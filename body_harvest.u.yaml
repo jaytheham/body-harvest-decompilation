@@ -1,0 +1,601 @@
+# ROM splitter configuration file
+name: "Body Harvest (U)"
+
+# checksums from ROM header offsets 0x10 and 0x14
+# used for auto configuration detection
+checksum1: 0x5326696F
+checksum2: 0xFE9A99C3
+
+# base filename used for outputs - [please, no spaces)
+basename: "body_harvest.u"
+
+# ranges to split the ROM into
+# types:
+#   asm      - MIPS assembly block.  Symbol names are in 'labels' list below
+#   behavior - behavior script
+#   bin      - raw binary, usually data
+#   header   - ROM header block
+#   instrset - instrument set
+#   level    - level commands
+#   m64      - M64 music sequence bank
+#   mio0     - MIO0 compressed data block.  may have texture breakdown
+#   ptr      - RAM address or ROM offset pointer
+#
+#   textures types:
+#      rgba   - 16-bit RGBA - [5-5-5-1)
+#      ia     - 16/8/4/1-bit greyscale
+#      skybox - grid of 32x32 16-bit RGBA
+ranges:
+#     start,  end,      type,     label
+    - [0x000000, 0x000040, "header",    "header"]
+    - [0x000040, 0x001000, "bin", "boot"]
+    - [0x001000, 0x02ea10, "asm", "base", 0x80000400]
+#    - [0x001000, 0x02ea10, "bin", "base"]
+    - [0x02ea10, 0x040720, "bin", "base_data"]
+    - [0x040720, 0x060e5c, "asm", "gameplay_frontend_overlay", 0x80070270]
+#    - [0x040720, 0x060e5c, "bin", "gameplay_frontend_overlay"]
+    - [0x060e5c, 0x07f220, "bin", "frontend_data"]
+#    - [0x07F220, 0x14A8A0, "asm", "gameplay_outside_overlay", 0x80070270]
+    - [0x07F220, 0x14A8A0, "bin", "gameplay_outside_overlay"]
+    - [0x14A8A0, 0x158330, "bin", "outside_data"]
+#    - [0x158330, 0x175EB0, "asm", "gameplay_inside_overlay", 0x80070270]
+    - [0x158330, 0x175EB0, "bin", "gameplay_inside_overlay"]
+    - [0x175EB0, 0x18d7e0, "bin", "inside_data"]
+    - [0x18d7e0, 0x195C80, "asm", "level_greece_overlay", 0x802d4cd0]
+#    - [0x18d7e0, 0x195C80, "bin", "level_greece_overlay"]
+    - [0x195C80, 0x196f70, "bin", "greece_data"]
+    - [0x196f70, 0x1ac280, "bin", "greece_height_map"] #mio0 2 bytes padding post 
+    - [0x1ac280, 0x1ac660, "bin", "greece_texture_map"] #mio0 1 byte padding post
+    - [0x1ac660, 0x1aec34, "bin", "greece_landscape_colours"] #mio0 2 bytes padding post
+    - [0x1aec34, 0x1aee5c, "bin", "greece_landscape_palette"] #mio0 3 bytes padding post
+    - [0x1aee5c, 0x1af470, "bin", "greece_terrain_objects"] #mio0
+    - [0x1af470, 0x1af830, "bin", "greece_terrain_object_groups"] #mio0 3 bytes padding post
+    - [0x1af830, 0x1af870, "bin", "greece_terrain_object_model_pointers"]
+    - [0x1af870, 0x1af878, "bin", "greece_water_table_height"] # 4 bytes padding post
+    - [0x1af878, 0x1afc78, "bin", "greece_building_types"] # 32 x 32 bytes
+    - [0x1afc78, 0x1b1460, "bin", "greece_building_instances"] # 255 * 24 bytes
+    - [0x1b1460, 0x1b2060, "bin", "greece_trigger_array"] # 192 * 16 bytes ?
+    - [0x1b2060, 0x1b206c, "bin", "greece_next_trigger"] # First 4 bytes are trigger_array padding? 4 bytes padding at end as well?
+    - [0x1b206c, 0x1b2f6c, "bin", "greece_alien_waves"] # 192 * 20 bytes. 0x0 is wave type; 0x2 & 0x4 are spawn coords
+    - [0x1b2f6c, 0x1b386c, "bin", "greece_vehicle_instances"] # 128 * 18 bytes. 0x0 and 0x2 are coords, 0x7 is type
+    - [0x1b386c, 0x1b4070, "bin", "greece_missions"]
+    - [0x1b4070, 0x1ddf8c, "bin", "greece_terrain_textures"] #mio0 2 bytes padding post
+    - [0x1ddf8c, 0x1df290, "bin", "greece_terrain_palettes"] #mio0 6 bytes padding post
+    - [0x1df290, 0x1e40a4, "bin", "greece_sky_texture"] #mio0 1 byte padding post
+    - [0x1e40a4, 0x1e42dc, "bin", "greece_sky_palette"] #mio0 7 bytes padding post
+    - [0x1e42dc, 0x1e5660, "bin", "greece_alien_types"] # 48 * 104 bytes
+    - [0x1e5660, 0x1e5f90, "bin", "greece_vehicle_types"] # 21 * 112 bytes
+    - [0x1e5f90, 0x1e5ff0, "bin", "greece_signposts"]
+    - [0x1E5FF0, 0x1E6BF0, "bin", "greece_english_sign_strings"]
+    - [0x1E6BF0, 0x1E6CF0, "bin", "greece_english_sign_string_offsets"]
+    - [0x1E6CF0, 0x1E78F0, "bin", "greece_french_sign_strings"]
+    - [0x1E78F0, 0x1E79F0, "bin", "greece_french_sign_string_offsets"]
+    - [0x1E79F0, 0x1E85F0, "bin", "greece_german_sign_strings"]
+    - [0x1E85F0, 0x1E86F0, "bin", "greece_german_sign_string_offsets"]
+    - [0x1E86F0, 0x1E9EF0, "bin", "greece_english_comms_strings"]
+    - [0x1E9EF0, 0x1E9FF0, "bin", "greece_english_comms_strings_offsets"]
+    - [0x1E9FF0, 0x1EB7F0, "bin", "greece_french_comms_strings"]
+    - [0x1EB7F0, 0x1EB8F0, "bin", "greece_french_comms_strings_offsets"]
+    - [0x1EB8F0, 0x1ED0F0, "bin", "greece_german_comms_strings"]
+    - [0x1ED0F0, 0x1ED1F0, "bin", "greece_german_comms_strings_offsets"]
+    - [0x1ED1F0, 0x1ed9e0, "bin", "unknown_commsSentenceInfo_Doors_BCPoints"] # Haven't figured out the boundaries between these 3 yet
+#    - [0x1ed9e0, 0x1F91B0, "asm", "level_java_overlay", 0x802d4cd0]
+    - [0x1ed9e0, 0x1F91B0, "bin", "level_java_overlay"]
+    - [0x1F91B0, 0x1F9CC0, "bin", "java_data"]
+    - [0x1F9CC0, 0x211454, "bin", "java_height_map"] #mio0
+    - [0x211454, 0x2117EC, "bin", "jave_texture_map"] #mio0
+    - [0x2117EC, 0x213434, "bin", "java_landscape_colours"] #mio0
+    - [0x213434, 0x2136F8, "bin", "java_landscape_palette"] #mio0
+    - [0x2136F8, 0x213C98, "bin", "java_terrain_objects"] #mio0
+    - [0x213C98, 0x21404C, "bin", "java_terrain_object_groups"] #mio0
+    - [0x21404C, 0x21408C, "bin", "java_terrain_object_model_pointers"]
+    - [0x21408C, 0x214094, "bin", "java_water_table_height"]
+    - [0x214094, 0x3767C0, "bin", "UNMAPPED_1"]
+
+#    001B2F6C        America vehicle table, 0x1 & 0x3 are coords, 0x7 is type (VehicleStartInfos)
+#
+#    002DCB39        Siberia vehicle table, 0x1 & 0x3 are coords, 0x7 is type (VehicleStartInfos)
+#
+#    00341F44        Comet vehicle table?, 0x1 & 0x3 are coords, 0x7 is type (VehicleStartInfos)
+
+    - [0x3767C0, 0x379554, "bin", "icons"] # MIO0
+    - [0x379554, 0x379690, "bin", "icons_palette"] # MIO0
+    - [0x379690, 0x37EB8C, "bin", "japanese_and_english_font"] # MIO0
+    - [0x37EB8C, 0x37EBD0, "bin", "japanese_and_english_font_palette"] # MIO0
+    - [0x37EBD0, 0x37F5E4, "bin", "message_alert_icons"] # MIO0
+    - [0x37F5E4, 0x37F840, "bin", "message_alert_icons_palette"] # MIO0
+    - [0x37F840, 0x38F640, "bin", "UNKNOWN_1"]
+    - [0x38F640, 0x38F644, "bin", "UNKNOWN_2"]
+    - [0x38F644, 0x392F44, "bin", "greece_inside_text_english"]
+    - [0x392F44, 0x39A250, "bin", "UNMAPPED_2"]
+    - [0x39A250, 0x39B320, "bin", "greece_bridge_man_portrait"] # MIO0
+    - [0x39B320, 0x39B570, "bin", "greece_bridge_man_palette"] # MIO0
+    - [0x39B570, 0x39C214, "bin", "greece_apocalypse_portrait"] # MIO0
+    - [0x39C214, 0x39C470, "bin", "greece_apocalypse_palette"] # MIO0
+    - [0x39C470, 0x39D280, "bin", "greece_fireman_portrait"] # MIO0
+    - [0x39D280, 0x39D4E0, "bin", "greece_fireman_palette"] # MIO0
+    - [0x39D4E0, 0x39E3A8, "bin", "greece_general_portrait"] # MIO0
+    - [0x39E3A8, 0x39E600, "bin", "greece_general_palette"] # MIO0
+    - [0x39E600, 0x39F418, "bin", "greece_hooded_man_portrait"] # MIO0
+    - [0x39F418, 0x39F670, "bin", "greece_hooded_man_palette"] # MIO0
+    - [0x39F670, 0x3A0560, "bin", "greece_soldier_portrait"] # MIO0
+    - [0x3A0560, 0x3A07C0, "bin", "greece_soldier_palette"] # MIO0
+    - [0x3A07C0, 0x3A191C, "bin", "greece_miller_portrait"] # MIO0
+    - [0x3A191C, 0x3A1B70, "bin", "greece_miller_palette"] # MIO0
+    - [0x3A1B70, 0x3A2B10, "bin", "greece_gatekeeper_portrait"] # MIO0
+    - [0x3A2B10, 0x3A2D70, "bin", "greece_gatekeeper_palette"] # MIO0
+    - [0x3A2D70, 0x3A3E5C, "bin", "greece_archaeologist_portrait"] # MIO0
+    - [0x3A3E5C, 0x3A40B0, "bin", "greece_archaeologist_palette"] # MIO0
+    - [0x3A40B0, 0x3A51F0, "bin", "greece_boat_man_portrait"] # MIO0
+    - [0x3A51F0, 0x3A5450, "bin", "greece_boat_man_palette"] # MIO0
+    - [0x3A5450, 0x3A6634, "bin", "greece_pilot_portrait"] # MIO0
+    - [0x3A6634, 0x3A6880, "bin", "greece_pilot_palette"] # MIO0
+    - [0x3A6880, 0x3A7784, "bin", "greece_priest_portrait"] # MIO0
+    - [0x3A7784, 0x3A79D8, "bin", "greece_priest_palette"] # MIO0
+    - [0x3A79D8, 0x3C23F0, "bin", "UNKNOWN_3"]
+    - [0x3C23F0, 0x3C3414, "bin", "java_tribesman_portrait"] # MIO0
+    - [0x3C3414, 0x3C3670, "bin", "java_tribesman_palette"] # MIO0
+    - [0x3C3670, 0x3C4528, "bin", "java_balding_man_portrait"]
+    - [0x3C4528, 0x3C4780, "bin", "java_balding_man_palette"] # MIO0
+    - [0x3C4780, 0x3C56D4, "bin", "java_helmet_soldier_portrait"] # MIO0
+    - [0x3C56D4, 0x3C5930, "bin", "java_helmet_soldier_palette"] # MIO0
+    - [0x3C5930, 0x3C681C, "bin", "java_glasses_soldier_portrait"] # MIO0
+    - [0x3C681C, 0x3C6A70, "bin", "java_glasses_soldier_palette"] # MIO0
+    - [0x3C6A70, 0x3C799C, "bin", "java_young_woman_portrait"] # MIO0
+    - [0x3C799C, 0x3C7BF0, "bin", "java_young_woman_palette"] # MIO0
+    - [0x3C7BF0, 0x3C8AD8, "bin", "java_old_man_portrait"] # MIO0
+    - [0x3C8AD8, 0x3C8D30, "bin", "java_old_man_palette"] # MIO0
+    - [0x3C8D30, 0x3C99FC, "bin", "java_boat_captain_portrait"] # MIO0
+    - [0x3C99FC, 0x3C9C50, "bin", "java_boat_captain_palette"] # MIO0
+    - [0x3C9C50, 0x3CAD10, "bin", "java_sick_man_portrait"] # MIO0
+    - [0x3CAD10, 0x3CAF70, "bin", "java_sick_man_palette"] # MIO0
+    - [0x3CAF70, 0x3CBEB4, "bin", "java_medicine_lady_portrait"] # MIO0
+    - [0x3CBEB4, 0x3CC110, "bin", "java_medicine_lady_palette"] # MIO0
+    - [0x3CC110, 0x3CCE7C, "bin", "java_battleship_captain_portrait"] # MIO0
+    - [0x3CCE7C, 0x3CD0D0, "bin", "java_battleship_captain_palette"] # MIO0
+    - [0x3CD0D0, 0x3CDC6C, "bin", "java_soldier_portrait"] # MIO0
+    - [0x3CDC6C, 0x3CDEC0, "bin", "java_soldier_palette"] # MIO0
+    - [0x3CDEC0, 0x3CEE54, "bin", "java_witch_doctor_portrait"] # MIO0
+    - [0x3CEE54, 0x3CF0A8, "bin", "java_witch_doctor_palette"] # MIO0
+    - [0x3CF0A8, 0x3E9AC0, "bin", "UNKNOWN_4"]
+    - [0x3E9AC0, 0x3EAADC, "bin", "america_lad_portrait"] # MIO0
+    - [0x3EAADC, 0x3EAD30, "bin", "america_lad_palette"] # MIO0
+    - [0x3EAD30, 0x3EBDF8, "bin", "america_man_portrait"] # MIO0
+    - [0x3EBDF8, 0x3EC050, "bin", "america_man_palette"] # MIO0
+    - [0x3EC050, 0x3ECF20, "bin", "america_yellow_hat_man_portrait"] # MIO0
+    - [0x3ECF20, 0x3ED180, "bin", "america_yellow_hat_man_palette"] # MIO0
+    - [0x3ED180, 0x3EE13C, "bin", "america_long_hair_man_portrait"] # MIO0
+    - [0x3EE13C, 0x3EE390, "bin", "america_long_hair_man_palette"] # MIO0
+    - [0x3EE390, 0x3EF4B0, "bin", "america_hillbilly_portrait"] # MIO0
+    - [0x3EF4B0, 0x3EF710, "bin", "america_hillbilly_palette"] # MIO0
+    - [0x3EF710, 0x3F0244, "bin", "america_man_in_black_portrait"] # MIO0
+    - [0x3F0244, 0x3F04A0, "bin", "america_man_in_black_palette"] # MIO0
+    - [0x3F04A0, 0x3F1074, "bin", "america_scientist_portrait"] # MIO0
+    - [0x3F1074, 0x3F12D0, "bin", "america_scientist_palette"] # MIO0
+    - [0x3F12D0, 0x3F2154, "bin", "america_alien_portrait"] # MIO0
+    - [0x3F2154, 0x3F2390, "bin", "america_alien_palette"] # MIO0
+    - [0x3F2390, 0x3F32EC, "bin", "america_white_helmet_man_portrait"] # MIO0
+    - [0x3F32EC, 0x3F3540, "bin", "america_white_helmet_man_palette"] # MIO0
+    - [0x3F3540, 0x3F4490, "bin", "america_sneering_man_portrait"] # MIO0
+    - [0x3F4490, 0x3F46F0, "bin", "america_sneering_man_palette"] # MIO0
+    - [0x3F46F0, 0x3F5594, "bin", "america_hippy_woman_portrait"] # MIO0
+    - [0x3F5594, 0x3F57F0, "bin", "america_hippy_woman_palette"] # MIO0
+    - [0x3F57F0, 0x3F6688, "bin", "america_nurse_portrait"] # MIO0
+    - [0x3F6688, 0x3F68DC, "bin", "america_nurse_palette"] # MIO0
+    - [0x3F68DC, 0x4112F0, "bin", "UNKNOWN_5"]
+    - [0x4112F0, 0x4120CC, "bin", "siberia_fat_man_1_portrait"] # MIO0
+    - [0x4120CC, 0x412320, "bin", "siberia_fat_man_1_palette"] # MIO0
+    - [0x412320, 0x412E64, "bin", "siberia_zombie_man_portrait"] # MIO0
+    - [0x412E64, 0x4130C0, "bin", "siberia_zombie_man_palette"] # MIO0
+    - [0x4130C0, 0x4140A8, "bin", "siberia_old_scientist_portrait"] # MIO0
+    - [0x4140A8, 0x414300, "bin", "siberia_old_scientist_palette"] # MIO0
+    - [0x414300, 0x415068, "bin", "siberia_blue_uniform_portrait"] # MIO0
+    - [0x415068, 0x4152C0, "bin", "siberia_blue_uniform_palette"] # MIO0
+    - [0x4152C0, 0x4161CC, "bin", "siberia_white_hat_portrait"] # MIO0
+    - [0x4161CC, 0x416420, "bin", "siberia_white_hat_palette"] # MIO0
+    - [0x416420, 0x417498, "bin", "siberia_injured_white_hat_portrait"] # MIO0
+    - [0x417498, 0x4176F0, "bin", "siberia_injured_white_hat"] # MIO0
+    - [0x4176F0, 0x4186A4, "bin", "siberia_fat_man_2_portrait"] # MIO0
+    - [0x4186A4, 0x418900, "bin", "siberia_fat_man_2_palette"] # MIO0
+    - [0x418900, 0x4198E0, "bin", "siberia_ginger_portrait"] # MIO0
+    - [0x4198E0, 0x419B40, "bin", "siberia_ginger_palette"] # MIO0
+    - [0x419B40, 0x41AAC8, "bin", "siberia_young_scientist_portrait"] # MIO0
+    - [0x41AAC8, 0x41AD20, "bin", "siberia_young_scientist_palette"] # MIO0
+    - [0x41AD20, 0x41BC18, "bin", "siberia_mutant_portrait"] # MIO0
+    - [0x41BC18, 0x41BE70, "bin", "siberia_mutant_palette"] # MIO0
+    - [0x41BE70, 0x41C13C, "bin", "siberia_placeholder_portrait"] # MIO0
+    - [0x41C13C, 0x41C390, "bin", "siberia_placeholder_palette"] # MIO0
+    - [0x41C390, 0x41D174, "bin", "siberia_bearded_man_portrait"] # MIO0
+    - [0x41D174, 0x41D3C8, "bin", "siberia_bearded_man_palette"] # MIO0
+    - [0x41D3C8, 0x437DE0, "bin", "UNKNOWN_6"] # Comet NPC speech
+    - [0x437DE0, 0x438D34, "bin", "alien_hivemind_portrait"] # MIO0
+    - [0x438D34, 0x438F80, "bin", "alien_hivemind_palette"] # MIO0
+    - [0x438F80, 0x43A0EC, "bin", "tortured_daisy_portrait"] # MIO0
+    - [0x43A0EC, 0x43A340, "bin", "tortured_daisy_palette"] # MIO0
+    - [0x43A340, 0x4EBF80, "bin", "intro_models"] # This might actually be multiple chunks?
+    - [0x4EBF80, 0x500A00, "bin", "detailed_adam_model"] # and more?
+    - [0x500A00, 0x55B0A0, "bin", "general_gameplay_models"]
+#        - [0x500A00, 0x501900, "bin", "textures"]
+#        - [0x501900, 0x504100, "bin", "alpha_one"]
+#        - [0x504110, 0x504858, "bin", "human_01"] # Each is used as a frame of animation!
+#        - [0x504858, 0x504FA0, "bin", "human_02"]
+#        - [0x504FA0, 0x5056E8, "bin", "human_03"]
+#        - [0x5056E8, 0x505E30, "bin", "human_04"]
+#        - [0x505E30, 0x506578, "bin", "human_05"]
+#        - [0x506578, 0x506CC0, "bin", "human_06"]
+#        - [0x506CC0, 0x507408, "bin", "human_07"]
+#        - [0x507408, 0x507B50, "bin", "human_08"]
+#        - [0x507B50, 0x5080C8, "bin", "human_09"]
+#        - [0x5080C8, 0x508600, "bin", "human_10"]
+#        - [0x508600, 0x508B68, "bin", "human_11"]
+#        - [0x508B68, 0x5090D8, "bin", "human_12"]
+#        - [0x5090D8, 0x509640, "bin", "human_13"]
+#        - [0x509640, 0x509BA8, "bin", "human_14"]
+#        - [0x509BA8, 0x50A118, "bin", "human_15"]
+# 514xxx prototype human running animation ?
+
+    - [0x55B0A0, 0x579D50, "bin", "item_models"]
+# item textures
+#        - [0x5610A0, 0x5612E0, "bin", "weapon_crystal"]
+#        - [0x, 0x, "bin", "alien_artifact"]
+#        - [0x, 0x, "bin", "alien_artifact_2"]
+#        - [0x, 0x, "bin", "totem_part_a"]
+#        - [0x, 0x, "bin", "totem_part_man"]
+#        - [0x, 0x, "bin", "totem_part_bird"]
+#        - [0x, 0x, "bin", "headset"]
+#        - [0x, 0x, "bin", "page_of_binary"]
+#        - [0x, 0x, "bin", "orange_key_card"]
+#        - [0x, 0x, "bin", "gold_key_card"]
+#        - [0x, 0x, "bin", "key_card"]
+#        - [0x, 0x, "bin", "kris_knife"]
+#        - [0x, 0x, "bin", "medicine_bottle"]
+#        - [0x, 0x, "bin", "howitzer_shell"]
+#        - [0x, 0x, "bin", "airboat_part"]
+#        - [0x, 0x, "bin", "grenade"]
+#        - [0x, 0x, "bin", "greece_puzzle_piece"]
+#        - [0x, 0x, "bin", "gold_key_1a"]
+#        - [0x, 0x, "bin", "gold_key_1b"]
+#        - [0x, 0x, "bin", "gold_key_2"]
+#        - [0x, 0x, "bin", "silver_key_1"]
+#        - [0x, 0x, "bin", "silver_key_2"]
+#        - [0x, 0x, "bin", "gold_key_3"]
+#        - [0x, 0x, "bin", "nitro_icon"] # beta?
+#        - [0x, 0x, "bin", "dynamite"] # unused?
+#        - [0x, 0x, "bin", "rocket_launcher"] # unused?
+#        - [0x, 0x, "bin", "scoped_pistol"] # unused?
+#        - [0x, 0x, "bin", "machinegun"] # unused?
+#        - [0x, 0x, "bin", "shotgun"] # unused?
+#        - [0x, 0x, "bin", "hunting_rifle"] # unused?
+#        - [0x, 0x, "bin", "deflect_icon"] # beta?
+#        - [0x, 0x, "bin", "fuel_can"]
+#        - [0x, 0x, "bin", "nitro_fuel_can"]
+#        - [0x, 0x, "bin", "wrench"] # beta?
+#        - [0x, 0x, "bin", "ankh"] # beta?
+#        - [0x, 0x, "bin", "windmill_cog"]
+#        - [0x, 0x, "bin", "atlantis_crank"]
+#        - [0x, 0x, "bin", "train_starting_handle"] # ?
+#        - [0x, 0x, "bin", "kris_blade"]
+#        - [0x, 0x, "bin", "kris_hilt"]
+#        - [0x, 0x, "bin", "kris_handle"]
+#        - [0x5796B0, 0x579D48, "rua_rua_idol"]
+    - [0x579D50, 0x5DCBB0, "bin", "greece_models"]
+#        - [0x579D50, 0x5838F0, "bin", "textures"]
+#        - [0x5838F0, 0x584210, "bin", "watergate_structure"]
+#        - [0x584210, 0x584480, "bin", "watergate_gate_a"]
+#        - [0x584480, 0x5846F0, "bin", "watergate_gate_b"]
+#        - [0x5846F0, 0x584CB0, "bin", "mine_entrance"]
+#        - [0x584CB0, 0x585CE8, "bin", "boat_shed"]
+#        - [0x585CE8, 0x587098, "bin", "small_church"]
+#        - [0x587098, 0x5882E8, "bin", "monastery"]
+#        - [0x5882E8, 0x5895E8, "bin", "temple_ruins"]
+#        - [0x5895E8, 0x589C60, "bin", "fountain"]
+#        - [0x589C60, 0x58AB10, "bin", "porch_and_flagpole_house"]
+#        - [0x58AB10, 0x58AF98, "bin", "wooden_dock"]
+#        - [0x58AF98, 0x58BA40, "bin", "brick_hanger"]
+#        - [0x58BA40, 0x58C148, "bin", "red_roof_white_house"]
+#        - [0x58C148, 0x58CAB0, "bin", "house_with_hedge"]
+#        - [0x58CAB0, 0x58CD20, "bin", "rectangle_of_vegetation"] # used anywhere?
+#        - [0x58CD20, 0x58D9A8, "bin", "house_with_upstairs_greenery"]
+#        - [0x58D9A8, 0x58E8A8, "bin", "bridge_master_house"]
+#        - [0x58E8A8, 0x58F3F0, "bin", "blue_and_yellow_house"] # beta
+#        - [0x58F3F0, 0x5903C0, "bin", "atlantis_temple"]
+#        - [0x5903C0, 0x5911B0, "bin", "atlantis_statue"]
+#        - [0x5911B0, 0x5913D0, "bin", "atlantis_statue_arm"]
+#        - [0x5913D0, 0x592848, "bin", "torch_bearing_statue"]
+#        - [0x592848, 0x593438, "bin", "windmill"]
+#        - [0x593438, 0x593778, "bin", "windmill_blades"]
+#        - [0x593778, 0x594708, "bin", "fire_station"]
+#        - [0x594708, 0x595848, "bin", "house_two_blue_roofs"]
+#        - [0x595848, 0x596100, "bin", "broken_column"]
+#        - [0x596100, 0x597350, "bin", "bridge_end"] # Strange. Includes own texture
+    - [0x5DCBB0, 0x791C20, "bin", "UNMAPPED_3"]
+#    5dcbb0                Java model bank
+#        63d1b0                Start of Kubelwagon displaylist
+#        63e3e0                Start of landing craft displaylist
+#    64edf0                America model bank
+#    6bfbb0                Siberia model bank
+#    72fda0                Comet model bank
+#    770c70                Boss monsters model bank
+    - [0x791C20, 0x7A4400, "bin", "misc_interior_models"]
+    - [0x7A4400, 0x7E6E50, "bin", "greece_interior_models"]
+    - [0x7E6E50, 0x7F9530, "bin", "greece_interior_textures"]
+    - [0x7F9530, 0x83B9B0, "bin", "java_interior_models"]
+    - [0x83B9B0, 0x8463D0, "bin", "java_interior_textures"]
+    - [0x8463D0, 0x88BE20, "bin", "america_interior_models"]
+    - [0x88BE20, 0x898450, "bin", "america_interior_textures"]
+    - [0x898450, 0x8D9D80, "bin", "siberia_interior_models"]
+    - [0x8D9D80, 0x8E4084, "bin", "siberia_interior_textures"]
+    - [0x8E4084, 0x8F3850, "bin", "comet_interior_models"]
+    - [0x8F3850, 0x8F4958, "bin", "comet_interior_textures"]
+# 94e500 Daisy portrait (not compressed)
+# 94fb00 ? portrait (not compressed)
+# 951100 Robot Helper portrait (not compressed)
+# 952700 Tortured Daisy portrait (not compressed)
+# 953D00 Greece Pilot portrait dupe ? (not compressed)
+#  953000                music data begins around hereish check usf files for more precision
+    - [0x8F4958, 0xC00000, "bin", "UNKNOWN_7"]
+
+# Labels for functions or data memory addresses
+# All label addresses are RAM addresses
+# Order does not matter
+labels:
+# Base code methods
+#    - [0x80000400, "EntryPoint"]
+#    - [0x80000E40, "CheckForRumblePak"]
+#    - [0x80001624, "ValidateSaveVersionAndChecksum"]
+#    - [0x800016D8, "Guess_SetupHighScores"]
+#    - [0x80001830, "Guess_SetupHighScores2"] # Identical to above func?
+#    - [0x80002378, "Guess_LoadSaveFile"]
+#    - [0x80002B1C, "Guess_SaveFileChecksum"]
+#    - [0x80003584, "ButtonIsNewlyPressed"]
+#    - [0x80006D5C, "SetFullResolution"]
+#    - [0x80006D84, "SetGameplayResolution"]
+#    - [0x80008938, "DebugDrawTimingBars"]
+#    - [0x8000A024, "Guess_DisplayInventory"]
+#    - [0x8000A4A4, "ShowText"]
+#    - [0x8000EF00, "DebugPrintWithFileNameAndSourceLine"]
+#    - [0x8000F1E8, "StopAndDestroyThread"]
+#    - [0x8000F648, "SetVideoInterfaceWidth"]
+#    - [0x8000F67C, "SetVideoInterfaceHeight"]
+#    - [0x80010768, "DestroyThreadIfMessageInQueue"]
+#    - [0x800107B4, "LoadLevel"]
+#    - [0x800108D0, "LoadLevelData"]
+#    - [0x800115F4, "LoadFrontEndDataToRam"]
+#    - [0x800116DC, "LoadLevelCode"]
+#    - [0x80011C34, "DebugPrintModelSegmentStart"]
+#    - [0x80011C6C, "DebugPrintModelSegmentEnd"]
+#    - [0x800135AC, "PlayMapMusic"]
+#    - [0x800135F4, "PlayInventoryMusic"]
+#    - [0x8001B7E0, "osAiSetFrequency"]
+#    - [0x8001AD40, "alUnlink"]
+#    - [0x8001AD70, "alLink"]
+#    - [0x8001AD94, "alClose"]
+#    - [0x8001ADCC, "alInit"]
+#    - [0x8001AE00, "alHeapDBAlloc"]
+#    - [0x8001AE60, "osCreateMesgQueue"]
+#    - [0x8001AE90, "osCreateThread"]
+#    - [0x8001AFE0, "osStartThread"]
+#    - [0x8001BA70, "osRecvMesg"]
+#    - [0x8001BBB0, "osVirtualToPhysical"]
+#    - [0x8001BC30, "osAiSetNextBuffer"]
+#    - [0x8001BCE0, "osAiGetLength"]
+#    - [0x8001BE38, "alAudioFrame"]
+#    - [0x8001C3D0, "osSendMesg"]
+#    - [0x8001C520, "osPiStartDma"]
+#    - [0x8001CC6C, "osSyncPrintf"]
+#    - [0x8001CC90, "osSetEventMesg"]
+#    - [0x8001CD00, "osContInit"]
+#    - [0x8001D0C0, "osEepromProbe"]
+#    - [0x8001D130, "osContSetCh"]
+#    - [0x8001D1A0, "__ull_rshift"]
+#    - [0x8001D208, "__ull_div"]
+#    - [0x8001D244, "__ll_lshift"]
+#    - [0x8001D308, "__ll_mul"]
+#    - [0x8001D460, "osEepromLongWrite"]
+#    - [0x8001D6E0, "osContStartReadData"]
+#    - [0x8001D7A4, "osContGetReadData"]
+#    - [0x8001D940, "sqrtf"]
+#    - [0x8001D950, "coss"]
+#    - [0x8001D980, "sins"]
+#    - [0x8001DB44, "guOrtho"]
+#    - [0x8001DE68, "guLookAt"]
+#    - [0x8001E074, "guRotate"]
+#    - [0x8001E590, "guPerspective"]
+#    - [0x8001E5F0, "sinf"]
+#    - [0x8001E7B0, "cosf"]
+#    - [0x8001E920, "_blkclr"]
+#    - [0x8001E9C0, "osCreateViManager"]
+#    - [0x8001ED80, "osViSetMode"]
+#    - [0x8001EDF0, "osViSwapBuffer"]
+#    - [0x8001EFD0, "osSetThreadPri"]
+#    - [0x8001F0B0, "osStopThread"]
+#    - [0x8001F170, "osDestroyThread"]
+#    - [0x8001F270, "osViSetEvent"]
+#    - [0x8001F2E0, "osWriteBackDCacheAll"]
+#    - [0x8001F310, "osViSetSpecialFeatures"]
+#    - [0x8001F4D0, "osViBlack"]
+#    - [0x8001F540, "osGetCount"]
+#    - [0x8001F550, "osViSetYScale"]
+#    - [0x8001F5B0, "osViSetXScale"]
+#    - [0x8001F6E0, "osPiGetStatus"]
+#    - [0x8001F6F0, "CopyRomToRamIn32ByteChunks"]
+#    - [0x8001F770, "CopyRomToRamIn16ByteChunks"]
+#    - [0x8001F820, "alSndpSetSound"]
+#    - [0x8001F840, "alSndpGetState"]
+#    - [0x80022110, "alSndpSetPitch"]
+#    - [0x80022170, "alSndpSetVol"]
+#    - [0x800221D0, "alSndpSetPan"]
+#    - [0x80022320, "alSndpStop"]
+#    - [0x80022370, "alSeqpSetChlVol"]
+#    - [0x80022810, "guLookAtReflect"]
+#    - [0x80022B94, "guScale"]
+#    - [0x80023050, "alSynDelete"]
+#    - [0x800239F0, "osSetIntMask"]
+#    - [0x80023F50, "__osProbeTLB"]
+#    - [0x80028190, "__osSetSR"]
+#    - [0x800281A0, "__osGetSR"]
+#    - [0x800281B0, "__osSetFpcCsr"]
+#    - [0x800282E0, "osMapTLBRdb"]
+#    - [0x800287A0, "osGetThreadPri"]
+#    - [0x80028910, "osViSwapContext"]
+#    - [0x8002D630, "__osSetCompare"]
+#    - [0x8002DE00, "alSynSetPriority"]
+
+# Frontend methods
+#    - [0x80070390, "CalculatePlayersTotalScore"]
+#    - [0x80075C84, "ShowVersionInfo"]
+#    - [0x80076504, "DisplayCometExplodesCutscene"]
+#    - [0x8007685C, "DisplayEndGameMessage"]
+#    - [0x800768C4, "DoIntroCutsceneLoop"]
+#    - [0x8007704C, "DoPressStartLoop"]
+#    - [0x80077344, "DisplaySelectFileDifficulty"]
+#    - [0x80078424, "DisplayChooseNewFileName"]
+#    - [0x800788e4, "UnusedFileStart"]
+#    - [0x80078968, "FileStart"]
+#    - [0x800789E4, "DoFrontEndLoop"]
+#    - [0x800796D0, "DisplayTopScores"]
+#    - [0x8007A038, "DisplayGameOver"]
+#    - [0x8007B618, "DisplayDeleteSavedData"]
+#    - [0x8007B900, "DisplayCopyrightMessage"]
+#    - [0x8007BB0C, "DisplayPublisherLogo"]
+#    - [0x8007BC90, "DisplayNoControllerMessage"]
+#    - [0x8007BD98, "DisplayWrongConsoleRegionMessage"]
+#    - [0x8007BEC0, "DisplayDmaLogo"]
+#    - [0x8007CFB4, "DoSaveBeaconLoop"]
+#    - [0x8007D2B0, "DoInventoryLoop"]
+#    - [0x80082CBC, "DisplayTransitionToNextLevel"]
+
+# Gameplay outside Methods
+    #- [0x800702C0, "UpdateGameplayTimer"]
+    #- [0x80070CC0, "Guess_DrawSky"]
+    #- [0x80071228, "Render"]
+    #- [0x80071F28, "Guess_DoGameplay"]
+    #- [0x800720F4, "DoGameplayLoop"]
+    #- [0x800731B0, "EnableCheatAnnull"]
+    #- [0x800232C8, "EnableCheatFarewell"]
+    #- [0x800732E0, "EnableCheatArsenal"]
+    #- [0x80073428, "EnableCheatDurable"]
+    #- [0x800734AC, "Guess_DoCheatWander"]
+    #- [0x8007364C, "EnableCheatWander"]
+    #- [0x80073670, "EnableCheatSnared"]
+    #- [0x8007367C, "EnableCheatFreed"]
+    #- [0x8007368C, "EnableCheatAlfa"]
+    #- [0x8007377C, "EnableCheatSnuffle"]
+    #- [0x80073794, "EnableCheatAward"]
+    #- [0x800737A4, "EnableCheatSurreal"]
+    #- [0x800737BC, "EnableCheatDefender"]
+    #- [0x80073814, "EnableCheatBleed"]
+    #- [0x8007383C, "EnableCheatSuffer"]
+    #- [0x8007391C, "EnableCheatWeasel"]
+    #- [0x80073934, "EnableCheatUseful"]
+    #- [0x800739B8, "EnableCheatDwarf"]
+    #- [0x800739C8, "EnableCheatBanana"]
+    #- [0x800739D8, "EnableCheatDundee"]
+    #- [0x800739F8, "EnableCheatLard"]
+    #- [0x80073A08, "EnableCheatFeeble"]
+    #- [0x80073A20, "AddCharToCheatInputBuffer"]
+    #- [0x80073B30, "ActivateCheat"]
+    #- [0x800746DC, "Guess_InitMissions"]
+    #- [0x800770D8, "FellTree"]
+    #- [0x8007764C, "DisplayTrees"]
+    #- [0x8007AAEC, "Guess_DoMovement"]
+    #- [0x8007BEC0, "DrawComplexObjectShadows"]
+    #- [0x8007C044, "DrawComplexObjects"]
+    #- [0x80095100, "DebugMenuDisplayProperty"]
+    #- [0x80095530, "DebugMenuNavigation"]
+    #- [0x8009594C, "DebugMenuDisplayProperties"]
+    #- [0x800959DC, "DebugMenu"]
+    #- [0x80095F08, "Guess_DrawMapTiles"]
+    #- [0x8009811C, "Guess_DisplayMap"]
+    #- [0x8009C6CC, "DrawHudBarWithIcon"]
+    #- [0x8009D96C, "DrawHudBars"]
+    #- [0x8009E994, "DrawAlienHealthBar"]
+    #- [0x800A03FC, "DisplayScanner"]
+    #- [0x800A140C, "DebugShowTimingGraph"]
+    #- [0x800A2B58, "DrawGhostTarget"]
+    #- [0x800A5A50, "ActivateSaveBeacon"]
+    #- [0x800A5B30, "CheckIfActivatingSaveBeacon"]
+    #- [0x800A5D3C, "Guess_InitSaveBeacons"]
+    #- [0x800A5EA8, "WarpFromSaveBeacon"]
+    #- [0x800A70B8, "ShowBeacons"]
+    #- [0x800A9238, "Guess_GivePowerUp"]
+    #- [0x800AE588, "Guess_InitAlienWaves"]
+    #- [0x800AEE5C, "SpawnAlienWave"]
+    #- [0x800AF348, "Guess_InitTriggers"]
+    #- [0x800B1028, "ClipLineToShieldWalls"]
+    #- [0x800B753C, "Guess_DrawRoadTiles"]
+    #- [0x800B9DB8, "DrawTileBuffer"]
+    #- [0x800BA5B0, "DrawVtxBufferWater"]
+    #- [0x800BB5E0, "DrawShieldWalls"]
+    #- [0x800BD360, "DisplayGates"] # A gate is a portal through the shield wall
+    #- [0x800BDAF4, "OpenCurrentStageGate"]
+    #- [0x800E0134, "Guess_InitSpecialEffects"]
+    #- [0x800E03FC, "DebugPrintSpecialEffectsInfo"]
+    #- [0x800E5044, "DisplayLasers"]
+    #- [0x800E5CF4, "AllocateShield"]
+    #- [0x800E5E3C, "RemoveShield"]
+    #- [0x800E71F8, "DisplayFxUnderWater"]
+    #- [0x800E7C28, "Guess_DebugCameraControl"]
+    #- [0x800E87C8, "UpdateCamera"]
+    #- [0x800E88C0, "StripModelToBones"]
+    #- [0x800E8A00, "Guess_CastVehicleShadows"]
+    #- [0x800EA2BC, "Guess_AttemptDoAnimation"]
+    #- [0x800EA434, "Guess_InitAnimations"]
+    #- [0x8010065C, "DrawVehicles"]
+    #- [0x80101C14, "DrawDeadVehicles"]
+    #- [0x801052E8, "DoAdamInput"]
+    #- [0x8011694C, "Guess_InitBuildingDoors"]
+    #- [0x80118774, "DisplayBuildings"]
+    #- [0x80124D60, "DisplayBullets"]
+    #- [0x8012D884, "DebugDrawInteractionBoxes"]
+    #- [0x801365E0, "DisplaySignposts"]
+    #- [0x801391DC, "Guess_GiveItem"]
+    #- [0x80139984, "Guess_InitInventory"]
+    #- [0x8013B688, "Guess_DoWeaponChange"]
+
+# GameplayInside Methods
+    #- [0x800705E0, "Guess_LoadCharactersAndEffects"]
+    #- [0x80072300, "SetUpColMap"]
+    #- [0x8007290C, "DoIndoorLoop"]
+    #- [0x8007D69C, "SearchObject"]
+    #- [0x8007F668, "Guess_AllocateTwoCharacterBuffers"]
+    #- [0x80081764, "DebugManualCameraControl"]
+
+# Variables
+#    - [0x800313D0, "language"]
+#    - [0x800314C4, "maxHumanDeathsAllowed"]
+#    - [0x80035630, "osViModes"]
+#    - [0x80047588, "controllerOneButtonState"]
+#    - [0x8004758e, "controllerTwoButtonState"]
+#    - [0x80047710, "debugBoundingBoxes"]
+#    - [0x80047720, "debugTimingGraph"]
+#    - [0x8004773C, "fogColour"]
+#    - [0x80047f90, "currentLevel"]
+#    - [0x80047f9c, "warpPointNumber"]
+#    - [0x80048034, "showDemoText"]
+#    - [0x80048138, "weaponSlot1"]
+#    - [0x80048139, "weaponSlot2"]
+#    - [0x8004813A, "weaponSlot3"]
+#    - [0x8004813B, "weaponSlot4"]
+#    - [0x8004813C, "weaponSlot5"]
+#    - [0x8004813D, "weaponSlot6"]
+#    - [0x8004813E, "weaponSlot7"]
+#    - [0x80048168, "numHumansEatenToSpawnMutant"]
+#    - [0x80050AD8, "buildingData"]
+#    - [0x80052548, "indoorRoomToLoadId"]
+#    - [0x80052A90, "millisecondsElapsedInLevel"]
+#    - [0x80052A98, "levelStats"] # 6 structs: {int score; short secondsElapsed; short unk}
+#    - [0x80052ACD, "playerModelType"]
+#    - [0x80052ADC, "gameplayMode"]
+#    - [0x80052B34, "activeVehicle"]
+#    - [0x80052B38, "ticksElapsedDuringFrame"]
+#    - [0x80068084, "videoRenderWidthInPixels"]
+#    - [0x8006808C, "fractionOfFrameBufferWidthRendered"]
+#    - [0x800920A0, "inventoryItemNameOffsets"]
+#    - [0x800942D8, "inventoryModelRefs"]
+#    - [0x800946DC, "frontendStateToSwitchTo"]
+#    - [0x800E6EE8, "npcAnimationSpeed"]
+#    - [0x800E73E0, "indoorCameraYaw"]
+#    - [0x800E73E4, "indoorCameraPitch"]
+#    - [0x80223778, "nextTrigger"]
+#    - [0x80223780, "alienWaves"]
