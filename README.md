@@ -39,13 +39,21 @@ If you did everything correctly, you'll be greeted with the following:
 build/bh.us.z64: OK
 ```
 
+Note: Currently need to change the references to func_802D4CD0 in loader.s to func_802D4CD0_18D7E0
+Not sure why this one file is problematic.
+
 ## Docker
 
-Clone this repository, place the `baserom.us.z64` at its root, and then build the Docker image.
+Clone this repository, place the `baserom.us.z64` at its root, and then build the Docker image:
+
+```sh
+docker build --no-cache -t bh-local .
+```
+
 Run the docker image with:
 
 ```sh
-docker run --rm -ti -v "$PWD:/body-harvest-decompilation" bh-local
+docker run --rm -ti -v "${PWD}:/bh" bh-local
 ```
 
 From here you can run the `make extract` and `make --jobs` commands.
