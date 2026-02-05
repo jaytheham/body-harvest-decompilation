@@ -1,0 +1,8 @@
+build-essential
+gcc-mips-linux-gnu
+less
+libglib2.0
+python3
+python3-pip
+unzip
+wget

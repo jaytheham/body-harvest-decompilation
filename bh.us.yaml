@@ -1,0 +1,247 @@
+sha1: bbb6666f5014a473747ee4145f036d9fb25d7348
+options:
+  platform: n64
+  basename: bh
+  target_path: baserom.us.z64
+  base_path: .
+  symbol_addrs_path: symbol_addrs.us.txt
+  reloc_addrs_path: reloc_addrs.us.txt
+  ld_symbol_header_path: include/ld_symbols.us.h
+  generated_c_preamble: |
+    #include <ultra64.h>
+    #include "common.h"
+  src_path: src.us
+  extensions_path: tools/splat_ext
+  lib_path: build/lib
+  # migrate_rodata_to_functions: yes
+  # workaround regex issue
+  create_undefined_funcs_auto: no
+  symbol_name_format: $VRAM_$ROM
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  image_type_in_extension: yes
+  segment_symbols_style: makerom
+segments:
+  - name: header
+    type: header
+    start: 0x0
+
+  - name: boot
+    type: bin
+    start: 0x40
+
+  - name: main
+    type: code
+    start: 0x1000
+    vram: 0x80000400
+    subsegments:
+      - [0x1000, c, main_1000]
+      - [0x53D0, asm]
+      - [0x53F0, asm]
+      - [0xAD60, asm]
+      - [0xE830, asm]
+      - [0xFB00, asm]
+      - [0xFD80, c, main_FD80]
+      - [0x10A20, asm]
+      - [0x10BC0, asm, loader] # original src filename
+      - [0x12C80, asm]
+      - [0x1B060, asm]
+      - [0x1B100, asm]
+      - [0x1B7E0, asm]
+      - [0x1BA60, asm]
+      - [0x1BA90, asm]
+      - [0x1BBE0, asm]
+      - [0x1C670, asm]
+      - [0x1C7B0, asm]
+      - [0x1C830, asm]
+      - [0x1C8E0, asm]
+      - [0x1C8F0, asm]
+      - [0x1D120, asm]
+      - [0x1D230, asm]
+      - [0x1D850, asm]
+      - [0x1D890, asm]
+      - [0x1D900, asm]
+      - [0x1DCC0, asm]
+      - [0x1DD30, asm]
+      - [0x1DDA0, asm]
+      - [0x1E1A0, asm]
+      - [0x1E2E0, asm]
+      - [0x1E540, asm]
+      - [0x1E550, asm]
+      - [0x1E7B0, asm]
+      - [0x1ECD0, asm]
+      - [0x1EF60, asm]
+      - [0x1F1F0, asm]
+      - [0x1F520, asm]
+      - [0x1F5C0, asm]
+      - [0x1F980, asm]
+      - [0x1F9F0, asm]
+      - [0x1FBD0, asm]
+      - [0x1FE70, asm]
+      - [0x1FEE0, asm]
+      - [0x1FF10, asm]
+      - [0x200D0, asm]
+      - [0x20150, asm]
+      - [0x201B0, asm]
+      - [0x202E0, asm]
+      - [0x202F0, asm]
+      - [0x20370, asm]
+      - [0x20420, asm]
+      - [0x20440, asm]
+      - [0x204A0, asm]
+      - [0x206F0, asm]
+      - [0x21920, asm]
+      - [0x22030, asm]
+      - [0x22070, asm]
+      - [0x22B30, asm]
+      - [0x22B70, asm]
+      - [0x22BB0, asm]
+      - [0x22C80, asm]
+      - [0x22D10, asm]
+      - [0x22D70, asm]
+      - [0x22DD0, asm]
+      - [0x22E30, asm]
+      - [0x22EA0, asm]
+      - [0x22F70, asm]
+      - [0x22FD0, asm]
+      - [0x23490, asm]
+      - [0x23740, asm]
+      - [0x237E0, asm]
+      - [0x23980, asm]
+      - [0x23B90, asm]
+      - [0x23C50, asm]
+      - [0x23C60, asm]
+      - [0x245B0, asm]
+      - [0x245F0, asm]
+      - [0x24A80, asm]
+      - [0x24B30, asm]
+      - [0x24C10, asm]
+      - [0x253E0, asm]
+      - [0x25480, asm]
+      - [0x26120, asm]
+      - [0x26420, asm]
+      - [0x27080, asm]
+      - [0x27190, asm]
+      - [0x273D0, asm]
+      - [0x27740, asm]
+      - [0x278B0, asm]
+      - [0x28140, asm]
+      - [0x281D0, asm]
+      - [0x282B0, asm]
+      - [0x28A90, asm]
+      - [0x28D00, asm]
+      - [0x28D90, asm]
+      - [0x28DB0, asm]
+      - [0x28E60, asm]
+      - [0x28EE0, asm]
+      - [0x28F40, asm]
+      - [0x28FA0, asm]
+      - [0x293C0, asm]
+      - [0x29500, asm]
+      - [0x29510, asm]
+      - [0x29870, asm]
+      - [0x29960, asm]
+      - [0x29A60, asm]
+      - [0x29E30, asm]
+      - [0x2BC00, asm]
+      - [0x2C010, asm]
+      - [0x2C160, asm]
+      - [0x2C1F0, asm]
+      - [0x2C420, asm]
+      - [0x2C560, asm]
+      - [0x2C5F0, asm]
+      - [0x2C690, asm]
+      - [0x2C720, asm]
+      - [0x2CFA0, asm]
+      - [0x2CFB0, asm]
+      - [0x2D2C0, asm]
+      - [0x2D2D0, asm]
+      - [0x2D310, asm]
+      - [0x2D3A0, asm]
+      - [0x2D3D0, asm]
+      - [0x2D400, asm]
+      - [0x2D420, asm]
+      - [0x2E070, asm]
+      - [0x2E0F0, asm]
+      - [0x2E120, asm]
+      - [0x2E230, asm]
+      - [0x2E240, asm]
+      - [0x2E2A0, asm]
+      - [0x2E2F0, asm]
+      - [0x2E390, asm]
+      - [0x2E3E0, asm]
+
+  - name: main_data
+    type: bin
+    start: 0x02EA10
+    vram: 0x02DE10
+
+  - name: overlay_gameplay_frontend
+    type: code
+    start: 0x40720
+    vram: 0x80070270
+    exclusive_ram_id: 80070270
+    overlay: true
+    subsegments:
+      - [0x40720, asm]
+      - [0x52690, asm]
+  - name: overlay_gameplay_frontend_data
+    type: bin
+    start: 0x060E60
+
+  - name: overlay_gameplay_outside
+    type: code
+    start: 0x7F220
+    vram: 0x80070270
+    exclusive_ram_id: 80070270
+    overlay: true
+    subsegments:
+      - [0x7F220, c, overlay_gameplay_outside_7F220]
+      - [0x82160, asm, overlay_gameplay_outside_82160]
+      - [0x857E0, asm, overlay_gameplay_outside_857E0]
+      - [0x884C0, asm, overlay_gameplay_outside_884C0]
+      - [0xA40B0, asm, overlay_gameplay_outside_A40B0]
+      - [0xA49A0, asm, overlay_gameplay_outside_A49A0]
+      - [0xAAA70, asm, overlay_gameplay_outside_AAA70]
+      - [0xB2CB0, asm, overlay_gameplay_outside_B2CB0]
+      - [0xB8290, asm, overlay_gameplay_outside_B8290]
+      - [0xBD270, asm, overlay_gameplay_outside_BD270]
+      - [0xBF9C0, asm, overlay_gameplay_outside_BF9C0]
+      - [0xCFE30, asm, overlay_gameplay_outside_CFE30]
+      - [0xF6A50, asm, overlay_gameplay_outside_F6A50]
+      - [0xF7870, asm, overlay_gameplay_outside_F7870]
+      - [0xF9230, asm, overlay_gameplay_outside_F9230]
+      - [0x124ED0, asm, overlay_gameplay_outside_124ED0]
+      - [0x13DA70, asm, overlay_gameplay_outside_13DA70]
+      - [0x1416E0, asm, overlay_gameplay_outside_1416E0]
+      - [0x145D70, asm, overlay_gameplay_outside_145D70]
+      - [0x148000, asm, overlay_gameplay_outside_148000]
+  - name: overlay_gameplay_outside_data
+    type: bin
+    start: 0x14A8A0
+
+  - name: overlay_gameplay_inside
+    type: bin
+    start: 0x158330
+
+  - name: overlay_gameplay_inside_data
+    type: bin
+    start: 0x175EB0
+
+  - name: overlay_level_greece
+    type: code
+    start: 0x18D7E0
+    vram: 0x802D4CD0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x18D7E0, asm, overlay_level_greece_18D7E0]
+
+  - name: overlay_level_greece_data
+    type: bin
+    start: 0x195C80
+
+  - name: unknown
+    type: bin
+    start: 0x196F70
+  - [0xC00000]

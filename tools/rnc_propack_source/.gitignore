@@ -1,0 +1,11 @@
+*.suo
+*.db
+*.user
+*.obj
+*.exe
+*.ilk
+*.log
+*.pdb
+*.tlog
+rnc32
+rnc64

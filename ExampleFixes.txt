@@ -1,0 +1,10 @@
+If an incorrect register is used:
+Target:
+0:    li      t8,1
+Current:
+0:    li      t0,1
+It may be that the function params are incorrectly typed:
+Orginal C:
+void func_80071148_800F8(s8 arg0, s8 arg1) {
+Correct C:
+void func_80071148_800F8(u8 arg0, u8 arg1) {

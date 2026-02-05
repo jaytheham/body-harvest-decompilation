@@ -1,32 +1,96 @@
-# bodyharvestdecomp
+# Body Harvest N64 Decompilation
 
-Decompilation of Body Harvest for the Nintendo 64.
+Help is welcome!
 
-## Setup
-Clone the repo.
-Use the .yaml to split a Body Harvest (U) ROM with [N64Split](https://github.com/queueRAM/sm64tools).
-Copy the bin folder from the split output to the repo.
-Either use the dockerfile itself, or read it to see how to setup a build environment.
-You'll need qemu-irix in the same location as the dockerfile when you build it.
+# Building
+
+The instructions below assume that you will be using `Ubuntu 22.04`; either natively, via [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10), or via [Docker](https://docs.docker.com/get-docker/).
+Please check the [packages.txt](packages.txt) and [requirements.txt](requirements.txt) for the  prerequisite Linux and Python packages respectively.
+
+## Natively
+
+Clone the repository; note the `--recursive` flag to fetch submodules at the same time:
+
+```sh
+git clone --recursive https://github.com/jaytheham/body-harvest-decompilation.git
 ```
-docker build -t n64split_build .
-docker run -it --rm -v /sm64:/app/src -w /app/src n64split_build:latest make
-```
-Where /sm64 is the shared folder on your pc where you've put the repo.
-You may need to read the instructions in the dockerfile on sharing a folder if you're running via virtualbox.
-If you get an error about qemu-irix run:
-```
-docker run -it --rm -v /sm64:/app/src -w /app/src n64split_build:latest bash
-```
-And then run make in the terminal.
-This should build a 1:1  ROM in the repo dir.
 
-## Notes
+Navigate into the freshly cloned repo
 
-Currently only two functions are written in c.
-The majority of the work is in /Decompiled where I've been rewriting functions in d.
-This isn't currently compiled into the ROM, though in theory you can compile d to MIPS if you know more than me.
+```sh
+cd body-harvest-decompilation
+```
 
-## Questions
-Why are you using a janky hack of the Super Mario 64 decomp makefile?
-I don't know any better, help is welcome, especially if you know how to setup a compiler that will compile the ld and sd operations in the ROM. I've had to change them to data in the .s file so the compiler doesn't turn them into two sw or lw.
+Place the **US** Body Harvest ROM in the root of this repository, name it `baserom.us.z64`, and then run the first `make` command to extract the ROM:
+
+```sh
+make extract
+```
+
+Now build the ROM:
+
+```sh
+make --jobs
+```
+
+If you did everything correctly, you'll be greeted with the following:
+
+```sh
+build/bh.us.z64: OK
+```
+
+## Docker
+
+Clone this repository, place the `baserom.us.z64` at its root, and then build the Docker image.
+Run the docker image with:
+
+```sh
+docker run --rm -ti -v "$PWD:/body-harvest-decompilation" bh-local
+```
+
+From here you can run the `make extract` and `make --jobs` commands.
+
+## Building `EU` Version
+
+Place `baserom.eu.z64` in the root of the repository, and suffix each `make` command with `VERSION=eu`. Note that whilst this will build the EU ROM, minimal effort has been made to decompile this version.
+
+## Building `NON_MATCHING` Version
+
+If there are any functions within the ROM that have been decompiled to a state where they are functionally equivalent, but are not a byte-perfect match. In order to build/test the non-matching, pass `NON_MATCHING=1` to the `make` commands.
+
+# ROM Versions
+
+There are 2 known versions of the ROM:
+
+| Country Code      | CRC1/CRC2           | ROM SHA1                                   | Version |
+|:------------------|:-------------------:|:------------------------------------------:|:-------:|
+| E - North America | `5326696F/FE9A99C3` | `7DF1E2890C67E1B013F1421F7C5F7859739FECFC` | `B6.5`  |
+| P - European      | `0B58B8CD/B7B291D2` | `67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355` | `F2.6`  |
+
+Only US and EU versions were released to the public. If you are in possession of a beta/prototype ROM, please let me know.
+
+# Repo layout
+
+```
+asm/             ; assembly files split by splat (not checked in)
+assets/          ; binary files split by splat (not checked in)
+build/           ; build folder (not checked in)
+include/
+  2.0I/          ; libultra 2.0I headers
+lib/libultra.a   ; libultra 2.0I static library
+src.{us|eu})/
+tools/
+  ido5.3_recomp/ ; static recompilation of IDO 5.3 compiler
+  splat_ext      ; custom splat extensions
+```
+
+# Tools
+
+ - [asm-processor](https://github.com/simonlindholm/asm-processor); allows `GLOBAL_ASM` pragma - replacing assembly inside C files
+ - [asm-differ](https://github.com/simonlindholm/asm-differ); rapidly diff between source/target assembly
+ - [decomp-permuter](https://github.com/simonlindholm/decomp-permuter); tweaks code, rebuilds, scores; helpful for weird regalloc issues
+ - [ido-static-recomp](https://github.com/Emill/ido-static-recomp); no need to use qemu-irix anymore!
+ - [m2c](https://github.com/matt-kempster/m2c); assembly to C code translator
+ - [rnc_propack_source](https://github.com/lab313ru/rnc_propack_source); open-source compressor/decompressor for RNC file format
+ - [splat](https://github.com/ethteck/splat); successor to n64split
+

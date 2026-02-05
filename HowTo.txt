@@ -1,0 +1,15 @@
+Define a c file in one of the code segments:
+
+    type: code
+    subsegments:
+      ...
+      - [0xfd80, c, main_fd80]
+      ...
+
+Now when you `make extract` there will be:
+\src.us\main_fd80.c
+and individial functions as assembly in:
+\asm\nonmatchings\main_fd80
+
+Once you have a matching decomp for one of the functions replace the appropriate `#pragma GLOBAL_ASM`
+in the .c file with the function definition.

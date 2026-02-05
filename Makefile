@@ -1,217 +1,418 @@
-# Makefile to rebuild SM64 split image
+BASENAME  = bh
+VERSION  := us
 
-### Default target ###
+# Colors
 
-default: clean all
+NO_COL  := \033[0m
+RED     := \033[0;31m
+RED2    := \033[1;31m
+GREEN   := \033[0;32m
+YELLOW  := \033[0;33m
+BLUE    := \033[0;34m
+PINK    := \033[0;35m
+CYAN    := \033[0;36m
 
-### Build Options ###
-# Version of the game to build and graphics microcode used
-# If COMPARE is 1, check the output sha1sum when building 'all'
-# If NON_MATCHING is 1, define the NON_MATCHING macro when building
-NON_MATCHING ?= 0
-# If ENDIAN_IND is 1, enable non-matching code changes that try to ensure
-# endianness independence
-ENDIAN_IND ?= 0
+# Directories
 
-# Release
+BUILD_DIR = build
+ASM_DIRS  = asm \
+            asm/libc \
+            asm/libultra/audio \
+            asm/data asm/data/libultra/audio asm/data/core asm/data/bh
+BIN_DIRS  = assets
+SRC_DIR   = src.$(VERSION)
 
-TARGET := body_harvest.u
+SRC_DIRS  = $(SRC_DIR) $(SRC_DIR)/core \
+            $(SRC_DIR)/libultra/audio $(SRC_DIR)/libultra/libc \
+            $(SRC_DIR)/bh \
+            $(SRC_DIR)/data \
+            $(SRC_DIR)/bss \
+            $(SRC_DIR)/buffers
 
-# Microcode
-
-################ Target Executable and Sources ###############
-
-# BUILD_DIR is location where all build artifacts are placed
-BUILD_DIR_BASE := build
-BUILD_DIR := $(BUILD_DIR_BASE)
-
-LIBULTRA := $(BUILD_DIR)/libultra.a
-ROM := $(TARGET).z64
-ELF := $(BUILD_DIR)/$(TARGET).elf
-LD_SCRIPT := body_harvest.u.ld
-TEXTURE_DIR := textures
-ACTOR_DIR := actors
-
-# Directories containing source files
-SRC_DIRS := src src/base
-ASM_DIRS := asm
-BIN_DIRS := bin
-
-ULTRA_SRC_DIRS := lib/src lib/src/math
-ULTRA_ASM_DIRS := lib/asm lib/data
-ULTRA_BIN_DIRS := lib/bin
-
-LEVEL_DIRS := $(patsubst levels/%,%,$(dir $(wildcard levels/*/header.s)))
-
-MIPSISET := -mips2 -32
-
-OPT_FLAGS := -O2
-
-
-# File dependencies and variables for specific files
-include Makefile.split
-
-# Source code files
-C_FILES := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
-S_FILES := $(foreach dir,$(ASM_DIRS),$(wildcard $(dir)/*.s))
-ULTRA_C_FILES := $(foreach dir,$(ULTRA_SRC_DIRS),$(wildcard $(dir)/*.c))
-ULTRA_S_FILES := $(foreach dir,$(ULTRA_ASM_DIRS),$(wildcard $(dir)/*.s))
-LEVEL_S_FILES := $(addsuffix header.s,$(addprefix bin/,$(LEVEL_DIRS)))
-SEG_IN_FILES := $(foreach dir,$(BIN_DIRS),$(wildcard $(dir)/*.s.in))
-SEG_S_FILES := $(foreach dir,$(BIN_DIRS),$(wildcard $(dir)/*.s)) \
-               $(foreach file,$(SEG_IN_FILES),$(file:.s.in=.s))
-
-# Object files
-O_FILES := $(foreach file,$(C_FILES),$(BUILD_DIR)/$(file:.c=.o)) \
-           $(foreach file,$(S_FILES),$(BUILD_DIR)/$(file:.s=.o)) \
-           $(foreach file,$(LEVEL_S_FILES),$(BUILD_DIR)/$(file:.s=.o))
-
-ULTRA_O_FILES := $(foreach file,$(ULTRA_S_FILES),$(BUILD_DIR)/$(file:.s=.o)) \
-                 $(foreach file,$(ULTRA_C_FILES),$(BUILD_DIR)/$(file:.c=.o))
-
-# Automatic dependency files
-DEP_FILES := $(O_FILES:.o=.d) $(ULTRA_O_FILES:.o=.d)
-
-# Files with NON_MATCHING ifdefs
-NON_MATCHING_C_FILES != grep -rl NON_MATCHING $(wildcard src/audio/*.c)
-NON_MATCHING_O_FILES = $(foreach file,$(NON_MATCHING_C_FILES),$(BUILD_DIR)/$(file:.c=.o))
-NON_MATCHING_DEP = $(BUILD_DIR)/src/audio/non_matching_dep
-
-# Segment elf files
-SEG_FILES := $(foreach file,$(SEG_S_FILES),$(BUILD_DIR)/$(file:.s=.elf))
-
-##################### Compiler Options #######################
-IRIX_ROOT := tools/ido5.3_compiler
-
-ifeq ($(shell type mips-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
-  CROSS := mips-linux-gnu-
-else
-  CROSS := mips64-elf-
-endif
-
-AS        := $(CROSS)as
-CC        := $(QEMU_IRIX) -silent -L $(IRIX_ROOT) $(IRIX_ROOT)/usr/bin/cc
-CPP       := cpp -P
-LD        := $(CROSS)ld
-AR        := $(CROSS)ar
-OBJDUMP   := $(CROSS)objdump
-OBJCOPY   := $(CROSS)objcopy
-
-# Check code syntax with host compiler
-CC_CHECK := gcc -fsyntax-only -fsigned-char -nostdinc -I include -I $(BUILD_DIR)/include -I src -std=gnu90 -Wall -Wextra -Wno-format-security -D_LANGUAGE_C 
-
-ASFLAGS := -march=vr4300 -mabi=32 -I include -I $(BUILD_DIR)
-CFLAGS = -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm -Xfullwarn $(OPT_FLAGS) -signed -I include -I $(BUILD_DIR)/include -I src -D_LANGUAGE_C $(MIPSISET)
-OBJCOPYFLAGS := 
-SYMBOL_LINKING_FLAGS := $(addprefix -R ,$(SEG_FILES))
-LDFLAGS := -T undefined_syms.txt -T $(LD_SCRIPT) -Map $(BUILD_DIR)/body_harvest.u.map --no-check-sections $(SYMBOL_LINKING_FLAGS)
-
-ifeq ($(shell getconf LONG_BIT), 32)
-  # Work around memory allocation bug in QEMU
-  export QEMU_GUEST_BASE := 1
-else
-  # Ensure that gcc treats the code as 32-bit
-  CC_CHECK += -m32
-endif
-
-####################### Other Tools #########################
-
-# N64 tools
 TOOLS_DIR = tools
-N64CKSUM = $(TOOLS_DIR)/n64cksum
-N64GRAPHICS = $(TOOLS_DIR)/n64graphics
-N64GRAPHICS_CI = $(TOOLS_DIR)/n64graphics_ci
-TEXTCONV = $(TOOLS_DIR)/textconv
-IPLFONTUTIL = $(TOOLS_DIR)/iplfontutil
-EMULATOR = mupen64plus
-EMU_FLAGS = --noosd
-LOADER = loader64
-LOADER_FLAGS = -vwf
-SHA1SUM = sha1sum
 
-# Make tools if out of date
-DUMMY != make -s -C tools >&2
+# Files
 
-###################### Dependency Check #####################
+S_FILES         = $(foreach dir,$(ASM_DIRS),$(wildcard $(dir)/*.s))
+C_FILES         = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+# H_FILES       = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.h))
+BIN_FILES       = $(foreach dir,$(BIN_DIRS),$(wildcard $(dir)/*.bin))
 
-BINUTILS_VER_MAJOR := $(shell $(LD) --version | grep ^GNU | sed 's/^.* //; s/\..*//g')
-BINUTILS_VER_MINOR := $(shell $(LD) --version | grep ^GNU | sed 's/^[^.]*\.//; s/\..*//g')
-BINUTILS_DEPEND := $(shell expr $(BINUTILS_VER_MAJOR) \>= 2 \& $(BINUTILS_VER_MINOR) \>= 27)
-ifeq ($(BINUTILS_DEPEND),0)
-$(error binutils version 2.27 required, version $(BINUTILS_VER_MAJOR).$(BINUTILS_VER_MINOR) detected)
+O_FILES := $(foreach file,$(S_FILES),$(BUILD_DIR)/$(file).o) \
+           $(foreach file,$(C_FILES),$(BUILD_DIR)/$(file).o) \
+           $(foreach file,$(BIN_FILES),$(BUILD_DIR)/$(file).o)
+
+LIBULTRA = lib/libultra_rom.a
+
+# Language data
+
+LANG_RNC_FILES      = $(wildcard assets/lang/*.dat.rnc)
+LANG_RNC_O_FILES    = $(foreach file,$(LANG_RNC_FILES),$(BUILD_DIR)/$(file:.dat.rnc=.dat.rnc.o))
+
+# Compressed Images
+
+RGBA16_RNC_FILES    = $(shell find assets/img/ -name "*.rgba16.rnc.png" 2> /dev/null)
+RGBA16_RNC_O_FILES  = $(foreach file,$(RGBA16_RNC_FILES),$(BUILD_DIR)/$(file:.rgba16.rnc.png=.rgba16.rnc.o))
+
+I4_RNC_FILES        = $(shell find assets/img/ -name "*.i4.rnc.png" 2> /dev/null)
+I4_RNC_O_FILES      = $(foreach file,$(I4_RNC_FILES),$(BUILD_DIR)/$(file:.i4.rnc.png=.i4.rnc.o))
+
+# Uncompressed Images
+
+RGBA16_FILES        = $(shell find assets/img/ -name "*.rgba16.png" 2> /dev/null)
+I4_FILES            = $(shell find assets/img/ -name "*.i4.png" 2> /dev/null)
+I8_FILES            = $(shell find assets/img/ -name "*.i8.png" 2> /dev/null)
+IA16_FILES          = $(shell find assets/img/ -name "*.ia16.png" 2> /dev/null)
+CI4_FILES           = $(shell find assets/img/ -name "*.ci4.png" 2> /dev/null)
+
+
+RGBA16_O_FILES      = $(foreach file,$(RGBA16_FILES),$(BUILD_DIR)/$(file:.png=.png.o))
+I4_O_FILES          = $(foreach file,$(I4_FILES),$(BUILD_DIR)/$(file:.png=.png.o))
+I8_O_FILES          = $(foreach file,$(I8_FILES),$(BUILD_DIR)/$(file:.png=.png.o))
+IA16_O_FILES        = $(foreach file,$(IA16_FILES),$(BUILD_DIR)/$(file:.png=.png.o))
+CI4_O_FILES         = $(foreach file,$(CI4_FILES),$(BUILD_DIR)/$(file:.png=.png.o))
+CI4_PAL_O_FILES     = $(foreach file,$(CI4_FILES),$(BUILD_DIR)/$(file:.ci4.png=.pal.o))
+
+# All Images
+
+IMAGE_O_FILES       = $(RGBA16_RNC_O_FILES) $(I4_RNC_O_FILES) $(RGBA16_O_FILES) $(I4_O_FILES) $(I8_O_FILES) $(IA16_O_FILES) $(CI4_O_FILES) $(CI4_PAL_O_FILES)
+
+# Generic RNC compressed files
+ALL_RNC_FILES       := $(wildcard assets/rnc*.bin) $(wildcard assets/levels/*.bin)
+ALL_RNC_EXTRACTED   := $(foreach file,$(ALL_RNC_FILES),rnc/$(file))
+ALL_RNC_COMPRESSED  := $(foreach file,$(ALL_RNC_FILES),build/$(file))
+
+RNC_FILES       := $(shell find assets/ -name "*.rnc" 2> /dev/null)
+RNC_O_FILES     := $(foreach file,$(RNC_FILES),$(BUILD_DIR)/$(file:.rnc=.rnc.o))
+
+
+# function is not included unless explicitly undefined
+UNDEFINED_SYMS  := osViGetCurrentLine
+
+# Tools
+find-command = $(shell which $(1) 2>/dev/null)
+
+CROSS    = mips-linux-gnu-
+
+AS       = $(CROSS)as
+CPP      = cpp
+LD       = $(CROSS)ld
+OBJCOPY  = $(CROSS)objcopy
+PYTHON   = python3
+GCC      = gcc
+
+XGCC     = $(CROSS)gcc
+
+# prefer clang as CC_CHECK
+ifneq (,$(call find-command,clang))
+  HOSTCC = clang
+  HOSTCC_CHECK_FLAGS = --target=i686-linux-gnu
+else
+  HOSTCC = gcc
+  HOSTCC_CHECK_FLAGS = -m32
 endif
 
-ifndef QEMU_IRIX
-$(error env variable QEMU_IRIX should point to the qemu-mips binary)
+# prefer modern gcc for data, but fall back to IDO if not available
+ifneq (,$(call find-command,$(CROSS)gcc))
+  DCC        = $(XGCC)
+  DCC_CFLAGS = $(GCC_FLAGS)
+else
+  DCC        = $(CC)
+  DCC_CFLAGS = $(CFLAGS)
 endif
 
-######################## Targets #############################
+GREP     = grep -rl
+CC       = $(TOOLS_DIR)/ido5.3_recomp/cc
+RNC64    = $(TOOLS_DIR)/rnc_propack_source/rnc64
+RNCU     = $(PYTHON) $(TOOLS_DIR)/rncu.py
+SPLAT    = $(TOOLS_DIR)/splat/split.py
+N64CRC   = $(TOOLS_DIR)/n64crc.py
 
-all: $(ROM)
+IMG_CONVERT = $(PYTHON) $(TOOLS_DIR)/image_converter.py
+
+LIBRNCU  = $(TOOLS_DIR)/librncu.so
+
+# Flags
+
+OPT_FLAGS      = -O2
+LOOP_UNROLL    =
+
+MIPSISET       = -mips2 -32
+
+INCLUDE_CFLAGS = -I . -I include -I include/2.0I -I include/libc -I assets \
+                 -I src.$(VERSION) -I src.$(VERSION)/libultra/audio
+
+ASFLAGS        = -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I include
+OBJCOPYFLAGS   = -O binary
+
+# Files requiring pre/post-processing
+GLOBAL_ASM_C_FILES := $(shell $(GREP) GLOBAL_ASM $(SRC_DIR) </dev/null 2>/dev/null)
+GLOBAL_ASM_O_FILES := $(foreach file,$(GLOBAL_ASM_C_FILES),$(BUILD_DIR)/$(file).o)
+
+
+DEFINES := -D_LANGUAGE_C -D_FINALROM -DF3DEX_GBI -DWIN32 -DSSSV -DNDEBUG
+
+ifeq ($(VERSION),us)
+DEFINES += -DVERSION_US
+endif
+ifeq ($(VERSION),eu)
+DEFINES += -DVERSION_EU
+endif
+
+VERIFY = verify
+
+ifeq ($(NON_MATCHING),1)
+DEFINES += -DNON_MATCHING
+VERIFY = no_verify
+PROGRESS_NONMATCHING = --non-matching
+endif
+
+CFLAGS := -G0 -Xfullwarn -Xcpluscomm -signed -nostdinc -non_shared -Wab,-r4300_mul
+CFLAGS += $(DEFINES)
+# ignore compiler warnings about anonymous structs
+CFLAGS += -woff 649,838
+CFLAGS += $(INCLUDE_CFLAGS)
+
+CHECK_WARNINGS := -Wall -Wextra -Wno-format-security -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-variable -Wno-missing-braces -Wno-int-conversion
+# CHECK_WARNINGS += -Wdouble-promotion
+CC_CHECK := $(HOSTCC) $(HOSTCC_CHECK_FLAGS) -fsyntax-only -fno-builtin -fsigned-char -std=gnu90 $(CHECK_WARNINGS) $(INCLUDE_CFLAGS) $(DEFINES)
+
+GCC_FLAGS := $(INCLUDE_CFLAGS) $(DEFINES)
+GCC_FLAGS += -G0 -mno-shared -march=vr4300 -mfix4300 -mabi=32 -mhard-float
+GCC_FLAGS += -mdivide-breaks -fno-stack-protector -fno-common -fno-zero-initialized-in-bss -fno-PIC -mno-abicalls -fno-strict-aliasing -fno-inline-functions -ffreestanding -fwrapv
+GCC_FLAGS += -Wall -Wextra -Wno-missing-braces
+
+TARGET     = $(BUILD_DIR)/$(BASENAME).$(VERSION)
+LD_SCRIPT  = $(BASENAME).ld
+
+LD_FLAGS   = -T $(LD_SCRIPT) -T undefined_syms.$(VERSION).txt -T undefined_syms_auto.txt
+LD_FLAGS  += -Map $(TARGET).map --no-check-sections
+
+ifeq ($(VERSION),us)
+LD_FLAGS_EXTRA  = -Lbuild/lib -lultra_rom
+LD_FLAGS_EXTRA += $(foreach sym,$(UNDEFINED_SYMS),-u $(sym))
+else
+LD_FLAGS_EXTRA  =
+endif
+
+ASM_PROCESSOR_DIR := $(TOOLS_DIR)/asm-processor
+ASM_PROCESSOR      = $(PYTHON) $(ASM_PROCESSOR_DIR)/asm_processor.py
+
+### Optimisation Overrides
+$(BUILD_DIR)/$(SRC_DIR)/main_1050.c.o: OPT_FLAGS := -O1
+# $(BUILD_DIR)/$(SRC_DIR)/core/eeprom.c.o: OPT_FLAGS := -O2
+
+$(BUILD_DIR)/$(SRC_DIR)/overlay2_6AB090.c.o: LOOP_UNROLL := -Wo,-loopunroll,0
+
+$(BUILD_DIR)/src.eu/overlay1%.c.o: OPT_FLAGS := -g
+
+### Targets
+
+default: all
+
+all: dirs $(VERIFY)
+
+dirs:
+	$(foreach dir,$(SRC_DIRS) $(ASM_DIRS) $(BIN_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+
+tools: $(RNC64) $(LIBRNCU)
+
+verify: $(TARGET).z64
+	@sha1sum --check $(BASENAME).$(VERSION).sha1
+
+no_verify: $(TARGET).z64
+	@echo "Skipping SHA1SUM check, updating CRC"
+	@$(PYTHON) $(N64CRC) $(TARGET).z64
+
+progress: dirs $(VERIFY) progress.csv
+
+splat: $(SPLAT)
+
+extract: splat tools
+	$(PYTHON) $(SPLAT) $(BASENAME).$(VERSION).yaml
+	$(PYTHON) $(TOOLS_DIR)/fixup_tlut.py
+
+decompress: $(ALL_RNC_EXTRACTED)
+
+compress: dirs $(ALL_RNC_COMPRESSED)
+	# DO NOT UNCOMMENT NEXT LINE UNTIL COMPRESSION IS MATCHING
+	#cp $(BUILD_DIR)/assets/rnc*.bin assets/
 
 clean:
-	find $(BUILD_DIR_BASE) -type f -delete
+	rm -rf build
 
-test: $(ROM)
-	$(EMULATOR) $(EMU_FLAGS) $<
-
-load: $(ROM)
-	$(LOADER) $(LOADER_FLAGS) $<
-
-libultra: $(BUILD_DIR)/libultra.a
-
-ALL_DIRS := $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS) $(ASM_DIRS) $(ULTRA_SRC_DIRS) $(ULTRA_ASM_DIRS) $(ULTRA_BIN_DIRS) $(BIN_DIRS) include)
-
-# Make sure build directory exists before compiling anything
-DUMMY != mkdir -p $(ALL_DIRS)
-
-# compressed segment generation
-$(BUILD_DIR)/bin/%.o: bin/%.s
-	$(AS) $(ASFLAGS) --no-pad-sections -o $@ $<
-
-# Rebuild files with '#ifdef NON_MATCHING' when that macro changes.
-$(NON_MATCHING_O_FILES): $(NON_MATCHING_DEP).$(NON_MATCHING)
-$(NON_MATCHING_DEP).$(NON_MATCHING):
-	@rm -f $(NON_MATCHING_DEP).*
-	touch $@
-
-$(BUILD_DIR)/lib/src/math/%.o: lib/src/math/%.c
-	@$(CC_CHECK) -MMD -MP -MT $@ -MF $(BUILD_DIR)/lib/src/math/$*.d $<
-	$(CC) -c $(CFLAGS) -o $@ $<
-	tools/patch_libultra_math $@ || rm $@
-
-$(BUILD_DIR)/%.o: %.c
-	@$(CC_CHECK) -MMD -MP -MT $@ -MF $(BUILD_DIR)/$*.d $<
-	$(CC) -c $(CFLAGS) -o $@ $<
+distclean: clean
+	rm -rf asm
+	rm -rf assets
+	rm -f *auto.txt
+	rm -f src.us/data/inc/*
 
 
-$(BUILD_DIR)/%.o: %.s
-	$(AS) $(ASFLAGS) -MD $(BUILD_DIR)/$*.d -o $@ $<
+### Recipes
 
-$(BUILD_DIR)/$(LD_SCRIPT): $(LD_SCRIPT)
-	$(CPP) -I include/ -DBUILD_DIR=$(BUILD_DIR) -o $@ $<
+$(TARGET).elf: $(BASENAME).ld $(BUILD_DIR)/$(LIBULTRA) $(O_FILES) $(LANG_RNC_O_FILES) $(IMAGE_O_FILES) $(RNC_O_FILES)
+	@$(LD) $(LD_FLAGS) $(LD_FLAGS_EXTRA) -o $@
+	@printf "[$(PINK) linker $(NO_COL)]  $<\n"
 
-$(BUILD_DIR)/libultra.a: $(ULTRA_O_FILES)
-	$(AR) rcs -o $@ $(ULTRA_O_FILES)
+ifndef PERMUTER
+$(GLOBAL_ASM_O_FILES): $(BUILD_DIR)/%.c.o: %.c include/functions.$(VERSION).h include/variables.$(VERSION).h include/structs.h
+	@$(CC_CHECK) $<
+	@printf "[$(YELLOW) syntax $(NO_COL)] $<\n"
+	@$(ASM_PROCESSOR) $(OPT_FLAGS) $< > $(BUILD_DIR)/$<
+	@$(CC) -c $(CFLAGS) $(OPT_FLAGS) $(LOOP_UNROLL) $(MIPSISET) -o $@ $(BUILD_DIR)/$<
+	@$(ASM_PROCESSOR) $(OPT_FLAGS) $< --post-process $@ \
+		--assembler "$(AS) $(ASFLAGS)" --asm-prelude $(ASM_PROCESSOR_DIR)/prelude.inc
+	@printf "[$(GREEN) ido5.3 $(NO_COL)]  $<\n"
+endif
 
-$(ELF): $(BUILD_DIR)/$(TARGET).o $(O_FILES) $(LD_SCRIPT)
-	$(LD) $(LDFLAGS) -o $@ $< $(LIBS)
+# non asm-processor recipe
+$(BUILD_DIR)/%.c.o: %.c
+	@$(CC_CHECK) $<
+	@printf "[$(YELLOW) syntax $(NO_COL)]  $<\n"
+	@$(CC) -c $(CFLAGS) $(OPT_FLAGS) $(LOOP_UNROLL) $(MIPSISET) -o $@ $<
+	@printf "[$(GREEN) ido5.3 $(NO_COL)]  $<\n"
 
-$(ROM): $(ELF)
-	$(OBJCOPY) $(OBJCOPYFLAGS) $< $(@:.z64=.bin) -O binary
-	$(N64CKSUM) $(@:.z64=.bin) $@
+# use modern gcc or IDO for data
+$(BUILD_DIR)/$(SRC_DIR)/data/%.c.o: $(SRC_DIR)/data/%.c
+	@$(DCC) -c $(DCC_CFLAGS) -o $@ $<
+	@printf "[$(GREEN)  data  $(NO_COL)]  $<\n"
 
-$(BUILD_DIR)/$(TARGET).objdump: $(ELF)
-	$(OBJDUMP) -D $< > $@
+$(BUILD_DIR)/%.s.o: %.s
+	@$(AS) $(ASFLAGS) -o $@ $<
+	@printf "[$(GREEN)   as   $(NO_COL)]  $<\n"
+
+$(BUILD_DIR)/%.bin.o: %.bin
+	@$(LD) -r -b binary -o $@ $<
+	@printf "[$(PINK) linker $(NO_COL)]  $<\n"
+
+$(TARGET).bin: $(TARGET).elf
+	@$(OBJCOPY) $(OBJCOPYFLAGS) $< $@
+	@printf "[$(CYAN) objcpy $(NO_COL)]  $<\n"
+
+$(TARGET).z64: $(TARGET).bin
+	@cp $< $@
+
+$(BUILD_DIR)/$(LIBULTRA): $(LIBULTRA)
+	@mkdir -p $$(dirname $@)
+	@cp $< $@
+	@$(PYTHON) $(TOOLS_DIR)/set_o32abi_bit.py --quiet $@
+
+rnc/%.bin: %.bin
+	@mkdir -p rnc/assets/levels
+	@$(RNCU) $< $@
+	@printf "[$(RED) rnc u. $(NO_COL)]  $<\n"
+
+$(RNC64): $(TOOLS_DIR)/rnc_propack_source/main.c
+	make -C $(TOOLS_DIR)/rnc_propack_source rnc64
+
+$(LIBRNCU): $(TOOLS_DIR)/rncu.c
+	$(HOSTCC) -o $@ $< --shared -O3 -fPIC
+
+# language files
+%.dat.rnc.json: %.dat.rnc
+	@mkdir -p $$(dirname $@)
+	@$(PYTHON) $(TOOLS_DIR)/lang2json.py $< $@
+	@printf "[$(YELLOW)  lang  $(NO_COL)]  $<\n"
+
+$(BUILD_DIR)/%.dat: %.dat.rnc.json
+	@mkdir -p $$(dirname $@)
+	@$(PYTHON) $(TOOLS_DIR)/lang2json.py $< $@ --encode
+	@printf "[$(RED2)  lang  $(NO_COL)]  $<\n"
+
+# compressed images
+$(BUILD_DIR)/%.rgba16: %.rgba16.rnc.png
+	@mkdir -p $$(dirname $@)
+	@$(IMG_CONVERT) rgba16 $< $@
+	@printf "[$(GREEN) rgba16 $(NO_COL)]  $<\n"
+
+$(BUILD_DIR)/%.i4: %.i4.rnc.png
+	@mkdir -p $$(dirname $@)
+	@$(IMG_CONVERT) i4 $< $@
+	@printf "[$(GREEN)   i4   $(NO_COL)]  $<\n"
+
+# uncompressed images
+$(BUILD_DIR)/%.rgba16.png: %.rgba16.png
+	@mkdir -p $$(dirname $@)
+	@$(IMG_CONVERT) rgba16 $< $@
+	@printf "[$(GREEN) rgba16 $(NO_COL)]  $<\n"
+
+$(BUILD_DIR)/%.i4.png: %.i4.png
+	@mkdir -p $$(dirname $@)
+	@$(IMG_CONVERT) i4 $< $@
+	@printf "[$(GREEN)   i4   $(NO_COL)]  $<\n"
+
+$(BUILD_DIR)/%.i8.png: %.i8.png
+	@mkdir -p $$(dirname $@)
+	@$(IMG_CONVERT) i8 $< $@
+	@printf "[$(GREEN)   i8   $(NO_COL)]  $<\n"
+
+$(BUILD_DIR)/%.ia16.png: %.ia16.png
+	@mkdir -p $$(dirname $@)
+	@$(IMG_CONVERT) ia16 $< $@
+	@printf "[$(GREEN)  ia16  $(NO_COL)]  $<\n"
+
+$(BUILD_DIR)/%.ci4.png: %.ci4.png
+	@mkdir -p $$(dirname $@)
+	@$(IMG_CONVERT) ci4 $< $@
+	@printf "[$(GREEN)  ci4   $(NO_COL)]  $<\n"
+
+$(BUILD_DIR)/%.pal: %.ci4.png
+	@mkdir -p $$(dirname $@)
+	@$(IMG_CONVERT) palette $< $@
+	@printf "[$(GREEN)  pal   $(NO_COL)]  $<\n"
+
+# BUILD_DIR prefix to suppress circular dependency
+$(BUILD_DIR)/%.png.o: $(BUILD_DIR)/%.png
+	@$(LD) -r -b binary -o $@ $<
+	@printf "[$(PINK) linker $(NO_COL)]  $<\n"
+
+$(BUILD_DIR)/%.pal.o: $(BUILD_DIR)/%.pal
+	@$(LD) -r -b binary -o $@ $<
+	@printf "[$(PINK) linker $(NO_COL)]  $<\n"
 
 
+# rnc compress
+%.rnc: %
+	@$(RNC64) p $< $@ /f >/dev/null
+	@$(PYTHON) $(TOOLS_DIR)/pad.py $@ $@.pad
+	@mv $@.pad $@
+	@printf "[$(RED) rnc p. $(NO_COL)]  $<\n"
 
-.PHONY: all clean default diff test load libultra
-.PRECIOUS: $(BUILD_DIR)/bin/%.elf
+$(BUILD_DIR)/%.collision.rnc: %.collision.rnc
+	@$(RNC64) p $< $@ /f >/dev/null
+	@$(PYTHON) $(TOOLS_DIR)/pad.py $@ $@.pad
+	@mv $@.pad $@
+	@printf "[$(RED) rnc p. $(NO_COL)]  $<\n"
 
-# Remove built-in rules, to improve performance
-MAKEFLAGS += --no-builtin-rules
+%.rnc.o: %.rnc
+	@$(LD) -r -b binary -o $@ $<
+	@printf "[$(PINK) linker $(NO_COL)]  $<\n"
 
--include $(DEP_FILES)
+# progress
+progress.csv: progress.main.csv progress.overlay1.csv
+	@awk "(NR == 1) || (FNR > 1)" $^ > $@
+	@rm $^
 
-print-% : ; $(info $* is a $(flavor $*) variable set to [$($*)]) @true
+progress.main.csv: $(TARGET).elf
+	$(PYTHON) $(TOOLS_DIR)/progress.py . $(TARGET).map _mainSegmentTextStart main_libultra_start_OFFSET main --version $(VERSION) $(PROGRESS_NONMATCHING) > $@
+#progress.lib.csv: $(TARGET).elf
+#	$(PYTHON) $(TOOLS_DIR)/progress.py . $(TARGET).map main_libultra_start_OFFSET _mainSegmentTextEnd lib --version $(VERSION) $(PROGRESS_NONMATCHING) > $@
+progress.overlay_frontend.csv: $(TARGET).elf
+	$(PYTHON) $(TOOLS_DIR)/progress.py . $(TARGET).map _overlay1SegmentTextStart _overlay1SegmentTextEnd overlay_frontend --version $(VERSION) $(PROGRESS_NONMATCHING) > $@
+#progress.overlay2.csv: $(TARGET).elf
+#	$(PYTHON) $(TOOLS_DIR)/progress.py . $(TARGET).map _overlay2SegmentTextStart _overlay2SegmentTextEnd overlay2 --version $(VERSION) $(PROGRESS_NONMATCHING) > $@
+
+# fake targets for better error handling
+$(SPLAT):
+	$(info Repo cloned without submodules, attempting to fetch them now...)
+	@which git >/dev/null || echo "ERROR: git binary not found on PATH"
+	@which git >/dev/null
+	git submodule update --init --recursive
+
+baserom.$(VERSION).z64:
+	$(error Place the BH ROM, named '$@', in the root of this repo and try again.)
+
+### Settings
+.SECONDARY:
+.PHONY: all clean default
+SHELL = /bin/bash -e -o pipefail

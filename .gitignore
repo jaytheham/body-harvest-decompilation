@@ -1,0 +1,37 @@
+# directories
+
+__pycache__/
+asm/
+assets/
+bin/
+build/
+expected/
+junk/
+jupyter/
+levels/
+nonmatchings/
+py/
+rnc/
+rodata/
+
+
+# symlinks
+
+src
+
+# files
+
+*.ld
+*auto.txt
+*.o
+*.ok
+.splat_cache
+*.bin
+*.z64
+progress*.csv
+*.inc.c
+*.ply
+ctx.c
+ctx.c.m2c
+pah.conf
+.vscode/
