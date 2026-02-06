@@ -69,7 +69,15 @@ void func_80071178_80128(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay_outside_7F220/func_80071228_801D8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay_outside_7F220/func_80071E88_80E38.s")
+void func_80071E88_80E38(UnkArg1* arg0) {
+    D_80149430 = (s16) arg0->unkC;
+    D_80149432 = (s16) arg0->unk14;
+    D_80149434 = arg0->unk3C;
+    D_80149436 = arg0->unk3E;
+    D_80047954 = (f32) arg0->unk0 * 0.25;
+    D_80047958 = (f32) arg0->unk4 * 0.25;
+    D_8004795C = (f32) arg0->unk8 * 0.25;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay_outside_7F220/func_80071F28_80ED8.s")
 

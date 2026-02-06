@@ -7,6 +7,18 @@ typedef struct {
 } UnkArg0;
 
 typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    u8 pad[4];
+    f32 unk14;
+    u8 pad2[0x24];
+    s16 unk3C;
+    s16 unk3E;
+} UnkArg1;
+
+typedef struct {
     char pad0[0x34];
     s16 unk34;
     char pad1[0x02];

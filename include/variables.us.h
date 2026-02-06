@@ -15,10 +15,15 @@ extern u32 D_8004768C;
 extern u32 D_80047690;
 extern u32 D_80047698;
 extern s16 D_800476A2;
+extern f32 D_80047954;
+extern f32 D_80047958;
+extern f32 D_8004795C;
 extern u32 D_80052ADC;
 extern Unk80052B2C* D_80052B2C;
 extern s32 D_80052B34;
 
+extern s16 D_80149430;
+extern s16 D_80149432;
 extern s16 D_80149434;
 extern s16 D_80149436;
 extern s16 D_80149440;
