@@ -16,9 +16,20 @@ s32 func_80070270_7F220(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay_outside_7F220/func_800702C0_7F270.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay_outside_7F220/func_800703B0_7F360.s")
+s32 func_800703B0_7F360(s16 arg0, s16 arg1) {
+    s32 var_v1;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay_outside_7F220/func_80070420_7F3D0.s")
+    var_v1 = 
+        arg0 >= (D_80149434 - 0x800) &&
+        arg1 >= (D_80149436 - 0x900) &&
+        (D_80149434 + 0x700) >= arg0 &&
+        (D_80149436 + 0x700) >= arg1;
+    return var_v1;
+}
+
+void func_80070420_7F3D0(UnkArg0* arg0) {
+    func_8007679C_8574C(arg0->unk9);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay_outside_7F220/func_80070440_7F3F0.s")
 
@@ -62,6 +73,10 @@ void func_80071178_80128(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay_outside_7F220/func_80071F28_80ED8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay_outside_7F220/func_800720B8_81068.s")
+void func_800720B8_81068(void) {
+    D_80052B34 = D_80052B2C->unk38;
+    D_80149440 = D_80052B2C->unk34;
+    func_80071228_801D8();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay_outside_7F220/func_800720F4_810A4.s")
