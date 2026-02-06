@@ -30,7 +30,7 @@ void checkForRumblePak(void) {
 	D_80047688 = 0;
 	D_8004768C = 0;
 	D_80047690 = 0;
-	D_80047698 = D_80052ADC;
+	D_80047698 = gameplayMode;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main_1000/func_80000ED4_1AD4.s")

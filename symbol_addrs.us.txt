@@ -1,4 +1,6 @@
 
+gameplayMode = 0x80052ADC;
+
 checkForRumblePak = 0x80000E40;
 validateSaveVersionAndChecksum = 0x80001624;
 guess_prepareToSaveGame = 0x80001AA4;

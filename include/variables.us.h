@@ -3,6 +3,26 @@
 
 #include "PR/sched.h"
 
+typedef enum GameplayMode {
+    LevelMap = 0,
+    Unk1 = 1,
+    Unk2 = 2,
+    Unk3 = 3,
+    Unk4 = 4,
+    Unk5 = 5,
+    Unk6 = 6,
+    Unk7 = 7,
+    Unk8 = 8,
+    Unk9 = 9,
+    EndOfLevel = 0xA,
+    UnkB = 0xB,
+    UnkC = 0xC,
+    UnkD = 0xD,
+    UnkE = 0xE,
+    UnkF = 0xF,
+    Inventory = 0x10
+} GameplayMode;
+
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
 extern OSMesgQueue D_80036840;
@@ -18,7 +38,7 @@ extern s16 D_800476A2;
 extern f32 D_80047954;
 extern f32 D_80047958;
 extern f32 D_8004795C;
-extern u32 D_80052ADC;
+extern GameplayMode gameplayMode;
 extern Unk80052B2C* D_80052B2C;
 extern s32 D_80052B34;
 
