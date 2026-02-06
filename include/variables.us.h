@@ -50,6 +50,8 @@ extern f32 D_8004795C;
 extern s32 D_8004D148;
 extern Level currentLevel;
 extern GameplayMode gameplayMode;
+extern s16 D_80052AC8;
+extern s32 D_80052AD0;
 extern Unk80052B2C* D_80052B2C;
 extern s32 D_80052B34;
 

@@ -4,9 +4,46 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800731B0_82160.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800732C8_82278.s")
+// func_800732C8_82278
+void enableCheatFarewell() {
+    D_80052AC8 = 2;
+    D_80052AD0 = 0;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800732E0_82290.s")
+// func_800732E0_82290
+void enableCheatArsenal() {
+    func_801391DC_14818C(5, 0x3E7); // a0 = itemId, a1 = quantity. Machine gun
+    if (currentLevel == LEVEL_GREECE) {
+        func_801391DC_14818C(7, 3); // T. N. T.
+        func_801391DC_14818C(8, -0x8000); // Sunshield
+        func_801391DC_14818C(0xA, 0x64); // Tri-Spinner
+        return;
+    }
+    if (currentLevel == LEVEL_JAVA) {
+        func_801391DC_14818C(3, 0x64);
+        func_801391DC_14818C(4, 0x32);
+        func_801391DC_14818C(9, 0x14);
+        func_801391DC_14818C(0xA, 0x64);
+        return;
+    }
+    if (currentLevel == LEVEL_AMERICA) {
+        func_801391DC_14818C(3, 0x64);
+        func_801391DC_14818C(4, 0x32);
+        func_801391DC_14818C(0xA, 0x64);
+        return;
+    }
+    if (currentLevel == LEVEL_SIBERIA) {
+        func_801391DC_14818C(3, 0x64);
+        func_801391DC_14818C(4, 0x32);
+        func_801391DC_14818C(6, 0x19);
+        func_801391DC_14818C(0xA, 0x64);
+        return;
+    }
+    func_801391DC_14818C(3, 0x64);
+    func_801391DC_14818C(4, 0x32);
+    func_801391DC_14818C(6, 0x19);
+    func_801391DC_14818C(7, 3);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073428_823D8.s")
 
