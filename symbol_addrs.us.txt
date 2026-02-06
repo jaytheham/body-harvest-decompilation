@@ -1,4 +1,5 @@
 
+currentLevel = 0x80047F90;
 gameplayMode = 0x80052ADC;
 
 checkForRumblePak = 0x80000E40;

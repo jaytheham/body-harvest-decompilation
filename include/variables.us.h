@@ -4,30 +4,39 @@
 #include "PR/sched.h"
 
 typedef enum GameplayMode {
-    LevelMap = 0,
-    Unk1 = 1,
-    Unk2 = 2,
-    Unk3 = 3,
-    Unk4 = 4,
-    Unk5 = 5,
-    Unk6 = 6,
-    Unk7 = 7,
-    Unk8 = 8,
-    Unk9 = 9,
-    EndOfLevel = 0xA,
-    UnkB = 0xB,
-    UnkC = 0xC,
-    UnkD = 0xD,
-    UnkE = 0xE,
-    UnkF = 0xF,
-    Inventory = 0x10
+    GAMEPLAY_MODE_LEVEL_MAP = 0,
+    GAMEPLAY_MODE_UNK1 = 1,
+    GAMEPLAY_MODE_UNK2 = 2,
+    GAMEPLAY_MODE_UNK3 = 3,
+    GAMEPLAY_MODE_UNK4 = 4,
+    GAMEPLAY_MODE_UNK5 = 5,
+    GAMEPLAY_MODE_UNK6 = 6,
+    GAMEPLAY_MODE_UNK7 = 7,
+    GAMEPLAY_MODE_UNK8 = 8,
+    GAMEPLAY_MODE_UNK9 = 9,
+    GAMEPLAY_MODE_END_OF_LEVEL = 0xA,
+    GAMEPLAY_MODE_UNKB = 0xB,
+    GAMEPLAY_MODE_UNKC = 0xC,
+    GAMEPLAY_MODE_UNKD = 0xD,
+    GAMEPLAY_MODE_UNKE = 0xE,
+    GAMEPLAY_MODE_UNKF = 0xF,
+    GAMEPLAY_MODE_INVENTORY = 0x10
 } GameplayMode;
+
+typedef enum Level {
+    LEVEL_GREECE = 1,
+    LEVEL_JAVA = 2,
+    LEVEL_AMERICA = 3,
+    LEVEL_SIBERIA = 4,
+    LEVEL_COMET = 5
+} Level;
 
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
 extern OSMesgQueue D_80036840;
 extern u8 D_80047678;
 extern u32 D_800313CC;
+extern u16 D_80047588;
 extern u32 D_8004767C;
 extern u32 D_80047680;
 extern u32 D_80047688;
@@ -38,10 +47,13 @@ extern s16 D_800476A2;
 extern f32 D_80047954;
 extern f32 D_80047958;
 extern f32 D_8004795C;
+extern s32 D_8004D148;
+extern Level currentLevel;
 extern GameplayMode gameplayMode;
 extern Unk80052B2C* D_80052B2C;
 extern s32 D_80052B34;
 
+extern s16 D_80149406;
 extern s16 D_80149430;
 extern s16 D_80149432;
 extern s16 D_80149434;
@@ -51,5 +63,6 @@ extern u8 D_80149448;
 extern u8 D_80149449;
 extern u8 D_8014944A;
 extern u8 D_8014944B;
+extern s16 D_80159260;
 
 #endif
