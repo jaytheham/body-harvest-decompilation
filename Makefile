@@ -18,13 +18,13 @@ BUILD_DIR = build
 ASM_DIRS  = asm \
             asm/libc \
             asm/libultra/audio \
-            asm/data asm/data/libultra/audio asm/data/core asm/data/bh
+            asm/data asm/data/libultra/audio asm/overlay_gameplay/outside
 BIN_DIRS  = assets
 SRC_DIR   = src.$(VERSION)
 
 SRC_DIRS  = $(SRC_DIR) $(SRC_DIR)/core \
             $(SRC_DIR)/libultra/audio $(SRC_DIR)/libultra/libc \
-            $(SRC_DIR)/bh \
+            $(SRC_DIR)/overlay_gameplay/outside \
             $(SRC_DIR)/data \
             $(SRC_DIR)/bss \
             $(SRC_DIR)/buffers
