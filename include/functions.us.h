@@ -44,5 +44,7 @@ void func_800BED30_CDCE0(void);
 // Functions from cheats.c
 void func_80124118_1330C8(void *, s16);
 void func_800EA2BC_F926C(void);
+void func_8007622C_851DC(void (*fn)(void));
+void func_800734AC_8245C(void);
 
 #endif

@@ -1,26 +1,16 @@
-Your job is to decompile N64 assembly functions from the `asm/nonmatchings/` directory into C code, ensuring functional equivalence. The final goal is a byte-perfect matche. Follow the workflow outlined below to systematically approach each function.
+Your job is to decompile N64 assembly functions from the `asm/nonmatchings/` directory into C code, ensuring functional equivalence. The final goal is c code that will compile to the _exact_ same assembly as the original. Follow the workflow outlined below to systematically approach each function.
 
 # Decompilation & Matching Workflow
 
 ## Overview
 
-Convert an assembly function from `asm/nonmatchings/` to C code, compile it using IDO 5.3 in Docker, and compare the output against the original assembly.
+Convert an assembly function from `asm/nonmatchings/` to C code, compile it using IDO 5.3 in Docker, and compare the output against the original assembly. Update the C code iteratively until it produces byte-for-byte identical assembly.
 
-## Prerequisites
-
-- Docker container running with ID: `b3619d5e5b69c8a44ca914f1925110d8e87e334595f9eff7dce3ac854f4d6a1e`
-- Repository cloned with all submodules
-- `baserom.us.z64` present in repo root
+Create a todo list of the following steps and mark them off as you complete them:
 
 ## Step 1: Select Target Function
 
-Choose an assembly file from `asm/nonmatchings/` (e.g., `asm/nonmatchings/main_1000/isButtonNewlyPressed.s`).
-
-Record:
-
-- **Function name**: `isButtonNewlyPressed`
-- **Source file**: `src.us/main_1000.c`
-- **ASM file path**: `asm/nonmatchings/main_1000/isButtonNewlyPressed.s`
+Look up the named assembly function.
 
 ## Step 2: Analyze the Original Assembly
 
@@ -71,7 +61,7 @@ int isButtonNewlyPressed(int idx, unsigned int mask) {
 #pragma GLOBAL_ASM("asm/nonmatchings/main_1000/func_800035D8_41D8.s")
 ```
 
-## Step 5: Declare External Data Symbols
+## Step 5: Declare External Symbols
 
 Check `include/variables.us.h` for declarations of data symbols used by the function (e.g., `D_80047588`, `D_800475E0`).
 
@@ -80,6 +70,10 @@ If missing, add `extern` declarations:
 ```c
 extern u16 D_800475E0;
 ```
+
+Check `include/structs.h` for relevant struct definitions. If needed, add new struct definitions to match the data layout accessed by the function.
+
+Check `include/functions.us.h` for declarations of any functions called by the target function. If missing, add declarations.
 
 ## Step 6: Build in Docker
 
