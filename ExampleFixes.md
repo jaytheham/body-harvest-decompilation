@@ -18,3 +18,7 @@ It may be that the function params are incorrectly typed:
 ### v0
 
 If v0 is being used for a variable and should not be, the function may need to return a value - which should use v0.
+
+Loading and checking of a value being optimised away because it's known at compile time? Can prevent that by altering the value:
+u8 continueOn = 1;
+continueOn &= 1;

@@ -19,6 +19,11 @@ typedef struct {
 } UnkArg1;
 
 typedef struct {
+    u8 pad[0x20];
+    u16 unk20;
+} Unk80052B34;
+
+typedef struct {
     char pad0[0x34];
     s16 unk34;
     char pad1[0x02];

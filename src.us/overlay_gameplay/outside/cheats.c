@@ -51,37 +51,62 @@ void enableCheatArsenal() {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_8007364C_825FC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073670_82620.s")
+void func_80073670_82620() {
+    D_8004D148 = 0;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_8007367C_8262C.s")
+void func_8007367C_8262C() {
+    D_8004D148 = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_8007368C_8263C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_8007377C_8272C.s")
+void func_8007377C_8272C() {
+    D_80052ACD ^= 4;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073794_82744.s")
+void func_80073794_82744() {
+    D_80047FA0 = 5;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800737A4_82754.s")
+void func_800737A4_82754() {
+    D_80159320 ^= 0x80;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800737BC_8276C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073814_827C4.s")
+void func_80073814_827C4() {
+    func_80124118_1330C8(D_80052B34, 0x7FFF);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_8007383C_827EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_8007391C_828CC.s")
+void func_8007391C_828CC() {
+    D_80052ACD ^= 2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073934_828E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800739B8_82968.s")
+void func_800739B8_82968() {
+    D_80157A3C = 0x68;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800739C8_82978.s")
+void func_800739C8_82978() {
+    D_80157A3C = 0x22;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800739D8_82988.s")
+void func_800739D8_82988() {
+    func_800EA2BC_F926C();
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800739F8_829A8.s")
+void func_800739F8_829A8() {
+    D_8013FCD0 = 1;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073A08_829B8.s")
+void func_80073A08_829B8() {
+    s32 x = D_8013BD04;
+    D_8013BD04 = x == 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073A20_829D0.s")
 
