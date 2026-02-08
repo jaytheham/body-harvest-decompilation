@@ -49,7 +49,12 @@ void enableCheatArsenal() {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800734AC_8245C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_8007364C_825FC.s")
+extern void func_8007622C_851DC(void (*fn)(void));
+extern void func_800734AC_8245C(void);
+
+void func_8007364C_825FC(void) {
+    func_8007622C_851DC(func_800734AC_8245C);
+}
 
 void func_80073670_82620() {
     D_8004D148 = 0;
