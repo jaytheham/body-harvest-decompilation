@@ -5,7 +5,7 @@ Help is welcome!
 # Building
 
 The instructions below assume that you will be using `Ubuntu 22.04`; either natively, via [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10), or via [Docker](https://docs.docker.com/get-docker/).
-Please check the [packages.txt](packages.txt) and [requirements.txt](requirements.txt) for the  prerequisite Linux and Python packages respectively.
+Please check the [packages.txt](packages.txt) and [requirements.txt](requirements.txt) for the prerequisite Linux and Python packages respectively.
 
 ## Natively
 
@@ -70,9 +70,9 @@ If there are any functions within the ROM that have been decompiled to a state w
 
 There are 2 known versions of the ROM:
 
-| Country Code      | CRC1/CRC2           | ROM SHA1                                   | Version |
-|:------------------|:-------------------:|:------------------------------------------:|:-------:|
-| E - North America | `5326696F/FE9A99C3` | `7DF1E2890C67E1B013F1421F7C5F7859739FECFC` | `B6.5`  |
+| Country Code      |      CRC1/CRC2      |                  ROM SHA1                  | Version |
+| :---------------- | :-----------------: | :----------------------------------------: | :-----: |
+| E - North America | `5326696F/FE9A99C3` | `BBB6666F5014A473747EE4145F036D9FB25D7348` | `B6.5`  |
 | P - European      | `0B58B8CD/B7B291D2` | `67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355` | `F2.6`  |
 
 Only US and EU versions were released to the public. If you are in possession of a beta/prototype ROM, please let me know.
@@ -94,11 +94,10 @@ tools/
 
 # Tools
 
- - [asm-processor](https://github.com/simonlindholm/asm-processor); allows `GLOBAL_ASM` pragma - replacing assembly inside C files
- - [asm-differ](https://github.com/simonlindholm/asm-differ); rapidly diff between source/target assembly
- - [decomp-permuter](https://github.com/simonlindholm/decomp-permuter); tweaks code, rebuilds, scores; helpful for weird regalloc issues
- - [ido-static-recomp](https://github.com/Emill/ido-static-recomp); no need to use qemu-irix anymore!
- - [m2c](https://github.com/matt-kempster/m2c); assembly to C code translator
- - [rnc_propack_source](https://github.com/lab313ru/rnc_propack_source); open-source compressor/decompressor for RNC file format
- - [splat](https://github.com/ethteck/splat); successor to n64split
-
+- [asm-processor](https://github.com/simonlindholm/asm-processor); allows `GLOBAL_ASM` pragma - replacing assembly inside C files
+- [asm-differ](https://github.com/simonlindholm/asm-differ); rapidly diff between source/target assembly
+- [decomp-permuter](https://github.com/simonlindholm/decomp-permuter); tweaks code, rebuilds, scores; helpful for weird regalloc issues
+- [ido-static-recomp](https://github.com/Emill/ido-static-recomp); no need to use qemu-irix anymore!
+- [m2c](https://github.com/matt-kempster/m2c); assembly to C code translator
+- [rnc_propack_source](https://github.com/lab313ru/rnc_propack_source); open-source compressor/decompressor for RNC file format
+- [splat](https://github.com/ethteck/splat); successor to n64split
