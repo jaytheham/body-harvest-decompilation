@@ -16,7 +16,7 @@ void func_800720F4_810A4(void);
 void func_8007679C_8574C(s16);
 void func_800710D4_80084(u8, u8, u8, void *);
 void func_80071228_801D8(void);
-void func_801052E8_114298(void *, void *);
+void func_801052E8_114298(void *, Unk80047588 *);
 void func_800BDDCC_CCD7C(void);
 void func_800074F4_80F4(void);
 void func_800BD8B8_CC868(void);
@@ -49,5 +49,6 @@ void func_800734AC_8245C(void);
 void func_800E5CF4_F4CA4(u8, u8);
 void func_800E5E3C_F4DEC(u8, u8);
 void func_800A8A68_B7A18(s16, s16, s16, u8);
+void func_800FD410_10C3C0(VehicleSpec*, VehicleSpec*);
 
 #endif

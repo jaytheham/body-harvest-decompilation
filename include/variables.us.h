@@ -36,7 +36,7 @@ extern OSPfs D_80047610;
 extern OSMesgQueue D_80036840;
 extern u8 D_80047678;
 extern u32 D_800313CC;
-extern u16 D_80047588;
+extern Unk80047588 D_80047588;
 extern u32 D_8004767C;
 extern u32 D_80047680;
 extern u32 D_80047688;
@@ -75,5 +75,7 @@ extern u8 D_8014944B;
 extern s16 D_80157A3C;
 extern s16 D_80159260;
 extern s32 D_80159320;
+
+extern VehicleSpec D_80257A00; // is an array
 
 #endif
