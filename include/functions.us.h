@@ -46,5 +46,7 @@ void func_80124118_1330C8(void *, s16);
 void func_800EA2BC_F926C(void);
 void func_8007622C_851DC(void (*fn)(void));
 void func_800734AC_8245C(void);
+void func_800E5CF4_F4CA4(u8, u8);
+void func_800E5E3C_F4DEC(u8, u8);
 
 #endif

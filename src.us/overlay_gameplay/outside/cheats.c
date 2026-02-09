@@ -75,7 +75,13 @@ void func_800737A4_82754() {
     D_80159320 ^= 0x80;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800737BC_8276C.s")
+void func_800737BC_8276C(void) {
+    if (!(D_80052B34->unk20 & 0x80)) {
+        func_800E5CF4_F4CA4(2, D_80149441);
+        return;
+    }
+    func_800E5E3C_F4DEC(2, D_80149441);
+}
 
 void func_80073814_827C4() {
     func_80124118_1330C8(D_80052B34, 0x7FFF);
