@@ -61,7 +61,12 @@ void func_8007367C_8262C() {
     D_8004D148 = 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_8007368C_8263C.s")
+void func_8007368C_8263C(void) {
+    func_800A8A68_B7A18((s16) (D_80052B34->unk0 + 0x64), (s16) (D_80052B34->unk2 - 0xFA), D_80052B34->unk4, 0x15);
+    func_800A8A68_B7A18((s16) (D_80052B34->unk0 + 0x64), (s16) (D_80052B34->unk2 + 0xFA), D_80052B34->unk4, 0x17);
+    func_800A8A68_B7A18((s16) (D_80052B34->unk0 - 0xC8), (s16) (D_80052B34->unk2 - 0xC8), D_80052B34->unk4, 0x18);
+    func_800A8A68_B7A18((s16) (D_80052B34->unk0 - 0xC8), (s16) (D_80052B34->unk2 + 0xC8), D_80052B34->unk4, 0x19);
+}
 
 void func_8007377C_8272C() {
     D_80052ACD ^= 4;
