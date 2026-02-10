@@ -298,7 +298,7 @@ extern Addr overlay_gameplay_outside_F7870_s;
 extern Addr overlay_gameplay_outside_F9230_s;
 extern Addr overlay_gameplay_outside_cheats_c;
 extern Addr overlay_gameplay_outside_data_bin;
-extern Addr overlay_gameplay_outside_missions_s;
+extern Addr overlay_gameplay_outside_missions_c;
 extern Addr overlay_level_greece_18D7E0_s;
 extern Addr overlay_level_greece_data_bin;
 extern Addr unknown_bin;
