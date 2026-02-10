@@ -45,10 +45,10 @@ void enableCheatArsenal() {
     func_801391DC_14818C(7, 3);
 }
 
-void func_80073428_823D8() {
-    D_80052B34->unk1C = (u16) (&D_80257A00 + D_80052B34->unk1A)->hitPoints;
-    D_80052B34->unk3C = (s16) ((&D_80257A00 + D_80052B34->unk1A)->unk61 << 8);
-    func_800FD410_10C3C0(&D_80257A00 + D_80052B34->unk1A, &D_80257A00);
+void func_80073428_823D8() {   
+    D_80052B34->unk1C = (u16) D_80257A00[D_80052B34->unk1A].hitPoints;
+    D_80052B34->unk3C = (s16) (D_80257A00[D_80052B34->unk1A].unk61 << 8);
+    func_800FD410_10C3C0(&(D_80257A00[D_80052B34->unk1A]), &D_80257A00[0]);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800734AC_8245C.s")

@@ -76,6 +76,6 @@ extern s16 D_80157A3C;
 extern s16 D_80159260;
 extern s32 D_80159320;
 
-extern VehicleSpec D_80257A00; // is an array
+extern VehicleSpec D_80257A00[0x14];
 
 #endif
