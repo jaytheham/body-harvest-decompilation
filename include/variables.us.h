@@ -3,6 +3,24 @@
 
 #include "PR/sched.h"
 
+typedef enum Buttons {
+    BUTTON_NONE = 0,
+    BUTTON_D_RIGHT = 0x0100,
+    BUTTON_D_LEFT = 0x0200,
+    BUTTON_D_DOWN = 0x0400,
+    BUTTON_D_UP = 0x0800,
+    BUTTON_START = 0x1000,
+    BUTTON_Z = 0x2000,
+    BUTTON_B = 0x4000,
+    BUTTON_A = 0x8000,
+    BUTTON_C_RIGHT = 0x0001,
+    BUTTON_C_LEFT = 0x0002,
+    BUTTON_C_DOWN = 0x0004,
+    BUTTON_C_UP = 0x0008,
+    BUTTON_R = 0x0010,
+    BUTTON_L = 0x0020
+} Buttons;
+
 typedef enum GameplayMode {
     GAMEPLAY_MODE_LEVEL_MAP = 0,
     GAMEPLAY_MODE_UNK1 = 1,
@@ -44,11 +62,13 @@ extern u32 D_8004768C;
 extern u32 D_80047690;
 extern u32 D_80047698;
 extern s16 D_800476A2;
+extern u8 D_8004794C;
 extern f32 D_80047954;
 extern f32 D_80047958;
 extern f32 D_8004795C;
 extern Level currentLevel; // 80047f90
 extern s32 D_80047FA0;
+extern s32 D_80048188;
 extern s32 D_8004D148;
 extern s32 D_8004D150;
 extern u8 D_8004D160;
@@ -78,6 +98,7 @@ extern s32 D_80149B44;
 extern s16 D_80157A3C;
 extern s16 D_80159260;
 extern s32 D_80159320;
+extern s16 D_8015FAEE;
 
 extern VehicleSpec D_80257A00[0x14];
 

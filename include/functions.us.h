@@ -54,5 +54,7 @@ void func_800FD410_10C3C0(VehicleSpec*, VehicleSpec*);
 // Functions from missions.c
 void func_800078B8_84B8(s32, s32*);
 s8 func_8007452C_834DC();
+void func_800A5A50_B4A00(s32, u8);
+s32 isButtonNewlyPressed(u8, u16);
 
 #endif

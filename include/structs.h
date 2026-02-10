@@ -2,7 +2,7 @@
 #define STRUCTS_H
 
 typedef struct {
-    u8 pad[9];
+    u8 pad0[9];
     u8 unk9;
 } UnkArg0;
 
@@ -11,9 +11,9 @@ typedef struct {
     f32 unk4;
     f32 unk8;
     f32 unkC;
-    u8 pad[4];
+    u8 pad10[4];
     f32 unk14;
-    u8 pad2[0x24];
+    u8 pad18[0x24];
     s16 unk3C;
     s16 unk3E;
 } UnkArg1;
@@ -23,13 +23,6 @@ typedef struct {
     s8 unk2;
     s8 unk3;
 } Unk80047588;
-
-typedef struct {
-    u8 pad[0x34];
-    s16 unk34;
-    char pad1[0x02];
-    s32 unk38;
-} Unk80048198;
 
 typedef struct {
     s16 unk0;
@@ -53,10 +46,17 @@ typedef struct {
 } Unk80052B34;
 
 typedef struct {
-    char pad0[0x34];
+    u8 pad[0x34];
     s16 unk34;
-    char pad1[0x02];
+    u8 pad36[0x02];
     s32 unk38;
+} Unk80048198;
+
+typedef struct {
+    u8 pad0[0x34];
+    s16 unk34;
+    u8 pad36[0x02];
+    Unk80052B34* unk38;
 } Unk80052B2C;
 
 typedef struct {

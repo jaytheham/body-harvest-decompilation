@@ -204,7 +204,7 @@ segments:
       - [0xA40B0, asm, overlay_gameplay/outside/A40B0]
       - [0xA49A0, asm, overlay_gameplay/outside/A49A0]
       - [0xAAA70, asm, overlay_gameplay/outside/AAA70]
-      - [0xB2CB0, asm, overlay_gameplay/outside/B2CB0]
+      - [0xB2CB0, c, overlay_gameplay/outside/B2CB0]
       - [0xB8290, asm, overlay_gameplay/outside/B8290]
       - [0xBD270, asm, overlay_gameplay/outside/BD270]
       - [0xBF9C0, asm, overlay_gameplay/outside/BF9C0]
