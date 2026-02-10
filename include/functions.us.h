@@ -53,5 +53,6 @@ void func_800FD410_10C3C0(VehicleSpec*, VehicleSpec*);
 
 // Functions from missions.c
 void func_800078B8_84B8(s32, s32*);
+s8 func_8007452C_834DC();
 
 #endif

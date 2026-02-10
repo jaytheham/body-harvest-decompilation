@@ -24,7 +24,10 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800746F8_836A8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074768_83718.s")
+void func_80074768_83718(void) {
+    *(&D_8004D160 + (D_80149B44 * 2)) = func_8007452C_834DC();
+    D_80149B44 += 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800747A8_83758.s")
 

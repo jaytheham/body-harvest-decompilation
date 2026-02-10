@@ -47,14 +47,15 @@ extern s16 D_800476A2;
 extern f32 D_80047954;
 extern f32 D_80047958;
 extern f32 D_8004795C;
+extern Level currentLevel; // 80047f90
 extern s32 D_80047FA0;
 extern s32 D_8004D148;
 extern s32 D_8004D150;
-extern Level currentLevel; // 80047f90
-extern GameplayMode gameplayMode; // 80052adc
+extern u8 D_8004D160;
 extern s16 D_80052AC8;
 extern u8 D_80052ACD;
 extern s32 D_80052AD0;
+extern GameplayMode gameplayMode; // 80052adc
 extern Unk80052B2C* D_80052B2C;
 extern Unk80052B34* D_80052B34;
 
@@ -72,6 +73,7 @@ extern u8 D_80149448;
 extern u8 D_80149449;
 extern u8 D_8014944A;
 extern u8 D_8014944B;
+extern s32 D_80149B44;
 
 extern s16 D_80157A3C;
 extern s16 D_80159260;
