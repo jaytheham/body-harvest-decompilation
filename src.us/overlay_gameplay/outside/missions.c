@@ -58,7 +58,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076088_85038.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076208_851B8.s")
+void func_80076208_851B8(s32 arg0) {
+    func_800078B8_84B8(arg0, &D_8004D150);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007622C_851DC.s")
 

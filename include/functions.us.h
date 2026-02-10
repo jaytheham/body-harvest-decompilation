@@ -51,4 +51,7 @@ void func_800E5E3C_F4DEC(u8, u8);
 void func_800A8A68_B7A18(s16, s16, s16, u8);
 void func_800FD410_10C3C0(VehicleSpec*, VehicleSpec*);
 
+// Functions from missions.c
+void func_800078B8_84B8(s32, s32*);
+
 #endif
