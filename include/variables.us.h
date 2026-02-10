@@ -93,6 +93,7 @@ extern Unk80052B2C* D_80052B2C;
 extern Unk80052B34* D_80052B34;
 
 extern s32 D_8013BD04;
+extern s8 D_8013D890;
 extern s32 D_8013FCD0;
 
 extern u8 D_80142790[]; // Activate Beacon %d
