@@ -3,7 +3,14 @@
 
 #include "PR/sched.h"
 
-typedef enum Buttons {
+typedef enum Controller {
+    CONTROLLER_ONE = 0,
+    CONTROLLER_TWO = 1,
+    CONTROLLER_THREE = 2,
+    CONTROLLER_FOUR = 3
+} Controller;
+
+typedef enum Button {
     BUTTON_NONE = 0,
     BUTTON_D_RIGHT = 0x0100,
     BUTTON_D_LEFT = 0x0200,
@@ -19,7 +26,7 @@ typedef enum Buttons {
     BUTTON_C_UP = 0x0008,
     BUTTON_R = 0x0010,
     BUTTON_L = 0x0020
-} Buttons;
+} Button;
 
 typedef enum GameplayMode {
     GAMEPLAY_MODE_LEVEL_MAP = 0,
@@ -51,7 +58,7 @@ typedef enum Level {
 
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
-extern OSMesgQueue D_80036840;
+extern u8 D_80036840[]; // Rumble pak(tm) detected!
 extern u8 D_80047678;
 extern u32 D_800313CC;
 extern Unk80047588 D_80047588;
@@ -61,17 +68,23 @@ extern u32 D_80047688;
 extern u32 D_8004768C;
 extern u32 D_80047690;
 extern u32 D_80047698;
+extern s16 D_800476A0;
 extern s16 D_800476A2;
 extern u8 D_8004794C;
 extern f32 D_80047954;
 extern f32 D_80047958;
 extern f32 D_8004795C;
 extern Level currentLevel; // 80047f90
+extern s32 D_80047F9C;
 extern s32 D_80047FA0;
+extern s16 D_8004816A;
 extern s32 D_80048188;
 extern s32 D_8004D148;
 extern s32 D_8004D150;
 extern u8 D_8004D160;
+
+extern u32 D_80052A90;
+extern Unk80052A98 D_80052A98[];
 extern s16 D_80052AC8;
 extern u8 D_80052ACD;
 extern s32 D_80052AD0;
@@ -81,6 +94,8 @@ extern Unk80052B34* D_80052B34;
 
 extern s32 D_8013BD04;
 extern s32 D_8013FCD0;
+
+extern u8 D_80142790[]; // Activate Beacon %d
 
 extern s16 D_80149406;
 extern s16 D_80149430;
@@ -94,7 +109,9 @@ extern u8 D_80149449;
 extern u8 D_8014944A;
 extern u8 D_8014944B;
 extern s32 D_80149B44;
+extern s32 D_8014F800;
 
+extern u8 D_80151DD0;
 extern s16 D_80157A3C;
 extern s16 D_80159260;
 extern s32 D_80159320;

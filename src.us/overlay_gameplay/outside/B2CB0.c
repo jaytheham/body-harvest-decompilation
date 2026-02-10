@@ -24,11 +24,32 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A5A10_B49C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A5A50_B4A00.s")
+// activateSaveBeacon?
+void func_800A5A50_B4A00(s32 arg0, s32 arg1) {
+    s32 sp1C;
+
+    D_8014F800 = 1;
+    func_8001CC6C_1D86C(D_80142790, arg0);
+    if (D_80151DD0 == 0) {
+        D_80047F9C = arg0 + 1;
+        sp1C = func_80009F18_AB18(arg1);
+        func_80116784_125734();
+        if (sp1C == 1) {
+            D_80052A98[currentLevel - 1].unk0 = (s32) D_80052B2C->unk30;
+            D_80052A98[currentLevel - 1].unk6 = (s16) D_8004816A;
+            D_80052A98[currentLevel - 1].unk4 = (s16) ((u32) D_80052A90 / 1000U);
+            D_800476A0 = 1;
+            return;
+        }
+        if (sp1C == 2) {
+            func_800A5F24_B4ED4(arg0);
+        }
+    }
+}
 
 // checkIfActivatingSaveBeacon?
 void func_800A5B30_B4AE0(s32 arg0, s16 arg1) {
-    if ((isButtonNewlyPressed(0, BUTTON_A) != 0) &&
+    if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A) != 0) &&
         (D_80052B34->unk1A == 0) &&
         (D_8004794C == 0) &&
         (D_80048188 != 1)) {

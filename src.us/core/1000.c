@@ -20,7 +20,7 @@ void checkForRumblePak(void) {
 		return;
 	}
 
-	func_8001CC6C_1D86C(&D_80036840);
+	func_8001CC6C_1D86C(D_80036840);
 	D_80047678 = 1;
 	func_8000108C_1C8C(0);
 	D_800313CC = 0;

@@ -3,9 +3,12 @@
 
 #include "functions.h"
 
-void func_8001CC6C_1D86C(void *);
-void func_80071148_800F8(u8 arg0, u8 arg1);
 void func_8000108C_1C8C(s32);
+s32 func_80009F18_AB18(s32);
+void func_8001CC6C_1D86C(u8*, ...);
+void func_80071148_800F8(u8 arg0, u8 arg1);
+void func_800A5F24_B4ED4(s32);
+void func_80116784_125734();  
 s32 func_801391DC_14818C(u8, s16);
 
 // Functions from main_FD80.c
@@ -54,7 +57,6 @@ void func_800FD410_10C3C0(VehicleSpec*, VehicleSpec*);
 // Functions from missions.c
 void func_800078B8_84B8(s32, s32*);
 s8 func_8007452C_834DC();
-void func_800A5A50_B4A00(s32, u8);
 s32 isButtonNewlyPressed(u8, u16);
 
 #endif
