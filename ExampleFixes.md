@@ -15,6 +15,8 @@ It may be that the function params are incorrectly typed:
 | --- | --- |
 | `void func(s8 arg0, s8 arg1) {` | `void func(u8 arg0, u8 arg1) {` |
 
+If a char/short param is being `& 0xFF`/`& -xFFFF` in ASM it may not need to be in the c code and doing so will throw off the register alloc.
+
 ### v0
 
 If v0 is being used for a variable and should not be, the function may need to return a value - which should use v0.

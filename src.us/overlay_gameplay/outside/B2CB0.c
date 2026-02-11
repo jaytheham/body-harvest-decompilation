@@ -8,7 +8,20 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A3E74_B2E24.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A4150_B3100.s")
+void func_800A4150_B3100(u8 arg0) {
+    s32 temp_v1;
+    Unk80048198* temp_v0;
+
+    temp_v0 = (arg0 ) + D_80048198;
+    temp_v1 = temp_v0->unk20;
+    if (!(temp_v1 & 0x100000) &&
+        (temp_v0->unk3D == 0) &&
+        !(temp_v1 & 0x4000) &&
+        (temp_v1 & 0x1000)) {
+        temp_v0->unk20 = (s32) (temp_v1 | 0x4000);
+        temp_v0->unk2C = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A41B0_B3160.s")
 
