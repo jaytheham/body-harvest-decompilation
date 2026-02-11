@@ -18,6 +18,7 @@ void func_800A4150_B3100(u8 arg0) {
         (temp_v0->unk3D == 0) &&
         !(temp_v1 & 0x4000) &&
         (temp_v1 & 0x1000)) {
+
         temp_v0->unk20 = (s32) (temp_v1 | 0x4000);
         temp_v0->unk2C = 0;
     }
@@ -35,7 +36,18 @@ void func_800A4150_B3100(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A57E4_B4794.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A5A10_B49C0.s")
+Unk8014F6D0* func_800A5A10_B49C0() {
+    s32 i;
+
+    i = 16;
+    while (i--) {
+        if (D_8014F6D0[i].unkC == -1) {
+            return &D_8014F6D0[i];
+        }
+    }
+
+    return NULL;
+}
 
 // activateSaveBeacon?
 void func_800A5A50_B4A00(s32 arg0, s32 arg1) {
@@ -115,7 +127,7 @@ void func_800A92B0_B8260(void) {
     s32 i;
     
     i = 16;
-    while (i != 0, i--) {
+    while (i--) {
         D_8014F6D0[i].unkC = -1;
     } ;
 }
