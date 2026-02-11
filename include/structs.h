@@ -77,7 +77,7 @@ typedef struct {
     u8 pad0[0xC];
     s16 unkC;
     u8 padE[4];
-} Unk8014F7DE;
+} Unk8014F6D0;
 
 typedef struct {
 //     0x00 xxxxyyyy yyyy = Model pointer

@@ -111,4 +111,11 @@ void func_800A5EE8_B4E98(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A9238_B81E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A92B0_B8260.s")
+void func_800A92B0_B8260(void) {
+    s32 i;
+    
+    i = 16;
+    while (i != 0, i--) {
+        D_8014F6D0[i].unkC = -1;
+    } ;
+}
