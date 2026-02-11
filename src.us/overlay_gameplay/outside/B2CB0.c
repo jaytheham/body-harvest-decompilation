@@ -61,7 +61,11 @@ void func_800A5B30_B4AE0(s32 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A5D3C_B4CEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A5EA8_B4E58.s")
+void func_800A5EA8_B4E58(u8 arg0) {
+    func_8001CC6C_1D86C(D_801427D8, arg0);
+    D_8013D890 = 1;
+    D_8013D894 = arg0;
+}
 
 void func_800A5EE8_B4E98(u8 arg0) {
     D_8013D890 = 4;

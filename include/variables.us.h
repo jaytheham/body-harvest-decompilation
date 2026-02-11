@@ -94,9 +94,11 @@ extern Unk80052B34* D_80052B34;
 
 extern s32 D_8013BD04;
 extern s8 D_8013D890;
+extern u8 D_8013D894;
 extern s32 D_8013FCD0;
 
 extern u8 D_80142790[]; // Activate Beacon %d
+extern u8 D_801427D8[]; // teleport to:%d
 
 extern s16 D_80149406;
 extern s16 D_80149430;
