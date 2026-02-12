@@ -121,7 +121,21 @@ void func_800A5EE8_B4E98(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A8E18_B7DC8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A9238_B81E8.s")
+void func_800A9238_B81E8() {
+    s16* powerupTypePtr = &D_80047F7E + 1;
+    s16 powerupType;
+    s32 i = 0x10;
+    s16 negOne = -1;
+    
+    while (powerupTypePtr--, i--) {
+        powerupType = *powerupTypePtr;
+        if (negOne != powerupType) {
+            func_8001CC6C_1D86C(D_80142820, powerupType);
+            func_800A8E18_B7DC8(*powerupTypePtr);
+        }
+    }
+}
+
 
 void func_800A92B0_B8260(void) {
     s32 i;

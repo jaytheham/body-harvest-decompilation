@@ -74,6 +74,7 @@ extern u8 D_8004794C;
 extern f32 D_80047954;
 extern f32 D_80047958;
 extern f32 D_8004795C;
+extern s16 D_80047F7E; // Last item of an array of powerup values?
 extern Level currentLevel; // 80047f90
 extern s32 D_80047F9C;
 extern s32 D_80047FA0;
@@ -100,7 +101,7 @@ extern s32 D_8013FCD0;
 
 extern u8 D_80142790[]; // Activate Beacon %d
 extern u8 D_801427D8[]; // teleport to:%d
-
+extern u8 D_80142820[]; // Giving delayed powerup %d
 extern s16 D_80149406;
 extern s16 D_80149430;
 extern s16 D_80149432;

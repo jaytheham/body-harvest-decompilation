@@ -24,3 +24,7 @@ If v0 is being used for a variable and should not be, the function may need to r
 Loading and checking of a value being optimised away because it's known at compile time? Can prevent that by altering the value:
 u8 continueOn = 1;
 continueOn &= 1;
+
+### Branching
+
+If a branch instruction's registers are reversed, reversing the order in C may help. If not, and one is a literal value, try putting the literal into a var.

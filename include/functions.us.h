@@ -9,6 +9,7 @@ void func_800153D8_15FD8(s16);
 void func_8001CC6C_1D86C(u8*, ...);
 void func_80071148_800F8(u8 arg0, u8 arg1);
 void func_800A5F24_B4ED4(s32);
+s32 func_800A8E18_B7DC8(s16);
 void func_800EC450_FB400();
 void func_80116784_125734();  
 s32 func_801391DC_14818C(u8, s16);
