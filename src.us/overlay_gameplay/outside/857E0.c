@@ -44,7 +44,16 @@ void func_800786CC_8767C(u16* arg0, s32 arg1) {
     *arg0 &= ~(0xF << (arg1 * 4));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800786EC_8769C.s")
+void func_800786EC_8769C(u16* arg0, s32 arg1) {
+    s32 temp_v1;
+    u16 temp_v0;
+
+    temp_v0 = *arg0;
+    temp_v1 = arg1 * 4;
+    if ((((s32) temp_v0 >> temp_v1) & 0xF) >= 0xE) {
+        *arg0 = temp_v0 & ~(0xF << temp_v1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078720_876D0.s")
 
