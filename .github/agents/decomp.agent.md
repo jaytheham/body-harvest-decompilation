@@ -21,19 +21,18 @@ Look up the named assembly e.g. `asm/nonmatchings/core/1000/func_80000D0C_190C.s
 
 Find the corresponding `#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80000D0C_190C.s")` line in the source file (e.g., `src.us/core/1000.c`).
 Important: build runs on linux, all file edits must preserve LF line endings.
-Translate the assembly logic to a C function and replace the `GLOBAL_ASM` line with the C implementation.
-Use natural C constructs while ensuring the generated assembly will match the original. This often requires:
+Use mips_to_c to create an initial C implementation from the original assembly and replace the `GLOBAL_ASM` line with the generated C code:
 
-- Using loops and conditionals rather than `goto`
-- Using structs to represent data accessed via pointers
+```bash
+python tools/mips_to_c/m2c.py asm/nonmatchings/core/1000/func_80000D0C_190C.s
+```
 
-**Key guidelines:**
+## Step 3: Refine C Code
 
-- Use types matching the original (`u8`, `s16`, `s32`, etc.)
-- Avoid C-ism syntax that IDO compiler may reject (e.g., complex cast+index on one line)
-- Break operations into separate statements for clarity
+Simplify the generated code and make it more human-readable and less like the original assembly.
+Identify structs and arrays accessed by the function and define them in `include/structs.us.h`/`include/variables.us.h`. Prefer struct/array access in C code to match the original assembly's pointer arithmetic.
 
-## Step 3: Declare External Symbols
+## Step 4: Declare External Symbols
 
 Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
 
@@ -45,7 +44,7 @@ Add or update used struct definitions in `include/structs.us.h` to match the dat
 
 Add or update used function declarations in `include/functions.us.h` if they aren't defined in `src.us/` yet.
 
-## Step 4: Build in Docker
+## Step 5: Build in Docker
 
 Run the build inside the container:
 
@@ -64,7 +63,7 @@ docker exec -it b3619d5e5b69c8a44ca914f1925110d8e87e334595f9eff7dce3ac854f4d6a1e
 
 If build complete and checksums match: `build/bh.us.z64: OK`. The function is now decompiled and matched and you can stop work. If not, proceed to the next steps for analysis and iteration.
 
-## Step 5: Compare with Original
+## Step 6: Compare with Original
 
 Place the original assembly and generated assembly side-by-side:
 
@@ -80,7 +79,7 @@ docker exec -it b3619d5e5b69c8a44ca914f1925110d8e87e334595f9eff7dce3ac854f4d6a1e
 
 Note instruction order, registers, immediates, branch conditions
 
-## Step 6: Iterate To Resolve Differences
+## Step 7: Iterate To Resolve Differences
 
 **Byte-perfect matching**: Requires iterating:
 
@@ -88,7 +87,7 @@ Rewrite C code to match original logic more closely. Think about how a person wo
 Read file `DecompHints.md` and `ExampleFixes.md` for common patterns and pitfalls.
 Rebuild and re-compare until the generated assembly is identical to the original. Once it is identical proceed to the final step.
 
-## Step 7: Finalize
+## Step 8: Finalize
 
 Update `ExampleFixes.md` with any new patterns or insights you discovered during the process to help future contributors.
 
