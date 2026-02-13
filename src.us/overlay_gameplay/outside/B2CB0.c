@@ -43,7 +43,31 @@ void func_800A4150_B3100(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A4C28_B3BD8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A52F8_B42A8.s")
+s32 func_800A52F8_B42A8(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 temp_a0;
+    s32 var_v0;
+    s32 var_v1;
+
+    var_v1 = 0;
+    if (D_80048198[arg0].unk10 < -arg2) {
+        var_v1 = arg1;
+    } else {
+        if (D_80048198[arg0].unk10 < arg2) {
+            var_v0 = arg3 - D_80048198[arg0].unk2;
+            temp_a0 = arg1 * 4;
+            if (D_80048198[arg0].unk10 < 0) {
+                var_v0 -= D_80048198[arg0].unk10;
+            }
+            if (temp_a0 < var_v0) {
+                var_v1 = arg1;
+            } else if (var_v0 >= 0) {
+                var_v1 = (f32) (((temp_a0 - var_v0) * 0x70) + (arg1 * var_v0)) / temp_a0;
+            }
+        }
+    }
+    D_80048198[arg0].unk10 += var_v1;
+    return var_v1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A53C0_B4370.s")
 
