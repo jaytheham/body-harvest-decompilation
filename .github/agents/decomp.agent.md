@@ -1,20 +1,14 @@
-Your job is to decompile N64 assembly functions from the `asm/nonmatchings/` directory into C code, ensuring functional equivalence. The final goal is c code that will compile to the _exact_ same assembly - including register allocations - as the original. Follow the workflow outlined below to systematically approach each function.
-
 # Decompilation & Matching Workflow
 
 ## Overview
 
-Convert an assembly function to C code, compile it using IDO 5.3 in Docker, and compare the output against the original assembly. Update the C code iteratively until it produces byte-for-byte identical assembly.
+Convert the named N64 assembly function to C code, compile it using IDO 5.3 in Docker, and compare the output against the original assembly. Update the C code iteratively until it produces byte-for-byte identical assembly.
 
 Create a todo list of the following steps and mark them off as you complete them:
 
-## Step 1: Select Target Function
+## Step 1: Analyze the Original Assembly
 
-Look up the named assembly function in asm/nonmatchings/. For example, `asm/nonmatchings/core/1000/func_80000D0C_190C.s`.
-
-## Step 2: Analyze the Original Assembly
-
-Read the `.s` file to understand:
+Look up the named assembly e.g. `asm/nonmatchings/core/1000/func_80000D0C_190C.s`. to understand:
 
 - Function signature (parameters, return type)
 - Data symbols accessed (e.g., `D_80047588`, `D_800475E0`). Check for declarations in `include/variables.us.h` and `include/structs.h`.
@@ -22,9 +16,11 @@ Read the `.s` file to understand:
 - Control flow (branches, loops)
 - Register usage patterns
 
-## Step 3: Write C Implementation
+## Step 2: Write C Implementation
 
-Translate the assembly logic to a C function.
+Find the corresponding `#pragma GLOBAL_ASM(...)` line in the source file (e.g., `src.us/core/1000.c`).
+
+Translate the assembly logic to a C function and replace the `GLOBAL_ASM` line with the C implementation.
 
 **Key guidelines:**
 
@@ -32,27 +28,19 @@ Translate the assembly logic to a C function.
 - Avoid C-ism syntax that IDO compiler may reject (e.g., complex cast+index on one line)
 - Break operations into separate statements for clarity
 
-## Step 4: Locate the GLOBAL_ASM Pragma
+## Step 3: Declare External Symbols
 
-Find the corresponding `#pragma GLOBAL_ASM(...)` line in the source file (e.g., `src.us/core/1000.c`).
-
-Replace it with the C function implementation:
-
-## Step 5: Declare External Symbols
-
-Check `include/variables.us.h` for declarations of data symbols used by the function (e.g., `D_80047588`, `D_800475E0`).
-
-If missing, add `extern` declarations:
+Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
 
 ```c
 extern u16 D_800475E0;
 ```
 
-Check `include/structs.h` for relevant struct definitions. If needed, add new struct definitions to match the data layout accessed by the function.
+Add or update used struct definitions in `include/structs.us.h` to match the data layout accessed by the function.
 
-Check `include/functions.us.h` for declarations of any functions called by the target function. If missing, add declarations.
+Add or update used function declarations in `include/functions.us.h` if they aren't defined in `src.us/` yet.
 
-## Step 6: Build in Docker
+## Step 4: Build in Docker
 
 Run the build inside the container:
 
@@ -69,43 +57,35 @@ docker exec -it b3619d5e5b69c8a44ca914f1925110d8e87e334595f9eff7dce3ac854f4d6a1e
 - Simplify C code (avoid complex expressions in single statements)
 - Ensure all extern symbols are declared
 
-If build complete and checksums match: `build/bh.us.z64: OK`. The function is now decompiled and matched. If not, proceed to the next steps for analysis and iteration.
+If build complete and checksums match: `build/bh.us.z64: OK`. The function is now decompiled and matched and you can stop work. If not, proceed to the next steps for analysis and iteration.
 
-## Step 7: Disassemble Generated Code
+## Step 5: Compare with Original
 
-View the compiled assembly to compare visually:
+Place the original assembly and generated assembly side-by-side:
+
+**Original**
+from e.g. `asm/nonmatchings/core/1000/func_80000D0C_190C.s`:
+
+**Generated** (from objdump output):
 
 ```bash
 docker exec -it b3619d5e5b69c8a44ca914f1925110d8e87e334595f9eff7dce3ac854f4d6a1e \
   bash -c "cd /bh && mips-linux-gnu-objdump -d build/src.us/main/1000.c.o | grep -A 30 'func_80000D0C_190C>:'"
 ```
 
-## Step 8: Compare with Original
+Note instruction order, registers, immediates, branch conditions
 
-Place the original assembly and generated assembly side-by-side:
-
-**Original** (from `asm/nonmatchings/core/1000/func_80000D0C_190C.s`):
-
-- Note instruction order, registers, immediates, branch conditions
-
-**Generated** (from objdump output):
-
-- Note instruction order, registers, immediates, branch conditions
-
-## Step 9: Iterate To Resolve Differences
+## Step 6: Iterate To Resolve Differences
 
 **Byte-perfect matching**: Requires iterating:
 
 Rewrite C code to match original logic more closely.
-Read file `DecompHints.md` for common patterns and pitfalls.
-Rebuild and re-compare until the generated assembly is identical to the original.
+Read file `DecompHints.md` and `ExampleFixes.md` for common patterns and pitfalls.
+Rebuild and re-compare until the generated assembly is identical to the original. Once it is identical proceed to the final step.
 
-## Step 10: Mark as Complete
+## Step 7: Finalize
 
-Once byte-perfect:
-
-- Leave the C implementation in place (replacing `GLOBAL_ASM`)
-- Remove the corresponding `.s` file reference
+Update `ExampleFixes.md` with any new patterns or insights you discovered during the process to help future contributors.
 
 ## Quick Reference: Docker Commands
 

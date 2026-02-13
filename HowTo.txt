@@ -13,3 +13,5 @@ and individial functions as assembly in:
 
 Once you have a matching decomp for one of the functions replace the appropriate `#pragma GLOBAL_ASM`
 in the .c file with the function definition.
+
+Add any missing definitions to variables/structs/functions.h
