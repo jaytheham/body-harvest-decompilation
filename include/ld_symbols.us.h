@@ -389,7 +389,7 @@ extern Addr overlay_gameplay_outside_1416E0_s;
 extern Addr overlay_gameplay_outside_145D70_s;
 extern Addr overlay_gameplay_outside_148000_s;
 extern Addr overlay_gameplay_outside_7F220_c;
-extern Addr overlay_gameplay_outside_857E0_s;
+extern Addr overlay_gameplay_outside_857E0_c;
 extern Addr overlay_gameplay_outside_884C0_s;
 extern Addr overlay_gameplay_outside_A40B0_s;
 extern Addr overlay_gameplay_outside_A49A0_s;

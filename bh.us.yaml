@@ -199,7 +199,7 @@ segments:
       - [0x7F220, c, overlay_gameplay/outside/7F220]
       - [0x82160, c, overlay_gameplay/outside/cheats]
       - [0x82D70, c, overlay_gameplay/outside/missions]
-      - [0x857E0, asm, overlay_gameplay/outside/857E0]
+      - [0x857E0, c, overlay_gameplay/outside/857E0]
       - [0x884C0, asm, overlay_gameplay/outside/884C0]
       - [0xA40B0, asm, overlay_gameplay/outside/A40B0]
       - [0xA49A0, asm, overlay_gameplay/outside/A49A0]

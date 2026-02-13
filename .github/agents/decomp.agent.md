@@ -15,12 +15,17 @@ Look up the named assembly e.g. `asm/nonmatchings/core/1000/func_80000D0C_190C.s
 - Functions called (check `include/functions.us.h` for declarations)
 - Control flow (branches, loops)
 - Register usage patterns
+  Make notes of any complex operations or patterns that may require special attention when translating to C. This analysis will guide your implementation in the next step.
 
 ## Step 2: Write C Implementation
 
 Find the corresponding `#pragma GLOBAL_ASM(...)` line in the source file (e.g., `src.us/core/1000.c`).
-
+Important: build runs on linux, all file edits must preserve LF line endings.
 Translate the assembly logic to a C function and replace the `GLOBAL_ASM` line with the C implementation.
+Use natural C constructs while ensuring the generated assembly will match the original. This often requires:
+
+- Using loops and conditionals rather than `goto`
+- Using structs to represent data accessed via pointers
 
 **Key guidelines:**
 
@@ -79,7 +84,7 @@ Note instruction order, registers, immediates, branch conditions
 
 **Byte-perfect matching**: Requires iterating:
 
-Rewrite C code to match original logic more closely.
+Rewrite C code to match original logic more closely. Think about how a person would have originally written the code in C to produce the assembly you see.
 Read file `DecompHints.md` and `ExampleFixes.md` for common patterns and pitfalls.
 Rebuild and re-compare until the generated assembly is identical to the original. Once it is identical proceed to the final step.
 

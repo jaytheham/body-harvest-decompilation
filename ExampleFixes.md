@@ -39,3 +39,21 @@ If you see `+ 1` happening to a var in a loop consider it may be a `for(;;)` loo
 If you see missing `b` after another type of branch you may have if `if` that needs its `else` added.
 
 A variable being decremented and being checked for != 0 is also usually a `while (var--).`
+
+### Delay-slot pointer setup
+
+For patterns like:
+
+- compare index against sentinel
+- branch delay slot does `addu baseReg, baseReg, index`
+- then `lbu` from that pointer
+- then increment/store index
+
+use an explicit pointer plus temp byte value in C:
+
+`u8* ptr = &D_xxx[index];`
+`u8 value = *ptr;`
+`D_index = index + 1;`
+`return value;`
+
+This shape can preserve both branch delay-slot pointer arithmetic and the `lbu` before index increment/store ordering.
