@@ -137,11 +137,13 @@ extern s16 D_80159260;
 extern s32 D_80159320;
 extern s16 D_8015FAEE;
 
+extern u32 D_80222A30[];
 // 223780 alien waves?
 // 224680 missions?
 // 25667C alien specs?
 extern VehicleSpec D_80257A00[0x14];
 // 259090 building specs?
 // 259490 vehicle instances?
+extern Unk80259D98 D_80259D98[];
 
 #endif

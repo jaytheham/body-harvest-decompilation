@@ -109,4 +109,9 @@ typedef struct {
     u8 pad62[0xE];
 } VehicleSpec;
 
+typedef struct {
+    u32 unk0;
+    u8 pad4[0x4C];
+} Unk80259D98;
+
 #endif

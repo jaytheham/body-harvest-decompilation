@@ -24,6 +24,8 @@ s8 func_8007452C_834DC();
 void func_80075AA4_84A54(void);
 void func_8007622C_851DC(void (*fn)(void));
 void func_8007679C_8574C(s16);
+void func_80076868_85818(s32 arg0);
+s32 func_80078BC8_87B78(s16 arg0, s16 arg1);
 void func_8007AAEC_89A9C(void);
 void func_80081C84_90C34(u8, s32);
 u16 func_80081E5C_90E0C(s16);

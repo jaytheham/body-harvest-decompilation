@@ -53,7 +53,7 @@ docker build --no-cache -t bh-local .
 Run the docker image with:
 
 ```sh
-docker run --rm -ti -v "${PWD}:/bh" bh-local
+docker run --name bh-container --rm -ti -v "${PWD}:/bh" bh-local
 ```
 
 From here you can run the `make extract` and `make --jobs` commands.

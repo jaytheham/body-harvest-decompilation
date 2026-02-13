@@ -65,7 +65,20 @@ void func_800786EC_8769C(u16* arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078D64_87D14.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078F5C_87F0C.s")
+void func_80078F5C_87F0C(s16 arg0, s16 arg1, u16 arg2) {
+	u16 temp_v1;
+	s32 temp_v0;
+
+	temp_v0 = func_80078BC8_87B78(arg0, arg1);
+	temp_v1 = arg2;
+	if (temp_v0 != -1) {
+		if (temp_v1 == 0) {
+			func_80076868_85818(temp_v0);
+			return;
+		}
+		D_80259D98[temp_v0].unk0 = D_80222A30[temp_v1];
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078FE0_87F90.s")
 
