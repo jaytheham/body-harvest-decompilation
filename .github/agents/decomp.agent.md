@@ -19,7 +19,7 @@ Look up the named assembly e.g. `asm/nonmatchings/core/1000/func_80000D0C_190C.s
 
 ## Step 2: Write C Implementation
 
-Find the corresponding `#pragma GLOBAL_ASM(...)` line in the source file (e.g., `src.us/core/1000.c`).
+Find the corresponding `#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80000D0C_190C.s")` line in the source file (e.g., `src.us/core/1000.c`).
 Important: build runs on linux, all file edits must preserve LF line endings.
 Translate the assembly logic to a C function and replace the `GLOBAL_ASM` line with the C implementation.
 Use natural C constructs while ensuring the generated assembly will match the original. This often requires:
