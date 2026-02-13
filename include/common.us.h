@@ -6,6 +6,7 @@
 #include "functions.h"
 #include "variables.h"
 
+#include "structs.us.h"
 #include "functions.us.h"
 #include "variables.us.h"
 #include "ld_symbols.us.h"

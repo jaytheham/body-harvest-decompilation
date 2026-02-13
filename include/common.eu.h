@@ -5,6 +5,7 @@
 #include "functions.h"
 #include "variables.h"
 
+#include "structs.eu.h"
 #include "functions.eu.h"
 #include "variables.eu.h"
 #include "ld_symbols.eu.h"
