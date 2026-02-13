@@ -78,12 +78,14 @@ extern s16 D_80047F7E; // Last item of an array of powerup values?
 extern Level currentLevel; // 80047f90
 extern s32 D_80047F9C;
 extern s32 D_80047FA0;
+extern s16 D_80048026;
 extern s16 D_8004816A;
 extern s32 D_80048188;
 extern Unk80048198 D_80048198[];
 extern s32 D_8004D148;
 extern s32 D_8004D150;
 extern u8 D_8004D160;
+extern u16 D_8004DC5E;
 
 // 50AD8 building instances?
 extern u32 D_80052A90;

@@ -115,8 +115,22 @@ void enableCheatWeasel() {
     D_80052ACD ^= 2;
 }
 
-//enableCheatUseful
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073934_828E4.s")
+//func_80073934_828E4
+void enableCheatUseful() {
+    s32 temp_v0;
+
+    temp_v0 = (s16) D_80048026 >> ((currentLevel * 3) - 3);
+    if (!(temp_v0 & 1)) {
+        D_8004DC5E += 1;
+    }
+    if (!(temp_v0 & 2)) {
+        D_8004DC5E += 1;
+    }
+    if (!(temp_v0 & 4)) {
+        D_8004DC5E += 1;
+    }
+    D_80048026 |= 7 << ((currentLevel * 3) - 3);
+}
 
 // func_800739B8_82968
 void enableCheatDwarf() {
