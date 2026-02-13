@@ -75,6 +75,7 @@ extern f32 D_80047954;
 extern f32 D_80047958;
 extern f32 D_8004795C;
 extern s16 D_80047F7E; // Last item of an array of powerup values?
+extern s32 currentSaveFileIndex;
 extern Level currentLevel; // 80047f90
 extern s32 D_80047F9C;
 extern s32 D_80047FA0;
@@ -117,6 +118,9 @@ extern u8 D_80149448;
 extern u8 D_80149449;
 extern u8 D_8014944A;
 extern u8 D_8014944B;
+extern u8 cheatInputBuffer[0xA];
+extern s32 D_8014945C;
+extern s32 isCheatingEnabled; // 80149460
 extern s32 D_80149B44;
 extern u8 D_8014D408[]; // unknown size, maybe 0x101
 extern u8 D_8014D509;

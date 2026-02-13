@@ -162,7 +162,27 @@ void enableCheatFeeble() {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073A20_829D0.s")
 
 // initCheating
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073A74_82A24.s")
+void func_80073A74_82A24(void) {
+    s32 inputBufferIndex;
+    u8 saveFileName[7];
+
+    inputBufferIndex = 0xA;
+    func_80002AB4_36B4(currentSaveFileIndex, saveFileName);
+    while (inputBufferIndex--) {
+        cheatInputBuffer[inputBufferIndex] = '-';
+    }
+    D_8014945C = 0;
+    if ((saveFileName[0] == 'I') &&
+        (saveFileName[1] == 'C') && 
+        (saveFileName[2] == 'H') &&
+        (saveFileName[3] == 'E') &&
+        (saveFileName[4] == 'A') &&
+        (saveFileName[5] == 'T')) {
+        isCheatingEnabled = 1;
+        return;
+    }
+    isCheatingEnabled = 0;
+}
 
 // activateCheat
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073B30_82AE0.s")

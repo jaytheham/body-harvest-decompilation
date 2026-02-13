@@ -37,3 +37,5 @@ If a branch instruction's registers are reversed, reversing the order in C may h
 If you see `+ 1` happening to a var in a loop consider it may be a `for(;;)` loop.
 
 If you see missing `b` after another type of branch you may have if `if` that needs its `else` added.
+
+A variable being decremented and being checked for != 0 is also usually a `while (var--).`

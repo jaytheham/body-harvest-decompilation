@@ -1,6 +1,9 @@
 
+currentSaveFileIndex = 0x80047F84;
 currentLevel = 0x80047F90;
 gameplayMode = 0x80052ADC;
+cheatInputBuffer = 0x80149450;
+isCheatingEnabled = 0x80149460;
 
 checkForRumblePak = 0x80000E40;
 validateSaveVersionAndChecksum = 0x80001624;
