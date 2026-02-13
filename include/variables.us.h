@@ -99,6 +99,7 @@ extern s8 D_8013D890; // Triggers beacon warp
 extern u8 D_8013D894; // Beacon warp destination
 extern s32 D_8013FCD0;
 
+extern u8 D_80142740[]; // Found parent %d
 extern u8 D_80142790[]; // Activate Beacon %d
 extern u8 D_801427D8[]; // teleport to:%d
 extern u8 D_80142820[]; // Giving delayed powerup %d
@@ -114,6 +115,9 @@ extern u8 D_80149449;
 extern u8 D_8014944A;
 extern u8 D_8014944B;
 extern s32 D_80149B44;
+extern u8 D_8014D408[]; // unknown size, maybe 0x101
+extern u8 D_8014D509;
+extern u8 D_8014D50A;
 extern s16 D_8014DD5E[][8];
 extern Unk8014F6D0 D_8014F6D0[0x10];
 extern s32 D_8014F800;

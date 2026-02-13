@@ -19,7 +19,25 @@ void func_800A3D00_B2CB0(u8 arg0, s16 arg1, s16 arg2, s32 arg3) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A3DC8_B2D78.s")
+u8 func_800A3DC8_B2D78(void) {
+    u8 var_v0;
+    u8 temp_a2;
+    Unk80048198* temp_v1;
+
+    for (var_v0 = D_8014D509; var_v0 < D_8014D50A; var_v0++) {
+        temp_a2 = D_8014D408[var_v0];
+        temp_v1 = &D_80048198[temp_a2];
+        
+        if (temp_v1->unk1A == 0x19) {
+            if (temp_v1->unk3C != 0) {
+                temp_v1->unk3C = (s8) (temp_v1->unk3C - 1);
+                func_8001CC6C_1D86C(D_80142740, temp_a2);
+                return temp_a2;
+            }
+        }
+    }
+    return 0xFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A3E74_B2E24.s")
 
