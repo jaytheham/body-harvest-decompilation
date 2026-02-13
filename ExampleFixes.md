@@ -31,3 +31,5 @@ continueOn &= 1;
 ### Branching
 
 If a branch instruction's registers are reversed, reversing the order in C may help. If not, and one is a literal value, try putting the literal into a var.
+
+If you see `+ 1` happening to a var in a loop consider it may be a `for(;;)` loop

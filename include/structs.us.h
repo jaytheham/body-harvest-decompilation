@@ -88,33 +88,18 @@ typedef struct {
 } Unk8014F6D0;
 
 typedef struct {
-//     0x00 xxxxyyyy yyyy = Model pointer
-// 0x04
-// 0x08
+// 0x00 xxxxyyyy yyyy = Model pointer
 // 0x0C xxxxxxxx Collision model size
-// 0x10
-// 0x14
 // 0x18 xxxxxxxx Vehicle name modifier
 // 0x1C xxxxxxxx 1st Weapon
-// 0x20
-// 0x24
 // 0x28 xxxxxxxx 2nd Weapon
-// 0x2C
-// 0x30
-// 0x34
 // 0x38 xxxxyyyy yyyy = Hits (Max health)
 // 0x3C xxxxyyyy xxxx = Arc of Fire, yyyy = Max speed
-// 0x40
-// 0x44
-// 0x48
 // 0x4C xxyyzzaa	xx = Hill climb/ff goes underwater yy = Helicopter mode(0F<) zz = Water flag(00 Boat, 01 Land vehicle) aa = 
 // 0x50 xxyyzzaa aa = Detail prop(06 = Tank turret 08 = Gun barrels? 0A = tank tracks 0C = Tank barrel? 0E = Left Track 0F = Right Ttrack 15 Propeller 18 = Bulldog turret 19 = Bulldog machinegun) 
-// 0x54
-// 0x58
 // 0x5C xxyyzzzz xx = Camera Min, yy = Camera Max, zzzz = East/West position of Adam in vehilce
 // 0x60 xxxxyyyy xxxx = North/South Position of Adam in vehicle
 // 0x64 xxxxyyyy yyyy = Steer Point (Turning speed)
-// 0x68
 // 0x6C xxyyzzzz xxyy = Shadow X & Shadow Z
     u8 pad0[0x39];
     u16 hitPoints;

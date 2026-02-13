@@ -242,7 +242,59 @@ segments:
     type: bin
     start: 0x195C80
 
+  - name: overlay_level_java
+    type: code
+    start: 0x1ED9E0
+    vram: 0x802D4CD0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x1ED9E0, asm, overlay_level/java/1ED9E0]
+
+  - name: overlay_level_java_data
+    type: bin
+    start: 0x1F91B0
+
+  - name: overlay_level_america
+    type: code
+    start: 0x254410
+    vram: 0x802D4CD0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x254410, asm, overlay_level/america/254410]
+
+  - name: overlay_level_america_data
+    type: bin
+    start: 0x25EA90
+
+  - name: overlay_level_siberia
+    type: code
+    start: 0x2B7100
+    vram: 0x802D4CD0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x2B7100, asm, overlay_level/siberia/2B7100]
+
+  - name: overlay_level_siberia_data
+    type: bin
+    start: 0x2C3220
+
+  - name: overlay_level_comet
+    type: code
+    start: 0x318E20
+    vram: 0x802D4CD0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x318E20, asm, overlay_level/comet/318E20]
+
+  - name: overlay_level_comet_data
+    type: bin
+    start: 0x328FD0
+
   - name: unknown
     type: bin
-    start: 0x196F70
+    start: 0x32BD80
   - [0xC00000]
