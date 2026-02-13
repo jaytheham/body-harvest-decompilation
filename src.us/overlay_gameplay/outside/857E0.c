@@ -40,7 +40,9 @@ s32 func_80076830_857E0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078678_87628.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800786CC_8767C.s")
+void func_800786CC_8767C(u16* arg0, s32 arg1) {
+    *arg0 &= ~(0xF << (arg1 * 4));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800786EC_8769C.s")
 
