@@ -1,3 +1,4 @@
+https://hackmd.io/vPmcgdaFSlq4R2mfkq4bJg
 https://github.com/n64decomp/oot/blob/master/docs/guides/-O2%20decompilation%20(for%20IDO%205.3).md
 https://github.com/zeldaret/mm/tree/main/docs/tutorial
 https://github.com/zeldaret/oot/blob/9963e7f5d5fa8caee329f6b40e393d8a2c45390b/docs/tutorial/contents.md

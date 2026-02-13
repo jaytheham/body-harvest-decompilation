@@ -1,65 +1,42 @@
-Your job is to decompile N64 assembly functions from the `asm/nonmatchings/` directory into C code, ensuring functional equivalence. The final goal is c code that will compile to the _exact_ same assembly as the original. Follow the workflow outlined below to systematically approach each function.
+Your job is to decompile N64 assembly functions from the `asm/nonmatchings/` directory into C code, ensuring functional equivalence. The final goal is c code that will compile to the _exact_ same assembly - including register allocations - as the original. Follow the workflow outlined below to systematically approach each function.
 
 # Decompilation & Matching Workflow
 
 ## Overview
 
-Convert an assembly function from `asm/nonmatchings/` to C code, compile it using IDO 5.3 in Docker, and compare the output against the original assembly. Update the C code iteratively until it produces byte-for-byte identical assembly.
+Convert an assembly function to C code, compile it using IDO 5.3 in Docker, and compare the output against the original assembly. Update the C code iteratively until it produces byte-for-byte identical assembly.
 
 Create a todo list of the following steps and mark them off as you complete them:
 
 ## Step 1: Select Target Function
 
-Look up the named assembly function.
+Look up the named assembly function in asm/nonmatchings/. For example, `asm/nonmatchings/core/1000/func_80000D0C_190C.s`.
 
 ## Step 2: Analyze the Original Assembly
 
 Read the `.s` file to understand:
 
 - Function signature (parameters, return type)
-- Data symbols accessed (e.g., `D_80047588`, `D_800475E0`)
+- Data symbols accessed (e.g., `D_80047588`, `D_800475E0`). Check for declarations in `include/variables.us.h` and `include/structs.h`.
+- Functions called (check `include/functions.us.h` for declarations)
 - Control flow (branches, loops)
 - Register usage patterns
 
 ## Step 3: Write C Implementation
 
-Translate the assembly logic to C. Example:
-
-```c
-int isButtonNewlyPressed(s32 idx, u32 mask) {
-	u32 mask16 = mask & 0xFFFFu;
-	u16* table1 = (u16*)&D_80047588;
-	u16* table2 = (u16*)&D_800475E0;
-	u32 v0 = (u32)(table1[idx * 3]) & mask16;
-	if (v0 == 0) {
-		return 0;
-	}
-	v0 = (u32)(table2[idx]) & mask16;
-	return (v0 == 0);
-}
-```
+Translate the assembly logic to a C function.
 
 **Key guidelines:**
 
-- Use types matching the original (`u16`, `u32`, `s32`, etc.)
+- Use types matching the original (`u8`, `s16`, `s32`, etc.)
 - Avoid C-ism syntax that IDO compiler may reject (e.g., complex cast+index on one line)
 - Break operations into separate statements for clarity
 
 ## Step 4: Locate the GLOBAL_ASM Pragma
 
-Find the corresponding `#pragma GLOBAL_ASM(...)` line in the source file (e.g., `src.us/main_1000.c`).
+Find the corresponding `#pragma GLOBAL_ASM(...)` line in the source file (e.g., `src.us/core/1000.c`).
 
 Replace it with the C function implementation:
-
-```c
-#pragma GLOBAL_ASM("asm/nonmatchings/main_1000/func_8000345C_405C.s")
-
-int isButtonNewlyPressed(int idx, unsigned int mask) {
-	/* ... implementation ... */
-}
-
-#pragma GLOBAL_ASM("asm/nonmatchings/main_1000/func_800035D8_41D8.s")
-```
 
 ## Step 5: Declare External Symbols
 
@@ -92,7 +69,7 @@ docker exec -it b3619d5e5b69c8a44ca914f1925110d8e87e334595f9eff7dce3ac854f4d6a1e
 - Simplify C code (avoid complex expressions in single statements)
 - Ensure all extern symbols are declared
 
-If build complete and checksums matchs `build/bh.us.z64: OK` The function is now decompiled and matched. If not, proceed to the next steps for analysis and iteration.
+If build complete and checksums match: `build/bh.us.z64: OK`. The function is now decompiled and matched. If not, proceed to the next steps for analysis and iteration.
 
 ## Step 7: Disassemble Generated Code
 
@@ -100,14 +77,14 @@ View the compiled assembly to compare visually:
 
 ```bash
 docker exec -it b3619d5e5b69c8a44ca914f1925110d8e87e334595f9eff7dce3ac854f4d6a1e \
-  bash -c "cd /bh && mips-linux-gnu-objdump -d build/src.us/main_1000.c.o | grep -A 30 'isButtonNewlyPressed>:'"
+  bash -c "cd /bh && mips-linux-gnu-objdump -d build/src.us/main/1000.c.o | grep -A 30 'func_80000D0C_190C>:'"
 ```
 
 ## Step 8: Compare with Original
 
 Place the original assembly and generated assembly side-by-side:
 
-**Original** (from `asm/nonmatchings/main_1000/isButtonNewlyPressed.s`):
+**Original** (from `asm/nonmatchings/core/1000/func_80000D0C_190C.s`):
 
 - Note instruction order, registers, immediates, branch conditions
 
@@ -117,12 +94,11 @@ Place the original assembly and generated assembly side-by-side:
 
 ## Step 9: Iterate To Resolve Differences
 
-**Functional equivalence**: If both paths produce the same output for all inputs, the code is functionally correct.
-
 **Byte-perfect matching**: Requires iterating:
 
-Rewrite C code to match original logic more closely
-Read file `DecompHints.md` for common patterns and pitfalls
+Rewrite C code to match original logic more closely.
+Read file `DecompHints.md` for common patterns and pitfalls.
+Rebuild and re-compare until the generated assembly is identical to the original.
 
 ## Step 10: Mark as Complete
 

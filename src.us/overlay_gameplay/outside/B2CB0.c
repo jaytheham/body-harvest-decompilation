@@ -2,7 +2,22 @@
 #include "common.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A3D00_B2CB0.s")
+void func_800A3D00_B2CB0(u8 arg0, s16 arg1, s16 arg2, s32 arg3) {
+    if (!(D_80048198[arg0].unk20 & 0x8000)) {
+        return;
+    }
+
+    func_80081E5C_90E0C(arg1);
+    if (D_8014DD5E[arg1][0] == 0) {
+        if (arg2 == D_80048198[arg0].unk4B) {
+            D_80048198[arg0].unk20 &= ~0x8000;
+            return;
+        }
+
+        func_80081C84_90C34(arg1, (D_80048198[arg0].unk4B * 0x10) + arg3);
+        D_80048198[arg0].unk4B++;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A3DC8_B2D78.s")
 

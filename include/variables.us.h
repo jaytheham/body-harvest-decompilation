@@ -114,6 +114,7 @@ extern u8 D_80149449;
 extern u8 D_8014944A;
 extern u8 D_8014944B;
 extern s32 D_80149B44;
+extern s16 D_8014DD5E[][8];
 extern Unk8014F6D0 D_8014F6D0[0x10];
 extern s32 D_8014F800;
 
