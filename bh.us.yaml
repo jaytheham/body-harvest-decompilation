@@ -222,8 +222,13 @@ segments:
     start: 0x14A8A0
 
   - name: overlay_gameplay_inside
-    type: bin
+    type: code
     start: 0x158330
+    vram: 0x80070270
+    exclusive_ram_id: 80070270
+    overlay: true
+    subsegments:
+      - [0x158330, asm, overlay_gameplay/inside/158330]
 
   - name: overlay_gameplay_inside_data
     type: bin

@@ -1,3 +1,5 @@
+https://github.com/zestydevy/dinosaur-planet/blob/master/docs/Guide.md
+
 https://hackmd.io/vPmcgdaFSlq4R2mfkq4bJg
 https://github.com/n64decomp/oot/blob/master/docs/guides/-O2%20decompilation%20(for%20IDO%205.3).md
 https://github.com/zeldaret/mm/tree/main/docs/tutorial
@@ -32,4 +34,6 @@ continueOn &= 1;
 
 If a branch instruction's registers are reversed, reversing the order in C may help. If not, and one is a literal value, try putting the literal into a var.
 
-If you see `+ 1` happening to a var in a loop consider it may be a `for(;;)` loop
+If you see `+ 1` happening to a var in a loop consider it may be a `for(;;)` loop.
+
+If you see missing `b` after another type of branch you may have if `if` that needs its `else` added.
