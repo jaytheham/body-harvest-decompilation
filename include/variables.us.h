@@ -123,7 +123,9 @@ extern s32 D_8014945C;
 extern s32 isCheatingEnabled; // 80149460
 extern s32 D_80149B44;
 extern u8 D_8014D200[];
+extern u16 D_8014D298[];
 extern s32 D_8014D2E8;
+extern s32 D_8014D2EC;
 extern u8 D_8014D408[]; // unknown size, maybe 0x101
 extern u8 D_8014D509;
 extern u8 D_8014D50A;
@@ -144,6 +146,7 @@ extern u32 D_80222A30[];
 extern VehicleSpec D_80257A00[0x14];
 // 259090 building specs?
 // 259490 vehicle instances?
+extern s8 D_80259D92[];
 extern Unk80259D98 D_80259D98[];
 
 #endif

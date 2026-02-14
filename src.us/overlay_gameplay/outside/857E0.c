@@ -1,7 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-
 s32 func_80076830_857E0(void) {
 	s32 index;
 	u8* ptr;
@@ -18,7 +17,26 @@ s32 func_80076830_857E0(void) {
 	return value;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80076868_85818.s")
+void func_80076868_85818(s32 arg0) {
+	s32 i;
+	u16* ptr;
+
+	i = 0;
+	if (D_8014D2EC > 0) {
+		ptr = D_8014D298;
+		do {
+			if (arg0 == *ptr) {
+				func_800769A8_85958(i);
+			}
+			i += 1;
+			ptr += 5;
+		} while (i < D_8014D2EC);
+	}
+
+	D_80259D92[arg0 * 0x50] = -1;
+	D_8014D2E8 -= 1;
+	D_8014D200[D_8014D2E8] = arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80076918_858C8.s")
 
