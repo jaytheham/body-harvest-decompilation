@@ -48,7 +48,7 @@ Run the build inside the container:
 
 ```bash
 docker exec -it bh-container \
-  bash -c "cd /bh && make clean && make --jobs"
+  bash -c "cd /bh && make clean && make -j QUIET=1"
 ```
 
 **Expected outcome**: Build completes (SHA1 check may fail, if generated assembly does not match target).
@@ -100,7 +100,7 @@ docker exec -it bh-container bash
 **Build:**
 
 ```bash
-docker exec -it bh-container bash -c "cd /bh && make --jobs"
+docker exec -it bh-container bash -c "cd /bh && make -j QUIET=1"
 ```
 
 **Disassemble single object:**
@@ -119,12 +119,12 @@ docker exec -it bh-container \
 
 ## Troubleshooting
 
-| Issue                             | Solution                                                  |
-| --------------------------------- | --------------------------------------------------------- |
-| `undeclared identifier`           | Add `extern` to `include/variables.us.h`                  |
-| IDO syntax error on casts         | Split into separate statements; avoid complex expressions |
-| Link error (missing symbol)       | Ensure symbol is declared with `extern` in a header       |
-| Build fails but creates no output | Check for `make` syntax in container; use `make --jobs`   |
-| Can't find function in objdump    | Verify function name matches; rebuild first               |
+| Issue                             | Solution                                                    |
+| --------------------------------- | ----------------------------------------------------------- |
+| `undeclared identifier`           | Add `extern` to `include/variables.us.h`                    |
+| IDO syntax error on casts         | Split into separate statements; avoid complex expressions   |
+| Link error (missing symbol)       | Ensure symbol is declared with `extern` in a header         |
+| Build fails but creates no output | Check for `make` syntax in container; use `make -j QUIET=1` |
+| Can't find function in objdump    | Verify function name matches; rebuild first                 |
 
 Important: build runs on linux, all file edits must use LF line endings.

@@ -147,6 +147,18 @@ IMG_CONVERT = $(PYTHON) $(TOOLS_DIR)/image_converter.py
 
 LIBRNCU  = $(TOOLS_DIR)/librncu.so
 
+# Build output control
+# Use QUIET=1 to hide successful compile/status output while keeping errors.
+QUIET ?= 0
+
+ifeq ($(QUIET),1)
+RUN = @tmp="$@.log"; { $(1); } >"$$tmp" 2>&1 || { status=$$?; cat "$$tmp" >&2; rm -f "$$tmp"; exit $$status; }; rm -f "$$tmp"
+PRINT = @:
+else
+RUN = @$(1)
+PRINT = @printf
+endif
+
 # Flags
 
 OPT_FLAGS      = -O2
@@ -268,42 +280,42 @@ distclean: clean
 
 $(TARGET).elf: $(BASENAME).ld $(BUILD_DIR)/$(LIBULTRA) $(O_FILES) $(LANG_RNC_O_FILES) $(IMAGE_O_FILES) $(RNC_O_FILES)
 	@$(LD) $(LD_FLAGS) $(LD_FLAGS_EXTRA) -o $@
-	@printf "[$(PINK) linker $(NO_COL)]  $<\n"
+	$(PRINT) "[$(PINK) linker $(NO_COL)]  $<\n"
 
 ifndef PERMUTER
 $(GLOBAL_ASM_O_FILES): $(BUILD_DIR)/%.c.o: %.c include/functions.$(VERSION).h include/variables.$(VERSION).h include/structs.$(VERSION).h
-	@$(CC_CHECK) $<
-	@printf "[$(YELLOW) syntax $(NO_COL)] $<\n"
+	$(call RUN,$(CC_CHECK) $<)
+	$(PRINT) "[$(YELLOW) syntax $(NO_COL)] $<\n"
 	@$(ASM_PROCESSOR) $(OPT_FLAGS) $< > $(BUILD_DIR)/$<
-	@$(CC) -c $(CFLAGS) $(OPT_FLAGS) $(LOOP_UNROLL) $(MIPSISET) -o $@ $(BUILD_DIR)/$<
+	$(call RUN,$(CC) -c $(CFLAGS) $(OPT_FLAGS) $(LOOP_UNROLL) $(MIPSISET) -o $@ $(BUILD_DIR)/$<)
 	@$(ASM_PROCESSOR) $(OPT_FLAGS) $< --post-process $@ \
 		--assembler "$(AS) $(ASFLAGS)" --asm-prelude $(ASM_PROCESSOR_DIR)/prelude.inc
-	@printf "[$(GREEN) ido5.3 $(NO_COL)]  $<\n"
+	$(PRINT) "[$(GREEN) ido5.3 $(NO_COL)]  $<\n"
 endif
 
 # non asm-processor recipe
 $(BUILD_DIR)/%.c.o: %.c
-	@$(CC_CHECK) $<
-	@printf "[$(YELLOW) syntax $(NO_COL)]  $<\n"
-	@$(CC) -c $(CFLAGS) $(OPT_FLAGS) $(LOOP_UNROLL) $(MIPSISET) -o $@ $<
-	@printf "[$(GREEN) ido5.3 $(NO_COL)]  $<\n"
+	$(call RUN,$(CC_CHECK) $<)
+	$(PRINT) "[$(YELLOW) syntax $(NO_COL)]  $<\n"
+	$(call RUN,$(CC) -c $(CFLAGS) $(OPT_FLAGS) $(LOOP_UNROLL) $(MIPSISET) -o $@ $<)
+	$(PRINT) "[$(GREEN) ido5.3 $(NO_COL)]  $<\n"
 
 # use modern gcc or IDO for data
 $(BUILD_DIR)/$(SRC_DIR)/data/%.c.o: $(SRC_DIR)/data/%.c
-	@$(DCC) -c $(DCC_CFLAGS) -o $@ $<
-	@printf "[$(GREEN)  data  $(NO_COL)]  $<\n"
+	$(call RUN,$(DCC) -c $(DCC_CFLAGS) -o $@ $<)
+	$(PRINT) "[$(GREEN)  data  $(NO_COL)]  $<\n"
 
 $(BUILD_DIR)/%.s.o: %.s
 	@$(AS) $(ASFLAGS) -o $@ $<
-	@printf "[$(GREEN)   as   $(NO_COL)]  $<\n"
+	$(PRINT) "[$(GREEN)   as   $(NO_COL)]  $<\n"
 
 $(BUILD_DIR)/%.bin.o: %.bin
 	@$(LD) -r -b binary -o $@ $<
-	@printf "[$(PINK) linker $(NO_COL)]  $<\n"
+	$(PRINT) "[$(PINK) linker $(NO_COL)]  $<\n"
 
 $(TARGET).bin: $(TARGET).elf
 	@$(OBJCOPY) $(OBJCOPYFLAGS) $< $@
-	@printf "[$(CYAN) objcpy $(NO_COL)]  $<\n"
+	$(PRINT) "[$(CYAN) objcpy $(NO_COL)]  $<\n"
 
 $(TARGET).z64: $(TARGET).bin
 	@cp $< $@
@@ -316,7 +328,7 @@ $(BUILD_DIR)/$(LIBULTRA): $(LIBULTRA)
 rnc/%.bin: %.bin
 	@mkdir -p rnc/assets/levels
 	@$(RNCU) $< $@
-	@printf "[$(RED) rnc u. $(NO_COL)]  $<\n"
+	$(PRINT) "[$(RED) rnc u. $(NO_COL)]  $<\n"
 
 $(RNC64): $(TOOLS_DIR)/rnc_propack_source/main.c
 	make -C $(TOOLS_DIR)/rnc_propack_source rnc64
@@ -328,63 +340,63 @@ $(LIBRNCU): $(TOOLS_DIR)/rncu.c
 %.dat.rnc.json: %.dat.rnc
 	@mkdir -p $$(dirname $@)
 	@$(PYTHON) $(TOOLS_DIR)/lang2json.py $< $@
-	@printf "[$(YELLOW)  lang  $(NO_COL)]  $<\n"
+	$(PRINT) "[$(YELLOW)  lang  $(NO_COL)]  $<\n"
 
 $(BUILD_DIR)/%.dat: %.dat.rnc.json
 	@mkdir -p $$(dirname $@)
 	@$(PYTHON) $(TOOLS_DIR)/lang2json.py $< $@ --encode
-	@printf "[$(RED2)  lang  $(NO_COL)]  $<\n"
+	$(PRINT) "[$(RED2)  lang  $(NO_COL)]  $<\n"
 
 # compressed images
 $(BUILD_DIR)/%.rgba16: %.rgba16.rnc.png
 	@mkdir -p $$(dirname $@)
 	@$(IMG_CONVERT) rgba16 $< $@
-	@printf "[$(GREEN) rgba16 $(NO_COL)]  $<\n"
+	$(PRINT) "[$(GREEN) rgba16 $(NO_COL)]  $<\n"
 
 $(BUILD_DIR)/%.i4: %.i4.rnc.png
 	@mkdir -p $$(dirname $@)
 	@$(IMG_CONVERT) i4 $< $@
-	@printf "[$(GREEN)   i4   $(NO_COL)]  $<\n"
+	$(PRINT) "[$(GREEN)   i4   $(NO_COL)]  $<\n"
 
 # uncompressed images
 $(BUILD_DIR)/%.rgba16.png: %.rgba16.png
 	@mkdir -p $$(dirname $@)
 	@$(IMG_CONVERT) rgba16 $< $@
-	@printf "[$(GREEN) rgba16 $(NO_COL)]  $<\n"
+	$(PRINT) "[$(GREEN) rgba16 $(NO_COL)]  $<\n"
 
 $(BUILD_DIR)/%.i4.png: %.i4.png
 	@mkdir -p $$(dirname $@)
 	@$(IMG_CONVERT) i4 $< $@
-	@printf "[$(GREEN)   i4   $(NO_COL)]  $<\n"
+	$(PRINT) "[$(GREEN)   i4   $(NO_COL)]  $<\n"
 
 $(BUILD_DIR)/%.i8.png: %.i8.png
 	@mkdir -p $$(dirname $@)
 	@$(IMG_CONVERT) i8 $< $@
-	@printf "[$(GREEN)   i8   $(NO_COL)]  $<\n"
+	$(PRINT) "[$(GREEN)   i8   $(NO_COL)]  $<\n"
 
 $(BUILD_DIR)/%.ia16.png: %.ia16.png
 	@mkdir -p $$(dirname $@)
 	@$(IMG_CONVERT) ia16 $< $@
-	@printf "[$(GREEN)  ia16  $(NO_COL)]  $<\n"
+	$(PRINT) "[$(GREEN)  ia16  $(NO_COL)]  $<\n"
 
 $(BUILD_DIR)/%.ci4.png: %.ci4.png
 	@mkdir -p $$(dirname $@)
 	@$(IMG_CONVERT) ci4 $< $@
-	@printf "[$(GREEN)  ci4   $(NO_COL)]  $<\n"
+	$(PRINT) "[$(GREEN)  ci4   $(NO_COL)]  $<\n"
 
 $(BUILD_DIR)/%.pal: %.ci4.png
 	@mkdir -p $$(dirname $@)
 	@$(IMG_CONVERT) palette $< $@
-	@printf "[$(GREEN)  pal   $(NO_COL)]  $<\n"
+	$(PRINT) "[$(GREEN)  pal   $(NO_COL)]  $<\n"
 
 # BUILD_DIR prefix to suppress circular dependency
 $(BUILD_DIR)/%.png.o: $(BUILD_DIR)/%.png
 	@$(LD) -r -b binary -o $@ $<
-	@printf "[$(PINK) linker $(NO_COL)]  $<\n"
+	$(PRINT) "[$(PINK) linker $(NO_COL)]  $<\n"
 
 $(BUILD_DIR)/%.pal.o: $(BUILD_DIR)/%.pal
 	@$(LD) -r -b binary -o $@ $<
-	@printf "[$(PINK) linker $(NO_COL)]  $<\n"
+	$(PRINT) "[$(PINK) linker $(NO_COL)]  $<\n"
 
 
 # rnc compress
@@ -392,17 +404,17 @@ $(BUILD_DIR)/%.pal.o: $(BUILD_DIR)/%.pal
 	@$(RNC64) p $< $@ /f >/dev/null
 	@$(PYTHON) $(TOOLS_DIR)/pad.py $@ $@.pad
 	@mv $@.pad $@
-	@printf "[$(RED) rnc p. $(NO_COL)]  $<\n"
+	$(PRINT) "[$(RED) rnc p. $(NO_COL)]  $<\n"
 
 $(BUILD_DIR)/%.collision.rnc: %.collision.rnc
 	@$(RNC64) p $< $@ /f >/dev/null
 	@$(PYTHON) $(TOOLS_DIR)/pad.py $@ $@.pad
 	@mv $@.pad $@
-	@printf "[$(RED) rnc p. $(NO_COL)]  $<\n"
+	$(PRINT) "[$(RED) rnc p. $(NO_COL)]  $<\n"
 
 %.rnc.o: %.rnc
 	@$(LD) -r -b binary -o $@ $<
-	@printf "[$(PINK) linker $(NO_COL)]  $<\n"
+	$(PRINT) "[$(PINK) linker $(NO_COL)]  $<\n"
 
 # progress
 progress.csv: progress.main.csv progress.overlay1.csv
