@@ -19,23 +19,20 @@ s32 func_80076830_857E0(void) {
 
 void func_80076868_85818(s32 arg0) {
 	s32 i;
-	u16* ptr;
+	s32* ptr_count;
+	s8 neg_one;
 
-	i = 0;
-	if (D_8014D2EC > 0) {
-		ptr = D_8014D298;
-		do {
-			if (arg0 == *ptr) {
-				func_800769A8_85958(i);
-			}
-			i += 1;
-			ptr += 5;
-		} while (i < D_8014D2EC);
+	for (i = 0; i < D_8014D2EC; i++) {
+		if (arg0 == *(u16*)D_8014D298[i]) {
+			func_800769A8_85958(i);
+		}
 	}
 
-	D_80259D92[arg0 * 0x50] = -1;
-	D_8014D2E8 -= 1;
-	D_8014D200[D_8014D2E8] = arg0;
+	neg_one = -1;
+	D_80259D92[arg0][0] = neg_one;
+	ptr_count = &D_8014D2E8;
+	*ptr_count = *ptr_count - 1;
+	D_8014D200[*ptr_count] = (u8)arg0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80076918_858C8.s")

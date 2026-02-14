@@ -101,3 +101,38 @@ Example shape:
 `} while (i < D_count);`
 
 Using `ptr += 5` (instead of byte casts) helps IDO emit `addiu ptr, ptr, 0xA` and keep the compare/increment ordering aligned with `bnel` delay-slot behavior.
+
+### Constant encoding for -1 vs 255
+
+When storing -1 to a `u8` array element, the compiler may optimize the constant to 255 (0x00FF) instead of -1 (0xFFFF), causing a mismatch in the immediate encoding.
+
+To force the exact encoding `addiu reg, zero, -1` (0xFFFF), use a temporary `s8` variable:
+
+```c
+s8 neg_one = -1;
+byteArray[index] = neg_one;
+```
+
+This prevents the compiler from optimizing the constant and ensures the correct instruction encoding.
+
+### Pointer to global for register allocation
+
+When decrementing a global variable and immediately using its new value, using a pointer can improve register allocation:
+
+Instead of:
+
+```c
+temp = D_global - 1;
+D_global = temp;
+array[temp] = value;
+```
+
+Use:
+
+```c
+s32* ptr = &D_global;
+*ptr = *ptr - 1;
+array[*ptr] = value;
+```
+
+This pattern helps IDO keep the address in a register (v0) and reuse it for both the load-modify-store and the subsequent array index, matching the original assembly's register usage (t9 → t0 pattern).
