@@ -58,6 +58,7 @@ typedef enum Level {
 
 extern Unk80042DA8 D_80042DA8;
 extern u8 D_80042DB8;
+extern u8 D_80043243;
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
