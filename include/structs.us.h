@@ -111,6 +111,13 @@ typedef struct {
 } Unk8014F6D0;
 
 typedef struct {
+    u8 unk0;
+    u8 pad1[3];
+    s32 unk4;
+    void* unk8;
+} Unk80042DA8;
+
+typedef struct {
 // 0x00 xxxxyyyy yyyy = Model pointer
 // 0x0C xxxxxxxx Collision model size
 // 0x18 xxxxxxxx Vehicle name modifier

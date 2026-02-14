@@ -11,7 +11,15 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80000B14_1714.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80000CD4_18D4.s")
+void* (*func_80000CD4_18D4(Unk80042DA8** arg0))(void) {
+    if (D_80042DA8.unk0 == 0) {
+        D_80042DA8.unk4 = 0;
+        D_80042DA8.unk8 = &D_80042DB8;
+        D_80042DA8.unk0 = 1U;
+    }
+    *arg0 = &D_80042DA8;
+    return &func_80000B14_1714;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80000D0C_190C.s")
 

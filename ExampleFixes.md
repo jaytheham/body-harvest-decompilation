@@ -171,14 +171,14 @@ The order in which local variables are declared can affect which registers the c
 \\\c
 // This order produces t8, t9, t2, t3 for args
 s32 temp_t0;
-Unk8014D298 *temp_v1;
+Unk8014D298 \*temp_v1;
 \\\
 
 vs
 
 \\\c
 // This order produced t9, t2, t3, t4 for args
-Unk8014D298 *temp_v1;
+Unk8014D298 \*temp_v1;
 s32 temp_t0;
 \\\
 
@@ -193,8 +193,8 @@ When a global variable is loaded before a function call and used after, the comp
 \\\c
 temp_t0 = D_8014D2EC;
 if (temp_t0 == 8) {
-    func_800769A8_85958(0);
-    temp_t0 = D_8014D2EC;  // Explicit reload
+func_800769A8_85958(0);
+temp_t0 = D_8014D2EC; // Explicit reload
 }
 // Use temp_t0...
 \\\
@@ -208,7 +208,7 @@ For arrays of small structs (e.g., 0xA/10 bytes), accessing via pointer vs direc
 **Pointer pattern:**
 
 \\\c
-Unk8014D298 *entry = &D_8014D298[index];
+Unk8014D298 \*entry = &D_8014D298[index];
 entry->unk0 = value0;
 entry->unk8 = value8;
 // Keeps base in register v1
@@ -223,3 +223,53 @@ D_8014D298[index].unk8 = value8;
 \\\
 
 The pointer pattern is generally closer to original code when you see the assembly compute a base address once and reuse it for multiple stores.
+
+### Function pointer return types and forward declarations
+
+When a function returns the address of another function (function pointer), proper declarations are critical:
+
+**Function pointer return syntax:**
+
+```c
+void* (*func_80000CD4_18D4(Unk80042DA8** arg0))(void) {
+    // ...
+    return &func_80000B14_1714;
+}
+```
+
+This reads as: "a function that takes a pointer-to-pointer and returns a function pointer (that returns void\*)."
+
+**Forward declaration requirement:**
+
+```c
+void* func_80000B14_1714(void);  // Must declare before returning its address
+```
+
+Without the forward declaration, the compiler will error with "undeclared identifier" even if the function is defined in the same file (as a GLOBAL_ASM pragma).
+
+### Struct padding for alignment
+
+When defining structs based on assembly access patterns, remember to add explicit padding for alignment:
+
+**Without padding (incorrect):**
+
+```c
+typedef struct {
+    u8 unk0;
+    s32 unk4;    // Misaligned!
+    void* unk8;
+} Unk;
+```
+
+**With padding (correct):**
+
+```c
+typedef struct {
+    u8 unk0;
+    u8 pad1[3];  // Explicit padding for alignment
+    s32 unk4;
+    void* unk8;
+} Unk;
+```
+
+The assembly will show `lbu` at offset 0x0, `sw` at offset 0x4, and `sw` at offset 0x8. The padding bytes ensure field offsets match the assembly exactly.

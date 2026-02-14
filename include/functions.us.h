@@ -4,6 +4,7 @@
 #include "functions.h"
 
 // core
+void* func_80000B14_1714(void);
 void func_8000108C_1C8C(s32);
 s32 isButtonNewlyPressed(u8, u16);
 void func_80002AB4_36B4(s32, u8*); // getSaveFileName
