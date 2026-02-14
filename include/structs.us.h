@@ -74,7 +74,36 @@ typedef struct {
 } Unk80048198;
 
 typedef struct {
-    u8 pad0[0x30];
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    s16 unk18;
+    s16 unk1A;
+    s16 unk1C;
+    s16 unk1E;
+    u8 pad20[0x14];
+    s16 unk34;
+    s16 unk36;
+    u8 pad38[0x4];
+    s16 unk3C;
+    s16 unk3E;
+    u8* unk40;
+} Unk80052AE8; // size 0x44
+
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    u8 pad10[0x04];
+    f32 unk14;
+    u8 pad18[0x04];
+    s16 unk1C;
+    s16 unk1E;
+    u8 pad20[0x10];
     s32 unk30;
     s16 unk34;
     u8 pad36[0x02];
@@ -108,6 +137,13 @@ typedef struct {
     u8 unk61;
     u8 pad62[0xE];
 } VehicleSpec;
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    u8 pad4[0x4];
+    s16 unk8;
+} Unk80259490;
 
 typedef struct {
     u32 unk0;

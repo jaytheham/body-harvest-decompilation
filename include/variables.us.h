@@ -61,6 +61,12 @@ extern OSPfs D_80047610;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
 extern u8 D_80047678;
 extern u32 D_800313CC;
+extern s16 D_800313C8;
+extern s32 D_80031410;
+extern s32 D_80031414;
+extern s8 D_800314C4;
+extern u8 D_8003DFD4[];
+extern u8 D_8003E000[];
 extern Unk80047588 D_80047588;
 extern u32 D_8004767C;
 extern u32 D_80047680;
@@ -75,25 +81,45 @@ extern f32 D_80047954;
 extern f32 D_80047958;
 extern f32 D_8004795C;
 extern s16 D_80047F7E; // Last item of an array of powerup values?
+extern s32 D_80047B70;
+extern s8 D_80047F80;
+extern s32 D_80047F94;
+extern u8 D_80047F97;
+extern s32 D_80047F98;
 extern s32 currentSaveFileIndex;
 extern Level currentLevel; // 80047f90
 extern s32 D_80047F9C;
 extern s32 D_80047FA0;
 extern s16 D_80048026;
+extern s32 D_80048034;
+extern u8 D_80048138[];
+extern s8 D_80048168;
 extern s16 D_8004816A;
+extern s16 D_8004816E;
+extern s16 D_80048170;
+extern s16 D_80048176;
 extern s32 D_80048188;
 extern Unk80048198 D_80048198[];
 extern s32 D_8004D148;
 extern s32 D_8004D150;
 extern u8 D_8004D160;
+extern s16 D_8004DC60;
+extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
+extern u8 D_8004DCD0[];
 
 // 50AD8 building instances?
 extern u32 D_80052A90;
+extern s32 D_80052A8C;
+extern u8* D_80052A94;
 extern Unk80052A98 D_80052A98[];
 extern s16 D_80052AC8;
+extern s8 D_80052ACC;
 extern u8 D_80052ACD;
 extern s32 D_80052AD0;
+extern s32 D_80052AD8;
+extern Unk80052AE8 D_80052AE8;
+extern s32 D_80052550;
 extern GameplayMode gameplayMode; // 80052adc
 extern Unk80052B2C* D_80052B2C;
 extern Unk80052B34* D_80052B34;
@@ -103,10 +129,34 @@ extern s8 D_8013D890; // Triggers beacon warp
 extern u8 D_8013D894; // Beacon warp destination
 extern s32 D_8013FCD0;
 
+extern u8 D_80140D90[];
+extern u8 D_80140DA8[];
+extern u8 D_80140DC0[];
+extern f32 D_801411A0;
 extern u8 D_80142740[]; // Found parent %d
 extern u8 D_80142790[]; // Activate Beacon %d
 extern u8 D_801427D8[]; // teleport to:%d
 extern u8 D_80142820[]; // Giving delayed powerup %d
+extern s32 D_80149380;
+extern s32 D_80149398;
+extern s32 D_8014939C;
+extern s32 D_801493A0;
+extern s32 D_801493A4;
+extern s32 D_801493CC;
+extern s16 D_801493D4;
+extern s16 D_801493D8;
+extern s16 D_801493DC;
+extern s16 D_801493E0;
+extern s16 D_801493E2;
+extern f32 D_801493E8;
+extern f32 D_801493EC;
+extern f32 D_801493F0;
+extern f32 D_801493F4;
+extern f32 D_801493F8;
+extern f32 D_801493FC;
+extern f32 D_80149400;
+extern s16 D_80149404;
+extern s32 D_80149408;
 extern s16 D_80149406;
 extern s16 D_80149430;
 extern s16 D_80149432;
@@ -134,10 +184,14 @@ extern Unk8014F6D0 D_8014F6D0[0x10];
 extern s32 D_8014F800;
 
 extern u8 D_80151DD0;
+extern s16 D_80152C90;
+extern s16 D_80157590;
 extern s16 D_80157A3C;
 extern s16 D_80159260;
 extern s32 D_80159320;
 extern s16 D_8015FAEE;
+
+extern u8 D_801FEA30[];
 
 extern u32 D_80222A30[];
 // 223780 alien waves?
@@ -145,7 +199,7 @@ extern u32 D_80222A30[];
 // 25667C alien specs?
 extern VehicleSpec D_80257A00[0x14];
 // 259090 building specs?
-// 259490 vehicle instances?
+extern Unk80259490 D_80259490; // vehicle instances?
 extern u8 D_80259D92[][0x50];
 extern Unk80259D98 D_80259D98[];
 
