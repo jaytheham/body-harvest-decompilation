@@ -23,24 +23,25 @@ Convert the named N64 assembly function to C89 code, compile it using IDO 5.3 in
 
 Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly.
 Use mips_to_c to create an initial C implementation from the original assembly and replace the `#pragma GLOBAL_ASM` line with the generated C code.
-All edited files must use LF line endings.
 
-## Step 2: Use runSubagent to independently check and fix each of the following common patterns.
+## Step 2: Use runSubagent to independently add missing declarations.
 
 - Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
 - Add or update declarations for any called functions in `include/functions.us.h` if they aren't defined in `src.us/` yet.
-- Simplify the generated code and make it more human-readable.
+
+## Step 3: Use runSubagent to fix all of the following common patterns.
+
 - Update the code to use struct/array access instead of pointer arithmetic.
-- All struct field accesses use -> or . operators
-- No void\* parameters that should be typed structs
-- Struct sizes match the assembly access patterns
-- If an arg or `v0` return value is being `& 0xFF` that's a hint that it's actually u8/s8.
+- All struct field accesses use -> or . operators.
+- Update void\* parameters that should be typed structs.
+- Struct sizes match the assembly access patterns.
+- Update arg & return types - if an arg or `v0` return value is being `& 0xFF` that's a hint that it's actually u8/s8.
 - Constructions like `(arg0 < 0x9C) ^ 1` should be converted into a more natural form `arg0 >= 0x9C`.
 - Replace goto-based control flow with structured control flow (if/else, for, while).
 - Replace if-do-while and do-while loops with for(;;) or while() loops where appropriate.
 
-## Step 3: Build in Docker
+## Step 4: Build in Docker
 
 Run the build inside the container:
 
@@ -54,21 +55,21 @@ Run the build inside the container:
 
 If build complete and checksums match: `build/bh.us.z64: OK`. The function is now decompiled and matched and you can stop work. If not, proceed to the next steps for analysis and iteration.
 
-## Step 4: Compare with Original
+## Step 5: Compare with Original
 
 Compare the original assembly and generated assembly to identify differences:
 
 Note instruction order, registers, immediates, branch conditions
 
-## Step 5: Iterate To Resolve Differences
+## Step 6: Iterate To Resolve Differences
 
 Rewrite C code to match assumed original intent more closely. Think about how a person would have originally written the code in C to produce the assembly you see.
 Read file `DecompHints.md` and `ExampleFixes.md` for common patterns and pitfalls.
 Rebuild and re-compare until the generated assembly is identical to the original. Once the build returns `build/bh.us.z64: OK` proceed to the final step.
 
-## Step 6: Finalize
+## Step 7: Finalize
 
-Look back at the changes you had to make, then update `ExampleFixes.md` with any new patterns or insights you discovered during the process to help future decomp.
+Look back at the C changes you had to make, then update `ExampleFixes.md` with any new patterns or insights you discovered during the process to help future decomp.
 
 ## Troubleshooting
 
@@ -79,5 +80,3 @@ Look back at the changes you had to make, then update `ExampleFixes.md` with any
 | Link error (missing symbol)       | Ensure symbol is declared with `extern` in a header         |
 | Build fails but creates no output | Check for `make` syntax in container; use `make -j QUIET=1` |
 | Can't find function in objdump    | Verify function name matches; rebuild first                 |
-
-Important: build runs on linux, all file edits must use LF line endings.

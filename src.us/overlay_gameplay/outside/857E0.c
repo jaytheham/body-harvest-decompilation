@@ -74,7 +74,23 @@ void func_800786EC_8769C(u16* arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078828_877D8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078B58_87B08.s")
+s32 func_80078B58_87B08(s16 arg0, s16 arg1) {
+    s32 sp24;
+    s32 temp_t0;
+    s32 value;
+    u16 *ptr;
+
+    ptr = func_800785B4_87564(arg0, arg1, &sp24);
+    if (ptr == NULL) {
+        return -1;
+    }
+    temp_t0 = sp24 * 4;
+    value = (s32) (*ptr & (0xF << temp_t0)) >> temp_t0;
+    if (value >= 0xE) {
+        return -1;
+    }
+    return value;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078BC8_87B78.s")
 
