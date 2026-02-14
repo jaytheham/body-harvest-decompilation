@@ -161,3 +161,65 @@ While these are mathematically equivalent, IDO generates different instruction s
 - Shift right
 
 The simplified pattern can cause the compiler to optimize differently and generate non-matching assembly. Always preserve the mask-then-shift order when it appears in mips_to_c output.
+
+### Variable declaration order affects register allocation
+
+The order in which local variables are declared can affect which registers the compiler assigns to them:
+
+**Example from func_80076918_858C8:**
+
+\\\c
+// This order produces t8, t9, t2, t3 for args
+s32 temp_t0;
+Unk8014D298 *temp_v1;
+\\\
+
+vs
+
+\\\c
+// This order produced t9, t2, t3, t4 for args
+Unk8014D298 *temp_v1;
+s32 temp_t0;
+\\\
+
+While both are functionally correct, the register allocation can differ by 1 register number. If you're very close to matching but registers are off by one (e.g., using t2 instead of t1), try reordering local variable declarations.
+
+### Global reload after function call
+
+When a global variable is loaded before a function call and used after, the compiler may reload it fresh or keep the cached value depending on the code structure:
+
+**Original pattern (reloads):**
+
+\\\c
+temp_t0 = D_8014D2EC;
+if (temp_t0 == 8) {
+    func_800769A8_85958(0);
+    temp_t0 = D_8014D2EC;  // Explicit reload
+}
+// Use temp_t0...
+\\\
+
+Without the explicit reload, the compiler might cache D_8014D2EC's address and reuse it, changing the instruction pattern from \lui/lw\ to \lw (cached_reg)\.
+
+### Struct array access patterns
+
+For arrays of small structs (e.g., 0xA/10 bytes), accessing via pointer vs direct array indexing affects codegen:
+
+**Pointer pattern:**
+
+\\\c
+Unk8014D298 *entry = &D_8014D298[index];
+entry->unk0 = value0;
+entry->unk8 = value8;
+// Keeps base in register v1
+\\\
+
+**Direct access pattern:**
+
+\\\c
+D_8014D298[index].unk0 = value0;
+D_8014D298[index].unk8 = value8;
+// May recalculate base each time
+\\\
+
+The pointer pattern is generally closer to original code when you see the assembly compute a base address once and reuse it for multiple stores.

@@ -4,19 +4,7 @@
 typedef struct {
     u8 pad0[9];
     u8 unk9;
-} UnkArg0;
-
-typedef struct {
-    f32 unk0;
-    f32 unk4;
-    f32 unk8;
-    f32 unkC;
-    u8 pad10[4];
-    f32 unk14;
-    u8 pad18[0x24];
-    s16 unk3C;
-    s16 unk3E;
-} UnkArg1;
+} func_80070420_7F3D0_UnkArg0;
 
 typedef struct {
     u16 unk0;
@@ -112,6 +100,8 @@ typedef struct {
     s16 unk34;
     u8 pad36[0x02];
     Unk80052B34* unk38;
+    s16 unk3C;
+    s16 unk3E;
 } Unk80052B2C;
 
 typedef struct {

@@ -27,7 +27,7 @@ s32 func_800703B0_7F360(s16 arg0, s16 arg1) {
     return var_v1;
 }
 
-void func_80070420_7F3D0(UnkArg0* arg0) {
+void func_80070420_7F3D0(func_80070420_7F3D0_UnkArg0* arg0) {
     func_8007679C_8574C(arg0->unk9);
 }
 
@@ -68,7 +68,7 @@ void func_80071178_80128(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80071228_801D8.s")
 
-void func_80071E88_80E38(UnkArg1* arg0) {
+void func_80071E88_80E38(Unk80052B2C* arg0) {
     D_80149430 = (s16) arg0->unkC;
     D_80149432 = (s16) arg0->unk14;
     D_80149434 = arg0->unk3C;
