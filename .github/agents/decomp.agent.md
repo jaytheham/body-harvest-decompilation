@@ -1,6 +1,7 @@
 ---
 description: Decompile a function from the Body Harvest N64 game
-tools: ["search", "edit/editFiles", "execute", "read", "agent/runSubagent"]
+tools:
+  ["search", "edit/editFiles", "execute", "read", "agent/runSubagent", "todo"]
 ---
 
 # Decompilation Workflow
