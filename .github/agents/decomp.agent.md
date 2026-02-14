@@ -87,7 +87,7 @@ Rebuild and re-compare until the generated assembly is identical to the original
 
 ## Step 8: Finalize
 
-Update `ExampleFixes.md` with any new patterns or insights you discovered during the process to help future contributors.
+Compare the original mips_to_c output with your final C code, then update `ExampleFixes.md` with any new patterns or insights you discovered during the process to help future decomp.
 
 ## Quick Reference: Docker Commands
 
