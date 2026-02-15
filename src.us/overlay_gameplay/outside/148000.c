@@ -92,4 +92,9 @@ s32 func_80139150_148100(u8 arg0, u16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B688_14A638.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B8C8_14A878.s")
+s32 func_8013B8C8_14A878(void) {
+    if (D_801601DC == 0) {
+        return 0;
+    }
+    return 1;
+}
