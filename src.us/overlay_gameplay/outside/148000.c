@@ -52,7 +52,9 @@ s32 func_80139150_148100(u8 arg0, u16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139778_148728.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013994C_1488FC.s")
+s16 func_8013994C_1488FC(u8 arg0) {
+    return D_80048140[D_80048138[D_801601B3[arg0 * 4]]];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139984_148934.s")
 
