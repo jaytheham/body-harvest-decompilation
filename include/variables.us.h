@@ -70,7 +70,10 @@ extern s32 D_80031414;
 extern s8 D_800314C4;
 extern u8 D_8003DFD4[];
 extern u8 D_8003E000[];
-extern Unk80047588 D_80047588;
+extern Unk80047588 D_80047588[];
+extern u16 D_800475D8[];
+extern u16 D_800475E0[];
+extern u32 D_800475F8;
 extern u32 D_8004767C;
 extern u32 D_80047680;
 extern u32 D_80047688;
@@ -79,6 +82,7 @@ extern u32 D_80047690;
 extern u32 D_80047698;
 extern s16 D_800476A0;
 extern s16 D_800476A2;
+extern s16 D_8004794A;
 extern u8 D_8004794C;
 extern f32 D_80047954;
 extern f32 D_80047958;
@@ -140,6 +144,9 @@ extern u8 D_80142740[]; // Found parent %d
 extern u8 D_80142790[]; // Activate Beacon %d
 extern u8 D_801427D8[]; // teleport to:%d
 extern u8 D_80142820[]; // Giving delayed powerup %d
+extern u8 D_80145A30; // select 
+extern u8 D_80145A38; // %d,
+extern u8 D_80145A3C; // .
 extern s32 D_80149380;
 extern s32 D_80149398;
 extern s32 D_8014939C;

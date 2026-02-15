@@ -10,6 +10,8 @@ typedef struct {
     u16 unk0;
     s8 unk2;
     s8 unk3;
+    s8 unk4;
+    s8 unk5;
 } Unk80047588;
 
 typedef struct {

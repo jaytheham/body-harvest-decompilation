@@ -18,7 +18,7 @@ It may be that the function params are incorrectly typed:
 | --- | --- |
 | `void func(s8 arg0, s8 arg1) {` | `void func(u8 arg0, u8 arg1) {` |
 
-If a char/short param is being `& 0xFF`/`& -xFFFF` in ASM it may not need to be in the c code and doing so will throw off the register alloc.
+If a char/short param is being `& 0xFF`/`& 0xFFFF` in ASM it may not need to be in the c code and doing so will throw off the register alloc.
 
 Rather than loading a value from an array/pointer into a temp variable manually to reference it multiple times - it may be correct to just directly reference the array/pointer every time: `D_80048198[arg0].unk10`
 

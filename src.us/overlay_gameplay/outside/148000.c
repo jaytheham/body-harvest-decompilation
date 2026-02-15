@@ -1,0 +1,79 @@
+#include <ultra64.h>
+#include "common.h"
+
+
+void func_80139050_148000(void) {
+    s32 var_s0;
+    u8* var_s1;
+
+    for (var_s1 = D_80048138, var_s0 = 0; var_s0 != 7; var_s0 += 1, var_s1 += 1){
+    
+        if (var_s0 == D_8004794A) {
+            func_8001CC6C_1D86C(&D_80145A30);
+        }
+        func_8001CC6C_1D86C(&D_80145A38, *var_s1);
+    }
+    func_8001CC6C_1D86C(&D_80145A3C);
+}
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801390F4_1480A4.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139150_148100.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801391DC_14818C.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801392FC_1482AC.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801393A0_148350.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139460_148410.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801394DC_14848C.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013958C_14853C.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801396A8_148658.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139778_148728.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013994C_1488FC.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139984_148934.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139B34_148AE4.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139BF8_148BA8.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139D58_148D08.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A1CC_14917C.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A218_1491C8.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A4C8_149478.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A630_1495E0.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A764_149714.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013AF58_149F08.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B004_149FB4.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B054_14A004.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B298_14A248.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B30C_14A2BC.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B384_14A334.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B480_14A430.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B534_14A4E4.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B5E4_14A594.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B688_14A638.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B8C8_14A878.s")
