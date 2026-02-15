@@ -43,8 +43,10 @@ s32 func_80139150_148100(u8 arg0, u16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801391DC_14818C.s")
 
+// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801392FC_1482AC.s")
 
+// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801393A0_148350.s")
 
 void func_80139460_148410(void) {
@@ -59,8 +61,10 @@ void func_80139460_148410(void) {
     D_801601D8 = -1;
 }
 
+// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801394DC_14848C.s")
 
+// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013958C_14853C.s")
 
 void func_801396A8_148658(s32 arg0) {
@@ -201,8 +205,10 @@ void func_8013B30C_14A2BC(void) {
     }
 }
 
+// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B384_14A334.s")
 
+// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B480_14A430.s")
 
 s32 func_8013B534_14A4E4(void) {
@@ -221,6 +227,7 @@ s32 func_8013B534_14A4E4(void) {
     return 0;
 }
 
+// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B5E4_14A594.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B688_14A638.s")
