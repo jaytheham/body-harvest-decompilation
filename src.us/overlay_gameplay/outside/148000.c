@@ -92,7 +92,37 @@ s16 func_8013994C_1488FC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139984_148934.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139B34_148AE4.s")
+void func_80139B34_148AE4(void) {
+    s32 temp_v1;
+    
+    D_801601E4 = 0;
+    D_801601E0 = 0;
+    D_801601DC = 0;
+    D_801601D8 = -1;
+    temp_v1 = 1;
+    *(s32*)&D_80257A1C = temp_v1;
+    D_801601D0 = 0;
+    D_8004794A = 0;
+    D_80047948 = temp_v1;
+    D_801601E8 = 0;
+    switch (currentLevel) {                         /* irregular */
+    default:
+        D_8003144C = 0;
+        return;
+    case 1:
+        D_8003144C = 0x5E;
+        return;
+    case 2:
+        D_8003144C = 0x5B;
+        return;
+    case 3:
+        D_8003144C = 0x5A;
+        return;
+    case 4:
+        D_8003144C = 0x5C;
+        return;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139BF8_148BA8.s")
 

@@ -68,6 +68,7 @@ extern s16 D_800313C8;
 extern s32 D_80031410;
 extern s32 D_80031414;
 extern u32 D_80031424[];
+extern s32 D_8003144C;
 extern s32 D_80031450;
 extern s8 D_800314C4;
 extern u8 D_8003DFD4[];
@@ -213,6 +214,7 @@ extern u8 D_801601D3;
 extern s32 D_801601D4;
 extern s32 D_801601D8;
 extern s32 D_801601DC;
+extern s32 D_801601E0;
 extern s32 D_801601E4;
 extern s32 D_801601E8;
 
