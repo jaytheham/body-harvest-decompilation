@@ -40,6 +40,27 @@ If you see missing `b` after another type of branch you may have if `if` that ne
 
 A variable being decremented and being checked for != 0 is also usually a `while (var--).`
 
+#### Getting `bnez` vs `beqz` after `slt`
+
+When you have assembly like:
+
+```
+slt $at, $a, $b      # $at = (a < b)
+bnez $at, label      # branch if a < b
+```
+
+To generate `bnez` instead of `beqz`, negate the condition and flip the if/else blocks:
+
+```c
+if (!(a < b)) {
+    // false case
+} else {
+    // true case (where bnez branches to)
+}
+```
+
+This makes the compiler branch to the else block when the condition is true, producing `bnez`.
+
 ### Delay-slot pointer setup
 
 For patterns like:
