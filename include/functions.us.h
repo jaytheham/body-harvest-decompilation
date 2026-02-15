@@ -100,6 +100,8 @@ void func_8012D824_13C7D4(void);
 void func_8012E258_13D208(void);
 void func_801390F4_1480A4(s16);
 s32 func_801391DC_14818C(u8, s16);
+void func_801392FC_1482AC(s32);
+s32 func_801393A0_148350(s32);
 void func_80139BF8_148BA8(void);
 void func_80139984_148934(void);
 void func_80139D58_148D08(void);
