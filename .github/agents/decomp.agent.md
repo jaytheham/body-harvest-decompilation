@@ -75,7 +75,7 @@ Rebuild and re-compare until the generated assembly is identical to the original
 
 ## Step 7: Finalize
 
-Look back at the C changes you had to make, then update `ExampleFixes.md` with any new patterns or insights you discovered during the process to help future decomp.
+If you had to make changes to the initial C code, think about whether there is some detectable pattern or insight, and if so update `ExampleFixes.md` with those discoveries to help future decomp.
 
 ## Troubleshooting
 

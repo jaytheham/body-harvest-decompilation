@@ -64,7 +64,14 @@ s16 func_8013994C_1488FC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139D58_148D08.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A1CC_14917C.s")
+void func_8013A1CC_14917C(void) {
+    if (D_80052B34->unk1A == 0) {
+        func_80139BF8_148BA8();
+    } else {
+        func_80139D58_148D08();
+    }
+    func_8013B004_149FB4();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A218_1491C8.s")
 

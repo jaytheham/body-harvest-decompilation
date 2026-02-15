@@ -99,7 +99,10 @@ void func_8012B26C_13A21C(void);
 void func_8012D824_13C7D4(void);
 void func_8012E258_13D208(void);
 s32 func_801391DC_14818C(u8, s16);
+void func_80139BF8_148BA8(void);
 void func_80139984_148934(void);
+void func_80139D58_148D08(void);
+void func_8013B004_149FB4(void);
 void func_8013B688_14A638(void);
 
 // overlay_level
