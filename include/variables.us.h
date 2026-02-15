@@ -207,6 +207,7 @@ extern s16 D_8015FAEE;
 extern u8 D_801601B3[];
 extern s32 D_801601CC;
 extern s32 D_801601D0;
+extern u8 D_801601D3;
 extern s32 D_801601D8;
 extern s32 D_801601DC;
 extern s32 D_801601E8;

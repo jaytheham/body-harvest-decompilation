@@ -96,7 +96,20 @@ void func_8013A1CC_14917C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A764_149714.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013AF58_149F08.s")
+void func_8013AF58_149F08(void) {
+    u8 i;
+
+    if (D_80157590 != 3) {
+        func_8013A630_1495E0();
+        if ((D_801601DC == 0) && (D_801601CC > 0)) {
+            func_8013A764_149714(D_801601D3);
+            return;
+        }
+        for (i = 0; i < D_801601CC; i++) {
+            func_8013A764_149714(i);
+        }
+    }
+}
 
 void func_8013B004_149FB4(void) {
     D_8004794A = D_801601B3[D_801601D0 * 4];
