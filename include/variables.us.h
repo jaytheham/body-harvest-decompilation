@@ -153,6 +153,7 @@ extern u8 D_80142820[]; // Giving delayed powerup %d
 extern u8 D_80145A30; // select 
 extern u8 D_80145A38; // %d,
 extern u8 D_80145A3C; // .
+extern u8 D_80145A8C;
 extern u8 D_80145AA4;
 extern s32 D_80149380;
 extern s32 D_80149398;

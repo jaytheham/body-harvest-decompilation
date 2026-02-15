@@ -41,6 +41,7 @@ s32 func_80139150_148100(u8 arg0, u16 arg1) {
     return 1;
 }
 
+// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801391DC_14818C.s")
 
 // Failed - sonnet 4.5
@@ -94,7 +95,65 @@ s16 func_8013994C_1488FC(u8 arg0) {
     return D_80048140[D_80048138[D_801601B3[arg0 * 4]]];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139984_148934.s")
+void func_80139984_148934(void) {
+    if (D_80047F98 == 0) {
+        D_80048140[0] = 0;
+        D_80048140[1] = 0;
+        D_80048140[2] = -0x8000;
+        D_80048140[3] = 0;
+        D_80048140[4] = 0;
+        D_80048140[5] = 0;
+        D_80048140[6] = 0;
+        D_80048140[7] = 0;
+        D_80048140[8] = -0x8000;
+        D_80048140[9] = 0;
+        D_80048140[10] = 0;
+        D_80048140[11] = -0x8000;
+        D_80048140[12] = -0x8000;
+        D_80048140[13] = -0x8000;
+        D_80048140[14] = 0;
+        D_80048140[16] = 0;
+        D_80048140[17] = 0;
+        D_80048140[15] = 0;
+        D_80048140[18] = 0;
+        D_80048140[19] = 0;
+    } else {
+        D_80048140[2] = -0x8000;
+        D_80048140[8] = -0x8000;
+        D_80048140[11] = -0x8000;
+        D_80048140[12] = -0x8000;
+        D_80048140[13] = -0x8000;
+    }
+    if (currentLevel == 5) {
+        func_801391DC_14818C(3, 0xA);
+        func_801391DC_14818C(5, 0x64);
+        func_801391DC_14818C(6, 5);
+        if (D_80052ACD & 0x10) {
+            func_800A8E18_B7DC8(0x15);
+            func_800A8E18_B7DC8(0x15);
+            func_800A8E18_B7DC8(0x19);
+            func_800A8E18_B7DC8(0x19);
+            func_800A8E18_B7DC8(0x17);
+            func_800A8E18_B7DC8(0x18);
+        }
+    }
+    if (D_80052ACD & 4) {
+        D_80031424[2] = 0xD;
+        D_80031424[3] = 0xF;
+        D_80031424[4] = 0xB;
+        D_80031424[5] = 0x6D;
+        D_80031424[6] = 0x66;
+        D_80031424[9] = 0x1D;
+    } else {
+        D_80031424[2] = 1;
+        D_80031424[3] = 2;
+        D_80031424[4] = 3;
+        D_80031424[5] = 4;
+        D_80031424[6] = 0x29;
+        D_80031424[9] = 0x14;
+    }
+    func_8001CC6C_1D86C(&D_80145A8C);
+}
 
 void func_80139B34_148AE4(void) {
     s32 temp_v1;
@@ -143,8 +202,10 @@ void func_8013A1CC_14917C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A218_1491C8.s")
 
+// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A4C8_149478.s")
 
+// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A630_1495E0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A764_149714.s")

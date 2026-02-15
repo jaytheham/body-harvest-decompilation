@@ -13,14 +13,15 @@ Convert the named N64 assembly function to C89 code, compile it using IDO 5.3 in
 
 ## Project Structure
 
-- `asm/`: Contains original assembly files from the ROM. Each function is in its own `.s` file.
+- `asm/`: Contains original assembly files from the ROM. In `nonmatchings/` each function is in its own `.s` file, others contain multiple functions.
 - `src.us/`: Contains C source files.
 - `include/`: Contains header files for variables, functions, and structs.
 - `build/`: Contains compiled object files and the final ROM image.
 
 ## Tools
 
-- `python tools/mips_to_c/m2c.py asm/nonmatchings/core/1000/func_80000D0C_190C.s` - Generate an initial C implementation from the original assembly.
+- Outside the docker container:`python tools/mips_to_c/m2c.py asm/nonmatchings/core/1000/func_80000D0C_190C.s` - Generate an initial C implementation from the original assembly.
+- In the docker container:
 - `docker exec -it bh-container bash -c "grep -r 'D_80047588' include/"` - Search for extern declarations.
 - `docker exec -it bh-container bash -c "make -j QUIET=1"` - Build the project.
 - `docker exec -it bh-container bash -c "mips-linux-gnu-objdump -d build/src.us/overlay_gameplay/outside/missions.c.o | sed -n '/<func_8007679C_8574C>:/,/^$/p'"` - Disassemble a single function from an object file.
@@ -35,6 +36,7 @@ Use mips_to_c to create an initial C implementation from the original assembly a
 - Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
 - Add or update declarations for any called functions in `include/functions.us.h` if they aren't defined in `src.us/` yet.
+- Search all the .s files in `asm/` to find calls to the target function and try to determine its parameter and return types.
 
 ## Step 3: Use runSubagent to fix all of the following common patterns.
 
@@ -42,7 +44,6 @@ Use mips_to_c to create an initial C implementation from the original assembly a
 - All struct field accesses use -> or . operators.
 - Update void\* parameters that should be typed structs.
 - Struct sizes match the assembly access patterns.
-- Update arg & return types - if an arg or `v0` return value is being `& 0xFF` that's a hint that it's actually u8/s8.
 - Constructions like `(arg0 < 0x9C) ^ 1` should be converted into a more natural form `arg0 >= 0x9C`.
 - Replace goto-based control flow with structured control flow (if/else, for, while).
 - Replace if-do-while and do-while loops with for(;;) or while() loops where appropriate.
