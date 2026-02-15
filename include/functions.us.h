@@ -98,7 +98,7 @@ void func_80124BA8_133B58(void);
 void func_8012B26C_13A21C(void);
 void func_8012D824_13C7D4(void);
 void func_8012E258_13D208(void);
-void func_801390F4_1480A4(u8);
+void func_801390F4_1480A4(s16);
 s32 func_801391DC_14818C(u8, s16);
 void func_80139BF8_148BA8(void);
 void func_80139984_148934(void);

@@ -67,6 +67,7 @@ extern u32 D_800313CC;
 extern s16 D_800313C8;
 extern s32 D_80031410;
 extern s32 D_80031414;
+extern u32 D_80031424[];
 extern s8 D_800314C4;
 extern u8 D_8003DFD4[];
 extern u8 D_8003E000[];
@@ -83,6 +84,7 @@ extern u32 D_80047698;
 extern s16 D_800476A0;
 extern s16 D_800476A2;
 extern s16 D_8004794A;
+extern s16 D_80047948;
 extern u8 D_8004794C;
 extern f32 D_80047954;
 extern f32 D_80047958;
@@ -213,6 +215,7 @@ extern u32 D_80222A30[];
 // 224680 missions?
 // 25667C alien specs?
 extern VehicleSpec D_80257A00[0x14];
+extern u32 D_80257A1C[];
 // 259090 building specs?
 extern Unk80259490 D_80259490; // vehicle instances?
 extern u8 D_80259D92[][0x50];

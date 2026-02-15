@@ -16,7 +16,12 @@ void func_80139050_148000(void) {
     func_8001CC6C_1D86C(&D_80145A3C);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801390F4_1480A4.s")
+void func_801390F4_1480A4(s16 arg0) {
+    if (D_80052B34->unk1A == 0) {
+        D_80047948 = arg0 - 1;
+    }
+    D_80257A00[D_80052B34->unk1A].weapon1 = D_80031424[arg0];
+}
 
 s32 func_80139150_148100(u8 arg0, u16 arg1) {
         

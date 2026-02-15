@@ -133,7 +133,9 @@ typedef struct {
 // 0x60 xxxxyyyy xxxx = North/South Position of Adam in vehicle
 // 0x64 xxxxyyyy yyyy = Steer Point (Turning speed)
 // 0x6C xxyyzzzz xxyy = Shadow X & Shadow Z
-    u8 pad0[0x39];
+    u8 pad0[0x1C];
+    u32 weapon1;
+    u8 pad20[0x1A];
     u16 hitPoints;
     u8 pad3c[0x24];
     u8 unk60;
