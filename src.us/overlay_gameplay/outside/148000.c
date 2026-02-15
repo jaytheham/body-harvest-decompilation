@@ -18,7 +18,23 @@ void func_80139050_148000(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801390F4_1480A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139150_148100.s")
+s32 func_80139150_148100(u8 arg0, u16 arg1) {
+        
+    if (D_80048140[arg0] == D_80140D40[arg0]) {
+        return 0;
+    }
+    if (D_80048140[arg0] == -0x8000) {
+        return 1;
+    }
+    if (arg1 == -0x8000) {
+        D_80048140[arg0] = D_80140D40[arg0];
+    }
+    D_80048140[arg0] += arg1;
+    if (D_80140D40[arg0] < D_80048140[arg0]) {
+        D_80048140[arg0] = D_80140D40[arg0];
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801391DC_14818C.s")
 

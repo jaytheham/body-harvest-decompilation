@@ -100,6 +100,7 @@ extern s32 D_80047FA0;
 extern s16 D_80048026;
 extern s32 D_80048034;
 extern u8 D_80048138[];
+extern s16 D_80048140[];
 extern s8 D_80048168;
 extern s16 D_8004816A;
 extern s16 D_8004816E;
@@ -136,6 +137,7 @@ extern s8 D_8013D890; // Triggers beacon warp
 extern u8 D_8013D894; // Beacon warp destination
 extern s32 D_8013FCD0;
 
+extern s16 D_80140D40[];
 extern u8 D_80140D90[];
 extern u8 D_80140DA8[];
 extern u8 D_80140DC0[];
