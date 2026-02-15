@@ -83,7 +83,10 @@ void func_8013A1CC_14917C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013AF58_149F08.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B004_149FB4.s")
+void func_8013B004_149FB4(void) {
+    D_8004794A = D_801601B3[D_801601D0 * 4];
+    func_801390F4_1480A4(D_80048138[D_8004794A]);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B054_14A004.s")
 
