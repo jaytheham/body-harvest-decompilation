@@ -104,6 +104,7 @@ void func_80139BF8_148BA8(void);
 void func_80139984_148934(void);
 void func_80139D58_148D08(void);
 void func_8013B004_149FB4(void);
+void func_8013B054_14A004(void);
 void func_8013B688_14A638(void);
 
 // overlay_level
