@@ -134,10 +134,12 @@ typedef struct {
 // 0x64 xxxxyyyy yyyy = Steer Point (Turning speed)
 // 0x6C xxyyzzzz xxyy = Shadow X & Shadow Z
     u8 pad0[0x1C];
-    u32 weapon1;
+    s32 weapon1;
     u8 pad20[0x1A];
     u16 hitPoints;
-    u8 pad3c[0x24];
+    u8 pad3C[0x10];
+    u32 unk4C;
+    u8 pad50[0x10];
     u8 unk60;
     u8 unk61;
     u8 pad62[0xE];

@@ -63,7 +63,26 @@ void func_80139460_148410(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013958C_14853C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801396A8_148658.s")
+void func_801396A8_148658(s32 arg0) {
+    func_801392FC_1482AC(0xB);
+    func_801392FC_1482AC(0xC);
+    func_801392FC_1482AC(0xD);
+    func_801392FC_1482AC(0xE);
+    func_801392FC_1482AC(0x10);
+    func_801392FC_1482AC(0x11);
+    func_801392FC_1482AC(0xF);
+    func_801394DC_14848C();
+    func_8013A1CC_14917C();
+    
+    if (!(D_80257A00[arg0].unk4C & 0x04000000)) {
+        D_801601D0 = D_801601D4;
+    }
+    func_8013B004_149FB4();
+    func_800EA2B0_F9260(D_80047948);
+    D_80257A00[arg0].weapon1 = D_80031450;
+    D_801601DC = 0;
+    D_801601E4 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139778_148728.s")
 
