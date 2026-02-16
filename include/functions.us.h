@@ -95,6 +95,7 @@ void func_80116784_125734();
 void func_8011A604_1295B4(void);
 void func_80124118_1330C8(void *, s16);
 void func_80124BA8_133B58(void);
+OutputStruct_8012B150 *func_80129354_138304(s32, s32, s16, s16, s16);
 void func_8012B26C_13A21C(void);
 void func_8012D824_13C7D4(void);
 void func_8012E258_13D208(void);

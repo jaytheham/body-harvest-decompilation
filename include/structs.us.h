@@ -163,4 +163,15 @@ typedef struct {
     u8 pad4[0x4C];
 } Unk80259D98;
 
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+} InputStruct_8012B150;
+
+typedef struct {
+    char pad[0x18];
+    s32 unk18;
+} OutputStruct_8012B150;
+
 #endif

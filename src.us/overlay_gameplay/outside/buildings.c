@@ -297,7 +297,14 @@ void func_8011F22C_12E1DC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012B110_13A0C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012B150_13A100.s")
+void func_8012B150_13A100(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2, s32 arg3) {
+    OutputStruct_8012B150 *result;
+
+    result = func_80129354_138304(arg0, arg1, arg2->unk0, arg2->unk2, arg2->unk4);
+    if (result != NULL) {
+        result->unk18 = arg3;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012B194_13A144.s")
 
