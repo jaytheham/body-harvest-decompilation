@@ -189,6 +189,8 @@ extern u8 D_8014944B;
 extern u8 cheatInputBuffer[0xA];
 extern s32 D_8014945C;
 extern s32 isCheatingEnabled; // 80149460
+extern u8* D_801494B8;
+extern u8 D_801494BC;
 extern s32 D_80149B44;
 extern u8 D_8014D200[];
 extern u8 D_8014D298[][10];
