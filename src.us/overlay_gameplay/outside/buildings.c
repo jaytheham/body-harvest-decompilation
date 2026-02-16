@@ -111,7 +111,9 @@ void func_801184E4_127494(s8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C9D8_12B988.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011CBD8_12BB88.s")
+s32 func_8011CBD8_12BB88(u8 arg0, u8 arg1) {
+    return (s32) ((arg0 * 0x4BAD) + (arg1 * 0xD)) % 6500;
+}
 
 s32 func_8011CC20_12BBD0(u16 arg0, u8 arg1) {
     return ((arg0 << 8) + arg1) & 0xFFFF;
