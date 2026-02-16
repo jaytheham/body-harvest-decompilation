@@ -163,12 +163,12 @@ void func_80139B34_148AE4(void) {
     D_801601DC = 0;
     D_801601D8 = -1;
     temp_v1 = 1;
-    *(s32*)&D_80257A1C = temp_v1;
+    D_80257A00[0].weapon1 = temp_v1;
     D_801601D0 = 0;
     D_8004794A = 0;
     D_80047948 = temp_v1;
     D_801601E8 = 0;
-    switch (currentLevel) {                         /* irregular */
+    switch (currentLevel) {
     default:
         D_8003144C = 0;
         return;

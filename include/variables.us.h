@@ -228,7 +228,6 @@ extern u32 D_80222A30[];
 // 224680 missions?
 // 25667C alien specs?
 extern VehicleSpec D_80257A00[0x14];
-extern u32 D_80257A1C[];
 // 259090 building specs?
 extern Unk80259490 D_80259490; // vehicle instances?
 extern u8 D_80259D92[][0x50];
