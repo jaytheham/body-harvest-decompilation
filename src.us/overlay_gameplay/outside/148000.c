@@ -96,6 +96,7 @@ s16 func_8013994C_1488FC(u8 arg0) {
     return D_80048140[weaponSlots[hudWeaponItems[arg0].weaponSlot]];
 }
 
+// Initialize ammunition?
 void func_80139984_148934(void) {
     if (D_80047F98 == 0) {
         D_80048140[0] = 0;
