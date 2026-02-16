@@ -32,7 +32,7 @@ Convert the named N64 assembly function to C89 code, compile it using IDO 5.3 in
 Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly.
 Use mips_to_c to create an initial C implementation from the original assembly and replace the `#pragma GLOBAL_ASM` line with the generated C code.
 
-## Step 2: Use a subagent to fix ALL of the following common problems with the new C code.
+## Step 2: Use runSubagent to fix ALL of these unacceptable patterns in the new C code.
 
 - Replace pointer arithmetic with struct/array access.
 - All struct field accesses should use -> or . operators.

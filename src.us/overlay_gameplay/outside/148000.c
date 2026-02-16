@@ -47,6 +47,7 @@ s32 func_80139150_148100(u8 arg0, u16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801391DC_14818C.s")
 
 // Failed - sonnet 4.5
+// Failed - opus 4.6
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801392FC_1482AC.s")
 
 // Failed - sonnet 4.5
