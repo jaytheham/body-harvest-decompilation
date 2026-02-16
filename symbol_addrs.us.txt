@@ -4,6 +4,7 @@ currentLevel = 0x80047F90;
 gameplayMode = 0x80052ADC;
 cheatInputBuffer = 0x80149450;
 isCheatingEnabled = 0x80149460;
+D_80257A00 = 0x80257A00; // size:0x70
 
 checkForRumblePak = 0x80000E40;
 validateSaveVersionAndChecksum = 0x80001624;
