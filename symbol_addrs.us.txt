@@ -3,6 +3,8 @@ currentSaveFileIndex = 0x80047F84;
 currentLevel = 0x80047F90;
 weaponSlots = 0x80048138;
 
+buildingInstances = 0x80050AD8; // size:0x24
+buildingInteriorToLoadId = 0x80052548;
 gameplayMode = 0x80052ADC;
 
 cheatInputBuffer = 0x80149450;
@@ -11,6 +13,7 @@ isCheatingEnabled = 0x80149460;
 hudWeaponItems = 0x801601B0;
 
 vehicleSpecs = 0x80257A00; // size:0x70
+buildingSpecs = 0x80259090; // size:0x20
 
 osSyncPrintf = 0x8001CC6C;
 checkForRumblePak = 0x80000E40;

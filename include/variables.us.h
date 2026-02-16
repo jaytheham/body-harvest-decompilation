@@ -120,7 +120,8 @@ extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
 extern u8 D_8004DCD0[];
 
-// 50AD8 building instances?
+extern BuildingInstance buildingInstances[0xFF];
+extern u32 buildingInteriorToLoadId;
 extern u32 D_80052A90;
 extern s32 D_80052A8C;
 extern u8* D_80052A94;
@@ -237,7 +238,7 @@ extern u32 D_80222A30[];
 // 224680 missions?
 // 25667C alien specs?
 extern VehicleSpec vehicleSpecs[0x14];
-// 259090 building specs?
+extern BuildingSpec buildingSpecs[0x20];
 extern Unk80259490 D_80259490; // vehicle instances?
 extern u8 D_80259D92[][0x50];
 extern Unk80259D98 D_80259D98[];

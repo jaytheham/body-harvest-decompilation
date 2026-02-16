@@ -146,6 +146,33 @@ typedef struct {
 } VehicleSpec;
 
 typedef struct {
+    s16 xCoord;
+    s16 yCoord;
+    s16 zCoord;
+    u8 buildingType;
+    u8 unk7;
+    u8 isDestroyable;
+    u8 unk9;
+    u8 state;
+    u8 rotation;
+    u8 padC[3];
+    u8 hitPoints;
+    u8 pad10[0x2];
+    u8 door1InteriorId;
+    u8 door2InteriorId;
+    u8 door3InteriorId;
+    u8 pad15[0x4];
+} BuildingInstance;
+
+// 0x00 xxyyyyyy yyyyyy = Model
+// 0x04 xxyyyyyy yyyyyy = Damaged model
+// 0x10 xxyyzzaa yy = Collision data
+// 0x18 xxyyzzaa yy = Max health aa = Detail props(00 = Windmill 01 = flag 02 = Fountain effect 04 = Black oblong 05 = Statue's hand 06 = Grass oblong
+typedef struct {
+    u8 pad0[0x20];
+} BuildingSpec;
+
+typedef struct {
     s16 yPosition;
     u8 opacity;
     u8 weaponSlot;
