@@ -44,11 +44,15 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118418_1273C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118454_127404.s")
+void func_80118454_127404(s32 arg0, s32 arg1) {
+
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118460_127410.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801184E4_127494.s")
+void func_801184E4_127494(s8 arg0) {
+    D_80159DDE = arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801184F4_1274A4.s")
 
@@ -106,7 +110,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011CBD8_12BB88.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011CC20_12BBD0.s")
+s32 func_8011CC20_12BBD0(u16 arg0, u8 arg1) {
+    return ((arg0 << 8) + arg1) & 0xFFFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011CC40_12BBF0.s")
 
@@ -126,7 +132,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011DBA0_12CB50.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011DE60_12CE10.s")
+void func_8011DE60_12CE10(s32 arg0) {
+    D_8015EB80 = arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011DE6C_12CE1C.s")
 
@@ -148,7 +156,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F094_12E044.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F22C_12E1DC.s")
+void func_8011F22C_12E1DC(s32 arg0, s32 arg1) {
+    D_8015EA52 = 0x78;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F244_12E1F4.s")
 
@@ -314,7 +324,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E114_13D0C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E1F8_13D1A8.s")
+void func_8012E1F8_13D1A8(s32 arg0, s32 arg1) {
+
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E204_13D1B4.s")
 
