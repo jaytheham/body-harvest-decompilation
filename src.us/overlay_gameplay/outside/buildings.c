@@ -32,7 +32,10 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117A4C_1269FC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117F10_126EC0.s")
+void func_80117F10_126EC0(void) {
+    D_8015EA30 = D_80144F30;
+    D_8015EA2C = D_80144F34;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117F34_126EE4.s")
 
