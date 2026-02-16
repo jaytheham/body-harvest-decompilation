@@ -47,9 +47,9 @@ void enableCheatArsenal() {
 
 // func_80073428_823D8
 void enableCheatDurable() {   
-    D_80052B34->unk1C = (u16) D_80257A00[D_80052B34->unk1A].hitPoints;
-    D_80052B34->unk3C = (s16) (D_80257A00[D_80052B34->unk1A].unk61 << 8);
-    func_800FD410_10C3C0(&(D_80257A00[D_80052B34->unk1A]), &D_80257A00[0]);
+    D_80052B34->unk1C = (u16) vehicleSpecs[D_80052B34->unk1A].hitPoints;
+    D_80052B34->unk3C = (s16) (vehicleSpecs[D_80052B34->unk1A].unk61 << 8);
+    func_800FD410_10C3C0(&(vehicleSpecs[D_80052B34->unk1A]), &vehicleSpecs[0]);
 }
 
 // doWanderingCheatEffect

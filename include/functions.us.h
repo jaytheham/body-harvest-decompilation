@@ -23,7 +23,6 @@ void func_8001599C_1659C(void);
 void func_80017AAC_186AC(void);
 void func_80017AE0_186E0(void);
 void func_8001A500_1B100(s32);
-void func_8001CC6C_1D86C(u8*, ...);
 
 // overlay_gameplay
 void func_80070440_7F3F0(void);

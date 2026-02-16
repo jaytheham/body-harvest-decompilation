@@ -146,6 +146,12 @@ typedef struct {
 } VehicleSpec;
 
 typedef struct {
+    s16 yPosition;
+    u8 opacity;
+    u8 weaponSlot;
+} HudWeaponItem;
+
+typedef struct {
     s16 unk0;
     s16 unk2;
     u8 pad4[0x4];

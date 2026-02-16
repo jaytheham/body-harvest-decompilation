@@ -1,26 +1,27 @@
 #include <ultra64.h>
 #include "common.h"
 
+// Weapons / HUD / Vehicle weapons
 
 void func_80139050_148000(void) {
     s32 var_s0;
     u8* var_s1;
 
-    for (var_s1 = D_80048138, var_s0 = 0; var_s0 != 7; var_s0 += 1, var_s1 += 1){
+    for (var_s1 = weaponSlots, var_s0 = 0; var_s0 != 7; var_s0 += 1, var_s1 += 1){
     
         if (var_s0 == D_8004794A) {
-            func_8001CC6C_1D86C(&D_80145A30);
+            osSyncPrintf(&D_80145A30);
         }
-        func_8001CC6C_1D86C(&D_80145A38, *var_s1);
+        osSyncPrintf(&D_80145A38, *var_s1);
     }
-    func_8001CC6C_1D86C(&D_80145A3C);
+    osSyncPrintf(&D_80145A3C);
 }
 
 void func_801390F4_1480A4(s16 arg0) {
     if (D_80052B34->unk1A == 0) {
         D_80047948 = arg0 - 1;
     }
-    D_80257A00[D_80052B34->unk1A].weapon1 = D_80031424[arg0];
+    vehicleSpecs[D_80052B34->unk1A].weapon1 = D_80031424[arg0];
 }
 
 s32 func_80139150_148100(u8 arg0, u16 arg1) {
@@ -79,12 +80,12 @@ void func_801396A8_148658(s32 arg0) {
     func_801394DC_14848C();
     func_8013A1CC_14917C();
     
-    if (!(D_80257A00[arg0].unk4C & 0x04000000)) {
+    if (!(vehicleSpecs[arg0].unk4C & 0x04000000)) {
         D_801601D0 = D_801601D4;
     }
     func_8013B004_149FB4();
     func_800EA2B0_F9260(D_80047948);
-    D_80257A00[arg0].weapon1 = D_80031450;
+    vehicleSpecs[arg0].weapon1 = D_80031450;
     D_801601DC = 0;
     D_801601E4 = 0;
 }
@@ -92,7 +93,7 @@ void func_801396A8_148658(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139778_148728.s")
 
 s16 func_8013994C_1488FC(u8 arg0) {
-    return D_80048140[D_80048138[D_801601B3[arg0 * 4]]];
+    return D_80048140[weaponSlots[hudWeaponItems[arg0].weaponSlot]];
 }
 
 void func_80139984_148934(void) {
@@ -152,7 +153,7 @@ void func_80139984_148934(void) {
         D_80031424[6] = 0x29;
         D_80031424[9] = 0x14;
     }
-    func_8001CC6C_1D86C(&D_80145A8C);
+    osSyncPrintf(&D_80145A8C);
 }
 
 void func_80139B34_148AE4(void) {
@@ -163,7 +164,7 @@ void func_80139B34_148AE4(void) {
     D_801601DC = 0;
     D_801601D8 = -1;
     temp_v1 = 1;
-    D_80257A00[0].weapon1 = temp_v1;
+    vehicleSpecs[0].weapon1 = temp_v1;
     D_801601D0 = 0;
     D_8004794A = 0;
     D_80047948 = temp_v1;
@@ -189,6 +190,8 @@ void func_80139B34_148AE4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139BF8_148BA8.s")
 
+// Failed - sonnet 4.5
+// Vehicle weapon UI related?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139D58_148D08.s")
 
 void func_8013A1CC_14917C(void) {
@@ -226,8 +229,8 @@ void func_8013AF58_149F08(void) {
 }
 
 void func_8013B004_149FB4(void) {
-    D_8004794A = D_801601B3[D_801601D0 * 4];
-    func_801390F4_1480A4(D_80048138[D_8004794A]);
+    D_8004794A = hudWeaponItems[D_801601D0].weaponSlot;
+    func_801390F4_1480A4(weaponSlots[D_8004794A]);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B054_14A004.s")
@@ -277,14 +280,14 @@ s32 func_8013B534_14A4E4(void) {
     u8 temp_v1;
 
     temp_v0 = func_8013994C_1488FC(D_801601D3);
-    D_8004794A = D_801601B3[D_801601D0 * 4];
+    D_8004794A = hudWeaponItems[D_801601D0].weaponSlot;
     if (D_801601D0 < D_801601CC) {
-        temp_v1 = D_80048138[D_8004794A];
+        temp_v1 = weaponSlots[D_8004794A];
         if ((temp_v1 != 0) && (temp_v0 != 0) && (func_8013B480_14A430((s16) temp_v1) != 0)) {
             return 1;
         }
     }
-    func_8001CC6C_1D86C(&D_80145AA4, D_801601D0);
+    osSyncPrintf(&D_80145AA4, D_801601D0);
     return 0;
 }
 

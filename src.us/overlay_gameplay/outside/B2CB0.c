@@ -31,7 +31,7 @@ u8 func_800A3DC8_B2D78(void) {
         if (temp_v1->unk1A == 0x19) {
             if (temp_v1->unk3C != 0) {
                 temp_v1->unk3C = (s8) (temp_v1->unk3C - 1);
-                func_8001CC6C_1D86C(D_80142740, temp_a2);
+                osSyncPrintf(D_80142740, temp_a2);
                 return temp_a2;
             }
         }
@@ -111,7 +111,7 @@ void func_800A5A50_B4A00(s32 arg0, s32 arg1) {
     s32 sp1C;
 
     D_8014F800 = 1;
-    func_8001CC6C_1D86C(D_80142790, arg0);
+    osSyncPrintf(D_80142790, arg0);
     if (D_80151DD0 == 0) {
         D_80047F9C = arg0 + 1;
         sp1C = func_80009F18_AB18(arg1);
@@ -144,7 +144,7 @@ void func_800A5B30_B4AE0(s32 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A5D3C_B4CEC.s")
 
 void func_800A5EA8_B4E58(u8 arg0) {
-    func_8001CC6C_1D86C(D_801427D8, arg0);
+    osSyncPrintf(D_801427D8, arg0);
     D_8013D890 = 1;
     D_8013D894 = arg0;
 }
@@ -187,7 +187,7 @@ void func_800A9238_B81E8() {
     while (powerupTypePtr--, i--) {
         powerupType = *powerupTypePtr;
         if (negOne != powerupType) {
-            func_8001CC6C_1D86C(D_80142820, powerupType);
+            osSyncPrintf(D_80142820, powerupType);
             func_800A8E18_B7DC8(*powerupTypePtr);
         }
     }

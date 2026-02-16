@@ -103,7 +103,7 @@ extern s32 D_80047F9C;
 extern s32 D_80047FA0;
 extern s16 D_80048026;
 extern s32 D_80048034;
-extern u8 D_80048138[];
+extern u8 weaponSlots[7];
 extern s16 D_80048140[];
 extern s8 D_80048168;
 extern s16 D_8004816A;
@@ -210,7 +210,8 @@ extern s16 D_80157A3C;
 extern s16 D_80159260;
 extern s32 D_80159320;
 extern s16 D_8015FAEE;
-extern u8 D_801601B3[];
+extern HudWeaponItem hudWeaponItems[7];
+
 extern s32 D_801601CC;
 extern s32 D_801601D0;
 extern u8 D_801601D3;
@@ -227,7 +228,7 @@ extern u32 D_80222A30[];
 // 223780 alien waves?
 // 224680 missions?
 // 25667C alien specs?
-extern VehicleSpec D_80257A00[0x14];
+extern VehicleSpec vehicleSpecs[0x14];
 // 259090 building specs?
 extern Unk80259490 D_80259490; // vehicle instances?
 extern u8 D_80259D92[][0x50];
