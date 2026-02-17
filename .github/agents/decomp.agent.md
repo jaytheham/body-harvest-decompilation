@@ -20,17 +20,15 @@ Convert the named N64 assembly function to C89 code, compile it using IDO 5.3 in
 
 ## Tools
 
-- Outside the docker container:`python tools/mips_to_c/m2c.py asm/nonmatchings/core/1000/func_80000D0C_190C.s` - Generate an initial C implementation from the original assembly.
 - In the docker container:
 - `docker exec -it bh-container bash -c "grep -r 'D_80047588' include/"` - Search for extern declarations.
-- `docker exec -it bh-container bash -c "make clean && make -j QUIET=1"` - Build the project.
 - `docker exec -it bh-container bash -c "tools/asm-differ/diff.py --no-pager --compress-matching 3 func_8011CC20_12BBD0"` - Compare target and generated assembly for a specific function. Ignore instructions from beyond the function boundaries.
 - `docker exec -it bh-container bash -c "mips-linux-gnu-objdump -d build/src.us/overlay_gameplay/outside/missions.c.o | sed -n '/<func_8007679C_8574C>:/,/^$/p'"` - Disassemble a single function from an object file.
 
 ## Step 1: Generate C Implementation
 
 Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly.
-Use mips_to_c to create an initial C implementation from the original assembly and replace the `#pragma GLOBAL_ASM` line with the generated C code.
+Outside the docker container run:`python tools/mips_to_c/m2c.py asm/nonmatchings/core/1000/func_80000D0C_190C.s` to generate an initial C implementation from the original assembly then replace the `#pragma GLOBAL_ASM` line with the generated C code.
 
 ## Step 2: Clean Up C Code
 
@@ -51,7 +49,7 @@ Identify and fix all these issues in the generated C code before proceeding to t
 
 ## Step 3: Build in Docker
 
-Run the build inside the container:
+Run the build inside the container:- `docker exec -it bh-container bash -c "make clean && make -j QUIET=1"`
 
 **Expected outcome**: Build completes (SHA1 check may fail, if generated assembly does not match target).
 
