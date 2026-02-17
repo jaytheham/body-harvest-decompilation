@@ -98,7 +98,12 @@ void func_801184E4_127494(s8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BF7C_12AF2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C080_12B030.s")
+void func_8011C080_12B030(u8 arg0)
+{
+    buildingInstances[arg0].hitPoints = 0;
+    buildingInstances[arg0].unk10 = 0;
+    func_8011BB94_12AB44(arg0, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C0CC_12B07C.s")
 

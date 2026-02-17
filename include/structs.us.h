@@ -164,11 +164,12 @@ typedef struct {
     u8 rotation;
     u8 padC[3];
     u8 hitPoints;
-    u8 pad10[0x2];
+    u8 unk10;
+    u8 unk11;
     u8 door1InteriorId;
     u8 door2InteriorId;
     u8 door3InteriorId;
-    u8 pad15[0x4];
+    u8 pad15[0x3];
 } BuildingInstance;
 
 // 0x00 xxyyyyyy yyyyyy = Model
