@@ -480,7 +480,31 @@ void func_8012B21C_13A1CC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012B26C_13A21C.s")
 
+#ifdef NON_MATCHING
+s32 func_8012D600_13C5B0(void) {
+    u32 minTime;
+    s32 minIdx;
+    s32 i;
+
+    minIdx = -1;
+    minTime = (u32)-1;
+    i = 0x18;
+    do {
+        if ((u32)D_8015FAD0[i].unk28 < minTime) {
+            minTime = (u32)D_8015FAD0[i].unk28;
+            minIdx = i;
+        }
+        if (D_8015FAD0[i].unk2C == 0) {
+            D_8015FAD0[i].unk28 = (u32)D_80052A8C;
+            return i;
+        }
+    } while (i--);
+    D_8015FAD0[minIdx].unk28 = (u32)D_80052A8C;
+    return minIdx;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012D600_13C5B0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012D684_13C634.s")
 

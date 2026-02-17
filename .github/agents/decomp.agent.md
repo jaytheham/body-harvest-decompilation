@@ -20,7 +20,8 @@ Convert the named N64 assembly function to C89 code, compile it using IDO 5.3 in
 
 ## Tools
 
-- In the docker container:
+You are running in windows, you have access to a docker container where you can run linux commands and build the project using IDO 5.3. You can also edit files on your host machine and those changes will be reflected in the container:
+
 - `docker exec -it bh-container bash -c "grep -r 'D_80047588' include/"` - Search for extern declarations.
 - `docker exec -it bh-container bash -c "tools/asm-differ/diff.py --no-pager --compress-matching 3 func_8011CC20_12BBD0"` - Compare target and generated assembly for a specific function. Ignore instructions from beyond the function boundaries.
 - `docker exec -it bh-container bash -c "mips-linux-gnu-objdump -d build/src.us/overlay_gameplay/outside/missions.c.o | sed -n '/<func_8007679C_8574C>:/,/^$/p'"` - Disassemble a single function from an object file.

@@ -200,6 +200,13 @@ typedef struct {
 } Unk8015FAF0;
 
 typedef struct {
+    u8 pad0[0x28];
+    u32 unk28;
+    u8 unk2C;
+    u8 pad2D[3];
+} Unk8015FAD0;
+
+typedef struct {
     s16 yPosition;
     u8 opacity;
     u8 weaponSlot;
