@@ -226,7 +226,9 @@ void func_8011FD90_12ED40(BuildingInstance *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801201C0_12F170.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012028C_12F23C.s")
+void func_8012028C_12F23C(BuildingInstance *arg0) {
+    func_8011FA90_12EA40(arg0, 5, -0x180, 0, 0x216, 0x54, 0x80, 0x57, 0xF);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801202DC_12F28C.s")
 
