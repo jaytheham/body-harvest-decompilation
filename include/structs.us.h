@@ -184,6 +184,14 @@ typedef struct {
 } BuildingSpec;
 
 typedef struct {
+    u8 pad0[0x4];
+    void (*callback)(s32, s16);
+    u8 pad8[0x4];
+    u8 unkC;
+    u8 padD[0x23];
+} Unk8015FAF0;
+
+typedef struct {
     s16 yPosition;
     u8 opacity;
     u8 weaponSlot;

@@ -164,7 +164,7 @@ void func_8011DE60_12CE10(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011E788_12D738.s")
 
 void func_8011E9F4_12D9A4(s32 arg0, s16 arg1) {
-    if (D_8015FAFC[arg1 * 0x30] == 6) {
+    if (D_8015FAF0[arg1].unkC == 6) {
         D_80159320 |= 0x1000000;
     }
 }
@@ -391,6 +391,14 @@ void func_8012E1F8_13D1A8(s32 arg0, s32 arg1) {
 
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E204_13D1B4.s")
+void func_8012E204_13D1B4(s16 arg0, s32 arg1) {
+    void (*callback)(s32, s16);
+    callback = D_8015FAF0[arg0].callback;
+    if (callback == NULL) {
+        return;
+    }
+
+    callback(arg1, arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E258_13D208.s")
