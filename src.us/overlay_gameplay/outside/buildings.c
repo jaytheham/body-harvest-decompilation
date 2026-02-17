@@ -234,7 +234,16 @@ void func_8012028C_12F23C(BuildingInstance *arg0) {
     func_8011FA90_12EA40(arg0, 5, -0x180, 0, 0x216, 0x54, 0x80, 0x57, 0xF);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801202DC_12F28C.s")
+void func_801202DC_12F28C(s32 arg0, s32 arg1) {
+    u8 saveFileName[7];
+    s32 prefixASJI = 0x41534A49;
+
+    func_80002AB4_36B4(currentSaveFileIndex, saveFileName);
+
+    if (*(s32*)saveFileName == prefixASJI) {
+        D_80159320 |= 0x08000000;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80120334_12F2E4.s")
 
