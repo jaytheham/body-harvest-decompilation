@@ -163,7 +163,11 @@ void func_8011DE60_12CE10(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011E788_12D738.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011E9F4_12D9A4.s")
+void func_8011E9F4_12D9A4(s32 arg0, s16 arg1) {
+    if (D_8015FAFC[arg1 * 0x30] == 6) {
+        D_80159320 |= 0x1000000;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EA44_12D9F4.s")
 

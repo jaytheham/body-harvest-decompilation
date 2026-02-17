@@ -224,6 +224,7 @@ extern s16 D_8015EA4A;
 extern s16 D_8015EA52;
 extern s32 D_8015EB80;
 extern s16 D_8015FAEE;
+extern u8 D_8015FAFC[];
 
 extern HudWeaponItem hudWeaponItems[7];
 extern s32 D_801601CC;
