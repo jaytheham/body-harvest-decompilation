@@ -164,7 +164,16 @@ void func_8011DE60_12CE10(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EABC_12DA6C.s")
 
+#ifdef NON_MATCHING
+void func_8011EAF8_12DAA8(s32 arg0, s32 arg1) {
+    if (D_8015EA4A == 1) {
+        func_800072CC_7ECC(0, 0x13);
+        D_8015EA4A = 3;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EAF8_12DAA8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EB40_12DAF0.s")
 
