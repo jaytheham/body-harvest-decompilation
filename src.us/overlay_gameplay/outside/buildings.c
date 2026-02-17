@@ -72,7 +72,31 @@ void func_801184E4_127494(s8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011853C_1274EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801185F8_1275A8.s")
+s32 func_801185F8_1275A8(BuildingInstance *arg0, s16 arg1) {
+    s32 buildingIndex;
+    s32 maxY;
+    s32 maxYClamped;
+
+    buildingIndex = arg0 - buildingInstances;
+    if (buildingIndex >= 0xFF) {
+        return 0;
+    }
+
+    maxY = arg1 + 0x15B0;
+    if (arg0 != NULL) {
+        if (maxY >= 0x8001) {
+            maxYClamped = 0x8000;
+        } else {
+            maxYClamped = maxY;
+        }
+
+        if (arg0->zCoord < maxYClamped) {
+            return 1;
+        }
+    }
+
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118670_127620.s")
 
