@@ -15,6 +15,14 @@ typedef struct {
 } Unk80047588;
 
 typedef struct {
+    u8 pad0[0x1A];
+    u8 unk1A;
+    u8 unk1B;
+    u8 pad1C[0x4];
+    s32 unk20;
+} Unk8004D0F8;
+
+typedef struct {
     s32 unk0;
     s16 unk4;
     s16 unk6;

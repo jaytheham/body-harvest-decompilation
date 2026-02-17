@@ -273,7 +273,15 @@ void func_801219A4_130954(Unk80052B34 *arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80122320_1312D0.s")
 
+#ifdef NON_MATCHING
+s32 func_8012235C_13130C(Unk8004D0F8* arg0) {
+    return (arg0->unk1A != 0) &&
+       ((arg0->unk20 & 0x100000) == 0) &&
+       ((arg0->unk1B == 0xFF) || (D_80047F94 == arg0->unk1B));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012235C_13130C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801223B0_131360.s")
 
