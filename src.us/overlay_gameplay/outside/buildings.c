@@ -206,7 +206,9 @@ void func_8011FCF4_12ECA4(BuildingInstance *arg0) {
     func_8011FA90_12EA40(arg0, 5, 0, 0xBE, 0, 0xAA, 0xC8, 0x95, 0xF);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011FD40_12ECF0.s")
+void func_8011FD40_12ECF0(BuildingInstance *arg0) {
+    func_8011FA90_12EA40(arg0, 6, 0, 0x76, 0x62, 0x4B, 0xA, 0x28, 0xF);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011FD90_12ED40.s")
 
