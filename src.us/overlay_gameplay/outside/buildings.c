@@ -169,7 +169,11 @@ void func_8011E9F4_12D9A4(s32 arg0, s16 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EA44_12D9F4.s")
+void func_8011EA44_12D9F4(s16 *arg0) {
+    if (gameplayMode == GAMEPLAY_MODE_UNK1) {
+        func_800E0D28_EFCD8(arg0[0] + D_80159DC8, arg0[1] + D_80159DCA, arg0[2] + D_80159DCC);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EABC_12DA6C.s")
 

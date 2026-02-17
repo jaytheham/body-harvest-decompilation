@@ -120,6 +120,7 @@ extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
 extern u8 D_8004DCD0[];
+extern u8 D_80050AF0[];
 
 extern BuildingInstance buildingInstances[0xFF];
 extern u32 buildingInteriorToLoadId;
@@ -136,6 +137,7 @@ extern s32 D_80052AD0;
 extern s32 D_80052AD8;
 extern Unk80052AE8 D_80052AE8;
 extern s32 D_80052550;
+extern s32 D_80052558;
 extern GameplayMode gameplayMode; // 80052adc
 extern Unk80052B2C* D_80052B2C;
 extern Unk80052B34* D_80052B34;
@@ -163,6 +165,7 @@ extern u8 D_80145A3C; // .
 extern u8 D_80145A40;
 extern u8 D_80145A8C;
 extern u8 D_80145AA4;
+extern u8 D_80145BE0[];
 extern Unk80148620 D_80148620[];
 extern s16 D_80148690;
 extern s32 D_80149380;
@@ -219,6 +222,9 @@ extern s16 D_80157590;
 extern s16 D_80157A3C;
 extern s16 D_80159260;
 extern s32 D_80159320;
+extern s16 D_80159DC8;
+extern s16 D_80159DCA;
+extern s16 D_80159DCC;
 extern s8 D_80159DDE;
 extern f32 D_8015EA2C;
 extern f32 D_8015EA30;

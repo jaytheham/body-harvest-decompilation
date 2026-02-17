@@ -1,4 +1,5 @@
 ---
+name: Body Harvest Decomp
 description: Decompile a function from the Body Harvest N64 game
 tools: ["search", "edit/editFiles", "execute", "read", "todo"]
 ---
@@ -33,7 +34,7 @@ Use mips_to_c to create an initial C implementation from the original assembly a
 
 ## Step 2: Clean Up C Code
 
-Create a ToDo for the following C code cleanup steps:
+Create a todo list for the following C code cleanup steps:
 
 1. Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
 2. Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
@@ -80,7 +81,7 @@ Rebuild and re-compare until the generated assembly is identical to the original
 ## Step 6: Finalize
 
 If you had to make changes to the initial C code, think about whether there is some detectable pattern or insight, and if so update `ExampleFixes.md` with those discoveries to help future decomp.
-Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.
+Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`. Never add NON_MATCHING yourself, users will do that.
 
 ## Troubleshooting
 
