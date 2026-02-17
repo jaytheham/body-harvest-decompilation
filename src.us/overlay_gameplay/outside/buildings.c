@@ -294,7 +294,34 @@ void func_801202DC_12F28C(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801205AC_12F55C.s")
 
+#ifdef NON_MATCHING
+s32 func_80120634_12F5E4() {
+    s32 i = 0;
+    
+    while (1) {
+        if (D_8015EA29 == buildingInstances[i].buildingType) {
+            return i;
+        }
+        if (D_8015EA29 == buildingInstances[i + 1].buildingType) {
+            return i + 1;
+        }
+        if (D_8015EA29 == buildingInstances[i + 2].buildingType) {
+            return i + 2;
+        }
+        if (D_8015EA29 == buildingInstances[i + 3].buildingType) {
+            return i + 3;
+        }
+        i += 4;
+        if (i == 0x100) {
+            break;
+        }
+    }
+
+    return D_8015EA29;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80120634_12F5E4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801206B0_12F660.s")
 
