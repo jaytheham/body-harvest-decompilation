@@ -120,6 +120,13 @@ typedef struct {
 } Unk80042DA8;
 
 typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+} Unk80148620;
+
+typedef struct {
 // 0x00 xxxxyyyy yyyy = Model pointer
 // 0x0C xxxxxxxx Collision model size
 // 0x18 xxxxxxxx Vehicle name modifier
@@ -169,7 +176,10 @@ typedef struct {
 // 0x10 xxyyzzaa yy = Collision data
 // 0x18 xxyyzzaa yy = Max health aa = Detail props(00 = Windmill 01 = flag 02 = Fountain effect 04 = Black oblong 05 = Statue's hand 06 = Grass oblong
 typedef struct {
-    u8 pad0[0x20];
+    u8 pad0[0x10];
+    s16 unk10;
+    s16 unk12;
+    u8 pad14[0xC];
 } BuildingSpec;
 
 typedef struct {

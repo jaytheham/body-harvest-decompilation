@@ -26,6 +26,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117508_1264B8.s")
 
+// Failed - gpt 5.3 codex
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801176B0_126660.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801176F4_1266A4.s")
@@ -39,7 +40,16 @@ void func_80117F10_126EC0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117F34_126EE4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118114_1270C4.s")
+s32 func_80118114_1270C4(s16 arg0) {
+    s32 i;
+    i = 0xF;
+    while (i--) {
+        if (arg0 == D_80148620[i].unk0) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011815C_12710C.s")
 
@@ -57,6 +67,7 @@ void func_801184E4_127494(s8 arg0) {
     D_80159DDE = arg0;
 }
 
+// Failed - gpt 5.3 codex
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801184F4_1274A4.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011853C_1274EC.s")

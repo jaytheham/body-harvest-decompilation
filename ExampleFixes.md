@@ -380,3 +380,9 @@ When a function passes its incoming arguments directly to another function witho
 - This typically applies to the first parameters (a0, a1) that are passed through untouched while later parameters are extracted from structs
 
 Example: `func_8012B150_13A100` passes a0 and a1 through while extracting s16 values from a struct for the remaining args. Declaring the callee as `func(s32, s32, s16, s16, s16)` matches, while `func(s16, s16, s16, s16, s16)` generates extra sign-extension for the first two parameters.
+
+### Reverse scan over strided halfword table
+
+If a function compares one `s16` value per entry while stepping backwards by 8 bytes each iteration, model the table as a struct array with an `s16` first field and stride 8.
+
+A form like `while (i--) { if (arg == entries[i].value) return 1; }` can produce the exact `lh` / `move v0, v1` / `addiu ptr, -8` / `bnez v1` loop shape that a raw pointer or byte-offset form may miss.

@@ -122,6 +122,8 @@ extern u8 D_8004DCD0[];
 
 extern BuildingInstance buildingInstances[0xFF];
 extern u32 buildingInteriorToLoadId;
+extern s32 D_80052540;
+extern s32 D_80052544;
 extern u32 D_80052A90;
 extern s32 D_80052A8C;
 extern u8* D_80052A94;
@@ -159,6 +161,8 @@ extern u8 D_80145A3C; // .
 extern u8 D_80145A40;
 extern u8 D_80145A8C;
 extern u8 D_80145AA4;
+extern Unk80148620 D_80148620[];
+extern s16 D_80148690;
 extern s32 D_80149380;
 extern s32 D_80149398;
 extern s32 D_8014939C;
