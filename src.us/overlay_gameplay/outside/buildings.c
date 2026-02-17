@@ -313,7 +313,15 @@ void func_801219A4_130954(Unk80052B34 *arg0, s16 arg1) {
     D_80048178 = -10;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801219F4_1309A4.s")
+void func_801219F4_1309A4(void* arg0, s16 arg1) {
+    func_8011D260_12C210(0x45, 0x12);
+    if (arg0 == (D_80145BE0 + 0x1E0)) {
+        D_80048178 = 0x14;
+        func_8012D84C_13C7FC();
+        func_800072CC_7ECC(0xF);
+        D_80052558 |= 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80121A64_130A14.s")
 
