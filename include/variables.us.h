@@ -120,6 +120,7 @@ extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
 extern u8 D_8004DCD0[];
+extern u8 D_80050AE0[];
 extern u8 D_80050AF0[];
 
 extern BuildingInstance buildingInstances[0xFF];
