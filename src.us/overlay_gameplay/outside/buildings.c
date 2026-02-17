@@ -347,7 +347,14 @@ void func_8012B150_13A100(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2, s32 ar
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012B194_13A144.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012B21C_13A1CC.s")
+void func_8012B21C_13A1CC(void) {
+    s32 i;
+
+    i = D_8015F9E4;
+    while (i--) {
+        func_801238DC_13288C((s16)i);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012B26C_13A21C.s")
 

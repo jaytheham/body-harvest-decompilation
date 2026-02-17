@@ -94,6 +94,7 @@ void func_80113CEC_122C9C(void);
 void func_8011694C_1258FC(void);
 void func_80116784_125734();  
 void func_8011A604_1295B4(void);
+void func_801238DC_13288C(s16);
 void func_80124118_1330C8(void *, s16);
 void func_80124170_133120(s16, s16, s16, s32, s32, s32);
 void func_80124BA8_133B58(void);

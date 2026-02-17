@@ -386,3 +386,12 @@ Example: `func_8012B150_13A100` passes a0 and a1 through while extracting s16 va
 If a function compares one `s16` value per entry while stepping backwards by 8 bytes each iteration, model the table as a struct array with an `s16` first field and stride 8.
 
 A form like `while (i--) { if (arg == entries[i].value) return 1; }` can produce the exact `lh` / `move v0, v1` / `addiu ptr, -8` / `bnez v1` loop shape that a raw pointer or byte-offset form may miss.
+
+### `while (i--)` for `bnez` + delay-slot decrement loops
+
+If the target loop tail is `bnez reg, loop` with `addiu reg, reg, -1` in the delay slot, prefer `while (i--)` over `if` + `do/while` or manual `if/break` structures.
+
+In one buildings.c case, this rewrite produced both:
+
+- the exact tail pattern (`bnez s0` + delay-slot decrement), and
+- the expected early `move v0, s0` before the zero check.
