@@ -221,6 +221,8 @@ extern u8 D_80151DD0;
 extern s16 D_80152C90;
 extern s16 D_80157590;
 extern s16 D_80157A3C;
+extern s16 D_8015904C;
+extern InputStruct_8012B150 D_80159050[];
 extern s16 D_80159260;
 extern s32 D_80159320;
 extern s16 D_80159DC8;

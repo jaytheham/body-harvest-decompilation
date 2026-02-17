@@ -467,7 +467,22 @@ void func_8012B150_13A100(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2, s32 ar
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012B194_13A144.s")
+void func_8012B194_13A144(s32 arg0, s32 arg1, u8 arg2) {
+    s16 index;
+    InputStruct_8012B150 *input;
+    OutputStruct_8012B150 *result;
+
+    index = D_8015904C - arg2;
+    if (index < 0) {
+        index += 50;
+    }
+
+    input = &D_80159050[index];
+    result = func_80129354_138304(arg0, arg1, input->unk0, input->unk2, input->unk4);
+    if (result != NULL) {
+        result->unk18 = (s32) D_80052B2C->unk38;
+    }
+}
 
 void func_8012B21C_13A1CC(void) {
     s32 i;
