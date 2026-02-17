@@ -110,6 +110,7 @@ extern s16 D_8004816A;
 extern s16 D_8004816E;
 extern s16 D_80048170;
 extern s16 D_80048176;
+extern s32 D_80048178;
 extern s32 D_80048188;
 extern Unk80048198 D_80048198[];
 extern s32 D_8004D148;
