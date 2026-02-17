@@ -61,6 +61,7 @@ void func_80118454_127404(s32 arg0, s32 arg1) {
 
 }
 
+// Failed - gpt 5.3 codex
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118460_127410.s")
 
 void func_801184E4_127494(s8 arg0) {
@@ -214,16 +215,12 @@ void func_8011EA44_12D9F4(s16 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EABC_12DA6C.s")
 
-#ifdef NON_MATCHING
 void func_8011EAF8_12DAA8(s32 arg0, s32 arg1) {
     if (D_8015EA4A == 1) {
-        func_800072CC_7ECC(0, 0x13);
+        func_800072CC_7ECC(0x13);
         D_8015EA4A = 3;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EAF8_12DAA8.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EB40_12DAF0.s")
 

@@ -30,6 +30,16 @@ Loading and checking of a value being optimised away because it's known at compi
 u8 continueOn = 1;
 continueOn &= 1;
 
+### li vs move
+
+```asm
+li      a0,0
+jal     func_800072CC_7ECC
+li      a1,0xf
+```
+
+if the first value is being loaded with `move a0,zero` instead of `li` the called func may be expecting a single u64 param rather than two params.
+
 ### Branching
 
 If a branch instruction's registers are reversed, reversing the order in C may help. If not, and one is a literal value, try putting the literal into a var.
