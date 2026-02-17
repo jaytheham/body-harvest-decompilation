@@ -1,7 +1,6 @@
 ---
 description: Decompile a function from the Body Harvest N64 game
-tools:
-  ["search", "edit/editFiles", "execute", "read", "agent/runSubagent", "todo"]
+tools: ["search", "edit/editFiles", "execute", "read", "todo"]
 ---
 
 # Decompilation Workflow
@@ -27,27 +26,27 @@ Convert the named N64 assembly function to C89 code, compile it using IDO 5.3 in
 - `docker exec -it bh-container bash -c "tools/asm-differ/diff.py --no-pager --compress-matching 3 func_8011CC20_12BBD0"` - Compare target and generated assembly for a specific function. Ignore instructions from beyond the function boundaries.
 - `docker exec -it bh-container bash -c "mips-linux-gnu-objdump -d build/src.us/overlay_gameplay/outside/missions.c.o | sed -n '/<func_8007679C_8574C>:/,/^$/p'"` - Disassemble a single function from an object file.
 
-## Step 1: Use runSubagent to generate C Implementation
+## Step 1: Generate C Implementation
 
 Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly.
 Use mips_to_c to create an initial C implementation from the original assembly and replace the `#pragma GLOBAL_ASM` line with the generated C code.
 
-Fix ALL of these unacceptable patterns in the new C code:
+## Step 2: Clean Up C Code
 
-- Replace pointer arithmetic with struct/array access.
-- All struct field accesses should use -> or . operators.
-- Update void\* parameters that should be typed.
-- Constructions like `(arg0 < 0x9C) ^ 1` should be converted into a more natural form `arg0 >= 0x9C`.
-- Replace goto-based control flow with structured control flow (if/else, for, while).
-- Replace if-do-while and do-while loops with for(;;) or while() loops where appropriate.
+Create a ToDo for the following C code cleanup steps:
 
-Return the updated C code with all unacceptable patterns fixed.
+1. Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
+2. Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
+3. Add or update declarations for any called functions in `include/functions.us.h` if they aren't defined in `src.us/` yet.
+4. Replace pointer arithmetic with struct/array access.
+5. All struct field accesses should use -> or . operators.
+6. Update void\* parameters that should be typed.
+7. Unusual constructions like `(arg0 < 0x9C) ^ 1` should be converted into a more natural form `arg0 >= 0x9C`.
+8. Replace goto-based control flow with structured control flow (if/else, for, while).
+9. Replace if-do-while and do-while loops with for(;;) or while() loops where appropriate.
+10. Search in `/asm/` for any `jal` references to the target function to determine correct parameter and return types.
 
-## Step 2: Add missing declarations.
-
-- Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
-- Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
-- Add or update declarations for any called functions in `include/functions.us.h` if they aren't defined in `src.us/` yet.
+Identify and fix all these issues in the generated C code before proceeding to the next step. The goal is to have clean, readable C code that still compiles down to the same assembly as the original.
 
 ## Step 3: Build in Docker
 
@@ -73,7 +72,6 @@ Note instruction order, registers, immediates, branch conditions
 
 Rewrite C code to make it better match the target assembly once compiled.
 Always begin by making sure all pointer arithmetic is replaced with proper struct/array access, and that assembly-like if>do>while and goto control flow is replaced with more natural C control flow constructs.
-Search in `/asm/` for any references to the target function to determine correct parameter and return types.
 Always try removing intermediate variables and simplifying before adding new ones.
 Think about how a person would have originally written the code in C to produce the assembly you see. Search for patterns in the original assembly and see how other functions were written to achieve similar assembly output.
 Read file `DecompHints.md` and `ExampleFixes.md` for common patterns and pitfalls.
@@ -82,6 +80,7 @@ Rebuild and re-compare until the generated assembly is identical to the original
 ## Step 6: Finalize
 
 If you had to make changes to the initial C code, think about whether there is some detectable pattern or insight, and if so update `ExampleFixes.md` with those discoveries to help future decomp.
+Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.
 
 ## Troubleshooting
 

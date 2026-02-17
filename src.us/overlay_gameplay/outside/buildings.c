@@ -313,7 +313,19 @@ void func_80124B5C_133B0C(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124D60_133D10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80125C48_134BF8.s")
+void func_80125C48_134BF8(s16 arg0, s16 arg1, s16 arg2) {
+    s32 index;
+
+    index = D_80140AC8;
+    D_8015F9F8[index][0] = arg0;
+    D_8015F9F8[index][1] = arg1;
+    D_8015F9F8[index][2] = arg2;
+    D_8015F9F8[index][3] = 4;
+    D_80140AC8 = index + 1;
+    if (D_80140AC8 == 8) {
+        D_80140AC8 = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80125CA0_134C50.s")
 
