@@ -47,7 +47,7 @@ typedef struct {
     f32 unk34;
     f32 unk38;
     u16 unk3C;
-} Unk80052B34;
+} Unk80052B34; // also used at D_8004F038 ?
 
 typedef struct {
     s16 unk0;

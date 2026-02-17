@@ -299,7 +299,13 @@ s32 func_8012235C_13130C(Unk8004D0F8* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80123E90_132E40.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124118_1330C8.s")
+void func_80124118_1330C8(Unk80052B34 *arg0, s16 arg1) {
+    if ((arg0->unk20 & 0x80) == 0) {
+        if ((arg0 != D_80052B34) || (D_801493E0 != 0)) {
+            func_80123E90_132E40(arg0, arg1);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124170_133120.s")
 
