@@ -84,7 +84,7 @@ s32 func_80002A88_3688(s32 arg0) {
     return *(&D_80043243 + (arg0 * 0x7A)) & 0xF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80002AB4_36B4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/getSaveFileName.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80002B20_3720.s")
 

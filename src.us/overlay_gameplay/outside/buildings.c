@@ -234,11 +234,14 @@ void func_8012028C_12F23C(BuildingInstance *arg0) {
     func_8011FA90_12EA40(arg0, 5, -0x180, 0, 0x216, 0x54, 0x80, 0x57, 0xF);
 }
 
+// setUnluckyAndrewFlag
+// Doesn't work to name this and set it in symbol_addrs.us
+// because the function is never actually called?
 void func_801202DC_12F28C(s32 arg0, s32 arg1) {
     u8 saveFileName[7];
     s32 prefixASJI = 0x41534A49;
 
-    func_80002AB4_36B4(currentSaveFileIndex, saveFileName);
+    getSaveFileName(currentSaveFileIndex, saveFileName);
 
     if (*(s32*)saveFileName == prefixASJI) {
         D_80159320 |= 0x08000000;

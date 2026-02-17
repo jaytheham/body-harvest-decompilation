@@ -15,11 +15,11 @@ hudWeaponItems = 0x801601B0;
 vehicleSpecs = 0x80257A00; // size:0x70
 buildingSpecs = 0x80259090; // size:0x20
 
-osSyncPrintf = 0x8001CC6C;
 checkForRumblePak = 0x80000E40;
 validateSaveVersionAndChecksum = 0x80001624;
 guess_prepareToSaveGame = 0x80001AA4;
 guess_loadSavedGame = 0x80002378;
+getSaveFileName = 0x80002AB4;
 guess_saveHighScores = 0x80002D04;
 guess_deleteSavedData = 0x80002DB0;
 guess_restoreSavedData = 0x80002E48;
@@ -42,6 +42,7 @@ debug_printModelSegmentStart = 0x80011C34;
 debug_printModelSegmentEnd = 0x80011C6C;
 playMapMusic = 0x800135AC;
 playInventoryMusic = 0x800135F4;
+osSyncPrintf = 0x8001CC6C;
 
 MusPtrBankGetCurrent = 0x800267B8;
 _MotorStartData = 0x8006C800;

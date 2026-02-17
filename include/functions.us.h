@@ -7,7 +7,7 @@
 void* func_80000B14_1714(void);
 void func_8000108C_1C8C(s32);
 s32 isButtonNewlyPressed(u8, u16);
-void func_80002AB4_36B4(s32, u8*); // getSaveFileName
+void getSaveFileName(s32, u8*);
 void func_800048B8_54B8(void);
 void func_800048E8_54E8(void);
 void func_80004918_5518(void);

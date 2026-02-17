@@ -167,7 +167,7 @@ void func_80073A74_82A24(void) {
     u8 saveFileName[7];
 
     inputBufferIndex = 0xA;
-    func_80002AB4_36B4(currentSaveFileIndex, saveFileName);
+    getSaveFileName(currentSaveFileIndex, saveFileName);
     while (inputBufferIndex--) {
         cheatInputBuffer[inputBufferIndex] = '-';
     }
