@@ -216,7 +216,50 @@ s32 func_801185F8_1275A8(BuildingInstance *arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BB94_12AB44.s")
 
+#ifdef NON_MATCHING
+s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
+    s32 buildingId;
+    BuildingInstance* building;
+    s8 hitPoints;
+
+    buildingId = arg0 & 0xFF;
+    building = &buildingInstances[buildingId];
+    if (building->padC[0] != 0) {
+        return 0;
+    }
+
+    if (((*(u32*)&building->isDestroyable >> 12) & 0x1000) != 0) {
+        return 0;
+    }
+
+    if (arg1 <= 0) {
+        return 0;
+    }
+
+    hitPoints = (s8) building->hitPoints;
+    building->unk10 = hitPoints;
+    if (hitPoints > 0) {
+        if (arg1 < hitPoints) {
+            building->hitPoints = hitPoints - arg1;
+        } else {
+            building->hitPoints = 0;
+        }
+    }
+
+    func_8011BB94_12AB44(buildingId, 1);
+
+    if ((s8) building->hitPoints <= 0) {
+        if (D_8015EA29 == building->buildingType) {
+            D_80052AC8 = 0;
+            D_80052AD0 = 0;
+        }
+    }
+
+    return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BEA0_12AE50.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BF7C_12AF2C.s")
 
