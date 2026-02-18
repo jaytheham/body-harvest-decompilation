@@ -621,7 +621,28 @@ s32 func_8012D600_13C5B0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012DDA8_13CD58.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012DF90_13CF40.s")
+s32 func_8012DF90_13CF40(Unk8015FAD0 *arg0, void *arg1, s32 arg2) {
+
+    s32 var_v1 = 0;
+
+    if (arg2 == 0) {
+        if (arg0->unk20 != NULL) {
+            ((s32 (*)()) arg0->unk20)(arg1, (s16) (arg0 - D_8015FAD0));
+        }
+    }
+
+    if ((arg0->unk2C == 5) || (arg0->unk2C == 7) || (arg0->unk2C == 0xB)) {
+        var_v1 = 1;
+    }
+    if (arg0->unk2C == 6) {
+        var_v1 |= 2;
+    }
+    if (arg0->unk2C == 7) {
+        var_v1 |= 4;
+    }
+
+    return var_v1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E03C_13CFEC.s")
 
