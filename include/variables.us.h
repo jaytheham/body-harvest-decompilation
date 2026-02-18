@@ -267,4 +267,6 @@ extern Unk80259490 D_80259490; // vehicle instances?
 extern u8 D_80259D92[][0x50];
 extern Unk80259D98 D_80259D98[];
 
+extern u8 D_D03E780[];
+
 #endif
