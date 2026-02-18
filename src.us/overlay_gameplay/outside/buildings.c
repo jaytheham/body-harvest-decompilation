@@ -363,7 +363,28 @@ void func_8011EAF8_12DAA8(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EB40_12DAF0.s")
 
+#ifdef NON_MATCHING
+void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
+    u8 *temp_v0;
+    s32 objIndex;
+
+    objIndex = (((u8 *) arg0 - D_80145BE0) / 0x18);
+    if ((temp_v0 = (u8 *) buildingInstances + (((((*(s16 *)((u8 *) &D_8015FAEE + (arg1 * 0x30))) >> 4) << 2) - ((*(s16 *)((u8 *) &D_8015FAEE + (arg1 * 0x30))) >> 4)) << 3),
+         objIndex == 0x4F)) {
+        if (temp_v0[0xD] != 2) {
+            temp_v0[0xD] = 1;
+        }
+
+        if (func_8000726C_7E6C(0x12) == 0) {
+            func_801371B8_146168(0, 0x177, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, D_80144FC8);
+        }
+
+        func_800072CC_7ECC(0x12);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EFBC_12DF6C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F094_12E044.s")
 
@@ -554,6 +575,7 @@ void func_801219F4_1309A4(void* arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80121EB4_130E64.s")
 
+// Failed - gpt 5.3 codex
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80122244_1311F4.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80122320_1312D0.s")
@@ -801,6 +823,7 @@ s32 func_8012DF90_13CF40(Unk8015FAD0 *arg0, void *arg1, s32 arg2) {
     return var_v1;
 }
 
+// Failed - gpt 5.3 codex
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E03C_13CFEC.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E114_13D0C4.s")

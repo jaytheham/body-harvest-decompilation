@@ -214,7 +214,14 @@ typedef struct {
 } Unk80128428Arg0;
 
 typedef struct {
-    u8 pad0[0x20];
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    u8 padC[0xC];
+    s16 unk18;
+    s16 unk1A;
+    s16 unk1C;
+    u8 pad1E[0x2];
     s32 (*unk20)();
     u8 pad24[0x4];
     u32 unk28;
