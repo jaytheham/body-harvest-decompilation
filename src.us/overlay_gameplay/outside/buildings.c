@@ -229,7 +229,45 @@ void func_8011C080_12B030(u8 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C0CC_12B07C.s")
 
+#ifdef NON_MATCHING
+s32 func_8011C25C_12B20C(s8 *arg0, s32 arg1) {
+    s16 sp1E;
+    s16 sp1A;
+    s16 sp1C;
+    s16 xCoord;
+    BuildingInstance *building;
+    s32 index;
+
+    sp1A = arg0[1] << 8;
+    sp1C = arg0[2] << 8;
+    sp1E = arg0[0] << 8;
+
+    index = func_80117508_1264B8((s16)(sp1A - sp1C)) - 1;
+    arg1++;
+    while (TRUE) {
+        if (arg1 == 0) {
+            return index;
+        }
+
+        index++;
+        building = &buildingInstances[index];
+        xCoord = building->xCoord;
+
+        if ((xCoord >= (sp1E - sp1C)) && (xCoord < (sp1E + sp1C))) {
+            arg1--;
+        }
+
+        if (index < 0xFF) {
+            if (building->zCoord < (sp1A + sp1C)) {
+                continue;
+            }
+        }
+        return -1;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C25C_12B20C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C338_12B2E8.s")
 
