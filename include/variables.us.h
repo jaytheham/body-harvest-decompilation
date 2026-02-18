@@ -277,5 +277,6 @@ extern Unk80259D98 D_80259D98[];
 extern u8 D_D03E780[];
 
 extern f64 D_80144F08;
+extern s32 D_80140AC4;
 
 #endif

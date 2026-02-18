@@ -53,14 +53,16 @@ typedef struct {
     s16 unk0;
     s16 unk2;
     s16 unk4;
-    u8 pad6[0xA];
-    s16 unk10;
-    u8 pad12[0x8];
-    u8 unk1A;
-    u8 pad1B[0x5];
+      u8 pad6[0x8];
+      s16 unkE;
+      s16 unk10;
+      s16 unk12;
+      u8 pad14[0x6];
+      u8 unk1A;
+      u8 pad1B[0x5];
     s32 unk20;
     u8 unk24;
-    u8 pad25;
+    u8 unk25;
     u8 unk26;
     u8 pad27[0x5];
     s16 unk2C;
@@ -194,7 +196,8 @@ typedef struct {
 typedef struct {
     u8 pad0[0x4];
     void (*callback)(s32, s16);
-    u8 pad8[0x4];
+    u8 unk8;
+    u8 pad9[0x3];
     u8 unkC;
     u8 padD[0x23];
 } Unk8015FAF0;

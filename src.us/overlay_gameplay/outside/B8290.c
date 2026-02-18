@@ -2,7 +2,11 @@
 #include "common.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A92E0_B8290.s")
+void func_800A92E0_B8290(u8 arg0, s32 arg1) {
+    if ((D_80048198[arg0].unk20 & arg1) == arg1) {
+        D_80140AC4 = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A931C_B82CC.s")
 
@@ -38,9 +42,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB570_BA520.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB6D0_BA680.s")
+void func_800AB6D0_BA680(u8 arg0) {
+    D_80048198[arg0].unkE += 0x100;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB700_BA6B0.s")
+void func_800AB700_BA6B0(u8 arg0) {
+    D_80048198[arg0].unkE += 0x400;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB730_BA6E0.s")
 
@@ -90,7 +98,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ADA70_BCA20.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ADAF8_BCAA8.s")
+void func_800ADAF8_BCAA8(u8 arg0) {
+    func_800873A8_96358(arg0);
+    if (D_80048198[arg0].unk24 == 4) {
+        D_80048198[arg0].unk12 = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ADB4C_BCAFC.s")
 
@@ -104,8 +117,14 @@ void func_800ADFE8_BCF98(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AE010_BCFC0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AE190_BD140.s")
+void func_800AE190_BD140(s16 arg0) {
+    D_8004816A += arg0;
+    D_80048170 += arg0;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AE1C0_BD170.s")
+void func_800AE1C0_BD170(void) {
+    D_8004816A += 1;
+    D_8004816E += 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AE1EC_BD19C.s")
