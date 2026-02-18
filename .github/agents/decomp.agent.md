@@ -1,7 +1,7 @@
 ---
 name: Body Harvest Decomp
 description: Decompile a function from the Body Harvest N64 game
-tools: ["search", "edit/editFiles", "execute", "read", "todo"]
+tools: ["search", "edit/editFiles", "execute", "read", "todo", "agent/runSubagent"
 ---
 
 # Decompilation Workflow
@@ -23,17 +23,14 @@ Convert the named N64 assembly function to C89 code, compile it using IDO 5.3 in
 You are running in windows, you have access to a docker container where you can run linux commands and build the project using IDO 5.3. You can also edit files on your host machine and those changes will be reflected in the container:
 
 - `docker exec -it bh-container bash -c "grep -r 'D_80047588' include/"` - Search for extern declarations.
-- `docker exec -it bh-container bash -c "tools/asm-differ/diff.py --no-pager --compress-matching 3 func_8011CC20_12BBD0"` - Compare target and generated assembly for a specific function. Ignore instructions from beyond the function boundaries.
+- Functions are named like `func_<RAM address>_<ROM address>` Compare target and generated assembly for a specific function `docker exec -it bh-container bash -c "tools/asm-differ/diff.py --no-pager --compress-matching 3 <function name> 0x<ROM address of next function>"`.
 - `docker exec -it bh-container bash -c "mips-linux-gnu-objdump -d build/src.us/overlay_gameplay/outside/missions.c.o | sed -n '/<func_8007679C_8574C>:/,/^$/p'"` - Disassemble a single function from an object file.
 
-## Step 1: Generate C Implementation
+## Step 1: Generate C Implementation using runSubagent
 
-Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly.
 Outside the docker container run:`python tools/mips_to_c/m2c.py asm/nonmatchings/core/1000/func_80000D0C_190C.s` to generate an initial C implementation from the original assembly then replace the `#pragma GLOBAL_ASM` line with the generated C code.
 
-## Step 2: Clean Up C Code
-
-Create a todo list for the following C code cleanup steps:
+Clean up the generated C code by following these steps:
 
 1. Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
 2. Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
@@ -47,6 +44,10 @@ Create a todo list for the following C code cleanup steps:
 10. Search in `/asm/` for any `jal` references to the target function to determine correct parameter and return types.
 
 Identify and fix all these issues in the generated C code before proceeding to the next step. The goal is to have clean, readable C code that still compiles down to the same assembly as the original.
+
+## Step 2: Insert C into Project
+
+Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly. Replace that line with the cleaned up C code you generated in Step 1. Make sure to keep the function signature and return type consistent with any calls to that function from other C code.
 
 ## Step 3: Build in Docker
 

@@ -255,7 +255,18 @@ s32 func_8011C42C_12B3DC(s32 arg0) {
     return var_s2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C4D4_12B484.s")
+s32 func_8011C4D4_12B484(void) {
+    s32 i;
+    s32 count;
+
+    count = 0;
+    for (i = 0; i < 0xFF; i++) {
+        if ((s8) buildingInstances[i].unk11 == -1) {
+            count += buildingInstances[i].unk7;
+        }
+    }
+    return count;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C594_12B544.s")
 
@@ -302,6 +313,7 @@ s32 func_8011D260_12C210(s8 arg0, s8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D2DC_12C28C.s")
 
+// Failed sonnet 4.6
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D438_12C3E8.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D4FC_12C4AC.s")
