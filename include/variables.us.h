@@ -127,7 +127,10 @@ extern BuildingInstance buildingInstances[0xFF];
 extern u32 buildingInteriorToLoadId;
 extern s32 D_80052540;
 extern s32 D_80052544;
+extern s16 D_80052546;
+extern u8 D_80052547;
 extern u32 D_80052A90;
+extern s32 D_80052A88;
 extern s32 D_80052A8C;
 extern u8* D_80052A94;
 extern Unk80052A98 D_80052A98[];
@@ -160,6 +163,8 @@ extern u8 D_801427D8[]; // teleport to:%d
 extern u8 D_80142820[]; // Giving delayed powerup %d
 extern f32 D_80144F30;
 extern f32 D_80144F34;
+extern u8 D_80144E20[];
+extern u8 D_80144E2C[];
 extern u8 D_80145A30; // select 
 extern u8 D_80145A38; // %d,
 extern u8 D_80145A3C; // .
@@ -168,6 +173,7 @@ extern u8 D_80145A8C;
 extern u8 D_80145AA4;
 extern u8 D_80145BE0[];
 extern Unk80148620 D_80148620[];
+extern s16 D_801483A4[];
 extern s16 D_80148690;
 extern s32 D_80149380;
 extern s32 D_80149398;
