@@ -98,7 +98,9 @@ void func_800ADFC0_BCF70(u8 arg0) {
     func_800873A8_96358(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ADFE8_BCF98.s")
+void func_800ADFE8_BCF98(u8 arg0) {
+    func_800873A8_96358(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AE010_BCFC0.s")
 
