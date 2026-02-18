@@ -70,9 +70,9 @@ Note instruction order, registers, immediates, branch conditions
 
 ## Step 5: Iterate To Resolve Differences
 
-Rewrite C code to make it better match the target assembly once compiled.
+Rewrite C code to reduce the number of differences in assembly.
 Always begin by making sure all pointer arithmetic is replaced with proper struct/array access, and that assembly-like if>do>while and goto control flow is replaced with more natural C control flow constructs.
-Always try removing intermediate variables and simplifying before adding new ones.
+Always try removing intermediate variables and simplifying before adding new ones, it is very common for the original code to derefence struct fields and arrays multiple times instead of storing them in a local variable.
 Think about how a person would have originally written the code in C to produce the assembly you see. Search for patterns in the original assembly and see how other functions were written to achieve similar assembly output.
 Read file `DecompHints.md` and `ExampleFixes.md` for common patterns and pitfalls.
 Rebuild and re-compare until the generated assembly is identical to the original. Once the build returns `build/bh.us.z64: OK` proceed to the final step.

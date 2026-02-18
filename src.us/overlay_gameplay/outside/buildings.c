@@ -151,7 +151,27 @@ void func_8011C080_12B030(u8 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C338_12B2E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C42C_12B3DC.s")
+s32 func_8011C42C_12B3DC(s32 arg0) {
+    s32 temp_v0;
+    s32 temp_v0_2;
+    s32 var_s0;
+    s32 var_s1;
+    s32 var_s2;
+
+    var_s0 = 0;
+    var_s2 = 0;
+    temp_v0 = func_8011C25C_12B20C(arg0, 0);
+    var_s1 = temp_v0;
+    if (temp_v0 != -1) {
+        do {
+            var_s0 += 1;
+            var_s2 += buildingInstances[var_s1].unk7;
+            temp_v0_2 = func_8011C25C_12B20C(arg0, var_s0);
+            var_s1 = temp_v0_2;
+        } while (temp_v0_2 != -1);
+    }
+    return var_s2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C4D4_12B484.s")
 
