@@ -1,10 +1,27 @@
 #include <ultra64.h>
 #include "common.h"
 
-
+// Failed - sonnet 4.6
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80115F20_124ED0.s")
 
+#ifdef NON_MATCHING
+s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
+    f32 sp20;
+    f32 sp24;
+    s16 var_v1;
+
+    sp20 = (f32)(((f64)(f32)arg0 * D_80144F08) / 32768.0);
+    sp24 = sinf(sp20) / cosf(sp20);
+    if (arg2 >= 0) {
+        var_v1 = (s16)(s32)(-sp24 * (f32)(arg1 - arg2));
+    } else {
+        var_v1 = (s16)(s32)((f64)((f32)(arg1 - arg2) * sp24) - 2.0 * (f64)(sp24 * (f32)arg1));
+    }
+    return (s16)(var_v1 - (var_v1 >> 2));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011619C_12514C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011629C_12524C.s")
 
