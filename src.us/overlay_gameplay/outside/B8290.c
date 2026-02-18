@@ -94,7 +94,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ADB4C_BCAFC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ADFC0_BCF70.s")
+void func_800ADFC0_BCF70(u8 arg0) {
+    func_800873A8_96358(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ADFE8_BCF98.s")
 
