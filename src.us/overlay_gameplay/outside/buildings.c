@@ -316,7 +316,11 @@ void func_8011F22C_12E1DC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011FA90_12EA40.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011FB98_12EB48.s")
+void func_8011FB98_12EB48(BuildingInstance *arg0) {
+    func_8011FA90_12EA40(arg0, 5, -5, 0x74, -0xD8, 0xBF, 0x17, 0xB, 0xF);
+    func_8011FA90_12EA40(arg0, 5, 0xB6, 0x74, -0xB0, 0xE, 0x16, 0x24, 0xE);
+    func_8011FA90_12EA40(arg0, 5, -0xCD, 0x74, -0x72, 0xE, 0x16, 0x6F, 0xD);
+}
 
 void func_8011FC64_12EC14(BuildingInstance *arg0) {
     func_8011FA90_12EA40(arg0, 5, 0xCF, 0x99, -0x92, 0x2F, 0x1D, 0xF, 0xF);
