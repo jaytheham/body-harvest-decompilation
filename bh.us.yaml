@@ -205,7 +205,7 @@ segments:
       - [0xA49A0, asm, overlay_gameplay/outside/A49A0] # Map
       - [0xAAA70, asm, overlay_gameplay/outside/AAA70] # HUD
       - [0xB2CB0, c, overlay_gameplay/outside/B2CB0] # Beacons
-      - [0xB8290, asm, overlay_gameplay/outside/B8290]
+      - [0xB8290, c, overlay_gameplay/outside/B8290]
       - [0xBD270, asm, overlay_gameplay/outside/trigger] # original src filename
       - [0xBF9C0, asm, overlay_gameplay/outside/BF9C0] # Shield walls, gates, terrain, water
       - [0xCFE30, asm, overlay_gameplay/outside/CFE30] # Special effects
