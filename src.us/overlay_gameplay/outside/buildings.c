@@ -662,7 +662,30 @@ void func_80125CA0_134C50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80128288_137238.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80128428_1373D8.s")
+void func_80128428_1373D8(Unk80128428Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3, s32 *arg4, s32 *arg5, s32 *arg6) {
+    s16 sp38[3];
+    s16 sp30[3];
+    s32 sp24[3];
+
+    sp38[0] = arg1;
+    sp38[1] = arg2;
+    sp38[2] = arg3;
+
+    sp30[0] = 0x4000 - arg0->unk6;
+    sp30[1] = -arg0->unk8;
+    sp30[2] = arg0->unkA;
+
+    if (arg0->unkD != -2) {
+        sp30[1] += arg0->unk44;
+        sp30[2] += arg0->unk42;
+    }
+
+    func_800044D4_50D4(sp38, sp24, sp30);
+
+    *arg4 = sp24[0] + arg0->unk0;
+    *arg5 = sp24[1] + arg0->unk2;
+    *arg6 = sp24[2] + arg0->unk4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80128504_1374B4.s")
 

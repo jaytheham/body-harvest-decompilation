@@ -200,6 +200,20 @@ typedef struct {
 } Unk8015FAF0;
 
 typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    u8 padC;
+    s8 unkD;
+    u8 padE[0x34];
+    s16 unk42;
+    s16 unk44;
+} Unk80128428Arg0;
+
+typedef struct {
     u8 pad0[0x20];
     s32 (*unk20)();
     u8 pad24[0x4];
