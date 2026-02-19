@@ -265,6 +265,7 @@ extern u16 D_8021FA30[][0x10];
 extern u8 D_80221A30[][0x40];
 
 extern u32 D_80222A30[];
+extern s32 D_80222A70;
 // 223780 alien waves?
 // 224680 missions?
 // 25667C alien specs?

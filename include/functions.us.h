@@ -53,6 +53,7 @@ void func_80081C84_90C34(u8, s32);
 u16 func_80081E5C_90E0C(s16);
 void func_800873A8_96358(u8);
 void func_80087AAC_96A5C(u8);
+void func_80088760_97710(Unk80048198*);
 void func_8009BAC0_AAA70(void);
 void func_800A17EC_B079C(void);
 void func_800A1924_B08D4(void);

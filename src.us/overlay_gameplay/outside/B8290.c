@@ -18,10 +18,12 @@ void func_800A92E0_B8290(u8 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9908_B88B8.s")
 
+// Failed - gpt 5.3 codex
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A99B8_B8968.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9A90_B8A40.s")
 
+// Failed - sonnet 4.6
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9DC0_B8D70.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9E1C_B8DCC.s")
@@ -30,9 +32,15 @@ void func_800A92E0_B8290(u8 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AA340_B92F0.s")
 
+// Failed - gpt 5.3 codex
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB250_BA200.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB32C_BA2DC.s")
+void func_800AB32C_BA2DC(u8 arg0) {
+    if (D_80222A70 >= D_80048198[arg0].unk2) {
+        func_80088760_97710(&D_80048198[arg0]);
+        D_80048198[arg0].unk2C = 0xA;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB390_BA340.s")
 
@@ -64,8 +72,10 @@ void func_800AB700_BA6B0(u8 arg0) {
     D_80048198[arg0].unkE += 0x400;
 }
 
+// Failed - gpt 5.3 codex
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB730_BA6E0.s")
 
+// Failed - gpt 5.3 codex
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB80C_BA7BC.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB8CC_BA87C.s")
@@ -141,4 +151,5 @@ void func_800AE1C0_BD170(void) {
     D_8004816E += 1;
 }
 
+// Failed - gpt 5.3 codex
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AE1EC_BD19C.s")
