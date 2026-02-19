@@ -21,7 +21,20 @@ void func_800A931C_B82CC(s8 arg0, s16 *arg1, s32 *arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9820_B87D0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9908_B88B8.s")
+void func_800A9908_B88B8(u8 arg0, s32 arg1) {
+    s16 sp38[4];
+    s32 sp30;
+    s32 sp34;
+    s32 sp3C;
+
+    sp38[0] = D_8014DD50[D_80048198[arg0].unkC].unkC;
+    sp38[1] = D_8014DD50[sp38[0]].unkC;
+    sp38[2] = D_8014DD50[sp38[0]].unkD;
+    sp38[3] = D_8014DD50[sp38[2]].unkC;
+    if (func_80081F18_90EC8(arg0, 4, 3, sp38, arg1) == 3) {
+        D_80048198[arg0].unk36 = 0;
+    }
+}
 
 // Failed - gpt 5.3 codex
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A99B8_B8968.s")

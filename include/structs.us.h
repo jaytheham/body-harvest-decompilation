@@ -53,7 +53,8 @@ typedef struct {
     s16 unk0;
     s16 unk2;
     s16 unk4;
-    u8 pad6[0x8];
+    u8 pad6[0x6];
+    s16 unkC;
     s16 unkE;
     s16 unk10;
     s16 unk12;
@@ -68,7 +69,8 @@ typedef struct {
     s16 unk2C;
     u8 pad2E[0x6];
     s16 unk34;
-    u8 pad36[0x2];
+    s8 unk36;
+    u8 pad37;
     s16 unk38;
     s16 unk3A;
     s8 unk3C;

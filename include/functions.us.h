@@ -55,6 +55,7 @@ s32 func_80080840_8F7F0(u8, s32);
 void func_800808F0_8F8A0(u8, s16 *);
 void func_80081C84_90C34(u8, s32);
 u16 func_80081E5C_90E0C(s16);
+s32 func_80081F18_90EC8(u8, s32, s32, s16 *, s32);
 void func_800873A8_96358(u8);
 void func_80087AAC_96A5C(u8);
 void func_80088760_97710(Unk80048198*);
