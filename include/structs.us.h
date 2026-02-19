@@ -255,6 +255,17 @@ typedef struct {
     s16 unk0;
     s16 unk2;
     s16 unk4;
+    s16 unk6;
+    u8 pad8[4];
+    s8 unkC;
+    s8 unkD;
+    u8 padE[2];
+} Unk8014DD50; /* size 0x10 */
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
 } InputStruct_8012B150;
 
 typedef struct {
