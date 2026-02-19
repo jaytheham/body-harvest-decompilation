@@ -52,6 +52,8 @@ Clean up the generated C code by following these steps:
 9. Replace if-do-while and do-while loops with for(;;) or while() loops.
 10. Search in `/asm/` for any `jal` references to the target function to determine correct parameter and return types.
 
+After making these changes **use runSubagent** and ask the agent replace all pointer arithmetic with proper struct and array access, then review the changes to ensure they are correct and that no pointer arithmetic remains.
+
 Identify and fix all these issues in the generated C code before proceeding to the next step. The goal is to have clean, readable C code that still compiles down to the same assembly as the original.
 
 ## Step 2: Insert C into Project
@@ -86,6 +88,8 @@ Make sure all pointer arithmetic is replaced with proper struct/array access, an
 Double check all function calls param are necessary and correctly typed.
 Think about how a person would have originally written the code in C to produce the assembly you see rather than writing the C to match the assembly exactly. Search for patterns in the original assembly and see how other functions were written to achieve similar assembly output.
 Read file `DecompHints.md` for common patterns and pitfalls.
+
+If the only differences are register allocation try changing the order of the related operations, even if the new order appears less like the original assembly.
 
 Rebuild and re-compare until the generated assembly is identical to the original. Once the build returns `build/bh.us.z64: OK` proceed to the final step.
 

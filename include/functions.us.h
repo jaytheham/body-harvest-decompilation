@@ -128,6 +128,7 @@ void func_801238DC_13288C(s16);
 void func_80124170_133120(s16, s16, s16, s32, s32, s32);
 void func_80124BA8_133B58(void);
 OutputStruct_8012B150 *func_80129354_138304(s32, s32, s16, s16, s16);
+void func_8012B110_13A0C0(Unk80048198 *a0, s32 a1, Unk80048198 *a2, Unk80048198 *a3);
 void func_8012B26C_13A21C(void);
 void func_8012D808_13C7B8(s16);
 void func_8012D824_13C7D4(void);

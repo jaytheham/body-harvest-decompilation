@@ -77,15 +77,35 @@ void func_800AB408_BA3B8(u8 arg0) {
     temp_v0 = &D_80048198[arg0];
     temp_v0->unk48 = 0xC0;
     if (*(s16*) ((u8*) temp_v0 + 0x38) != 0x64) {
-        temp_v1 = *(s16*) &D_8004DCD0[0x4AC] - temp_v0->unk0;
-        temp_a0 = *(s16*) &D_8004DCD0[0x4B0] - temp_v0->unk4;
+        temp_v1 = D_8004DCD0[13].unk0 - temp_v0->unk0;
+        temp_a0 = D_8004DCD0[13].unk4 - temp_v0->unk4;
         if (((temp_v1 * temp_v1) + (temp_a0 * temp_a0)) < 0x40000) {
             func_800AD814_BC7C4(arg0, 0xB, 0xD, *((u8*) temp_v0 + 0x3F));
         }
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB4B4_BA464.s")
+void func_800AB4B4_BA464(u8 arg0) {
+    Unk8004DCD0 *spec;
+    s32 dx, dz, ndx, ndz;
+    s32 absDx, absDz;
+
+    spec = &D_8004DCD0[D_80048198[arg0].unk38];
+    dx = D_80048198[arg0].unk0 - spec->unk0;
+    dz = D_80048198[arg0].unk4 - spec->unk4;
+    ndx = -dx;
+    absDx = (ndx < dx) ? dx : ndx;
+    ndz = -dz;
+    if (absDx < 0xC9) {
+        absDz = (ndz < dz) ? dz : ndz;
+        if (absDz < 0xC9) {
+            return;
+        }
+    }
+    D_80048198[arg0].unk24--;
+    D_80048198[arg0].unk48 = 0xC0;
+    
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB570_BA520.s")
 
