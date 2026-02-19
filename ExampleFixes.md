@@ -7,6 +7,10 @@ https://github.com/zeldaret/oot/blob/9963e7f5d5fa8caee329f6b40e393d8a2c45390b/do
 
 ## Registers
 
+### Stack size
+
+If the only difference is stack size evaluate if there are any temp variables that can be removed. Especially if they are just storing a pointer to an array or struct that can be directly dereferenced.
+
 ### Incorrect registers
 
 | Target               | Current              |
@@ -427,7 +431,7 @@ Note: Even with `s32 idx`, if `D_80048198 + idx` appears in **two separate point
 
 ### Compound bit-flag sequence with two stores (set/clear pattern)
 
-When the original assembly does a load, OR into a register, STORE (intermediate), AND the register, STORE again  use |= followed by &= rather than a named temp variable.
+When the original assembly does a load, OR into a register, STORE (intermediate), AND the register, STORE again use |= followed by &= rather than a named temp variable.
 
 IDO 5.3 with a named temp:
 `c
@@ -440,14 +444,23 @@ IDO 5.3 with |= / &=:
 ptr->field |= 0x80;          // store 1 emitted
 ptr->field &= ~0x100;        // AND uses the register value, no reload; store 2 emitted
 `
-IDO 5.3 is smart enough to *not* reload from memory for the &= even though it just stored, so the assembly matches: one load, two stores.
+IDO 5.3 is smart enough to _not_ reload from memory for the &= even though it just stored, so the assembly matches: one load, two stores.
 
 ### Trailing call register allocation: prefer no-temp-variable and if (cond) over if (cond != 0)
 
-When a function has a conditional block followed by an unconditional call at the end, using a local struct pointer variable OR writing if (func() != 0) can cause the compiler to choose 2 for the restored arg0, adding an ndi a0, a2, 0xff in the jal delay slot instead of 
+When a function has a conditional block followed by an unconditional call at the end, using a local struct pointer variable OR writing if (func() != 0) can cause the compiler to choose 2 for the restored arg0, adding an ndi a0, a2, 0xff in the jal delay slot instead of
 op.
 
 Fix:
-- Use direct array subscript D_array[arg0].field instead of a local Type *ptr
+
+- Use direct array subscript D_array[arg0].field instead of a local Type \*ptr
 - Write if (func(arg0, x)) instead of if (func(arg0, x) != 0)
 - Ensure called functions are properly declared in unctions.us.h (implicit declarations can affect register allocation)
+
+### Struct field split: s32 to two s16 fields
+
+When assembly uses lh at offset unk_N but the struct has s32 unkN, the s32 field should be split into two s16 fields:
+
+- s32 unk38 s16 unk38; s16 unk3A;
+
+This allows clean ->unk3A struct access instead of _(s16_)((u8\*)ptr + 0x3A) casts.
