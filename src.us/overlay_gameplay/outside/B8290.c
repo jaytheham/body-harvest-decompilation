@@ -112,7 +112,23 @@ void func_800ABC2C_BABDC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ABE7C_BAE2C.s")
 
+#ifdef NON_MATCHING
+void func_800ABFC0_BAF70(u8 arg0) {
+    s32 sp28;
+    s32 sp24;
+
+    func_800808F0_8F8A0(arg0, &D_80048198[arg0].unkE);
+    sp28 = D_80048198[arg0].unk0 >> 8;
+    sp24 = D_80048198[arg0].unk4 >> 8;
+    if ((func_80080840_8F7F0(arg0, 0xA) != 0) ||
+        (func_800B325C_C220C((s8)sp28, (s8)sp24, 0x800) != 0)) {
+        func_800ABE7C_BAE2C(arg0);
+    }
+    func_800AC198_BB148(arg0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ABFC0_BAF70.s")
+#endif
 
 void func_800AC064_BB014(u8 arg0) {
 
