@@ -42,7 +42,14 @@ void func_800AB32C_BA2DC(u8 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB390_BA340.s")
+void func_800AB390_BA340(u8 arg0) {
+    if (func_80080840_8F7F0(arg0, 0x19)) {
+        D_80048198[arg0].unk20 |= 0x80;
+        D_80048198[arg0].unk20 &= ~0x100;
+        D_80048198[arg0].unk24 = 0x1C;
+    }
+    func_800AB32C_BA2DC(arg0);
+}
 
 void func_800AB408_BA3B8(u8 arg0) {
     s32 temp_a0;

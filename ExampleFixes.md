@@ -424,3 +424,30 @@ D_80048198[idx].unk20 &= 0xDFBFFFFF;
 Using `u8 idx` or an inline cast `(s32)((u8*)arg0)[8]` both generate `multu`. Only a named `s32` variable gives the shift chain.
 
 Note: Even with `s32 idx`, if `D_80048198 + idx` appears in **two separate pointer assignments** (two named `Unk80048198 *` pointers), IDO may still use `multu`. The pure array-subscript form `D_80048198[idx]` with a single `s32 idx` variable is the most reliable way to get shift chains.
+
+### Compound bit-flag sequence with two stores (set/clear pattern)
+
+When the original assembly does a load, OR into a register, STORE (intermediate), AND the register, STORE again  use |= followed by &= rather than a named temp variable.
+
+IDO 5.3 with a named temp:
+`c
+s32 temp = ptr->field | 0x80;
+ptr->field = temp;           // << IDO eliminates this (dead store)
+ptr->field = temp & ~0x100;
+`
+IDO 5.3 with |= / &=:
+`c
+ptr->field |= 0x80;          // store 1 emitted
+ptr->field &= ~0x100;        // AND uses the register value, no reload; store 2 emitted
+`
+IDO 5.3 is smart enough to *not* reload from memory for the &= even though it just stored, so the assembly matches: one load, two stores.
+
+### Trailing call register allocation: prefer no-temp-variable and if (cond) over if (cond != 0)
+
+When a function has a conditional block followed by an unconditional call at the end, using a local struct pointer variable OR writing if (func() != 0) can cause the compiler to choose 2 for the restored arg0, adding an ndi a0, a2, 0xff in the jal delay slot instead of 
+op.
+
+Fix:
+- Use direct array subscript D_array[arg0].field instead of a local Type *ptr
+- Write if (func(arg0, x)) instead of if (func(arg0, x) != 0)
+- Ensure called functions are properly declared in unctions.us.h (implicit declarations can affect register allocation)
