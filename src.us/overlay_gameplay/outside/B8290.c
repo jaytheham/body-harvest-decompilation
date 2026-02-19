@@ -50,8 +50,26 @@ void func_800A9908_B88B8(u8 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AA340_B92F0.s")
 
-// Failed - gpt 5.3 codex
+#ifdef NON_MATCHING
+s32 func_800AB250_BA200(u8 arg0, s32 arg1) {
+    Unk80048198 *ptr;
+    s32 dx, dz;
+
+    ptr = &D_80048198[arg0];
+    if (ptr->unk20 & 0x08000000) {
+        return 1;
+    }
+    dx = D_80052B34->unk0 - ptr->unk0;
+    dz = D_80052B34->unk4 - ptr->unk4;
+    if ((s32) sqrtf((f32) (dx * dx + dz * dz)) < arg1) {
+        ptr->unk20 |= 0x08000100;
+        return 1;
+    }
+    return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB250_BA200.s")
+#endif
 
 void func_800AB32C_BA2DC(u8 arg0) {
     if (D_80222A70 >= D_80048198[arg0].unk2) {
@@ -121,6 +139,7 @@ void func_800AB700_BA6B0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB730_BA6E0.s")
 
 // Failed - gpt 5.3 codex
+// Failed - sonnet 4.6
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB80C_BA7BC.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB8CC_BA87C.s")

@@ -52,7 +52,7 @@ Clean up the generated C code by following these steps:
 9. Replace if-do-while and do-while loops with for(;;) or while() loops.
 10. Search in `/asm/` for any `jal` references to the target function to determine correct parameter and return types.
 
-After making these changes **use runSubagent** and ask the agent replace all pointer arithmetic with proper struct and array access, then review the changes to ensure they are correct and that no pointer arithmetic remains.
+After making these changes **use runSubagent** and ask the agent replace all pointer arithmetic with proper struct and array access and all temp pointers with direct struct/array references, then review the changes to ensure they are correct and that no pointer arithmetic remains.
 
 Identify and fix all these issues in the generated C code before proceeding to the next step. The goal is to have clean, readable C code that still compiles down to the same assembly as the original.
 
