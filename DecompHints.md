@@ -1,23 +1,22 @@
-# -O2 decompilation (for IDO 5.3 and 7.1)
+# -O2 decompilation
 
 ### Preliminaries
 
-- make sure the file compiles without warnings; warnings can hint about weird things you're doing that will cause non-matchings
-- in particular, make sure all functions you call are declared
-- O2, and O3 will assign registers automatically. Any variable defined as `register` will become a "normal" variable (eg, `register int a;` simply becomes `int a;`)
+- make sure all functions you call are declared
+- O2 will assign registers automatically. Any variable defined as `register` will become a "normal" variable (eg, `register s32 a;` becomes `s32 a;`)
 
 ### Regalloc differences
 
 - move statements around
-- introduce temporary variables for subexpressions, and move their assignments around
+- remove or introduce temporary variables for subexpressions, and move their assignments around
 - in particular, try moving statements between different basic blocks
 - duplicate expressions and use the compiler's deduplication machinery
 - reuse variables
 - fiddle with int promotion if relevant
-- special compiler-generated patterns, like turning `(x ^ A) < 1` back into `x == A`, or recognizing bit field access
+- revert compiler-generated patterns, like turning `(x ^ A) < 1` back into `x == A`, or recognizing bit field access
 - initialize variables within loop headers
-- `-var` uses the same destination reg vs `-1*var` which uses a separate distination reg in O2. -g is identical
-- change void function calls to a relevant type, i.e. f32, u32. -g is identical
+- `-var` uses the same destination reg vs `-1*var` which uses a separate distination reg in O2.
+- change void function calls to a relevant type, i.e. f32, u32.
 
 ### Reorderings
 
@@ -39,19 +38,17 @@
 
 #### Local variable placement
 
-`-g` and `-O2` place things on the stack in the same way. (TODO: verify this.) However, the optimizer can then move some variables into registers, leaving slots empty. If an explicitly declared stack variable is unused or placed in a register, and it is last in the declaration order, it won't affect `sp`. (Thus, a strategy for getting correct stack usage is to first move all stack-placed variables to their correct place on the stack, then either pad with unused variables at the top of the stack to increase stack size, or move registers variables from the start to the end of the declaration order to decrease it.)
-
-Hypothesis: the compiler does a naive codegen pass, involving creating pseudo registers for a lot of expressions, each of which gets an assigned place on the stack. Then the optimizer runs and places most expressions in registers, but they keep their reserved stack space.
+The optimizer can move some variables into registers, leaving stack slots empty. If an explicitly declared stack variable is unused or placed in a register, and it is last in the declaration order, it won't affect `sp`. (Thus, a strategy for getting correct stack usage is to first move all stack-placed variables to their correct place on the stack, then either pad with unused variables at the top of the stack to increase stack size, or move registers variables from the start to the end of the declaration order to decrease it.)
 
 Stack variables are placed in "as declared" order - non-declared temporary variables are placed at end of stack:
 
 ```c=
-int var1; //0 or -56
-int var2; //4 or -52
-int var3; //8 or -48
+s32 var1; //0 or -56
+s32 var2; //4 or -52
+s32 var3; //8 or -48
 ...
-int var12; //48 or -8
-int var13; //52 or -4
+s32 var12; //48 or -8
+s32 var13; //52 or -4
 
 if(x < (1*(1/255)*6)) //consumes a temp sp 56 or 0 (function scope)
 ```
@@ -84,7 +81,7 @@ Example:
 
 ```c
 void temps(int x, struct Test *this) {
-    int a, b;
+    s32 a, b;
     // temp 1 created (s32)
     if (ABS(x) < 100);
 
@@ -101,9 +98,9 @@ void temps(int x, struct Test *this) {
      *  sp10: a
      *  sp0C: b
      *
-     *  sp08: temp 1, int
-     *  sp04: temp 2, float
-     *  sp00: temp 3, int
+     *  sp08: temp 1, s32
+     *  sp04: temp 2, f32
+     *  sp00: temp 3, s32
      */
 }
 ```
@@ -122,7 +119,7 @@ Often, stack problems involve moving a uopt temp into a specific stack offset, s
 
 #### ugen temps/stack:
 
-Ugen allocates space for `$ra`, and any saved registers that were allocated by uopt. It might be the case that ugen creates its own temporary variables. (Needs more investigating).
+Ugen allocates space for `$ra`, and any saved registers that were allocated by uopt. It might be the case that ugen creates its own temporary variables.
 
 #### Stack size
 
@@ -132,8 +129,6 @@ However if the address of a local variable is used anywhere in the function, the
 
 ### Register allocation
 
-TODO: we really need to figure this out.
-
 For a simple test program, the order in which Variable registers got allocated for variables was "as declared" and in the order v0, v1, a0, a1, a2, a3, t0, t1, t2, t3, t4, t5. After that point things started getting put on the stack. t6 and on might serve other roles than variable storage.
 
 A second simple test for Saved registers shows the order is stored "as used", then by "as declared" and in the order s0, s1, s2, s3, s4, s5, s6, s7, s8. After that Arg and temp registers are used (a3, t0...)
@@ -142,111 +137,11 @@ The Codegen does not re-order instructions so you can still infer declaration or
 
 Normal Register allocation order - As Declared :
 
-```c=
-int var1; //v0
-int var2; //v1
-int var3; //a0
-...
-int var12; //t5
-int var13; //sp(xx)
-```
-
-Saved Register allocation order - As first Used (not saved), then by declaration order :
-
-```c=
-    int regs0  = 0; //s0 // regs0 is used first so get s0
-    int regs1  = 1; //s1  {s2 if s3 switch uncommented}
-    int regs2  = 2; //s2  {s3 if s3 switch uncommented}
-    int regs3  = 3; //s3  {s1 if s3 switch uncommented}
-    int regs4  = 4; //s4
-    int regs5  = 5; //s5
-    int regs6  = 6; //s6
-    int regs7  = 7; //s7
-    int regs8  = 8; //s8
-    int regs9  = 9; //t8 [sp104]
-    int regs10 = 10;//t9 [sp100]
-    int regs11 = 11;//t0 [sp96]
-...
-    switch (((char *)regs0)[0]) //regs0 used first
-    {
-        case 0:
-        { // if this block is un-commented regs3 used second, and becomes s1
-            /*switch (((char *)regs3)[0])
-            {
-                case 0:
-                    return;
-                case 1:
-                    return;
-            }*/
-            //9, 10 & 11 re-load from sp to t8/9/0
-            regs0 = chraiGoT2oLabel(regs0,
-                                    regs1,
-                                    regs2,
-                                    regs3,
-                                    regs4,
-                                    regs5,
-                                    regs6,
-                                    regs7,
-                                    regs8,
-                                    regs9,
-                                    regs10,
-                                    regs11);
-            break;
-        }
-        ...
-
-```
-
-```c=
-    int regs0  = 0; //s1  {s2 if s3 switch uncommented}
-    int regs2  = 2; //s2  {s3 if s3 switch uncommented}
-    int regs3  = 3; //s3  {s1 if s3 switch uncommented}
-    int regs4  = 4; //s4
-    int regs1  = 1; //s5 // this becomes s5 as it was declared 5th
-    int regs5  = 5; //s6
-    int regs6  = 6; //s0 // this becomes s0 as its used first
-    int regs9  = 9; //s7
-    int regs10 = 10;//s8
-    int regs11 = 11;//t8 [sp104]
-    int regs7  = 7; //t9 [sp100]
-    int regs8  = 8; //t0 [sp96]
-...
-    switch (((char *)regs6)[0]) //regs6 used first
-    {
-        case 0:
-        {   // if this block is un-commented regs3 used second and becomes s1
-            /*switch (((char *)regs3)[0])
-            {
-                case 0:
-                    return;
-                case 1:
-                    return;
-            }*/
-        //7, 8 & 11 re-load from sp to t8/9/0
-            regs0 = chraiGoT2oLabel(regs0,
-                                    regs1,
-                                    regs2,
-                                    regs3,
-                                    regs4,
-                                    regs5,
-                                    regs6,
-                                    regs7,
-                                    regs8,
-                                    regs9,
-                                    regs10,
-                                    regs11);
-            break;
-        }
-        ...
-```
-
 ### Function declarations matter
 
 Calling a function with non-void return type consumes stack and can affect regalloc, even if the return value is ignored.
 
 Calling a function that isn't declared will automatically declare it as a varargs function: `int f()`. Following C varargs type promotion rules, floats passed to the function will be casted to doubles (and avoid the f12..f15 registers), s8/u8/s16/u16 to s32, and as noted above, the `int` return type may affect regalloc/stack. This is a good reason to watch out for compiler warnings.
-
-With -framepointer, `void f(void)` may use 4 bytes more stack than `void f()`.
 
 ### Variables matter
 
@@ -274,14 +169,6 @@ Types of different size are usually easy to distinguish, based on sign extension
 A common way in which u32 constants can appear is via `sizeof`.
 
 If a function call accepts both lb and lbu or lh and lhu then the function parameter is an s32 as any other type would cause conversion before passing.
-
-```c=
-lb	a3,128(v0)
-jal	handles_shot_actors
-...
-lbu	a3,2(s1)
-jal	handles_shot_actors
-```
 
 ### Int promotion matters
 
@@ -356,32 +243,21 @@ Are treated as "really const", while `extern const`s aren't. Thus, their loads c
 
 ### Volatile variables
 
-If `x` is declared `volatile`, reading/writing to `x` will first compute its address, and then do a load/store:
+If `x` is declared `volatile`, reading/writing to `x` will first compute its address, and then do a load/store.
 
-```bash=
-lui   $t6, %hi(x)
-addiu $t6, %lo(x)
-sw    $zero, ($t6)
-```
-
-If `x` is not `volatile`, the compiler usually (but not always) folds the `%lo` into the load/store:
-
-```bash=
-lui   $t6, %hi(x)
-sw    $zero, %lo(x)($t6)
-```
+If `x` is not `volatile`, the compiler usually (but not always) folds the `%lo` into the load/store.
 
 ### Loop unrolling
 
 The compiler unrolls "small" loops, by a factor 2 or 4. (The definition of "small" varies wildly, and needs to be figured out.)
 
-Adding a `continue;` or `i++; i--;` can prevent loop unrolling; I don't know if it has side effects (it's certainly a good sign that you're missing something). Passing `-Wo,-loopunroll,0` to the compiler disables loop unrolling completely.
+Adding a `continue;` or `i++; i--;` can prevent loop unrolling; I don't know if it has side effects (it's certainly a good sign that you're missing something).
 
 Large struct copies are also done with unrolled loops (with a factor 3), but that obeys its own rules.
 
 ### Deduplication
 
-The compiler has a Global Value Numbering pass which deduplicates expressions. However, the act of deduplication affects register allocation. Thus one can sometimes force different regalloc by duplicating various expressions, hoping they will get deduplicated by the compiler. (Hypothesis: deduplication pushes a new expression onto an expression list (last), and regalloc traverses assigns registers to expressions in order of appearance within this list.)
+The compiler has a Global Value Numbering pass which deduplicates expressions. However, the act of deduplication affects register allocation. Thus one can sometimes force different regalloc by duplicating various expressions, hoping they will get deduplicated by the compiler.
 
 ### Rematerialization of constants
 
@@ -399,7 +275,7 @@ Two variables which are both referred to via `%hi`/`%lo` and which have the same
 
 ### Function pointers
 
-Taking a pointer to a function, either in global scope or in a function higher up, can (rarely) impact codegen of that function, e.g. by reorderings. (TODO: does this include function calls as well?)
+Taking a pointer to a function, either in global scope or in a function higher up, can (rarely) impact codegen of that function, e.g. by reorderings.
 
 ### `,` vs `;`
 
@@ -407,47 +283,11 @@ Separating statements by `,` instead of `;` can sometimes cause reorderings, sim
 
 ### Ternaries
 
-`a = (b ? c : d)` and `if (b) a = c; else a = d;` generate the same code, but occasionally with some reordering and regalloc differences. `(b ? (a = c) : (a = d))` generates the same code as the other ternary. This could be because the compiler needs to come up with a single value for the entire expression (even though it discards it later), or because it treats expressions and statements fundamentally differently. (Edit: or maybe this is just whitespace sensitivity again! I should re-test.)
+`a = (b ? c : d)` and `if (b) a = c; else a = d;` generate the same code, but occasionally with some reordering and regalloc differences. `(b ? (a = c) : (a = d))` generates the same code as the other ternary. This could be because the compiler needs to come up with a single value for the entire expression (even though it discards it later), or because it treats expressions and statements fundamentally differently.
 
 ### `&a[i]` vs `a + i`
 
 While nominally the same thing, using `&a[i]` within a loop may trigger the compiler to keep an additional loop counter for `&a[i]`. `a + i`, on the other hand, is often computed by addition and multiplication. `&a[i]` might also cause main iterator to become a multiple of the array type size.
-
-Ex:
-
-```c=
-s32 i;
-s32 *arr;
-for (i = 0; i < 10; i++)` {
-    s32 x = arr[i];
-    ...
-}
-```
-
-may get compiled to:
-
-```c=
-s32 i;
-s32 *arr;
-s32 *arr_tmp = arr;
-for (i = 0; i < 40; i += 4, arr_tmp++) {
-    s32 x = *arr_tmp;
-    ...
-}
-```
-
-or if 10 is a constant and the array global
-
-```c=
-s32 i;
-s32 *arr;
-s32 *arr_tmp;
-s32 *arr_end = &arr[10];
-for (arr_tmp = arr; arr_tmp != arr_end; arr_tmp++) {
-    s32 x = *arr_tmp;
-    ...
-}
-```
 
 The two expressions may also sometimes result in different codegen/regalloc. `(*(A + B)).x`, `(a + b)->x` and `a[b].x` can all have different codegen. (But `(&a[b])->x` seems to be the same as `a[b].x` at least in one function.)
 
@@ -508,8 +348,6 @@ Conditions like `if (glob.singleBitField)` are sometimes (but not always) emitte
 
 The underlying type of the bitfield cannot easily be determined from the asm (IDO can emit lw even for u8-based bitfields, or lbu for u32 ones, depending on which bits it needs), however, it can sometimes have an impact on regalloc.
 
-https://hackmd.io/@EllipticEllipsis/ryEtn3obn has more notes on this topic.
-
 ### Struct copies
 
 Copying a struct generates reorderings compared to copying each data member separately. It might also copy padding data (?), and if the size is 3 (mod 4) it may also generate `lwr`/`swr` instructions (like array initialization).
@@ -551,8 +389,6 @@ After the codegen pass has run and emitted code (including regalloc), the output
 The output of the codegen pass can be seen by passing the -S flag to the compiler; it may be instructive to look at this output for various functions to get a feeling for what the codegen pass tries to emit. It's much more straightforward than the actual assembled version. -k and -o are interesting as well.
 
 $at is always generated by the assembler, when emitting pseudo instructions, e.g. `beq $t2, 5`, `la`, large immediates as operands. `lw` with a symbol as a name also gets expanded as a pseudo instruction, but doesn't use at. Instead it uses the same register twice, e.g. `lui $t2, hi lw .., lo($t2)`.
-
-Note that the -S compiler output uses $1 instead of $at and so on.
 
 ## Code patterns
 
@@ -608,3 +444,164 @@ The above are semantically the same, and due to the nature of the loop the while
 ### Branch delay slots / branch likely's
 
 As far as the compiler's backend pass knows, branch delay slots don't exist -- they are fixed up by the assembler afterwards (see the Assembler pass section). Here's an old hypothesis about how it might work: if the assembler is able to reorder a branch with its preceding instruction, it does so. If it can't, it emits a branch-likely instruction pointing one step down from its real target. (This hypothesis isn't entirely correct, because sometimes there are branches with nop delay slots... Maybe branch-likely's are only used for forward jumps? However it _is_ true that when reading diffs, one can think of branch likely's as pointing one instruction above their stated target.) `b` instructions can also be invisible branch likelies, with the same "pointing one step down from its real target" behavior.
+
+### Stack size
+
+If the only difference is stack size evaluate if there are any temp variables that can be removed. Especially if they are just storing a pointer to an array or struct that can be directly dereferenced.
+
+### Incorrect registers
+
+| Target               | Current              |
+| -------------------- | -------------------- |
+| `0:    li      t8,1` | `0:    li      t0,1` |
+
+It may be that the function params are incorrectly typed:
+| Incorrect C | Matching C |
+| --- | --- |
+| `void func(s8 arg0, s8 arg1) {` | `void func(u8 arg0, u8 arg1) {` |
+
+Rather than loading a value from an array/pointer into a temp variable manually to reference it multiple times - it may be correct to just directly reference the array/pointer every time: `D_80048198[arg0].unk10`
+
+### v0
+
+If v0 is being used for a variable and should not be, the function may need to return a value - which should use v0.
+
+Loading and checking of a value being optimised away because it's known at compile time? Can prevent that by altering the value:
+u8 continueOn = 1;
+continueOn &= 1;
+
+### li vs move
+
+```asm
+li      a0,0
+jal     func_800072CC_7ECC
+li      a1,0xf
+```
+
+if the first value is being loaded with `move a0,zero` instead of `li` the called func may be expecting a single u64 param rather than two params.
+
+### Branching
+
+If a branch instruction's registers are reversed, reversing the order in C may help. If not, and one is a literal value, try putting the literal into a var.
+
+If you see `+ 1` happening to a var in a loop consider it may be a `for(;;)` loop.
+
+If you see missing `b` after another type of branch you may have `if` that needs its `else` added.
+
+A variable being decremented and being checked for != 0 is also usually a `while (var--).`
+
+#### Converting do-while to for loops
+
+When m2c generates a simple counter-based do-while loop that increments a variable until it reaches a limit, converting it to a for loop often matches perfectly:
+
+**m2c output (do-while):**
+
+```c
+var_s0 = 2;
+do {
+    if (func(var_s0) != 0) {
+        // body
+    }
+    var_s0 += 1;
+} while (var_s0 != 0xB);
+```
+
+**Matching C (for loop):**
+
+```c
+for (i = 2; i < 11; i++) {
+    if (func(i) != 0) {
+        // body
+    }
+}
+```
+
+- Replace `var_s0 = start; ... var_s0 += 1; ... while (var_s0 != limit)` with `for (i = start; i < limit; i++)`
+- Use `<` instead of `!=` for the loop condition (mathematically equivalent for incrementing loops)
+
+#### Getting `bnez` vs `beqz` after `slt`
+
+When you have assembly like:
+
+```
+slt $at, $a, $b      # $at = (a < b)
+bnez $at, label      # branch if a < b
+```
+
+To generate `bnez` instead of `beqz`, negate the condition and flip the if/else blocks:
+
+```c
+if (!(a < b)) {
+    // false case
+} else {
+    // true case (where bnez branches to)
+}
+```
+
+This makes the compiler branch to the else block when the condition is true, producing `bnez`.
+
+### Constant encoding for -1 vs 255
+
+When storing -1 to a `u8` array element, the compiler may optimize the constant to 255 (0x00FF) instead of -1 (0xFFFF), causing a mismatch in the immediate encoding.
+
+To force the exact encoding `addiu reg, zero, -1` (0xFFFF), use a temporary `s8` variable:
+
+```c
+s8 neg_one = -1;
+byteArray[index] = neg_one;
+```
+
+This prevents the compiler from optimizing the constant and ensures the correct instruction encoding.
+
+### mips_to_c function signature inference
+
+mips_to_c may incorrectly infer function parameters based on register setup in the assembly. If registers like `$a0` and `$a1` are set up before a function call but the actual function definition takes no parameters, the register setup might be for saving/preserving values rather than passing arguments.
+
+Always verify function signatures by checking the actual function definition or examining what the function does with the registers. If a function accesses globals directly rather than using argument registers, it likely takes no parameters.
+
+### Do not use local pointer variables for struct array entries used across a jal
+
+When a struct array entry pointer is computed and then used both as a `jal` argument and for field accesses after the call, the compiler naturally creates a uopt temp to save/restore the pointer across the call (e.g. `sw v0, 0x1c(sp)` before `jal`, `lw v0, 0x1c(sp)` after). If you declare a named local pointer variable instead, it becomes a user-declared stack slot and lands at a _different_ offset, causing a stack size mismatch.
+
+**Wrong** (user variable shifts the stack slot):
+
+```c
+Foo *sp1C = &D_Array[(s32)arg0];
+func_call(arg1, arg2, &sp1C->unk6);
+arg2[0] += sp1C->unk0;
+```
+
+**Correct** (inline access lets the compiler place the uopt temp at the right offset):
+
+```c
+func_call(arg1, arg2, &D_Array[(s32)arg0].unk6);
+arg2[0] += D_Array[(s32)arg0].unk0;
+```
+
+### `while (i--)` for `bnez` + delay-slot decrement loops
+
+If the target loop tail is `bnez reg, loop` with `addiu reg, reg, -1` in the delay slot, prefer `while (i--)` over `if` + `do/while` or manual `if/break` structures.
+
+In one buildings.c case, this rewrite produced both:
+
+- the exact tail pattern (`bnez s0` + delay-slot decrement), and
+- the expected early `move v0, s0` before the zero check.
+
+### `s32` index variable forces shift chain vs `multu` for array access
+
+When accessing `D_80048198[idx]` (stride 0x50 = 80 bytes), IDO 5.3 chooses between:
+
+- **Shift chain** (`sll x, 2; addu x, x; sll x, 4`) — when a named `s32` variable is used as index
+- **`multu` with constant** (`li reg, 0x50; multu idx, reg`) — when the index comes from an inline expression or from a `u8` variable, or when the same index is used more than once in separate array accesses
+
+To get shift chain for a `D_80048198` lookup where the index is loaded from a struct pointer:
+
+```c
+s32 idx = ((u8 *) arg0)[8];   // explicit s32 named variable
+D_80048198[D_80048198[idx].unk25].unk20 &= 0xFFFEFFFF;
+D_80048198[idx].unk20 &= 0xDFBFFFFF;
+```
+
+Using `u8 idx` or an inline cast `(s32)((u8*)arg0)[8]` both generate `multu`. Only a named `s32` variable gives the shift chain.
+
+Note: Even with `s32 idx`, if `D_80048198 + idx` appears in **two separate pointer assignments** (two named `Unk80048198 *` pointers), IDO may still use `multu`. The pure array-subscript form `D_80048198[idx]` with a single `s32 idx` variable is the most reliable way to get shift chains.

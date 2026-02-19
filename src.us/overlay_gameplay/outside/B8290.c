@@ -142,7 +142,19 @@ void func_800AC064_BB014(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD814_BC7C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ADA70_BCA20.s")
+u8 func_800ADA70_BCA20(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    u8 idx;
+    Unk80048198 *ptr;
+
+    idx = (u8) func_8007956C_8851C(1);
+    if (idx != 0xFF) {
+        ptr = &D_80048198[idx];
+        ptr->unk0 = arg0;
+        ptr->unk4 = arg1;
+        func_800AD814_BC7C4(idx, arg2, arg3, arg4);
+    }
+    return idx;
+}
 
 void func_800ADAF8_BCAA8(u8 arg0) {
     func_800873A8_96358(arg0);

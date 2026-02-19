@@ -5,107 +5,7 @@ https://github.com/n64decomp/oot/blob/master/docs/guides/-O2%20decompilation%20(
 https://github.com/zeldaret/mm/tree/main/docs/tutorial
 https://github.com/zeldaret/oot/blob/9963e7f5d5fa8caee329f6b40e393d8a2c45390b/docs/tutorial/contents.md
 
-## Registers
-
-### Stack size
-
-If the only difference is stack size evaluate if there are any temp variables that can be removed. Especially if they are just storing a pointer to an array or struct that can be directly dereferenced.
-
-### Incorrect registers
-
-| Target               | Current              |
-| -------------------- | -------------------- |
-| `0:    li      t8,1` | `0:    li      t0,1` |
-
-It may be that the function params are incorrectly typed:
-| Incorrect C | Matching C |
-| --- | --- |
-| `void func(s8 arg0, s8 arg1) {` | `void func(u8 arg0, u8 arg1) {` |
-
 If a char/short param is being `& 0xFF`/`& 0xFFFF` in ASM it may not need to be in the c code and doing so will throw off the register alloc. This hints that the arg in question is a u8/u16 ?
-
-Rather than loading a value from an array/pointer into a temp variable manually to reference it multiple times - it may be correct to just directly reference the array/pointer every time: `D_80048198[arg0].unk10`
-
-### v0
-
-If v0 is being used for a variable and should not be, the function may need to return a value - which should use v0.
-
-Loading and checking of a value being optimised away because it's known at compile time? Can prevent that by altering the value:
-u8 continueOn = 1;
-continueOn &= 1;
-
-### li vs move
-
-```asm
-li      a0,0
-jal     func_800072CC_7ECC
-li      a1,0xf
-```
-
-if the first value is being loaded with `move a0,zero` instead of `li` the called func may be expecting a single u64 param rather than two params.
-
-### Branching
-
-If a branch instruction's registers are reversed, reversing the order in C may help. If not, and one is a literal value, try putting the literal into a var.
-
-If you see `+ 1` happening to a var in a loop consider it may be a `for(;;)` loop.
-
-If you see missing `b` after another type of branch you may have if `if` that needs its `else` added.
-
-A variable being decremented and being checked for != 0 is also usually a `while (var--).`
-
-#### Converting do-while to for loops
-
-When m2c generates a simple counter-based do-while loop that increments a variable until it reaches a limit, converting it to a for loop often matches perfectly:
-
-**m2c output (do-while):**
-
-```c
-var_s0 = 2;
-do {
-    if (func(var_s0) != 0) {
-        // body
-    }
-    var_s0 += 1;
-} while (var_s0 != 0xB);
-```
-
-**Matching C (for loop):**
-
-```c
-for (i = 2; i < 11; i++) {
-    if (func(i) != 0) {
-        // body
-    }
-}
-```
-
-Key transformations:
-
-- Replace `var_s0 = start; ... var_s0 += 1; ... while (var_s0 != limit)` with `for (i = start; i < limit; i++)`
-- Rename the variable to a more idiomatic name like `i`
-- Use `<` instead of `!=` for the loop condition (mathematically equivalent for incrementing loops)
-
-#### Getting `bnez` vs `beqz` after `slt`
-
-When you have assembly like:
-
-```
-slt $at, $a, $b      # $at = (a < b)
-bnez $at, label      # branch if a < b
-```
-
-To generate `bnez` instead of `beqz`, negate the condition and flip the if/else blocks:
-
-```c
-if (!(a < b)) {
-    // false case
-} else {
-    // true case (where bnez branches to)
-}
-```
-
-This makes the compiler branch to the else block when the condition is true, producing `bnez`.
 
 ### Delay-slot pointer setup
 
@@ -169,19 +69,6 @@ Example shape:
 
 Using `ptr += 5` (instead of byte casts) helps IDO emit `addiu ptr, ptr, 0xA` and keep the compare/increment ordering aligned with `bnel` delay-slot behavior.
 
-### Constant encoding for -1 vs 255
-
-When storing -1 to a `u8` array element, the compiler may optimize the constant to 255 (0x00FF) instead of -1 (0xFFFF), causing a mismatch in the immediate encoding.
-
-To force the exact encoding `addiu reg, zero, -1` (0xFFFF), use a temporary `s8` variable:
-
-```c
-s8 neg_one = -1;
-byteArray[index] = neg_one;
-```
-
-This prevents the compiler from optimizing the constant and ensures the correct instruction encoding.
-
 ### Pointer to global for register allocation
 
 When decrementing a global variable and immediately using its new value, using a pointer can improve register allocation:
@@ -228,28 +115,6 @@ While these are mathematically equivalent, IDO generates different instruction s
 - Shift right
 
 The simplified pattern can cause the compiler to optimize differently and generate non-matching assembly. Always preserve the mask-then-shift order when it appears in mips_to_c output.
-
-### Variable declaration order affects register allocation
-
-The order in which local variables are declared can affect which registers the compiler assigns to them:
-
-**Example from func_80076918_858C8:**
-
-\\\c
-// This order produces t8, t9, t2, t3 for args
-s32 temp_t0;
-Unk8014D298 \*temp_v1;
-\\\
-
-vs
-
-\\\c
-// This order produced t9, t2, t3, t4 for args
-Unk8014D298 \*temp_v1;
-s32 temp_t0;
-\\\
-
-While both are functionally correct, the register allocation can differ by 1 register number. If you're very close to matching but registers are off by one (e.g., using t2 instead of t1), try reordering local variable declarations.
 
 ### Global reload after function call
 
@@ -341,12 +206,6 @@ typedef struct {
 
 The assembly will show `lbu` at offset 0x0, `sw` at offset 0x4, and `sw` at offset 0x8. The padding bytes ensure field offsets match the assembly exactly.
 
-### mips_to_c function signature inference
-
-mips_to_c may incorrectly infer function parameters based on register setup in the assembly. If registers like `$a0` and `$a1` are set up before a function call but the actual function definition takes no parameters, the register setup might be for saving/preserving values rather than passing arguments.
-
-Always verify function signatures by checking the actual function definition or examining what the function does with the registers. If a function accesses globals directly rather than using argument registers, it likely takes no parameters.
-
 ### mips_to_c struct field generation for simple arrays
 
 When mips_to_c sees stores/loads at sequential offsets (e.g., +0x0, +0x2, +0x4), it may generate struct-like field accesses even when the symbol is actually a simple array:
@@ -381,25 +240,6 @@ The conversion rule: **array_index = byte_offset / sizeof(element_type)**
 
 This pattern is common for lookup tables, configuration arrays, and state buffers that are initialized with specific values at known indices.
 
-### Do not use local pointer variables for struct array entries used across a jal
-
-When a struct array entry pointer is computed and then used both as a `jal` argument and for field accesses after the call, the compiler naturally creates a uopt temp to save/restore the pointer across the call (e.g. `sw v0, 0x1c(sp)` before `jal`, `lw v0, 0x1c(sp)` after). If you declare a named local pointer variable instead, it becomes a user-declared stack slot and lands at a _different_ offset, causing a stack size mismatch.
-
-**Wrong** (user variable shifts the stack slot):
-
-```c
-Foo *sp1C = &D_Array[(s32)arg0];
-func_call(arg1, arg2, &sp1C->unk6);
-arg2[0] += sp1C->unk0;
-```
-
-**Correct** (inline access lets the compiler place the uopt temp at the right offset):
-
-```c
-func_call(arg1, arg2, &D_Array[(s32)arg0].unk6);
-arg2[0] += D_Array[(s32)arg0].unk0;
-```
-
 ### Small integer parameter types and argument save stores
 
 When a function has \andi\ instructions to mask parameters to 0xFF or 0xFFFF, the correct C code should use \u8\/\s8\ or \u16\/\s16\ parameter types instead of \s32\ with manual masking.
@@ -420,34 +260,6 @@ If a function compares one `s16` value per entry while stepping backwards by 8 b
 
 A form like `while (i--) { if (arg == entries[i].value) return 1; }` can produce the exact `lh` / `move v0, v1` / `addiu ptr, -8` / `bnez v1` loop shape that a raw pointer or byte-offset form may miss.
 
-### `while (i--)` for `bnez` + delay-slot decrement loops
-
-If the target loop tail is `bnez reg, loop` with `addiu reg, reg, -1` in the delay slot, prefer `while (i--)` over `if` + `do/while` or manual `if/break` structures.
-
-In one buildings.c case, this rewrite produced both:
-
-- the exact tail pattern (`bnez s0` + delay-slot decrement), and
-- the expected early `move v0, s0` before the zero check.
-
-### `s32` index variable forces shift chain vs `multu` for array access
-
-When accessing `D_80048198[idx]` (stride 0x50 = 80 bytes), IDO 5.3 chooses between:
-
-- **Shift chain** (`sll x, 2; addu x, x; sll x, 4`) — when a named `s32` variable is used as index
-- **`multu` with constant** (`li reg, 0x50; multu idx, reg`) — when the index comes from an inline expression or from a `u8` variable, or when the same index is used more than once in separate array accesses
-
-To get shift chain for a `D_80048198` lookup where the index is loaded from a struct pointer:
-
-```c
-s32 idx = ((u8 *) arg0)[8];   // explicit s32 named variable
-D_80048198[D_80048198[idx].unk25].unk20 &= 0xFFFEFFFF;
-D_80048198[idx].unk20 &= 0xDFBFFFFF;
-```
-
-Using `u8 idx` or an inline cast `(s32)((u8*)arg0)[8]` both generate `multu`. Only a named `s32` variable gives the shift chain.
-
-Note: Even with `s32 idx`, if `D_80048198 + idx` appears in **two separate pointer assignments** (two named `Unk80048198 *` pointers), IDO may still use `multu`. The pure array-subscript form `D_80048198[idx]` with a single `s32 idx` variable is the most reliable way to get shift chains.
-
 ### Compound bit-flag sequence with two stores (set/clear pattern)
 
 When the original assembly does a load, OR into a register, STORE (intermediate), AND the register, STORE again use |= followed by &= rather than a named temp variable.
@@ -467,14 +279,14 @@ IDO 5.3 is smart enough to _not_ reload from memory for the &= even though it ju
 
 ### Trailing call register allocation: prefer no-temp-variable and if (cond) over if (cond != 0)
 
-When a function has a conditional block followed by an unconditional call at the end, using a local struct pointer variable OR writing if (func() != 0) can cause the compiler to choose 2 for the restored arg0, adding an ndi a0, a2, 0xff in the jal delay slot instead of
+When a function has a conditional block followed by an unconditional call at the end, using a local struct pointer variable OR writing if (func() != 0) can cause the compiler to choose a2 for the restored arg0, adding an andi a0, a2, 0xff in the jal delay slot instead of
 op.
 
 Fix:
 
 - Use direct array subscript D_array[arg0].field instead of a local Type \*ptr
 - Write if (func(arg0, x)) instead of if (func(arg0, x) != 0)
-- Ensure called functions are properly declared in unctions.us.h (implicit declarations can affect register allocation)
+- Ensure called functions are properly declared in functions.us.h (implicit declarations can affect register allocation)
 
 ### Struct field split: s32 to two s16 fields
 
