@@ -36,8 +36,32 @@ void func_800A9908_B88B8(u8 arg0, s32 arg1) {
     }
 }
 
-// Failed - gpt 5.3 codex
+#ifdef NON_MATCHING
+void func_800A99B8_B8968(u8 arg0) {
+    Unk80048198 *ptr;
+    s16 step;
+    s16 angle;
+    s16 diff;
+    s32 dx;
+    s32 dz;
+
+    ptr = &D_80048198[arg0];
+    step = alienSpecs[ptr->unk1A].unk42;
+    dx = D_80052B34->unk0 - ptr->unk0;
+    dz = D_80052B34->unk4 - ptr->unk4;
+    angle = func_80003824_4424((f32)dx, (f32)dz);
+    diff = angle - ptr->unk6;
+    if (-step >= diff) {
+        ptr->unk6 -= step;
+        return;
+    }
+    if (step < diff) {
+        ptr->unk6 += step;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A99B8_B8968.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9A90_B8A40.s")
 

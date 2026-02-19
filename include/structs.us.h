@@ -60,7 +60,8 @@ typedef struct {
     s16 unk0;
     s16 unk2;
     s16 unk4;
-    u8 pad6[0x6];
+    s16 unk6;
+    u8 pad8[0x4];
     s16 unkC;
     s16 unkE;
     s16 unk10;
@@ -89,6 +90,39 @@ typedef struct {
     u8 unk4B;
     u8 pad4C[0x4];
 } Unk80048198;
+
+// 0x00 00000000
+// 0x04 xxxxxxxx Body modifier
+// 0x08 Changes shadow
+// 0x0C Collision model size? Maybe only be second h/word
+// 0x10 xxxxyyyy Variables xxxx (Drone King Shield size)(Spyder warp beam size) yyyy (Spyder Health goes up to this value from normal then begins to decrease)
+// 0x14 More Variables?
+// 0x18 xxxxyyyy xxxx Points given on death
+// 0x1C Pointer to alien's name
+// 0x20 First weapon
+// 0x24
+// 0x28
+// 0x2C Second weapon
+// 0x30
+// 0x34
+// 0x38 xxxxyyyy xxxx Width of main shadow yyyy Depth of main shadow
+// 0x3C xxxxyyyy yyyy Health meter size
+// 0x40
+// 0x44 xxxxyyyy xxxx Max speed? yyyy Turning speed
+// 0x48 Pointer to head model/arrangment
+// 0x4C ?Pointer to ASM?
+// 0x50 ?Pointer to ASM?
+// 0x54 xxxxyyyy xxxx Legs modifier yyyy Damage done by rush attack(Spyder)
+// 0x58 xxxxyyyy xxxx Material type etc(Flesh, metal) Can use to give other enemies shields(000C)
+// 0x5C xxxxyyyy xxxx Height of body off the ground
+// 0x60 Pointer to Death animation ASM?
+// 0x64 xxxxyyyy xxxx Drops modifier
+// 0x68
+typedef struct {
+    u8 pad0[0x42];
+    s16 unk42;
+    u8 pad44[0x24];
+} AlienSpec;
 
 typedef struct {
     f32 unk0;

@@ -269,7 +269,7 @@ extern u32 D_80222A30[];
 extern s32 D_80222A70;
 // 223780 alien waves?
 // 224680 missions?
-// 25667C alien specs?
+extern AlienSpec alienSpecs[0x30];
 extern VehicleSpec vehicleSpecs[0x14];
 extern BuildingSpec buildingSpecs[0x20];
 extern Unk80259490 D_80259490; // vehicle instances?
