@@ -158,9 +158,12 @@ extern s32 D_80068088;
 
 extern s32 D_80094900;
 
+extern MissionData D_800D6DC0[42];
+extern s16 D_800D74AA;
 extern u8 D_800D7971;
 extern u8 D_800D747A;
-extern MissionData D_800D6DC0[42];
+extern FrontendStreamSlot D_800D8578[];
+extern FrontendStreamSlot* D_800D8550[];
 
 extern s32 D_8013BD04;
 extern s8 D_8013D890; // Triggers beacon warp

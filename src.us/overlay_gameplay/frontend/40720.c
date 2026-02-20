@@ -8,7 +8,28 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070420_408D0.s")
 
+/**
+ * @brief Finds a mission entry by mission id stored in `unk26`.
+ */
+#ifdef NON_MATCHING
+MissionData* func_80070494_40944(s16 arg0) {
+    s32 i;
+    u8* entry;
+
+    entry = &D_800D747A;
+    i = 0x29;
+    do {
+        if (entry[0x26] == arg0) {
+            return (MissionData*)entry;
+        }
+        entry -= 0x2A;
+    } while (i--);
+
+    return NULL;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070494_40944.s")
+#endif
 
 /**
  * @brief Clears mission frontend byte flag `unk1C` when it equals 1.
@@ -37,7 +58,24 @@ void func_800704DC_4098C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800706E8_40B98.s")
 
+/**
+ * @brief Finds a mission entry by id, clamps `unk12` to 0x4000, and sets `unk14` to -0x400.
+ */
+#ifdef NON_MATCHING
+void func_800708B8_40D68(s32 arg0) {
+    MissionData* entry;
+
+    entry = func_80070494_40944((s16)arg0);
+    if (entry != NULL) {
+        if (entry->unk12 > 0x4000) {
+            entry->unk12 = 0x4000;
+        }
+        entry->unk14 = -0x400;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800708B8_40D68.s")
+#endif
 
 /**
  * @brief Finds a mission entry by id and clears three frontend fields.
@@ -78,9 +116,64 @@ void func_80070940_40DF0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070940_40DF0.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070970_40E20.s")
+/**
+ * @brief Clears transient mission fields, optionally fetches selected mission data, and tags active save entry state.
+ */
+#ifdef NON_MATCHING
+MissionData* func_80070970_40E20(MissionData* entry, s32 hasSelection) {
+    MissionData* selectedEntry;
 
+    entry->unk12 = 0;
+    entry->unk14 = 0;
+    entry->unk16 = 0;
+
+    if (hasSelection != 0) {
+        selectedEntry = func_800706E8_40B98(D_800D74AA);
+        if ((currentSaveFileIndex + 2) != selectedEntry->unk26) {
+            selectedEntry->unk1C = 0;
+        } else {
+            selectedEntry->unk1C = 1;
+            *(s16*)&selectedEntry->pad27[1] = -1;
+        }
+        D_800D74AA = 0;
+        return selectedEntry;
+    }
+
+    D_800D74AA = 0;
+    return NULL;
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070970_40E20.s")
+#endif
+
+/**
+ * @brief Scans mission entries in reverse, clears the first entry in state 4, and eases others toward default values.
+ */
+#ifdef NON_MATCHING
+s32 func_800709F0_40EA0(void) {
+    s32 i;
+    MissionData* entry;
+
+    entry = &D_800D6DC0[41];
+    i = 0x29;
+    do {
+        if (entry->unk16 == 4) {
+            func_80070970_40E20(entry, 0);
+            return i;
+        }
+
+        if (entry->unk12 > 0x4000) {
+            entry->unk12 = 0x4000;
+        }
+        entry->unk14 = -0x400;
+        entry--;
+    } while (i--);
+
+    return i;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800709F0_40EA0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070A8C_40F3C.s")
 
@@ -141,7 +234,20 @@ void func_80071738_41BE8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075D58_46208.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800764B4_46964.s")
+/**
+ * @brief Runs several frontend update/render passes for four ticks.
+ */
+void func_800764B4_46964(void) {
+    s32 i;
+
+    i = 3;
+    do {
+        func_80075D58_46208(0);
+        func_800731A8_43658();
+        func_8000B044_BC44();
+        func_8000505C_5C5C();
+    } while (i--);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076504_469B4.s")
 
@@ -340,11 +446,42 @@ void func_8007FBC8_50078(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080668_50B18.s")
 
+/**
+ * @brief Clears all frontend stream slots and nulls their owner pointers.
+ */
+#ifdef NON_MATCHING
+void func_8008098C_50E3C(void) {
+    s32 i;
+
+    i = 0;
+    do {
+        D_800D8550[i] = NULL;
+        D_800D8578[i].unk50 = 0;
+        i++;
+    } while (i < 10);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8008098C_50E3C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800809DC_50E8C.s")
 
+/**
+ * @brief Releases a frontend stream slot pointer and clears its stream data pointer.
+ */
+#ifdef NON_MATCHING
+void func_80080A84_50F34(FrontendStreamSlot* arg0) {
+    s32 index;
+
+    if (arg0 != NULL) {
+        index = (arg0 - D_800D8578);
+        D_800D8550[index] = NULL;
+        D_800D8578[index].unk50 = 0;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080A84_50F34.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080AD4_50F84.s")
 

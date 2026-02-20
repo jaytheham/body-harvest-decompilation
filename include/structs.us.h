@@ -365,7 +365,9 @@ typedef struct {
     u8 unk16;
     u8 pad17[0x5];
     u8 unk1C;
-    u8 pad1D[0xD]; // 0x2A total
+    u8 pad1D[0x9];
+    u8 unk26;
+    u8 pad27[0x3]; // 0x2A total
 } MissionData;
 
 typedef struct {
@@ -373,5 +375,12 @@ typedef struct {
     s16 unk10;
     s16 unk12;
 } FrontendStruct;
+
+typedef struct {
+    u8 pad[0x50];
+    s32 unk50;
+    u8 pad54[0x4];
+} FrontendStreamSlot;
+
 
 #endif

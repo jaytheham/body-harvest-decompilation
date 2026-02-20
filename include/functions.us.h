@@ -33,6 +33,7 @@ void func_8001A500_1B100(s32);
 
 // overlay_gameplay frontend
 MissionData* func_80070494_40944(s16 arg0);
+extern MissionData* func_800706E8_40B98(s16 arg0);
 void func_8007A754_4AC04(void);
 void func_8007C7F4_4CCA4(void);
 
