@@ -1,11 +1,41 @@
 #include <ultra64.h>
 #include "common.h"
 
+typedef enum FrontEndState
+{
+    FE_STATE_INTRO_CUTSCENE = 0,
+    FE_STATE_FILE_SELECT = 1,
+    FE_STATE_INVALID_2 = 2,
+    FE_STATE_CHOOSE_FILE_NAME = 3,
+    FE_STATE_FILE_DETAILS = 4,
+    FE_STATE_INVALID_5 = 5,
+    FE_STATE_INVALID_6 = 6,
+    FE_STATE_START_GAMEPLAY = 7,
+    FE_STATE_FILE_OPTIONS = 8,
+    FE_STATE_START_DEMO = 9,
+    FE_STATE_UNUSED_START_GAMEPLAY_1 = 0xa,
+    FE_STATE_UNUSED_START_GAMEPLAY_2 = 0xb,
+    FE_STATE_UNUSED_START_GAMEPLAY_3 = 0xc,
+    FE_STATE_CHANGE_AIM_OPTION = 0xd,
+    FE_STATE_CHANGE_BLOOD_OPTION = 0xe,
+    FE_STATE_REPLAY_LEVEL_SELECT = 0xf,
+    FE_STATE_HIGH_SCORES = 0x10,
+    FE_STATE_CHANGE_SFX_OPTION = 0x11,
+    FE_STATE_CHANGE_MUSIC_OPTION = 0x12,
+    FE_STATE_DELETE_FILE = 0x13,
+    FE_STATE_COPY_FILE = 0x14,
+    FE_STATE_PRESS_START = 0x15,
+    FE_STATE_INVALID_16 = 0x16,
+    FE_STATE_REPLAY_BOSS_SELECT = 0x17,
+    FE_STATE_LANGUAGE_SELECT = 0x18
+} FrontEndState;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070270_40720.s")
 
+// calculatePlayersTotalScore
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070390_40840.s")
 
+//calculatePlayersTotalSeconds
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070420_408D0.s")
 
 /**
@@ -175,9 +205,6 @@ s32 func_800709F0_40EA0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800709F0_40EA0.s")
 #endif
 
-/**
- * @brief Sets unk1C=3 in both D_800D6DC0[entry] and D_800909B0[entry.unk26] at matching mission id, returns loop counter.
- */
 #ifdef NON_MATCHING
 s32 func_80070A8C_40F3C(s16 arg0) {
     s32 temp_v0;
@@ -232,9 +259,6 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007166C_41B1C.s")
 
-/**
- * @brief Clears a per-entry frontend status byte across a fixed table.
- */
 #ifdef NON_MATCHING
 void func_80071738_41BE8(void) {
 
@@ -261,6 +285,7 @@ void func_80071738_41BE8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800728F4_42DA4.s")
 
+// Checks if selected inventory item is 0xb (weapon crystals)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072B68_43018.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072E18_432C8.s")
@@ -271,6 +296,7 @@ void func_80071738_41BE8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075B64_46014.s")
 
+// Show version info on title screen if slot 3 named GRIMLN
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075C84_46134.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075D58_46208.s")
@@ -290,11 +316,10 @@ void func_800764B4_46964(void) {
     } while (i--);
 }
 
+// displayCometExplodesCutscene
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076504_469B4.s")
 
-/**
- * @brief Initializes frontend state: processes mission selection, clears fields, sets state byte, inits audio/renderer systems.
- */
+// displayEndGameMessage
 s32 func_8007685C_46D0C(void) {
     func_8007949C_4994C(func_80070390_40840(), 0);
     func_8007C7F4_4CCA4();
@@ -307,37 +332,38 @@ s32 func_8007685C_46D0C(void) {
     return 2;
 }
 
+// doIntroCutsceneLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800768C4_46D74.s")
 
+// Called once before showing the 'Select Slot' screen
+// doFileSelectLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076C98_47148.s")
 
-/**
- * @brief Returns constant value 3.
- * Perhaps a mode or configuration value.
- */
 s32 func_80076FD8_47488(void) {
     return 3;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076FE0_47490.s")
 
+// doPressStartLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007704C_474FC.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077204_476B4.s")
 
+// displaySelectFileDifficulty
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077344_477F4.s")
 
+// doDeleteFile
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077494_47944.s")
 
+// doCopyFile
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800776BC_47B6C.s")
 
+// doFileDetailsLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800779FC_47EAC.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077CE0_48190.s")
 
-/**
- * @brief Returns 0. Potentially a stub function.
- */
 s32 func_80077E78_48328(s32 arg0, s32 arg1) {
     return 0;
 }
@@ -346,12 +372,16 @@ s32 func_80077E78_48328(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078110_485C0.s")
 
+// doChooseFileNameLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078424_488D4.s")
 
+// startFile (unused?)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800788E4_48D94.s")
 
+// startFile
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078968_48E18.s")
 
+// doFrontEndLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800789E4_48E94.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800791A0_49650.s")
@@ -376,10 +406,12 @@ s32 func_8007946C_4991C(u8* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007949C_4994C.s")
 
+// displayHighScores
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800796D0_49B80.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80079F30_4A3E0.s")
 
+// displayGameOver
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A038_4A4E8.s")
 
 /**
@@ -391,16 +423,22 @@ void func_8007A754_4AC04(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A774_4AC24.s")
 
+// displayClearSaveData
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007B618_4BAC8.s")
 
+// displayCopyright
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007B900_4BDB0.s")
 
+// displayPublisherLogo
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BB0C_4BFBC.s")
 
+// displayNoControllerNotice
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BC90_4C140.s")
 
+// displayWrongConsoleRegionNotice
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BD98_4C248.s")
 
+// displayDmaLogo
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BEC0_4C370.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BFC4_4C474.s")
@@ -411,8 +449,10 @@ void func_8007A754_4AC04(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007C7F4_4CCA4.s")
 
+// doSaveBeaconLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007CFB4_4D464.s")
 
+// doInventoryLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007D2B0_4D760.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007D7E0_4DC90.s")
@@ -423,9 +463,6 @@ void func_8007A754_4AC04(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007EA0C_4EEBC.s")
 
-/**
- * @brief Increments global counter D_80094900.
- */
 void func_8007EB98_4F048(void) {
     D_80094900++;
 }
@@ -455,9 +492,6 @@ void func_8007EE8C_4F33C(s32** arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F188_4F638.s")
 
-/**
- * @brief Clears certain fields in FrontendStruct.
- */
 void func_8007F3EC_4F89C(FrontendStruct* arg0) {
     arg0->unk12 = 0;
     arg0->unk10 = 0;
@@ -484,9 +518,6 @@ void func_8007FB90_50040(s32* arg0, s32* arg1) {
 }
 
 #ifdef NON_MATCHING
-/**
- * @brief Sets D_800D7971 to -1 if lower byte of arg0 is 1, otherwise 0.
- */
 void func_8007FBC8_50078(s32 arg0) {
     if ((u8)arg0 == 1) {
         D_800D7971 = -1;
@@ -504,11 +535,9 @@ void func_8007FBC8_50078(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800801BC_5066C.s")
 
+// Called during start cutscene, mostly before scene changes
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8008035C_5080C.s")
 
-/**
- * @brief Copies position/transform fields from a source entry into the indexed slot in the D_800D7A1C array.
- */
 void func_80080530_509E0(Unk80080530_Src* arg0) {
     Unk80080530_Dst* dst;
 
@@ -521,13 +550,11 @@ void func_80080530_509E0(Unk80080530_Src* arg0) {
     dst->unk16 = arg0->unkA;
 }
 
+// ambient light ?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080588_50A38.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080668_50B18.s")
 
-/**
- * @brief Clears all frontend stream slots and nulls their owner pointers.
- */
 #ifdef NON_MATCHING
 void func_8008098C_50E3C(void) {
     s32 i;
@@ -545,9 +572,6 @@ void func_8008098C_50E3C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800809DC_50E8C.s")
 
-/**
- * @brief Releases a frontend stream slot pointer and clears its stream data pointer.
- */
 #ifdef NON_MATCHING
 void func_80080A84_50F34(FrontendStreamSlot* arg0) {
     s32 index;
@@ -578,9 +602,6 @@ void func_80080A84_50F34(FrontendStreamSlot* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081CAC_5215C.s")
 
-/**
- * @brief Advances the D_800D7A4C-based ring buffer index (0-3 cycle), reads slot data at +0x20, and sets D_800D8524 mode flag.
- */
 #ifdef NON_MATCHING
 void func_80081F9C_5244C(void) {
     D_800D8524 = 0xF;
