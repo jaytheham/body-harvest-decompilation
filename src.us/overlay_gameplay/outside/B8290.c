@@ -284,7 +284,39 @@ void func_800AC064_BB014(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC5BC_BB56C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ACA3C_BB9EC.s")
+s32 func_800ACA3C_BB9EC(u8 arg0) {
+    Unk80048198 *ptr = &D_80048198[arg0];
+    s32 flags = ptr->unk20;
+
+    if (flags & 0x4000) {
+        ptr->unk12 = 0;
+        if (flags & 0x600) {
+            ptr->unk2C -= 1;
+        } else {
+            ptr->unk2C -= 4;
+        }
+        if (ptr->unk2C <= 0) {
+            ptr->unk2C = 0;
+            ptr->unk20 &= ~0x4000;
+            flags = ptr->unk20;
+        } else {
+            return 0;
+        }
+    }
+
+    if ((flags & 0x600) && (ptr->unk2 < D_80222A70)) {
+        ptr->unk48 = 0x60;
+        return 1;
+    }
+    if ((ptr->unk12 == 0x60) && (D_80222A70 < ptr->unk2)) {
+        if (flags & 0x1000) {
+            ptr->unk48 = 0xA0;
+        } else {
+            ptr->unk48 = 0x40;
+        }
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ACB3C_BBAEC.s")
 
