@@ -41,7 +41,6 @@ void func_801372B4_146264(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
     f32 sp3C;
     s16 sp22;
     Struct_80140D00 sp24;
-    
 
     sp24 = D_80140D00;
     sp22 = sp24.values[arg3];

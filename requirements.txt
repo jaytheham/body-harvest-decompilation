@@ -5,7 +5,7 @@ crunch64==0.3.1
 cxxfilt
 intervaltree
 n64img==0.2.1
-pycparser
+pycparser==2.22
 pygfxd==1.0.2
 pylibyaml
 pynacl
