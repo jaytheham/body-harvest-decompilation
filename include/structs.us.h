@@ -53,7 +53,9 @@ typedef struct {
     s16 unk0;
     s16 unk2;
     s16 unk4;
-    u8 pad6[0x56];
+    u8 pad6[0x16];
+    s16 unk1C;
+    u8 pad1E[0x3E];
 } Unk8004DCD0; // stride 0x5C
 
 typedef struct {
@@ -66,9 +68,12 @@ typedef struct {
     s16 unkE;
     s16 unk10;
     s16 unk12;
-    u8 pad14[0x6];
+    s16 unk14;
+    s16 unk16;
+    s16 unk18;
     u8 unk1A;
-    u8 pad1B[0x3];
+    u8 pad1B;
+    s16 unk1C;
     s16 unk1E;
     s32 unk20;
     u8 unk24;

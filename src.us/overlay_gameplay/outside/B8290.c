@@ -349,7 +349,28 @@ s32 func_800ACA3C_BB9EC(u8 arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ACB3C_BBAEC.s")
+void func_800ACB3C_BBAEC(u8 arg0) {
+
+    if ((D_80048198[arg0].unk20 & 0x80) &&
+        D_8004DCD0[D_80048198[arg0].unk38].unk1C <= 0) {
+        
+        D_80048198[arg0].unk20 = D_80048198[arg0].unk20 & ~0xC0;
+        return;
+    }
+    if ((D_80048198[arg0].unk20 & 0x20) &&
+        D_80048198[D_80048198[arg0].unk38].unk1C <= 0) {
+        
+        D_80048198[arg0].unk20 = D_80048198[arg0].unk20 & ~0x60;
+        return;
+    }
+    if (!(D_80048198[arg0].unk20 & 0x08000000) &&
+        (D_80048198[arg0].unk20 & 0x100) &&
+        (D_80048198[arg0].unk38 != 0xFF)) {
+        if (func_800B325C_C220C((s8)(D_80048198[arg0].unk14 >> 8), (s8)(D_80048198[arg0].unk18 >> 8), 0x800) == 0) {
+            D_80048198[arg0].unk20 &= ~0x1E0;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ACC5C_BBC0C.s")
 
