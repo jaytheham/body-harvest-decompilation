@@ -309,6 +309,17 @@ typedef struct {
 } Unk8014DD50; /* size 0x10 */
 
 typedef struct {
+    u8  unk0;               /* type identifier */
+    s8  unk1;               /* x tile coordinate */
+    s8  unk2;               /* z tile coordinate */
+    u8  pad3;
+    s32 unk4;               /* spawn counter */
+    u8  unk8;               /* alien entity index */
+    u8  pad9[3];
+    void (*unkC)(void *);  /* state callback */
+} Unk80222A78; /* Are these notes correct?? */
+
+typedef struct {
     s16 unk0;
     s16 unk2;
     s16 unk4;

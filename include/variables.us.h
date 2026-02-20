@@ -112,14 +112,14 @@ extern s16 D_80048170;
 extern s16 D_80048176;
 extern s32 D_80048178;
 extern s32 D_80048188;
-extern Unk80048198 D_80048198[];
+extern Unk80048198 D_80048198[]; // alien instances
 extern s32 D_8004D148;
 extern s32 D_8004D150;
 extern u8 D_8004D160;
 extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
-extern Unk8004DCD0 D_8004DCD0[];
+extern Unk8004DCD0 D_8004DCD0[]; // vehicle instances?
 extern u8 D_80050AE0[];
 extern u8 D_80050AF0[];
 
