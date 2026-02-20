@@ -335,4 +335,8 @@ typedef struct {
     s32 unk18;
 } OutputStruct_8012B150;
 
+typedef struct {
+    s16 values[8];
+} Struct_80140D00;
+
 #endif

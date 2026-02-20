@@ -146,12 +146,15 @@ extern GameplayMode gameplayMode; // 80052adc
 extern Unk80052B2C* D_80052B2C;
 extern Unk80052B34* D_80052B34;
 
+extern s32 D_8006AB88;
+
 extern s32 D_8013BD04;
 extern s8 D_8013D890; // Triggers beacon warp
 extern u8 D_8013D894; // Beacon warp destination
 extern s32 D_8013FCD0;
 
 extern s32 D_80140AC8;
+extern Struct_80140D00 D_80140D00;
 extern s16 D_80140D40[];
 extern u8 D_80140D90[];
 extern u8 D_80140DA8[];
