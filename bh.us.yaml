@@ -207,7 +207,7 @@ segments:
       - [0xB2CB0, c, overlay_gameplay/outside/B2CB0] # Beacons
       - [0xB8290, c, overlay_gameplay/outside/B8290] # Aliens
       - [0xBD270, asm, overlay_gameplay/outside/trigger] # original src filename
-      - [0xBF9C0, asm, overlay_gameplay/outside/BF9C0] # Shield walls, gates, terrain, water
+      - [0xBF9C0, c, overlay_gameplay/outside/BF9C0] # Shield walls, gates, terrain, water
       - [0xCFE30, asm, overlay_gameplay/outside/CFE30] # Special effects
       - [0xF6A50, asm, overlay_gameplay/outside/F6A50] # Camera
       - [0xF7870, asm, overlay_gameplay/outside/F7870] # Shadows
