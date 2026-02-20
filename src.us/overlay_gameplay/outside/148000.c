@@ -90,7 +90,45 @@ void func_801396A8_148658(s32 arg0) {
     D_801601E4 = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139778_148728.s")
+void func_80139778_148728(void) {
+    u8 temp_v1;
+    VehicleSpec *temp_v0;
+    
+    D_801601D4 = D_801601D0;
+    ((Unk80031424*)D_80031424)->unk2C = (s32) vehicleSpecs[D_80052B34->unk1A].weapon1;
+    ((Unk80031424*)D_80031424)->unk30 = (s32) vehicleSpecs[D_80052B34->unk1A].weapon2;
+    temp_v1 = D_80052B34->unk1A;
+    if (temp_v1 == 0x13) {
+        func_80139460_148410();
+        func_801391DC_14818C(0xD, -0x8000);
+        func_801391DC_14818C(0xE, 0);
+        func_801391DC_14818C(0x10, 0);
+        func_801391DC_14818C(0x11, 0);
+        func_801391DC_14818C(0xF, 0);
+        func_8013A1CC_14917C();
+    } else {
+        temp_v0 = &vehicleSpecs[temp_v1];
+        if (!(temp_v0->unk4C & 0x04000000)) {
+            osSyncPrintf(&D_80145A70, temp_v0->weapon1, &D_80031424);
+            func_80139460_148410();
+            if (D_80031450) {
+                func_801391DC_14818C(0xB, -0x8000);
+                if (D_80031454 && ((currentLevel != 1) || (D_80052B34->unk1A != 8))) {
+                    func_801391DC_14818C(0xC, -0x8000);
+                }
+
+                if ((currentLevel == 1) && (D_80052B34->unk1A == 6) && !func_8000726C_7E6C(1)) {
+                    D_80048156 = 0;
+                }
+            }
+            func_8013A1CC_14917C();
+            func_8013958C_14853C();
+        }
+    }
+    func_8013B004_149FB4();
+    D_801601DC = 0;
+    D_801601E4 = 0;
+}
 
 s16 func_8013994C_1488FC(u8 arg0) {
     return D_80048140[weaponSlots[hudWeaponItems[arg0].weaponSlot]];

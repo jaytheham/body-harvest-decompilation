@@ -71,6 +71,7 @@ extern s32 D_80031414;
 extern u32 D_80031424[];
 extern s32 D_8003144C;
 extern s32 D_80031450;
+extern s32 D_80031454;
 extern s8 D_800314C4;
 extern u8 D_8003DFD4[];
 extern u8 D_8003E000[];
@@ -106,6 +107,7 @@ extern s16 D_80048026;
 extern s32 D_80048034;
 extern u8 weaponSlots[7];
 extern s16 D_80048140[];
+extern s16 D_80048156;
 extern s8 D_80048168;
 extern s16 D_8004816A;
 extern s16 D_8004816E;
@@ -191,12 +193,13 @@ extern u8 D_801454D0[];
 extern u8 D_801454D8[];
 extern u8 D_801454E0[];
 extern u8 D_801454E8[];
-extern u8 D_80145A30; // select 
-extern u8 D_80145A38; // %d,
-extern u8 D_80145A3C; // .
+extern char D_80145A30; // select 
+extern char D_80145A38; // %d,
+extern char D_80145A3C; // .
 extern u8 D_80145A40;
-extern u8 D_80145A8C;
-extern u8 D_80145AA4;
+extern char D_80145A70;
+extern char D_80145A8C;
+extern char D_80145AA4;
 extern u8 D_80145BE0[];
 extern Unk80148620 D_80148620[];
 extern s16 D_801483A4[];
@@ -280,6 +283,7 @@ extern HudWeaponItem hudWeaponItems[7];
 extern s32 D_801601CC;
 extern s32 D_801601D0;
 extern u8 D_801601D3;
+extern s32 D_801601D0;
 extern s32 D_801601D4;
 extern s32 D_801601D8;
 extern s32 D_801601DC;
