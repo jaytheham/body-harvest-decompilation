@@ -112,7 +112,7 @@ extern s16 D_80048170;
 extern s16 D_80048176;
 extern s32 D_80048178;
 extern s32 D_80048188;
-extern Unk80048198 D_80048198[]; // alien instances
+extern AlienInstance alienInstances[]; // alien instances
 extern s32 D_8004D148;
 extern s32 D_8004D150;
 extern u8 D_8004D160;

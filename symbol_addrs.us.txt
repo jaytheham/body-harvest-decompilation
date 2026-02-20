@@ -2,6 +2,7 @@
 currentSaveFileIndex = 0x80047F84;
 currentLevel = 0x80047F90;
 weaponSlots = 0x80048138;
+alienInstances = 0x80048198; // size:0x50
 
 buildingInstances = 0x80050AD8; // size:0x24
 buildingInteriorToLoadId = 0x80052548;

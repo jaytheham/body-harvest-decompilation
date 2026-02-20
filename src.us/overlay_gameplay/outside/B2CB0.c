@@ -3,30 +3,30 @@
 
 
 void func_800A3D00_B2CB0(u8 arg0, s16 arg1, s16 arg2, s32 arg3) {
-    if (!(D_80048198[arg0].unk20 & 0x8000)) {
+    if (!(alienInstances[arg0].unk20 & 0x8000)) {
         return;
     }
 
     func_80081E5C_90E0C(arg1);
     if (D_8014DD5E[arg1][0] == 0) {
-        if (arg2 == D_80048198[arg0].unk4B) {
-            D_80048198[arg0].unk20 &= ~0x8000;
+        if (arg2 == alienInstances[arg0].unk4B) {
+            alienInstances[arg0].unk20 &= ~0x8000;
             return;
         }
 
-        func_80081C84_90C34(arg1, (D_80048198[arg0].unk4B * 0x10) + arg3);
-        D_80048198[arg0].unk4B++;
+        func_80081C84_90C34(arg1, (alienInstances[arg0].unk4B * 0x10) + arg3);
+        alienInstances[arg0].unk4B++;
     }
 }
 
 u8 func_800A3DC8_B2D78(void) {
     u8 var_v0;
     u8 temp_a2;
-    Unk80048198* temp_v1;
+    AlienInstance* temp_v1;
 
     for (var_v0 = D_8014D509; var_v0 < D_8014D50A; var_v0++) {
         temp_a2 = D_8014D408[var_v0];
-        temp_v1 = &D_80048198[temp_a2];
+        temp_v1 = &alienInstances[temp_a2];
         
         if (temp_v1->unk1A == 0x19) {
             if (temp_v1->unk3C != 0) {
@@ -43,9 +43,9 @@ u8 func_800A3DC8_B2D78(void) {
 
 void func_800A4150_B3100(u8 arg0) {
     s32 temp_v1;
-    Unk80048198* temp_v0;
+    AlienInstance* temp_v0;
 
-    temp_v0 = (arg0 ) + D_80048198;
+    temp_v0 = (arg0 ) + alienInstances;
     temp_v1 = temp_v0->unk20;
     if (!(temp_v1 & 0x100000) &&
         (temp_v0->unk3D == 0) &&
@@ -67,14 +67,14 @@ s32 func_800A52F8_B42A8(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 var_v1;
 
     var_v1 = 0;
-    if (D_80048198[arg0].unk10 < -arg2) {
+    if (alienInstances[arg0].unk10 < -arg2) {
         var_v1 = arg1;
     } else {
-        if (D_80048198[arg0].unk10 < arg2) {
-            var_v0 = arg3 - D_80048198[arg0].unk2;
+        if (alienInstances[arg0].unk10 < arg2) {
+            var_v0 = arg3 - alienInstances[arg0].unk2;
             temp_a0 = arg1 * 4;
-            if (D_80048198[arg0].unk10 < 0) {
-                var_v0 -= D_80048198[arg0].unk10;
+            if (alienInstances[arg0].unk10 < 0) {
+                var_v0 -= alienInstances[arg0].unk10;
             }
             if (temp_a0 < var_v0) {
                 var_v1 = arg1;
@@ -83,7 +83,7 @@ s32 func_800A52F8_B42A8(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
             }
         }
     }
-    D_80048198[arg0].unk10 += var_v1;
+    alienInstances[arg0].unk10 += var_v1;
     return var_v1;
 }
 

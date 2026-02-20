@@ -94,7 +94,7 @@ typedef struct {
     u8 pad4A;
     u8 unk4B;
     u8 pad4C[0x4];
-} Unk80048198;
+} AlienInstance;
 
 // 0x00 00000000
 // 0x04 xxxxxxxx Body modifier
