@@ -60,9 +60,9 @@ Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the ta
 
 Before continuing review the code and ensure all pointer arithmetic has been replaced with proper struct and array access and all temp pointers variables removed and replaced with direct struct/array references.
 
-## Step 3: Build in Docker
+## Step 3: Build project in Docker
 
-Run the build inside the container:- `docker exec -it bh-container bash -c "make clean && make -j QUIET=1"`
+Run the build inside the container:- `docker exec -it bh-container bash -c "make clean && make -j QUIET=1"` Important: You must build the entire project, not just the single file, to ensure all symbols are correctly linked and to get an accurate comparison of the generated assembly against the original.
 
 **Expected outcome**: build/bh.us.z64: OK/FAILED
 
@@ -72,7 +72,7 @@ Run the build inside the container:- `docker exec -it bh-container bash -c "make
 - Simplify C code (avoid complex expressions in single statements)
 - Ensure all extern symbols are declared
 
-If build completes with `OK` the function is correctly matched and you can stop work. If not, proceed to the next steps for analysis and iteration.
+If build completes with `build/bh.us.z64: OK` the function is correctly matched and you can stop work. If not, proceed to the next steps for analysis and iteration.
 
 ## Step 4: Compare with Original
 
@@ -91,7 +91,7 @@ Read file `DecompHints.md` for common patterns and pitfalls.
 
 If the only differences are register allocation try changing the order of the related operations, even if the new order appears less like the original assembly.
 
-Rebuild and re-compare until the generated assembly is identical to the original. Once the build returns `OK` proceed to the final step.
+Rebuild the project and re-compare until the generated assembly is identical to the original. Once the build returns `build/bh.us.z64: OK` proceed to the final step.
 
 ## Step 6: Finalize
 

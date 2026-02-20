@@ -65,6 +65,7 @@ extern u8 D_80036840[]; // Rumble pak(tm) detected!
 extern u8 D_80047678;
 extern u32 D_800313CC;
 extern s16 D_800313C8;
+extern s16 D_800313D0;
 extern s32 D_80031410;
 extern s32 D_80031414;
 extern u32 D_80031424[];
@@ -122,6 +123,7 @@ extern u16 D_8004DC5E;
 extern Unk8004DCD0 D_8004DCD0[]; // vehicle instances?
 extern u8 D_80050AE0[];
 extern u8 D_80050AF0[];
+extern Gfx *D_8005BB2C;
 
 extern BuildingInstance buildingInstances[0xFF];
 extern u32 buildingInteriorToLoadId;
@@ -134,6 +136,7 @@ extern s32 D_80052A88;
 extern s32 D_80052A8C;
 extern u8* D_80052A94;
 extern Unk80052A98 D_80052A98[];
+extern s32 D_80052AA0;
 extern s16 D_80052AC8;
 extern s8 D_80052ACC;
 extern u8 D_80052ACD;
@@ -147,6 +150,8 @@ extern Unk80052B2C* D_80052B2C;
 extern Unk80052B34* D_80052B34;
 
 extern s32 D_8006AB88;
+extern s32 D_80068084;
+extern s32 D_80068088;
 
 extern s32 D_8013BD04;
 extern s8 D_8013D890; // Triggers beacon warp
@@ -154,6 +159,17 @@ extern u8 D_8013D894; // Beacon warp destination
 extern s32 D_8013FCD0;
 
 extern s32 D_80140AC8;
+extern u8 D_80140C70[4];
+extern u8 D_80140C74[4];
+extern s32 D_80140C84;
+extern s32 D_80140C88;
+extern s32 D_80140C8C;
+extern s32 D_80140C90;
+extern s32 D_80140C94;
+extern s32 D_80140C98;
+extern s32 D_80140C9C;
+extern s32 D_80140CA0;
+extern s32 D_80140C78;
 extern Struct_80140D00 D_80140D00;
 extern s16 D_80140D40[];
 extern u8 D_80140D90[];
@@ -169,6 +185,12 @@ extern u8 D_80144E2C[];
 extern f32 D_80144F30;
 extern f32 D_80144F34;
 extern f32 D_80144FC8;
+extern u8 D_801454C0[];
+extern u8 D_801454C8[];
+extern u8 D_801454D0[];
+extern u8 D_801454D8[];
+extern u8 D_801454E0[];
+extern u8 D_801454E8[];
 extern u8 D_80145A30; // select 
 extern u8 D_80145A38; // %d,
 extern u8 D_80145A3C; // .
@@ -251,6 +273,8 @@ extern s16 D_8015F9F8[8][4];
 extern s16 D_8015FAEE;
 extern Unk8015FAD0 D_8015FAD0[0x19];
 extern Unk8015FAF0 D_8015FAF0[];
+extern u8 D_8015FF80;
+extern s32 D_8015FF84;
 
 extern HudWeaponItem hudWeaponItems[7];
 extern s32 D_801601CC;
