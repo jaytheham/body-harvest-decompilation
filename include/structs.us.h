@@ -344,4 +344,18 @@ typedef struct {
     s16 values[8];
 } Struct_80140D00;
 
+typedef struct {
+    s16 unk0;  /* x */
+    s16 unk2;  /* y */
+    s16 unk4;
+    s16 unk6;
+    u8 unk8;   /* active flag / type */
+    u8 unk9;
+    u8 unkA;
+    u8 unkB;
+    s16 unkC;
+    s16 unkE;
+    u16 unk10;
+} Unk80152B80; /* particle/effect entry, 18 bytes */
+
 #endif

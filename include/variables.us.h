@@ -75,6 +75,7 @@ extern s32 D_80031454;
 extern s8 D_800314C4;
 extern u8 D_8003DFD4[];
 extern u8 D_8003E000[];
+extern u8 D_8003E0FC[];
 extern Unk80047588 D_80047588[];
 extern u16 D_800475D8[];
 extern u16 D_800475E0[];
@@ -158,8 +159,14 @@ extern s32 D_80068088;
 extern s32 D_8013BD04;
 extern s8 D_8013D890; // Triggers beacon warp
 extern u8 D_8013D894; // Beacon warp destination
+extern s8 D_8013D9AC;
+extern s8 D_8013D9B0;
+extern s32 D_8013D9B4;
+extern u8 D_8013DAE0; /* particle/effect count */
+extern u8 D_8013DAE4; /* particle/effect free index */
 extern s32 D_8013FCD0;
 
+extern s32 D_80140AC4;
 extern s32 D_80140AC8;
 extern u8 D_80140C70[4];
 extern u8 D_80140C74[4];
@@ -184,6 +191,7 @@ extern u8 D_801427D8[]; // teleport to:%d
 extern u8 D_80142820[]; // Giving delayed powerup %d
 extern u8 D_80144E20[];
 extern u8 D_80144E2C[];
+extern f64 D_80144F08;
 extern f32 D_80144F30;
 extern f32 D_80144F34;
 extern f32 D_80144FC8;
@@ -252,8 +260,15 @@ extern Unk8014DD50 D_8014DD50[];
 extern s16 D_8014DD5E[][8];
 extern Unk8014F6D0 D_8014F6D0[0x10];
 extern s32 D_8014F800;
+extern s16 D_8014F832;
+extern s32 D_8014F838;
+extern f32 D_8014F850;
+extern u8* D_8014F8A0; /* pointer to world tile data */
+extern u8 D_8014FDD0[];
 
 extern u8 D_80151DD0;
+extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
+extern u8 D_80152B88; /* unk8 field of first particle/effect entry */
 extern s16 D_80152C90;
 extern s16 D_80157590;
 extern s16 D_80157A3C;
@@ -309,7 +324,5 @@ extern Unk80259D98 D_80259D98[];
 
 extern u8 D_D03E780[];
 
-extern f64 D_80144F08;
-extern s32 D_80140AC4;
 
 #endif
