@@ -183,8 +183,8 @@ segments:
     exclusive_ram_id: 80070270
     overlay: true
     subsegments:
-      - [0x40720, asm, overlay_gameplay/frontend/40720]
-      - [0x52690, asm, overlay_gameplay/frontend/52690]
+      - [0x40720, c, overlay_gameplay/frontend/40720]
+      - [0x52690, c, overlay_gameplay/frontend/52690]
   - name: overlay_gameplay_frontend_data
     type: bin
     start: 0x060E60
