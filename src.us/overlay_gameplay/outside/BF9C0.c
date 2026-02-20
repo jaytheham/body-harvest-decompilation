@@ -131,7 +131,48 @@ void func_800B9954_C8904(u8 arg0) {
     D_8013DAE0--;
 }
 
+/* Allocates a new particle/effect slot, fills it from the given parameters,
+   then finds the next free slot in the pool. Warns via osSyncPrintf if the
+   pool is already full (max 15 entries). */
+#ifdef NON_MATCHING
+void func_800B99A8_C8958(Unk80152B80 *arg0, s16 arg1, s16 arg2, s32 arg3, u8 *arg4, s16 arg5, s16 arg6, u16 arg7) {
+    u8 i;
+    Unk80152B80 *entry;
+
+    if (D_8013DAE0 == 0xF) {
+        osSyncPrintf(&D_80142D94);
+        return;
+    }
+    entry = &D_80152B80[D_8013DAE4];
+    entry->unk0 = arg0->unk0;
+    entry->unk4 = arg1;
+    entry->unk6 = arg2;
+    entry->unk2 = arg0->unk2;
+    entry->unk8 = arg3;
+    entry->unk9 = arg4[0];
+    entry->unkA = arg4[1];
+    D_8013DAE0++;
+    entry->unkC = arg5;
+    entry->unkE = arg6;
+    entry->unk10 = arg7;
+    entry->unkB = arg4[2];
+    if (D_8013DAE4 < 0xF) {
+        i = D_8013DAE4;
+        for (;;) {
+            if (D_80152B80[i].unk8 == 0) {
+                D_8013DAE4 = i;
+                break;
+            }
+            i = (i + 1) & 0xFF;
+            if (i >= 0xF) {
+                break;
+            }
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B99A8_C8958.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9AC8_C8A78.s")
 

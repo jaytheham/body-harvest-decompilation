@@ -189,6 +189,7 @@ extern u8 D_80142740[]; // Found parent %d
 extern u8 D_80142790[]; // Activate Beacon %d
 extern u8 D_801427D8[]; // teleport to:%d
 extern u8 D_80142820[]; // Giving delayed powerup %d
+extern char D_80142D94; /* osSyncPrintf format string - particle pool full warning */
 extern u8 D_80144E20[];
 extern u8 D_80144E2C[];
 extern f64 D_80144F08;
