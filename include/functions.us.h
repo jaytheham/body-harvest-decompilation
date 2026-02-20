@@ -31,7 +31,11 @@ void func_80017AAC_186AC(void);
 void func_80017AE0_186E0(void);
 void func_8001A500_1B100(s32);
 
-// overlay_gameplay
+// overlay_gameplay frontend
+void func_8007A754_4AC04(void);
+void func_8007C7F4_4CCA4(void);
+
+// overlay_gameplay outside
 void func_80070440_7F3F0(void);
 void func_800710D4_80084(u8, u8, u8, void *);
 void func_80071148_800F8(u8 arg0, u8 arg1);

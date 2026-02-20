@@ -80,7 +80,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076C98_47148.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076FD8_47488.s")
+/**
+ * @brief Returns constant value 3.
+ * Perhaps a mode or configuration value.
+ */
+s32 func_80076FD8_47488(void) {
+    return 3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076FE0_47490.s")
 
@@ -98,7 +104,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077CE0_48190.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077E78_48328.s")
+/**
+ * @brief Returns 0. Potentially a stub function.
+ */
+s32 func_80077E78_48328(s32 arg0, s32 arg1) {
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077E88_48338.s")
 
@@ -124,7 +135,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A038_4A4E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A754_4AC04.s")
+/**
+ * @brief Simple wrapper calling func_8007C7F4_4CCA4.
+ */
+void func_8007A754_4AC04(void) {
+    func_8007C7F4_4CCA4();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A774_4AC24.s")
 
@@ -160,7 +176,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007EA0C_4EEBC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007EB98_4F048.s")
+/**
+ * @brief Increments global counter D_80094900.
+ */
+void func_8007EB98_4F048(void) {
+    D_80094900++;
+}
 
 void func_8007EBB0_4F060(void) {
 }
@@ -175,7 +196,13 @@ void func_8007EBB0_4F060(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F188_4F638.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F3EC_4F89C.s")
+/**
+ * @brief Clears certain fields in FrontendStruct.
+ */
+void func_8007F3EC_4F89C(FrontendStruct* arg0) {
+    arg0->unk12 = 0;
+    arg0->unk10 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F3F8_4F8A8.s")
 
@@ -185,7 +212,20 @@ void func_8007EBB0_4F060(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007FB90_50040.s")
 
+#ifdef NON_MATCHING
+/**
+ * @brief Sets D_800D7971 to -1 if lower byte of arg0 is 1, otherwise 0.
+ */
+void func_8007FBC8_50078(s32 arg0) {
+    if ((u8)arg0 == 1) {
+        D_800D7971 = -1;
+    } else {
+        D_800D7971 = 0;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007FBC8_50078.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007FBF8_500A8.s")
 

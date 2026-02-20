@@ -358,4 +358,16 @@ typedef struct {
     u16 unk10;
 } Unk80152B80; /* particle/effect entry, 18 bytes */
 
+typedef struct {
+    u8 pad0[0x16];
+    u8 unk16;
+    u8 pad17[0x19]; // 0x2A total
+} MissionData;
+
+typedef struct {
+    u8 pad0[0x10];
+    s16 unk10;
+    s16 unk12;
+} FrontendStruct;
+
 #endif

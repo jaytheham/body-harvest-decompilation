@@ -156,6 +156,12 @@ extern s32 D_8006AB88;
 extern s32 D_80068084;
 extern s32 D_80068088;
 
+extern s32 D_80094900;
+
+extern u8 D_800D7971;
+extern u8 D_800D747A;
+extern MissionData D_800D6DC0[42];
+
 extern s32 D_8013BD04;
 extern s8 D_8013D890; // Triggers beacon warp
 extern u8 D_8013D894; // Beacon warp destination
