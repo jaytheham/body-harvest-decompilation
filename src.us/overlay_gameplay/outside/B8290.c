@@ -17,7 +17,34 @@ void func_800A931C_B82CC(s8 arg0, s16 *arg1, s32 *arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A93A4_B8354.s")
 
+#ifdef NON_MATCHING
+void func_800A9738_B86E8(u8 arg0, s32 arg1) {
+    u8 *group;
+    Unk80048198 *member;
+
+    D_80048198[arg0].unk20 |= arg1;
+    group = (u8 *)&D_80048198[D_80048198[arg0].unk25];
+
+    member = &D_80048198[group[0]];
+    if (member->unk1A != 0) {
+        member->unk20 |= arg1;
+    }
+    member = &D_80048198[group[1]];
+    if (member->unk1A != 0) {
+        member->unk20 |= arg1;
+    }
+    member = &D_80048198[group[2]];
+    if (member->unk1A != 0) {
+        member->unk20 |= arg1;
+    }
+    member = &D_80048198[group[3]];
+    if (member->unk1A != 0) {
+        member->unk20 |= arg1;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9738_B86E8.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_800A9820_B87D0(u8 arg0, s32 arg1) {
