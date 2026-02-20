@@ -359,9 +359,13 @@ typedef struct {
 } Unk80152B80; /* particle/effect entry, 18 bytes */
 
 typedef struct {
-    u8 pad0[0x16];
+    u8 pad0[0x12];
+    u16 unk12;
+    u16 unk14;
     u8 unk16;
-    u8 pad17[0x19]; // 0x2A total
+    u8 pad17[0x5];
+    u8 unk1C;
+    u8 pad1D[0xD]; // 0x2A total
 } MissionData;
 
 typedef struct {

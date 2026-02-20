@@ -10,7 +10,28 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070494_40944.s")
 
+/**
+ * @brief Clears mission frontend byte flag `unk1C` when it equals 1.
+ */
+#ifdef NON_MATCHING
+void func_800704DC_4098C(void) {
+    u8* entry;
+    s32 i;
+    u8 one;
+
+    entry = &D_800D747A;
+    i = 0x29;
+    one = 1;
+    do {
+        if (entry[0x1C] == one) {
+            entry[0x1C] = 0;
+        }
+        entry -= 0x2A;
+    } while (i--);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800704DC_4098C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070514_409C4.s")
 
@@ -18,9 +39,44 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800708B8_40D68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070904_40DB4.s")
+/**
+ * @brief Finds a mission entry by id and clears three frontend fields.
+ */
+#ifdef NON_MATCHING
+void func_80070904_40DB4(s32 arg0) {
+    MissionData* entry;
 
+    entry = func_80070494_40944((s16)arg0);
+    if (entry != NULL) {
+        entry->unk14 = 0;
+        entry->unk12 = 0;
+        entry->unk16 = 0;
+    }
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070904_40DB4.s")
+#endif
+
+/**
+ * @brief Resets three per-entry frontend fields across all mission entries.
+ */
+#ifdef NON_MATCHING
+void func_80070940_40DF0(void) {
+    register s32 i;
+    register MissionData* entry;
+
+    entry = &D_800D6DC0[41];
+    i = 0x29;
+    do {
+        entry->unk14 = 0;
+        entry->unk12 = 0;
+        entry->unk16 = 0;
+        entry--;
+    } while (i--);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070940_40DF0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070970_40E20.s")
 
@@ -42,7 +98,22 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007166C_41B1C.s")
 
+/**
+ * @brief Clears a per-entry frontend status byte across a fixed table.
+ */
+#ifdef NON_MATCHING
+void func_80071738_41BE8(void) {
+
+    s32 i;
+
+    i = 0x29;
+    do {
+        D_800D6DC0[i].unk16 = 0;
+    } while (i--);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071738_41BE8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071760_41C10.s")
 
@@ -125,7 +196,23 @@ s32 func_80077E78_48328(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800791A0_49650.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007946C_4991C.s")
+/**
+ * @brief Returns the byte length of a null-terminated string.
+ */
+s32 func_8007946C_4991C(u8* arg0) {
+    s32 len;
+    u8* ptr;
+
+    len = 0;
+    ptr = arg0;
+    if (*ptr != 0) {
+        do {
+            len++;
+        } while (*++ptr != 0);
+    }
+
+    return len;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007949C_4994C.s")
 
@@ -210,7 +297,19 @@ void func_8007F3EC_4F89C(FrontendStruct* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F830_4FCE0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007FB90_50040.s")
+/**
+ * @brief Initializes a small frontend playback/state block from a source descriptor.
+ */
+void func_8007FB90_50040(s32* arg0, s32* arg1) {
+    arg0[2] = 0;
+    if (arg1[0] != 0) {
+        arg0[3] = (s32)arg1;
+        arg0[0] = arg1[0];
+        arg0[1] = ((s32*)arg1[0])[2];
+        return;
+    }
+    arg0[3] = 0;
+}
 
 #ifdef NON_MATCHING
 /**
