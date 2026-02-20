@@ -141,6 +141,7 @@ extern u8* D_80052A94;
 extern Unk80052A98 D_80052A98[];
 extern s32 D_80052AA0;
 extern s16 D_80052AC8;
+extern s8 D_80052ACA;
 extern s8 D_80052ACC;
 extern u8 D_80052ACD;
 extern s32 D_80052AD0;
@@ -157,11 +158,18 @@ extern s32 D_80068084;
 extern s32 D_80068088;
 
 extern s32 D_80094900;
+extern u8 D_800949D4;
+extern MissionData D_800909B0[42];
 
 extern MissionData D_800D6DC0[42];
 extern s16 D_800D74AA;
 extern u8 D_800D7971;
-extern u8 D_800D747A;
+extern MissionData D_800D747A;
+extern s32* D_800D7A18;
+extern Unk80080530_Dst* D_800D7A1C;
+extern u8* D_800D7A4C;
+extern s32 D_800D8520;
+extern s8 D_800D8524;
 extern FrontendStreamSlot D_800D8578[];
 extern FrontendStreamSlot* D_800D8550[];
 

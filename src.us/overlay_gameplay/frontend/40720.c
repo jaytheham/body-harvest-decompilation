@@ -175,7 +175,32 @@ s32 func_800709F0_40EA0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800709F0_40EA0.s")
 #endif
 
+/**
+ * @brief Sets unk1C=3 in both D_800D6DC0[entry] and D_800909B0[entry.unk26] at matching mission id, returns loop counter.
+ */
+#ifdef NON_MATCHING
+s32 func_80070A8C_40F3C(s16 arg0) {
+    s32 temp_v0;
+    s32 var_v1;
+    MissionData* entry;
+
+    entry = &D_800D747A;
+    var_v1 = 0x29;
+    while (1) {
+        if (arg0 == entry->unk26) {
+            D_800909B0[entry->unk26].unk1C = 3;
+            entry->unk1C = 3;
+        }
+        temp_v0 = var_v1;
+        entry = (MissionData*)((u8*)entry - 0x2A);
+        var_v1 -= 1;
+        if (var_v1 == 0) break;
+    }
+    return temp_v0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070A8C_40F3C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070AEC_40F9C.s")
 
@@ -183,7 +208,23 @@ s32 func_800709F0_40EA0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070BD8_41088.s")
 
+/**
+ * @brief If arg2 is divisible by 8 and arg2/8 is less than arg1, calls func_80070514 to process the resulting slot index.
+ */
+#ifdef NON_MATCHING
+void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2) {
+    s32 temp_v0;
+
+    if (!(arg2 & 7)) {
+        temp_v0 = arg2 >> 3;
+        if (temp_v0 < arg1) {
+            func_80070514_409C4((s16)(temp_v0 + arg0));
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070C64_41114.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070CC4_41174.s")
 
@@ -251,7 +292,20 @@ void func_800764B4_46964(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076504_469B4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007685C_46D0C.s")
+/**
+ * @brief Initializes frontend state: processes mission selection, clears fields, sets state byte, inits audio/renderer systems.
+ */
+s32 func_8007685C_46D0C(void) {
+    func_8007949C_4994C(func_80070390_40840(), 0);
+    func_8007C7F4_4CCA4();
+    func_80013684_14284();
+    func_8007C4BC_4C96C();
+    D_80052ACA = 3;
+    func_800056A8_62A8();
+    func_800056A8_62A8();
+    func_80070940_40DF0();
+    return 2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800768C4_46D74.s")
 
@@ -383,7 +437,19 @@ void func_8007EBB0_4F060(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007EE0C_4F2BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007EE8C_4F33C.s")
+/**
+ * @brief Initializes the global frontend playback block (D_800D7A18) from a pointer-to-pointer source.
+ */
+void func_8007EE8C_4F33C(s32** arg0) {
+    D_800D7A18[2] = 0;
+    if (*arg0 != 0) {
+        D_800D7A18[3] = (s32)arg0;
+        D_800D7A18[0] = (s32)*arg0;
+        D_800D7A18[1] = (*arg0)[5];
+        return;
+    }
+    D_800D7A18[3] = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007EEE0_4F390.s")
 
@@ -440,7 +506,20 @@ void func_8007FBC8_50078(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8008035C_5080C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080530_509E0.s")
+/**
+ * @brief Copies position/transform fields from a source entry into the indexed slot in the D_800D7A1C array.
+ */
+void func_80080530_509E0(Unk80080530_Src* arg0) {
+    Unk80080530_Dst* dst;
+
+    dst = &D_800D7A1C[arg0->unkC];
+    dst->unkC = arg0->unk0;
+    dst->unkE = arg0->unk2;
+    dst->unk10 = arg0->unk4;
+    dst->unk14 = arg0->unk8;
+    dst->unk12 = arg0->unk6;
+    dst->unk16 = arg0->unkA;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080588_50A38.s")
 
@@ -499,7 +578,18 @@ void func_80080A84_50F34(FrontendStreamSlot* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081CAC_5215C.s")
 
+/**
+ * @brief Advances the D_800D7A4C-based ring buffer index (0-3 cycle), reads slot data at +0x20, and sets D_800D8524 mode flag.
+ */
+#ifdef NON_MATCHING
+void func_80081F9C_5244C(void) {
+    D_800D8524 = 0xF;
+    D_800D8520 = ((s32*)(D_800D7A4C + D_800949D4 * 8))[8];
+    D_800949D4 = (u8)((s32)(D_800949D4 + 1) % 4);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081F9C_5244C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081FF0_524A0.s")
 

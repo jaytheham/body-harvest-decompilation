@@ -371,6 +371,27 @@ typedef struct {
 } MissionData;
 
 typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    u8 unkC;
+} Unk80080530_Src; /* 0xD bytes */
+
+typedef struct {
+    u8 pad0[0xC];
+    s16 unkC;
+    s16 unkE;
+    s16 unk10;
+    s16 unk12;
+    s16 unk14;
+    s16 unk16;
+    u8 pad18[0x14];
+} Unk80080530_Dst; /* 0x2C bytes */
+
+typedef struct {
     u8 pad0[0x10];
     s16 unk10;
     s16 unk12;

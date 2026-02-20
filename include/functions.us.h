@@ -16,6 +16,7 @@ void func_800048B8_54B8(void);
 void func_800048E8_54E8(void);
 void func_80004918_5518(void);
 void func_80004AEC_56EC(void);
+void func_800056A8_62A8(void);
 s32 func_8000726C_7E6C(u64);
 void func_800072CC_7ECC(u64);
 void func_800074F4_80F4(void);
@@ -24,6 +25,7 @@ void func_800078B8_84B8(s32, s32*);
 s32 func_80009F18_AB18(s32);
 void func_8000A160(void);
 void func_80013324_13F24(void);
+void func_80013684_14284(void);
 void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4);
 void func_800153D8_15FD8(s16);
 void func_8001599C_1659C(void);
@@ -32,9 +34,13 @@ void func_80017AE0_186E0(void);
 void func_8001A500_1B100(s32);
 
 // overlay_gameplay frontend
+s32 func_80070390_40840(void);
 MissionData* func_80070494_40944(s16 arg0);
+void func_80070514_409C4(s16 arg0);
 extern MissionData* func_800706E8_40B98(s16 arg0);
+void func_8007949C_4994C(s32 arg0, s32 arg1);
 void func_8007A754_4AC04(void);
+void func_8007C4BC_4C96C(void);
 void func_8007C7F4_4CCA4(void);
 
 // overlay_gameplay outside
