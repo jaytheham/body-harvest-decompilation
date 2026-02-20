@@ -17,8 +17,8 @@ tools:
 
 ## Overview
 
-This is a matching decompilation project for Body Harvest (N64). The goal is to create C code that, when compiled, produces the exact same assembly as the original game ROM.
-Convert the named N64 assembly function to C89 code, compile it using IDO 5.3 (-O2 -mips2 -32) in Docker, and compare the output against the original assembly. Modify the C code iteratively until it produces byte-for-byte identical assembly.
+This is a matching decompilation project for Body Harvest (N64). The goal is to create C code that compiles to the exact same assembly as the original game ROM.
+You will convert the named N64 assembly function to C89 code, compile it using IDO 5.3 (-O2 -mips2 -32) in Docker, compare the output against the original assembly, and modify the C code iteratively until it produces byte-for-byte identical assembly.
 
 ## Project Structure
 
@@ -35,36 +35,36 @@ You are running in windows, you have access to a docker container where you can 
 - Functions are named like `func_<RAM address>_<ROM address>`. Compare target and generated assembly for a specific function: `docker exec -it bh-container bash -c "tools/asm-differ/diff.py --no-pager --compress-matching 3 <function name> 0x<ROM address of next function>"`.
 - `docker exec -it bh-container bash -c "mips-linux-gnu-objdump -d build/src.us/overlay_gameplay/outside/missions.c.o | sed -n '/<func_8007679C_8574C>:/,/^$/p'"` - Disassemble a single function from an object file.
 
-## Step 1: Generate C Implementation
+## Step 1: Use runSubagent to generate cleaned C implementation
 
 Outside the docker container run:`python tools/mips_to_c/m2c.py asm/nonmatchings/core/1000/func_80000D0C_190C.s` to generate an initial C implementation from the original assembly.
 
-Clean up the generated C code by following these steps:
+Clean up the generated C code:
 
-1. Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
-2. Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
-3. Add or update declarations for any called functions in `include/functions.us.h` if they aren't defined in `src.us/` yet.
-4. Replace all pointer arithmetic with struct/array access.
-5. All struct field accesses should use -> or . operators.
-6. Update void\* parameters that should be typed.
-7. Unusual constructions like `(arg0 < 0x9C) ^ 1` should be converted into a more natural form `arg0 >= 0x9C`.
-8. Replace goto-based control flow with structured control flow (if/else, for, while).
-9. Replace if-do-while and do-while loops with for(;;) or while() loops.
-10. Search in `/asm/` for any `jal` references to the target function to determine correct parameter and return types.
-
-After making these changes **use runSubagent** and ask the agent replace all pointer arithmetic with proper struct and array access and all temp pointers with direct struct/array references, then review the changes to ensure they are correct and that no pointer arithmetic remains.
+- Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
+- Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
+- Add or update declarations for any called functions in `include/functions.us.h` if they aren't defined in `src.us/` yet.
+- Replace all pointer arithmetic with struct/array access.
+- All struct field accesses should use -> or . operators.
+- Update void\* parameters that should be typed.
+- Unusual constructions like `(arg0 < 0x9C) ^ 1` should be converted into a more natural form `arg0 >= 0x9C`.
+- Replace goto-based control flow with structured control flow (if/else, for, while).
+- Replace if-do-while and do-while loops with for(;;) or while() loops.
+- Search in `/asm/` for any `jal` references to the target function to determine correct parameter and return types.
 
 Identify and fix all these issues in the generated C code before proceeding to the next step. The goal is to have clean, readable C code that still compiles down to the same assembly as the original.
 
 ## Step 2: Insert C into Project
 
-Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly. Replace that line with the cleaned up C code you generated in Step 1. Make sure to keep the function signature and return type consistent with any calls to that function from other C code.
+Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly. Replace that line with the cleaned up C code from Step 1.
+
+Before continuing review the code and ensure all pointer arithmetic has been replaced with proper struct and array access and all temp pointers variables removed and replaced with direct struct/array references.
 
 ## Step 3: Build in Docker
 
 Run the build inside the container:- `docker exec -it bh-container bash -c "make clean && make -j QUIET=1"`
 
-**Expected outcome**: Build completes (SHA1 check may fail, if generated assembly does not match target).
+**Expected outcome**: build/bh.us.z64: OK/FAILED
 
 **If compilation errors occur:**
 
@@ -72,7 +72,7 @@ Run the build inside the container:- `docker exec -it bh-container bash -c "make
 - Simplify C code (avoid complex expressions in single statements)
 - Ensure all extern symbols are declared
 
-If build completes and checksums match: `build/bh.us.z64: OK`. The function is now decompiled and matched and you can stop work. If not, proceed to the next steps for analysis and iteration.
+If build completes with `OK` the function is correctly matched and you can stop work. If not, proceed to the next steps for analysis and iteration.
 
 ## Step 4: Compare with Original
 
@@ -83,15 +83,15 @@ Note instruction order, registers, immediates, branch conditions
 ## Step 5: Iterate To Resolve Differences
 
 Rewrite C code to reduce the number of differences in assembly.
-**FIRST ALWAYS try removing intermediate variables and simplifying before adding new ones**, it is very common for the original code to derefence struct fields and arrays multiple times instead of storing them in a local variable.
+**FIRST ALWAYS try removing intermediate variables and simplifying the code**, it is very common that the original code derefenced struct fields and arrays multiple times instead of storing them in a local variable.
 Make sure all pointer arithmetic is replaced with proper struct/array access, and that assembly-like if>do>while and goto control flow is replaced with more natural C control flow constructs.
-Double check all function calls param are necessary and correctly typed.
+Double check all function call params are necessary and correctly typed.
 Think about how a person would have originally written the code in C to produce the assembly you see rather than writing the C to match the assembly exactly. Search for patterns in the original assembly and see how other functions were written to achieve similar assembly output.
 Read file `DecompHints.md` for common patterns and pitfalls.
 
 If the only differences are register allocation try changing the order of the related operations, even if the new order appears less like the original assembly.
 
-Rebuild and re-compare until the generated assembly is identical to the original. Once the build returns `build/bh.us.z64: OK` proceed to the final step.
+Rebuild and re-compare until the generated assembly is identical to the original. Once the build returns `OK` proceed to the final step.
 
 ## Step 6: Finalize
 

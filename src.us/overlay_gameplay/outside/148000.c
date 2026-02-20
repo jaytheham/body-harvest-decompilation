@@ -1,8 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-// Weapons / HUD / Vehicle weapons
-
 void func_80139050_148000(void) {
     s32 var_s0;
     u8* var_s1;
