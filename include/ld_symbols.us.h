@@ -383,7 +383,7 @@ extern Addr overlay_gameplay_frontend_52690_s;
 extern Addr overlay_gameplay_frontend_data_bin;
 extern Addr overlay_gameplay_inside_158330_s;
 extern Addr overlay_gameplay_inside_data_bin;
-extern Addr overlay_gameplay_outside_13DA70_s;
+extern Addr overlay_gameplay_outside_13DA70_c;
 extern Addr overlay_gameplay_outside_1416E0_s;
 extern Addr overlay_gameplay_outside_145D70_c;
 extern Addr overlay_gameplay_outside_148000_c;
