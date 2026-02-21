@@ -88,21 +88,21 @@ void func_800704DC_4098C(void)
 /**
  * @brief Finds a mission entry by id, clamps `unk12` to 0x4000, and sets `unk14` to -0x400.
  */
-#ifdef NON_MATCHING
-void func_800708B8_40D68(s32 arg0) {
-    MissionData* entry;
-
-    entry = func_80070494_40944((s16)arg0);
-    if (entry != NULL) {
-        if (entry->unk12 > 0x4000) {
-            entry->unk12 = 0x4000;
-        }
-        entry->unk14 = -0x400;
+void func_800708B8_40D68(short arg0)
+{
+  int new_var;
+  MissionData *entry;
+  entry = func_80070494_40944((s16) arg0);
+  new_var = -0x400;
+  if (entry != NULL)
+  {
+    if (entry->unk12 > 0x4000)
+    {
+      entry->unk12 = 0x4000;
     }
+    entry->unk14 = new_var;
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800708B8_40D68.s")
-#endif
 
 /**
  * @brief Finds a mission entry by id and clears three frontend fields.
