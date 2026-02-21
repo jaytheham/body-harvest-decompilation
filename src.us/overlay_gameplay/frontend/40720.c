@@ -50,25 +50,18 @@ s32 func_80070420_408D0(void) {
 /**
  * @brief Finds a mission entry by mission id stored in `unk26`.
  */
-#ifdef NON_MATCHING
 MissionData* func_80070494_40944(s16 arg0) {
-    s32 i;
-    u8* entry;
-
-    entry = &D_800D747A;
-    i = 0x29;
-    do {
-        if (entry[0x26] == arg0) {
-            return (MissionData*)entry;
-        }
-        entry -= 0x2A;
+        s32 i;
+    s32 newv;
+    i = 0x29; do { do {
+        newv = i;
+    if (D_800D6DC0[newv].unk26 == arg0) {
+        return (MissionData *) (&D_800D6DC0[newv]);
+    }
     } while (i--);
-
-    return NULL;
+    return 0;
+    } while (0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070494_40944.s")
-#endif
 
 /**
  * @brief Clears mission frontend byte flag `unk1C` when it equals 1.
