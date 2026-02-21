@@ -29,9 +29,9 @@ typedef struct {
 } Unk8004D0F8;
 
 typedef struct {
-    s32 unk0;
-    u16 unk4;
-    s16 unk6;
+    s32 score;
+    u16 secondsElapsed;
+    s16 humansKilled;
 } Unk80052A98;
 
 typedef struct {

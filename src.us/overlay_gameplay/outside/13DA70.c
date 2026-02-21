@@ -178,9 +178,9 @@ void func_8012FE6C_13EE1C(s32 arg0) {
 s32 func_8012FFB0_13EF60(void) {
     Unk80052A98 *ptr;
 
-    D_80052A98[currentLevel - 1].unk0 = (s32) D_80052B2C->unk30;
+    D_80052A98[currentLevel - 1].score = (s32) D_80052B2C->unk30;
     ptr = &D_80052A98[2];
-    return D_80052A98[0].unk0 + D_80052AA0 + ptr[0].unk0 + ptr[1].unk0 + ptr[2].unk0 + ptr[3].unk0;
+    return D_80052A98[0].score + D_80052AA0 + ptr[0].score + ptr[1].score + ptr[2].score + ptr[3].score;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012FFB0_13EF60.s")

@@ -38,10 +38,10 @@ typedef enum FrontEndState
 // Stores the current level's play time in seconds and returns the total play time across all levels.
 #ifdef NON_MATCHING
 s32 func_80070420_408D0(void) {
-    D_80052A98[currentLevel - 1].unk4 = (u16)((u32)D_80052A90 / 1000U);
+    D_80052A98[currentLevel - 1].secondsElapsed = (u16)((u32)D_80052A90 / 1000U);
 
-    return D_80052A98[0].unk4 + D_80052A98[1].unk4 + D_80052A98[2].unk4 +
-           D_80052A98[3].unk4 + D_80052A98[4].unk4 + D_80052A98[5].unk4;
+    return D_80052A98[0].secondsElapsed + D_80052A98[1].secondsElapsed + D_80052A98[2].secondsElapsed +
+           D_80052A98[3].secondsElapsed + D_80052A98[4].secondsElapsed + D_80052A98[5].secondsElapsed;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070420_408D0.s")

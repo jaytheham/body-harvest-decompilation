@@ -134,7 +134,7 @@ extern s32 D_80052540;
 extern s32 D_80052544;
 extern s16 D_80052546;
 extern u8 D_80052547;
-extern u32 D_80052A90;
+extern u32 D_80052A90; // millseconds played in current level
 extern s32 D_80052A88;
 extern s32 D_80052A8C;
 extern u8* D_80052A94;
