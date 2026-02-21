@@ -107,8 +107,7 @@ void func_800708B8_40D68(short arg0)
 /**
  * @brief Finds a mission entry by id and clears three frontend fields.
  */
-#ifdef NON_MATCHING
-void func_80070904_40DB4(s32 arg0) {
+void func_80070904_40DB4(s16 arg0) {
     MissionData* entry;
 
     entry = func_80070494_40944((s16)arg0);
@@ -118,9 +117,6 @@ void func_80070904_40DB4(s32 arg0) {
         entry->unk16 = 0;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070904_40DB4.s")
-#endif
 
 /**
  * @brief Resets three per-entry frontend fields across all mission entries.
