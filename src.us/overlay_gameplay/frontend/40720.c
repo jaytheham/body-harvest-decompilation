@@ -66,25 +66,20 @@ MissionData* func_80070494_40944(s16 arg0) {
 /**
  * @brief Clears mission frontend byte flag `unk1C` when it equals 1.
  */
-#ifdef NON_MATCHING
-void func_800704DC_4098C(void) {
-    u8* entry;
-    s32 i;
-    u8 one;
-
-    entry = &D_800D747A;
-    i = 0x29;
-    one = 1;
-    do {
-        if (entry[0x1C] == one) {
-            entry[0x1C] = 0;
-        }
-        entry -= 0x2A;
-    } while (i--);
+void func_800704DC_4098C(void)
+{
+   s32 var_v1;
+  int new_var;
+  int new_var2;
+  new_var = D_800D6DC0[var_v1].unk1C == 1;
+  var_v1 = 0x29; do {
+      new_var = D_800D6DC0[var_v1].unk1C == 1;
+      new_var2 = new_var;
+      if (new_var2) {
+          D_800D6DC0[var_v1].unk1C = 0U;
+      }
+  } while (var_v1--);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800704DC_4098C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070514_409C4.s")
 
