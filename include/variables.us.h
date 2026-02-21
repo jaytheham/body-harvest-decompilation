@@ -73,6 +73,7 @@ extern s32 D_8003144C;
 extern s32 D_80031450;
 extern s32 D_80031454;
 extern s8 D_800314C4;
+extern s32 D_80031B84;
 extern u8 D_8003DFD4[];
 extern u8 D_8003E000[];
 extern u8 D_8003E0FC[];
@@ -126,7 +127,6 @@ extern u16 D_8004DC5E;
 extern Unk8004DCD0 D_8004DCD0[]; // vehicle instances?
 extern u8 D_80050AE0[];
 extern u8 D_80050AF0[];
-extern Gfx *D_8005BB2C;
 
 extern BuildingInstance buildingInstances[0xFF];
 extern u32 buildingInteriorToLoadId;
@@ -139,7 +139,9 @@ extern s32 D_80052A88;
 extern s32 D_80052A8C;
 extern u8* D_80052A94;
 extern Unk80052A98 D_80052A98[];
+extern u16 D_80052A9C;
 extern s32 D_80052AA0;
+extern u16 D_80052AA4;
 extern s16 D_80052AC8;
 extern s8 D_80052ACA;
 extern s8 D_80052ACC;
@@ -152,14 +154,19 @@ extern s32 D_80052558;
 extern GameplayMode gameplayMode; // 80052adc
 extern Unk80052B2C* D_80052B2C;
 extern Unk80052B34* D_80052B34;
+extern Gfx *D_8005BB2C;
+extern s32 D_8005BB48[];
 
 extern s32 D_8006AB88;
 extern s32 D_80068084;
 extern s32 D_80068088;
 
 extern s32 D_80094900;
+extern s32 D_80094938;
 extern u8 D_800949D4;
 extern MissionData D_800909B0[42];
+
+extern f64 D_800AEA68;
 
 extern MissionData D_800D6DC0[42];
 extern s16 D_800D74AA;
@@ -170,6 +177,7 @@ extern Unk80080530_Dst* D_800D7A1C;
 extern u8* D_800D7A4C;
 extern s32 D_800D8520;
 extern s8 D_800D8524;
+extern f32 D_800D8528;
 extern FrontendStreamSlot D_800D8578[];
 extern FrontendStreamSlot* D_800D8550[];
 

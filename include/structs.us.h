@@ -30,7 +30,7 @@ typedef struct {
 
 typedef struct {
     s32 unk0;
-    s16 unk4;
+    u16 unk4;
     s16 unk6;
 } Unk80052A98;
 

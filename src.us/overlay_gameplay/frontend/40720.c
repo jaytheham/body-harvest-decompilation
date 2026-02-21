@@ -35,8 +35,17 @@ typedef enum FrontEndState
 // calculatePlayersTotalScore
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070390_40840.s")
 
-//calculatePlayersTotalSeconds
+// Stores the current level's play time in seconds and returns the total play time across all levels.
+#ifdef NON_MATCHING
+s32 func_80070420_408D0(void) {
+    D_80052A98[currentLevel - 1].unk4 = (u16)((u32)D_80052A90 / 1000U);
+
+    return D_80052A98[0].unk4 + D_80052A98[1].unk4 + D_80052A98[2].unk4 +
+           D_80052A98[3].unk4 + D_80052A98[4].unk4 + D_80052A98[5].unk4;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070420_408D0.s")
+#endif
 
 /**
  * @brief Finds a mission entry by mission id stored in `unk26`.
@@ -229,9 +238,46 @@ s32 func_80070A8C_40F3C(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070A8C_40F3C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070AEC_40F9C.s")
+#ifdef NON_MATCHING
+void func_80070AEC_40F9C(s16 arg0, s16 arg1) {
+    MissionData *entry;
+    u8 missionId;
+    s32 i;
 
+    entry = &D_800D747A;
+    i = 41;
+    do {
+        missionId = entry->unk26;
+        if (missionId <= arg1 && missionId >= arg0) {
+            D_800909B0[missionId].unk1C = 3;
+            entry->unk1C = 3;
+        }
+        entry--;
+    } while (i--);
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070AEC_40F9C.s")
+#endif
+
+#ifdef NON_MATCHING
+void func_80070B68_41018(s16 arg0) {
+    s32 i;
+    MissionData* entry;
+
+    entry = &D_800D747A;
+    i = 0x29;
+    do {
+        if (arg0 == entry->unk26 && entry->unk1C == 3) {
+            D_800909B0[entry->unk26].unk1C = 0;
+            entry->unk1C = 0;
+            *(s16*)&entry->pad27[1] = 0;
+        }
+        entry--;
+    } while (i--);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070B68_41018.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070BD8_41088.s")
 
@@ -343,7 +389,38 @@ s32 func_80076FD8_47488(void) {
     return 3;
 }
 
+/**
+ * @brief Copies tiled framebuffer data from a strided source to a contiguous destination.
+ * NON_MATCHING: regalloc only - cfe temp from while(counter--) goes to t0 instead of a0.
+ */
+#ifdef NON_MATCHING
+void func_80076FE0_47490(s32* arg0, s32* arg1) {
+    s32* src;
+    s32* dst;
+    s32 i, j, k, l;
+
+    src = arg0;
+    dst = arg1;
+    i = 7;
+    do {
+        j = 9;
+        do {
+            k = 0x1F;
+            do {
+                l = 0xF;
+                do {
+                    *dst++ = *src++;
+                } while (l--);
+                src += 0x90;
+            } while (k--);
+            src -= 0x13F0;
+        } while (j--);
+        src += 0x1360;
+    } while (i--);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076FE0_47490.s")
+#endif
 
 // doPressStartLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007704C_474FC.s")
@@ -378,8 +455,17 @@ s32 func_80077E78_48328(s32 arg0, s32 arg1) {
 // startFile (unused?)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800788E4_48D94.s")
 
-// startFile
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078968_48E18.s")
+// Start saved game
+void func_80078968_48E18(void) {
+    func_800050C4_5CC4();
+    func_8000DC9C_E89C(D_8005BB48[D_80031B84], D_8005BB48[D_80031B84 ^ 1]);
+    func_8000505C_5C5C();
+    D_800313C8 = 1;
+    func_80006DDC_79DC();
+    D_800313C8 = 0;
+    func_80011D24_12924();
+    func_80070940_40DF0();
+}
 
 // doFrontEndLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800789E4_48E94.s")
@@ -472,7 +558,23 @@ void func_8007EBB0_4F060(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007EBB8_4F068.s")
 
+#ifdef NON_MATCHING
+void func_8007EE0C_4F2BC(s32* arg0) {
+    if (D_80094938 == 0) {
+        D_800D7A18[4] = arg0[0];
+        D_800D7A18[5] = arg0[1];
+        D_800D7A18[6] = arg0[2];
+        D_800D7A18[7] = arg0[3];
+        D_800D7A18[8] = arg0[4];
+        D_800D7A18[9] = arg0[5];
+        ((s16*)D_800D7A18)[26] = ((s16*)arg0)[12];
+        ((s16*)D_800D7A18)[29] = (s16)(((s16*)arg0)[13] - 10);
+        ((s16*)D_800D7A18)[30] = ((s16*)arg0)[14];
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007EE0C_4F2BC.s")
+#endif
 
 /**
  * @brief Initializes the global frontend playback block (D_800D7A18) from a pointer-to-pointer source.
@@ -612,6 +714,23 @@ void func_80081F9C_5244C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081F9C_5244C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081FF0_524A0.s")
+/**
+ * @brief Dampens D_800D8528 by 87.5% and reverses direction, zeroing if below threshold.
+ */
+void func_80081FF0_524A0(void) {
+    f32 absVal;
+
+    if (D_800D8528 >= 0.0f) {
+        absVal = D_800D8528;
+    } else {
+        absVal = -D_800D8528;
+    }
+    if ((f64)absVal < D_800AEA68) {
+        D_800D8528 = 0.0f;
+        return;
+    }
+    D_800D8528 = (f32)((f64)D_800D8528 - (f64)D_800D8528 * 0.125);
+    D_800D8528 = -D_800D8528;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80082074_52524.s")
