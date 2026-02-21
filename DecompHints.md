@@ -605,3 +605,15 @@ D_80048198[idx].unk20 &= 0xDFBFFFFF;
 Using `u8 idx` or an inline cast `(s32)((u8*)arg0)[8]` both generate `multu`. Only a named `s32` variable gives the shift chain.
 
 Note: Even with `s32 idx`, if `D_80048198 + idx` appears in **two separate pointer assignments** (two named `Unk80048198 *` pointers), IDO may still use `multu`. The pure array-subscript form `D_80048198[idx]` with a single `s32 idx` variable is the most reliable way to get shift chains.
+
+### Matrix-vector multiply: left-to-right add without parentheses for correct mul scheduling
+
+For 3-element multiply-add expressions like `out = a*b + c*d + e*f`, write ALL terms with consistent operand order (e.g., `vec[i]*mat[j]`) and without explicit parentheses. Adding parentheses like `e*f + (a*b + c*d)` changes the final add's operand order in the generated `add.s` instruction.
+
+### Constant register placement in multi-store functions
+
+When filling a struct with both argument values and a constant (e.g., `D_840[i].unk2 = 0xF`), the C position of the constant store determines the register it gets. The compiler's register allocator processes the "variables" (including constants requiring a register) in C statement order. Place the constant between the groups where the target shows it was allocated (often between s16 and u8 arg groups).
+
+### u8\* pointer for offset byte access to differently-typed struct fields
+
+When assembly uses `sb` to write single bytes at struct offsets that are declared as wider types (e.g., writing a byte at offset 0x12 of an s16 field), use `*(u8 *)&struct.field = val` to generate `sb` instead of `sh`.

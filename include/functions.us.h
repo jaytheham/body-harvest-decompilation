@@ -47,6 +47,19 @@ void func_8007949C_4994C(s32 arg0, s32 arg1);
 void func_8007A754_4AC04(void);
 void func_8007C4BC_4C96C(void);
 void func_8007C7F4_4CCA4(void);
+s32 func_8008D98C_5DE3C(Gfx **);
+void func_80083B14_53FC4(u8);
+s16 func_80083B7C_5402C(u8);
+void func_80083DBC_5426C(s16, u8);
+u8 func_8008DC34_5E0E4(s16, s16, s16, s16, s16);
+void func_8008EB20_5EFD0(s16, s16, s16, u16, u8, s32, s32);
+void func_800840C4_54574(u8);
+u8 func_80083A58_53F08(s32);
+void func_8008CC3C_5D0EC(void);
+void func_8008DFA0_5E450(void);
+void func_8008EEC4_5F374(void);
+void func_8008F1E0_5F690(void);
+void func_8008FAAC_5FF5C(void);
 
 // overlay_gameplay outside
 void func_80070440_7F3F0(void);

@@ -56,13 +56,8 @@ typedef enum Level {
     LEVEL_COMET = 5
 } Level;
 
-extern Unk80042DA8 D_80042DA8;
-extern u8 D_80042DB8;
-extern u8 D_80043243;
-extern OSMesgQueue D_80043388;
-extern OSPfs D_80047610;
-extern u8 D_80036840[]; // Rumble pak(tm) detected!
 extern u8 D_80047678;
+extern u8 D_80031160;
 extern u32 D_800313CC;
 extern s16 D_800313C8;
 extern s16 D_800313D0;
@@ -74,9 +69,16 @@ extern s32 D_80031450;
 extern s32 D_80031454;
 extern s8 D_800314C4;
 extern s32 D_80031B84;
+extern u8 D_80036840[]; // Rumble pak(tm) detected!
 extern u8 D_8003DFD4[];
 extern u8 D_8003E000[];
 extern u8 D_8003E0FC[];
+
+extern Unk80042DA8 D_80042DA8;
+extern u8 D_80042DB8;
+extern u8 D_80043243;
+extern OSMesgQueue D_80043388;
+extern OSPfs D_80047610;
 extern Unk80047588 D_80047588[];
 extern u16 D_800475D8[];
 extern u16 D_800475E0[];
@@ -180,6 +182,26 @@ extern s8 D_800D8524;
 extern f32 D_800D8528;
 extern FrontendStreamSlot D_800D8578[];
 extern FrontendStreamSlot* D_800D8550[];
+extern u8 D_800DE0BE;
+extern u8 D_800DE0BF;
+extern u8 D_800DE0EB;
+extern Unk800DE130 D_800DE130[];
+extern u8 D_800DE838;
+extern u8 D_800DE839;
+extern s16 D_800DE81A;
+extern Unk800DE840 D_800DE840[];
+extern f32 D_800DE0F0[];
+extern f32 D_800DE100[];
+extern s16 D_800DE10C;
+extern s16 D_800DE10E;
+extern s16 D_800DE110;
+
+extern u8 D_800E198D;
+extern u8 D_800E198F;
+extern s8 D_800E1992;
+extern Unk800E1980 D_800E1980[];
+extern u8 D_800E1D68;
+extern u8 D_800E1D69;
 
 extern s32 D_8013BD04;
 extern s8 D_8013D890; // Triggers beacon warp

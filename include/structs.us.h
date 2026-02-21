@@ -2,6 +2,10 @@
 #define STRUCTS_US_H
 
 typedef struct {
+    f32 x, y, z;
+} Vec3f;
+
+typedef struct {
     u8 pad0[9];
     u8 unk9;
 } func_80070420_7F3D0_UnkArg0;
@@ -404,5 +408,51 @@ typedef struct {
     u8 pad54[0x4];
 } FrontendStreamSlot;
 
+typedef struct {
+    /* 0x00 */ u8 unk0;
+    /* 0x01 */ u8 unk1;
+    /* 0x02 */ u8 pad2[2];
+    /* 0x04 */ u8 unk4;
+    /* 0x05 */ u8 pad5;
+    /* 0x06 */ s16 unk6;
+    /* 0x08 */ s16 unk8;
+    /* 0x0A */ s16 unkA;
+} Unk800DE130; /* size = 0x0C */
+
+typedef struct {
+    /* 0x00 */ u8 pad0[0x6];
+    /* 0x06 */ u8 unk6;
+    /* 0x07 */ u8 unk7;
+    /* 0x08 */ u8 unk8;
+    /* 0x09 */ u8 pad9;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ u8 padC;
+    /* 0x0D */ u8 unkD;
+    /* 0x0E */ u8 padE;
+    /* 0x0F */ u8 unkF;
+    /* 0x10 */ s8 unk10;
+    /* 0x11 */ s8 unk11;
+    /* 0x12 */ s8 unk12;
+    /* 0x13 */ u8 pad13;
+} Unk800E1980; /* size = 0x14 */
+
+typedef struct {
+    /* 0x00 */ u8 pad0[0x2];
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ u8 pad6[0x2];
+    /* 0x08 */ s16 unk8;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ s16 unkC;
+    /* 0x0E */ u8 unkE;
+    /* 0x0F */ u8 unkF;
+    /* 0x10 */ u8 unk10;
+    /* 0x11 */ u8 unk11;
+    /* 0x12 */ s16 unk12;
+    /* 0x14 */ s16 unk14;
+    /* 0x16 */ s16 unk16;
+    /* 0x18 */ u8 unk18;
+    /* 0x19 */ u8 pad19[0x3];
+} Unk800DE840; /* size = 0x1C */
 
 #endif

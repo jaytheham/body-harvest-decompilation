@@ -628,8 +628,7 @@ void func_80080530_509E0(Unk80080530_Src* arg0) {
 void func_8008098C_50E3C(void) {
     s32 i;
 
-    i = 0;
-    do {
+    i = 0; do {
         D_800D8550[i] = NULL;
         D_800D8578[i].unk50 = 0;
         i++;
