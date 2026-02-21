@@ -228,18 +228,15 @@ void func_80070AEC_40F9C(s16 arg0, s16 arg1) {
 
 #ifdef NON_MATCHING
 void func_80070B68_41018(s16 arg0) {
+    u32 new_var;
     s32 i;
-    MissionData* entry;
-
-    entry = &D_800D747A;
-    i = 0x29;
-    do {
-        if (arg0 == entry->unk26 && entry->unk1C == 3) {
-            D_800909B0[entry->unk26].unk1C = 0;
-            entry->unk1C = 0;
-            entry->unk28 = 0;
+    new_var = 0x29;
+    i = new_var; do {
+        if (arg0 == D_800D6DC0[i].unk26 && D_800D6DC0[i].unk1C == 3) {
+            D_800909B0[D_800D6DC0[i].unk26].unk1C = 0;
+            D_800D6DC0[i].unk1C = 0;
+            D_800D6DC0[i].unk28 = 0;
         }
-        entry--;
     } while (i--);
 }
 #else
@@ -251,20 +248,18 @@ void func_80070B68_41018(s16 arg0) {
 /**
  * @brief If arg2 is divisible by 8 and arg2/8 is less than arg1, calls func_80070514 to process the resulting slot index.
  */
-#ifdef NON_MATCHING
-void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2) {
-    s32 temp_v0;
-
-    if (!(arg2 & 7)) {
-        temp_v0 = arg2 >> 3;
-        if (temp_v0 < arg1) {
-            func_80070514_409C4((s16)(temp_v0 + arg0));
-        }
+void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
+{
+  s32 temp_v0;
+  if (!(arg2 & 7))
+  {
+    temp_v0 = arg2 >> 3;
+    if (temp_v0 < arg1)
+    {
+      func_80070514_409C4((s16) ((temp_v0 ^ 0) + arg0));
     }
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070C64_41114.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070CC4_41174.s")
 
@@ -276,11 +271,7 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2) {
 void func_80071738_41BE8(void) {
 
     s32 i;
-
-    i = 0x29;
-    do {
-        D_800D6DC0[i].unk16 = 0;
-    } while (i--);
+    i = 0x29; do { D_800D6DC0[i].unk16 = 0; } while (i--);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071738_41BE8.s")
@@ -362,28 +353,41 @@ s32 func_80076FD8_47488(void) {
  */
 #ifdef NON_MATCHING
 void func_80076FE0_47490(s32* arg0, s32* arg1) {
-    s32* src;
-    s32* dst;
-    s32 i, j, k, l;
-
-    src = arg0;
-    dst = arg1;
-    i = 7;
-    do {
-        j = 9;
-        do {
-            k = 0x1F;
-            do {
-                l = 0xF;
-                do {
-                    *dst++ = *src++;
-                } while (l--);
-                src += 0x90;
-            } while (k--);
-            src -= 0x13F0;
-        } while (j--);
-        src += 0x1360;
-    } while (i--);
+  s32 *src;
+  s32 *dst;
+  s32 j;
+  s32 i;
+  s32 k;
+  s32 l;
+  src = arg0;
+  dst = arg1;
+  i = 7;
+  do
+  {
+    j = 9;
+    do
+    {
+      k = 0x1F;
+      do
+      {
+        l = 0xF;
+        do
+        {
+          if (!arg0)
+          {
+          }
+          *(dst++) = *(src++);
+        }
+        while (l--);
+        src += 0x90;
+      }
+      while (k--);
+      src -= 0x13F0;
+    }
+    while (j--);
+    src += 0x1360;
+  }
+  while (i--);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076FE0_47490.s")
@@ -586,17 +590,13 @@ void func_8007FB90_50040(s32* arg0, s32* arg1) {
     arg0[3] = 0;
 }
 
-#ifdef NON_MATCHING
-void func_8007FBC8_50078(s32 arg0) {
-    if ((u8)arg0 == 1) {
+void func_8007FBC8_50078(u8 arg0) {
+    if (arg0 == 1) {
         D_800D7971 = -1;
     } else {
         D_800D7971 = 0;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007FBC8_50078.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007FBF8_500A8.s")
 
