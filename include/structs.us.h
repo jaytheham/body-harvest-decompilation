@@ -367,7 +367,8 @@ typedef struct {
     u8 unk1C;
     u8 pad1D[0x9];
     u8 unk26;
-    u8 pad27[0x3]; // 0x2A total
+    u8 unk27;
+    s16 unk28; // 0x2A total
 } MissionData;
 
 typedef struct {

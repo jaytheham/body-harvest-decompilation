@@ -158,7 +158,7 @@ MissionData* func_80070970_40E20(MissionData* entry, s32 hasSelection)
     else
     {
       selectedEntry->unk1C = 1;
-      *((s16 *) (&selectedEntry->pad27[1])) = -1;
+      selectedEntry->unk28 = -1;
     }
     D_800D74AA = 0;
     return selectedEntry;
@@ -197,8 +197,7 @@ void func_80070A8C_40F3C(s16 arg0)
   if ((!arg0) != 0)
   {
   }
-  var_v1 = 0x29;   do
-  {
+  var_v1 = 0x29; do {
     if (arg0 == D_800D6DC0[var_v1].unk26)
     {
       D_800909B0[D_800D6DC0[var_v1].unk26].unk1C = 3;
@@ -211,20 +210,17 @@ void func_80070A8C_40F3C(s16 arg0)
 
 #ifdef NON_MATCHING
 void func_80070AEC_40F9C(s16 arg0, s16 arg1) {
-    MissionData *entry;
-    u8 missionId;
-    s32 i;
-
-    entry = &D_800D747A;
-    i = 41;
-    do {
-        missionId = entry->unk26;
-        if (missionId <= arg1 && missionId >= arg0) {
-            D_800909B0[missionId].unk1C = 3;
-            entry->unk1C = 3;
-        }
-        entry--;
-    } while (i--);
+  u8 missionId;
+  s32 i;
+  i = 0x29; do {
+      missionId = D_800D6DC0[i].unk26;
+    if ((missionId <= arg1) && (missionId >= arg0))
+    {
+      D_800909B0[missionId].unk1C = 3;
+      D_800D6DC0[i].unk1C = 3;
+    }
+  }
+  while (i--);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070AEC_40F9C.s")
@@ -241,7 +237,7 @@ void func_80070B68_41018(s16 arg0) {
         if (arg0 == entry->unk26 && entry->unk1C == 3) {
             D_800909B0[entry->unk26].unk1C = 0;
             entry->unk1C = 0;
-            *(s16*)&entry->pad27[1] = 0;
+            entry->unk28 = 0;
         }
         entry--;
     } while (i--);
