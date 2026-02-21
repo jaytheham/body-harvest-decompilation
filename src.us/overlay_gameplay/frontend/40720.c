@@ -124,15 +124,11 @@ void func_80070904_40DB4(s16 arg0) {
 #ifdef NON_MATCHING
 void func_80070940_40DF0(void) {
     register s32 i;
-    register MissionData* entry;
 
-    entry = &D_800D6DC0[41];
-    i = 0x29;
-    do {
-        entry->unk14 = 0;
-        entry->unk12 = 0;
-        entry->unk16 = 0;
-        entry--;
+    i = 0x29; do {
+        D_800D6DC0[i].unk14 = 0;
+        D_800D6DC0[i].unk12 = 0;
+        D_800D6DC0[i].unk16 = 0;
     } while (i--);
 }
 #else
@@ -142,32 +138,34 @@ void func_80070940_40DF0(void) {
 /**
  * @brief Clears transient mission fields, optionally fetches selected mission data, and tags active save entry state.
  */
-#ifdef NON_MATCHING
-MissionData* func_80070970_40E20(MissionData* entry, s32 hasSelection) {
-    MissionData* selectedEntry;
-
-    entry->unk12 = 0;
-    entry->unk14 = 0;
-    entry->unk16 = 0;
-
-    if (hasSelection != 0) {
-        selectedEntry = func_800706E8_40B98(D_800D74AA);
-        if ((currentSaveFileIndex + 2) != selectedEntry->unk26) {
-            selectedEntry->unk1C = 0;
-        } else {
-            selectedEntry->unk1C = 1;
-            *(s16*)&selectedEntry->pad27[1] = -1;
-        }
-        D_800D74AA = 0;
-        return selectedEntry;
+MissionData* func_80070970_40E20(MissionData* entry, s32 hasSelection)
+{
+  int new_var;
+  MissionData *selectedEntry;
+  int new_var2;
+  entry->unk12 = 0;
+  entry->unk14 = 0;
+  entry->unk16 = 0;
+  new_var = hasSelection != 0;
+  if (new_var)
+  {
+    selectedEntry = func_800706E8_40B98(D_800D74AA);
+    new_var2 = selectedEntry->unk26 != (currentSaveFileIndex + 2);
+    if (new_var2)
+    {
+      selectedEntry->unk1C = 0;
     }
-
+    else
+    {
+      selectedEntry->unk1C = 1;
+      *((s16 *) (&selectedEntry->pad27[1])) = -1;
+    }
     D_800D74AA = 0;
-    return NULL;
+    return selectedEntry;
+  }
+  D_800D74AA = 0;
+  return NULL;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070970_40E20.s")
-#endif
 
 /**
  * @brief Scans mission entries in reverse, clears the first entry in state 4, and eases others toward default values.
