@@ -361,7 +361,7 @@ typedef struct {
 typedef struct {
     u8 pad0[0x12];
     u16 unk12;
-    u16 unk14;
+    s16 unk14;
     u8 unk16;
     u8 pad17[0x5];
     u8 unk1C;

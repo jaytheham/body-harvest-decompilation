@@ -170,31 +170,24 @@ MissionData* func_80070970_40E20(MissionData* entry, s32 hasSelection)
 /**
  * @brief Scans mission entries in reverse, clears the first entry in state 4, and eases others toward default values.
  */
-#ifdef NON_MATCHING
-s32 func_800709F0_40EA0(void) {
-    s32 i;
-    MissionData* entry;
-
-    entry = &D_800D6DC0[41];
-    i = 0x29;
-    do {
-        if (entry->unk16 == 4) {
-            func_80070970_40E20(entry, 0);
-            return i;
-        }
-
-        if (entry->unk12 > 0x4000) {
-            entry->unk12 = 0x4000;
-        }
-        entry->unk14 = -0x400;
-        entry--;
-    } while (i--);
-
-    return i;
+void func_800709F0_40EA0(void)
+{
+  s32 i;
+  i = 0x29; do
+  {
+    if (D_800D6DC0[i].unk16 == 4)
+    {
+      func_80070970_40E20(&D_800D6DC0[i], 0);
+        continue;
+    }
+    if (D_800D6DC0[i].unk12 > 0x4000)
+    {
+      D_800D6DC0[i].unk12 = 0x4000;
+    }
+    D_800D6DC0[i].unk14 = -0x400;
+  }
+  while (i--);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800709F0_40EA0.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_80070A8C_40F3C(s16 arg0) {
