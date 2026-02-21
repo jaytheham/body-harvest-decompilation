@@ -189,29 +189,25 @@ void func_800709F0_40EA0(void)
   while (i--);
 }
 
-#ifdef NON_MATCHING
-s32 func_80070A8C_40F3C(s16 arg0) {
-    s32 temp_v0;
-    s32 var_v1;
-    MissionData* entry;
-
-    entry = &D_800D747A;
-    var_v1 = 0x29;
-    while (1) {
-        if (arg0 == entry->unk26) {
-            D_800909B0[entry->unk26].unk1C = 3;
-            entry->unk1C = 3;
-        }
-        temp_v0 = var_v1;
-        entry = (MissionData*)((u8*)entry - 0x2A);
-        var_v1 -= 1;
-        if (var_v1 == 0) break;
+void func_80070A8C_40F3C(s16 arg0)
+{
+  s32 temp_v0;
+  s32 var_v1;
+  s32 var_v2;
+  if ((!arg0) != 0)
+  {
+  }
+  var_v1 = 0x29;   do
+  {
+    if (arg0 == D_800D6DC0[var_v1].unk26)
+    {
+      D_800909B0[D_800D6DC0[var_v1].unk26].unk1C = 3;
+      D_800D6DC0[var_v1].unk1C = 3;
     }
-    return temp_v0;
+    temp_v0 = var_v1;
+  }
+  while (var_v1--);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070A8C_40F3C.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_80070AEC_40F9C(s16 arg0, s16 arg1) {
