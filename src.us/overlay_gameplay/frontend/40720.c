@@ -489,7 +489,156 @@ s32 func_80077494_47944(void) {
 #endif
 
 // doCopyFile
+#ifdef NON_MATCHING
+s32 func_800776BC_47B6C(void) {
+  volatile s32 saveSlotSp;
+  u8* saveName;
+  s16 saveSlot;
+  s32 sourceFileIndex;
+  s32 destFileIndex;
+  s32 i;
+  s32 foundSelectableFile;
+  s32 state;
+  u32 frameCounter;
+  s16* selectedSaveSlot;
+  s32* sourceFileIndexPtr;
+  s32* destFileIndexPtr;
+  u8* saveNameBase;
+  s32 saveNameStride;
+
+  frameCounter = 0;
+  state = 1;
+  foundSelectableFile = 0;
+
+  func_800708B8_40D68(1);
+  func_800708B8_40D68(5);
+  func_800708B8_40D68(6);
+  func_80070514_409C4(0x34);
+  currentSaveFileIndex = 0;
+
+  i = 0;
+  if (0 < 3) {
+    selectedSaveSlot = &D_800D74A4;
+    saveName = D_800D6DA8;
+    do {
+      getSaveFileName(i, saveName);
+      saveSlot = i + 2;
+      if (saveName[1] == 0x6D) {
+        func_80070A8C_40F3C((s16) (i + 2));
+      } else {
+        saveSlotSp = (s32) saveSlot;
+        func_80070B68_41018(saveSlot);
+        if (foundSelectableFile == 0) {
+          *selectedSaveSlot = (s16) saveSlotSp;
+          foundSelectableFile = 1;
+        }
+      }
+      i++;
+      saveName += 7;
+    } while (i < 3);
+  }
+
+  selectedSaveSlot = &D_800D74A4;
+  func_8007166C_41B1C();
+  D_80090A7D = 0;
+  sourceFileIndexPtr = &D_80047F88;
+  saveNameBase = D_800D6DA8;
+  saveNameStride = 7;
+
+  do {
+    if (frameCounter >= 0x29U) {
+      func_80070CC4_41174();
+      func_8007166C_41B1C();
+
+      if (isButtonNewlyPressed(0, 0x9000) != 0) {
+        sourceFileIndex = *selectedSaveSlot - 2;
+        *sourceFileIndexPtr = sourceFileIndex;
+        if (saveNameBase[(sourceFileIndex * saveNameStride) + 1] != 0x6D) {
+          state = 2;
+        }
+      }
+      if (isButtonNewlyPressed(0, 0x4000) != 0) {
+        state = 0;
+      }
+    }
+
+    func_80075D58_46208(0);
+    func_800731A8_43658();
+    func_8000B044_BC44();
+    func_8000505C_5C5C();
+
+    if (frameCounter < 0x3E8U) {
+      frameCounter++;
+    }
+
+    if (state == 0) {
+      func_8000AFDC_BBDC();
+      func_800709F0_40EA0();
+    }
+  } while (state == 1);
+
+  func_80070BD8_41088(2, 4);
+  func_800153D8_15FD8(0xC8);
+  func_80070A8C_40F3C(*selectedSaveSlot);
+
+  if (*selectedSaveSlot == 2) {
+    *selectedSaveSlot = 3;
+  } else {
+    *selectedSaveSlot = 2;
+  }
+
+  func_80070CC4_41174();
+  if (state != 0) {
+    state = 1;
+    func_800708B8_40D68(0x34);
+    func_80070514_409C4(0x35);
+    destFileIndexPtr = &D_80047F8C;
+
+    do {
+      if (frameCounter >= 0x41U) {
+        func_80070CC4_41174();
+        func_8007166C_41B1C();
+
+        if (isButtonNewlyPressed(0, 0x9000) != 0) {
+          destFileIndex = *selectedSaveSlot - 2;
+          *destFileIndexPtr = destFileIndex;
+          if (destFileIndex != *sourceFileIndexPtr) {
+            state = 2;
+          }
+        }
+
+        if (isButtonNewlyPressed(0, 0x4000) != 0) {
+          state = 0;
+        }
+      }
+
+      func_80075D58_46208(0);
+      func_800731A8_43658();
+      func_8000B044_BC44();
+      func_8000505C_5C5C();
+      frameCounter++;
+    } while (state == 1);
+
+    func_800153D8_15FD8(0xC8);
+    if ((state == 2) && (func_80077204_476B4() == 2)) {
+      D_800476A0 = 5;
+    }
+
+    func_8000AFDC_BBDC();
+    if (state == 2) {
+      func_800764B4_46964();
+      func_800709F0_40EA0();
+    } else {
+      func_800708B8_40D68(0x35);
+      func_800776BC_47B6C();
+    }
+  }
+
+  return state;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800776BC_47B6C.s")
+#endif
 
 // doFileDetailsLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800779FC_47EAC.s")

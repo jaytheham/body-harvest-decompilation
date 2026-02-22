@@ -42,6 +42,7 @@ void func_8001A500_1B100(s32);
 s32 func_80070390_40840(void);
 MissionData* func_80070494_40944(s16 arg0);
 void func_80070514_409C4(s16 arg0);
+s32 func_800776BC_47B6C(void);
 extern MissionData* func_800706E8_40B98(s16 arg0);
 void func_8007949C_4994C(s32 arg0, s32 arg1);
 void func_8007A754_4AC04(void);
