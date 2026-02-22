@@ -484,7 +484,7 @@ void func_800789E4_48E94(void) {
     displayClearSaveDataScreen();
     displayCopyrightScreen();
     displayPublisherLogoScreen();
-    func_8007BEC0_4C370();
+    showDmaLogoScreen();
   }
 
   fileSelectCycle = 0;

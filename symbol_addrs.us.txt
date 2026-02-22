@@ -198,6 +198,7 @@ alCSeqNewMarker = 0x80021AE0;
 alCSeqNextEvent = 0x800216D4;
 alCSeqSecToTicks = 0x80021C54;
 alCSeqSetLoc = 0x80021510;
+showDmaLogoScreen = 0x8007BEC0;
 alCSeqTicksToSec = 0x80021D50;
 alClose = 0x8001AD94;
 alCopy = 0x8002D470;
