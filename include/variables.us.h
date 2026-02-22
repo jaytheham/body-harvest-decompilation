@@ -59,6 +59,10 @@ typedef enum Level {
 
 extern u8 D_80047678;
 extern u8 D_80031160;
+extern Unk800311A0 D_800311A0;
+extern Gfx D_800311D0[];
+extern Gfx D_80031200[];
+extern Gfx D_80031230[];
 extern u32 D_800313CC;
 extern s16 D_800313C8;
 extern s16 D_800313D0;
@@ -167,6 +171,7 @@ extern s32 D_80052AA0;
 extern u16 D_80052AA4;
 extern s16 D_80052AC8;
 extern s8 D_80052ACA;
+extern s8 D_80052ACB;
 extern s8 D_80052ACC;
 extern u8 D_80052ACD; // bitfield? x02 = black adam model
 extern s32 D_80052AD0;
@@ -178,6 +183,8 @@ extern GameplayMode gameplayMode; // 80052adc
 extern Unk80052B2C* D_80052B2C;
 extern Unk80052B34* D_80052B34;
 extern Gfx *D_8005BB2C;
+extern u8* D_8005BB20;
+extern s32 D_8005BB24;
 extern s32 D_8005BB48[];
 
 extern s32 D_8006AB88;
@@ -255,12 +262,44 @@ extern s32 D_80140C98;
 extern s32 D_80140C9C;
 extern s32 D_80140CA0;
 extern s32 D_80140C78;
+extern char D_80140DD8[];
+extern char D_80140DEC[];
+extern char D_80140E08[];
+extern char D_80140E1C[];
+extern char D_80140E3C[];
+extern char D_80140E58[];
+extern char D_80140E6C[];
+extern char D_80140E88[];
+extern char D_80140EA0[];
+extern char D_80140EC0[];
+extern char D_80140ED0[];
+extern char D_80140EE4[];
+extern char D_80140EF8[];
+extern char D_80140F10[];
+extern char D_80140F28[];
+extern char D_80140F40[];
+extern char D_80140F58[];
+extern char D_80140F70[];
+extern char D_80140F84[];
+extern char D_80140F98[];
+extern char D_80140FB0[];
+extern char D_80140FC4[];
+extern char D_80140FDC[];
+extern char D_80140FF4[];
+extern char D_8014100C[];
+extern char D_80141020[];
+extern char D_80141034[];
+extern char D_80141050[];
+extern char D_80141068[];
+extern char D_8014107C[];
+extern char D_80141090[];
 extern Struct_80140D00 D_80140D00;
 extern s16 D_80140D40[];
 extern u8 D_80140D90[];
 extern u8 D_80140DA8[];
 extern u8 D_80140DC0[];
 extern f32 D_801411A0;
+extern f32 D_801411A4;
 extern u8 D_80142740[]; // Found parent %d
 extern u8 D_80142790[]; // Activate Beacon %d
 extern u8 D_801427D8[]; // teleport to:%d
@@ -296,6 +335,7 @@ extern s32 D_801493A0;
 extern s32 D_801493A4;
 extern s32 D_801493CC;
 extern s16 D_801493D4;
+extern s16 D_801493D6;
 extern s16 D_801493D8;
 extern s16 D_801493DC;
 extern s16 D_801493E0;
@@ -350,6 +390,7 @@ extern u8 D_80152B88; /* unk8 field of first particle/effect entry */
 extern s16 D_80152C90;
 extern s16 D_80157590;
 extern s16 D_80157A3C;
+extern s32 D_80159020;
 extern s16 D_8015904C;
 extern InputStruct_8012B150 D_80159050[];
 extern s16 D_80159260;

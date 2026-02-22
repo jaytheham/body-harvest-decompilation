@@ -6,6 +6,12 @@ typedef struct {
 } Vec3f;
 
 typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+} Unk800311A0;
+
+typedef struct {
     u8 pad0[9];
     u8 unk9;
 } func_80070420_7F3D0_UnkArg0;

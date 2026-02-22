@@ -173,7 +173,440 @@ void func_80071178_80128(void) {
     }
 }
 
+#ifdef NON_MATCHING
+void func_80071228_801D8(void) {
+    Gfx* dl;
+    Gfx* savedDl31200;
+    Gfx* savedDl311D0;
+    s32 savedX;
+    s32 savedY;
+    s32 savedZ;
+    s32 phase;
+    s32 offset;
+    s32 halfOffset;
+    s32 level;
+    u32 segAddr31160;
+    u32 matrixBase;
+
+    func_800E8890_F7840();
+
+    segAddr31160 = ((u32)&D_80031160) & 0x1FFFFFFF;
+    savedDl31200 = D_80031200;
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0x01020040;
+    dl->words.w1 = segAddr31160;
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0xB7000000;
+    dl->words.w1 = 0x00020000;
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0x06000000;
+    dl->words.w1 = (u32)savedDl31200;
+
+    func_80070FB8_7FF68();
+    func_800B9DB8_C8D68(0);
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140DD8);
+    }
+
+    func_800B19F8_C09A8();
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140DEC);
+    }
+
+    if (D_80052ACB == 0) {
+        func_800E94B8_F8468(D_80140EA0);
+        if (currentControllerStates[0].button == 0x30) {
+            osSyncPrintf(D_80140E08);
+        }
+
+        func_8007BEC0_8AE70();
+        if (currentControllerStates[0].button == 0x30) {
+            osSyncPrintf(D_80140E1C);
+        }
+
+        func_800EA12C_F90DC();
+        if (currentControllerStates[0].button == 0x30) {
+            osSyncPrintf(D_80140E3C);
+        }
+
+        func_800F97FC_1087AC();
+        if (currentControllerStates[0].button == 0x30) {
+            osSyncPrintf(D_80140E58);
+        }
+
+        func_800DD5E0_EC590();
+        if (currentControllerStates[0].button == 0x30) {
+            osSyncPrintf(D_80140E6C);
+        }
+
+        func_800EA088_F9038();
+        if (currentControllerStates[0].button == 0x30) {
+            osSyncPrintf(D_80140E88);
+        }
+    } else {
+        osSyncPrintf(D_80140EA0);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    func_800F98C0_108870();
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140EC0);
+    }
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0xB7000000;
+    dl->words.w1 = 0x2000;
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0x06000000;
+    dl->words.w1 = (u32)D_800311D0;
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0xB900031D;
+    dl->words.w1 = 0xC8112478;
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0xE7000000;
+    dl->words.w1 = 0;
+
+    savedDl311D0 = D_800311D0;
+    func_80124D60_133D10();
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140ED0);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    if (D_80052ACA != 2) {
+        func_8007764C_865FC();
+        if (currentControllerStates[0].button == 0x30) {
+            osSyncPrintf(D_80140EE4);
+        }
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    func_8010065C_10F60C(0);
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140EF8);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    func_80101C14_110BC4();
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140F10);
+    }
+
+    if (D_80157590 != 0) {
+        func_8010065C_10F60C(1);
+    }
+
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140F28);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    if ((D_80052ACA != 2) || (currentLevel == LEVEL_COMET)) {
+        phase = D_80052A8C;
+        if (D_80159320 & 0x80) {
+            savedX = D_800311A0.unk0;
+            savedY = D_800311A0.unk2;
+            savedZ = D_800311A0.unk4;
+
+            offset = (s32) (((f64) (f32) sins((D_80052A8C << 12) & 0xFFFF) / 32768.0) * 32.0);
+            halfOffset = offset >> 1;
+
+            D_800311A0.unk2 += offset;
+            D_800311A0.unk0 -= halfOffset;
+            D_800311A0.unk4 -= halfOffset;
+            phase = offset;
+        }
+
+        func_80118774_127724(phase);
+
+        if (D_80159320 & 0x80) {
+            D_800311A0.unk0 = savedX;
+            D_800311A0.unk2 = savedY;
+            D_800311A0.unk4 = savedZ;
+        }
+
+        if (currentControllerStates[0].button == 0x30) {
+            osSyncPrintf(D_80140F40);
+        }
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    func_8007C044_8AFF4();
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140F58);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    func_8012D884_13C834();
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140F70);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    level = currentLevel;
+    if (level == LEVEL_COMET) {
+        func_802D4CD0_18D7E0(0x11, 0);
+        level = currentLevel;
+    }
+    if (level == LEVEL_AMERICA) {
+        func_802D4CD0_18D7E0(0xE, 0);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    func_800A70B8_B6068();
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140F84);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    func_801365E0_145590();
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140F98);
+    }
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140FB0);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    if (D_80157590 == 0) {
+        dl = D_8005BB2C++;
+        dl->words.w0 = 0x06000000;
+        dl->words.w1 = (u32) D_80031230;
+
+        func_800A3490_B2440(D_80159020);
+
+        dl = D_8005BB2C++;
+        dl->words.w0 = 0x06000000;
+        dl->words.w1 = (u32) savedDl31200;
+
+        dl = D_8005BB2C++;
+        dl->words.w0 = 0x01020040;
+        dl->words.w1 = segAddr31160;
+
+        dl = D_8005BB2C++;
+        dl->words.w0 = 0xBA000E02;
+        dl->words.w1 = 0x8000;
+
+        dl = D_8005BB2C++;
+        dl->words.w0 = 0xB7000000;
+        dl->words.w1 = 0x10204;
+
+        dl = D_8005BB2C++;
+        dl->words.w0 = 0xB900031D;
+        dl->words.w1 = 0xC8112478;
+
+        dl = D_8005BB2C++;
+        dl->words.w0 = 0xBA001402;
+        dl->words.w1 = 0x100000;
+
+        dl = D_8005BB2C++;
+        dl->words.w0 = 0xFCFFFFFF;
+        dl->words.w1 = 0xFFFE7838;
+
+        dl = D_8005BB2C++;
+        dl->words.w0 = 0xBA000C02;
+        dl->words.w1 = 0x2000;
+
+        dl = D_8005BB2C++;
+        dl->words.w0 = 0xBB000001;
+        dl->words.w1 = 0x80008000;
+
+        dl = D_8005BB2C++;
+        dl->words.w0 = 0xE7000000;
+        dl->words.w1 = 0;
+
+        dl = D_8005BB2C++;
+        dl->words.w0 = 0xB7000000;
+        dl->words.w1 = 0x22001;
+
+        func_80071178_80128();
+        func_8010065C_10F60C(1);
+        func_80070FB8_7FF68();
+
+        dl = D_8005BB2C++;
+        dl->words.w0 = 0xBA001402;
+        dl->words.w1 = 0;
+    }
+
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140FC4);
+    }
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0xBA000E02;
+    dl->words.w1 = 0;
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0xB6000000;
+    dl->words.w1 = 0x20000;
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0xE7000000;
+    dl->words.w1 = 0;
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0x01020040;
+    dl->words.w1 = segAddr31160;
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    func_800E71F8_F61A8();
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140FDC);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    func_800BA5B0_C9560(0, 1);
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80140FF4);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    func_800BD360_CC310();
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_8014100C);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    if (D_80052ACA != 2) {
+        func_800BB5E0_CA590();
+    }
+
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80141020);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    if (D_80052ACB != 2) {
+        func_800E7234_F61E4(D_80141034);
+    } else {
+        osSyncPrintf(D_80141034);
+    }
+
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80141050);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0x06000000;
+    dl->words.w1 = (u32) D_80031230;
+
+    func_800E5044_F3FF4();
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80141068);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    func_800A2B58_B1B08();
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_8014107C);
+    }
+
+    if (D_80052ACB == 2) {
+        return;
+    }
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0x03800010;
+    dl->words.w1 = ((u32) D_8005BB24) & 0x1FFFFFFF;
+
+    guPerspective((void*) (D_8005BB20 + 0x140), &D_801493D6, (f32) D_80149404, 1.3333334f, 10.0f, D_801411A4, 1.0f);
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0xBC00000E;
+    dl->words.w1 = D_801493D6;
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0x06000000;
+    dl->words.w1 = (u32) savedDl311D0;
+
+    matrixBase = (u32) D_8005BB20;
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0x01030040;
+    dl->words.w1 = (matrixBase + 0x140) & 0x1FFFFFFF;
+
+    dl = D_8005BB2C++;
+    dl->words.w0 = 0x01010040;
+    dl->words.w1 = (matrixBase + 0x200) & 0x1FFFFFFF;
+
+    func_800A03FC_AF3AC();
+
+    if (currentControllerStates[0].button == 0x30) {
+        osSyncPrintf(D_80141090);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80071228_801D8.s")
+#endif
 
 void func_80071E88_80E38(Unk80052B2C* arg0) {
     D_80149430 = (s16) arg0->unkC;
