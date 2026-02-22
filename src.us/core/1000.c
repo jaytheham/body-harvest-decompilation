@@ -114,7 +114,7 @@ s32 func_80002A88_3688(s32 arg0) {
 
 s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask)
 {
-  s32 result = (D_80047588[controllerNum].button & buttonMask) != 0;
+	s32 result = (currentControllerStates[controllerNum].button & buttonMask) != 0;
   if (result)
   {
     return (D_800475E0[controllerNum] & buttonMask) == 0;

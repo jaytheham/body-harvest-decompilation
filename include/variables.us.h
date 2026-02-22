@@ -82,7 +82,7 @@ extern u8 D_80042DB8;
 extern u8 D_80043243;
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
-extern Unk80047588 D_80047588[4];
+extern Unk80047588 currentControllerStates[4];
 extern u16 D_800475D8[];
 extern u16 D_800475E0[4];
 extern u32 D_800475F8;
