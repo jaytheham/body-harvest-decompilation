@@ -38,7 +38,16 @@ void func_80070420_7F3D0(func_80070420_7F3D0_UnkArg0* arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070CC0_7FC70.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070FB8_7FF68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_800710D4_80084.s")
+void func_800710D4_80084(u8 arg0, u8 arg1, u8 arg2) {
+    Gfx *temp_v1 = D_8005BB2C;
+    Gfx *temp_v1_2 = D_8005BB2C;
+
+    D_8005BB2C++;
+    temp_v1->words.w0 = 0xF8000000; temp_v1->words.w1 = ((((arg0 << 14) << 10) | ((arg1 & 0xFF) << 0x10)) | ((arg2 & 0xFF) << 8)) | 0xFF; arg0 = arg0;
+    temp_v1_2 = D_8005BB2C;
+    D_8005BB2C++;
+    temp_v1_2->words.w0 = 0xBC000008; temp_v1_2->words.w1 = 0x05000500;
+}
 
 void func_80071148_800F8(u8 arg0, u8 arg1) {
     D_80149448 = 1;
@@ -51,7 +60,7 @@ void func_80071178_80128(void) {
     if ((s32) D_80149449 > 0) {
         if ((s32) D_8014944A > 0) {
             if (D_80149448 == 1) {
-                func_800710D4_80084(0xBE, 0xBE, 0xFF, &D_8014944A);
+                func_800710D4_80084(0xBE, 0xBE, 0xFF);
                 D_8014944A -= 1;
                 return;
             }

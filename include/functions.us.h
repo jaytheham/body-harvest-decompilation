@@ -63,7 +63,6 @@ void func_8008FAAC_5FF5C(void);
 
 // overlay_gameplay outside
 void func_80070440_7F3F0(void);
-void func_800710D4_80084(u8, u8, u8, void *);
 void func_80071148_800F8(u8 arg0, u8 arg1);
 void func_80071228_801D8(void);
 void func_800720F4_810A4(void);

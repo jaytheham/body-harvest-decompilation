@@ -229,6 +229,10 @@ segments:
     overlay: true
     subsegments:
       - [0x158330, asm, overlay_gameplay/inside/158330]
+      - [0x1648A0, asm, overlay_gameplay/inside/1648A0]
+      - [0x167C90, c, overlay_gameplay/inside/167C90]
+      - [0x16AF30, asm, overlay_gameplay/inside/16AF30]
+      - [0x173B60, asm, overlay_gameplay/inside/173B60]
 
   - name: overlay_gameplay_inside_data
     type: bin
