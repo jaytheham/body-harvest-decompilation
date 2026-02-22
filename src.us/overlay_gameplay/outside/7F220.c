@@ -33,43 +33,40 @@ void func_80070420_7F3D0(func_80070420_7F3D0_UnkArg0* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070440_7F3F0.s")
 
-#ifdef NON_MATCHING
 void func_80070BFC_7FBAC(void) {
+    Gfx *new_var;
+    Gfx *new_var2;
     Gfx *dl;
-    s32 clipPos;
-    s32 clipNeg;
-
+    Gfx *new_var3;
     func_80011E14_12A14(D_80047F93);
     func_80004CC8_58C8();
     func_80004D38_5938();
+    D_80052B2C = &D_80052AE8;
 
-    D_80052B2C = (Unk80052B2C*) &D_80052AE8;
-    clipPos = 4;
-    clipNeg = 0xFFFC;
-
-    dl = D_8005BB2C;
+    new_var2 = D_8005BB2C;
+    dl = new_var2;
     D_8005BB2C++;
+    new_var = D_8005BB2C;
     dl->words.w0 = 0xBC000404;
-    dl->words.w1 = clipPos;
+    dl->words.w1 = 4;
 
+    dl = new_var;
     dl = D_8005BB2C;
     D_8005BB2C++;
-    dl->words.w1 = clipPos;
+    dl->words.w1 = 4;
     dl->words.w0 = 0xBC000C04;
 
     dl = D_8005BB2C;
     D_8005BB2C++;
     dl->words.w0 = 0xBC001404;
-    dl->words.w1 = clipNeg;
+    dl->words.w1 = 0xFFFC;
 
-    dl = D_8005BB2C;
+    new_var3 = D_8005BB2C;
+    dl = new_var3;
     D_8005BB2C++;
-    dl->words.w1 = clipNeg;
+    dl->words.w1 = 0xFFFC;
     dl->words.w0 = 0xBC001C04;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070BFC_7FBAC.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070CC0_7FC70.s")
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070FB8_7FF68.s")
