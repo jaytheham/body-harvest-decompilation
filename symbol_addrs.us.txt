@@ -438,3 +438,4 @@ sqrtf = 0x8001D940;
 synthesizer_rodata_0000 = 0x80039860;
 synthesizer_rodata_0008 = 0x80039868;
 vi_data_0000 = 0x800366D0;
+setRandomSeed = 0x800038D4;

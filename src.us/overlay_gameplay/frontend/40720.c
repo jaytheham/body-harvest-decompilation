@@ -633,7 +633,7 @@ void func_800789E4_48E94(void) {
         D_8004D154 = 0;
         D_8004D150 = 0;
         D_8004D158 = 0;
-        func_800038D4_44D4(0x00FACADE);
+        setRandomSeed(0x00FACADE);
         func_80078968_48E18();
         D_800946DC = FE_STATE_PRESS_START;
         break;

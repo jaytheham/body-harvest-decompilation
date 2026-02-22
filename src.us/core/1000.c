@@ -122,7 +122,7 @@ s32 func_80002A88_3688(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80003824_4424.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_800038D4_44D4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/setRandomSeed.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_800038E0_44E0.s")
 
