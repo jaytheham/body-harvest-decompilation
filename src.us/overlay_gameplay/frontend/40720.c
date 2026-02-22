@@ -483,7 +483,7 @@ void func_800789E4_48E94(void) {
     }
     displayClearSaveDataScreen();
     displayCopyrightScreen();
-    func_8007BB0C_4BFBC();
+    displayPublisherLogoScreen();
     func_8007BEC0_4C370();
   }
 
