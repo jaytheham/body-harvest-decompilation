@@ -429,7 +429,7 @@ s32 func_80077494_47944(void) {
       saveSlot = i + 2;
 
       if (D_800D6DA8[(i * 7) + 1] == 0x6D) {
-        func_80070A8C_40F3C(saveSlot);
+        func_80070A8C_40F3C(saveSlot); // If the second letter of filename is "m" it cannot be copied or deleted
       } else {
         func_80070B68_41018(saveSlot);
         if (foundSelectableFile == 0) {

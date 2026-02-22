@@ -11,11 +11,11 @@ typedef struct {
 } func_80070420_7F3D0_UnkArg0;
 
 typedef struct {
-    u16 unk0;
-    s8 unk2;
-    s8 unk3;
-    s8 unk4;
-    s8 unk5;
+    u16 button;
+    s8 stick_x;
+    s8 stick_y;
+    s8 errno;
+    s8 pad5;
 } Unk80047588;
 
 typedef struct {

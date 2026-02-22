@@ -6,7 +6,6 @@
 // core
 void* func_80000B14_1714(void);
 void func_8000108C_1C8C(s32);
-s32 isButtonNewlyPressed(u8, u16);
 void getSaveFileName(s32, u8*);
 s32 func_800038E0_44E0(void);
 s16 func_80003824_4424(f32, f32);

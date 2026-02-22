@@ -112,7 +112,14 @@ s32 func_80002A88_3688(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_8000345C_405C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/isButtonNewlyPressed.s")
+s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask)
+{
+  s32 result = (D_80047588[controllerNum].button & buttonMask) != 0;
+  if (result)
+  {
+    return (D_800475E0[controllerNum] & buttonMask) == 0;
+  }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_800035D8_41D8.s")
 

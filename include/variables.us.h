@@ -10,7 +10,7 @@ typedef enum Controller {
     CONTROLLER_FOUR = 3
 } Controller;
 
-typedef enum Button {
+enum ButtonEnum {
     BUTTON_NONE = 0,
     BUTTON_D_RIGHT = 0x0100,
     BUTTON_D_LEFT = 0x0200,
@@ -26,7 +26,8 @@ typedef enum Button {
     BUTTON_C_UP = 0x0008,
     BUTTON_R = 0x0010,
     BUTTON_L = 0x0020
-} Button;
+};
+typedef u16 Button;
 
 typedef enum GameplayMode {
     GAMEPLAY_MODE_LEVEL_MAP = 0,
@@ -81,9 +82,9 @@ extern u8 D_80042DB8;
 extern u8 D_80043243;
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
-extern Unk80047588 D_80047588[];
+extern Unk80047588 D_80047588[4];
 extern u16 D_800475D8[];
-extern u16 D_800475E0[];
+extern u16 D_800475E0[4];
 extern u32 D_800475F8;
 extern s32 D_80047584;
 extern u32 D_8004767C;
