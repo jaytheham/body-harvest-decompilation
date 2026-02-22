@@ -150,32 +150,14 @@ typedef struct {
     s16 unk1A;
     s16 unk1C;
     s16 unk1E;
-    u8 pad20[0x14];
-    s16 unk34;
-    s16 unk36;
-    u8 pad38[0x4];
-    s16 unk3C;
-    s16 unk3E;
-    u8* unk40;
-} Unk80052AE8; // size 0x44
-
-typedef struct {
-    f32 unk0;
-    f32 unk4;
-    f32 unk8;
-    f32 unkC;
-    u8 pad10[0x04];
-    f32 unk14;
-    u8 pad18[0x04];
-    s16 unk1C;
-    s16 unk1E;
     u8 pad20[0x10];
     s32 unk30;
     s16 unk34;
-    u8 pad36[0x02];
+    s16 unk36;
     Unk80052B34* unk38;
     s16 unk3C;
     s16 unk3E;
+    u8* unk40;
 } Unk80052B2C;
 
 typedef struct {

@@ -134,6 +134,7 @@ extern s32 D_8004D150;
 extern s32 D_8004D154;
 extern s32 D_8004D158;
 extern u8 D_8004D160;
+extern u8 D_80047F93;
 extern s32 D_8004DC48;
 extern s32 D_8004DC4C;
 extern s16 D_8004DC60;
@@ -163,7 +164,7 @@ extern s8 D_80052ACC;
 extern u8 D_80052ACD; // bitfield? x02 = black adam model
 extern s32 D_80052AD0;
 extern s32 D_80052AD8;
-extern Unk80052AE8 D_80052AE8;
+extern Unk80052B2C D_80052AE8;
 extern s32 D_80052550;
 extern s32 D_80052558;
 extern GameplayMode gameplayMode; // 80052adc
