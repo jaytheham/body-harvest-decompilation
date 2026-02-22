@@ -484,7 +484,7 @@ void func_800789E4_48E94(void) {
     displayClearSaveDataScreen();
     displayCopyrightScreen();
     displayPublisherLogoScreen();
-    showDmaLogoScreen();
+    displayDmaLogoScreen();
   }
 
   fileSelectCycle = 0;
@@ -504,7 +504,7 @@ void func_800789E4_48E94(void) {
 
     switch ((u16)currentFrontendState) {
       case FE_STATE_INTRO_MOVIE:
-        result = func_800768C4_46D74();
+        result = doIntroMovie();
         if (result == 1) {
           currentFrontendState = FE_STATE_INTRO_MOVIE;
         } else if (result == 2) {
