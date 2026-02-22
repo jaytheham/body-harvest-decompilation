@@ -443,3 +443,4 @@ currentFrontendState = 0x800946DC;
 displayWrongConsoleRegionNotice = 0x8007BD98;
 displayNoControllerNotice = 0x8007BC90;
 displayClearSaveDataScreen = 0x8007B618;
+displayCopyrightScreen = 0x8007B900;

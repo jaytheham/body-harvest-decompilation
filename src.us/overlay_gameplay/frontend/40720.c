@@ -482,7 +482,7 @@ void func_800789E4_48E94(void) {
       displayNoControllerNotice();
     }
     displayClearSaveDataScreen();
-    func_8007B900_4BDB0();
+    displayCopyrightScreen();
     func_8007BB0C_4BFBC();
     func_8007BEC0_4C370();
   }
