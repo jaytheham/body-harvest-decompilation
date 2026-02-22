@@ -584,7 +584,7 @@ void func_800789E4_48E94(void) {
         break;
 
       case FE_STATE_START_GAMEPLAY:
-        D_80048034 = 0;
+        showDemoText = 0;
         func_80078968_48E18();
         currentFrontendState = FE_STATE_PRESS_START;
         break;
@@ -619,7 +619,7 @@ void func_800789E4_48E94(void) {
         break;
 
       case FE_STATE_START_DEMO:
-        D_80048034 = 1;
+        showDemoText = 1;
         currentLevel = LEVEL_GREECE;
         func_80007570_8170();
         D_80047F94 = 0;
