@@ -84,7 +84,7 @@ extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
 extern Unk80047588 currentControllerStates[4];
 extern u16 D_800475D8[];
-extern u16 D_800475E0[4];
+extern u16 previousControllerButtonStates[4];
 extern u32 D_800475F8;
 extern s32 D_80047584;
 extern u32 D_8004767C;

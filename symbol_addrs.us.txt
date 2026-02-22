@@ -3,6 +3,7 @@ currentSaveFileIndex = 0x80047F84;
 currentLevel = 0x80047F90;
 showDemoText = 0x80048034;
 currentControllerStates = 0x80047588;
+previousControllerButtonStates = 0x800475E0;
 weaponSlots = 0x80048138;
 alienInstances = 0x80048198; // size:0x50
 
