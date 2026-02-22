@@ -402,7 +402,91 @@ void func_80076FE0_47490(s32* arg0, s32* arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077344_477F4.s")
 
 // doDeleteFile
+#ifdef NON_MATCHING
+s32 func_80077494_47944(void) {
+  u32 frameCounter;
+  s32 i;
+  s32 foundSelectableFile;
+  s32 state;
+  s16 saveSlot;
+  register s16* selectedSaveSlot;
+
+  frameCounter = 0;
+  foundSelectableFile = 0;
+  selectedSaveSlot = &D_800D74A4;
+  state = 1;
+
+  func_800708B8_40D68(1);
+  func_800708B8_40D68(5);
+  func_800708B8_40D68(6);
+  func_80070514_409C4(0x33);
+
+  currentSaveFileIndex = 0;
+  i = 0;
+  if (0 < 3) {
+    do {
+      getSaveFileName(i, &D_800D6DA8[i * 7]);
+      saveSlot = i + 2;
+
+      if (D_800D6DA8[(i * 7) + 1] == 0x6D) {
+        func_80070A8C_40F3C(saveSlot);
+      } else {
+        func_80070B68_41018(saveSlot);
+        if (foundSelectableFile == 0) {
+          *selectedSaveSlot = saveSlot;
+          foundSelectableFile = 1;
+        }
+      }
+      i++;
+    } while (i < 3);
+  }
+
+  selectedSaveSlot = &D_800D74A4;
+  func_8007166C_41B1C();
+  D_80090A7D = 0;
+
+  while (state == 1) {
+    if (frameCounter >= 0x29U) {
+      func_80070CC4_41174();
+      func_8007166C_41B1C();
+
+      if (isButtonNewlyPressed(0, 0x9000) != 0) {
+        if (D_800D6DA8[((*selectedSaveSlot - 2) * 7) + 1] != 0x6D) {
+          state = 2;
+        }
+      }
+
+      if (isButtonNewlyPressed(0, 0x4000) != 0) {
+        state = 0;
+      }
+    }
+
+    func_80075D58_46208(0);
+    func_800731A8_43658();
+    func_8000B044_BC44();
+    func_8000505C_5C5C();
+
+    if (frameCounter < 0x3E8U) {
+      frameCounter++;
+    }
+  }
+
+  func_800153D8_15FD8(0xC8);
+
+  currentSaveFileIndex = *selectedSaveSlot - 2;
+  if ((state != 0) && (func_80077204_476B4() == 2)) {
+    D_800476A0 = 3;
+  }
+
+  func_8000AFDC_BBDC();
+  func_800709F0_40EA0();
+  func_800764B4_46964();
+
+  return currentSaveFileIndex;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077494_47944.s")
+#endif
 
 // doCopyFile
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800776BC_47B6C.s")
