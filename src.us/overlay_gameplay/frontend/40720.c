@@ -473,7 +473,7 @@ void func_800789E4_48E94(void) {
 
   setFullResolution();
 
-  if (D_800946DC == FE_STATE_PRESS_START) {
+  if (currentFrontendState == FE_STATE_PRESS_START) {
   } else {
     if (osTvType == 0) {
       func_8007BD98_4C248();
@@ -498,39 +498,39 @@ void func_800789E4_48E94(void) {
     gfx->words.w0 = 0xBA000602;
     D_800476A2 = 1;
 
-    if ((u16)D_800946DC >= 0x19) {
+    if ((u16)currentFrontendState >= 0x19) {
       continue;
     }
 
-    switch ((u16)D_800946DC) {
+    switch ((u16)currentFrontendState) {
       case FE_STATE_INTRO_MOVIE:
         result = func_800768C4_46D74();
         if (result == 1) {
-          D_800946DC = FE_STATE_INTRO_MOVIE;
+          currentFrontendState = FE_STATE_INTRO_MOVIE;
         } else if (result == 2) {
-          D_800946DC = FE_STATE_PRESS_START;
+          currentFrontendState = FE_STATE_PRESS_START;
         }
         break;
 
       case FE_STATE_PRESS_START:
         result = func_8007704C_474FC();
         if (result == 0) {
-          D_800946DC = FE_STATE_INTRO_MOVIE;
+          currentFrontendState = FE_STATE_INTRO_MOVIE;
         } else if (result == 2) {
           currentLevel = LEVEL_GREECE;
-          D_800946DC = FE_STATE_FILE_SELECT;
+          currentFrontendState = FE_STATE_FILE_SELECT;
           D_80048026 = 0;
           D_80048028 = 0;
         } else if (result == 3) {
           fileSelectCycle = (fileSelectCycle + 1) % 3;
           if (fileSelectCycle == 0) {
-            D_800946DC = FE_STATE_INTRO_MOVIE;
+            currentFrontendState = FE_STATE_INTRO_MOVIE;
           }
           if (fileSelectCycle == 1) {
-            D_800946DC = FE_STATE_START_DEMO;
+            currentFrontendState = FE_STATE_START_DEMO;
           }
           if (fileSelectCycle == 2) {
-            D_800946DC = FE_STATE_HIGH_SCORES;
+            currentFrontendState = FE_STATE_HIGH_SCORES;
           }
         }
         break;
@@ -540,21 +540,21 @@ void func_800789E4_48E94(void) {
         if ((u32)result < 7) {
           switch (result) {
             case 0:
-              D_800946DC = FE_STATE_CHOOSE_FILE_NAME;
+              currentFrontendState = FE_STATE_CHOOSE_FILE_NAME;
               break;
             case 1:
-              D_800946DC = FE_STATE_PRESS_START;
+              currentFrontendState = FE_STATE_PRESS_START;
               break;
             case 2:
             case 3:
             case 4:
-              D_800946DC = FE_STATE_FILE_DETAILS;
+              currentFrontendState = FE_STATE_FILE_DETAILS;
               break;
             case 5:
-              D_800946DC = FE_STATE_DELETE_FILE;
+              currentFrontendState = FE_STATE_DELETE_FILE;
               break;
             case 6:
-              D_800946DC = FE_STATE_COPY_FILE;
+              currentFrontendState = FE_STATE_COPY_FILE;
               break;
           }
         }
@@ -563,9 +563,9 @@ void func_800789E4_48E94(void) {
       case FE_STATE_CHOOSE_FILE_NAME:
         result = func_80078424_488D4();
         if (result == 0) {
-          D_800946DC = FE_STATE_FILE_SELECT;
+          currentFrontendState = FE_STATE_FILE_SELECT;
         } else if (result == 2) {
-          D_800946DC = FE_STATE_FILE_DETAILS;
+          currentFrontendState = FE_STATE_FILE_DETAILS;
         }
         break;
 
@@ -573,20 +573,20 @@ void func_800789E4_48E94(void) {
         optionArg = 0;
         result = func_800779FC_47EAC();
         if (result == 0) {
-          D_800946DC = FE_STATE_FILE_SELECT;
+          currentFrontendState = FE_STATE_FILE_SELECT;
         } else if (result == 2) {
-          D_800946DC = FE_STATE_FILE_OPTIONS;
+          currentFrontendState = FE_STATE_FILE_OPTIONS;
         } else if (result == 3) {
-          D_800946DC = FE_STATE_START_GAMEPLAY;
+          currentFrontendState = FE_STATE_START_GAMEPLAY;
         } else if (result == 4) {
-          D_800946DC = FE_STATE_START_DEMO;
+          currentFrontendState = FE_STATE_START_DEMO;
         }
         break;
 
       case FE_STATE_START_GAMEPLAY:
         D_80048034 = 0;
         func_80078968_48E18();
-        D_800946DC = FE_STATE_PRESS_START;
+        currentFrontendState = FE_STATE_PRESS_START;
         break;
 
       case FE_STATE_FILE_OPTIONS:
@@ -594,25 +594,25 @@ void func_800789E4_48E94(void) {
         if ((u32)result < 8) {
           switch (result) {
             case 0:
-              D_800946DC = FE_STATE_FILE_DETAILS;
+              currentFrontendState = FE_STATE_FILE_DETAILS;
               break;
             case 2:
-              D_800946DC = FE_STATE_REPLAY_LEVEL_SELECT;
+              currentFrontendState = FE_STATE_REPLAY_LEVEL_SELECT;
               break;
             case 3:
-              D_800946DC = FE_STATE_HIGH_SCORES;
+              currentFrontendState = FE_STATE_HIGH_SCORES;
               break;
             case 4:
-              D_800946DC = FE_STATE_CHANGE_SFX_OPTION;
+              currentFrontendState = FE_STATE_CHANGE_SFX_OPTION;
               break;
             case 5:
-              D_800946DC = FE_STATE_CHANGE_MUSIC_OPTION;
+              currentFrontendState = FE_STATE_CHANGE_MUSIC_OPTION;
               break;
             case 6:
-              D_800946DC = FE_STATE_CHANGE_AIM_OPTION;
+              currentFrontendState = FE_STATE_CHANGE_AIM_OPTION;
               break;
             case 7:
-              D_800946DC = FE_STATE_CHANGE_BLOOD_OPTION;
+              currentFrontendState = FE_STATE_CHANGE_BLOOD_OPTION;
               break;
           }
         }
@@ -635,7 +635,7 @@ void func_800789E4_48E94(void) {
         D_8004D158 = 0;
         setRandomSeed(0x00FACADE);
         func_80078968_48E18();
-        D_800946DC = FE_STATE_PRESS_START;
+        currentFrontendState = FE_STATE_PRESS_START;
         break;
 
       case FE_STATE_UNUSED_START_GAMEPLAY_1:
@@ -654,12 +654,12 @@ void func_800789E4_48E94(void) {
         optionArg = 0;
         result = func_80077E88_48338();
         if (result == 0) {
-          D_800946DC = FE_STATE_FILE_OPTIONS;
+          currentFrontendState = FE_STATE_FILE_OPTIONS;
         } else if (result == 2) {
           func_80007570_8170();
-          D_800946DC = FE_STATE_START_GAMEPLAY;
+          currentFrontendState = FE_STATE_START_GAMEPLAY;
         } else if (result == 3) {
-          D_800946DC = FE_STATE_REPLAY_BOSS_SELECT;
+          currentFrontendState = FE_STATE_REPLAY_BOSS_SELECT;
         }
         break;
 
@@ -667,7 +667,7 @@ void func_800789E4_48E94(void) {
         optionArg = 0;
         result = func_80078110_485C0();
         if (result == 0) {
-          D_800946DC = FE_STATE_REPLAY_LEVEL_SELECT;
+          currentFrontendState = FE_STATE_REPLAY_LEVEL_SELECT;
         } else if (result == 2) {
           func_80007570_8170();
           D_80047F9C = 5;
@@ -676,7 +676,7 @@ void func_800789E4_48E94(void) {
           if (currentLevel == LEVEL_COMET) {
             func_800072CC_7ECC(0x1FULL);
           }
-          D_800946DC = FE_STATE_START_GAMEPLAY;
+          currentFrontendState = FE_STATE_START_GAMEPLAY;
           D_80052ACD |= 0x11;
         }
         break;
@@ -688,7 +688,7 @@ void func_800789E4_48E94(void) {
         } else {
           *frontendFlags |= 4;
         }
-        D_800946DC = FE_STATE_FILE_OPTIONS;
+        currentFrontendState = FE_STATE_FILE_OPTIONS;
         break;
 
       case FE_STATE_CHANGE_SFX_OPTION:
@@ -700,7 +700,7 @@ void func_800789E4_48E94(void) {
         *frontendFlags &= ~0x60;
         *frontendFlags |= (result << 5);
         func_80016FD0_17BD0((s16)result);
-        D_800946DC = FE_STATE_FILE_OPTIONS;
+        currentFrontendState = FE_STATE_FILE_OPTIONS;
         break;
 
       case FE_STATE_CHANGE_MUSIC_OPTION:
@@ -712,13 +712,13 @@ void func_800789E4_48E94(void) {
         *frontendFlags &= ~0x18;
         *frontendFlags |= (result << 3);
         func_800170F4_17CF4((s16)result);
-        D_800946DC = FE_STATE_FILE_OPTIONS;
+        currentFrontendState = FE_STATE_FILE_OPTIONS;
         break;
 
       case FE_STATE_HIGH_SCORES:
         optionArg = 0;
         func_800796D0_49B80(0, 0);
-        D_800946DC = FE_STATE_PRESS_START;
+        currentFrontendState = FE_STATE_PRESS_START;
         break;
 
       case FE_STATE_CHANGE_BLOOD_OPTION:
@@ -735,17 +735,17 @@ void func_800789E4_48E94(void) {
         }
         *frontendFlags &= ~3;
         *frontendFlags |= result;
-        D_800946DC = FE_STATE_FILE_OPTIONS;
+        currentFrontendState = FE_STATE_FILE_OPTIONS;
         break;
 
       case FE_STATE_DELETE_FILE:
         func_80077494_47944();
-        D_800946DC = FE_STATE_FILE_SELECT;
+        currentFrontendState = FE_STATE_FILE_SELECT;
         break;
 
       case FE_STATE_COPY_FILE:
         func_800776BC_47B6C();
-        D_800946DC = FE_STATE_FILE_SELECT;
+        currentFrontendState = FE_STATE_FILE_SELECT;
         break;
 
       case FE_STATE_LANGUAGE_SELECT:
@@ -753,13 +753,13 @@ void func_800789E4_48E94(void) {
         result = func_80076FD8_47488();
         if (result == 2) {
           D_800313D0 = 2;
-          D_800946DC = FE_STATE_INTRO_MOVIE;
+          currentFrontendState = FE_STATE_INTRO_MOVIE;
         } else if (result == 4) {
           D_800313D0 = 1;
-          D_800946DC = FE_STATE_INTRO_MOVIE;
+          currentFrontendState = FE_STATE_INTRO_MOVIE;
         } else if ((result == 0) || (result == 3)) {
           D_800313D0 = 0;
-          D_800946DC = FE_STATE_INTRO_MOVIE;
+          currentFrontendState = FE_STATE_INTRO_MOVIE;
         }
         D_800476A0 = 6;
         break;
