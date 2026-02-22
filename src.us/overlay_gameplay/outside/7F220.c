@@ -14,7 +14,45 @@ s32 func_80070270_7F220(s32 arg0) {
     return 0;
 }
 
+#ifdef NON_MATCHING
+void func_800702C0_7F270(s16 arg0) {
+    u32 currentTick;
+    u32 referenceTick;
+    u64 elapsedMicro;
+    u64 m1m = 1000000ULL;
+
+    currentTick = osGetCount();
+    
+    if (arg0 == 1) {
+        referenceTick = currentTick;
+    } else if (arg0 == 2) {
+        referenceTick = currentTick;
+        D_80052A90 = 0;
+    } else {
+        if (arg0 == 0) {
+            referenceTick = D_80149444;
+        } else {
+            referenceTick = D_80149444;
+        }
+    }
+
+    if (currentTick < referenceTick) {
+        referenceTick++;
+    }
+
+    D_80149444 = referenceTick;
+    
+    elapsedMicro = (u64)(currentTick - referenceTick) * m1m / D_80035610;
+
+    if (gameplayMode == GAMEPLAY_MODE_UNK1) {
+        D_80052A90 += (u32)elapsedMicro / 1000U;
+    }
+    
+    D_80149444 = currentTick;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_800702C0_7F270.s")
+#endif
 
 s32 func_800703B0_7F360(s16 arg0, s16 arg1) {
     s32 var_v1;
@@ -69,7 +107,34 @@ void func_80070BFC_7FBAC(void) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070CC0_7FC70.s")
+
+#ifdef NON_MATCHING
+void* func_80070FB8_7FF68(void) {
+    s32 temp_a2;
+    Gfx *temp_v1;
+    u32 new_var;
+    Gfx *temp_v1_2;
+    s32 temp_num;
+
+    temp_v1 = D_8005BB2C;
+
+    D_8005BB2C = temp_v1 + 1;
+    temp_v1->words.w0 = 0xF8000000;
+    temp_v1->words.w1 = (s32) ((((D_80047743 << 0x18) | (D_80047744 << 0x10)) | (D_80047745 << 8)) | (D_800313F4 & 0xFF));
+
+    temp_v1_2 = D_8005BB2C;
+    D_8005BB2C++;
+
+    temp_v1_2->words.w0 = 0xBC000008;
+    temp_a2 = D_800313FC - D_800313F8;
+    temp_num = (new_var = D_800313F8 * (-0x100)) + 0x1F400;
+    temp_v1_2->words.w1 = (((0x1F400 / temp_a2) & 0xFFFF) << 0x10) | ((temp_num / temp_a2) & 0xFFFF);
+
+    return temp_v1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070FB8_7FF68.s")
+#endif
 
 void func_800710D4_80084(u8 arg0, u8 arg1, u8 arg2) {
     Gfx *temp_v1 = D_8005BB2C;
