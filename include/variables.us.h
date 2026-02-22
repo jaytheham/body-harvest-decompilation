@@ -63,6 +63,7 @@ extern s16 D_800313C8;
 extern s16 D_800313D0;
 extern s32 D_80031410;
 extern s32 D_80031414;
+extern s32 D_80031420;
 extern u32 D_80031424[];
 extern s32 D_8003144C;
 extern s32 D_80031450;
@@ -72,6 +73,7 @@ extern s32 D_80031B84;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
 extern u8 D_8003DFD4[];
 extern u8 D_8003E000[];
+extern s16 D_8003E0EE[];
 extern u8 D_8003E0FC[];
 
 extern Unk80042DA8 D_80042DA8;
@@ -83,6 +85,7 @@ extern Unk80047588 D_80047588[];
 extern u16 D_800475D8[];
 extern u16 D_800475E0[];
 extern u32 D_800475F8;
+extern s32 D_80047584;
 extern u32 D_8004767C;
 extern u32 D_80047680;
 extern u32 D_80047688;
@@ -108,6 +111,9 @@ extern Level currentLevel; // 80047f90
 extern s32 D_80047F9C;
 extern s32 D_80047FA0;
 extern s16 D_80048026;
+extern s16 D_80048028;
+extern u8 D_80048024;
+extern u8 D_80048025;
 extern s32 D_80048034;
 extern u8 weaponSlots[7];
 extern s16 D_80048140[];
@@ -122,7 +128,11 @@ extern s32 D_80048188;
 extern AlienInstance alienInstances[]; // alien instances
 extern s32 D_8004D148;
 extern s32 D_8004D150;
+extern s32 D_8004D154;
+extern s32 D_8004D158;
 extern u8 D_8004D160;
+extern s32 D_8004DC48;
+extern s32 D_8004DC4C;
 extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
@@ -165,12 +175,18 @@ extern s32 D_80068088;
 
 extern s32 D_80094900;
 extern s32 D_80094938;
+extern s16 D_800946DC;
 extern u8 D_800949D4;
 extern MissionData D_800909B0[42];
 
 extern f64 D_800AEA68;
 
 extern MissionData D_800D6DC0[42];
+extern u8 D_800D6D88;
+extern u8 D_800D6D89;
+extern u8 D_800D6D8A;
+extern s16 D_800D74A4;
+extern s16 D_800D74A6;
 extern s16 D_800D74AA;
 extern u8 D_800D7971;
 extern MissionData D_800D747A;

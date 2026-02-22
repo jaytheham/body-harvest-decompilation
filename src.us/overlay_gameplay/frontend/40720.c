@@ -3,7 +3,7 @@
 
 typedef enum FrontEndState
 {
-    FE_STATE_INTRO_CUTSCENE = 0,
+    FE_STATE_INTRO_MOVIE = 0,
     FE_STATE_FILE_SELECT = 1,
     FE_STATE_INVALID_2 = 2,
     FE_STATE_CHOOSE_FILE_NAME = 3,
@@ -320,7 +320,7 @@ void func_800764B4_46964(void) {
     } while (i--);
 }
 
-// displayCometExplodesCutscene
+// displayCometExplodesMovie
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076504_469B4.s")
 
 // displayEndGameMessage
@@ -336,7 +336,7 @@ s32 func_8007685C_46D0C(void) {
     return 2;
 }
 
-// doIntroCutsceneLoop
+// doIntroMovieLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800768C4_46D74.s")
 
 // Called once before showing the 'Select Slot' screen
@@ -439,7 +439,342 @@ void func_80078968_48E18(void) {
 }
 
 // doFrontEndLoop
+#ifdef NON_MATCHING
+void func_800789E4_48E94(void) {
+  Gfx* gfx;
+  s32 result;
+  s32 fileSelectCycle;
+  s32 optionArg;
+  s32* frontendFlags;
+
+  D_80052ACA = 3;
+  gameplayMode = GAMEPLAY_MODE_UNKD;
+  osSetTime(*(u64*)&D_80068084);
+  func_80071738_41BE8();
+  D_800D6D88 = 0x30;
+  D_800D6D89 = 0xB9;
+  D_800D6D8A = 0x20;
+  func_8000AFDC_BBDC();
+  D_800D74A4 = -1;
+  D_800D74A6 = -1;
+  currentSaveFileIndex = 0;
+  func_80011D24_12924();
+  func_800118F8_124F8();
+
+  gfx = D_8005BB2C;
+  D_8005BB2C = gfx + 1;
+  gfx->words.w1 = 0x20;
+  gfx->words.w0 = 0xBA000402;
+
+  gfx = D_8005BB2C;
+  D_8005BB2C = gfx + 1;
+  gfx->words.w1 = 0x40;
+  gfx->words.w0 = 0xBA000602;
+
+  setFullResolution();
+
+  if (D_800946DC == FE_STATE_PRESS_START) {
+  } else {
+    if (osTvType == 0) {
+      func_8007BD98_4C248();
+    }
+    if (D_80047584 == 0) {
+      func_8007BC90_4C140();
+    }
+    func_8007B618_4BAC8();
+    func_8007B900_4BDB0();
+    func_8007BB0C_4BFBC();
+    func_8007BEC0_4C370();
+  }
+
+  fileSelectCycle = 0;
+  optionArg = 0;
+  frontendFlags = &D_80031420;
+
+  while (1) {
+    gfx = D_8005BB2C;
+    D_8005BB2C = gfx + 1;
+    gfx->words.w1 = 0xC0;
+    gfx->words.w0 = 0xBA000602;
+    D_800476A2 = 1;
+
+    if ((u16)D_800946DC >= 0x19) {
+      continue;
+    }
+
+    switch ((u16)D_800946DC) {
+      case FE_STATE_INTRO_MOVIE:
+        result = func_800768C4_46D74();
+        if (result == 1) {
+          D_800946DC = FE_STATE_INTRO_MOVIE;
+        } else if (result == 2) {
+          D_800946DC = FE_STATE_PRESS_START;
+        }
+        break;
+
+      case FE_STATE_PRESS_START:
+        result = func_8007704C_474FC();
+        if (result == 0) {
+          D_800946DC = FE_STATE_INTRO_MOVIE;
+        } else if (result == 2) {
+          currentLevel = LEVEL_GREECE;
+          D_800946DC = FE_STATE_FILE_SELECT;
+          D_80048026 = 0;
+          D_80048028 = 0;
+        } else if (result == 3) {
+          fileSelectCycle = (fileSelectCycle + 1) % 3;
+          if (fileSelectCycle == 0) {
+            D_800946DC = FE_STATE_INTRO_MOVIE;
+          }
+          if (fileSelectCycle == 1) {
+            D_800946DC = FE_STATE_START_DEMO;
+          }
+          if (fileSelectCycle == 2) {
+            D_800946DC = FE_STATE_HIGH_SCORES;
+          }
+        }
+        break;
+
+      case FE_STATE_FILE_SELECT:
+        result = func_80076C98_47148();
+        if ((u32)result < 7) {
+          switch (result) {
+            case 0:
+              D_800946DC = FE_STATE_CHOOSE_FILE_NAME;
+              break;
+            case 1:
+              D_800946DC = FE_STATE_PRESS_START;
+              break;
+            case 2:
+            case 3:
+            case 4:
+              D_800946DC = FE_STATE_FILE_DETAILS;
+              break;
+            case 5:
+              D_800946DC = FE_STATE_DELETE_FILE;
+              break;
+            case 6:
+              D_800946DC = FE_STATE_COPY_FILE;
+              break;
+          }
+        }
+        break;
+
+      case FE_STATE_CHOOSE_FILE_NAME:
+        result = func_80078424_488D4();
+        if (result == 0) {
+          D_800946DC = FE_STATE_FILE_SELECT;
+        } else if (result == 2) {
+          D_800946DC = FE_STATE_FILE_DETAILS;
+        }
+        break;
+
+      case FE_STATE_FILE_DETAILS:
+        optionArg = 0;
+        result = func_800779FC_47EAC();
+        if (result == 0) {
+          D_800946DC = FE_STATE_FILE_SELECT;
+        } else if (result == 2) {
+          D_800946DC = FE_STATE_FILE_OPTIONS;
+        } else if (result == 3) {
+          D_800946DC = FE_STATE_START_GAMEPLAY;
+        } else if (result == 4) {
+          D_800946DC = FE_STATE_START_DEMO;
+        }
+        break;
+
+      case FE_STATE_START_GAMEPLAY:
+        D_80048034 = 0;
+        func_80078968_48E18();
+        D_800946DC = FE_STATE_PRESS_START;
+        break;
+
+      case FE_STATE_FILE_OPTIONS:
+        result = func_80077CE0_48190(optionArg);
+        if ((u32)result < 8) {
+          switch (result) {
+            case 0:
+              D_800946DC = FE_STATE_FILE_DETAILS;
+              break;
+            case 2:
+              D_800946DC = FE_STATE_REPLAY_LEVEL_SELECT;
+              break;
+            case 3:
+              D_800946DC = FE_STATE_HIGH_SCORES;
+              break;
+            case 4:
+              D_800946DC = FE_STATE_CHANGE_SFX_OPTION;
+              break;
+            case 5:
+              D_800946DC = FE_STATE_CHANGE_MUSIC_OPTION;
+              break;
+            case 6:
+              D_800946DC = FE_STATE_CHANGE_AIM_OPTION;
+              break;
+            case 7:
+              D_800946DC = FE_STATE_CHANGE_BLOOD_OPTION;
+              break;
+          }
+        }
+        break;
+
+      case FE_STATE_START_DEMO:
+        D_80048034 = 1;
+        currentLevel = LEVEL_GREECE;
+        func_80007570_8170();
+        D_80047F94 = 0;
+        weaponSlots[0] = 2;
+        D_80047F9C = 0;
+        D_8004DC48 = 0;
+        D_8004DC4C = 0;
+        D_80048025 = 0;
+        D_80048024 = 0;
+        D_80052ACD = 0;
+        D_8004D154 = 0;
+        D_8004D150 = 0;
+        D_8004D158 = 0;
+        func_800038D4_44D4(0x00FACADE);
+        func_80078968_48E18();
+        D_800946DC = FE_STATE_PRESS_START;
+        break;
+
+      case FE_STATE_UNUSED_START_GAMEPLAY_1:
+        func_800788E4_48D94();
+        break;
+
+      case FE_STATE_UNUSED_START_GAMEPLAY_2:
+        func_800788E4_48D94();
+        break;
+
+      case FE_STATE_UNUSED_START_GAMEPLAY_3:
+        func_800788E4_48D94();
+        break;
+
+      case FE_STATE_REPLAY_LEVEL_SELECT:
+        optionArg = 0;
+        result = func_80077E88_48338();
+        if (result == 0) {
+          D_800946DC = FE_STATE_FILE_OPTIONS;
+        } else if (result == 2) {
+          func_80007570_8170();
+          D_800946DC = FE_STATE_START_GAMEPLAY;
+        } else if (result == 3) {
+          D_800946DC = FE_STATE_REPLAY_BOSS_SELECT;
+        }
+        break;
+
+      case FE_STATE_REPLAY_BOSS_SELECT:
+        optionArg = 0;
+        result = func_80078110_485C0();
+        if (result == 0) {
+          D_800946DC = FE_STATE_REPLAY_LEVEL_SELECT;
+        } else if (result == 2) {
+          func_80007570_8170();
+          D_80047F9C = 5;
+          D_80047F98 = D_8003E0EE[currentLevel];
+          D_80047F94 = D_8003E0EE[currentLevel];
+          if (currentLevel == LEVEL_COMET) {
+            func_800072CC_7ECC(0x1FULL);
+          }
+          D_800946DC = FE_STATE_START_GAMEPLAY;
+          D_80052ACD |= 0x11;
+        }
+        break;
+
+      case FE_STATE_CHANGE_AIM_OPTION:
+        optionArg = 5;
+        if (*frontendFlags & 4) {
+          *frontendFlags &= ~4;
+        } else {
+          *frontendFlags |= 4;
+        }
+        D_800946DC = FE_STATE_FILE_OPTIONS;
+        break;
+
+      case FE_STATE_CHANGE_SFX_OPTION:
+        optionArg = 3;
+        result = ((*frontendFlags & 0x60) >> 5) - 1;
+        if (result < 0) {
+          result = 3;
+        }
+        *frontendFlags &= ~0x60;
+        *frontendFlags |= (result << 5);
+        func_80016FD0_17BD0((s16)result);
+        D_800946DC = FE_STATE_FILE_OPTIONS;
+        break;
+
+      case FE_STATE_CHANGE_MUSIC_OPTION:
+        optionArg = 4;
+        result = ((*frontendFlags & 0x18) >> 3) - 1;
+        if (result < 0) {
+          result = 3;
+        }
+        *frontendFlags &= ~0x18;
+        *frontendFlags |= (result << 3);
+        func_800170F4_17CF4((s16)result);
+        D_800946DC = FE_STATE_FILE_OPTIONS;
+        break;
+
+      case FE_STATE_HIGH_SCORES:
+        optionArg = 0;
+        func_800796D0_49B80(0, 0);
+        D_800946DC = FE_STATE_PRESS_START;
+        break;
+
+      case FE_STATE_CHANGE_BLOOD_OPTION:
+        optionArg = 6;
+        result = (*frontendFlags & 3) - 1;
+        if (result < 0) {
+          result = 3;
+          if (D_800313D0 == 2) {
+            result = 1;
+          }
+        }
+        if (result == 2) {
+          result = 1;
+        }
+        *frontendFlags &= ~3;
+        *frontendFlags |= result;
+        D_800946DC = FE_STATE_FILE_OPTIONS;
+        break;
+
+      case FE_STATE_DELETE_FILE:
+        func_80077494_47944();
+        D_800946DC = FE_STATE_FILE_SELECT;
+        break;
+
+      case FE_STATE_COPY_FILE:
+        func_800776BC_47B6C();
+        D_800946DC = FE_STATE_FILE_SELECT;
+        break;
+
+      case FE_STATE_LANGUAGE_SELECT:
+        optionArg = 0;
+        result = func_80076FD8_47488();
+        if (result == 2) {
+          D_800313D0 = 2;
+          D_800946DC = FE_STATE_INTRO_MOVIE;
+        } else if (result == 4) {
+          D_800313D0 = 1;
+          D_800946DC = FE_STATE_INTRO_MOVIE;
+        } else if ((result == 0) || (result == 3)) {
+          D_800313D0 = 0;
+          D_800946DC = FE_STATE_INTRO_MOVIE;
+        }
+        D_800476A0 = 6;
+        break;
+
+      case FE_STATE_INVALID_2:
+      case FE_STATE_INVALID_5:
+      case FE_STATE_INVALID_6:
+      case FE_STATE_INVALID_16:
+        break;
+    }
+  }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800789E4_48E94.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800791A0_49650.s")
 
@@ -604,7 +939,7 @@ void func_8007FBC8_50078(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800801BC_5066C.s")
 
-// Called during start cutscene, mostly before scene changes
+// Called during start movie, mostly before scene changes
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8008035C_5080C.s")
 
 void func_80080530_509E0(Unk80080530_Src* arg0) {
