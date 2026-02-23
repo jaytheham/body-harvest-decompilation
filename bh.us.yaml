@@ -200,21 +200,21 @@ segments:
       - [0x82160, c, overlay_gameplay/outside/cheats]
       - [0x82D70, c, overlay_gameplay/outside/missions]
       - [0x857E0, c, overlay_gameplay/outside/857E0] # Trees
-      - [0x884C0, asm, overlay_gameplay/outside/884C0] # Aliens, humans
-      - [0xA40B0, asm, overlay_gameplay/outside/A40B0] # Debug
-      - [0xA49A0, asm, overlay_gameplay/outside/A49A0] # Map
-      - [0xAAA70, asm, overlay_gameplay/outside/AAA70] # HUD
+      - [0x884C0, c, overlay_gameplay/outside/884C0] # Aliens, humans
+      - [0xA40B0, c, overlay_gameplay/outside/A40B0] # Debug
+      - [0xA49A0, c, overlay_gameplay/outside/A49A0] # Map
+      - [0xAAA70, c, overlay_gameplay/outside/AAA70] # HUD
       - [0xB2CB0, c, overlay_gameplay/outside/B2CB0] # Beacons
       - [0xB8290, c, overlay_gameplay/outside/B8290] # Aliens
-      - [0xBD270, asm, overlay_gameplay/outside/trigger] # original src filename
+      - [0xBD270, c, overlay_gameplay/outside/trigger] # original src filename
       - [0xBF9C0, c, overlay_gameplay/outside/BF9C0] # Shield walls, gates, terrain, water
-      - [0xCFE30, asm, overlay_gameplay/outside/CFE30] # Special effects
-      - [0xF6A50, asm, overlay_gameplay/outside/F6A50] # Camera
-      - [0xF7870, asm, overlay_gameplay/outside/F7870] # Shadows
-      - [0xF9230, asm, overlay_gameplay/outside/F9230] # Animation, cutscenes, Adam control
+      - [0xCFE30, c, overlay_gameplay/outside/CFE30] # Special effects
+      - [0xF6A50, c, overlay_gameplay/outside/F6A50] # Camera
+      - [0xF7870, c, overlay_gameplay/outside/F7870] # Shadows
+      - [0xF9230, c, overlay_gameplay/outside/F9230] # Animation, cutscenes, Adam control
       - [0x124ED0, c, overlay_gameplay/outside/buildings] # & shooting
       - [0x13DA70, c, overlay_gameplay/outside/13DA70] # Misc?
-      - [0x1416E0, asm, overlay_gameplay/outside/1416E0] # Text?
+      - [0x1416E0, c, overlay_gameplay/outside/1416E0] # Text?
       - [0x145D70, c, overlay_gameplay/outside/145D70]
       - [0x148000, c, overlay_gameplay/outside/148000] # Weapons / HUD / Vehicle weapons
   - name: overlay_gameplay_outside_data
