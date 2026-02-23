@@ -158,9 +158,9 @@ void enableCheatFeeble() {
     D_8013BD04 = x == 0;
 }
 
-// addCharToCheatInputBuffer
+// func_80073A20_829D0
 #ifdef NON_MATCHING
-void func_80073A20_829D0(u8 arg0) {
+void addCharToCheatInputBuffer(u8 arg0) {
     u8* var_v0;
     s32 passedStart = 1;
 

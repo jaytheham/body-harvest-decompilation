@@ -13,6 +13,7 @@ gameplayMode = 0x80052ADC;
 
 cheatInputBuffer = 0x80149450;
 isCheatingEnabled = 0x80149460;
+addCharToCheatInputBuffer = 0x80073A20;
 
 hudWeaponItems = 0x801601B0;
 

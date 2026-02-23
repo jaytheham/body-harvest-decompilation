@@ -163,26 +163,25 @@ void func_800A9E1C_B8DCC(Unk80222A78 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AA340_B92F0.s")
 
-#ifdef NON_MATCHING
 s32 func_800AB250_BA200(u8 arg0, s32 arg1) {
     AlienInstance *ptr;
-    s32 dx, dz;
-
+    s32 dx;
+    s32 dz;
     ptr = &alienInstances[arg0];
-    if (ptr->unk20 & 0x08000000) {
+    if (ptr->unk20 & 0x08000000)
+    {
         return 1;
     }
+    ptr = &alienInstances[arg0];
     dx = D_80052B34->unk0 - ptr->unk0;
     dz = D_80052B34->unk4 - ptr->unk4;
-    if ((s32) sqrtf((f32) (dx * dx + dz * dz)) < arg1) {
+    if (((s32) sqrtf((f32) ((dx * dx) + (dz * dz)))) < arg1)
+    {
         ptr->unk20 |= 0x08000100;
         return 1;
     }
     return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB250_BA200.s")
-#endif
 
 void func_800AB32C_BA2DC(u8 arg0) {
     if (D_80222A70 >= alienInstances[arg0].unk2) {
