@@ -170,8 +170,8 @@ extern u16 D_80052A9C;
 extern s32 D_80052AA0;
 extern u16 D_80052AA4;
 extern s16 D_80052AC8;
-extern s8 D_80052ACA;
-extern s8 D_80052ACB;
+extern u8 D_80052ACA;
+extern u8 D_80052ACB;
 extern s8 D_80052ACC;
 extern u8 D_80052ACD; // bitfield? x02 = black adam model
 extern s32 D_80052AD0;

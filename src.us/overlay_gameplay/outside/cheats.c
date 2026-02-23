@@ -159,7 +159,29 @@ void enableCheatFeeble() {
 }
 
 // addCharToCheatInputBuffer
+#ifdef NON_MATCHING
+void func_80073A20_829D0(u8 arg0) {
+    u8* var_v0;
+    s32 passedStart = 1;
+
+    if (isCheatingEnabled == 0) {
+        return;
+    }
+    
+    passedStart &= 1;
+    if (passedStart != 0) {
+        var_v0 = &cheatInputBuffer[9];
+        do {
+            passedStart = var_v0 < &cheatInputBuffer[2];
+            var_v0 -= 1;
+            *(var_v0 + 1) = *(var_v0);
+        } while (passedStart == 0);
+    }
+    cheatInputBuffer[0] = arg0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073A20_829D0.s")
+#endif
 
 // initCheating
 void func_80073A74_82A24(void) {

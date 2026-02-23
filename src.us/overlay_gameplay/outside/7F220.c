@@ -194,16 +194,14 @@ void func_80071228_801D8(void) {
     savedDl31200 = D_80031200;
 
     dl = D_8005BB2C++;
-    dl->words.w0 = 0x01020040;
-    dl->words.w1 = segAddr31160;
+    dl->words.w0 = 0x01020040;     dl->words.w1 = segAddr31160;
 
     dl = D_8005BB2C++;
     dl->words.w0 = 0xB7000000;
     dl->words.w1 = 0x00020000;
 
     dl = D_8005BB2C++;
-    dl->words.w0 = 0x06000000;
-    dl->words.w1 = (u32)savedDl31200;
+    dl->words.w0 = 0x06000000;    dl->words.w1 = (u32)savedDl31200;
 
     func_80070FB8_7FF68();
     func_800B9DB8_C8D68(0);
@@ -268,12 +266,10 @@ void func_80071228_801D8(void) {
     dl->words.w1 = 0x2000;
 
     dl = D_8005BB2C++;
-    dl->words.w0 = 0x06000000;
-    dl->words.w1 = (u32)D_800311D0;
+    dl->words.w0 = 0x06000000; dl->words.w1 = (u32)D_800311D0;
 
     dl = D_8005BB2C++;
-    dl->words.w0 = 0xB900031D;
-    dl->words.w1 = 0xC8112478;
+    dl->words.w0 = 0xB900031D; dl->words.w1 = 0xC8112478;
 
     dl = D_8005BB2C++;
     dl->words.w0 = 0xE7000000;
@@ -331,8 +327,9 @@ void func_80071228_801D8(void) {
     }
 
     if ((D_80052ACA != 2) || (currentLevel == LEVEL_COMET)) {
-        phase = D_80052A8C;
+        
         if (D_80159320 & 0x80) {
+            phase = D_80052A8C;
             savedX = D_800311A0.unk0;
             savedY = D_800311A0.unk2;
             savedZ = D_800311A0.unk4;
@@ -417,8 +414,7 @@ void func_80071228_801D8(void) {
 
     if (D_80157590 == 0) {
         dl = D_8005BB2C++;
-        dl->words.w0 = 0x06000000;
-        dl->words.w1 = (u32) D_80031230;
+        dl->words.w0 = 0x06000000;        dl->words.w1 = (u32) D_80031230;
 
         func_800A3490_B2440(D_80159020);
 
@@ -622,7 +618,7 @@ void func_80071F28_80ED8(void) {
     D_80052B34 = D_80052B2C->unk38;
     D_80149440 = D_80052B2C->unk34;
     func_80071228_801D8();
-    func_801052E8_114298(D_80052B2C, &currentControllerStates);
+    func_801052E8_114298(D_80052B2C, &currentControllerStates[0]);
     D_80149406 = -D_80149406;
     if (D_80149406 > 0) {
         D_80149406 -= (s16) D_80149406 >> 1;
