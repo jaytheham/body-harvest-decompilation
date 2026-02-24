@@ -120,12 +120,11 @@ void func_800800DC_8F08C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080A54_8FA04.s")
 
 #ifdef NON_MATCHING
-void func_80080B44_8FAF4(s32 arg0, s32 arg1) {
-    AlienInstance *alien = &alienInstances[arg0 & 0xFF];
-    BuildingInstance *building = &buildingInstances[arg1 & 0xFF];
-    alien->unk38 = 0;
-    alien->unk39 = (u8)(arg1 & 0xFF);
-    alien->unk14 = (s16)(building->xCoord + 0x80);
+void func_80080B44_8FAF4(u8 arg0, u8 arg1) {
+    AlienInstance *alien = &alienInstances[arg0]; 
+    BuildingInstance *building = &buildingInstances[arg1];
+    alien->unk38 = arg1;
+    alien->unk14 = (s16)(building->xCoord + 0x80) ^ 0;
     alien->unk18 = (s16)(building->zCoord + 0x80);
     alien->unk20 |= 0x100;
     alien->unk3D = building->unk11;
@@ -149,7 +148,6 @@ void func_80080B44_8FAF4(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80081AD4_90A84.s")
 
-#ifdef NON_MATCHING
 void func_80081BB0_90B60(u8 arg0) {
     AlienInstance *inst;
     s32 v1;
@@ -158,13 +156,10 @@ void func_80081BB0_90B60(u8 arg0) {
     v1 = inst->unk20;
     if (v1 & 0x20000) {
         inst->unk20 = v1 & ~0x20020;
-        shift = inst->unk39;
-        alienInstances[shift].unk27 &= (u8)~(1 << inst->unk27);
+        shift = inst->unk38;
+        alienInstances[shift].unk27 &= ~(1 << inst->unk27);
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80081BB0_90B60.s")
-#endif
 
 void func_80081C24_90BD4(u8 arg0) {
     AlienInstance *inst = &alienInstances[arg0];
