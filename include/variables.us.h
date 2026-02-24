@@ -447,5 +447,35 @@ extern Unk80259D98 D_80259D98[];
 
 extern u8 D_D03E780[];
 
+extern s16 D_8014F1F6;
+extern s16 D_8014F1F8;
+extern s16 D_8014F1FA;
+extern f32 D_8014F1EC;
+extern f32 D_8014F1F0;
+extern s32 D_8013D75C;
+extern s32 D_8013D758;
+extern u32 D_8014F20C;
+extern s32 D_8014F210[][8];
+extern s32 D_8014F610;extern s16 D_8013D5B4;
+extern s16 D_8013D5B8;
+extern s16 D_8013D5BC;
+extern s16 D_8013D5C0;
+extern BuildingInstance *D_80158FE8;
+extern u32 D_8014D1B8[];
+extern Unk8014F618 D_8014F618;
+extern s32 D_80257A1C[][0x1C];
+extern s32 D_80145BE8[][6];
+extern s16 D_8014EDD8;
+extern u8 D_8014EDE0[];
+extern s32 D_80050AD0;
+extern s32 D_80050AD4;
+extern s32 D_80052AE0;
+extern s16 D_8014ED40;
+extern s16 D_8014ED54;
+extern s16 D_8014ED56;
+extern s32 D_801591AC;
+extern s32 D_801591B0;
+extern s16 D_801591D4;
+
 
 #endif

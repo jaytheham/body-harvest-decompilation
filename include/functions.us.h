@@ -39,6 +39,7 @@ void func_8001599C_1659C(void);
 void func_80017AAC_186AC(void);
 void func_80017AE0_186E0(void);
 void func_8001A500_1B100(s32);
+s32 func_80018A58_19658(void);
 
 // overlay_gameplay frontend
 s32 func_80070390_40840(void);
@@ -116,6 +117,7 @@ void func_8008E0D8_9D088(u8);
 void func_8008E16C_9D11C(u8);
 void func_80094AA0_A3A50(u8, s32);
 void func_8009BAC0_AAA70(void);
+void func_800A1764_B0714(void);
 void func_800A17EC_B079C(void);
 void func_800A1924_B08D4(void);
 void func_800A1A18_B09C8(void);

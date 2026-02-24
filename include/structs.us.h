@@ -455,4 +455,40 @@ typedef struct {
     /* 0x19 */ u8 pad19[0x3];
 } Unk800DE840; /* size = 0x1C */
 
+typedef struct {
+    /* 0x00 */ u8 pad0[0x60];
+    /* 0x60 */ u8 unk60;
+    /* 0x61 */ u8 unk61;
+    /* 0x62 */ u8 unk62;
+    /* 0x63 */ u8 unk63;
+    /* 0x64 */ u8 unk64;
+    /* 0x65 */ u8 unk65;
+    /* 0x66 */ u8 unk66;
+    /* 0x67 */ u8 unk67;
+    /* 0x68 */ u8 unk68;
+    /* 0x69 */ u8 unk69;
+    /* 0x6A */ u8 unk6A;
+    /* 0x6B */ u8 unk6B;
+    /* 0x6C */ u8 unk6C;
+    /* 0x6D */ u8 unk6D;
+    /* 0x6E */ u8 unk6E;
+    /* 0x6F */ u8 unk6F;
+    /* 0x70 */ u8 unk70;
+    /* 0x71 */ u8 unk71;
+    /* 0x72 */ u8 unk72;
+    /* 0x73 */ u8 unk73;
+    /* 0x74 */ u8 unk74;
+    /* 0x75 */ u8 unk75;
+    /* 0x76 */ u8 unk76;
+    /* 0x77 */ u8 unk77;
+    /* 0x78 */ u8 unk78;
+    /* 0x79 */ u8 unk79;
+    /* 0x7A */ u8 unk7A;
+    /* 0x7B */ u8 unk7B;
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+    /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 unk7F;
+} Unk8014F618;
+
 #endif
