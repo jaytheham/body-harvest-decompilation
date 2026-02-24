@@ -724,3 +724,46 @@ u8 *ptr = &D_array[(arg1 << 4) + arg0 / 2];
 ```
 
 If you instead write `*ptr = (*ptr & 0xF0) | arg2;` (single expression) or `masked = *ptr & 0xF0; *ptr = masked | arg2;` (explicit temp), IDO's dead-store elimination removes the intermediate store and only emits ONE `sb`. Use `*ptr &= ...; *ptr |= ...;` to force both stores.
+
+---
+
+## Tiny / Simple Function Patterns
+
+### Empty single-arg function `jr $ra; sw $a0, 0($sp)`
+
+IDO -O2 with a single argument and empty body produces:
+`asm
+jr $ra
+sw $a0, 0x0($sp)   ; delay slot: arg save (ABI compliance)
+`
+C decompilation: `void func(s32 arg0) {}`
+
+### Simple global getter/setter with delay slot
+
+IDO often places the memory access in the delay slot of `jr ``:
+`
+jr $ra
+sw $a0, %lo(GLOBAL_VAR)($at) ; setter delay slot
+`or`
+lui $v0, %hi(GLOBAL_VAR)
+jr $ra
+lw $v0, %lo(GLOBAL_VAR)($v0) ; getter delay slot
+`C decompilation for setter:`void func(s32 arg0) { D_ADDR = arg0; }`C decompilation for getter:`s32 func(void) { return D_ADDR; }`
+
+### sins/coss double-andi issue
+
+When the masked u16 argument is stored in a s32 variable and then passed to sins(u16) or coss(u16), IDO generates TWO andi 0xFFFF instructions. This issue is hard to work around - even inline assignment `sins(sp18 = val & 0xFFFF)` doesn't fix it if sp18 is s32 and later reloaded for coss. Consider accepting NON_MATCHING if 5 iterations haven't resolved it.
+
+### s16 arg with sw a0, 0(sp) delay slot issue
+
+When a function takes `s16 arg0` and stores result via `sh`, IDO 5.3 generates a `sw a0, 0(sp)` (saves original 32-bit arg to the caller's argument home area). The correct C form is:
+
+```c
+void func(s16 arg0) { D_s16_GLOBAL = CONST - arg0; }
+```
+
+However IDO's scheduler may put `sh` vs `sw a0, 0(sp)` in the delay slot in either order depending on context. If the delay slot ordering doesn't match after trying once, accept NON_MATCHING. The correct function signature is `s16 arg0` (not `s32`) -- using `lh` at call sites and `sh` for the result confirms this.
+
+### u8 vs s8 for global variables
+
+Check which load instruction is used: `lbu` = `u8`, `lb` = `s8`. Using the wrong type will generate the wrong load instruction. E.g. `D_80047F80` should be `extern u8` (not `s8`) because functions access it with `lbu`.

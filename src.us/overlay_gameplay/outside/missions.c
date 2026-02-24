@@ -10,7 +10,12 @@
 
 #ifdef NON_MATCHING
 s32 func_800744E0_83490(s32 arg0) {
-    return arg0 >= 0x9C && arg0 < 0xA6;
+    s32 var;
+    var = arg0 & 0xFF;
+    if (var >= 0x9C) {
+        return var < 0xA6;
+    }
+    return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800744E0_83490.s")

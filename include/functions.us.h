@@ -117,11 +117,16 @@ void func_8008E0D8_9D088(u8);
 void func_8008E16C_9D11C(u8);
 void func_80094AA0_A3A50(u8, s32);
 void func_8009BAC0_AAA70(void);
+void func_8009BDB8_AAD68(s32, s32);
+void func_8009BF64_AAF14(u16);
+void func_8009C1D8_AB188(s16, s16, s32);
+void func_800039D0_45D0(Unk80052B40 *, Unk80052B40 *, Unk80052B40 *, s32);
 void func_800A1764_B0714(void);
 void func_800A17EC_B079C(void);
 void func_800A1924_B08D4(void);
 void func_800A1A18_B09C8(void);
 void func_800A03FC_AF3AC(void);
+void func_800A2260_B1210(Gfx *, Gfx *, Gfx *, Gfx *);
 void func_800A2B58_B1B08(void);
 void func_800A3490_B2440(s32 arg0);
 void func_800A5D3C_B4CEC(void);
@@ -183,10 +188,10 @@ void func_800E94B8_F8468(void* arg0);
 void func_800EA088_F9038(void);
 void func_800EA12C_F90DC(void);
 void func_800EA280_F9230(void);
-void func_800EA2B0_F9260(s16);
+void func_800EA2B0_F9260(s32 arg0);
 void func_800EA2BC_F926C(void);
 void func_800EA434_F93E4(void);
-void func_800EC450_FB400();
+void func_800EC450_FB400(void);
 s32 func_800F2D48_101CF8(s32, s16, s16);
 void func_800F3670_102620(void);
 void func_800F97FC_1087AC(void);
@@ -226,7 +231,7 @@ void func_80124BA8_133B58(void);
 OutputStruct_8012B150 *func_80129354_138304(s32, s32, s16, s16, s16);
 void func_8012B110_13A0C0(AlienInstance *a0, s32 a1, AlienInstance *a2, AlienInstance *a3);
 void func_8012B26C_13A21C(void);
-void func_8012D808_13C7B8(s16);
+void func_8012D808_13C7B8(s32);
 void func_8012D824_13C7D4(void);
 void func_8012D84C_13C7FC(void);
 void func_801371B8_146168(s32, s32, s16, s16, s16, f32);
@@ -243,6 +248,7 @@ void func_801394DC_14848C(void);
 void func_8013958C_14853C(void);
 void func_80139778_148728(void);
 void func_80139984_148934(void);
+void func_80139B34_148AE4(void);
 void func_80139BF8_148BA8(void);
 void func_80139D58_148D08(void);
 void func_8013A1CC_14917C(void);
@@ -255,5 +261,67 @@ void func_8013B688_14A638(void);
 
 // overlay_level
 void func_802D4CD0_18D7E0(s32, s32);
+
+// core/1000
+void osViExtendVStart(s32 arg0);
+void func_8000140C_200C(OSThread *arg0);
+OSThread *__osGetActiveQueue(void);
+void setRandomSeed(s32 arg0);
+
+// F9230
+s16 func_800EB9B4_FA964(void *arg0);
+f32 func_800EB9BC_FA96C(void *arg0);
+s32 func_800F02E4_FF294(void);
+
+// CFE30
+void func_800E5520_F44D0(s32 arg0, s32 arg1);
+void func_800E552C_F44DC(void);
+
+// 1416E0
+void func_80136198_145148(s32 arg0);
+
+// 167C90
+void func_80081A18_169AD8(s32 arg0);
+
+// trigger
+void func_800AF474_BE424(s32 arg0);
+void func_800AF47C_BE42C(s32 arg0);
+void func_800AF484_BE434(s32 arg0);
+void func_800AF48C_BE43C(s32 arg0);
+void func_800AF494_BE444(s32 arg0);
+void func_800AF49C_BE44C(s32 arg0);
+void func_800AFFE8_BEF98(s32 arg0);
+void func_800AFFF0_BEFA0(s32 arg0);
+
+// A40B0
+void func_800959DC_A498C(void);
+
+// F9230 (additional)
+void func_800EA298_F9248(s16 arg0);
+s32 func_800F9C40_108BF0(s32 arg0);
+void func_8010FABC_11EA6C(void);
+
+// trigger (additional)
+s32 func_800B0A00_BF9B0(void);
+
+// 1416E0 (additional)
+s16 func_80132730_1416E0(s32 arg0, s32 arg1);
+
+// 167C90 (additional)
+void func_800808AC_16896C(void);
+void func_800808BC_16897C(void);
+
+// F9230 float/s16 setters
+void func_800FB430_10A3E0(Unk80052B34 *arg0, f32 arg1);
+
+// trigger (additional batch 2)
+void func_80017B08_18708(s32 arg0);
+void func_80088000_96FB0(s32 arg0);
+
+// CFE30 (additional)
+void func_800C978C_D873C(void);
+
+// missions (additional)
+s32 func_800744E0_83490(s32 arg0);
 
 #endif

@@ -24,11 +24,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF1F8_BE1A8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF2BC_BE26C.s")
+void func_800AF2BC_BE26C(void *arg0) { func_80017B08_18708(((u8 *)arg0)[8]); }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF2DC_BE28C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF324_BE2D4.s")
+void func_800AF324_BE2D4(s32 arg0) { func_80088000_96FB0(-1); }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF348_BE2F8.s")
 
@@ -36,17 +36,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF3B8_BE368.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF474_BE424.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF47C_BE42C.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF484_BE434.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF48C_BE43C.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF494_BE444.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF49C_BE44C.s")
+void func_800AF474_BE424(s32 arg0) {}
+void func_800AF47C_BE42C(s32 arg0) {}
+void func_800AF484_BE434(s32 arg0) {}
+void func_800AF48C_BE43C(s32 arg0) {}
+void func_800AF494_BE444(s32 arg0) {}
+void func_800AF49C_BE44C(s32 arg0) {}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF4A4_BE454.s")
 
@@ -82,11 +77,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AFF9C_BEF4C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AFFE8_BEF98.s")
+void func_800AFFE8_BEF98(s32 arg0) {}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AFFF0_BEFA0.s")
+void func_800AFFF0_BEFA0(s32 arg0) {
+    D_801493E0 = 0;
+}
 
+#ifdef NON_MATCHING
+void func_800B0000_BEFB0(s32 arg0) { D_801493E0 = 1; D_801493E2 = 1; }
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800B0000_BEFB0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800B001C_BEFCC.s")
 
@@ -116,4 +117,4 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800B08DC_BF88C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800B0A00_BF9B0.s")
+s32 func_800B0A00_BF9B0(void) { return D_80047F98; }

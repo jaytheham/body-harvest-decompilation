@@ -16,9 +16,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080770_168830.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800808AC_16896C.s")
+void func_800808AC_16896C(void) { D_800E73DF = 2; }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800808BC_16897C.s")
+void func_800808BC_16897C(void) { D_800E73DF = D_80047F80; }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800808D0_168990.s")
 
@@ -36,7 +36,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80081764_169824.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80081A18_169AD8.s")
+void func_80081A18_169AD8(s32 arg0) {
+    D_800E7488 = arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80081A24_169AE4.s")
 

@@ -51,7 +51,9 @@ typedef struct {
     s16 unk6;
     u8 pad8[0x6];
     s16 unkE;
-    u8 pad10[0xa];
+    u8 pad10[0x2];
+    s16 unk12;
+    u8 pad14[0x6];
     u8 unk1A;
     u8 unk1B;
     u16 unk1C;
@@ -63,6 +65,11 @@ typedef struct {
     f32 unk34;
     f32 unk38;
     u16 unk3C;
+    u8 pad3E[0xe];
+    f32 unk4C;
+    f32 unk50;
+    f32 unk54;
+    f32 unk58;
 } Unk80052B34; // also used at D_8004F038 ?
 
 typedef struct {
@@ -490,5 +497,11 @@ typedef struct {
     /* 0x7E */ u8 unk7E;
     /* 0x7F */ u8 unk7F;
 } Unk8014F618;
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+} Unk80052B40;
 
 #endif

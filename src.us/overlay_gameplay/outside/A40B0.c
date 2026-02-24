@@ -8,4 +8,5 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A40B0/func_8009594C_A48FC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A40B0/func_800959DC_A498C.s")
+void func_800959DC_A498C(void) {
+}

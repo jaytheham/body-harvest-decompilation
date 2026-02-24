@@ -54,11 +54,17 @@ void checkForRumblePak(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80001190_1D90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/osViExtendVStart.s")
+void osViExtendVStart(s32 arg0) {
+    __additional_scanline = arg0;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_8000140C_200C.s")
+void func_8000140C_200C(OSThread *arg0) {
+    __osActiveQueue2 = arg0;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/__osGetActiveQueue.s")
+OSThread *__osGetActiveQueue(void) {
+    return __osActiveQueue2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80001424_2024.s")
 
@@ -100,9 +106,9 @@ s32 func_80002A88_3688(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/guess_restoreSavedData.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80002EB0_3AB0.s")
+void func_80002EB0_3AB0(void) { osContStartReadData(&D_80043388); }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80002ED4_3AD4.s")
+void func_80002ED4_3AD4(void) { osContGetReadData(&D_800475B8); }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80002EF8_3AF8.s")
 
@@ -129,7 +135,9 @@ s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80003824_4424.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1000/setRandomSeed.s")
+void setRandomSeed(s32 arg0) {
+    D_800476C0 = arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_800038E0_44E0.s")
 
