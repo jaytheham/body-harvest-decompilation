@@ -32,14 +32,14 @@ typedef u16 Button;
 typedef enum GameplayMode {
     GAMEPLAY_MODE_LEVEL_MAP = 0,
     GAMEPLAY_MODE_UNK1 = 1,
-    GAMEPLAY_MODE_UNK2 = 2,
-    GAMEPLAY_MODE_UNK3 = 3,
+    GAMEPLAY_MODE_UNK2 = 2, // pause menu?
+    GAMEPLAY_MODE_UNK3 = 3, // Cutscene mode?
     GAMEPLAY_MODE_UNK4 = 4,
     GAMEPLAY_MODE_UNK5 = 5,
-    GAMEPLAY_MODE_UNK6 = 6,
+    GAMEPLAY_MODE_UNK6 = 6, // inside building?
     GAMEPLAY_MODE_UNK7 = 7,
     GAMEPLAY_MODE_UNK8 = 8,
-    GAMEPLAY_MODE_UNK9 = 9,
+    GAMEPLAY_MODE_UNK9 = 9, // talking to an NPC?
     GAMEPLAY_MODE_END_OF_LEVEL = 0xA,
     GAMEPLAY_MODE_UNKB = 0xB,
     GAMEPLAY_MODE_UNKC = 0xC,

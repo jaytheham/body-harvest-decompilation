@@ -240,12 +240,19 @@ s32 func_800A18CC_B087C(void) {
     return (D_8014D1B8[index >> 5] & (1 << (index & 0x1F))) != 0;
 }
 
+// checkIfShouldOpenPauseMenu
 void func_800A1924_B08D4(void) {
-    if ((currentControllerStates[0].button & 0x1000) && (gameplayMode != GAMEPLAY_MODE_UNK3) && (gameplayMode != GAMEPLAY_MODE_UNKB) && (D_8004794C == 0) && (func_80018A58_19658() == 0) && (D_80048188 == 0)) {
+    if ((currentControllerStates[0].button & 0x1000) &&
+        (gameplayMode != GAMEPLAY_MODE_UNK3) &&
+        (gameplayMode != GAMEPLAY_MODE_UNKB) &&
+        (D_8004794C == 0) &&
+        (func_80018A58_19658() == 0) &&
+        (D_80048188 == 0)) {
+
         D_801591B0 = D_801591AC;
         D_80052AE0 = gameplayMode;
         D_801591AC = 3;
-        gameplayMode = 2;
+        gameplayMode = GAMEPLAY_MODE_UNK2;
         D_8014ED56 = 0xFF;
         D_8014ED54 = 0;
         D_80050AD0 = D_80050AD4;
