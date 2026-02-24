@@ -26,19 +26,19 @@ void func_800A9738_B86E8(u8 arg0, s32 arg1) {
     group = (u8 *)&alienInstances[alienInstances[arg0].unk25];
 
     member = &alienInstances[group[0]];
-    if (member->unk1A != 0) {
+    if (member->specIndex != 0) {
         member->unk20 |= arg1;
     }
     member = &alienInstances[group[1]];
-    if (member->unk1A != 0) {
+    if (member->specIndex != 0) {
         member->unk20 |= arg1;
     }
     member = &alienInstances[group[2]];
-    if (member->unk1A != 0) {
+    if (member->specIndex != 0) {
         member->unk20 |= arg1;
     }
     member = &alienInstances[group[3]];
-    if (member->unk1A != 0) {
+    if (member->specIndex != 0) {
         member->unk20 |= arg1;
     }
 }
@@ -59,19 +59,19 @@ void func_800A9820_B87D0(u8 arg0, s32 arg1) {
     group = &alienInstances[ptr->unk25];
 
     member = &alienInstances[*(u8 *)group];
-    if (member->unk1A != 0) {
+    if (member->specIndex != 0) {
         member->unk20 &= mask;
     }
     member = &alienInstances[((u8 *)group)[1]];
-    if (member->unk1A != 0) {
+    if (member->specIndex != 0) {
         member->unk20 &= mask;
     }
     member = &alienInstances[((u8 *)group)[2]];
-    if (member->unk1A != 0) {
+    if (member->specIndex != 0) {
         member->unk20 &= mask;
     }
     member = &alienInstances[((u8 *)group)[3]];
-    if (member->unk1A != 0) {
+    if (member->specIndex != 0) {
         member->unk20 &= mask;
     }
 }

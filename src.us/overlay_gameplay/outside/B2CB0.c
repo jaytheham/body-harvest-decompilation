@@ -28,7 +28,7 @@ u8 func_800A3DC8_B2D78(void) {
         temp_a2 = D_8014D408[var_v0];
         temp_v1 = &alienInstances[temp_a2];
         
-        if (temp_v1->unk1A == 0x19) {
+        if (temp_v1->specIndex == 0x19) {
             if (temp_v1->unk3C != 0) {
                 temp_v1->unk3C = (s8) (temp_v1->unk3C - 1);
                 osSyncPrintf(D_80142740, temp_a2);

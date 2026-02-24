@@ -7,7 +7,7 @@ void func_80079510_884C0(u8 arg0) {
     *(s32 *)&inst->unkC = 0;
     *(s32 *)&inst->unk10 = 0;
     *(s32 *)&inst->unk14 = 0;
-    inst->unk1A = 0;
+    inst->specIndex = 0;
     inst->unk1C = 0x32;
     inst->unk1B = 0xFF;
     inst->unk1E = 0xFF;
@@ -231,9 +231,14 @@ s32 func_80082990_91940(s16 arg0, s16 arg1) {
 
 #ifdef NON_MATCHING
 s32 func_80082E38_91DE8(u8 arg0, s16 arg1) {
-    s32 unk1A = alienInstances[arg0].unk1A;
+    s32 specIndex = alienInstances[arg0].specIndex;
+    u16 new_var;
+    s32 new_var2;
     s16 unk2 = alienInstances[arg0].unk2;
-    if ((s16)(alienSpecs[unk1A].unk38 + unk2) < arg1) {
+    new_var = unk2;
+    new_var2 = alienSpecs[specIndex].unk38 + new_var;
+    if (((s16) new_var2) < arg1)
+    {
         return 0;
     }
     return 1;
@@ -598,7 +603,7 @@ void func_8008E2B4_9D264(u8 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008EB20_9DAD0.s")
 
 void func_8008EDFC_9DDAC(u8 arg0) {
-    func_8008E978_9D928(arg0, D_802566D8[alienInstances[arg0].unk1A].unk0);
+    func_8008E978_9D928(arg0, D_802566D8[alienInstances[arg0].specIndex].unk0);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008EE5C_9DE0C.s")
