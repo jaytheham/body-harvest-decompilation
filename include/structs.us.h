@@ -79,7 +79,8 @@ typedef struct {
     s16 unk2;
     s16 unk4;
     s16 unk6;
-    u8 pad8[0x4];
+    s16 unk8;
+    s16 unkA;
     s16 unkC;
     s16 unkE;
     s16 unk10;
@@ -88,16 +89,20 @@ typedef struct {
     s16 unk16;
     s16 unk18;
     u8 unk1A;
-    u8 pad1B;
+    u8 unk1B;
     s16 unk1C;
-    s16 unk1E;
+    u8 unk1E;
+    u8 pad1F;
     s32 unk20;
     u8 unk24;
     u8 unk25;
     u8 unk26;
-    u8 pad27[0x5];
+    u8 unk27;
+    u8 pad28[0x4];
     s16 unk2C;
-    u8 pad2E[0x6];
+    s16 unk2E;
+    s16 unk30;
+    s16 unk32;
     s16 unk34;
     u8 unk36;
     u8 pad37;
@@ -105,7 +110,8 @@ typedef struct {
     s16 unk3A;
     s8 unk3C;
     s8 unk3D;
-    u8 pad3E[0xA];
+    u8 pad3E[0x9];
+    u8 unk47;
     s16 unk48;
     u8 pad4A;
     u8 unk4B;
@@ -140,7 +146,9 @@ typedef struct {
 // 0x64 xxxxyyyy xxxx Drops modifier
 // 0x68
 typedef struct {
-    u8 pad0[0x42];
+    u8 pad0[0x38];
+    s16 unk38;
+    u8 pad3A[0x8];
     s16 unk42;
     u8 pad44[0x24];
 } AlienSpec;
@@ -224,7 +232,7 @@ typedef struct {
     u8 padC[3];
     u8 hitPoints;
     u8 unk10;
-    u8 unk11;
+    s8 unk11;
     u8 door1InteriorId;
     u8 door2InteriorId;
     u8 door3InteriorId;
@@ -330,6 +338,8 @@ typedef struct {
 typedef struct {
     char pad[0x18];
     s32 unk18;
+    s32 unk1C;
+    s32 unk20;
 } OutputStruct_8012B150;
 
 typedef struct {
@@ -442,5 +452,10 @@ typedef struct {
     /* 0x18 */ u8 unk18;
     /* 0x19 */ u8 pad19[0x3];
 } Unk800DE840; /* size = 0x1C */
+
+typedef struct {
+    s16 unk0;
+    u8 pad2[0x66];
+} Unk802566D8; /* stride 0x68 */
 
 #endif

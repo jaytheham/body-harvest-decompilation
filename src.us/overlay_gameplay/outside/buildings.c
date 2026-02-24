@@ -342,7 +342,7 @@ s32 func_8011C4D4_12B484(void) {
 
     count = 0;
     for (i = 0; i < 0xFF; i++) {
-        if ((s8) buildingInstances[i].unk11 == -1) {
+        if (buildingInstances[i].unk11 == -1) {
             count += buildingInstances[i].unk7;
         }
     }
