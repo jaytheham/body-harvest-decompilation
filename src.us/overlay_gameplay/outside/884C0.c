@@ -603,7 +603,7 @@ void func_8008E2B4_9D264(u8 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008EB20_9DAD0.s")
 
 void func_8008EDFC_9DDAC(u8 arg0) {
-    func_8008E978_9D928(arg0, D_802566D8[alienInstances[arg0].specIndex].unk0);
+    func_8008E978_9D928(arg0, alienSpecs[alienInstances[arg0].specIndex].unk58);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008EE5C_9DE0C.s")

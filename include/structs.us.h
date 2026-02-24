@@ -150,7 +150,9 @@ typedef struct {
     s16 unk38;
     u8 pad3A[0x8];
     s16 unk42;
-    u8 pad44[0x24];
+    u8 pad44[0x14];
+    s16 unk58;
+    u8 pad5A[0xE];
 } AlienSpec;
 
 typedef struct {
@@ -452,10 +454,5 @@ typedef struct {
     /* 0x18 */ u8 unk18;
     /* 0x19 */ u8 pad19[0x3];
 } Unk800DE840; /* size = 0x1C */
-
-typedef struct {
-    s16 unk0;
-    u8 pad2[0x66];
-} Unk802566D8; /* stride 0x68 */
 
 #endif
