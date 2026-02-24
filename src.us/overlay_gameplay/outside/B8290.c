@@ -104,7 +104,7 @@ void func_800A99B8_B8968(u8 arg0) {
     s32 dz;
 
     ptr = &alienInstances[arg0];
-    step = alienSpecs[ptr->unk1A].unk42;
+    step = alienSpecs[ptr->specIndex].unk42;
     dx = D_80052B34->unk0 - ptr->unk0;
     dz = D_80052B34->unk4 - ptr->unk4;
     angle = func_80003824_4424((f32)dx, (f32)dz);
@@ -357,7 +357,7 @@ void func_800ACB3C_BBAEC(u8 arg0) {
         return;
     }
     if ((alienInstances[arg0].unk20 & 0x20) &&
-        alienInstances[alienInstances[arg0].unk38].unk1C <= 0) {
+        alienInstances[alienInstances[arg0].unk38].hitPoints <= 0) {
         
         alienInstances[arg0].unk20 = alienInstances[arg0].unk20 & ~0x60;
         return;

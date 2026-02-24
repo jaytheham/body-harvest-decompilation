@@ -8,7 +8,7 @@ void func_80079510_884C0(u8 arg0) {
     *(s32 *)&inst->unk10 = 0;
     *(s32 *)&inst->unk14 = 0;
     inst->specIndex = 0;
-    inst->unk1C = 0x32;
+    inst->hitPoints = 0x32;
     inst->unk1B = 0xFF;
     inst->unk1E = 0xFF;
 }

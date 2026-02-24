@@ -89,8 +89,8 @@ typedef struct {
     s16 unk16;
     s16 unk18;
     u8 specIndex;
-    u8 unk1B;
-    s16 unk1C;
+    u8 unk1B; // something to do with showing health bar?
+    s16 hitPoints;
     u8 unk1E;
     u8 pad1F;
     s32 unk20;
