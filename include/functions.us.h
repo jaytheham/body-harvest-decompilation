@@ -36,6 +36,7 @@ void func_800078B8_84B8(s32, s32*);
 s32 func_80009F18_AB18(s32);
 void func_8000A160(void);
 void func_8000CF4C_DB4C(void *arg0, void *arg1, u8 arg2, s32 arg3);
+void func_8007DAA8_165B68(void *arg0, s32 arg1, u64 arg2, s32 arg3);
 void func_8000DC9C_E89C(s32, s32);
 void func_80011D24_12924(void);
 void func_80011E14_12A14(u8 arg0);

@@ -53,7 +53,50 @@ void enableCheatDurable() {
 }
 
 // doWanderingCheatEffect
+#ifdef NON_MATCHING
+void func_800734AC_8245C() {
+    s32 var_v0;
+    s32 var_v1;
+    s16 temp_2 = D_80052B34->unk0;
+    s16 temp_3 = D_80052B34->unk4;
+
+    D_801591AC = 5;
+    var_v0 = temp_2 + (currentControllerStates[0].stick_x * 4);
+    var_v1 = temp_3 - (currentControllerStates[0].stick_y * 4);
+    if (var_v0 < -0x6C00) {
+        var_v0 = -0x6C00;
+    }
+    if (var_v1 < -0x6C00) {
+        var_v1 = -0x6C00;
+    }
+    if (var_v0 >= 0x6C01) {
+        var_v0 = 0x6C00;
+    }
+    if (var_v1 >= 0x6C01) {
+        var_v1 = 0x6C00;
+    }
+
+    func_800FB44C_10A3FC(temp_3, (f32) var_v0);
+    func_800FB468_10A418(D_80052B34, (f32) (func_800F9FAC_108F5C((s16) var_v0, (s16) var_v1) + 0xC8));
+    func_800FB484_10A434(D_80052B34, (f32) var_v1);
+    D_80052B34->unk6 = -0x4000;
+    D_80052B34->unk22 = 0;
+    D_80052B34->unk30 = 0.0f;
+    D_80052B34->unk34 = 0.0f;
+    D_80052B34->unk38 = 0.0f;
+    D_80052B34->unkE = -0x4000;
+    func_800FB430_10A3E0(D_80052B34, 0.0f);
+    D_80052B34->unk20 = (u16) (D_80052B34->unk20 | 2);
+    if (currentControllerStates[0].button & 0x2000) {
+        D_80052B34->unk20 = (u16) (D_80052B34->unk20 | 1);
+        func_800762A8_85258(func_800734AC_8245C);
+        D_801591AC = 0;
+    }
+
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800734AC_8245C.s")
+#endif
 
 // func_8007364C_825FC
 void enableCheatWander(void) {
