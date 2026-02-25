@@ -106,6 +106,7 @@ void func_80070BFC_7FBAC(void) {
     dl->words.w0 = 0xBC001C04;
 }
 
+// drawSky?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070CC0_7FC70.s")
 
 #ifdef NON_MATCHING

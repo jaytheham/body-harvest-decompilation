@@ -14,6 +14,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F6A50/func_800E82AC_F725C.s")
 
+// updateCamera?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F6A50/func_800E87C8_F7778.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F6A50/func_800E8890_F7840.s")

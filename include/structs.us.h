@@ -173,7 +173,8 @@ typedef struct {
     s16 unk1A;
     s16 unk1C;
     s16 unk1E;
-    u8 pad20[0x10];
+    s16 unk20;
+    u8 pad22[0xE];
     s32 unk30;
     s16 unk34;
     s16 unk36;
@@ -218,11 +219,16 @@ typedef struct {
     s32 weapon1; // 0x1C
     u8 pad20[0x8];
     s32 weapon2; // 0x28
-    u8 pad2C[0xE];
+    u8 pad2C[0xC];
+    s16 unk38; // 0x38
     u16 hitPoints; // 0x3A
     u8 pad3C[0x10];
     u32 unk4C;
-    u8 pad50[0x10];
+    u8 pad50[0xC];
+    u8 unk5C;
+    u8 unk5D;
+    u8 unk5E;
+    u8 unk5F;
     u8 unk60;
     u8 unk61;
     u8 pad62[0xE];
@@ -503,5 +509,44 @@ typedef struct {
     s16 unk2;
     s16 unk4;
 } Unk80052B40;
+
+typedef struct {
+    /* 0x00 */ f32 unk0;
+    /* 0x04 */ f32 unk4;
+    /* 0x08 */ f32 unk8;
+    /* 0x0C */ f32 unkC;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ f32 unk18;
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ f32 unk24;
+    /* 0x28 */ f32 unk28;
+    /* 0x2C */ f32 unk2C;
+    /* 0x30 */ f32 unk30;
+    /* 0x34 */ f32 unk34;
+    /* 0x38 */ f32 unk38;
+    /* 0x3C */ f32 unk3C;
+    /* 0x40 */ f32 unk40;
+    /* 0x44 */ f32 unk44;
+    /* 0x48 */ s16 unk48;
+    /* 0x4A */ s16 unk4A;
+    /* 0x4C */ s16 unk4C;
+    /* 0x4E */ s16 unk4E;
+    /* 0x50 */ s16 unk50;
+    /* 0x52 */ s16 unk52;
+    /* 0x54 */ s16 unk54;
+    /* 0x56 */ s16 unk56;
+    /* 0x58 */ s16 unk58;
+    /* 0x5A */ s16 unk5A;
+    /* 0x5C */ s16 unk5C;
+    /* 0x5E */ s16 unk5E;
+    /* 0x60 */ s16 unk60;
+    /* 0x62 */ u8 pad62[0x2];
+    /* 0x64 */ s16 unk64;
+    /* 0x66 */ u8 pad66[0x2];
+    /* 0x68 */ s32 unk68;
+    /* 0x6C */ u8 unk6C;
+} Unk80160080;
 
 #endif

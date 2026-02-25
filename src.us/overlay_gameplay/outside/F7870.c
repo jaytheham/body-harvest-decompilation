@@ -4,6 +4,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E88C0_F7870.s")
 
+// castVehicleShadows?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E8A00_F79B0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E94B8_F8468.s")

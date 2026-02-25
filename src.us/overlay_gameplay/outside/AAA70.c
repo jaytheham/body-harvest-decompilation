@@ -491,6 +491,7 @@ void func_800A13E8_B0398(void) {
     D_8013D75C = osGetCount();
 }
 
+// drawDebugTimingGraphs
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A140C_B03BC.s")
 
 void func_800A1764_B0714(void) {

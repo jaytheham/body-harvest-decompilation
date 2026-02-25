@@ -767,3 +767,24 @@ However IDO's scheduler may put `sh` vs `sw a0, 0(sp)` in the delay slot in eith
 ### u8 vs s8 for global variables
 
 Check which load instruction is used: `lbu` = `u8`, `lb` = `s8`. Using the wrong type will generate the wrong load instruction. E.g. `D_80047F80` should be `extern u8` (not `s8`) because functions access it with `lbu`.
+
+### Float bit-copy (lw/sw instead of lwc1/swc1)
+
+When the assembly copies float field bits with integer `lw`/`sw` rather than float `lwc1`/`swc1`, use explicit pointer casts:
+```c
+*(s32*)&dest->unkXX = *(s32*)&src->unkXX;
+```
+Statement order matters for scheduling. To get the `sw` delayed and fill a `mtc1` delay slot, put the next float computation *between* the two copies:
+```c
+*(s32*)&arg0->unk24 = *(s32*)&arg0->unk30;  // copy 1
+arg0->unk38 = (f32) temp->unk4;              // compute next before copy 2
+*(s32*)&arg0->unk28 = *(s32*)&arg0->unk34;  // copy 2 fills mtc1 delay slot
+```
+
+### Float field struct types
+
+Fields loaded with `lwc1` are `f32`, not `s32`. Defining a float-loaded field as `s32` produces mismatched register types. Check assembly load opcodes when defining struct members.
+
+### Two-return-register pattern (lh v1 + move v0,v1)
+
+The `lh v1; jr ra; move v0, v1` pattern (vs `lh v0; jr ra; nop`) is a register allocation artifact where `v0` is considered live from an earlier conditional. Hard to fix; accept NON_MATCHING after 5 iterations if only this and register names differ.

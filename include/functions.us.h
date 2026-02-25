@@ -324,4 +324,26 @@ void func_800C978C_D873C(void);
 // missions (additional)
 s32 func_800744E0_83490(s32 arg0);
 
+// 1416E0 (additional)
+void func_80132740_1416F0(Unk80160080 *arg0);
+void func_800B33BC_C236C(s32 arg0);
+void func_80135CB8_144C68(void);
+void func_8000345C_405C(s32 arg0);
+void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2);
+void func_801333D0_142380(void);
+void func_801336CC_14267C(Unk80160080 *arg0, Vec3f *arg1);
+void func_80133A54_142A04(Unk80160080 *arg0);
+void func_801351DC_14418C(Unk80160080 *arg0);
+void func_80133F28_142ED8(Unk80160080 *arg0);
+void func_801343D8_143388(Unk80160080 *arg0);
+void func_801354C0_144470(Unk80160080 *arg0);
+void func_80133EBC_142E6C(Unk80160080 *arg0);
+void func_80135380_144330(Unk80160080 *arg0);
+void func_80135630_1445E0(Unk80160080 *arg0);
+void func_801356F4_1446A4(Unk80160080 *arg0);
+void func_801357EC_14479C(Unk80160080 *arg0);
+void func_80136B50_145B00(s32 arg0, s16 arg1);
+s32 func_800A3CD0_B2C80(void);
+void func_80018D7C_1997C(u16 arg0);
+
 #endif
