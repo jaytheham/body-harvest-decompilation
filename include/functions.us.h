@@ -345,5 +345,11 @@ void func_801357EC_14479C(Unk80160080 *arg0);
 void func_80136B50_145B00(s32 arg0, s16 arg1);
 s32 func_800A3CD0_B2C80(void);
 void func_80018D7C_1997C(u16 arg0);
+void func_80071E88_80E38(Unk80052B2C *arg0);
+void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1);
+void func_800E82AC_F725C(Unk80052B2C *arg0);
+void func_800C1268_D0218(f32 arg0, f32 arg1, f32 arg2);
+void func_800E7C28_F6BD8(void);
+void func_80135F0C_144EBC(void);
 
 #endif
