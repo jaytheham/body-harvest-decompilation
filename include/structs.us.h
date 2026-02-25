@@ -559,7 +559,9 @@ typedef struct {
 } Unk80160080;
 
 typedef struct {
-    u8 pad0[0x8];
+    u8 pad0[0x2];
+    s16 unk2;
+    u8 pad4[0x4];
     f32 unk8;
     f32 unkC;
     f32 unk10;
@@ -568,8 +570,19 @@ typedef struct {
     void *unk408;
     s32 unk40C;
     f32 unk410;
-    u8 pad414[0x34];
+    f32 unk414;
+    f32 unk418;
+    u8 pad41C[0x2C];
 } Unk80157600; /* size = 0x448 */
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+    u8 pad14[0x20];
+} Unk8009E8DC; // stride 0x34
 
 typedef struct {
     s16 unk0;
@@ -604,7 +617,7 @@ typedef struct {
 	void *unk404;
 	void *unk408;
 	s32 unk40C;
-	s32 unk410;
+	f32 unk410;
 	u8 pad414[0x11];
 	u8 unk425;
 	u8 unk426;
@@ -614,5 +627,15 @@ typedef struct {
 	u8 unk0;
 	u8 unk1;
 } Unk8007D62C_Entry;
+
+typedef struct {
+    s32 unk0;
+    u8 pad4[0x30];
+} Unk8009E8E0; // stride 0x34
+
+typedef struct {
+    u16 unk0;
+    u8 pad2[0x6E];
+} Unk80257A3A; // stride 0x70
 
 #endif
