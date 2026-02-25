@@ -592,4 +592,27 @@ typedef struct {
     s32 unk8;
 } Unk80052B40_fp;
 
+typedef struct {
+	u8 pad0[0xE50];
+	s32 unkE50;
+} Unk8007F878_404;
+
+typedef struct {
+	u8 pad0[0x18];
+	s32 unk18;
+	u8 pad1C[0x3E8];
+	void *unk404;
+	void *unk408;
+	s32 unk40C;
+	s32 unk410;
+	u8 pad414[0x11];
+	u8 unk425;
+	u8 unk426;
+} Unk8007F878_D6AD8;
+
+typedef struct {
+	u8 unk0;
+	u8 unk1;
+} Unk8007D62C_Entry;
+
 #endif
