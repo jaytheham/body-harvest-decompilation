@@ -42,11 +42,14 @@ void func_80013324_13F24(void);
 void func_80013684_14284(void);
 void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4);
 void func_800153D8_15FD8(s16);
+void func_800156C8_162C8(s32 arg0);
 void func_8001599C_1659C(void);
 void func_80017AAC_186AC(void);
 void func_80017AE0_186E0(void);
 void func_8001A500_1B100(s32);
 s32 func_80018A58_19658(void);
+void func_800E7B20_F6AD0(s32 arg0, s32 arg1);
+void func_800101F0_10DF0(void *arg0, void *arg1, s32 arg2, s32 arg3);
 
 // overlay_gameplay frontend
 s32 func_80070390_40840(void);
