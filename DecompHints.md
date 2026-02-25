@@ -771,10 +771,13 @@ Check which load instruction is used: `lbu` = `u8`, `lb` = `s8`. Using the wrong
 ### Float bit-copy (lw/sw instead of lwc1/swc1)
 
 When the assembly copies float field bits with integer `lw`/`sw` rather than float `lwc1`/`swc1`, use explicit pointer casts:
+
 ```c
 *(s32*)&dest->unkXX = *(s32*)&src->unkXX;
 ```
-Statement order matters for scheduling. To get the `sw` delayed and fill a `mtc1` delay slot, put the next float computation *between* the two copies:
+
+Statement order matters for scheduling. To get the `sw` delayed and fill a `mtc1` delay slot, put the next float computation _between_ the two copies:
+
 ```c
 *(s32*)&arg0->unk24 = *(s32*)&arg0->unk30;  // copy 1
 arg0->unk38 = (f32) temp->unk4;              // compute next before copy 2
@@ -788,3 +791,15 @@ Fields loaded with `lwc1` are `f32`, not `s32`. Defining a float-loaded field as
 ### Two-return-register pattern (lh v1 + move v0,v1)
 
 The `lh v1; jr ra; move v0, v1` pattern (vs `lh v0; jr ra; nop`) is a register allocation artifact where `v0` is considered live from an earlier conditional. Hard to fix; accept NON_MATCHING after 5 iterations if only this and register names differ.
+
+### Post-increment in condition moves global address to a0
+
+When a global counter is loaded, incremented, stored, and compared, using `D_global++ >= threshold` instead of a local temp (`s16 temp = D_global; D_global = temp+1; if (temp >= threshold)`) causes IDO to put the global address in `a0` (not `v1`) and the loaded value in `v1` (not `v0`). It also triggers pre-loading of the next global address into `at` before the branch — matching the original scheduling pattern. Use this form when the original shows: `lui a0; lh v1, 0(a0); lui at, D_other; slti v0, v1, threshold`.
+
+### u8 vs s8 parameter shifts temp register numbers
+
+When an argument parameter type is `s8`, temp registers t7/t8/t9 end up one slot higher (t8/t9/t0) compared to `u8`. The `sw $a0, 0($sp)` hint for (u)8 parameters is the same for both; the difference is in the subsequent address/compute register assignments. If D_global address computation ends up in t9 (orig: t8), try changing the parameter from `s8` to `u8`.
+
+### bnel backward loop with or v0, v1, zero pattern
+
+When a backwards array walk uses `or v0, v1, zero` at the start of each loop iteration (copying counter v1 to return register v0), the original C code has no explicit `ctr` variable — IDO spontaneously copies the counter to the return register v0 as an optimization to return NULL naturally when the counter reaches 0. To reproduce: declare only two local vars (counter, pointer) in order counter→v1, pointer→a0. If v0/v1 are taken by locals, v0 will NOT be the implicit return copy and bne will be used instead of bnel. After 5 attempts if the register layout still differs, wrap as NON_MATCHING.

@@ -1,16 +1,8 @@
 ---
 name: Body Harvest Decomp
-description: Decompile a function from the Body Harvest N64 game
+description: Decompile functions from the N64 game Body Harvest
 tools:
-  [
-    "search",
-    "edit/editFiles",
-    "edit/createFile",
-    "execute",
-    "read",
-    "todo",
-    "agent/runSubagent",
-  ]
+  ["search", "edit/editFiles", "edit/createFile", "execute", "read", "todo"]
 ---
 
 # Decompilation Workflow
@@ -35,7 +27,7 @@ You are running in windows, you have access to a docker container where you can 
 - Functions are named like `func_<RAM address>_<ROM address>`. Compare target and generated assembly for a specific function: `docker exec -it bh-container bash -c "tools/asm-differ/diff.py --no-pager --compress-matching 3 <function name> 0x<ROM address of next function>"`.
 - `docker exec -it bh-container bash -c "mips-linux-gnu-objdump -d build/src.us/overlay_gameplay/outside/missions.c.o | sed -n '/<func_8007679C_8574C>:/,/^$/p'"` - Disassemble a single function from an object file.
 
-## Step 1: Use runSubagent to generate cleaned C implementation
+## Step 1: Generate cleaned C implementation
 
 Outside the docker container run:`python tools/mips_to_c/m2c.py asm/nonmatchings/core/1000/func_80000D0C_190C.s` to generate an initial C implementation from the original assembly.
 
@@ -64,15 +56,13 @@ Before continuing review the code and ensure all pointer arithmetic has been rep
 
 Run the build inside the container:- `docker exec -it bh-container bash -c "make clean && make -j QUIET=1"` Important: You must build the entire project, not just the single file, to ensure all symbols are correctly linked and to get an accurate comparison of the generated assembly against the original.
 
-**Expected outcome**: build/bh.us.z64: OK/FAILED
-
 **If compilation errors occur:**
 
 - Check IDO error messages for syntax issues
 - Simplify C code (avoid complex expressions in single statements)
 - Ensure all extern symbols are declared
 
-If build completes with `build/bh.us.z64: OK` the function is correctly matched and you can stop work. If not, proceed to the next steps for analysis and iteration.
+If build completes with `build/bh.us.z64: OK` the function is correctly matched and you can stop work. If you see `FAILED` the generated assembly does not match the original, proceed to the next steps for analysis and iteration.
 
 ## Step 4: Compare with Original
 

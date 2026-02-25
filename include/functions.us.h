@@ -4,6 +4,13 @@
 #include "functions.h"
 
 // core
+void *func_8000C6F4_D2F4(void);
+void func_8000C790_D390(void *arg0, void *arg1, s32 arg2);
+void func_8000C764_D364(s32 arg0);
+void func_80001144_1D44(s32 arg0, s32 arg1, s32 arg2);
+
+// F9230
+void func_800EB534_FA4E4(void *arg0, s32 arg1, s8 arg2, s32 arg3);
 void* func_80000B14_1714(void);
 void func_8000108C_1C8C(s32);
 void getSaveFileName(s32, u8*);
@@ -262,28 +269,20 @@ void func_8013B688_14A638(void);
 // overlay_level
 void func_802D4CD0_18D7E0(s32, s32);
 
-// core/1000
 void osViExtendVStart(s32 arg0);
 void func_8000140C_200C(OSThread *arg0);
 OSThread *__osGetActiveQueue(void);
 void setRandomSeed(s32 arg0);
-
-// F9230
 s16 func_800EB9B4_FA964(void *arg0);
 f32 func_800EB9BC_FA96C(void *arg0);
 s32 func_800F02E4_FF294(void);
-
-// CFE30
+s32 func_800B84D0_C7480(s16 arg0, s16 arg1);
+s32 func_800B85CC_C757C(s16 arg0, s16 arg1);
+void func_8010F834_11E7E4(Unk80052B40 *arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_800E5520_F44D0(s32 arg0, s32 arg1);
 void func_800E552C_F44DC(void);
-
-// 1416E0
 void func_80136198_145148(s32 arg0);
-
-// 167C90
 void func_80081A18_169AD8(s32 arg0);
-
-// trigger
 void func_800AF474_BE424(s32 arg0);
 void func_800AF47C_BE42C(s32 arg0);
 void func_800AF484_BE434(s32 arg0);
@@ -292,39 +291,21 @@ void func_800AF494_BE444(s32 arg0);
 void func_800AF49C_BE44C(s32 arg0);
 void func_800AFFE8_BEF98(s32 arg0);
 void func_800AFFF0_BEFA0(s32 arg0);
-
-// A40B0
 void func_800959DC_A498C(void);
-
-// F9230 (additional)
 void func_800EA298_F9248(s16 arg0);
 s32 func_800F9C40_108BF0(s32 arg0);
 void func_8010FABC_11EA6C(void);
-
-// trigger (additional)
 s32 func_800B0A00_BF9B0(void);
-
-// 1416E0 (additional)
 s16 func_80132730_1416E0(s32 arg0, s32 arg1);
-
-// 167C90 (additional)
 void func_800808AC_16896C(void);
 void func_800808BC_16897C(void);
-
-// F9230 float/s16 setters
 void func_800FB430_10A3E0(Unk80052B34 *arg0, f32 arg1);
-
-// trigger (additional batch 2)
+f32 func_800FB014_109FC4(Unk80052B34 *arg0);
+f32 func_800FB098_10A048(Unk80052B34 *arg0);
 void func_80017B08_18708(s32 arg0);
 void func_80088000_96FB0(s32 arg0);
-
-// CFE30 (additional)
 void func_800C978C_D873C(void);
-
-// missions (additional)
 s32 func_800744E0_83490(s32 arg0);
-
-// 1416E0 (additional)
 void func_80132740_1416F0(Unk80160080 *arg0);
 void func_800B33BC_C236C(s32 arg0);
 void func_80135CB8_144C68(void);
@@ -351,5 +332,11 @@ void func_800E82AC_F725C(Unk80052B2C *arg0);
 void func_800C1268_D0218(f32 arg0, f32 arg1, f32 arg2);
 void func_800E7C28_F6BD8(void);
 void func_80135F0C_144EBC(void);
+s32 func_8011E6FC_12D6AC(s16 arg0, s16 arg1, s16 *arg2);
+s16 func_800FADF8_109DA8(s16 arg0);
+void func_800FDC30_10CBE0(s16 arg0);
+void func_800F9D60_108D10(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, s16 *arg4);
+void func_800FD0EC_10C09C(void);
+void func_800FD168_10C118(void);
 
 #endif
