@@ -691,4 +691,30 @@ typedef struct {
     /* 0x12 */ s16 unk12;
 } Unk169EC8Entry; /* stride 0x14 */
 
+typedef struct {
+    /* 0x00 */ u8 pad0[6];
+    /* 0x06 */ u8 unk6;
+    /* 0x07 */ u8 unk7;
+    /* 0x08 */ u8 unk8;
+    /* 0x09 */ u8 unk9;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ u8 unkC;
+    /* 0x0D */ u8 unkD;
+    /* 0x0E */ u8 unkE;
+    /* 0x0F */ u8 unkF;
+    /* 0x10 */ s8 unk10;
+    /* 0x11 */ s8 unk11;
+    /* 0x12 */ s8 unk12;
+    /* 0x13 */ u8 unk13;
+} UnkFC8E8Entry; /* stride 0x14 */
+
+typedef struct {
+    /* 0x00 */ u8 pad0[2];
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ u8 unk4;
+    /* 0x05 */ u8 unk5;
+    /* 0x06 */ s16 unk6;
+    /* 0x08 */ u8 pad8[4];
+} UnkFB6F8Entry; /* stride 0xC */
+
 #endif

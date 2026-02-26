@@ -830,8 +830,10 @@ extern s16 D_80047D40[];
 extern u8 D_800FC8F5;
 extern u8 D_800FC8F7;
 extern u8 D_800FC8FA;
-extern s8 D_800FCA78;
-extern s8 D_800FCA79;
+extern UnkFC8E8Entry D_800FC8E8;
+extern s8 D_800FB6FA;
+extern u8 D_800FCA78;
+extern u8 D_800FCA79;
 extern s32 D_800FCA80;
 extern s32 D_800FCA84;
 extern s16 D_800FCA90;
@@ -870,6 +872,16 @@ extern s16 D_800FCF46;
 extern u8 D_800A5538;
 extern u8 D_8025F540;
 extern u8 D_8025F780;
+extern s8 D_800A26A0;
+extern s16 D_800FB6A0;
+extern s16 D_800FB6A2;
+extern s16 D_800FCA7A;
+extern s16 D_800FCA7C;
+extern s16 D_800FCA7E;
+extern s8 D_800FB6FE;
+extern s8 D_800FB7B0;
+extern s8 D_800FB7BE;
+extern UnkFB6F8Entry D_800FB6F8;
 
 
 #endif
