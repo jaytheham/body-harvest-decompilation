@@ -348,5 +348,19 @@ void func_800FD168_10C118(void);
 void func_80006DAC_79AC(s32 arg0, s32 arg1);
 void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *arg3);
 void func_80070294_158354(Unk8007CAA8_6A40 *arg0);
+void func_8007290C_15A9CC(void);
+void func_8007453C_15C5FC(s32 arg0, s32 arg1);
+void func_8007774C_15F80C(s32 arg0, s32 arg1);
+void func_80077A5C_15FB1C(s32 arg0, s32 arg1);
+void guess_checkMissions(void);
+void func_8007C8FC_1649BC(void);
+void func_8007F778_167838(void);
+void func_8007F878_167938(void);
+void func_8008B474_173534(void);
+s32 func_80072E88_15AF48(void);
+s32 func_8000851C_911C(s16 arg0);
+void func_80080168_168228(u16 arg0, u16 arg1, u8 arg2);
+void func_80082B04_16ABC4(void);
+void func_8007AE40_162F00(void);
 
 #endif

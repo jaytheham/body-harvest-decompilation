@@ -614,7 +614,19 @@ extern s32 D_800E6A30;
 extern Unk8007F878_D6AD8 D_800E6AD8;
 extern s32 D_800E7304;
 extern s32 D_800E65A8;
+extern Unk9C804 *D_800E65C8;
+extern s32 D_800E65CC;
+extern f32 D_800E65E0;
+extern Unk9C804 D_8009C804[];
+extern Unk800E66A8 D_800E66A8[];
+extern s32 D_800E668C;
+extern s32 D_800E6460;
+extern s32 D_800E6464;
 extern s32 D_800E6A70;
+extern s16 D_8009CE14[];
+extern s16 D_8009CE34[];
+extern s32 D_8009C4C8;
+extern s32 D_8009C4E4[];
 extern s32 D_800E7328;
 extern s32 D_801575DC;
 extern s32 D_80158FDC;
@@ -736,7 +748,13 @@ extern void *D_80157F50;
 extern s32 D_80157F54;
 extern void *D_80157F58;
 extern s32 D_80157F64;
-
+extern s32 D_800E65B4;
+extern u8 D_8008DE58;
+extern s32 D_800E662C;
+extern s16 D_800E6632;
+extern s32 D_800E65D8;
+extern Unk800E65BC *D_800E65BC;
+extern s16 D_80047D40[];
 
 
 

@@ -813,3 +813,25 @@ Fix: inline `some_struct->field` directly in every use (no local variable). IDO 
 ### f32 in position 4 (a3 slot) stays in a3 with IDO O32
 
 For a prototyped function with signature `(ptr, s32, s32, f32)`, the f32 fourth argument arrives in integer register `$a3` (not in `$f12`). The function prologue emits `mtc1 $a3, $f12` to move it to a float register. This is standard IDO -O2 -mips2 -32 behaviour: only the first two float arguments (positions 1 and 2) use the float registers `$f12`/`$f14`; later positions use the corresponding integer registers (`$a2`, `$a3`).
+
+### UP-counting outer loop: register save order (s1 before ra)
+
+When a nested loop function counts UP (var_s1 = 0; ... var_s1++) and the outer counter uses s1, IDO may save ra before s1 in the prologue - wrong save order.
+
+Root cause: IDO saves registers as first used. If var_s1 = 0 is inside the if body, IDO only encounters s1 after the branch, so ra (first clobbered by jal calls inside the loop) is saved first.
+
+Fix: Move var_s1 = 0 BEFORE the if-check and change the condition to if (var_s1 < D_bound) instead of if (D_bound > 0):
+
+    // WRONG (ra saved before s1):
+    if (D_800E6460 > 0) {
+        var_s1 = 0;
+        do { ... } while (var_s1 < D_800E6460);
+    }
+
+    // CORRECT (s1 saved first):
+    var_s1 = 0;
+    if (var_s1 < D_800E6460) {
+        do { ... } while (var_s1 < D_800E6460);
+    }
+
+IDO -O2 optimises the if (0 < D_bound) check to blez v0, end (same instruction), while the earlier var_s1 = 0 assignment makes s1 the first live saved register, fixing the prologue save order.
