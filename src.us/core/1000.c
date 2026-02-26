@@ -12,13 +12,13 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80000B14_1714.s")
 
 void* (*func_80000CD4_18D4(Unk80042DA8** arg0))(void) {
-    if (D_80042DA8.unk0 == 0) {
-        D_80042DA8.unk4 = 0;
-        D_80042DA8.unk8 = &D_80042DB8;
-        D_80042DA8.unk0 = 1U;
-    }
-    *arg0 = &D_80042DA8;
-    return &func_80000B14_1714;
+	if (D_80042DA8.unk0 == 0) {
+		D_80042DA8.unk4 = 0;
+		D_80042DA8.unk8 = &D_80042DB8;
+		D_80042DA8.unk0 = 1U;
+	}
+	*arg0 = &D_80042DA8;
+	return &func_80000B14_1714;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80000D0C_190C.s")
@@ -55,15 +55,15 @@ void checkForRumblePak(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80001190_1D90.s")
 
 void osViExtendVStart(s32 arg0) {
-    __additional_scanline = arg0;
+	__additional_scanline = arg0;
 }
 
 void func_8000140C_200C(OSThread *arg0) {
-    __osActiveQueue2 = arg0;
+	__osActiveQueue2 = arg0;
 }
 
 OSThread *__osGetActiveQueue(void) {
-    return __osActiveQueue2;
+	return __osActiveQueue2;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80001424_2024.s")
@@ -87,7 +87,7 @@ OSThread *__osGetActiveQueue(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/guess_loadSavedGame.s")
 
 s32 func_80002A88_3688(s32 arg0) {
-    return *(&D_80043243 + (arg0 * 0x7A)) & 0xF;
+	return *(&D_80043243 + (arg0 * 0x7A)) & 0xF;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/getSaveFileName.s")
@@ -136,7 +136,7 @@ s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80003824_4424.s")
 
 void setRandomSeed(s32 arg0) {
-    D_800476C0 = arg0;
+	D_800476C0 = arg0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_800038E0_44E0.s")

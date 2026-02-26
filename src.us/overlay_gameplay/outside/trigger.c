@@ -86,7 +86,7 @@ void func_800AF49C_BE44C(s32 arg0) {}
 void func_800AFFE8_BEF98(s32 arg0) {}
 
 void func_800AFFF0_BEFA0(s32 arg0) {
-    D_801493E0 = 0;
+	D_801493E0 = 0;
 }
 
 #ifdef NON_MATCHING

@@ -11,12 +11,12 @@
 
 #ifdef NON_MATCHING
 s32 func_800744E0_83490(s32 arg0) {
-    s32 var;
-    var = arg0 & 0xFF;
-    if (var >= 0x9C) {
-        return var < 0xA6;
-    }
-    return 0;
+	s32 var;
+	var = arg0 & 0xFF;
+	if (var >= 0x9C) {
+		return var < 0xA6;
+	}
+	return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800744E0_83490.s")
@@ -25,17 +25,17 @@ s32 func_800744E0_83490(s32 arg0) {
 // readMissionByteWithIncrement
 #ifdef NON_MATCHING
 u8 func_80074500_834B0() {
-    s32 temp_t6;
-    volatile u8 *var_a0;
-    u8 *new_var;
+	s32 temp_t6;
+	volatile u8 *var_a0;
+	u8 *new_var;
 
-    new_var = D_801494B8;
-    var_a0 = &D_801494BC;
-    temp_t6 = (*new_var) & 0xFFu;
-    D_801494B8++;
-    *var_a0 = temp_t6;
-    if (0) { }
-    return temp_t6;
+	new_var = D_801494B8;
+	var_a0 = &D_801494BC;
+	temp_t6 = (*new_var) & 0xFFu;
+	D_801494B8++;
+	*var_a0 = temp_t6;
+	if (0) { }
+	return temp_t6;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074500_834B0.s")
@@ -44,18 +44,18 @@ u8 func_80074500_834B0() {
 // readMissionByteWithIncrementCopy
 #ifdef NON_MATCHING
 s8 func_8007452C_834DC(void) {
-    u8* var_v1;
-    u8 temp_t6;
-    volatile u8* var_a0;
-    s32 var_v0;
+	u8* var_v1;
+	u8 temp_t6;
+	volatile u8* var_a0;
+	s32 var_v0;
 
-    var_v1 = D_801494B8;
-    var_a0 = &D_801494BC;
-    temp_t6 = *var_v1;
-    D_801494B8 = var_v1 + 1;
-    *var_a0 = temp_t6;
-    var_v0 = temp_t6 & 0xFF;
-    return var_v0;
+	var_v1 = D_801494B8;
+	var_a0 = &D_801494BC;
+	temp_t6 = *var_v1;
+	D_801494B8 = var_v1 + 1;
+	*var_a0 = temp_t6;
+	var_v0 = temp_t6 & 0xFF;
+	return var_v0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007452C_834DC.s")
@@ -63,8 +63,8 @@ s8 func_8007452C_834DC(void) {
 
 // readMissionByteWithoutIncrement
 u8 func_80074558_83508(void) {
-    D_801494BC = *D_801494B8;
-    return D_801494BC;
+	D_801494BC = *D_801494B8;
+	return D_801494BC;
 }
 
 // readMissionObject
@@ -78,8 +78,8 @@ u8 func_80074558_83508(void) {
 
 // readMissionByteWithIncrementCopyWrapper
 void func_80074768_83718(void) {
-    *(&D_8004D160 + (D_80149B44 * 2)) = func_8007452C_834DC();
-    D_80149B44 += 1;
+	*(&D_8004D160 + (D_80149B44 * 2)) = func_8007452C_834DC();
+	D_80149B44 += 1;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800747A8_83758.s")
@@ -118,26 +118,26 @@ void func_80074768_83718(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076088_85038.s")
 
 void func_80076208_851B8(s32 arg0) {
-    func_800078B8_84B8(arg0, &D_8004D150);
+	func_800078B8_84B8(arg0, &D_8004D150);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007622C_851DC.s")
 
 #ifdef NON_MATCHING
 void func_800762A8_85258() {
-    s32 *var_a1;
-    s32 var_v1;
-    var_a1 = &D_801494B4;
-    var_v1 = 0xF; 
-    do
-    {
-        if (var_v1 == *var_a1)
-        {
-            *var_a1 = 0;
-            return;
-        }
-        
-    } while (var_a1--, var_v1--);
+	s32 *var_a1;
+	s32 var_v1;
+	var_a1 = &D_801494B4;
+	var_v1 = 0xF; 
+	do
+	{
+		if (var_v1 == *var_a1)
+		{
+			*var_a1 = 0;
+			return;
+		}
+		
+	} while (var_a1--, var_v1--);
 
 }
 #else
@@ -154,17 +154,17 @@ void func_800762A8_85258() {
 
 #ifdef NON_MATCHING
 s32 func_80076754_85704(void) {
-    register s32 temp_v0;
-    s32 var_s0;
+	register s32 temp_v0;
+	s32 var_s0;
 
-    var_s0 = 0x17;
-    do {
-        func_8007643C_853EC(var_s0);
-        temp_v0 = var_s0;
-    } while (var_s0--);
-    D_8004D158 = 0;
-    D_8004D154 = -1;
-    return temp_v0;
+	var_s0 = 0x17;
+	do {
+		func_8007643C_853EC(var_s0);
+		temp_v0 = var_s0;
+	} while (var_s0--);
+	D_8004D158 = 0;
+	D_8004D154 = -1;
+	return temp_v0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076754_85704.s")

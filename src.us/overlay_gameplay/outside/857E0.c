@@ -52,16 +52,16 @@ void func_80076868_85818(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_8007764C_865FC.s")
 
 u16 func_80078530_874E0(s16 arg0, s16 arg1) {
-    u8 temp_v1;
-    
-    arg0 += 0x80;
-    arg1 += 0x80;
-    
-    if (D_80221A30[arg1 >> 2][arg0 >> 2] == 0xFF) {
-        return 0U;
-    }
+	u8 temp_v1;
+	
+	arg0 += 0x80;
+	arg1 += 0x80;
+	
+	if (D_80221A30[arg1 >> 2][arg0 >> 2] == 0xFF) {
+		return 0U;
+	}
 
-    return D_8021FA30[D_80221A30[arg1 >> 2][arg0 >> 2]][((arg1 & 3) << 2) + (arg0 & 3)];
+	return D_8021FA30[D_80221A30[arg1 >> 2][arg0 >> 2]][((arg1 & 3) << 2) + (arg0 & 3)];
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800785B4_87564.s")
@@ -75,8 +75,8 @@ s16 func_80078678_87628(u16 *arg0, s32 arg1, s32 arg2)
   temp_t7 = (((s32) (*arg0)) >> new_var) & 0xF;
   if ((((s32) (temp_t7 - 1)) % 3) == 0)
   {
-    *arg0 = (*arg0) + (arg2 << arg2);
-    return (s16) (temp_t7 + arg2);
+	*arg0 = (*arg0) + (arg2 << arg2);
+	return (s16) (temp_t7 + arg2);
   }
   return -1;
 }
@@ -85,18 +85,18 @@ s16 func_80078678_87628(u16 *arg0, s32 arg1, s32 arg2)
 #endif
 
 void func_800786CC_8767C(u16* arg0, s32 arg1) {
-    *arg0 &= ~(0xF << (arg1 * 4));
+	*arg0 &= ~(0xF << (arg1 * 4));
 }
 
 void func_800786EC_8769C(u16* arg0, s32 arg1) {
-    s32 temp_v1;
-    u16 temp_v0;
+	s32 temp_v1;
+	u16 temp_v0;
 
-    temp_v0 = *arg0;
-    temp_v1 = arg1 * 4;
-    if ((((s32) temp_v0 >> temp_v1) & 0xF) >= 0xE) {
-        *arg0 = temp_v0 & ~(0xF << temp_v1);
-    }
+	temp_v0 = *arg0;
+	temp_v1 = arg1 * 4;
+	if ((((s32) temp_v0 >> temp_v1) & 0xF) >= 0xE) {
+		*arg0 = temp_v0 & ~(0xF << temp_v1);
+	}
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078720_876D0.s")
@@ -104,21 +104,21 @@ void func_800786EC_8769C(u16* arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078828_877D8.s")
 
 s32 func_80078B58_87B08(s16 arg0, s16 arg1) {
-    s32 sp24;
-    s32 temp_t0;
-    s32 value;
-    u16 *ptr;
+	s32 sp24;
+	s32 temp_t0;
+	s32 value;
+	u16 *ptr;
 
-    ptr = func_800785B4_87564(arg0, arg1, &sp24);
-    if (ptr == NULL) {
-        return -1;
-    }
-    temp_t0 = sp24 * 4;
-    value = (s32) (*ptr & (0xF << temp_t0)) >> temp_t0;
-    if (value >= 0xE) {
-        return -1;
-    }
-    return value;
+	ptr = func_800785B4_87564(arg0, arg1, &sp24);
+	if (ptr == NULL) {
+		return -1;
+	}
+	temp_t0 = sp24 * 4;
+	value = (s32) (*ptr & (0xF << temp_t0)) >> temp_t0;
+	if (value >= 0xE) {
+		return -1;
+	}
+	return value;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078BC8_87B78.s")

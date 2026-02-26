@@ -533,7 +533,7 @@ void func_800E5520_F44D0(s32 arg0, s32 arg1) {
 }
 
 void func_800E552C_F44DC(void) {
-    D_80152C96 = 0;
+	D_80152C96 = 0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5538_F44E8.s")

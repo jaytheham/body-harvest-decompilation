@@ -9,9 +9,9 @@
 
 /* Tests whether a bit is set in the 2D world-space collision/visibility bitfield at (x,y) */
 s32 func_800B0C4C_BFBFC(s32 arg0, s32 arg1) {
-    arg0 += 0x80;
-    arg1 += 0x80;
-    return D_8014FDD0[(arg1 << 5) + (arg0 >> 3)] & (1 << (arg0 & 7));
+	arg0 += 0x80;
+	arg1 += 0x80;
+	return D_8014FDD0[(arg1 << 5) + (arg0 >> 3)] & (1 << (arg0 & 7));
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0C80_BFC30.s")
@@ -45,13 +45,13 @@ s32 func_800B0C4C_BFBFC(s32 arg0, s32 arg1) {
 /* Sets tile flags at position (arg0, arg1) in the world tile map */
 #ifdef NON_MATCHING
 void func_800B31FC_C21AC(s8 arg0, s8 arg1) {
-    u8 *temp_v0;
+	u8 *temp_v0;
 
-    temp_v0 = (u8 *)((s32)D_80052A94 + (arg1 << 9) + (arg0 * 2));
-    *temp_v0 |= 0x80;
-    *temp_v0 &= 0xF7;
-    *temp_v0 |= 4;
-    *(u16 *)temp_v0 = (*(u16 *)temp_v0 & 0xFC3F) | 0x300;
+	temp_v0 = (u8 *)((s32)D_80052A94 + (arg1 << 9) + (arg0 * 2));
+	*temp_v0 |= 0x80;
+	*temp_v0 &= 0xF7;
+	*temp_v0 |= 4;
+	*(u16 *)temp_v0 = (*(u16 *)temp_v0 & 0xFC3F) | 0x300;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B31FC_C21AC.s")
@@ -60,8 +60,8 @@ void func_800B31FC_C21AC(s8 arg0, s8 arg1) {
 /* Looks up tile flags at (arg0, arg1) and tests against bitmask arg2 */
 #ifdef NON_MATCHING
 s32 func_800B325C_C220C(s8 arg0, s8 arg1, s32 arg2) {
-    u8 *addr = (u8 *)((s32)D_8014F8A0 + (arg1 << 9) + (arg0 * 2));
-    return *(s16 *)(addr + 0x10100) & arg2 & 0xFFFF;
+	u8 *addr = (u8 *)((s32)D_8014F8A0 + (arg1 << 9) + (arg0 * 2));
+	return *(s16 *)(addr + 0x10100) & arg2 & 0xFFFF;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B325C_C220C.s")
@@ -113,10 +113,10 @@ s32 func_800B325C_C220C(s8 arg0, s8 arg1, s32 arg2) {
 /* Initializes world state: calls C7BDC to set up position, sets float speed to 2.0,
    mode byte to 0x46 (animation state), and active flag to 1. arg2 is unused. */
 void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2) {
-    func_800B8C2C_C7BDC(arg0, arg1, 0x1F);
-    D_8014F850 = 2.0f;
-    D_8014F832 = 0x46;
-    D_8014F838 = 1;
+	func_800B8C2C_C7BDC(arg0, arg1, 0x1F);
+	D_8014F850 = 2.0f;
+	D_8014F832 = 0x46;
+	D_8014F838 = 1;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9228_C81D8.s")
@@ -127,11 +127,11 @@ void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2) {
 
 /* Frees a particle/effect slot and decrements active count */
 void func_800B9954_C8904(u8 arg0) {
-    D_80152B80[arg0].unk8 = 0;
-    if (arg0 < D_8013DAE4) {
-        D_8013DAE4 = arg0;
-    }
-    D_8013DAE0--;
+	D_80152B80[arg0].unk8 = 0;
+	if (arg0 < D_8013DAE4) {
+		D_8013DAE4 = arg0;
+	}
+	D_8013DAE0--;
 }
 
 /* Allocates a new particle/effect slot, fills it from the given parameters,
@@ -139,39 +139,39 @@ void func_800B9954_C8904(u8 arg0) {
    pool is already full (max 15 entries). */
 #ifdef NON_MATCHING
 void func_800B99A8_C8958(Unk80152B80 *arg0, s16 arg1, s16 arg2, s32 arg3, u8 *arg4, s16 arg5, s16 arg6, u16 arg7) {
-    u8 i;
-    Unk80152B80 *entry;
+	u8 i;
+	Unk80152B80 *entry;
 
-    if (D_8013DAE0 == 0xF) {
-        osSyncPrintf(&D_80142D94);
-        return;
-    }
-    entry = &D_80152B80[D_8013DAE4];
-    entry->unk0 = arg0->unk0;
-    entry->unk4 = arg1;
-    entry->unk6 = arg2;
-    entry->unk2 = arg0->unk2;
-    entry->unk8 = arg3;
-    entry->unk9 = arg4[0];
-    entry->unkA = arg4[1];
-    D_8013DAE0++;
-    entry->unkC = arg5;
-    entry->unkE = arg6;
-    entry->unk10 = arg7;
-    entry->unkB = arg4[2];
-    if (D_8013DAE4 < 0xF) {
-        i = D_8013DAE4;
-        for (;;) {
-            if (D_80152B80[i].unk8 == 0) {
-                D_8013DAE4 = i;
-                break;
-            }
-            i = (i + 1) & 0xFF;
-            if (i >= 0xF) {
-                break;
-            }
-        }
-    }
+	if (D_8013DAE0 == 0xF) {
+		osSyncPrintf(&D_80142D94);
+		return;
+	}
+	entry = &D_80152B80[D_8013DAE4];
+	entry->unk0 = arg0->unk0;
+	entry->unk4 = arg1;
+	entry->unk6 = arg2;
+	entry->unk2 = arg0->unk2;
+	entry->unk8 = arg3;
+	entry->unk9 = arg4[0];
+	entry->unkA = arg4[1];
+	D_8013DAE0++;
+	entry->unkC = arg5;
+	entry->unkE = arg6;
+	entry->unk10 = arg7;
+	entry->unkB = arg4[2];
+	if (D_8013DAE4 < 0xF) {
+		i = D_8013DAE4;
+		for (;;) {
+			if (D_80152B80[i].unk8 == 0) {
+				D_8013DAE4 = i;
+				break;
+			}
+			i = (i + 1) & 0xFF;
+			if (i >= 0xF) {
+				break;
+			}
+		}
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B99A8_C8958.s")
@@ -186,13 +186,13 @@ void func_800B99A8_C8958(Unk80152B80 *arg0, s16 arg1, s16 arg2, s32 arg3, u8 *ar
 
 /* Clamps arg0 to the range [arg1, arg2] */
 s16 func_800BA4DC_C948C(s16 arg0, s16 arg1, s16 arg2) {
-    if (arg0 < arg1) {
-        return arg1;
-    }
-    if (arg2 < arg0) {
-        return arg2;
-    }
-    return arg0;
+	if (arg0 < arg1) {
+		return arg1;
+	}
+	if (arg2 < arg0) {
+		return arg2;
+	}
+	return arg0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA52C_C94DC.s")
@@ -218,15 +218,15 @@ s16 func_800BA4DC_C948C(s16 arg0, s16 arg1, s16 arg2) {
 /* Resets the animation speed field for each of 8 sub-entries of the current level's
    table at D_8003E0FC, then calls CC1BC to process them */
 void func_800BD2F4_CC2A4(void) {
-    s32 i = 0;
-    s32 stride = 0xA;
-    u8 *base = &D_8003E0FC[currentLevel * 0x50];
+	s32 i = 0;
+	s32 stride = 0xA;
+	u8 *base = &D_8003E0FC[currentLevel * 0x50];
 
-    do {
-        base[i * stride - 0x4A] = 0;
-        i = (i + 1) & 0xFF;
-    } while (i < 8);
-    func_800BD20C_CC1BC(base);
+	do {
+		base[i * stride - 0x4A] = 0;
+		i = (i + 1) & 0xFF;
+	} while (i < 8);
+	func_800BD20C_CC1BC(base);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD2F4_CC2A4.s")
@@ -246,14 +246,14 @@ void func_800BD2F4_CC2A4(void) {
 
 /* Resets trigger mode state and sub-state counter to 0 */
 void func_800BDDA0_CCD50(void) {
-    D_80151DD0 = 0;
-    D_8013D9AC = 0;
+	D_80151DD0 = 0;
+	D_8013D9AC = 0;
 }
 
 /* Sets trigger mode state to 3 and resets sub-state counter */
 void func_800BDDB4_CCD64(void) {
-    D_80151DD0 = 3;
-    D_8013D9AC = 0;
+	D_80151DD0 = 3;
+	D_8013D9AC = 0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BDDCC_CCD7C.s")
@@ -262,24 +262,24 @@ void func_800BDDB4_CCD64(void) {
 
 /* Sets animation/mode byte to 0x4B (idle state) */
 void func_800BECE0_CDC90(void) {
-    D_8013D9B0 = 0x4B;
+	D_8013D9B0 = 0x4B;
 }
 
 /* Sets animation/mode byte to 0x4B and marks as active */
 void func_800BECF0_CDCA0(void) {
-    D_8013D9B0 = 0x4B;
-    D_8013D9B4 = 1;
+	D_8013D9B0 = 0x4B;
+	D_8013D9B4 = 1;
 }
 
 /* Sets animation/mode byte to 1 and clears active flag */
 void func_800BED0C_CDCBC(void) {
-    D_8013D9B0 = 1;
-    D_8013D9B4 = 0;
+	D_8013D9B0 = 1;
+	D_8013D9B4 = 0;
 }
 
 /* Clears the active entity state flag */
 void func_800BED24_CDCD4(void) {
-    D_8013D9B4 = 0;
+	D_8013D9B4 = 0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BED30_CDCE0.s")
