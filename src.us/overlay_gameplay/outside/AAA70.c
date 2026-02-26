@@ -407,6 +407,13 @@ void func_8009C4F8_AB4A8(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009C4F8_AB4A8.s")
 #endif
 
+// Additional params
+// sp10 Pointer to icon
+// sp14 Type, 2=Vertical, 3=Horizontal ...
+// sp18 Values > 0 scale icon smaller
+// sp1c Alters color of the bar - used to make it flash
+// sp20 Length of the bar background
+// drawHudBarWithIcon
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009C6CC_AB67C.s")
 
 void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
@@ -421,8 +428,10 @@ void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
     }
 }
 
+// Draws Health/Human/vehicle/+more bars on HUD
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009D96C_AC91C.s")
 
+// drawAlienHealth
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009E994_AD944.s")
 
 void func_8009EC90_ADC40(s16 arg0, f32 *arg1, f32 *arg2) {
@@ -466,6 +475,7 @@ void func_8009FB1C_AEACC(s16 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009FB58_AEB08.s")
 
+// displayScanner
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A03FC_AF3AC.s")
 
 #ifdef NON_MATCHING
@@ -611,6 +621,7 @@ s32 func_800A2A88_B1A38(void) {
     return 1;
 }
 
+// drawGhostTarget - R-trigger aiming reticle?
 #ifdef NON_MATCHING
 void func_800A2B58_B1B08(void) {
     Unk8014F618 *base = &D_8014F618;

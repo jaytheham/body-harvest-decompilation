@@ -42,6 +42,7 @@ void func_800E7BC4_F6B74(void) {
     D_8015758E = D_80047712;
 }
 
+// Outdoors debug camera? Controller 2 moves camera when function runs
 #ifdef NON_MATCHING
 void func_800E7C28_F6BD8(void) {
     s32 sp3C;

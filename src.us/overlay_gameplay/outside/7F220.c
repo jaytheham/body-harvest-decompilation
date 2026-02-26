@@ -69,6 +69,7 @@ void func_80070420_7F3D0(func_80070420_7F3D0_UnkArg0* arg0) {
     func_8007679C_8574C(arg0->unk9);
 }
 
+/// Inits data after save file started
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070440_7F3F0.s")
 
 void func_80070BFC_7FBAC(void) {
@@ -109,6 +110,7 @@ void func_80070BFC_7FBAC(void) {
 // drawSky?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070CC0_7FC70.s")
 
+// Does stuff with object fog colour values
 #ifdef NON_MATCHING
 void* func_80070FB8_7FF68(void) {
     s32 temp_a2;
@@ -137,6 +139,7 @@ void* func_80070FB8_7FF68(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070FB8_7FF68.s")
 #endif
 
+// If called from drawComplexObjects causes alien bodies to be red (as if shot)
 void func_800710D4_80084(u8 arg0, u8 arg1, u8 arg2) {
     Gfx *temp_v1 = D_8005BB2C;
     Gfx *temp_v1_2 = D_8005BB2C;
@@ -615,6 +618,7 @@ void func_80071E88_80E38(Unk80052B2C* arg0) {
     D_8004795C = (f32) arg0->unk8 * 0.25;
 }
 
+// guess_doGamePlay
 void func_80071F28_80ED8(void) {
     D_80052B34 = D_80052B2C->unk38;
     D_80149440 = D_80052B2C->unk34;
@@ -664,4 +668,5 @@ void func_800720B8_81068(void) {
     func_80071228_801D8();
 }
 
+// doGameplayLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_800720F4_810A4.s")

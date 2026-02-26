@@ -40,8 +40,7 @@ s32 func_80139150_148100(u8 arg0, u16 arg1) {
     return 1;
 }
 
-// Failed - sonnet 4.5
-// Failed - opus 4.6
+// guess_giveItem
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801391DC_14818C.s")
 
 // Failed - sonnet 4.5
@@ -134,7 +133,7 @@ s16 func_8013994C_1488FC(u8 arg0) {
     return D_80048140[weaponSlots[hudWeaponItems[arg0].weaponSlot]];
 }
 
-// Initialize ammunition?
+// Initialize ammunition? guess_initInventory ?
 void func_80139984_148934(void) {
     if (D_80047F98 == 0) {
         D_80048140[0] = 0;
@@ -333,6 +332,7 @@ s32 func_8013B534_14A4E4(void) {
 // Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B5E4_14A594.s")
 
+// guess_doWeaponChange
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B688_14A638.s")
 
 s32 func_8013B8C8_14A878(void) {

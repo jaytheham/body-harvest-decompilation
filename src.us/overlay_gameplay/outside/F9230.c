@@ -11,6 +11,7 @@ void func_800EA298_F9248(s16 arg0) {
 
 void func_800EA2B0_F9260(s32 arg0) { D_801575DC = arg0; }
 
+// guess_attemptDoAnimation
 #ifdef NON_MATCHING
 void func_800EA2BC_F926C(void) {
     if (D_80052B34->unk1A == 0) {
@@ -30,6 +31,7 @@ void *func_800EA3E8_F9398(s16 arg0) {
     return (char *)&D_8013E5AC + (arg0 * 0x34) + 0x20;
 }
 
+// guess_initAnimations
 #ifdef NON_MATCHING
 void func_800EA434_F93E4(void) {
     f32 temp_zero = 0.0f;
@@ -153,8 +155,11 @@ void func_800EC468_FB418(void) { D_80157A28 &= ~0x200; }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED78C_FC73C.s")
 
+// Cont 2 button attempts to use weapon model 0 when changing weapon
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF0B0_FE060.s")
 
+// This checks the player modifier and writes values that cause either
+// normal or evil adam to be rendered
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF14C_FE0FC.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF650_FE600.s")
@@ -177,6 +182,28 @@ void func_800EFE50_FEE00(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFE50_FEE00.s")
 #endif
 
+/// Cutscene stuff
+/// 800EFEB4 is called and triggers cutscenes (may need to be followed by 80013468)
+/// Greece values:
+/// a0 = cutscene code pointer?
+/// 800F1DDC = 0
+/// 802D52C4 = 1
+/// 800F1134 = 4
+/// 802D57A0 = 5
+/// 802D64D0 = 6
+/// 802D6904 = 7
+/// 
+/// a1 = cutscene number
+/// 0 = Alpha Zero landing at stage start
+/// 1 = Bridge lowering
+/// 2 = Beacon launch
+/// 3 = ?
+/// 4 = Destroying Shield Generator
+/// 5 = Raising Atlantis
+/// 6 = Dark Adam blowing up bridge
+/// 7 = Dark Adam blowing up planes
+/// 	
+/// a2 = bool, pause gameplay while cutscene active?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFEB4_FEE64.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFFB4_FEF64.s")
@@ -280,8 +307,10 @@ void func_800F3580_102530(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F9118_1080C8.s")
 
+// DrawLegsShadows ?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F97FC_1087AC.s")
 
+// drawLegs
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F98C0_108870.s")
 
 s32 func_800F9C40_108BF0(s32 arg0) { return arg0 * arg0; }
@@ -663,6 +692,7 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010065C_10F60C.s")
 
+// drawDeadVehicles
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80101C14_110BC4.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80101EF4_110EA4.s")
@@ -689,12 +719,15 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103DD0_112D80.s")
 
+// Do vehicle acceleration?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103E54_112E04.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801047C8_113778.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80104E00_113DB0.s")
 
+// The button press check is Z to shoot the gun.
+// Skiiping this call stops adam responding to input
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801052E8_114298.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80106628_1155D8.s")

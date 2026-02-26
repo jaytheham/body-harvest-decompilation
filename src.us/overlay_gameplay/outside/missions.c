@@ -4,6 +4,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80073DC0_82D70.s")
 
+// Resets a bunch of memory? For missions?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074204_831B4.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007447C_8342C.s")
@@ -21,6 +22,7 @@ s32 func_800744E0_83490(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800744E0_83490.s")
 #endif
 
+// readMissionByteWithIncrement
 #ifdef NON_MATCHING
 u8 func_80074500_834B0() {
     s32 temp_t6;
@@ -39,6 +41,7 @@ u8 func_80074500_834B0() {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074500_834B0.s")
 #endif
 
+// readMissionByteWithIncrementCopy
 #ifdef NON_MATCHING
 s8 func_8007452C_834DC(void) {
     u8* var_v1;
@@ -58,11 +61,13 @@ s8 func_8007452C_834DC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007452C_834DC.s")
 #endif
 
+// readMissionByteWithoutIncrement
 u8 func_80074558_83508(void) {
     D_801494BC = *D_801494B8;
     return D_801494BC;
 }
 
+// readMissionObject
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074578_83528.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800745F0_835A0.s")
@@ -71,6 +76,7 @@ u8 func_80074558_83508(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800746F8_836A8.s")
 
+// readMissionByteWithIncrementCopyWrapper
 void func_80074768_83718(void) {
     *(&D_8004D160 + (D_80149B44 * 2)) = func_8007452C_834DC();
     D_80149B44 += 1;
@@ -80,10 +86,13 @@ void func_80074768_83718(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074970_83920.s")
 
+// readMissionInfo
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074B2C_83ADC.s")
 
+// guess_readMissionCondition
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074CA0_83C50.s")
 
+// readMissionConditions
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074FA8_83F58.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075148_840F8.s")

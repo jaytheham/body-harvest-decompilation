@@ -69,6 +69,7 @@ void func_80116554_125504(s32 arg0, s16 *arg1, s16 *arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801168E8_125898.s")
 
+// guess_initBuildingsDoors
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011694C_1258FC.s")
 
 s32 func_80117464_126414(u8 arg0) {
@@ -87,6 +88,8 @@ s32 func_80117464_126414(u8 arg0) {
     return 0;
 }
 
+// Is the return value from this used to determine how close a building is?
+// And if it should be drawn?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117508_1264B8.s")
 
 // Failed - gpt 5.3 codex
@@ -198,6 +201,7 @@ s32 func_801185F8_1275A8(BuildingInstance *arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118670_127620.s")
 
+// displayBuildings
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118774_127724.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011A2A0_129250.s")
@@ -686,6 +690,7 @@ s32 func_8012235C_13130C(Unk8004D0F8* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80123AC4_132A74.s")
 
+// 80123F04 Reduces damage to adam by 40% in easy
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80123E90_132E40.s")
 
 void func_80124118_1330C8(Unk80052B34 *arg0, s16 arg1) {
@@ -707,6 +712,7 @@ void func_80124B5C_133B0C(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124C40_133BF0.s")
 
+// displayBullets
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124D60_133D10.s")
 
 void func_80125C48_134BF8(s16 arg0, s16 arg1, s16 arg2) {
@@ -877,6 +883,7 @@ void func_8012D808_13C7B8(s32 arg0) { *(&D_8015FAFC + arg0 * 0x30) = 0; }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012D84C_13C7FC.s")
 
+// debug_drawInteractionBoxes
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012D884_13C834.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012DDA8_13CD58.s")

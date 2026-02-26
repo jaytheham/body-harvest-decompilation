@@ -141,8 +141,10 @@ void func_800A5B30_B4AE0(s32 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A5BD0_B4B80.s")
 
+// guess_initBeacons
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A5D3C_B4CEC.s")
 
+// warpFromSaveBeacon
 void func_800A5EA8_B4E58(u8 arg0) {
     osSyncPrintf(D_801427D8, arg0);
     D_8013D890 = 1;
@@ -162,8 +164,10 @@ void func_800A5EE8_B4E98(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A68CC_B587C.s")
 
+// Launch beacon?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A6FD4_B5F84.s")
 
+// displayBeacons
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A70B8_B6068.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A7B84_B6B34.s")
@@ -178,6 +182,7 @@ void func_800A5EE8_B4E98(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A8E18_B7DC8.s")
 
+// guess_givePowerUp
 void func_800A9238_B81E8() {
     s16* powerupTypePtr = &D_80047F7E + 1;
     s16 powerupType;

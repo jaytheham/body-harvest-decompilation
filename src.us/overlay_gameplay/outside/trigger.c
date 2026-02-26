@@ -8,16 +8,21 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AE3AC_BD35C.s")
 
+// Writes data for the next trigger to be executed?
+// Data waits at 0x802232C8 (Greece) until the trigger is executed
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AE454_BD404.s")
 
+// guess_initAlienWaves
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AE588_BD538.s")
 
+// guess_checkTriggers
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AE6CC_BD67C.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AEBC4_BDB74.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AEC34_BDBE4.s")
 
+// spawnAlienWave(short xPostion, short yPosition, ubyte waveType, ubyte orientation)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AEE5C_BDE0C.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF0C0_BE070.s")
@@ -30,6 +35,7 @@ void func_800AF2BC_BE26C(void *arg0) { func_80017B08_18708(((u8 *)arg0)[8]); }
 
 void func_800AF324_BE2D4(s32 arg0) { func_80088000_96FB0(-1); }
 
+// guess_initTriggers
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF348_BE2F8.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF390_BE340.s")

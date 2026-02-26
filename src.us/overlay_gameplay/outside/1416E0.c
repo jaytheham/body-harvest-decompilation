@@ -685,6 +685,7 @@ void func_80136570_145520(void) {
     D_8006C550 = &D_80258F90;
 }
 
+// displaySignposts
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801365E0_145590.s")
 
 #ifdef NON_MATCHING
