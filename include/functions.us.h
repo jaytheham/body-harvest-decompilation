@@ -380,5 +380,7 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 s32 func_80083224_16B2E4(s32 arg0);
 void func_800835F0_16B6B0(s16 arg0, u8 arg1);
 s16 func_80083390_16B450(u8 arg0);
+s32 func_80085984_16DA44(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 arg5);
+void func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10, s32 arg11, s32 arg12, s32 arg13);
 
 #endif

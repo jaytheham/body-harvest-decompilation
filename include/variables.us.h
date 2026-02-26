@@ -628,9 +628,12 @@ extern f64 D_800A4D90;
 extern f64 D_800A4F28;
 extern f64 D_800A4F30;
 extern f64 D_800A4F38;
+extern u8 D_800A4F70[];
 extern f32 D_800A0980;
 extern s32 D_800A0964;
 extern char D_800A4DC0;
+extern char D_800A4FD8;
+extern char D_800A5168;
 extern Unk80257A3A D_80257A3A[];
 extern s32 D_800E6A1C;
 extern s32 D_800E6A20;
@@ -880,8 +883,12 @@ extern s16 D_800FCA7C;
 extern s16 D_800FCA7E;
 extern s8 D_800FB6FE;
 extern s8 D_800FB7B0;
+extern s8 D_800FB7B4;
 extern s8 D_800FB7BE;
-extern UnkFB6F8Entry D_800FB6F8;
+extern s8 D_800FB7C4;
+extern u8 D_800FB7AC;
+extern u8 D_800FB7AD;
+extern UnkFB6F8Entry D_800FB6F8[];
 
 
 #endif
