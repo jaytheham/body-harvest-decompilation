@@ -363,5 +363,13 @@ void func_80080168_168228(u16 arg0, u16 arg1, u8 arg2);
 void func_80082B04_16ABC4(void);
 void func_8007AE40_162F00(void);
 void func_80083924_16B9E4(s16 arg0, s32 arg1);
+void func_8001A598_1B198(void *arg0);
+void func_8001A828_1B428(void);
+void func_8001F2E0_1FEE0(void);
+void func_8001A130_1AD30(s32 arg0, s32 arg1);
+s32 func_80017B78_18778(void);
+void drawText(void *arg0, s32 arg1, s32 arg2);
+void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
 #endif

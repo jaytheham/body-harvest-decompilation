@@ -760,7 +760,43 @@ extern u8 D_800FC8F7;
 extern u8 D_800FC8FA;
 extern s8 D_800FCA78;
 extern s8 D_800FCA79;
+extern s32 D_800FCA80;
+extern s32 D_800FCA84;
+extern s16 D_800FCA90;
+extern s16 D_800FCA92;
+extern u8 D_800FCAD8;
+extern u16 D_800A436C;
+extern s16 D_800A4370;
+extern s16 D_800FCF22;
+extern s16 D_800FCF24;
+extern s16 D_800FCF26;
+extern s16 D_800FCF28;
+extern s32 D_800FCF3C;
+extern s32 D_800FCF40;
+extern u16 D_800A2EB0[];
+extern u8 D_800A26B0[];
+extern u16 D_800A37B0[];
+extern u8 D_800A2FB0[];
+extern u16 D_800A40B0[];
+extern u8 D_800A38B0[];
+typedef struct {
+    s32 unk0;
+    u16 unk4;
+} Unk800A4354; /* stride 0x6 or 0x8 */
+extern Unk800A4354 D_800A4354;
+extern Unk800A4354 D_800A435C;
+extern Unk800A4354 D_800A4364;
 
+extern u8 D_8004DCEA;
+extern s16 D_8004DCEC;
+extern u16 D_8006C6C4;
+extern u16 D_8006C6C6;
+extern s32 D_800E65AC;
+extern s16 D_800FCF44;
+extern s16 D_800FCF46;
+extern u8 D_800A5538;
+extern u8 D_8025F540;
+extern u8 D_8025F780;
 
 
 #endif
