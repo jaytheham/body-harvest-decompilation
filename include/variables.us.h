@@ -200,13 +200,26 @@ extern s32 D_8006AB88;
 extern s32 D_80068084;
 extern s32 D_80068088;
 
+extern f32 D_8008DDF0;
+
+extern MissionData D_800909B0[42];
 extern s8 D_80090A7D;
 extern s32 D_80094900;
 extern s32 D_80094938;
 extern s16 currentFrontendState;
 extern u8 D_800949D4;
-extern MissionData D_800909B0[42];
+extern s32 D_8009E8D8;
 
+extern f32 D_800A08F8;
+extern f64 D_800A4D08;
+extern f64 D_800A4D10;
+extern f64 D_800A4D18;
+extern f64 D_800A4D20;
+extern f64 D_800A4D28;
+extern f64 D_800A4D30;
+extern f64 D_800A4D38;
+extern f64 D_800A4D40;
+extern f64 D_800A4D48;
 extern f64 D_800AEA68;
 
 extern MissionData D_800D6DC0[42];
@@ -247,6 +260,16 @@ extern s8 D_800E1992;
 extern Unk800E1980 D_800E1980[];
 extern u8 D_800E1D68;
 extern u8 D_800E1D69;
+extern Vec3f D_800E6A10;
+extern Unk8007CAA8_6A40 D_800E6A40;
+extern s32 D_800E6A64;
+extern s16 D_800E6A66;
+extern s16 D_800E6A74;
+extern s32 D_800E730C;
+extern f32 D_800E7314;
+extern f32 D_800E7318;
+extern s16 D_800E733C;
+extern Vec3f D_800E7340;
 
 extern s32 D_8013BD04;
 extern s16 D_8013C610;
@@ -554,7 +577,7 @@ extern s32 D_80160158;
 extern s8 D_8016015E;
 extern s8 D_8016015F;
 extern Vec3f D_801600F8;
-extern const char D_80145650;
+extern char D_80145650;
 extern f32 D_8014567C;
 extern s32 D_801591BC;
 extern f32 D_801456D8;
@@ -713,6 +736,8 @@ extern void *D_80157F50;
 extern s32 D_80157F54;
 extern void *D_80157F58;
 extern s32 D_80157F64;
+
+
 
 
 #endif

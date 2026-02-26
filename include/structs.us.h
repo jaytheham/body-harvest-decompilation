@@ -74,6 +74,16 @@ typedef struct {
 } Unk80052B34; // also used at D_8004F038 ?
 
 typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    u8 padC[0x2];
+    u8 unkE;
+    u8 unkF;
+    f32 unk10;
+} Unk8007CAA8_6A40;
+
+typedef struct {
     s16 unk0;
     s16 unk2;
     s16 unk4;

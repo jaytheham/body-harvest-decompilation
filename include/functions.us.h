@@ -345,5 +345,8 @@ void func_800FDC30_10CBE0(s16 arg0);
 void func_800F9D60_108D10(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, s16 *arg4);
 void func_800FD0EC_10C09C(void);
 void func_800FD168_10C118(void);
+void func_80006DAC_79AC(s32 arg0, s32 arg1);
+void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *arg3);
+void func_80070294_158354(Unk8007CAA8_6A40 *arg0);
 
 #endif
