@@ -682,4 +682,13 @@ typedef struct {
     /* 0x48 */ u8 pad48[0x0];
 } Unk800E65BC; /* stride 0x48 */
 
+typedef struct {
+    /* 0x00 */ f32 unk0;
+    /* 0x04 */ f32 unk4;
+    /* 0x08 */ f32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ s16 unk10;
+    /* 0x12 */ s16 unk12;
+} Unk169EC8Entry; /* stride 0x14 */
+
 #endif
