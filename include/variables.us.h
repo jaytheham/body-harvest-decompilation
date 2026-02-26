@@ -755,6 +755,11 @@ extern s16 D_800E6632;
 extern s32 D_800E65D8;
 extern Unk800E65BC *D_800E65BC;
 extern s16 D_80047D40[];
+extern u8 D_800FC8F5;
+extern u8 D_800FC8F7;
+extern u8 D_800FC8FA;
+extern s8 D_800FCA78;
+extern s8 D_800FCA79;
 
 
 
