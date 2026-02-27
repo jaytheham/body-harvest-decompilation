@@ -547,13 +547,13 @@ void func_801356F4_1446A4(Unk80160080 *arg0) {
 	VehicleSpec *temp = &vehicleSpecs[D_80052B34->unk1A];
 	func_801358E8_144898(arg0, (s16)(temp->unk5C * 0x10), (s16)(temp->unk5D * 0x10));
 	func_8000345C_405C(3);
-	if (currentControllerStates[0].button & 1) {
+	if (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_RIGHT) {
 		D_8016014A -= 1;
 		if (D_8016014A < 0) {
 			D_8016014A = 7;
 		}
 	}
-	if (currentControllerStates[0].button & 2) {
+	if (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_LEFT) {
 		D_8016014A += 1;
 		if (D_8016014A >= 8) {
 			D_8016014A = 0;

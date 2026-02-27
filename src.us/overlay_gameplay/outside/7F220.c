@@ -623,7 +623,7 @@ void func_80071F28_80ED8(void) {
 	D_80052B34 = D_80052B2C->unk38;
 	D_80149440 = D_80052B2C->unk34;
 	func_80071228_801D8();
-	func_801052E8_114298(D_80052B2C, &currentControllerStates[0]);
+	func_801052E8_114298(D_80052B2C, &currentControllerStates[CONTROLLER_ONE]);
 	D_80149406 = -D_80149406;
 	if (D_80149406 > 0) {
 		D_80149406 -= (s16) D_80149406 >> 1;

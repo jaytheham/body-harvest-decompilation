@@ -570,7 +570,7 @@ s32 func_800A18CC_B087C(void) {
 
 // checkIfShouldOpenPauseMenu
 void func_800A1924_B08D4(void) {
-	if ((currentControllerStates[0].button & 0x1000) &&
+	if ((currentControllerStates[CONTROLLER_ONE].button & BUTTON_START) &&
 		(gameplayMode != GAMEPLAY_MODE_UNK3) &&
 		(gameplayMode != GAMEPLAY_MODE_UNKB) &&
 		(D_8004794C == 0) &&
