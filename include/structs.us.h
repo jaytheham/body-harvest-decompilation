@@ -692,7 +692,9 @@ typedef struct {
 } Unk169EC8Entry; /* stride 0x14 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[6];
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
 	/* 0x06 */ u8 unk6;
 	/* 0x07 */ u8 unk7;
 	/* 0x08 */ u8 unk8;
@@ -716,5 +718,53 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ u8 pad8[4];
 } UnkFB6F8Entry; /* stride 0xC */
+
+typedef struct {
+	/* 0x00 */ s8 unk0;
+	/* 0x01 */ s8 unk1;
+	/* 0x02 */ s8 unk2;
+} Unk80154082; /* size = 0x3 */
+
+typedef struct {
+	/* 0x00 */ u8 pad0[2];
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[2];
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ s8 unk14;
+	/* 0x15 */ u8 pad15[7];
+} Unk80154318Entry; /* stride = 0x1C */
+
+typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
+	/* 0x02 */ u8 pad2[2];
+	/* 0x04 */ u8 unk4;
+	/* 0x05 */ u8 pad5[1];
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ u8 padA[2];
+} Unk801541F8Entry; /* stride = 0xC */
+
+typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
+	/* 0x02 */ u8 unk2;
+} Unk80152CA0Entry; /* stride = 0x3 */
+
+typedef struct {
+	/* 0x00 */ u8 pad0[0x12];
+	/* 0x12 */ u8 unk12;
+	/* 0x13 */ u8 unk13;
+	/* 0x14 */ u8 unk14;
+	/* 0x15 */ u8 pad15[3];
+	/* 0x18 */ s32 unk18;
+	/* 0x1C */ s32 unk1C;
+} Unk80153AE0Entry; /* stride = 0x20 */
 
 #endif

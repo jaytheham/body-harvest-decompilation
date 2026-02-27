@@ -229,9 +229,9 @@ segments:
     overlay: true
     subsegments:
       - [0x158330, c, overlay_gameplay/inside/158330]
-      - [0x1648A0, c, overlay_gameplay/inside/1648A0]
-      - [0x167C90, c, overlay_gameplay/inside/167C90]
-      - [0x16AF30, c, overlay_gameplay/inside/16AF30]
+      - [0x1648A0, c, overlay_gameplay/inside/1648A0] # Animations..
+      - [0x167C90, c, overlay_gameplay/inside/167C90] # Camera
+      - [0x16AF30, c, overlay_gameplay/inside/16AF30] # Effects
       - [0x173B60, c, overlay_gameplay/inside/173B60]
 
   - name: overlay_gameplay_inside_data
