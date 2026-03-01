@@ -912,5 +912,7 @@ extern char D_80143478;
 extern char D_801437C0;
 extern char D_8014390C;
 extern char D_801439A4;
+extern u8 D_801592A0;
+extern u8 D_801592B0;
 
 #endif

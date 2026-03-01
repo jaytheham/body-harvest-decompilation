@@ -18,34 +18,33 @@ s32 func_80070270_7F220(s32 arg0) {
 void func_800702C0_7F270(s16 arg0) {
 	u32 currentTick;
 	u32 referenceTick;
-	u64 elapsedMicro;
-	u64 m1m = 1000000ULL;
-
+	u32 elapsedMicro;
 	currentTick = osGetCount();
-	
-	if (arg0 == 1) {
+	switch (arg0) {
+	case 0:
+		referenceTick = D_80149444;
+		break;
+	case 1:
 		referenceTick = currentTick;
-	} else if (arg0 == 2) {
-		referenceTick = currentTick;
+		break;
+	case 2:
 		D_80052A90 = 0;
-	} else {
-		if (arg0 == 0) {
-			referenceTick = D_80149444;
-		} else {
-			referenceTick = D_80149444;
-		}
+		referenceTick = currentTick;
+		break;
+	default:
+		referenceTick = D_80149444;
+		break;
 	}
-
+	
 	if (currentTick < referenceTick) {
-		referenceTick++;
+		referenceTick += 1;
 	}
-
 	D_80149444 = referenceTick;
 	
-	elapsedMicro = (u64)(currentTick - referenceTick) * m1m / D_80035610;
-
-	if (gameplayMode == GAMEPLAY_MODE_UNK1) {
-		D_80052A90 += (u32)elapsedMicro / 1000U;
+	elapsedMicro = (u32)__ull_div(__ll_mul((u64)(currentTick - referenceTick), 0xF4240ULL), D_80035610);
+	
+	if (gameplayMode == 1) {
+		D_80052A90 += elapsedMicro / 1000U;
 	}
 	
 	D_80149444 = currentTick;

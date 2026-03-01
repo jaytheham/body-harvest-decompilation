@@ -6,35 +6,43 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 #ifdef NON_MATCHING
 /* Converts an integer to a decimal string, writes into arg1 */
 void func_8012EAC0_13DA70(s32 arg0, u8 *arg1) {
-	s16 numDigits = 0;
-	s16 j = 0;
-	s16 power;
-	s16 k;
-	s32 v = arg0;
-	s32 digit;
-
-	if (arg0 > 0) {
-		do {
-			numDigits++;
-			v = (s32)((f32)v / 10.0f);
-		} while (v > 0);
+  s16 numDigits = 0;
+  s16 j = 0;
+  int power;
+  s16 k;
+  s32 v = arg0;
+  s32 digit;
+  if (arg0 > 0)
+  {
+	do
+	{
+	  numDigits++;
+	  v = (s32) (((f32) v) / 10.0f);
 	}
-	if (numDigits > 0) {
-		do {
-			power = 1;
-			k = 0;
-			if (j > 0) {
-				do {
-					k++;
-					power *= 0xA;
-				} while (k < j);
-			}
-			digit = (s32)((f32)arg0 / (f32)power);
-			*(arg1 + numDigits - j - 1) = (u8)(digit - (s32)((f32)digit / 10.0f) * 0xA + 0x30);
-			j++;
-		} while (j < numDigits);
+	while (v > 0);
+  }
+  if (numDigits > 0)
+  {
+	do
+	{
+	  power = 1;
+	  k = 0;
+	  if (j > 0)
+	  {
+		do
+		{
+		  k++;
+		  power *= 0xA;
+		}
+		while (k < j);
+	  }
+	  digit = (s32) (((f32) arg0) / ((f32) power));
+	  *(((arg1 + numDigits) - j) - 1) = (u8) ((digit - (((s32) (((f32) digit) / 10.0f)) * 0xA)) + 0x30);
+	  j++;
 	}
-	arg1[numDigits] = 0;
+	while (j < numDigits);
+  }
+  arg1[numDigits] = 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012EAC0_13DA70.s")
