@@ -26,6 +26,15 @@ You are running in windows, you have access to a docker container where you can 
 - `docker exec -it bh-container bash -c "grep -r 'D_80047588' include/"` - Search for extern declarations.
 - Functions are named like `func_<RAM address>_<ROM address>`. Compare target and generated assembly for a specific function: `docker exec -it bh-container bash -c "tools/asm-differ/diff.py --no-pager --compress-matching 3 <function name> 0x<ROM address of next function>"`.
 - `docker exec -it bh-container bash -c "mips-linux-gnu-objdump -d build/src.us/overlay_gameplay/outside/missions.c.o | sed -n '/<func_8007679C_8574C>:/,/^$/p'"` - Disassemble a single function from an object file.
+- You can decompile gfx macros using the `tools/gfxdis.ps1` powershell script:
+e.g.
+```C
+dl = D_8005BB2C;
+D_8005BB2C = dl + 1;
+dl->words.w0 = 0xB6000000;
+dl->words.w1 = 0x10001;
+```
+Is converted by pwsh cmd `tools\gfxdis.ps1 -w 03840010 801592A0` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
 
 ## Step 1: Generate cleaned C implementation
 

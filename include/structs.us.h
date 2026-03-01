@@ -569,9 +569,10 @@ typedef struct {
 } Unk80160080;
 
 typedef struct {
-	u8 pad0[0x2];
+	s16 unk0;
 	s16 unk2;
-	u8 pad4[0x4];
+	s16 unk4;
+	u8 pad6[0x2];
 	f32 unk8;
 	f32 unkC;
 	f32 unk10;
@@ -766,5 +767,25 @@ typedef struct {
 	/* 0x18 */ s32 unk18;
 	/* 0x1C */ s32 unk1C;
 } Unk80153AE0Entry; /* stride = 0x20 */
+
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[2];
+	/* 0x08 */ f32 unk8;
+	/* 0x0C */ f32 unkC;
+	/* 0x10 */ f32 unk10;
+} UnkA6C64Keyframe; /* stride = 0x14 */
+
+typedef struct {
+	/* 0x00 */ s16 x;
+	/* 0x02 */ s16 y;
+} TileCoord; /* stride = 0x4 */
+
+typedef struct {
+	/* 0x00 */ s8 unk0;
+	/* 0x01 */ s8 unk1;
+} TileEntry; /* stride = 0x2 */
 
 #endif
