@@ -196,6 +196,7 @@ extern u8 *D_8006AA6C;
 extern u16 D_8013D50C;
 extern s16 D_8013D510;
 extern TileEntry D_801479B0[];
+extern u8 D_80147C30[];
 extern TileCoord D_801475F0[];
 extern f32 D_801424E0;
 extern f32 D_8014ED0C;
@@ -441,12 +442,16 @@ extern s16 D_8014F832;
 extern s32 D_8014F838;
 extern f32 D_8014F850;
 extern u8* D_8014F8A0; /* pointer to world tile data */
+extern Unk8014FD30Type D_8014FD30;
+extern u8 D_8014FD48[];
+extern u16 D_8014FDC8;
 extern u8 D_8014FDD0[];
 
 extern u8 D_80151DD0;
 extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
 extern u8 D_80152B88; /* unk8 field of first particle/effect entry */
 extern s16 D_80152C90;
+extern u8 D_80152740[];
 extern s16 D_80157590;
 extern s16 D_80157A3C;
 extern Unk80052B34 *D_80159020;
@@ -952,5 +957,9 @@ extern char D_801427C4;
 extern char D_801427E8;
 extern char D_801427F4;
 extern char D_80142800;
+extern f32 D_80142E20;
+extern f32 D_80142E24;
+extern s16 D_8014FD2A;
+extern Unk8003E290Entry D_8003E290[];
 
 #endif
