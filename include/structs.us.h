@@ -124,7 +124,8 @@ typedef struct {
 	u8 unk25;
 	u8 unk26;
 	u8 unk27;
-	u8 pad28[0x4];
+	u8 pad28[0x2];
+	s16 unk2A;
 	s16 unk2C;
 	s16 unk2E;
 	s16 unk30;
@@ -174,7 +175,9 @@ typedef struct {
 typedef struct {
 	u8 pad0[0x38];
 	s16 unk38;
-	u8 pad3A[0x8];
+	u8 pad3A[4];
+	s16 unk3E;
+	s16 unk40;
 	s16 unk42;
 	u8 pad44[0x14];
 	s16 unk58;
@@ -204,9 +207,15 @@ typedef struct {
 } Unk80052B2C;
 
 typedef struct {
-	u8 pad0[0xC];
+	s16 unk0;
+	s16 unk2;
+	s16 unk4;
+	s16 unk6;
+	s16 unk8;
+	s16 unkA;
 	s16 unkC;
-	u8 padE[4];
+	s16 unkE;
+	s16 unk10;
 } Unk8014F6D0;
 
 typedef struct {
@@ -787,5 +796,15 @@ typedef struct {
 	/* 0x00 */ s8 unk0;
 	/* 0x01 */ s8 unk1;
 } TileEntry; /* stride = 0x2 */
+
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[6];
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ u8 padE[2];
+	/* 0x10 */ s16 unk10;
+} BeaconDisplayEntry; /* stride = 0x12 */
 
 #endif
