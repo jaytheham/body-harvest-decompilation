@@ -1,0 +1,25 @@
+FROM gcc:latest
+
+COPY n64/src /n64/src
+COPY n64/include /n64/include
+
+# Generate a minimal config.h (swap.h only uses WORDS_BIGENDIAN, unset for x86)
+RUN printf '/* generated for gfxdis build */\n/* #undef WORDS_BIGENDIAN */\n' \
+    > /n64/src/config.h
+
+# Build gfxdis for each GBI variant Body Harvest uses F3DEX_GBI
+RUN gcc -std=c11 -DF3DEX_GBI   -I/n64/src -I/n64/include \
+        /n64/src/gfxdis/gfxdis.c /n64/src/gfxdis/main.c \
+        -o /usr/local/bin/gfxdis.f3dex && \
+    gcc -std=c11 -DF3DEX_GBI_2 -I/n64/src -I/n64/include \
+        /n64/src/gfxdis/gfxdis.c /n64/src/gfxdis/main.c \
+        -o /usr/local/bin/gfxdis.f3dex2 && \
+    gcc -std=c11 -DF3D_GBI     -I/n64/src -I/n64/include \
+        /n64/src/gfxdis/gfxdis.c /n64/src/gfxdis/main.c \
+        -o /usr/local/bin/gfxdis.f3d
+
+# Default to f3dex (Body Harvest uses F3DEX_GBI)
+RUN ln -s /usr/local/bin/gfxdis.f3dex /usr/local/bin/gfxdis
+
+WORKDIR /work
+ENTRYPOINT ["gfxdis"]

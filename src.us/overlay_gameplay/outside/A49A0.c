@@ -55,33 +55,13 @@ s32 func_800959F0_A49A0(s32 arg0, s32 arg1, s32 arg2) {
 
 #ifdef NON_MATCHING
 void func_80097B74_A6B24(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
-    Gfx *dl;
-    s32 sa3 = arg3;
-    s32 sa2 = arg2;
-    s32 sa1 = arg1;
 
-    dl = D_8005BB2C;
-    D_8005BB2C = dl + 1;
-    dl->words.w1 = (u32)&D_801592A0;
-    dl->words.w0 = 0x03840010;
-
-    dl = D_8005BB2C;
-    D_8005BB2C = dl + 1;
-    dl->words.w0 = 0x03820010;
-    dl->words.w1 = (u32)&D_801592B0;
-
-    dl = D_8005BB2C;
-    D_8005BB2C = dl + 1;
-    dl->words.w1 = 0;
-    dl->words.w0 = 0xE7000000;
-
-    dl = D_8005BB2C;
-    D_8005BB2C = dl + 1;
-    dl->words.w1 = 0x2000;
-    dl->words.w0 = 0xB7000000;
+	gSPLookAt(D_8005BB2C++, 0x801592A0);
+	gDPPipeSync(D_8005BB2C++);
+	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 
     if (currentLevel != LEVEL_JAVA || D_8004DCD0[arg0].unk1A != 0x12) {
-        func_80101EF4_110EA4(D_8004DCD0[arg0].unk1A, sa1, sa2, sa3, 0, 0x4000, (s32)arg4);
+        func_80101EF4_110EA4(D_8004DCD0[arg0].unk1A, arg1, arg2, arg3, 0, 0x4000, (s32)arg4);
     }
 }
 #else
