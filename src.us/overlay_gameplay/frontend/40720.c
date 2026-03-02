@@ -450,13 +450,13 @@ s32 func_80077494_47944(void) {
 	  func_80070CC4_41174();
 	  func_8007166C_41B1C();
 
-	  if (isButtonNewlyPressed(0, 0x9000) != 0) {
+	  if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) {
 		if (D_800D6DA8[((*selectedSaveSlot - 2) * 7) + 1] != 0x6D) {
 		  state = 2;
 		}
 	  }
 
-	  if (isButtonNewlyPressed(0, 0x4000) != 0) {
+	  if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B) != 0) {
 		state = 0;
 	  }
 	}
@@ -550,14 +550,14 @@ s32 func_800776BC_47B6C(void) {
 	  func_80070CC4_41174();
 	  func_8007166C_41B1C();
 
-	  if (isButtonNewlyPressed(0, 0x9000) != 0) {
+	  if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) {
 		sourceFileIndex = *selectedSaveSlot - 2;
 		*sourceFileIndexPtr = sourceFileIndex;
 		if (saveNameBase[(sourceFileIndex * saveNameStride) + 1] != 0x6D) {
 		  state = 2;
 		}
 	  }
-	  if (isButtonNewlyPressed(0, 0x4000) != 0) {
+	  if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B) != 0) {
 		state = 0;
 	  }
 	}
@@ -599,7 +599,7 @@ s32 func_800776BC_47B6C(void) {
 		func_80070CC4_41174();
 		func_8007166C_41B1C();
 
-		if (isButtonNewlyPressed(0, 0x9000) != 0) {
+		if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) {
 		  destFileIndex = *selectedSaveSlot - 2;
 		  *destFileIndexPtr = destFileIndex;
 		  if (destFileIndex != *sourceFileIndexPtr) {
@@ -607,7 +607,7 @@ s32 func_800776BC_47B6C(void) {
 		  }
 		}
 
-		if (isButtonNewlyPressed(0, 0x4000) != 0) {
+		if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B) != 0) {
 		  state = 0;
 		}
 	  }

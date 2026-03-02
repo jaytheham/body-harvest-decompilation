@@ -218,6 +218,7 @@ s32 func_801185F8_1275A8(BuildingInstance *arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BA80_12AA30.s")
 
+// draw explosion etc when building is damaged/destroyed
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BB94_12AB44.s")
 
 #ifdef NON_MATCHING

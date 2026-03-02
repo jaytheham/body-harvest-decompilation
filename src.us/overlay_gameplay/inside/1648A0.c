@@ -413,7 +413,7 @@ void func_8007F778_167838(void) {
 		temp_v1 = D_800E6AD8.unk426;
 		temp_t0 = D_800E6AD8.unk425;
 		if (((Unk8007F878_404 *)D_800E6AD8.unk404)->unkE50 == 0) {
-			if (!((currentLevel == 5) && (temp_v1 == 4) && (temp_t0 == 0) && (D_800E65A8 & 0x100))) {
+			if (!((currentLevel == LEVEL_COMET) && (temp_v1 == 4) && (temp_t0 == 0) && (D_800E65A8 & 0x100))) {
 				temp_v0 = &D_8009E4C8[temp_v1 * 0xD0 + temp_t0 * 0x10];
 				func_8007DAA8_165B68(&D_800E6AD8, *(s32*)(temp_v0 + 8), NULL, 0.0f, temp_v0[0xC]);
 			}

@@ -702,7 +702,7 @@ void func_80136B50_145B00(s32 arg0, s16 arg1) {
 	sp32 = ((s8)((u8 *)sp1C)[0] << 8) + 0x80;
 	sp30 = ((s8)((u8 *)sp1C)[1] << 8) + 0x80;
 	sp28 = temp_v0;
-	if (isButtonNewlyPressed(0, 0x8000) != 0) {
+	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A) != 0) {
 		if (D_80052B34->unk1A == 0) {
 			temp_t6 = (u32)(((u8 *)sp1C)[2] << 29) >> 30;
 			switch (temp_t6) {
@@ -740,7 +740,7 @@ void func_80136B50_145B00(s32 arg0, s16 arg1) {
 				}
 				break;
 			}
-			if (isButtonNewlyPressed(0, 0x8000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A) != 0) {
 				if (D_80052B34->unk1A == 0) {
 					if (func_800A3CD0_B2C80() != 0) {
 						func_80136570_145520();

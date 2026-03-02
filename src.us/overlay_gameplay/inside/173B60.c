@@ -219,7 +219,7 @@ void func_8008CF2C_174FEC(void) {
 		menuEntries[1] = 0xE;
 		menuEntries[5] = 3;
 		menuEntries[4] = 8;
-		if (currentLevel != 5) {
+		if (currentLevel != LEVEL_COMET) {
 			menuEntries[7] = 0xD;
 		}
 	}
@@ -375,7 +375,7 @@ void func_8008CF2C_174FEC(void) {
 		var_t5_2 -= 1;
 		var_t4_2 -= 1;
 	} while (var_t4_2 != 0);
-	if ((isButtonNewlyPressed(0, 0x9000) != 0) && (D_800FCA92 == 0xFF) && (D_800FCA84 == 0)) {
+	if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) && (D_800FCA92 == 0xFF) && (D_800FCA84 == 0)) {
 		D_800FCA80 = 1;
 		if (D_800FCA90 == 0) {
 			func_800153D8_15FD8(0xC6);
@@ -455,7 +455,7 @@ void func_8008D900_1759C0(void) {
 	sp48_unk4 = D_800A4364.unk4;
 	D_800A436C += 1;
 	func_8001A130_1AD30(0x4A - D_800FCF26, D_80068088 - 0x50);
-	if (isButtonNewlyPressed(0, 0x1000) == 0) {
+	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_START) == 0) {
 		D_800FCA80 = 0;
 		D_800FCA84 = 0;
 	}
@@ -502,7 +502,7 @@ void func_8008D900_1759C0(void) {
 	} else {
 		D_800FCA90 = 0;
 	}
-	if (isButtonNewlyPressed(0, 0x1000) != 0) {
+	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_START) != 0) {
 		if (D_800FCA80 == 0) {
 			if (D_800E65A8 == 1) {
 				if (D_800FCA92 != 0xFF) {

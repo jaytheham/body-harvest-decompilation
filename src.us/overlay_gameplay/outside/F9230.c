@@ -99,12 +99,12 @@ void func_800EA5B8_F9568(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EADF8_F9DA8.s")
 
 void func_800EB05C_FA00C(void) {
-	osSyncPrintf(&D_801442F0);
+	osSyncPrintf(&D_801442F0); // Player start swimming
 	D_80157A28 |= 4;
 }
 
 void func_800EB090_FA040(void) {
-	osSyncPrintf(&D_80144308);
+	osSyncPrintf(&D_80144308); // Player stops swimming
 	D_80157A28 &= ~4;
 }
 

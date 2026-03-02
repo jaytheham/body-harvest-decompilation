@@ -37,7 +37,7 @@ void checkForRumblePak(void) {
 		return;
 	}
 
-	osSyncPrintf(D_80036840);
+	osSyncPrintf(D_80036840); // Rumble pak(tm)  detected!
 	D_80047678 = 1;
 	func_8000108C_1C8C(0);
 	D_800313CC = 0;
@@ -235,7 +235,7 @@ void guess_restoreSavedData(void) {
     if (D_80047608 != 0) {
         func_8001D5A0_1E1A0(&D_80043388, 0, &D_800431C0, 0x1BD);
     }
-    osSyncPrintf(D_80036C74);
+    osSyncPrintf(D_80036C74); // RESTORE GAMENOTE
     if (validateSaveVersionAndChecksum(0, 0x1B9) == 0) {
         guess_deleteSavedData();
     }

@@ -458,7 +458,7 @@ void func_800D6A84_E5A34(s32 arg0) {
 
 void func_800D76A8_E6658(s16 arg0) {
 	if (arg0 == -3) {
-		osSyncPrintf(&D_8014390C);
+		osSyncPrintf(&D_8014390C); // DYNAMIC EFFECTS : Tried to kill minin photon effect which does not exist!
 		return;
 	}
 	func_800C1A4C_D09FC(arg0, 0x11, 1);

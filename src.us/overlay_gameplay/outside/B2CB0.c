@@ -21,16 +21,16 @@ void func_800A3D00_B2CB0(u8 arg0, s16 arg1, s16 arg2, s32 arg3) {
 u8 func_800A3DC8_B2D78(void) {
 	u8 var_v0;
 	u8 temp_a2;
-	AlienInstance* temp_v1;
+	AlienInstance* alien;
 
 	for (var_v0 = D_8014D509; var_v0 < D_8014D50A; var_v0++) {
 		temp_a2 = D_8014D408[var_v0];
-		temp_v1 = &alienInstances[temp_a2];
+		alien = &alienInstances[temp_a2];
 		
-		if (temp_v1->specIndex == 0x19) {
-			if (temp_v1->unk3C != 0) {
-				temp_v1->unk3C = (s8) (temp_v1->unk3C - 1);
-				osSyncPrintf(D_80142740, temp_a2);
+		if (alien->specIndex == 0x19) {
+			if (alien->unk3C != 0) {
+				alien->unk3C = (s8) (alien->unk3C - 1);
+				osSyncPrintf(D_80142740, temp_a2); // Found parent %d
 				return temp_a2;
 			}
 		}
@@ -261,7 +261,7 @@ void func_800A5A50_B4A00(s32 arg0, s32 arg1) {
 	s32 sp1C;
 
 	D_8014F800 = 1;
-	osSyncPrintf(D_80142790, arg0);
+	osSyncPrintf(D_80142790, arg0); // Activate beacon %d
 	if (D_80151DD0 == 0) {
 		D_80047F9C = arg0 + 1;
 		sp1C = func_80009F18_AB18(arg1);
@@ -299,7 +299,7 @@ void func_800A5BD0_B4B80(s32 arg0) {
     sp4C = ((s8*)&D_8003154C)[currentLevel * 0x18 + arg0 * 4 - 0x18] << 8;
     sp48 = ((s8*)&D_8003154C)[currentLevel * 0x18 + arg0 * 4 - 0x17] << 8;
     sp40 = func_800B84D0_C7480((s16)sp4C, (s16)sp48) >> 8;
-    if (currentLevel == 3 && arg0 == 0) {
+    if (currentLevel == LEVEL_AMERICA && arg0 == 0) {
         sp40 = 0x7D0;
     }
     sp44 = arg0 * 2;
@@ -356,7 +356,7 @@ void func_800A5D3C_B4CEC(void) {
 
 // warpFromSaveBeacon
 void func_800A5EA8_B4E58(u8 arg0) {
-	osSyncPrintf(D_801427D8, arg0);
+	osSyncPrintf(D_801427D8, arg0); // teleport to:%d
 	D_8013D890 = 1;
 	D_8013D894 = arg0;
 }
@@ -398,7 +398,7 @@ void func_800A6FD4_B5F84(void) {
 
     sp1F = D_80047F9B;
     osSyncPrintf(&D_8014280C, (s32)sp1F);
-    if (currentLevel != 4 || sp1F != 3) {
+    if (currentLevel != LEVEL_SIBERIA || sp1F != 3) {
         func_80013314_13F14();
         D_80052AE0 = gameplayMode;
         gameplayMode = 0xA;
@@ -555,7 +555,7 @@ void func_800A9238_B81E8() {
 	while (powerupTypePtr--, i--) {
 		powerupType = *powerupTypePtr;
 		if (negOne != powerupType) {
-			osSyncPrintf(D_80142820, powerupType);
+			osSyncPrintf(D_80142820, powerupType); // Giving delayed powerup %d
 			func_800A8E18_B7DC8(*powerupTypePtr);
 		}
 	}

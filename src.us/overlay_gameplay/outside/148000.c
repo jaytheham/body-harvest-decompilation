@@ -8,9 +8,9 @@ void func_80139050_148000(void) {
 	for (var_s1 = weaponSlots, var_s0 = 0; var_s0 != 7; var_s0 += 1, var_s1 += 1){
 	
 		if (var_s0 == D_8004794A) {
-			osSyncPrintf(&D_80145A30);
+			osSyncPrintf(&D_80145A30); // select 
 		}
-		osSyncPrintf(&D_80145A38, *var_s1);
+		osSyncPrintf(&D_80145A38, *var_s1); // %d,
 	}
 	osSyncPrintf(&D_80145A3C);
 }
@@ -108,15 +108,15 @@ void func_80139778_148728(void) {
 	} else {
 		temp_v0 = &vehicleSpecs[temp_v1];
 		if (!(temp_v0->unk4C & 0x04000000)) {
-			osSyncPrintf(&D_80145A70, temp_v0->weapon1, &D_80031424);
+			osSyncPrintf(&D_80145A70, temp_v0->weapon1, &D_80031424); // Give vehicle its weapon %d
 			func_80139460_148410();
 			if (D_80031450) {
 				func_801391DC_14818C(0xB, -0x8000);
-				if (D_80031454 && ((currentLevel != 1) || (D_80052B34->unk1A != 8))) {
+				if (D_80031454 && ((currentLevel != LEVEL_GREECE) || (D_80052B34->unk1A != 8))) {
 					func_801391DC_14818C(0xC, -0x8000);
 				}
 
-				if ((currentLevel == 1) && (D_80052B34->unk1A == 6) && !func_8000726C_7E6C(1)) {
+				if ((currentLevel == LEVEL_GREECE) && (D_80052B34->unk1A == 6) && !func_8000726C_7E6C(1)) {
 					D_80048156 = 0;
 				}
 			}
@@ -163,7 +163,7 @@ void func_80139984_148934(void) {
 		D_80048140[12] = -0x8000;
 		D_80048140[13] = -0x8000;
 	}
-	if (currentLevel == 5) {
+	if (currentLevel == LEVEL_COMET) {
 		func_801391DC_14818C(3, 0xA);
 		func_801391DC_14818C(5, 0x64);
 		func_801391DC_14818C(6, 5);
@@ -191,7 +191,7 @@ void func_80139984_148934(void) {
 		D_80031424[6] = 0x29;
 		D_80031424[9] = 0x14;
 	}
-	osSyncPrintf(&D_80145A8C);
+	osSyncPrintf(&D_80145A8C); // Initialise Ammunition
 }
 
 void func_80139B34_148AE4(void) {
@@ -325,7 +325,7 @@ s32 func_8013B534_14A4E4(void) {
 			return 1;
 		}
 	}
-	osSyncPrintf(&D_80145AA4, D_801601D0);
+	osSyncPrintf(&D_80145AA4, D_801601D0); // Weapon %d not valid
 	return 0;
 }
 
