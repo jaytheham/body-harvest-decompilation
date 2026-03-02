@@ -91,7 +91,9 @@ typedef struct {
 	u8 unk1A;
 	u8 unk1B;
 	s16 unk1C;
-	u8 pad1E[0x3E];
+	u8 pad1E[2];
+	u16 unk20;
+	u8 pad22[0x3A];
 } Unk8004DCD0; // stride 0x5C
 
 typedef struct {
