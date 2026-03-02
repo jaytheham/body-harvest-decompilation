@@ -271,27 +271,15 @@ void func_80070BFC_7FBAC(void) {
 // Does stuff with object fog colour values
 #ifdef NON_MATCHING
 void* func_80070FB8_7FF68(void) {
-	s32 temp_a2;
-	Gfx *temp_v1;
-	u32 new_var;
-	Gfx *temp_v1_2;
-	s32 temp_num;
+	Gfx *dl = D_8005BB2C;
+	s32 fogRange = D_800313FC - D_800313F8;
+	s32 fogOffset = (s32)(D_800313F8 * (-0x100)) + 0x1F400;
 
-	temp_v1 = D_8005BB2C;
+	gDPSetFogColor(D_8005BB2C++, D_80047743, D_80047744, D_80047745, D_800313F4 & 0xFF);
+	gMoveWd(D_8005BB2C++, G_MW_FOG, G_MWO_FOG,
+		(((0x1F400 / fogRange) & 0xFFFF) << 0x10) | ((fogOffset / fogRange) & 0xFFFF));
 
-	D_8005BB2C = temp_v1 + 1;
-	temp_v1->words.w0 = 0xF8000000;
-	temp_v1->words.w1 = (s32) ((((D_80047743 << 0x18) | (D_80047744 << 0x10)) | (D_80047745 << 8)) | (D_800313F4 & 0xFF));
-
-	temp_v1_2 = D_8005BB2C;
-	D_8005BB2C++;
-
-	temp_v1_2->words.w0 = 0xBC000008;
-	temp_a2 = D_800313FC - D_800313F8;
-	temp_num = (new_var = D_800313F8 * (-0x100)) + 0x1F400;
-	temp_v1_2->words.w1 = (((0x1F400 / temp_a2) & 0xFFFF) << 0x10) | ((temp_num / temp_a2) & 0xFFFF);
-
-	return temp_v1;
+	return dl;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070FB8_7FF68.s")
@@ -299,14 +287,8 @@ void* func_80070FB8_7FF68(void) {
 
 // If called from drawComplexObjects causes alien bodies to be red (as if shot)
 void func_800710D4_80084(u8 arg0, u8 arg1, u8 arg2) {
-	Gfx *temp_v1 = D_8005BB2C;
-	Gfx *temp_v1_2 = D_8005BB2C;
-
-	D_8005BB2C++;
-	temp_v1->words.w0 = 0xF8000000; temp_v1->words.w1 = ((((arg0 << 14) << 10) | ((arg1 & 0xFF) << 0x10)) | ((arg2 & 0xFF) << 8)) | 0xFF; arg0 = arg0;
-	temp_v1_2 = D_8005BB2C;
-	D_8005BB2C++;
-	temp_v1_2->words.w0 = 0xBC000008; temp_v1_2->words.w1 = 0x05000500;
+	gDPSetFogColor(D_8005BB2C++, arg0, arg1, arg2, 0xFF);
+	gSPFogPosition(D_8005BB2C++, 0, 100);
 }
 
 void func_80071148_800F8(u8 arg0, u8 arg1) {
