@@ -17,6 +17,7 @@
 - initialize variables within loop headers
 - `-var` uses the same destination reg vs `-1*var` which uses a separate distination reg in O2.
 - change void function calls to a relevant type, i.e. f32, u32.
+- **Struct pointer in argument register (a2/a3) instead of v0**: This happens when the result variables (v0/v1) are claimed first by initialized declarations. Pattern: if target uses `lw a2,0(s0); lh v0,0(a2); lh v1,4(a2)`, declare the working variables with initializers from the struct fields directly (e.g. `s32 var_v0 = struct->field0; s32 var_v1 = struct->field1;`) and modify them in-place with `+=`/`-=`. Do NOT use separate temp variables - they bloat the stack frame and cause different register allocation.
 
 ### Reorderings
 
