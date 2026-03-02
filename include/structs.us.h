@@ -196,7 +196,7 @@ typedef struct {
 	s16 unk18;
 	s16 unk1A;
 	s16 unk1C;
-	s16 unk1E;
+	u16 unk1E;
 	s16 unk20;
 	u8 pad22[0xE];
 	s32 unk30;
