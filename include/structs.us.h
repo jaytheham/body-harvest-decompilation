@@ -835,4 +835,16 @@ typedef struct {
     s32 unk4;
 } Unk80047578;
 
+typedef struct {
+    /* 0x00 */ s8 unk0;
+    /* 0x01 */ u8 pad1;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ u8 pad6[2];
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ u8 padC[6];
+    /* 0x12 */ u8 unk12;
+    /* 0x13 */ u8 pad13;
+} Unk80223780Entry; /* stride 0x14 */
+
 #endif

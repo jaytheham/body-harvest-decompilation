@@ -976,10 +976,15 @@ extern s32 D_80047694;
 extern u8 D_800431C0;
 extern s32 D_80047684;
 extern u8 D_80047608;
+extern Unk80223780Entry D_80223780[];
 extern s32 D_80223788[];
 extern u8 D_80048038[];
 extern char D_80142BDC;
 extern u8 D_8014CFF0[];
 extern char D_80142BEC;
 extern u8 D_8014CFF1[];
+extern char D_80142BB8;
+extern s8 D_80223793[];
+extern char D_80142AB0;
+extern char D_80142AD0;
 #endif

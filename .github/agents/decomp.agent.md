@@ -53,7 +53,7 @@ Clean up the generated C code:
 - Replace if-do-while and do-while loops with for(;;) or while() loops.
 - Search in `/asm/` for any `jal` references to the target function to determine correct parameter and return types.
 
-Identify and fix all these issues in the generated C code before proceeding to the next step. The goal is to have clean, readable C code that still compiles down to the same assembly as the original.
+Identify and fix all these issues in the generated C code before proceeding to the next step.
 
 ## Step 2: Insert C into Project
 
@@ -81,7 +81,7 @@ Note instruction order, registers, immediates, branch conditions
 
 ## Step 5: Iterate To Resolve Differences
 
-Rewrite C code to reduce the number of differences in assembly.
+Rewrite C code to reduce the number of differences in assembly. First target differences in instructions and their ordering, and only then target register allocation.
 **FIRST ALWAYS try removing intermediate variables and simplifying the code**, it is very common that the original code derefenced struct fields and arrays multiple times instead of storing them in a local variable.
 Make sure all pointer arithmetic is replaced with proper struct/array access, and that assembly-like if>do>while and goto control flow is replaced with more natural C control flow constructs.
 Double check all function call params are necessary and correctly typed.
