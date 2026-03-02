@@ -254,38 +254,15 @@ void func_80070440_7F3F0(void) {
 #endif
 
 void func_80070BFC_7FBAC(void) {
-	Gfx *new_var;
-	Gfx *new_var2;
-	Gfx *dl;
-	Gfx *new_var3;
 	func_80011E14_12A14(D_80047F93);
 	func_80004CC8_58C8();
 	func_80004D38_5938();
 	D_80052B2C = &D_80052AE8;
 
-	new_var2 = D_8005BB2C;
-	dl = new_var2;
-	D_8005BB2C++;
-	new_var = D_8005BB2C;
-	dl->words.w0 = 0xBC000404;
-	dl->words.w1 = 4;
-
-	dl = new_var;
-	dl = D_8005BB2C;
-	D_8005BB2C++;
-	dl->words.w1 = 4;
-	dl->words.w0 = 0xBC000C04;
-
-	dl = D_8005BB2C;
-	D_8005BB2C++;
-	dl->words.w0 = 0xBC001404;
-	dl->words.w1 = 0xFFFC;
-
-	new_var3 = D_8005BB2C;
-	dl = new_var3;
-	D_8005BB2C++;
-	dl->words.w1 = 0xFFFC;
-	dl->words.w0 = 0xBC001C04;
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNX, 0x4);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNY, 0x4);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPX, 0xFFFC);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPY, 0xFFFC);
 }
 
 // drawSky?
