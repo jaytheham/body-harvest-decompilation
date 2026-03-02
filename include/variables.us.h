@@ -80,6 +80,9 @@ extern s8 D_800314C4;
 extern s32 D_80031B84;
 extern u64 D_80035610;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
+extern u8 D_80036C64[];
+extern u8 D_80036C74[];
+extern u8 D_8004337D;
 extern u8 D_8003DFD4[];
 extern u8 D_8003E000[];
 extern s16 D_8003E0EE[];
@@ -961,5 +964,11 @@ extern f32 D_80142E20;
 extern f32 D_80142E24;
 extern s16 D_8014FD2A;
 extern Unk8003E290Entry D_8003E290[];
-
+extern Unk80047578 D_80047578;
+extern OSMesgQueue D_800433A8;
+extern s32 D_80031304;
+extern s32 D_80047694;
+extern u8 D_800431C0;
+extern s32 D_80047684;
+extern u8 D_80047608;
 #endif

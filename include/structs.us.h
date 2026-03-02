@@ -829,4 +829,10 @@ typedef struct {
     /* 0x16 */ s16 unk16;
 } Unk8014FD30Type; /* 0x18 bytes */
 
+typedef struct {
+    s16 unk0;
+    u8 pad2[2];
+    s32 unk4;
+} Unk80047578;
+
 #endif

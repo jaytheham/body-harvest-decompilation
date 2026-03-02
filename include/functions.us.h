@@ -7,7 +7,7 @@
 void *func_8000C6F4_D2F4(void);
 void func_8000C790_D390(void *arg0, void *arg1, s32 arg2);
 void func_8000C764_D364(s32 arg0);
-void func_80001144_1D44(s32 arg0, s32 arg1, s32 arg2);
+void func_80001144_1D44(u8 arg0, u8 arg1, u8 arg2);
 
 // F9230
 void func_800EB534_FA4E4(void *arg0, s32 arg1, s8 arg2, s32 arg3);
@@ -429,5 +429,16 @@ f32 __cosf(f32 arg0);
 s32 func_80003740_4340(f32 arg0);
 s32 func_800056D0_62D0(s16 arg0, s16 arg1);
 s32 func_800B0A88_BFA38(s32 arg0, s32 arg1);
+u32 func_8001BCE0_1C8E0(void);
+void func_800015B4_21B4(s32 arg0, s32 arg1);
+void func_800016D8_22D8(void);
+void func_800021CC_2DCC(s32 arg0);
+void guess_prepareToSaveGame(s32 arg0);
+s32 func_8001D5A0_1E1A0(OSMesgQueue *arg0, u8 arg1, u8 *arg2, s32 arg3);
+s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1);
+void guess_deleteSavedData(void);
+void func_80001830_2430(void);
+f32 func_80003910_4510(f32 arg0, s32 arg1);
+s32 func_8000393C_453C(f32 arg0, s32 arg1);
 
 #endif

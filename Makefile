@@ -230,6 +230,7 @@ ASM_PROCESSOR      = $(PYTHON) $(ASM_PROCESSOR_DIR)/asm_processor.py
 # $(BUILD_DIR)/$(SRC_DIR)/core/eeprom.c.o: OPT_FLAGS := -O2
 # $(BUILD_DIR)/$(SRC_DIR)/overlay2_6AB090.c.o: LOOP_UNROLL := -Wo,-loopunroll,0
 # $(BUILD_DIR)/src.eu/overlay1%.c.o: OPT_FLAGS := -g
+# $(BUILD_DIR)/$(SRC_DIR)/core/1000.c.o: LOOP_UNROLL := -Wo,-loopunroll,0
 
 ### Targets
 
