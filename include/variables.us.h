@@ -441,6 +441,8 @@ extern s16 D_8014DD5E[][8];
 extern u8 D_8014E4D0[];
 extern Unk8014F6D0 D_8014F6D0[0x10];
 extern s32 D_8014F800;
+extern s32 D_8014F820;
+extern s32 D_8014F828;
 extern s16 D_8014F832;
 extern s32 D_8014F838;
 extern f32 D_8014F850;
@@ -501,7 +503,9 @@ extern u8 D_80221A30[][0x40];
 
 extern u32 D_80222A30[];
 extern s32 D_80222A70;
+extern Unk80222A78 D_80222A78[0xD0];
 // 223780 alien waves?
+extern s32 D_80223778;
 // 224680 missions?
 extern AlienSpec alienSpecs[0x30];
 extern VehicleSpec vehicleSpecs[0x14];
@@ -773,6 +777,7 @@ extern s16 D_801493AA;
 extern s16 D_8004794E;
 extern Unk80052B2C D_80157F08;
 extern s16 D_80157F68;
+extern s16 D_80157F94;
 extern s16 D_80157F96;
 extern s16 D_8013B8F4;
 extern s16 D_8013B8F8;
@@ -971,4 +976,10 @@ extern s32 D_80047694;
 extern u8 D_800431C0;
 extern s32 D_80047684;
 extern u8 D_80047608;
+extern s32 D_80223788[];
+extern u8 D_80048038[];
+extern char D_80142BDC;
+extern u8 D_8014CFF0[];
+extern char D_80142BEC;
+extern u8 D_8014CFF1[];
 #endif
