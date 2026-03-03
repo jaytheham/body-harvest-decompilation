@@ -851,4 +851,9 @@ typedef struct {
 	/* 0x13 */ u8 pad13;
 } Unk80223780Entry; /* size = 0x14 */
 
+typedef struct {
+	/* 0x00 */ u16 unk0;
+	/* 0x02 */ u8 unk2[8];
+} Unk_8014D298; /* size = 0x0A */
+
 #endif
