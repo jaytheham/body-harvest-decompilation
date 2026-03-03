@@ -35,7 +35,25 @@ void func_80076868_85818(s32 arg0) {
 	D_8014D200[*ptr_count] = (u8)arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80076918_858C8.s")
+s32 func_80076918_858C8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+	s32 index;
+	Unk_8014D298 *entry;
+	index = D_8014D2EC;
+	if (index == 8)
+	{
+		func_800769A8_85958(0);
+		index = D_8014D2EC;
+	}
+	index = D_8014D2EC;
+	entry = (Unk_8014D298 *) D_8014D298[index];
+	entry->unk2 = 0;
+	entry->unk0 = (s16) arg0;
+	entry->unk8 = (s16) arg3;
+	entry->unk4 = (s16) arg1;
+	entry->unk6 = (s16) arg2;
+	D_8014D2EC = index + 1;
+	return index;
+}
 
 void func_800769A8_85958(s32 arg0) {
 	s32 temp_t7;
