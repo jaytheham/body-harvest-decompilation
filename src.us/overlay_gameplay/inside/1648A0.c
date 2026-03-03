@@ -1,29 +1,25 @@
 #include <ultra64.h>
 #include "common.h"
 
-#ifdef NON_MATCHING
 void func_8007C7E0_1648A0(void) {
-	Unk80052B34 *v0 = &D_800E6A78;
+    Unk80052B34 *v0 = &D_800E6A78;
 
-	v0->unk12 = 0;
-	v0->unkE = 0x4000;
-	v0->unk4C = 200.0f;
-	v0->unk50 = 0.0f;
-	v0->unk54 = 116.0f;
-	osSyncPrintf(D_800A4BB0);
-	D_800E7304 = (s32)func_8000C6F4_D2F4();
-	((Unk80157600 *)D_800E6F00)->unk408 = func_8000C6F4_D2F4();
-	((Unk80157600 *)D_800E6F00)->unk410 = 1.0f;
-	func_8000C790_D390(D_800E6F00, &D_8003BAE0, 0x10);
-	func_8007DAA8_165B68(D_800E6F00, 0x11, (void *)7, 0.0f, 0x10);
-	D_800E7328 = 0;
-	if (!(D_800E65A8 & 0x200)) {
-		D_800E6A70 = D_80047948;
-	}
+    v0->unk12 = 0;
+    v0->unkE = 0x4000;
+    v0->unk4C = 200.0f;
+    v0->unk50 = 0.0f;
+    v0->unk54 = 116.0f;
+    osSyncPrintf(D_800A4BB0);
+    D_800E7304 = (s32)func_8000C6F4_D2F4();
+    ((Unk80157600 *)D_800E6F00)->unk408 = func_8000C6F4_D2F4();
+    ((Unk80157600 *)D_800E6F00)->unk410 = 1.0f;
+    func_8000C790_D390(D_800E6F00, &D_8003BAE0, 0x10);
+    func_8007DAA8_165B68(D_800E6F00, 0x11, 0x7, 0, 0x10);
+    D_800E7328 = 0;
+    if (!(D_800E65A8 & 0x200)) {
+        D_800E6A70 = D_80047948;
+    }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007C7E0_1648A0.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_8007C8BC_16497C(void) {
