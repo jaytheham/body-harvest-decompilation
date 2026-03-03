@@ -125,6 +125,8 @@ void func_800800DC_8F08C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080A54_8FA04.s")
 
+// set building as target for alien?
+// https://decomp.me/scratch/vFXhm
 #ifdef NON_MATCHING
 void func_80080B44_8FAF4(u8 arg0, u8 arg1) {
 	AlienInstance *alien = &alienInstances[arg0]; 
@@ -208,6 +210,7 @@ void func_80081C84_90C34(u8 arg0, void *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800828F0_918A0.s")
 
+// https://decomp.me/scratch/Ievdq
 #ifdef NON_MATCHING
 s32 func_80082990_91940(s16 arg0, s16 arg1) {
 	s32 v1;
