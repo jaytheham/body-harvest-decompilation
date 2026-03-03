@@ -16,9 +16,9 @@ CYAN    := \033[0;36m
 
 BUILD_DIR = build
 ASM_DIRS  = asm \
-            asm/libc \
-            asm/libultra/audio \
-            asm/data asm/data/libultra/audio \
+			asm/libc \
+			asm/libultra/audio \
+			asm/data asm/data/libultra/audio \
 			asm/core \
 			asm/overlay_gameplay/frontend asm/overlay_gameplay/outside asm/overlay_gameplay/inside \
 			asm/overlay_level/greece \
@@ -30,19 +30,19 @@ BIN_DIRS  = assets
 SRC_DIR   = src.$(VERSION)
 
 SRC_DIRS  = $(SRC_DIR) \
-            $(SRC_DIR)/libultra/audio $(SRC_DIR)/libultra/libc \
-            $(SRC_DIR)/core \
+			$(SRC_DIR)/libultra/audio $(SRC_DIR)/libultra/libc \
+			$(SRC_DIR)/core \
 			$(SRC_DIR)/overlay_gameplay/frontend \
 			$(SRC_DIR)/overlay_gameplay/outside \
 			$(SRC_DIR)/overlay_gameplay/inside \
-            $(SRC_DIR)/overlay_level/greece \
-            $(SRC_DIR)/overlay_level/java \
-            $(SRC_DIR)/overlay_level/america \
-            $(SRC_DIR)/overlay_level/siberia \
-            $(SRC_DIR)/overlay_level/comet \
-            $(SRC_DIR)/data \
-            $(SRC_DIR)/bss \
-            $(SRC_DIR)/buffers
+			$(SRC_DIR)/overlay_level/greece \
+			$(SRC_DIR)/overlay_level/java \
+			$(SRC_DIR)/overlay_level/america \
+			$(SRC_DIR)/overlay_level/siberia \
+			$(SRC_DIR)/overlay_level/comet \
+			$(SRC_DIR)/data \
+			$(SRC_DIR)/bss \
+			$(SRC_DIR)/buffers
 
 TOOLS_DIR = tools
 
@@ -54,8 +54,8 @@ C_FILES         = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 BIN_FILES       = $(foreach dir,$(BIN_DIRS),$(wildcard $(dir)/*.bin))
 
 O_FILES := $(foreach file,$(S_FILES),$(BUILD_DIR)/$(file).o) \
-           $(foreach file,$(C_FILES),$(BUILD_DIR)/$(file).o) \
-           $(foreach file,$(BIN_FILES),$(BUILD_DIR)/$(file).o)
+		   $(foreach file,$(C_FILES),$(BUILD_DIR)/$(file).o) \
+		   $(foreach file,$(BIN_FILES),$(BUILD_DIR)/$(file).o)
 
 LIBULTRA = lib/libultra_rom.a
 
@@ -167,7 +167,7 @@ LOOP_UNROLL    =
 MIPSISET       = -mips2 -32
 
 INCLUDE_CFLAGS = -I . -I include -I include/2.0I -I include/libc -I assets \
-                 -I src.$(VERSION) -I src.$(VERSION)/libultra/audio
+				 -I src.$(VERSION) -I src.$(VERSION)/libultra/audio
 
 ASFLAGS        = -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I include
 OBJCOPYFLAGS   = -O binary
@@ -257,7 +257,6 @@ splat: $(SPLAT)
 extract: splat tools
 	$(PYTHON) $(SPLAT) $(BASENAME).$(VERSION).yaml
 	$(PYTHON) $(TOOLS_DIR)/fixup_tlut.py
-	sed -i 's/(func_802D4CD0)/(func_802D4CD0_18D7E0)/g' asm/core/loader.s
 	sed -i 's/(func_802D4CD0)/(func_802D4CD0_18D7E0)/g' asm/nonmatchings/core/loader/__osInitialize_emu.s
 
 decompress: $(ALL_RNC_EXTRACTED)
