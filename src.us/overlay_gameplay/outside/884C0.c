@@ -235,23 +235,20 @@ s32 func_80082990_91940(s16 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082CA0_91C50.s")
 
-#ifdef NON_MATCHING
 s32 func_80082E38_91DE8(u8 arg0, s16 arg1) {
 	s32 specIndex = alienInstances[arg0].specIndex;
 	u16 new_var;
 	s32 new_var2;
 	s16 unk2 = alienInstances[arg0].unk2;
 	new_var = unk2;
-	new_var2 = alienSpecs[specIndex].unk38 + new_var;
-	if (((s16) new_var2) < arg1)
+	unk2 = alienSpecs[specIndex].unk38 + new_var;
+	new_var2 = unk2;
+	if (new_var2 < arg1)
 	{
 		return 0;
 	}
 	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082E38_91DE8.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082EB4_91E64.s")
 
