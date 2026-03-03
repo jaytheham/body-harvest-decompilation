@@ -198,22 +198,26 @@ void enableCheatFeeble() {
 // addCharToCheatInputBuffer
 #ifdef NON_MATCHING
 void func_80073A20_829D0(u8 arg0) {
-	u8* var_v0 = &cheatInputBuffer[9];
-	s32 var_v1 = 1;
-
-	if (isCheatingEnabled == 0) {
-		return;
+  u8 *var_v0;
+  int new_var;
+  s32 haveShiftedAllChars = 1;
+  if (isCheatingEnabled == 0)
+  {
+	return;
+  }
+  haveShiftedAllChars &= 1;
+  if (haveShiftedAllChars != 0)
+  {
+	var_v0 = &cheatInputBuffer[9]; do
+	{
+		new_var = var_v0 < &cheatInputBuffer[2];
+		var_v0 -= 1;
+		*(var_v0 + 1) = *var_v0;
+		haveShiftedAllChars = new_var;
 	}
-	
-	var_v1 &= 1;
-	if (var_v1 != 0) {
-		do {
-			var_v1 = var_v0 < &cheatInputBuffer[2];
-			var_v0 -= 1;
-			*(var_v0 + 1) = *(var_v0);
-		} while (var_v1 == 0);
-	}
-	cheatInputBuffer[0] = arg0;
+	while (!haveShiftedAllChars);
+  }
+  cheatInputBuffer[0] = arg0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073A20_829D0.s")

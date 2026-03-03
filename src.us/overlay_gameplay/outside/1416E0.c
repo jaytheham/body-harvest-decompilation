@@ -80,7 +80,6 @@ void func_80132740_1416F0(Unk80160080 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80132980_141930.s")
 
-
 void func_801330E4_142094(Unk80160080 *arg0) {
 	u16 sp46;
 

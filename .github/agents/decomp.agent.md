@@ -3,6 +3,7 @@ name: Body Harvest Decomp
 description: Decompile functions from the N64 game Body Harvest
 tools:
   ["search", "edit/editFiles", "edit/createFile", "execute", "read", "todo"]
+model: Claude Sonnet 4.6 (copilot)
 ---
 
 # Decompilation Workflow
