@@ -2,6 +2,7 @@
 #include "common.h"
 
 // enableCheatAnnull
+// https://decomp.me/scratch/X2f6R
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800731B0_82160.s")
 
 // func_800732C8_82278
@@ -145,6 +146,7 @@ void enableCheatBleed() {
 }
 
 // enableCheatSuffer
+// https://decomp.me/scratch/tLY1D
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_8007383C_827EC.s")
 
 // func_8007391C_828CC
@@ -196,6 +198,7 @@ void enableCheatFeeble() {
 }
 
 // addCharToCheatInputBuffer
+// https://decomp.me/scratch/ms2Ub
 #ifdef NON_MATCHING
 void func_80073A20_829D0(u8 arg0) {
   u8 *var_v0;

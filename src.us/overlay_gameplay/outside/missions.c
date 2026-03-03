@@ -7,8 +7,10 @@
 // Resets a bunch of memory? For missions?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074204_831B4.s")
 
+// https://decomp.me/scratch/igaHA
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007447C_8342C.s")
 
+// https://decomp.me/scratch/aFHOH
 #ifdef NON_MATCHING
 s32 func_800744E0_83490(s32 arg0) {
 	return arg0 >= 0x9C && arg0 < 0xA6;
@@ -18,43 +20,20 @@ s32 func_800744E0_83490(s32 arg0) {
 #endif
 
 // readMissionByteWithIncrement
-#ifdef NON_MATCHING
-u8 func_80074500_834B0() {
-	s32 temp_t6;
-	volatile u8 *var_a0;
-	u8 *new_var;
-
-	new_var = D_801494B8;
-	var_a0 = &D_801494BC;
-	temp_t6 = (*new_var) & 0xFFu;
-	D_801494B8++;
-	*var_a0 = temp_t6;
-	if (0) { }
-	return temp_t6;
+u8 func_80074500_834B0(void) {
+	
+	D_801494BC = *D_801494B8;
+	D_801494B8 += 1;
+	return D_801494BC;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074500_834B0.s")
-#endif
 
 // readMissionByteWithIncrementCopy
-#ifdef NON_MATCHING
-s8 func_8007452C_834DC(void) {
-	u8* var_v1;
-	u8 temp_t6;
-	volatile u8* var_a0;
-	s32 var_v0;
-
-	var_v1 = D_801494B8;
-	var_a0 = &D_801494BC;
-	temp_t6 = *var_v1;
-	D_801494B8 = var_v1 + 1;
-	*var_a0 = temp_t6;
-	var_v0 = temp_t6 & 0xFF;
-	return var_v0;
+s32 func_8007452C_834DC(void) {
+	
+	D_801494BC = *D_801494B8;
+	D_801494B8 += 1;
+	return D_801494BC;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007452C_834DC.s")
-#endif
 
 // readMissionByteWithoutIncrement
 u8 func_80074558_83508(void) {
@@ -118,6 +97,7 @@ void func_80076208_851B8(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007622C_851DC.s")
 
+// https://decomp.me/scratch/GkpO5
 #ifdef NON_MATCHING
 void func_800762A8_85258() {
 	s32 *var_a1;

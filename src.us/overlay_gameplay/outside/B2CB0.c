@@ -368,6 +368,7 @@ void func_800A5EE8_B4E98(u8 arg0) {
 	func_800153D8_15FD8(0xD7);
 }
 
+// https://decomp.me/scratch/xqKk4
 #ifdef NON_MATCHING
 void func_800A5F24_B4ED4(s32 arg0) {
     u8 sp27;

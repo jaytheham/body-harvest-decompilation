@@ -92,7 +92,6 @@ void func_800720F4_810A4(void);
 void* func_80070FB8_7FF68(void);
 void func_80073A74_82A24(void);
 void func_800734AC_8245C(void);
-s8 func_8007452C_834DC();
 void func_80075AA4_84A54(void);
 void func_800756DC_8468C(void);
 void func_80075E50_84E00(void);

@@ -14,6 +14,7 @@ s32 func_80070270_7F220(s32 arg0) {
 	return 0;
 }
 
+// https://decomp.me/scratch/bBdJM
 #ifdef NON_MATCHING
 void func_800702C0_7F270(s16 arg0) {
 	u32 currentTick;

@@ -74,6 +74,7 @@ void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012EC3C_13DBEC.s")
 
+// https://decomp.me/scratch/RaB1d
 #ifdef NON_MATCHING
 /* Cycles RGBA color through hue phases over 300 steps using a global timer */
 void func_8012F24C_13E1FC(u8 *arg0, s32 arg1) {

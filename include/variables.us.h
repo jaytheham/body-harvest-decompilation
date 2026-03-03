@@ -153,6 +153,7 @@ extern s32 D_8004D158;
 extern u8 D_8004D160;
 extern u8 D_8004D1B9;
 extern u8 D_80047F93;
+extern AlienInstance* D_8004D0F8;
 extern s32 D_8004DC48;
 extern s32 D_8004DC4C;
 extern s16 D_8004DC60;

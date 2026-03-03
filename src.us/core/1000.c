@@ -249,6 +249,7 @@ void func_80002ED4_3AD4(void) { osContGetReadData(&D_800475B8); }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1000/func_80003064_3C64.s")
 
+// https://decomp.me/scratch/66U7q
 #ifdef NON_MATCHING
 void func_800033D4_3FD4(u32 arg0, s32 arg1) {
     s32 temp_v0;
