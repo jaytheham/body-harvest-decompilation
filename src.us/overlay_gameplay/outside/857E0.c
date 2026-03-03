@@ -85,7 +85,26 @@ u16 func_80078530_874E0(s16 arg0, s16 arg1) {
 	return D_8021FA30[D_80221A30[arg1 >> 2][arg0 >> 2]][((arg1 & 3) << 2) + (arg0 & 3)];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800785B4_87564.s")
+u16 *func_800785B4_87564(s16 arg0, s16 arg1, s32 *arg2) {
+	s16 t4;
+	s16 t1;
+	u8 v1;
+
+	t1 = (s16)((arg1 + 0x8000) >> 8);
+	t4 = (s16)((arg0 + 0x8000) >> 8);
+
+	v1 = D_80221A30[t1 >> 2][t4 >> 2];
+	if (v1 == 0xFF) {
+		return NULL;
+	}
+
+	*arg2 = (arg0 & 0x80) ? 1 : 0;
+	if (arg1 & 0x80) {
+		*arg2 += 2;
+	}
+
+	return &D_8021FA30[v1][(t1 & 3) * 4 + (t4 & 3)];
+}
 
 // https://decomp.me/scratch/AHGPz
 #ifdef NON_MATCHING
