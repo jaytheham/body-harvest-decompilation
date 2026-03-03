@@ -318,6 +318,7 @@ void func_80071178_80128(void) {
 	}
 }
 
+// https://decomp.me/scratch/yoXSG
 #ifdef NON_MATCHING
 void func_80071228_801D8(void) {
 	Gfx* dl;

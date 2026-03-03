@@ -35,6 +35,7 @@ typedef enum FrontEndState
 // calculatePlayersTotalScore
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070390_40840.s")
 
+// https://decomp.me/scratch/MMAgd
 // Stores the current level's play time in seconds and returns the total play time across all levels.
 #ifdef NON_MATCHING
 s32 func_80070420_408D0(void) {
@@ -118,6 +119,7 @@ void func_80070904_40DB4(s16 arg0) {
 	}
 }
 
+// https://decomp.me/scratch/VPyx1
 /**
  * @brief Resets three per-entry frontend fields across all mission entries.
  */
@@ -208,6 +210,7 @@ void func_80070A8C_40F3C(s16 arg0)
   while (var_v1--);
 }
 
+// https://decomp.me/scratch/cR6k4
 #ifdef NON_MATCHING
 void func_80070AEC_40F9C(s16 arg0, s16 arg1) {
   u8 missionId;

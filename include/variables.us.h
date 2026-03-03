@@ -363,6 +363,8 @@ extern u8 D_80140DA8[];
 extern u8 D_80140DC0[];
 extern f32 D_801411A0;
 extern f32 D_801411A4;
+extern s32 D_801416D0[];
+extern s32 D_80141734[];
 extern f64 D_801426C0;
 extern f64 D_801426C8;
 extern u8 D_80142740[]; // Found parent %d
@@ -440,6 +442,8 @@ extern u8 D_8014D200[];
 extern u8 D_8014D298[][10];
 extern s32 D_8014D2E8;
 extern s32 D_8014D2EC;
+extern s32 D_8014D2F0;
+extern s32 D_8014D2F4;
 extern u8 D_8014D408[]; // unknown size, maybe 0x101
 extern u8 D_8014D509;
 extern u8 D_8014D50A;
@@ -518,6 +522,7 @@ extern AlienSpec alienSpecs[0x30];
 extern VehicleSpec vehicleSpecs[0x14];
 extern BuildingSpec buildingSpecs[0x20];
 extern Unk80259490 D_80259490; // vehicle instances?
+extern u8 D_80259D90[][0x50];
 extern u8 D_80259D92[][0x50];
 extern Unk80259D98 D_80259D98[];
 

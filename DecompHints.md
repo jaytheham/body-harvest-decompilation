@@ -5,6 +5,15 @@
 - make sure all functions you call are declared
 - O2 will assign registers automatically. Any variable defined as `register` will become a "normal" variable (eg, `register s32 a;` becomes `s32 a;`)
 
+### Parameter types
+
+- If the assembly at function entry shows a plain `move reg, arg` (or `or reg, a0, zero`) without sign-extension (`sll/sra` pair), declare the parameter as `s32` not `s16`, even if the values are conceptually 16-bit. Using `s16` parameters causes IDO to emit a sign-extension sequence at the prologue.
+
+### Array base address and immediate offsets
+
+- When a u8 (or other) array is declared at address X+N (e.g. `D_80259D92` starts 2 bytes into `D_80259D90`), accessing `D_80259D92[i][0]` generates a different base pointer in the compiled output vs `D_80259D90[i][2]`, even though both access the same memory. The immediate offset in `sb/lb` instructions will differ by N. Match the original assembly's immediate (e.g. `-0x4E` vs `-0x50`) to pick the right base variable and field index.
+- **`li reg, -1` vs `li reg, 0xff`**: To get `addiu reg, zero, -1` (signed -1 load) for a byte store, use a `s8 neg_one = -1;` variable and assign from it. Directly assigning `-1` or `(u8)-1` to a `u8` array element generates `li reg, 0xff` (unsigned 0xFF load) instead.
+
 ### Regalloc differences
 
 - move statements around

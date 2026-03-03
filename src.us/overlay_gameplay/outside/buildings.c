@@ -155,6 +155,7 @@ s32 func_80118114_1270C4(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801183EC_12739C.s")
 
+// https://decomp.me/scratch/9HA5h
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118418_1273C8.s")
 
 void func_80118454_127404(s32 arg0, s32 arg1) {

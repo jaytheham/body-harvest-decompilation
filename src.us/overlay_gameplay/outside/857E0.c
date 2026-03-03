@@ -62,7 +62,27 @@ void func_800769A8_85958(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80076A10_859C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80076FCC_85F7C.s")
+void func_80076FCC_85F7C(s32 arg0, s32 arg1) {
+    s32 i;
+    s32 s3;
+    s32 s4;
+    s8 neg_one;
+
+    D_8014D2E8 = 0;
+    D_8014D2EC = 0;
+    neg_one = -1;
+    for (i = 0; i < 0x96; i++) {
+        D_8014D200[i] = i;
+        D_80259D90[i][2] = neg_one;
+    }
+    s3 = ((arg0 - 0x880) >> 8) >> 2;
+    D_8014D2F0 = s3;
+    s4 = ((arg1 - 0x880) >> 8) >> 2;
+    D_8014D2F4 = s4;
+    for (i = 0; i < 0x19; i++) {
+        func_80076A10_859C0((s16) i, (s16) (D_801416D0[i] + s3), (s16) (D_80141734[i] + s4));
+    }
+}
 
 // fell tree
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800770D8_86088.s")
@@ -140,7 +160,60 @@ void func_800786EC_8769C(u16* arg0, s32 arg1) {
 	}
 }
 
+#ifdef NON_MATCHING
+void func_80078720_876D0(AlienInstance *alien) {
+	s16 new_var;
+	s32 sp20;
+	s32 *new_var2;
+	s32 sp1C;
+	if (sp1C)
+	{
+	}
+	sp1C = alien->unk30;
+	new_var = alien->unk14;
+	if (!alien->unk10)
+	{
+	}
+	if (alien->unk10 == sp1C)
+	{
+	u16 *v0;
+	s32 v1 = alien->unk10;
+	sp1C = new_var;
+	sp1C = alien->unk30;
+	v0 = func_800785B4_87564((s16) v1, (s16) sp1C, &sp20);
+	sp1C = v1;
+	if (v0 != NULL)
+	{
+	func_800786EC_8769C(v0, 2);
+	}
+	v0 = func_800785B4_87564((s16) (sp1C - 1), (s16) sp1C, &sp20);
+	if (v0 != NULL)
+	{
+	func_800786EC_8769C(v0, 1);
+	}
+	}
+	else
+	{
+	u16 *v0;
+	s32 a3 = new_var;
+	sp1C = alien->unk10;
+	v0 = func_800785B4_87564((s16) sp1C, (s16) a3, &sp20);
+	a3 = sp1C;
+	if (v0 != NULL)
+	{
+	func_800786EC_8769C(v0, 0);
+	}
+	v0 = func_800785B4_87564((s16) a3, (s16) (a3 - 1), new_var2 = &sp20);
+	if (v0 != NULL)
+	{
+	func_800786EC_8769C(v0, 3);
+	}
+	sp1C = alien->unk10;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078720_876D0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078828_877D8.s")
 

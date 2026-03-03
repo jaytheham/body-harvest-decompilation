@@ -123,7 +123,7 @@ void func_800A99B8_B8968(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9A90_B8A40.s")
 
-// Failed - sonnet 4.6
+// https://decomp.me/scratch/v6aUL
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9DC0_B8D70.s")
 
 #ifdef NON_MATCHING
