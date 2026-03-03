@@ -80,7 +80,7 @@ void func_80132740_1416F0(Unk80160080 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80132980_141930.s")
 
-#ifdef NON_MATCHING
+
 void func_801330E4_142094(Unk80160080 *arg0) {
 	u16 sp46;
 
@@ -92,32 +92,14 @@ void func_801330E4_142094(Unk80160080 *arg0) {
 		s16 far = 0x500;
 		guPerspective((Mtx *)(D_8005BB20 + 0x180), &sp46, (f32)D_80149404, 1.3333334f, (f32)near, (f32)far, 1.0f);
 	}
-	{
-		Gfx *gfx = D_8005BB2C;
-		D_8005BB2C = gfx + 1;
-		gfx->words.w0 = 0xBC00000E;
-		gfx->words.w1 = (s32)sp46;
-	}
+	gSPPerspNormalize(D_8005BB2C++, sp46);
 	guLookAt((Mtx *)(D_8005BB20 + 0x200),
 			 D_80160194, D_80160198, D_8016019C,
 			 D_801601A0, D_801601A4, D_801601A8,
 			 arg0->unk18, arg0->unk1C, arg0->unk20);
-	{
-		Gfx *gfx = D_8005BB2C;
-		D_8005BB2C = gfx + 1;
-		gfx->words.w0 = 0x01030040;
-		gfx->words.w1 = (s32)((u32)(D_8005BB20 + 0x180) & 0x1FFFFFFF);
-	}
-	{
-		Gfx *gfx = D_8005BB2C;
-		D_8005BB2C = gfx + 1;
-		gfx->words.w0 = 0x01010040;
-		gfx->words.w1 = (s32)((u32)(D_8005BB20 + 0x200) & 0x1FFFFFFF);
-	}
+	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)(D_8005BB20 + 0x180) & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)(D_8005BB20 + 0x200) & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801330E4_142094.s")
-#endif
 
 void func_80133260_142210(Unk80160080 *arg0) {
 	D_801493D0 = 0;
