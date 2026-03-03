@@ -11,9 +11,9 @@ void func_80132740_1416F0(Unk80160080 *arg0) {
 	sp1C = D_80052B34;
 	osSyncPrintf(&D_80145650, arg0);
 	arg0->unkC = 0.0f;
+	*(s32*)&arg0->unk24 = *(s32*)&arg0->unkC;
 	arg0->unk10 = 0.0f;
 	arg0->unk14 = 0.0f;
-	*(s32*)&arg0->unk24 = *(s32*)&arg0->unkC;
 	arg0->unk48 = 0;
 	arg0->unk50 = 0;
 	arg0->unk4A = 0x71C;
@@ -31,16 +31,19 @@ void func_80132740_1416F0(Unk80160080 *arg0) {
 	*(s32*)&arg0->unk2C = *(s32*)&arg0->unk14;
 	*(s32*)&arg0->unk28 = *(s32*)&arg0->unk10;
 	arg0->unk5E = (s16) D_80052B34->unkE;
-	arg0->unk64 = 0x64;
-	arg0->unk68 = 0;
-	D_8016011C = 1.0f;
-	D_80160120 = 1.0f;
-	D_80160124 = 1.0f;
-	D_80160128 = 1.0f;
-	D_8016012C = D_8014567C;
-	D_80160130 = D_8014567C;
-	D_80160134 = D_8014567C;
-	D_80160138 = D_8014567C;
+	{
+		f32 lodColor = D_8014567C;
+		arg0->unk64 = 0x64;
+		arg0->unk68 = 0;
+		D_8016011C = 1.0f;
+		D_80160120 = 1.0f;
+		D_80160124 = 1.0f;
+		D_80160128 = 1.0f;
+		D_8016012C = lodColor;
+		D_80160130 = lodColor;
+		D_80160134 = lodColor;
+		D_80160138 = lodColor;
+	}
 	arg0->unk6C = 1;
 	arg0->unk30 = (f32) sp1C->unk0;
 	{

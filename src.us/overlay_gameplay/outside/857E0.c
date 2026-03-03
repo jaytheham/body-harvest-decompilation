@@ -69,13 +69,11 @@ u16 func_80078530_874E0(s16 arg0, s16 arg1) {
 #ifdef NON_MATCHING
 s16 func_80078678_87628(u16 *arg0, s32 arg1, s32 arg2)
 {
-  s16 temp_t7;
-  s32 new_var;
-  new_var = arg1 * 4;
-  temp_t7 = (((s32) (*arg0)) >> new_var) & 0xF;
+s16 temp_t7;
+  temp_t7 = (((s32) (*arg0)) >> (arg1 * 4)) & 0xF;
   if ((((s32) (temp_t7 - 1)) % 3) == 0)
   {
-	*arg0 = (*arg0) + (arg2 << arg2);
+	*arg0 = (*arg0) + (arg2 << (arg1 * 4));
 	return (s16) (temp_t7 + arg2);
   }
   return -1;

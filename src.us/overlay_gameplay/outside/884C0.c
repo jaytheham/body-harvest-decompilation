@@ -83,12 +83,11 @@ void func_80079510_884C0(u8 arg0) {
 #ifdef NON_MATCHING
 void func_8007EE24_8DDD4(u8 arg0) {
 	AlienInstance *inst = &alienInstances[arg0];
-	s32 mode;
-	s32 v1 = inst->unk20;
+	s32 mode = inst->unk20;
 	inst->unk0 = inst->unk2E;
 	inst->unk4 = inst->unk32;
-	if ((v1 & 0x80000) && (v1 & 0x600)) {
-		func_800F2D48_101CF8(v1 & 7, inst->unk0, inst->unk4);
+	if ((mode & 0x80000) && (mode & 0x600)) {
+		func_800F2D48_101CF8(mode & 7, inst->unk0, inst->unk4);
 	}
 }
 #else
