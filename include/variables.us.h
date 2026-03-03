@@ -524,6 +524,12 @@ extern BuildingSpec buildingSpecs[0x20];
 extern Unk80259490 D_80259490; // vehicle instances?
 extern u8 D_80259D90[][0x50];
 extern u8 D_80259D92[][0x50];
+extern s16 D_80259D94;
+extern s16 D_80259D96;
+extern s8 D_80259DE2;
+extern s16 D_80259DE4;
+extern s16 D_80259DE6;
+extern u8 D_80259E30[];
 extern Unk80259D98 D_80259D98[];
 
 extern u8 D_D03E780[];

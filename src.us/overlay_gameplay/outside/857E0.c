@@ -235,7 +235,46 @@ s32 func_80078B58_87B08(s16 arg0, s16 arg1) {
 	return value;
 }
 
+#ifdef NON_MATCHING
+s32 func_80078BC8_87B78(s16 arg0, s16 arg1) {
+    s32 i;
+    s32 ret3;
+    long long new_var2;
+    u8 *e;
+
+    arg0 = (s16)(arg0 >> 7);
+    arg1 = (s16)(arg1 >> 7);
+    if (0) {}
+
+    if ((s8)D_80259D92[0][0] != -1 && arg0 == D_80259D94 >> 7 && arg1 == D_80259D96 >> 7) {
+        return 0;
+    }
+    if ((s8)D_80259DE2 != -1 && arg0 == D_80259DE4 >> 7 && arg1 == D_80259DE6 >> 7) {
+        return 1;
+    }
+    for (i = 2, e = D_80259E30; i < 0x96; i += 4, e += 0x140) {
+        s16 x2, y2, x3, y3, x4, y4;
+        if ((s8)e[2] != -1 && arg0 == *(s16*)(e + 4) >> 7 && arg1 == *(s16*)(e + 6) >> 7) {
+            return i;
+        }
+        if ((s8)e[0x52] != -1 && arg0 == (x2 = *(s16*)(e + 0x54)) >> 7 && arg1 == (y2 = *(s16*)(e + 0x56)) >> 7) {
+            new_var2 = 1;
+            return i + new_var2;
+        }
+        if ((s8)e[0xA2] != -1 && arg0 == (x3 = *(s16*)(e + 0xA4)) >> 7 && arg1 == (y3 = *(s16*)(e + 0xA6)) >> 7) {
+            return i + 2;
+        }
+        x4 = *(s16*)(e + 0xF4); y4 = *(s16*)(e + 0xF6);
+        ret3 = i + 3;
+        if ((s8)e[0xF2] != -1 && arg0 == x4 >> 7 && arg1 == y4 >> 7) {
+            return ret3;
+        }
+    }
+    return -1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078BC8_87B78.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078D64_87D14.s")
 
