@@ -41,7 +41,9 @@
 
 The optimizer can move some variables into registers, leaving stack slots empty. If an explicitly declared stack variable is unused or placed in a register, and it is last in the declaration order, it won't affect `sp`. (Thus, a strategy for getting correct stack usage is to first move all stack-placed variables to their correct place on the stack, then either pad with unused variables at the top of the stack to increase stack size, or move registers variables from the start to the end of the declaration order to decrease it.)
 
-Stack variables are placed in "as declared" order - non-declared temporary variables are placed at end of stack:
+Stack variables are placed in "as declared" order - non-declared temporary variables are placed at end of stack.
+
+**Padding with unused variables (not-last rule):** If a stack frame is too small (e.g., sp3C ends up at 0x34 instead of 0x3c), declare extra unused `s32` variables BETWEEN the first variable and the next real one. Because they are NOT last in declaration order, IDO still reserves their stack slots even if they're never used. Two unused `s32` variables between `sp3C` and `sp24` add 8 bytes (moving both into the correct positions). Verified with IDO 5.3 O2.
 
 ```c=
 s32 var1; //0 or -56

@@ -195,24 +195,23 @@ void enableCheatFeeble() {
 	D_8013BD04 = x == 0;
 }
 
-// func_80073A20_829D0
+// addCharToCheatInputBuffer
 #ifdef NON_MATCHING
-void addCharToCheatInputBuffer(u8 arg0) {
-	u8* var_v0;
-	s32 passedStart = 1;
+void func_80073A20_829D0(u8 arg0) {
+	u8* var_v0 = &cheatInputBuffer[9];
+	s32 var_v1 = 1;
 
 	if (isCheatingEnabled == 0) {
 		return;
 	}
 	
-	passedStart &= 1;
-	if (passedStart != 0) {
-		var_v0 = &cheatInputBuffer[9];
+	var_v1 &= 1;
+	if (var_v1 != 0) {
 		do {
-			passedStart = var_v0 < &cheatInputBuffer[2];
+			var_v1 = var_v0 < &cheatInputBuffer[2];
 			var_v0 -= 1;
 			*(var_v0 + 1) = *(var_v0);
-		} while (passedStart == 0);
+		} while (var_v1 == 0);
 	}
 	cheatInputBuffer[0] = arg0;
 }

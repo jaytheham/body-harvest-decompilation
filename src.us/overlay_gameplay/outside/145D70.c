@@ -36,20 +36,18 @@ void func_80137234_1461E4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_801372B4_146264(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	f32 sp3C;
-	s16 sp22;
+	s32 sp38;
+	s32 sp34;
 	Struct_80140D00 sp24;
+	s16 sp22;
 
 	sp24 = D_80140D00;
 	sp22 = sp24.values[arg3];
 	sp3C = func_80136DC0_145D70(arg0, arg1, arg2);
 	func_80014A3C_1563C(0, sp22, sp3C, func_80136ECC_145E7C(arg0, arg1, arg2), -1.0f);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/145D70/func_801372B4_146264.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/145D70/func_80137368_146318.s")
 
