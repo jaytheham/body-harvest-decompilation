@@ -277,7 +277,20 @@ s32 func_80082A98_91A48(u8 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082B30_91AE0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082C04_91BB4.s")
+s32 func_80082C04_91BB4(u8 arg0)
+{
+	s16 sp1E;
+	s16 sp1C;
+	sp1E = alienInstances[arg0].unk0;
+	sp1C = alienInstances[arg0].unk4;
+	if (func_800B0C4C_BFBFC(sp1E >> 8, sp1C >> 8))
+	{
+		sp1E &= 0xff;
+		sp1C &= 0xff;
+		return func_800829EC_9199C(arg0, func_80082990_91940(sp1E, sp1C));
+	}
+	return -1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082CA0_91C50.s")
 
