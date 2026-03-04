@@ -1,7 +1,25 @@
 #include <ultra64.h>
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/145D70/func_80136DC0_145D70.s")
+f32 func_80136DC0_145D70(s16 arg0, s16 arg1, s16 arg2) {
+	f32 temp_f0;
+	f32 temp_f2;
+	f32 temp_f14;
+
+	if (D_8006AB88 == 0) {
+		return 0.0f;
+	}
+	if (D_80157F68 > 0) {
+		temp_f0 = (f32)arg0 - D_80157F08.unk0;
+		temp_f2 = (f32)arg1 - D_80157F08.unk4;
+		temp_f14 = (f32)arg2 - D_80157F08.unk8;
+		return sqrtf(temp_f0 * temp_f0 + temp_f2 * temp_f2 + temp_f14 * temp_f14);
+	}
+	temp_f0 = (f32)arg0 - D_80160080.unk0;
+	temp_f2 = (f32)arg1 - D_80160080.unk4;
+	temp_f14 = (f32)arg2 - D_80160080.unk8;
+	return sqrtf(temp_f0 * temp_f0 + temp_f2 * temp_f2 + temp_f14 * temp_f14);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/145D70/func_80136ECC_145E7C.s")
 
@@ -49,7 +67,24 @@ void func_801372B4_146264(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	func_80014A3C_1563C(0, sp22, sp3C, func_80136ECC_145E7C(arg0, arg1, arg2), -1.0f);
 }
 
+// https://decomp.me/scratch/4dfzw
+#ifdef NON_MATCHING
+void func_80137368_146318(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
+	f32 sp4C;
+	s32 sp48;
+	s32 sp44;
+	Struct_80140D10 sp28;
+
+	sp28 = D_80140D10;
+	if (D_8006AB88 != 0 && sp28.values[arg3] != -1) {
+		sp44 = (s32)&sp44 + arg4 * 4 + 4;
+		sp4C = func_80136DC0_145D70(arg0, arg1, arg2);
+		func_80014A3C_1563C(sp44, sp28.values[arg3], sp4C, func_80136ECC_145E7C(arg0, arg1, arg2), -1.0f);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/145D70/func_80137368_146318.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/145D70/func_80137468_146418.s")
 

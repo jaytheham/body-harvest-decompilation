@@ -418,6 +418,10 @@ typedef struct {
 } Struct_80140D00; /* size = 0x10 */
 
 typedef struct {
+	/* 0x00 */ s16 values[14];
+} Struct_80140D10; /* size = 0x1C */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;  /* x */
 	/* 0x02 */ s16 unk2;  /* y */
 	/* 0x04 */ s16 unk4;
