@@ -504,7 +504,16 @@ s32 func_80088F78_97F28(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088FFC_97FAC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008916C_9811C.s")
+void func_8008916C_9811C(u8 arg0, s16 arg1) {
+	s16 padX;
+	s16 sp24;
+	s32 sp20;
+	padX = alienInstances[arg0].unkC;
+	sp24 = D_8014DD50[padX].unkC;
+	sp20 = *(s32 *)&alienSpecs[alienInstances[arg0].specIndex];
+	sp20 = func_80012000_12C00(sp20);
+	func_80088FFC_97FAC(&sp20, arg1, sp24);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80089200_981B0.s")
 
