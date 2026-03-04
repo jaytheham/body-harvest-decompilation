@@ -105,9 +105,9 @@ typedef struct {
 } Unk80158F98; /* size = 0x08 */
 
 typedef struct {
-	/* 0x00 */ s16 unk0;
+	/* 0x00 */ s16 unk0; // xposition
 	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
+	/* 0x04 */ s16 unk4; // zposition
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ s16 unkA;
@@ -141,7 +141,8 @@ typedef struct {
 	/* 0x3A */ s16 unk3A;
 	/* 0x3C */ s8 unk3C;
 	/* 0x3D */ s8 unk3D;
-	/* 0x3E */ u8 pad3E[0x9];
+	/* 0x3E */ u8 unk3E;
+	/* 0x3F */ u8 pad3F[0x8];
 	/* 0x47 */ u8 unk47;
 	/* 0x48 */ s16 unk48;
 	/* 0x4A */ u8 pad4A;
@@ -187,6 +188,29 @@ typedef struct {
 	/* 0x58 */ s16 unk58;
 	/* 0x5A */ u8 pad5A[0xE];
 } AlienSpec; /* size = 0x68 */
+
+typedef struct {
+	/* 0x00 */ s16 xOffset;
+	/* 0x02 */ s16 zOffset;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 alienSpecId;
+	/* 0x07 */ u8 pad7;
+} AlienWaveEntry; /* size = 0x08 */
+
+typedef struct {
+	/* 0x00 */ s8 waveSpecId;
+	/* 0x01 */ u8 pad1;
+	/* 0x02 */ s16 xPosition;
+	/* 0x04 */ s16 yPosition;
+	/* 0x06 */ u8 pad6[2];
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ u8 padC[3];
+	/* 0x0F */ s8 unkF;
+	/* 0x10 */ u8 unk10;
+	/* 0x11 */ u8 unk11;
+	/* 0x12 */ u8 unk12;
+	/* 0x13 */ s8 unk13;
+} AlienWaveInstance; /* size = 0x14 */
 
 typedef struct {
 	/* 0x00 */ f32 unk0;
@@ -839,17 +863,6 @@ typedef struct {
 	/* 0x04 */ s32 unk4;
 } Unk80047578; /* size = 0x08 */
 
-typedef struct {
-	/* 0x00 */ s8 unk0;
-	/* 0x01 */ u8 pad1;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 pad6[2];
-	/* 0x08 */ s32 unk8;
-	/* 0x0C */ u8 padC[6];
-	/* 0x12 */ u8 unk12;
-	/* 0x13 */ u8 pad13;
-} Unk80223780Entry; /* size = 0x14 */
 
 typedef struct {
 	/* 0x00 */ u16 unk0;

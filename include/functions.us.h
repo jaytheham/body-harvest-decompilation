@@ -168,7 +168,7 @@ void func_800ADFC0_BCF70(u8);
 void func_800AE2C0_BD270(void);
 s16 func_800AE300_BD2B0(Unk80222A78 *arg0);
 void func_800AE3AC_BD35C(Unk80222A78 *arg0);
-void func_800AEE5C_BDE0C(s16, s16, u8, s32);
+u8 func_800AEE5C_BDE0C(s16, s16, u8, u8);
 s32 func_800AE454_BD404(Unk80222A78 *);
 void sourceTaggedPrintF(char *arg0, char *arg1, s32 arg2, s32 *arg3);
 void func_800AE588_BD538(void);
@@ -184,7 +184,7 @@ void func_800B01E4_BF194(void *);
 void func_800B03CC_BF37C(u8, s16, s16, Unk80222A78 *);
 s32 func_800B0C4C_BFBFC(s32, s32);
 void func_800B0C80_BFC30(void);
-s16 func_800B0F20_BFED0(s16, s16, s16);
+s16 func_800B0F20_BFED0(s16, s16);
 void func_800B31FC_C21AC(s8, s8);
 s32 func_800B325C_C220C(s8, s8, s32);
 void func_800B41C8_C3178(s32, s32, u8*, s32);
@@ -486,5 +486,7 @@ void func_802D536C_18DE7C(void);
 void func_802D4F74_18DA84(void);
 void func_802D5660_18E170(void);
 void func_802D4ECC_18D9DC(void);
+void func_80080510_8F4C0(s32 arg0);
+void func_800AEC34_BDBE4(void *arg0);
 
 #endif
