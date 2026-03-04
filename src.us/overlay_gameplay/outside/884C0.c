@@ -706,7 +706,17 @@ void func_800908C4_9F874(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80091470_A0420.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8009170C_A06BC.s")
+void func_8009170C_A06BC(u8 arg0) {
+	u8 unk25;
+	unk25 = alienInstances[arg0].unk25;
+	if ((&alienInstances[unk25])->unk20 & 0x1000) {
+		if (alienInstances[arg0].unk20 & 0x100) {
+			(&alienInstances[unk25])->unk20 &= ~0x1000;
+			func_80080B44_8FAF4(unk25, (u8)alienInstances[arg0].unk38);
+			(&alienInstances[unk25])->unk20 |= 0x2000;
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8009179C_A074C.s")
 
