@@ -45,6 +45,11 @@ class PermuterCodeLensProvider {
                         command: 'permuter-lens.runPermuter',
                         arguments: [document.uri, funcName]
                     }));
+                    lenses.push(new vscode.CodeLens(range, {
+                        title: `⬆ upload to decomp.me: ${funcName}`,
+                        command: 'permuter-lens.uploadToDecompMe',
+                        arguments: [document.uri, funcName]
+                    }));
                     break;
                 }
             }
@@ -107,6 +112,95 @@ function activate(context) {
 
                 terminal.show(/* preserveFocus */ true);
                 terminal.sendText(cmd);
+            }
+        )
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'permuter-lens.uploadToDecompMe',
+            /**
+             * @param {vscode.Uri} uri
+             * @param {string} funcName
+             */
+            async (uri, funcName) => {
+                const workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);
+                if (!workspaceFolder) {
+                    vscode.window.showErrorMessage('decomp.me: file is not inside a workspace folder.');
+                    return;
+                }
+
+                const relPath = path
+                    .relative(workspaceFolder.uri.fsPath, uri.fsPath)
+                    .replace(/\\/g, '/');
+
+                const config = vscode.workspace.getConfiguration('permuter-lens');
+                const container = config.get('container', 'bh-container');
+
+                vscode.window.withProgress(
+                    {
+                        location: vscode.ProgressLocation.Notification,
+                        title: `Uploading ${funcName} to decomp.me...`,
+                        cancellable: false
+                    },
+                    async () => {
+                        const { exec } = require('child_process');
+                        const util = require('util');
+                        const execAsync = util.promisify(exec);
+
+                        const cmd = `docker exec ${container} python3 tools/decomp-permuter/import.py ${relPath} ${funcName} --decompme`;
+
+                        try {
+                            const { stdout, stderr } = await execAsync(cmd, {
+                                cwd: workspaceFolder.uri.fsPath
+                            });
+                            const output = stdout + stderr;
+
+                            // Extract decomp.me URL from output
+                            const urlMatch = output.match(/https:\/\/decomp\.me\/scratch\/\S+/);
+                            if (urlMatch) {
+                                const url = urlMatch[0];
+                                const action = await vscode.window.showInformationMessage(
+                                    `Uploaded ${funcName} to decomp.me`,
+                                    'Open in Browser'
+                                );
+                                if (action === 'Open in Browser') {
+                                    vscode.env.openExternal(vscode.Uri.parse(url));
+                                }
+                            } else {
+                                // Show output in terminal so user can see what happened
+                                let terminal = vscode.window.terminals.find(t => t.name === 'decomp.me');
+                                if (!terminal || terminal.exitStatus !== undefined) {
+                                    terminal = vscode.window.createTerminal({
+                                        name: 'decomp.me',
+                                        cwd: workspaceFolder.uri.fsPath
+                                    });
+                                }
+                                terminal.show(true);
+                                terminal.sendText(`docker exec ${container} python3 tools/decomp-permuter/import.py ${relPath} ${funcName} --decompme`);
+                                vscode.window.showWarningMessage(
+                                    `Could not find decomp.me URL in output. Check the terminal.`
+                                );
+                            }
+                        } catch (err) {
+                            const msg = err.message || String(err);
+                            // Still try to find a URL in the error output
+                            const urlMatch = msg.match(/https:\/\/decomp\.me\/scratch\/\S+/);
+                            if (urlMatch) {
+                                const url = urlMatch[0];
+                                const action = await vscode.window.showInformationMessage(
+                                    `Uploaded ${funcName} to decomp.me`,
+                                    'Open in Browser'
+                                );
+                                if (action === 'Open in Browser') {
+                                    vscode.env.openExternal(vscode.Uri.parse(url));
+                                }
+                            } else {
+                                vscode.window.showErrorMessage(`decomp.me upload failed: ${msg}`);
+                            }
+                        }
+                    }
+                );
             }
         )
     );

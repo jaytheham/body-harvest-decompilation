@@ -1,7 +1,7 @@
 {
     "name": "permuter-lens",
     "displayName": "Permuter CodeLens",
-    "description": "Shows CodeLens above NON_MATCHING functions to run the decomp permuter",
+    "description": "Shows CodeLens above NON_MATCHING functions to run the decomp permuter or upload to decomp.me",
     "version": "0.1.0",
     "engines": {
         "vscode": "^1.60.0"
@@ -16,6 +16,10 @@
             {
                 "command": "permuter-lens.runPermuter",
                 "title": "Run Permuter on function"
+            },
+            {
+                "command": "permuter-lens.uploadToDecompMe",
+                "title": "Upload to decomp.me"
             }
         ],
         "configuration": {
@@ -30,6 +34,11 @@
                     "type": "string",
                     "default": "--best-only",
                     "description": "Extra arguments to append to the permute.ps1 command"
+                },
+                "permuter-lens.container": {
+                    "type": "string",
+                    "default": "bh-container",
+                    "description": "Docker container name used for decomp.me uploads"
                 }
             }
         }

@@ -732,19 +732,27 @@ void func_80091A78_A0A28(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800920C0_A1070.s")
 
+// https://decomp.me/scratch/MmU1f
 #ifdef NON_MATCHING
 u8 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 {
-  u8 result = func_8007956C_8851C(0xA);
-  if (result != 0xFF)
-  {
-	alienInstances[result].unk0 = arg0;
-	alienInstances[result].unk20 &= 0xF7FFFFFF;
-	alienInstances[result].unk4 = arg1;
-	alienInstances[result].unk20 |= 0x2000;
-	alienInstances[result].unk3F = arg2;
-  }
-  return result;
+	s16 new_var2;
+	u8 new_var;
+	int new_var3;
+	u8 result = func_8007956C_8851C(0xA) & 0xFF;
+	if (1) { } if (1) { } if (1) { }
+	if (result != 0xFF)
+	{
+		new_var = result;
+
+		new_var3 = 0x2000;
+		alienInstances[new_var].unk0 = arg0;
+		new_var2 = (alienInstances[result].unk4 = arg1);
+		alienInstances[result].unk20 &= 0xF7FFFFFF;
+		alienInstances[result].unk20 |= (int) new_var3;
+		alienInstances[result].unk3F = arg2;
+	}
+	return result;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80092A50_A1A00.s")
