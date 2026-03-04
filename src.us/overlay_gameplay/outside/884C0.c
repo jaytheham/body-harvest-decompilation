@@ -78,7 +78,22 @@ void func_80079510_884C0(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007EB74_8DB24.s")
 
+#ifdef NON_MATCHING
+void func_8007ED9C_8DD4C(u8 arg0) {
+	s32 pad;
+	AlienInstance *inst;
+	inst = &alienInstances[arg0];
+	inst->unk0 = inst->unk2E;
+	inst->unk2 = inst->unk30;
+	inst->unk4 = inst->unk32;
+	if ((inst->unk20 & 0x80000) && (inst->unk20 & 0x600)) {
+		func_800F2D48_101CF8(inst->unk20 & 7, inst->unk0, inst->unk4);
+	}
+	inst->unk16 = inst->unk2;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007ED9C_8DD4C.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8007EE24_8DDD4(u8 arg0) {
