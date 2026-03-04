@@ -95,19 +95,17 @@ void func_8007ED9C_8DD4C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007ED9C_8DD4C.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_8007EE24_8DDD4(u8 arg0) {
 	AlienInstance *inst = &alienInstances[arg0];
 	s32 mode = inst->unk20;
 	inst->unk0 = inst->unk2E;
 	inst->unk4 = inst->unk32;
-	if ((mode & 0x80000) && (mode & 0x600)) {
-		func_800F2D48_101CF8(mode & 7, inst->unk0, inst->unk4);
+	if ((mode & 0x80000) && (mode & 0x600))
+	{
+		inst->unk4 = inst->unk32;
+		func_800F2D48_101CF8(((unsigned char) mode) & 7, inst->unk0, inst->unk4);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007EE24_8DDD4.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007EE98_8DE48.s")
 

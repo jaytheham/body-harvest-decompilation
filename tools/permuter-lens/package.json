@@ -1,0 +1,37 @@
+{
+    "name": "permuter-lens",
+    "displayName": "Permuter CodeLens",
+    "description": "Shows CodeLens above NON_MATCHING functions to run the decomp permuter",
+    "version": "0.1.0",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": ["Other"],
+    "activationEvents": [
+        "onLanguage:c"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "permuter-lens.runPermuter",
+                "title": "Run Permuter on function"
+            }
+        ],
+        "configuration": {
+            "title": "Permuter CodeLens",
+            "properties": {
+                "permuter-lens.jobs": {
+                    "type": "number",
+                    "default": 6,
+                    "description": "Number of parallel jobs to pass to permute.ps1 (-j)"
+                },
+                "permuter-lens.extraArgs": {
+                    "type": "string",
+                    "default": "--best-only",
+                    "description": "Extra arguments to append to the permute.ps1 command"
+                }
+            }
+        }
+    }
+}
