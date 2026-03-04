@@ -45,7 +45,7 @@ void func_800AEBC4_BDB74(s32 arg0) {
 	if (currentLevel == 4 && D_80047F94 == 3) {
 		func_80013314_13F14();
 		D_80052AE0 = gameplayMode;
-		gameplayMode = 0xA;
+		gameplayMode = GAMEPLAY_MODE_END_OF_LEVEL;
 		return;
 	}
 	func_800A6FD4_B5F84();
@@ -381,7 +381,7 @@ void func_800B0110_BF0C0(s32 arg0) {
 void func_800B018C_BF13C(s32 arg0) {
 	Unk80222A78 tmp;
 	func_80013314_13F14();
-	gameplayMode = 0xA;
+	gameplayMode = GAMEPLAY_MODE_END_OF_LEVEL;
 	tmp.unk0 = 2;
 	tmp.unk4 = D_8014F820 + 0xC8;
 	tmp.unkC = func_800B0068_BF018;

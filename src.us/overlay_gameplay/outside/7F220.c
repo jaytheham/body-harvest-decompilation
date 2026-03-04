@@ -44,7 +44,7 @@ void func_800702C0_7F270(s16 arg0) {
 	
 	elapsedMicro = (u32)__ull_div(__ll_mul((u64)(currentTick - referenceTick), 0xF4240ULL), D_80035610);
 	
-	if (gameplayMode == 1) {
+	if (gameplayMode == GAMEPLAY_MODE_UNK1) {
 		D_80052A90 += elapsedMicro / 1000U;
 	}
 	

@@ -402,7 +402,7 @@ void func_800A6FD4_B5F84(void) {
     if (currentLevel != LEVEL_SIBERIA || sp1F != 3) {
         func_80013314_13F14();
         D_80052AE0 = gameplayMode;
-        gameplayMode = 0xA;
+        gameplayMode = GAMEPLAY_MODE_END_OF_LEVEL;
     }
     *((u8*)&D_8003154C + currentLevel * 0x18 + sp1F * 4 - 0x16) = 1;
     *((u8*)&D_8003154C + currentLevel * 0x18 + sp1F * 4 - 0x15) = 0x1E;

@@ -463,12 +463,12 @@ void func_8008D900_1759C0(void) {
 		func_8008BAFC_173BBC();
 	} else {
 		if (D_80052B34->unk1A == 0) {
-			if (gameplayMode == 0xA) {
+			if (gameplayMode == GAMEPLAY_MODE_END_OF_LEVEL) {
 				func_8008BB4C_173C0C();
 			} else {
 				func_8008BB5C_173C1C();
 			}
-		} else if (gameplayMode == 0xA) {
+		} else if (gameplayMode == GAMEPLAY_MODE_END_OF_LEVEL) {
 			func_8008BAFC_173BBC();
 		} else {
 			func_8008BB14_173BD4();
