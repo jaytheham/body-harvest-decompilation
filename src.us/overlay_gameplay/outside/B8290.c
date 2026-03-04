@@ -123,8 +123,14 @@ void func_800A99B8_B8968(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9A90_B8A40.s")
 
-// https://decomp.me/scratch/v6aUL
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9DC0_B8D70.s")
+void func_800A9DC0_B8D70(func_800A9DC0_B8D70_arg *arg0) {
+	s32 idx = arg0->unk8;
+	AlienInstance *temp2 = &alienInstances[alienInstances[idx].unk25];
+	AlienInstance *temp = &alienInstances[idx];
+	
+	temp2->unk20 &= ~0x10000;
+	temp->unk20 &= ~(0x20000000 | 0x400000);
+}
 
 #ifdef NON_MATCHING
 void func_800A9E1C_B8DCC(Unk80222A78 *arg0) {

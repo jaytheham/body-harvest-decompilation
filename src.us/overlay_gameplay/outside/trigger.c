@@ -54,81 +54,61 @@ void func_800AEBC4_BDB74(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AEC34_BDBE4.s")
 
 // spawnAlienWave arg3 changes orientation?
-// https://decomp.me/scratch/s6Jn4
-#ifdef NON_MATCHING
-u8 func_800AEE5C_BDE0C(s16 xPosition, s16 zPosition, u8 waveType, u8 arg3)
+u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
 {
-  AlienWaveEntry *waveBase;
-  s8 new_var;
-  u8 followerIdx;
-  u8 leaderId;
-  AlienInstance *leaderGroup;
-  u8 i;
-  Unk80222A78 sp68;
-  leaderId = 0xFF;
-  osSyncPrintf(&D_80142B6C, waveType);
-  D_80223780[arg3].unk11 = 0;
-  waveBase = D_8003BCC0[waveType];
-  for (i = 0; i < 0xC; i++)
-  {
-	if (waveBase[i].alienSpecId == 0) 
-	{
-	  break;
-	}
-	  if (i != 0)
-	  {
-		followerIdx = func_8007956C_8851C(waveBase[i].alienSpecId);
-		if (followerIdx == 0xFF)
-		{
-		  break;
-		}
-		alienInstances[followerIdx].unk25 = leaderId;
-		((u8 *) leaderGroup)[i - 1] = followerIdx;
-	  }
-	  else
-	  {
-		leaderId = func_8007956C_8851C(waveBase[i].alienSpecId) & 0xFF;
-		if (leaderId == 0xFF)
-		{
-		  return 0;
-		}
-		leaderGroup = &alienInstances[alienInstances[leaderId].unk25];
-		if (waveType == 0x1F)
-		{
-		  sp68.unk0 = 3;
-		  sp68.unk8 = leaderId;
-		  sp68.unkC = func_800AEC34_BDBE4;
-		  func_800AE454_BD404(&sp68);
-		}
-		
-		if (alienInstances[leaderId].specIndex == 0x19)
-		{
-		  alienInstances[leaderId].unk26 = 4;
-		}
-		  followerIdx = leaderId;
-	  }
-	  alienInstances[followerIdx].unk0 = waveBase[i].xOffset + xPosition;
-	  alienInstances[followerIdx].unk4 = waveBase[i].zOffset + zPosition;
-	  
-	  D_80223780[arg3].unk10 = D_80223780[arg3].unk10 + 1;
-		
-	  alienInstances[followerIdx].unk3E = arg3;
-	  new_var = D_80223780[arg3].unk13;
-	  alienInstances[followerIdx].unk3D = new_var;
-	  alienInstances[followerIdx].unk2E = alienInstances[followerIdx].unk0;
-	  alienInstances[followerIdx].unk32 = alienInstances[followerIdx].unk4;
-	  func_8011E6FC_12D6AC(alienInstances[followerIdx].unk0, alienInstances[followerIdx].unk4, &alienInstances[followerIdx].unk2);
-	  alienInstances[followerIdx].unk1B = func_800B0F20_BFED0(alienInstances[followerIdx].unk0, alienInstances[followerIdx].unk4);
-	  alienInstances[followerIdx].unk6 = (D_80223780[arg3].unkF << 8) + waveBase[i].unk4;
-	  alienInstances[followerIdx].unkE = alienInstances[followerIdx].unk6;
-	func_80080510_8F4C0((u8)followerIdx);
-  }
+	Unk80222A78 sp68;
+	u8 i;
+	u8 leaderId;
+	u8 followerIdx;
+	AlienInstance *leaderGroup;
 
-  return leaderId;
+	leaderId = 0xFF;
+	osSyncPrintf(&D_80142B6C, waveType);
+	D_80223780[arg3].unk11 = 0;
+	for (i = 0; i < 0xC; i++) {
+		if (D_8003BCC0[waveType][i].alienSpecId == 0) {
+			break;
+		}
+		if (i != 0) {
+			followerIdx = func_8007956C_8851C(D_8003BCC0[waveType][i].alienSpecId);
+			if (followerIdx == 0xFF) {
+				break;
+			}
+			alienInstances[followerIdx].unk25 = leaderId;
+			((u8 *)leaderGroup)[i - 1] = followerIdx;
+		} else {
+			leaderId = func_8007956C_8851C(D_8003BCC0[waveType][i].alienSpecId);
+			if (leaderId == 0xFF) {
+				return 0;
+			}
+			leaderGroup = &alienInstances[alienInstances[leaderId].unk25];
+			if (waveType == 0x1F) {
+				sp68.unk0 = 3;
+				sp68.unk8 = leaderId;
+				sp68.unkC = func_800AEC34_BDBE4;
+				func_800AE454_BD404(&sp68);
+			}
+			if (alienInstances[leaderId].specIndex == 0x19) {
+				alienInstances[leaderId].unk26 = 4;
+			}
+			followerIdx = leaderId;
+		}
+
+		alienInstances[followerIdx].unk3E = arg3;
+		alienInstances[followerIdx].unk3D = D_80223780[arg3].unk13;
+		D_80223780[arg3].unk10++;
+		alienInstances[followerIdx].unk0 = D_8003BCC0[waveType][i].xOffset + arg0;
+		alienInstances[followerIdx].unk4 = D_8003BCC0[waveType][i].zOffset + arg1;
+		alienInstances[followerIdx].unk2E = alienInstances[followerIdx].unk0;
+		alienInstances[followerIdx].unk32 = alienInstances[followerIdx].unk4;
+		func_8011E6FC_12D6AC(alienInstances[followerIdx].unk0, alienInstances[followerIdx].unk4, &alienInstances[followerIdx].unk2);
+		alienInstances[followerIdx].unk1B = func_800B0F20_BFED0(alienInstances[followerIdx].unk0, alienInstances[followerIdx].unk4);
+		alienInstances[followerIdx].unkE = alienInstances[followerIdx].unk6 = D_8003BCC0[waveType][i].unk4 + (D_80223780[arg3].unkF << 8);
+		func_80080510_8F4C0(followerIdx);
+	}
+
+	return leaderId;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AEE5C_BDE0C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF0C0_BE070.s")
 

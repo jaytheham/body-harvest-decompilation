@@ -22,6 +22,7 @@
 - duplicate expressions and use the compiler's deduplication machinery
 - reuse variables
 - fiddle with int promotion if relevant
+- try removing any casts and "un-natural" logic.
 - **`multu` vs `sll/addu/sll` for struct array index**: When a struct array has size `N = p*2^q` (e.g. `AlienInstance` = 0x50 = 5*16), IDO may generate `li reg, N; multu idx, reg` (caching the constant in a register) instead of the inline `sll/addu/sll` shift sequence. This happens when the SAME stride constant appears in multiple array index computations in the function AND the index variable is a sub-integer type (`u8`, `s8`, etc.). To force the shift pattern, declare the index variable as `s32` instead of `u8`/`u16`. Example: `s32 unk25 = inst->unk25;` then `alienInstances[unk25]` generates shifts, while `u8 unk25 = inst->unk25;` generates `multu`.
 - revert compiler-generated patterns, like turning `(x ^ A) < 1` back into `x == A`, or recognizing bit field access
 - initialize variables within loop headers
@@ -866,3 +867,13 @@ Fix: Move var_s1 = 0 BEFORE the if-check and change the condition to if (var_s1 
     }
 
 IDO -O2 optimises the if (0 < D_bound) check to blez v0, end (same instruction), while the earlier var_s1 = 0 assignment makes s1 the first live saved register, fixing the prologue save order.
+
+### while loop initial value offset
+
+If a while loop begins by adding or subtracting from its counter var, the initial value set in code may be one off from the asm value:
+`li      v1,0x29`
+becomes:
+```c
+	i = 0x2A;
+	while (i--) {
+```

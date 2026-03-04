@@ -183,7 +183,7 @@ typedef struct {
 	/* 0x38 */ s16 unk38;
 	/* 0x3A */ u8 pad3A[4];
 	/* 0x3E */ s16 unk3E;
-    /* 0x40 */ s16 unk40;
+	/* 0x40 */ s16 unk40;
 	/* 0x42 */ s16 unk42;
 	/* 0x44 */ u8 pad44[0x14];
 	/* 0x58 */ s16 unk58;
@@ -876,5 +876,10 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s16 unk8;
 } Unk_8014D298; /* size = 0x0A */
+
+typedef struct {
+	/* 0x00 */ u8 pad0[0x8];
+	/* 0x08 */ u8 unk8;
+} func_800A9DC0_B8D70_arg; /* size = 0x9 */
 
 #endif

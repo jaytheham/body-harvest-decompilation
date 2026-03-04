@@ -119,23 +119,16 @@ void func_80070904_40DB4(s16 arg0) {
 	}
 }
 
-// https://decomp.me/scratch/VPyx1
-/**
- * @brief Resets three per-entry frontend fields across all mission entries.
- */
-#ifdef NON_MATCHING
-void func_80070940_40DF0(void) {
-	register s32 i;
-
-	i = 0x29; do {
+void func_80070940_40DF0(void)
+{
+	s32 i;
+	i = 0x2A;
+	while (i--) {
 		D_800D6DC0[i].unk14 = 0;
 		D_800D6DC0[i].unk12 = 0;
 		D_800D6DC0[i].unk16 = 0;
-	} while (i--);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070940_40DF0.s")
-#endif
 
 /**
  * @brief Clears transient mission fields, optionally fetches selected mission data, and tags active save entry state.
@@ -210,24 +203,18 @@ void func_80070A8C_40F3C(s16 arg0)
   while (var_v1--);
 }
 
-// https://decomp.me/scratch/cR6k4
-#ifdef NON_MATCHING
 void func_80070AEC_40F9C(s16 arg0, s16 arg1) {
-  u8 missionId;
-  s32 i;
-  i = 0x29; do {
-	  missionId = D_800D6DC0[i].unk26;
-	if ((missionId <= arg1) && (missionId >= arg0))
-	{
-	  D_800909B0[missionId].unk1C = 3;
-	  D_800D6DC0[i].unk1C = 3;
+	u8 missionId;
+	s32 i;
+	i = 0x2A;
+	while (i--) {
+		missionId = D_800D6DC0[i].unk26;
+		if (missionId >= arg0 && missionId <= arg1) {
+			D_800909B0[missionId].unk1C = 3;
+			D_800D6DC0[i].unk1C = 3;
+		}  
 	}
-  }
-  while (i--);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070AEC_40F9C.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_80070B68_41018(s16 arg0) {

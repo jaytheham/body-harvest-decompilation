@@ -139,21 +139,16 @@ void func_800800DC_8F08C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080A54_8FA04.s")
 
 // set building as target for alien?
-// https://decomp.me/scratch/vFXhm
-#ifdef NON_MATCHING
 void func_80080B44_8FAF4(u8 arg0, u8 arg1) {
-	AlienInstance *alien = &alienInstances[arg0]; 
+	AlienInstance *alien = &alienInstances[arg0];
 	BuildingInstance *building = &buildingInstances[arg1];
 	alien->unk38 = arg1;
-	alien->unk14 = (s16)(building->xCoord + 0x80) ^ 0;
-	alien->unk18 = (s16)(building->zCoord + 0x80);
-	alien->unk20 |= 0x100;
 	alien->unk3D = building->unk11;
+	alien->unk14 = building->xCoord + 0x80;
 	alien->unk16 = building->yCoord;
+	alien->unk18 = building->zCoord + 0x80;
+	alien->unk20 |= 0x100;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080B44_8FAF4.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080BC0_8FB70.s")
 
@@ -223,23 +218,23 @@ void func_80081C84_90C34(u8 arg0, void *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800828F0_918A0.s")
 
-// https://decomp.me/scratch/Ievdq
-#ifdef NON_MATCHING
-s32 func_80082990_91940(s16 arg0, s16 arg1) {
+s32 func_80082990_91940(s16 arg0, s16 arg1)
+{
 	s32 v1;
 	if (arg1 < arg0) {
 		v1 = 0x88;
 	} else {
 		v1 = 0x22;
 	}
-	if (0xFF - arg1 < arg0) {
-		return v1 & ~0xA0;
+
+	if ((0xFF - arg1) < arg0) {
+		v1 &= ~0xA0;
+	} else {
+		v1 &= ~0xA;
 	}
-	return v1 & ~0xA;
+
+	return v1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082990_91940.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800829EC_9199C.s")
 

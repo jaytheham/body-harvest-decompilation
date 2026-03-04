@@ -164,7 +164,7 @@ Unk8014F6D0 *func_800A5A10_B49C0(void);
 s16 func_800CB19C_DA14C(s16, s16, s16, u8);
 s32 func_800A8E18_B7DC8(s16);
 void func_800A931C_B82CC(s8, s16 *, s32 *);
-void func_800A9DC0_B8D70(void *);
+void func_800A9DC0_B8D70(func_800A9DC0_B8D70_arg *arg0);
 void func_800ABE7C_BAE2C(u8);
 void func_800AC198_BB148(u8);
 void func_800ADFC0_BCF70(u8);
@@ -490,7 +490,7 @@ void func_802D536C_18DE7C(void);
 void func_802D4F74_18DA84(void);
 void func_802D5660_18E170(void);
 void func_802D4ECC_18D9DC(void);
-void func_80080510_8F4C0(s32 arg0);
+void func_80080510_8F4C0(u8 arg0);
 void func_800AEC34_BDBE4(void *arg0);
 
 #endif

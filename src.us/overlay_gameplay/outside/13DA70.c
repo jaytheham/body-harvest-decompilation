@@ -75,24 +75,27 @@ void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012EC3C_13DBEC.s")
 
 // https://decomp.me/scratch/RaB1d
+// This does match but doesn't compile right at the moment:
+// this requires D_8015FF84 as a function static so this may cause .bss issues
+// shouldn't be a problem if you match the entire TU / file
 #ifdef NON_MATCHING
-/* Cycles RGBA color through hue phases over 300 steps using a global timer */
-void func_8012F24C_13E1FC(u8 *arg0, s32 arg1) {
+void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
+{
+	static s32 D_8015FF84;
 	s32 rem;
-
 	rem = D_8015FF84 % 300;
 	if (rem < 0x64) {
+		arg0[0] = 0xFA - rem;\
+		arg0[1] = rem + 0x96;\
 		arg0[2] = 0x96;
-		arg0[1] = rem + 0x96;
-		arg0[0] = 0xFA - rem;
 	} else if (rem < 0xC8) {
+		arg0[0] = 0x96;\
+		arg0[1] = 0x15E - rem;\
 		arg0[3] = rem + 0x32;
-		arg0[0] = 0x96;
-		arg0[1] = 0x15E - rem;
 	} else {
-		arg0[1] = 0x96;
+		arg0[0] = rem - 0x32;\
+		arg0[1] = 0x96;\
 		arg0[3] = 0x1C2 - rem;
-		arg0[0] = rem - 0x32;
 	}
 	D_8015FF84 += arg1;
 }
