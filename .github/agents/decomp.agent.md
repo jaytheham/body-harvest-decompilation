@@ -81,11 +81,13 @@ Run the build inside the container:- `docker exec -it bh-container bash -c "make
 
 If build completes with `build/bh.us.z64: OK` the function is correctly matched and you can stop work. If you see `FAILED` the generated assembly does not match the original, proceed to the next steps for analysis and iteration.
 
-## Step 4: Compare with Original
+## Step 4: Compare with Original and find similar functions
 
 Compare the original assembly and generated assembly to identify differences:
 
 Note instruction order, registers, immediates, branch conditions
+
+Use coddog to find similar functions and assembly sequences that are already matched and you may be able to copy.
 
 ## Step 5: Iterate To Resolve Differences
 
