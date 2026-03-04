@@ -643,7 +643,16 @@ void func_8008EF1C_9DECC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8009012C_9F0DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800908C4_9F874.s")
+void func_800908C4_9F874(u8 arg0) {
+	AlienInstance *inst = &alienInstances[alienInstances[arg0].unk25];
+	s32 unk10 = *(s32 *)&inst->unk10;
+	if (unk10 <= 0) {
+		func_8009012C_9F0DC(arg0);
+		return;
+	}
+	inst->unk20 &= ~0x30000;
+	*(s32 *)&inst->unk10 = unk10 - 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80090948_9F8F8.s")
 
