@@ -37,6 +37,13 @@ dl->words.w1 = 0x10001;
 ```
 Is converted by pwsh cmd `tools\gfxdis.ps1 -w 03840010 801592A0` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
 
+- Find similar functions using coddog:
+Find functions similar to a target (threshold 0.0–1.0, lower = more results)
+`.\tools\coddog\coddog.exe match func_80092A50_A1A00 -t 0.7`
+
+Find partial code sequence matches within a function
+`.\tools\coddog\coddog.exe submatch func_80092A50_A1A00 30`
+
 ## Step 1: Generate cleaned C implementation
 
 Outside the docker container run:`python tools/mips_to_c/m2c.py asm/nonmatchings/core/1000/func_80000D0C_190C.s` to generate an initial C implementation from the original assembly.

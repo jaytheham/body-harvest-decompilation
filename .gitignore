@@ -2,6 +2,7 @@
 
 __pycache__/
 asm/
+tools/coddog/
 assets/
 bin/
 build/

@@ -698,7 +698,20 @@ void func_8008EF1C_9DECC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008F9E4_9E994.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008FC78_9EC28.s")
+s32 func_8008FC78_9EC28(u8 arg0) {
+    u8 result = func_8007956C_8851C(0x20) & 0xFF;
+    if (result != 0xFF) {
+        AlienInstance *newInst = &alienInstances[result];
+        AlienInstance *srcInst = &alienInstances[arg0];
+        newInst->unk12 = 0xE0;
+        newInst->unk0 = srcInst->unk0;
+        newInst->unk4 = srcInst->unk4;
+        if (currentLevel < 3) {
+            newInst->unk26 = 1;
+        }
+    }
+    return result;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008FD0C_9ECBC.s")
 
