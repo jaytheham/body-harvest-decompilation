@@ -380,7 +380,16 @@ void func_80085DC8_94D78(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085F68_94F18.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800860CC_9507C.s")
+void func_800860CC_9507C(s16 arg0, s16 arg1, s16 arg2) {
+    s16 pad;
+    s16 sp1C;
+    s16 temp_v1;
+    s16 temp_a3;
+    temp_v1 = D_80052B34->unk0 - arg0;
+    sp1C = D_80052B34->unk2 - arg1;
+    temp_a3 = D_80052B34->unk4 - arg2;
+    func_80003824_4424(sqrtf((f32)((temp_v1 * temp_v1) + (temp_a3 * temp_a3))), (f32)-sp1C);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80086164_95114.s")
 
