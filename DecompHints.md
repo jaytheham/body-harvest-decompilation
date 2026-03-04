@@ -22,6 +22,7 @@
 - duplicate expressions and use the compiler's deduplication machinery
 - reuse variables
 - fiddle with int promotion if relevant
+- **`multu` vs `sll/addu/sll` for struct array index**: When a struct array has size `N = p*2^q` (e.g. `AlienInstance` = 0x50 = 5*16), IDO may generate `li reg, N; multu idx, reg` (caching the constant in a register) instead of the inline `sll/addu/sll` shift sequence. This happens when the SAME stride constant appears in multiple array index computations in the function AND the index variable is a sub-integer type (`u8`, `s8`, etc.). To force the shift pattern, declare the index variable as `s32` instead of `u8`/`u16`. Example: `s32 unk25 = inst->unk25;` then `alienInstances[unk25]` generates shifts, while `u8 unk25 = inst->unk25;` generates `multu`.
 - revert compiler-generated patterns, like turning `(x ^ A) < 1` back into `x == A`, or recognizing bit field access
 - initialize variables within loop headers
 - `-var` uses the same destination reg vs `-1*var` which uses a separate distination reg in O2.

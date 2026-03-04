@@ -131,8 +131,10 @@ void func_8008EE5C_9DE0C(u8, s8, s8);
 void func_80081AD4_90A84(u8, u8);
 s16 func_80085A9C_94A4C(s16, s32, s32, s32, s16);
 void func_80085B14_94AC4(u8, s16, s16, s16, s16);
+void func_80085C50_94C00(s16, s16, s16, s16, s16, s16);
 void func_80085CE0_94C90(u8, s16, s16, s16, s16);
 void func_80089EB4_98E64(u8, s32, s32, s32, s32);
+void func_8008B02C_99FDC(u8);
 void func_8008E0D8_9D088(u8);
 void func_8008E16C_9D11C(u8);
 void func_8009012C_9F0DC(u8);
@@ -440,6 +442,7 @@ void func_80101EF4_110EA4(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 a
 void func_80097CB4_A6C64(UnkA6C64Keyframe *arg0, UnkA6C64Keyframe *arg1, UnkA6C64Keyframe *arg2, f32 arg3);
 void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s32 arg2, s32 arg3);
 void func_8000CC3C_D83C(void *arg0, s32 arg1);
+s32 func_80011F90_12B90(void *arg0);
 s32 func_80011FAC_12BAC(void *arg0);
 void func_8010C4EC_11B49C(Unk8004DCD0 *arg0);
 s32 func_8010CF7C_11BF2C(s16 arg0, s16 arg1);
