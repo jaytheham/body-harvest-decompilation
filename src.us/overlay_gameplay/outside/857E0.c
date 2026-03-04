@@ -85,7 +85,41 @@ void func_80076FCC_85F7C(s32 arg0, s32 arg1) {
 }
 
 // fell tree
+#ifdef NON_MATCHING
+void func_800770D8_86088(s32 arg0) {
+    u32 sp8C;
+    u32 sp88;
+    s32 sp84;
+    s32 sp80;
+    f32 sp7C;
+    f32 sp78;
+    f32 sp74;
+    Mtx sp30;
+    s16 sp2C;
+    void *sp28;
+    u32 sp24;
+    u8 *sp20;
+
+    sp28 = (Unk_8014D298 *)D_8014D298[arg0];
+    sp24 = ((Unk_8014D298 *)sp28)->unk2 * 6 & 0xFFFF;
+    if (sp24 < ((Unk_8014D298 *)sp28)->unk6) {
+        sp20 = D_80259D90[((Unk_8014D298 *)sp28)->unk0];
+        sp8C = *(u32 *)(sp20 + 0x28);
+        sp2C = sins(((Unk_8014D298 *)sp28)->unk4);
+        sp88 = *(u32 *)(sp20 + 0x2C);
+        sp28 = (Mtx *)(sp20 + 0x10);
+        guAlign((Mtx *)sp28, (f32)sp24, (f32)sp2C / 32768.0, 0, -(f32)coss(((Unk_8014D298 *)D_8014D298[arg0])->unk4) / 32768.0);
+        sp7C = (f32)(((((s16)(sp8C >> 16) * (s16)(sp88 >> 16)) * 0x41C64E6D + 0x3039) >> 16) % 64 + 0xE0) / 256;
+        sp74 = sp7C;
+        sp78 = (f32)((((s16)(sp88 >> 16) * 0x41C64E6D + 0x3039) >> 16) % 64 + 0xE0) / 256;
+        guRotateRPY(&sp30, sp74, sp78, sp7C);
+        ((Mtx *)sp28)->m[1][2] = sp8C;
+        ((Mtx *)sp28)->m[1][3] = sp88;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800770D8_86088.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800772EC_8629C.s")
 
