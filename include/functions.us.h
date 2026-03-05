@@ -496,5 +496,6 @@ void func_802D5660_18E170(void);
 void func_802D4ECC_18D9DC(void);
 void func_80080510_8F4C0(u8 arg0);
 void func_800AEC34_BDBE4(void *arg0);
+void func_80093164_A2114(u8 arg0);
 
 #endif
