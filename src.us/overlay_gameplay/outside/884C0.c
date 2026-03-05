@@ -191,7 +191,21 @@ void func_800800DC_8F08C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008076C_8F71C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080840_8F7F0.s")
+s32 func_80080840_8F7F0(u8 arg0, s32 arg1)
+{
+  AlienInstance *alien;
+  if ((((((&alienInstances[arg0])->unk0 < ((&alienInstances[arg0])->unk14 + arg1)) &&
+   (((&alienInstances[arg0])->unk14 - arg1) < (&alienInstances[arg0])->unk0)) &&
+	((&alienInstances[arg0])->unk4 < ((&alienInstances[arg0])->unk18 + arg1))) &&
+	 (((&alienInstances[arg0])->unk18 - arg1) < (&alienInstances[arg0])->unk4)) &&
+	  ((currentLevel != 7) ||
+	   (((&alienInstances[arg0])->unk2 < ((&alienInstances[arg0])->unk16 + arg1)) &&
+		(((&alienInstances[arg0])->unk16 - arg1) < (&alienInstances[arg0])->unk2))))
+  {
+	return 1;
+  }
+  return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800808F0_8F8A0.s")
 

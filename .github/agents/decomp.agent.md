@@ -6,8 +6,6 @@ tools:
 model: Claude Sonnet 4.6 (copilot)
 ---
 
-# Decompilation Workflow
-
 ## Overview
 
 This is a matching decompilation project for Body Harvest (N64). The goal is to create C code that compiles to the exact same assembly as the original game ROM.
@@ -15,7 +13,7 @@ You will convert the named N64 assembly function to C89 code, compile it using I
 
 ## Project Structure
 
-- `asm/`: Contains original assembly files from the ROM. In `nonmatchings/` each function is in its own `.s` file, others contain multiple functions.
+- `asm/`: Contains original assembly files from the ROM.
 - `src.us/`: Contains C source files.
 - `include/`: Contains header files for variables, functions, and structs.
 - `build/`: Contains compiled object files and the final ROM image.
@@ -24,9 +22,9 @@ You will convert the named N64 assembly function to C89 code, compile it using I
 
 You are running in windows, you have access to a docker container where you can run linux commands and build the project. You can also edit files on your host machine and those changes will be reflected in the container:
 
-- `docker exec -it bh-container bash -c "grep -r 'D_80047588' include/"` - Search for extern declarations.
-- Functions are named like `func_<RAM address>_<ROM address>`. Compare target and generated assembly for a specific function: `docker exec -it bh-container bash -c "tools/asm-differ/diff.py --no-pager --compress-matching 3 <function name> 0x<ROM address of next function>"`.
-- `docker exec -it bh-container bash -c "mips-linux-gnu-objdump -d build/src.us/overlay_gameplay/outside/missions.c.o | sed -n '/<func_8007679C_8574C>:/,/^$/p'"` - Disassemble a single function from an object file.
+- Search for extern declarations: `docker exec -it bh-container bash -c "grep -r 'D_80047588' include/"`.
+- Compare target and generated assembly for a specific function: `docker exec -it bh-container bash -c "tools/asm-differ/diff.py --no-pager --compress-matching 3 <function name> 0x<ROM address of next function>"`. Functions are named like `func_<RAM address>_<ROM address>`. 
+- Disassemble a single function from an object file: `docker exec -it bh-container bash -c "mips-linux-gnu-objdump -d build/src.us/overlay_gameplay/outside/missions.c.o | sed -n '/<func_8007679C_8574C>:/,/^$/p'"`.
 - You can decompile gfx macros using the `tools/gfxdis.ps1` powershell script:
 e.g.
 ```C
@@ -36,25 +34,20 @@ dl->words.w0 = 0xB6000000;
 dl->words.w1 = 0x10001;
 ```
 Is converted by pwsh cmd `tools\gfxdis.ps1 -w 03840010 801592A0` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
+- Find similar decompiled functions using coddog: `.\tools\coddog\coddog.exe match func_80092A50_A1A00 -t 0.7`.
 
-- Find similar functions using coddog:
-Find functions similar to a target (threshold 0.0–1.0, lower = more results)
-`.\tools\coddog\coddog.exe match func_80092A50_A1A00 -t 0.7`
-
-Find partial code sequence matches within a function
-`.\tools\coddog\coddog.exe submatch func_80092A50_A1A00 30`
-
+# Decompilation Workflow
 ## Step 1: Generate cleaned C implementation
 
-Outside the docker container run:`python tools/mips_to_c/m2c.py asm/nonmatchings/core/1000/func_80000D0C_190C.s` to generate an initial C implementation from the original assembly.
+Outside the docker container run: `python tools/mips_to_c/m2c.py asm/nonmatchings/core/1000/func_80000D0C_190C.s` to generate an initial C implementation from the original assembly.
 
 Clean up the generated C code:
 
 - Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
-- Add or update declarations for any called functions in `include/functions.us.h` if they aren't defined in `src.us/` yet.
+- Add or update declarations for any called functions in `include/functions.us.h`.
 - Replace all pointer arithmetic with struct/array access.
-- All struct field accesses should use -> or . operators.
+- All struct field accesses should use `.` or `->` operators.
 - Update void\* parameters that should be typed.
 - Unusual constructions like `(arg0 < 0x9C) ^ 1` should be converted into a more natural form `arg0 >= 0x9C`.
 - Replace goto-based control flow with structured control flow (if/else, for, while).
@@ -83,7 +76,7 @@ If build completes with `build/bh.us.z64: OK` the function is correctly matched 
 
 ## Step 4: Compare with Original and find similar functions
 
-Use coddog to find similar functions and assembly sequences that are already matched and you may be able to copy.
+Use coddog to find any similar functions that are already decompiled which you may be able to copy.
 
 Compare the original assembly and generated assembly to identify differences: note instruction order, registers, immediates, branch conditions.
 
@@ -94,7 +87,7 @@ Rewrite C code to reduce the number of differences in assembly. First target dif
 Make sure all pointer arithmetic is replaced with proper struct/array access, and that assembly-like if>do>while and goto control flow is replaced with more natural C control flow constructs.
 Double check all function call params are necessary and correctly typed.
 Think about how a person would have originally written the code in C to produce the assembly you see rather than writing the C to match the assembly exactly. Search for patterns in the original assembly and see how other functions were written to achieve similar assembly output.
-Read file `DecompHints.md` for common patterns and pitfalls.
+Read file `DecompHints.md` for examples of solving specific patterns.
 
 Rebuild the project and re-compare until the generated assembly is identical to the original, never give up, keep trying. Once the build returns `build/bh.us.z64: OK` proceed to the final step.
 
