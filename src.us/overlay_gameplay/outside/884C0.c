@@ -40,7 +40,24 @@ void func_80079DC0_88D70(s32 arg0)
   }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80079E64_88E14.s")
+void func_80079E64_88E14(s32 arg0) {
+	u8 state = alienInstances[arg0].specIndex;
+	AlienInstance *ai = &alienInstances[arg0];
+	if (state == 1) {
+		if (!(ai->unk20 & 0x1000)) {
+			if (ai->unk24 == 0xF) {
+				ai->unk48 = 0xA0;
+			} else if (ai->unk24 == 0x10 || ai->unk24 == 0x13) {
+				ai->unk48 = 0;
+			} else {
+				ai->unk48 = 0x40;
+			}
+		}
+		if (ai->unk24 == 1 || ai->unk24 == 0x1D) {
+			D_80048194++;
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80079F08_88EB8.s")
 
