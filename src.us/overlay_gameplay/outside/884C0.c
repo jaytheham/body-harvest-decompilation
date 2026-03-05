@@ -538,7 +538,22 @@ void func_80087C50_96C00(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088000_96FB0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800880B8_97068.s")
+s32 func_800880B8_97068(void)
+{
+	s16 i;
+	u8 new_var;
+	AlienInstance *inst;
+	for (i = D_8014D509; i < D_8014D50A; i++)
+	{
+		inst = &alienInstances[new_var = D_8014D408[i]];
+		if ((inst->specIndex == 0x19) && (((s32) inst->unk24) >= (((u8) D_80048168) - 2)))
+		{
+			return 1;
+		}
+	}
+
+  return 0;
+}
 
 // 000881d4 Multiplies Adam's weapon damage by 1.8 in easy mode
 // 800885C8 halves alien death points in easy
