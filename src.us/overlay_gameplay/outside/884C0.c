@@ -341,7 +341,22 @@ s32 func_80082E38_91DE8(u8 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084AE4_93A94.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084C48_93BF8.s")
+void func_80084C48_93BF8(Unk80052B34 *arg0)
+{
+	s32 dx;
+	s32 dx2;  
+	s32 dy;
+	s32 dx3;  
+	s16 angle;
+
+	dx = D_80052B34->unk0 - arg0->unk0;
+	dy = D_80052B34->unk4 - arg0->unk4;
+	sqrtf((f32) ((dx * dx) + (dy * dy)));
+	angle = func_80003824_4424((f32) dx, (f32) dy);
+	// Force player off in direction %d
+	osSyncPrintf(&D_80141D98, angle);
+	func_80102DDC_111D8C(D_80052B34, angle, 0x2000, 20.0f);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084CF8_93CA8.s")
 

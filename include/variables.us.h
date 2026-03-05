@@ -359,6 +359,7 @@ extern char D_80141050[];
 extern char D_80141068[];
 extern char D_8014107C[];
 extern char D_80141090[];
+extern char D_80141D98;
 extern char D_80141E80;
 extern Struct_80140D00 D_80140D00;
 extern Struct_80140D10 D_80140D10;
