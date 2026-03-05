@@ -306,6 +306,8 @@ extern Vec3f D_800E7340;
 extern s32 D_8013BD04;
 extern s16 D_8013C2BC[];
 extern s16 D_8013C610;
+extern u8 D_8013C618[];
+extern u8 D_8013C638[];
 extern s8 D_8013CA0C[];
 extern Unk80154082 D_8013CB48;
 extern s8 D_8013D890; // Triggers beacon warp

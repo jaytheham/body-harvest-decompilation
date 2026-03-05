@@ -1037,7 +1037,16 @@ void func_8008EDFC_9DDAC(u8 arg0) {
 	func_8008E978_9D928(arg0, alienSpecs[alienInstances[arg0].specIndex].unk58);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008EE5C_9DE0C.s")
+void func_8008EE5C_9DE0C(u8 arg0, s16 arg1, s16 arg2) {
+	func_80081E5C_90E0C(arg1);
+	func_80081E5C_90E0C(arg2);
+	if (D_8014DD5E[arg1][0] == 0) {
+		func_80081C84_90C34(arg1, &D_8013C618[alienInstances[arg0].unk4B * 0x10]);
+		func_80081C84_90C34(arg2, &D_8013C638[alienInstances[arg0].unk4B * 0x10]);
+		alienInstances[arg0].unk4B++;
+		alienInstances[arg0].unk4B &= 1;
+	}
+}
 
 void func_8008EF1C_9DECC(u8 arg0) {
 	s8 tmp = D_8014DD50[alienInstances[arg0].unkC].unkC;
