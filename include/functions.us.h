@@ -130,6 +130,8 @@ void func_80087AAC_96A5C(u8);
 void func_80088760_97710(AlienInstance*);
 void func_8008E978_9D928(u8, s16);
 void func_8008EE5C_9DE0C(u8, s8, s8);
+void func_8008F0BC_9E06C(u8, s32);
+void func_8008F6C0_9E670(u8);
 void func_80081AD4_90A84(u8, u8);
 s16 func_80085A9C_94A4C(s16, s32, s32, s32, s16);
 void func_80085B14_94AC4(u8, s16, s16, s16, s16);
