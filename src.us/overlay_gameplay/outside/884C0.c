@@ -47,7 +47,19 @@ void func_80079510_884C0(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007AF8C_89F3C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B170_8A120.s")
+void func_8007B170_8A120(s32 arg0) {
+	if (arg0 == -1) {
+		return;
+	}
+	do {
+		func_800039D0_45D0((Unk80052B40 *)&D_8014DD50[arg0], (Unk80052B40 *)&D_8014DD50[arg0].unk6, NULL, D_8005BB38);
+		D_8005BB38 += 0x40;
+		if (D_8014DD50[arg0].unkC != -1) {
+			func_8007B170_8A120(D_8014DD50[arg0].unkC);
+		}
+		arg0 = D_8014DD50[arg0].unkD;
+	} while (arg0 != -1);
+}
 
 void func_8007B20C_8A1BC(Unk8014DD50 *arg0) {
 	if (arg0 == NULL) {
