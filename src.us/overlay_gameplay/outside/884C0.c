@@ -24,7 +24,21 @@ void func_80079510_884C0(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80079C8C_88C3C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80079DC0_88D70.s")
+void func_80079DC0_88D70(s32 arg0)
+{
+  s32 idx;
+  while (arg0 != (-1))
+  {
+	idx = -1;
+	if (D_8014DD50[arg0].unkC != idx)
+	{
+	  func_80079DC0_88D70(D_8014DD50[arg0].unkC);
+	}
+	idx = --D_8014ECD0;
+	D_8014EC50[D_8014ECD0] = arg0;
+	arg0 = D_8014DD50[arg0].unkD;
+  }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80079E64_88E14.s")
 

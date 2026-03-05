@@ -455,6 +455,8 @@ extern u8 D_8014D509;
 extern u8 D_8014D50A;
 extern Unk8014DD50 D_8014DD50[];
 extern s16 D_8014DD5E[][8];
+extern s8 D_8014EC50[];
+extern s32 D_8014ECD0;
 extern u8 D_8014E4D0[];
 extern Unk8014F6D0 D_8014F6D0[0x10];
 extern s32 D_8014F800;
