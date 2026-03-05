@@ -388,7 +388,7 @@ typedef struct {
 	/* 0x08 */ u8 pad8[4];
 	/* 0x0C */ s8 unkC;
 	/* 0x0D */ s8 unkD;
-	/* 0x0E */ u8 padE[2];
+	/* 0x0E */ s16 unkE;
 } Unk8014DD50; /* size = 0x10 */
 
 typedef struct {

@@ -89,7 +89,7 @@ Double check all function call params are necessary and correctly typed.
 Think about how a person would have originally written the code in C to produce the assembly you see rather than writing the C to match the assembly exactly. Search for patterns in the original assembly and see how other functions were written to achieve similar assembly output.
 Read file `DecompHints.md` for examples of solving specific patterns.
 
-Rebuild the project and re-compare until the generated assembly is identical to the original, never give up, keep trying. Once the build returns `build/bh.us.z64: OK` proceed to the final step.
+**Every** time you make changes, rebuild the project and compare the generated assembly to the original, never give up, keep trying. Once the build returns `build/bh.us.z64: OK` proceed to the final step.
 
 ## Step 6: Finalize
 
