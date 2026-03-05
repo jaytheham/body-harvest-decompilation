@@ -293,7 +293,17 @@ void func_80081E5C_90E0C(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082084_91034.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800821F0_911A0.s")
+void func_800821F0_911A0(s32 arg0, s32 arg1, s32 arg2, u8 *arg3) {
+	s32 hi;
+	func_80081E5C_90E0C((s16)arg1);
+	if (D_8014DD5E[arg1][0] == 0) {
+		do {
+			hi = func_800038E0_44E0() % arg2;
+		} while (hi == alienInstances[arg0].unk36);
+		alienInstances[arg0].unk36 = (u8)hi;
+		func_80081C84_90C34((u8)arg1, &arg3[hi * 0x10]);
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800822BC_9126C.s")
 
