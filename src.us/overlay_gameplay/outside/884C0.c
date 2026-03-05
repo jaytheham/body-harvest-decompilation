@@ -518,7 +518,24 @@ void func_80086270_95220(OutputStruct_8012B150 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80086D70_95D20.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800870D8_96088.s")
+s32 func_800870D8_96088(s32 arg0, s32 arg1)
+{
+	s32 new_var;
+	u32 var_v1;
+	if (arg1 != 0)
+	{
+		var_v1 = ((u32) D_80052A8C) % ((u32) arg1);
+	}
+	else
+	{
+		var_v1 = 0;
+	}
+	if ((arg1 / 2) < ((s32) var_v1))
+	{
+		return (var_v1 * ((u32) arg0)) - (new_var = ((arg1 * 3) * arg0) / 4);
+	}
+	return ((arg1 * arg0) / 4) - (var_v1 * arg0);
+}
 
 void func_80087188_96138(u8 arg0, s32 arg1, s32 arg2) {
 	func_80086A34_959E4(arg0, arg1, func_800870D8_96088(0x80, arg2));
