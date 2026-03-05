@@ -466,7 +466,14 @@ s32 func_800857D0_94780(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085900_948B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800859F4_949A4.s")
+s32 func_800859F4_949A4(u8 arg0) {
+	AlienInstance *inst = &alienInstances[arg0];
+	if (func_80084FE8_93F98(arg0, (*(&D_802566D1 + (u32)inst->specIndex * 0x68) * 0xC8) & 0xFFFF) != 0) {
+		inst->unk20 |= 0x08000100;
+		return 1;
+	}
+	return 0;
+}
 
 #ifdef NON_MATCHING
 s16 func_80085A9C_94A4C(s16 arg0, s32 arg1, s32 arg2, s32 arg3, s16 arg4) {
