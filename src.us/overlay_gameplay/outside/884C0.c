@@ -849,7 +849,31 @@ void func_8008D3F4_9C3A4(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008D71C_9C6CC.s")
 
+// https://decomp.me/scratch/lrRls
+#ifdef NON_MATCHING
+s32 func_8008D978_9C928(u8 arg0)
+{
+  AlienInstance *inst = &alienInstances[arg0];
+  u8 unk25 = inst->unk25;
+  AlienInstance *new_var;
+  if (unk25 != 0xFF)
+  {
+	if (alienInstances[unk25].unk20 & 0x300000)
+	{
+	  new_var = &alienInstances[alienInstances[unk25].unk25];
+	  if ((*new_var).unk20 & 0x2000)
+	  {
+		func_80087AAC_96A5C(arg0);
+	  }
+	  inst->unk25 = 0xFF;
+	  return 1;
+	}
+  }
+  return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008D978_9C928.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008DA24_9C9D4.s")
 
