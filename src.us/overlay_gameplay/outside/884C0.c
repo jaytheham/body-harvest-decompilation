@@ -662,7 +662,25 @@ void func_8008D004_9BFB4(u8 arg0) {
 	func_80089EB4_98E64(arg0, 0x50, 6, 0xA, 8);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008D040_9BFF0.s")
+void func_8008D040_9BFF0(u8 arg0)
+{
+	u8 new_var;
+	s32 parentUnk20;
+	AlienInstance *inst;
+	AlienInstance *parent;
+	arg0 = arg0;
+	inst = &alienInstances[arg0];
+	new_var = inst->unk25;
+	parent = &alienInstances[new_var];
+	parentUnk20 = parent->unk20;
+	if ((parentUnk20 & 0x1000) && (inst->unk20 & 0xF000))
+	{
+		parent->unk20 = parentUnk20 & (~0x1000);
+		// %s says I'm busy
+		// so this call should have one arg?
+		do {} while(0); do { osSyncPrintf(&D_80141E80, *((s32 *) (&D_80256698[inst->specIndex])), parent, parentUnk20); } while (0);
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008D0E0_9C090.s")
 
