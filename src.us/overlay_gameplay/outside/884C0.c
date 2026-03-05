@@ -278,7 +278,24 @@ s32 func_80082990_91940(s16 arg0, s16 arg1)
 	return v1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800829EC_9199C.s")
+s16 func_800829EC_9199C(u8 arg0, s32 arg1) {
+	s32 col;
+	s32 row;
+	s32 mask;
+	AlienInstance *inst;
+	mask = 1;
+	for (row = 0; row < 3; row++) {
+		for (col = 0; col < 3; col++, mask <<= 1) {
+			if (arg1 & mask) {
+				inst = &alienInstances[arg0];
+				inst->unk28 = (inst->unk0 >> 8) + col - 1;
+				inst->unk29 = (inst->unk4 >> 8) + row - 1;
+				return D_8013C2BC[row * 3 + col];
+			}
+		}
+	}
+	return -1;
+}
 
 #ifdef NON_MATCHING
 s32 func_80082A98_91A48(u8 arg0)

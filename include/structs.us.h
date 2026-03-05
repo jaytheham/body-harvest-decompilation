@@ -128,7 +128,8 @@ typedef struct {
 	/* 0x25 */ u8 unk25;
 	/* 0x26 */ u8 unk26;
 	/* 0x27 */ u8 unk27;
-	/* 0x28 */ u8 pad28[0x2];
+	/* 0x28 */ s8 unk28;
+	/* 0x29 */ s8 unk29;
 	/* 0x2A */ s16 unk2A;
 	/* 0x2C */ s16 unk2C;
 	/* 0x2E */ s16 unk2E;
