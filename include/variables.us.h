@@ -1034,4 +1034,5 @@ extern s16 D_802DE460;
 extern s16 D_8014D182;
 extern s16 D_802DE464;
 extern s16 D_80052554;
+extern Unk80146212 D_80146212[];
 #endif

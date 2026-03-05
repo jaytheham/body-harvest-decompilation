@@ -86,6 +86,7 @@ Rewrite C code to reduce the number of differences in assembly. First target dif
 **FIRST ALWAYS try removing intermediate variables and simplifying the code**, it is very common that the original code derefenced struct fields and arrays multiple times instead of storing them in a local variable.
 Make sure all pointer arithmetic is replaced with proper struct/array access, and that assembly-like if>do>while and goto control flow is replaced with more natural C control flow constructs.
 Double check all function call params are necessary and correctly typed.
+An arg being `&& 0xFF` or `&& 0xFFFF` repeatedly suggests that the original code was using a smaller type like u8 or s16.
 Think about how a person would have originally written the code in C to produce the assembly you see rather than writing the C to match the assembly exactly. Search for patterns in the original assembly and see how other functions were written to achieve similar assembly output.
 Read file `DecompHints.md` for examples of solving specific patterns.
 

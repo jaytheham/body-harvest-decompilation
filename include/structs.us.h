@@ -883,4 +883,9 @@ typedef struct {
 	/* 0x08 */ u8 unk8;
 } func_800A9DC0_B8D70_arg; /* size = 0x9 */
 
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ u8 pad[0x16];
+} Unk80146212; /* size = 0x18 */
+
 #endif
