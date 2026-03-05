@@ -902,7 +902,20 @@ s32 func_8008E3E8_9D398(u8 arg0) {
 	return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008E478_9D428.s")
+s32 func_8008E478_9D428(u8 arg0)
+{
+  u8 new_var;
+  new_var = alienInstances[arg0].unk25;
+  if (((alienInstances[arg0].unk25 == 0xFF) ||
+	   (alienInstances[new_var].specIndex != 0x19)) ||
+	  func_8008D978_9C928((u32)arg0))
+  {
+	func_80081BB0_90B60(arg0);
+	alienInstances[arg0].unk20 |= 0x08000100;
+	return 1;
+  }
+  return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008E524_9D4D4.s")
 
