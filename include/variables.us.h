@@ -571,6 +571,7 @@ extern s32 D_80257A1C[][0x1C];
 extern s16 D_80257A0C;
 extern s16 D_8025668C;
 extern AlienSpec D_80256698[];
+extern u8 D_802566D1;
 extern s16 D_80257A38;
 extern s32 D_80145BE8[][6];
 extern s16 D_8014EDD8;
