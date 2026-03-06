@@ -190,7 +190,8 @@ typedef struct {
 	/* 0x40 */ s16 unk40;
 	/* 0x42 */ s16 unk42;
 	/* 0x44 */ void *unk44;
-	/* 0x48 */ u8 pad48[0x10];
+	/* 0x48 */ u8 pad48[0xC];
+	/* 0x54 */ s32 unk54;
 	/* 0x58 */ s16 unk58;
 	/* 0x5A */ u8 pad5A[0xE];
 } AlienSpec; /* size = 0x68 */
@@ -850,7 +851,7 @@ typedef struct {
 	/* 0x00 */ u8 pad0[0x8];
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ s16 unkA;
-	/* 0x0C */ u8 padC[0x4];
+	/* 0x0C */ s32 unkC;
 } Unk8003E290Entry; /* 0x10 bytes */
 
 typedef struct {
