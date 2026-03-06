@@ -64,6 +64,12 @@ The optimizer can move some variables into registers, leaving stack slots empty.
 
 Stack variables are placed in "as declared" order - non-declared temporary variables are placed at end of stack.
 
+**Displacing a cfe temp from 0x1c to 0x18 with a dummy variable (declare dummy FIRST):** When a single register needs to be saved across a JAL call (e.g., sp18 in a 0x20 frame) and it spills to offset 0x1c (but the target uses 0x18), declare an UNUSED dummy variable BEFORE the real variable. The dummy being first in declaration order takes the higher slot (0x1c), forcing IDO to allocate the cfe temp at the lower slot (0x18). The real variable comes SECOND (last in declaration order, can be register-allocated → its slot is removed by the not-last rule), while the dummy (first, not-last) keeps its slot at the higher address, blocking the cfe from using 0x1c. Pattern:
+```c
+s32 sp1c;   // dummy — first declared, not-last → keeps slot at 0x1c (blocks cfe from using 0x1c)
+s32 sp18;   // real — second declared, last, register-allocated → slot removed; cfe falls to 0x18
+```
+
 **Padding with unused variables (not-last rule):** If a stack frame is too small (e.g., sp3C ends up at 0x34 instead of 0x3c), declare extra unused `s32` variables BETWEEN the first variable and the next real one. Because they are NOT last in declaration order, IDO still reserves their stack slots even if they're never used. Two unused `s32` variables between `sp3C` and `sp24` add 8 bytes (moving both into the correct positions). Verified with IDO 5.3 O2.
 
 ```c=

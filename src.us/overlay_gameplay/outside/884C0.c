@@ -330,7 +330,22 @@ void func_800821F0_911A0(s32 arg0, s32 arg1, s32 arg2, u8 *arg3) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800822BC_9126C.s")
+void func_800822BC_9126C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+	s32 sp1c;
+	s32 sp18;
+
+	func_80081E5C_90E0C(arg1);
+	if (D_8014DD5E[arg1][0] == 0) {
+		sp18 = arg4;
+		if (alienInstances[arg0].unk36 != 0) {
+			sp18 = arg3;
+			alienInstances[arg0].unk36 = 0;
+		} else {
+			alienInstances[arg0].unk36 = 1;
+		}
+		func_80081C84_90C34((u8)arg1, (void *)(sp18 + (func_800038E0_44E0() % arg2) * 0x10));
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082394_91344.s")
 
