@@ -23,7 +23,7 @@ You will convert the named N64 assembly function to C89 code, compile it using I
 You are running in windows, you have access to a docker container where you can run linux commands and build the project. You can also edit files on your host machine and those changes will be reflected in the container:
 
 - Search for extern declarations: `docker exec -it bh-container bash -c "grep -r 'D_80047588' include/"`.
-- Compare target and generated assembly for a specific function: `docker exec -it bh-container bash -c "tools/asm-differ/diff.py --no-pager --compress-matching 3 <function name> 0x<ROM address of next function>"`. Functions are named like `func_<RAM address>_<ROM address>`. 
+- Compare target and generated assembly for a specific function: `docker exec -it bh-container bash -c "tools/asm-differ/diff.py --no-pager --compress-matching 3 <function name> 0x<ROM address of next function>"`. Functions are named like `func_<RAM address>_<ROM address>`. Diff output includes a score that indicates how close the generated assembly is to the target e.g. `CURRENT (46)`, 0 is a perfect match.
 - Disassemble a single function from an object file: `docker exec -it bh-container bash -c "mips-linux-gnu-objdump -d build/src.us/overlay_gameplay/outside/missions.c.o | sed -n '/<func_8007679C_8574C>:/,/^$/p'"`.
 - You can decompile gfx macros using the `tools/gfxdis.ps1` powershell script:
 e.g.

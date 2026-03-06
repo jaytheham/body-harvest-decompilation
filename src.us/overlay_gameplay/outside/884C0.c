@@ -122,7 +122,7 @@ void func_8007B2A0_8A250(u8 arg0)
   gSPDisplayList(D_8005BB2C++, (Gfx *) spec->unk0);
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B2A0_8A250.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B2A0_8A250.s")	
 #endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B370_8A320.s")

@@ -20,6 +20,10 @@
             {
                 "command": "permuter-lens.uploadToDecompMe",
                 "title": "Upload to decomp.me"
+            },
+            {
+                "command": "permuter-lens.wrapNonMatching",
+                "title": "Wrap function as NON_MATCHING"
             }
         ],
         "configuration": {
