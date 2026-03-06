@@ -189,7 +189,19 @@ void func_800800DC_8F08C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008064C_8F5FC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008076C_8F71C.s")
+void func_8008076C_8F71C(u8 arg0) {
+	u8 specIdx = alienInstances[arg0].specIndex;
+	s32 mult = 1;
+	if (!(alienInstances[arg0].unk20 & 0x600)) {
+		mult = 4;
+	}
+	func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
+	if (alienInstances[arg0].unk12 < alienSpecs[specIdx].unk40) {
+		alienInstances[arg0].unk12 += alienSpecs[specIdx].unk3E * mult;
+	} else {
+		alienInstances[arg0].unk12 -= alienSpecs[specIdx].unk3E * mult;
+	}
+}
 
 s32 func_80080840_8F7F0(u8 arg0, s32 arg1)
 {
@@ -552,7 +564,48 @@ s32 func_800857D0_94780(u8 arg0) {
 	return 0;
 }
 
+#ifdef NON_MATCHING
+s32 func_80085838_947E8(u8 arg0) {
+	s32 neg_dx, neg_dz, abs_dx, abs_dz, max;
+	s32 dx = D_80052B34->unk0 - alienInstances[arg0].unk0;
+	s32 dz = D_80052B34->unk4 - alienInstances[arg0].unk4;
+
+	neg_dx = -dx;
+	if (neg_dx < dx) {
+		abs_dx = dx;
+	} else {
+		abs_dx = neg_dx;
+	}
+
+	neg_dz = -dz;
+	abs_dz = neg_dz;
+	if (neg_dz < dz) {
+		abs_dz = dz;
+	}
+
+	if (abs_dz < abs_dx) {
+		max = neg_dx;
+		if (neg_dx < dx) {
+		} else {
+			goto block_11;
+		}
+	} else {
+		max = neg_dz;
+		if (neg_dz < dz) {
+			max = dz;
+		}
+	block_11:
+		dx = max;
+	}
+
+	if (dx < 0x1800) {
+		return 1;
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085838_947E8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085900_948B0.s")
 
