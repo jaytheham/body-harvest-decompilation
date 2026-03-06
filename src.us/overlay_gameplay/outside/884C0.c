@@ -260,7 +260,33 @@ void func_80080B44_8FAF4(u8 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008199C_9094C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80081AD4_90A84.s")
+void func_80081AD4_90A84(u8 arg0, u8 arg1)
+{
+  s16 cur;
+  s32 v0 = 0;
+  AlienInstance *inst = &alienInstances[arg0];
+  if (inst->unk20 & 0x20000)
+  {
+	cur = inst->unk38;
+	if ((cur ^ 0) == arg1)
+	{
+	  return;
+	}
+	alienInstances[cur].unk27 &= ~inst->unk27;
+  }
+  inst->unk38 = arg1;
+  inst->unk20 |= 0x20020;
+  if (alienInstances[arg1].unk27 & 1)
+  {
+	do
+	{
+	  v0 = (v0 + 1) & 0xFF;
+	}
+	while (alienInstances[arg1].unk27 & (1 << v0));
+  }
+  inst->unk27 = v0;
+  alienInstances[arg1].unk27 |= 1 << v0;
+}
 
 void func_80081BB0_90B60(u8 arg0) {
 	AlienInstance *inst;
@@ -505,7 +531,31 @@ void func_80084C48_93BF8(Unk80052B34 *arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084CF8_93CA8.s")
 
+#ifdef NON_MATCHING
+void func_80084D80_93D30(u8 arg0)
+{
+  u8 new_var;
+  alienInstances[arg0].unk20 &= 0xFEFFFFFF;
+  if ((D_80052ACA != 2) && (!(alienInstances[arg0].unk20 & 0x100000)))
+  {
+	func_800A4150_B3100(alienInstances[arg0].unk25);
+	if (alienInstances[alienInstances[arg0].unk26].specIndex == 0x19)
+	{
+	  alienInstances[arg0].unk25 = alienInstances[arg0].unk26;
+	  if (alienInstances[arg0].specIndex == 3)
+	  {
+		new_var = alienInstances[arg0].unk26;
+		alienInstances[arg0].unk38 = new_var;
+		alienInstances[arg0].unk20 |= 0x2020;
+		alienInstances[arg0].unk20 &= ~0x800;
+	  }
+	}
+	alienInstances[arg0].unk26 = 0;
+  }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084D80_93D30.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_80084E54_93E04(AlienInstance *arg0, AlienInstance *arg1)
@@ -985,7 +1035,32 @@ void func_8008A32C_992DC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008AC5C_99C0C.s")
 
+#ifdef NON_MATCHING
+void func_8008AF58_99F08(u8 arg0)
+{
+	AlienInstance *inst = &alienInstances[arg0];
+	s32 flags = inst->unk20;
+	if (!inst)
+	{
+	}
+	if (!(flags & 0x100000))
+	{
+	func_8008AC5C_99C0C(arg0, flags);
+	return;
+	}
+	if (((0, inst->unk2C == 0x50)) || ((!(flags & 0x40000000)) && ((inst->unk47 & 0xFFFF) & 1)))
+	{
+	flags = flags | 0x40000000;
+	inst->unk20 = flags;
+	}
+	if ((flags & 0x40000000) || (inst->unk2C < 0x50))
+	{
+	func_8008AAFC_99AAC(arg0, (&D_8025668C)[inst->specIndex * 0x34], 2);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008AF58_99F08.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008B02C_99FDC.s")
 
