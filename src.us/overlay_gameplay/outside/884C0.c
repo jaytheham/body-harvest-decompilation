@@ -110,7 +110,20 @@ void func_8007B20C_8A1BC(Unk8014DD50 *arg0) {
 	} while (arg0 != NULL);
 }
 
+#ifdef NON_MATCHING
+void func_8007B2A0_8A250(u8 arg0)
+{
+  AlienSpec *spec = &alienSpecs[0, alienInstances[arg0].specIndex];
+  if (spec->unk44 != NULL)
+  {
+	gSPSegment(D_8005BB2C++, 0x07, osVirtualToPhysical((void *) D_8005BB38));
+	func_8007B20C_8A1BC((Unk8014DD50 *) spec->unk44);
+  }
+  gSPDisplayList(D_8005BB2C++, (Gfx *) spec->unk0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B2A0_8A250.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B370_8A320.s")
 

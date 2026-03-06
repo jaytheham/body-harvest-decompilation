@@ -182,13 +182,15 @@ typedef struct {
 // 0x64 xxxxyyyy xxxx Drops modifier
 // 0x68
 typedef struct {
-	/* 0x00 */ u8 pad0[0x38];
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ u8 pad4[0x34];
 	/* 0x38 */ s16 unk38;
 	/* 0x3A */ u8 pad3A[4];
 	/* 0x3E */ s16 unk3E;
 	/* 0x40 */ s16 unk40;
 	/* 0x42 */ s16 unk42;
-	/* 0x44 */ u8 pad44[0x14];
+	/* 0x44 */ void *unk44;
+	/* 0x48 */ u8 pad48[0x10];
 	/* 0x58 */ s16 unk58;
 	/* 0x5A */ u8 pad5A[0xE];
 } AlienSpec; /* size = 0x68 */
