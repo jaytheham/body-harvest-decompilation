@@ -149,7 +149,9 @@ typedef struct {
 	/* 0x48 */ s16 unk48;
 	/* 0x4A */ u8 pad4A;
 	/* 0x4B */ u8 unk4B;
-	/* 0x4C */ u8 pad4C[0x4];
+	/* 0x4C */ u8 pad4C[0x2];
+	/* 0x4E */ s8 unk4E;
+	/* 0x4F */ u8 pad4F;
 } AlienInstance; /* size = 0x50 */
 
 // 0x00 00000000

@@ -704,7 +704,21 @@ void func_800873A8_96358(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008751C_964CC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80087720_966D0.s")
+void func_80087720_966D0(u8 arg0, s32 arg1)
+{
+  AlienInstance *inst;
+ if (arg1 < 0xFA0) { func_8008554C_944FC(arg0); inst = &alienInstances[arg0]; } else { inst = &alienInstances[arg0]; inst->unk4E = 1;
+  }
+  if ((inst->unk4E == 0) && (arg1 < 0x7D0))
+  {
+	inst->unk20 |= 0x800;
+	inst += 0;
+	inst->unk20 &= ~0x100;
+	return;
+  }
+  inst->unk20 |= 0x100;
+  inst->unk20 &= ~0x800;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800877E8_96798.s")
 

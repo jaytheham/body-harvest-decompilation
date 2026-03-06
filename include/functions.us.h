@@ -112,6 +112,7 @@ void func_8007AA0C_899BC(void);
 void func_8007AAEC_89A9C(void);
 void func_8008064C_8F5FC(u8);
 void func_8008076C_8F71C(u8);
+void func_8008554C_944FC(u8);
 void func_8008751C_964CC(u8, s32, s32);
 s32 func_80080840_8F7F0(u8, s32);
 s32 func_800808F0_8F8A0(u8, s16 *);
