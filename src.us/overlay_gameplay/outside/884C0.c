@@ -941,7 +941,18 @@ void func_80087C74_96C24(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80087D18_96CC8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80087E30_96DE0.s")
+s32 func_80087E30_96DE0(void) {
+	AlienInstance *alien = &alienInstances[0xFE];
+	s32 i = 0xFE;
+	do {
+		if ((alien->specIndex >= 2 || (alien->specIndex == 1 && (alien->unk24 == 1 || alien->unk24 == 0x1D)))
+			&& alien->specIndex < 0x1A && alien->specIndex != 0x18 && alien->specIndex != 0x17
+			&& !(alien->unk20 & 0x100000)) {
+			func_80088760_97710(alien);
+		}
+		alien--;
+	} while (i--);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80087F08_96EB8.s")
 
