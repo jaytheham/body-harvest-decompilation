@@ -2,7 +2,7 @@
 name: Body Harvest Decomp
 description: Decompile functions from the N64 game Body Harvest
 tools:
-  [execute/getTerminalOutput, execute/awaitTerminal, execute/killTerminal, execute/createAndRunTask, execute/runInTerminal, read/problems, read/readFile, read/terminalSelection, read/terminalLastCommand, edit/createFile, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/listDirectory, search/searchResults, search/textSearch, search/searchSubagent, search/usages, todo]
+  [execute/getTerminalOutput, execute/awaitTerminal, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, edit/createFile, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/searchResults, search/textSearch, search/searchSubagent, search/usages, todo]
 model: Claude Sonnet 4.6 (copilot)
 ---
 
