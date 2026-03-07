@@ -838,10 +838,6 @@ arg0->unk38 = (f32) temp->unk4;              // compute next before copy 2
 
 Fields loaded with `lwc1` are `f32`, not `s32`. Defining a float-loaded field as `s32` produces mismatched register types. Check assembly load opcodes when defining struct members.
 
-### Two-return-register pattern (lh v1 + move v0,v1)
-
-The `lh v1; jr ra; move v0, v1` pattern (vs `lh v0; jr ra; nop`) is a register allocation artifact where `v0` is considered live from an earlier conditional. Hard to fix; accept NON_MATCHING after 5 iterations if only this and register names differ.
-
 ### Post-increment in condition moves global address to a0
 
 When a global counter is loaded, incremented, stored, and compared, using `D_global++ >= threshold` instead of a local temp (`s16 temp = D_global; D_global = temp+1; if (temp >= threshold)`) causes IDO to put the global address in `a0` (not `v1`) and the loaded value in `v1` (not `v0`). It also triggers pre-loading of the next global address into `at` before the branch — matching the original scheduling pattern. Use this form when the original shows: `lui a0; lh v1, 0(a0); lui at, D_other; slti v0, v1, threshold`.

@@ -339,15 +339,12 @@ void func_80071228_801D8(void) {
 	segAddr31160 = ((u32)&D_80031160) & 0x1FFFFFFF;
 	savedDl31200 = D_80031200;
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0x01020040;     dl->words.w1 = segAddr31160;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xB7000000;
-	dl->words.w1 = 0x00020000;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0x06000000;    dl->words.w1 = (u32)savedDl31200;
+	/* set modelview matrix from segment 0x12 */
+	gSPMatrix(D_8005BB2C++, segAddr31160, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	/* enable lighting geometry mode */
+	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
+	/* preserve previous display list */
+	gSPDisplayList(D_8005BB2C++, savedDl31200);
 
 	func_80070FB8_7FF68();
 	func_800B9DB8_C8D68(0);
@@ -407,19 +404,11 @@ void func_80071228_801D8(void) {
 		osSyncPrintf(D_80140EC0);
 	}
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xB7000000;
-	dl->words.w1 = 0x2000;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0x06000000; dl->words.w1 = (u32)D_800311D0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xB900031D; dl->words.w1 = 0xC8112478;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE7000000;
-	dl->words.w1 = 0;
+	/* cull back faces while drawing list at D_800311D0 */
+	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
+	gSPDisplayList(D_8005BB2C++, D_800311D0);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_INTER2);
+	gDPPipeSync(D_8005BB2C++);
 
 	savedDl311D0 = D_800311D0;
 	func_80124D60_133D10();
@@ -559,83 +548,43 @@ void func_80071228_801D8(void) {
 	}
 
 	if (D_80157590 == 0) {
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0x06000000;        dl->words.w1 = (u32) D_80031230;
+/* draw list for 31230 before changing render state */
+			gSPDisplayList(D_8005BB2C++, D_80031230);
 
-		func_800A3490_B2440(D_80159020);
+			func_800A3490_B2440(D_80159020);
 
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0x06000000;
-		dl->words.w1 = (u32) savedDl31200;
+			/* restore saved display list */
+			gSPDisplayList(D_8005BB2C++, savedDl31200);
 
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0x01020040;
-		dl->words.w1 = segAddr31160;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xBA000E02;
-		dl->words.w1 = 0x8000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xB7000000;
-		dl->words.w1 = 0x10204;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xB900031D;
-		dl->words.w1 = 0xC8112478;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xBA001402;
-		dl->words.w1 = 0x100000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xFCFFFFFF;
-		dl->words.w1 = 0xFFFE7838;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xBA000C02;
-		dl->words.w1 = 0x2000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xBB000001;
-		dl->words.w1 = 0x80008000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE7000000;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xB7000000;
-		dl->words.w1 = 0x22001;
+			/* reset matrix and enable lighting with smooth fog shading */
+			gSPMatrix(D_8005BB2C++, segAddr31160, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+			gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+			gSPSetGeometryMode(D_8005BB2C++, G_SHADE | G_FOG | G_SHADING_SMOOTH);
+			gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_INTER2);
+			gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+			gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
+			gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+			gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+			gDPPipeSync(D_8005BB2C++);
+			gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_LIGHTING);
 
 		func_80071178_80128();
 		func_8010065C_10F60C(1);
 		func_80070FB8_7FF68();
 
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xBA001402;
-		dl->words.w1 = 0;
+		/* back to 1-cycle rendering */
+		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	}
 
 	if (currentControllerStates[0].button == 0x30) {
 		osSyncPrintf(D_80140FC4);
 	}
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xBA000E02;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xB6000000;
-	dl->words.w1 = 0x20000;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE7000000;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0x01020040;
-	dl->words.w1 = segAddr31160;
+/* disable texture lookup table and lighting, restore matrix */
+		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+		gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
+		gDPPipeSync(D_8005BB2C++);
+		gSPMatrix(D_8005BB2C++, segAddr31160, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	if (D_80052ACB == 2) {
 		return;
@@ -681,7 +630,7 @@ void func_80071228_801D8(void) {
 	}
 
 	if (D_80052ACB != 2) {
-		func_800E7234_F61E4(D_80141034);
+		func_800E7234_F61E4();
 	} else {
 		osSyncPrintf(D_80141034);
 	}
@@ -694,9 +643,8 @@ void func_80071228_801D8(void) {
 		return;
 	}
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0x06000000;
-	dl->words.w1 = (u32) D_80031230;
+/* switch back to list 31230 */
+		gSPDisplayList(D_8005BB2C++, D_80031230);
 
 	func_800E5044_F3FF4();
 	if (currentControllerStates[0].button == 0x30) {
@@ -716,29 +664,24 @@ void func_80071228_801D8(void) {
 		return;
 	}
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0x03800010;
-	dl->words.w1 = ((u32) D_8005BB24) & 0x1FFFFFFF;
+/* load viewport */
+		gSPViewport(D_8005BB2C++, ((u32) D_8005BB24) & 0x1FFFFFFF);
 
 	guPerspective((void*) (D_8005BB20 + 0x140), &D_801493D6, (f32) D_80149404, 1.3333334f, 10.0f, D_801411A4, 1.0f);
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xBC00000E;
-	dl->words.w1 = D_801493D6;
+/* set perspective normalization */
+		gSPPerspNormalize(D_8005BB2C++, D_801493D6);
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0x06000000;
-	dl->words.w1 = (u32) savedDl311D0;
+/* restore saved display list 311D0 */
+		gSPDisplayList(D_8005BB2C++, savedDl311D0);
 
 	matrixBase = (u32) D_8005BB20;
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0x01030040;
-	dl->words.w1 = (matrixBase + 0x140) & 0x1FFFFFFF;
+/* load projection matrix */
+		gSPMatrix(D_8005BB2C++, (matrixBase + 0x140) & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0x01010040;
-	dl->words.w1 = (matrixBase + 0x200) & 0x1FFFFFFF;
+/* multiply projection matrix */
+		gSPMatrix(D_8005BB2C++, (matrixBase + 0x200) & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 
 	func_800A03FC_AF3AC();
 
