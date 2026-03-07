@@ -1,6 +1,5 @@
 #!/usr/bin/env pwsh
 # Helper script to import a function and run the decomp-permuter inside the bh-container.
-# Agents do not use this, think for yourself.
 # Usage:
 #   .\permute.ps1 <c_file> <asm_file_or_func_name> [permuter options]
 #

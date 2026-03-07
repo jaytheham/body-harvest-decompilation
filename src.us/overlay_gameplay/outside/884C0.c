@@ -641,7 +641,33 @@ s32 func_80084F00_93EB0(Unk80052B34 *arg0, AlienInstance *arg1)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084FE8_93F98.s")
 
+#ifdef NON_MATCHING
+s32 func_800850DC_9408C(s32 arg0, u16 arg1) {
+    s16 sp30;
+    f32 sp24;
+    f32 sp20;
+    s32 var_v1;
+    s32 var_v0;
+    AlienInstance *s0;
+
+    s0 = &alienInstances[arg0 & 0xFF];
+    sp24 = (f32)(s0->unk14 - s0->unk0);
+    sp20 = (f32)(s0->unk18 - s0->unk4);
+    sp30 = func_80003824_4424(sp24, sp20);
+    if (-(func_80003824_4424(sp24, sp20) - s0->unk6) < (sp30 - s0->unk6)) {
+        var_v1 = func_80003824_4424(sp24, sp20) - s0->unk6;
+    } else {
+        var_v1 = -(func_80003824_4424(sp24, sp20) - s0->unk6);
+    }
+    var_v0 = 0;
+    if (var_v1 < (s32)arg1) {
+        var_v0 = 1;
+    }
+    return var_v0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800850DC_9408C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800851C8_94178.s")
 

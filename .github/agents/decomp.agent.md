@@ -22,7 +22,7 @@ You will convert the named N64 assembly function to C89 code, compile it (IDO 5.
 
 You have access to the following powershell tools to assist you in the decompilation process:
 
-- Compare target and generated assembly for a specific function: `.\tools\asm-diff.ps1 <target function name> 0x<ROM address of next function>"`. E.g. `.\tools\asm-diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`. Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match.
+- Compare target and generated assembly for a specific function: `.\tools\asm-diff.ps1 <target function name> <ROM address of next function>"`. E.g. `.\tools\asm-diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`. Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match.
 - You can decompile gfx macros using `.\tools\gfxdis.ps1`:
 e.g.
 ```C
@@ -79,7 +79,7 @@ Use coddog to find any similar functions that are already decompiled which you m
 
 Compare the original assembly and generated assembly to identify differences: note instruction order, registers, immediates, branch conditions.
 
-## Step 5: Iterate To Resolve Differences
+## Step 5+: Iterate Until Match
 
 Rewrite C code to reduce the number of differences in assembly. First target differences in instructions and their ordering, and only then target register allocation.
 **FIRST ALWAYS try removing intermediate variables and simplifying the code**, it is very common that the original code derefenced struct fields and arrays multiple times instead of storing them in a local variable.
@@ -89,9 +89,9 @@ An arg being `&& 0xFF` or `&& 0xFFFF` repeatedly suggests that the original code
 Think about how a person would have originally written the code in C to produce the assembly you see rather than writing the C to match the assembly exactly. Search for patterns in the original assembly and see how other functions were written to achieve similar assembly output.
 Read file `DecompHints.md` for examples of solving specific patterns.
 
-**Every** time you make changes, rebuild the project and compare the generated assembly to the original, never give up, keep trying. Once the build returns `build/bh.us.z64: OK` proceed to the final step.
+**Every** time you make changes, rebuild the project and compare the generated assembly to the original, if it doesn't match repeat this step, never give up, keep trying. Only once the build returns `build/bh.us.z64: OK` proceed to Finalize.
 
-## Step 6: Finalize
+## Finalize
 
 If you had to make changes to the initial C code, think about whether there is some detectable pattern or insight, and if so update `DecompHints.md` with brief notes to help future decomp.
 Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.
