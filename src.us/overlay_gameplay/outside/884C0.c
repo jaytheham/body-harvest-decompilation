@@ -1600,7 +1600,32 @@ void func_800908C4_9F874(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80090A6C_9FA1C.s")
 
+#ifdef NON_MATCHING
+void func_80090C14_9FBC4(u8 arg0)
+{
+  s16 sp2C;
+  int new_var;
+  s32 var_a0;
+  s32 var_a1;
+  int new_var2;
+  AlienInstance *sp1C;
+  sp1C = &alienInstances[arg0];
+  new_var2 = sp1C->unk14 - sp1C->unk0;
+  new_var = sp1C->unk18 - sp1C->unk4;
+  sp2C = func_80003824_4424((f32) (-new_var), (f32) new_var2);
+  var_a0 = sp2C - func_80003824_4424((f32) (D_80052B34->unk0 - sp1C->unk0), (f32) (D_80052B34->unk4 - sp1C->unk4));
+  var_a1 = -var_a0;
+  if (((var_a1 < var_a0) ? (var_a0) : (var_a1)) < 0x4000)
+  {
+	sp2C += 0x8000;
+  }
+  sp1C->unk34 = 0x78;
+  sp1C->unk47 |= 1;
+  sp1C->unk2A = sp2C;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80090C14_9FBC4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80090D0C_9FCBC.s")
 
