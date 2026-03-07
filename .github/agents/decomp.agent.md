@@ -2,7 +2,7 @@
 name: Body Harvest Decomp
 description: Decompile functions from the N64 game Body Harvest
 tools:
-  [vscode/askQuestions, execute/getTerminalOutput, execute/awaitTerminal, execute/killTerminal, execute/createAndRunTask, execute/runInTerminal, read/problems, read/readFile, read/terminalSelection, read/terminalLastCommand, edit/createFile, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/listDirectory, search/searchResults, search/textSearch, search/usages, todo]
+  [execute/getTerminalOutput, execute/awaitTerminal, execute/killTerminal, execute/createAndRunTask, execute/runInTerminal, read/problems, read/readFile, read/terminalSelection, read/terminalLastCommand, edit/createFile, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/listDirectory, search/searchResults, search/textSearch, search/searchSubagent, search/usages, todo]
 model: Claude Sonnet 4.6 (copilot)
 ---
 
@@ -34,7 +34,7 @@ dl->words.w0 = 0xB6000000;
 dl->words.w1 = 0x10001;
 ```
 Is converted by pwsh cmd `tools\gfxdis.ps1 -w 03840010 801592A0` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
-- Find similar decompiled functions using coddog: `.\tools\coddog\coddog.exe match func_80092A50_A1A00 -t 0.7`.
+- Find similar decompiled functions using coddog in pwsh (not docker): `.\tools\coddog\coddog.exe match func_80092A50_A1A00 -t 0.7`.
 
 # Decompilation Workflow
 ## Step 1: Generate cleaned C implementation

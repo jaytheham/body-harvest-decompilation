@@ -286,7 +286,7 @@ void func_80091470_A0420(u8);
 void func_8009170C_A06BC(u8);
 s32 func_8009179C_A074C(u8, s32);
 void func_800918E0_A0890(u8);
-s32 func_80084F00_93EB0(void *, AlienInstance *);
+s32 func_80084F00_93EB0(Unk80052B34 *, AlienInstance *);
 s32 func_80084FE8_93F98(u8, s32);
 s32 func_80004818_5418(s32, s32, s32);
 OutputStruct_8012B150 *func_80129354_138304(s32, s32, s16, s16, s16);
