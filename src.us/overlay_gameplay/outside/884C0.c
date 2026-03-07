@@ -1537,7 +1537,32 @@ u8 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80092A50_A1A00.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80092ADC_A1A8C(void)
+{
+	Unk8013CA *p = &D_8013CA00;
+	u8 new_var;
+	u8 result;
+	do
+	{
+		result = func_80092A50_A1A00((s16) (p->unk0 << 8), (s16) (p->unk1 << 8), 0x10);
+		result += 0;
+		if (result != 0xFF)
+		{
+			new_var = result;
+			alienInstances[result].unk26 = 0;
+			alienInstances[result].unk38 = 0x2F;
+			alienInstances[new_var].unk20 |= 0x4000;
+			D_8004817C++;
+			func_80092BBC_A1B6C(result);
+		}
+		p++;
+	}
+	while (p != (&D_8013CA0A));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80092ADC_A1A8C.s")
+#endif
 
 void func_80092BBC_A1B6C(u8 arg0)
 {

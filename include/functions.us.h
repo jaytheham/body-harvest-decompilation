@@ -501,6 +501,7 @@ void func_800A93A4_B8354(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80007690_8290(void);
 void func_80007410_8010(void *arg0);
 void func_80092ADC_A1A8C(void);
+void func_80092BBC_A1B6C(u8 arg0);
 void func_800EFEB4_FEE64(void *arg0, s32 arg1, s32 arg2);
 void func_80013468_14068(s32 arg0);
 void func_8011BF7C_12AF2C(s32 arg0);
