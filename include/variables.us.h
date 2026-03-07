@@ -145,8 +145,10 @@ extern s8 D_8004758A;
 extern s8 D_8004758B;
 extern s32 D_80048178;
 extern s32 D_8004817C;
+extern s32 D_80048180;
 extern s32 D_80048184;
 extern s32 D_80048188;
+extern s32 D_80048190;
 extern s32 D_80048194;
 extern AlienInstance alienInstances[]; // alien instances
 extern AlienWaveEntry D_8003BCC0[][12];
@@ -460,12 +462,17 @@ extern s32 D_8014D2E8;
 extern s32 D_8014D2EC;
 extern s32 D_8014D2F0;
 extern s32 D_8014D2F4;
+extern s8 D_8014D308[];
 extern u8 D_8014D408[]; // unknown size, maybe 0x101
 extern u8 D_8014D509;
 extern u8 D_8014D50A;
+extern u8 D_8014D510[];
+extern u8 D_8014D550[];
 extern Unk8014DD50 D_8014DD50[];
 extern s16 D_8014DD5E[][8];
 extern s8 D_8014EC50[];
+extern s32 D_8014ECC8;
+extern s32 D_8014ECCC;
 extern s32 D_8014ECD0;
 extern Unk8014DD50 D_8014E4D0[];
 extern Unk8014F6D0 D_8014F6D0[0x10];

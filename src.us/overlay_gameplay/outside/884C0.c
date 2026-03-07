@@ -70,7 +70,45 @@ void func_80079E64_88E14(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007A6B4_89664.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007AA0C_899BC.s")
+void func_8007AA0C_899BC(void)
+{
+	s32 i;
+	s8 *p;
+	D_8014ECCC = 0;
+	D_8014ECC8 = 0;
+	D_8014ECD0 = 0;
+	D_80140AC4 = 0;
+	D_80048184 = -1;
+	D_80048180 = 0;
+	D_80048190 = 0;
+	D_80048194 = 0;
+	for (i = 0; i < 0xFF; i++)
+	{
+		alienInstances[i].specIndex = 0;
+		alienInstances[i].unk20 = 0;
+		alienInstances[i].pad37 = 0;
+		D_8014D308[i] = i;
+	}
+
+	for (i = 0; i < 0x40; i++)
+	{
+		D_8014D510[i] = 0xFF;
+	}
+
+	p = D_8014EC50;
+	i = 0;
+	loop3:
+	if (1)
+	{
+		p[1] = i + 1; p[2] = i + 2; p[3] = i + 3;
+		p[0] = i;
+		i += 4;
+		p += 4;
+	}
+
+	if (i != 0x78)
+	goto loop3;
+}
 
 // R on controller 2 debug prints current vehicle info + target info (if any)
 // Skipping this stops aliens/humans moving
@@ -234,7 +272,38 @@ s32 func_80080840_8F7F0(u8 arg0, s32 arg1)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800808F0_8F8A0.s")
 
+#ifdef NON_MATCHING
+	s32 func_80080A54_8FA04(u8 arg0, s16 arg1, s16 arg2)
+	{
+	u8 new_var;
+	AlienInstance *alien;
+	s16 maxTurn;
+	s32 dx;
+	s32 dz;
+	s16 angle;
+	s16 diff;
+	alien = &alienInstances[arg0];
+	new_var = alien->specIndex;
+	maxTurn = D_802566C2[new_var][0];
+	dx = arg1 - alien->unk0;
+	dz = arg2 - alien->unk4;
+	angle = func_80003824_4424((f32) dx, (f32) dz);
+	diff = angle - alien->unk6;
+	if ((-maxTurn) >= diff)
+	{
+	alien->unk6 -= maxTurn;
+	return 1;
+	}
+	if (maxTurn < diff)
+	{
+	alien->unk6 += maxTurn;
+	return 1;
+	}
+	return 0;
+	}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080A54_8FA04.s")
+#endif
 
 // set building as target for alien?
 void func_80080B44_8FAF4(u8 arg0, u8 arg1) {
@@ -643,27 +712,27 @@ s32 func_80084F00_93EB0(Unk80052B34 *arg0, AlienInstance *arg1)
 
 #ifdef NON_MATCHING
 s32 func_800850DC_9408C(s32 arg0, u16 arg1) {
-    s16 sp30;
-    f32 sp24;
-    f32 sp20;
-    s32 var_v1;
-    s32 var_v0;
-    AlienInstance *s0;
+	s16 sp30;
+	f32 sp24;
+	f32 sp20;
+	s32 var_v1;
+	s32 var_v0;
+	AlienInstance *s0;
 
-    s0 = &alienInstances[arg0 & 0xFF];
-    sp24 = (f32)(s0->unk14 - s0->unk0);
-    sp20 = (f32)(s0->unk18 - s0->unk4);
-    sp30 = func_80003824_4424(sp24, sp20);
-    if (-(func_80003824_4424(sp24, sp20) - s0->unk6) < (sp30 - s0->unk6)) {
-        var_v1 = func_80003824_4424(sp24, sp20) - s0->unk6;
-    } else {
-        var_v1 = -(func_80003824_4424(sp24, sp20) - s0->unk6);
-    }
-    var_v0 = 0;
-    if (var_v1 < (s32)arg1) {
-        var_v0 = 1;
-    }
-    return var_v0;
+	s0 = &alienInstances[arg0 & 0xFF];
+	sp24 = (f32)(s0->unk14 - s0->unk0);
+	sp20 = (f32)(s0->unk18 - s0->unk4);
+	sp30 = func_80003824_4424(sp24, sp20);
+	if (-(func_80003824_4424(sp24, sp20) - s0->unk6) < (sp30 - s0->unk6)) {
+		var_v1 = func_80003824_4424(sp24, sp20) - s0->unk6;
+	} else {
+		var_v1 = -(func_80003824_4424(sp24, sp20) - s0->unk6);
+	}
+	var_v0 = 0;
+	if (var_v1 < (s32)arg1) {
+		var_v0 = 1;
+	}
+	return var_v0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800850DC_9408C.s")

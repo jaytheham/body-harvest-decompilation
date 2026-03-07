@@ -89,7 +89,7 @@ An arg being `&& 0xFF` or `&& 0xFFFF` repeatedly suggests that the original code
 Think about how a person would have originally written the code in C to produce the assembly you see rather than writing the C to match the assembly exactly. Search for patterns in the original assembly and see how other functions were written to achieve similar assembly output.
 Read file `DecompHints.md` for examples of solving specific patterns.
 
-**Every** time you make changes, rebuild the project and compare the generated assembly to the original, if it doesn't match repeat this step, never give up, keep trying. Only once the build returns `build/bh.us.z64: OK` proceed to Finalize.
+**Every** time you make changes, rebuild the project and compare the generated assembly to the original, if it doesn't match repeat this step, never give up, keep trying autonomously. Only once the build returns `build/bh.us.z64: OK` proceed to Finalize.
 
 ## Finalize
 
