@@ -349,6 +349,13 @@ function activate(context) {
                 const edit = new vscode.WorkspaceEdit();
                 edit.replace(uri, funcRange, replacement);
                 await vscode.workspace.applyEdit(edit);
+
+                // Save the modified document so the wrapper is persisted immediately
+                try {
+                    await document.save();
+                } catch (e) {
+                    // ignore save errors — the user can still save manually
+                }
             }
         )
     );
