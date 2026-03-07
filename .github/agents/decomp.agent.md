@@ -9,7 +9,7 @@ model: Claude Sonnet 4.6 (copilot)
 ## Overview
 
 This is a matching decompilation project for Body Harvest (N64). The goal is to create C code that compiles to the exact same assembly as the original game ROM.
-You will convert the named N64 assembly function to C89 code, compile it using IDO 5.3 (-O2 -mips2 -32) in Docker, compare the output against the original assembly, and modify the C code iteratively until it produces byte-for-byte identical assembly.
+You will convert the named N64 assembly function to C89 code, compile it (IDO 5.3 -O2 -mips2 -32), compare the output against the original assembly, and modify the C code iteratively until it produces byte-for-byte identical assembly.
 
 ## Project Structure
 
@@ -20,12 +20,10 @@ You will convert the named N64 assembly function to C89 code, compile it using I
 
 ## Tools
 
-You are running in windows, you have access to a docker container where you can run linux commands and build the project. You can also edit files on your host machine and those changes will be reflected in the container:
+You have access to the following powershell tools to assist you in the decompilation process:
 
-- Search for extern declarations: `docker exec -it bh-container bash -c "grep -r 'D_80047588' include/"`.
-- Compare target and generated assembly for a specific function: `docker exec -it bh-container bash -c "tools/asm-differ/diff.py --no-pager --compress-matching 2 <function name> 0x<ROM address of next function>"`. Functions are named like `func_<RAM address>_<ROM address>`. Diff output includes a score that indicates how close the generated assembly is to the target e.g. `CURRENT (46)`, 0 is a perfect match.
-- Disassemble a single function from an object file: `docker exec -it bh-container bash -c "mips-linux-gnu-objdump -d build/src.us/overlay_gameplay/outside/missions.c.o | sed -n '/<func_8007679C_8574C>:/,/^$/p'"`.
-- You can decompile gfx macros using the `tools/gfxdis.ps1` powershell script:
+- Compare target and generated assembly for a specific function: `.\tools\asm-diff.ps1 <target function name> 0x<ROM address of next function>"`. E.g. `.\tools\asm-diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`. Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match.
+- You can decompile gfx macros using `.\tools\gfxdis.ps1`:
 e.g.
 ```C
 dl = D_8005BB2C;
@@ -33,13 +31,13 @@ D_8005BB2C = dl + 1;
 dl->words.w0 = 0xB6000000;
 dl->words.w1 = 0x10001;
 ```
-Is converted by pwsh cmd `tools\gfxdis.ps1 -w 03840010 801592A0` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
-- Find similar decompiled functions using coddog in pwsh (not docker): `.\tools\coddog\coddog.exe match func_80092A50_A1A00 -t 0.7`.
+Is converted by pwsh cmd `.\tools\gfxdis.ps1 -w B6000000 00010001` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
+- Find similar decompiled functions using coddog: `.\tools\coddog\coddog.exe match func_80092ADC_A1A8C -t 0.7`.
 
 # Decompilation Workflow
 ## Step 1: Generate cleaned C implementation
 
-Outside the docker container run: `python tools/mips_to_c/m2c.py asm/nonmatchings/core/1000/func_80000D0C_190C.s` to generate an initial C implementation from the original assembly.
+Run pwsh: `python tools/mips_to_c/m2c.py asm/nonmatchings/overlay_gameplay/outside/884C0/func_80092ADC_A1A8C.s` to generate an initial C implementation from the original assembly.
 
 Clean up the generated C code:
 
@@ -62,9 +60,9 @@ Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the ta
 
 Before continuing review the code and ensure all pointer arithmetic has been replaced with proper struct and array access and all temp pointers variables removed and replaced with direct struct/array references.
 
-## Step 3: Build project in Docker
+## Step 3: Build ROM
 
-Run the build inside the container:- `docker exec -it bh-container bash -c "make clean && make -j QUIET=1"` Important: You must build the entire project, not just the single file, to ensure all symbols are correctly linked and to get an accurate comparison of the generated assembly against the original.
+Build the ROM: `.\tools\clean-make.ps1` Important: You must build the entire project, not idividual files, to ensure all symbols are correctly linked and to get an accurate comparison of the generated assembly against the original.
 
 **If compilation errors occur:**
 
