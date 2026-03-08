@@ -226,19 +226,18 @@ void func_800800DC_8F08C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800800E4_8F094.s")
 
-#ifdef NON_MATCHING
 void func_8008030C_8F2BC(u8 arg0)
 {
-	volatile unsigned int new_var;
 	s32 x = alienInstances[arg0].unk0;
 	s32 z = alienInstances[arg0].unk4;
-	new_var = z;
-	x += ((s32) (((f64) (alienInstances[arg0].unk12 * 4)) * (((f64) ((f32) coss((u16) alienInstances[arg0].unkE))) / 32768.0))) >> 5;
-func_80080418_8F3C8(arg0, x, new_var + (((s32) (((f64) (alienInstances[arg0].unk12 * 4)) * (((f64) ((f32) sins((u16) alienInstances[arg0].unkE))) / 32768.0))) >> 5));
+
+	x += ((s32) ((alienInstances[arg0].unk12 * 4) *
+		(((f32) coss(alienInstances[arg0].unkE)) / 32768.0))) >> 5;
+	z = (z + (((s32) ((alienInstances[arg0].unk12 * 4) *
+		(((f32) sins((u16) alienInstances[arg0].unkE)) / 32768.0))) >> 5)) ^
+		(alienInstances[arg0].unkE * 0);
+	func_80080418_8F3C8(arg0, x, z);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008030C_8F2BC.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080418_8F3C8.s")
 
