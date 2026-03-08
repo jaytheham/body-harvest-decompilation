@@ -6,7 +6,7 @@ s16 func_80132730_1416E0(s32 arg0, s32 arg1) { return (s16)(arg1 - arg0); }
 
 #ifdef NON_MATCHING
 void func_80132740_1416F0(Unk80160080 *arg0) {
-	Unk80052B34 *sp1C;
+	VehicleInstance *sp1C;
 
 	sp1C = D_80052B34;
 	osSyncPrintf(&D_80145650, arg0);
@@ -233,7 +233,7 @@ void func_80133934_1428E4(Unk80160080 *arg0) {
 #ifdef NON_MATCHING
 void func_80133A54_142A04(Unk80160080 *arg0) {
 	f64 sp28;
-	Unk80052B34 *sp34;
+	VehicleInstance *sp34;
 	f32 sp40;
 	f32 sp44;
 	f32 sp48;
@@ -336,7 +336,7 @@ void func_80133E94_142E44(s32 arg0) {
 
 #ifdef NON_MATCHING
 void func_80133EBC_142E6C(Unk80160080 *arg0) {
-	Unk80052B34 *temp = D_80052B34;
+	VehicleInstance *temp = D_80052B34;
 	arg0->unk30 = (f32) temp->unk0;
 	arg0->unk34 = (f32) temp->unk2 + (f32) D_80160188;
 	arg0->unk38 = (f32) temp->unk4;

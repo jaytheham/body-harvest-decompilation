@@ -126,11 +126,11 @@ void func_802D54AC_18DFBC(void) {
 #ifdef NON_MATCHING
 void func_802D5578_18E088(void) {
     u16 temp_t3;
-    if (!(D_8004DCD0[84].unk20 & 0x8000)) {
+    if (!(vehicleInstances[84].unk20 & 0x8000)) {
         func_800074BC_80BC(func_802D5578_18E088);
     }
-    if ((D_8004DCD0[84].unk0 < 0x1000) && (D_8004DCD0[84].unk4 < -0x6B00)) {
-        D_8004DCD0[84].unk20 = (u16)(D_8004DCD0[84].unk20 & 0xFBFF);
+    if ((vehicleInstances[84].unk0 < 0x1000) && (vehicleInstances[84].unk4 < -0x6B00)) {
+        vehicleInstances[84].unk20 = (u16)(vehicleInstances[84].unk20 & 0xFBFF);
         func_800074BC_80BC(func_802D5578_18E088);
     }
     temp_t3 = D_802DE466 + 1;

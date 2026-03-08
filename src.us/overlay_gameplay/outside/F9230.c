@@ -386,19 +386,19 @@ s16 func_800F9F64_108F14(s16 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FADF8_109DA8.s")
 
-s16 func_800FAE60_109E10(Unk80052B34 *arg0) {
-	return (s16)(arg0 - D_8004DCD0);
+s16 func_800FAE60_109E10(VehicleInstance *arg0) {
+	return (s16)(arg0 - vehicleInstances);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FAE84_109E34.s")
 
-f32 func_800FAF74_109F24(Unk80052B34 *arg0, Unk80052B34 *arg1) {
+f32 func_800FAF74_109F24(VehicleInstance *arg0, VehicleInstance *arg1) {
 	f32 temp_f0 = arg0->unk4C - arg1->unk4C;
 	f32 temp_f2 = arg0->unk54 - arg1->unk54;
 	return sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
 }
 
-void *func_800FAFB8_109F68(Unk80052B34 *arg0) {
+void *func_800FAFB8_109F68(VehicleInstance *arg0) {
 	if (arg0->unkC == -2) {
 		return &vehicleSpecs[arg0->unk1A];
 	}
@@ -409,7 +409,7 @@ void *func_800FAFB8_109F68(Unk80052B34 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FB098_10A048.s")
 
-f32 func_800FB11C_10A0CC(Unk80052B34 *arg0) {
+f32 func_800FB11C_10A0CC(VehicleInstance *arg0) {
 	f32 sp1C = func_800FB014_109FC4(arg0);
 	f32 temp_f0 = func_800FB098_10A048(arg0);
 	return sqrtf((sp1C * sp1C) + (temp_f0 * temp_f0));
@@ -419,33 +419,33 @@ f32 func_800FB11C_10A0CC(Unk80052B34 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FB238_10A1E8.s")
 
-void func_800FB3A0_10A350(Unk80052B34 *arg0, f32 arg1) {
+void func_800FB3A0_10A350(VehicleInstance *arg0, f32 arg1) {
 	arg0->unk58 = arg0->unk58 + arg1;
 	arg0->unk12 = (s16)(s32)arg0->unk58;
 }
 
-void func_800FB3C4_10A374(Unk80052B34 *arg0, f32 arg1) {
+void func_800FB3C4_10A374(VehicleInstance *arg0, f32 arg1) {
 	arg0->unk4C = arg0->unk4C + arg1;
 	arg0->unk0 = (s16)(s32)arg0->unk4C;
 }
 
-void func_800FB3E8_10A398(Unk80052B34 *arg0, f32 arg1) {
+void func_800FB3E8_10A398(VehicleInstance *arg0, f32 arg1) {
 	arg0->unk50 = arg0->unk50 + arg1;
 	arg0->unk2 = (s16)(s32)arg0->unk50;
 }
 
-void func_800FB40C_10A3BC(Unk80052B34 *arg0, f32 arg1) {
+void func_800FB40C_10A3BC(VehicleInstance *arg0, f32 arg1) {
 	arg0->unk54 = arg0->unk54 + arg1;
 	arg0->unk4 = (s16)(s32)arg0->unk54;
 }
 
-void func_800FB430_10A3E0(Unk80052B34 *arg0, f32 arg1) { arg0->unk58 = arg1; arg0->unk12 = (s16)(s32)arg1; }
+void func_800FB430_10A3E0(VehicleInstance *arg0, f32 arg1) { arg0->unk58 = arg1; arg0->unk12 = (s16)(s32)arg1; }
 
-void func_800FB44C_10A3FC(Unk80052B34 *arg0, f32 arg1) { arg0->unk4C = arg1; arg0->unk0 = (s16)(s32)arg1; }
+void func_800FB44C_10A3FC(VehicleInstance *arg0, f32 arg1) { arg0->unk4C = arg1; arg0->unk0 = (s16)(s32)arg1; }
 
-void func_800FB468_10A418(Unk80052B34 *arg0, f32 arg1) { arg0->unk50 = arg1; arg0->unk2 = (s16)(s32)arg1; }
+void func_800FB468_10A418(VehicleInstance *arg0, f32 arg1) { arg0->unk50 = arg1; arg0->unk2 = (s16)(s32)arg1; }
 
-void func_800FB484_10A434(Unk80052B34 *arg0, f32 arg1) { arg0->unk54 = arg1; arg0->unk4 = (s16)(s32)arg1; }
+void func_800FB484_10A434(VehicleInstance *arg0, f32 arg1) { arg0->unk54 = arg1; arg0->unk4 = (s16)(s32)arg1; }
 
 void func_800FB4A0_10A450(s16 arg0, s16 arg1, s16 arg2) {
 	s32 temp_v0;
@@ -766,9 +766,9 @@ s16 func_801081AC_11715C(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801098E8_118898.s")
 
 #ifdef NON_MATCHING
-Unk80052B34 *func_80109960_118910(void) {
+VehicleInstance *func_80109960_118910(void) {
 	s32 i = 0x7F;
-	Unk80052B34 *ptr = &D_80050A74;
+	VehicleInstance *ptr = &D_80050A74;
 	do {
 		if (ptr->unk1A == 5) {
 			return ptr;
@@ -783,7 +783,7 @@ Unk80052B34 *func_80109960_118910(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010999C_11894C.s")
 
-void func_80109B34_118AE4(Unk80052B34 *arg0, f32 arg1, f32 arg2) {
+void func_80109B34_118AE4(VehicleInstance *arg0, f32 arg1, f32 arg2) {
 	func_800FB430_10A3E0(arg0, 0.0f);
 	arg0->unk30 = arg1;
 	arg0->unk38 = arg2;
@@ -795,7 +795,7 @@ void func_80109B34_118AE4(Unk80052B34 *arg0, f32 arg1, f32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010ADA4_119D54.s")
 
-void func_8010B5C8_11A578(Unk80052B34 *arg0, f32 arg1) {
+void func_8010B5C8_11A578(VehicleInstance *arg0, f32 arg1) {
 	func_800FB430_10A3E0(arg0, 0.0f);
 	arg0->unk30 = 0.0f;
 	arg0->unk34 = 0.0f;

@@ -216,7 +216,7 @@ void func_80070440_7F3F0(void) {
 			obj->unk1E = 0x19;
 			obj->unk34 = 0;
 			obj->unk36 = 0;
-			obj->unk38 = (Unk80052B34 *)D_8004DCD0;
+			obj->unk38 = (VehicleInstance *)vehicleInstances;
 		} while (++obj != &D_80052AE8 + 1);
 	}
 	func_800FCA5C_10BA0C();

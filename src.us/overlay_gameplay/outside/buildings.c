@@ -641,7 +641,7 @@ s32 func_80120634_12F5E4() {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80121128_1300D8.s")
 
-void func_801219A4_130954(Unk80052B34 *arg0, s16 arg1) {
+void func_801219A4_130954(VehicleInstance *arg0, s16 arg1) {
 	func_8011D260_12C210(0x45, 0x12);
 	func_80102D00_111CB0(arg0, -50.0f, 30.0f, 0.0f);
 	func_8012D808_13C7B8(arg1);
@@ -695,7 +695,7 @@ s32 func_8012235C_13130C(Unk8004D0F8* arg0) {
 // 80123F04 Reduces damage to adam by 40% in easy
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80123E90_132E40.s")
 
-void func_80124118_1330C8(Unk80052B34 *arg0, s16 arg1) {
+void func_80124118_1330C8(VehicleInstance *arg0, s16 arg1) {
 	if ((arg0->unk20 & 0x80) == 0) {
 		if ((arg0 != D_80052B34) || (D_801493E0 != 0)) {
 			func_80123E90_132E40(arg0, arg1);

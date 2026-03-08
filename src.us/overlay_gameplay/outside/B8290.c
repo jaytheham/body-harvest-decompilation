@@ -213,8 +213,8 @@ void func_800AB408_BA3B8(u8 arg0) {
 	temp_v0 = &alienInstances[arg0];
 	temp_v0->unk48 = 0xC0;
 	if (*(s16*) ((u8*) temp_v0 + 0x38) != 0x64) {
-		temp_v1 = D_8004DCD0[13].unk0 - temp_v0->unk0;
-		temp_a0 = D_8004DCD0[13].unk4 - temp_v0->unk4;
+		temp_v1 = vehicleInstances[13].unk0 - temp_v0->unk0;
+		temp_a0 = vehicleInstances[13].unk4 - temp_v0->unk4;
 		if (((temp_v1 * temp_v1) + (temp_a0 * temp_a0)) < 0x40000) {
 			func_800AD814_BC7C4(arg0, 0xB, 0xD, *((u8*) temp_v0 + 0x3F));
 		}
@@ -222,11 +222,11 @@ void func_800AB408_BA3B8(u8 arg0) {
 }
 
 void func_800AB4B4_BA464(u8 arg0) {
-	Unk80052B34 *spec;
+	VehicleInstance *spec;
 	s32 dx, dz, ndx, ndz;
 	s32 absDx, absDz;
 
-	spec = &D_8004DCD0[alienInstances[arg0].unk38];
+	spec = &vehicleInstances[alienInstances[arg0].unk38];
 	dx = alienInstances[arg0].unk0 - spec->unk0;
 	dz = alienInstances[arg0].unk4 - spec->unk4;
 	ndx = -dx;
@@ -357,7 +357,7 @@ s32 func_800ACA3C_BB9EC(u8 arg0) {
 void func_800ACB3C_BBAEC(u8 arg0) {
 
 	if ((alienInstances[arg0].unk20 & 0x80) &&
-		D_8004DCD0[alienInstances[arg0].unk38].unk1C <= 0) {
+		vehicleInstances[alienInstances[arg0].unk38].unk1C <= 0) {
 		
 		alienInstances[arg0].unk20 = alienInstances[arg0].unk20 & ~0xC0;
 		return;

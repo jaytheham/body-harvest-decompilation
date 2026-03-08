@@ -420,7 +420,7 @@ void func_800A6FD4_B5F84(void) {
 s16 func_800A7B84_B6B34(s16 arg0, s16 arg1) {
     s32 i;
     u8 *ptr;
-    Unk80052B34 *item;
+    VehicleInstance *item;
 
     i = D_80158FD8;
     if (i == 0) {
@@ -429,7 +429,7 @@ s16 func_800A7B84_B6B34(s16 arg0, s16 arg1) {
     i--;
     ptr = D_80158E80 + i;
     do {
-        item = D_8004DCD0 + *ptr;
+        item = vehicleInstances + *ptr;
         func_8010C4EC_11B49C(item);
         ptr--;
         if (func_8010CF7C_11BF2C(arg0, arg1) != 0) {

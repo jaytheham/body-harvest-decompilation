@@ -610,7 +610,7 @@ s32 func_80082E38_91DE8(u8 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084AE4_93A94.s")
 
-void func_80084C48_93BF8(Unk80052B34 *arg0)
+void func_80084C48_93BF8(VehicleInstance *arg0)
 {
 	s32 dx;
 	s32 dx2;  
@@ -694,7 +694,7 @@ s32 func_80084E54_93E04(AlienInstance *alien1, AlienInstance *alien2)
 }
 
 #ifdef NON_MATCHING
-s32 func_80084F00_93EB0(Unk80052B34 *arg0, AlienInstance *arg1)
+s32 func_80084F00_93EB0(VehicleInstance *arg0, AlienInstance *arg1)
 {
 	s32 diff = arg0->unk0 - arg1->unk0;
 	s32 neg = -diff;

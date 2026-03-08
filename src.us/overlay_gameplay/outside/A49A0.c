@@ -587,8 +587,8 @@ void func_80097B74_A6B24(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	gDPPipeSync(D_8005BB2C++);
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 
-	if (currentLevel != LEVEL_JAVA || D_8004DCD0[arg0].unk1A != 0x12) {
-		func_80101EF4_110EA4(D_8004DCD0[arg0].unk1A, arg1, arg2, arg3, 0, 0x4000, (s32)arg4);
+	if (currentLevel != LEVEL_JAVA || vehicleInstances[arg0].unk1A != 0x12) {
+		func_80101EF4_110EA4(vehicleInstances[arg0].unk1A, arg1, arg2, arg3, 0, 0x4000, (s32)arg4);
 	}
 }
 #else

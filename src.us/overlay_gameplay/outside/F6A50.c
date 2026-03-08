@@ -2,7 +2,7 @@
 #include "common.h"
 
 
-void func_800E7AA0_F6A50(Unk80052B34 *arg0) {
+void func_800E7AA0_F6A50(VehicleInstance *arg0) {
 	s32 dx;
 	s32 dz;
 	s16 angle;

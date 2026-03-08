@@ -2,7 +2,7 @@
 #include "common.h"
 
 void func_8007C7E0_1648A0(void) {
-    Unk80052B34 *v0 = &D_800E6A78;
+    VehicleInstance *v0 = &D_800E6A78;
 
     v0->unk12 = 0;
     v0->unkE = 0x4000;
@@ -83,7 +83,7 @@ f32 func_8007C96C_164A2C(Unk80047588 *arg0) {
 #endif
 
 #ifdef NON_MATCHING
-void func_8007CAA8_164B68(Unk80052B34 *arg0, Unk80047588 *arg1) {
+void func_8007CAA8_164B68(VehicleInstance *arg0, Unk80047588 *arg1) {
 	s16 sp4E;
 	s16 sp4C;
 	s32 sp38;
@@ -210,7 +210,7 @@ void func_8007CAA8_164B68(Unk80052B34 *arg0, Unk80047588 *arg1) {
 #endif
 
 #ifdef NON_MATCHING
-void func_8007D37C_16543C(Unk80052B34 *arg0, s16 arg1, s32 arg2) {
+void func_8007D37C_16543C(UnVehicleInstancek80052B34 *arg0, s16 arg1, s32 arg2) {
 	s32 var_v0;
 	s32 var_v1;
 
@@ -331,7 +331,7 @@ void func_8007DB98_165C58(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 				func_8007DAA8_165B68(arg0, arg2, NULL, arg3, 0x10);
 			}
 		} else if (((Unk80157600 *)arg0)->unk40C < 0x12) {
-			if ((arg1 == 0x11) && ((s32)D_80257A3A[D_8004DCD0[0].unk1A].unk0 >> 2) >= (s32)D_8004DCD0[0].unk1C) {
+			if ((arg1 == 0x11) && ((s32)D_80257A3A[vehicleInstances[0].unk1A].unk0 >> 2) >= (s32)vehicleInstances[0].unk1C) {
 				arg1 = 2;
 			}
 			func_8007DAA8_165B68(arg0, arg1, NULL, 0.0f, 0x10);
@@ -340,7 +340,7 @@ void func_8007DB98_165C58(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 }
 
 #ifdef NON_MATCHING
-void func_8007DC80_165D40(Unk80052B34 *arg0, Unk80157600 *arg1, s32 arg2) {
+void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, s32 arg2) {
 	if (((Unk8007F878_404 *)arg1->unk404)->unkE50 == 0) {
 		arg0->unkE += (s32)((f32)D_8009E8DC[arg1->unk40C].unk10 * 32768.0f / D_800A4D90);
 		arg1->unk2 = 0;

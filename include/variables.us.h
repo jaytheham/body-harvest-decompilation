@@ -166,7 +166,7 @@ extern s32 D_8004DC4C;
 extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
-extern Unk80052B34 D_8004DCD0[]; // vehicle instances
+extern VehicleInstance vehicleInstances[]; // 8004DCD0
 extern u8 D_80050AE0[];
 extern u8 D_80050AF0[];
 extern s8 D_80050C0B;
@@ -201,7 +201,7 @@ extern s32 D_80052550;
 extern s32 D_80052558;
 extern GameplayMode gameplayMode; // 80052adc
 extern Unk80052B2C* D_80052B2C;
-extern Unk80052B34* D_80052B34; // Active vehicle instance?
+extern VehicleInstance* D_80052B34; // Active vehicle instance?
 extern Unk80052B40 D_80052B40;
 extern Unk80052B40 D_80052B48;
 extern Unk80052B40 D_80052B50;
@@ -497,7 +497,7 @@ extern s16 D_80152C90;
 extern u8 D_80152740[];
 extern s16 D_80157590;
 extern s16 D_80157A3C;
-extern Unk80052B34 *D_80159020;
+extern VehicleInstance *D_80159020;
 extern s16 D_8015904C;
 extern InputStruct_8012B150 D_80159050[];
 extern s16 D_80159260;
@@ -699,7 +699,7 @@ extern s32 D_800E732C;
 extern u8 D_800E6F00[];
 extern s32 D_800E6A68;
 extern s16 D_800E6A86;
-extern Unk80052B34 D_800E6A78;
+extern VehicleInstance D_800E6A78;
 extern Unk8009E8E0 D_8009E8E0[];
 extern Unk8009E8DC D_8009E8DC[];
 extern f64 D_800A4D90;
@@ -889,8 +889,8 @@ extern s32 D_80047968;
 extern s32 D_80157F70;
 extern s16 D_80157F8C;
 extern s16 D_80157F8E;
-extern Unk80052B34 D_80050A74;
-extern Unk80052B34 D_8004FB00;
+extern VehicleInstance D_80050A74;
+extern VehicleInstance D_8004FB00;
 extern s16 D_8015930C;
 extern u8 D_8013FDA8[];
 extern char D_800A4BCC[];
