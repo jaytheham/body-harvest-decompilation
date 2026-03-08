@@ -1,7 +1,7 @@
 ---
 name: Decomp Oracle - Free
 description: Ask questions about the decompilation process. This agent knows all the tricks and tips.
-tools: ["read", "search", "todo"]
+tools: [read/readFile, search/codebase, search/fileSearch, search/searchResults, search/textSearch, search/searchSubagent, search/usages]
 model: Raptor mini (Preview) (copilot)
 ---
 

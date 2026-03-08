@@ -592,6 +592,7 @@ extern Unk8014F618 D_8014F618;
 extern s32 D_80257A1C[][0x1C];
 extern s16 D_80257A0C;
 extern s16 D_8025668C;
+extern u8 D_8025668D;
 extern AlienSpec D_80256698[];
 extern s32 D_8025669C;
 extern u8 D_802566D1;

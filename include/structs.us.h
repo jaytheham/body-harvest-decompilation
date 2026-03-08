@@ -175,7 +175,9 @@ typedef struct {
 // 0x68
 typedef struct {
 	/* 0x00 */ s32 unk0;
-	/* 0x04 */ u8 pad4[0x34];
+	/* 0x04 */ u8 pad4[0x9];
+	/* 0x0D */ u8 unkD;
+	/* 0x0E */ u8 padE[0x2A];
 	/* 0x38 */ s16 unk38;
 	/* 0x3A */ u8 pad3A[4];
 	/* 0x3E */ s16 unk3E;
