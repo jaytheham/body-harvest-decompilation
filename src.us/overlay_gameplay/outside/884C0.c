@@ -928,7 +928,51 @@ s32 func_80085838_947E8(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085838_947E8.s")
 #endif
 
+#ifdef NON_MATCHING
+s32 func_80085900_948B0(u8 arg0, s32 arg1) {
+	s32 neg_dx, neg_dz, abs_dx, abs_dz, max;
+	s32 dx = D_80052B34->unk0 - alienInstances[arg0].unk0;
+	s32 dz = D_80052B34->unk4 - alienInstances[arg0].unk4;
+
+	neg_dx = -dx;
+	if (neg_dx < dx) {
+		abs_dx = dx;
+	} else {
+		abs_dx = neg_dx;
+	}
+
+	neg_dz = -dz;
+	if (neg_dz < dz) {
+		abs_dz = dz;
+	} else {
+		abs_dz = neg_dz;
+	}
+
+	if (abs_dz < abs_dx) {
+		max = neg_dx;
+		if (neg_dx < dx) {
+		} else {
+			goto block_12;
+		}
+	} else {
+		max = neg_dz;
+		if (neg_dz < dz) {
+			max = dz;
+		}
+	block_12:
+		dx = max;
+	}
+
+	if (arg1 < dx) {
+		alienInstances[arg0].unk20 |= 0x08000100;
+		return 1;
+	}
+	alienInstances[arg0].unk20 &= ~0x100;
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085900_948B0.s")
+#endif
 
 s32 func_800859F4_949A4(u8 arg0) {
 	AlienInstance *inst = &alienInstances[arg0];
@@ -1427,7 +1471,23 @@ void func_8008B870_9A820(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008C428_9B3D8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008C7B0_9B760.s")
+void func_8008C7B0_9B760(u8 arg0) {
+    s16 sp28[12];
+
+    sp28[0] = D_8014DD50[alienInstances[arg0].unkC].unkC;
+    sp28[1] = D_8014DD50[sp28[0]].unkC;
+    sp28[2] = D_8014DD50[sp28[0]].unkD;
+    sp28[3] = D_8014DD50[sp28[2]].unkC;
+    sp28[4] = D_8014DD50[sp28[3]].unkC;
+    sp28[5] = D_8014DD50[sp28[3]].unkD;
+    sp28[6] = D_8014DD50[sp28[5]].unkC;
+    sp28[7] = D_8014DD50[sp28[2]].unkD;
+    sp28[8] = D_8014DD50[sp28[7]].unkC;
+    sp28[9] = D_8014DD50[sp28[8]].unkC;
+    sp28[10] = D_8014DD50[sp28[8]].unkD;
+    sp28[11] = D_8014DD50[sp28[10]].unkC;
+    func_80081F18_90EC8(arg0, 0xC, 1, sp28, &D_8013C514);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008C8B8_9B868.s")
 
