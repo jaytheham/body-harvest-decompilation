@@ -531,23 +531,29 @@ s32 func_80082A98_91A48(u8 arg0)
   return func_800829EC_9199C(new_var, v0);
 }
 
+// https://decomp.me/scratch/M9ZDB
 #ifdef NON_MATCHING
-s32 func_80082B30_91AE0(u8 arg0) {
-	u8 specIndex;
-	s16 xPos;
-	s16 zPos;
-	s32 threshold;
-
-	specIndex = alienInstances[arg0].specIndex;
-	xPos = alienInstances[arg0].unk0;
-	zPos = alienInstances[arg0].unk4;
-	threshold = (u32) (alienSpecs[specIndex].unk54 & 0x180000) >> 0x13;
-
-	if (D_8003E290[func_800056D0_62D0(xPos, zPos)].unkC <= threshold) {
-		return -1;
-	}
-	return func_800829EC_9199C(arg0, func_80082990_91940(xPos & 0xFF, zPos & 0xFF));
+s32 func_80082B30_91AE0(u8 arg0)
+{
+  u8 specIndex;
+  s16 xPos;
+  s16 zPos;
+  s32 threshold;
+	s32 xx;
+  specIndex = alienInstances[arg0].specIndex;
+  xPos = alienInstances[arg0].unk0;
+  zPos = alienInstances[arg0].unk4;
+  threshold = ((u32) (alienSpecs[specIndex].unk54 & 0x180000)) >> 0x13;
+	xx = func_800056D0_62D0(
+		  alienInstances[arg0].unk0,
+		  alienInstances[arg0].unk4);
+  if (D_8003E290[xx].unkC <= threshold)
+  {
+	return -1;
+  }
+  return func_800829EC_9199C(arg0, func_80082990_91940(xPos & 0xFF, zPos & 0xFF));
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082B30_91AE0.s")
 #endif
@@ -623,6 +629,7 @@ void func_80084C48_93BF8(Unk80052B34 *arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084CF8_93CA8.s")
 
+// https://decomp.me/scratch/qqop3
 #ifdef NON_MATCHING
 void func_80084D80_93D30(u8 arg0)
 {
@@ -649,50 +656,42 @@ void func_80084D80_93D30(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084D80_93D30.s")
 #endif
 
-#ifdef NON_MATCHING
-s32 func_80084E54_93E04(AlienInstance *arg0, AlienInstance *arg1)
+// Get X/Z distance between two aliens
+s32 func_80084E54_93E04(AlienInstance *alien1, AlienInstance *alien2)
 {
-	f32 new_var;
-	s32 temp_a0;
-	s32 temp_a1;
-	s32 temp_a2;
-	s32 temp_v0;
-	s32 temp_v0_2;
-	s16 new_var2;
-	s32 temp_v0_3;
-	s32 var_v1;
-	s32 var_v1_2;
-	temp_v0 = arg0->unk0 - arg1->unk0;
-	temp_a2 = -temp_v0;
-	if (temp_a2 < temp_v0)
+	s32 xDiff;
+	s32 zDiff;
+	s16 zPos;
+	s32 halfAbsoluteXDiff;
+	s32 halfAbsoluteZDiff;
+	s32 absoluteXDiff;
+	s32 absoluteZDiff;
+	xDiff = alien1->unk0 - alien2->unk0;
+	if ((-xDiff) < xDiff)
 	{
-	var_v1 = temp_v0;
+		absoluteXDiff = xDiff;
 	}
 	else
 	{
-	var_v1 = temp_a2;
+		absoluteXDiff = -xDiff;
 	}
-	temp_a0 = var_v1;
-	temp_a0 = temp_a0 >> 1;
-	new_var2 = arg0->unk4;
-	temp_v0_2 = new_var2 - arg1->unk4;
-	temp_a1 = -temp_v0_2;
-	var_v1 = temp_a1 < temp_v0_2;
-	if (var_v1)
+	halfAbsoluteXDiff = absoluteXDiff;
+	if (!halfAbsoluteXDiff) {}
+	halfAbsoluteXDiff = halfAbsoluteXDiff >> 1;
+	zDiff = alien1->unk4 - alien2->unk4;
+	if ((-zDiff) < zDiff)
 	{
-	var_v1_2 = temp_v0_2;
+		absoluteZDiff = zDiff;
 	}
 	else
 	{
-	var_v1_2 = temp_a1;
+		absoluteZDiff = -zDiff;
 	}
-	temp_v0_3 = var_v1_2 >> 1;
-	;
-	return ((s32) sqrtf((f32) ((temp_a0 * temp_a0) + (temp_v0_3 * temp_v0_3)))) * 2;
+	halfAbsoluteZDiff = absoluteZDiff >> 1;
+	return ((s32) sqrtf(
+		(f32) ((halfAbsoluteXDiff * halfAbsoluteXDiff) + (halfAbsoluteZDiff * halfAbsoluteZDiff))
+	)) * 2;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084E54_93E04.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_80084F00_93EB0(Unk80052B34 *arg0, AlienInstance *arg1)
