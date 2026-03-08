@@ -13,7 +13,7 @@ void func_800A3D00_B2CB0(u8 arg0, s16 arg1, s16 arg2, s32 arg3) {
 			return;
 		}
 
-		func_80081C84_90C34(arg1, (alienInstances[arg0].unk4B * 0x10) + arg3);
+		func_80081C84_90C34(arg1, (Unk8014DD50 *)((alienInstances[arg0].unk4B * 0x10) + arg3));
 		alienInstances[arg0].unk4B++;
 	}
 }
