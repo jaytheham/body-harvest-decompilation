@@ -444,7 +444,6 @@ void func_800822BC_9126C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082394_91344.s")
 
-#ifdef NON_MATCHING
 s32 func_800825E8_91598(s16 arg0, s16 arg1, s32 *arg2)
 {
   s16 dx;
@@ -452,14 +451,9 @@ s32 func_800825E8_91598(s16 arg0, s16 arg1, s32 *arg2)
   s32 dist;
   s32 result;
   s32 idx;
-  u8 *ptr;
   s32 i;
-  i = D_8014D507;
-  result = 0xFF;
-  if (i < ((s32) D_8014D50A))
-  {
- if (!idx) { } ptr = &D_8014D408[i]; do { idx = *ptr;
-	  i++;
+  i = D_8014D507; result = 0xFF; if (i < ((s32) D_8014D50A)) { 
+	  do { idx = D_8014D408[i];
 	  dx = arg0 - alienInstances[idx].unk0;
 	  dz = arg1 - alienInstances[idx].unk4;
 	  dist = (dx * dx) + (dz * dz);
@@ -468,16 +462,11 @@ s32 func_800825E8_91598(s16 arg0, s16 arg1, s32 *arg2)
 		*arg2 = dist;
 		result = idx & 0xFF;
 	  }
-	  ptr++;
 	}
-	while (i < ((s32) D_8014D50A));
+	while (++i < ((s32) D_8014D50A));
   }
   return result;
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800825E8_91598.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800826E4_91694.s")
 
