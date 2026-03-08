@@ -509,26 +509,27 @@ s16 func_800829EC_9199C(u8 arg0, s32 arg1) {
 	return -1;
 }
 
-#ifdef NON_MATCHING
 s32 func_80082A98_91A48(u8 arg0)
 {
-  u32 new_var;
+  s16 new_var2;
   s16 sp1C;
-  s16 sp1E;
   s32 v0;
+  u32 new_var;
   new_var = arg0;
-  sp1E = alienInstances[new_var].unk0 & 0xFF;
-  sp1C = alienInstances[arg0].unk4 & 0xFF;
+  new_var2 = alienInstances[arg0].unk0;
+  new_var2 = new_var2 & 0xFF;
+  sp1C = alienInstances[arg0].unk4;
+  sp1C = sp1C & 0xFF;
   if (func_800828F0_918A0(new_var, 0x1000, 0x800) != 0)
   {
-	v0 = func_80082990_91940(sp1E, sp1C);
-	return func_800829EC_9199C(new_var, v0);
+	v0 = func_80082990_91940(new_var2, sp1C);
   }
-  return -1;
+  else
+  {
+	return -1;
+  }
+  return func_800829EC_9199C(new_var, v0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082A98_91A48.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_80082B30_91AE0(u8 arg0) {
