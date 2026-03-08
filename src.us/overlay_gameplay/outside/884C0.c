@@ -1176,7 +1176,29 @@ s32 func_80087E30_96DE0(void) {
 	} while (i--);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80087F08_96EB8.s")
+void func_80087F08_96EB8(void)
+{
+  AlienWaveInstance *waves;
+  AlienInstance *alien;
+  s32 i;
+  waves = D_80223780;
+ alien = alienInstances; for (i = 0; i < 0xFF; i++, alien++) {
+	if ((alien->specIndex == 2) || (alien->specIndex == 0x20))
+	{
+	  func_80088760_97710(alien);
+	}
+	else
+	  if (((alien->specIndex != 1) && (alien->specIndex != 0x18)) && (alien->specIndex != 0x17))
+	{
+	  if (alien->unk3E != 0xFF)
+	  {
+		waves[alien->unk3E].unk11 = 1;
+	  }
+	  func_80087AAC_96A5C(i);
+	}
+  }
+
+}
 
 #ifdef NON_MATCHING
 void func_80088000_96FB0(s16 arg0)
