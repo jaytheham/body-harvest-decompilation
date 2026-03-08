@@ -64,7 +64,7 @@ typedef struct {
 	/* 0x14 */ u8 pad14[0x6];
 	/* 0x1A */ u8 unk1A;
 	/* 0x1B */ u8 unk1B;
-	/* 0x1C */ u16 unk1C;
+	/* 0x1C */ s16 unk1C;
 	/* 0x1E */ u8 pad1E[2];
 	/* 0x20 */ u16 unk20;
 	/* 0x22 */ s16 unk22;
@@ -78,7 +78,7 @@ typedef struct {
 	/* 0x50 */ f32 unk50;
 	/* 0x54 */ f32 unk54;
 	/* 0x58 */ f32 unk58;
-} Unk80052B34; /* size = 0x5C */
+} Unk80052B34; /* size = 0x5C Vehicle Instance */
 
 typedef struct {
 	/* 0x00 */ f32 unk0;
@@ -89,19 +89,6 @@ typedef struct {
 	/* 0x0F */ u8 unkF;
 	/* 0x10 */ f32 unk10;
 } Unk8007CAA8_6A40; /* size = 0x14 */
-
-typedef struct {
-	/* 0x00 */ s16 unk0;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 pad6[0x14];
-	/* 0x1A */ u8 unk1A;
-	/* 0x1B */ u8 unk1B;
-	/* 0x1C */ s16 unk1C;
-	/* 0x1E */ u8 pad1E[2];
-	/* 0x20 */ u16 unk20;
-	/* 0x22 */ u8 pad22[0x3A];
-} Unk8004DCD0; /* size = 0x5C */
 
 typedef struct {
 	/* 0x00 */ u8 unk0;
@@ -143,7 +130,7 @@ typedef struct {
 	/* 0x34 */ s16 unk34;
 	/* 0x36 */ u8 unk36;
 	/* 0x37 */ u8 pad37;
-	/* 0x38 */ s16 unk38; // target building instance id?
+	/* 0x38 */ s16 unk38; // target building/vehicle instance id
 	/* 0x3A */ s16 unk3A;
 	/* 0x3C */ s8 unk3C;
 	/* 0x3D */ s8 unk3D;

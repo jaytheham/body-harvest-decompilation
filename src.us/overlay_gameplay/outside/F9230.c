@@ -386,7 +386,7 @@ s16 func_800F9F64_108F14(s16 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FADF8_109DA8.s")
 
-s16 func_800FAE60_109E10(Unk8004DCD0 *arg0) {
+s16 func_800FAE60_109E10(Unk80052B34 *arg0) {
 	return (s16)(arg0 - D_8004DCD0);
 }
 
@@ -766,9 +766,9 @@ s16 func_801081AC_11715C(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801098E8_118898.s")
 
 #ifdef NON_MATCHING
-Unk8004DCD0 *func_80109960_118910(void) {
+Unk80052B34 *func_80109960_118910(void) {
 	s32 i = 0x7F;
-	Unk8004DCD0 *ptr = &D_80050A74;
+	Unk80052B34 *ptr = &D_80050A74;
 	do {
 		if (ptr->unk1A == 5) {
 			return ptr;

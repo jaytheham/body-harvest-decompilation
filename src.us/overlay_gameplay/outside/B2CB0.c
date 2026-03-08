@@ -420,7 +420,7 @@ void func_800A6FD4_B5F84(void) {
 s16 func_800A7B84_B6B34(s16 arg0, s16 arg1) {
     s32 i;
     u8 *ptr;
-    Unk8004DCD0 *item;
+    Unk80052B34 *item;
 
     i = D_80158FD8;
     if (i == 0) {

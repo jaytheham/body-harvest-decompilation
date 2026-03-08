@@ -222,7 +222,7 @@ void func_800AB408_BA3B8(u8 arg0) {
 }
 
 void func_800AB4B4_BA464(u8 arg0) {
-	Unk8004DCD0 *spec;
+	Unk80052B34 *spec;
 	s32 dx, dz, ndx, ndz;
 	s32 absDx, absDz;
 
