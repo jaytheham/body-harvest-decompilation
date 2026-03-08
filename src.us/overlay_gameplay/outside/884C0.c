@@ -693,42 +693,52 @@ s32 func_80084E54_93E04(AlienInstance *alien1, AlienInstance *alien2)
 	)) * 2;
 }
 
-#ifdef NON_MATCHING
-s32 func_80084F00_93EB0(VehicleInstance *arg0, AlienInstance *arg1)
+// get distance between alien and vehicle
+s32 func_80084F00_93EB0(VehicleInstance *vehicle, AlienInstance *alien)
 {
-	s32 diff = arg0->unk0 - arg1->unk0;
-	s32 neg = -diff;
-	s32 var_v0;
-	s32 hx, hy, hz;
-
-	if (neg < diff) {
-		var_v0 = diff;
-	} else {
-		var_v0 = neg;
-	}
-	hx = var_v0 >> 1;
-
-	diff = arg0->unk2 - arg1->unk2;
-	neg = -diff;
-	var_v0 = neg;
-	if (neg < diff) {
-		var_v0 = diff;
-	}
-	hy = var_v0 >> 1;
-
-	diff = arg0->unk4 - arg1->unk4;
-	neg = -diff;
-	var_v0 = neg;
-	if (neg < diff) {
-		var_v0 = diff;
-	}
-	hz = var_v0 >> 1;
-
-	return (s32)sqrtf((f32)(hx * hx + hy * hy + hz * hz)) * 2;
+  s32 hx;
+  s32 hy;
+  s32 new_var2;
+  s32 hz;
+  s32 diff = ((0, vehicle->unk0)) - alien->unk0;
+  s32 new_var;
+  s32 var_v0 = -diff;
+  if ((-diff) < diff)
+  {
+	var_v0 = diff;
+  }
+  else
+  {
+	var_v0 = -diff;
+  }
+  new_var = vehicle->unk2 - alien->unk2;
+  hx = var_v0 >> 1;
+  diff = new_var;
+  new_var = diff;
+  var_v0 = -diff;
+  if ((-diff) < diff)
+  {
+	var_v0 = new_var;
+  }
+  else
+  {
+	var_v0 = -diff;
+  }
+  hy = var_v0 >> 1;
+  var_v0 = -diff;
+  new_var2 = vehicle->unk4 - alien->unk4;
+  diff = new_var2;
+  if ((-diff) < diff)
+  {
+	var_v0 = diff;
+  }
+  else
+  {
+	var_v0 = -diff;
+  }
+  hz = var_v0 >> 1;
+  return ((s32) sqrtf((f32) (((hx * hx) + (hy * hy)) + (hz * hz)))) * 2;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084F00_93EB0.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_80084FE8_93F98(u8 arg0, u16 arg1)

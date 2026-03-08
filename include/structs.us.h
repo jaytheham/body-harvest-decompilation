@@ -52,9 +52,9 @@ typedef struct {
 } Unk80052A98; /* size = 0x08 */
 
 typedef struct {
-	/* 0x00 */ s16 unk0;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
+	/* 0x00 */ s16 unk0; // xposition
+	/* 0x02 */ s16 unk2; // yposition
+	/* 0x04 */ s16 unk4; // zposition
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ u8 pad8[0x4];
 	/* 0x0C */ s16 unkC;
@@ -98,7 +98,7 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ s16 unk0; // xposition
-	/* 0x02 */ s16 unk2;
+	/* 0x02 */ s16 unk2; // yposition
 	/* 0x04 */ s16 unk4; // zposition
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s16 unk8;
