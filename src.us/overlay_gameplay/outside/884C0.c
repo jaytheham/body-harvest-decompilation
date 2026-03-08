@@ -393,21 +393,21 @@ void func_80081C84_90C34(u8 arg0, Unk8014DD50 *src) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80081CF0_90CA0.s")
 
-#ifdef NON_MATCHING
-void func_80081E5C_90E0C(s16 arg0) {
-	Unk8014DD50 *a3 = &D_8014DD50[arg0];
-	Unk8014DD50 *a1;
-	s16 counter = a3->unkE;
-	if (counter != 0) {
-		a1 = &D_8014E4D0[arg0];
-		func_80081CF0_90CA0(a3, a1, counter, a3);
-		a3->unk6 = (u16)a3->unk6 + (a1->unk6 - (s16)(u16)a3->unk6) / counter;
-		a3->unkE = a3->unkE - 1;
-	}
+void func_80081E5C_90E0C(s16 arg0)
+{
+  s16 counter = D_8014DD50[arg0].unkE;
+  if (counter != 0)
+  {
+	func_80081CF0_90CA0(&D_8014DD50[arg0], &D_8014E4D0[arg0], counter);
+	D_8014DD50[arg0].unk6 =
+		(
+			(
+				(D_8014E4D0[arg0].unk6 - ((s16) ((u16) D_8014DD50[arg0].unk6))) / counter
+			) + (u16) D_8014DD50[arg0].unk6
+		);
+	D_8014DD50[arg0].unkE--;
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80081E5C_90E0C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80081F18_90EC8.s")
 
