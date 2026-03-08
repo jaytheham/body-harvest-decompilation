@@ -456,7 +456,40 @@ void func_800822BC_9126C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082394_91344.s")
 
+#ifdef NON_MATCHING
+s32 func_800825E8_91598(s16 arg0, s16 arg1, s32 *arg2)
+{
+  s16 dx;
+  s16 dz;
+  s32 dist;
+  s32 result;
+  s32 idx;
+  u8 *ptr;
+  s32 i;
+  i = D_8014D507;
+  result = 0xFF;
+  if (i < ((s32) D_8014D50A))
+  {
+ if (!idx) { } ptr = &D_8014D408[i]; do { idx = *ptr;
+	  i++;
+	  dx = arg0 - alienInstances[idx].unk0;
+	  dz = arg1 - alienInstances[idx].unk4;
+	  dist = (dx * dx) + (dz * dz);
+	  if (dist < (*arg2))
+	  {
+		*arg2 = dist;
+		result = idx & 0xFF;
+	  }
+	  ptr++;
+	}
+	while (i < ((s32) D_8014D50A));
+  }
+  return result;
+}
+
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800825E8_91598.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800826E4_91694.s")
 
@@ -1204,7 +1237,22 @@ void func_80089C40_98BF0(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80089D04_98CB4.s")
 
+#ifdef NON_MATCHING
+void func_80089EB4_98E64(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    if (!(alienInstances[arg0].unk20 & 0x100000)) {
+        if (alienInstances[arg0].unk20 & 0x600) {
+            func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)(&D_8025668C)[alienInstances[arg0].specIndex * 0x34], arg2);
+        }
+        alienInstances[arg0].unk2C = arg1;
+        return;
+    }
+    if ((alienInstances[arg0].unk2C == 1) && (alienInstances[arg0].unk20 & 0x600)) {
+        func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)(&D_8025668C)[alienInstances[arg0].specIndex * 0x34], arg3);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80089EB4_98E64.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80089FAC_98F5C.s")
 
