@@ -1419,13 +1419,13 @@ void func_80089C40_98BF0(u8 arg0) {
 void func_80089EB4_98E64(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	if (!(alienInstances[arg0].unk20 & 0x100000)) {
 		if (alienInstances[arg0].unk20 & 0x600) {
-			func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)(&D_8025668C)[alienInstances[arg0].specIndex * 0x34], arg2);
+			func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)alienSpecs[alienInstances[arg0].specIndex].unkC, arg2);
 		}
 		alienInstances[arg0].unk2C = arg1;
 		return;
 	}
 	if ((alienInstances[arg0].unk2C == 1) && (alienInstances[arg0].unk20 & 0x600)) {
-		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)(&D_8025668C)[alienInstances[arg0].specIndex * 0x34], arg3);
+		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)alienSpecs[alienInstances[arg0].specIndex].unkC, arg3);
 	}
 }
 #else
@@ -1476,7 +1476,7 @@ void func_8008AF58_99F08(u8 arg0)
 	}
 	if ((flags & 0x40000000) || (inst->unk2C < 0x50))
 	{
-	func_8008AAFC_99AAC(arg0, (&D_8025668C)[inst->specIndex * 0x34], 2);
+	func_8008AAFC_99AAC(arg0, alienSpecs[inst->specIndex].unkC, 2);
 	}
 }
 #else
@@ -1492,12 +1492,12 @@ void func_8008B02C_99FDC(u8 arg0)
 	{
 	  if (alienInstances[arg0].unk20 & 0x600)
 	  {
-		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16) (&D_8025668C)[alienInstances[arg0].specIndex * 0x34], 0);
+		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16) alienSpecs[alienInstances[arg0].specIndex].unkC, 0);
 	  }
 	  alienInstances[arg0].unk2C = 0x7FFF;
 	  alienInstances[arg0].unk20 |= 0x40000000;
 	}
-	func_8008AAFC_99AAC(arg0, (&D_8025668C)[(((((((((alienInstances[arg0].specIndex & 0xFF) & 0xFF) & 0xFF) & 0xFF) & 0xFF) & 0xFF) & 0xFF) & 0xFF) & 0xFF) * 0x34], 3);
+	func_8008AAFC_99AAC(arg0, alienSpecs[alienInstances[arg0].specIndex].unkC, 3);
   }
 }
 #else

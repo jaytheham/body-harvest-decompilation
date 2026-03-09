@@ -593,9 +593,7 @@ extern s32 D_80257A1C[][0x1C];
 extern s16 D_80257A0C;
 
 extern AlienSpec alienSpecs[0x30];
-extern AlienSpec D_8025667C[];
 
-extern s16 D_8025668C;
 extern u8 D_8025668D;
 extern s32 D_8025669C;
 extern s16 D_802566C2[][0x34];
