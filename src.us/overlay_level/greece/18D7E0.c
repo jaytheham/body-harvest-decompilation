@@ -198,7 +198,7 @@ void func_802D4F74_18DA84(void) {
 		}
 		func_80018D7C_1997C(0xEC);
 		func_800074BC_80BC(func_802D4F74_18DA84);
-		func_800072CC_7ECC(0x0, 0x1E);
+		func_800072CC_7ECC((u64)0x1E);
 		flag_value = *(s32*)(D_80159320);
 		flag_value = flag_value & 0xFFBFFFFF;
 		*(s32*)(D_80159320) = flag_value;

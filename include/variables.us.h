@@ -1049,6 +1049,27 @@ extern s16 D_802DE464;
 extern s16 D_80052554;
 extern Unk80146212 D_80146212[];
 
+/* overlay_level/greece/18D7E0 — ROM data (main RAM) */
+extern u8 D_80158BD0[];
+extern u8 D_8015273E;
+extern f32 D_80157F78;
+extern f32 D_80157F7C;
+extern f32 D_80157F80;
+extern f32 D_80157F84;
+extern f32 D_80157F88;
+extern u8 D_80159DDF;
+extern s16 D_80159DE0;
+extern s16 D_80159DE2;
+extern s16 D_80159DE4;
+extern f32 D_8004DCAC;
+extern f32 D_8004DCB0;
+extern f32 D_8004DCB4;
+extern f32 D_8004DCB8;
+
+/* D_8013E3C0 — 3-byte RGB entries indexed by level */
+typedef struct { u8 unk0; u8 unk1; u8 unk2; } D_8013E3C0_t;
+extern D_8013E3C0_t D_8013E3C0[];
+
 /* overlay_level/greece/18D7E0 — local data */
 extern char D_802DE2D0;
 extern char D_802DE2F0[];
@@ -1085,6 +1106,16 @@ extern f64 D_802DE448;
 extern f64 D_802DE450;
 extern void (*D_802DDBF4[])(s32);
 extern s32 jtbl_802DE338_overlay_level_greece[];
+extern s16 D_80257DB4;
+extern u16 D_8025668C;
+extern s16 D_80257A0C;
+extern s16 D_802566C0;
+extern s16 D_802571B2;
+extern s16 D_802571B6;
+extern s16 D_802571B8;
+extern s16 D_80257184;
+extern s16 D_80257188;
+extern s16 D_8025718A;
 extern u8 D_802DE25C[];
 extern u8 D_802DE268[];
 extern u8 D_802DE274[];

@@ -68,7 +68,9 @@ typedef struct {
 	/* 0x1E */ u8 pad1E[2];
 	/* 0x20 */ u16 unk20;
 	/* 0x22 */ s16 unk22;
-	/* 0x24 */ u8 pad24[0xC];
+	/* 0x24 */ s16 unk24;
+	/* 0x26 */ s16 unk26;
+	/* 0x28 */ u8 pad28[0x8];
 	/* 0x30 */ f32 unk30;
 	/* 0x34 */ f32 unk34;
 	/* 0x38 */ f32 unk38;
@@ -185,12 +187,17 @@ typedef struct {
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 pad17;
 	/* 0x18 */ s32 unk18; // Ptr to name
-	/* 0x1C */ u8 pad1C[0xA];
+	/* 0x1C */ u8 pad1C[0x4];
+	/* 0x20 */ s16 unk20;
+	/* 0x22 */ s16 unk22;
+	/* 0x24 */ s16 unk24;
 
 	/* 0x26 */ s16 unk26;
-	/* 0x28 */ u8 pad28[0x5];
-	/* 0x2D */ s8 unk2D;
-	/* 0x2E */ u8 pad2E[0xA];
+	/* 0x28 */ u8 pad28[0x4];
+	/* 0x2C */ s16 unk2C;
+	/* 0x2E */ s16 unk2E;
+	/* 0x30 */ s16 unk30;
+	/* 0x32 */ u8 pad32[0x6];
 	/* 0x38 */ s16 unk38;
 	/* 0x3A */ u8 pad3A[0x4];
 	/* 0x3E */ s16 unk3E;
