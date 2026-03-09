@@ -146,7 +146,7 @@ typedef struct {
 	/* 0x4F */ u8 pad4F;
 } AlienInstance; /* size = 0x50 */
 
-// 0x00 00000000
+// 0x00 00000000 -- are these all offset a word too much? is body modifier at 0x0 ?
 // 0x04 xxxxxxxx Body modifier
 // 0x08 Changes shadow
 // 0x0C Collision model size? Maybe only be second h/word
@@ -177,7 +177,10 @@ typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ u8 pad4[0x9];
 	/* 0x0D */ u8 unkD;
-	/* 0x0E */ u8 padE[0x18];
+	/* 0x0E */ u8 padE[0xA];
+	/* 0x18 */ s32 unk18;
+	/* 0x1C */ u8 pad1C[0xA];
+
 	/* 0x26 */ s16 unk26;
 	/* 0x28 */ u8 pad28[0x5];
 	/* 0x2D */ s8 unk2D;

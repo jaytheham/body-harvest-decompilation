@@ -547,7 +547,6 @@ extern Unk80222A78 D_80222A78[0xD0];
 // 223780 alien waves?
 extern s32 D_80223778;
 // 224680 missions?
-extern AlienSpec alienSpecs[0x30];
 extern VehicleSpec vehicleSpecs[0x14];
 extern BuildingSpec buildingSpecs[0x20];
 extern Unk80259490 D_80259490; // vehicle instances?
@@ -592,11 +591,16 @@ extern u32 D_8014D1B8[];
 extern Unk8014F618 D_8014F618;
 extern s32 D_80257A1C[][0x1C];
 extern s16 D_80257A0C;
+
+extern AlienSpec alienSpecs[0x30];
+extern AlienSpec D_8025667C[];
+
 extern s16 D_8025668C;
 extern u8 D_8025668D;
-extern AlienSpec D_80256698[];
 extern s32 D_8025669C;
+extern s16 D_802566C2[][0x34];
 extern u8 D_802566D1;
+
 extern s16 D_80257A38;
 extern s32 D_80145BE8[][6];
 extern s16 D_8014EDD8;
@@ -1007,7 +1011,6 @@ extern u8 D_80031535[];
 extern u8 D_80031536[];
 extern u8 D_80031537[];
 extern u8 D_8003153A[];
-extern s16 D_802566C2[][0x34];
 extern BeaconDisplayEntry D_8014F7DE;
 extern s32 D_8014F7F0;
 extern s32 D_8014F7F4;

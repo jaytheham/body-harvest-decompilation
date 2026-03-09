@@ -908,7 +908,7 @@ void func_80085690_94640(u8 arg0, u16 arg1) {
 	if (func_80084FE8_93F98(arg0, arg1 & 0xFFFF) != 0) {
 		alien = &alienInstances[arg0];
 		if (*(s16 *)&alien->unk1E == 0) {
-			D_80256698[alien->specIndex];
+			alienSpecs[alien->specIndex];
 			func_80122524_1314D4(D_80052B34, *(&D_80145BE2 + specIdx * 0xC), alien->unk0, alien->unk4);
 			*(s16 *)&alien->unk1E = 0x1C;
 		}
@@ -1187,13 +1187,13 @@ void func_8008741C_963CC(u8 arg0, s16 arg1) {
 		arg1 = 0;
 	}
 	if (arg1 < alienInstances[arg0].unk12) {
-		alienInstances[arg0].unk12 -= D_80256698[specIndex].unk26;
+		alienInstances[arg0].unk12 -= alienSpecs[specIndex].unk3E;
 		if (alienInstances[arg0].unk12 < arg1) {
 			alienInstances[arg0].unk12 = arg1;
 		}
 	}
 	if (alienInstances[arg0].unk12 < arg1) {
-		alienInstances[arg0].unk12 += D_80256698[specIndex].unk26;
+		alienInstances[arg0].unk12 += alienSpecs[specIndex].unk3E;
 		if (arg1 < alienInstances[arg0].unk12) {
 			alienInstances[arg0].unk12 = arg1;
 		}
@@ -1595,7 +1595,7 @@ void func_8008D040_9BFF0(u8 arg0)
 		parent->unk20 = parentUnk20 & (~0x1000);
 		// %s says I'm busy
 		// so this call should have one arg?
-		do {} while(0); do { osSyncPrintf(&D_80141E80, *((s32 *) (&D_80256698[inst->specIndex])), parent, parentUnk20); } while (0);
+		do {} while(0); do { osSyncPrintf(&D_80141E80, *((s32 *) (&alienSpecs[inst->specIndex].unk18)), parent, parentUnk20); } while (0);
 	}
 }
 
