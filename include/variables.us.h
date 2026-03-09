@@ -464,6 +464,7 @@ extern s32 D_8014D2E8;
 extern s32 D_8014D2EC;
 extern s32 D_8014D2F0;
 extern s32 D_8014D2F4;
+extern s32 D_8014D300;
 extern s8 D_8014D308[];
 extern u8 D_8014D408[]; // unknown size, maybe 0x101
 extern u8 D_8014D507;

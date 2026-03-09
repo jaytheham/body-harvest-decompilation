@@ -109,7 +109,7 @@ u16* func_800785B4_87564(s16, s16, s32*);
 s32 func_80078BC8_87B78(s16 arg0, s16 arg1);
 s32 func_8007956C_8851C(s32);
 void func_80079910_888C0(s32);
-void func_80079B74_88B24(s32 arg0);
+s16 func_80079B74_88B24(Unk8014DD50 *arg0);
 void func_80079C8C_88C3C(s32 arg0);
 void func_80079F08_88EB8(void);
 void func_8007AA0C_899BC(void);
