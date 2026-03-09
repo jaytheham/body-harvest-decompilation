@@ -534,5 +534,11 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 ar
 void func_800C80F0_D70A0(s32 arg0, s32 arg1, s32 arg2, s16 arg3);
 void func_800C8184_D7134(s8 arg0, s8 arg1, s8 arg2, s16 arg3);
 void func_80124118_1330C8(VehicleInstance *arg0, s16 arg1);
+void func_80087AFC_96AAC(u8 arg0);
+void func_800800E4_8F094(u8 arg0);
+void func_8007A198_89148(s32 arg0);
+s32 func_800CDB40_DCAF0(s16 arg0, s16 arg1, s16 arg2);
+void func_800CDD7C_DCD2C(s16 arg0);
+void func_800DFBA8_EEB58(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 #endif

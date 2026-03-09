@@ -1048,4 +1048,45 @@ extern s16 D_8014D182;
 extern s16 D_802DE464;
 extern s16 D_80052554;
 extern Unk80146212 D_80146212[];
+
+/* overlay_level/greece/18D7E0 — local data */
+extern char D_802DE2D0;
+extern char D_802DE2F0[];
+extern char D_802DE30C[];
+extern char D_802DE318[];
+extern u8 D_802DE280[];
+extern u8 D_802DDE18[];
+extern u8 D_802DDE24[];
+extern u8 D_802DDF00[];
+extern u8 D_802DDF0C[];
+extern u8 D_802DE0A8[];
+extern u8 D_802DE0B4[];
+extern u8 D_802DE0C0[];
+extern u8 D_802DDCF8[];
+extern u8 D_9052A00[];
+extern u8 D_9052AC0[];
+extern s16 D_802DDC88[];
+extern s16 D_802DE462;
+extern s16 D_802DE46A;
+extern s16 D_802DE468;
+extern s32 D_802DDCD0;
+extern s32 D_802DDCD8;
+extern f32 D_802DE408;
+extern f32 D_802DE438;
+extern f32 D_802DE43C;
+extern f64 D_802DE400;
+extern f64 D_802DE410;
+extern f64 D_802DE418;
+extern f64 D_802DE420;
+extern f64 D_802DE428;
+extern f64 D_802DE430;
+extern f64 D_802DE440;
+extern f64 D_802DE448;
+extern f64 D_802DE450;
+extern void (*D_802DDBF4[])(s32);
+extern s32 jtbl_802DE338_overlay_level_greece[];
+extern u8 D_802DE25C[];
+extern u8 D_802DE268[];
+extern u8 D_802DE274[];
+
 #endif
