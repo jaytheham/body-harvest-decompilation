@@ -259,7 +259,47 @@ s32 func_8007E500_8D4B0(AlienInstance *arg0, AlienSpec *arg1, AlienInstance *arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E500_8D4B0.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_8007E608_8D5B8(AlienInstance *arg0, AlienInstance *arg1) {
+	AlienSpec *sp24;
+	AlienSpec *var_a3;
+	s32 sp1C;
+	s32 sp18;
+	u8 specA;
+
+	specA = arg0->specIndex;
+	sp24 = &alienSpecs[specA];
+	if (arg1->unkD == -2) {
+		var_a3 = (AlienSpec *)&vehicleSpecs[arg1->specIndex];
+	} else {
+		var_a3 = &alienSpecs[arg1->specIndex];
+	}
+	sp1C = sp24->unk8;
+	sp18 = var_a3->unk8;
+	if (arg1->unkD != -2) {
+		if (currentLevel == 1) {
+			if (specA == 0xD) {
+				if (arg1->specIndex != 9) {
+				}
+			}
+			if (arg1->specIndex == 0xD) {
+				if (specA != 9) {
+				}
+			}
+		} else if (currentLevel == 2) {
+			if (specA == 0xD) {
+			}
+			if (arg1->specIndex == 0xD) {
+			}
+		}
+	}
+	func_8007E500_8D4B0(arg0, sp24, arg1, var_a3);
+	sp24->unk8 = sp1C;
+	var_a3->unk8 = sp18;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E608_8D5B8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E734_8D6E4.s")
 
