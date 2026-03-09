@@ -544,11 +544,23 @@ extern u8 D_80221A30[][0x40];
 extern u32 D_80222A30[];
 extern s32 D_80222A70;
 extern Unk80222A78 D_80222A78[0xD0];
-// 223780 alien waves?
+
 extern s32 D_80223778;
+extern AlienWaveInstance D_80223780[0xC0]; // 80223780
+// need to merge these:
+extern s32 D_80223788[];
+extern s8 D_80223793[];
+
 // 224680 missions?
-extern VehicleSpec vehicleSpecs[0x14];
-extern BuildingSpec buildingSpecs[0x20];
+
+extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
+// need to merge these:
+extern s16 D_80257A0C;
+extern s32 D_80257A1C[][0x1C];
+extern s16 D_80257A38;
+extern Unk80257A3A D_80257A3A[];
+
+extern BuildingSpec buildingSpecs[0x20]; // 0x80259090
 extern Unk80259490 D_80259490; // vehicle instances?
 extern u8 D_80259D90[][0x50];
 extern u8 D_80259D92[][0x50];
@@ -589,14 +601,9 @@ extern s16 D_8013D5C0;
 extern BuildingInstance *D_80158FE8;
 extern u32 D_8014D1B8[];
 extern Unk8014F618 D_8014F618;
-extern s32 D_80257A1C[][0x1C];
-extern s16 D_80257A0C;
 
 extern AlienSpec alienSpecs[0x30]; // 80256680
-extern u8 D_8025668D;
-extern s32 D_8025669C;
 
-extern s16 D_80257A38;
 extern s32 D_80145BE8[][6];
 extern s16 D_8014EDD8;
 extern s16 D_8014EDDA;
@@ -713,7 +720,6 @@ extern s32 D_800A0964;
 extern char D_800A4DC0;
 extern char D_800A4FD8;
 extern char D_800A5168;
-extern Unk80257A3A D_80257A3A[];
 extern s32 D_800E6A1C;
 extern s32 D_800E6A20;
 extern s32 D_800E6A24;
@@ -1027,8 +1033,7 @@ extern s32 D_80047694;
 extern u8 D_800431C0;
 extern s32 D_80047684;
 extern u8 D_80047608;
-extern AlienWaveInstance D_80223780[0xC0];
-extern s32 D_80223788[];
+
 extern u8 D_80048030;
 extern u8 D_80048038[];
 extern char D_80142BDC;
@@ -1036,7 +1041,6 @@ extern u8 D_8014CFF0[];
 extern char D_80142BEC;
 extern u8 D_8014CFF1[];
 extern char D_80142BB8;
-extern s8 D_80223793[];
 extern char D_80142AB0;
 extern char D_80142AD0;
 extern s32 D_802DD170;
