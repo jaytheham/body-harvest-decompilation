@@ -1315,26 +1315,22 @@ void func_80087F08_96EB8(void)
 
 }
 
+// https://decomp.me/scratch/sGrqh
 #ifdef NON_MATCHING
 void func_80088000_96FB0(s16 arg0)
 {
-  s32 i;
- i = 0; do {
-	if (arg0 != i)
-	{
-	  if (alienInstances[i].specIndex == 1)
-	  {
-		func_80079910_888C0(i);
-	  }
-	  else
-		if (alienInstances[i].specIndex != 0)
-	  {
-		func_80088760_97710(&alienInstances[i]);
-	  }
+	s32 i;
+  for ( i = 0; i != 0xFF; i++)
+  {
+	if (arg0 != i) {
+	 if (alienInstances[i].specIndex == 1)
+	 { func_80079910_888C0(i); }
+	 else if (alienInstances[i].specIndex != 0)
+	 {
+	   func_80088760_97710(&alienInstances[i]);
+	 } 
 	}
-	i++;
   }
-  while (i != 0xFF);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088000_96FB0.s")
@@ -1816,7 +1812,7 @@ void func_8008F818_9E7C8(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008F9E4_9E994.s")
 
-s32 func_8008FC78_9EC28(u8 arg0) {
+u8 func_8008FC78_9EC28(u8 arg0) {
 	u8 result = func_8007956C_8851C(0x20) & 0xFF;
 	if (result != 0xFF) {
 		AlienInstance *newInst = &alienInstances[result];
@@ -1831,7 +1827,33 @@ s32 func_8008FC78_9EC28(u8 arg0) {
 	return result;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008FD0C_9ECBC.s")
+void func_8008FD0C_9ECBC(u8 arg0) {
+	u8 sp1F;
+	u8 temp_v0;
+	AlienInstance *v1;
+
+	sp1F = func_8008FC78_9EC28(arg0);
+	temp_v0 = func_8008FC78_9EC28(arg0);
+
+	if (sp1F != 0xFF) {
+		v1 = &alienInstances[sp1F];
+		v1->unk12 = 0x380;
+		v1->unk26 = alienInstances[arg0].unk26 + 1;
+		v1->unk20 |= 0x40000000;
+		v1->unk10 = 0x320;
+		v1->unk6 = alienInstances[arg0].unk6;
+		v1->unkE = alienInstances[arg0].unk6 + 0x4000;
+	}
+	if (temp_v0 != 0xFF) {
+		v1 = &alienInstances[temp_v0];
+		v1->unk12 = 0x380;
+		v1->unk26 = alienInstances[arg0].unk26 + 1;
+		v1->unk20 |= 0x40000000;
+		v1->unk10 = 0x320;
+		v1->unk6 = alienInstances[arg0].unk6;
+		v1->unkE = alienInstances[arg0].unk6 - 0x4000;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008FE18_9EDC8.s")
 

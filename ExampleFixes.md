@@ -16,7 +16,43 @@ use an explicit pointer plus temp byte value in C:
 
 This shape can preserve both branch delay-slot pointer arithmetic and the `lbu` before index increment/store ordering.
 
+### Delay-slot pointer setup
+
+For patterns like:
+
+- compare index against sentinel
+- branch delay slot does `addu baseReg, baseReg, index`
+- then `lbu` from that pointer
+- then increment/store index
+
+use an explicit pointer plus temp byte value in C:
+
+`u8* ptr = &D_xxx[index];`
+`u8 value = *ptr;`
+`D_index = index + 1;`
+`return value;`
+
+This shape can preserve both branch delay-slot pointer arithmetic and the `lbu` before index increment/store ordering.
+
+### Struct array: `multu` + early arg computation order
+
+When a function body does `sh unk12` → `multu arg_idx` → `lw unk20` → ... → `sw unk20` → `sh unk10`:
+- The early `multu` is driven by the FIRST use of the argument-indexed pointer (e.g. `unk26` load).
+- Put the assignment driven by the argument-indexed load (e.g. `v1->unk26 = arr[arg].unk26 + 1`) **before** the `|=` and the independent `unk10` store in the C source.
+- This causes IDO to emit multu for arg early and interleave `lw/or/sw` for the `|=` while the multu is in flight.
+
+Example (correct order):
+```c
+v1->unk12 = 0x380;
+v1->unk26 = arr[arg].unk26 + 1;   // triggers early multu
+v1->unk20 |= 0x40000000;           // lw/or/sw interleaved while multu runs
+v1->unk10 = 0x320;                 // sh deferred
+```
+
+Also: to get `multu` instead of `sll/addu/sll` for struct index computation, declare the index variable as `u8` (not `s32`). Using `s32` causes IDO to use the shift expansion. When the callee returns `s32` but the caller stores to `u8`, IDO emits an extra `andi` — fix by changing the callee to return `u8` if appropriate.
+
 ### Struct stride for stable index math
+
 
 If a global is really an array of fixed-size records (for example, stride `0x50`) and the asm does:
 
