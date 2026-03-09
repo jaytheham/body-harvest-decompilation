@@ -1030,7 +1030,7 @@ s32 func_80085900_948B0(u8 arg0, s32 arg1) {
 
 s32 func_800859F4_949A4(u8 arg0) {
 	AlienInstance *inst = &alienInstances[arg0];
-	if (func_80084FE8_93F98(arg0, (*(&D_802566D1 + (u32)inst->specIndex * 0x68) * 0xC8) & 0xFFFF) != 0) {
+	if (func_80084FE8_93F98(arg0, (alienSpecs[inst->specIndex].unk51 * 0xC8) & 0xFFFF) != 0) {
 		inst->unk20 |= 0x08000100;
 		return 1;
 	}
@@ -1610,7 +1610,7 @@ void func_8008D3B0_9C360(u8 arg0) {
 void func_8008D3F4_9C3A4(u8 arg0) {
 	AlienInstance *inst = &alienInstances[arg0];
 	u8 unk25 = inst->unk25;
-	inst->unk2C = 0x4B0 - *(&D_802566D1 + (u32)inst->specIndex * 0x68) * 5;
+	inst->unk2C = 0x4B0 - alienSpecs[inst->specIndex].unk51 * 5;
 	alienInstances[unk25].unk20 |= 0x1000;
 	if (alienInstances[unk25].unk2C < 4) {
 		alienInstances[unk25].unk2C = 4;

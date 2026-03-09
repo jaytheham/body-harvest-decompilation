@@ -191,7 +191,9 @@ typedef struct {
 	/* 0x40 */ s16 unk40;
 	/* 0x42 */ s16 unk42;
 	/* 0x44 */ void *unk44;
-	/* 0x48 */ u8 pad48[0xC];
+	/* 0x48 */ u8 pad48[0x9];
+	/* 0x51 */ u8 unk51;
+	/* 0x52 */ u8 pad52[0x2];
 	/* 0x54 */ s32 unk54;
 	/* 0x58 */ s16 unk58;
 	/* 0x5A */ u8 pad5A[0xE];
