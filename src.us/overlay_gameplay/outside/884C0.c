@@ -1236,7 +1236,7 @@ s32 func_800879A4_96954(u8 arg0, s16 arg1, u8 arg2) {
 	temp_v1 = D_80052B34->unk0 - sp40;
 	temp_a0 = D_80052B34->unk2 - sp3C;
 	temp_a1 = D_80052B34->unk4 - sp38;
-	if ((s32) sqrtf((f32) ((temp_v1 * temp_v1) + (temp_a0 * temp_a0) + (temp_a1 * temp_a1))) < *(s16 *)((char *)&D_80257A0C + sp47 * 0x70) + arg1) {
+	if ((s32) sqrtf((f32) ((temp_v1 * temp_v1) + (temp_a0 * temp_a0) + (temp_a1 * temp_a1))) < *(s16 *)((char *)vehicleSpecs[sp47].unkC) + arg1) {
 		var_v0 = 1;
 	} else {
 		var_v0 = 0;

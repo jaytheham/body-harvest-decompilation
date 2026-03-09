@@ -555,7 +555,6 @@ extern s8 D_80223793[];
 
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
 // need to merge these:
-extern s16 D_80257A0C;
 extern s32 D_80257A1C[][0x1C];
 extern s16 D_80257A38;
 extern Unk80257A3A D_80257A3A[];

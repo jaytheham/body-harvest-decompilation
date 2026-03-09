@@ -263,7 +263,7 @@ void func_80133A54_142A04(Unk80160080 *arg0) {
 		arg0->unk58 += temp_a1 < (s32) D_8015929C ? temp_a1 : (s32) D_8015929C;
 	}
 	arg0->unk56 = 0x73;
-	sp40 = (f32) ((&D_80257A0C)[D_80052B34->unk1A * 0x38] * 2);
+	sp40 = (f32) (vehicleSpecs[D_80052B34->unk1A].unkC * 2);
 	sp44 = (f32) ((f64) sp34->unk0 - (((f64) (f32) coss((u16) arg0->unk58) / 32768.0) * (f64) sp40));
 	sp48 = (f32) ((&D_80257A38)[D_80052B34->unk1A * 0x38] + sp34->unk2 + 0x32);
 	sp28 = (f64) sp40;

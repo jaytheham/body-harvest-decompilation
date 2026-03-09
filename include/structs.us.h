@@ -281,7 +281,9 @@ typedef struct {
 // 0x64 xxxxyyyy yyyy = Steer Point (Turning speed)
 // 0x6C xxyyzzzz xxyy = Shadow X & Shadow Z
 typedef struct {
-	/* 0x00 */ u8 pad0[0x1C];
+	/* 0x00 */ u8 pad0[0xC];
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ u8 pad0E[0xE];
 	/* 0x1C */ s32 weapon1;
 	/* 0x20 */ u8 pad20[0x8];
 	/* 0x28 */ s32 weapon2;
