@@ -104,7 +104,7 @@ void func_800A53C0_B4370(s32 arg0, s16 arg1, s16 arg2) {
         }
         entry->unk8 = entry->unk8 - sign * abs_arg1;
     } else {
-        s16 lookup = D_802566C2[entry->specIndex][0];
+        s16 lookup = alienSpecs[entry->specIndex].unk42;
         s16 diff = entry->unk2A - entry->unkE;
         if (-lookup >= diff) {
             entry->unk8 = entry->unk8 - arg1;

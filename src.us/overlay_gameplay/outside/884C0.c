@@ -1072,7 +1072,7 @@ void func_80085CE0_94C90(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 			alienInstances[arg0].unk2 + (&D_8014DD50[arg1])->unk2,
 			alienInstances[arg0].unk4,
 			arg2, arg3, arg4),
-		0x71C, -0x1555, D_802566C2[sp27][0]);
+		0x71C, -0x1555, alienSpecs[sp27].unk42);
 }
 
 void func_80085DC8_94D78(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
@@ -1104,7 +1104,7 @@ void func_80086164_95114(u8 arg0, s16 arg1)
 			alienInstances[arg0].unk4),
 		0x71C,
 		-0x1555,
-		D_802566C2[sp27][0]);
+		alienSpecs[sp27].unk42);
 }
 
 void func_80086230_951E0(u8 arg0, s16 arg1, s32 arg2) {
