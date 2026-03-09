@@ -2161,7 +2161,21 @@ void func_800946A4_A3654(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800946CC_A367C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80094808_A37B8.s")
+void func_80094808_A37B8(u8 arg0) {
+    s32 sp24;
+    AlienInstance *alien;
+
+    alien = &alienInstances[arg0];
+    if ((alien->unk20 & 0x2000) && (alien->unk2C >= 0xF)) {
+        func_80088760_97710(alien);
+    }
+    if (alien->unk2C == 0xE) {
+        sp24 = func_80084F00_93EB0(D_80052B34, alien) - vehicleSpecs[D_80052B34->unk1A].unkC - alienSpecs[alien->specIndex].unkC;
+        if ((func_80084FE8_93F98(arg0, 0x800) != 0) && (sp24 < 0x8C)) {
+            alien->unk20 |= 0x2000;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8009490C_A38BC.s")
 

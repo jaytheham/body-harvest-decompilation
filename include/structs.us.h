@@ -62,7 +62,7 @@ typedef struct {
 	/* 0x10 */ u16 unk10;
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ u8 pad14[0x6];
-	/* 0x1A */ u8 unk1A;
+	/* 0x1A */ u8 unk1A; // specIndex?
 	/* 0x1B */ u8 unk1B;
 	/* 0x1C */ s16 unk1C;
 	/* 0x1E */ u8 pad1E[2];
