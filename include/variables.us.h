@@ -313,6 +313,7 @@ extern s16 D_8013C514;
 extern s16 D_8013C610;
 extern u8 D_8013C618[];
 extern u8 D_8013C638[];
+extern s16 D_8013C738;
 extern Unk8013CA D_8013CA00;
 extern Unk8013CA D_8013CA0A;
 extern s8 D_8013CA0C[];
