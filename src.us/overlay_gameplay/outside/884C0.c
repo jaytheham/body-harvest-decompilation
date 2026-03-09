@@ -1220,32 +1220,31 @@ void func_80087720_966D0(u8 arg0, s32 arg1)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800877E8_96798.s")
 
-#ifdef NON_MATCHING
-s32 func_800879A4_96954(u8 arg0, s16 arg1, u8 arg2) {
-	u8 sp47;
-	s32 sp40;
-	s32 sp3C;
-	s32 sp38;
-	s32 temp_v1;
-	s32 temp_a0;
-	s32 temp_a1;
-	s32 var_v0;
-
-	sp47 = D_80052B34->unk1A;
-	func_80128504_1374B4(&alienInstances[arg0], arg2, &sp40, &sp3C, &sp38);
-	temp_v1 = D_80052B34->unk0 - sp40;
-	temp_a0 = D_80052B34->unk2 - sp3C;
-	temp_a1 = D_80052B34->unk4 - sp38;
-	if ((s32) sqrtf((f32) ((temp_v1 * temp_v1) + (temp_a0 * temp_a0) + (temp_a1 * temp_a1))) < *(s16 *)((char *)vehicleSpecs[sp47].unkC) + arg1) {
-		var_v0 = 1;
-	} else {
-		var_v0 = 0;
-	}
-	return var_v0;
+s32 func_800879A4_96954(u8 arg0, s16 arg1, u8 arg2)
+{
+  u8 sp47;
+  s32 sp40;
+  s32 sp3C;
+  s32 sp38;
+  s32 temp_v1;
+  s32 temp_a0;
+  s32 temp_a1;
+  s32 var_v0;
+  sp47 = D_80052B34->unk1A;
+  func_80128504_1374B4(&alienInstances[arg0], arg2, &sp40, &sp3C, &sp38);
+  temp_v1 = D_80052B34->unk0 - sp40;
+  temp_a0 = D_80052B34->unk2 - sp3C;
+  temp_a1 = D_80052B34->unk4 - sp38;
+  if ((s32) sqrtf((temp_v1 * temp_v1) + (temp_a0 * temp_a0) + (temp_a1 * temp_a1)) <
+	  (vehicleSpecs[sp47].unkC + arg1))
+  {
+	return 1;
+  }
+  else
+  {
+	return 0;
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800879A4_96954.s")
-#endif
 
 void func_80087AAC_96A5C(u8 arg0) {
 	if (!(alienInstances[arg0].unk20 & 0x300000)) {
