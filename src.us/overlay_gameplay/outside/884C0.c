@@ -202,7 +202,42 @@ void func_8007B2A0_8A250(u8 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007D690_8C640.s")
 
+#ifdef NON_MATCHING
+s32 func_8007E500_8D4B0(AlienInstance *arg0, AlienSpec *arg1, AlienInstance *arg2, AlienSpec *arg3) {
+	s32 var_a0;
+	s32 var_a2;
+	s32 var_v1;
+	s32 var_a1;
+	s32 dist;
+
+	if ((arg1->unk16 & 0xF) != 1 && (arg3->unk16 & 0xF) != 1) {
+		dist = func_80084F00_93EB0((VehicleInstance *)arg0, arg2);
+	} else {
+		dist = func_80084E54_93E04(arg0, arg2);
+	}
+	if (dist < 0) {
+		return 0;
+	}
+	var_a0 = arg1->unk38;
+	var_a2 = arg3->unk38;
+	var_v1 = arg0->unk2;
+	var_a1 = arg2->unk2;
+	if (arg1->unk16 & 0x10) {
+		var_v1 -= var_a0;
+		var_a0 *= 2;
+	}
+	if (arg3->unk16 & 0x10) {
+		var_a1 -= var_a2;
+		var_a2 *= 2;
+	}
+	if (dist < arg1->unkC + arg3->unkC && (var_a1 + var_a2) >= var_v1 && (var_v1 + var_a0) >= var_a1) {
+		return 1;
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E500_8D4B0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E608_8D5B8.s")
 
@@ -2162,19 +2197,19 @@ void func_800946A4_A3654(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800946CC_A367C.s")
 
 void func_80094808_A37B8(u8 arg0) {
-    s32 sp24;
-    AlienInstance *alien;
+	s32 sp24;
+	AlienInstance *alien;
 
-    alien = &alienInstances[arg0];
-    if ((alien->unk20 & 0x2000) && (alien->unk2C >= 0xF)) {
-        func_80088760_97710(alien);
-    }
-    if (alien->unk2C == 0xE) {
-        sp24 = func_80084F00_93EB0(D_80052B34, alien) - vehicleSpecs[D_80052B34->unk1A].unkC - alienSpecs[alien->specIndex].unkC;
-        if ((func_80084FE8_93F98(arg0, 0x800) != 0) && (sp24 < 0x8C)) {
-            alien->unk20 |= 0x2000;
-        }
-    }
+	alien = &alienInstances[arg0];
+	if ((alien->unk20 & 0x2000) && (alien->unk2C >= 0xF)) {
+		func_80088760_97710(alien);
+	}
+	if (alien->unk2C == 0xE) {
+		sp24 = func_80084F00_93EB0(D_80052B34, alien) - vehicleSpecs[D_80052B34->unk1A].unkC - alienSpecs[alien->specIndex].unkC;
+		if ((func_80084FE8_93F98(arg0, 0x800) != 0) && (sp24 < 0x8C)) {
+			alien->unk20 |= 0x2000;
+		}
+	}
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8009490C_A38BC.s")
