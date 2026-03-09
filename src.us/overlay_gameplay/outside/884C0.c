@@ -1126,7 +1126,25 @@ void func_800873A8_96358(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800873A8_96358.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008741C_963CC.s")
+void func_8008741C_963CC(u8 arg0, s16 arg1) {
+	u8 specIndex;
+	specIndex = alienInstances[arg0].specIndex;
+	if (func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE) != 0) {
+		arg1 = 0;
+	}
+	if (arg1 < alienInstances[arg0].unk12) {
+		alienInstances[arg0].unk12 -= D_80256698[specIndex].unk26;
+		if (alienInstances[arg0].unk12 < arg1) {
+			alienInstances[arg0].unk12 = arg1;
+		}
+	}
+	if (alienInstances[arg0].unk12 < arg1) {
+		alienInstances[arg0].unk12 += D_80256698[specIndex].unk26;
+		if (arg1 < alienInstances[arg0].unk12) {
+			alienInstances[arg0].unk12 = arg1;
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008751C_964CC.s")
 
@@ -1472,21 +1490,21 @@ void func_8008B870_9A820(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008C428_9B3D8.s")
 
 void func_8008C7B0_9B760(u8 arg0) {
-    s16 sp28[12];
+	s16 sp28[12];
 
-    sp28[0] = D_8014DD50[alienInstances[arg0].unkC].unkC;
-    sp28[1] = D_8014DD50[sp28[0]].unkC;
-    sp28[2] = D_8014DD50[sp28[0]].unkD;
-    sp28[3] = D_8014DD50[sp28[2]].unkC;
-    sp28[4] = D_8014DD50[sp28[3]].unkC;
-    sp28[5] = D_8014DD50[sp28[3]].unkD;
-    sp28[6] = D_8014DD50[sp28[5]].unkC;
-    sp28[7] = D_8014DD50[sp28[2]].unkD;
-    sp28[8] = D_8014DD50[sp28[7]].unkC;
-    sp28[9] = D_8014DD50[sp28[8]].unkC;
-    sp28[10] = D_8014DD50[sp28[8]].unkD;
-    sp28[11] = D_8014DD50[sp28[10]].unkC;
-    func_80081F18_90EC8(arg0, 0xC, 1, sp28, &D_8013C514);
+	sp28[0] = D_8014DD50[alienInstances[arg0].unkC].unkC;
+	sp28[1] = D_8014DD50[sp28[0]].unkC;
+	sp28[2] = D_8014DD50[sp28[0]].unkD;
+	sp28[3] = D_8014DD50[sp28[2]].unkC;
+	sp28[4] = D_8014DD50[sp28[3]].unkC;
+	sp28[5] = D_8014DD50[sp28[3]].unkD;
+	sp28[6] = D_8014DD50[sp28[5]].unkC;
+	sp28[7] = D_8014DD50[sp28[2]].unkD;
+	sp28[8] = D_8014DD50[sp28[7]].unkC;
+	sp28[9] = D_8014DD50[sp28[8]].unkC;
+	sp28[10] = D_8014DD50[sp28[8]].unkD;
+	sp28[11] = D_8014DD50[sp28[10]].unkC;
+	func_80081F18_90EC8(arg0, 0xC, 1, sp28, &D_8013C514);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008C8B8_9B868.s")
