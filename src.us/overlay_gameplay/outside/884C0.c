@@ -358,7 +358,28 @@ s32 func_80080418_8F3C8(s32 arg0, s32 arg1, s32 arg2)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080510_8F4C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008064C_8F5FC.s")
+void func_8008064C_8F5FC(u8 arg0) {
+	u8 specIndex;
+	s32 mult;
+
+	specIndex = alienInstances[arg0].specIndex;
+	mult = 1;
+	if (!(alienInstances[arg0].unk20 & 0x600)) {
+		mult = 4;
+	}
+	if (func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE) == 0) {
+		if (alienInstances[arg0].unk12 < alienSpecs[specIndex].unk40) {
+			alienInstances[arg0].unk12 += alienSpecs[specIndex].unk3E * mult;
+		} else {
+			alienInstances[arg0].unk12 -= alienSpecs[specIndex].unk3E * mult;
+		}
+	} else {
+		alienInstances[arg0].unk12 -= mult * alienSpecs[specIndex].unk3E;
+		if (alienInstances[arg0].unk12 < 0) {
+			alienInstances[arg0].unk12 = 0;
+		}
+	}
+}
 
 void func_8008076C_8F71C(u8 arg0) {
 	u8 specIdx = alienInstances[arg0].specIndex;
