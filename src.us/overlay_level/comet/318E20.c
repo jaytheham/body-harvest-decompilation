@@ -371,7 +371,9 @@ void func_802D657C_31A6CC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D8B18_31CC68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D9100_31D250.s")
+void func_802D9100_31D250(u8 arg0) {
+    func_8008735C_9630C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D9128_31D278.s")
 
