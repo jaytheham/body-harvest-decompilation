@@ -1051,4 +1051,11 @@ extern Unk80146212 D_80146212[];
 extern s32 D_802E4E84[];
 extern char D_802E7A30[];
 extern char D_802E7A40[];
+extern char D_802E7A60[];
+extern s16 D_802E7C30;
+extern s16 D_802E7C32;
+extern s16 D_802E7C34;
+extern s16 D_802E7C36;
+extern s32 D_802E4E80;
+extern BuildingInstance *D_80157FA4;
 #endif

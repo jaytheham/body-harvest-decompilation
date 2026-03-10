@@ -63,7 +63,73 @@ void func_802D4EE4_319034(s16 arg0) {
     }
 }
 
+#ifdef NON_MATCHING
+void func_802D4F4C_31909C(void) {
+    BuildingInstance *temp_t5;
+
+    osSyncPrintf(&D_802E7A60);
+    if (func_8000726C_7E6C(0x2D) == 0) {
+        D_802E7C30 = func_802D4DA8_318EF8(-0x3BF6, (s16) (func_800B84D0_C7480(-0x3BF6, 0x3900) >> 8), 0x37F5, 0x7D0, 0x1F4);
+    } else {
+        D_802E7C30 = -1;
+        func_8011C080_12B030(0xC3);
+        func_8011C080_12B030(0xCB);
+        func_8011C080_12B030(0xD0);
+        func_8011C080_12B030(0xC9);
+        func_8011C080_12B030(0xCA);
+    }
+    if (func_8000726C_7E6C(0x2E) == 0) {
+        D_802E7C32 = func_802D4DA8_318EF8(0x1000, (s16) (func_800B84D0_C7480(0x1000, 0x3900) >> 8), 0x37F5, 0x7D0, 0x1F4);
+    } else {
+        D_802E7C32 = -1;
+        func_8011C080_12B030(0xC4);
+        func_8011C080_12B030(0xCE);
+        func_8011C080_12B030(0xD1);
+        func_8011C080_12B030(0xCC);
+        func_8011C080_12B030(0xCD);
+    }
+    if (func_8000726C_7E6C(0x2F) == 0) {
+        D_802E7C34 = func_802D4DA8_318EF8(-0x3BF6, (s16) (func_800B84D0_C7480(-0x3BF6, -0x3900) >> 8), -0x3BF6, 0x7D0, 0x1F4);
+    } else {
+        D_802E7C34 = -1;
+        func_8011C080_12B030(0x43);
+        func_8011C080_12B030(0x3F);
+        func_8011C080_12B030(0x45);
+        func_8011C080_12B030(0x4D);
+        func_8011C080_12B030(0x44);
+    }
+    if (func_8000726C_7E6C(0x30) == 0) {
+        D_802E7C36 = func_802D4DA8_318EF8(0x1000, (s16) (func_800B84D0_C7480(0x1000, -0x3900) >> 8), -0x3BF6, 0x7D0, 0x1F4);
+    } else {
+        D_802E7C36 = -1;
+        func_8011C080_12B030(0x40);
+        func_8011C080_12B030(0x47);
+        func_8011C080_12B030(0x4E);
+        func_8011C080_12B030(0x46);
+        func_8011C080_12B030(0x48);
+    }
+    D_802E4E80 = 0;
+    if (func_8000726C_7E6C(0x29) != 0) {
+        func_8011C080_12B030(0xF6);
+    }
+    if (func_8000726C_7E6C(0x2A) != 0) {
+        func_8011C080_12B030(0x65);
+    }
+    if (func_8000726C_7E6C(0x2B) != 0) {
+        func_8011C080_12B030(0x5D);
+    }
+    if (func_8000726C_7E6C(0x2C) != 0) {
+        func_8011C080_12B030(0xAF);
+    }
+    if (D_80047F98 != 0) {
+        temp_t5 = &buildingInstances[func_80120634_12F5E4()];
+        D_80157FA4 = temp_t5;
+        temp_t5->yCoord = 0x7D00;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4F4C_31909C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D522C_31937C.s")
 
