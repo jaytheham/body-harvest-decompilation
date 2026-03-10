@@ -16,7 +16,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D59BC_319B0C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D5BFC_319D4C.s")
+void func_802D5BFC_319D4C(void) {
+    s32 *counter = &D_802E7C3C;
+    s32 val = D_802E7C3C - 1;
+
+    *counter = val;
+    if (val >= 0) {
+        return;
+    }
+    func_80018D7C_1997C(0xE0);
+    func_800074BC_80BC(func_802D5BFC_319D4C);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D5C40_319D90.s")
 
@@ -26,7 +36,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D5D48_319E98.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D5DA0_319EF0.s")
+void func_802D5DA0_319EF0(void) {
+    D_80047F9C = 5;
+    D_802E7C3C = 0;
+    func_80007410_8010(func_802D5BFC_319D4C);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D5DD8_319F28.s")
 
@@ -63,7 +77,11 @@ void func_802D657C_31A6CC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D6670_31A7C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D6770_31A8C0.s")
+void func_802D6770_31A8C0(void) {
+    D_802E7C40 = 0;
+    osSyncPrintf(D_802E7A7C);
+    func_80007410_8010(func_802D6670_31A7C0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D67A8_31A8F8.s")
 
@@ -173,13 +191,20 @@ void func_802DE7BC_32290C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFF04_324054.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFF84_3240D4.s")
+s8 func_802DFF84_3240D4(u8 arg0) {
+    return D_8014DD50[D_8014DD50[func_802DFF04_324054(arg0)].unkC].unkD;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFFC8_324118.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0018_324168.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E00D0_324220.s")
+s32 func_802E00D0_324220(s32 arg0, s32 arg1) {
+    if ((arg0 < -0x2C00) || (arg0 >= -0x1EFF) || (arg1 < -0xD00) || (arg1 >= 0xE01)) {
+        return 0;
+    }
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0104_324254.s")
 
