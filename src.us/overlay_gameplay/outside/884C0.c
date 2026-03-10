@@ -1611,7 +1611,6 @@ void func_8008AF58_99F08(u8 arg0)
 	}
 }
 
-#ifdef NON_MATCHING
 void func_8008B02C_99FDC(u8 arg0)
 {
   if (alienInstances[arg0].unk20 & 0x600)
@@ -1628,9 +1627,6 @@ void func_8008B02C_99FDC(u8 arg0)
 	func_8008AAFC_99AAC(arg0, alienSpecs[alienInstances[arg0].specIndex].unkC, 3);
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008B02C_99FDC.s")
-#endif
 
 void func_8008B108_9A0B8(u8 arg0) {
 	AlienInstance *inst = &alienInstances[arg0];
