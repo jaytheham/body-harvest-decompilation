@@ -53,7 +53,15 @@ s16 func_802D4DA8_318EF8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
     return temp_v0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4EE4_319034.s")
+void func_802D4EE4_319034(s16 arg0) {
+    s16 sp1E;
+
+    if (arg0 != -3) {
+        sp1E = D_80154318[arg0].unk14;
+        func_800C1E24_D0DD4(arg0, 0xB, 1);
+        func_800C1E24_D0DD4(sp1E, 0xB, 1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4F4C_31909C.s")
 
