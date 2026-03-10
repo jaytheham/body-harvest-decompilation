@@ -331,7 +331,7 @@ void func_8007DB98_165C58(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 				func_8007DAA8_165B68(arg0, arg2, NULL, arg3, 0x10);
 			}
 		} else if (((Unk80157600 *)arg0)->unk40C < 0x12) {
-			if ((arg1 == 0x11) && ((s32)D_80257A3A[vehicleInstances[0].unk1A].unk0 >> 2) >= (s32)vehicleInstances[0].unk1C) {
+			if ((arg1 == 0x11) && ((s32)vehicleSpecs[vehicleInstances[0].unk1A].hitPoints >> 2) >= (s32)vehicleInstances[0].unk1C) {
 				arg1 = 2;
 			}
 			func_8007DAA8_165B68(arg0, arg1, NULL, 0.0f, 0x10);

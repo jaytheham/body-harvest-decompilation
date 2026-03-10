@@ -557,10 +557,6 @@ extern s8 D_80223793[];
 // 224680 missions?
 
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
-// need to merge these:
-extern s32 D_80257A1C[][0x1C];
-extern s16 D_80257A38;
-extern Unk80257A3A D_80257A3A[];
 
 extern BuildingSpec buildingSpecs[0x20]; // 0x80259090
 extern Unk80259490 D_80259490; // vehicle instances?

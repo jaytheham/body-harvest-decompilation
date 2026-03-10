@@ -602,7 +602,7 @@ s32 func_800A2A88_B1A38(void) {
 	if (D_8013D5B4 == 0) {
 		return 0;
 	}
-	temp_v0 = D_80257A1C[D_80052B34->unk1A][0];
+	temp_v0 = vehicleSpecs[D_80052B34->unk1A].weapon1;
 	if (temp_v0 == 0) {
 		return 0;
 	}

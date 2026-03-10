@@ -62,7 +62,7 @@ typedef struct {
 	/* 0x10 */ u16 unk10;
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ u8 pad14[0x6];
-	/* 0x1A */ u8 unk1A; // specIndex?
+	/* 0x1A */ u8 unk1A; // specIndex
 	/* 0x1B */ u8 unk1B;
 	/* 0x1C */ s16 unk1C;
 	/* 0x1E */ u8 pad1E[2];
@@ -716,11 +716,6 @@ typedef struct {
 	/* 0x2E */ u8 unk2E;
 	/* 0x2F */ u8 pad2F[0x1];
 } Unk800E66A8; /* stride 0x30 */
-
-typedef struct {
-	/* 0x00 */ u16 unk0;
-	/* 0x02 */ u8 pad2[0x6E];
-} Unk80257A3A; /* size = 0x70 */
 
 typedef struct {
 	/* 0x00 */ u8 unk0;

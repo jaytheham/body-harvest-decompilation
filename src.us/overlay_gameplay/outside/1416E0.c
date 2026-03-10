@@ -47,7 +47,7 @@ void func_80132740_1416F0(Unk80160080 *arg0) {
 	arg0->unk6C = 1;
 	arg0->unk30 = (f32) sp1C->unk0;
 	{
-		s16 temp_v0 = (&D_80257A38)[D_80052B34->unk1A * 0x38];
+		s16 temp_v0 = vehicleSpecs[D_80052B34->unk1A].unk38;
 		arg0->unk34 = (f32) (temp_v0 - (temp_v0 >> 2)) + (f32) sp1C->unk2;
 	}
 	arg0->unk38 = (f32) sp1C->unk4;
@@ -265,7 +265,7 @@ void func_80133A54_142A04(Unk80160080 *arg0) {
 	arg0->unk56 = 0x73;
 	sp40 = (f32) (vehicleSpecs[D_80052B34->unk1A].unkC * 2);
 	sp44 = (f32) ((f64) sp34->unk0 - (((f64) (f32) coss((u16) arg0->unk58) / 32768.0) * (f64) sp40));
-	sp48 = (f32) ((&D_80257A38)[D_80052B34->unk1A * 0x38] + sp34->unk2 + 0x32);
+	sp48 = (f32) (vehicleSpecs[D_80052B34->unk1A].unk38 + sp34->unk2 + 0x32);
 	sp28 = (f64) sp40;
 	sp4C = (f32) ((f64) sp34->unk4 - (((f64) (f32) sins((u16) arg0->unk58) / 32768.0) * sp28));
 	func_801336CC_14267C(arg0, (Vec3f *) &sp44);
