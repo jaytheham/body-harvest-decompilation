@@ -677,6 +677,9 @@ class GlobalAsmBlock:
             self.add_sized(2*len(line.split(',')), real_line)
         elif line.startswith('.size'):
             pass
+        elif line.startswith('nonmatching '):
+            # Size hint directive used by decomp tooling — no-op in asm_processor and assembler
+            real_line = '# ' + real_line
         elif line.startswith('.'):
             # .macro, ...
             self.fail("asm directive not supported", real_line)
