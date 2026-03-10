@@ -295,6 +295,7 @@ void func_80091470_A0420(u8);
 void func_8009170C_A06BC(u8);
 s32 func_8009179C_A074C(u8, s32);
 void func_800918E0_A0890(u8);
+void func_80084904_938B4(u8);
 s32 func_80084E54_93E04(AlienInstance *, AlienInstance *);
 s32 func_80084F00_93EB0(VehicleInstance *, AlienInstance *);
 s32 func_8007E500_8D4B0(AlienInstance *, AlienSpec *, AlienInstance *, AlienSpec *);

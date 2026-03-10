@@ -780,7 +780,28 @@ s32 func_80082E38_91DE8(u8 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800844D0_93480.s")
 
+// https://decomp.me/scratch/dDCXt
+#ifdef NON_MATCHING
+void func_800847D0_93780(u8 arg0) {
+	s32 specIdx = alienInstances[arg0].specIndex;
+	AlienSpec *spec = &alienSpecs[specIdx];
+	s16 rnd;
+
+	if (spec->unk54 & 0x1000) {
+		func_80084904_938B4(arg0);
+		return;
+	}
+
+	rnd = (func_800038E0_44E0() >> 9) - 0x20;
+	alienInstances[arg0].unk14 = alienInstances[arg0].unk0;
+	alienInstances[arg0].unk18 = alienInstances[arg0].unk4;
+	alienInstances[arg0].unk34 = 0x2000 / spec->unk42 + (-rnd < rnd ? rnd : -rnd);
+	alienInstances[arg0].unk47 |= 1;
+	alienInstances[arg0].unk2A += (rnd < 0 ? -1 : 1) << 13;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800847D0_93780.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084904_938B4.s")
 
