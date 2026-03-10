@@ -1436,26 +1436,25 @@ void func_80087F08_96EB8(void)
 
 }
 
-// https://decomp.me/scratch/sGrqh
-#ifdef NON_MATCHING
 void func_80088000_96FB0(s16 arg0)
 {
-	s32 i;
-  for ( i = 0; i != 0xFF; i++)
+  s32 i;
+  for (i = 0; i != 0xFF; i++)
   {
-	if (arg0 != i) {
-	 if (alienInstances[i].specIndex == 1)
-	 { func_80079910_888C0(i); }
-	 else if (alienInstances[i].specIndex != 0)
-	 {
-	   func_80088760_97710(&alienInstances[i]);
-	 } 
+	if (arg0 == i)
+	{
+		continue;
 	}
+	if (alienInstances[i].specIndex == 1)
+	{
+		func_80079910_888C0(i);
+	}
+	else if (alienInstances[i].specIndex != 0)
+	{
+		func_80088760_97710(&alienInstances[i]);
+	}  
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088000_96FB0.s")
-#endif
 
 s32 func_800880B8_97068(void)
 {
