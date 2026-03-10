@@ -44,7 +44,10 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D63E0_31A530.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D6428_31A578.s")
+void func_802D6428_31A578(void) {
+    func_800073B8_7FB8(0xA);
+    func_800073B8_7FB8(0xB);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D6458_31A5A8.s")
 
