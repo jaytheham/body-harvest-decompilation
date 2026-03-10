@@ -2,7 +2,35 @@
 #include "common.h"
 
 
+#ifdef NON_MATCHING
+void func_802D4CD0_318E20(s32 arg0, void *arg1) {
+    if (arg0 < 0x14) {
+        ((void (*)(s32))D_802E4E84[arg0])(arg0);
+        return;
+    }
+
+    switch (arg0) {
+    case 0x16:
+        func_802DFE68_323FB8(arg1, arg0);
+        return;
+    case 0x15:
+        osSyncPrintf(D_802E7A30);
+        func_800EFEB4_FEE64((void *)&func_802D67A8_31A8F8, 0x24, 0);
+        return;
+    case 0x45:
+        func_802D7548_31B698(arg1, arg0);
+        return;
+    case 0x44:
+        func_80007690_8290();
+        return;
+    default:
+        osSyncPrintf(D_802E7A40);
+        return;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4CD0_318E20.s")
+#endif
 
 s16 func_802D4DA8_318EF8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
     s16 temp_v0;
@@ -277,3 +305,4 @@ void func_802DE7BC_32290C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E4ACC_328C1C.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E4CB4_328E04.s")
+
