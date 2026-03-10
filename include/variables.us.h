@@ -1056,4 +1056,7 @@ extern s16 D_8014D182;
 extern s16 D_802DE464;
 extern s16 D_80052554;
 extern Unk80146212 D_80146212[];
+extern s32 D_802E4E84[];
+extern char D_802E7A30[];
+extern char D_802E7A40[];
 #endif
