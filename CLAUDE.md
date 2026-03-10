@@ -25,11 +25,11 @@ Use these agents for all reclamation work — do not run tools manually.
 
 Skill `bh-reclaim` orchestrates the full cycle.
 
-## Key References
+## Key Docs
 
-- @WORKFLOW.md — end-to-end reclamation workflow
-- @DecompHints.md — IDO/m2c fix patterns and parameter type rules
-- @ExampleFixes.md — concrete worked examples of common decompilation fixes
+- `WORKFLOW.md` — end-to-end reclamation workflow
+- `DecompHints.md` — IDO/m2c parameter type rules, regalloc patterns
+- `ExampleFixes.md` — worked examples of common decompilation fixes
 
 ## Commit Convention
 
