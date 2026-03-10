@@ -144,7 +144,7 @@ void func_8008F0BC_9E06C(u8, s32);
 void func_8008F6C0_9E670(u8);
 void func_80081AD4_90A84(u8, u8);
 s16 func_80085A9C_94A4C(s16, s16, s32, s32, s16);
-void func_80085B14_94AC4(u8, s16, s16, s16, s16);
+s32 func_80085B14_94AC4(u8, s16, s32, s16, s16);
 s16 func_80085C50_94C00(s16, s16, s16, s16, s16, s16);
 void func_80085CE0_94C90(u8, s16, s16, s16, s16);
 void func_80089EB4_98E64(u8, s32, s32, s32, s32);

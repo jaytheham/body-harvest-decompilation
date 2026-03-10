@@ -1026,108 +1026,49 @@ s32 func_800857D0_94780(u8 arg0) {
 	return 0;
 }
 
-// https://decomp.me/scratch/L4wSj
-#ifdef NON_MATCHING
 s32 func_80085838_947E8(u8 arg0)
 {
-  s32 neg_dx;
-  s32 neg_dz;
-  s32 abs_dx;
-  s32 abs_dz;
-  s32 max;
-  s32 dx = D_80052B34->unk0 - alienInstances[arg0].unk0;
-  s32 dz = D_80052B34->unk4 - alienInstances[arg0].unk4;
-	
-  neg_dx = -dx;
-  if (neg_dx < dx) abs_dx = dx;
-  else             abs_dx = neg_dx;
-  
-  neg_dz = -dz;
-  if (neg_dz < dz) abs_dz = dz;
-  else             abs_dz = neg_dz;    
-  
-  if (abs_dz < abs_dx)// a1 < v1
-  {
-	  // abs_dx=neg_dx;
-	if (neg_dx < dx)//a3 < v0
-	{
-		max = neg_dx;
-		
-	}
-	else
-	{
-		max = abs_dx;
-	}
-	  
-  }
-  else
-  {
-	if (abs_dx = neg_dz, neg_dz < dz)// a0 < a2
-	{
-	  abs_dx = dz;     
-	} else {
-	  max = neg_dz;
-	}
-	  max = abs_dx;
-  }
-	dx = max;
-	xx:
-  if (dx < 0x1800)
-  {
-	return 1;
-  }
-  return 0;
-}
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085838_947E8.s")
-#endif
-
-// https://decomp.me/scratch/yhUl1
-#ifdef NON_MATCHING
-s32 func_80085900_948B0(u8 arg0, s32 arg1) {
-	s32 neg_dx, neg_dz, abs_dx, abs_dz, max;
+	s32 abs_dx;
+	s32 abs_dz;
+	s32 max;
 	s32 dx = D_80052B34->unk0 - alienInstances[arg0].unk0;
 	s32 dz = D_80052B34->unk4 - alienInstances[arg0].unk4;
 
-	neg_dx = -dx;
-	if (neg_dx < dx) {
-		abs_dx = dx;
-	} else {
-		abs_dx = neg_dx;
-	}
+	abs_dx = -dx < dx ? dx : -dx;
+	abs_dz = -dz < dz ? dz : -dz;
+	max = abs_dz < abs_dx
+		? -dx < dx ? dx : -dx
+		:-dz < dz ? dz : -dz;
 
-	neg_dz = -dz;
-	if (neg_dz < dz) {
-		abs_dz = dz;
-	} else {
-		abs_dz = neg_dz;
+	if (max < 0x1800)
+	{
+		return 1;
 	}
+	return 0;
+}
 
-	if (abs_dz < abs_dx) {
-		max = neg_dx;
-		if (neg_dx < dx) {
-		} else {
-			goto block_12;
-		}
-	} else {
-		max = neg_dz;
-		if (neg_dz < dz) {
-			max = dz;
-		}
-	block_12:
-		dx = max;
-	}
+s32 func_80085900_948B0(u8 arg0, s32 arg1)
+{
+	s32 abs_dx;
+	s32 abs_dz;
+	s32 max;
+	s32 dx = D_80052B34->unk0 - alienInstances[arg0].unk0;
+	s32 dz = D_80052B34->unk4 - alienInstances[arg0].unk4;
 
-	if (arg1 < dx) {
+	abs_dx = -dx < dx ? dx : -dx;
+	abs_dz = -dz < dz ? dz : -dz;
+	max = abs_dz < abs_dx
+		? -dx < dx ? dx : -dx
+		: -dz < dz ? dz : -dz;
+
+	if (arg1 < max)
+	{
 		alienInstances[arg0].unk20 |= 0x08000100;
 		return 1;
 	}
 	alienInstances[arg0].unk20 &= ~0x100;
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085900_948B0.s")
-#endif
 
 s32 func_800859F4_949A4(u8 arg0) {
 	AlienInstance *inst = &alienInstances[arg0];
@@ -1162,7 +1103,39 @@ s16 func_80085A9C_94A4C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s16 arg4)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085A9C_94A4C.s")
 #endif
 
+// https://decomp.me/scratch/K2a1e
+#ifdef NON_MATCHING
+s32 func_80085B14_94AC4(u8 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4) {
+	u8 sp47;
+	s16 sp42;
+	s16 temp_t1;
+	s32 temp_a0;
+	s32 temp_v1;
+	s32 var_v0;
+	AlienInstance *temp_ptr;
+	s32 temp_dx;
+	s32 temp_dy;
+
+	temp_ptr = &alienInstances[arg0];
+	sp47 = temp_ptr->specIndex;
+	temp_dx = arg3 - temp_ptr->unk0;
+	temp_dy = arg4 - temp_ptr->unk4;
+	temp_t1 = func_80003824_4424((f32)temp_dx, (f32)temp_dy) - temp_ptr->unk6;
+	sp42 = temp_t1;
+
+	(&D_8014DD50[arg1])->unk6 = func_80085A9C_94A4C((&D_8014DD50[arg1])->unk6, (s16)(temp_t1 * -1), arg2, -arg2, alienSpecs[sp47].unk42);
+
+	temp_v1 = (&D_8014DD50[arg1])->unk6 + sp42;
+	temp_a0 = -temp_v1;
+	var_v0 = (temp_a0 < temp_v1) ? temp_v1 : temp_a0;
+	if ((alienSpecs[sp47].unk42 * 2) < var_v0) {
+		return 1;
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085B14_94AC4.s")
+#endif
 
 s16 func_80085C50_94C00(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5) {
 	s16 temp_v0 = arg3 - arg0;
