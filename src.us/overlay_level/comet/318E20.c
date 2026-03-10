@@ -131,7 +131,148 @@ void func_802D4F4C_31909C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4F4C_31909C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802D522C_31937C(s16 arg0) {
+    Unk80052B40_fp *temp_fp;
+    s16 spBE;
+    s16 spB8;
+    s16 spB4;
+    s16 spB0;
+    s16 var_s1;
+    s16 var_s1_2;
+    s16 var_s4;
+    s16 var_s5;
+    s32 sp90;
+    s32 sp8C;
+    s32 sp88;
+    s32 sp84;
+    s16 temp_a1;
+    s16 temp_a3;
+    s32 temp_v0;
+    s32 var_s6;
+    s8 temp_s2;
+    u32 temp_hi;
+    u32 temp_v1_2;
+    f64 temp_f20;
+    Gfx *temp_v1;
+    Gfx *temp_v1_3;
+    Gfx *temp_v1_4;
+    Gfx *temp_v1_5;
+    s32 temp_t3;
+    s32 temp_t4;
+    Vtx *temp_t5;
+
+    temp_fp = &D_802E4ED8[arg0];
+    D_80052B40.unk0 = temp_fp->unk0 / 4;
+    D_80052B40.unk2 = temp_fp->unk4 / 4;
+    D_80052B40.unk4 = temp_fp->unk8 / 4;
+    D_80052B50.unk0 = 0x40;
+    D_80052B50.unk2 = 0x40;
+    D_80052B50.unk4 = 0x40;
+    func_800039D0_45D0(&D_80052B40, &D_80052B50, &D_80052B50, D_8005BB38);
+    temp_v1 = D_8005BB2C;
+    D_8005BB2C = temp_v1 + 8;
+    temp_v1->unk0 = 0x01020040;
+    temp_v1->unk4 = (s32)(D_8005BB38 & 0x1FFFFFFF);
+    temp_a3 = temp_fp->unk8;
+    var_s4 = 0;
+    D_8005BB38 += 0x40;
+    var_s5 = 0;
+    temp_a1 = temp_fp->unk4;
+    if (temp_a3 == 0) {
+        sp90 = -temp_a1 / 2;
+        var_s5 = *(s16*)(&D_80052B40.unk2);
+    } else {
+        sp90 = -temp_a1 / 2;
+        var_s4 = *(s16*)(&D_80052B40.unk2);
+    }
+    temp_hi = (u32)D_80052A8C % 10U;
+    var_s6 = ((D_80052A8C * 0x9C4) & 0xFFFF);
+    if (temp_hi == ((u32)D_80052A8C % 20U)) {
+        spB4 = (s16)temp_hi;
+    } else {
+        spB4 = 0xA - temp_hi;
+    }
+    spBE = 0;
+    temp_f20 = D_802E7B00;
+    sp84 = temp_a1 / 4;
+    spB8 = 0x64;
+    spB0 = temp_a3;
+    do {
+        var_s1 = 0;
+        sp8C = spB8 + spB4 + 0xA;
+        sp88 = spB8 - spB4 - 0xA;
+        do {
+            temp_s2 = (u8)(s32)(temp_f20 - (((f64)(f32)sins(var_s6 & 0xFFFF) / 32768.0) * 100.0));
+            temp_v1_2 = (u32)((((f64)(f32)coss(var_s6 & 0xFFFF) / 32768.0) * 100.0) + temp_f20);
+            D_8005BB34->unk0 = var_s4;
+            var_s6 = (var_s6 + 0x7D0) & 0xFFFF;
+            D_8005BB34->unk2 = (s16)sp8C;
+            D_8005BB34->unk4 = var_s5;
+            D_8005BB34->unk6 = 0;
+            D_8005BB34->unk8 = 0;
+            D_8005BB34->unkA = 0;
+            D_8005BB34->unkC = temp_s2;
+            D_8005BB34->unkD = 0x28;
+            D_8005BB34->unkE = (s8)temp_v1_2;
+            D_8005BB34->unkF = 0x64;
+            temp_t5 = D_8005BB34 + 0x10;
+            D_8005BB34 = temp_t5;
+            temp_t5->unk0 = var_s4;
+            temp_t5->unk2 = (s16)sp88;
+            temp_t5->unk4 = var_s5;
+            temp_t5->unk6 = 0;
+            temp_t5->unk8 = 0;
+            temp_t5->unkA = 0;
+            temp_t5->unkC = temp_s2;
+            temp_t5->unkD = 0x28;
+            temp_t5->unkE = (s8)temp_v1_2;
+            temp_t5->unkF = 0x64;
+            D_8005BB34 += 0x10;
+            if (spB0 == 0) {
+                var_s5 += sp84;
+            } else {
+                var_s4 += sp84;
+            }
+            if (((u32)D_80052A8C % (u32)((func_800038E0_44E0() % 40) + 0x1E)) == 0) {
+                func_800C541C_D43CC(temp_fp->unk0 + var_s4, temp_fp->unk4 + spB8,
+                    temp_fp->unk8 + var_s5, 0, 0x7F, 0, 0x28, 0xFF, 0x14, 0x14,
+                    temp_s2, 0x28, temp_v1_2 & 0xFF);
+            }
+            var_s1 += 1;
+        } while (var_s1 < 5);
+        spB8 += 0x55;
+        if (spB0 == 0) {
+            var_s5 = *(s16*)(&D_80052B40.unk2);
+        } else {
+            var_s4 = *(s16*)(&D_80052B40.unk2);
+        }
+        temp_v1_3 = D_8005BB2C;
+        D_8005BB2C = temp_v1_3 + 8;
+        temp_v1_3->unk0 = 0x0400289F;
+        var_s6 = (var_s6 + 0x1D4C) & 0xFFFF;
+        var_s1_2 = 0;
+        temp_v1_3->unk4 = (s32)(D_8005BB34 - 0xA0);
+        do {
+            temp_v1_4 = D_8005BB2C;
+            temp_v0 = var_s1_2 * 2;
+            temp_t3 = (temp_v0 + 2) & 0xFF;
+            D_8005BB2C = temp_v1_4 + 8;
+            temp_t4 = (temp_v0 + 4) & 0xFF;
+            temp_v1_4->unk4 = (s32)(((temp_v0 & 0xFF) << 0x10) | (temp_t3 << 8) | temp_t4);
+            temp_v1_4->unk0 = 0xBF000000;
+            temp_v1_5 = D_8005BB2C;
+            var_s1_2 += 2;
+            D_8005BB2C = temp_v1_5 + 8;
+            temp_v1_5->unk4 = (s32)((temp_t3 << 0x10) | (temp_t4 << 8) | ((temp_v0 + 6) & 0xFF));
+            temp_v1_5->unk0 = 0xBF000000;
+        } while (var_s1_2 < 8);
+        spBE += 1;
+    } while (spBE < 3);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D522C_31937C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D58BC_319A0C.s")
 
