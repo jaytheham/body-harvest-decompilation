@@ -2872,6 +2872,8 @@ void func_802DC1B8_194CC8(s32 arg0, s32 arg1) {
 
 
 
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC2E4_194DF4.s")
+
 void func_802DC500_195010(u8 arg0) {
 	s16 sp9E;
 	s32 sp94;
