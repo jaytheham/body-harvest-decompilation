@@ -172,8 +172,8 @@ void func_802D522C_31937C(s16 arg0) {
     func_800039D0_45D0(&D_80052B40, &D_80052B50, &D_80052B50, D_8005BB38);
     temp_v1 = D_8005BB2C;
     D_8005BB2C = temp_v1 + 8;
-    temp_v1->unk0 = 0x01020040;
-    temp_v1->unk4 = (s32)(D_8005BB38 & 0x1FFFFFFF);
+    temp_v1->words.w0 = 0x01020040;
+    temp_v1->words.w1 = (s32)(D_8005BB38 & 0x1FFFFFFF);
     temp_a3 = temp_fp->unk8;
     var_s4 = 0;
     D_8005BB38 += 0x40;
@@ -205,30 +205,30 @@ void func_802D522C_31937C(s16 arg0) {
         do {
             temp_s2 = (u8)(s32)(temp_f20 - (((f64)(f32)sins(var_s6 & 0xFFFF) / 32768.0) * 100.0));
             temp_v1_2 = (u32)((((f64)(f32)coss(var_s6 & 0xFFFF) / 32768.0) * 100.0) + temp_f20);
-            D_8005BB34->unk0 = var_s4;
+            D_8005BB34->v.ob[0] = var_s4;
             var_s6 = (var_s6 + 0x7D0) & 0xFFFF;
-            D_8005BB34->unk2 = (s16)sp8C;
-            D_8005BB34->unk4 = var_s5;
-            D_8005BB34->unk6 = 0;
-            D_8005BB34->unk8 = 0;
-            D_8005BB34->unkA = 0;
-            D_8005BB34->unkC = temp_s2;
-            D_8005BB34->unkD = 0x28;
-            D_8005BB34->unkE = (s8)temp_v1_2;
-            D_8005BB34->unkF = 0x64;
-            temp_t5 = D_8005BB34 + 0x10;
+            D_8005BB34->v.ob[1] = (s16)sp8C;
+            D_8005BB34->v.ob[2] = var_s5;
+            D_8005BB34->v.flag = 0;
+            D_8005BB34->v.tc[0] = 0;
+            D_8005BB34->v.tc[1] = 0;
+            D_8005BB34->v.cn[0] = temp_s2;
+            D_8005BB34->v.cn[1] = 0x28;
+            D_8005BB34->v.cn[2] = (u8)temp_v1_2;
+            D_8005BB34->v.cn[3] = 0x64;
+            temp_t5 = D_8005BB34 + 1;
             D_8005BB34 = temp_t5;
-            temp_t5->unk0 = var_s4;
-            temp_t5->unk2 = (s16)sp88;
-            temp_t5->unk4 = var_s5;
-            temp_t5->unk6 = 0;
-            temp_t5->unk8 = 0;
-            temp_t5->unkA = 0;
-            temp_t5->unkC = temp_s2;
-            temp_t5->unkD = 0x28;
-            temp_t5->unkE = (s8)temp_v1_2;
-            temp_t5->unkF = 0x64;
-            D_8005BB34 += 0x10;
+            temp_t5->v.ob[0] = var_s4;
+            temp_t5->v.ob[1] = (s16)sp88;
+            temp_t5->v.ob[2] = var_s5;
+            temp_t5->v.flag = 0;
+            temp_t5->v.tc[0] = 0;
+            temp_t5->v.tc[1] = 0;
+            temp_t5->v.cn[0] = temp_s2;
+            temp_t5->v.cn[1] = 0x28;
+            temp_t5->v.cn[2] = (u8)temp_v1_2;
+            temp_t5->v.cn[3] = 0x64;
+            D_8005BB34 += 1;
             if (spB0 == 0) {
                 var_s5 += sp84;
             } else {
@@ -248,24 +248,24 @@ void func_802D522C_31937C(s16 arg0) {
             var_s4 = *(s16*)(&D_80052B40.unk2);
         }
         temp_v1_3 = D_8005BB2C;
-        D_8005BB2C = temp_v1_3 + 8;
-        temp_v1_3->unk0 = 0x0400289F;
+        D_8005BB2C = temp_v1_3 + 1;
+        temp_v1_3->words.w0 = 0x0400289F;
         var_s6 = (var_s6 + 0x1D4C) & 0xFFFF;
         var_s1_2 = 0;
-        temp_v1_3->unk4 = (s32)(D_8005BB34 - 0xA0);
+        temp_v1_3->words.w1 = (s32)(D_8005BB34 - 0xA0);
         do {
             temp_v1_4 = D_8005BB2C;
             temp_v0 = var_s1_2 * 2;
             temp_t3 = (temp_v0 + 2) & 0xFF;
-            D_8005BB2C = temp_v1_4 + 8;
+            D_8005BB2C = temp_v1_4 + 1;
             temp_t4 = (temp_v0 + 4) & 0xFF;
-            temp_v1_4->unk4 = (s32)(((temp_v0 & 0xFF) << 0x10) | (temp_t3 << 8) | temp_t4);
-            temp_v1_4->unk0 = 0xBF000000;
+            temp_v1_4->words.w1 = (s32)(((temp_v0 & 0xFF) << 0x10) | (temp_t3 << 8) | temp_t4);
+            temp_v1_4->words.w0 = 0xBF000000;
             temp_v1_5 = D_8005BB2C;
             var_s1_2 += 2;
-            D_8005BB2C = temp_v1_5 + 8;
-            temp_v1_5->unk4 = (s32)((temp_t3 << 0x10) | (temp_t4 << 8) | ((temp_v0 + 6) & 0xFF));
-            temp_v1_5->unk0 = 0xBF000000;
+            D_8005BB2C = temp_v1_5 + 1;
+            temp_v1_5->words.w1 = (s32)((temp_t3 << 0x10) | (temp_t4 << 8) | ((temp_v0 + 6) & 0xFF));
+            temp_v1_5->words.w0 = 0xBF000000;
         } while (var_s1_2 < 8);
         spBE += 1;
     } while (spBE < 3);
@@ -274,7 +274,34 @@ void func_802D522C_31937C(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D522C_31937C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802D58BC_319A0C(void) {
+    s16 i;
+    Gfx *dl;
+
+    dl = D_8005BB2C;
+    D_8005BB2C = dl + 1;
+    dl->words.w0 = 0xE7000000;
+    dl->words.w1 = 0;
+    dl = D_8005BB2C;
+    D_8005BB2C = dl + 1;
+    dl->words.w0 = 0xB6000000;
+    dl->words.w1 = 0x2000;
+    for (i = 0; i < 9; i++) {
+        if (D_802E4ED8[i].unkA == 1) {
+            if (func_800B960C_C85BC(D_802E4ED8[i].unk0, D_802E4ED8[i].unk4, 0x190, 0x190) != 0) {
+                func_802D522C_31937C(i);
+            }
+        }
+    }
+    dl = D_8005BB2C;
+    D_8005BB2C = dl + 1;
+    dl->words.w0 = 0xB7000000;
+    dl->words.w1 = 0x2000;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D58BC_319A0C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D59BC_319B0C.s")
 
