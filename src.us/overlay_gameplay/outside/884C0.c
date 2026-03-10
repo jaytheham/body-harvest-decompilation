@@ -42,7 +42,44 @@ s16 func_80079B74_88B24(Unk8014DD50 *arg0) {
 	return idx;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80079C8C_88C3C.s")
+s32 func_80079C8C_88C3C(s32 arg0) {
+	u8 spec;
+	s16 idx;
+	spec = alienInstances[arg0].specIndex;
+
+	D_8014D300 = 0;
+	if (D_8014ECD0 == 0x78) {
+		alienInstances[arg0].unkC = -1;
+		osSyncPrintf(&D_801417C0, &alienInstances[arg0]);
+		return 0;
+	}
+
+	idx = D_8014EC50[D_8014ECD0];
+	D_8014ECD0++;
+	D_8014DD50[idx].unkE = 0;
+	D_8014DD50[idx].unk0 = 0;
+	D_8014DD50[idx].unk2 = 0;
+	D_8014DD50[idx].unk4 = 0;
+	D_8014DD50[idx].unk6 = 0;
+	D_8014DD50[idx].unk8 = 0;
+	D_8014DD50[idx].unkA = 0;
+	D_8014DD50[idx].unkD = -1;
+
+	if (alienSpecs[spec].unk44 != 0) {
+		D_8014DD50[idx].unkC = func_80079B74_88B24((Unk8014DD50 *)alienSpecs[spec].unk44);
+	} else {
+		D_8014DD50[idx].unkC = -1;
+	}
+
+	if (D_8014D300 != 0) {
+		alienInstances[arg0].unkC = -1;
+		func_80079DC0_88D70(idx);
+		return 0;
+	}
+
+	alienInstances[arg0].unkC = idx;
+	return 1;
+}
 
 void func_80079DC0_88D70(s32 arg0)
 {

@@ -16,23 +16,19 @@ use an explicit pointer plus temp byte value in C:
 
 This shape can preserve both branch delay-slot pointer arithmetic and the `lbu` before index increment/store ordering.
 
-### Delay-slot pointer setup
+### Frame too large: phantom stack slot from named pointer local
 
-For patterns like:
+If the frame is 8 bytes too large and all register saves are uniformly shifted by 4 bytes (but no extra instruction writes to that phantom slot), a named local pointer variable like `AlienInstance *inst = &alienInstances[arg0]` is causing IDO to allocate a 4-byte stack home. The fix is to eliminate the named pointer and use the array access `alienInstances[arg0].field` directly throughout instead.
 
-- compare index against sentinel
-- branch delay slot does `addu baseReg, baseReg, index`
-- then `lbu` from that pointer
-- then increment/store index
+Example:
+```c
+// Wrong: inst gets a phantom stack slot → frame 0x30
+AlienInstance *inst = &alienInstances[arg0];
+inst->unkC = -1;
 
-use an explicit pointer plus temp byte value in C:
-
-`u8* ptr = &D_xxx[index];`
-`u8 value = *ptr;`
-`D_index = index + 1;`
-`return value;`
-
-This shape can preserve both branch delay-slot pointer arithmetic and the `lbu` before index increment/store ordering.
+// Right: no pointer variable, direct access
+alienInstances[arg0].unkC = -1;
+```
 
 ### Struct array: `multu` + early arg computation order
 
