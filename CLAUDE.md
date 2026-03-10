@@ -27,11 +27,9 @@ Skill `bh-reclaim` orchestrates the full cycle.
 
 ## Key References
 
-- @~/harvester-home/harvester-internal/docs/workflow.md — full reclamation workflow
-- @~/harvester-home/harvester-internal/docs/fix-patterns.md — IDO/m2c fix patterns
-- @~/harvester-home/harvester-internal/state/STATE.md — current active zones
-- @~/harvester-home/harvester-internal/directives/rank-status.json — match count and rank
-- @~/harvester-home/harvester-internal/progress-log.md — session log
+- @WORKFLOW.md — end-to-end reclamation workflow
+- @DecompHints.md — IDO/m2c fix patterns and parameter type rules
+- @ExampleFixes.md — concrete worked examples of common decompilation fixes
 
 ## Commit Convention
 
