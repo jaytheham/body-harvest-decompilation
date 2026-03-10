@@ -2100,7 +2100,7 @@ void func_802D9C60_192770(u8 arg0) {
 		sp56 = (s16) temp_t1;
 		sp54 = (s16) sp3C->unkC;
 		sp52 = (s16) sp38->unkC;
-		temp_s0 = func_8008916C_9811C(temp_t6, temp_a1, sp38, D_8014DD50);
+		temp_s0 = func_8008916C_9811C(temp_t6, temp_a1);
 		func_80128428_1373D8(temp_s1, sp40->unk0, sp40->unk2, sp40->unk4, (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
 		func_800C80F0_D70A0(((-(s32) sp40->unk6 - temp_s1->unk6) + 0x4000) & 0xFFFF, 0, 0, func_800C7924_D68D4((s16)sp6C, (s16)sp68, (s16)sp64, 0x40, -8, (&D_8025668C)[temp_s1->specIndex * 0x34], temp_s0, 1));
 		func_800E093C_EF8EC((s16)sp6C, (s16)sp68, (s16)sp64, 0);
