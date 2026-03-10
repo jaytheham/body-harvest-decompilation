@@ -1120,4 +1120,15 @@ extern u8 D_802DE25C[];
 extern u8 D_802DE268[];
 extern u8 D_802DE274[];
 
+extern u8 D_800481B2;
+extern u8 D_80157F95;
+extern s32 D_802566C8;
+extern s16 D_80157F98;
+extern s16 D_80157F9A;
+extern s16 D_80157F76;
+extern s16 D_80157FAC;
+extern s16 D_80157FAE;
+extern s16 D_80157FB0;
+extern s16 D_800481C4;
+
 #endif

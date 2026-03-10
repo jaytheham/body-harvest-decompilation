@@ -329,14 +329,14 @@ void func_802D56E8_18E1F8(void) {
 }
 
 void func_802D5720_18E230(void) {
-	extern void func_802D64D0_18EFE0(void);
+	extern s32 func_802D64D0_18EFE0(void);
 	D_80157F94 = 0xFF;
 	func_800EFEB4_FEE64(func_802D64D0_18EFE0, 6, 1);
 	func_80013468_14068(2);
 }
 
 void func_802D5760_18E270(void) {
-	extern void func_802D6904_18F414(void);
+	extern s32 func_802D6904_18F414(void);
 	D_80157F94 = 0xFF;
 	func_800EFEB4_FEE64(func_802D6904_18F414, 7, 1);
 	func_80013468_14068(3);
@@ -548,18 +548,18 @@ s32 func_802D64D0_18EFE0(void) {
 		D_80052554 = 0x400;
 		D_80157F98 = func_800CDB40_DCAF0(0x4AF0, 0x3B6, -0x664);
 		D_80157F9A = func_800CDB40_DCAF0(0x4AFC, 0x3B6, -0x69C);
-		func_800072CC_7ECC(0, 0x2A);
+		func_800072CC_7ECC((u64)0x2A);
 		D_80157F8C++;
 		v0 = func_8007956C_8851C(0x12);
 		alien = &alienInstances[v0];
 		building = buildingInstances;
 		alien->unkE = alien->unkE | 0x100;
-		alien->unk0 = building->unk918 + 0x80;
-		alien->unk14 = building->unk918 + 0x600;
+		alien->unk0 = buildingInstances[97].xCoord + 0x80;
+		alien->unk14 = buildingInstances[97].xCoord + 0x600;
 		alien->unkE = alien->unkE & 0xF7FFFFFF;
 		alien->unk24 = 2;
-		alien->unk4 = building->unk91C;
-		alien->unk18 = building->unk91C;
+		alien->unk4 = buildingInstances[97].zCoord;
+		alien->unk18 = buildingInstances[97].zCoord;
 		func_8007A198_89148(v0);
 		D_80157F94 = (s16) v0;
 		break;
@@ -610,8 +610,8 @@ s32 func_802D64D0_18EFE0(void) {
 		}
 		break;
 	case 8:
-		func_800072CC_7ECC(0, 0x28);
-		func_800073B8_7FB8(0, 0x2A);
+		func_800072CC_7ECC((u64)0x28);
+		func_800073B8_7FB8((u64)0x2A);
 		D_80159DDF = 0xFF;
 		func_80079910_888C0(D_80157F94);
 		return 1;
@@ -647,7 +647,7 @@ s32 func_802D6904_18F414(void) {
 			alienIdx = D_80157F94;
 			alien = &alienInstances[alienIdx];
 			alien->unk6 = alien->unkE;
-			idx5 = alien->unk1A;
+			idx5 = alien->specIndex;
 			((void (*)(u8)) *(s32 *) ((u8 *) &D_802566C8 + ((idx5 * 4 - idx5) * 4 + idx5) * 8))((u8) alienIdx);
 		} else {
 			D_80157F94 = 0xFF;
