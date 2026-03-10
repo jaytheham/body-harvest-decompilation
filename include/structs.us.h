@@ -184,7 +184,7 @@ typedef struct {
 	/* 0x0E */ u8 padE[0x8];
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 pad17;
-	/* 0x18 */ s32 unk18;
+	/* 0x18 */ s32 unk18; // Ptr to name
 	/* 0x1C */ u8 pad1C[0xA];
 
 	/* 0x26 */ s16 unk26;

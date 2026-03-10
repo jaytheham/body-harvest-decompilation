@@ -32,7 +32,7 @@ dl->words.w0 = 0xB6000000;
 dl->words.w1 = 0x10001;
 ```
 Is converted by pwsh cmd `.\tools\gfxdis.ps1 -w B6000000 00010001` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
-- Find similar decompiled functions using coddog: `.\tools\coddog\coddog.exe match func_80092ADC_A1A8C -t 0.7`.
+- Find similar decompiled functions using coddog: `.\tools\coddog\coddog.exe match -t 0.7 func_80092ADC_A1A8C`.
 - You should do your own work instead of using the permuter, but it can be run with `.\tools\agent-permuter.ps1`.
 
 # Decompilation Workflow

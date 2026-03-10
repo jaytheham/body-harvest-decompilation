@@ -1763,22 +1763,21 @@ void func_8008D634_9C5E4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008D71C_9C6CC.s")
 
 // https://decomp.me/scratch/lrRls
+// This one is matching but when included it screws up later functions somehow??
 #ifdef NON_MATCHING
 s32 func_8008D978_9C928(u8 arg0)
 {
   AlienInstance *inst = &alienInstances[arg0];
   u8 unk25 = inst->unk25;
-  AlienInstance *new_var;
   if (unk25 != 0xFF)
   {
 	if (alienInstances[unk25].unk20 & 0x300000)
 	{
-	  new_var = &alienInstances[alienInstances[unk25].unk25];
-	  if ((*new_var).unk20 & 0x2000)
+	  if ((*(inst = &alienInstances[alienInstances[unk25].unk25])).unk20 & 0x2000)
 	  {
 		func_80087AAC_96A5C(arg0);
 	  }
-	  inst->unk25 = 0xFF;
+	  alienInstances[arg0].unk25 = 0xFF;
 	  return 1;
 	}
   }
@@ -2142,25 +2141,23 @@ void func_80091A78_A0A28(u8 arg0) {
 
 // https://decomp.me/scratch/MmU1f
 #ifdef NON_MATCHING
-u8 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
+s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 {
-	s16 new_var2;
-	u8 new_var;
-	int new_var3;
-	u8 result = func_8007956C_8851C(0xA) & 0xFF;
-	if (1) { } if (1) { } if (1) { }
-	if (result != 0xFF)
-	{
-		new_var = result;
-
-		new_var3 = 0x2000;
-		alienInstances[new_var].unk0 = arg0;
-		new_var2 = (alienInstances[result].unk4 = arg1);
-		alienInstances[result].unk20 &= 0xF7FFFFFF;
-		alienInstances[result].unk20 |= (int) new_var3;
-		alienInstances[result].unk3F = arg2;
-	}
-	return result;
+  u8 result;
+	AlienInstance*ptr;
+  result = func_8007956C_8851C(0xA) & 0xFF;
+ 
+  if (result != 0xFF)
+  {
+	  ptr = &alienInstances[result];
+	
+	ptr->unk0 = arg0;
+	ptr->unk4 = arg1;
+	ptr->unk20 &= 0xF7FFFFFF;
+	ptr->unk20 |= (int) 0x2000;
+	ptr->unk3F = arg2;
+  }
+  return result;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80092A50_A1A00.s")
