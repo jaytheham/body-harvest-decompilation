@@ -549,10 +549,7 @@ extern s32 D_80222A70;
 extern Unk80222A78 D_80222A78[0xD0];
 
 extern s32 D_80223778;
-extern AlienWaveInstance D_80223780[0xC0]; // 80223780
-// need to merge these:
-extern s32 D_80223788[];
-extern s8 D_80223793[];
+extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 
 // 224680 missions?
 

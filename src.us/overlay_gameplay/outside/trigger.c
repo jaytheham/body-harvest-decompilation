@@ -162,7 +162,7 @@ void func_800AF4A4_BE454(s32 arg0, s32 arg1, s32 arg2) {
 	tmp.unkC = 0;
 	tmp.pad9[0] = arg0;
 	func_800AE454_BD404(&tmp);
-	D_80223793[arg0 * 0x14] = arg2;
+	D_80223780[arg0].unk13 = arg2;
 }
 
 #ifdef NON_MATCHING
@@ -208,7 +208,7 @@ void func_800AF764_BE714(s16 arg0) {
 	s32 sp18;
 	s32 sp1C;
 	Unk80222A78 tmp;
-	sp18 = D_80223788[arg0 * 5];
+	sp18 = D_80223780[arg0].unk8;
 	sp1C = D_8014F820;
 	tmp.pad9[0] = arg0;
 	tmp.unk4 = sp18 + sp1C + 0xA;
