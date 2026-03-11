@@ -2344,7 +2344,35 @@ void func_8009170C_A06BC(u8 arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8009179C_A074C.s")
+s32 func_8009179C_A074C(u8 arg0, s32 arg1) {
+	if (((-(alienInstances[arg0].unk0 - D_80052B34->unk0) <
+	        (alienInstances[arg0].unk0 - D_80052B34->unk0)
+	        ? (alienInstances[arg0].unk0 - D_80052B34->unk0)
+	        : -(alienInstances[arg0].unk0 - D_80052B34->unk0))
+	    > (-(alienInstances[arg0].unk4 - D_80052B34->unk4) <
+	        (alienInstances[arg0].unk4 - D_80052B34->unk4)
+	        ? (alienInstances[arg0].unk4 - D_80052B34->unk4)
+	        : -(alienInstances[arg0].unk4 - D_80052B34->unk4))
+	    ? (-(alienInstances[arg0].unk0 - D_80052B34->unk0) <
+	        (alienInstances[arg0].unk0 - D_80052B34->unk0)
+	        ? (alienInstances[arg0].unk0 - D_80052B34->unk0)
+	        : -(alienInstances[arg0].unk0 - D_80052B34->unk0))
+	    : (-(alienInstances[arg0].unk4 - D_80052B34->unk4) <
+	        (alienInstances[arg0].unk4 - D_80052B34->unk4)
+	        ? (alienInstances[arg0].unk4 - D_80052B34->unk4)
+	        : -(alienInstances[arg0].unk4 - D_80052B34->unk4))) < (arg1 << 8)) {
+		if (!(alienInstances[arg0].unk20 & 0x08000000)) {
+			func_80081BB0_90B60(arg0);
+			alienInstances[arg0].unk20 |= 0x08000100;
+			alienInstances[arg0].unk20 &= ~0x2000;
+		}
+		return 1;
+	}
+	if (alienInstances[arg0].unk20 & 0x08000000) {
+		alienInstances[arg0].unk20 &= ~0x08000100;
+	}
+	return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800918E0_A0890.s")
 
