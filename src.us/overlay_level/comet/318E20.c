@@ -4,7 +4,26 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4CD0_318E20.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4DA8_318EF8.s")
+s16 func_802D4DA8_318EF8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
+    s16 temp_v0;
+    s16 temp_v0_2;
+    s16 temp_v0_3;
+
+    temp_v0 = func_800D249C_E144C(arg0, arg1, arg2, (s16) (arg3 / 2), (s32) arg4, (s32) arg4, -0xB, 1);
+    if (temp_v0 != -3) {
+        func_800D25A4_E1554(temp_v0);
+        temp_v0_2 = (arg4 / 3) * 2;
+        temp_v0_3 = func_800D249C_E144C(arg0, arg1, arg2, arg3, (s32) temp_v0_2, (s32) temp_v0_2, -0xB, 2);
+        if (temp_v0_3 != -3) {
+            D_80154318[temp_v0].unk14 = temp_v0_3;
+            D_80154318[temp_v0_3].unk14 = temp_v0;
+        } else {
+            func_800C1A4C_D09FC(temp_v0, 0xB, 1);
+            return -3;
+        }
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4EE4_319034.s")
 
