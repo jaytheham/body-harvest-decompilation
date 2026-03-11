@@ -302,6 +302,7 @@ void func_80084904_938B4(u8);
 s32 func_80084E54_93E04(AlienInstance *, AlienInstance *);
 s32 func_80084F00_93EB0(VehicleInstance *, AlienInstance *);
 s32 func_8007E500_8D4B0(AlienInstance *, AlienSpec *, AlienInstance *, AlienSpec *);
+void func_8007E734_8D6E4(AlienInstance *, s16);
 s32 func_80084FE8_93F98(u8, s32);
 s32 func_80004818_5418(s32, s32, s32);
 void func_80128504_1374B4(AlienInstance *arg0, u8 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
