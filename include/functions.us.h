@@ -240,6 +240,7 @@ void func_800D951C_E84CC(void *, s16, s16, s16, s32, s32, s32, s32);
 void func_800E0134_EF0E4(void);
 void func_800E0AE0_EFA90(s16, s16, s16, s32);
 void func_800E0D28_EFCD8(s16, s16, s16);
+void func_800E52E8_F4298(s16, s16, s16, s16, s32, s32, s32);
 void func_800E5CF4_F4CA4(u8, u8);
 void func_800E5E3C_F4DEC(u8, u8);
 void func_800E5044_F3FF4(void);

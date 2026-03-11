@@ -2366,7 +2366,26 @@ void func_80092DFC_A1DAC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80092EF4_A1EA4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80093164_A2114.s")
+void func_80093164_A2114(u8 arg0)
+{
+  func_8008076C_8F71C(arg0);
+  if (((func_8008E478_9D428(arg0) == 0) && (func_8008E30C_9D2BC(arg0, 0x80000000) == 0)) && (func_8008E3E8_9D398(arg0) == 0))
+  {
+	func_8009170C_A06BC(arg0);
+	func_80091470_A0420(arg0);
+	if (!(D_80052A8C & 0x3F))
+	{
+		s16 targetIdx = func_80082394_91344(alienInstances[arg0].unk0, alienInstances[arg0].unk4, 3);
+		if ((targetIdx < 0xFF) && (!(alienInstances[targetIdx].unk20 & 0x4000)))
+		{
+		  func_800E52E8_F4298(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, alienInstances[targetIdx].unk0, alienInstances[targetIdx].unk2, alienInstances[targetIdx].unk4, 0);
+		  alienInstances[targetIdx].unk20 |= 0x5000;
+		  alienInstances[targetIdx].unk12 = 0;
+		  alienInstances[targetIdx].unk2C = 0xC8;
+		}
+	}
+  }
+}
 
 void func_800932A8_A2258(u8 arg0) {
 	func_8008EDFC_9DDAC(arg0);
