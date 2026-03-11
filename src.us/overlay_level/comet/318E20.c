@@ -331,7 +331,14 @@ void func_802D5C40_319D90(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D5C98_319DE8.s")
+void func_802D5C98_319DE8(void) {
+    if (func_8000726C_7E6C(0x2A) == 0) {
+        D_80047F9C = 2;
+        func_800072CC_7ECC(0x2A);
+        D_802E7C3C = 0x28;
+        func_80007410_8010(&func_802D5BFC_319D4C);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D5CF0_319E40.s")
 
