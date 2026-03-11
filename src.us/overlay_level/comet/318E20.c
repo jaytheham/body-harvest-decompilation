@@ -1,6 +1,8 @@
 #include <ultra64.h>
 #include "common.h"
 
+extern void func_802D5DD8_319F28(void);
+
 
 #ifdef NON_MATCHING
 void func_802D4CD0_318E20(s32 arg0, void *arg1) {
