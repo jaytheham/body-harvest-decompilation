@@ -436,7 +436,16 @@ void func_802D9100_31D250(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D93D8_31D528.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D95F8_31D748.s")
+void func_802D95F8_31D748(u8 arg0) {
+    u8 index;
+    u8 saved_arg0;
+
+    index = arg0 & 0xFF;
+    alienInstances[index].unk20 &= ~0x10;
+    saved_arg0 = index;
+    func_80137468_146418(index, 0x1FB);
+    func_8008735C_9630C(saved_arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D9658_31D7A8.s")
 
