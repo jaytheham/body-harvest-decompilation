@@ -4,6 +4,7 @@
 extern void func_802D5DD8_319F28(void);
 extern void func_802D5F6C_31A0BC(void);
 extern void func_802D6100_31A250(void);
+extern void func_802D6294_31A3E4(void);
 
 
 #ifdef NON_MATCHING
@@ -359,7 +360,12 @@ void func_802D624C_31A39C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D6294_31A3E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D63E0_31A530.s")
+void func_802D63E0_31A530(void) {
+    if (func_8000726C_7E6C(0x2F) == 0) {
+        func_800EFEB4_FEE64(&func_802D6294_31A3E4, 0x22, 1);
+    }
+    func_800072CC_7ECC(0x2F);
+}
 
 void func_802D6428_31A578(void) {
     func_800073B8_7FB8(0xA);
