@@ -340,7 +340,31 @@ void func_8007EE24_8DDD4(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007F0E8_8E098.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007F9C8_8E978.s")
+s32 func_8007F9C8_8E978(u8 arg0, u8 arg1) {
+	s16 var_v1 = -1;
+
+	if (alienSpecs[arg1].unk54 & 1) {
+		return 0;
+	}
+	if (alienSpecs[arg1].unk54 & 2) {
+		var_v1 = func_80082A98_91A48(arg0);
+	} else if (alienSpecs[arg1].unk54 & 0x10000080) {
+		var_v1 = func_80082CA0_91C50(arg0);
+	}
+	if (var_v1 != -1) {
+		return 1;
+	}
+	if (((u32)(alienSpecs[arg1].unk54 & 0x180000)) >> 0x13 < 3) {
+		var_v1 = func_80082B30_91AE0(arg0);
+	}
+	if (var_v1 == -1 && !(alienSpecs[arg1].unk54 & 0x20000000)) {
+		var_v1 = func_80082C04_91BB4(arg0);
+	}
+	if (var_v1 != -1) {
+		return 1;
+	}
+	return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007FB08_8EAB8.s")
 
