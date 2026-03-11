@@ -728,7 +728,19 @@ void func_802E3E30_327F80(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E43FC_32854C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E46B8_328808.s")
+void func_802E46B8_328808(u8 arg0, s32 arg1, u8 arg2) {
+    u8 old_unk25;
+    u8 new_idx;
+    AlienInstance *new_inst;
+
+    old_unk25 = alienInstances[arg0].unk25;
+    new_idx = func_8007956C_8851C(arg0);
+    new_inst = &alienInstances[new_idx];
+    new_inst->unk25 = old_unk25;
+    *((u8 *)&alienInstances[alienInstances[old_unk25].unk25] + arg1 - 1) = new_idx;
+    D_80140AB0[arg1] = new_inst;
+    osSyncPrintf(D_802E7AE4, new_idx, arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E4774_3288C4.s")
 
