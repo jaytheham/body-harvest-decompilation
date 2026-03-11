@@ -105,6 +105,7 @@ s32 func_80082A98_91A48(u8 arg0);
 s32 func_80082B30_91AE0(u8 arg0);
 s32 func_80082C04_91BB4(u8 arg0);
 s32 func_80082CA0_91C50(u8 arg0);
+s32 func_80082EB4_91E64(u8 arg0, s16 arg1);
 void func_80076868_85818(s32 arg0);
 void func_800769A8_85958(s32 arg0);
 void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2);

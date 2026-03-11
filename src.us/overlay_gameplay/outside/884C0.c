@@ -849,7 +849,38 @@ s32 func_80082E38_91DE8(u8 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082EB4_91E64.s")
 
+// https://decomp.me/scratch/fQx5r
+#ifdef NON_MATCHING
+s32 func_80083060_92010(s16 arg0, s16 arg1, s32 arg2, u8 *arg3) {
+	s32 sp18;
+	s32 sp1C;
+	s16 var_v1;
+	s16 sp22;
+	s32 sp24;
+
+	sp24 = alienInstances[arg2].specIndex;
+	sp18 = arg1;
+	sp1C = arg0;
+	*arg3 = func_8011E6FC_12D6AC(sp1C, sp18, &sp22);
+	if ((*arg3 & 0xFF) != 0xFF) {
+		var_v1 = (s16)(func_800B84D0_C7480(sp1C, sp18) >> 8);
+	} else {
+		var_v1 = sp22;
+	}
+	if (var_v1 != sp22 && !(alienSpecs[sp24].unk54 & 0x80000041)) {
+		return 1;
+	}
+	if (*arg3 == 0xFF && (alienSpecs[sp24].unk54 & 0x20000000)) {
+		return 0;
+	}
+	if (func_80082EB4_91E64(arg2, sp22) != 0) {
+		return 1;
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80083060_92010.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800831A4_92154.s")
 
