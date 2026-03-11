@@ -521,7 +521,17 @@ void func_802DE7BC_32290C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFE68_323FB8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFF04_324054.s")
+s32 func_802DFF04_324054(u8 arg0) {
+    s8 chain;
+
+    chain = D_8014DD50[alienInstances[arg0].unkC].unkC;
+    chain = D_8014DD50[chain].unkD;
+    chain = D_8014DD50[chain].unkD;
+    chain = D_8014DD50[chain].unkD;
+    chain = D_8014DD50[chain].unkD;
+    chain = D_8014DD50[chain].unkD;
+    return D_8014DD50[chain].unkD;
+}
 
 s8 func_802DFF84_3240D4(u8 arg0) {
     return D_8014DD50[D_8014DD50[func_802DFF04_324054(arg0)].unkC].unkD;
