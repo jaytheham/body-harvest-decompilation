@@ -2,6 +2,7 @@
 #include "common.h"
 
 extern void func_802D5DD8_319F28(void);
+extern void func_802D5F6C_31A0BC(void);
 
 
 #ifdef NON_MATCHING
@@ -339,7 +340,12 @@ void func_802D5DA0_319EF0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D5F6C_31A0BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D60B8_31A208.s")
+void func_802D60B8_31A208(void) {
+    if (func_8000726C_7E6C(0x2E) == 0) {
+        func_800EFEB4_FEE64((void*)&func_802D5F6C_31A0BC, 0x20, 1);
+    }
+    func_800072CC_7ECC(0x2E);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D6100_31A250.s")
 
