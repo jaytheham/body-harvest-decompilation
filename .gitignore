@@ -1,7 +1,9 @@
 # directories
 
 __pycache__/
-asm/
+asm/core/
+# asm/nonmatchings/ is intentionally committed — required for ROM-free CI diff checks.
+# These are disassembled function stubs (text, not binary ROM data).
 tools/coddog/
 assets/
 bin/
@@ -10,7 +12,6 @@ expected/
 junk/
 jupyter/
 levels/
-nonmatchings/
 py/
 rnc/
 rodata/

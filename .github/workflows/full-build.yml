@@ -1,0 +1,127 @@
+name: Full Build (ROM required)
+
+# This workflow runs a complete ROM-verified build including asm-differ diff
+# checks against every changed function.
+#
+# It uses a PRIVATE Docker image (ghcr.io/jaytheham/bh-build:main) that
+# contains the baserom.us.z64 file. The image is never public and the ROM
+# is never exposed in logs or artifacts.
+#
+# SETUP INSTRUCTIONS (one-time, repo owner only):
+#
+#   1. Build the private image:
+#        docker build -f Dockerfile.ci -t ghcr.io/jaytheham/bh-build:main .
+#        docker push ghcr.io/jaytheham/bh-build:main
+#
+#      Dockerfile.ci must COPY the ROM into /baserom/:
+#        FROM ghcr.io/jaytheham/bh-build:main AS base  (or ubuntu:22.04)
+#        COPY baserom.us.z64 /baserom/baserom.us.z64
+#        RUN make extract
+#        # (keep the pre-extracted asm/ and assets/ in /baserom/ for reuse)
+#
+#   2. Make the ghcr.io package private in GitHub → Packages → bh-build → Settings
+#
+#   3. Ensure the repo's Actions settings allow pull_request_target to access
+#      packages (Settings → Actions → General → "Allow GitHub Actions to create
+#      and approve pull requests" + fork PR read access to private packages).
+#
+# WHY pull_request_target:
+#   The standard `pull_request` trigger does NOT give fork PRs access to private
+#   container images (secrets are not passed to fork PRs for security). The
+#   `pull_request_target` trigger runs in the context of the base repo, giving
+#   access to private images. We explicitly check out the PR head commit (not the
+#   base) so the correct code is tested. This is the pattern used by bfbbdecomp
+#   and other active decomp projects.
+#
+# SECURITY NOTE:
+#   pull_request_target with a fork checkout is a known attack surface. This
+#   workflow ONLY reads from the private image and runs the build — it does not
+#   use any repository secrets beyond the container registry token, and it does
+#   not write to the repo or expose ROM data in artifacts/logs.
+
+on:
+  pull_request_target:
+    paths:
+      - 'src.us/**/*.c'
+      - 'include/**/*.h'
+
+jobs:
+  full-build:
+    name: Full ROM build + asm-differ diff
+    runs-on: ubuntu-22.04
+    # Private image containing baserom.us.z64 + pre-extracted asm/ and assets/
+    container: ghcr.io/jaytheham/bh-build:main
+    # Only run if the private image exists (skip gracefully if not yet set up)
+    if: ${{ vars.FULL_BUILD_ENABLED == 'true' }}
+
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          # For pull_request_target, always check out the PR head explicitly.
+          # Without this, we would be testing the base branch, not the PR.
+          ref: ${{ github.event.pull_request.head.sha }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          fetch-depth: 0
+
+      - name: Copy ROM and pre-extracted files from container
+        run: |
+          cp /baserom/baserom.us.z64 .
+          # If the container has a pre-extracted asm/ and assets/, copy them
+          # to avoid re-running make extract on every CI run (slow).
+          if [ -d /baserom/asm ]; then cp -r /baserom/asm .; fi
+          if [ -d /baserom/assets ]; then cp -r /baserom/assets .; fi
+
+      - name: Extract ROM (if not pre-extracted)
+        run: |
+          if [ ! -d asm/nonmatchings ]; then
+            echo "Running make extract..."
+            make extract
+          else
+            echo "Using pre-extracted asm/ from container."
+          fi
+
+      - name: Restore IDO tool permissions
+        run: chmod +x tools/ido5.3_recomp/*
+
+      - name: Build all zones
+        run: make --jobs$(nproc) 2>&1
+
+      - name: Verify ROM hash
+        run: make verify
+
+      - name: Find changed C source files
+        id: changed
+        run: |
+          BASE=${{ github.event.pull_request.base.sha }}
+          HEAD=${{ github.event.pull_request.head.sha }}
+          FILES=$(git diff --name-only "$BASE" "$HEAD" -- 'src.us/**/*.c' | tr '\n' ' ')
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+          echo "Changed source files: $FILES"
+
+      - name: Run asm-differ on changed functions
+        if: steps.changed.outputs.files != ''
+        run: |
+          # For each changed source file, extract the function names that were
+          # modified (wrapped in #ifdef NON_MATCHING or bare GLOBAL_ASM) and
+          # run asm-differ to verify byte-identical match.
+          FAILED=0
+          for src in ${{ steps.changed.outputs.files }}; do
+            echo "=== Checking functions in $src ==="
+            # Extract function names from the source file
+            FUNCS=$(grep -oE 'func_[0-9A-Fa-f_]+' "$src" | sort -u)
+            for func in $FUNCS; do
+              # Only diff functions that have an .s stub (i.e. still unmatched or
+              # recently matched — stubs exist until the function is confirmed matching)
+              stub=$(find asm/nonmatchings -name "${func}.s" 2>/dev/null | head -1)
+              if [ -n "$stub" ]; then
+                echo "--- Diffing: $func"
+                if ! python3 tools/asm-differ/diff.py -1 "$func" 2>&1 | grep -q "^All OK"; then
+                  echo "::error file=$src::$func is not byte-identical"
+                  python3 tools/asm-differ/diff.py -1 "$func" 2>&1 | head -40
+                  FAILED=1
+                fi
+              fi
+            done
+          done
+          exit $FAILED

@@ -1,0 +1,62 @@
+# Dockerfile.ci — Private CI image for body-harvest-decompilation
+#
+# This image contains the ROM file and pre-extracted ASM/assets.
+# It MUST be kept private (ghcr.io package set to private).
+# Never push this image to a public registry.
+#
+# BUILD INSTRUCTIONS (one-time, requires the ROM):
+#
+#   Place baserom.us.z64 in the repo root, then:
+#     docker build -f Dockerfile.ci -t ghcr.io/jaytheham/bh-build:main .
+#     docker push ghcr.io/jaytheham/bh-build:main
+#
+# REBUILD when:
+#   - asm/ or assets/ change significantly (splat yaml updated)
+#   - New tools added to the base environment
+#   - ROM file changes (different version)
+
+FROM ubuntu:22.04 AS base
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+COPY packages.txt /packages.txt
+
+RUN apt-get update && \
+    sed -i 's/\r$//' /packages.txt && \
+    apt-get install -y $(cat /packages.txt) && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt /
+RUN python3 -m pip install -r /requirements.txt --no-cache-dir --disable-pip-version-check
+
+# ---
+
+FROM base AS ci-build
+
+WORKDIR /bh
+
+# Copy repo files needed for extraction
+COPY . .
+
+# The ROM must be present at build time. It is never exposed in CI logs
+# because it is baked into this private image, not passed as a secret.
+RUN test -f baserom.us.z64 || (echo "ERROR: baserom.us.z64 not found. Place the ROM in the repo root before building this image." && exit 1)
+
+# Restore IDO tool permissions (git strips +x)
+RUN chmod +x tools/ido5.3_recomp/*
+
+# Build tools
+RUN make tools
+
+# Pre-extract asm/ and assets/ so CI runs don't need to re-extract
+RUN make extract
+
+# Copy the ROM and pre-extracted files to /baserom/ for CI workflows to consume
+RUN mkdir /baserom && \
+    cp baserom.us.z64 /baserom/ && \
+    cp -r asm /baserom/ && \
+    cp -r assets /baserom/
+
+# The final image does not need the full repo — workflows will check out fresh
+WORKDIR /
+RUN rm -rf /bh

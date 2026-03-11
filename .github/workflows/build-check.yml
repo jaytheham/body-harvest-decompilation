@@ -26,8 +26,10 @@ jobs:
       - name: Restore IDO tool permissions
         run: chmod +x tools/ido5.3_recomp/*
 
-      - name: Build IDO tools
-        run: make tools
+      - name: Build IDO tools and create build directories
+        run: |
+          make tools
+          make dirs
 
       - name: Find changed C source files
         id: changed
@@ -55,6 +57,18 @@ jobs:
             fi
           done
           exit $FAILED
+
+      - name: ROM-free diff check (NON_MATCHING zones only)
+        if: steps.changed.outputs.files != ''
+        run: |
+          # For NON_MATCHING zones (e.g. greece, java), compiled C bodies appear as
+          # symbols in the .o — compare them against the committed .s stubs in
+          # asm/nonmatchings/ to catch functions that compile but are not byte-identical.
+          #
+          # GLOBAL_ASM zones (comet, siberia, america) produce no compiled symbols under
+          # PERMUTER=1 and are silently skipped — they require the full ROM build for
+          # diff validation (see full-build.yml when available).
+          python3 tools/ci_diff_check.py ${{ steps.changed.outputs.files }}
 
       - name: No source changes
         if: steps.changed.outputs.files == ''
