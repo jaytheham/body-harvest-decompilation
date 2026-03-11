@@ -474,6 +474,7 @@ extern u8 D_8014D50A;
 extern u8 D_8014D510[];
 extern u8 D_8014D550[];
 extern Unk8014DD50 D_8014DD50[];
+extern Unk802E71B8 D_802E71B8;
 extern s16 D_8014DD5E[][8];
 extern s8 D_8014EC50[];
 extern s32 D_8014ECC8;
@@ -1063,4 +1064,7 @@ extern BuildingInstance *D_80157FA4;
 extern s32 D_802E7C3C;
 extern s16 D_802E7C40;
 extern char D_802E7A7C[];
+extern s16 D_802E4FB4[];
+extern s16 D_8014D17C;
+extern s16 D_8014D17E;
 #endif
