@@ -35,14 +35,18 @@ jobs:
           echo "files=$FILES" >> "$GITHUB_OUTPUT"
           echo "Changed source files: $FILES"
 
-      - name: Compile changed files (NON_MATCHING=1)
+      - name: Compile changed files (NON_MATCHING=1 PERMUTER=1)
         if: steps.changed.outputs.files != ''
         run: |
+          # NON_MATCHING=1  — compile C bodies instead of inlining ROM ASM
+          # PERMUTER=1      — skip asm-processor for GLOBAL_ASM zones (avoids failures
+          #                   on stubborn functions whose .s stubs are not asm-processor
+          #                   format). C syntax is still fully checked by IDO.
           FAILED=0
           for src in ${{ steps.changed.outputs.files }}; do
             obj="build/${src}.o"
             echo "--- Compiling: $src"
-            if ! make "$obj" NON_MATCHING=1 2>&1; then
+            if ! make "$obj" NON_MATCHING=1 PERMUTER=1 2>&1; then
               echo "::error file=$src::Compilation failed"
               FAILED=1
             fi
