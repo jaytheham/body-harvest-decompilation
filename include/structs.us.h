@@ -897,4 +897,9 @@ typedef struct {
 	/* 0x0B */ u8 padB;
 } Unk802E4ED8_entry; /* size = 0x0C */
 
+typedef struct {
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ u16 unk4;
+} Unk802E71B8; /* size = 0x6 */
+
 #endif
