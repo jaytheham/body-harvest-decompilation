@@ -597,7 +597,29 @@ s32 func_802E00D0_324220(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0B64_324CB4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1274_3253C4.s")
+s32 func_802E1274_3253C4(u8 arg0) {
+    AlienInstance *inst;
+    u8 idx;
+    u8 idx2;
+
+    inst = &alienInstances[arg0];
+    idx = inst->unk25;
+    inst->unk2C++;
+    idx2 = alienInstances[idx].unk25;
+    if (inst->unk2C < 0x51) {
+        if (((u8 *)&alienInstances[idx2])[1] != (u8)0xFF) {
+            return 0;
+        }
+        if (inst->unk2C < 0x29) {
+            return 0;
+        }
+    }
+    if (func_80084FE8_93F98(idx, 0x800)) {
+        inst->unk2C = 0;
+        return 1;
+    }
+    return 0;
+}
 
 void func_802E1324_325474(u8 arg0) {
     AlienInstance *inst;
