@@ -144,6 +144,7 @@ void func_8008E978_9D928(u8, s16);
 void func_8008EE5C_9DE0C(u8, s16, s16);
 void func_8008F0BC_9E06C(u8, s32);
 void func_8008F6C0_9E670(u8);
+void func_800816B0_90660(u8, void *, s32, AlienInstance *);
 void func_80081AD4_90A84(u8, u8);
 s16 func_80085A9C_94A4C(s16, s16, s32, s32, s16);
 s32 func_80085B14_94AC4(u8, s16, s32, s16, s16);
