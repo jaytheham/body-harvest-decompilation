@@ -30,6 +30,8 @@ inst->unkC = -1;
 alienInstances[arg0].unkC = -1;
 ```
 
+This also applies to other named pointer locals (not just AlienInstance). For example, a local `Unk8014DD50 *ptr = &D_8014DD50[idx]` used only twice (once to read a field, once to check another field after several jals) will create a phantom slot too. In that case: use `D_8014DD50[idx].field` directly both times — IDO will still spill the computed pointer to the stack naturally across the jal calls, but without the extra phantom slot. This also correctly allocates `$a2` (not `$v1`) for the pointer register.
+
 ### Struct array: `multu` + early arg computation order
 
 When a function body does `sh unk12` → `multu arg_idx` → `lw unk20` → ... → `sw unk20` → `sh unk10`:
