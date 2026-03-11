@@ -604,7 +604,31 @@ s8 func_802DFF84_3240D4(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFFC8_324118.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0018_324168.s")
+s32 func_802E0018_324168(u8 arg0) {
+    AlienInstance *inst;
+    s16 val;
+
+    inst = &alienInstances[arg0];
+    val = inst->unk0;
+    if (val < -0x2C00) {
+        func_8007E734_8D6E4(inst, 0x4000);
+        return 1;
+    }
+    if (val >= -0x1EFF) {
+        func_8007E734_8D6E4(inst, -0x4000);
+        return 1;
+    }
+    val = inst->unk4;
+    if (val < -0xD00) {
+        func_8007E734_8D6E4(inst, -0x8000);
+        return 1;
+    }
+    if (val < 0xE01) {
+        return 0;
+    }
+    func_8007E734_8D6E4(inst, 0);
+    return 1;
+}
 
 s32 func_802E00D0_324220(s32 arg0, s32 arg1) {
     if ((arg0 < -0x2C00) || (arg0 >= -0x1EFF) || (arg1 < -0xD00) || (arg1 >= 0xE01)) {
