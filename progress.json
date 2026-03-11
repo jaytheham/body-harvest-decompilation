@@ -1,0 +1,47 @@
+{
+  "generated_at": "2026-03-11T00:17:41.304514+00:00",
+  "commit": "14d892b",
+  "zones": {
+    "greece/18D7E0": {
+      "file": "src.us/overlay_level/greece/18D7E0.c",
+      "hostile": 43,
+      "matched": 44,
+      "total": 87,
+      "percent": 50.6
+    },
+    "java/1ED9E0": {
+      "file": "src.us/overlay_level/java/1ED9E0.c",
+      "hostile": 101,
+      "matched": 0,
+      "total": 101,
+      "percent": 0.0
+    },
+    "siberia/2B7100": {
+      "file": "src.us/overlay_level/siberia/2B7100.c",
+      "hostile": 94,
+      "matched": 1,
+      "total": 95,
+      "percent": 1.1
+    },
+    "america/254410": {
+      "file": "src.us/overlay_level/america/254410.c",
+      "hostile": 74,
+      "matched": 0,
+      "total": 74,
+      "percent": 0.0
+    },
+    "comet/318E20": {
+      "file": "src.us/overlay_level/comet/318E20.c",
+      "hostile": 122,
+      "matched": 0,
+      "total": 122,
+      "percent": 0.0
+    }
+  },
+  "totals": {
+    "hostile": 434,
+    "matched": 45,
+    "total": 479,
+    "percent": 9.4
+  }
+}
