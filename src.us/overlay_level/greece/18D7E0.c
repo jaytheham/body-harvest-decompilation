@@ -66,27 +66,23 @@ void func_802D531C_18DE2C(void) {
 	D_801493E0 = 0;
 }
 
-#ifdef NON_MATCHING
 void func_802D536C_18DE7C(void) {
-	s16 sp1E;
-	s16 var_v1;
-	var_v1 = 0xBD - D_8004D1B9;
-	sp1E = var_v1;
-	if ((var_v1 < 0xB5) && (D_802DE464 >= 0xA)) {
-		sp1E = var_v1;
-		func_8009BF64_AAF14(var_v1);
-		var_v1 = sp1E;
+	s16 temp_diff;
+	s16 status;
+
+	temp_diff = 0xBD - D_8004D1B9;
+	status = temp_diff;
+	if ((temp_diff < 0xB5) && (D_802DE464 >= 0xA)) {
+		func_8009BF64_AAF14((u16) temp_diff);
+		status = temp_diff;
 	}
 	if (D_802DE464 < 0xA) {
 		D_802DE464 += 1;
 	}
-	if ((var_v1 == 0) || (((s8)buildingInstances[0x37].hitPoints <= 0) && ((s8)buildingInstances[0x3F].hitPoints <= 0) && ((s8)buildingInstances[0x39].hitPoints <= 0) && ((s8)buildingInstances[0x3E].hitPoints <= 0))) {
+	if ((status == 0) || (((s8) buildingInstances[55].hitPoints <= 0) && ((s8) buildingInstances[63].hitPoints <= 0) && ((s8) buildingInstances[57].hitPoints <= 0) && ((s8) buildingInstances[62].hitPoints <= 0))) {
 		func_800074BC_80BC(func_802D536C_18DE7C);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D536C_18DE7C.s")
-#endif
 
 void func_802D5434_18DF44(void) {
 	func_800074BC_80BC(func_802D536C_18DE7C);
