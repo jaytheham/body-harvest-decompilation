@@ -539,7 +539,26 @@ void func_802DE7BC_32290C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DF940_323A90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFE68_323FB8.s")
+void func_802DFE68_323FB8() {
+    AlienInstance *inst;
+    s32 alien_index;
+
+    func_80088000_96FB0(-1);
+    func_800AE2C0_BD270();
+    alien_index = func_8007956C_8851C(0x12);
+    if (alien_index != 0xFF) {
+        inst = &alienInstances[alien_index];
+        inst->unk0 = -0x2AD8;
+        inst->unk2 = 0;
+        inst->unk4 = 0;
+        inst->unk20 |= 0x8000100;
+        inst->unk24 = 2;
+        inst->unkE = 0;
+        D_8014D17E = alien_index;
+    }
+    D_8014D17C = 0;
+    func_80007410_8010(&func_802DF290_3233E0);
+}
 
 s32 func_802DFF04_324054(u8 arg0) {
     s8 chain;
