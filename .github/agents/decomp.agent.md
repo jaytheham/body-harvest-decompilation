@@ -9,7 +9,7 @@ model: Claude Sonnet 4.6 (copilot)
 ## Overview
 
 This is a matching decompilation project for Body Harvest (N64). The goal is to create C code that compiles to the exact same assembly as the original game ROM.
-You will convert the named N64 assembly function to C89 code, compile it (IDO 5.3 -O2 -mips2 -32), compare the output against the original assembly, and modify the C code iteratively until it produces byte-for-byte identical assembly.
+You will convert the named N64 assembly function to C89 code, compile it (IDO 5.3 -O2 -mips2 -32), compare the output against the target assembly, and modify the C code iteratively until it produces byte-for-byte identical assembly.
 
 ## Project Structure
 
@@ -20,9 +20,9 @@ You will convert the named N64 assembly function to C89 code, compile it (IDO 5.
 
 ## Tools
 
-You have access to the following powershell tools to assist you in the decompilation process:
+These powershell tools exist to assist you:
 
-- Compare target and generated assembly for a specific function: `.\tools\asm-diff.ps1 <target function name> <ROM address of next function>"`. E.g. `.\tools\asm-diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`. Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match.
+- Compare target and your current assembly for a specific function after building: `.\tools\asm-diff.ps1 <target function name> <ROM address of next function>"`. E.g. `.\tools\asm-diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`. Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match. Diff output skips matching lines except for 3 lines of matching context either side of differences.
 - You can decompile gfx macros using `.\tools\gfxdis.ps1`:
 e.g.
 ```C
@@ -32,13 +32,13 @@ dl->words.w0 = 0xB6000000;
 dl->words.w1 = 0x10001;
 ```
 Is converted by pwsh cmd `.\tools\gfxdis.ps1 -w B6000000 00010001` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
-- Find similar decompiled functions using coddog: `.\tools\coddog\coddog.exe match -t 0.7 func_80092ADC_A1A8C`.
-- You should do your own work instead of using the permuter, but it can be run with `.\tools\agent-permuter.ps1`.
+- Find similar functions using coddog: `.\tools\coddog\coddog.exe match -t 0.7 func_80092ADC_A1A8C` if any results are `(decompiled)` you can reference them for guidance.
+- Do your own work instead of using the permuter `.\tools\agent-permuter.ps1`.
 
 # Decompilation Workflow
 ## Step 1: Generate cleaned C implementation
 
-Run pwsh: `python tools/mips_to_c/m2c.py asm/nonmatchings/overlay_gameplay/outside/884C0/func_80092ADC_A1A8C.s` to generate an initial C implementation from the original assembly.
+Run pwsh: `.\tools\run-m2c.ps1 asm/nonmatchings/overlay_gameplay/outside/884C0/func_80093AE4_A2A9.s` to generate an initial C implementation from the target assembly.
 
 Clean up the generated C code:
 
@@ -64,7 +64,7 @@ Read file `DecompHints.md` for general guidance.
 
 ## Step 3: Build ROM
 
-Build the ROM: `.\tools\clean-make.ps1` Important: You must build the entire project, not idividual files, to ensure all symbols are correctly linked and to get an accurate comparison of the generated assembly against the original.
+Build the ROM: `.\tools\clean-make.ps1` Important: You must build the entire project, not idividual files, to ensure all symbols are correctly linked and to get an accurate comparison of the current vs the target.
 
 **If compilation errors occur:**
 
@@ -72,13 +72,13 @@ Build the ROM: `.\tools\clean-make.ps1` Important: You must build the entire pro
 - Simplify C code (avoid complex expressions in single statements)
 - Ensure all extern symbols are declared
 
-If build completes with `build/bh.us.z64: OK` the function is correctly matched and you can stop work. If you see `FAILED` the generated assembly does not match the original, proceed to the next steps for analysis and iteration.
+If build completes with `build/bh.us.z64: OK` the function is correctly matched and you can stop work. If you see `FAILED` the generated assembly does not match the target, proceed to the next steps for analysis and iteration.
 
-## Step 4: Compare with Original and find similar functions
+## Step 4: Compare with target and find similar functions
 
 Use coddog to find any similar functions that are already decompiled which you may be able to copy.
 
-Compare the original assembly and generated assembly to identify differences: note instruction order, registers, immediates, branch conditions.
+Use `.\tools\asm-diff.ps1` to compare the target and current assembly to identify differences: note instruction order, registers, immediates, branch conditions.
 
 ## Step 5+: Iterate Until Match
 
@@ -87,10 +87,10 @@ Rewrite C code to reduce the number of differences in assembly. First target dif
 Make sure all pointer arithmetic is replaced with proper struct/array access, and that assembly-like if>do>while and goto control flow is replaced with more natural C control flow constructs.
 Double check all function call params are necessary and correctly typed.
 An arg being `&& 0xFF` or `&& 0xFFFF` repeatedly suggests that the original code was using a smaller type like u8 or s16.
-Think about how a person would have originally written the code in C to produce the assembly you see rather than writing the C to match the assembly exactly. Search for patterns in the original assembly and see how other functions were written to achieve similar assembly output.
-Read file `ExampleFixes.md` for examples of solving specific patterns.
+Think about how a person would have originally written the code in C to produce the assembly you see rather than writing the C to match the assembly exactly. Search for patterns in the target assembly and see how other functions were written to achieve similar assembly output.
+Search in file `ExampleFixes.md` for examples of solving specific patterns.
 
-**Every** time you make changes, rebuild the project and compare the generated assembly to the original, if it doesn't match repeat this step, never give up, keep trying autonomously. Only once the build returns `build/bh.us.z64: OK` proceed to Finalize.
+**Every** time you make changes, rebuild the project and compare the current assembly to the target, if it doesn't match repeat this step, never give up, keep trying autonomously. Only once the build returns `build/bh.us.z64: OK` proceed to Finalize.
 
 ## Finalize
 
