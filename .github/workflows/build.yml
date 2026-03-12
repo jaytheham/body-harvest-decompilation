@@ -20,6 +20,16 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Fetch ROM from private assets repo
+        uses: actions/checkout@v4
+        with:
+          repository: Meridian-Lex/bh-rom-assets
+          token: ${{ secrets.BH_ROM_ASSETS_PAT }}
+          path: rom-assets
+
+      - name: Place ROM
+        run: cp rom-assets/baserom.${{ matrix.version }}.z64 baserom.${{ matrix.version }}.z64
+
       - name: Install system dependencies
         run: |
           sudo apt-get update
@@ -27,17 +37,6 @@ jobs:
 
       - name: Install Python dependencies
         run: pip3 install -r requirements.txt
-
-      - name: Place ROM
-        env:
-          ROM_US: ${{ secrets.BASEROM_US }}
-          ROM_EU: ${{ secrets.BASEROM_EU }}
-        run: |
-          if [ "${{ matrix.version }}" = "us" ]; then
-            echo "$ROM_US" | base64 -d > baserom.us.z64
-          else
-            echo "$ROM_EU" | base64 -d > baserom.eu.z64
-          fi
 
       - name: Extract ROM
         run: make extract VERSION=${{ matrix.version }}
@@ -50,10 +49,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ matrix.version }}-
 
-      - name: Build ROM
+      - name: Build and verify ROM
         run: make --jobs VERSION=${{ matrix.version }}
 
-      - name: Upload build on failure
+      - name: Upload build artifacts on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
