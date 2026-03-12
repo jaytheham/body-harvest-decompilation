@@ -500,40 +500,40 @@ s32 func_80080840_8F7F0(u8 arg0, s32 arg1)
 
 #ifdef NON_MATCHING
 s32 func_800808F0_8F8A0(u8 arg0, s16 *arg1) {
-    s32 var_v0;
-    u8 specIndex;
-    s16 unk42;
+	s32 var_v0;
+	u8 specIndex;
+	s16 unk42;
 
-    var_v0 = 1;
-    specIndex = alienInstances[arg0].specIndex;
-    unk42 = alienSpecs[specIndex].unk42;
-    if (alienSpecs[specIndex].unk54 & 0x40) {
-        if (alienInstances[arg0].unk2 < alienInstances[arg0].unk16) {
-            if (alienInstances[arg0].unk10 < 0x80) {
-                alienInstances[arg0].unk10 += alienSpecs[specIndex].unk3E;
-            }
-        }
-        if (alienInstances[arg0].unk16 < alienInstances[arg0].unk2) {
-            if (alienInstances[arg0].unk10 >= -0x7F) {
-                alienInstances[arg0].unk10 -= alienSpecs[specIndex].unk3E;
-            }
-        }
-    }
-    if (!(alienInstances[arg0].unk20 & 0x600)) {
-        var_v0 = 4;
-    }
-    if (!(alienInstances[arg0].unk20 & 0x10)) {
-        if (-unk42 * var_v0 >= (s16)(alienInstances[arg0].unk2A - alienInstances[arg0].unkE)) {
-            *arg1 -= unk42 * var_v0;
-            return 1;
-        }
-        if (unk42 * var_v0 < (s16)(alienInstances[arg0].unk2A - alienInstances[arg0].unkE)) {
-            *arg1 += unk42 * var_v0;
-            return 1;
-        }
-        return 0;
-    }
-    return 0;
+	var_v0 = 1;
+	specIndex = alienInstances[arg0].specIndex;
+	unk42 = alienSpecs[specIndex].unk42;
+	if (alienSpecs[specIndex].unk54 & 0x40) {
+		if (alienInstances[arg0].unk2 < alienInstances[arg0].unk16) {
+			if (alienInstances[arg0].unk10 < 0x80) {
+				alienInstances[arg0].unk10 += alienSpecs[specIndex].unk3E;
+			}
+		}
+		if (alienInstances[arg0].unk16 < alienInstances[arg0].unk2) {
+			if (alienInstances[arg0].unk10 >= -0x7F) {
+				alienInstances[arg0].unk10 -= alienSpecs[specIndex].unk3E;
+			}
+		}
+	}
+	if (!(alienInstances[arg0].unk20 & 0x600)) {
+		var_v0 = 4;
+	}
+	if (!(alienInstances[arg0].unk20 & 0x10)) {
+		if (-unk42 * var_v0 >= (s16)(alienInstances[arg0].unk2A - alienInstances[arg0].unkE)) {
+			*arg1 -= unk42 * var_v0;
+			return 1;
+		}
+		if (unk42 * var_v0 < (s16)(alienInstances[arg0].unk2A - alienInstances[arg0].unkE)) {
+			*arg1 += unk42 * var_v0;
+			return 1;
+		}
+		return 0;
+	}
+	return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800808F0_8F8A0.s")
@@ -1934,7 +1934,28 @@ void func_8008A32C_992DC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008A3EC_9939C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008AAFC_99AAC.s")
+s32 func_8008AAFC_99AAC(u8 arg0, s32 arg1, s32 arg2) {
+	AlienInstance *alien = &alienInstances[arg0];
+
+	if (alien->specIndex == 0xA) {
+		arg2 = 0;
+	}
+	if ((!(alien->unk20 & 0x40000000) || (alien->unk47 & 1) || (alien->unk2 < D_80222A70)) && alien->unk2C >= 2) {
+		if (alien->unk20 & 0x600) {
+			if (alien->unk2 < D_80222A70) {
+				func_800DF038_EDFE8(alien->unk0, alien->unk2, alien->unk4, (arg1 * 3) & 0xFFFF, arg2, (s32) &D_8013C16C);
+				func_800DEF2C_EDEDC(alien->unk0, alien->unk2, alien->unk4, 0xFF, 2);
+			} else if (alien->specIndex == 0xA) {
+				func_800DFA34_EE9E4(alien->unk0, alien->unk2, alien->unk4, (u16) arg1, arg2);
+			} else {
+				func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16) arg1, arg2);
+			}
+			alien->unk2C = 1;
+		}
+		return 1;
+	}
+	return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008AC5C_99C0C.s")
 

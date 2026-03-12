@@ -309,6 +309,7 @@ extern s16 D_800E733C;
 extern Vec3f D_800E7340;
 
 extern s32 D_8013BD04;
+extern s32 D_8013C16C;
 extern s16 D_8013C2BC[];
 extern s16 D_8013C514;
 extern s16 D_8013C610;
