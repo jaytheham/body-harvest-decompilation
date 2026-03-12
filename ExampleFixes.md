@@ -1,3 +1,46 @@
+### `bnez` vs `beqz` for early-exit `if (flags & BIT) return 0` pattern
+
+When the function has an early `if (flags & 0x10) { return 0; }` followed by a multiplication block, target assembly may use `bnez t9, RETURN_0_AT_END` (branch to a return-0 label placed AFTER the main code), while a naive `if (flags & 0x10) { return 0; }` generates `beqz t9, SKIP_RETURN` (inline return-0 immediately after the branch).
+
+**Fix**: Negate the condition and put the early exit AFTER the main code:
+
+```c
+/* Instead of: */
+if (flags & 0x10) { return 0; }
+/* main multiply code */
+return result;
+
+/* Use: */
+if (!(flags & 0x10)) {
+    /* main multiply code */
+    return result;
+}
+return 0;  
+```
+
+This generates `bnez t9, OUTER_RETURN_0` (jump past multiply if flag SET), with the multiply as the fall-through. The `return 0;` at the end gets placed after all the multiply code. Score improvement can be ~300 points when this pattern is present.
+
+### v0/v1 register allocation for leaf functions with named locals (specIndex + unk42 + var_v0 pattern)
+
+For leaf functions accessing `alienSpecs[alienInstances[arg0].specIndex].fieldX` with a multiplier variable, to get the correct register layout `a2=instance_ptr, v1=specIndex, t0=spec_ptr, a3=unk42, v0=var_v0`:
+
+Declare variables in this order, initializing `var_v0=1` FIRST in the function body:
+```c
+s32 var_v0;
+u8 specIndex;
+s16 unk42;
+
+var_v0 = 1;                    /* ← must be FIRST assignment */
+specIndex = alienInstances[arg0].specIndex;
+unk42 = alienSpecs[specIndex].unk42;
+```
+
+This declaration+assignment order gives: `a2=instance_ptr` (pushed by v0, v1, a0, a1 all being taken), `a3=unk42` (pushed after a0-a2 and v0-v1 taken). The `li v0,1` appears as standalone instruction before the `beqz` condition, and `lh a3, unk42(spec_ptr)` appears in the delay slot of the beqz.
+
+**NOTE**: IDO's critical-path scheduler still places `lbu` for specIndex before `li` for var_v0, causing `lbu v0` (specIndex→v0) instead of `lbu v1` (specIndex→v1). This results in a persistent v0↔v1 swap throughout the function. All other structure matches perfectly; the register swap is a hardcoded IDO allocator behavior for this pattern that we haven't resolved.
+
+The bnez delay slot for `flags & 0x10` check is also affected: when `var_v0=v1`, IDO can put `move v0, zero` in the delay slot (safe). When `var_v0=v0` (target), it cannot (would corrupt var_v0 on fall-through) → uses `nop` delay slot instead.
+
 ### `lbu` from `s8` struct field via pointer cast + avoid extra temp for 3rd pre-load
 
 When the target assembly uses `lbu` to read a struct field declared as `s8` (e.g., checking `!= 0` but NOT checking `!= -1`), use a pointer cast to force unsigned byte load without changing the struct:
