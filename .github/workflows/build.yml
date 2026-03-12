@@ -21,6 +21,7 @@ jobs:
           submodules: recursive
 
       - name: Fetch ROM from private assets repo
+        if: ${{ secrets.BH_ROM_ASSETS_PAT != '' }}
         uses: actions/checkout@v4
         with:
           repository: Meridian-Lex/bh-rom-assets
@@ -28,7 +29,17 @@ jobs:
           path: rom-assets
 
       - name: Place ROM
+        if: ${{ secrets.BH_ROM_ASSETS_PAT != '' }}
         run: cp rom-assets/baserom.${{ matrix.version }}.z64 baserom.${{ matrix.version }}.z64
+
+      - name: Check ROM available
+        run: |
+          if [ ! -f baserom.${{ matrix.version }}.z64 ]; then
+            echo "::warning::ROM not available (BH_ROM_ASSETS_PAT not set) — skipping extract and build verification"
+            echo "ROM_AVAILABLE=false" >> $GITHUB_ENV
+          else
+            echo "ROM_AVAILABLE=true" >> $GITHUB_ENV
+          fi
 
       - name: Install system dependencies
         run: |
@@ -49,6 +60,7 @@ jobs:
           ln -sf "$SPLAT_PKG" tools/splat/src/splat
 
       - name: Extract ROM
+        if: env.ROM_AVAILABLE == 'true'
         run: make extract VERSION=${{ matrix.version }}
 
       - name: Cache build artifacts
@@ -60,6 +72,7 @@ jobs:
             ${{ runner.os }}-${{ matrix.version }}-
 
       - name: Build and verify ROM
+        if: env.ROM_AVAILABLE == 'true'
         run: make --jobs VERSION=${{ matrix.version }}
 
       - name: Upload build artifacts on failure
