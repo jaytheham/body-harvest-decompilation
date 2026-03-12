@@ -38,7 +38,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip3 install -r requirements.txt
-          pip3 install tools/splat
+          pip3 install splat64==0.23.0
 
       - name: Extract ROM
         run: make extract VERSION=${{ matrix.version }}
