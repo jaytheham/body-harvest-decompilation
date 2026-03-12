@@ -648,7 +648,26 @@ void func_80081C84_90C34(u8 arg0, Unk8014DD50 *src) {
 	D_8014DD5E[arg0][0] = src->unkE;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80081CF0_90CA0.s")
+void func_80081CF0_90CA0(Unk8014DD50 *arg0, Unk8014DD50 *arg1, s16 arg2) {
+	s16 temp_v0;
+	s16 temp_v1;
+	s16 temp_v0_2;
+	s16 temp_v1_2;
+
+	if (*(u8*)&arg1->unkC != 0) {
+		temp_v0 = arg0->unk0;
+		temp_v1 = arg0->unk2;
+		arg0->unk0 = temp_v0 + (arg1->unk0 - temp_v0) / arg2;
+		arg0->unk2 = temp_v1 + (arg1->unk2 - temp_v1) / arg2;
+		arg0->unk4 = arg0->unk4 + (arg1->unk4 - arg0->unk4) / arg2;
+	}
+	if (*(u8*)&arg1->unkD != 0) {
+		temp_v0_2 = arg0->unk8;
+		temp_v1_2 = arg0->unkA;
+		arg0->unk8 = temp_v0_2 + (arg1->unk8 - temp_v0_2) / arg2;
+		arg0->unkA = temp_v1_2 + (arg1->unkA - temp_v1_2) / arg2;
+	}
+}
 
 void func_80081E5C_90E0C(s16 arg0)
 {
@@ -1404,27 +1423,22 @@ s32 func_80085E2C_94DDC(u8 arg0, s16 arg1, s32 arg2) {
 #ifdef NON_MATCHING
 s32 func_80085F68_94F18(u8 arg0, s16 arg1, s32 arg2)
 {
-  u8 sp67;
+  u8 new_var;
+	u8 sp67;
   s16 sp62;
-  s32 sp54;
-  s32 sp50;
-  s32 sp4C;
-  s32 temp_dx;
   s32 temp_dz;
   AlienInstance *sp40;
-  AlienSpec *sp38;
-  u8 new_var;
+  AlienSpec *sp38;s32 sp54;s32 sp50;s32 sp4C;
+  
   sp40 = &alienInstances[arg0];
   sp67 = (new_var = sp40->specIndex);
   func_80128428_1373D8(sp40, D_8014DD50[arg1].unk0, 0, D_8014DD50[arg1].unk4, &sp54, &sp50, &sp4C);
   sp38 = &alienSpecs[sp67];
-  temp_dx = D_80052B34->unk0 - sp54;
-  temp_dz = D_80052B34->unk4 - sp4C;
-  sp62 = func_80003824_4424((f32) temp_dx, (f32) temp_dz) - sp40->unk6;
-  temp_dx = arg1;
+  sp62 = func_80003824_4424((f32) (D_80052B34->unk0 - sp54), (f32) (D_80052B34->unk4 - sp4C)) - sp40->unk6;
+  //temp_dx = arg1;
   (&D_8014DD50[arg1])->unk6 = func_80085A9C_94A4C((&D_8014DD50[arg1])->unk6, (s16) (sp62 * (-1)), arg2, -arg2, sp38->unk42);
   {
-	s32 temp_v1 = (&D_8014DD50[temp_dx])->unk6 + sp62;
+	s32 temp_v1 = (&D_8014DD50[arg1])->unk6 + sp62;
 	s32 temp_a0 = -temp_v1;
 	if ((sp38->unk42 * 2) < ((temp_a0 < temp_v1) ? (temp_v1) : (temp_a0)))
 	{
