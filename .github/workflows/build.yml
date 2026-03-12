@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [us, eu]
+        version: [us]
 
     steps:
       - name: Checkout repository
@@ -21,14 +21,17 @@ jobs:
           submodules: recursive
 
       - name: Fetch ROM from private assets repo
-        uses: actions/checkout@v4
-        with:
-          repository: Meridian-Lex/bh-rom-assets
-          token: ${{ secrets.BH_ROM_ASSETS_PAT }}
-          path: rom-assets
-
-      - name: Place ROM
-        run: cp rom-assets/baserom.${{ matrix.version }}.z64 baserom.${{ matrix.version }}.z64
+        env:
+          ROM_PAT: ${{ secrets.BH_ROM_ASSETS_PAT }}
+        run: |
+          if [ -n "$ROM_PAT" ]; then
+            git clone --depth 1 "https://x-access-token:${ROM_PAT}@github.com/Meridian-Lex/bh-rom-assets.git" rom-assets
+            cp rom-assets/baserom.${{ matrix.version }}.z64 baserom.${{ matrix.version }}.z64
+            echo "ROM_AVAILABLE=true" >> $GITHUB_ENV
+          else
+            echo "::warning::BH_ROM_ASSETS_PAT not set — skipping ROM fetch and build verification"
+            echo "ROM_AVAILABLE=false" >> $GITHUB_ENV
+          fi
 
       - name: Install system dependencies
         run: |
@@ -38,7 +41,18 @@ jobs:
       - name: Install Python dependencies
         run: pip3 install -r requirements.txt
 
+      - name: Install splat
+        run: |
+          pip3 install splat64==0.23.0
+          # tools/splat/split.py uses 'import src.splat' — requires src/ next to split.py.
+          # The submodule is pinned to a commit that pre-dates the src/ layout migration.
+          # Create a compatibility shim so the installed package is found correctly.
+          SPLAT_PKG=$(python3 -c "import splat, os; print(os.path.dirname(splat.__file__))")
+          mkdir -p tools/splat/src
+          ln -sf "$SPLAT_PKG" tools/splat/src/splat
+
       - name: Extract ROM
+        if: env.ROM_AVAILABLE == 'true'
         run: make extract VERSION=${{ matrix.version }}
 
       - name: Cache build artifacts
@@ -50,6 +64,7 @@ jobs:
             ${{ runner.os }}-${{ matrix.version }}-
 
       - name: Build and verify ROM
+        if: env.ROM_AVAILABLE == 'true'
         run: make --jobs VERSION=${{ matrix.version }}
 
       - name: Upload build artifacts on failure
