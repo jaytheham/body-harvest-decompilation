@@ -1,0 +1,62 @@
+name: build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [us, eu]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Fetch ROM from private assets repo
+        uses: actions/checkout@v4
+        with:
+          repository: Meridian-Lex/bh-rom-assets
+          token: ${{ secrets.BH_ROM_ASSETS_PAT }}
+          path: rom-assets
+
+      - name: Place ROM
+        run: cp rom-assets/baserom.${{ matrix.version }}.z64 baserom.${{ matrix.version }}.z64
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y $(cat packages.txt | tr '\n' ' ')
+
+      - name: Install Python dependencies
+        run: pip3 install -r requirements.txt
+
+      - name: Extract ROM
+        run: make extract VERSION=${{ matrix.version }}
+
+      - name: Cache build artifacts
+        uses: actions/cache@v4
+        with:
+          path: build
+          key: ${{ runner.os }}-${{ matrix.version }}-${{ hashFiles('src.us/**', 'asm/**', 'assets/**', 'Makefile') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.version }}-
+
+      - name: Build and verify ROM
+        run: make --jobs VERSION=${{ matrix.version }}
+
+      - name: Upload build artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-build-${{ matrix.version }}
+          path: |
+            build/bh.${{ matrix.version }}.map
+            build/undefined_syms.txt
