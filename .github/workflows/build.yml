@@ -21,24 +21,16 @@ jobs:
           submodules: recursive
 
       - name: Fetch ROM from private assets repo
-        if: ${{ secrets.BH_ROM_ASSETS_PAT != '' }}
-        uses: actions/checkout@v4
-        with:
-          repository: Meridian-Lex/bh-rom-assets
-          token: ${{ secrets.BH_ROM_ASSETS_PAT }}
-          path: rom-assets
-
-      - name: Place ROM
-        if: ${{ secrets.BH_ROM_ASSETS_PAT != '' }}
-        run: cp rom-assets/baserom.${{ matrix.version }}.z64 baserom.${{ matrix.version }}.z64
-
-      - name: Check ROM available
+        env:
+          ROM_PAT: ${{ secrets.BH_ROM_ASSETS_PAT }}
         run: |
-          if [ ! -f baserom.${{ matrix.version }}.z64 ]; then
-            echo "::warning::ROM not available (BH_ROM_ASSETS_PAT not set) — skipping extract and build verification"
-            echo "ROM_AVAILABLE=false" >> $GITHUB_ENV
-          else
+          if [ -n "$ROM_PAT" ]; then
+            git clone --depth 1 "https://x-access-token:${ROM_PAT}@github.com/Meridian-Lex/bh-rom-assets.git" rom-assets
+            cp rom-assets/baserom.${{ matrix.version }}.z64 baserom.${{ matrix.version }}.z64
             echo "ROM_AVAILABLE=true" >> $GITHUB_ENV
+          else
+            echo "::warning::BH_ROM_ASSETS_PAT not set — skipping ROM fetch and build verification"
+            echo "ROM_AVAILABLE=false" >> $GITHUB_ENV
           fi
 
       - name: Install system dependencies
