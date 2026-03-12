@@ -16,7 +16,6 @@
     \label:
 .endm
 
-
 # Float register aliases (o32 ABI, odd ones are rarely used)
 
 .set $fv0,          $f0
@@ -51,3 +50,15 @@
 .set $fs4f,         $f29
 .set $fs5,          $f30
 .set $fs5f,         $f31
+
+.macro endlabel label
+    .size \label, . - \label
+    .end \label
+.endm
+
+.macro nonmatching label, size=1
+    .global \label\().NON_MATCHING
+    .type \label\().NON_MATCHING, @object
+    .size \label\().NON_MATCHING, \size
+    \label\().NON_MATCHING:
+.endm

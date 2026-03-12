@@ -615,7 +615,7 @@ class GlobalAsmBlock:
             self.text_glabels.append(line.split()[1])
         if not line:
             pass # empty line
-        elif line.startswith('glabel ') or line.startswith('dlabel ') or line.startswith('jlabel ') or line.startswith('endlabel ') or (' ' not in line and line.endswith(':')):
+        elif line.startswith('glabel ') or line.startswith('dlabel ') or line.startswith('jlabel ') or line.startswith('endlabel ') or line.startswith('nonmatching ') or (' ' not in line and line.endswith(':')):
             pass # label
         elif line.startswith('.section') or line in ['.text', '.data', '.rdata', '.rodata', '.bss', '.late_rodata']:
             # section change
@@ -677,6 +677,9 @@ class GlobalAsmBlock:
             self.add_sized(2*len(line.split(',')), real_line)
         elif line.startswith('.size'):
             pass
+        elif line.startswith('nonmatching '):
+            # Size hint directive used by decomp tooling — no-op in asm_processor and assembler
+            real_line = '# ' + real_line
         elif line.startswith('.'):
             # .macro, ...
             self.fail("asm directive not supported", real_line)
@@ -931,6 +934,9 @@ def parse_source(f, opts, out_dependencies, print_source=None):
         use_jtbl_for_rodata = True
 
     state = GlobalState(min_instr_count, skip_instr_count, use_jtbl_for_rodata, prelude_if_late_rodata, opts.mips1, opts.pascal)
+    # Seed namectr with a hash of the filename so parallel builds don't collide on _asmpp_* symbols
+    import hashlib as _hashlib
+    state.namectr = int(_hashlib.md5(f.name.encode()).hexdigest(), 16) % (10 ** 6) * 1000
     output_enc = opts.output_enc
 
     global_asm = None
