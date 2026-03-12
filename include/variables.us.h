@@ -167,6 +167,7 @@ extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
 extern VehicleInstance vehicleInstances[]; // 8004DCD0
+extern u8 D_80050ADE[];
 extern u8 D_80050AE0[];
 extern u8 D_80050AF0[];
 extern s8 D_80050C0B;
@@ -561,6 +562,7 @@ extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
 
 extern BuildingSpec buildingSpecs[0x20]; // 0x80259090
+extern u8 D_802590A4[];
 extern Unk80259490 D_80259490; // vehicle instances?
 extern u8 D_80259D90[][0x50];
 extern u8 D_80259D92[][0x50];
