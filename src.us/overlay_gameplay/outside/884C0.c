@@ -2679,69 +2679,27 @@ void func_800932A8_A2258(u8 arg0) {
 	}
 }
 
-// https://decomp.me/scratch/Wdl2K
-#ifdef NON_MATCHING
 void func_8009335C_A230C(u8 arg0)
 {
-  s32 dz;
-  s32 dx;
-  s32 neg_dz;
-  int new_var;
-  s32 neg_dx;
-  s32 abs_dx;
-  s32 abs_dz;
-  func_800873A8_96358(arg0);
-  dz = alienInstances[arg0].unk0 - D_80052B34->unk0;
-  neg_dz = -dz;
-  dx = alienInstances[arg0].unk4 - D_80052B34->unk4;
-  if (neg_dz < dz)
-  {
-	abs_dz = dz;
-  }
-  else
-  {
-	abs_dz = neg_dz;
-  }
-  neg_dx = -dx;
-  abs_dx = neg_dx;
-  new_var = neg_dx;
-  if ((-dx) < dx)
-  {
-	abs_dx = dx;
-  } else {
-	  abs_dx = neg_dx;
-  }
-  if (abs_dx < abs_dz)
-  {
-	neg_dz = -dz;
-	if (neg_dz < dz)
+	s32 dz;
+	s32 dx;
+	s32 abs_dx;
+	s32 abs_dz;
+	func_800873A8_96358(arg0);
+	dz = alienInstances[arg0].unk0 - D_80052B34->unk0;
+	dx = alienInstances[arg0].unk4 - D_80052B34->unk4;
+
+	abs_dz = -dz < dz?  dz : -dz;
+	abs_dx = -dx < dx ? dx : -dx;
+
+	dz = abs_dx < abs_dz
+		? (-dz < dz? dz : -dz)
+		: (-dx < dx? dx : -dx);
+	if (dz < 0xC00)
 	{
-	  abs_dz = dz;  
+		alienInstances[arg0].unk12 = 0;
 	}
-	else
-	{
-	  abs_dz = neg_dz;
-	}
-	  dz = abs_dz;
-  }
-  else
-  {
-	if (neg_dx < dx)
-	{
-	  abs_dx = dx;
-	} else {
-		abs_dx = new_var;    
-	}
-	dz = abs_dx;
-  }
-  if (dz < 0xC00)
-  {
-	alienInstances[arg0].unk12 = 0;
-  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8009335C_A230C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80093438_A23E8.s")
 
