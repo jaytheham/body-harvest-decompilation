@@ -1401,7 +1401,42 @@ s32 func_80085E2C_94DDC(u8 arg0, s16 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085E2C_94DDC.s")
 #endif
 
+#ifdef NON_MATCHING
+s32 func_80085F68_94F18(u8 arg0, s16 arg1, s32 arg2)
+{
+  u8 sp67;
+  s16 sp62;
+  s32 sp54;
+  s32 sp50;
+  s32 sp4C;
+  s32 temp_dx;
+  s32 temp_dz;
+  AlienInstance *sp40;
+  AlienSpec *sp38;
+  u8 new_var;
+  sp40 = &alienInstances[arg0];
+  sp67 = (new_var = sp40->specIndex);
+  func_80128428_1373D8(sp40, D_8014DD50[arg1].unk0, 0, D_8014DD50[arg1].unk4, &sp54, &sp50, &sp4C);
+  sp38 = &alienSpecs[sp67];
+  temp_dx = D_80052B34->unk0 - sp54;
+  temp_dz = D_80052B34->unk4 - sp4C;
+  sp62 = func_80003824_4424((f32) temp_dx, (f32) temp_dz) - sp40->unk6;
+  temp_dx = arg1;
+  (&D_8014DD50[arg1])->unk6 = func_80085A9C_94A4C((&D_8014DD50[arg1])->unk6, (s16) (sp62 * (-1)), arg2, -arg2, sp38->unk42);
+  {
+	s32 temp_v1 = (&D_8014DD50[temp_dx])->unk6 + sp62;
+	s32 temp_a0 = -temp_v1;
+	if ((sp38->unk42 * 2) < ((temp_a0 < temp_v1) ? (temp_v1) : (temp_a0)))
+	{
+	  return 1;
+	}
+  }
+  return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085F68_94F18.s")
+#endif
+
 
 s16 func_800860CC_9507C(s16 arg0, s16 arg1, s16 arg2) {
 	s16 pad;
@@ -2518,18 +2553,14 @@ void func_80091A78_A0A28(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800920C0_A1070.s")
 
-// https://decomp.me/scratch/MmU1f
-#ifdef NON_MATCHING
 s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 {
   u8 result;
-	AlienInstance*ptr;
-  result = func_8007956C_8851C(0xA) & 0xFF;
- 
+  AlienInstance *ptr;
+  result = func_8007956C_8851C(0xA);
   if (result != 0xFF)
   {
-	  ptr = &alienInstances[result];
-	
+	ptr = &alienInstances[result];
 	ptr->unk0 = arg0;
 	ptr->unk4 = arg1;
 	ptr->unk20 &= 0xF7FFFFFF;
@@ -2538,9 +2569,6 @@ s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
   }
   return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80092A50_A1A00.s")
-#endif
 
 // https://decomp.me/scratch/Eb0Us
 #ifdef NON_MATCHING
