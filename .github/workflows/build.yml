@@ -36,7 +36,9 @@ jobs:
           sudo apt-get install -y $(cat packages.txt | tr '\n' ' ')
 
       - name: Install Python dependencies
-        run: pip3 install -r requirements.txt
+        run: |
+          pip3 install -r requirements.txt
+          pip3 install tools/splat
 
       - name: Extract ROM
         run: make extract VERSION=${{ matrix.version }}
