@@ -205,7 +205,16 @@ s32 func_80011D6C_1296C(s32 arg0) {
     return debug_printModelSegmentEnd((void *)temp_v0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011DBC_129BC.s")
+s32 func_80011DBC_129BC(s32 arg0) {
+    s32 temp_v0;
+
+    debug_printModelSegmentStart(__printfunc);
+    temp_v0 = func_800119A8_125A8(__printfunc);
+    temp_v0 = func_80011B14_12714(temp_v0);
+    temp_v0 = func_80011B60_12760((u8)arg0, temp_v0);
+    temp_v0 = func_80011AC8_126C8(temp_v0);
+    return debug_printModelSegmentEnd((void *)temp_v0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011E14_12A14.s")
 
