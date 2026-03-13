@@ -41,16 +41,6 @@ jobs:
       - name: Install Python dependencies
         run: pip3 install -r requirements.txt
 
-      - name: Install splat
-        run: |
-          pip3 install splat64==0.23.0
-          # tools/splat/split.py uses 'import src.splat' — requires src/ next to split.py.
-          # The submodule is pinned to a commit that pre-dates the src/ layout migration.
-          # Create a compatibility shim so the installed package is found correctly.
-          SPLAT_PKG=$(python3 -c "import splat, os; print(os.path.dirname(splat.__file__))")
-          mkdir -p tools/splat/src
-          ln -sf "$SPLAT_PKG" tools/splat/src/splat
-
       - name: Extract ROM
         if: env.ROM_AVAILABLE == 'true'
         run: make extract VERSION=${{ matrix.version }}
