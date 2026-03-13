@@ -12,6 +12,9 @@ extern char D_800377BC[];
 extern char D_800377D0[];
 extern char D_800377E4[];
 extern char D_800377F8[];
+extern char D_80037808[];
+extern char D_8003781C[];
+extern s32 D_802B2080;
 
 s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 var_s0;
@@ -98,7 +101,9 @@ void func_80010228_10E28(u32 rom_addr, void *dest_buffer) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_8001032C_10F2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80010420_11020.s")
+s32 func_80010420_11020(s32 arg0, s32 arg1) {
+    return func_8001032C_10F2C(arg0, arg1, (s32)&D_802B2080);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80010444_11044.s")
 
