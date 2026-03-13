@@ -1935,7 +1935,55 @@ s32 func_80088F78_97F28(u8 arg0) {
 	return *(s32 *)(unk0 + 4);
 }
 
+#ifdef NON_MATCHING
+s32 func_80088FFC_97FAC(s8 **arg0, s16 arg1, s16 arg2) {
+	s32 var_s0;
+	s32 var_a3;
+	s8 *var_t8;
+
+	var_a3 = 0;
+	var_s0 = 0;
+	while (arg2 != -1) {
+loop_2:
+		var_t8 = *arg0 + 8;
+		if (*(*arg0) == 1) {
+			var_s0 += 1;
+		} else if (*(*arg0) == -0x43) {
+			var_s0 -= 1;
+		}
+		*arg0 = var_t8;
+		if (var_s0 != 1) {
+			goto loop_2;
+		}
+		if (var_t8[0] != 6) {
+			goto loop_2;
+		}
+		if (arg2 == arg1) {
+			var_a3 = *(s32 *)(var_t8 + 4);
+		} else {
+			if (D_8014DD50[arg2].unkC != -1) {
+				var_a3 = func_80088FFC_97FAC(arg0, arg1, D_8014DD50[arg2].unkC);
+			}
+		}
+		if (var_a3 != 0) {
+			return var_a3;
+		}
+		arg2 = D_8014DD50[arg2].unkD;
+	}
+	do {
+		var_t8 = *arg0 + 8;
+		if (*(*arg0) == 1) {
+			var_s0 += 1;
+		} else if (*(*arg0) == -0x43) {
+			var_s0 -= 1;
+		}
+		*arg0 = var_t8;
+	} while (var_s0 != 0);
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088FFC_97FAC.s")
+#endif
 
 s32 func_8008916C_9811C(u8 arg0, s16 arg1) {
 	s16 padX;
