@@ -754,7 +754,30 @@ void func_80081E5C_90E0C(s16 arg0)
   }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80081F18_90EC8.s")
+s8 func_80081F18_90EC8(u8 arg0, u8 arg1, u8 arg2, s16 *arg3, Unk8014DD50 **arg4) {
+	u8 i;
+	s8 result;
+
+	result = -1;
+	if (D_8014DD5E[*arg3][0] == 0) {
+		if (alienInstances[arg0].unk36 == arg2) {
+			return (s8)arg2;
+		}
+		for (i = 0; i < arg1; i++) {
+			if (arg3[i] != -1) {
+				func_80081C84_90C34((u8)arg3[i], arg4[i] + alienInstances[arg0].unk36);
+			}
+		}
+		result = (s8)alienInstances[arg0].unk36;
+		alienInstances[arg0].unk36++;
+	}
+	for (i = 0; i < arg1; i++) {
+		if (arg3[i] != -1) {
+			func_80081E5C_90E0C(arg3[i]);
+		}
+	}
+	return result;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082084_91034.s")
 
