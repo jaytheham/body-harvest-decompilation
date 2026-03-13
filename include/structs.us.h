@@ -113,8 +113,7 @@ typedef struct {
 	/* 0x1A */ u8 specIndex;
 	/* 0x1B */ u8 unk1B; // something to do with showing health bar?
 	/* 0x1C */ s16 hitPoints;
-	/* 0x1E */ u8 unk1E;
-	/* 0x1F */ u8 pad1F;
+	/* 0x1E */ s16 unk1E;
 	/* 0x20 */ s32 unk20; // flags?
 	/* 0x24 */ u8 unk24;
 	/* 0x25 */ u8 unk25;

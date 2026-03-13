@@ -23,8 +23,8 @@ You will convert the named N64 assembly function to C89 code, compile it (IDO 5.
 
 These powershell tools exist to assist you:
 
-- Build the ROM: `.\tools\clean-make.ps1`
-- Compare target and your current assembly for a specific function after building: `.\tools\asm-diff.ps1 <target function name> <ROM address of next function>"`. E.g. `.\tools\asm-diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`. Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match. Diff output skips matching lines except for 3 lines of matching context either side of differences.
+- Build the ROM: `.\tools\make.ps1`
+- Compare target and your current assembly for a specific function after building: `.\tools\diff.ps1 <target function name> <ROM address of next function>"`. E.g. `.\tools\diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`. Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match. Diff output skips matching lines except for 3 lines of matching context either side of differences.
 - You can decompile gfx macros using `.\tools\gfxdis.ps1`:
 e.g.
 ```C
@@ -66,7 +66,7 @@ Read file `DecompHints.md` for general guidance.
 
 ## Step 3: Build ROM
 
-Build the ROM: `.\tools\clean-make.ps1` Important: You must run this to build the entire project, to ensure all symbols are correctly linked and to get an accurate comparison of the current vs the target.
+Build the ROM: `.\tools\make.ps1` Important: You must run this to build the entire project, to ensure all symbols are correctly linked and to get an accurate comparison of the current vs the target.
 
 **If compilation errors occur:**
 
@@ -80,7 +80,7 @@ If build completes with `build/bh.us.z64: OK` the function is correctly matched 
 
 Use coddog to find any similar functions that are already decompiled which you may be able to copy.
 
-Use `.\tools\asm-diff.ps1` to compare the target and current assembly to identify differences: note instruction order, registers, immediates, branch conditions.
+Use `.\tools\diff.ps1` to compare the target and current assembly to identify differences: note instruction order, registers, immediates, branch conditions.
 
 ## Step 5+: Iterate Until Match
 
@@ -106,5 +106,4 @@ Move any newly declared variables or functions from the C source file to `includ
 | `undeclared identifier`           | Add `extern` to `include/variables.us.h`                    |
 | IDO syntax error on casts         | Split into separate statements; avoid complex expressions   |
 | Link error (missing symbol)       | Ensure symbol is declared with `extern` in a header         |
-| Build fails but creates no output | Check for `make` syntax in container; use `make -j QUIET=1` |
 | Can't find function in objdump    | Verify function name matches; rebuild first                 |
