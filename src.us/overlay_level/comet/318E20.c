@@ -653,9 +653,38 @@ s32 func_802E00D0_324220(s32 arg0, s32 arg1) {
     return 1;
 }
 
+void func_802E0104_324254(VehicleInstance *vehicle);
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0104_324254.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E015C_3242AC.s")
+void func_802E015C_3242AC(VehicleInstance *vehicle) {
+    s16 u, v;
+    s32 du, dv;
+    AlienInstance *alien;
+    u8 specIndex;
+
+    specIndex = vehicle->unk1A;
+    alien = &alienInstances[specIndex];
+
+    u = (vehicle->unk1B << 8) + 0x80;
+    v = (vehicle->unk1C << 8) + 0x80;
+
+    alien->unk0 = u;
+    alien->unk4 = v;
+    alien->unk2 = (s16)(alien->unk2 + 0x8000);
+    alien->unk20 = (s32)(alien->unk20 | 0x20000000);
+
+    vehicle->unk4 = (s32)(vehicle->unk4 + 9);
+    vehicle->unkC = &func_802E0104_324254;
+
+    func_800AE454_BD404(vehicle);
+
+    du = D_80052B34->unk0 - alien->unk0;
+    dv = D_80052B34->unk4 - alien->unk4;
+
+    alien->unkE = func_80003824_4424((f32)du, (f32)dv);
+
+    alien->unk3A = 0xFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0234_324384.s")
 
