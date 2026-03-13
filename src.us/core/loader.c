@@ -204,4 +204,15 @@ s32 func_80011FE4_12BE4(void *arg0) {
     return ((s32)arg0 & 0xFFFFFF) + D_8006AA74;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80012000_12C00.s")
+s32 func_80012000_12C00(s32 arg0) {
+    switch ((u32)arg0 >> 24) {
+    case 1:
+        return func_80011FAC_12BAC((void *)arg0);
+    case 5:
+        return func_80011FC8_12BC8((void *)arg0);
+    case 0xF:
+        return func_80011FE4_12BE4((void *)arg0);
+    default:
+        return func_80011F90_12B90((void *)arg0);
+    }
+}
