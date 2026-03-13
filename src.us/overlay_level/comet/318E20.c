@@ -7,6 +7,7 @@ extern void func_802D6100_31A250(void);
 extern void func_802D6294_31A3E4(void);
 
 
+#ifdef NON_MATCHING
 void func_802D4CD0_318E20(s32 arg0, void *arg1) {
     if (arg0 < 0x14) {
         ((void (*)(s32))D_802E4E84[arg0])(arg0);
@@ -32,6 +33,9 @@ void func_802D4CD0_318E20(s32 arg0, void *arg1) {
         return;
     }
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4CD0_318E20.s")
+#endif
 
 
 s16 func_802D4DA8_318EF8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
@@ -65,6 +69,7 @@ void func_802D4EE4_319034(s16 arg0) {
     }
 }
 
+#ifdef NON_MATCHING
 void func_802D4F4C_31909C(void) {
     BuildingInstance *temp_t5;
 
@@ -128,8 +133,12 @@ void func_802D4F4C_31909C(void) {
         temp_t5->yCoord = 0x7D00;
     }
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4F4C_31909C.s")
+#endif
 
 
+#ifdef NON_MATCHING
 void func_802D522C_31937C(s16 arg0) {
     Unk80052B40_fp *temp_fp;
     s16 spBE;
@@ -268,6 +277,9 @@ void func_802D522C_31937C(s16 arg0) {
         spBE += 1;
     } while (spBE < 3);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D522C_31937C.s")
+#endif
 
 
 void func_802D58BC_319A0C(void) {
