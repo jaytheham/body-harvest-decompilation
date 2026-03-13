@@ -33,6 +33,8 @@ extern void (*__printfunc)(s32, s32);
 extern OSMesgQueue D_80067F88;
 extern s32 D_8006AA70;
 extern s32 D_8006AA74;
+extern char D_800380C4[];
+extern char D_800380E4[];
 
 s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 var_s0;
@@ -176,13 +178,32 @@ void __osInitialize_emu(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011BE8_127E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/debug_printModelSegmentStart.s")
+void debug_printModelSegmentStart(void *arg0) {
+    osSyncPrintf(D_800380C4);
+    osSyncPrintf(D_800380E4, arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/debug_printModelSegmentEnd.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011D24_12924.s")
+void func_80011D24_12924(void) {
+    s32 temp_v0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011D6C_1296C.s")
+    debug_printModelSegmentStart(__printfunc);
+    temp_v0 = func_800119A8_125A8(__printfunc);
+    temp_v0 = func_80011AC8_126C8(temp_v0);
+    temp_v0 = func_80011BE8_127E8(temp_v0);
+    debug_printModelSegmentEnd(temp_v0);
+}
+
+s32 func_80011D6C_1296C(s32 arg0) {
+    s32 temp_v0;
+
+    debug_printModelSegmentStart(__printfunc);
+    temp_v0 = func_800119A8_125A8(__printfunc);
+    temp_v0 = func_800119F4_125F4(temp_v0);
+    temp_v0 = func_80011A40_12640((u8)arg0, temp_v0);
+    return debug_printModelSegmentEnd((void *)temp_v0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011DBC_129BC.s")
 
