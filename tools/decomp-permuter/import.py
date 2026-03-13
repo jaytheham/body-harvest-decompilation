@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # usage: ./import.py path/to/file.c path/to/asm.s [make flags]
 import argparse
+from base64 import b64encode
 from collections import defaultdict
 import json
 import os
@@ -12,7 +13,18 @@ import subprocess
 import sys
 import toml
 import fnmatch
-from typing import Callable, Dict, List, Match, Mapping, Optional, Pattern, Tuple
+from typing import (
+    Callable,
+    Dict,
+    List,
+    Match,
+    Mapping,
+    Optional,
+    Pattern,
+    Tuple,
+    Set,
+    cast,
+)
 import urllib.request
 import urllib.parse
 
@@ -43,7 +55,7 @@ cpp_cmd = homebrew_gcc_cpp() if is_macos else "cpp"
 make_cmd = "gmake" if is_macos else "make"
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-prelude_file = os.path.join(dir_path, "prelude.inc")
+DEFAULT_ASM_PRELUDE_FILE = os.path.join(dir_path, "prelude.inc")
 
 DEFAULT_AS_CMDLINE: List[str] = ["mips-linux-gnu-as", "-march=vr4300", "-mabi=32"]
 
@@ -55,7 +67,7 @@ STUB_FN_MACROS: List[str] = [
     "-D_Static_assert(x, y)=",
     "-D__attribute__(x)=",
     "-DGLOBAL_ASM(...)=",
-    "-D__asm__(...)=",
+    "-D__asm__(...)=_permuter_ignore_line __asm__(__VA_ARGS__)",
 ]
 
 SETTINGS_FILES = [
@@ -65,20 +77,35 @@ SETTINGS_FILES = [
 ]
 
 
+def json_dict(
+    data: Mapping[str, object], prop: str, allow_missing: bool = True
+) -> Dict[str, object]:
+    if prop not in data:
+        if allow_missing:
+            return {}
+        else:
+            raise Exception(f'missing "{prop}" property')
+    ret = data[prop]
+    if not isinstance(ret, dict):
+        raise Exception(f'"{prop}" property must be a dict')
+    return cast(Dict[str, object], ret)
+
+
 def formatcmd(cmdline: List[str]) -> str:
     return " ".join(shlex.quote(arg) for arg in cmdline)
 
 
 def prune_asm(asm_cont: str) -> Tuple[str, str]:
     func_name = None
-    asm_lines = []
-    late_rodata = []
+    asm_lines: List[str] = []
+    late_rodata: List[str] = []
     cur_section = ".text"
     for line in asm_cont.splitlines(keepends=True):
         changed_section = False
+        line_parts = line.split()
 
-        if line.strip().startswith(".section"):
-            cur_section = line.split()[1]
+        if len(line_parts) >= 2 and line_parts[0] == ".section":
+            cur_section = line_parts[1]
             changed_section = True
         elif line.strip() in [
             ".text",
@@ -99,11 +126,10 @@ def prune_asm(asm_cont: str) -> Tuple[str, str]:
         if (
             func_name is None
             and cur_section == ".text"
-            and (
-                line.strip().startswith("glabel ") or line.strip().startswith(".globl ")
-            )
+            and len(line_parts) >= 2
+            and line_parts[0] in ("glabel", ".globl")
         ):
-            func_name = line.split()[1]
+            func_name = line_parts[1]
         asm_lines.append(line)
 
     # ".late_rodata" is non-standard asm, so we add it to the end of the file as ".rodata"
@@ -195,7 +221,7 @@ def parse_asm(
 
 
 def create_directory(func_name: str) -> str:
-    os.makedirs(f"nonmatchings/", exist_ok=True)
+    os.makedirs("nonmatchings/", exist_ok=True)
     ctr = 0
     while True:
         ctr += 1
@@ -225,7 +251,7 @@ def find_root_dir(filename: str, pattern: List[str]) -> Optional[str]:
 def fixup_build_command(
     parts: List[str], ignore_part: str
 ) -> Tuple[List[str], Optional[List[str]]]:
-    res = []
+    res: List[str] = []
     skip_count = 0
     assembler = None
     for part in parts:
@@ -245,7 +271,12 @@ def fixup_build_command(
             for i, arg in enumerate(res)
             if any(
                 cmd in arg
-                for cmd in ["asm_processor", "asm-processor", "preprocess.py"]
+                for cmd in [
+                    "asm_processor",
+                    "asm-processor",
+                    "build.py",
+                    "preprocess.py",
+                ]
             )
         )
         ind1 = res.index("--", ind0 + 1)
@@ -254,7 +285,15 @@ def fixup_build_command(
         assembler = res[ind1 + 1 : ind2]
         compiler_args = res[ind2 + 1 :]
         while compiler and compiler[0].startswith("-"):
-            compiler.pop(0)
+            flag = compiler.pop(0)
+            if flag in (
+                "--input-enc",
+                "--output-enc",
+                "--asm-prelude",
+                "--convert-statics",
+                "--keep-preprocessed",
+            ):
+                compiler.pop(0)
         res = compiler + compiler_args
     except ValueError:
         pass
@@ -286,8 +325,8 @@ def find_build_command_line(
         .split("\n")
     )
 
-    output = []
-    close_match = ""
+    output: List[List[str]] = []
+    close_match: str = ""
 
     assembler = DEFAULT_AS_CMDLINE
     for line in debug_output:
@@ -354,10 +393,8 @@ PreserveMacros = Tuple[Pattern[str], Callable[[str], str]]
 def build_preserve_macros(
     cwd: str, preserve_regex: Optional[str], settings: Mapping[str, object]
 ) -> Optional[PreserveMacros]:
-
-    subdata = settings.get("preserve_macros", {})
-    assert isinstance(subdata, dict)
-    regexes = []
+    subdata = json_dict(settings, "preserve_macros")
+    regexes: List[Tuple[re.Pattern[str], str]] = []
     for regex, value in subdata.items():
         assert isinstance(value, str)
         regexes.append((re.compile(f"^(?:{regex})$"), value))
@@ -426,13 +463,17 @@ def preprocess_c_with_macros(
     # function declarations for them in a specially demarcated section of
     # the file. When the compiler runs, this section will be replaced by
     # the real defines and the preprocessor invoked once more.
-    late_defines = []
-    lines = []
-    graph = defaultdict(set)
+    late_defines: List[Tuple[str, str]] = []
+    lines: List[str] = []
+    graph: Dict[str, Set[str]] = defaultdict(set)
     reg_token = re.compile(r"[a-zA-Z0-9_]+")
     for line in source.splitlines():
         is_macro = line.startswith("_permuter define ")
         params = []
+        ignore = False
+        if "_permuter_ignore_line " in line:
+            line = line.replace("_permuter_ignore_line ", "")
+            ignore = True
         if is_macro:
             ind1 = line.find("(")
             ind2 = line.find(" ", len("_permuter define "))
@@ -446,7 +487,11 @@ def preprocess_c_with_macros(
             if after.startswith("("):
                 params = [w.strip() for w in after[1 : after.find(")")].split(",")]
         else:
-            lines.append(line)
+            if ignore:
+                encoded = b64encode(line.encode("utf-8")).decode("ascii")
+                lines.append(f"#pragma _permuter b64literal {encoded}")
+            else:
+                lines.append(line)
             name = ""
         for m in reg_token.finditer(line):
             name2 = m.group(0)
@@ -461,7 +506,7 @@ def preprocess_c_with_macros(
                 graph[name].add(name2)
 
     # Prune away (recursively) unused macros, for cleanliness.
-    used_anywhere = set()
+    used_anywhere: Set[str] = set()
     used_by_nonmacro = graph[""]
     queue = [""]
     while queue:
@@ -483,7 +528,7 @@ def preprocess_c_with_macros(
         else:
             return f"extern {typ} {name};"
 
-    used_macros = [name for (name, after) in late_defines if name in used_by_nonmacro]
+    used_macros = [name for (name, _after) in late_defines if name in used_by_nonmacro]
 
     return (
         "\n".join(
@@ -643,10 +688,8 @@ def prune_and_separate_context(
 def get_decompme_compiler_name(
     compiler: List[str], settings: Mapping[str, object], api_base: str
 ) -> str:
-    decompme_settings = settings.get("decompme", {})
-    assert isinstance(decompme_settings, dict)
-    compiler_mappings = decompme_settings.get("compilers", {})
-    assert isinstance(compiler_mappings, dict)
+    decompme_settings = json_dict(settings, "decompme")
+    compiler_mappings = json_dict(decompme_settings, "compilers")
 
     compiler_path = compiler[0]
 
@@ -656,13 +699,16 @@ def get_decompme_compiler_name(
         if fnmatch.fnmatch(compiler_path, path):
             return compiler_name
 
+    available_ids: List[str] = []
     try:
-        with urllib.request.urlopen(f"{api_base}/api/compilers") as f:
+        req = urllib.request.Request(
+            f"{api_base}/api/compiler",
+            headers={"User-Agent": "decomp-permuter"},
+        )
+        with urllib.request.urlopen(req) as f:
             json_data = json.load(f)
-            available = json_data["compilers"]
-            if not isinstance(available, dict):
-                raise Exception("compilers must be a dict")
-            available_ids = available.keys()
+            available = json_dict(json_data, "compilers", allow_missing=False)
+            available_ids = list(available.keys())
     except Exception as e:
         print(f"Failed to request available compilers from decomp.me:\n{e}")
 
@@ -694,13 +740,17 @@ def finalize_compile_command(cmdline: List[str]) -> str:
     return " ".join(quoted[:ind] + ['"$INPUT"'] + quoted[ind:] + ["-o", '"$OUTPUT"'])
 
 
-def get_compiler_flags(cmdline: List[str]) -> str:
+def get_compiler_flags(settings: Mapping[str, object], cmdline: List[str]) -> str:
+    decompme_settings = json_dict(settings, "decompme")
+    flags = decompme_settings.get("flags")
+    if flags:
+        assert isinstance(flags, str)
+        return flags
     flags = [b for a, b in zip(cmdline, cmdline[1:]) if a != "|" and b != "|"]
     return " ".join(shlex.quote(flag) for flag in flags)
 
 
 def write_compile_command(compiler: List[str], cwd: str, out_file: str) -> None:
-
     with open(out_file, "w", encoding="utf-8") as f:
         f.write("#!/usr/bin/env bash\n")
         f.write('INPUT="$(realpath "$1")"\n')
@@ -710,8 +760,9 @@ def write_compile_command(compiler: List[str], cwd: str, out_file: str) -> None:
     os.chmod(out_file, 0o755)
 
 
-def write_asm(asm_cont: str, out_file: str) -> None:
-    with open(prelude_file, "r") as p:
+def write_asm(asm_prelude_file: Optional[str], asm_cont: str, out_file: str) -> None:
+    asm_prelude_file = asm_prelude_file or DEFAULT_ASM_PRELUDE_FILE
+    with open(asm_prelude_file, "r") as p:
         asm_prelude = p.read()
     with open(out_file, "w", encoding="utf-8") as f:
         f.write(asm_prelude)
@@ -750,14 +801,19 @@ def compile_base(compile_script: str, source: str, c_file: str, out_file: str) -
 
 
 def create_write_settings_toml(
-    func_name: str, compiler_type: str, filename: str
+    func_name: str,
+    compiler_type: str,
+    filename: str,
+    objdump_command: Optional[str] = None,
 ) -> None:
-
     rand_weights = get_default_randomization_weights(compiler_type)
 
     with open(filename, "w", encoding="utf-8") as f:
         f.write(f'func_name = "{func_name}"\n')
-        f.write(f'compiler_type = "{compiler_type}"\n\n')
+        f.write(f'compiler_type = "{compiler_type}"\n')
+        if objdump_command:
+            f.write(f'objdump_command = "{objdump_command}"\n')
+        f.write("\n")
 
         f.write("# uncomment lines below to customize randomization pass weights\n")
         f.write("# see --help=randomization-passes for descriptions\n")
@@ -824,6 +880,12 @@ def main(arg_list: List[str]) -> None:
         help="""Upload the function to decomp.me to share with other people,
         instead of importing.""",
     )
+    parser.add_argument(
+        "--settings",
+        dest="settings_file",
+        metavar="SETTINGS_FILE",
+        help="""Path to settings file.""",
+    )
     args = parser.parse_args(arg_list)
 
     root_dir = find_root_dir(
@@ -831,26 +893,48 @@ def main(arg_list: List[str]) -> None:
     )
 
     if not root_dir:
-        print(f"Can't find root dir of project!", file=sys.stderr)
+        print("Can't find root dir of project!", file=sys.stderr)
         sys.exit(1)
 
     settings: Mapping[str, object] = {}
-    for filename in SETTINGS_FILES:
-        filename = os.path.join(root_dir, filename)
-        if os.path.exists(filename):
-            with open(filename) as f:
+    if args.settings_file:
+        if os.path.exists(args.settings_file):
+            with open(args.settings_file) as f:
                 settings = toml.load(f)
-            break
+        else:
+            print("Can't find settings file!", file=sys.stderr)
+            sys.exit(1)
+    else:
+        for filename in SETTINGS_FILES:
+            filename = os.path.join(root_dir, filename)
+            if os.path.exists(filename):
+                with open(filename) as f:
+                    settings = toml.load(f)
+                break
 
-    compiler_type = settings.get("compiler_type", "base")
-    build_system = settings.get("build_system", "make")
-    compiler = settings.get("compiler_command")
-    assembler = settings.get("assembler_command")
+    def get_setting(key: str) -> Optional[str]:
+        value = settings.get(key)
+        if value is None:
+            return None
+        if not isinstance(value, str):
+            print(
+                f"Value of {key} in settings.toml must be a string, but found: {value}"
+            )
+            sys.exit(1)
+        return value
+
+    build_system_raw = get_setting("build_system")
+    build_system = build_system_raw or "make"
+    compiler_str = get_setting("compiler_command") or ""
+    assembler_str = get_setting("assembler_command") or ""
+    asm_prelude_file = get_setting("asm_prelude_file")
+    objdump_command = get_setting("objdump_command")
+    if asm_prelude_file is not None:
+        asm_prelude_file = os.path.join(root_dir, asm_prelude_file)
     make_flags = args.make_flags
 
-    compiler_type = settings.get("compiler_type")
+    compiler_type = get_setting("compiler_type")
     if compiler_type is not None:
-        assert isinstance(compiler_type, str)
         print(f"Compiler type: {compiler_type}")
     else:
         compiler_type = "base"
@@ -863,21 +947,19 @@ def main(arg_list: List[str]) -> None:
     func_name, asm_cont = parse_asm(root_dir, args.c_file, args.asm_file_or_func_name)
     print(f"Function name: {func_name}")
 
-    if compiler or assembler:
-        assert isinstance(compiler, str)
-        assert isinstance(assembler, str)
-        assert settings.get("build_system") is None
-
-        compiler = shlex.split(compiler)
-        assembler = shlex.split(assembler)
+    if compiler_str or assembler_str:
+        assert (
+            build_system_raw is None
+        ), "Must not specify both build system and compiler/assembler"
+        compiler = shlex.split(compiler_str)
+        assembler = shlex.split(assembler_str)
     else:
-        assert isinstance(build_system, str)
         compiler, assembler = find_build_command_line(
             root_dir, args.c_file, make_flags, build_system
         )
 
-    print(f"Compiler: {formatcmd(compiler)} {{input}} -o {{output}}")
-    print(f"Assembler: {formatcmd(assembler)} {{input}} -o {{output}}")
+    print(f"Compiler: {finalize_compile_command(compiler)}")
+    print(f'Assembler: {formatcmd(assembler)} "$INPUT" -o "$OUTPUT"')
 
     preserve_macros = build_preserve_macros(
         root_dir, args.preserve_macros_regex, settings
@@ -897,11 +979,16 @@ def main(arg_list: List[str]) -> None:
                     "context": context,
                     "source_code": source,
                     "compiler": compiler_name,
-                    "compiler_flags": get_compiler_flags(compiler),
+                    "compiler_flags": get_compiler_flags(settings, compiler),
                     "diff_label": func_name,
                 }
             ).encode("ascii")
-            with urllib.request.urlopen(f"{api_base}/api/scratch", post_data) as f:
+            req = urllib.request.Request(
+                f"{api_base}/api/scratch",
+                data=post_data,
+                headers={"User-Agent": "decomp-permuter"},
+            )
+            with urllib.request.urlopen(req) as f:
                 resp = f.read()
                 json_data: Dict[str, str] = json.loads(resp)
                 if "slug" in json_data:
@@ -930,9 +1017,11 @@ def main(arg_list: List[str]) -> None:
 
     try:
         write_to_file(source, base_c_file)
-        create_write_settings_toml(func_name, compiler_type, settings_file)
+        create_write_settings_toml(
+            func_name, compiler_type, settings_file, objdump_command
+        )
         write_compile_command(compiler, root_dir, compile_script)
-        write_asm(asm_cont, target_s_file)
+        write_asm(asm_prelude_file, asm_cont, target_s_file)
         compile_asm(assembler, root_dir, target_s_file, target_o_file)
         if compilable_source is not None:
             compile_base(compile_script, compilable_source, base_c_file, base_o_file)

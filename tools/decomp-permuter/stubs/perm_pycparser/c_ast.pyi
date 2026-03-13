@@ -7,7 +7,7 @@
 # License: BSD
 # -----------------------------------------------------------------
 
-from typing import TextIO, Iterable, List, Any, Optional, Union as Union_
+from typing import TextIO, Iterable, List, Optional, Union as Union_
 from .plyparser import Coord
 import sys
 
@@ -33,6 +33,7 @@ Expression = Union_[
     "Cast",
     "CompoundLiteral",
     "Constant",
+    "Compound",
     "ExprList",
     "FuncCall",
     "ID",
@@ -42,6 +43,7 @@ Expression = Union_[
 ]
 Statement = Union_[
     Expression,
+    "Asm",
     "Break",
     "Case",
     "Compound",
@@ -51,6 +53,7 @@ Statement = Union_[
     "DoWhile",
     "EmptyStatement",
     "For",
+    "GccAttributeStatement",
     "Goto",
     "If",
     "Label",
@@ -61,8 +64,8 @@ Statement = Union_[
     "Pragma",
 ]
 Type = Union_["PtrDecl", "ArrayDecl", "FuncDecl", "TypeDecl"]
-InnerType = Union_["IdentifierType", "Struct", "Union", "Enum"]
-ExternalDeclaration = Union_["FuncDef", "Decl", "Typedef", "Pragma"]
+InnerType = Union_["IdentifierType", "Struct", "Union", "Enum", "Typeof"]
+ExternalDeclaration = Union_["Asm", "FuncDef", "Decl", "Typedef", "Pragma"]
 AnyNode = Union_[
     Statement,
     Type,
@@ -77,6 +80,10 @@ AnyNode = Union_[
     "NamedInitializer",
     "ParamList",
     "Typename",
+    "AsmOperand",
+    "Range",
+    "GccAttribute",
+    "GccAttributeStatement",
 ]
 
 class NodeVisitor:
@@ -85,6 +92,8 @@ class NodeVisitor:
     def visit_Alignas(self, node: Alignas) -> None: ...
     def visit_ArrayDecl(self, node: ArrayDecl) -> None: ...
     def visit_ArrayRef(self, node: ArrayRef) -> None: ...
+    def visit_Asm(self, node: Asm) -> None: ...
+    def visit_AsmOperand(self, node: AsmOperand) -> None: ...
     def visit_Assignment(self, node: Assignment) -> None: ...
     def visit_BinaryOp(self, node: BinaryOp) -> None: ...
     def visit_Break(self, node: Break) -> None: ...
@@ -109,6 +118,8 @@ class NodeVisitor:
     def visit_FuncCall(self, node: FuncCall) -> None: ...
     def visit_FuncDecl(self, node: FuncDecl) -> None: ...
     def visit_FuncDef(self, node: FuncDef) -> None: ...
+    def visit_GccAttribute(self, node: GccAttribute) -> None: ...
+    def visit_GccAttributeStatement(self, node: GccAttributeStatement) -> None: ...
     def visit_Goto(self, node: Goto) -> None: ...
     def visit_ID(self, node: ID) -> None: ...
     def visit_IdentifierType(self, node: IdentifierType) -> None: ...
@@ -118,6 +129,7 @@ class NodeVisitor:
     def visit_NamedInitializer(self, node: NamedInitializer) -> None: ...
     def visit_ParamList(self, node: ParamList) -> None: ...
     def visit_PtrDecl(self, node: PtrDecl) -> None: ...
+    def visit_Range(self, node: Range) -> None: ...
     def visit_Return(self, node: Return) -> None: ...
     def visit_Struct(self, node: Struct) -> None: ...
     def visit_StructRef(self, node: StructRef) -> None: ...
@@ -126,6 +138,7 @@ class NodeVisitor:
     def visit_TypeDecl(self, node: TypeDecl) -> None: ...
     def visit_Typedef(self, node: Typedef) -> None: ...
     def visit_Typename(self, node: Typename) -> None: ...
+    def visit_Typeof(self, node: Typeof) -> None: ...
     def visit_UnaryOp(self, node: UnaryOp) -> None: ...
     def visit_Union(self, node: Union) -> None: ...
     def visit_While(self, node: While) -> None: ...
@@ -133,7 +146,6 @@ class NodeVisitor:
 
 class Alignas(Node):
     alignment: Union_[Expression, Typename]
-    coord: Optional[Coord]
 
     def __init__(
         self,
@@ -159,6 +171,38 @@ class ArrayRef(Node):
     subscript: Expression
 
     def __init__(self, name: Node, subscript: Node, coord: Optional[Coord] = None): ...
+
+class Asm(Node):
+    quals: List[str]
+    asm: Constant
+    output_operands: List[AsmOperand]
+    input_operands: List[AsmOperand]
+    clobbers: List[Constant]
+    gotos: List[str]
+
+    def __init__(
+        self,
+        quals: List[str],
+        asm: Constant,
+        output_operands: List[AsmOperand],
+        input_operands: List[AsmOperand],
+        clobbers: List[Constant],
+        gotos: List[str],
+        coord: Optional[Coord] = None,
+    ): ...
+
+class AsmOperand(Node):
+    symbolic_name: Optional[str]
+    constraint: Constant
+    expr: Expression
+
+    def __init__(
+        self,
+        symbolic_name: Optional[str],
+        constraint: Constant,
+        expr: Expression,
+        coord: Optional[Coord] = None,
+    ): ...
 
 class Assignment(Node):
     op: str
@@ -186,11 +230,14 @@ class Break(Node):
     def __init__(self, coord: Optional[Coord] = None): ...
 
 class Case(Node):
-    expr: Expression
+    expr: Union_[Expression, Range]
     stmts: List[Statement]
 
     def __init__(
-        self, expr: Expression, stmts: List[Statement], coord: Optional[Coord] = None
+        self,
+        expr: Union_[Expression, Range],
+        stmts: List[Statement],
+        coord: Optional[Coord] = None,
     ): ...
 
 class Cast(Node):
@@ -231,9 +278,11 @@ class Decl(Node):
     align: List[Alignas]
     storage: List[str]  # e.g. register
     funcspec: List[str]  # e.g. inline
+    gcc_attributes: List[GccAttribute]
     type: Union_[Type, "Struct", "Enum", "Union"]
     init: Optional[Union_[Expression, "InitList"]]
     bitsize: Optional[Expression]
+    asmlabel: Optional[Constant]
 
     def __init__(
         self,
@@ -242,9 +291,11 @@ class Decl(Node):
         align: List[Alignas],
         storage: List[str],
         funcspec: List[str],
+        gcc_attributes: List[GccAttribute],
         type: Union_[Type, "Struct", "Enum", "Union"],
         init: Optional[Union_[Expression, "InitList"]],
         bitsize: Optional[Expression],
+        asmlabel: Optional[Constant],
         coord: Optional[Coord] = None,
     ): ...
 
@@ -274,21 +325,28 @@ class EmptyStatement(Node):
 
 class Enum(Node):
     name: Optional[str]
+    gcc_attributes: List[GccAttribute]
     values: "Optional[EnumeratorList]"
 
     def __init__(
         self,
         name: Optional[str],
+        gcc_attributes: List[GccAttribute],
         values: "Optional[EnumeratorList]",
         coord: Optional[Coord] = None,
     ): ...
 
 class Enumerator(Node):
     name: str
+    gcc_attributes: List[GccAttribute]
     value: Optional[Expression]
 
     def __init__(
-        self, name: str, value: Optional[Expression], coord: Optional[Coord] = None
+        self,
+        name: str,
+        gcc_attributes: List[GccAttribute],
+        value: Optional[Expression],
+        coord: Optional[Coord] = None,
     ): ...
 
 class EnumeratorList(Node):
@@ -356,6 +414,19 @@ class FuncDef(Node):
         coord: Optional[Coord] = None,
     ): ...
 
+class GccAttribute(Node):
+    name: str
+    args: Optional[List[Expression]]
+
+    def __init__(
+        self, name: str, args: Optional[List[Expression]], coord: Optional[Coord] = None
+    ): ...
+
+class GccAttributeStatement(Node):
+    attrs: List[GccAttribute]
+
+    def __init__(self, attrs: List[GccAttribute], coord: Optional[Coord] = None): ...
+
 class Goto(Node):
     name: str
 
@@ -400,11 +471,14 @@ class Label(Node):
     def __init__(self, name: str, stmt: Statement, coord: Optional[Coord] = None): ...
 
 class NamedInitializer(Node):
-    name: List[Expression]  # [ID(x), Constant(4)] for {.x[4] = ...}
+    name: List[Union_[Expression, Range]]  # [ID(x), Constant(4)] for {.x[4] = ...}
     expr: Expression
 
     def __init__(
-        self, name: List[Expression], expr: Expression, coord: Optional[Coord] = None
+        self,
+        name: List[Union_[Expression, Range]],
+        expr: Expression,
+        coord: Optional[Coord] = None,
     ): ...
 
 class ParamList(Node):
@@ -422,6 +496,14 @@ class PtrDecl(Node):
 
     def __init__(self, quals: List[str], type: Type, coord: Optional[Coord] = None): ...
 
+class Range(Node):
+    first: Expression
+    last: Expression
+
+    def __init__(
+        self, first: Expression, last: Expression, coord: Optional[Coord] = None
+    ): ...
+
 class Return(Node):
     expr: Optional[Expression]
 
@@ -429,11 +511,13 @@ class Return(Node):
 
 class Struct(Node):
     name: Optional[str]
+    gcc_attributes: List[GccAttribute]
     decls: Optional[List[Union_[Decl, Pragma]]]
 
     def __init__(
         self,
         name: Optional[str],
+        gcc_attributes: List[GccAttribute],
         decls: Optional[List[Union_[Decl, Pragma]]],
         coord: Optional[Coord] = None,
     ): ...
@@ -487,6 +571,7 @@ class Typedef(Node):
     name: str
     quals: List[str]
     storage: List[str]
+    gcc_attributes: List[GccAttribute]
     type: Type
 
     def __init__(
@@ -494,6 +579,7 @@ class Typedef(Node):
         name: str,
         quals: List[str],
         storage: List[str],
+        gcc_attributes: List[GccAttribute],
         type: Type,
         coord: Optional[Coord] = None,
     ): ...
@@ -501,16 +587,25 @@ class Typedef(Node):
 class Typename(Node):
     name: None
     quals: List[str]
-    align: List[Alignas]
+    align: None
+    gcc_attributes: List[GccAttribute]
     type: Type
 
     def __init__(
         self,
         name: None,
         quals: List[str],
-        align: List[Alignas],
+        align: None,
+        gcc_attributes: List[GccAttribute],
         type: Type,
         coord: Optional[Coord] = None,
+    ): ...
+
+class Typeof(Node):
+    expr: Union_[Expression, Typename]
+
+    def __init__(
+        self, expr: Union_[Expression, Typename], coord: Optional[Coord] = None
     ): ...
 
 class UnaryOp(Node):
@@ -523,11 +618,13 @@ class UnaryOp(Node):
 
 class Union(Node):
     name: Optional[str]
+    gcc_attributes: List[GccAttribute]
     decls: Optional[List[Union_[Decl, Pragma]]]
 
     def __init__(
         self,
         name: Optional[str],
+        gcc_attributes: List[GccAttribute],
         decls: Optional[List[Union_[Decl, Pragma]]],
         coord: Optional[Coord] = None,
     ): ...
