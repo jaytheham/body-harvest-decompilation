@@ -555,5 +555,8 @@ s16 func_800D249C_E144C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 ar
 void func_800D25A4_E1554(s16 arg0);
 void func_802DFE68_323FB8(void *arg0, s32 arg1);
 void func_802D7548_31B698(void *arg0, s32 arg1);
+s32 func_802DFF04_324054(u8 arg0);
+void func_802D6670_31A7C0(void);
+void func_802D5BFC_319D4C(void);
 
 #endif
