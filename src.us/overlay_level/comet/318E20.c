@@ -824,6 +824,7 @@ s32 func_802E193C_325A8C(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E205C_3261AC.s")
 
+#ifdef NON_MATCHING
 void func_802E21C4_326314(s32 arg0) {
     s16 sp2C;
     void *sp24;
@@ -832,17 +833,20 @@ void func_802E21C4_326314(s32 arg0) {
     void *temp_v1;
 
     temp_s0 = arg0 & 0xFF;
-    sp2C = (s16)*(&D_8014DD5C + func_802DFF04_324054(temp_s0 & 0xFF));
+    sp2C = (s16)*(&D_8014DD5C[func_802DFF04_324054(temp_s0 & 0xFF) << 4]);
     func_802E205C_3261AC(temp_s0 & 0xFF);
     temp_v0 = func_800870D8_96088(0x80, 0x20);
-    temp_v1 = (sp2C * 0x10) + &D_8014DD50;
+    temp_v1 = &D_8014DD50[sp2C];
     sp24 = temp_v1;
-    if (func_80086D70_95D20(temp_s0 & 0xFF, 0, (s16)(temp_v0 - temp_v1->unk6)) != 0) {
-        *(&D_800481B6 + (temp_s0 * 0x50)) = 0;
-        func_80086D70_95D20(temp_s0 & 0xFF, 1, (s16)(func_800870D8_96088(0x80, 0x20) - sp24->unk6));
+    if (func_80086D70_95D20(temp_s0 & 0xFF, 0, (s16)(temp_v0 - ((Unk8014DD50 *)temp_v1)->unk6)) != 0) {
+        *(s16 *)((u8 *)&D_800481B6 + temp_s0 * 0x50) = 0;
+        func_80086D70_95D20(temp_s0 & 0xFF, 1, (s16)(func_800870D8_96088(0x80, 0x20) - ((Unk8014DD50 *)sp24)->unk6));
         func_80137468_146418(temp_s0, 0x262);
     }
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E21C4_326314.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E22A4_3263F4.s")
 
