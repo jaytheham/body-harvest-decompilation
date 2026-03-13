@@ -2,6 +2,7 @@
 #include "common.h"
 
 extern s16 D_80068078;
+extern OSMesgQueue D_80067F70;
 extern s32 D_8006AA60;
 extern s32 D_8006AA64;
 extern char D_80037780[];
@@ -83,7 +84,13 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800101F0_10DF0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80010228_10E28.s")
+void func_80010228_10E28(u32 rom_addr, void *dest_buffer) {
+    OSIoMesg io_msg;
+
+    func_8001F2E0_1FEE0();
+    osPiStartDma(&io_msg, 0, 0, rom_addr, dest_buffer, 0x18, &D_80067F70);
+    osRecvMesg(&D_80067F70, NULL, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80010290_10E90.s")
 
