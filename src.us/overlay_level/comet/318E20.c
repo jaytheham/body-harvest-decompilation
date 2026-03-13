@@ -828,27 +828,20 @@ s32 func_802E193C_325A8C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1CC0_325E10.s")
 
-s32 func_802E1EFC(u8 arg0, u8 arg1) {
-    s32 v0;
+#ifdef NON_MATCHING
+s32 func_802E1EFC_32604C(u8 arg0, u8 arg1) {
     s8 temp_s8;
-    s16 temp_s16_1;
-    s16 temp_s16_2;
+    s16 temp_s16;
     s32 result;
-    AlienInstance *alien;
 
-    v0 = func_802DFFC8(arg0);
-    temp_s8 = (s8)v0;
+    temp_s8 = (s8)func_802DFFC8_324118(arg0);
+    temp_s16 = D_8014DD5C[temp_s8];
 
-    temp_s16_1 = D_8014DD5C[temp_s8];
-    temp_s16_2 = D_800481A4[arg1 * 5];
-
-    result = func_80082084(arg0, 3, 4, &temp_s8);
+    result = func_80082084_91034(arg0, 3, 4, &temp_s8);
 
     if (result == 2) {
-        func_802E1CC0(arg1);
-
-        alien = &alienInstances[arg1 * 5];
-        alien->unk12 -= 0x280;
+        func_802E1CC0_325E10(arg1);
+        alienInstances[arg1].unk12 -= 0x280;
     }
 
     if ((s8)result == 4) {
@@ -857,6 +850,9 @@ s32 func_802E1EFC(u8 arg0, u8 arg1) {
         return 1;
     }
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1EFC_32604C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1FE0_326130.s")
 
