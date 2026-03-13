@@ -539,7 +539,33 @@ countdown:
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBDD0_31FF20.s")
+void func_802DBDD0_31FF20(u8 arg0) {
+    void *sp24;
+    s16 temp_v1;
+    AlienInstance *inst;
+    s32 t3;
+
+    inst = &alienInstances[arg0];
+    if (!(inst->unk20 & 0x100000)) {
+        sp24 = inst;
+        func_800DF848_EE7F8(inst->unk0, inst->unk2, inst->unk4, 0x96, 8);
+        inst->unk2C = 0xA;
+        func_80137468_146418(arg0, 0xF);
+        return;
+    }
+    temp_v1 = inst->unk2C;
+    if (temp_v1 >= 0) {
+        t3 = 0;
+    } else {
+        t3 = temp_v1 & 1;
+        if (t3 != 0) {
+            t3 += -2;
+        }
+    }
+    if (t3 == 0) {
+        func_800DFA34_EE9E4(inst->unk0, (s16)((inst->unk2 - (s16)(temp_v1 * 0x28)) + 0x190), inst->unk4, 0x96, 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBEA4_31FFF4.s")
 
