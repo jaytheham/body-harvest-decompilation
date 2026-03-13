@@ -310,6 +310,7 @@ void func_802D58BC_319A0C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D59BC_319B0C.s")
 
+#ifdef NON_MATCHING
 void func_802D5BFC_319D4C(void) {
     s32 *counter = &D_802E7C3C;
     s32 val = D_802E7C3C - 1;
@@ -321,6 +322,9 @@ void func_802D5BFC_319D4C(void) {
     func_80018D7C_1997C(0xE0);
     func_800074BC_80BC(func_802D5BFC_319D4C);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D5BFC_319D4C.s")
+#endif
 
 void func_802D5C40_319D90(void) {
     if (func_8000726C_7E6C(0x29) == 0) {
@@ -583,22 +587,23 @@ void func_802DBDD0_31FF20(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBDD0_31FF20.s")
 #endif
 
+#ifdef NON_MATCHING
 void func_802DBEA4_31FFF4(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
     AlienInstance *inst;
     s32 result;
     s16 local_arg1, local_arg2;
-    
+
     inst = &alienInstances[arg0 & 0xFF];
-    
+
     if (!(inst->unk20 & 0x1000)) {
         return;
     }
-    
+
     local_arg1 = arg1;
     local_arg2 = arg2;
-    result = func_80081F18_90EC8(arg0, 2, 0xD, &local_arg1);
+    result = func_80081F18_90EC8(arg0, 2, 0xD, &local_arg1, &D_802E566C);
     result &= 0xFF;
-    
+
     if (result == 4 || result == 7 || result == 0xA || result == 0xD) {
         inst->unk1E = 0;
         func_80087188_96138(arg0, 0, 0x20);
@@ -606,6 +611,9 @@ void func_802DBEA4_31FFF4(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
         inst->unk20 &= ~0x1001;
     }
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBEA4_31FFF4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBF88_3200D8.s")
 
@@ -711,7 +719,6 @@ s8 func_802DFF84_3240D4(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFFC8_324118.s")
 
-#ifdef NON_MATCHING
 s32 func_802E0018_324168(u8 arg0) {
     AlienInstance *inst;
     s16 val;
@@ -731,15 +738,12 @@ s32 func_802E0018_324168(u8 arg0) {
         func_8007E734_8D6E4(inst, -0x8000);
         return 1;
     }
-    if (val < 0xE01) {
-        return 0;
+    if (val >= 0xE01) {
+        func_8007E734_8D6E4(inst, 0);
+        return 1;
     }
-    func_8007E734_8D6E4(inst, 0);
-    return 1;
+    return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0018_324168.s")
-#endif
 
 s32 func_802E00D0_324220(s32 arg0, s32 arg1) {
     if ((arg0 < -0x2C00) || (arg0 >= -0x1EFF) || (arg1 < -0xD00) || (arg1 >= 0xE01)) {
@@ -946,55 +950,35 @@ void func_802E21C4_326314(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E33B0_327500.s")
 
-#ifdef NON_MATCHING
-void func_802E3550_3276A0(u8 arg0) {
-    func_800A93A4_B8354(arg0, -0x3B, 0x117, 0xA9);
+void func_802E3550_3276A0(s32 arg0) {
+    func_800A93A4_B8354(arg0 & 0xFF, -0x3B, 0x117, 0xA9);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E3550_3276A0.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E3584_3276D4.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E3744_327894.s")
 
-#ifdef NON_MATCHING
-void func_802E37D4_327924(u8 arg0) {
-    func_800A93A4_B8354(arg0, -0x96, -0x25, 0xD4);
+void func_802E37D4_327924(s32 arg0) {
+    func_800A93A4_B8354(arg0 & 0xFF, -0x96, -0x25, 0xD4);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E37D4_327924.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E3808_327958.s")
 
-#ifdef NON_MATCHING
-void func_802E38A4_3279F4(u8 arg0) {
-    func_800A93A4_B8354(arg0, 0x91, -0x25, 0xBB);
+void func_802E38A4_3279F4(s32 arg0) {
+    func_800A93A4_B8354(arg0 & 0xFF, 0x91, -0x25, 0xBB);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E38A4_3279F4.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E38D8_327A28.s")
 
-#ifdef NON_MATCHING
-void func_802E3A18_327B68(u8 arg0) {
-    func_800A93A4_B8354(arg0, -0x96, -0x25, 0xD4);
+void func_802E3A18_327B68(s32 arg0) {
+    func_800A93A4_B8354(arg0 & 0xFF, -0x96, -0x25, 0xD4);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E3A18_327B68.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E3A4C_327B9C.s")
 
-#ifdef NON_MATCHING
-void func_802E3E30_327F80(u8 arg0) {
-    func_800A93A4_B8354(arg0, 0x91, -0x25, 0xBB);
+void func_802E3E30_327F80(s32 arg0) {
+    func_800A93A4_B8354(arg0 & 0xFF, 0x91, -0x25, 0xBB);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E3E30_327F80.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E3E64_327FB4.s")
 
