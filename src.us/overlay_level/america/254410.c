@@ -4,7 +4,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D4CD0_254410.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D4DD4_254514.s")
+void func_802D4DD4_254514(void) {
+    func_800FB468_10A418(&D_8004F990, 0x44F64000);
+    func_800FB468_10A418(&D_8004F9EC, 0x44F64000);
+    func_800FB468_10A418(&D_8004FA48, 0x44F64000);
+    vehicleInstances[80].unk20 = (u16)(vehicleInstances[80].unk20 | 3);
+    vehicleInstances[81].unk20 = (u16)(vehicleInstances[81].unk20 | 3);
+    vehicleInstances[82].unk20 = (u16)(vehicleInstances[82].unk20 | 3);
+    if (func_8000726C_7E6C(0x26) != 0) {
+        func_802D4CD0_254410(0x13, 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D4E70_2545B0.s")
 

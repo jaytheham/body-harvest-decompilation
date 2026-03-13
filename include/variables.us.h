@@ -914,6 +914,9 @@ extern s16 D_80157F8C;
 extern s16 D_80157F8E;
 extern VehicleInstance D_80050A74;
 extern VehicleInstance D_8004FB00;
+extern VehicleInstance D_8004F990;
+extern VehicleInstance D_8004F9EC;
+extern VehicleInstance D_8004FA48;
 extern s16 D_8015930C;
 extern u8 D_8013FDA8[];
 extern char D_800A4BCC[];
@@ -1089,4 +1092,6 @@ extern s16 D_802E4FB4[];
 extern s16 D_8014D17C;
 extern s16 D_8014D17E;
 extern Unk8014DD50 *D_802E566C;
+extern void (*D_802DF350[])(s32);
+
 #endif
