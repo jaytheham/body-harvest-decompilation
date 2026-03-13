@@ -498,46 +498,49 @@ s32 func_80080840_8F7F0(u8 arg0, s32 arg1)
   return 0;
 }
 
-#ifdef NON_MATCHING
-s32 func_800808F0_8F8A0(u8 arg0, s16 *arg1) {
+s32 func_800808F0_8F8A0(u8 arg0, s16 *arg1)
+{
 	s32 var_v0;
 	u8 specIndex;
 	s16 unk42;
-
 	var_v0 = 1;
 	specIndex = alienInstances[arg0].specIndex;
 	unk42 = alienSpecs[specIndex].unk42;
-	if (alienSpecs[specIndex].unk54 & 0x40) {
-		if (alienInstances[arg0].unk2 < alienInstances[arg0].unk16) {
-			if (alienInstances[arg0].unk10 < 0x80) {
-				alienInstances[arg0].unk10 += alienSpecs[specIndex].unk3E;
-			}
+	if (alienSpecs[specIndex].unk54 & 0x40)
+	{
+		if (alienInstances[arg0].unk2 < alienInstances[arg0].unk16 && alienInstances[arg0].unk10 < 0x80)
+		{
+			alienInstances[arg0].unk10 += alienSpecs[specIndex].unk3E;
 		}
-		if (alienInstances[arg0].unk16 < alienInstances[arg0].unk2) {
-			if (alienInstances[arg0].unk10 >= -0x7F) {
-				alienInstances[arg0].unk10 -= alienSpecs[specIndex].unk3E;
-			}
+		if (alienInstances[arg0].unk16 < alienInstances[arg0].unk2 && alienInstances[arg0].unk10 >= (-0x7F))
+		{
+			alienInstances[arg0].unk10 -= alienSpecs[specIndex].unk3E;
 		}
 	}
-	if (!(alienInstances[arg0].unk20 & 0x600)) {
+	if (!(alienInstances[arg0].unk20 & 0x600))
+	{
 		var_v0 = 4;
 	}
-	if (!(alienInstances[arg0].unk20 & 0x10)) {
-		if (-unk42 * var_v0 >= (s16)(alienInstances[arg0].unk2A - alienInstances[arg0].unkE)) {
-			*arg1 -= unk42 * var_v0;
-			return 1;
-		}
-		if (unk42 * var_v0 < (s16)(alienInstances[arg0].unk2A - alienInstances[arg0].unkE)) {
-			*arg1 += unk42 * var_v0;
-			return 1;
+	while (1)
+	{
+		if (!(alienInstances[arg0].unk20 & 0x10))
+		{
+			if (((-unk42) * var_v0) >= ((s16) (alienInstances[arg0].unk2A - alienInstances[arg0].unkE)))
+			{
+				*arg1 -= unk42 * var_v0;
+				break;
+			}
+			if ((unk42 * var_v0) < ((s16) (alienInstances[arg0].unk2A - alienInstances[arg0].unkE)))
+			{
+				*arg1 += unk42 * var_v0;
+				break;
+			}
+			return 0;
 		}
 		return 0;
 	}
-	return 0;
+	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800808F0_8F8A0.s")
-#endif
 
 // https://decomp.me/scratch/n1AaG
 #ifdef NON_MATCHING
@@ -1506,56 +1509,60 @@ void func_80085DC8_94D78(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	func_80085B14_94AC4(arg0, arg1, 0x2000, arg2, arg4);
 }
 
+// https://decomp.me/scratch/gA9AH
 #ifdef NON_MATCHING
-s32 func_80085E2C_94DDC(u8 arg0, s16 arg1, s32 arg2) {
-	u8 sp47;
-	s16 sp42;
-	s32 temp_v1;
-	s32 temp_a0;
+s32 func_80085E2C_94DDC(u8 arg0, s16 arg1, s32 arg2)
+{
+  u8 sp47;
+  s16 sp42;
+  s32 temp_v1;
+  
+  s32 temp_dx;
+  s32 temp_dy;
 	AlienInstance *temp_ptr;
-	s32 temp_dx;
-	s32 temp_dy;
-
-	temp_ptr = &alienInstances[arg0];
-	sp47 = temp_ptr->specIndex;
-	temp_dx = D_80052B34->unk0 - temp_ptr->unk0;
-	temp_dy = D_80052B34->unk4 - temp_ptr->unk4;
-	sp42 = func_80003824_4424((f32)temp_dx, (f32)temp_dy) - temp_ptr->unk6;
-
-	(&D_8014DD50[arg1])->unk6 = func_80085A9C_94A4C((&D_8014DD50[arg1])->unk6, (s16)(sp42 * -1), arg2, -arg2, alienSpecs[sp47].unk42);
-
-	temp_v1 = (&D_8014DD50[arg1])->unk6 + sp42;
-	temp_a0 = -temp_v1;
-	if ((alienSpecs[sp47].unk42 * 2) < ((temp_a0 < temp_v1) ? temp_v1 : temp_a0)) {
-		return 1;
-	}
-	return 0;
+  temp_ptr = &alienInstances[arg0];
+  sp47 = temp_ptr->specIndex;
+  temp_dx = D_80052B34->unk0 - temp_ptr->unk0;
+  temp_dy = D_80052B34->unk4 - temp_ptr->unk4;
+  sp42 = func_80003824_4424((f32) temp_dx, (f32) temp_dy) - temp_ptr->unk6;
+  (&D_8014DD50[arg1])->unk6 = func_80085A9C_94A4C((&D_8014DD50[arg1])->unk6, (s16) (sp42 * (-1)), arg2, -arg2, alienSpecs[sp47].unk42);
+  temp_v1 = (&D_8014DD50[arg1])->unk6 + sp42;
+  if ((alienSpecs[sp47].unk42 * 2) < ((-temp_v1 < temp_v1) ? (temp_v1) : (-temp_v1)))
+  {
+	return 1;
+  }
+  return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085E2C_94DDC.s")
 #endif
 
+// https://decomp.me/scratch/26Z9e
 #ifdef NON_MATCHING
 s32 func_80085F68_94F18(u8 arg0, s16 arg1, s32 arg2)
 {
+  s16 new_var3;
   u8 new_var;
-	u8 sp67;
+  int new_var2;
+  u8 sp67;
   s16 sp62;
-  s32 temp_dz;
+  s16 new_var4;
   AlienInstance *sp40;
-  AlienSpec *sp38;s32 sp54;s32 sp50;s32 sp4C;
-  
+
+  s32 sp54;
+  s32 sp50;
+  s32 sp4C;
   sp40 = &alienInstances[arg0];
   sp67 = (new_var = sp40->specIndex);
-  func_80128428_1373D8(sp40, D_8014DD50[arg1].unk0, 0, D_8014DD50[arg1].unk4, &sp54, &sp50, &sp4C);
-  sp38 = &alienSpecs[sp67];
-  sp62 = func_80003824_4424((f32) (D_80052B34->unk0 - sp54), (f32) (D_80052B34->unk4 - sp4C)) - sp40->unk6;
-  //temp_dx = arg1;
-  (&D_8014DD50[arg1])->unk6 = func_80085A9C_94A4C((&D_8014DD50[arg1])->unk6, (s16) (sp62 * (-1)), arg2, -arg2, sp38->unk42);
+  new_var3 = arg1;
+  func_80128428_1373D8(sp40, D_8014DD50[new_var3].unk0, 0, D_8014DD50[arg1].unk4, &sp54, &sp50, &sp4C);
+  new_var2 = D_80052B34->unk0 - sp54;
+  sp62 = func_80003824_4424((f32) new_var2, (f32) ((new_var4 = D_80052B34->unk4) - sp4C)) - sp40->unk6;
+  (&D_8014DD50[arg1])->unk6 = func_80085A9C_94A4C((&D_8014DD50[arg1])->unk6, (s16) (sp62 * (-1)), arg2, -arg2, alienSpecs[sp67].unk42);
   {
 	s32 temp_v1 = (&D_8014DD50[arg1])->unk6 + sp62;
 	s32 temp_a0 = -temp_v1;
-	if ((sp38->unk42 * 2) < ((temp_a0 < temp_v1) ? (temp_v1) : (temp_a0)))
+	if ((alienSpecs[sp67].unk42 * 2) < ((temp_a0 < temp_v1) ? (temp_v1) : (temp_a0)))
 	{
 	  return 1;
 	}
