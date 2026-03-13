@@ -1663,7 +1663,35 @@ s32 func_80087188_96138(u8 arg0, s32 arg1, s32 arg2) {
 	func_80086A34_959E4(arg0, arg1, func_800870D8_96088(0x80, arg2));
 }
 
+#ifdef NON_MATCHING
+s32 func_800871CC_9617C(u8 arg0, s32 arg1, s32 arg2) {
+	s16 dx;
+	s16 dz;
+	s16 angle;
+	s16 cos2;
+	s16 sin2;
+	s16 sin1;
+	s16 cos1;
+
+	angle = func_800870D8_96088(0x80, arg2);
+	dx = D_80052B34->unk0 - alienInstances[arg0].unk0;
+	dz = D_80052B34->unk4 - alienInstances[arg0].unk4;
+	cos1 = coss(angle);
+	sin1 = sins(angle);
+	sin2 = sins(angle);
+	cos2 = coss(angle);
+
+	if (func_800865F4_955A4(arg0, arg1,
+			(s32) (((f64)alienInstances[arg0].unk0 + (f64)(f32)sin1 / 32768.0 * (f64)dz) + (f64)dx * ((f64)(f32)cos1 / 32768.0)),
+			D_80052B34->unk2,
+			(s32) (((f64)alienInstances[arg0].unk4 + (f64)(f32)cos2 / 32768.0 * (f64)dz) - (f64)dx * ((f64)(f32)sin2 / 32768.0))) != 0) {
+		return 1;
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800871CC_9617C.s")
+#endif
 
 void func_8008735C_9630C(u8 arg0) {
 	alienInstances[arg0].unk20 |= 0x100;
