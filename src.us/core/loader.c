@@ -31,6 +31,8 @@ extern u8 D_800E1D70[];
 extern void func_80070270(void);
 extern void (*__printfunc)(s32, s32);
 extern OSMesgQueue D_80067F88;
+extern s32 D_8006AA70;
+extern s32 D_8006AA74;
 
 s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 var_s0;
@@ -186,12 +188,20 @@ void __osInitialize_emu(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011E14_12A14.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011F90_12B90.s")
+s32 func_80011F90_12B90(void *arg0) {
+    return ((s32)arg0 & 0xFFFFFF) + D_8006AA70;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011FAC_12BAC.s")
+s32 func_80011FAC_12BAC(void *arg0) {
+    return ((s32)arg0 & 0xFFFFFF) + (s32)__printfunc;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011FC8_12BC8.s")
+s32 func_80011FC8_12BC8(void *arg0) {
+    return ((s32)arg0 & 0xFFFFFF) + (s32)D_8006AA6C;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011FE4_12BE4.s")
+s32 func_80011FE4_12BE4(void *arg0) {
+    return ((s32)arg0 & 0xFFFFFF) + D_8006AA74;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80012000_12C00.s")
