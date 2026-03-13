@@ -592,7 +592,37 @@ void func_80080B44_8FAF4(u8 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80081390_90340.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008153C_904EC.s")
+s32 func_8008153C_904EC(u8 arg0, s16 *arg1)
+{
+	u8 specIndex = alienInstances[arg0].specIndex;
+	s16 result;
+
+	if (alienInstances[arg0].unk20 & 0x1A0) {
+		if (alienSpecs[specIndex].unk54 & 0x40) {
+			if (alienInstances[arg0].unk2 < alienInstances[arg0].unk16) {
+				if (alienInstances[arg0].unk10 < 0x80) {
+					alienInstances[arg0].unk10 = (s16)(alienSpecs[specIndex].unk3E + alienInstances[arg0].unk10);
+				}
+			}
+			if (alienInstances[arg0].unk16 < alienInstances[arg0].unk2) {
+				if (alienInstances[arg0].unk10 >= -0x7F) {
+					alienInstances[arg0].unk10 = (s16)(alienInstances[arg0].unk10 - alienSpecs[specIndex].unk3E);
+				}
+			}
+		}
+
+		result = func_80081390_90340(arg0);
+
+		if ((s16)(result - alienInstances[arg0].unkE) < 0) {
+			*arg1 -= alienSpecs[alienInstances[arg0].specIndex].unk42;
+		}
+		if ((s16)(result - alienInstances[arg0].unkE) > 0) {
+			*arg1 += alienSpecs[alienInstances[arg0].specIndex].unk42;
+		}
+		return 1;
+	}
+	return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800816B0_90660.s")
 

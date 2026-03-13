@@ -177,6 +177,45 @@ v1->unk10 = 0x320;                 // sh deferred
 
 Also: to get `multu` instead of `sll/addu/sll` for struct index computation, declare the index variable as `u8` (not `s32`). Using `s32` causes IDO to use the shift expansion. When the callee returns `s32` but the caller stores to `u8`, IDO emits an extra `andi` — fix by changing the callee to return `u8` if appropriate.
 
+### `u8 specIndex` at function scope → `lbu v0` in beqz delay slot
+
+When a function begins with `if (flags & FLAG) { /* active path */ }` and the active path's first operation is loading `specIndex` from the alien instance, declaring `u8 specIndex = alienInstances[arg0].specIndex` **before the if block** (at function scope) causes IDO to:
+1. Assign v0 to specIndex (first temp register)
+2. Move the specIndex load into the beqz delay slot (`lbu v0, 0x1a(v1)`)
+3. Use v0 for the subsequent `multu v0, t1` (specIndex × 0x68)
+
+Without this, a `s16 result` declaration pre-claims v0 (for the jal return value), causing IDO to use t3 for specIndex and put `move v0, zero` in the delay slot instead (a cascading one-register shift throughout the whole function).
+
+The specIndex load in the delay slot is "safe" even for the branch-taken (early-exit) path because the return-0 label overwrites v0 with `move v0, zero` anyway.
+
+After the jal (which overwrites v0 with the return value), use inline `alienInstances[arg0].specIndex` for post-call space accesses (IDO reloads from memory) rather than the named `specIndex` variable.
+
+**Key pattern**:
+```c
+s32 func_name(u8 arg0, s16 *arg1)
+{
+    u8 specIndex = alienInstances[arg0].specIndex; /* → v0, enables beqzl delay slot lbu */
+    s16 result;  /* → v0 after jal (no conflict: different live ranges) */
+
+    if (alienInstances[arg0].unk20 & 0x1A0) {
+        if (alienSpecs[specIndex].unk54 & 0x40) { ... }
+        result = func_call(arg0);
+        if (...result...) { *arg1 -= alienSpecs[alienInstances[arg0].specIndex].unk42; }
+        if (...result...) { *arg1 += alienSpecs[alienInstances[arg0].specIndex].unk42; }
+        return 1;
+    }
+    return 0;
+}
+```
+
+### Commutative `addu` operand order when one operand is already live in v0
+
+When computing `unk10 + unk3E` where `unk10` is already live in v0 (from a preceding `slti v0` check) and `unk3E` is freshly loaded into t6, IDO generates `addu dst, t6, v0` (t6 first). But the **target** may have `addu dst, v0, t6` (v0 first).
+
+**Fix**: write the expression with `unk3E` first in C: `(s16)(alienSpecs[specIndex].unk3E + alienInstances[arg0].unk10)`. Despite the "wrong" C order, IDO evaluates the already-live v0 as `rs` (first) because it's the operand with the longer live range. Score change: 10 → 0.
+
+This is the **opposite** of the non-commutative subtraction case: for `unk10 - unk3E`, the C order IS preserved (`subu dst, v0, t_reg`).
+
 ### Struct stride for stable index math
 
 
