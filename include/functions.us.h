@@ -568,5 +568,6 @@ void func_802E3584_3276D4(u8, s16, s8, Unk802E71B8 *);
 void func_802DF290_3233E0(void);
 void func_802D6670_31A7C0(void);
 void func_802D5BFC_319D4C(void);
+s32 func_80087188_96138(u8, s32, s32);
 
 #endif

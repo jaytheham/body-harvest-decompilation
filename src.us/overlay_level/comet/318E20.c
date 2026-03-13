@@ -583,7 +583,29 @@ void func_802DBDD0_31FF20(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBDD0_31FF20.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBEA4_31FFF4.s")
+void func_802DBEA4_31FFF4(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
+    AlienInstance *inst;
+    s32 result;
+    s16 local_arg1, local_arg2;
+    
+    inst = &alienInstances[arg0 & 0xFF];
+    
+    if (!(inst->unk20 & 0x1000)) {
+        return;
+    }
+    
+    local_arg1 = arg1;
+    local_arg2 = arg2;
+    result = func_80081F18_90EC8(arg0, 2, 0xD, &local_arg1);
+    result &= 0xFF;
+    
+    if (result == 4 || result == 7 || result == 0xA || result == 0xD) {
+        inst->unk1E = 0;
+        func_80087188_96138(arg0, 0, 0x20);
+    } else if (result == 0xD) {
+        inst->unk20 &= ~0x1001;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBF88_3200D8.s")
 

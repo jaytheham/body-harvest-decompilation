@@ -1082,4 +1082,5 @@ extern char D_802E7A7C[];
 extern s16 D_802E4FB4[];
 extern s16 D_8014D17C;
 extern s16 D_8014D17E;
+extern Unk8014DD50 *D_802E566C;
 #endif
