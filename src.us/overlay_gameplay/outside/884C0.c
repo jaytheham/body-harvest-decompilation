@@ -779,7 +779,30 @@ s8 func_80081F18_90EC8(u8 arg0, u8 arg1, u8 arg2, s16 *arg3, Unk8014DD50 **arg4)
 	return result;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082084_91034.s")
+s8 func_80082084_91034(u8 arg0, u8 arg1, u8 arg2, s16 *arg3, Unk8014DD50 **arg4) {
+	u8 i;
+	s8 result;
+
+	result = -1;
+	if (D_8014DD5E[*arg3][0] == 0) {
+		if (alienInstances[arg0].unk4B == arg2) {
+			return (s8)arg2;
+		}
+		for (i = 0; i < arg1; i++) {
+			if (arg3[i] != -1) {
+				func_80081C84_90C34((u8)arg3[i], arg4[i] + alienInstances[arg0].unk4B);
+			}
+		}
+		result = (s8)alienInstances[arg0].unk4B;
+		alienInstances[arg0].unk4B++;
+	}
+	for (i = 0; i < arg1; i++) {
+		if (arg3[i] != -1) {
+			func_80081E5C_90E0C(arg3[i]);
+		}
+	}
+	return result;
+}
 
 void func_800821F0_911A0(s32 arg0, s32 arg1, s32 arg2, u8 *arg3) {
 	s32 hi;
