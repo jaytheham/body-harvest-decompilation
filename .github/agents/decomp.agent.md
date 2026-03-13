@@ -13,7 +13,8 @@ You will convert the named N64 assembly function to C89 code, compile it (IDO 5.
 
 ## Project Structure
 
-- `asm/`: Contains original assembly files from the ROM.
+- `asm/nonmatchings`: Contains target assembly of unmatched functions.
+- `asm/matchings`: Contains target assembly of matched functions.
 - `src.us/`: Contains C source files.
 - `include/`: Contains header files for variables, functions, and structs.
 - `build/`: Contains compiled object files and the final ROM image.
@@ -22,6 +23,7 @@ You will convert the named N64 assembly function to C89 code, compile it (IDO 5.
 
 These powershell tools exist to assist you:
 
+- Build the ROM: `.\tools\clean-make.ps1`
 - Compare target and your current assembly for a specific function after building: `.\tools\asm-diff.ps1 <target function name> <ROM address of next function>"`. E.g. `.\tools\asm-diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`. Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match. Diff output skips matching lines except for 3 lines of matching context either side of differences.
 - You can decompile gfx macros using `.\tools\gfxdis.ps1`:
 e.g.
@@ -64,7 +66,7 @@ Read file `DecompHints.md` for general guidance.
 
 ## Step 3: Build ROM
 
-Build the ROM: `.\tools\clean-make.ps1` Important: You must build the entire project, not idividual files, to ensure all symbols are correctly linked and to get an accurate comparison of the current vs the target.
+Build the ROM: `.\tools\clean-make.ps1` Important: You must run this to build the entire project, to ensure all symbols are correctly linked and to get an accurate comparison of the current vs the target.
 
 **If compilation errors occur:**
 

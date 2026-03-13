@@ -7,7 +7,7 @@ import rabbitizer
 import spimdisasm
 
 from ...util import log, options, symbols
-from ...util.compiler import GCC, SN64, IDO
+from ...util.compiler import IDO
 from ...util.symbols import Symbol
 
 from .codesubsegment import CommonSegCodeSubsegment
@@ -105,19 +105,19 @@ class CommonSegC(CommonSegCodeSubsegment):
     def get_global_asm_funcs(c_file: Path) -> Set[str]:
         with c_file.open() as f:
             text = CommonSegC.strip_c_comments(f.read())
-        if options.opts.compiler in [GCC, SN64]:
-            return set(CommonSegC.find_include_asm(text))
-        else:
+        if options.opts.compiler == IDO:
             return set(m.group(2) for m in C_GLOBAL_ASM_IDO_RE.finditer(text))
+        else:
+            return set(CommonSegC.find_include_asm(text))
 
     @staticmethod
     def get_global_asm_rodata_syms(c_file: Path) -> Set[str]:
         with c_file.open() as f:
             text = CommonSegC.strip_c_comments(f.read())
-        if options.opts.compiler in [GCC, SN64]:
-            return set(CommonSegC.find_include_rodata(text))
-        else:
+        if options.opts.compiler == IDO:
             return set(m.group(2) for m in C_GLOBAL_ASM_IDO_RE.finditer(text))
+        else:
+            return set(CommonSegC.find_include_rodata(text))
 
     @staticmethod
     def is_text() -> bool:
@@ -151,7 +151,7 @@ class CommonSegC(CommonSegCodeSubsegment):
     def split(self, rom_bytes: bytes):
         if self.rom_start != self.rom_end:
             asm_out_dir = options.opts.nonmatchings_path / self.dir
-            asm_out_dir.mkdir(parents=True, exist_ok=True)
+            matching_asm_out_dir = options.opts.matchings_path / self.dir
 
             self.print_file_boundaries()
 
@@ -226,7 +226,17 @@ class CommonSegC(CommonSegCodeSubsegment):
                         )
                         assert func_sym is not None
 
-                        self.create_c_asm_file(entry, asm_out_dir, func_sym)
+                        if (
+                            not entry.function.getName() in self.global_asm_funcs
+                            and options.opts.disassemble_all
+                            and not is_new_c_file
+                        ):
+                            self.create_c_asm_file(
+                                entry, matching_asm_out_dir, func_sym
+                            )
+                        else:
+                            self.create_c_asm_file(entry, asm_out_dir, func_sym)
+
                 else:
                     for spim_rodata_sym in entry.rodataSyms:
                         if (
@@ -454,6 +464,8 @@ class CommonSegC(CommonSegCodeSubsegment):
 
                     if func_name in self.global_asm_funcs or is_new_c_file:
                         outpath = asm_out_dir / self.name / (func_name + ".s")
+                        outpath.parent.mkdir(parents=True, exist_ok=True)
+
                         depend_list.append(outpath)
                         f.write(f" \\\n    {outpath}")
                 else:
@@ -462,6 +474,8 @@ class CommonSegC(CommonSegCodeSubsegment):
 
                         if rodata_name in self.global_asm_rodata_syms or is_new_c_file:
                             outpath = asm_out_dir / self.name / (rodata_name + ".s")
+                            outpath.parent.mkdir(parents=True, exist_ok=True)
+
                             depend_list.append(outpath)
                             f.write(f" \\\n    {outpath}")
 

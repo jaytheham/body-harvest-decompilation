@@ -42,6 +42,7 @@ The target platform for the binary. Options are:
 - `n64` (Nintendo 64)
 - `psx` (PlayStation 1)
 - `ps2` (PlayStation 2)
+- `psp` (PlayStation Portable)
 
 #### Usage
 ```yaml
@@ -215,6 +216,9 @@ Determines the path to the asm data directory
 
 Determines the path to the asm nonmatchings directory
 
+### matchings_path
+
+Determines the path to the asm matchings directory (used alongside `disassemble_all` to organize matching functions from nonmatching functions)
 
 ### cache_path
 Path to splat cache
@@ -426,7 +430,6 @@ This behavior can be customized per segment too. See [ld_fill_value](Segments.md
 
 Defaults to 0.
 
-
 ### ld_bss_is_noload
 
 Allows to control if `bss` sections (and derivatived sections) will be put on a `NOLOAD` segment on the generated linker script or not.
@@ -434,6 +437,17 @@ Allows to control if `bss` sections (and derivatived sections) will be put on a 
 Applies to all `bss` (`sbss`, `common`, `scommon`, etc) sections.
 
 Defaults to `True`, meaning `bss` sections will be put on `NOLOAD` segments.
+
+
+### ld_align_segment_start
+
+Specify that segments should be aligned before starting them.
+
+This option specifies the desired alignment value, or `null` if no aligment should be imposed on the segment start.
+
+This behavior can be customized per segment too. See [ld_align_segment_start](Segments.md#ld_align_segment_start) on the Segments section.
+
+Defaults to `null`.
 
 
 ### ld_align_segment_vram_end
@@ -609,6 +623,11 @@ Tries to detect redundant and unreferenced functions ends and merge them togethe
 
 Don't skip disassembling already matched functions and migrated sections
 
+### global_vram_start and global_vram_end
+
+Allow specifying that the global memory range may be larger than what was automatically detected.
+
+Useful for projects where splat is used in multiple individual files, meaning the expected global segment may not be properly detected because each instance of splat can't see the info from other files, like in PSX and PSP projects.
 
 ## N64-specific options
 

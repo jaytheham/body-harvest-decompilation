@@ -275,6 +275,31 @@ While this kind of segment can be represented by other segment types ([`asm`](#a
 - [0x00B250, pad, nops_00B250]
 ```
 
+## incbins
+
+incbin segments correpond to a family of segments used for extracting binary blobs.
+
+Their main advantage over the [`bin`](#bin) segment is the incbins allows to specify a specific section type instead of defaulting to simply `.data`. This is done by generating an assembly file that uses the `.incbin` asm directive to include the binary blob.
+
+Generating assembly files enables better customization of these binaries, like allowing different sections or to define a symbol for the binary blob.
+
+If a known symbol (via a symbol_addrs file) matches the vram of a incbin segment then it will be emitted accordingly at the top. If the symbol contains a [`name_end`](Adding-Symbols.md#name_end) property then it will be emitted after the `.incbin` (useful for Nintendo64's RSP ucodes).
+
+Curretly there are 3 types of incbins, `textbin`, `databin` and `rodatabin`, which are intended for binary blobs of `.text`, `.data` and `.rodata` sections.
+
+If a `textbin` section has a corresponding `databin` and/or `rodatabin` section with the same name then those will be included in the same generated assembly file.
+
+By default the generated assembly file will be written relative to the configured [`data_path`](docs/Configuration.md#data_path). The per segment `use_src_path` option allows to tell splat that a given incbin should be relative to the [`src_path`](docs/Configuration.md#src_path) instead. This behavior can be useful to allow committing those assembly files to the repo since splat will not override them if they already exist, and still extract the binary blobs.
+
+```yaml
+- { start: 0x06C4B0, type: textbin, use_src_path: True, name: rsp/rspboot }
+- [0x06C580, textbin, rsp/aspMain]
+
+# ...
+
+- [0x093D60, databin, rsp/aspMain]
+```
+
 ## PS2 exclusive segments
 
 ### `lit4`
@@ -354,6 +379,14 @@ It must be either an integer, which will be used as the parameter for the `FILL`
 If not set, then the global configuration is used. See [ld_fill_value](Configuration.md#ld_fill_value) on the Configuration section.
 
 Defaults to the value of the global option.
+
+### `ld_align_segment_start`
+
+Specify the current segment should be aligned before starting it.
+
+This option specifies the desired alignment value, or `null` if no aligment should be imposed on the segment start.
+
+If not set, then the global configuration is used. See [ld_align_segment_start](Configuration.md#ld_align_segment_start) on the Configuration section.
 
 ### `subalign`
 

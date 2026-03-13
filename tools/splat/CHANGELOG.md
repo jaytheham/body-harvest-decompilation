@@ -1,5 +1,60 @@
 # splat Release Notes
 
+### 0.24.7
+* splat no longer creates unnecessary directories for asm
+
+### 0.24.6
+
+* Handle PS-X EXE header that includes .text/.data vram address
+
+### 0.24.5
+
+* New `use_src_path` option for incbins segments.
+  * Allows to make the generated assembly files relative to the `src_path` directory instead of the default `data_path`.
+* New yaml option: `global_vram_start` and `global_vram_end`.
+  * Allow specifying that the global memory range may be larger than what was automatically detected.
+  * Useful for projects where splat is used in multiple individual files, meaning the expected global segment may not be properly detected because each instance of splat can't see the info from other files (like in PSX and PSP projects).
+
+### 0.24.4
+
+* New yaml option: `matchings_path`
+  * Determines the path to the asm matchings directory
+  * This is used alongside `disassemble_all` to organize matching functions from nonmatching functions
+
+### 0.24.3
+
+* New yaml option: `ld_align_segment_start`
+  * Allows specifying an alignment for the start of all the segments.
+  * The alignment can be overriden or disabled per segment too.
+* Add `visibility` attribute to symbols.
+  * Allows to specify if a symbol should be declared as `local`, `weak`, etc in the disassembly.
+* `spimdisasm` 1.26.0 or above is now required
+
+### 0.24.2
+
+* Fixed create_config to replace "/" in detected binary names with "_"
+
+### 0.24.1
+
+* Tweak the disassembler's configuration for PSP platform to improve assembly analysis.
+  * Should improve function start/end detection.
+
+### 0.24.0
+
+* Added PSP as a new platform.
+* `spimdisasm` 1.25.0 or above is now required
+* `rabbitizer` 1.10.0 or above is now required
+
+### 0.23.2
+
+* Fixed a bug where auto segments insertion may not respect the proper ordering if there are linker_offset segments present.
+
+### 0.23.1
+
+* New `EEGCC` compiler option.
+  * Provide specific adjustments for the GCC compiler used for the PS2 platform.
+* `spimdisasm` 1.24.2 or above is now required.
+
 ### 0.23.0
 
 * splat now checks if symbol names can be valid filepaths and produce an error if not.

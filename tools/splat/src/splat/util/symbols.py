@@ -186,6 +186,9 @@ def handle_sym_addrs(
                             if attr_name == "filename":
                                 sym.given_filename = attr_val
                                 continue
+                            if attr_name == "visibility":
+                                sym.given_visibility = attr_val
+                                continue
                         except:
                             log.parsing_error_preamble(path, line_num, line)
                             log.write(
@@ -314,8 +317,8 @@ def initialize(all_segments: "List[Segment]"):
 def initialize_spim_context(all_segments: "List[Segment]") -> None:
     global_vrom_start = None
     global_vrom_end = None
-    global_vram_start = None
-    global_vram_end = None
+    global_vram_start = options.opts.global_vram_start
+    global_vram_end = options.opts.global_vram_end
     overlay_segments: Set[spimdisasm.common.SymbolsSegment] = set()
 
     spim_context.bannedSymbols |= ignored_addresses
@@ -415,6 +418,19 @@ def initialize_spim_context(all_segments: "List[Segment]") -> None:
             for sym in symbols_list:
                 add_symbol_to_spim_segment(spim_context.globalSegment, sym)
 
+    if global_vram_start and global_vram_end:
+        # Pass global symbols to spimdisasm that are not part of any segment on the binary we are splitting (for psx and psp)
+        for sym in all_symbols:
+            if sym.segment is not None:
+                # We already handled this symbol somewhere else
+                continue
+
+            if sym.vram_start < global_vram_start or sym.vram_end > global_vram_end:
+                # Not global
+                continue
+
+            add_symbol_to_spim_segment(spim_context.globalSegment, sym)
+
 
 def add_symbol_to_spim_segment(
     segment: spimdisasm.common.SymbolsSegment, sym: "Symbol"
@@ -461,6 +477,8 @@ def add_symbol_to_spim_segment(
     context_sym.setNameGetCallbackIfUnset(lambda _: sym.name)
     if sym.given_name_end:
         context_sym.nameEnd = sym.given_name_end
+    if sym.given_visibility:
+        context_sym.visibility = sym.given_visibility
 
     return context_sym
 
@@ -506,6 +524,8 @@ def add_symbol_to_spim_section(
     context_sym.setNameGetCallbackIfUnset(lambda _: sym.name)
     if sym.given_name_end:
         context_sym.nameEnd = sym.given_name_end
+    if sym.given_visibility:
+        context_sym.visibility = sym.given_visibility
 
     return context_sym
 
@@ -599,6 +619,7 @@ class Symbol:
     allow_duplicated: bool = False
 
     given_filename: Optional[str] = None
+    given_visibility: Optional[str] = None
 
     _generated_default_name: Optional[str] = None
     _last_type: Optional[str] = None

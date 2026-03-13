@@ -61,6 +61,8 @@ class SplatOpts:
     data_path: Path
     # Determines the path to the asm nonmatchings directory
     nonmatchings_path: Path
+    # Determines the path to the asm matchings directory (used alongside `disassemble_all` to organize matching functions from nonmatching functions)
+    matchings_path: Path
     # Determines the path to the cache file (used when supplied --use-cache via the CLI)
     cache_path: Path
     # Tells splat to consider `hasm` files to be relative to `src_path` instead of `asm_path`.
@@ -131,6 +133,8 @@ class SplatOpts:
     ld_fill_value: Optional[int]
     # Allows to control if `bss` sections (and derivatived sections) will be put on a `NOLOAD` segment on the generated linker script or not.
     ld_bss_is_noload: bool
+    # Aligns the start of the segment to the given value
+    ld_align_segment_start: Optional[int]
     # Allows to toggle aligning the `*_VRAM_END` linker symbol for each segment.
     ld_align_segment_vram_end: bool
     # Allows to toggle aligning the `*_END` linker symbol for each section of each section.
@@ -216,6 +220,10 @@ class SplatOpts:
     detect_redundant_function_end: bool
     # Don't skip disassembling already matched functions and migrated sections
     disassemble_all: bool
+    # Allow specifying that the global memory range may be larger than what was automatically detected.
+    # Useful for projects where splat is used in multiple individual files, meaning the expected global segment may not be properly detected because each instance of splat can't see the info from other files.
+    global_vram_start: Optional[int]
+    global_vram_end: Optional[int]
 
     ################################################################################
     # N64-specific options
@@ -334,7 +342,7 @@ def _parse_yaml(
     p = OptParser(yaml)
 
     basename = p.parse_opt("basename", str)
-    platform = p.parse_opt_within("platform", str, ["n64", "psx", "ps2"])
+    platform = p.parse_opt_within("platform", str, ["n64", "psx", "ps2", "psp"])
     comp = compiler.for_name(p.parse_opt("compiler", str, "IDO"))
 
     base_path = Path(
@@ -352,7 +360,7 @@ def _parse_yaml(
             "endianness",
             str,
             ["big", "little"],
-            "little" if platform in ["psx", "ps2"] else "big",
+            "little" if platform in ["psx", "ps2", "psp"] else "big",
         )
 
         if endianness == "big":
@@ -400,6 +408,7 @@ def _parse_yaml(
         asm_path=asm_path,
         data_path=p.parse_path(asm_path, "data_path", "data"),
         nonmatchings_path=p.parse_path(asm_path, "nonmatchings_path", "nonmatchings"),
+        matchings_path=p.parse_path(asm_path, "matchings_path", "matchings"),
         cache_path=p.parse_path(base_path, "cache_path", ".splache"),
         hasm_in_src_path=p.parse_opt("hasm_in_src_path", bool, False),
         create_undefined_funcs_auto=p.parse_opt(
@@ -447,6 +456,9 @@ def _parse_yaml(
         ld_fill_value=p.parse_optional_opt_with_default("ld_fill_value", int, 0),
         ld_bss_is_noload=p.parse_opt(
             "ld_bss_is_noload", bool, default_ld_bss_is_noload
+        ),
+        ld_align_segment_start=p.parse_optional_opt_with_default(
+            "ld_align_segment_start", int, None
         ),
         ld_align_segment_vram_end=p.parse_opt("ld_align_segment_vram_end", bool, True),
         ld_align_section_vram_end=p.parse_opt("ld_align_section_vram_end", bool, True),
@@ -531,6 +543,8 @@ def _parse_yaml(
         disassemble_all=(
             disasm_all if disasm_all else p.parse_opt("disassemble_all", bool, False)
         ),
+        global_vram_start=p.parse_optional_opt("global_vram_start", int),
+        global_vram_end=p.parse_optional_opt("global_vram_end", int),
     )
     p.check_no_unread_opts()
     return ret
