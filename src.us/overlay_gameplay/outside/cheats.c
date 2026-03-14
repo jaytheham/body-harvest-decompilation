@@ -188,7 +188,7 @@ void func_8007383C_827EC(void) {
 	AlienInstance *alien;
 
 	for (i = D_8014D509; i < D_8014D50A; i++) {
-		
+
 		index = D_8014D408[i];
 		alien = &alienInstances[index];
 		if (alien->specIndex == 0x19) {
@@ -297,6 +297,95 @@ void func_80073A74_82A24(void) {
 }
 
 // activateCheat
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073B30_82AE0.s")
+void func_80073B30_82AE0(s32 arg0) {
+	func_8001A650_1B250((s16) (arg0 + 0x77));
+	((void (*)(void)) D_8013B94C[arg0 * 4])();
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073B78_82B28.s")
+void func_80073B78_82B28(void) {
+	u8 *var_s1;
+	s32 temp_v0;
+	s32 var_a0;
+	s32 var_a2;
+	s32 var_s0;
+	u8 *var_v1;
+	u8 temp_t2;
+	u8 temp_t9;
+	u8 *var_v0;
+
+	if ((currentControllerStates[0].button == 0) || (D_8014945C != 1)) {
+		if ((currentControllerStates[0].button != 0) && (D_8014945C == 0)) {
+			switch ((s32) currentControllerStates[0].button) {
+			case 0x8000:
+				func_80073A20_829D0(0x61);
+				break;
+			case 0x4000:
+				func_80073A20_829D0(0x62);
+				break;
+			case 0x2:
+				func_80073A20_829D0(0x77);
+				break;
+			case 0x4:
+				func_80073A20_829D0(0x73);
+				break;
+			case 0x8:
+				func_80073A20_829D0(0x6E);
+				break;
+			case 0x1:
+				func_80073A20_829D0(0x65);
+				break;
+			case 0x2000:
+				func_80073A20_829D0(0x66);
+				break;
+			case 0x800:
+				func_80073A20_829D0(0x75);
+				break;
+			case 0x400:
+				func_80073A20_829D0(0x64);
+				break;
+			case 0x200:
+				func_80073A20_829D0(0x6C);
+				break;
+			case 0x100:
+				func_80073A20_829D0(0x72);
+				break;
+			}
+			D_8014945C = 1;
+		} else {
+			D_8014945C = 0;
+		}
+		var_s1 = &D_8013BA80[0];
+		var_s0 = 0x14;
+		do {
+			var_a2 = 4;
+			if (*(u8*)(var_s1 + 4) != 0) {
+				do {
+					temp_v0 = var_a2 + 1;
+					temp_t2 = D_8013B940[var_s0][temp_v0];
+					var_a2 = temp_v0;
+				} while (temp_t2 != 0);
+			}
+			var_a0 = var_a2 - 1;
+			if (var_a2 != 0) {
+				var_v0 = &D_8013B940[var_s0][var_a2 - var_a0];
+				var_v1 = &cheatInputBuffer[var_a0];
+loop_check:
+				temp_t9 = *(var_v0 - 1);
+				var_v0 += 1;
+				var_v1 -= 1;
+				if (temp_t9 == *var_v1) {
+					var_a0 -= 1;
+					if (var_a0 != 0) {
+						goto loop_check;
+					}
+				}
+			}
+			if (var_a0 == -1) {
+				func_80073B30_82AE0(var_s0);
+				func_80073A74_82A24();
+			}
+			var_s1 -= 0x10;
+			var_s0 -= 1;
+		} while (var_s0 != 0);
+	}
+}
