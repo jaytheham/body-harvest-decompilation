@@ -299,7 +299,48 @@ void func_8007B2A0_8A250(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B9CC_8A97C.s")
 
 // drawComplexObjectShadows e.g. humans
+// https://decomp.me/scratch/mrFc0
+#ifdef NON_MATCHING
+void func_8007BEC0_8AE70(void) {
+	s32 sp58;
+	s32 i;
+	AlienInstance *inst;
+	u8 *ptr;
+
+	if (!D_8014ECD0) {
+		return;
+	}
+	ptr = D_8014D510;
+	for (i = 0; i < D_8014ECCC; i++, ptr++) {
+		u8 new_var;
+		new_var = *ptr;
+		inst = &alienInstances[new_var];
+		if (!(inst->unk20 & 0x200) || (inst->unk20 & 0x80000)) {
+			if (currentLevel == 1 && inst->specIndex == 0x22) {
+				if (!(inst->unk20 & 0x4000)) {
+					continue;
+				}
+			}
+			if (currentLevel == 3) {
+				if (inst->specIndex == 9) {
+					continue;
+				}
+				if (inst->specIndex == 8) {
+					continue;
+				}
+			}
+			if (func_8011E6FC_12D6AC(inst->unk0, inst->unk4, (s16 *)&sp58) != -1) {
+				continue;
+			}
+			if (inst->unk20 & 0x10000000) {
+				func_800E988C_F883C(inst, &alienSpecs[inst->specIndex]);
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007BEC0_8AE70.s")
+#endif
 
 // drawComplexObjects eg: humans, alien torsos & heads
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007C044_8AFF4.s")

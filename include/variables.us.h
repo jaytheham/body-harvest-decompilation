@@ -497,7 +497,7 @@ extern Unk802E71B8 D_802E71C0;
 extern s16 D_8014DD5E[][8];
 extern s8 D_8014EC50[];
 extern s32 D_8014ECC8;
-extern s32 D_8014ECCC;
+extern u32 D_8014ECCC;
 extern s32 D_8014ECD0;
 extern s32 D_8014ECE0;
 extern Unk8014DD50 D_8014E4D0[];
