@@ -16,8 +16,56 @@ void func_80079510_884C0(u8 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007956C_8851C.s")
 
-// Skip this and aliens freeze when they die, never disappear
+// https://decomp.me/scratch/tmc2b
+#ifdef NON_MATCHING
+void func_800797A4_88754(s32 arg0, u8 arg1)
+{
+  s16 i;
+  s16 nibble;
+  if ((arg1) == 0)
+  {
+	return;
+  }
+  if ((i && i) && i)   {  }
+  if ((arg1) >= 0x19)
+  {
+	return;
+  }
+  for (i = 0; i < 4; i++)
+  {
+	switch (i)
+	{
+	  case 0:
+		i = D_8013C1B8[arg1 * 2];
+		nibble = ((u32) i) >> 4;
+		break;
+
+	  case 1:
+		nibble = D_8013C1B8[arg1 * 2] & 0xF;
+		break;
+
+	  case 2:
+		nibble = ((u32) D_8013C1B8[(arg1 * 2) + 1]) >> 4;
+		break;
+
+	  case 3:
+		nibble = D_8013C1B8[(arg1 * 2) + 1] & 0xF;
+		break;
+	}
+
+	if (nibble != 0)
+	{
+	  func_800A8A68_B7A18(
+		  alienInstances[arg0].unk0,
+		  alienInstances[arg0].unk2,
+		  alienInstances[arg0].unk4,
+		  D_8013C1A7[nibble]);
+	}
+  }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800797A4_88754.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80079910_888C0.s")
 
