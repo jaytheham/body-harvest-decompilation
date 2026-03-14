@@ -250,7 +250,6 @@ void enableCheatFeeble() {
 
 // addCharToCheatInputBuffer
 // https://decomp.me/scratch/ms2Ub
-#ifdef NON_MATCHING
 void func_80073A20_829D0(u8 arg0) {
   u8 *var_v0;
   int new_var;
@@ -273,9 +272,6 @@ void func_80073A20_829D0(u8 arg0) {
   }
   cheatInputBuffer[0] = arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073A20_829D0.s")
-#endif
 
 // initCheating
 void func_80073A74_82A24(void) {
