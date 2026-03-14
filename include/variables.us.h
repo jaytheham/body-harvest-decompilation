@@ -1133,6 +1133,10 @@ extern OSThread D_80067388;
 extern void *D_8005C760;
 
 /* core/E830 */
+extern f64 D_80037628;
+extern f64 D_80037630;
+extern f64 D_80037638;
+extern f64 D_80037640;
 extern s32 D_8005BAEC;
 extern s32 __osCurrentTime;
 extern s16 D_80059CD0;
