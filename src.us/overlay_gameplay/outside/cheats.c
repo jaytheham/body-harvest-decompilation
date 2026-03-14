@@ -2,8 +2,43 @@
 #include "common.h"
 
 // enableCheatAnnull
-// https://decomp.me/scratch/X2f6R
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_800731B0_82160.s")
+void func_800731B0_82160(void)
+{
+	int new_var;
+	AlienInstance *alien;
+	s32 i;
+	s32 temp;
+	s32 adist;
+	if (D_80052ACA == 2)
+	{
+		return;
+	}
+	if (!(currentControllerStates[0].button & 0x200))
+	{
+		return;
+	}
+	temp = 0xFE;
+	alien = &alienInstances[temp];
+	i = temp;
+	do
+	{
+		if (((alien->specIndex >= 2) || ((alien->specIndex == 1) && (alien->unk24 == 1))) && (!(alien->unk20 & 0x100000)))
+		{
+			temp = alien->unk0 - D_80052B34->unk0;
+			if (((temp >= 0) ? (temp) : (-temp)) < 0xA00)
+			{
+				new_var = alien->unk4 - D_80052B34->unk4;
+				temp = new_var;
+				adist = (temp >= 0) ? (temp) : (-temp);
+				if (adist < 0xA00)
+				{
+					func_80088760_97710(alien);
+				}
+			}
+		}
+		alien--;
+	} while (i--);
+}
 
 // func_800732C8_82278
 void enableCheatFarewell() {
