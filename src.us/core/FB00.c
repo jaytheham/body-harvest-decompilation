@@ -1,12 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-extern s16 D_80068078;
-extern u8 D_8003FB20[];
-extern OSThread D_80067388;
-extern void *D_8005C760;
-extern void func_8000EFB8_FBB8(void *);
-
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FB00/sourceTaggedPrintF.s")
 
 void func_8000EF10_FB10(s32 arg0) {

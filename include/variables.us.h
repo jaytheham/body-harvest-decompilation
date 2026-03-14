@@ -1127,4 +1127,9 @@ extern s32 D_8006AA74;
 extern char D_800380C4[];
 extern char D_800380E4[];
 
+/* core/FB00 */
+extern u8 D_8003FB20[];
+extern OSThread D_80067388;
+extern void *D_8005C760;
+
 #endif

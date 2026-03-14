@@ -584,4 +584,7 @@ void func_802D4CD0_254410(s32 arg0, s32 arg1);
 extern void func_80070270(void);
 extern void (*__printfunc)(s32, s32);
 
+/* core/FB00 */
+void func_8000EFB8_FBB8(void *);
+
 #endif
