@@ -1138,12 +1138,22 @@ extern s32 __osCurrentTime;
 extern s16 D_80059CD0;
 extern s16 D_80059CD2;
 extern s16 D_80059CD4;
+extern s16 D_80059CD6;
 extern s16 D_80059CD8;
 extern f32 D_80059CE0;
 extern f64 D_80037620;
+extern f64 D_80037648;
 extern void *D_80031A90;
 extern void *D_80059CDC;
 extern void *D_80267080;
 extern void *D_803DA800;
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    u8 unk8[4];
+    f32 unkC;
+    f32 unk10;
+} Unk8005BAE8;
+extern Unk8005BAE8 *D_8005BAE8;
 
 #endif
