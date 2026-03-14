@@ -257,7 +257,6 @@ splat: $(SPLAT)
 extract: splat tools
 	$(PYTHON) $(SPLAT) $(BASENAME).$(VERSION).yaml
 	$(PYTHON) $(TOOLS_DIR)/fixup_tlut.py
-	test -f asm/nonmatchings/core/loader/__osInitialize_emu.s && sed -i 's/(func_802D4CD0)/(func_802D4CD0_18D7E0)/g' asm/nonmatchings/core/loader/__osInitialize_emu.s || true
 
 decompress: $(ALL_RNC_EXTRACTED)
 
