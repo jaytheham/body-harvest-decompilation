@@ -57,7 +57,7 @@ void func_80013810_14410(s8 arg0);
 void func_8001A54C_1B14C(void *arg0, ...);
 s32 func_80018A58_19658(void);
 void func_800E7B20_F6AD0(s32 arg0, s32 arg1);
-void func_800101F0_10DF0(void *arg0, void *arg1, s32 arg2, s32 arg3);
+s32 func_800101F0_10DF0(s32 arg0, s32 arg1, s32 arg2);
 
 // overlay_gameplay frontend
 s32 func_80070390_40840(void);
@@ -573,5 +573,15 @@ void func_802DF290_3233E0(void);
 void func_802D6670_31A7C0(void);
 void func_802D5BFC_319D4C(void);
 s32 func_80087188_96138(u8, s32, s32);
+void func_800F1134_1000E4(void);
+void func_800F1DDC_100D8C(void);
+void func_802D563C_254D7C(void);
+void func_802D5110_254850(s32 arg0);
+void func_802D4E70_2545B0(s32 arg0);
+void func_802D4CD0_254410(s32 arg0, s32 arg1);
+
+/* core/loader */
+extern void func_80070270(void);
+extern void (*__printfunc)(s32, s32);
 
 #endif
