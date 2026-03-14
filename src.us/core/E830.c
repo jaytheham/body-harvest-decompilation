@@ -47,7 +47,17 @@ void func_8000DC30_E830(s16 *arg0, s16 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/E830/osSetTime.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E4C4_F0C4.s")
+/* Initialise projection state from entry arg0 in D_80031A90 table, then copy framebuffer region. */
+void func_8000E4C4_F0C4(s32 arg0) {
+    void *temp_t8;
+
+    temp_t8 = (void *)((u8 *)D_80031A90 + (arg0 << 5));
+    D_80059CDC = temp_t8;
+    D_80059CD0 = *(s16 *)((u8 *)temp_t8 + 4);
+    D_80059CE0 = *(f32 *)((u8 *)temp_t8 + 8);
+    D_80059CD8 = 0;
+    func_8000DC9C_E89C((s32)&D_80267080, (s32)&D_803DA800);
+}
 
 /* Square of arg0. */
 s32 func_8000E52C_F12C(s32 arg0) {

@@ -1132,4 +1132,18 @@ extern u8 D_8003FB20[];
 extern OSThread D_80067388;
 extern void *D_8005C760;
 
+/* core/E830 */
+extern s32 D_8005BAEC;
+extern s32 __osCurrentTime;
+extern s16 D_80059CD0;
+extern s16 D_80059CD2;
+extern s16 D_80059CD4;
+extern s16 D_80059CD8;
+extern f32 D_80059CE0;
+extern f64 D_80037620;
+extern void *D_80031A90;
+extern void *D_80059CDC;
+extern void *D_80267080;
+extern void *D_803DA800;
+
 #endif
