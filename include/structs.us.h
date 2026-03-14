@@ -116,7 +116,7 @@ typedef struct {
 	/* 0x1E */ s16 unk1E;
 	/* 0x20 */ s32 unk20; // flags?
 	/* 0x24 */ u8 unk24;
-	/* 0x25 */ u8 unk25;
+	/* 0x25 */ u8 unk25; // parent alien instance id?
 	/* 0x26 */ u8 unk26;
 	/* 0x27 */ u8 unk27;
 	/* 0x28 */ s8 unk28;

@@ -1,3 +1,29 @@
+### `s16` parameter passed to `s32` trig function generates `andi a0, a1, 0xffff` directly
+
+When a function has an `s16 arg1` parameter and passes it to `coss(s32)` or `sins(s32)`, IDO 5.3 -O2 generates `andi a0, a1, 0xffff` (zero-extension) automatically:
+
+```c
+s16 func_foo(u8 arg0, s16 arg1) {
+    f32 sp24 = (f32)((f64)(f32)coss(arg1) / 32768.0 * 30.0);  // andi a0,a1,0xffff generated
+    f32 sp20 = (f32)((f64)(f32)sins(arg1) / 32768.0 * 30.0);
+    ...
+}
+```
+
+**Key rule**: Write `coss(arg1)` / `sins(arg1)` directly — do NOT write `arg1 & 0xFFFF` (produces 3 extra move/andi instructions) or `(u16)arg1` (same result as direct but unnecessary).
+
+### Two named pointer locals required for correct frame size (avoid t-register cycle shift)
+
+When a function with `u8 arg0, u8 arg1` uses both `alienInstances[arg0]` and `D_8014DD50[arg1]` across multiple function calls, and the target frame is 0x60 but without named pointer locals IDO generates a 0x58 frame:
+
+Declare **both** pointer variables at the **TOP** of the declaration list (before other locals):
+```c
+Unk8014DD50 *weapon;    // first declared → highest stack address (sp+0x5C)
+AlienInstance *alien;   // second declared → sp+0x58
+s32 sp54;               // sp+0x54 (correct position)
+...
+```
+
 ### `s8` local used before branch forces early `lh` load via delay-slot scheduling
 
 When a function reads a `s8` value from a double-indirect struct lookup (`D_8014DD50[inst->unkC].unkC`) and the result is used as BOTH a function argument AND an array index before the function call, assigning it to a named `s8 specEntry` BEFORE the `if` check forces IDO to:
