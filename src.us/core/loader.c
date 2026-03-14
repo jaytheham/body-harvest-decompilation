@@ -1,41 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-extern s16 D_80068078;
-extern OSMesgQueue D_80067F70;
-extern s32 D_8006AA60;
-extern s32 D_8006AA64;
-extern char D_80037780[];
-extern char D_80037794[];
-extern char D_800377A8[];
-extern char D_800377BC[];
-extern char D_800377D0[];
-extern char D_800377E4[];
-extern char D_800377F8[];
-extern char D_80037808[];
-extern char D_8003781C[];
-extern char D_80037838[];
-extern char D_80037850[];
-extern char D_80037870[];
-extern char D_8003788C[];
-extern char D_800378A8[];
-extern s32 D_802B2080;
-extern u8 D_955300[];
-extern s32 D_80031BC4[];
-extern s32 D_37F840;
-extern s32 D_803DA800;
-extern u8 D_40720[];
-extern u8 D_7F220[];
-extern u8 D_800AED70[];
-extern u8 D_800E1D70[];
-extern void func_80070270(void);
-extern void (*__printfunc)(s32, s32);
-extern OSMesgQueue D_80067F88;
-extern s32 D_8006AA70;
-extern s32 D_8006AA74;
-extern char D_800380C4[];
-extern char D_800380E4[];
-
 #ifdef NON_MATCHING
 s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 var_s0;

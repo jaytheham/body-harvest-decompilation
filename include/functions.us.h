@@ -579,4 +579,8 @@ void func_802D5110_254850(s32 arg0);
 void func_802D4E70_2545B0(s32 arg0);
 void func_802D4CD0_254410(s32 arg0, s32 arg1);
 
+/* core/loader */
+extern void func_80070270(void);
+extern void (*__printfunc)(s32, s32);
+
 #endif
