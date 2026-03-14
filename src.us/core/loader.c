@@ -36,6 +36,7 @@ extern s32 D_8006AA74;
 extern char D_800380C4[];
 extern char D_800380E4[];
 
+#ifdef NON_MATCHING
 s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 var_s0;
     s32 var_s1;
@@ -104,6 +105,9 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     D_8006AA60 = arg3;
     return arg2;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_8000FFC0_10BC0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800101F0_10DF0.s")
 
