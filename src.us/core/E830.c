@@ -49,6 +49,9 @@ void func_8000DC30_E830(s16 *arg0, s16 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E4C4_F0C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E52C_F12C.s")
+/* Square of arg0. */
+s32 func_8000E52C_F12C(s32 arg0) {
+    return arg0 * arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E53C_F13C.s")
