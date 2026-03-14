@@ -16,6 +16,7 @@ void func_80079510_884C0(u8 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007956C_8851C.s")
 
+// Skip this and aliens freeze when they die, never disappear
 // https://decomp.me/scratch/tmc2b
 #ifdef NON_MATCHING
 void func_800797A4_88754(s32 arg0, u8 arg1)
@@ -1324,7 +1325,37 @@ s32 func_800850DC_9408C(s32 arg0, u16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800850DC_9408C.s")
 #endif
 
+#ifdef NON_MATCHING
+s32 func_800851C8_94178(u8 arg0, u8 arg1, u16 arg2) {
+	Unk8014DD50 *weapon;
+	AlienInstance *alien;
+	s32 sp54;
+	s32 sp50;
+	s32 sp4C;
+	s16 sp44;
+	f32 sp34;
+	f32 sp30;
+	s32 var_v1;
+
+	alien = &alienInstances[arg0];
+	weapon = &D_8014DD50[arg1];
+	func_80128428_1373D8(alien, weapon->unk0, 0, weapon->unk4, &sp54, &sp50, &sp4C);
+	sp34 = (f32)(D_80052B34->unk0 - sp54);
+	sp30 = (f32)(D_80052B34->unk4 - sp4C);
+	sp44 = func_80003824_4424(sp34, sp30);
+	if (-(s16)(func_80003824_4424(sp34, sp30) - (alien->unk6 - (u16)weapon->unk6)) < (s16)(sp44 - (alien->unk6 - (u16)weapon->unk6))) {
+		var_v1 = (s16)(func_80003824_4424(sp34, sp30) - alien->unk6 + (u16)weapon->unk6);
+	} else {
+		var_v1 = -(s16)(func_80003824_4424(sp34, sp30) - alien->unk6 + (u16)weapon->unk6);
+	}
+	if (var_v1 < (s32)arg2) {
+		return 1;
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800851C8_94178.s")
+#endif
 
 // https://decomp.me/scratch/ftkqT
 #ifdef NON_MATCHING
@@ -3057,7 +3088,28 @@ void func_8009335C_A230C(u8 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8009377C_A272C.s")
 
+// https://decomp.me/scratch/PJVa8
+#ifdef NON_MATCHING
+s16 func_8009395C_A290C(u8 arg0, s16 arg1) {
+	f32 sp24;
+	f32 sp20;
+	s16 sp1E;
+
+	sp24 = (f32)((f64)(f32)coss(arg1) / 32768.0 * 30.0);
+	sp20 = (f32)((f64)(f32)sins(arg1) / 32768.0 * 30.0);
+
+	sp1E = func_800B84D0_C7480(
+		(s16)((f32)alienInstances[arg0].unk0 - sp24),
+		(s16)((f32)alienInstances[arg0].unk4 - sp20)) >> 8;
+
+	return func_80003824_4424(100.0f,
+		(f32)(sp1E - (s16)(func_800B84D0_C7480(
+			(s16)((f32)alienInstances[arg0].unk0 + sp24),
+			(s16)((f32)alienInstances[arg0].unk4 + sp20)) >> 8)));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8009395C_A290C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80093AE4_A2A94.s")
 
