@@ -58,6 +58,7 @@ typedef enum Level {
 } Level;
 
 extern u8 D_80047678;
+extern s32 D_80031120;
 extern u8 D_80031160;
 extern Unk800311A0 D_800311A0;
 extern Gfx D_800311D0[];
@@ -1153,6 +1154,9 @@ extern s16 D_80059CD8;
 extern f32 D_80059CE0;
 extern f64 D_80037620;
 extern f64 D_80037648;
+extern f32 D_80037650;
+extern f32 D_80037654;
+extern f32 D_80037658;
 extern void *D_80031A90;
 extern void *D_80059CDC;
 extern void *D_80267080;
