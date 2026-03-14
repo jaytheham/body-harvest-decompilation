@@ -587,4 +587,7 @@ extern void (*__printfunc)(s32, s32);
 /* core/FB00 */
 void func_8000EFB8_FBB8(void *);
 
+/* overlay_gameplay/outside/A40B0 */
+void func_80095100_A40B0(s16, s16);
+
 #endif

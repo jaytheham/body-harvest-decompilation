@@ -468,6 +468,8 @@ extern u8 D_80149449;
 extern u8 D_8014944A;
 extern u8 D_8014944B;
 extern u8 cheatInputBuffer[0xA];
+extern u8 D_80149452; // cheat input buffer boundary
+extern u8 D_80149459; // cheat input buffer end
 extern s32 D_8014945C;
 extern s32 isCheatingEnabled; // 80149460
 extern s32 D_80149478[16];
@@ -843,6 +845,9 @@ extern s16 D_8013B910[6];
 extern s16 D_8013B91C[6];
 extern s16 D_8013B928[6];
 extern s16 D_8013B934;
+extern u8 D_8013B940[][0x10]; // cheat code patterns (stride 0x10)
+extern void (*D_8013B94C[])(void); // cheat activation function pointer table (stride 0x10)
+extern u8 D_8013BA80[]; // cheat entry structs
 extern s32 D_8013FD7C;
 extern s16 D_801493A8;
 extern s16 D_801493AA;
@@ -1159,5 +1164,8 @@ typedef struct {
     f32 unk10;
 } Unk8005BAE8;
 extern Unk8005BAE8 *D_8005BAE8;
+
+/* overlay_gameplay/outside/A40B0 */
+extern s32 D_8014ECF4;
 
 #endif
