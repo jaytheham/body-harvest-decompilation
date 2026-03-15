@@ -58,6 +58,7 @@ typedef enum Level {
 } Level;
 
 extern u8 D_80047678;
+extern s32 D_80031120;
 extern u8 D_80031160;
 extern Unk800311A0 D_800311A0;
 extern Gfx D_800311D0[];
@@ -163,6 +164,7 @@ extern s32 D_8004D158;
 extern u8 D_8004D160;
 extern u8 D_8004D1B9;
 extern u8 D_80047F93;
+extern AlienInstance D_8004D0F8[]; // alien array base
 extern s32 D_8004DC48;
 extern s32 D_8004DC4C;
 extern s16 D_8004DC60;
@@ -468,6 +470,8 @@ extern u8 D_80149449;
 extern u8 D_8014944A;
 extern u8 D_8014944B;
 extern u8 cheatInputBuffer[0xA];
+extern u8 D_80149452; // cheat input buffer boundary
+extern u8 D_80149459; // cheat input buffer end
 extern s32 D_8014945C;
 extern s32 isCheatingEnabled; // 80149460
 extern s32 D_80149478[16];
@@ -843,6 +847,9 @@ extern s16 D_8013B910[6];
 extern s16 D_8013B91C[6];
 extern s16 D_8013B928[6];
 extern s16 D_8013B934;
+extern u8 D_8013B940[][0x10]; // cheat code patterns (stride 0x10)
+extern u32 D_8013B94C[]; // cheat activation function pointer table (stride 0x10, index as [arg0*4])
+extern u8 D_8013BA80[]; // cheat entry structs
 extern s32 D_8013FD7C;
 extern s16 D_801493A8;
 extern s16 D_801493AA;
@@ -1126,5 +1133,56 @@ extern s32 D_8006AA70;
 extern s32 D_8006AA74;
 extern char D_800380C4[];
 extern char D_800380E4[];
+
+/* core/FB00 */
+extern u8 D_8003FB20[];
+extern OSThread D_80067388;
+extern void *D_8005C760;
+
+/* core/E830 */
+extern f64 D_80037628;
+extern f64 D_80037630;
+extern f64 D_80037638;
+extern f64 D_80037640;
+extern s32 D_8005BAEC;
+extern s32 __osCurrentTime;
+extern s16 D_80059CD0;
+extern s16 D_80059CD2;
+extern s16 D_80059CD4;
+extern s16 D_80059CD6;
+extern s16 D_80059CD8;
+extern f32 D_80059CE0;
+extern f64 D_80037620;
+extern f64 D_80037648;
+extern f32 D_80037650;
+extern f32 D_80037654;
+extern f32 D_80037658;
+extern void *D_80031A90;
+extern void *D_80059CDC;
+extern s16 D_80267080[];
+/* core/FB00 — thread structs, stacks, OS mode tables */
+extern OSThread D_80067388;
+extern OSThread D_80067538;
+extern OSThread D_800676E8;
+extern OSThread D_80067898;
+extern u8 D_8005CF68[];
+extern u8 D_80064F70[];
+extern u8 D_80066780[];
+extern OSMesgQueue D_80068040;
+extern OSMesg D_80068060[];
+extern OSViMode D_80035B30;
+extern OSViMode D_800356D0;
+extern OSViMode D_80035F90;
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    u8 unk8[4];
+    f32 unkC;
+    f32 unk10;
+} Unk8005BAE8;
+extern Unk8005BAE8 *D_8005BAE8;
+
+/* overlay_gameplay/outside/A40B0 */
+extern s32 D_8014ECF4;
 
 #endif

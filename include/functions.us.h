@@ -584,4 +584,16 @@ void func_802D4CD0_254410(s32 arg0, s32 arg1);
 extern void func_80070270(void);
 extern void (*__printfunc)(s32, s32);
 
+/* core/FB00 */
+void func_8000EFB8_FBB8(void *);
+
+/* overlay_gameplay/outside/A40B0 */
+void func_80095100_A40B0(s16, s16);
+
+/* core/FB00 — thread entry points */
+void func_8000F6B0_102B0(void *);
+void func_8000FE50_10A50(void *);
+void func_80002EF8_3AF8(void *);
+void func_8000F218_FE18(void);
+
 #endif
