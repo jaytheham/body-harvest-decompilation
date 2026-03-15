@@ -295,102 +295,122 @@ void func_80073A74_82A24(void) {
 // activateCheat
 void func_80073B30_82AE0(s32 arg0)
 {
-  s32 new_var2;
-  s32 *new_var;
   func_8001A650_1B250((s16) (arg0 + 0x77));
-  new_var = &arg0;
-  new_var2 = *new_var;
-  ((void (*)(void)) D_8013B94C[new_var2 * 4])();
+  D_8013B940[arg0].cheatFunc();
 }
 
-
+// https://decomp.me/scratch/Xo6Wf
 #ifdef NON_MATCHING
-void func_80073B78_82B28(void) {
-	u8 *var_s1;
-	s32 temp_v0;
-	s32 var_a0;
-	s32 var_a2;
-	s32 var_s0;
-	u8 *var_v1;
-	u8 temp_t2;
-	u8 temp_t9;
-	u8 *var_v0;
+void func_80073B78_82B28(void)
+{
+  u8 *var_s1;
+  s32 temp_v0;
+  s32 var_a0;
+  s32 var_a2;
+  s32 var_s0;
+  u8 *var_v1;
+  u8 temp_t2;
+  u8 temp_t9;
+  u8 *var_v0;
+  u32 new_var;
 
-	if ((currentControllerStates[0].button == 0) || (D_8014945C != 1)) {
-		if ((currentControllerStates[0].button != 0) && (D_8014945C == 0)) {
-			switch ((s32) currentControllerStates[0].button) {
-			case 0x8000:
-				func_80073A20_829D0(0x61);
-				break;
-			case 0x4000:
-				func_80073A20_829D0(0x62);
-				break;
-			case 0x2:
-				func_80073A20_829D0(0x77);
-				break;
-			case 0x4:
-				func_80073A20_829D0(0x73);
-				break;
-			case 0x8:
-				func_80073A20_829D0(0x6E);
-				break;
-			case 0x1:
-				func_80073A20_829D0(0x65);
-				break;
-			case 0x2000:
-				func_80073A20_829D0(0x66);
-				break;
-			case 0x800:
-				func_80073A20_829D0(0x75);
-				break;
-			case 0x400:
-				func_80073A20_829D0(0x64);
-				break;
-			case 0x200:
-				func_80073A20_829D0(0x6C);
-				break;
-			case 0x100:
-				func_80073A20_829D0(0x72);
-				break;
-			}
-			D_8014945C = 1;
-		} else {
-			D_8014945C = 0;
-		}
-		var_s1 = &D_8013BA80[0];
-		var_s0 = 0x14;
-		do {
-			var_a2 = 4;
-			if (*(u8*)(var_s1 + 4) != 0) {
-				do {
-					temp_v0 = var_a2 + 1;
-					temp_t2 = D_8013B940[var_s0][temp_v0];
-					var_a2 = temp_v0;
-				} while (temp_t2 != 0);
-			}
-			var_a0 = var_a2 - 1;
-			if (var_a2 != 0) {
-				var_v0 = &D_8013B940[var_s0][var_a2 - var_a0];
-				var_v1 = &cheatInputBuffer[var_a0];
-loop_check:
-				temp_t9 = *(var_v0 - 1);
-				var_v0 += 1;
-				var_v1 -= 1;
-				if (temp_t9 == *var_v1) {
-					var_a0 -= 1;
-					if (var_a0 != 0) {
-						goto loop_check;
-					}
-				}
-			}
-			if (var_a0 == -1) {
-				func_80073B30_82AE0(var_s0);
-				func_80073A74_82A24();
-			}
-			var_s1 -= 0x10;
-			var_s0 -= 1;
-		} while (var_s0 != 0);
+  if ((currentControllerStates[0].button == 0) || (D_8014945C != 1))
+  {
+	if ((currentControllerStates[0].button != 0) && (D_8014945C == 0))
+	{
+	  switch ((s32) currentControllerStates[0].button)
+	  {
+		case BUTTON_A:
+		  func_80073A20_829D0('a');
+		  break;
+
+		case BUTTON_B:
+		  func_80073A20_829D0('b');
+		  break;
+
+		case BUTTON_C_LEFT:
+		  func_80073A20_829D0('w');
+		  break;
+
+		case BUTTON_C_DOWN:
+		  func_80073A20_829D0('s');
+		  break;
+
+		case BUTTON_C_UP:
+		  func_80073A20_829D0('n');
+		  break;
+
+		case BUTTON_C_RIGHT:
+		  func_80073A20_829D0('e');
+		  break;
+
+		case BUTTON_Z:
+		  func_80073A20_829D0('f');
+		  break;
+
+		case BUTTON_D_UP:
+		  func_80073A20_829D0('u');
+		  break;
+
+		case BUTTON_D_DOWN:
+		  func_80073A20_829D0('d');
+		  break;
+
+		case BUTTON_D_LEFT:
+		  func_80073A20_829D0('l');
+		  break;
+
+		case BUTTON_D_RIGHT:
+		  func_80073A20_829D0('r');
+		  break;
+	  }
+
+	  D_8014945C = 1;
 	}
+	else
+	{
+	  D_8014945C = 0;
+	}
+	var_s1 = D_8013B940[var_s0].cheatPattern;
+	new_var = 1;
+	var_s0 = 0x14;
+	do
+	{
+	  var_a2 = 4;
+	  if (var_s1[4] != 0)
+	  {
+		do
+		{
+		  temp_v0 = var_a2 + new_var;
+		  temp_t2 = D_8013B940[var_s0].cheatPattern[temp_v0];
+		  var_a2 = temp_v0;
+		}
+		while (temp_t2 != 0);
+	  }
+	  var_a0 = var_a2 - new_var;
+	  if (var_a2 != 0)
+	  {
+		var_v0 = &D_8013B940[var_s0].cheatPattern[var_a2 - var_a0];
+		var_v1 = &cheatInputBuffer[var_a0];
+		do
+		{
+		  temp_t9 = *(var_v0 - new_var);
+		  var_v0 += new_var;
+		  if (temp_t9 != *var_v1) break;
+		  var_v1 -= new_var;
+		}
+		while (var_a0-- != 0);
+	  }
+	  if (var_a0 == -1)
+	  {
+		func_80073B30_82AE0(var_s0);
+		func_80073A74_82A24();
+	  }
+	  var_s1 -= 0x10;
+	  var_s0 -= new_var;
+	}
+	while (var_s0 != 0);
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073B78_82B28.s")

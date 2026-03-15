@@ -847,9 +847,7 @@ extern s16 D_8013B910[6];
 extern s16 D_8013B91C[6];
 extern s16 D_8013B928[6];
 extern s16 D_8013B934;
-extern u8 D_8013B940[][0x10]; // cheat code patterns (stride 0x10)
-extern u32 D_8013B94C[]; // cheat activation function pointer table (stride 0x10, index as [arg0*4])
-extern u8 D_8013BA80[]; // cheat entry structs
+extern Cheat D_8013B940[21];
 extern s32 D_8013FD7C;
 extern s16 D_801493A8;
 extern s16 D_801493AA;
@@ -1184,5 +1182,24 @@ extern Unk8005BAE8 *D_8005BAE8;
 
 /* overlay_gameplay/outside/A40B0 */
 extern s32 D_8014ECF4;
+extern s16 D_8014ECF0;
+extern s16 D_8013CBB4;
+extern u8 D_8013CBA4;
+extern u8 D_8013CBBC;
+extern DebugPropEntry D_8013CBC0[];
+extern u8 D_802566D0[];
+extern s8 D_80257A55[];
+extern u8 D_80140768[];
+extern u8 D_801601F0[];
+extern s32 D_80034574[];
+extern u8 D_801421A0[];
+extern u8 D_801421A8[];
+extern u8 D_801421AC[];
+extern u8 D_801421B0[];
+extern u8 D_801421B4[];
+extern u8 D_801421B8[];
+extern f64 D_80142328;
+extern f64 D_80142350;
+extern f64 D_80142358;
 
 #endif

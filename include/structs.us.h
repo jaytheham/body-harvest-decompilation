@@ -19,6 +19,11 @@ typedef struct {
 } Unk800311A0; /* size = 0x06 */
 
 typedef struct {
+	/* 0x00 */ u8 cheatPattern[0xC];
+	/* 0x0C */ void (*cheatFunc)(void);
+} Cheat; /* size = 0x10 */
+
+typedef struct {
 	/* 0x00 */ u8 pad0[9];
 	/* 0x09 */ u8 unk9;
 } func_80070420_7F3D0_UnkArg0; /* size = 0x0A */
@@ -900,5 +905,13 @@ typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ u16 unk4;
 } Unk802E71B8; /* size = 0x6 */
+
+typedef struct {
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ s32 unk4;
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ u8 pad0C[0xC];
+	/* 0x18 */ u32 type;
+} DebugPropEntry; /* stride = 0x1C */
 
 #endif
