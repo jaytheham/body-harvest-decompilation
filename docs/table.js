@@ -1,5 +1,26 @@
 import { pct, fmt } from './utils.js';
 
+// Interpolate red(0%) -> orange(50%) -> green(100%) for matched % badge
+function pctColor(p) {
+  const t = Math.max(0, Math.min(100, p)) / 100;
+  let r, g, b;
+  if (t < 0.5) {
+    // red #cc1500 -> orange #d06010
+    const s = t * 2;
+    r = Math.round(0xcc + (0xd0 - 0xcc) * s);
+    g = Math.round(0x15 + (0x60 - 0x15) * s);
+    b = Math.round(0x00 + (0x10 - 0x00) * s);
+  } else {
+    // orange #d06010 -> green #28a828
+    const s = (t - 0.5) * 2;
+    r = Math.round(0xd0 + (0x28 - 0xd0) * s);
+    g = Math.round(0x60 + (0xa8 - 0x60) * s);
+    b = Math.round(0x10 + (0x28 - 0x10) * s);
+  }
+  const hex = `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+  return `color:${hex};background:${hex}22;border:1px solid ${hex}55`;
+}
+
 export function renderFilesTable(files) {
   const segmentOptions = [...new Set(files.map(f => f.segment))].sort()
     .map(s => `<option value="${s}">${s}</option>`).join('');
@@ -57,7 +78,7 @@ export function initFilesTable(files) {
       return `<tr>
         <td><code>${f.path}</code></td>
         <td><span style="color:var(--text-muted)">${f.segment}</span></td>
-        <td>${f.matched} <span class="badge ${f.matched_pct >= 50 ? 'badge-matched' : f.matched_pct >= 10 ? 'badge-nonmatch' : 'badge-asm'}">${fmt(f.matched_pct)}</span></td>
+        <td>${f.matched} <span class="badge" style="${pctColor(f.matched_pct)}">${fmt(f.matched_pct)}</span></td>
         <td>${f.non_matching}</td>
         <td>${f.asm_stubs}</td>
         <td>${f.total}</td>
