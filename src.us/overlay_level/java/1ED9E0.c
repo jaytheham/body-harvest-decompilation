@@ -4,6 +4,7 @@
 extern char D_802E0D84[];
 extern const char D_802E0DA8[];
 extern s16 D_800481AA[];
+extern s32 D_800481B8[];
 extern s16 D_802E0FB0;
 extern s16 D_802E0FB2;
 extern s16 D_802E0FB4;
@@ -215,7 +216,14 @@ void func_802D7938_1F0648(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DA844_1F3554.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DAF5C_1F3C6C.s")
+extern void func_802DA844_1F3554(u8);
+void func_802DAF5C_1F3C6C(s32 arg0) {
+    if (!(*(s32 *)(D_800481B8 + ((u8)arg0 * 0x50)) & 0x100000)) {
+        func_80137468_146418((u8)arg0, 0xF);
+        func_802DA844_1F3554((u8)arg0);
+    }
+    func_80089EB4_98E64((u8)arg0, 0x3C, 0, 6, 3);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DAFD0_1F3CE0.s")
 
