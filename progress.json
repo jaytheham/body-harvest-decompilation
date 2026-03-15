@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-15T04:36:31Z",
-  "commit": "56d2ea2",
-  "commit_timestamp": "2026-03-15T14:43:36+13:00",
+  "generated": "2026-03-15T10:19:50Z",
+  "commit": "f1d2389",
+  "commit_timestamp": "2026-03-15T23:19:35+13:00",
   "overall": {
-    "total_functions": 2959,
+    "total_functions": 2960,
     "matched": 642,
-    "non_matching": 285,
+    "non_matching": 286,
     "asm_stubs": 2032,
-    "matched_pct": 21.7,
-    "decompiled_pct": 31.33
+    "matched_pct": 21.69,
+    "decompiled_pct": 31.35
   },
   "segments": {
     "core": {
@@ -32,9 +32,9 @@
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
       "matched": 449,
-      "non_matching": 164,
+      "non_matching": 165,
       "asm_stubs": 977,
-      "total": 1590,
+      "total": 1591,
       "matched_pct": 28.2,
       "decompiled_pct": 38.6
     },
@@ -348,11 +348,11 @@
       "path": "overlay_gameplay/outside/A40B0.c",
       "segment": "overlay_gameplay/outside",
       "matched": 1,
-      "non_matching": 1,
+      "non_matching": 2,
       "asm_stubs": 3,
-      "total": 5,
-      "matched_pct": 20.0,
-      "contributor": "Meridian Lex"
+      "total": 6,
+      "matched_pct": 16.7,
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/A49A0.c",
@@ -538,10 +538,10 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 35,
-      "matched": 591,
-      "non_matching": 257,
-      "asm_stubs": 1869
+      "files": 36,
+      "matched": 592,
+      "non_matching": 259,
+      "asm_stubs": 1872
     },
     {
       "name": "Harvester",
@@ -552,10 +552,10 @@
     },
     {
       "name": "Meridian Lex",
-      "files": 6,
-      "matched": 15,
-      "non_matching": 17,
-      "asm_stubs": 22
+      "files": 5,
+      "matched": 14,
+      "non_matching": 16,
+      "asm_stubs": 19
     }
   ],
   "history": [
@@ -641,11 +641,11 @@
     },
     {
       "date": "2026-03-15",
-      "commit": "56d2ea2",
-      "matched_pct": 21.7,
-      "decompiled_pct": 31.33,
+      "commit": "f1d2389",
+      "matched_pct": 21.69,
+      "decompiled_pct": 31.35,
       "matched": 642,
-      "total": 2959
+      "total": 2960
     }
   ]
 }
