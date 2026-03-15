@@ -1178,7 +1178,6 @@ void func_80080530_509E0(Unk80080530_Src* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080668_50B18.s")
 
-#ifdef NON_MATCHING
 void func_8008098C_50E3C(void) {
 	s32 i;
 
@@ -1188,13 +1187,9 @@ void func_8008098C_50E3C(void) {
 		i++;
 	} while (i < 10);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8008098C_50E3C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800809DC_50E8C.s")
 
-#ifdef NON_MATCHING
 void func_80080A84_50F34(FrontendStreamSlot* arg0) {
 	s32 index;
 
@@ -1204,9 +1199,6 @@ void func_80080A84_50F34(FrontendStreamSlot* arg0) {
 		D_800D8578[index].unk50 = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080A84_50F34.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080AD4_50F84.s")
 
@@ -1224,15 +1216,11 @@ void func_80080A84_50F34(FrontendStreamSlot* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081CAC_5215C.s")
 
-#ifdef NON_MATCHING
 void func_80081F9C_5244C(void) {
 	D_800D8524 = 0xF;
 	D_800D8520 = ((s32*)(D_800D7A4C + D_800949D4 * 8))[8];
 	D_800949D4 = (u8)((s32)(D_800949D4 + 1) % 4);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081F9C_5244C.s")
-#endif
 
 /**
  * @brief Dampens D_800D8528 by 87.5% and reverses direction, zeroing if below threshold.
