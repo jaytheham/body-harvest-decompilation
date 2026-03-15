@@ -98,7 +98,6 @@ s32 func_80080DA8_168E68(s32 arg0, s32 arg1) {
 	return v1;
 }
 
-#ifdef NON_MATCHING
 void func_80080E28_168EE8(void) {
 	s16 sp1E;
 	s32 delta;
@@ -136,11 +135,7 @@ void func_80080E28_168EE8(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080E28_168EE8.s")
-#endif
 
-#ifdef NON_MATCHING
 s16 func_80080FD8_169098(void) {
 	f32 sp84;
 	f32 sp80;
@@ -184,9 +179,6 @@ s16 func_80080FD8_169098(void) {
 	}
 	return (s16) (0x4000 - D_800E6A86);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080FD8_169098.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800811DC_16929C.s")
 
