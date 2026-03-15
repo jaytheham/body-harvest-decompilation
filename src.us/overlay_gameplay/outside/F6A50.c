@@ -42,8 +42,8 @@ void func_800E7BC4_F6B74(void) {
 	D_8015758E = D_80047712;
 }
 
-// Outdoors debug camera? Controller 2 moves camera when function runs
 #ifdef NON_MATCHING
+// Outdoors debug camera? Controller 2 moves camera when function runs
 void func_800E7C28_F6BD8(void) {
 	s32 sp3C;
 	s32 sp38;
@@ -153,7 +153,7 @@ void func_800E82AC_F725C(Unk80052B2C *arg0) {
     D_80149404 = 0x2D;
     switch (D_80157590) {
     case 1:
-        func_800E7BC4_F6B74(D_80157590);
+        func_800E7BC4_F6B74();
         /* fallthrough */
     case 2:
     case 4:
@@ -162,7 +162,7 @@ void func_800E82AC_F725C(Unk80052B2C *arg0) {
     case 3:
         temp_f14 = (f32) D_80157588;
         temp_f12 = (f32) D_8015758A;
-        guLookAt(temp_f12, temp_f14, D_8005BB20 + 0x200, (f32) D_80157580, (f32) D_80157582, (f32) D_80157584, (f32) D_80157586, temp_f14, temp_f12, 0.0f, 1.0f, 0.0f);
+        guLookAt((Mtx *)(D_8005BB20 + 0x200), (f32) D_80157586, temp_f14, temp_f12, (f32) D_80157580, (f32) D_80157582, (f32) D_80157584, 0.0f, 1.0f, 0.0f);
         D_80153BAC = D_80157586;
         D_80153BAE = D_80157588;
         D_80153BB0 = D_8015758A;
@@ -190,7 +190,7 @@ void func_800E82AC_F725C(Unk80052B2C *arg0) {
         var_t3 = 1;
     }
     D_801493CC = var_t3;
-    guPerspective(D_8005BB20 + 0x180, &D_801493D6, (f32) D_80149404, 0x3FAAAAAB, (f32) D_80157574, (f32) D_80157576, 1.0f);
+    guPerspective((Mtx *)(D_8005BB20 + 0x180), &D_801493D6, (f32) D_80149404, 0x3FAAAAAB, (f32) D_80157574, (f32) D_80157576, 1.0f);
     temp_v0 = D_8005BB2C;
     D_8005BB2C = temp_v0 + 1;
     temp_v0->words.w0 = 0xBC00000E;
@@ -198,11 +198,11 @@ void func_800E82AC_F725C(Unk80052B2C *arg0) {
     temp_v0_2 = D_8005BB2C;
     D_8005BB2C = temp_v0_2 + 1;
     temp_v0_2->words.w0 = 0x01030040;
-    temp_v0_2->words.w1 = (u32) ((D_8005BB20 + 0x180) & 0x1FFFFFFF);
+    temp_v0_2->words.w1 = (u32) ((u32)(D_8005BB20 + 0x180) & 0x1FFFFFFF);
     temp_v0_3 = D_8005BB2C;
     D_8005BB2C = temp_v0_3 + 1;
     temp_v0_3->words.w0 = 0x01010040;
-    temp_v0_3->words.w1 = (u32) ((D_8005BB20 + 0x200) & 0x1FFFFFFF);
+    temp_v0_3->words.w1 = (u32) ((u32)(D_8005BB20 + 0x200) & 0x1FFFFFFF);
     D_80031404 = (f32) ((f64) (f32) sins((D_80047950 + 0x4000) & 0xFFFF) / 32768.0);
     D_8003140C = (f32) ((f64) (f32) coss((D_80047950 + 0x4000) & 0xFFFF) / 32768.0);
     temp_t7 = (s32) (arg0->unk3C - 0x780) >> 8;
