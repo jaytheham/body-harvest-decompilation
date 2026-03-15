@@ -2081,6 +2081,7 @@ s32 func_800880B8_97068(void)
 // 800885C8 halves alien death points in easy
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088154_97104.s")
 
+// maybe kill alien?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088760_97710.s")
 
 void func_80088E10_97DC0(s16 arg0) {

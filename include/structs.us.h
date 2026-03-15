@@ -69,7 +69,7 @@ typedef struct {
 	/* 0x14 */ u8 pad14[0x6];
 	/* 0x1A */ u8 unk1A; // specIndex
 	/* 0x1B */ u8 unk1B;
-	/* 0x1C */ s16 unk1C;
+	/* 0x1C */ s16 unk1C; // hitPoints
 	/* 0x1E */ u8 pad1E[2];
 	/* 0x20 */ u16 unk20;
 	/* 0x22 */ s16 unk22;
@@ -77,7 +77,7 @@ typedef struct {
 	/* 0x30 */ f32 unk30;
 	/* 0x34 */ f32 unk34;
 	/* 0x38 */ f32 unk38;
-	/* 0x3C */ s16 unk3C;
+	/* 0x3C */ s16 unk3C; // fuel
 	/* 0x3E */ u8 pad3E[0xE];
 	/* 0x4C */ f32 unk4C;
 	/* 0x50 */ f32 unk50;
@@ -310,7 +310,7 @@ typedef struct {
 	/* 0x5E */ u8 unk5E;
 	/* 0x5F */ u8 unk5F;
 	/* 0x60 */ u8 unk60;
-	/* 0x61 */ u8 unk61;
+	/* 0x61 */ u8 unk61; // Max fuel (/ 0x100) ?
 	/* 0x62 */ u8 pad62[0xE];
 } VehicleSpec; /* size = 0x70 */
 

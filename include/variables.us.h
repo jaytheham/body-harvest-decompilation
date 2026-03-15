@@ -157,7 +157,7 @@ extern s32 D_80048194;
 extern AlienInstance alienInstances[]; // alien instances
 extern AlienWaveEntry D_8003BCC0[][12];
 extern char D_80142B6C;
-extern s32 D_8004D148;
+extern s32 D_8004D148; // is Snared cheat disabled
 extern s32 D_8004D150;
 extern s32 D_8004D154;
 extern s32 D_8004D158;
@@ -206,7 +206,7 @@ extern s32 D_80052550;
 extern s32 D_80052558;
 extern GameplayMode gameplayMode; // 80052adc
 extern Unk80052B2C* D_80052B2C;
-extern VehicleInstance* D_80052B34; // Active vehicle instance?
+extern VehicleInstance* D_80052B34; // Ptr to active vehicle instance
 extern Unk80052B40 D_80052B40;
 extern Unk80052B40 D_80052B48;
 extern Unk80052B40 D_80052B50;
@@ -1172,11 +1172,11 @@ extern OSViMode D_80035B30;
 extern OSViMode D_800356D0;
 extern OSViMode D_80035F90;
 typedef struct {
-    f32 unk0;
-    f32 unk4;
-    u8 unk8[4];
-    f32 unkC;
-    f32 unk10;
+	f32 unk0;
+	f32 unk4;
+	u8 unk8[4];
+	f32 unkC;
+	f32 unk10;
 } Unk8005BAE8;
 extern Unk8005BAE8 *D_8005BAE8;
 

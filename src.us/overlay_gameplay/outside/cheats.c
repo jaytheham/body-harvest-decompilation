@@ -152,6 +152,7 @@ void enableCheatAlfa(void) {
 }
 
 // func_8007377C_8272C
+// use normal player model
 void enableCheatSnuffle() {
 	D_80052ACD ^= 4;
 }
@@ -201,11 +202,13 @@ void func_8007383C_827EC(void) {
 }
 
 // func_8007391C_828CC
+// use Black Adam model for player
 void enableCheatWeasel() {
 	D_80052ACD ^= 2;
 }
 
 //func_80073934_828E4
+// gain all alien artifacts
 void enableCheatUseful() {
 	s32 temp_v0;
 
@@ -243,6 +246,7 @@ void enableCheatLard() {
 }
 
 // func_80073A08_829B8
+// Weak bosses
 void enableCheatFeeble() {
 	s32 x = D_8013BD04;
 	D_8013BD04 = x == 0;
