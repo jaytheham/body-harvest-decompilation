@@ -30,7 +30,7 @@ Note - the core .c files assumed to only contain library functions
 | overlay_gameplay/outside/missions.c | ? |  | unclaimed |  |
 | overlay_gameplay/outside/857E0.c | ? |  | unclaimed |  |
 | overlay_gameplay/outside/884C0.c | ? | jaytheham | in-progress |  |
-| overlay_gameplay/outside/A40B0.c | ? |  | unclaimed |  |
+| overlay_gameplay/outside/A40B0.c | ? | jaytheham | in-progress |  |
 | overlay_gameplay/outside/A49A0.c | ? |  | unclaimed |  |
 | overlay_gameplay/outside/AAA70.c | ? |  | unclaimed |  |
 | overlay_gameplay/outside/B2CB0.c | ? |  | unclaimed |  |
@@ -38,7 +38,7 @@ Note - the core .c files assumed to only contain library functions
 | overlay_gameplay/outside/trigger.c | ? |  | unclaimed |  |
 | overlay_gameplay/outside/BF9C0.c | ? |  | unclaimed |  |
 | overlay_gameplay/outside/CFE30.c | ? |  | unclaimed |  |
-| overlay_gameplay/outside/F6A50.c | ? |  | unclaimed |  |
+| overlay_gameplay/outside/F6A50.c | ? | jaytheham | in-progress |  |
 | overlay_gameplay/outside/F7870.c | ? |  | unclaimed |  |
 | overlay_gameplay/outside/F9230.c | ? |  | unclaimed |  |
 | overlay_gameplay/outside/buildings.c | ? |  | unclaimed |  |
