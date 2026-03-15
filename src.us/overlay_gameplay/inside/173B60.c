@@ -40,6 +40,7 @@ void func_8008BB5C_173C1C(void) {
 	D_800FCF28 = -8;
 }
 
+#ifdef NON_MATCHING
 void func_8008BB6C_173C2C(s32 arg0, s32 arg1) {
 	Gfx *dl;
 	Gfx *spC;
@@ -103,12 +104,16 @@ void func_8008BB6C_173C2C(s32 arg0, s32 arg1) {
 	dl->words.w1 = 0;
 	dl->words.w0 = 0xE7000000;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008BB6C_173C2C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008BD18_173DD8.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008C8A4_174964.s")
 
 // doPauseMenu ?
+#ifdef NON_MATCHING
 void func_8008CF2C_174FEC(void) {
 	u8 menuEntries[9];
 	s16 temp_s0;
@@ -420,7 +425,11 @@ block_79:
 		((Gfx *) var_v0_3)->words.w0 = var_t7;
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008CF2C_174FEC.s")
+#endif
 
+#ifdef NON_MATCHING
 void func_8008D900_1759C0(void) {
 	s32 sp58_unk0;
 	u16 sp58_unk4;
@@ -524,6 +533,9 @@ void func_8008D900_1759C0(void) {
 	temp_v0_9->words.w1 = 0;
 	temp_v0_9->words.w0 = 0xBA000E02;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008D900_1759C0.s")
+#endif
 
 void func_8008DC44_175D04(s32 arg0) {
 	switch (D_800313D0) {
