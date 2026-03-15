@@ -293,14 +293,16 @@ void func_80073A74_82A24(void) {
 }
 
 // activateCheat
-#ifdef NON_MATCHING
-void func_80073B30_82AE0(s32 arg0) {
-	func_8001A650_1B250((s16) (arg0 + 0x77));
-	((void (*)(void)) D_8013B94C[arg0 * 4])();
+void func_80073B30_82AE0(s32 arg0)
+{
+  s32 new_var2;
+  s32 *new_var;
+  func_8001A650_1B250((s16) (arg0 + 0x77));
+  new_var = &arg0;
+  new_var2 = *new_var;
+  ((void (*)(void)) D_8013B94C[new_var2 * 4])();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073B30_82AE0.s")
-#endif
+
 
 #ifdef NON_MATCHING
 void func_80073B78_82B28(void) {

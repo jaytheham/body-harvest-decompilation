@@ -1,5 +1,7 @@
 # Body Harvest N64 Decompilation
 
+[View progress](https://jaytheham.github.io/body-harvest-decompilation/)
+
 Help is welcome! Message me on discord `jaytheham` or @gmail.com
 
 Note AI is being used extensively for initial decomp work. All NON_MATCHING code should be assumed to be AI generated and possibly wildly wrong. Same with the pre-function /\* ... \*/ comments.
