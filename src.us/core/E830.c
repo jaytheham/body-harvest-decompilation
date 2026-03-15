@@ -35,9 +35,73 @@ void func_8000DC30_E830(s16 *arg0, s16 *arg1) {
     } while (outer != 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000DC9C_E89C.s")
+void func_8000DC9C_E89C(s32 arg0, s32 arg1) {
+    u8 *src = (u8 *)arg0;
+    u8 *dst = (u8 *)arg1;
+    s32 count = 0x95FF;
+    do {
+        *(s32 *)(dst - 4) = *(s32 *)src;
+        src += 4;
+        dst += 4;
+        count -= 1;
+    } while (count != 0);
+}
 
+#ifdef NON_MATCHING
+void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s16 sp36;
+    s32 sp40;
+    s32 sp50;
+    s32 sp54;
+    f64 sp20;
+    f64 sp28;
+    s16 temp_a3;
+    s16 temp_t0;
+    s32 temp_a1;
+    s32 temp_s0;
+    s32 var_s1;
+    f32 temp_f12;
+    f64 temp_f0;
+    f64 temp_f2;
+    f64 temp_f18;
+    s16 temp_v0;
+
+    temp_a3 = D_80059CD2;
+    temp_t0 = D_80059CD4;
+    sp54 = (s32) temp_a3;
+    sp50 = (s32) temp_t0;
+
+    temp_a1 = (temp_a3 * temp_a3) + (temp_t0 * temp_t0);
+
+    var_s1 = (s32) ((D_80059CD0 * 2 * (((s32) ((D_8005BAEC * D_8005BAEC) + (__osCurrentTime * __osCurrentTime)) / 4) - temp_a1)) + (D_80059CD0 * temp_a1)) / 1296;
+    temp_s0 = var_s1 & 0xFFFF;
+
+    sp36 = coss(temp_s0 & 0xFFFF, temp_a1, D_80059CD0, temp_a3);
+
+    temp_f0 = (f64) temp_t0;
+    temp_f18 = (f64) (f32) sins(temp_s0 & 0xFFFF);
+    sp28 = temp_f0;
+    temp_f2 = (f64) temp_a3;
+    sp20 = temp_f2;
+
+    sp40 = (s32) (((temp_f18 / 32768.0) * temp_f0) + (((f64) (f32) sp36 / 32768.0) * temp_f2));
+
+    sp36 = sins(temp_s0 & 0xFFFF);
+    temp_v0 = coss(temp_s0 & 0xFFFF);
+
+    if (var_s1 >= 0x8000) {
+        var_s1 = 0x7FFF;
+    }
+
+    temp_f12 = (f32) ((D_80037620 - (f64) (f32) var_s1) / D_80037620);
+
+    D_80059CD2 = (s16) (s32) ((f32) sp40 * temp_f12);
+
+    D_80059CD4 = (s16) (s32) ((f32) (s32) ((((f64) (f32) temp_v0 / 32768.0) * temp_f0) + (-((f64) (f32) sp36 / 32768.0) * temp_f2)) * temp_f12);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000DCCC_E8CC.s")
+#endif
 
 /* Rotate (D_80059CD2, D_80059CD4) by angle derived from D_80059CD0, update spin rate. */
 void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
