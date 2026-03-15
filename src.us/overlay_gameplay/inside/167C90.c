@@ -2,7 +2,6 @@
 #include "common.h"
 
 
-#ifdef NON_MATCHING
 void func_8007FBD0_167C90(void) {
 	D_800E747C = 0;
 	D_800E73AC = 1;
@@ -20,9 +19,6 @@ void func_8007FBD0_167C90(void) {
 	D_800E73A0 = 0;
 	D_800E73A8 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_8007FBD0_167C90.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_8007FC74_167D34.s")
 
