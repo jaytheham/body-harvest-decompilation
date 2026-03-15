@@ -248,7 +248,17 @@ void func_802DB428_1F4138(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DCA54_1F5764.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DCDD4_1F5AE4.s")
+void func_802DCDD4_1F5AE4(s32 arg0) {
+    AlienInstance *ai;
+    u8 id;
+
+    id = (u8)arg0;
+    ai = &alienInstances[id];
+    func_80137468_146418(id, 0x1C);
+    func_800873A8_96358(id);
+    ai->unk20 &= ~0x10;
+    ai->unk6 = ai->unkE;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DCE34_1F5B44.s")
 
