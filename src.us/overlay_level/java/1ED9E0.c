@@ -1,6 +1,10 @@
 #include <ultra64.h>
 #include "common.h"
 
+extern void func_800E2720_F16D0(s32);
+extern u8 D_802D48D0;
+extern u8 D_802D4AD0;
+extern VehicleInstance D_8004DFB0;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4CD0_1ED9E0.s")
 
@@ -25,9 +29,38 @@ void func_802D4E34_1EDB44(s16 arg0) {
     }
 }
 
+#ifdef NON_MATCHING
+void func_802D4E6C_1EDB7C(void) {
+    s16 var_v1;
+    s32 temp_v0;
+    u16 temp_t9;
+    u32 temp_v1;
+    func_800FB468_10A418(&D_8004DFB0, 675.0f);
+    *((u16 *) (((u8 *) vehicleInstances) + 0x300)) = (u16) ((*((u16 *) (((u8 *) vehicleInstances) + 0x300))) | 3);
+    if (func_8000726C_7E6C((u64) 0x1E) != 0)
+    {
+ do { func_800E2720_F16D0(0); var_v1 = 0; do { temp_v0 = var_v1 * 2; ; var_v1 += 1; *((u16 *) ((&D_802D4AD0) + temp_v0)) = *((u16 *) ((&D_802D48D0) + temp_v0)); } while (var_v1 < 0x100); } while (0);
+    }
+    else
+    {
+        func_802D4CD0_1ED9E0(0xC, 0);
+    }
+    temp_v1 = (*((u32 *) (((u8 *) buildingInstances) + 0x398))) >> 0xC;
+    *((u32 *) (((u8 *) buildingInstances) + 0x398)) = (u32) ((((temp_v1 | 0x10000) ^ temp_v1) << 0xC) ^ (*((u32 *) (((u8 *) buildingInstances) + 0x398))));
+    if (func_8000726C_7E6C((u64) 0x11) != 0)
+    {
+        func_8011C080_12B030(0x31);
+        func_8011C080_12B030(0x32);
+    }
+    *((u16 *) (((u8 *) vehicleInstances) + 0x14F8)) = (u16) ((*((u16 *) (((u8 *) vehicleInstances) + 0x14F8))) | 0x80);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4E6C_1EDB7C.s")
+#endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4F70_1EDC80.s")
+void func_802D4F70_1EDC80(s32 arg0) {
+    func_800072CC_7ECC((u64)0x2C);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4F98_1EDCA8.s")
 
