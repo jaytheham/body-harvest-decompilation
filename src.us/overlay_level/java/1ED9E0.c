@@ -206,7 +206,9 @@ void func_802DD5A0_1F62B0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DE9B8_1F76C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DEE18_1F7B28.s")
+void func_802DEE18_1F7B28(s32 arg0) {
+    func_800A93A4_B8354(arg0 & 0xFF, 0, -1, 0xC6);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DEE4C_1F7B5C.s")
 
