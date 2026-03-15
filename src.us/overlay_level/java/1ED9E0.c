@@ -93,7 +93,13 @@ void func_802D6104_1EEE14(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6104_1EEE14.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802D6128_1EEE38(void) {
+    func_800074BC_80BC(&func_802D60DC_1EEDEC + 0x20);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6128_1EEE38.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D614C_1EEE5C.s")
 
@@ -113,7 +119,11 @@ void func_802D6104_1EEE14(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6E70_1EFB80.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7938_1F0648.s")
+void func_802D6E70_1EFB80(void);
+
+void func_802D7938_1F0648(void) {
+    func_80007410_8010(&func_802D6E70_1EFB80);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D795C_1F066C.s")
 
