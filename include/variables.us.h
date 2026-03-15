@@ -1159,7 +1159,21 @@ extern f32 D_80037654;
 extern f32 D_80037658;
 extern void *D_80031A90;
 extern void *D_80059CDC;
-extern void *D_80267080;
+extern s16 D_80267080[];
+extern s16 D_802B2080;
+/* core/FB00 — thread structs, stacks, OS mode tables */
+extern OSThread D_80067388;
+extern OSThread D_80067538;
+extern OSThread D_800676E8;
+extern OSThread D_80067898;
+extern u8 D_8005CF68[];
+extern u8 D_80064F70[];
+extern u8 D_80066780[];
+extern OSMesgQueue D_80068040;
+extern OSMesg D_80068060[];
+extern OSViMode D_80035B30;
+extern OSViMode D_800356D0;
+extern OSViMode D_80035F90;
 extern void *D_803DA800;
 typedef struct {
     f32 unk0;
