@@ -57,7 +57,7 @@ export function initFilesTable(files) {
       return `<tr>
         <td><code>${f.path}</code></td>
         <td><span style="color:var(--text-muted)">${f.segment}</span></td>
-        <td>${f.matched} <span class="badge badge-matched">${fmt(f.matched_pct)}</span></td>
+        <td>${f.matched} <span class="badge ${f.matched_pct >= 50 ? 'badge-matched' : f.matched_pct >= 10 ? 'badge-nonmatch' : 'badge-asm'}">${fmt(f.matched_pct)}</span></td>
         <td>${f.non_matching}</td>
         <td>${f.asm_stubs}</td>
         <td>${f.total}</td>

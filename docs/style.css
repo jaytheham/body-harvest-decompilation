@@ -118,6 +118,8 @@ header .subtitle { color: var(--text-muted); font-size: 12px; letter-spacing: 1p
 .stat-card .sub { color: var(--text-muted); font-size: 11px; margin-top: 6px; }
 .stat-card.matched .value { color: var(--matched-light); text-shadow: 0 0 8px rgba(40,168,40,0.4); }
 .stat-card.decomp .value { color: var(--nonmatch-light); text-shadow: 0 0 8px rgba(208,96,16,0.4); }
+.stat-card.nonmatch .value { color: var(--nonmatch-light); text-shadow: 0 0 8px rgba(208,96,16,0.4); }
+.stat-card.asm .value { color: var(--accent-light); text-shadow: 0 0 8px rgba(204,21,0,0.4); }
 
 /* Progress bar */
 .progress-section {

@@ -13,12 +13,12 @@ export function renderHero(o) {
         <div class="value">${fmt2(o.decompiled_pct)}</div>
         <div class="sub">${(o.matched + o.non_matching).toLocaleString()} functions have C source</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card nonmatch">
         <div class="label">Non-Matching</div>
         <div class="value">${o.non_matching.toLocaleString()}</div>
         <div class="sub">Decompiled but not byte-perfect</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card asm">
         <div class="label">ASM Stubs</div>
         <div class="value">${o.asm_stubs.toLocaleString()}</div>
         <div class="sub">Still in assembly</div>
