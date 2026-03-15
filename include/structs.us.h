@@ -110,7 +110,7 @@ typedef struct {
 	/* 0x14 */ s16 unk14; // target x coord?
 	/* 0x16 */ s16 unk16; // target y coord?
 	/* 0x18 */ s16 unk18; // target z coord?
-	/* 0x1A */ u8 specIndex;
+	/* 0x1A */ u8 specIndex; // Specs are the same every level? e.g. 0x19 is harvester?
 	/* 0x1B */ u8 unk1B; // something to do with showing health bar?
 	/* 0x1C */ s16 hitPoints;
 	/* 0x1E */ s16 unk1E;

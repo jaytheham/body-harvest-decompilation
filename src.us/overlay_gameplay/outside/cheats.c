@@ -13,7 +13,7 @@ void func_800731B0_82160(void)
 	{
 		return;
 	}
-	if (!(currentControllerStates[0].button & 0x200))
+	if (!(currentControllerStates[0].button & BUTTON_D_LEFT))
 	{
 		return;
 	}
@@ -120,7 +120,7 @@ void func_800734AC_8245C() {
 	D_80052B34->unkE = -0x4000;
 	func_800FB430_10A3E0(D_80052B34, 0.0f);
 	D_80052B34->unk20 = (u16) (D_80052B34->unk20 | 2);
-	if (currentControllerStates[0].button & 0x2000) {
+	if (currentControllerStates[0].button & BUTTON_Z) {
 		D_80052B34->unk20 = (u16) (D_80052B34->unk20 | 1);
 		func_800762A8_85258(func_800734AC_8245C);
 		D_801591AC = 0;
@@ -181,8 +181,24 @@ void enableCheatBleed() {
 }
 
 // enableCheatSuffer
-// https://decomp.me/scratch/tLY1D
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_8007383C_827EC.s")
+// Turn Harvesters into Mutants
+void func_8007383C_827EC(void) {
+	s32 i;
+	s32 index;
+	AlienInstance *alien;
+
+	for (i = D_8014D509; i < D_8014D50A; i++) {
+		
+		index = D_8014D408[i];
+		alien = &alienInstances[index];
+		if (alien->specIndex == 0x19) {
+			alien->unk24 = 6;
+			func_80087AAC_96A5C(index);
+			func_800AFBA4_BEB54(alien->unk0, alien->unk4);
+			alien->unk26 = 4;
+		}
+	}
+}
 
 // func_8007391C_828CC
 void enableCheatWeasel() {
