@@ -5,6 +5,7 @@ extern char D_802E0D84[];
 extern const char D_802E0DA8[];
 extern s16 D_800481AA[];
 extern s32 D_800481B8[];
+extern s16 D_800481D2[];
 extern s16 D_802E0FB0;
 extern s16 D_802E0FB2;
 extern s16 D_802E0FB4;
@@ -406,9 +407,11 @@ void func_802DEE18_1F7B28(s32 arg0) {
 
 #ifdef NON_MATCHING
 void func_802DEF70_1F7C80(s32 arg0) {
-    u8 temp_t6 = arg0 & 0xFF;
-    *(s16*)(D_800481AA + 0x14 + temp_t6 * 0x28) = 0x7D0;
-    func_800A93A4_B8354(temp_t6, 0, -0x45, 0x2B3);
+    u8 index;
+
+    index = (u8)arg0;
+    *(s16*)(D_800481D2 + index * 0x50) = 0x7D0;
+    func_800A93A4_B8354(index, 0, -0x45, 0x2B3);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DEF70_1F7C80.s")
