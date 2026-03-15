@@ -1,0 +1,36 @@
+name: progress
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'src.us/**'
+      - 'tools/progress.py'
+      - 'docs/index.html'
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate progress data
+        run: python3 tools/progress.py --output docs/progress.json
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages
+          commit_message: "chore: update progress data"
+          force_orphan: false

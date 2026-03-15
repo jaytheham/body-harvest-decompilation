@@ -1,0 +1,652 @@
+{
+  "generated": "2026-03-14T23:44:04Z",
+  "commit": "11fe134",
+  "commit_timestamp": "2026-03-15T12:37:56+13:00",
+  "overall": {
+    "total_functions": 2944,
+    "matched": 638,
+    "non_matching": 270,
+    "asm_stubs": 2036,
+    "matched_pct": 21.67,
+    "decompiled_pct": 30.84
+  },
+  "segments": {
+    "core": {
+      "display_name": "Core",
+      "matched": 32,
+      "non_matching": 11,
+      "asm_stubs": 312,
+      "total": 355,
+      "matched_pct": 9.0,
+      "decompiled_pct": 12.1
+    },
+    "overlay_gameplay/frontend": {
+      "display_name": "Gameplay / Frontend",
+      "matched": 59,
+      "non_matching": 16,
+      "asm_stubs": 156,
+      "total": 231,
+      "matched_pct": 25.5,
+      "decompiled_pct": 32.5
+    },
+    "overlay_gameplay/outside": {
+      "display_name": "Gameplay / Outside",
+      "matched": 446,
+      "non_matching": 162,
+      "asm_stubs": 980,
+      "total": 1588,
+      "matched_pct": 28.1,
+      "decompiled_pct": 38.3
+    },
+    "overlay_gameplay/inside": {
+      "display_name": "Gameplay / Inside",
+      "matched": 74,
+      "non_matching": 30,
+      "asm_stubs": 161,
+      "total": 265,
+      "matched_pct": 27.9,
+      "decompiled_pct": 39.2
+    },
+    "overlay_level/greece": {
+      "display_name": "Level / Greece",
+      "matched": 22,
+      "non_matching": 10,
+      "asm_stubs": 42,
+      "total": 74,
+      "matched_pct": 29.7,
+      "decompiled_pct": 43.2
+    },
+    "overlay_level/java": {
+      "display_name": "Level / Java",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 101,
+      "total": 101,
+      "matched_pct": 0.0,
+      "decompiled_pct": 0.0
+    },
+    "overlay_level/america": {
+      "display_name": "Level / America",
+      "matched": 1,
+      "non_matching": 0,
+      "asm_stubs": 73,
+      "total": 74,
+      "matched_pct": 1.4,
+      "decompiled_pct": 1.4
+    },
+    "overlay_level/siberia": {
+      "display_name": "Level / Siberia",
+      "matched": 1,
+      "non_matching": 0,
+      "asm_stubs": 94,
+      "total": 95,
+      "matched_pct": 1.1,
+      "decompiled_pct": 1.1
+    },
+    "overlay_level/comet": {
+      "display_name": "Level / Comet",
+      "matched": 3,
+      "non_matching": 41,
+      "asm_stubs": 117,
+      "total": 161,
+      "matched_pct": 1.9,
+      "decompiled_pct": 27.3
+    }
+  },
+  "files": [
+    {
+      "path": "core/1000.c",
+      "segment": "core",
+      "matched": 18,
+      "non_matching": 10,
+      "asm_stubs": 38,
+      "total": 66,
+      "matched_pct": 27.3,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/10A20.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 5,
+      "total": 5,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/12C80.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 115,
+      "total": 115,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/1B060.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/53D0.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/53F0.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 75,
+      "total": 75,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/AD60.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 26,
+      "total": 26,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/E830.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 10,
+      "total": 10,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/FB00.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 4,
+      "total": 4,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/FD80.c",
+      "segment": "core",
+      "matched": 1,
+      "non_matching": 0,
+      "asm_stubs": 10,
+      "total": 11,
+      "matched_pct": 9.1,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/loader.c",
+      "segment": "core",
+      "matched": 13,
+      "non_matching": 1,
+      "asm_stubs": 26,
+      "total": 40,
+      "matched_pct": 32.5,
+      "contributor": "Harvester"
+    },
+    {
+      "path": "overlay_gameplay/frontend/40720.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 24,
+      "non_matching": 11,
+      "asm_stubs": 88,
+      "total": 123,
+      "matched_pct": 19.5,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/52690.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 35,
+      "non_matching": 5,
+      "asm_stubs": 68,
+      "total": 108,
+      "matched_pct": 32.4,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/inside/158330.c",
+      "segment": "overlay_gameplay/inside",
+      "matched": 22,
+      "non_matching": 8,
+      "asm_stubs": 69,
+      "total": 99,
+      "matched_pct": 22.2,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/inside/1648A0.c",
+      "segment": "overlay_gameplay/inside",
+      "matched": 8,
+      "non_matching": 9,
+      "asm_stubs": 14,
+      "total": 31,
+      "matched_pct": 25.8,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/inside/167C90.c",
+      "segment": "overlay_gameplay/inside",
+      "matched": 14,
+      "non_matching": 3,
+      "asm_stubs": 14,
+      "total": 31,
+      "matched_pct": 45.2,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/inside/16AF30.c",
+      "segment": "overlay_gameplay/inside",
+      "matched": 20,
+      "non_matching": 7,
+      "asm_stubs": 59,
+      "total": 86,
+      "matched_pct": 23.3,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/inside/173B60.c",
+      "segment": "overlay_gameplay/inside",
+      "matched": 10,
+      "non_matching": 3,
+      "asm_stubs": 5,
+      "total": 18,
+      "matched_pct": 55.6,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/13DA70.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 0,
+      "non_matching": 7,
+      "asm_stubs": 13,
+      "total": 20,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/1416E0.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 14,
+      "non_matching": 11,
+      "asm_stubs": 21,
+      "total": 46,
+      "matched_pct": 30.4,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/145D70.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 7,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 9,
+      "matched_pct": 77.8,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/148000.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 16,
+      "non_matching": 0,
+      "asm_stubs": 16,
+      "total": 32,
+      "matched_pct": 50.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/7F220.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 10,
+      "non_matching": 4,
+      "asm_stubs": 6,
+      "total": 20,
+      "matched_pct": 50.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/857E0.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 11,
+      "non_matching": 5,
+      "asm_stubs": 11,
+      "total": 27,
+      "matched_pct": 40.7,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/884C0.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 123,
+      "non_matching": 33,
+      "asm_stubs": 124,
+      "total": 280,
+      "matched_pct": 43.9,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/A40B0.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 1,
+      "non_matching": 0,
+      "asm_stubs": 3,
+      "total": 4,
+      "matched_pct": 25.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/A49A0.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 0,
+      "non_matching": 11,
+      "asm_stubs": 14,
+      "total": 25,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/AAA70.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 17,
+      "non_matching": 9,
+      "asm_stubs": 22,
+      "total": 48,
+      "matched_pct": 35.4,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/B2CB0.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 11,
+      "non_matching": 10,
+      "asm_stubs": 19,
+      "total": 40,
+      "matched_pct": 27.5,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/B8290.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 21,
+      "non_matching": 5,
+      "asm_stubs": 31,
+      "total": 57,
+      "matched_pct": 36.8,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/BF9C0.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 15,
+      "non_matching": 10,
+      "asm_stubs": 60,
+      "total": 85,
+      "matched_pct": 17.6,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/CFE30.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 32,
+      "non_matching": 28,
+      "asm_stubs": 249,
+      "total": 309,
+      "matched_pct": 10.4,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/F6A50.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 6,
+      "non_matching": 2,
+      "asm_stubs": 2,
+      "total": 10,
+      "matched_pct": 60.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/F7870.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 8,
+      "total": 8,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/F9230.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 59,
+      "non_matching": 6,
+      "asm_stubs": 211,
+      "total": 276,
+      "matched_pct": 21.4,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/buildings.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 46,
+      "non_matching": 11,
+      "asm_stubs": 111,
+      "total": 168,
+      "matched_pct": 27.4,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/cheats.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 22,
+      "non_matching": 1,
+      "asm_stubs": 4,
+      "total": 27,
+      "matched_pct": 81.5,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/missions.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 5,
+      "non_matching": 3,
+      "asm_stubs": 32,
+      "total": 40,
+      "matched_pct": 12.5,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/outside/trigger.c",
+      "segment": "overlay_gameplay/outside",
+      "matched": 30,
+      "non_matching": 6,
+      "asm_stubs": 21,
+      "total": 57,
+      "matched_pct": 52.6,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_level/america/254410.c",
+      "segment": "overlay_level/america",
+      "matched": 1,
+      "non_matching": 0,
+      "asm_stubs": 73,
+      "total": 74,
+      "matched_pct": 1.4,
+      "contributor": "Harvester"
+    },
+    {
+      "path": "overlay_level/comet/318E20.c",
+      "segment": "overlay_level/comet",
+      "matched": 3,
+      "non_matching": 41,
+      "asm_stubs": 117,
+      "total": 161,
+      "matched_pct": 1.9,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_level/greece/18D7E0.c",
+      "segment": "overlay_level/greece",
+      "matched": 22,
+      "non_matching": 10,
+      "asm_stubs": 42,
+      "total": 74,
+      "matched_pct": 29.7,
+      "contributor": "Harvester"
+    },
+    {
+      "path": "overlay_level/java/1ED9E0.c",
+      "segment": "overlay_level/java",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 101,
+      "total": 101,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_level/siberia/2B7100.c",
+      "segment": "overlay_level/siberia",
+      "matched": 1,
+      "non_matching": 0,
+      "asm_stubs": 94,
+      "total": 95,
+      "matched_pct": 1.1,
+      "contributor": "jaytheham"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "jaytheham",
+      "files": 41,
+      "matched": 602,
+      "non_matching": 259,
+      "asm_stubs": 1895
+    },
+    {
+      "name": "Harvester",
+      "files": 3,
+      "matched": 36,
+      "non_matching": 11,
+      "asm_stubs": 141
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-03-04",
+      "commit": "4c537fd",
+      "matched_pct": 18.38,
+      "decompiled_pct": 25.56,
+      "matched": 530,
+      "total": 2883
+    },
+    {
+      "date": "2026-03-05",
+      "commit": "e04ea65",
+      "matched_pct": 19.41,
+      "decompiled_pct": 26.49,
+      "matched": 559,
+      "total": 2880
+    },
+    {
+      "date": "2026-03-06",
+      "commit": "9cdbf56",
+      "matched_pct": 19.73,
+      "decompiled_pct": 27.1,
+      "matched": 570,
+      "total": 2889
+    },
+    {
+      "date": "2026-03-07",
+      "commit": "effdd6f",
+      "matched_pct": 19.8,
+      "decompiled_pct": 27.33,
+      "matched": 573,
+      "total": 2894
+    },
+    {
+      "date": "2026-03-08",
+      "commit": "ee3fc86",
+      "matched_pct": 20.2,
+      "decompiled_pct": 27.64,
+      "matched": 584,
+      "total": 2891
+    },
+    {
+      "date": "2026-03-09",
+      "commit": "2dc0d46",
+      "matched_pct": 20.41,
+      "decompiled_pct": 28.0,
+      "matched": 591,
+      "total": 2896
+    },
+    {
+      "date": "2026-03-12",
+      "commit": "3fc40cf",
+      "matched_pct": 21.37,
+      "decompiled_pct": 29.01,
+      "matched": 619,
+      "total": 2896
+    },
+    {
+      "date": "2026-03-10",
+      "commit": "c3035fc",
+      "matched_pct": 21.9,
+      "decompiled_pct": 29.69,
+      "matched": 635,
+      "total": 2900
+    },
+    {
+      "date": "2026-03-11",
+      "commit": "7902c1d",
+      "matched_pct": 22.45,
+      "decompiled_pct": 30.24,
+      "matched": 651,
+      "total": 2900
+    },
+    {
+      "date": "2026-03-13",
+      "commit": "30ddc10",
+      "matched_pct": 21.7,
+      "decompiled_pct": 30.75,
+      "matched": 638,
+      "total": 2940
+    },
+    {
+      "date": "2026-03-14",
+      "commit": "7493465",
+      "matched_pct": 21.66,
+      "decompiled_pct": 30.74,
+      "matched": 637,
+      "total": 2941
+    },
+    {
+      "date": "2026-03-15",
+      "commit": "11fe134",
+      "matched_pct": 21.67,
+      "decompiled_pct": 30.84,
+      "matched": 638,
+      "total": 2944
+    }
+  ]
+}
