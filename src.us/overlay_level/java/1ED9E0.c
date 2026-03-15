@@ -8,7 +8,11 @@ extern const char D_802E0DA8[];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4DB0_1EDAC0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4E34_1EDB44.s")
+void func_802D4E34_1EDB44(s16 arg0) {
+    if (arg0 != -3) {
+        func_800C1A4C_D09FC(arg0, 0xD, 1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4E6C_1EDB7C.s")
 
