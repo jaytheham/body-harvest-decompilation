@@ -1160,7 +1160,6 @@ extern f32 D_80037658;
 extern void *D_80031A90;
 extern void *D_80059CDC;
 extern s16 D_80267080[];
-extern s16 D_802B2080;
 /* core/FB00 — thread structs, stacks, OS mode tables */
 extern OSThread D_80067388;
 extern OSThread D_80067538;
@@ -1174,7 +1173,6 @@ extern OSMesg D_80068060[];
 extern OSViMode D_80035B30;
 extern OSViMode D_800356D0;
 extern OSViMode D_80035F90;
-extern void *D_803DA800;
 typedef struct {
     f32 unk0;
     f32 unk4;
