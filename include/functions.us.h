@@ -399,6 +399,7 @@ void func_80088000_96FB0(s16 arg0);
 void func_800C978C_D873C(void);
 s32 func_800744E0_83490(s32 arg0);
 void func_80132740_1416F0(Unk80160080 *arg0);
+void func_801330E4_142094(Unk80160080 *arg0);
 void func_800B33BC_C236C(s32 arg0);
 void func_80135CB8_144C68(void);
 void func_8000345C_405C(s32 arg0);
