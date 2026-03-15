@@ -2,6 +2,8 @@
 #include "common.h"
 
 extern void func_800E2720_F16D0(s32);
+extern s32 func_800DF9C8_EE978(s16, s16, s16, s32, u8, s32);
+extern void func_80123E90_132E40(VehicleInstance *, s32);
 extern u8 D_802D48D0;
 extern u8 D_802D4AD0;
 extern VehicleInstance D_8004DFB0;
@@ -10,6 +12,9 @@ extern s32 D_80256DEC;
 extern char D_802E0D6C[];
 extern char D_802E0D84[];
 extern char D_802E0DA8[];
+extern s16 D_801591C4;
+extern f64 D_802E0EA8;
+extern s32 D_502D390;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4CD0_1ED9E0.s")
 
@@ -159,7 +164,57 @@ void func_802D5560_1EE270(void) {
     func_80007410_8010(&func_802D5508_1EE218);
 }
 
+#ifdef NON_MATCHING
+void func_802D5590_1EE2A0(void) {
+    f64 temp_f20;
+    s16 temp_s6;
+    s16 temp_v0;
+    s16 var_s1;
+    s16 var_v0;
+    s16 var_v0_2;
+
+    temp_v0 = D_802E0FB0;
+    if (temp_v0 == -1) {
+        func_800076D4_82D4(8);
+        func_80018D7C_1997C(0xDC);
+    }
+    D_802E0FB0 = temp_v0 + 1;
+    if (D_802E0FB0 == 0xA) {
+        func_80123E90_132E40(&D_8004F990, 2);
+        D_802E0FB0 = 0;
+    }
+    if (vehicleInstances[80].unk1C <= 0) {
+        func_800074BC_80BC(func_802D5590_1EE2A0);
+        func_800AE190_BD140(D_801591C4);
+        temp_s6 = (s16) func_800DF9C8_EE978(vehicleInstances[80].unk0, (s16) (vehicleInstances[80].unk2 + 0xA), vehicleInstances[80].unk4, 0xC8, 0, 0);
+        var_s1 = 0;
+        if (D_801591C4 >= 9) {
+            var_v0 = 8;
+        } else {
+            var_v0 = D_801591C4;
+        }
+        if (var_v0 > 0) {
+            temp_f20 = D_802E0EA8;
+            do {
+                if (var_s1 < 4) {
+                    func_801371B8_146168(0, 0x185, vehicleInstances[80].unk0, vehicleInstances[80].unk2, (s32) vehicleInstances[80].unk4, (f32) (((f64) (f32) (func_800038E0_44E0() % 100) / temp_f20) + 1.625));
+                }
+                func_800C7924_D68D4(vehicleInstances[80].unk0, (s16) (vehicleInstances[80].unk2 + 0xA), vehicleInstances[80].unk4, 0x10, (s32) temp_s6, vehicleSpecs[vehicleInstances[80].unk1A].unk36 * 2, &D_502D390, 1);
+                var_s1 += 1;
+                if (D_801591C4 >= 9) {
+                    var_v0_2 = 8;
+                } else {
+                    var_v0_2 = D_801591C4;
+                }
+            } while (var_s1 < var_v0_2);
+        }
+        D_801591C4 = 0;
+        func_800076D4_82D4(9);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5590_1EE2A0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D57F4_1EE504.s")
 

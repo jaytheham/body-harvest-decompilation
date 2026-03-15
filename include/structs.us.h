@@ -299,7 +299,8 @@ typedef struct {
 	/* 0x1C */ s32 weapon1;
 	/* 0x20 */ u8 pad20[0x8];
 	/* 0x28 */ s32 weapon2;
-	/* 0x2C */ u8 pad2C[0xC];
+	/* 0x2C */ u8 pad2C[0xA];
+	/* 0x36 */ s16 unk36;
 	/* 0x38 */ s16 unk38;
 	/* 0x3A */ u16 hitPoints;
 	/* 0x3C */ u8 pad3C[0x10];
