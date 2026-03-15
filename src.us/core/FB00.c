@@ -3,6 +3,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FB00/sourceTaggedPrintF.s")
 
+#ifdef NON_MATCHING
 void func_8000EF10_FB10(s32 arg0) {
     D_80068078 = 0;
     bzero(&D_8003FB20, 0x803FFFFF - (s32)(&D_8003FB20));
@@ -12,6 +13,9 @@ void func_8000EF10_FB10(s32 arg0) {
     osCreateThread(&D_80067388, 1, func_8000EFB8_FBB8, NULL, &D_8005C760, 0xA);
     osStartThread(&D_80067388);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/FB00/func_8000EF10_FB10.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8000EF98_FB98(void) {

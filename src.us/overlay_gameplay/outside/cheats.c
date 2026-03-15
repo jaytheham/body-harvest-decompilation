@@ -250,6 +250,7 @@ void enableCheatFeeble() {
 
 // addCharToCheatInputBuffer
 // https://decomp.me/scratch/ms2Ub
+#ifdef NON_MATCHING
 void func_80073A20_829D0(u8 arg0) {
   u8 *var_v0;
   int new_var;
@@ -272,6 +273,9 @@ void func_80073A20_829D0(u8 arg0) {
   }
   cheatInputBuffer[0] = arg0;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073A20_829D0.s")
+#endif
 
 // initCheating
 void func_80073A74_82A24(void) {
@@ -297,11 +301,16 @@ void func_80073A74_82A24(void) {
 }
 
 // activateCheat
+#ifdef NON_MATCHING
 void func_80073B30_82AE0(s32 arg0) {
 	func_8001A650_1B250((s16) (arg0 + 0x77));
 	((void (*)(void)) D_8013B94C[arg0 * 4])();
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073B30_82AE0.s")
+#endif
 
+#ifdef NON_MATCHING
 void func_80073B78_82B28(void) {
 	u8 *var_s1;
 	s32 temp_v0;
@@ -389,3 +398,6 @@ loop_check:
 		} while (var_s0 != 0);
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073B78_82B28.s")
+#endif

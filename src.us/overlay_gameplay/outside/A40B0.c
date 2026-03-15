@@ -8,6 +8,7 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A40B0/func_80095530_A44E0.s")
 
 // Debug - display menu items
+#ifdef NON_MATCHING
 void func_8009594C_A48FC(s16 arg0, s16 arg1) {
     s16 temp_s2;
     s16 var_s0;
@@ -25,6 +26,9 @@ void func_8009594C_A48FC(s16 arg0, s16 arg1) {
     }
     D_8014ECF4 = (s32) arg1;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A40B0/func_8009594C_A48FC.s")
+#endif
 
 void func_800959DC_A498C(void) {
 }

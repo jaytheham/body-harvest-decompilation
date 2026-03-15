@@ -2,6 +2,7 @@
 #include "common.h"
 
 
+#ifdef NON_MATCHING
 /* Copy a tiled subregion of a 16-bit framebuffer across 6 outer iterations.
    Reads 32 halfwords per inner pass, skipping 0x120 halfwords between middle rows,
    then rewinds src by 0x27E0 halfwords after each middle sweep. */
@@ -34,7 +35,11 @@ void func_8000DC30_E830(s16 *arg0, s16 *arg1) {
         outer -= 1;
     } while (outer != 0);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000DC30_E830.s")
+#endif
 
+#ifdef NON_MATCHING
 void func_8000DC9C_E89C(s32 arg0, s32 arg1) {
     u8 *src = (u8 *)arg0;
     u8 *dst = (u8 *)arg1;
@@ -46,6 +51,9 @@ void func_8000DC9C_E89C(s32 arg0, s32 arg1) {
         count -= 1;
     } while (count != 0);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000DC9C_E89C.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
@@ -103,6 +111,7 @@ void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000DCCC_E8CC.s")
 #endif
 
+#ifdef NON_MATCHING
 /* Rotate (D_80059CD2, D_80059CD4) by angle derived from D_80059CD0, update spin rate. */
 void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s16 sp1E;
@@ -112,7 +121,11 @@ void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     D_80059CD4 = (s16) (s32) ((f64) D_80059CD4 + (f64) (D_80059CD0 / 10) * ((f64) (f32) coss((D_80059CD0 * 0x10) & 0xFFFF) / 32768.0));
     D_80059CD6 = -D_80059CD0 * 2;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000DEFC_EAFC.s")
+#endif
 
+#ifdef NON_MATCHING
 /* Distance-based lens distortion correction: selects rodata constant based on
    arg0/arg1 threshold, computes distortion factor, updates (D_80059CD2, D_80059CD4). */
 void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
@@ -163,7 +176,11 @@ void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     }
     D_80059CD2 = (s16) (s32) (((f32) (D_80059CD2 + 0x480) * var_f0_2) - 1152.0f);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E048_EC48.s")
+#endif
 
+#ifdef NON_MATCHING
 /* Update projection coordinates from struct fields and screen-space offsets. */
 void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3) {
     D_8005BAE8->unk0 = (f32) (D_8005BAE8->unk0 + D_8005BAE8->unkC);
@@ -173,9 +190,13 @@ void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3) {
     D_80059CD4 = (s16) (s32) (-D_8005BAE8->unk4 - (f32) (arg3 << 8));
     D_80059CD6 = 0;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E3DC_EFDC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/E830/osSetTime.s")
 
+#ifdef NON_MATCHING
 /* Initialise projection state from entry arg0 in D_80031A90 table, then copy framebuffer region. */
 void func_8000E4C4_F0C4(s32 arg0) {
     void *temp_t8;
@@ -187,11 +208,18 @@ void func_8000E4C4_F0C4(s32 arg0) {
     D_80059CD8 = 0;
     func_8000DC9C_E89C((s32)&D_80267080, (s32)&D_803DA800);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E4C4_F0C4.s")
+#endif
 
+#ifdef NON_MATCHING
 /* Square of arg0. */
 s32 func_8000E52C_F12C(s32 arg0) {
     return arg0 * arg0;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E52C_F12C.s")
+#endif
 
 #ifdef NON_MATCHING
 /* Constructs graphics display lists with perspective/lookat setup. Returns 0 or 1. */

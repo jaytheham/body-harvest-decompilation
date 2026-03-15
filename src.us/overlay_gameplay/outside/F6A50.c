@@ -43,6 +43,7 @@ void func_800E7BC4_F6B74(void) {
 }
 
 // Outdoors debug camera? Controller 2 moves camera when function runs
+#ifdef NON_MATCHING
 void func_800E7C28_F6BD8(void) {
 	s32 sp3C;
 	s32 sp38;
@@ -95,6 +96,9 @@ void func_800E7C28_F6BD8(void) {
 		}
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F6A50/func_800E7C28_F6BD8.s")
+#endif
 
 void func_800E8190_F7140(void) {
 	func_80132740_1416F0(&D_80160080);

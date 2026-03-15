@@ -20,6 +20,7 @@ f32 func_80136DC0_145D70(s16 arg0, s16 arg1, s16 arg2) {
 	temp_f14 = (f32)arg2 - D_80160080.unk8;
 	return sqrtf(temp_f0 * temp_f0 + temp_f2 * temp_f2 + temp_f14 * temp_f14);
 }
+#ifdef NON_MATCHING
 s16 func_80136ECC_145E7C(s16 arg0, s16 arg1, s16 arg2) {
     f32 sp44;
     f32 sp28;
@@ -83,6 +84,9 @@ s16 func_80136ECC_145E7C(s16 arg0, s16 arg1, s16 arg2) {
     }
     return var_v1;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/145D70/func_80136ECC_145E7C.s")
+#endif
 
 void func_80137130_1460E0(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	f32 temp_f1;
