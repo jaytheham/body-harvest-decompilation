@@ -4,6 +4,7 @@
 extern char D_802E0D84[];
 extern const char D_802E0DA8[];
 extern s16 D_800481AA[];
+extern s16 D_802E0FB0;
 extern s16 D_802E0FB6;
 extern s16 D_802E0FB8;
 
@@ -41,7 +42,18 @@ void func_802D513C_1EDE4C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D51F8_1EDF08.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5508_1EE218.s")
+extern void func_802D51F8_1EDF08(void);
+
+void func_802D5508_1EE218(void) {
+    s16 value;
+    value = D_802E0FB0;
+    D_802E0FB0 = value - 1;
+    if (value <= 0) {
+        func_80013468_14068(6);
+        func_800EFEB4_FEE64(&func_802D51F8_1EDF08, 0xC, 0);
+        func_800074BC_80BC(func_802D5508_1EE218);
+    }
+}
 
 extern s16 D_802E0FB0;
 extern void func_802D5508_1EE218(void);
@@ -216,7 +228,15 @@ void func_802DB428_1F4138(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD140_1F5E50.s")
 
+#ifdef NON_MATCHING
+void func_802DD244_1F5F54(u8 arg0) {
+    u8 tmp = arg0 & 0xFF;
+    alienInstances[tmp].unk20 |= 0x8000000;
+    func_800873A8_96358(tmp);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD244_1F5F54.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD294_1F5FA4.s")
 
@@ -249,7 +269,15 @@ void func_802DEE18_1F7B28(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DEE4C_1F7B5C.s")
 
+#ifdef NON_MATCHING
+void func_802DEF70_1F7C80(s32 arg0) {
+    u8 temp_t6 = arg0 & 0xFF;
+    *(s16*)(D_800481AA + 0x14 + temp_t6 * 0x28) = 0x7D0;
+    func_800A93A4_B8354(temp_t6, 0, -0x45, 0x2B3);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DEF70_1F7C80.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DEFC0_1F7CD0.s")
 
