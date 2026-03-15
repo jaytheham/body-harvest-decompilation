@@ -109,7 +109,6 @@ void func_8008BB6C_173C2C(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008C8A4_174964.s")
 
 // doPauseMenu ?
-#ifdef NON_MATCHING
 void func_8008CF2C_174FEC(void) {
 	u8 menuEntries[9];
 	s16 temp_s0;
@@ -421,9 +420,6 @@ block_79:
 		((Gfx *) var_v0_3)->words.w0 = var_t7;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008CF2C_174FEC.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_8008D900_1759C0(void) {
