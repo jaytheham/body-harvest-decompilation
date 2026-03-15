@@ -376,14 +376,11 @@ void func_802DD244_1F5F54(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD294_1F5FA4.s")
 
-#ifdef NON_MATCHING
-void func_802DD5A0_1F62B0(s32 arg0) {
-    s32 tmp = arg0 & 0xFF;
-    func_802DD140_1F5E50(tmp, 4);
+void func_802DD5A0_1F62B0(u8 arg0) {
+    unsigned long new_var;
+    new_var = arg0;
+    func_802DD140_1F5E50(new_var, 4);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD5A0_1F62B0.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD5CC_1F62DC.s")
 
