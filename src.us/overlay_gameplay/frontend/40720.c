@@ -257,15 +257,11 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007166C_41B1C.s")
 
-#ifdef NON_MATCHING
 void func_80071738_41BE8(void) {
 
 	s32 i;
 	i = 0x29; do { D_800D6DC0[i].unk16 = 0; } while (i--);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071738_41BE8.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071760_41C10.s")
 
