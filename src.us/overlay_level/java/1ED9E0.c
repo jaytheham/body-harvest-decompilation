@@ -13,6 +13,8 @@ extern s16 D_802E0FB8;
 extern char D_802E0E10[];
 extern char D_802E0E30[];
 extern char D_802E0E3C[];
+extern char D_802E0E60[];
+extern s16 D_802E04F8[];
 extern s16 D_801591C4;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4CD0_1ED9E0.s")
@@ -174,7 +176,19 @@ void func_802D6DBC_1EFACC(void) {
     func_800EFEB4_FEE64(&func_802D68F4_1EF604, 0xB, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6DF8_1EFB08.s")
+void func_802D6DF8_1EFB08(void) {
+    s16 counter;
+    s16 *element_ptr;
+
+    osSyncPrintf(&D_802E0E60);
+    counter = 0;
+    do {
+        element_ptr = (s16 *)((u8 *)D_802E04F8 + (counter * 8));
+        func_802D4E34_1EDB44(*element_ptr);
+        counter += 1;
+        *element_ptr = -3;
+    } while (counter < 0xE);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6E70_1EFB80.s")
 
