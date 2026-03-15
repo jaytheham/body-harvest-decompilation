@@ -12,6 +12,65 @@ s16 func_foo(u8 arg0, s16 arg1) {
 
 **Key rule**: Write `coss(arg1)` / `sins(arg1)` directly — do NOT write `arg1 & 0xFFFF` (produces 3 extra move/andi instructions) or `(u16)arg1` (same result as direct but unnecessary).
 
+### `sins`/`coss` with int expressions: omit `& 0xFFFF` to match target pattern
+
+When calling `sins`/`coss` with an integer expression like `D_80047950 + 0x4000`, write it WITHOUT `& 0xFFFF`:
+```c
+D_80031404 = sins(D_80047950 + 0x4000) / 32768.0;
+```
+NOT `sins((D_80047950 + 0x4000) & 0xFFFF)` — the explicit `& 0xFFFF` puts the `andi` in the branch delay slot and uses one fewer instruction (wrong pattern). Without it, IDO 5.3 -O2 generates the 4-instruction pattern: `addiu a0, a0, offset; andi t2, a0, 0xffff; jal sins; move a0, t2`.
+
+### `guPerspective` aspect ratio: use float literal, not hex integer
+
+The aspect ratio constant `1.3333334f` (= 4/3) as a hex bit pattern is `0x3FAAAAAB`. Pass it as a float literal, NOT as an integer literal:
+```c
+guPerspective(mtx, &perspNorm, fovy, 1.3333334f, near, far, scale);  // CORRECT
+guPerspective(mtx, &perspNorm, fovy, 0x3FAAAAAB, near, far, scale);  // WRONG (integer conversion)
+```
+The integer `0x3FAAAAAB` gets implicitly cast to `float` (≈1.07e9), producing `0x4E7EAAAB` in registers instead of `0x3FAAAAAB`.
+
+### Stack variable ordering: first float declared gets HIGHEST sp offset
+
+For matching `sp30` (or any local float) at a specific stack position with non-spilled floats also declared:
+- The **first** declared float variable gets the **highest** sp offset in the local variable area (just below $ra save).
+- Declare a register-allocated (non-spilled) float variable BEFORE the spilled one to push the spilled one to a lower address.
+
+Example: target has `sp30` at `sp+0x30`, but `sp30` declared first gives `sp+0x34`. Fix: declare a float variable that won't be spilled FIRST, then `sp30`:
+```c
+f32 var_f0;   // declared first → gets sp+0x34 (non-spilled, slot allocated but unused)
+f32 sp30;     // declared second → gets sp+0x30 (spilled here, matches target)
+```
+
+### GFX display list macros: use `gfxdis.ps1` to decode raw word writes
+
+When you see raw word writes to a display list pointer:
+```c
+temp_v0 = D_8005BB2C++;
+temp_v0->words.w0 = 0xBC00000E;
+temp_v0->words.w1 = (s32) D_801493D6;
+```
+Run `.\tools\gfxdis.ps1 -w BC00000E 00000000` to get `gsSPPerspNormalize(0)`, then use the macro form:
+```c
+gSPPerspNormalize(D_8005BB2C++, D_801493D6);
+```
+This eliminates the temp pointer variables and often improves register allocation.
+
+### GFX display list macros: use `gfxdis.ps1` to decode raw word writes - ALREADY ADDED ABOVE
+
+### Global variable write-then-read forces pointer precomputation
+
+When global variables are STORED then READ BACK in computations like:
+```c
+D_801493C0 = temp_t7;           // store
+// ... other stores ...
+D_801493B0 = D_801493C0 << 8;   // read-back
+```
+IDO pre-allocates a pointer register (e.g. a1=&D_801493C0) because it needs to READ BACK via pointer later. This adds 2 instructions (`lui + addiu`) for the pointer precomputation but removes 1 instruction from the store (uses `sw t7, 0(a1)` instead of `lui at; sw t7, -0x...(at)`).
+
+The number of pointer setups added (net +1 per variable that needs pointer) determines the function's instruction count. If the target's function size requires having specific variables read via pointer, change direct register-value shifts to global-variable reads.
+
+**Important**: Only do this if the compiler performs "store forwarding" optimization (uses the register value for the read, not an actual memory reload). If IDO reloads from memory, it adds an extra `lw` instruction making the function too long. IDO applies store forwarding when the register holding the value is NOT clobbered between store and read-back.
+
 ### Two named pointer locals required for correct frame size (avoid t-register cycle shift)
 
 When a function with `u8 arg0, u8 arg1` uses both `alienInstances[arg0]` and `D_8014DD50[arg1]` across multiple function calls, and the target frame is 0x60 but without named pointer locals IDO generates a 0x58 frame:

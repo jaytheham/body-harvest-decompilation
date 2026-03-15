@@ -33,7 +33,14 @@ D_8005BB2C = dl + 1;
 dl->words.w0 = 0xB6000000;
 dl->words.w1 = 0x10001;
 ```
+or
+```C
+D_8005BB2C = D_8005BB2C++;
+D_8005BB2C->words.w0 = 0xB6000000;
+D_8005BB2C->words.w1 = 0x00010001;
+```
 Is converted by pwsh cmd `.\tools\gfxdis.ps1 -w B6000000 00010001` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
+If you don't know one of the values, you can use `12345678` as a placeholder and then fill it in after the fact.
 - Find similar functions using coddog: `.\tools\coddog\coddog.exe match -t 0.7 func_80092ADC_A1A8C` if any results are `(decompiled)` you can reference them for guidance.
 - Do your own work instead of using the permuter `.\tools\agent-permuter.ps1`.
 
