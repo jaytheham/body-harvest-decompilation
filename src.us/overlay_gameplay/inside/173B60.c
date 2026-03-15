@@ -421,7 +421,6 @@ block_79:
 	}
 }
 
-#ifdef NON_MATCHING
 void func_8008D900_1759C0(void) {
 	s32 sp58_unk0;
 	u16 sp58_unk4;
@@ -525,9 +524,6 @@ void func_8008D900_1759C0(void) {
 	temp_v0_9->words.w1 = 0;
 	temp_v0_9->words.w0 = 0xBA000E02;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008D900_1759C0.s")
-#endif
 
 void func_8008DC44_175D04(s32 arg0) {
 	switch (D_800313D0) {
