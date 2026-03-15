@@ -3,6 +3,7 @@
 
 extern char D_802E0D84[];
 extern const char D_802E0DA8[];
+extern s16 D_800481AA[];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4CD0_1ED9E0.s")
 
@@ -154,7 +155,10 @@ void func_802D6104_1EEE14(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB14C_1F3E5C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB428_1F4138.s")
+void func_802DB428_1F4138(u8 arg0) {
+    func_80137468_146418(arg0, 0x25);
+    *(s16*)(D_800481AA + (arg0 * 0x50)) = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB468_1F4178.s")
 
