@@ -1,6 +1,8 @@
 #include <ultra64.h>
 #include "common.h"
 
+extern char D_802E0D84[];
+extern const char D_802E0DA8[];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4CD0_1ED9E0.s")
 
@@ -23,7 +25,10 @@ void func_802D507C_1EDD8C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D50B0_1EDDC0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D513C_1EDE4C.s")
+void func_802D513C_1EDE4C(s32 arg0) {
+    osSyncPrintf(&D_802E0DA8);
+    func_800072CC_7ECC(0xCUL);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5170_1EDE80.s")
 
