@@ -20,6 +20,9 @@ extern s16 D_802E0DE8;
 extern s16 D_802E0E04;
 extern s16 D_802E0FB0;
 extern char D_802E0E10[];
+extern char D_802E0E18[];
+extern char D_802E0E24[];
+extern void func_800AD554_BC504(s32, s32, s32);
 extern s16 D_802E0FB2;
 extern s16 D_802E0FB4;
 s32 func_802D57F4_1EE504(void);
@@ -306,7 +309,25 @@ void func_802D5A78_1EE788(void) {
     func_800EFEB4_FEE64(&func_802D57F4_1EE504, 0xE, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5ADC_1EE7EC.s")
+void func_802D5ADC_1EE7EC(void) {
+    s16 sp1E;
+    s16 sp1C;
+
+    sp1E = *(s16 *)(((u8 *) vehicleInstances) + 0x1CC0);
+    sp1C = *(s16 *)(((u8 *) vehicleInstances) + 0x1CC4);
+    D_802E0FB0 += 1;
+    osSyncPrintf(&D_802E0E18);
+    if (D_802E0FB0 == 3) {
+        D_802E0FB0 = 0;
+        if (D_801591C4 != 0) {
+            osSyncPrintf(&D_802E0E24);
+            func_800AD554_BC504(sp1E + 0x64, sp1C + 0x64, 0x33);
+            D_801591C4 -= 1;
+            return;
+        }
+        func_800074BC_80BC((void *) func_802D5ADC_1EE7EC);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5BA0_1EE8B0.s")
 
