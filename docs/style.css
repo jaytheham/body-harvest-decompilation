@@ -1,16 +1,17 @@
 :root {
-  --bg: #0d1117;
-  --surface: #161b22;
-  --border: #30363d;
-  --text: #e6edf3;
-  --text-muted: #8b949e;
-  --matched: #238636;
-  --matched-light: #2ea043;
-  --nonmatch: #9e6a03;
-  --nonmatch-light: #d29922;
-  --asm: #3d444d;
-  --accent: #1f6feb;
-  --accent-light: #388bfd;
+  /* Body Harvest palette — drawn from official Gremlin promotional render */
+  --bg: #0f0d08;              /* near-black with warm brown undertone — deep alien sky */
+  --surface: #1a1710;         /* dark gunmetal brown — alien mech hull */
+  --border: #3a3020;          /* muted ochre edge — ground/sand contrast */
+  --text: #f0e0b0;            /* warm parchment — readable against dark bg */
+  --text-muted: #8a7a50;      /* sandy muted tone */
+  --matched: #2d5a1b;         /* dark military green — alien craft markings */
+  --matched-light: #4a9030;   /* brighter military green — highlighted match */
+  --nonmatch: #7a5010;        /* deep amber brown — grim, unfinished tone */
+  --nonmatch-light: #c88020;  /* burnt amber — NON_MATCHING accent */
+  --asm: #252018;             /* dark olive gunmetal — ASM stub background */
+  --accent: #c45010;          /* burnt orange — box art fiery sky */
+  --accent-light: #e07828;    /* vivid orange — hover/active accent */
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
