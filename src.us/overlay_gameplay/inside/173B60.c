@@ -40,7 +40,6 @@ void func_8008BB5C_173C1C(void) {
 	D_800FCF28 = -8;
 }
 
-#ifdef NON_MATCHING
 void func_8008BB6C_173C2C(s32 arg0, s32 arg1) {
 	Gfx *dl;
 	Gfx *spC;
@@ -104,9 +103,6 @@ void func_8008BB6C_173C2C(s32 arg0, s32 arg1) {
 	dl->words.w1 = 0;
 	dl->words.w0 = 0xE7000000;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008BB6C_173C2C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008BD18_173DD8.s")
 
