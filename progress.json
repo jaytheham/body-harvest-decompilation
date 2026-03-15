@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-15T01:42:10Z",
-  "commit": "e056572",
-  "commit_timestamp": "2026-03-15T14:42:00+13:00",
+  "generated": "2026-03-15T01:43:49Z",
+  "commit": "56d2ea2",
+  "commit_timestamp": "2026-03-15T14:43:36+13:00",
   "overall": {
-    "total_functions": 2960,
-    "matched": 641,
-    "non_matching": 286,
-    "asm_stubs": 2033,
-    "matched_pct": 21.66,
-    "decompiled_pct": 31.32
+    "total_functions": 2959,
+    "matched": 642,
+    "non_matching": 285,
+    "asm_stubs": 2032,
+    "matched_pct": 21.7,
+    "decompiled_pct": 31.33
   },
   "segments": {
     "core": {
@@ -31,12 +31,12 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 448,
-      "non_matching": 165,
-      "asm_stubs": 978,
-      "total": 1591,
+      "matched": 449,
+      "non_matching": 164,
+      "asm_stubs": 977,
+      "total": 1590,
       "matched_pct": 28.2,
-      "decompiled_pct": 38.5
+      "decompiled_pct": 38.6
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -457,11 +457,11 @@
     {
       "path": "overlay_gameplay/outside/cheats.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 24,
-      "non_matching": 2,
-      "asm_stubs": 2,
-      "total": 28,
-      "matched_pct": 85.7,
+      "matched": 25,
+      "non_matching": 1,
+      "asm_stubs": 1,
+      "total": 27,
+      "matched_pct": 92.6,
       "contributor": "jaytheham"
     },
     {
@@ -539,9 +539,9 @@
     {
       "name": "jaytheham",
       "files": 35,
-      "matched": 590,
-      "non_matching": 258,
-      "asm_stubs": 1870
+      "matched": 591,
+      "non_matching": 257,
+      "asm_stubs": 1869
     },
     {
       "name": "Harvester",
@@ -641,11 +641,11 @@
     },
     {
       "date": "2026-03-15",
-      "commit": "e056572",
-      "matched_pct": 21.66,
-      "decompiled_pct": 31.32,
-      "matched": 641,
-      "total": 2960
+      "commit": "56d2ea2",
+      "matched_pct": 21.7,
+      "decompiled_pct": 31.33,
+      "matched": 642,
+      "total": 2959
     }
   ]
 }
