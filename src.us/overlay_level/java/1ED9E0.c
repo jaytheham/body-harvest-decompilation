@@ -4,7 +4,20 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4CD0_1ED9E0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4DB0_1EDAC0.s")
+s16 func_802D4DB0_1EDAC0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+    s16 temp_v0;
+    Unk80154318Entry *temp_v1;
+
+    temp_v0 = func_800C17B4_D0764(0xD, 1);
+    if (temp_v0 != -3) {
+        temp_v1 = &D_80154318[temp_v0];
+        temp_v1->unk2 = arg3;
+        temp_v1->unk8 = arg0;
+        temp_v1->unkA = arg1;
+        temp_v1->unkC = arg2;
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4E34_1EDB44.s")
 
