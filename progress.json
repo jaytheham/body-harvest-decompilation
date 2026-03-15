@@ -1,7 +1,7 @@
 {
-  "generated": "2026-03-15T10:41:29Z",
-  "commit": "e97d10d",
-  "commit_timestamp": "2026-03-15T23:41:17+13:00",
+  "generated": "2026-03-15T19:14:41Z",
+  "commit": "28c20d0",
+  "commit_timestamp": "2026-03-16T08:14:27+13:00",
   "overall": {
     "total_functions": 2960,
     "matched": 642,
@@ -422,7 +422,7 @@
       "asm_stubs": 2,
       "total": 10,
       "matched_pct": 60.0,
-      "contributor": "Meridian Lex"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/F7870.c",
@@ -538,10 +538,10 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 36,
-      "matched": 592,
-      "non_matching": 259,
-      "asm_stubs": 1872
+      "files": 37,
+      "matched": 598,
+      "non_matching": 261,
+      "asm_stubs": 1874
     },
     {
       "name": "Harvester",
@@ -552,10 +552,10 @@
     },
     {
       "name": "Meridian Lex",
-      "files": 5,
-      "matched": 14,
-      "non_matching": 16,
-      "asm_stubs": 19
+      "files": 4,
+      "matched": 8,
+      "non_matching": 14,
+      "asm_stubs": 17
     }
   ],
   "history": [
@@ -642,6 +642,14 @@
     {
       "date": "2026-03-15",
       "commit": "e97d10d",
+      "matched_pct": 21.69,
+      "decompiled_pct": 31.35,
+      "matched": 642,
+      "total": 2960
+    },
+    {
+      "date": "2026-03-16",
+      "commit": "28c20d0",
       "matched_pct": 21.69,
       "decompiled_pct": 31.35,
       "matched": 642,
