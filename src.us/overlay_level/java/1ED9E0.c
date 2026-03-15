@@ -73,7 +73,17 @@ void func_802D5560_1EE270(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D57F4_1EE504.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5A78_1EE788.s")
+extern void func_802D57F4_1EE504(void);
+
+void func_802D5A78_1EE788(void) {
+    osSyncPrintf(&D_802E0E10);
+    D_801591C4 = 0;
+    D_802E0FB2 = 0;
+    D_802E0FB4 = 0xA;
+    D_802E0FB0 = 0;
+    func_80013468_14068(8);
+    func_800EFEB4_FEE64(&func_802D57F4_1EE504, 0xE, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5ADC_1EE7EC.s")
 
