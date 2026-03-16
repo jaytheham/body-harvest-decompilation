@@ -1,3 +1,23 @@
+### Declaration order controls stack offset: first declared gets HIGHEST sp offset
+
+IDO allocates local variables **top-down** (highest sp offset first). The **first declared** variable gets the **highest** sp offset; the **last declared** gets the **lowest** sp offset.
+
+**Problem**: target has `addiu t8, sp, 0x24` but you see `addiu t8, sp, 0x28` (struct 4 bytes too high).
+
+**Cause**: declaring `Unk8014DD50 sp24` first gave it the highest slot (sp+0x28–0x37), pushing smaller vars to lower offsets.
+
+**Fix**: declare the smaller variable (`s16 temp`) FIRST so it gets the highest slot, and declare `Unk8014DD50 sp24` SECOND so it lands at the next-lower range (sp+0x24–0x33):
+
+```c
+// CORRECT (struct ends up at sp+0x24):
+s16 temp;           // first → IDO assigns highest offset (sp+0x34 area); kept in register
+Unk8014DD50 sp24;   // second → sp+0x24–0x33 ✓
+
+// WRONG (struct displaced to sp+0x28):
+Unk8014DD50 sp24;   // first → sp+0x28–0x37
+s16 temp;           // second → sp+0x24 area
+```
+
 ### `s16` parameter passed to `s32` trig function generates `andi a0, a1, 0xffff` directly
 
 When a function has an `s16 arg1` parameter and passes it to `coss(s32)` or `sins(s32)`, IDO 5.3 -O2 generates `andi a0, a1, 0xffff` (zero-extension) automatically:
@@ -247,6 +267,23 @@ s32 func_8008199C_9094C(u8 arg0) {
 `u8 value = *ptr;`
 `D_index = index + 1;`
 `return value;`
+
+### Phantom `s32 dummy` for correct frame size without named pointer
+
+When a function's target frame is 0x28 but without any named pointer locals IDO only generates a 0x20 frame (because only `ra`, `a3`, and one spill need saving), add a phantom `s32 dummy;` local variable:
+
+```c
+void func_foo(s32 arg0) {
+    s16 target;
+    s32 dummy;   /* ← phantom: never read/written, but forces 0x28 frame */
+
+    /* all struct accesses via alienInstances[arg0].field directly */
+}
+```
+
+The `s32 dummy` declaration causes IDO to reserve an extra 4-byte slot on the stack, inflating the frame from 0x20 to 0x28. No `(void)dummy;` statement is needed — the declaration alone is sufficient. This was needed in `func_8008D4A0_9C450` where removing an `AlienInstance *alien` pointer (which fixed register allocation) reduced the frame from 0x28 to 0x20.
+
+**Key rule**: If your fix for register allocation involves removing a named pointer variable, and the frame shrinks as a side effect, add `s32 dummy;` to restore the original frame size.
 
 This shape can preserve both branch delay-slot pointer arithmetic and the `lbu` before index increment/store ordering.
 
@@ -793,6 +830,21 @@ jal callee
 `
 Use `s16 arr[2]` in C instead of two separate variables. With two named s16 vars, IDO may allocate them in wrong stack order or optimize away the second (written-but-not-read).
 
+### Address-taken array reload: use a non-address-taken temp for the shared index
+
+When an `s16 arr[2]` (passed to a function as a pointer) needs arr[0] to also serve as the index for computing arr[1], writing `arr[0] = x; arr[1] = D_arr[arr[0]].field;` causes IDO to **reload** arr[0] from memory for the second access — because the array is address-taken, IDO won't apply store-forwarding. This produces an extra `sh + lh` store-reload pair.
+
+**Fix**: introduce a non-address-taken `s16 tempc` (declared last in the function), compute the index into it, then assign both:
+```c
+s16 tempc;
+// ...
+tempc = D_arr[inst->fieldA].fieldB;
+arr[0] = tempc;
+arr[1] = D_arr[tempc].fieldC;   // IDO uses tempc register directly, no reload
+func_call(..., arr, ...);
+```
+Since `tempc` is a plain local (not address-taken), IDO keeps it in a register and uses it directly for the second D_arr indexing, avoiding the extra `sh + lh` pair. Declaring `tempc` last avoids disrupting the existing declared-variable stack layout (since IDO keeps it in a register at -O2 and only allocates the stack slot as a potential spill site below existing used slots).
+
 ### Register allocation: control which struct field gets loaded first in a branch
 
 When inside a branch body two struct fields must be loaded (e.g., `inst->unkXX` and `inst->unkYY` for an array index + bit-shift computation):
@@ -858,6 +910,37 @@ The specific declaration order `f32 sp24; AlienSpec *spec; f32 sp1C; s32 sp18;` 
 s32 sp1c;   // dummy — first declared, not-last → keeps slot at 0x1c (blocks cfe from using 0x1c)
 s32 sp18;   // real — second declared, last, register-allocated → slot removed; cfe falls to 0x18
 ```
+
+### `u8` index + `s16` local: declare index FIRST to put spec_val at lowest stack slot
+
+When a function has two local variables — a `u8` (or small integer) index variable and a `s16` value — and the target places the `s16` at the LOWEST available stack slot (e.g., sp+0x1c), declare the `u8` index variable FIRST and the `s16` value SECOND. IDO always allocates the LAST declared variable at the lowest available address, so the `s16` ends up at sp+0x1c:
+
+```c
+u8 specIdx;    // declared first → gets higher slot (e.g. sp+0x1e, phantom)
+s16 spec_val;  // declared last  → gets lowest slot (sp+0x1c) ← matches target
+specIdx = alienInstances[arg0].specIndex;
+spec_val = alienSpecs[specIdx].unk40;
+```
+
+If you declare them in the reverse order (`s16 spec_val` first, `u8 specIdx` second), the phantom for `specIdx` takes sp+0x1c and `spec_val` is pushed to sp+0x1e.
+
+The named `u8 specIdx` is necessary to force `lbu $v0` (IDO assigns `v0` to the first named local load), which then allows v0 to be used as a *constant* in the multiply chain (e.g., `sll t9, v0, 2; subu t9, t9, v0; ...`), displacing other temps to the correct registers. Inlining the index access (removing the named variable) breaks the `lbu $v0` and shifts all subsequent multiply registers.
+
+### Else-block load scheduling: put `unk20 &= ~mask` BEFORE `unk12 = expr` to pre-schedule loads
+
+When the target assembly's else-block starts with multiple independent loads (`lw t0` for arg1, `lw t8` for unk20, `li at` for mask) before any computation — and the bnez delay slot is `li a1, 0x800` (function call upcoming) — the fix is to put the `unk20 &= ~0x4000` assignment BEFORE the `unk12 = ...` computation in the else block:
+
+```c
+} else {
+    alienInstances[arg0].unk20 &= ~0x4000;                         // FIRST: triggers early lw unk20
+    alienInstances[arg0].unk12 = (s16)(((arg1 - 0xFA) >> 2) << 5); // SECOND
+    if (alienInstances[arg0].unk12 < spec_val >> 1) {
+        alienInstances[arg0].unk12 = (s16)(-(spec_val >> 1));
+    }
+}
+```
+
+With `unk20 &= ...` first, IDO pre-schedules both `lw arg1` and `lw unk20` at the top of the else block. This means the else block provides its own loads without relying on a bnez delay-slot pre-load. The bnez delay slot is then free for the compiler to use `li a1, 0x800` (pre-loading the function call argument for the fall-through path). The deferred `sw unk20` store goes into the `beqz` delay slot at the end. Writing `unk12 = ...` FIRST causes IDO to use the bnez delay slot to pre-load arg1 for the else path instead, breaking the scheduling.
 
 ### Float register allocation from expression order
 
@@ -1117,3 +1200,27 @@ if (max < (arg1 << 8)) { ... }
 ```
 Named variables like `dx`, `abs_dx`, `dy`, `abs_dy`, `max` cause phantom stack slots in non-leaf functions. The inline CSE form avoids them.
 
+
+### `s16` loop variables that get incremented need `s32` to avoid sign extensions in loop body
+
+When a loop variable (counter or accumulator) is declared as `s16` and incremented (`var++`) inside the loop body, IDO 5.3 -O2 emits an extra `sll reg, reg, 0x10; sra reg, reg, 0x10` pair after each increment to ensure the register holds a valid sign-extended 16-bit value. This adds ~2 instructions per increment, inflating the loop size significantly (~500-1000 score penalty).
+
+**Fix**: Declare the loop variable as `s32` (even if initialized from an `s16` expression). Use an explicit `(s16)` cast in the INITIALIZATION only (to preserve the sign-extension instruction that belongs in the prologue), not in the loop body.
+
+```c
+/* Instead of: */
+s16 z0;
+z0 = (ai->unk4 >> 8) - 1;  /* s16 → sign extension in init ✓ but also in loop ✗ */
+/* ... */
+z0++;                        /* IDO emits extra sll/sra pair */
+
+/* Use: */
+s32 z0;
+z0 = (s16)((ai->unk4 >> 8) - 1);  /* (s16) cast → preserves sign extension in init ✓ */
+/* ... */
+z0++;                               /* no extra sign extension in loop ✓ */
+```
+
+**Key rule**: If the target assembly does NOT show `sll reg, 0x10; sra reg, 0x10` after incrementing a counter/accumulator in the loop body, declare that variable as `s32` with `(s16)` initialization if the prologue uses the sign-extension pair.
+
+**Trade-off**: Changing a loop variable from `s16` to `s32` may cause IDO to allocate a 4-byte "phantom home" on the stack if the variable is initialized from a struct field expression (see "Named s32 locals cause phantom stack homes"). In practice, this inflates the frame by 8 bytes (due to 8-byte alignment) but is still better than the loop sign-extension penalty.

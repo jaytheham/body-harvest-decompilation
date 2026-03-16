@@ -12,7 +12,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E95BC_F856C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E9868_F8818.s")
+s16 func_800E9868_F8818(s32 arg0, s32 arg1) {
+    return (s16) ((D_801493D8 * 4) + 0x310);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E988C_F883C.s")
 

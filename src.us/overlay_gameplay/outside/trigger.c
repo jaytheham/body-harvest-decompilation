@@ -323,11 +323,12 @@ void func_800AFFF0_BEFA0(s32 arg0) {
 	D_801493E0 = 0;
 }
 
-#ifdef NON_MATCHING
-void func_800B0000_BEFB0(s32 arg0) { D_801493E0 = 1; D_801493E2 = 1; }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800B0000_BEFB0.s")
-#endif
+void func_800B0000_BEFB0(s32 arg0) {
+	s32 *ptr = &arg0;
+	*ptr = arg0;
+	D_801493E0 = 1;
+	D_801493E2 = 1;
+}
 
 void func_800B001C_BEFCC(u16 arg0) {
 	Unk80222A78 tmp;
