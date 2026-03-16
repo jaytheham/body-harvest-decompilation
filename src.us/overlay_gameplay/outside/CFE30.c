@@ -876,19 +876,12 @@ void func_800E26FC_F16AC(s8 arg0, s8 arg1, s8 arg2) {
 	D_80154082.unk2 = arg2;
 }
 
-#ifdef NON_MATCHING
 void func_800E2720_F16D0(s32 arg0) {
-	s32 temp_lo;
-
-	temp_lo = arg0 / 6;
-	D_80154308 = temp_lo;
-	if (temp_lo >= 0xC9) {
+	D_80154308 = arg0 / 6;
+	if (D_80154308 >= 0xC9) {
 		D_80154308 = 0xC8;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2720_F16D0.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2750_F1700.s")
 
