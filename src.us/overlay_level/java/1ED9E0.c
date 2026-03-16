@@ -532,7 +532,9 @@ void func_802D6840_1EF550(void) {
     func_800EFEB4_FEE64(&func_802D6338_1EF048, 0xD, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D687C_1EF58C.s")
+s32 func_802D687C_1EF58C(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
+    return (s32) (((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D68F4_1EF604.s")
 
