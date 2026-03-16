@@ -598,4 +598,12 @@ void func_8000FE50_10A50(void *);
 void func_80002EF8_3AF8(void *);
 void func_8000F218_FE18(void);
 
+/* overlay_gameplay/inside/1648A0 */
+f32 func_8007C96C_164A2C(Unk80047588 *arg0);
+void func_8007CAA8_164B68(VehicleInstance *arg0, Unk80047588 *arg1);
+void func_8007D37C_16543C(VehicleInstance *arg0, s16 arg1, s32 arg2);
+void func_8007DDA0_165E60(VehicleInstance *arg0, Unk80047588 *arg1);
+void func_8007EB1C_166BDC(void *arg0);
+void func_8007EFD4_167094(VehicleInstance *arg0);
+
 #endif
