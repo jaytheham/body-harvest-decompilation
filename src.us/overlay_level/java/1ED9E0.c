@@ -1672,7 +1672,129 @@ void func_802DA210_1F2F20(u8 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DA548_1F3258.s")
 
+#ifdef NON_MATCHING
+void func_802DA844_1F3554(u8 arg0) {
+    s16 sp6E;
+    s16 sp6A;
+    s16 sp66;
+    s16 sp6C;
+    s16 sp68;
+    s16 sp64;
+    s32 sp60;
+    s32 sp5C;
+    s16 sp5A;
+    s16 sp58;
+    s16 sp56;
+    s16 sp54;
+    s16 sp52;
+    s8 sp5F;
+    s8 sp43;
+    s8 sp37;
+    s8 sp63;
+    s8 sp3F;
+    void *sp40;
+    void *sp3C;
+    void *sp38;
+    s32 sp34;
+    s16 temp_v0_2;
+    s16 temp_v0_3;
+    s16 temp_v0_4;
+    s16 temp_v0_5;
+    s32 temp_s0;
+    s32 temp_s0_2;
+    s32 temp_s0_3;
+    s32 temp_s0_4;
+    s32 temp_s0_5;
+    s32 temp_s0_6;
+    s8 temp_a0;
+    s8 temp_a1;
+    s8 temp_a2_2;
+    s8 temp_t0;
+    s8 temp_t1;
+    u8 temp_t6;
+    void *temp_a2;
+    void *temp_s1;
+    void *temp_v0;
+    void *temp_v1;
+    void *temp_v1_2;
+    void *temp_v1_3;
+
+    temp_t6 = arg0 & 0xFF;
+    temp_s1 = (void *)((temp_t6 * 0x50) + (s32)&alienInstances);
+    if (((alienInstance *)temp_s1)->unk20 & 0x600) {
+        temp_a1 = *(s8 *)((temp_t6 * 0x10) + (s32)&D_8014DD50 + 0xC);
+        arg0 = temp_t6;
+        temp_v1 = (void *)((temp_a1 * 0x10) + (s32)&D_8014DD50);
+        temp_t0 = *(s8 *)((s32)temp_v1 + 0xD);
+        sp40 = temp_v1;
+        sp5A = (s16) temp_a1;
+        temp_v0 = (void *)((temp_t0 * 0x10) + (s32)&D_8014DD50);
+        temp_t1 = *(s8 *)((s32)temp_v0 + 0xD);
+        sp3C = temp_v0;
+        temp_a2 = (void *)((temp_t1 * 0x10) + (s32)&D_8014DD50);
+        sp38 = temp_a2;
+        sp58 = temp_t0;
+        sp56 = temp_t1;
+        sp54 = *(s8 *)((s32)temp_v0 + 0xC);
+        sp52 = *(s8 *)((s32)temp_a2 + 0xC);
+        temp_s0 = func_8008916C_9811C(temp_t6, temp_a1, temp_a2, &D_8014DD50);
+        func_80128428_1373D8(temp_s1, *(s16 *)((s32)temp_v1), *(s16 *)((s32)temp_v1 + 2), *(s16 *)((s32)temp_v1 + 4), (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
+        func_800C80F0_D70A0(((-(s32)((alienInstance *)sp40)->unk6 - ((alienInstance *)temp_s1)->unk6) + 0x4000) & 0xFFFF, 0, 0, func_800C7924_D68D4(sp6E, sp6A, sp66, 0x40, -8, *(s32 *)((((alienInstance *)temp_s1)->unk1A * 0x68) + (s32)&D_8025668C), temp_s0, 1));
+        func_800E093C_EF8EC(sp6E, sp6A, sp66, 0);
+        func_800E093C_EF8EC(sp6E, sp6A, sp66, 0x1E);
+        temp_s0_2 = ((alienInstance *)temp_s1)->unk6 & 0xFFFF;
+        ((alienInstance *)temp_s1)->unk14 = (s16) (s32) sp6C;
+        ((alienInstance *)temp_s1)->unk16 = (s16) (s32) sp68;
+        ((alienInstance *)temp_s1)->unk18 = (s16) (s32) sp64;
+        sp60 = (s32) (((f64) (f32) coss(temp_s0_2 & 0xFFFF) / 32768.0) * 6.0);
+        sp5C = (s32) (((f64) (f32) sins(temp_s0_2 & 0xFFFF) / 32768.0) * 6.0);
+        temp_s0_3 = func_8008916C_9811C(arg0, (s8) sp58);
+        func_80128428_1373D8(temp_s1, *(s16 *)((s32)sp3C), *(s16 *)((s32)sp3C + 2), *(s16 *)((s32)sp3C + 4), (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
+        temp_v0_2 = func_800C7924_D68D4(sp6E, sp6A, sp66, 0x40, -8, *(s32 *)((((alienInstance *)temp_s1)->unk1A * 0x68) + (s32)&D_8025668C), temp_s0_3, 1);
+        func_800C80F0_D70A0((0x4000 - ((alienInstance *)temp_s1)->unk6) & 0xFFFF, 0, 0, temp_v0_2);
+        func_800C820C_D71BC(0, 0, 0, temp_v0_2);
+        temp_a2_2 = sp60 * -1;
+        sp34 = (s32) temp_a2_2;
+        sp5F = sp60 * -1;
+        func_800C8184_D7134(sp5F, 3, temp_a2_2, temp_v0_2);
+        if (sp54 != -1) {
+            temp_v1_2 = (void *)((sp54 * 0x10) + (s32)&D_8014DD50);
+            temp_s0_4 = func_8008916C_9811C(arg0, (s8) sp54);
+            func_80128428_1373D8(temp_s1, (s16) (*(s16 *)((s32)temp_v1_2) + *(s16 *)((s32)sp3C)), (s16) (*(s16 *)((s32)temp_v1_2 + 2) + *(s16 *)((s32)sp3C + 2)), (s16) (*(s16 *)((s32)temp_v1_2 + 4) + *(s16 *)((s32)sp3C + 4)), (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
+            temp_v0_3 = func_800C7924_D68D4(sp6E, sp6A, sp66, 0x40, -8, *(s32 *)((((alienInstance *)temp_s1)->unk1A * 0x68) + (s32)&D_8025668C), temp_s0_4, 1);
+            func_800C80F0_D70A0((0x4000 - ((alienInstance *)temp_s1)->unk6) & 0xFFFF, 0, 0, temp_v0_3);
+            func_800C820C_D71BC(0, 0, 0, temp_v0_3);
+            sp43 = *(s8 *)((s32)temp_v1_2 + 0xC);
+            sp37 = *(s8 *)((s32)sp3C + 0xC);
+            func_800C8184_D7134(sp43, 3, sp37, temp_v0_3);
+        }
+        temp_s0_5 = func_8008916C_9811C(arg0, (s8) sp56);
+        func_80128428_1373D8(temp_s1, *(s16 *)((s32)sp38), *(s16 *)((s32)sp38 + 2), *(s16 *)((s32)sp38 + 4), (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
+        temp_v0_4 = func_800C7924_D68D4(sp6E, sp6A, sp66, 0x40, -8, *(s32 *)((((alienInstance *)temp_s1)->unk1A * 0x68) + (s32)&D_8025668C), temp_s0_5, 1);
+        func_800C80F0_D70A0((0x4000 - ((alienInstance *)temp_s1)->unk6) & 0xFFFF, 0, 0, temp_v0_4);
+        func_800C820C_D71BC(0, 0, 0, temp_v0_4);
+        temp_a0 = sp5C * -1;
+        sp63 = temp_a0;
+        func_800C8184_D7134(temp_a0, 3, sp63, temp_v0_4);
+        if (sp52 != -1) {
+            temp_v1_3 = (void *)((sp52 * 0x10) + (s32)&D_8014DD50);
+            temp_s0_6 = func_8008916C_9811C(arg0, (s8) sp52);
+            func_80128428_1373D8(temp_s1, (s16) (*(s16 *)((s32)temp_v1_3) + *(s16 *)((s32)sp38)), (s16) (*(s16 *)((s32)temp_v1_3 + 2) + *(s16 *)((s32)sp38 + 2)), (s16) (*(s16 *)((s32)temp_v1_3 + 4) + *(s16 *)((s32)sp38 + 4)), (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
+            temp_v0_5 = func_800C7924_D68D4(sp6E, sp6A, sp66, 0x40, -8, *(s32 *)((((alienInstance *)temp_s1)->unk1A * 0x68) + (s32)&D_8025668C), temp_s0_6, 1);
+            func_800C80F0_D70A0((0x4000 - ((alienInstance *)temp_s1)->unk6) & 0xFFFF, 0, 0, temp_v0_5);
+            func_800C820C_D71BC(0, 0, 0, temp_v0_5);
+            sp43 = *(s8 *)((s32)temp_v1_3 + 0xC);
+            sp3F = *(s8 *)((s32)sp38 + 0xC);
+            func_800C8184_D7134(sp43, 3, sp3F, temp_v0_5);
+        }
+        func_80088E10_97DC0(sp5A);
+        func_80088E10_97DC0(sp58);
+        func_80088E10_97DC0(sp56);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DA844_1F3554.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DAF5C_1F3C6C.s")
 
