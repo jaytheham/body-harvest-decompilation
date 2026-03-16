@@ -46,6 +46,9 @@ extern u8 D_8003153E[];
 extern s32 D_80052A8C;
 extern Unk8014DD50 *D_802E0608;
 extern Unk8014DD50 *D_802E0B08;
+extern Unk8014DD50 *D_802E0C9C;
+extern f32 D_802E0F88;
+extern f32 D_802E0F8C;
 extern char D_802E0E74[];
 extern char D_802E0E7C[];
 extern char D_802E0FBA[];
@@ -3004,7 +3007,132 @@ void func_802DDE04_1F6B14(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DDE04_1F6B14.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802DE0C8_1F6DD8(u8 arg0) {
+    AlienInstance *alienIdx;
+    AlienInstance *otherIdx;
+    VehicleInstance *vehicle;
+    s16 sp88;
+    s16 sp8A;
+    s16 sp8C;
+    s16 sp8E;
+    s16 sp90;
+    s16 sp92;
+    s16 sp70;
+    s16 sp72;
+    s16 sp74;
+    s16 sp76;
+    s16 sp78;
+    s16 sp7A;
+    s32 sp68;
+    s16 temp_v1;
+    s16 deltaX;
+    s16 var_a1;
+    s16 temp_a2;
+    s16 temp_a3;
+    s8 lookupVal;
+    s8 lookupVal2;
+    s8 lookupVal3;
+    s8 lookupVal4;
+    s8 lookupVal5;
+    s32 temp_a0_2;
+    s32 temp_a1;
+    s32 temp_t0_2;
+    s32 temp_v1_2;
+    u8 alienId;
+    s8 funcResult;
+
+    alienId = arg0 & 0xFF;
+    alienIdx = &alienInstances[alienId];
+    otherIdx = &alienInstances[alienIdx->unk25];
+    vehicle = D_80052B34;
+
+    if (!(otherIdx->unk20 & 0x6000) && ((alienIdx->unk20 & 0xF000) != 0xF000) && (alienIdx->unk1E == 0)) {
+        temp_v1 = func_80003824_4424(
+            (f32)(vehicle->unk0 - alienIdx->unk0),
+            (f32)(vehicle->unk4 - alienIdx->unk4)
+        ) - alienIdx->unkE;
+
+        var_a1 = -temp_v1;
+        if (-temp_v1 < temp_v1) {
+            var_a1 = temp_v1;
+        }
+
+        if (var_a1 >= 0x4001) {
+            otherIdx->unk20 |= 0x4000;
+            alienIdx->unk36 = 0;
+        }
+    } else {
+        sp88 = alienIdx->unkC;
+        lookupVal = D_8014DD50[sp88].unkC;
+        sp8A = (s16)lookupVal;
+
+        lookupVal2 = D_8014DD50[lookupVal].unkC;
+        sp8C = (s16)lookupVal2;
+
+        lookupVal3 = D_8014DD50[lookupVal2].unkC;
+        sp8E = (s16)lookupVal3;
+
+        lookupVal4 = D_8014DD50[lookupVal3].unkC;
+        sp90 = (s16)lookupVal4;
+
+        lookupVal5 = D_8014DD50[lookupVal4].unkC;
+        sp92 = (s16)lookupVal5;
+
+        if (otherIdx->unk20 & 0x4000) {
+            funcResult = func_80081F18_90EC8(alienId, 6, 4, &sp88, &D_802E0C9C);
+
+            if (funcResult == 2) {
+                func_80137468_146418(alienId, 0x259);
+                func_80128504_1374B4(alienIdx, 1, (s32*)&sp78, (s32*)&sp74, (s32*)&sp70);
+                func_800D05A8_DF558(sp7A, sp76, sp72, 0x3E8, 0x8C, 0x8C, 0xC8);
+                func_800DEE5C_EDE0C(sp7A, (s16)((s32)sp74 + 5), sp72, 0x50, 0xA);
+                func_800DEA08_ED9B8(sp7A, sp76, sp72, 0x258, 8, 6, 0x28, 0xDC, 0xA6, 0x85, 0x2F);
+                func_800C541C_D43CC(sp7A, sp76, sp72, 0, 0x7F, 0, 0x78, 0xFF, 0x3C, 0x14, 0x6A, 0x53, 0);
+                alienIdx->unk20 |= 0x400000;
+                func_80124B5C_133B0C(sp7A, sp76, sp72, 0x2710, 0x1F4);
+                alienIdx->unk20 &= 0xFFBFFFFF;
+
+                temp_a2 = vehicle->unk0;
+                temp_a3 = vehicle->unk4;
+                temp_a0_2 = temp_a2 - (s32)sp78;
+                temp_a1 = temp_a3 - (s32)sp70;
+                temp_v1_2 = (temp_a0_2 * temp_a0_2) + (temp_a1 * temp_a1);
+
+                if ((temp_v1_2 < 0x225510) && !(vehicle->unk20 & 2)) {
+                    temp_t0_2 = 0x225510 - temp_v1_2;
+                    deltaX = alienIdx->unk0 - temp_a2;
+                    sp68 = temp_t0_2;
+
+                    func_80102DDC_111D8C(
+                        vehicle,
+                        func_80003824_4424(
+                            (f32)-(alienIdx->unk0 - temp_a2),
+                            (f32)-(alienIdx->unk4 - temp_a3)
+                        ),
+                        (s16)(s32)(((f32)temp_t0_2 / D_802E0F88) + 8192.0f),
+                        (f32)(temp_t0_2 * 0x32) / D_802E0F8C
+                    );
+
+                    vehicle->unk22 = (s16)(0x3E8 - (func_800038E0_44E0() % 2000));
+                    vehicle->unk24 = (s16)(0x3E8 - (func_800038E0_44E0() % 2000));
+                    vehicle->unk26 = (s16)(0x3E8 - (func_800038E0_44E0() % 2000));
+                }
+            } else {
+                if (funcResult == 3) {
+                    otherIdx->unk20 &= ~0x1000;
+                    return;
+                }
+                if (funcResult == 4) {
+                    otherIdx->unk20 &= ~0x4000;
+                }
+            }
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DE0C8_1F6DD8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DE594_1F72A4.s")
 
