@@ -2399,7 +2399,15 @@ void func_802DCA54_1F5764(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DCA54_1F5764.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DCDD4_1F5AE4.s")
+void func_802DCDD4_1F5AE4(u8 arg0) {
+    AlienInstance *alien;
+
+    func_80137468_146418(arg0, 0x1C);
+    func_800873A8_96358(arg0);
+    alien = &alienInstances[arg0];
+    alien->unk20 = (s32) (alien->unk20 & ~0x10);
+    alien->unk6 = (s16) alien->unkE;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DCE34_1F5B44.s")
 
