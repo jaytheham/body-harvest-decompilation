@@ -1,3 +1,24 @@
+### `while (i--)` generates `or v0,v1,zero` at loop top + `bnez v1; v1--` delay slot
+
+When IDO 5.3 -O2 compiles `while (i--) { arr[i].field = 0; }` with `i = N` (array count):
+
+- Generates `li v1, N-1` (folds initial decrement into init)
+- Precomputes pointer to last element `arr[N-1]` in a0
+- Emits `or v0,v1,zero` at the **top** of the loop as a compiler artifact (tracking the result of `i--` expression)
+- Emits `bnez v1, loop; addiu v1,v1,-1` at bottom (delay-slot decrement = fused post-decrement check)
+
+**Example** (array of 0x19 elements):
+```c
+void func(...) {
+    s32 i;
+    i = 0x19;
+    while (i--) {
+        D_8015FAD0[i].unk2C = 0;
+    }
+}
+```
+Generates: `li v1,0x18` (= 0x19-1), `lui/addiu a0, D_8015FF50` (= &arr[0x18]), then loop with `or v0,v1,zero; sb; addiu a0,-stride; bnez v1; addiu v1,-1`.
+
 ### Declaration order controls stack offset: first declared gets HIGHEST sp offset
 
 IDO allocates local variables **top-down** (highest sp offset first). The **first declared** variable gets the **highest** sp offset; the **last declared** gets the **lowest** sp offset.
