@@ -2067,7 +2067,94 @@ void func_802DBDDC_1F4AEC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBDDC_1F4AEC.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802DBF34_1F4C44(u8 arg0) {
+    AlienInstance *alien;
+    s32 flags;
+    s16 val14;
+    s16 val38;
+    s16 delta;
+    s32 limit;
+    s32 param;
+    s16 spec_val;
+
+    /* Get alien instance from arg0; manages alien state machine for harvest behavior */
+    alien = &alienInstances[arg0];
+    flags = alien->unk20;
+
+    /* Check if flags bits 0x600 are set */
+    if (flags & 0x600) {
+        /* Check if bit 0x100000 is NOT set */
+        if (!(flags & 0x100000)) {
+            /* Set flags with 0x40000000 OR'd in */
+            alien->unk20 = flags | 0x40000000;
+            alien->unk2C = 0x7FFF;
+            alien->unk10 = 0;
+            alien->unk38 = 0;
+            alien->unk14 = arg0 & 1;
+
+            /* If new flags still have 0x600 bits set, call function */
+            if ((flags | 0x40000000) & 0x600) {
+                /* spec lookup table indexed by specIndex*0x68 */
+                spec_val = *(s16*)(&D_8025668C[alien->specIndex * 0x68]);
+                param = (s32)((f64)spec_val * 0.75);
+                func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4,
+                                    (s32)(param & 0xFFFF), 0);
+            }
+        } else {
+            /* flags & 0x40000000 is set */
+            limit = D_80222A70;
+
+            if (limit < alien->unk2) {
+                val14 = alien->unk14;
+                val38 = alien->unk38;
+
+                if (val14 != 0) {
+                    if (val38 >= -8) {
+                        alien->unk38 = val38 - 1;
+                    }
+                } else {
+                    if (val38 < 0xA) {
+                        alien->unk38 = val38 + 1;
+                    }
+                }
+
+                /* Calculate delta based on unk38 value */
+                val38 = alien->unk38;
+                delta = val38 * 0xC8;
+                alien->unkE = (s16)(alien->unkE + delta);
+                alien->unk6 = (s16)(alien->unk6 + delta);
+                alien->unk10 = (s16)(alien->unk10 + 0x60);
+                alien->unk12 = (s16)(alien->unk12 + 0x10);
+            }
+
+            /* Set fields based on unk38 */
+            alien->unk8 = (s16)(alien->unk38 << 8);
+            alien->unkA = (s16)(alien->unk10 * -4);
+
+            /* Call function if unk2C & 3 == 0 */
+            if (!(alien->unk2C & 3)) {
+                func_800DEA08_ED9B8(alien->unk0, alien->unk2, alien->unk4,
+                                    0xFA, 2, 2, 0x1E, 0xC8, 0x82, 0x82, 0x82);
+            }
+
+            /* Check if in range and adjust unk38 */
+            limit = D_80222A70;
+            if ((limit < alien->unk30) && (alien->unk2 < limit)) {
+                alien->unk38 = 0;
+                alien->unk12 = (s16)((s16)alien->unk12 >> 1);
+                alien->unk10 = (s16)((s16)alien->unk10 >> 1);
+            }
+
+            /* Call with spec value */
+            spec_val = *(s16*)(&D_8025668C[alien->specIndex * 0x68]);
+            func_8008AAFC_99AAC(arg0, (s32)spec_val, 3);
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBF34_1F4C44.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DC230_1F4F40.s")
 
