@@ -44,9 +44,9 @@ f32 func_800C1090_D0040(Vec3f *arg0, Vec3f *arg1) {
 }
 
 void func_800C10C0_D0070(Vec3f *arg0, Vec3f *arg1, Vec3f *arg2) {
-    arg2->x = arg0->x - arg1->x;
-    arg2->y = arg0->y - arg1->y;
-    arg2->z = arg0->z - arg1->z;
+	arg2->x = arg0->x - arg1->x;
+	arg2->y = arg0->y - arg1->y;
+	arg2->z = arg0->z - arg1->z;
 }
 
 void func_800C10F4_D00A4(Vec3f *arg0, Vec3f *arg1, Vec3f *arg2) {
@@ -670,18 +670,13 @@ void func_800DDDE4_ECD94(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DDDE4_ECD94.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_800DDE1C_ECDCC(s32 arg0, u8 arg1) {
-	s32 temp_t6;
-
-	temp_t6 = arg0 & 0xFF;
-	if (temp_t6 != 0xFF) {
-		D_80156EF0[temp_t6].unkD = arg1 & 0xFF;
-	}
+void func_800DDE1C_ECDCC(u8 arg0, u8 arg1)
+{
+  if (arg0 != 0xFF)
+  {
+	D_80156EF0[arg0].unkD = arg1;
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DDE1C_ECDCC.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800DDE54_ECE04(s32 arg0, s8 arg1) {
@@ -776,7 +771,7 @@ u8 func_800DEE5C_EDE0C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4) {
 #endif
 
 void func_800DEED0_EDE80(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
-	func_800DDE1C_ECDCC(func_800DDB60_ECB10(arg0, arg1, arg2, 5, (s32) arg3) & 0xFF, arg4);
+	func_800DDE1C_ECDCC(func_800DDB60_ECB10(arg0, arg1, arg2, 5, (s32) arg3), arg4);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DEF2C_EDEDC.s")
