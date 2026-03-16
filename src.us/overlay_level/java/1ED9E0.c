@@ -1978,7 +1978,54 @@ void func_802DBBE4_1F48F4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBBE4_1F48F4.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802DBCB0_1F49C0(u8 arg0) {
+    AlienInstance *alien;
+    s16 temp_v0;
+    s32 temp_s0;
+    s32 temp_v1;
+    u32 temp_t5;
+
+    temp_s0 = arg0 & 0xFF;
+    alien = &alienInstances[temp_s0];
+    if (!(alien->unk20 & 0x4000)) {
+        if ((func_8008E478_9D428(temp_s0 & 0xFF, alien) != 0) || (func_8008E30C_9D2BC(temp_s0 & 0xFF, 0x80000000, alien) != 0)) {
+            func_802DBB58_1F4868(temp_s0 & 0xFF);
+        } else {
+            func_802DBBE4_1F48F4(temp_s0 & 0xFF);
+            if ((D_80052A8C & 0x3C) == (temp_s0 & 0x3C)) {
+                temp_v1 = alien->unk20;
+                if ((temp_v1 & 0x100)) {
+                    temp_t5 = ((u32) *(s32*)(&D_80050AE0 + (alien->unk39 * 0x18))) >> 0xC;
+                    if (((temp_t5 & 1) == 0) || (temp_t5 & 4)) {
+                        alien->unk20 = (s32) (temp_v1 & ~0x100);
+                    }
+                }
+            }
+        }
+    } else {
+        func_802DBBE4_1F48F4(temp_s0 & 0xFF);
+        if ((D_80052A8C & 0x3C) == (temp_s0 & 0x3C)) {
+            temp_v1 = alien->unk20;
+            if ((temp_v1 & 0x100)) {
+                temp_t5 = ((u32) *(s32*)(&D_80050AE0 + (alien->unk39 * 0x18))) >> 0xC;
+                if (((temp_t5 & 1) == 0) || (temp_t5 & 4)) {
+                    alien->unk20 = (s32) (temp_v1 & ~0x100);
+                }
+            }
+        }
+    }
+    func_8008076C_8F71C(temp_s0 & 0xFF);
+    temp_v0 = alien->unk1E;
+    if (temp_v0 > 0) {
+        alien->unk1E = (s16) (temp_v0 - 4);
+    } else {
+        alien->unk1E = 0;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBCB0_1F49C0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBDDC_1F4AEC.s")
 
