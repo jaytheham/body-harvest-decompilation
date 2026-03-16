@@ -627,20 +627,14 @@ void func_800DDB18_ECAC8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DDB60_ECB10.s")
 
-#ifdef NON_MATCHING
-void func_800DDD30_ECCE0(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
-	s32 temp_t6;
-
-	temp_t6 = arg0 & 0xFF;
-	if (temp_t6 != 0xFF) {
-		D_80156EF0[temp_t6].unk0 = arg1;
-		D_80156EF0[temp_t6].unk2 = arg2;
-		D_80156EF0[temp_t6].unk4 = arg3;
+void func_800DDD30_ECCE0(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	if (arg0 != 0xFF) {
+		UnkFC8E8Entry *entry = &D_80156EF0[arg0];
+		entry->unk0 = arg1;
+		entry->unk2 = arg2;
+		entry->unk4 = arg3;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DDD30_ECCE0.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800DDD90_ECD40(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
