@@ -1,5 +1,6 @@
 # directories
 
+tools/n64/
 __pycache__/
 asm/
 assets/
