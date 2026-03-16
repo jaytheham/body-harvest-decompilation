@@ -39,13 +39,9 @@ void func_800C1024_CFFD4(Vec3f *arg0, Vec3f *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1024_CFFD4.s")
 #endif
 
-#ifdef NON_MATCHING
 f32 func_800C1090_D0040(Vec3f *arg0, Vec3f *arg1) {
 	return (arg0->x * arg1->x) + (arg0->y * arg1->y) + (arg0->z * arg1->z);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1090_D0040.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800C10C0_D0070(Vec3f *arg0, Vec3f *arg1, Vec3f *arg2) {
