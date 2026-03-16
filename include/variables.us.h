@@ -1082,6 +1082,7 @@ extern char D_802E7A30[];
 extern char D_802E7A40[];
 extern Unk802E4ED8_entry D_802E4ED8[9];
 extern f64 D_802E7B00;
+extern f64 D_802E0F58;
 extern char D_802E7A60[];
 extern s16 D_802E7C30;
 extern s16 D_802E7C32;
