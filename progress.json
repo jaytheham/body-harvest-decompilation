@@ -1,7 +1,7 @@
 {
-  "generated": "2026-03-16T03:06:16Z",
-  "commit": "e8dfb46",
-  "commit_timestamp": "2026-03-16T16:06:02+13:00",
+  "generated": "2026-03-16T04:10:24Z",
+  "commit": "dd945f0",
+  "commit_timestamp": "2026-03-16T17:10:12+13:00",
   "overall": {
     "total_functions": 2962,
     "matched": 647,
@@ -649,7 +649,7 @@
     },
     {
       "date": "2026-03-16",
-      "commit": "e8dfb46",
+      "commit": "dd945f0",
       "matched_pct": 21.84,
       "decompiled_pct": 31.57,
       "matched": 647,
