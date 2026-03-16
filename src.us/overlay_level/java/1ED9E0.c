@@ -1810,7 +1810,111 @@ void func_802DAF5C_1F3C6C(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DAFD0_1F3CE0.s")
 
+#ifdef NON_MATCHING
+void func_802DB14C_1F3E5C(u8 arg0) {
+    s16 sp5E;
+    s16 sp5C;
+    void *sp1C;
+    void *sp18;
+    s16 temp_t0;
+    s32 temp_a0;
+    s32 temp_a1_2;
+    s32 temp_v0_2;
+    s32 temp_v0_3;
+    s32 var_a1;
+    s32 var_a2;
+    s32 var_t0;
+    s32 var_v1;
+    s8 temp_a1;
+    s8 temp_v1;
+    u8 temp_t6;
+    u8 var_v0;
+    void *temp_a3;
+    void *temp_v0;
+    void *var_a3;
+
+    temp_t6 = arg0 & 0xFF;
+    temp_a3 = (temp_t6 * 0x50) + &alienInstances;
+    temp_v1 = (&D_8014DD50 + (temp_a3->unkC * 0x10))->unkC;
+    temp_v0 = &D_8014DD50 + (temp_v1 * 0x10);
+    temp_a1 = temp_v0->unkD;
+    arg0 = temp_t6;
+    sp18 = temp_v0;
+    sp1C = temp_a3;
+    sp5E = (s16) temp_v1;
+    sp5C = (s16) temp_a1;
+    func_80086230_951E0(temp_t6, temp_a1, 0x2000, temp_a3);
+    temp_v0_2 = func_802D8578_1F1288(arg0, 0x14, 0x180);
+    var_a3 = temp_a3;
+    if (var_a3->unk20 & 0x40000000) {
+        temp_t0 = *(&D_80257A0C + (D_80052B34->unk1A * 0x70)) + 0x23;
+        if ((temp_v0_2 != 0) && !(var_a3->unk47 & 1)) {
+            var_a3->unk12 = (s16) *(&D_802566C0 + (var_a3->unk1A * 0x68));
+        }
+        if ((var_a3->unk20 & 0x8000) && (var_a3->unk4B == 0xA)) {
+            sp1C = var_a3;
+            func_8008751C_964CC(arg0, 0x3E8, 0x3E8, var_a3);
+        } else {
+            sp1C = var_a3;
+            func_8008751C_964CC(arg0, temp_t0, (s16) (temp_t0 + 0x14), var_a3);
+        }
+        var_a3 = sp1C;
+        if (var_a3->unk20 & 0x1000) {
+            var_v0 = var_a3->unk36;
+            if ((s32) var_v0 < 3) {
+                if (sp18->unkE == 0) {
+                    if ((s32) var_v0 < 2) {
+                        func_80081C84_90C34(sp5E, (var_v0 * 0x10) + &D_802E0710);
+                        var_v0 = var_a3->unk36;
+                    }
+                    var_a3->unk36 = (u8) (var_v0 + 1);
+                }
+                func_80081E5C_90E0C(sp5E);
+            }
+        }
+    } else {
+        sp18->unkA = 0;
+    }
+    var_v1 = var_a3->unk0 - D_80052B34->unk0;
+    temp_a1_2 = -var_v1;
+    temp_a0 = var_a3->unk4 - D_80052B34->unk4;
+    if (temp_a1_2 < var_v1) {
+        var_t0 = var_v1;
+    } else {
+        var_t0 = temp_a1_2;
+    }
+    temp_v0_3 = -temp_a0;
+    var_a2 = temp_v0_3;
+    if (temp_v0_3 < temp_a0) {
+        var_a2 = temp_a0;
+    }
+    if (var_a2 < var_t0) {
+        if (temp_a1_2 < var_v1) {
+
+        } else {
+            var_v1 = temp_a1_2;
+        }
+    } else {
+        var_a1 = temp_v0_3;
+        if (temp_v0_3 < temp_a0) {
+            var_a1 = temp_a0;
+        }
+        var_v1 = var_a1;
+    }
+    if ((var_v1 < 0x64) && !(var_a3->unk20 & 0xC000)) {
+        sp1C = var_a3;
+        if (func_80084FE8_93F98(arg0, 0x800, var_a2, var_a3) != 0) {
+            var_a3->unk4B = 0;
+            var_a3->unk20 = (s32) (var_a3->unk20 | 0x8000);
+        }
+    }
+    if (var_a3->unk20 & 0x8000) {
+        func_802DAFD0_1F3CE0(arg0, *(&D_8014DD5D + (sp5C * 0x10)));
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB14C_1F3E5C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB428_1F4138.s")
 
