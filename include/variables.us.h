@@ -1202,4 +1202,22 @@ extern f64 D_80142328;
 extern f64 D_80142350;
 extern f64 D_80142358;
 
+/* overlay_level/java/1ED9E0 */
+extern char D_802E0D84[];
+extern const char D_802E0DA8[];
+extern char D_802E0E10[];
+extern char D_802E0E30[];
+extern char D_802E0E3C[];
+extern char D_802E0E60[];
+extern s16 D_802E04F8[];
+extern s16 D_802E0FB0;
+extern s16 D_802E0FB2;
+extern s16 D_802E0FB4;
+extern s16 D_802E0FB6;
+extern s16 D_802E0FB8;
+extern s16 D_801591C4;
+extern s16 D_800481AA[];
+extern s32 D_800481B8[];
+extern s16 D_800481D2[];
+
 #endif
