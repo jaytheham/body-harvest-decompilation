@@ -2409,7 +2409,65 @@ void func_802DCDD4_1F5AE4(u8 arg0) {
     alien->unk6 = (s16) alien->unkE;
 }
 
+#ifdef NON_MATCHING
+void func_802DCE34_1F5B44(u8 arg0) {
+    AlienInstance *alien;
+    AlienSpec *spec;
+    s16 sp46;
+    s16 sp44;
+    s16 sp3C;
+    s16 sp42;
+    s16 sp40;
+    s16 sp3E;
+    u16 sp34;
+    u16 sp32;
+    u16 sp30;
+    s32 result;
+    s16 divResult;
+    s32 temp;
+
+    alien = &alienInstances[arg0];
+
+    if (alien->unk20 & 0x600) {
+        sp3C = alien->specIndex;
+        sp46 = alien->unk0;
+        sp44 = alien->unk4;
+        result = func_800B84D0_C7480(alien->unk0, alien->unk4);
+        spec = &alienSpecs[sp3C];
+        if ((spec->unk58 + (result >> 8)) < alien->unk2) {
+            alien->unk10 = (s16) ((f64) alien->unk10 + 24.0);
+            alien->unk8 = (s16) (alien->unk8 + (s32) (((f64) (f32) sins((D_80052A8C << 0xB) & 0xFFFF) / 32768.0) * 512.0));
+            alien->unkA = (s16) (alien->unkA + (s32) (((f64) (f32) coss(((D_80052A8C + 0xC) << 0xB) & 0xFFFF) / 32768.0) * 512.0));
+        } else {
+            spec = &alienSpecs[sp3C];
+            result = func_800B84D0_C7480(alien->unk0, alien->unk4);
+            alien->unk2 = (s16) (spec->unk58 + (result >> 8));
+        }
+
+        if (!(D_80052A8C & 3)) {
+            spec = &alienSpecs[sp3C];
+            sp42 = spec->unk34;
+            sp40 = spec->unk36;
+            sp3E = spec->unk38;
+            sp30 = func_800038E0_44E0();
+            sp32 = func_800038E0_44E0();
+            sp34 = func_800038E0_44E0();
+
+            divResult = (s16) ((((s32) sp30 % sp42) + alien->unk0) - (sp42 >> 1));
+            temp = (((s32) sp32 % (sp3E >> 1)) + alien->unk2) - (sp3E >> 1);
+            func_800DF848_EE7F8(
+                divResult,
+                (s16) temp,
+                (s16) ((((s32) sp34 % sp40) + alien->unk4) - (sp40 >> 1)),
+                ((func_800038E0_44E0() % 40) + 0x1E) & 0xFFFF,
+                0
+            );
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DCE34_1F5B44.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD140_1F5E50.s")
 

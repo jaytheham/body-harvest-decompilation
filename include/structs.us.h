@@ -196,7 +196,9 @@ typedef struct {
 	/* 0x2C */ s16 unk2C; /* second weapon angle/range param; low byte formerly known as unk2D */
 	/* 0x2E */ s16 unk2E;
 	/* 0x30 */ s16 unk30;
-	/* 0x32 */ u8 pad32[0x6];
+	/* 0x32 */ u8 pad32[0x2];
+	/* 0x34 */ s16 unk34;
+	/* 0x36 */ s16 unk36;
 	/* 0x38 */ s16 unk38;
 	/* 0x3A */ u8 pad3A[0x4];
 	/* 0x3E */ s16 unk3E;
