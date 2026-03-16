@@ -58,6 +58,9 @@ extern f64 D_802E0F08;
 extern f64 D_802E0F10;
 extern f64 D_802E0F18;
 extern void func_80135D44_144CF4(s32, s32, s32, f32);
+extern s32 func_800C2274_D1224(s16, s16, s16, u8);
+extern void func_800C3BD8_D2B88(s16, s16, s16, s16, s32, s32, s32, s32);
+extern s16 *D_8025668C;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4CD0_1ED9E0.s")
 
@@ -855,7 +858,28 @@ void func_802D795C_1F066C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7B68_1F0878.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7EAC_1F0BBC.s")
+void func_802D7EAC_1F0BBC(u8 arg0) {
+    AlienInstance *alien;
+    s16 baseValue;
+    s16 adjustedValue;
+    u16 specTableValue;
+
+    alien = &alienInstances[arg0];
+
+    if (alien->unk20 & 0x600) {
+        baseValue = *(s16*)(&D_8025668C + (alien->specIndex * 0x68));
+        func_800DF848_EE7F8(alien->unk0, (s16)(alien->unk2 + 0x14), alien->unk4, baseValue, 0);
+
+        alien->unk24 = func_800C2274_D1224(alien->unk0, (s16)(alien->unk2 + 0x64), alien->unk4, 2);
+        alien->unk2C = 0x5A;
+        alien->unk3D = 0;
+
+        specTableValue = *(s16*)(&D_8025668C + (alien->specIndex * 0x68));
+        adjustedValue = (s16)((specTableValue + 0x32) & 0xFFFF);
+
+        func_800C3BD8_D2B88(alien->unk0, alien->unk2, alien->unk4, adjustedValue, 0x5A, 0xF0, 0x78, 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7FCC_1F0CDC.s")
 
