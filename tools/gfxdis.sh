@@ -2,6 +2,10 @@
 # gfxdis.sh - bash equivalent of gfxdis.ps1
 # Wraps gfxdis F3DEX display list disassembler via Docker
 #
+# Requires Docker. On Linux:
+#   sudo apt-get install docker.io
+#   sudo chmod 666 /var/run/docker.sock   (or add user to docker group)
+#
 # Usage:
 #   tools/gfxdis.sh -w <word> ...      disassemble 32-bit word pairs (hi lo ...)
 #   tools/gfxdis.sh -d <byte> ...      disassemble hex bytes
@@ -11,6 +15,9 @@
 #
 # Example:
 #   tools/gfxdis.sh -w E7000000 00000000 B7000000 00002000
+#
+# The bh-gfxdis Docker image is built automatically from tools/Dockerfile.gfxdis
+# using the glankk/n64 source (cloned to tools/n64 on first run).
 
 set -e
 
