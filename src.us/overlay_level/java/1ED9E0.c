@@ -1107,6 +1107,7 @@ block_9:
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D8D14_1F1A24.s")
 
+#ifdef NON_MATCHING
 void func_802D8D68_1F1A78(u8 arg0) {
     AlienInstance *alien;
     Unk8014DD50 *ptr_a1;
@@ -1250,6 +1251,9 @@ void func_802D8D68_1F1A78(u8 arg0) {
         alien->unk1E = temp_v1_2 - 1;
     }
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D8D68_1F1A78.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_802D91F8_1F1F08(u8 arg0) {
