@@ -293,6 +293,7 @@ void func_8012D884_13C834(void);
 void func_801365E0_145590(void);
 void func_80102D00_111CB0(VehicleInstance *, f32, f32, f32);
 void func_80102DDC_111D8C(VehicleInstance *, s16, s16, f32);
+void func_8011815C_12710C(void *arg0, s16 arg1, s32 arg2);
 void func_80112F98_121F48(void);
 void func_80113CEC_122C9C(void);
 Unk80047588 *func_801164C4_125474(s16, s16);
