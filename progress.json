@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-16T04:44:32Z",
-  "commit": "dd945f0",
-  "commit_timestamp": "2026-03-16T17:10:12+13:00",
+  "generated": "2026-03-16T05:47:33Z",
+  "commit": "d138973",
+  "commit_timestamp": "2026-03-16T18:47:19+13:00",
   "overall": {
-    "total_functions": 2962,
-    "matched": 647,
-    "non_matching": 288,
-    "asm_stubs": 2027,
-    "matched_pct": 21.84,
-    "decompiled_pct": 31.57
+    "total_functions": 2961,
+    "matched": 652,
+    "non_matching": 287,
+    "asm_stubs": 2022,
+    "matched_pct": 22.02,
+    "decompiled_pct": 31.71
   },
   "segments": {
     "core": {
@@ -31,12 +31,12 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 454,
-      "non_matching": 167,
-      "asm_stubs": 972,
-      "total": 1593,
-      "matched_pct": 28.5,
-      "decompiled_pct": 39.0
+      "matched": 459,
+      "non_matching": 166,
+      "asm_stubs": 967,
+      "total": 1592,
+      "matched_pct": 28.8,
+      "decompiled_pct": 39.3
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -407,11 +407,11 @@
     {
       "path": "overlay_gameplay/outside/CFE30.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 32,
-      "non_matching": 28,
-      "asm_stubs": 249,
-      "total": 309,
-      "matched_pct": 10.4,
+      "matched": 33,
+      "non_matching": 27,
+      "asm_stubs": 248,
+      "total": 308,
+      "matched_pct": 10.7,
       "contributor": "jaytheham"
     },
     {
@@ -447,11 +447,11 @@
     {
       "path": "overlay_gameplay/outside/buildings.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 46,
+      "matched": 50,
       "non_matching": 11,
-      "asm_stubs": 111,
+      "asm_stubs": 107,
       "total": 168,
-      "matched_pct": 27.4,
+      "matched_pct": 29.8,
       "contributor": "jaytheham"
     },
     {
@@ -539,9 +539,9 @@
     {
       "name": "jaytheham",
       "files": 37,
-      "matched": 603,
-      "non_matching": 263,
-      "asm_stubs": 1869
+      "matched": 608,
+      "non_matching": 262,
+      "asm_stubs": 1864
     },
     {
       "name": "Harvester",
@@ -559,14 +559,6 @@
     }
   ],
   "history": [
-    {
-      "date": "2026-03-05",
-      "commit": "e04ea65",
-      "matched_pct": 19.41,
-      "decompiled_pct": 26.49,
-      "matched": 559,
-      "total": 2880
-    },
     {
       "date": "2026-03-06",
       "commit": "9cdbf56",
@@ -649,11 +641,11 @@
     },
     {
       "date": "2026-03-16",
-      "commit": "dd945f0",
-      "matched_pct": 21.84,
-      "decompiled_pct": 31.57,
-      "matched": 647,
-      "total": 2962
+      "commit": "d138973",
+      "matched_pct": 22.02,
+      "decompiled_pct": 31.71,
+      "matched": 652,
+      "total": 2961
     }
   ]
 }
