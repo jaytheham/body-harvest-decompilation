@@ -61,6 +61,7 @@ extern void func_80135D44_144CF4(s32, s32, s32, f32);
 extern s32 func_800C2274_D1224(s16, s16, s16, u8);
 extern void func_800C3BD8_D2B88(s16, s16, s16, s16, s32, s32, s32, s32);
 extern s16 *D_8025668C;
+extern s16 D_80257A0C;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4CD0_1ED9E0.s")
 
@@ -951,7 +952,21 @@ s32 func_802D8578_1F1288(u8 arg0, s32 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D8578_1F1288.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D872C_1F143C.s")
+void func_802D872C_1F143C(u8 arg0) {
+    s32 sp24;
+    AlienInstance *temp_s0;
+
+    temp_s0 = &alienInstances[arg0];
+    if ((temp_s0->unk20 & 0x2000) && (temp_s0->unk2C >= 0xF)) {
+        func_80088760_97710(temp_s0);
+    }
+    if (temp_s0->unk2C == 0xE) {
+        sp24 = (func_80084F00_93EB0(D_80052B34, temp_s0) - *(s16*)(&D_80257A0C + (D_80052B34->unk1A * 0x70))) - *(s16*)(&D_8025668C + (temp_s0->specIndex * 0x68));
+        if ((func_80084FE8_93F98(arg0, 0x800) != 0) && (sp24 < 0x8C)) {
+            temp_s0->unk20 = (s32) (temp_s0->unk20 | 0x2000);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D8830_1F1540.s")
 
