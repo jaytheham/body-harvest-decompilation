@@ -1059,54 +1059,51 @@ s32 func_80082C04_91BB4(u8 arg0)
 }
 
 /*  3×3 grid scan — searches a 3×3 area of grid cells around an alien's position
- for cells where func_800B325C_C220C returns 0, preferring cells at odd diagonal offsets.*/
+ for cells where func_800B325C_C220C returns 0, preferring orthogonal cells.*/
+ // https://decomp.me/scratch/bCNBv
 #ifdef NON_MATCHING
 s32 func_80082CA0_91C50(u8 arg0)
 {
-	AlienInstance *ai;
-	s16 x0;
-	s32 s7;
-	s16 sp58;
-	s32 s5;
-	s32 s6;
-	s32 s2;
-	s32 s0;
-	s32 s1;
+  s16 startXPos;
+  s16 startZPos;
+  s32 matchingXOffset;
+  s32 matchingZOffset;
+  s32 xOffest;
+  s32 zOffset;
+  s32 curXPos;
+  s32 curZPos;
+  if (alienInstances[arg0].unk0){}
+  startXPos = (alienInstances[arg0].unk0 >> 8) - 1;
+  startZPos = (alienInstances[arg0].unk4 >> 8) - 1;
+	
+  matchingXOffset = -1;
+  matchingZOffset = -1;
 
-	ai = &alienInstances[arg0];
-	s7 = (s16)((ai->unk4 >> 8) - 1);
-	x0 = (ai->unk0 >> 8) - 1;
-	s5 = -1;
-	s6 = -1;
-	sp58 = s7;
-	s2 = 0;
-
-loop_1:
-	s0 = 0;
-	s1 = x0;
-loop_2:
-	if (func_800B325C_C220C((s8)s1, (s8)s7, 0x1000) == 0) {
-		s5 = s0;
-		s6 = s2;
-		if ((s2 + s0) & 1) {
-			ai->unk28 = (s8)s1;
-			ai->unk29 = (s8)s7;
-			return D_8013C2BC[s2 * 3 + s0];
+  for (zOffset = 0, curZPos = startZPos; zOffset != 3; zOffset++, curZPos++)
+  {
+	for (xOffest = 0, curXPos = startXPos; xOffest != 3; xOffest++, curXPos++)
+	{
+	  if (func_800B325C_C220C(curXPos, curZPos, 0x1000) == 0)
+	  {
+		matchingXOffset = xOffest;
+		matchingZOffset = zOffset;
+		if ((zOffset + xOffest) & 1)
+		{
+		  alienInstances[arg0].unk28 = curXPos;
+		  alienInstances[arg0].unk29 = curZPos;
+		  return D_8013C2BC[(zOffset * 3) + xOffest];
 		}
+	  }
 	}
-	s0++;
-	s1++;
-	if (s0 != 3) goto loop_2;
-	s2++;
-	s7++;
-	if (s2 != 3) goto loop_1;
+  }
 
-	if (s5 != -1) {
-		ai->unk28 = (s8)(x0 + s5);
-		ai->unk29 = (s8)(sp58 + s6);
-		return D_8013C2BC[s6 * 3 + s5];
-	}
-	return -1;
+  if (matchingXOffset != (-1))
+  {
+	alienInstances[arg0].unk28 = startXPos + matchingXOffset;
+	alienInstances[arg0].unk29 = startZPos + matchingZOffset;
+	return D_8013C2BC[(matchingZOffset * 3) + matchingXOffset];
+  }
+  return -1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082CA0_91C50.s")
@@ -1418,6 +1415,7 @@ s32 func_800850DC_9408C(s32 arg0, u16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800850DC_9408C.s")
 #endif
 
+// https://decomp.me/scratch/c6ii8
 #ifdef NON_MATCHING
 s32 func_800851C8_94178(u8 arg0, u8 arg1, u16 arg2) {
 	Unk8014DD50 *weapon;
@@ -2528,6 +2526,7 @@ void func_8008D3F4_9C3A4(u8 arg0) {
 	func_8008D3B0_9C360(arg0);
 }
 
+// https://decomp.me/scratch/mZdi4
 #ifdef NON_MATCHING
 void func_8008D4A0_9C450(u8 arg0) {
 	s16 target;
@@ -2715,6 +2714,7 @@ s32 func_8008E478_9D428(u8 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008E524_9D4D4.s")
 
+// https://decomp.me/scratch/V6LCq
 #ifdef NON_MATCHING
 void func_8008E978_9D928(u8 arg0, s32 arg1)
 {
