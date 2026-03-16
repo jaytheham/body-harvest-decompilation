@@ -357,7 +357,9 @@ s32 func_8011C4D4_12B484(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C594_12B544.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C680_12B630.s")
+void func_8011C680_12B630(u8 arg0, s8 arg1) {
+    alienInstances[arg0].unk3D = arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C6A8_12B658.s")
 

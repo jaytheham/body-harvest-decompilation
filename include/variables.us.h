@@ -154,7 +154,7 @@ extern s32 D_80048184;
 extern s32 D_80048188;
 extern s32 D_80048190;
 extern s32 D_80048194;
-extern AlienInstance alienInstances[]; // alien instances
+extern AlienInstance alienInstances[]; // 0x80048198
 extern AlienWaveEntry D_8003BCC0[][12];
 extern char D_80142B6C;
 extern s32 D_8004D148; // is Snared cheat disabled
