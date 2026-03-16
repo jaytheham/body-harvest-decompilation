@@ -362,7 +362,9 @@ void func_802D5BF8_1EE908(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5BF8_1EE908.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5DE4_1EEAF4.s")
+void func_802D5DE4_1EEAF4(void) {
+    vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & 0xFBFF);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5DFC_1EEB0C.s")
 
