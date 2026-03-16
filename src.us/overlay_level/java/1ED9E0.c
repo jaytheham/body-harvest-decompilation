@@ -1952,7 +1952,31 @@ void func_802DBB58_1F4868(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBB58_1F4868.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802DBBE4_1F48F4(u8 arg0) {
+    AlienInstance *alien;
+    s8 temp_x;
+    s8 temp_z;
+
+    func_80091470_A0420(arg0);
+    alien = &alienInstances[arg0];
+    if (!(alien->unk20 & 0x4000)) {
+        func_8009170C_A06BC(arg0);
+    }
+    if (alien->unk20 & 0x100) {
+        temp_x = (s8) (alien->unk0 >> 8);
+        temp_z = (s8) (alien->unk4 >> 8);
+        if (func_800B325C_C220C(temp_x, temp_z, 0x800) != 0) {
+            if (func_80129354_138304((s32) alien, 0, 0, 0, 0) != 0) {
+                func_80137468_146418((s32) arg0, 0x65);
+                alien->unk1E = 0x1E;
+            }
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBBE4_1F48F4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBCB0_1F49C0.s")
 
