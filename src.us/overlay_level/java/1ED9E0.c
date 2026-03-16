@@ -45,6 +45,7 @@ extern s16 D_80031634[];
 extern u8 D_8003153E[];
 extern s32 D_80052A8C;
 extern Unk8014DD50 *D_802E0608;
+extern Unk8014DD50 *D_802E0B08;
 extern char D_802E0E74[];
 extern char D_802E0E7C[];
 extern char D_802E0FBA[];
@@ -2907,7 +2908,101 @@ void func_802DDA64_1F6774(u8 arg0, u8 arg1, u8 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DDA64_1F6774.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802DDE04_1F6B14(u8 arg0) {
+    AlienInstance *alien1;
+    AlienInstance *alien2;
+    Unk8014DD50 *lookup_table;
+    Unk8014DD50 *weapon_struct;
+    s16 temp_value;
+    s32 weapon_dmg;
+    s32 dmg_threshold;
+    s8 spec_id1;
+    s8 spec_id2;
+    s8 spec_id3;
+    s8 spec_id4;
+    s8 spec_id5;
+    s16 value40;
+    s16 value42;
+    s16 value44;
+    s16 value46;
+    s16 value48;
+
+    alien1 = &alienInstances[arg0];
+    alien2 = &alienInstances[alien1->unk25];
+
+    if (!(alien2->unk20 & 0x6000) && ((alien1->unk20 & 0xF000) != 0xF000) && (alien1->unk1E == 0) && (alien1->unk2C != 0)) {
+        if (func_80084FE8_93F98(arg0, 0x800) != 0) {
+            alien2->unk20 = (s32) (alien2->unk20 | 0x2000);
+            alien1->unk36 = 0;
+            alien1->unk2C = (s16) (alien1->unk2C - 1);
+        }
+    } else {
+        temp_value = alien1->unk2C;
+        lookup_table = &D_8014DD50[alien1->unkC];
+        spec_id1 = lookup_table->unkC;
+        value40 = (s16) spec_id1;
+
+        lookup_table = &D_8014DD50[spec_id1];
+        spec_id2 = lookup_table->unkC;
+        value42 = (s16) spec_id2;
+
+        lookup_table = &D_8014DD50[spec_id2];
+        spec_id3 = lookup_table->unkC;
+        value44 = (s16) spec_id3;
+
+        lookup_table = &D_8014DD50[spec_id3];
+        spec_id4 = lookup_table->unkC;
+        value46 = (s16) spec_id4;
+
+        lookup_table = &D_8014DD50[spec_id4];
+        spec_id5 = lookup_table->unkC;
+        value48 = (s16) spec_id5;
+
+        if (alien2->unk20 & 0x2000) {
+            dmg_threshold = 0x2710;
+        } else {
+            dmg_threshold = 0;
+            if ((alien1->unk20 & 0xF000) == 0xF000) {
+                dmg_threshold = 0x1D4C;
+            }
+        }
+
+        if (temp_value < dmg_threshold) {
+            alien1->unk2C = (s16) (temp_value + 0x64);
+        } else if (dmg_threshold < temp_value) {
+            alien1->unk2C = (s16) (temp_value - 0x64);
+        }
+
+        weapon_struct = &D_8014DD50[spec_id5];
+        weapon_struct->unk8 = (u16) (weapon_struct->unk8 + alien1->unk2C);
+
+        func_80137468_146418(arg0, 0x261);
+
+        if ((alien1->unk2C >= 0x26AD) && ((alien2->unk20 & 0x2000) != 0)) {
+            alien2->unk20 = (s32) (alien2->unk20 | 0x1000);
+            weapon_dmg = func_80081F18_90EC8(arg0, 5, 4, &value40, &D_802E0B08);
+
+            if (weapon_dmg == 2) {
+                func_80087188_96138(arg0, 0, 0);
+                weapon_dmg = alien1->unk20;
+
+                if ((weapon_dmg & 0xF000) != 0xF000) {
+                    if (weapon_dmg & 0x6000) {
+                        alien1->unk1E = (s16) ((func_800038E0_44E0() % 70) + 0x1E);
+                        return;
+                    }
+                    alien1->unk1E = (s16) ((func_800038E0_44E0() % 100) + 0x32);
+                }
+            } else if (weapon_dmg == 4) {
+                alien2->unk20 = (s32) (alien2->unk20 & ~0x3000);
+            }
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DDE04_1F6B14.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DE0C8_1F6DD8.s")
 
