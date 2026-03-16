@@ -3134,7 +3134,111 @@ void func_802DE0C8_1F6DD8(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DE0C8_1F6DD8.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802DE594_1F72A4(u8 arg0) {
+    AlienInstance *alien;
+    AlienInstance *parentAlien;
+    s16 sp6E;
+    s16 sp6A;
+    s16 sp66;
+    s32 sp6C;
+    s32 sp68;
+    s32 sp64;
+    f32 sp74;
+    s32 distance;
+    s32 sp50;
+    s16 diff;
+    s16 absDiff;
+    s16 maxDiff;
+    s32 flags;
+    s32 temp;
+
+    alien = &alienInstances[arg0 & 0xFF];
+    parentAlien = &alienInstances[alien->unk25];
+
+    if (!(parentAlien->unk20 & 0x10000)) {
+        if (alien->unk12 != 0) {
+            sp50 = arg0 & 0xFF;
+            arg0 = (u8) (arg0 & 0xFF);
+            func_80137468_146418(arg0 & 0xFF, 0x25E);
+        } else {
+            sp50 = arg0 & 0xFF;
+            arg0 = (u8) (arg0 & 0xFF);
+            func_80137468_146418(arg0 & 0xFF, 0x25D);
+        }
+        if (!(parentAlien->unk20 & 0x1000)) {
+            distance = func_80084E54_93E04(D_80052B34, alien);
+            temp = func_80003824_4424((f32) (D_80052B34->unk0 - alien->unk0), (f32) (D_80052B34->unk4 - alien->unk4));
+            flags = alien->unk20;
+            if (((flags & 0xF000) != 0xF000) && (flags & 0x8000) && (distance < 0x7D0)) {
+                diff = (s16) (temp - alien->unkE);
+                absDiff = (s16) -diff;
+                maxDiff = absDiff;
+                if (absDiff < diff) {
+                    maxDiff = diff;
+                }
+                if (maxDiff >= 0x4001) {
+                    func_8008751C_964CC(arg0, 0x1F4, 0x258);
+                    alien->unk20 = (s32) (alien->unk20 | 0x40);
+                } else {
+                    func_8008751C_964CC(arg0, 0x44C, 0x514);
+                    alien->unk20 = (s32) (alien->unk20 & ~0x40);
+                }
+            } else {
+                func_8008751C_964CC(arg0, 0x44C, 0x514);
+                alien->unk20 = (s32) (alien->unk20 & ~0x40);
+            }
+        } else {
+            alien->unk2A = alien->unk6;
+            func_8008741C_963CC(arg0, 0);
+        }
+        if (!(alien->unk20 & 0x8000)) {
+            func_802DDA64_1F6774(arg0, parentAlien->unk0, parentAlien->unk3);
+        } else {
+            func_802DE0C8_1F6DD8(arg0);
+            func_802DDE04_1F6B14(arg0);
+        }
+        if ((alien->unk20 & 0xF000) == 0xF000) {
+            if (D_80031420 & 3) {
+                func_80128428_1373D8(alien, 0, 0, 0xC6, &sp6C, &sp68, &sp64);
+                sp74 = (f32) ((f64) (f32) sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
+                sp6E = (s16) sp6C;
+                sp6A = (s16) sp68;
+                sp66 = (s16) sp64;
+                func_800CA5EC_D959C(sp6E, sp6A, sp66, (s8) (s32) (sp74 * 128.0f), 0, (s32) ((f32) -((f64) (f32) coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0) * 128.0f), 0x28, 0x14, 1, 0x96, (s32) D_8013E3C0.unk3, (s32) D_8013E3C0.unk4, (s32) D_8013E3C0.unk5, 0xFF);
+            }
+            temp = parentAlien->unk20;
+            if (!(temp & 0x6000)) {
+                parentAlien->unk20 = (s32) (temp | 0x5000);
+                alien->unk36 = 0;
+                alien->unk20 = (s32) (alien->unk20 & 0xF7FFFFFF);
+                alien->unk14 = (s16) ((alien->unk0 - (func_800038E0_44E0() >> 3)) + 0x1000);
+                alien->unk18 = (s16) ((alien->unk4 - (func_800038E0_44E0() >> 3)) + 0x1000);
+            }
+        }
+        if (alien->unk1E != 0) {
+            alien->unk1E = (s16) (alien->unk1E - 1);
+        }
+        func_800A92E0_B8290(arg0, 0xF000);
+        if (alien->unk26 != 0) {
+            alien->unk20 = (s32) (alien->unk20 | 0x400000);
+        } else {
+            alien->unk20 = (s32) (alien->unk20 & 0xFFBFFFFF);
+        }
+        flags = alien->unk20;
+        if (!(flags & 0x1000)) {
+            if (flags & 0x6000) {
+                func_80137468_146418(sp50, 0xD4);
+            } else {
+                func_80137468_146418(sp50, 0xD3);
+            }
+        }
+        func_800A7F34_B8EE4(arg0);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DE594_1F72A4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DE9B8_1F76C8.s")
 
