@@ -43,15 +43,11 @@ f32 func_800C1090_D0040(Vec3f *arg0, Vec3f *arg1) {
 	return (arg0->x * arg1->x) + (arg0->y * arg1->y) + (arg0->z * arg1->z);
 }
 
-#ifdef NON_MATCHING
 void func_800C10C0_D0070(Vec3f *arg0, Vec3f *arg1, Vec3f *arg2) {
-	arg2->x = arg0->x - arg1->x;
-	arg2->y = arg0->y - arg1->y;
-	arg2->z = arg0->z - arg1->z;
+    arg2->x = arg0->x - arg1->x;
+    arg2->y = arg0->y - arg1->y;
+    arg2->z = arg0->z - arg1->z;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C10C0_D0070.s")
-#endif
 
 void func_800C10F4_D00A4(Vec3f *arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->x = arg0->x + arg1->x;
