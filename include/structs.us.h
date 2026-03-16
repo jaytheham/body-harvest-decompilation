@@ -192,9 +192,11 @@ typedef struct {
 	/* 0x1C */ u8 pad1C[0xA];
 
 	/* 0x26 */ s16 unk26;
-	/* 0x28 */ u8 pad28[0x5];
-	/* 0x2D */ s8 unk2D;
-	/* 0x2E */ u8 pad2E[0xA];
+	/* 0x28 */ u8 pad28[0x4];
+	/* 0x2C */ s16 unk2C; /* second weapon angle/range param; low byte formerly known as unk2D */
+	/* 0x2E */ s16 unk2E;
+	/* 0x30 */ s16 unk30;
+	/* 0x32 */ u8 pad32[0x6];
 	/* 0x38 */ s16 unk38;
 	/* 0x3A */ u8 pad3A[0x4];
 	/* 0x3E */ s16 unk3E;
