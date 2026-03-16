@@ -883,7 +883,73 @@ void func_802D7EAC_1F0BBC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7FCC_1F0CDC.s")
 
+#ifdef NON_MATCHING
+/* Alien state machine: compute movement deltas, check height threshold, update flags based on unk20 bit 30 */
+s32 func_802D8578_1F1288(u8 arg0, s32 arg1, s32 arg2) {
+    AlienInstance *alien;
+    s32 sp24;
+
+    alien = &alienInstances[arg0 & 0xFF];
+    sp24 = 0;
+
+    /* Compute movement deltas */
+    alien->unkA = func_8009395C_A290C(arg0 & 0xFF, alien->unk6);
+    alien->unk8 = func_8009395C_A290C(arg0 & 0xFF, (s16)(alien->unk6 + 0x4000));
+
+    /* Check if alien is above threshold and call initialization */
+    if (((func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8) + 0x12C) < alien->unk2) {
+        func_80088760_97710(alien);
+    }
+
+    /* Main state logic based on unk20 flags */
+    if (alien->unk20 & 0x40000000) {
+        /* High flag set: restore stored values and apply modifications */
+        alien->unk6 = alien->unkE;
+
+        if (D_80222A70 < alien->unk2) {
+            alien->unk10 = (s16)(alien->unk10 + 0x30);
+        }
+
+        if (alien->unk47 & 0x4) {
+            alien->unk12 = 0;
+        }
+
+        if ((alien->unk47 & 0x2) && ((alien->unk3A == 0) || (alien->unk10 != 0))) {
+            alien->unk20 = (s32)(alien->unk20 | 0x40001000);
+            alien->unk36 = 0;
+            sp24 = 1;
+            alien->unk10 = (s16)arg2;
+            alien->unk2C = (s16)arg1;
+        }
+
+        alien->unk3A = (s16)alien->unk10;
+    } else {
+        /* Low flag: countdown timer logic */
+        s16 temp_v0;
+
+        temp_v0 = alien->unk2C;
+        alien->unk12 = 0;
+
+        if (temp_v0 != 0) {
+            alien->unk2C = (s16)(temp_v0 - 1);
+        } else {
+            alien->unk20 = (s32)(alien->unk20 | 0x40001000);
+            alien->unk36 = 0;
+            sp24 = 1;
+            alien->unk10 = (s16)arg2;
+            alien->unk2C = (s16)arg1;
+        }
+
+        if (alien->unk47 & 0x1) {
+            alien->unk2C = 0;
+        }
+    }
+
+    return sp24;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D8578_1F1288.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D872C_1F143C.s")
 
