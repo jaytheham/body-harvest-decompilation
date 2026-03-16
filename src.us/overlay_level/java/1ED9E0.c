@@ -1796,7 +1796,17 @@ void func_802DA844_1F3554(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DA844_1F3554.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802DAF5C_1F3C6C(u8 arg0) {
+    if (!(*(s32 *)((u8 *)&D_800481B8 + (arg0 * 0x50)) & 0x100000)) {
+        func_80137468_146418((s32)arg0, 0xF);
+        func_802DA844_1F3554(arg0);
+    }
+    func_80089EB4_98E64(arg0, 0x3C, 0, 6, 3);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DAF5C_1F3C6C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DAFD0_1F3CE0.s")
 
