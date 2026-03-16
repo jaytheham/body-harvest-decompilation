@@ -29,11 +29,15 @@ extern void func_800AD554_BC504(s32, s32, s32);
 extern s16 D_802E0FB2;
 extern s16 D_802E0FB4;
 extern s16 D_802E0FB6;
+extern s16 D_802E0FB8;
 extern s32 D_80222A70;
 extern void func_800E0F4C_EFEFC(s16, s16, s16, s16);
 s32 func_802D57F4_1EE504(void);
 extern void func_802D5590_1EE2A0(void);
 extern void func_80135D08_144CB8(f32, s16, s16, s16);
+extern u8 D_802CA8D0;
+extern u8 D_802D48CF;
+extern void leoInitUnit_atten(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4CD0_1ED9E0.s")
 
@@ -536,9 +540,102 @@ s32 func_802D687C_1EF58C(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
     return (s32) (((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D68F4_1EF604.s")
+#ifdef NON_MATCHING
+s32 func_802D68F4_1EF604(void) {
+    s16 temp_s0;
+    s16 temp_s0_2;
+    s16 temp_t1;
+    s16 temp_t6;
+    s16 temp_v1;
+    s16 temp_v1_2;
+    s16 var_s1;
+    s16 var_s5;
+    s32 temp_s0_4;
+    s32 temp_s0_5;
+    s32 temp_s1;
+    s32 temp_s1_2;
+    s32 temp_s1_3;
+    s32 temp_s2;
+    u16 *temp_s0_3;
+    u16 temp_t0;
+    u16 temp_v0;
+    u16 temp_v0_2;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6DBC_1EFACC.s")
+    switch (D_80157F8C) {
+    case 0:
+        func_800E2720_F16D0(0x1F4 - (D_80157F8E * 0xA));
+        D_80157F8E += 1;
+        if (D_80157F8E >= 0x1F) {
+            D_80157F8E = 0;
+            D_80157F8C += 1;
+        }
+        return 0;
+    case 1:
+        temp_s0 = (s16) (func_800038E0_44E0() >> 5);
+        temp_v1 = D_80157F8E;
+        temp_t6 = (s16) (func_800038E0_44E0() >> 5);
+        if ((temp_v1 % 7) == 0) {
+            func_800D16BC_E066C(0x3980, 0xB3B, 0x1400, (s16) (temp_s0 + 0x3778), 0x1194, temp_t6 + 0x13EC, 0xA);
+        }
+        D_80157F8E = temp_v1 + 1;
+        if (temp_v1 >= 0xA1) {
+            D_80157F8E = 0;
+            D_80157F8C += 1;
+        }
+        return 0;
+    case 2:
+        temp_s0_2 = (s16) (func_800038E0_44E0() >> 5);
+        temp_v1_2 = D_80157F8E;
+        temp_t1 = (s16) (func_800038E0_44E0() >> 5);
+        if ((temp_v1_2 < 0x3C) && ((temp_v1_2 % 12) == 0)) {
+            func_800D16BC_E066C(0x3980, 0xB3B, 0x1400, (s16) (temp_s0_2 + 0x3778), 0x1194, temp_t1 + 0x13EC, 0xA);
+        }
+        var_s5 = 0x64 - temp_v1_2;
+        var_s1 = 0;
+        do {
+            temp_s2 = var_s1 * 2;
+            temp_v0 = *(u16*)(&D_802D48D0 + temp_s2);
+            temp_s0_3 = (u16*)(&D_802D4AD0 + temp_s2);
+            *temp_s0_3 = func_802D687C_1EF58C(((s32) (temp_v0 & 0xF800) >> 0xB) & 0xFF, 0xC, var_s5, 0x64) << 0xB;
+            *temp_s0_3 += func_802D687C_1EF58C(((s32) (temp_v0 & 0x7C0) >> 6) & 0xFF, 0xC, var_s5, 0x64) << 6;
+            var_s1 += 1;
+            *temp_s0_3 += func_802D687C_1EF58C(((s32) (temp_v0 & 0x3E) >> 1) & 0xFF, 0xA, var_s5, 0x64) * 2;
+        } while (var_s1 < 0x100);
+        if (var_s5 > 0) {
+            var_s5 = 0x63 - D_80157F8E;
+        }
+        temp_v0_2 = *(u16*)(&D_802D48D0 + (D_802CA8D0 * 2));
+        temp_s1 = (func_802D687C_1EF58C(((s32) (temp_v0_2 & 0xF800) >> 0xB) & 0xFF, 0xC, var_s5, 0x64) << 0xB) & 0xFFFF;
+        temp_s1_2 = (temp_s1 + (func_802D687C_1EF58C(((s32) (temp_v0_2 & 0x7C0) >> 6) & 0xFF, 0xC, var_s5, 0x64) << 6)) & 0xFFFF;
+        temp_t0 = *(u16*)(&D_802D48D0 + (D_802D48CF * 2));
+        temp_s1_3 = (temp_s1_2 + (func_802D687C_1EF58C(((s32) (temp_v0_2 & 0x3E) >> 1) & 0xFF, 0xA, var_s5, 0x64) * 2)) & 0xFFFF;
+        temp_s0_4 = (func_802D687C_1EF58C(((s32) (temp_t0 & 0xF800) >> 0xB) & 0xFF, 0xC, var_s5, 0x64) << 0xB) & 0xFFFF;
+        temp_s0_5 = (temp_s0_4 + (func_802D687C_1EF58C(((s32) (temp_t0 & 0x7C0) >> 6) & 0xFF, 0xC, var_s5, 0x64) << 6)) & 0xFFFF;
+        func_800049D4_55D4(temp_s1_3 & 0xFFFF, (temp_s0_5 + (func_802D687C_1EF58C(((s32) (temp_t0 & 0x3E) >> 1) & 0xFF, 0xA, var_s5, 0x64) * 2)) & 0xFFFF);
+        leoInitUnit_atten();
+        D_80157F8E += 1;
+        if (D_80157F8E >= 0x65) {
+            D_80157F8E = 0;
+            D_80157F8C += 1;
+        }
+        return 0;
+    case 3:
+        func_800072CC_7ECC(0x21);
+        return 1;
+    }
+    return 0;
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D68F4_1EF604.s")
+#endif
+
+s32 func_802D68F4_1EF604(void);
+
+void func_802D6DBC_1EFACC(void) {
+    D_802E0FB8 = 0;
+    func_80013468_14068(5);
+    func_800EFEB4_FEE64(&func_802D68F4_1EF604, 0xB, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6DF8_1EFB08.s")
 
