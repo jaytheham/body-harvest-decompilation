@@ -25,6 +25,8 @@ extern char D_802E0E18[];
 extern char D_802E0E24[];
 extern char D_802E0E30[];
 extern char D_802E0E3C[];
+extern char D_802E0E60[];
+extern s16 D_802E04F8[];
 extern void func_800AD554_BC504(s32, s32, s32);
 extern s16 D_802E0FB2;
 extern s16 D_802E0FB4;
@@ -637,7 +639,27 @@ void func_802D6DBC_1EFACC(void) {
     func_800EFEB4_FEE64(&func_802D68F4_1EF604, 0xB, 1);
 }
 
+#ifdef NON_MATCHING
+/* Pointer arithmetic form required for correct regalloc (t6/t7 instead of t7/t8).
+ * base variable forces lui+addiu for D_802E04F8 to complete before move s0,zero. */
+void func_802D6DF8_1EFB08(void) {
+    s16 *temp_s1;
+    s16 *base;
+    s16 var_s0;
+
+    osSyncPrintf(D_802E0E60);
+    base = D_802E04F8;
+    var_s0 = 0;
+    do {
+        temp_s1 = base + (var_s0 * 4);
+        func_802D4E34_1EDB44(*temp_s1);
+        var_s0 += 1;
+        *temp_s1 = -3;
+    } while (var_s0 < 0xE);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6DF8_1EFB08.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6E70_1EFB80.s")
 
