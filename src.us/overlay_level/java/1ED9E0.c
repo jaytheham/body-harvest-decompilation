@@ -861,6 +861,7 @@ void func_802D795C_1F066C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7B68_1F0878.s")
 
+#ifdef NON_MATCHING
 void func_802D7EAC_1F0BBC(u8 arg0) {
     AlienInstance *alien;
     s16 baseValue;
@@ -883,6 +884,9 @@ void func_802D7EAC_1F0BBC(u8 arg0) {
         func_800C3BD8_D2B88(alien->unk0, alien->unk2, alien->unk4, adjustedValue, 0x5A, 0xF0, 0x78, 0);
     }
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7EAC_1F0BBC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7FCC_1F0CDC.s")
 
@@ -954,6 +958,7 @@ s32 func_802D8578_1F1288(u8 arg0, s32 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D8578_1F1288.s")
 #endif
 
+#ifdef NON_MATCHING
 void func_802D872C_1F143C(u8 arg0) {
     s32 sp24;
     AlienInstance *temp_s0;
@@ -969,6 +974,9 @@ void func_802D872C_1F143C(u8 arg0) {
         }
     }
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D872C_1F143C.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_802D8830_1F1540(u8 arg0) {
