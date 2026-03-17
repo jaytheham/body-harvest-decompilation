@@ -12,11 +12,14 @@ void func_800EA298_F9248(s16 arg0) {
 void func_800EA2B0_F9260(s32 arg0) { D_801575DC = arg0; }
 
 // guess_attemptDoAnimation
+// https://decomp.me/scratch/4eqv8
 #ifdef NON_MATCHING
-void func_800EA2BC_F926C(void) {
-	if (D_80052B34->unk1A == 0) {
-		func_800EB534_FA4E4(&D_80157600, 0x2F, 0, 0);
-	}
+void func_800EA2BC_F926C(void)
+{
+  if (D_80052B34->unk1A == 0)
+  {
+	func_800EB534_FA4E4(&D_80157600, 0x2F, 0, 0);
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA2BC_F926C.s")

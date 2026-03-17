@@ -524,13 +524,11 @@ void func_800D9754_E8704(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D99F4_E89A4.s")
 
-#ifdef NON_MATCHING
 void func_800D9A8C_E8A3C(s16 arg0, s32 arg1, s16 arg2) {
-	*(s16 *)((u8 *)&D_80154318[D_80154318[arg0].unk4].unk8 + (arg1 * 2)) = arg2;
+	s16 new_var;
+	new_var = D_80154318[arg0].unk4;
+	*(s16 *)((u8 *)&D_80154318[new_var].unk8 + (arg1 * 2)) = arg2;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9A8C_E8A3C.s")
-#endif
 
 void func_800D9AD4_E8A84(s16 arg0, u8 arg1)
 {
