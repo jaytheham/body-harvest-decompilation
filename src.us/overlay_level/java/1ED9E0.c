@@ -71,6 +71,10 @@ extern s16 *D_8025668C;
 extern s16 D_80257A0C;
 extern void (*D_802E04A4[])(s32);
 extern char D_802E0D50[];
+extern s8 D_802E0570;
+extern s8 D_802E0580;
+extern f64 D_802E0EB0;
+extern s32 func_80092A50_A1A00(s16, s16, s32);
 
 #ifdef NON_MATCHING
 void func_802D4CD0_1ED9E0(s32 arg0, void *arg1) {
@@ -518,7 +522,34 @@ void func_802D5FBC_1EECCC(void) {
     func_800EFEB4_FEE64(0, 0xF, 0);
 }
 
+#ifdef NON_MATCHING
+void func_802D5FE4_1EECF4(void) {
+    s8 *var_s0;
+    s8 *var_s3;
+    s32 var_s2;
+    f64 temp_f20;
+    f64 temp_f22;
+    s32 temp_v0;
+
+    var_s0 = &D_802E0570;
+    var_s3 = &D_802E0580;
+    var_s2 = 0xFF;
+    temp_f20 = D_802E0EB0;
+    temp_f22 = 0.0;
+
+    do {
+        s16 coord_x = (s16) ((s32) ((f64) (var_s0[0] << 8) * temp_f20) + *(s16*)(((u8*)buildingInstances) + 0x330));
+        s16 coord_y = (s16) ((s32) ((f64) (var_s0[1] << 8) * temp_f22) + *(s16*)(((u8*)buildingInstances) + 0x334));
+        temp_v0 = func_80092A50_A1A00(coord_x, coord_y, -1);
+        if ((temp_v0 & 0xFF) != var_s2) {
+            func_80080B44_8FAF4(temp_v0 & 0xFF, 0x22);
+        }
+        var_s0 += 2;
+    } while (var_s0 != var_s3);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5FE4_1EECF4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D60DC_1EEDEC.s")
 
