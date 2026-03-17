@@ -389,6 +389,14 @@ extern char D_80141068[];
 extern char D_8014107C[];
 extern char D_80141090[];
 extern char D_801417C0; /* osSyncPrintf format string - alien action table full warning */
+extern char D_801417DC;
+extern char D_801417F8;
+extern char D_8014180C;
+extern char D_8014183C;
+extern char D_80141868;
+extern char D_8014189C;
+extern s32 D_8014D304;
+extern s32 D_802566D4[];
 extern char D_80141D98;
 extern f64 D_80141E40;
 extern f64 D_80141E48;
