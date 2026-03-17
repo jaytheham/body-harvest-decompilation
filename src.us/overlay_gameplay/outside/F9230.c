@@ -765,21 +765,17 @@ s16 func_801081AC_11715C(s16 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801098E8_118898.s")
 
-#ifdef NON_MATCHING
-VehicleInstance *func_80109960_118910(void) {
-	s32 i = 0x7F;
-	VehicleInstance *ptr = &D_80050A74;
-	do {
-		if (ptr->unk1A == 5) {
-			return ptr;
-		}
-		ptr--;
-	} while (i-- != 0);
-	return NULL;
+VehicleInstance *func_80109960_118910(void)
+{
+  s32 i;
+  for (i = 0x80; i--;)
+  {
+	if (vehicleInstances[i].unk1A == 5)
+	{
+	  return &vehicleInstances[i];
+	}
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80109960_118910.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010999C_11894C.s")
 

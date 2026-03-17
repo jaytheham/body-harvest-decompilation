@@ -443,7 +443,12 @@ void func_8011EA44_12D9F4(s16 *arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EABC_12DA6C.s")
+void func_8011EABC_12DA6C(Unk8004D0F8 *arg0, s32 arg1) {
+	if (arg0->unk1A != 0) {
+		D_8015EA4A = 2;
+		func_800072CC_7ECC(0x13);
+	}
+}
 
 void func_8011EAF8_12DAA8(s32 arg0, s32 arg1) {
 	if (D_8015EA4A == 1) {
