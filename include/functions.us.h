@@ -598,4 +598,19 @@ void func_8000FE50_10A50(void *);
 void func_80002EF8_3AF8(void *);
 void func_8000F218_FE18(void);
 
+/* java/1ED9E0 */
+void func_800E2720_F16D0(s32);
+s32 func_800DF9C8_EE978(s16, s16, s16, s32, u8, s32);
+void func_80123E90_132E40(VehicleInstance *, s32);
+void func_800AD554_BC504(s32, s32, s32);
+void func_800E0F4C_EFEFC(s16, s16, s16, s16);
+s32 func_802D57F4_1EE504(void);
+void func_802D5590_1EE2A0(void);
+void func_80135D08_144CB8(f32, s16, s16, s16);
+void leoInitUnit_atten(void);
+void func_80135D44_144CF4(s32, s32, s32, f32);
+s32 func_800C2274_D1224(s16, s16, s16, u8);
+void func_800C3BD8_D2B88(s16, s16, s16, s16, s32, s32, s32, s32);
+s32 func_80092A50_A1A00(s16, s16, s32);
+
 #endif
