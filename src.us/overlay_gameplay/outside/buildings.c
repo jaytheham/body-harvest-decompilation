@@ -668,8 +668,21 @@ void func_801219F4_1309A4(void* arg0, s16 arg1) {
 
 // Failed - gpt 5.3 codex
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80122244_1311F4.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80122320_1312D0.s")
+ 
+s32 func_80122320_1312D0(s32 arg0)
+{
+	int new_var;
+	s32 i;
+	for(i = 5;i--;)
+	{
+		new_var = (s32)D_80140AB0[i] == arg0;
+		if (new_var)
+		{
+			return -1;
+		}
+	}
+	return 0;
+}
 
 #ifdef NON_MATCHING
 s32 func_8012235C_13130C(Unk8004D0F8* arg0) {
