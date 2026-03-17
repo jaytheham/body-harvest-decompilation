@@ -177,6 +177,7 @@ void func_8008DEF4_9CEA4(u8);
 void func_8008E0D8_9D088(u8);
 void func_8008E16C_9D11C(u8);
 void func_8009012C_9F0DC(u8);
+void func_80090A6C_9FA1C(u8, s16, u16);
 void func_80094AA0_A3A50(u8, s32);
 void func_8009BAC0_AAA70(void);
 void func_8009BDB8_AAD68(s32, s32);

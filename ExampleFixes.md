@@ -1,3 +1,22 @@
+### `u8 arg0` vs `s32 arg0` for alien-index parameter: a0 home-slot save
+
+When a function takes an alien instance index (0-255) as first argument and accesses `alienInstances[arg0]` multiple times, setting `u8 arg0` (**not** `s32 arg0`) causes IDO to:
+1. Save `a0` to its home slot (`sw a0, 0x38(sp)`) in the prologue.
+2. Generate `andi t6, a0, 0xff` interleaved with the struct copy (same position in both target and C output).
+3. Match the frame size correctly (0x38 for a function with Unk8014DD50 sp28 + two temp saves).
+
+With `s32 arg0 + arg0 & 0xFF` accesses: IDO does NOT save a0 → wrong register allocation everywhere (score ~528).
+With `u8 arg0 + arg0 & 0xFF` (explicit mask): IDO saves a0 but uses wrong frame size 0x40 (score ~464).
+With `u8 arg0 + arg0` (NO `& 0xFF`): IDO saves a0, correct frame 0x38, first 67+ instructions match (score ~120). Remaining mismatch is only in the `multu` result registers within the three-block multiply section.
+
+The triple multiply block:
+```c
+sp28.unk6 = ((func_800038E0_44E0() * arg2) / 0x10000) - (arg2 / 2);
+sp28.unk8 = ((func_800038E0_44E0() * arg2) / 0x10000) - (arg2 / 2);
+sp28.unkA = ((func_800038E0_44E0() * arg2) / 0x10000) - (arg2 / 2);
+```
+These three identical inline expressions produce the correct `multu / mflo / bgez / sra / subu / sh-in-jal-delay` pattern. Do NOT extract arg2/2 to a named variable (that worsens the score).
+
 ### `while (i--)` generates `or v0,v1,zero` at loop top + `bnez v1; v1--` delay slot
 
 When IDO 5.3 -O2 compiles `while (i--) { arr[i].field = 0; }` with `i = N` (array count):

@@ -3101,7 +3101,34 @@ void func_80090948_9F8F8(s16 arg0, u16 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80090948_9F8F8.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80090A6C_9FA1C.s")
+void func_80090A6C_9FA1C(u8 arg0, s16 arg1, u16 arg2)
+{
+  Unk8014DD50 sp28;
+  s32 var_v0;
+  s32 var_v1;
+  sp28 = D_8013C9EC;
+  var_v0 = alienInstances[arg0].unk2A;
+  var_v1 = alienInstances[arg0].unkE;
+  if (var_v0 >= 0x8001)
+  {
+	var_v0 = 0xFFFF - var_v0;
+  }
+  if (var_v1 >= 0x8001)
+  {
+	var_v1 = 0xFFFF - var_v1;
+  }
+  if ((((alienInstances[arg0].unk12 > 0) || (var_v0 >= (var_v1 + 0x3E8))) || ((var_v1 - 0x3E8) >= var_v0)) && (alienInstances[arg0].unk20 & 0x1A0))
+  {
+	func_80081E5C_90E0C(arg1);
+	if (D_8014DD5E[arg1][0] == 0)
+	{
+	  sp28.unk6 = (s16)((func_800038E0_44E0() * arg2) / 0x10000) - (arg2 / 2);
+	  sp28.unk8 = (s16)((func_800038E0_44E0() * arg2) / 0x10000) - (arg2 / 2);
+	  sp28.unkA = (s16)((func_800038E0_44E0() * arg2) / 0x10000) - (arg2 / 2);
+	  func_80081C84_90C34((u8) arg1, &sp28);
+	}
+  }
+}
 
 // https://decomp.me/scratch/qLxSW
 #ifdef NON_MATCHING
