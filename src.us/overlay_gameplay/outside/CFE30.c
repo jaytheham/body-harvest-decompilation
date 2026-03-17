@@ -20,7 +20,17 @@ f32 func_800C0FAC_CFF5C(Vec3f *arg0) {
 	return (arg0->x * arg0->x) + (arg0->y * arg0->y) + (arg0->z * arg0->z);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C0FD4_CFF84.s")
+f32 func_800C0FD4_CFF84(Vec3f *arg0) {
+	f32 temp_f0;
+	f32 var_f12;
+
+	temp_f0 = func_800C0FAC_CFF5C(arg0);
+	var_f12 = temp_f0;
+	if ((f64) temp_f0 != 0.0) {
+		var_f12 = sqrtf(var_f12);
+	}
+	return var_f12;
+}
 
 #ifdef NON_MATCHING
 void func_800C1024_CFFD4(Vec3f *arg0, Vec3f *arg1) {
