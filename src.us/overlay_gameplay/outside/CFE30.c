@@ -898,18 +898,9 @@ s32 func_800E60CC_F507C(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
 
 // displayFXUnderWater
-#ifdef NON_MATCHING
 void func_800E71F8_F61A8(void) {
-	Gfx *dl;
-
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w1 = (u32) &D_80031160 & 0x1FFFFFFF;
-	dl->words.w0 = 0x01020040;
+	gSPMatrix(D_8005BB2C++, (Mtx *)((u32) &D_80031160 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E71F8_F61A8.s")
-#endif
 
 // displayFXOnWater - Ripples, splashes etc
 #ifdef NON_MATCHING
