@@ -3082,24 +3082,18 @@ void func_800908C4_9F874(u8 arg0) {
 	*(s32 *)&inst->unk10 = unk10 - 1;
 }
 
-// https://decomp.me/scratch/Bs32I
-#ifdef NON_MATCHING
 void func_80090948_9F8F8(s16 arg0, u16 arg1)
 {
-  Unk8014DD50 sp20;
-  sp20 = D_8013C9DC;
+  Unk8014DD50 sp20 = D_8013C9DC;
   func_80081E5C_90E0C(arg0);
   if (D_8014DD5E[arg0][0] == 0)
   {
-	sp20.unk6 = ((func_800038E0_44E0() * arg1) / 0x10000) - (arg1 / 2);
-	sp20.unk8 = ((func_800038E0_44E0() * arg1) / 0x10000) - (arg1 / 2);
-	sp20.unkA = ((func_800038E0_44E0() * arg1) / 0x10000) - (arg1 / 2);
-	func_80081C84_90C34((u8) arg0, &sp20);
+	sp20.unk6 = (s16)((func_800038E0_44E0() * arg1) / 0x10000) - (arg1 / 2);
+	sp20.unk8 = (s16)((func_800038E0_44E0() * arg1) / 0x10000) - (arg1 / 2);
+	sp20.unkA = (s16)((func_800038E0_44E0() * arg1) / 0x10000) - (arg1 / 2);
+	func_80081C84_90C34(arg0, &sp20);
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80090948_9F8F8.s")
-#endif
 
 void func_80090A6C_9FA1C(u8 arg0, s16 arg1, u16 arg2)
 {
