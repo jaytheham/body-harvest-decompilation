@@ -157,8 +157,11 @@ void func_801183EC_12739C(void *arg0, s16 arg1) {
 	func_8011815C_12710C(arg0, arg1, 0);
 }
 
-// https://decomp.me/scratch/9HA5h
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118418_1273C8.s")
+void func_80118418_1273C8(void* arg0, s16 arg1) {
+	if (currentControllerStates[CONTROLLER_ONE].button & BUTTON_A) {
+		func_8011815C_12710C(arg0, arg1, 1);
+	}
+}
 
 void func_80118454_127404(s32 arg0, s32 arg1) {
 
