@@ -448,6 +448,8 @@ void func_802D5DFC_1EEB0C(AlienInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5DFC_1EEB0C.s")
 #endif
 
+void func_802D5E98_1EEBA8(void);
+
 #ifdef NON_MATCHING
 void func_802D5E98_1EEBA8(void) {
     s32 v0;
@@ -508,13 +510,9 @@ block_13:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5E98_1EEBA8.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802D5F98_1EECA8(void) {
     func_80007410_8010(&func_802D5E98_1EEBA8);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5F98_1EECA8.s")
-#endif
 
 void func_802D5FBC_1EECCC(void) {
     func_800EFEB4_FEE64(0, 0xF, 0);
