@@ -849,17 +849,11 @@ void func_8010F93C_11E8EC(Unk80052B40 *arg0, Unk80052B40 *arg1) {
 	func_8010F834_11E7E4(arg0, arg1->unk0, arg1->unk2, arg1->unk4);
 }
 
-#ifdef NON_MATCHING
-void func_8010F96C_11E91C(Unk80052B40 *arg0, Unk80052B40_fp *arg1) {
-	Unk80052B40_fp *temp = arg1;
-	s32 x = temp->unk4;
-	s32 y = temp->unk8;
-	s32 z = arg1->unk0;
-	func_8010F834_11E7E4(arg0, z >> 16, x >> 16, y >> 16);
+void func_8010F96C_11E91C(Unk80052B40 *arg0, Unk80052B40_fp *arg1)
+{
+  Unk80052B40_fp *temp = arg1;
+  func_8010F834_11E7E4(arg0, arg1->unk0 >> 16, temp->unk4 >> 16, temp->unk8 >> 16);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010F96C_11E91C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010F9B4_11E964.s")
 
