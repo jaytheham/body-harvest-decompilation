@@ -776,7 +776,8 @@ typedef struct {
 	/* 0x0E */ s16 unkE;
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
-	/* 0x14 */ s16 unk14;
+	/* 0x14 */ u8 unk14;
+	/* 0x15 */ s8 unk15;
 	/* 0x16 */ u8 pad16[6];
 } Unk80154318Entry; /* stride = 0x1C */
 

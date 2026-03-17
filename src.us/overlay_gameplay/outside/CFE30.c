@@ -532,13 +532,12 @@ void func_800D9A8C_E8A3C(s16 arg0, s32 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9A8C_E8A3C.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_800D9AD4_E8A84(s16 arg0, s8 arg1) {
-	D_80154318[D_80154318[arg0].unk4].unk14 = arg1;
+void func_800D9AD4_E8A84(s16 arg0, u8 arg1)
+{
+	s16 new_var;
+	new_var = D_80154318[arg0].unk4;
+	D_80154318[new_var].unk14 = arg1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9AD4_E8A84.s")
-#endif
 
 void func_800D9B14_E8AC4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	Unk80154318Entry *temp_v0;
