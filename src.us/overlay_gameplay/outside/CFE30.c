@@ -903,22 +903,13 @@ void func_800E71F8_F61A8(void) {
 }
 
 // displayFXOnWater - Ripples, splashes etc
-#ifdef NON_MATCHING
 void func_800E7234_F61E4(void) {
-	Gfx *dl;
-
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w1 = (u32) &D_80031160 & 0x1FFFFFFF;
-	dl->words.w0 = 0x01020040;
+	gSPMatrix(D_8005BB2C++, (Mtx *)((u32) &D_80031160 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	func_800DD604_EC5B4(&D_8005BB2C);
 	func_800E6A38_F59E8();
 	func_800CFD84_DED34();
 	func_800E5538_F44E8();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7234_F61E4.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E72A0_F6250.s")
 
