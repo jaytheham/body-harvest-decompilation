@@ -52,6 +52,8 @@ extern f32 D_802E0F8C;
 extern char D_802E0E74[];
 extern char D_802E0E7C[];
 extern char D_802E0FBA[];
+extern char D_802E0E50[];
+extern char D_802E0E58[];
 extern f64 D_802E0ED8;
 extern f32 D_802E0EE0;
 extern f32 D_802E0EE4;
@@ -611,9 +613,115 @@ void func_802D62A0_1EEFB0(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D62A0_1EEFB0.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6338_1EF048.s")
+#ifdef NON_MATCHING
+/* State machine for java zone building display sequence
+ * D_80157F8C: current state (0-6)
+ * D_80157F8E: frame counter within state
+ * After cases 0-5, calls building position display funcs if state < 4
+ * NOTE: C body matches ROM only when compiled with NON_MATCHING=1 flag.
+ * IDO produces different code without that flag — do not strip this wrapper. */
+s32 func_802D6338_1EF048(void) {
+    s16 temp_s1;
 
-void func_802D6338_1EF048(void);
+    switch (D_80157F8C) {
+    case 0:
+        /* Increment building fall speed every 5 frames; apply to building offset */
+        if (((u32) D_80052A8C % 5U) == 0) {
+            D_802E0FB6 += 2;
+        }
+        *((s16 *) (((u8 *) buildingInstances) + 0x4B0)) = (s16) (*((s16 *) (((u8 *) buildingInstances) + 0x4B0)) - D_802E0FB6);
+        D_80157F8E += 1;
+        if (D_80157F8E >= 0x29) {
+            D_80157F8C += 1;
+            D_80157F8E = 0;
+        }
+        break;
+    case 1:
+        /* Continue building descent for longer phase */
+        *((s16 *) (((u8 *) buildingInstances) + 0x4B0)) = (s16) (*((s16 *) (((u8 *) buildingInstances) + 0x4B0)) - D_802E0FB6);
+        D_80157F8E += 1;
+        if (D_80157F8E >= 0x97) {
+            D_80157F8C += 1;
+            D_80157F8E = 0;
+        }
+        break;
+    case 2:
+        /* Snap building to fixed position */
+        *((s16 *) (((u8 *) buildingInstances) + 0x4B0)) = (s16) -0x4B00;
+        D_80157F8E += 1;
+        if (D_80157F8E >= 2) {
+            D_80157F8C += 1;
+            D_80157F8E = 0;
+        }
+        break;
+    case 3:
+        /* Continue descent; at frame 0x62 trigger display callback */
+        *((s16 *) (((u8 *) buildingInstances) + 0x4B0)) = (s16) (*((s16 *) (((u8 *) buildingInstances) + 0x4B0)) - D_802E0FB6);
+        if (D_80157F8E == 0x62) {
+            func_800DF038_EDFE8((s16) (*((s16 *) (((u8 *) buildingInstances) + 0x498)) + 0x64), (s16) (D_80222A70 + 0x96), *((s16 *) (((u8 *) buildingInstances) + 0x49C)), 0x12C, 8, 0);
+        }
+        D_80157F8E += 1;
+        if (D_80157F8E >= 0x83) {
+            D_80157F8C += 1;
+            D_80157F8E = 0;
+        }
+        break;
+    case 4:
+        /* Announce state progress; at frame 1 trigger building sequence; every 5 frames update offsets */
+        osSyncPrintf(&D_802E0E50, D_80157F8E);
+        if (D_802E04A0 != 0xFF) {
+            func_80087AAC_96A5C(D_802E04A0);
+        }
+        if (D_80157F8E == 1) {
+            func_80124B5C_133B0C((s16) -0x59A1, 0x2FF, (s16) -0x22CC, 0x2710, 0x3E8);
+            func_800E0F4C_EFEFC(*((s16 *) (((u8 *) buildingInstances) + 0x498)), (s16) (D_80222A70 + 0x64), *((s16 *) (((u8 *) buildingInstances) + 0x49C)), 0x19);
+            func_800DF038_EDFE8(*((s16 *) (((u8 *) buildingInstances) + 0x498)), (s16) (D_80222A70 + 0x96), *((s16 *) (((u8 *) buildingInstances) + 0x49C)), 0x12C, 8, 0);
+            func_800DF038_EDFE8(*((s16 *) (((u8 *) buildingInstances) + 0x4B0)), (s16) (D_80222A70 + 0x96), *((s16 *) (((u8 *) buildingInstances) + 0x4B4)), 0x12C, 0x10, 0);
+        }
+        if ((D_80157F8E % 5) == 0) {
+            func_800E0F4C_EFEFC((s16) (*((s16 *) (((u8 *) buildingInstances) + 0x4B0)) - (D_80157F8E * 0x32) + 0x3E8), (s16) (D_80222A70 + 0x96), *((s16 *) (((u8 *) buildingInstances) + 0x4B4)), 0x19);
+        }
+        D_80157F8E += 1;
+        if (D_80157F8E >= 0x29) {
+            D_80157F8E = 0;
+            D_80157F8C += 1;
+        }
+        break;
+    case 5:
+        /* Announce; at frame 1 trigger display callbacks; at frame 0x1E trigger second callback */
+        osSyncPrintf(&D_802E0E58, D_80157F8E);
+        if (D_80157F8E == 1) {
+            func_8011C080_12B030(0x32);
+            func_800DF038_EDFE8(*((s16 *) (((u8 *) buildingInstances) + 0x498)), (s16) (D_80222A70 + 0x96), *((s16 *) (((u8 *) buildingInstances) + 0x49C)), 0x12C, 8, 0);
+            func_800DF038_EDFE8(*((s16 *) (((u8 *) buildingInstances) + 0x4B0)), (s16) (D_80222A70 + 0x96), *((s16 *) (((u8 *) buildingInstances) + 0x4B4)), 0x12C, 0x10, 0);
+        }
+        if (D_80157F8E == 0x1E) {
+            func_8011C080_12B030(0x31);
+        }
+        D_80157F8E += 1;
+        if (D_80157F8E >= 0x29) {
+            D_80157F8E = 0;
+            D_80157F8C += 1;
+        }
+        break;
+    case 6:
+        return 1;
+    default:
+        break;
+    }
+
+    /* Tail: display building position while in early states */
+    if (D_80157F8C < 4) {
+        temp_s1 = func_80136ECC_145E7C(*((s16 *) (((u8 *) buildingInstances) + 0x4B0)), *((s16 *) (((u8 *) buildingInstances) + 0x4B2)), *((s16 *) (((u8 *) buildingInstances) + 0x4B4)));
+        func_80014A3C_1563C(0, 0xB3, (f32) ((s16) func_80136DC0_145D70(*((s16 *) (((u8 *) buildingInstances) + 0x4B0)), *((s16 *) (((u8 *) buildingInstances) + 0x4B2)), *((s16 *) (((u8 *) buildingInstances) + 0x4B4))) / 5), temp_s1, -1.0f);
+    }
+    return 0;
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6338_1EF048.s")
+#endif
+
+s32 func_802D6338_1EF048(void);
 
 void func_802D6840_1EF550(void) {
     D_802E0FB6 = 0;
