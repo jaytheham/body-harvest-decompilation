@@ -432,7 +432,7 @@ s32 func_8011E6FC_12D6AC(s16 arg0, s16 arg1, s16 *arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011E788_12D738.s")
 
 void func_8011E9F4_12D9A4(s32 arg0, s16 arg1) {
-	if (D_8015FAF0[arg1].unkC == 6) {
+	if (D_8015FAD0[arg1].unk2C == 6) {
 		D_80159320 |= 0x1000000;
 	}
 }
@@ -895,7 +895,17 @@ void func_8012D824_13C7D4(void) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012D84C_13C7FC.s")
+void func_8012D84C_13C7FC()
+{
+  s32 i;
+  for (i = 0x19;i--;)
+  {
+	if (D_8015FAD0[i].unk28 != -1)
+	{
+	  D_8015FAD0[i].unk2C = 0;
+	}
+  }
+}
 
 // debug_drawInteractionBoxes
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012D884_13C834.s")
@@ -930,13 +940,11 @@ s32 func_8012DF90_13CF40(Unk8015FAD0 *arg0, void *arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E114_13D0C4.s")
 
-void func_8012E1F8_13D1A8(s32 arg0, s32 arg1) {
-
-}
+void func_8012E1F8_13D1A8(s32 arg0, s32 arg1) { }
 
 void func_8012E204_13D1B4(s16 arg0, s32 arg1) {
 	void (*callback)(s32, s16);
-	callback = D_8015FAF0[arg0].callback;
+	callback = D_8015FAD0[arg0].unk24;
 	if (callback == NULL) {
 		return;
 	}

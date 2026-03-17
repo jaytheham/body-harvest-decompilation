@@ -347,15 +347,6 @@ typedef struct {
 } BuildingSpec; /* size = 0x20 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x4];
-	/* 0x04 */ void (*callback)(s32, s16);
-	/* 0x08 */ u8 unk8;
-	/* 0x09 */ u8 pad9[0x3];
-	/* 0x0C */ u8 unkC;
-	/* 0x0D */ u8 padD[0x23];
-} Unk8015FAF0; /* size = 0x30 */
-
-typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ s32 unk4;
 	/* 0x08 */ s32 unk8;
@@ -365,7 +356,7 @@ typedef struct {
 	/* 0x1C */ s16 unk1C;
 	/* 0x1E */ u8 pad1E[0x2];
 	/* 0x20 */ s32 (*unk20)();
-	/* 0x24 */ u8 pad24[0x4];
+	/* 0x24 */ void (*unk24)(s32, s16);
 	/* 0x28 */ u32 unk28;
 	/* 0x2C */ u8 unk2C;
 	/* 0x2D */ u8 pad2D[3];
