@@ -373,7 +373,7 @@ typedef struct {
 	/* 0x18 */ s16 unk18;
 	/* 0x1A */ s16 unk1A;
 	/* 0x1C */ s16 unk1C;
-	/* 0x1E */ u8 pad1E[0x2];
+	/* 0x1E */ s16 unk1E;
 	/* 0x20 */ s32 (*unk20)();
 	/* 0x24 */ void (*unk24)(s32, s16);
 	/* 0x28 */ u32 unk28;
