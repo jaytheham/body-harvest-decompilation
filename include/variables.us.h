@@ -491,6 +491,8 @@ extern s32 D_80149478[16];
 extern s32 D_801494B4;
 extern u8* D_801494B8;
 extern u8 D_801494BC;
+extern u8 D_80149AF8[];
+extern s32 D_80149B40;
 extern s32 D_80149B44;
 extern u8 D_8014D200[];
 extern u8 D_8014D298[][10];

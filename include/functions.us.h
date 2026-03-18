@@ -447,6 +447,8 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 void func_80070294_158354(Unk8007CAA8_6A40 *arg0);
 void func_8007290C_15A9CC(void);
 void func_8007453C_15C5FC(s32 arg0, s32 arg1);
+s32 func_800745F0_835A0(void);
+void func_80074578_83528(u8 *arg0);
 void func_8007774C_15F80C(s32 arg0, s32 arg1);
 void func_80077A5C_15FB1C(s32 arg0, s32 arg1);
 void guess_checkMissions(void);

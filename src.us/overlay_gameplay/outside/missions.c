@@ -44,7 +44,10 @@ u8 func_80074558_83508(void) {
 // readMissionObject
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074578_83528.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800745F0_835A0.s")
+s32 func_800745F0_835A0(void) {
+	func_80074578_83528(&D_80149AF8[D_80149B40 * 3]);
+	return D_80149B40++ & 0xFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007463C_835EC.s")
 
