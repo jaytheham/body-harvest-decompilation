@@ -598,4 +598,14 @@ void func_8000FE50_10A50(void *);
 void func_80002EF8_3AF8(void *);
 void func_8000F218_FE18(void);
 
+/* overlay_level/java/1ED9E0 */
+void func_802D51F8_1EDF08(void);
+void func_802D5508_1EE218(void);
+void func_802D57F4_1EE504(void);
+void func_802D5590_1EE2A0(void);
+void func_802D5ADC_1EE7EC(void);
+void func_802D6338_1EF048(void);
+void func_802D68F4_1EF604(void);
+void func_802DA844_1F3554(u8);
+
 #endif

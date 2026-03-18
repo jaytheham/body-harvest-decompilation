@@ -699,15 +699,15 @@ void func_800789E4_48E94(void) {
   if (currentFrontendState == FE_STATE_PRESS_START) {
   } else {
 	if (osTvType == 0) {
-	  func_8007BD98_4C248();
+	  displayWrongConsoleRegionNotice();
 	}
 	if (D_80047584 == 0) {
-	  func_8007BC90_4C140();
+	  displayNoControllerNotice();
 	}
-	func_8007B618_4BAC8();
-	func_8007B900_4BDB0();
-	func_8007BB0C_4BFBC();
-	func_8007BEC0_4C370();
+	displayClearSaveDataScreen();
+	displayCopyrightScreen();
+	displayPublisherLogoScreen();
+	displayDmaLogoScreen();
   }
 
   fileSelectCycle = 0;
@@ -727,7 +727,7 @@ void func_800789E4_48E94(void) {
 
 	switch ((u16)currentFrontendState) {
 	  case FE_STATE_INTRO_MOVIE:
-		result = func_800768C4_46D74();
+		result = doIntroMovie();
 		if (result == 1) {
 		  currentFrontendState = FE_STATE_INTRO_MOVIE;
 		} else if (result == 2) {
