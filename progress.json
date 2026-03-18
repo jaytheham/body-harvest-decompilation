@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-18T04:28:41Z",
-  "commit": "52f2c86",
-  "commit_timestamp": "2026-03-18T07:55:17+13:00",
+  "generated": "2026-03-18T09:17:00Z",
+  "commit": "3f1112e",
+  "commit_timestamp": "2026-03-18T22:16:47+13:00",
   "overall": {
-    "total_functions": 2944,
-    "matched": 677,
-    "non_matching": 270,
-    "asm_stubs": 1997,
-    "matched_pct": 23.0,
-    "decompiled_pct": 32.17
+    "total_functions": 2940,
+    "matched": 689,
+    "non_matching": 266,
+    "asm_stubs": 1985,
+    "matched_pct": 23.44,
+    "decompiled_pct": 32.48
   },
   "segments": {
     "core": {
@@ -31,12 +31,12 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 484,
-      "non_matching": 149,
-      "asm_stubs": 942,
-      "total": 1575,
-      "matched_pct": 30.7,
-      "decompiled_pct": 40.2
+      "matched": 496,
+      "non_matching": 145,
+      "asm_stubs": 930,
+      "total": 1571,
+      "matched_pct": 31.6,
+      "decompiled_pct": 40.8
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -337,11 +337,11 @@
     {
       "path": "overlay_gameplay/outside/884C0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 126,
-      "non_matching": 38,
-      "asm_stubs": 121,
-      "total": 285,
-      "matched_pct": 44.2,
+      "matched": 129,
+      "non_matching": 40,
+      "asm_stubs": 118,
+      "total": 287,
+      "matched_pct": 44.9,
       "contributor": "jaytheham"
     },
     {
@@ -397,21 +397,21 @@
     {
       "path": "overlay_gameplay/outside/BF9C0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 15,
-      "non_matching": 10,
-      "asm_stubs": 60,
-      "total": 85,
-      "matched_pct": 17.6,
+      "matched": 16,
+      "non_matching": 7,
+      "asm_stubs": 59,
+      "total": 82,
+      "matched_pct": 19.5,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/CFE30.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 51,
-      "non_matching": 10,
-      "asm_stubs": 230,
-      "total": 291,
-      "matched_pct": 17.5,
+      "matched": 54,
+      "non_matching": 7,
+      "asm_stubs": 227,
+      "total": 288,
+      "matched_pct": 18.8,
       "contributor": "jaytheham"
     },
     {
@@ -447,11 +447,11 @@
     {
       "path": "overlay_gameplay/outside/buildings.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 55,
-      "non_matching": 11,
-      "asm_stubs": 102,
-      "total": 168,
-      "matched_pct": 32.7,
+      "matched": 57,
+      "non_matching": 12,
+      "asm_stubs": 100,
+      "total": 169,
+      "matched_pct": 33.7,
       "contributor": "jaytheham"
     },
     {
@@ -467,11 +467,11 @@
     {
       "path": "overlay_gameplay/outside/missions.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 5,
-      "non_matching": 3,
-      "asm_stubs": 32,
-      "total": 40,
-      "matched_pct": 12.5,
+      "matched": 8,
+      "non_matching": 2,
+      "asm_stubs": 29,
+      "total": 39,
+      "matched_pct": 20.5,
       "contributor": "jaytheham"
     },
     {
@@ -539,9 +539,9 @@
     {
       "name": "jaytheham",
       "files": 37,
-      "matched": 633,
-      "non_matching": 245,
-      "asm_stubs": 1839
+      "matched": 645,
+      "non_matching": 241,
+      "asm_stubs": 1827
     },
     {
       "name": "Harvester",
@@ -559,14 +559,6 @@
     }
   ],
   "history": [
-    {
-      "date": "2026-03-07",
-      "commit": "effdd6f",
-      "matched_pct": 19.8,
-      "decompiled_pct": 27.33,
-      "matched": 573,
-      "total": 2894
-    },
     {
       "date": "2026-03-08",
       "commit": "ee3fc86",
@@ -649,11 +641,11 @@
     },
     {
       "date": "2026-03-18",
-      "commit": "52f2c86",
-      "matched_pct": 23.0,
-      "decompiled_pct": 32.17,
-      "matched": 677,
-      "total": 2944
+      "commit": "3f1112e",
+      "matched_pct": 23.44,
+      "decompiled_pct": 32.48,
+      "matched": 689,
+      "total": 2940
     }
   ]
 }
