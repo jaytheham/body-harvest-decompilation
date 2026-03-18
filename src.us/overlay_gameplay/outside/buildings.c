@@ -92,8 +92,27 @@ s32 func_80117464_126414(u8 arg0) {
 // And if it should be drawn?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117508_1264B8.s")
 
-// Failed - gpt 5.3 codex
+// https://decomp.me/scratch/UNJJQ
+#ifdef NON_MATCHING
+s32 func_801176B0_126660(void)
+{
+  s32 i;
+  s32 target = D_80052540;Unk80148620 *ptr = &D_80148620;
+  
+  for (i = 0xF; i--;ptr--)
+  {
+	if (target == ptr->unk0)
+	{
+	  return ptr;
+	}
+	
+  }
+
+  return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801176B0_126660.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801176F4_1266A4.s")
 
@@ -174,8 +193,15 @@ void func_801184E4_127494(s8 arg0) {
 	D_80159DDE = arg0;
 }
 
-// Failed - gpt 5.3 codex
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801184F4_1274A4.s")
+s32 func_801184F4_1274A4(BuildingInstance *building) {
+	BuildingSpec *spec = &buildingSpecs[building->buildingType];
+
+	if ((spec->unk10 >= 0x321) || (spec->unk12 >= 0x321)) {
+		return 1;
+	}
+
+	return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011853C_1274EC.s")
 
