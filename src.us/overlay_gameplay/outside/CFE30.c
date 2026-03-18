@@ -509,18 +509,16 @@ void func_800D96B4_E8664(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
   temp_v1->unkC = arg3;
 }
 
-#ifdef NON_MATCHING
-void func_800D9704_E86B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-	Unk80154318Entry *temp_v1;
-
-	temp_v1 = &D_80154318[D_80154318[arg0].unk4];
-	temp_v1->unkE = arg1;
-	temp_v1->unk10 = arg2;
-	temp_v1->unk12 = arg3;
+void func_800D9704_E86B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
+{
+  s16 new_var;
+  s16 new_var2;
+  Unk80154318Entry *temp_v1;
+ temp_v1 = &D_80154318[new_var2 = D_80154318[arg0].unk4]; new_var = arg2; new_var2 = new_var;
+  temp_v1->unkE = arg1;
+  temp_v1->unk10 = new_var2;
+  (*temp_v1).unk12 = arg3;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9704_E86B4.s")
-#endif
 
 void func_800D9754_E8704(s16 arg0) {
 	if (arg0 != -3) {
