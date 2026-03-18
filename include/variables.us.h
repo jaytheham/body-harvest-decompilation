@@ -527,7 +527,7 @@ extern s32 D_8014F828;
 extern s16 D_8014F832;
 extern s32 D_8014F838;
 extern f32 D_8014F850;
-extern u8* D_8014F8A0; /* pointer to world tile data */
+extern s16 (*D_8014F8A0)[256]; /* pointer to world tile data (256x256 s16 array) */
 extern Unk8014FD30Type D_8014FD30;
 extern u8 D_8014FD48[];
 extern u16 D_8014FDC8;

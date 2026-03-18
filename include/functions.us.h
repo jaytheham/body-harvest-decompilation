@@ -236,7 +236,7 @@ s32 func_800B0D10_BFCC0(s32, s32, s32);
 s16 func_800B0DF4_BFDA4(s16, s16, s32, s32);
 s16 func_800B0F20_BFED0(s16, s16);
 void func_800B31FC_C21AC(s8, s8);
-s32 func_800B325C_C220C(s8, s8, s32);
+s32 func_800B325C_C220C(s8, s8, u16);
 void func_800B41C8_C3178(s32, s32, u8*, s32);
 void func_800B8C2C_C7BDC(s16, s16, s32);
 void func_800B9954_C8904(u8);

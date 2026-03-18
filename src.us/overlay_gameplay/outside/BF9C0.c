@@ -126,44 +126,14 @@ void func_800B19F8_C09A8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2CF0_C1CA0.s")
 
-#ifdef NON_MATCHING
-void func_800B316C_C211C(s8 arg0, s8 arg1, s32 arg2, s32 arg3) {
-	s32 temp_v0 = arg0 + 0x80;
-	s32 temp_v1 = arg1 + 0x80;
-
-	arg2 &= 0xFFFF;
-	if (arg3 & 0xFF) {
-		*(s16 *)(D_8014F8A0 + (temp_v1 << 9) + (temp_v0 * 2)) |= arg2;
-		return;
-	}
-	*(s16 *)(D_8014F8A0 + (temp_v1 << 9) + (temp_v0 * 2)) &= ~arg2;
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B316C_C211C.s")
-#endif
 
-#ifdef NON_MATCHING
-void func_800B31FC_C21AC(s8 arg0, s8 arg1) {
-	u8 *temp_v0;
-
-	temp_v0 = (u8 *)((s32)D_80052A94 + (arg1 << 9) + (arg0 * 2));
-	*temp_v0 |= 0x80;
-	*temp_v0 &= 0xF7;
-	*temp_v0 |= 4;
-	*(u16 *)temp_v0 = (*(u16 *)temp_v0 & 0xFC3F) | 0x300;
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B31FC_C21AC.s")
-#endif
 
-#ifdef NON_MATCHING
-s32 func_800B325C_C220C(s8 arg0, s8 arg1, s32 arg2) {
-	u8 *addr = (u8 *)((s32)D_8014F8A0 + (arg1 << 9) + (arg0 * 2));
-	return *(s16 *)(addr + 0x10100) & arg2 & 0xFFFF;
+s32 func_800B325C_C220C(s8 arg0, s8 arg1, u16 arg2)
+{
+  return (D_8014F8A0[128 + arg1][128 + arg0] & arg2) & 0xFFFF;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B325C_C220C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B32AC_C225C.s")
 
