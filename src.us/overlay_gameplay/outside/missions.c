@@ -146,22 +146,17 @@ void func_800762A8_85258(void (*callback))
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800765C4_85574.s")
 
-#ifdef NON_MATCHING
-s32 func_80076754_85704(void) {
-	register s32 temp_v0;
-	s32 var_s0;
-
-	var_s0 = 0x17;
-	do {
-		func_8007643C_853EC(var_s0);
-		temp_v0 = var_s0;
-	} while (var_s0--);
-	D_8004D158 = 0;
-	D_8004D154 = -1;
-	return temp_v0;
+void func_80076754_85704(void)
+{
+  s32 var_s0;
+  var_s0 = 0x17;
+  do
+  {
+	func_8007643C_853EC(var_s0);
+  }
+  while (var_s0--);
+  D_8004D158 = 0;
+  D_8004D154 = -1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076754_85704.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007679C_8574C.s")
