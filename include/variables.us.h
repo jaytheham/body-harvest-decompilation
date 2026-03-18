@@ -163,6 +163,7 @@ extern s32 D_8004D154;
 extern s32 D_8004D158;
 extern u8 D_8004D160;
 extern u8 D_8004D1B9;
+extern Unk8004D1C8 D_8004D1C8[];
 extern u8 D_80047F93;
 extern AlienInstance D_8004D0F8[]; // alien array base
 extern s32 D_8004DC48;

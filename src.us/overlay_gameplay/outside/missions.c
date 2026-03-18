@@ -82,7 +82,24 @@ void func_80074768_83718(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075574_84524.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800755E0_84590.s")
+void func_800755E0_84590(void)
+{
+  Unk8004D1C8 *var_v0;
+  Unk8004D1C8 * var_v1;
+  s32 i;
+	s32 new_var;
+  func_80074204_831B4();
+  new_var = 0x10;
+  
+  for (i = 0; &D_8004D1C8[new_var] != &D_8004D1C8[i]; i++)
+  {
+	D_8004D1C8[i].unk6 = 0;
+	D_8004D1C8[i].unkC = 0;
+	D_8004D1C8[i].unk12 = 0;
+	D_8004D1C8[i].unk0 = 0;
+  }
+  D_8004D150 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007562C_845DC.s")
 
