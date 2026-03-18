@@ -403,6 +403,8 @@ extern char D_801418D4;
 extern s32 D_8014D304;
 extern s32 D_802566D4[];
 extern char D_80141D98;
+extern f64 D_80141E30;
+extern f64 D_80141E38;
 extern f64 D_80141E40;
 extern f64 D_80141E48;
 extern f64 D_80141E50;
