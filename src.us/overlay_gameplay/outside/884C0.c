@@ -252,7 +252,53 @@ s32 func_8007A2A0_89250(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007A2A0_89250.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007A4F8_894A8.s")
+s32 func_8007A4F8_894A8(s32 arg0)
+{
+  u8 alienIdx;
+  alienIdx = D_8014D510[arg0];
+  if (((u32) arg0) >= D_8014ECCC)
+  {
+	osSyncPrintf(&D_801418B8, alienIdx, arg0);
+	return 0;
+  }
+  if (!(alienInstances[alienIdx].unk20 & 0x600))
+  {
+	osSyncPrintf(&D_801418D4, alienIdx, arg0);
+	return 0;
+  }
+  alienInstances[alienIdx].unk20 &= ~0x600;
+  if (alienInstances[alienIdx].unk20 & 0x80000)
+  {
+	func_800F375C_10270C((s8) (alienInstances[alienIdx].unk20 & 7));
+	alienInstances[alienIdx].unk20 &= ~0x80000;
+  }
+  if (alienSpecs[alienInstances[alienIdx].specIndex].unk54 & 0x02000000)
+  {
+	if (alienInstances[alienIdx].unk3C != 0xFB)
+	{
+	  func_800CD390_DC340((u8) alienInstances[alienIdx].unk3C);
+	}
+	if (alienInstances[alienIdx].unk3D != 0xFB)
+	{
+	  func_800CD390_DC340((u8) alienInstances[alienIdx].unk3D);
+	}
+  }
+  if (alienInstances[alienIdx].specIndex == 1)
+  {
+	if (!(alienInstances[alienIdx].unk20 & 0x1000))
+	{
+	  alienInstances[alienIdx].unk48 = 0;
+	}
+	if ((alienInstances[alienIdx].unk24 == 1) || (alienInstances[alienIdx].unk24 == 0x1D))
+	{
+	  D_80048194--;
+	}
+  }
+  func_80079DC0_88D70(alienInstances[alienIdx].unkC);
+  D_8014ECCC--;
+  D_8014D510[arg0] = D_8014D510[D_8014ECCC];
+  return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007A6B4_89664.s")
 

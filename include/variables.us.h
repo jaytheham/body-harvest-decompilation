@@ -398,6 +398,8 @@ extern char D_8014180C;
 extern char D_8014183C;
 extern char D_80141868;
 extern char D_8014189C;
+extern char D_801418B8;
+extern char D_801418D4;
 extern s32 D_8014D304;
 extern s32 D_802566D4[];
 extern char D_80141D98;
