@@ -1783,7 +1783,7 @@ s32 func_80085838_947E8(u8 arg0)
 	abs_dz = -dz < dz ? dz : -dz;
 	max = abs_dz < abs_dx
 		? -dx < dx ? dx : -dx
-		:-dz < dz ? dz : -dz;
+		: -dz < dz ? dz : -dz;
 
 	if (max < 0x1800)
 	{
@@ -3526,7 +3526,63 @@ void func_80092BBC_A1B6C(u8 arg0)
 	alienInstances[arg0].unk26++;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80092C40_A1BF0.s")
+void func_80092C40_A1BF0(u8 arg0)
+{
+  s32 dz;
+  s32 dx;
+  s32 abs_dx;
+  s32 abs_dz;
+  dx = alienInstances[arg0].unk0 - alienInstances[arg0].unk14;
+  dz = alienInstances[arg0].unk4 - alienInstances[arg0].unk18;
+  abs_dx = -dx < dx ? dx : -dx;
+  abs_dz = -dz < dz ? dz : -dz;
+  dz = (0, abs_dz < abs_dx
+		? -dx < dx ? dx : -dx
+		: -dz < dz ? dz : -dz);
+  if (alienInstances[arg0].unk20 & 0x4000)
+  {
+	if (dz < 0x100)
+	{
+	  func_80092BBC_A1B6C(arg0);
+	  if ((!(alienInstances[arg0].unk20 & 0x4000)) && (alienInstances[arg0].unk20 & 0x2000))
+	  {
+		func_80080B44_8FAF4(arg0, (u8) alienInstances[arg0].unk38);
+	  }
+	}
+  }
+  else
+  {
+	if ((alienInstances[arg0].unk20 & 0x100) && (dz < 0x1F4))
+	{
+	  alienInstances[arg0].unk20 &= ~0x100;
+	  alienInstances[arg0].unk20 |= 0x10800;
+	  return;
+	}
+	if (alienInstances[arg0].unk20 & 0x800)
+	{
+	  if (dz >= 0x321)
+	  {
+		alienInstances[arg0].unk20 &= 0xFFFEF7FF;
+		alienInstances[arg0].unk20 |= 0x100;
+		return;
+	  }
+	  if (dz < 0xC8)
+	  {
+		if (alienInstances[arg0].unk3A == 0)
+		{
+		  alienInstances[arg0].unk20 &= 0xFFFEF7FF;
+		  alienInstances[arg0].unk20 |= 0x40001100;
+		  alienInstances[arg0].unk2C = 0x14;
+		  alienInstances[arg0].unk10 = 0xA0;
+		  if (alienInstances[arg0].unk20 & 0x600)
+		  {
+			func_80137468_146418(arg0, 0x13);
+		  }
+		}
+	  }
+	}
+  }
+}
 
 void func_80092DFC_A1DAC(u8 arg0) {
 	AlienInstance *alien = &alienInstances[arg0];
