@@ -234,7 +234,7 @@ s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 		return 0;
 	}
 
-	if (((*(u32*)&building->isDestroyable >> 12) & 0x1000) != 0) {
+	if (((building->unk8 >> 12) & 0x1000) != 0) {
 		return 0;
 	}
 

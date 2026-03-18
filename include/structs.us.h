@@ -189,10 +189,12 @@ typedef struct {
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 pad17;
 	/* 0x18 */ s32 unk18; // Ptr to name
-	/* 0x1C */ u8 pad1C[0xA];
-
+	/* 0x1C */ u8 pad1C[0x4];
+	/* 0x20 */ s16 unk20;
+	/* 0x22 */ u8 pad22[0x4];
 	/* 0x26 */ s16 unk26;
-	/* 0x28 */ u8 pad28[0x4];
+	/* 0x28 */ s16 unk28;
+	/* 0x2A */ u8 pad2A[0x2];
 	/* 0x2C */ s16 unk2C; /* second weapon angle/range param; low byte formerly known as unk2D */
 	/* 0x2E */ s16 unk2E;
 	/* 0x30 */ s16 unk30;
@@ -325,10 +327,7 @@ typedef struct {
 	/* 0x04 */ s16 zCoord;
 	/* 0x06 */ u8 buildingType;
 	/* 0x07 */ u8 unk7;
-	/* 0x08 */ u8 isDestroyable;
-	/* 0x09 */ u8 unk9;
-	/* 0x0A */ u8 state;
-	/* 0x0B */ u8 rotation;
+	/* 0x08 */ u32 unk8; /* 32-bit flags word: isDestroyable/state/rotation packed */
 	/* 0x0C */ u8 padC[3];
 	/* 0x0F */ u8 hitPoints;
 	/* 0x10 */ u8 unk10;
