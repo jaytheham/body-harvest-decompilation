@@ -303,18 +303,22 @@ void func_80073B30_82AE0(s32 arg0)
   D_8013B940[arg0].cheatFunc();
 }
 
-// https://decomp.me/scratch/Xo6Wf
+// checkCheats
+// Reads controller button input, maps to cheat characters, and checks
+// against known cheat patterns in D_8013B940
 #ifdef NON_MATCHING
 void func_80073B78_82B28(void)
 {
   u8 *var_s1;
   s32 temp_v0;
+  s32 new_var3;
   s32 var_a0;
   s32 var_a2;
+  long long new_var2;
   s32 var_s0;
   u8 *var_v1;
-  u8 temp_t2;
   u8 temp_t9;
+  u8 temp_t2;
   u8 *var_v0;
   u32 new_var;
 
@@ -322,7 +326,7 @@ void func_80073B78_82B28(void)
   {
 	if ((currentControllerStates[0].button != 0) && (D_8014945C == 0))
 	{
-	  switch ((s32) currentControllerStates[0].button)
+	  switch ((s32) (&currentControllerStates[0])->button)
 	  {
 		case BUTTON_A:
 		  func_80073A20_829D0('a');
@@ -375,43 +379,53 @@ void func_80073B78_82B28(void)
 	{
 	  D_8014945C = 0;
 	}
-	var_s1 = D_8013B940[var_s0].cheatPattern;
+	var_s1 = D_8013B940[0x14].cheatPattern;
 	new_var = 1;
-	var_s0 = 0x14;
+	var_s0 = 0x14 & 0xFFFFFFFFu;
 	do
 	{
+	  new_var3 = var_s0;
 	  var_a2 = 4;
-	  if (var_s1[4] != 0)
+	  temp_t9 = var_s1[4];
+	  if ((temp_t9 & 0xFFu) != 0)
 	  {
 		do
 		{
 		  temp_v0 = var_a2 + new_var;
-		  temp_t2 = D_8013B940[var_s0].cheatPattern[temp_v0];
+		  temp_t2 = D_8013B940[new_var3].cheatPattern[temp_v0] ^ 0;
 		  var_a2 = temp_v0;
 		}
 		while (temp_t2 != 0);
 	  }
-	  var_a0 = var_a2 - new_var;
-	  if (var_a2 != 0)
-	  {
-		var_v0 = &D_8013B940[var_s0].cheatPattern[var_a2 - var_a0];
-		var_v1 = &cheatInputBuffer[var_a0];
-		do
-		{
-		  temp_t9 = *(var_v0 - new_var);
-		  var_v0 += new_var;
-		  if (temp_t9 != *var_v1) break;
-		  var_v1 -= new_var;
-		}
-		while (var_a0-- != 0);
-	  }
-	  if (var_a0 == -1)
-	  {
-		func_80073B30_82AE0(var_s0);
-		func_80073A74_82A24();
-	  }
-	  var_s1 -= 0x10;
-	  var_s0 -= new_var;
+	  do {
+		do {
+		  var_a0 = var_a2;
+		  do {
+			var_a0 = var_a0 - new_var;
+			if (var_a2 != 0)
+			{
+			  var_v0 = &D_8013B940[var_s0].cheatPattern[var_a2 - var_a0];
+			  var_v1 = &cheatInputBuffer[var_a0];
+			  do
+			  {
+				temp_t9 = *(var_v0 - new_var);
+				var_v0 += new_var;
+				var_s1 = var_v1;
+				if (temp_t9 != (*var_s1)) break;
+				var_v1 -= (new_var2 = new_var);
+			  }
+			  while ((var_a0--) != 0);
+			}
+			if (var_a0 == (-1))
+			{
+			  func_80073B30_82AE0(var_s0);
+			  func_80073A74_82A24();
+			}
+			var_s1 -= 0x10;
+			var_s0 -= new_var;
+		  } while (0);
+		} while (0);
+	  } while (0);
 	}
 	while (var_s0 != 0);
   }
