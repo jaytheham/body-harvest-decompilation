@@ -228,17 +228,13 @@ s32 func_800F02E4_FF294(void) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
-void func_800F02EC_FF29C(s16 arg0) {
-	s32 temp = (s32)arg0 * 24 + (s32)D_80157F58;
-	D_80157F4C = (void *)temp;
-	D_80157F50 = (void *)(temp + 0x18);
-	D_80157F64 = *(s16 *)(temp + 0xC);
-	D_80157F54 = 0;
+void func_800F02EC_FF29C(s16 arg0)
+{
+  D_80157F4C = (void *) ((((s32) arg0) * 24) + ((s32) D_80157F58));
+  D_80157F50 = (void *) ((s32)D_80157F4C + 0x18);
+  D_80157F64 = *((s16 *) ((s32)D_80157F4C + 0xC));
+  D_80157F54 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F02EC_FF29C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F0340_FF2F0.s")
 
