@@ -203,7 +203,6 @@ void func_802D7360_18FE70(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D7D08_190818.s")
 
-#ifdef NON_MATCHING
 void func_802D7EBC_1909CC(u8 arg0) {
 	s32 sp24;
 	AlienInstance *alien;
@@ -218,15 +217,11 @@ void func_802D7EBC_1909CC(u8 arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D7EBC_1909CC.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D7FC0_190AD0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D8150_190C60.s")
 
-#ifdef NON_MATCHING
 void func_802D84A0_190FB0(u8 arg0) {
 	s32 sp18;
 	AlienInstance *alien;
@@ -239,11 +234,7 @@ void func_802D84A0_190FB0(u8 arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D84A0_190FB0.s")
-#endif
 
-#ifdef NON_MATCHING
 void func_802D852C_19103C(u8 arg0) {
 	AlienInstance *alien;
 	func_80091470_A0420(arg0);
@@ -256,9 +247,6 @@ void func_802D852C_19103C(u8 arg0) {
 		alien->unk1E = 0x1E;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D852C_19103C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D85F8_191108.s")
 
