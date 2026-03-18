@@ -29,6 +29,11 @@ typedef struct {
 } func_80070420_7F3D0_UnkArg0; /* size = 0x0A */
 
 typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ u8 pad02[0x16];
+} Unk80050ADA; /* size = 0x18 */
+
+typedef struct {
 	/* 0x00 */ u16 button;
 	/* 0x02 */ s8 stick_x;
 	/* 0x03 */ s8 stick_y;
@@ -194,7 +199,9 @@ typedef struct {
 	/* 0x26 */ s16 unk26;
 	/* 0x28 */ u8 pad28[0x5];
 	/* 0x2D */ s8 unk2D;
-	/* 0x2E */ u8 pad2E[0xA];
+	/* 0x2E */ u8 pad2E[4];
+	/* 0x32 */ u16 unk32;
+	/* 0x34 */ u8 pad34[4];
 	/* 0x38 */ s16 unk38;
 	/* 0x3A */ u8 pad3A[0x4];
 	/* 0x3E */ s16 unk3E;
