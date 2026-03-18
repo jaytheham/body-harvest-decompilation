@@ -2107,7 +2107,47 @@ void func_80087720_966D0(u8 arg0, s32 arg1)
   inst->unk20 &= ~0x800;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800877E8_96798.s")
+s32 func_800877E8_96798(u8 arg0, s16 arg1, s16 arg2) {
+	s16 specVal = alienSpecs[alienInstances[arg0].specIndex].unk40;
+	s16 sp24 = func_80084E54_93E04(D_80052B34, &alienInstances[arg0]);
+
+	func_80087720_966D0(arg0, sp24);
+
+	if (alienInstances[arg0].unk4E == 0) {
+		func_8008064C_8F5FC(arg0);
+		return 0;
+	}
+
+	if (alienInstances[arg0].unk47 & 0xE) {
+		func_8008735C_9630C(arg0);
+	} else {
+		if (alienInstances[arg0].unk20 & 0x100) {
+			if (alienInstances[arg0].unk20 & 0x40) {
+				if (arg2 < sp24) {
+					specVal *= -1;
+				} else if (arg1 < sp24) {
+					specVal = 0;
+				}
+			} else {
+				if (sp24 < arg1) {
+					specVal *= -1;
+				} else if (sp24 < arg2) {
+					specVal = 0;
+				}
+			}
+		}
+		if (specVal == 0 && !(alienInstances[arg0].unk47 & 1)) {
+			alienInstances[arg0].unk3A = alienInstances[arg0].unk3A - 1;
+		} else {
+			alienInstances[arg0].unk3A = 0xFF;
+		}
+		if (alienInstances[arg0].unk3A <= 0 && !(alienInstances[arg0].unk47 & 1)) {
+			func_800847D0_93780(arg0 & 0xFF);
+		}
+		func_8008741C_963CC(arg0, specVal);
+	}
+	return 1;
+}
 
 s32 func_800879A4_96954(u8 arg0, s16 arg1, u8 arg2)
 {
