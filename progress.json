@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-19T03:51:39Z",
-  "commit": "3a850bb",
-  "commit_timestamp": "2026-03-19T16:51:30+13:00",
+  "generated": "2026-03-19T03:58:52Z",
+  "commit": "c5da4ed",
+  "commit_timestamp": "2026-03-19T16:58:41+13:00",
   "overall": {
-    "total_functions": 2912,
-    "matched": 723,
-    "non_matching": 239,
-    "asm_stubs": 1950,
-    "matched_pct": 24.83,
-    "decompiled_pct": 33.04
+    "total_functions": 2939,
+    "matched": 725,
+    "non_matching": 266,
+    "asm_stubs": 1948,
+    "matched_pct": 24.67,
+    "decompiled_pct": 33.72
   },
   "segments": {
     "core": {
@@ -58,12 +58,12 @@
     },
     "overlay_level/java": {
       "display_name": "Level / Java",
-      "matched": 0,
-      "non_matching": 0,
-      "asm_stubs": 101,
-      "total": 101,
-      "matched_pct": 0.0,
-      "decompiled_pct": 0.0
+      "matched": 2,
+      "non_matching": 27,
+      "asm_stubs": 99,
+      "total": 128,
+      "matched_pct": 1.6,
+      "decompiled_pct": 22.7
     },
     "overlay_level/america": {
       "display_name": "Level / America",
@@ -517,12 +517,12 @@
     {
       "path": "overlay_level/java/1ED9E0.c",
       "segment": "overlay_level/java",
-      "matched": 0,
-      "non_matching": 0,
-      "asm_stubs": 101,
-      "total": 101,
-      "matched_pct": 0.0,
-      "contributor": "jaytheham"
+      "matched": 2,
+      "non_matching": 27,
+      "asm_stubs": 99,
+      "total": 128,
+      "matched_pct": 1.6,
+      "contributor": "Meridian Lex"
     },
     {
       "path": "overlay_level/siberia/2B7100.c",
@@ -538,17 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 34,
+      "files": 33,
       "matched": 615,
       "non_matching": 180,
-      "asm_stubs": 1603
+      "asm_stubs": 1502
     },
     {
       "name": "Meridian Lex",
-      "files": 8,
-      "matched": 94,
-      "non_matching": 58,
-      "asm_stubs": 248
+      "files": 9,
+      "matched": 96,
+      "non_matching": 85,
+      "asm_stubs": 347
     },
     {
       "name": "Harvester",
@@ -559,22 +559,6 @@
     }
   ],
   "history": [
-    {
-      "date": "2026-03-09",
-      "commit": "2dc0d46",
-      "matched_pct": 20.41,
-      "decompiled_pct": 28.0,
-      "matched": 591,
-      "total": 2896
-    },
-    {
-      "date": "2026-03-12",
-      "commit": "3fc40cf",
-      "matched_pct": 21.37,
-      "decompiled_pct": 29.01,
-      "matched": 619,
-      "total": 2896
-    },
     {
       "date": "2026-03-10",
       "commit": "c3035fc",
@@ -616,20 +600,20 @@
       "total": 2942
     },
     {
-      "date": "2026-03-16",
-      "commit": "becd424",
-      "matched_pct": 22.53,
-      "decompiled_pct": 31.92,
-      "matched": 665,
-      "total": 2951
-    },
-    {
       "date": "2026-03-17",
       "commit": "7c61f97",
       "matched_pct": 22.92,
       "decompiled_pct": 32.12,
       "matched": 675,
       "total": 2945
+    },
+    {
+      "date": "2026-03-16",
+      "commit": "275cfe7",
+      "matched_pct": 22.42,
+      "decompiled_pct": 32.54,
+      "matched": 667,
+      "total": 2975
     },
     {
       "date": "2026-03-18",
@@ -641,11 +625,11 @@
     },
     {
       "date": "2026-03-19",
-      "commit": "3a850bb",
-      "matched_pct": 24.83,
-      "decompiled_pct": 33.04,
-      "matched": 723,
-      "total": 2912
+      "commit": "502333c",
+      "matched_pct": 24.67,
+      "decompiled_pct": 33.72,
+      "matched": 725,
+      "total": 2939
     }
   ]
 }
