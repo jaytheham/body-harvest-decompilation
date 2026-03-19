@@ -128,7 +128,30 @@ void func_800B19F8_C09A8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B316C_C211C.s")
 
+// https://decomp.me/scratch/oc09b
+#ifdef NON_MATCHING
+void func_800B31FC_C21AC(s8 arg0, s8 arg1)
+{
+  volatile u8 *v0;
+  u8 temp;
+  u8 temp2;
+  u16 temp3;
+  v0 = (volatile u8 *) ((((u8 *) D_80052A94) + (arg1 * 512)) + (arg0 * 2));
+  temp = *v0;
+  temp |= 0x80;
+  *v0 = temp;
+  temp &= 0xF7;
+  *v0 = temp;
+  temp |= 4;
+  *v0 = temp;
+  temp3 = *((volatile u16 *) v0);
+  temp3 &= 0xFC3F;
+  temp3 |= 0x300;
+  *((volatile u16 *) v0) = temp3;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B31FC_C21AC.s")
+#endif
 
 s32 func_800B325C_C220C(s8 arg0, s8 arg1, u16 arg2)
 {
