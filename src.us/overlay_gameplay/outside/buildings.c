@@ -67,7 +67,22 @@ void func_80116554_125504(s32 arg0, s16 *arg1, s16 *arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80116784_125734.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801168E8_125898.s")
+s32 func_801168E8_125898(s16 arg0, s16 arg1) {
+	s32 count;
+	s32 i;
+
+	count = 0;
+	i = 0x20;
+	while (i--) {
+		if (arg0 == D_800522C0[i].unkC) {
+			if (arg1 == count) {
+				return 1;
+			}
+			count++;
+		}
+	}
+	return 0;
+}
 
 // guess_initBuildingsDoors
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011694C_1258FC.s")

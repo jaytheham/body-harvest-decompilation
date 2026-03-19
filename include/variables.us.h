@@ -190,6 +190,8 @@ extern u32 D_800510C8;
 
 extern BuildingInstance buildingInstances[0xFF];
 extern u32 buildingInteriorToLoadId;
+extern Unk800522C0 D_800522C0[0x20];
+extern Unk800522C0 D_8005252C;
 extern s32 D_80052540;
 extern s32 D_80052544;
 extern s16 D_80052546;
