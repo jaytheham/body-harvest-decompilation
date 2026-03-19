@@ -159,7 +159,44 @@ void func_800EC468_FB418(void) { D_80157A28 &= ~0x200; }
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED78C_FC73C.s")
 
 // Cont 2 button attempts to use weapon model 0 when changing weapon
+#ifdef NON_MATCHING
+s32 func_800EF0B0_FE060(s32 arg0) {
+	s32 *ptr;
+	s32 sum;
+	s32 count;
+	s64 pad0;
+	s64 pad1;
+	s64 temp;
+	s32 *temp32;
+	s8 byte;
+
+	ptr = (s32 *)func_80012000_12C00(arg0);
+	temp32 = (s32 *)(&pad1 + 2);
+	sum = 0;
+	count = 0;
+
+	do {
+		temp32[0] = *ptr;
+		ptr += 2;
+		count++;
+		temp32[1] = *(ptr - 1);
+		byte = (s8)temp32[0];
+		sum += byte;
+	} while ((byte != -0x48) || (count >= 0x39));
+
+	if (D_8004758E & 0x2000) {
+		return 0;
+	}
+
+	if ((sum == -0x88E) && (count == 0x38)) {
+		return 1;
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF0B0_FE060.s")
+#endif
 
 // This checks the player modifier and writes values that cause either
 // normal or evil adam to be rendered
@@ -173,11 +210,15 @@ void func_800EC468_FB418(void) { D_80157A28 &= ~0x200; }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFCC0_FEC70.s")
 
+#ifdef NON_MATCHING
 void func_800EFE50_FEE00(u8 arg0) {
 	func_800101F0_10DF0(&D_80157E90,
 		(void *)(((s32)&D_3058A40 & 0xFFFFFF) + ((arg0 * 0x78) & 0xFFFF) + (s32)&D_8F4960),
 		0x78);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFE50_FEE00.s")
+#endif
 
 /// Cutscene stuff
 /// 800EFEB4 is called and triggers cutscenes (may need to be followed by 80013468)

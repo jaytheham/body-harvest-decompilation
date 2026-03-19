@@ -94,9 +94,14 @@ extern u8 D_80042DB8;
 extern u8 D_80043243;
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
+// TODO merge these:
 extern Unk80047588 currentControllerStates[4];
+extern s8 D_8004758A;
+extern s8 D_8004758B;
+extern u16 D_8004758E;
+
 extern u16 D_800475D8[];
-extern u16 previousControllerButtonStates[4];
+extern u16 previousControllerButtonStates[4]; // 0x800475E0
 extern u32 D_800475F8;
 extern s32 D_80047584;
 extern u32 D_8004767C;
@@ -145,8 +150,6 @@ extern s16 D_80048176;
 extern s16 D_800481A4[];
 extern s16 D_800481B6;
 extern u8 D_800481BD;
-extern s8 D_8004758A;
-extern s8 D_8004758B;
 extern s32 D_80048178;
 extern s32 D_8004817C;
 extern s32 D_80048180;
