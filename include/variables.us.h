@@ -334,6 +334,7 @@ extern Unk8014DD50 D_8013C9EC;
 extern Unk8013CA D_8013CA00;
 extern Unk8013CA D_8013CA0A;
 extern s8 D_8013CA0C[];
+extern Unk8014DD50 D_8013CA24[];
 extern Unk8014DD50 *D_8013CB40;
 extern Unk80154082 D_8013CB48;
 extern s8 D_8013D890; // Triggers beacon warp

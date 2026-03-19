@@ -777,7 +777,94 @@ void func_80080B44_8FAF4(u8 arg0, u8 arg1) {
 	alien->unk20 |= 0x100;
 }
 
+#ifdef NON_MATCHING
+void func_80080BC0_8FB70(u8 arg0, s16 arg1, s16 arg2, u8 arg3) {
+    s16 unk0;
+    s16 unk4;
+    s16 shifted_unk4;
+    s16 shifted_unk0;
+    s16 shifted_arg1;
+    s32 dx;
+    s32 neg_dx;
+    s32 dz;
+    s32 neg_dz;
+    s32 abs_dx;
+    s32 abs_dz;
+    s32 step;
+    s32 mask;
+    s32 half;
+
+    unk0 = alienInstances[arg0].unk0;
+    unk4 = alienInstances[arg0].unk4;
+    shifted_unk4 = (s16)(unk4 >> arg3);
+    shifted_unk0 = (s16)(unk0 >> arg3);
+    shifted_arg1 = (s16)(arg1 >> arg3);
+
+    if (shifted_unk0 != shifted_arg1 || shifted_unk4 != (s16)(arg2 >> arg3)) {
+        if (shifted_unk0 != shifted_arg1) {
+            s16 unkE = alienInstances[arg0].unkE;
+            if (unkE < 0) {
+                alienInstances[arg0].unkE = unkE - ((shifted_unk0 - shifted_arg1) << 14);
+            } else {
+                alienInstances[arg0].unkE = unkE + ((shifted_unk0 - shifted_arg1) << 14);
+            }
+            alienInstances[arg0].unk0 = arg1;
+            return;
+        }
+        if (shifted_unk4 != (s16)(arg2 >> arg3)) {
+            s16 unkE = alienInstances[arg0].unkE;
+            s16 shifted_arg2 = (s16)(arg2 >> arg3);
+            s32 neg_unkE = -(s32)unkE;
+            s32 abs_unkE;
+            if (neg_unkE < unkE) {
+                abs_unkE = unkE;
+            } else {
+                abs_unkE = neg_unkE;
+            }
+            if (abs_unkE >= 0x4001) {
+                alienInstances[arg0].unkE = unkE + ((shifted_unk4 - shifted_arg2) << 14);
+            } else {
+                alienInstances[arg0].unkE = unkE - ((shifted_unk4 - shifted_arg2) << 14);
+            }
+            alienInstances[arg0].unk4 = arg2;
+        }
+    } else {
+        step = 1 << arg3;
+        mask = step - 1;
+        half = step / 2;
+        dx = (unk0 & mask) - half;
+        neg_dx = -dx;
+        dz = (unk4 & mask) - half;
+        if (neg_dx < dx) {
+            abs_dx = dx;
+        } else {
+            abs_dx = neg_dx;
+        }
+        neg_dz = -dz;
+        if (neg_dz < dz) {
+            abs_dz = dz;
+        } else {
+            abs_dz = neg_dz;
+        }
+        if (abs_dz < abs_dx) {
+            if (dx < 0) {
+                alienInstances[arg0].unk0 = (unk0 & 0xFF00) - 1;
+            } else {
+                alienInstances[arg0].unk0 = (unk0 & 0xFF00) + 0x100;
+            }
+        } else {
+            if (dz < 0) {
+                alienInstances[arg0].unk4 = (unk4 & 0xFF00) - 1;
+            } else {
+                alienInstances[arg0].unk4 = (unk4 & 0xFF00) + 0x100;
+            }
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080BC0_8FB70.s")
+#endif
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080D98_8FD48.s")
 
