@@ -20,7 +20,17 @@ f32 func_800C0FAC_CFF5C(Vec3f *arg0) {
 	return (arg0->x * arg0->x) + (arg0->y * arg0->y) + (arg0->z * arg0->z);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C0FD4_CFF84.s")
+f32 func_800C0FD4_CFF84(Vec3f *arg0) {
+	f32 temp_f0;
+	f32 var_f12;
+
+	temp_f0 = func_800C0FAC_CFF5C(arg0);
+	var_f12 = temp_f0;
+	if ((f64) temp_f0 != 0.0) {
+		var_f12 = sqrtf(var_f12);
+	}
+	return var_f12;
+}
 
 #ifdef NON_MATCHING
 void func_800C1024_CFFD4(Vec3f *arg0, Vec3f *arg1) {
@@ -488,31 +498,27 @@ void func_800D7FB4_E6F64(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D95D0_E8580.s")
 
-#ifdef NON_MATCHING
-void func_800D96B4_E8664(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-	Unk80154318Entry *temp_v1;
-
-	temp_v1 = &D_80154318[D_80154318[arg0].unk4];
-	temp_v1->unk8 = arg1;
-	temp_v1->unkA = arg2;
-	temp_v1->unkC = arg3;
+void func_800D96B4_E8664(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
+{
+  s16 new_var;
+  Unk80154318Entry *temp_v1;
+  new_var = D_80154318[arg0].unk4;
+  temp_v1 = &D_80154318[new_var];
+  temp_v1->unk8 = arg1;
+  temp_v1->unkA = arg2;
+  temp_v1->unkC = arg3;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D96B4_E8664.s")
-#endif
 
-#ifdef NON_MATCHING
-void func_800D9704_E86B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-	Unk80154318Entry *temp_v1;
-
-	temp_v1 = &D_80154318[D_80154318[arg0].unk4];
-	temp_v1->unkE = arg1;
-	temp_v1->unk10 = arg2;
-	temp_v1->unk12 = arg3;
+void func_800D9704_E86B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
+{
+  s16 new_var;
+  s16 new_var2;
+  Unk80154318Entry *temp_v1;
+ temp_v1 = &D_80154318[new_var2 = D_80154318[arg0].unk4]; new_var = arg2; new_var2 = new_var;
+  temp_v1->unkE = arg1;
+  temp_v1->unk10 = new_var2;
+  (*temp_v1).unk12 = arg3;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9704_E86B4.s")
-#endif
 
 void func_800D9754_E8704(s16 arg0) {
 	if (arg0 != -3) {
@@ -524,21 +530,18 @@ void func_800D9754_E8704(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D99F4_E89A4.s")
 
-#ifdef NON_MATCHING
 void func_800D9A8C_E8A3C(s16 arg0, s32 arg1, s16 arg2) {
-	*(s16 *)((u8 *)&D_80154318[D_80154318[arg0].unk4].unk8 + (arg1 * 2)) = arg2;
+	s16 new_var;
+	new_var = D_80154318[arg0].unk4;
+	*(s16 *)((u8 *)&D_80154318[new_var].unk8 + (arg1 * 2)) = arg2;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9A8C_E8A3C.s")
-#endif
 
-#ifdef NON_MATCHING
-void func_800D9AD4_E8A84(s16 arg0, s8 arg1) {
-	D_80154318[D_80154318[arg0].unk4].unk14 = arg1;
+void func_800D9AD4_E8A84(s16 arg0, u8 arg1)
+{
+	s16 new_var;
+	new_var = D_80154318[arg0].unk4;
+	D_80154318[new_var].unk14 = arg1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9AD4_E8A84.s")
-#endif
 
 void func_800D9B14_E8AC4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	Unk80154318Entry *temp_v0;
@@ -691,13 +694,9 @@ void func_800DDF18_ECEC8(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DE2E8_ED298.s")
 
-#ifdef NON_MATCHING
 void func_800DE9B8_ED968(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	func_800DDB60_ECB10(arg0, arg1, arg2, 1, (s32) arg3);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DE9B8_ED968.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DEA08_ED9B8.s")
 
@@ -899,36 +898,18 @@ s32 func_800E60CC_F507C(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
 
 // displayFXUnderWater
-#ifdef NON_MATCHING
 void func_800E71F8_F61A8(void) {
-	Gfx *dl;
-
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w1 = (u32) &D_80031160 & 0x1FFFFFFF;
-	dl->words.w0 = 0x01020040;
+	gSPMatrix(D_8005BB2C++, (Mtx *)((u32) &D_80031160 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E71F8_F61A8.s")
-#endif
 
 // displayFXOnWater - Ripples, splashes etc
-#ifdef NON_MATCHING
 void func_800E7234_F61E4(void) {
-	Gfx *dl;
-
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w1 = (u32) &D_80031160 & 0x1FFFFFFF;
-	dl->words.w0 = 0x01020040;
+	gSPMatrix(D_8005BB2C++, (Mtx *)((u32) &D_80031160 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	func_800DD604_EC5B4(&D_8005BB2C);
 	func_800E6A38_F59E8();
 	func_800CFD84_DED34();
 	func_800E5538_F44E8();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7234_F61E4.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E72A0_F6250.s")
 

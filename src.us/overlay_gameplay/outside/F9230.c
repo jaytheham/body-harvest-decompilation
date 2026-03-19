@@ -12,11 +12,14 @@ void func_800EA298_F9248(s16 arg0) {
 void func_800EA2B0_F9260(s32 arg0) { D_801575DC = arg0; }
 
 // guess_attemptDoAnimation
+// https://decomp.me/scratch/4eqv8
 #ifdef NON_MATCHING
-void func_800EA2BC_F926C(void) {
-	if (D_80052B34->unk1A == 0) {
-		func_800EB534_FA4E4(&D_80157600, 0x2F, 0, 0);
-	}
+void func_800EA2BC_F926C(void)
+{
+  if (D_80052B34->unk1A == 0)
+  {
+	func_800EB534_FA4E4(&D_80157600, 0x2F, 0, 0);
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA2BC_F926C.s")
@@ -225,17 +228,13 @@ s32 func_800F02E4_FF294(void) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
-void func_800F02EC_FF29C(s16 arg0) {
-	s32 temp = (s32)arg0 * 24 + (s32)D_80157F58;
-	D_80157F4C = (void *)temp;
-	D_80157F50 = (void *)(temp + 0x18);
-	D_80157F64 = *(s16 *)(temp + 0xC);
-	D_80157F54 = 0;
+void func_800F02EC_FF29C(s16 arg0)
+{
+  D_80157F4C = (void *) ((((s32) arg0) * 24) + ((s32) D_80157F58));
+  D_80157F50 = (void *) ((s32)D_80157F4C + 0x18);
+  D_80157F64 = *((s16 *) ((s32)D_80157F4C + 0xC));
+  D_80157F54 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F02EC_FF29C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F0340_FF2F0.s")
 
@@ -765,21 +764,17 @@ s16 func_801081AC_11715C(s16 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801098E8_118898.s")
 
-#ifdef NON_MATCHING
-VehicleInstance *func_80109960_118910(void) {
-	s32 i = 0x7F;
-	VehicleInstance *ptr = &D_80050A74;
-	do {
-		if (ptr->unk1A == 5) {
-			return ptr;
-		}
-		ptr--;
-	} while (i-- != 0);
-	return NULL;
+VehicleInstance *func_80109960_118910(void)
+{
+  s32 i;
+  for (i = 0x80; i--;)
+  {
+	if (vehicleInstances[i].unk1A == 5)
+	{
+	  return &vehicleInstances[i];
+	}
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80109960_118910.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010999C_11894C.s")
 
@@ -850,17 +845,11 @@ void func_8010F93C_11E8EC(Unk80052B40 *arg0, Unk80052B40 *arg1) {
 	func_8010F834_11E7E4(arg0, arg1->unk0, arg1->unk2, arg1->unk4);
 }
 
-#ifdef NON_MATCHING
-void func_8010F96C_11E91C(Unk80052B40 *arg0, Unk80052B40_fp *arg1) {
-	Unk80052B40_fp *temp = arg1;
-	s32 x = temp->unk4;
-	s32 y = temp->unk8;
-	s32 z = arg1->unk0;
-	func_8010F834_11E7E4(arg0, z >> 16, x >> 16, y >> 16);
+void func_8010F96C_11E91C(Unk80052B40 *arg0, Unk80052B40_fp *arg1)
+{
+  Unk80052B40_fp *temp = arg1;
+  func_8010F834_11E7E4(arg0, arg1->unk0 >> 16, temp->unk4 >> 16, temp->unk8 >> 16);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010F96C_11E91C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010F9B4_11E964.s")
 

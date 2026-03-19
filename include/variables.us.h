@@ -163,6 +163,7 @@ extern s32 D_8004D154;
 extern s32 D_8004D158;
 extern u8 D_8004D160;
 extern u8 D_8004D1B9;
+extern Unk8004D1C8 D_8004D1C8[];
 extern u8 D_80047F93;
 extern AlienInstance D_8004D0F8[]; // alien array base
 extern s32 D_8004DC48;
@@ -171,6 +172,7 @@ extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
 extern VehicleInstance vehicleInstances[]; // 8004DCD0
+extern Unk80050ADA D_80050ADA[]; // 0x80050ADA
 extern u8 D_80050ADE[];
 extern u8 D_80050AE0[];
 extern u8 D_80050AF0[];
@@ -328,9 +330,11 @@ extern u8 D_8013C698[];
 extern u8 D_8013C6B8[];
 extern Unk8014DD50 *D_8013C738;
 extern Unk8014DD50 D_8013C9DC;
+extern Unk8014DD50 D_8013C9EC;
 extern Unk8013CA D_8013CA00;
 extern Unk8013CA D_8013CA0A;
 extern s8 D_8013CA0C[];
+extern Unk8014DD50 D_8013CA24[];
 extern Unk8014DD50 *D_8013CB40;
 extern Unk80154082 D_8013CB48;
 extern s8 D_8013D890; // Triggers beacon warp
@@ -389,7 +393,19 @@ extern char D_80141068[];
 extern char D_8014107C[];
 extern char D_80141090[];
 extern char D_801417C0; /* osSyncPrintf format string - alien action table full warning */
+extern char D_801417DC;
+extern char D_801417F8;
+extern char D_8014180C;
+extern char D_8014183C;
+extern char D_80141868;
+extern char D_8014189C;
+extern char D_801418B8;
+extern char D_801418D4;
+extern s32 D_8014D304;
+extern s32 D_802566D4[];
 extern char D_80141D98;
+extern f64 D_80141E30;
+extern f64 D_80141E38;
 extern f64 D_80141E40;
 extern f64 D_80141E48;
 extern f64 D_80141E50;
@@ -481,6 +497,8 @@ extern s32 D_80149478[16];
 extern s32 D_801494B4;
 extern u8* D_801494B8;
 extern u8 D_801494BC;
+extern u8 D_80149AF8[];
+extern s32 D_80149B40;
 extern s32 D_80149B44;
 extern u8 D_8014D200[];
 extern u8 D_8014D298[][10];
@@ -514,7 +532,7 @@ extern s32 D_8014F828;
 extern s16 D_8014F832;
 extern s32 D_8014F838;
 extern f32 D_8014F850;
-extern u8* D_8014F8A0; /* pointer to world tile data */
+extern s16 (*D_8014F8A0)[256]; /* pointer to world tile data (256x256 s16 array) */
 extern Unk8014FD30Type D_8014FD30;
 extern u8 D_8014FD48[];
 extern u16 D_8014FDC8;
@@ -548,7 +566,6 @@ extern s32 D_8015F9E4;
 extern s16 D_8015F9F8[8][4];
 extern s16 D_8015FAEE;
 extern Unk8015FAD0 D_8015FAD0[0x19];
-extern Unk8015FAF0 D_8015FAF0[];
 extern u8 D_8015FF80;
 extern s32 D_8015FF84;
 

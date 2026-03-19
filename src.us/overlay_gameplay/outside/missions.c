@@ -44,7 +44,10 @@ u8 func_80074558_83508(void) {
 // readMissionObject
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074578_83528.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800745F0_835A0.s")
+s32 func_800745F0_835A0(void) {
+	func_80074578_83528(&D_80149AF8[D_80149B40 * 3]);
+	return D_80149B40++ & 0xFF;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007463C_835EC.s")
 
@@ -79,7 +82,24 @@ void func_80074768_83718(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075574_84524.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800755E0_84590.s")
+void func_800755E0_84590(void)
+{
+  Unk8004D1C8 *var_v0;
+  Unk8004D1C8 * var_v1;
+  s32 i;
+	s32 new_var;
+  func_80074204_831B4();
+  new_var = 0x10;
+  
+  for (i = 0; &D_8004D1C8[new_var] != &D_8004D1C8[i]; i++)
+  {
+	D_8004D1C8[i].unk6 = 0;
+	D_8004D1C8[i].unkC = 0;
+	D_8004D1C8[i].unk12 = 0;
+	D_8004D1C8[i].unk0 = 0;
+  }
+  D_8004D150 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007562C_845DC.s")
 
@@ -97,23 +117,22 @@ void func_80076208_851B8(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007622C_851DC.s")
 
+// Remove the current callback from the list of callbacks (to call each frame?)
 // https://decomp.me/scratch/GkpO5
 #ifdef NON_MATCHING
-void func_800762A8_85258() {
-	s32 *var_a1;
-	s32 var_v1;
-	var_a1 = &D_801494B4;
-	var_v1 = 0xF; 
-	do
+void func_800762A8_85258(void (*callback))
+{
+  s32 var_v1;
+  s32*var_a1 = &D_801494B4;
+  var_v1 = 0xF;
+  if (!var_a1) { } 
+  do {
+	if ((s32)callback == *var_a1)
 	{
-		if (var_v1 == *var_a1)
-		{
-			*var_a1 = 0;
-			return;
-		}
-		
-	} while (var_a1--, var_v1--);
-
+	  *var_a1 = 0;
+	  return;
+	}
+  } while(var_a1--, var_v1--);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800762A8_85258.s")
@@ -127,22 +146,17 @@ void func_800762A8_85258() {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800765C4_85574.s")
 
-#ifdef NON_MATCHING
-s32 func_80076754_85704(void) {
-	register s32 temp_v0;
-	s32 var_s0;
-
-	var_s0 = 0x17;
-	do {
-		func_8007643C_853EC(var_s0);
-		temp_v0 = var_s0;
-	} while (var_s0--);
-	D_8004D158 = 0;
-	D_8004D154 = -1;
-	return temp_v0;
+void func_80076754_85704(void)
+{
+  s32 var_s0;
+  var_s0 = 0x17;
+  do
+  {
+	func_8007643C_853EC(var_s0);
+  }
+  while (var_s0--);
+  D_8004D158 = 0;
+  D_8004D154 = -1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076754_85704.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007679C_8574C.s")

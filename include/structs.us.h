@@ -29,6 +29,11 @@ typedef struct {
 } func_80070420_7F3D0_UnkArg0; /* size = 0x0A */
 
 typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ u8 pad02[0x16];
+} Unk80050ADA; /* size = 0x18 */
+
+typedef struct {
 	/* 0x00 */ u16 button;
 	/* 0x02 */ s8 stick_x;
 	/* 0x03 */ s8 stick_y;
@@ -49,6 +54,18 @@ typedef struct {
 	/* 0x1C */ u8 pad1C[0x4];
 	/* 0x20 */ s32 unk20;
 } Unk8004D0F8; /* size = 0x24 */
+
+typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 pad1[5];
+	/* 0x06 */ u8 unk6;
+	/* 0x07 */ u8 pad7[5];
+	/* 0x0C */ u8 unkC;
+	/* 0x0D */ u8 padD[5];
+	/* 0x12 */ u8 unk12;
+	/* 0x13 */ u8 pad13[4];
+	/* 0x17 */ u8 unk17;
+} Unk8004D1C8; /* size = 0x18 */
 
 typedef struct {
 	/* 0x00 */ s32 score;
@@ -194,14 +211,17 @@ typedef struct {
 	/* 0x26 */ s16 unk26;
 	/* 0x28 */ u8 pad28[0x5];
 	/* 0x2D */ s8 unk2D;
-	/* 0x2E */ u8 pad2E[0xA];
+	/* 0x2E */ u8 pad2E[4];
+	/* 0x32 */ u16 unk32;
+	/* 0x34 */ u8 pad34[4];
 	/* 0x38 */ s16 unk38;
 	/* 0x3A */ u8 pad3A[0x4];
 	/* 0x3E */ s16 unk3E;
 	/* 0x40 */ s16 unk40;
 	/* 0x42 */ s16 unk42;
 	/* 0x44 */ void *unk44;
-	/* 0x48 */ u8 pad48[0x9];
+	/* 0x48 */ u8 pad48[0x8];
+	/* 0x50 */ s8 unk50;
 	/* 0x51 */ u8 unk51;
 	/* 0x52 */ u8 pad52[0x2];
 	/* 0x54 */ s32 unk54;
@@ -346,15 +366,6 @@ typedef struct {
 } BuildingSpec; /* size = 0x20 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x4];
-	/* 0x04 */ void (*callback)(s32, s16);
-	/* 0x08 */ u8 unk8;
-	/* 0x09 */ u8 pad9[0x3];
-	/* 0x0C */ u8 unkC;
-	/* 0x0D */ u8 padD[0x23];
-} Unk8015FAF0; /* size = 0x30 */
-
-typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ s32 unk4;
 	/* 0x08 */ s32 unk8;
@@ -362,9 +373,9 @@ typedef struct {
 	/* 0x18 */ s16 unk18;
 	/* 0x1A */ s16 unk1A;
 	/* 0x1C */ s16 unk1C;
-	/* 0x1E */ u8 pad1E[0x2];
+	/* 0x1E */ s16 unk1E;
 	/* 0x20 */ s32 (*unk20)();
-	/* 0x24 */ u8 pad24[0x4];
+	/* 0x24 */ void (*unk24)(s32, s16);
 	/* 0x28 */ u32 unk28;
 	/* 0x2C */ u8 unk2C;
 	/* 0x2D */ u8 pad2D[3];
@@ -784,7 +795,8 @@ typedef struct {
 	/* 0x0E */ s16 unkE;
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
-	/* 0x14 */ s16 unk14;
+	/* 0x14 */ u8 unk14;
+	/* 0x15 */ u8 unk15;
 	/* 0x16 */ u8 pad16[6];
 } Unk80154318Entry; /* stride = 0x1C */
 

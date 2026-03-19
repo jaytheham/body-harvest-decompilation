@@ -47,7 +47,7 @@ Note - the core .c files assumed to only contain library functions
 | overlay_gameplay/outside/145D70.c | ? |  | unclaimed |  |
 | overlay_gameplay/outside/148000.c | ? |  | unclaimed |  |
 | overlay_gameplay/inside/158330.c | ? |  | unclaimed |  |
-| overlay_gameplay/inside/1648A0.c | ? |  | unclaimed |  |
+| overlay_gameplay/inside/1648A0.c | Harvester |  | in-progress |  |
 | overlay_gameplay/inside/167C90.c | ? |  | unclaimed |  |
 | overlay_gameplay/inside/16AF30.c | ? |  | unclaimed |  |
 | overlay_gameplay/inside/173B60.c | ? |  | unclaimed |  |

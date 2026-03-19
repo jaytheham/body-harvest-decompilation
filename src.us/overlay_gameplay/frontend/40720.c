@@ -1198,7 +1198,6 @@ void func_8008098C_50E3C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800809DC_50E8C.s")
 
-#ifdef NON_MATCHING
 void func_80080A84_50F34(FrontendStreamSlot* arg0) {
 	s32 index;
 
@@ -1208,9 +1207,6 @@ void func_80080A84_50F34(FrontendStreamSlot* arg0) {
 		D_800D8578[index].unk50 = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080A84_50F34.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080AD4_50F84.s")
 
