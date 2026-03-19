@@ -431,20 +431,14 @@ void func_800D5588_E4538(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D6290_E5240.s")
 
-#ifdef NON_MATCHING
-void func_800D6A84_E5A34(s32 arg0) {
-	s32 temp_t6;
-
-	temp_t6 = arg0 & 0xFF;
-	D_80153AE0[temp_t6].unk13 = 0;
-	D_80153AE0[temp_t6].unk14 = 0;
-	D_80153AE0[temp_t6].unk18 = ((s32 *) &D_8013E2F4)[temp_t6];
-	D_80153AE0[temp_t6].unk12 = ((u8 *) &D_8013E2EC)[temp_t6];
-	D_80153AE0[temp_t6].unk1C = ((s32 *) &D_8013E308)[temp_t6];
+void func_800D6A84_E5A34(u8 arg0)
+{
+  D_80153AE0[arg0].unk13 = 0;
+  D_80153AE0[arg0].unk14 = 0;
+  D_80153AE0[arg0].unk18 = ((s32 *) (&D_8013E2F4))[arg0];
+  D_80153AE0[arg0].unk12 = ((u8 *) (&D_8013E2EC))[arg0];
+  D_80153AE0[arg0].unk1C = ((s32 *) (&D_8013E308))[arg0];
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D6A84_E5A34.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D6ADC_E5A8C.s")
 
