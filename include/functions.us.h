@@ -629,4 +629,39 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, Unk80047588 *arg1);
 void func_8007EB1C_166BDC(void *arg0);
 void func_8007EFD4_167094(VehicleInstance *arg0);
 
+/* added for func_800720F4_810A4 */
+void func_8000AFDC_BBDC(void);
+void func_8000577C_637C(void);
+void func_800071D8_7DD8(void);
+void func_80008C18_9818(void);
+void playMapMusic(void);
+void playInventoryMusic(void);
+void guess_displayInventory(void);
+// isButtonNewlyPressed declared in 1000.c
+void func_800E8190_F7140(void);
+void func_800EFFB4_FEF64(void);
+void func_800E87C8_F7778(void);
+void func_800E8A00_F79B0(void);
+void func_800EA5B8_F9568(void);
+void func_80070CC0_7FC70(void);
+void func_80071F28_80ED8(void);
+void func_800A140C_B03BC(void);
+void func_8000B044_BC44(void);
+void func_800F0094_FF044(void);
+void func_800EC330_FB2E0(void);
+void func_8011DBA0_12CB50(void);
+void func_80073B78_82B28(void);
+void func_80116724_1256D4(void);
+void func_80117F34_126EE4(void);
+void func_80115A74_124A24(void);
+void func_8009811C_A70CC(void);
+void func_800A9238_B81E8(void);
+void func_800E35E0_F2590(u8);
+void func_8009C458_AB408(void);
+void func_800BC2F8_CB2A8(s16, s16);
+void func_800BDAF4_CCAA4(void);
+void func_80070BFC_7FBAC(void);
+void func_80116784_125734(void);
+void func_800702C0_7F270(s16);
+
 #endif

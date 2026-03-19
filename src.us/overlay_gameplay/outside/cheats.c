@@ -307,16 +307,11 @@ void func_80073B30_82AE0(s32 arg0)
 #ifdef NON_MATCHING
 void func_80073B78_82B28(void)
 {
-  u8 *var_s1;
-  s32 temp_v0;
-  s32 var_a0;
-  s32 var_a2;
+  s32 bufferIndex;
+  s32 firstNullCharIndex;
   s32 var_s0;
-  u8 *var_v1;
-  u8 temp_t2;
-  u8 temp_t9;
-  u8 *var_v0;
-  u32 new_var;
+  u8 *curBufferChar;
+  u8 *curCheatPatternChar;
 
   if ((currentControllerStates[0].button == 0) || (D_8014945C != 1))
   {
@@ -375,45 +370,32 @@ void func_80073B78_82B28(void)
 	{
 	  D_8014945C = 0;
 	}
-	var_s1 = D_8013B940[var_s0].cheatPattern;
-	new_var = 1;
-	var_s0 = 0x14;
-	do
+
+	for(var_s0 = 0x14; var_s0 != 0; var_s0--)
 	{
-	  var_a2 = 4;
-	  if (var_s1[4] != 0)
+	  firstNullCharIndex = 3;
+	  while (D_8013B940[var_s0].cheatPattern[++firstNullCharIndex] != 0);
+	  
+	  bufferIndex = firstNullCharIndex;      
+	  if (firstNullCharIndex != 0)//
 	  {
+		  bufferIndex--;
+		  curCheatPatternChar = &D_8013B940[var_s0].cheatPattern[firstNullCharIndex - bufferIndex],
+			curBufferChar = &cheatInputBuffer[bufferIndex];
+		  // walk backwards up the buffer and down the cheatPattern
+		  // as buffer is <latest input> -> <oldest input> order
 		do
 		{
-		  temp_v0 = var_a2 + new_var;
-		  temp_t2 = D_8013B940[var_s0].cheatPattern[temp_v0];
-		  var_a2 = temp_v0;
+		  if (*curBufferChar-- != (curCheatPatternChar++)[-1]) break;
 		}
-		while (temp_t2 != 0);
+		while (bufferIndex--);
 	  }
-	  var_a0 = var_a2 - new_var;
-	  if (var_a2 != 0)
-	  {
-		var_v0 = &D_8013B940[var_s0].cheatPattern[var_a2 - var_a0];
-		var_v1 = &cheatInputBuffer[var_a0];
-		do
-		{
-		  temp_t9 = *(var_v0 - new_var);
-		  var_v0 += new_var;
-		  if (temp_t9 != *var_v1) break;
-		  var_v1 -= new_var;
-		}
-		while (var_a0-- != 0);
-	  }
-	  if (var_a0 == -1)
+	  if (bufferIndex == -1)
 	  {
 		func_80073B30_82AE0(var_s0);
 		func_80073A74_82A24();
 	  }
-	  var_s1 -= 0x10;
-	  var_s0 -= new_var;
 	}
-	while (var_s0 != 0);
   }
 }
 #else
