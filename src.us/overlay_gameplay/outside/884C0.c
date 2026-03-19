@@ -37,8 +37,7 @@ void func_800797A4_88754(s32 arg0, u8 arg1)
 	switch (i)
 	{
 	  case 0:
-		i = D_8013C1B8[arg1 * 2];
-		nibble = ((u32) i) >> 4;
+		nibble = ((u32) D_8013C1B8[arg1 * 2]) >> 4;
 		break;
 
 	  case 1:
@@ -199,54 +198,71 @@ s32 func_8007A198_89148(s32 arg0)
 #endif
 
 // guess_addActiveObject Skipping seems to result in aliens with no physical presence
+// https://decomp.me/scratch/s8PwY
 #ifdef NON_MATCHING
-s32 func_8007A2A0_89250(s32 arg0) {
-	struct { u8 _f0; u8 specIdx; u8 _f2; u8 _f3; } sp34;
-
-	sp34.specIdx = alienInstances[arg0].specIndex;
-	if (D_8014ECCC == 0x40) {
-		osSyncPrintf(&D_801417DC);
-		return -1;
+s32 func_8007A2A0_89250(s32 arg0)
+{
+  u8 sp34;
+  int new_var;
+  int new_var2;
+  sp34 = alienInstances[arg0].specIndex;
+  if (D_8014ECCC == 0x40)
+  {
+	osSyncPrintf(&D_801417DC);
+	return -1;
+  }
+  new_var2 = alienInstances[arg0].unk20 & 0x600;
+  if (new_var2)
+  {
+	osSyncPrintf(&D_801417F8, arg0);
+	return -1;
+  }
+  D_8014D510[D_8014ECCC] = arg0;
+  if (func_80079F08_88EB8(arg0) != 0)
+  {
+	osSyncPrintf(&D_8014180C);
+	return -1;
+	if (alienInstances[arg0].unkC)
+	{
 	}
-	if (alienInstances[arg0].unk20 & 0x600) {
-		osSyncPrintf(&D_801417F8, arg0);
-		return -1;
+  }
+  if (D_802566D4[alienInstances[arg0].specIndex * 0x1A] & 0x3E)
+  {
+	D_8014D304 = 0;
+	if (func_8007F0E8_8E098(arg0 & 0xFF, 0, 0) != 0)
+	{
+	  osSyncPrintf(&D_8014183C);
+	  return -1;
 	}
-	D_8014D510[D_8014ECCC] = arg0;
-	if (func_80079F08_88EB8(arg0) != 0) {
-		osSyncPrintf(&D_8014180C);
-		return -1;
+  }
+  if (func_80079C8C_88C3C(arg0) == 0)
+  {
+	osSyncPrintf(&D_80141868);
+	return -1;
+  }
+  if (alienSpecs[sp34].unk50 != (-1))
+  {
+	s8 slot = (s8) func_800F3990_102940(arg0 & 0xFF, alienSpecs[sp34].unk50 & 0xFF);
+	if (slot == (-1))
+	{
+	  osSyncPrintf(&D_8014189C);
+	  func_80079DC0_88D70(alienInstances[arg0].unkC);
+	  return -1;
 	}
-	if (D_802566D4[alienInstances[arg0].specIndex * 0x1A] & 0x3E) {
-		D_8014D304 = 0;
-		if (func_8007F0E8_8E098(arg0 & 0xFF, 0, 0) != 0) {
-			osSyncPrintf(&D_8014183C);
-			return -1;
-		}
-	}
-	if (func_80079C8C_88C3C(arg0) == 0) {
-		osSyncPrintf(&D_80141868);
-		return -1;
-	}
-	if (alienSpecs[sp34.specIdx].unk50 != -1) {
-		s8 slot = (s8) func_800F3990_102940(arg0 & 0xFF, alienSpecs[sp34.specIdx].unk50 & 0xFF);
-		if (slot == -1) {
-			osSyncPrintf(&D_8014189C);
-			func_80079DC0_88D70(alienInstances[arg0].unkC);
-			return -1;
-		}
-		alienInstances[arg0].unk20 &= ~7;
-		alienInstances[arg0].unk20 |= (slot | 0x80000);
-	}
-	if (alienSpecs[sp34.specIdx].unk54 & 0x02000000) {
-		alienInstances[arg0].unk3C = func_800CD1F8_DC1A8(0, 0, 0, 0, -0x3C, 0);
-		alienInstances[arg0].unk3D = func_800CD1F8_DC1A8(0, 0, 0, 0, -0x3C, 0);
-	}
-	func_80079E64_88E14(arg0);
-	alienInstances[arg0].unk20 |= 0x600;
-	D_8014D510[D_8014ECCC] = arg0;
-	D_8014ECCC++;
-	return D_8014ECCC - 1;
+	new_var = slot | 0x80000;
+	alienInstances[arg0].unk20 &= ~7;
+	alienInstances[arg0].unk20 |= new_var;
+  }
+  if (alienSpecs[sp34].unk54 & 0x02000000)
+  {
+	alienInstances[arg0].unk3C = func_800CD1F8_DC1A8(0, 0, 0, 0, -0x3C, 0);
+	alienInstances[arg0].unk3D = func_800CD1F8_DC1A8(0, 0, 0, 0, -0x3C, 0);
+  }
+  func_80079E64_88E14(arg0);
+  alienInstances[arg0].unk20 |= 0x600;
+  D_8014D510[D_8014ECCC] = arg0;
+  D_8014ECCC++;
+  return D_8014ECCC - 1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007A2A0_89250.s")
@@ -318,7 +334,7 @@ void func_8007AA0C_899BC(void)
 	{
 		alienInstances[i].specIndex = 0;
 		alienInstances[i].unk20 = 0;
-		alienInstances[i].pad37 = 0;
+		alienInstances[i].unk37 = 0;
 		D_8014D308[i] = i;
 	}
 
@@ -344,7 +360,117 @@ void func_8007AA0C_899BC(void)
 
 // R on controller 2 debug prints current vehicle info + target info (if any)
 // Skipping this stops aliens/humans moving
+#ifdef NON_MATCHING
+void func_8007AAEC_89A9C(void)
+{
+  VehicleInstance *vehicle;
+  AlienInstance *alien;
+  alien = D_80158FEC;
+  vehicle = D_80052B34;
+  func_8007AF8C_89F3C();
+  func_8007D690_8C640();
+  func_8007D424_8C3D4();
+  func_8007FDD8_8ED88();
+  if (isButtonNewlyPressed(CONTROLLER_TWO, BUTTON_R) != 0)
+  {
+	if (vehicle != NULL)
+	{
+	  osSyncPrintf(&D_80141990, vehicle - vehicleInstances);
+	  osSyncPrintf(&D_8014199C, D_800344B4[vehicleSpecs[vehicle->unk1A].unk18 * 2]);
+	  osSyncPrintf(&D_801419A8, (s32) vehicle->unk0, vehicle->unk2, vehicle->unk4);
+	  osSyncPrintf(&D_801419B8, (s32) vehicle->unk6, vehicle->unkA, vehicle->unk8);
+	  osSyncPrintf(&D_801419C8, (s32) vehicle->unkE);
+	  osSyncPrintf(&D_801419D8, (s32) vehicle->unk10);
+	  osSyncPrintf(&D_801419E8, (s32) vehicle->unk12);
+	  osSyncPrintf(&D_801419F4, (double) vehicle->unk30, (double) vehicle->unk34, (double) vehicle->unk38);
+	  osSyncPrintf(&D_80141A04, (s32) vehicle->unk20);
+	  if (vehicle->unk20 & 2)
+	  {
+		osSyncPrintf(&D_80141A10);
+	  }
+	  if (vehicle->unk20 & 0x800)
+	  {
+		osSyncPrintf(&D_80141A1C);
+	  }
+	  if (vehicle->unk20 & 4)
+	  {
+		osSyncPrintf(&D_80141A28);
+	  }
+	  if (vehicle->unk20 & 8)
+	  {
+		osSyncPrintf(&D_80141A38);
+	  }
+	  osSyncPrintf(&D_80141A48);
+	}
+	if (alien != NULL)
+	{
+	  osSyncPrintf(&D_80141A4C, alien - alienInstances);
+	  osSyncPrintf(&D_80141A58, alienSpecs[alien->specIndex].unk18);
+	  if (alien->specIndex == 1)
+	  {
+		osSyncPrintf(&D_80141A64, (s32) alien->unk24);
+	  }
+	  osSyncPrintf(&D_80141A74, (s32) alien->unk0, alien->unk2, alien->unk4);
+	  osSyncPrintf(&D_80141A84, (s32) alien->unk6, alien->unkA, alien->unk8);
+	  osSyncPrintf(&D_80141A94, (s32) alien->unkE);
+	  osSyncPrintf(&D_80141AA4, (s32) alien->unk2A);
+	  osSyncPrintf(&D_80141ABC, (s32) alien->unk12);
+	  osSyncPrintf(&D_80141AC8, (s32) alien->unk10);
+	  osSyncPrintf(&D_80141AD8, alien->unk20);
+	  if (alien->unk20 & 0x20)
+	  {
+		osSyncPrintf(&D_80141AE8);
+	  }
+	  if (alien->unk20 & 0x80)
+	  {
+		osSyncPrintf(&D_80141AF4);
+	  }
+	  if (alien->unk20 & 0x100)
+	  {
+		osSyncPrintf(&D_80141B04);
+	  }
+	  if (alien->unk20 & 0x08000000)
+	  {
+		osSyncPrintf(&D_80141B10);
+	  }
+	  if (alien->unk20 & 0x40)
+	  {
+		osSyncPrintf(&D_80141B18);
+	  }
+	  if (alien->unk20 & 0x40000000)
+	  {
+		osSyncPrintf(&D_80141B20);
+	  }
+	  if (alien->unk20 & 0x400000)
+	  {
+		osSyncPrintf(&D_80141B28);
+	  }
+	  osSyncPrintf(&D_80141B34);
+	  osSyncPrintf(&D_80141B38, (s32) alien->hitPoints);
+	  osSyncPrintf(&D_80141B48, (s32) alien->unk47);
+	  osSyncPrintf(&D_80141B60, (s32) alien->unk38, alien->unk14, alien->unk16, (s32) alien->unk18);
+	  osSyncPrintf(&D_80141B78, (s32) alien->unk28, (s32) alien->unk29);
+	  osSyncPrintf(&D_80141B94, (s32) alien->unk2C, alien->unk34, (s32) alien->unk36, alien->unk37, alien->unk3A, alien->unk40, (s32) alien->unk1E);
+	  osSyncPrintf(&D_80141BD8, (s32) alien->unk1B);
+	  if ((alien->specIndex == 0x19) || (alien->specIndex == 0x1B))
+	  {
+		AlienInstance *parent;
+		  parent = &alienInstances[alien->unk25];
+		osSyncPrintf(&D_80141BE4);
+		
+		osSyncPrintf(&D_80141C08, *((s32 *) (&parent->unk10)), *((s32 *) (&parent->unk14)));
+		osSyncPrintf(&D_80141C24, parent->unk20);
+		if (alien->specIndex == 0x19)
+		{
+		  osSyncPrintf(&D_80141C38, (s32) parent->unk1B, ((u8 *) parent)[0x1E]);
+		}
+	  }
+	}
+  }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007AAEC_89A9C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007AF8C_89F3C.s")
 
@@ -777,89 +903,92 @@ void func_80080B44_8FAF4(u8 arg0, u8 arg1) {
 	alien->unk20 |= 0x100;
 }
 
+// https://decomp.me/scratch/RJAQq
 #ifdef NON_MATCHING
-void func_80080BC0_8FB70(u8 arg0, s16 arg1, s16 arg2, u8 arg3) {
-    s16 unk0;
-    s16 unk4;
-    s16 shifted_unk4;
-    s16 shifted_unk0;
-    s16 shifted_arg1;
-    s32 dx;
-    s32 neg_dx;
-    s32 dz;
-    s32 neg_dz;
-    s32 abs_dx;
-    s32 abs_dz;
-    s32 step;
-    s32 mask;
-    s32 half;
-
-    unk0 = alienInstances[arg0].unk0;
-    unk4 = alienInstances[arg0].unk4;
-    shifted_unk4 = (s16)(unk4 >> arg3);
-    shifted_unk0 = (s16)(unk0 >> arg3);
-    shifted_arg1 = (s16)(arg1 >> arg3);
-
-    if (shifted_unk0 != shifted_arg1 || shifted_unk4 != (s16)(arg2 >> arg3)) {
-        if (shifted_unk0 != shifted_arg1) {
-            s16 unkE = alienInstances[arg0].unkE;
-            if (unkE < 0) {
-                alienInstances[arg0].unkE = unkE - ((shifted_unk0 - shifted_arg1) << 14);
-            } else {
-                alienInstances[arg0].unkE = unkE + ((shifted_unk0 - shifted_arg1) << 14);
-            }
-            alienInstances[arg0].unk0 = arg1;
-            return;
-        }
-        if (shifted_unk4 != (s16)(arg2 >> arg3)) {
-            s16 unkE = alienInstances[arg0].unkE;
-            s16 shifted_arg2 = (s16)(arg2 >> arg3);
-            s32 neg_unkE = -(s32)unkE;
-            s32 abs_unkE;
-            if (neg_unkE < unkE) {
-                abs_unkE = unkE;
-            } else {
-                abs_unkE = neg_unkE;
-            }
-            if (abs_unkE >= 0x4001) {
-                alienInstances[arg0].unkE = unkE + ((shifted_unk4 - shifted_arg2) << 14);
-            } else {
-                alienInstances[arg0].unkE = unkE - ((shifted_unk4 - shifted_arg2) << 14);
-            }
-            alienInstances[arg0].unk4 = arg2;
-        }
-    } else {
-        step = 1 << arg3;
-        mask = step - 1;
-        half = step / 2;
-        dx = (unk0 & mask) - half;
-        neg_dx = -dx;
-        dz = (unk4 & mask) - half;
-        if (neg_dx < dx) {
-            abs_dx = dx;
-        } else {
-            abs_dx = neg_dx;
-        }
-        neg_dz = -dz;
-        if (neg_dz < dz) {
-            abs_dz = dz;
-        } else {
-            abs_dz = neg_dz;
-        }
-        if (abs_dz < abs_dx) {
-            if (dx < 0) {
-                alienInstances[arg0].unk0 = (unk0 & 0xFF00) - 1;
-            } else {
-                alienInstances[arg0].unk0 = (unk0 & 0xFF00) + 0x100;
-            }
-        } else {
-            if (dz < 0) {
-                alienInstances[arg0].unk4 = (unk4 & 0xFF00) - 1;
-            } else {
-                alienInstances[arg0].unk4 = (unk4 & 0xFF00) + 0x100;
-            }
-        }
-    }
+void func_80080BC0_8FB70(u8 arg0, s16 arg1, s16 arg2, u8 arg3)
+{
+  s16 unk0;
+  s16 unk4;
+  s16 shifted_unk4;
+  s16 shifted_unk0;
+  s16 shifted_arg1;
+  s32 dx;
+  s32 dz;
+  s32 abs_dx;
+  s32 abs_dz;
+  s32 step;
+  s32 mask;
+  s16 *new_var;
+  s32 half;
+  unk0 = alienInstances[arg0].unk0;
+  unk4 = alienInstances[arg0].unk4;
+  new_var = &shifted_unk4;
+  shifted_unk4 = (s16) (unk4 >> arg3);
+  shifted_unk0 = (s16) (unk0 >> arg3);
+  shifted_arg1 = (s16) (arg1 >> arg3);
+  if ((shifted_unk0 != shifted_arg1) || (shifted_unk4 != ((s16) (arg2 >> arg3))))
+  {
+	if (shifted_unk0 != shifted_arg1)
+	{
+	  s16 unkE = alienInstances[arg0].unkE;
+	  if (unkE < 0)
+	  {
+		alienInstances[arg0].unkE = unkE - ((shifted_unk0 - shifted_arg1) << 14);
+	  }
+	  else
+	  {
+		alienInstances[arg0].unkE = unkE + ((shifted_unk0 - shifted_arg1) << 14);
+	  }
+	  alienInstances[arg0].unk0 = arg1;
+	  return;
+	}
+	if (shifted_unk4 != ((s16) (arg2 >> arg3)))
+	{
+	  s16 unkE = alienInstances[arg0].unkE;
+	  s16 shifted_arg2 = (s16) (arg2 >> arg3);
+	  s32 abs_unkE = -unkE < unkE ? unkE : -unkE;
+	  
+	  if (abs_unkE >= 0x4001)
+	  {
+		alienInstances[arg0].unkE = unkE + ((shifted_unk4 - shifted_arg2) << 14);
+	  }
+	  else
+	  {
+		alienInstances[arg0].unkE = unkE - (((*new_var) - shifted_arg2) << 14);
+	  }
+	  alienInstances[arg0].unk4 = arg2;
+	}
+  }
+  else
+  {
+	step = 1 << arg3;
+	mask = step - 1;
+	half = step / 2;
+	dx = (unk0 & mask) - half;
+	dz = (unk4 & mask) - half;
+	abs_dx = -dx < dx ? dx : -dx;
+	abs_dz = -dz < dz ? dz : -dz;
+	if (abs_dz < abs_dx)
+	{
+	  if (dx < 0)
+	  {
+		alienInstances[arg0].unk0 = (unk0 & 0xFF00) - 1;
+	  }
+	  else
+	  {
+		alienInstances[arg0].unk0 = (unk0 & 0xFF00) + 0x100;
+	  }
+	}
+	else
+	  if (dz < 0)
+	{
+	  alienInstances[arg0].unk4 = (unk4 & 0xFF00) - 1;
+	}
+	else
+	{
+	  alienInstances[arg0].unk4 = (unk4 & 0xFF00) + 0x100;
+	}
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080BC0_8FB70.s")
@@ -868,6 +997,7 @@ void func_80080BC0_8FB70(u8 arg0, s16 arg1, s16 arg2, u8 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080D98_8FD48.s")
 
+// https://decomp.me/scratch/B1BlZ
 #ifdef NON_MATCHING
 s16 func_80081390_90340(u8 arg0) {
 	s32 dx = alienInstances[arg0].unk14 - alienInstances[arg0].unk0;
@@ -1430,6 +1560,7 @@ s32 func_80083060_92010(s16 arg0, s16 arg1, s32 arg2, u8 *arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800836D0_92680.s")
 
+// https://decomp.me/scratch/cC8xU
 #ifdef NON_MATCHING
 void func_80083EF4_92EA4(AlienInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
 {

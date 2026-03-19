@@ -73,27 +73,43 @@ typedef struct {
 	/* 0x06 */ s16 humansKilled;
 } Unk80052A98; /* size = 0x08 */
 
+typedef enum VehicleFlags {
+	VEHICLE_FLAG_UNK1 = 1,
+	VEHICLE_FLAG_AIRBORNE = 2,
+	VEHICLE_FLAG_HALF_ON_BRIDGE = 4,
+	VEHICLE_FLAG_UNDER_BRIDGE = 8,
+	VEHICLE_FLAG_UNK5 = 0x10,
+	VEHICLE_FLAG_UNK6 = 0x20,
+	VEHICLE_FLAG_UNK7 = 0x40,
+	VEHICLE_FLAG_UNK8 = 0x80,
+	VEHICLE_FLAG_UNK9 = 0x100,
+	VEHICLE_FLAG_UNKA = 0x200,
+	VEHICLE_FLAG_UNKB = 0x400,
+	VEHICLE_FLAG_ON_BRIDGE = 0x800
+} VehicleFlags;
+
 typedef struct {
-	/* 0x00 */ s16 unk0; // xposition
-	/* 0x02 */ s16 unk2; // yposition
-	/* 0x04 */ s16 unk4; // zposition
-	/* 0x06 */ s16 unk6;
-	/* 0x08 */ u8 pad8[0x4];
+	/* 0x00 */ s16 unk0; // X position
+	/* 0x02 */ s16 unk2; // Y position
+	/* 0x04 */ s16 unk4; // Z position
+	/* 0x06 */ s16 unk6; // X rotation
+	/* 0x08 */ s16 unk8; // Y rotation
+	/* 0x0A */ s16 unkA; // Z rotation
 	/* 0x0C */ s16 unkC;
-	/* 0x0E */ s16 unkE;
-	/* 0x10 */ u16 unk10;
-	/* 0x12 */ s16 unk12;
+	/* 0x0E */ s16 unkE; // "Direction"
+	/* 0x10 */ s16 unk10; // Elevation
+	/* 0x12 */ s16 unk12; // Speed
 	/* 0x14 */ u8 pad14[0x6];
 	/* 0x1A */ u8 unk1A; // specIndex
 	/* 0x1B */ u8 unk1B;
 	/* 0x1C */ s16 unk1C; // hitPoints
 	/* 0x1E */ u8 pad1E[2];
-	/* 0x20 */ u16 unk20;
+	/* 0x20 */ u16 unk20; // Bit flags
 	/* 0x22 */ s16 unk22;
 	/* 0x24 */ u8 pad24[0xC];
-	/* 0x30 */ f32 unk30;
-	/* 0x34 */ f32 unk34;
-	/* 0x38 */ f32 unk38;
+	/* 0x30 */ f32 unk30; // "Inc" X
+	/* 0x34 */ f32 unk34; // "Inc" Y
+	/* 0x38 */ f32 unk38; // "Inc" Z
 	/* 0x3C */ s16 unk3C; // fuel
 	/* 0x3E */ u8 pad3E[0xE];
 	/* 0x4C */ f32 unk4C;
@@ -118,50 +134,72 @@ typedef struct {
 	/* 0x04 */ s32 unk4;
 } Unk80158F98; /* size = 0x08 */
 
+typedef enum AlienFlags {
+	ALIEN_FLAG_UNK1 = 1,
+	ALIEN_FLAG_UNK2 = 2,
+	ALIEN_FLAG_UNK3 = 4,
+	ALIEN_FLAG_UNK4 = 8,
+	ALIEN_FLAG_UNK5 = 0x10,
+	ALIEN_FLAG_TARGET_OBJ = 0x20,
+	ALIEN_FLAG_AWAY = 0x40,
+	ALIEN_FLAG_TARGET_VEHICLE = 0x80,
+	ALIEN_FLAG_TARGET_PT = 0x100,
+	ALIEN_FLAG_UNKA = 0x200,
+	ALIEN_FLAG_UNKB = 0x400,
+	ALIEN_FLAG_UNKC = 0x800,
+	ALIEN_FLAG_UNKD = 0x1000,
+	ALIEN_FLAG_UNKE = 0x2000,
+	ALIEN_FLAG_UNKF = 0x4000,
+	ALIEN_FLAG_UNKG = 0x8000,
+	ALIEN_FLAG_INVINCIBLE = 0x400000,
+	ALIEN_FLAG_PLAYER = 0x8000000,
+	ALIEN_FLAG_FALL = 0x40000000
+} AlienFlags;
+
 typedef struct {
-	/* 0x00 */ s16 unk0; // xposition
-	/* 0x02 */ s16 unk2; // yposition
-	/* 0x04 */ s16 unk4; // zposition
-	/* 0x06 */ s16 unk6;
-	/* 0x08 */ s16 unk8;
-	/* 0x0A */ s16 unkA;
+	/* 0x00 */ s16 unk0; // X position
+	/* 0x02 */ s16 unk2; // Y position
+	/* 0x04 */ s16 unk4; // Z position
+	/* 0x06 */ s16 unk6; // X orientation
+	/* 0x08 */ s16 unk8; // Y orientation
+	/* 0x0A */ s16 unkA; // Z orientation
 	/* 0x0C */ s16 unkC;
-	/* 0x0E */ s16 unkE;
-	/* 0x10 */ s16 unk10;
-	/* 0x12 */ s16 unk12;
-	/* 0x14 */ s16 unk14; // target x coord?
-	/* 0x16 */ s16 unk16; // target y coord?
-	/* 0x18 */ s16 unk18; // target z coord?
-	/* 0x1A */ u8 specIndex; // Specs are the same every level? e.g. 0x19 is harvester?
-	/* 0x1B */ u8 unk1B; // something to do with showing health bar?
+	/* 0x0E */ s16 unkE; // "Direction"
+	/* 0x10 */ s16 unk10; // Y Velocity
+	/* 0x12 */ s16 unk12; // Speed
+	/* 0x14 */ s16 unk14; // target x coord
+	/* 0x16 */ s16 unk16; // target y coord
+	/* 0x18 */ s16 unk18; // target z coord
+	/* 0x1A */ u8 specIndex; // Specs are the same every level? e.g. 0x19 is harvester, 0x1B is Boss
+	/* 0x1B */ u8 unk1B; // "Stage" something to do with showing health bar? Used as human count for harvester?
 	/* 0x1C */ s16 hitPoints;
-	/* 0x1E */ s16 unk1E;
-	/* 0x20 */ s32 unk20; // flags?
-	/* 0x24 */ u8 unk24;
+	/* 0x1E */ s16 unk1E; // Weapons? Upper byte used as HCU count for harvester?
+	/* 0x20 */ s32 unk20; // Bit flags
+	/* 0x24 */ u8 unk24; // Human type
 	/* 0x25 */ u8 unk25; // parent alien instance id?
 	/* 0x26 */ u8 unk26;
 	/* 0x27 */ u8 unk27;
-	/* 0x28 */ s8 unk28;
-	/* 0x29 */ s8 unk29;
-	/* 0x2A */ s16 unk2A;
-	/* 0x2C */ s16 unk2C;
+	/* 0x28 */ s8 unk28; // Last collision tile X
+	/* 0x29 */ s8 unk29; // Last collision tile Z
+	/* 0x2A */ s16 unk2A; // Desired direction
+	/* 0x2C */ s16 unk2C; // Counters
 	/* 0x2E */ s16 unk2E;
 	/* 0x30 */ s16 unk30;
 	/* 0x32 */ s16 unk32;
-	/* 0x34 */ s16 unk34;
-	/* 0x36 */ u8 unk36;
-	/* 0x37 */ u8 pad37;
+	/* 0x34 */ s16 unk34; // Collision counter?
+	/* 0x36 */ u8 unk36; // Anim counter?
+	/* 0x37 */ u8 unk37; // Hit counter?
 	/* 0x38 */ s16 unk38; // target building/vehicle instance id
-	/* 0x3A */ s16 unk3A;
+	/* 0x3A */ s16 unk3A; // Wait counter?
 	/* 0x3C */ s8 unk3C;
 	/* 0x3D */ s8 unk3D;
 	/* 0x3E */ u8 unk3E;
 	/* 0x3F */ u8 unk3F;
-	/* 0x40 */ u8 pad40[0x2];
+	/* 0x40 */ s16 unk40; // Water counter?
 	/* 0x42 */ s16 unk42;
 	/* 0x44 */ s16 unk44;
 	/* 0x46 */ u8 pad46;
-	/* 0x47 */ u8 unk47;
+	/* 0x47 */ u8 unk47; // Collision flags
 	/* 0x48 */ s16 unk48;
 	/* 0x4A */ u8 pad4A;
 	/* 0x4B */ u8 unk4B;
@@ -315,7 +353,8 @@ typedef struct {
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ u8 pad0E[0x8];
 	/* 0x16 */ u8 unk16;
-	/* 0x17 */ u8 pad17[0x5];
+	/* 0x17 */ u8 pad17;
+	/* 0x18 */ s32 unk18;
 	/* 0x1C */ s32 weapon1;
 	/* 0x20 */ u8 pad20[0x8];
 	/* 0x28 */ s32 weapon2;
