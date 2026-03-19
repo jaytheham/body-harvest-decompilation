@@ -13,11 +13,11 @@ You will convert the named N64 assembly function to C89 code, compile it (IDO 5.
 
 ## Project Structure
 
-- `asm/nonmatchings`: Contains target assembly of unmatched functions.
-- `asm/matchings`: Contains target assembly of functions with a matching C implementation, for reference.
-- `src.us/`: Contains C source files.
-- `include/`: Contains header files for variables, functions, and structs.
-- `build/`: Contains compiled object files and the final ROM image.
+- `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
+- `asm/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
+- `src.us/`: C source files.
+- `include/`: Header files for variables, functions, and structs.
+- `build/`: Readonly - compiled object files and the final ROM image.
 
 ## Tools
 
