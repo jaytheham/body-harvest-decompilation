@@ -32,22 +32,16 @@ f32 func_800C0FD4_CFF84(Vec3f *arg0) {
 	return var_f12;
 }
 
-#ifdef NON_MATCHING
 void func_800C1024_CFFD4(Vec3f *arg0, Vec3f *arg1) {
 	f32 temp_f0;
 
 	temp_f0 = func_800C0FD4_CFF84(arg0);
 	if ((f64) temp_f0 == 0.0) {
-		*(s32 *)&arg1->x = *(s32 *)&arg0->x;
-		*(s32 *)&arg1->y = *(s32 *)&arg0->y;
-		*(s32 *)&arg1->z = *(s32 *)&arg0->z;
+		*arg1 = *arg0;
 		return;
 	}
 	func_800C0F84_CFF34(temp_f0, arg0, arg1);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1024_CFFD4.s")
-#endif
 
 f32 func_800C1090_D0040(Vec3f *arg0, Vec3f *arg1) {
 	return (arg0->x * arg1->x) + (arg0->y * arg1->y) + (arg0->z * arg1->z);
@@ -313,7 +307,7 @@ void func_800CDD7C_DCD2C(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CFD84_DED34.s")
 
 void func_800D05A8_DF558(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5, u8 arg6) {
-    func_800D0614_DF5C4(arg0, arg1, arg2, arg3, arg4, arg5, arg6, 1);
+	func_800D0614_DF5C4(arg0, arg1, arg2, arg3, arg4, arg5, arg6, 1);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D0614_DF5C4.s")
