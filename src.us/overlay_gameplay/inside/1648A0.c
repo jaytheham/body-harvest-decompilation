@@ -21,20 +21,17 @@ void func_8007C7E0_1648A0(void) {
     }
 }
 
-#ifdef NON_MATCHING
-void func_8007C8BC_16497C(void) {
-	volatile Unk80157600 *ptr;
-
-	func_8000C764_D364(D_800E7304);
-	ptr = (volatile Unk80157600 *) &D_800E6AD8;
-	func_8000C764_D364((s32) ptr->unk408);
-	ptr = (volatile Unk80157600 *) &D_800E6AD8;
-	ptr->unk408 = NULL;
-	ptr->unk404 = NULL;
+void func_8007C8BC_16497C(void)
+{
+    Unk80157600 *temp_v0;
+    func_8000C764_D364(D_800E7304);
+    func_8000C764_D364((s32) ((Unk80157600 *) D_800E6F00)->unk408);
+    ((Unk80157600 *) D_800E6F00)->unk408 = 0;
+    if (((Unk80157600 *) D_800E6F00)->unk408)
+    {
+    }
+    ((Unk80157600 *) D_800E6F00)->unk404 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007C8BC_16497C.s")
-#endif
 
 void func_8007C8FC_1649BC(void) {
 	func_8007DDA0_165E60(&D_800E6A78, currentControllerStates);
