@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-19T03:47:57Z",
-  "commit": "5c4859e",
-  "commit_timestamp": "2026-03-19T16:47:46+13:00",
+  "generated": "2026-03-19T03:51:39Z",
+  "commit": "3a850bb",
+  "commit_timestamp": "2026-03-19T16:51:30+13:00",
   "overall": {
-    "total_functions": 2909,
+    "total_functions": 2912,
     "matched": 723,
-    "non_matching": 236,
+    "non_matching": 239,
     "asm_stubs": 1950,
-    "matched_pct": 24.85,
-    "decompiled_pct": 32.97
+    "matched_pct": 24.83,
+    "decompiled_pct": 33.04
   },
   "segments": {
     "core": {
@@ -41,11 +41,11 @@
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
       "matched": 74,
-      "non_matching": 30,
+      "non_matching": 33,
       "asm_stubs": 161,
-      "total": 265,
-      "matched_pct": 27.9,
-      "decompiled_pct": 39.2
+      "total": 268,
+      "matched_pct": 27.6,
+      "decompiled_pct": 39.9
     },
     "overlay_level/greece": {
       "display_name": "Level / Greece",
@@ -238,11 +238,11 @@
       "path": "overlay_gameplay/inside/1648A0.c",
       "segment": "overlay_gameplay/inside",
       "matched": 8,
-      "non_matching": 9,
+      "non_matching": 12,
       "asm_stubs": 14,
-      "total": 31,
-      "matched_pct": 25.8,
-      "contributor": "jaytheham"
+      "total": 34,
+      "matched_pct": 23.5,
+      "contributor": "Meridian Lex"
     },
     {
       "path": "overlay_gameplay/inside/167C90.c",
@@ -538,17 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 35,
-      "matched": 623,
-      "non_matching": 189,
-      "asm_stubs": 1617
+      "files": 34,
+      "matched": 615,
+      "non_matching": 180,
+      "asm_stubs": 1603
     },
     {
       "name": "Meridian Lex",
-      "files": 7,
-      "matched": 86,
-      "non_matching": 46,
-      "asm_stubs": 234
+      "files": 8,
+      "matched": 94,
+      "non_matching": 58,
+      "asm_stubs": 248
     },
     {
       "name": "Harvester",
@@ -609,19 +609,19 @@
     },
     {
       "date": "2026-03-15",
-      "commit": "e97d10d",
-      "matched_pct": 21.69,
-      "decompiled_pct": 31.35,
-      "matched": 642,
-      "total": 2960
+      "commit": "cdce924",
+      "matched_pct": 22.91,
+      "decompiled_pct": 32.02,
+      "matched": 674,
+      "total": 2942
     },
     {
       "date": "2026-03-16",
-      "commit": "428f09e",
-      "matched_pct": 22.56,
-      "decompiled_pct": 31.85,
+      "commit": "becd424",
+      "matched_pct": 22.53,
+      "decompiled_pct": 31.92,
       "matched": 665,
-      "total": 2948
+      "total": 2951
     },
     {
       "date": "2026-03-17",
@@ -641,11 +641,11 @@
     },
     {
       "date": "2026-03-19",
-      "commit": "5c4859e",
-      "matched_pct": 24.85,
-      "decompiled_pct": 32.97,
+      "commit": "3a850bb",
+      "matched_pct": 24.83,
+      "decompiled_pct": 33.04,
       "matched": 723,
-      "total": 2909
+      "total": 2912
     }
   ]
 }
