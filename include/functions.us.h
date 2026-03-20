@@ -86,6 +86,8 @@ void func_8008EEC4_5F374(void);
 void func_8008F1E0_5F690(void);
 void func_8008F704_5FBB4(u8 arg0);
 void func_8008FAAC_5FF5C(void);
+void func_80075D58_46208(s32 arg0);
+void func_800731A8_43658(void);
 
 // overlay_gameplay outside
 void func_80070440_7F3F0(void);
