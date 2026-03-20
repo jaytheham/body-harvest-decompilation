@@ -118,7 +118,8 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015210_15E10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015380_15F80.s")
+void func_80015380_15F80(s8 arg0) {
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015388_15F88.s")
 
