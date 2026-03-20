@@ -29,6 +29,9 @@ enum ButtonEnum {
 };
 typedef u16 Button;
 
+// declared here because Controller and Button are needed
+s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask);
+
 typedef enum GameplayMode {
 	GAMEPLAY_MODE_LEVEL_MAP = 0,
 	GAMEPLAY_MODE_UNK1 = 1,

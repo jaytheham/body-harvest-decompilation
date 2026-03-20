@@ -655,7 +655,7 @@ void func_80008C18_9818(void);
 void playMapMusic(void);
 void playInventoryMusic(void);
 void guess_displayInventory(void);
-// isButtonNewlyPressed declared in 1000.c
+// isButtonNewlyPressed declared in 1000.c, and declared in variables.us.h
 void func_800E8190_F7140(void);
 void func_800EFFB4_FEF64(void);
 void func_800E87C8_F7778(void);
