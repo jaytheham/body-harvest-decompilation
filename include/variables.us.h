@@ -1292,5 +1292,6 @@ extern s16 D_800481D2[];
 extern f64 perspective_rodata_0000; /* 0x80039880: pi/180 as double (0.017453292...) */
 extern f32 rotate_rodata_0000;      /* 0x80039870: pi/180 as float (0.01745329f) */
 extern f32 rotate_bss_0000;         /* 0x8006CA50: guAlignF scale cache */
+extern f64 lookatref_rodata_0000;   /* 0x80039BC0: -128.0 as double (LookAt clamp) */
 
 #endif

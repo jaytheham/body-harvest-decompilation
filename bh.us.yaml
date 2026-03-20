@@ -105,7 +105,7 @@ segments:
       - [0x22E30, asm, core/22E30]
       - [0x22EA0, asm, core/22EA0]
       - [0x22F70, asm, core/22F70]
-      - [0x22FD0, asm, core/22FD0]
+      - [0x22FD0, c, core/22FD0]
       - [0x23490, asm, core/23490]
       - [0x23740, asm, core/23740]
       - [0x237E0, asm, core/237E0]
