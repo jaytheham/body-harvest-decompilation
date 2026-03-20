@@ -75,7 +75,6 @@ void func_802D5A78_1EE788(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5ADC_1EE7EC.s")
 
-#ifdef NON_MATCHING
 void func_802D5BA0_1EE8B0(void) {
     osSyncPrintf(&D_802E0E30);
     D_802E0FB0 = 0;
@@ -84,9 +83,6 @@ void func_802D5BA0_1EE8B0(void) {
     func_80007410_8010(&func_802D5ADC_1EE7EC);
     func_800076D4_82D4(9);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5BA0_1EE8B0.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5BF8_1EE908.s")
 
