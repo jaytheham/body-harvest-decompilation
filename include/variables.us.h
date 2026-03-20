@@ -97,11 +97,7 @@ extern u8 D_80042DB8;
 extern u8 D_80043243;
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
-// TODO merge these:
-extern Unk80047588 currentControllerStates[4];
-extern s8 D_8004758A;
-extern s8 D_8004758B;
-extern u16 D_8004758E;
+extern Unk80047588 currentControllerStates[4]; // 0x80047588
 
 extern u16 D_800475D8[];
 extern u16 previousControllerButtonStates[4]; // 0x800475E0

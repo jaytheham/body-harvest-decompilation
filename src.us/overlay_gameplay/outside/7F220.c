@@ -1108,7 +1108,7 @@ void func_800720F4_810A4(void) {
 			}
 		}
 
-		if (D_8004758E & 0x2000) {
+		if (currentControllerStates[CONTROLLER_TWO] & BUTTON_Z) {
 			if (D_80149380 == 0) {
 				D_80149380 = 100;
 				D_80149394 = 0;

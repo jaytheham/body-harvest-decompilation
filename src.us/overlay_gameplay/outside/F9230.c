@@ -184,7 +184,7 @@ s32 func_800EF0B0_FE060(s32 arg0) {
 		sum += byte;
 	} while ((byte != -0x48) || (count >= 0x39));
 
-	if (D_8004758E & 0x2000) {
+	if (currentControllerStates[CONTROLLER_TWO] & BUTTON_Z) {
 		return 0;
 	}
 
