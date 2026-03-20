@@ -88,7 +88,8 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800137F0_143F0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013810_14410.s")
+void func_80013810_14410(s8 arg0) {
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013818_14418.s")
 
