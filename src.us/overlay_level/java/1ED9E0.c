@@ -390,15 +390,13 @@ void func_802D5E98_1EEBA8(void) {
     s32 v1_2;
     s32 v1_3;
 
-    /* Calculate absolute difference between vehicleInstances[x].unk119C and buildingInstances[y].unkDC8 */
-    v0 = vehicleInstances[0].unk119C - buildingInstances[0].unkDC8;
+    v0 = vehicleInstances[49].unk0 - buildingInstances[147].xCoord;
     v1 = -v0;
     if (v0 >= 0) {
         v1 = v0;
     }
     if (v1 < 0x500) {
-        /* Calculate absolute difference between vehicleInstances[x].unk11A0 and buildingInstances[y].unkDCC */
-        v0_2 = vehicleInstances[0].unk11A0 - buildingInstances[0].unkDCC;
+        v0_2 = vehicleInstances[49].unk4 - buildingInstances[147].zCoord;
         v1_2 = -v0_2;
         if (v0_2 >= 0) {
             v1_2 = v0_2;
@@ -409,14 +407,13 @@ void func_802D5E98_1EEBA8(void) {
         goto block_12;
     }
 block_6:
-    /* Load active vehicle instance and check position difference */
-    v0_3 = D_80052B34->unk0 - buildingInstances[0].unkDC8;
+    v0_3 = D_80052B34->unk0 - buildingInstances[147].xCoord;
     a0 = -v0_3;
     if (v0_3 >= 0) {
         a0 = v0_3;
     }
     if (a0 < 0xC8) {
-        v0_4 = D_80052B34->unk4 - buildingInstances[0].unkDCC;
+        v0_4 = D_80052B34->unk4 - buildingInstances[147].zCoord;
         v1_3 = -v0_4;
         if (v0_4 >= 0) {
             v1_3 = v0_4;
