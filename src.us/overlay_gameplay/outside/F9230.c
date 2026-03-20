@@ -827,7 +827,18 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80107EBC_116E6C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80108138_1170E8.s")
+s16 func_80108138_1170E8(s16 arg0, s16 arg1, s16 arg2) {
+	s16 sp1E;
+	s16 temp_v0;
+	s32 var_a0;
+
+	temp_v0 = func_8011E6FC_12D6AC(arg0, arg2, &sp1E);
+	var_a0 = sp1E >= (arg1 - 0xA);
+	if (var_a0) {
+		var_a0 = (temp_v0 + 1) != 0;
+	}
+	return var_a0;
+}
 
 s16 func_801081AC_11715C(s16 arg0, s16 arg1) {
 	s16 sp1E;
