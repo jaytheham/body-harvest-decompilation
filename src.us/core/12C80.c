@@ -94,7 +94,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013B48_14748.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013E44_14A44.s")
+void func_80013E44_14A44(s32 *arg0) {
+    if (D_8006AB88 != 0) {
+        arg0[2] = 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013E64_14A64.s")
 
