@@ -247,6 +247,7 @@ extern s32 D_8005BB24;
 extern s32 D_8005BB48[];
 
 extern s32 D_8006AB88;
+extern s32 D_8006ABA8;
 extern s32 D_80068084;
 extern s32 D_80068088;
 
