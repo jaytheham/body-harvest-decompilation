@@ -204,7 +204,10 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018D14_19914.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018D58_19958.s")
+void func_80018D58_19958(void) {
+    func_80018D14_19914();
+    D_8003449C = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018D7C_1997C.s")
 
