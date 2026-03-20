@@ -1,7 +1,7 @@
 {
-  "generated": "2026-03-20T19:38:15Z",
-  "commit": "9c588fa",
-  "commit_timestamp": "2026-03-21T08:38:05+13:00",
+  "generated": "2026-03-20T22:18:47Z",
+  "commit": "afabffc",
+  "commit_timestamp": "2026-03-21T11:17:13+13:00",
   "overall": {
     "total_functions": 2923,
     "matched": 761,
@@ -625,7 +625,7 @@
     },
     {
       "date": "2026-03-21",
-      "commit": "9c588fa",
+      "commit": "40b3004",
       "matched_pct": 26.03,
       "decompiled_pct": 34.59,
       "matched": 761,
