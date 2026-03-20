@@ -30,14 +30,10 @@ void func_802D507C_1EDD8C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D50B0_1EDDC0.s")
 
-#ifdef NON_MATCHING
 void func_802D513C_1EDE4C(s32 arg0) {
     osSyncPrintf(&D_802E0DA8);
     func_800072CC_7ECC(0xCUL);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D513C_1EDE4C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5170_1EDE80.s")
 
