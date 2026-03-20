@@ -23,6 +23,7 @@ void func_800048E8_54E8(void);
 void func_80004918_5518(void);
 void func_80004AEC_56EC(void);
 void func_80004CC8_58C8(void);
+VehicleInstance *func_80109960_118910(void);
 void func_80004D38_5938(void);
 void func_8000505C_5C5C(void);
 void func_800050C4_5CC4(void);

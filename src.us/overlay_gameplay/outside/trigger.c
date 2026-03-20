@@ -203,22 +203,16 @@ void func_800AF5B0_BE560(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF634_BE5E4.s")
 
-#ifdef NON_MATCHING
 void func_800AF764_BE714(s16 arg0) {
-	s32 sp18;
-	s32 sp1C;
 	Unk80222A78 tmp;
-	sp18 = D_80223780[arg0].unk8;
-	sp1C = D_8014F820;
-	tmp.pad9[0] = arg0;
-	tmp.unk4 = sp18 + sp1C + 0xA;
+	s32 idx;
+	idx = arg0;
+	tmp.pad9[0] = idx;
+	tmp.unk4 = D_80223780[idx].unk8 + D_8014F820 + 0xA;
 	tmp.unk0 = 2;
 	tmp.unkC = func_800AFD48_BECF8;
 	func_800AE454_BD404(&tmp);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF764_BE714.s")
-#endif
 
 void func_800AF7D4_BE784(Unk80222A78 *arg0) {
 	Unk80222A78 tmp;
