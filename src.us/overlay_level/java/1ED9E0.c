@@ -50,14 +50,10 @@ void func_802D5508_1EE218(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5508_1EE218.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802D5560_1EE270(void) {
     D_802E0FB0 = 0x1E;
     func_80007410_8010(&func_802D5508_1EE218);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5560_1EE270.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5590_1EE2A0.s")
 
