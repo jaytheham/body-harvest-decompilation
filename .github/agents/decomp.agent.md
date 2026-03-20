@@ -74,7 +74,6 @@ Identify and fix all these issues in the generated C code before proceeding to t
 Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly. Replace that line with the cleaned up C code from Step 1.
 
 Before continuing review the code and ensure all pointer arithmetic has been replaced with proper struct and array access, and all temp pointer variables are removed and replaced with direct struct/array references.
-Read file `DecompHints.md` for general guidance.
 
 ## Step 3: Build ROM
 
@@ -91,7 +90,7 @@ If build completes with `build/bh.us.z64: OK` the function is matched and you ca
 ## Step 4: Compare with target and find similar functions
 
 Use coddog to find any similar functions that are already decompiled which you may be able to copy.
-
+At this point always read the whole file `DecompHints.md` for general matching advice.
 Use `.\tools\diff.ps1` to compare the target and current assembly to identify differences: note instruction order, registers, immediates, branch conditions.
 
 ## Step 5+: Iterate Until Match
@@ -102,13 +101,13 @@ Make sure all pointer arithmetic is replaced with proper struct/array access, an
 Double check all function call params are necessary and correctly typed.
 An arg being `&& 0xFF` or `&& 0xFFFF` repeatedly suggests that the original code was using a smaller type like u8 or s16.
 Think about how a person would have originally written the code in C to produce the assembly you see rather than writing the C to match the assembly exactly. Search for patterns in the target assembly and see how other functions were written to achieve similar assembly output.
-Search in file `ExampleFixes.md` for examples of solving specific patterns.
+`ExampleFixes` folder contains md files with examples of fixes that have been applied previously to solve specific patterns, search in here for stubborn cases.
 
 **Every** time you make changes, rebuild the project and compare the current assembly to the target, if it doesn't match repeat this step, never give up, keep trying autonomously. Only once the build returns `build/bh.us.z64: OK` proceed to Finalize.
 
 ## Finalize
 
-If you had to make changes to the initial C code, think about whether there is some detectable pattern or insight, and if so update `ExampleFixes.md` with brief notes to help future decomp.
+If you had to make changes to the initial C code, think about whether there is some detectable pattern or insight, and if so update `ExampleFixes` with new or updated case notes to help future decomp.
 Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.
 
 ## Troubleshooting
