@@ -46,7 +46,7 @@ D_8005BB2C->words.w1 = 0x00010001;
 ```
 Is converted by pwsh cmd `.\tools\gfxdis.ps1 -w B6000000 00010001` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
 If you don't know one of the values, you can use `12345678` as a placeholder and then fill it in after the fact.
-- Find similar functions to use their C implementations as reference using coddog: `.\tools\coddog\coddog.exe match -t 0.7 func_80092ADC_A1A8C | sls '\(decompiled\)' | select -First 3`.
+- Find similar functions to use their C implementations as reference using: `.\tools\find-similar.ps1 func_80092ADC_A1A8C`.
 - Avoid using the permuter `.\tools\agent-permuter.ps1`.
 
 # Decompilation Workflow
@@ -89,7 +89,7 @@ If build completes with `build/bh.us.z64: OK` the function is matched and you ca
 
 ## Step 4: Compare with target and find similar functions
 
-Use coddog to find any similar functions that are already decompiled which you may be able to copy.
+Use `.\tools\find-similar.ps1` to find any similar functions that are already decompiled which you may be able to copy.
 At this point always read the whole file `DecompHints.md` for general matching advice.
 Use `.\tools\diff.ps1` to compare the target and current assembly to identify differences: note instruction order, registers, immediates, branch conditions.
 
