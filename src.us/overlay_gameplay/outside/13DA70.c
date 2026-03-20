@@ -185,14 +185,12 @@ void func_8012FE6C_13EE1C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012FE6C_13EE1C.s")
 #endif
 
+// Saves current level's score and returns the total score across all levels.
 #ifdef NON_MATCHING
-/* Stores the current score into the level slot and returns the total across all level slots */
 s32 func_8012FFB0_13EF60(void) {
-	Unk80052A98 *ptr;
-
-	D_80052A98[currentLevel - 1].score = (s32) D_80052B2C->unk30;
-	ptr = &D_80052A98[2];
-	return D_80052A98[0].score + D_80052AA0 + ptr[0].score + ptr[1].score + ptr[2].score + ptr[3].score;
+	Unk80052A98 *a1 = D_80052A98;
+	a1[currentLevel - 1].score = D_80052B2C->unk30;
+	return D_80052A98[0].score + D_80052AA0 + a1[2].score + a1[3].score + a1[4].score + a1[5].score;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012FFB0_13EF60.s")
