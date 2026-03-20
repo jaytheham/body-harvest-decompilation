@@ -110,13 +110,9 @@ void func_802D5BA0_1EE8B0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5BF8_1EE908.s")
 
-#ifdef NON_MATCHING
 void func_802D5DE4_1EEAF4(void) {
     vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & 0xFBFF);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5DE4_1EEAF4.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5DFC_1EEB0C.s")
 
