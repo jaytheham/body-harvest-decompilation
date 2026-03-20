@@ -709,7 +709,6 @@ s32 func_800C2274_D1224(s16, s16, s16, u8);
 void func_800C3BD8_D2B88(s16, s16, s16, s16, s32, s32, s32, s32);
 void func_800E0F4C_EFEFC(s16, s16, s16, s16);
 void func_800E2720_F16D0(s32);
-void func_80123E90_132E40(VehicleInstance *, s32);
 void func_80135D08_144CB8(f32, s16, s16, s16);
 void func_80135D44_144CF4(s32, s32, s32, f32);
 void leoInitUnit_atten(void);
