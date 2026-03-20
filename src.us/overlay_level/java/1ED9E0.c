@@ -120,13 +120,9 @@ void func_802D5F98_1EECA8(void) {
     func_80007410_8010(func_802D5E98_1EEBA8);
 }
 
-#ifdef NON_MATCHING
 void func_802D5FBC_1EECCC(void) {
     func_800EFEB4_FEE64(0, 0xF, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5FBC_1EECCC.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5FE4_1EECF4.s")
 
