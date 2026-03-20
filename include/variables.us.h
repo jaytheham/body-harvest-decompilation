@@ -620,6 +620,7 @@ extern AlienInstance *D_80158FEC; // Target alien instance
 extern s16 *D_80158FF4;
 extern s16 D_8015904C;
 extern InputStruct_8012B150 D_80159050[];
+extern s16 D_80159248;
 extern s16 D_80159260;
 extern s32 D_80159300;
 extern s32 D_80159320;
@@ -631,6 +632,8 @@ extern s8 D_80159DDE;
 extern u8 D_8015EA29;
 extern f32 D_8015EA2C;
 extern f32 D_8015EA30;
+extern f32 D_8015EA34;
+extern f32 D_8015EA38;
 extern s16 D_8015EA4A;
 extern s16 D_8015EA52;
 extern s32 D_8015EB80;
