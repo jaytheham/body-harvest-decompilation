@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-20T19:22:04Z",
-  "commit": "84ab848",
-  "commit_timestamp": "2026-03-21T08:21:45+13:00",
+  "generated": "2026-03-20T19:38:15Z",
+  "commit": "9c588fa",
+  "commit_timestamp": "2026-03-21T08:38:05+13:00",
   "overall": {
-    "total_functions": 2936,
-    "matched": 748,
-    "non_matching": 263,
-    "asm_stubs": 1925,
-    "matched_pct": 25.48,
-    "decompiled_pct": 34.43
+    "total_functions": 2923,
+    "matched": 761,
+    "non_matching": 250,
+    "asm_stubs": 1912,
+    "matched_pct": 26.03,
+    "decompiled_pct": 34.59
   },
   "segments": {
     "core": {
@@ -58,12 +58,12 @@
     },
     "overlay_level/java": {
       "display_name": "Level / Java",
-      "matched": 2,
-      "non_matching": 27,
-      "asm_stubs": 99,
-      "total": 128,
-      "matched_pct": 1.6,
-      "decompiled_pct": 22.7
+      "matched": 15,
+      "non_matching": 14,
+      "asm_stubs": 86,
+      "total": 115,
+      "matched_pct": 13.0,
+      "decompiled_pct": 25.2
     },
     "overlay_level/america": {
       "display_name": "Level / America",
@@ -517,11 +517,11 @@
     {
       "path": "overlay_level/java/1ED9E0.c",
       "segment": "overlay_level/java",
-      "matched": 2,
-      "non_matching": 27,
-      "asm_stubs": 99,
-      "total": 128,
-      "matched_pct": 1.6,
+      "matched": 15,
+      "non_matching": 14,
+      "asm_stubs": 86,
+      "total": 115,
+      "matched_pct": 13.0,
       "contributor": "Meridian Lex"
     },
     {
@@ -546,9 +546,9 @@
     {
       "name": "Meridian Lex",
       "files": 9,
-      "matched": 96,
-      "non_matching": 85,
-      "asm_stubs": 347
+      "matched": 109,
+      "non_matching": 72,
+      "asm_stubs": 334
     },
     {
       "name": "Harvester",
@@ -617,19 +617,19 @@
     },
     {
       "date": "2026-03-20",
-      "commit": "6703122",
-      "matched_pct": 25.42,
-      "decompiled_pct": 34.34,
-      "matched": 746,
-      "total": 2935
+      "commit": "d9584b6",
+      "matched_pct": 25.84,
+      "decompiled_pct": 34.36,
+      "matched": 755,
+      "total": 2922
     },
     {
       "date": "2026-03-21",
-      "commit": "84ab848",
-      "matched_pct": 25.48,
-      "decompiled_pct": 34.43,
-      "matched": 748,
-      "total": 2936
+      "commit": "9c588fa",
+      "matched_pct": 26.03,
+      "decompiled_pct": 34.59,
+      "matched": 761,
+      "total": 2923
     }
   ]
 }
