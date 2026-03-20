@@ -70,7 +70,7 @@ segments:
       - [0x1E2E0, asm, core/1E2E0]
       - [0x1E540, asm, core/1E540]
       - [0x1E550, asm, core/1E550]
-      - [0x1E7B0, asm, core/1E7B0]
+      - [0x1E7B0, c, core/1E7B0]
       - [0x1ECD0, asm, core/1ECD0]
       - [0x1EF60, c, core/1EF60]
       - [0x1F1F0, asm, core/1F1F0]

@@ -13,7 +13,6 @@
  * translation columns.  The forward vector is negated during normalisation
  * (scale = -1/mag) so columns 0-2 hold right, up, and -forward directly.
  */
-#ifdef NON_MATCHING
 void guLookAtF(float mf[4][4], float xEye, float yEye, float zEye,
                float xAt, float yAt, float zAt,
                float xUp, float yUp, float zUp) {
@@ -97,16 +96,12 @@ void guLookAtF(float mf[4][4], float xEye, float yEye, float zEye,
     var_v0[14] = -temp_f2;   /* -dot(eye, -forward) */
     var_v0[15] = 1.0f;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1E7B0/guLookAtF.s")
-#endif
 
 
 /*
  * guLookAt — view matrix (fixed-point Mtx form).
  * Delegates to guLookAtF then converts via guMtxF2L.
  */
-#ifdef NON_MATCHING
 void guLookAt(Mtx *m, float xEye, float yEye, float zEye,
               float xAt, float yAt, float zAt,
               float xUp, float yUp, float zUp) {
@@ -115,9 +110,6 @@ void guLookAt(Mtx *m, float xEye, float yEye, float zEye,
     guLookAtF(mf, xEye, yEye, zEye, xAt, yAt, zAt, xUp, yUp, zUp);
     guMtxF2L(mf, m);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1E7B0/guLookAt.s")
-#endif
 
 
 /*
@@ -130,7 +122,6 @@ void guLookAt(Mtx *m, float xEye, float yEye, float zEye,
  * Converts angle to radians using rotate_rodata_0000 (pi/180), caches the
  * scale factor in rotate_bss_0000, then applies Rodrigues' rotation formula.
  */
-#ifdef NON_MATCHING
 void guAlignF(float mf[4][4], float angle, float ax, float ay, float az) {
     f32 sp3C;   /* angle * scale */
     f32 sp34;   /* sin(angle) */
@@ -206,24 +197,17 @@ void guAlignF(float mf[4][4], float angle, float ax, float ay, float az) {
     temp_f4 = (1.0f - temp_f0) * temp_f12;              /* (1-az²)*cos */
     var_v0[10] = temp_f4 + temp_f0;                     /* (1-az²)*cos + az² */
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1E7B0/guAlignF.s")
-#endif
 
 
 /*
  * guAlign — arbitrary-axis rotation matrix (fixed-point Mtx form).
  * Delegates to guAlignF then converts via guMtxF2L.
  */
-#ifdef NON_MATCHING
 void guAlign(Mtx *m, float angle, float ax, float ay, float az) {
     float mf[4][4];
 
     guAlignF(mf, angle, ax, ay, az);
     guMtxF2L(mf, m);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1E7B0/guAlign.s")
-#endif
 
 

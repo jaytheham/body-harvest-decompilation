@@ -1,8 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-extern f64 perspective_rodata_0000;
-
 /*
  * guPerspectiveF — build a perspective projection matrix (float form).
  *
