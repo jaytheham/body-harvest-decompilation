@@ -186,10 +186,8 @@ void func_800AF52C_BE4DC(s32 arg0) {
 #ifdef NON_MATCHING
 void func_800AF5B0_BE560(s32 arg0) {
 	u8 *ptr;
-	u8 val;
 	ptr = D_80048038 + arg0;
-	val = *ptr;
-	if (val == 1 || val == 0) {
+	if ((*ptr == 1) || (*ptr == 0)) {
 		osSyncPrintf(&D_80142BEC, arg0);
 		*ptr = 2;
 		if (D_8014CFF1[arg0 * 2] != 0x93) {
@@ -434,7 +432,7 @@ void func_800B0830_BF7E0(s32 arg0) {
 		a0 = &D_80222A78[v0];
 		for (;;) {
 			if (a0->unkC == func_800AFD48_BECF8 || a0->unkC == 0) {
-				if (D_80223780[a0->pad9[0]].unk0 == 0x1F && D_80223780[a0->pad9[0]].unk12 < arg0) {
+				if (D_80223780[a0->pad9[0]].unk8 == 0x1F && D_80223780[a0->pad9[0]].unk12 < arg0) {
 					a0->unk0 = 0;
 					D_80048038[a0->pad9[0]] = 0;
 				}
