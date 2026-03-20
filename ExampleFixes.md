@@ -76,6 +76,8 @@ Generates: `andi t2,a3,0xffff` / `li t6,1` / `move a3,t2` / `sra a2` / `sra a1` 
 
 With `s32 arg3` instead: `li t6,1` / `andi t2,a3,0xffff` / `sra a2` / `sra a1` / `move a3,t2` (wrong order, score 120).
 
+**Side-effect: changing callee arg3 from `s32` to `u16` can break other callers that compute arg3 via arithmetic (e.g., `(arg1 * 3) & 0xFFFF`).** IDO generates `subu t8, t7, a3` (fresh dest) instead of in-place `subu t7, t7, a3`, which shifts subsequent register allocation by 1 and causes cascade register mismatches in those callers. Fix: change the arithmetic caller's expression from `(x * 3) & 0xFFFF` to `(u16)(x * 3)`. The explicit `(u16)` cast forces IDO to use the in-place pattern, restoring original register allocation.
+
 ### `while (i--)` generates `or v0,v1,zero` at loop top + `bnez v1; v1--` delay slot
 
 When IDO 5.3 -O2 compiles `while (i--) { arr[i].field = 0; }` with `i = N` (array count):

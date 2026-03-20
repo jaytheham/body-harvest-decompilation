@@ -2903,7 +2903,7 @@ s32 func_8008AAFC_99AAC(u8 arg0, s32 arg1, s32 arg2) {
 	if ((!(alien->unk20 & 0x40000000) || (alien->unk47 & 1) || (alien->unk2 < D_80222A70)) && alien->unk2C >= 2) {
 		if (alien->unk20 & 0x600) {
 			if (alien->unk2 < D_80222A70) {
-				func_800DF038_EDFE8(alien->unk0, alien->unk2, alien->unk4, (arg1 * 3) & 0xFFFF, arg2, (s32) &D_8013C16C);
+				func_800DF038_EDFE8(alien->unk0, alien->unk2, alien->unk4, (u16)(arg1 * 3), arg2, (s32) &D_8013C16C);
 				func_800DEF2C_EDEDC(alien->unk0, alien->unk2, alien->unk4, 0xFF, 2);
 			} else if (alien->specIndex == 0xA) {
 				func_800DFA34_EE9E4(alien->unk0, alien->unk2, alien->unk4, (u16) arg1, arg2);
