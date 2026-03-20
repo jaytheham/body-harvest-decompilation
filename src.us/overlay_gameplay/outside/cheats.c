@@ -1,6 +1,30 @@
 #include <ultra64.h>
 #include "common.h"
 
+// const Cheat D_8013B940[21] = {
+// 	{ "annul", func_800731B0_82160 },
+// 	{ "zfarewell", enableCheatFarewell },
+// 	{ "arsenal", enableCheatArsenal },
+// 	{ "durable", enableCheatDurable },
+// 	{ "zwander", enableCheatWander },
+// 	{ "snuffle", enableCheatSnuffle },
+// 	{ "zaward", enableCheatAward },
+// 	{ "zsnared", enableCheatSnared },
+// 	{ "zfreed", enableCheatFreed },
+// 	{ "alfa", enableCheatAlfa },
+// 	{ "surreal", enableCheatSurreal },
+// 	{ "zdefender", enableCheatDefender },
+// 	{ "bleed", enableCheatBleed },
+// 	{ "suffer", func_8007383C_827EC },
+// 	{ "weasel", enableCheatWeasel },
+// 	{ "useful", enableCheatUseful },
+// 	{ "banana", enableCheatBanana },
+// 	{ "dwarf", enableCheatDwarf },
+// 	{ "dundee", enableCheatDundee },
+// 	{ "lard", enableCheatLard },
+// 	{ "feeble", enableCheatFeeble }
+// };
+
 // enableCheatAnnull
 void func_800731B0_82160(void)
 {
