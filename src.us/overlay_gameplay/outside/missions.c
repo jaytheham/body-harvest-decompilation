@@ -80,7 +80,20 @@ void func_80074768_83718(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800753A0_84350.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075574_84524.s")
+void func_80075574_84524(void) {
+	s32 sp24[1];
+	u8 *var_s0;
+
+	sp24[0] = 0;
+	if (func_80074558_83508() != 0x87) {
+		var_s0 = &D_8014CFF0[sp24[0] * 2];
+		do {
+			var_s0[0] = func_80074500_834B0();
+			var_s0[1] = func_80074500_834B0();
+			var_s0 += 2;
+		} while (func_80074558_83508() != 0x87);
+	}
+}
 
 void func_800755E0_84590(void)
 {
