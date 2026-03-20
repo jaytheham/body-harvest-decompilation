@@ -322,7 +322,9 @@ void func_800F3580_102530(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F4028_102FD8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F41E0_103190.s")
+s32 func_800F41E0_103190(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
+    return (s32) (((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F4258_103208.s")
 
