@@ -334,19 +334,13 @@ void func_80133E94_142E44(s32 arg0) {
 	D_80160188 = 0x24;
 }
 
-#ifdef NON_MATCHING
 void func_80133EBC_142E6C(Unk80160080 *arg0) {
-	VehicleInstance *temp = D_80052B34;
-	arg0->unk30 = (f32) temp->unk0;
-	arg0->unk34 = (f32) temp->unk2 + (f32) D_80160188;
-	arg0->unk38 = (f32) temp->unk4;
-	*(s32 *)&arg0->unk24 = *(s32 *)&arg0->unk30;
-	*(s32 *)&arg0->unk28 = *(s32 *)&arg0->unk34;
-	*(s32 *)&arg0->unk2C = *(s32 *)&arg0->unk38;
+	VehicleInstance *veh = D_80052B34;
+	arg0->unk30 = (f32) veh->unk0;
+	arg0->unk34 = (f32) veh->unk2 + (f32) D_80160188;
+	arg0->unk38 = (f32) veh->unk4;
+	*(Vec3f*)&arg0->unk24 = *(Vec3f*)&arg0->unk30;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80133EBC_142E6C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80133F28_142ED8.s")
 
