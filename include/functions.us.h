@@ -46,6 +46,17 @@ void func_8000CDFC_D9FC(void *arg0, void *arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8000DC9C_E89C(s32, s32);
 void func_80011D24_12924(void);
 void func_80011E14_12A14(u8 arg0);
+// loader.c functions - prototype-less to preserve implicit int behavior for matching functions
+s32 func_8001032C_10F2C();
+s32 func_8000F1E8_FDE8();
+s32 func_800119A8_125A8();
+s32 func_80011AC8_126C8();
+s32 func_80011BE8_127E8();
+s32 debug_printModelSegmentEnd();
+s32 func_800119F4_125F4();
+s32 func_80011A40_12640();
+s32 func_80011B14_12714();
+s32 func_80011B60_12760();
 void func_80013324_13F24(void);
 void func_80013684_14284(void);
 void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4);
