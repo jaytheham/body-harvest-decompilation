@@ -51,7 +51,16 @@ s32 func_800745F0_835A0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007463C_835EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800746F8_836A8.s")
+void func_800746F8_836A8(void) {
+	u8 *temp_a1;
+
+	temp_a1 = D_801497C8 + D_80149B30 * 3;
+	if (++D_80149B30 >= 0xFE) {
+		osSyncPrintf(D_8014121C, temp_a1);
+		D_80149B4A = 1;
+	}
+	*temp_a1 = 0xA9;
+}
 
 // readMissionByteWithIncrementCopyWrapper
 void func_80074768_83718(void) {

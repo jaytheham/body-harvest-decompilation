@@ -409,6 +409,7 @@ extern char D_80141130[];
 extern char D_8014114C[];
 extern char D_80141168[];
 extern char D_80141184[];
+extern char D_8014121C[];
 extern char D_801417C0; /* osSyncPrintf format string - alien action table full warning */
 extern char D_801417DC;
 extern char D_801417F8;
@@ -563,9 +564,12 @@ extern s32 D_80149478[16];
 extern s32 D_801494B4;
 extern u8* D_801494B8;
 extern u8 D_801494BC;
+extern u8 D_801497C8[];
 extern u8 D_80149AF8[];
+extern s32 D_80149B30; // Number of mission commands?
 extern s32 D_80149B40;
 extern s32 D_80149B44;
+extern s16 D_80149B4A;
 extern u8 D_8014D200[];
 extern u8 D_8014D298[][10];
 extern s32 D_8014D2E8;

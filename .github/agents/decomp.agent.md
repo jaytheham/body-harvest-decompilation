@@ -24,7 +24,11 @@ You will convert the named N64 assembly function to C89 code, compile it (IDO 5.
 These powershell tools exist to assist you:
 
 - Build the ROM: `.\tools\make.ps1`
-- Compare target and your current assembly for a specific function after building: `.\tools\diff.ps1 <target function name> <ROM address of next function>"`. E.g. `.\tools\diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`. Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match. Diff output skips matching lines except for 3 lines of matching context either side of differences.
+- Compare target and your current assembly for a specific function after building:
+ `.\tools\diff.ps1 <target function name> <ROM address of next function>"`.
+ E.g. `.\tools\diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`.
+ Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match.
+ Diff output skips matching instructions except for 3 either side of differences.
 - You can get the full assembly of a function after building by adding param `--show=target` or `--show=current` to the above diff command.
 - You must decompile Gfx macros. Use `.\tools\gfxdis.ps1`:
 e.g.
@@ -42,8 +46,8 @@ D_8005BB2C->words.w1 = 0x00010001;
 ```
 Is converted by pwsh cmd `.\tools\gfxdis.ps1 -w B6000000 00010001` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
 If you don't know one of the values, you can use `12345678` as a placeholder and then fill it in after the fact.
-- Find similar functions using coddog: `.\tools\coddog\coddog.exe match -t 0.7 func_80092ADC_A1A8C` if any results are `(decompiled)` you can reference them for guidance.
-- Do your own work instead of using the permuter `.\tools\agent-permuter.ps1`.
+- Find similar functions to use their C implementations as reference using coddog: `.\tools\coddog\coddog.exe match -t 0.7 func_80092ADC_A1A8C | sls '\(decompiled\)' | select -First 3`.
+- Avoid using the permuter `.\tools\agent-permuter.ps1`.
 
 # Decompilation Workflow
 ## Step 1: Generate cleaned C implementation
@@ -112,6 +116,4 @@ Move any newly declared variables or functions from the C source file to `includ
 | Issue                             | Solution                                                    |
 | --------------------------------- | ----------------------------------------------------------- |
 | `undeclared identifier`           | Add `extern` to `include/variables.us.h`                    |
-| IDO syntax error on casts         | Split into separate statements; avoid complex expressions   |
 | Link error (missing symbol)       | Ensure symbol is declared with `extern` in a header         |
-| Can't find function in objdump    | Verify function name matches; rebuild first                 |
