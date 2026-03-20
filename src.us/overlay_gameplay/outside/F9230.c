@@ -400,7 +400,20 @@ s16 func_800F9F64_108F14(s16 arg0, s16 arg1) {
 	return sp24;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F9FAC_108F5C.s")
+s16 func_800F9FAC_108F5C(s16 arg0, s16 arg1) {
+	s16 sp2E;
+	s16 sp2C;
+	s16 sp2A;
+	s32 var_v1;
+
+	func_800F9D60_108D10(arg0, arg1, &sp2A, &sp2E, &sp2C);
+	if (D_80222A70 < sp2C) {
+		var_v1 = sp2C;
+	} else {
+		var_v1 = D_80222A70;
+	}
+	return (s16) var_v1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FA018_108FC8.s")
 
