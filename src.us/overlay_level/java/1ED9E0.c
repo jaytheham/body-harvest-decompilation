@@ -17,13 +17,9 @@ void func_802D4E34_1EDB44(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4E6C_1EDB7C.s")
 
-#ifdef NON_MATCHING
 void func_802D4F70_1EDC80(s32 arg0) {
     func_800072CC_7ECC(0x2C);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4F70_1EDC80.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4F98_1EDCA8.s")
 
