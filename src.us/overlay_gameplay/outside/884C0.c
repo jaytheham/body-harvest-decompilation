@@ -1739,8 +1739,8 @@ void func_80084D80_93D30(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084D80_93D30.s")
 #endif
 
-// Get X/Z distance between two aliens
-s32 func_80084E54_93E04(AlienInstance *alien1, AlienInstance *alien2)
+// Get X/Z distance between
+s32 func_80084E54_93E04(VehicleInstance *vehicle, AlienInstance *alien)
 {
 	s32 xDiff;
 	s32 zDiff;
@@ -1749,7 +1749,7 @@ s32 func_80084E54_93E04(AlienInstance *alien1, AlienInstance *alien2)
 	s32 halfAbsoluteZDiff;
 	s32 absoluteXDiff;
 	s32 absoluteZDiff;
-	xDiff = alien1->unk0 - alien2->unk0;
+	xDiff = vehicle->unk0 - alien->unk0;
 	if ((-xDiff) < xDiff)
 	{
 		absoluteXDiff = xDiff;
@@ -1761,7 +1761,7 @@ s32 func_80084E54_93E04(AlienInstance *alien1, AlienInstance *alien2)
 	halfAbsoluteXDiff = absoluteXDiff;
 	if (!halfAbsoluteXDiff) {}
 	halfAbsoluteXDiff = halfAbsoluteXDiff >> 1;
-	zDiff = alien1->unk4 - alien2->unk4;
+	zDiff = vehicle->unk4 - alien->unk4;
 	if ((-zDiff) < zDiff)
 	{
 		absoluteZDiff = zDiff;

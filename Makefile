@@ -149,10 +149,11 @@ LIBRNCU  = $(TOOLS_DIR)/librncu.so
 
 # Build output control
 # Use QUIET=1 to hide successful compile/status output while keeping errors.
+# Still show important messages for known patterns even in quiet mode.
 QUIET ?= 0
 
 ifeq ($(QUIET),1)
-RUN = @tmp="$@.log"; { $(1); } >"$$tmp" 2>&1 || { status=$$?; cat "$$tmp" >&2; rm -f "$$tmp"; exit $$status; }; rm -f "$$tmp"
+RUN = @tmp="$@.log"; { $(1); } >"$$tmp" 2>&1 || { status=$$?; cat "$$tmp" >&2; rm -f "$$tmp"; exit $$status; }; grep -E "warning: implicit declaration of function" "$$tmp" >&2 || true; rm -f "$$tmp"
 PRINT = @:
 else
 RUN = @$(1)

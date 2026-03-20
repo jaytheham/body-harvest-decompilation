@@ -784,7 +784,6 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ u8 pad0[0x44];
 	/* 0x44 */ s32 unk44;
-	/* 0x48 */ u8 pad48[0x0];
 } Unk800E65BC; /* stride 0x48 */
 
 typedef struct {
