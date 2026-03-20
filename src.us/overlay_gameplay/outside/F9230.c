@@ -257,7 +257,14 @@ void func_800F0234_FF1E4(void) {
 	D_80047968 = 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F026C_FF21C.s")
+s32 func_800F026C_FF21C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	s32 temp_v0;
+	s32 temp_v1;
+
+	temp_v0 = arg0 - arg2;
+	temp_v1 = arg1 - arg3;
+	return (s32) sqrtf((f32) ((temp_v0 * temp_v0) + (temp_v1 * temp_v1)));
+}
 
 s32 func_800F02E4_FF294(void) {
 	return 0;
