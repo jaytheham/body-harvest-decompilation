@@ -144,7 +144,16 @@ void func_800EBD5C_FAD0C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC0D0_FB080.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC330_FB2E0.s")
+void func_800EC330_FB2E0(void) {
+	Unk80047588 *temp_v0;
+
+	temp_v0 = func_801164C4_125474(D_80052542, D_80052546);
+	D_8016018C = 1;
+	if (*(s32 *)((u8 *)D_80148390 + ((u8 *)temp_v0)[8] * 0x18) != 0) {
+		D_80048188 = 1;
+		D_801575E0.unk0 = 3;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC3A0_FB350.s")
 
