@@ -744,7 +744,14 @@ void func_800FF6C0_10E670(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FFC3C_10EBEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FFCB8_10EC68.s")
+void func_800FFCB8_10EC68(s32 arg0) {
+	Unk80052B40 *sp = (Unk80052B40 *)(D_8013FDA8 + arg0 * 0x10 + 8);
+
+	D_80052B40.unk0 = sp->unk0;
+	D_80052B40.unk2 = sp->unk2;
+	D_80052B40.unk4 = sp->unk4 - D_801591C0;
+	func_800039D0_45D0(&D_80052B40, 0, 0, D_8005BB38);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FFD28_10ECD8.s")
 

@@ -755,6 +755,7 @@ extern s16 D_8014ED56;
 extern s16 D_80158C50;
 extern s32 D_801591AC;
 extern s32 D_801591B0;
+extern s16 D_801591C0;
 extern s16 D_801591C2;
 extern s16 D_80159232;
 extern s16 D_80159246;

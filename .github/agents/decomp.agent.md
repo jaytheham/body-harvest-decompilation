@@ -62,7 +62,7 @@ Clean up the generated C code:
 - Replace all pointer arithmetic with struct/array access.
 - All struct field accesses should use `.` or `->` operators.
 - Update void\* parameters that should be typed.
-- Unusual constructions like `(arg0 < 0x9C) ^ 1` should be converted into a more natural form `arg0 >= 0x9C`.
+- Unusual constructions like `(arg0 < 0x9C) ^ 1` should be converted into a more human readable form `arg0 >= 0x9C`.
 - Replace goto-based control flow with structured control flow (if/else, for, while).
 - Replace if-do-while and do-while loops with for(;;) or while() loops.
 - Search in `/asm/` for any `jal` references to the target function to determine correct parameter and return types.
@@ -73,12 +73,12 @@ Identify and fix all these issues in the generated C code before proceeding to t
 
 Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly. Replace that line with the cleaned up C code from Step 1.
 
-Before continuing review the code and ensure all pointer arithmetic has been replaced with proper struct and array access and all temp pointers variables removed and replaced with direct struct/array references.
+Before continuing review the code and ensure all pointer arithmetic has been replaced with proper struct and array access, and all temp pointer variables are removed and replaced with direct struct/array references.
 Read file `DecompHints.md` for general guidance.
 
 ## Step 3: Build ROM
 
-Build the ROM: `.\tools\make.ps1` Important: You must run this to build the entire project, to ensure all symbols are correctly linked and to get an accurate comparison of the current vs the target.
+Build the ROM: `.\tools\make.ps1` Important: This is the only correct way to build your C code, it ensures all symbols are correctly linked and produces a true comparison of the current vs the target.
 
 **If compilation errors occur:**
 
@@ -86,7 +86,7 @@ Build the ROM: `.\tools\make.ps1` Important: You must run this to build the enti
 - Simplify C code (avoid complex expressions in single statements)
 - Ensure all extern symbols are declared
 
-If build completes with `build/bh.us.z64: OK` the function is correctly matched and you can stop work. If you see `FAILED` the generated assembly does not match the target, proceed to the next steps for analysis and iteration.
+If build completes with `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, proceed to the next steps for analysis and iteration.
 
 ## Step 4: Compare with target and find similar functions
 
