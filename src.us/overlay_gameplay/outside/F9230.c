@@ -418,7 +418,19 @@ s16 func_800F9F64_108F14(s16 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FAD10_109CC0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FADF8_109DA8.s")
+s16 func_800FADF8_109DA8(s16 arg0) {
+	s32 var_v1;
+
+	var_v1 = D_80158FD8;
+	if (var_v1--) {
+		do {
+			if (arg0 == D_80158E80[var_v1]) {
+				return var_v1;
+			}
+		} while (var_v1--);
+	}
+	return -1;
+}
 
 s16 func_800FAE60_109E10(VehicleInstance *arg0) {
 	return (s16)(arg0 - vehicleInstances);
