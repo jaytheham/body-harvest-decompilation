@@ -5,47 +5,31 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4DB0_1EDAC0.s")
 
-#ifdef NON_MATCHING
 void func_802D4E34_1EDB44(s16 arg0) {
     if (arg0 != -3) {
         func_800C1A4C_D09FC(arg0, 0xD, 1);
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4E34_1EDB44.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4E6C_1EDB7C.s")
 
-#ifdef NON_MATCHING
 void func_802D4F70_1EDC80(s32 arg0) {
     func_800072CC_7ECC(0x2C);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4F70_1EDC80.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4F98_1EDCA8.s")
 
-#ifdef NON_MATCHING
 void func_802D507C_1EDD8C(s32 arg0) {
     osSyncPrintf(&D_802E0D84);
     func_800073B8_7FB8(0xB);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D507C_1EDD8C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D50B0_1EDDC0.s")
 
-#ifdef NON_MATCHING
 void func_802D513C_1EDE4C(s32 arg0) {
     osSyncPrintf(&D_802E0DA8);
     func_800072CC_7ECC(0xCUL);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D513C_1EDE4C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5170_1EDE80.s")
 
@@ -66,14 +50,10 @@ void func_802D5508_1EE218(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5508_1EE218.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802D5560_1EE270(void) {
     D_802E0FB0 = 0x1E;
     func_80007410_8010(&func_802D5508_1EE218);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5560_1EE270.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5590_1EE2A0.s")
 
@@ -95,7 +75,6 @@ void func_802D5A78_1EE788(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5ADC_1EE7EC.s")
 
-#ifdef NON_MATCHING
 void func_802D5BA0_1EE8B0(void) {
     osSyncPrintf(&D_802E0E30);
     D_802E0FB0 = 0;
@@ -104,19 +83,12 @@ void func_802D5BA0_1EE8B0(void) {
     func_80007410_8010(&func_802D5ADC_1EE7EC);
     func_800076D4_82D4(9);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5BA0_1EE8B0.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5BF8_1EE908.s")
 
-#ifdef NON_MATCHING
 void func_802D5DE4_1EEAF4(void) {
     vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & 0xFBFF);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5DE4_1EEAF4.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5DFC_1EEB0C.s")
 
@@ -124,21 +96,13 @@ void func_802D5DE4_1EEAF4(void) {
 
 void func_802D5E98_1EEBA8(void);
 
-#ifdef NON_MATCHING
 void func_802D5F98_1EECA8(void) {
     func_80007410_8010(func_802D5E98_1EEBA8);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5F98_1EECA8.s")
-#endif
 
-#ifdef NON_MATCHING
 void func_802D5FBC_1EECCC(void) {
     func_800EFEB4_FEE64(0, 0xF, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5FBC_1EECCC.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5FE4_1EECF4.s")
 
@@ -172,15 +136,11 @@ void func_802D6128_1EEE38(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6338_1EF048.s")
 
-#ifdef NON_MATCHING
 void func_802D6840_1EF550(void) {
     D_802E0FB6 = 0;
     func_80013468_14068(7);
     func_800EFEB4_FEE64(&func_802D6338_1EF048, 0xD, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6840_1EF550.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_802D687C_1EF58C(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
@@ -192,15 +152,11 @@ s32 func_802D687C_1EF58C(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D68F4_1EF604.s")
 
-#ifdef NON_MATCHING
 void func_802D6DBC_1EFACC(void) {
     D_802E0FB8 = 0;
     func_80013468_14068(5);
     func_800EFEB4_FEE64(&func_802D68F4_1EF604, 0xB, 1);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6DBC_1EFACC.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_802D6DF8_1EFB08(void) {
@@ -224,13 +180,9 @@ void func_802D6DF8_1EFB08(void) {
 
 void func_802D6E70_1EFB80(void);
 
-#ifdef NON_MATCHING
 void func_802D7938_1F0648(void) {
     func_80007410_8010(&func_802D6E70_1EFB80);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7938_1F0648.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D795C_1F066C.s")
 
@@ -292,14 +244,10 @@ void func_802DAF5C_1F3C6C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB14C_1F3E5C.s")
 
-#ifdef NON_MATCHING
 void func_802DB428_1F4138(u8 arg0) {
     func_80137468_146418(arg0, 0x25);
     alienInstances[arg0].unk12 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB428_1F4138.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB468_1F4178.s")
 
