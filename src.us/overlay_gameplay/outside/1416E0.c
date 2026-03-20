@@ -642,10 +642,10 @@ s16 func_801361A4_145154(Unk80160080 *arg0) {
 		D_80160184 = D_80052B34->unkE + 0x8000;
 	}
 	if (D_8016017C != 0) {
-		arg0->unk5E = (s16) D_80160184;
+		arg0->unk5E = D_80160184;
 		return D_80160184;
 	}
-	return (s16) D_80052B34->unkE;
+	return D_80052B34->unkE;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801361A4_145154.s")

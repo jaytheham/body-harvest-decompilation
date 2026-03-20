@@ -1320,6 +1320,8 @@ extern s16 D_802E0FB4;
 extern s16 D_802E0FB6;
 extern s16 D_802E0FB8;
 extern s16 D_801591C4;
+extern s16 D_80159218;
+extern s16 D_8015921C;
 extern s16 D_800481AA[];
 extern s32 D_800481B8[];
 extern s16 D_800481D2[];

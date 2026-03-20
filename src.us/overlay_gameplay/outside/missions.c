@@ -42,7 +42,28 @@ u8 func_80074558_83508(void) {
 }
 
 // readMissionObject
+// Needs jumptable data
+#ifdef NON_MATCHING
+void func_80074578_83528(u8 *arg0) {
+	arg0[0] = func_80074500_834B0();
+
+	switch (arg0[0]) {
+		case 0x98:
+		case 0x99:
+		case 0x9A:
+		case 0x9B:
+		case 0xAF:
+			arg0[1] = func_8007452C_834DC();
+			break;
+		case 0xAD:
+			arg0[1] = func_8007452C_834DC();
+			arg0[2] = func_8007452C_834DC();
+			break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074578_83528.s")
+#endif
 
 s32 func_800745F0_835A0(void) {
 	func_80074578_83528(&D_80149AF8[D_80149B40 * 3]);
