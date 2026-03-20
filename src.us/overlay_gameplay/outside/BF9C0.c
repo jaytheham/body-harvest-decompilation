@@ -352,23 +352,18 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD20C_CC1BC.s")
 
-#ifdef NON_MATCHING
-/* Resets the animation speed field for each of 8 sub-entries of the current level's
-   table at D_8003E0FC, then calls CC1BC to process them */
 void func_800BD2F4_CC2A4(void) {
-	s32 i = 0;
-	s32 stride = 0xA;
-	u8 *base = &D_8003E0FC[currentLevel * 0x50];
+    s8 *base;
+    s32 i;
 
-	do {
-		base[i * stride - 0x4A] = 0;
-		i = (i + 1) & 0xFF;
-	} while (i < 8);
-	func_800BD20C_CC1BC(base);
+    base = (s8 *)&D_8003E0FC[currentLevel * 0x50];
+    i = 0;
+    do {
+        base[i * 0xA - 0x4A] = 0;
+        i = (i + 1) & 0xFF;
+    } while (i < 8);
+    func_800BD20C_CC1BC(base);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD2F4_CC2A4.s")
-#endif
 
 // DisplayGates - A gate is a portal through the shield wall
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD360_CC310.s")

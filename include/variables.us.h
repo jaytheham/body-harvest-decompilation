@@ -181,7 +181,7 @@ extern VehicleInstance vehicleInstances[]; // 8004DCD0
 extern Unk80050ADA D_80050ADA[]; // 0x80050ADA
 extern u8 D_80050ADE[];
 extern u8 D_80050AE0[];
-extern u8 D_80050AF0[];
+extern BuildingInstance D_80050AF0[];
 extern s8 D_80050C0B;
 extern u32 D_80051008;
 extern u32 D_80051038;
