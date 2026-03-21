@@ -267,7 +267,7 @@ s32 func_800B325C_C220C(s8, s8, u16);
 void func_800B41C8_C3178(s32, s32, u8*, s32);
 void func_800B8C2C_C7BDC(s16, s16, s32);
 void func_800B9954_C8904(u8);
-void func_800BD20C_CC1BC(void *);
+void func_800BD20C_CC1BC(void);
 void func_800BD2F4_CC2A4(void);
 void func_800B19F8_C09A8(void);
 void func_800B9DB8_C8D68(s32 arg0);

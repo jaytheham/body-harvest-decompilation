@@ -352,17 +352,14 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD20C_CC1BC.s")
 
-void func_800BD2F4_CC2A4(void) {
-    s8 *base;
-    s32 i;
-
-    base = (s8 *)&D_8003E0FC[currentLevel * 0x50];
-    i = 0;
-    do {
-        base[i * 0xA - 0x4A] = 0;
-        i = (i + 1) & 0xFF;
-    } while (i < 8);
-    func_800BD20C_CC1BC(base);
+void func_800BD2F4_CC2A4(void)
+{
+  u8 i;
+  for (i = 0;i < 8;i++)
+  {
+	D_8003E0FC[currentLevel - 1][i].unk6 = 0;
+  }
+  func_800BD20C_CC1BC();
 }
 
 // DisplayGates - A gate is a portal through the shield wall
@@ -376,20 +373,18 @@ void func_800BD2F4_CC2A4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BDAF4_CCAA4.s")
 
 #ifdef NON_MATCHING
-void func_800BDD24_CCCD4(s32 arg0) {
-	s8 *v0 = (s8 *)&D_8003E0FC[currentLevel * 0x50 + (arg0 & 0xFF) * 0xA];
+void func_800BDD24_CCCD4(u8 arg0) {
+	s8 *v0 = (s8 *)&D_8003E0FC[currentLevel * 0x50 + arg0 * 0xA];
 	s32 v1 = v0[-0x4A];
-	s32 a0;
+	s32 a0 = -v1;
 	s32 a1;
-	if (v1 > 0) {
-		a0 = -v1;
-		if (D_80048188 == 0) {
+	if (v1 > 0 && D_80048188 == 0) {
+		if (a0 < v1) {
+			a1 = v1;
+		} else {
 			a1 = a0;
-			if (a0 < v1) {
-				a1 = v1;
-			}
-			v0[-0x4A] = (s8)-a1;
 		}
+		v0[-0x4A] = (s8)-a1;
 	}
 }
 #else

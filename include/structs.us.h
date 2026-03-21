@@ -963,6 +963,17 @@ typedef struct {
 	/* 0x04 */ u16 unk4;
 } Unk802E71B8; /* size = 0x6 */
 
+/* Gate entry in shield wall. Array: D_8003E0FC[5][8], access [currentLevel-1][idx] */
+typedef struct {
+	/* 0x00 */ s16 unk0; /* world X position */
+	/* 0x02 */ s16 unk2; /* world Z position */
+	/* 0x04 */ s16 unk4; /* world Y position or other coordinate */
+	/* 0x06 */ s8  unk6; /* gate open/close animation state (0=closed, 0x50=fully open) */
+	/* 0x07 */ u8  unk7;
+	/* 0x08 */ u8  unk8;
+	/* 0x09 */ u8  unk9; /* gate type (1 or 2) */
+} GateEntry; /* 0xA bytes */
+
 typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ s32 unk4;

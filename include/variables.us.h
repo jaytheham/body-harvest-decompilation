@@ -93,7 +93,7 @@ extern u8 D_8004337D;
 extern u8 D_8003DFD4[];
 extern u8 D_8003E000[];
 extern s16 D_8003E0EE[];
-extern u8 D_8003E0FC[];
+extern GateEntry D_8003E0FC[5][8]; /* [currentLevel-1][gateIdx], level 0=Greece..4=Comet */
 
 extern Unk80042DA8 D_80042DA8;
 extern u8 D_80042DB8;
