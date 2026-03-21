@@ -4,7 +4,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800047F0_53F0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800047FC_53FC.s")
+s32 func_800047FC_53FC(s16 arg0) {
+    return arg0 * arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004818_5418.s")
 
