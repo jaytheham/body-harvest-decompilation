@@ -169,30 +169,26 @@ void func_800EC468_FB418(void) { D_80157A28 &= ~0x200; }
 // Cont 2 button attempts to use weapon model 0 when changing weapon
 #ifdef NON_MATCHING
 s32 func_800EF0B0_FE060(s32 arg0) {
+	s32 buf[2];
 	s32 *ptr;
-	s32 sum;
 	s32 count;
-	s64 pad0;
-	s64 pad1;
-	s64 temp;
-	s32 *temp32;
+	s32 sum;
 	s8 byte;
 
 	ptr = (s32 *)func_80012000_12C00(arg0);
-	temp32 = (s32 *)(&pad1 + 2);
-	sum = 0;
 	count = 0;
+	sum = 0;
 
 	do {
-		temp32[0] = *ptr;
+		buf[0] = ptr[0];
 		ptr += 2;
 		count++;
-		temp32[1] = *(ptr - 1);
-		byte = (s8)temp32[0];
+		buf[1] = ptr[-1];
+		byte = *(s8 *)buf;
 		sum += byte;
-	} while ((byte != -0x48) || (count >= 0x39));
+	} while (byte != -0x48 || count >= 0x39);
 
-	if (currentControllerStates[CONTROLLER_TWO] & BUTTON_Z) {
+	if (currentControllerStates[CONTROLLER_TWO].button & BUTTON_Z) {
 		return 0;
 	}
 
