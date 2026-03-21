@@ -4,6 +4,8 @@
 
 Help is welcome! Message me on discord `jaytheham` or @gmail.com
 
+[Help match existing scratches on decomp.me](https://decomp.me/preset/211)
+
 Note AI is being used extensively for initial decomp work. All NON_MATCHING code should be assumed to be AI generated and possibly wildly wrong. Same with the pre-function /\* ... \*/ comments.
 
 # Building
@@ -44,7 +46,7 @@ build/bh.us.z64: OK
 ```
 
 Note: Currently need to change the references to func_802D4CD0 in loader.s to func_802D4CD0_18D7E0
-Not sure why this one file is problematic.
+Not sure why this one file is problematic. Should be done automatically during extract.
 
 ## Docker
 
@@ -64,11 +66,11 @@ From here you can run the `make extract` and `make --jobs` commands.
 
 ## Building `EU` Version
 
-Place `baserom.eu.z64` in the root of the repository, and suffix each `make` command with `VERSION=eu`. Note that whilst this will build the EU ROM, minimal effort has been made to decompile this version.
+Place `baserom.eu.z64` in the root of the repository, and suffix each `make` command with `VERSION=eu`. Note that whilst this will build the EU ROM, no effort has been made to decompile this version yet.
 
 ## Building `NON_MATCHING` Version
 
-If there are any functions within the ROM that have been decompiled to a state where they are functionally equivalent, but are not a byte-perfect match. In order to build/test the non-matching, pass `NON_MATCHING=1` to the `make` commands.
+Functions that are close to - but not yet - a byte-perfect match are wrapped with NON_MATCHING to exclude from the build. In order to build/test the non-matching, pass `NON_MATCHING=1` to the `make` commands.
 
 # ROM Versions
 
