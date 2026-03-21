@@ -227,8 +227,15 @@ void func_80118454_127404(s32 arg0, s32 arg1) {
 
 }
 
-// Failed - gpt 5.3 codex
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118460_127410.s")
+s32 func_80118460_127410(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	s32 temp2;
+	s32 temp1;
+
+	temp1 = func_800F9C40_108BF0(arg0 - arg2);
+	temp2 = func_800F9C40_108BF0(arg1 - arg3);
+	temp2 += temp1;
+	return (s32) sqrtf((f32)(u32)temp2);
+}
 
 void func_801184E4_127494(s8 arg0) {
 	D_80159DDE = arg0;
