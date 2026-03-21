@@ -358,6 +358,7 @@ extern u8 D_8013DAE4; /* particle/effect free index */
 extern s32 D_8013FCD0;
 
 extern AlienInstance *D_80140AB0[];
+extern Unk8013FDA8Entry D_8013FDA8[];
 extern s32 D_80140AC4;
 extern s32 D_80140AC8;
 extern u8 D_80140C70[4];
@@ -1033,7 +1034,7 @@ extern VehicleInstance D_8004F990;
 extern VehicleInstance D_8004F9EC;
 extern VehicleInstance D_8004FA48;
 extern s16 D_8015930C;
-extern u8 D_8013FDA8[];
+extern Unk8013FDA8Entry D_8013FDA8[];
 extern char D_800A4BCC[];
 extern u8 D_8009E4C8[];
 extern char D_800A4CE8[];

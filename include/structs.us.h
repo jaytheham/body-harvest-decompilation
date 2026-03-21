@@ -639,6 +639,12 @@ typedef struct {
 } Unk80052B40; /* size = 0x06 */
 
 typedef struct {
+	/* 0x00 */ u8 unk0[8];
+	/* 0x08 */ Unk80052B40 unk8;
+	/* 0x0E */ u8 pad0[2];
+} Unk8013FDA8Entry; /* size = 0x10 */
+
+typedef struct {
 	/* 0x00 */ f32 unk0;
 	/* 0x04 */ f32 unk4;
 	/* 0x08 */ f32 unk8;
