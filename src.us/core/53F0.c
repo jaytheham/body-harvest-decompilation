@@ -98,7 +98,24 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800074F4_80F4.s")
 
+#ifdef NON_MATCHING
+void func_80007548_8148(void) {
+    s32 *var_a0;
+    s32 temp_v0;
+    s32 var_v1;
+
+    var_a0 = &D_8004DC74;
+    var_v1 = 3;
+    do {
+        temp_v0 = var_v1;
+        *var_a0 = 0;
+        var_a0 -= 1;
+        var_v1 -= 1;
+    } while (var_v1 != 0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007548_8148.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007570_8170.s")
 

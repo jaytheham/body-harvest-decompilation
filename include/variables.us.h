@@ -1384,5 +1384,6 @@ extern char D_802E0D50[];
 extern s8 D_802E0570;
 extern s8 D_802E0580;
 extern f64 D_802E0EB0;
+extern s32 D_8004DC74;
 
 #endif
