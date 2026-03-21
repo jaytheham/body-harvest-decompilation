@@ -144,7 +144,7 @@ void func_800EBD5C_FAD0C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC0D0_FB080.s")
 
 void func_800EC330_FB2E0(void) {
-	Unk80047588 *temp_v0;
+	Unk800522C0 *temp_v0;
 
 	temp_v0 = func_801164C4_125474(D_80052542, D_80052546);
 	D_8016018C = 1;
@@ -214,7 +214,19 @@ s32 func_800EF0B0_FE060(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF9F0_FE9A0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFC28_FEBD8.s")
+void func_800EFC28_FEBD8(u8 arg0) {
+    s16 idx;
+    AlienInstance *alien;
+
+    idx = func_8007956C_8851C(0x12);
+    alien = &alienInstances[idx];
+    alien->unk0 = D_80052B34->unk0;
+    alien->unk4 = D_80052B34->unk4 + 0x50;
+    if (arg0 == 0) {
+        alienSpecs[arg0].unk0 = (s32)&D_5040770;
+        alien->unk24 = 0x10;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFCC0_FEC70.s")
 
@@ -1085,7 +1097,19 @@ void func_8010B5C8_11A578(VehicleInstance *arg0, f32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010B804_11A7B4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010B970_11A920.s")
+s32 func_8010B970_11A920(u8 *arg0, VehicleInstance *arg1) {
+	VehicleSpec *sp1C;
+	s32 sp18;
+
+	sp1C = &vehicleSpecs[arg1->unk1A];
+	if (func_80078FE0_87F90(arg0, arg1, &sp18) != 0 ||
+			((sp1C->unk4C & 0x20000000) && (arg1->unk20 & 2))) {
+		func_800792E0_88290(arg0, sp18);
+		func_80014180_14D80(0);
+		return 1;
+	}
+	return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010BA04_11A9B4.s")
 

@@ -19,6 +19,15 @@ typedef struct {
 } Unk800311A0; /* size = 0x06 */
 
 typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
+	/* 0x02 */ u8 unk2;
+	/* 0x03 */ u8 unk3;
+	/* 0x04 */ u8 unk4;
+	/* 0x05 */ u8 unk5;
+} MissionCondEntry; /* size = 0x06 */
+
+typedef struct {
 	/* 0x00 */ u8 cheatPattern[0xC];
 	/* 0x0C */ void (*cheatFunc)(void);
 } Cheat; /* size = 0x10 */
