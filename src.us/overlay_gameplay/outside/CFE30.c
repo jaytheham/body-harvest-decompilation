@@ -934,7 +934,19 @@ void func_800E7234_F61E4(void) {
 	func_800E5538_F44E8();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E72A0_F6250.s")
+void func_800E72A0_F6250(void) {
+	if ((currentLevel == 2) && (func_8000726C_7E6C(((u64)0x1E << 32)) == 0)) {
+		func_800E2830_F17E0();
+	} else if (currentLevel == 4) {
+		func_800E2830_F17E0();
+	}
+	func_800E1C10_F0BC0();
+	if (D_80052ACB == 0) {
+		func_800E64B4_F5464();
+	}
+	func_800E5B78_F4B28();
+	func_800E520C_F41BC();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7338_F62E8.s")
 

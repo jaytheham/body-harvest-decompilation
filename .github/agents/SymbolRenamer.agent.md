@@ -3,6 +3,7 @@ name: Symbol Renamer
 description: Change all instances of a symbol to a new name across the entire codebase, including C source files, header files, and symbol .txt files. Update all declarations, definitions, and references to the symbol to ensure consistency and correctness.
 tools: ["execute", "read", "edit", "search", "todo"]
 model: GPT-5 mini (copilot)
+disable-model-invocation: true
 ---
 
 You will be given a function/symbol name and a new name to change it to. Your task is to rename this across the entire codebase, including all C source files, header files, and symbol .txt files.

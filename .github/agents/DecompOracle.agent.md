@@ -4,6 +4,7 @@ description: Answer questions about decompilation
 tools:
   [execute/getTerminalOutput, execute/awaitTerminal, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, edit/createFile, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/searchResults, search/textSearch, search/usages, todo]
 model: Raptor mini (Preview) (copilot)
+disable-model-invocation: true
 ---
 
 ## Overview
