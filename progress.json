@@ -1,7 +1,7 @@
 {
-  "generated": "2026-03-21T00:17:00Z",
-  "commit": "7d81c2a",
-  "commit_timestamp": "2026-03-21T13:16:39+13:00",
+  "generated": "2026-03-21T00:17:32Z",
+  "commit": "362d9ff",
+  "commit_timestamp": "2026-03-21T13:17:22+13:00",
   "overall": {
     "total_functions": 2958,
     "matched": 767,
@@ -102,7 +102,7 @@
       "asm_stubs": 38,
       "total": 66,
       "matched_pct": 27.3,
-      "contributor": "jaytheham"
+      "contributor": "Meridian Lex"
     },
     {
       "path": "core/10A20.c",
@@ -538,17 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 32,
-      "matched": 608,
-      "non_matching": 173,
-      "asm_stubs": 1458
+      "files": 31,
+      "matched": 590,
+      "non_matching": 163,
+      "asm_stubs": 1420
     },
     {
       "name": "Meridian Lex",
-      "files": 10,
-      "matched": 145,
-      "non_matching": 111,
-      "asm_stubs": 349
+      "files": 11,
+      "matched": 163,
+      "non_matching": 121,
+      "asm_stubs": 387
     },
     {
       "name": "Harvester",
@@ -617,7 +617,7 @@
     },
     {
       "date": "2026-03-20",
-      "commit": "7a4d6c1",
+      "commit": "91c5081",
       "matched_pct": 25.86,
       "decompiled_pct": 35.5,
       "matched": 765,
@@ -625,7 +625,7 @@
     },
     {
       "date": "2026-03-21",
-      "commit": "7d81c2a",
+      "commit": "362d9ff",
       "matched_pct": 25.93,
       "decompiled_pct": 35.56,
       "matched": 767,
