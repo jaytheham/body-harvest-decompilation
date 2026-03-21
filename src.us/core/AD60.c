@@ -40,7 +40,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CF4C_DB4C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D26C_DE6C.s")
+void func_8000D26C_DE6C(Unk8007F878_404 *arg0, s32 arg1) {
+    arg0->unkE50 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D278_DE78.s")
 
