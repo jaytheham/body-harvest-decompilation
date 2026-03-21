@@ -114,7 +114,9 @@ s32 func_800078B8_84B8(s32 arg0, s32 *arg1) {
     return *arg1 & (1 << arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800078CC_84CC.s")
+void func_800078CC_84CC(s32 arg0, s32 *arg1) {
+    *arg1 |= 1 << arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800078E4_84E4.s")
 
