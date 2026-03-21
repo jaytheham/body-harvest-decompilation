@@ -239,6 +239,7 @@ extern f32 D_8014ED10;
 extern f32 D_8014ED14;
 extern u8 D_3058A40[];
 extern u8 D_8F4960[];
+extern u8 D_5040770[];
 extern u8 D_80157E90[];
 extern u8 D_1009C70[];
 extern u8 D_1001B50[];

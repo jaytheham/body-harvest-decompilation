@@ -214,7 +214,19 @@ s32 func_800EF0B0_FE060(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF9F0_FE9A0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFC28_FEBD8.s")
+void func_800EFC28_FEBD8(u8 arg0) {
+    s16 idx;
+    AlienInstance *alien;
+
+    idx = func_8007956C_8851C(0x12);
+    alien = &alienInstances[idx];
+    alien->unk0 = D_80052B34->unk0;
+    alien->unk4 = D_80052B34->unk4 + 0x50;
+    if (arg0 == 0) {
+        alienSpecs[arg0].unk0 = (s32)&D_5040770;
+        alien->unk24 = 0x10;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFCC0_FEC70.s")
 
