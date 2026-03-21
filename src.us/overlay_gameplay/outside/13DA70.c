@@ -74,6 +74,7 @@ void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012EC3C_13DBEC.s")
 
+#ifdef NON_MATCHING
 void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 {
 	static s32 D_8015FF84;
@@ -88,6 +89,9 @@ void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 	}
 	D_8015FF84 += arg1;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F24C_13E1FC.s")
+#endif
 
 #ifdef NON_MATCHING
 /* Applies a cosine-based brightness oscillation to RGB color data */
