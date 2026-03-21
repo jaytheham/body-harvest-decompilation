@@ -212,14 +212,10 @@ void func_8000E4C4_F0C4(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E4C4_F0C4.s")
 #endif
 
-#ifdef NON_MATCHING
 /* Square of arg0. */
 s32 func_8000E52C_F12C(s32 arg0) {
     return arg0 * arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E52C_F12C.s")
-#endif
 
 #ifdef NON_MATCHING
 /* Constructs graphics display lists with perspective/lookat setup. Returns 0 or 1. */
