@@ -440,7 +440,21 @@ void func_800D6A84_E5A34(u8 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7284_E6234.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7624_E65D4.s")
+s16 func_800D7624_E65D4(s16 arg0, s16 arg1, s16 arg2) {
+	s16 temp_v0;
+	Unk80154318Entry *entry;
+
+	temp_v0 = func_800C17B4_D0764(0x11, 1);
+	if (temp_v0 != -3) {
+		entry = &D_80154318[temp_v0];
+		entry->unk2 = 0x14;
+		((u8 *)entry)[0x0E] = 0;
+		entry->unk8 = arg0;
+		entry->unkA = arg1;
+		entry->unkC = arg2;
+	}
+	return temp_v0;
+}
 
 void func_800D76A8_E6658(s16 arg0) {
 	if (arg0 == -3) {
