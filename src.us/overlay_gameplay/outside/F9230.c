@@ -932,7 +932,12 @@ s16 func_801081AC_11715C(s16 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801095BC_11856C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801098E8_118898.s")
+void func_801098E8_118898(VehicleInstance *vehicle) {
+	D_8015922C = &D_8003E290[func_800056D0_62D0(vehicle->unk0, vehicle->unk4)];
+	if ((vehicle->unk20 & VEHICLE_FLAG_ON_BRIDGE) && (currentLevel != LEVEL_COMET)) {
+		D_8015922C = &D_8003E3A0;
+	}
+}
 
 VehicleInstance *func_80109960_118910(void)
 {
