@@ -505,7 +505,18 @@ void func_800D76A8_E6658(s16 arg0) {
 	func_800C1A4C_D09FC(arg0, 0x11, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D76F4_E66A4.s")
+void func_800D76F4_E66A4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+    u8 *temp_v1;
+    s16 *temp_v0;
+
+    if ((arg3 == -3) || (temp_v1 = (u8 *)&D_80154318[arg3], temp_v0 = (s16 *)(temp_v1 + 8), ((*temp_v1 & 1) == 0))) {
+        osSyncPrintf(&D_80143958, arg1, arg2);
+        return;
+    }
+    temp_v0[0] = arg0;
+    temp_v0[1] = arg1;
+    temp_v0[2] = arg2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7790_E6740.s")
 

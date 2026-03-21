@@ -1144,6 +1144,7 @@ extern char D_80143478;
 extern char D_80143814;
 extern char D_801437C0;
 extern char D_8014390C;
+extern char D_80143958;
 extern char D_801439A4;
 extern char D_80143A38;
 extern u8 D_801592A0;
