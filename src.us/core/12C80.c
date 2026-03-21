@@ -184,7 +184,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017AAC_186AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017AE0_186E0.s")
+void func_80017AE0_186E0(void) {
+    D_80034478 = 0;
+    D_80034480 = 0xFFFF;
+    D_8003447C = 0;
+    D_80034484 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017B08_18708.s")
 
