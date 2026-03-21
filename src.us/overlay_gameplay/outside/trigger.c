@@ -220,21 +220,17 @@ void func_800AF870_BE820(Unk80222A78 *arg0) {
 	func_800AEE5C_BDE0C((s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80), arg0->pad9[0], 0xFF);
 }
 
-#ifdef NON_MATCHING
 void func_800AF8C4_BE874(Unk80222A78 *arg0) {
 	Unk80222A78 tmp;
 	func_800AF1F8_BE1A8((s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80), arg0->pad9[0], arg0);
 	tmp.unk1 = arg0->unk1;
+	tmp.unk2 = arg0->unk2;
+	tmp.pad9[0] = arg0->pad9[0];
 	tmp.unk4 = D_8014F820 + 0x12;
 	tmp.unk0 = 2;
 	tmp.unkC = func_800AF870_BE820;
-	tmp.unk2 = arg0->unk2;
-	tmp.pad9[0] = arg0->pad9[0];
 	func_800AE454_BD404(&tmp);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF8C4_BE874.s")
-#endif
 
 void func_800AF95C_BE90C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 	Unk80222A78 tmp;
