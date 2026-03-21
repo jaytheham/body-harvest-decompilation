@@ -304,7 +304,18 @@ void func_800CCAD4_DBA84(s16 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD2E8_DC298.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD390_DC340.s")
+void func_800CD390_DC340(u8 arg0) {
+    if (arg0 < 0x1E) {
+        if (D_80154088[arg0].unk0 == 5) {
+            if (D_80154088[arg0].unk4 < 2) {
+                func_800C1418_D03C8(arg0, 0);
+                func_800C1384_D0334(arg0);
+                return;
+            }
+            D_80154329[D_80154088[arg0].unk6].unk0 = 0;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD42C_DC3DC.s")
 

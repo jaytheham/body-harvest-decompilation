@@ -1129,6 +1129,7 @@ extern u8 D_8013E344;
 extern Unk80154318Entry D_80154318[];
 extern u8 D_80154327;
 extern u8 D_80154328;
+extern Unk80154318Entry D_80154329[];
 extern Unk801541F8Entry D_80154088[];
 extern Unk801541F8Entry D_801541F8[];
 extern UnkFC8E8Entry D_80156EF0[];
