@@ -96,7 +96,13 @@ s32 func_80010420_11020(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80010444_11044.s")
 
+#ifdef NON_MATCHING
+s32 func_80010490_11090(s32 arg0) {
+    return D_80031BC4[arg0 & 0xFF];
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80010490_11090.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800104AC_110AC.s")
 
