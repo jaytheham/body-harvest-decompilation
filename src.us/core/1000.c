@@ -314,12 +314,14 @@ s32 func_800038E0_44E0(void) {
 
 #ifdef NON_MATCHING
 f32 func_80003910_4510(f32 arg0, s32 arg1) {
-	f32 result = 1.0f;
+	f32 result;
+	s32 i;
+
+	result = 1.0f;
 	if (arg1 != 0) {
-		do {
+		for (i = arg1; i > 0; i--) {
 			result *= arg0;
-			arg1--;
-		} while (arg1 != 0);
+		}
 	}
 	return result;
 }
