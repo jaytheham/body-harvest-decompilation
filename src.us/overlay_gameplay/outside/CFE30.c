@@ -833,7 +833,9 @@ void func_800E00F4_EF0A4(u8 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E0AE0_EFA90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E0C8C_EFC3C.s")
+void func_800E0C8C_EFC3C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5) {
+    func_800CA5EC_D959C(arg0, arg1, arg2, arg3, arg4, arg5, 0x37, 7, (func_800038E0_44E0() % 9) + 0xA, 0x64, 0xDC, 0xBE, 0x2D, 0xFF);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E0D28_EFCD8.s")
 
