@@ -106,7 +106,8 @@ typedef struct {
 	/* 0x1E */ u8 pad1E[2];
 	/* 0x20 */ u16 unk20; // Bit flags
 	/* 0x22 */ s16 unk22;
-	/* 0x24 */ u8 pad24[0xC];
+	/* 0x24 */ u8 pad24[0xA];
+	/* 0x2E */ s16 unk2E;
 	/* 0x30 */ f32 unk30; // "Inc" X
 	/* 0x34 */ f32 unk34; // "Inc" Y
 	/* 0x38 */ f32 unk38; // "Inc" Z
