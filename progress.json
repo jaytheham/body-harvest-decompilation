@@ -1,24 +1,24 @@
 {
-  "generated": "2026-03-21T00:18:11Z",
-  "commit": "77c5200",
-  "commit_timestamp": "2026-03-21T13:18:02+13:00",
+  "generated": "2026-03-21T00:18:52Z",
+  "commit": "32a8ab1",
+  "commit_timestamp": "2026-03-21T13:18:43+13:00",
   "overall": {
     "total_functions": 2958,
-    "matched": 768,
+    "matched": 769,
     "non_matching": 285,
-    "asm_stubs": 1905,
-    "matched_pct": 25.96,
-    "decompiled_pct": 35.6
+    "asm_stubs": 1904,
+    "matched_pct": 26.0,
+    "decompiled_pct": 35.63
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 35,
+      "matched": 36,
       "non_matching": 22,
-      "asm_stubs": 308,
+      "asm_stubs": 307,
       "total": 365,
-      "matched_pct": 9.6,
-      "decompiled_pct": 15.6
+      "matched_pct": 9.9,
+      "decompiled_pct": 15.9
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -147,12 +147,12 @@
     {
       "path": "core/53F0.c",
       "segment": "core",
-      "matched": 0,
+      "matched": 1,
       "non_matching": 0,
-      "asm_stubs": 75,
+      "asm_stubs": 74,
       "total": 75,
-      "matched_pct": 0.0,
-      "contributor": "jaytheham"
+      "matched_pct": 1.3,
+      "contributor": "Meridian Lex"
     },
     {
       "path": "core/AD60.c",
@@ -538,17 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 31,
+      "files": 30,
       "matched": 608,
       "non_matching": 173,
-      "asm_stubs": 1343
+      "asm_stubs": 1268
     },
     {
       "name": "Meridian Lex",
-      "files": 11,
-      "matched": 146,
+      "files": 12,
+      "matched": 147,
       "non_matching": 111,
-      "asm_stubs": 463
+      "asm_stubs": 537
     },
     {
       "name": "Harvester",
@@ -625,10 +625,10 @@
     },
     {
       "date": "2026-03-21",
-      "commit": "77c5200",
-      "matched_pct": 25.96,
-      "decompiled_pct": 35.6,
-      "matched": 768,
+      "commit": "32a8ab1",
+      "matched_pct": 26.0,
+      "decompiled_pct": 35.63,
+      "matched": 769,
       "total": 2958
     }
   ]
