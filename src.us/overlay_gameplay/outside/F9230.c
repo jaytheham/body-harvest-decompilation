@@ -1016,7 +1016,14 @@ s32 func_80112A64_121A14(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80112F98_121F48.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801131D4_122184.s")
+void func_801131D4_122184(VehicleInstance *arg0) {
+    func_800FB44C_10A3FC(arg0, D_80159194);
+    func_800FB468_10A418(arg0, D_8015919C);
+    func_800FB484_10A434(arg0, D_80159198);
+    arg0->unk6 = D_801591A0;
+    arg0->unkA = D_801591A2;
+    arg0->unk8 = D_801591A4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80113248_1221F8.s")
 
