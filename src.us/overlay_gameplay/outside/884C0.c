@@ -1710,7 +1710,29 @@ void func_80084C48_93BF8(VehicleInstance *arg0)
 	func_80102DDC_111D8C(D_80052B34, angle, 0x2000, 20.0f);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084CF8_93CA8.s")
+void func_80084CF8_93CA8(AlienInstance *arg0, AlienInstance *arg1)
+{
+	s32 temp_v0;
+	s32 temp_v0_2;
+
+	if (*((s8 *)arg0 + 0x0D) != -2) {
+		temp_v0 = arg0->unk20;
+		if (!(temp_v0 & 0x100000)) {
+			if (temp_v0 & 0x40000000) {
+				func_80084AE4_93A94(arg0, arg1);
+			}
+			goto block_4;
+		}
+	} else {
+block_4:
+		if (*((s8 *)arg1 + 0x0D) != -2) {
+			temp_v0_2 = arg1->unk20;
+			if (!(temp_v0_2 & 0x100000) && (temp_v0_2 & 0x40000000)) {
+				func_80084AE4_93A94(arg1, arg0);
+			}
+		}
+	}
+}
 
 // https://decomp.me/scratch/qqop3
 #ifdef NON_MATCHING
