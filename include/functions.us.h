@@ -292,6 +292,7 @@ void func_800E0D28_EFCD8(s16, s16, s16);
 void func_800E52E8_F4298(s16, s16, s16, s16, s32, s32, s32);
 void func_800E5CF4_F4CA4(u8, u8);
 void func_800E5E3C_F4DEC(u8, u8);
+s32 func_800E60CC_F507C(u8, u8);
 void func_800E5044_F3FF4(void);
 void func_800E71F8_F61A8(void);
 void func_800E7234_F61E4(void);

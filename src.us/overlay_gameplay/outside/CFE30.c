@@ -842,24 +842,16 @@ void func_800E552C_F44DC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6028_F4FD8.s")
 
-#ifdef NON_MATCHING
-s32 func_800E60CC_F507C(s32 arg0, s32 arg1) {
-	s16 var_v0;
+s32 func_800E60CC_F507C(u8 arg0, u8 arg1) {
+	s16 i;
 
-	var_v0 = 0;
-	if (D_80152C96 > 0) {
-		do {
-			if (((arg0 & 0xFF) == D_80152CA0[var_v0].unk1) && ((arg1 & 0xFF) == D_80152CA0[var_v0].unk0)) {
-				return 1;
-			}
-			var_v0 += 1;
-		} while (var_v0 < D_80152C96);
+	for (i = 0; i < D_80152C96; i++) {
+		if (arg0 == D_80152CA0[i].unk1 && arg1 == D_80152CA0[i].unk0) {
+			return 1;
+		}
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E60CC_F507C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E614C_F50FC.s")
 
