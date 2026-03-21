@@ -313,6 +313,7 @@ s32 func_800038E0_44E0(void) {
 #endif
 
 #ifdef NON_MATCHING
+/* possible: powf_i */
 f32 func_80003910_4510(f32 arg0, s32 arg1) {
 	f32 result;
 	s32 i;
