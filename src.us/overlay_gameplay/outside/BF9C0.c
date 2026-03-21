@@ -352,6 +352,7 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD20C_CC1BC.s")
 
+// Reset gates for current level to closed
 void func_800BD2F4_CC2A4(void)
 {
   u8 i;
@@ -372,24 +373,16 @@ void func_800BD2F4_CC2A4(void)
 // openCurrentStageGate
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BDAF4_CCAA4.s")
 
-#ifdef NON_MATCHING
-void func_800BDD24_CCCD4(u8 arg0) {
-	s8 *v0 = (s8 *)&D_8003E0FC[currentLevel * 0x50 + arg0 * 0xA];
-	s32 v1 = v0[-0x4A];
-	s32 a0 = -v1;
-	s32 a1;
-	if (v1 > 0 && D_80048188 == 0) {
-		if (a0 < v1) {
-			a1 = v1;
-		} else {
-			a1 = a0;
-		}
-		v0[-0x4A] = (s8)-a1;
-	}
+void func_800BDD24_CCCD4(u8 arg0)
+{
+  if ((D_8003E0FC[currentLevel - 1][arg0].unk6 > 0) && (D_80048188 == 0))
+  {
+	D_8003E0FC[currentLevel - 1][arg0].unk6 = (s8) -(
+		-D_8003E0FC[currentLevel - 1][arg0].unk6 < D_8003E0FC[currentLevel - 1][arg0].unk6
+		? D_8003E0FC[currentLevel - 1][arg0].unk6
+		: -D_8003E0FC[currentLevel - 1][arg0].unk6);
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BDD24_CCCD4.s")
-#endif
 
 void func_800BDDA0_CCD50(void) {
 	D_80151DD0 = 0;
