@@ -727,7 +727,15 @@ void func_800FF258_10E208(s32 arg0) {
 	func_800039D0_45D0((Unk80052B40 *)(D_8013FDA8 + arg0 * 0x10 + 8), &D_80052B48, 0, D_8005BB38);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FF2BC_10E26C.s")
+void func_800FF2BC_10E26C(s32 arg0) {
+	D_80052B48.unk0 = 0;
+	D_80052B48.unk2 = (s16)func_800038E0_44E0();
+	D_80052B48.unk4 = 0;
+	D_80052B50.unk0 = 0x3A1;
+	D_80052B50.unk2 = 0x3A1;
+	D_80052B50.unk4 = 0x3A1;
+	func_800039D0_45D0((Unk80052B40 *)(D_8013FDA8 + arg0 * 0x10 + 8), &D_80052B48, &D_80052B50, D_8005BB38);
+}
 
 void func_800FF334_10E2E4(s32 arg0) {
 	D_80052B48.unk0 = 0;
