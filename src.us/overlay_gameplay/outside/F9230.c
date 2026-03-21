@@ -616,7 +616,14 @@ void func_800FD1E4_10C194(void) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FD218_10C1C8.s")
+void func_800FD218_10C1C8(void) {
+	if (D_80159310++ >= 0x15) {
+		D_8015930E = 0;
+		D_8015920C = 0;
+	}
+	D_80052B34->unk20 |= 2;
+	D_80159304 = func_800065A4_71A4(0, 0x6E, D_80159310 * 2978);
+}
 
 void func_800FD2AC_10C25C(void) {
 	if (D_80052B34->unk3C != 0 && D_8015920C == 0) {

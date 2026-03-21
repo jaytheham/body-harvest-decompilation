@@ -1026,6 +1026,7 @@ extern char D_8003BAE0;
 extern u8 D_80158022[];
 extern Unk80158F98 D_80158F98[];
 extern s32 D_8015920C;
+extern s16 D_80159304;
 extern s16 D_8015930E;
 extern s16 D_80159310;
 extern s32 D_80047968;
