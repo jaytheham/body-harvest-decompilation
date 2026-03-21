@@ -599,7 +599,24 @@ void func_800D9DD8_E8D88(s16 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA7CC_E977C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA994_E9944.s")
+void func_800DA994_E9944(void) {
+	struct {
+		s32 temp_v0;
+		s16 pad;
+		s16 sp26;
+	} vars;
+
+	vars.temp_v0 = func_800D99F4_E89A4(&func_800DA7CC_E977C, 0x28, 0, 0, 0);
+	vars.sp26 = (s16) vars.temp_v0;
+	if (vars.temp_v0 != -3) {
+		func_800D9A8C_E8A3C(vars.sp26, 0,
+			func_800DDB60_ECB10(D_80052B34->unk0,
+				(s16)(D_80052B34->unk2 + 0x50),
+				D_80052B34->unk4,
+				9,
+				0x78));
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DAA1C_E99CC.s")
 
