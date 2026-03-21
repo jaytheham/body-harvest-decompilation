@@ -217,6 +217,7 @@ void func_800A1764_B0714(void);
 void func_800A17EC_B079C(void);
 void func_800A1924_B08D4(void);
 void func_800A1A18_B09C8(void);
+void func_800AF764_BE714(s16 arg0);
 void func_800A03FC_AF3AC(void);
 void func_800A2260_B1210(Gfx *, Gfx *, Gfx *, Gfx *);
 void func_800A2B58_B1B08(void);
