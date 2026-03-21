@@ -632,6 +632,7 @@ extern s16 D_8015904C;
 extern InputStruct_8012B150 D_80159050[];
 extern s16 D_80159248;
 extern s16 D_80159260;
+extern u16 D_80159274;
 extern Mtx D_801592C0;
 extern s32 D_80159300;
 extern s16 D_80159308;
