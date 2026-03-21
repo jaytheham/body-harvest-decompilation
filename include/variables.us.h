@@ -1171,7 +1171,7 @@ extern char D_801427F4;
 extern char D_80142800;
 extern f32 D_80142E20;
 extern f32 D_80142E24;
-extern s16 D_8014FD2A;
+extern u16 D_8014FD2A;
 extern Unk8003E290Entry D_8003E3A0;
 extern Unk8003E290Entry D_8003E290[];
 extern Unk8003E290Entry *D_8015922C;

@@ -149,23 +149,18 @@ s32 func_800B325C_C220C(s8 arg0, s8 arg1, u16 arg2)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B32AC_C225C.s")
 
-#ifdef NON_MATCHING
-void func_800B33BC_C236C(u16 arg0) {
+void func_800B33BC_C236C(s32 arg0) {
 	s16 coss_val;
 	f32 sp20;
 	f32 sp1C;
 
-	sp20 = __cosf(D_80142E20);
-	sp1C = sinf(D_80142E24);
+	sp1C = __cosf(D_80142E20); sp20 = sinf(D_80142E24);
 	coss_val = coss(arg0);
-	D_8014FD2A = func_80003740_4340((f32)((f64)(sp1C / sp20) / ((f64)(f32)coss_val / 32768.0))) * 2;
+	D_8014FD2A = func_80003740_4340((f32)((f64)(sp20 / sp1C) / ((f64)(f32)coss_val / 32768.0))) * 2;
 	if ((s16)arg0 >= 0x2E39) {
 		D_8014FD2A = 0x8000;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B33BC_C236C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B345C_C240C.s")
 
