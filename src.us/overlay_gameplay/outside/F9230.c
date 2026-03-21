@@ -962,7 +962,24 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103D18_112CC8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103DD0_112D80.s")
+void func_80103DD0_112D80(void) {
+	s16 temp_v1;
+
+	if (D_80052B34->unk1A != 0x13) {
+		temp_v1 = D_80052B34->unk3C;
+		if (temp_v1 > 0) {
+			if (temp_v1 == 0x5DC) {
+				func_8001A650_1B250(3);
+				temp_v1 = D_80052B34->unk3C;
+			}
+			if (temp_v1 == 2) {
+				func_8001A650_1B250(0xE);
+				temp_v1 = D_80052B34->unk3C;
+			}
+			D_80052B34->unk3C = temp_v1 - 2;
+		}
+	}
+}
 
 // Do vehicle acceleration?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103E54_112E04.s")
