@@ -497,6 +497,7 @@ extern u8 D_80142790[]; // Activate Beacon %d
 extern u8 D_801427D8[]; // teleport to:%d
 extern u8 D_80142820[]; // Giving delayed powerup %d
 extern char D_80142D94; /* osSyncPrintf format string - particle pool full warning */
+extern char D_80142ECC;
 extern u8 D_80144E20[];
 extern u8 D_80144E2C[];
 extern f64 D_80144F08;
@@ -1117,7 +1118,9 @@ extern UnkFB6F8Entry D_800FB6F8[];
 
 extern Unk80154082 D_80154082;
 extern Unk80154082 D_801541F0;
+extern u8 D_80154304;
 extern s32 D_80154308;
+extern u8 D_8015430C;
 extern u8 D_8013E344;
 extern Unk80154318Entry D_80154318[];
 extern u8 D_80154327;

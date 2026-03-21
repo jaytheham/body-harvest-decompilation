@@ -75,7 +75,18 @@ void func_800C1268_D0218(f32 arg0, f32 arg1, f32 arg2) { D_80153BA0.x = arg0; D_
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1288_D0238.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1384_D0334.s")
+void func_800C1384_D0334(u8 arg0) {
+    if (D_80154088[arg0].unk0 == 0xFA) {
+        osSyncPrintf(&D_80142ECC);
+        return;
+    }
+    D_80154088[arg0].unk0 = 0xFA;
+    D_80154088[arg0].unk1 = 0;
+    D_80154304--;
+    if (arg0 < D_8015430C) {
+        D_8015430C = arg0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1418_D03C8.s")
 
