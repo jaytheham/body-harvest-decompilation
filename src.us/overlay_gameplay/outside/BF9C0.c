@@ -45,20 +45,9 @@ s32 func_800B0C4C_BFBFC(s32 arg0, s32 arg1) {
 	return D_8014FDD0[(arg1 << 5) + (arg0 >> 3)] & (1 << (arg0 & 7));
 }
 
-#ifdef NON_MATCHING
 void func_800B0C80_BFC30(void) {
-	void *src = (void *)((s32)D_80147C30 + currentLevel * 0x90 + D_80047F94 * 0x18 - 0x90);
-	s32 *dest = (s32 *)&D_8014FD30;
-	dest[0] = *(s32 *)((u8 *)src + 0x00);
-	dest[1] = *(s32 *)((u8 *)src + 0x04);
-	dest[2] = *(s32 *)((u8 *)src + 0x08);
-	dest[3] = *(s32 *)((u8 *)src + 0x0C);
-	dest[4] = *(s32 *)((u8 *)src + 0x10);
-	dest[5] = *(s32 *)((u8 *)src + 0x14);
+	D_8014FD30 = *(Unk8014FD30Type *)(D_80147C30 + currentLevel * 0x90 + D_80047F94 * 0x18 - 0x90);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0C80_BFC30.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_800B0D10_BFCC0(s32 arg0, s32 arg1, s32 arg2) {
