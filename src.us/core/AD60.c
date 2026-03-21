@@ -22,7 +22,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C6C4_D2C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C6D0_D2D0.s")
+/* busy-wait loop: counts 0..0x10 with 8-bit masking */
+void func_8000C6D0_D2D0(s32 arg0) {
+    s32 var_v0 = 0;
+    s32 temp_t6;
+
+    do {
+        do {
+            temp_t6 = (var_v0 = (var_v0 + 1) & 0xFF) ^ 0;
+        } while (temp_t6 != 0x10);
+    } while (0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C6F4_D2F4.s")
 
