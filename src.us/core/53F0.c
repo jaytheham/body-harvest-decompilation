@@ -78,7 +78,10 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/setFullResolution.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/setGameplayResolution.s")
+void setGameplayResolution(void) {
+    setVideoInterfaceXSize(0x130);
+    setVideoInterfaceYSize(0xE6);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006DAC_79AC.s")
 
