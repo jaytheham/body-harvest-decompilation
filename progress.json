@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-21T04:09:14Z",
-  "commit": "961165a",
-  "commit_timestamp": "2026-03-21T15:47:47+13:00",
+  "generated": "2026-03-21T05:58:02Z",
+  "commit": "a87bd7c",
+  "commit_timestamp": "2026-03-21T18:57:48+13:00",
   "overall": {
-    "total_functions": 2957,
-    "matched": 781,
-    "non_matching": 284,
-    "asm_stubs": 1892,
-    "matched_pct": 26.41,
-    "decompiled_pct": 36.02
+    "total_functions": 2954,
+    "matched": 801,
+    "non_matching": 281,
+    "asm_stubs": 1872,
+    "matched_pct": 27.12,
+    "decompiled_pct": 36.63
   },
   "segments": {
     "core": {
@@ -31,12 +31,12 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 531,
-      "non_matching": 142,
-      "asm_stubs": 895,
-      "total": 1568,
-      "matched_pct": 33.9,
-      "decompiled_pct": 42.9
+      "matched": 551,
+      "non_matching": 139,
+      "asm_stubs": 875,
+      "total": 1565,
+      "matched_pct": 35.2,
+      "decompiled_pct": 44.1
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -337,11 +337,11 @@
     {
       "path": "overlay_gameplay/outside/884C0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 132,
+      "matched": 133,
       "non_matching": 44,
-      "asm_stubs": 115,
+      "asm_stubs": 114,
       "total": 291,
-      "matched_pct": 45.4,
+      "matched_pct": 45.7,
       "contributor": "jaytheham"
     },
     {
@@ -407,11 +407,11 @@
     {
       "path": "overlay_gameplay/outside/CFE30.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 61,
+      "matched": 65,
       "non_matching": 0,
-      "asm_stubs": 220,
+      "asm_stubs": 216,
       "total": 281,
-      "matched_pct": 21.7,
+      "matched_pct": 23.1,
       "contributor": "jaytheham"
     },
     {
@@ -437,21 +437,21 @@
     {
       "path": "overlay_gameplay/outside/F9230.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 77,
+      "matched": 89,
       "non_matching": 5,
-      "asm_stubs": 193,
+      "asm_stubs": 181,
       "total": 275,
-      "matched_pct": 28.0,
+      "matched_pct": 32.4,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/buildings.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 60,
-      "non_matching": 12,
-      "asm_stubs": 97,
-      "total": 169,
-      "matched_pct": 35.5,
+      "matched": 61,
+      "non_matching": 11,
+      "asm_stubs": 96,
+      "total": 168,
+      "matched_pct": 36.3,
       "contributor": "jaytheham"
     },
     {
@@ -477,12 +477,12 @@
     {
       "path": "overlay_gameplay/outside/trigger.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 32,
-      "non_matching": 4,
-      "asm_stubs": 19,
-      "total": 55,
-      "matched_pct": 58.2,
-      "contributor": "Meridian Lex"
+      "matched": 34,
+      "non_matching": 2,
+      "asm_stubs": 17,
+      "total": 53,
+      "matched_pct": 64.2,
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_level/america/254410.c",
@@ -538,17 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 31,
-      "matched": 621,
-      "non_matching": 172,
-      "asm_stubs": 1330
+      "files": 32,
+      "matched": 673,
+      "non_matching": 173,
+      "asm_stubs": 1329
     },
     {
       "name": "Meridian Lex",
-      "files": 11,
-      "matched": 146,
-      "non_matching": 111,
-      "asm_stubs": 463
+      "files": 10,
+      "matched": 114,
+      "non_matching": 107,
+      "asm_stubs": 444
     },
     {
       "name": "Harvester",
@@ -559,14 +559,6 @@
     }
   ],
   "history": [
-    {
-      "date": "2026-03-14",
-      "commit": "536824e",
-      "matched_pct": 22.11,
-      "decompiled_pct": 31.32,
-      "matched": 651,
-      "total": 2944
-    },
     {
       "date": "2026-03-15",
       "commit": "cdce924",
@@ -617,11 +609,11 @@
     },
     {
       "date": "2026-03-21",
-      "commit": "961165a",
-      "matched_pct": 26.41,
-      "decompiled_pct": 36.02,
-      "matched": 781,
-      "total": 2957
+      "commit": "ea29134",
+      "matched_pct": 27.12,
+      "decompiled_pct": 36.63,
+      "matched": 801,
+      "total": 2954
     }
   ]
 }
