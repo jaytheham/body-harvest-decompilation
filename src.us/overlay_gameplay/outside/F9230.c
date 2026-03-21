@@ -488,7 +488,12 @@ void *func_800FAFB8_109F68(VehicleInstance *arg0) {
 	return &alienSpecs[arg0->unk1A];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FB014_109FC4.s")
+f32 func_800FB014_109FC4(VehicleInstance *arg0) {
+	s16 sp1E;
+
+	sp1E = coss(arg0->unkE);
+	return (f32)(((f64)(f32)coss(arg0->unk10) / 32768.0) * ((f64)(f32)sp1E / 32768.0) * (f64)arg0->unk58 + (f64)arg0->unk30);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FB098_10A048.s")
 
