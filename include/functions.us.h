@@ -233,6 +233,8 @@ void func_800A854C_B74FC(void);
 void func_800A8A68_B7A18(s16, s16, s16, u8);
 Unk8014F6D0 *func_800A5A10_B49C0(void);
 s16 func_800CB19C_DA14C(s16, s16, s16, u8);
+void func_800CCAD4_DBA84(s16 arg0, s16 arg1, s16 arg2);
+s32 func_800CC7B0_DB760(u8 arg0, u8 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5);
 s32 func_800A8E18_B7DC8(s16);
 void func_800A931C_B82CC(s8, s16 *, s32 *);
 void func_800A9DC0_B8D70(func_800A9DC0_B8D70_arg *arg0);
