@@ -542,7 +542,7 @@ void func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg
 f32 func_800C0FD4_CFF84(Vec3f *arg0);
 void func_800DDB18_ECAC8(void);
 u8 func_800DDB60_ECB10(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4);
-s32 func_800D99F4_E89A4(void *arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4);
+s32 func_800D99F4_E89A4(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void func_800D9A8C_E8A3C(s16 arg0, s32 arg1, s16 arg2);
 void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4);
 void func_800DFA34_EE9E4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4);
