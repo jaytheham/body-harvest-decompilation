@@ -18,7 +18,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C670_D270.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C6B8_D2B8.s")
+void func_8000C6B8_D2B8(s32 arg0) {
+    D_80053C98 = arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C6C4_D2C4.s")
 
