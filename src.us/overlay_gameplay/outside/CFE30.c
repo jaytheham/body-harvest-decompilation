@@ -2,7 +2,11 @@
 #include "common.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C0E80_CFE30.s")
+void func_800C0E80_CFE30(f32 *mat, f32 *vec, f32 *out) {
+	out[0] = vec[0] * mat[0] + vec[1] * mat[3] + vec[2] * mat[6];
+	out[1] = vec[0] * mat[1] + vec[1] * mat[4] + vec[2] * mat[7];
+	out[2] = vec[0] * mat[2] + vec[1] * mat[5] + vec[2] * mat[8];
+}
 
 void func_800C0F14_CFEC4(Vec3f *arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->x = (arg0->y * arg1->z) - (arg0->z * arg1->y);
