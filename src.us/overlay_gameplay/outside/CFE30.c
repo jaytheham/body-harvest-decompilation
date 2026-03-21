@@ -827,7 +827,23 @@ void func_800DE9B8_ED968(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DEA08_ED9B8.s")
 
+#ifdef NON_MATCHING
+void func_800DEADC_EDA8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	s32 slot;
+	s16 val;
+
+	slot = func_800DDB60_ECB10(arg0, arg1, arg2, 2, (func_800038E0_44E0() % 15) + 0x19);
+	if (slot != 0xFF) {
+		val = arg3 + 0x78;
+		if (val >= 0x100) {
+			val = 0xFF;
+		}
+		D_80156EF0[slot & 0xFF].unkD = val;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DEADC_EDA8C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DEB7C_EDB2C.s")
 
