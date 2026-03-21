@@ -1085,7 +1085,19 @@ void func_8010B5C8_11A578(VehicleInstance *arg0, f32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010B804_11A7B4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010B970_11A920.s")
+s32 func_8010B970_11A920(u8 *arg0, VehicleInstance *arg1) {
+	VehicleSpec *sp1C;
+	s32 sp18;
+
+	sp1C = &vehicleSpecs[arg1->unk1A];
+	if (func_80078FE0_87F90(arg0, arg1, &sp18) != 0 ||
+			((sp1C->unk4C & 0x20000000) && (arg1->unk20 & 2))) {
+		func_800792E0_88290(arg0, sp18);
+		func_80014180_14D80(0);
+		return 1;
+	}
+	return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010BA04_11A9B4.s")
 
