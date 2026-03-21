@@ -20,7 +20,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C6B8_D2B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C6C4_D2C4.s")
+s32 func_8000C6C4_D2C4(void) {
+    return D_80053C98;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C6D0_D2D0.s")
 
