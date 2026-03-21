@@ -782,7 +782,13 @@ void func_800FF720_10E6D0(s32 arg0) {
 	guMtxCatL(D_8005BB38, &D_801592C0, &D_801592C0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FF794_10E744.s")
+void func_800FF794_10E744(s32 arg0) {
+	D_80052B48.unk0 = D_80052B2C->unk36;
+	D_80052B48.unk2 = 0;
+	D_80052B48.unk4 = 0;
+	func_800039D0_45D0((Unk80052B40 *)(D_8013FDA8 + arg0 * 0x10 + 8), &D_80052B48, 0, D_8005BB38);
+	guMtxCatL(D_8005BB38, &D_801592C0, &D_801592C0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FF80C_10E7BC.s")
 

@@ -19,3 +19,29 @@ result = 1;
 ```
 
 IDO reorders the `sw result` to appear before the `sh` stores in the output anyway (store-store reordering for non-aliasing addresses), so the final assembly store order matches the target despite the source order change.
+### Load-dependent store reordering: put ptr-field assignment first, zero-stores after
+
+When a struct has two fields set to 0 and one field set to a value loaded from a
+pointer (e.g. `D_80052B48.unk0 = D_80052B2C->unk36; D_80052B48.unk2 = 0; D_80052B48.unk4 = 0;`),
+and the target assembly stores in order `unk2=0, unk4=0, unk0=ptr->field` (zeros first, loaded value last):
+
+- Write the pointer-field store FIRST in C, then the zero stores.
+- Do NOT use a named temp variable (e.g. `s16 unk36 = ...`) — this causes v0 to
+  be used instead of a t-register (t7), and also shifts all arithmetic temporaries.
+- IDO's scheduler moves the independent zero stores before the load-dependent store,
+  producing the correct assembly store order automatically.
+- Without the named temp, IDO uses the register immediately after the pointer's
+  register (e.g., pointer in t6 → value in t7) instead of v0.
+
+```c
+// Wrong: named temp causes v0 register for unk36, wrong arithmetic register chain
+s16 unk36 = D_80052B2C->unk36;
+D_80052B48.unk2 = 0;
+D_80052B48.unk4 = 0;
+D_80052B48.unk0 = unk36;
+
+// Correct: inline, pointer-field first → IDO reorders stores, uses t7 for value
+D_80052B48.unk0 = D_80052B2C->unk36;
+D_80052B48.unk2 = 0;
+D_80052B48.unk4 = 0;
+```
