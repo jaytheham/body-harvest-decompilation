@@ -316,7 +316,15 @@ void func_800D05A8_DF558(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D0DE4_DFD94.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D0F5C_DFF0C.s")
+void func_800D0F5C_DFF0C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	if (arg0 != -3) {
+		Unk80154318Entry *entry = &D_80154318[arg0];
+		entry->unk8 = arg1;
+		entry->unkA = arg2;
+		entry->unkC = arg3;
+		func_800DDD30_ECCE0(*(u8 *)((u8 *)entry + 0x13), arg1, arg2, arg3);
+	}
+}
 
 void func_800D0FE0_DFF90(s16 arg0, u16 arg1) {
 	if (arg0 != -3) {
