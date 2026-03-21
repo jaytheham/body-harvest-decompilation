@@ -1,24 +1,24 @@
 {
-  "generated": "2026-03-21T02:06:13Z",
-  "commit": "ffde030",
-  "commit_timestamp": "2026-03-21T15:06:02+13:00",
+  "generated": "2026-03-21T02:07:31Z",
+  "commit": "f685220",
+  "commit_timestamp": "2026-03-21T15:07:20+13:00",
   "overall": {
     "total_functions": 2958,
-    "matched": 774,
+    "matched": 775,
     "non_matching": 285,
-    "asm_stubs": 1899,
-    "matched_pct": 26.17,
-    "decompiled_pct": 35.8
+    "asm_stubs": 1898,
+    "matched_pct": 26.2,
+    "decompiled_pct": 35.84
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 40,
+      "matched": 41,
       "non_matching": 22,
-      "asm_stubs": 303,
+      "asm_stubs": 302,
       "total": 365,
-      "matched_pct": 11.0,
-      "decompiled_pct": 17.0
+      "matched_pct": 11.2,
+      "decompiled_pct": 17.3
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -157,12 +157,12 @@
     {
       "path": "core/AD60.c",
       "segment": "core",
-      "matched": 0,
+      "matched": 1,
       "non_matching": 0,
-      "asm_stubs": 26,
+      "asm_stubs": 25,
       "total": 26,
-      "matched_pct": 0.0,
-      "contributor": "jaytheham"
+      "matched_pct": 3.8,
+      "contributor": "Meridian Lex"
     },
     {
       "path": "core/E830.c",
@@ -538,17 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 31,
+      "files": 30,
       "matched": 614,
       "non_matching": 173,
-      "asm_stubs": 1337
+      "asm_stubs": 1311
     },
     {
       "name": "Meridian Lex",
-      "files": 11,
-      "matched": 146,
+      "files": 12,
+      "matched": 147,
       "non_matching": 111,
-      "asm_stubs": 463
+      "asm_stubs": 488
     },
     {
       "name": "Harvester",
@@ -617,10 +617,10 @@
     },
     {
       "date": "2026-03-21",
-      "commit": "ffde030",
-      "matched_pct": 26.17,
-      "decompiled_pct": 35.8,
-      "matched": 774,
+      "commit": "f685220",
+      "matched_pct": 26.2,
+      "decompiled_pct": 35.84,
+      "matched": 775,
       "total": 2958
     }
   ]
