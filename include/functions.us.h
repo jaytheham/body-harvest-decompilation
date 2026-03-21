@@ -418,6 +418,7 @@ void func_802D4CD0_18D7E0(s32, s32);
 void osViExtendVStart(s32 arg0);
 void func_8000140C_200C(OSThread *arg0);
 OSThread *__osGetActiveQueue(void);
+void __osSiCreateAccessQueue(void);
 void setRandomSeed(s32 arg0);
 s16 func_800EB9B4_FA964(void *arg0);
 f32 func_800EB9BC_FA96C(void *arg0);

@@ -1397,5 +1397,7 @@ extern s8 D_802E0570;
 extern s8 D_802E0580;
 extern f64 D_802E0EB0;
 extern s32 D_80053C98;
+extern s32 __osSiAccessQueueEnabled;
+extern OSMesgQueue __osSiAccessQueue;
 
 #endif
