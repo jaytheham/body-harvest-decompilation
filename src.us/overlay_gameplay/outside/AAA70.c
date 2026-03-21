@@ -51,25 +51,31 @@ void func_8009BAC0_AAA70(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009BAC0_AAA70.s")
 #endif
 
+// https://decomp.me/scratch/HfYzB
 #ifdef NON_MATCHING
-s32 func_8009BC48_AABF8(s32 arg0, s32 arg1, s32 arg2) {
-	s32 temp_t0;
-	s32 temp_v1;
-	s32 var_v1;
-
-	temp_v1 = arg0 - 0x10;
-	temp_t0 = arg1 - 0x10;
-	if ((arg0 >= 0) && (temp_v1 < 0x10) && (temp_t0 >= -0x10) && (temp_t0 < 0x10)) {
-		var_v1 = 0x100;
-		if (arg2 != 0) {
-			var_v1 = 0x80;
-		}
-		if (((temp_v1 * temp_v1) + (temp_t0 * temp_t0)) < var_v1) {
-			return 1;
-		}
-		return 0;
+s32 func_8009BC48_AABF8(s32 arg0, s32 arg1, s32 arg2)
+{
+  s32 new_var;
+  s32 temp_t0;
+  s32 temp_v1;
+  s32 var_v1;
+  temp_t0 = arg1 - 0x10;
+  temp_v1 = arg0 - 0x10;
+  new_var = temp_t0;
+  if (arg0 >= 0 && temp_v1 < 0x10 && new_var >= -0x10 && temp_t0 < 0x10)
+  {
+	var_v1 = 0x100;
+	if (arg2 != 0)
+	{
+	  var_v1 = 0x80;
 	}
-	return 0;
+	if (((temp_t0 * temp_t0) + (temp_v1 * temp_v1)) < var_v1)
+	{
+	  if (arg0) { }
+	  return 1;
+	}
+  }
+  return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009BC48_AABF8.s")
