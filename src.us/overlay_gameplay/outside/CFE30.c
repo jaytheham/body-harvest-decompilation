@@ -877,7 +877,25 @@ void func_800E0C8C_EFC3C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E24B8_F1468.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2668_F1618.s")
+void func_800E2668_F1618(void) {
+	if (currentLevel == 2) {
+		D_801541F0.unk0 = 0x96;
+		D_801541F0.unk1 = 0xDC;
+		D_801541F0.unk2 = 0xF0;
+		D_80154082.unk0 = 0x96;
+		D_80154082.unk1 = 0xDC;
+		D_80154082.unk2 = 0xF0;
+	} else if (currentLevel == 4) {
+		D_801541F0.unk0 = 0xF0;
+		D_801541F0.unk1 = 0xF0;
+		D_801541F0.unk2 = 0xF0;
+		D_80154082.unk0 = 0xF0;
+		D_80154082.unk1 = 0xF0;
+		D_80154082.unk2 = 0xF0;
+	}
+	D_80154300 = 0;
+	D_80154308 = 0x34;
+}
 
 void func_800E26FC_F16AC(s8 arg0, s8 arg1, s8 arg2) {
 	D_80154082.unk0 = arg0;

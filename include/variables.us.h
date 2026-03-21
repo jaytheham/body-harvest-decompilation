@@ -1121,6 +1121,7 @@ extern UnkFB6F8Entry D_800FB6F8[];
 
 extern Unk80154082 D_80154082;
 extern Unk80154082 D_801541F0;
+extern s32 D_80154300;
 extern u8 D_80154304;
 extern s32 D_80154308;
 extern u8 D_8015430C;
