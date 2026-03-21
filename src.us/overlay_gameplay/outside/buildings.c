@@ -764,10 +764,20 @@ int func_8012235C_13130C(Unk8004D0F8 *arg0)
   return ((arg0->unk1A != 0) && ((arg0->unk20 & 0x100000) == 0)) && ((arg0->unk1B == 0xFF) || (D_80047F94 == arg0->unk1B));
 }
 
+// Failed - gpt 5.3 codex
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801223B0_131360.s")
 
-// Failed - gpt 5.3 codex
+#ifdef NON_MATCHING
+void func_80122524_1314D4(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
+	s32 pct = func_801223B0_131360(arg0, arg2, arg3, arg1);
+	s32 temp = (s32)((f64)arg1 * (1.0 - (f64)pct / 100.0));
+	if ((s16)temp > 0) {
+		func_80124118_1330C8(arg0, (s16)temp);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80122524_1314D4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801225C4_131574.s")
 
