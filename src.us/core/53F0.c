@@ -112,7 +112,22 @@ void setGameplayResolution(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800074F4_80F4.s")
 
+extern s32 D_8004DC74;
+#ifdef NON_MATCHING
+void func_80007548_8148(void) {
+    s32 *ptr = &D_8004DC74;
+    s32 i = 3;
+    if (ptr)
+    {
+    }
+    do {
+        *ptr = 0;
+        ptr--;
+    } while (i--);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007548_8148.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007570_8170.s")
 
@@ -171,7 +186,18 @@ void func_800078E4_84E4(s32 arg0, s32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/debug_drawTimingGraphBars.s")
 
+#ifdef NON_MATCHING
+void func_80008C18_9818(void) {
+    s16 *ptr = &D_80047F7E;
+    s32 count = 0xF;
+    do {
+        *ptr = -1;
+        ptr--;
+    } while (count--);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008C18_9818.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008C44_9844.s")
 
