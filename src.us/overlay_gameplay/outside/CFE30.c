@@ -123,7 +123,23 @@ s16 func_800C19D4_D0984(u8 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1D40_D0CF0.s")
 
+#ifdef NON_MATCHING
+void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2) {
+	u8 sp27;
+	s16 sp1E;
+
+	if ((arg0 >= 0) && (arg0 < 0x190) && (arg1 < 0x1E) && (D_80154318[arg0].unk0 & 1)) {
+		sp1E = D_80154318[arg0].unk4;
+		sp27 = arg1;
+		func_800C1A4C_D09FC(arg0, arg1, arg2);
+		func_800C1A4C_D09FC(sp1E, sp27, arg2);
+		return;
+	}
+	osSyncPrintf(&D_80143304);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1E24_D0DD4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1ECC_D0E7C.s")
 

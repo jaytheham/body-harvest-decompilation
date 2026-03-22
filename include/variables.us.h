@@ -1151,6 +1151,7 @@ extern u8 D_8013E2EC;
 extern s32 D_8013E2F4;
 extern s32 D_8013E308;
 extern Unk80152CA0Entry D_80152CA0[];
+extern char D_80143304;
 extern char D_80143478;
 extern char D_80143814;
 extern char D_801437C0;
