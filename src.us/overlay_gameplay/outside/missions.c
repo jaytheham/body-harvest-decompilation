@@ -8,7 +8,29 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074204_831B4.s")
 
 // https://decomp.me/scratch/igaHA
+#ifdef NON_MATCHING
+s32 func_8007447C_8342C(u8 arg0) {
+    s32 var_v0 = arg0 == 0x98;
+    if (var_v0 == 0) {
+        var_v0 = arg0 == 0x9A;
+        if (var_v0 == 0) {
+            var_v0 = arg0 == 0x99;
+            if (var_v0 == 0) {
+                var_v0 = arg0 == 0x9B;
+                if (var_v0 == 0) {
+                    var_v0 = arg0 == 0xAD;
+                    if (var_v0 == 0) {
+                        var_v0 = arg0 == 0xAF;
+                    }
+                }
+            }
+        }
+    }
+    return var_v0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007447C_8342C.s")
+#endif
 
 // https://decomp.me/scratch/aFHOH
 #ifdef NON_MATCHING
