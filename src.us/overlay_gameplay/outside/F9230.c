@@ -755,7 +755,22 @@ void func_800FDD8C_10CD3C(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FDD8C_10CD3C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FDE00_10CDB0.s")
+void func_800FDE00_10CDB0(void) {
+	extern VehicleInstance *D_80158F8C;
+	extern Vec3f D_80159188;
+
+	if ((D_80159320 & 2) && (D_80158F8C->unkC == -2)) {
+		D_80158F8C->unk30 = D_80159188.x;
+		D_80158F8C->unk34 = D_80159188.y;
+		D_80158F8C->unk38 = D_80159188.z;
+		D_80158F8C->unk12 = 0;
+		D_80158F8C->unk58 = 0.0f;
+		D_80158F8C->unk20 |= 3;
+		D_80158F8C = 0;
+		D_80159320 &= ~2;
+		D_80159320 |= 0x80000000;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FDEA8_10CE58.s")
 
