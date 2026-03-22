@@ -115,7 +115,15 @@ void func_800B19F8_C09A8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2CF0_C1CA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B316C_C211C.s")
+void func_800B316C_C211C(s8 arg0, s8 arg1, u16 arg2, u8 arg3) {
+    s32 x = arg0 + 0x80;
+    s32 y = arg1 + 0x80;
+    if (arg3) {
+        D_8014F8A0[y][x] |= arg2;
+    } else {
+        D_8014F8A0[y][x] &= ~arg2;
+    }
+}
 
 // https://decomp.me/scratch/oc09b
 #ifdef NON_MATCHING
