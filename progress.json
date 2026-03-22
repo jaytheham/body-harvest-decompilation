@@ -1,24 +1,24 @@
 {
-  "generated": "2026-03-22T19:02:44Z",
-  "commit": "55e06bb",
-  "commit_timestamp": "2026-03-23T08:02:32+13:00",
+  "generated": "2026-03-22T19:04:11Z",
+  "commit": "cc08911",
+  "commit_timestamp": "2026-03-23T08:04:02+13:00",
   "overall": {
-    "total_functions": 2931,
-    "matched": 841,
-    "non_matching": 262,
-    "asm_stubs": 1828,
-    "matched_pct": 28.69,
-    "decompiled_pct": 37.63
+    "total_functions": 2933,
+    "matched": 845,
+    "non_matching": 264,
+    "asm_stubs": 1824,
+    "matched_pct": 28.81,
+    "decompiled_pct": 37.81
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 52,
-      "non_matching": 22,
-      "asm_stubs": 288,
-      "total": 362,
-      "matched_pct": 14.4,
-      "decompiled_pct": 20.4
+      "matched": 56,
+      "non_matching": 24,
+      "asm_stubs": 284,
+      "total": 364,
+      "matched_pct": 15.4,
+      "decompiled_pct": 22.0
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -147,12 +147,12 @@
     {
       "path": "core/53F0.c",
       "segment": "core",
-      "matched": 5,
-      "non_matching": 0,
-      "asm_stubs": 70,
-      "total": 75,
-      "matched_pct": 6.7,
-      "contributor": "jaytheham"
+      "matched": 9,
+      "non_matching": 2,
+      "asm_stubs": 66,
+      "total": 77,
+      "matched_pct": 11.7,
+      "contributor": "Meridian Lex"
     },
     {
       "path": "core/AD60.c",
@@ -538,17 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 33,
-      "matched": 711,
+      "files": 32,
+      "matched": 706,
       "non_matching": 155,
-      "asm_stubs": 1299
+      "asm_stubs": 1229
     },
     {
       "name": "Meridian Lex",
-      "files": 9,
-      "matched": 116,
-      "non_matching": 106,
-      "asm_stubs": 430
+      "files": 10,
+      "matched": 125,
+      "non_matching": 108,
+      "asm_stubs": 496
     },
     {
       "name": "Harvester",
@@ -609,11 +609,11 @@
     },
     {
       "date": "2026-03-23",
-      "commit": "9afdac4",
-      "matched_pct": 28.69,
-      "decompiled_pct": 37.63,
-      "matched": 841,
-      "total": 2931
+      "commit": "cc08911",
+      "matched_pct": 28.81,
+      "decompiled_pct": 37.81,
+      "matched": 845,
+      "total": 2933
     }
   ]
 }
