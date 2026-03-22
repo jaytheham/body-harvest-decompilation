@@ -708,7 +708,24 @@ void func_801205AC_12F55C(BuildingInstance *arg0) {
 	func_8011FA90_12EA40(arg0, 5, 0xD1, 0x3C, 0, 0x4B, 0x3C, 0x596, 0xE);
 }
 
+// NON_MATCHING: register allocation (v0=key vs a0=pointer) cannot be coerced to match IDO's choice
+#ifdef NON_MATCHING
+s32 func_80120634_12F5E4(void) {
+	s32 i = 0;
+	BuildingInstance *inst = buildingInstances;
+
+	for (; i != 0x100; i += 4, inst += 4) {
+		if (D_8015EA29 == inst[0].buildingType) return i;
+		if (D_8015EA29 == inst[1].buildingType) return i + 1;
+		if (D_8015EA29 == inst[2].buildingType) return i + 2;
+		if (D_8015EA29 == inst[3].buildingType) return i + 3;
+	}
+
+	return D_8015EA29;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80120634_12F5E4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801206B0_12F660.s")
 

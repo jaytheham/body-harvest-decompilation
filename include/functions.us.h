@@ -363,6 +363,7 @@ s32 func_8011DE6C_12CE1C();
 s32 func_8011FA90_12EA40();
 s32 func_8011D19C_12C14C(s8, s8);
 s32 func_8011D260_12C210(s8, s8);
+s32 func_80120634_12F5E4(void);
 void func_801219A4_130954(VehicleInstance *, s16);
 void func_801238DC_13288C(s16);
 void func_80124170_133120(s16, s16, s16, s32, s32, s32);
