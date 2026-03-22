@@ -685,6 +685,8 @@ void func_802D6338_1EF048(void);
 void func_802D68F4_1EF604(void);
 void func_802DA844_1F3554(u8);
 s32 func_802DD140_1F5E50();
+void func_802E0B08_2C2F38(u8);
+void func_802D62E4_2B8714(void);
 /* overlay_gameplay/inside/1648A0 */
 f32 func_8007C96C_164A2C(Unk80047588 *arg0);
 void func_8007CAA8_164B68(VehicleInstance *arg0, Unk80047588 *arg1);
