@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-22T19:11:37Z",
-  "commit": "173b6d8",
-  "commit_timestamp": "2026-03-23T08:11:25+13:00",
+  "generated": "2026-03-22T19:22:44Z",
+  "commit": "da01199",
+  "commit_timestamp": "2026-03-23T08:22:36+13:00",
   "overall": {
-    "total_functions": 2932,
-    "matched": 851,
+    "total_functions": 2931,
+    "matched": 856,
     "non_matching": 263,
-    "asm_stubs": 1818,
-    "matched_pct": 29.02,
-    "decompiled_pct": 37.99
+    "asm_stubs": 1812,
+    "matched_pct": 29.21,
+    "decompiled_pct": 38.18
   },
   "segments": {
     "core": {
@@ -76,12 +76,12 @@
     },
     "overlay_level/siberia": {
       "display_name": "Level / Siberia",
-      "matched": 1,
+      "matched": 6,
       "non_matching": 0,
-      "asm_stubs": 94,
-      "total": 95,
-      "matched_pct": 1.1,
-      "decompiled_pct": 1.1
+      "asm_stubs": 88,
+      "total": 94,
+      "matched_pct": 6.4,
+      "decompiled_pct": 6.4
     },
     "overlay_level/comet": {
       "display_name": "Level / Comet",
@@ -527,28 +527,28 @@
     {
       "path": "overlay_level/siberia/2B7100.c",
       "segment": "overlay_level/siberia",
-      "matched": 1,
+      "matched": 6,
       "non_matching": 0,
-      "asm_stubs": 94,
-      "total": 95,
-      "matched_pct": 1.1,
-      "contributor": "jaytheham"
+      "asm_stubs": 88,
+      "total": 94,
+      "matched_pct": 6.4,
+      "contributor": "Meridian Lex"
     }
   ],
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 31,
-      "matched": 703,
+      "files": 30,
+      "matched": 702,
       "non_matching": 155,
-      "asm_stubs": 1206
+      "asm_stubs": 1112
     },
     {
       "name": "Meridian Lex",
-      "files": 13,
-      "matched": 148,
+      "files": 14,
+      "matched": 154,
       "non_matching": 108,
-      "asm_stubs": 612
+      "asm_stubs": 700
     }
   ],
   "history": [
@@ -594,19 +594,19 @@
     },
     {
       "date": "2026-03-22",
-      "commit": "634af56",
-      "matched_pct": 28.63,
-      "decompiled_pct": 37.23,
-      "matched": 836,
-      "total": 2920
+      "commit": "6c690d5",
+      "matched_pct": 28.71,
+      "decompiled_pct": 37.31,
+      "matched": 838,
+      "total": 2919
     },
     {
       "date": "2026-03-23",
-      "commit": "173b6d8",
-      "matched_pct": 29.02,
-      "decompiled_pct": 37.99,
-      "matched": 851,
-      "total": 2932
+      "commit": "da01199",
+      "matched_pct": 29.21,
+      "decompiled_pct": 38.18,
+      "matched": 856,
+      "total": 2931
     }
   ]
 }
