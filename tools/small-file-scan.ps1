@@ -1,4 +1,8 @@
 
+param(
+    [int]$First = 100
+)
+
 $root = '.\asm\nonmatchings\overlay_gameplay\outside'
 
 # Normalize the root path and capture its length
@@ -8,7 +12,7 @@ $rootPrefix = 'asm/nonmatchings/overlay_gameplay/outside'
 
 $topFiles = Get-ChildItem -Path $root -Recurse -File |
   Sort-Object -Property Length |
-  Select-Object -First 50
+  Select-Object -First $First
 
 $results = @()
 
