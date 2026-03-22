@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-22T18:56:01Z",
-  "commit": "2c165c6",
-  "commit_timestamp": "2026-03-23T07:55:51+13:00",
+  "generated": "2026-03-22T19:02:44Z",
+  "commit": "55e06bb",
+  "commit_timestamp": "2026-03-23T08:02:32+13:00",
   "overall": {
-    "total_functions": 2922,
-    "matched": 840,
-    "non_matching": 253,
-    "asm_stubs": 1829,
-    "matched_pct": 28.75,
-    "decompiled_pct": 37.41
+    "total_functions": 2931,
+    "matched": 841,
+    "non_matching": 262,
+    "asm_stubs": 1828,
+    "matched_pct": 28.69,
+    "decompiled_pct": 37.63
   },
   "segments": {
     "core": {
@@ -31,12 +31,12 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 581,
-      "non_matching": 111,
-      "asm_stubs": 844,
-      "total": 1536,
-      "matched_pct": 37.8,
-      "decompiled_pct": 45.1
+      "matched": 582,
+      "non_matching": 120,
+      "asm_stubs": 843,
+      "total": 1545,
+      "matched_pct": 37.7,
+      "decompiled_pct": 45.4
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -278,10 +278,10 @@
       "path": "overlay_gameplay/outside/13DA70.c",
       "segment": "overlay_gameplay/outside",
       "matched": 1,
-      "non_matching": 1,
+      "non_matching": 3,
       "asm_stubs": 12,
-      "total": 14,
-      "matched_pct": 7.1,
+      "total": 16,
+      "matched_pct": 6.2,
       "contributor": "jaytheham"
     },
     {
@@ -368,10 +368,10 @@
       "path": "overlay_gameplay/outside/AAA70.c",
       "segment": "overlay_gameplay/outside",
       "matched": 17,
-      "non_matching": 3,
+      "non_matching": 4,
       "asm_stubs": 22,
-      "total": 42,
-      "matched_pct": 40.5,
+      "total": 43,
+      "matched_pct": 39.5,
       "contributor": "jaytheham"
     },
     {
@@ -397,21 +397,21 @@
     {
       "path": "overlay_gameplay/outside/BF9C0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 20,
+      "matched": 21,
       "non_matching": 4,
-      "asm_stubs": 55,
+      "asm_stubs": 54,
       "total": 79,
-      "matched_pct": 25.3,
+      "matched_pct": 26.6,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/CFE30.c",
       "segment": "overlay_gameplay/outside",
       "matched": 82,
-      "non_matching": 3,
+      "non_matching": 7,
       "asm_stubs": 199,
-      "total": 284,
-      "matched_pct": 28.9,
+      "total": 288,
+      "matched_pct": 28.5,
       "contributor": "jaytheham"
     },
     {
@@ -448,10 +448,10 @@
       "path": "overlay_gameplay/outside/buildings.c",
       "segment": "overlay_gameplay/outside",
       "matched": 61,
-      "non_matching": 12,
+      "non_matching": 14,
       "asm_stubs": 95,
-      "total": 168,
-      "matched_pct": 36.3,
+      "total": 170,
+      "matched_pct": 35.9,
       "contributor": "jaytheham"
     },
     {
@@ -539,9 +539,9 @@
     {
       "name": "jaytheham",
       "files": 33,
-      "matched": 710,
-      "non_matching": 146,
-      "asm_stubs": 1300
+      "matched": 711,
+      "non_matching": 155,
+      "asm_stubs": 1299
     },
     {
       "name": "Meridian Lex",
@@ -559,14 +559,6 @@
     }
   ],
   "history": [
-    {
-      "date": "2026-03-17",
-      "commit": "7c61f97",
-      "matched_pct": 22.92,
-      "decompiled_pct": 32.12,
-      "matched": 675,
-      "total": 2945
-    },
     {
       "date": "2026-03-16",
       "commit": "275cfe7",
@@ -614,6 +606,14 @@
       "decompiled_pct": 37.41,
       "matched": 840,
       "total": 2922
+    },
+    {
+      "date": "2026-03-23",
+      "commit": "9afdac4",
+      "matched_pct": 28.69,
+      "decompiled_pct": 37.63,
+      "matched": 841,
+      "total": 2931
     }
   ]
 }
