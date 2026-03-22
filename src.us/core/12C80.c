@@ -227,7 +227,9 @@ void func_8001593C_1653C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A068_1AC68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A114_1AD14.s")
+u8 func_8001A114_1AD14(void) {
+    return *(u8 *)(D_80034468 + D_8006C558);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A130_1AD30.s")
 
