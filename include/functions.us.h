@@ -414,7 +414,7 @@ void func_8013A764_149714(u8);
 void func_8013B004_149FB4(void);
 void func_8013B054_14A004(void);
 s32 func_8013B480_14A430(s16 arg0);
-void func_8013B5E4_14A594(s32);
+s32 func_8013B5E4_14A594(s32 arg0);
 void func_8013B688_14A638(void);
 
 // overlay_level
