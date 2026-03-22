@@ -1,5 +1,5 @@
 
-$root = ".\asm\nonmatchings\overlay_gameplay\outside"
+$root = '.\asm\nonmatchings\overlay_gameplay\outside'
 
 # Normalize the root path and capture its length
 $rootAbs = (Resolve-Path $root).Path
@@ -8,7 +8,7 @@ $rootPrefix = 'asm/nonmatchings/overlay_gameplay/outside'
 
 $topFiles = Get-ChildItem -Path $root -Recurse -File |
   Sort-Object -Property Length |
-  Select-Object -First 100
+  Select-Object -First 50
 
 $results = @()
 
@@ -18,7 +18,7 @@ foreach ($file in $topFiles) {
     $escapedAsmPath = [regex]::Escape($asmPath)
     $pragmaPattern = "^\s*#pragma\s+GLOBAL_ASM\(`"$escapedAsmPath`"\)\s*$"
 
-    $matches = Get-ChildItem -Path ".\src.us" -Recurse -File -Include *.c,*.h |
+    $matches = Get-ChildItem -Path ".\src.us" -Recurse -File -Include *.c |
         Select-String -Pattern $pragmaPattern -SimpleMatch:$false
 
     foreach ($match in $matches) {
@@ -35,5 +35,5 @@ foreach ($file in $topFiles) {
 if ($results.Count -eq 0) {
     Write-Output "No matching #pragma GLOBAL_ASM(...) occurrences found where next line is not #endif."
 } else {
-    $results | Sort-Object -Unique
+    $results | Select-Object -Unique
 }
