@@ -158,7 +158,37 @@ void func_80076208_851B8(s32 arg0) {
 	func_800078B8_84B8(arg0, &D_8004D150);
 }
 
+#ifdef NON_MATCHING
+s32 func_8007622C_851DC(s32 arg0) {
+    s32 v0;
+    s32 *ptr;
+    s32 v1;
+
+    ptr = &D_801494B4;
+    v1 = 15;
+    do {
+        v0 = v1;
+        if (arg0 == *ptr--) {
+            return v0;
+        }
+    } while (v1--);
+
+    v1 = 15;
+    if (D_801494B4 != 0) {
+        while (v1--) {
+            if (D_80149478[v1] != 0) {
+                v0 = v1;
+            } else {
+                break;
+            }
+        }
+    }
+    D_80149478[v1] = arg0;
+    return v0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007622C_851DC.s")
+#endif
 
 // Remove the current callback from the list of callbacks (to call each frame?)
 // https://decomp.me/scratch/GkpO5

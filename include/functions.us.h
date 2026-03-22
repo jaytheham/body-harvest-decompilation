@@ -117,7 +117,7 @@ void func_80074204_831B4();
 void func_8007643C_853EC();
 void func_800756DC_8468C(void);
 void func_80075E50_84E00(void);
-void func_8007622C_851DC(void (*fn)(void));
+s32 func_8007622C_851DC(s32 arg0);
 void func_800762A8_85258();
 void func_8007679C_8574C(s16);
 void func_8007764C_865FC(void);
