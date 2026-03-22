@@ -85,6 +85,7 @@ extern s32 D_80031454;
 extern s8 D_800314C4;
 extern OSMesg D_800314CC;
 extern s32 D_80031B84;
+extern s8 D_80031CA4;
 extern u64 D_80035610;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
 extern u8 D_80036C64[];

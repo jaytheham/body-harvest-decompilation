@@ -50,7 +50,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800132CC_13ECC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013314_13F14.s")
+void func_80013314_13F14(void) {
+    D_80031CA4 = -1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013324_13F24.s")
 
