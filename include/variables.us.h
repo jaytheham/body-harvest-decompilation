@@ -1165,6 +1165,8 @@ extern char D_80143A38;
 extern char D_80143ED0;
 extern char D_80143EF0;
 extern char D_80143FA4;
+extern UnkFunc8013B5E4 D_80257A1C[];
+extern char D_80145ABC[];
 extern u8 D_801592A0;
 extern u8 D_801592B0;
 extern u8 D_80158E80[];

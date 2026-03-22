@@ -861,9 +861,9 @@ typedef struct {
 } UnkFB6F8Entry; /* stride 0xC */
 
 typedef struct {
-     /* 0x00 */ u8 unk0;
-     /* 0x01 */ u8 unk1;
-     /* 0x02 */ u8 unk2;
+	 /* 0x00 */ u8 unk0;
+	 /* 0x01 */ u8 unk1;
+	 /* 0x02 */ u8 unk2;
 } Unk80154082; /* size = 0x3 */
 
 typedef struct {
@@ -1027,5 +1027,10 @@ typedef struct {
 	/* 0x10 */ f32 unk10;
 	/* 0x14 */ u8 pad14[0xC];
 } Unk8013E45C; /* size = 0x20 */
+
+typedef struct {
+	s32 unk0;
+	char unk4[0x6C];
+} UnkFunc8013B5E4;
 
 #endif

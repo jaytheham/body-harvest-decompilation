@@ -319,14 +319,6 @@ s32 func_8013B534_14A4E4(void) {
 	return 0;
 }
 
-typedef struct {
-	s32 unk0;
-	char unk4[0x6C];
-} UnkFunc8013B5E4;
-
-extern UnkFunc8013B5E4 D_80257A1C[];
-extern char D_80145ABC[];
-
 s32 func_8013B5E4_14A594(s32 arg0) {
 	if (func_8013B534_14A4E4() != 0) {
 		return 1;
