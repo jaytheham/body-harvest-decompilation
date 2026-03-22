@@ -974,7 +974,16 @@ void func_800E00F4_EF0A4(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E0134_EF0E4.s")
 
 // debug_printSpecialEffectsInfo
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E03FC_EF3AC.s")
+void func_800E03FC_EF3AC(void) {
+    u8 i;
+
+    osSyncPrintf(&D_80143ED0);
+    for (i = 0; i < 0x1E; i++) {
+        if (D_80154088[i].unk0 != 0xFA) {
+            osSyncPrintf(&D_80143EF0, i, D_80154088[i].unk0, D_80154088[i].unk4);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E049C_EF44C.s")
 
@@ -1089,7 +1098,17 @@ void func_800E552C_F44DC(void) {
 // Remove shield (wtf is a shield?)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5E3C_F4DEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6028_F4FD8.s")
+void func_800E6028_F4FD8(u8 arg0, u8 arg1) {
+	s16 i;
+
+	osSyncPrintf(&D_80143FA4, (s32) arg1);
+	for (i = 0; i < D_80152C96; i++) {
+		if ((arg0 == D_80152CA0[i].unk1) && (arg1 == D_80152CA0[i].unk0)) {
+			D_80152CA0[i].unk2 = 0x64;
+			break;
+		}
+	}
+}
 
 s32 func_800E60CC_F507C(u8 arg0, u8 arg1) {
 	s16 i;
