@@ -299,8 +299,6 @@ void func_800AFFF0_BEFA0(s32 arg0) {
 }
 
 void func_800B0000_BEFB0(s32 arg0) {
-	s32 *ptr = &arg0;
-	*ptr = arg0;
 	D_801493E0 = 1;
 	D_801493E2 = 1;
 }
