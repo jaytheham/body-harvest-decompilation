@@ -82,7 +82,12 @@ void func_800056A8_62A8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006C4C_784C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/setFullResolution.s")
+extern void setVideoInterfaceXSize(s32 width);
+extern void setVideoInterfaceYSize(s32 height);
+void setFullResolution(void) {
+    setVideoInterfaceXSize(0x140);
+    setVideoInterfaceYSize(0xF0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/setGameplayResolution.s")
 
