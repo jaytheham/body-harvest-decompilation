@@ -24,15 +24,21 @@ void func_802D4DD4_254514(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5110_254850.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5148_254888.s")
+void func_802D5148_254888(void) {
+    func_800073B8_7FB8((u64)0x36);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D516C_2548AC.s")
+void func_802D516C_2548AC(void) {
+    func_800073B8_7FB8((u64)0x36);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5190_2548D0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D51B8_2548F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5288_2549C8.s")
+void func_802D5288_2549C8(s32 arg0) {
+    func_800072CC_7ECC((u64)0x2C);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D52B0_2549F0.s")
 
