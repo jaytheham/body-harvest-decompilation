@@ -493,7 +493,7 @@ s32 func_8011E6FC_12D6AC(s16 arg0, s16 arg1, s16 *arg2);
 void func_800E988C_F883C(AlienInstance *arg0, AlienSpec *arg1);
 s16 func_800FADF8_109DA8(s16 arg0);
 void func_800FDC30_10CBE0(s16 arg0);
-void func_800F9D60_108D10(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, s16 *arg4);
+s16 func_800F9D60_108D10(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, s16 *arg4);
 void func_800FD0EC_10C09C(void);
 void func_800FD168_10C118(void);
 void func_80006DAC_79AC(s32 arg0, s32 arg1);

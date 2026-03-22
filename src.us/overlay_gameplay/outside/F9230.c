@@ -432,7 +432,27 @@ s16 func_800F9D24_108CD4(s16 arg0, s16 arg1) {
 	return (s16)(func_800B84D0_C7480(arg0, arg1) >> 8);
 }
 
+#ifdef NON_MATCHING
+s16 func_800F9D60_108D10(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, s16 *arg4) {
+	s16 sp22;
+	s16 temp_v0;
+	s32 var_v1;
+
+	*arg2 = (s16)(func_800B85CC_C757C(arg0, arg1) >> 8);
+	var_v1 = func_8011E6FC_12D6AC(arg0, arg1, &sp22);
+	if (var_v1 != -1) {
+		*arg3 = D_80050ADA[var_v1].unk0;
+		*arg4 = sp22;
+	} else {
+		temp_v0 = *arg2;
+		*arg3 = temp_v0;
+		*arg4 = temp_v0;
+	}
+	return (s16)var_v1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F9D60_108D10.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F9E0C_108DBC.s")
 
