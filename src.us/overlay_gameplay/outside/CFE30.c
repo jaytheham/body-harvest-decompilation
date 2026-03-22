@@ -220,7 +220,25 @@ void func_800C3288_D2238(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3BD8_D2B88.s")
 
+#ifdef NON_MATCHING
+void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	Unk80154318Entry *entry;
+	extern char D_801434C0;
+
+	if (arg3 != -3) {
+		entry = &D_80154318[arg3];
+		if ((entry->unk0 & 1) && (entry->unk1 == 0xC)) {
+			entry->unk8 = arg0;
+			entry->unkA = arg1;
+			entry->unkC = arg2;
+			return;
+		}
+	}
+	osSyncPrintf(&D_801434C0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3D88_D2D38.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3E2C_D2DDC.s")
 
