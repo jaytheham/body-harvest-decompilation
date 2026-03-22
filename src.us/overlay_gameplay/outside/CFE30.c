@@ -172,7 +172,30 @@ s32 func_800C2274_D1224(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C22EC_D129C.s")
 
+#ifdef NON_MATCHING
+void func_800C2554_D1504(s16 arg0, u8 arg1) {
+	Unk801541F8Entry *entry;
+	s16 temp;
+	extern char D_80143390;
+
+	if (arg1 < 0x1E) {
+		entry = &D_80154088[arg1];
+		if (entry->unk0 == 0) {
+			temp = *(s16 *) ((u8 *) entry + 0xA);
+			if (arg0 == temp) {
+				func_800C1418_D03C8(arg1, 0);
+				func_800C1384_D0334(arg1);
+				return;
+			}
+			func_800C1A4C_D09FC(arg0, arg1, 0);
+			return;
+		}
+	}
+	osSyncPrintf(&D_80143390);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C2554_D1504.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C25F8_D15A8.s")
 
