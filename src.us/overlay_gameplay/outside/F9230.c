@@ -473,7 +473,20 @@ s16 func_800F9FAC_108F5C(s16 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FAB9C_109B4C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FAC90_109C40.s")
+void func_800FAC90_109C40(void) {
+    VehicleInstance *var_s0;
+    VehicleInstance *end;
+
+    var_s0 = vehicleInstances, end = (VehicleInstance *)&D_80050AD0;
+    do {
+        if (func_800B0D10_BFCC0(var_s0->unk0, var_s0->unk4, 0) != 0) {
+            var_s0->unk20 = var_s0->unk20 & ~0x40;
+        } else {
+            var_s0->unk20 = var_s0->unk20 | 0x40;
+        }
+        var_s0++;
+    } while (var_s0 != end);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FAD10_109CC0.s")
 
