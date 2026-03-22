@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include "common.h"
 
+struct Unk80013E44_arg0 { s32 unk0; s32 unk4; s32 unk8; };
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012080_12C80.s")
 
@@ -42,7 +43,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012EC4_13AC4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013178_13D78.s")
+void func_80013178_13D78(s8 arg0) {
+    func_80015C94_16894(arg0, 0x2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800131A4_13DA4.s")
 
@@ -50,7 +53,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800132CC_13ECC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013314_13F14.s")
+void func_80013314_13F14(void) {
+    D_80031CA4 = -1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013324_13F24.s")
 
@@ -76,7 +81,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013684_14284.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800136CC_142CC.s")
+void func_800136CC_142CC(void) {
+    func_80015C94_16894(0x23, 0x10);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800136F0_142F0.s")
 
@@ -86,7 +93,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/n_alSynFreeFX.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800137F0_143F0.s")
+void func_800137F0_143F0(s32 arg0) {
+    if (D_8006AB88 != 0) {
+        D_8006ABA8 = arg0;
+    }
+}
 
 void func_80013810_14410(s8 arg0) {
 }
@@ -95,7 +106,11 @@ void func_80013810_14410(s8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013B48_14748.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013E44_14A44.s")
+void func_80013E44_14A44(void *arg0) {
+    if (D_8006AB88 != 0) {
+        ((struct Unk80013E44_arg0 *)arg0)->unk8 = 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013E64_14A64.s")
 
@@ -119,7 +134,8 @@ void func_80013810_14410(s8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015210_15E10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015380_15F80.s")
+void func_80015380_15F80(void *arg0) {
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015388_15F88.s")
 
@@ -141,7 +157,8 @@ void func_80013810_14410(s8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800158C8_164C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001593C_1653C.s")
+void func_8001593C_1653C(void *arg0) {
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015944_16544.s")
 
@@ -185,7 +202,12 @@ void func_80013810_14410(s8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017AAC_186AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017AE0_186E0.s")
+void func_80017AE0_186E0(void) {
+    D_80034478 = 0;
+    D_80034480 = 0xFFFF;
+    D_8003447C = 0;
+    D_80034484 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017B08_18708.s")
 
@@ -197,15 +219,28 @@ void func_80013810_14410(s8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018A58_19658.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018AA0_196A0.s")
+s32 func_80018AA0_196A0(void) {
+    if (D_8003449C == 0x18) {
+        return 1;
+    }
+    return 0;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018AC8_196C8.s")
+s32 func_80018AC8_196C8(void) {
+    if (D_8003449C != 0) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018AEC_196EC.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018D14_19914.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018D58_19958.s")
+void func_80018D58_19958(void) {
+    func_80018D14_19914();
+    D_8003449C = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018D7C_1997C.s")
 
@@ -223,7 +258,9 @@ void func_80013810_14410(s8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A068_1AC68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A114_1AD14.s")
+u8 func_8001A114_1AD14(void) {
+    return *(u8 *)(D_80034468 + D_8006C558);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A130_1AD30.s")
 

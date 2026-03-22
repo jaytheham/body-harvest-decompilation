@@ -85,6 +85,7 @@ extern s32 D_80031454;
 extern s8 D_800314C4;
 extern OSMesg D_800314CC;
 extern s32 D_80031B84;
+extern s8 D_80031CA4;
 extern u64 D_80035610;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
 extern u8 D_80036C64[];
@@ -249,6 +250,7 @@ extern s32 D_8005BB24;
 extern s32 D_8005BB48[];
 
 extern s32 D_8006AB88;
+extern s32 D_8006ABA8;
 extern s32 D_80068084;
 extern s32 D_80068088;
 
@@ -934,8 +936,12 @@ extern s32 D_80034468;
 extern s32 D_8003446C;
 extern s32 D_80034470;
 extern s32 D_80034474;
+extern s32 D_80034478;
+extern u16 D_80034480;
+extern s32 D_8003447C;
 extern s32 D_80034484;
 extern s32 D_80034488;
+extern s32 D_8003449C;
 extern s32 D_800344B4[];
 extern void *D_8006C550;
 extern void *D_8006C554;
