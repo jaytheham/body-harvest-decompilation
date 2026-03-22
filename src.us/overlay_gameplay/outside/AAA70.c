@@ -278,7 +278,28 @@ void func_800A17EC_B079C(void) {
 	func_800A1764_B0714();
 }
 
+#ifdef NON_MATCHING
+s32 func_800A1828_B07D8(u8 arg0, u8 arg1, u8 arg2) {
+	s32 target = arg1;
+	s32 step = arg2;
+	s32 current = arg0;
+
+	if (target < current) {
+		if (current < step || (current - target) < step) {
+			return arg1;
+		}
+		return current - step;
+	} else if (current < target) {
+		if ((0xFF - step) < current || (target - current) < step) {
+			return arg1;
+		}
+		current = (current + step) & 0xFF;
+	}
+	return current;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1828_B07D8.s")
+#endif
 
 s32 func_800A18CC_B087C(void) {
 	s16 index = (s16)(D_80158FE8 - buildingInstances);
