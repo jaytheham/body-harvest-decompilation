@@ -169,30 +169,26 @@ void func_800EC468_FB418(void) { D_80157A28 &= ~0x200; }
 // Cont 2 button attempts to use weapon model 0 when changing weapon
 #ifdef NON_MATCHING
 s32 func_800EF0B0_FE060(s32 arg0) {
+	s32 buf[2];
 	s32 *ptr;
-	s32 sum;
 	s32 count;
-	s64 pad0;
-	s64 pad1;
-	s64 temp;
-	s32 *temp32;
+	s32 sum;
 	s8 byte;
 
 	ptr = (s32 *)func_80012000_12C00(arg0);
-	temp32 = (s32 *)(&pad1 + 2);
-	sum = 0;
 	count = 0;
+	sum = 0;
 
 	do {
-		temp32[0] = *ptr;
+		buf[0] = ptr[0];
 		ptr += 2;
 		count++;
-		temp32[1] = *(ptr - 1);
-		byte = (s8)temp32[0];
+		buf[1] = ptr[-1];
+		byte = *(s8 *)buf;
 		sum += byte;
-	} while ((byte != -0x48) || (count >= 0x39));
+	} while (byte != -0x48 || count >= 0x39);
 
-	if (currentControllerStates[CONTROLLER_TWO] & BUTTON_Z) {
+	if (currentControllerStates[CONTROLLER_TWO].button & BUTTON_Z) {
 		return 0;
 	}
 
@@ -356,7 +352,21 @@ s32 func_800F41E0_103190(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F4DB0_103D60.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F54AC_10445C.s")
+void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
+    f32 x = arg0->x;
+    f32 lenSq = (arg0->z * arg0->z) + (x * x + arg0->y * arg0->y);
+
+    if (lenSq == 0.0f) {
+        arg1->x = x;
+        arg1->y = arg0->y;
+        arg1->z = arg0->z;
+    } else {
+        f32 len = sqrtf(lenSq);
+        arg1->x = arg0->x / len;
+        arg1->y = arg0->y / len;
+        arg1->z = arg0->z / len;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F554C_1044FC.s")
 
