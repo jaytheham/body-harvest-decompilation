@@ -938,6 +938,7 @@ extern s32 D_80034470;
 extern s32 D_80034474;
 extern s32 D_80034484;
 extern s32 D_80034488;
+extern s32 D_8003449C;
 extern s32 D_800344B4[];
 extern void *D_8006C550;
 extern void *D_8006C554;

@@ -214,7 +214,12 @@ void func_8001593C_1653C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018AA0_196A0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018AC8_196C8.s")
+s32 func_80018AC8_196C8(void) {
+    if (D_8003449C != 0) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018AEC_196EC.s")
 
