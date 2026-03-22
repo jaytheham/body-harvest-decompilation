@@ -43,11 +43,8 @@ s32 func_80139150_148100(u8 arg0, u16 arg1) {
 // guess_giveItem
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801391DC_14818C.s")
 
-// Failed - sonnet 4.5
-// Failed - opus 4.6
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801392FC_1482AC.s")
 
-// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801393A0_148350.s")
 
 void func_80139460_148410(void) {
@@ -62,10 +59,8 @@ void func_80139460_148410(void) {
 	D_801601D8 = -1;
 }
 
-// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801394DC_14848C.s")
 
-// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013958C_14853C.s")
 
 void func_801396A8_148658(s32 arg0) {
@@ -228,7 +223,6 @@ void func_80139B34_148AE4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139BF8_148BA8.s")
 
-// Failed - sonnet 4.5
 // Vehicle weapon UI related?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139D58_148D08.s")
 
@@ -243,10 +237,8 @@ void func_8013A1CC_14917C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A218_1491C8.s")
 
-// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A4C8_149478.s")
 
-// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A630_1495E0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A764_149714.s")
@@ -307,10 +299,8 @@ void func_8013B30C_14A2BC(void) {
 	}
 }
 
-// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B384_14A334.s")
 
-// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B480_14A430.s")
 
 s32 func_8013B534_14A4E4(void) {
@@ -329,7 +319,6 @@ s32 func_8013B534_14A4E4(void) {
 	return 0;
 }
 
-// Failed - sonnet 4.5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B5E4_14A594.s")
 
 // guess_doWeaponChange
