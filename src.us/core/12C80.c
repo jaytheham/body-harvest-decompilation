@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include "common.h"
 
+struct Unk80013E44_arg0 { s32 unk0; s32 unk4; s32 unk8; };
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012080_12C80.s")
 
@@ -97,7 +98,11 @@ void func_80013810_14410(s8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013B48_14748.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013E44_14A44.s")
+void func_80013E44_14A44(void *arg0) {
+    if (D_8006AB88 != 0) {
+        ((struct Unk80013E44_arg0 *)arg0)->unk8 = 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013E64_14A64.s")
 
