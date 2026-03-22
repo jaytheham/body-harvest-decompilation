@@ -1,24 +1,24 @@
 {
-  "generated": "2026-03-22T02:53:52Z",
-  "commit": "3975202",
-  "commit_timestamp": "2026-03-22T15:53:41+13:00",
+  "generated": "2026-03-22T02:59:08Z",
+  "commit": "94e73e4",
+  "commit_timestamp": "2026-03-22T15:58:59+13:00",
   "overall": {
-    "total_functions": 2923,
-    "matched": 824,
+    "total_functions": 2920,
+    "matched": 833,
     "non_matching": 251,
-    "asm_stubs": 1848,
-    "matched_pct": 28.19,
-    "decompiled_pct": 36.78
+    "asm_stubs": 1836,
+    "matched_pct": 28.53,
+    "decompiled_pct": 37.12
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 43,
+      "matched": 52,
       "non_matching": 22,
-      "asm_stubs": 300,
-      "total": 365,
-      "matched_pct": 11.8,
-      "decompiled_pct": 17.8
+      "asm_stubs": 288,
+      "total": 362,
+      "matched_pct": 14.4,
+      "decompiled_pct": 20.4
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -117,11 +117,11 @@
     {
       "path": "core/12C80.c",
       "segment": "core",
-      "matched": 1,
+      "matched": 10,
       "non_matching": 0,
-      "asm_stubs": 114,
-      "total": 115,
-      "matched_pct": 0.9,
+      "asm_stubs": 102,
+      "total": 112,
+      "matched_pct": 8.9,
       "contributor": "Meridian Lex"
     },
     {
@@ -546,9 +546,9 @@
     {
       "name": "Meridian Lex",
       "files": 9,
-      "matched": 107,
+      "matched": 116,
       "non_matching": 106,
-      "asm_stubs": 442
+      "asm_stubs": 430
     },
     {
       "name": "Harvester",
@@ -617,11 +617,11 @@
     },
     {
       "date": "2026-03-22",
-      "commit": "3975202",
-      "matched_pct": 28.19,
-      "decompiled_pct": 36.78,
-      "matched": 824,
-      "total": 2923
+      "commit": "94e73e4",
+      "matched_pct": 28.53,
+      "decompiled_pct": 37.12,
+      "matched": 833,
+      "total": 2920
     }
   ]
 }
