@@ -1,24 +1,24 @@
 {
-  "generated": "2026-03-22T19:04:11Z",
-  "commit": "cc08911",
-  "commit_timestamp": "2026-03-23T08:04:02+13:00",
+  "generated": "2026-03-22T19:06:09Z",
+  "commit": "6ef602c",
+  "commit_timestamp": "2026-03-23T08:05:58+13:00",
   "overall": {
     "total_functions": 2933,
-    "matched": 845,
+    "matched": 846,
     "non_matching": 264,
-    "asm_stubs": 1824,
-    "matched_pct": 28.81,
-    "decompiled_pct": 37.81
+    "asm_stubs": 1823,
+    "matched_pct": 28.84,
+    "decompiled_pct": 37.85
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 56,
+      "matched": 57,
       "non_matching": 24,
-      "asm_stubs": 284,
+      "asm_stubs": 283,
       "total": 364,
-      "matched_pct": 15.4,
-      "decompiled_pct": 22.0
+      "matched_pct": 15.7,
+      "decompiled_pct": 22.3
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -157,12 +157,12 @@
     {
       "path": "core/AD60.c",
       "segment": "core",
-      "matched": 3,
+      "matched": 4,
       "non_matching": 0,
-      "asm_stubs": 23,
+      "asm_stubs": 22,
       "total": 26,
-      "matched_pct": 11.5,
-      "contributor": "jaytheham"
+      "matched_pct": 15.4,
+      "contributor": "Meridian Lex"
     },
     {
       "path": "core/E830.c",
@@ -538,17 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 32,
-      "matched": 706,
+      "files": 31,
+      "matched": 703,
       "non_matching": 155,
-      "asm_stubs": 1229
+      "asm_stubs": 1206
     },
     {
       "name": "Meridian Lex",
-      "files": 10,
-      "matched": 125,
+      "files": 11,
+      "matched": 129,
       "non_matching": 108,
-      "asm_stubs": 496
+      "asm_stubs": 518
     },
     {
       "name": "Harvester",
@@ -609,10 +609,10 @@
     },
     {
       "date": "2026-03-23",
-      "commit": "cc08911",
-      "matched_pct": 28.81,
-      "decompiled_pct": 37.81,
-      "matched": 845,
+      "commit": "6ef602c",
+      "matched_pct": 28.84,
+      "decompiled_pct": 37.85,
+      "matched": 846,
       "total": 2933
     }
   ]
