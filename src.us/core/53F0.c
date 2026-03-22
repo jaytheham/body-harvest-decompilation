@@ -2,7 +2,9 @@
 #include "common.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800047F0_53F0.s")
+f32 func_800047F0_53F0(f32 arg0) {
+    return arg0 * arg0;
+}
 
 s32 func_800047FC_53FC(s16 arg0) {
     return arg0 * arg0;
@@ -48,7 +50,9 @@ s32 func_800047FC_53FC(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005654_6254.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800056A8_62A8.s")
+void func_800056A8_62A8(void) {
+    func_80005654_6254(0, 0, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800056D0_62D0.s")
 
@@ -78,9 +82,17 @@ s32 func_800047FC_53FC(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006C4C_784C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/setFullResolution.s")
+extern void setVideoInterfaceXSize(s32 width);
+extern void setVideoInterfaceYSize(s32 height);
+void setFullResolution(void) {
+    setVideoInterfaceXSize(0x140);
+    setVideoInterfaceYSize(0xF0);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/setGameplayResolution.s")
+void setGameplayResolution(void) {
+    setVideoInterfaceXSize(0x130);
+    setVideoInterfaceYSize(0xE6);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006DAC_79AC.s")
 
@@ -100,7 +112,22 @@ s32 func_800047FC_53FC(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800074F4_80F4.s")
 
+extern s32 D_8004DC74;
+#ifdef NON_MATCHING
+void func_80007548_8148(void) {
+    s32 *ptr = &D_8004DC74;
+    s32 i = 3;
+    if (ptr)
+    {
+    }
+    do {
+        *ptr = 0;
+        ptr--;
+    } while (i--);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007548_8148.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007570_8170.s")
 
@@ -159,7 +186,18 @@ void func_800078E4_84E4(s32 arg0, s32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/debug_drawTimingGraphBars.s")
 
+#ifdef NON_MATCHING
+void func_80008C18_9818(void) {
+    s16 *ptr = &D_80047F7E;
+    s32 count = 0xF;
+    do {
+        *ptr = -1;
+        ptr--;
+    } while (count--);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008C18_9818.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008C44_9844.s")
 
