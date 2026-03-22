@@ -742,7 +742,21 @@ void func_800D9F60_E8F10(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA260_E9210.s")
 
+#ifdef NON_MATCHING
+void func_800DA3A8_E9358(s16 arg0, s16 arg1) {
+	Unk80154318Entry *sp2C;
+	Unk80154318Entry *sp28;
+
+	sp2C = &D_80154318[arg0];
+	sp28 = &D_80154318[arg1];
+	func_800E52E8_F4298(sp2C->unkE, sp2C->unk10, sp2C->unk12, sp28->unk8, (s32) sp28->unkA, (s32) sp28->unkC, (s32) sp28->unk14);
+	(&sp28->unk8)[0] = (&sp2C->unk8)[3];
+	(&sp28->unk8)[1] = (&sp2C->unk8)[4];
+	(&sp28->unk8)[2] = (&sp2C->unk8)[5];
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA3A8_E9358.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA450_E9400.s")
 
