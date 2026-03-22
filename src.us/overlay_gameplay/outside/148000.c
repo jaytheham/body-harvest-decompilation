@@ -319,7 +319,26 @@ s32 func_8013B534_14A4E4(void) {
 	return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B5E4_14A594.s")
+s32 func_8013B5E4_14A594(s32 arg0) {
+	if (func_8013B534_14A4E4() != 0) {
+		return 1;
+	}
+
+	if (D_801601D0 == 0) {
+		D_80257A1C[D_80052B34->unk1A].unk0 = 0;
+		return 1;
+	}
+
+	osSyncPrintf(&D_80145ABC, D_801601D0);
+	if (arg0 == 0) {
+		func_8013B298_14A248();
+	} else {
+		func_8013B30C_14A2BC();
+	}
+
+	func_8013B5E4_14A594(arg0);
+	return 0;
+}
 
 // guess_doWeaponChange
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B688_14A638.s")
