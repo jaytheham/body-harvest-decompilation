@@ -50,7 +50,9 @@ s32 func_800047FC_53FC(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005654_6254.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800056A8_62A8.s")
+void func_800056A8_62A8(void) {
+    func_80005654_6254(0, 0, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800056D0_62D0.s")
 
