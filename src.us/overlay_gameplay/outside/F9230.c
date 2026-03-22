@@ -1176,7 +1176,20 @@ s32 func_8010B970_11A920(u8 *arg0, VehicleInstance *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010C14C_11B0FC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010C454_11B404.s")
+void func_8010C454_11B404(void) {
+	VehicleInstance *vehicle;
+
+	if (D_80159314-- == 0) {
+		vehicle = D_80052B34;
+		if (vehicle != vehicleInstances + D_80159316) {
+			func_800FD510_10C4C0(0, D_80159316);
+			vehicle = D_80052B34;
+		}
+		func_800E7B20_F6AD0(vehicle, D_801493D8);
+		D_801591AC = 0;
+		D_8015930E = 0;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010C4EC_11B49C.s")
 
