@@ -238,7 +238,16 @@ void func_800C8184_D7134(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C820C_D71BC.s")
+void func_800C820C_D71BC(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
+    s8 *p;
+
+    if (arg3 != -3) {
+        p = (s8 *)&D_80154318[D_80154318[D_80154318[arg3].unk4].unk4].unk8;
+        p[6] = arg0;
+        p[7] = arg1;
+        p[8] = arg2;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8294_D7244.s")
 
