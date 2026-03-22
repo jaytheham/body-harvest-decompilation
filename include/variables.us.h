@@ -1012,6 +1012,7 @@ extern s16 D_80157586;
 extern s16 D_80157588;
 extern s16 D_8015758A;
 extern s32 D_8013E438;
+extern Unk8013E45C D_8013E45C[];
 extern char D_801441F0[];
 extern f64 D_80144240;
 extern f64 D_80144248;

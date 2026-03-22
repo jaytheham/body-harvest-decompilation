@@ -126,7 +126,24 @@ f32 func_800EB9BC_FA96C(void *arg0) {
 	return ((f32 *)arg0)[0x7];
 }
 
+#ifdef NON_MATCHING
+s32 func_800EB9C4_FA974(s32 arg0, Unk80157600 *arg1) {
+	Unk8013E45C *temp_v0;
+	s16 temp_v1;
+	f32 temp_f0;
+
+	temp_v0 = &D_8013E45C[arg0];
+	temp_v1 = temp_v0->unkC;
+	if (((arg1->unk298 == temp_v1) && (arg1->unk29C == temp_v0->unk10)) ||
+	    ((temp_f0 = temp_v0->unk10, (-1.0f == temp_f0)) && (temp_v1 < arg1->unk298)) ||
+	    ((-1.0f == temp_f0) && (temp_v1 == -1))) {
+		return 1;
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB9C4_FA974.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBA54_FAA04.s")
 

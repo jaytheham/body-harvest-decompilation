@@ -719,7 +719,10 @@ typedef struct {
 	/* 0x08 */ f32 unk8;
 	/* 0x0C */ f32 unkC;
 	/* 0x10 */ f32 unk10;
-	/* 0x14 */ u8 pad14[0x3F0];
+	/* 0x14 */ u8 pad14[0x284];
+	/* 0x298 */ s32 unk298;
+	/* 0x29C */ f32 unk29C;
+	/* 0x2A0 */ u8 pad2A0[0x164];
 	/* 0x404 */ void *unk404;
 	/* 0x408 */ void *unk408;
 	/* 0x40C */ s32 unk40C;
@@ -1016,5 +1019,13 @@ typedef struct {
 	/* 0x0C */ u8 pad0C[0xC];
 	/* 0x18 */ u32 type;
 } DebugPropEntry; /* stride = 0x1C */
+
+typedef struct {
+	/* 0x00 */ u8 pad0[0xC];
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ u8 padE[2];
+	/* 0x10 */ f32 unk10;
+	/* 0x14 */ u8 pad14[0xC];
+} Unk8013E45C; /* size = 0x20 */
 
 #endif
