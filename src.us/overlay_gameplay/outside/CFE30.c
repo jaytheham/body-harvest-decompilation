@@ -881,7 +881,23 @@ void func_800DA994_E9944(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DABBC_E9B6C.s")
 
+#ifdef NON_MATCHING
+void func_800DAF24_E9ED4(u8 arg0) {
+	u8 i;
+	u8 count;
+	Unk801541F8Entry *entry;
+
+	count = (func_800038E0_44E0() % 3) + 1;
+	entry = &D_80154088[arg0];
+	for (i = 0; i < count; i++) {
+		if (entry->unk4 < 0x96) {
+			func_800CA1B0_D9160(arg0);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DAF24_E9ED4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DAFCC_E9F7C.s")
 
