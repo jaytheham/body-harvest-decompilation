@@ -6,10 +6,34 @@ $rootAbs = (Resolve-Path $root).Path
 $rootLen = $rootAbs.Length
 $rootPrefix = 'asm/nonmatchings/overlay_gameplay/outside'
 
-Get-ChildItem -Path $root -Recurse -File |
+$topFiles = Get-ChildItem -Path $root -Recurse -File |
   Sort-Object -Property Length |
-  Select-Object -First 100 |
-  ForEach-Object {
-    $rel = $_.FullName.Substring($rootLen).TrimStart('\\') -replace '\\','/'
-    "$rootPrefix/$rel"
-  }
+  Select-Object -First 100
+
+$results = @()
+
+foreach ($file in $topFiles) {
+    $rel = $file.FullName.Substring($rootLen).TrimStart('\\') -replace '\\','/'
+    $asmPath = "$rootPrefix/$rel"
+    $escapedAsmPath = [regex]::Escape($asmPath)
+    $pragmaPattern = "^\s*#pragma\s+GLOBAL_ASM\(`"$escapedAsmPath`"\)\s*$"
+
+    $matches = Get-ChildItem -Path ".\src.us" -Recurse -File -Include *.c,*.h |
+        Select-String -Pattern $pragmaPattern -SimpleMatch:$false
+
+    foreach ($match in $matches) {
+        $lines = Get-Content -Path $match.Path
+        $nextIndex = $match.LineNumber
+        $nextLine = if ($nextIndex -lt $lines.Count) { $lines[$nextIndex].Trim() } else { "" }
+
+        if ($nextLine -ne '#endif') {
+            $results += $asmPath
+        }
+    }
+}
+
+if ($results.Count -eq 0) {
+    Write-Output "No matching #pragma GLOBAL_ASM(...) occurrences found where next line is not #endif."
+} else {
+    $results | Sort-Object -Unique
+}
