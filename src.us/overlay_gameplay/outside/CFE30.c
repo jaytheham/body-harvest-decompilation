@@ -632,7 +632,24 @@ void func_800D5588_E4538(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5AF4_E4AA4.s")
 
+void func_800D6084_E5034(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6);
+
+#ifdef NON_MATCHING
+u8 func_800D5FD4_E4F84(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
+	u8 slot;
+
+	slot = ((u8 (*)(u8))func_800C14D4_D0484)(6);
+	if (slot != 0xFB) {
+		func_800D6084_E5034(slot, arg0, arg1, arg2, arg3, arg4, arg5);
+		arg0 += 2;
+		arg2 += 2;
+		func_800D6084_E5034(slot, arg0, arg1, arg2, arg3, arg4, arg5);
+	}
+	return slot;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5FD4_E4F84.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D6084_E5034.s")
 
