@@ -737,6 +737,8 @@ void func_800BDAF4_CCAA4(void);
 void func_80070BFC_7FBAC(void);
 void func_80116784_125734(void);
 void func_800702C0_7F270(s16);
+void func_800C9530_D84E0(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
+void func_800DEADC_EDA8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_80103760_112710(VehicleInstance *, VehicleInstance *);
 
 /* java/1ED9E0 — additional function declarations */
