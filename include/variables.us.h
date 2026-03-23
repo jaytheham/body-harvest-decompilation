@@ -577,6 +577,7 @@ extern s32 D_801494B4;
 extern u8* D_801494B8;
 extern u8 D_801494BC;
 extern MissionCondEntry D_801494C0[];
+extern u8 D_801497BA;
 extern u8 D_801497C8[];
 extern u8 D_80149AF8[];
 extern s32 D_80149B30; // Number of mission commands?
