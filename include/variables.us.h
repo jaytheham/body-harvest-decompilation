@@ -359,6 +359,7 @@ extern s8 D_8013D9B0;
 extern s32 D_8013D9B4;
 extern u8 D_8013DAE0; /* particle/effect count */
 extern u8 D_8013DAE4; /* particle/effect free index */
+extern Unk80154082 D_8013DF80;
 extern s32 D_8013FCD0;
 
 extern AlienInstance *D_80140AB0[];
@@ -419,6 +420,7 @@ extern char D_80141130[];
 extern char D_8014114C[];
 extern char D_80141168[];
 extern char D_80141184[];
+extern char D_801411F0[];
 extern char D_8014121C[];
 extern char D_801417C0; /* osSyncPrintf format string - alien action table full warning */
 extern char D_801417DC;
@@ -523,7 +525,7 @@ extern char D_80145A70;
 extern char D_80145A8C;
 extern char D_80145AA4;
 extern u8 D_80145BE0[];
-extern s16 D_80145BE2;
+extern Unk80050ADA D_80145BE2[];
 extern Unk80148620 D_80148620[];
 extern s32 D_80148390[];
 extern s16 D_801483A4[];
@@ -573,6 +575,7 @@ extern u8 D_80149452; // cheat input buffer boundary
 extern u8 D_80149459; // cheat input buffer end
 extern s32 D_8014945C;
 extern s32 isCheatingEnabled; // 80149460
+extern s16 D_80149474;
 extern s32 D_80149478[16];
 extern s32 D_801494B4;
 extern u8* D_801494B8;
@@ -742,6 +745,7 @@ extern u32 D_8014D1B8[];
 extern Unk8014F618 D_8014F618;
 
 extern AlienSpec alienSpecs[0x30]; // 80256680
+extern Unk8025669C D_8025669C[];  // 8025669C
 
 extern s32 D_80145BE8[][6];
 extern s16 D_8014EDD8;
@@ -1175,6 +1179,7 @@ extern char D_80143ED0;
 extern char D_80143EF0;
 extern char D_80143FA4;
 extern UnkFunc8013B5E4 D_80257A1C[];
+extern UnkFunc8013B5E4 D_80257A4C[];
 extern char D_80145ABC[];
 extern u8 D_801592A0;
 extern u8 D_801592B0;
@@ -1431,5 +1436,7 @@ extern s8 D_802E0580;
 extern f64 D_802E0EB0;
 extern s32 D_80053C98;
 extern s32 D_802E3100;
+extern VehicleInstance *D_80158F8C;
+extern f64 D_80144AC0;
 
 #endif

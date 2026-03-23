@@ -16,3 +16,18 @@ The `s32 dummy` declaration causes IDO to reserve an extra 4-byte slot on the st
 **Key rule**: If your fix for register allocation involves removing a named pointer variable, and the frame shrinks as a side effect, add `s32 dummy;` to restore the original frame size.
 
 This shape can preserve both branch delay-slot pointer arithmetic and the `lbu` before index increment/store ordering.
+
+---
+
+### Phantom `s32 dummy` to push `s16 slot` from sp+0x26 to sp+0x22
+
+When a function naturally places `s16 slot` at sp+0x26 (the top of the local area after `$ra` at sp+0x1C), but the target has it at sp+0x22, declare an unused `s32 dummy` FIRST followed by `s16 slot`:
+
+```c
+s32 dummy;  /* first declared → highest slot: sp+0x24-0x27 (phantom, never used) */
+s16 slot;   /* second declared → next available: sp+0x22-0x23 ✓ */
+```
+
+IDO allocates local variables top-down: first declared = highest offset. The `s32 dummy` (first) takes the top 4-byte slot (sp+0x24-0x27), and `s16 slot` (second/last) lands at sp+0x22-0x23. No statement referencing `dummy` is needed.
+
+This was needed in `func_800D3C88_E2C38` (6-arg struct-init function) where `slot = func_800C17B4_D0764(0xE, 1)` needed to spill at sp+0x22 before a second `jal` call.

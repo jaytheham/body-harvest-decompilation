@@ -478,7 +478,25 @@ s16 func_800F9D60_108D10(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, s16 *arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F9D60_108D10.s")
 #endif
 
+#ifdef NON_MATCHING
+s16 func_800F9E0C_108DBC(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, s16 *arg4, s32 arg5, s32 arg6) {
+	s16 sp2A;
+	s32 temp_v0;
+
+	*arg2 = (s16)(func_800B85CC_C757C(arg0, arg1) >> 8);
+	temp_v0 = func_8011E788_12D738(arg0, arg1, &sp2A, arg5, arg6);
+	if (temp_v0 != -1) {
+		*arg3 = D_80050ADA[temp_v0].unk0;
+		*arg4 = sp2A;
+	} else {
+		*arg3 = *arg2;
+		*arg4 = *arg2;
+	}
+	return temp_v0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F9E0C_108DBC.s")
+#endif
 
 s16 func_800F9EC4_108E74(s16 arg0, s16 arg1) {
 	return (s16)(func_800B85CC_C757C(arg0, arg1) >> 8);
@@ -1097,7 +1115,18 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103760_112710.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103D18_112CC8.s")
+void func_80103D18_112CC8(VehicleInstance *arg0, VehicleInstance *arg1) {
+	func_80103760_112710(arg0, D_80158F8C);
+	arg1->unk12 = 0;
+	arg0->unk20 |= 1;
+	if (arg1->unkC == -2 && arg1->unk20 & 2) {
+		arg1->unk2A = 0;
+		arg1->unk28 = 0;
+		arg1->unk26 = -arg1->unkA >> 1;
+		arg1->unk24 = -arg1->unk8 >> 1;
+		arg1->unk22 = (s16)(s32)((f64)arg1->unk22 * D_80144AC0);
+	}
+}
 
 void func_80103DD0_112D80(void) {
 	s16 temp_v1;

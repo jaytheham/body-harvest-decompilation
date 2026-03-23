@@ -89,7 +89,30 @@ void func_80139460_148410(void) {
 	D_801601D8 = -1;
 }
 
+// https://decomp.me/scratch/TODO
+// Score 210: D_801601E8 &= ~bit generates lui at; sw imm(at) instead of sw 0(s2).
+// Compound &= produces correct register ordering (nor t0 before lw t9) but wrong store address.
+#ifdef NON_MATCHING
+void func_801394DC_14848C(void) {
+    s32 bit;
+    s32 i;
+
+    for (i = 2; i != 0xB; i++) {
+        bit = 1 << i;
+        if (bit & D_801601E8) {
+            func_801391DC_14818C(i, 0);
+            D_801601E8 &= ~bit;
+        }
+    }
+    if (currentLevel == LEVEL_COMET) {
+        D_80048140[3] = 0x64;
+        D_80048140[4] = 0x190;
+        D_80048140[6] = 0x18;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801394DC_14848C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013958C_14853C.s")
 
@@ -331,7 +354,43 @@ void func_8013B30C_14A2BC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B384_14A334.s")
 
+#ifdef NON_MATCHING
+s32 func_8013B480_14A430(s16 arg0) {
+	u8 temp_v0;
+
+	if (arg0 == 1) {
+		return 0;
+	}
+	temp_v0 = D_80052B34->unk1A;
+	if (temp_v0 == 0) {
+		return arg0 < 0xB;
+	}
+	if (temp_v0 == 0x13) {
+		if ((arg0 < 0xD) ^ 1) {
+			return arg0 < 0x14;
+		}
+		return 0;
+	}
+	{
+		s32 var_v0;
+
+		if (D_80257A4C[temp_v0].unk0 & 0x04000000) {
+			var_v0 = (arg0 < 6);
+			if (var_v0 == 0) {
+				return (arg0 == 0xB);
+			}
+			return var_v0;
+		}
+		var_v0 = (arg0 == 0xB);
+		if (var_v0 == 0) {
+			var_v0 = (arg0 == 0xC);
+		}
+		return var_v0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B480_14A430.s")
+#endif
 
 s32 func_8013B534_14A4E4(void) {
 	s32 temp_v0;

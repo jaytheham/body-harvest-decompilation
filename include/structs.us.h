@@ -43,6 +43,11 @@ typedef struct {
 } Unk80050ADA; /* size = 0x18 */
 
 typedef struct {
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ u8 pad04[0x64];
+} Unk8025669C; /* size = 0x68 */
+
+typedef struct {
 	/* 0x00 */ u16 button;
 	/* 0x02 */ s8 stick_x;
 	/* 0x03 */ s8 stick_y;
@@ -115,7 +120,11 @@ typedef struct {
 	/* 0x1E */ u8 pad1E[2];
 	/* 0x20 */ u16 unk20; // Bit flags
 	/* 0x22 */ s16 unk22;
-	/* 0x24 */ u8 pad24[0xA];
+	/* 0x24 */ s16 unk24;
+	/* 0x26 */ s16 unk26;
+	/* 0x28 */ s16 unk28;
+	/* 0x2A */ s16 unk2A;
+	/* 0x2C */ u8 pad2C[2];
 	/* 0x2E */ s16 unk2E;
 	/* 0x30 */ f32 unk30; // "Inc" X
 	/* 0x34 */ f32 unk34; // "Inc" Y

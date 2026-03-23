@@ -92,7 +92,25 @@ s32 func_800745F0_835A0(void) {
 	return D_80149B40++ & 0xFF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007463C_835EC.s")
+void func_8007463C_835EC(void) {
+    u8 *entry;
+
+    entry = D_801497C8 + D_80149B30 * 3;
+    if (++D_80149B30 >= 0xFE) {
+        osSyncPrintf(D_801411F0);
+        D_80149B4A = 1;
+    }
+    entry[0] = func_80074500_834B0();
+    entry[1] = func_8007452C_834DC();
+    if (entry[0] == 0x9E) {
+        if (func_80074558_83508() == 0xB4) {
+            func_80074500_834B0();
+            entry[2] = func_800745F0_835A0();
+        }
+    } else {
+        entry[2] = 0;
+    }
+}
 
 void func_800746F8_836A8(void) {
 	u8 *temp_a1;
@@ -241,7 +259,27 @@ void func_800762A8_85258(void (*callback))
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800762A8_85258.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800762E0_85290(void) {
+    s32 *ptr154 = &D_8004D154;
+    s32 *ptr150 = &D_8004D150;
+    {
+        u8 *entry = &D_801497BA;
+        s32 i = 0x7F;
+        do {
+            if ((entry[0] == 2) && (func_80076208_851B8(entry[1]) != 0)) {
+                func_800078E4_84E4(entry[1], ptr150);
+                func_800078CC_84CC(entry[1], ptr154);
+                func_80073DC0_82D70(entry[4]);
+            }
+            entry -= 6;
+        } while (i--);
+    }
+    D_80149474 = 0xFF;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800762E0_85290.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80076390_85340(void) {
