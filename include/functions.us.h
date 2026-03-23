@@ -494,6 +494,7 @@ void func_800C1268_D0218(f32 arg0, f32 arg1, f32 arg2);
 void func_800E7C28_F6BD8(void);
 void func_80135F0C_144EBC(void);
 s32 func_8011E6FC_12D6AC(s16 arg0, s16 arg1, s16 *arg2);
+s16 func_8011E788_12D738(s16 arg0, s16 arg1, s16 *arg2, s32 arg3, s32 arg4);
 void func_800E988C_F883C(AlienInstance *arg0, AlienSpec *arg1);
 s16 func_800FADF8_109DA8(s16 arg0);
 void func_800FDC30_10CBE0(s16 arg0);
