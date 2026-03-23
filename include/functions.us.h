@@ -571,6 +571,7 @@ void func_800CFD84_DED34(void);
 void func_800E5538_F44E8(void);
 void func_800D9C98_E8C48(void);
 void func_800D9E38_E8DE8(void);
+void func_800DA3A8_E9358(s16 arg0, s16 arg1);
 void func_800DDDE4_ECD94(u8 arg0, u8 arg1);
 void func_800DDE54_ECE04(u8 arg0, s8 arg1);
 void func_800DDE90_ECE40(u8 arg0, s8 arg1, s8 arg2);

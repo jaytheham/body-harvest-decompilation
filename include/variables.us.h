@@ -164,6 +164,8 @@ extern s32 D_80048194;
 extern AlienInstance alienInstances[]; // 0x80048198
 extern AlienWaveEntry D_8003BCC0[][12];
 extern char D_80142B6C;
+extern char D_80142B7C;
+extern char D_80142BA0;
 extern s32 D_8004D148; // is Snared cheat disabled
 extern s32 D_8004D150;
 extern s32 D_8004D154;
@@ -505,6 +507,8 @@ extern u8 D_801427D8[]; // teleport to:%d
 extern u8 D_80142820[]; // Giving delayed powerup %d
 extern char D_80142D94; /* osSyncPrintf format string - particle pool full warning */
 extern char D_80142ECC;
+extern char D_80142F10;
+extern char D_80143720;
 extern u8 D_80144E20[];
 extern u8 D_80144E2C[];
 extern f64 D_80144F08;
@@ -1170,6 +1174,7 @@ extern char D_80143304;
 extern char D_801436D8;
 extern char D_80143478;
 extern char D_80143814;
+extern char D_80143860;
 extern char D_801437C0;
 extern char D_8014390C;
 extern char D_80143958;
