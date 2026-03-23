@@ -737,7 +737,42 @@ void func_800D7FB4_E6F64(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9294_E8244.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D951C_E84CC.s")
+s16 func_800D951C_E84CC(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7) {
+	s16 temp_v0;
+	s16 temp_a1;
+	s16 temp_arg1;
+	s16 temp_arg2;
+	s16 temp_arg3;
+	s16 temp_arg4;
+	s16 temp_arg5;
+	s16 temp_arg6;
+	s16 temp_arg7;
+	Unk80154318Entry *entry;
+	Unk80154318Entry *linkedEntry;
+
+	temp_v0 = func_800C19D4_D0984(0x14, 1);
+	if (temp_v0 != -3) {
+		temp_arg7 = arg7;
+		temp_arg1 = arg1;
+		temp_arg2 = arg2;
+		temp_arg3 = arg3;
+		temp_arg4 = arg4;
+		temp_arg5 = arg5;
+		entry = &D_80154318[temp_v0];
+		temp_a1 = entry->unk4;
+		*(void **)&entry->unk8 = arg0;
+		*(s32 *)&entry->unkC = temp_arg7;
+		linkedEntry = &D_80154318[temp_a1];
+		temp_arg6 = arg6;
+		linkedEntry->unk8 = temp_arg1;
+		linkedEntry->unkA = temp_arg2;
+		linkedEntry->unkC = temp_arg3;
+		linkedEntry->unkE = temp_arg4;
+		linkedEntry->unk10 = temp_arg5;
+		linkedEntry->unk12 = temp_arg6;
+	}
+	return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D95D0_E8580.s")
 

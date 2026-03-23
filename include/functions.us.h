@@ -296,7 +296,7 @@ void func_800BECF0_CDCA0(void);
 void func_800BED0C_CDCBC(void);
 void func_800BED24_CDCD4(void);
 void func_800BED30_CDCE0(void);
-void func_800D951C_E84CC(void *, s16, s16, s16, s32, s32, s32, s32);
+s16 func_800D951C_E84CC(void *, s16, s16, s16, s16, s16, s16, s16);
 void func_800E0134_EF0E4(void);
 void func_800E0AE0_EFA90(s16, s16, s16, s32);
 void func_800E0D28_EFCD8(s16, s16, s16);
