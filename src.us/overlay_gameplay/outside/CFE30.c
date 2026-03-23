@@ -449,7 +449,23 @@ void func_800CDA98_DCA48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CDB40_DCAF0.s")
+s16 func_800CDB40_DCAF0(s16 arg0, s16 arg1, s16 arg2) {
+	Unk80154318Entry *entry;
+	s16 index;
+
+	index = func_800C17B4_D0764(9, 1);
+	if (index != -3) {
+		entry = &D_80154318[index];
+		entry->unk8 = arg0;
+		entry->unkA = arg1;
+		entry->unkC = arg2;
+		entry->unkE = 0;
+		*((u8 *)&entry->unk10 + 1) = 1;
+		*(u8 *)&entry->unk10 = func_800DDB60_ECB10(arg0, (s16)(arg1 - 0x1E), arg2, 8, 0x19);
+	}
+
+	return index;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CDBF4_DCBA4.s")
 
