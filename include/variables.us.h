@@ -143,6 +143,7 @@ extern u8 D_80048024;
 extern u8 D_80048025;
 extern s32 showDemoText;
 extern u8 weaponSlots[7];
+extern u8 D_8004813F;
 extern s16 D_80048140[];
 extern s16 D_80048156;
 extern s8 D_80048168;

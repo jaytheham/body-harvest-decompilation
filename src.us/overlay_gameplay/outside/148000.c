@@ -43,7 +43,36 @@ s32 func_80139150_148100(u8 arg0, u16 arg1) {
 // guess_giveItem
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801391DC_14818C.s")
 
+#ifdef NON_MATCHING
+void func_801392FC_1482AC(s32 arg0) {
+	s32 i;
+
+	i = 0;
+	for (; i < 7 && arg0 != weaponSlots[i]; i++) {
+	}
+	if (i != 7) {
+		if (i < 7) {
+			s32 cont;
+			u8 *ptr;
+			u8 t;
+
+			ptr = weaponSlots + i + 1;
+			do {
+				t = *ptr;
+				cont = (u32)ptr < (u32)&D_8004813F;
+				ptr++;
+				*(ptr - 2) = t;
+			} while (cont);
+		}
+		weaponSlots[6] = 0;
+		func_8013B5E4_14A594(0);
+		func_8013B004_149FB4();
+		func_80139050_148000();
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801392FC_1482AC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801393A0_148350.s")
 
