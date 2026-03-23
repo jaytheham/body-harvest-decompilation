@@ -43,6 +43,7 @@ s32 func_80139150_148100(u8 arg0, u16 arg1) {
 // guess_giveItem
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801391DC_14818C.s")
 
+// https://decomp.me/scratch/YmlBr
 #ifdef NON_MATCHING
 void func_801392FC_1482AC(s32 arg0) {
 	s32 i;
@@ -330,41 +331,7 @@ void func_8013B30C_14A2BC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B384_14A334.s")
 
-#ifdef NON_MATCHING
-s32 func_8013B480_14A430(s16 arg0) {
-	s32 var_v0;
-	u8 specIndex;
-
-	if (arg0 == 1) {
-		return 0;
-	}
-	specIndex = D_80052B34->unk1A;
-	if (specIndex == 0) {
-		return arg0 < 0xB;
-	}
-	if (specIndex == 0x13) {
-		var_v0 = arg0 >= 0xD;
-		if (var_v0 != 0) {
-			return arg0 < 0x14;
-		}
-		return var_v0;
-	}
-	var_v0 = arg0 == 0xB;
-	if (vehicleSpecs[specIndex].unk4C & 0x04000000) {
-		var_v0 = arg0 < 6;
-		if (var_v0 == 0) {
-			return arg0 == 0xB;
-		}
-		return var_v0;
-	}
-	if (var_v0 == 0) {
-		var_v0 = arg0 == 0xC;
-	}
-	return var_v0;
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B480_14A430.s")
-#endif
 
 s32 func_8013B534_14A4E4(void) {
 	s32 temp_v0;
