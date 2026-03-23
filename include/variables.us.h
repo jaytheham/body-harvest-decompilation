@@ -426,6 +426,7 @@ extern char D_801417F8;
 extern char D_8014180C;
 extern char D_8014183C;
 extern char D_80141868;
+extern char D_801439EC;
 extern char D_8014189C;
 extern char D_801418B8;
 extern char D_801418D4;
