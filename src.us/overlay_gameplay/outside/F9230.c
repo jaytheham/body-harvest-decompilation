@@ -147,7 +147,31 @@ s32 func_800EB9C4_FA974(s32 arg0, Unk80157600 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBA54_FAA04.s")
 
+#ifdef NON_MATCHING
+void func_800EBC94_FAC44(VehicleInstance *arg0, Unk80047588 *arg1) {
+    s16 var_v1;
+    s8 var_v0;
+
+    arg0->unk22 = 0;
+    func_800FB430_10A3E0(arg0, 0);
+    var_v0 = arg1->stick_x;
+    if (var_v0 >= 0x3E) {
+        var_v0 = 0x3D;
+    }
+    if (var_v0 < -0x3D) {
+        var_v0 = -0x3D;
+    }
+    if (currentControllerStates[0].button & 0x10) {
+        var_v1 = (s16)((s32)(var_v0 * var_v0 * var_v0) >> 8);
+    } else {
+        var_v1 = (s16)((s32)(var_v0 * var_v0 * var_v0) >> 8);
+        var_v1 *= 2;
+    }
+    arg0->unkE += var_v1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBC94_FAC44.s")
+#endif
 
 void func_800EBD5C_FAD0C(s32 arg0) {
 	D_80157A28 |= 0x1000;
