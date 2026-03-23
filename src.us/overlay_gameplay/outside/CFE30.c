@@ -374,7 +374,30 @@ s16 func_800CB19C_DA14C(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CBD1C_DACCC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CBDE0_DAD90.s")
+void func_800CBDE0_DAD90(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7) {
+	s16 temp_v0;
+	Unk80154318Entry *entry;
+
+	temp_v0 = func_800C17B4_D0764(5, 1);
+	if (temp_v0 != -3) {
+		entry = &D_80154318[temp_v0];
+		*((u8 *)&entry->unk10 + 1) = 0;
+		*(u8 *)&entry->unk12 = 0;
+		entry->unk14 = arg7;
+		entry->unk2 = arg0;
+		entry->unk8 = arg1;
+		entry->unkA = arg2;
+		entry->unkC = arg3;
+		*(u8 *)&entry->unkE = D_8013DF80.unk0;
+		*((u8 *)&entry->unkE + 1) = D_8013DF80.unk1;
+		*(u8 *)&entry->unk10 = D_8013DF80.unk2;
+		if (arg7 == 0) {
+			*((u8 *)&entry->unk12 + 1) = 0;
+			return;
+		}
+		*((u8 *)&entry->unk12 + 1) = 0x18;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CBE98_DAE48.s")
 

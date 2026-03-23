@@ -359,6 +359,7 @@ extern s8 D_8013D9B0;
 extern s32 D_8013D9B4;
 extern u8 D_8013DAE0; /* particle/effect count */
 extern u8 D_8013DAE4; /* particle/effect free index */
+extern Unk80154082 D_8013DF80;
 extern s32 D_8013FCD0;
 
 extern AlienInstance *D_80140AB0[];
