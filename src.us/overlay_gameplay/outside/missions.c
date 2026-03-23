@@ -166,8 +166,6 @@ void func_800755E0_84590(void)
   D_8004D150 = 0;
 }
 
-s32 func_80076208_851B8(s32 arg0);
-
 void func_8007562C_845DC(void) {
   s32 i;
 
