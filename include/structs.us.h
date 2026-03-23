@@ -43,6 +43,11 @@ typedef struct {
 } Unk80050ADA; /* size = 0x18 */
 
 typedef struct {
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ u8 pad04[0x64];
+} Unk8025669C; /* size = 0x68 */
+
+typedef struct {
 	/* 0x00 */ u16 button;
 	/* 0x02 */ s8 stick_x;
 	/* 0x03 */ s8 stick_y;

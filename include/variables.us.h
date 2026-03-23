@@ -524,7 +524,7 @@ extern char D_80145A70;
 extern char D_80145A8C;
 extern char D_80145AA4;
 extern u8 D_80145BE0[];
-extern s16 D_80145BE2;
+extern Unk80050ADA D_80145BE2[];
 extern Unk80148620 D_80148620[];
 extern s32 D_80148390[];
 extern s16 D_801483A4[];
@@ -744,6 +744,7 @@ extern u32 D_8014D1B8[];
 extern Unk8014F618 D_8014F618;
 
 extern AlienSpec alienSpecs[0x30]; // 80256680
+extern Unk8025669C D_8025669C[];  // 8025669C
 
 extern s32 D_80145BE8[][6];
 extern s16 D_8014EDD8;
