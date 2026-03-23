@@ -143,7 +143,20 @@ void func_800AF390_BE340(Unk80222A78 *arg0) {
 	func_800AE454_BD404(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF3B8_BE368.s")
+void func_800AF3B8_BE368(Unk80222A78 *arg0) {
+	s32 sp1C;
+
+	sp1C = D_80223780[arg0->pad9[0]].padC[2] * 200;
+	if (sp1C != 0) {
+		osSyncPrintf(&D_80142B7C, arg0->pad9[0], sp1C / 20, arg0);
+		arg0->unk0 = 2;
+		arg0->unk4 = sp1C + D_8014F820;
+		arg0->unkC = func_800AF390_BE340;
+		func_800AE454_BD404(arg0);
+		return;
+	}
+	osSyncPrintf(&D_80142BA0, arg0->pad9[0]);
+}
 
 void func_800AF474_BE424(s32 arg0) {}
 void func_800AF47C_BE42C(s32 arg0) {}
