@@ -312,7 +312,31 @@ void func_800AC064_BB014(u8 arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
+void func_800AC0E4_BB094(u8 arg0) {
+	s16 targetIndex;
+	AlienInstance *target;
+	AlienInstance *alien;
+
+	alienInstances[arg0].unk48 = 0;
+	alien = &alienInstances[arg0];
+	targetIndex = alien->unk38;
+	target = &alienInstances[targetIndex];
+	if ((target->unk20 << 0xB) < 0) {
+		alien->unk20 &= ~0x20;
+		alien->unk48 = 0x40;
+		return;
+	}
+	if (alien->unk36 == 0x10) {
+		alien->unk1E = 0;
+		targetIndex = *(volatile s16 *)&alien->unk38;
+		target = &alienInstances[targetIndex];
+	}
+	func_8012B110_13A0C0((s32) alien, 0, (InputStruct_8012B150 *) target);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC0E4_BB094.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC198_BB148.s")
 
