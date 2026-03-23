@@ -735,6 +735,7 @@ void func_800BDAF4_CCAA4(void);
 void func_80070BFC_7FBAC(void);
 void func_80116784_125734(void);
 void func_800702C0_7F270(s16);
+void func_80103760_112710(VehicleInstance *, VehicleInstance *);
 
 /* java/1ED9E0 — additional function declarations */
 void func_8008EF1C_9DECC(u8);
