@@ -978,6 +978,7 @@ extern s16 D_8013B91C[6];
 extern s16 D_8013B928[6];
 extern s16 D_8013B934;
 extern Cheat D_8013B940[21];
+extern s32 D_8013BAC0[][4];
 extern s32 D_8013FD7C;
 extern s16 D_801493A8;
 extern s16 D_801493AA;
