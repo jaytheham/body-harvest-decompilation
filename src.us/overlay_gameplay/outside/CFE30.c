@@ -1029,7 +1029,20 @@ void func_800DA3A8_E9358(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA3A8_E9358.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA450_E9400.s")
+s16 func_800DA450_E9400(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
+    s32 retval;
+    s16 temp_v0;
+
+    retval = func_800D99F4_E89A4(&func_800DA3A8_E9358, 0x7FFF, arg0, arg1, (s32) arg2);
+    temp_v0 = (s16)retval;
+    if (retval != -3) {
+        func_800D9A8C_E8A3C(temp_v0, 0, arg0);
+        func_800D9A8C_E8A3C(temp_v0, 1, arg1);
+        func_800D9A8C_E8A3C(temp_v0, 2, arg2);
+        func_800D9AD4_E8A84(temp_v0, arg3);
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA510_E94C0.s")
 
