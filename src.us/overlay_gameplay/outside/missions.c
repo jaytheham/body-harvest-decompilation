@@ -92,7 +92,25 @@ s32 func_800745F0_835A0(void) {
 	return D_80149B40++ & 0xFF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007463C_835EC.s")
+void func_8007463C_835EC(void) {
+    u8 *entry;
+
+    entry = D_801497C8 + D_80149B30 * 3;
+    if (++D_80149B30 >= 0xFE) {
+        osSyncPrintf(D_801411F0);
+        D_80149B4A = 1;
+    }
+    entry[0] = func_80074500_834B0();
+    entry[1] = func_8007452C_834DC();
+    if (entry[0] == 0x9E) {
+        if (func_80074558_83508() == 0xB4) {
+            func_80074500_834B0();
+            entry[2] = func_800745F0_835A0();
+        }
+    } else {
+        entry[2] = 0;
+    }
+}
 
 void func_800746F8_836A8(void) {
 	u8 *temp_a1;

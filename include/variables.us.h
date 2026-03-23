@@ -420,6 +420,7 @@ extern char D_80141130[];
 extern char D_8014114C[];
 extern char D_80141168[];
 extern char D_80141184[];
+extern char D_801411F0[];
 extern char D_8014121C[];
 extern char D_801417C0; /* osSyncPrintf format string - alien action table full warning */
 extern char D_801417DC;
