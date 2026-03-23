@@ -1,5 +1,13 @@
 ### Phantom `s32 dummy` for correct frame size without named pointer
 
+**Frame size formula** (direct array access, no named pointer, baseline frame 0x20):
+- 1 dummy: 0x20 → 0x28  (logical 0x24 rounds up to 0x28)
+- 2 dummies: 0x20 → 0x28 (logical 0x28, already aligned)
+- 3 dummies: 0x20 → 0x30 (logical 0x2C rounds up to 0x30)
+- 4 dummies: 0x20 → 0x30 (logical 0x30, already aligned)
+
+Use 3 or 4 dummies when the target frame is 0x30 and the baseline is 0x20.
+
 When a function's target frame is 0x28 but without any named pointer locals IDO only generates a 0x20 frame (because only `ra`, `a3`, and one spill need saving), add a phantom `s32 dummy;` local variable:
 
 ```c
