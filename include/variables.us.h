@@ -681,24 +681,26 @@ extern s32 D_801601E8;
 
 extern u8 D_801FEA30[];
 
-extern u8 D_8021EA30[];
-extern u16 D_8021FA30[][0x10];
-extern u8 D_80221A30[][0x40];
+extern u8 D_8021EA30[0x1000]; // Texture map
+extern u16 D_8021FA30[][0x10]; // Terrain objects 0x1f20 total size
+extern u8 D_80221A30[][0x40]; // Terrain object groups 0x1000 total size
+extern u8 D_80260700[0x4000]; // Landscape colors
+extern s32 D_80264700[0x100]; // Landscape palettes
 
-extern u32 D_80222A30[];
+extern u32 D_80222A30[]; // terrain object model pointers
 extern s32 D_80222A70;
-extern Unk80222A78 D_80222A78[0xD0];
+extern Unk80222A78 D_80222A78[0xD0]; // trigger array (does this actually start at 70 or 74?)
 
 extern s32 D_80223778;
 extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 
-// 224680 missions?
+// 80224680 missions
 
-extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
+extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
 
 extern BuildingSpec buildingSpecs[0x20]; // 0x80259090
 extern u8 D_802590A4[];
-extern Unk80259490 D_80259490; // vehicle instances?
+extern Unk80259490 D_80259490; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
 extern u8 D_80259D90[][0x50];
 extern u8 D_80259D92[][0x50];
 extern s16 D_80259D94;
@@ -963,9 +965,9 @@ extern f32 D_8016019C;
 extern f32 D_801601A0;
 extern f32 D_801601A4;
 extern f32 D_801601A8;
-extern s32 D_80258390;
-extern s32 D_80258F90;
-extern u8 D_80258330;
+extern s32 D_80258390; // English sign strings
+extern s32 D_80258F90; // English sign string offsets (actually u16/s16?)
+extern u8 D_80258330; // signposts
 extern s16 D_80047710;
 extern s16 D_80047712;
 extern s16 D_80157580;
@@ -1134,6 +1136,8 @@ extern s8 D_800FB7BE;
 extern s8 D_800FB7C4;
 extern u8 D_800FB7AC;
 extern u8 D_800FB7AD;
+extern u8 D_8006AC10; // english comms strings
+extern u8 D_8006C450; // english comms strings offsets
 extern UnkFB6F8Entry D_800FB6F8[];
 
 extern Unk80154082 D_80154082;
