@@ -573,6 +573,7 @@ extern u8 D_80149452; // cheat input buffer boundary
 extern u8 D_80149459; // cheat input buffer end
 extern s32 D_8014945C;
 extern s32 isCheatingEnabled; // 80149460
+extern s16 D_80149474;
 extern s32 D_80149478[16];
 extern s32 D_801494B4;
 extern u8* D_801494B8;
