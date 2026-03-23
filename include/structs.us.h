@@ -729,7 +729,10 @@ typedef struct {
 	/* 0x410 */ f32 unk410;
 	/* 0x414 */ f32 unk414;
 	/* 0x418 */ f32 unk418;
-	/* 0x41C */ u8 pad41C[0x2C];
+	/* 0x41C */ u8 pad41C[0x4];
+	/* 0x420 */ void *unk420;
+	/* 0x424 */ u8 unk424;
+	/* 0x425 */ u8 pad425[0x23];
 } Unk80157600; /* size = 0x448 */
 
 typedef struct {
