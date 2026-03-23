@@ -1159,7 +1159,15 @@ void func_800E0C8C_EFC3C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E0D28_EFCD8.s")
 
+#ifdef NON_MATCHING
+void func_800E0E9C_EFE4C(s16 arg0, s16 arg1, u16 arg2) {
+	func_800DDB60_ECB10(arg0, (s16) (((s32) arg2 / 2) + D_80222A70), arg1, 0, (s32) arg2);
+	func_800DEF2C_EDEDC(arg0, (s16) (D_80222A70 + 4), arg1, 0x64, 2);
+	func_801372B4_146264(arg0, (s16) (D_80222A70 + 4), arg1, 1);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E0E9C_EFE4C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E0F4C_EFEFC.s")
 
