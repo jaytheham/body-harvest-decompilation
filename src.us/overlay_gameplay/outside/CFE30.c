@@ -679,7 +679,23 @@ void func_800D5588_E4538(s16 arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D55C0_E4570.s")
+void func_800D55C0_E4570(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	Unk80154318Entry *entry;
+
+	if (arg0 != -3) {
+		entry = &D_80154318[arg0];
+		if (entry->unk0 & 1) {
+			entry->unkE = (u8)(arg1 - entry->unk8);
+			entry->unkF = (u8)(arg2 - entry->unkA);
+			entry->unk10 = (u8)(arg3 - entry->unkC);
+			entry->unk8 = arg1;
+			entry->unkA = arg2;
+			entry->unkC = arg3;
+			return;
+		}
+	}
+	osSyncPrintf(&D_80143860, arg1, arg2, arg3);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5684_E4634.s")
 
