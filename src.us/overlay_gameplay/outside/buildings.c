@@ -483,7 +483,39 @@ void func_8011C680_12B630(u8 arg0, s8 arg1) {
 	alienInstances[arg0].unk3D = arg1;
 }
 
+#ifdef NON_MATCHING
+void func_8011C6A8_12B658(u8 arg0) {
+	AlienInstance *alien;
+	s32 index;
+	s16 *ptr;
+	s8 unk3D;
+	s32 temp_unk20;
+
+	alien = &alienInstances[arg0];
+	unk3D = alien->unk3D;
+	index = unk3D * 16;
+	ptr = (s16 *)(D_80146688 + (currentLevel * 512 + index - 512));
+
+	if (alien->unk24 != 1) {
+		if (index != -16) {
+			ptr[5]--;
+			if ((alien->unk20 << 11) < 0) {
+				if (ptr[6] != 0) {
+					ptr[6]--;
+				}
+			}
+		} else {
+			temp_unk20 = alien->unk20;
+			D_8015EA18--;
+			if ((temp_unk20 << 11) < 0) {
+				D_8015EA1C--;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C6A8_12B658.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C770_12B720.s")
 
