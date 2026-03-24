@@ -912,7 +912,7 @@ typedef struct {
 	/* 0x05 */ u8 pad5[1];
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s16 unk8;
-	/* 0x0A */ u8 padA[2];
+	/* 0x0A */ s16 unkA;
 } Unk801541F8Entry; /* stride = 0xC Special Effect */
 
 typedef struct {
