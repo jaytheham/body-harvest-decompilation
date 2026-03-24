@@ -1522,7 +1522,43 @@ void func_800E35E0_F2590(u8 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E52E8_F4298.s")
 
+#ifdef NON_MATCHING
+void func_800E5450_F4400(s32 arg0, s32 arg1) {
+	u8 i;
+	u8 slot;
+	u8 minValue;
+	u8 minSlot;
+	s16 temp;
+	Unk80152B80 *entry;
+	
+	slot = 0x40;
+	for (i = 0; i < 0x40; i++) {
+		if (D_80152D00[i].unk0 == 0) {
+			slot = i;
+			break;
+		}
+	}
+	
+	if (slot == 0x40) {
+		minValue = D_8013DD1A;
+		for (i = 0; i < 0x40; i++) {
+			temp = D_80152D00[i].unk2;
+			if (minValue >= temp) {
+				minSlot = i;
+				minValue = temp;
+			}
+		}
+		slot = minSlot;
+	}
+	
+	entry = &D_80152D00[slot];
+	entry->unk2 = 10;
+	*(s32 *)&entry->unk8 = arg0;
+	entry->unk0 = 2;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5450_F4400.s")
+#endif
 
 void func_800E5520_F44D0(s32 arg0, s32 arg1) {
 }
