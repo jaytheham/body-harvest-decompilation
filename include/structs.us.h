@@ -900,15 +900,15 @@ typedef struct {
 } Unk80154318Entry; /* stride = 0x1C */
 
 typedef struct {
-	/* 0x00 */ u8 unk0;
+	/* 0x00 */ u8 unk0; // type
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ u8 pad2[2];
-	/* 0x04 */ u8 unk4;
+	/* 0x04 */ u8 unk4; // numUnits
 	/* 0x05 */ u8 pad5[1];
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ u8 padA[2];
-} Unk801541F8Entry; /* stride = 0xC */
+} Unk801541F8Entry; /* stride = 0xC Special Effect */
 
 typedef struct {
 	/* 0x00 */ u8 unk0;

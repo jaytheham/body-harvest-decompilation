@@ -77,7 +77,7 @@ void func_800C1268_D0218(f32 arg0, f32 arg1, f32 arg2) { D_80153BA0.x = arg0; D_
 
 void func_800C1384_D0334(u8 arg0) {
 	if (D_80154088[arg0].unk0 == 0xFA) {
-		osSyncPrintf(&D_80142ECC);
+		osSyncPrintf(&D_80142ECC); // EFFECTS WARNING : Call to free up an effect which does not exist
 		return;
 	}
 	D_80154088[arg0].unk0 = 0xFA;
@@ -98,7 +98,7 @@ void func_800C1418_D03C8(u8 arg0, s32 arg1) {
 		entry = &D_80154088[arg0];
 	}
 	if (entry->unk0 == 0xFA) {
-		osSyncPrintf(&D_80142F10);
+		osSyncPrintf(&D_80142F10); // ERROR : freeing all effect units for unused effect
 		return;
 	}
 	while (entry->unk4 > 0) {
@@ -109,7 +109,36 @@ void func_800C1418_D03C8(u8 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1418_D03C8.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C14D4_D0484.s")
+u8 func_800C14D4_D0484(u8 arg0) {
+	u8 temp_slot;
+	u8 result_slot;
+	s32 temp;
+
+	if ((gameplayMode == 2) || (gameplayMode == 9)) {
+		osSyncPrintf(&D_80142F44); // Do not allocate because in pause
+	}
+	
+	if (arg0 >= 0xA) {
+		temp = 1;
+	} else {
+		temp = 0;
+	}
+	
+	if (temp != 0) {
+		osSyncPrintf(&D_80142F68, arg0); // ERROR: tried to allocate a permanent effect
+		return 0xFB;
+	}
+	
+	if (D_80154304 >= 0x1E) {
+		osSyncPrintf(&D_80142F98, arg0); // WARNING : Out of space to create a new dynamic effect of type %d
+		temp_slot = 0xFB;
+	} else {
+		temp_slot = D_8015430C;
+		func_800C1288_D0238(temp_slot, arg0, 0);
+	}
+	result_slot = temp_slot;
+	return result_slot;
+}
 
 void func_800C1598_D0548(u8 arg0) {
 	func_800C14D4_D0484(arg0);
@@ -154,7 +183,7 @@ void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2) {
 		func_800C1A4C_D09FC(sp1E, sp27, arg2);
 		return;
 	}
-	osSyncPrintf(&D_80143304);
+	osSyncPrintf(&D_80143304); // EFFECTS WARNING : Call to free up invalid double effect unit
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1E24_D0DD4.s")
@@ -210,7 +239,7 @@ void func_800C2554_D1504(s16 arg0, u8 arg1) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_80143390);
+	osSyncPrintf(&D_80143390); // DYNAMIC EFFECTS : Tried to kill smoke puff unit which does not exist!
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C2554_D1504.s")
@@ -228,7 +257,7 @@ void func_800C2554_D1504(s16 arg0, u8 arg1) {
 
 void func_800C3288_D2238(u8 arg0) {
 	if (arg0 >= 0x1E || D_80154088[arg0].unk0 != 1) {
-		osSyncPrintf(&D_80143478);
+		osSyncPrintf(&D_80143478); // DYNAMIC EFFECTS : Tried to kill photon effect which does not exist!
 		return;
 	}
 	func_800C1418_D03C8(arg0, 0);
@@ -253,7 +282,7 @@ void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_801434C0);
+	osSyncPrintf(&D_801434C0); // EFFECTS WARNING : Call to move a fire effect which doesn't exist
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3D88_D2D38.s")
@@ -467,7 +496,7 @@ void func_800CD2E8_DC298(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_801436D8);
+	osSyncPrintf(&D_801436D8); // ** WARNING: tried to update a jet stream effect that doesn't exist! **
 }
 
 void func_800CD390_DC340(u8 arg0) {
@@ -543,7 +572,7 @@ u8 func_800CE040_DCFF0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 	if (sp1F != 0xFB) {
 		temp_v0 = func_800C18D0_D0880(sp1F);
 		if (temp_v0 == -3) {
-			osSyncPrintf(&D_80143720, sp1F);
+			osSyncPrintf(&D_80143720, sp1F); // EFFECTS WARNING: Failed to create a water jet - could not allocate any units
 			func_800C1384_D0334(sp1F);
 			return 0xFBU;
 		}
@@ -652,7 +681,7 @@ void func_800D1A1C_E09CC(u8 arg0) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_801437C0);
+	osSyncPrintf(&D_801437C0); // EFFECTS WARNING : You have tried to kill a lightning effect which doesn't exist
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D1A94_E0A44.s")
@@ -740,10 +769,24 @@ void func_800D4AB0_E3A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_80143814);
+	osSyncPrintf(&D_80143814); // ** WARNING: tried to update a ring weapon bullet that doesn't exist! **
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D4B44_E3AF4.s")
+void func_800D4B44_E3AF4(void) {
+	s16 index;
+
+	index = D_801542B2;
+	if (index == -5 || index == -6) {
+		func_800C1418_D03C8(0xF, 1);
+		return;
+	}
+	
+	while (index != -5 && index != -6) {
+		D_80154318[index].unk14++;
+		func_80137368_146318(D_80154318[index].unk8, D_80154318[index].unkA, D_80154318[index].unkC, 0xC, index);
+		index = D_80154318[index].unk4;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D4C10_E3BC0.s")
 
@@ -770,7 +813,7 @@ void func_800D55C0_E4570(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_80143860, arg1, arg2, arg3);
+	osSyncPrintf(&D_80143860, arg1, arg2, arg3); // ** WARNING: tried to update a triple spinner that doesn't exist! **
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5684_E4634.s")
@@ -867,7 +910,7 @@ void func_800D76F4_E66A4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 *temp_v0;
 
 	if ((arg3 == -3) || (temp_v1 = (u8 *)&D_80154318[arg3], temp_v0 = (s16 *)(temp_v1 + 8), ((*temp_v1 & 1) == 0))) {
-		osSyncPrintf(&D_80143958, arg1, arg2);
+		osSyncPrintf(&D_80143958, arg1, arg2); // DYNAMIC EFFECTS : Tried to update mini photon effect which does not exist!
 		return;
 	}
 	temp_v0[0] = arg0;
@@ -903,7 +946,7 @@ s16 func_800D7EF8_E6EA8(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 void func_800D7FB4_E6F64(s16 arg0) {
 	if (arg0 == -3) {
-		osSyncPrintf(&D_801439A4);
+		osSyncPrintf(&D_801439A4); // DYNAMIC EFFECTS : Tried to kill fire ball effect which does not exist!
 		return;
 	}
 	func_800C1A4C_D09FC(arg0, 0x12, 1);
@@ -916,7 +959,7 @@ void func_800D8000_E6FB0(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 *temp_v1;
 
 	if ((arg3 == -3) || (temp_a0 = (u8 *)&D_80154318[arg3], temp_v0 = (s16 *)(temp_a0 + 8), ((*temp_a0 & 1) == 0))) {
-		osSyncPrintf(&D_801439EC);
+		osSyncPrintf(&D_801439EC); // DYNAMIC EFFECTS : Tried to update fire ball effect which does not exist!
 		return;
 	}
 
@@ -1015,7 +1058,7 @@ s32 func_800D99F4_E89A4(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 temp_v0;
 	Unk80154318Entry *temp_v1;
 
-	osSyncPrintf(&D_80143A38);
+	osSyncPrintf(&D_80143A38); // Create group effect
 	temp_v0 = func_800C19D4_D0984(0x15, 1);
 	if (temp_v0 != -3) {
 		temp_v1 = &D_80154318[temp_v0];
@@ -1271,7 +1314,22 @@ void func_800DE9B8_ED968(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	func_800DDB60_ECB10(arg0, arg1, arg2, 1, (s32) arg3);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DEA08_ED9B8.s")
+void func_800DEA08_ED9B8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10) {
+	u8 slot;
+	UnkFC8E8Entry *entry;
+
+	slot = func_800DDB60_ECB10(arg0, arg1, arg2, 3, (s32) arg3);
+	if (slot != 0xFF) {
+		entry = &D_80156EF0[slot];
+		entry->unkD = arg7;
+		entry->unk12 = (s8) ((s32) arg7 / (s32) arg6);
+		entry->unk6 = arg8;
+		entry->unk7 = arg9;
+		entry->unk8 = arg10;
+		entry->unk10 = arg4;
+		entry->unk11 = arg5;
+	}
+}
 
 #ifdef NON_MATCHING
 void func_800DEADC_EDA8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
@@ -1353,9 +1411,10 @@ void func_800E00F4_EF0A4(u8 arg0, u8 arg1) {
 void func_800E03FC_EF3AC(void) {
 	u8 i;
 
-	osSyncPrintf(&D_80143ED0);
+	osSyncPrintf(&D_80143ED0); // DUMP SPECIAL EFFECTS INFO
 	for (i = 0; i < 0x1E; i++) {
 		if (D_80154088[i].unk0 != 0xFA) {
+			// Effect %d :  Type %d  numUints %d
 			osSyncPrintf(&D_80143EF0, i, D_80154088[i].unk0, D_80154088[i].unk4);
 		}
 	}
@@ -1485,7 +1544,7 @@ void func_800E552C_F44DC(void) {
 void func_800E6028_F4FD8(u8 arg0, u8 arg1) {
 	s16 i;
 
-	osSyncPrintf(&D_80143FA4, (s32) arg1);
+	osSyncPrintf(&D_80143FA4, (s32) arg1); // removing shield : %d
 	for (i = 0; i < D_80152C96; i++) {
 		if ((arg0 == D_80152CA0[i].unk1) && (arg1 == D_80152CA0[i].unk0)) {
 			D_80152CA0[i].unk2 = 0x64;
