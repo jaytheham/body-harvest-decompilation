@@ -75,7 +75,18 @@ void func_801392FC_1482AC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801392FC_1482AC.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801393A0_148350.s")
+s32 func_801393A0_148350(s32 arg0) {
+	s32 i;
+	if (arg0 == 1) {
+		return 0;
+	}
+	for (i = 0; i < 7; i++) {
+		if (arg0 == weaponSlots[i]) {
+			return i + 1;
+		}
+	}
+	return 0;
+}
 
 void func_80139460_148410(void) {
 	s32 i;
