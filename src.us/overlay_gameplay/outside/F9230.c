@@ -135,8 +135,8 @@ s32 func_800EB9C4_FA974(s32 arg0, Unk80157600 *arg1) {
 	temp_v0 = &D_8013E45C[arg0];
 	temp_v1 = temp_v0->unkC;
 	if (((arg1->unk298 == temp_v1) && (arg1->unk29C == temp_v0->unk10)) ||
-	    ((temp_f0 = temp_v0->unk10, (-1.0f == temp_f0)) && (temp_v1 < arg1->unk298)) ||
-	    ((-1.0f == temp_f0) && (temp_v1 == -1))) {
+		((temp_f0 = temp_v0->unk10, (-1.0f == temp_f0)) && (temp_v1 < arg1->unk298)) ||
+		((-1.0f == temp_f0) && (temp_v1 == -1))) {
 		return 1;
 	}
 	return 0;
@@ -149,25 +149,25 @@ s32 func_800EB9C4_FA974(s32 arg0, Unk80157600 *arg1) {
 
 #ifdef NON_MATCHING
 void func_800EBC94_FAC44(VehicleInstance *arg0, Unk80047588 *arg1) {
-    s16 var_v1;
-    s8 var_v0;
+	s16 var_v1;
+	s8 var_v0;
 
-    arg0->unk22 = 0;
-    func_800FB430_10A3E0(arg0, 0);
-    var_v0 = arg1->stick_x;
-    if (var_v0 >= 0x3E) {
-        var_v0 = 0x3D;
-    }
-    if (var_v0 < -0x3D) {
-        var_v0 = -0x3D;
-    }
-    if (currentControllerStates[0].button & 0x10) {
-        var_v1 = (s16)((s32)(var_v0 * var_v0 * var_v0) >> 8);
-    } else {
-        var_v1 = (s16)((s32)(var_v0 * var_v0 * var_v0) >> 8);
-        var_v1 *= 2;
-    }
-    arg0->unkE += var_v1;
+	arg0->unk22 = 0;
+	func_800FB430_10A3E0(arg0, 0);
+	var_v0 = arg1->stick_x;
+	if (var_v0 >= 0x3E) {
+		var_v0 = 0x3D;
+	}
+	if (var_v0 < -0x3D) {
+		var_v0 = -0x3D;
+	}
+	if (currentControllerStates[0].button & 0x10) {
+		var_v1 = (s16)((s32)(var_v0 * var_v0 * var_v0) >> 8);
+	} else {
+		var_v1 = (s16)((s32)(var_v0 * var_v0 * var_v0) >> 8);
+		var_v1 *= 2;
+	}
+	arg0->unkE += var_v1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBC94_FAC44.s")
@@ -276,17 +276,17 @@ s32 func_800EF0B0_FE060(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF9F0_FE9A0.s")
 
 void func_800EFC28_FEBD8(u8 arg0) {
-    s16 idx;
-    AlienInstance *alien;
+	s16 idx;
+	AlienInstance *alien;
 
-    idx = func_8007956C_8851C(0x12);
-    alien = &alienInstances[idx];
-    alien->unk0 = D_80052B34->unk0;
-    alien->unk4 = D_80052B34->unk4 + 0x50;
-    if (arg0 == 0) {
-        alienSpecs[arg0].unk0 = (s32)&D_5040770;
-        alien->unk24 = 0x10;
-    }
+	idx = func_8007956C_8851C(0x12);
+	alien = &alienInstances[idx];
+	alien->unk0 = D_80052B34->unk0;
+	alien->unk4 = D_80052B34->unk4 + 0x50;
+	if (arg0 == 0) {
+		alienSpecs[arg0].unk0 = (s32)&D_5040770;
+		alien->unk24 = 0x10;
+	}
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFCC0_FEC70.s")
@@ -418,19 +418,19 @@ s32 func_800F41E0_103190(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F4DB0_103D60.s")
 
 void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
-    f32 x = arg0->x;
-    f32 lenSq = (arg0->z * arg0->z) + (x * x + arg0->y * arg0->y);
+	f32 x = arg0->x;
+	f32 lenSq = (arg0->z * arg0->z) + (x * x + arg0->y * arg0->y);
 
-    if (lenSq == 0.0f) {
-        arg1->x = x;
-        arg1->y = arg0->y;
-        arg1->z = arg0->z;
-    } else {
-        f32 len = sqrtf(lenSq);
-        arg1->x = arg0->x / len;
-        arg1->y = arg0->y / len;
-        arg1->z = arg0->z / len;
-    }
+	if (lenSq == 0.0f) {
+		arg1->x = x;
+		arg1->y = arg0->y;
+		arg1->z = arg0->z;
+	} else {
+		f32 len = sqrtf(lenSq);
+		arg1->x = arg0->x / len;
+		arg1->y = arg0->y / len;
+		arg1->z = arg0->z / len;
+	}
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F554C_1044FC.s")
@@ -446,7 +446,19 @@ void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F9118_1080C8.s")
 
 // DrawLegsShadows ?
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F97FC_1087AC.s")
+void func_800F97FC_1087AC(void) {
+	s32 i;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PASS2);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+
+	for (i = 0; i < 8; i++) {
+		func_800F9118_1080C8(i);
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+}
 
 // drawLegs
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F98C0_108870.s")
@@ -577,18 +589,18 @@ s16 func_800F9FAC_108F5C(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FAB9C_109B4C.s")
 
 void func_800FAC90_109C40(void) {
-    VehicleInstance *var_s0;
-    VehicleInstance *end;
+	VehicleInstance *var_s0;
+	VehicleInstance *end;
 
-    var_s0 = vehicleInstances, end = (VehicleInstance *)&D_80050AD0;
-    do {
-        if (func_800B0D10_BFCC0(var_s0->unk0, var_s0->unk4, 0) != 0) {
-            var_s0->unk20 = var_s0->unk20 & ~0x40;
-        } else {
-            var_s0->unk20 = var_s0->unk20 | 0x40;
-        }
-        var_s0++;
-    } while (var_s0 != end);
+	var_s0 = vehicleInstances, end = (VehicleInstance *)&D_80050AD0;
+	do {
+		if (func_800B0D10_BFCC0(var_s0->unk0, var_s0->unk4, 0) != 0) {
+			var_s0->unk20 = var_s0->unk20 & ~0x40;
+		} else {
+			var_s0->unk20 = var_s0->unk20 | 0x40;
+		}
+		var_s0++;
+	} while (var_s0 != end);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FAD10_109CC0.s")
