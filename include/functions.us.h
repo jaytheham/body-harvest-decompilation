@@ -447,6 +447,7 @@ void func_800AF494_BE444(s32 arg0);
 void func_800AF49C_BE44C(s32 arg0);
 void func_800AFFE8_BEF98(s32 arg0);
 void func_800AFFF0_BEFA0(s32 arg0);
+void func_800FDD8C_10CD3C(VehicleInstance *arg0);
 void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1);
 void func_800959DC_A498C(void);
 void func_800EA298_F9248(s16 arg0);
