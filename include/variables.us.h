@@ -490,6 +490,7 @@ extern f64 D_80141E50;
 extern f32 D_80141E58;
 extern char D_80141E80;
 extern f64 D_80141EE0;
+extern u8 D_80140AA4[];
 extern Struct_80140D00 D_80140D00;
 extern Struct_80140D10 D_80140D10;
 extern s16 D_80140D40[];
