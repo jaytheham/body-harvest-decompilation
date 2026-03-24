@@ -420,4 +420,15 @@ void func_800AE1C0_BD170(void) {
 	D_8004816E += 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AE1EC_BD19C.s")
+void func_800AE1EC_BD19C(void) {
+	s16 i;
+
+	for (i = 0; i < D_8014D507; i++) {
+		s32 idx = D_8014D408[i];
+		if (alienInstances[idx].unk24 == 0) {
+			func_800AD814_BC7C4(idx, 1, 0, 0);
+		} else if (alienInstances[idx].unk24 == 3) {
+			alienInstances[idx].unk24 = 0x1D;
+		}
+	}
+}

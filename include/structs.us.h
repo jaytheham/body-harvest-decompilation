@@ -400,10 +400,15 @@ typedef struct {
 	/* 0x04 */ s16 zCoord;
 	/* 0x06 */ u8 buildingType;
 	/* 0x07 */ u8 unk7;
-	/* 0x08 */ u8 isDestroyable;
-	/* 0x09 */ u8 unk9;
-	/* 0x0A */ u8 state;
-	/* 0x0B */ u8 rotation;
+	union {
+		struct {
+			/* 0x08 */ u8 isDestroyable;
+			/* 0x09 */ u8 unk9;
+			/* 0x0A */ u8 state;
+			/* 0x0B */ u8 rotation;
+		};
+		/* 0x08 */ u32 unk8;
+	};
 	/* 0x0C */ u8 padC[3];
 	/* 0x0F */ u8 hitPoints;
 	/* 0x10 */ u8 unk10;
