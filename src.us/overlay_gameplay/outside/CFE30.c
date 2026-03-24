@@ -1548,7 +1548,27 @@ void func_800E72A0_F6250(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7338_F62E8.s")
 
+#ifdef NON_MATCHING
+void func_800E74DC_F648C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
+    s32 temp_lo;
+    u8 var_v1;
+
+    D_80157532 = arg3;
+    var_v1 = arg3;
+    if (arg4 < arg3) {
+        var_v1 = arg4;
+    }
+    temp_lo = arg4 / var_v1;
+    D_80157533 = temp_lo;
+    D_80157534 = temp_lo;
+    D_80157536 = arg0;
+    D_80157538 = arg1;
+    D_8015753A = arg2;
+    D_8015753C = arg5;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E74DC_F648C.s")
+#endif
 
 void func_800E75A0_F6550(s16 arg0, s16 arg1, s16 arg2) {
     if (currentLevel == LEVEL_GREECE || currentLevel == LEVEL_AMERICA) {
