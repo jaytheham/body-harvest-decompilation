@@ -13,7 +13,7 @@
 // https://decomp.me/scratch/aFHOH
 #ifdef NON_MATCHING
 s32 func_800744E0_83490(s32 arg0) {
-	return arg0 >= 0x9C && arg0 < 0xA6;
+	return (arg0 & 0xFF) >= 0x9C && (arg0 & 0xFF) < 0xA6;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800744E0_83490.s")
