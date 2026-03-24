@@ -587,8 +587,54 @@ s32 func_8011D260_12C210(s8 arg0, s8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D2DC_12C28C.s")
 
-// Failed sonnet 4.6
+#ifdef NON_MATCHING
+// Score: 1725 (very close, mostly register allocation differences)
+void func_8011D438_12C3E8(u8 arg0, s32 arg1) {
+    u8 value;
+    u8* ptr;
+    s32 i;
+    s32 count;
+
+    value = arg0 & 0xFF;
+    value += (arg1 != 0 ? 0x80 : 0);
+    value &= 0xFF;
+    
+    count = 8;
+    if (count) {
+        i = 7;
+        ptr = &D_8015EB67;
+        do {
+            if (value == *ptr) {
+                return;
+            }
+            ptr--;
+        } while (i--);
+    }
+    
+    if (D_8015EB6E == value) {
+        return;
+    }
+    
+    count = 8;
+    if (count) {
+        i = 7;
+        ptr = &D_8015EB77;
+        do {
+            if (value == *ptr) {
+                return;
+            }
+            ptr--;
+        } while (i--);
+    }
+    
+    if (D_8015EB6A < 8) {
+        (&D_8015EB70)[D_8015EB6A] = value;
+        D_8015EB6A++;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D438_12C3E8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D4FC_12C4AC.s")
 
