@@ -3,7 +3,7 @@ name: Body Harvest Decomp
 description: Decompile functions from N64 game Body Harvest
 tools:
   [execute/getTerminalOutput, execute/awaitTerminal, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, edit/createFile, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/searchResults, search/textSearch, search/usages, todo]
-model: Gemini 3.1 Pro (Preview) (copilot)
+model: GPT-5.3-Codex (copilot)
 ---
 
 ## Overview

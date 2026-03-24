@@ -26,17 +26,17 @@ s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011629C_12524C.s")
 
 Unk800522C0 *func_801164C4_125474(s16 arg0, s16 arg1) {
-    s32 i;
+	s32 i;
 
-    i = 0x20;
-    while (i--) {
-        if (D_800522C0[i].unk13 != 0 && D_800522C0[i].unkC == buildingInstances[arg0].buildingType) {
-            if (arg1-- == 0) {
-                return &D_800522C0[i];
-            }
-        }
-    }
-    return NULL;
+	i = 0x20;
+	while (i--) {
+		if (D_800522C0[i].unk13 != 0 && D_800522C0[i].unkC == buildingInstances[arg0].buildingType) {
+			if (arg1-- == 0) {
+				return &D_800522C0[i];
+			}
+		}
+	}
+	return NULL;
 }
 
 #ifdef NON_MATCHING
@@ -505,39 +505,7 @@ s32 func_8011CC20_12BBD0(u16 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D030_12BFE0.s")
 
-#ifdef NON_MATCHING
-s32 func_8011D19C_12C14C(s8 arg0, s8 arg1) {
-    u16 sp2C;
-    s32 sp20;
-    s32 sp1C;
-    u32 var_v1;
-    s32 var_a0;
-    u8 temp_a1;
-    s32 temp_t6 = arg0;
-    s32 temp_t7 = arg1;
-
-    sp1C = temp_t7 & 0xFF;
-    sp20 = temp_t6 & 0xFF;
-    sp2C = func_8011CC20_12BBD0(sp20, sp1C);
-    var_v1 = func_8011CBD8_12BB88(sp20, sp1C);
-    var_a0 = 0x17;
-
-    while (1) {
-        temp_a1 = D_8015D0B0[var_v1];
-        if (temp_a1 == 0xFF) {
-            return -1;
-        }
-        if (sp2C == D_80159DE8[var_v1]) {
-            return temp_a1;
-        }
-        var_v1 = (var_a0 + var_v1) % 6500;
-        var_a0++;
-    }
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D19C_12C14C.s")
-#endif
-
 
 s32 func_8011D260_12C210(s8 arg0, s8 arg1) {
 	s32 temp_v0;
