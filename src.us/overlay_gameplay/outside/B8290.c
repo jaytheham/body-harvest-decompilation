@@ -200,7 +200,21 @@ void func_800AB700_BA6B0(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB730_BA6E0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB80C_BA7BC.s")
+void func_800AB80C_BA7BC(u8 arg0) {
+	s32 dummy1, dummy2, dummy3, dummy4;
+	alienInstances[arg0].unk48 = 0xC0;
+	if (alienInstances[arg0].unk24 == 0xD && D_80052B34->unk1A != 0) {
+		alienInstances[arg0].unk20 &= 0xFFFDFFFF;
+		alienInstances[arg0].unk24 = 0x15;
+		return;
+	}
+	if (func_80080840_8F7F0(arg0, 0x23) != 0) {
+		alienInstances[arg0].unk48 = 0;
+		alienInstances[arg0].unk24++;
+		alienInstances[arg0].unk36 = 0;
+		alienInstances[arg0].unk20 &= 0xFFFDFFFF;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB8CC_BA87C.s")
 

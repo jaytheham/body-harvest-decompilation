@@ -262,7 +262,30 @@ s32 func_801184F4_1274A4(BuildingInstance *building) {
 	return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011853C_1274EC.s")
+s32 func_8011853C_1274EC(BuildingInstance *arg0, s16 arg1) {
+	if (arg0 != NULL) {
+		if (func_801184F4_1274A4(arg0) != 0) {
+			s32 lo;
+			if (arg1 - 0x4B0 < -0x8000) {
+				lo = -0x8000;
+			} else {
+				lo = arg1 - 0x4B0;
+			}
+			if (arg0->xCoord >= lo) {
+				if (arg0->xCoord < ((arg1 + 0x15B0) >= 0x8001 ? (s32)0x8000 : (s32)(arg1 + 0x15B0))) {
+					return 1;
+				}
+			}
+		} else {
+			if (arg0->xCoord >= arg1) {
+				if (arg0->xCoord < arg1 + 0x1100) {
+					return 1;
+				}
+			}
+		}
+	}
+	return 0;
+}
 
 s32 func_801185F8_1275A8(BuildingInstance *arg0, s16 arg1) {
 	s32 buildingIndex;

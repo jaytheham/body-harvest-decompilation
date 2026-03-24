@@ -1550,7 +1550,15 @@ void func_800E72A0_F6250(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E74DC_F648C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E75A0_F6550.s")
+void func_800E75A0_F6550(s16 arg0, s16 arg1, s16 arg2) {
+    if (currentLevel == LEVEL_GREECE || currentLevel == LEVEL_AMERICA) {
+        func_800DEADC_EDA8C(arg0, (s16)(func_800B84D0_C7480(arg0, arg1) >> 8), arg1, arg2);
+        return;
+    }
+    if (currentLevel == LEVEL_JAVA) {
+        func_800C9530_D84E0(arg0, arg1, 0xF, 0x96, 0x96, 0xC8, (arg2 / 4) + 0x3C);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7660_F6610.s")
 
