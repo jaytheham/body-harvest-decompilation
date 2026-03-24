@@ -142,11 +142,82 @@ void func_80074768_83718(void) {
 // readMissionConditions
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074FA8_83F58.s")
 
+#ifdef NON_MATCHING
+void func_80075148_840F8(void) {
+	s32 count;
+	MissionCondEntry *entry;
+	s16 matchId;
+	
+	count = D_80149B28;
+	if (count != 0) {entry = &D_801494C0[--count], matchId = D_80149B48;do {
+			if (entry->unk1 == matchId && entry->unk0 == 1) {
+				entry->unk4 = (u8)D_80149B30;
+			}
+			entry--;
+		} while (count--);
+	}
+	
+	while (func_800744E0_83490(func_80074558_83508() & 0xFF)) {
+		func_8007463C_835EC();
+	}
+	
+	func_800746F8_836A8();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075148_840F8.s")
+#endif
 
+#ifdef NON_MATCHING
+void func_80075210_841C0(void) {
+	MissionCondEntry *entry;
+	s16 matchId;
+	s32 count;
+	
+	count = D_80149B28;
+	if (count != 0) {
+		matchId = D_80149B48;
+		entry = &D_801494C0[--count];
+		do {
+			if (entry->unk1 == matchId && entry->unk0 == 2) {
+				entry->unk4 = (u8)D_80149B30;
+			}
+			entry--;
+		} while (count--);
+	}
+	
+	while (func_800744E0_83490(func_80074558_83508() & 0xFF)) {
+		func_8007463C_835EC();
+	}
+	
+	func_800746F8_836A8();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075210_841C0.s")
+#endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800752D8_84288.s")
+void func_800752D8_84288(void)
+{
+  MissionCondEntry *entry;
+  s16 matchId;
+  s32 count;
+  count = D_80149B28;
+ if (count--) { entry = &D_801494C0[count], matchId = D_80149B48; do {
+	  if ((entry->unk1 == matchId) && (entry->unk0 == 3))
+	  {
+		entry->unk4 = (u8) D_80149B30;
+	  }
+	  entry--;
+	}
+	while (count--);
+  }
+  while (func_800744E0_83490(func_80074558_83508() & 0xFF))
+  {
+	func_8007463C_835EC();
+  }
+
+  func_800746F8_836A8();
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800753A0_84350.s")
 

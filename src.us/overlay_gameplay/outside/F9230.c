@@ -389,7 +389,27 @@ void func_800F3580_102530(u8 arg0) {
 	D_80158022[arg0 * 0x170] = 0;
 }
 
+#ifdef NON_MATCHING
+void func_800F35AC_10255C(u8 arg0, s16 arg1) {
+	u8 temp_v1;
+	
+	temp_v1 = arg0;
+	
+	if (arg0 >= 9) {
+		osSyncPrintf(&D_80144868);
+	}
+	
+	if (D_80157FF0[arg0] != -1) {
+		osSyncPrintf(&D_80144880);
+	}
+	
+	if (temp_v1 < 8 && D_80157FF0[arg0] == -1) {
+		*(s16*)&D_80158020[arg0 * 0x170] = arg1;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F35AC_10255C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F3670_102620.s")
 
