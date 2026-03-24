@@ -226,15 +226,11 @@ void func_800EFC28_FEBD8(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFCC0_FEC70.s")
 
-#ifdef NON_MATCHING
 void func_800EFE50_FEE00(u8 arg0) {
 	func_800101F0_10DF0(&D_80157E90,
 		(void *)(((s32)&D_3058A40 & 0xFFFFFF) + ((arg0 * 0x78) & 0xFFFF) + (s32)&D_8F4960),
 		0x78);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFE50_FEE00.s")
-#endif
 
 /// Cutscene stuff
 /// 800EFEB4 is called and triggers cutscenes (may need to be followed by 80013468)
