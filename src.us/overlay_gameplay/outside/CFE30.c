@@ -772,7 +772,21 @@ void func_800D4AB0_E3A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	osSyncPrintf(&D_80143814);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D4B44_E3AF4.s")
+void func_800D4B44_E3AF4(void) {
+	s16 index;
+
+	index = D_801542B2;
+	if (index == -5 || index == -6) {
+		func_800C1418_D03C8(0xF, 1);
+		return;
+	}
+	
+	while (index != -5 && index != -6) {
+		D_80154318[index].unk14++;
+		func_80137368_146318(D_80154318[index].unk8, D_80154318[index].unkA, D_80154318[index].unkC, 0xC, index);
+		index = D_80154318[index].unk4;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D4C10_E3BC0.s")
 

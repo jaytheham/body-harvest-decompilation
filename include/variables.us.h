@@ -1170,6 +1170,7 @@ extern u8 D_80154304;
 extern s32 D_80154308;
 extern u8 D_8015430C;
 extern u8 D_8013E344;
+extern s16 D_801542B2;
 extern Unk80154318Entry D_80154318[];
 extern u8 D_80154327;
 extern u8 D_80154328;
