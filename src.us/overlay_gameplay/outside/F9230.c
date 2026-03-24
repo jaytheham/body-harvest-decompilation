@@ -678,7 +678,32 @@ f32 func_800FB11C_10A0CC(VehicleInstance *arg0) {
 	return sqrtf((sp1C * sp1C) + (temp_f0 * temp_f0));
 }
 
+#ifdef NON_MATCHING
+s16 func_800FB160_10A110(VehicleInstance *arg0) {
+	f32 sp1C;
+	f32 sp18;
+	f32 var_f16;
+	f32 var_f2;
+	s16 temp;
+
+	sp1C = func_800FB014_109FC4(arg0);
+	sp18 = func_800FB098_10A048(arg0);
+	var_f16 = (-sp1C < sp1C) ? sp1C : -sp1C;
+	var_f2 = (-sp18 < sp18) ? sp18 : -sp18;
+	
+	if ((f64)(var_f2 + var_f16) < 1.0) {
+		if (arg0->unk58 < 0.0f) {
+			return arg0->unk6;
+		}
+		temp = arg0->unk6;
+		temp = -temp;
+		return temp;
+	}
+	return func_80003824_4424(sp1C, sp18);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FB160_10A110.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FB238_10A1E8.s")
 
