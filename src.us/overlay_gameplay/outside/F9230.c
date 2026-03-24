@@ -788,7 +788,26 @@ void func_800FD390_10C340(void) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FD410_10C3C0.s")
+void func_800FD410_10C3C0(VehicleSpec *spec) {
+	switch (spec->unk58) {
+	case 1:
+		func_800FD2AC_10C25C();
+		break;
+	case 3:
+		func_800FD2F8_10C2A8();
+		break;
+	case 5:
+		func_800FD390_10C340();
+		break;
+	case 7:
+		func_800FD344_10C2F4();
+		break;
+	}
+
+	if ((currentLevel == 2) && (((s32) (spec - vehicleSpecs)) == 7)) {   
+		D_80159318 = -0xFB4;
+	}
+}
 
 void func_800FD4D4_10C484(void *arg0) {
 	u8 temp_v0;
