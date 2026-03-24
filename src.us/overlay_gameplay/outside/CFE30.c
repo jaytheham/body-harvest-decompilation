@@ -1271,7 +1271,22 @@ void func_800DE9B8_ED968(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	func_800DDB60_ECB10(arg0, arg1, arg2, 1, (s32) arg3);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DEA08_ED9B8.s")
+void func_800DEA08_ED9B8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10) {
+	u8 slot;
+	UnkFC8E8Entry *entry;
+
+	slot = func_800DDB60_ECB10(arg0, arg1, arg2, 3, (s32) arg3);
+	if (slot != 0xFF) {
+		entry = &D_80156EF0[slot];
+		entry->unkD = arg7;
+		entry->unk12 = (s8) ((s32) arg7 / (s32) arg6);
+		entry->unk6 = arg8;
+		entry->unk7 = arg9;
+		entry->unk8 = arg10;
+		entry->unk10 = arg4;
+		entry->unk11 = arg5;
+	}
+}
 
 #ifdef NON_MATCHING
 void func_800DEADC_EDA8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
