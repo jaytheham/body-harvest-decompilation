@@ -511,6 +511,9 @@ extern u8 D_80142820[]; // Giving delayed powerup %d
 extern char D_80142D94; /* osSyncPrintf format string - particle pool full warning */
 extern char D_80142ECC;
 extern char D_80142F10;
+extern char D_80142F44;
+extern char D_80142F68;
+extern char D_80142F98;
 extern char D_80143720;
 extern u8 D_80144E20[];
 extern u8 D_80144E2C[];

@@ -109,7 +109,36 @@ void func_800C1418_D03C8(u8 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1418_D03C8.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C14D4_D0484.s")
+u8 func_800C14D4_D0484(u8 arg0) {
+	u8 temp_slot;
+	u8 result_slot;
+	s32 temp;
+
+	if ((gameplayMode == 2) || (gameplayMode == 9)) {
+		osSyncPrintf(&D_80142F44);
+	}
+	
+	if (arg0 >= 0xA) {
+		temp = 1;
+	} else {
+		temp = 0;
+	}
+	
+	if (temp != 0) {
+		osSyncPrintf(&D_80142F68, arg0);
+		return 0xFB;
+	}
+	
+	if (D_80154304 >= 0x1E) {
+		osSyncPrintf(&D_80142F98, arg0);
+		temp_slot = 0xFB;
+	} else {
+		temp_slot = D_8015430C;
+		func_800C1288_D0238(temp_slot, arg0, 0);
+	}
+	result_slot = temp_slot;
+	return result_slot;
+}
 
 void func_800C1598_D0548(u8 arg0) {
 	func_800C14D4_D0484(arg0);

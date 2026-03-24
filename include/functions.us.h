@@ -492,6 +492,7 @@ void func_80071E88_80E38(Unk80052B2C *arg0);
 void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1);
 void func_800E82AC_F725C(Unk80052B2C *arg0);
 void func_800C1268_D0218(f32 arg0, f32 arg1, f32 arg2);
+void func_800C1288_D0238(u8 arg0, u8 arg1, s32 arg2);
 void func_800E7C28_F6BD8(void);
 void func_80135F0C_144EBC(void);
 s32 func_8011E6FC_12D6AC(s16 arg0, s16 arg1, s16 *arg2);
@@ -547,7 +548,7 @@ s32 func_801223B0_131360(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_80122524_1314D4(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3);
 /* CFE30.c internal functions */
 s16 func_800C17B4_D0764(u8 arg0, s32 arg1);
-void func_800C14D4_D0484(u8 arg0);
+u8 func_800C14D4_D0484(u8 arg0);
 void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2);
 void func_800C1A4C_D09FC(s16 arg0, s32 arg1, s32 arg2);
 void func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5, u8 arg6, s32 arg7);
