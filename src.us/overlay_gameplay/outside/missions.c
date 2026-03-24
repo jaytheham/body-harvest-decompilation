@@ -172,7 +172,32 @@ void func_80075210_841C0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075210_841C0.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800752D8_84288(void) {
+    MissionCondEntry *entry;
+    s16 matchId;
+    s32 count;
+    
+    count = D_80149B28;
+    if (count--) {
+        entry = &D_801494C0[count], matchId = D_80149B48;
+        do {
+            if (entry->unk1 == matchId && entry->unk0 == 3) {
+                entry->unk4 = (u8)D_80149B30;
+            }
+            entry--;
+        } while (count--);
+    }
+    
+    while (func_800744E0_83490(func_80074558_83508() & 0xFF)) {
+        func_8007463C_835EC();
+    }
+    
+    func_800746F8_836A8();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800752D8_84288.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800753A0_84350.s")
 
