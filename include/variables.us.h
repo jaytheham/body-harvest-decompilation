@@ -1452,5 +1452,7 @@ extern VehicleInstance *D_80158F8C;
 extern f64 D_80144AC0;
 extern s32 D_80149B28;
 extern s16 D_80149B48;
+extern u16 D_80159DE8[];
+extern u8 D_8015D0B0[];
 
 #endif
