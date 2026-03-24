@@ -616,7 +616,7 @@ void func_800CF80C_DE7BC(s16, s16, s16, s32, s32, s32, s32, s32);
 void func_800B0000_BEFB0(s32);
 void func_800AF1F8_BE1A8(s16, s16, u8, void *);
 void func_800AF0C0_BE070(s16, s16, u8, void *);
-void func_800AF9C0_BE970(void *);
+void func_800AF9C0_BE970(Unk80222A78 *);
 void func_800074BC_80BC(void *arg0);
 void func_800076D4_82D4(s32 arg0);
 void func_800AE190_BD140(s16);
