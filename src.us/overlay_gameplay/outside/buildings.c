@@ -26,17 +26,17 @@ s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011629C_12524C.s")
 
 Unk800522C0 *func_801164C4_125474(s16 arg0, s16 arg1) {
-    s32 i;
+	s32 i;
 
-    i = 0x20;
-    while (i--) {
-        if (D_800522C0[i].unk13 != 0 && D_800522C0[i].unkC == buildingInstances[arg0].buildingType) {
-            if (arg1-- == 0) {
-                return &D_800522C0[i];
-            }
-        }
-    }
-    return NULL;
+	i = 0x20;
+	while (i--) {
+		if (D_800522C0[i].unk13 != 0 && D_800522C0[i].unkC == buildingInstances[arg0].buildingType) {
+			if (arg1-- == 0) {
+				return &D_800522C0[i];
+			}
+		}
+	}
+	return NULL;
 }
 
 #ifdef NON_MATCHING

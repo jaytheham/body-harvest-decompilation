@@ -1164,6 +1164,13 @@ extern Unk801541F8Entry D_801541F8[];
 extern UnkFC8E8Entry D_80156EF0[];
 extern u8 D_80157530;
 extern u8 D_80157531;
+extern u8 D_80157532;
+extern s8 D_80157533;
+extern u8 D_80157534;
+extern s16 D_80157536;
+extern s16 D_80157538;
+extern s16 D_8015753A;
+extern u8 D_8015753C;
 extern s8 D_80153B87;
 extern Unk80153AE0Entry D_80153AE0[];
 extern u8 D_8013E2EC;
@@ -1443,5 +1450,9 @@ extern s32 D_80053C98;
 extern s32 D_802E3100;
 extern VehicleInstance *D_80158F8C;
 extern f64 D_80144AC0;
+extern s32 D_80149B28;
+extern s16 D_80149B48;
+extern u16 D_80159DE8[];
+extern u8 D_8015D0B0[];
 
 #endif

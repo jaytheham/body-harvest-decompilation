@@ -382,7 +382,9 @@ typedef struct {
 	/* 0x3A */ u16 hitPoints;
 	/* 0x3C */ u8 pad3C[0x10];
 	/* 0x4C */ u32 unk4C;
-	/* 0x50 */ u8 pad50[0xC];
+	/* 0x50 */ u8 pad50[0x8];
+	/* 0x58 */ u8 unk58;
+	/* 0x59 */ u8 pad59[0x3];
 	/* 0x5C */ u8 unk5C;
 	/* 0x5D */ u8 unk5D;
 	/* 0x5E */ u8 unk5E;
