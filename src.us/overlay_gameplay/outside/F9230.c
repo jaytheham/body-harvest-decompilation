@@ -198,7 +198,25 @@ void func_800EBD5C_FAD0C(s32 arg0) {
 	func_80001144_1D44(0x46, 0xA, 0xA);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBD9C_FAD4C.s")
+void func_800EBD9C_FAD4C(s16 arg0, s16 arg1, s16 arg2) {
+	if (D_80048188 == 0) {
+		D_80048188 = 1;
+		D_801575E0.unk0 = 1;
+		D_801575E0.unk4 = 0;
+		D_801575E0.unkE = arg2;
+		D_801575E0.unk6 = arg0;
+		D_80157600.unk8 = 0.0f;
+		D_80157600.unk10 = 0.0f;
+		D_801575E0.unkA = arg1;
+		osSyncPrintf(&D_80144330, arg0, arg1, arg2);
+		D_8015760C = 145.0f;
+		if ((D_80222A70 - 0x24) >= arg1) {
+			func_800EB05C_FA00C();
+			return;
+		}
+		func_800EB090_FA040();
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s")
 
