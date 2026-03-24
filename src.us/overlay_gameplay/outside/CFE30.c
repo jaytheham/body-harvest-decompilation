@@ -1439,7 +1439,10 @@ void func_800DFE68_EEE18(s16 arg0, s16 arg1, s16 arg2) {
 	func_800DEA08_ED9B8(arg0, arg1, arg2, 0xF, 2, 1, 0x14, 0xFF, 0xFF, 0xFA, 0xDC);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DFEE4_EEE94.s")
+void func_800DFEE4_EEE94(s16 arg0, s16 arg1, s16 arg2) {
+	func_800DEA08_ED9B8(arg0, arg1, arg2, 0xF, 2, 1, 0x14, 0xFF, 0xFF, 0xFA, 0xDC);
+	func_800C541C_D43CC(arg0, arg1, arg2, 0, 0x7F, 0, 0x32, 0xFA, func_800038E0_44E0() % 4, 3, 0xFF, 0xFF, 0xDC);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DFFC4_EEF74.s")
 

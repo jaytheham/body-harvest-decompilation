@@ -659,7 +659,7 @@ void func_802D7548_31B698(void *arg0, s32 arg1);
 s32 func_800B960C_C85BC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_802D522C_31937C(s16 arg0);
 void func_802D67A8_31A8F8(void);
-void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s8 arg10, s32 arg11, s32 arg12);
+void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, u8 arg10, s32 arg11, s32 arg12);
 s32 func_802DFF04_324054(u8 arg0);
 void func_802E3584_3276D4(u8, s16, s8, Unk802E71B8 *);
 void func_802DF290_3233E0(void);
