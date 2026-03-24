@@ -505,7 +505,38 @@ s32 func_8011CC20_12BBD0(u16 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D030_12BFE0.s")
 
+#ifdef NON_MATCHING
+s32 func_8011D19C_12C14C(s8 arg0, s8 arg1) {
+    u16 sp2C;
+    u8 sp20;
+    u8 sp1C;
+    u32 var_v1;
+    u32 var_a0;
+    u8 temp_a1;
+    u8 emptyMarker;
+
+    sp20 = arg0 & 0xFF;
+    sp1C = arg1 & 0xFF;
+    sp2C = func_8011CC20_12BBD0(sp20, sp1C);
+    var_v1 = func_8011CBD8_12BB88(sp20, sp1C);
+    var_a0 = 0x17;
+    emptyMarker = 0xFF;
+    
+    while (1) {
+        temp_a1 = D_8015D0B0[var_v1];
+        if (emptyMarker == temp_a1) {
+            return -1;
+        }
+        if (sp2C == D_80159DE8[var_v1]) {
+            return temp_a1;
+        }
+        var_v1 = (var_a0 + var_v1) % 6500;
+        var_a0++;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D19C_12C14C.s")
+#endif
 
 s32 func_8011D260_12C210(s8 arg0, s8 arg1) {
 	s32 temp_v0;
