@@ -144,7 +144,36 @@ void func_80074768_83718(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075148_840F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075210_841C0.s")
+#ifdef NON_MATCHING
+void func_80075210_841C0(s16 arg1, s32 arg2, s32 *arg3) {
+    s16 var_a1;
+    s32 var_v1;
+    MissionCondEntry *var_v0;
+
+    var_v1 = D_80149B28 - 1;
+    if (D_80149B28 != 0) {
+        var_a1 = D_80149B48;
+        var_v0 = &D_801494C0[var_v1];
+        do {
+            if ((var_a1 == var_v0->unk1) && (var_v0->unk0 == 2)) {
+                var_v0->unk4 = (s8) D_80149B30;
+            }
+            var_v0--;
+            var_v1--;
+        } while (var_v1 != 0);
+    }
+    if (func_800744E0_83490(func_80074558_83508() & 0xFF) != 0) {
+        do {
+            func_8007463C_835EC();
+        } while (func_800744E0_83490(func_80074558_83508() & 0xFF) != 0);       
+    }
+    func_800746F8_836A8();
+}
+  #else
+  #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075210_841C0.s")
+  #endif
+
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800752D8_84288.s")
 
