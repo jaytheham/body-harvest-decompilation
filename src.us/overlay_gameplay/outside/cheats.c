@@ -109,7 +109,7 @@ void enableCheatArsenal() {
 void enableCheatDurable() {   
 	D_80052B34->unk1C = (u16) vehicleSpecs[D_80052B34->unk1A].hitPoints;
 	D_80052B34->unk3C = (s16) (vehicleSpecs[D_80052B34->unk1A].unk61 << 8);
-	func_800FD410_10C3C0(&(vehicleSpecs[D_80052B34->unk1A]), &vehicleSpecs[0]);
+	func_800FD410_10C3C0(&(vehicleSpecs[D_80052B34->unk1A]));
 }
 
 // doWanderingCheatEffect
