@@ -327,10 +327,11 @@ segments:
     overlay: true
     subsegments:
       - [0x2B7100, c, overlay_level/siberia/2B7100]
+      - [0x2C3220, bin]
 
   - name: overlay_level_siberia_data
     type: bin
-    start: 0x2C3220
+    start: 0x2C54C0
 
   - name: overlay_level_comet
     type: code

@@ -9,6 +9,7 @@ extern Addr _175EB0_bin;
 extern Addr _195C80_bin;
 extern Addr _1F91B0_bin;
 extern Addr _25EA90_bin;
+extern Addr _2C3220_bin;
 extern Addr _2EA10_bin;
 extern Addr _60E60_bin;
 extern Addr _bootSegmentDataEnd;
