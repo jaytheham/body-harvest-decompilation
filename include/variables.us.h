@@ -640,6 +640,8 @@ extern u8 D_8014FDD0[];
 
 extern u8 D_80151DD0;
 extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
+extern Unk80152D00 D_80152D00[];
+extern s8 D_80153300;
 extern u8 D_80152B88; /* unk8 field of first particle/effect entry */
 extern s16 D_80152C90;
 extern u8 D_80152740[];
