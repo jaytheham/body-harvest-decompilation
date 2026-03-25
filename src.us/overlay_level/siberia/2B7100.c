@@ -137,7 +137,23 @@ void func_802DACA0_2BD0D0(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DAEBC_2BD2EC.s")
 
+#ifdef NON_MATCHING
+void func_802DB390_2BD7C0(u8 arg0) {
+    AlienInstance *instance;
+    s32 flags;
+    s16 value;
+
+    func_80137468_146418(arg0, 0x1C);
+    func_8008735C_9630C(arg0);
+    instance = &alienInstances[arg0];
+    flags = instance->unk20;
+    value = instance->unkE;
+    instance->unk20 = flags & ~0x10;
+    instance->unk6 = value;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DB390_2BD7C0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DB3F0_2BD820.s")
 
