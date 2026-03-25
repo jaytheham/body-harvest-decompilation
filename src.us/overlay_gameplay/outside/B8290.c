@@ -198,7 +198,39 @@ void func_800AB700_BA6B0(u8 arg0) {
 	alienInstances[arg0].unkE += 0x400;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB730_BA6E0.s")
+void func_800AB730_BA6E0(u8 arg0) {
+    s32 dx;
+    s32 dz;
+    s32 neg_dx;
+    s32 neg_dz;
+    s32 abs_dx, abs_dz;
+
+    dx = alienInstances[arg0].unk0 - D_80052B34->unk0;
+    dz = alienInstances[arg0].unk4 - D_80052B34->unk4;
+    neg_dx = -dx;
+    if (neg_dx < dx) {
+        abs_dx = dx;
+    } else {
+        abs_dx = neg_dx;
+    }
+    neg_dz = -dz;
+    if (abs_dx < 0xC9) {
+        if (neg_dz < dz) {
+            abs_dz = dz;
+        } else {
+            abs_dz = neg_dz;
+        }
+        if (abs_dz < 0xC9) {
+            if (alienInstances[arg0].unk24 != 0xE || D_80052B34->unk1A == 0) {
+                return;
+            }
+        }
+    }
+    alienInstances[arg0].unk24--;
+    alienInstances[arg0].unk20 |= 0x08020000;
+    alienInstances[arg0].unk20 &= ~0x8020;
+    alienInstances[arg0].unk48 = 0xC0;
+}
 
 void func_800AB80C_BA7BC(u8 arg0) {
 	s32 dummy1, dummy2, dummy3, dummy4;
