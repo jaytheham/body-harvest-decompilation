@@ -332,33 +332,30 @@ void func_80089AB4_59F64(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008AEC8_5B378.s")
 
 /* Allocate entry with given params; returns allocId or 0xFB on failure */
-/* NON_MATCHING: stack frame 0x20 instead of 0x28 (8 byte difference), all instructions match */
-#ifdef NON_MATCHING
-u8 func_8008B08C_5B53C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6) {
-	s16 idx;
-	u8 allocId;
-
-	allocId = func_80083A58_53F08(7);
-	if (allocId != 0xFB) {
-		idx = func_80083B7C_5402C(allocId);
-		if (idx == -3) {
-			func_80083B14_53FC4(allocId);
-			return 0xFB;
-		}
-		D_800DE840[idx].unk8 = arg0;
-		D_800DE840[idx].unkA = arg1;
-		D_800DE840[idx].unkC = arg2;
-		D_800DE840[idx].unkE = arg3;
-		D_800DE840[idx].unkF = arg4;
-		D_800DE840[idx].unk10 = arg5;
-		D_800DE840[idx].unk11 = 1;
-		*(u8 *)&D_800DE840[idx].unk12 = arg6;
+u8 func_8008B08C_5B53C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6)
+{
+  s16 idx;s32 new_var;
+  u8 allocId;
+  allocId = func_80083A58_53F08(7);
+  if (allocId != 0xFB)
+  {
+	idx = func_80083B7C_5402C(allocId);
+	if (idx == (-3))
+	{
+	  func_80083B14_53FC4(allocId);
+	  return 0xFB;
 	}
-	return allocId;
+	D_800DE840[idx].unk8 = arg0;
+	D_800DE840[idx].unkA = arg1;
+	D_800DE840[idx].unkC = arg2;
+	D_800DE840[idx].unkE = arg3;
+	D_800DE840[idx].unkF = arg4;
+	D_800DE840[idx].unk10 = arg5;
+	D_800DE840[idx].unk11 = 1;
+	*((u8 *) (&D_800DE840[idx].unk12)) = arg6;
+  }
+  return allocId;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B08C_5B53C.s")
-#endif
 
 /* Sets 3D position (s16 x,y,z) in D_800DE840 entry indexed via D_800DE130 */
 void func_8008B148_5B5F8(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
