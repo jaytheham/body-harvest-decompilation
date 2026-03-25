@@ -1,7 +1,7 @@
 {
-  "generated": "2026-03-25T17:20:18Z",
-  "commit": "4e8ce7c",
-  "commit_timestamp": "2026-03-26T06:20:04+13:00",
+  "generated": "2026-03-25T17:32:52Z",
+  "commit": "6887cb8",
+  "commit_timestamp": "2026-03-26T06:32:37+13:00",
   "overall": {
     "total_functions": 2972,
     "matched": 899,
@@ -242,7 +242,7 @@
       "asm_stubs": 14,
       "total": 34,
       "matched_pct": 23.5,
-      "contributor": "Meridian Lex"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/inside/167C90.c",
@@ -538,17 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 33,
-      "matched": 810,
-      "non_matching": 220,
-      "asm_stubs": 1275
+      "files": 34,
+      "matched": 818,
+      "non_matching": 232,
+      "asm_stubs": 1289
     },
     {
       "name": "Meridian Lex",
-      "files": 11,
-      "matched": 89,
-      "non_matching": 84,
-      "asm_stubs": 494
+      "files": 10,
+      "matched": 81,
+      "non_matching": 72,
+      "asm_stubs": 480
     }
   ],
   "history": [
@@ -594,7 +594,7 @@
     },
     {
       "date": "2026-03-26",
-      "commit": "4e8ce7c",
+      "commit": "6887cb8",
       "matched_pct": 30.25,
       "decompiled_pct": 40.48,
       "matched": 899,
