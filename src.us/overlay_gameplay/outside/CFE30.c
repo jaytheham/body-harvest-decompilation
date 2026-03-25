@@ -1606,7 +1606,15 @@ void func_800E2720_F16D0(s32 arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2750_F1700.s")
+void func_800E2750_F1700(u8 arg0) {
+	D_80153BD0[arg0].unk0 = (s16)((func_800038E0_44E0() % D_80068084) * 0x10);
+	D_80153BD0[arg0].unk2 = 0;
+	if (currentLevel == LEVEL_JAVA) {
+		D_80153BD0[arg0].unk4 = (s16)((func_800038E0_44E0() % 125) + 75);
+	} else if (currentLevel == LEVEL_SIBERIA) {
+		D_80153BD0[arg0].unk4 = (s16)((func_800038E0_44E0() % 75) + 25);
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2830_F17E0.s")
 
