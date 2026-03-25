@@ -172,11 +172,7 @@ segments:
       - [0x2E2F0, asm, core/2E2F0]
       - [0x2E390, asm, core/2E390]
       - [0x2E3E0, asm, core/2E3E0]
-
-  - name: main_data
-    type: bin
-    start: 0x02EA10
-    vram: 0x02DE10
+      - [0x2EA10, bin]
 
   - name: overlay_gameplay_frontend
     type: code
