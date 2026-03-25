@@ -1,7 +1,7 @@
 {
-  "generated": "2026-03-25T18:42:47Z",
-  "commit": "faca818",
-  "commit_timestamp": "2026-03-26T07:42:31+13:00",
+  "generated": "2026-03-25T20:06:36Z",
+  "commit": "143818d",
+  "commit_timestamp": "2026-03-26T09:06:26+13:00",
   "overall": {
     "total_functions": 2972,
     "matched": 900,
@@ -594,7 +594,7 @@
     },
     {
       "date": "2026-03-26",
-      "commit": "faca818",
+      "commit": "a89e5c7",
       "matched_pct": 30.28,
       "decompiled_pct": 40.51,
       "matched": 900,
