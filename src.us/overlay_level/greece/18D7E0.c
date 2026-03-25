@@ -259,13 +259,13 @@ void func_802D852C_19103C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D8D84_191894.s")
 
 #ifdef NON_MATCHING
-void func_802D90C8_191BD8(s32 arg0) {
-	s32 temp_t6;
+void func_802D90C8_191BD8(u8 arg0) {
 	AlienInstance *temp_v0;
+	u8 temp_t6;
 
 	temp_t6 = arg0 & 0xFF;
 	temp_v0 = &alienInstances[temp_t6];
-	temp_v0->unk20 = (s32) (temp_v0->unk20 & 0xBFFFEFFF);
+	temp_v0->unk20 = (s32)(temp_v0->unk20 & 0xBFFFEFFF);
 	func_800873A8_96358(temp_t6);
 }
 #else
