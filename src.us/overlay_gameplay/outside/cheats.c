@@ -23,7 +23,7 @@ void func_800739D8_82988(void);
 void func_800739F8_829A8(void);
 void func_80073A08_829B8(void);
 
-Cheat D_8013B940_14A8F0[21] = {
+Cheat cheatData[21] = {
 	{ "annul", func_800731B0_82160 },
 	{ "zfarewell", func_800732C8_82278 },
 	{ "arsenal", func_800732E0_82290 },
@@ -346,11 +346,11 @@ void func_80073A74_82A24(void) {
 void func_80073B30_82AE0(s32 arg0)
 {
   func_8001A650_1B250((s16) (arg0 + 0x77));
-  D_8013B940_14A8F0[arg0].cheatFunc();
+  cheatData[arg0].cheatFunc();
 }
 
 // https://decomp.me/scratch/Xo6Wf
-#ifdef TRUE
+#ifdef NON_MATCHING
 void func_80073B78_82B28(void)
 {
   s32 bufferIndex;
@@ -420,13 +420,13 @@ void func_80073B78_82B28(void)
 	for(var_s0 = 0x14; var_s0 != 0; var_s0--)
 	{
 	  firstNullCharIndex = 3;
-	  while (D_8013B940_14A8F0[var_s0].cheatPattern[++firstNullCharIndex] != 0);
+	  while (cheatData[var_s0].cheatPattern[++firstNullCharIndex] != 0);
 	  
 	  bufferIndex = firstNullCharIndex;      
 	  if (firstNullCharIndex != 0)//
 	  {
 		  bufferIndex--;
-		  curCheatPatternChar = &D_8013B940_14A8F0[var_s0].cheatPattern[firstNullCharIndex - bufferIndex],
+		  curCheatPatternChar = &cheatData[var_s0].cheatPattern[firstNullCharIndex - bufferIndex],
 			curBufferChar = &cheatInputBuffer[bufferIndex];
 		  // walk backwards up the buffer and down the cheatPattern
 		  // as buffer is <latest input> -> <oldest input> order
