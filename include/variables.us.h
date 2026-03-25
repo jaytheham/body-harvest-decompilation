@@ -1206,6 +1206,7 @@ extern u8 D_8013E2EC_14D29C;
 extern s32 D_8013E2F4_14D2A4;
 extern s32 D_8013E308_14D2B8;
 extern Unk80152CA0Entry D_80152CA0[];
+extern char D_801432C4_152274;
 extern char D_80143304;
 extern char D_80143430;
 extern char D_801436D8_152688;
