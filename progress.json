@@ -1,7 +1,7 @@
 {
-  "generated": "2026-03-25T17:03:47Z",
-  "commit": "35fdd2b",
-  "commit_timestamp": "2026-03-26T06:03:36+13:00",
+  "generated": "2026-03-25T17:17:21Z",
+  "commit": "1fcc1e5",
+  "commit_timestamp": "2026-03-26T06:17:06+13:00",
   "overall": {
     "total_functions": 2972,
     "matched": 899,
@@ -202,7 +202,7 @@
       "asm_stubs": 25,
       "total": 40,
       "matched_pct": 35.0,
-      "contributor": "Meridian Lex"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/frontend/40720.c",
@@ -538,17 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 31,
-      "matched": 771,
-      "non_matching": 209,
-      "asm_stubs": 1163
+      "files": 32,
+      "matched": 785,
+      "non_matching": 210,
+      "asm_stubs": 1188
     },
     {
       "name": "Meridian Lex",
-      "files": 13,
-      "matched": 128,
-      "non_matching": 95,
-      "asm_stubs": 606
+      "files": 12,
+      "matched": 114,
+      "non_matching": 94,
+      "asm_stubs": 581
     }
   ],
   "history": [
@@ -594,7 +594,7 @@
     },
     {
       "date": "2026-03-26",
-      "commit": "35fdd2b",
+      "commit": "1fcc1e5",
       "matched_pct": 30.25,
       "decompiled_pct": 40.48,
       "matched": 899,
