@@ -107,6 +107,7 @@ void func_802D72A0_2B96D0(func_80070420_7F3D0_UnkArg0 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7508_2B9938.s")
 
+/* possible: updateStageTimer */
 void func_802D7540_2B9970(void) {
     D_8014D17C += 1;
     if (D_8014D17C == 0x64) {
@@ -126,7 +127,21 @@ void func_802D7680_2B9AB0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D769C_2B9ACC.s")
 
+#ifdef NON_MATCHING
+void func_802D77BC_2B9BEC(void) {
+    u16 temp;
+
+    func_80013468_14068(0xC);
+    buildingInstances[0].unkE22 = 0x6E;
+    temp = buildingInstances[0].unkE1A;
+    buildingInstances[0].unkE1A = (u16) ((temp & 0xF03F) | 0x400);
+    D_8014D17C = 0;
+    func_80007410_8010(&func_802D75E4_2B9A14);
+    func_802D769C_2B9ACC();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D77BC_2B9BEC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7818_2B9C48.s")
 
