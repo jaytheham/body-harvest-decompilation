@@ -2,50 +2,50 @@
 #include "common.h"
 
 void func_800731B0_82160(void);
-void enableCheatFarewell(void);
-void enableCheatArsenal(void);
-void enableCheatDurable(void);
-void enableCheatWander(void);
-void enableCheatSnuffle(void);
-void enableCheatAward(void);
-void enableCheatSnared(void);
-void enableCheatFreed(void);
-void enableCheatAlfa(void);
-void enableCheatSurreal(void);
-void enableCheatDefender(void);
-void enableCheatBleed(void);
+void func_800732C8_82278(void);
+void func_800732E0_82290(void);
+void func_80073428_823D8(void);
+void func_8007364C_825FC(void);
+void func_8007377C_8272C(void);
+void func_80073794_82744(void);
+void func_80073670_82620(void);
+void func_8007367C_8262C(void);
+void func_8007368C_8263C(void);
+void func_800737A4_82754(void);
+void func_800737BC_8276C(void);
+void func_80073814_827C4(void);
 void func_8007383C_827EC(void);
-void enableCheatWeasel(void);
-void enableCheatUseful(void);
-void enableCheatBanana(void);
-void enableCheatDwarf(void);
-void enableCheatDundee(void);
-void enableCheatLard(void);
-void enableCheatFeeble(void);
+void func_8007391C_828CC(void);
+void func_80073934_828E4(void);
+void func_800739C8_82978(void);
+void func_800739B8_82968(void);
+void func_800739D8_82988(void);
+void func_800739F8_829A8(void);
+void func_80073A08_829B8(void);
 
-// const Cheat D_8013B940_14A8F0[21] = {
-// 	{ "annul", func_800731B0_82160 },
-// 	{ "zfarewell", enableCheatFarewell },
-// 	{ "arsenal", enableCheatArsenal },
-// 	{ "durable", enableCheatDurable },
-// 	{ "zwander", enableCheatWander },
-// 	{ "snuffle", enableCheatSnuffle },
-// 	{ "zaward", enableCheatAward },
-// 	{ "zsnared", enableCheatSnared },
-// 	{ "zfreed", enableCheatFreed },
-// 	{ "alfa", enableCheatAlfa },
-// 	{ "surreal", enableCheatSurreal },
-// 	{ "zdefender", enableCheatDefender },
-// 	{ "bleed", enableCheatBleed },
-// 	{ "suffer", func_8007383C_827EC },
-// 	{ "weasel", enableCheatWeasel },
-// 	{ "useful", enableCheatUseful },
-// 	{ "banana", enableCheatBanana },
-// 	{ "dwarf", enableCheatDwarf },
-// 	{ "dundee", enableCheatDundee },
-// 	{ "lard", enableCheatLard },
-// 	{ "feeble", enableCheatFeeble }
-// };
+const Cheat D_8013B940_14A8F0[21] = {
+	{ "annulz", func_800731B0_82160 },
+	{ "zfarewell", func_800732C8_82278 },
+	{ "arsenal", func_800732E0_82290 },
+	{ "durable", func_80073428_823D8 },
+	{ "zwander", func_8007364C_825FC },
+	{ "snuffle", func_8007377C_8272C },
+	{ "zaward", func_80073794_82744 },
+	{ "zsnared", func_80073670_82620 },
+	{ "zfreed", func_8007367C_8262C },
+	{ "alfa", func_8007368C_8263C },
+	{ "surreal", func_800737A4_82754 },
+	{ "zdefender", func_800737BC_8276C },
+	{ "bleed", func_80073814_827C4 },
+	{ "suffer", func_8007383C_827EC },
+	{ "weasel", func_8007391C_828CC },
+	{ "useful", func_80073934_828E4 },
+	{ "banana", func_800739C8_82978 },
+	{ "dwarf", func_800739B8_82968 },
+	{ "dundee", func_800739D8_82988 },
+	{ "lard", func_800739F8_829A8 },
+	{ "feeble", func_80073A08_829B8 }
+};
 
 // enableCheatAnnull
 void func_800731B0_82160(void)
@@ -87,13 +87,13 @@ void func_800731B0_82160(void)
 }
 
 // func_800732C8_82278
-void enableCheatFarewell() {
+void func_800732C8_82278() {
 	D_80052AC8 = 2;
 	D_80052AD0 = 0;
 }
 
 // func_800732E0_82290
-void enableCheatArsenal() {
+void func_800732E0_82290() {
 	func_801391DC_14818C(5, 0x3E7); // a0 = itemId, a1 = quantity. Machine gun
 	if (currentLevel == LEVEL_GREECE) {
 		func_801391DC_14818C(7, 3); // T. N. T.
@@ -128,7 +128,7 @@ void enableCheatArsenal() {
 }
 
 // func_80073428_823D8
-void enableCheatDurable() {   
+void func_80073428_823D8() {   
 	D_80052B34->unk1C = (u16) vehicleSpecs[D_80052B34->unk1A].hitPoints;
 	D_80052B34->unk3C = (s16) (vehicleSpecs[D_80052B34->unk1A].unk61 << 8);
 	func_800FD410_10C3C0(&(vehicleSpecs[D_80052B34->unk1A]));
@@ -175,22 +175,22 @@ void func_800734AC_8245C() {
 }
 
 // func_8007364C_825FC
-void enableCheatWander(void) {
+void func_8007364C_825FC(void) {
 	func_8007622C_851DC(func_800734AC_8245C);
 }
 
 // func_80073670_82620
-void enableCheatSnared() {
+void func_80073670_82620() {
 	D_8004D148 = 0;
 }
 
 // func_8007367C_8262C
-void enableCheatFreed() {
+void func_8007367C_8262C() {
 	D_8004D148 = 1;
 }
 
 // func_8007368C_8263C
-void enableCheatAlfa(void) {
+void func_8007368C_8263C(void) {
 	func_800A8A68_B7A18((s16) (D_80052B34->unk0 + 0x64), (s16) (D_80052B34->unk2 - 0xFA), D_80052B34->unk4, 0x15);
 	func_800A8A68_B7A18((s16) (D_80052B34->unk0 + 0x64), (s16) (D_80052B34->unk2 + 0xFA), D_80052B34->unk4, 0x17);
 	func_800A8A68_B7A18((s16) (D_80052B34->unk0 - 0xC8), (s16) (D_80052B34->unk2 - 0xC8), D_80052B34->unk4, 0x18);
@@ -199,22 +199,22 @@ void enableCheatAlfa(void) {
 
 // func_8007377C_8272C
 // use normal player model
-void enableCheatSnuffle() {
+void func_8007377C_8272C() {
 	D_80052ACD ^= 4;
 }
 
 // func_80073794_82744
-void enableCheatAward() {
+void func_80073794_82744() {
 	D_80047FA0 = 5;
 }
 
 // func_800737A4_82754
-void enableCheatSurreal() {
+void func_800737A4_82754() {
 	D_80159320 ^= 0x80;
 }
 
 // func_800737BC_8276C
-void enableCheatDefender(void) {
+void func_800737BC_8276C(void) {
 	if (!(D_80052B34->unk20 & 0x80)) {
 		func_800E5CF4_F4CA4(2, D_80149441);
 		return;
@@ -223,7 +223,7 @@ void enableCheatDefender(void) {
 }
 
 // func_80073814_827C4
-void enableCheatBleed() {
+void func_80073814_827C4() {
 	func_80124118_1330C8(D_80052B34, 0x7FFF);
 }
 
@@ -249,13 +249,13 @@ void func_8007383C_827EC(void) {
 
 // func_8007391C_828CC
 // use Black Adam model for player
-void enableCheatWeasel() {
+void func_8007391C_828CC() {
 	D_80052ACD ^= 2;
 }
 
 //func_80073934_828E4
 // gain all alien artifacts
-void enableCheatUseful() {
+void func_80073934_828E4() {
 	s32 temp_v0;
 
 	temp_v0 = (s16) D_80048026 >> ((currentLevel * 3) - 3);
@@ -272,28 +272,28 @@ void enableCheatUseful() {
 }
 
 // func_800739B8_82968
-void enableCheatDwarf() {
+void func_800739B8_82968() {
 	D_80157A3C = 0x68;
 }
 
 // func_800739C8_82978
-void enableCheatBanana() {
+void func_800739C8_82978() {
 	D_80157A3C = 0x22;
 }
 
 // func_800739D8_82988
-void enableCheatDundee() {
+void func_800739D8_82988() {
 	func_800EA2BC_F926C();
 }
 
 // func_800739F8_829A8
-void enableCheatLard() {
+void func_800739F8_829A8() {
 	D_8013FCD0_14EC80 = 1;
 }
 
 // func_80073A08_829B8
 // Weak bosses
-void enableCheatFeeble() {
+void func_80073A08_829B8() {
 	s32 x = D_8013BD04_14ACB4;
 	D_8013BD04_14ACB4 = x == 0;
 }
@@ -350,7 +350,7 @@ void func_80073B30_82AE0(s32 arg0)
 }
 
 // https://decomp.me/scratch/Xo6Wf
-#ifdef NON_MATCHING
+#ifdef TRUE
 void func_80073B78_82B28(void)
 {
   s32 bufferIndex;

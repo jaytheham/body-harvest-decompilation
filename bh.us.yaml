@@ -219,8 +219,8 @@ segments:
       - [0x1416E0, c, overlay_gameplay/outside/1416E0] # Adam & vehicle Camera
       - [0x145D70, c, overlay_gameplay/outside/145D70]
       - [0x148000, c, overlay_gameplay/outside/148000] # Weapons / HUD / Vehicle weapons
-      - [0x14A8A0, bin]
-      - [0x14A8F0, bin] #.rodata, overlay_gameplay/outside/cheats]
+      - [0x14A8A0, rodata]
+      - [0x14A8F0, .rodata, overlay_gameplay/outside/cheats]
       - [0x14AA40, bin]
 
   - name: overlay_gameplay_inside

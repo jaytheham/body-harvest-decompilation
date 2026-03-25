@@ -23,7 +23,9 @@ ASM_DIRS  = asm \
 			asm/overlay_level/java \
 			asm/overlay_level/america \
 			asm/overlay_level/siberia \
-			asm/overlay_level/comet
+			asm/overlay_level/comet \
+			asm/data \
+			asm/data/overlay_gameplay/outside
 BIN_DIRS  = assets
 SRC_DIR   = src.$(VERSION)
 

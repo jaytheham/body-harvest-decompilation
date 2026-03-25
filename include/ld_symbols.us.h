@@ -3,8 +3,6 @@
 
 #include "common.h"
 
-extern Addr _14A8A0_bin;
-extern Addr _14A8F0_bin;
 extern Addr _14AA40_bin;
 extern Addr _bootSegmentDataEnd;
 extern Addr _bootSegmentDataSize;
