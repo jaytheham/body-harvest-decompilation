@@ -35,13 +35,31 @@ The declarations-vs-uopt-temp difference causes parent=a2 vs parent=a1, and casc
 
 #### OR version (set flags: `arg1` used directly)
 
-Target uses TWO copies of stripe because `a2` is hijacked for parent:
+Target uses TWO copies of stride because `a2` is hijacked for parent:
 - First `addiu a2, zero, 0x50` (stride → a2, used for first 2 multiplies)
 - Later `addiu t0, zero, 0x50` (second stride → t0, used for child multiplies)
 - `a2` reused for parent (overwrites stride)
 - `a0` = child ptr (same as AND version)
 
 Since arg1 is never freed in the OR version (used directly in `or` instructions), a1 stays arg1 and parent must land in a2 via stride-reuse.
+
+**Best achievable C (score 550, not a full match):**
+```c
+void func_800A9738_B86E8(u8 arg0, s32 arg1) {
+    AlienInstance *parent;
+    alienInstances[arg0].unk20 |= arg1;
+    parent = &alienInstances[alienInstances[arg0].unk25];
+    if (alienInstances[((u8 *)parent)[0]].specIndex != 0) {
+        alienInstances[((u8 *)parent)[0]].unk20 |= arg1;
+    }
+    // ... repeat for [1], [2], [3]
+}
+```
+Removing the `s32 newFlags` intermediate (from 615→550) is required; the OR-first order is also needed (parent-first gives 610).
+
+**Why full match is blocked:** The stride-reuse pattern (`a2` = stride first, then parent) only occurs when parent is an **unnamed uopt temp** — IDO's scheduler then coalesces the stride register with the parent register since their live ranges don't overlap. A named `AlienInstance *parent` variable causes IDO to eagerly pre-allocate `a2` for parent and fall back to `t0` for stride, cascading to parent→v1, stride→t0, child-ptr→a2 (all wrong).
+
+Fully inlining the parent expression (no named variable) to let GVN deduplicate is not viable: IDO cannot prove that `alienInstances[arg0].unk20 |= arg1` doesn't alias with subsequent `alienInstances[arg0].unk25` reads, so it reloads unk25 on every iteration, blowing up to score 2875.
 
 #### The child-byte access pattern
 
