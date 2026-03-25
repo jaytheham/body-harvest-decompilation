@@ -261,6 +261,8 @@ void func_800AFBA4_BEB54(s16, s16);
 void func_800AFE68_BEE18(void *);
 void func_800AF8C4_BE874(Unk80222A78 *);
 void func_800AFA98_BEA48(Unk80222A78 *);
+void func_800B0390_BF340(Unk80222A78 *arg0);
+void func_800AF634_BE5E4(Unk80222A78 *arg0);
 void func_800B0068_BF018(void *);
 void func_800B01E4_BF194(void *);
 void func_800F9118_1080C8(s32 arg0);

@@ -63,7 +63,7 @@ u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
 	AlienInstance *leaderGroup;
 
 	leaderId = 0xFF;
-	osSyncPrintf(&D_80142B6C_151B1C, waveType);
+	osSyncPrintf(&D_80142B6C_151B1C, waveType); // Wave type %d
 	D_80223780[arg3].unk11 = 0;
 	for (i = 0; i < 0xC; i++) {
 		if (D_8003BCC0[waveType][i].alienSpecId == 0) {
@@ -163,14 +163,14 @@ void func_800AF3B8_BE368(Unk80222A78 *arg0) {
 
 	sp1C = D_80223780[arg0->pad9[0]].padC[2] * 200;
 	if (sp1C != 0) {
-		osSyncPrintf(&D_80142B7C_151B2C, arg0->pad9[0], sp1C / 20, arg0);
+		osSyncPrintf(&D_80142B7C_151B2C, arg0->pad9[0], sp1C / 20, arg0); // Create positional %d in %d seconds
 		arg0->unk0 = 2;
 		arg0->unk4 = sp1C + D_8014F820;
 		arg0->unkC = func_800AF390_BE340;
 		func_800AE454_BD404(arg0);
 		return;
 	}
-	osSyncPrintf(&D_80142BA0_151B50, arg0->pad9[0]);
+	osSyncPrintf(&D_80142BA0_151B50, arg0->pad9[0]); // Do not regenerate %d
 }
 
 void func_800AF474_BE424(s32 arg0) {}
@@ -195,7 +195,7 @@ void func_800AF4A4_BE454(s32 arg0, s32 arg1, s32 arg2) {
 
 void func_800AF52C_BE4DC(s32 arg0) {
 	if ((D_80048038[arg0] == 1) || (D_80048038[arg0] == 0)) {
-		osSyncPrintf(&D_80142BDC_151B8C, arg0);
+		osSyncPrintf(&D_80142BDC_151B8C, arg0); // Wave failed %d
 		D_80048038[arg0] = 3;
 		if (D_8014CFF0[arg0 * 2] != 0x93) {
 			func_800AF764_BE714((s16)D_8014CFF0[arg0 * 2]);
@@ -205,7 +205,7 @@ void func_800AF52C_BE4DC(s32 arg0) {
 
 void func_800AF5B0_BE560(s32 arg0) {
 	if ((D_80048038[arg0] == 1) || (D_80048038[arg0] == 0)) {
-		osSyncPrintf(&D_80142BEC_151B9C, arg0);
+		osSyncPrintf(&D_80142BEC_151B9C, arg0); // Wave successful %d
 		D_80048038[arg0] = 2;
 		if (D_8014CFF1[arg0 * 2] != 0x93) {
 			func_800AF764_BE714((s16)D_8014CFF1[arg0 * 2]);
@@ -326,7 +326,54 @@ void func_800AFBA4_BEB54(s16 arg0, s16 arg1) {
 	D_80031410 = 1;
 }
 
+// https://decomp.me/scratch/Fkn1t
+#ifdef NON_MATCHING
+void func_800AFBF8_BEBA8(Unk80222A78 *arg0)
+{
+	s32 var1;
+	s32 var2;
+  Unk80222A78 tmp;
+	s32 var3;
+	s32 var4;
+  u8 waveIdx;
+	s32 var5;
+	s32 var6;
+  u8 alienIdx;
+  waveIdx = arg0->pad9[0];
+  alienIdx = func_800AEE5C_BDE0C(D_80223780[waveIdx].xPosition, D_80223780[waveIdx].yPosition, D_80223780[waveIdx].waveSpecId, waveIdx);
+  D_80048038[waveIdx] = 1;
+  if ((*(D_80223780 + waveIdx)).waveSpecId == 0x1C)
+  {
+	tmp.unk1 = (s8) (((s16) D_80223780[waveIdx].xPosition) >> 8);
+	tmp.unk2 = (s8) (((s16) D_80223780[waveIdx].yPosition) >> 8);
+	tmp.unkC = func_800B0390_BF340;
+	tmp.unk0 = 3;
+	tmp.unk8 = alienIdx;
+	if (func_800AE454_BD404(&tmp) == (-1))
+	{
+	  func_8001A650_1B250(7);
+	  func_800AE3AC_BD35C(&tmp);
+	}
+  }
+  if (alienInstances[alienIdx].specIndex == 0x19)
+  {
+	tmp.pad9[0] = waveIdx;
+	tmp.unk8 = alienIdx;
+	tmp.unkC = func_800AF634_BE5E4;
+	tmp.unk0 = 3;
+	func_800AE454_BD404(&tmp);
+	return;
+  }
+  if (arg0->pad3 != 0)
+  {
+	arg0->unkC = func_800AF3B8_BE368;
+	arg0->unk0 = 0xA;
+	func_800AE454_BD404(arg0);
+  }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AFBF8_BEBA8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AFD48_BECF8.s")
 
