@@ -113,7 +113,9 @@ typedef struct {
 	/* 0x0E */ s16 unkE; // "Direction"
 	/* 0x10 */ s16 unk10; // Elevation
 	/* 0x12 */ s16 unk12; // Speed
-	/* 0x14 */ u8 pad14[0x6];
+	/* 0x14 */ u8 pad14[0x2];
+	/* 0x16 */ s16 unk16;
+	/* 0x18 */ u8 pad18[0x2];
 	/* 0x1A */ u8 unk1A; // specIndex
 	/* 0x1B */ u8 unk1B;
 	/* 0x1C */ s16 unk1C; // hitPoints
