@@ -221,9 +221,9 @@ void func_800A1364_B0314(void) {
 	s32 temp_v0;
 	u32 temp_t4;
 
-	D_8013D758 = D_8013D75C;
+	D_8013D758 = D_8013D75C_14C70C;
 	temp_v0 = osGetCount();
-	D_8013D75C = temp_v0;
+	D_8013D75C_14C70C = temp_v0;
 	D_8014F210[D_8014F20C][D_8014F610] = temp_v0 - D_8013D758;
 	temp_t4 = D_8014F20C + 1;
 	D_8014F20C = temp_t4;
@@ -236,7 +236,7 @@ void func_800A1364_B0314(void) {
 #endif
 
 void func_800A13E8_B0398(void) {
-	D_8013D75C = osGetCount();
+	D_8013D75C_14C70C = osGetCount();
 }
 
 // drawDebugTimingGraphs
@@ -271,10 +271,10 @@ void func_800A1764_B0714(void) {
 }
 
 void func_800A17EC_B079C(void) {
-	D_8013D5B4 = 0;
-	D_8013D5B8 = 0;
-	D_8013D5BC = 0;
-	D_8013D5C0 = 0;
+	D_8013D5B4_14C564 = 0;
+	D_8013D5B8_14C568 = 0;
+	D_8013D5BC_14C56C = 0;
+	D_8013D5C0_14C570 = 0;
 	func_800A1764_B0714();
 }
 
@@ -337,14 +337,14 @@ void func_800A1924_B08D4(void) {
 s32 func_800A2A88_B1A38(void) {
 	s32 temp_v0;
 
-	if (D_8013D5B4 == 0) {
+	if (D_8013D5B4_14C564 == 0) {
 		return 0;
 	}
 	temp_v0 = vehicleSpecs[D_80052B34->unk1A].weapon1;
 	if (temp_v0 == 0) {
 		return 0;
 	}
-	if (((s32)D_80145BE8[temp_v0][0] >> 8) & 0x200000) {
+	if (((s32)D_80145BE8_154B98[temp_v0][0] >> 8) & 0x200000) {
 		return 0;
 	}
 	if (D_80159320 & 0x10000) {

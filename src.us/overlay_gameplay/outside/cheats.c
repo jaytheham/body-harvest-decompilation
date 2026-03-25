@@ -1,7 +1,29 @@
 #include <ultra64.h>
 #include "common.h"
 
-// const Cheat D_8013B940[21] = {
+void func_800731B0_82160(void);
+void enableCheatFarewell(void);
+void enableCheatArsenal(void);
+void enableCheatDurable(void);
+void enableCheatWander(void);
+void enableCheatSnuffle(void);
+void enableCheatAward(void);
+void enableCheatSnared(void);
+void enableCheatFreed(void);
+void enableCheatAlfa(void);
+void enableCheatSurreal(void);
+void enableCheatDefender(void);
+void enableCheatBleed(void);
+void func_8007383C_827EC(void);
+void enableCheatWeasel(void);
+void enableCheatUseful(void);
+void enableCheatBanana(void);
+void enableCheatDwarf(void);
+void enableCheatDundee(void);
+void enableCheatLard(void);
+void enableCheatFeeble(void);
+
+// const Cheat D_8013B940_14A8F0[21] = {
 // 	{ "annul", func_800731B0_82160 },
 // 	{ "zfarewell", enableCheatFarewell },
 // 	{ "arsenal", enableCheatArsenal },
@@ -266,14 +288,14 @@ void enableCheatDundee() {
 
 // func_800739F8_829A8
 void enableCheatLard() {
-	D_8013FCD0 = 1;
+	D_8013FCD0_14EC80 = 1;
 }
 
 // func_80073A08_829B8
 // Weak bosses
 void enableCheatFeeble() {
-	s32 x = D_8013BD04;
-	D_8013BD04 = x == 0;
+	s32 x = D_8013BD04_14ACB4;
+	D_8013BD04_14ACB4 = x == 0;
 }
 
 // addCharToCheatInputBuffer
@@ -324,7 +346,7 @@ void func_80073A74_82A24(void) {
 void func_80073B30_82AE0(s32 arg0)
 {
   func_8001A650_1B250((s16) (arg0 + 0x77));
-  D_8013B940[arg0].cheatFunc();
+  D_8013B940_14A8F0[arg0].cheatFunc();
 }
 
 // https://decomp.me/scratch/Xo6Wf
@@ -398,13 +420,13 @@ void func_80073B78_82B28(void)
 	for(var_s0 = 0x14; var_s0 != 0; var_s0--)
 	{
 	  firstNullCharIndex = 3;
-	  while (D_8013B940[var_s0].cheatPattern[++firstNullCharIndex] != 0);
+	  while (D_8013B940_14A8F0[var_s0].cheatPattern[++firstNullCharIndex] != 0);
 	  
 	  bufferIndex = firstNullCharIndex;      
 	  if (firstNullCharIndex != 0)//
 	  {
 		  bufferIndex--;
-		  curCheatPatternChar = &D_8013B940[var_s0].cheatPattern[firstNullCharIndex - bufferIndex],
+		  curCheatPatternChar = &D_8013B940_14A8F0[var_s0].cheatPattern[firstNullCharIndex - bufferIndex],
 			curBufferChar = &cheatInputBuffer[bufferIndex];
 		  // walk backwards up the buffer and down the cheatPattern
 		  // as buffer is <latest input> -> <oldest input> order

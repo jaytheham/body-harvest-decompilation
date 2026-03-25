@@ -77,7 +77,7 @@ void func_800C1268_D0218(f32 arg0, f32 arg1, f32 arg2) { D_80153BA0.x = arg0; D_
 
 void func_800C1384_D0334(u8 arg0) {
 	if (D_80154088[arg0].unk0 == 0xFA) {
-		osSyncPrintf(&D_80142ECC); // EFFECTS WARNING : Call to free up an effect which does not exist
+		osSyncPrintf(&D_80142ECC_151E7C); // EFFECTS WARNING : Call to free up an effect which does not exist
 		return;
 	}
 	D_80154088[arg0].unk0 = 0xFA;
@@ -115,7 +115,7 @@ u8 func_800C14D4_D0484(u8 arg0) {
 	s32 temp;
 
 	if ((gameplayMode == 2) || (gameplayMode == 9)) {
-		osSyncPrintf(&D_80142F44); // Do not allocate because in pause
+		osSyncPrintf(&D_80142F44_151EF4); // Do not allocate because in pause
 	}
 	
 	if (arg0 >= 0xA) {
@@ -125,12 +125,12 @@ u8 func_800C14D4_D0484(u8 arg0) {
 	}
 	
 	if (temp != 0) {
-		osSyncPrintf(&D_80142F68, arg0); // ERROR: tried to allocate a permanent effect
+		osSyncPrintf(&D_80142F68_151F18, arg0); // ERROR: tried to allocate a permanent effect
 		return 0xFB;
 	}
 	
 	if (D_80154304 >= 0x1E) {
-		osSyncPrintf(&D_80142F98, arg0); // WARNING : Out of space to create a new dynamic effect of type %d
+		osSyncPrintf(&D_80142F98_151F48, arg0); // WARNING : Out of space to create a new dynamic effect of type %d
 		temp_slot = 0xFB;
 	} else {
 		temp_slot = D_8015430C;
@@ -317,7 +317,7 @@ success:
 
 void func_800C3288_D2238(u8 arg0) {
 	if (arg0 >= 0x1E || D_80154088[arg0].unk0 != 1) {
-		osSyncPrintf(&D_80143478); // DYNAMIC EFFECTS : Tried to kill photon effect which does not exist!
+		osSyncPrintf(&D_80143478_152428); // DYNAMIC EFFECTS : Tried to kill photon effect which does not exist!
 		return;
 	}
 	func_800C1418_D03C8(arg0, 0);
@@ -508,9 +508,9 @@ void func_800CBDE0_DAD90(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 		entry->unk8 = arg1;
 		entry->unkA = arg2;
 		entry->unkC = arg3;
-		*(u8 *)&entry->unkE = D_8013DF80.unk0;
-		*((u8 *)&entry->unkE + 1) = D_8013DF80.unk1;
-		*(u8 *)&entry->unk10 = D_8013DF80.unk2;
+		*(u8 *)&entry->unkE = D_8013DF80_14CF30.unk0;
+		*((u8 *)&entry->unkE + 1) = D_8013DF80_14CF30.unk1;
+		*(u8 *)&entry->unk10 = D_8013DF80_14CF30.unk2;
 		if (arg7 == 0) {
 			*((u8 *)&entry->unk12 + 1) = 0;
 			return;
@@ -556,7 +556,7 @@ void func_800CD2E8_DC298(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_801436D8); // ** WARNING: tried to update a jet stream effect that doesn't exist! **
+	osSyncPrintf(&D_801436D8_152688); // ** WARNING: tried to update a jet stream effect that doesn't exist! **
 }
 
 void func_800CD390_DC340(u8 arg0) {
@@ -741,7 +741,7 @@ void func_800D1A1C_E09CC(u8 arg0) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_801437C0); // EFFECTS WARNING : You have tried to kill a lightning effect which doesn't exist
+	osSyncPrintf(&D_801437C0_152770); // EFFECTS WARNING : You have tried to kill a lightning effect which doesn't exist
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D1A94_E0A44.s")
@@ -855,7 +855,7 @@ void func_800D4AB0_E3A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_80143814); // ** WARNING: tried to update a ring weapon bullet that doesn't exist! **
+	osSyncPrintf(&D_80143814_1527C4); // ** WARNING: tried to update a ring weapon bullet that doesn't exist! **
 }
 
 void func_800D4B44_E3AF4(void) {
@@ -899,7 +899,7 @@ void func_800D55C0_E4570(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_80143860, arg1, arg2, arg3); // ** WARNING: tried to update a triple spinner that doesn't exist! **
+	osSyncPrintf(&D_80143860_152810, arg1, arg2, arg3); // ** WARNING: tried to update a triple spinner that doesn't exist! **
 }
 
 void func_800D5684_E4634(void) {
@@ -966,9 +966,9 @@ void func_800D6A84_E5A34(u8 arg0)
 {
   D_80153AE0[arg0].unk13 = 0;
   D_80153AE0[arg0].unk14 = 0;
-  D_80153AE0[arg0].unk18 = ((s32 *) (&D_8013E2F4))[arg0];
-  D_80153AE0[arg0].unk12 = ((u8 *) (&D_8013E2EC))[arg0];
-  D_80153AE0[arg0].unk1C = ((s32 *) (&D_8013E308))[arg0];
+  D_80153AE0[arg0].unk18 = ((s32 *) (&D_8013E2F4_14D2A4))[arg0];
+  D_80153AE0[arg0].unk12 = ((u8 *) (&D_8013E2EC_14D29C))[arg0];
+  D_80153AE0[arg0].unk1C = ((s32 *) (&D_8013E308_14D2B8))[arg0];
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D6ADC_E5A8C.s")
@@ -999,7 +999,7 @@ s16 func_800D7624_E65D4(s16 arg0, s16 arg1, s16 arg2) {
 
 void func_800D76A8_E6658(s16 arg0) {
 	if (arg0 == -3) {
-		osSyncPrintf(&D_8014390C); // DYNAMIC EFFECTS : Tried to kill minin photon effect which does not exist!
+		osSyncPrintf(&D_8014390C_1528BC); // DYNAMIC EFFECTS : Tried to kill minin photon effect which does not exist!
 		return;
 	}
 	func_800C1A4C_D09FC(arg0, 0x11, 1);
@@ -1010,7 +1010,7 @@ void func_800D76F4_E66A4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 *temp_v0;
 
 	if ((arg3 == -3) || (temp_v1 = (u8 *)&D_80154318[arg3], temp_v0 = (s16 *)(temp_v1 + 8), ((*temp_v1 & 1) == 0))) {
-		osSyncPrintf(&D_80143958, arg1, arg2); // DYNAMIC EFFECTS : Tried to update mini photon effect which does not exist!
+		osSyncPrintf(&D_80143958_152908, arg1, arg2); // DYNAMIC EFFECTS : Tried to update mini photon effect which does not exist!
 		return;
 	}
 	temp_v0[0] = arg0;
@@ -1046,7 +1046,7 @@ s16 func_800D7EF8_E6EA8(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 void func_800D7FB4_E6F64(s16 arg0) {
 	if (arg0 == -3) {
-		osSyncPrintf(&D_801439A4); // DYNAMIC EFFECTS : Tried to kill fire ball effect which does not exist!
+		osSyncPrintf(&D_801439A4_152954); // DYNAMIC EFFECTS : Tried to kill fire ball effect which does not exist!
 		return;
 	}
 	func_800C1A4C_D09FC(arg0, 0x12, 1);
@@ -1175,7 +1175,7 @@ s32 func_800D99F4_E89A4(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 temp_v0;
 	Unk80154318Entry *temp_v1;
 
-	osSyncPrintf(&D_80143A38); // Create group effect
+	osSyncPrintf(&D_80143A38_1529E8); // Create group effect
 	temp_v0 = func_800C19D4_D0984(0x15, 1);
 	if (temp_v0 != -3) {
 		temp_v1 = &D_80154318[temp_v0];
@@ -1545,11 +1545,11 @@ void func_800E00F4_EF0A4(u8 arg0, u8 arg1) {
 void func_800E03FC_EF3AC(void) {
 	u8 i;
 
-	osSyncPrintf(&D_80143ED0); // DUMP SPECIAL EFFECTS INFO
+	osSyncPrintf(&D_80143ED0_152E80); // DUMP SPECIAL EFFECTS INFO
 	for (i = 0; i < 0x1E; i++) {
 		if (D_80154088[i].unk0 != 0xFA) {
 			// Effect %d :  Type %d  numUints %d
-			osSyncPrintf(&D_80143EF0, i, D_80154088[i].unk0, D_80154088[i].unk4);
+			osSyncPrintf(&D_80143EF0_152EA0, i, D_80154088[i].unk0, D_80154088[i].unk4);
 		}
 	}
 }
@@ -1643,9 +1643,9 @@ void func_800E2750_F1700(u8 arg0) {
 
 void func_800E35E0_F2590(u8 arg0)
 {
-  if (D_8013E344 < arg0)
+  if (D_8013E344_14D2F4 < arg0)
   {
-	D_8013E344 = arg0;
+	D_8013E344_14D2F4 = arg0;
   }
 }
 
@@ -1722,7 +1722,7 @@ void func_800E552C_F44DC(void) {
 void func_800E6028_F4FD8(u8 arg0, u8 arg1) {
 	s16 i;
 
-	osSyncPrintf(&D_80143FA4, (s32) arg1); // removing shield : %d
+	osSyncPrintf(&D_80143FA4_152F54, (s32) arg1); // removing shield : %d
 	for (i = 0; i < D_80152C96; i++) {
 		if ((arg0 == D_80152CA0[i].unk1) && (arg1 == D_80152CA0[i].unk0)) {
 			D_80152CA0[i].unk2 = 0x64;

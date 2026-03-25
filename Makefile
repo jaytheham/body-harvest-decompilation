@@ -16,9 +16,7 @@ CYAN    := \033[0;36m
 
 BUILD_DIR = build
 ASM_DIRS  = asm \
-			asm/libc \
-			asm/libultra/audio \
-			asm/data asm/data/libultra/audio \
+			asm/data \
 			asm/core \
 			asm/overlay_gameplay/frontend asm/overlay_gameplay/outside asm/overlay_gameplay/inside \
 			asm/overlay_level/greece \
@@ -30,7 +28,6 @@ BIN_DIRS  = assets
 SRC_DIR   = src.$(VERSION)
 
 SRC_DIRS  = $(SRC_DIR) \
-			$(SRC_DIR)/libultra/audio $(SRC_DIR)/libultra/libc \
 			$(SRC_DIR)/core \
 			$(SRC_DIR)/overlay_gameplay/frontend \
 			$(SRC_DIR)/overlay_gameplay/outside \
@@ -41,8 +38,7 @@ SRC_DIRS  = $(SRC_DIR) \
 			$(SRC_DIR)/overlay_level/siberia \
 			$(SRC_DIR)/overlay_level/comet \
 			$(SRC_DIR)/data \
-			$(SRC_DIR)/bss \
-			$(SRC_DIR)/buffers
+			$(SRC_DIR)/bss
 
 TOOLS_DIR = tools
 

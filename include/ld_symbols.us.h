@@ -3,6 +3,9 @@
 
 #include "common.h"
 
+extern Addr _14A8A0_bin;
+extern Addr _14A8F0_bin;
+extern Addr _14AA40_bin;
 extern Addr _bootSegmentDataEnd;
 extern Addr _bootSegmentDataSize;
 extern Addr _bootSegmentDataStart;
@@ -106,13 +109,6 @@ extern Addr _overlay_gameplay_outsideSegmentTextEnd;
 extern Addr _overlay_gameplay_outsideSegmentTextSize;
 extern Addr _overlay_gameplay_outsideSegmentTextStart;
 extern Addr _overlay_gameplay_outside_bssSegmentStart;
-extern Addr _overlay_gameplay_outside_dataSegmentDataEnd;
-extern Addr _overlay_gameplay_outside_dataSegmentDataSize;
-extern Addr _overlay_gameplay_outside_dataSegmentDataStart;
-extern Addr _overlay_gameplay_outside_dataSegmentEnd;
-extern Addr _overlay_gameplay_outside_dataSegmentRomEnd;
-extern Addr _overlay_gameplay_outside_dataSegmentRomStart;
-extern Addr _overlay_gameplay_outside_dataSegmentStart;
 extern Addr _overlay_level_americaSegmentBssEnd;
 extern Addr _overlay_level_americaSegmentBssSize;
 extern Addr _overlay_level_americaSegmentBssStart;
@@ -406,7 +402,6 @@ extern Addr overlay_gameplay_outside_F7870_c;
 extern Addr overlay_gameplay_outside_F9230_c;
 extern Addr overlay_gameplay_outside_buildings_c;
 extern Addr overlay_gameplay_outside_cheats_c;
-extern Addr overlay_gameplay_outside_data_bin;
 extern Addr overlay_gameplay_outside_missions_c;
 extern Addr overlay_gameplay_outside_trigger_c;
 extern Addr overlay_level_america_254410_c;

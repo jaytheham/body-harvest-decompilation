@@ -4,7 +4,7 @@
 
 void func_800A92E0_B8290(u8 arg0, s32 arg1) {
 	if ((alienInstances[arg0].unk20 & arg1) == arg1) {
-		D_80140AC4 = 0;
+		D_80140AC4_14FA74 = 0;
 	}
 }
 

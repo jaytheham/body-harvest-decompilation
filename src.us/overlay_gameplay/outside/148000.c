@@ -8,11 +8,11 @@ void func_80139050_148000(void) {
 	for (var_s1 = weaponSlots, var_s0 = 0; var_s0 != 7; var_s0 += 1, var_s1 += 1){
 	
 		if (var_s0 == D_8004794A) {
-			osSyncPrintf(&D_80145A30); // select 
+			osSyncPrintf(&D_80145A30_1549E0); // select 
 		}
-		osSyncPrintf(&D_80145A38, *var_s1); // %d,
+		osSyncPrintf(&D_80145A38_1549E8, *var_s1); // %d,
 	}
-	osSyncPrintf(&D_80145A3C);
+	osSyncPrintf(&D_80145A3C_1549EC);
 }
 
 void func_801390F4_1480A4(s16 arg0) {
@@ -24,18 +24,18 @@ void func_801390F4_1480A4(s16 arg0) {
 
 s32 func_80139150_148100(u8 arg0, u16 arg1) {
 		
-	if (D_80048140[arg0] == D_80140D40[arg0]) {
+	if (D_80048140[arg0] == D_80140D40_14FCF0[arg0]) {
 		return 0;
 	}
 	if (D_80048140[arg0] == -0x8000) {
 		return 1;
 	}
 	if (arg1 == -0x8000) {
-		D_80048140[arg0] = D_80140D40[arg0];
+		D_80048140[arg0] = D_80140D40_14FCF0[arg0];
 	}
 	D_80048140[arg0] += arg1;
-	if (D_80140D40[arg0] < D_80048140[arg0]) {
-		D_80048140[arg0] = D_80140D40[arg0];
+	if (D_80140D40_14FCF0[arg0] < D_80048140[arg0]) {
+		D_80048140[arg0] = D_80140D40_14FCF0[arg0];
 	}
 	return 1;
 }
@@ -105,21 +105,21 @@ void func_80139460_148410(void) {
 // Compound &= produces correct register ordering (nor t0 before lw t9) but wrong store address.
 #ifdef NON_MATCHING
 void func_801394DC_14848C(void) {
-    s32 bit;
-    s32 i;
+	s32 bit;
+	s32 i;
 
-    for (i = 2; i != 0xB; i++) {
-        bit = 1 << i;
-        if (bit & D_801601E8) {
-            func_801391DC_14818C(i, 0);
-            D_801601E8 &= ~bit;
-        }
-    }
-    if (currentLevel == LEVEL_COMET) {
-        D_80048140[3] = 0x64;
-        D_80048140[4] = 0x190;
-        D_80048140[6] = 0x18;
-    }
+	for (i = 2; i != 0xB; i++) {
+		bit = 1 << i;
+		if (bit & D_801601E8) {
+			func_801391DC_14818C(i, 0);
+			D_801601E8 &= ~bit;
+		}
+	}
+	if (currentLevel == LEVEL_COMET) {
+		D_80048140[3] = 0x64;
+		D_80048140[4] = 0x190;
+		D_80048140[6] = 0x18;
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801394DC_14848C.s")
@@ -167,7 +167,7 @@ void func_80139778_148728(void) {
 	} else {
 		temp_v0 = &vehicleSpecs[temp_v1];
 		if (!(temp_v0->unk4C & 0x04000000)) {
-			osSyncPrintf(&D_80145A70, temp_v0->weapon1, &D_80031424); // Give vehicle its weapon %d
+			osSyncPrintf(&D_80145A70_154A20, temp_v0->weapon1, &D_80031424); // Give vehicle its weapon %d
 			func_80139460_148410();
 			if (D_80031450) {
 				func_801391DC_14818C(0xB, -0x8000);
@@ -250,7 +250,7 @@ void func_80139984_148934(void) {
 		D_80031424[6] = 0x29;
 		D_80031424[9] = 0x14;
 	}
-	osSyncPrintf(&D_80145A8C); // Initialise Ammunition
+	osSyncPrintf(&D_80145A8C_154A3C); // Initialise Ammunition
 }
 
 void func_80139B34_148AE4(void) {
@@ -415,7 +415,7 @@ s32 func_8013B534_14A4E4(void) {
 			return 1;
 		}
 	}
-	osSyncPrintf(&D_80145AA4, D_801601D0); // Weapon %d not valid
+	osSyncPrintf(&D_80145AA4_154A54, D_801601D0); // Weapon %d not valid
 	return 0;
 }
 
@@ -429,7 +429,7 @@ s32 func_8013B5E4_14A594(s32 arg0) {
 		return 1;
 	}
 
-	osSyncPrintf(&D_80145ABC, D_801601D0);
+	osSyncPrintf(&D_80145ABC_154A6C, D_801601D0);
 	if (arg0 == 0) {
 		func_8013B298_14A248();
 	} else {

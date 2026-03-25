@@ -46,7 +46,7 @@ s32 func_800B0C4C_BFBFC(s32 arg0, s32 arg1) {
 }
 
 void func_800B0C80_BFC30(void) {
-	D_8014FD30 = *(Unk8014FD30Type *)(D_80147C30 + currentLevel * 0x90 + D_80047F94 * 0x18 - 0x90);
+	D_8014FD30 = *(Unk8014FD30Type *)(D_80147C30_156BE0 + currentLevel * 0x90 + D_80047F94 * 0x18 - 0x90);
 }
 
 #ifdef NON_MATCHING
@@ -162,7 +162,7 @@ void func_800B33BC_C236C(s32 arg0) {
 	f32 sp20;
 	f32 sp1C;
 
-	sp1C = __cosf(D_80142E20); sp20 = sinf(D_80142E24);
+	sp1C = __cosf(D_80142E20_151DD0); sp20 = sinf(D_80142E24_151DD4);
 	coss_val = coss(arg0);
 	D_8014FD2A = func_80003740_4340((f32)((f64)(sp20 / sp1C) / ((f64)(f32)coss_val / 32768.0))) * 2;
 	if ((s16)arg0 >= 0x2E39) {
@@ -240,10 +240,10 @@ void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2) {
 
 void func_800B9954_C8904(u8 arg0) {
 	D_80152B80[arg0].unk8 = 0;
-	if (arg0 < D_8013DAE4) {
-		D_8013DAE4 = arg0;
+	if (arg0 < D_8013DAE4_14CA94) {
+		D_8013DAE4_14CA94 = arg0;
 	}
-	D_8013DAE0--;
+	D_8013DAE0_14CA90--;
 }
 
 /* Allocates a new particle/effect slot, fills it from the given parameters,
@@ -254,11 +254,11 @@ void func_800B99A8_C8958(Unk80152B80 *arg0, s16 arg1, s16 arg2, s32 arg3, u8 *ar
 	u8 i;
 	Unk80152B80 *entry;
 
-	if (D_8013DAE0 == 0xF) {
+	if (D_8013DAE0_14CA90 == 0xF) {
 		osSyncPrintf(&D_80142D94);
 		return;
 	}
-	entry = &D_80152B80[D_8013DAE4];
+	entry = &D_80152B80[D_8013DAE4_14CA94];
 	entry->unk0 = arg0->unk0;
 	entry->unk4 = arg1;
 	entry->unk6 = arg2;
@@ -266,16 +266,16 @@ void func_800B99A8_C8958(Unk80152B80 *arg0, s16 arg1, s16 arg2, s32 arg3, u8 *ar
 	entry->unk8 = arg3;
 	entry->unk9 = arg4[0];
 	entry->unkA = arg4[1];
-	D_8013DAE0++;
+	D_8013DAE0_14CA90++;
 	entry->unkC = arg5;
 	entry->unkE = arg6;
 	entry->unk10 = arg7;
 	entry->unkB = arg4[2];
-	if (D_8013DAE4 < 0xF) {
-		i = D_8013DAE4;
+	if (D_8013DAE4_14CA94 < 0xF) {
+		i = D_8013DAE4_14CA94;
 		for (;;) {
 			if (D_80152B80[i].unk8 == 0) {
-				D_8013DAE4 = i;
+				D_8013DAE4_14CA94 = i;
 				break;
 			}
 			i = (i + 1) & 0xFF;
@@ -378,12 +378,12 @@ void func_800BDD24_CCCD4(u8 arg0)
 
 void func_800BDDA0_CCD50(void) {
 	D_80151DD0 = 0;
-	D_8013D9AC = 0;
+	D_8013D9AC_14C95C = 0;
 }
 
 void func_800BDDB4_CCD64(void) {
 	D_80151DD0 = 3;
-	D_8013D9AC = 0;
+	D_8013D9AC_14C95C = 0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BDDCC_CCD7C.s")
@@ -391,21 +391,21 @@ void func_800BDDB4_CCD64(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BE5C0_CD570.s")
 
 void func_800BECE0_CDC90(void) {
-	D_8013D9B0 = 0x4B;
+	D_8013D9B0_14C960 = 0x4B;
 }
 
 void func_800BECF0_CDCA0(void) {
-	D_8013D9B0 = 0x4B;
-	D_8013D9B4 = 1;
+	D_8013D9B0_14C960 = 0x4B;
+	D_8013D9B4_14C964 = 1;
 }
 
 void func_800BED0C_CDCBC(void) {
-	D_8013D9B0 = 1;
-	D_8013D9B4 = 0;
+	D_8013D9B0_14C960 = 1;
+	D_8013D9B4_14C964 = 0;
 }
 
 void func_800BED24_CDCD4(void) {
-	D_8013D9B4 = 0;
+	D_8013D9B4_14C964 = 0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BED30_CDCE0.s")

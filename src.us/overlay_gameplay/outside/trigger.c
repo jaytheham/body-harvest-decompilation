@@ -13,7 +13,7 @@ void func_800AE2C0_BD270(void) {
 
 s16 func_800AE300_BD2B0(Unk80222A78 *arg0) {
 	if (D_80223778 >= 0xD0) {
-		sourceTaggedPrintF(&D_80142AB0, &D_80142AD0, 0x6D, &D_80223778); // nextTrigger < MAX_GAME_TRIGGERS
+		sourceTaggedPrintF(&D_80142AB0_151A60, &D_80142AD0_151A80, 0x6D, &D_80223778); // nextTrigger < MAX_GAME_TRIGGERS
 	}
 	if (D_80223778 >= 0xD0) {
 		return -1;
@@ -63,7 +63,7 @@ u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
 	AlienInstance *leaderGroup;
 
 	leaderId = 0xFF;
-	osSyncPrintf(&D_80142B6C, waveType);
+	osSyncPrintf(&D_80142B6C_151B1C, waveType);
 	D_80223780[arg3].unk11 = 0;
 	for (i = 0; i < 0xC; i++) {
 		if (D_8003BCC0[waveType][i].alienSpecId == 0) {
@@ -163,14 +163,14 @@ void func_800AF3B8_BE368(Unk80222A78 *arg0) {
 
 	sp1C = D_80223780[arg0->pad9[0]].padC[2] * 200;
 	if (sp1C != 0) {
-		osSyncPrintf(&D_80142B7C, arg0->pad9[0], sp1C / 20, arg0);
+		osSyncPrintf(&D_80142B7C_151B2C, arg0->pad9[0], sp1C / 20, arg0);
 		arg0->unk0 = 2;
 		arg0->unk4 = sp1C + D_8014F820;
 		arg0->unkC = func_800AF390_BE340;
 		func_800AE454_BD404(arg0);
 		return;
 	}
-	osSyncPrintf(&D_80142BA0, arg0->pad9[0]);
+	osSyncPrintf(&D_80142BA0_151B50, arg0->pad9[0]);
 }
 
 void func_800AF474_BE424(s32 arg0) {}
@@ -182,7 +182,7 @@ void func_800AF49C_BE44C(s32 arg0) {}
 
 void func_800AF4A4_BE454(s32 arg0, s32 arg1, s32 arg2) {
 	Unk80222A78 tmp;
-	osSyncPrintf(&D_80142BB8, arg0, arg2); // Wave regenerated %d in %d seconds
+	osSyncPrintf(&D_80142BB8_151B68, arg0, arg2); // Wave regenerated %d in %d seconds
 	tmp.unk0 = 9;
 	tmp.unk1 = 0;
 	tmp.unk2 = 0;
@@ -195,7 +195,7 @@ void func_800AF4A4_BE454(s32 arg0, s32 arg1, s32 arg2) {
 
 void func_800AF52C_BE4DC(s32 arg0) {
 	if ((D_80048038[arg0] == 1) || (D_80048038[arg0] == 0)) {
-		osSyncPrintf(&D_80142BDC, arg0);
+		osSyncPrintf(&D_80142BDC_151B8C, arg0);
 		D_80048038[arg0] = 3;
 		if (D_8014CFF0[arg0 * 2] != 0x93) {
 			func_800AF764_BE714((s16)D_8014CFF0[arg0 * 2]);
@@ -205,7 +205,7 @@ void func_800AF52C_BE4DC(s32 arg0) {
 
 void func_800AF5B0_BE560(s32 arg0) {
 	if ((D_80048038[arg0] == 1) || (D_80048038[arg0] == 0)) {
-		osSyncPrintf(&D_80142BEC, arg0);
+		osSyncPrintf(&D_80142BEC_151B9C, arg0);
 		D_80048038[arg0] = 2;
 		if (D_8014CFF1[arg0 * 2] != 0x93) {
 			func_800AF764_BE714((s16)D_8014CFF1[arg0 * 2]);
