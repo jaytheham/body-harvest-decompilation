@@ -30,7 +30,7 @@ u8 func_800A3DC8_B2D78(void) {
 		if (alien->specIndex == 0x19) {
 			if (alien->unk3C != 0) {
 				alien->unk3C = (s8) (alien->unk3C - 1);
-				osSyncPrintf(D_80142740, temp_a2); // Found parent %d
+				osSyncPrintf(D_80142740_1516F0, temp_a2); // Found parent %d
 				return temp_a2;
 			}
 		}
@@ -261,7 +261,7 @@ void func_800A5A50_B4A00(s32 arg0, s32 arg1) {
 	s32 sp1C;
 
 	D_8014F800 = 1;
-	osSyncPrintf(D_80142790, arg0); // Activate beacon %d
+	osSyncPrintf(D_80142790_151740, arg0); // Activate beacon %d
 	if (D_80151DD0 == 0) {
 		D_80047F9C = arg0 + 1;
 		sp1C = func_80009F18_AB18(arg1);
@@ -356,13 +356,13 @@ void func_800A5D3C_B4CEC(void) {
 
 // warpFromSaveBeacon
 void func_800A5EA8_B4E58(u8 arg0) {
-	osSyncPrintf(D_801427D8, arg0); // teleport to:%d
-	D_8013D890 = 1;
-	D_8013D894 = arg0;
+	osSyncPrintf(D_801427D8_151788, arg0); // teleport to:%d
+	D_8013D890_14C840 = 1;
+	D_8013D894_14C844 = arg0;
 }
 
 void func_800A5EE8_B4E98(u8 arg0) {
-	D_8013D890 = 4;
+	D_8013D890_14C840 = 4;
 	D_80157A3C = 0;
 	func_800EC450_FB400();
 	func_800153D8_15FD8(0xD7);
@@ -373,7 +373,7 @@ void func_800A5EE8_B4E98(u8 arg0) {
 void func_800A5F24_B4ED4(s32 arg0) {
     u8 sp27;
 
-    if (D_8013D890 == 0) {
+    if (D_8013D890_14C840 == 0) {
         osSyncPrintf(&D_801427E8, (s32)arg0);
         sp27 = arg0 * 4;
         osSyncPrintf(&D_801427F4, (u32)D_80031536[currentLevel * 0x18 + sp27]);
@@ -556,7 +556,7 @@ void func_800A9238_B81E8() {
 	while (powerupTypePtr--, i--) {
 		powerupType = *powerupTypePtr;
 		if (negOne != powerupType) {
-			osSyncPrintf(D_80142820, powerupType); // Giving delayed powerup %d
+			osSyncPrintf(D_80142820_1517D0, powerupType); // Giving delayed powerup %d
 			func_800A8E18_B7DC8(*powerupTypePtr);
 		}
 	}

@@ -149,7 +149,7 @@ s32 func_80117464_126414(u8 arg0) {
 s32 func_801176B0_126660(void)
 {
   s32 i;
-  s32 target = D_80052540;Unk80148620 *ptr = &D_80148620;
+  s32 target = D_80052540;Unk80148620 *ptr = &D_80148620_1575D0;
   
   for (i = 0xF; i--;ptr--)
   {
@@ -171,8 +171,8 @@ s32 func_801176B0_126660(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117A4C_1269FC.s")
 
 void func_80117F10_126EC0(void) {
-	D_8015EA30 = D_80144F30;
-	D_8015EA2C = D_80144F34;
+	D_8015EA30 = D_80144F30_153EE0;
+	D_8015EA2C = D_80144F34_153EE4;
 }
 
 #ifdef NON_MATCHING
@@ -215,7 +215,7 @@ s32 func_80118114_1270C4(s16 arg0) {
 	s32 i;
 	i = 0xF;
 	while (i--) {
-		if (arg0 == D_80148620[i].unk0) {
+		if (arg0 == D_80148620_1575D0[i].unk0) {
 			return 1;
 		}
 	}
@@ -693,7 +693,7 @@ void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
 	u8 *temp_v0;
 	s32 objIndex;
 
-	objIndex = (((u8 *) arg0 - D_80145BE0) / 0x18);
+	objIndex = (((u8 *) arg0 - D_80145BE0_154B90) / 0x18);
 	if ((temp_v0 = (u8 *) buildingInstances + (((((*(s16 *)((u8 *) &D_8015FAEE + (arg1 * 0x30))) >> 4) << 2) - ((*(s16 *)((u8 *) &D_8015FAEE + (arg1 * 0x30))) >> 4)) << 3),
 		 objIndex == 0x4F)) {
 		if (temp_v0[0xD] != 2) {
@@ -878,7 +878,7 @@ void func_801219A4_130954(VehicleInstance *arg0, s16 arg1) {
 
 void func_801219F4_1309A4(void* arg0, s16 arg1) {
 	func_8011D260_12C210(0x45, 0x12);
-	if (arg0 == (D_80145BE0 + 0x1E0)) {
+	if (arg0 == (D_80145BE0_154B90 + 0x1E0)) {
 		D_80048178 = 0x14;
 		func_8012D84C_13C7FC();
 		func_800072CC_7ECC(0xF);
@@ -920,7 +920,7 @@ s32 func_80122320_1312D0(s32 arg0)
 	s32 i;
 	for(i = 5;i--;)
 	{
-		new_var = (s32)D_80140AB0[i] == arg0;
+		new_var = (s32)D_80140AB0_14FA60[i] == arg0;
 		if (new_var)
 		{
 			return -1;
@@ -1008,7 +1008,7 @@ void func_80124BA8_133B58(void) {
 		var_a0_2--;
 	} while (var_v1--);
 
-	temp_v0 = &D_80140AC8;
+	temp_v0 = &D_80140AC8_14FA78;
 	temp_v1 = &D_8015F9E8;
 	*temp_v0 = 0;
 	*temp_v1 = 0;
@@ -1027,14 +1027,14 @@ void func_80124BA8_133B58(void) {
 void func_80125C48_134BF8(s16 arg0, s16 arg1, s16 arg2) {
 	s32 index;
 
-	index = D_80140AC8;
+	index = D_80140AC8_14FA78;
 	D_8015F9F8[index][0] = arg0;
 	D_8015F9F8[index][1] = arg1;
 	D_8015F9F8[index][2] = arg2;
 	D_8015F9F8[index][3] = 4;
-	D_80140AC8 = index + 1;
-	if (D_80140AC8 == 8) {
-		D_80140AC8 = 0;
+	D_80140AC8_14FA78 = index + 1;
+	if (D_80140AC8_14FA78 == 8) {
+		D_80140AC8_14FA78 = 0;
 	}
 }
 

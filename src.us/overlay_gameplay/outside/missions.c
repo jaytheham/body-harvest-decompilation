@@ -97,7 +97,7 @@ void func_8007463C_835EC(void) {
 
 	entry = D_801497C8 + D_80149B30 * 3;
 	if (++D_80149B30 >= 0xFE) {
-		osSyncPrintf(D_801411F0); // **** ERROR: MISSION COMMANDS OVERFLOW ****
+		osSyncPrintf(D_801411F0_1501A0); // **** ERROR: MISSION COMMANDS OVERFLOW ****
 		D_80149B4A = 1;
 	}
 	entry[0] = func_80074500_834B0();
@@ -117,7 +117,7 @@ void func_800746F8_836A8(void) {
 
 	temp_a1 = D_801497C8 + D_80149B30 * 3;
 	if (++D_80149B30 >= 0xFE) {
-		osSyncPrintf(D_8014121C, temp_a1); // **** ERROR: MISSION COMMANDS OVERFLOW ****
+		osSyncPrintf(D_8014121C_1501CC, temp_a1); // **** ERROR: MISSION COMMANDS OVERFLOW ****
 		D_80149B4A = 1;
 	}
 	*temp_a1 = 0xA9;
@@ -259,8 +259,8 @@ void func_8007562C_845DC(void) {
   s32 i;
 
   for (i = 0; i < 4; i++) {
-	if ((D_8013BAC0[currentLevel - 1][i] >= 0) && (func_80076208_851B8(D_8013BAC0[currentLevel - 1][i]) != 0)) {
-	  func_800078E4_84E4(D_8013BAC0[currentLevel - 1][i], &D_8004D150);
+	if ((D_8013BAC0_14AA70[currentLevel - 1][i] >= 0) && (func_80076208_851B8(D_8013BAC0_14AA70[currentLevel - 1][i]) != 0)) {
+	  func_800078E4_84E4(D_8013BAC0_14AA70[currentLevel - 1][i], &D_8004D150);
 	}
   }
 }

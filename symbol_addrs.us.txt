@@ -15,6 +15,7 @@ gameplayMode = 0x80052ADC;
 cheatInputBuffer = 0x80149450;
 isCheatingEnabled = 0x80149460;
 addCharToCheatInputBuffer = 0x80073A20;
+cheatData = 0x8013B940; // rom:0x14A8F0 size:0x150
 
 hudWeaponItems = 0x801601B0;
 
