@@ -24,7 +24,21 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D62B4_2B86E4.s")
 
+#ifdef NON_MATCHING
+void func_802D62E4_2B8714(void) {
+    s16 sp1E;
+    s16 temp_t9;
+
+    temp_t9 = 0x28 - D_8004D1B1;
+    sp1E = temp_t9;
+    func_8009BF64_AAF14((u16)(temp_t9 & 0xFFFF));
+    if ((sp1E < 0) || (func_8000726C_7E6C((u64)0x28) != 0)) {
+        func_800074BC_80BC((void *)func_802D62E4_2B8714);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D62E4_2B8714.s")
+#endif
 
 void func_802D6340_2B8770(void) {
     func_80007410_8010(&func_802D62E4_2B8714);
