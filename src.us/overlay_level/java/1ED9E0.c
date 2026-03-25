@@ -297,7 +297,7 @@ s32 func_802D57F4_1EE504(void) {
 #endif
 
 void func_802D5A78_1EE788(void) {
-    osSyncPrintf(&D_802E0E10);
+    osSyncPrintf(&D_802E0E10_1F9B20);
     D_801591C4 = 0;
     D_802E0FB2 = 0;
     D_802E0FB4 = 0xA;
@@ -313,7 +313,7 @@ void func_802D5ADC_1EE7EC(void) {
     sp1E = vehicleInstances[80].unk0;
     sp1C = vehicleInstances[80].unk4;
     D_802E0FB0 += 1;
-    osSyncPrintf(&D_802E0E18);
+    osSyncPrintf(&D_802E0E18_1F9B28);
     if (D_802E0FB0 == 3) {
         D_802E0FB0 = 0;
         if (D_801591C4 != 0) {

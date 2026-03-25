@@ -313,10 +313,11 @@ segments:
     overlay: true
     subsegments:
       - [0x254410, c, overlay_level/america/254410]
+      - [0x25EA90, bin]
 
   - name: overlay_level_america_data
     type: bin
-    start: 0x25EA90
+    start: 0x260570
 
   - name: overlay_level_siberia
     type: code
