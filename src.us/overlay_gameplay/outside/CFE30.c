@@ -101,7 +101,7 @@ void func_800C1418_D03C8(u8 arg0, s32 arg1)
   }
   if (entry->unk0 == 0xFA)
   {
-    osSyncPrintf(&D_80142F10); // ERROR : freeing all effect units for unused effect
+    osSyncPrintf(&D_80142F10_151EC0); // ERROR : freeing all effect units for unused effect
     return;
   }
   while (entry->unk4 > 0)
