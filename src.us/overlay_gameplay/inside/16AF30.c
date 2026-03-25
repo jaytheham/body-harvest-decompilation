@@ -364,7 +364,7 @@ void func_8008B058_173118(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B474_173534.s")
 
 void func_8008B53C_1735FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
-	D_800A26A0 = 1;
+	D_800A26A0_18A760 = 1;
 	D_800FCA7A = arg0 * 4;
 	D_800FCA7C = arg1 * 4;
 	D_800FCA7E = arg2 * 4;

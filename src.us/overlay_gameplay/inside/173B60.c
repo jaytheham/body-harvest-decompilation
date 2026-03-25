@@ -226,13 +226,13 @@ void func_8008D900_1759C0(void) {
 void func_8008DC44_175D04(s32 arg0) {
 	switch (D_800313D0) {
 	case 0:
-		func_8001A598_1B198(D_800A26B0 + D_800A2EB0[arg0]);
+		func_8001A598_1B198(D_800A26B0_18A770 + D_800A2EB0_18AF70[arg0]);
 		break;
 	case 1:
-		func_8001A598_1B198(D_800A2FB0 + D_800A37B0[arg0]);
+		func_8001A598_1B198(D_800A2FB0_18B070 + D_800A37B0_18B870[arg0]);
 		break;
 	case 2:
-		func_8001A598_1B198(D_800A38B0 + D_800A40B0[arg0]);
+		func_8001A598_1B198(D_800A38B0_18B970 + D_800A40B0_18C170[arg0]);
 		break;
 	}
 }
@@ -241,13 +241,13 @@ void func_8008DCF4_175DB4(s32 arg0) {
 	s32 temp_v1 = (currentLevel * 0xB) + arg0 + 0xA;
 	switch (D_800313D0) {
 	case 0:
-		func_8001A598_1B198(D_800A26B0 + D_800A2EB0[temp_v1]);
+		func_8001A598_1B198(D_800A26B0_18A770 + D_800A2EB0_18AF70[temp_v1]);
 		break;
 	case 1:
-		func_8001A598_1B198(D_800A2FB0 + D_800A37B0[temp_v1]);
+		func_8001A598_1B198(D_800A2FB0_18B070 + D_800A37B0_18B870[temp_v1]);
 		break;
 	case 2:
-		func_8001A598_1B198(D_800A38B0 + D_800A40B0[temp_v1]);
+		func_8001A598_1B198(D_800A38B0_18B970 + D_800A40B0_18C170[temp_v1]);
 		break;
 	}
 }

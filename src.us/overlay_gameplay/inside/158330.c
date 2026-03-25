@@ -41,7 +41,7 @@ f32 func_80070448_158508(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80071510_1595D0.s")
 
 u8 func_800717A8_159868(void) {
-	return D_8008DE58;
+	return D_8008DE58_175F18;
 }
 
 #ifdef NON_MATCHING
