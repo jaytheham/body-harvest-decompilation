@@ -17,9 +17,51 @@ void func_800A931C_B82CC(s8 arg0, s16 *arg1, s32 *arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A93A4_B8354.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9738_B86E8.s")
+#ifdef NON_MATCHING
+void func_800A9738_B86E8(u8 arg0, s32 arg1) {
+	AlienInstance *parent;
 
+	alienInstances[arg0].unk20 |= arg1;
+	parent = &alienInstances[alienInstances[arg0].unk25];
+	if (alienInstances[((u8 *)parent)[0]].specIndex != 0) {
+		alienInstances[((u8 *)parent)[0]].unk20 |= arg1;
+	}
+	if (alienInstances[((u8 *)parent)[1]].specIndex != 0) {
+		alienInstances[((u8 *)parent)[1]].unk20 |= arg1;
+	}
+	if (alienInstances[((u8 *)parent)[2]].specIndex != 0) {
+		alienInstances[((u8 *)parent)[2]].unk20 |= arg1;
+	}
+	if (alienInstances[((u8 *)parent)[3]].specIndex != 0) {
+		alienInstances[((u8 *)parent)[3]].unk20 |= arg1;
+	}
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9738_B86E8.s")
+#endif
+
+#ifdef NON_MATCHING
+void func_800A9820_B87D0(u8 arg0, s32 arg1) {
+	AlienInstance *parent;
+
+	alienInstances[arg0].unk20 &= ~arg1;
+	parent = &alienInstances[alienInstances[arg0].unk25];
+	if (alienInstances[((u8 *)parent)[0]].specIndex != 0) {
+		alienInstances[((u8 *)parent)[0]].unk20 &= ~arg1;
+	}
+	if (alienInstances[((u8 *)parent)[1]].specIndex != 0) {
+		alienInstances[((u8 *)parent)[1]].unk20 &= ~arg1;
+	}
+	if (alienInstances[((u8 *)parent)[2]].specIndex != 0) {
+		alienInstances[((u8 *)parent)[2]].unk20 &= ~arg1;
+	}
+	if (alienInstances[((u8 *)parent)[3]].specIndex != 0) {
+		alienInstances[((u8 *)parent)[3]].unk20 &= ~arg1;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9820_B87D0.s")
+#endif
 
 void func_800A9908_B88B8(u8 arg0, s32 arg1) {
 	s16 sp38[4];
@@ -198,7 +240,39 @@ void func_800AB700_BA6B0(u8 arg0) {
 	alienInstances[arg0].unkE += 0x400;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB730_BA6E0.s")
+void func_800AB730_BA6E0(u8 arg0) {
+    s32 dx;
+    s32 dz;
+    s32 neg_dx;
+    s32 neg_dz;
+    s32 abs_dx, abs_dz;
+
+    dx = alienInstances[arg0].unk0 - D_80052B34->unk0;
+    dz = alienInstances[arg0].unk4 - D_80052B34->unk4;
+    neg_dx = -dx;
+    if (neg_dx < dx) {
+        abs_dx = dx;
+    } else {
+        abs_dx = neg_dx;
+    }
+    neg_dz = -dz;
+    if (abs_dx < 0xC9) {
+        if (neg_dz < dz) {
+            abs_dz = dz;
+        } else {
+            abs_dz = neg_dz;
+        }
+        if (abs_dz < 0xC9) {
+            if (alienInstances[arg0].unk24 != 0xE || D_80052B34->unk1A == 0) {
+                return;
+            }
+        }
+    }
+    alienInstances[arg0].unk24--;
+    alienInstances[arg0].unk20 |= 0x08020000;
+    alienInstances[arg0].unk20 &= ~0x8020;
+    alienInstances[arg0].unk48 = 0xC0;
+}
 
 void func_800AB80C_BA7BC(u8 arg0) {
 	s32 dummy1, dummy2, dummy3, dummy4;
@@ -432,3 +506,4 @@ void func_800AE1EC_BD19C(void) {
 		}
 	}
 }
+

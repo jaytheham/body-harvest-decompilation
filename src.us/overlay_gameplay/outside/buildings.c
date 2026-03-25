@@ -890,8 +890,29 @@ void func_801219F4_1309A4(void* arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80121EB4_130E64.s")
 
-// Failed - gpt 5.3 codex
+#ifdef NON_MATCHING
+void func_80122244_1311F4(Unk80152B80 *arg0) {
+    s16 sp30;
+    s16 sp32;
+    u8 sp34[3];
+
+    sp34[0] = D_80140AA4[0];
+    sp34[1] = D_80140AA4[1];
+    sp34[2] = D_80140AA4[2];
+
+    if ((D_80052A8C % 35) == 0) {
+        sp30 = arg0->unk0;
+        sp32 = arg0->unk4;
+        func_800B99A8_C8958(&sp30, 30, 500, 255, sp34, 80, 10, 0);
+    }
+
+    if (gameplayMode == GAMEPLAY_MODE_UNK1) {
+        func_800D16BC_E066C(arg0->unk0, arg0->unk2 + 0x14E, arg0->unk4, arg0->unk0, arg0->unk2 + 0x7D0, arg0->unk4, 1);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80122244_1311F4.s")
+#endif
  
 s32 func_80122320_1312D0(s32 arg0)
 {
@@ -1244,8 +1265,47 @@ s32 func_8012DF90_13CF40(Unk8015FAD0 *arg0, void *arg1, s32 arg2) {
 	return var_v1;
 }
 
-// Failed - gpt 5.3 codex
+#ifdef NON_MATCHING
+s32 func_8012E03C_13CFEC(s16 arg0, s16 arg1, s16 arg2) {
+	s32 a0, a1, a2;
+	s32 i;
+	s32 v0;
+	s16 t0;
+	s32 temp1, temp2, temp3;
+	
+	a0 = arg0;
+	a1 = arg1;
+	a2 = arg2;
+	
+	i = 0x19;
+	while (i--) {
+		if (D_8015FAD0[i].unk2C == 0) continue;
+		
+		v0 = D_8015FAD0[i].unk0;
+		t0 = D_8015FAD0[i].unk18;
+		temp1 = v0 >> 16;
+		if (a0 < temp1 - t0) continue;
+		if (temp1 + t0 < a0) continue;
+		
+		v0 = D_8015FAD0[i].unk4;
+		t0 = D_8015FAD0[i].unk1C;
+		temp2 = v0 >> 16;
+		if (a1 < temp2 - t0) continue;
+		if (temp2 + t0 < a1) continue;
+		
+		v0 = D_8015FAD0[i].unk8;
+		t0 = D_8015FAD0[i].unk1A;
+		temp3 = v0 >> 16;
+		if (a2 < temp3 - t0) continue;
+		if (temp3 + t0 < a2) continue;
+		
+		return i;
+	}
+	return -1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E03C_13CFEC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E114_13D0C4.s")
 
