@@ -1,7 +1,7 @@
 {
-  "generated": "2026-03-25T17:32:52Z",
-  "commit": "6887cb8",
-  "commit_timestamp": "2026-03-26T06:32:37+13:00",
+  "generated": "2026-03-25T17:42:00Z",
+  "commit": "2aa78bd",
+  "commit_timestamp": "2026-03-26T06:41:44+13:00",
   "overall": {
     "total_functions": 2972,
     "matched": 899,
@@ -522,7 +522,7 @@
       "asm_stubs": 82,
       "total": 150,
       "matched_pct": 12.7,
-      "contributor": "Meridian Lex"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_level/siberia/2B7100.c",
@@ -538,17 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 34,
-      "matched": 818,
-      "non_matching": 232,
-      "asm_stubs": 1289
+      "files": 35,
+      "matched": 837,
+      "non_matching": 281,
+      "asm_stubs": 1371
     },
     {
       "name": "Meridian Lex",
-      "files": 10,
-      "matched": 81,
-      "non_matching": 72,
-      "asm_stubs": 480
+      "files": 9,
+      "matched": 62,
+      "non_matching": 23,
+      "asm_stubs": 398
     }
   ],
   "history": [
@@ -594,7 +594,7 @@
     },
     {
       "date": "2026-03-26",
-      "commit": "6887cb8",
+      "commit": "2aa78bd",
       "matched_pct": 30.25,
       "decompiled_pct": 40.48,
       "matched": 899,
