@@ -720,7 +720,13 @@ s8 func_802DFF84_3240D4(s32 arg0) {
 #endif
 
 
+#ifdef NON_MATCHING
+s8 func_802DFFC8_324118(s32 arg0) {
+	return D_8014DD50[D_8014DD50[D_8014DD50[func_802DFF04_324054(arg0 & 0xFF)].unkC].unkD].unkD;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFFC8_324118.s")
+#endif
 
 s32 func_802E0018_324168(u8 arg0) {
 	AlienInstance *inst;
@@ -755,8 +761,25 @@ s32 func_802E00D0_324220(s32 arg0, s32 arg1) {
 	return 1;
 }
 
-void func_802E0104_324254(VehicleInstance *vehicle);
+#ifdef NON_MATCHING
+void func_802E0104_324254(VehicleInstance *vehicle) {
+	AlienInstance *alien_a1;
+	AlienInstance *alien_v1;
+	u8 spec_index;
+	s32 value;
+
+	spec_index = vehicle->unk8;
+	alien_a1 = &alienInstances[spec_index];
+	spec_index = alien_a1->unk25;
+	alien_v1 = &alienInstances[spec_index];
+	value = alien_v1->unk20;
+	alien_v1->unk20 = (s32)(value & ~0x1000);
+	value = alien_a1->unk20;
+	alien_a1->unk20 = (s32)(value & 0xDFBFFFFF);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0104_324254.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_802E015C_3242AC(VehicleInstance *vehicle) {
