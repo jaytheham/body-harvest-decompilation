@@ -1,7 +1,7 @@
 {
-  "generated": "2026-03-25T17:45:40Z",
-  "commit": "d610b15",
-  "commit_timestamp": "2026-03-26T06:45:27+13:00",
+  "generated": "2026-03-25T17:51:25Z",
+  "commit": "5bdb2db",
+  "commit_timestamp": "2026-03-26T06:51:14+13:00",
   "overall": {
     "total_functions": 2972,
     "matched": 899,
@@ -594,7 +594,7 @@
     },
     {
       "date": "2026-03-26",
-      "commit": "d610b15",
+      "commit": "5bdb2db",
       "matched_pct": 30.25,
       "decompiled_pct": 40.48,
       "matched": 899,
