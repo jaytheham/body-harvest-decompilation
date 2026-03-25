@@ -584,6 +584,15 @@ typedef struct {
 } Unk80152B80; /* particle/effect entry, 18 bytes */
 
 typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ u8 pad4[0x14];
+	/* 0x18 */ s16 unk18;
+	/* 0x1A */ s16 unk1A;
+	/* 0x1C */ u8 pad1C[0x14];
+} Unk80152D00; /* 0x30 bytes */
+
+typedef struct {
 	/* 0x00 */ u8 pad0[0x12];
 	/* 0x12 */ u16 unk12;
 	/* 0x14 */ s16 unk14;
