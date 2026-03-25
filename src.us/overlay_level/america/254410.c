@@ -66,7 +66,18 @@ void func_802D536C_254AAC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D563C_254D7C.s")
 
+#ifdef NON_MATCHING
+void func_802D5CA8_2553E8(u8 arg0) {
+    u8 temp_a2;
+
+    temp_a2 = arg0 & 0xFF;
+    alienInstances[temp_a2].unk20 = (s32)(alienInstances[temp_a2].unk20 & ~0x10);
+    func_80137468_146418(temp_a2, 0x130);
+    func_8008064C_8F5FC(temp_a2);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5CA8_2553E8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5D08_255448.s")
 
@@ -104,7 +115,15 @@ void func_802D536C_254AAC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D9510_258C50.s")
 
+#ifdef NON_MATCHING
+void func_802D998C_2590CC(u8 arg0) {
+    func_80137468_146418(arg0, 0x1C);
+    func_8008735C_9630C(arg0);
+    alienInstances[arg0].unk20 = (s32)(alienInstances[arg0].unk20 & ~0x10);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D998C_2590CC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D99E4_259124.s")
 
@@ -118,7 +137,22 @@ void func_802D536C_254AAC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DA878_259FB8.s")
 
+#ifdef NON_MATCHING
+void func_802DAA98_25A1D8(u8 arg0) {
+    AlienInstance *instance;
+
+    instance = &alienInstances[arg0];
+    instance->unk12 = 0;
+    instance->unk26 = 1;
+    instance->unk48 = -0x1F4;
+    instance->unk2C = 0x3C;
+    if (instance->unk1A == 9) {
+        instance->unk1A = 8;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DAA98_25A1D8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DAAF0_25A230.s")
 
