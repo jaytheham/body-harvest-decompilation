@@ -19,7 +19,28 @@ void func_800A931C_B82CC(s8 arg0, s16 *arg1, s32 *arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9738_B86E8.s")
 
+#ifdef NON_MATCHING
+void func_800A9820_B87D0(u8 arg0, s32 arg1) {
+	AlienInstance *parent;
+
+	alienInstances[arg0].unk20 &= ~arg1;
+	parent = &alienInstances[alienInstances[arg0].unk25];
+	if (alienInstances[((u8 *)parent)[0]].specIndex != 0) {
+		alienInstances[((u8 *)parent)[0]].unk20 &= ~arg1;
+	}
+	if (alienInstances[((u8 *)parent)[1]].specIndex != 0) {
+		alienInstances[((u8 *)parent)[1]].unk20 &= ~arg1;
+	}
+	if (alienInstances[((u8 *)parent)[2]].specIndex != 0) {
+		alienInstances[((u8 *)parent)[2]].unk20 &= ~arg1;
+	}
+	if (alienInstances[((u8 *)parent)[3]].specIndex != 0) {
+		alienInstances[((u8 *)parent)[3]].unk20 &= ~arg1;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9820_B87D0.s")
+#endif
 
 void func_800A9908_B88B8(u8 arg0, s32 arg1) {
 	s16 sp38[4];
@@ -464,3 +485,4 @@ void func_800AE1EC_BD19C(void) {
 		}
 	}
 }
+
