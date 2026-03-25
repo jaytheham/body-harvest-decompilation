@@ -1296,7 +1296,7 @@ extern s32 D_802E4E80;
 extern BuildingInstance *D_80157FA4;
 extern s32 D_802E7C3C;
 extern s16 D_802E7C40;
-extern char D_802E7A7C[];
+extern char D_802E7A7C_32BBCC[];
 extern s16 D_802E4FB4[];
 extern s16 D_8014D17C;
 extern s16 D_8014D17E;

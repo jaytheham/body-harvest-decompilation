@@ -426,7 +426,7 @@ void func_802D659C_31A6EC(void) {
 
 void func_802D6770_31A8C0(void) {
 	D_802E7C40 = 0;
-	osSyncPrintf(D_802E7A7C);
+	osSyncPrintf(D_802E7A7C_32BBCC);
 	func_80007410_8010(func_802D6670_31A7C0);
 }
 
