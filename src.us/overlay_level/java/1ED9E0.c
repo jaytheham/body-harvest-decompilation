@@ -93,34 +93,34 @@ void func_802D4F98_1EDCA8(void) {
     Unk80222A78 callback_struct;
     s16 position;
 
-    D_802E04A0 = func_8007956C_8851C(0x12);
-    if (D_802E04A0 != 0xFF) {
+    D_802E04A0_1F91B0 = func_8007956C_8851C(0x12);
+    if (D_802E04A0_1F91B0 != 0xFF) {
         D_80256DEC = 0x6F;
         D_80157E7C = 2;
         func_8011E6FC_12D6AC(-0x5954, -0x2258, &position);
-        (&alienInstances[D_802E04A0])->unk0 = -0x5954;
-        (&alienInstances[D_802E04A0])->unk4 = -0x2258;
-        (&alienInstances[D_802E04A0])->unk2 = (s16) (position + 0xA);
-        (&alienInstances[D_802E04A0])->unk24 = 4;
-        (&alienInstances[D_802E04A0])->unk1B = 3;
+        (&alienInstances[D_802E04A0_1F91B0])->unk0 = -0x5954;
+        (&alienInstances[D_802E04A0_1F91B0])->unk4 = -0x2258;
+        (&alienInstances[D_802E04A0_1F91B0])->unk2 = (s16) (position + 0xA);
+        (&alienInstances[D_802E04A0_1F91B0])->unk24 = 4;
+        (&alienInstances[D_802E04A0_1F91B0])->unk1B = 3;
         callback_struct.unk0 = 3;
-        callback_struct.unk8 = D_802E04A0;
+        callback_struct.unk8 = D_802E04A0_1F91B0;
         callback_struct.unkC = (void (*)(void *)) func_802D4F70_1EDC80;
         func_800AE454_BD404(&callback_struct);
         return;
     }
-    osSyncPrintf(D_802E0D6C);
+    osSyncPrintf(D_802E0D6C_1F9A7C);
 }
 
 void func_802D507C_1EDD8C(s32 arg0) {
-    osSyncPrintf(D_802E0D84);
+    osSyncPrintf(D_802E0D84_1F9A94);
     func_800073B8_7FB8(0xBLL);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D50B0_1EDDC0.s")
 
 void func_802D513C_1EDE4C(s32 arg0) {
-    osSyncPrintf(&D_802E0DA8);
+    osSyncPrintf(&D_802E0DA8_1F9AB8);
     func_800072CC_7ECC(0xC);
 }
 
@@ -317,7 +317,7 @@ void func_802D5ADC_1EE7EC(void) {
     if (D_802E0FB0 == 3) {
         D_802E0FB0 = 0;
         if (D_801591C4 != 0) {
-            osSyncPrintf(&D_802E0E24);
+            osSyncPrintf(&D_802E0E24_1F9B34);
             func_800AD554_BC504(sp1E + 0x64, sp1C + 0x64, 0x33);
             D_801591C4 -= 1;
             return;
@@ -329,7 +329,7 @@ void func_802D5ADC_1EE7EC(void) {
 void func_802D5BA0_1EE8B0(void) {
     osSyncPrintf(&D_802E0E30);
     D_802E0FB0 = 0;
-    osSyncPrintf(&D_802E0E3C);
+    osSyncPrintf(&D_802E0E3C_1F9B4C);
     func_800074BC_80BC(&func_802D5590_1EE2A0);
     func_80007410_8010(&func_802D5ADC_1EE7EC);
     func_800076D4_82D4(9);
@@ -589,8 +589,8 @@ s32 func_802D6338_1EF048(void) {
     case 4:
         /* Announce state progress; at frame 1 trigger building sequence; every 5 frames update offsets */
         osSyncPrintf(&D_802E0E50, D_80157F8E);
-        if (D_802E04A0 != 0xFF) {
-            func_80087AAC_96A5C(D_802E04A0);
+        if (D_802E04A0_1F91B0 != 0xFF) {
+            func_80087AAC_96A5C(D_802E04A0_1F91B0);
         }
         if (D_80157F8E == 1) {
             func_80124B5C_133B0C((s16) -0x59A1, 0x2FF, (s16) -0x22CC, 0x2710, 0x3E8);

@@ -6,6 +6,8 @@
 extern Addr _14A8A0_data__s;
 extern Addr _14AA40_bin;
 extern Addr _175EB0_bin;
+extern Addr _195C80_bin;
+extern Addr _1F91B0_bin;
 extern Addr _2EA10_bin;
 extern Addr _60E60_bin;
 extern Addr _bootSegmentDataEnd;

@@ -239,12 +239,12 @@ segments:
     overlay: true
     subsegments:
       - [0x18D7E0, c, overlay_level/greece/18D7E0]
+      - [0x195C80, bin]
 
   - name: overlay_level_greece_data
     type: bin
-    start: 0x195C80
+    start: 0x196F70
     subsegments:
-      - [0x195C80, bin, overlay_level/greece/195C80]
       - [0x196F70, bin, overlay_level/greece/height_map] #mio0
       - [0x1AC280, bin, overlay_level/greece/texture_map] #mio0
       - [0x1AC660, bin, overlay_level/greece/landscape_colours] #mio0
@@ -289,12 +289,12 @@ segments:
     overlay: true
     subsegments:
       - [0x1ED9E0, c, overlay_level/java/1ED9E0]
+      - [0x1F91B0, bin]
 
   - name: overlay_level_java_data
     type: bin
-    start: 0x1F91B0
+    start: 0x1F9CC0
     subsegments:
-      - [0x1F91B0, bin, overlay_level/java/1F91B0]
       - [0x1F9CC0, bin, overlay_level/java/java_height_map] #mio0
       - [0x211454, bin, overlay_level/java/java_texture_map] #mio0
       - [0x2117EC, bin, overlay_level/java/java_landscape_colours] #mio0
