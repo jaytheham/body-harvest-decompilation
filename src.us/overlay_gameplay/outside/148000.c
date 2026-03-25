@@ -429,7 +429,7 @@ s32 func_8013B5E4_14A594(s32 arg0) {
 		return 1;
 	}
 
-	osSyncPrintf(&D_80145ABC_154A6C, D_801601D0);
+	osSyncPrintf(&D_80145ABC_154A6C, D_801601D0); // Weapon %d not valid
 	if (arg0 == 0) {
 		func_8013B298_14A248();
 	} else {

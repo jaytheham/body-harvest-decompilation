@@ -302,12 +302,12 @@ typedef struct {
 	/* 0x02 */ s16 xPosition;
 	/* 0x04 */ s16 yPosition;
 	/* 0x06 */ u8 pad6[2];
-	/* 0x08 */ s32 unk8;
-	/* 0x0C */ u8 padC[3];
-	/* 0x0F */ s8 unkF;
-	/* 0x10 */ u8 unk10;
+	/* 0x08 */ s32 unk8; // Seconds before wave spawns after triggered
+	/* 0x0C */ u8 padC[3]; // 0xE = If != 0 wave respawns when destroyed
+	/* 0x0F */ s8 unkF; // Y axis rotation applied to aliens (0 = facing North, 63 = East)
+	/* 0x10 */ u8 unk10; // Count of aliens intially spawned still alive
 	/* 0x11 */ u8 unk11;
-	/* 0x12 */ u8 unk12;
+	/* 0x12 */ u8 unk12; // Must equal the s32 at 80047f94 for trigger type(spec) 1 to check its conditions
 	/* 0x13 */ s8 unk13;
 } AlienWaveInstance; /* size = 0x14 */
 
@@ -361,21 +361,55 @@ typedef struct {
 
 // 0x00 xxxxyyyy yyyy = Model pointer
 // 0x0C xxxxxxxx Collision model size
-// 0x18 xxxxxxxx Vehicle name modifier
-// 0x3C xxxxyyyy xxxx = Arc of Fire, yyyy = Max speed
-// 0x4C xxyyzzaa	xx = Hill climb/ff goes underwater yy = Helicopter mode(0F<) zz = Water flag(00 Boat, 01 Land vehicle) aa = 
-// 0x50 xxyyzzaa aa = Detail prop(06 = Tank turret 08 = Gun barrels? 0A = tank tracks 0C = Tank barrel? 0E = Left Track 0F = Right Ttrack 15 Propeller 18 = Bulldog turret 19 = Bulldog machinegun) 
-// 0x5C xxyyzzzz xx = Camera Min, yy = Camera Max, zzzz = East/West position of Adam in vehilce
-// 0x60 xxxxyyyy xxxx = North/South Position of Adam in vehicle
-// 0x64 xxxxyyyy yyyy = Steer Point (Turning speed)
-// 0x6C xxyyzzzz xxyy = Shadow X & Shadow Z
+// 0x0E Frontal Armour
+// 0x10 Side Armour
+// 0x12 Rear Armour
+// 0x14 Penalty
+// 0x16 Collision Type
+// 0x18 Vehicle Name reference
+// 0x1C First Weapon
+// 0x20 Gun 1 Xposition
+// 0x22 Gun 1 Yposition
+// 0x24 Gun 1 Zpostiion
+// 0x28 Second Weapon
+// 0x2C Gun 2 Xposition
+// 0x2E Gun 2 Xposition
+// 0x30 Gun 2 Xposition
+// 0x32 Mass
+// 0x3A Hits. Max healt
+// 0x3C Arc of Fire
+// 0x3E Acceleration
+// 0x40 Max Speed
+// 0x42 Min Speed. A negative value is reversing max speed
+// 0x44 Tension
+// 0x45 Damping
+// 0x46 Hill Climb
+// 0x47 Water Drag
+// 0x48 Max Steer
+// 0x4C Certain values allow vehicle to drive underwater (hill climb?)
+// 0x4D Certain values allow vertical take-off and landing
+// 0x4E Water flag? (00 = Drive ON water, 01 = Drive UNDER water)
+// 0x50 Launch Angle
+// 0x52 Pivot Point
+// 0x53 Detail prop (06 = Tank turret 08 = Gun barrels? 0A = tank tracks 0C = Tank barrel? 0E = Left Track 0F = Right Ttrack 15 Propeller 18 = Bulldog turret 19 = Bulldog machinegun) 
+// 0x56 Side Grip
+// 0x57 Grip
+// 0x5A Steer Change
+// 0x5C Camera Min
+// 0x5D Camera Max
+// 0x5E Left/Right position of Adam in vehicle
+// 0x60 Front/Back position of Adam in vehicle
+// 0x65 Shadow Size
+// 0x66 Steer Point (Turning speed)
+// 0x6C Shadow X
+// 0x6D Shadow Z
 typedef struct {
 	/* 0x00 */ u8 pad0[0xC];
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ u8 pad0E[0x8];
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 pad17;
-	/* 0x18 */ s32 unk18;
+	/* 0x18 */ s32 unk18; // string table index for vehicle name
 	/* 0x1C */ s32 weapon1;
 	/* 0x20 */ u8 pad20[0x8];
 	/* 0x28 */ s32 weapon2;
@@ -507,7 +541,7 @@ typedef struct {
 	/* 0x00 */ u8  unk0;               /* type identifier */
 	/* 0x01 */ s8  unk1;               /* x tile coordinate */
 	/* 0x02 */ s8  unk2;               /* z tile coordinate */
-	/* 0x03 */ u8  pad3;
+	/* 0x03 */ u8  pad3; // size in tiles?
 	/* 0x04 */ s32 unk4;               /* spawn counter */
 	/* 0x08 */ u8  unk8;               /* alien entity index */
 	/* 0x09 */ u8  pad9[3];

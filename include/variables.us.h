@@ -71,7 +71,7 @@ extern Gfx D_80031200[];
 extern Gfx D_80031230[];
 extern u32 D_800313CC;
 extern s16 D_800313C8;
-extern s16 D_800313D0;
+extern s16 D_800313D0; // Language
 extern u8 D_800313F4;
 extern s16 D_800313F8;
 extern s16 D_800313FC;
@@ -82,7 +82,7 @@ extern u32 D_80031424[];
 extern s32 D_8003144C;
 extern s32 D_80031450;
 extern s32 D_80031454;
-extern s8 D_800314C4;
+extern s8 D_800314C4; // maxHumanDeathsAllowed?
 extern OSMesg D_800314CC;
 extern s32 D_80031B84;
 extern s8 D_80031CA4;
@@ -114,7 +114,7 @@ extern u32 D_8004768C;
 extern u32 D_80047690;
 extern u32 D_80047698;
 extern s16 D_800476A0;
-extern s16 D_800476A2;
+extern s16 D_800476A2; // enables input?
 extern u8 D_80047743;
 extern u8 D_80047744;
 extern u8 D_80047745;
@@ -135,19 +135,19 @@ extern u8 D_80047F97;
 extern s32 D_80047F98;
 extern s32 currentSaveFileIndex;
 extern Level currentLevel; // 80047f90
-extern s32 D_80047F9C;
+extern s32 D_80047F9C; // WarpPointNumber
 extern s32 D_80047FA0;
 extern s16 D_80048026;
 extern s16 D_80048028;
 extern u8 D_80048024;
 extern u8 D_80048025;
 extern s32 showDemoText;
-extern u8 weaponSlots[7];
+extern u8 weaponSlots[7]; // 80048138
 extern u8 D_8004813F;
 extern s16 D_80048140[];
 extern s16 D_80048156;
-extern s8 D_80048168;
-extern s16 D_8004816A;
+extern s8 D_80048168; // numHumansEatenToSpawnMutant
+extern s16 D_8004816A; // numHumansEaten
 extern s16 D_8004816E;
 extern s16 D_80048170;
 extern s16 D_80048176;
@@ -205,13 +205,13 @@ extern u32 D_80052A90; // millseconds played in current level
 extern s32 D_80052A88;
 extern s32 D_80052A8C;
 extern u8* D_80052A94; // This is a ptr to a [512][512] array of Heightmap data? Is 256x256 s16?
-extern Unk80052A98 D_80052A98[];
+extern Unk80052A98 D_80052A98[]; // LevelStats
 extern u16 D_80052A9C;
 extern s32 D_80052AA0;
 extern u16 D_80052AA4;
 extern s16 D_80052AC8;
 extern u8 D_80052ACA;
-extern u8 D_80052ACB;
+extern u8 D_80052ACB; // Rendering Flags? 1=Shadows 2=Objects
 extern s8 D_80052ACC;
 extern u8 D_80052ACD; // bitfield? x02 = black adam model
 extern s32 D_80052AD0;
@@ -597,8 +597,8 @@ extern u8 D_801497BA;
 extern u8 D_801497C8[];
 extern u8 D_80149AF8[];
 extern s32 D_80149B30; // Number of mission commands?
-extern s32 D_80149B40;
-extern s32 D_80149B44;
+extern s32 D_80149B40; // numberOfCommandObjects
+extern s32 D_80149B44; // numberOfCharacters
 extern s16 D_80149B4A;
 extern u8 D_8014D200[];
 extern u8 D_8014D298[][10];
@@ -690,7 +690,7 @@ extern s32 D_8015FF84;
 
 extern HudWeaponItem hudWeaponItems[7];
 extern s32 D_801601CC;
-extern s32 D_801601D0;
+extern s32 D_801601D0; // Current weapon index?
 extern u8 D_801601D3;
 extern s32 D_801601D0;
 extern s32 D_801601D4;
@@ -934,8 +934,8 @@ extern s16 D_800E73D8;
 extern s16 D_800E73DA;
 extern s16 D_800E73DC;
 extern s8 D_800E73DF;
-extern s16 D_800E73E0;
-extern s16 D_800E73E4;
+extern s16 D_800E73E0; // indoorCameraYaw
+extern s16 D_800E73E4; // indoorCameraPitch
 extern f32 D_800E73E8;
 extern Vec3f D_800E73F0;
 extern Vec3f D_800E7400;
@@ -974,7 +974,7 @@ extern s32 D_8003447C;
 extern s32 D_80034484;
 extern s32 D_80034488;
 extern s32 D_8003449C;
-extern s32 D_800344B4[];
+extern s32 D_800344B4[]; // pointers to strings for names of many things, each entry is actually 2x s32 in size, first is pointer to string
 extern void *D_8006C550;
 extern void *D_8006C554;
 extern s32 D_800E7490;
@@ -992,9 +992,9 @@ extern s32 D_80258F90; // English sign string offsets (actually u16/s16?)
 extern u8 D_80258330; // signposts
 extern s16 D_80047710;
 extern s16 D_80047712;
-extern s16 D_80157580;
-extern s16 D_80157582;
-extern s16 D_80157584;
+extern s16 D_80157580; // outside camera x?
+extern s16 D_80157582; // outside camera y?
+extern s16 D_80157584; // outside camera z?
 extern s16 D_8015758C;
 extern s16 D_8015758E;
 extern s16 D_8013B8F0;
@@ -1234,7 +1234,7 @@ extern char D_8014280C;
 extern u8 D_8003154C;
 extern u8 D_80031534[];
 extern u8 D_80031535[];
-extern u8 D_80031536[];
+extern u8 D_80031536[]; // is actually an array of beacon data
 extern u8 D_80031537[];
 extern u8 D_8003153A[];
 extern BeaconDisplayEntry D_8014F7DE;
@@ -1482,8 +1482,8 @@ extern s32 D_80053C98;
 extern s32 D_802E3100;
 extern VehicleInstance *D_80158F8C;
 extern f64 D_80144AC0_153A70;
-extern s32 D_80149B28;
-extern s16 D_80149B48;
+extern s32 D_80149B28; // numberOfMissionConditions
+extern s16 D_80149B48; // numberOfMissions
 extern u16 D_80159DE8[];
 extern u8 D_8015D0B0[];
 
