@@ -90,24 +90,24 @@ void func_800C1384_D0334(u8 arg0) {
 
 void func_800C1418_D03C8(u8 arg0, s32 arg1)
 {
-  Unk801541F8Entry *entry;
-  if (arg1 != 0)
-  {
-    entry = &D_801541F8[arg0];
-  }
-  else
-  {
-    entry = &D_80154088[arg0];
-  }
-  if (entry->unk0 == 0xFA)
-  {
-    osSyncPrintf(&D_80142F10_151EC0); // ERROR : freeing all effect units for unused effect
-    return;
-  }
-  while (entry->unk4 > 0)
-  {
-    func_800C1A4C_D09FC(entry->unk6, arg0, arg1);
-  }
+	Unk801541F8Entry *entry;
+	if (arg1 != 0)
+	{
+		entry = &D_801541F8[arg0];
+	}
+	else
+	{
+		entry = &D_80154088[arg0];
+	}
+	if (entry->unk0 == 0xFA)
+	{
+		osSyncPrintf(&D_80142F10_151EC0); // ERROR : freeing all effect units for unused effect
+		return;
+	}
+	while (entry->unk4 > 0)
+	{
+		func_800C1A4C_D09FC(entry->unk6, arg0, arg1);
+	}
 }
 
 u8 func_800C14D4_D0484(u8 arg0) {
@@ -153,6 +153,7 @@ void func_800C18D0_D0880(u8 arg0) {
 	func_800C17B4_D0764(arg0, 0);
 }
 
+// https://decomp.me/scratch/BDEg6
 #ifdef NON_MATCHING
 s16 func_800C18FC_D08AC(u8 arg0, s32 arg1) {
 	s16 temp_v0;
