@@ -36,7 +36,21 @@ void func_802D4DD4_254514(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D52B0_2549F0.s")
 
+#ifdef NON_MATCHING
+void func_802D536C_254AAC(void) {
+    s16 sp1E;
+    s16 temp_t9;
+
+    temp_t9 = 0x96 - D_8004D1B2;
+    sp1E = temp_t9;
+    func_8009BF64_AAF14(temp_t9 & 0xFFFF);
+    if (sp1E == -1) {
+        func_800074BC_80BC(func_802D536C_254AAC);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D536C_254AAC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D53BC_254AFC.s")
 
