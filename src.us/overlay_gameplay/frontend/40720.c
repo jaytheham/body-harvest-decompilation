@@ -1245,7 +1245,7 @@ void func_80081FF0_524A0(void) {
 	} else {
 		absVal = -D_800D8528;
 	}
-	if ((f64)absVal < D_800AEA68) {
+	if ((f64)absVal < D_800AEA68_7EF18) {
 		D_800D8528 = 0.0f;
 		return;
 	}

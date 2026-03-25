@@ -284,7 +284,7 @@ extern f64 D_800A4D30;
 extern f64 D_800A4D38;
 extern f64 D_800A4D40;
 extern f64 D_800A4D48;
-extern f64 D_800AEA68;
+extern f64 D_800AEA68_7EF18;
 
 extern MissionData D_800D6DC0[42];
 extern u8 D_800D6D88;

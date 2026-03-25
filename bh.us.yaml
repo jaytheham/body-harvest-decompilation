@@ -183,9 +183,7 @@ segments:
     subsegments:
       - [0x40720, c, overlay_gameplay/frontend/40720]
       - [0x52690, c, overlay_gameplay/frontend/52690]
-  - name: overlay_gameplay_frontend_data
-    type: bin
-    start: 0x060E60
+      - [0x60E60, bin]
 
   - name: overlay_gameplay_outside
     type: code
