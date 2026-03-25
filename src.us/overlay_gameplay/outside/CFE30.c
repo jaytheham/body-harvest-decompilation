@@ -902,7 +902,21 @@ void func_800D55C0_E4570(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	osSyncPrintf(&D_80143860, arg1, arg2, arg3); // ** WARNING: tried to update a triple spinner that doesn't exist! **
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5684_E4634.s")
+void func_800D5684_E4634(void) {
+	s16 var_s1;
+
+	var_s1 = D_801542BE;
+	if (var_s1 == -5 || var_s1 == -6) {
+		func_800C1418_D03C8(0x10, 1);
+		return;
+	}
+	while (var_s1 != -5 && var_s1 != -6) {
+		var_s1 = D_80154318[var_s1].unk4;
+		D_80154318[var_s1].unk8 = (u16)D_80154318[var_s1].unk8 + 1;
+		func_80137368_146318(D_80154318[var_s1].unk8, D_80154318[var_s1].unkA, D_80154318[var_s1].unkC, 0xB, var_s1);
+		var_s1 = D_80154318[var_s1].unk4;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5760_E4710.s")
 
