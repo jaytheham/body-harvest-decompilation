@@ -66,7 +66,17 @@ void func_802D670C_2B8B3C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6768_2B8B98.s")
 
+#ifdef NON_MATCHING
+void func_802D69EC_2B8E1C(void) {
+    func_80013468_14068(0xE);
+    func_80135D08_144CB8(1.0f, 0x28, 0x46, 0x32);
+    D_8014D17C = 0;
+    func_800EFEB4_FEE64(&func_802D6768_2B8B98, 0x18, 0);
+    func_800073B8_7FB8(0x18ULL);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D69EC_2B8E1C.s")
+#endif
 
 void func_802D6A4C_2B8E7C(void) {
     func_800AE190_BD140(D_801591C4);
@@ -97,7 +107,14 @@ void func_802D72A0_2B96D0(func_80070420_7F3D0_UnkArg0 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7508_2B9938.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7540_2B9970.s")
+void func_802D7540_2B9970(void) {
+    D_8014D17C += 1;
+    if (D_8014D17C == 0x64) {
+        func_800074BC_80BC(func_802D7540_2B9970);
+        func_800A6FD4_B5F84();
+        func_800076D4_82D4(0xB);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7598_2B99C8.s")
 
