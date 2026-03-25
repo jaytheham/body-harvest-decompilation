@@ -23,8 +23,8 @@ void func_800739D8_82988(void);
 void func_800739F8_829A8(void);
 void func_80073A08_829B8(void);
 
-const Cheat D_8013B940_14A8F0[21] = {
-	{ "annulz", func_800731B0_82160 },
+Cheat D_8013B940_14A8F0[21] = {
+	{ "annul", func_800731B0_82160 },
 	{ "zfarewell", func_800732C8_82278 },
 	{ "arsenal", func_800732E0_82290 },
 	{ "durable", func_80073428_823D8 },
