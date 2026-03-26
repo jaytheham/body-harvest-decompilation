@@ -177,6 +177,7 @@ void func_802D77BC_2B9BEC(void) {
 
 /* checks alienInstances entry flags and conditionally calls func_80081F18_90EC8 to clear bit 0x2000 */
 /* possible: alienClearActionFlagIfReady */
+#ifdef NON_MATCHING
 void func_802D806C_2BA49C(u8 arg0, s16 arg1, s16 arg2) {
     s16 sp2E;
     s16 sp2C;
@@ -195,8 +196,26 @@ void func_802D806C_2BA49C(u8 arg0, s16 arg1, s16 arg2) {
         }
     }
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D806C_2BA49C.s")
+#endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D8120_2BA550.s")
+void func_802D8120_2BA550(u8 arg0, s16 arg1, s16 arg2) {
+    s16 sp2E;
+    s16 sp2C;
+    AlienInstance *sp24;
+    u8 temp_t6;
+
+    temp_t6 = arg0 & 0xFF;
+    sp24 = &alienInstances[temp_t6 * 5];
+    if ((sp24->unk20 & 0x4000) != 0) {
+        sp2C = arg1;
+        sp2E = arg2;
+        if ((func_80081F18_90EC8(temp_t6, 2, 2, &sp2C, &D_802E1478) & 0xFF) == 2) {
+            sp24->unk20 = sp24->unk20 & ~0x4000;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D81C0_2BA5F0.s")
 
