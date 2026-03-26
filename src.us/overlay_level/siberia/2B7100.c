@@ -201,6 +201,7 @@ void func_802D806C_2BA49C(u8 arg0, s16 arg1, s16 arg2) {
 #endif
 
 /* possible: alienClearActionFlagIfReady */
+#ifdef NON_MATCHING
 void func_802D8120_2BA550(u8 arg0, s16 arg1, s16 arg2) {
     s16 sp2E;
     s16 sp2C;
@@ -217,6 +218,9 @@ void func_802D8120_2BA550(u8 arg0, s16 arg1, s16 arg2) {
         }
     }
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D8120_2BA550.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D81C0_2BA5F0.s")
 
@@ -236,7 +240,21 @@ void func_802D8120_2BA550(u8 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DA4CC_2BC8FC.s")
 
+#ifdef NON_MATCHING
+void func_802DA7CC_2BCBFC(u8 arg0) {
+    AlienInstance *alien;
+    u16 spec;
+
+    alien = &alienInstances[arg0 * 5];
+    if ((alien->unk20 & 0x100000) == 0) {
+        spec = (u16)alienSpecs[alien->unk1A].unkC;
+        func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, spec, 0);
+        alien->unk2C = 0;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DA7CC_2BCBFC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DA854_2BCC84.s")
 
