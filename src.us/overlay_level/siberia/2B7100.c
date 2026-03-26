@@ -1,6 +1,11 @@
 #include <ultra64.h>
 #include "common.h"
 
+extern s16 D_802E30F4;
+extern s32 D_802E3098;
+extern s32 D_802E3094;
+extern s32 D_802E30EC;
+extern void func_802D5F28_2B8358(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4CD0_2B7100.s")
 
@@ -20,7 +25,30 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5F28_2B8358.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6220_2B8650.s")
+void func_802D6220_2B8650(void) {
+    s16 val;
+
+    val = D_802E30F4;
+    val -= 1;
+    D_802E30F4 = val;
+
+    if (D_802E30F4 != 0) {
+        return;
+    }
+
+    vehicleInstances[30].unk20 = (u16)(vehicleInstances[30].unk20 & 0xFF7F);
+
+    D_801493E0 = 0;
+    D_802E3094 = 0;
+
+    func_8012D808_13C7B8(D_802E3098);
+
+    D_802E30EC = 0;
+    D_8014D17C = 0;
+
+    func_800EFEB4_FEE64(0, 0x1C, 0);
+    func_80007410_8010(&func_802D5F28_2B8358);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D62B4_2B86E4.s")
 
