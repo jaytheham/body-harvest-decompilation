@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-26T03:45:41Z",
-  "commit": "b7a464f",
-  "commit_timestamp": "2026-03-26T16:45:31+13:00",
+  "generated": "2026-03-26T04:28:30Z",
+  "commit": "ca9bf3d",
+  "commit_timestamp": "2026-03-26T17:28:18+13:00",
   "overall": {
-    "total_functions": 2969,
-    "matched": 907,
-    "non_matching": 301,
-    "asm_stubs": 1761,
-    "matched_pct": 30.55,
-    "decompiled_pct": 40.69
+    "total_functions": 2967,
+    "matched": 909,
+    "non_matching": 299,
+    "asm_stubs": 1759,
+    "matched_pct": 30.64,
+    "decompiled_pct": 40.71
   },
   "segments": {
     "core": {
@@ -31,12 +31,12 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 631,
-      "non_matching": 155,
-      "asm_stubs": 794,
-      "total": 1580,
-      "matched_pct": 39.9,
-      "decompiled_pct": 49.7
+      "matched": 633,
+      "non_matching": 153,
+      "asm_stubs": 792,
+      "total": 1578,
+      "matched_pct": 40.1,
+      "decompiled_pct": 49.8
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -407,11 +407,11 @@
     {
       "path": "overlay_gameplay/outside/CFE30.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 102,
-      "non_matching": 20,
-      "asm_stubs": 179,
-      "total": 301,
-      "matched_pct": 33.9,
+      "matched": 104,
+      "non_matching": 18,
+      "asm_stubs": 177,
+      "total": 299,
+      "matched_pct": 34.8,
       "contributor": "jaytheham"
     },
     {
@@ -539,9 +539,9 @@
     {
       "name": "jaytheham",
       "files": 34,
-      "matched": 736,
-      "non_matching": 265,
-      "asm_stubs": 1202
+      "matched": 738,
+      "non_matching": 263,
+      "asm_stubs": 1200
     },
     {
       "name": "Jay",
@@ -593,11 +593,11 @@
     },
     {
       "date": "2026-03-26",
-      "commit": "f601cc7",
-      "matched_pct": 30.55,
-      "decompiled_pct": 40.69,
-      "matched": 907,
-      "total": 2969
+      "commit": "ca9bf3d",
+      "matched_pct": 30.64,
+      "decompiled_pct": 40.71,
+      "matched": 909,
+      "total": 2967
     }
   ]
 }
