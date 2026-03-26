@@ -657,7 +657,26 @@ s16 func_800F9FAC_108F5C(s16 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FAA08_1099B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FAB9C_109B4C.s")
+s16 func_800FAB9C_109B4C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	s32 sp1C;
+	s32 sp18;
+	f32 temp_f2;
+	f32 var_f0;
+	s32 temp_v1;
+	s32 temp_a0;
+
+	sp1C = func_800B84D0_C7480(arg0, arg1) >> 8;
+	temp_v1 = arg2 - arg0;
+	temp_a0 = arg3 - arg1;
+	sp18 = func_800B84D0_C7480(arg2, arg3) >> 8;
+	temp_f2 = (f32)(sp18 - sp1C) / (f32)(s32)sqrtf((f32)(temp_v1 * temp_v1 + temp_a0 * temp_a0)) * 8.0f;
+	if (temp_f2 >= 0.0f) {
+		var_f0 = temp_f2;
+	} else {
+		var_f0 = -temp_f2;
+	}
+	return (s16)(s32)var_f0;
+}
 
 void func_800FAC90_109C40(void) {
 	VehicleInstance *var_s0;
@@ -1324,7 +1343,24 @@ void func_80103DD0_112D80(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801073FC_1163AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80107890_116840.s")
+void func_80107890_116840(VehicleInstance *arg0) {
+	VehicleSpec *specPtr;
+	WeaponSpecEntry *tableEntry;
+	s16 retVal;
+
+	specPtr = &vehicleSpecs[arg0->unk1A];
+	tableEntry = &D_80140768_14F718[specPtr->unk55];
+
+	if (specPtr->unk4C & 0x20000000) {
+		retVal = func_800FA018_108FC8(arg0, arg0->unk6, specPtr->unk36, tableEntry);
+		if (tableEntry->unk8 < arg0->unkA - retVal) {
+			func_80123E90_132E40(arg0, (s16)((arg0->unkA - retVal - tableEntry->unk8) >> 2));
+		}
+		if (currentLevel == LEVEL_SIBERIA && arg0->unk1A == 0xE) {
+			func_800FDB58_10CB08(arg0);
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80107970_116920.s")
 

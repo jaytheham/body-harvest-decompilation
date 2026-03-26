@@ -1678,44 +1678,40 @@ void func_800E35E0_F2590(u8 arg0)
 
 #ifdef NON_MATCHING
 void func_800E520C_F41BC(void) {
-	s16 temp;
-	Unk80152D00 *ptr;
+    Unk80152D00Pair *entry;
 
-	temp = 0;
-	ptr = D_80152D00;
-	do {
-		temp = ptr->unk0;
-		if (temp != 0) {
-			if (1 == temp) {
-				ptr->unk2 = (s16)(ptr->unk2 - 1);
-				if (ptr->unk2 <= 0) {
-					ptr->unk0 = 0;
-				}
-			}
-			if (ptr->unk0 == 2) {
-				ptr->unk2 = (s16)(ptr->unk2 - 1);
-				if (ptr->unk2 <= 0) {
-					ptr->unk0 = 0;
-				}
-			}
-		}
-		temp = ptr->unk18;
-		if (temp != 0) {
-			if (1 == temp) {
-				ptr->unk1A = (s16)(ptr->unk1A - 1);
-				if (ptr->unk1A <= 0) {
-					ptr->unk18 = 0;
-				}
-			}
-			if (ptr->unk18 == 2) {
-				ptr->unk1A = (s16)(ptr->unk1A - 1);
-				if (ptr->unk1A <= 0) {
-					ptr->unk18 = 0;
-				}
-			}
-		}
-		ptr++;
-	} while (ptr != (Unk80152D00*)&D_80153300);
+    entry = D_80152D00;
+    do {
+        if (entry->unk0 != 0) {
+            if (entry->unk0 == 1) {
+                entry->unk2--;
+                if (entry->unk2 <= 0) {
+                    entry->unk0 = 0;
+                }
+            }
+            if (entry->unk0 == 2) {
+                entry->unk2--;
+                if (entry->unk2 <= 0) {
+                    entry->unk0 = 0;
+                }
+            }
+        }
+        if (entry->unk18 != 0) {
+            if (entry->unk18 == 1) {
+                entry->unk1A--;
+                if (entry->unk1A <= 0) {
+                    entry->unk18 = 0;
+                }
+            }
+            if (entry->unk18 == 2) {
+                entry->unk1A--;
+                if (entry->unk1A <= 0) {
+                    entry->unk18 = 0;
+                }
+            }
+        }
+        entry++;
+    } while (entry != &D_80153300);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E520C_F41BC.s")

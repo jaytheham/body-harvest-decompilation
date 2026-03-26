@@ -499,7 +499,6 @@ extern u8 D_80140D90[];
 extern u8 D_80140DA8[];
 extern u8 D_80140DC0[];
 extern f32 D_801411A0;
-extern f32 D_801411A4;
 extern s32 D_801416D0_150680[];
 extern s32 D_80141734_1506E4[];
 extern f64 D_801426C0;
@@ -641,8 +640,8 @@ extern u8 D_8014FDD0[];
 extern u8 D_80151DD0;
 extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
 extern Unk80152D00 D_80152D00[];
-extern s8 D_80153300;
 extern u8 D_80152B88; /* unk8 field of first particle/effect entry */
+extern Unk80152D00Pair D_80153300; /* one past end of D_80152D00 */
 extern s16 D_80152C90;
 extern u8 D_80152740[];
 extern s16 D_80157590;
@@ -1402,6 +1401,7 @@ extern DebugPropEntry D_8013CBC0[];
 extern u8 D_802566D0[];
 extern s8 D_80257A55[];
 extern u8 D_80140768[];
+extern WeaponSpecEntry D_80140768_14F718[];
 extern u8 D_801601F0[];
 extern s32 D_80034574[];
 extern u8 D_801421A0[];
