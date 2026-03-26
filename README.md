@@ -6,7 +6,7 @@ Help is welcome! Message me on discord `jaytheham` or @gmail.com
 
 [Help match existing scratches on decomp.me](https://decomp.me/preset/211)
 
-Note AI is being used extensively for initial decomp work. All NON_MATCHING code should be assumed to be AI generated and possibly wildly wrong. Same with the pre-function /\* ... \*/ comments.
+A decompilation to C of the N64 game Body Harvest.
 
 # Building
 
