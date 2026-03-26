@@ -1843,6 +1843,14 @@ void func_800E75A0_F6550(s16 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7660_F6610.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E77B4_F6764.s")
+void func_800E77B4_F6764(void) {
+    gDPPipeSync(D_8005BB2C++);
+    gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+    gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
+    gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
+    gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+    gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_FOG | G_LIGHTING);
+    gDPPipeSync(D_8005BB2C++);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7894_F6844.s")
