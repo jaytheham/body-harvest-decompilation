@@ -843,7 +843,15 @@ void func_802E1324_325474(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E14F4_325644.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1630_325780.s")
+void func_802E1630_325780(u8 arg0) {
+	AlienInstance *inst;
+	s16 y_offset;
+
+	inst = &alienInstances[arg0];
+	inst->unk1E = 0;
+	y_offset = func_80003824_4424(110.0f, 80.0f);
+	func_800868A4_95854(arg0, 0, 0, (s16)(y_offset + inst->unkA));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E16A8_3257F8.s")
 
