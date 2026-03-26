@@ -1679,7 +1679,46 @@ void func_800E35E0_F2590(u8 arg0)
 // displayLasers
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5044_F3FF4.s")
 
+#ifdef NON_MATCHING
+void func_800E520C_F41BC(void) {
+    Unk80152D00Pair *entry;
+
+    entry = D_80152D00;
+    do {
+        if (entry->unk0 != 0) {
+            if (entry->unk0 == 1) {
+                entry->unk2--;
+                if (entry->unk2 <= 0) {
+                    entry->unk0 = 0;
+                }
+            }
+            if (entry->unk0 == 2) {
+                entry->unk2--;
+                if (entry->unk2 <= 0) {
+                    entry->unk0 = 0;
+                }
+            }
+        }
+        if (entry->unk18 != 0) {
+            if (entry->unk18 == 1) {
+                entry->unk1A--;
+                if (entry->unk1A <= 0) {
+                    entry->unk18 = 0;
+                }
+            }
+            if (entry->unk18 == 2) {
+                entry->unk1A--;
+                if (entry->unk1A <= 0) {
+                    entry->unk18 = 0;
+                }
+            }
+        }
+        entry++;
+    } while (entry != &D_80153300);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E520C_F41BC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E52E8_F4298.s")
 
