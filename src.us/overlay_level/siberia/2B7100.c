@@ -54,7 +54,6 @@ void func_802D6220_2B8650(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D62B4_2B86E4.s")
 
-#ifdef NON_MATCHING
 void func_802D62E4_2B8714(void) {
     s16 sp1E;
     s16 temp_t9;
@@ -66,9 +65,6 @@ void func_802D62E4_2B8714(void) {
         func_800074BC_80BC((void *)func_802D62E4_2B8714);
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D62E4_2B8714.s")
-#endif
 
 void func_802D6340_2B8770(void) {
     func_80007410_8010(&func_802D62E4_2B8714);
@@ -149,6 +145,7 @@ void func_802D6A4C_2B8E7C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6CA0_2B90D0.s")
 
 /* Applies XOR/shift transformations to four specific buildingInstances, clears state counters, and registers callback */
+#ifdef NON_MATCHING
 void func_802D6F4C_2B937C(void) {
     s32 v1;
     s32 a1;
@@ -200,6 +197,9 @@ void func_802D6F4C_2B937C(void) {
 
     func_80007410_8010(&func_802D6CA0_2B90D0);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6F4C_2B937C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6FFC_2B942C.s")
 
@@ -212,7 +212,25 @@ void func_802D72A0_2B96D0(func_80070420_7F3D0_UnkArg0 *arg0) {
     func_800072CC_7ECC((u64)arg0->unk9);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D72C4_2B96F4.s")
+/* Allocates alien instance, initializes position, registers callback for lifecycle management */
+/* possible: initAlienAtCoords */
+void func_802D72C4_2B96F4(s16 arg0, s16 arg1, u8 arg2) {
+    s32 temp_v0;
+    u8 temp_v1;
+    Unk80222A78 callback_data;
+
+    temp_v0 = func_8007956C_8851C(0x24);
+    temp_v1 = temp_v0 & 0xFF;
+    if ((temp_v0 & 0xFF) != 0xFF) {
+        alienInstances[temp_v1].unk0 = arg0;
+        alienInstances[temp_v1].unk4 = arg1;
+        callback_data.unk0 = 3;
+        callback_data.unk8 = temp_v1;
+        callback_data.pad9[0] = arg2;
+        callback_data.unkC = &func_802D72A0_2B96D0;
+        func_800AE454_BD404(&callback_data);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7350_2B9780.s")
 
