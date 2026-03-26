@@ -835,7 +835,36 @@ void func_8011F22C_12E1DC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F818_12E7C8.s")
 
+#ifdef NON_MATCHING
+void func_8011F9A0_12E950(s32 arg0) {
+	Gfx *dl;
+	s32 mask;
+
+	D_80052B40.unk0 = D_80159DC8;
+	D_80052B40.unk2 = D_80159DCA;
+	D_80052B40.unk4 = D_80159DCC;
+	mask = 0x1FFFFFFF;
+	func_800039D0_45D0(&D_80052B40, 0, 0, D_8005BB38);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01000040;
+	dl->words.w1 = (s32)(D_8005BB38 & mask);
+
+	D_8005BB38 += 0x40;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x06000000;
+	dl->words.w1 = D_80159DC4;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01020040;
+	dl->words.w1 = (s32)((s32)&D_80031160 & mask);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F9A0_12E950.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011FA90_12EA40.s")
 
