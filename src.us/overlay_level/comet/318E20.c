@@ -984,16 +984,21 @@ void func_802E3E30_327F80(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E43FC_32854C.s")
 
 #ifdef NON_MATCHING
-void func_802E46B8_328808(u8 arg0, s32 arg1, u8 arg2) {
+void func_802E46B8_328808(u8 arg0, s32 arg1, s32 arg2) {
+	unsigned char new_var3;
 	u8 old_unk25;
+	u8 new_var;
 	u8 new_idx;
+	AlienInstance *new_var2;
 	AlienInstance *new_inst;
 
 	old_unk25 = alienInstances[arg0].unk25;
-	new_idx = func_8007956C_8851C(arg0);
+	new_var3 = arg2;
+	new_idx = func_8007956C_8851C(new_var3);
 	new_inst = &alienInstances[new_idx];
 	new_inst->unk25 = old_unk25;
-	*((u8 *)&alienInstances[alienInstances[old_unk25].unk25] + arg1 - 1) = new_idx;
+	new_var = (*(new_var2 = &alienInstances[old_unk25])).unk25;
+	*((((u8 *) (&alienInstances[new_var])) + arg1) - 1) = new_idx;
 	D_80140AB0_14FA60[arg1] = new_inst;
 	osSyncPrintf(D_802E7AE4, new_idx, arg2);
 }
