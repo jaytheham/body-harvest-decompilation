@@ -185,7 +185,28 @@ void func_800B415C_C310C(s16 arg0, s16 arg1) {
 	D_8014FDC8 = (idx + 1) % 64;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B41C8_C3178.s")
+void func_800B41C8_C3178(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
+	s16 i;
+
+	func_800B0C80_BFC30();
+	func_800B32AC_C225C(arg2);
+	func_800B4050_C3000(arg0, arg1, arg2, arg3);
+	func_800B0B94_BFB44();
+	D_8014FDC8 = 0;
+	for (i = 0; i < 0x40; i++) {
+		D_8014FD48[i * 2] = 0;
+	}
+	D_8014F838 = 0;
+	if (currentLevel != 5) {
+		i = 0;
+		if (D_80047F98 > 0) {
+			do {
+				func_800B165C_C060C(i);
+				i++;
+			} while (i < D_80047F98);
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B42B0_C3260.s")
 
@@ -342,7 +363,48 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BC760_CB710.s")
 
+#ifdef NON_MATCHING
+void func_800BD20C_CC1BC(void) {
+	s32 var_v0;
+	s32 var_a0;
+	s32 level;
+	u16 *arr_base;
+	u16 mask;
+	s32 var_t0;
+
+	var_v0 = 0;
+	level = currentLevel;
+	arr_base = D_80147F00_156EB0[level];
+	if (D_80047F98 > 0) {
+		do {
+			mask = arr_base[var_v0 - 6];
+			var_a0 = 0;
+			var_t0 = 0;
+			do {
+				if (mask & (1 << var_t0)) {
+					s32 temp_t1 = D_8003E0FC[level - 1][var_a0].unk6;
+					s32 temp_t2 = -temp_t1;
+					if (temp_t1 != 0x50) {
+						s32 var_t3;
+						if (temp_t2 < temp_t1) {
+							var_t3 = temp_t1;
+						} else {
+							var_t3 = temp_t2;
+						}
+						D_8003E0FC[level - 1][var_a0].unk6 = (s8)(var_t3 + 1);
+					}
+				}
+				var_a0++;
+				var_t0 = var_a0 & 0xFF;
+				var_a0 = var_t0;
+			} while (var_t0 < 0x10);
+			var_v0 = (var_v0 + 1) & 0xFF;
+		} while (var_v0 < D_80047F98);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD20C_CC1BC.s")
+#endif
 
 // Reset gates for current level to closed
 void func_800BD2F4_CC2A4(void)

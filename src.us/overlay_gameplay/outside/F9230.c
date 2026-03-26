@@ -1284,7 +1284,28 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80102A0C_1119BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80102D00_111CB0.s")
+void func_80102D00_111CB0(VehicleInstance *arg0, f32 arg1, f32 arg2, f32 arg3) {
+	if (arg0->unk1C <= 0) {
+		return;
+	}
+	if (gameplayMode != 1 && arg0 == D_80052B34) {
+		return;
+	}
+	arg0->unk30 += arg1;
+	arg0->unk34 += arg2;
+	arg0->unk38 += arg3;
+	if (arg2 > 0.0f) {
+		if (!(arg0->unk20 & 2)) {
+			arg0->unk20 |= 2;
+			arg0->unk10 = 0;
+			func_800FB3E8_10A398(arg0, 1.0f);
+		}
+	}
+	arg0->unk20 |= 1;
+	if (arg0 == D_80052B34) {
+		D_80157A2C = func_80003824_4424(arg1, arg3);
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80102DDC_111D8C.s")
 
