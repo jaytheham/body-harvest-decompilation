@@ -5,6 +5,7 @@ extern s16 D_802E30F4;
 extern s32 D_802E3098;
 extern s32 D_802E3094;
 extern s32 D_802E30EC;
+extern char D_802E2EE8;
 extern void func_802D5F28_2B8358(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4CD0_2B7100.s")
@@ -72,7 +73,26 @@ void func_802D6340_2B8770(void) {
     func_80007410_8010(&func_802D62E4_2B8714);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6364_2B8794.s")
+void func_802D6364_2B8794(void) {
+    s32 temp_v0;
+    u8 temp_a1;
+    s16 building_y;
+    s16 building_z;
+    AlienInstance *alien;
+
+    temp_v0 = func_8007956C_8851C(0x13);
+    temp_a1 = temp_v0 & 0xFF;
+    if ((temp_v0 & 0xFF) != 0xFF) {
+        osSyncPrintf(D_802E2EE8, temp_a1);
+        alien = &alienInstances[temp_a1];
+        building_y = buildingInstances[160].xCoord;
+        building_z = buildingInstances[160].zCoord;
+        alien->unk0 = building_y + 0x320;
+        alien->unkE = 0;
+        alien->unk4 = building_z;
+        func_80080510_8F4C0(temp_a1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D63E8_2B8818.s")
 
