@@ -355,7 +355,6 @@ void func_802D5DE4_1EEAF4(void) {
     vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & 0xFBFF);
 }
 
-#ifdef NON_MATCHING
 void func_802D5DFC_1EEB0C(AlienInstance *arg0) {
     s16 v0;
     s16 v1;
@@ -369,9 +368,6 @@ void func_802D5DFC_1EEB0C(AlienInstance *arg0) {
     func_80124B5C_133B0C(arg0->unk2A, (s16)result, *(s16 *)&arg0->unk26, 0x3E8, 0x96);
     func_800DF038_EDFE8(arg0->unk2A, arg0->unk32, *(s16 *)&arg0->unk26, 0xC8, 0, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5DFC_1EEB0C.s")
-#endif
 
 void func_802D5E98_1EEBA8(void);
 
