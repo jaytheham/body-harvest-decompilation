@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-26T04:28:30Z",
-  "commit": "ca9bf3d",
-  "commit_timestamp": "2026-03-26T17:28:18+13:00",
+  "generated": "2026-03-26T04:35:19Z",
+  "commit": "6c11fcf",
+  "commit_timestamp": "2026-03-26T17:35:05+13:00",
   "overall": {
-    "total_functions": 2967,
+    "total_functions": 2965,
     "matched": 909,
-    "non_matching": 299,
+    "non_matching": 297,
     "asm_stubs": 1759,
-    "matched_pct": 30.64,
-    "decompiled_pct": 40.71
+    "matched_pct": 30.66,
+    "decompiled_pct": 40.67
   },
   "segments": {
     "core": {
@@ -32,11 +32,11 @@
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
       "matched": 633,
-      "non_matching": 153,
+      "non_matching": 151,
       "asm_stubs": 792,
-      "total": 1578,
-      "matched_pct": 40.1,
-      "decompiled_pct": 49.8
+      "total": 1576,
+      "matched_pct": 40.2,
+      "decompiled_pct": 49.7
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -408,10 +408,10 @@
       "path": "overlay_gameplay/outside/CFE30.c",
       "segment": "overlay_gameplay/outside",
       "matched": 104,
-      "non_matching": 18,
+      "non_matching": 16,
       "asm_stubs": 177,
-      "total": 299,
-      "matched_pct": 34.8,
+      "total": 297,
+      "matched_pct": 35.0,
       "contributor": "jaytheham"
     },
     {
@@ -540,7 +540,7 @@
       "name": "jaytheham",
       "files": 34,
       "matched": 738,
-      "non_matching": 263,
+      "non_matching": 261,
       "asm_stubs": 1200
     },
     {
@@ -593,11 +593,11 @@
     },
     {
       "date": "2026-03-26",
-      "commit": "ca9bf3d",
-      "matched_pct": 30.64,
-      "decompiled_pct": 40.71,
+      "commit": "6c11fcf",
+      "matched_pct": 30.66,
+      "decompiled_pct": 40.67,
       "matched": 909,
-      "total": 2967
+      "total": 2965
     }
   ]
 }
