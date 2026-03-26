@@ -712,6 +712,7 @@ void func_802DE7BC_32290C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DF940_323A90.s")
 
+#ifdef NON_MATCHING
 void func_802DFE68_323FB8() {
 	AlienInstance *inst;
 	s32 alien_index;
@@ -732,6 +733,9 @@ void func_802DFE68_323FB8() {
 	D_8014D17C = 0;
 	func_80007410_8010(&func_802DF290_3233E0);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFE68_323FB8.s")
+#endif
 
 s32 func_802DFF04_324054(u8 arg0) {
 	s8 chain;
