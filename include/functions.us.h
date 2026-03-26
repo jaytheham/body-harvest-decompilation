@@ -205,7 +205,7 @@ s32 func_8008AAFC_99AAC(u8, s32, s32);
 void func_8008AC5C_99C0C(u8, s32);
 void func_8008B02C_99FDC(u8);
 s32 func_8008D0E0_9C090(u8);
-void func_8008D4A0_9C450(u8);
+void func_8008D4A0_9C450(unsigned int);
 void func_8008DEF4_9CEA4(u8);
 void func_8008E0D8_9D088(u8);
 void func_8008E16C_9D11C(u8);
