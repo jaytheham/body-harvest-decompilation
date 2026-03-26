@@ -257,30 +257,7 @@ s32 func_800C2274_D1224(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C22EC_D129C.s")
 
-#ifdef NON_MATCHING
-void func_800C2554_D1504(s16 arg0, u8 arg1) {
-	Unk801541F8Entry *entry;
-	s16 temp;
-	extern char D_80143390;
-
-	if (arg1 < 0x1E) {
-		entry = &D_80154088[arg1];
-		if (entry->unk0 == 0) {
-			temp = *(s16 *) ((u8 *) entry + 0xA);
-			if (arg0 == temp) {
-				func_800C1418_D03C8(arg1, 0);
-				func_800C1384_D0334(arg1);
-				return;
-			}
-			func_800C1A4C_D09FC(arg0, arg1, 0);
-			return;
-		}
-	}
-	osSyncPrintf(&D_80143390); // DYNAMIC EFFECTS : Tried to kill smoke puff unit which does not exist!
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C2554_D1504.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C25F8_D15A8.s")
 
@@ -290,44 +267,7 @@ void func_800C2554_D1504(s16 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C2EE4_D1E94.s")
 
-#ifdef NON_MATCHING
-void func_800C31AC_D215C(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
-	Unk801541F8Entry* entry;
-	s16* ptr;
-
-	if (arg3 >= 0x1E) {
-		goto error;
-	}
-
-	entry = &D_80154088[arg3];
-
-	if (entry->unk0 != 1) {
-		goto error;
-	}
-
-	if (entry->unk0 == 0xFA) {
-		goto error;
-	}
-
-	ptr = &D_80154318[entry->unkA].unk8;
-
-	if (D_80154318[entry->unkA].unk0 & 1) {
-		goto success;
-	}
-
-error:
-	osSyncPrintf(&D_80143430);
-	return;
-
-success:
-	ptr[0] = arg0;
-	ptr[1] = arg1;
-	ptr[2] = arg2;
-	func_80137368_146318(arg0, arg1, arg2, 0, entry->unkA);
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C31AC_D215C.s")
-#endif
 
 void func_800C3288_D2238(u8 arg0) {
 	if (arg0 >= 0x1E || D_80154088[arg0].unk0 != 1) {
@@ -405,6 +345,7 @@ s32 func_800C4A64_D3A14(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C6D80_D5D30.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C7924_D68D4.s")
+
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C7E18_D6DC8.s")
 
 void func_800C80F0_D70A0(u16 arg0, u16 arg1, u16 arg2, s16 arg3) {
