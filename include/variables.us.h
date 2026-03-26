@@ -1187,6 +1187,7 @@ extern s16 D_801542BE;
 extern s16 D_801542CA;
 extern s16 D_801542D6;
 extern s16 D_80154282;
+extern s16 D_801542EE;
 extern Unk80154318Entry D_80154318[];
 extern u8 D_80154327;
 extern u8 D_80154328;

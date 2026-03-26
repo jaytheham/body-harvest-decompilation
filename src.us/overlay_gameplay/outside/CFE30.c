@@ -1140,7 +1140,32 @@ s16 func_800D951C_E84CC(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	return temp_v0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D95D0_E8580.s")
+void func_800D95D0_E8580(void) {
+	Unk80154318Entry *entry;
+	s16 idx;
+	s16 next;
+	s32 *counter;
+
+	idx = D_801542EE;
+	if ((idx == -5) || (idx == -6)) {
+		func_800C1418_D03C8(0x14, 1);
+		return;
+	}
+	if ((idx != -5) && (idx != -6)) {
+		do {
+			entry = &D_80154318[idx];
+			counter = (s32*)&entry->unk8;
+			next = entry->unk4;
+			next = D_80154318[next].unk4;
+			if (*(s32*)&entry->unkC != 0) {
+				counter[1] = counter[1] - 1;
+			} else {
+				func_800C1E24_D0DD4(idx, 0x14, 1);
+			}
+			idx = next;
+		} while ((idx != -5) && (idx != -6));
+	}
+}
 
 void func_800D96B4_E8664(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
