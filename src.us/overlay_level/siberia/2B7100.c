@@ -7,6 +7,7 @@ extern s32 D_802E3094;
 extern s32 D_802E30EC;
 extern char D_802E2EE8;
 extern void func_802D5F28_2B8358(void);
+extern void func_802D6CA0_2B90D0(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4CD0_2B7100.s")
 
@@ -98,6 +99,7 @@ void func_802D6364_2B8794(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D64DC_2B890C.s")
 
+#ifdef NON_MATCHING
 void func_802D6674_2B8AA4(void) {
     if (D_8014D17C >= 0x15) {
         func_802D64DC_2B890C(0xA0, D_8014D17C - 0x14, 0xC8, 0x18, &D_802E0E48, 6, 0x28, 1);
@@ -108,6 +110,9 @@ void func_802D6674_2B8AA4(void) {
     }
     D_8014D17C += 1;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6674_2B8AA4.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_802D670C_2B8B3C(void) {
@@ -143,7 +148,57 @@ void func_802D6A4C_2B8E7C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6CA0_2B90D0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6F4C_2B937C.s")
+void func_802D6F4C_2B937C(void) {
+    s32 v1;
+    s32 a1;
+    s32 a2;
+    s32 a3;
+    s32 t0;
+    s32 t1;
+    s32 t2;
+    s32 t3;
+    s32 t4;
+    s32 t5;
+    s32 t6;
+    s32 t7;
+    s32 t8;
+    s32 t9;
+
+    v1 = buildingInstances[69].unk8;
+    a2 = buildingInstances[80].unk8;
+    t4 = 0x10000;
+    a1 = v1 >> 12;
+    t6 = a1 | t4;
+    t7 = t6 ^ a1;
+    t0 = buildingInstances[65].unk8;
+    t8 = t7 << 12;
+    a3 = a2 >> 12;
+    t5 = a3 | t4;
+    t9 = t8 ^ v1;
+    t2 = buildingInstances[86].unk8;
+    t6 = t5 ^ a3;
+    buildingInstances[69].unk8 = t9;
+    t7 = t6 << 12;
+    t1 = t0 >> 12;
+    t9 = t1 | t4;
+    t8 = t7 ^ a2;
+    buildingInstances[80].unk8 = t8;
+    t5 = t9 ^ t1;
+    t3 = t2 >> 12;
+    t6 = t5 << 12;
+    t8 = t3 | t4;
+    t9 = t8 ^ t3;
+    t5 = t9 << 12;
+    t7 = t6 ^ t0;
+    t6 = t5 ^ t2;
+    buildingInstances[65].unk8 = t7;
+    buildingInstances[86].unk8 = t6;
+
+    D_8014D17E = 0;
+    D_801591C4 = 0;
+
+    func_80007410_8010(&func_802D6CA0_2B90D0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6FFC_2B942C.s")
 
