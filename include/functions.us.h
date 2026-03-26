@@ -644,7 +644,7 @@ void func_800EF650_FE600(AlienInstance *);
 void func_800EFEB4_FEE64(void *arg0, s32 arg1, s32 arg2);
 void func_800CA5EC_D959C(s16, s16, s16, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
 void func_80013468_14068(s32 arg0);
-void func_8011BF7C_12AF2C(s32 arg0);
+void func_8011BF7C_12AF2C(u8 arg0);
 void func_802D5578_18E088(void);
 void func_802D9C60_192770(u8 arg0);
 void func_802D536C_18DE7C(void);
