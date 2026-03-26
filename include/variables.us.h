@@ -1337,6 +1337,7 @@ extern s32 D_802E7C3C;
 extern s16 D_802E7C40;
 extern char D_802E7A7C_32BBCC[];
 extern s16 D_802E4FB4[];
+extern Unk8014DD50 *D_802E5140;
 extern s16 D_8014D17C;
 extern s16 D_8014D17E;
 extern Unk8014DD50 *D_802E566C;
