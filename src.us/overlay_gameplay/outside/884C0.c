@@ -1980,6 +1980,7 @@ s32 func_80085340_942F0(u8 arg0, u16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085340_942F0.s")
 #endif
 
+#ifdef NON_MATCHING
 s32 func_80085448_943F8(u8 arg0) {
 	s32 var_v0 = D_80052B34->unk0 - alienInstances[arg0].unk0;
 	s32 temp_a2 = D_80052B34->unk4 - alienInstances[arg0].unk4;
@@ -2020,6 +2021,9 @@ block_11:
 	}
 	return 0;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085448_943F8.s")
+#endif
 
 s32 func_80085524_944D4(u8 arg0) {
 	return ((u32)(arg0 + D_80052A8C) % 5U) == 0;
