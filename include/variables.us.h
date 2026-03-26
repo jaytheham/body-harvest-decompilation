@@ -1402,6 +1402,7 @@ extern DebugPropEntry D_8013CBC0[];
 extern u8 D_802566D0[];
 extern s8 D_80257A55[];
 extern u8 D_80140768[];
+extern WeaponSpecEntry D_80140768_14F718[];
 extern u8 D_801601F0[];
 extern s32 D_80034574[];
 extern u8 D_801421A0[];

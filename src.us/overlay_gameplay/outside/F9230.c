@@ -1324,7 +1324,24 @@ void func_80103DD0_112D80(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801073FC_1163AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80107890_116840.s")
+void func_80107890_116840(VehicleInstance *arg0) {
+	VehicleSpec *specPtr;
+	WeaponSpecEntry *tableEntry;
+	s16 retVal;
+
+	specPtr = &vehicleSpecs[arg0->unk1A];
+	tableEntry = &D_80140768_14F718[specPtr->unk55];
+
+	if (specPtr->unk4C & 0x20000000) {
+		retVal = func_800FA018_108FC8(arg0, arg0->unk6, specPtr->unk36, tableEntry);
+		if (tableEntry->unk8 < arg0->unkA - retVal) {
+			func_80123E90_132E40(arg0, (s16)((arg0->unkA - retVal - tableEntry->unk8) >> 2));
+		}
+		if (currentLevel == LEVEL_SIBERIA && arg0->unk1A == 0xE) {
+			func_800FDB58_10CB08(arg0);
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80107970_116920.s")
 
