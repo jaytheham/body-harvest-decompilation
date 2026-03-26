@@ -3,6 +3,8 @@
 
 extern Unk8014DD50 **D_802E2040;
 extern Unk8014DD50 **D_802E2190;
+extern void func_800797A4_88754(s32 arg0, u8 arg1);
+extern void func_8008B108_9A0B8(u8 arg0);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4CD0_2B7100.s")
 
@@ -362,4 +364,21 @@ void func_802E0D20_2C3150(u8 arg0) {
     func_802E0B08_2C2F38(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802E0D48_2C3178.s")
+void func_802E0D48_2C3178(u8 arg0) {
+    AlienInstance *temp_v0;
+    AlienInstance *temp_a0;
+    u8 var_a2;
+
+    var_a2 = arg0 & 0xFF;
+    temp_v0 = &alienInstances[var_a2];
+    if (!(temp_v0->unk20 & 0x100000)) {
+        temp_a0 = &alienInstances[temp_v0->unk25];
+        if (temp_a0->specIndex == 0x1B) {
+            temp_a0->unk3C = (s8)(temp_a0->unk3C - 1);
+        }
+        if (temp_v0->unk20 & 0x40000000) {
+            func_800797A4_88754(var_a2, 2);
+        }
+    }
+    func_8008B108_9A0B8(var_a2 & 0xFF);
+}
