@@ -524,6 +524,7 @@ extern u8 D_80144E2C[];
 extern f64 D_80144F08;
 extern f32 D_80144F30_153EE0;
 extern f32 D_80144F34_153EE4;
+extern f64 D_80144FA0_153F50;
 extern f32 D_80144FC8;
 extern u8 D_801454C0[];
 extern u8 D_801454C8[];

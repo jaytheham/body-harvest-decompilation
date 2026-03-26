@@ -463,7 +463,8 @@ typedef struct {
 	/* 0x00 */ u8 pad0[0x10];
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
-	/* 0x14 */ u8 pad14[0xC];
+	/* 0x14 */ s16 unk14;
+	/* 0x16 */ u8 pad16[0xA];
 } BuildingSpec; /* size = 0x20 */
 
 typedef struct {

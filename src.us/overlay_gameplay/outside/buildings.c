@@ -394,7 +394,32 @@ s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BEA0_12AE50.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BF7C_12AF2C.s")
+void func_8011BF7C_12AF2C(u8 arg0) {
+    BuildingInstance *inst = &buildingInstances[arg0];
+    BuildingSpec *spec = &buildingSpecs[inst->buildingType];
+
+    if ((s8)inst->hitPoints <= 0) {
+        return;
+    }
+    if (!((inst->unk8 >> 12) & 1)) {
+        return;
+    }
+    if ((inst->unk8 >> 12) & 0x10) {
+        return;
+    }
+    func_800D249C_E144C(
+        inst->xCoord,
+        (s16)(s32)((f64)inst->yCoord + (f64)spec->unk14 * D_80144FA0_153F50),
+        inst->zCoord,
+        0xC8,
+        0x55,
+        0x55,
+        (s32)arg0,
+        0
+    );
+    inst->hitPoints = 1;
+    inst->unk8 = (((inst->unk8 >> 12 | 0x10) ^ (inst->unk8 >> 12)) << 12) ^ inst->unk8;
+}
 
 void func_8011C080_12B030(u8 arg0)
 {
