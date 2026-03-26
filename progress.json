@@ -1,7 +1,7 @@
 {
-  "generated": "2026-03-26T04:40:27Z",
-  "commit": "59694f2",
-  "commit_timestamp": "2026-03-26T17:40:16+13:00",
+  "generated": "2026-03-26T05:29:01Z",
+  "commit": "82019ed",
+  "commit_timestamp": "2026-03-26T18:28:43+13:00",
   "overall": {
     "total_functions": 2966,
     "matched": 912,
@@ -452,7 +452,7 @@
       "asm_stubs": 93,
       "total": 175,
       "matched_pct": 36.0,
-      "contributor": "Jay"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/cheats.c",
@@ -538,17 +538,10 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 33,
-      "matched": 765,
-      "non_matching": 251,
-      "asm_stubs": 1212
-    },
-    {
-      "name": "Jay",
-      "files": 2,
-      "matched": 85,
-      "non_matching": 24,
-      "asm_stubs": 146
+      "files": 34,
+      "matched": 828,
+      "non_matching": 270,
+      "asm_stubs": 1305
     },
     {
       "name": "Meridian Lex",
@@ -556,6 +549,13 @@
       "matched": 62,
       "non_matching": 23,
       "asm_stubs": 398
+    },
+    {
+      "name": "Jay",
+      "files": 1,
+      "matched": 22,
+      "non_matching": 5,
+      "asm_stubs": 53
     }
   ],
   "history": [
@@ -593,7 +593,7 @@
     },
     {
       "date": "2026-03-26",
-      "commit": "59694f2",
+      "commit": "82019ed",
       "matched_pct": 30.75,
       "decompiled_pct": 40.8,
       "matched": 912,
