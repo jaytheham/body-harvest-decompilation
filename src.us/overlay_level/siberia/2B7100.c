@@ -148,6 +148,7 @@ void func_802D6A4C_2B8E7C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6CA0_2B90D0.s")
 
+/* Applies XOR/shift transformations to four specific buildingInstances, clears state counters, and registers callback */
 void func_802D6F4C_2B937C(void) {
     s32 v1;
     s32 a1;
