@@ -1001,7 +1001,25 @@ void func_800D76F4_E66A4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	temp_v0[2] = arg2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7790_E6740.s")
+void func_800D7790_E6740(void) {
+    s16 var_s1;
+    s16 *temp_v0;
+
+    var_s1 = D_801542CA;
+    if (var_s1 == -5 || var_s1 == -6) {
+        func_800C1418_D03C8(0x11, 1);
+        return;
+    }
+    while (var_s1 != -5 && var_s1 != -6) {
+        D_80154318[var_s1].unkE++;
+        temp_v0 = (s16 *)((u8 *)&D_80154318[var_s1] + 8);
+        if (D_80154318[var_s1].unkE >= 4) {
+            D_80154318[var_s1].unkE = 0;
+        }
+        func_80137368_146318(temp_v0[0], temp_v0[1], temp_v0[2], 9, var_s1);
+        var_s1 = D_80154318[var_s1].unk4;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7870_E6820.s")
 
