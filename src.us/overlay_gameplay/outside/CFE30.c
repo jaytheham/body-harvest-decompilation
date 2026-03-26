@@ -115,7 +115,7 @@ u8 func_800C14D4_D0484(u8 arg0) {
 	u8 result_slot;
 	s32 temp;
 
-	if ((gameplayMode == 2) || (gameplayMode == 9)) {
+	if ((gameplayMode == GAMEPLAY_MODE_UNK2) || (gameplayMode == GAMEPLAY_MODE_UNK9)) {
 		osSyncPrintf(&D_80142F44_151EF4); // Do not allocate because in pause
 	}
 	
@@ -192,41 +192,41 @@ s16 func_800C19D4_D0984(u8 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1A4C_D09FC.s")
 
 #ifdef NON_MATCHING
-void func_800C1D40_D0CF0(s16 arg0, u8 arg1, s32 arg2) {
-	s16 sp1E;
-	s16 sp22;
-
-	if ((arg0 >= 0) && (arg0 < 0x190) && (arg1 < 0x1E) && (D_80154318[arg0].unk0 & 1)) {
+	void func_800C1D40_D0CF0(s16 arg0, u8 arg1, s32 arg2)
+	{
+	  s16 sp1E;
+	  s16 sp22;
+	  if ((arg0 >= 0) && (arg0 < 0x190) && (arg1 < 0x1E) && (D_80154318[arg0].unk0 & 1))
+	  {
 		sp1E = D_80154318[arg0].unk4;
-		func_800C1A4C_D09FC(arg0, arg1, arg2);
+		func_800C1A4C_D09FC(arg0 & 0xFFFFFFFFu, arg1, arg2);
 		sp22 = D_80154318[sp1E].unk4;
-		func_800C1A4C_D09FC(sp1E, arg1, arg2);
-		func_800C1A4C_D09FC(sp22, arg1, arg2);
+		  if (1){}
+		  func_800C1A4C_D09FC(sp1E, arg1, arg2);
+		  func_800C1A4C_D09FC(sp22, arg1, arg2); 
 		return;
-	}
-	osSyncPrintf(&D_801432C4_152274);
+	  }
+	osSyncPrintf(&D_801432C4_152274); // EFFECTS WARNING : Call to free up invalid triple effect unit
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1D40_D0CF0.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2) {
-	u8 sp27;
+void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2)
+{
 	s16 sp1E;
-
-	if ((arg0 >= 0) && (arg0 < 0x190) && (arg1 < 0x1E) && (D_80154318[arg0].unk0 & 1)) {
+	  u8 sp27;
+  
+	  if ((arg0 >= 0) && (arg0 < 0x190) && (arg1 < 0x1E) && (D_80154318[arg0].unk0 & 1))
+	  {
 		sp1E = D_80154318[arg0].unk4;
 		sp27 = arg1;
 		func_800C1A4C_D09FC(arg0, arg1, arg2);
 		func_800C1A4C_D09FC(sp1E, sp27, arg2);
 		return;
-	}
-	osSyncPrintf(&D_80143304); // EFFECTS WARNING : Call to free up invalid double effect unit
+	  }
+	osSyncPrintf(&D_80143304_1522B4); // EFFECTS WARNING : Call to free up invalid double effect unit
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1E24_D0DD4.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1ECC_D0E7C.s")
 
@@ -1678,40 +1678,40 @@ void func_800E35E0_F2590(u8 arg0)
 
 #ifdef NON_MATCHING
 void func_800E520C_F41BC(void) {
-    Unk80152D00Pair *entry;
+	Unk80152D00Pair *entry;
 
-    entry = D_80152D00;
-    do {
-        if (entry->unk0 != 0) {
-            if (entry->unk0 == 1) {
-                entry->unk2--;
-                if (entry->unk2 <= 0) {
-                    entry->unk0 = 0;
-                }
-            }
-            if (entry->unk0 == 2) {
-                entry->unk2--;
-                if (entry->unk2 <= 0) {
-                    entry->unk0 = 0;
-                }
-            }
-        }
-        if (entry->unk18 != 0) {
-            if (entry->unk18 == 1) {
-                entry->unk1A--;
-                if (entry->unk1A <= 0) {
-                    entry->unk18 = 0;
-                }
-            }
-            if (entry->unk18 == 2) {
-                entry->unk1A--;
-                if (entry->unk1A <= 0) {
-                    entry->unk18 = 0;
-                }
-            }
-        }
-        entry++;
-    } while (entry != &D_80153300);
+	entry = D_80152D00;
+	do {
+		if (entry->unk0 != 0) {
+			if (entry->unk0 == 1) {
+				entry->unk2--;
+				if (entry->unk2 <= 0) {
+					entry->unk0 = 0;
+				}
+			}
+			if (entry->unk0 == 2) {
+				entry->unk2--;
+				if (entry->unk2 <= 0) {
+					entry->unk0 = 0;
+				}
+			}
+		}
+		if (entry->unk18 != 0) {
+			if (entry->unk18 == 1) {
+				entry->unk1A--;
+				if (entry->unk1A <= 0) {
+					entry->unk18 = 0;
+				}
+			}
+			if (entry->unk18 == 2) {
+				entry->unk1A--;
+				if (entry->unk1A <= 0) {
+					entry->unk18 = 0;
+				}
+			}
+		}
+		entry++;
+	} while (entry != &D_80153300);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E520C_F41BC.s")
