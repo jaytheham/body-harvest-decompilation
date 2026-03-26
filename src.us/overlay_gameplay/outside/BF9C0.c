@@ -185,7 +185,28 @@ void func_800B415C_C310C(s16 arg0, s16 arg1) {
 	D_8014FDC8 = (idx + 1) % 64;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B41C8_C3178.s")
+void func_800B41C8_C3178(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
+	s16 i;
+
+	func_800B0C80_BFC30();
+	func_800B32AC_C225C(arg2);
+	func_800B4050_C3000(arg0, arg1, arg2, arg3);
+	func_800B0B94_BFB44();
+	D_8014FDC8 = 0;
+	for (i = 0; i < 0x40; i++) {
+		D_8014FD48[i * 2] = 0;
+	}
+	D_8014F838 = 0;
+	if (currentLevel != 5) {
+		i = 0;
+		if (D_80047F98 > 0) {
+			do {
+				func_800B165C_C060C(i);
+				i++;
+			} while (i < D_80047F98);
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B42B0_C3260.s")
 
