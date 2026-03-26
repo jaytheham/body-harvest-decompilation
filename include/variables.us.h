@@ -237,6 +237,7 @@ extern s16 D_8013D510;
 extern s32 D_8013D580;
 extern TileEntry D_801479B0[];
 extern u8 D_80147C30_156BE0[];
+extern u16 D_80147F00_156EB0[5][6];
 extern TileCoord D_801475F0[];
 extern u8 D_80146688[];
 extern f32 D_801424E0;

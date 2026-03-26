@@ -363,7 +363,48 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BC760_CB710.s")
 
+#ifdef NON_MATCHING
+void func_800BD20C_CC1BC(void) {
+	s32 var_v0;
+	s32 var_a0;
+	s32 level;
+	u16 *arr_base;
+	u16 mask;
+	s32 var_t0;
+
+	var_v0 = 0;
+	level = currentLevel;
+	arr_base = D_80147F00_156EB0[level];
+	if (D_80047F98 > 0) {
+		do {
+			mask = arr_base[var_v0 - 6];
+			var_a0 = 0;
+			var_t0 = 0;
+			do {
+				if (mask & (1 << var_t0)) {
+					s32 temp_t1 = D_8003E0FC[level - 1][var_a0].unk6;
+					s32 temp_t2 = -temp_t1;
+					if (temp_t1 != 0x50) {
+						s32 var_t3;
+						if (temp_t2 < temp_t1) {
+							var_t3 = temp_t1;
+						} else {
+							var_t3 = temp_t2;
+						}
+						D_8003E0FC[level - 1][var_a0].unk6 = (s8)(var_t3 + 1);
+					}
+				}
+				var_a0++;
+				var_t0 = var_a0 & 0xFF;
+				var_a0 = var_t0;
+			} while (var_t0 < 0x10);
+			var_v0 = (var_v0 + 1) & 0xFF;
+		} while (var_v0 < D_80047F98);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD20C_CC1BC.s")
+#endif
 
 // Reset gates for current level to closed
 void func_800BD2F4_CC2A4(void)
