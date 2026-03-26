@@ -802,7 +802,6 @@ void func_802E015C_3242AC(VehicleInstance *vehicle) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0B64_324CB4.s")
 
-#ifdef NON_MATCHING
 s32 func_802E1274_3253C4(s32 arg0) {
 	AlienInstance *inst;
 	u8 idx;
@@ -826,9 +825,6 @@ s32 func_802E1274_3253C4(s32 arg0) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1274_3253C4.s")
-#endif
 
 void func_802E1324_325474(u8 arg0) {
 	AlienInstance *inst;
