@@ -207,10 +207,10 @@ segments:
       - [0xCFE30, c, overlay_gameplay/outside/CFE30] # Special effects
       - [0xF6A50, c, overlay_gameplay/outside/F6A50] # Camera
       - [0xF7870, c, overlay_gameplay/outside/F7870] # Shadows
-      - [0xF9230, c, overlay_gameplay/outside/F9230] # Animation, cutscenes, Adam control
+      - [0xF9230, c, overlay_gameplay/outside/F9230] # Animation, cutscenes, Adam/vehicle control
       - [0x124ED0, c, overlay_gameplay/outside/buildings] # & shooting
       - [0x13DA70, c, overlay_gameplay/outside/13DA70] # Misc?
-      - [0x1416E0, c, overlay_gameplay/outside/1416E0] # Adam & vehicle Camera
+      - [0x1416E0, c, overlay_gameplay/outside/1416E0] # Adam & vehicle Camera, signposts
       - [0x145D70, c, overlay_gameplay/outside/145D70]
       - [0x148000, c, overlay_gameplay/outside/148000] # Weapons / HUD / Vehicle weapons
       - [0x14A8A0, data]

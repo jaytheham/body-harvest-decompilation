@@ -101,8 +101,6 @@ void func_80139460_148410(void) {
 }
 
 // https://decomp.me/scratch/TODO
-// Score 210: D_801601E8 &= ~bit generates lui at; sw imm(at) instead of sw 0(s2).
-// Compound &= produces correct register ordering (nor t0 before lw t9) but wrong store address.
 #ifdef NON_MATCHING
 void func_801394DC_14848C(void) {
 	s32 bit;

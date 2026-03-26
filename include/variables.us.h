@@ -644,7 +644,7 @@ extern u8 D_80152B88; /* unk8 field of first particle/effect entry */
 extern Unk80152D00Pair D_80153300; /* one past end of D_80152D00 */
 extern s16 D_80152C90;
 extern u8 D_80152740[];
-extern s16 D_80157590;
+extern s16 D_80157590; // outside camera status
 extern s16 D_80157A3C;
 extern VehicleInstance *D_80159020;
 extern AlienInstance *D_80158FEC; // Target alien instance

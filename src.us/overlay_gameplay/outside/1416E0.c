@@ -440,6 +440,7 @@ void func_80136570_145520(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801365E0_145590.s")
 
 // https://decomp.me/scratch/NQ4OJ
+// Check if player is reading signpost
 #ifdef NON_MATCHING
 void func_80136B50_145B00(s32 arg0, s16 arg1) {
 	s16 sp32;
