@@ -920,6 +920,7 @@ extern s32 D_800E7328;
 extern s32 D_801575DC;
 extern s32 D_80158FDC;
 extern s32 D_80157A28;
+extern s16 D_80157A2C;
 extern s16 D_80157A40;
 extern s16 D_800E7390;
 extern s32 D_800E7398;
