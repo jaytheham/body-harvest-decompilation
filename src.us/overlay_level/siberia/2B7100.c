@@ -176,6 +176,7 @@ void func_802D77BC_2B9BEC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7CD4_2BA104.s")
 
 /* checks alienInstances entry flags and conditionally calls func_80081F18_90EC8 to clear bit 0x2000 */
+/* possible: alienClearActionFlagIfReady */
 void func_802D806C_2BA49C(u8 arg0, s16 arg1, s16 arg2) {
     s16 sp2E;
     s16 sp2C;
