@@ -699,16 +699,19 @@ void func_802DFE68_323FB8() {
 	func_80007410_8010(&func_802DF290_3233E0);
 }
 
-s32 func_802DFF04_324054(u8 arg0) {
-	s8 chain;
+s8 func_802DFF04_324054(u8 arg0) {
+    s16 offset;
+    s8 idx;
 
-	chain = D_8014DD50[alienInstances[arg0].unkC].unkC;
-	chain = D_8014DD50[chain].unkD;
-	chain = D_8014DD50[chain].unkD;
-	chain = D_8014DD50[chain].unkD;
-	chain = D_8014DD50[chain].unkD;
-	chain = D_8014DD50[chain].unkD;
-	return D_8014DD50[chain].unkD;
+    offset = D_800481A4[(arg0 & 0xFF) * 40];
+    idx = D_8014DD50[offset].unkC;
+    idx = D_8014DD50[idx].unkD;
+    idx = D_8014DD50[idx].unkD;
+    idx = D_8014DD50[idx].unkD;
+    idx = D_8014DD50[idx].unkD;
+    idx = D_8014DD50[idx].unkD;
+    idx = D_8014DD50[idx].unkD;
+    return D_8014DD50[idx].unkD;
 }
 
 #ifdef NON_MATCHING
