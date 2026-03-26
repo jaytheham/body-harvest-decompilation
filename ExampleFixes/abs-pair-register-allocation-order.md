@@ -94,3 +94,27 @@ void func_800AB730_BA6E0(u8 arg0) {
     alienInstances[arg0].unk48 = 0xC0;
 }
 ```
+
+#### Leaf function max(abs_dx, abs_dz) with goto (func_80085448_943F8)
+
+For LEAF functions (no jal) that also compute **max(abs_dx, abs_dz)** with a goto-based
+merge and check the distance against a constant:
+
+**Pattern:**
+1. Use C89 inline init declarations in order `var_v0 = dx`, `temp_a2 = dz`, `temp_a3 = -var_v0`:
+   this gives `dz→a2` and `neg_dx→a3` correctly.
+2. Use **explicit if-else** (not init+conditional) for BOTH abs computations:
+   ```c
+   temp_t0 = -temp_a2;
+   if (temp_t0 < temp_a2) { var_t1 = temp_a2; } else { var_t1 = temp_t0; }
+   ```
+   and inside the outer-else's abs_dz_2:
+   ```c
+   if (temp_t0 < temp_a2) { var_a0_2 = temp_a2; } else { var_a0_2 = temp_t0; }
+   ```
+3. Use a `goto block_11` (inside else block) for the dx≤0 path to maintain a3 register
+   allocation via CFG interference with the else block's `temp_t0=t0`.
+4. Result: best achievable score ~405 (2 missing `b+delay` instructions due to
+   IDO jump-threading the goto into the beqz when the else body has only the goto;
+   all registers, instruction types, and logic are correct).
+

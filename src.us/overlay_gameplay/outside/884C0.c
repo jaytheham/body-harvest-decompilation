@@ -1980,7 +1980,46 @@ s32 func_80085340_942F0(u8 arg0, u16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085340_942F0.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085448_943F8.s")
+s32 func_80085448_943F8(u8 arg0) {
+	s32 var_v0 = D_80052B34->unk0 - alienInstances[arg0].unk0;
+	s32 temp_a2 = D_80052B34->unk4 - alienInstances[arg0].unk4;
+	s32 temp_a3 = -var_v0;
+	s32 temp_t0;
+	s32 var_a0;
+	s32 var_a0_2;
+	s32 var_t1;
+
+	if (temp_a3 < var_v0) {
+		var_a0 = var_v0;
+	} else {
+		var_a0 = temp_a3;
+	}
+	temp_t0 = -temp_a2;
+	if (temp_t0 < temp_a2) {
+		var_t1 = temp_a2;
+	} else {
+		var_t1 = temp_t0;
+	}
+	if (var_t1 < var_a0) {
+		var_a0_2 = temp_a3;
+		if (temp_a3 < var_v0) {
+		} else {
+			goto block_11;
+		}
+	} else {
+		if (temp_t0 < temp_a2) {
+			var_a0_2 = temp_a2;
+		} else {
+			var_a0_2 = temp_t0;
+		}
+block_11:
+		var_v0 = var_a0_2;
+	}
+	if ((D_80052B34->unk2 < alienInstances[arg0].unk2) && (var_v0 < 0x200)) {
+		return 1;
+	}
+	return 0;
+}
 
 s32 func_80085524_944D4(u8 arg0) {
 	return ((u32)(arg0 + D_80052A8C) % 5U) == 0;
