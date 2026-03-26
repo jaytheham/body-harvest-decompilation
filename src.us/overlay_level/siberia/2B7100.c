@@ -240,6 +240,7 @@ void func_802D8120_2BA550(u8 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DA4CC_2BC8FC.s")
 
+/* possible: alienInitSpecEffectIfReady */
 #ifdef NON_MATCHING
 void func_802DA7CC_2BCBFC(u8 arg0) {
     AlienInstance *alien;
