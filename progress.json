@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-26T02:03:30Z",
-  "commit": "c529eba",
-  "commit_timestamp": "2026-03-26T15:03:06+13:00",
+  "generated": "2026-03-26T03:10:57Z",
+  "commit": "26103c4",
+  "commit_timestamp": "2026-03-26T16:10:44+13:00",
   "overall": {
-    "total_functions": 2970,
-    "matched": 904,
-    "non_matching": 302,
-    "asm_stubs": 1764,
-    "matched_pct": 30.44,
-    "decompiled_pct": 40.61
+    "total_functions": 2969,
+    "matched": 905,
+    "non_matching": 301,
+    "asm_stubs": 1763,
+    "matched_pct": 30.48,
+    "decompiled_pct": 40.62
   },
   "segments": {
     "core": {
@@ -31,11 +31,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 628,
-      "non_matching": 156,
-      "asm_stubs": 797,
-      "total": 1581,
-      "matched_pct": 39.7,
+      "matched": 629,
+      "non_matching": 155,
+      "asm_stubs": 796,
+      "total": 1580,
+      "matched_pct": 39.8,
       "decompiled_pct": 49.6
     },
     "overlay_gameplay/inside": {
@@ -337,11 +337,11 @@
     {
       "path": "overlay_gameplay/outside/884C0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 136,
-      "non_matching": 43,
-      "asm_stubs": 111,
-      "total": 290,
-      "matched_pct": 46.9,
+      "matched": 137,
+      "non_matching": 42,
+      "asm_stubs": 110,
+      "total": 289,
+      "matched_pct": 47.4,
       "contributor": "jaytheham"
     },
     {
@@ -539,9 +539,9 @@
     {
       "name": "jaytheham",
       "files": 35,
-      "matched": 842,
-      "non_matching": 279,
-      "asm_stubs": 1366
+      "matched": 843,
+      "non_matching": 278,
+      "asm_stubs": 1365
     },
     {
       "name": "Meridian Lex",
@@ -594,11 +594,11 @@
     },
     {
       "date": "2026-03-26",
-      "commit": "c529eba",
-      "matched_pct": 30.44,
-      "decompiled_pct": 40.61,
-      "matched": 904,
-      "total": 2970
+      "commit": "26103c4",
+      "matched_pct": 30.48,
+      "decompiled_pct": 40.62,
+      "matched": 905,
+      "total": 2969
     }
   ]
 }
