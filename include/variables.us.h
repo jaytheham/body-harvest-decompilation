@@ -1483,6 +1483,7 @@ extern u8 D_8003153E[];
 extern Unk8014DD50 *D_802E0608;
 extern Unk8014DD50 *D_802E0B08;
 extern Unk8014DD50 *D_802E0C9C;
+extern Unk8014DD50 *D_802E1430;
 extern f32 D_802E0F88;
 extern f32 D_802E0F8C;
 extern char D_802E0E74[];

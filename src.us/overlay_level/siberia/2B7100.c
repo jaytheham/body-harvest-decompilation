@@ -175,7 +175,25 @@ void func_802D77BC_2B9BEC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7CD4_2BA104.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D806C_2BA49C.s")
+/* checks alienInstances entry flags and conditionally calls func_80081F18_90EC8 to clear bit 0x2000 */
+void func_802D806C_2BA49C(u8 arg0, s16 arg1, s16 arg2) {
+    s16 sp2E;
+    s16 sp2C;
+    AlienInstance *sp24;
+    u8 temp_t6;
+
+    temp_t6 = arg0 & 0xFF;
+    sp24 = &alienInstances[temp_t6 * 5];
+    if ((sp24->unk20 & 0x2000) != 0) {
+        if (D_8014DD50[arg1].unkA == 0) {
+            sp2C = arg1;
+            sp2E = arg2;
+            if ((func_80081F18_90EC8(temp_t6, 2, 2, &sp2C, &D_802E1430) & 0xFF) == 2) {
+                sp24->unk20 = sp24->unk20 & ~0x2000;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D8120_2BA550.s")
 
