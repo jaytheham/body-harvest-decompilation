@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-26T03:10:57Z",
-  "commit": "26103c4",
-  "commit_timestamp": "2026-03-26T16:10:44+13:00",
+  "generated": "2026-03-26T03:45:41Z",
+  "commit": "b7a464f",
+  "commit_timestamp": "2026-03-26T16:45:31+13:00",
   "overall": {
     "total_functions": 2969,
-    "matched": 905,
+    "matched": 907,
     "non_matching": 301,
-    "asm_stubs": 1763,
-    "matched_pct": 30.48,
-    "decompiled_pct": 40.62
+    "asm_stubs": 1761,
+    "matched_pct": 30.55,
+    "decompiled_pct": 40.69
   },
   "segments": {
     "core": {
@@ -31,12 +31,12 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 629,
+      "matched": 631,
       "non_matching": 155,
-      "asm_stubs": 796,
+      "asm_stubs": 794,
       "total": 1580,
-      "matched_pct": 39.8,
-      "decompiled_pct": 49.6
+      "matched_pct": 39.9,
+      "decompiled_pct": 49.7
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -437,12 +437,12 @@
     {
       "path": "overlay_gameplay/outside/F9230.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 107,
+      "matched": 109,
       "non_matching": 13,
-      "asm_stubs": 163,
+      "asm_stubs": 161,
       "total": 283,
-      "matched_pct": 37.8,
-      "contributor": "jaytheham"
+      "matched_pct": 38.5,
+      "contributor": "Jay"
     },
     {
       "path": "overlay_gameplay/outside/buildings.c",
@@ -538,10 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 35,
-      "matched": 843,
-      "non_matching": 278,
-      "asm_stubs": 1365
+      "files": 34,
+      "matched": 736,
+      "non_matching": 265,
+      "asm_stubs": 1202
+    },
+    {
+      "name": "Jay",
+      "files": 1,
+      "matched": 109,
+      "non_matching": 13,
+      "asm_stubs": 161
     },
     {
       "name": "Meridian Lex",
@@ -552,14 +559,6 @@
     }
   ],
   "history": [
-    {
-      "date": "2026-03-21",
-      "commit": "98103e7",
-      "matched_pct": 27.51,
-      "decompiled_pct": 36.99,
-      "matched": 812,
-      "total": 2952
-    },
     {
       "date": "2026-03-22",
       "commit": "6c690d5",
@@ -594,10 +593,10 @@
     },
     {
       "date": "2026-03-26",
-      "commit": "26103c4",
-      "matched_pct": 30.48,
-      "decompiled_pct": 40.62,
-      "matched": 905,
+      "commit": "f601cc7",
+      "matched_pct": 30.55,
+      "decompiled_pct": 40.69,
+      "matched": 907,
       "total": 2969
     }
   ]
