@@ -1053,6 +1053,18 @@ typedef struct {
 	/* 0x02 */ u8 pad[0x16];
 } Unk80146212; /* size = 0x18 */
 
+/* Entry in D_80146688 zone table, size = 0x10, 0x20 entries per level, indexed as [currentLevel][entry] */
+typedef struct {
+	/* 0x00 */ s8 unk0;      /* center X in 1/256 world units */
+	/* 0x01 */ s8 unk1;      /* center Z in 1/256 world units */
+	/* 0x02 */ s8 unk2;      /* half-size in 1/256 world units */
+	/* 0x03 */ s8 unk3;      /* 0 = active zone entry */
+	/* 0x04 */ u8 pad04[6];
+	/* 0x0A */ s16 unk0A;
+	/* 0x0C */ s16 unk0C;
+	/* 0x0E */ u8 pad0E[2];
+} Unk80146688; /* size = 0x10 */
+
 typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ u8 pad2[2];
