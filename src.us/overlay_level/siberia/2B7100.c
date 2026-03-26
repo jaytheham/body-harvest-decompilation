@@ -1,6 +1,8 @@
 #include <ultra64.h>
 #include "common.h"
 
+extern Unk8014DD50 **D_802E2040;
+extern Unk8014DD50 **D_802E2190;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4CD0_2B7100.s")
 
@@ -257,7 +259,26 @@ void func_802DA7CC_2BCBFC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DA7CC_2BCBFC.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DA854_2BCC84.s")
+void func_802DA854_2BCC84(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
+    AlienInstance *alien;
+    s16 sp2C;
+    s16 sp2A;
+    s16 sp28;
+    s8 result;
+
+    sp28 = arg1;
+    sp2A = arg2;
+    sp2C = arg3;
+    alien = &alienInstances[arg0 * 5];
+    if (alien->unk4B == 0) {
+        result = func_80081F18_90EC8(arg0, 3, 5, &sp28, &D_802E2040);
+    } else {
+        result = func_80081F18_90EC8(arg0, 3, 5, &sp28, &D_802E2190);
+    }
+    if ((result & 0xFF) == 5) {
+        alien->unk36 = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DA910_2BCD40.s")
 
