@@ -1311,7 +1311,27 @@ s32 func_8012E03C_13CFEC(s16 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E03C_13CFEC.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E114_13D0C4.s")
+s32 func_8012E114_13D0C4(s16 arg0, s16 arg1, s16 arg2) {
+	s32 i;
+	s32 a1;
+	s32 a2;
+
+	a1 = arg1;
+	a2 = arg2;
+	i = 0x19;
+	while (i--) {
+		if (D_8015FAD0[i].unk2C == 0) continue;
+		if (arg0 < (D_8015FAD0[i].unk0 >> 16) - D_8015FAD0[i].unk18) continue;
+		if (D_8015FAD0[i].unk18 + (D_8015FAD0[i].unk0 >> 16) < arg0) continue;
+		if (a1 < (D_8015FAD0[i].unk4 >> 16) - D_8015FAD0[i].unk1C) continue;
+		if (D_8015FAD0[i].unk1C + (D_8015FAD0[i].unk4 >> 16) < a1) continue;
+		if (a2 < (D_8015FAD0[i].unk8 >> 16) - D_8015FAD0[i].unk1A) continue;
+		if (D_8015FAD0[i].unk1A + (D_8015FAD0[i].unk8 >> 16) < a2) continue;
+		if (D_8015FAD0[i].unk24 == 0) continue;
+		return i;
+	}
+	return -1;
+}
 
 void func_8012E1F8_13D1A8(s32 arg0, s32 arg1) { }
 
