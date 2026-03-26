@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-26T06:10:19Z",
-  "commit": "21af98b",
-  "commit_timestamp": "2026-03-26T19:10:06+13:00",
+  "generated": "2026-03-26T19:53:33Z",
+  "commit": "7b6b262",
+  "commit_timestamp": "2026-03-27T08:53:22+13:00",
   "overall": {
-    "total_functions": 2966,
-    "matched": 912,
-    "non_matching": 298,
-    "asm_stubs": 1756,
-    "matched_pct": 30.75,
-    "decompiled_pct": 40.8
+    "total_functions": 2970,
+    "matched": 913,
+    "non_matching": 302,
+    "asm_stubs": 1755,
+    "matched_pct": 30.74,
+    "decompiled_pct": 40.91
   },
   "segments": {
     "core": {
@@ -31,12 +31,12 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 636,
-      "non_matching": 152,
-      "asm_stubs": 789,
-      "total": 1577,
+      "matched": 637,
+      "non_matching": 156,
+      "asm_stubs": 788,
+      "total": 1581,
       "matched_pct": 40.3,
-      "decompiled_pct": 50.0
+      "decompiled_pct": 50.2
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -447,11 +447,11 @@
     {
       "path": "overlay_gameplay/outside/buildings.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 63,
-      "non_matching": 19,
-      "asm_stubs": 93,
-      "total": 175,
-      "matched_pct": 36.0,
+      "matched": 64,
+      "non_matching": 23,
+      "asm_stubs": 92,
+      "total": 179,
+      "matched_pct": 35.8,
       "contributor": "jaytheham"
     },
     {
@@ -539,9 +539,9 @@
     {
       "name": "jaytheham",
       "files": 34,
-      "matched": 828,
-      "non_matching": 270,
-      "asm_stubs": 1305
+      "matched": 829,
+      "non_matching": 274,
+      "asm_stubs": 1304
     },
     {
       "name": "Meridian Lex",
@@ -593,11 +593,19 @@
     },
     {
       "date": "2026-03-26",
-      "commit": "21af98b",
-      "matched_pct": 30.75,
-      "decompiled_pct": 40.8,
-      "matched": 912,
-      "total": 2966
+      "commit": "035462f",
+      "matched_pct": 30.52,
+      "decompiled_pct": 40.84,
+      "matched": 908,
+      "total": 2975
+    },
+    {
+      "date": "2026-03-27",
+      "commit": "7b6b262",
+      "matched_pct": 30.74,
+      "decompiled_pct": 40.91,
+      "matched": 913,
+      "total": 2970
     }
   ]
 }
