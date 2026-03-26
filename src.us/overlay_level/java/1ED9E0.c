@@ -124,7 +124,6 @@ void func_802D513C_1EDE4C(s32 arg0) {
     func_800072CC_7ECC(0xC);
 }
 
-#ifdef NON_MATCHING
 void func_802D5170_1EDE80(void) {
     u8 alien_id;
     s32 new_var;
@@ -142,11 +141,8 @@ void func_802D5170_1EDE80(void) {
         callback_struct.unkC = func_802D513C_1EDE4C;
         func_800AE454_BD404(&callback_struct);
     }
-    func_800073B8_7FB8(0xCLL);
+    func_800073B8_7FB8(0xCULL);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5170_1EDE80.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D51F8_1EDF08.s")
 
