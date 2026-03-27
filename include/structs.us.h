@@ -113,13 +113,13 @@ typedef struct {
 	/* 0x0E */ s16 unkE; // "Direction"
 	/* 0x10 */ s16 unk10; // Elevation
 	/* 0x12 */ s16 unk12; // Speed
-	/* 0x14 */ u8 pad14[0x2];
+	/* 0x14 */ s16 unk14;
 	/* 0x16 */ s16 unk16;
-	/* 0x18 */ u8 pad18[0x2];
+	/* 0x18 */ s16 unk18;
 	/* 0x1A */ u8 unk1A; // specIndex
 	/* 0x1B */ u8 unk1B;
 	/* 0x1C */ s16 unk1C; // hitPoints
-	/* 0x1E */ u8 pad1E[2];
+	/* 0x1E */ s16 unk1E;
 	/* 0x20 */ u16 unk20; // Bit flags
 	/* 0x22 */ s16 unk22;
 	/* 0x24 */ s16 unk24;
@@ -132,7 +132,12 @@ typedef struct {
 	/* 0x34 */ f32 unk34; // "Inc" Y
 	/* 0x38 */ f32 unk38; // "Inc" Z
 	/* 0x3C */ s16 unk3C; // fuel
-	/* 0x3E */ u8 pad3E[0xE];
+	/* 0x3E */ u8 pad3E[2];
+	/* 0x40 */ s16 unk40;
+	/* 0x42 */ s16 unk42;
+	/* 0x44 */ u8 pad44[2];
+	/* 0x46 */ u8 unk46;
+	/* 0x47 */ u8 pad47[5];
 	/* 0x4C */ f32 unk4C;
 	/* 0x50 */ f32 unk50;
 	/* 0x54 */ f32 unk54;

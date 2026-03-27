@@ -463,7 +463,25 @@ void func_800F35AC_10255C(u8 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F35AC_10255C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800F3670_102620(void) {
+	u8 i;
+
+	D_80157FF8 = 0;
+	for (i = 0; i < 8; i++) {
+		D_80157FF0[i] = i;
+	}
+	{
+		u8 j;
+		for (j = 0; j < 12; j++) {
+			*(Unk801470C0Entry *)(D_801601F0 + j * 0x16) =
+				*(Unk801470C0Entry *)(D_801470C0_156070 + currentLevel * 0x108 + j * 0x16 - 0x108);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F3670_102620.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F375C_10270C.s")
 
@@ -714,7 +732,43 @@ s16 func_800FAE60_109E10(VehicleInstance *arg0) {
 	return (s16)(arg0 - vehicleInstances);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FAE84_109E34.s")
+void func_800FAE84_109E34(VehicleInstance *arg0) {
+    VehicleSpec *spec = &vehicleSpecs[arg0->unk1A];
+    arg0->unk0 = 0;
+    arg0->unk2 = 0;
+    arg0->unk4 = 0;
+    arg0->unkE = 0;
+    arg0->unk10 = 0;
+    arg0->unk12 = 0;
+    arg0->unk6 = 0;
+    arg0->unk8 = 0;
+    arg0->unkA = 0;
+    arg0->unkC = -2;
+    arg0->unk22 = 0;
+    arg0->unk24 = 0;
+    arg0->unk26 = 0;
+    arg0->unk20 = spec->unk4C;
+    arg0->unk1C = spec->hitPoints;
+    arg0->unk14 = 0;
+    arg0->unk16 = 0;
+    arg0->unk18 = 0;
+    arg0->unk28 = 0;
+    arg0->unk2A = 0;
+    arg0->unk2E = 0xFA;
+    arg0->unk1E = 0;
+    arg0->unk30 = 0.0f;
+    arg0->unk34 = 0.0f;
+    arg0->unk38 = 0.0f;
+    arg0->unk3C = (s16)(spec->unk61 << 8);
+    arg0->unk40 = 0;
+    arg0->unk42 = 0;
+    arg0->unk46 = arg0->unk46 & 0xFFC0;
+    arg0->unk4C = 0.0f;
+    arg0->unk50 = 0.0f;
+    arg0->unk54 = 0.0f;
+    arg0->unk58 = 0.0f;
+    D_80158C58[func_800FAE60_109E10(arg0)] = 0.0f;
+}
 
 f32 func_800FAF74_109F24(VehicleInstance *arg0, VehicleInstance *arg1) {
 	f32 temp_f0 = arg0->unk4C - arg1->unk4C;
