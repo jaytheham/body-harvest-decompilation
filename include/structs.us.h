@@ -668,6 +668,10 @@ typedef struct {
 } Unk800DE130; /* size = 0x0C */
 
 typedef struct {
+	u16 unk0[256];
+} Unk80052A94;
+
+typedef struct {
 	/* 0x00 */ u8 pad0[0x6];
 	/* 0x06 */ u8 unk6;
 	/* 0x07 */ u8 unk7;

@@ -1,7 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-// https://decomp.me/scratch/vP5F2
 void func_8009BAC0_AAA70(void)
 {
   s32 i;

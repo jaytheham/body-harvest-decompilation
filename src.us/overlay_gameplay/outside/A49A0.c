@@ -34,14 +34,13 @@ s32 func_800959F0_A49A0(s32 arg0, s32 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800959F0_A49A0.s")
 #endif
 
-// https://decomp.me/scratch/yD5OZ
-#ifdef NON_MATCHING
 s16 func_80095A6C_A4A1C(s16 arg0, s16 arg1, u16 arg2)
 {
-  u8 **new_var;
+  Unk80052A94 **new_var;
   s32 r;
   s16 nx;
   s16 ny;
+	s16 temp;
   r = sqrtf((arg0 * arg0) + (arg1 * arg1));
   if (r >= 2)
   {
@@ -64,14 +63,11 @@ s16 func_80095A6C_A4A1C(s16 arg0, s16 arg1, u16 arg2)
 	{
 	  ny = 0x7F;
 	}
-	return ((*((u16 *) (((*new_var) + (ny << 9)) + (nx * 2)))) & 0x3F) - arg2;
+	  temp = ((*((u16 *)(*new_var + ny) + nx)) & 0x3F) - arg2;
+	return temp;
   }
   return r * 0;
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095A6C_A4A1C.s")
-#endif
 
 void func_80095BD4_A4B84(int arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3)
 {
