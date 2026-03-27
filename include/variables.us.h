@@ -804,6 +804,7 @@ extern s16 D_8014ED52;
 extern s16 D_8014ED54;
 extern s16 D_8014ED56;
 extern s16 D_80158C50;
+extern f32 D_80158C58[];
 extern f32 D_80159194;
 extern f32 D_80159198;
 extern f32 D_8015919C;
