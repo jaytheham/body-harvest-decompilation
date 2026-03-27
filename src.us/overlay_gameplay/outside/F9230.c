@@ -1732,7 +1732,45 @@ void func_8010C454_11B404(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010F72C_11E6DC.s")
 
+#ifdef NON_MATCHING
+void func_8010F834_11E7E4(Unk80052B40 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+	float fx = (float)(arg0->unk0 - arg1);
+	float fy = (float)(arg0->unk2 - arg2);
+	float fz = (float)(arg0->unk4 - arg3);
+	float len = sqrtf(fx * fx + fy * fy + fz * fz);
+	float nx;
+	float ny;
+	float nz;
+	u16 flags;
+
+	if (len == 0.0f) {
+		return;
+	}
+
+	nx = fx / len;
+	ny = fy / len;
+	nz = fz / len;
+
+	/* read halfword at offset 0x20 from the base pointer (outer struct flag) */
+	flags = *(u16 *)((char *)arg0 + 0x20);
+
+	if (!(flags & 2)) {
+		ny = 0.0f;
+	} else if (0.0f < ny) {
+		ny *= 2.0f;
+	}
+
+	/* store length into offsets 0x30,0x34,0x38 relative to base */
+	*(float *)((char *)arg0 + 0x30) = len;
+	*(float *)((char *)arg0 + 0x34) = len;
+	*(float *)((char *)arg0 + 0x38) = len;
+
+	/* scale normalized vector by 10 and call handler */
+	func_80102D00_111CB0((VehicleInstance *)arg0, nx * 10.0f, ny * 10.0f, nz * 10.0f);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010F834_11E7E4.s")
+#endif
 
 void func_8010F93C_11E8EC(Unk80052B40 *arg0, Unk80052B40 *arg1) {
 	func_8010F834_11E7E4(arg0, arg1->unk0, arg1->unk2, arg1->unk4);
