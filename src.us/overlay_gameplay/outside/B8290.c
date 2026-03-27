@@ -108,38 +108,34 @@ void func_800A9DC0_B8D70(func_800A9DC0_B8D70_arg *arg0) {
 	temp->unk20 &= ~(0x20000000 | 0x400000);
 }
 
-// https://decomp.me/scratch/6iIbH
-#ifdef NON_MATCHING
 void func_800A9E1C_B8DCC(Unk80222A78 *arg0)
 {
   u8 alienIdx;
+	u8 temp;
   AlienInstance *alien;
   s32 x;
   s32 z;
-  s16 new_unk2;
-  s32 flags;
+  s32 a1, a2;
   alienIdx = arg0->unk8;
   alien = &alienInstances[alienIdx];
   x = (arg0->unk1 << 8) + 0x80;
-  new_unk2 = alien->unk2 + 0x8000;
   z = (arg0->unk2 << 8) + 0x80;
   alien->unk0 = x;
   alien->unk4 = z;
-  alien->unk2 = new_unk2;
+  alien->unk2 += 0x8000;
   alien->unk20 |= 0x20000000;
-  flags = alien->unk20;
-  if (flags & 0x80000)
+  if (alien->unk20 & 0x80000)
   {
-	func_800F2D48_101CF8((flags & 0xFFu) & 7, (s16) x, (s16) z);
+	temp = alien->unk20 & 7;
+	func_800F2D48_101CF8(temp, x, z);
   }
   arg0->unk4 += 9;
   arg0->unkC = func_800A9DC0_B8D70;
   func_800AE454_BD404(arg0);
-  alien->unkE = func_80003824_4424((f32) (D_80052B34->unk0 - alien->unk0), (f32) (D_80052B34->unk4 - alien->unk4));
+	a1 = D_80052B34->unk0 - alien->unk0;
+	a2 = D_80052B34->unk4 - alien->unk4;
+  alien->unkE = func_80003824_4424(a1, a2);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9E1C_B8DCC.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9F34_B8EE4.s")
 

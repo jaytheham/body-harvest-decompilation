@@ -332,7 +332,7 @@ void func_800EA2B0_F9260(s32 arg0);
 void func_800EA2BC_F926C(void);
 void func_800EA434_F93E4(void);
 void func_800EC450_FB400(void);
-s32 func_800F2D48_101CF8(s32, s16, s16);
+s32 func_800F2D48_101CF8(u8, s16, s16);
 void func_800F3670_102620(void);
 s32 func_800F3990_102940(s32 arg0, s32 arg1);
 s16 func_800065A4_71A4(s16 arg0, s16 arg1, u16 arg2);

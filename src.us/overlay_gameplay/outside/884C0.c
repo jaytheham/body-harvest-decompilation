@@ -631,7 +631,7 @@ void func_8007ED9C_8DD4C(u8 arg0)
   if ((alienInstances[arg0].unk20 & 0x80000) && (alienInstances[arg0].unk20 & 0x600))
   {
 	func_800F2D48_101CF8(
-		(alienInstances[arg0].unk20 & 0xFFFF) & 7,
+		alienInstances[arg0].unk20 & 7,
 		alienInstances[arg0].unk0,
 		alienInstances[arg0].unk4);
   }
@@ -646,7 +646,7 @@ void func_8007EE24_8DDD4(u8 arg0) {
 	if ((mode & 0x80000) && (mode & 0x600))
 	{
 		inst->unk4 = inst->unk32;
-		func_800F2D48_101CF8(((unsigned char) mode) & 7, inst->unk0, inst->unk4);
+		func_800F2D48_101CF8(mode & 7, inst->unk0, inst->unk4);
 	}
 }
 
@@ -1593,7 +1593,7 @@ void func_80083EF4_92EA4(AlienInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
   }
   if ((arg0->unk20 & 0x80000) && (arg0->unk20 & 0x600))
   {
-	func_800F2D48_101CF8(((unsigned char) arg0->unk20) & 7, arg0->unk0, arg0->unk4);
+	func_800F2D48_101CF8((arg0->unk20 & 7, arg0->unk0, arg0->unk4);
   }
   spec = &alienSpecs[sp27];
   half = arg2 / 2;
