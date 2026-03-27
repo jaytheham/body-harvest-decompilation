@@ -734,7 +734,39 @@ void func_800FAC90_109C40(void) {
 	} while (var_s0 != end);
 }
 
+#ifdef NON_MATCHING
+void func_800FAD10_109CC0(void) {
+	VehicleInstance *var_v1;
+	s8 var_v0;
+
+	D_80158FD8 = 0;
+	var_v1 = vehicleInstances;
+	var_v0 = 0;
+	do {
+		if (var_v1[0].unk20 & 0x8000) {
+			D_80158E80[D_80158FD8] = var_v0;
+			D_80158FD8++;
+		}
+		if (var_v1[1].unk20 & 0x8000) {
+			D_80158E80[D_80158FD8] = var_v0 + 1;
+			D_80158FD8++;
+		}
+		if (var_v1[2].unk20 & 0x8000) {
+			D_80158E80[D_80158FD8] = var_v0 + 2;
+			D_80158FD8++;
+		}
+		if (var_v1[3].unk20 & 0x8000) {
+			D_80158E80[D_80158FD8] = var_v0 + 3;
+			D_80158FD8++;
+		}
+		var_v0 += 4;
+		var_v1 += 4;
+	} while (var_v0 != 0x80);
+	D_80159320 &= ~0x2000;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FAD10_109CC0.s")
+#endif
 
 s16 func_800FADF8_109DA8(s16 arg0) {
 	s32 var_v1;
