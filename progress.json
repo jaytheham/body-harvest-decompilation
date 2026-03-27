@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-27T08:24:23Z",
-  "commit": "05b2504",
-  "commit_timestamp": "2026-03-27T21:24:14+13:00",
+  "generated": "2026-03-27T08:25:45Z",
+  "commit": "dc02e5f",
+  "commit_timestamp": "2026-03-27T21:25:33+13:00",
   "overall": {
-    "total_functions": 2961,
-    "matched": 932,
-    "non_matching": 293,
-    "asm_stubs": 1736,
-    "matched_pct": 31.48,
-    "decompiled_pct": 41.37
+    "total_functions": 2960,
+    "matched": 933,
+    "non_matching": 292,
+    "asm_stubs": 1735,
+    "matched_pct": 31.52,
+    "decompiled_pct": 41.39
   },
   "segments": {
     "core": {
@@ -31,11 +31,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 656,
-      "non_matching": 147,
-      "asm_stubs": 769,
-      "total": 1572,
-      "matched_pct": 41.7,
+      "matched": 657,
+      "non_matching": 146,
+      "asm_stubs": 768,
+      "total": 1571,
+      "matched_pct": 41.8,
       "decompiled_pct": 51.1
     },
     "overlay_gameplay/inside": {
@@ -467,11 +467,11 @@
     {
       "path": "overlay_gameplay/outside/missions.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 15,
-      "non_matching": 8,
-      "asm_stubs": 22,
-      "total": 45,
-      "matched_pct": 33.3,
+      "matched": 16,
+      "non_matching": 7,
+      "asm_stubs": 21,
+      "total": 44,
+      "matched_pct": 36.4,
       "contributor": "jaytheham"
     },
     {
@@ -539,9 +539,9 @@
     {
       "name": "jaytheham",
       "files": 34,
-      "matched": 848,
-      "non_matching": 265,
-      "asm_stubs": 1285
+      "matched": 849,
+      "non_matching": 264,
+      "asm_stubs": 1284
     },
     {
       "name": "Meridian Lex",
@@ -601,11 +601,11 @@
     },
     {
       "date": "2026-03-27",
-      "commit": "3c6664e",
-      "matched_pct": 31.48,
-      "decompiled_pct": 41.37,
-      "matched": 932,
-      "total": 2961
+      "commit": "dc02e5f",
+      "matched_pct": 31.52,
+      "decompiled_pct": 41.39,
+      "matched": 933,
+      "total": 2960
     }
   ]
 }
