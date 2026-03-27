@@ -1075,6 +1075,7 @@ extern s32 D_80157E70;
 extern char D_8003BAE0;
 extern char D_80144828[];
 extern char D_80144840[];
+extern s32 D_8013ECC8_14DC78;
 extern u8 D_8014DD52[];
 extern char D_80144868;
 extern char D_80144880;

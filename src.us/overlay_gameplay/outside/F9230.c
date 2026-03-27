@@ -24,7 +24,29 @@ void func_800EA2BC_F926C(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA2BC_F926C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800EA2FC_F92AC(s16 arg0) {
+	Unk8009E8DC *anim;
+
+	if (arg0 >= 0x6E) {
+		func_8000CDFC_D9FC(D_80157600.unk404, &D_80157600, 0x10, D_8013ECC8_14DC78, 1);
+		return;
+	}
+
+	if ((arg0 == D_80157600.unk40C) && (((Unk8007F878_404 *)D_80157600.unk404)->unkE50 != 0)) {
+		return;
+	}
+
+	anim = &((Unk8009E8DC *)D_8013E5AC_14D55C)[arg0];
+	D_80157600.unk40C = arg0;
+	func_8000CDFC_D9FC(D_80157600.unk404, &D_80157600, 0x10, anim->unk0, 1);
+	if (anim->unk4 & 1) {
+		func_8000D278_DE78(D_80157600.unk404, &D_80157600, 0x10, anim->unk8);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA2FC_F92AC.s")
+#endif
 
 void *func_800EA3E8_F9398(s16 arg0) {
 	if (arg0 >= 0x6E) {
