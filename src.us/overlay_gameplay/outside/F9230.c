@@ -1634,7 +1634,26 @@ void func_8010FAC8_11EA78(u8 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80110144_11F0F4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801103B4_11F364.s")
+void func_801103B4_11F364(VehicleInstance *arg0, VehicleSpec *arg1) {
+    BeaconDisplayEntry *entry;
+    s32 i;
+
+    if (arg0 == D_80052B34) {
+        entry = &D_8014F7DE + 1;
+        i = 0x10;
+        while (entry--, i--) {
+            if (entry->unkC != -1) {
+                if ((arg0->unk2 - 0xA) < entry->unk2 && entry->unk2 < (arg0->unk2 + arg1->unk38 + 0xA) && func_8010DC00_11CBB0(entry->unk0, entry->unk4, 0x14) != 0) {
+                    if (func_800A8E18_B7DC8(entry->unkC) != 0) {
+                        func_800153D8_15FD8(0xC5);
+                    }
+                    func_800CBD1C_DACCC(entry->unk10);
+                    entry->unkC = -1;
+                }
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8011049C_11F44C.s")
 
