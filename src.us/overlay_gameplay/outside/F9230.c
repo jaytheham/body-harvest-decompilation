@@ -382,7 +382,38 @@ void func_800EFE50_FEE00(u8 arg0) {
 /// a2 = bool, pause gameplay while cutscene active?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFEB4_FEE64.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFFB4_FEF64.s")
+void func_800EFFB4_FEF64(void) {
+	s16 temp;
+
+	switch (currentLevel) {
+		case 1:
+			if (func_8011D260_12C210(0x46, -0x25) == -1) {
+				osSyncPrintf(&D_801444F0_1534A0);
+			}
+
+			if (func_8011D260_12C210(0x4A, -7) == -1) {
+				osSyncPrintf(&D_80144534_1534E4);
+			}
+
+			if (func_8011D260_12C210(-0x13, -0x1F) == -1) {
+				osSyncPrintf(&D_8014457C_15352C);
+			}
+			/* fallthrough */
+		case 2:
+		default:
+			temp = -1;
+			break;
+	}
+
+	D_80157F68 = temp;
+	D_80157F70 = 0;
+	D_80157F8C = 0;
+	D_80157F8E = 0;
+	D_80068080 = 0;
+	D_8004DC60 = 0x25;
+	D_80157FB4 = 0;
+	D_80157F96 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F0094_FF044.s")
 
