@@ -373,7 +373,7 @@ void func_8011A604_1295B4(void);
 s32 func_8011BB94_12AB44();
 s32 func_8011C25C_12B20C();
 s32 func_8011DE6C_12CE1C();
-s32 func_8011FA90_12EA40();
+void func_8011FA90_12EA40(BuildingInstance *, u8, s16, s16, s16, s16, s16, s16, s32);
 s32 func_8011D19C_12C14C(s8, s8);
 s32 func_8011D260_12C210(s8, s8);
 s32 func_80120634_12F5E4(void);
