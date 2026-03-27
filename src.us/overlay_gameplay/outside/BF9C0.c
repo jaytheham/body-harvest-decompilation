@@ -225,7 +225,36 @@ void func_800B41C8_C3178(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 // Draw rotated tiles e.g. roads
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B753C_C64EC.s")
 
+#ifdef NON_MATCHING
+s32 func_800B84D0_C7480(s16 arg0, s16 arg1) {
+	u32 temp_v0;
+	u32 temp_a3;
+	u32 var_v1;
+	u32 var_a2;
+	s32 var_t0;
+	s32 var_t1;
+	s32 var_t2;
+
+	temp_v0 = arg0 & 0xFF;
+	temp_a3 = arg1 & 0xFF;
+	var_v1 = temp_v0;
+	var_a2 = temp_a3;
+	if ((u32)(temp_v0 + temp_a3) < 0x100U) {
+		var_t0 = D_80052A94[arg1 >> 8].unk0[arg0 >> 8] & 0x3F;
+		var_t1 = (D_80052A94[arg1 >> 8].unk0[(arg0 >> 8) + 1] & 0x3F) - var_t0;
+		var_t2 = (D_80052A94[(arg1 >> 8) + 1].unk0[arg0 >> 8] & 0x3F) - var_t0;
+	} else {
+		var_v1 = 0x100 - temp_v0;
+		var_a2 = 0x100 - temp_a3;
+		var_t0 = D_80052A94[(arg1 >> 8) + 1].unk0[(arg0 >> 8) + 1] & 0x3F;
+		var_t1 = (D_80052A94[(arg1 >> 8) + 1].unk0[arg0 >> 8] & 0x3F) - var_t0;
+		var_t2 = (D_80052A94[arg1 >> 8].unk0[(arg0 >> 8) + 1] & 0x3F) - var_t0;
+	}
+	return ((var_t0 << 8) + (var_t1 * var_v1) + (var_t2 * var_a2)) << 5;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B84D0_C7480.s")
+#endif
 
 s32 func_800B85CC_C757C(s16 arg0, s16 arg1) {
 	Unk8003E290Entry *sp1C;

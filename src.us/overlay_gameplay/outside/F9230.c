@@ -24,7 +24,29 @@ void func_800EA2BC_F926C(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA2BC_F926C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800EA2FC_F92AC(s16 arg0) {
+	Unk8009E8DC *anim;
+
+	if (arg0 >= 0x6E) {
+		func_8000CDFC_D9FC(D_80157600.unk404, &D_80157600, 0x10, D_8013ECC8_14DC78, 1);
+		return;
+	}
+
+	if ((arg0 == D_80157600.unk40C) && (((Unk8007F878_404 *)D_80157600.unk404)->unkE50 != 0)) {
+		return;
+	}
+
+	anim = &((Unk8009E8DC *)D_8013E5AC_14D55C)[arg0];
+	D_80157600.unk40C = arg0;
+	func_8000CDFC_D9FC(D_80157600.unk404, &D_80157600, 0x10, anim->unk0, 1);
+	if (anim->unk4 & 1) {
+		func_8000D278_DE78(D_80157600.unk404, &D_80157600, 0x10, anim->unk8);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA2FC_F92AC.s")
+#endif
 
 void *func_800EA3E8_F9398(s16 arg0) {
 	if (arg0 >= 0x6E) {
@@ -360,7 +382,38 @@ void func_800EFE50_FEE00(u8 arg0) {
 /// a2 = bool, pause gameplay while cutscene active?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFEB4_FEE64.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFFB4_FEF64.s")
+void func_800EFFB4_FEF64(void) {
+	s16 temp;
+
+	switch (currentLevel) {
+		case 1:
+			if (func_8011D260_12C210(0x46, -0x25) == -1) {
+				osSyncPrintf(&D_801444F0_1534A0);
+			}
+
+			if (func_8011D260_12C210(0x4A, -7) == -1) {
+				osSyncPrintf(&D_80144534_1534E4);
+			}
+
+			if (func_8011D260_12C210(-0x13, -0x1F) == -1) {
+				osSyncPrintf(&D_8014457C_15352C);
+			}
+			/* fallthrough */
+		case 2:
+		default:
+			temp = -1;
+			break;
+	}
+
+	D_80157F68 = temp;
+	D_80157F70 = 0;
+	D_80157F8C = 0;
+	D_80157F8E = 0;
+	D_80068080 = 0;
+	D_8004DC60 = 0x25;
+	D_80157FB4 = 0;
+	D_80157F96 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F0094_FF044.s")
 
@@ -712,7 +765,39 @@ void func_800FAC90_109C40(void) {
 	} while (var_s0 != end);
 }
 
+#ifdef NON_MATCHING
+void func_800FAD10_109CC0(void) {
+	VehicleInstance *var_v1;
+	s8 var_v0;
+
+	D_80158FD8 = 0;
+	var_v1 = vehicleInstances;
+	var_v0 = 0;
+	do {
+		if (var_v1[0].unk20 & 0x8000) {
+			D_80158E80[D_80158FD8] = var_v0;
+			D_80158FD8++;
+		}
+		if (var_v1[1].unk20 & 0x8000) {
+			D_80158E80[D_80158FD8] = var_v0 + 1;
+			D_80158FD8++;
+		}
+		if (var_v1[2].unk20 & 0x8000) {
+			D_80158E80[D_80158FD8] = var_v0 + 2;
+			D_80158FD8++;
+		}
+		if (var_v1[3].unk20 & 0x8000) {
+			D_80158E80[D_80158FD8] = var_v0 + 3;
+			D_80158FD8++;
+		}
+		var_v0 += 4;
+		var_v1 += 4;
+	} while (var_v0 != 0x80);
+	D_80159320 &= ~0x2000;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FAD10_109CC0.s")
+#endif
 
 s16 func_800FADF8_109DA8(s16 arg0) {
 	s32 var_v1;
@@ -1634,7 +1719,26 @@ void func_8010FAC8_11EA78(u8 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80110144_11F0F4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801103B4_11F364.s")
+void func_801103B4_11F364(VehicleInstance *arg0, VehicleSpec *arg1) {
+    BeaconDisplayEntry *entry;
+    s32 i;
+
+    if (arg0 == D_80052B34) {
+        entry = &D_8014F7DE + 1;
+        i = 0x10;
+        while (entry--, i--) {
+            if (entry->unkC != -1) {
+                if ((arg0->unk2 - 0xA) < entry->unk2 && entry->unk2 < (arg0->unk2 + arg1->unk38 + 0xA) && func_8010DC00_11CBB0(entry->unk0, entry->unk4, 0x14) != 0) {
+                    if (func_800A8E18_B7DC8(entry->unkC) != 0) {
+                        func_800153D8_15FD8(0xC5);
+                    }
+                    func_800CBD1C_DACCC(entry->unk10);
+                    entry->unkC = -1;
+                }
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8011049C_11F44C.s")
 
@@ -1689,7 +1793,27 @@ void func_80113248_1221F8(VehicleInstance *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80115604_1245B4.s")
 
+#ifdef NON_MATCHING
+s32 func_80115730_1246E0(VehicleInstance *arg0, s32 arg1) {
+	s32 temp_a3;
+	s32 temp_v1;
+	s32 var_a1;
+
+	temp_a3 = arg1 * 4;
+	temp_v1 = func_800B84D0_C7480(
+		(s16)(s32)(D_80159D78[arg1] + arg0->unk4C),
+		(s16)(s32)(D_80159D98[arg1] + arg0->unk54)) >> 8;
+	var_a1 = temp_v1;
+
+	if (!(D_80257A4C[arg0->unk1A].unk0 & 0x100) && (temp_v1 < D_80222A70)) {
+		var_a1 = D_80222A70;
+	}
+
+	return var_a1 - *(s32 *)((u8 *)D_80159510 + (func_800FAE60_109E10(arg0) * 0x10) + temp_a3);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80115730_1246E0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80115824_1247D4.s")
 
