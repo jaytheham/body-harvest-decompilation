@@ -559,7 +559,26 @@ void func_800F3670_102620(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F3670_102620.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F375C_10270C.s")
+void func_800F375C_10270C(s8 arg0) {
+    osSyncPrintf(&D_801448A8_153858, arg0, D_80157FF8, &D_80157FF8);
+    if (arg0 >= 8 || arg0 < -1) {
+        osSyncPrintf(&D_801448D0_153880, arg0);
+        return;
+    }
+    if (D_80157FF0[arg0] != -1 && arg0 != -1) {
+        osSyncPrintf(&D_801448E8_153898, arg0);
+        return;
+    }
+    if (arg0 == -1) {
+        for (arg0 = 0; arg0 < 8; arg0++) {
+            D_80157FF0[arg0] = arg0;
+        }
+        D_80157FF8 = 0;
+        return;
+    }
+    D_80157FF0[arg0] = arg0;
+    D_80157FF8--;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F384C_1027FC.s")
 
