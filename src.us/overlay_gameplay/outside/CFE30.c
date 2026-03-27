@@ -257,7 +257,18 @@ s32 func_800C2274_D1224(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C22EC_D129C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C2554_D1504.s")
+void func_800C2554_D1504(s16 arg0, u8 arg1) {
+	if (arg1 >= 0x1E || D_80154088[arg1].unk0 != 0) {
+		osSyncPrintf(&D_80143390_152340);
+		return;
+	}
+	if (arg0 == D_80154088[arg1].unkA) {
+		func_800C1418_D03C8(arg1, 0);
+		func_800C1384_D0334(arg1);
+		return;
+	}
+	func_800C1A4C_D09FC(arg0, arg1, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C25F8_D15A8.s")
 
@@ -267,7 +278,24 @@ s32 func_800C2274_D1224(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C2EE4_D1E94.s")
 
+#ifdef NON_MATCHING
+void func_800C31AC_D215C(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
+	s32 idx;
+
+	idx = arg3;
+	if (idx >= 0x1E || D_80154088[idx].unk0 != 1 || D_80154088[idx].unk0 == 0xFA
+		|| !(D_80154318[D_80154088[idx].unkA].unk0 & 1)) {
+		osSyncPrintf(&D_80143430_1523E0, arg1, arg2);
+		return;
+	}
+	D_80154318[D_80154088[idx].unkA].unk8 = arg0;
+	D_80154318[D_80154088[idx].unkA].unkA = arg1;
+	D_80154318[D_80154088[idx].unkA].unkC = arg2;
+	func_80137368_146318(arg0, arg1, arg2, 0, D_80154088[idx].unkA);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C31AC_D215C.s")
+#endif
 
 void func_800C3288_D2238(u8 arg0) {
 	if (arg0 >= 0x1E || D_80154088[arg0].unk0 != 1) {
@@ -973,7 +1001,25 @@ void func_800D76F4_E66A4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	temp_v0[2] = arg2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7790_E6740.s")
+void func_800D7790_E6740(void) {
+    s16 var_s1;
+    s16 *temp_v0;
+
+    var_s1 = D_801542CA;
+    if (var_s1 == -5 || var_s1 == -6) {
+        func_800C1418_D03C8(0x11, 1);
+        return;
+    }
+    while (var_s1 != -5 && var_s1 != -6) {
+        D_80154318[var_s1].unkE++;
+        temp_v0 = (s16 *)((u8 *)&D_80154318[var_s1] + 8);
+        if (D_80154318[var_s1].unkE >= 4) {
+            D_80154318[var_s1].unkE = 0;
+        }
+        func_80137368_146318(temp_v0[0], temp_v0[1], temp_v0[2], 9, var_s1);
+        var_s1 = D_80154318[var_s1].unk4;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7870_E6820.s")
 
@@ -1094,7 +1140,32 @@ s16 func_800D951C_E84CC(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	return temp_v0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D95D0_E8580.s")
+void func_800D95D0_E8580(void) {
+	Unk80154318Entry *entry;
+	s16 idx;
+	s16 next;
+	s32 *counter;
+
+	idx = D_801542EE;
+	if ((idx == -5) || (idx == -6)) {
+		func_800C1418_D03C8(0x14, 1);
+		return;
+	}
+	if ((idx != -5) && (idx != -6)) {
+		do {
+			entry = &D_80154318[idx];
+			counter = (s32*)&entry->unk8;
+			next = entry->unk4;
+			next = D_80154318[next].unk4;
+			if (*(s32*)&entry->unkC != 0) {
+				counter[1] = counter[1] - 1;
+			} else {
+				func_800C1E24_D0DD4(idx, 0x14, 1);
+			}
+			idx = next;
+		} while ((idx != -5) && (idx != -6));
+	}
+}
 
 void func_800D96B4_E8664(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
@@ -1815,6 +1886,14 @@ void func_800E75A0_F6550(s16 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7660_F6610.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E77B4_F6764.s")
+void func_800E77B4_F6764(void) {
+    gDPPipeSync(D_8005BB2C++);
+    gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+    gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
+    gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
+    gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+    gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_FOG | G_LIGHTING);
+    gDPPipeSync(D_8005BB2C++);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7894_F6844.s")

@@ -1980,7 +1980,50 @@ s32 func_80085340_942F0(u8 arg0, u16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085340_942F0.s")
 #endif
 
+#ifdef NON_MATCHING
+s32 func_80085448_943F8(u8 arg0) {
+	s32 var_v0 = D_80052B34->unk0 - alienInstances[arg0].unk0;
+	s32 temp_a2 = D_80052B34->unk4 - alienInstances[arg0].unk4;
+	s32 temp_a3 = -var_v0;
+	s32 temp_t0;
+	s32 var_a0;
+	s32 var_a0_2;
+	s32 var_t1;
+
+	if (temp_a3 < var_v0) {
+		var_a0 = var_v0;
+	} else {
+		var_a0 = temp_a3;
+	}
+	temp_t0 = -temp_a2;
+	if (temp_t0 < temp_a2) {
+		var_t1 = temp_a2;
+	} else {
+		var_t1 = temp_t0;
+	}
+	if (var_t1 < var_a0) {
+		var_a0_2 = temp_a3;
+		if (temp_a3 < var_v0) {
+		} else {
+			goto block_11;
+		}
+	} else {
+		if (temp_t0 < temp_a2) {
+			var_a0_2 = temp_a2;
+		} else {
+			var_a0_2 = temp_t0;
+		}
+block_11:
+		var_v0 = var_a0_2;
+	}
+	if ((D_80052B34->unk2 < alienInstances[arg0].unk2) && (var_v0 < 0x200)) {
+		return 1;
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085448_943F8.s")
+#endif
 
 s32 func_80085524_944D4(u8 arg0) {
 	return ((u32)(arg0 + D_80052A8C) % 5U) == 0;
@@ -3768,7 +3811,51 @@ s32 func_8009179C_A074C(u8 arg0, s32 arg1) {
 	return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800918E0_A0890.s")
+void func_800918E0_A0890(u8 arg0) {
+    AlienInstance *alien;
+    s32 flags;
+    s32 dx, neg_dx, abs_dx;
+    s32 dy, neg_dy, abs_dy;
+
+    alien = &alienInstances[arg0];
+    flags = alien->unk20;
+    if (flags & 0x100) {
+        dx = alien->unk0 - alien->unk14;
+        neg_dx = -dx;
+        if (neg_dx < dx) {
+            abs_dx = dx;
+        } else {
+            abs_dx = neg_dx;
+        }
+        dy = alien->unk4 - alien->unk18;
+        neg_dy = -dy;
+        if (neg_dy < dy) {
+            abs_dy = dy;
+        } else {
+            abs_dy = neg_dy;
+        }
+        if (abs_dy < abs_dx) {
+            if (neg_dx < dx) {
+                abs_dx = dx;
+            } else {
+                abs_dx = neg_dx;
+            }
+            dx = abs_dx;
+        } else {
+            if (neg_dy < dy) {
+                neg_dx = dy;
+            } else {
+                neg_dx = neg_dy;
+            }
+            dx = neg_dx;
+        }
+        if (dx < 0x400) {
+            alien->unk20 = flags | 0x1000;
+            return;
+        }
+    }
+    alien->unk20 = flags & ~0x1000;
+}
 
 s32 func_800919C0_A0970(u8 arg0, u8 arg1) {
 	AlienInstance *alien;
