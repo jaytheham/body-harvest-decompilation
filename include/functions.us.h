@@ -110,7 +110,7 @@ void func_80071148_800F8(u8 arg0, u8 arg1);
 void func_80071178_80128(void);
 void func_80071228_801D8(void);
 void func_800720F4_810A4(void);
-void* func_80070FB8_7FF68(void);
+void func_80070FB8_7FF68(void);
 void func_80073A74_82A24(void);
 void func_800734AC_8245C(void);
 void func_80075AA4_84A54(void);

@@ -269,10 +269,14 @@ void func_80070BFC_7FBAC(void) {
 // drawSky?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070CC0_7FC70.s")
 
-// Does stuff with object fog colour values
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070FB8_7FF68.s")
+// Set world fog
+void func_80070FB8_7FF68(void) {
+	gDPSetFogColor(D_8005BB2C++, D_80047743, D_80047744, D_80047745, D_800313F4);
+	gSPFogPosition(D_8005BB2C++, D_800313F8, D_800313FC);
+}
 
-// If called from drawComplexObjects causes alien bodies to be red (as if shot)
+// Set object fog
+// Used to flash aliens/buildings when damaged
 void func_800710D4_80084(u8 arg0, u8 arg1, u8 arg2) {
 	gDPSetFogColor(D_8005BB2C++, arg0, arg1, arg2, 0xFF);
 	gSPFogPosition(D_8005BB2C++, 0, 100);

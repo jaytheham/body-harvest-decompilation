@@ -72,9 +72,9 @@ extern Gfx D_80031230[];
 extern u32 D_800313CC;
 extern s16 D_800313C8;
 extern s16 D_800313D0; // Language
-extern u8 D_800313F4;
-extern s16 D_800313F8;
-extern s16 D_800313FC;
+extern u8 D_800313F4; // World fog alpha value
+extern s16 D_800313F8; // World fog near distance
+extern s16 D_800313FC; // World fog far distance
 extern s32 D_80031410;
 extern s32 D_80031414;
 extern s32 D_80031420;
@@ -115,9 +115,9 @@ extern u32 D_80047690;
 extern u32 D_80047698;
 extern s16 D_800476A0;
 extern s16 D_800476A2; // enables input?
-extern u8 D_80047743;
-extern u8 D_80047744;
-extern u8 D_80047745;
+extern u8 D_80047743; // World fog red value
+extern u8 D_80047744; // World fog green value
+extern u8 D_80047745; // World fog blue value
 extern s16 D_8004794A;
 extern s16 D_80047948;
 extern u8 D_8004794C;
