@@ -572,7 +572,7 @@ u8 func_800DDB60_ECB10(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4);
 s32 func_800D99F4_E89A4(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void func_800D9A8C_E8A3C(s16 arg0, s32 arg1, s16 arg2);
 void func_800D16BC_E066C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6);
-void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4);
+void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4);
 void func_800DFA34_EE9E4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4);
 void func_800DF848_EE7F8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4);
 void func_800DF038_EDFE8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 arg5);

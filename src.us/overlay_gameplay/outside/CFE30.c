@@ -1646,7 +1646,26 @@ void func_800DEED0_EDE80(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	func_800DDE1C_ECDCC(func_800DDB60_ECB10(arg0, arg1, arg2, 5, (s32) arg3), arg4);
 }
 
+#ifdef NON_MATCHING
+void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
+	u8 slot;
+	u8 var_s0;
+	u8 var_s1;
+
+	var_s0 = 0;
+	var_s1 = 0;
+	if (arg4 > 0) {
+		do {
+			slot = func_800DDB60_ECB10(arg0, arg1, arg2, 4, 2);
+			func_800DDE1C_ECDCC(slot, arg3);
+			func_800DDEE0_ECE90(slot, var_s0);
+			var_s0 += 0xC;
+		} while (++var_s1 < arg4);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DEF2C_EDEDC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DF038_EDFE8.s")
 
