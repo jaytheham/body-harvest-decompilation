@@ -215,25 +215,17 @@ void func_8009FB1C_AEACC(s16 arg0, s16 arg1) {
 // displayScanner
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A03FC_AF3AC.s")
 
-// https://decomp.me/scratch/X7arU
-#ifdef NON_MATCHING
-void func_800A1364_B0314(void) {
-	s32 temp_v0;
-	u32 temp_t4;
-
-	D_8013D758 = D_8013D75C_14C70C;
-	temp_v0 = osGetCount();
-	D_8013D75C_14C70C = temp_v0;
-	D_8014F210[D_8014F20C][D_8014F610] = temp_v0 - D_8013D758;
-	temp_t4 = D_8014F20C + 1;
-	D_8014F20C = temp_t4;
-	if (temp_t4 >= 0x20U) {
-		D_8014F20C = 0;
-	}
+void func_800A1364_B0314(void)
+{
+  D_8013D758_14C708 = D_8013D75C_14C70C;
+  D_8013D75C_14C70C = osGetCount();
+  D_8014F210[D_8014F20C][D_8014F610] = D_8013D75C_14C70C - D_8013D758_14C708;
+  D_8014F20C++;
+  if (D_8014F20C >= 0x20)
+  {
+	D_8014F20C = 0;
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1364_B0314.s")
-#endif
 
 void func_800A13E8_B0398(void) {
 	D_8013D75C_14C70C = osGetCount();
