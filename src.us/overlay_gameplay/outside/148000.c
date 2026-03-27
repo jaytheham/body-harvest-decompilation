@@ -350,7 +350,35 @@ void func_8013B30C_14A2BC(void) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B384_14A334.s")
+void func_8013B384_14A334(void) {
+    s16 temp_v0;
+    s16 temp_a1;
+    s16 var_a2;
+    s16 var_a3;
+    s8 var_t1;
+
+    temp_v0 = (s16)((D_801601CC - D_801601D0) * 0x12 - 0x12);
+    temp_a1 = (s16)(temp_v0 / 6);
+    var_a2 = 0xAF;
+    if (currentLevel == 5) {
+        var_a2 = 0xC3;
+    }
+    var_a3 = (s16)(((s16)var_a2 + temp_v0) - (temp_a1 * D_801601E4) - 4);
+    var_t1 = (s8)(D_801601CC - 1);
+    if (var_t1 >= 0) {
+        do {
+            if (var_t1 == D_801601D0) {
+                var_a3 = (s16)(var_a3 - 0x18);
+                hudWeaponItems[var_t1].opacity = 0xFF;
+            } else {
+                var_a3 = (s16)(var_a3 - 0x12);
+                hudWeaponItems[var_t1].opacity = (u8)(D_801601E4 * 0x26);
+            }
+            hudWeaponItems[var_t1].yPosition = var_a3;
+            var_t1 -= 1;
+        } while (var_t1 >= 0);
+    }
+}
 
 #ifdef NON_MATCHING
 s32 func_8013B480_14A430(s16 arg0) {

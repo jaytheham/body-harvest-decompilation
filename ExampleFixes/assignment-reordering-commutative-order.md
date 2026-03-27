@@ -9,3 +9,5 @@ If `x` and `y` are stack variables and `X`/`Y` don't involve function calls or b
 ### Order of commutative operations
 
 `a + b` and `b + a` tend to generate the same code, and similar for ==, !=, ^, &, |. The order used is not currently known; it seems to depend on at least whether a and b include array indexing, and type casts can also matter (even casting a variable to its own type). Maybe it depends on when a and b were created, and on their complexity? Speculation: this normalization might be done to make deduplication passes more powerful.
+
+**Confirmed example**: `(s16)var_a2 + temp_v0` vs `var_a2 + temp_v0` — adding a redundant `(s16)` cast to `var_a2` changed `addu t4,v0,a2` to `addu t4,a2,v0`, fixing a single-instruction mismatch in `func_8013B384_14A334`. The cast changes how IDO sorts the operands in the commutative `addu`.
