@@ -876,7 +876,28 @@ s16 func_800D3C88_E2C38(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 ar
 	return slot;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D3D40_E2CF0.s")
+void func_800D3D40_E2CF0(void) {
+	s16 var_s0;
+	s16 temp_s1;
+	u8 *p;
+
+	var_s0 = D_801542A6;
+	if (var_s0 == -5 || var_s0 == -6) {
+		func_800C1418_D03C8(0xE, 1);
+		return;
+	}
+	while (var_s0 != -5 && var_s0 != -6) {
+		p = (u8 *)&D_80154318[var_s0].unk8;
+		if (D_80154318[var_s0].unk14 == 9) {
+			temp_s1 = D_80154318[var_s0].unk4;
+			func_800C1A4C_D09FC(var_s0, 0xE, 1);
+			var_s0 = temp_s1;
+		} else {
+			p[0xC] = (u8)(p[0xC] + 1);
+			var_s0 = D_80154318[var_s0].unk4;
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D3E3C_E2DEC.s")
 
