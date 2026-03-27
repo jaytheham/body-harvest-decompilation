@@ -73,28 +73,17 @@ s16 func_80095A6C_A4A1C(s16 arg0, s16 arg1, u16 arg2)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095A6C_A4A1C.s")
 #endif
 
-// https://decomp.me/scratch/y3dnn
-#ifdef NON_MATCHING
-void func_80095BD4_A4B84(u32 arg0, s16 arg1, s16 arg2, s16 arg3) {
-	Gfx *sp8;
-	Gfx *sp4;
-	s32 col;
-
+void func_80095BD4_A4B84(int arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3)
+{
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
-	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, (void *)(arg0 & 0x1FFFFFFF));
-	col = ((arg1 << 8) & 0xF800) | ((arg2 << 3) & 0x7C0) | ((arg3 >> 2) & 0x3E) | 1;
-	gDPSetFillColor(D_8005BB2C++, (col << 16) | col);
+	gDPSetCycleType(D_8005BB2C++, 3 << 20);
+	gDPSetColorImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 320, K0_TO_PHYS(arg0));
+	gDPSetFillColor(D_8005BB2C++, (GPACK_RGBA5551(arg1, arg2, arg3, 1) << 16) | GPACK_RGBA5551(arg1, arg2, arg3, 1));
 	gDPPipeSync(D_8005BB2C++);
-	sp8 = D_8005BB2C;
-	gDPFillRectangle(D_8005BB2C++, 0, 0, D_80068084 - 1, D_80068088 - 1);
-	sp4 = D_8005BB2C;
-	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gDPFillRectangle(D_8005BB2C++, 0, 0, D_80068084 - 1, D_80068088 - 1); 
+	gDPSetCycleType(D_8005BB2C++, 0 << 20);
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095BD4_A4B84.s")
-#endif
 
 // draws vehicle triangle icons on map
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095D4C_A4CFC.s")
