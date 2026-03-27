@@ -326,19 +326,17 @@ void func_800AFBA4_BEB54(s16 arg0, s16 arg1) {
 	D_80031410 = 1;
 }
 
-// https://decomp.me/scratch/Fkn1t
-#ifdef NON_MATCHING
 void func_800AFBF8_BEBA8(Unk80222A78 *arg0)
 {
+  Unk80222A78 tmp;
 	s32 var1;
 	s32 var2;
-  Unk80222A78 tmp;
 	s32 var3;
 	s32 var4;
-  u8 waveIdx;
 	s32 var5;
-	s32 var6;
   u8 alienIdx;
+	s32 var6;
+  u8 waveIdx;
   waveIdx = arg0->pad9[0];
   alienIdx = func_800AEE5C_BDE0C(D_80223780[waveIdx].xPosition, D_80223780[waveIdx].yPosition, D_80223780[waveIdx].waveSpecId, waveIdx);
   D_80048038[waveIdx] = 1;
@@ -371,9 +369,6 @@ void func_800AFBF8_BEBA8(Unk80222A78 *arg0)
 	func_800AE454_BD404(arg0);
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AFBF8_BEBA8.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AFD48_BECF8.s")
 
