@@ -736,6 +736,7 @@ void func_802D6DBC_1EFACC(void) {
 
 /* Pointer arithmetic form required for correct regalloc (t6/t7 instead of t7/t8).
  * base variable forces lui+addiu for D_802E04F8 to complete before move s0,zero. */
+#ifdef NON_MATCHING
 void func_802D6DF8_1EFB08(void) {
     s16 var_s0;
     s16 *temp_s1;
@@ -749,6 +750,9 @@ void func_802D6DF8_1EFB08(void) {
         *temp_s1 = -3;
     } while (var_s0 < 0xE);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6DF8_1EFB08.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_802D6E70_1EFB80(void) {
@@ -1999,6 +2003,7 @@ void func_802DB14C_1F3E5C(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB7A4_1F44B4.s")
 
+#ifdef NON_MATCHING
 void func_802DBB58_1F4868(u8 arg0) {
     AlienInstance *alien;
     u8 index;
@@ -2012,6 +2017,9 @@ void func_802DBB58_1F4868(u8 arg0) {
         }
     }
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBB58_1F4868.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_802DBBE4_1F48F4(u8 arg0) {
