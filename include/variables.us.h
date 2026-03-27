@@ -754,8 +754,7 @@ extern s8 D_8014F202;
 extern s8 D_8014F203;
 extern s32 D_8014F204;
 extern s32 D_8014F208;
-extern s32 D_8014F210[][8];
-extern s32 D_8014F5F0[];
+extern s32 D_8014F210[0x20][8];
 extern s32 D_8014F610;
 extern Unk80052B40 D_8013D588;
 extern Unk80052B40 D_8013D5E8;
@@ -772,8 +771,8 @@ extern Unk8025669C D_8025669C[];  // 8025669C
 
 extern s32 D_80145BE8_154B98[][6];
 extern s16 D_8014EDD8;
-extern s16 D_8014EDDA;
-extern s16 D_8014EDDC;
+extern u16 D_8014EDDA;
+extern u16 D_8014EDDC;
 extern u8 D_8014EDE0[];
 extern s32 D_80050AD0;
 extern s32 D_80050AD4;

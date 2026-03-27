@@ -2,54 +2,36 @@
 #include "common.h"
 
 // https://decomp.me/scratch/vP5F2
-#ifdef NON_MATCHING
-void func_8009BAC0_AAA70(void) {
-	s32 i;
-	s32 j;
-	s32 *ptr;
-	s32 *inner;
-
-	D_8014F20C = 0;
-	D_8014EDDC = 0;
-	D_8014EDD8 = 0;
-	D_8014EDDA = 0x40;
-	D_8014F1E4 = 160.0f;
-	D_8014F1E8 = 250.0f;
-	D_8014F1EC = 160.0f;
-	D_8014F1F0 = 250.0f;
-	D_8014F1F4 = 0x80;
-	D_8014F1F6 = 0;
-	D_8014F1FA = 0x80;
-	D_8014F1F8 = 0;
-	D_8014ED4A = 0;
-	D_8014ED48 = D_8014ED4A;
-	D_8014ED46 = D_8014ED48;
-	D_8014ED44 = D_8014ED46;
-	D_8014ED42 = D_8014ED44;
-	D_8014ED52 = 0;
-	D_8014ED50 = D_8014ED52;
-	D_8014ED4E = D_8014ED50;
-	D_8014ED4C = D_8014ED4E;
-	ptr = D_8014F5F0;
-	i = 0x1F;
-	do {
-		j = 7;
-		inner = ptr + 7;
-		do {
-			*inner-- = 0;
-		} while (j--);
-		ptr -= 8;
-	} while (i--);
-	D_8014F610 = 0;
-	D_8014F202 = 0;
-	D_8014F203 = 0;
-	D_8014F204 = (s32) D_8004816A;
-	D_8014F208 = -1;
-	func_80139B34_148AE4();
+void func_8009BAC0_AAA70(void)
+{
+  s32 i;
+  s32 j;
+  D_8014EDD8 = D_8014EDDC = D_8014F20C = 0;
+  D_8014EDDA = 0x40;
+  D_8014F1E4 = 160.0f;
+  D_8014F1E8 = 250.0f;
+  D_8014F1EC = 160.0f;
+  D_8014F1F0 = 250.0f;
+  D_8014F1F4 = 0x80;
+  D_8014F1F6 = 0;
+  D_8014F1FA = 0x80;
+  D_8014F1F8 = 0;
+  D_8014ED42 = D_8014ED44 = D_8014ED46 = D_8014ED48 = D_8014ED4A = 0;
+  D_8014ED4C = D_8014ED4E = D_8014ED50 = D_8014ED52 = 0;
+  i = 0x20;
+  while (i--) {
+	  j = 8;
+	  while (j--) {
+		  D_8014F210[i][j] = 0;
+	  }
+  }
+  D_8014F610 = 0;
+  D_8014F202 = 0;
+  D_8014F203 = 0;
+  D_8014F204 = (s32) D_8004816A;
+  D_8014F208 = -1;
+  func_80139B34_148AE4();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009BAC0_AAA70.s")
-#endif
 
 // https://decomp.me/scratch/HfYzB
 #ifdef NON_MATCHING
