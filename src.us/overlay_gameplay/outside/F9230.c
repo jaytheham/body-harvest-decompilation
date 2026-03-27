@@ -1793,7 +1793,27 @@ void func_80113248_1221F8(VehicleInstance *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80115604_1245B4.s")
 
+#ifdef NON_MATCHING
+s32 func_80115730_1246E0(VehicleInstance *arg0, s32 arg1) {
+	s32 temp_a3;
+	s32 temp_v1;
+	s32 var_a1;
+
+	temp_a3 = arg1 * 4;
+	temp_v1 = func_800B84D0_C7480(
+		(s16)(s32)(D_80159D78[arg1] + arg0->unk4C),
+		(s16)(s32)(D_80159D98[arg1] + arg0->unk54)) >> 8;
+	var_a1 = temp_v1;
+
+	if (!(D_80257A4C[arg0->unk1A].unk0 & 0x100) && (temp_v1 < D_80222A70)) {
+		var_a1 = D_80222A70;
+	}
+
+	return var_a1 - *(s32 *)((u8 *)D_80159510 + (func_800FAE60_109E10(arg0) * 0x10) + temp_a3);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80115730_1246E0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80115824_1247D4.s")
 
