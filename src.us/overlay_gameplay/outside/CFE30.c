@@ -785,7 +785,37 @@ void func_800D1A1C_E09CC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D1C24_E0BD4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D249C_E144C.s")
+s16 func_800D249C_E144C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, u8 arg7) {
+	Unk80154318Entry *child;
+	Unk80154318Entry *entry;
+	s16 sp26;
+	s16 child_idx;
+	s8 *loop_base;
+	s32 s0;
+
+	sp26 = func_800C19D4_D0984(0xB, 1);
+	if (sp26 != -3) {
+		entry = &D_80154318[sp26];
+		child_idx = entry->unk4;
+		child = &D_80154318[child_idx];
+		entry->unk2 = arg3;
+		entry->unk8 = arg0;
+		entry->unkA = arg1;
+		entry->unkC = arg2;
+		entry->unkE = 0xF5;
+		entry->unkF = 0;
+		*(s16*)&entry->unk10 = arg6;
+		*(u8*)&entry->unk12 = arg7;
+		child->unk2 = 0;
+		loop_base = (s8*)&child->unk8;
+		child->unk8 = arg4;
+		child->unkA = arg5;
+		for (s0 = 0; s0 < 8; s0 = (s0 + 1) & 0xFF) {
+			loop_base[s0 + 4] = (s8)(func_800038E0_44E0() % 16);
+		}
+	}
+	return sp26;
+}
 
 void func_800D25A4_E1554(s16 arg0) {
 	*(&D_80154327 + (arg0 * 0x1C)) = 1;
