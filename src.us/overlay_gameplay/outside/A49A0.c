@@ -114,39 +114,32 @@ void func_80097B74_A6B24(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	}
 }
 
-// https://decomp.me/scratch/nKG1k
-#ifdef NON_MATCHING
-void func_80097CB4_A6C64(UnkA6C64Keyframe *arg0, UnkA6C64Keyframe *arg1, UnkA6C64Keyframe *arg2, f32 arg3) {
-	s32 diff;
-	s32 absDiff;
-
-	arg2->unk0 = arg0->unk0 + (s32)((f32)(arg1->unk0 - arg0->unk0) * arg3);
-
-	diff = arg1->unk2 - arg0->unk2;
-	if (diff >= 0) {
-		absDiff = diff;
-	} else {
-		absDiff = -diff;
+void func_80097CB4_A6C64(UnkA6C64Keyframe *arg0, UnkA6C64Keyframe *arg1, UnkA6C64Keyframe *arg2, f32 arg3)
+{
+  s32 absDiff;
+  arg2->unk0 = arg0->unk0 + ((s16) ((arg1->unk0 - arg0->unk0) * arg3));
+  absDiff = (((arg1->unk2 - arg0->unk2) >= 0) ? (arg1->unk2 - arg0->unk2) : -(arg1->unk2 - arg0->unk2));
+  
+  if (absDiff > 0x8000)
+  {
+	if (arg0->unk2 < arg1->unk2)
+	{
+	  arg2->unk2 = arg0->unk2 - ((s16) (((arg0->unk2 - arg1->unk2) + 0xFFFF) * arg3));
 	}
-
-	if (absDiff >= 0x8001) {
-		if (arg0->unk2 < arg1->unk2) {
-			arg2->unk2 = arg0->unk2 - (s32)((f32)((arg0->unk2 - arg1->unk2) + 0xFFFF) * arg3);
-		} else {
-			arg2->unk2 = arg0->unk2 + (s32)((f32)(diff + 0xFFFF) * arg3);
-		}
-	} else {
-		arg2->unk2 = arg0->unk2 + (s32)((f32)diff * arg3);
+	else
+	{
+	  arg2->unk2 = arg0->unk2 + ((s16) (((arg1->unk2 - arg0->unk2) + 0xFFFF) * arg3));
 	}
-
-	arg2->unk4 = arg0->unk4 + (s32)((f32)(arg1->unk4 - arg0->unk4) * arg3);
-	arg2->unk8 = arg0->unk8 + (arg1->unk8 - arg0->unk8) * arg3;
-	arg2->unkC = arg0->unkC + (arg1->unkC - arg0->unkC) * arg3;
-	arg2->unk10 = arg0->unk10 + (arg1->unk10 - arg0->unk10) * arg3;
+  }
+  else
+  {
+	arg2->unk2 = arg0->unk2 + ((s16) ((arg1->unk2 - arg0->unk2) * arg3));
+  }
+  arg2->unk4 = arg0->unk4 + ((s16) ((arg1->unk4 - arg0->unk4) * arg3));
+  arg2->unk8 = arg0->unk8 + ((arg1->unk8 - arg0->unk8) * arg3);
+  arg2->unkC = arg0->unkC + ((arg1->unkC - arg0->unkC) * arg3);
+  arg2->unk10 = arg0->unk10 + ((arg1->unk10 - arg0->unk10) * arg3);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097CB4_A6C64.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097E1C_A6DCC.s")
 
