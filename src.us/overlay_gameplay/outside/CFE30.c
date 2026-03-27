@@ -191,27 +191,21 @@ s16 func_800C19D4_D0984(u8 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1A4C_D09FC.s")
 
-// https://decomp.me/scratch/FH35Z
-#ifdef NON_MATCHING
 void func_800C1D40_D0CF0(s16 arg0, u8 arg1, s32 arg2)
 {
-	  s16 sp1E;
-	  s16 sp22;
-	  if ((arg0 >= 0) && (arg0 < 0x190) && (arg1 < 0x1E) && (D_80154318[arg0].unk0 & 1))
-	  {
-		sp1E = D_80154318[arg0].unk4;
-		func_800C1A4C_D09FC(arg0 & 0xFFFFFFFFu, arg1, arg2);
-		sp22 = D_80154318[sp1E].unk4;
-		  if (1){}
-		  func_800C1A4C_D09FC(sp1E, arg1, arg2);
-		  func_800C1A4C_D09FC(sp22, arg1, arg2); 
-		return;
-	  }
-	osSyncPrintf(&D_801432C4_152274); // EFFECTS WARNING : Call to free up invalid triple effect unit
+  s16 sp1E;
+  if ((arg0 >= 0) && (arg0 < 0x190) && (arg1 < 0x1E) && (D_80154318[arg0].unk0 & 1))
+  {
+	sp1E = D_80154318[arg0].unk4;
+	func_800C1A4C_D09FC(arg0 & 0xFFFFFFFFu, arg1, arg2);
+	arg0 = D_80154318[sp1E].unk4;
+	  if (1){}
+	  func_800C1A4C_D09FC(sp1E, arg1, arg2);
+	  func_800C1A4C_D09FC(arg0, arg1, arg2); 
+	return;
+  }
+  osSyncPrintf(&D_801432C4_152274); // EFFECTS WARNING : Call to free up invalid triple effect unit
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1D40_D0CF0.s")
-#endif
 
 void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2)
 {
@@ -1002,23 +996,23 @@ void func_800D76F4_E66A4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 }
 
 void func_800D7790_E6740(void) {
-    s16 var_s1;
-    s16 *temp_v0;
+	s16 var_s1;
+	s16 *temp_v0;
 
-    var_s1 = D_801542CA;
-    if (var_s1 == -5 || var_s1 == -6) {
-        func_800C1418_D03C8(0x11, 1);
-        return;
-    }
-    while (var_s1 != -5 && var_s1 != -6) {
-        D_80154318[var_s1].unkE++;
-        temp_v0 = (s16 *)((u8 *)&D_80154318[var_s1] + 8);
-        if (D_80154318[var_s1].unkE >= 4) {
-            D_80154318[var_s1].unkE = 0;
-        }
-        func_80137368_146318(temp_v0[0], temp_v0[1], temp_v0[2], 9, var_s1);
-        var_s1 = D_80154318[var_s1].unk4;
-    }
+	var_s1 = D_801542CA;
+	if (var_s1 == -5 || var_s1 == -6) {
+		func_800C1418_D03C8(0x11, 1);
+		return;
+	}
+	while (var_s1 != -5 && var_s1 != -6) {
+		D_80154318[var_s1].unkE++;
+		temp_v0 = (s16 *)((u8 *)&D_80154318[var_s1] + 8);
+		if (D_80154318[var_s1].unkE >= 4) {
+			D_80154318[var_s1].unkE = 0;
+		}
+		func_80137368_146318(temp_v0[0], temp_v0[1], temp_v0[2], 9, var_s1);
+		var_s1 = D_80154318[var_s1].unk4;
+	}
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7870_E6820.s")
@@ -1887,13 +1881,13 @@ void func_800E75A0_F6550(s16 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7660_F6610.s")
 
 void func_800E77B4_F6764(void) {
-    gDPPipeSync(D_8005BB2C++);
-    gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
-    gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
-    gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
-    gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
-    gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_FOG | G_LIGHTING);
-    gDPPipeSync(D_8005BB2C++);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_FOG | G_LIGHTING);
+	gDPPipeSync(D_8005BB2C++);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7894_F6844.s")
