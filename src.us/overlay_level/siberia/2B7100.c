@@ -5,7 +5,7 @@ extern s16 D_802E30F4;
 extern s32 D_802E3098;
 extern s32 D_802E3094;
 extern s32 D_802E30EC;
-extern char D_802E2EE8;
+extern char D_802E2EE8_2C5318;
 extern void func_802D5F28_2B8358(void);
 extern void func_802D6CA0_2B90D0(void);
 
@@ -80,7 +80,7 @@ void func_802D6364_2B8794(void) {
     temp_v0 = func_8007956C_8851C(0x13);
     temp_a1 = temp_v0 & 0xFF;
     if ((temp_v0 & 0xFF) != 0xFF) {
-        osSyncPrintf(D_802E2EE8, temp_a1);
+        osSyncPrintf(D_802E2EE8_2C5318, temp_a1);
         alien = &alienInstances[temp_a1];
         building_y = buildingInstances[160].xCoord;
         building_z = buildingInstances[160].zCoord;
