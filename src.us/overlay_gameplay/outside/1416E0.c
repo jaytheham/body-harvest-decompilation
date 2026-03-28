@@ -222,14 +222,14 @@ void func_801351DC_14418C(Unk80160080 *arg0)
   s32 temp_t5;
   s32 temp_t6;
   s32 var_a0;
-  s32 button_2000;
+  s32 zButtonState;
   func_801358E8_144898(arg0, 0x12C, 0x4E2);
   if (((D_80160148 >= 0) ? (D_80160148) : (-D_80160148)) < 2)
   {
 	D_80160148 = 0;
   }
-  button_2000 = currentControllerStates[CONTROLLER_ONE].button & BUTTON_Z;
-  if (button_2000 == 0)
+  zButtonState = currentControllerStates[CONTROLLER_ONE].button & BUTTON_Z;
+  if (zButtonState == 0)
   {
 	if (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_LEFT)
 	{
@@ -266,7 +266,7 @@ void func_801351DC_14418C(Unk80160080 *arg0)
 	temp_t6 = currentControllerStates[CONTROLLER_ONE].stick_y >= 0xB;
 	var_a0 = -temp_t6 < temp_t6 ? temp_t6 : -temp_t6;
 
-	if (((var_a0 == 0 && button_2000 == 0) && 
+	if (((var_a0 == 0 && zButtonState == 0) && 
 		 !(currentControllerStates[CONTROLLER_ONE].button & BUTTON_R)) &&
 		!(currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_DOWN))
 	{
@@ -275,7 +275,7 @@ void func_801351DC_14418C(Unk80160080 *arg0)
   }
   D_8016018C = 0;
   skip_clear:
-  if (((button_2000 != 0) || (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_DOWN)) && (!(D_80157A28 & 4)))
+  if (((zButtonState != 0) || (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_DOWN)) && (!(D_80157A28 & 4)))
   {
 	D_80160190 = 1;
   }
@@ -420,21 +420,23 @@ void func_80136198_145148(s32 arg0) {
 	D_8016017C = arg0;
 }
 
-// https://decomp.me/scratch/jaqtL
-#ifdef NON_MATCHING
-s16 func_801361A4_145154(Unk80160080 *arg0) {
-	if ((D_8016017C != 0) && (D_80160180 == 0)) {
-		D_80160184 = D_80052B34->unkE + 0x8000;
-	}
-	if (D_8016017C != 0) {
-		arg0->unk5E = D_80160184;
-		return D_80160184;
-	}
-	return D_80052B34->unkE;
+s16 func_801361A4_145154(Unk80160080 *arg0)
+{
+	s16 ret;
+  if (D_8016017C && (D_80160180 == 0))
+  {
+	  D_80160184 = D_80052B34->unkE + 0x8000;
+  }
+  
+  if (D_8016017C)
+  {
+	arg0->unk5E = D_80160184;
+	ret = D_80160184;
+  } else {
+	  ret = D_80052B34->unkE;
+  }
+  return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801361A4_145154.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80136214_1451C4.s")
 
