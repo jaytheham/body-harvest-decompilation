@@ -375,6 +375,7 @@ extern s32 D_8013D9B4_14C964;
 extern u8 D_8013DAE0_14CA90; /* particle/effect count */
 extern u8 D_8013DAE4_14CA94; /* particle/effect free index */
 extern Unk80154082 D_8013DF80_14CF30;
+extern u8 D_8013DF84_14CF34[];
 extern s32 D_8013FCD0_14EC80;
 
 extern AlienInstance *D_80140AB0_14FA60[];
