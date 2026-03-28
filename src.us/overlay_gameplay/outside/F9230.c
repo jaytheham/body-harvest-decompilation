@@ -380,7 +380,39 @@ void func_800EFE50_FEE00(u8 arg0) {
 /// 7 = Dark Adam blowing up planes
 /// 	
 /// a2 = bool, pause gameplay while cutscene active?
+#ifdef NON_MATCHING
+void func_800EFEB4_FEE64(void *arg0, s16 arg1, s32 arg2) {
+	s32 sp18 = arg1;
+
+	if (D_80052AD0 != 0) {
+		if (arg1 == 1) {
+			D_8015EA2C = 0.0f;
+		}
+		D_800476A2 = 0;
+		D_80047968 = 0;
+		func_800EFE50_FEE00(arg1);
+		D_80157F6A = (s8)sp18;
+		if (arg2 != 0) {
+			gameplayMode = 3;
+		} else {
+			gameplayMode = 0xB;
+		}
+		if (arg1 != 3) {
+			D_801493E2 = 0;
+		}
+		D_80157F8C = 0;
+		D_80157F8E = 0;
+		D_80157F90 = 0;
+		D_80157F70 = (s32)arg0;
+		if (arg0 != NULL) {
+			((void (*)(void))arg0)();
+		}
+		func_800F0340_FF2F0(&D_80157E90, 0, 5);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFEB4_FEE64.s")
+#endif
 
 void func_800EFFB4_FEF64(void) {
 	s16 temp;
