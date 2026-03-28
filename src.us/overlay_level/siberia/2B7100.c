@@ -27,88 +27,23 @@ extern void func_802D6CA0_2B90D0(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5F28_2B8358.s")
 
-void func_802D6220_2B8650(void) {
-    s16 val;
-
-    val = D_802E30F4;
-    val -= 1;
-    D_802E30F4 = val;
-
-    if (D_802E30F4 != 0) {
-        return;
-    }
-
-    vehicleInstances[30].unk20 = (u16)(vehicleInstances[30].unk20 & 0xFF7F);
-
-    D_801493E0 = 0;
-    D_802E3094 = 0;
-
-    func_8012D808_13C7B8(D_802E3098);
-
-    D_802E30EC = 0;
-    D_8014D17C = 0;
-
-    func_800EFEB4_FEE64(0, 0x1C, 0);
-    func_80007410_8010(&func_802D5F28_2B8358);
-}
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6220_2B8650.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D62B4_2B86E4.s")
 
-void func_802D62E4_2B8714(void) {
-    s16 sp1E;
-    s16 temp_t9;
-
-    temp_t9 = 0x28 - D_8004D1B1;
-    sp1E = temp_t9;
-    func_8009BF64_AAF14((u16)(temp_t9 & 0xFFFF));
-    if ((sp1E < 0) || (func_8000726C_7E6C((u64)0x28) != 0)) {
-        func_800074BC_80BC((void *)func_802D62E4_2B8714);
-    }
-}
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D62E4_2B8714.s")
 
 void func_802D6340_2B8770(void) {
     func_80007410_8010(&func_802D62E4_2B8714);
 }
 
-void func_802D6364_2B8794(void) {
-    s32 temp_v0;
-    u8 temp_a1;
-    s16 building_y;
-    s16 building_z;
-    AlienInstance *alien;
-
-    temp_v0 = func_8007956C_8851C(0x13);
-    temp_a1 = temp_v0 & 0xFF;
-    if ((temp_v0 & 0xFF) != 0xFF) {
-        osSyncPrintf(D_802E2EE8_2C5318, temp_a1);
-        alien = &alienInstances[temp_a1];
-        building_y = buildingInstances[160].xCoord;
-        building_z = buildingInstances[160].zCoord;
-        alien->unk0 = building_y + 0x320;
-        alien->unkE = 0;
-        alien->unk4 = building_z;
-        func_80080510_8F4C0(temp_a1);
-    }
-}
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6364_2B8794.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D63E8_2B8818.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D64DC_2B890C.s")
 
-#ifdef NON_MATCHING
-void func_802D6674_2B8AA4(void) {
-    if (D_8014D17C >= 0x15) {
-        func_802D64DC_2B890C(0xA0, D_8014D17C - 0x14, 0xC8, 0x18, &D_802E0E48, 6, 0x28, 1);
-        if (D_800519E7 <= 0) {
-            func_800074BC_80BC((void *)func_802D6674_2B8AA4);
-            func_802D6364_2B8794();
-        }
-    }
-    D_8014D17C += 1;
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6674_2B8AA4.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_802D670C_2B8B3C(void) {
@@ -144,62 +79,7 @@ void func_802D6A4C_2B8E7C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6CA0_2B90D0.s")
 
-/* Applies XOR/shift transformations to four specific buildingInstances, clears state counters, and registers callback */
-#ifdef NON_MATCHING
-void func_802D6F4C_2B937C(void) {
-    s32 v1;
-    s32 a1;
-    s32 a2;
-    s32 a3;
-    s32 t0;
-    s32 t1;
-    s32 t2;
-    s32 t3;
-    s32 t4;
-    s32 t5;
-    s32 t6;
-    s32 t7;
-    s32 t8;
-    s32 t9;
-
-    v1 = buildingInstances[69].unk8;
-    a2 = buildingInstances[80].unk8;
-    t4 = 0x10000;
-    a1 = v1 >> 12;
-    t6 = a1 | t4;
-    t7 = t6 ^ a1;
-    t0 = buildingInstances[65].unk8;
-    t8 = t7 << 12;
-    a3 = a2 >> 12;
-    t5 = a3 | t4;
-    t9 = t8 ^ v1;
-    t2 = buildingInstances[86].unk8;
-    t6 = t5 ^ a3;
-    buildingInstances[69].unk8 = t9;
-    t7 = t6 << 12;
-    t1 = t0 >> 12;
-    t9 = t1 | t4;
-    t8 = t7 ^ a2;
-    buildingInstances[80].unk8 = t8;
-    t5 = t9 ^ t1;
-    t3 = t2 >> 12;
-    t6 = t5 << 12;
-    t8 = t3 | t4;
-    t9 = t8 ^ t3;
-    t5 = t9 << 12;
-    t7 = t6 ^ t0;
-    t6 = t5 ^ t2;
-    buildingInstances[65].unk8 = t7;
-    buildingInstances[86].unk8 = t6;
-
-    D_8014D17E = 0;
-    D_801591C4 = 0;
-
-    func_80007410_8010(&func_802D6CA0_2B90D0);
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6F4C_2B937C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6FFC_2B942C.s")
 
@@ -212,25 +92,7 @@ void func_802D72A0_2B96D0(func_80070420_7F3D0_UnkArg0 *arg0) {
     func_800072CC_7ECC((u64)arg0->unk9);
 }
 
-/* Allocates alien instance, initializes position, registers callback for lifecycle management */
-/* possible: initAlienAtCoords */
-void func_802D72C4_2B96F4(s16 arg0, s16 arg1, u8 arg2) {
-    s32 temp_v0;
-    u8 temp_v1;
-    Unk80222A78 callback_data;
-
-    temp_v0 = func_8007956C_8851C(0x24);
-    temp_v1 = temp_v0 & 0xFF;
-    if ((temp_v0 & 0xFF) != 0xFF) {
-        alienInstances[temp_v1].unk0 = arg0;
-        alienInstances[temp_v1].unk4 = arg1;
-        callback_data.unk0 = 3;
-        callback_data.unk8 = temp_v1;
-        callback_data.pad9[0] = arg2;
-        callback_data.unkC = &func_802D72A0_2B96D0;
-        func_800AE454_BD404(&callback_data);
-    }
-}
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D72C4_2B96F4.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7350_2B9780.s")
 
