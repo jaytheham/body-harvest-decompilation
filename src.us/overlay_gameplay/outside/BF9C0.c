@@ -84,7 +84,60 @@ s32 func_800B0D10_BFCC0(s32 arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0DF4_BFDA4.s")
 
+#ifdef NON_MATCHING
+s32 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
+	s16 t2;
+	s16 v0;
+	s32 t0;
+	s32 v1;
+	s32 cl;
+	Unk8014FD30Type *a2;
+	Unk8014FD30Type *a3;
+	Unk8014FD30Type *t1;
+	s32 t8;
+
+	cl = currentLevel - 1;
+	a2 = (Unk8014FD30Type *)((u8 *)&D_80147C30_156BE0 + cl * 0x90);
+	a3 = a2;
+	v1 = 0;
+
+	for (;;) {
+		if (arg0 >= a3->unk0 && a3->unk4 >= arg0 && a3->unk2 < arg1) {
+			t8 = (v1 << 2) - v1;
+			if (arg1 < a3->unk6) {
+				t0 = 0;
+				t1 = (Unk8014FD30Type *)((u8 *)a2 + (t8 << 3));
+				for (;;) {
+					v0 = t1->unk8;
+					t2 = t1->unkC;
+					if (v0 == t2) {
+						return v1 & 0xFF;
+					}
+					if ((arg0 < v0) || (t2 < arg0) || (t1->unkA >= arg1) || (arg1 >= t1->unkE)) {
+						if (t0 == 8) {
+							return v1 & 0xFF;
+						}
+						t0 += 8;
+						t1 = (Unk8014FD30Type *)((u8 *)t1 + 8);
+						if (t0 != 0x10) {
+							continue;
+						}
+					}
+					goto next;
+				}
+			}
+		}
+	next:
+		v1++;
+		a3 = (Unk8014FD30Type *)((u8 *)a3 + 0x18);
+		if (v1 == 6) {
+			return 0xFF;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0F20_BFED0.s")
+#endif
 
 // ClipLineToShieldWalls
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1028_BFFD8.s")
