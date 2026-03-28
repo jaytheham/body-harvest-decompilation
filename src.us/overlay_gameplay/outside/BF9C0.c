@@ -483,16 +483,13 @@ void func_800B9954_C8904(u8 arg0) {
 	D_8013DAE0_14CA90--;
 }
 
-/* Allocates a new particle/effect slot, fills it from the given parameters,
-   then finds the next free slot in the pool. Warns via osSyncPrintf if the
-   pool is already full (max 15 entries). */
 #ifdef NON_MATCHING
 void func_800B99A8_C8958(Unk80152B80 *arg0, s16 arg1, s16 arg2, s32 arg3, u8 *arg4, s16 arg5, s16 arg6, u16 arg7) {
 	u8 i;
 	Unk80152B80 *entry;
 
 	if (D_8013DAE0_14CA90 == 0xF) {
-		osSyncPrintf(&D_80142D94);
+		osSyncPrintf(&D_80142D94); // WARNING : Cannot create new land ring effect - out of storage space - blame it on Westy
 		return;
 	}
 	entry = &D_80152B80[D_8013DAE4_14CA94];
