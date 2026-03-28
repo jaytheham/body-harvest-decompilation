@@ -217,57 +217,69 @@ void func_80134CCC_143C7C(Unk80160080 *arg0, Unk80052B2C *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80134D44_143CF4.s")
 
 // adamCameraControls ?
-// https://decomp.me/scratch/4DQsJ
-#ifdef NON_MATCHING
-void func_801351DC_14418C(Unk80160080 *arg0) {
-	s32 temp_t5;
-	s32 temp_t6;
-	s32 var_v1_2;
-	s32 var_a0;
-	s32 button_2000;
+void func_801351DC_14418C(Unk80160080 *arg0)
+{
+  s32 temp_t5;
+  s32 temp_t6;
+  s32 var_a0;
+  s32 button_2000;
+  func_801358E8_144898(arg0, 0x12C, 0x4E2);
+  if (((D_80160148 >= 0) ? (D_80160148) : (-D_80160148)) < 2)
+  {
+	D_80160148 = 0;
+  }
+  button_2000 = currentControllerStates[CONTROLLER_ONE].button & BUTTON_Z;
+  if (button_2000 == 0)
+  {
+	if (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_LEFT)
+	{
+	  if (D_80160148 < 0x100)
+	  {
+		D_80160148 = 0x100;
+	  }
+	  else if (D_80160148 < 0x400)
+	  {
+		D_80160148 += 0x40;
+	  }
+	  D_8016018C = 1;
+	}
+	else if (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_RIGHT)
+	{
+	  if (D_80160148 >= (-0xFF))
+	  {
+		D_80160148 = -0x100;
+	  }
+	  else if (D_80160148 >= (-0x3FF))
+	  {
+		D_80160148 -= 0x40;
+	  }
+	  D_8016018C = 1;
+	}
+	else if (D_80160148 != 0)
+	{
+	  D_80160148 = (s16) (D_80160148 / 2);
+	}
+  }
+  temp_t5 = currentControllerStates[CONTROLLER_ONE].stick_x >= 0xB;
+  if ((-temp_t5 < temp_t5 ? temp_t5 : -temp_t5) == 0)
+  {
+	temp_t6 = currentControllerStates[CONTROLLER_ONE].stick_y >= 0xB;
+	var_a0 = -temp_t6 < temp_t6 ? temp_t6 : -temp_t6;
 
-	func_801358E8_144898(arg0, 0x12C, 0x4E2);
-	if ((D_80160148 >= 0 ? D_80160148 : -D_80160148) < 2) {
-		D_80160148 = 0;
+	if (((var_a0 == 0 && button_2000 == 0) && 
+		 !(currentControllerStates[CONTROLLER_ONE].button & BUTTON_R)) &&
+		!(currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_DOWN))
+	{
+	  goto skip_clear;
 	}
-	button_2000 = currentControllerStates[0].button & 0x2000;
-	if (button_2000 == 0) {
-		if (currentControllerStates[0].button & 2) {
-			if (D_80160148 < 0x100) {
-				D_80160148 = 0x100;
-			} else if (D_80160148 < 0x400) {
-				D_80160148 += 0x40;
-			}
-			D_8016018C = 1;
-		} else if (currentControllerStates[0].button & 1) {
-			if (D_80160148 >= -0xFF) {
-				D_80160148 = -0x100;
-			} else if (D_80160148 >= -0x3FF) {
-				D_80160148 -= 0x40;
-			}
-			D_8016018C = 1;
-		} else if (D_80160148 != 0) {
-			D_80160148 = (s16) (D_80160148 / 2);
-		}
-	}
-	temp_t5 = (currentControllerStates[0].stick_x < 0xB) ^ 1;
-	var_v1_2 = ((-temp_t5) < temp_t5) ? temp_t5 : (-temp_t5);
-	if (var_v1_2 == 0) {
-		temp_t6 = (currentControllerStates[0].stick_y < 0xB) ^ 1;
-		var_a0 = ((-temp_t6) < temp_t6) ? temp_t6 : (-temp_t6);
-		if (var_a0 == 0 && button_2000 == 0 && !(currentControllerStates[0].button & 0x10) && !(currentControllerStates[0].button & 4)) {
-			goto skip_clear;
-		}
-	}
-	D_8016018C = 0;
-skip_clear:
-	if ((button_2000 != 0 || (currentControllerStates[0].button & 4)) && !(D_80157A28 & 4)) {
-		D_80160190 = 1;
-	}
+  }
+  D_8016018C = 0;
+  skip_clear:
+  if (((button_2000 != 0) || (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_DOWN)) && (!(D_80157A28 & 4)))
+  {
+	D_80160190 = 1;
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801351DC_14418C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80135380_144330.s")
 
