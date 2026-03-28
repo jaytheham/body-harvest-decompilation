@@ -7,6 +7,8 @@ extern s32 D_802E3094;
 extern s32 D_802E30EC;
 extern char D_802E2EE8_2C5318;
 extern void func_802D5F28_2B8358(void);
+extern void func_802D6674_2B8AA4(void);
+extern void func_802D6768_2B8B98(void);
 extern void func_802D6CA0_2B90D0(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4CD0_2B7100.s")
@@ -45,7 +47,6 @@ void func_802D6340_2B8770(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6674_2B8AA4.s")
 
-#ifdef NON_MATCHING
 void func_802D670C_2B8B3C(void) {
     func_80013468_14068(0xA);
     func_80135D08_144CB8(1.0f, 0x28, 0x46, 0x32);
@@ -53,13 +54,9 @@ void func_802D670C_2B8B3C(void) {
     func_800EFEB4_FEE64(0, 0x17, 0);
     func_80007410_8010(&func_802D6674_2B8AA4);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D670C_2B8B3C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6768_2B8B98.s")
 
-#ifdef NON_MATCHING
 void func_802D69EC_2B8E1C(void) {
     func_80013468_14068(0xE);
     func_80135D08_144CB8(1.0f, 0x28, 0x46, 0x32);
@@ -67,9 +64,6 @@ void func_802D69EC_2B8E1C(void) {
     func_800EFEB4_FEE64(&func_802D6768_2B8B98, 0x18, 0);
     func_800073B8_7FB8(0x18ULL);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D69EC_2B8E1C.s")
-#endif
 
 void func_802D6A4C_2B8E7C(void) {
     func_800AE190_BD140(D_801591C4);
