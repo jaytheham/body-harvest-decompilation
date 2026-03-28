@@ -683,6 +683,7 @@ extern s16 D_80159DC8;
 extern s16 D_80159DCA;
 extern s16 D_80159DCC;
 extern s8 D_80159DDE;
+extern u8 D_8015EA28;
 extern u8 D_8015EA29;
 extern f32 D_8015EA2C;
 extern f32 D_8015EA30;

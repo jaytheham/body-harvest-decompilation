@@ -1762,7 +1762,41 @@ void func_8010C454_11B404(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010F5D8_11E588.s")
 
+#ifdef NON_MATCHING
+s32 func_8010F72C_11E6DC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	BuildingInstance *building;
+	s16 idx;
+	s16 temp;
+
+	idx = func_8011D260_12C210((s8)(arg0 >> 8), (s8)(arg2 >> 8));
+	if (idx == -1) {
+		return 0;
+	}
+
+	building = &buildingInstances[idx];
+	if ((building->buildingType != 0x1F) && (D_8015EA28 != building->buildingType)) {
+		return 0;
+	}
+
+	if ((arg1 + arg3) < building->yCoord) {
+		return 0;
+	}
+
+	temp = arg2;
+	if (building->unk8 & 1) {
+		temp = arg0;
+	}
+
+	temp = (temp & 0xFF) >> 2;
+	if (temp < 9) {
+		return 1;
+	}
+
+	return temp >= 0x38;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010F72C_11E6DC.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8010F834_11E7E4(Unk80052B40 *arg0, s32 arg1, s32 arg2, s32 arg3) {
