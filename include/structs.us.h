@@ -576,7 +576,8 @@ typedef struct {
 	/* 0x03 */ u8  pad3; // size in tiles?
 	/* 0x04 */ s32 unk4;               /* spawn counter */
 	/* 0x08 */ u8  unk8;               /* alien entity index */
-	/* 0x09 */ u8  pad9[3];
+	/* 0x09 */ u8  unk9;
+	/* 0x09 */ u8  padA[2];
 	/* 0x0C */ void (*unkC)(void *);  /* state callback */
 } Unk80222A78; /* size = 0x10 Are these notes correct? */
 
