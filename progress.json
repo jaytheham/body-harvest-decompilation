@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-27T23:59:37Z",
-  "commit": "23e6882",
-  "commit_timestamp": "2026-03-28T12:59:24+13:00",
+  "generated": "2026-03-28T01:38:53Z",
+  "commit": "affdbc5",
+  "commit_timestamp": "2026-03-28T14:38:41+13:00",
   "overall": {
-    "total_functions": 2969,
+    "total_functions": 2970,
     "matched": 941,
-    "non_matching": 301,
+    "non_matching": 302,
     "asm_stubs": 1727,
-    "matched_pct": 31.69,
-    "decompiled_pct": 41.83
+    "matched_pct": 31.68,
+    "decompiled_pct": 41.85
   },
   "segments": {
     "core": {
@@ -32,9 +32,9 @@
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
       "matched": 665,
-      "non_matching": 155,
+      "non_matching": 156,
       "asm_stubs": 760,
-      "total": 1580,
+      "total": 1581,
       "matched_pct": 42.1,
       "decompiled_pct": 51.9
     },
@@ -398,10 +398,10 @@
       "path": "overlay_gameplay/outside/BF9C0.c",
       "segment": "overlay_gameplay/outside",
       "matched": 22,
-      "non_matching": 6,
+      "non_matching": 7,
       "asm_stubs": 53,
-      "total": 81,
-      "matched_pct": 27.2,
+      "total": 82,
+      "matched_pct": 26.8,
       "contributor": "jaytheham"
     },
     {
@@ -540,7 +540,7 @@
       "name": "jaytheham",
       "files": 34,
       "matched": 852,
-      "non_matching": 261,
+      "non_matching": 262,
       "asm_stubs": 1236
     },
     {
@@ -594,11 +594,11 @@
     },
     {
       "date": "2026-03-28",
-      "commit": "23e6882",
-      "matched_pct": 31.69,
-      "decompiled_pct": 41.83,
+      "commit": "affdbc5",
+      "matched_pct": 31.68,
+      "decompiled_pct": 41.85,
       "matched": 941,
-      "total": 2969
+      "total": 2970
     }
   ]
 }
