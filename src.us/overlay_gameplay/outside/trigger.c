@@ -271,29 +271,29 @@ void func_800AF95C_BE90C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 	func_800AE454_BD404(&tmp);
 }
 
-#ifdef NON_MATCHING
-void func_800AF9C0_BE970(Unk80222A78 *arg0) {
-	u8 alienIdx;
-	AlienInstance *alien;
-	
-	alienIdx = func_8007956C_8851C(arg0->unk9);
-	if (alienIdx != 0xFF) {
-		alien = &alienInstances[alienIdx];
-		alien->unk25 = arg0->unk8;
-		alien->unk0 = (arg0->unk1 << 8) + 0x80;
-		alien->unk4 = (arg0->unk2 << 8) + 0x80;
-		alien->unk2E = alien->unk0;
-		alien->unk32 = alien->unk4;
-		alien->unk1B = func_800B0F20_BFED0(alien->unk0, alien->unk4);
-		func_8011E6FC_12D6AC(alien->unk0, alien->unk4, &alien->unk2);
-		if (arg0->unk8 != 0xFF) {
-			alien->unkE = alienInstances[arg0->unk8].unkE;
-		}
-	}
+void func_800AF9C0_BE970(Unk80222A78 *arg0)
+{
+  u8 alienIdx;
+    
+  alienIdx = func_8007956C_8851C(arg0->unk9);
+  if (alienIdx != 0xFF)
+  {
+    alienInstances[alienIdx].unk25 = arg0->unk8;
+    alienInstances[alienIdx].unk0 = (arg0->unk1 << 8) + 0x80;
+    alienInstances[alienIdx].unk4 = (arg0->unk2 << 8) + 0x80;
+    alienInstances[alienIdx].unk2E = alienInstances[alienIdx].unk0;
+    alienInstances[alienIdx].unk32 = alienInstances[alienIdx].unk4;
+    alienInstances[alienIdx].unk1B = func_800B0F20_BFED0(alienInstances[alienIdx].unk0, alienInstances[alienIdx].unk4);
+    func_8011E6FC_12D6AC(
+        alienInstances[alienIdx].unk0,
+        alienInstances[alienIdx].unk4,
+        &alienInstances[alienIdx].unk2);
+    if (arg0->unk8 != 0xFF)
+    {
+      alienInstances[alienIdx].unkE = alienInstances[arg0->unk8].unkE;
+    }
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF9C0_BE970.s")
-#endif
 
 void func_800AFA98_BEA48(Unk80222A78 *arg0) {
 	Unk80222A78 tmp;
