@@ -699,6 +699,7 @@ void func_802DFE68_323FB8() {
 	func_80007410_8010(&func_802DF290_3233E0);
 }
 
+#ifdef NON_MATCHING
 s8 func_802DFF04_324054(u8 arg0) {
     s16 offset;
     s8 idx;
@@ -713,6 +714,9 @@ s8 func_802DFF04_324054(u8 arg0) {
     idx = D_8014DD50[idx].unkD;
     return D_8014DD50[idx].unkD;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFF04_324054.s")
+#endif
 
 #ifdef NON_MATCHING
 s8 func_802DFF84_3240D4(s32 arg0) {
@@ -802,6 +806,7 @@ void func_802E015C_3242AC(VehicleInstance *vehicle) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0B64_324CB4.s")
 
+#ifdef NON_MATCHING
 s32 func_802E1274_3253C4(s32 arg0) {
 	AlienInstance *inst;
 	u8 idx;
@@ -825,6 +830,9 @@ s32 func_802E1274_3253C4(s32 arg0) {
 	}
 	return 0;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1274_3253C4.s")
+#endif
 
 void func_802E1324_325474(u8 arg0) {
 	AlienInstance *inst;
@@ -843,6 +851,7 @@ void func_802E1324_325474(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E14F4_325644.s")
 
+#ifdef NON_MATCHING
 void func_802E1630_325780(u8 arg0) {
 	AlienInstance *inst;
 	s16 y_offset;
@@ -852,6 +861,9 @@ void func_802E1630_325780(u8 arg0) {
 	y_offset = func_80003824_4424(110.0f, 80.0f);
 	func_800868A4_95854(arg0, 0, 0, (s16)(y_offset + inst->unkA));
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1630_325780.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E16A8_3257F8.s")
 
