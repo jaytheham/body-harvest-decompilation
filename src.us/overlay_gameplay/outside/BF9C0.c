@@ -5,7 +5,70 @@ s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32)(((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
 }
 
+#ifdef NON_MATCHING
+s32 func_800B0A88_BFA38(s32 arg0, s32 arg1) {
+	s32 a0;
+	s32 a1;
+	s32 a2;
+	s32 a3;
+	s32 v0;
+	s32 t0;
+	u16 *v1;
+
+	v1 = &D_80052A94[arg1].unk0[arg0];
+	a2 = v1[0] & 0x3F;
+	a3 = v1[1] & 0x3F;
+	v0 = a2 - a3;
+	t0 = -v0;
+	if (t0 < v0) {
+		a0 = v0;
+	} else {
+		a0 = t0;
+	}
+	if (a0 >= 0xA) {
+		return 1;
+	}
+
+	a1 = v1[0x101] & 0x3F;
+	v0 = a3 - a1;
+	t0 = -v0;
+	if (t0 < v0) {
+		a0 = v0;
+	} else {
+		a0 = t0;
+	}
+	if (a0 >= 0xA) {
+		return 1;
+	}
+
+	a3 = v1[0x100] & 0x3F;
+	v0 = a1 - a3;
+	t0 = -v0;
+	if (t0 < v0) {
+		a0 = v0;
+	} else {
+		a0 = t0;
+	}
+	if (a0 >= 0xA) {
+		return 1;
+	}
+
+	v0 = a3 - a2;
+	t0 = -v0;
+	if (t0 < v0) {
+		a0 = v0;
+	} else {
+		a0 = t0;
+	}
+	if (a0 >= 0xA) {
+		return 1;
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0A88_BFA38.s")
+#endif
 
 void func_800B0B94_BFB44(void) {
 	u8 *s2;

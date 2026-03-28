@@ -1383,7 +1383,38 @@ void func_800D9B14_E8AC4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	temp_v0->unk12 = arg2;
 }
 
+#ifdef NON_MATCHING
+void func_800D9B54_E8B04(void) {
+	s16 temp_s2;
+	s16 var_s1;
+	s16 temp_a1;
+	s16 temp_v1;
+	s16 *ptr;
+
+	var_s1 = D_801542FA;
+	if (var_s1 == -5 || var_s1 == -6) {
+		func_800C1418_D03C8(0x15, 1);
+		return;
+	}
+	if (var_s1 != -5 && var_s1 != -6) {
+		do {
+			temp_a1 = D_80154318[var_s1].unk4;
+			temp_s2 = D_80154318[temp_a1].unk4;
+			(*(void (**)(s16, s16))&D_80154318[var_s1].unk8)(var_s1, temp_a1);
+			ptr = (s16 *)((s8 *)&D_80154318[var_s1].unk8 + 4);
+			temp_v1 = *ptr;
+			if (temp_v1 != 0) {
+				*ptr = temp_v1 - 1;
+			} else {
+				func_800C1E24_D0DD4(var_s1, 0x15, 1);
+			}
+			var_s1 = temp_s2;
+		} while (temp_s2 != -5 && temp_s2 != -6);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9B54_E8B04.s")
+#endif
 
 void func_800D9C60_E8C10(s16 arg0) {
 	if (arg0 != -3) {
@@ -1705,7 +1736,31 @@ void func_800DFA34_EE9E4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 	D_80153B87 = 0;
 }
 
+#ifdef NON_MATCHING
+void func_800DFA98_EEA48(s8 *arg0) {
+	s32 i;
+	s32 j;
+	s16 temp;
+
+	i = 0;
+	do {
+		j = 0;
+		while (j < 3) {
+			temp = (func_800038E0_44E0() % 120) + D_8013DF84_14CF34[(i * 3) + j] - 0x3C;
+			if (temp < 0) {
+				temp = 0;
+			} else if (temp >= 0x100) {
+				temp = 0xFF;
+			}
+			arg0[(i * 3) + j] = temp;
+			j = (j + 1) & 0xFF;
+		}
+		i = (i + 1) & 0xFF;
+	} while (i < 4);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DFA98_EEA48.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DFBA8_EEB58.s")
 
@@ -1746,7 +1801,15 @@ void func_800E03FC_EF3AC(void) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E049C_EF44C.s")
+void func_800E049C_EF44C(s16 arg0, s16 arg1, s16 arg2) {
+    s32 pad;
+    u16 sp42;
+    u16 sp40;
+
+    sp40 = func_800038E0_44E0();
+    sp42 = func_800038E0_44E0();
+    func_800CA5EC_D959C(arg0, arg1, arg2, (s8) (((s32) sp40 % 10) - 0x14), 0x7F, ((s32) sp42 % 10) - 0x14, 0x28, 6, (func_800038E0_44E0() % 3) + 3, 0xA0, 0xB4, 0xBE, 0xFF, 0xC8);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E05B4_EF564.s")
 
