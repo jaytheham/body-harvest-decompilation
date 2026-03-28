@@ -1,13 +1,13 @@
 {
-  "generated": "2026-03-28T20:26:50Z",
-  "commit": "537c2cb",
-  "commit_timestamp": "2026-03-29T09:26:36+13:00",
+  "generated": "2026-03-28T20:30:53Z",
+  "commit": "98ba581",
+  "commit_timestamp": "2026-03-29T09:30:43+13:00",
   "overall": {
-    "total_functions": 2973,
-    "matched": 948,
-    "non_matching": 305,
-    "asm_stubs": 1720,
-    "matched_pct": 31.89,
+    "total_functions": 2970,
+    "matched": 950,
+    "non_matching": 302,
+    "asm_stubs": 1718,
+    "matched_pct": 31.99,
     "decompiled_pct": 42.15
   },
   "segments": {
@@ -76,12 +76,12 @@
     },
     "overlay_level/siberia": {
       "display_name": "Level / Siberia",
-      "matched": 7,
-      "non_matching": 4,
-      "asm_stubs": 87,
-      "total": 98,
-      "matched_pct": 7.1,
-      "decompiled_pct": 11.2
+      "matched": 9,
+      "non_matching": 1,
+      "asm_stubs": 85,
+      "total": 95,
+      "matched_pct": 9.5,
+      "decompiled_pct": 10.5
     },
     "overlay_level/comet": {
       "display_name": "Level / Comet",
@@ -527,28 +527,28 @@
     {
       "path": "overlay_level/siberia/2B7100.c",
       "segment": "overlay_level/siberia",
-      "matched": 7,
-      "non_matching": 4,
-      "asm_stubs": 87,
-      "total": 98,
-      "matched_pct": 7.1,
-      "contributor": "Meridian Lex"
+      "matched": 9,
+      "non_matching": 1,
+      "asm_stubs": 85,
+      "total": 95,
+      "matched_pct": 9.5,
+      "contributor": "jaytheham"
     }
   ],
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 34,
-      "matched": 859,
-      "non_matching": 265,
-      "asm_stubs": 1229
+      "files": 35,
+      "matched": 868,
+      "non_matching": 266,
+      "asm_stubs": 1314
     },
     {
       "name": "Meridian Lex",
-      "files": 10,
-      "matched": 89,
-      "non_matching": 40,
-      "asm_stubs": 491
+      "files": 9,
+      "matched": 82,
+      "non_matching": 36,
+      "asm_stubs": 404
     }
   ],
   "history": [
@@ -577,14 +577,6 @@
       "total": 2973
     },
     {
-      "date": "2026-03-26",
-      "commit": "035462f",
-      "matched_pct": 30.52,
-      "decompiled_pct": 40.84,
-      "matched": 908,
-      "total": 2975
-    },
-    {
       "date": "2026-03-27",
       "commit": "3d33771",
       "matched_pct": 31.53,
@@ -593,20 +585,28 @@
       "total": 2965
     },
     {
+      "date": "2026-03-26",
+      "commit": "b108a45",
+      "matched_pct": 31.82,
+      "decompiled_pct": 41.99,
+      "matched": 945,
+      "total": 2970
+    },
+    {
       "date": "2026-03-28",
-      "commit": "53ed272",
-      "matched_pct": 31.9,
-      "decompiled_pct": 42.13,
-      "matched": 948,
-      "total": 2972
+      "commit": "d71ea4e",
+      "matched_pct": 31.79,
+      "decompiled_pct": 41.84,
+      "matched": 943,
+      "total": 2966
     },
     {
       "date": "2026-03-29",
-      "commit": "537c2cb",
-      "matched_pct": 31.89,
+      "commit": "98ba581",
+      "matched_pct": 31.99,
       "decompiled_pct": 42.15,
-      "matched": 948,
-      "total": 2973
+      "matched": 950,
+      "total": 2970
     }
   ]
 }
