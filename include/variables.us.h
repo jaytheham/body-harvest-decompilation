@@ -738,7 +738,7 @@ extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
 extern BuildingSpec buildingSpecs[0x20]; // 0x80259090
 extern u8 D_802590A4[];
 extern Unk80259490 D_80259490; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
-extern u8 D_80259D90[][0x50];
+extern Unk80259D90 D_80259D90[];
 extern u8 D_80259D92[][0x50];
 extern s16 D_80259D94;
 extern s16 D_80259D96;

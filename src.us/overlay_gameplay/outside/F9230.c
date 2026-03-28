@@ -1782,7 +1782,30 @@ void func_8010F96C_11E91C(Unk80052B40 *arg0, Unk80052B40_fp *arg1)
   func_8010F834_11E7E4(arg0, arg1->unk0 >> 16, temp->unk4 >> 16, temp->unk8 >> 16);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010F9B4_11E964.s")
+void func_8010F9B4_11E964(Unk80052B40 *arg0, s32 arg1) {
+    s32 var_s0;
+    s32 var_a2;
+    s32 var_a3;
+    Unk80259D90 *entry;
+
+    if (arg1 == -1) {
+        var_s0 = arg0->unk0 + 1;
+        var_a2 = arg0->unk2;
+        var_a3 = arg0->unk4;
+    } else {
+        entry = &D_80259D90[arg1];
+        if (entry->unk0 >= 0xE) {
+            var_s0 = (entry->unk40 + entry->unk20) / 2;
+            var_a2 = (entry->unk42 + entry->unk22) / 2;
+            var_a3 = (entry->unk44 + entry->unk24) / 2;
+        } else {
+            var_s0 = entry->unk4;
+            var_a3 = entry->unk6;
+            var_a2 = func_800B84D0_C7480(var_s0, var_a3) >> 8;
+        }
+    }
+    func_8010F834_11E7E4(arg0, var_s0, var_a2, var_a3);
+}
 
 void func_8010FABC_11EA6C(void) { D_80158FDC = 0; }
 
