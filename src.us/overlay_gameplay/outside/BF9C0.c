@@ -172,7 +172,40 @@ void func_800B33BC_C236C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B345C_C240C.s")
 
+// https://decomp.me/scratch/TODO
+#ifdef NON_MATCHING
+void func_800B4050_C3000(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
+    s32 row;
+    s32 col;
+    s32 nextCol;
+    s32 nextRow;
+
+    D_8014F8A0 = (s16(*)[256])arg2;
+    D_80151DD8[0x964] = arg0;
+    D_80151DD8[0x965] = arg1;
+    D_8014F89C = arg0;
+    D_8014F89D = arg1;
+    row = 0;
+    nextRow = 0;
+    do {
+        col = 0;
+        nextCol = 0;
+        do {
+            *(u16 *)(D_80151DD8 + row * 0x78 + col * 6) =
+                ((u16 *)arg2)[(u16)(arg0 + nextCol + ((arg1 + nextRow) << 8))];
+            nextCol = (col + 1) & 0xFF;
+            col = nextCol;
+        } while (nextCol < 0x13);
+        nextRow = (row + 1) & 0xFF;
+        row = nextRow;
+    } while (nextRow < 0x13);
+    D_80151DD8[0x960] = 0;
+    D_80151DD8[0x961] = 0;
+    func_800B345C_C240C(arg0, arg1, arg2, arg3);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B4050_C3000.s")
+#endif
 
 void func_800B415C_C310C(s16 arg0, s16 arg1) {
 	s32 idx;
