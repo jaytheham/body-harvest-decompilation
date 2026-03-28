@@ -10,7 +10,7 @@ void func_8000C764_D364(s32 arg0);
 void func_80001144_1D44(u8 arg0, u8 arg1, u8 arg2);
 
 // F9230
-void func_800EB534_FA4E4(void *arg0, s32 arg1, s8 arg2, s32 arg3);
+void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3);
 void* func_80000B14_1714(void);
 void func_8000108C_1C8C(s32);
 void getSaveFileName(s32, u8*);
