@@ -73,7 +73,7 @@ void func_80076FCC_85F7C(s32 arg0, s32 arg1) {
 	neg_one = -1;
 	for (i = 0; i < 0x96; i++) {
 		D_8014D200[i] = i;
-		D_80259D90[i][2] = neg_one;
+		D_80259D90[i].unk2 = neg_one;
 	}
 	s3 = ((arg0 - 0x880) >> 8) >> 2;
 	D_8014D2F0 = s3;

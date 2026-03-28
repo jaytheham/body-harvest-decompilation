@@ -640,6 +640,8 @@ extern s16 D_8014F832;
 extern s32 D_8014F838;
 extern f32 D_8014F850;
 extern u16 D_8014F89A;
+extern u8 D_8014F89C;
+extern u8 D_8014F89D;
 extern s16 (*D_8014F8A0)[256]; /* pointer to world tile data (256x256 s16 array) */
 extern u16 D_8014FD28;
 extern Unk8014FD30Type D_8014FD30;
@@ -736,7 +738,7 @@ extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
 extern BuildingSpec buildingSpecs[0x20]; // 0x80259090
 extern u8 D_802590A4[];
 extern Unk80259490 D_80259490; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
-extern u8 D_80259D90[][0x50];
+extern Unk80259D90 D_80259D90[];
 extern u8 D_80259D92[][0x50];
 extern s16 D_80259D94;
 extern s16 D_80259D96;
@@ -929,6 +931,7 @@ extern s16 D_8009CE34[];
 extern s32 D_8009C4C8;
 extern s32 D_8009C4E4[];
 extern s32 D_800E7328;
+extern s32 D_801575A0;
 extern s32 D_801575DC;
 extern s32 D_80158FDC;
 extern s32 D_80157A28;
@@ -1215,6 +1218,7 @@ extern s16 D_801542BE;
 extern s16 D_801542CA;
 extern s16 D_801542D6;
 extern s16 D_80154282;
+extern s16 D_8015425E;
 extern s16 D_801542EE;
 extern Unk80154318Entry D_80154318[];
 extern u8 D_80154327;
