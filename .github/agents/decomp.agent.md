@@ -30,7 +30,7 @@ These powershell tools exist to assist you:
  Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match.
  Diff output skips matching instructions except for 3 either side of differences.
 - You can get the full assembly of a function after building by adding param `--show=target` or `--show=current` to the above diff command.
-- You must decompile Gfx macros. Use `.\tools\gfxdis.ps1`:
+- You must decompile Gfx macros, you are not allowed to use the raw `*->words.w0` or `*->words.w1` form. Use `.\tools\gfxdis.ps1`:
 e.g.
 ```C
 dl = D_8005BB2C;

@@ -362,6 +362,10 @@ extern Unk8014DD50 *D_8013CB40_14BAF0;
 extern Unk80154082 D_8013CB48_14BAF8;
 extern s8 D_8013D890_14C840; // Triggers beacon warp
 extern u8 D_8013D894_14C844; // Beacon warp destination
+extern Light D_8013D958_14C908;
+extern Light D_8013D960_14C910;
+extern Light D_8013D970_14C920;
+extern Light D_8013D978_14C928;
 extern s8 D_8013D9AC_14C95C;
 extern s8 D_8013D9B0_14C960;
 extern s32 D_8013D9B4_14C964;
@@ -635,13 +639,16 @@ extern s32 D_8014F828;
 extern s16 D_8014F832;
 extern s32 D_8014F838;
 extern f32 D_8014F850;
+extern u16 D_8014F89A;
 extern s16 (*D_8014F8A0)[256]; /* pointer to world tile data (256x256 s16 array) */
+extern u16 D_8014FD28;
 extern Unk8014FD30Type D_8014FD30;
 extern u8 D_8014FD48[];
 extern u16 D_8014FDC8;
 extern u8 D_8014FDD0[];
 
 extern u8 D_80151DD0;
+extern u8 D_80151DD8[];
 extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
 extern Unk80152D00 D_80152D00[];
 extern u8 D_80152B88; /* unk8 field of first particle/effect entry */
@@ -723,6 +730,7 @@ extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 
 // 80224680 missions
 
+extern u8 D_80254E80[]; // Tile palette data
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
 
 extern BuildingSpec buildingSpecs[0x20]; // 0x80259090
