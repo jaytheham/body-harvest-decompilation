@@ -331,7 +331,7 @@ void func_800E71F8_F61A8(void);
 void func_800E7234_F61E4(void);
 void func_800E72A0_F6250(void);
 void func_800E8890_F7840(void);
-void func_800E94B8_F8468(void* arg0);
+void func_800E94B8_F8468(void);
 void func_800EA088_F9038(void);
 void func_800EA12C_F90DC(void);
 void func_800EA280_F9230(void);

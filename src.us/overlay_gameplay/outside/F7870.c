@@ -8,7 +8,17 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E8A00_F79B0.s")
 
 // SetupForShadows ?
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E94B8_F8468.s")
+void func_800E94B8_F8468(void) {
+    gDPPipeSync(D_8005BB2C++);
+    gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
+    gDPSetBlendColor(D_8005BB2C++, 0, 0, 0, 0x96);
+    gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
+    gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
+    gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+    gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0, 0, 0x40);
+    gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+    D_801575A0 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E95BC_F856C.s")
 
