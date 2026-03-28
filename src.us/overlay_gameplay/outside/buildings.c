@@ -1036,7 +1036,26 @@ s32 func_80120634_12F5E4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80120D6C_12FD1C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012101C_12FFCC.s")
+void func_8012101C_12FFCC(BuildingInstance *arg0, s16 arg1) {
+	BuildingInstance *building;
+
+	building = &buildingInstances[D_8015FAD0[arg1].unk1E >> 4];
+
+	if ((arg0 - (BuildingInstance *)D_80145BE0_154B90) == 0xA) {
+		building->padC[1] |= (D_8015FAD0[arg1].unk1E & 0xF);
+		func_800DF038_EDFE8(
+			(s16)(D_8015FAD0[arg1].unk0 >> 0x10),
+			(s16)(D_8015FAD0[arg1].unk4 >> 0x10),
+			(s16)(D_8015FAD0[arg1].unk8 >> 0x10),
+			0x64, 6, 0);
+		func_8012D808_13C7B8(arg1);
+		if (building->zCoord < 0x5301) {
+			if ((building->padC[1] & 3) && (building->padC[1] & 0xC)) {
+				func_800072CC_7ECC(0xE);
+			}
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80121128_1300D8.s")
 
