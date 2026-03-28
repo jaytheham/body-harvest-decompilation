@@ -1746,7 +1746,15 @@ void func_800E03FC_EF3AC(void) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E049C_EF44C.s")
+void func_800E049C_EF44C(s16 arg0, s16 arg1, s16 arg2) {
+    s32 pad;
+    u16 sp42;
+    u16 sp40;
+
+    sp40 = func_800038E0_44E0();
+    sp42 = func_800038E0_44E0();
+    func_800CA5EC_D959C(arg0, arg1, arg2, (s8) (((s32) sp40 % 10) - 0x14), 0x7F, ((s32) sp42 % 10) - 0x14, 0x28, 6, (func_800038E0_44E0() % 3) + 3, 0xA0, 0xB4, 0xBE, 0xFF, 0xC8);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E05B4_EF564.s")
 
