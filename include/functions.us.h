@@ -782,5 +782,7 @@ void func_80135D44_144CF4(s32, s32, s32, f32);
 void leoInitUnit_atten(void);
 s32 func_80092A50_A1A00(s16, s16, s32);
 void func_800AD554_BC504(s32, s32, s32);
+void debug_drawTimingGraphBars(void);
+unsigned long long func_8001D1A0_1DDA0(s32, u32, s32, s16);
 
 #endif

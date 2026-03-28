@@ -213,7 +213,84 @@ void func_800A13E8_B0398(void) {
 }
 
 // drawDebugTimingGraphs
+#ifdef NON_MATCHING
+void func_800A140C_B03BC(void) {
+	s32 iter;
+	s32 lry;
+	s32 uly;
+	s32 newIdx;
+	union { struct { s32 hi; u32 lo; } h; unsigned long long ull; } acc;
+	s32 *rowPtr;
+	s16 *shiftPtr;
+
+	if (D_80047720 != 0) {
+		shiftPtr = &D_80047722;
+		debug_drawTimingGraphBars();
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetCycleType(D_8005BB2C++, 3 << 20);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+
+		iter = 0x1F;
+		lry = 0xD3;
+		uly = 0xCF;
+		rowPtr = D_8014F5F0;
+		shiftPtr = &D_80047722;
+		do {
+			s32 j;
+			acc.h.lo = 0;
+			acc.h.hi = 0;
+			j = 7;
+			do {
+				u32 carry = 0;
+				u32 new_lo = (u32)rowPtr[j] + acc.h.lo;
+				carry = carry + (u32)(new_lo < acc.h.lo);
+				acc.h.hi = acc.h.hi + carry;
+				acc.h.lo = new_lo;
+			} while (j--);
+			acc.ull = func_8001D1A0_1DDA0(acc.h.hi, acc.h.lo, (s32)*shiftPtr >> 31, *shiftPtr);
+			if (acc.h.hi != 0 || acc.h.lo >= 0xC9U) {
+				acc.h.hi = 0;
+				acc.h.lo = 0xC8;
+			}
+			{
+				s32 c0 = (iter & 2) ? 0x3C0 : 0;
+				s32 c1 = (iter & 1) ? 0x1E : 0;
+				s32 c2 = (iter & 4) ? 0x7800 : 0;
+				s32 color = c2 + c1 + c0;
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetFillColor(D_8005BB2C++, ((u32)color << 16) | (u32)color);
+				gDPFillRectangle(D_8005BB2C++, 0x20, uly, acc.h.lo + 0x20, lry);
+			}
+			rowPtr -= 8;
+			lry -= 6;
+			uly -= 6;
+		} while (iter--);
+		iter = 0x1F;
+
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetCycleType(D_8005BB2C++, 0);
+		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+
+		((s32 *)D_8014F210)[D_8014F610] = D_8013D764_14C714 - D_8013D760_14C710;
+		newIdx = D_8014F610 + 1;
+		D_8014F610 = newIdx;
+		if ((u32)newIdx >= 8U) {
+			D_8014F610 = 0;
+			newIdx = 0;
+		}
+		rowPtr = D_8014F5F0 + newIdx;
+		do {
+			*rowPtr = 0;
+			rowPtr -= 8;
+		} while (iter--);
+
+		D_8014F20C = 1;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A140C_B03BC.s")
+#endif
 
 void func_800A1764_B0714(void) {
 	D_8014F618.unk69 = 0;

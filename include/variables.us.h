@@ -115,6 +115,8 @@ extern u32 D_80047690;
 extern u32 D_80047698;
 extern s16 D_800476A0;
 extern s16 D_800476A2; // enables input?
+extern s16 D_80047720;
+extern s16 D_80047722;
 extern u8 D_80047743; // World fog red value
 extern u8 D_80047744; // World fog green value
 extern u8 D_80047745; // World fog blue value
@@ -760,12 +762,15 @@ extern f32 D_8014F1EC;
 extern f32 D_8014F1F0;
 extern s32 D_8013D75C_14C70C;
 extern s32 D_8013D758_14C708;
+extern s32 D_8013D760_14C710;
+extern s32 D_8013D764_14C714;
 extern u32 D_8014F20C;
 extern s8 D_8014F202;
 extern s8 D_8014F203;
 extern s32 D_8014F204;
 extern s32 D_8014F208;
 extern s32 D_8014F210[0x20][8];
+extern s32 D_8014F5F0[8];
 extern s32 D_8014F610;
 extern Unk80052B40 D_8013D588;
 extern Unk80052B40 D_8013D5E8;
