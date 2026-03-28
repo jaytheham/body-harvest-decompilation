@@ -10,6 +10,8 @@ extern void func_802D5F28_2B8358(void);
 extern void func_802D6674_2B8AA4(void);
 extern void func_802D6768_2B8B98(void);
 extern void func_802D6CA0_2B90D0(void);
+extern void func_802D75E4_2B9A14(void);
+extern void func_802D769C_2B9ACC(void);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4CD0_2B7100.s")
 
@@ -119,9 +121,9 @@ void func_802D77BC_2B9BEC(void) {
     u16 temp;
 
     func_80013468_14068(0xC);
-    buildingInstances[0].unkE22 = 0x6E;
-    temp = buildingInstances[0].unkE1A;
-    buildingInstances[0].unkE1A = (u16) ((temp & 0xF03F) | 0x400);
+    buildingInstances[150].door1InteriorId = 0x6E;
+    temp = buildingInstances[150].state;
+    buildingInstances[150].state = (u16) ((temp & 0xF03F) | 0x400);
     D_8014D17C = 0;
     func_80007410_8010(&func_802D75E4_2B9A14);
     func_802D769C_2B9ACC();
