@@ -1,8 +1,8 @@
 #include <ultra64.h>
 #include "common.h"
 
-extern Unk8014DD50 **D_802E2040;
-extern Unk8014DD50 **D_802E2190;
+extern Unk8014DD50 **D_802E2040_2C4470;
+extern Unk8014DD50 **D_802E2190_2C45C0;
 extern void func_800797A4_88754(s32 arg0, u8 arg1);
 extern void func_8008B108_9A0B8(u8 arg0);
 
@@ -273,9 +273,9 @@ void func_802DA854_2BCC84(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
     sp2C = arg3;
     alien = &alienInstances[arg0 * 5];
     if (alien->unk4B == 0) {
-        result = func_80081F18_90EC8(arg0, 3, 5, &sp28, &D_802E2040);
+        result = func_80081F18_90EC8(arg0, 3, 5, &sp28, &D_802E2040_2C4470);
     } else {
-        result = func_80081F18_90EC8(arg0, 3, 5, &sp28, &D_802E2190);
+        result = func_80081F18_90EC8(arg0, 3, 5, &sp28, &D_802E2190_2C45C0);
     }
     if ((result & 0xFF) == 5) {
         alien->unk36 = 0;
