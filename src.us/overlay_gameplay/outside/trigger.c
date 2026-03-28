@@ -112,18 +112,25 @@ u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF0C0_BE070.s")
 
+// https://decomp.me/scratch/xEzEG
 #ifdef NON_MATCHING
-void func_800AF1F8_BE1A8(s16 arg0, s16 arg1, u8 arg2, void *arg3) {
-	AlienWaveEntry *entry;
-	u8 i;
-
-	entry = D_8003BCC0[arg2];
-	for (i = 0; i < 0xC; i++) {
-		if (entry[i].alienSpecId == 0) {
-			return;
-		}
-		func_800AF0C0_BE070((s16)(entry[i].xOffset + arg0), (s16)(entry[i].zOffset + arg1), entry[i].alienSpecId, arg3);
+void func_800AF1F8_BE1A8(s16 arg0, s16 arg1, u8 arg2, void *arg3)
+{
+  //void **new_var = &arg3;
+  u8 i;
+  
+  for (i = 0; i < 0xC; i++)
+  {
+	if (!D_8003BCC0[arg2][i].alienSpecId)
+	{
+	  return;
 	}
+	func_800AF0C0_BE070(
+		D_8003BCC0[arg2][i].xOffset + arg0,
+		D_8003BCC0[arg2][i].zOffset + arg1,
+		D_8003BCC0[arg2][i].alienSpecId,
+		arg3);
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF1F8_BE1A8.s")
@@ -274,24 +281,24 @@ void func_800AF95C_BE90C(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
 void func_800AF9C0_BE970(Unk80222A78 *arg0)
 {
   u8 alienIdx;
-    
+	
   alienIdx = func_8007956C_8851C(arg0->unk9);
   if (alienIdx != 0xFF)
   {
-    alienInstances[alienIdx].unk25 = arg0->unk8;
-    alienInstances[alienIdx].unk0 = (arg0->unk1 << 8) + 0x80;
-    alienInstances[alienIdx].unk4 = (arg0->unk2 << 8) + 0x80;
-    alienInstances[alienIdx].unk2E = alienInstances[alienIdx].unk0;
-    alienInstances[alienIdx].unk32 = alienInstances[alienIdx].unk4;
-    alienInstances[alienIdx].unk1B = func_800B0F20_BFED0(alienInstances[alienIdx].unk0, alienInstances[alienIdx].unk4);
-    func_8011E6FC_12D6AC(
-        alienInstances[alienIdx].unk0,
-        alienInstances[alienIdx].unk4,
-        &alienInstances[alienIdx].unk2);
-    if (arg0->unk8 != 0xFF)
-    {
-      alienInstances[alienIdx].unkE = alienInstances[arg0->unk8].unkE;
-    }
+	alienInstances[alienIdx].unk25 = arg0->unk8;
+	alienInstances[alienIdx].unk0 = (arg0->unk1 << 8) + 0x80;
+	alienInstances[alienIdx].unk4 = (arg0->unk2 << 8) + 0x80;
+	alienInstances[alienIdx].unk2E = alienInstances[alienIdx].unk0;
+	alienInstances[alienIdx].unk32 = alienInstances[alienIdx].unk4;
+	alienInstances[alienIdx].unk1B = func_800B0F20_BFED0(alienInstances[alienIdx].unk0, alienInstances[alienIdx].unk4);
+	func_8011E6FC_12D6AC(
+		alienInstances[alienIdx].unk0,
+		alienInstances[alienIdx].unk4,
+		&alienInstances[alienIdx].unk2);
+	if (arg0->unk8 != 0xFF)
+	{
+	  alienInstances[alienIdx].unkE = alienInstances[arg0->unk8].unkE;
+	}
   }
 }
 
