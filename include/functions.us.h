@@ -221,6 +221,7 @@ void func_8009BDB8_AAD68(s32, s32);
 void func_8009BF64_AAF14(u16);
 void func_8009C1D8_AB188(s16, s16, s32);
 void func_800039D0_45D0(Unk80052B40 *, Unk80052B40 *, Unk80052B40 *, s32);
+s32 func_800FA40C_1093BC(VehicleInstance *, s16, s16);
 void func_800A1764_B0714(void);
 void func_800A17EC_B079C(void);
 void func_800A1924_B08D4(void);
