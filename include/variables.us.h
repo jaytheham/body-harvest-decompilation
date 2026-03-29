@@ -165,6 +165,7 @@ extern s32 D_80048190;
 extern s32 D_80048194;
 extern AlienInstance alienInstances[]; // 0x80048198
 extern AlienWaveEntry D_8003BCC0[][12];
+extern u8 D_8003BCC6;
 extern char D_80142B6C_151B1C;
 extern char D_80142B7C_151B2C;
 extern char D_80142BA0_151B50;
