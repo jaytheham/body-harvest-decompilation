@@ -204,7 +204,29 @@ u8 func_800C1598_D0548(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C15C0_D0570.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C17B4_D0764.s")
+s16 func_800C17B4_D0764(u8 arg0, s32 arg1) {
+	s16 var_a2;
+
+	if (gameplayMode == 2 || gameplayMode == 9) {
+		osSyncPrintf(&D_8014301C_151FCC);
+	}
+	if (D_8015430E >= 0x190) {
+		if (arg1 != 0) {
+			osSyncPrintf(&D_80143040_151FF0, D_801541F8[arg0].unk0);
+			var_a2 = -3;
+		} else {
+			osSyncPrintf(&D_80143094_152044, D_80154088[arg0].unk0);
+			var_a2 = -3;
+		}
+	} else {
+		var_a2 = D_80154310;
+		if (D_80154318[var_a2].unk0 & 1) {
+			osSyncPrintf(&D_801430E8_152098);
+		}
+		func_800C15C0_D0570(arg0, arg1, var_a2, 0);
+	}
+	return var_a2;
+}
 
 void func_800C18D0_D0880(u8 arg0) {
 	func_800C17B4_D0764(arg0, 0);
