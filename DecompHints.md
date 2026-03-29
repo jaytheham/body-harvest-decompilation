@@ -7,6 +7,7 @@
 - If you see missing `b` after another type of branch you may have `if` that needs its `else` added.
 - A variable being decremented and being checked for != 0 is also usually a `while (var--)`
 - If the stack size is too large, evaluate are there any temp variables that can be removed. Especially if they are storing a pointer to an array or struct that can be directly dereferenced.
+- temp registers (t0, t1, etc) are generally used to hold values that were not assigned to a variable in c, while a, s, & v registers are often used for values that were assigned to variables.
 
 ### Register allocation differences
 - move statements around
