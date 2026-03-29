@@ -372,6 +372,7 @@ void func_80113CEC_122C9C(void);
 Unk800522C0 *func_801164C4_125474(s16, s16);
 void func_801165FC_1255AC(u8, u8, s16 *, s16 *, s16 *, s16 *);
 void func_8011694C_1258FC(void);
+s32 func_80117508_1264B8(s16 arg0);
 s32 func_801176B0_126660(void);
 void func_80117A4C_1269FC(s32);
 void func_80117F10_126EC0(void);

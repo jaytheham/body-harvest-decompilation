@@ -382,7 +382,38 @@ void func_8011B3F0_12A3A0(s16 arg0, s16 *arg1, s16 *arg2, s16 *arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011B6C0_12A670.s")
 
+#ifdef NON_MATCHING
+void func_8011BA80_12AA30(u8 arg0, s16 arg1) {
+	BuildingInstance *building;
+	BuildingInstance *end;
+	s16 minX;
+	s16 minZ;
+	s16 maxX;
+	s16 maxZ;
+
+	building = &buildingInstances[func_80117508_1264B8((s16)(buildingInstances[arg0].zCoord - arg1))];
+	end = (BuildingInstance *) D_800522C0;
+	minX = buildingInstances[arg0].xCoord - arg1;
+	minZ = buildingInstances[arg0].zCoord - arg1;
+	maxX = minX + (arg1 << 1);
+	maxZ = minZ + (arg1 << 1);
+
+	if ((building < end) && (building->zCoord < maxZ)) {
+		while (TRUE) {
+			if (((building->unk8 >> 12) & 1) && (building->xCoord >= minX) && (building->xCoord < maxX)) {
+				building->unk8 ^= 0x10000000;
+			}
+
+			building++;
+			if ((building >= end) || (building->zCoord >= maxZ)) {
+				break;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BA80_12AA30.s")
+#endif
 
 // draw explosion etc when building is damaged/destroyed
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BB94_12AB44.s")
