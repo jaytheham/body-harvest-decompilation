@@ -596,6 +596,26 @@ void func_800B0830_BF7E0(s32 arg0)
   }
 }
 
+#ifdef NON_MATCHING
+// Score 15: only v0/v1 register difference for CSE'd &D_80223780[a0->unk9] pointer
+void func_800B08DC_BF88C(s32 arg0)
+{
+  s32 v0 = D_80223778;
+  Unk80222A78 *a0;
+  while (v0--)
+  {
+	a0 = &D_80222A78[v0];
+	if (((a0->unkC == (void (*)(void *))func_800AFD48_BECF8) || (a0->unkC == 0)) &&
+	  D_8003BCC0[D_80223780[a0->unk9].waveSpecId][0].alienSpecId != 0x18 &&
+	  (D_80223780[a0->unk9].unk12 < arg0))
+	{
+	  a0->unk0 = 0;
+	  osSyncPrintf(&D_80142C40_151BF0, v0);
+	}
+  }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800B08DC_BF88C.s")
+#endif
 
 s32 func_800B0A00_BF9B0(void) { return D_80047F98; }
