@@ -401,7 +401,21 @@ void func_800AFD48_BECF8(Unk80222A78 *arg0) {
     func_800AE454_BD404(&tmp);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AFE68_BEE18.s")
+void func_800AFE68_BEE18(Unk80222A78 *arg0) {
+    s32 sp34;
+    s32 sp30;
+    s32 sp2c;
+    s32 sp28;
+    s32 sp24;
+    s32 sp20;
+
+    if (alienInstances[arg0->unk8].specIndex == 0x19) {
+        sp24 = alienInstances[arg0->unk8].unk0;
+        sp20 = alienInstances[arg0->unk8].unk4;
+        sp24 = (s32) ((f64) sp24 - (400.0 * ((f64) (f32) coss(alienInstances[arg0->unk8].unkE) / 32768.0)));
+        func_800AFB38_BEAE8((s16) sp24, (s16) (s32) ((f64) sp20 - (400.0 * ((f64) (f32) sins(*(u16*)(&D_800481A6 + arg0->unk8 * 0x50)) / 32768.0))), arg0->unk9, arg0->unk8, 0);
+    }
+}
 
 void func_800AFF9C_BEF4C(s32 arg0, s32 arg1, s32 arg2) {
 	Unk80222A78 tmp;
