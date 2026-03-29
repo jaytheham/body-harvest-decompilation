@@ -1083,6 +1083,7 @@ extern char D_801442E0_153290;
 extern char D_801442F0_1532A0;
 extern char D_80144308_1532B8;
 extern char D_80144330_1532E0[];
+extern f64 D_801443E0_153390;
 extern char D_801444F0_1534A0;
 extern char D_80144534_1534E4;
 extern char D_8014457C_15352C;

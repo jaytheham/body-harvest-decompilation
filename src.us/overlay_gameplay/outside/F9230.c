@@ -114,7 +114,50 @@ void func_800EA5B8_F9568(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA604_F95B4.s")
 
+#ifdef NON_MATCHING
+s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) {
+	s32 temp_v1;
+	s32 var_a0;
+	s32 var_v0;
+	s32 var_v0_2;
+
+	temp_v1 = (arg3 & 0xFFFF) - (func_80003824_4424(arg1->z - arg2->z, arg1->x - arg2->x) & 0xFFFF);
+	var_a0 = temp_v1;
+	if (temp_v1 >= 0) {
+		var_v0 = temp_v1;
+	} else {
+		var_v0 = -temp_v1;
+	}
+	if (var_v0 >= 0x8001) {
+		u32 var_at = 0x10000;
+		if (temp_v1 > 0) {
+			var_at = 0xFFFF0000;
+		}
+		var_a0 = temp_v1 + var_at;
+	}
+	if (var_a0 >= 0) {
+		var_v0_2 = var_a0;
+	} else {
+		var_v0_2 = -var_a0;
+	}
+	if (var_v0_2 < (s16) (s32) ((f64) ((arg4 / 2) * 32768.0f) / D_801443E0_153390)) {
+		goto block_18;
+	}
+	if (var_a0 >= 0) {
+		if (arg0 >= -4) {
+			return 2;
+		}
+		goto block_18;
+	}
+	if ((var_a0 < 0) && (arg0 < 5)) {
+		return 1;
+	}
+block_18:
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA7DC_F978C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA8F8_F98A8.s")
 

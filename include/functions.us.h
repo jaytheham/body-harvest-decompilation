@@ -337,6 +337,7 @@ void func_800E94B8_F8468(void);
 void func_800EA088_F9038(void);
 void func_800EA12C_F90DC(void);
 void func_800EA280_F9230(void);
+s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4);
 void func_800EA2B0_F9260(s32 arg0);
 void func_800EA2BC_F926C(void);
 void func_800EA434_F93E4(void);
