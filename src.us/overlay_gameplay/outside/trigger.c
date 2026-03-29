@@ -500,7 +500,42 @@ void func_800B06C4_BF674(Unk80222A78 *arg0) {
 	func_800B03CC_BF37C(arg0->unk8, (s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80), arg0);
 }
 
+#ifdef NON_MATCHING
+void func_800B0710_BF6C0(s16 arg0, s16 arg1) {
+	Unk80222A78 tmp;
+	s16 y;
+	u8 levelIdx;
+	u8 missionIdx;
+
+	levelIdx = (currentLevel - 1) & 0xFF;
+	missionIdx = ((u8 *)D_8003CEC6)[levelIdx * 0x28];
+	y = ((s16 *)((u8 *)D_802566D8 + (missionIdx * 0x68)))[0] + (func_800B84D0_C7480(arg0, arg1) >> 8);
+
+	func_800CF80C_DE7BC(
+		arg0,
+		y,
+		arg1,
+		((s16 *)((u8 *)D_8013D91E_14C8CE + (currentLevel * 4)))[0],
+		0xA0,
+		0xFF,
+		0,
+		0
+	);
+
+	func_800BECF0_CDCA0();
+
+	tmp.unk0 = 2;
+	tmp.unk1 = (s8)(arg0 >> 8);
+	tmp.unk2 = (s8)(arg1 >> 8);
+	tmp.unk4 = D_8014F820 + 0x12;
+	tmp.unkC = func_800B06C4_BF674;
+	tmp.unk8 = levelIdx;
+
+	func_800AE454_BD404(&tmp);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800B0710_BF6C0.s")
+#endif
 
 void func_800B0830_BF7E0(s32 arg0)
 {
