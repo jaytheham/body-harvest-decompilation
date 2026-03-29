@@ -271,7 +271,51 @@ s32 func_800B325C_C220C(s8 arg0, s8 arg1, u16 arg2)
   return (D_8014F8A0[128 + arg1][128 + arg0] & arg2) & 0xFFFF;
 }
 
+
+#ifdef NON_MATCHING
+void func_800B32AC_C225C(u8 *arg0) {
+	s32 x;
+	s32 y;
+	s32 i;
+	s32 level;
+	u16 *cell;
+	u16 val;
+
+	x = 0;
+	y = 0;
+	level = D_80222A70 / 32;
+	cell = (u16 *)arg0;
+	i = 0;
+
+	do {
+		i += 2;
+		if (currentLevel == 4) {
+			level = 6;
+			if ((x < 0x4C) && (y < 0x9C) && (y >= 0x59)) {
+				level = 0x20;
+			}
+		}
+
+		val = cell[0];
+		if (((cell[0] & 0x3F) < level) || ((cell[1] & 0x3F) < level) || ((cell[0x100] & 0x3F) < level) ||
+			((cell[0x101] & 0x3F) < level)) {
+			cell[0] = val | 0x1000;
+		} else {
+			cell[0] = val & ~0x1000;
+		}
+
+		x = (x + 1) & 0xFF;
+		if (x == 0) {
+			y = (y + 1) & 0xFF;
+		}
+		cell++;
+	} while (i != 0x1FE02);
+
+	*((u16 *)arg0) = 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B32AC_C225C.s")
+#endif
 
 void func_800B33BC_C236C(s32 arg0) {
 	s16 coss_val;

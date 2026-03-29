@@ -317,7 +317,46 @@ s32 func_801185F8_1275A8(BuildingInstance *arg0, s16 arg1) {
 	return 0;
 }
 
+#ifdef NON_MATCHING
+s32 func_80118670_127620(s16 arg0, s16 arg1) {
+	s32 sp20;
+	s32 sp1C;
+	s32 var_v0;
+
+	if (currentLevel != 1) {
+		return 0x400;
+	}
+
+	sp20 = (s32) arg0;
+	sp1C = (s32) arg1;
+
+	if (func_80118460_127410((s16) sp20, (s16) sp1C, 0x4B, -6) < 0x14) {
+		if (func_8000726C_7E6C((u64) 0x28) != 0) {
+			return -0x2570;
+		}
+		return 0x400;
+	}
+
+	if (func_80118460_127410((s16) sp20, (s16) sp1C, 0x27, -0x41) < 0x14) {
+		if (func_8000726C_7E6C((u64) 0x29) != 0) {
+			return -0x2970;
+		}
+		return 0x400;
+	}
+
+	var_v0 = 0x400;
+	if (func_80118460_127410((s16) sp20, (s16) sp1C, -0x23, -0x2E) < 0x14) {
+		if (func_8000726C_7E6C((u64) 0xB) != 0) {
+			return 0x400;
+		}
+		var_v0 = 0x38A4;
+	}
+
+	return var_v0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118670_127620.s")
+#endif
 
 // displayBuildings
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118774_127724.s")
@@ -343,7 +382,38 @@ void func_8011B3F0_12A3A0(s16 arg0, s16 *arg1, s16 *arg2, s16 *arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011B6C0_12A670.s")
 
+#ifdef NON_MATCHING
+void func_8011BA80_12AA30(u8 arg0, s16 arg1) {
+	BuildingInstance *building;
+	BuildingInstance *end;
+	s16 minX;
+	s16 minZ;
+	s16 maxX;
+	s16 maxZ;
+
+	building = &buildingInstances[func_80117508_1264B8((s16)(buildingInstances[arg0].zCoord - arg1))];
+	end = (BuildingInstance *) D_800522C0;
+	minX = buildingInstances[arg0].xCoord - arg1;
+	minZ = buildingInstances[arg0].zCoord - arg1;
+	maxX = minX + (arg1 << 1);
+	maxZ = minZ + (arg1 << 1);
+
+	if ((building < end) && (building->zCoord < maxZ)) {
+		while (TRUE) {
+			if (((building->unk8 >> 12) & 1) && (building->xCoord >= minX) && (building->xCoord < maxX)) {
+				building->unk8 ^= 0x10000000;
+			}
+
+			building++;
+			if ((building >= end) || (building->zCoord >= maxZ)) {
+				break;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BA80_12AA30.s")
+#endif
 
 // draw explosion etc when building is damaged/destroyed
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BB94_12AB44.s")
@@ -1209,7 +1279,30 @@ void func_80124BA8_133B58(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124BA8_133B58.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80124C40_133BF0(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
+	s32 pct;
+	s16 dmg;
+
+	dmg = arg1;
+	pct = func_801223B0_131360(arg0, arg2, arg3, dmg);
+
+	if (arg0->unkC == -2) {
+		func_80122524_1314D4(arg0, dmg, arg2, arg3);
+		return;
+	}
+
+	if (arg0->unk1A != 0) {
+		dmg = (s32)((f64)dmg * (1.0 - ((f64)pct / 100.0)));
+		if (dmg != 0) {
+			func_80088154_97104(arg0, dmg, func_80003824_4424((f32)(arg0->unk0 - arg2), (f32)(arg0->unk4 - arg3)));
+			D_8014ED44 = 8;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124C40_133BF0.s")
+#endif
 
 // displayBullets
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124D60_133D10.s")
