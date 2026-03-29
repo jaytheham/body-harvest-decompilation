@@ -1,5 +1,8 @@
-Warning: missing "jr $ra" in last block (jumptarget_label).
+Warning: missing "jr $ra" in last block of test (jumptarget_label).
 
-s32 test(void) {
-    return 0x1233FFFF * 2;
+extern s32 more special;
+static s16 special !@#$%^chars[2] = { 0, 0x1234 };  /* const */
+
+void *test(void) {
+    return &special !@#$%^chars[0x1233FFFF] + more special;
 }

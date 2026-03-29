@@ -8,7 +8,7 @@ from typing import Dict, List, Optional, Union
 
 from .c_types import build_typemap, dump_typemap
 from .error import DecompFailure
-from .flow_graph import FlowGraph, build_flowgraph, visualize_flowgraph
+from .flow_graph import FlowGraph, build_flowgraph
 from .if_statements import get_function_text
 from .options import CodingStyle, Options, Target
 from .asm_file import AsmData, Function, parse_file
@@ -19,20 +19,22 @@ from .translate import (
     GlobalInfo,
     translate_to_ast,
     narrow_func_call_outputs,
+    visualize_flowgraph,
 )
 from .types import TypePool
-from .arch_mips import MipsArch
+from .arch_arm import ArmArch, ArmGbaArch
+from .arch_mips import MipsArch, MipseeArch
 from .arch_ppc import PpcArch
 
 
-def print_current_exception(sanitize: bool) -> None:
+def print_exception(exc: Exception, sanitize: bool) -> None:
     """Print a traceback for the current exception to stdout.
 
     If `sanitize` is true, the filename's full path is stripped,
     and the line is set to 0. These changes make the test output
     less brittle."""
     if sanitize:
-        tb = traceback.TracebackException(*sys.exc_info())
+        tb = traceback.TracebackException(type(exc), exc, exc.__traceback__)
         if tb.exc_type == InstrProcessingFailure and tb.__cause__:
             tb = tb.__cause__
         for frame in tb.stack:
@@ -41,11 +43,11 @@ def print_current_exception(sanitize: bool) -> None:
         for line in tb.format(chain=False):
             print(line, end="")
     else:
-        traceback.print_exc(file=sys.stdout)
+        traceback.print_exception(type(exc), exc, exc.__traceback__, file=sys.stdout)
 
 
 def print_exception_as_comment(
-    exc: Exception, context: Optional[str], sanitize: bool
+    exc: Exception, options: Options, context: Optional[str]
 ) -> None:
     context_phrase = f" in {context}" if context is not None else ""
     if isinstance(exc, OSError):
@@ -55,20 +57,35 @@ def print_exception_as_comment(
         print("/*")
         print(f"Decompilation failure{context_phrase}:\n")
         print(exc)
+        if options.stacktrace:
+            tb = traceback.TracebackException(type(exc), exc, exc.__traceback__)
+            tb = tb.__cause__ or tb.__context__
+            if tb:
+                print()
+                for line in tb.format():
+                    print(line, end="")
         print("*/")
     else:
         print("/*")
         print(f"Internal error{context_phrase}:\n")
-        print_current_exception(sanitize=sanitize)
+        print_exception(exc, sanitize=options.sanitize_tracebacks)
         print("*/")
 
 
 def run(options: Options) -> int:
     arch: Arch
     if options.target.arch == Target.ArchEnum.MIPS:
-        arch = MipsArch()
+        if options.target.platform == Target.PlatformEnum.MIPSEE:
+            arch = MipseeArch()
+        else:
+            arch = MipsArch()
     elif options.target.arch == Target.ArchEnum.PPC:
         arch = PpcArch()
+    elif options.target.arch == Target.ArchEnum.ARM:
+        if options.target.platform == Target.PlatformEnum.GBA:
+            arch = ArmGbaArch()
+        else:
+            arch = ArmArch()
     else:
         raise ValueError(f"Invalid target arch: {options.target.arch}")
 
@@ -86,11 +103,9 @@ def run(options: Options) -> int:
 
         if options.heuristic_strings:
             asm_data.detect_heuristic_strings()
-        typemap = build_typemap(options.c_contexts, use_cache=options.use_cache)
+        typemap = build_typemap(options.c_contexts, arch, use_cache=options.use_cache)
     except Exception as e:
-        print_exception_as_comment(
-            e, context=None, sanitize=options.sanitize_tracebacks
-        )
+        print_exception_as_comment(e, options, context=None)
         return 1
 
     if options.dump_typemap:
@@ -122,6 +137,7 @@ def run(options: Options) -> int:
     typepool = TypePool(
         unknown_field_prefix="unk_" if fmt.coding_style.unknown_underscore else "unk",
         unk_inference=options.unk_inference,
+        union_field_overrides=options.union_field_overrides,
     )
     global_info = GlobalInfo(
         asm_data,
@@ -131,6 +147,7 @@ def run(options: Options) -> int:
         typemap,
         typepool,
         deterministic_vars=options.deterministic_vars,
+        stack_spill_detection=options.stack_spill_detection,
     )
 
     flow_graphs: List[Union[FlowGraph, Exception]] = []
@@ -143,6 +160,7 @@ def run(options: Options) -> int:
                 arch,
                 fragment=False,
                 print_warnings=options.debug,
+                debug_patterns=options.debug_patterns,
             )
             flow_graphs.append(graph)
         except Exception as e:
@@ -210,9 +228,7 @@ def run(options: Options) -> int:
         if global_decls:
             print(global_decls)
     except Exception as e:
-        print_exception_as_comment(
-            e, context=None, sanitize=options.sanitize_tracebacks
-        )
+        print_exception_as_comment(e, options, context=None)
         return_code = 1
 
     for index, (function, function_info) in enumerate(zip(functions, function_infos)):
@@ -230,15 +246,13 @@ def run(options: Options) -> int:
             print(function_text)
 
         except Exception as e:
-            print_exception_as_comment(
-                e,
-                context=f"function {function.name}",
-                sanitize=options.sanitize_tracebacks,
-            )
+            print_exception_as_comment(e, options, context=f"function {function.name}")
             return_code = 1
 
     for warning in typepool.warnings:
-        print(fmt.with_comments("", comments=[warning]))
+        line = fmt.with_comments("", comments=[warning])
+        if line:
+            print(line)
 
     return return_code
 
@@ -335,6 +349,18 @@ def parse_flags(flags: List[str]) -> Options:
         dest="debug",
         action="store_true",
         help="Print debug info inline",
+    )
+    group.add_argument(
+        "--debug-patterns",
+        dest="debug_patterns",
+        action="store_true",
+        help="Dump assembly after each matched asm pattern",
+    )
+    group.add_argument(
+        "--stacktrace",
+        dest="stacktrace",
+        action="store_true",
+        help="Print internal stack traces for errors",
     )
     group.add_argument(
         "--print-assembly",
@@ -460,6 +486,18 @@ def parse_flags(flags: List[str]) -> Options:
         help="Name temp and phi vars after their location in the source asm, "
         "rather than using an incrementing suffix. Can help reduce diff size in tests.",
     )
+    group.add_argument(
+        "--descending-regs",
+        dest="descending_regs",
+        action="store_true",
+        help="Sort variables in descending order by register number",
+    )
+    group.add_argument(
+        "--backwards-bss",
+        dest="backwards_bss",
+        action="store_true",
+        help="Sort bss variables backwards compared to what's in the asm",
+    )
 
     group = parser.add_argument_group("Analysis Options")
     group.add_argument(
@@ -468,9 +506,11 @@ def parse_flags(flags: List[str]) -> Options:
         dest="target",
         type=Target.parse,
         default="mips-ido-c",
-        help="Target architecture, compiler, and language triple. "
-        "Supported triples: mips-ido-c, mips-gcc-c, mipsel-gcc-c, ppc-mwcc-c++, ppc-mwcc-c. "
-        "Default is mips-ido-c, `ppc` is an alias for ppc-mwcc-c++. ",
+        help="Target platform, compiler, and language triple. "
+        "Supported platforms: [mips, mipsel, mipsee, ppc, arm, gba]. "
+        "Supported compilers: [ido, gcc, mwcc]. "
+        "Supported languages: [c, c++]. "
+        "Default is mips-ido-c, `ppc` is an alias for ppc-mwcc-c++, and `arm` for arm-gcc-c.",
     )
     group.add_argument(
         "--passes",
@@ -531,6 +571,15 @@ def parse_flags(flags: List[str]) -> Options:
         ),
     )
     group.add_argument(
+        "--no-stack-spill",
+        dest="stack_spill_detection",
+        action="store_false",
+        help=(
+            "Disable stack spilling detection, which introduces unnecessary "
+            "temporaries in unoptimized code instead of using the stack."
+        ),
+    )
+    group.add_argument(
         "--heuristic-strings",
         dest="heuristic_strings",
         action="store_true",
@@ -566,6 +615,16 @@ def parse_flags(flags: List[str]) -> Options:
         help="Disable Python garbage collection. Can improve performance at "
         "the risk of running out of memory.",
     )
+    group.add_argument(
+        "--union-field",
+        metavar="STRUCT:FIELD",
+        dest="union_fields",
+        action="append",
+        default=[],
+        help="Specify which field to use for a union. "
+        "Format: STRUCT_NAME:FIELD_NAME (e.g., MyUnion:int_value). "
+        "Can be specified multiple times for different unions.",
+    )
 
     args = parser.parse_args(flags)
     reg_vars = args.reg_vars.split(",") if args.reg_vars else []
@@ -593,14 +652,31 @@ def parse_flags(flags: List[str]) -> Options:
         except ValueError:
             functions.append(fn)
 
+    # Parse union field overrides
+    union_field_overrides: Dict[str, str] = {}
+    for override in args.union_fields:
+        parts = override.split(":", 1)
+        if len(parts) != 2:
+            print(
+                f"Error: Invalid union field override '{override}'. "
+                "Expected format: STRUCT_NAME:FIELD_NAME",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        struct_name, field_name = parts
+        union_field_overrides[struct_name] = field_name
+
     # The debug output interferes with the visualize output
     if args.visualize_flowgraph is not None:
         args.debug = False
+        args.debug_patterns = False
 
     return Options(
         filenames=args.filenames,
         function_indexes_or_names=functions,
         debug=args.debug,
+        debug_patterns=args.debug_patterns,
+        stacktrace=args.stacktrace,
         void=args.void,
         ifs=args.ifs,
         switch_detection=args.switch_detection,
@@ -626,10 +702,14 @@ def parse_flags(flags: List[str]) -> Options:
         target=args.target,
         print_stack_structs=args.print_stack_structs,
         unk_inference=args.unk_inference,
+        stack_spill_detection=args.stack_spill_detection,
         passes=args.passes,
         incbin_dirs=args.incbin_dirs,
         deterministic_vars=args.deterministic_vars,
+        descending_regs=args.descending_regs,
+        backwards_bss=args.backwards_bss,
         disable_gc=args.disable_gc,
+        union_field_overrides=union_field_overrides,
     )
 
 

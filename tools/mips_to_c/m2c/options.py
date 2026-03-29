@@ -5,6 +5,8 @@ import enum
 from pathlib import Path
 from typing import Dict, Iterator, List, Optional, Union
 
+from .error import static_assert_unreachable
+
 
 class ChoicesEnum(enum.Enum):
     """A helper class that is easier to use with argparse"""
@@ -33,9 +35,35 @@ class CodingStyle:
 
 @dataclass
 class Target:
+    class PlatformEnum(ChoicesEnum):
+        MIPS = "mips"
+        MIPSEL = "mipsel"
+        MIPSEE = "mipsee"
+        PPC = "ppc"
+        ARM = "arm"
+        GBA = "gba"
+
+        @property
+        def arch(self) -> Target.ArchEnum:
+            if self == Target.PlatformEnum.MIPS:
+                return Target.ArchEnum.MIPS
+            elif self == Target.PlatformEnum.MIPSEL:
+                return Target.ArchEnum.MIPS
+            elif self == Target.PlatformEnum.MIPSEE:
+                return Target.ArchEnum.MIPS
+            elif self == Target.PlatformEnum.PPC:
+                return Target.ArchEnum.PPC
+            elif self == Target.PlatformEnum.ARM:
+                return Target.ArchEnum.ARM
+            elif self == Target.PlatformEnum.GBA:
+                return Target.ArchEnum.ARM
+            else:
+                static_assert_unreachable(self)
+
     class ArchEnum(ChoicesEnum):
         MIPS = "mips"
         PPC = "ppc"
+        ARM = "arm"
 
     class EndianEnum(ChoicesEnum):
         LITTLE = "little"
@@ -50,6 +78,7 @@ class Target:
         C = "c"
         CXX = "c++"
 
+    platform: PlatformEnum
     arch: ArchEnum
     endian: EndianEnum
     compiler: CompilerEnum
@@ -61,23 +90,30 @@ class Target:
     @staticmethod
     def parse(name: str) -> Target:
         """
-        Parse an `arch-compiler-language` triple.
+        Parse an `platform-compiler-language` triple.
         If `-language` is missing, use the default for the compiler.
-        If `-compiler` is missing, use the default for the arch.
+        If `-compiler` is missing, use the default for the platform.
         (This makes `mips` an alias for `mips-ido-c`, etc.)
         """
         endian = Target.EndianEnum.BIG
         terms = name.split("-")
         try:
-            arch_name = terms[0]
-            if arch_name.endswith("el"):
-                arch_name = arch_name[:-2]
+            platform = Target.PlatformEnum(terms[0])
+            if platform in (
+                Target.PlatformEnum.MIPSEL,
+                Target.PlatformEnum.MIPSEE,
+                Target.PlatformEnum.ARM,
+                Target.PlatformEnum.GBA,
+            ):
                 endian = Target.EndianEnum.LITTLE
-            arch = Target.ArchEnum(arch_name)
+            arch = platform.arch
+
             if len(terms) >= 2:
                 compiler = Target.CompilerEnum(terms[1])
             elif arch == Target.ArchEnum.PPC:
                 compiler = Target.CompilerEnum.MWCC
+            elif arch == Target.ArchEnum.ARM:
+                compiler = Target.CompilerEnum.GCC
             else:
                 compiler = Target.CompilerEnum.IDO
 
@@ -91,6 +127,7 @@ class Target:
             raise ValueError(f"Unable to parse Target '{name}' ({e})")
 
         return Target(
+            platform=platform,
             arch=arch,
             endian=endian,
             compiler=compiler,
@@ -112,6 +149,8 @@ class Options:
     filenames: List[str]
     function_indexes_or_names: List[Union[int, str]]
     debug: bool
+    debug_patterns: bool
+    stacktrace: bool
     void: bool
     ifs: bool
     switch_detection: bool
@@ -137,10 +176,14 @@ class Options:
     target: Target
     print_stack_structs: bool
     unk_inference: bool
+    stack_spill_detection: bool
     passes: int
     incbin_dirs: List[Path]
     deterministic_vars: bool
+    descending_regs: bool
+    backwards_bss: bool
     disable_gc: bool
+    union_field_overrides: Dict[str, str]
 
     def formatter(self) -> Formatter:
         return Formatter(
@@ -149,6 +192,8 @@ class Options:
             zfill_constants=self.zfill_constants,
             force_decimal=self.force_decimal,
             valid_syntax=self.valid_syntax,
+            descending_regs=self.descending_regs,
+            backwards_bss=self.backwards_bss,
         )
 
 
@@ -176,6 +221,8 @@ class Formatter:
     line_length: int = 80
     zfill_constants: bool = False
     force_decimal: bool = False
+    descending_regs: bool = False
+    backwards_bss: bool = False
 
     def indent(self, line: str, indent: int = 0) -> str:
         return self.indent_step * max(indent + self.extra_indent, 0) + line
@@ -221,11 +268,21 @@ class Formatter:
         padding = ""
         if line:
             padding = max(1, self.coding_style.comment_column - len(base)) * " "
+        comment_str = "; ".join(comments)
         if self.coding_style.comment_style == CodingStyle.CommentStyle.ONELINE:
-            comment = f"// {'; '.join(comments)}"
+            start = "// "
+            mid = "// "
+            end = ""
         else:
-            comment = f"/* {'; '.join(comments)} */"
-        return f"{base}{padding}{comment}"
+            start = "/* "
+            mid = " * "
+            end = " */"
+        lines = comment_str.split("\n")
+        ret = f"{base}{padding}{start}{lines[0]}"
+        for cline in lines[1:]:
+            new_base = self.indent("", indent=indent) + " " * len(line)
+            ret += f"\n{new_base}{padding}{mid}{cline}"
+        return ret + end
 
     def format_hex(self, val: int) -> str:
         return format(val, "x").upper()

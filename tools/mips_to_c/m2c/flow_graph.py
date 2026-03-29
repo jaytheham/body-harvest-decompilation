@@ -1,11 +1,11 @@
 from __future__ import annotations
 import abc
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import dataclass, field, replace
 from typing import (
     Any,
     Callable,
-    Counter,
+    Counter as CounterPy38,
     DefaultDict,
     Dict,
     ItemsView,
@@ -19,7 +19,7 @@ from typing import (
 
 from .error import DecompFailure
 from .options import Formatter, Options, Target
-from .asm_file import AsmData, Function, Label
+from .asm_file import AsmData, AsmSymbolicData, Function, Label
 from .asm_instruction import (
     AsmAddressMode,
     AsmGlobalSymbol,
@@ -39,8 +39,7 @@ from .asm_pattern import simplify_patterns, AsmPattern
 class ArchFlowGraph(ArchAsm):
     asm_patterns: List[AsmPattern] = []
 
-    def simplify_ir(self, flow_graph: FlowGraph) -> None:
-        ...
+    def simplify_ir(self, flow_graph: FlowGraph) -> None: ...
 
 
 class Reference(abc.ABC):
@@ -373,8 +372,11 @@ def minimize_labels(function: Function, asm_data: AsmData) -> Function:
         if name in asm_data.mentioned_labels
     }
     for item in function.body:
-        if isinstance(item, Instruction) and isinstance(item.jump_target, JumpTarget):
-            labels_used.add(item.jump_target.target)
+        if isinstance(item, Instruction):
+            if isinstance(item.jump_target, JumpTarget):
+                labels_used.add(item.jump_target.target)
+            if isinstance(item.function_target, AsmGlobalSymbol):
+                labels_used.add(item.function_target.symbol_name)
 
     new_function = function.bodyless_copy()
     cur_label: List[str] = []
@@ -392,15 +394,24 @@ def minimize_labels(function: Function, asm_data: AsmData) -> Function:
     return new_function
 
 
-def simplify_standard_patterns(function: Function, arch: ArchFlowGraph) -> Function:
-    new_body = simplify_patterns(function.body, arch.asm_patterns, arch)
+def simplify_standard_patterns(
+    function: Function, asm_data: AsmData, arch: ArchFlowGraph, debug_patterns: bool
+) -> Function:
+    new_body = simplify_patterns(
+        function.body, arch.asm_patterns, asm_data, arch, debug_patterns=debug_patterns
+    )
     new_function = function.bodyless_copy()
     new_function.body.extend(new_body)
     return new_function
 
 
 def build_blocks(
-    function: Function, asm_data: AsmData, arch: ArchFlowGraph, *, fragment: bool
+    function: Function,
+    asm_data: AsmData,
+    arch: ArchFlowGraph,
+    *,
+    fragment: bool,
+    debug_patterns: bool,
 ) -> List[Block]:
     if arch.arch == Target.ArchEnum.MIPS:
         verify_no_trailing_delay_slot(function)
@@ -409,13 +420,15 @@ def build_blocks(
         function = normalize_ido_likely_branches(function, arch)
 
     function = minimize_labels(function, asm_data)
-    function = simplify_standard_patterns(function, arch)
+    function = simplify_standard_patterns(
+        function, asm_data, arch, debug_patterns=debug_patterns
+    )
     function = minimize_labels(function, asm_data)
 
     block_builder = BlockBuilder()
 
     body_iter: Iterator[Union[Instruction, Label]] = iter(function.body)
-    branch_likely_counts: Counter[str] = Counter()
+    branch_likely_counts: CounterPy38[str] = Counter()
     cond_return_target: Optional[str] = None
 
     def process_mips(item: Union[Instruction, Label]) -> None:
@@ -563,6 +576,13 @@ def build_blocks(
             block_builder.set_label(item)
             return
 
+        if item.is_conditional and isinstance(item.jump_target, list):
+            for i in range(len(item.jump_target)):
+                if item.jump_target[i] == JumpTarget("_m2c_ret"):
+                    if cond_return_target is None:
+                        cond_return_target = internal_label("conditionalreturn")
+                    item.jump_target[i] = JumpTarget(cond_return_target)
+
         if item.is_conditional and item.is_return:
             if cond_return_target is None:
                 cond_return_target = internal_label("conditionalreturn")
@@ -651,8 +671,7 @@ class BaseNode(_BaseNode, abc.ABC):
         return str(self.block.index)
 
     @abc.abstractmethod
-    def children(self) -> List[Node]:
-        ...
+    def children(self) -> List[Node]: ...
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__}: {self.name()}>"
@@ -796,6 +815,7 @@ class NaturalLoop:
 def build_graph_from_block(
     block: Block,
     blocks: List[Block],
+    parent_blocks: List[Block],
     nodes: List[Node],
     asm_data: AsmData,
     arch: ArchFlowGraph,
@@ -806,7 +826,7 @@ def build_graph_from_block(
             return node
 
     new_node: Node
-    dummy_node: Any = None
+    dummy_node: Node = None  # type: ignore
     terminal_node = nodes[0]
     assert isinstance(
         terminal_node, TerminalNode
@@ -830,7 +850,7 @@ def build_graph_from_block(
         # Recursively analyze.
         next_block = blocks[block.index + 1]
         new_node.successor = build_graph_from_block(
-            next_block, blocks, nodes, asm_data, arch
+            next_block, blocks, parent_blocks + [block], nodes, asm_data, arch
         )
     elif len(jumps) == 1:
         # There is a jump. This is either:
@@ -849,37 +869,74 @@ def build_graph_from_block(
             new_node = SwitchNode(block, False, [])
             nodes.append(new_node)
 
-            jtbl_names = []
-            for ins in block.instructions:
-                for arg in ins.args:
-                    if isinstance(arg, AsmAddressMode):
-                        arg = arg.lhs
-                    if (
-                        isinstance(arg, Macro)
-                        and arg.macro_name in ("lo", "l")
-                        and isinstance(arg.argument, AsmGlobalSymbol)
-                        and any(
-                            arg.argument.symbol_name.startswith(prefix)
-                            for prefix in ("jtbl", "jpt_", "lbl_")
-                        )
-                    ):
-                        jtbl_names.append(arg.argument.symbol_name)
-            if len(jtbl_names) != 1:
+            jtbl_names = set()
+            for jtbl_block in [block] + parent_blocks[::-1]:
+                for ins in jtbl_block.instructions:
+                    for arg in ins.args:
+                        if isinstance(arg, AsmAddressMode):
+                            arg = arg.addend
+                        if (
+                            isinstance(arg, Macro)
+                            and arg.macro_name in ("lo", "l")
+                            and isinstance(arg.argument, AsmGlobalSymbol)
+                            and any(
+                                arg.argument.symbol_name.startswith(prefix)
+                                for prefix in ("jtbl", "jpt_", "lbl_", "jumptable_")
+                            )
+                        ):
+                            jtbl_names.add(arg.argument.symbol_name)
+                        if (
+                            isinstance(arg, AsmGlobalSymbol)
+                            and ins.arch_mnemonic(arch) == "arm:ldr"
+                        ):
+                            sym_name = arg.symbol_name
+                            ent = asm_data.values.get(sym_name)
+                            if (
+                                ent is not None
+                                and ent.is_text
+                                and ent.data
+                                and isinstance(ent.data[0], AsmSymbolicData)
+                            ):
+                                jtbl_name = ent.data[0].as_symbol_without_addend()
+                                if jtbl_name is not None:
+                                    ent = asm_data.values.get(jtbl_name)
+                                    if (
+                                        ent is not None
+                                        and ent.is_text
+                                        and ent.data
+                                        and isinstance(ent.data[0], AsmSymbolicData)
+                                        and ent.data[0].as_symbol_without_addend()
+                                        is not None
+                                    ):
+                                        jtbl_names.add(jtbl_name)
+
+                if jtbl_names:
+                    break
+            if len(jtbl_names) > 1:
                 raise DecompFailure(
                     f"Unable to determine jump table for {jump.mnemonic} instruction {jump.meta.loc_str()}.\n\n"
-                    "There must be a read of a variable in the same block as\n"
-                    'the instruction, which has a name starting with "jtbl"/"jpt_"/"lbl_".'
+                    f"Found multiple candidates: {', '.join(sorted(jtbl_names))}\n"
+                    "You can help m2c's analysis by putting a copy of the jump table\n"
+                    "setup instructions within the same block as the jump instruction."
+                )
+            if not jtbl_names:
+                help_text = ""
+                if arch.arch != Target.ArchEnum.ARM:
+                    help_text = (
+                        "\n\nThere must be a read of a variable before the instruction\n"
+                        'which has a name starting with with "jtbl"/"jpt_"/"lbl_"/"jumptable_".'
+                    )
+                raise DecompFailure(
+                    f"Unable to determine jump table for {jump.mnemonic} instruction {jump.meta.loc_str()}.{help_text}"
                 )
 
-            jtbl_name = jtbl_names[0]
+            jtbl_name = list(jtbl_names)[0]
             if jtbl_name not in asm_data.values:
                 raise DecompFailure(
                     f"Found {jump.mnemonic} instruction {jump.meta.loc_str()}, but the "
                     "corresponding jump table is not provided.\n"
                     "\n"
                     "Please include it in the input .s file(s), or in an additional file.\n"
-                    'It needs to be within a data section (e.g. ".section .rodata", or\n'
-                    ".late_rodata/.data/.sdata/.sdata2).\n"
                 )
 
             jtbl_value = asm_data.values[jtbl_name]
@@ -888,11 +945,28 @@ def build_graph_from_block(
                 if isinstance(entry, bytes):
                     # We have entered padding, stop reading.
                     break
-                case_block = find_block_by_label(entry)
+                sym = entry.as_symbol_without_addend()
+                if sym is None:
+                    # Also possibly padding
+                    break
+                case_block = find_block_by_label(sym)
                 if case_block is None:
-                    raise DecompFailure(f"Cannot find jtbl target {entry}")
+                    raise DecompFailure(f"Cannot find jtbl target {sym}")
                 case_node = build_graph_from_block(
-                    case_block, blocks, nodes, asm_data, arch
+                    case_block, blocks, parent_blocks + [block], nodes, asm_data, arch
+                )
+                new_node.cases.append(case_node)
+            return new_node
+
+        if isinstance(jump.jump_target, list):
+            new_node = SwitchNode(block, False, [])
+            nodes.append(new_node)
+            for jump_target in jump.jump_target:
+                case_block = find_block_by_label(jump_target.target)
+                if case_block is None:
+                    raise DecompFailure(f"Cannot find jtbl target {jump_target}")
+                case_node = build_graph_from_block(
+                    case_block, blocks, parent_blocks + [block], nodes, asm_data, arch
                 )
                 new_node.cases.append(case_node)
             return new_node
@@ -913,7 +987,7 @@ def build_graph_from_block(
             nodes.append(new_node)
             # Recursively analyze.
             new_node.successor = build_graph_from_block(
-                branch_block, blocks, nodes, asm_data, arch
+                branch_block, blocks, parent_blocks + [block], nodes, asm_data, arch
             )
         else:
             # A conditional branch means the fallthrough block is the next
@@ -923,10 +997,10 @@ def build_graph_from_block(
             # Recursively analyze this too.
             next_block = blocks[block.index + 1]
             new_node.conditional_edge = build_graph_from_block(
-                branch_block, blocks, nodes, asm_data, arch
+                branch_block, blocks, parent_blocks + [block], nodes, asm_data, arch
             )
             new_node.fallthrough_edge = build_graph_from_block(
-                next_block, blocks, nodes, asm_data, arch
+                next_block, blocks, parent_blocks + [block], nodes, asm_data, arch
             )
     return new_node
 
@@ -974,7 +1048,7 @@ def build_nodes(
 
     # Traverse through the block tree.
     entry_block = blocks[0]
-    build_graph_from_block(entry_block, blocks, graph, asm_data, arch)
+    build_graph_from_block(entry_block, blocks, [], graph, asm_data, arch)
 
     # Give the TerminalNode a new index so that it sorts to the end of the list
     assert [n for n in graph if isinstance(n, TerminalNode)] == [terminal_node]
@@ -985,12 +1059,16 @@ def build_nodes(
     return graph
 
 
-def warn_on_safeguard_use(nodes: List[Node], arch: ArchFlowGraph) -> None:
+def warn_on_safeguard_use(
+    function: Function, nodes: List[Node], arch: ArchFlowGraph
+) -> None:
     node = next((node for node in nodes if node.block.is_safeguard), None)
     if node:
         label = node.block.approx_label_name
         return_instrs = arch.missing_return()
-        print(f'Warning: missing "{return_instrs[0]}" in last block ({label}).\n')
+        print(
+            f'Warning: missing "{return_instrs[0]}" in last block of {function.name} ({label}).\n'
+        )
 
 
 def is_premature_return(
@@ -1333,8 +1411,8 @@ class FlowGraph:
 
         # Kahn's Algorithm, with backedges excluded
         # https://en.wikipedia.org/wiki/Topological_sorting#Kahn's_algorithm
-        seen = set()
-        queue = {self.entry_node()}
+        seen: Set[Node] = set()
+        queue: Set[Node] = {self.entry_node()}
         incoming_edges: Dict[Node, Set[Node]] = {
             n: set(n.parents) - (n.loop.backedges if n.loop else set())
             for n in self.nodes
@@ -1360,8 +1438,8 @@ class FlowGraph:
         # Traverse the graph again, but starting at the terminal and following
         # all edges backwards, to ensure that it is possible to reach the exit
         # from every node. We don't need to look for loops this time.
-        seen = set()
-        queue = {self.terminal_node()}
+        seen: Set[Node] = set()
+        queue: Set[Node] = {self.terminal_node()}
         while queue:
             n = queue.pop()
             seen.add(n)
@@ -1564,17 +1642,20 @@ def build_flowgraph(
     *,
     fragment: bool,
     print_warnings: bool = False,
+    debug_patterns: bool = False,
 ) -> FlowGraph:
     """
     Build the FlowGraph for the given Function.
     If `fragment` is True, do not treat the asm as a full function: this is used
     for analyzing IR patterns which do not need to be normalized in the same way.
     """
-    blocks = build_blocks(function, asm_data, arch, fragment=fragment)
+    blocks = build_blocks(
+        function, asm_data, arch, fragment=fragment, debug_patterns=debug_patterns
+    )
     verify_no_duplicate_instructions(blocks)
 
     nodes = build_nodes(function, blocks, asm_data, arch, fragment=fragment)
-    warn_on_safeguard_use(nodes, arch)
+    warn_on_safeguard_use(function, nodes, arch)
     if not fragment:
         nodes = duplicate_premature_returns(nodes, arch)
 
@@ -1589,82 +1670,3 @@ def build_flowgraph(
         arch.simplify_ir(flow_graph)
 
     return flow_graph
-
-
-def visualize_flowgraph(
-    flow_graph: FlowGraph, viz_type: Options.VisualizeTypeEnum
-) -> str:
-    import graphviz as g
-
-    fmt = Formatter(debug=True)
-    dot = g.Digraph(
-        node_attr={
-            "shape": "rect",
-            "fontname": "Monospace",
-        },
-        edge_attr={
-            "fontname": "Monospace",
-        },
-    )
-
-    for node in flow_graph.nodes:
-        block_info: Optional[Any] = node.block.block_info
-        asm_label = ""
-        c_label = ""
-
-        # In Graphviz, "\l" makes the preceeding text left-aligned, and inserts a newline
-        if block_info:
-            asm_label = "".join(
-                f"{'*' if i.meta.synthetic else '&nbsp;'} {i}\l"
-                for i in node.block.instructions
-            )
-            c_label = "".join(
-                w.format(fmt) + "\l" for w in block_info.to_write if w.should_write()
-            )
-
-        dot.node(node.name())
-        if isinstance(node, BasicNode):
-            dot.edge(node.name(), node.successor.name(), color="black")
-        elif isinstance(node, ConditionalNode):
-            if block_info:
-                c_label += f"if ({block_info.branch_condition.format(fmt)})\l"
-            dot.edge(node.name(), node.fallthrough_edge.name(), label="F", color="blue")
-            dot.edge(node.name(), node.conditional_edge.name(), label="T", color="red")
-        elif isinstance(node, ReturnNode):
-            if block_info and block_info.return_value:
-                c_label += f"return ({block_info.return_value.format(fmt)});\l"
-            else:
-                c_label += "return;\l"
-            dot.edge(node.name(), node.terminal.name())
-        elif isinstance(node, SwitchNode):
-            assert block_info is not None
-            switch_control = block_info.switch_control
-            c_label += f"switch ({switch_control.control_expr.format(fmt)})\l"
-            for i, case in enumerate(node.cases):
-                dot.edge(
-                    node.name(),
-                    case.name(),
-                    label=str(i + switch_control.offset),
-                    color="green",
-                )
-        else:
-            assert isinstance(node, TerminalNode)
-            asm_label += "// exit\l"
-            c_label += "// exit\l"
-
-        line_label = ""
-        first_instr = next(node.block.instructions, None)
-        if first_instr is not None and first_instr.meta.lineno > 0:
-            line_label = f" (line {first_instr.meta.lineno})"
-
-        label = f"// Node {node.name()}{line_label}\l"
-        if viz_type == Options.VisualizeTypeEnum.ASM:
-            label += asm_label
-        elif viz_type == Options.VisualizeTypeEnum.C:
-            label += c_label
-        else:
-            raise ValueError("Invalid viz_type: {viz_type!r}")
-
-        dot.node(node.name(), label=label)
-    svg_bytes: bytes = dot.pipe("svg")
-    return svg_bytes.decode("utf-8", "replace")

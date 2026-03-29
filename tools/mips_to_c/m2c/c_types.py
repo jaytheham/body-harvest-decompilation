@@ -2,6 +2,7 @@
 based on a C AST. Based on the pycparser library."""
 
 from __future__ import annotations
+import abc
 import copy
 import functools
 import hashlib
@@ -22,18 +23,24 @@ from typing import (
     cast,
 )
 
-from pycparser import c_ast as ca
-from pycparser.c_ast import ArrayDecl, FuncDecl, IdentifierType, PtrDecl, TypeDecl
-from pycparser.c_generator import CGenerator
-from pycparser.c_parser import CParser
-from pycparser.plyparser import ParseError
+from m2c_pycparser import c_ast as ca
+from m2c_pycparser.c_ast import ArrayDecl, FuncDecl, IdentifierType, PtrDecl, TypeDecl
+from m2c_pycparser.c_generator import CGenerator
+from m2c_pycparser.c_parser import CParser
+from m2c_pycparser.plyparser import ParseError
 
 from .error import DecompFailure
 
 CType = Union[PtrDecl, ArrayDecl, TypeDecl, FuncDecl]
 StructUnion = Union[ca.Struct, ca.Union]
 SimpleType = Union[PtrDecl, TypeDecl]
-CParserScope = Dict[str, bool]
+CParserScope = Optional[Dict[str, bool]]
+
+
+class ArchC(abc.ABC):
+    """Arch-specific information needed to extract types from C."""
+
+    base_struct_align: int = 1
 
 
 @dataclass
@@ -44,10 +51,16 @@ class StructField:
 
 
 @dataclass
+class BitField:
+    width: int
+    name: str
+
+
+@dataclass
 class Struct:
     type: CType
     fields: Dict[int, List[StructField]]
-    # TODO: bitfields
+    bitfields: Dict[int, List[BitField]]
     has_bitfields: bool
     size: int
     align: int
@@ -87,12 +100,14 @@ class Enum:
 @dataclass(eq=False)
 class TypeMap:
     # Change VERSION if TypeMap changes to invalidate all preexisting caches
-    VERSION: ClassVar[int] = 4
+    VERSION: ClassVar[int] = 10
 
-    cparser_scope: CParserScope = field(default_factory=dict)
-    source_hash: Optional[str] = None
+    source_hash: str
+    base_struct_align: int
 
-    typedefs: Dict[str, CType] = field(default_factory=dict)
+    cparser_scope: CParserScope = None
+
+    typedefs: Dict[str, Tuple[CType, int]] = field(default_factory=dict)
     var_types: Dict[str, CType] = field(default_factory=dict)
     vars_with_initializers: Set[str] = field(default_factory=set)
     functions: Dict[str, Function] = field(default_factory=dict)
@@ -100,6 +115,7 @@ class TypeMap:
     struct_typedefs: Dict[Union[str, StructUnion], TypeDecl] = field(
         default_factory=dict
     )
+    pragma_packs: Dict[StructUnion, int] = field(default_factory=dict)
     enums: Dict[Union[str, ca.Enum], Enum] = field(default_factory=dict)
     enum_values: Dict[str, int] = field(default_factory=dict)
 
@@ -117,15 +133,72 @@ def pointer(type: CType) -> CType:
     return PtrDecl(quals=[], type=type)
 
 
-def resolve_typedefs(type: CType, typemap: TypeMap) -> CType:
-    while (
-        isinstance(type, TypeDecl)
-        and isinstance(type.type, IdentifierType)
-        and len(type.type.names) == 1
-        and type.type.names[0] in typemap.typedefs
-    ):
-        type = typemap.typedefs[type.type.names[0]]
-    return type
+def get_align_override(
+    decl: Union[ca.Decl, ca.Typedef, ca.Typename, ca.Struct, ca.Union],
+    typemap: TypeMap,
+) -> int:
+    aligns = []
+    for attr in decl.gcc_attributes:
+        if attr.name == "aligned":
+            if not attr.args:
+                align_to = 0x10
+            else:
+                align_to = parse_constant_int(attr.args[0], typemap)
+            aligns.append(align_to)
+    if isinstance(decl, ca.Decl):
+        for alignas in decl.align:
+            if isinstance(alignas.alignment, ca.Typename):
+                _, tp_align, _ = parse_struct_member(
+                    alignas.alignment.type,
+                    "referenced in _Alignas",
+                    typemap,
+                    allow_unsized=False,
+                )
+                align_to = get_align_override(alignas.alignment, typemap) or tp_align
+            else:
+                align_to = parse_constant_int(alignas.alignment, typemap)
+            aligns.append(align_to)
+
+    align = 0
+    for align_to in aligns:
+        if align_to <= 0 or (align_to & (align_to - 1)) != 0:
+            raise DecompFailure(f"Alignment {align_to} is not a power of two")
+        align = max(align, align_to)
+    return align
+
+
+def has_128bit_attr(attrs: List[ca.GccAttribute]) -> bool:
+    return any(
+        attr.name == "mode"
+        and attr.args
+        and isinstance(attr.args[0], ca.ID)
+        and attr.args[0].name == "TI"
+        for attr in attrs
+    )
+
+
+def resolve_typedefs(type: CType, typemap: TypeMap) -> Tuple[CType, int]:
+    if isinstance(type, TypeDecl):
+        if (
+            isinstance(type.type, IdentifierType)
+            and len(type.type.names) == 1
+            and type.type.names[0] in typemap.typedefs
+        ):
+            type, align_override = typemap.typedefs[type.type.names[0]]
+            type, base_align_override = resolve_typedefs(type, typemap)
+            return type, align_override or base_align_override
+        if isinstance(type.type, ca.Typeof):
+            typeof = type.type
+            if isinstance(typeof.expr, ca.Typename):
+                type = typeof.expr.type
+                return type, get_align_override(typeof.expr, typemap)
+            else:
+                expr = typeof.expr
+                if isinstance(expr, ca.UnaryOp) and expr.op == "sizeof":
+                    size_t = ca.IdentifierType(names=["unsigned", "int"])
+                    return TypeDecl(declname=None, quals=[], type=size_t, align=[]), 0
+                raise DecompFailure("typeof() is not supported")
+    return type, 0
 
 
 def type_of_var_decl(decl: ca.Decl) -> CType:
@@ -146,7 +219,11 @@ def type_from_global_decl(decl: ca.Decl) -> CType:
         param.name = None
         set_decl_name(param)
         return ca.Typename(
-            name=None, quals=param.quals, type=type_of_var_decl(param), align=[]
+            name=None,
+            quals=param.quals,
+            type=type_of_var_decl(param),
+            align=None,
+            gcc_attributes=[],
         )
 
     new_params: List[Union[ca.Decl, ca.ID, ca.Typename, ca.EllipsisParam]] = [
@@ -172,6 +249,8 @@ def primitive_size(type: Union[ca.Enum, ca.IdentifierType]) -> int:
         return 8
     if "float" in names:
         return 4
+    if "__int128" in names:
+        return 16
     if "short" in names:
         return 2
     if "char" in names:
@@ -197,31 +276,6 @@ def primitive_range(type: Union[ca.Enum, ca.IdentifierType]) -> Optional[range]:
         return range(-(2**bits), 2**bits)
     else:
         return range(0, 2**bits)
-
-
-def function_arg_size_align(type: CType, typemap: TypeMap) -> Tuple[int, int]:
-    type = resolve_typedefs(type, typemap)
-    if isinstance(type, PtrDecl) or isinstance(type, ArrayDecl):
-        return 4, 4
-    assert not isinstance(type, FuncDecl), "Function argument can not be a function"
-    inner_type = type.type
-    if isinstance(inner_type, (ca.Struct, ca.Union)):
-        struct = get_struct(inner_type, typemap)
-        assert (
-            struct is not None
-        ), "Function argument can not be of an incomplete struct"
-        return struct.size, struct.align
-    size = primitive_size(inner_type)
-    if size == 0:
-        raise DecompFailure("Function parameter has void type")
-    return size, size
-
-
-def is_struct_type(type: CType, typemap: TypeMap) -> bool:
-    type = resolve_typedefs(type, typemap)
-    if not isinstance(type, TypeDecl):
-        return False
-    return isinstance(type.type, (ca.Struct, ca.Union))
 
 
 def is_unk_type(type: CType, typemap: TypeMap) -> bool:
@@ -250,7 +304,7 @@ def is_unk_type(type: CType, typemap: TypeMap) -> bool:
             type_name = type.type.names[0]
             if type_name.startswith("UNK_") or type_name.startswith("M2C_UNK"):
                 return True
-            type = typemap.typedefs[type_name]
+            type, _ = typemap.typedefs[type_name]
         elif isinstance(type, (PtrDecl, ArrayDecl)):
             type = type.type
         else:
@@ -357,10 +411,14 @@ def parse_constant_int(expr: "ca.Expression", typemap: TypeMap) -> int:
     if isinstance(expr, ca.TernaryOp):
         cond = parse_constant_int(expr.cond, typemap) != 0
         return parse_constant_int(expr.iftrue if cond else expr.iffalse, typemap)
-    if isinstance(expr, ca.ExprList) and not isinstance(expr.exprs[-1], ca.Typename):
-        return parse_constant_int(expr.exprs[-1], typemap)
+    if isinstance(expr, ca.ExprList):
+        last_expr = expr.exprs[-1]
+        if not isinstance(last_expr, ca.Typename):
+            return parse_constant_int(last_expr, typemap)
     if isinstance(expr, ca.UnaryOp) and not isinstance(expr.expr, ca.Typename):
         sub = parse_constant_int(expr.expr, typemap)
+        if expr.op == "+":
+            return sub
         if expr.op == "-":
             return -sub
         if expr.op == "~":
@@ -374,10 +432,10 @@ def parse_constant_int(expr: "ca.Expression", typemap: TypeMap) -> int:
         if expr.op == "sizeof":
             return size
         if expr.op == "_Alignof":
-            return align
+            return get_align_override(expr.expr, typemap) or align
     if isinstance(expr, ca.Cast):
         value = parse_constant_int(expr.expr, typemap)
-        type = resolve_typedefs(expr.to_type.type, typemap)
+        type, _ = resolve_typedefs(expr.to_type.type, typemap)
         if isinstance(type, ca.TypeDecl) and isinstance(
             type.type, (ca.Enum, ca.IdentifierType)
         ):
@@ -446,44 +504,50 @@ def parse_struct(struct: Union[ca.Struct, ca.Union], typemap: TypeMap) -> Struct
 def parse_struct_member(
     type: CType, field_name: str, typemap: TypeMap, *, allow_unsized: bool
 ) -> Tuple[int, int, DetailedStructMember]:
-    type = resolve_typedefs(type, typemap)
+    type, align_override = resolve_typedefs(type, typemap)
     if isinstance(type, PtrDecl):
-        return 4, 4, None
+        return 4, align_override or 4, None
     if isinstance(type, ArrayDecl):
-        if type.dim is None:
-            raise DecompFailure(f"Array field {field_name} must have a size")
-        dim = parse_constant_int(type.dim, typemap)
+        if type.dim is not None:
+            dim = parse_constant_int(type.dim, typemap)
+        else:
+            # We don't deal very well with flexible array members at the moment,
+            # but let's at least parse them. This mirrors logic in Type.ctype.
+            dim = 1
         size, align, substr = parse_struct_member(
             type.type, field_name, typemap, allow_unsized=False
         )
-        return size * dim, align, Array(substr, type.type, size, dim)
+        return size * dim, align_override or align, Array(substr, type.type, size, dim)
     if isinstance(type, FuncDecl):
         assert allow_unsized, "Struct can not contain a function"
         return 0, 0, None
     inner_type = type.type
     if isinstance(inner_type, (ca.Struct, ca.Union)):
         substr = parse_struct(inner_type, typemap)
-        return substr.size, substr.align, substr
+        return substr.size, align_override or substr.align, substr
     if isinstance(inner_type, ca.Enum):
         parse_enum(inner_type, typemap)
+    assert not isinstance(inner_type, ca.Typeof), "handled by resolve_typedefs"
     # Otherwise it has to be of type Enum or IdentifierType
     size = primitive_size(inner_type)
     if size == 0 and not allow_unsized:
         raise DecompFailure(f"Field {field_name} cannot be void")
-    return size, size, None
+    return size, align_override or size, None
 
 
 def do_parse_struct(struct: Union[ca.Struct, ca.Union], typemap: TypeMap) -> Struct:
     is_union = isinstance(struct, ca.Union)
     assert struct.decls is not None, "enforced by caller"
-    assert struct.decls, "Empty structs are not valid C"
 
     fields: Dict[int, List[StructField]] = defaultdict(list)
+    bitfields: Dict[int, List[BitField]] = defaultdict(list)
     union_size = 0
-    align = 1
     offset = 0
     bit_offset = 0
     has_bitfields = False
+    align = get_align_override(struct, typemap) or typemap.base_struct_align
+    pack_struct = any(attr.name == "packed" for attr in struct.gcc_attributes)
+    pragma_pack = typemap.pragma_packs.get(struct, 0)
 
     def flush_bitfields() -> None:
         nonlocal offset, bit_offset
@@ -492,15 +556,26 @@ def do_parse_struct(struct: Union[ca.Struct, ca.Union], typemap: TypeMap) -> Str
             offset += 1
 
     for decl in struct.decls:
+        if is_union:
+            assert offset == 0
+
         if not isinstance(decl, ca.Decl):
             # Ignore pragmas
             continue
+
+        if pack_struct or any(attr.name == "packed" for attr in decl.gcc_attributes):
+            pack_decl = get_align_override(decl, typemap) or 1
+        else:
+            pack_decl = 0
+        if pragma_pack and (not pack_decl or pack_decl > pragma_pack):
+            pack_decl = pragma_pack
 
         type = decl.type
         if isinstance(type, (ca.Struct, ca.Union)):
             if type.decls is None:
                 continue
             substruct = parse_struct(type, typemap)
+            subalign = pack_decl or get_align_override(decl, typemap) or substruct.align
             if type.name is not None:
                 # Struct defined within another, which is silly but valid C.
                 # parse_struct already makes sure it gets defined in the global
@@ -509,8 +584,8 @@ def do_parse_struct(struct: Union[ca.Struct, ca.Union], typemap: TypeMap) -> Str
             else:
                 # C extension: anonymous struct/union, whose members are flattened
                 flush_bitfields()
-                align = max(align, substruct.align)
-                offset = (offset + substruct.align - 1) & -substruct.align
+                align = max(align, subalign)
+                offset = (offset + subalign - 1) & -subalign
                 for off, sfields in substruct.fields.items():
                     for field in sfields:
                         fields[offset + off].append(field)
@@ -539,19 +614,28 @@ def do_parse_struct(struct: Union[ca.Struct, ca.Union], typemap: TypeMap) -> Str
             ssize, salign, substr = parse_struct_member(
                 type, field_name, typemap, allow_unsized=False
             )
+            if ssize != salign or substr is not None:
+                raise DecompFailure(f"Bitfield {field_name} is not of primitive type")
+            if get_align_override(decl, typemap):
+                raise DecompFailure(
+                    f"Alignment directive not supported for bitfield {field_name}"
+                )
             align = max(align, salign)
             if width == 0:
                 continue
-            if ssize != salign or substr is not None:
-                raise DecompFailure(f"Bitfield {field_name} is not of primitive type")
             if width > ssize * 8:
                 raise DecompFailure(f"Width of bitfield {field_name} exceeds its type")
+            if (
+                offset // ssize != (offset + (bit_offset + width - 1) // 8) // ssize
+                and not pack_decl
+            ):
+                bit_offset = 0
+                offset = (offset + ssize) & -ssize
+            if decl.name is not None:
+                bitfields[offset * 8 + bit_offset].append(BitField(width, decl.name))
             if is_union:
                 union_size = max(union_size, ssize)
             else:
-                if offset // ssize != (offset + (bit_offset + width - 1) // 8) // ssize:
-                    bit_offset = 0
-                    offset = (offset + ssize) & -ssize
                 bit_offset += width
                 offset += bit_offset // 8
                 bit_offset &= 7
@@ -564,6 +648,7 @@ def do_parse_struct(struct: Union[ca.Struct, ca.Union], typemap: TypeMap) -> Str
         ssize, salign, substr = parse_struct_member(
             type, field_name, typemap, allow_unsized=False
         )
+        salign = pack_decl or max(salign, get_align_override(decl, typemap))
         align = max(align, salign)
         offset = (offset + salign - 1) & -salign
         fields[offset].append(
@@ -591,7 +676,12 @@ def do_parse_struct(struct: Union[ca.Struct, ca.Union], typemap: TypeMap) -> Str
     size = union_size if is_union else offset
     size = (size + align - 1) & -align
     return Struct(
-        type=ctype, fields=fields, has_bitfields=has_bitfields, size=size, align=align
+        type=ctype,
+        fields=dict(fields),
+        bitfields=dict(bitfields),
+        has_bitfields=has_bitfields,
+        size=size,
+        align=align,
     )
 
 
@@ -630,6 +720,25 @@ def strip_comments(text: str) -> str:
     return re.sub(pattern, replacer, text)
 
 
+def process_ifdef(text: str) -> str:
+    pattern = re.compile(
+        r"^[ \t]*#if(?P<neg>n?)def[ \t]+M2C\s+"
+        r"(?P<if_body>.*?)"
+        r"(?:^[ \t]*#else\s+(?P<else_body>.*?))?"
+        r"^[ \t]*#endif.*?$",
+        flags=re.DOTALL | re.MULTILINE,
+    )
+
+    def repl(m: Match[str]) -> str:
+        if m.group("neg") == "n":
+            ret = m.group("else_body") or ""
+        else:
+            ret = m.group("if_body")
+        return ret + "\n" * (m.group(0).count("\n") - ret.count("\n"))
+
+    return re.sub(pattern, repl, text)
+
+
 def strip_macro_defs(text: str) -> str:
     """Strip macro definitions from C source. m2c does not run the preprocessor,
     for a bunch of reasons:
@@ -647,8 +756,41 @@ def strip_macro_defs(text: str) -> str:
 
     Under the optimistic assumption that the macros aren't necessary for parsing the
     context file itself, we strip all macro definitions before parsing."""
-    pattern = re.compile(r"^[ \t]*#[ \t]*define[ \t](\\\n|.)*", flags=re.MULTILINE)
+    pattern = re.compile(
+        r"^[ \t]*#[ \t]*(?:define|undef)[ \t](\\\n|.)*", flags=re.MULTILINE
+    )
     return re.sub(pattern, lambda m: m.group(0).count("\n") * "\n", text)
+
+
+def remove_backslashes_at_eol(text: str) -> str:
+    string_pat = re.compile(r'\'(?:\\.|[^\\\'])*\'?|"(?:\\.|[^\\"])*"?')
+    continued_string_start_ind = -1
+    continued_string_delim = ""
+
+    def replacer(match: Match[str]) -> str:
+        # Check if the backslash appeared within a string. If so, we need to
+        # end the string and restart it at the next line.
+        nonlocal continued_string_start_ind
+        nonlocal continued_string_delim
+        ind = match.start()
+        line_start = text.rfind("\n", 0, ind) + 1
+        prev_line = text[line_start:ind]
+        if line_start == continued_string_start_ind:
+            prev_line = continued_string_delim + prev_line
+
+        strings: List[str] = string_pat.findall(prev_line + "$")
+        if strings and strings[-1][-1] == "$":
+            delim = strings[-1][0]
+            continued_string_start_ind = ind + 2
+            continued_string_delim = delim
+            if delim == "'":
+                return ""
+            return delim + "\n" + delim
+        else:
+            continued_string_start_ind = -1
+            return "\n"
+
+    return re.sub(r"\\\n", replacer, text, flags=re.MULTILINE)
 
 
 def parse_c(
@@ -660,39 +802,39 @@ def parse_c(
     c_parser = CParser()
     c_parser.clex.filename = "<source>"
     c_parser.clex.reset_lineno()
-    c_parser._scope_stack = [initial_scope.copy()]
+    if initial_scope is not None:
+        c_parser._scope_stack = [initial_scope.copy()]
     c_parser._last_yielded_token = None
     try:
         ast = c_parser.cparser.parse(input=source, lexer=c_parser.clex)
     except ParseError as e:
         msg = str(e)
-        position, msg = msg.split(": ", 1)
-        parts = position.split(":")
-        if len(parts) >= 2:
-            # Adjust the line number by 1 to correct for the added typedefs
-            lineno = int(parts[1]) - 1
-            posstr = f" at line {lineno}"
-            if len(parts) >= 3:
-                posstr += f", column {parts[2]}"
-            try:
-                line = source.split("\n")[lineno].rstrip()
-                posstr += "\n\n" + line
-            except IndexError:
-                posstr += "(out of bounds?)"
+        coord = e.args[1]
+        _, msg = msg.split(": ", 1)
+        if isinstance(coord, str):
+            # Error at end of input
+            posstr = " " + coord[0].lower() + coord[1:]
         else:
-            posstr = ""
+            # Adjust the line number by 1 to correct for the added typedefs
+            source = coord.source_line()
+            posstr = f" at line {coord.line - 1}, column {coord.column}\n\n{source}"
         raise DecompFailure(f"Syntax error when parsing C context.\n{msg}{posstr}")
     return ast, c_parser._scope_stack[0].copy()
 
 
-def build_typemap(source_paths: List[Path], use_cache: bool) -> TypeMap:
+def build_typemap(source_paths: List[Path], arch: ArchC, use_cache: bool) -> TypeMap:
     # Wrapper to convert `source_paths` into a hashable type
-    return _build_typemap(tuple(source_paths), use_cache)
+    return _build_typemap(tuple(source_paths), arch, use_cache)
 
 
 @functools.lru_cache(maxsize=16)
-def _build_typemap(source_paths: Tuple[Path, ...], use_cache: bool) -> TypeMap:
-    typemap = TypeMap()
+def _build_typemap(
+    source_paths: Tuple[Path, ...], arch: ArchC, use_cache: bool
+) -> TypeMap:
+    typemap = TypeMap(
+        source_hash=f"root:{TypeMap.VERSION},{arch.base_struct_align}",
+        base_struct_align=arch.base_struct_align,
+    )
 
     for source_path in source_paths:
         source = source_path.read_text(encoding="utf-8-sig")
@@ -702,7 +844,6 @@ def _build_typemap(source_paths: Tuple[Path, ...], use_cache: bool) -> TypeMap:
         # secure, caching should only be enabled in trusted environments. (Unpickling files
         # can lead to arbitrary code execution.)
         hasher = hashlib.sha256()
-        hasher.update(f"version={TypeMap.VERSION}\n".encode("utf-8"))
         hasher.update(f"parent={typemap.source_hash}\n".encode("utf-8"))
         hasher.update(source.encode("utf-8"))
         source_hash = hasher.hexdigest()
@@ -713,9 +854,10 @@ def _build_typemap(source_paths: Tuple[Path, ...], use_cache: bool) -> TypeMap:
                 with cache_path.open("rb") as f:
                     cache = cast(TypeMap, pickle.load(f))
             except Exception as e:
-                print(
-                    f"Warning: Unable to read cache file {cache_path}, skipping ({e})"
-                )
+                # Class structure changes generally cause cache invalidation via
+                # TypeMap.VERSION being different, but in some cases it can also
+                # cause unpickling to fail, e.g. if classes have been removed.
+                pass
             else:
                 if cache.source_hash == source_hash:
                     typemap = cache
@@ -723,7 +865,9 @@ def _build_typemap(source_paths: Tuple[Path, ...], use_cache: bool) -> TypeMap:
 
         source = add_builtin_typedefs(source)
         source = strip_comments(source)
+        source = process_ifdef(source)
         source = strip_macro_defs(source)
+        source = remove_backslashes_at_eol(source)
 
         ast, result_scope = parse_c(source, typemap.cparser_scope)
         typemap.cparser_scope = result_scope
@@ -731,9 +875,20 @@ def _build_typemap(source_paths: Tuple[Path, ...], use_cache: bool) -> TypeMap:
 
         for item in ast.ext:
             if isinstance(item, ca.Typedef):
-                typemap.typedefs[item.name] = resolve_typedefs(item.type, typemap)
-                if isinstance(item.type, TypeDecl) and isinstance(
-                    item.type.type, (ca.Struct, ca.Union)
+                target, align = resolve_typedefs(item.type, typemap)
+                align = get_align_override(item, typemap) or align
+                if (
+                    has_128bit_attr(item.gcc_attributes)
+                    and isinstance(target, TypeDecl)
+                    and isinstance(target.type, ca.IdentifierType)
+                ):
+                    sign = ["unsigned"] if "unsigned" in target.type.names else []
+                    target = basic_type(sign + ["__int128"])
+                typemap.typedefs[item.name] = target, align
+                if (
+                    isinstance(item.type, TypeDecl)
+                    and isinstance(item.type.type, (ca.Struct, ca.Union))
+                    and not get_align_override(item, typemap)
                 ):
                     typedef = basic_type([item.name])
                     if item.type.type.name:
@@ -750,29 +905,56 @@ def _build_typemap(source_paths: Tuple[Path, ...], use_cache: bool) -> TypeMap:
                 assert fn is not None
                 typemap.functions[item.name] = fn
 
+        cur_pack = 0
+        pack_stack: List[int] = []
+
         class Visitor(ca.NodeVisitor):
-            def visit_Struct(self, struct: ca.Struct) -> None:
-                if struct.decls is not None:
-                    parse_struct(struct, typemap)
+            def visit_Pragma(self, node: ca.Pragma) -> None:
+                nonlocal cur_pack
+                # Handle "#pragma pack". This only covers top-level structs, but
+                # we don't care enough about nested ones to pay the performance
+                # cost of doing another visitor traversal.
+                parts = node.string.split("(")
+                if len(parts) >= 2 and parts[0].strip() == "pack":
+                    args = parts[1].split(")")[0].split(",")
+                    arg = args[0].strip()
+                    if not arg:
+                        cur_pack = 0
+                    elif args[0].strip() == "pop":
+                        cur_pack = pack_stack.pop()
+                    elif args[0].strip() == "push":
+                        pack_stack.append(cur_pack)
+                        if len(args) >= 2:
+                            cur_pack = int(args[1], 0)
+                    else:
+                        cur_pack = int(args[0], 0)
 
-            def visit_Union(self, union: ca.Union) -> None:
-                if union.decls is not None:
-                    parse_struct(union, typemap)
+            def visit_Struct(self, node: ca.Struct) -> None:
+                if cur_pack:
+                    typemap.pragma_packs[node] = cur_pack
+                if node.decls is not None:
+                    parse_struct(node, typemap)
 
-            def visit_Decl(self, decl: ca.Decl) -> None:
-                if decl.name is not None:
-                    typemap.var_types[decl.name] = type_from_global_decl(decl)
-                    if decl.init is not None:
-                        typemap.vars_with_initializers.add(decl.name)
-                if not isinstance(decl.type, FuncDecl):
-                    self.visit(decl.type)
+            def visit_Union(self, node: ca.Union) -> None:
+                if cur_pack:
+                    typemap.pragma_packs[node] = cur_pack
+                if node.decls is not None:
+                    parse_struct(node, typemap)
 
-            def visit_Enum(self, enum: ca.Enum) -> None:
-                parse_enum(enum, typemap)
+            def visit_Decl(self, node: ca.Decl) -> None:
+                if node.name is not None:
+                    typemap.var_types[node.name] = type_from_global_decl(node)
+                    if node.init is not None:
+                        typemap.vars_with_initializers.add(node.name)
+                if not isinstance(node.type, FuncDecl):
+                    self.visit(node.type)
 
-            def visit_FuncDef(self, fn: ca.FuncDef) -> None:
-                if fn.decl.name is not None:
-                    typemap.var_types[fn.decl.name] = type_from_global_decl(fn.decl)
+            def visit_Enum(self, node: ca.Enum) -> None:
+                parse_enum(node, typemap)
+
+            def visit_FuncDef(self, node: ca.FuncDef) -> None:
+                if node.decl.name is not None:
+                    typemap.var_types[node.decl.name] = type_from_global_decl(node.decl)
 
         Visitor().visit(ast)
 
@@ -809,7 +991,7 @@ def type_to_string(type: CType, name: str = "") -> str:
             return f"{su} {type.type.name}"
         else:
             return f"anon {su}"
-    decl = ca.Decl(name, [], [], [], [], copy.deepcopy(type), None, None)
+    decl = ca.Decl(name, [], [], [], [], [], copy.deepcopy(type), None, None, None)
     set_decl_name(decl)
     return to_c(decl)
 

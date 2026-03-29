@@ -23,11 +23,12 @@ from typing import (
     Union,
 )
 
-from .c_types import CType, TypeMap
+from .c_types import ArchC, CType, TypeMap, is_unk_type
 from .demangle_codewarrior import parse as demangle_codewarrior_parse, CxxSymbol
 from .error import DecompFailure, static_assert_unreachable
 from .flow_graph import (
     ArchFlowGraph,
+    BasicNode,
     Block,
     ConditionalNode,
     FlowGraph,
@@ -43,7 +44,7 @@ from .flow_graph import (
 )
 from .ir_pattern import IrPattern, simplify_ir_patterns
 from .options import CodingStyle, Formatter, Options, Target
-from .asm_file import AsmData, AsmDataEntry
+from .asm_file import AsmData, AsmDataEntry, AsmSymbolicData
 from .asm_instruction import (
     Argument,
     AsmAddressMode,
@@ -52,6 +53,7 @@ from .asm_instruction import (
     BinOp,
     Macro,
     Register,
+    RegisterList,
 )
 from .instruction import (
     Instruction,
@@ -75,11 +77,15 @@ CmpInstrMap = Mapping[str, Callable[["InstrArgs"], "Condition"]]
 StoreInstrMap = Mapping[str, Callable[["InstrArgs"], Optional["StoreStmt"]]]
 
 
-class Arch(ArchFlowGraph):
+class Arch(ArchFlowGraph, ArchC):
     """Arch-specific information that relates to the translation level.
     Extends ArchFlowGraph."""
 
+    home_space_size: int
     base_return_regs: List[Tuple[Register, bool]]
+
+    @abc.abstractmethod
+    def arg_name(self, loc: ArgLoc) -> str: ...
 
     @abc.abstractmethod
     def function_abi(
@@ -107,6 +113,9 @@ class Arch(ArchFlowGraph):
         """
         ...
 
+    def is_likely_partial_offset(self, addend: int) -> bool:
+        return addend < 0x1000000 and addend % 2**15 in (0, 2**15 - 1)
+
     # These are defined here to avoid a circular import in flow_graph.py
     ir_patterns: List[IrPattern] = []
 
@@ -126,7 +135,9 @@ PSEUDO_FUNCTION_OPS: Set[str] = {
 }
 
 
-def as_type(expr: Expression, type: Type, silent: bool) -> Expression:
+def as_type(
+    expr: Expression, type: Type, silent: bool, *, unify: bool = True
+) -> Expression:
     type = type.weaken_void_ptr()
     if isinstance(expr, Literal):
         # In an interesting twist from how types behave everywhere else, for
@@ -136,8 +147,9 @@ def as_type(expr: Expression, type: Type, silent: bool) -> Expression:
         # Importantly, we do keep information about maybe-floatness and
         # 64-bitness of values.
         expr = Literal(expr.value, expr.type.clone_literal_type())
+        unify = True
     ptr_target_type = type.get_pointer_target()
-    if expr.type.unify(type):
+    if unify and expr.type.unify(type):
         if silent or isinstance(expr, Literal):
             return expr
     elif ptr_target_type is not None:
@@ -270,10 +282,11 @@ class StackInfo:
     persistent_state: PersistentFunctionState
     global_info: GlobalInfo
     flow_graph: FlowGraph
+    warnings: List[str] = field(default_factory=list)
     allocated_stack_size: int = 0
     is_leaf: bool = True
     is_variadic: bool = False
-    uses_framepointer: bool = False
+    frame_pointer_reg: Optional[Register] = None
     subroutine_arg_top: int = 0
     callee_save_regs: Set[Register] = field(default_factory=set)
     callee_save_reg_region: Tuple[int, int] = (0, 0)
@@ -287,7 +300,7 @@ class StackInfo:
     arguments: List[PassedInArg] = field(default_factory=list)
     temp_name_counter: Dict[str, int] = field(default_factory=dict)
     nonzero_accesses: Set[Expression] = field(default_factory=set)
-    param_names: Dict[int, str] = field(default_factory=dict)
+    param_names: Dict[ArgLoc, str] = field(default_factory=dict)
     stack_pointer_type: Optional[Type] = None
     replace_first_arg: Optional[Tuple[str, Type]] = None
     weak_stack_var_types: Dict[int, Type] = field(default_factory=dict)
@@ -320,7 +333,7 @@ class StackInfo:
     def location_above_stack(self, location: int) -> bool:
         return location >= self.allocated_stack_size
 
-    def add_known_param(self, offset: int, name: Optional[str], type: Type) -> Type:
+    def add_known_param(self, loc: ArgLoc, name: Optional[str], type: Type) -> Type:
         # A common pattern in C for OOP-style polymorphism involves casting a general "base" struct
         # to a specific "class" struct, where the first member of the class struct is the base struct.
         #
@@ -328,7 +341,7 @@ class StackInfo:
         # exists a class struct named after the first part of the function name, assume that
         # this pattern is being used. Internally, treat the argument as a pointer to the *class*
         # struct, even though it is only a pointer to the *base* struct in the provided context.
-        if offset == 0 and type.is_pointer() and self.replace_first_arg is None:
+        if loc.sort_index == 0 and type.is_pointer() and self.replace_first_arg is None:
             namespace = self.function.name.partition("_")[0]
             base_struct_type = type.get_pointer_target()
             self_struct = self.global_info.typepool.get_struct_by_tag_name(
@@ -355,14 +368,15 @@ class StackInfo:
                     name = "this" if name == "thisx" else "self"
                     type = Type.ptr(Type.struct(self_struct))
         if name:
-            self.param_names[offset] = name
-        _, arg = self.get_argument(offset)
-        self.add_argument(arg)
+            self.param_names[loc] = name
+        arg = self.get_argument(loc)
+        self.arguments.append(arg)
+        self.arguments.sort(key=lambda a: a.loc)
         arg.type.unify(type)
         return type
 
-    def get_param_name(self, offset: int) -> Optional[str]:
-        return self.param_names.get(offset)
+    def get_param_name(self, loc: ArgLoc) -> Optional[str]:
+        return self.param_names.get(loc)
 
     def add_local_var(self, var: LocalVar) -> None:
         if any(v.value == var.value for v in self.local_vars):
@@ -372,21 +386,32 @@ class StackInfo:
         self.local_vars.sort(key=lambda v: v.value)
 
     def add_argument(self, arg: PassedInArg) -> None:
-        if any(a.value == arg.value for a in self.arguments):
-            return
+        for a in self.arguments:
+            if a.loc == arg.loc:
+                # If the first mention of the argument is by taking a pointer
+                # (e.g. from a loop over a stack array), and we only then read
+                # from a register, refine saved location info.
+                if a.loc.reg is None and arg.loc.reg is not None:
+                    self.arguments.remove(a)
+                    break
+                return
         self.arguments.append(arg)
-        self.arguments.sort(key=lambda a: a.value)
+        self.arguments.sort(key=lambda a: a.loc)
 
-    def get_argument(self, location: int) -> Tuple[Expression, PassedInArg]:
-        real_location = location & -4
-        arg = PassedInArg(
-            real_location,
+    def get_argument(self, loc: ArgLoc) -> PassedInArg:
+        return PassedInArg(
+            loc,
             stack_info=self,
-            type=self.unique_type_for("arg", real_location, Type.any_reg()),
+            type=self.unique_type_for("arg", loc, Type.any_reg()),
         )
-        if real_location == location - 3:
+
+    def get_argument_above_stack(self, offset: int) -> Tuple[Expression, PassedInArg]:
+        aligned_offset = offset & -4
+        loc = ArgLoc(aligned_offset, None, None)
+        arg = self.get_argument(loc)
+        if aligned_offset == offset - 3:
             return as_type(arg, Type.int_of_size(8), True), arg
-        if real_location == location - 2:
+        if aligned_offset == offset - 2:
             return as_type(arg, Type.int_of_size(16), True), arg
         return arg, arg
 
@@ -414,8 +439,12 @@ class StackInfo:
             expr.symbol_name.startswith("saved_reg_") or expr.symbol_name == "sp"
         ):
             return True
-        if isinstance(expr, PassedInArg) and (
-            offset is None or offset == self.allocated_stack_size + expr.value
+        if (
+            isinstance(expr, PassedInArg)
+            and expr.loc.offset is not None
+            and (
+                offset is None or offset == self.allocated_stack_size + expr.loc.offset
+            )
         ):
             return True
         return False
@@ -427,7 +456,8 @@ class StackInfo:
             # further special-casing, just return whatever - it won't matter.
             return LocalVar(location, type=Type.any_reg(), path=None)
         elif self.location_above_stack(location):
-            ret, arg = self.get_argument(location - self.allocated_stack_size)
+            offset = location - self.allocated_stack_size
+            ret, arg = self.get_argument_above_stack(offset)
             if not store:
                 self.add_argument(arg)
             return ret
@@ -478,7 +508,7 @@ class StackInfo:
 
     def add_register_var(self, reg: Register, name: str) -> None:
         type = Type.floatish() if reg.is_float() else Type.intptr()
-        var = Var(self, prefix=f"var_{name}", type=type)
+        var = Var(self, prefix=f"var_{name}", is_planned=True, type=type)
         self.reg_vars[reg] = var
         self.temp_vars.append(var)
 
@@ -516,8 +546,8 @@ class StackInfo:
     def is_stack_reg(self, reg: Register) -> bool:
         if reg == self.global_info.arch.stack_pointer_reg:
             return True
-        if reg == self.global_info.arch.frame_pointer_reg:
-            return self.uses_framepointer
+        if reg == self.frame_pointer_reg:
+            return True
         return False
 
     def get_struct_type_map(self) -> Dict[Expression, Dict[int, Type]]:
@@ -566,6 +596,7 @@ def get_stack_info(
     # a local variable *and* a subroutine argument.) Anything within the stack frame,
     # but outside of these two regions, is considered a local variable.
     callee_saved_offsets: List[int] = []
+    allowed_callee_save_gaps: Set[int] = set()
     # Track simple literal values stored into registers: MIPS compilers need a temp
     # reg to move the stack pointer more than 0x7FFF bytes.
     temp_reg_values: Dict[Register, int] = {}
@@ -576,7 +607,7 @@ def get_stack_info(
         elif arch_mnemonic == "mips:addiu" and inst.args[0] == arch.stack_pointer_reg:
             # Moving the stack pointer on MIPS
             assert isinstance(inst.args[2], AsmLiteral)
-            info.allocated_stack_size = abs(inst.args[2].signed_value())
+            info.allocated_stack_size = abs(inst.args[2].as_s16())
         elif (
             arch_mnemonic == "mips:subu"
             and inst.args[0] == arch.stack_pointer_reg
@@ -591,20 +622,39 @@ def get_stack_info(
         elif arch_mnemonic == "ppc:stwu" and inst.args[0] == arch.stack_pointer_reg:
             # Moving the stack pointer on PPC
             assert isinstance(inst.args[1], AsmAddressMode)
-            assert isinstance(inst.args[1].lhs, AsmLiteral)
-            info.allocated_stack_size = abs(inst.args[1].lhs.signed_value())
+            assert isinstance(inst.args[1].addend, AsmLiteral)
+            info.allocated_stack_size = abs(inst.args[1].addend.value)
+        elif arch_mnemonic == "arm:push":
+            assert isinstance(inst.args[0], RegisterList)
+            for reg in inst.args[0].regs[::-1]:
+                info.allocated_stack_size += 4
+                if reg in arch.saved_regs:
+                    callee_saved_offsets.append(-info.allocated_stack_size)
+                    info.callee_save_regs.add(reg)
+                if reg == Register("lr"):
+                    info.is_leaf = False
         elif (
-            arch_mnemonic in ("mips:move", "ppc:mr")
-            and inst.args[0] == arch.frame_pointer_reg
+            arch_mnemonic == "arm:sub"
+            and inst.args[0] == arch.stack_pointer_reg
+            and inst.args[1] == arch.stack_pointer_reg
+            and isinstance(inst.args[2], AsmLiteral)
+        ):
+            info.allocated_stack_size += inst.args[2].value
+        elif (
+            arch_mnemonic in ("mips:move", "arm:mov", "ppc:mr")
+            and isinstance(inst.args[0], Register)
+            and inst.args[0] in arch.frame_pointer_regs
             and inst.args[1] == arch.stack_pointer_reg
         ):
             # "move fp, sp" very likely means the code is compiled with frame
             # pointers enabled; thus fp should be treated the same as sp.
-            info.uses_framepointer = True
+            info.frame_pointer_reg = inst.args[0]
         elif (
             arch_mnemonic
             in [
                 "mips:sw",
+                "mips:sd",
+                "mips:sq",
                 "mips:swc1",
                 "mips:sdc1",
                 "ppc:stw",
@@ -615,7 +665,7 @@ def get_stack_info(
             and isinstance(inst.args[0], Register)
             and inst.args[0] in arch.saved_regs
             and isinstance(inst.args[1], AsmAddressMode)
-            and inst.args[1].rhs == arch.stack_pointer_reg
+            and inst.args[1].base == arch.stack_pointer_reg
             and (
                 inst.args[0] not in info.callee_save_regs
                 or arch_mnemonic == "ppc:psq_st"
@@ -626,15 +676,23 @@ def get_stack_info(
                 # Saving the return address on the stack.
                 info.is_leaf = False
             # The registers & their stack accesses must be matched up in ArchAsm.parse
-            for reg, mem in zip(inst.inputs, inst.outputs):
-                if isinstance(reg, Register) and isinstance(mem, StackLocation):
+            for inp, mem in zip(inst.inputs, inst.outputs):
+                if isinstance(inp, Register) and isinstance(mem, StackLocation):
                     assert mem.symbolic_offset is None
                     stack_offset = mem.offset
                     if arch_mnemonic != "ppc:psq_st":
                         # psq_st instructions store the same register as stfd, just
                         # as packed singles instead. Prioritize the stfd.
-                        info.callee_save_regs.add(reg)
+                        info.callee_save_regs.add(inp)
                     callee_saved_offsets.append(stack_offset)
+                    if arch_mnemonic == "mips:sd":
+                        # Some PS2 compilers use sd/ld to save/restore registers, but
+                        # reserve 0x10 bytes of space as if they had used sq/lq.
+                        # Allow for the discrepancy.
+                        allowed_callee_save_gaps.add(stack_offset + 8)
+                    if arch_mnemonic == "mips:swc1":
+                        # Similarly, they use swc1 but reserve 8 bytes of space.
+                        allowed_callee_save_gaps.add(stack_offset + 4)
         elif arch_mnemonic == "ppc:mflr" and inst.args[0] == Register("r0"):
             info.is_leaf = False
         elif arch_mnemonic == "mips:li" and inst.args[0] in arch.temp_regs:
@@ -650,6 +708,12 @@ def get_stack_info(
             assert isinstance(inst.args[2], AsmLiteral)
             temp_reg_values[inst.args[0]] |= inst.args[2].value
 
+    if arch.arch == Target.ArchEnum.ARM:
+        # On ARM we don't know the stack size up front, so callee_saved_offsets needs
+        # to be adjusted after scanning the full first block.
+        for i in range(len(callee_saved_offsets)):
+            callee_saved_offsets[i] += info.allocated_stack_size
+
     if not info.is_leaf:
         # Iterate over the whole function, not just the first basic block,
         # to estimate the boundary for the subroutine argument region
@@ -657,17 +721,22 @@ def get_stack_info(
         for node in flow_graph.nodes:
             for inst in node.block.instructions:
                 arch_mnemonic = inst.arch_mnemonic(arch)
+                # TODO: improve this check to cover all loads, not just of words
+                # Can we make use of StackLocation dependencies?
                 if (
-                    arch_mnemonic in ["mips:lw", "mips:lwc1", "mips:ldc1", "ppc:lwz"]
-                    and isinstance(inst.args[1], AsmAddressMode)
-                    and info.is_stack_reg(inst.args[1].rhs)
-                    and inst.args[1].lhs_as_literal() >= 16
-                ):
-                    info.subroutine_arg_top = min(
-                        info.subroutine_arg_top, inst.args[1].lhs_as_literal()
+                    (
+                        arch_mnemonic
+                        in ("mips:lw", "mips:lwc1", "mips:ldc1", "ppc:lwz")
+                        or arch_mnemonic.startswith("arm:ldr")
                     )
+                    and isinstance(inst.args[1], AsmAddressMode)
+                    and info.is_stack_reg(inst.args[1].base)
+                ):
+                    offset = inst.args[1].addend_as_literal()
+                    if offset >= arch.home_space_size:
+                        info.subroutine_arg_top = min(info.subroutine_arg_top, offset)
                 elif (
-                    arch_mnemonic == "mips:addiu"
+                    arch_mnemonic in ("mips:addiu", "ppc:addi", "arm:add")
                     and isinstance(inst.args[1], Register)
                     and info.is_stack_reg(inst.args[1])
                     and isinstance(inst.args[0], Register)
@@ -692,15 +761,19 @@ def get_stack_info(
         # 4-byte word between subregions.
         top = bottom
         internal_padding_added = False
+        has_warned = False
         for offset in callee_saved_offsets:
+            while top < offset and top in allowed_callee_save_gaps:
+                top += 4
             if offset != top:
                 if not internal_padding_added and offset == top + 4:
                     internal_padding_added = True
-                else:
-                    raise DecompFailure(
-                        f"Gap in callee-saved word stack region. "
-                        f"Saved: {callee_saved_offsets}, "
-                        f"gap at: {offset} != {top}."
+                elif not has_warned:
+                    has_warned = True
+                    info.warnings.append(
+                        f"Gap in callee-saved word stack region.\n"
+                        f"Saved: [{', '.join(hex(o) for o in callee_saved_offsets)}], "
+                        f"gap at: {hex(top)}."
                     )
             top = offset + 4
         info.callee_save_reg_region = (bottom, top)
@@ -766,6 +839,7 @@ def escape_byte(b: int) -> bytes:
 class Var:
     stack_info: StackInfo = field(repr=False)
     prefix: str
+    is_planned: bool
     type: Type
     is_emitted: bool = False
     name: Optional[str] = None
@@ -786,8 +860,7 @@ class Expression(abc.ABC):
     type: Type
 
     @abc.abstractmethod
-    def dependencies(self) -> List[Expression]:
-        ...
+    def dependencies(self) -> List[Expression]: ...
 
     def use(self) -> None:
         """Mark an expression as "will occur in the output". Various subclasses
@@ -805,8 +878,7 @@ class Expression(abc.ABC):
             expr.use()
 
     @abc.abstractmethod
-    def format(self, fmt: Formatter) -> str:
-        ...
+    def format(self, fmt: Formatter) -> str: ...
 
     def __str__(self) -> str:
         """Stringify an expression for debug purposes. The output can change
@@ -818,18 +890,15 @@ class Expression(abc.ABC):
 
 class Condition(Expression):
     @abc.abstractmethod
-    def negated(self) -> Condition:
-        ...
+    def negated(self) -> Condition: ...
 
 
 class Statement(abc.ABC):
     @abc.abstractmethod
-    def should_write(self) -> bool:
-        ...
+    def should_write(self) -> bool: ...
 
     @abc.abstractmethod
-    def format(self, fmt: Formatter) -> str:
-        ...
+    def format(self, fmt: Formatter) -> str: ...
 
     def __str__(self) -> str:
         """Stringify a statement for debug purposes. The output can change
@@ -898,12 +967,15 @@ class SecondF64Half(Expression):
 
 @dataclass(frozen=True, eq=False)
 class CarryBit(Expression):
+    expr: Optional[Expression] = None
     type: Type = field(default_factory=Type.intish)
 
     def dependencies(self) -> List[Expression]:
-        return []
+        return [self.expr] if self.expr is not None else []
 
     def format(self, fmt: Formatter) -> str:
+        if self.expr is not None:
+            return f"M2C_CARRY({self.expr.format(fmt)})"
         return "M2C_CARRY"
 
 
@@ -935,7 +1007,7 @@ class BinaryOp(Condition):
     @staticmethod
     def icmp(left: Expression, op: str, right: Expression) -> BinaryOp:
         return BinaryOp(
-            left=as_intptr(left), op=op, right=as_intptr(right), type=Type.bool()
+            left=as_intptr(left), op=op, right=as_intptr(right), type=Type.boolean()
         )
 
     @staticmethod
@@ -944,7 +1016,7 @@ class BinaryOp(Condition):
             left=as_sintish(left, silent=True),
             op=op,
             right=as_sintish(right, silent=True),
-            type=Type.bool(),
+            type=Type.boolean(),
         )
 
     @staticmethod
@@ -953,13 +1025,13 @@ class BinaryOp(Condition):
             left=as_type(left, Type.sintptr(), False),
             op=op,
             right=as_type(right, Type.sintptr(), False),
-            type=Type.bool(),
+            type=Type.boolean(),
         )
 
     @staticmethod
     def ucmp(left: Expression, op: str, right: Expression) -> BinaryOp:
         return BinaryOp(
-            left=as_uintish(left), op=op, right=as_uintish(right), type=Type.bool()
+            left=as_uintish(left), op=op, right=as_uintish(right), type=Type.boolean()
         )
 
     @staticmethod
@@ -968,7 +1040,7 @@ class BinaryOp(Condition):
             left=as_type(left, Type.uintptr(), False),
             op=op,
             right=as_type(right, Type.uintptr(), False),
-            type=Type.bool(),
+            type=Type.boolean(),
         )
 
     @staticmethod
@@ -977,7 +1049,7 @@ class BinaryOp(Condition):
             left=as_f32(left),
             op=op,
             right=as_f32(right),
-            type=Type.bool(),
+            type=Type.boolean(),
         )
 
     @staticmethod
@@ -986,7 +1058,7 @@ class BinaryOp(Condition):
             left=as_f64(left),
             op=op,
             right=as_f64(right),
-            type=Type.bool(),
+            type=Type.boolean(),
         )
 
     @staticmethod
@@ -1049,21 +1121,21 @@ class BinaryOp(Condition):
                 left=self.left.negated(),
                 op={"&&": "||", "||": "&&"}[self.op],
                 right=self.right.negated(),
-                type=Type.bool(),
+                type=Type.boolean(),
             )
         if not self.is_comparison() or (
             self.is_floating() and self.op in ["<", ">", "<=", ">="]
         ):
             # Floating-point comparisons cannot be negated in any nice way,
             # due to nans.
-            return UnaryOp("!", self, type=Type.bool())
+            return UnaryOp("!", self, type=Type.boolean())
         return BinaryOp(
             left=self.left,
             op={"==": "!=", "!=": "==", ">": "<=", "<": ">=", ">=": "<", "<=": ">"}[
                 self.op
             ],
             right=self.right,
-            type=Type.bool(),
+            type=Type.boolean(),
         )
 
     def dependencies(self) -> List[Expression]:
@@ -1162,18 +1234,18 @@ class UnaryOp(Condition):
         return [self.expr]
 
     @staticmethod
+    def int(op: str, expr: Expression) -> UnaryOp:
+        return UnaryOp(op=op, expr=as_intish(expr), type=expr.type)
+
+    @staticmethod
     def sint(op: str, expr: Expression) -> UnaryOp:
         expr = as_sintish(expr, silent=True)
-        return UnaryOp(
-            op=op,
-            expr=expr,
-            type=expr.type,
-        )
+        return UnaryOp(op=op, expr=expr, type=expr.type)
 
     def negated(self) -> Condition:
         if self.op == "!" and isinstance(self.expr, (UnaryOp, BinaryOp)):
             return self.expr
-        return UnaryOp("!", self, type=Type.bool())
+        return UnaryOp("!", self, type=Type.boolean())
 
     def format(self, fmt: Formatter) -> str:
         # These aren't real operators (or functions); format them as a fn call
@@ -1204,7 +1276,7 @@ class ExprCondition(Condition):
 class CommaConditionExpr(Condition):
     statements: List[Statement]
     condition: Condition
-    type: Type = Type.bool()
+    type: Type = Type.boolean()
 
     def dependencies(self) -> List[Expression]:
         assert False, "CommaConditionExpr should not be used within translate.py"
@@ -1352,7 +1424,7 @@ class PlannedPhiExpr(Expression):
 
 @dataclass(frozen=True, eq=True)
 class PassedInArg(Expression):
-    value: int
+    loc: ArgLoc
     stack_info: StackInfo = field(compare=False, repr=False)
     type: Type = field(compare=False)
 
@@ -1360,9 +1432,10 @@ class PassedInArg(Expression):
         return []
 
     def format(self, fmt: Formatter) -> str:
-        assert self.value % 4 == 0
-        name = self.stack_info.get_param_name(self.value)
-        return name or f"arg{format_hex(self.value // 4)}"
+        name = self.stack_info.get_param_name(self.loc)
+        if name:
+            return name
+        return self.stack_info.global_info.arch.arg_name(self.loc)
 
 
 @dataclass(frozen=True, eq=True)
@@ -1583,6 +1656,8 @@ class GlobalSymbol(Expression):
         at the end of the symbol's data.
         If the extra bytes are nonzero, then it's likely that `element_size` is incorrect.
         """
+        assert element_size != 0, "potential_array_dim cannot be called on zero size"
+
         # If we don't have the .data/.rodata entry for this symbol, we can't guess
         # its array dimension. Jump tables are ignored and not treated as arrays.
         if self.asm_data_entry is None or self.asm_data_entry.is_jtbl:
@@ -1660,9 +1735,6 @@ class Literal(Expression):
 
         return prefix + value + suffix
 
-    def likely_partial_offset(self) -> bool:
-        return self.value % 2**15 in (0, 2**15 - 1) and self.value < 0x1000000
-
 
 @dataclass(frozen=True, eq=True)
 class AddressOf(Expression):
@@ -1737,7 +1809,7 @@ class EvalOnceExpr(Expression):
     var: Var
     type: Type
 
-    sources: List[Reference]
+    sources: List[Reference] = field(repr=False)
 
     # True for function calls/errors
     emit_exactly_once: bool
@@ -1752,6 +1824,8 @@ class EvalOnceExpr(Expression):
     # Based on `should_wrap_transparently` (except for function returns). Always true
     # if `trivial` is true.
     transparent: bool
+
+    is_fictive_temp: bool
 
     # Mutable state:
 
@@ -1895,6 +1969,7 @@ class NaivePhiExpr(Expression):
 @dataclass
 class SwitchControl:
     control_expr: Expression
+    num_cases: Optional[int] = None
     jump_table: Optional[GlobalSymbol] = None
     offset: int = 0
     is_irregular: bool = False
@@ -1912,9 +1987,7 @@ class SwitchControl:
         cmp_exclusive = cmp_expr.op == ">"
 
         # The LHS may have been wrapped in a u32 cast
-        left_expr = late_unwrap(cmp_expr.left)
-        if isinstance(left_expr, Cast):
-            left_expr = late_unwrap(left_expr.expr)
+        left_expr = late_unwrap_ints(cmp_expr.left)
 
         if self.offset != 0:
             if (
@@ -1924,23 +1997,14 @@ class SwitchControl:
                 or late_unwrap(left_expr.right) != Literal(-self.offset)
             ):
                 return False
-        elif left_expr != late_unwrap(self.control_expr):
+        elif left_expr != late_unwrap_ints(self.control_expr):
             return False
 
         right_expr = late_unwrap(cmp_expr.right)
-        if (
-            self.jump_table is None
-            or self.jump_table.asm_data_entry is None
-            or not self.jump_table.asm_data_entry.is_jtbl
-            or not isinstance(right_expr, Literal)
-        ):
+        if not isinstance(right_expr, Literal):
             return False
 
-        # Count the number of labels (exclude padding bytes)
-        jump_table_len = sum(
-            isinstance(e, str) for e in self.jump_table.asm_data_entry.data
-        )
-        return right_expr.value + int(cmp_exclusive) == jump_table_len
+        return right_expr.value + int(cmp_exclusive) == self.num_cases
 
     @staticmethod
     def irregular_from_expr(control_expr: Expression) -> SwitchControl:
@@ -1949,15 +2013,10 @@ class SwitchControl:
         The switch does not have a single jump table; instead it is a series of
         if statements & other switches.
         """
-        return SwitchControl(
-            control_expr=control_expr,
-            jump_table=None,
-            offset=0,
-            is_irregular=True,
-        )
+        return SwitchControl(control_expr=control_expr, offset=0, is_irregular=True)
 
     @staticmethod
-    def from_expr(expr: Expression) -> SwitchControl:
+    def from_expr(expr: Expression, num_cases: int) -> SwitchControl:
         """
         Try to convert `expr` into a SwitchControl from one of the following forms:
             - `*(&jump_table + (control_expr * 4))`
@@ -2012,10 +2071,12 @@ class SwitchControl:
                 offset = -offset_lit.value
 
         # Check that it is really a jump table
+        # TODO: check that it's actually the same jump table as we found in the
+        # flow_graph pre-check
         if jump_table.asm_data_entry is None or not jump_table.asm_data_entry.is_jtbl:
             return error_expr
 
-        return SwitchControl(control_expr, jump_table, offset)
+        return SwitchControl(control_expr, num_cases, jump_table, offset)
 
 
 @dataclass
@@ -2096,13 +2157,13 @@ class CommentStmt(Statement):
 @dataclass(frozen=True)
 class AddressMode:
     offset: int
-    rhs: Register
+    base: Register
 
     def __str__(self) -> str:
         if self.offset:
-            return f"{self.offset}({self.rhs})"
+            return f"{self.offset}({self.base})"
         else:
-            return f"({self.rhs})"
+            return f"({self.base})"
 
 
 @dataclass(frozen=True)
@@ -2215,9 +2276,9 @@ class RegInfo:
             if isinstance(uw_ret, PassedInArg):
                 # Use accessed argument registers as a signal for determining which
                 # arguments actually exist.
-                val, arg = self.stack_info.get_argument(uw_ret.value)
+                arg = self.stack_info.get_argument(uw_ret.loc)
                 self.stack_info.add_argument(arg)
-                val.type.unify(ret.type)
+                arg.type.unify(ret.type)
         if meta.force:
             assert isinstance(ret, EvalOnceExpr)
             ret.force()
@@ -2299,6 +2360,87 @@ class BlockInfo:
         return [st for st in self.to_write if st.should_write()]
 
 
+def visualize_flowgraph(
+    flow_graph: FlowGraph, viz_type: Options.VisualizeTypeEnum
+) -> str:
+    import graphviz as g
+
+    fmt = Formatter(debug=True)
+    dot = g.Digraph(
+        node_attr={
+            "shape": "rect",
+            "fontname": "Monospace",
+        },
+        edge_attr={
+            "fontname": "Monospace",
+        },
+    )
+
+    for node in flow_graph.nodes:
+        block_info = _get_optional_block_info(node)
+        asm_label = ""
+        c_label = ""
+
+        # In Graphviz, "\l" makes the preceeding text left-aligned, and inserts a newline
+        if block_info:
+            asm_label = "".join(
+                f"{'*' if i.meta.synthetic else '&nbsp;'} {i}\\l"
+                for i in node.block.instructions
+            )
+            c_label = "".join(
+                w.format(fmt) + "\\l" for w in block_info.to_write if w.should_write()
+            )
+
+        dot.node(node.name())
+        if isinstance(node, BasicNode):
+            dot.edge(node.name(), node.successor.name(), color="black")
+        elif isinstance(node, ConditionalNode):
+            if block_info:
+                assert block_info.branch_condition is not None
+                c_label += f"if ({block_info.branch_condition.format(fmt)})\\l"
+            dot.edge(node.name(), node.fallthrough_edge.name(), label="F", color="blue")
+            dot.edge(node.name(), node.conditional_edge.name(), label="T", color="red")
+        elif isinstance(node, ReturnNode):
+            if block_info is not None and block_info.return_value:
+                c_label += f"return ({block_info.return_value.format(fmt)});\\l"
+            else:
+                c_label += "return;\\l"
+            dot.edge(node.name(), node.terminal.name())
+        elif isinstance(node, SwitchNode):
+            assert block_info is not None
+            switch_control = block_info.switch_control
+            assert switch_control is not None
+            c_label += f"switch ({switch_control.control_expr.format(fmt)})\\l"
+            for i, case in enumerate(node.cases):
+                dot.edge(
+                    node.name(),
+                    case.name(),
+                    label=str(i + switch_control.offset),
+                    color="green",
+                )
+        else:
+            assert isinstance(node, TerminalNode)
+            asm_label += "// exit\\l"
+            c_label += "// exit\\l"
+
+        line_label = ""
+        first_instr = next(node.block.instructions, None)
+        if first_instr is not None and first_instr.meta.lineno > 0:
+            line_label = f" (line {first_instr.meta.lineno})"
+
+        label = f"// Node {node.name()}{line_label}\\l"
+        if viz_type == Options.VisualizeTypeEnum.ASM:
+            label += asm_label
+        elif viz_type == Options.VisualizeTypeEnum.C:
+            label += c_label
+        else:
+            raise ValueError("Invalid viz_type: {viz_type!r}")
+
+        dot.node(node.name(), label=label)
+    svg_bytes: bytes = dot.pipe("svg")
+    return svg_bytes.decode("utf-8", "replace")
+
+
 def get_block_info_for_block(block: Block) -> BlockInfo:
     ret = block.block_info
     assert isinstance(ret, BlockInfo)
@@ -2307,6 +2449,12 @@ def get_block_info_for_block(block: Block) -> BlockInfo:
 
 def get_block_info(node: Node) -> BlockInfo:
     return get_block_info_for_block(node.block)
+
+
+def _get_optional_block_info(node: Node) -> Optional[BlockInfo]:
+    if node.block.block_info is None:
+        return None
+    return get_block_info(node)
 
 
 @dataclass
@@ -2344,7 +2492,10 @@ class InstrArgs:
         """Extract a double from a register. This may involve reading both the
         mentioned register and the next."""
         reg = self.reg_ref(index)
-        if not reg.is_float():
+        if (
+            self.stack_info.global_info.arch.arch != Target.ArchEnum.ARM
+            and not reg.is_float()
+        ):
             raise DecompFailure(
                 f"Expected instruction argument {reg} to be a float register"
             )
@@ -2354,7 +2505,7 @@ class InstrArgs:
         if self.stack_info.global_info.arch.arch == Target.ArchEnum.PPC:
             return ret
 
-        # MIPS: Look at the paired FPR to get the full 64-bit value
+        # ARM/MIPS: Look at the paired FPR to get the full 64-bit value
         if not isinstance(ret, Literal) or ret.type.get_size_bits() == 64:
             return ret
         reg_num = int(reg.register_name[1:])
@@ -2363,7 +2514,7 @@ class InstrArgs:
                 "Tried to use a double-precision instruction with odd-numbered float "
                 f"register {reg}"
             )
-        other = self.regs[Register(f"f{reg_num+1}")]
+        other = self.regs[Register(f"{reg.register_name[0]}{reg_num+1}")]
         if isinstance(other, Literal) and other.type.get_size_bits() != 64:
             value = ret.value | (other.value << 32)
             return Literal(value, type=Type.f64())
@@ -2382,17 +2533,23 @@ class InstrArgs:
         ret = literal_expr(arg, self.stack_info)
         return ret
 
-    def imm(self, index: int) -> Expression:
+    def s16_imm(self, index: int) -> Expression:
         ret = self.full_imm(index)
         if isinstance(ret, Literal):
             return Literal(((ret.value + 0x8000) & 0xFFFF) - 0x8000)
         return ret
 
-    def unsigned_imm(self, index: int) -> Expression:
+    def u16_imm(self, index: int) -> Expression:
         ret = self.full_imm(index)
         if isinstance(ret, Literal):
             return Literal(ret.value & 0xFFFF)
         return ret
+
+    def reg_or_imm(self, index: int) -> Expression:
+        arg = self.raw_arg(index)
+        if isinstance(arg, Register):
+            return self.regs[arg]
+        return self.full_imm(index)
 
     def hi_imm(self, index: int) -> RawSymbolRef:
         arg = self.raw_arg(index)
@@ -2416,9 +2573,9 @@ class InstrArgs:
 
     def maybe_got_imm(self, index: int) -> Optional[RawSymbolRef]:
         arg = self.raw_arg(index)
-        if not isinstance(arg, AsmAddressMode) or arg.rhs != Register("gp"):
+        if not isinstance(arg, AsmAddressMode) or arg.base != Register("gp"):
             return None
-        val = arg.lhs
+        val = arg.addend
         if not isinstance(val, Macro) or val.macro_name not in (
             "got",
             "call16",
@@ -2429,9 +2586,9 @@ class InstrArgs:
             raise DecompFailure(f"Invalid macro argument {val.argument}")
         return ref
 
-    def shifted_imm(self, index: int) -> Expression:
+    def shifted_u16_imm(self, index: int) -> Expression:
         # TODO: Should this be part of hi_imm? Do we need to handle @ha?
-        raw_imm = self.unsigned_imm(index)
+        raw_imm = self.u16_imm(index)
         assert isinstance(raw_imm, Literal)
         return Literal(raw_imm.value << 16)
 
@@ -2461,12 +2618,12 @@ class InstrArgs:
                 "Expected instruction argument to be of the form offset($register), "
                 f"but found {ret}"
             )
-        if not isinstance(ret.lhs, AsmLiteral):
+        if not isinstance(ret.addend, AsmLiteral):
             raise DecompFailure(
                 f"Unable to parse offset for instruction argument {ret}. "
                 "Expected a constant or a %lo macro."
             )
-        return AddressMode(offset=ret.lhs.signed_value(), rhs=ret.rhs)
+        return AddressMode(offset=ret.addend.value, base=ret.base)
 
     def count(self) -> int:
         return len(self.raw_args)
@@ -2490,7 +2647,6 @@ def should_wrap_transparently(expr: Expression) -> bool:
     if isinstance(
         expr,
         (
-            EvalOnceExpr,
             Literal,
             LocalVar,
             PassedInArg,
@@ -2501,6 +2657,8 @@ def should_wrap_transparently(expr: Expression) -> bool:
         ),
     ):
         return True
+    if isinstance(expr, EvalOnceExpr):
+        return not expr.is_fictive_temp
     if isinstance(expr, GlobalSymbol):
         return not expr.is_string_constant()
     if isinstance(expr, AddressOf):
@@ -2779,6 +2937,14 @@ def early_unwrap_ints(expr: Expression) -> Expression:
     return uw_expr
 
 
+def late_unwrap_ints(expr: Expression) -> Expression:
+    """Like early_unwrap_ints, but with late_unwrap."""
+    uw_expr = late_unwrap(expr)
+    if isinstance(uw_expr, Cast) and uw_expr.reinterpret and uw_expr.type.is_int():
+        return late_unwrap_ints(uw_expr.expr)
+    return uw_expr
+
+
 def unwrap_deep(expr: Expression) -> Expression:
     """
     Unwrap EvalOnceExpr's, even past variable boundaries.
@@ -2901,22 +3067,66 @@ def strip_macros(arg: Argument) -> Argument:
         if isinstance(arg.argument, AsmLiteral):
             return AsmLiteral(arg.argument.value)
         return AsmLiteral(0)
-    elif isinstance(arg, AsmAddressMode) and isinstance(arg.lhs, Macro):
-        if arg.lhs.macro_name in ["sda2", "sda21", "gp_rel"]:
-            return arg.lhs.argument
-        if arg.lhs.macro_name not in ["lo", "l"]:
+    elif isinstance(arg, AsmAddressMode) and isinstance(arg.addend, Macro):
+        if arg.addend.macro_name in ["sda2", "sda21", "gp_rel"]:
+            return arg.addend.argument
+        if arg.addend.macro_name not in ["lo", "l"]:
             raise DecompFailure(
                 f"Bad linker macro in instruction argument {arg}, expected %lo"
             )
-        return AsmAddressMode(lhs=AsmLiteral(0), rhs=arg.rhs)
+        return AsmAddressMode(
+            base=arg.base,
+            addend=AsmLiteral(0),
+            writeback=arg.writeback,
+        )
     else:
         return arg
 
 
+@dataclass(frozen=True)
+class ArgLoc:
+    # offset represents the offset above the stack where the argument is loaded from.
+    # reg represents the register the argument is loaded from.
+    # Either value or reg will always be non-None. In the case of MIPS with
+    # arguments with home space, both will be.
+    # sort_index represents a sort index for argument registers, and is always set
+    # when reg is, and may be set in other cases as well for known prototypes.
+    offset: Optional[int]
+    sort_index: Optional[int]
+    reg: Optional[Register]
+
+    def __lt__(self, other: object) -> bool:
+        if not isinstance(other, ArgLoc):
+            return NotImplemented
+        if self.sort_index is not None:
+            if other.sort_index is None:
+                return True
+            return self.sort_index < other.sort_index
+        else:
+            if other.sort_index is not None:
+                return False
+            assert self.offset is not None
+            assert other.offset is not None
+            return self.offset < other.offset
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, ArgLoc):
+            return NotImplemented
+        if self.offset is not None:
+            return other.offset == self.offset
+        else:
+            return other.offset is None and self.reg == other.reg
+
+    def __hash__(self) -> int:
+        if self.offset is not None:
+            return hash(self.offset)
+        else:
+            return hash(self.reg)
+
+
 @dataclass
 class AbiArgSlot:
-    offset: int
-    reg: Optional[Register]
+    loc: ArgLoc
     type: Type
     name: Optional[str] = None
     comment: Optional[str] = None
@@ -3218,15 +3428,21 @@ class NodeState:
         source: Reference,
     ) -> EvalOnceExpr:
         planned_var = self.stack_info.get_planned_var(reg, source)
+        is_fictive_temp = False
 
-        if "_fictive_" in reg.register_name and isinstance(expr, EvalOnceExpr):
-            # Avoid creating additional EvalOnceExprs for fictive Registers
-            # so they're less likely to appear in the output. These are only
-            # used as inputs to single instructions, so there's no risk of
-            # missing phi assignments.
-            assert not emit_exactly_once
-            assert not planned_var
-            return expr
+        if "_fictive_" in reg.register_name:
+            if isinstance(expr, EvalOnceExpr) and not expr.var.is_planned:
+                # In the common case where a fictive reg transparently wraps an
+                # EvalOnceExpr whose var does not overlap with anything else,
+                # we can avoid the risk of new temps entirely. (Fictive registers
+                # are only used as inputs to single instructions, so will never
+                # be planned vars.)
+                assert not emit_exactly_once
+                assert not planned_var
+                return expr
+            # In the less common case, at least give the temp reg a nicer name.
+            reg = Register(reg.register_name.split("_fictive_")[0])
+            is_fictive_temp = True
 
         trivial = transparent and is_trivial_expression(expr)
 
@@ -3248,7 +3464,7 @@ class NodeState:
             temp_name = f"temp_{prefix}"
             if self.stack_info.global_info.deterministic_vars:
                 temp_name = f"{temp_name}_{self.regs.get_instruction_lineno()}"
-            var = Var(self.stack_info, temp_name, expr.type)
+            var = Var(self.stack_info, temp_name, is_planned=False, type=expr.type)
             self.stack_info.temp_vars.append(var)
 
         expr = EvalOnceExpr(
@@ -3259,6 +3475,7 @@ class NodeState:
             emit_exactly_once=emit_exactly_once,
             trivial=trivial,
             transparent=transparent,
+            is_fictive_temp=is_fictive_temp,
         )
         stmt = EvalOnceStmt(expr)
         self.write_statement(stmt)
@@ -3332,13 +3549,8 @@ class NodeState:
     def set_reg(
         self,
         reg: Register,
-        expr: Optional[Expression],
-    ) -> Optional[Expression]:
-        if expr is None:
-            if reg in self.regs:
-                del self.regs[reg]
-            return None
-
+        expr: Expression,
+    ) -> Expression:
         if isinstance(expr, LocalVar):
             if (
                 isinstance(self.node, ReturnNode)
@@ -3348,8 +3560,11 @@ class NodeState:
             ):
                 # Elide saved register restores with --reg-vars (it doesn't
                 # matter in other cases).
-                return None
-            if expr in self.local_var_writes:
+                return expr
+            if (
+                self.stack_info.global_info.stack_spill_detection
+                and expr in self.local_var_writes
+            ):
                 # Elide register restores (only for the same register for now,
                 # to be conversative).
                 orig_reg, orig_expr, force = self.local_var_writes[expr]
@@ -3357,7 +3572,7 @@ class NodeState:
                     expr = orig_expr
                     if force:
                         base_expr = expr
-                        if isinstance(base_expr, Cast):
+                        while isinstance(base_expr, Cast):
                             base_expr = base_expr.expr
                         if isinstance(base_expr, EvalOnceExpr):
                             base_expr.force()
@@ -3422,10 +3637,13 @@ class NodeState:
         assert self.branch_condition is None
         self.branch_condition = cond
 
-    def set_switch_expr(self, expr: Expression) -> None:
+    def set_switch_expr(self, expr: Expression, just_index: bool = False) -> None:
         assert isinstance(self.node, SwitchNode)
         assert self.switch_control is None
-        self.switch_control = SwitchControl.from_expr(expr)
+        if just_index:
+            self.switch_control = SwitchControl(expr, num_cases=len(self.node.cases))
+        else:
+            self.switch_control = SwitchControl.from_expr(expr, len(self.node.cases))
 
     def write_statement(self, stmt: Statement) -> None:
         self.to_write.append(stmt)
@@ -3436,12 +3654,12 @@ class NodeState:
         if isinstance(dest, SubroutineArg):
             # About to call a subroutine with this argument. Skip arguments for the
             # first four stack slots; they are also passed in registers.
-            if dest.value >= 0x10:
+            if dest.value >= self.stack_info.global_info.arch.home_space_size:
                 self.subroutine_args[dest.value] = source
             return
 
         raw_value = source
-        if isinstance(raw_value, Cast) and raw_value.reinterpret:
+        while isinstance(raw_value, Cast) and raw_value.reinterpret:
             raw_value = raw_value.expr
 
         if isinstance(dest, LocalVar):
@@ -3490,6 +3708,7 @@ class NodeState:
                 len(uses) == 1
                 and isinstance(source, InstrRef)
                 and source.instruction.function_target is None
+                and call_instr.instruction.function_target != reg
             ):
                 return True
         return False
@@ -3509,18 +3728,32 @@ class NodeState:
             # registers can be used arguments & return values.
             # The ABI can also mix & match the rN & fN registers, which makes the
             # "require" heuristic less powerful.
+            # The heuristic is as follows:
             #
-            # - `meta.inherited` will only be False for registers set in *this* basic block
-            # - `meta.function_return` will only be accurate for registers set within this
-            #   basic block because we have not called `propagate_register_meta` yet.
-            #   Within this block, it will be True for registers that were return values.
+            # - function returns are never treated as likely arguments
+            # - other values set in the same basic block *are* treated as likely
+            #   arguments
+            # - other values set in a different basic block are not treated as
+            #   likely arguments if they are also read by another instruction
             #
             # We don't do this stricter filtering for variadic functions, though, since
             # those don't provide "fix the context" as a way out if we get it wrong.
+            #
+            # For ARM we have the same filter, except with the second clause removed.
+            # This is because Thumb has high register pressure, so there are even
+            # more false positives.
+            #
+            # Implementation note: the `meta.function_return` bit is only accurate for
+            # registers set within this basic block, because `propagate_register_meta`
+            # has not yet been called. However, it's only in that case we read it.
             if (
-                arch.arch == Target.ArchEnum.PPC
+                arch.arch in (Target.ArchEnum.PPC, Target.ArchEnum.ARM)
                 and not fn_sig.is_variadic
-                and (data.meta.inherited or data.meta.function_return)
+                and (
+                    data.meta.inherited
+                    or data.meta.function_return
+                    or arch.arch == Target.ArchEnum.ARM
+                )
                 and not self._reg_probably_meant_as_function_argument(reg, call_instr)
             ):
                 likely_regs[reg] = False
@@ -3537,19 +3770,22 @@ class NodeState:
 
         func_args: List[Expression] = []
         for slot in abi.arg_slots:
-            if slot.reg:
-                expr = self.regs[slot.reg]
-            elif slot.offset in self.subroutine_args:
-                expr = self.subroutine_args.pop(slot.offset)
+            if slot.loc.reg:
+                expr = self.regs[slot.loc.reg]
             else:
-                expr = ErrorExpr(f"Unable to find stack arg {slot.offset:#x} in block")
+                offset = slot.loc.offset
+                assert offset is not None
+                if offset in self.subroutine_args:
+                    expr = self.subroutine_args.pop(offset)
+                else:
+                    expr = ErrorExpr(f"Unable to find stack arg {offset:#x} in block")
             func_args.append(
                 CommentExpr.wrap(as_type(expr, slot.type, True), prefix=slot.comment)
             )
 
         for slot in abi.possible_slots:
-            assert slot.reg is not None
-            func_args.append(self.regs[slot.reg])
+            assert slot.loc.reg is not None
+            func_args.append(self.regs[slot.loc.reg])
 
         # Add the arguments after a3.
         # TODO: limit this based on abi.arg_slots. If the function type is known
@@ -3771,12 +4007,18 @@ def create_dominated_node_state(
                 if found_par_value is not None:
                     new_val = EvalOnceExpr(
                         wrapped_expr=found_par_value.wrapped_expr,
-                        var=Var(stack_info, "_m2c_inherited_phi", found_par_value.type),
+                        var=Var(
+                            stack_info,
+                            "_m2c_inherited_phi",
+                            is_planned=False,
+                            type=found_par_value.type,
+                        ),
                         type=found_par_value.type,
                         sources=sources,
                         emit_exactly_once=False,
                         trivial=True,
                         transparent=True,
+                        is_fictive_temp=False,
                     )
                     new_regs.global_set_with_meta(reg, new_val, RegMeta(inherited=True))
                     continue
@@ -3927,6 +4169,7 @@ class GlobalInfo:
     typemap: TypeMap
     typepool: TypePool
     deterministic_vars: bool
+    stack_spill_detection: bool
     global_symbol_map: Dict[str, GlobalSymbol] = field(default_factory=dict)
     persistent_function_state: Dict[str, PersistentFunctionState] = field(
         default_factory=lambda: defaultdict(PersistentFunctionState)
@@ -3944,7 +4187,10 @@ class GlobalInfo:
         else:
             demangled_symbol: Optional[CxxSymbol] = None
             demangled_str: Optional[str] = None
-            if self.target.language == Target.LanguageEnum.CXX:
+            if (
+                self.target.language == Target.LanguageEnum.CXX
+                and self.target.compiler == Target.CompilerEnum.MWCC
+            ):
                 try:
                     demangled_symbol = demangle_codewarrior_parse(sym_name)
                 except ValueError:
@@ -3962,6 +4208,7 @@ class GlobalInfo:
             # If the symbol is a C++ vtable, try to build a custom type for it by parsing it
             if (
                 self.target.language == Target.LanguageEnum.CXX
+                and self.target.compiler == Target.CompilerEnum.MWCC
                 and sym_name.startswith("__vt__")
                 and sym.asm_data_entry is not None
             ):
@@ -3979,7 +4226,11 @@ class GlobalInfo:
                 sym.initializer_in_typemap = (
                     sym_name in self.typemap.vars_with_initializers
                 )
-                sym.type.unify(Type.ctype(ctype, self.typemap, self.typepool))
+                if self.typepool.unk_inference and is_unk_type(ctype, self.typemap):
+                    type = Type.gsym_unk_ctype(ctype, self.typemap, self.typepool)
+                else:
+                    type = Type.ctype(ctype, self.typemap, self.typepool)
+                sym.type.unify(type)
                 if sym_name not in self.typepool.unknown_decls:
                     sym.type_provided = True
             elif sym_name in self.local_functions:
@@ -4018,16 +4269,19 @@ class GlobalInfo:
                     )
                     offset += 4
             else:
-                entry_name = entry
+                sym = entry.as_symbol_without_addend()
+                if sym is None:
+                    raise DecompFailure(f"Unable to parse vtable data in {sym_name}")
+                entry_name = sym
                 try:
-                    demangled_field_sym = demangle_codewarrior_parse(entry)
+                    demangled_field_sym = demangle_codewarrior_parse(sym)
                     if demangled_field_sym.name.qualified_name is not None:
                         entry_name = str(demangled_field_sym.name.qualified_name[-1])
                 except ValueError:
                     pass
 
                 field = struct.try_add_field(
-                    self.address_of_gsym(entry).type,
+                    self.address_of_gsym(sym).type,
                     offset,
                     name=entry_name,
                     size=4,
@@ -4054,12 +4308,13 @@ class GlobalInfo:
             if not data:
                 raise FailedToGenerateInitializer("not enough data")
             if not isinstance(data[0], bytes):
-                raise FailedToGenerateInitializer(f"cannot parse {data[0]} as integer")
+                arg = data[0].data
+                raise FailedToGenerateInitializer(f"cannot parse {arg} as integer")
             if len(data[0]) < n:
                 if len(data) > 1:
                     sym = data[1]
-                    assert isinstance(sym, str)
-                    raise FailedToGenerateInitializer(f"partial read of {sym}")
+                    assert isinstance(sym, AsmSymbolicData)
+                    raise FailedToGenerateInitializer(f"partial read of {sym.data}")
                 else:
                     raise FailedToGenerateInitializer("not enough data")
             bs = data[0][:n]
@@ -4067,16 +4322,20 @@ class GlobalInfo:
             if not data[0]:
                 del data[0]
             value = 0
+            if not self.target.is_big_endian():
+                bs = bs[::-1]
             for b in bs:
                 value = (value << 8) | b
             return value
 
         def try_read_pointer() -> Optional[Expression]:
             """Read the next label from `data`"""
-            if not data or not isinstance(data[0], str):
+            if not data or isinstance(data[0], bytes):
+                return None
+            label = data[0].as_symbol_without_addend()
+            if label is None:
                 return None
 
-            label = data[0]
             data.pop(0)
             return self.address_of_gsym(label)
 
@@ -4171,9 +4430,11 @@ class GlobalInfo:
         lines = []
         processed_names: Set[str] = set()
         while True:
-            names: AbstractSet[str] = self.global_symbol_map.keys()
+            names: Set[str] = set(self.global_symbol_map.keys())
             if decls == Options.GlobalDeclsEnum.ALL:
-                names |= self.asm_data.values.keys()
+                for name, ent in self.asm_data.values.items():
+                    if not ent.is_text:
+                        names.add(name)
             names -= processed_names
             if not names:
                 break
@@ -4182,6 +4443,11 @@ class GlobalInfo:
                 sym = self.address_of_gsym(name).expr
                 assert isinstance(sym, GlobalSymbol)
                 data_entry = sym.asm_data_entry
+
+                if data_entry is not None and data_entry.is_text:
+                    if not sym.type.is_function():
+                        continue
+                    data_entry = None
 
                 # Is the label defined in this unit (in the active AsmData file(s))
                 is_in_file = data_entry is not None or name in self.local_functions
@@ -4203,12 +4469,23 @@ class GlobalInfo:
                     # Skip externally-declared symbols that are defined in other files
                     continue
 
+                # Flip the bss order if the corresponding option is set
+                if data_entry:
+                    file, index = data_entry.sort_order
+                    data_entry_order = (
+                        (file, index * -1)
+                        if data_entry.is_bss and fmt.backwards_bss
+                        else (file, index)
+                    )
+                else:
+                    data_entry_order = ("", 0)
+
                 sort_order = (
                     not sym.type.is_function(),
                     is_in_file,
                     is_global if not is_in_file else False,
                     is_const,
-                    data_entry.sort_order if data_entry is not None else ("", 0),
+                    data_entry_order,
                     name,
                 )
                 qualifier = ""
@@ -4265,7 +4542,7 @@ class GlobalInfo:
                             )
 
                 # Try to convert the data from .data/.rodata into an initializer
-                if data_entry and not data_entry.is_bss:
+                if data_entry and not data_entry.is_bss and not data_entry.is_text:
                     try:
                         value = self.initializer_for_symbol(sym, fmt)
                     except FailedToGenerateInitializer as e:
@@ -4279,7 +4556,11 @@ class GlobalInfo:
                     # Float & string constants are almost always inlined and can be omitted
                     if sym.is_string_constant():
                         continue
-                    if array_dim is None and sym.type.is_likely_float():
+                    if (
+                        array_dim is None
+                        and data_entry is not None
+                        and data_entry.used_as_literal
+                    ):
                         continue
 
                 # In "none" mode, do not emit any decls
@@ -4292,6 +4573,7 @@ class GlobalInfo:
                 if (
                     decls != Options.GlobalDeclsEnum.ALL
                     and self.target.language == Target.LanguageEnum.CXX
+                    and self.target.compiler == Target.CompilerEnum.MWCC
                     and name.startswith("__vt__")
                 ):
                     continue
@@ -4352,15 +4634,18 @@ def setup_planned_vars(
         prefix = f"var_{reg_name}"
         if stack_info.global_info.deterministic_vars:
             lineno = min(
-                0
-                if not isinstance(source, InstrRef)
-                else source.instruction.meta.lineno
+                (
+                    0
+                    if not isinstance(source, InstrRef)
+                    else source.instruction.meta.lineno
+                )
                 for _, source in keys
             )
             prefix = f"{prefix}_{lineno}"
         var = Var(
             stack_info,
             prefix=prefix,
+            is_planned=True,
             type=Type.any_reg(),
         )
         stack_info.temp_vars.append(var)
@@ -4402,9 +4687,10 @@ def setup_initial_registers(state: NodeState, fn_sig: FunctionSignature) -> None
             reg, stack_info.saved_reg_symbol(reg.register_name), RegMeta(initial=True)
         )
 
-    def make_arg(offset: int, type: Type) -> PassedInArg:
-        assert offset % 4 == 0
-        return PassedInArg(offset, stack_info=stack_info, type=type)
+    def make_arg(loc: ArgLoc, type: Type) -> PassedInArg:
+        if loc.offset is not None:
+            assert loc.offset % 4 == 0
+        return PassedInArg(loc, stack_info=stack_info, type=type)
 
     abi = arch.function_abi(
         fn_sig,
@@ -4412,18 +4698,18 @@ def setup_initial_registers(state: NodeState, fn_sig: FunctionSignature) -> None
         for_call=False,
     )
     for slot in abi.arg_slots:
-        type = stack_info.add_known_param(slot.offset, slot.name, slot.type)
-        if slot.reg is not None:
+        type = stack_info.add_known_param(slot.loc, slot.name, slot.type)
+        if slot.loc.reg is not None:
             state.set_initial_reg(
-                slot.reg,
-                make_arg(slot.offset, type),
+                slot.loc.reg,
+                make_arg(slot.loc, type),
                 RegMeta(uninteresting=True, initial=True),
             )
     for slot in abi.possible_slots:
-        if slot.reg is not None:
+        if slot.loc.reg is not None:
             state.set_initial_reg(
-                slot.reg,
-                make_arg(slot.offset, slot.type),
+                slot.loc.reg,
+                make_arg(slot.loc, slot.type),
                 RegMeta(uninteresting=True, initial=True),
             )
 
@@ -4500,6 +4786,8 @@ def translate_to_ast(
     else:
         return_type.unify(Type.void())
 
+    assign_naive_phis(used_naive_phis, stack_info)
+
     # Guess parameters
     if not fn_sig.params_known:
         while len(fn_sig.params) < len(stack_info.arguments):
@@ -4509,7 +4797,6 @@ def translate_to_ast(
             if not param.name:
                 param.name = arg.format(Formatter())
 
-    assign_naive_phis(used_naive_phis, stack_info)
     resolve_types_late(stack_info)
 
     if options.pdb_translate:

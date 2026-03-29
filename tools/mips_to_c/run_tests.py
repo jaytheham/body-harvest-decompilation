@@ -12,6 +12,7 @@ import sys
 from coverage import Coverage
 from pathlib import Path
 from typing import Any, Iterator, List, Optional, Pattern, Tuple
+import unittest
 
 from m2c.options import Options
 
@@ -36,7 +37,6 @@ class TestCase:
     name: str
     asm_file: Path
     output_file: Path
-    brief_crashes: bool = True
     flags_path: Optional[Path] = None
     flags: List[str] = field(default_factory=list)
 
@@ -78,19 +78,24 @@ def decompile_and_compare(
         original_contents = test_case.output_file.read_text()
     except FileNotFoundError:
         if not test_options.should_overwrite:
-            logging.error(f"{test_case.output_file} does not exist. Skipping.")
-            return None, f"{test_case.output_file} does not exist. Skippping."
+            err = f"{test_case.output_file} does not exist. Skipping."
+            logging.error(err)
+            return None, err
         original_contents = "(file did not exist)"
 
     test_flags = ["--sanitize-tracebacks", "--stop-on-error"]
     test_flags.extend(test_case.flags)
+    if "gba" in test_flags:
+        # Avoid repeated cache invalidations due to different struct alignment.
+        # This also helps test both with and without cache.
+        test_flags.append("--no-cache")
     if test_case.flags_path is not None:
         test_flags.extend(get_test_flags(test_case.flags_path))
     test_flags.append(str(test_case.asm_file))
     test_flags.extend(test_options.extra_flags)
     options = parse_flags(test_flags)
 
-    final_contents = decompile_and_capture_output(options, test_case.brief_crashes)
+    final_contents = decompile_and_capture_output(options)
 
     if test_options.should_overwrite:
         test_case.output_file.parent.mkdir(parents=True, exist_ok=True)
@@ -111,7 +116,7 @@ def decompile_and_compare(
     return True, ""
 
 
-def decompile_and_capture_output(options: Options, brief_crashes: bool) -> str:
+def decompile_and_capture_output(options: Options) -> str:
     # This import is deferred so it can be profiled by the coverage tool
     from m2c.main import run as decompile
 
@@ -124,10 +129,7 @@ def decompile_and_capture_output(options: Options, brief_crashes: bool) -> str:
     if returncode == 0:
         return out_text
     else:
-        if brief_crashes:
-            return CRASH_STRING
-        else:
-            return f"{CRASH_STRING}\n{out_text}"
+        return f"{CRASH_STRING}\n{out_text}"
 
 
 def create_e2e_tests(
@@ -145,7 +147,6 @@ def create_e2e_tests(
                 name=name,
                 asm_file=asm_file,
                 output_file=output_file,
-                brief_crashes=True,
                 flags_path=flags_path,
                 flags=["--function", "test"],
             )
@@ -255,7 +256,6 @@ def create_project_tests(
                 name=name,
                 asm_file=file_list[0],
                 output_file=output_file,
-                brief_crashes=False,
                 flags=flags + [str(p) for p in file_list[1:]],
             )
         )
@@ -273,7 +273,7 @@ def run_test(
     return test_case, did_pass, output
 
 
-def main(
+def run(
     project_dirs: List[Tuple[Path, bool]],
     test_options: TestOptions,
 ) -> int:
@@ -346,16 +346,30 @@ def main(
     if test_options.parallel:
         pool.terminate()
 
+    suite = unittest.defaultTestLoader.discover("tests/unit")
+    unit_num = suite.countTestCases()
+    logging.info(f"Running {unit_num} unit test{'s' if unit_num != 1 else ''}")
+    unit_out = io.StringIO()
+    unit_res = unittest.TextTestRunner(stream=unit_out).run(suite)
+
+    passed += unit_res.testsRun - len(unit_res.failures) - len(unit_res.errors)
+    skipped += len(unit_res.skipped)
+    failed += len(unit_res.failures)
+    failed += len(unit_res.errors)
+    if unit_res.failures or unit_res.errors:
+        logging.error("Unit tests failed:")
+        print(unit_out.getvalue(), end="")
+
     logging.info(
         f"Test summary: {passed} passed, {skipped} skipped, {failed} failed, {passed + skipped + failed} total"
     )
 
-    if failed > 0 and not test_options.should_overwrite:
+    if failed > 0 and (not test_options.should_overwrite or unit_res.failures):
         return 1
     return 0
 
 
-if __name__ == "__main__":
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Run and record end-to-end decompiler tests."
     )
@@ -481,7 +495,7 @@ if __name__ == "__main__":
         extra_flags=args.extra_flags,
         coverage=cov,
     )
-    ret = main(args.project_dirs, test_options)
+    ret = run(args.project_dirs, test_options)
 
     if cov is not None:
         cov.stop()
@@ -491,3 +505,7 @@ if __name__ == "__main__":
         logging.info(f"Wrote html coverage report to {args.coverage_html}")
 
     sys.exit(ret)
+
+
+if __name__ == "__main__":
+    main()

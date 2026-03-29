@@ -17,11 +17,20 @@ def print_headers(content_type: str) -> None:
     sys.stdout.flush()
 
 
+FUNCTION_START_DIRECTIVES = (
+    "glabel",
+    ".global",
+    "thumb_func",
+    "arm_func",
+    "THUMB_FUNC",
+    "ARM_FUNC",
+)
+
 form = cgi.FieldStorage()
 if "source" in form:
     source = form["source"].value if "source" in form else ""
     context = form["context"].value if "context" in form else None
-    if "glabel" not in source and ".global" not in source:
+    if all(x not in source for x in FUNCTION_START_DIRECTIVES):
         source = "glabel foo\n" + source
     source = bytes(source, "utf-8")
     script_path = os.path.join(os.path.dirname(__file__), "m2c.py")
@@ -57,17 +66,26 @@ if "source" in form:
     if "target" in form:
         value = form.getfirst("target")
         if value in (
-            "ppc-mwcc-c",
             "ppc-mwcc-c++",
+            "gba-gcc-c",
+            "arm-gcc-c",
+            "arm-mwcc-c++",
             "mips-ido-c",
             "mips-gcc-c",
             "mipsel-gcc-c",
+            "mipsee-gcc-c",
         ):
             cmd.extend(["--target", value])
     if "nounkinference" in form:
         cmd.append("--no-unk-inference")
     if "stackstructs" in form:
         cmd.append("--stack-structs")
+    if "nostackspill" in form:
+        cmd.append("--no-stack-spill")
+    if "descendingregs" in form:
+        cmd.append("--descending-regs")
+    if "backwardsbss" in form:
+        cmd.append("--backwards-bss")
 
     comment_style = form.getfirst("comment_style", "multiline")
     if "none" in comment_style:
@@ -235,13 +253,16 @@ label {
     <option value="none">none</option>
     </select>
     </label>
-    <label>Target arch, compiler, &amp; language:
+    <label>Target platform &amp; compiler:
     <select name="target">
-    <option value="mips-ido-c">MIPS, IDO, C</option>
-    <option value="mips-gcc-c">MIPS, GCC, C</option>
-    <option value="mipsel-gcc-c">MIPSEL, GCC, C</option>
-    <option value="ppc-mwcc-c++">PPC, MWCC, C++</option>
-    <option value="ppc-mwcc-c">PPC, MWCC, C</option>
+    <option value="mips-ido-c">MIPS, IDO</option>
+    <option value="mips-gcc-c">MIPS, GCC</option>
+    <option value="mipsel-gcc-c">MIPSEL, GCC</option>
+    <option value="mipsee-gcc-c">MIPSEE, GCC</option>
+    <option value="ppc-mwcc-c++">PPC, MWCC</option>
+    <option value="gba-gcc-c">ARM, agbcc</option>
+    <option value="arm-gcc-c">ARM, GCC</option>
+    <option value="arm-mwcc-c++">ARM, MWCC</option>
     </select>
     </label>
     <label>Comment style:
@@ -275,6 +296,9 @@ label {
     <label><input type="checkbox" name="noswitches">Disable irregular switch detection</label>
     <label><input type="checkbox" name="nounkinference">Disable unknown struct/type inference</label>
     <label><input type="checkbox" name="stackstructs">Stack struct templates</label>
+    <label><input type="checkbox" name="nostackspill">Disable stack spilling detection</label>
+    <label><input type="checkbox" name="descendingregs">Sort variables in descending order</label>
+    <label><input type="checkbox" name="backwardsbss">Sort bss in descending order</label>
     <label><input type="checkbox" name="usesidebar">Output sidebar</label>
     <label><input type="checkbox" name="dark">Dark mode</label>
   </div>
@@ -356,7 +380,7 @@ contextEl.addEventListener("change", function() {
     localStorage.mips_to_c_saved_context = contextEl.value;
 });
 document.getElementById("options").addEventListener("change", function(event) {
-    var shouldSave = ["usesidebar", "allman", "knr", "extraswitchindent", "leftptr", "zfillconstants", "globals", "nocasts", "noandor", "noifs", "noswitches", "dark", "regvarsselect", "regvars", "comment_style", "target", "nounkinference", "stackstructs"];
+    var shouldSave = ["usesidebar", "allman", "knr", "extraswitchindent", "leftptr", "zfillconstants", "globals", "nocasts", "noandor", "noifs", "noswitches", "dark", "regvarsselect", "regvars", "comment_style", "target", "nounkinference", "stackstructs", "nostackspill", "descendingregs", "backwardsbss"];
     var options = {};
     for (var key of shouldSave) {
         var el = document.getElementsByName(key)[0];
