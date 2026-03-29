@@ -114,7 +114,50 @@ void func_800EA5B8_F9568(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA604_F95B4.s")
 
+#ifdef NON_MATCHING
+s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) {
+	s32 temp_v1;
+	s32 var_a0;
+	s32 var_v0;
+	s32 var_v0_2;
+
+	temp_v1 = (arg3 & 0xFFFF) - (func_80003824_4424(arg1->z - arg2->z, arg1->x - arg2->x) & 0xFFFF);
+	var_a0 = temp_v1;
+	if (temp_v1 >= 0) {
+		var_v0 = temp_v1;
+	} else {
+		var_v0 = -temp_v1;
+	}
+	if (var_v0 >= 0x8001) {
+		u32 var_at = 0x10000;
+		if (temp_v1 > 0) {
+			var_at = 0xFFFF0000;
+		}
+		var_a0 = temp_v1 + var_at;
+	}
+	if (var_a0 >= 0) {
+		var_v0_2 = var_a0;
+	} else {
+		var_v0_2 = -var_a0;
+	}
+	if (var_v0_2 < (s16) (s32) ((f64) ((arg4 / 2) * 32768.0f) / D_801443E0_153390)) {
+		goto block_18;
+	}
+	if (var_a0 >= 0) {
+		if (arg0 >= -4) {
+			return 2;
+		}
+		goto block_18;
+	}
+	if ((var_a0 < 0) && (arg0 < 5)) {
+		return 1;
+	}
+block_18:
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA7DC_F978C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA8F8_F98A8.s")
 
@@ -1722,7 +1765,22 @@ void func_80109B34_118AE4(VehicleInstance *arg0, f32 arg1, f32 arg2) {
 	arg0->unk38 = arg2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80109B74_118B24.s")
+void func_80109B74_118B24(VehicleInstance *arg0) {
+	if ((gameplayMode != 0xB) && (D_8015922C->unk8 == 0x1F5) && !(arg0->unk20 & 2)) {
+		if (!(D_80052A8C & 3) && (arg0->unk1A == 0)) {
+			func_800C3BD8_D2B88(arg0->unk0, arg0->unk2, arg0->unk4, 0x10, 2, 0xFF, 0xEE, 0);
+		}
+		if ((currentLevel == 2) && ((arg0->unk1A == 0x10) || (arg0->unk1A == 2))) {
+			func_80123E90_132E40(arg0, 4);
+			return;
+		}
+		if (currentLevel == 5) {
+			func_80123E90_132E40(arg0, 0x18);
+			return;
+		}
+		func_80123E90_132E40(arg0, 8);
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80109C84_118C34.s")
 

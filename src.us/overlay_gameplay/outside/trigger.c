@@ -25,7 +25,7 @@ s16 func_800AE300_BD2B0(Unk80222A78 *arg0) {
 
 void func_800AE3AC_BD35C(Unk80222A78 *arg0) {
 	if (arg0->unk0 == 2 && (u32)(arg0->unk4 - D_80052A8C) >= 0x3Du &&
-		(arg0->unkC == func_800AFD48_BECF8 || arg0->unkC == 0)) {
+		(arg0->unkC == (void (*)(void *))func_800AFD48_BECF8 || arg0->unkC == 0)) {
 		arg0->unk1 = (s8)((s16)D_80223780[arg0->unk9].xPosition >> 8);
 		arg0->unk2 = (s8)((s16)D_80223780[arg0->unk9].yPosition >> 8);
 	}
@@ -377,9 +377,49 @@ void func_800AFBF8_BEBA8(Unk80222A78 *arg0)
   }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AFD48_BECF8.s")
+void func_800AFD48_BECF8(Unk80222A78 *arg0) {
+	Unk80222A78 tmp;
+	u8 waveIdx;
 
+	waveIdx = arg0->unk9;
+	func_800AF1F8_BE1A8(D_80223780[waveIdx].xPosition, D_80223780[waveIdx].yPosition, D_80223780[waveIdx].waveSpecId, arg0);
+	tmp.unk4 = D_8014F820 + 0x12;
+	tmp.unk0 = 2;
+	tmp.unkC = func_800AFBF8_BEBA8;
+	tmp.unk9 = waveIdx;
+	if (arg0->unk0 == 1 && *(&D_8003BCC6 + (s8)D_80223780[waveIdx].waveSpecId * 0x60) != 0x19) {
+		tmp.unk1 = arg0->unk1;
+		tmp.unk2 = arg0->unk2;
+		tmp.pad3 = arg0->pad3;
+	} else {
+		tmp.pad3 = 0;
+	}
+	if (*(&D_8003BCC6 + (s8)D_80223780[waveIdx].waveSpecId * 0x60) == 0x19) {
+		func_8001A650_1B250(0x17);
+		func_800BECE0_CDC90();
+	}
+	func_800AE454_BD404(&tmp);
+}
+
+#ifdef NON_MATCHING
+void func_800AFE68_BEE18(Unk80222A78 *arg0) {
+	s32 sp34;
+	s32 sp30;
+	s32 sp2c;
+	s32 sp28;
+	s32 sp24;
+	s32 sp20;
+
+	if (alienInstances[arg0->unk8].specIndex == 0x19) {
+		sp24 = alienInstances[arg0->unk8].unk0;
+		sp20 = alienInstances[arg0->unk8].unk4;
+		sp24 = (s32) ((f64) sp24 - (400.0 * ((f64) (f32) coss(alienInstances[arg0->unk8].unkE) / 32768.0)));
+		func_800AFB38_BEAE8((s16) sp24, (s16) (s32) ((f64) sp20 - (400.0 * ((f64) (f32) sins(*(u16*)(D_80048198[arg0->unk8].unkE)) / 32768.0))), arg0->unk9, arg0->unk8, 0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AFE68_BEE18.s")
+#endif
 
 void func_800AFF9C_BEF4C(s32 arg0, s32 arg1, s32 arg2) {
 	Unk80222A78 tmp;
@@ -546,7 +586,7 @@ void func_800B0830_BF7E0(s32 arg0)
   while (v0--)
   {
 	a0 = &D_80222A78[v0];
-	if (((a0->unkC == func_800AFD48_BECF8) || (a0->unkC == 0)) && 
+	if (((a0->unkC == (void (*)(void *))func_800AFD48_BECF8) || (a0->unkC == 0)) && 
 	  (*(new_var = &D_80223780[a0->unk9])).waveSpecId == 0x1F &&
 	  ((*new_var).unk12 < arg0))
 	{
