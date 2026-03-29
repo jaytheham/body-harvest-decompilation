@@ -70,26 +70,26 @@ void func_800C1128_D00D8(f32 arg0, Vec3f *arg1, Vec3f *arg2) {
 }
 
 void func_800C1150_D0100(void) {
-    f32 sp58[4][4];
-    f32 sp34[3][3];
-    s16 var_a1;
-    s16 var_v0;
-    f32 spvec[3];
+	f32 sp58[4][4];
+	f32 sp34[3][3];
+	s16 var_a1;
+	s16 var_v0;
+	f32 spvec[3];
 
-    guMtxL2F(sp58, (Mtx *)(D_8005BB20 + 0x200));
-    for (var_a1 = 0; var_a1 < 3; var_a1++) {
-        for (var_v0 = 0; var_v0 < 3; var_v0++) {
-            sp34[var_a1][var_v0] = sp58[var_v0][var_a1];
-        }
-    }
-    spvec[0] = -0.5f;
-    spvec[1] = 0.5f;
-    spvec[2] = 0.0f;
-    func_800C0E80_CFE30((f32 *)sp34, spvec, (f32 *)&D_80153AB8);
-    spvec[0] = -spvec[0];
-    func_800C0E80_CFE30((f32 *)sp34, spvec, (f32 *)&D_80153AC4);
-    func_800C0F14_CFEC4(&D_80153AB8, &D_80153AC4, &D_80153AD0);
-    func_800C1024_CFFD4(&D_80153AD0, &D_80153AD0);
+	guMtxL2F(sp58, (Mtx *)(D_8005BB20 + 0x200));
+	for (var_a1 = 0; var_a1 < 3; var_a1++) {
+		for (var_v0 = 0; var_v0 < 3; var_v0++) {
+			sp34[var_a1][var_v0] = sp58[var_v0][var_a1];
+		}
+	}
+	spvec[0] = -0.5f;
+	spvec[1] = 0.5f;
+	spvec[2] = 0.0f;
+	func_800C0E80_CFE30((f32 *)sp34, spvec, (f32 *)&D_80153AB8);
+	spvec[0] = -spvec[0];
+	func_800C0E80_CFE30((f32 *)sp34, spvec, (f32 *)&D_80153AC4);
+	func_800C0F14_CFEC4(&D_80153AB8, &D_80153AC4, &D_80153AD0);
+	func_800C1024_CFFD4(&D_80153AD0, &D_80153AD0);
 }
 
 void func_800C1268_D0218(f32 arg0, f32 arg1, f32 arg2) { D_80153BA0.x = arg0; D_80153BA0.y = arg1; D_80153BA0.z = arg2; }
@@ -1846,13 +1846,13 @@ void func_800E03FC_EF3AC(void) {
 }
 
 void func_800E049C_EF44C(s16 arg0, s16 arg1, s16 arg2) {
-    s32 pad;
-    u16 sp42;
-    u16 sp40;
+	s32 pad;
+	u16 sp42;
+	u16 sp40;
 
-    sp40 = func_800038E0_44E0();
-    sp42 = func_800038E0_44E0();
-    func_800CA5EC_D959C(arg0, arg1, arg2, (s8) (((s32) sp40 % 10) - 0x14), 0x7F, ((s32) sp42 % 10) - 0x14, 0x28, 6, (func_800038E0_44E0() % 3) + 3, 0xA0, 0xB4, 0xBE, 0xFF, 0xC8);
+	sp40 = func_800038E0_44E0();
+	sp42 = func_800038E0_44E0();
+	func_800CA5EC_D959C(arg0, arg1, arg2, (s8) (((s32) sp40 % 10) - 0x14), 0x7F, ((s32) sp42 % 10) - 0x14, 0x28, 6, (func_800038E0_44E0() % 3) + 3, 0xA0, 0xB4, 0xBE, 0xFF, 0xC8);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E05B4_EF564.s")
@@ -1934,7 +1934,17 @@ void func_800E2750_F1700(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2830_F17E0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2DB4_F1D64.s")
+void func_800E2DB4_F1D64(void) {
+	gDPPipeSync(D_8005BB2C++);
+	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2ED4_F1E84.s")
 
