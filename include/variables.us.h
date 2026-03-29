@@ -164,7 +164,6 @@ extern s32 D_80048188;
 extern s32 D_80048190;
 extern s32 D_80048194;
 extern AlienInstance alienInstances[]; // 0x80048198
-extern u8 D_800481A6; // alienInstances[0].unkE (byte base for indexed access)
 extern AlienWaveEntry D_8003BCC0[][12];
 extern u8 D_8003BCC6;
 extern char D_80142B6C_151B1C;
