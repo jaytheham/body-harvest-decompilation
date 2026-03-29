@@ -127,7 +127,9 @@ def parse_c(source: str, *, from_import: bool = False) -> ca.FileAST:
     source = re.sub(r"^#ident.*", "", source, flags=re.MULTILINE)
     try:
         parser = CParser()
-        return parser.parse(source, "<source>")
+        ast = parser.parse(source, "<source>")
+        deduplicate_typedefs(ast)
+        return ast
     except ParseError as e:
         msg = str(e)
         position, msg = msg.split(": ", 1)
@@ -393,6 +395,58 @@ def normalize_ast(fn: ca.FuncDef, ast: ca.FileAST) -> None:
 
     rec(fn.body)
 
+
+def deduplicate_typedefs(ast: ca.FileAST) -> None:
+    """Ensure multi-name typedefs sharing an anonymous struct/union/enum emit a
+    single named definition instead of duplicating the body for each typedef."""
+
+    temp_shared_id = 0
+    seen_structs: Set[int] = set()
+
+    def process_decl(item: Union[ca.Typedef, ca.Decl]) -> None:
+        nonlocal temp_shared_id
+        if isinstance(item.type, (ca.Struct, ca.Union, ca.Enum)):
+            # A bare struct/union/enum declaration (no wrapper). Nothing to
+            # deduplicate at this node; the visitor will recurse into members.
+            return
+        # Walk through PtrDecl/ArrayDecl/TypeDecl wrappers to find a
+        # Struct, Union, or Enum node, if any.
+        tp = item.type
+        while not isinstance(tp, ca.TypeDecl):
+            tp = tp.type
+        inner = tp.type
+        if not isinstance(inner, (ca.Struct, ca.Union, ca.Enum)):
+            return
+        if isinstance(inner, ca.Enum):
+            has_body = inner.values is not None
+        else:
+            has_body = inner.decls is not None
+        if not has_body:
+            return
+        obj_id = id(inner)
+        if obj_id in seen_structs:
+            if not inner.name:
+                temp_shared_id += 1
+                inner.name = f"_PermuterAnon{temp_shared_id}"
+            fwd = copy.deepcopy(inner)
+            if isinstance(fwd, ca.Enum):
+                fwd.values = None
+            else:
+                fwd.decls = None
+            tp.type = fwd
+        else:
+            seen_structs.add(obj_id)
+
+    class DeclVisitor(ca.NodeVisitor):
+        def visit_Decl(self, node: ca.Decl) -> None:
+            process_decl(node)
+            self.generic_visit(node)
+
+        def visit_Typedef(self, node: ca.Typedef) -> None:
+            process_decl(node)
+            self.generic_visit(node)
+
+    DeclVisitor().visit(ast)
 
 def prune_ast(fn: ca.FuncDef, ast: ca.FileAST) -> int:
     """Prune away unnecessary parts of the AST, to reduce overhead from serialization
