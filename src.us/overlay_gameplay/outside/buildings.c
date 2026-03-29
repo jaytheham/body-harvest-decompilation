@@ -317,7 +317,46 @@ s32 func_801185F8_1275A8(BuildingInstance *arg0, s16 arg1) {
 	return 0;
 }
 
+#ifdef NON_MATCHING
+s32 func_80118670_127620(s16 arg0, s16 arg1) {
+	s32 sp20;
+	s32 sp1C;
+	s32 var_v0;
+
+	if (currentLevel != 1) {
+		return 0x400;
+	}
+
+	sp20 = (s32) arg0;
+	sp1C = (s32) arg1;
+
+	if (func_80118460_127410((s16) sp20, (s16) sp1C, 0x4B, -6) < 0x14) {
+		if (func_8000726C_7E6C((u64) 0x28) != 0) {
+			return -0x2570;
+		}
+		return 0x400;
+	}
+
+	if (func_80118460_127410((s16) sp20, (s16) sp1C, 0x27, -0x41) < 0x14) {
+		if (func_8000726C_7E6C((u64) 0x29) != 0) {
+			return -0x2970;
+		}
+		return 0x400;
+	}
+
+	var_v0 = 0x400;
+	if (func_80118460_127410((s16) sp20, (s16) sp1C, -0x23, -0x2E) < 0x14) {
+		if (func_8000726C_7E6C((u64) 0xB) != 0) {
+			return 0x400;
+		}
+		var_v0 = 0x38A4;
+	}
+
+	return var_v0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118670_127620.s")
+#endif
 
 // displayBuildings
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118774_127724.s")
