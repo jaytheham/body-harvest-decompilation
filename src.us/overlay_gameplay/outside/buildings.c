@@ -1279,7 +1279,30 @@ void func_80124BA8_133B58(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124BA8_133B58.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80124C40_133BF0(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
+	s32 pct;
+	s16 dmg;
+
+	dmg = arg1;
+	pct = func_801223B0_131360(arg0, arg2, arg3, dmg);
+
+	if (arg0->unkC == -2) {
+		func_80122524_1314D4(arg0, dmg, arg2, arg3);
+		return;
+	}
+
+	if (arg0->unk1A != 0) {
+		dmg = (s32)((f64)dmg * (1.0 - ((f64)pct / 100.0)));
+		if (dmg != 0) {
+			func_80088154_97104(arg0, dmg, func_80003824_4424((f32)(arg0->unk0 - arg2), (f32)(arg0->unk4 - arg3)));
+			D_8014ED44 = 8;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124C40_133BF0.s")
+#endif
 
 // displayBullets
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124D60_133D10.s")
