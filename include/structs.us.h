@@ -841,7 +841,8 @@ typedef struct {
 	/* 0x420 */ void *unk420;
 	/* 0x424 */ u8 unk424;
 	/* 0x425 */ u8 pad425[0x23];
-} Unk80157600; /* size = 0x448 */
+} Unk80157600; /* size = 0x448. TODO This address outside is actually an array of 0x40 structs? */
+// Inside it appears to be solely f32 values
 
 typedef struct {
 	/* 0x00 */ s32 unk0;
