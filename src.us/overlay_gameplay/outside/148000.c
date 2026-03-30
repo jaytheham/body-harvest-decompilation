@@ -41,7 +41,55 @@ s32 func_80139150_148100(u8 arg0, u16 arg1) {
 }
 
 // guess_giveItem
+#ifdef NON_MATCHING
+s32 func_801391DC_14818C(s32 arg0, s16 arg1) {
+	s32 pad1;
+	s32 pad2;
+	s32 result;
+	s32 pad3;
+	s32 i;
+	u8 *p;
+	u8 prev;
+
+	if (func_801393A0_148350(arg0) != 0) {
+		return (s16)func_80139150_148100(arg0, arg1);
+	}
+
+	p = weaponSlots;
+	if (p[6] != 0) {
+		if (p[0] != 1) {
+			osSyncPrintf(&D_80145A40_1549F0);
+			return 0;
+		}
+		for (i = 1; i < 7; i++) {
+			p[i - 1] = p[i];
+		}
+		p[6] = 0;
+	}
+
+	p = weaponSlots + 6;
+loop:
+	prev = p[-1];
+	if (arg0 < prev) {
+		*p = prev;
+	} else if (prev != 0) {
+		goto store_done;
+	}
+	p--;
+	if (p != weaponSlots) {
+		goto loop;
+	}
+store_done:
+	*p = arg0;
+
+	result = func_80139150_148100(arg0, arg1);
+	func_80139050_148000();
+	return result;
+}
+
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801391DC_14818C.s")
+#endif
 
 void func_801392FC_1482AC(s32 arg0)
 {
@@ -401,33 +449,33 @@ void func_8013B30C_14A2BC(void) {
 }
 
 void func_8013B384_14A334(void) {
-    s16 temp_v0;
-    s16 temp_a1;
-    s16 var_a2;
-    s16 var_a3;
-    s8 var_t1;
+	s16 temp_v0;
+	s16 temp_a1;
+	s16 var_a2;
+	s16 var_a3;
+	s8 var_t1;
 
-    temp_v0 = (s16)((D_801601CC - D_801601D0) * 0x12 - 0x12);
-    temp_a1 = (s16)(temp_v0 / 6);
-    var_a2 = 0xAF;
-    if (currentLevel == 5) {
-        var_a2 = 0xC3;
-    }
-    var_a3 = (s16)(((s16)var_a2 + temp_v0) - (temp_a1 * D_801601E4) - 4);
-    var_t1 = (s8)(D_801601CC - 1);
-    if (var_t1 >= 0) {
-        do {
-            if (var_t1 == D_801601D0) {
-                var_a3 = (s16)(var_a3 - 0x18);
-                hudWeaponItems[var_t1].opacity = 0xFF;
-            } else {
-                var_a3 = (s16)(var_a3 - 0x12);
-                hudWeaponItems[var_t1].opacity = (u8)(D_801601E4 * 0x26);
-            }
-            hudWeaponItems[var_t1].yPosition = var_a3;
-            var_t1 -= 1;
-        } while (var_t1 >= 0);
-    }
+	temp_v0 = (s16)((D_801601CC - D_801601D0) * 0x12 - 0x12);
+	temp_a1 = (s16)(temp_v0 / 6);
+	var_a2 = 0xAF;
+	if (currentLevel == 5) {
+		var_a2 = 0xC3;
+	}
+	var_a3 = (s16)(((s16)var_a2 + temp_v0) - (temp_a1 * D_801601E4) - 4);
+	var_t1 = (s8)(D_801601CC - 1);
+	if (var_t1 >= 0) {
+		do {
+			if (var_t1 == D_801601D0) {
+				var_a3 = (s16)(var_a3 - 0x18);
+				hudWeaponItems[var_t1].opacity = 0xFF;
+			} else {
+				var_a3 = (s16)(var_a3 - 0x12);
+				hudWeaponItems[var_t1].opacity = (u8)(D_801601E4 * 0x26);
+			}
+			hudWeaponItems[var_t1].yPosition = var_a3;
+			var_t1 -= 1;
+		} while (var_t1 >= 0);
+	}
 }
 
 #ifdef NON_MATCHING

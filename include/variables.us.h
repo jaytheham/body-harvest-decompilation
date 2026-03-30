@@ -557,7 +557,7 @@ extern u8 D_801454E8[];
 extern char D_80145A30_1549E0; // select 
 extern char D_80145A38_1549E8; // %d,
 extern char D_80145A3C_1549EC; // .
-extern u8 D_80145A40;
+extern char D_80145A40_1549F0;
 extern char D_80145A70_154A20;
 extern char D_80145A8C_154A3C;
 extern char D_80145AA4_154A54;
