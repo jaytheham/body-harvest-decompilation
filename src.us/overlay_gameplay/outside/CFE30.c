@@ -1525,7 +1525,18 @@ void func_800D9C60_E8C10(s16 arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9C98_E8C48.s")
+void func_800D9C98_E8C48(s16 arg0, s16 arg1) {
+    s32 sp2C;
+    s16 *entryData = (s16 *)&D_80154318[arg0].unk8;
+    if (entryData[2] & 1) {
+        s32 rnd;
+        sp2C = func_800DEE5C_EDE0C(entryData[3], (s16)(s32)(entryData[4] + ((f64)(f32)sins(0x4000 - (entryData[2] << 10)) / 32768.0) * D_80144028_152FD8), entryData[5], 0x46, 0x18 - entryData[2]);
+        rnd = func_800038E0_44E0() % 128;
+        rnd += 0x40;
+        func_800DDD90_ECD40((u8)sp2C, 0xFF, rnd, 0);
+        func_80135D44_144CF4(entryData[3], entryData[4], entryData[5], (f32)(entryData[2] >> 1));
+    }
+}
 
 void func_800D9DD8_E8D88(s16 arg0, s16 arg1, s16 arg2) {
 	if (func_800D99F4_E89A4(&func_800D9C98_E8C48, 0x10, arg0, arg1, (s32) arg2) != -3) {

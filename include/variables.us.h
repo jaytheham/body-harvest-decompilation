@@ -1296,6 +1296,7 @@ extern char D_80143A38_1529E8;
 extern char D_80143ED0_152E80;
 extern char D_80143EF0_152EA0;
 extern char D_80143FA4_152F54;
+extern f64 D_80144028_152FD8;
 extern UnkFunc8013B5E4 D_80257A1C[];
 extern UnkFunc8013B5E4 D_80257A4C[];
 extern char D_80145ABC_154A6C[];
