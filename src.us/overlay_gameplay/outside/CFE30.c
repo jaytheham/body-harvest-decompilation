@@ -2045,7 +2045,17 @@ void func_800E35E0_F2590(u8 arg0)
   }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E360C_F25BC.s")
+void func_800E360C_F25BC(void) {
+	gDPPipeSync(D_8005BB2C++);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 255, 255, 255, D_8013E344_14D2F4);
+	gDPPipeSync(D_8005BB2C++);
+	gDPFillRectangle(D_8005BB2C++, 0, 0, D_80068084, D_80068088);
+	D_8013E344_14D2F4 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3738_F26E8.s")
 
