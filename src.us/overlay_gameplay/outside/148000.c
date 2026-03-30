@@ -112,7 +112,57 @@ void func_801394DC_14848C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801394DC_14848C.s")
 #endif
 
+// NON_MATCHING: regalloc - a0/a1/a2 cyclic rotation (offset/srcPtr/weapon2)
+// Compiler folds &D_80031424 base address, preventing a0 from being allocated to it first.
+// Score 780 - all instructions match, only register names differ.
+#ifdef NON_MATCHING
+void func_8013958C_14853C(void) {
+	s32 val;
+	s32 weapon1;
+	s32 *src;
+	s32 weapon2;
+	s32 offset;
+	Unk80031424 *srcStruct;
+
+	D_80031474.unk2C = 0;
+	D_80031474.unk30 = 1;
+	val = D_8003142C;
+	srcStruct = (Unk80031424 *)D_80031424;
+	weapon1 = srcStruct->unk2C;
+	src = &D_80031430;
+	if (weapon1 == val) {
+		D_800314A0 = D_8003147C;
+	}
+	weapon2 = srcStruct->unk30;
+	offset = 0xC;
+	if (weapon2 == val) {
+		D_800314A4 = D_8003147C;
+	}
+
+loop:
+	val = src[0];
+	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + offset);
+	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + offset);
+
+	val = src[1];
+	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + offset + 4);
+	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + offset + 4);
+
+	val = src[2];
+	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + offset + 8);
+	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + offset + 8);
+
+	val = src[3];
+	src += 4;
+	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + offset + 0xC);
+	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + offset + 0xC);
+
+	offset += 0x10;
+	if (src != &D_80031450) goto loop;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013958C_14853C.s")
+#endif
 
 void func_801396A8_148658(s32 arg0) {
 	func_801392FC_1482AC(0xB);

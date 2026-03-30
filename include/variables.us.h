@@ -79,9 +79,15 @@ extern s32 D_80031410;
 extern s32 D_80031414;
 extern s32 D_80031420;
 extern u32 D_80031424[];
+extern s32 D_8003142C;
+extern s32 D_80031430;
 extern s32 D_8003144C;
 extern s32 D_80031450;
 extern s32 D_80031454;
+extern Unk80031424 D_80031474;
+extern s32 D_8003147C;
+extern s32 D_800314A0;
+extern s32 D_800314A4;
 extern s8 D_800314C4; // maxHumanDeathsAllowed?
 extern OSMesg D_800314CC;
 extern s32 D_80031B84;
