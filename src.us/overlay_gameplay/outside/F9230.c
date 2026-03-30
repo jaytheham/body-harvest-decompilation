@@ -1123,7 +1123,32 @@ void func_800FB4A0_10A450(s16 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FC568_10B518.s")
 
+#ifdef NON_MATCHING
+void func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
+	s32 result;
+	u32 bits;
+	s32 idx;
+	u32 val;
+
+	val = D_80052A94[arg1].unk0[arg0];
+	bits = (u8)((val << 22) >> 28);
+	idx = bits;
+	if ((s32)(val << 21) < 0) {
+		idx = (u8)(bits + 16);
+	}
+	*arg2 = D_801407F4_14F7A4[idx * 6];
+	*arg3 = D_801407F4_14F7A4[idx * 6 + 1];
+	result = func_800B325C_C220C(arg0, arg1, 0xFFFF);
+	if ((s16)(((result & 0x4000) == 0) ^ ((arg0 & 1) == 0)) != 0) {
+		*arg2 = 0x100 - *arg2;
+	}
+	if ((s16)(((result & 0x2000) == 0) ^ ((arg1 & 1) == 0)) != 0) {
+		*arg3 = 0x100 - *arg3;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FC7E0_10B790.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FC90C_10B8BC.s")
 
