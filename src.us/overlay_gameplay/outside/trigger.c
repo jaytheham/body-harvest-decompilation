@@ -221,7 +221,29 @@ void func_800AF5B0_BE560(s32 arg0) {
 }
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF634_BE5E4.s")
+void func_800AF634_BE5E4(Unk80222A78 *arg0) {
+	u8 alienIdx = arg0->unk8;
+	AlienInstance *parent;
+	s32 waveIndex;
+
+	osSyncPrintf(&D_80142C00_151BB0, alienInstances[alienIdx].unk3E);
+	if (alienInstances[alienIdx].specIndex == 0x19) {
+		parent = alienInstances + alienInstances[alienIdx].unk25;
+		waveIndex = alienInstances[alienIdx].unk3E;
+
+		if ((parent->unk20 & 0x4000) != 0) {
+			if (D_80223780[waveIndex].padC[2] != 0) {
+				func_800AF4A4_BE454(waveIndex, D_80223780[waveIndex].padC[2] * 0xC8, alienInstances[alienIdx].unk3D);
+			}
+		}
+		if ((parent->unk20 & 0x8000) != 0) {
+			func_800AF5B0_BE560(arg0->unk9);
+			func_800AFBA4_BEB54(D_80223780[waveIndex].xPosition, D_80223780[waveIndex].yPosition);
+		} else {
+			func_800AF52C_BE4DC(arg0->unk9);
+		}
+	}
+}
 
 void func_800AF764_BE714(s16 arg0) {
 	Unk80222A78 tmp;
