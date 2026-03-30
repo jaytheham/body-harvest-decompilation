@@ -1899,7 +1899,12 @@ void func_800DFEE4_EEE94(s16 arg0, s16 arg1, s16 arg2) {
 	func_800C541C_D43CC(arg0, arg1, arg2, 0, 0x7F, 0, 0x32, 0xFA, func_800038E0_44E0() % 4, 3, 0xFF, 0xFF, 0xDC);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DFFC4_EEF74.s")
+void func_800DFFC4_EEF74(s16 arg0, s16 arg1, s16 arg2) {
+	if (D_80031420 & 3) {
+		func_800DEA08_ED9B8(arg0, arg1, arg2, 0x28, 8, 4, 0x14, 0xC8, D_8013E3C0[currentLevel * 3 - 3], D_8013E3C0[currentLevel * 3 - 2], D_8013E3C0[currentLevel * 3 - 1]);
+		func_800CA5EC_D959C(arg0, arg1, arg2, 0, 0x7F, 0, 0x32, 4, func_800038E0_44E0() % 4, 0xFF, D_8013E3C0[currentLevel * 3 - 3], D_8013E3C0[currentLevel * 3 - 2], D_8013E3C0[currentLevel * 3 - 1], 0xFF);
+	}
+}
 
 void func_800E00F4_EF0A4(u8 arg0, u8 arg1) {
 	Unk801541F8Entry *entry = &D_801541F8[arg1];
