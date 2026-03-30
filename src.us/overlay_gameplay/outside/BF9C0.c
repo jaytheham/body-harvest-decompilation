@@ -145,7 +145,58 @@ s32 func_800B0D10_BFCC0(s32 arg0, s32 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0D10_BFCC0.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0DF4_BFDA4.s")
+s32 func_800B0DF4_BFDA4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 extW, extH;
+    s32 dx, dz;
+    s32 overlapX;
+
+    if (arg3 == 1) {
+        if (arg0 - arg2 < D_8014FD30.unk0) {
+            return 0x4000;
+        }
+        if (D_8014FD30.unk4 < arg0 + arg2) {
+            return -0x4000;
+        }
+        if (arg1 - arg2 < D_8014FD30.unk2) {
+            return -0x8000;
+        }
+        if (D_8014FD30.unk6 < arg1 + arg2) {
+            return 0;
+        }
+    }
+
+    extW = *((s16 *)((u8 *)&D_8014FD30 + arg3 * 8) - 2) - *((s16 *)((u8 *)&D_8014FD30 + arg3 * 8) - 4);
+    extH = *((s16 *)((u8 *)&D_8014FD30 + arg3 * 8) - 1) - *((s16 *)((u8 *)&D_8014FD30 + arg3 * 8) - 3);
+    extW >>= 1;
+    extH >>= 1;
+    extW += arg2;
+    extH += arg2;
+    dx = (arg0 + arg2) - *((s16 *)((u8 *)&D_8014FD30 + arg3 * 8) - 4) - extW;
+    dz = (arg1 + arg2) - *((s16 *)((u8 *)&D_8014FD30 + arg3 * 8) - 3) - extH;
+
+    if (dx < 0) {
+        overlapX = dx + extW;
+    } else {
+        overlapX = extW - dx;
+    }
+
+    if (dz < 0) {
+        extW = dz + extH;
+    } else {
+        extW = extH - dz;
+    }
+
+    if (overlapX < extW) {
+        if (dx < 0) {
+            return -0x4000;
+        }
+        return 0x4000;
+    }
+    if (dz < 0) {
+        return 0;
+    }
+    return -0x8000;
+}
 
 #ifdef NON_MATCHING
 s32 func_800B0F20_BFED0(s32 arg0, s32 arg1) {

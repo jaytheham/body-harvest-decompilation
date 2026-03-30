@@ -715,7 +715,7 @@ s32 func_80080418_8F3C8(s32 arg0, s32 arg1, s32 arg2)
   bounceResult = func_800B0D10_BFCC0(arg1, arg2, new_var);
   if (bounceResult != 0)
   {
-	s16 angle = func_800B0DF4_BFDA4(inst->unk0, inst->unk4, new_var, bounceResult);
+	s32 angle = func_800B0DF4_BFDA4(inst->unk0, inst->unk4, new_var, bounceResult);
 	if ((angle == 0x4000) || (angle == (-0x4000)))
 	{
 	  inst->unkE = (s16) (0x8000 - inst->unkE);
