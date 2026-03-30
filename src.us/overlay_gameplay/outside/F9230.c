@@ -697,7 +697,23 @@ void func_800F375C_10270C(s8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F3990_102940.s")
 
+#ifdef NON_MATCHING
+// Regalloc in else block: compiler reuses $f2 for 0.5 division instead of loading fresh.
+// Score 1270 - all matching except else block float constant loading order.
+s16 func_800F3EE4_102E94(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, u8 arg5) {
+	f64 ratio;
+
+	ratio = (f64)((f32)(u32)arg0 / (f32)(u32)arg5);
+
+	if (ratio < 0.5) {
+		return (s16)(s32)((f32)arg1 + (f32)(s16)(arg3 - arg1) * (f32)(ratio / 0.5));
+	}
+
+	return (s16)(s32)((f32)(s16)(arg3 - arg2) * (f32)(1.0 - (f64)(f32)(ratio - 0.5) / 0.5) + (f32)arg2);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F3EE4_102E94.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F4028_102FD8.s")
 
