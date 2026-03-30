@@ -1135,7 +1135,33 @@ void func_800FB4A0_10A450(s16 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FC1CC_10B17C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FC434_10B3E4.s")
+void func_800FC434_10B3E4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s16 arg8, s16 arg9) {
+	Vtx *vtx0;
+	Vtx *vtx1;
+	Vtx *vtx2;
+
+	vtx0 = D_8005BB34++;
+	vtx1 = D_8005BB34++;
+	vtx2 = D_8005BB34++;
+
+	vtx0->v.cn[0] = vtx1->v.cn[0] = vtx2->v.cn[0] = arg6;
+	vtx0->v.cn[1] = vtx1->v.cn[1] = vtx2->v.cn[1] = arg7;
+	vtx0->v.cn[2] = vtx1->v.cn[2] = vtx2->v.cn[2] = arg8;
+	vtx0->v.cn[3] = vtx1->v.cn[3] = vtx2->v.cn[3] = arg9;
+
+	vtx0->v.ob[0] = arg0;
+	vtx0->v.ob[1] = arg1;
+	vtx0->v.ob[2] = arg2;
+	vtx1->v.ob[0] = arg3 - 50;
+	vtx1->v.ob[1] = arg4;
+	vtx1->v.ob[2] = arg5;
+	vtx2->v.ob[0] = arg3 + 50;
+	vtx2->v.ob[1] = arg4;
+	vtx2->v.ob[2] = arg5;
+
+	gSPVertex(D_8005BB2C++, (u32)(D_8005BB34 - 3) & 0x1FFFFFFF, 3, 0);
+	gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FC568_10B518.s")
 
