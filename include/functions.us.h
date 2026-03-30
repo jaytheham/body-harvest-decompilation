@@ -650,7 +650,7 @@ f32 func_80003910_4510(f32 arg0, s32 arg1);
 s32 func_8000393C_453C(f32 arg0, s32 arg1);
 void func_800AFD48_BECF8(Unk80222A78 *);
 void func_800A6FD4_B5F84(void);
-void func_800CF80C_DE7BC(s16, s16, s16, s32, s32, s32, s32, s32);
+void func_800CF80C_DE7BC(s16, s16, s16, s16, u8, u8, u8, u8);
 void func_800B0000_BEFB0(s32);
 void func_800AF1F8_BE1A8(s16, s16, u8, void *);
 void func_800AF0C0_BE070(s16, s16, u8, void *);

@@ -886,7 +886,39 @@ void func_800CF070_DE020(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF2E0_DE290.s")
 
+#ifdef NON_MATCHING
+void func_800CF80C_DE7BC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7) {
+	s16 idx;
+	Unk80154318Entry *entry;
+
+	idx = func_800C17B4_D0764(0xA, 1);
+	if (idx != -3) {
+		entry = &D_80154318[idx];
+		entry->unk2 = arg3;
+		((u8 *)entry)[0x18] = arg7;
+		entry->unkA = arg1;
+		entry->unkC = arg2;
+		entry->unk8 = arg0;
+		entry->unkE = D_8013DF80_14CF30.unk0;
+		entry->unkF = D_8013DF80_14CF30.unk1;
+		entry->unk10 = D_8013DF80_14CF30.unk2;
+
+		if ((arg7 & 1) == 0) {
+			*(s32 *)&entry->unk14 = 1;
+			arg7 = arg7 & 1;
+			func_801372B4_146264(arg0, arg1, arg2, 3);
+		} else {
+			*(s32 *)&entry->unk14 = 0x19;
+			arg7 = arg7 & 1;
+			func_801372B4_146264(arg0, arg1, arg2, 4);
+		}
+
+		func_800CBDE0_DAD90(arg3, arg0, arg1, arg2, arg4, arg5, arg6, arg7);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF80C_DE7BC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF948_DE8F8.s")
 
