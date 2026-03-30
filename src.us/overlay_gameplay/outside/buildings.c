@@ -1261,7 +1261,47 @@ void func_80122524_1314D4(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80122524_1314D4.s")
 #endif
 
+#ifdef NON_MATCHING
+s16 func_801225C4_131574(Unk8015F760 *arg0) {
+	s32 var_v1;
+	s32 var_a1;
+	Unk8015F790 *var_a2;
+	s16 *var_a3;
+
+	if ((D_8015F9E8 >= 0x10) || !((D_80145BE8_154B98[arg0->unk20][0] >> 8) & 0x10)) {
+		return -1;
+	}
+	D_8015F9E8++;
+
+	var_v1 = 15;
+	do {
+		if (D_8015F790[var_v1].unk1C << 30 < 0) {
+			continue;
+		}
+		var_a1 = var_v1;
+		break;
+	} while (var_v1--);
+
+	var_a2 = &D_8015F790[var_a1];
+	var_a3 = (s16 *)var_a2 + 4;
+	var_v1 = 4;
+	do {
+		var_a3--;
+		var_a3[1] = (s16)arg0->unk0;
+		var_a3[6] = (s16)arg0->unk4;
+		var_a3[11] = (s16)arg0->unk8;
+	} while (var_v1--);
+
+	*(u16 *)((u8 *)var_a2 + 0x1E) = (*(u16 *)((u8 *)var_a2 + 0x1E) & 3) | 0x14;
+	var_a2->unk20 = arg0;
+	*(u8 *)((u8 *)var_a2 + 0x1F) = *(u8 *)((u8 *)var_a2 + 0x1F) | 2;
+	*(u8 *)((u8 *)var_a2 + 0x1F) &= 0xFE;
+
+	return (s16)var_a1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801225C4_131574.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801226F8_1316A8.s")
 
