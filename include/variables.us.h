@@ -1057,6 +1057,8 @@ extern s16 D_80157F68;
 extern s8 D_80157F6A;
 extern s16 D_80157F94;
 extern s16 D_80157F96;
+extern s16 D_80157FD0;
+extern f32 D_8014462C_1535DC;
 extern s16 D_8013B8F4_14A8A4;
 extern s16 D_8013B8F8_14A8A8;
 extern s16 D_8013B8FC_14A8AC;

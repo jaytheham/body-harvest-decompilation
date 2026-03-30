@@ -564,7 +564,44 @@ void func_800F02EC_FF29C(s16 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F066C_FF61C.s")
 
+#ifdef NON_MATCHING
+void func_800F1004_FFFB4(void) {
+	AlienInstance *alien;
+	s16 z;
+
+	D_80157FD0--;
+	if ((D_80157FD0 == 0x32) && (D_80047F9C != 5)) {
+		switch (currentLevel) {
+			case LEVEL_GREECE:
+				func_80018D7C_1997C(0xFF);
+				break;
+			case LEVEL_JAVA:
+				func_80018D7C_1997C(0xE2);
+				break;
+			case LEVEL_AMERICA:
+				func_80018D7C_1997C(0xFA);
+				break;
+			case LEVEL_SIBERIA:
+				func_80018D7C_1997C(0xE6);
+				break;
+			case LEVEL_COMET:
+				func_80018D7C_1997C(0xFA);
+				break;
+		}
+
+		func_80014A3C_1563C(0, 0x17B, 0.0f, 0, D_8014462C_1535DC);
+	}
+
+	if (D_80157FD0 <= 0) {
+		alien = &alienInstances[D_80157F94];
+		z = alien->unk4 - 0x3E8;
+		func_800B0710_BF6C0(alien->unk0, z);
+		func_800074BC_80BC(func_800F1004_FFFB4);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F1004_FFFB4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F1134_1000E4.s")
 
