@@ -2130,7 +2130,33 @@ void func_80113248_1221F8(VehicleInstance *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80113CEC_122C9C.s")
 
+#ifdef NON_MATCHING
+// NON_MATCHING: li s1,3 scheduled 1 instruction too early by IDO scheduler
+// (between lui and addiu blocks instead of after addiu s4,v1,0xc).
+// All other instructions match perfectly; score 60.
+void func_80115604_1245B4(VehicleInstance *arg0) {
+	s32 *base;
+	s32 height;
+	s32 i;
+
+	base = (s32 *)(func_800FAE60_109E10(arg0) * 0x10 + (s32)D_80159510);
+
+	i = 3;
+	do {
+		height = func_800B84D0_C7480(
+			(s16)(s32)(D_80159D78[i] + arg0->unk4C),
+			(s16)(s32)(D_80159D98[i] + arg0->unk54)) >> 8;
+
+		if (!(vehicleSpecs[arg0->unk1A].unk4C & 0x100) && (height < D_80222A70)) {
+			height = D_80222A70;
+		}
+
+		base[i] = height;
+	} while (i--);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80115604_1245B4.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_80115730_1246E0(VehicleInstance *arg0, s32 arg1) {
