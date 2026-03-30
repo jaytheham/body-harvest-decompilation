@@ -470,6 +470,7 @@ extern char D_80141A10;
 extern char D_80141A1C;
 extern char D_80141A28;
 extern char D_80141A38;
+extern u8 D_80154220;
 extern char D_80141A48;
 extern char D_80141A4C;
 extern char D_80141A58;

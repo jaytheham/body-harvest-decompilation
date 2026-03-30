@@ -529,7 +529,50 @@ void func_800C820C_D71BC(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C927C_D822C.s")
 
+#ifdef NON_MATCHING
+void func_800C9530_D84E0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
+	s16 temp_v0;
+	s16 sp1A;
+	s16 temp_a2;
+	s32 temp_t2;
+	Unk80154318Sub *var_v0;
+	u8 *var_a0;
+
+	if (D_80154220 < 0x41) {
+		temp_v0 = func_800C17B4_D0764(3, 1);
+		if (temp_v0 != -3) {
+			sp1A = temp_v0;
+			temp_a2 = func_800B84D0_C7480(arg0, arg1) >> 8;
+			if (D_80222A70 >= temp_a2) {
+				var_a0 = (u8 *)&D_80154318[sp1A];
+				var_v0 = (Unk80154318Sub *)(var_a0 + 8);
+				var_v0->unk2 = D_80222A70 + 1;
+				var_v0->unkC = 1;
+			} else {
+				var_a0 = (u8 *)&D_80154318[sp1A];
+				var_v0 = (Unk80154318Sub *)(var_a0 + 8);
+				var_v0->unk2 = temp_a2;
+				var_v0->unkC = 0;
+			}
+			var_v0->unk0 = arg0;
+			var_v0->unk4 = arg1;
+			var_v0->unkA = arg6;
+			((Unk80154318Entry *)var_a0)->unk2 = arg2;
+			var_v0->unk6 = arg3;
+			var_v0->unk7 = arg4;
+			var_v0->unk9 = 0;
+			var_v0->unk8 = arg5;
+			temp_t2 = (s32) arg2 / 2;
+			var_v0->unkB = temp_t2;
+			if (!(temp_t2 & 0xFF)) {
+				var_v0->unkB = 1;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C9530_D84E0.s")
+#endif
 
 void func_800C9668_D8618(void) {
 	s16 var_s0;
