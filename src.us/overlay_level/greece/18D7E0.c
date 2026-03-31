@@ -373,19 +373,13 @@ void func_802DC91C_19542C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC91C_19542C.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_802DC98C_19549C(s32 arg0) {
-	u8 alienIdx;
-	alienIdx = arg0 & 0xFF;
-	alienInstances[alienIdx].unk14 = -0xA8;
-	alienInstances[alienIdx].unk16 = 0xB6;
-	alienInstances[alienIdx].unk18 = 0x39;
-	func_802DC500_195010(alienIdx);
-	func_800A93A4_B8354(alienIdx, -0x88, 0x32, 0xD4);
+void func_802DC98C_19549C(u8 arg0) {
+	alienInstances[arg0].unk14 = -0xA8;
+	alienInstances[arg0].unk16 = 0xB6;
+	alienInstances[arg0].unk18 = 0x39;
+	func_802DC500_195010(arg0);
+	func_800A93A4_B8354(arg0, -0x88, 0x32, 0xD4);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC98C_19549C.s")
-#endif
 
 void func_802DC9FC_19550C(u8 arg0) {
 	alienInstances[arg0].unk14 = 0x9B;
