@@ -295,7 +295,44 @@ void func_800ABC2C_BABDC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ABCC8_BAC78.s")
 
+// NON_MATCHING: regalloc only - all instructions and ordering match, persistent
+// +2 temp register offset (score 145). Target uses v1 for rnd variable but IDO
+// allocates t1 instead, shifting all subsequent temps by 2 positions.
+#ifdef NON_MATCHING
+void func_800ABE7C_BAE2C(u8 arg0) {
+	s32 rnd;
+	s32 x = alienInstances[arg0].unk0 >> 8;
+	s32 z = alienInstances[arg0].unk4 >> 8;
+	s32 i;
+	s16 *offsets;
+	s32 baseX;
+	s32 baseZ;
+
+	rnd = func_800038E0_44E0() >> 13;
+	i = 0;
+	offsets = &D_8013D8F0_14C8A0[(rnd & 0xFFFF) * 2];
+	baseX = x << 8;
+	baseZ = z << 8;
+
+	do {
+		i++;
+		x = offsets[0] + baseX + 0x80;
+		z = offsets[1] + baseZ + 0x80;
+		if (func_800B325C_C220C((s8)(x >> 8), (s8)(z >> 8), 0x1800) == 0) {
+			break;
+		}
+	} while (i != 8);
+
+	if (i < 8) {
+		alienInstances[arg0].unk14 = x;
+		alienInstances[arg0].unk18 = z;
+		alienInstances[arg0].unk16 = func_800B84D0_C7480((s16)x, (s16)z) >> 8;
+		alienInstances[arg0].unk20 |= 0x100;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ABE7C_BAE2C.s")
+#endif
 
 void func_800ABFC0_BAF70(u8 arg0)
 {
