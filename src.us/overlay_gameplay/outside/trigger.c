@@ -124,25 +124,24 @@ u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
 	return leaderId;
 }
 
+// https://decomp.me/scratch/ogcjI
 #ifdef NON_MATCHING
-void func_800AF0C0_BE070(s16 arg0, s16 arg1, u8 arg2) {
-	register s16 var_a1;
-	s32 temp_a0;
-	register AlienSpec *temp_v1;
-
-	if (currentLevel == 3 && (arg2 == 9 || arg2 == 8)) {
-		return;
-	}
-
-	temp_v1 = &alienSpecs[arg2];
-	temp_a0 = func_800B84D0_C7480(arg0, arg1);
-	temp_a0 /= 0x100;
-	var_a1 = (s16)temp_a0;
-	if ((temp_v1->unk54 & 0x81) != 0 && (s16)temp_a0 < D_80222A70) {
-		var_a1 = D_80222A70;
-	}
-
-	func_800CF80C_DE7BC(arg0, var_a1 + temp_v1->unk58, arg1, (s16)((s32)((f64)temp_v1->unkC * 1.5)), 0xA0, 0xFF, 0, 0);
+void func_800AF0C0_BE070(s16 arg0, s16 arg1, u8 arg2)
+{
+  s16 var_a1;
+  
+  if (currentLevel == 3 && (arg2 == 9 || arg2 == 8))
+  {
+	return;
+  }
+  
+  var_a1 = func_800B84D0_C7480(arg0, arg1) / 0x100;
+  if ((alienSpecs[arg2].unk54 & 0x81) != 0 && var_a1 < D_80222A70)
+  {
+	var_a1 = D_80222A70;
+  }
+	
+  func_800CF80C_DE7BC(arg0, var_a1 + alienSpecs[arg2].unk58, arg1, alienSpecs[arg2].unkC * 1.5, 0xA0, 0xFF, 0, 0);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF0C0_BE070.s")
@@ -573,42 +572,8 @@ void func_800B06C4_BF674(Unk80222A78 *arg0) {
 	func_800B03CC_BF37C(arg0->unk8, (s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80), arg0);
 }
 
-#ifdef NON_MATCHING
-void func_800B0710_BF6C0(s16 arg0, s16 arg1) {
-	Unk80222A78 tmp;
-	s16 y;
-	u8 levelIdx;
-	u8 missionIdx;
-
-	levelIdx = (currentLevel - 1) & 0xFF;
-	missionIdx = ((u8 *)D_8003CEC6)[levelIdx * 0x28];
-	y = ((s16 *)((u8 *)D_802566D8 + (missionIdx * 0x68)))[0] + (func_800B84D0_C7480(arg0, arg1) >> 8);
-
-	func_800CF80C_DE7BC(
-		arg0,
-		y,
-		arg1,
-		((s16 *)((u8 *)D_8013D91E_14C8CE + (currentLevel * 4)))[0],
-		0xA0,
-		0xFF,
-		0,
-		0
-	);
-
-	func_800BECF0_CDCA0();
-
-	tmp.unk0 = 2;
-	tmp.unk1 = (s8)(arg0 >> 8);
-	tmp.unk2 = (s8)(arg1 >> 8);
-	tmp.unk4 = D_8014F820 + 0x12;
-	tmp.unkC = func_800B06C4_BF674;
-	tmp.unk8 = levelIdx;
-
-	func_800AE454_BD404(&tmp);
-}
-#else
+// https://decomp.me/scratch/plniN
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800B0710_BF6C0.s")
-#endif
 
 void func_800B0830_BF7E0(s32 arg0)
 {
