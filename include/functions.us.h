@@ -426,6 +426,7 @@ void func_8012D84C_13C7FC();
 void func_801371B8_146168(s32, s32, s16, s16, s16, f32);
 void func_80137468_146418(s32, s32);
 void func_8012E258_13D208(void);
+void func_8012FE6C_13EE1C(s8);
 f32 func_80136DC0_145D70(s16 arg0, s16 arg1, s16 arg2);
 s16 func_80136ECC_145E7C(s16 arg0, s16 arg1, s16 arg2);
 void func_801390F4_1480A4(s16);

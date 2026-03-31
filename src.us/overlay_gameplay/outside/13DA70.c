@@ -102,7 +102,17 @@ void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F4E0_13E490.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012FE6C_13EE1C.s")
+void func_8012FE6C_13EE1C(s8 arg0) {
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0, 0, arg0);
+	gDPPipeSync(D_8005BB2C++);
+	gDPFillRectangle(D_8005BB2C++, 0, 0, D_80068084, D_80068088);
+}
 
 // Saves current level's score and returns the total score across all levels.
 s32 func_8012FFB0_13EF60(void)
