@@ -394,7 +394,7 @@ void func_8012101C_12FFCC(BuildingInstance *, s16);
 void func_801238DC_13288C(s16);
 void func_80124170_133120(s16, s16, s16, s32, s32, VehicleInstance *);
 void func_80124BA8_133B58(void);
-void func_800D6ADC_E5A8C(s16, s16, s16, s32);
+void func_800D6ADC_E5A8C(s16, s16, s16, s16);
 void func_800B8F30_C7EE0(s16, s16, s32);
 s32 func_80085448_943F8(u8);
 void func_80091470_A0420(u8);
