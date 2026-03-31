@@ -41,55 +41,49 @@ s32 func_80139150_148100(u8 arg0, u16 arg1) {
 }
 
 // guess_giveItem
-#ifdef NON_MATCHING
-s32 func_801391DC_14818C(s32 arg0, s16 arg1) {
-	s32 pad1;
-	s32 pad2;
-	s32 result;
-	s32 pad3;
-	s32 i;
-	u8 *p;
-	u8 prev;
-
-	if (func_801393A0_148350(arg0) != 0) {
-		return (s16)func_80139150_148100(arg0, arg1);
+s32 func_801391DC_14818C(s32 arg0, s16 arg1)
+{
+  s32 pad1;
+  s32 pad2;
+  s32 result;
+  s32 pad3;
+  s32 i;
+  u8 *p;
+  u8 prev;
+  if (func_801393A0_148350(arg0) != 0)
+  {
+	return (s16) func_80139150_148100(arg0, arg1);
+  }
+  p = weaponSlots;
+  if (weaponSlots[6] != 0)
+  {
+	if (weaponSlots[0] != 1)
+	{
+	  osSyncPrintf(&D_80145A40_1549F0);
+	  return 0;
+	}
+	for (i = 1; i < 7; i++)
+	{
+	  weaponSlots[i - 1] = weaponSlots[i];
 	}
 
-	p = weaponSlots;
-	if (p[6] != 0) {
-		if (p[0] != 1) {
-			osSyncPrintf(&D_80145A40_1549F0);
-			return 0;
+	weaponSlots[6] = 0;
+  }
+	for (i = 6; i > 0; i--) {
+		if (arg0 < weaponSlots[i-1]) {
+			weaponSlots[i] = weaponSlots[i -1];
+			continue;
+		} 
+		if (weaponSlots[i -1] != 0) {
+			break;
 		}
-		for (i = 1; i < 7; i++) {
-			p[i - 1] = p[i];
-		}
-		p[6] = 0;
 	}
+	weaponSlots[i] = arg0;
 
-	p = weaponSlots + 6;
-loop:
-	prev = p[-1];
-	if (arg0 < prev) {
-		*p = prev;
-	} else if (prev != 0) {
-		goto store_done;
-	}
-	p--;
-	if (p != weaponSlots) {
-		goto loop;
-	}
-store_done:
-	*p = arg0;
-
-	result = func_80139150_148100(arg0, arg1);
-	func_80139050_148000();
-	return result;
+  result = func_80139150_148100(arg0, arg1);
+  func_80139050_148000();
+  return result;
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801391DC_14818C.s")
-#endif
 
 void func_801392FC_1482AC(s32 arg0)
 {
