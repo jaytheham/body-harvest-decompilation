@@ -248,7 +248,32 @@ void func_802D852C_19103C(u8 arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
+void func_802D85F8_191108(u8 arg0) {
+	if (!(alienInstances[arg0].unk20 & 0x4000) &&
+		(func_8008E478_9D428(arg0) != 0 || func_8008E30C_9D2BC(arg0, 0x80000000) != 0)) {
+		func_802D84A0_190FB0(arg0);
+	} else {
+		func_802D852C_19103C(arg0);
+		if ((arg0 & 0x3C) == (D_80052A8C & 0x3C)) {
+			if (alienInstances[arg0].unk20 & 0x100) {
+				s32 temp_t5 = (u32)(*(u32 *)(D_80050AE0 + (u8)(alienInstances[arg0].unk38) * 0x18)) >> 0xC;
+				if (((temp_t5 & 1) == 0) || (temp_t5 & 4)) {
+					alienInstances[arg0].unk20 &= ~0x100;
+				}
+			}
+		}
+	}
+	func_8008076C_8F71C(arg0);
+	if (alienInstances[arg0].unk1E > 0) {
+		alienInstances[arg0].unk1E -= 4;
+	} else {
+		alienInstances[arg0].unk1E = 0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D85F8_191108.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D8724_191234.s")
 
