@@ -149,27 +149,22 @@ void func_800AF0C0_BE070(s16 arg0, s16 arg1, u8 arg2) {
 #endif
 
 // https://decomp.me/scratch/xEzEG
-#ifdef NON_MATCHING
-void func_800AF1F8_BE1A8(s16 arg0, s16 arg1, u8 arg2, void *arg3)
+void func_800AF1F8_BE1A8(s16 arg0, s16 arg1, u8 arg2)
 {
-  //void **new_var = &arg3;
   u8 i;
+    s16 temp, temp2;
   
   for (i = 0; i < 0xC; i++)
   {
-	if (!D_8003BCC0[arg2][i].alienSpecId)
-	{
-	  return;
-	}
-	func_800AF0C0_BE070(
-		D_8003BCC0[arg2][i].xOffset + arg0,
-		D_8003BCC0[arg2][i].zOffset + arg1,
-		D_8003BCC0[arg2][i].alienSpecId);
+    if (!D_8003BCC0[arg2][i].alienSpecId)
+    {
+      return;
+    }
+    temp = D_8003BCC0[arg2][i].xOffset + arg0;
+    temp2 = D_8003BCC0[arg2][i].zOffset + arg1;
+    func_800AF0C0_BE070(temp, temp2, D_8003BCC0[arg2][i].alienSpecId);
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF1F8_BE1A8.s")
-#endif
 
 void func_800AF2BC_BE26C(void *arg0) { func_80017B08_18708(((u8 *)arg0)[8]); }
 
@@ -314,7 +309,7 @@ void func_800AF870_BE820(Unk80222A78 *arg0) {
 
 void func_800AF8C4_BE874(Unk80222A78 *arg0) {
 	Unk80222A78 tmp;
-	func_800AF1F8_BE1A8((s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80), arg0->unk9, arg0);
+	func_800AF1F8_BE1A8((s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80), arg0->unk9);
 	tmp.unk1 = arg0->unk1;
 	tmp.unk2 = arg0->unk2;
 	tmp.unk9 = arg0->unk9;
@@ -439,7 +434,7 @@ void func_800AFD48_BECF8(Unk80222A78 *arg0) {
 	u8 waveIdx;
 
 	waveIdx = arg0->unk9;
-	func_800AF1F8_BE1A8(D_80223780[waveIdx].xPosition, D_80223780[waveIdx].yPosition, D_80223780[waveIdx].waveSpecId, arg0);
+	func_800AF1F8_BE1A8(D_80223780[waveIdx].xPosition, D_80223780[waveIdx].yPosition, D_80223780[waveIdx].waveSpecId);
 	tmp.unk4 = D_8014F820 + 0x12;
 	tmp.unk0 = 2;
 	tmp.unkC = func_800AFBF8_BEBA8;
