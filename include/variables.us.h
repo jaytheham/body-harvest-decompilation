@@ -1283,7 +1283,6 @@ extern u8 D_8015753C;
 extern s8 D_80153B87;
 extern Vec3f D_80153B90;
 extern s16 D_8013E3F4_14D3A4;
-extern s16 D_8013E3F4_W;
 extern s16 D_8013E3F8_14D3A8;
 extern s16 D_8013E3F8_W;
 extern Unk80153AE0Entry D_80153AE0[];

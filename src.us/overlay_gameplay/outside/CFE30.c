@@ -2085,6 +2085,9 @@ void func_800E0E9C_EFE4C(s16 arg0, s16 arg1, u16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E0F4C_EFEFC.s")
 
+// This matches if the two vars assigned in the ifs are declared as separate variables
+// instead of reusing the same variable from the compare
+#ifdef NON_MATCHING
 void func_800E1C10_F0BC0(void) {
 	D_80153B90.x = (f32)D_80153BAC - D_80153BA0.x;
 	D_80153B90.y = (f32)D_80153BAE - D_80153BA0.y;
@@ -2095,15 +2098,18 @@ void func_800E1C10_F0BC0(void) {
 	func_800DABBC_E9B6C(&D_80153BA0, &D_80156EE4, &D_80156EDC);
 	func_800DE150_ED100();
 	if (D_8013E3F4_14D3A4 < (s32)D_80154304) {
-		D_8013E3F4_W = D_80154304;
+		D_8013E3F4_14D3A4 = D_80154304;
 	}
 	if (D_8013E3F8_14D3A8 < D_8015430E) {
-		D_8013E3F8_W = D_8015430E;
+		D_8013E3F8_14D3A8 = D_8015430E;
 	}
 	D_80156EDC.unk0 = D_80052B34->unk0;
 	D_80156EDC.unk2 = D_80052B34->unk2;
 	D_80156EDC.unk4 = D_80052B34->unk4;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1C10_F0BC0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1D48_F0CF8.s")
 

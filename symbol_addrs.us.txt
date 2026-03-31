@@ -25,9 +25,6 @@ buildingSpecs = 0x80259090; // size:0x400
 
 D_8014F210 = 0x8014F210; // size:0x400
 
-D_8013E3F4_W = 0x8013E3F4;
-D_8013E3F8_W = 0x8013E3F8;
-
 checkForRumblePak = 0x80000E40;
 validateSaveVersionAndChecksum = 0x80001624;
 guess_prepareToSaveGame = 0x80001AA4;
