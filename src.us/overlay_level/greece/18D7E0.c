@@ -290,24 +290,15 @@ void func_802D90C8_191BD8(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D911C_191C2C.s")
 
-#ifdef NON_MATCHING
-void func_802D95A8_1920B8(s32 arg0, s16 arg1, s16 arg2) {
-	AlienInstance *temp_v1;
-	AlienInstance *sp1C;
-
-	temp_v1 = &alienInstances[arg0 & 0xFF];
-	temp_v1->unk20 |= 0x1000;
-	sp1C = temp_v1;
+void func_802D95A8_1920B8(u8 arg0, s16 arg1, s16 arg2) {
+	alienInstances[arg0].unk20 |= 0x1000;
 	if ((func_800038E0_44E0() & 1) && arg2 != -1) {
-		temp_v1->unk26 = arg2;
+		alienInstances[arg0].unk26 = arg2;
 	} else {
-		temp_v1->unk26 = arg1;
+		alienInstances[arg0].unk26 = arg1;
 	}
-	temp_v1->unk36 = 0;
+	alienInstances[arg0].unk36 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D95A8_1920B8.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D962C_19213C.s")
 
