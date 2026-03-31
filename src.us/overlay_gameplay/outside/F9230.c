@@ -972,7 +972,20 @@ s16 func_800F9FAC_108F5C(s16 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FA40C_1093BC.s")
 
+#ifdef NON_MATCHING
+s16 func_800FA690_109640(s16 arg0, s16 arg1, s16 arg2) {
+	s16 h1;
+	f32 cos_val;
+	f32 sin_val;
+
+	cos_val = (f32)((f32)coss((u16)arg2) / 32768.0 * 50.0);
+	sin_val = (f32)((f32)sins((u16)arg2) / 32768.0 * 50.0);
+	h1 = (s16)(func_800B85CC_C757C((s16)((f32)arg0 - cos_val), (s16)((f32)arg1 - sin_val)) >> 8);
+	return func_80003824_4424(100.0f, (f32)(h1 - (s16)(func_800B85CC_C757C((s16)((f32)arg0 + cos_val), (s16)((f32)arg1 + sin_val)) >> 8)));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FA690_109640.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FA7F0_1097A0.s")
 
