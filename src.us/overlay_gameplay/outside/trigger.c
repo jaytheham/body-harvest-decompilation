@@ -32,8 +32,22 @@ void func_800AE3AC_BD35C(Unk80222A78 *arg0) {
 	D_80222A78[0] = *arg0;
 }
 
-// Data waits at 0x802232C8 (Greece) until the trigger is executed
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AE454_BD404.s")
+s32 func_800AE454_BD404(Unk80222A78 *arg0) {
+	if (D_80223778 >= 0xD0) {
+		sourceTaggedPrintF(&D_80142AE0_151A90, &D_80142B00_151AB0, 0x8F, (s32 *)arg0);
+	}
+	if (D_80223778 >= 0xD0) {
+		return -1;
+	}
+	if (arg0->unk0 == 2 && (u32)(arg0->unk4 - D_80052A8C) >= 0x3Du &&
+		(arg0->unkC == (void (*)(void *))func_800AFD48_BECF8 || arg0->unkC == NULL)) {
+		arg0->unk1 = (s8)(D_80223780[arg0->unk9].xPosition >> 8);
+		arg0->unk2 = (s8)(D_80223780[arg0->unk9].yPosition >> 8);
+	}
+	D_80222A78[D_80223778] = *arg0;
+	D_80223778 = D_80223778 + 1;
+	return (s16)(D_80223778 - 1);
+}
 
 // guess_initAlienWaves
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AE588_BD538.s")
@@ -110,7 +124,29 @@ u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
 	return leaderId;
 }
 
+#ifdef NON_MATCHING
+void func_800AF0C0_BE070(s16 arg0, s16 arg1, u8 arg2) {
+	register s16 var_a1;
+	s32 temp_a0;
+	register AlienSpec *temp_v1;
+
+	if (currentLevel == 3 && (arg2 == 9 || arg2 == 8)) {
+		return;
+	}
+
+	temp_v1 = &alienSpecs[arg2];
+	temp_a0 = func_800B84D0_C7480(arg0, arg1);
+	temp_a0 /= 0x100;
+	var_a1 = (s16)temp_a0;
+	if ((temp_v1->unk54 & 0x81) != 0 && (s16)temp_a0 < D_80222A70) {
+		var_a1 = D_80222A70;
+	}
+
+	func_800CF80C_DE7BC(arg0, var_a1 + temp_v1->unk58, arg1, (s16)((s32)((f64)temp_v1->unkC * 1.5)), 0xA0, 0xFF, 0, 0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF0C0_BE070.s")
+#endif
 
 // https://decomp.me/scratch/xEzEG
 #ifdef NON_MATCHING
@@ -128,8 +164,7 @@ void func_800AF1F8_BE1A8(s16 arg0, s16 arg1, u8 arg2, void *arg3)
 	func_800AF0C0_BE070(
 		D_8003BCC0[arg2][i].xOffset + arg0,
 		D_8003BCC0[arg2][i].zOffset + arg1,
-		D_8003BCC0[arg2][i].alienSpecId,
-		arg3);
+		D_8003BCC0[arg2][i].alienSpecId);
   }
 }
 #else
@@ -326,7 +361,7 @@ void func_800AF9C0_BE970(Unk80222A78 *arg0)
 
 void func_800AFA98_BEA48(Unk80222A78 *arg0) {
 	Unk80222A78 tmp;
-	func_800AF0C0_BE070((s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80), arg0->unk9, arg0);
+	func_800AF0C0_BE070((s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80), arg0->unk9);
 	tmp.unk1 = arg0->unk1;
 	tmp.unk2 = arg0->unk2;
 	tmp.unk9 = arg0->unk9;
