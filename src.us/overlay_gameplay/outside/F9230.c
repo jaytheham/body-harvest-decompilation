@@ -2091,7 +2091,36 @@ void func_8010C454_11B404(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010F218_11E1C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010F5D8_11E588.s")
+void func_8010F5D8_11E588(VehicleInstance *arg0) {
+	u8 temp_v0;
+	s32 speed;
+	s32 neg;
+	s32 val;
+
+	temp_v0 = D_80257A55[arg0->unk1A * 0x70];
+	if (temp_v0 != 0 && D_80140768_14F718[temp_v0].unk2 > 0) {
+		speed = arg0->unk12;
+		neg = -speed;
+		if (neg < speed) {
+			val = speed;
+		} else {
+			val = neg;
+		}
+		func_80123E90_132E40(arg0, (s16)(s32)(sqrtf((f32)(val + 1)) * 40.0f));
+	} else {
+		speed = arg0->unk12;
+		neg = -speed;
+		if (neg < speed) {
+			val = speed;
+		} else {
+			val = neg;
+		}
+		func_80123E90_132E40(arg0, (s16)(s32)(sqrtf((f32)(val + 1)) * 25.0f));
+	}
+	arg0->unk22 += func_800038E0_44E0() & 0x400;
+	arg0->unk26 += func_800038E0_44E0() & 0x400;
+	arg0->unk24 += func_800038E0_44E0() & 0x400;
+}
 
 #ifdef NON_MATCHING
 s32 func_8010F72C_11E6DC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
