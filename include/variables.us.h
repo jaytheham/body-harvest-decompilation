@@ -1352,6 +1352,8 @@ extern char D_80142BB8_151B68;
 extern char D_80142C00_151BB0;
 extern char D_80142AB0_151A60;
 extern char D_80142AD0_151A80;
+extern char D_80142AE0_151A90;
+extern char D_80142B00_151AB0;
 extern s32 D_802DD170;
 extern Gfx D_9052C10[];
 extern Gfx D_9052C70[];

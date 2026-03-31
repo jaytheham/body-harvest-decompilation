@@ -32,8 +32,22 @@ void func_800AE3AC_BD35C(Unk80222A78 *arg0) {
 	D_80222A78[0] = *arg0;
 }
 
-// Data waits at 0x802232C8 (Greece) until the trigger is executed
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AE454_BD404.s")
+s32 func_800AE454_BD404(Unk80222A78 *arg0) {
+	if (D_80223778 >= 0xD0) {
+		sourceTaggedPrintF(&D_80142AE0_151A90, &D_80142B00_151AB0, 0x8F, (s32 *)arg0);
+	}
+	if (D_80223778 >= 0xD0) {
+		return -1;
+	}
+	if (arg0->unk0 == 2 && (u32)(arg0->unk4 - D_80052A8C) >= 0x3Du &&
+		(arg0->unkC == (void (*)(void *))func_800AFD48_BECF8 || arg0->unkC == NULL)) {
+		arg0->unk1 = (s8)(D_80223780[arg0->unk9].xPosition >> 8);
+		arg0->unk2 = (s8)(D_80223780[arg0->unk9].yPosition >> 8);
+	}
+	D_80222A78[D_80223778] = *arg0;
+	D_80223778 = D_80223778 + 1;
+	return (s16)(D_80223778 - 1);
+}
 
 // guess_initAlienWaves
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AE588_BD538.s")
