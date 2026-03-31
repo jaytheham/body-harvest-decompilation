@@ -281,54 +281,61 @@ void func_801351DC_14418C(Unk80160080 *arg0)
   }
 }
 
-#ifdef NON_MATCHING
-void func_80135380_144330(Unk80160080 *arg0) {
-	f32 var_f0;
-	f32 temp_f2;
-	f32 var_f12;
-
-	if ((temp_f2 = arg0->unk3C) <= 0.0f) {
-		var_f12 = 0.0f - temp_f2;
-		var_f0 = var_f12;
-	} else {
-		var_f12 = 0.0f - temp_f2;
-		var_f0 = -var_f12;
-	}
-	if ((f64) var_f0 < 2.0) {
-		arg0->unk3C = 0.0f;
-	} else {
-		arg0->unk3C = (f32)((f64) temp_f2 + ((f64) var_f12 / 12.0));
-	}
-
-	if ((temp_f2 = arg0->unk40) <= 0.0f) {
-		var_f12 = 0.0f - temp_f2;
-		var_f0 = var_f12;
-	} else {
-		var_f12 = 0.0f - temp_f2;
-		var_f0 = -var_f12;
-	}
-	if ((f64) var_f0 < 2.0) {
-		arg0->unk40 = 0.0f;
-	} else {
-		arg0->unk40 = (f32)((f64) temp_f2 + ((f64) var_f12 / 12.0));
-	}
-
-	if ((temp_f2 = arg0->unk44) <= 0.0f) {
-		var_f12 = 0.0f - temp_f2;
-		var_f0 = var_f12;
-	} else {
-		var_f12 = 0.0f - temp_f2;
-		var_f0 = -var_f12;
-	}
-	if ((f64) var_f0 < 2.0) {
-		arg0->unk44 = 0.0f;
-		return;
-	}
-	arg0->unk44 = (f32)((f64) temp_f2 + ((f64) var_f12 / 12.0));
+void func_80135380_144330(Unk80160080 *arg0)
+{
+  f32 var_f0;
+  f32 temp_f2;
+  f32 var_f12;
+  var_f0 = 0.0f;
+  if ((temp_f2 = arg0->unk3C) <= var_f0)
+  {
+	var_f12 = 0.0f - temp_f2;
+	var_f0 = var_f12;
+  }
+  else
+  {
+	var_f12 = 0.0f - temp_f2;
+	var_f0 = -var_f12;
+  }
+  if (((f64) var_f0) < 2.0)
+  {
+	arg0->unk3C = 0.0f;
+  }
+  else
+  {
+	arg0->unk3C = (f32) (((f64) temp_f2) + (((f64) var_f12) / 12.0));
+  }
+  if ((temp_f2 = arg0->unk40) <= 0.0f)
+  {
+	var_f12 = 0.0f - temp_f2;
+	var_f0 = var_f12;
+  }
+  else
+  {
+	var_f12 = 0.0f - temp_f2;
+	var_f0 = -var_f12;
+  }
+  if (((f64) var_f0) < 2.0)
+  {
+	arg0->unk40 = 0.0f;
+  }
+  else
+  {
+	arg0->unk40 = (f32) (((f64) temp_f2) + (((f64) var_f12) / 12.0));
+  }
+  if ((temp_f2 = arg0->unk44) <= 0.0f)
+  {
+ var_f12 = 0.0f - temp_f2; var_f0 = var_f12; } else {
+	var_f12 = 0.0f - temp_f2;
+	var_f0 = -var_f12;
+  }
+  if (((f64) var_f0) < 2.0)
+  {
+	arg0->unk44 = 0.0f;
+	return;
+  }
+  arg0->unk44 = (f32) (((f64) temp_f2) + (((f64) var_f12) / 12.0));
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80135380_144330.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801354C0_144470.s")
 
@@ -419,35 +426,34 @@ void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
 {
   f32 var_f14;
   f32 new_var;
+  float new_var2;
   s32 var_v0;
   s32 var_v1;
   s32 var_a0;
   f32 temp_f16;
   f32 temp_f18;
-  f32 temp_f2;
+  new_var2 = 0.0f;
   if (arg3 != 0.0f)
   {
-	temp_f2 = (arg0 / 4) - D_80047954;
-	
-	var_v0 = (-temp_f2 < temp_f2) ? (s32) temp_f2 : (s32) -temp_f2;
-	
+	f32 temp_f2;
+	new_var2 = arg0 / 4;
+	temp_f2 = new_var2 - D_80047954;
+	var_v0 = ((-temp_f2) < temp_f2) ? ((s32) temp_f2) : ((s32) (-temp_f2));
 	temp_f2 = (arg1 / 4) - D_80047958;
-	
-	var_v1 = (-temp_f2 < temp_f2) ? (s32) temp_f2 : (s32) -temp_f2;
-	
+	var_v1 = ((-temp_f2) < temp_f2) ? ((s32) temp_f2) : ((s32) (-temp_f2));
 	temp_f2 = (arg2 / 4) - D_8004795C;
-	
-	var_a0 = (-temp_f2 < temp_f2) ? (s32) temp_f2 : (s32) -temp_f2;
-	
+	var_a0 = ((-temp_f2) < temp_f2) ? ((s32) temp_f2) : ((s32) (-temp_f2));
 	new_var = D_801456F8;
-	temp_f16 = ((var_v0 * var_v0) + (var_v1 * var_v1) + (var_a0 * var_a0)) / new_var;
-	temp_f18 = arg3 - temp_f16;
+	temp_f16 = (((var_v0 * var_v0) + (var_v1 * var_v1)) + (var_a0 * var_a0)) / new_var;
+	temp_f18 = temp_f16;
+	temp_f18 = arg3 - temp_f18;
 	var_f14 = temp_f18;
 	if (arg3 < temp_f16)
 	{
-	  var_f14 = 0.0f;
+	  var_f14 = new_var2;
 	}
-	else if (temp_f18 < 1.0)
+	else
+	  if (temp_f18 < 1.0)
 	{
 	  var_f14 = 1.0f;
 	}
