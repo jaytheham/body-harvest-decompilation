@@ -430,7 +430,27 @@ s32 func_8011B454_12A404(s16 arg0, s16 *arg1, s16 *arg2, s16 *arg3) {
 	return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011B584_12A534.s")
+s32 func_8011B584_12A534(s32 arg0, s32 arg1) {
+	if (!((buildingInstances[arg0].unk8 >> 12) & 1) || alienInstances[arg1].unk38 == 0xFF) {
+		return 0;
+	}
+	if (alienInstances[arg1].unk24 == 1) {
+		func_800765C4_85574(alienInstances[arg1].unk3F);
+		func_80079910_888C0(arg1);
+		return 0;
+	}
+	if (buildingInstances[arg0].unk7 < D_802590A8[buildingInstances[arg0].buildingType << 5]) {
+		func_80079910_888C0(arg1);
+		buildingInstances[arg0].unk7++;
+		if (buildingInstances[arg0].unk11 == -1) {
+			D_8015EA18++;
+		} else {
+			D_80146688_155638[currentLevel - 1][buildingInstances[arg0].unk11].unk0A++;
+		}
+		return 1;
+	}
+	return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011B6C0_12A670.s")
 
