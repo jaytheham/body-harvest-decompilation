@@ -137,28 +137,28 @@ void func_80139460_148410(void) {
 	D_801601D8 = -1;
 }
 
-// https://decomp.me/scratch/TODO
-#ifdef NON_MATCHING
-void func_801394DC_14848C(void) {
-	s32 bit;
-	s32 i;
+void func_801394DC_14848C(void)
+{
+  s32 bit;
+  s32 i;
+  for (i = 2; i != 0xB; i++)
+  {
+	bit = 1 << i;
+	if (bit & D_801601E8)
+	{
+	  func_801391DC_14818C(i, 0);
+	  bit = 1 << i;
+	  D_801601E8 &= ~bit;
+	}
+  }
 
-	for (i = 2; i != 0xB; i++) {
-		bit = 1 << i;
-		if (bit & D_801601E8) {
-			func_801391DC_14818C(i, 0);
-			D_801601E8 &= ~bit;
-		}
-	}
-	if (currentLevel == LEVEL_COMET) {
-		D_80048140[3] = 0x64;
-		D_80048140[4] = 0x190;
-		D_80048140[6] = 0x18;
-	}
+  if (currentLevel == LEVEL_COMET)
+  {
+	D_80048140[3] = 0x64;
+	D_80048140[4] = 0x190;
+	D_80048140[6] = 0x18;
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_801394DC_14848C.s")
-#endif
 
 // NON_MATCHING: regalloc - a0/a1/a2 cyclic rotation (offset/srcPtr/weapon2)
 // Compiler folds &D_80031424 base address, preventing a0 from being allocated to it first.

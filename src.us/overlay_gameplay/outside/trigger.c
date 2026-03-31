@@ -148,21 +148,20 @@ void func_800AF0C0_BE070(s16 arg0, s16 arg1, u8 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF0C0_BE070.s")
 #endif
 
-// https://decomp.me/scratch/xEzEG
 void func_800AF1F8_BE1A8(s16 arg0, s16 arg1, u8 arg2)
 {
   u8 i;
-    s16 temp, temp2;
+	s16 temp, temp2;
   
   for (i = 0; i < 0xC; i++)
   {
-    if (!D_8003BCC0[arg2][i].alienSpecId)
-    {
-      return;
-    }
-    temp = D_8003BCC0[arg2][i].xOffset + arg0;
-    temp2 = D_8003BCC0[arg2][i].zOffset + arg1;
-    func_800AF0C0_BE070(temp, temp2, D_8003BCC0[arg2][i].alienSpecId);
+	if (!D_8003BCC0[arg2][i].alienSpecId)
+	{
+	  return;
+	}
+	temp = D_8003BCC0[arg2][i].xOffset + arg0;
+	temp2 = D_8003BCC0[arg2][i].zOffset + arg1;
+	func_800AF0C0_BE070(temp, temp2, D_8003BCC0[arg2][i].alienSpecId);
   }
 }
 
