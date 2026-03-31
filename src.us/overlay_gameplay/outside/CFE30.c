@@ -523,7 +523,43 @@ void func_800C820C_D71BC(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8C7C_D7C2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8E10_D7DC0.s")
+void func_800C8E10_D7DC0(s16 arg0, s16 arg1, s16 arg2, u8 arg3)
+{
+	s16 idx;
+	if (D_80156ED8 == 2)
+	{
+	if ((func_800038E0_44E0() % 10) < 5)
+	{
+	return;
+	}
+	}
+	if (arg3 >= 0x1E)
+	{
+	return;
+	}
+	if (arg3 == 0xFB)
+	{
+	return;
+	}
+
+	if (D_80154088[arg3].unk0 != 3)
+	{
+	return;
+	}
+	idx = func_800C17B4_D0764(arg3, 0);
+	if (idx == (-3))
+	{
+	return;
+	}
+	D_80154318[idx].unk8 = arg0;
+	D_80154318[idx].unkA = arg1;
+	D_80154318[idx].unkC = arg2;
+	D_80154318[idx].unk2 = (func_800038E0_44E0() % 15) + 0x1E;
+	D_80154318[idx].unk11 = 0xFA;
+	D_80154318[idx].unkE = D_80154318[D_80154088[arg3].unk6].unkE;
+	D_80154318[idx].unkF = D_80154318[D_80154088[arg3].unk6].unkF;
+	D_80154318[idx].unk10 = D_80154318[D_80154088[arg3].unk6].unk10;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8F5C_D7F0C.s")
 
