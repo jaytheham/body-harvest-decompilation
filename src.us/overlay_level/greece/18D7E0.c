@@ -359,19 +359,13 @@ void func_802DC184_194C94(s32 arg0) {
 
 void func_802DC500_195010(u8 arg0);
 
-#ifdef NON_MATCHING
-void func_802DC91C_19542C(s32 arg0) {
-	u8 alienIdx;
-	alienIdx = arg0 & 0xFF;
-	alienInstances[alienIdx].unk14 = -0x8D;
-	alienInstances[alienIdx].unk16 = -0x7;
-	alienInstances[alienIdx].unk18 = 0x26;
-	func_802DC500_195010(alienIdx);
-	func_800A93A4_B8354(alienIdx, -0xBB, 0x22, 0x147);
+void func_802DC91C_19542C(u8 arg0) {
+	alienInstances[arg0].unk14 = -0x8D;
+	alienInstances[arg0].unk16 = -0x7;
+	alienInstances[arg0].unk18 = 0x26;
+	func_802DC500_195010(arg0);
+	func_800A93A4_B8354(arg0, -0xBB, 0x22, 0x147);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC91C_19542C.s")
-#endif
 
 void func_802DC98C_19549C(u8 arg0) {
 	alienInstances[arg0].unk14 = -0xA8;
