@@ -730,7 +730,48 @@ void func_800F375C_10270C(s8 arg0) {
 	D_80157FF8--;
 }
 
+#ifdef NON_MATCHING
+s16 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3) {
+	s16 sp36;
+	f32 temp_f0;
+	f32 temp_f12;
+	f32 temp_f14;
+	f32 temp_f16;
+	f32 var_f2;
+	s32 temp_a0;
+	s32 var_v1;
+
+	func_8011E6FC_12D6AC(arg2, arg3, &sp36);
+	temp_a0 = *(s16 *)((u8 *)D_802566D8 + (((u8 *)D_800481B2)[arg0->unk144 * 0x50] * 0x68));
+
+	if (temp_a0 < 0x33) {
+		var_f2 = 3.0f;
+	} else {
+		var_f2 = 2.0f;
+	}
+
+	var_v1 = sp36;
+	temp_f14 = arg1;
+	temp_f16 = temp_a0 * var_f2;
+	temp_f12 = var_v1;
+	temp_f0 = temp_f14 - temp_f16;
+
+	if (temp_f12 < temp_f0) {
+		var_v1 = (s16)(s32)temp_f0;
+	} else if (temp_f0 < temp_f12) {
+		var_v1 = (s16)(s32)(temp_f14 + temp_f16);
+	}
+
+	if (arg1 < var_v1) {
+		sp36 = var_v1;
+		var_v1 = (s16)(func_800B84D0_C7480(arg2, arg3) >> 8);
+	}
+
+	return var_v1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F384C_1027FC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F3990_102940.s")
 

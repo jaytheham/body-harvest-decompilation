@@ -1050,6 +1050,11 @@ typedef struct {
 } Unk80153AE0Entry; /* stride = 0x20 */
 
 typedef struct {
+	/* 0x000 */ u8 unk0[0x144];
+	/* 0x144 */ u8 unk144;
+} UnkF9230Arg0;
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
