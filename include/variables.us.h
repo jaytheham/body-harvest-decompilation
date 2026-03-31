@@ -387,6 +387,7 @@ extern u8 D_8013DAE4_14CA94; /* particle/effect free index */
 extern Unk80154082 D_8013DF80_14CF30;
 extern u8 D_8013DF84_14CF34[];
 extern s32 D_8013FCD0_14EC80;
+extern VehicleInstance *D_8013FD78_14ED28;
 extern u8 D_801407F4_14F7A4[];
 
 extern AlienInstance *D_80140AB0_14FA60[];
@@ -688,6 +689,8 @@ extern InputStruct_8012B150 D_80159050[];
 extern s16 D_80159248;
 extern s16 D_80159260;
 extern u16 D_80159274;
+extern s16 D_80159278;
+extern s16 D_8015927A;
 extern Mtx D_801592C0;
 extern s32 D_80159300;
 extern s16 D_80159308;
@@ -851,6 +854,7 @@ extern s32 D_801591AC;
 extern s32 D_801591B0;
 extern s16 D_801591C0;
 extern s16 D_801591C2;
+extern s16 D_801591C8;
 extern s16 D_801591CA;
 extern s16 D_80159232;
 extern s16 D_80159246;

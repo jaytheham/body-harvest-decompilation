@@ -2319,7 +2319,23 @@ s32 func_80115824_1247D4(VehicleInstance *arg0, s32 arg1) {
 	return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8011592C_1248DC.s")
+void func_8011592C_1248DC(s16 arg0, s16 arg1) {
+	D_80159274 = 0;
+	D_80159278 = 0;
+	D_8015927A = 0;
+	D_8013FD78_14ED28->unk1A = 0x13;
+	func_800FAE84_109E34(D_8013FD78_14ED28);
+	D_8013FD78_14ED28->unk20 |= 0x8041;
+	D_8013FD78_14ED28->unkE = D_8013FD78_14ED28->unk6;
+	D_8013FD78_14ED28->unkA = func_800065A4_71A4(-0xA9F, (s16)(D_80052B34->unkA >> 1), (u16)(D_80159274 << 11));
+	func_800FB44C_10A3FC(D_8013FD78_14ED28, (f32)arg0);
+	func_800FB484_10A434(D_8013FD78_14ED28, (f32)arg1);
+	func_800FB468_10A418(D_8013FD78_14ED28, (f32)(func_800B84D0_C7480(arg0, arg1) >> 8));
+	D_80159320 |= 0x10000000;
+	func_800FAD10_109CC0();
+	D_801591CA = 0;
+	D_801591C8 = D_801591CA;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80115A74_124A24.s")
 

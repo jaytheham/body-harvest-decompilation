@@ -354,6 +354,7 @@ void func_800F98C0_108870(void);
 s16 func_800F9FAC_108F5C(s16 arg0, s16 arg1);
 void func_800F4DB0_103D60(void);
 void func_800FAC90_109C40(void);
+void func_800FAD10_109CC0(void);
 void func_800FB44C_10A3FC(VehicleInstance *, f32);
 void func_800FB468_10A418(VehicleInstance *, f32);
 void func_800FB484_10A434(VehicleInstance *, f32);
