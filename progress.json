@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-31T10:27:45Z",
-  "commit": "36ed5a2",
-  "commit_timestamp": "2026-03-31T23:26:04+13:00",
+  "generated": "2026-03-31T19:52:52Z",
+  "commit": "b77749d",
+  "commit_timestamp": "2026-04-01T08:52:37+13:00",
   "overall": {
-    "total_functions": 2992,
-    "matched": 981,
-    "non_matching": 324,
-    "asm_stubs": 1687,
-    "matched_pct": 32.79,
-    "decompiled_pct": 43.62
+    "total_functions": 2988,
+    "matched": 988,
+    "non_matching": 320,
+    "asm_stubs": 1680,
+    "matched_pct": 33.07,
+    "decompiled_pct": 43.78
   },
   "segments": {
     "core": {
@@ -49,12 +49,12 @@
     },
     "overlay_level/greece": {
       "display_name": "Level / Greece",
-      "matched": 26,
-      "non_matching": 6,
-      "asm_stubs": 38,
-      "total": 70,
-      "matched_pct": 37.1,
-      "decompiled_pct": 45.7
+      "matched": 33,
+      "non_matching": 2,
+      "asm_stubs": 31,
+      "total": 66,
+      "matched_pct": 50.0,
+      "decompiled_pct": 53.0
     },
     "overlay_level/java": {
       "display_name": "Level / Java",
@@ -507,11 +507,11 @@
     {
       "path": "overlay_level/greece/18D7E0.c",
       "segment": "overlay_level/greece",
-      "matched": 26,
-      "non_matching": 6,
-      "asm_stubs": 38,
-      "total": 70,
-      "matched_pct": 37.1,
+      "matched": 33,
+      "non_matching": 2,
+      "asm_stubs": 31,
+      "total": 66,
+      "matched_pct": 50.0,
       "contributor": "jaytheham"
     },
     {
@@ -539,9 +539,9 @@
     {
       "name": "jaytheham",
       "files": 36,
-      "matched": 924,
-      "non_matching": 295,
-      "asm_stubs": 1322
+      "matched": 931,
+      "non_matching": 291,
+      "asm_stubs": 1315
     },
     {
       "name": "Meridian Lex",
@@ -607,6 +607,14 @@
       "decompiled_pct": 43.62,
       "matched": 981,
       "total": 2992
+    },
+    {
+      "date": "2026-04-01",
+      "commit": "cd6a6b6",
+      "matched_pct": 33.07,
+      "decompiled_pct": 43.78,
+      "matched": 988,
+      "total": 2988
     }
   ]
 }
