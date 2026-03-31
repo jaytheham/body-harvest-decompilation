@@ -119,9 +119,7 @@ void func_802D54AC_18DFBC(void) {
 	func_800076D4_82D4(5);
 }
 
-#ifdef NON_MATCHING
 void func_802D5578_18E088(void) {
-	u16 temp_t3;
 	if (!(vehicleInstances[84].unk20 & 0x8000)) {
 		func_800074BC_80BC(func_802D5578_18E088);
 	}
@@ -129,15 +127,11 @@ void func_802D5578_18E088(void) {
 		vehicleInstances[84].unk20 = (u16)(vehicleInstances[84].unk20 & 0xFBFF);
 		func_800074BC_80BC(func_802D5578_18E088);
 	}
-	temp_t3 = D_802DE466 + 1;
-	D_802DE466 = temp_t3;
-	if (((temp_t3 & 0xFFFF) == 0x9C4) && (D_80048030 == 0xF)) {
+	D_802DE466 = D_802DE466 + 1;
+	if (D_802DE466 == 0x9C4 && D_80048030 == 0xF) {
 		func_80007690_8290();
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D5578_18E088.s")
-#endif
 
 void func_802D562C_18E13C(void) {
 	func_80092ADC_A1A8C();
