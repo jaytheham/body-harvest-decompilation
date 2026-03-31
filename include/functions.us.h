@@ -794,7 +794,7 @@ s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s16 arg2, WeaponSpecEn
 /* java/1ED9E0 — additional function declarations */
 void func_8008EF1C_9DECC(u8);
 s32 func_800C2274_D1224(s16, s16, s16, u8);
-void func_800C3BD8_D2B88(s16, s16, s16, s16, s32, s32, s32, s32);
+void func_800C3BD8_D2B88(s16, s16, s16, u16, s32, s32, s32, s32);
 void func_800E0F4C_EFEFC(s16, s16, s16, s16);
 void func_800E2720_F16D0(s32);
 void func_80135D08_144CB8(f32, s16, s16, s16);

@@ -191,7 +191,15 @@ void func_802D7360_18FE70(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D738C_18FE9C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D763C_19014C.s")
+void func_802D763C_19014C(u8 arg0) {
+	if (alienInstances[arg0].unk20 & 0x600) {
+		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2 + 0x14, alienInstances[arg0].unk4, alienSpecs[alienInstances[arg0].specIndex].unkC, 0);
+		alienInstances[arg0].unk24 = func_800C2274_D1224(alienInstances[arg0].unk0, alienInstances[arg0].unk2 + 0x64, alienInstances[arg0].unk4, 2);
+		alienInstances[arg0].unk2C = 0x5A;
+		alienInstances[arg0].unk3D = 0;
+		func_800C3BD8_D2B88(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, alienSpecs[alienInstances[arg0].specIndex].unkC + 0x32, 0x5A, 0xF0, 0x78, 0);
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D775C_19026C.s")
 
