@@ -388,7 +388,18 @@ void func_8013A1CC_14917C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A4C8_149478.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A630_1495E0.s")
+void func_8013A630_1495E0(void) {
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | G_CLIPPING | 0xFF60CDF8);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_ZB_XLU_SURF, G_RM_ZB_XLU_SURF2);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gSPSetGeometryMode(D_8005BB2C++, G_SHADE);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A764_149714.s")
 
