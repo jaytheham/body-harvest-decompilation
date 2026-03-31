@@ -251,6 +251,7 @@ void func_800A931C_B82CC(s8, s16 *, s32 *);
 void func_800A9DC0_B8D70(func_800A9DC0_B8D70_arg *arg0);
 void func_800ABE7C_BAE2C(u8);
 void func_800AC198_BB148(u8);
+void func_800AD0F0_BC0A0(u8);
 void func_800AD814_BC7C4(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_800ADFC0_BCF70(u8);
 void func_800AE2C0_BD270(void);

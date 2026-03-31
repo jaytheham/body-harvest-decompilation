@@ -448,7 +448,44 @@ void func_800ACB3C_BBAEC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ACF9C_BBF4C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD0F0_BC0A0.s")
+void func_800AD0F0_BC0A0(u8 arg0) {
+	s16 xPos, zPos;
+	s16 xOff, zOff;
+
+	xPos = alienInstances[arg0].unk0;
+	zPos = alienInstances[arg0].unk4;
+	xOff = (xPos & 0xFF) - 0x80;
+	zOff = (zPos & 0xFF) - 0x80;
+
+	alienInstances[arg0].unk38 = 0xFF;
+	alienInstances[arg0].unk20 |= 0x100;
+	alienInstances[arg0].unk20 &= ~0x1000;
+	alienInstances[arg0].unk48 = 0;
+
+	if (zOff < xOff) {
+		if (-zOff < xOff) {
+			xPos += 0x100;
+		} else {
+			zPos -= 0x100;
+		}
+	} else {
+		if (-zOff < xOff) {
+			zPos += 0x100;
+		} else {
+			xPos -= 0x100;
+		}
+	}
+
+	xPos = ((xPos >> 8) << 8) + 0x80;
+	zPos = ((zPos >> 8) << 8) + 0x80;
+	alienInstances[arg0].unk14 = xPos;
+	alienInstances[arg0].unk18 = zPos;
+	alienInstances[arg0].unk16 = func_800B84D0_C7480(xPos, zPos) >> 8;
+
+	if (alienInstances[arg0].unk20 & 0x600) {
+		alienInstances[arg0].unk48 = 0x40;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD240_BC1F0.s")
 
