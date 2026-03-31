@@ -454,7 +454,34 @@ void func_800ACB3C_BBAEC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD3BC_BC36C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD554_BC504.s")
+u8 func_800AD554_BC504(s32 arg0, s32 arg1, s32 arg2) {
+	u8 idx;
+	AlienInstance *ptr;
+	u8 v3;
+
+	idx = func_8007956C_8851C(1);
+	if (idx != 0xFF) {
+		ptr = &alienInstances[idx];
+		ptr->unk0 = arg0;
+		ptr->unk4 = arg1;
+		ptr->unk2E = arg0;
+		ptr->unk32 = arg1;
+		ptr->unk48 = 0x40;
+		ptr->unk20 |= 0x1000;
+		ptr->unk1B = func_800B0F20_BFED0(arg0, arg1);
+		v3 = (&D_80050AE9)[arg2 * 24];
+		if (v3 != -1) {
+			D_80146688_155638[currentLevel - 1][v3].unk0A += 1;
+		} else {
+			D_8015EA14 += 1;
+		}
+		func_8011C680_12B630(idx, (s8)v3);
+		ptr->unk38 = arg2;
+		func_8011B3F0_12A3A0(ptr->unk38, &ptr->unk14, &ptr->unk16, &ptr->unk18);
+		ptr->unk20 |= 0x100;
+	}
+	return idx;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD698_BC648.s")
 

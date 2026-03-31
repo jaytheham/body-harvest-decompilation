@@ -509,66 +509,73 @@ void func_80136570_145520(void) {
 // https://decomp.me/scratch/NQ4OJ
 // Check if player is reading signpost
 #ifdef NON_MATCHING
-void func_80136B50_145B00(s32 arg0, s16 arg1) {
+void func_80136B50_145B00(s32 arg0, s16 arg1)
+{
 	s16 sp32;
 	s16 sp30;
 	s16 sp28;
 	void *sp1C;
 	s16 temp_v0;
 	s32 temp_t6;
-
-	temp_v0 = *(s16 *)((u8 *)&D_8015FAEE + (arg1 * 0x30)) - 0x2000;
-	sp1C = (u8 *)&D_80258330 + temp_v0 * 3;
-	sp32 = ((s8)((u8 *)sp1C)[0] << 8) + 0x80;
-	sp30 = ((s8)((u8 *)sp1C)[1] << 8) + 0x80;
+	temp_v0 = (*((s16 *) (((u8 *) (&D_8015FAEE)) + (arg1 * 0x30)))) - 0x2000;
+	sp1C = ((u8 *) (&D_80258330)) + (temp_v0 * 3);
+	sp32 = (((s8) ((u8 *) sp1C)[0]) << 8) + 0x80;
+	sp30 = (((s8) ((u8 *) sp1C)[1]) << 8) + 0x80;
 	sp28 = temp_v0;
-	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A) != 0) {
-		if (D_80052B34->unk1A == 0) {
-			temp_t6 = (u32)(((u8 *)sp1C)[2] << 29) >> 30;
-			switch (temp_t6) {
-			case 0:
-				if (sp30 < D_80052B34->unk4) {
-					if ((D_80052B34->unk0 >= (sp32 - 0x13)) && ((sp32 + 0x13) >= D_80052B34->unk0)) {
-						if ((D_80052B34->unkE >= -0x6000) && (D_80052B34->unkE < -0x1FFF)) {
-						}
-					}
-				}
-				break;
-			case 1:
-				if (sp32 < D_80052B34->unk0) {
-					if ((D_80052B34->unk4 >= (sp30 - 0x13)) && ((sp30 + 0x13) >= D_80052B34->unk4)) {
-						if ((D_80052B34->unkE >= -0x5FFF) && (D_80052B34->unkE >= 0x6000)) {
-						}
-					}
-				}
-				break;
-			case 2:
-				if (D_80052B34->unk4 < sp30) {
-					if ((D_80052B34->unk0 >= (sp32 - 0x13)) && ((sp32 + 0x13) >= D_80052B34->unk0)) {
-						if ((D_80052B34->unkE < 0x6001) && (D_80052B34->unkE >= 0x2000)) {
-						}
-					}
-				}
-				break;
-			case 3:
-				if (D_80052B34->unk0 < sp32) {
-					if ((D_80052B34->unk4 >= (sp30 - 0x13)) && ((sp30 + 0x13) >= D_80052B34->unk4)) {
-						if (D_80052B34->unkE >= 0) {
-							break;
-						}
-					}
-				}
-				break;
-			}
-			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A) != 0) {
-				if (D_80052B34->unk1A == 0) {
-					if (func_800A3CD0_B2C80() != 0) {
-						func_80136570_145520();
-						func_80018D7C_1997C((u16) sp28);
-					}
-				}
-			}
-		}
+	if (!isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A))
+	{
+		return;
+	}
+	if (D_80052B34->unk1A != 0)
+	{
+		return;
+	}
+	temp_t6 = ((u32) (((u8 *) sp1C)[2] << 29)) >> 30;
+	switch (temp_t6)
+	{
+		case 0:
+		  if (sp30 < D_80052B34->unk4 &&
+			  (D_80052B34->unk0 >= (sp32 - 0x13)) &&
+			  ((sp32 - -0x13) >= D_80052B34->unk0) &&
+			  (D_80052B34->unkE >= (-0x6000)) &&
+			  (D_80052B34->unkE < (-0x1FFF))) { }
+		  break;
+		
+		case 1:
+		  if (sp32 < D_80052B34->unk0 &&
+			  (D_80052B34->unk4 >= (sp30 - 0x13)) &&
+			  ((sp30 + 0x13) >= D_80052B34->unk4) &&
+			  (D_80052B34->unkE >= (-0x5FFF)) &&
+			  (D_80052B34->unkE >= 0x6000)) { }
+		  break;
+		
+		case 2:
+		  if (D_80052B34->unk4 < sp30 &&
+			  (D_80052B34->unk0 >= (sp32 - 0x13)) &&
+			  ((sp32 + 0x13) >= D_80052B34->unk0) &&
+			  (D_80052B34->unkE < 0x6001) &&
+			  (D_80052B34->unkE >= 0x2000))
+		  { }
+		  break;
+		
+		case 3:
+		  if (D_80052B34->unk0 < sp32 &&
+			  (D_80052B34->unk4 >= (sp30 - 0x13)) &&
+			  ((sp30 + 0x13) >= D_80052B34->unk4) &&
+			  D_80052B34->unkE >= 0)
+		  { }
+		  break;
+		  default:
+			if ((D_80052B34->unk4 == 1) && (1 == D_80052B34->unk4)) { }
+		  break;
+	}
+	
+	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A) &&
+		D_80052B34->unk1A == 0 &&
+		func_800A3CD0_B2C80() != 0)
+	{
+		func_80136570_145520();
+		func_80018D7C_1997C((u16) sp28);
 	}
 }
 #else
