@@ -1,14 +1,14 @@
 {
-  "generated": "2026-03-31T09:55:31Z",
-  "commit": "12ca13b",
-  "commit_timestamp": "2026-03-31T22:55:16+13:00",
+  "generated": "2026-03-31T10:27:45Z",
+  "commit": "36ed5a2",
+  "commit_timestamp": "2026-03-31T23:26:04+13:00",
   "overall": {
-    "total_functions": 2993,
-    "matched": 980,
-    "non_matching": 325,
-    "asm_stubs": 1688,
-    "matched_pct": 32.74,
-    "decompiled_pct": 43.6
+    "total_functions": 2992,
+    "matched": 981,
+    "non_matching": 324,
+    "asm_stubs": 1687,
+    "matched_pct": 32.79,
+    "decompiled_pct": 43.62
   },
   "segments": {
     "core": {
@@ -49,12 +49,12 @@
     },
     "overlay_level/greece": {
       "display_name": "Level / Greece",
-      "matched": 25,
-      "non_matching": 7,
-      "asm_stubs": 39,
-      "total": 71,
-      "matched_pct": 35.2,
-      "decompiled_pct": 45.1
+      "matched": 26,
+      "non_matching": 6,
+      "asm_stubs": 38,
+      "total": 70,
+      "matched_pct": 37.1,
+      "decompiled_pct": 45.7
     },
     "overlay_level/java": {
       "display_name": "Level / Java",
@@ -507,12 +507,12 @@
     {
       "path": "overlay_level/greece/18D7E0.c",
       "segment": "overlay_level/greece",
-      "matched": 25,
-      "non_matching": 7,
-      "asm_stubs": 39,
-      "total": 71,
-      "matched_pct": 35.2,
-      "contributor": "Meridian Lex"
+      "matched": 26,
+      "non_matching": 6,
+      "asm_stubs": 38,
+      "total": 70,
+      "matched_pct": 37.1,
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_level/java/1ED9E0.c",
@@ -538,17 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 35,
-      "matched": 898,
-      "non_matching": 289,
-      "asm_stubs": 1284
+      "files": 36,
+      "matched": 924,
+      "non_matching": 295,
+      "asm_stubs": 1322
     },
     {
       "name": "Meridian Lex",
-      "files": 9,
-      "matched": 82,
-      "non_matching": 36,
-      "asm_stubs": 404
+      "files": 8,
+      "matched": 57,
+      "non_matching": 29,
+      "asm_stubs": 365
     }
   ],
   "history": [
@@ -602,11 +602,11 @@
     },
     {
       "date": "2026-03-31",
-      "commit": "12ca13b",
-      "matched_pct": 32.74,
-      "decompiled_pct": 43.6,
-      "matched": 980,
-      "total": 2993
+      "commit": "36ed5a2",
+      "matched_pct": 32.79,
+      "decompiled_pct": 43.62,
+      "matched": 981,
+      "total": 2992
     }
   ]
 }
