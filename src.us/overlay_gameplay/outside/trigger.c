@@ -50,7 +50,36 @@ s32 func_800AE454_BD404(Unk80222A78 *arg0) {
 }
 
 // guess_initAlienWaves
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AE588_BD538.s")
+void func_800AE588_BD538(void) {
+	s32 i;
+
+	D_8014F820 = 0;
+	D_8014F824 = 0;
+
+	i = 0xCF; do {
+		if (D_80222A78[i].unk0 == 2) {
+			D_80222A78[i].unk1 = (s8)(D_80223780[D_80222A78[i].unk9].xPosition >> 8);
+			D_80222A78[i].unk2 = (s8)(D_80223780[D_80222A78[i].unk9].yPosition >> 8);
+		}
+	} while (i--);
+
+	for (i = 0; i < 0xC0; i++) {
+		D_80048038[i] = 0;
+		D_80223780[i].unk10 = 0;
+		D_80223780[i].unk12 = func_800B0F20_BFED0(D_80223780[i].xPosition, D_80223780[i].yPosition);
+		D_80223780[i].unk13 = -1;
+	}
+
+	osSyncPrintf(&D_80142B10_151AC0);
+	osSyncPrintf(&D_80142B28_151AD8, D_80047F98);
+	osSyncPrintf(&D_80142B38_151AE8);
+
+	if (currentLevel != 5) {
+		func_8007562C_845DC();
+		func_800B0830_BF7E0(D_80047F98);
+		func_800B08DC_BF88C(D_80047F98);
+	}
+}
 
 // guess_checkTriggers
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AE6CC_BD67C.s")
