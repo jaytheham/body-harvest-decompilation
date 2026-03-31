@@ -361,6 +361,7 @@ void func_800FB44C_10A3FC(VehicleInstance *, f32);
 void func_800FB468_10A418(VehicleInstance *, f32);
 void func_800FB484_10A434(VehicleInstance *, f32);
 void func_800FB504_10A4B4(void);
+void *func_800FAFB8_109F68(VehicleInstance *);
 void func_800FCA5C_10BA0C(void);
 void func_800FD410_10C3C0(VehicleSpec*);
 void func_800FD510_10C4C0(s32 arg0, s16 arg1);
@@ -413,7 +414,7 @@ s32 func_8007E500_8D4B0(AlienInstance *, AlienSpec *, AlienInstance *, AlienSpec
 void func_8007E734_8D6E4(AlienInstance *, s16);
 s32 func_80084FE8_93F98(u8, s32);
 s32 func_80004818_5418(s32, s32, s32);
-void func_80128504_1374B4(AlienInstance *arg0, u8 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
+void func_80128504_1374B4(AlienInstance *arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
 void func_80124B5C_133B0C(s16, s16, s16, s32, s32);
 OutputStruct_8012B150 *func_80129354_138304(s32, s32, s16, s16, s16);
 void func_8012B110_13A0C0(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2);

@@ -853,6 +853,7 @@ extern f32 D_8015919C;
 extern s16 D_801591A0;
 extern s16 D_801591A2;
 extern s16 D_801591A4;
+extern s32 D_801591A8;
 extern s32 D_801591AC;
 extern s32 D_801591B0;
 extern s16 D_801591C0;

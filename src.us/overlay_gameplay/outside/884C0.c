@@ -179,9 +179,9 @@ s32 func_8007A198_89148(s32 arg0)
   func_80079F08_88EB8();
   sp24 = arg0;
   func_80080510_8F4C0(sp24);
-  if (alienSpecs[sp2D].unk2D != (-1))
+  if ((s8)alienSpecs[sp2D].unk2C != (-1))
   {
-	new_var = ((s8) func_800F3990_102940(sp24, alienSpecs[sp2D].unk2D & 0xFF)) | 0x80000;
+	new_var = ((s8) func_800F3990_102940(sp24, alienSpecs[sp2D].unk2C & 0xFF)) | 0x80000;
 	alienInstances[arg0].unk20 &= ~7;
 	alienInstances[arg0].unk20 |= new_var;
   }

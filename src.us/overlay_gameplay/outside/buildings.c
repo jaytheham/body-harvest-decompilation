@@ -1502,7 +1502,28 @@ void func_80128428_1373D8(AlienInstance *arg0, s16 arg1, s16 arg2, s16 arg3, s32
 	*arg6 = sp24[2] + arg0->unk4;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80128504_1374B4.s")
+void func_80128504_1374B4(AlienInstance *arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4) {
+	AlienSpec *spec;
+	f32 x;
+	f32 y;
+	f32 z;
+
+	spec = func_800FAFB8_109F68((VehicleInstance *)arg0);
+	if (arg1 == 0) {
+		if (D_801591A8 == 0 && currentLevel == 4 && arg0->specIndex == 0xC) {
+			x = (f32)((func_800038E0_44E0() % 8) * 5 - 0x14);
+		} else {
+			x = (f32)spec->unk20;
+		}
+		y = (f32)spec->unk22;
+		z = (f32)spec->unk24;
+	} else {
+		x = (f32)spec->unk2C;
+		y = (f32)spec->unk2E;
+		z = (f32)spec->unk30;
+	}
+	func_80128428_1373D8(arg0, (s16)(s32)x, (s16)(s32)y, (s16)(s32)z, arg2, arg3, arg4);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80128650_137600.s")
 

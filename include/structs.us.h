@@ -270,12 +270,15 @@ typedef struct {
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 pad17;
 	/* 0x18 */ s32 unk18; // Ptr to name
-	/* 0x1C */ u8 pad1C[0xA];
-
+	/* 0x1C */ u8 pad1C[0x4];
+	/* 0x20 */ s16 unk20;
+	/* 0x22 */ s16 unk22;
+	/* 0x24 */ s16 unk24;
 	/* 0x26 */ s16 unk26;
-	/* 0x28 */ u8 pad28[0x5];
-	/* 0x2D */ s8 unk2D;
-	/* 0x2E */ u8 pad2E[4];
+	/* 0x28 */ u8 pad28[0x4];
+	/* 0x2C */ s16 unk2C;
+	/* 0x2E */ s16 unk2E;
+	/* 0x30 */ s16 unk30;
 	/* 0x32 */ u16 unk32;
 	/* 0x34 */ u8 pad34[4];
 	/* 0x38 */ s16 unk38;
