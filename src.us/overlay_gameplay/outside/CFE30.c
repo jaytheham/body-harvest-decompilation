@@ -1762,7 +1762,31 @@ void func_800D9F60_E8F10(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9FF8_E8FA8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA260_E9210.s")
+s16 func_800DA260_E9210(s16 arg0, s16 arg1, s16 arg2) {
+	s16 temp_v0;
+	s16 temp_v0_2;
+	s16 temp_v0_3;
+	s32 result;
+
+	result = func_800D99F4_E89A4(&func_800D9FF8_E8FA8, 0x3C, arg0, arg1, arg2);
+	temp_v0 = (s16)result;
+	if (result != -3) {
+		temp_v0_2 = func_800D951C_E84CC(&D_5055C00, arg0, arg1, arg2, 0, 0, 0, 0x3C);
+		if (temp_v0_2 == -3) {
+			func_800D9C60_E8C10(temp_v0);
+			return -3;
+		}
+		func_800D9A8C_E8A3C(temp_v0, 0, temp_v0_2);
+		temp_v0_3 = func_800D0DE4_DFD94(arg0, arg1, arg2, 0x32, 0xE5, 0x96, 0x63);
+		if (temp_v0_3 == -3) {
+			func_800D9C60_E8C10(temp_v0);
+			func_800D9754_E8704(temp_v0_2);
+			return -3;
+		}
+		func_800D9A8C_E8A3C(temp_v0, 1, temp_v0_3);
+	}
+	return temp_v0;
+}
 
 #ifdef NON_MATCHING
 void func_800DA3A8_E9358(s16 arg0, s16 arg1) {
