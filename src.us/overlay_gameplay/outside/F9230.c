@@ -1270,7 +1270,35 @@ void func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FC7E0_10B790.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FC90C_10B8BC.s")
+void func_800FC90C_10B8BC(VehicleInstance *arg0, s16 *arg1) {
+	s16 sp36;
+	s16 sp34;
+	s16 v0 = arg1[0];
+	s16 v1 = arg1[1];
+
+	func_800FC7E0_10B790((s8)v0, (s8)v1, &sp36, &sp34);
+	func_800FB44C_10A3FC(arg0, (f32)((v0 << 8) + sp36));
+	func_800FB484_10A434(arg0, (f32)((v1 << 8) + sp34));
+	arg0->unk40 = (v0 << 8) + sp36;
+	arg0->unk42 = (v1 << 8) + sp34;
+	arg0->unk47 = v0;
+	arg0->unk48 = v1;
+	arg0->unk45 = 10;
+	arg0->unk20 |= 0x400;
+	switch (arg1[4]) {
+	case 0:
+		arg0->unk44 = 8;
+		break;
+	case 0x4000:
+		arg0->unk44 = 1;
+		break;
+	case 0x8000:
+		arg0->unk44 = 4;
+		break;
+	default:
+		arg0->unk44 = 2;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FCA5C_10BA0C.s")
 

@@ -135,9 +135,12 @@ typedef struct {
 	/* 0x3E */ u8 pad3E[2];
 	/* 0x40 */ s16 unk40;
 	/* 0x42 */ s16 unk42;
-	/* 0x44 */ u8 pad44[2];
+	/* 0x44 */ u8 unk44;
+	/* 0x45 */ u8 unk45;
 	/* 0x46 */ u8 unk46;
-	/* 0x47 */ u8 pad47[5];
+	/* 0x47 */ u8 unk47;
+	/* 0x48 */ u8 unk48;
+	/* 0x49 */ u8 pad49[3];
 	/* 0x4C */ f32 unk4C;
 	/* 0x50 */ f32 unk50;
 	/* 0x54 */ f32 unk54;

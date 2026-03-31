@@ -363,6 +363,7 @@ void func_800FB468_10A418(VehicleInstance *, f32);
 void func_800FB484_10A434(VehicleInstance *, f32);
 void func_800FB504_10A4B4(void);
 void *func_800FAFB8_109F68(VehicleInstance *);
+void func_800FC7E0_10B790(s8, s8, s16 *, s16 *);
 void func_800FCA5C_10BA0C(void);
 void func_800FD410_10C3C0(VehicleSpec*);
 void func_800FD510_10C4C0(s32 arg0, s16 arg1);
