@@ -20,6 +20,7 @@ void func_800702C0_7F270(s16 arg0) {
 	u32 currentTick;
 	u32 referenceTick;
 	u32 elapsedMicro;
+
 	currentTick = osGetCount();
 	switch (arg0) {
 	case 0:
@@ -40,11 +41,12 @@ void func_800702C0_7F270(s16 arg0) {
 	if (currentTick < referenceTick) {
 		referenceTick += 1;
 	}
-	D_80149444 = referenceTick;
-	
+	D_80149444 = referenceTick; //reft = t0
+	// curt = t1
+
 	elapsedMicro = (u32)__ull_div(__ll_mul((u64)(currentTick - referenceTick), 0xF4240ULL), D_80035610);
 	
-	if (gameplayMode == GAMEPLAY_MODE_UNK1) {
+	if (gameplayMode == 1) {
 		D_80052A90 += elapsedMicro / 1000U;
 	}
 	
