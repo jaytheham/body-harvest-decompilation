@@ -2392,7 +2392,40 @@ void func_800E552C_F44DC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5B78_F4B28.s")
 
 // Allocate shield (wtf is a shield?)
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5CF4_F4CA4.s")
+void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
+	Unk80152CA0Entry *entry;
+	s16 count;
+
+	if (arg0 == 2 && (vehicleInstances[arg1].unk20 & 0x80)) {
+		return;
+	}
+	if (arg0 == 1 && ((buildingInstances[arg1].unk8 >> 12) & 0x1000)) {
+		return;
+	}
+
+	count = D_80152C96;
+	entry = &D_80152CA0[count];
+	entry->unk1 = arg0;
+	entry->unk0 = arg1;
+	entry->unk2 = 0;
+
+	if (count >= 0x20) {
+		osSyncPrintf(&D_80143F58_152F08);
+		return;
+	}
+
+	D_80152C96 = count + 1;
+
+	if (arg0 == 2) {
+		vehicleInstances[arg1].unk20 |= 0x80;
+		return;
+	}
+	if (arg0 == 1) {
+		u32 val = buildingInstances[arg1].unk8;
+		u32 shifted = val >> 12;
+		buildingInstances[arg1].unk8 = ((((shifted | 0x1000) ^ shifted) << 12) ^ val);
+	}
+}
 
 // Remove shield (wtf is a shield?)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5E3C_F4DEC.s")
