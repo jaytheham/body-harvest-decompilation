@@ -1635,7 +1635,15 @@ void func_802D9CB8_1F29C8(u8 alienIdx) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D9CB8_1F29C8.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DA18C_1F2E9C.s")
+void func_802DA18C_1F2E9C(u8 arg0, s16 arg1, s16 arg2) {
+    alienInstances[arg0].unk20 = alienInstances[arg0].unk20 | 0x1000;
+    if ((func_800038E0_44E0() & 1) && (arg2 != -1)) {
+        alienInstances[arg0].unk26 = (u8)arg2;
+    } else {
+        alienInstances[arg0].unk26 = (u8)arg1;
+    }
+    alienInstances[arg0].unk36 = 0;
+}
 
 #ifdef NON_MATCHING
 void func_802DA210_1F2F20(u8 arg0, s16 arg1, s16 arg2) {
