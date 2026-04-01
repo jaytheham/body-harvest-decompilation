@@ -1952,7 +1952,10 @@ void func_802DB14C_1F3E5C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB14C_1F3E5C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB428_1F4138.s")
+void func_802DB428_1F4138(u8 arg0) {
+    func_80137468_146418(arg0, 0x25);
+    alienInstances[arg0].unk12 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB468_1F4178.s")
 
