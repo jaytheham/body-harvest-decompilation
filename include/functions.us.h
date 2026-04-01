@@ -261,7 +261,7 @@ s16 func_800AE300_BD2B0(Unk80222A78 *arg0);
 void func_800AE3AC_BD35C(Unk80222A78 *arg0);
 u8 func_800AEE5C_BDE0C(s16, s16, u8, u8);
 s32 func_800AE454_BD404(Unk80222A78 *);
-void sourceTaggedPrintF(char *arg0, char *arg1, s32 arg2, s32 *arg3);
+void sourceTaggedPrintF(char *arg0, char *arg1, s32 arg2);
 void func_800AE588_BD538(void);
 void func_8007562C_845DC(void);
 void func_800B0830_BF7E0(s32);

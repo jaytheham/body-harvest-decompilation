@@ -1,7 +1,8 @@
 #include <ultra64.h>
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/FB00/sourceTaggedPrintF.s")
+void sourceTaggedPrintF(char *arg0, char *arg1, s32 arg2) {
+}
 
 #ifdef NON_MATCHING
 void func_8000EF10_FB10(s32 arg0) {

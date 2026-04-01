@@ -12,7 +12,7 @@ void func_800AE2C0_BD270(void) {
 
 s16 func_800AE300_BD2B0(Unk80222A78 *arg0) {
 	if (D_80223778 >= 0xD0) {
-		sourceTaggedPrintF(&D_80142AB0_151A60, &D_80142AD0_151A80, 0x6D, &D_80223778); // nextTrigger < MAX_GAME_TRIGGERS
+		sourceTaggedPrintF(&D_80142AB0_151A60, &D_80142AD0_151A80, 0x6D);
 	}
 	if (D_80223778 >= 0xD0) {
 		return -1;
@@ -33,7 +33,7 @@ void func_800AE3AC_BD35C(Unk80222A78 *arg0) {
 
 s32 func_800AE454_BD404(Unk80222A78 *arg0) {
 	if (D_80223778 >= 0xD0) {
-		sourceTaggedPrintF(&D_80142AE0_151A90, &D_80142B00_151AB0, 0x8F, (s32 *)arg0);
+		sourceTaggedPrintF(&D_80142AE0_151A90, &D_80142B00_151AB0, 0x8F);
 	}
 	if (D_80223778 >= 0xD0) {
 		return -1;
