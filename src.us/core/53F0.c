@@ -92,7 +92,12 @@ void func_80004C8C_588C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000505C_5C5C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800050C4_5CC4.s")
+void func_800050C4_5CC4(void) {
+    osRecvMesg(&D_8006A8D0, &D_80068038, 1);
+    func_80011E14_12A14(D_80047F93);
+    func_80004CC8_58C8();
+    func_80004D38_5938();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005110_5D10.s")
 
