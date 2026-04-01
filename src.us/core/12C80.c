@@ -195,7 +195,11 @@ void func_8001593C_1653C(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015BCC_167CC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015C58_16858.s")
+void func_80015C58_16858(u8 arg0) {
+    if (D_8006AB88 != 0) {
+        alSeqpSetChlVol((ALSeqPlayer *)D_8006AB18[0], arg0, 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015C94_16894.s")
 
