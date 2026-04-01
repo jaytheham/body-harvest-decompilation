@@ -30,7 +30,23 @@ void func_800048B8_54B8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800048B8_54B8.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800048E8_54E8(void) {
+    D47F40Entry *end;
+    D47F40Entry *p;
+    end = (D47F40Entry *)(&D_80047F60);
+    p = (D47F40Entry *)D_80047F40;
+    do {
+        p->f4 = 0;
+        p->f8 = 0;
+        p->fC = 0;
+        p->f0 = 0;
+        p++;
+    } while (p != end);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800048E8_54E8.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80004918_5518(void) {
