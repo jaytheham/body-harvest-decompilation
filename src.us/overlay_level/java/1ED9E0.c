@@ -2521,7 +2521,10 @@ void func_802DD140_1F5E50(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD140_1F5E50.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD244_1F5F54.s")
+void func_802DD244_1F5F54(u8 arg0) {
+    alienInstances[arg0].unk20 |= 0x08000000;
+    func_800873A8_96358(arg0);
+}
 
 #ifdef NON_MATCHING
 void func_802DD294_1F5FA4(u8 arg0) {
