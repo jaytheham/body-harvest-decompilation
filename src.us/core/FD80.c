@@ -32,6 +32,10 @@ void setVideoInterfaceXSize(s32 arg0) {
     D_8006809C = 2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/setVideoInterfaceYSize.s")
+void setVideoInterfaceYSize(s32 arg0) {
+    D_80068088 = arg0;
+    D_80068090 = (f32) arg0 / 240.0f;
+    D_8006809C = 2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F6B0_102B0.s")
