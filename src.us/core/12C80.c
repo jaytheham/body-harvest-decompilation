@@ -266,7 +266,11 @@ u8 func_8001A114_1AD14(void) {
     return *(u8 *)(D_80034468 + D_8006C558);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A130_1AD30.s")
+void func_8001A130_1AD30() {
+    if (D_80034478 != 0) {
+        func_80019ABC_1A6BC();
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A160_1AD60.s")
 
