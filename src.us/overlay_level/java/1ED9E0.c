@@ -2628,7 +2628,9 @@ void func_802DD294_1F5FA4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD294_1F5FA4.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD5A0_1F62B0.s")
+void func_802DD5A0_1F62B0(u8 arg0) {
+    func_802DD140_1F5E50(arg0, 4);
+}
 
 #ifdef NON_MATCHING
 void func_802DD5CC_1F62DC(u8 arg0) {

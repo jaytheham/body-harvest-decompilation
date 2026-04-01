@@ -760,7 +760,7 @@ void func_802D5FE4_1EECF4(void);
 void func_802D6338_1EF048(void);
 void func_802D68F4_1EF604(void);
 void func_802DA844_1F3554(u8);
-s32 func_802DD140_1F5E50();
+void func_802DD140_1F5E50(u8 arg0, u8 arg1);
 void func_802E0B08_2C2F38(u8);
 void func_802D62E4_2B8714(void);
 /* overlay_gameplay/inside/1648A0 */
