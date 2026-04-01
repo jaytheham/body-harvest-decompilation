@@ -90,6 +90,7 @@ extern s32 D_800314A0;
 extern s32 D_800314A4;
 extern s8 D_800314C4; // maxHumanDeathsAllowed?
 extern OSMesg D_800314CC;
+extern u8 D_80031B58_32758;
 extern s32 D_80031B84;
 extern s8 D_80031CA4;
 extern u64 D_80035610;
