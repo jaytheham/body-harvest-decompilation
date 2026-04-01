@@ -38,6 +38,7 @@ segments:
     vram: 0x80000400
     subsegments:
       - [0x1000, c, core/1000]
+      - [0x1050, c, core/1050]
       - [0x53D0, c, core/53D0]
       - [0x53F0, c, core/53F0]
       - [0xAD60, c, core/AD60]
