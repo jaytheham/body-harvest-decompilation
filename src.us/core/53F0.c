@@ -110,7 +110,13 @@ void func_800056A8_62A8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005844_6444.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005AEC_66EC.s")
+void func_80005AEC_66EC(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
+    D_80047734 = 1;
+    D_80047738 = arg0;
+    D_80047739 = arg1;
+    D_8004773A = arg2;
+    D_80047730 = 0x40;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005B30_6730.s")
 

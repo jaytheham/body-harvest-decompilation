@@ -124,6 +124,11 @@ extern s16 D_800476A0;
 extern s16 D_800476A2; // enables input?
 extern s16 D_80047720;
 extern s16 D_80047722;
+extern s32 D_80047730;
+extern s32 D_80047734;
+extern s8 D_80047738;
+extern s8 D_80047739;
+extern s8 D_8004773A;
 extern u8 D_80047743; // World fog red value
 extern u8 D_80047744; // World fog green value
 extern u8 D_80047745; // World fog blue value
