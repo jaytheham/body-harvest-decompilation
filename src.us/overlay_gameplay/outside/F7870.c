@@ -2,7 +2,62 @@
 #include "common.h"
 
 // StripModelToBones
+#ifdef NON_MATCHING
+// regalloc: arg1/count in a3 instead of s0 (callee-saved), causing register shift throughout
+Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1) {
+	Gfx* src;
+	Gfx* dst;
+	Gfx* result;
+	Gfx temp;
+	s8 opcode;
+
+	src = (Gfx*)func_80012000_12C00(arg0);
+
+	switch (arg1) {
+	case 0:
+		dst = D_801575A8;
+		arg1 = D_801575B0;
+		break;
+	case 1:
+		dst = D_802C9480;
+		D_801575AC = D_802C9480;
+		arg1 = 0;
+		break;
+	case 2:
+		dst = D_802C9EA8;
+		D_801575AC = D_802C9EA8;
+		arg1 = 0;
+		break;
+	default:
+		dst = D_801575A8;
+		arg1 = D_801575B0;
+		break;
+	}
+
+	result = dst;
+
+	do {
+		temp = *src++;
+		opcode = *(s8*)&temp;
+		if (opcode == -0x41 || opcode == -0x4F || opcode == -0x48 || opcode == 4) {
+			*dst++ = temp;
+			arg1++;
+		}
+	} while (opcode != -0x48);
+
+	D_801575A8 = dst;
+	D_801575B0 = arg1;
+
+	if (arg1 >= 0x145) {
+		D_801575B0 = arg1;
+		osSyncPrintf(&D_80144260_153210, arg1, 0x145);
+	}
+
+	return result;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E88C0_F7870.s")
+#endif
 
 // castVehicleShadows?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E8A00_F79B0.s")
