@@ -912,21 +912,13 @@ void func_802D6E70_1EFB80(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6E70_1EFB80.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802D7938_1F0648(void) {
 	func_80007410_8010(&func_802D6E70_1EFB80);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7938_1F0648.s")
-#endif
 
-#ifdef NON_MATCHING
 void func_802D795C_1F066C(void) {
 	func_800074BC_80BC(&func_802D6E70_1EFB80);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D795C_1F066C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7980_1F0690.s")
 
