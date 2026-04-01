@@ -446,7 +446,9 @@ void func_802D6104_1EEE14(void) {
     func_80007410_8010((void *)func_802D60FC_stub);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6128_1EEE38.s")
+void func_802D6128_1EEE38(void) {
+    func_800074BC_80BC((void *)func_802D60FC_stub);
+}
 
 void func_802D614C_1EEE5C(void)
 {
