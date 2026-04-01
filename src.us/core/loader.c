@@ -106,7 +106,15 @@ s32 func_80010420_11020(s32 arg0, s32 arg1) {
 	return func_8001032C_10F2C(arg0, arg1, (s32)&D_802B2080);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80010444_11044.s")
+s32 func_80010444_11044(s32 arg0, s32 arg1, s32 arg2) {
+	s32 temp_v0;
+
+	temp_v0 = func_80010420_11020(arg0, arg1);
+	if (temp_v0 == 0) {
+		return func_800101F0_10DF0(arg0, arg1, arg2);
+	}
+	return temp_v0;
+}
 
 s32 func_80010490_11090(u8 arg0) {
 	return D_80031BC4_327C4[arg0];
