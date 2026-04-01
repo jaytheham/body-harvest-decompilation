@@ -277,6 +277,7 @@ extern u8* D_8005BB20;
 extern s32 D_8005BB24;
 extern s32 D_8005BB48[];
 
+extern Unk80031424 *D_8006AB18[];
 extern s32 D_8006AB88;
 extern s32 D_8006ABA8;
 extern s32 D_80068084;

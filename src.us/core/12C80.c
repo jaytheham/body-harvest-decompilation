@@ -48,7 +48,12 @@ void *func_80012834_13434(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012A74_13674.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012E88_13A88.s")
+s32 func_80012E88_13A88(s8 arg0) {
+    if (D_8006AB88 == 0) {
+        return 0;
+    }
+    return D_8006AB18[arg0]->unk2C;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012EC4_13AC4.s")
 
