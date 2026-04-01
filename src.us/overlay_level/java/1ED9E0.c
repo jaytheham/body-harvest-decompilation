@@ -3314,7 +3314,17 @@ void func_802DEE18_1F7B28(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DEE4C_1F7B5C.s")
 
+#ifdef NON_MATCHING
+void func_802DEF70_1F7C80(s32 arg0) {
+    s32 idx;
+
+    idx = arg0 & 0xFF;
+    alienInstances[idx].unk3A = 0x7D0;
+    func_800A93A4_B8354(idx, 0, -0x45, 0x2B3);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DEF70_1F7C80.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DEFC0_1F7CD0.s")
 
