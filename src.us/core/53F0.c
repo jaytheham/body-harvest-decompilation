@@ -195,7 +195,11 @@ void func_80007548_8148(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007570_8170.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007690_8290.s")
+void func_80007690_8290(void) {
+    D_80048030 = D_80048030 + 1;
+    osSyncPrintf(&D_80036DA4_379A4, D_80048030);
+    func_8001A650_1B250(1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800076D4_82D4.s")
 
