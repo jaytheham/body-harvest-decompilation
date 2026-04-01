@@ -1536,7 +1536,7 @@ extern const char D_802E0DA8_1F9AB8[];
 extern char D_802E0E10_1F9B20[];
 extern char D_802E0E30[];
 extern char D_802E0E3C_1F9B4C[];
-extern char D_802E0E60[];
+extern char D_802E0E60_1F9B70[];
 extern Unk802E04F8Entry D_802E04F8[];
 extern s16 D_802E0FB0;
 extern s16 D_802E0FB2;

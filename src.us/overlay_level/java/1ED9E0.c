@@ -144,11 +144,11 @@ void func_802D5170_1EDE80(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D51F8_1EDF08.s")
 
 void func_802D5508_1EE218(void) {
-    if (D_802E0FB0-- <= 0) {
-        func_80013468_14068(6);
-        func_800EFEB4_FEE64(&func_802D51F8_1EDF08, 0xC, 0);
-        func_800074BC_80BC(func_802D5508_1EE218);
-    }
+	if (D_802E0FB0-- <= 0) {
+		func_80013468_14068(6);
+		func_800EFEB4_FEE64(&func_802D51F8_1EDF08, 0xC, 0);
+		func_800074BC_80BC(func_802D5508_1EE218);
+	}
 }
 
 void func_802D5560_1EE270(void) {
@@ -442,18 +442,18 @@ void func_802D5FE4_1EECF4(void) {
 #endif
 
 void func_802D60DC_1EEDEC(void) {
-    func_802D5FE4_1EECF4();
+	func_802D5FE4_1EECF4();
 }
 
 static void func_802D60FC_stub(void) {
 }
 
 void func_802D6104_1EEE14(void) {
-    func_80007410_8010((void *)func_802D60FC_stub);
+	func_80007410_8010((void *)func_802D60FC_stub);
 }
 
 void func_802D6128_1EEE38(void) {
-    func_800074BC_80BC((void *)func_802D60FC_stub);
+	func_800074BC_80BC((void *)func_802D60FC_stub);
 }
 
 void func_802D614C_1EEE5C(void)
@@ -714,7 +714,7 @@ void func_802D6DBC_1EFACC(void) {
 void func_802D6DF8_1EFB08(void) {
 	s16 i;
 
-	osSyncPrintf(D_802E0E60);
+	osSyncPrintf(D_802E0E60_1F9B70);
 	for (i = 0; i < 0xE; i++) {
 		func_802D4E34_1EDB44(D_802E04F8[i].unk0);
 		D_802E04F8[i].unk0 = -3;
@@ -1134,8 +1134,8 @@ block_9:
 #endif
 
 void func_802D8D14_1F1A24(u8 arg0) {
-    alienInstances[arg0].unk20 = alienInstances[arg0].unk20 & 0xBFFFEFFF;
-    func_800873A8_96358(arg0);
+	alienInstances[arg0].unk20 = alienInstances[arg0].unk20 & 0xBFFFEFFF;
+	func_800873A8_96358(arg0);
 }
 
 #ifdef NON_MATCHING
@@ -1636,13 +1636,13 @@ void func_802D9CB8_1F29C8(u8 alienIdx) {
 #endif
 
 void func_802DA18C_1F2E9C(u8 arg0, s16 arg1, s16 arg2) {
-    alienInstances[arg0].unk20 = alienInstances[arg0].unk20 | 0x1000;
-    if ((func_800038E0_44E0() & 1) && (arg2 != -1)) {
-        alienInstances[arg0].unk26 = (u8)arg2;
-    } else {
-        alienInstances[arg0].unk26 = (u8)arg1;
-    }
-    alienInstances[arg0].unk36 = 0;
+	alienInstances[arg0].unk20 = alienInstances[arg0].unk20 | 0x1000;
+	if ((func_800038E0_44E0() & 1) && (arg2 != -1)) {
+		alienInstances[arg0].unk26 = (u8)arg2;
+	} else {
+		alienInstances[arg0].unk26 = (u8)arg1;
+	}
+	alienInstances[arg0].unk36 = 0;
 }
 
 #ifdef NON_MATCHING
@@ -1848,11 +1848,11 @@ void func_802DA844_1F3554(u8 arg0) {
 #endif
 
 void func_802DAF5C_1F3C6C(u8 arg0) {
-    if (!(alienInstances[arg0].unk20 & 0x100000)) {
-        func_80137468_146418(arg0, 0xF);
-        func_802DA844_1F3554(arg0);
-    }
-    func_80089EB4_98E64(arg0, 0x3C, 0, 6, 3);
+	if (!(alienInstances[arg0].unk20 & 0x100000)) {
+		func_80137468_146418(arg0, 0xF);
+		func_802DA844_1F3554(arg0);
+	}
+	func_80089EB4_98E64(arg0, 0x3C, 0, 6, 3);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DAFD0_1F3CE0.s")
@@ -1964,8 +1964,8 @@ void func_802DB14C_1F3E5C(u8 arg0) {
 #endif
 
 void func_802DB428_1F4138(u8 arg0) {
-    func_80137468_146418(arg0, 0x25);
-    alienInstances[arg0].unk12 = 0;
+	func_80137468_146418(arg0, 0x25);
+	alienInstances[arg0].unk12 = 0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB468_1F4178.s")
@@ -2533,8 +2533,8 @@ void func_802DD140_1F5E50(u8 arg0, u8 arg1) {
 #endif
 
 void func_802DD244_1F5F54(u8 arg0) {
-    alienInstances[arg0].unk20 |= 0x08000000;
-    func_800873A8_96358(arg0);
+	alienInstances[arg0].unk20 |= 0x08000000;
+	func_800873A8_96358(arg0);
 }
 
 #ifdef NON_MATCHING
@@ -2646,7 +2646,7 @@ void func_802DD294_1F5FA4(u8 arg0) {
 #endif
 
 void func_802DD5A0_1F62B0(u8 arg0) {
-    func_802DD140_1F5E50(arg0, 4);
+	func_802DD140_1F5E50(arg0, 4);
 }
 
 #ifdef NON_MATCHING
@@ -3346,11 +3346,11 @@ void func_802DF8A8_1F85B8(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DFB94_1F88A4.s")
 
 void func_802DFC28_1F8938(u8 arg0) {
-    if (!(alienInstances[arg0].unk20 & 0x100000)) {
-        alienInstances[alienInstances[arg0].unk25].unk26--;
-        func_80137468_146418(arg0, 0xF);
-    }
-    func_8008B02C_99FDC(arg0);
+	if (!(alienInstances[arg0].unk20 & 0x100000)) {
+		alienInstances[alienInstances[arg0].unk25].unk26--;
+		func_80137468_146418(arg0, 0xF);
+	}
+	func_8008B02C_99FDC(arg0);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DFCA8_1F89B8.s")
