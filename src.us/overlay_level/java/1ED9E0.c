@@ -716,8 +716,8 @@ void func_802D6DF8_1EFB08(void) {
 
 	osSyncPrintf(D_802E0E60_1F9B70);
 	for (i = 0; i < 0xE; i++) {
-		func_802D4E34_1EDB44(D_802E04F8[i].unk0);
-		D_802E04F8[i].unk0 = -3;
+		func_802D4E34_1EDB44(D_802E04F8_1F9208[i].unk0);
+		D_802E04F8_1F9208[i].unk0 = -3;
 	}
 }
 
@@ -770,11 +770,11 @@ void func_802D6E70_1EFB80(void) {
 	} else if (var_v1 < D_800313F8) {
 		D_800313F8 -= 1;
 	}
-	if (D_802E04F8 == -3) {
+	if (D_802E04F8_1F9208 == -3) {
 		var_v1_2 = 0;
 		if (D_80047F94 == 2) {
 			do {
-				temp_s0 = (Unk80154318Entry *)((var_v1_2 * 8) + (s32)(&D_802E04F8));
+				temp_s0 = (Unk80154318Entry *)((var_v1_2 * 8) + (s32)(&D_802E04F8_1F9208));
 				if (temp_s0->unk0 == -3) {
 					sp5A = var_v1_2;
 					temp_s0->unk0 = func_802D4DB0_1EDAC0(temp_s0->unk2, (s16) (func_800B84D0_C7480(temp_s0->unk2, temp_s0->unk4, 0, 0) >> 8), temp_s0->unk4, temp_s0->unk6);
