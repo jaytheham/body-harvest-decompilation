@@ -143,7 +143,13 @@ void func_802D5170_1EDE80(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D51F8_1EDF08.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5508_1EE218.s")
+void func_802D5508_1EE218(void) {
+    if (D_802E0FB0-- <= 0) {
+        func_80013468_14068(6);
+        func_800EFEB4_FEE64(&func_802D51F8_1EDF08, 0xC, 0);
+        func_800074BC_80BC(func_802D5508_1EE218);
+    }
+}
 
 void func_802D5560_1EE270(void) {
 	D_802E0FB0 = 0x1E;
