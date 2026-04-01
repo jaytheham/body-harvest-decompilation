@@ -90,7 +90,15 @@ void func_80010228_10E28(u32 rom_addr, void *dest_buffer) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80010290_10E90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800102EC_10EEC.s")
+s32 func_800102EC_10EEC(s32 arg0, s32 arg1) {
+    s32 temp_v0;
+
+    temp_v0 = func_80010290_10E90();
+    if (temp_v0 == 0) {
+        return arg1 + arg0;
+    }
+    return temp_v0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_8001032C_10F2C.s")
 

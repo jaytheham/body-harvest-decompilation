@@ -77,6 +77,7 @@ void func_8001A54C_1B14C(void *arg0, ...);
 s32 func_80018A58_19658(void);
 void func_800E7B20_F6AD0(s32 arg0, s32 arg1);
 s32 func_800101F0_10DF0(s32 arg0, s32 arg1, s32 arg2);
+s32 func_80010290_10E90(void);
 
 // overlay_gameplay frontend
 s32 func_80070390_40840(void);
