@@ -1,14 +1,14 @@
 {
-  "generated": "2026-04-01T07:15:08Z",
-  "commit": "046dd83",
-  "commit_timestamp": "2026-04-01T20:14:54+13:00",
+  "generated": "2026-04-01T17:03:24Z",
+  "commit": "d92deb0",
+  "commit_timestamp": "2026-04-02T06:03:13+13:00",
   "overall": {
-    "total_functions": 2992,
-    "matched": 1000,
-    "non_matching": 324,
-    "asm_stubs": 1668,
-    "matched_pct": 33.42,
-    "decompiled_pct": 44.25
+    "total_functions": 2984,
+    "matched": 1018,
+    "non_matching": 316,
+    "asm_stubs": 1650,
+    "matched_pct": 34.12,
+    "decompiled_pct": 44.71
   },
   "segments": {
     "core": {
@@ -58,12 +58,12 @@
     },
     "overlay_level/java": {
       "display_name": "Level / Java",
-      "matched": 19,
-      "non_matching": 49,
-      "asm_stubs": 82,
-      "total": 150,
-      "matched_pct": 12.7,
-      "decompiled_pct": 45.3
+      "matched": 37,
+      "non_matching": 41,
+      "asm_stubs": 64,
+      "total": 142,
+      "matched_pct": 26.1,
+      "decompiled_pct": 54.9
     },
     "overlay_level/america": {
       "display_name": "Level / America",
@@ -502,7 +502,7 @@
       "asm_stubs": 93,
       "total": 137,
       "matched_pct": 19.7,
-      "contributor": "Meridian Lex"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_level/greece/18D7E0.c",
@@ -517,11 +517,11 @@
     {
       "path": "overlay_level/java/1ED9E0.c",
       "segment": "overlay_level/java",
-      "matched": 19,
-      "non_matching": 49,
-      "asm_stubs": 82,
-      "total": 150,
-      "matched_pct": 12.7,
+      "matched": 37,
+      "non_matching": 41,
+      "asm_stubs": 64,
+      "total": 142,
+      "matched_pct": 26.1,
       "contributor": "jaytheham"
     },
     {
@@ -538,17 +538,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 36,
-      "matched": 943,
-      "non_matching": 295,
-      "asm_stubs": 1303
+      "files": 37,
+      "matched": 988,
+      "non_matching": 304,
+      "asm_stubs": 1378
     },
     {
       "name": "Meridian Lex",
-      "files": 8,
-      "matched": 57,
-      "non_matching": 29,
-      "asm_stubs": 365
+      "files": 7,
+      "matched": 30,
+      "non_matching": 12,
+      "asm_stubs": 272
     }
   ],
   "history": [
@@ -602,11 +602,19 @@
     },
     {
       "date": "2026-04-01",
-      "commit": "046dd83",
-      "matched_pct": 33.42,
-      "decompiled_pct": 44.25,
-      "matched": 1000,
-      "total": 2992
+      "commit": "305986e",
+      "matched_pct": 34.0,
+      "decompiled_pct": 44.62,
+      "matched": 1015,
+      "total": 2985
+    },
+    {
+      "date": "2026-04-02",
+      "commit": "2de9d02",
+      "matched_pct": 34.12,
+      "decompiled_pct": 44.71,
+      "matched": 1018,
+      "total": 2984
     }
   ]
 }
