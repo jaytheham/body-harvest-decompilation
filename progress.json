@@ -1,14 +1,14 @@
 {
-  "generated": "2026-04-01T04:51:03Z",
-  "commit": "aa99fca",
-  "commit_timestamp": "2026-04-01T15:16:26+13:00",
+  "generated": "2026-04-01T06:01:01Z",
+  "commit": "2cf5701",
+  "commit_timestamp": "2026-04-01T19:00:10+13:00",
   "overall": {
     "total_functions": 2991,
-    "matched": 999,
+    "matched": 1000,
     "non_matching": 323,
-    "asm_stubs": 1669,
-    "matched_pct": 33.4,
-    "decompiled_pct": 44.2
+    "asm_stubs": 1668,
+    "matched_pct": 33.43,
+    "decompiled_pct": 44.23
   },
   "segments": {
     "core": {
@@ -31,9 +31,9 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 713,
+      "matched": 714,
       "non_matching": 185,
-      "asm_stubs": 712,
+      "asm_stubs": 711,
       "total": 1610,
       "matched_pct": 44.3,
       "decompiled_pct": 55.8
@@ -477,11 +477,11 @@
     {
       "path": "overlay_gameplay/outside/trigger.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 44,
+      "matched": 45,
       "non_matching": 2,
-      "asm_stubs": 7,
+      "asm_stubs": 6,
       "total": 53,
-      "matched_pct": 83.0,
+      "matched_pct": 84.9,
       "contributor": "jaytheham"
     },
     {
@@ -539,9 +539,9 @@
     {
       "name": "jaytheham",
       "files": 36,
-      "matched": 942,
+      "matched": 943,
       "non_matching": 294,
-      "asm_stubs": 1304
+      "asm_stubs": 1303
     },
     {
       "name": "Meridian Lex",
@@ -602,10 +602,10 @@
     },
     {
       "date": "2026-04-01",
-      "commit": "aa99fca",
-      "matched_pct": 33.4,
-      "decompiled_pct": 44.2,
-      "matched": 999,
+      "commit": "2cf5701",
+      "matched_pct": 33.43,
+      "decompiled_pct": 44.23,
+      "matched": 1000,
       "total": 2991
     }
   ]
