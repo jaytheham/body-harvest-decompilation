@@ -3337,7 +3337,13 @@ void func_802DF8A8_1F85B8(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DFB94_1F88A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DFC28_1F8938.s")
+void func_802DFC28_1F8938(u8 arg0) {
+    if (!(alienInstances[arg0].unk20 & 0x100000)) {
+        alienInstances[alienInstances[arg0].unk25].unk26--;
+        func_80137468_146418(arg0, 0xF);
+    }
+    func_8008B02C_99FDC(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DFCA8_1F89B8.s")
 
