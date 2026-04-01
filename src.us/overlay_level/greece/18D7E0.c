@@ -322,26 +322,26 @@ void func_802DA378_192E88(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DBA00_194510.s")
 
-void func_802DBB88_194698(s32 arg0) {
-	func_800A93A4_B8354(arg0 & 0xFF, -0xBB, 0x22, 0x147);
+void func_802DBB88_194698(u8 arg0) {
+	func_800A93A4_B8354(arg0, -0xBB, 0x22, 0x147);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DBBBC_1946CC.s")
 
-void func_802DBDA8_1948B8(s32 arg0) {
-	func_800A93A4_B8354(arg0 & 0xFF, -0x88, 0x32, 0xD4);
+void func_802DBDA8_1948B8(u8 arg0) {
+	func_800A93A4_B8354(arg0, -0x88, 0x32, 0xD4);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DBDDC_1948EC.s")
 
-void func_802DBF64_194A74(s32 arg0) {
-	func_800A93A4_B8354(arg0 & 0xFF, 0xBB, 0x24, 0x145);
+void func_802DBF64_194A74(u8 arg0) {
+	func_800A93A4_B8354(arg0, 0xBB, 0x24, 0x145);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DBF98_194AA8.s")
 
-void func_802DC184_194C94(s32 arg0) {
-	func_800A93A4_B8354(arg0 & 0xFF, 0x99, 0x32, 0xD4);
+void func_802DC184_194C94(u8 arg0) {
+	func_800A93A4_B8354(arg0, 0x99, 0x32, 0xD4);
 }
 
 #ifdef NON_MATCHING
