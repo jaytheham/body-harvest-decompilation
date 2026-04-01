@@ -133,6 +133,7 @@ extern s16 D_80047950;
 extern f32 D_80047954;
 extern f32 D_80047958;
 extern f32 D_8004795C;
+extern s16 D_80047970[];
 extern s16 D_80047F7E; // Last item of an array of powerup values?
 extern s32 D_80047B70;
 extern u8 D_80047F80;
