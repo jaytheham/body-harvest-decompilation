@@ -259,7 +259,12 @@ void func_80017AE0_186E0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017CA4_188A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018A58_19658.s")
+s32 func_80018A58_19658(void) {
+    if ((D_8003449C == 0) && (func_80017B78_18778() != 1)) {
+        return 0;
+    }
+    return 1;
+}
 
 s32 func_80018AA0_196A0(void) {
 	if (D_8003449C == 0x18) {
