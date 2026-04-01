@@ -152,28 +152,23 @@ u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
 	return leaderId;
 }
 
-// https://decomp.me/scratch/ogcjI
-#ifdef NON_MATCHING
 void func_800AF0C0_BE070(s16 arg0, s16 arg1, u8 arg2)
 {
-  s16 var_a1;
-  
-  if (currentLevel == 3 && (arg2 == 9 || arg2 == 8))
-  {
-	return;
-  }
-  
-  var_a1 = func_800B84D0_C7480(arg0, arg1) / 0x100;
-  if ((alienSpecs[arg2].unk54 & 0x81) != 0 && var_a1 < D_80222A70)
-  {
-	var_a1 = D_80222A70;
-  }
-	
-  func_800CF80C_DE7BC(arg0, var_a1 + alienSpecs[arg2].unk58, arg1, alienSpecs[arg2].unkC * 1.5, 0xA0, 0xFF, 0, 0);
+	s16 var_a1;
+
+	if (currentLevel == 3 && (arg2 == 9 || arg2 == 8))
+	{
+		return;
+	}
+
+	var_a1 = func_800B84D0_C7480(arg0, arg1) / 0x100;
+	if ((alienSpecs[arg2].unk54 & 0x81) != 0 && var_a1 < D_80222A70)
+	{
+		var_a1 = D_80222A70;
+	}
+	var_a1 += alienSpecs[arg2].unk58;
+	func_800CF80C_DE7BC(arg0, var_a1, arg1, alienSpecs[arg2].unkC * 1.5, 0xA0, 0xFF, 0, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AF0C0_BE070.s")
-#endif
 
 void func_800AF1F8_BE1A8(s16 arg0, s16 arg1, u8 arg2)
 {
