@@ -94,7 +94,13 @@ void setGameplayResolution(void) {
     setVideoInterfaceYSize(0xE6);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006DAC_79AC.s")
+void func_80006DAC_79AC(s32 arg0, s32 arg1) {
+    if (D_80052AD0 != 0) {
+        D_80052AD4 = arg0;
+        D_80052AD0 = 0;
+        D_80052AC8 = arg1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006DDC_79DC.s")
 
