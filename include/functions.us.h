@@ -70,6 +70,7 @@ void func_800156C8_162C8(s32 arg0);
 void func_8001599C_1659C(void);
 void func_80017AAC_186AC(void);
 void func_80017AE0_186E0(void);
+void func_8001A024_1AC24(void);
 void func_8001A500_1B100(s32);
 void func_8001A650_1B250(s16);
 void func_80013810_14410(s8 arg0);
@@ -77,6 +78,7 @@ void func_8001A54C_1B14C(void *arg0, ...);
 s32 func_80018A58_19658(void);
 void func_800E7B20_F6AD0(s32 arg0, s32 arg1);
 s32 func_800101F0_10DF0(s32 arg0, s32 arg1, s32 arg2);
+s32 func_80010290_10E90(void);
 
 // overlay_gameplay frontend
 s32 func_80070390_40840(void);
@@ -288,6 +290,7 @@ void func_800B0C80_BFC30(void);
 s32 func_800B0D10_BFCC0(s32, s32, s32);
 s32 func_800B0DF4_BFDA4(s32, s32, s32, s32);
 void func_80005654_6254(u8, u8, u8);
+void func_80005AEC_66EC(u8, u8, u8, u8);
 s32 func_80076208_851B8(s32 arg0);
 void func_80015C94_16894(s32, s32);
 void func_80018D14_19914();
@@ -748,6 +751,7 @@ void func_80095100_A40B0(s16, s16);
 /* core/FB00 — thread entry points */
 void func_8000F6B0_102B0(void *);
 void func_8000FE50_10A50(void *);
+void __osSiCreateAccessQueue(void);
 void func_80002EF8_3AF8(void *);
 void func_8000F218_FE18(void);
 

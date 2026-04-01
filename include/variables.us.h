@@ -90,10 +90,12 @@ extern s32 D_800314A0;
 extern s32 D_800314A4;
 extern s8 D_800314C4; // maxHumanDeathsAllowed?
 extern OSMesg D_800314CC;
+extern u8 D_80031B58_32758;
 extern s32 D_80031B84;
 extern s8 D_80031CA4;
 extern u64 D_80035610;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
+extern char D_80036DA4_379A4;
 extern u8 D_80036C64[];
 extern u8 D_80036C74[];
 extern u8 D_8004337D;
@@ -123,6 +125,11 @@ extern s16 D_800476A0;
 extern s16 D_800476A2; // enables input?
 extern s16 D_80047720;
 extern s16 D_80047722;
+extern s32 D_80047730;
+extern s32 D_80047734;
+extern s8 D_80047738;
+extern s8 D_80047739;
+extern s8 D_8004773A;
 extern u8 D_80047743; // World fog red value
 extern u8 D_80047744; // World fog green value
 extern u8 D_80047745; // World fog blue value
@@ -192,6 +199,7 @@ extern s32 D_8004DC4C;
 extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
+extern s32 D_8004DC68[4];
 extern VehicleInstance vehicleInstances[]; // 8004DCD0
 extern Unk80050ADA D_80050ADA[]; // 0x80050ADA
 extern u8 D_80050ADE[];
@@ -239,6 +247,7 @@ extern VehicleInstance* D_80052B34; // Ptr to active vehicle instance
 extern Unk80052B40 D_80052B40;
 extern Unk80052B40 D_80052B48;
 extern Unk80052B40 D_80052B50;
+extern s32 D_80053C8C;
 extern s32 D_80053C98;
 extern s32 D_80054668[];
 extern s32 D_80054680;
@@ -276,7 +285,10 @@ extern u8* D_8005BB20;
 extern s32 D_8005BB24;
 extern s32 D_8005BB48[];
 
+extern Unk80031424 *D_8006AB18[];
 extern s32 D_8006AB88;
+extern s8 D_80031CD0_328D0[];
+extern s32 D_80031D20_32920[];
 extern s32 D_8006ABA8;
 extern s32 D_80068084;
 extern s32 D_80068088;
@@ -1495,11 +1507,17 @@ extern u8 D_8005CF68[];
 extern u8 D_80064F70[];
 extern u8 D_80066780[];
 extern OSMesg D_80068038;
+extern OSMesgQueue __osSiAccessQueue;
+extern s32 __osSiAccessQueueEnabled;
 extern OSMesgQueue D_80068040;
 extern OSMesg D_80068060[];
 extern OSMesgQueue D_8006A8B0;
 extern OSMesgQueue D_8006A8D0;
 extern s16 D_8006C558;
+extern s16 D_8006C55C;
+extern u16 D_8006C55E;
+extern s16 D_8006C568;
+extern s16 D_8006C56A;
 extern OSViMode D_80035B30;
 extern OSViMode D_800356D0;
 extern OSViMode D_80035F90;

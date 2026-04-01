@@ -16,7 +16,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C670_D270.s")
+s32 func_8000C670_D270(s16 arg0) {
+	s32 temp;
+	temp = (D_80052AD8 - D_80053C8C) - (arg0 * 4) + 8;
+	if (temp >= 0x10) {
+		return 1;
+	}
+	return 0;
+}
 
 void func_8000C6B8_D2B8(s32 arg0) {
 	D_80053C98 = arg0;
