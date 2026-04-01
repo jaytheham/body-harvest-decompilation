@@ -79,7 +79,7 @@ void func_80004918_5518(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004C34_5834.s")
 
 void func_80004C8C_588C(void) {
-    gSPSegment(D_8005BB2C++, 0x02, (u32)D_8005BB20 & 0x1FFFFFFF);
+	gSPSegment(D_8005BB2C++, 0x02, (u32)D_8005BB20 & 0x1FFFFFFF);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004CC8_58C8.s")
@@ -93,10 +93,10 @@ void func_80004C8C_588C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000505C_5C5C.s")
 
 void func_800050C4_5CC4(void) {
-    osRecvMesg(&D_8006A8D0, &D_80068038, 1);
-    func_80011E14_12A14(D_80047F93);
-    func_80004CC8_58C8();
-    func_80004D38_5938();
+	osRecvMesg(&D_8006A8D0, &D_80068038, 1);
+	func_80011E14_12A14(D_80047F93);
+	func_80004CC8_58C8();
+	func_80004D38_5938();
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005110_5D10.s")
@@ -116,11 +116,11 @@ void func_800056A8_62A8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005844_6444.s")
 
 void func_80005AEC_66EC(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
-    D_80047734 = 1;
-    D_80047738 = arg0;
-    D_80047739 = arg1;
-    D_8004773A = arg2;
-    D_80047730 = 0x40;
+	D_80047734 = 1;
+	D_80047738 = arg0;
+	D_80047739 = arg1;
+	D_8004773A = arg2;
+	D_80047730 = 0x40;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005B30_6730.s")
@@ -176,13 +176,13 @@ void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007410_8010.s")
 
 void func_800074BC_80BC(void *arg0) {
-    s32 i = 4;
-    while (i--) {
-        if (arg0 == (void *)D_8004DC68[i]) {
-            D_8004DC68[i] = 0;
-            return;
-        }
-    }
+	s32 i = 4;
+	while (i--) {
+		if (arg0 == (void *)D_8004DC68[i]) {
+			D_8004DC68[i] = 0;
+			return;
+		}
+	}
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800074F4_80F4.s")
@@ -207,9 +207,9 @@ void func_80007548_8148(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007570_8170.s")
 
 void func_80007690_8290(void) {
-    D_80048030 = D_80048030 + 1;
-    osSyncPrintf(&D_80036DA4_379A4, D_80048030);
-    func_8001A650_1B250(1);
+	D_80048030 = D_80048030 + 1;
+	osSyncPrintf(&D_80036DA4_379A4, D_80048030);
+	func_8001A650_1B250(1);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800076D4_82D4.s")
