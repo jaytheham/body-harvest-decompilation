@@ -31,7 +31,16 @@ struct Unk80013E44_arg0 { s32 unk0; s32 unk4; s32 unk8; };
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800127CC_133CC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012834_13434.s")
+void *func_80012834_13434(void *arg0) {
+    void *v1;
+    if (D_8006AB88 == 0) {
+        return 0;
+    }
+    v1 = *(void **)((char *)arg0 + 0x30);
+    if (*(u16 *)v1 == *(u16 *)arg0) {
+        return v1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001286C_1346C.s")
 
