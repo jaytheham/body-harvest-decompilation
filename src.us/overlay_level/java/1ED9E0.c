@@ -1139,7 +1139,10 @@ block_9:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D89C4_1F16D4.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D8D14_1F1A24.s")
+void func_802D8D14_1F1A24(u8 arg0) {
+    alienInstances[arg0].unk20 = alienInstances[arg0].unk20 & 0xBFFFEFFF;
+    func_800873A8_96358(arg0);
+}
 
 #ifdef NON_MATCHING
 void func_802D8D68_1F1A78(u8 arg0) {
