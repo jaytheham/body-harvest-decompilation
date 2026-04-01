@@ -280,6 +280,8 @@ extern s32 D_8006AB88;
 extern s32 D_8006ABA8;
 extern s32 D_80068084;
 extern s32 D_80068088;
+extern f32 D_8006808C;
+extern s32 D_8006809C;
 
 extern f32 D_8008DDF0;
 extern f32 D_8008DDF4_175EB4;

@@ -26,7 +26,11 @@ void func_8000F618_10218()
 	osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/setVideoInterfaceXSize.s")
+void setVideoInterfaceXSize(s32 arg0) {
+    D_80068084 = arg0;
+    D_8006808C = (f32) arg0 / 320.0f;
+    D_8006809C = 2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/setVideoInterfaceYSize.s")
 
