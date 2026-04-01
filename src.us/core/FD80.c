@@ -7,8 +7,8 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F190_FD90.s")
 
 void func_8000F1E8_FDE8(void) {
-    osStopThread(&D_80067A48);
-    osDestroyThread(&D_80067A48);
+	osStopThread(&D_80067A48);
+	osDestroyThread(&D_80067A48);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F218_FE18.s")
@@ -27,15 +27,15 @@ void func_8000F618_10218()
 }
 
 void setVideoInterfaceXSize(s32 arg0) {
-    D_80068084 = arg0;
-    D_8006808C = (f32) arg0 / 320.0f;
-    D_8006809C = 2;
+	D_80068084 = arg0;
+	D_8006808C = (f32) arg0 / 320.0f;
+	D_8006809C = 2;
 }
 
 void setVideoInterfaceYSize(s32 arg0) {
-    D_80068088 = arg0;
-    D_80068090 = (f32) arg0 / 240.0f;
-    D_8006809C = 2;
+	D_80068088 = arg0;
+	D_80068090 = (f32) arg0 / 240.0f;
+	D_8006809C = 2;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F6B0_102B0.s")

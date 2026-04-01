@@ -19,29 +19,29 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C670_D270.s")
 
 void func_8000C6B8_D2B8(s32 arg0) {
-    D_80053C98 = arg0;
+	D_80053C98 = arg0;
 }
 
 s32 func_8000C6C4_D2C4(void) {
-    return D_80053C98;
+	return D_80053C98;
 }
 
 /* busy-wait loop: counts 0..0x10 with 8-bit masking */
 void func_8000C6D0_D2D0(s32 arg0) {
-    s32 var_v0 = 0;
-    s32 temp_t6;
+	s32 var_v0 = 0;
+	s32 temp_t6;
 
-    do {
-        do {
-            temp_t6 = (var_v0 = (var_v0 + 1) & 0xFF) ^ 0;
-        } while (temp_t6 != 0x10);
-    } while (0);
+	do {
+		do {
+			temp_t6 = (var_v0 = (var_v0 + 1) & 0xFF) ^ 0;
+		} while (temp_t6 != 0x10);
+	} while (0);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C6F4_D2F4.s")
 
 void func_8000C764_D364(s32 arg0) {
-    D_80054668[(arg0 - (s32)&D_80054680) / 0xE58] = 0;
+	D_80054668[(arg0 - (s32)&D_80054680) / 0xE58] = 0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C790_D390.s")
@@ -57,7 +57,7 @@ void func_8000C764_D364(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CF4C_DB4C.s")
 
 void func_8000D26C_DE6C(Unk8007F878_404 *arg0, void *arg1) {
-    arg0->unkE50 = 0;
+	arg0->unkE50 = 0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D278_DE78.s")
