@@ -1312,6 +1312,7 @@ extern char D_80143304_1522B4;
 extern char D_80143390_152340;
 extern char D_80143430_1523E0;
 extern char D_801436D8_152688;
+extern char D_80143644_1525F4;
 extern char D_80143688_152638;
 extern char D_80143478_152428;
 extern char D_80143814_1527C4;
