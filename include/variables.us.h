@@ -1536,8 +1536,8 @@ extern const char D_802E0DA8_1F9AB8[];
 extern char D_802E0E10_1F9B20[];
 extern char D_802E0E30[];
 extern char D_802E0E3C_1F9B4C[];
-extern char D_802E0E60[];
-extern s16 D_802E04F8[];
+extern char D_802E0E60_1F9B70[];
+extern Unk802E04F8Entry D_802E04F8_1F9208[];
 extern s16 D_802E0FB0;
 extern s16 D_802E0FB2;
 extern s16 D_802E0FB4;
@@ -1549,7 +1549,7 @@ extern s16 D_8015921C;
 extern s16 D_800481AA[];
 extern s32 D_800481B8[];
 extern s16 D_800481D2[];
-
+extern s16 D_802E0FB0;
 /* java/1ED9E0 — additional externs for NON_MATCHING C bodies */
 extern u8 D_802D48D0;
 extern u8 D_802D4AD0;
