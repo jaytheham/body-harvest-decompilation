@@ -751,6 +751,7 @@ void func_80095100_A40B0(s16, s16);
 /* core/FB00 — thread entry points */
 void func_8000F6B0_102B0(void *);
 void func_8000FE50_10A50(void *);
+void __osSiCreateAccessQueue(void);
 void func_80002EF8_3AF8(void *);
 void func_8000F218_FE18(void);
 
