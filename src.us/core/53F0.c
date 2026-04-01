@@ -16,7 +16,23 @@ s32 func_800047FC_53FC(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800048E8_54E8.s")
 
+#ifdef NON_MATCHING
+void func_80004918_5518(void) {
+    D47D40Entry *end;
+    D47D40Entry *p;
+    end = (D47D40Entry *)D_80047F40;
+    p = (D47D40Entry *)D_80047D40;
+    do {
+        p->f2 = 0;
+        p->f4 = 0;
+        p->f6 = 0;
+        p->f0 = 0;
+        p++;
+    } while (p != end);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004918_5518.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004948_5548.s")
 

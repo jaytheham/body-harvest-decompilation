@@ -103,6 +103,13 @@ typedef struct {
 	/* 0x06 */ s16 humansKilled;
 } Unk80052A98; /* size = 0x08 */
 
+typedef struct {
+	/* 0x00 */ s16 f0;
+	/* 0x02 */ s16 f2;
+	/* 0x04 */ s16 f4;
+	/* 0x06 */ s16 f6;
+} D47D40Entry; /* size = 0x08 */
+
 typedef enum VehicleFlags {
 	VEHICLE_FLAG_UNK1 = 1,
 	VEHICLE_FLAG_AIRBORNE = 2,
