@@ -117,7 +117,13 @@ void func_8001363C_1423C(void) {
     func_80015C94_16894(0x54, 0xA);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013684_14284.s")
+void func_80013684_14284(void) {
+    if (D_80031B58_32758 == 1) {
+        func_80015C94_16894(0x45, 0xD);
+        return;
+    }
+    func_80015C94_16894(0x55, 0xD);
+}
 
 void func_800136CC_142CC(void) {
 	func_80015C94_16894(0x23, 0x10);
