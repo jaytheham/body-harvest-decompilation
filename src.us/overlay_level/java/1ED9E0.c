@@ -124,17 +124,13 @@ void func_802D513C_1EDE4C(s32 arg0) {
 	func_800072CC_7ECC(0xC);
 }
 
-#ifdef NON_MATCHING
 void func_802D5170_1EDE80(void) {
 	u8 alien_id;
-	s32 new_var;
-	s32 new_var2;
 	Unk80222A78 callback_struct;
 
-	alien_id = (new_var = func_8007956C_8851C(0x24));
-	new_var = new_var & 0xFF;
+	alien_id = func_8007956C_8851C(0x24);
 	if (alien_id != 0xFF) {
-		alienInstances[alien_id].unk0 = (new_var2 = -0x14D8);
+		alienInstances[alien_id].unk0 = -0x14D8;
 		alienInstances[alien_id].unk4 = 0x2900;
 		alienInstances[alien_id].unk1B = 0;
 		callback_struct.unk0 = 3;
@@ -144,9 +140,6 @@ void func_802D5170_1EDE80(void) {
 	}
 	func_800073B8_7FB8(0xCLL);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5170_1EDE80.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D51F8_1EDF08.s")
 
