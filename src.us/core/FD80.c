@@ -6,7 +6,10 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F190_FD90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F1E8_FDE8.s")
+void func_8000F1E8_FDE8(void) {
+    osStopThread(&D_80067A48);
+    osDestroyThread(&D_80067A48);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F218_FE18.s")
 
