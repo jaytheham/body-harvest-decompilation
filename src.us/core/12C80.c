@@ -65,7 +65,13 @@ void func_80013178_13D78(s8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001322C_13E2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800132CC_13ECC.s")
+void func_800132CC_13ECC(void) {
+	if (D_80031B58_32758 == 1) {
+		func_80015C94_16894(0x3E, 0xB);
+		return;
+	}
+	func_80015C94_16894(0x4E, 0xB);
+}
 
 void func_80013314_13F14(void) {
 	D_80031CA4 = -1;
