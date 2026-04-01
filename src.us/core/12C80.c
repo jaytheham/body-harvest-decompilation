@@ -95,7 +95,13 @@ void playMapMusic(void) {
     func_80015C94_16894(0x52, 8);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/playInventoryMusic.s")
+void playInventoryMusic(void) {
+    if (D_80031B58_32758 == 1) {
+        func_80015C94_16894(0x43, 0x9);
+        return;
+    }
+    func_80015C94_16894(0x53, 0x9);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001363C_1423C.s")
 
