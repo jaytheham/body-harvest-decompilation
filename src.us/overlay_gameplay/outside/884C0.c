@@ -1,6 +1,12 @@
 #include <ultra64.h>
 #include "common.h"
 
+// s16 D_8013C2BC_14B26C[3][3] = {
+// 	0x6000, 0x8000, 0xA000,
+// 	0x4000, 0xFFFE, 0xC000,
+// 	0x2000, 0x0000, 0xE000
+// };
+
 void func_80079510_884C0(u8 arg0)
 {
   AlienInstance *inst = &alienInstances[alienInstances[arg0].unk25];
