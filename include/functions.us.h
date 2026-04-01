@@ -70,6 +70,7 @@ void func_800156C8_162C8(s32 arg0);
 void func_8001599C_1659C(void);
 void func_80017AAC_186AC(void);
 void func_80017AE0_186E0(void);
+void func_8001A024_1AC24(void);
 void func_8001A500_1B100(s32);
 void func_8001A650_1B250(s16);
 void func_80013810_14410(s8 arg0);

@@ -277,7 +277,13 @@ s32 func_80018AC8_196C8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018AEC_196EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018D14_19914.s")
+void func_80018D14_19914(void) {
+    D_80034484 = 0;
+    D_8003447C = 0;
+    D_8006C558 = -1;
+    D_8006C55E = 0xFFFF;
+    func_8001A024_1AC24();
+}
 
 void func_80018D58_19958(void) {
 	func_80018D14_19914();
