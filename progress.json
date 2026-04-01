@@ -1,7 +1,7 @@
 {
-  "generated": "2026-04-01T21:15:29Z",
-  "commit": "b561c75",
-  "commit_timestamp": "2026-04-02T10:15:19+13:00",
+  "generated": "2026-04-01T21:16:33Z",
+  "commit": "252b875",
+  "commit_timestamp": "2026-04-02T10:16:10+13:00",
   "overall": {
     "total_functions": 2988,
     "matched": 1025,
@@ -182,7 +182,7 @@
       "asm_stubs": 9,
       "total": 18,
       "matched_pct": 5.6,
-      "contributor": "Meridian Lex"
+      "contributor": "jaytheham"
     },
     {
       "path": "core/FB00.c",
@@ -548,17 +548,17 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 42,
-      "matched": 1019,
-      "non_matching": 312,
-      "asm_stubs": 1564
+      "files": 43,
+      "matched": 1020,
+      "non_matching": 320,
+      "asm_stubs": 1573
     },
     {
       "name": "Meridian Lex",
-      "files": 3,
-      "matched": 6,
-      "non_matching": 8,
-      "asm_stubs": 79
+      "files": 2,
+      "matched": 5,
+      "non_matching": 0,
+      "asm_stubs": 70
     }
   ],
   "history": [
@@ -620,7 +620,7 @@
     },
     {
       "date": "2026-04-02",
-      "commit": "edf4138",
+      "commit": "252b875",
       "matched_pct": 34.3,
       "decompiled_pct": 45.01,
       "matched": 1025,
