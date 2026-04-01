@@ -12,11 +12,59 @@ s32 func_800047FC_53FC(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004818_5418.s")
 
+#ifdef NON_MATCHING
+void func_800048B8_54B8(void) {
+    D47D40Entry *end;
+    D47D40Entry *p;
+    end = (D47D40Entry *)(&D_80047B70);
+    p = (D47D40Entry *)D_80047970;
+    do {
+        p->f2 = 0;
+        p->f4 = 0;
+        p->f6 = 0;
+        p->f0 = 0;
+        p++;
+    } while (p != end);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800048B8_54B8.s")
+#endif
 
+#ifdef NON_MATCHING
+void func_800048E8_54E8(void) {
+    D47F40Entry *end;
+    D47F40Entry *p;
+    end = (D47F40Entry *)(&D_80047F60);
+    p = (D47F40Entry *)D_80047F40;
+    do {
+        p->f4 = 0;
+        p->f8 = 0;
+        p->fC = 0;
+        p->f0 = 0;
+        p++;
+    } while (p != end);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800048E8_54E8.s")
+#endif
 
+#ifdef NON_MATCHING
+void func_80004918_5518(void) {
+    D47D40Entry *end;
+    D47D40Entry *p;
+    end = (D47D40Entry *)D_80047F40;
+    p = (D47D40Entry *)D_80047D40;
+    do {
+        p->f2 = 0;
+        p->f4 = 0;
+        p->f6 = 0;
+        p->f0 = 0;
+        p++;
+    } while (p != end);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004918_5518.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004948_5548.s")
 
@@ -94,7 +142,13 @@ void setGameplayResolution(void) {
     setVideoInterfaceYSize(0xE6);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006DAC_79AC.s")
+void func_80006DAC_79AC(s32 arg0, s32 arg1) {
+    if (D_80052AD0 != 0) {
+        D_80052AD4 = arg0;
+        D_80052AD0 = 0;
+        D_80052AC8 = arg1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006DDC_79DC.s")
 

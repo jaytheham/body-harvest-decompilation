@@ -40,7 +40,9 @@ void func_8000C6D0_D2D0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C6F4_D2F4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C764_D364.s")
+void func_8000C764_D364(s32 arg0) {
+    D_80054668[(arg0 - (s32)&D_80054680) / 0xE58] = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C790_D390.s")
 

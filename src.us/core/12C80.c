@@ -85,7 +85,11 @@ void func_800136CC_142CC(void) {
     func_80015C94_16894(0x23, 0x10);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800136F0_142F0.s")
+void func_800136F0_142F0(void) {
+    if (D_8006AB88 != 0) {
+        func_80013324_13F24();
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013720_14320.s")
 
@@ -262,7 +266,11 @@ u8 func_8001A114_1AD14(void) {
     return *(u8 *)(D_80034468 + D_8006C558);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A130_1AD30.s")
+void func_8001A130_1AD30() {
+    if (D_80034478 != 0) {
+        func_80019ABC_1A6BC();
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A160_1AD60.s")
 
