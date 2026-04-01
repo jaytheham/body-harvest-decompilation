@@ -43,6 +43,11 @@ typedef struct {
 } Unk80050ADA; /* size = 0x18 */
 
 typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ u8 pad02[0x66];
+} Unk802566D8; /* size = 0x68 */
+
+typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ u8 pad04[0x64];
 } Unk8025669C; /* size = 0x68 */
@@ -54,6 +59,17 @@ typedef struct {
 	/* 0x04 */ s8 errno;
 	/* 0x05 */ s8 pad5;
 } Unk80047588; /* size = 0x06 */
+
+typedef struct {
+    u8 pad0[0x6];
+    u8 unk6;
+    u8 pad7[0x21];
+} Unk_8003CEC0;
+
+typedef struct {
+    u16 unk0;
+    s16 unk2;
+} Unk_8013D91C;
 
 typedef struct {
 	/* 0x00 */ u32 pad0[11];  /* 0x00-0x2B */

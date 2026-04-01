@@ -24,6 +24,7 @@ vehicleSpecs = 0x80257A00; // size:0xE70
 buildingSpecs = 0x80259090; // size:0x400
 
 D_8014F210 = 0x8014F210; // size:0x400
+D_8013D91C = 0x8013D91C; // rom:0x14C870 size:0x18
 
 checkForRumblePak = 0x80000E40;
 validateSaveVersionAndChecksum = 0x80001624;

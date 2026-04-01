@@ -1,7 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-
 void func_800AE2C0_BD270(void) {
 	u8 i;
 	for (i = 0; i < 0xD0; i++) {
@@ -601,8 +600,33 @@ void func_800B06C4_BF674(Unk80222A78 *arg0) {
 	func_800B03CC_BF37C(arg0->unk8, (s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80), arg0);
 }
 
-// https://decomp.me/scratch/plniN
+// This is matching but there's something whacky going on with D_8013D91C
+// does it require the .data section to be split first?
+#ifdef NON_MATCHING
+void func_800B0710_BF6C0(s16 arg0, s16 arg1)
+{
+	u8 levelIdx;
+	u8 missionIdx;
+	s16 y;
+	Unk80222A78 tmp;
+	s32 g2, g3, g4, g5;
+
+	levelIdx = (currentLevel - 1);
+	missionIdx = D_8003CEC0[levelIdx].unk6;
+	y = (func_800B84D0_C7480(arg0, arg1) >> 8) + alienSpecs[missionIdx].unk58;
+	func_800CF80C_DE7BC(arg0, y, arg1, D_8013D91C[currentLevel].unk2, 0xA0, 0xFF, 0, 0);
+	func_800BECF0_CDCA0();
+	tmp.unk1 = arg0 >> 8;
+	tmp.unk2 = arg1 >> 8;
+	tmp.unk8 = levelIdx;
+	tmp.unk0 = 2;
+	tmp.unk4 = D_8014F820 + 0x12;
+	tmp.unkC = func_800B06C4_BF674;
+	func_800AE454_BD404(&tmp);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800B0710_BF6C0.s")
+#endif
 
 void func_800B0830_BF7E0(s32 arg0)
 {

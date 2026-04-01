@@ -1063,7 +1063,6 @@ extern s16 D_8015758E;
 extern s16 D_8013B8F0;
 extern s16 D_8013B910_14A8C0[6];
 extern s16 D_8013B91C_14A8CC[6];
-extern u8 D_8013D91E_14C8CE[];
 extern s16 D_8013B928_14A8D8[6];
 extern s16 D_8013B934_14A8E4;
 extern s32 D_8013BAC0_14AA70[][4];
@@ -1512,7 +1511,7 @@ extern u8 D_8013CBA4;
 extern u8 D_8013CBBC;
 extern DebugPropEntry D_8013CBC0[];
 extern u8 D_802566D0[];
-extern u8 D_802566D8[];
+extern Unk802566D8 D_802566D8[];
 extern s8 D_80257A55[];
 extern u8 D_80140768[];
 extern WeaponSpecEntry D_80140768_14F718[];
@@ -1528,6 +1527,8 @@ extern u8 D_801421B8[];
 extern f64 D_80142328;
 extern f64 D_80142350;
 extern f64 D_80142358;
+extern Unk_8003CEC0 D_8003CEC0[5];
+extern Unk_8013D91C D_8013D91C[6];
 
 /* overlay_level/java/1ED9E0 */
 extern char D_802E0D84_1F9A94[];
