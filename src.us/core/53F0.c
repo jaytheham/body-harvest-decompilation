@@ -162,7 +162,15 @@ void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007410_8010.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800074BC_80BC.s")
+void func_800074BC_80BC(void *arg0) {
+    s32 i = 4;
+    while (i--) {
+        if (arg0 == (void *)D_8004DC68[i]) {
+            D_8004DC68[i] = 0;
+            return;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800074F4_80F4.s")
 
