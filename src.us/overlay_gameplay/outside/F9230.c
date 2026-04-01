@@ -501,15 +501,15 @@ void func_800EFFB4_FEF64(void) {
 	switch (currentLevel) {
 		case 1:
 			if (func_8011D260_12C210(0x46, -0x25) == -1) {
-				osSyncPrintf(&D_801444F0_1534A0);
+				osSyncPrintf(&D_801444F0_1534A0); // **** ERROR: Cutscenes: RaiseAtlantis: Building not present ****
 			}
 
 			if (func_8011D260_12C210(0x4A, -7) == -1) {
-				osSyncPrintf(&D_80144534_1534E4);
+				osSyncPrintf(&D_80144534_1534E4); // **** ERROR: Cutscenes: BridgeBlowerUpper: Building not present ****
 			}
 
 			if (func_8011D260_12C210(-0x13, -0x1F) == -1) {
-				osSyncPrintf(&D_8014457C_15352C);
+				osSyncPrintf(&D_8014457C_15352C); // **** ERROR: Cutscenes: AlphaTransmute: Building not present ****
 			}
 			/* fallthrough */
 		case 2:
@@ -710,13 +710,13 @@ void func_800F3670_102620(void) {
 #endif
 
 void func_800F375C_10270C(s8 arg0) {
-	osSyncPrintf(&D_801448A8_153858, arg0, D_80157FF8, &D_80157FF8);
+	osSyncPrintf(&D_801448A8_153858, arg0, D_80157FF8, &D_80157FF8); // FREE WALKER %d: %d walkers allocated
 	if (arg0 >= 8 || arg0 < -1) {
-		osSyncPrintf(&D_801448D0_153880, arg0);
+		osSyncPrintf(&D_801448D0_153880, arg0); // Error in walker index
 		return;
 	}
 	if (D_80157FF0[arg0] != -1 && arg0 != -1) {
-		osSyncPrintf(&D_801448E8_153898, arg0);
+		osSyncPrintf(&D_801448E8_153898, arg0); // Attempt to free unallocated walker ID %d
 		return;
 	}
 	if (arg0 == -1) {

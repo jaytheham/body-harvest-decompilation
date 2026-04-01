@@ -12,7 +12,7 @@ void func_80139050_148000(void) {
 		}
 		osSyncPrintf(&D_80145A38_1549E8, *var_s1); // %d,
 	}
-	osSyncPrintf(&D_80145A3C_1549EC);
+	osSyncPrintf(&D_80145A3C_1549EC); // .
 }
 
 void func_801390F4_1480A4(s16 arg0) {
@@ -59,7 +59,7 @@ s32 func_801391DC_14818C(s32 arg0, s16 arg1)
   {
 	if (weaponSlots[0] != 1)
 	{
-	  osSyncPrintf(&D_80145A40_1549F0);
+	  osSyncPrintf(&D_80145A40_1549F0); // No space left in inventory for the new item
 	  return 0;
 	}
 	for (i = 1; i < 7; i++)

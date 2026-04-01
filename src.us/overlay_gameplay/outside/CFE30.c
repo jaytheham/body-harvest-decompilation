@@ -208,20 +208,20 @@ s16 func_800C17B4_D0764(u8 arg0, s32 arg1) {
 	s16 var_a2;
 
 	if (gameplayMode == 2 || gameplayMode == 9) {
-		osSyncPrintf(&D_8014301C_151FCC);
+		osSyncPrintf(&D_8014301C_151FCC); // Do not allocate because in pause
 	}
 	if (D_8015430E >= 0x190) {
 		if (arg1 != 0) {
-			osSyncPrintf(&D_80143040_151FF0, D_801541F8[arg0].unk0);
+			osSyncPrintf(&D_80143040_151FF0, D_801541F8[arg0].unk0); // WARNING - New permanent effect unit (type %d) cannot be allocated - out of space
 			var_a2 = -3;
 		} else {
-			osSyncPrintf(&D_80143094_152044, D_80154088[arg0].unk0);
+			osSyncPrintf(&D_80143094_152044, D_80154088[arg0].unk0); // WARNING - New dynamic effect unit (type %d) cannot be allocated - out of space
 			var_a2 = -3;
 		}
 	} else {
 		var_a2 = D_80154310;
 		if (D_80154318[var_a2].unk0 & 1) {
-			osSyncPrintf(&D_801430E8_152098);
+			osSyncPrintf(&D_801430E8_152098); // *** Tried to allocate a unit that is already being used!! ***
 		}
 		func_800C15C0_D0570(arg0, arg1, var_a2, 0);
 	}
@@ -332,7 +332,7 @@ s32 func_800C2274_D1224(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 
 void func_800C2554_D1504(s16 arg0, u8 arg1) {
 	if (arg1 >= 0x1E || D_80154088[arg1].unk0 != 0) {
-		osSyncPrintf(&D_80143390_152340);
+		osSyncPrintf(&D_80143390_152340); // DYNAMIC EFFECTS : Tried to kill smoke puff unit which does not exist!
 		return;
 	}
 	if (arg0 == D_80154088[arg1].unkA) {
@@ -695,7 +695,7 @@ void func_800CB23C_DA1EC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4, s32 ar
 			return;
 		}
 	}
-	osSyncPrintf(&D_80143644_1525F4);
+	osSyncPrintf(&D_80143644_1525F4); // ** WARNING: tried to update a bubble effect that doesn't exist! **
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CB394_DA344.s")
@@ -804,7 +804,7 @@ u8 func_800CD1F8_DC1A8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5) 
 		D_80154088[sp1F].unk1 |= 1;
 		temp_v0 = func_800C17B4_D0764(sp1F, 0);
 		if (temp_v0 == -3) {
-			osSyncPrintf(&D_80143688_152638);
+			osSyncPrintf(&D_80143688_152638); // EFFECTS WARNING: Failed to create a jet stream - could not allocate any units
 			func_800C1384_D0334(sp1F);
 			return 0xFB;
 		}
@@ -1386,7 +1386,7 @@ void func_800D6ADC_E5A8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	Unk80154318Entry *entry;
 
 	if (D_80153AB0 == 1) {
-		osSyncPrintf(&D_801438DC_15288C);
+		osSyncPrintf(&D_801438DC_15288C); // Can't create a nuke - one already in progress
 		return;
 	}
 	temp_a0 = func_800C14D4_D0484(7);
@@ -2464,7 +2464,7 @@ void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 	entry->unk2 = 0;
 
 	if (count >= 0x20) {
-		osSyncPrintf(&D_80143F58_152F08);
+		osSyncPrintf(&D_80143F58_152F08); // Error: too many shields allocated
 		return;
 	}
 

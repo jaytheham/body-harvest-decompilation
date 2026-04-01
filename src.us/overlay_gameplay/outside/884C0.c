@@ -99,7 +99,7 @@ s32 func_80079C8C_88C3C(s32 arg0) {
 	D_8014D300 = 0;
 	if (D_8014ECD0 == 0x78) {
 		alienInstances[arg0].unkC = -1;
-		osSyncPrintf(&D_801417C0_150770, &alienInstances[arg0]);
+		osSyncPrintf(&D_801417C0_150770, &alienInstances[arg0]); // No mode active components
 		return 0;
 	}
 
@@ -274,12 +274,12 @@ s32 func_8007A4F8_894A8(s32 arg0)
   alienIdx = D_8014D510[arg0];
   if (((u32) arg0) >= D_8014ECCC)
   {
-	osSyncPrintf(&D_801418B8_150868, alienIdx, arg0);
+	osSyncPrintf(&D_801418B8_150868, alienIdx, arg0); // Object %d is not active %d
 	return 0;
   }
   if (!(alienInstances[alienIdx].unk20 & 0x600))
   {
-	osSyncPrintf(&D_801418D4_150884, alienIdx, arg0);
+	osSyncPrintf(&D_801418D4_150884, alienIdx, arg0); // Trying to free already freed obj %d active %d
 	return 0;
   }
   alienInstances[alienIdx].unk20 &= ~0x600;
