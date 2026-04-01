@@ -150,22 +150,7 @@ void func_802D5170_1EDE80(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D51F8_1EDF08.s")
 
-extern s16 D_802E0FB0;
-
-void func_802D5508_1EE218(void);
-
-#ifdef NON_MATCHING
-void func_802D5508_1EE218(void) {
-	D_802E0FB0 -= 1;
-	if (D_802E0FB0 <= 0) {
-		func_80013468_14068(6);
-		func_800EFEB4_FEE64(&func_802D51F8_1EDF08, 0xC, 0);
-		func_800074BC_80BC(func_802D5508_1EE218);
-	}
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5508_1EE218.s")
-#endif
 
 void func_802D5560_1EE270(void) {
 	D_802E0FB0 = 0x1E;
@@ -359,23 +344,7 @@ void func_802D5DE4_1EEAF4(void) {
 	vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & 0xFBFF);
 }
 
-#ifdef NON_MATCHING
-void func_802D5DFC_1EEB0C(AlienInstance *arg0) {
-	s16 v0;
-	s16 v1;
-	s32 result;
-
-	v0 = (s8) *((u8 *)arg0 + 1);
-	v1 = (s8) *((u8 *)arg0 + 2);
-	v0 = (v0 << 8) + 0x80;
-	v1 = (v1 << 8) + 0x80;
-	result = func_800B84D0_C7480(v0, v1) >> 8;
-	func_80124B5C_133B0C(arg0->unk2A, (s16)result, *(s16 *)&arg0->unk26, 0x3E8, 0x96);
-	func_800DF038_EDFE8(arg0->unk2A, arg0->unk32, *(s16 *)&arg0->unk26, 0xC8, 0, 0);
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5DFC_1EEB0C.s")
-#endif
 
 void func_802D5E98_1EEBA8(void);
 
@@ -1871,17 +1840,7 @@ void func_802DA844_1F3554(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DA844_1F3554.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_802DAF5C_1F3C6C(u8 arg0) {
-	if (!(D_800481B8[arg0].unk20 & 0x100000)) {
-		func_80137468_146418((s32)arg0, 0xF);
-		func_802DA844_1F3554(arg0);
-	}
-	func_80089EB4_98E64(arg0, 0x3C, 0, 6, 3);
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DAF5C_1F3C6C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DAFD0_1F3CE0.s")
 
@@ -2557,17 +2516,7 @@ void func_802DD140_1F5E50(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD140_1F5E50.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_802DD244_1F5F54(s32 arg0) {
-	AlienInstance *alien;
-
-	alien = &alienInstances[arg0 & 0xFF];
-	alien->unk20 = alien->unk20 | 0x08000000;
-	func_800873A8_96358(arg0 & 0xFF);
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD244_1F5F54.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_802DD294_1F5FA4(u8 arg0) {

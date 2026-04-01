@@ -1549,7 +1549,7 @@ extern s16 D_8015921C;
 extern s16 D_800481AA[];
 extern s32 D_800481B8[];
 extern s16 D_800481D2[];
-
+extern s16 D_802E0FB0;
 /* java/1ED9E0 — additional externs for NON_MATCHING C bodies */
 extern u8 D_802D48D0;
 extern u8 D_802D4AD0;

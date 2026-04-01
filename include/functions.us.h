@@ -205,6 +205,7 @@ s32 func_80085B14_94AC4(u8, s16, s32, s16, s16);
 s16 func_80085C50_94C00(s16, s16, s16, s16, s16, s16);
 void func_80085CE0_94C90(u8, s16, s16, s16, s16);
 void func_80089EB4_98E64(u8, s32, s32, s32, s32);
+void func_802D5508_1EE218(void);
 void func_800893C8_98378(s32, s16, s16, s16, s16, s16, s16, s32, s32);
 s32 func_8008AAFC_99AAC(u8, s32, s32);
 void func_8008AC5C_99C0C(u8, s32);
