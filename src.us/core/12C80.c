@@ -209,7 +209,10 @@ void func_80015C58_16858(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016ABC_176BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016B38_17738.s")
+void func_80016B38_17738(s8 arg0, s8 arg1) {
+    D_80031D20_32920[arg1] = D_8006AB18[0]->unk1C;
+    D_80031CD0_328D0[arg1] = arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016B74_17774.s")
 

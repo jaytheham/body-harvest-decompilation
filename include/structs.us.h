@@ -72,7 +72,9 @@ typedef struct {
 } Unk_8013D91C;
 
 typedef struct {
-	/* 0x00 */ u32 pad0[11];  /* 0x00-0x2B */
+	/* 0x00 */ u32 pad0[7];   /* 0x00-0x1B */
+	/* 0x1C */ s32 unk1C;
+	/* 0x20 */ u32 pad20[3];  /* 0x20-0x2B */
 	/* 0x2C */ s32 unk2C;
 	/* 0x30 */ s32 unk30;
 } Unk80031424; /* size = 0x34 */
