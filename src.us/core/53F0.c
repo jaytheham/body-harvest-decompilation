@@ -189,8 +189,14 @@ void func_800074BC_80BC(void *arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800074F4_80F4.s")
-
+void func_800074F4_80F4(void) {
+    s32 i = 4;
+    while (i--) {
+        if (D_8004DC68[i] != 0) {
+            ((void (*)(void))D_8004DC68[i])();
+        }
+    }
+}
 extern s32 D_8004DC74;
 #ifdef NON_MATCHING
 void func_80007548_8148(void) {
