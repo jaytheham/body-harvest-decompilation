@@ -4,7 +4,7 @@
   --surface: #0a0e1a;         /* dark navy panel — planet surface shadow */
   --border: #1a2a4a;          /* electric blue edge — planet glow rim */
   --text: #d8e8f8;            /* cool white-blue — starfield readability */
-  --text-muted: #4a6a8a;      /* muted steel blue */
+  --text-muted: #a6c3df;      /* muted steel blue */
   --matched: #1a5c1a;         /* dark military green — alien carapace */
   --matched-light: #28a828;   /* bright alien green — matched highlight */
   --nonmatch: #7a3a00;        /* deep burnt orange — in-game health bar */
@@ -115,7 +115,7 @@ header .subtitle { color: var(--text-muted); font-size: 12px; letter-spacing: 1p
   font-family: "Courier New", "Consolas", monospace;
   letter-spacing: -1px;
 }
-.stat-card .sub { color: var(--text-muted); font-size: 11px; margin-top: 6px; }
+.stat-card .sub { color: var(--text-muted); font-size: 12px; margin-top: 6px; }
 .stat-card.matched .value { color: var(--matched-light); text-shadow: 0 0 8px rgba(40,168,40,0.4); }
 .stat-card.decomp .value { color: var(--nonmatch-light); text-shadow: 0 0 8px rgba(208,96,16,0.4); }
 .stat-card.nonmatch .value { color: var(--nonmatch-light); text-shadow: 0 0 8px rgba(208,96,16,0.4); }
@@ -183,7 +183,7 @@ header .subtitle { color: var(--text-muted); font-size: 12px; letter-spacing: 1p
 .seg-row { margin-bottom: 14px; }
 .seg-header { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 12px; }
 .seg-name { color: var(--text); letter-spacing: 0.3px; }
-.seg-pct { color: var(--text-muted); font-size: 11px; font-family: "Courier New", monospace; }
+.seg-pct { color: var(--text-muted); font-size: 12px; }
 .seg-bar {
   height: 6px;
   border-radius: 1px;
@@ -229,7 +229,7 @@ header .subtitle { color: var(--text-muted); font-size: 12px; letter-spacing: 1p
   box-shadow: 0 0 0 2px rgba(26,74,170,0.2);
 }
 .table-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
 thead th {
   background: var(--bg);
   border-bottom: 1px solid var(--border);
@@ -250,7 +250,7 @@ tbody tr { border-bottom: 1px solid rgba(26,42,74,0.5); }
 tbody tr:last-child { border-bottom: none; }
 tbody tr:hover { background: rgba(26,74,170,0.06); }
 tbody td { padding: 8px 12px; vertical-align: middle; }
-tbody td code { font-size: 11px; color: #8ab0d0; font-family: "Courier New", monospace; }
+tbody td code { font-size: 13px; color: #d0e1f0; }
 .mini-bar {
   width: 80px; height: 5px; background: var(--asm);
   border-radius: 1px; display: inline-flex; overflow: hidden; vertical-align: middle; margin-left: 6px;
