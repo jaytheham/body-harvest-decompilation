@@ -330,7 +330,16 @@ s16 func_80013F64_14B64(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/osBbUsbDevGetHandle.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014208_14E08.s")
+void func_80014208_14E08(s32 arg0, s16 arg1, s32 arg2) {
+    s32 pad1;
+    s32 pad2;
+    f32 sp24;
+
+    if (D_8006AB88 != 0) {
+        func_80014A3C_1563C((s32) &sp24, 0xC4, 0, 0,
+            sp24 = (f32)D_80032D88_33988 + ((f32) arg1 / D_80038300_38F00));
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014278_14E78.s")
 

@@ -6,7 +6,24 @@
 - 3 dummies: 0x20 → 0x30 (logical 0x2C rounds up to 0x30)
 - 4 dummies: 0x20 → 0x30 (logical 0x30, already aligned)
 
-Use 3 or 4 dummies when the target frame is 0x30 and the baseline is 0x20.
+**Frame size formula with an `f32` local (baseline frame 0x28, f32 at sp+0x20):**
+- 1 dummy (before f32): f32 moves from sp+0x20 → sp+0x24, frame 0x28 → 0x28
+- 2 dummies (before f32): f32 moves to sp+0x28, frame 0x28 → 0x30
+
+The two dummies push the f32 local upward; each dummy takes an integer-zone slot below the float zone. Two dummies place the f32 at sp+0x28, requiring minimum sp+0x2C → aligned to 0x30.
+
+Use 2 dummies when the target has an f32 at sp+0x24 AND frame 0x30, with `$ra` at sp+0x1C.
+Wait — 1 dummy puts f32 at sp+0x24 with frame 0x28. To get frame 0x30 with f32 still at sp+0x24,
+use **2 dummies** (1 real s32 dummy at 0x20 + 1 more dummy at 0x28 ... but a single pad does not generate the extra slot). Empirically found that declaring **2 s32 dummies before the f32** gives frame 0x30 with f32 at sp+0x24 (func_80014208_14E08):
+
+```c
+void func_80014208_14E08(s32 arg0, s16 arg1, s32 arg2) {
+    s32 pad1;   /* not last, phantom slot at sp+0x20 */
+    s32 pad2;   /* not last, phantom slot at sp+0x24(?) → pushes f32 up */
+    f32 sp24;   /* live float at sp+0x24 with frame 0x30 */
+    ...
+}
+```
 
 When a function's target frame is 0x28 but without any named pointer locals IDO only generates a 0x20 frame (because only `ra`, `a3`, and one spill need saving), add a phantom `s32 dummy;` local variable:
 
