@@ -233,7 +233,12 @@ void func_80015388_15F88(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015500_16100.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800155B0_161B0.s")
+void func_800155B0_161B0(s16 arg0, f32 arg1) {
+    if ((D_8006AB88 != 0) && (arg0 >= 0)) {
+        func_8001F820_20420(D_8006AB10, arg0);
+        alSndpSetPitch(D_8006AB10, arg1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015600_16200.s")
 
