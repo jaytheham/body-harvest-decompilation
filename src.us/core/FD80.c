@@ -17,10 +17,10 @@ void func_8000F180_FD80(void) {
 #endif
 
 void func_8000F190_FD90(void (*arg0)(void *)) {
-    D_80067A48.next = NULL;
-    D_80067A48.queue = NULL;
-    osCreateThread(&D_80067A48, 8, arg0, NULL, &D_80067388, 3);
-    osStartThread(&D_80067A48);
+	D_80067A48.next = NULL;
+	D_80067A48.queue = NULL;
+	osCreateThread(&D_80067A48, 8, arg0, NULL, &D_80067388, 3);
+	osStartThread(&D_80067A48);
 }
 
 void func_8000F1E8_FDE8(void) {
