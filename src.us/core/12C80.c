@@ -133,7 +133,13 @@ void func_80013410_14010(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/__dummy.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013468_14068.s")
+void func_80013468_14068(s16 arg0) {
+    if (arg0 == 0) {
+        func_80015C94_16894((s8)(currentLevel + 0x24), 5);
+        return;
+    }
+    func_80015C94_16894((s8)(arg0 + 0x29), 5);
+}
 
 void func_800134CC_140CC(void) {
     if (D_80031B58_32758 == 1) {
