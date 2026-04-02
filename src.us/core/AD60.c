@@ -58,7 +58,28 @@ s16 func_8000A43C_B03C(s8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/drawText.s")
 
+#ifdef NON_MATCHING
+void func_8000AFDC_BBDC(void) {
+	s8 *var_a0;
+	s32 var_v1;
+
+	D_80053BE2 = 0;
+	D_80053BE4 = 0;
+	D_80053BE0 = 0;
+	D_80053C80 = 0;
+	D_80053C82 = 0;
+	D_80053C90 = 0x28;
+	D_80053C92 = 0x18;
+	var_a0 = &D_80053BDF;
+	var_v1 = 0xFFF;
+	do {
+		*var_a0 = 0;
+		var_a0 -= 1;
+	} while (var_v1--);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000AFDC_BBDC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s")
 
@@ -91,7 +112,22 @@ void func_8000C6D0_D2D0(s32 arg0) {
 	} while (0);
 }
 
+#ifdef NON_MATCHING
+void *func_8000C6F4_D2F4(void) {
+	s32 i;
+	void *ptr;
+
+	for (i = 0; i != 6; i = (i + 1) & 0xFF) {
+		if (D_80054668[i] == 0) {
+			ptr = (void *)((char *)&D_80054680 + i * 0xE58);
+			D_80054668[i] = (s32)ptr;
+			return ptr;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C6F4_D2F4.s")
+#endif
 
 void func_8000C764_D364(s32 arg0) {
 	D_80054668[(arg0 - (s32)&D_80054680) / 0xE58] = 0;

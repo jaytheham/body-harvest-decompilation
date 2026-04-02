@@ -158,7 +158,15 @@ s32 destroyThreadIfMessageInQueue(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadFrontendData.s")
 
+#ifdef NON_MATCHING
+void func_80011674_12274(void) {
+    osInvalICache(&func_80070270, (u8 *)&D_8013B8F0 - (u8 *)&func_80070270);
+    osInvalDCache(&D_8013B8F0, (u8 *)&D_80149380 - (u8 *)&D_8013B8F0);
+    func_800101F0_10DF0((s32)&func_80070270, (s32)D_7F220, D_158330 - D_7F220);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011674_12274.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelCode.s")
 

@@ -93,7 +93,8 @@ typedef struct Unk8006AA80Node {
 	/* 0x00 */ u16 unk0;
 	/* 0x02 */ u8 pad2[0x4];
 	/* 0x06 */ s16 unk6;
-	/* 0x08 */ u8 pad8[0x24];
+	/* 0x08 */ u8 pad8[0x20];
+	/* 0x28 */ s32 unk28;
 	/* 0x2C */ s32 unk2C;
 	/* 0x30 */ u8 pad30[0x4];
 	/* 0x34 */ struct Unk8006AA80Node *unk34;
@@ -101,11 +102,25 @@ typedef struct Unk8006AA80Node {
 
 typedef struct Unk8006AA84Node {
 	/* 0x00 */ u16 unk0;
-	/* 0x02 */ u8 pad2[0x0E];
+	/* 0x02 */ u8 pad2[0x04];
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ u8 pad8[0x08];
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ u8 pad12[0x1E];
 	/* 0x30 */ struct Unk8006AA84Node *unk30;
 } Unk8006AA84Node;
+
+typedef struct {
+    /* 0x00 */ s32 offset;
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ s16 len;
+} BhSeqEntry; /* size = 0x8 */
+
+typedef struct {
+    /* 0x00 */ s16 revision;
+    /* 0x02 */ s16 seqCount;
+    /* 0x04 */ BhSeqEntry seqArray[1];
+} BhSeqFile;
 
 typedef struct {
 	/* 0x00 */ u8 pad0[0x1A];

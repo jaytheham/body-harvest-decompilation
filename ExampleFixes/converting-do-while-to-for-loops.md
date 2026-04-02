@@ -112,3 +112,19 @@ if (leomecha_bss_0004 != 0) {
 ```
 
 Also note: adding an explicit `s32 temp_v1 = var_v0 * 2;` temp variable (to force increment-before-load ordering) fixes the loop-body instruction scheduling but corrupts the loop-body t-register allocation (sign-extend uses t7 instead of t0). The `for` loop form avoids needing any such temp.
+
+#### for-loop with `(i + 1) & 0xFF` update: bne operand ordering is fixed
+
+When a for-loop uses `i = (i + 1) & 0xFF` as the update expression, IDO generates:
+```
+addiu v1, v1, 1     ; i++
+andi  t0, v1, 0xFF  ; t0 = new i (masked)
+bne   [rs], [rt], loop_top
+or    v1, t0, zero  ; delay: update v1 with masked value
+```
+
+IDO consistently places the most-recently-written register (`t0`, from the `andi`) as `rs` (first operand) in the `bne`, and the loop-bound register as `rt` (second). Flipping the C condition from `i != 6` to `6 != i` does **not** change this behavior — IDO ignores comparison direction for this loop-rotation pattern.
+
+If the target uses `bne a1_bound, t0_counter` (bound first, counter second) and your code generates `bne t0_counter, a1_bound`, the bne ordering cannot be fixed by C-level changes to the comparison expression. This count as score 10 (one `r` mismatch). The function is functionally identical and this is acceptable.
+
+**Note:** Introducing an additional explicit temp variable for the bound (`s32 max = 6`) works against you — it shifts the base-address pointer from `v0` to `a1`, and `max` takes `v0`, causing more mismatches rather than fewer.
