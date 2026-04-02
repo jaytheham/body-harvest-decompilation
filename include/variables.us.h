@@ -1528,6 +1528,7 @@ extern OSThread D_80067538;
 extern OSThread D_800676E8;
 extern OSThread D_80067898;
 extern OSThread D_80067A48;
+extern OSMesgQueue D_80067FD0;
 extern u8 D_8005CF68[];
 extern u8 D_80064F70[];
 extern u8 D_80066780[];
