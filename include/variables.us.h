@@ -1472,6 +1472,7 @@ extern s32 D_37F840;
 extern s32 D_803DA800;
 extern u8 D_40720[];
 extern u8 D_7F220[];
+extern u8 D_158330[];
 extern u8 D_800AED70[];
 extern u8 D_800E1D70[];
 extern OSMesgQueue D_80067F88;
