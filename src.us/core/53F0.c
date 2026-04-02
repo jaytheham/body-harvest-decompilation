@@ -98,7 +98,11 @@ void func_80004C8C_588C(void) {
 	gSPSegment(D_8005BB2C++, 0x02, (u32)D_8005BB20 & 0x1FFFFFFF);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004CC8_58C8.s")
+void func_80004CC8_58C8(void) {
+	gSPViewport(D_8005BB2C++, D_8005BB24 + 0x80000000);
+	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
+	gSPSetGeometryMode(D_8005BB2C++, G_SHADE | G_SHADING_SMOOTH);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004D38_5938.s")
 
