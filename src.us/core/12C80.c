@@ -397,7 +397,18 @@ s16 func_80013F64_14B64(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013FC4_14BC4.s")
 
+#ifdef NON_MATCHING
+void func_80014180_14D80(s8 arg0) {
+    s32 temp_f16;
+
+    if (D_8006AB88 != 0) {
+        temp_f16 = (s32) ((f32) arg0 / 3.0f);
+        func_800153D8_15FD8(D_80033A68_34668[currentLevel * 16 + (s8) temp_f16]);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014180_14D80.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/osBbUsbDevGetHandle.s")
 
