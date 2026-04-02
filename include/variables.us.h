@@ -1494,7 +1494,9 @@ extern u8 D_955300[];
 extern s32 D_80031BC4_327C4[];
 extern s32 D_37F840;
 extern s32 D_803DA800;
+#ifndef OVERLAY_ENTRY_AS_FUNC
 extern u8 func_80070270[];
+#endif
 extern u8 D_40720[];
 extern u8 D_7F220[];
 extern u8 D_158330[];

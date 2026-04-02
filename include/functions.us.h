@@ -50,7 +50,13 @@ void func_8000CDFC_D9FC(void *arg0, void *arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8000D278_DE78(void *arg0, void *arg1, s32 arg2, s32 arg3);
 void func_8000DC9C_E89C(s32, s32);
 void func_80011D24_12924(void);
+s32 func_80011D6C_1296C(s32 arg0);
+void func_80011674_12274(void);
+void func_800117D8_123D8(void);
 void func_80011E14_12A14(u8 arg0);
+#ifdef OVERLAY_ENTRY_AS_FUNC
+s32 func_80070270(s32 arg0);
+#endif
 // loader.c functions - prototype-less to preserve implicit int behavior for matching functions
 s32 func_8001032C_10F2C();
 void func_8000F1E8_FDE8(void);

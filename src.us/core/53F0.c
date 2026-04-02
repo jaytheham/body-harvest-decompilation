@@ -1,3 +1,4 @@
+#define OVERLAY_ENTRY_AS_FUNC
 #include <ultra64.h>
 #include "common.h"
 
@@ -208,7 +209,20 @@ void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006DDC_79DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800071D8_7DD8.s")
+void func_800071D8_7DD8(void) {
+    func_8000505C_5C5C();
+    func_800056A8_62A8();
+    func_800056A8_62A8();
+    setFullResolution();
+    func_800117D8_123D8();
+    func_80070270(0);
+    if (gameplayMode != 0 && gameplayMode != 0x10 && D_80052AD0 != 0) {
+        setGameplayResolution();
+    }
+    func_80011674_12274();
+    func_80011D6C_1296C(D_80047F93);
+    func_800050C4_5CC4();
+}
 
 s32 func_8000726C_7E6C(u64 arg0) {
 	return ((1LL << arg0) & D_8004DC48.unk0) != 0;
