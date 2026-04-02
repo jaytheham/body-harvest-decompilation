@@ -67,6 +67,7 @@ void func_80013684_14284(void);
 void func_80014180_14D80(s32 arg0);
 void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4);
 void func_800153D8_15FD8(s16);
+void func_800157D4_163D4(s16);
 void func_8001F820_20420(s32 arg0, s16 arg1);
 void func_800156C8_162C8(s32 arg0);
 void func_8001599C_1659C(void);

@@ -101,7 +101,9 @@ typedef struct Unk8006AA80Node {
 
 typedef struct Unk8006AA84Node {
 	/* 0x00 */ u16 unk0;
-	/* 0x02 */ u8 pad2[0x0E];
+	/* 0x02 */ u8 pad2[0x04];
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ u8 pad8[0x08];
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ u8 pad12[0x1E];
 	/* 0x30 */ struct Unk8006AA84Node *unk30;
