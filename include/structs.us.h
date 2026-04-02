@@ -110,6 +110,18 @@ typedef struct Unk8006AA84Node {
 } Unk8006AA84Node;
 
 typedef struct {
+    /* 0x00 */ s32 offset;
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ s16 len;
+} BhSeqEntry; /* size = 0x8 */
+
+typedef struct {
+    /* 0x00 */ s16 revision;
+    /* 0x02 */ s16 seqCount;
+    /* 0x04 */ BhSeqEntry seqArray[1];
+} BhSeqFile;
+
+typedef struct {
 	/* 0x00 */ u8 pad0[0x1A];
 	/* 0x1A */ u8 unk1A;
 	/* 0x1B */ u8 unk1B;

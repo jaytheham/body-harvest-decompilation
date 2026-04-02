@@ -305,6 +305,8 @@ extern Unk8006AA84Node *D_8006AA84;
 extern Unk80031424 *D_8006AB18[];
 extern s32 D_8006AB10;
 extern s32 D_8006AB88;
+extern BhSeqFile *D_8006AB44;
+extern s32 D_8006AB30[];
 extern s16 D_80033A74_34674[];
 extern s8 D_80031CD0_328D0[];
 extern s32 D_80031D20_32920[];

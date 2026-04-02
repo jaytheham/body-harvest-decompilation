@@ -170,7 +170,19 @@ void *func_80012834_13434(void *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001286C_1346C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800129FC_135FC.s")
+void func_800129FC_135FC(s8 arg0, s8 arg1) {
+    s32 devAddr;
+    s16 var_a2;
+
+    if (D_8006AB88 != 0) {
+        devAddr = D_8006AB44->seqArray[arg0].offset;
+        var_a2 = D_8006AB44->seqArray[arg0].len;
+        if (var_a2 & 1) {
+            var_a2 += 1;
+        }
+        func_8000F5A8_101A8(devAddr, D_8006AB30[arg1], var_a2);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012A74_13674.s")
 

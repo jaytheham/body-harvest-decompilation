@@ -54,6 +54,7 @@ void func_80011E14_12A14(u8 arg0);
 // loader.c functions - prototype-less to preserve implicit int behavior for matching functions
 s32 func_8001032C_10F2C();
 void func_8000F1E8_FDE8(void);
+void func_8000F5A8_101A8(s32 arg0, s32 arg1, s32 arg2);
 s32 func_800119A8_125A8();
 s32 func_80011AC8_126C8();
 s32 func_80011BE8_127E8();
