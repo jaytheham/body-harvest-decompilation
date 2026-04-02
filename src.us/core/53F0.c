@@ -104,9 +104,9 @@ void func_800050C4_5CC4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800053A0_5FA0.s")
 
 void func_80005654_6254(u8 arg0, u8 arg1, u8 arg2) {
-    func_800050C4_5CC4();
-    func_80004DDC_59DC(arg0, arg1, arg2, 0, D_80068088 - 1);
-    func_8000505C_5C5C();
+	func_800050C4_5CC4();
+	func_80004DDC_59DC(arg0, arg1, arg2, 0, D_80068088 - 1);
+	func_8000505C_5C5C();
 }
 
 void func_800056A8_62A8(void) {
@@ -204,12 +204,12 @@ void func_800074BC_80BC(void *arg0) {
 }
 
 void func_800074F4_80F4(void) {
-    s32 i = 4;
-    while (i--) {
-        if (D_8004DC68[i] != 0) {
-            ((void (*)(void))D_8004DC68[i])();
-        }
-    }
+	s32 i = 4;
+	while (i--) {
+		if (D_8004DC68[i] != 0) {
+			((void (*)(void))D_8004DC68[i])();
+		}
+	}
 }
 extern s32 D_8004DC74;
 #ifdef NON_MATCHING
@@ -237,11 +237,11 @@ void func_80007690_8290(void) {
 }
 
 void func_800076D4_82D4(s32 arg0) {
-    osSyncPrintf(&D_80036DBC_379BC, arg0);
-    if (D_80048030 < arg0) {
-        D_80048030 = (u8) arg0;
-        func_8001A650_1B250(1);
-    }
+	osSyncPrintf(&D_80036DBC_379BC, arg0);
+	if (D_80048030 < arg0) {
+		D_80048030 = (u8) arg0;
+		func_8001A650_1B250(1);
+	}
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007728_8328.s")
