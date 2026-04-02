@@ -196,30 +196,25 @@ void func_80002D58_3958(void) {
 	}
 }
 
-#ifdef NON_MATCHING
-void guess_deleteSavedData(void) {
+void guess_deleteSavedData(void)
+{
 	u8 *var_v0;
+	short new_var;
 	u8 *var_v1;
-
-	osSyncPrintf(&D_80036C64);
-	var_v0 = &D_800431C0;
-	var_v1 = &D_8004337D;
 	do {
-		var_v0++;
-		*(var_v0 - 1) = 0;
-	} while ((u32) var_v0 < (u32) var_v1);
-	func_80001830_2430();
-	func_800021CC_2DCC(0);
-	func_800021CC_2DCC(1);
-	func_800021CC_2DCC(2);
-	func_800015B4_21B4(0, 0x1B9);
-	if (D_80047608 != 0) {
-		osEepromLongWrite(&D_80043388, 0, &D_800431C0, 0x1BD);
+		osSyncPrintf(&D_80036C64);
+		var_v0 = &D_800431C0; new_var = 0; var_v1 = &D_8004337D;
+		do { var_v0++; *(var_v0 - 1) = new_var; } while (((u32) var_v0) < ((u32) var_v1));
+		func_80001830_2430();
+		func_800021CC_2DCC(new_var);
+		func_800021CC_2DCC(1);
+		func_800021CC_2DCC(2);
+	} while (0);
+	func_800015B4_21B4(new_var, 0x1B9);
+	if (D_80047608 != new_var) {
+		osEepromLongWrite(&D_80043388, new_var, &D_800431C0, 0x1BD);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_deleteSavedData.s")
-#endif
 
 void guess_restoreSavedData(void) {
 	if (D_80047608 != 0) {
