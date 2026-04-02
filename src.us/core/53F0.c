@@ -163,7 +163,12 @@ s32 func_80005B30_6730(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005C5C_685C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006520_7120.s")
+s16 func_80006520_7120(s16 arg0, s16 arg1, u16 arg2) {
+    f64 var_f6;
+
+    var_f6 = (f64)(u32)arg2;
+    return (s16) (s32) ((f32) arg0 + ((f32) (arg1 - arg0) * (f32) (var_f6 / D_80037138_37D38)));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800065A4_71A4.s")
 
