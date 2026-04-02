@@ -399,7 +399,14 @@ void func_800155B0_161B0(s16 arg0, f32 arg1) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015600_16200.s")
+void func_80015600_16200(s16 arg0, u8 arg1) {
+	if ((D_8006AB88 != 0) && (arg0 >= 0)) {
+		func_8001F820_20420(D_8006AB10, arg0);
+		if (func_8001F840_20440(D_8006AB10) == 1) {
+			alSndpSetPan(D_8006AB10, arg1);
+		}
+	}
+}
 
 void func_80015674_16274(s16 arg0) {
 	if ((D_8006AB88 != 0) && (arg0 != -1) && (arg0 < 0x74)) {
