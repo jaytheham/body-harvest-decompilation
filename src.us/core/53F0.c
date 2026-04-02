@@ -127,7 +127,17 @@ void func_80005AEC_66EC(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	D_80047730 = 0x40;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005B30_6730.s")
+s32 func_80005B30_6730(void) {
+	if (D_80047734 != 0) {
+		D_8004772C = D_8004772C + D_80047730;
+		if (D_8004772C >= 0x100) {
+			D_8004772C = 0xFF;
+			D_80047734 = 0;
+			return 1;
+		}
+	}
+	return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005B84_6784.s")
 
