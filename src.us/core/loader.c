@@ -106,7 +106,15 @@ s32 func_80010420_11020(s32 arg0, s32 arg1) {
 	return func_8001032C_10F2C(arg0, arg1, (s32)&D_802B2080);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80010444_11044.s")
+s32 func_80010444_11044(s32 arg0, s32 arg1, s32 arg2) {
+	s32 temp_v0;
+
+	temp_v0 = func_80010420_11020(arg0, arg1);
+	if (temp_v0 == 0) {
+		return func_800101F0_10DF0(arg0, arg1, arg2);
+	}
+	return temp_v0;
+}
 
 s32 func_80010490_11090(u8 arg0) {
 	return D_80031BC4_327C4[arg0];
@@ -147,19 +155,55 @@ void __osInitialize_emu(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800118F8_124F8.s")
 
+#ifdef NON_MATCHING
+s32 func_800119A8_125A8(s32 arg0) {
+	s32 size = &D_500A00 - &D_4EBF80;
+	func_800101F0_10DF0(__printfunc = (void (*)(s32, s32))arg0, &D_4EBF80, size);
+	return size + arg0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800119A8_125A8.s")
+#endif
 
+#ifdef NON_MATCHING
+s32 func_800119F4_125F4(s32 arg0) {
+	func_800101F0_10DF0(D_8006AA6C = arg0, &D_500A00, &D_55B0A0 - &D_500A00);
+	return (&D_55B0A0 - &D_500A00) + arg0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800119F4_125F4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011A40_12640.s")
 
+#ifdef NON_MATCHING
+s32 func_80011AC8_126C8(s32 arg0) {
+	func_800101F0_10DF0(D_8006AA74 = arg0, &D_55B0A0, &D_579D50 - &D_55B0A0);
+	return (&D_579D50 - &D_55B0A0) + arg0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011AC8_126C8.s")
+#endif
 
+#ifdef NON_MATCHING
+s32 func_80011B14_12714(s32 arg0) {
+	func_800101F0_10DF0(D_8006AA6C = arg0, &D_791C20, &D_7A4400 - &D_791C20);
+	return (&D_7A4400 - &D_791C20) + arg0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011B14_12714.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011B60_12760.s")
 
+#ifdef NON_MATCHING
+s32 func_80011BE8_127E8(s32 arg0) {
+	func_800101F0_10DF0(D_8006AA70 = arg0, &D_43A340, &D_4EBF80 - &D_43A340);
+	return (&D_4EBF80 - &D_43A340) + arg0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011BE8_127E8.s")
+#endif
 
 void debug_printModelSegmentStart(void *arg0) {
 	osSyncPrintf(D_800380C4);
