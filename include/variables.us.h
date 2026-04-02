@@ -1473,6 +1473,8 @@ extern u8 D_4EBF80;
 extern u8 D_500A00;
 extern u8 D_55B0A0;
 extern u8 D_579D50;
+extern u8 D_791C20;
+extern u8 D_7A4400;
 extern char D_800380C4[];
 extern char D_800380E4[];
 
