@@ -359,7 +359,12 @@ void func_80018D58_19958(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80019F80_1AB80.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A024_1AC24.s")
+void func_8001A024_1AC24(void) {
+    D_80034460 = D_80034464;
+    D_80034468 = D_8003446C;
+    D_80034470 = D_80034474;
+    D_8006C550 = D_8006C554;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A068_1AC68.s")
 
