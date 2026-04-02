@@ -58,7 +58,28 @@ s16 func_8000A43C_B03C(s8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/drawText.s")
 
+#ifdef NON_MATCHING
+void func_8000AFDC_BBDC(void) {
+	s8 *var_a0;
+	s32 var_v1;
+
+	D_80053BE2 = 0;
+	D_80053BE4 = 0;
+	D_80053BE0 = 0;
+	D_80053C80 = 0;
+	D_80053C82 = 0;
+	D_80053C90 = 0x28;
+	D_80053C92 = 0x18;
+	var_a0 = &D_80053BDF;
+	var_v1 = 0xFFF;
+	do {
+		*var_a0 = 0;
+		var_a0 -= 1;
+	} while (var_v1--);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000AFDC_BBDC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s")
 
