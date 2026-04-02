@@ -175,7 +175,12 @@ void func_80011674_12274(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelCode.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800117D8_123D8.s")
+void func_800117D8_123D8(void) {
+    osInvalICache(func_80070270, (u8 *)&D_8008DDF0 - func_80070270);
+    osInvalDCache(&D_8008DDF0, D_800A5720 - (u8 *)&D_8008DDF0);
+    func_800101F0_10DF0(func_80070270, D_158330, D_18D7E0 - D_158330);
+    bzero(D_800A5720, D_800FCF50 - D_800A5720);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011858_12458.s")
 
