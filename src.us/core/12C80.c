@@ -109,7 +109,16 @@ void func_80013514_14114(void) {
     func_80015C94_16894(0x50, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001355C_1415C.s")
+void func_8001355C_1415C(void) {
+    if (D_80031B58_32758 == 1) {
+        func_80015C94_16894(0x41, 0);
+        return;
+    }
+    func_80015C94_16894(0x51, 0);
+}
+
+static void func_800135A4_stub(void) {
+}
 
 void playMapMusic(void) {
     if (D_80031B58_32758 == 1) {
