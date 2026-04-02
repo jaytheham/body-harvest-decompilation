@@ -103,7 +103,11 @@ void func_800050C4_5CC4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800053A0_5FA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005654_6254.s")
+void func_80005654_6254(u8 arg0, u8 arg1, u8 arg2) {
+    func_800050C4_5CC4();
+    func_80004DDC_59DC(arg0, arg1, arg2, 0, D_80068088 - 1);
+    func_8000505C_5C5C();
+}
 
 void func_800056A8_62A8(void) {
 	func_80005654_6254(0, 0, 0);
