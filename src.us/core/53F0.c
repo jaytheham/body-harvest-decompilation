@@ -110,7 +110,11 @@ void func_80004CC8_58C8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004F64_5B64.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000505C_5C5C.s")
+void func_8000505C_5C5C(void) {
+	gDPFullSync(D_8005BB2C++);
+	gSPEndDisplayList(D_8005BB2C++);
+	osSendMesg(&D_8006A8B0, &D_800314CC_320CC, 1);
+}
 
 void func_800050C4_5CC4(void) {
 	osRecvMesg(&D_8006A8D0, &D_80068038, 1);

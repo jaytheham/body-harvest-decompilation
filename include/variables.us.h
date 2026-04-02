@@ -1547,6 +1547,7 @@ extern u8 D_8005CF68[];
 extern u8 D_80064F70[];
 extern u8 D_80066780[];
 extern OSMesg D_80068038;
+extern OSMesg D_800314CC_320CC;
 extern OSMesgQueue __osSiAccessQueue;
 extern s32 __osSiAccessQueueEnabled;
 extern OSMesgQueue D_80068040;
