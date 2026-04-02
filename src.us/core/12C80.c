@@ -93,7 +93,21 @@ Unk8006AA80Node *func_800125D8_131D8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012638_13238.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800126B0_132B0.s")
+s32 func_800126B0_132B0(void) {
+	Unk8006AA80Node *var_v0;
+
+	if (D_8006AB88 == 0) {
+		return 0;
+	}
+	var_v0 = D_8006AA80;
+	while (var_v0 != NULL) {
+		if (var_v0->unk0 >= 0xFA && var_v0->unk0 < 0x109 && var_v0->unk6 != -1) {
+			return 1;
+		}
+		var_v0 = var_v0->unk34;
+	}
+	return 0;
+}
 
 Unk8006AA80Node *func_80012720_13320(void) {
 	Unk8006AA80Node *v1;
