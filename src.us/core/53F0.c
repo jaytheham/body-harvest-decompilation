@@ -335,7 +335,18 @@ void func_80008C18_9818(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008C18_9818.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008C44_9844.s")
+s32 func_80008C44_9844(s32 arg0) {
+    s16 *v1 = &D_80047F7E;
+    s32 a1 = 0x10;
+    while (a1--) {
+        if (*v1 == -1) {
+            *v1 = arg0;
+            osSyncPrintf(D_80037100_37D00, arg0);
+            break;
+        }
+        v1--;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008CA8_98A8.s")
 

@@ -103,6 +103,7 @@ extern u8 D_80033C80_W;
 extern f32 D_80032D88_33988;
 extern f32 D_80038300_38F00;
 extern u64 D_80035610;
+extern char D_80037100_37D00[];
 extern f64 D_80037138_37D38;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
 extern char D_80036DA4_379A4;
