@@ -11,6 +11,12 @@ typedef struct {
 } Unk8013CA; /* size = 0x02 */
 
 typedef struct {
+	/* 0x00 */ s8 unk0;
+	/* 0x01 */ s8 unk1;
+	/* 0x02 */ s8 unk2;
+} Unk8004773C; /* size = 0x04 */
+
+typedef struct {
 	/* 0x00 */ f32 x;
 	/* 0x04 */ f32 y;
 	/* 0x08 */ f32 z;

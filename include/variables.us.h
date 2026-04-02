@@ -133,6 +133,8 @@ extern s32 D_80047734;
 extern s8 D_80047738;
 extern s8 D_80047739;
 extern s8 D_8004773A;
+extern Unk8004773C D_8004773C;
+extern Unk8004773C D_80047740;
 extern u8 D_80047743; // World fog red value
 extern u8 D_80047744; // World fog green value
 extern u8 D_80047745; // World fog blue value
