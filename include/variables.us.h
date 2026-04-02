@@ -75,6 +75,7 @@ extern s16 D_800313D0; // Language
 extern u8 D_800313F4; // World fog alpha value
 extern s16 D_800313F8; // World fog near distance
 extern s16 D_800313FC; // World fog far distance
+extern s32 leomecha_bss_0004;
 extern s32 D_80031410;
 extern s32 D_80031414;
 extern s32 D_80031420;
@@ -135,6 +136,7 @@ extern s8 D_8004773A;
 extern u8 D_80047743; // World fog red value
 extern u8 D_80047744; // World fog green value
 extern u8 D_80047745; // World fog blue value
+extern u16 D_80047748;
 extern s16 D_8004794A;
 extern s16 D_80047948;
 extern u8 D_8004794C;

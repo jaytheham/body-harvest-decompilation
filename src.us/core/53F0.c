@@ -76,7 +76,16 @@ void func_80004918_5518(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/leoInitUnit_atten.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004C34_5834.s")
+void func_80004C34_5834(void) {
+	s16 var_v0;
+
+	if (leomecha_bss_0004 != 0) {
+		for (var_v0 = 0; var_v0 < 0x100; var_v0++) {
+			((u16 *)&D_80047748)[var_v0] = ((u16 *)&D_802D4AD0)[var_v0];
+		}
+		leomecha_bss_0004 = 0;
+	}
+}
 
 void func_80004C8C_588C(void) {
 	gSPSegment(D_8005BB2C++, 0x02, (u32)D_8005BB20 & 0x1FFFFFFF);
