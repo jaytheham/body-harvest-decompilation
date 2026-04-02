@@ -185,7 +185,11 @@ void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800072CC_7ECC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800073B8_7FB8.s")
+void func_800073B8_7FB8(u64 arg0) {
+	u64 temp_ret;
+	temp_ret = __ll_lshift(1, arg0);
+	D_8004DC48.unk0 &= ~temp_ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007410_8010.s")
 
