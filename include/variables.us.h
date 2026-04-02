@@ -1073,6 +1073,7 @@ extern Vec3f D_80153BA0;
 extern OSContPad D_800475B8;
 extern u8 D_8015FAFC;
 extern u8 D_8015FAF8;
+extern s32 D_8003445C;
 extern void *D_80034460;
 extern void *D_80034464;
 extern s32 D_80034468;
@@ -1509,6 +1510,7 @@ extern u8 D_7A4400;
 extern char D_800380C4[];
 extern char D_800380E4[];
 extern char D_80038424_39024;
+extern char D_800384E0_390E0;
 
 /* core/FB00 */
 extern u8 D_8003FB20[];
@@ -1561,6 +1563,7 @@ extern s16 D_8006C564;
 extern s16 D_8006C566;
 extern s16 D_8006C568;
 extern s16 D_8006C56A;
+extern s8 D_8006C56C;
 extern OSViMode D_80035B30;
 extern OSViMode D_800356D0;
 extern OSViMode D_80035F90;

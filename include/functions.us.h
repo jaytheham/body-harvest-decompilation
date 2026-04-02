@@ -517,6 +517,7 @@ f32 func_800FB098_10A048(VehicleInstance *arg0);
 void func_8000C6B8_D2B8(s32 arg0);
 void func_80019F80_1AB80(void);
 void func_80017B08_18708(s32 arg0);
+void func_80019EA8_1AAA8(u8 arg0);
 void func_80088000_96FB0(s16 arg0);
 void func_800C978C_D873C(void);
 s32 func_800744E0_83490(s32 arg0);

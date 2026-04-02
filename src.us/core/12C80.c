@@ -665,7 +665,14 @@ void func_80018D58_19958(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80019ABC_1A6BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80019EA8_1AAA8.s")
+void func_80019EA8_1AAA8(u8 arg0) {
+    D_80034478 = 1;
+    D_80034480 = arg0;
+    osSyncPrintf(&D_800384E0_390E0, D_80034480, arg0);
+    D_8003447C = 0;
+    D_8006C56C = 0;
+    D_8003445C = 1;
+}
 
 void func_80019F08_1AB08(void) {
     func_80019F80_1AB80();
