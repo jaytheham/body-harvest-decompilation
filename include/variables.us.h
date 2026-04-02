@@ -96,6 +96,7 @@ extern s8 D_80031CA4;
 extern u64 D_80035610;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
 extern char D_80036DA4_379A4;
+extern char D_80036DBC_379BC;
 extern u8 D_80036C64[];
 extern u8 D_80036C74[];
 extern u8 D_8004337D;
@@ -125,6 +126,7 @@ extern s16 D_800476A0;
 extern s16 D_800476A2; // enables input?
 extern s16 D_80047720;
 extern s16 D_80047722;
+extern s32 D_8004772C;
 extern s32 D_80047730;
 extern s32 D_80047734;
 extern s8 D_80047738;
@@ -194,8 +196,7 @@ extern u8 D_8004D1B9;
 extern Unk8004D1C8 D_8004D1C8[];
 extern u8 D_80047F93;
 extern AlienInstance D_8004D0F8[]; // alien array base
-extern s32 D_8004DC48;
-extern s32 D_8004DC4C;
+extern BitFlags64 D_8004DC48;
 extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
@@ -285,8 +286,11 @@ extern u8* D_8005BB20;
 extern s32 D_8005BB24;
 extern s32 D_8005BB48[];
 
+extern Unk8006AA80Node *D_8006AA80;
 extern Unk80031424 *D_8006AB18[];
+extern s32 D_8006AB10;
 extern s32 D_8006AB88;
+extern s16 D_80033A74_34674[];
 extern s8 D_80031CD0_328D0[];
 extern s32 D_80031D20_32920[];
 extern s32 D_8006ABA8;
@@ -1645,5 +1649,10 @@ extern s32 D_80149B28; // numberOfMissionConditions
 extern s16 D_80149B48; // numberOfMissions
 extern u16 D_80159DE8[];
 extern u8 D_8015D0B0[];
+extern s8 D_80031D4C_3294C;
+extern f32 D_80031D50_32950;
+extern f32 D_80031D54_32954;
+extern f32 D_80031D58_32958;
+extern f32 D_80031D5C_3295C;
 
 #endif

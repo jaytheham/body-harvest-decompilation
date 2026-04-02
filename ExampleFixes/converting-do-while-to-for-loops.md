@@ -53,3 +53,32 @@ for (i = 0; i < 0xE; i++) {
 ```
 
 Also ensure the array type has the correct stride (e.g., a struct with stride 8) rather than raw `s16[]` pointer arithmetic — using struct indexing (`D_802E04F8[i].unk0`) rather than `base + (i * 4)` on a `s16*` is required to get the correct t-register (t6 not t7) in the loop body sll instruction.
+
+#### Decrementing do-while: use `while (i--)` from `i = N+1` instead of `do { } while (i--)` from `i = N`
+
+For **backwards** loops that call function pointers (requiring callee-save registers) where the target uses `bnez s0, loop; addiu s0, s0, -1` (delay), if using `do { } while (i--)` starting from `i = N` gives score 60 with only the `addiu s1, s1, lo` ↔ `li s0, N` prologue swap, convert to `while (i--)` starting from `i = N+1`.
+
+IDO internalizes the initial decrement: `while (i=N+1; i--)` is equivalent at runtime to `do { } while (i=N; i--)` but IDO schedules the address setup (addiu for CSE ptr) BEFORE the counter initialization (li s0) in the prologue of the while form, while it puts li s0 FIRST in the do-while form.
+
+Use inline array access (`D_arr[i]`, no named pointer) to let IDO strength-reduce to an internal CSE pointer (s1), keeping the user counter as s0.
+
+**Symptom:** score 60 with the ONLY diff being `li s0, N` ↔ `addiu s1, s1, lo` in the prologue.
+
+**Fix:**
+```c
+// ❌ WRONG – do-while with i=3 schedules li s0,3 BEFORE addiu s1
+s32 i = 3;
+do {
+    if (D_8004DC68[i] != 0) {
+        ((void (*)(void))D_8004DC68[i])();
+    }
+} while (i--);
+
+// ✅ CORRECT – while with i=4 schedules addiu s1 BEFORE li s0,3
+s32 i = 4;
+while (i--) {
+    if (D_8004DC68[i] != 0) {
+        ((void (*)(void))D_8004DC68[i])();
+    }
+}
+```

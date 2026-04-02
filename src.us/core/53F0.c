@@ -103,7 +103,11 @@ void func_800050C4_5CC4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800053A0_5FA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005654_6254.s")
+void func_80005654_6254(u8 arg0, u8 arg1, u8 arg2) {
+	func_800050C4_5CC4();
+	func_80004DDC_59DC(arg0, arg1, arg2, 0, D_80068088 - 1);
+	func_8000505C_5C5C();
+}
 
 void func_800056A8_62A8(void) {
 	func_80005654_6254(0, 0, 0);
@@ -123,7 +127,17 @@ void func_80005AEC_66EC(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	D_80047730 = 0x40;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005B30_6730.s")
+s32 func_80005B30_6730(void) {
+	if (D_80047734 != 0) {
+		D_8004772C = D_8004772C + D_80047730;
+		if (D_8004772C >= 0x100) {
+			D_8004772C = 0xFF;
+			D_80047734 = 0;
+			return 1;
+		}
+	}
+	return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005B84_6784.s")
 
@@ -171,7 +185,11 @@ void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800072CC_7ECC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800073B8_7FB8.s")
+void func_800073B8_7FB8(u64 arg0) {
+	u64 temp_ret;
+	temp_ret = __ll_lshift(1, arg0);
+	D_8004DC48.unk0 &= ~temp_ret;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007410_8010.s")
 
@@ -185,8 +203,14 @@ void func_800074BC_80BC(void *arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800074F4_80F4.s")
-
+void func_800074F4_80F4(void) {
+	s32 i = 4;
+	while (i--) {
+		if (D_8004DC68[i] != 0) {
+			((void (*)(void))D_8004DC68[i])();
+		}
+	}
+}
 extern s32 D_8004DC74;
 #ifdef NON_MATCHING
 void func_80007548_8148(void) {
@@ -212,7 +236,13 @@ void func_80007690_8290(void) {
 	func_8001A650_1B250(1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800076D4_82D4.s")
+void func_800076D4_82D4(s32 arg0) {
+	osSyncPrintf(&D_80036DBC_379BC, arg0);
+	if (D_80048030 < arg0) {
+		D_80048030 = (u8) arg0;
+		func_8001A650_1B250(1);
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007728_8328.s")
 

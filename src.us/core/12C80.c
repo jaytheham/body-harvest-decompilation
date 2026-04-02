@@ -27,7 +27,21 @@ struct Unk80013E44_arg0 { s32 unk0; s32 unk4; s32 unk8; };
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012720_13320.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012778_13378.s")
+Unk8006AA80Node *func_80012778_13378(s32 arg0) {
+    Unk8006AA80Node *v1;
+
+    if (D_8006AB88 == 0) {
+        return NULL;
+    }
+    v1 = D_8006AA80;
+    while (v1 != NULL) {
+        if (arg0 == v1->unk2C) {
+            return v1;
+        }
+        v1 = v1->unk34;
+    }
+    return NULL;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800127CC_133CC.s")
 
@@ -109,7 +123,16 @@ void func_80013514_14114(void) {
     func_80015C94_16894(0x50, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001355C_1415C.s")
+void func_8001355C_1415C(void) {
+    if (D_80031B58_32758 == 1) {
+        func_80015C94_16894(0x41, 0);
+        return;
+    }
+    func_80015C94_16894(0x51, 0);
+}
+
+static void func_800135A4_stub(void) {
+}
 
 void playMapMusic(void) {
     if (D_80031B58_32758 == 1) {
@@ -224,11 +247,20 @@ void func_80015388_15F88(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015500_16100.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800155B0_161B0.s")
+void func_800155B0_161B0(s16 arg0, f32 arg1) {
+    if ((D_8006AB88 != 0) && (arg0 >= 0)) {
+        func_8001F820_20420(D_8006AB10, arg0);
+        alSndpSetPitch(D_8006AB10, arg1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015600_16200.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015674_16274.s")
+void func_80015674_16274(s16 arg0) {
+    if ((D_8006AB88 != 0) && (arg0 != -1) && (arg0 < 0x74)) {
+        func_800153D8_15FD8(D_80033A74_34674[arg0]);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800156C8_162C8.s")
 
@@ -241,7 +273,11 @@ void func_80015388_15F88(s16 arg0) {
 void func_8001593C_1653C(void *arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015944_16544.s")
+void func_80015944_16544(s8 arg0, s16 arg1) {
+    if ((D_8006AB88 != 0) && (func_80012E88_13A88(arg0) == 1)) {
+        alSeqpSetVol((ALSeqPlayer *)D_8006AB18[arg0], arg1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001599C_1659C.s")
 
@@ -270,7 +306,13 @@ void func_80016B38_17738(s8 arg0, s8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016C14_17814.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016C8C_1788C.s")
+void func_80016C8C_1788C(f32 arg0, f32 arg1, f32 arg2) {
+    D_80031D50_32950 = arg0;
+    D_80031D54_32954 = arg0;
+    D_80031D58_32958 = arg2 / 20.0f;
+    D_80031D5C_3295C = (arg1 - arg2) / 20.0f;
+    D_80031D4C_3294C = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016CD8_178D8.s")
 
