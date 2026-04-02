@@ -236,7 +236,13 @@ void func_80007690_8290(void) {
 	func_8001A650_1B250(1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800076D4_82D4.s")
+void func_800076D4_82D4(s32 arg0) {
+    osSyncPrintf(&D_80036DBC_379BC, arg0);
+    if (D_80048030 < arg0) {
+        D_80048030 = (u8) arg0;
+        func_8001A650_1B250(1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007728_8328.s")
 
