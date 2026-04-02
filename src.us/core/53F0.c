@@ -67,7 +67,18 @@ void func_80004918_5518(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004918_5518.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004948_5548.s")
+void func_80004948_5548(void) {
+	u16 temp_v0;
+
+	temp_v0 = (&D_80047748)[D_802CA8D0];
+	D_80047740.unk0 = (s8) ((s32) (temp_v0 & 0xF800) >> 8);
+	D_80047740.unk1 = (s8) ((s32) (temp_v0 & 0x7C0) >> 3);
+	D_80047740.unk2 = (s8) ((temp_v0 & 0x3E) * 4);
+	temp_v0 = (&D_80047748)[D_802D48CF];
+	D_8004773C.unk0 = (s8) ((s32) (temp_v0 & 0xF800) >> 8);
+	D_8004773C.unk1 = (s8) ((s32) (temp_v0 & 0x7C0) >> 3);
+	D_8004773C.unk2 = (s8) ((temp_v0 & 0x3E) * 4);
+}
 
 void func_800049D4_55D4(u16 arg0, u16 arg1) {
 	D_80047740.unk0 = (s8) ((s32) (arg0 & 0xF800) >> 8);
