@@ -6,7 +6,32 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A2B8_AEB8.s")
 
+#ifdef NON_MATCHING
+void func_8000A3DC_AFDC(u8 arg0, s8 *arg1) {
+    s16 temp_v1;
+    s32 temp_a3;
+    s32 temp_t0;
+    s8 var_a2;
+    u8 var_v0;
+
+    temp_v1 = arg0 * 2;
+    temp_a3 = temp_v1 >> 8;
+    temp_t0 = temp_v1 & 0xFF;
+    var_v0 = temp_v1 & 0xFF;
+    var_a2 = (s8)temp_a3;
+    if (temp_t0 >= 0) {
+        var_v0 = (temp_t0 + 1) & 0xFF;
+    }
+    if ((s8)temp_a3 >= 0) {
+        var_a2 = (s8)temp_a3 + 1;
+    }
+    *arg1 = var_a2;
+    arg1++;
+    *(u8 *)arg1 = var_v0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A3DC_AFDC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A43C_B03C.s")
 
