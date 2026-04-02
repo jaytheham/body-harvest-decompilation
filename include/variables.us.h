@@ -1497,6 +1497,7 @@ extern u8 D_791C20;
 extern u8 D_7A4400;
 extern char D_800380C4[];
 extern char D_800380E4[];
+extern char D_80038424_39024;
 
 /* core/FB00 */
 extern u8 D_8003FB20[];
@@ -1544,6 +1545,8 @@ extern OSMesgQueue D_8006A8D0;
 extern s16 D_8006C558;
 extern s16 D_8006C55C;
 extern u16 D_8006C55E;
+extern s16 D_8006C564;
+extern s16 D_8006C566;
 extern s16 D_8006C568;
 extern s16 D_8006C56A;
 extern OSViMode D_80035B30;

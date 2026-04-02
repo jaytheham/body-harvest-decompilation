@@ -472,7 +472,17 @@ void func_80017AE0_186E0(void) {
 	D_80034484 = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017B08_18708.s")
+void func_80017B08_18708(s32 arg0) {
+    D_8006C55C = 0;
+    D_8006C558 = arg0;
+    osSyncPrintf(&D_80038424_39024, D_8006C558);
+    D_8006C55E = 1;
+    D_8006C564 = 0;
+    D_8006C566 = 0;
+    D_8006C568 = 0;
+    D_8006C56A = 0;
+    func_8000C6B8_D2B8(0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017B78_18778.s")
 
