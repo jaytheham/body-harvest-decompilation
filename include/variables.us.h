@@ -1389,7 +1389,7 @@ extern Unk80047578 D_80047578;
 extern OSMesgQueue D_800433A8;
 extern s32 D_80031304;
 extern s32 D_80047694;
-extern u8 D_800431C0;
+extern u8 D_800431C0; // Save file data. 0x89 bytes, then 0x7A per save slot
 extern s32 D_80047684;
 extern u8 D_80047608;
 

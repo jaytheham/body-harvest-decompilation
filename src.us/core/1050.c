@@ -100,6 +100,7 @@ OSThread *__osGetActiveQueue(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001424_2024.s")
 
+// https://decomp.me/scratch/zsK5T
 #ifdef NON_MATCHING
 void func_800015B4_21B4(s32 arg0, s32 arg1) {
 	u8 *v0;
@@ -148,39 +149,27 @@ s32 func_80002A88_3688(s32 arg0) {
 	return *(&D_80043243 + (arg0 * 0x7A)) & 0xF;
 }
 
-#ifdef NON_MATCHING
-void getSaveFileName(s32 arg0, u8 *arg1) {
-	s32 v0 = arg0 * 0x7A + 0x89;
-	u8 *a3 = &D_800431C0 + v0;
-	s32 v1 = 2;
-	u8 *t8 = &D_800431C0 + v1;
-	u8 *a2 = t8 + v0;
-	u8 *a0 = arg1 + v1;
-	arg1[0] = a3[0];
-	arg1[1] = a3[1];
-	a0[0] = a2[0];
-	a0[1] = a2[1];
-	a0[2] = a2[2];
-	a0[3] = a2[3];
+void getSaveFileName(s32 arg0, u8 *arg1)
+{
+	u8* sd = (u8*)&D_800431C0;
+	s32 index;
+	s32 temp_v0 = (arg0 * 0x7A) + 0x89;
+	for (index =  0; index < 6; index++){
+	  arg1[index] = temp_v0[sd + index];
+	}
 	arg1[6] = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/getSaveFileName.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80002B20_3720.s")
 
-#ifdef NON_MATCHING
-s32 func_80002C58_3858(s32 arg0) {
-	u8 *ptr = (u8 *)&D_800431C0 + arg0 * 0x7A;
-	s32 v1 = ptr[0x9C];
-	v1 += ptr[0x9D] << 8;
-	v1 += ptr[0x9E] << 16;
-	return v1 + (ptr[0x9F] << 24);
+s32 func_80002C58_3858(s32 arg0)
+{
+  u8 *ptr = ((u8 *) (&D_800431C0)) + (arg0 * 0x7A);
+  s32 v1 = ptr[0x9C];
+  v1 += ptr[0x9D] << 8;
+  ptr = ptr;  
+  return (ptr[0x9F] << 24) + (v1 += ptr[0x9E] << 16);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80002C58_3858.s")
-#endif
 
 void func_80002CA4_38A4(void) {
 	func_800016D8_22D8();
