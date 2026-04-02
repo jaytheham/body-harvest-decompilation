@@ -190,7 +190,9 @@ void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800071D8_7DD8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000726C_7E6C.s")
+s32 func_8000726C_7E6C(u64 arg0) {
+	return ((1LL << arg0) & D_8004DC48.unk0) != 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800072CC_7ECC.s")
 
