@@ -505,7 +505,13 @@ void func_80016B38_17738(s8 arg0, s8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016B74_17774.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016C14_17814.s")
+void func_80016C14_17814(s8 arg0, f32 arg1, f32 arg2, f32 arg3) {
+	D_80031D2C_3292C[arg0] = arg1;
+	D_80031D34_32934[arg0] = arg1;
+	D_80031D3C_3293C[arg0] = arg3 / 20.0f;
+	D_80031D44_32944[arg0] = (arg2 - arg3) / 20.0f;
+	D_80031D28_32928[arg0] = 1;
+}
 
 void func_80016C8C_1788C(f32 arg0, f32 arg1, f32 arg2) {
 	D_80031D50_32950 = arg0;
