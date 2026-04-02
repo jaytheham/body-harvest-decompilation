@@ -273,7 +273,11 @@ void func_80015674_16274(s16 arg0) {
 void func_8001593C_1653C(void *arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015944_16544.s")
+void func_80015944_16544(s8 arg0, s16 arg1) {
+    if ((D_8006AB88 != 0) && (func_80012E88_13A88(arg0) == 1)) {
+        alSeqpSetVol((ALSeqPlayer *)D_8006AB18[arg0], arg1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001599C_1659C.s")
 
