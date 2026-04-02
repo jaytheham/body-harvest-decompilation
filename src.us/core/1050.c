@@ -7,16 +7,17 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000730_1330.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_8000091C_151C.s")
-#ifdef NON_MATCHING
-void func_80000AD4_16D4(s32 arg0) {
+
+void func_80000AD4_16D4(s32 arg0)
+{
+	int new_var;
 	u32 ret = func_8001BCE0_1C8E0();
-	if ((ret >> 2) == 0 && D_80031304 == 0) {
-		D_80031304 = 0;
+	new_var = 0;
+	if (((ret >> 2) == 0) && (D_80031304 == 0))
+	{
+		D_80031304 = new_var;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000AD4_16D4.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000B14_1714.s")
 
