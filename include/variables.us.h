@@ -1491,6 +1491,8 @@ extern char D_8003788C[];
 extern char D_800378A8[];
 extern s32 D_802B2080;
 extern u8 D_955300[];
+extern s32 D_80031B90_32790[];
+extern s32 D_80031BAC_327AC[];
 extern s32 D_80031BC4_327C4[];
 extern s32 D_37F840;
 extern s32 D_803DA800;
