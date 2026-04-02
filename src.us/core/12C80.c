@@ -11,7 +11,21 @@ struct Unk80013E44_arg0 { s32 unk0; s32 unk4; s32 unk8; };
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800123A4_12FA4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001244C_1304C.s")
+Unk8006AA80Node *func_8001244C_1304C(s16 arg0) {
+    Unk8006AA80Node *var_v1;
+
+    if (D_8006AB88 == 0) {
+        return NULL;
+    }
+    var_v1 = D_8006AA80;
+    while (var_v1 != NULL) {
+        if (arg0 == var_v1->unk6) {
+            return var_v1;
+        }
+        var_v1 = var_v1->unk34;
+    }
+    return NULL;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800124A8_130A8.s")
 
