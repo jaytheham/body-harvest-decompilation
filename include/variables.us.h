@@ -1508,6 +1508,8 @@ extern u8 D_800E1D70[];
 extern u8 D_800A5720[];
 extern u8 D_800FCF50[];
 extern OSMesgQueue D_80067F88;
+extern s32 D_80031BDC_327DC[];
+extern s32 D_80031BF0_327F0[];
 extern s32 D_8006AA70;
 extern s32 D_8006AA74;
 extern u8 D_43A340;

@@ -237,7 +237,15 @@ s32 func_80011B14_12714(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011B14_12714.s")
 #endif
 
+#ifdef NON_MATCHING
+s32 func_80011B60_12760(u8 arg0, s32 arg1) {
+	D_8006AA70 = arg1;
+	func_800101F0_10DF0(arg1, D_80031BDC_327DC[arg0 - 1], D_80031BF0_327F0[arg0 - 1] - D_80031BDC_327DC[arg0 - 1]);
+	return D_80031BF0_327F0[arg0 - 1] - D_80031BDC_327DC[arg0 - 1] + arg1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011B60_12760.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_80011BE8_127E8(s32 arg0) {

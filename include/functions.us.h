@@ -68,7 +68,7 @@ s32 debug_printModelSegmentEnd();
 s32 func_800119F4_125F4();
 s32 func_80011A40_12640(u8 arg0, s32 arg1);
 s32 func_80011B14_12714();
-s32 func_80011B60_12760();
+s32 func_80011B60_12760(u8 arg0, s32 arg1);
 void func_80013324_13F24(void);
 void func_80013684_14284(void);
 void func_80014180_14D80(s8 arg0);
