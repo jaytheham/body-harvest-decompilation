@@ -157,7 +157,14 @@ void __osInitialize_emu(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800119A8_125A8.s")
 
+#ifdef NON_MATCHING
+s32 func_800119F4_125F4(s32 arg0) {
+	func_800101F0_10DF0(D_8006AA6C = arg0, &D_500A00, &D_55B0A0 - &D_500A00);
+	return (&D_55B0A0 - &D_500A00) + arg0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800119F4_125F4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011A40_12640.s")
 
