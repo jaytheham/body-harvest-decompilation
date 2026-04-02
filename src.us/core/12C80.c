@@ -214,7 +214,11 @@ void func_80013E44_14A44(void *arg0) {
 void func_80015380_15F80(void *arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015388_15F88.s")
+void func_80015388_15F88(s16 arg0) {
+    void *sp24;
+    sp24 = (void **)&sp24 + arg0;
+    func_80014A3C_1563C((s32)sp24, arg0, 0, 0, -1.0f);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800153D8_15FD8.s")
 
