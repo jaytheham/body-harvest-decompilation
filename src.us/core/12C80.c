@@ -234,7 +234,21 @@ void func_80013324_13F24(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013324_13F24.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80013398_13F98(void) {
+	s8 idx;
+	s8 arr_val;
+
+	if (D_80031CA4 != 4) {
+		idx = (s8)(D_80033C80_34880 % 16);
+		arr_val = D_80033C70_34870[idx] + 0xF;
+		D_80033C80_W = D_80033C80_34880 + 1;
+		func_80015C94_16894(arr_val, 4);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013398_13F98.s")
+#endif
 
 void func_80013410_14010(void) {
 	if (D_80031B58_32758 == 1) {
