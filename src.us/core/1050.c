@@ -267,10 +267,10 @@ void func_800033D4_3FD4(u32 arg0, s32 arg1) {
 s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask)
 {
 	s32 result = (currentControllerStates[controllerNum].button & buttonMask) != 0;
-  if (result)
-  {
-	return (previousControllerButtonStates[controllerNum] & buttonMask) == 0;
-  }
+	if (result)
+	{
+		return (previousControllerButtonStates[controllerNum] & buttonMask) == 0;
+	}
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800035D8_41D8.s")
@@ -285,17 +285,14 @@ void setRandomSeed(s32 arg0) {
 	D_800476C0 = arg0;
 }
 
-#ifdef NON_MATCHING
 // getRandomNumber
-s32 func_800038E0_44E0(void) {
-	s32 seed = D_800476C0;
-	seed = seed * 0x41C64E6D + 0x3039;
-	D_800476C0 = seed;
-	return ((u32)seed >> 16) & 0xFFFF;
+s32 func_800038E0_44E0(void)
+{
+	s64 new_var;
+	D_800476C0 = (D_800476C0 * 0x41C64E6D) + 0x3039;
+	new_var = 0xFFFF;
+	return (((u32) D_800476C0) >> 16) & new_var;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800038E0_44E0.s")
-#endif
 
 #ifdef NON_MATCHING
 /* possible: powf_i */
