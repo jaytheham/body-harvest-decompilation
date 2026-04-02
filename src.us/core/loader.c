@@ -167,7 +167,14 @@ void __osInitialize_emu(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011B60_12760.s")
 
+#ifdef NON_MATCHING
+s32 func_80011BE8_127E8(s32 arg0) {
+	func_800101F0_10DF0(D_8006AA70 = arg0, &D_43A340, &D_4EBF80 - &D_43A340);
+	return (&D_4EBF80 - &D_43A340) + arg0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011BE8_127E8.s")
+#endif
 
 void debug_printModelSegmentStart(void *arg0) {
 	osSyncPrintf(D_800380C4);

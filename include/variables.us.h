@@ -1468,6 +1468,8 @@ extern u8 D_800E1D70[];
 extern OSMesgQueue D_80067F88;
 extern s32 D_8006AA70;
 extern s32 D_8006AA74;
+extern u8 D_43A340;
+extern u8 D_4EBF80;
 extern char D_800380C4[];
 extern char D_800380E4[];
 
