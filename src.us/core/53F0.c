@@ -68,7 +68,14 @@ void func_80004918_5518(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004948_5548.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800049D4_55D4.s")
+void func_800049D4_55D4(u16 arg0, u16 arg1) {
+	D_80047740.unk0 = (s8) ((s32) (arg0 & 0xF800) >> 8);
+	D_80047740.unk1 = (s8) ((s32) (arg0 & 0x7C0) >> 3);
+	D_80047740.unk2 = (s8) ((arg0 & 0x3E) * 4);
+	D_8004773C.unk0 = (s8) ((s32) (arg1 & 0xF800) >> 8);
+	D_8004773C.unk1 = (s8) ((s32) (arg1 & 0x7C0) >> 3);
+	D_8004773C.unk2 = (s8) ((arg1 & 0x3E) * 4);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004A38_5638.s")
 
@@ -76,7 +83,16 @@ void func_80004918_5518(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/leoInitUnit_atten.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004C34_5834.s")
+void func_80004C34_5834(void) {
+	s16 var_v0;
+
+	if (leomecha_bss_0004 != 0) {
+		for (var_v0 = 0; var_v0 < 0x100; var_v0++) {
+			((u16 *)&D_80047748)[var_v0] = ((u16 *)&D_802D4AD0)[var_v0];
+		}
+		leomecha_bss_0004 = 0;
+	}
+}
 
 void func_80004C8C_588C(void) {
 	gSPSegment(D_8005BB2C++, 0x02, (u32)D_8005BB20 & 0x1FFFFFFF);
@@ -181,7 +197,9 @@ void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800071D8_7DD8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000726C_7E6C.s")
+s32 func_8000726C_7E6C(u64 arg0) {
+	return ((1LL << arg0) & D_8004DC48.unk0) != 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800072CC_7ECC.s")
 

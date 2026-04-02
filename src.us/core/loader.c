@@ -88,12 +88,29 @@ void func_80010228_10E28(u32 rom_addr, void *dest_buffer) {
 	osRecvMesg(&D_80067F70, NULL, 1);
 }
 
+#ifdef NON_MATCHING
+s32 func_80010290_10E90(s32 arg0) {
+	s32 header[6]; /* 0x18 bytes = MIO0 header at sp+0x20 */
+	s32 var_v1;
+
+	func_80010228_10E28(arg0, header);
+	if (header[0] != 0x4D494F30) {
+		return 0;
+	}
+	var_v1 = header[1];
+	if (header[1] & 3) {
+		var_v1 = (header[1] - (header[1] & 3)) + 4;
+	}
+	return arg0 + var_v1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80010290_10E90.s")
+#endif
 
 s32 func_800102EC_10EEC(s32 arg0, s32 arg1) {
 	s32 temp_v0;
 
-	temp_v0 = func_80010290_10E90();
+	temp_v0 = func_80010290_10E90(arg0);
 	if (temp_v0 == 0) {
 		return arg1 + arg0;
 	}

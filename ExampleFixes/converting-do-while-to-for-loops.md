@@ -82,3 +82,33 @@ while (i--) {
     }
 }
 ```
+
+#### for-loop inside an outer `if`: `addiu a2` vs `move v0,zero` swap in prologue
+
+When a `for` loop is nested inside an `if` check that loads a global variable (via `lw`), and the for-loop body accesses a global array (whose address is `lui+addiu`), IDO may split the `lui+addiu` pair for the array by inserting the `move reg, zero` (for-counter init) between them — putting `addiu` into the beqz delay slot instead of the for-counter init.
+
+**Symptom:** score 240 with the ONLY diff in the prologue being a swap of `addiu a2, a2, lo(array)` ↔ `move v0, zero` (2 positions), plus possible loop-body instruction reordering.
+
+**Fix:** Use a `for` loop (instead of `do { var_v0=0; ...; var_v0++ } while`) for the inner loop. The `for`-init clause keeps `lui+addiu` adjacent and schedules `move reg, zero` into the beqz delay slot. Also use simple array indexing (`((u16*)&arr)[i]`) rather than explicit byte-offset temporaries — the latter causes a register allocation shift that changes which t-register is used for the s16 sign-extend temp.
+
+```c
+// ❌ WRONG – do-while: splits lui+addiu, move v0,zero before beqz (score 240)
+if (leomecha_bss_0004 != 0) {
+    var_v0 = 0;
+    do {
+        ((u16 *)&D_80047748)[var_v0] = ((u16 *)&D_802D4AD0)[var_v0];
+        var_v0 += 1;
+    } while (var_v0 < 0x100);
+    leomecha_bss_0004 = 0;
+}
+
+// ✅ CORRECT – for loop: lui+addiu both before beqz, move v0,zero in delay slot (score 0)
+if (leomecha_bss_0004 != 0) {
+    for (var_v0 = 0; var_v0 < 0x100; var_v0++) {
+        ((u16 *)&D_80047748)[var_v0] = ((u16 *)&D_802D4AD0)[var_v0];
+    }
+    leomecha_bss_0004 = 0;
+}
+```
+
+Also note: adding an explicit `s32 temp_v1 = var_v0 * 2;` temp variable (to force increment-before-load ordering) fixes the loop-body instruction scheduling but corrupts the loop-body t-register allocation (sign-extend uses t7 instead of t0). The `for` loop form avoids needing any such temp.

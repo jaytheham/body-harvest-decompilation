@@ -80,7 +80,7 @@ void func_8001A54C_1B14C(void *arg0, ...);
 s32 func_80018A58_19658(void);
 void func_800E7B20_F6AD0(s32 arg0, s32 arg1);
 s32 func_800101F0_10DF0(s32 arg0, s32 arg1, s32 arg2);
-s32 func_80010290_10E90(void);
+s32 func_80010290_10E90(s32 arg0);
 
 // overlay_gameplay frontend
 s32 func_80070390_40840(void);
@@ -698,7 +698,7 @@ void func_800EF650_FE600(AlienInstance *);
 void func_800EFEB4_FEE64(void *arg0, s16 arg1, s32 arg2);
 void func_800F0340_FF2F0(u8 *arg0, s32 arg1, s32 arg2);
 void func_800CA5EC_D959C(s16, s16, s16, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
-void func_80013468_14068(s32 arg0);
+void func_80013468_14068(s16 arg0);
 void func_8011BF7C_12AF2C(u8 arg0);
 void func_802D5578_18E088(void);
 void func_802D9C60_192770(u8 arg0);
