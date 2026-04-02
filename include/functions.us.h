@@ -5,7 +5,7 @@
 
 // core
 void *func_8000C6F4_D2F4(void);
-void func_8000C790_D390(void *arg0, void *arg1, s32 arg2);
+void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2);
 void func_8000C764_D364(s32 arg0);
 void func_80001144_1D44(u8 arg0, u8 arg1, u8 arg2);
 

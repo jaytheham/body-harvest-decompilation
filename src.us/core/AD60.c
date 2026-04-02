@@ -133,7 +133,31 @@ void func_8000C764_D364(s32 arg0) {
 	D_80054668[(arg0 - (s32)&D_80054680) / 0xE58] = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C790_D390.s")
+void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2) {
+	s32 var_v0;
+	Unk80157600 *elem;
+
+	arg0->unk0 = 0;
+	arg0->unk2 = 0;
+	arg0->unk4 = 0;
+	var_v0 = 1;
+	arg0->unk8 = 0.0f;
+	arg0->unkC = 0.0f;
+	arg0->unk10 = 0.0f;
+	if (arg2 != 1) {
+		do {
+			elem = (Unk80157600 *)((var_v0 << 6) + (s32)arg0);
+			elem->unk8 = (f32)arg1[0];
+			elem->unkC = (f32)arg1[1];
+			elem->unk10 = (f32)arg1[2];
+			elem->unk0 = 0;
+			elem->unk2 = 0;
+			elem->unk4 = 0;
+			var_v0 = (var_v0 + 1) & 0xFF;
+			arg1 += 8;
+		} while (arg2 != var_v0);
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C81C_D41C.s")
 
