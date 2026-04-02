@@ -156,13 +156,18 @@ s32 destroyThreadIfMessageInQueue(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelData.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadFrontendData.s")
+void loadFrontendData(void) {
+    osInvalICache(func_80070270, (u8 *)&D_800909B0 - func_80070270);
+    osInvalDCache(&D_800909B0, (u8 *)&D_800AED70 - (u8 *)&D_800909B0);
+    func_800101F0_10DF0(func_80070270, D_40720, D_7F220 - D_40720);
+    bzero(&D_800AED70, (u8 *)&D_800E1D70 - (u8 *)&D_800AED70);
+}
 
 #ifdef NON_MATCHING
 void func_80011674_12274(void) {
-    osInvalICache(&func_80070270, (u8 *)&D_8013B8F0 - (u8 *)&func_80070270);
+    osInvalICache(func_80070270, (u8 *)&D_8013B8F0 - func_80070270);
     osInvalDCache(&D_8013B8F0, (u8 *)&D_80149380 - (u8 *)&D_8013B8F0);
-    func_800101F0_10DF0((s32)&func_80070270, (s32)D_7F220, D_158330 - D_7F220);
+    func_800101F0_10DF0(func_80070270, D_7F220, D_158330 - D_7F220);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011674_12274.s")
