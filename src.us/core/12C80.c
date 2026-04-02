@@ -541,7 +541,16 @@ void func_80015C58_16858(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800165EC_171EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016ABC_176BC.s")
+void func_80016ABC_176BC(s8 arg0) {
+    D_80031CD0_328D0[arg0] = -1;
+    D_80031CE4_328E4[arg0] = 0;
+    D_80031D1C_3291C[arg0] = -1;
+    D_80031D28_32928[arg0] = 0;
+    D_80031D2C_3292C[arg0] = 0.0f;
+    D_80031D34_32934[arg0] = 0.0f;
+    D_80031D3C_3293C[arg0] = 0.0f;
+    D_80031D44_32944[arg0] = 0.0f;
+}
 
 void func_80016B38_17738(s8 arg0, s8 arg1) {
 	D_80031D20_32920[arg1] = D_8006AB18[0]->unk1C;
