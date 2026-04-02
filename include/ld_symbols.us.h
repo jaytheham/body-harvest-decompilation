@@ -223,7 +223,7 @@ extern Addr _unknownSegmentRomEnd;
 extern Addr _unknownSegmentRomStart;
 extern Addr _unknownSegmentStart;
 extern Addr boot_bin;
-extern Addr core_1000_c;
+extern Addr core_1000_s;
 extern Addr core_1050_c;
 extern Addr core_10A20_c;
 extern Addr core_12C80_c;
