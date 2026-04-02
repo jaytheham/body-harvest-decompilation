@@ -83,6 +83,15 @@ typedef struct {
 	/* 0x30 */ s32 unk30;
 } Unk80031424; /* size = 0x34 */
 
+typedef struct Unk8006AA80Node {
+	/* 0x00 */ u8 pad0[0x6];
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ u8 pad8[0x24];
+	/* 0x2C */ s32 unk2C;
+	/* 0x30 */ u8 pad30[0x4];
+	/* 0x34 */ struct Unk8006AA80Node *unk34;
+} Unk8006AA80Node;
+
 typedef struct {
 	/* 0x00 */ u8 pad0[0x1A];
 	/* 0x1A */ u8 unk1A;
