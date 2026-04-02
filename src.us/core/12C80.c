@@ -284,7 +284,13 @@ void func_80016B38_17738(s8 arg0, s8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016C14_17814.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016C8C_1788C.s")
+void func_80016C8C_1788C(f32 arg0, f32 arg1, f32 arg2) {
+    D_80031D50_32950 = arg0;
+    D_80031D54_32954 = arg0;
+    D_80031D58_32958 = arg2 / 20.0f;
+    D_80031D5C_3295C = (arg1 - arg2) / 20.0f;
+    D_80031D4C_3294C = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016CD8_178D8.s")
 

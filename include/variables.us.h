@@ -1646,5 +1646,10 @@ extern s32 D_80149B28; // numberOfMissionConditions
 extern s16 D_80149B48; // numberOfMissions
 extern u16 D_80159DE8[];
 extern u8 D_8015D0B0[];
+extern s8 D_80031D4C_3294C;
+extern f32 D_80031D50_32950;
+extern f32 D_80031D54_32954;
+extern f32 D_80031D58_32958;
+extern f32 D_80031D5C_3295C;
 
 #endif
