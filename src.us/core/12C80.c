@@ -490,7 +490,8 @@ void func_800137D8(void) {
 void func_800137E0(void) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/n_alSynFreeFX.s")
+void n_alSynFreeFX(s32 arg0) {
+}
 
 void func_800137F0_143F0(s32 arg0) {
 	if (D_8006AB88 != 0) {
