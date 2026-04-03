@@ -194,7 +194,30 @@ void __osInitialize_emu(void) {
 	__printfunc = func_802D4CD0_18D7E0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800118F8_124F8.s")
+void func_800118F8_124F8(void) {
+    s32 ptr;
+    s32 temp;
+
+    ptr = (s32)D_3767C0;
+    temp = ptr & 0xF;
+    if (temp != 0) {
+        ptr = (ptr - temp) + 0x10;
+    }
+    ptr = func_80010420_11020((s32)D_8025CCC0, ptr);
+    ptr = func_80010420_11020((s32)D_80260500, ptr);
+    temp = ptr & 0xF;
+    if (temp != 0) {
+        ptr = (ptr - temp) + 0x10;
+    }
+    ptr = func_80010420_11020((s32)D_801F1210, ptr);
+    ptr = func_80010420_11020((s32)D_801FEA10, ptr);
+    temp = ptr & 0xF;
+    if (temp != 0) {
+        ptr = (ptr - temp) + 0x10;
+    }
+    ptr = func_80010420_11020((s32)D_80264B00, ptr);
+    func_80010420_11020((s32)D_80265880, ptr);
+}
 
 #ifdef NON_MATCHING
 s32 func_800119A8_125A8(s32 arg0) {
