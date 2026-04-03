@@ -139,7 +139,10 @@ void func_80004CC8_58C8(void) {
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADE | G_SHADING_SMOOTH);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004D38_5938.s")
+void func_80004D38_5938(void) {
+	gSPDisplayList(D_8005BB2C++, (Gfx *)((s32)&D_80031260 & 0x1FFFFFFF));
+	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 0, 0, D_80068084, D_80068088);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004DDC_59DC.s")
 
