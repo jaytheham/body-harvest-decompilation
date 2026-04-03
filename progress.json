@@ -1,24 +1,24 @@
 {
-  "generated": "2026-04-03T05:02:33Z",
-  "commit": "6e3497e",
-  "commit_timestamp": "2026-04-03T18:02:21+13:00",
+  "generated": "2026-04-03T20:17:12Z",
+  "commit": "f01c9eb",
+  "commit_timestamp": "2026-04-04T09:17:02+13:00",
   "overall": {
-    "total_functions": 2986,
-    "matched": 1097,
-    "non_matching": 333,
-    "asm_stubs": 1556,
-    "matched_pct": 36.74,
-    "decompiled_pct": 47.89
+    "total_functions": 2991,
+    "matched": 1111,
+    "non_matching": 338,
+    "asm_stubs": 1542,
+    "matched_pct": 37.14,
+    "decompiled_pct": 48.45
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 138,
-      "non_matching": 40,
-      "asm_stubs": 187,
-      "total": 365,
-      "matched_pct": 37.8,
-      "decompiled_pct": 48.8
+      "matched": 152,
+      "non_matching": 45,
+      "asm_stubs": 173,
+      "total": 370,
+      "matched_pct": 41.1,
+      "decompiled_pct": 53.2
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -97,31 +97,31 @@
     {
       "path": "core/1050.c",
       "segment": "core",
-      "matched": 23,
-      "non_matching": 5,
-      "asm_stubs": 33,
-      "total": 61,
-      "matched_pct": 37.7,
+      "matched": 25,
+      "non_matching": 6,
+      "asm_stubs": 31,
+      "total": 62,
+      "matched_pct": 40.3,
       "contributor": "jaytheham"
     },
     {
       "path": "core/10A20.c",
       "segment": "core",
-      "matched": 0,
+      "matched": 1,
       "non_matching": 1,
-      "asm_stubs": 4,
+      "asm_stubs": 3,
       "total": 5,
-      "matched_pct": 0.0,
+      "matched_pct": 20.0,
       "contributor": "jaytheham"
     },
     {
       "path": "core/12C80.c",
       "segment": "core",
-      "matched": 51,
-      "non_matching": 4,
-      "asm_stubs": 50,
-      "total": 105,
-      "matched_pct": 48.6,
+      "matched": 55,
+      "non_matching": 6,
+      "asm_stubs": 46,
+      "total": 107,
+      "matched_pct": 51.4,
       "contributor": "jaytheham"
     },
     {
@@ -147,21 +147,21 @@
     {
       "path": "core/53F0.c",
       "segment": "core",
-      "matched": 30,
-      "non_matching": 5,
-      "asm_stubs": 45,
-      "total": 80,
-      "matched_pct": 37.5,
+      "matched": 37,
+      "non_matching": 6,
+      "asm_stubs": 38,
+      "total": 81,
+      "matched_pct": 45.7,
       "contributor": "jaytheham"
     },
     {
       "path": "core/AD60.c",
       "segment": "core",
       "matched": 6,
-      "non_matching": 4,
+      "non_matching": 5,
       "asm_stubs": 19,
-      "total": 29,
-      "matched_pct": 20.7,
+      "total": 30,
+      "matched_pct": 20.0,
       "contributor": "jaytheham"
     },
     {
@@ -539,9 +539,9 @@
     {
       "name": "jaytheham",
       "files": 42,
-      "matched": 1092,
-      "non_matching": 333,
-      "asm_stubs": 1486
+      "matched": 1106,
+      "non_matching": 338,
+      "asm_stubs": 1472
     },
     {
       "name": "Meridian Lex",
@@ -552,14 +552,6 @@
     }
   ],
   "history": [
-    {
-      "date": "2026-03-30",
-      "commit": "027b356",
-      "matched_pct": 32.36,
-      "decompiled_pct": 43.16,
-      "matched": 968,
-      "total": 2991
-    },
     {
       "date": "2026-03-31",
       "commit": "36ed5a2",
@@ -586,11 +578,19 @@
     },
     {
       "date": "2026-04-03",
-      "commit": "9c8bf74",
-      "matched_pct": 36.74,
-      "decompiled_pct": 47.89,
-      "matched": 1097,
-      "total": 2986
+      "commit": "16c4a54",
+      "matched_pct": 37.05,
+      "decompiled_pct": 48.26,
+      "matched": 1107,
+      "total": 2988
+    },
+    {
+      "date": "2026-04-04",
+      "commit": "b909111",
+      "matched_pct": 37.14,
+      "decompiled_pct": 48.45,
+      "matched": 1111,
+      "total": 2991
     }
   ]
 }
