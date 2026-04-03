@@ -307,7 +307,35 @@ void func_800073B8_7FB8(u64 arg0) {
 	D_8004DC48.unk0 &= ~temp_ret;
 }
 
+#ifdef NON_MATCHING
+void func_80007410_8010(void *arg0) {
+	s32 i = 4;
+	s32 j;
+	while (i--) {
+		if (arg0 == (void *)D_8004DC68[i]) {
+			return;
+		}
+	}
+
+	j = 3;
+	if (D_8004DC74 != 0) {
+		while (j) {
+			j--;
+			if (D_8004DC68[j] != 0) {
+				continue;
+			}
+			break;
+		}
+		if (j == -1) {
+			osSyncPrintf(&D_80036D74_37974);
+		} else {
+			D_8004DC68[j] = (s32)arg0;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007410_8010.s")
+#endif
 
 void func_800074BC_80BC(void *arg0) {
 	s32 i = 4;
@@ -327,7 +355,6 @@ void func_800074F4_80F4(void) {
 		}
 	}
 }
-extern s32 D_8004DC74;
 #ifdef NON_MATCHING
 void func_80007548_8148(void) {
 	s32 *ptr = &D_8004DC74;

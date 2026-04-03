@@ -112,6 +112,7 @@ extern u64 D_80035610;
 extern char D_80037100_37D00[];
 extern f64 D_80037138_37D38;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
+extern char D_80036D74_37974; /* osSyncPrintf format string - callback table full warning */
 extern char D_80036DA4_379A4;
 extern char D_80036DBC_379BC;
 extern u8 D_80036C64[];
@@ -222,6 +223,7 @@ extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
 extern s32 D_8004DC68[4];
+extern s32 D_8004DC74; /* = D_8004DC68[3] */
 extern VehicleInstance vehicleInstances[]; // 8004DCD0
 extern Unk80050ADA D_80050ADA[]; // 0x80050ADA
 extern u8 D_80050ADE[];
