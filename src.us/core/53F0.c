@@ -190,7 +190,10 @@ s16 func_80006520_7120(s16 arg0, s16 arg1, u16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006654_7254.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006710_7310.s")
+s16 func_80006710_7310(s16 arg0, s16 arg1, u16 arg2) {
+    s32 sins_val = sins((arg2 >> 2) + 0xC000);
+    return (s16) (s32) ((f32) arg0 + ((f32) (arg1 - arg0) * (f32) (((f64) (f32) sins_val / 32768.0) + 1.0)));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800067B4_73B4.s")
 
