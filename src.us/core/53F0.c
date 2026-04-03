@@ -212,7 +212,14 @@ s16 func_80006520_7120(s16 arg0, s16 arg1, u16 arg2) {
     return (s16) (s32) ((f32) arg0 + ((f32) (arg1 - arg0) * (f32) (var_f6 / D_80037138_37D38)));
 }
 
+#ifdef NON_MATCHING
+s16 func_800065A4_71A4(s16 arg0, s16 arg1, u16 arg2) {
+    s32 sins_val = sins(((s32)arg2 >> 1) - 0x4000);
+    return (s16)(s32)((f32)arg0 + ((f32)(arg1 - arg0) * (f32)(((f64)(f32)sins_val / 32768.0) * (f64)0.5f + 0.5)));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800065A4_71A4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006654_7254.s")
 
