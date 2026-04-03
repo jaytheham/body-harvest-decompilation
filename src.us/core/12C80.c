@@ -515,7 +515,22 @@ void func_80015674_16274(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800156C8_162C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800157D4_163D4.s")
+void func_800157D4_163D4(s16 arg0) {
+	Unk8006AA80Node *node;
+
+	if ((D_8006AB88 != 0) && (arg0 >= 0)) {
+		node = func_8001244C_1304C(arg0);
+		if (node != NULL) {
+			node->unk8 = 0;
+			node->unk2C = 0;
+		}
+		func_8001F820_20420(D_8006AB10, arg0);
+		if (arg0 == D_80031CAC_328AC) {
+			D_80031CAC_328AC = -1;
+		}
+		alSndpStop(D_8006AB10);
+	}
+}
 
 void func_80015860_16460(s16 arg0) {
 	Unk8006AA84Node *node;
