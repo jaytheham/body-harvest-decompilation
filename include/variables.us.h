@@ -1592,6 +1592,7 @@ extern OSMesg D_80068038;
 extern OSMesg D_800314CC_320CC;
 extern OSMesgQueue __osSiAccessQueue;
 extern s32 __osSiAccessQueueEnabled;
+extern OSMesg siacs_bss_0000;
 extern OSMesgQueue D_80068040;
 extern OSMesg D_80068060[];
 extern OSMesgQueue D_8006A8B0;
