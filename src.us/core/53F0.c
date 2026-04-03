@@ -126,7 +126,9 @@ void func_80004A38_5638(u8 arg0, s8 *arg1, s8 *arg2, s8 *arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004AEC_56EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/leoInitUnit_atten.s")
+void leoInitUnit_atten(void) {
+    leomecha_bss_0004 = 1;
+}
 
 void func_80004C34_5834(void) {
 	s16 var_v0;
