@@ -279,7 +279,19 @@ s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003740_4340.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003824_4424.s")
+s16 func_80003824_4424(f32 arg0, f32 arg1) {
+    s32 sign;
+
+    if (arg0 == 0.0f) {
+        sign = (arg1 < 0.0f) ? -1 : 1;
+        return (s16) (sign << 0xE);
+    }
+    sign = (arg0 < 0.0f) ? -1 : 1;
+    if (sign == 1) {
+        return func_80003740_4340(arg1 / arg0);
+    }
+    return (s16) (func_80003740_4340(arg1 / arg0) + 0x8000);
+}
 
 void setRandomSeed(s32 arg0) {
 	D_800476C0 = arg0;

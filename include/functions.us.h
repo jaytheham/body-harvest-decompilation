@@ -684,7 +684,7 @@ s32 func_8012D700_13C6B0(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 a
 void func_8012D684_13C634(s32 arg0);
 void func_8012E1F8_13D1A8(s32 arg0, s32 arg1);
 f32 __cosf(f32 arg0);
-s32 func_80003740_4340(f32 arg0);
+s16 func_80003740_4340(f32 arg0);
 s32 func_800056D0_62D0(s16 arg0, s16 arg1);
 s32 func_800B0A88_BFA38(s32 arg0, s32 arg1);
 u32 func_8001BCE0_1C8E0(void);
