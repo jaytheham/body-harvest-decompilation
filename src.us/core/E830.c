@@ -1,3 +1,4 @@
+#define GAME_OSSETTIME_IMPL
 #include <ultra64.h>
 #include "common.h"
 
@@ -194,7 +195,10 @@ void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E3DC_EFDC.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/osSetTime.s")
+void osSetTime(s32 arg0, s32 arg1) {
+    D_8005BAEC = arg0;
+    __osCurrentTime = arg1;
+}
 
 #ifdef NON_MATCHING
 /* Initialise projection state from entry arg0 in D_80031A90 table, then copy framebuffer region. */
