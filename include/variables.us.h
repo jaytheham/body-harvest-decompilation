@@ -304,6 +304,8 @@ extern s32 D_8015EA18;
 extern s32 D_8015EA1C;
 extern u8 D_80050AE9;
 extern u8 D_3058A40[];
+extern u8 D_3059BA0[];
+extern u8 D_305AFA0[];
 extern u8 D_8F4960[];
 extern u8 D_5040770[];
 extern u8 D_5055C00;
@@ -815,6 +817,8 @@ extern u16 D_8021FA30[][0x10]; // Terrain objects 0x1f20 total size
 extern u8 D_80221A30[][0x40]; // Terrain object groups 0x1000 total size
 extern u8 D_80260700[0x4000]; // Landscape colors
 extern s32 D_80264700[0x100]; // Landscape palettes
+extern u8 D_80265A80[];
+extern u8 D_80266E80[];
 
 extern u32 D_80222A30[]; // terrain object model pointers
 extern s32 D_80222A70;

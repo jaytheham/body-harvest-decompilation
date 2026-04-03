@@ -781,7 +781,15 @@ s32 func_80017B78_18778(void) {
     return 0xFFFF;
 }
 
+#ifdef NON_MATCHING
+void func_80017BF8_187F8(u8 arg0) {
+    s32 offset = (arg0 * 0x1600) & 0xFFFF;
+    func_800101F0_10DF0(&D_80265A80, ((s32) &D_3059BA0 & 0xFFFFFF) + offset + D_8F4960, 0x1400);
+    func_800101F0_10DF0(&D_80266E80, ((s32) &D_305AFA0 & 0xFFFFFF) + offset + D_8F4960, 0x200);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017BF8_187F8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017CA4_188A4.s")
 
