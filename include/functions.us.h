@@ -58,6 +58,9 @@ void func_80011E14_12A14(u8 arg0);
 #ifdef OVERLAY_ENTRY_AS_FUNC
 s32 func_80070270(s32 arg0);
 #endif
+void func_8000F618_10218(void);
+void func_80001984_2584(void);
+void loadFrontendData(void);
 // loader.c functions - prototype-less to preserve implicit int behavior for matching functions
 s32 func_8001032C_10F2C();
 void func_8000F1E8_FDE8(void);
