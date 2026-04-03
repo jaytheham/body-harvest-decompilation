@@ -382,7 +382,11 @@ void func_80013410_14010(void) {
 	func_80015C94_16894(0x56, 4);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/__dummy.s")
+void __dummy(void) {
+}
+
+void func_80013460(void) {
+}
 
 void func_80013468_14068(s16 arg0) {
 	if (arg0 == 0) {
