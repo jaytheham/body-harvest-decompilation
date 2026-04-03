@@ -397,7 +397,16 @@ s32 func_80007D44_8944(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800081D4_8DD4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008478_9078.s")
+s32 func_80008478_9078(void) {
+    if ((currentLevel == 1) && (func_8000726C_7E6C(0xB) != 0) && (D_80052554 >= 0x401)) {
+        return 1;
+    }
+    osSyncPrintf(&D_80037000_37C00);
+    if ((currentLevel == 3) && (func_8000726C_7E6C(0x31) != 0) && (func_8000726C_7E6C(0x26) == 0)) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000851C_911C.s")
 
