@@ -3,7 +3,42 @@
 
 struct Unk80013E44_arg0 { s32 unk0; s32 unk4; s32 unk8; };
 
+#ifdef NON_MATCHING
+void func_80012080_12C80(s32 arg0) {
+    s32 *v0;
+    s32 *v1;
+
+    if (D_8006AB88 == 0) {
+        return;
+    }
+    if (arg0 == -1) {
+        v0 = D_8006AAD0;
+        v1 = D_8006ABB8;
+        arg0 = 0;
+        do {
+            v0[1] = arg0 + 1;
+            v0[2] = arg0 + 2;
+            v0[3] = arg0 + 3;
+            v0[0] = arg0;
+            arg0 += 4;
+            v1[1] = 0;
+            v1[2] = 0;
+            v1[3] = 0;
+            v0 += 4;
+            v1 += 4;
+            v1[-4] = 0;
+            arg0++;
+            arg0--;
+        } while (arg0 != 0x10);
+        D_80031CA0_328A0 = 0;
+        return;
+    }
+    D_8006AAD0[arg0] = arg0;
+    D_80031CA0_328A0 -= 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012080_12C80.s")
+#endif
 
 Unk8006AA84Node *func_80012128_12D28(void) {
     s32 i;
