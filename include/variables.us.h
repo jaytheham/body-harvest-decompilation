@@ -1087,6 +1087,7 @@ extern Vec3f D_80153AC4;
 extern Vec3f D_80153AD0;
 extern Vec3f D_80153BA0;
 extern OSContPad D_800475B8;
+extern OSContPad D_800475D0;
 extern u8 D_8015FAFC;
 extern u8 D_8015FAF8;
 extern s32 D_8003445C;
