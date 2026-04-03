@@ -333,7 +333,20 @@ void func_800078E4_84E4(s32 arg0, s32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007C78_8878.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007D44_8944.s")
+s32 func_80007D44_8944(s32 arg0) {
+    s16 sp1E;
+    s16 sp1C;
+    s16 sp1A;
+    s16 sp18;
+
+    func_80007728_8328(arg0, &sp1E, &sp1C);
+    func_80007728_8328(arg0 + 3, &sp1A, &sp18);
+    sp1E = (s16)(sp1E >> 8);
+    sp1C = (s16)(sp1C >> 8);
+    sp1A = (s16)(sp1A >> 8);
+    sp18 = (s16)(sp18 >> 8);
+    return (sp1E - sp1A) * (sp1E - sp1A) + (sp1C - sp18) * (sp1C - sp18);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007DE0_89E0.s")
 
