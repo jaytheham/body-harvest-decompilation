@@ -112,7 +112,17 @@ void func_800049D4_55D4(u16 arg0, u16 arg1) {
 	D_8004773C.unk2 = (s8) ((arg1 & 0x3E) * 4);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004A38_5638.s")
+void func_80004A38_5638(u8 arg0, s8 *arg1, s8 *arg2, s8 *arg3) {
+    if ((currentLevel == 2) && (func_8000726C_7E6C(0x21) == 0)) {
+        *arg1 = 0xC;
+        *arg2 = 0xC;
+        *arg3 = 0xA;
+        return;
+    }
+    *arg1 = (s8) ((s32) (((u16 *)&D_802D48D0)[arg0] & 0xF800) >> 0xB);
+    *arg2 = (s8) ((s32) (((u16 *)&D_802D48D0)[arg0] & 0x7C0) >> 6);
+    *arg3 = (s8) ((s32) (((u16 *)&D_802D48D0)[arg0] & 0x3E) >> 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004AEC_56EC.s")
 
