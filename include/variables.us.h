@@ -1324,6 +1324,7 @@ extern s8 D_800FB7C4;
 extern u8 D_800FB7AC;
 extern u8 D_800FB7AD;
 extern u8 D_8006AC10; // english comms strings
+extern u8 D_8006C410;
 extern u8 D_8006C450; // english comms strings offsets
 extern UnkFB6F8Entry D_800FB6F8[];
 
@@ -1547,6 +1548,7 @@ extern char D_800380C4[];
 extern char D_800380E4[];
 extern char D_80038424_39024;
 extern char D_800384E0_390E0;
+extern char D_80038500_39100;
 
 /* core/FB00 */
 extern u8 D_8003FB20[];
