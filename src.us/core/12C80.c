@@ -636,7 +636,15 @@ void func_80016B38_17738(s8 arg0, s8 arg1) {
 	D_80031CD0_328D0[arg1] = arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016B74_17774.s")
+void func_80016B74_17774(s8 arg0, s8 arg1) {
+    s8 i;
+
+    for (i = 0; i < 2; i++) {
+        if (D_80031D1C_3291C[i] >= arg0 && D_80031D1C_3291C[i] < arg1) {
+            func_80013E64_14A64(i);
+        }
+    }
+}
 
 void func_80016C14_17814(s8 arg0, f32 arg1, f32 arg2, f32 arg3) {
 	D_80031D2C_3292C[arg0] = arg1;
