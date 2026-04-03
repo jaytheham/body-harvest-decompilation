@@ -594,7 +594,19 @@ void func_80015944_16544(s8 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001599C_1659C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015BCC_167CC.s")
+void func_80015BCC_167CC(s32 arg0) {
+    if ((D_8006AB88 != 0) && (gameplayMode == 1)) {
+        if (D_80031CA4 != 4) {
+            if (D_80052ACA == 2) {
+                func_80013410_14010();
+                return;
+            }
+            func_80013398_13F98();
+            return;
+        }
+        D_80031CD4_328D4 = 0xFA;
+    }
+}
 
 void func_80015C58_16858(u8 arg0) {
 	if (D_8006AB88 != 0) {
