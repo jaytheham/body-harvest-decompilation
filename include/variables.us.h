@@ -69,6 +69,7 @@ extern Unk800311A0 D_800311A0;
 extern Gfx D_800311D0[];
 extern Gfx D_80031200[];
 extern Gfx D_80031230[];
+extern Gfx D_80031260[];
 extern u32 D_800313CC;
 extern s16 D_800313C8;
 extern s16 D_800313D0; // Language
@@ -116,6 +117,7 @@ extern char D_80036DBC_379BC;
 extern u8 D_80036C64[];
 extern u8 D_80036C74[];
 extern u8 D_8004337D;
+extern u16 D_8003D000_3DC00[];
 extern u8 D_8003DFD4[];
 extern u8 D_8003E000[];
 extern s16 D_8003E0EE[];
@@ -246,6 +248,7 @@ extern u32 D_80052A90; // millseconds played in current level
 extern s32 D_80052A88;
 extern s32 D_80052A8C;
 extern Unk80052A94 *D_80052A94; // This is a ptr to a [512][512] array of Heightmap data? Is 256x256 s16?
+extern u8 D_8021F250[];
 extern Unk80052A98 D_80052A98[]; // LevelStats
 extern u16 D_80052A9C;
 extern s32 D_80052AA0;
@@ -302,6 +305,8 @@ extern s32 D_8015EA18;
 extern s32 D_8015EA1C;
 extern u8 D_80050AE9;
 extern u8 D_3058A40[];
+extern u8 D_3059BA0[];
+extern u8 D_305AFA0[];
 extern u8 D_8F4960[];
 extern u8 D_5040770[];
 extern u8 D_5055C00;
@@ -317,6 +322,7 @@ extern Unk8006AA80Node *D_8006AA80;
 extern Unk8006AA84Node *D_8006AA84;
 extern Unk8006AA84Node *D_8006AA88[];
 extern s32 D_8006AAD0[];
+extern s32 D_8006ABB8[];
 extern s32 D_80031CA0_328A0;
 extern Unk80031424 *D_8006AB18[];
 extern s32 D_8006AB10;
@@ -512,6 +518,8 @@ extern char D_80141168[];
 extern char D_80141184[];
 extern char D_801411F0_1501A0[];
 extern char D_8014121C_1501CC[];
+extern char D_80037000_37C00; /* osSyncPrintf format string */
+extern char D_80037764_38364; /* osSyncPrintf format string */
 extern char D_801417C0_150770; /* osSyncPrintf format string - alien action table full warning */
 extern char D_801417DC;
 extern char D_801417F8;
@@ -810,6 +818,8 @@ extern u16 D_8021FA30[][0x10]; // Terrain objects 0x1f20 total size
 extern u8 D_80221A30[][0x40]; // Terrain object groups 0x1000 total size
 extern u8 D_80260700[0x4000]; // Landscape colors
 extern s32 D_80264700[0x100]; // Landscape palettes
+extern u8 D_80265A80[];
+extern u8 D_80266E80[];
 
 extern u32 D_80222A30[]; // terrain object model pointers
 extern s32 D_80222A70;
@@ -1082,6 +1092,7 @@ extern Vec3f D_80153AC4;
 extern Vec3f D_80153AD0;
 extern Vec3f D_80153BA0;
 extern OSContPad D_800475B8;
+extern OSContPad D_800475D0;
 extern u8 D_8015FAFC;
 extern u8 D_8015FAF8;
 extern s32 D_8003445C;
@@ -1314,6 +1325,7 @@ extern s8 D_800FB7C4;
 extern u8 D_800FB7AC;
 extern u8 D_800FB7AD;
 extern u8 D_8006AC10; // english comms strings
+extern u8 D_8006C410;
 extern u8 D_8006C450; // english comms strings offsets
 extern UnkFB6F8Entry D_800FB6F8[];
 
@@ -1422,6 +1434,7 @@ extern f32 D_80142E24_151DD4;
 extern u16 D_8014FD2A;
 extern Unk8003E290Entry D_8003E3A0;
 extern Unk8003E290Entry D_8003E290[];
+extern u8 D_8003E460_3F060[];
 extern Unk8003E290Entry *D_8015922C;
 extern Unk80047578 D_80047578;
 extern OSMesgQueue D_800433A8;
@@ -1536,6 +1549,7 @@ extern char D_800380C4[];
 extern char D_800380E4[];
 extern char D_80038424_39024;
 extern char D_800384E0_390E0;
+extern char D_80038500_39100;
 
 /* core/FB00 */
 extern u8 D_8003FB20[];
@@ -1581,6 +1595,7 @@ extern OSMesgQueue D_80068040;
 extern OSMesg D_80068060[];
 extern OSMesgQueue D_8006A8B0;
 extern OSMesgQueue D_8006A8D0;
+extern OSMesgQueue D_8006A8F0;
 extern s16 D_8006C558;
 extern s16 D_8006C55C;
 extern u16 D_8006C55E;

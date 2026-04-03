@@ -91,13 +91,14 @@ typedef struct {
 
 typedef struct Unk8006AA80Node {
 	/* 0x00 */ u16 unk0;
-	/* 0x02 */ u8 pad2[0x4];
+	/* 0x02 */ u8 pad2[0x2];
+	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s32 unk8;
 	/* 0x0C */ u8 pad0C[0x1C];
 	/* 0x28 */ s32 unk28;
 	/* 0x2C */ s32 unk2C;
-	/* 0x30 */ u8 pad30[0x4];
+	/* 0x30 */ struct Unk8006AA80Node *unk30;
 	/* 0x34 */ struct Unk8006AA80Node *unk34;
 } Unk8006AA80Node;
 
@@ -975,6 +976,34 @@ typedef struct {
 	/* 0x000 */ u8 pad0[0xE50];
 	/* 0xE50 */ s32 unkE50;
 } Unk8007F878_404; /* size = 0xE54 */
+
+/* 14-byte animation frame data entry (stride = 0xE, array starts at anim_data+0x50) */
+typedef struct {
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ s32 unk4;
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ u16 unkC;
+} AnimFrameData; /* size = 0x0E */
+
+/* 64-byte per-channel animation state element */
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[0x2];
+	/* 0x08 */ f32 unk8;
+	/* 0x0C */ f32 unkC;
+	/* 0x10 */ f32 unk10;
+	/* 0x14 */ s32 unk14;
+	/* 0x18 */ s32 unk18;
+	/* 0x1C */ f32 unk1C;
+	/* 0x20 */ f32 unk20;
+	/* 0x24 */ s32 unk24;
+	/* 0x28 */ s32 unk28;
+	/* 0x2C */ s32 unk2C;
+	/* 0x30 */ u16 unk30;
+	/* 0x32 */ u8 pad32[0xE];
+} AnimChannelState; /* size = 0x40 */
 
 typedef struct {
 	/* 0x00 */ u8 pad0[0x18];

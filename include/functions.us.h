@@ -4,6 +4,8 @@
 #include "functions.h"
 
 // core
+void func_80012080_12C80(s32 arg0);
+void func_80013E64_14A64(s8 arg0);
 void *func_8000C6F4_D2F4(void);
 void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2);
 void func_8000C764_D364(s32 arg0);
@@ -47,6 +49,7 @@ void func_8000A160(void);
 void func_8000CF4C_DB4C(void *arg0, void *arg1, u8 arg2, s32 arg3);
 void func_8007DAA8_165B68(void *arg0, s32 arg1, void *arg2, f32 arg3, s32 arg4);
 void func_8000D71C_E31C(void *arg0, void *arg1, void *arg2, s32 arg3, s32 arg4, s32 arg5, f32 arg6, s32 arg7);
+void func_8000CD54_D954(void *arg0, AnimChannelState *arg1, u8 arg2);
 void func_8000CDFC_D9FC(void *arg0, void *arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8000D278_DE78(void *arg0, void *arg1, s32 arg2, s32 arg3);
 void func_8000DC9C_E89C(s32, s32);
@@ -58,6 +61,9 @@ void func_80011E14_12A14(u8 arg0);
 #ifdef OVERLAY_ENTRY_AS_FUNC
 s32 func_80070270(s32 arg0);
 #endif
+void func_8000F618_10218(void);
+void func_80001984_2584(void);
+void loadFrontendData(void);
 // loader.c functions - prototype-less to preserve implicit int behavior for matching functions
 s32 func_8001032C_10F2C();
 void func_8000F1E8_FDE8(void);
@@ -377,6 +383,7 @@ s32 func_800F2D48_101CF8(u8, s16, s16);
 void func_800F3670_102620(void);
 s32 func_800F3990_102940(s32 arg0, s32 arg1);
 s16 func_800065A4_71A4(s16 arg0, s16 arg1, u16 arg2);
+s16 func_80006654_7254(s16 arg0, s16 arg1, u16 arg2);
 s32 func_800F41E0_103190(s32 arg0, s32 arg1, s16 arg2, s16 arg3);
 void func_800F97FC_1087AC(void);
 void func_800F98C0_108870(void);
@@ -441,7 +448,7 @@ s32 func_80084F00_93EB0(VehicleInstance *, AlienInstance *);
 s32 func_8007E500_8D4B0(AlienInstance *, AlienSpec *, AlienInstance *, AlienSpec *);
 void func_8007E734_8D6E4(AlienInstance *, s16);
 s32 func_80084FE8_93F98(u8, s32);
-s32 func_80004818_5418(s32, s32, s32);
+s32 func_80004818_5418(s8, s8, u8);
 void func_80128504_1374B4(AlienInstance *arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
 void func_80124B5C_133B0C(s16, s16, s16, s32, s32);
 OutputStruct_8012B150 *func_80129354_138304(s32, s32, s16, s16, s16);
@@ -679,7 +686,7 @@ s32 func_8012D700_13C6B0(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 a
 void func_8012D684_13C634(s32 arg0);
 void func_8012E1F8_13D1A8(s32 arg0, s32 arg1);
 f32 __cosf(f32 arg0);
-s32 func_80003740_4340(f32 arg0);
+s16 func_80003740_4340(f32 arg0);
 s32 func_800056D0_62D0(s16 arg0, s16 arg1);
 s32 func_800B0A88_BFA38(s32 arg0, s32 arg1);
 u32 func_8001BCE0_1C8E0(void);

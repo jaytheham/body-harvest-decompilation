@@ -163,7 +163,29 @@ void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CC3C_D83C.s")
 
+#ifdef NON_MATCHING
+void func_8000CD54_D954(void *arg0, AnimChannelState *arg1, u8 arg2) {
+	typedef struct { s16 a; s16 b; s16 c; s16 d; s16 e; s16 f; } AnimFrame12;
+	s32 temp_v0;
+	u16 temp_at;
+	s32 base;
+
+	temp_v0 = arg1->unk18;
+	if (arg1->unk14 > temp_v0) {
+		{
+			u16 start_frame = *(u16 *)((s32)arg0 + arg2 * 4 + 0xC);
+			base = (s32)arg0 + (((start_frame + temp_v0) & 0xFFFF) * 0xE);
+		}
+		*(AnimFrame12 *)&arg1->unk24 = *(AnimFrame12 *)((char *)base + 0x50);
+		temp_at = *(u16 *)((char *)base + 0x5C);
+		arg1->unk1C = 0.0f;
+		arg1->unk30 = temp_at;
+		arg1->unk20 = (f32)(u32)(temp_at & 0xFFFF);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CD54_D954.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CDFC_D9FC.s")
 

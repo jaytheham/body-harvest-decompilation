@@ -273,13 +273,68 @@ s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask)
 	}
 }
 
+#ifdef NON_MATCHING
+void func_800035D8_41D8(s16 arg0) {
+    if (!(currentControllerStates[0].button & 0x10)) {
+        s8 temp_v0 = D_800475B8.stick_x;
+        Unk80047588 *var_v1 = (Unk80047588 *)&D_800475B8;
+    loop:
+        temp_v0 = var_v1->stick_x;
+        if (arg0 < temp_v0) {
+            var_v1->stick_x = (s8)(temp_v0 - arg0);
+        } else if (temp_v0 < -arg0) {
+            var_v1->stick_x = (s8)(temp_v0 + arg0);
+        } else {
+            var_v1->stick_x = 0;
+        }
+        temp_v0 = var_v1->stick_y;
+        if (arg0 < temp_v0) {
+            var_v1->stick_y = (s8)(temp_v0 - arg0);
+        } else if (temp_v0 < -arg0) {
+            var_v1->stick_y = (s8)(temp_v0 + arg0);
+        } else {
+            var_v1->stick_y = 0;
+        }
+        var_v1++;
+        if (var_v1 != (Unk80047588 *)&D_800475D0) goto loop;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800035D8_41D8.s")
+#endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003680_4280.s")
+s16 func_80003680_4280(f32 arg0) {
+    f32 absval;
+
+    if (-arg0 < arg0) {
+        absval = arg0;
+    } else {
+        absval = -arg0;
+    }
+    if ((f64)absval > 1.0) {
+        return 0;
+    }
+    if (arg0 < 0.0f) {
+        return (s16)(-D_8003D000_3DC00[(s32)(-arg0 * 1024.0f)]);
+    }
+    return D_8003D000_3DC00[(s32)(arg0 * 1024.0f)];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003740_4340.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003824_4424.s")
+s16 func_80003824_4424(f32 arg0, f32 arg1) {
+    s32 sign;
+
+    if (arg0 == 0.0f) {
+        sign = (arg1 < 0.0f) ? -1 : 1;
+        return (s16) (sign << 0xE);
+    }
+    sign = (arg0 < 0.0f) ? -1 : 1;
+    if (sign == 1) {
+        return func_80003740_4340(arg1 / arg0);
+    }
+    return (s16) (func_80003740_4340(arg1 / arg0) + 0x8000);
+}
 
 void setRandomSeed(s32 arg0) {
 	D_800476C0 = arg0;

@@ -11,7 +11,30 @@ s32 func_800047FC_53FC(s16 arg0) {
 	return arg0 * arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004818_5418.s")
+s32 func_80004818_5418(s8 arg0, s8 arg1, u8 arg2) {
+    s8 x = (s8)(D_80052B34->unk0 >> 8);
+    s8 z = (s8)(D_80052B34->unk4 >> 8);
+    s32 dx, dz, abs_dx, abs_dz;
+
+    dx = x - arg0;
+    if (dx >= 0) {
+        abs_dx = dx;
+    } else {
+        abs_dx = -dx;
+    }
+    if (abs_dx < arg2) {
+        dz = z - arg1;
+        if (dz >= 0) {
+            abs_dz = dz;
+        } else {
+            abs_dz = -dz;
+        }
+        if (abs_dz < arg2) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 #ifdef NON_MATCHING
 void func_800048B8_54B8(void) {
@@ -89,7 +112,17 @@ void func_800049D4_55D4(u16 arg0, u16 arg1) {
 	D_8004773C.unk2 = (s8) ((arg1 & 0x3E) * 4);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004A38_5638.s")
+void func_80004A38_5638(u8 arg0, s8 *arg1, s8 *arg2, s8 *arg3) {
+    if ((currentLevel == 2) && (func_8000726C_7E6C(0x21) == 0)) {
+        *arg1 = 0xC;
+        *arg2 = 0xC;
+        *arg3 = 0xA;
+        return;
+    }
+    *arg1 = (s8) ((s32) (((u16 *)&D_802D48D0)[arg0] & 0xF800) >> 0xB);
+    *arg2 = (s8) ((s32) (((u16 *)&D_802D48D0)[arg0] & 0x7C0) >> 6);
+    *arg3 = (s8) ((s32) (((u16 *)&D_802D48D0)[arg0] & 0x3E) >> 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004AEC_56EC.s")
 
@@ -116,7 +149,10 @@ void func_80004CC8_58C8(void) {
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADE | G_SHADING_SMOOTH);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004D38_5938.s")
+void func_80004D38_5938(void) {
+	gSPDisplayList(D_8005BB2C++, (Gfx *)((s32)&D_80031260 & 0x1FFFFFFF));
+	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 0, 0, D_80068084, D_80068088);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004DDC_59DC.s")
 
@@ -149,7 +185,12 @@ void func_800056A8_62A8(void) {
 	func_80005654_6254(0, 0, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800056D0_62D0.s")
+s32 func_800056D0_62D0(s16 arg0, s16 arg1) {
+    u16 *p;
+
+    p = (u16 *)((u8 *)D_80052A94 + ((arg1 >> 8) << 9) + ((arg0 >> 8) << 1));
+    return ((u32)*p >> 0xF) ? 0 : D_8003E460_3F060[(((u32)*p << 0x16) >> 0x1C) | (((D_8021F250[((arg1 >> 10) << 6) + (arg0 >> 10)] & 0xF) + (currentLevel * 0xC) - 0xC) << 4)];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000577C_637C.s")
 
@@ -186,11 +227,28 @@ s16 func_80006520_7120(s16 arg0, s16 arg1, u16 arg2) {
     return (s16) (s32) ((f32) arg0 + ((f32) (arg1 - arg0) * (f32) (var_f6 / D_80037138_37D38)));
 }
 
+#ifdef NON_MATCHING
+s16 func_800065A4_71A4(s16 arg0, s16 arg1, u16 arg2) {
+    s32 sins_val = sins(((s32)arg2 >> 1) - 0x4000);
+    return (s16)(s32)((f32)arg0 + ((f32)(arg1 - arg0) * (f32)(((f64)(f32)sins_val / 32768.0) * (f64)0.5f + 0.5)));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800065A4_71A4.s")
+#endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006654_7254.s")
+s16 func_80006654_7254(s16 arg0, s16 arg1, u16 arg2) {
+    s32 diff = arg1 - arg0;
+    f32 temp_f0 = (f32)(((f64)(f32)sins(((s32)arg2 >> 1) - 0x4000) / 32768.0) + 1.0);
+    if ((s32)arg2 < 0x8000) {
+        return (s16)(s32)((f32)arg0 + (f32)diff * temp_f0);
+    }
+    return arg1;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006710_7310.s")
+s16 func_80006710_7310(s16 arg0, s16 arg1, u16 arg2) {
+    s32 sins_val = sins((arg2 >> 2) + 0xC000);
+    return (s16) (s32) ((f32) arg0 + ((f32) (arg1 - arg0) * (f32) (((f64) (f32) sins_val / 32768.0) + 1.0)));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800067B4_73B4.s")
 
@@ -356,7 +414,16 @@ s32 func_80007D44_8944(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800081D4_8DD4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008478_9078.s")
+s32 func_80008478_9078(void) {
+    if ((currentLevel == 1) && (func_8000726C_7E6C(0xB) != 0) && (D_80052554 >= 0x401)) {
+        return 1;
+    }
+    osSyncPrintf(&D_80037000_37C00);
+    if ((currentLevel == 3) && (func_8000726C_7E6C(0x31) != 0) && (func_8000726C_7E6C(0x26) == 0)) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000851C_911C.s")
 
