@@ -175,7 +175,12 @@ void func_800056A8_62A8(void) {
 	func_80005654_6254(0, 0, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800056D0_62D0.s")
+s32 func_800056D0_62D0(s16 arg0, s16 arg1) {
+    u16 *p;
+
+    p = (u16 *)((u8 *)D_80052A94 + ((arg1 >> 8) << 9) + ((arg0 >> 8) << 1));
+    return ((u32)*p >> 0xF) ? 0 : D_8003E460_3F060[(((u32)*p << 0x16) >> 0x1C) | (((D_8021F250[((arg1 >> 10) << 6) + (arg0 >> 10)] & 0xF) + (currentLevel * 0xC) - 0xC) << 4)];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000577C_637C.s")
 
