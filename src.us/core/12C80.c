@@ -259,7 +259,19 @@ void func_800131A4_13DA4(s16 arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001322C_13E2C.s")
+void func_8001322C_13E2C(s16 arg0) {
+	if (D_80031B58_32758 == 1) {
+		if (arg0 == 0) {
+			func_80015C94_16894((s8)(arg0 + 0x3B), 2);
+			func_80015C94_16894(0x3B, 2);
+		}
+	} else {
+		func_80015C94_16894((s8)(arg0 + 0x3B), 2);
+		if (arg0 + 0x3B == 0x3B) {
+			func_80015C94_16894((s8)(arg0 + 0x3B), 2);
+		}
+	}
+}
 
 void func_800132CC_13ECC(void) {
 	if (D_80031B58_32758 == 1) {
