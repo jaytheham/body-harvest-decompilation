@@ -884,7 +884,20 @@ void func_8001A024_1AC24(void) {
 	D_8006C550 = D_8006C554;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A068_1AC68.s")
+void func_8001A068_1AC68(void) {
+	if ((func_80017B78_18778() == 0xFFFF) && ((gameplayMode == GAMEPLAY_MODE_UNK1) || (gameplayMode == GAMEPLAY_MODE_UNK6)) && (func_80017B78_18778() != 1)) {
+		if (D_80034478 != 0) {
+			func_80019F80_1AB80();
+			D_80034484 = 1;
+			func_80018D7C_1997C(D_80034480);
+			D_80034478 = 0;
+			return;
+		}
+		if (D_8006C55E == 0xFFFF) {
+			func_80019F08_1AB08();
+		}
+	}
+}
 
 u8 func_8001A114_1AD14(void) {
 	return *(u8 *)(D_80034468 + D_8006C558);
