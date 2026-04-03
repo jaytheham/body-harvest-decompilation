@@ -1738,5 +1738,6 @@ extern f32 D_80031D50_32950;
 extern f32 D_80031D54_32954;
 extern f32 D_80031D58_32958;
 extern f32 D_80031D5C_3295C;
+extern f32 D_80031D60_32960;
 
 #endif
