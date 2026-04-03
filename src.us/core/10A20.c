@@ -40,4 +40,6 @@ void func_8000FF40_10B40(void) {
 	osRecvMesg(&__osSiAccessQueue, &D_80068038, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/10A20/__osSiRelAccess.s")
+void __osSiRelAccess(void) {
+    osSendMesg(&__osSiAccessQueue, 0, 0);
+}
