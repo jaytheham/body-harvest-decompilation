@@ -182,7 +182,13 @@ void func_800117D8_123D8(void) {
     bzero(D_800A5720, D_800FCF50 - D_800A5720);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011858_12458.s")
+void func_80011858_12458(u8 arg0, s32 arg1) {
+    if ((u32)(func_8001032C_10F2C(arg1, D_80031C04_32804[arg0 - 1], D_8006AA6C) - D_80031C04_32804[arg0 - 1]) >= 0x30D41U) {
+        osSyncPrintf(&D_80038034_38C34);
+        osSyncPrintf(&D_80038064_38C64);
+        osSyncPrintf(&D_80038094_38C94);
+    }
+}
 
 void __osInitialize_emu(void) {
 	__printfunc = func_802D4CD0_18D7E0;
