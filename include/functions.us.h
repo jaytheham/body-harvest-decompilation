@@ -668,6 +668,7 @@ void func_8000CC3C_D83C(void *arg0, s32 arg1);
 s32 func_80011F90_12B90(void *arg0);
 s32 func_80011FAC_12BAC(void *arg0);
 s32 func_80012000_12C00(s32 arg0);
+Unk8006AA84Node *func_80012128_12D28(void);
 void func_8010C4EC_11B49C(VehicleInstance *arg0);
 s32 func_8010CF7C_11BF2C(s16 arg0, s16 arg1);
 s16 func_80123AC4_132A74(VehicleInstance *arg0);

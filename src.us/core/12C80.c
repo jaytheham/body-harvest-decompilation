@@ -5,7 +5,34 @@ struct Unk80013E44_arg0 { s32 unk0; s32 unk4; s32 unk8; };
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012080_12C80.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012128_12D28.s")
+Unk8006AA84Node *func_80012128_12D28(void) {
+    s32 i;
+    s32 j;
+    s32 *slot;
+    Unk8006AA84Node **entry;
+
+    if (D_8006AB88 == 0) {
+        return NULL;
+    }
+    i = 0;
+    j = 0;
+    if (D_80031CA0_328A0 >= 0x11) {
+        return NULL;
+    }
+    slot = D_8006AAD0;
+    do {
+        if (*slot != -1) {
+            *slot = -1;
+            break;
+        }
+        i++;
+        j += 4;
+        slot++;
+    } while (i != 0x10);
+    entry = (Unk8006AA84Node **)((char *)D_8006AA88 + j);
+    (*entry)->unk4 = i;
+    return *entry;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800121B4_12DB4.s")
 
