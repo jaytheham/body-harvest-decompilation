@@ -549,7 +549,9 @@ void func_80014180_14D80(s8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014180_14D80.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/osBbUsbDevGetHandle.s")
+s32 osBbUsbDevGetHandle(void) {
+    return -1;
+}
 
 void func_80014208_14E08(s32 arg0, s16 arg1, s32 arg2) {
     s32 pad1;
