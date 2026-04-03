@@ -368,7 +368,21 @@ void func_800136F0_142F0(void) {
 	}
 }
 
+#ifdef NON_MATCHING
+void func_80013720_14320(void) {
+	s8 sp1F;
+
+	if (D_8006AB88 != 0) {
+		sp1F = D_80033C88_34888 % 4;
+		D_80033C88_W = D_80033C88_34888 + 1;
+		osSyncPrintf(&D_8003828C_38E8C, sp1F);
+		sp1F = *(&D_80033C84_34884 + sp1F);
+		((void (*)(s32, s32, s32))func_80015C94_16894)((s8)(sp1F + 0x1F), 6, sp1F);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013720_14320.s")
+#endif
 
 void func_800137AC_143AC(void) {
 	func_80015C94_16894(0x24, 0xF);
