@@ -5,7 +5,7 @@
 
 // core
 void *func_8000C6F4_D2F4(void);
-void func_8000C790_D390(void *arg0, void *arg1, s32 arg2);
+void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2);
 void func_8000C764_D364(s32 arg0);
 void func_80001144_1D44(u8 arg0, u8 arg1, u8 arg2);
 
@@ -38,6 +38,7 @@ void func_800072CC_7ECC(u64);
 void func_800073B8_7FB8(u64);
 void func_800074F4_80F4(void);
 void func_80007548_8148(void);
+void func_80007728_8328(s32, s16 *, s16 *);
 s32 func_800078B8_84B8(s32, s32*);
 void func_800078CC_84CC(s32, s32*);
 void func_80073DC0_82D70(s32);
@@ -50,7 +51,13 @@ void func_8000CDFC_D9FC(void *arg0, void *arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8000D278_DE78(void *arg0, void *arg1, s32 arg2, s32 arg3);
 void func_8000DC9C_E89C(s32, s32);
 void func_80011D24_12924(void);
+s32 func_80011D6C_1296C(s32 arg0);
+void func_80011674_12274(void);
+void func_800117D8_123D8(void);
 void func_80011E14_12A14(u8 arg0);
+#ifdef OVERLAY_ENTRY_AS_FUNC
+s32 func_80070270(s32 arg0);
+#endif
 // loader.c functions - prototype-less to preserve implicit int behavior for matching functions
 s32 func_8001032C_10F2C();
 void func_8000F1E8_FDE8(void);
@@ -60,10 +67,12 @@ s32 func_80011AC8_126C8();
 s32 func_80011BE8_127E8();
 s32 debug_printModelSegmentEnd();
 s32 func_800119F4_125F4();
-s32 func_80011A40_12640();
+s32 func_80011A40_12640(u8 arg0, s32 arg1);
 s32 func_80011B14_12714();
-s32 func_80011B60_12760();
+s32 func_80011B60_12760(u8 arg0, s32 arg1);
 void func_80013324_13F24(void);
+void func_80013398_13F98(void);
+void func_80013410_14010(void);
 void func_80013684_14284(void);
 void func_80014180_14D80(s8 arg0);
 void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4);
@@ -517,6 +526,7 @@ f32 func_800FB098_10A048(VehicleInstance *arg0);
 void func_8000C6B8_D2B8(s32 arg0);
 void func_80019F80_1AB80(void);
 void func_80017B08_18708(s32 arg0);
+void func_80019EA8_1AAA8(u8 arg0);
 void func_80088000_96FB0(s16 arg0);
 void func_800C978C_D873C(void);
 s32 func_800744E0_83490(s32 arg0);
@@ -660,6 +670,7 @@ void func_8000CC3C_D83C(void *arg0, s32 arg1);
 s32 func_80011F90_12B90(void *arg0);
 s32 func_80011FAC_12BAC(void *arg0);
 s32 func_80012000_12C00(s32 arg0);
+Unk8006AA84Node *func_80012128_12D28(void);
 void func_8010C4EC_11B49C(VehicleInstance *arg0);
 s32 func_8010CF7C_11BF2C(s16 arg0, s16 arg1);
 s16 func_80123AC4_132A74(VehicleInstance *arg0);
@@ -746,7 +757,6 @@ void func_802D4E70_2545B0(s32 arg0);
 void func_802D4CD0_254410(s32 arg0, s32 arg1);
 
 /* core/loader */
-extern void func_80070270(void);
 extern void (*__printfunc)(s32, s32);
 
 /* core/FB00 */
@@ -788,6 +798,7 @@ void func_8000AFDC_BBDC(void);
 void func_8000577C_637C(void);
 void func_800071D8_7DD8(void);
 void func_80008C18_9818(void);
+s32 func_80008C44_9844(s32 arg0);
 void playMapMusic(void);
 void playInventoryMusic(void);
 void guess_displayInventory(void);

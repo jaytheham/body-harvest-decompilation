@@ -1,3 +1,4 @@
+#define OVERLAY_ENTRY_AS_FUNC
 #include <ultra64.h>
 #include "common.h"
 
@@ -66,7 +67,18 @@ void func_80004918_5518(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004918_5518.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004948_5548.s")
+void func_80004948_5548(void) {
+	u16 temp_v0;
+
+	temp_v0 = (&D_80047748)[D_802CA8D0];
+	D_80047740.unk0 = (s8) ((s32) (temp_v0 & 0xF800) >> 8);
+	D_80047740.unk1 = (s8) ((s32) (temp_v0 & 0x7C0) >> 3);
+	D_80047740.unk2 = (s8) ((temp_v0 & 0x3E) * 4);
+	temp_v0 = (&D_80047748)[D_802D48CF];
+	D_8004773C.unk0 = (s8) ((s32) (temp_v0 & 0xF800) >> 8);
+	D_8004773C.unk1 = (s8) ((s32) (temp_v0 & 0x7C0) >> 3);
+	D_8004773C.unk2 = (s8) ((temp_v0 & 0x3E) * 4);
+}
 
 void func_800049D4_55D4(u16 arg0, u16 arg1) {
 	D_80047740.unk0 = (s8) ((s32) (arg0 & 0xF800) >> 8);
@@ -110,7 +122,11 @@ void func_80004CC8_58C8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004F64_5B64.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000505C_5C5C.s")
+void func_8000505C_5C5C(void) {
+	gDPFullSync(D_8005BB2C++);
+	gSPEndDisplayList(D_8005BB2C++);
+	osSendMesg(&D_8006A8B0, &D_800314CC_320CC, 1);
+}
 
 void func_800050C4_5CC4(void) {
 	osRecvMesg(&D_8006A8D0, &D_80068038, 1);
@@ -204,7 +220,20 @@ void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006DDC_79DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800071D8_7DD8.s")
+void func_800071D8_7DD8(void) {
+    func_8000505C_5C5C();
+    func_800056A8_62A8();
+    func_800056A8_62A8();
+    setFullResolution();
+    func_800117D8_123D8();
+    func_80070270(0);
+    if (gameplayMode != 0 && gameplayMode != 0x10 && D_80052AD0 != 0) {
+        setGameplayResolution();
+    }
+    func_80011674_12274();
+    func_80011D6C_1296C(D_80047F93);
+    func_800050C4_5CC4();
+}
 
 s32 func_8000726C_7E6C(u64 arg0) {
 	return ((1LL << arg0) & D_8004DC48.unk0) != 0;
@@ -304,7 +333,20 @@ void func_800078E4_84E4(s32 arg0, s32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007C78_8878.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007D44_8944.s")
+s32 func_80007D44_8944(s32 arg0) {
+    s16 sp1E;
+    s16 sp1C;
+    s16 sp1A;
+    s16 sp18;
+
+    func_80007728_8328(arg0, &sp1E, &sp1C);
+    func_80007728_8328(arg0 + 3, &sp1A, &sp18);
+    sp1E = (s16)(sp1E >> 8);
+    sp1C = (s16)(sp1C >> 8);
+    sp1A = (s16)(sp1A >> 8);
+    sp18 = (s16)(sp18 >> 8);
+    return (sp1E - sp1A) * (sp1E - sp1A) + (sp1C - sp18) * (sp1C - sp18);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007DE0_89E0.s")
 
@@ -335,7 +377,18 @@ void func_80008C18_9818(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008C18_9818.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008C44_9844.s")
+s32 func_80008C44_9844(s32 arg0) {
+    s16 *v1 = &D_80047F7E;
+    s32 a1 = 0x10;
+    while (a1--) {
+        if (*v1 == -1) {
+            *v1 = arg0;
+            osSyncPrintf(D_80037100_37D00, arg0);
+            break;
+        }
+        v1--;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008CA8_98A8.s")
 

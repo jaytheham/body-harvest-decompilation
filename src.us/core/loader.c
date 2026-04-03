@@ -156,13 +156,18 @@ s32 destroyThreadIfMessageInQueue(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelData.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadFrontendData.s")
+void loadFrontendData(void) {
+    osInvalICache(func_80070270, (u8 *)&D_800909B0 - func_80070270);
+    osInvalDCache(&D_800909B0, (u8 *)&D_800AED70 - (u8 *)&D_800909B0);
+    func_800101F0_10DF0(func_80070270, D_40720, D_7F220 - D_40720);
+    bzero(&D_800AED70, (u8 *)&D_800E1D70 - (u8 *)&D_800AED70);
+}
 
 #ifdef NON_MATCHING
 void func_80011674_12274(void) {
-    osInvalICache(&func_80070270, (u8 *)&D_8013B8F0 - (u8 *)&func_80070270);
+    osInvalICache(func_80070270, (u8 *)&D_8013B8F0 - func_80070270);
     osInvalDCache(&D_8013B8F0, (u8 *)&D_80149380 - (u8 *)&D_8013B8F0);
-    func_800101F0_10DF0((s32)&func_80070270, (s32)D_7F220, D_158330 - D_7F220);
+    func_800101F0_10DF0(func_80070270, D_7F220, D_158330 - D_7F220);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011674_12274.s")
@@ -170,9 +175,20 @@ void func_80011674_12274(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelCode.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800117D8_123D8.s")
+void func_800117D8_123D8(void) {
+    osInvalICache(func_80070270, (u8 *)&D_8008DDF0 - func_80070270);
+    osInvalDCache(&D_8008DDF0, D_800A5720 - (u8 *)&D_8008DDF0);
+    func_800101F0_10DF0(func_80070270, D_158330, D_18D7E0 - D_158330);
+    bzero(D_800A5720, D_800FCF50 - D_800A5720);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011858_12458.s")
+void func_80011858_12458(u8 arg0, s32 arg1) {
+    if ((u32)(func_8001032C_10F2C(arg1, D_80031C04_32804[arg0 - 1], D_8006AA6C) - D_80031C04_32804[arg0 - 1]) >= 0x30D41U) {
+        osSyncPrintf(&D_80038034_38C34);
+        osSyncPrintf(&D_80038064_38C64);
+        osSyncPrintf(&D_80038094_38C94);
+    }
+}
 
 void __osInitialize_emu(void) {
 	__printfunc = func_802D4CD0_18D7E0;
@@ -199,7 +215,15 @@ s32 func_800119F4_125F4(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800119F4_125F4.s")
 #endif
 
+#ifdef NON_MATCHING
+s32 func_80011A40_12640(u8 arg0, s32 arg1) {
+	D_8006AA70 = arg1;
+	func_800101F0_10DF0(arg1, D_80031B90_32790[arg0], D_80031BAC_327AC[arg0] - D_80031B90_32790[arg0]);
+	return D_80031BAC_327AC[arg0] - D_80031B90_32790[arg0] + arg1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011A40_12640.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_80011AC8_126C8(s32 arg0) {
@@ -219,7 +243,15 @@ s32 func_80011B14_12714(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011B14_12714.s")
 #endif
 
+#ifdef NON_MATCHING
+s32 func_80011B60_12760(u8 arg0, s32 arg1) {
+	D_8006AA70 = arg1;
+	func_800101F0_10DF0(arg1, D_80031BDC_327DC[arg0 - 1], D_80031BF0_327F0[arg0 - 1] - D_80031BDC_327DC[arg0 - 1]);
+	return D_80031BF0_327F0[arg0 - 1] - D_80031BDC_327DC[arg0 - 1] + arg1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011B60_12760.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_80011BE8_127E8(s32 arg0) {
