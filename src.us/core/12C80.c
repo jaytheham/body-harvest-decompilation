@@ -900,4 +900,6 @@ void func_8001A130_1AD30() {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A37C_1AF7C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/myfree.s")
+void myfree(void) {
+    gzip_data_0000 = 0;
+}

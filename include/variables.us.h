@@ -997,6 +997,7 @@ extern u8 D_800E6F00[];
 extern s32 D_800E6A68;
 extern s16 D_800E6A86;
 extern VehicleInstance D_800E6A78;
+extern s32 gzip_data_0000;
 extern Unk8009E8E0 D_8009E8E0_1869A0[];
 extern Unk8009E8DC D_8009E8DC_18699C[];
 extern f64 D_800A4D90;
