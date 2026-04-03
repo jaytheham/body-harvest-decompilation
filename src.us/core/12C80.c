@@ -36,7 +36,26 @@ Unk8006AA84Node *func_80012128_12D28(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800121B4_12DB4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800123A4_12FA4.s")
+void func_800123A4_12FA4(Unk8006AA80Node *arg0, Unk8006AA80Node **arg1, Unk8006AA80Node **arg2) {
+    if (D_8006AB88 != 0 && arg0 != NULL) {
+        func_80012080_12C80(arg0->unk4);
+        if (arg0 == *arg1) {
+            *arg1 = arg0->unk34;
+            if (*arg1 != NULL) {
+                (*arg1)->unk30 = NULL;
+                return;
+            }
+            *arg2 = NULL;
+            return;
+        }
+        arg0->unk30->unk34 = arg0->unk34;
+        if (arg0 != *arg2) {
+            arg0->unk34->unk30 = arg0->unk30;
+            return;
+        }
+        *arg2 = arg0->unk30;
+    }
+}
 
 Unk8006AA80Node *func_8001244C_1304C(s16 arg0) {
 	Unk8006AA80Node *var_v1;

@@ -91,13 +91,14 @@ typedef struct {
 
 typedef struct Unk8006AA80Node {
 	/* 0x00 */ u16 unk0;
-	/* 0x02 */ u8 pad2[0x4];
+	/* 0x02 */ u8 pad2[0x2];
+	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s32 unk8;
 	/* 0x0C */ u8 pad0C[0x1C];
 	/* 0x28 */ s32 unk28;
 	/* 0x2C */ s32 unk2C;
-	/* 0x30 */ u8 pad30[0x4];
+	/* 0x30 */ struct Unk8006AA80Node *unk30;
 	/* 0x34 */ struct Unk8006AA80Node *unk34;
 } Unk8006AA80Node;
 

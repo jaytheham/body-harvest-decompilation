@@ -4,6 +4,7 @@
 #include "functions.h"
 
 // core
+void func_80012080_12C80(s16 arg0);
 void func_80013E64_14A64(s8 arg0);
 void *func_8000C6F4_D2F4(void);
 void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2);
