@@ -11,7 +11,30 @@ s32 func_800047FC_53FC(s16 arg0) {
 	return arg0 * arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004818_5418.s")
+s32 func_80004818_5418(s8 arg0, s8 arg1, u8 arg2) {
+    s8 x = (s8)(D_80052B34->unk0 >> 8);
+    s8 z = (s8)(D_80052B34->unk4 >> 8);
+    s32 dx, dz, abs_dx, abs_dz;
+
+    dx = x - arg0;
+    if (dx >= 0) {
+        abs_dx = dx;
+    } else {
+        abs_dx = -dx;
+    }
+    if (abs_dx < arg2) {
+        dz = z - arg1;
+        if (dz >= 0) {
+            abs_dz = dz;
+        } else {
+            abs_dz = -dz;
+        }
+        if (abs_dz < arg2) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 #ifdef NON_MATCHING
 void func_800048B8_54B8(void) {
