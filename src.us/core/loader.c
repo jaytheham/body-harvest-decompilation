@@ -290,7 +290,19 @@ void debug_printModelSegmentStart(void *arg0) {
 	osSyncPrintf(D_800380E4, arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/debug_printModelSegmentEnd.s")
+s32 debug_printModelSegmentEnd(void *arg0) {
+    s32 sp18;
+
+    sp18 = (u8 *)&D_803DA800 - (u8 *)arg0;
+    if (sp18 <= 0) {
+        sourceTaggedPrintF(&D_80038104_38D04, &D_8003810C_38D0C, 0x47A);
+    }
+    osSyncPrintf(&D_8003811C_38D1C);
+    osSyncPrintf(&D_8003813C_38D3C, arg0);
+    osSyncPrintf(&D_80038158_38D58, &D_803DA800);
+    osSyncPrintf(&D_80038174_38D74, sp18, (f64)sp18 * 0.0009765625);
+    osSyncPrintf(&D_80038198_38D98);
+}
 
 void func_80011D24_12924(void) {
 	s32 temp_v0;

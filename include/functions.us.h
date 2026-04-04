@@ -71,7 +71,7 @@ void func_8000F5A8_101A8(s32 arg0, s32 arg1, s32 arg2);
 s32 func_800119A8_125A8();
 s32 func_80011AC8_126C8();
 s32 func_80011BE8_127E8();
-s32 debug_printModelSegmentEnd();
+s32 debug_printModelSegmentEnd(void *arg0);
 s32 func_800119F4_125F4();
 s32 func_80011A40_12640(u8 arg0, s32 arg1);
 s32 func_80011B14_12714();
