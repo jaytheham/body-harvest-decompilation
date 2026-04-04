@@ -339,7 +339,21 @@ s32 func_8000726C_7E6C(u64 arg0) {
 	return ((1LL << arg0) & D_8004DC48.unk0) != 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800072CC_7ECC.s")
+void func_800072CC_7ECC(u64 arg0) {
+    if (arg0 == 0x41) {
+        if (currentLevel != 5) {
+            D_80047F9C = 5;
+        }
+        D_80052ACD |= 1;
+        D_80052A98[currentLevel - 1].score = D_80052B2C->unk30;
+        D_80052A98[currentLevel - 1].humansKilled = D_8004816A;
+        D_80052A98[currentLevel - 1].secondsElapsed = D_80052A90 / 1000U;
+        D_800476A0 = 1;
+        func_8001A650_1B250(2);
+        return;
+    }
+    D_8004DC48.unk0 |= 1ULL << arg0;
+}
 
 void func_800073B8_7FB8(u64 arg0) {
 	u64 temp_ret;
