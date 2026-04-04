@@ -88,6 +88,7 @@ void func_80010228_10E28(u32 rom_addr, void *dest_buffer) {
 	osRecvMesg(&D_80067F70, NULL, 1);
 }
 
+// https://decomp.me/scratch/cg2WJ
 #ifdef NON_MATCHING
 s32 func_80010290_10E90(s32 arg0) {
 	s32 header[6]; /* 0x18 bytes = MIO0 header at sp+0x20 */
@@ -182,57 +183,58 @@ s32 destroyThreadIfMessageInQueue(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelData.s")
 
 void loadFrontendData(void) {
-    osInvalICache(func_80070270, (u8 *)&D_800909B0 - func_80070270);
-    osInvalDCache(&D_800909B0, (u8 *)&D_800AED70 - (u8 *)&D_800909B0);
-    func_800101F0_10DF0(func_80070270, D_40720, D_7F220 - D_40720);
-    bzero(&D_800AED70, (u8 *)&D_800E1D70 - (u8 *)&D_800AED70);
+	osInvalICache(func_80070270, (u8 *)&D_800909B0 - func_80070270);
+	osInvalDCache(&D_800909B0, (u8 *)&D_800AED70 - (u8 *)&D_800909B0);
+	func_800101F0_10DF0(func_80070270, D_40720, D_7F220 - D_40720);
+	bzero(&D_800AED70, (u8 *)&D_800E1D70 - (u8 *)&D_800AED70);
 }
 
-#ifdef NON_MATCHING
 void func_80011674_12274(void) {
-    osInvalICache(func_80070270, (u8 *)&D_8013B8F0 - func_80070270);
-    osInvalDCache(&D_8013B8F0, (u8 *)&D_80149380 - (u8 *)&D_8013B8F0);
-    func_800101F0_10DF0(func_80070270, D_7F220, D_158330 - D_7F220);
+	osInvalICache(func_80070270, (u8 *)&D_8013B8F0 - func_80070270);
+	osInvalDCache(&D_8013B8F0, (u8 *)&D_80149380 - (u8 *)&D_8013B8F0);
+	func_800101F0_10DF0(func_80070270, D_7F220, D_158330 - D_7F220);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011674_12274.s")
-#endif
 
+// https://decomp.me/scratch/ktq8M
 #ifdef NON_MATCHING
-void loadLevelCode(u8 arg0) {
-    s32 level;
-
-    level = arg0;
-    osSyncPrintf(&D_80038000_38C00, level);
-    func_800101F0_10DF0(D_80031C40_32840[level - 1], D_80031C18_32818[level - 1], D_80031C2C_3282C[level - 1] - D_80031C18_32818[level - 1]);
-    osSyncPrintf(&D_80038018_38C18, D_80031C40_32840[level - 1], D_80031C18_32818[level - 1], D_80031C2C_3282C[level - 1] - D_80031C18_32818[level - 1]);
-    {
-        s32 sizeCode;
-        s32 loadAddr;
-        sizeCode = D_80031C50_32850[level] - D_80031C40_32840[level - 1];
-        loadAddr = sizeCode + D_80031C40_32840[level - 1];
-        D_8006AA68 = loadAddr;
-        osSyncPrintf(&D_8003802C_38C2C, loadAddr);
-    }
-    __printfunc = (void (*)(s32, s32))D_8006AA68;
+void loadLevelCode(u8 arg0)
+{
+  s32 level = arg0;
+  s32 loadAddr;
+  osSyncPrintf(&D_80038000_38C00, level);
+  func_800101F0_10DF0(
+	  D_80031C40_32840[level - 1],
+	  D_80031C18_32818[level - 1],
+	  D_80031C2C_3282C[level - 1] - D_80031C18_32818[level - 1]);
+  osSyncPrintf(&D_80038018_38C18,
+			   D_80031C40_32840[level - 1],
+			   D_80031C18_32818[level - 1],
+			   D_80031C2C_3282C[level - 1] - D_80031C18_32818[level - 1]);
+	
+	loadAddr = D_80031C50_32850[level] - D_80031C40_32840[level - 1];
+	loadAddr += D_80031C40_32840[level - 1];
+	D_8006AA68 = loadAddr;
+	osSyncPrintf(&D_8003802C_38C2C, loadAddr);
+  
+  __printfunc = (void (*)(s32, s32)) D_8006AA68;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelCode.s")
 #endif
 
 void func_800117D8_123D8(void) {
-    osInvalICache(func_80070270, (u8 *)&D_8008DDF0 - func_80070270);
-    osInvalDCache(&D_8008DDF0, D_800A5720 - (u8 *)&D_8008DDF0);
-    func_800101F0_10DF0(func_80070270, D_158330, D_18D7E0 - D_158330);
-    bzero(D_800A5720, D_800FCF50 - D_800A5720);
+	osInvalICache(func_80070270, (u8 *)&D_8008DDF0 - func_80070270);
+	osInvalDCache(&D_8008DDF0, D_800A5720 - (u8 *)&D_8008DDF0);
+	func_800101F0_10DF0(func_80070270, D_158330, D_18D7E0 - D_158330);
+	bzero(D_800A5720, D_800FCF50 - D_800A5720);
 }
 
 void func_80011858_12458(u8 arg0, s32 arg1) {
-    if ((u32)(func_8001032C_10F2C(arg1, D_80031C04_32804[arg0 - 1], D_8006AA6C) - D_80031C04_32804[arg0 - 1]) >= 0x30D41U) {
-        osSyncPrintf(&D_80038034_38C34);
-        osSyncPrintf(&D_80038064_38C64);
-        osSyncPrintf(&D_80038094_38C94);
-    }
+	if ((u32)(func_8001032C_10F2C(arg1, D_80031C04_32804[arg0 - 1], D_8006AA6C) - D_80031C04_32804[arg0 - 1]) >= 0x30D41U) {
+		osSyncPrintf(&D_80038034_38C34);
+		osSyncPrintf(&D_80038064_38C64);
+		osSyncPrintf(&D_80038094_38C94);
+	}
 }
 
 void __osInitialize_emu(void) {
@@ -240,39 +242,37 @@ void __osInitialize_emu(void) {
 }
 
 void func_800118F8_124F8(void) {
-    s32 ptr;
-    s32 temp;
+	s32 ptr;
+	s32 temp;
 
-    ptr = (s32)D_3767C0;
-    temp = ptr & 0xF;
-    if (temp != 0) {
-        ptr = (ptr - temp) + 0x10;
-    }
-    ptr = func_80010420_11020((s32)D_8025CCC0, ptr);
-    ptr = func_80010420_11020((s32)D_80260500, ptr);
-    temp = ptr & 0xF;
-    if (temp != 0) {
-        ptr = (ptr - temp) + 0x10;
-    }
-    ptr = func_80010420_11020((s32)D_801F1210, ptr);
-    ptr = func_80010420_11020((s32)D_801FEA10, ptr);
-    temp = ptr & 0xF;
-    if (temp != 0) {
-        ptr = (ptr - temp) + 0x10;
-    }
-    ptr = func_80010420_11020((s32)D_80264B00, ptr);
-    func_80010420_11020((s32)D_80265880, ptr);
+	ptr = (s32)D_3767C0;
+	temp = ptr & 0xF;
+	if (temp != 0) {
+		ptr = (ptr - temp) + 0x10;
+	}
+	ptr = func_80010420_11020((s32)D_8025CCC0, ptr);
+	ptr = func_80010420_11020((s32)D_80260500, ptr);
+	temp = ptr & 0xF;
+	if (temp != 0) {
+		ptr = (ptr - temp) + 0x10;
+	}
+	ptr = func_80010420_11020((s32)D_801F1210, ptr);
+	ptr = func_80010420_11020((s32)D_801FEA10, ptr);
+	temp = ptr & 0xF;
+	if (temp != 0) {
+		ptr = (ptr - temp) + 0x10;
+	}
+	ptr = func_80010420_11020((s32)D_80264B00, ptr);
+	func_80010420_11020((s32)D_80265880, ptr);
 }
 
-#ifdef NON_MATCHING
-s32 func_800119A8_125A8(s32 arg0) {
-	s32 size = &D_500A00 - &D_4EBF80;
-	func_800101F0_10DF0(__printfunc = (void (*)(s32, s32))arg0, &D_4EBF80, size);
-	return size + arg0;
+s32 func_800119A8_125A8(s32 arg0)
+{
+  void (*new_var2)(s32, s32);
+  new_var2 = (__printfunc = (void (*)(s32, s32)) arg0);
+  func_800101F0_10DF0(new_var2, &D_4EBF80, &D_500A00 - &D_4EBF80);
+  return &D_500A00 - &D_4EBF80 + arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800119A8_125A8.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_800119F4_125F4(s32 arg0) {
@@ -336,17 +336,17 @@ void debug_printModelSegmentStart(void *arg0) {
 }
 
 s32 debug_printModelSegmentEnd(void *arg0) {
-    s32 sp18;
+	s32 sp18;
 
-    sp18 = (u8 *)&D_803DA800 - (u8 *)arg0;
-    if (sp18 <= 0) {
-        sourceTaggedPrintF(&D_80038104_38D04, &D_8003810C_38D0C, 0x47A);
-    }
-    osSyncPrintf(&D_8003811C_38D1C);
-    osSyncPrintf(&D_8003813C_38D3C, arg0);
-    osSyncPrintf(&D_80038158_38D58, &D_803DA800);
-    osSyncPrintf(&D_80038174_38D74, sp18, (f64)sp18 * 0.0009765625);
-    osSyncPrintf(&D_80038198_38D98);
+	sp18 = (u8 *)&D_803DA800 - (u8 *)arg0;
+	if (sp18 <= 0) {
+		sourceTaggedPrintF(&D_80038104_38D04, &D_8003810C_38D0C, 0x47A);
+	}
+	osSyncPrintf(&D_8003811C_38D1C);
+	osSyncPrintf(&D_8003813C_38D3C, arg0);
+	osSyncPrintf(&D_80038158_38D58, &D_803DA800);
+	osSyncPrintf(&D_80038174_38D74, sp18, (f64)sp18 * 0.0009765625);
+	osSyncPrintf(&D_80038198_38D98);
 }
 
 void func_80011D24_12924(void) {

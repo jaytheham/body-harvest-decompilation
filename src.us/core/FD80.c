@@ -35,11 +35,11 @@ void func_8000F1E8_FDE8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F478_10078.s")
 
 void func_8000F5A8_101A8(s32 arg0, s32 arg1, s32 arg2) {
-    OSIoMesg sp28;
+	OSIoMesg sp28;
 
-    func_8001F2E0_1FEE0();
-    osPiStartDma(&sp28, 0, 0, arg0, (void *)arg1, arg2, &D_80067FD0);
-    osRecvMesg(&D_80067FD0, &D_80068038, 1);
+	func_8001F2E0_1FEE0();
+	osPiStartDma(&sp28, 0, 0, arg0, (void *)arg1, arg2, &D_80067FD0);
+	osRecvMesg(&D_80067FD0, &D_80068038, 1);
 }
 
 void func_8000F618_10218()

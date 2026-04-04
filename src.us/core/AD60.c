@@ -58,6 +58,7 @@ s16 func_8000A43C_B03C(s8 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/drawText.s")
 
+// https://decomp.me/scratch/krtPZ
 #ifdef NON_MATCHING
 void func_8000AFDC_BBDC(void) {
 	s8 *var_a0;
@@ -112,22 +113,20 @@ void func_8000C6D0_D2D0(s32 arg0) {
 	} while (0);
 }
 
-#ifdef NON_MATCHING
-void *func_8000C6F4_D2F4(void) {
+void *func_8000C6F4_D2F4(void)
+{
 	s32 i;
 	void *ptr;
-
-	for (i = 0; i != 6; i = (i + 1) & 0xFF) {
-		if (D_80054668[i] == 0) {
-			ptr = (void *)((char *)&D_80054680 + i * 0xE58);
-			D_80054668[i] = (s32)ptr;
+	for (i = 0; (i ^ 0) != 6; i = (i + 1) & 0xFF)
+	{
+		if (D_80054668[i] == 0)
+		{
+			ptr = (void *) (((char *) (&D_80054680)) + (i * 0xE58));
+			D_80054668[i] = ptr;
 			return ptr;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C6F4_D2F4.s")
-#endif
 
 void func_8000C764_D364(s32 arg0) {
 	D_80054668[(arg0 - (s32)&D_80054680) / 0xE58] = 0;
@@ -161,28 +160,26 @@ void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C81C_D41C.s")
 
+// https://decomp.me/scratch/ePgS2
 #ifdef NON_MATCHING
-void func_8000CC3C_D83C(AnimChannelState *arg0, s32 arg1) {
-    s16 sp48[3];
-    s32 sp3C[3];
-    s32 temp_a3;
-    s32 var_s0;
-
-    var_s0 = 1;
-    if (arg1 != 1) {
-        do {
-            temp_a3 = D_8005BB38;
-            sp3C[0] = (s32)(arg0[var_s0].unk8 * 65536.0f);
-            sp3C[1] = (s32)(arg0[var_s0].unkC * 65536.0f);
-            sp3C[2] = (s32)(arg0[var_s0].unk10 * 65536.0f);
-            sp48[0] = arg0[var_s0].unk2 * 8;
-            sp48[1] = arg0[var_s0].unk4 * 8;
-            sp48[2] = arg0[var_s0].unk0 * 8;
-            D_8005BB38 = temp_a3 + 0x40;
-            func_8000C81C_D41C(sp3C, sp48, 0, temp_a3);
-            var_s0 = (var_s0 + 1) & 0xFF;
-        } while (arg1 != var_s0);
-    }
+void func_8000CC3C_D83C(AnimChannelState *arg0, s32 arg1)
+{
+  u8 var_s0;
+  s16 sp48[3];
+  s32 sp3C[3];
+  s32 val;
+  for (var_s0 = 1; arg1 != var_s0; var_s0++)
+	{
+	  sp3C[0] = arg0[var_s0].unk8 * 65536.0f;
+	  sp3C[1] = arg0[var_s0].unkC * 65536.0f;
+	  sp3C[2] = arg0[var_s0].unk10 * 65536.0f;
+	  sp48[0] = arg0[var_s0].unk2 * 8;
+	  sp48[1] = arg0[var_s0].unk4 * 8;
+	  sp48[2] = arg0[var_s0].unk0 * 8;
+		val = D_8005BB38;
+		D_8005BB38 = val + 0x40;
+	  func_8000C81C_D41C(sp3C, sp48, 0, val);
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CC3C_D83C.s")

@@ -342,6 +342,7 @@ s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask)
 	}
 }
 
+// https://decomp.me/scratch/TZvk8
 #ifdef NON_MATCHING
 void func_800035D8_41D8(s16 arg0) {
 	if (!(currentControllerStates[0].button & 0x10)) {
