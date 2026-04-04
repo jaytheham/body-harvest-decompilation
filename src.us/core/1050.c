@@ -130,36 +130,35 @@ void func_800015B4_21B4(s32 arg0, s32 arg1) {
 #endif
 
 #ifdef NON_MATCHING
-s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1) {
-    u8 *ptr;
-    u8 version;
-    s32 stored_checksum;
-    s32 computed_checksum;
-    s32 i;
-
-    ptr = (u8*)&D_800431C0 + arg0;
-    version = ptr[0];
-    if (version != 0x1C) {
-        osSyncPrintf(&D_8003685C_3745C, version);
-        return 0;
-    }
-    stored_checksum = ((ptr[3] << 8) + ptr[2]) & 0xFFFF;
-    ptr += 4;
-    computed_checksum = 0;
-    i = 0;
-    if (arg1 > 0) {
-        do {
-            i = (i + 1) & 0xFFFF;
-            computed_checksum = (computed_checksum + *ptr) & 0xFFFF;
-            ptr++;
-        } while (i < arg1);
-    }
-    if (computed_checksum != stored_checksum) {
-        osSyncPrintf(&D_80036870_37470, arg1, stored_checksum);
-        return 0;
-    }
-    return 1;
+s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
+{
+  u8 *ptr;
+  u8 version;
+  s32 stored_checksum;
+  s32 computed_checksum;
+  s32 i;
+  ptr = ((u8 *) (&D_800431C0)) + arg0;
+  version = ptr[0];
+  if (version != 0x1C)
+  {
+	osSyncPrintf(&D_8003685C_3745C, version);
+	return 0;
+  }
+  stored_checksum = ((ptr[3] << 8) + ptr[2]) & 0xFFFF;
+  ptr += 4;
+  computed_checksum = 0;
+ for (i = 0;i < arg1;i = (i + 1) & 0xFFFF){
+	  computed_checksum = (computed_checksum + (*ptr)) & 0xFFFF;
+	  ptr++;
+  }
+  if (computed_checksum != stored_checksum)
+  {
+	osSyncPrintf(&D_80036870_37470, arg1, stored_checksum);
+	return 0;
+  }
+  return 1;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/validateSaveVersionAndChecksum.s")
 #endif
@@ -174,37 +173,37 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1) {
 
 #ifdef NON_MATCHING
 void func_800020E0_2CE0(s32 arg0, s32 arg1) {
-    s32 srcOff = arg0 * 0x7A + 0x53;
-    s32 srcIdx = srcOff + 1;
-    u8 *srcPtr1 = &D_800431C0 + srcIdx;
-    u8 *sp = &D_800431C0 + srcIdx + 1;
-    s32 dstBase = arg1 * 0x7A;
-    s32 dstOff = dstBase + 0x53;
-    s32 dstIdx = dstOff + 1;
-    u8 *dstPtr1 = &D_800431C0 + dstIdx;
-    u8 *dp = &D_800431C0 + dstIdx + 1;
+	s32 srcOff = arg0 * 0x7A + 0x53;
+	s32 srcIdx = srcOff + 1;
+	u8 *srcPtr1 = &D_800431C0 + srcIdx;
+	u8 *sp = &D_800431C0 + srcIdx + 1;
+	s32 dstBase = arg1 * 0x7A;
+	s32 dstOff = dstBase + 0x53;
+	s32 dstIdx = dstOff + 1;
+	u8 *dstPtr1 = &D_800431C0 + dstIdx;
+	u8 *dp = &D_800431C0 + dstIdx + 1;
 
-    (&D_800431C0)[dstOff] = (&D_800431C0)[srcOff];
-    *dstPtr1 = *srcPtr1;
+	(&D_800431C0)[dstOff] = (&D_800431C0)[srcOff];
+	*dstPtr1 = *srcPtr1;
 
-    arg0 = 2;
-    arg1 = 0x76;
-    do {
-        arg0 += 4;
-        dp += 4;
-        dp[-4] = sp[0];
-        dp[-3] = sp[1];
-        sp += 4;
-        dp[-2] = sp[-2];
-        dp[-1] = sp[-1];
-        continue;
-    } while (arg0 != arg1);
+	arg0 = 2;
+	arg1 = 0x76;
+	do {
+		arg0 += 4;
+		dp += 4;
+		dp[-4] = sp[0];
+		dp[-3] = sp[1];
+		sp += 4;
+		dp[-2] = sp[-2];
+		dp[-1] = sp[-1];
+		continue;
+	} while (arg0 != arg1);
 
-    func_800015B4_21B4(dstBase + 0x4F, 0x76);
-    func_800015B4_21B4(0, 0x1B9);
-    if (D_80047608 != 0) {
-        osEepromLongWrite(&D_80043388, 0, &D_800431C0, 0x1BD);
-    }
+	func_800015B4_21B4(dstBase + 0x4F, 0x76);
+	func_800015B4_21B4(0, 0x1B9);
+	if (D_80047608 != 0) {
+		osEepromLongWrite(&D_80043388, 0, &D_800431C0, 0x1BD);
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800020E0_2CE0.s")
@@ -344,81 +343,81 @@ s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask)
 
 #ifdef NON_MATCHING
 void func_800035D8_41D8(s16 arg0) {
-    if (!(currentControllerStates[0].button & 0x10)) {
-        s8 temp_v0 = D_800475B8.stick_x;
-        Unk80047588 *var_v1 = (Unk80047588 *)&D_800475B8;
-    loop:
-        temp_v0 = var_v1->stick_x;
-        if (arg0 < temp_v0) {
-            var_v1->stick_x = (s8)(temp_v0 - arg0);
-        } else if (temp_v0 < -arg0) {
-            var_v1->stick_x = (s8)(temp_v0 + arg0);
-        } else {
-            var_v1->stick_x = 0;
-        }
-        temp_v0 = var_v1->stick_y;
-        if (arg0 < temp_v0) {
-            var_v1->stick_y = (s8)(temp_v0 - arg0);
-        } else if (temp_v0 < -arg0) {
-            var_v1->stick_y = (s8)(temp_v0 + arg0);
-        } else {
-            var_v1->stick_y = 0;
-        }
-        var_v1++;
-        if (var_v1 != (Unk80047588 *)&D_800475D0) goto loop;
-    }
+	if (!(currentControllerStates[0].button & 0x10)) {
+		s8 temp_v0 = D_800475B8.stick_x;
+		Unk80047588 *var_v1 = (Unk80047588 *)&D_800475B8;
+	loop:
+		temp_v0 = var_v1->stick_x;
+		if (arg0 < temp_v0) {
+			var_v1->stick_x = (s8)(temp_v0 - arg0);
+		} else if (temp_v0 < -arg0) {
+			var_v1->stick_x = (s8)(temp_v0 + arg0);
+		} else {
+			var_v1->stick_x = 0;
+		}
+		temp_v0 = var_v1->stick_y;
+		if (arg0 < temp_v0) {
+			var_v1->stick_y = (s8)(temp_v0 - arg0);
+		} else if (temp_v0 < -arg0) {
+			var_v1->stick_y = (s8)(temp_v0 + arg0);
+		} else {
+			var_v1->stick_y = 0;
+		}
+		var_v1++;
+		if (var_v1 != (Unk80047588 *)&D_800475D0) goto loop;
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800035D8_41D8.s")
 #endif
 
 s16 func_80003680_4280(f32 arg0) {
-    f32 absval;
+	f32 absval;
 
-    if (-arg0 < arg0) {
-        absval = arg0;
-    } else {
-        absval = -arg0;
-    }
-    if ((f64)absval > 1.0) {
-        return 0;
-    }
-    if (arg0 < 0.0f) {
-        return (s16)(-D_8003D000_3DC00[(s32)(-arg0 * 1024.0f)]);
-    }
-    return D_8003D000_3DC00[(s32)(arg0 * 1024.0f)];
+	if (-arg0 < arg0) {
+		absval = arg0;
+	} else {
+		absval = -arg0;
+	}
+	if ((f64)absval > 1.0) {
+		return 0;
+	}
+	if (arg0 < 0.0f) {
+		return (s16)(-D_8003D000_3DC00[(s32)(-arg0 * 1024.0f)]);
+	}
+	return D_8003D000_3DC00[(s32)(arg0 * 1024.0f)];
 }
 
 s16 func_80003740_4340(f32 arg0) {
-    s32 var_v1;
+	s32 var_v1;
 
-    var_v1 = 1;
-    if (arg0 < 0.0f) {
-        arg0 = -arg0;
-        var_v1 = -1;
-    }
-    if ((f64) arg0 > 1.0) {
-        arg0 = (f32)(1.0 / (f64)arg0);
-        return (s16) ((0x4000 - D_8003D800_3E400[(s32) (arg0 * 1024.0f)]) * var_v1);
-    }
-    if ((f64) arg0 == 1.0) {
-        return (s16) (var_v1 << 0xD);
-    }
-    return (s16) (D_8003D800_3E400[(s32) (arg0 * 1024.0f)] * var_v1);
+	var_v1 = 1;
+	if (arg0 < 0.0f) {
+		arg0 = -arg0;
+		var_v1 = -1;
+	}
+	if ((f64) arg0 > 1.0) {
+		arg0 = (f32)(1.0 / (f64)arg0);
+		return (s16) ((0x4000 - D_8003D800_3E400[(s32) (arg0 * 1024.0f)]) * var_v1);
+	}
+	if ((f64) arg0 == 1.0) {
+		return (s16) (var_v1 << 0xD);
+	}
+	return (s16) (D_8003D800_3E400[(s32) (arg0 * 1024.0f)] * var_v1);
 }
 
 s16 func_80003824_4424(f32 arg0, f32 arg1) {
-    s32 sign;
+	s32 sign;
 
-    if (arg0 == 0.0f) {
-        sign = (arg1 < 0.0f) ? -1 : 1;
-        return (s16) (sign << 0xE);
-    }
-    sign = (arg0 < 0.0f) ? -1 : 1;
-    if (sign == 1) {
-        return func_80003740_4340(arg1 / arg0);
-    }
-    return (s16) (func_80003740_4340(arg1 / arg0) + 0x8000);
+	if (arg0 == 0.0f) {
+		sign = (arg1 < 0.0f) ? -1 : 1;
+		return (s16) (sign << 0xE);
+	}
+	sign = (arg0 < 0.0f) ? -1 : 1;
+	if (sign == 1) {
+		return func_80003740_4340(arg1 / arg0);
+	}
+	return (s16) (func_80003740_4340(arg1 / arg0) + 0x8000);
 }
 
 void setRandomSeed(s32 arg0) {
