@@ -194,7 +194,33 @@ s32 func_800056D0_62D0(s16 arg0, s16 arg1) {
     return ((u32)*p >> 0xF) ? 0 : D_8003E460_3F060[(((u32)*p << 0x16) >> 0x1C) | (((D_8021F250[((arg1 >> 10) << 6) + (arg0 >> 10)] & 0xF) + (currentLevel * 0xC) - 0xC) << 4)];
 }
 
+#ifdef NON_MATCHING
+void func_8000577C_637C(void) {
+    s32 var_v0;
+    s32 temp_hi;
+
+	var_v0 = D_800315D4_321D4 + 0xA;
+	if (var_v0 >= 0x12C) {
+        var_v0 = 0;
+    }
+    temp_hi = var_v0 % 0x12C;
+    if (temp_hi < 0x64) {
+        D_800315D4_W = var_v0;
+        drawText(&D_80036D68_37968, 0xFA - var_v0, var_v0 + 0x96, 0x96);
+        return;
+    }
+    if (temp_hi < 0xC8) {
+        D_800315D4_W = var_v0;
+        drawText(&D_80036D6C_3796C, 0x96, 0x15E - var_v0, var_v0 + 0x32);
+        return;
+    }
+    D_800315D4_W = var_v0;
+    drawText(&D_80036D70_37970, var_v0 - 0x32, 0x96, 0x1C2 - var_v0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000577C_637C.s")
+#endif
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005844_6444.s")
 

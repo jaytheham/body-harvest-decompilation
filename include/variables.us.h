@@ -114,6 +114,11 @@ extern f64 D_80037138_37D38;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
 extern char D_8003685C_3745C; /* osSyncPrintf format string - save version mismatch */
 extern char D_80036870_37470; /* osSyncPrintf format string - save checksum mismatch */
+extern char D_80036D68_37968;
+extern char D_80036D6C_3796C;
+extern char D_80036D70_37970;
+extern s32 D_800315D4_321D4;
+extern s32 D_800315D4_W;
 extern char D_80036D74_37974; /* osSyncPrintf format string - callback table full warning */
 extern char D_80036DA4_379A4;
 extern char D_80036DBC_379BC;
