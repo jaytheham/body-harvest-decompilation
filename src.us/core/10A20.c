@@ -18,23 +18,23 @@ void func_8000FE20_10A20(void) {
 #endif
 
 void func_8000FE50_10A50(void *arg0) {
-    osRecvMesg(&D_8006A8D0, &D_80068038, 1);
-    osViSetSpecialFeatures(0x40);
-    func_8000F618_10218();
-    D_80052ACA = 3;
-    func_800056A8_62A8();
-    func_800056A8_62A8();
-    osRecvMesg(&D_8006A8F0, &D_80068038, 1);
-    func_80001984_2584();
-    osSyncPrintf(&D_80037764_38364, 0x28928);
-    loadFrontendData();
-    func_80070270(1);
+	osRecvMesg(&D_8006A8D0, &D_80068038, 1);
+	osViSetSpecialFeatures(0x40);
+	func_8000F618_10218();
+	D_80052ACA = 3;
+	func_800056A8_62A8();
+	func_800056A8_62A8();
+	osRecvMesg(&D_8006A8F0, &D_80068038, 1);
+	func_80001984_2584();
+	osSyncPrintf(&D_80037764_38364, 0x28928);
+	loadFrontendData();
+	func_80070270(1);
 }
 
 void __osSiCreateAccessQueue(void) {
-    __osSiAccessQueueEnabled = 1;
-    osCreateMesgQueue(&__osSiAccessQueue, &siacs_bss_0000, 1);
-    osSendMesg(&__osSiAccessQueue, 0, 0);
+	__osSiAccessQueueEnabled = 1;
+	osCreateMesgQueue(&__osSiAccessQueue, &siacs_bss_0000, 1);
+	osSendMesg(&__osSiAccessQueue, 0, 0);
 }
 
 void func_8000FF40_10B40(void) {
@@ -45,5 +45,5 @@ void func_8000FF40_10B40(void) {
 }
 
 void __osSiRelAccess(void) {
-    osSendMesg(&__osSiAccessQueue, 0, 0);
+	osSendMesg(&__osSiAccessQueue, 0, 0);
 }
