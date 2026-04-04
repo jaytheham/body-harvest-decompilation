@@ -444,7 +444,28 @@ void func_800078E4_84E4(s32 arg0, s32 *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007A20_8620.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007C78_8878.s")
+void func_80007C78_8878(u8 *arg0) {
+    s32 i;
+    u8 *ptr;
+
+    i = arg0[3];
+    ptr = &D_8004D348[arg0[2] * 9];
+    osSyncPrintf(&D_80036FE4_37BE4);
+    if (i--) {
+        do {
+            u8 *p = ptr;
+            ptr += 9;
+            func_80007A20_8620(p);
+            if (i >= 2) {
+                osSyncPrintf(&D_80036FF0_37BF0);
+            }
+            if (i == 1) {
+                osSyncPrintf(&D_80036FF4_37BF4);
+            }
+        } while (i--);
+    }
+    osSyncPrintf(&D_80036FFC_37BFC);
+}
 
 s32 func_80007D44_8944(s32 arg0) {
     s16 sp1E;

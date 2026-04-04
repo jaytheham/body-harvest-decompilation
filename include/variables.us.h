@@ -222,6 +222,7 @@ extern s32 D_8004D158;
 extern u8 D_8004D160;
 extern u8 D_8004D1B1;
 extern u8 D_8004D1B9;
+extern u8 D_8004D348[];
 extern Unk8004D1C8 D_8004D1C8[];
 extern u8 D_80047F93;
 extern AlienInstance D_8004D0F8[]; // alien array base
@@ -527,6 +528,10 @@ extern char D_80141168[];
 extern char D_80141184[];
 extern char D_801411F0_1501A0[];
 extern char D_8014121C_1501CC[];
+extern char D_80036FE4_37BE4; /* osSyncPrintf format string */
+extern char D_80036FF0_37BF0; /* osSyncPrintf format string */
+extern char D_80036FF4_37BF4; /* osSyncPrintf format string */
+extern char D_80036FFC_37BFC; /* osSyncPrintf format string */
 extern char D_80037000_37C00; /* osSyncPrintf format string */
 extern char D_80037764_38364; /* osSyncPrintf format string */
 extern char D_801417C0_150770; /* osSyncPrintf format string - alien action table full warning */
