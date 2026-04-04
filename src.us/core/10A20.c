@@ -31,7 +31,11 @@ void func_8000FE50_10A50(void *arg0) {
     func_80070270(1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/10A20/__osSiCreateAccessQueue.s")
+void __osSiCreateAccessQueue(void) {
+    __osSiAccessQueueEnabled = 1;
+    osCreateMesgQueue(&__osSiAccessQueue, &siacs_bss_0000, 1);
+    osSendMesg(&__osSiAccessQueue, 0, 0);
+}
 
 void func_8000FF40_10B40(void) {
 	if (__osSiAccessQueueEnabled == 0) {
@@ -40,4 +44,6 @@ void func_8000FF40_10B40(void) {
 	osRecvMesg(&__osSiAccessQueue, &D_80068038, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/10A20/__osSiRelAccess.s")
+void __osSiRelAccess(void) {
+    osSendMesg(&__osSiAccessQueue, 0, 0);
+}

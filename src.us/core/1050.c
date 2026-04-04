@@ -129,7 +129,40 @@ void func_800015B4_21B4(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800015B4_21B4.s")
 #endif
 
+#ifdef NON_MATCHING
+s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1) {
+    u8 *ptr;
+    u8 version;
+    s32 stored_checksum;
+    s32 computed_checksum;
+    s32 i;
+
+    ptr = (u8*)&D_800431C0 + arg0;
+    version = ptr[0];
+    if (version != 0x1C) {
+        osSyncPrintf(&D_8003685C_3745C, version);
+        return 0;
+    }
+    stored_checksum = ((ptr[3] << 8) + ptr[2]) & 0xFFFF;
+    ptr += 4;
+    computed_checksum = 0;
+    i = 0;
+    if (arg1 > 0) {
+        do {
+            i = (i + 1) & 0xFFFF;
+            computed_checksum = (computed_checksum + *ptr) & 0xFFFF;
+            ptr++;
+        } while (i < arg1);
+    }
+    if (computed_checksum != stored_checksum) {
+        osSyncPrintf(&D_80036870_37470, arg1, stored_checksum);
+        return 0;
+    }
+    return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/validateSaveVersionAndChecksum.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800016D8_22D8.s")
 

@@ -6,6 +6,15 @@ typedef struct {
 } BitFlags64; /* size = 0x08 */
 
 typedef struct {
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ s32 unk4;
+	/* 0x08 */ s32 outputSize;
+	/* 0x0C */ s32 offsetsRelOffset;
+	/* 0x10 */ s32 literalsRelOffset;
+	/* 0x14 */ s32 controlWords[1];
+} LzssHeader; /* size = 0x18 */
+
+typedef struct {
 	/* 0x00 */ s8 unk0;
 	/* 0x01 */ s8 unk1;
 } Unk8013CA; /* size = 0x02 */

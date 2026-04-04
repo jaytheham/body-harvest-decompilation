@@ -112,6 +112,9 @@ extern u64 D_80035610;
 extern char D_80037100_37D00[];
 extern f64 D_80037138_37D38;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
+extern char D_8003685C_3745C; /* osSyncPrintf format string - save version mismatch */
+extern char D_80036870_37470; /* osSyncPrintf format string - save checksum mismatch */
+extern char D_80036D74_37974; /* osSyncPrintf format string - callback table full warning */
 extern char D_80036DA4_379A4;
 extern char D_80036DBC_379BC;
 extern u8 D_80036C64[];
@@ -222,6 +225,7 @@ extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
 extern s32 D_8004DC68[4];
+extern s32 D_8004DC74; /* = D_8004DC68[3] */
 extern VehicleInstance vehicleInstances[]; // 8004DCD0
 extern Unk80050ADA D_80050ADA[]; // 0x80050ADA
 extern u8 D_80050ADE[];
@@ -902,8 +906,13 @@ extern u8 D_800A56EC[];
 extern u8 D_800A56F0[];
 extern u16 D_800FCB1E;
 extern s32 D_800FCF4C;
+extern u8 D_3767C0[];
 extern u8 D_8025CCC0[];
 extern u8 D_80260500[];
+extern u8 D_801F1210[];
+extern u8 D_801FEA10[];
+extern u8 D_80264B00[];
+extern u8 D_80265880[];
 extern s16 D_8014ED40;
 extern s16 D_8014ED42;
 extern s16 D_8014ED44;
@@ -997,6 +1006,7 @@ extern u8 D_800E6F00[];
 extern s32 D_800E6A68;
 extern s16 D_800E6A86;
 extern VehicleInstance D_800E6A78;
+extern s32 gzip_data_0000;
 extern Unk8009E8E0 D_8009E8E0_1869A0[];
 extern Unk8009E8DC D_8009E8DC_18699C[];
 extern f64 D_800A4D90;
@@ -1107,6 +1117,7 @@ extern u16 D_80034480;
 extern s32 D_8003447C;
 extern s32 D_80034484;
 extern s32 D_80034488;
+extern s32 D_80034494;
 extern s32 D_8003449C;
 extern s32 D_800344B4[]; // pointers to strings for names of many things, each entry is actually 2x s32 in size, first is pointer to string
 extern void *D_8006C550;
@@ -1591,6 +1602,7 @@ extern OSMesg D_80068038;
 extern OSMesg D_800314CC_320CC;
 extern OSMesgQueue __osSiAccessQueue;
 extern s32 __osSiAccessQueueEnabled;
+extern OSMesg siacs_bss_0000;
 extern OSMesgQueue D_80068040;
 extern OSMesg D_80068060[];
 extern OSMesgQueue D_8006A8B0;
@@ -1600,7 +1612,7 @@ extern s16 D_8006C558;
 extern s16 D_8006C55C;
 extern u16 D_8006C55E;
 extern s16 D_8006C564;
-extern s16 D_8006C566;
+extern u16 D_8006C566;
 extern s16 D_8006C568;
 extern s16 D_8006C56A;
 extern s8 D_8006C56C;
@@ -1734,5 +1746,6 @@ extern f32 D_80031D50_32950;
 extern f32 D_80031D54_32954;
 extern f32 D_80031D58_32958;
 extern f32 D_80031D5C_3295C;
+extern f32 D_80031D60_32960;
 
 #endif
