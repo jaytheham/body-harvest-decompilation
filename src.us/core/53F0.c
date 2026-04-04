@@ -158,7 +158,15 @@ void func_80004D38_5938(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004DDC_59DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004F64_5B64.s")
+void func_80004F64_5B64(void) {
+    gDPPipeSync(D_8005BB2C++);
+    gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
+    gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, &D_3DA800);
+    gDPSetFillColor(D_8005BB2C++, 0xFFFCFFFC);
+    gDPFillRectangle(D_8005BB2C++, 0, 0, D_80068084 - 1, D_80068088 - 1);
+    gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+    gDPPipeSync(D_8005BB2C++);
+}
 
 void func_8000505C_5C5C(void) {
 	gDPFullSync(D_8005BB2C++);

@@ -348,6 +348,7 @@ extern s32 D_80031CE4_328E4[];
 extern s8 D_80031D1C_3291C[];
 extern s32 D_80031D20_32920[];
 extern s32 D_8006ABA8;
+extern u16 D_3DA800;
 extern s32 D_80068084;
 extern s32 D_80068088;
 extern f32 D_80068090;
