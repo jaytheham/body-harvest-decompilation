@@ -173,7 +173,27 @@ void func_80011674_12274(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011674_12274.s")
 #endif
 
+#ifdef NON_MATCHING
+void loadLevelCode(u8 arg0) {
+    s32 level;
+
+    level = arg0;
+    osSyncPrintf(&D_80038000_38C00, level);
+    func_800101F0_10DF0(D_80031C40_32840[level - 1], D_80031C18_32818[level - 1], D_80031C2C_3282C[level - 1] - D_80031C18_32818[level - 1]);
+    osSyncPrintf(&D_80038018_38C18, D_80031C40_32840[level - 1], D_80031C18_32818[level - 1], D_80031C2C_3282C[level - 1] - D_80031C18_32818[level - 1]);
+    {
+        s32 sizeCode;
+        s32 loadAddr;
+        sizeCode = D_80031C50_32850[level] - D_80031C40_32840[level - 1];
+        loadAddr = sizeCode + D_80031C40_32840[level - 1];
+        D_8006AA68 = loadAddr;
+        osSyncPrintf(&D_8003802C_38C2C, loadAddr);
+    }
+    __printfunc = (void (*)(s32, s32))D_8006AA68;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelCode.s")
+#endif
 
 void func_800117D8_123D8(void) {
     osInvalICache(func_80070270, (u8 *)&D_8008DDF0 - func_80070270);
