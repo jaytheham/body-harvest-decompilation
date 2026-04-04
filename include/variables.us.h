@@ -90,7 +90,8 @@ extern Unk80031424 D_80031474;
 extern s32 D_8003147C;
 extern s32 D_800314A0;
 extern s32 D_800314A4;
-extern s8 D_800314C4; // maxHumanDeathsAllowed?
+extern s8 D_800314C4;
+extern s8 D_80031720_32320[]; // maxHumanDeathsAllowed?
 extern OSMesg D_800314CC;
 extern u8 D_80031B58_32758;
 extern s32 D_80031B84;
