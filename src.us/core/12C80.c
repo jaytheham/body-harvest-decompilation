@@ -952,7 +952,27 @@ void func_8001A130_1AD30() {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A160_1AD60.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001A37C_1AF7C.s")
+s32 func_8001A37C_1AF7C(char *arg0) {
+    s32 var_s0;
+    s32 sp20;
+
+    sp20 = (u8) arg0[1];
+    var_s0 = 0;
+    osSyncPrintf(&D_800385E0_391E0, sp20);
+    if (sp20 >= 0x30 && sp20 < 0x3A) {
+        var_s0 = (sp20 * 0xA - 0x1E0) & 0xFF;
+    } else {
+        osSyncPrintf(&D_800385E4_391E4, sp20);
+    }
+    sp20 = (u8) arg0[2];
+    osSyncPrintf(&D_80038614_39214, sp20);
+    if (sp20 >= 0x30 && sp20 < 0x3A) {
+        var_s0 = (var_s0 + sp20 - 0x30) & 0xFF;
+    } else {
+        osSyncPrintf(&D_80038618_39218, sp20);
+    }
+    return var_s0;
+}
 
 void myfree(void) {
     gzip_data_0000 = 0;

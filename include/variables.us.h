@@ -1578,6 +1578,10 @@ extern char D_80038198_38D98;
 extern char D_80038424_39024;
 extern char D_800384E0_390E0;
 extern char D_80038500_39100;
+extern char D_800385E0_391E0; /* osSyncPrintf format string */
+extern char D_800385E4_391E4; /* osSyncPrintf format string */
+extern char D_80038614_39214; /* osSyncPrintf format string */
+extern char D_80038618_39218; /* osSyncPrintf format string */
 
 /* core/FB00 */
 extern u8 D_8003FB20[];
