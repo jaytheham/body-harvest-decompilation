@@ -244,7 +244,21 @@ s32 func_80005B30_6730(void) {
 	return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005B84_6784.s")
+void func_80005B84_6784(void) {
+    if (D_80047734 != 0) {
+        func_80005844_6444(D_80047738, D_80047739, D_8004773A, (u8)D_8004772C);
+        func_8001593C_1653C((void *)((0xFF - D_8004772C) << 7));
+        return;
+    }
+    if (D_8004772C != 0) {
+        func_80005844_6444(D_80047738, D_80047739, D_8004773A, (u8)D_8004772C);
+        func_8001593C_1653C((void *)((0xFF - D_8004772C) << 7));
+        D_8004772C = D_8004772C - D_80047730;
+        if (D_8004772C <= 0) {
+            D_8004772C = 0;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005C5C_685C.s")
 

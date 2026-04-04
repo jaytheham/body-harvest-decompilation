@@ -156,9 +156,9 @@ extern s16 D_80047722;
 extern s32 D_8004772C;
 extern s32 D_80047730;
 extern s32 D_80047734;
-extern s8 D_80047738;
-extern s8 D_80047739;
-extern s8 D_8004773A;
+extern u8 D_80047738;
+extern u8 D_80047739;
+extern u8 D_8004773A;
 extern Unk8004773C D_8004773C;
 extern Unk8004773C D_80047740;
 extern u8 D_80047743; // World fog red value
