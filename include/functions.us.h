@@ -70,6 +70,7 @@ s32 func_80070270(s32 arg0);
 void func_8000F618_10218(void);
 void func_80001984_2584(void);
 void loadFrontendData(void);
+void func_8001A460_1B060(LzssHeader *data, u8 *out);
 // loader.c functions - prototype-less to preserve implicit int behavior for matching functions
 s32 func_8001032C_10F2C();
 void func_8000F1E8_FDE8(void);
