@@ -161,7 +161,32 @@ void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C81C_D41C.s")
 
+#ifdef NON_MATCHING
+void func_8000CC3C_D83C(AnimChannelState *arg0, s32 arg1) {
+    s16 sp48[3];
+    s32 sp3C[3];
+    s32 temp_a3;
+    s32 var_s0;
+
+    var_s0 = 1;
+    if (arg1 != 1) {
+        do {
+            temp_a3 = D_8005BB38;
+            sp3C[0] = (s32)(arg0[var_s0].unk8 * 65536.0f);
+            sp3C[1] = (s32)(arg0[var_s0].unkC * 65536.0f);
+            sp3C[2] = (s32)(arg0[var_s0].unk10 * 65536.0f);
+            sp48[0] = arg0[var_s0].unk2 * 8;
+            sp48[1] = arg0[var_s0].unk4 * 8;
+            sp48[2] = arg0[var_s0].unk0 * 8;
+            D_8005BB38 = temp_a3 + 0x40;
+            func_8000C81C_D41C(sp3C, sp48, 0, temp_a3);
+            var_s0 = (var_s0 + 1) & 0xFF;
+        } while (arg1 != var_s0);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CC3C_D83C.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8000CD54_D954(void *arg0, AnimChannelState *arg1, u8 arg2) {
