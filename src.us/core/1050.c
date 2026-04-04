@@ -129,6 +129,7 @@ void func_800015B4_21B4(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800015B4_21B4.s")
 #endif
 
+// https://decomp.me/scratch/Y6mYv
 #ifdef NON_MATCHING
 s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 {

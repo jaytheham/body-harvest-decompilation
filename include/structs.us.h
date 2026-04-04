@@ -14,6 +14,8 @@ typedef struct {
 	/* 0x14 */ s32 controlWords[1];
 } LzssHeader; /* size = 0x18 */
 
+struct Unk80013E44_arg0 { s32 unk0; s32 unk4; s32 unk8; };
+
 typedef struct {
 	/* 0x00 */ s8 unk0;
 	/* 0x01 */ s8 unk1;

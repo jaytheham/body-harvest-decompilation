@@ -1,40 +1,42 @@
 #include <ultra64.h>
 #include "common.h"
 
-struct Unk80013E44_arg0 { s32 unk0; s32 unk4; s32 unk8; };
-
+// https://decomp.me/scratch/LNcQK
 #ifdef NON_MATCHING
-void func_80012080_12C80(s32 arg0) {
-	s32 *v0;
-	s32 *v1;
-
-	if (D_8006AB88 == 0) {
-		return;
+void func_80012080_12C80(s32 arg0)
+{
+  s32 *v0;
+  s32 *v1;
+  if (D_8006AB88 == 0)
+  {
+	return;
+  }
+  if (arg0 == -1)
+  {
+	v0 = D_8006AAD0; v1 = D_8006ABB8;
+	arg0 = 0;
+	do
+	{
+	  v0[1] = arg0 + 1;
+	  v0[2] = arg0 + 2;
+	  v0[3] = arg0 + 3;
+	  v0[0] = arg0;
+	  arg0 += 4;
+	  v1[1] = 0;
+	  v1[2] = 0;
+	  v1[3] = 0;
+	  v0 += 4;
+	  v1 += 4;
+	  v1[-4] = 0;
+	  arg0++;
+	  arg0--;
 	}
-	if (arg0 == -1) {
-		v0 = D_8006AAD0;
-		v1 = D_8006ABB8;
-		arg0 = 0;
-		do {
-			v0[1] = arg0 + 1;
-			v0[2] = arg0 + 2;
-			v0[3] = arg0 + 3;
-			v0[0] = arg0;
-			arg0 += 4;
-			v1[1] = 0;
-			v1[2] = 0;
-			v1[3] = 0;
-			v0 += 4;
-			v1 += 4;
-			v1[-4] = 0;
-			arg0++;
-			arg0--;
-		} while (arg0 != 0x10);
-		D_80031CA0_328A0 = 0;
-		return;
-	}
-	D_8006AAD0[arg0] = arg0;
-	D_80031CA0_328A0 -= 1;
+	while (arg0 != 0x10);
+	D_80031CA0_328A0 = 0;
+	return;
+  }
+  D_8006AAD0[arg0] = arg0;
+  D_80031CA0_328A0 -= 1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012080_12C80.s")
@@ -339,36 +341,38 @@ void func_80013314_13F14(void) {
 	D_80031CA4 = -1;
 }
 
-#ifdef NON_MATCHING
-void func_80013324_13F24(void) {
+void func_80013324_13F24(void)
+{
 	s8 idx;
 	s8 arr_val;
-
-	if (D_8006AB88 == 0) {
+	if (D_8006AB88 == 0)
+	{
 		return;
 	}
-	if (D_80031CA4 != 3) {
-		idx = (s8)(D_80033C6C_3486C % 15);
+	if (D_80031CA4 != 3)
+	{
+		arr_val = D_80033C6C_3486C % 15;
+		idx = (s8) arr_val;
 		arr_val = D_80033C5C_3485C[idx];
 		D_80033C6C_W = D_80033C6C_3486C + 1;
 		func_80015C94_16894(arr_val, 3);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013324_13F24.s")
-#endif
 
+// https://decomp.me/scratch/wNzpE
 #ifdef NON_MATCHING
-void func_80013398_13F98(void) {
-	s8 idx;
-	s8 arr_val;
-
-	if (D_80031CA4 != 4) {
-		idx = (s8)(D_80033C80_34880 % 16);
-		arr_val = D_80033C70_34870[idx] + 0xF;
-		D_80033C80_W = D_80033C80_34880 + 1;
-		func_80015C94_16894(arr_val, 4);
-	}
+void func_80013398_13F98(void)
+{
+  s8 idx;
+  s8 arr_val;
+  if (D_80031CA4 != 4)
+  {
+	arr_val = (s8) (D_80033C80_34880 % 16);
+	idx = arr_val;
+	arr_val = D_80033C70_34870[idx] + 0xF;
+	D_80033C80_W = D_80033C80_34880 + 1;
+	func_80015C94_16894(arr_val, 4);
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013398_13F98.s")
@@ -465,6 +469,7 @@ void func_800136F0_142F0(void) {
 	}
 }
 
+// https://decomp.me/scratch/imH5M
 #ifdef NON_MATCHING
 void func_80013720_14320(void)
 {
@@ -474,7 +479,7 @@ void func_80013720_14320(void)
 	sp1F = D_80033C88_34888 % 4;
 	D_80033C88_W = D_80033C88_34888 + 1;
 	osSyncPrintf(&D_8003828C_38E8C, sp1F);
-	sp1F = *((&D_80033C84_34884) + sp1F) + 0x1F;
+	sp1F = D_80033C84_34884[sp1F] + 0x1F;
 	func_80015C94_16894(sp1F, 6);
   }
 }
@@ -541,15 +546,17 @@ s16 func_80013F64_14B64(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013FC4_14BC4.s")
 
+// https://decomp.me/scratch/QTO8a
 #ifdef NON_MATCHING
 void func_80014180_14D80(s8 arg0)
 {
+  int new_var;
   if (D_8006AB88)
   {
-	func_800153D8_15FD8(D_80033A68_34668[(currentLevel * 16) + (s8)(arg0 / 3.0f)]);
+	new_var = currentLevel * 16;
+	func_800153D8_15FD8(D_80033A68_34668[new_var + ((s8) (arg0 / 3.0f))]);
   }
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014180_14D80.s")
 #endif
@@ -765,20 +772,20 @@ void func_80017224_17E24(void) {
 	}
 }
 
+// https://decomp.me/scratch/n2aua
 #ifdef NON_MATCHING
 s16 func_800172E0_17EE0(u8 *arg0)
 {
   s32 count = 0;
   u8 *ptr = arg0;
-  if (((*arg0 != 0xA) && (*arg0 != 0)) && (*arg0 != 0x40))
+  int new_var;
+  new_var = 0x3B;
+  if ((((*arg0) != 0xA) && ((*arg0) != 0)) && ((*arg0) != 0x40))
   {
 	s32 c = ptr[count];
 	do
 	{
-	  if ((((c == 0x3B && arg0 != ptr) &&
-			(arg0 + 1 != ptr)) &&
-		   (arg0 + 2 != ptr)) &&
-		  (arg0 + 3 != ptr))
+	  if (((((c == new_var) && (arg0 != ptr)) && ((arg0 + 1) != ptr)) && ((arg0 + 2) != ptr)) && ((arg0 + 3) != ptr))
 	  {
 		count++;
 	  }
@@ -873,15 +880,12 @@ s32 func_80017B78_18778(void) {
 	return 0xFFFF;
 }
 
-#ifdef NON_MATCHING
-void func_80017BF8_187F8(u8 arg0) {
+void func_80017BF8_187F8(short arg0)
+{
 	s32 offset = (arg0 * 0x1600) & 0xFFFF;
-	func_800101F0_10DF0(&D_80265A80, ((s32) &D_3059BA0 & 0xFFFFFF) + offset + D_8F4960, 0x1400);
-	func_800101F0_10DF0(&D_80266E80, ((s32) &D_305AFA0 & 0xFFFFFF) + offset + D_8F4960, 0x200);
+	func_800101F0_10DF0(&D_80265A80, ((((s32) (&D_3059BA0)) & 0xFFFFFF) + offset) + D_8F4960, 0x1400);
+	func_800101F0_10DF0(&D_80266E80, ((((s32) (&D_305AFA0)) & 0xFFFFFF) + offset) + D_8F4960, 0x200);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017BF8_187F8.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017CA4_188A4.s")
 
