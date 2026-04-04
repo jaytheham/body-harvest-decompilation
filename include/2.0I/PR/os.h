@@ -890,7 +890,9 @@ extern void		osCreateViManager(OSPri);
 /* Timer interface */
 
 extern OSTime		osGetTime(void);
+#ifndef GAME_OSSETTIME_IMPL
 extern void		osSetTime(OSTime);
+#endif
 extern int		osSetTimer(OSTimer *, OSTime, OSTime,
 				   OSMesgQueue *, OSMesg);
 extern int		osStopTimer(OSTimer *);

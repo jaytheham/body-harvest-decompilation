@@ -172,7 +172,43 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_prepareToSaveGame.s")
 
+#ifdef NON_MATCHING
+void func_800020E0_2CE0(s32 arg0, s32 arg1) {
+    s32 srcOff = arg0 * 0x7A + 0x53;
+    s32 srcIdx = srcOff + 1;
+    u8 *srcPtr1 = &D_800431C0 + srcIdx;
+    u8 *sp = &D_800431C0 + srcIdx + 1;
+    s32 dstBase = arg1 * 0x7A;
+    s32 dstOff = dstBase + 0x53;
+    s32 dstIdx = dstOff + 1;
+    u8 *dstPtr1 = &D_800431C0 + dstIdx;
+    u8 *dp = &D_800431C0 + dstIdx + 1;
+
+    (&D_800431C0)[dstOff] = (&D_800431C0)[srcOff];
+    *dstPtr1 = *srcPtr1;
+
+    arg0 = 2;
+    arg1 = 0x76;
+    do {
+        arg0 += 4;
+        dp += 4;
+        dp[-4] = sp[0];
+        dp[-3] = sp[1];
+        sp += 4;
+        dp[-2] = sp[-2];
+        dp[-1] = sp[-1];
+        continue;
+    } while (arg0 != arg1);
+
+    func_800015B4_21B4(dstBase + 0x4F, 0x76);
+    func_800015B4_21B4(0, 0x1B9);
+    if (D_80047608 != 0) {
+        osEepromLongWrite(&D_80043388, 0, &D_800431C0, 0x1BD);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800020E0_2CE0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800021CC_2DCC.s")
 
@@ -353,7 +389,23 @@ s16 func_80003680_4280(f32 arg0) {
     return D_8003D000_3DC00[(s32)(arg0 * 1024.0f)];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003740_4340.s")
+s16 func_80003740_4340(f32 arg0) {
+    s32 var_v1;
+
+    var_v1 = 1;
+    if (arg0 < 0.0f) {
+        arg0 = -arg0;
+        var_v1 = -1;
+    }
+    if ((f64) arg0 > 1.0) {
+        arg0 = (f32)(1.0 / (f64)arg0);
+        return (s16) ((0x4000 - D_8003D800_3E400[(s32) (arg0 * 1024.0f)]) * var_v1);
+    }
+    if ((f64) arg0 == 1.0) {
+        return (s16) (var_v1 << 0xD);
+    }
+    return (s16) (D_8003D800_3E400[(s32) (arg0 * 1024.0f)] * var_v1);
+}
 
 s16 func_80003824_4424(f32 arg0, f32 arg1) {
     s32 sign;

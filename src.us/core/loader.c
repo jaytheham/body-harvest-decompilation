@@ -117,7 +117,32 @@ s32 func_800102EC_10EEC(s32 arg0, s32 arg1) {
 	return temp_v0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_8001032C_10F2C.s")
+s32 func_8001032C_10F2C(s32 arg0, s32 arg1, s32 arg2) {
+	s32 header[6];
+	s32 var_a2;
+
+	if (D_80068078 == 1) {
+		return 0;
+	}
+	func_80010228_10E28(arg1, header);
+	if (header[0] != 0x4D494F30) {
+		if (D_8006AA64 == 0xBABEFACE) {
+			osSyncPrintf(D_80037808);
+		}
+		return 0;
+	}
+	if (D_8006AA64 == 0xBABEFACE) {
+		osSyncPrintf(D_8003781C, header[1], header[2]);
+	}
+	var_a2 = header[1];
+	if (header[1] & 3) {
+		var_a2 = (header[1] - (header[1] & 3)) + 4;
+	}
+	func_800101F0_10DF0(arg2, arg1, var_a2);
+	func_8001A460_1B060(arg2, arg0);
+	D_8006AA60 = header[2];
+	return arg1 + var_a2;
+}
 
 s32 func_80010420_11020(s32 arg0, s32 arg1) {
 	return func_8001032C_10F2C(arg0, arg1, (s32)&D_802B2080);
@@ -173,7 +198,27 @@ void func_80011674_12274(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011674_12274.s")
 #endif
 
+#ifdef NON_MATCHING
+void loadLevelCode(u8 arg0) {
+    s32 level;
+
+    level = arg0;
+    osSyncPrintf(&D_80038000_38C00, level);
+    func_800101F0_10DF0(D_80031C40_32840[level - 1], D_80031C18_32818[level - 1], D_80031C2C_3282C[level - 1] - D_80031C18_32818[level - 1]);
+    osSyncPrintf(&D_80038018_38C18, D_80031C40_32840[level - 1], D_80031C18_32818[level - 1], D_80031C2C_3282C[level - 1] - D_80031C18_32818[level - 1]);
+    {
+        s32 sizeCode;
+        s32 loadAddr;
+        sizeCode = D_80031C50_32850[level] - D_80031C40_32840[level - 1];
+        loadAddr = sizeCode + D_80031C40_32840[level - 1];
+        D_8006AA68 = loadAddr;
+        osSyncPrintf(&D_8003802C_38C2C, loadAddr);
+    }
+    __printfunc = (void (*)(s32, s32))D_8006AA68;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelCode.s")
+#endif
 
 void func_800117D8_123D8(void) {
     osInvalICache(func_80070270, (u8 *)&D_8008DDF0 - func_80070270);
@@ -290,7 +335,19 @@ void debug_printModelSegmentStart(void *arg0) {
 	osSyncPrintf(D_800380E4, arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/debug_printModelSegmentEnd.s")
+s32 debug_printModelSegmentEnd(void *arg0) {
+    s32 sp18;
+
+    sp18 = (u8 *)&D_803DA800 - (u8 *)arg0;
+    if (sp18 <= 0) {
+        sourceTaggedPrintF(&D_80038104_38D04, &D_8003810C_38D0C, 0x47A);
+    }
+    osSyncPrintf(&D_8003811C_38D1C);
+    osSyncPrintf(&D_8003813C_38D3C, arg0);
+    osSyncPrintf(&D_80038158_38D58, &D_803DA800);
+    osSyncPrintf(&D_80038174_38D74, sp18, (f64)sp18 * 0.0009765625);
+    osSyncPrintf(&D_80038198_38D98);
+}
 
 void func_80011D24_12924(void) {
 	s32 temp_v0;
