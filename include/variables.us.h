@@ -328,6 +328,7 @@ extern u8 D_10031E0[];
 extern u8* D_8005BB20;
 extern s32 D_8005BB24;
 extern s32 D_8005BB48[];
+extern s32 D_8005BB4C[];
 
 extern Unk8006AA80Node *D_8006AA80;
 extern Unk8006AA84Node *D_8006AA84;

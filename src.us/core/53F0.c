@@ -1,4 +1,5 @@
 #define OVERLAY_ENTRY_AS_FUNC
+#define GAME_OSSETTIME_IMPL
 #include <ultra64.h>
 #include "common.h"
 
@@ -573,6 +574,33 @@ s32 func_80008C44_9844(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800092B8_9EB8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80009F18_AB18.s")
+s32 func_80009F18_AB18(s32 arg0) {
+    s32 sp1C;
+
+    func_8000505C_5C5C();
+    func_800050C4_5CC4();
+    func_8000DC9C_E89C(*(s32*)((u8*)D_8005BB48 + D_80031B84 * 4), *(s32*)((u8*)D_8005BB4C + (-(D_80031B84 * 4))));
+    func_8000505C_5C5C();
+    func_800050C4_5CC4();
+    osSetTime(D_80068084, D_80068088);
+    func_8000E4C4_F0C4(1);
+    func_8000505C_5C5C();
+    setFullResolution();
+    func_80011D24_12924();
+    loadFrontendData();
+    if (arg0 != 0) {
+        sp1C = func_80070270(9);
+    } else {
+        sp1C = func_80070270(0xE);
+    }
+    func_800056A8_62A8();
+    func_800056A8_62A8();
+    setGameplayResolution();
+    func_80011674_12274();
+    func_80011D6C_1296C(D_80047F93);
+    gameplayMode = 1;
+    func_800050C4_5CC4();
+    return sp1C;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_displayInventory.s")
