@@ -1117,6 +1117,7 @@ extern u16 D_80034480;
 extern s32 D_8003447C;
 extern s32 D_80034484;
 extern s32 D_80034488;
+extern s32 D_80034494;
 extern s32 D_8003449C;
 extern s32 D_800344B4[]; // pointers to strings for names of many things, each entry is actually 2x s32 in size, first is pointer to string
 extern void *D_8006C550;
@@ -1611,7 +1612,7 @@ extern s16 D_8006C558;
 extern s16 D_8006C55C;
 extern u16 D_8006C55E;
 extern s16 D_8006C564;
-extern s16 D_8006C566;
+extern u16 D_8006C566;
 extern s16 D_8006C568;
 extern s16 D_8006C56A;
 extern s8 D_8006C56C;

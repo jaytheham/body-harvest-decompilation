@@ -755,7 +755,29 @@ void func_80016C8C_1788C(f32 arg0, f32 arg1, f32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017224_17E24.s")
 
+#ifdef NON_MATCHING
+s16 func_800172E0_17EE0(u8 *arg0) {
+    s32 count = 0;
+    u8 *ptr = arg0;
+
+    if ((*arg0 != 0xA) && (*arg0 != 0) && (*arg0 != 0x40)) {
+        s32 c = *arg0;
+        do {
+            if ((c == 0x3B) && (arg0 != ptr) && ((arg0 + 1) != ptr) && ((arg0 + 2) != ptr) && ((arg0 + 3) != ptr)) {
+                count++;
+            }
+            c = ptr[1];
+            ptr++;
+        } while ((c != 0xA) && (c != 0) && (c != 0x40));
+    }
+    if ((D_80034494 != 0) && (D_8006C566 == 0xFFFF) && (count == 1)) {
+        count = 2;
+    }
+    return count;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800172E0_17EE0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017394_17F94.s")
 
