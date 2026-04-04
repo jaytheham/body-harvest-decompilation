@@ -353,7 +353,23 @@ s16 func_80003680_4280(f32 arg0) {
     return D_8003D000_3DC00[(s32)(arg0 * 1024.0f)];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003740_4340.s")
+s16 func_80003740_4340(f32 arg0) {
+    s32 var_v1;
+
+    var_v1 = 1;
+    if (arg0 < 0.0f) {
+        arg0 = -arg0;
+        var_v1 = -1;
+    }
+    if ((f64) arg0 > 1.0) {
+        arg0 = (f32)(1.0 / (f64)arg0);
+        return (s16) ((0x4000 - D_8003D800_3E400[(s32) (arg0 * 1024.0f)]) * var_v1);
+    }
+    if ((f64) arg0 == 1.0) {
+        return (s16) (var_v1 << 0xD);
+    }
+    return (s16) (D_8003D800_3E400[(s32) (arg0 * 1024.0f)] * var_v1);
+}
 
 s16 func_80003824_4424(f32 arg0, f32 arg1) {
     s32 sign;
