@@ -206,7 +206,39 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/validateSaveVersionAndChecksum.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800016D8_22D8(void) {
+	u16 j;
+	u16 idx;
+	u16 i;
+	s32 unk10;
+
+	D_800431C8 = (s8) D_800313D0;
+	idx = 9;
+	i = 0;
+	do {
+		j = 0;
+		do {
+			(&D_800431C0)[idx] = (&D_80047FB8[i].unk0)[j];
+			j++;
+			idx++;
+		} while (j < 6);
+		(&D_800431C0)[idx++] = (s8)(D_80047FB8[i].unk8);
+		(&D_800431C0)[idx++] = (s8)(D_80047FB8[i].unk8 >> 8);
+		(&D_800431C0)[idx++] = (s8)(D_80047FB8[i].unk8 >> 16);
+		(&D_800431C0)[idx++] = (s8)(D_80047FB8[i].unk8 >> 24);
+		(&D_800431C0)[idx++] = (s8)(D_80047FB8[i].unkC);
+		unk10 = D_80047FB8[i].unk10;
+		i++;
+		(&D_800431C0)[idx++] = (s8)(unk10);
+		(&D_800431C0)[idx++] = (s8)(unk10 >> 8);
+		(&D_800431C0)[idx++] = (s8)(unk10 >> 16);
+	} while (i < 5);
+	func_800015B4_21B4(4, 0x47);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800016D8_22D8.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80001830_2430(void) {
