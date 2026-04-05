@@ -42,3 +42,5 @@ Also place `var_s1 = (s32)((f32)var_s1 - unk20)` **before** the unk18 increment 
 ### Residual: unk14 gets t1 instead of t2 (score 15, unresolvable)
 
 In this pattern, the second anonymous load (unk14) gets register t1 ($9) while the target assigns t2 ($10). All other instruction positions and arguments match exactly. This one-register difference and its cascading bne operand swap appear to be an intrinsic IDO allocator tiebreaker that cannot be resolved via C-level changes (similar to the bne ordering note in `converting-do-while-to-for-loops.md`).
+
+Affects: `func_8000D278_DE78` and `func_8000DAFC_E6FC` (two-pointer variant with extra arg1 and 5-arg helper call). Both score 15 with this residual difference. When the function has an extra pointer arg1 (passed to the helper as a2), IDO still assigns t1 to unk14 rather than t2. Wrap these in `#ifdef NON_MATCHING` and use the pragma fallback.

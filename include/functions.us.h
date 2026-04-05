@@ -56,6 +56,8 @@ void func_8000D71C_E31C(void *arg0, void *arg1, void *arg2, s32 arg3, s32 arg4, 
 void func_8000CD54_D954(void *arg0, AnimChannelState *arg1, u8 arg2);
 void func_8000CDFC_D9FC(void *arg0, void *arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8000D278_DE78(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, s32 arg3);
+void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, u8 arg3, f32 arg4);
+void func_8000DAFC_E6FC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, f32 arg5);
 void func_8000DC9C_E89C(s32, s32);
 void func_8000E4C4_F0C4(s32 arg0);
 #ifdef GAME_OSSETTIME_IMPL
