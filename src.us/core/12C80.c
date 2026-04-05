@@ -603,7 +603,34 @@ void func_80014208_14E08(s32 arg0, s16 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014278_14E78.s")
 
+#ifdef NON_MATCHING
+s32 func_800143C4_14FC4(s16 arg0) {
+	Unk8006AA80Node sp58;
+	s32 sp54;
+	s32 sp50;
+
+	if (D_8006AB88 == 0) {
+		return -1;
+	}
+	if (func_80012638_13238(arg0, D_8006AB18[0]->unk1C) != NULL) {
+		return -1;
+	}
+	sp58.unk0 = arg0;
+	sp58.unk6 = -1;
+	sp58.unk0C = 0;
+	sp58.unk8 = 0;
+	sp58.unk0E = -1;
+	sp58.unk2 = D_80032228_32E28[arg0 & 0xFFFF];
+	sp58.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
+	sp58.unk20 = D_80031F04_32B04[arg0];
+	sp58.unk28 = D_8006AB18[0]->unk1C;
+	sp58.unk22 = 0x40;
+	sp58.unk0F = -1;
+	return func_800121B4_12DB4(sp58, &D_8006AA80, &D_8006AA84);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800143C4_14FC4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014508_15108.s")
 
