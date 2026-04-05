@@ -102,6 +102,7 @@ void func_8001F820_20420(s32 arg0, s16 arg1);
 s32 func_8001F840_20440(s32 arg0);
 void func_800156C8_162C8(u8 arg0);
 void func_8001599C_1659C(void);
+void func_80016C14_17814(s8 arg0, f32 arg1, f32 arg2, f32 arg3);
 void func_80016ABC_176BC(s8 arg0);
 void func_80017AAC_186AC(void);
 void func_80017AE0_186E0(void);

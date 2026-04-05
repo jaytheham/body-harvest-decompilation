@@ -760,7 +760,21 @@ void func_80015C58_16858(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015C94_16894.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800164C4_170C4.s")
+s32 func_800164C4_170C4(void) {
+    s32 var_s1;
+    s8 var_s0;
+
+    var_s1 = 0;
+    for (var_s0 = 0; var_s0 < 2; var_s0++) {
+        if (D_80031CE4_328E4[var_s0] == 1) {
+            if ((f64)D_80031D44_32944[var_s0] > 0.0 && D_80031D28_32928[var_s0] >= 2) {
+                return 1;
+            }
+            func_80016C14_17814(var_s0, 60.0f, 20.0f, 0.0f), var_s1 = 1;
+        }
+    }
+    return var_s1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800165EC_171EC.s")
 
