@@ -124,6 +124,13 @@ extern s32 D_800315D4_W;
 extern char D_80036D74_37974; /* osSyncPrintf format string - callback table full warning */
 extern char D_80036DA4_379A4;
 extern char D_80036DBC_379BC;
+extern char D_80036DD0_379D0; /* osSyncPrintf format string */
+extern char D_80036DD8_379D8; /* osSyncPrintf format string */
+extern char D_80036DE4_379E4; /* osSyncPrintf format string */
+extern char D_80036DF4_379F4; /* osSyncPrintf format string */
+extern char D_80036E0C_37A0C; /* osSyncPrintf format string */
+extern char D_80036E20_37A20; /* osSyncPrintf format string */
+extern char D_80036E34_37A34; /* osSyncPrintf format string */
 extern u8 D_80036C64[];
 extern u8 D_80036C74[];
 extern u8 D_8004337D;

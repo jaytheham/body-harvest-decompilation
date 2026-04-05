@@ -43,6 +43,7 @@ void func_80007548_8148(void);
 void func_80007728_8328(s32, s16 *, s16 *);
 s32 func_800078B8_84B8(s32, s32*);
 void func_800078CC_84CC(s32, s32*);
+void func_80007900_8500(u8 *arg0);
 void func_80007A20_8620(u8 *arg0);
 void func_80007C78_8878(u8 *arg0);
 s32 func_80007F60_8B60(u8 *arg0);

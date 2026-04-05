@@ -494,7 +494,36 @@ void func_800078E4_84E4(s32 arg0, s32 *arg1) {
 	*arg1 &= ~(1 << arg0);
 }
 
+#ifdef NON_MATCHING
+void func_80007900_8500(u8 *arg0) {
+    switch (arg0[0]) {
+        case 0x98:
+            osSyncPrintf(&D_80036DD0_379D0);
+            break;
+        case 0x9A:
+            osSyncPrintf(&D_80036DD8_379D8, arg0[1]);
+            break;
+        case 0x9B:
+            osSyncPrintf(&D_80036DE4_379E4, arg0[1]);
+            break;
+        case 0x99:
+            osSyncPrintf(&D_80036DF4_379F4, arg0[1], buildingInstances[arg0[1]].xCoord, buildingInstances[arg0[1]].zCoord);
+            break;
+        case 0xAD:
+            osSyncPrintf(&D_80036E0C_37A0C, arg0[1], arg0[2]);
+            break;
+        case 0xAF:
+            osSyncPrintf(&D_80036E20_37A20, arg0[1]);
+            func_80007900_8500(&D_8004D180[arg0[1] * 3]);
+            osSyncPrintf(&D_80036E34_37A34);
+            break;
+        default:
+            break;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007900_8500.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007A20_8620.s")
 
