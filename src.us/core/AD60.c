@@ -217,7 +217,44 @@ void func_8000D26C_DE6C(Unk8007F878_404 *arg0, void *arg1) {
 	arg0->unkE50 = 0;
 }
 
+#ifdef NON_MATCHING
+void func_8000D278_DE78(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, s32 arg3) {
+    s32 var_s1;
+    s32 var_s3;
+    AnimChannelState *temp_s0;
+
+    var_s3 = 0;
+    if (arg2 != 0) {
+        do {
+            var_s1 = arg3;
+            if (arg3 != 0) {
+                temp_s0 = &arg1[var_s3];
+                if (arg0->unkE50 != 0) {
+loop_3:
+                    if ((f32)var_s1 < temp_s0->unk20) {
+                        temp_s0->unk20 = temp_s0->unk20 - (f32)var_s1;
+                        var_s1 = 0;
+                    } else {
+                        var_s1 = (s32)((f32)var_s1 - temp_s0->unk20);
+                        temp_s0->unk18 = temp_s0->unk18 + 1;
+                        if (temp_s0->unk18 == temp_s0->unk14) {
+                            arg0->unkE50 = 0;
+                        } else {
+                            func_8000CD54_D954(arg0, temp_s0, var_s3);
+                        }
+                    }
+                    if ((var_s1 != 0) && (arg0->unkE50 != 0)) {
+                        goto loop_3;
+                    }
+                }
+            }
+            var_s3 = (var_s3 + 1) & 0xFF;
+        } while (arg2 != var_s3);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D278_DE78.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D384_DF84.s")
 
