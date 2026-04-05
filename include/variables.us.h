@@ -198,7 +198,6 @@ extern f32 D_80047954;
 extern f32 D_80047958;
 extern f32 D_8004795C;
 extern s16 D_80047970[];
-extern s16 D_80047F7E; // Last item of an array of powerup values?
 extern s32 D_80047B70;
 extern u8 D_80047F80;
 extern Unk80047FB8 D_80047FB8[5];
@@ -226,7 +225,7 @@ extern u8 D_8004813F;
 extern s16 D_80048140[];
 extern s16 D_80048156;
 extern s8 D_80048168; // numHumansEatenToSpawnMutant
-extern s16 D_8004816A; // numHumansEaten
+extern s16 D_8004816A; // numHumansKilled
 extern s16 D_8004816E;
 extern s16 D_80048170;
 extern s16 D_80048176;
@@ -1331,7 +1330,8 @@ extern s32 D_800E65D8;
 extern Unk800E65BC *D_800E65BC;
 extern s16 D_80047D40[];
 extern s16 D_80047F40[];
-extern D47F40Entry D_80047F60;
+extern s16 D_80047F60[];
+extern s16 D_80047F7E; // Last item of an array of powerup values?
 extern u8 D_800FC8F5;
 extern u8 D_800FC8F7;
 extern u8 D_800FC8FA;

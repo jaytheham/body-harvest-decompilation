@@ -126,14 +126,15 @@ s32 func_8001032C_10F2C(s32 arg0, s32 arg1, s32 arg2) {
 		return 0;
 	}
 	func_80010228_10E28(arg1, header);
-	if (header[0] != 0x4D494F30) {
+	if (header[0] != 0x4D494F30) { // MIO0
 		if (D_8006AA64 == 0xBABEFACE) {
-			osSyncPrintf(D_80037808);
+			osSyncPrintf(D_80037808); // header ID wrong, 
 		}
 		return 0;
 	}
 	if (D_8006AA64 == 0xBABEFACE) {
 		osSyncPrintf(D_8003781C, header[1], header[2]);
+		// packed %6d, unpacked %6d, 
 	}
 	var_a2 = header[1];
 	if (header[1] & 3) {
@@ -165,40 +166,40 @@ s32 func_80010490_11090(u8 arg0) {
 
 #ifdef NON_MATCHING
 s32 func_800104AC_110AC(u8 arg0) {
-    s32 var_s0;
-    s32 var_s1;
-    s32 var_s2;
-    s32 temp_v1;
+	s32 var_s0;
+	s32 var_s1;
+	s32 var_s2;
+	s32 temp_v1;
 
-    var_s2 = (arg0 - 1) & 0xFF;
-    var_s1 = (s32) &D_37F840;
-    if (var_s2 != 0) {
-        do {
-            temp_v1 = var_s1 & 0xF;
-            if (temp_v1 != 0) {
-                var_s1 = (var_s1 - temp_v1) + 0x10;
-            }
-            var_s1 = func_800102EC_10EEC(var_s1, 0xFE00);
-            temp_v1 = var_s1 & 0xF;
-            if (temp_v1 != 0) {
-                var_s1 = (var_s1 - temp_v1) + 0x10;
-            }
-            var_s1 = func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(var_s1, 4), 0x3800), 0x100), 0x3800), 0x100), 0x3800), 0x100), 0x100);
-            for (var_s0 = 0; var_s0 < 0xC; var_s0 = (var_s0 + 1) & 0xFF) {
-                temp_v1 = var_s1 & 0xF;
-                if (temp_v1 != 0) {
-                    var_s1 = (var_s1 - temp_v1) + 0x10;
-                }
-                var_s1 = func_80010290_10E90(func_80010290_10E90(var_s1));
-            }
-            var_s2 = (var_s2 - 1) & 0xFF;
-        } while (var_s2 != 0);
-    }
-    temp_v1 = var_s1 & 0xF;
-    if (temp_v1 != 0) {
-        var_s1 = (var_s1 - temp_v1) + 0x10;
-    }
-    return var_s1;
+	var_s2 = (arg0 - 1) & 0xFF;
+	var_s1 = (s32) &D_37F840;
+	if (var_s2 != 0) {
+		do {
+			temp_v1 = var_s1 & 0xF;
+			if (temp_v1 != 0) {
+				var_s1 = (var_s1 - temp_v1) + 0x10;
+			}
+			var_s1 = func_800102EC_10EEC(var_s1, 0xFE00);
+			temp_v1 = var_s1 & 0xF;
+			if (temp_v1 != 0) {
+				var_s1 = (var_s1 - temp_v1) + 0x10;
+			}
+			var_s1 = func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(var_s1, 4), 0x3800), 0x100), 0x3800), 0x100), 0x3800), 0x100), 0x100);
+			for (var_s0 = 0; var_s0 < 0xC; var_s0 = (var_s0 + 1) & 0xFF) {
+				temp_v1 = var_s1 & 0xF;
+				if (temp_v1 != 0) {
+					var_s1 = (var_s1 - temp_v1) + 0x10;
+				}
+				var_s1 = func_80010290_10E90(func_80010290_10E90(var_s1));
+			}
+			var_s2 = (var_s2 - 1) & 0xFF;
+		} while (var_s2 != 0);
+	}
+	temp_v1 = var_s1 & 0xF;
+	if (temp_v1 != 0) {
+		var_s1 = (var_s1 - temp_v1) + 0x10;
+	}
+	return var_s1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800104AC_110AC.s")
@@ -220,7 +221,7 @@ s32 destroyThreadIfMessageInQueue(void) {
 void loadLevel(s32 arg0) {
 	s32 temp_a1;
 
-	osSyncPrintf(D_80037838, currentLevel);
+	osSyncPrintf(D_80037838, currentLevel); // Loading level %d
 	D_8006AA64 = 0xBABEFACE;
 	loadLevelData(D_80047F93);
 	D_8006AA64 = 0;
@@ -228,11 +229,12 @@ void loadLevel(s32 arg0) {
 	loadLevelCode(D_80047F93);
 	func_80011D6C_1296C(D_80047F93);
 	func_800118F8_124F8();
-	osSyncPrintf(D_80037850);
-	osSyncPrintf(D_80037870, D_8F4960);
-	osSyncPrintf(D_8003788C, D_955300);
+	osSyncPrintf(D_80037850); // ------------------------------
+	osSyncPrintf(D_80037870, D_8F4960); //   Start of anim data: %x
+	osSyncPrintf(D_8003788C, D_955300); //      End of anim data: %x
 	temp_a1 = D_955300 - D_8F4960;
 	osSyncPrintf(D_800378A8, temp_a1, (f64)temp_a1 * 0.0009765625);
+	//                 Size: %x (%.2fK)
 	osSendMesg(&D_80067F88, 0, 0);
 	osSetThreadPri(0, 0);
 	for (;;);
@@ -289,9 +291,9 @@ void func_800117D8_123D8(void) {
 
 void func_80011858_12458(u8 arg0, s32 arg1) {
 	if ((u32)(func_8001032C_10F2C(arg1, D_80031C04_32804[arg0 - 1], D_8006AA6C) - D_80031C04_32804[arg0 - 1]) >= 0x30D41U) {
-		osSyncPrintf(&D_80038034_38C34);
-		osSyncPrintf(&D_80038064_38C64);
-		osSyncPrintf(&D_80038094_38C94);
+		osSyncPrintf(&D_80038034_38C34); //  ******************************************
+		osSyncPrintf(&D_80038064_38C64); //  ** WARNING: inside textures too large. *
+		osSyncPrintf(&D_80038094_38C94); //  ******************************************
 	}
 }
 
@@ -389,8 +391,8 @@ s32 func_80011BE8_127E8(s32 arg0) {
 #endif
 
 void debug_printModelSegmentStart(void *arg0) {
-	osSyncPrintf(D_800380C4);
-	osSyncPrintf(D_800380E4, arg0);
+	osSyncPrintf(D_800380C4); // ------------------------------
+	osSyncPrintf(D_800380E4, arg0); // Start of model segment: %8x
 }
 
 s32 debug_printModelSegmentEnd(void *arg0) {
@@ -399,12 +401,15 @@ s32 debug_printModelSegmentEnd(void *arg0) {
 	sp18 = (u8 *)&D_803DA800 - (u8 *)arg0;
 	if (sp18 <= 0) {
 		sourceTaggedPrintF(&D_80038104_38D04, &D_8003810C_38D0C, 0x47A);
+		// free>0
+		// src/loader.c
 	}
-	osSyncPrintf(&D_8003811C_38D1C);
-	osSyncPrintf(&D_8003813C_38D3C, arg0);
-	osSyncPrintf(&D_80038158_38D58, &D_803DA800);
+	osSyncPrintf(&D_8003811C_38D1C); // ------------------------------
+	osSyncPrintf(&D_8003813C_38D3C, arg0); // End of model segment: %8x
+	osSyncPrintf(&D_80038158_38D58, &D_803DA800); //     Start of ZBuffer: %8x
 	osSyncPrintf(&D_80038174_38D74, sp18, (f64)sp18 * 0.0009765625);
-	osSyncPrintf(&D_80038198_38D98);
+	//                 Free: %x, (%.2fK)
+	osSyncPrintf(&D_80038198_38D98); // ------------------------------
 }
 
 void func_80011D24_12924(void) {

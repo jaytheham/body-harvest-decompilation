@@ -631,30 +631,34 @@ s32 func_80014278_14E78(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014278_14E78.s")
 #endif
 
+// https://decomp.me/scratch/0wfIc
 #ifdef NON_MATCHING
-s32 func_800143C4_14FC4(s16 arg0) {
-	Unk8006AA80Node sp58;
-	s32 sp54;
-	s32 sp50;
-
-	if (D_8006AB88 == 0) {
-		return -1;
-	}
-	if (func_80012638_13238(arg0, D_8006AB18[0]->unk1C) != NULL) {
-		return -1;
-	}
-	sp58.unk0 = arg0;
-	sp58.unk6 = -1;
-	sp58.unk0C = 0;
-	sp58.unk8 = 0;
-	sp58.unk0E = -1;
-	sp58.unk2 = D_80032228_32E28[arg0 & 0xFFFF];
-	sp58.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
-	sp58.unk20 = D_80031F04_32B04[arg0];
-	sp58.unk28 = D_8006AB18[0]->unk1C;
+s32 func_800143C4_14FC4(s16 arg0)
+{
+  Unk8006AA80Node sp58;
+  s32 sp54;
+  unsigned char new_var;
+  if (D_8006AB88 == 0)
+  {
+	return -1;
+  }
+  if (func_80012638_13238(arg0, D_8006AB18[0]->unk1C) != NULL)
+  {
+	return -1;
+  }
+  sp58.unk0 = arg0;
+  sp58.unk6 = -1;
+  sp58.unk0C = 0;
+  sp58.unk8 = 0;
+  sp58.unk2 = D_80032228_32E28[arg0 & 0xFFFF];
+  sp58.unk0E = -1;
+  sp58.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
+  sp58.unk20 = D_80031F04_32B04[arg0];
+  sp58.unk28 = D_8006AB18[0]->unk1C;
+  
+  sp58.unk0F = -1;
 	sp58.unk22 = 0x40;
-	sp58.unk0F = -1;
-	return func_800121B4_12DB4(sp58, &D_8006AA80, &D_8006AA84);
+  return func_800121B4_12DB4(sp58, &D_8006AA80, &D_8006AA84);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800143C4_14FC4.s")
@@ -675,34 +679,32 @@ void func_80015388_15F88(s16 arg0) {
 	func_80014A3C_1563C((s32)sp24, arg0, 0, 0, -1.0f);
 }
 
-#ifdef NON_MATCHING
-void func_800153D8_15FD8(s16 arg0) {
+void func_800153D8_15FD8(s16 arg0)
+{
 	Unk8006AA80Node sp60;
 	s32 pad1;
 	s32 pad2;
 	s32 pad3;
-	s32 pad4;
-
-	if ((D_8006AB88 != 0) && (arg0 != -1) && (arg0 != -1)) {
-		if (arg0 == 0xC6) {
+	if (D_8006AB88 != 0 && arg0 != -1 && arg0 != -1)
+	{
+		if (arg0 == 0xC6)
+		{
 			arg0 = 0xCD;
 		}
 		sp60.unk0 = arg0;
 		sp60.unk2 = D_80032228_32E28[arg0];
+		sp60.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
 		sp60.unk6 = -1;
 		sp60.unk0C = 0;
 		sp60.unk8 = 0;
+		sp60.unk20 = D_80031F04_32B04[arg0];
 		sp60.unk22 = 0x40;
 		sp60.unk0E = -1;
 		sp60.unk2C = 0;
-		sp60.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
-		sp60.unk20 = D_80031F04_32B04[arg0];
+
 		func_800121B4_12DB4(sp60, &D_8006AA80, &D_8006AA84);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800153D8_15FD8.s")
-#endif
 
 void func_80015500_16100(s16 arg0, s16 arg1) {
 	s16 sp1E;
@@ -1045,6 +1047,7 @@ void func_80017B08_18708(s32 arg0) {
 	D_8006C55C = 0;
 	D_8006C558 = arg0;
 	osSyncPrintf(&D_80038424_39024, D_8006C558);
+	// --------talkyIndex=%d
 	D_8006C55E = 1;
 	D_8006C564 = 0;
 	D_8006C566 = 0;
@@ -1118,6 +1121,7 @@ void func_80019EA8_1AAA8(u8 arg0) {
 	D_80034478 = 1;
 	D_80034480 = arg0;
 	osSyncPrintf(&D_800384E0_390E0, D_80034480, arg0);
+	// 3)Changing mailMessageIndex=%d
 	D_8003447C = 0;
 	D_8006C56C = 0;
 	D_8003445C = 1;
@@ -1147,6 +1151,7 @@ void func_80019F80_1AB80(void) {
 	D_80034470 = (s32)&D_3059BA0;
 	D_8006C550 = &D_8006C450;
 	osSyncPrintf(&D_80038500_39100, D_8006C550, &D_80034468, &D_80034470);
+	// INSIDE InitCommsMessages,  dialogue_offsets=%d
 }
 
 void func_8001A024_1AC24(void) {
@@ -1189,18 +1194,18 @@ s32 func_8001A37C_1AF7C(char *arg0) {
 
 	sp20 = (u8) arg0[1];
 	var_s0 = 0;
-	osSyncPrintf(&D_800385E0_391E0, sp20);
+	osSyncPrintf(&D_800385E0_391E0, sp20); // %c
 	if (sp20 >= 0x30 && sp20 < 0x3A) {
 		var_s0 = (sp20 * 0xA - 0x1E0) & 0xFF;
 	} else {
-		osSyncPrintf(&D_800385E4_391E4, sp20);
+		osSyncPrintf(&D_800385E4_391E4, sp20); // Character read as key number was not a digit
 	}
 	sp20 = (u8) arg0[2];
-	osSyncPrintf(&D_80038614_39214, sp20);
+	osSyncPrintf(&D_80038614_39214, sp20); // %c
 	if (sp20 >= 0x30 && sp20 < 0x3A) {
 		var_s0 = (var_s0 + sp20 - 0x30) & 0xFF;
 	} else {
-		osSyncPrintf(&D_80038618_39218, sp20);
+		osSyncPrintf(&D_80038618_39218, sp20); // Character read as key number was not a digit
 	}
 	return var_s0;
 }

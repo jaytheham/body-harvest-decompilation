@@ -380,33 +380,33 @@ void getSaveFileName(s32 arg0, u8 *arg1)
 
 #ifdef NON_MATCHING
 s32 func_80002B20_3720(s32 arg0) {
-    s32 a1 = arg0 * 0x7A;
-    u8 *a2 = (u8 *)&D_800431C0 + a1;
-    u8 *a0 = (u8 *)((u32)&D_800431C0 + a1 + 2 * 8);
-    s32 v1 = a2[0x53];
-    v1 += a2[0x54] << 8;
-    v1 += a2[0x55] << 16;
-    v1 += a2[0x56] << 24;
-    v1 += a2[0x5B];
-    v1 += a2[0x5C] << 8;
-    v1 += a2[0x5D] << 16;
-    v1 += a2[0x5E] << 24;
-    v1 += a0[0x53];
-    v1 += a0[0x54] << 8;
-    v1 += a0[0x55] << 16;
-    v1 += a0[0x56] << 24;
-    v1 += a0[0x5B];
-    v1 += a0[0x5C] << 8;
-    v1 += a0[0x5D] << 16;
-    v1 += a0[0x5E] << 24;
-    v1 += a0[0x63];
-    v1 += a0[0x64] << 8;
-    v1 += a0[0x65] << 16;
-    v1 += a0[0x66] << 24;
-    v1 += a0[0x6B];
-    v1 += a0[0x6C] << 8;
-    v1 += a0[0x6D] << 16;
-    return v1 + (a0[0x6E] << 24);
+	s32 a1 = arg0 * 0x7A;
+	u8 *a2 = (u8 *)&D_800431C0 + a1;
+	u8 *a0 = (u8 *)((u32)&D_800431C0 + a1 + 2 * 8);
+	s32 v1 = a2[0x53];
+	v1 += a2[0x54] << 8;
+	v1 += a2[0x55] << 16;
+	v1 += a2[0x56] << 24;
+	v1 += a2[0x5B];
+	v1 += a2[0x5C] << 8;
+	v1 += a2[0x5D] << 16;
+	v1 += a2[0x5E] << 24;
+	v1 += a0[0x53];
+	v1 += a0[0x54] << 8;
+	v1 += a0[0x55] << 16;
+	v1 += a0[0x56] << 24;
+	v1 += a0[0x5B];
+	v1 += a0[0x5C] << 8;
+	v1 += a0[0x5D] << 16;
+	v1 += a0[0x5E] << 24;
+	v1 += a0[0x63];
+	v1 += a0[0x64] << 8;
+	v1 += a0[0x65] << 16;
+	v1 += a0[0x66] << 24;
+	v1 += a0[0x6B];
+	v1 += a0[0x6C] << 8;
+	v1 += a0[0x6D] << 16;
+	return v1 + (a0[0x6E] << 24);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80002B20_3720.s")
@@ -452,7 +452,7 @@ void guess_deleteSavedData(void)
 	short new_var;
 	u8 *var_v1;
 	do {
-		osSyncPrintf(&D_80036C64);
+		osSyncPrintf(&D_80036C64); // SCRUB GAMENOTE
 		var_v0 = &D_800431C0; new_var = 0; var_v1 = &D_8004337D;
 		do { var_v0++; *(var_v0 - 1) = new_var; } while (((u32) var_v0) < ((u32) var_v1));
 		func_80001830_2430();
@@ -515,24 +515,24 @@ void func_800033D4_3FD4(u32 arg0, s32 arg1) {
 // https://decomp.me/scratch/
 #ifdef NON_MATCHING
 void func_8000345C_405C(u16 arg0) {
-    s32 temp_v1;
+	s32 temp_v1;
 
-    if (!(D_800313C8 & 8)) {
-        if ((D_800475D8[0] & arg0) && (previousControllerButtonStates[0] & arg0)) {
-            D_80047588_W = D_80047588 & ~arg0;
-        }
-        temp_v1 = ~arg0;
-        if ((D_800475DA & arg0) && (D_800475E2 & arg0)) {
-            D_8004758E &= temp_v1;
-        }
-        if ((D_800475DC & arg0) && (D_800475E4 & arg0)) {
-            D_80047594 &= temp_v1;
-        }
-        if ((D_800475DE & arg0) && (D_800475E6 & arg0)) {
-            D_8004759A &= temp_v1;
-        }
-        D_800475F8 &= temp_v1;
-    }
+	if (!(D_800313C8 & 8)) {
+		if ((D_800475D8[0] & arg0) && (previousControllerButtonStates[0] & arg0)) {
+			D_80047588_W = D_80047588 & ~arg0;
+		}
+		temp_v1 = ~arg0;
+		if ((D_800475DA & arg0) && (D_800475E2 & arg0)) {
+			D_8004758E &= temp_v1;
+		}
+		if ((D_800475DC & arg0) && (D_800475E4 & arg0)) {
+			D_80047594 &= temp_v1;
+		}
+		if ((D_800475DE & arg0) && (D_800475E6 & arg0)) {
+			D_8004759A &= temp_v1;
+		}
+		D_800475F8 &= temp_v1;
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_8000345C_405C.s")

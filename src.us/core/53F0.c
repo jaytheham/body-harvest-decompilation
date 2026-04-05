@@ -61,23 +61,7 @@ void func_800048B8_54B8(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800048B8_54B8.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_800048E8_54E8(void) {
-	D47F40Entry *end;
-	D47F40Entry *p;
-	end = (D47F40Entry *)(&D_80047F60);
-	p = (D47F40Entry *)D_80047F40;
-	do {
-		p->f4 = 0;
-		p->f8 = 0;
-		p->fC = 0;
-		p->f0 = 0;
-		p++;
-	} while (p != end);
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800048E8_54E8.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_80004918_5518(void) {
@@ -343,17 +327,15 @@ s16 func_80006710_7310(s16 arg0, s16 arg1, u16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800069FC_75FC.s")
 
 void func_80006C4C_784C(void) {
-    gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
-    gDPSetFillColor(D_8005BB2C++, 0);
-    gDPPipeSync(D_8005BB2C++);
-    gDPFillRectangle(D_8005BB2C++, 0, 0, D_80068084 - 1, 0x24);
-    gDPFillRectangle(D_8005BB2C++, 0, D_80068088 - 0x26, D_80068084 - 1, D_80068088 - 1);
-    gDPPipeSync(D_8005BB2C++);
-    gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
+	gDPSetFillColor(D_8005BB2C++, 0);
+	gDPPipeSync(D_8005BB2C++);
+	gDPFillRectangle(D_8005BB2C++, 0, 0, D_80068084 - 1, 0x24);
+	gDPFillRectangle(D_8005BB2C++, 0, D_80068088 - 0x26, D_80068084 - 1, D_80068088 - 1);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 }
 
-extern void setVideoInterfaceXSize(s32 width);
-extern void setVideoInterfaceYSize(s32 height);
 void setFullResolution(void) {
 	setVideoInterfaceXSize(0x140);
 	setVideoInterfaceYSize(0xF0);
@@ -381,7 +363,8 @@ void func_800071D8_7DD8(void) {
 	setFullResolution();
 	func_800117D8_123D8();
 	func_80070270(0);
-	if (gameplayMode != 0 && gameplayMode != 0x10 && D_80052AD0 != 0) {
+	if (gameplayMode != GAMEPLAY_MODE_LEVEL_MAP &&
+		gameplayMode != GAMEPLAY_MODE_INVENTORY && D_80052AD0 != 0) {
 		setGameplayResolution();
 	}
 	func_80011674_12274();
@@ -521,11 +504,13 @@ void func_80007570_8170(void) {
 void func_80007690_8290(void) {
 	D_80048030 = D_80048030 + 1;
 	osSyncPrintf(&D_80036DA4_379A4, D_80048030);
+	// Increment objective %d
 	func_8001A650_1B250(1);
 }
 
 void func_800076D4_82D4(s32 arg0) {
 	osSyncPrintf(&D_80036DBC_379BC, arg0);
+	// Set objective %d
 	if (D_80048030 < arg0) {
 		D_80048030 = (u8) arg0;
 		func_8001A650_1B250(1);
@@ -533,7 +518,6 @@ void func_800076D4_82D4(s32 arg0) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007728_8328.s")
-
 
 u8 func_8000789C_849C(s32 arg0)
 {
@@ -543,9 +527,6 @@ u8 func_8000789C_849C(s32 arg0)
   new_var = D_80048038;
   return new_var[(s16) (*new_var2)];
 }
-
-
-
 
 s32 func_800078B8_84B8(s32 arg0, s32 *arg1) {
 	return *arg1 & (1 << arg0);
@@ -561,30 +542,30 @@ void func_800078E4_84E4(s32 arg0, s32 *arg1) {
 
 #ifdef NON_MATCHING
 void func_80007900_8500(u8 *arg0) {
-    switch (arg0[0]) {
-        case 0x98:
-            osSyncPrintf(&D_80036DD0_379D0);
-            break;
-        case 0x9A:
-            osSyncPrintf(&D_80036DD8_379D8, arg0[1]);
-            break;
-        case 0x9B:
-            osSyncPrintf(&D_80036DE4_379E4, arg0[1]);
-            break;
-        case 0x99:
-            osSyncPrintf(&D_80036DF4_379F4, arg0[1], buildingInstances[arg0[1]].xCoord, buildingInstances[arg0[1]].zCoord);
-            break;
-        case 0xAD:
-            osSyncPrintf(&D_80036E0C_37A0C, arg0[1], arg0[2]);
-            break;
-        case 0xAF:
-            osSyncPrintf(&D_80036E20_37A20, arg0[1]);
-            func_80007900_8500(&D_8004D180[arg0[1] * 3]);
-            osSyncPrintf(&D_80036E34_37A34);
-            break;
-        default:
-            break;
-    }
+	switch (arg0[0]) {
+		case 0x98:
+			osSyncPrintf(&D_80036DD0_379D0);
+			break;
+		case 0x9A:
+			osSyncPrintf(&D_80036DD8_379D8, arg0[1]);
+			break;
+		case 0x9B:
+			osSyncPrintf(&D_80036DE4_379E4, arg0[1]);
+			break;
+		case 0x99:
+			osSyncPrintf(&D_80036DF4_379F4, arg0[1], buildingInstances[arg0[1]].xCoord, buildingInstances[arg0[1]].zCoord);
+			break;
+		case 0xAD:
+			osSyncPrintf(&D_80036E0C_37A0C, arg0[1], arg0[2]);
+			break;
+		case 0xAF:
+			osSyncPrintf(&D_80036E20_37A20, arg0[1]);
+			func_80007900_8500(&D_8004D180[arg0[1] * 3]);
+			osSyncPrintf(&D_80036E34_37A34);
+			break;
+		default:
+			break;
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007900_8500.s")
@@ -598,17 +579,17 @@ void func_80007C78_8878(u8 *arg0) {
 
 	i = arg0[3];
 	ptr = &D_8004D348[arg0[2] * 9];
-	osSyncPrintf(&D_80036FE4_37BE4);
+	osSyncPrintf(&D_80036FE4_37BE4); //  because
 	if (i--) {
 		do {
 			u8 *p = ptr;
 			ptr += 9;
 			func_80007A20_8620(p);
 			if (i >= 2) {
-				osSyncPrintf(&D_80036FF0_37BF0);
+				osSyncPrintf(&D_80036FF0_37BF0); // ,
 			}
 			if (i == 1) {
-				osSyncPrintf(&D_80036FF4_37BF4);
+				osSyncPrintf(&D_80036FF4_37BF4); //  and
 			}
 		} while (i--);
 	}
@@ -635,24 +616,24 @@ s32 func_80007D44_8944(s32 arg0) {
 #ifdef NON_MATCHING
 s32 func_80007F60_8B60(u8 *arg0) {
 loop:
-    switch (arg0[0]) {
-    case 0x98:
-        return D_80052B34->unk1C < 1;
-    case 0x9A:
-        return vehicleInstances[arg0[1]].unk1C < 1;
-    case 0x9B:
-        if (alienInstances[D_8004D161[arg0[1] * 2]].unk20 & 0x100000) {
-            return 1;
-        }
-        return alienInstances[D_8004D161[arg0[1] * 2]].hitPoints < 1;
-    case 0x99: {
-        BuildingInstance *bi = buildingInstances + arg0[1];
-        return (s8)bi->hitPoints < 1;
-    }
-    case 0xAF:
-        arg0 = &D_8004D180[arg0[1] * 3];
-        goto loop;
-    }
+	switch (arg0[0]) {
+	case 0x98:
+		return D_80052B34->unk1C < 1;
+	case 0x9A:
+		return vehicleInstances[arg0[1]].unk1C < 1;
+	case 0x9B:
+		if (alienInstances[D_8004D161[arg0[1] * 2]].unk20 & 0x100000) {
+			return 1;
+		}
+		return alienInstances[D_8004D161[arg0[1] * 2]].hitPoints < 1;
+	case 0x99: {
+		BuildingInstance *bi = buildingInstances + arg0[1];
+		return (s8)bi->hitPoints < 1;
+	}
+	case 0xAF:
+		arg0 = &D_8004D180[arg0[1] * 3];
+		goto loop;
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007F60_8B60.s")
@@ -692,11 +673,11 @@ loop_1:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800081D4_8DD4.s")
 
 s32 func_80008478_9078(void) {
-	if ((currentLevel == 1) && (func_8000726C_7E6C(0xB) != 0) && (D_80052554 >= 0x401)) {
+	if ((currentLevel == LEVEL_GREECE) && (func_8000726C_7E6C(0xB) != 0) && (D_80052554 >= 0x401)) {
 		return 1;
 	}
-	osSyncPrintf(&D_80037000_37C00);
-	if ((currentLevel == 3) && (func_8000726C_7E6C(0x31) != 0) && (func_8000726C_7E6C(0x26) == 0)) {
+	osSyncPrintf(&D_80037000_37C00); // checkin for cutscenes
+	if ((currentLevel == LEVEL_AMERICA) && (func_8000726C_7E6C(0x31) != 0) && (func_8000726C_7E6C(0x26) == 0)) {
 		return 1;
 	}
 	return 0;
@@ -708,18 +689,14 @@ s32 func_80008478_9078(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/debug_drawTimingGraphBars.s")
 
-#ifdef NON_MATCHING
-void func_80008C18_9818(void) {
-	s16 *ptr = &D_80047F7E;
-	s32 count = 0xF;
-	do {
-		*ptr = -1;
-		ptr--;
-	} while (count--);
+void func_80008C18_9818(void)
+{
+	s32 count = 0x10;
+	while (count--)
+	{
+		D_80047F60[count] = -1;
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008C18_9818.s")
-#endif
 
 s32 func_80008C44_9844(s32 arg0) {
 	s16 *v1 = &D_80047F7E;
@@ -728,6 +705,7 @@ s32 func_80008C44_9844(s32 arg0) {
 		if (*v1 == -1) {
 			*v1 = arg0;
 			osSyncPrintf(D_80037100_37D00, arg0);
+			// Remember to give power up %d
 			break;
 		}
 		v1--;
@@ -762,7 +740,7 @@ s32 func_80009F18_AB18(s32 arg0) {
 	setGameplayResolution();
 	func_80011674_12274();
 	func_80011D6C_1296C(D_80047F93);
-	gameplayMode = 1;
+	gameplayMode = GAMEPLAY_MODE_UNK1;
 	func_800050C4_5CC4();
 	return sp1C;
 }
@@ -787,12 +765,12 @@ s32 guess_displayInventory(void) {
 	func_800056A8_62A8();
 	setGameplayResolution();
 	func_80011674_12274();
-	if (D_80052ACA == 2 && currentLevel != 5) {
+	if (D_80052ACA == 2 && currentLevel != LEVEL_COMET) {
 		func_80011D6C_1296C(6);
 	} else {
 		func_80011D6C_1296C(D_80047F93);
 	}
-	gameplayMode = 1;
+	gameplayMode = GAMEPLAY_MODE_UNK1;
 	func_800050C4_5CC4();
 	func_80013324_13F24();
 	return sp1C;
