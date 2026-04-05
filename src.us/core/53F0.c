@@ -538,7 +538,31 @@ s32 func_80007D44_8944(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007DE0_89E0.s")
 
+#ifdef NON_MATCHING
+s32 func_80007F60_8B60(u8 *arg0) {
+loop:
+    switch (arg0[0]) {
+    case 0x98:
+        return D_80052B34->unk1C < 1;
+    case 0x9A:
+        return vehicleInstances[arg0[1]].unk1C < 1;
+    case 0x9B:
+        if (alienInstances[D_8004D161[arg0[1] * 2]].unk20 & 0x100000) {
+            return 1;
+        }
+        return alienInstances[D_8004D161[arg0[1] * 2]].hitPoints < 1;
+    case 0x99: {
+        BuildingInstance *bi = buildingInstances + arg0[1];
+        return (s8)bi->hitPoints < 1;
+    }
+    case 0xAF:
+        arg0 = &D_8004D180[arg0[1] * 3];
+        goto loop;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007F60_8B60.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000807C_8C7C.s")
 

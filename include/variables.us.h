@@ -222,6 +222,8 @@ extern s32 D_8004D150;
 extern s32 D_8004D154;
 extern s32 D_8004D158;
 extern u8 D_8004D160;
+extern u8 D_8004D161[];
+extern u8 D_8004D180[];
 extern u8 D_8004D1B1;
 extern u8 D_8004D1B9;
 extern u8 D_8004D348[];
