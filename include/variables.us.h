@@ -72,6 +72,7 @@ extern Gfx D_80031230[];
 extern Gfx D_80031260[];
 extern u32 D_800312F0_31EF0;
 extern u32 D_800312F8_31EF8;
+extern Unk80047FB8 D_80031310_31F10[5];
 extern u32 D_800313CC;
 extern s16 D_800313C8;
 extern s16 D_800313D0; // Language
