@@ -178,7 +178,26 @@ s32 destroyThreadIfMessageInQueue(void) {
 	return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevel.s")
+void loadLevel(s32 arg0) {
+	s32 temp_a1;
+
+	osSyncPrintf(D_80037838, currentLevel);
+	D_8006AA64 = 0xBABEFACE;
+	loadLevelData(D_80047F93);
+	D_8006AA64 = 0;
+	func_80011674_12274();
+	loadLevelCode(D_80047F93);
+	func_80011D6C_1296C(D_80047F93);
+	func_800118F8_124F8();
+	osSyncPrintf(D_80037850);
+	osSyncPrintf(D_80037870, D_8F4960);
+	osSyncPrintf(D_8003788C, D_955300);
+	temp_a1 = D_955300 - D_8F4960;
+	osSyncPrintf(D_800378A8, temp_a1, (f64)temp_a1 * 0.0009765625);
+	osSendMesg(&D_80067F88, 0, 0);
+	osSetThreadPri(0, 0);
+	for (;;);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelData.s")
 

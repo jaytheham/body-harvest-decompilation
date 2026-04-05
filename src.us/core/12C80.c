@@ -527,7 +527,27 @@ void func_80013E44_14A44(void *arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013E64_14A64.s")
+void func_80013E64_14A64(s8 arg0) {
+    if (D_8006AB88 != 0) {
+        if (arg0 < 0 || arg0 >= 4) {
+            func_8001599C_1659C();
+            return;
+        }
+        if (D_8006AB18[arg0]->unk2C == 0) {
+            func_80016ABC_176BC(arg0);
+            return;
+        }
+        alSeqpStop(D_8006AB18[arg0]);
+        D_80031CD0_328D0[arg0] = -1;
+        D_80031CE4_328E4[arg0] = 0;
+        D_80031D1C_3291C[arg0] = -1;
+        D_80031D28_32928[arg0] = 0;
+        D_80031D2C_3292C[arg0] = 0.0f;
+        D_80031D34_32934[arg0] = 0.0f;
+        D_80031D3C_3293C[arg0] = 0.0f;
+        D_80031D44_32944[arg0] = 0.0f;
+    }
+}
 
 s16 func_80013F64_14B64(void) {
 	s16 var_v1;
@@ -636,7 +656,35 @@ void func_80015674_16274(s16 arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800156C8_162C8.s")
+void func_800156C8_162C8(u8 arg0) {
+    Unk8006AA84Node *node;
+    Unk8006AA84Node *node2;
+
+    if ((D_8006AB88 != 0) && ((node = func_800124A8_130A8(arg0)) != NULL)) {
+        if (node->unk6 >= 0) {
+            if (node->unk8 == 1) {
+                if (D_8006ABB8[node->unk6] != 1) {
+                    func_8001F820_20420(D_8006AB10, node->unk6);
+                    alSndpStop(D_8006AB10);
+                }
+            } else {
+                node2 = func_80012834_13434(node);
+                if ((node2 != NULL) && (node2->unk6 >= 0)) {
+                    if (node2->unk8 == 1) {
+                        if (D_8006ABB8[node2->unk6] != 1) {
+                            func_8001F820_20420(D_8006AB10, node2->unk6);
+                            alSndpStop(D_8006AB10);
+                        }
+                    } else {
+                        node2->unk6 = -2;
+                    }
+                }
+            }
+        } else {
+            node->unk6 = -2;
+        }
+    }
+}
 
 void func_800157D4_163D4(s16 arg0) {
 	Unk8006AA80Node *node;
@@ -762,7 +810,30 @@ void func_80016C8C_1788C(f32 arg0, f32 arg1, f32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016E54_17A54.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016FD0_17BD0.s")
+void func_80016FD0_17BD0(s16 arg0) {
+    Unk8006AA80Node *node;
+    s16 temp_vol;
+    Float4 sp38;
+
+    sp38 = D_80033C9C_3489C;
+
+    if (D_8006AB88 == 0) {
+        return;
+    }
+
+    D_80031D60_32960 = ((f32 *)&sp38)[arg0];
+    node = D_8006AA80;
+    if (node != NULL) {
+        do {
+            if (node->unk6 >= 0 && D_80031D4C_3294C == 0) {
+                temp_vol = (s16) ((f32) node->unk20 * D_80031D60_32960);
+                func_8001F820_20420(D_8006AB10, node->unk6);
+                alSndpSetVol(D_8006AB10, temp_vol);
+            }
+            node = node->unk34;
+        } while (node != NULL);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800170F4_17CF4.s")
 

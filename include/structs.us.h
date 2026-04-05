@@ -2,6 +2,13 @@
 #define STRUCTS_US_H
 
 typedef struct {
+	/* 0x00 */ f32 v0;
+	/* 0x04 */ f32 v1;
+	/* 0x08 */ f32 v2;
+	/* 0x0C */ f32 v3;
+} Float4; /* size = 0x10 */
+
+typedef struct {
 	/* 0x00 */ u64 unk0;
 } BitFlags64; /* size = 0x08 */
 
@@ -106,7 +113,9 @@ typedef struct Unk8006AA80Node {
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s32 unk8;
-	/* 0x0C */ u8 pad0C[0x1C];
+	/* 0x0C */ u8 pad0C[0x14];
+	/* 0x20 */ s16 unk20;
+	/* 0x22 */ u8 pad22[0x6];
 	/* 0x28 */ s32 unk28;
 	/* 0x2C */ s32 unk2C;
 	/* 0x30 */ struct Unk8006AA80Node *unk30;
@@ -118,7 +127,8 @@ typedef struct Unk8006AA84Node {
 	/* 0x02 */ u8 pad2[0x02];
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
-	/* 0x08 */ u8 pad8[0x08];
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ u8 pad0C[0x04];
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ u8 pad12[0x1E];
 	/* 0x30 */ struct Unk8006AA84Node *unk30;
@@ -1335,5 +1345,20 @@ typedef struct {
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ u16 unk14;
 } Unk801470C0Entry; /* size = 0x16 */
+
+typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
+	/* 0x02 */ u8 unk2;
+	/* 0x03 */ u8 unk3;
+	/* 0x04 */ u8 unk4;
+	/* 0x05 */ u8 unk5;
+	/* 0x06 */ u8 unk6;
+	/* 0x07 */ u8 unk7;
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s32 unk10;
+} Unk80047FB8; /* size = 0x14 */
 
 #endif

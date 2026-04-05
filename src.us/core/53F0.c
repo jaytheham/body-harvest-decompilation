@@ -314,7 +314,15 @@ s16 func_80006710_7310(s16 arg0, s16 arg1, u16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800069FC_75FC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006C4C_784C.s")
+void func_80006C4C_784C(void) {
+    gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
+    gDPSetFillColor(D_8005BB2C++, 0);
+    gDPPipeSync(D_8005BB2C++);
+    gDPFillRectangle(D_8005BB2C++, 0, 0, D_80068084 - 1, 0x24);
+    gDPFillRectangle(D_8005BB2C++, 0, D_80068088 - 0x26, D_80068084 - 1, D_80068088 - 1);
+    gDPPipeSync(D_8005BB2C++);
+    gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+}
 
 extern void setVideoInterfaceXSize(s32 width);
 extern void setVideoInterfaceYSize(s32 height);
@@ -486,7 +494,36 @@ void func_800078E4_84E4(s32 arg0, s32 *arg1) {
 	*arg1 &= ~(1 << arg0);
 }
 
+#ifdef NON_MATCHING
+void func_80007900_8500(u8 *arg0) {
+    switch (arg0[0]) {
+        case 0x98:
+            osSyncPrintf(&D_80036DD0_379D0);
+            break;
+        case 0x9A:
+            osSyncPrintf(&D_80036DD8_379D8, arg0[1]);
+            break;
+        case 0x9B:
+            osSyncPrintf(&D_80036DE4_379E4, arg0[1]);
+            break;
+        case 0x99:
+            osSyncPrintf(&D_80036DF4_379F4, arg0[1], buildingInstances[arg0[1]].xCoord, buildingInstances[arg0[1]].zCoord);
+            break;
+        case 0xAD:
+            osSyncPrintf(&D_80036E0C_37A0C, arg0[1], arg0[2]);
+            break;
+        case 0xAF:
+            osSyncPrintf(&D_80036E20_37A20, arg0[1]);
+            func_80007900_8500(&D_8004D180[arg0[1] * 3]);
+            osSyncPrintf(&D_80036E34_37A34);
+            break;
+        default:
+            break;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007900_8500.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007A20_8620.s")
 
@@ -530,7 +567,31 @@ s32 func_80007D44_8944(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007DE0_89E0.s")
 
+#ifdef NON_MATCHING
+s32 func_80007F60_8B60(u8 *arg0) {
+loop:
+    switch (arg0[0]) {
+    case 0x98:
+        return D_80052B34->unk1C < 1;
+    case 0x9A:
+        return vehicleInstances[arg0[1]].unk1C < 1;
+    case 0x9B:
+        if (alienInstances[D_8004D161[arg0[1] * 2]].unk20 & 0x100000) {
+            return 1;
+        }
+        return alienInstances[D_8004D161[arg0[1] * 2]].hitPoints < 1;
+    case 0x99: {
+        BuildingInstance *bi = buildingInstances + arg0[1];
+        return (s8)bi->hitPoints < 1;
+    }
+    case 0xAF:
+        arg0 = &D_8004D180[arg0[1] * 3];
+        goto loop;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007F60_8B60.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000807C_8C7C.s")
 
@@ -612,4 +673,33 @@ s32 func_80009F18_AB18(s32 arg0) {
 	return sp1C;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_displayInventory.s")
+s32 guess_displayInventory(void) {
+	s32 sp1C;
+
+	func_8000505C_5C5C();
+	func_800050C4_5CC4();
+	func_8000DC9C_E89C(*(s32*)((u8*)D_8005BB48 + D_80031B84 * 4), *(s32*)((u8*)D_8005BB4C + (-(D_80031B84 * 4))));
+	func_8000AFDC_BBDC();
+	func_8000505C_5C5C();
+	func_800050C4_5CC4();
+	osSetTime(D_80068084, D_80068088);
+	func_8000E4C4_F0C4(1);
+	func_8000505C_5C5C();
+	func_80011D24_12924();
+	loadFrontendData();
+	setFullResolution();
+	sp1C = func_80070270(0xB);
+	func_800056A8_62A8();
+	func_800056A8_62A8();
+	setGameplayResolution();
+	func_80011674_12274();
+	if (D_80052ACA == 2 && currentLevel != 5) {
+		func_80011D6C_1296C(6);
+	} else {
+		func_80011D6C_1296C(D_80047F93);
+	}
+	gameplayMode = 1;
+	func_800050C4_5CC4();
+	func_80013324_13F24();
+	return sp1C;
+}

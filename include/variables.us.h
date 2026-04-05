@@ -91,9 +91,11 @@ extern s32 D_8003147C;
 extern s32 D_800314A0;
 extern s32 D_800314A4;
 extern s8 D_800314C4;
+extern s16 D_80031650_32250[];
 extern s8 D_80031720_32320[]; // maxHumanDeathsAllowed?
 extern OSMesg D_800314CC;
 extern u8 D_80031B58_32758;
+extern Vp D_80031B60_32760[];
 extern s32 D_80031B84;
 extern s8 D_80031CA4;
 extern s16 D_80031CD4_328D4;
@@ -123,6 +125,13 @@ extern s32 D_800315D4_W;
 extern char D_80036D74_37974; /* osSyncPrintf format string - callback table full warning */
 extern char D_80036DA4_379A4;
 extern char D_80036DBC_379BC;
+extern char D_80036DD0_379D0; /* osSyncPrintf format string */
+extern char D_80036DD8_379D8; /* osSyncPrintf format string */
+extern char D_80036DE4_379E4; /* osSyncPrintf format string */
+extern char D_80036DF4_379F4; /* osSyncPrintf format string */
+extern char D_80036E0C_37A0C; /* osSyncPrintf format string */
+extern char D_80036E20_37A20; /* osSyncPrintf format string */
+extern char D_80036E34_37A34; /* osSyncPrintf format string */
 extern u8 D_80036C64[];
 extern u8 D_80036C74[];
 extern u8 D_8004337D;
@@ -177,6 +186,10 @@ extern s16 D_80047970[];
 extern s16 D_80047F7E; // Last item of an array of powerup values?
 extern s32 D_80047B70;
 extern u8 D_80047F80;
+extern Unk80047FB8 D_80047FB8[5];
+extern Unk80047FB8 D_8004801C;
+extern u8 D_800431C8;
+extern u8 D_800431C9;
 extern s32 D_80047F88;
 extern s32 D_80047F8C;
 extern s32 D_80047F94;
@@ -222,6 +235,8 @@ extern s32 D_8004D150;
 extern s32 D_8004D154;
 extern s32 D_8004D158;
 extern u8 D_8004D160;
+extern u8 D_8004D161[];
+extern u8 D_8004D180[];
 extern u8 D_8004D1B1;
 extern u8 D_8004D1B9;
 extern u8 D_8004D348[];
@@ -298,6 +313,8 @@ extern Gfx *D_8005BB2C;
 extern Gfx *D_8005BB30;
 extern Vtx *D_8005BB34;
 extern s32 D_8005BB38;
+extern s32 D_8005BB3C;
+extern s32 D_8005BB40;
 extern s32 D_8006AA6C;
 extern u16 D_8013D50C;
 extern s16 D_8013D510;
@@ -328,6 +345,8 @@ extern u8 D_1001B50[];
 extern u8 D_10031E0[];
 extern u8* D_8005BB20;
 extern s32 D_8005BB24;
+extern s32 D_8005BB28;
+extern u8 D_801CE710;
 extern s32 D_8005BB48[];
 extern s32 D_8005BB4C[];
 
@@ -1774,6 +1793,7 @@ extern f32 D_80031D2C_3292C[];
 extern f32 D_80031D34_32934[];
 extern f32 D_80031D3C_3293C[];
 extern f32 D_80031D44_32944[];
+extern Float4 D_80033C9C_3489C;
 extern s8 D_80031D4C_3294C;
 extern f32 D_80031D50_32950;
 extern f32 D_80031D54_32954;

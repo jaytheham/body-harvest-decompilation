@@ -30,7 +30,22 @@ void func_8000F1E8_FDE8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F218_FE18.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F368_FF68.s")
+void func_8000F368_FF68(void) {
+    D_8005BB20 = (u8 *)&D_801CE710 - D_80031B84 * 0x22B00;
+    D_8005BB28 = (s32)D_8005BB20;
+    D_8005BB3C = (s32)(D_8005BB20 + 0x180);
+    D_8005BB40 = (s32)(D_8005BB20 + 0x200);
+    D_8005BB2C = (Gfx *)(D_8005BB20 + 0x280);
+    D_8005BB30 = (Gfx *)(D_8005BB20 + 0xE380);
+    D_8005BB34 = (Vtx *)(D_8005BB20 + 0xF500);
+    D_8005BB38 = (s32)(D_8005BB20 + 0x1E280);
+
+    D_8005BB24 = (s32)&D_80031B60_32760[D_80031B84];
+    ((Vp *)D_8005BB24)->vp.vscale[0] = D_80068084 * 2;
+    ((Vp *)D_8005BB24)->vp.vscale[1] = (s16)(D_80068088 * 2);
+    ((Vp *)D_8005BB24)->vp.vtrans[0] = (s16)(D_80068084 * 2);
+    ((Vp *)D_8005BB24)->vp.vtrans[1] = (s16)(D_80068088 * 2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F478_10078.s")
 

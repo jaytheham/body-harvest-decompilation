@@ -168,7 +168,50 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001830_2430.s")
 
+#ifdef NON_MATCHING
+void func_80001984_2584(void) {
+check:
+	if (validateSaveVersionAndChecksum(4, 0x47) != 0) {
+		Unk80047FB8 *p3;
+		Unk80047FB8 *p2;
+		Unk80047FB8 *p1;
+		u8 *src;
+		Unk80047FB8 *p3end;
+
+		D_800313D0 = (s16) D_800431C8;
+		p3 = D_80047FB8; src = &D_800431C9;
+		p3end = &D_8004801C;
+		p2 = p3; p1 = p3;
+
+		do {
+			p3->unk0 = src[0];
+			p3->unk1 = src[1];
+			p2->unk2 = src[2];
+			p2->unk3 = src[3];
+			p2->unk4 = src[4];
+			p2->unk5 = src[5];
+			p1->unk6 = 0;
+			p1->unk8  = src[6];
+			p1->unk8 += src[7] << 8;
+			p1->unk8 += src[8] << 16;
+			p1->unk8 += src[9] << 24;
+			p1->unkC  = src[10];
+			p1->unk10  = src[11];
+			p1->unk10 += src[12] << 8;
+			p1->unk10 += src[13] << 16;
+			p3++;
+			p2++;
+			p1++;
+			src += 0xE;
+		} while (p3 != p3end);
+		return;
+	}
+	func_80001830_2430();
+	goto check;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001984_2584.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_prepareToSaveGame.s")
 
@@ -229,7 +272,39 @@ void getSaveFileName(s32 arg0, u8 *arg1)
 	arg1[6] = 0;
 }
 
+#ifdef NON_MATCHING
+s32 func_80002B20_3720(s32 arg0) {
+    s32 a1 = arg0 * 0x7A;
+    u8 *a2 = (u8 *)&D_800431C0 + a1;
+    u8 *a0 = (u8 *)((u32)&D_800431C0 + a1 + 2 * 8);
+    s32 v1 = a2[0x53];
+    v1 += a2[0x54] << 8;
+    v1 += a2[0x55] << 16;
+    v1 += a2[0x56] << 24;
+    v1 += a2[0x5B];
+    v1 += a2[0x5C] << 8;
+    v1 += a2[0x5D] << 16;
+    v1 += a2[0x5E] << 24;
+    v1 += a0[0x53];
+    v1 += a0[0x54] << 8;
+    v1 += a0[0x55] << 16;
+    v1 += a0[0x56] << 24;
+    v1 += a0[0x5B];
+    v1 += a0[0x5C] << 8;
+    v1 += a0[0x5D] << 16;
+    v1 += a0[0x5E] << 24;
+    v1 += a0[0x63];
+    v1 += a0[0x64] << 8;
+    v1 += a0[0x65] << 16;
+    v1 += a0[0x66] << 24;
+    v1 += a0[0x6B];
+    v1 += a0[0x6C] << 8;
+    v1 += a0[0x6D] << 16;
+    return v1 + (a0[0x6E] << 24);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80002B20_3720.s")
+#endif
 
 s32 func_80002C58_3858(s32 arg0)
 {
