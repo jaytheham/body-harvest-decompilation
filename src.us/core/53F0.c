@@ -314,7 +314,15 @@ s16 func_80006710_7310(s16 arg0, s16 arg1, u16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800069FC_75FC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006C4C_784C.s")
+void func_80006C4C_784C(void) {
+    gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
+    gDPSetFillColor(D_8005BB2C++, 0);
+    gDPPipeSync(D_8005BB2C++);
+    gDPFillRectangle(D_8005BB2C++, 0, 0, D_80068084 - 1, 0x24);
+    gDPFillRectangle(D_8005BB2C++, 0, D_80068088 - 0x26, D_80068084 - 1, D_80068088 - 1);
+    gDPPipeSync(D_8005BB2C++);
+    gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+}
 
 extern void setVideoInterfaceXSize(s32 width);
 extern void setVideoInterfaceYSize(s32 height);
