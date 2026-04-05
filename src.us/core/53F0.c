@@ -451,7 +451,44 @@ void func_80007548_8148(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007548_8148.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80007570_8170(void) {
+	s32 temp;
+	D_80047F98 = 0;
+	D_80047F9C = 0;
+	D_80047F94 = 0;
+	weaponSlots[0] = 2;
+	weaponSlots[1] = 0;
+	weaponSlots[2] = 0;
+	weaponSlots[4] = 0;
+	weaponSlots[5] = 0;
+	weaponSlots[6] = 0;
+	weaponSlots[3] = 0;
+	D_8004DC48.unk0 = 1;
+	D_8004DC50.unk0 = 0;
+	D_80052A90 = 0;
+	D_8004D154 = 0;
+	D_8004D150 = 0;
+	D_8004D158 = 0;
+	D_80048030 = 0;
+	D_8004DC5C = 0;
+	temp = (s32)D_80048028 >> (currentLevel * 3 + 0x1D);
+	if (temp & 1) {
+		D_8004DC5C = 1;
+	}
+	if (temp & 2) {
+		D_8004DC5C += 1;
+	}
+	if (temp & 4) {
+		D_8004DC5C += 1;
+	}
+	D_80052A98[currentLevel - 1].score = 0;
+	D_80052A98[currentLevel - 1].humansKilled = 0;
+	D_80052A98[currentLevel - 1].secondsElapsed = 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007570_8170.s")
+#endif
 
 void func_80007690_8290(void) {
 	D_80048030 = D_80048030 + 1;

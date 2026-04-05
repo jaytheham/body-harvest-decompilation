@@ -205,6 +205,8 @@ extern u8 D_80048024;
 extern u8 D_80048025;
 extern s32 showDemoText;
 extern u8 weaponSlots[7]; // 80048138
+extern u8 D_80048139;
+extern u8 D_8004813A;
 extern u8 D_8004813F;
 extern s16 D_80048140[];
 extern s16 D_80048156;
@@ -244,6 +246,8 @@ extern Unk8004D1C8 D_8004D1C8[];
 extern u8 D_80047F93;
 extern AlienInstance D_8004D0F8[]; // alien array base
 extern BitFlags64 D_8004DC48;
+extern BitFlags64 D_8004DC50;
+extern u8 D_8004DC5C;
 extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
