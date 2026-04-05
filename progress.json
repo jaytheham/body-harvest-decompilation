@@ -1,24 +1,24 @@
 {
-  "generated": "2026-04-05T20:58:01Z",
-  "commit": "d2ee444",
-  "commit_timestamp": "2026-04-06T08:57:47+12:00",
+  "generated": "2026-04-05T22:34:13Z",
+  "commit": "a8a582c",
+  "commit_timestamp": "2026-04-06T10:34:00+12:00",
   "overall": {
-    "total_functions": 3012,
-    "matched": 1144,
-    "non_matching": 361,
-    "asm_stubs": 1507,
-    "matched_pct": 37.98,
-    "decompiled_pct": 49.97
+    "total_functions": 3009,
+    "matched": 1146,
+    "non_matching": 358,
+    "asm_stubs": 1505,
+    "matched_pct": 38.09,
+    "decompiled_pct": 49.98
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 185,
-      "non_matching": 67,
-      "asm_stubs": 138,
-      "total": 390,
-      "matched_pct": 47.4,
-      "decompiled_pct": 64.6
+      "matched": 187,
+      "non_matching": 64,
+      "asm_stubs": 136,
+      "total": 387,
+      "matched_pct": 48.3,
+      "decompiled_pct": 64.9
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -117,11 +117,11 @@
     {
       "path": "core/12C80.c",
       "segment": "core",
-      "matched": 67,
-      "non_matching": 10,
-      "asm_stubs": 32,
-      "total": 109,
-      "matched_pct": 61.5,
+      "matched": 68,
+      "non_matching": 9,
+      "asm_stubs": 31,
+      "total": 108,
+      "matched_pct": 63.0,
       "contributor": "jaytheham"
     },
     {
@@ -147,11 +147,11 @@
     {
       "path": "core/53F0.c",
       "segment": "core",
-      "matched": 46,
-      "non_matching": 12,
-      "asm_stubs": 29,
-      "total": 87,
-      "matched_pct": 52.9,
+      "matched": 47,
+      "non_matching": 10,
+      "asm_stubs": 28,
+      "total": 85,
+      "matched_pct": 55.3,
       "contributor": "jaytheham"
     },
     {
@@ -539,9 +539,9 @@
     {
       "name": "jaytheham",
       "files": 42,
-      "matched": 1139,
-      "non_matching": 361,
-      "asm_stubs": 1437
+      "matched": 1141,
+      "non_matching": 358,
+      "asm_stubs": 1435
     },
     {
       "name": "Meridian Lex",
@@ -586,11 +586,11 @@
     },
     {
       "date": "2026-04-06",
-      "commit": "d2ee444",
-      "matched_pct": 37.98,
-      "decompiled_pct": 49.97,
-      "matched": 1144,
-      "total": 3012
+      "commit": "a8a582c",
+      "matched_pct": 38.09,
+      "decompiled_pct": 49.98,
+      "matched": 1146,
+      "total": 3009
     }
   ]
 }
