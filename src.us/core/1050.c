@@ -406,7 +406,31 @@ void func_800033D4_3FD4(u32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800033D4_3FD4.s")
 #endif
 
+// https://decomp.me/scratch/
+#ifdef NON_MATCHING
+void func_8000345C_405C(u16 arg0) {
+    s32 temp_v1;
+
+    if (!(D_800313C8 & 8)) {
+        if ((D_800475D8[0] & arg0) && (previousControllerButtonStates[0] & arg0)) {
+            D_80047588_W = D_80047588 & ~arg0;
+        }
+        temp_v1 = ~arg0;
+        if ((D_800475DA & arg0) && (D_800475E2 & arg0)) {
+            D_8004758E &= temp_v1;
+        }
+        if ((D_800475DC & arg0) && (D_800475E4 & arg0)) {
+            D_80047594 &= temp_v1;
+        }
+        if ((D_800475DE & arg0) && (D_800475E6 & arg0)) {
+            D_8004759A &= temp_v1;
+        }
+        D_800475F8 &= temp_v1;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_8000345C_405C.s")
+#endif
 
 s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask)
 {

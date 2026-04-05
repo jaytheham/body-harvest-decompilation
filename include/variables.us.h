@@ -150,7 +150,18 @@ extern OSPfs D_80047610;
 extern Unk80047588 currentControllerStates[4]; // 0x80047588
 
 extern u16 D_800475D8[];
+extern u16 D_800475DA;
+extern u16 D_800475DC;
+extern u16 D_800475DE;
 extern u16 previousControllerButtonStates[4]; // 0x800475E0
+extern u16 D_800475E2;
+extern u16 D_800475E4;
+extern u16 D_800475E6;
+extern u16 D_80047588;
+extern u16 D_80047588_W;
+extern u16 D_8004758E;
+extern u16 D_80047594;
+extern u16 D_8004759A;
 extern u32 D_800475F8;
 extern s32 D_80047584;
 extern u32 D_8004767C;
