@@ -373,7 +373,7 @@ void func_800B33BC_C236C(s32 arg0) {
 	f32 sp20;
 	f32 sp1C;
 
-	sp1C = __cosf(D_80142E20_151DD0); sp20 = sinf(D_80142E24_151DD4);
+	sp1C = cosf(D_80142E20_151DD0); sp20 = sinf(D_80142E24_151DD4);
 	coss_val = coss(arg0);
 	D_8014FD2A = func_80003740_4340((f32)((f64)(sp20 / sp1C) / ((f64)(f32)coss_val / 32768.0))) * 2;
 	if ((s16)arg0 >= 0x2E39) {

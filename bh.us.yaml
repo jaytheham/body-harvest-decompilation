@@ -50,129 +50,169 @@ segments:
       - [0x12C80, c, core/12C80]
       - [0x1B060, c, core/1B060]
       - [0x1B100, asm, core/1B100]
-      - [0x1B7E0, asm, core/1B7E0]
-      - [0x1BA60, asm, core/1BA60]
-      - [0x1BA90, asm, core/1BA90]
-      - [0x1BBE0, asm, core/1BBE0]
-      - [0x1C670, asm, core/1C670]
-      - [0x1C7B0, asm, core/1C7B0]
-      - [0x1C830, asm, core/1C830]
-      - [0x1C8E0, asm, core/1C8E0]
-      - [0x1C8F0, asm, core/1C8F0]
-      - [0x1D120, asm, core/1D120]
-      - [0x1D230, asm, core/1D230]
-      - [0x1D850, asm, core/1D850]
-      - [0x1D890, asm, core/1D890]
-      - [0x1D900, asm, core/1D900]
-      - [0x1DCC0, asm, core/1DCC0]
-      - [0x1DD30, asm, core/1DD30]
-      - [0x1DDA0, asm, core/1DDA0]
-      - [0x1E1A0, asm, core/1E1A0]
-      - [0x1E2E0, asm, core/1E2E0]
-      - [0x1E540, asm, core/1E540]
-      - [0x1E550, asm, core/1E550]
-      - [0x1E7B0, asm, core/1E7B0]
-      - [0x1ECD0, asm, core/1ECD0]
-      - [0x1EF60, asm, core/1EF60]
-      - [0x1F1F0, asm, core/1F1F0]
-      - [0x1F520, asm, core/1F520]
-      - [0x1F5C0, asm, core/1F5C0]
-      - [0x1F980, asm, core/1F980]
-      - [0x1F9F0, asm, core/1F9F0]
-      - [0x1FBD0, asm, core/1FBD0]
-      - [0x1FE70, asm, core/1FE70]
-      - [0x1FEE0, asm, core/1FEE0]
-      - [0x1FF10, asm, core/1FF10]
-      - [0x200D0, asm, core/200D0]
-      - [0x20150, asm, core/20150]
-      - [0x201B0, asm, core/201B0]
-      - [0x202E0, asm, core/202E0]
-      - [0x202F0, asm, core/202F0]
-      - [0x20370, asm, core/20370]
-      - [0x20420, asm, core/20420]
-      - [0x20440, asm, core/20440]
-      - [0x204A0, asm, core/204A0]
-      - [0x206F0, asm, core/206F0]
-      - [0x21920, asm, core/21920]
-      - [0x22030, asm, core/22030]
-      - [0x22070, asm, core/22070]
-      - [0x22B30, asm, core/22B30]
-      - [0x22B70, asm, core/22B70]
-      - [0x22BB0, asm, core/22BB0]
-      - [0x22C80, asm, core/22C80]
-      - [0x22D10, asm, core/22D10]
-      - [0x22D70, asm, core/22D70]
-      - [0x22DD0, asm, core/22DD0]
-      - [0x22E30, asm, core/22E30]
-      - [0x22EA0, asm, core/22EA0]
-      - [0x22F70, asm, core/22F70]
-      - [0x22FD0, asm, core/22FD0]
-      - [0x23490, asm, core/23490]
-      - [0x23740, asm, core/23740]
-      - [0x237E0, asm, core/237E0]
-      - [0x23980, asm, core/23980]
-      - [0x23B90, asm, core/23B90]
-      - [0x23C50, asm, core/23C50]
-      - [0x23C60, asm, core/23C60]
-      - [0x245B0, asm, core/245B0]
-      - [0x245F0, asm, core/245F0]
-      - [0x24A80, asm, core/24A80]
-      - [0x24B30, asm, core/24B30]
-      - [0x24C10, asm, core/24C10]
-      - [0x253E0, asm, core/253E0]
-      - [0x25480, asm, core/25480]
-      - [0x26120, asm, core/26120]
-      - [0x26420, asm, core/26420]
-      - [0x27080, asm, core/27080]
-      - [0x27190, asm, core/27190]
-      - [0x273D0, asm, core/273D0]
-      - [0x27740, asm, core/27740]
-      - [0x278B0, asm, core/278B0]
-      - [0x28140, asm, core/28140]
-      - [0x281D0, asm, core/281D0]
-      - [0x282B0, asm, core/282B0]
-      - [0x28A90, asm, core/28A90]
-      - [0x28D00, asm, core/28D00]
-      - [0x28D90, asm, core/28D90]
-      - [0x28DB0, asm, core/28DB0]
-      - [0x28E60, asm, core/28E60]
-      - [0x28EE0, asm, core/28EE0]
-      - [0x28F40, asm, core/28F40]
-      - [0x28FA0, asm, core/28FA0]
-      - [0x293C0, asm, core/293C0]
-      - [0x29500, asm, core/29500]
-      - [0x29510, asm, core/29510]
-      - [0x29870, asm, core/29870]
-      - [0x29960, asm, core/29960]
-      - [0x29A60, asm, core/29A60]
-      - [0x29E30, asm, core/29E30]
-      - [0x2BC00, asm, core/2BC00]
-      - [0x2C010, asm, core/2C010]
-      - [0x2C160, asm, core/2C160]
-      - [0x2C1F0, asm, core/2C1F0]
-      - [0x2C420, asm, core/2C420]
-      - [0x2C560, asm, core/2C560]
-      - [0x2C5F0, asm, core/2C5F0]
-      - [0x2C690, asm, core/2C690]
-      - [0x2C720, asm, core/2C720]
-      - [0x2CFA0, asm, core/2CFA0]
-      - [0x2CFB0, asm, core/2CFB0]
-      - [0x2D2C0, asm, core/2D2C0]
-      - [0x2D2D0, asm, core/2D2D0]
-      - [0x2D310, asm, core/2D310]
-      - [0x2D3A0, asm, core/2D3A0]
-      - [0x2D3D0, asm, core/2D3D0]
-      - [0x2D400, asm, core/2D400]
-      - [0x2D420, asm, core/2D420]
-      - [0x2E070, asm, core/2E070]
-      - [0x2E0F0, asm, core/2E0F0]
-      - [0x2E120, asm, core/2E120]
-      - [0x2E230, asm, core/2E230]
-      - [0x2E240, asm, core/2E240]
-      - [0x2E2A0, asm, core/2E2A0]
-      - [0x2E2F0, asm, core/2E2F0]
-      - [0x2E390, asm, core/2E390]
-      - [0x2E3E0, asm, core/2E3E0]
+      - [0x1B7E0, asm, libultra/aisetfreq.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x1B940, asm, libultra/sl.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x1BA00, asm, libultra/heapalloc.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1BA60, asm, libultra/createmesgqueue.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1BA90, asm, libultra/createthread.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1BBE0, asm, libultra/startthread.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1BD30, asm, libultra/sched.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x1C670, asm, libultra/recvmesg.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1C7B0, asm, libultra/virtualtophysical.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1C830, asm, libultra/aisetnextbuf.o] # libultra 2.0E 2.0F 2.0G
+      - [0x1C8E0, asm] # aigetlen?
+      - [0x1C8F0, asm, libultra/synthesizer.o] # libultra 2.0F 2.0G 2.0I
+      - [0x1CFD0, asm, libultra/sendmesg.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1D120, asm, libultra/pidma.o] # libultra 2.0F 2.0G 2.0I
+      - [0x1D230, asm]
+      - [0x1D850, asm, libultra/syncprintf.o] # libultra 2.0I 2.0J
+      - [0x1D890, asm, libultra/seteventmesg.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x1D900, asm, libultra/controller.o] # libultra 2.0F 2.0G
+      - [0x1DCC0, asm, libultra/conteepprobe.o] # libultra 2.0E 2.0F 2.0G
+      - [0x1DD30, asm, libultra/contsetch.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x1DDA0, asm, libultra/ll.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1E060, asm] # conteeplongwrite, conteeplongread?
+      - [0x1E2E0, asm, libultra/contreaddata.o] # libultra 2.0E 2.0F 2.0G
+      - [0x1E540, asm, libultra/sqrtf.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
+      - [0x1E550, asm, libultra/coss.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1E580, asm, libultra/sins.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1E5F0, asm, libultra/ortho.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x1E7B0, asm, libultra/lookat.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x1EAE0, asm, libultra/rotate.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x1ECD0, asm, libultra/initialize.o] # libultra 2.0I
+      - [0x1EF60, asm, libultra/perspective.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1F1F0, asm, libultra/sinf.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1F3B0, asm, libultra/cosf.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1F520, asm, libultra/bzero.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1F5C0, asm, libultra/vimgr.o] # libultra 2.0F 2.0G 2.0I
+      - [0x1F920, asm]
+      - [0x1F980, asm, libultra/visetmode.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x1F9F0, asm, libultra/viswapbuf.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x1FA40, asm, libultra/pimgr.o] # libultra 2.0F 2.0G 2.0I
+      - [0x1FBD0, asm, libultra/setthreadpri.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1FCB0, asm, libultra/stopthread.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1FD70, asm, libultra/destroythread.o] # libultra 2.0E 2.0F 2.0G
+      - [0x1FE70, asm, libultra/visetevent.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x1FEE0, asm, libultra/writebackdcacheall.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
+      - [0x1FF10, asm, libultra/visetspecial.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x200D0, asm, libultra/viblack.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x20140, asm, libultra/getcount.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L
+      - [0x20150, asm, libultra/visetyscale.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x201B0, asm, libultra/visetxscale.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x202E0, asm] # pigetstat?
+      - [0x202F0, asm, libultra/invalicache.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x20370, asm, libultra/invaldcache.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x20420, asm, libultra/sndpsetsound.o] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x20440, asm, libultra/sndpgetstate.o] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x20460, asm, libultra/heapinit.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x204A0, asm, libultra/bnkf.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x206F0, asm, libultra/csplayer.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x21920, asm, libultra/sndplayer.o] # libultra 2.0F 2.0G 2.0I
+      - [0x22030, asm] # seqpsetbank, cspsetbank?
+      - [0x22070, asm, libultra/cseq.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x22B30, asm] # seqpsetseq, cspsetseq, seqpsetvol, cspsetvol, seqpplay, cspplay?
+      - [0x22BE0, asm, libultra/sndpallocate.o] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x22C80, asm, libultra/sndpsetpriority.o] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x22CB0, asm, libultra/sndpsetfxmix.o] # libultra 2.0F 2.0G 2.0I
+      - [0x22D10, asm, libultra/sndpsetpitch.o] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x22D70, asm, libultra/sndpsetvol.o] # libultra 2.0F 2.0G 2.0I
+      - [0x22DD0, asm, libultra/sndpsetpan.o] # libultra 2.0F 2.0G 2.0I
+      - [0x22E30, asm, libultra/sndpplay.o] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x22EA0, asm] # seqpstop, cspstop?
+      - [0x22ED0, asm, libultra/sndpdeallocate.o] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x22F20, asm, libultra/sndpstop.o] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x22F70, asm] # seqpsetchlvol, cspsetchlvol?
+      - [0x22FD0, asm, libultra/lookatref.o] # libultra 2.0E 2.0F 2.0G
+      - [0x23490, asm, libultra/align.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x236A0, asm, libultra/translate.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x23740, asm, libultra/scale.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x237E0, asm, libultra/rotateRPY.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x23980, asm, libultra/mtxcatf.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x23B90, asm] # mtxcatl, mtxxfml?
+      - [0x23BF0, asm, libultra/mtxcatl.o] # libultra 2.0K 2.0L
+      - [0x23C50, asm, libultra/syndelete.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
+      - [0x23C60, asm, libultra/thread.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x23CA0, asm]
+      - [0x245B0, asm, libultra/interrupt.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I
+      - [0x245F0, asm, libultra/setintmask.o] # libultra 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L
+      - [0x24690, asm, libultra/sptaskyielded.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x24710, asm] # vigetcurrframebuf, vigetnextframebuf?
+      - [0x24790, asm, libultra/sptask.o] # libultra 2.0I
+      - [0x24A80, asm, libultra/dpsetnextbuf.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x24B30, asm, libultra/sptaskyield.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x24B50, asm, libultra/probetlb.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L
+      - [0x24C10, asm, libultra/ai.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x24C40, asm, libultra/drvrNew.o] # libultra 2.0F 2.0G 2.0I
+      - [0x253E0, asm, libultra/synallocfx.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x25480, asm, libultra/mainbus.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x255D0, asm, libultra/load.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x26120, asm, libultra/resample.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x26420, asm, libultra/env.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x27080, asm, libultra/auxbus.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x27190, asm, libultra/save.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x27250, asm, libultra/jammesg.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x273A0, asm, libultra/pigetcmdq.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x273D0, asm, libultra/pfsisplug.o] # libultra 2.0F 2.0G
+      - [0x27740, asm] # siacs, piacs?
+      - [0x27800, asm, libultra/sirawdma.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x278B0, asm, libultra/crc.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x27A30, asm]
+      - [0x28140, asm, libultra/gettime.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x281D0, asm, libultra/settimer.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J
+      - [0x282B0, asm, libultra/conteepwrite.o] # libultra 2.0E 2.0F 2.0G
+      - [0x28790, asm, libultra/conteepread.o] # libultra 2.0E 2.0F 2.0G
+      - [0x28A90, asm, libultra/mtxutil.o] # libultra 2.0E 2.0F 2.0G
+      - [0x28D00, asm, libultra/normalize.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J
+      - [0x28D90, asm, libultra/setsr.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
+      - [0x28DA0, asm, libultra/getsr.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
+      - [0x28DB0, asm, libultra/setfpccsr.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
+      - [0x28DC0, asm] # sprawread, sirawread, sprawwrite, sirawwrite?
+      - [0x28E60, asm, libultra/writebackdcache.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x28EE0, asm, libultra/maptlbrdb.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
+      - [0x28F40, asm, libultra/pirawread.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x28FA0, asm, libultra/timerintr.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J
+      - [0x293A0, asm, libultra/getthreadpri.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
+      - [0x293C0, asm, libultra/vi.o] # libultra 2.0I
+      - [0x29500, asm, libultra/vigetcurrcontext.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L
+      - [0x29510, asm, libultra/viswapcontext.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x29870, asm]
+      - [0x29B20, asm, libultra/pirawdma.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x29C00, asm, libultra/epirawdma.o] # libultra 2.0I
+      - [0x29E30, asm, libultra/devmgr.o] # libultra 2.0I
+      - [0x2A2C0, asm, libultra/seqplayer.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x2BC00, asm, libultra/event.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x2BF40, asm, libultra/synaddplayer.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2BF90, asm, libultra/synstopvoice.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2C010, asm, libultra/synfreevoice.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x2C0C0, asm, libultra/synsetvol.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2C160, asm, libultra/synsetpitch.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2C1F0, asm, libultra/synallocvoice.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x2C420, asm, libultra/cents2ratio.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2C470, asm, libultra/synstartvoiceparam.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x2C560, asm, libultra/synsetpan.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2C5F0, asm, libultra/synsetfxmix.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x2C690, asm, libultra/synstartvoice.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2C720, asm, libultra/leointerrupt.o] # libultra 2.0I
+      - [0x2CFA0, asm, libultra/spgetstat.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2CFB0, asm, libultra/bcopy.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2D2C0, asm, libultra/spsetstat.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2D2D0, asm, libultra/spsetpc.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x2D310, asm, libultra/sprawdma.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x2D3A0, asm, libultra/sp.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x2D3D0, asm, libultra/dp.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x2D400, asm, libultra/filter.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
+      - [0x2D420, asm, libultra/reverb.o] # libultra 2.0F 2.0G 2.0I
+      - [0x2E070, asm, libultra/copy.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2E0F0, asm, libultra/si.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x2E120, asm]
+      - [0x2E230, asm, libultra/setcompare.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L
+      - [0x2E240, asm, libultra/resetglobalintmask.o] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2E2A0, asm, libultra/epirawwrite.o] # libultra 2.0F 2.0G
+      - [0x2E2F0, asm, libultra/epirawread.o] # libultra 2.0F 2.0G
+      - [0x2E340, asm, libultra/setglobalintmask.o] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2E390, asm, libultra/yieldthread.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x2E3E0, asm, libultra/seq.o] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x2EA00, asm, libultra/synsetpriority.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
       - [0x2EA10, bin]
 
   - name: overlay_gameplay_frontend

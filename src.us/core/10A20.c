@@ -31,7 +31,8 @@ void func_8000FE50_10A50(void *arg0) {
 	func_80070270(1);
 }
 
-void __osSiCreateAccessQueue(void) {
+// __osSiCreateAccessQueue duplicate ?
+void func_8000FEF0_10AF0(void) {
 	__osSiAccessQueueEnabled = 1;
 	osCreateMesgQueue(&__osSiAccessQueue, &siacs_bss_0000, 1);
 	osSendMesg(&__osSiAccessQueue, 0, 0);
@@ -39,11 +40,12 @@ void __osSiCreateAccessQueue(void) {
 
 void func_8000FF40_10B40(void) {
 	if (__osSiAccessQueueEnabled == 0) {
-		__osSiCreateAccessQueue();
+		func_8000FEF0_10AF0();
 	}
 	osRecvMesg(&__osSiAccessQueue, &D_80068038, 1);
 }
 
-void __osSiRelAccess(void) {
+// __osSiRelAccess duplicate ?
+void func_8000FF88_10B88(void) {
 	osSendMesg(&__osSiAccessQueue, 0, 0);
 }

@@ -16,7 +16,7 @@ CYAN    := \033[0;36m
 
 BUILD_DIR = build
 ASM_DIRS  = asm \
-			asm/data \
+			asm/libultra \
 			asm/core \
 			asm/overlay_gameplay/frontend asm/overlay_gameplay/outside asm/overlay_gameplay/inside \
 			asm/overlay_level/greece \

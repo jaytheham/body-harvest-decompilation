@@ -19,7 +19,7 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	if (D_80068078 == 1) {
 		return 0;
 	}
-	func_8001F2E0_1FEE0();
+	osWritebackDCacheAll();
 	var_s1 = arg1;
 	var_s2 = arg2;
 	temp_t7 = arg3 / 2048;
@@ -83,7 +83,7 @@ s32 func_800101F0_10DF0(s32 arg0, s32 arg1, s32 arg2) {
 void func_80010228_10E28(u32 rom_addr, void *dest_buffer) {
 	OSIoMesg io_msg;
 
-	func_8001F2E0_1FEE0();
+	osWritebackDCacheAll();
 	osPiStartDma(&io_msg, 0, 0, rom_addr, dest_buffer, 0x18, &D_80067F70);
 	osRecvMesg(&D_80067F70, NULL, 1);
 }

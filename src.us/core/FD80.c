@@ -49,7 +49,7 @@ void func_8000F368_FF68(void) {
 
 #ifdef NON_MATCHING
 void func_8000F478_10078(BhGfxTask *arg0) {
-    func_8001F2E0_1FEE0();
+    osWritebackDCacheAll();
     arg0->list.t.data_ptr = (u64 *)(D_8005BB20 + 0x280);
     arg0->list.t.data_size = (((u8 *)D_8005BB2C - D_8005BB20) - 0x280) >> 3 << 3;
     arg0->list.t.ucode_boot_size = (u32)((u8 *)D_8002DEE0_2EAE0 - (u8 *)rspbootTextStart);
@@ -80,7 +80,7 @@ void func_8000F478_10078(BhGfxTask *arg0) {
 void func_8000F5A8_101A8(s32 arg0, s32 arg1, s32 arg2) {
 	OSIoMesg sp28;
 
-	func_8001F2E0_1FEE0();
+	osWritebackDCacheAll();
 	osPiStartDma(&sp28, 0, 0, arg0, (void *)arg1, arg2, &D_80067FD0);
 	osRecvMesg(&D_80067FD0, &D_80068038, 1);
 }

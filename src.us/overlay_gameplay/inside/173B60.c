@@ -161,7 +161,7 @@ void func_8008D900_1759C0(void) {
 		}
 		D_800A4370 = 0;
 	}
-	func_8001F2E0_1FEE0();
+	osWritebackDCacheAll();
 	temp_v0 = D_8005BB2C;
 	D_8005BB2C = temp_v0 + 1;
 	temp_v0->words.w0 = 0xB6000000;

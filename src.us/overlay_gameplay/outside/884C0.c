@@ -2416,7 +2416,7 @@ void func_800868A4_95854(u8 arg0, s32 arg1, s16 arg2, s16 arg3)
   sp40 = ((f64) ((f32) sins((alienInstances[arg0].unk6 + arg2)))) / 32768.0;
   sp48 = (s32) (((f64) alienInstances[arg0].unk4) + (D_80141E48 * sp40));
   temp_f12 = (f32) ((((f64) ((f32) arg3)) * D_80141E50) / (32768.0 * 1.0));
-  sp30 = __cosf(temp_f12);
+  sp30 = cosf(temp_f12);
   sp2C = sinf(temp_f12) / sp30;
   sp4C = (s32) (((f32) alienInstances[arg0].unk2) + (D_80141E58 * sp2C));
   func_800865F4_955A4(arg0, arg1, sp50, sp4C, sp48);
