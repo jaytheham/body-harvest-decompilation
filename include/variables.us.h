@@ -94,6 +94,7 @@ extern s8 D_800314C4;
 extern s8 D_80031720_32320[]; // maxHumanDeathsAllowed?
 extern OSMesg D_800314CC;
 extern u8 D_80031B58_32758;
+extern Vp D_80031B60_32760[];
 extern s32 D_80031B84;
 extern s8 D_80031CA4;
 extern s16 D_80031CD4_328D4;
@@ -300,6 +301,8 @@ extern Gfx *D_8005BB2C;
 extern Gfx *D_8005BB30;
 extern Vtx *D_8005BB34;
 extern s32 D_8005BB38;
+extern s32 D_8005BB3C;
+extern s32 D_8005BB40;
 extern s32 D_8006AA6C;
 extern u16 D_8013D50C;
 extern s16 D_8013D510;
@@ -330,6 +333,8 @@ extern u8 D_1001B50[];
 extern u8 D_10031E0[];
 extern u8* D_8005BB20;
 extern s32 D_8005BB24;
+extern s32 D_8005BB28;
+extern u8 D_801CE710;
 extern s32 D_8005BB48[];
 extern s32 D_8005BB4C[];
 
