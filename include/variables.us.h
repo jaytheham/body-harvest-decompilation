@@ -1822,4 +1822,14 @@ extern f32 D_80031D64_32964;
 extern s32 D_80031D74_32974[];
 extern f32 D_80033CAC_348AC[];
 
+extern OSSched D_800680A0;
+extern OSMesgQueue D_8006A908;
+extern BhGfxTask D_8006A940[];
+extern u64 D_8002DEE0_2EAE0[];
+extern u64 D_8003E860_3F460[];
+extern u64 D_80160300[];
+extern u64 D_80161700[];
+extern u64 D_80165700[];
+extern u64 D_80160B00[];
+
 #endif

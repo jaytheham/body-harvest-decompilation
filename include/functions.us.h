@@ -76,6 +76,7 @@ void func_80011E14_12A14(u8 arg0);
 s32 func_80070270(s32 arg0);
 #endif
 void func_8000F618_10218(void);
+void func_8000F478_10078(BhGfxTask *arg0);
 void func_80001984_2584(void);
 void loadFrontendData(void);
 void func_8001A460_1B060(LzssHeader *data, u8 *out);

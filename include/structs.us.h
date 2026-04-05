@@ -1365,4 +1365,20 @@ typedef struct {
 	/* 0x10 */ s32 unk10;
 } Unk80047FB8; /* size = 0x14 */
 
+typedef struct BhGfxTask_s {
+    /* 0x00 */ struct BhGfxTask_s *next;
+    /* 0x04 */ u32 state;
+    /* 0x08 */ u32 flags;
+    /* 0x0C */ void *framebuffer;
+    /* 0x10 */ OSTask list;
+    /* 0x50 */ OSMesgQueue *msgQ;
+    /* 0x54 */ OSMesg msg;
+    /* 0x58 */ u8 unk58[0x10];
+    /* 0x68 */ s16 unk68;
+    /* 0x6A */ u8 unk6A[0x1E];
+    /* 0x88 */ void *unk88;
+    /* 0x8C */ u32 unk8C;
+} BhGfxTask; /* size = 0x90 */
+
 #endif
+

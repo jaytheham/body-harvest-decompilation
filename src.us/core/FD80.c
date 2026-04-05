@@ -47,7 +47,35 @@ void func_8000F368_FF68(void) {
     ((Vp *)D_8005BB24)->vp.vtrans[1] = (s16)(D_80068088 * 2);
 }
 
+#ifdef NON_MATCHING
+void func_8000F478_10078(BhGfxTask *arg0) {
+    func_8001F2E0_1FEE0();
+    arg0->list.t.data_ptr = (u64 *)(D_8005BB20 + 0x280);
+    arg0->list.t.data_size = (((u8 *)D_8005BB2C - D_8005BB20) - 0x280) >> 3 << 3;
+    arg0->list.t.ucode_boot_size = (u32)((u8 *)D_8002DEE0_2EAE0 - (u8 *)rspbootTextStart);
+    arg0->list.t.type = 1;
+    arg0->list.t.flags = 6;
+    arg0->list.t.ucode_data = (u64 *)D_8003E860_3F460;
+    arg0->list.t.ucode_data_size = 0x800;
+    arg0->list.t.ucode = (u64 *)D_8002DEE0_2EAE0;
+    arg0->list.t.ucode_size = 0x1000;
+    arg0->list.t.ucode_boot = (u64 *)rspbootTextStart;
+    arg0->list.t.dram_stack = (u64 *)D_80160300;
+    arg0->list.t.dram_stack_size = 0x400;
+    arg0->list.t.output_buff = (u64 *)D_80161700;
+    arg0->list.t.output_buff_size = (u64 *)D_80165700;
+    arg0->list.t.yield_data_ptr = (u64 *)D_80160B00;
+    arg0->list.t.yield_data_size = 0xC00;
+    arg0->next = NULL;
+    arg0->flags = 0x63;
+    arg0->msgQ = &D_8006A908;
+    arg0->msg = (OSMesg)((u8 *)arg0 + 0x68);
+    arg0->framebuffer = arg0->unk88;
+    osSendMesg(osScGetCmdQ(&D_800680A0), (OSMesg)arg0, OS_MESG_BLOCK);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F478_10078.s")
+#endif
 
 void func_8000F5A8_101A8(s32 arg0, s32 arg1, s32 arg2) {
 	OSIoMesg sp28;
