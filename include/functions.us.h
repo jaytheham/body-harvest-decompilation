@@ -825,7 +825,7 @@ void func_80008C18_9818(void);
 s32 func_80008C44_9844(s32 arg0);
 void playMapMusic(void);
 void playInventoryMusic(void);
-void guess_displayInventory(void);
+s32 guess_displayInventory(void);
 // isButtonNewlyPressed declared in 1000.c, and declared in variables.us.h
 void func_800E8190_F7140(void);
 void func_800EFFB4_FEF64(void);

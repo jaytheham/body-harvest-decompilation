@@ -673,4 +673,33 @@ s32 func_80009F18_AB18(s32 arg0) {
 	return sp1C;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_displayInventory.s")
+s32 guess_displayInventory(void) {
+	s32 sp1C;
+
+	func_8000505C_5C5C();
+	func_800050C4_5CC4();
+	func_8000DC9C_E89C(*(s32*)((u8*)D_8005BB48 + D_80031B84 * 4), *(s32*)((u8*)D_8005BB4C + (-(D_80031B84 * 4))));
+	func_8000AFDC_BBDC();
+	func_8000505C_5C5C();
+	func_800050C4_5CC4();
+	osSetTime(D_80068084, D_80068088);
+	func_8000E4C4_F0C4(1);
+	func_8000505C_5C5C();
+	func_80011D24_12924();
+	loadFrontendData();
+	setFullResolution();
+	sp1C = func_80070270(0xB);
+	func_800056A8_62A8();
+	func_800056A8_62A8();
+	setGameplayResolution();
+	func_80011674_12274();
+	if (D_80052ACA == 2 && currentLevel != 5) {
+		func_80011D6C_1296C(6);
+	} else {
+		func_80011D6C_1296C(D_80047F93);
+	}
+	gameplayMode = 1;
+	func_800050C4_5CC4();
+	func_80013324_13F24();
+	return sp1C;
+}
