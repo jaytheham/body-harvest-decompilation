@@ -1005,7 +1005,9 @@ typedef struct {
 } Unk80052B40_fp; /* size = 0x0C */
 
 typedef struct {
-	/* 0x000 */ u8 pad0[0xE50];
+	/* 0x000 */ u8 pad0[0x8];
+	/* 0x008 */ s32 unk8; /* num animation frames */
+	/* 0x00C */ u8 pad0C[0xE44];
 	/* 0xE50 */ s32 unkE50;
 } Unk8007F878_404; /* size = 0xE54 */
 
@@ -1030,9 +1032,12 @@ typedef struct {
 	/* 0x18 */ s32 unk18;
 	/* 0x1C */ f32 unk1C;
 	/* 0x20 */ f32 unk20;
-	/* 0x24 */ s32 unk24;
-	/* 0x28 */ s32 unk28;
-	/* 0x2C */ s32 unk2C;
+	/* 0x24 */ s16 unk24;
+	/* 0x26 */ s16 unk26;
+	/* 0x28 */ s16 unk28;
+	/* 0x2A */ s16 unk2A;
+	/* 0x2C */ s16 unk2C;
+	/* 0x2E */ s16 unk2E;
 	/* 0x30 */ u16 unk30;
 	/* 0x32 */ u8 pad32[0xE];
 } AnimChannelState; /* size = 0x40 */

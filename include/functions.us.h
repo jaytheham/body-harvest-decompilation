@@ -55,7 +55,7 @@ void func_8000CF4C_DB4C(void *arg0, void *arg1, u8 arg2, s32 arg3);
 void func_8007DAA8_165B68(void *arg0, s32 arg1, void *arg2, f32 arg3, s32 arg4);
 void func_8000D71C_E31C(void *arg0, void *arg1, void *arg2, s32 arg3, s32 arg4, s32 arg5, f32 arg6, s32 arg7);
 void func_8000CD54_D954(void *arg0, AnimChannelState *arg1, u8 arg2);
-void func_8000CDFC_D9FC(void *arg0, void *arg1, s32 arg2, s32 arg3, s32 arg4);
+s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8000D278_DE78(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, s32 arg3);
 void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, u8 arg3, f32 arg4);
 void func_8000DAFC_E6FC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, f32 arg5);
