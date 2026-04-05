@@ -272,7 +272,39 @@ void getSaveFileName(s32 arg0, u8 *arg1)
 	arg1[6] = 0;
 }
 
+#ifdef NON_MATCHING
+s32 func_80002B20_3720(s32 arg0) {
+    s32 a1 = arg0 * 0x7A;
+    u8 *a2 = (u8 *)&D_800431C0 + a1;
+    u8 *a0 = (u8 *)((u32)&D_800431C0 + a1 + 2 * 8);
+    s32 v1 = a2[0x53];
+    v1 += a2[0x54] << 8;
+    v1 += a2[0x55] << 16;
+    v1 += a2[0x56] << 24;
+    v1 += a2[0x5B];
+    v1 += a2[0x5C] << 8;
+    v1 += a2[0x5D] << 16;
+    v1 += a2[0x5E] << 24;
+    v1 += a0[0x53];
+    v1 += a0[0x54] << 8;
+    v1 += a0[0x55] << 16;
+    v1 += a0[0x56] << 24;
+    v1 += a0[0x5B];
+    v1 += a0[0x5C] << 8;
+    v1 += a0[0x5D] << 16;
+    v1 += a0[0x5E] << 24;
+    v1 += a0[0x63];
+    v1 += a0[0x64] << 8;
+    v1 += a0[0x65] << 16;
+    v1 += a0[0x66] << 24;
+    v1 += a0[0x6B];
+    v1 += a0[0x6C] << 8;
+    v1 += a0[0x6D] << 16;
+    return v1 + (a0[0x6E] << 24);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80002B20_3720.s")
+#endif
 
 s32 func_80002C58_3858(s32 arg0)
 {
