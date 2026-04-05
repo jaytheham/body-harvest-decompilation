@@ -601,7 +601,35 @@ void func_80014208_14E08(s32 arg0, s16 arg1, s32 arg2) {
 	}
 }
 
+#ifdef NON_MATCHING
+s32 func_80014278_14E78(void) {
+	Unk8006AA80Node sp50;
+
+	if (D_8006AB88 == 0) {
+		return -1;
+	}
+
+	sp50.unk0 = D_80032EBA_33ABA[(currentLevel * 504) + (D_80052B34->unk1A * 24)];
+
+	if (sp50.unk0 == -1) {
+		return -1;
+	}
+
+	sp50.unk2 = D_80032228_32E28[sp50.unk0 & 0xFFFF];
+	sp50.unk6 = -1;
+	sp50.unk8 = 0;
+	sp50.unk0C = 0;
+	sp50.unk0E = -1;
+	sp50.unk0F = -1;
+	sp50.unk20 = D_80031F04_32B04[sp50.unk0];
+	sp50.unk22 = 0x40;
+	sp50.unk24 = D_80032A78_33678[sp50.unk0 & 0xFFFF];
+
+	return func_800121B4_12DB4(sp50, &D_8006AA80, &D_8006AA84);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014278_14E78.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_800143C4_14FC4(s16 arg0) {
