@@ -109,18 +109,22 @@ typedef struct {
 
 typedef struct Unk8006AA80Node {
 	/* 0x00 */ u16 unk0;
-	/* 0x02 */ u8 pad2[0x2];
+	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s32 unk8;
-	/* 0x0C */ u8 pad0C[0x14];
+	/* 0x0C */ s16 unk0C;
+	/* 0x0E */ s8 unk0E;
+	/* 0x0F */ u8 pad0F[0x11];
 	/* 0x20 */ s16 unk20;
-	/* 0x22 */ u8 pad22[0x6];
+	/* 0x22 */ s8 unk22;
+	/* 0x23 */ u8 pad23;
+	/* 0x24 */ f32 unk24;
 	/* 0x28 */ s32 unk28;
 	/* 0x2C */ s32 unk2C;
 	/* 0x30 */ struct Unk8006AA80Node *unk30;
 	/* 0x34 */ struct Unk8006AA80Node *unk34;
-} Unk8006AA80Node;
+} Unk8006AA80Node; /* size = 0x38 */
 
 typedef struct Unk8006AA84Node {
 	/* 0x00 */ u16 unk0;

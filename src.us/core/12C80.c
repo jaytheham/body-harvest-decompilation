@@ -620,7 +620,30 @@ void func_80015388_15F88(s16 arg0) {
 	func_80014A3C_1563C((s32)sp24, arg0, 0, 0, -1.0f);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800153D8_15FD8.s")
+void func_800153D8_15FD8(s16 arg0) {
+    Unk8006AA80Node sp60;
+    s32 pad1;
+    s32 pad2;
+    s32 pad3;
+    s32 pad4;
+
+    if ((D_8006AB88 != 0) && (arg0 != -1) && (arg0 != -1)) {
+        if (arg0 == 0xC6) {
+            arg0 = 0xCD;
+        }
+        sp60.unk0 = arg0;
+        sp60.unk2 = D_80032228_32E28[arg0];
+        sp60.unk6 = -1;
+        sp60.unk0C = 0;
+        sp60.unk8 = 0;
+        sp60.unk22 = 0x40;
+        sp60.unk0E = -1;
+        sp60.unk2C = 0;
+        sp60.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
+        sp60.unk20 = D_80031F04_32B04[arg0];
+        func_800121B4_12DB4(sp60, &D_8006AA80, &D_8006AA84);
+    }
+}
 
 void func_80015500_16100(s16 arg0, s16 arg1) {
 	s16 sp1E;
