@@ -70,6 +70,8 @@ extern Gfx D_800311D0[];
 extern Gfx D_80031200[];
 extern Gfx D_80031230[];
 extern Gfx D_80031260[];
+extern u32 D_800312F0_31EF0;
+extern u32 D_800312F8_31EF8;
 extern u32 D_800313CC;
 extern s16 D_800313C8;
 extern s16 D_800313D0; // Language
@@ -143,7 +145,8 @@ extern s16 D_8003E0EE[];
 extern GateEntry D_8003E0FC[5][8]; // shield wall gates by level
 
 extern Unk80042DA8 D_80042DA8;
-extern u8 D_80042DB8;
+extern Unk80042DB8 D_80042DB8;
+extern u32 D_800431A0;
 extern u8 D_80043243;
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
@@ -1556,6 +1559,7 @@ extern void (*D_802DF350[])(s32);
 
 /* core/loader */
 extern s16 D_80068078;
+extern OSMesgQueue D_80067F58;
 extern OSMesgQueue D_80067F70;
 extern s32 D_8006AA60;
 extern s32 D_8006AA64;

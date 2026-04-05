@@ -459,11 +459,18 @@ typedef struct {
 	/* 0x10 */ s16 unk10;
 } Unk8014F6D0; /* size = 0x12 */
 
+typedef struct Unk80042DB8 {
+	/* 0x00 */ struct Unk80042DB8 *unk0;
+	/* 0x04 */ struct Unk80042DB8 *unk4;
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ s32 unkC;
+} Unk80042DB8;
+
 typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 pad1[3];
-	/* 0x04 */ s32 unk4;
-	/* 0x08 */ void* unk8;
+	/* 0x04 */ Unk80042DB8 *unk4;
+	/* 0x08 */ Unk80042DB8 *unk8;
 } Unk80042DA8; /* size = 0x0C */
 
 typedef struct {

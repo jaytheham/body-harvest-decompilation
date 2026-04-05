@@ -31,7 +31,49 @@ void* (*func_80000CD4_18D4(Unk80042DA8** arg0))(void) {
 	return &func_80000B14_1714;
 }
 
+#ifdef NON_MATCHING
+void func_80000D0C_190C(void) {
+	OSMesg sp40;
+	u32 var_s0;
+	Unk80042DB8 *var_s0_2;
+	Unk80042DB8 *temp_v0;
+
+	var_s0 = 0;
+	if (D_800312F0_31EF0 != 0) {
+		do {
+			osRecvMesg(&D_80067F58, &sp40, 0);
+			var_s0 += 1;
+		} while (var_s0 < (u32) D_800312F0_31EF0);
+	}
+	var_s0_2 = D_80042DA8.unk4;
+	if (var_s0_2 != NULL) {
+		do {
+			temp_v0 = var_s0_2->unk0;
+			if ((u32) (var_s0_2->unkC + 1) < (u32) D_800431A0) {
+				if (var_s0_2 == D_80042DA8.unk4) {
+					D_80042DA8.unk4 = temp_v0;
+				}
+				alUnlink((ALLink*)var_s0_2);
+				if (D_80042DA8.unk8 != NULL) {
+					alLink((ALLink*)var_s0_2, (ALLink*)D_80042DA8.unk8);
+				} else {
+					D_80042DA8.unk8 = var_s0_2;
+					var_s0_2->unk0 = NULL;
+					var_s0_2->unk4 = NULL;
+				}
+			}
+			var_s0_2 = temp_v0;
+		} while (temp_v0 != NULL);
+	}
+	if ((u32) D_800312F8_31EF8 < D_800312F0_31EF0) {
+		D_800312F8_31EF8 = D_800312F0_31EF0;
+	}
+	D_800312F0_31EF0 = 0;
+	D_800431A0 += 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000D0C_190C.s")
+#endif
 
 void checkForRumblePak(void) {
 	if (osMotorInit(&D_80043388, &D_80047610, 0) != 0) {
