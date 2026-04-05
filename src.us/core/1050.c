@@ -31,7 +31,49 @@ void* (*func_80000CD4_18D4(Unk80042DA8** arg0))(void) {
 	return &func_80000B14_1714;
 }
 
+#ifdef NON_MATCHING
+void func_80000D0C_190C(void) {
+	OSMesg sp40;
+	u32 var_s0;
+	Unk80042DB8 *var_s0_2;
+	Unk80042DB8 *temp_v0;
+
+	var_s0 = 0;
+	if (D_800312F0_31EF0 != 0) {
+		do {
+			osRecvMesg(&D_80067F58, &sp40, 0);
+			var_s0 += 1;
+		} while (var_s0 < (u32) D_800312F0_31EF0);
+	}
+	var_s0_2 = D_80042DA8.unk4;
+	if (var_s0_2 != NULL) {
+		do {
+			temp_v0 = var_s0_2->unk0;
+			if ((u32) (var_s0_2->unkC + 1) < (u32) D_800431A0) {
+				if (var_s0_2 == D_80042DA8.unk4) {
+					D_80042DA8.unk4 = temp_v0;
+				}
+				alUnlink((ALLink*)var_s0_2);
+				if (D_80042DA8.unk8 != NULL) {
+					alLink((ALLink*)var_s0_2, (ALLink*)D_80042DA8.unk8);
+				} else {
+					D_80042DA8.unk8 = var_s0_2;
+					var_s0_2->unk0 = NULL;
+					var_s0_2->unk4 = NULL;
+				}
+			}
+			var_s0_2 = temp_v0;
+		} while (temp_v0 != NULL);
+	}
+	if ((u32) D_800312F8_31EF8 < D_800312F0_31EF0) {
+		D_800312F8_31EF8 = D_800312F0_31EF0;
+	}
+	D_800312F0_31EF0 = 0;
+	D_800431A0 += 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000D0C_190C.s")
+#endif
 
 void checkForRumblePak(void) {
 	if (osMotorInit(&D_80043388, &D_80047610, 0) != 0) {
@@ -164,9 +206,73 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/validateSaveVersionAndChecksum.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800016D8_22D8.s")
+#ifdef NON_MATCHING
+void func_800016D8_22D8(void) {
+	u16 j;
+	u16 idx;
+	u16 i;
+	s32 unk10;
 
+	D_800431C8 = (s8) D_800313D0;
+	idx = 9;
+	i = 0;
+	do {
+		j = 0;
+		do {
+			(&D_800431C0)[idx] = (&D_80047FB8[i].unk0)[j];
+			j++;
+			idx++;
+		} while (j < 6);
+		(&D_800431C0)[idx++] = (s8)(D_80047FB8[i].unk8);
+		(&D_800431C0)[idx++] = (s8)(D_80047FB8[i].unk8 >> 8);
+		(&D_800431C0)[idx++] = (s8)(D_80047FB8[i].unk8 >> 16);
+		(&D_800431C0)[idx++] = (s8)(D_80047FB8[i].unk8 >> 24);
+		(&D_800431C0)[idx++] = (s8)(D_80047FB8[i].unkC);
+		unk10 = D_80047FB8[i].unk10;
+		i++;
+		(&D_800431C0)[idx++] = (s8)(unk10);
+		(&D_800431C0)[idx++] = (s8)(unk10 >> 8);
+		(&D_800431C0)[idx++] = (s8)(unk10 >> 16);
+	} while (i < 5);
+	func_800015B4_21B4(4, 0x47);
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800016D8_22D8.s")
+#endif
+
+#ifdef NON_MATCHING
+void func_80001830_2430(void) {
+	u16 j;
+	u16 idx;
+	u16 i;
+	s32 unk10;
+
+	D_800431C8 = 0xFF;
+	idx = 9;
+	i = 0;
+	do {
+		j = 0;
+		do {
+			(&D_800431C0)[idx] = (&D_80031310_31F10[i].unk0)[j];
+			j++;
+			idx++;
+		} while (j < 6);
+		(&D_800431C0)[idx++] = (s8)(D_80031310_31F10[i].unk8);
+		(&D_800431C0)[idx++] = (s8)(D_80031310_31F10[i].unk8 >> 8);
+		(&D_800431C0)[idx++] = (s8)(D_80031310_31F10[i].unk8 >> 16);
+		(&D_800431C0)[idx++] = (s8)(D_80031310_31F10[i].unk8 >> 24);
+		(&D_800431C0)[idx++] = (s8)(D_80031310_31F10[i].unkC);
+		unk10 = D_80031310_31F10[i].unk10;
+		i++;
+		(&D_800431C0)[idx++] = (s8)(unk10);
+		(&D_800431C0)[idx++] = (s8)(unk10 >> 8);
+		(&D_800431C0)[idx++] = (s8)(unk10 >> 16);
+	} while (i < 5);
+	func_800015B4_21B4(4, 0x47);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001830_2430.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80001984_2584(void) {
@@ -406,7 +512,31 @@ void func_800033D4_3FD4(u32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800033D4_3FD4.s")
 #endif
 
+// https://decomp.me/scratch/
+#ifdef NON_MATCHING
+void func_8000345C_405C(u16 arg0) {
+    s32 temp_v1;
+
+    if (!(D_800313C8 & 8)) {
+        if ((D_800475D8[0] & arg0) && (previousControllerButtonStates[0] & arg0)) {
+            D_80047588_W = D_80047588 & ~arg0;
+        }
+        temp_v1 = ~arg0;
+        if ((D_800475DA & arg0) && (D_800475E2 & arg0)) {
+            D_8004758E &= temp_v1;
+        }
+        if ((D_800475DC & arg0) && (D_800475E4 & arg0)) {
+            D_80047594 &= temp_v1;
+        }
+        if ((D_800475DE & arg0) && (D_800475E6 & arg0)) {
+            D_8004759A &= temp_v1;
+        }
+        D_800475F8 &= temp_v1;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_8000345C_405C.s")
+#endif
 
 s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask)
 {

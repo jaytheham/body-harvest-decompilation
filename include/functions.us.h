@@ -5,6 +5,7 @@
 
 // core
 void func_80012080_12C80(s32 arg0);
+s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA84Node **arg2);
 void func_80013E64_14A64(s8 arg0);
 void *func_8000C6F4_D2F4(void);
 void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2);
@@ -47,6 +48,7 @@ void func_80007900_8500(u8 *arg0);
 void func_80007A20_8620(u8 *arg0);
 void func_80007C78_8878(u8 *arg0);
 s32 func_80007F60_8B60(u8 *arg0);
+s32 func_8000807C_8C7C(u8 *arg0, u8 *arg1);
 void func_80073DC0_82D70(s32);
 s32 func_80009F18_AB18(s32);
 void func_8000A160(void);
@@ -54,8 +56,10 @@ void func_8000CF4C_DB4C(void *arg0, void *arg1, u8 arg2, s32 arg3);
 void func_8007DAA8_165B68(void *arg0, s32 arg1, void *arg2, f32 arg3, s32 arg4);
 void func_8000D71C_E31C(void *arg0, void *arg1, void *arg2, s32 arg3, s32 arg4, s32 arg5, f32 arg6, s32 arg7);
 void func_8000CD54_D954(void *arg0, AnimChannelState *arg1, u8 arg2);
-void func_8000CDFC_D9FC(void *arg0, void *arg1, s32 arg2, s32 arg3, s32 arg4);
+s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8000D278_DE78(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, s32 arg3);
+void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, u8 arg3, f32 arg4);
+void func_8000DAFC_E6FC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, f32 arg5);
 void func_8000DC9C_E89C(s32, s32);
 void func_8000E4C4_F0C4(s32 arg0);
 #ifdef GAME_OSSETTIME_IMPL
@@ -73,6 +77,7 @@ void func_80011E14_12A14(u8 arg0);
 s32 func_80070270(s32 arg0);
 #endif
 void func_8000F618_10218(void);
+void func_8000F478_10078(BhGfxTask *arg0);
 void func_80001984_2584(void);
 void loadFrontendData(void);
 void func_8001A460_1B060(LzssHeader *data, u8 *out);
@@ -102,6 +107,7 @@ void func_8001F820_20420(s32 arg0, s16 arg1);
 s32 func_8001F840_20440(s32 arg0);
 void func_800156C8_162C8(u8 arg0);
 void func_8001599C_1659C(void);
+void func_80016C14_17814(s8 arg0, f32 arg1, f32 arg2, f32 arg3);
 void func_80016ABC_176BC(s8 arg0);
 void func_80017AAC_186AC(void);
 void func_80017AE0_186E0(void);
@@ -114,6 +120,7 @@ s32 func_80018A58_19658(void);
 void func_800E7B20_F6AD0(s32 arg0, s32 arg1);
 s32 func_800101F0_10DF0(s32 arg0, s32 arg1, s32 arg2);
 s32 func_80010290_10E90(s32 arg0);
+s32 func_800104AC_110AC(u8 arg0);
 
 // overlay_gameplay frontend
 s32 func_80070390_40840(void);
@@ -558,7 +565,7 @@ void func_80132740_1416F0(Unk80160080 *arg0);
 void func_801330E4_142094(Unk80160080 *arg0);
 void func_800B33BC_C236C(s32 arg0);
 void func_80135CB8_144C68(void);
-void func_8000345C_405C(s32 arg0);
+void func_8000345C_405C(u16 arg0);
 void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2);
 void func_801333D0_142380(void);
 void func_801336CC_14267C(Unk80160080 *arg0, Vec3f *arg1);

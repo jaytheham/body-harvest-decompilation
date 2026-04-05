@@ -70,6 +70,9 @@ extern Gfx D_800311D0[];
 extern Gfx D_80031200[];
 extern Gfx D_80031230[];
 extern Gfx D_80031260[];
+extern u32 D_800312F0_31EF0;
+extern u32 D_800312F8_31EF8;
+extern Unk80047FB8 D_80031310_31F10[5];
 extern u32 D_800313CC;
 extern s16 D_800313C8;
 extern s16 D_800313D0; // Language
@@ -143,14 +146,26 @@ extern s16 D_8003E0EE[];
 extern GateEntry D_8003E0FC[5][8]; // shield wall gates by level
 
 extern Unk80042DA8 D_80042DA8;
-extern u8 D_80042DB8;
+extern Unk80042DB8 D_80042DB8;
+extern u32 D_800431A0;
 extern u8 D_80043243;
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
 extern Unk80047588 currentControllerStates[4]; // 0x80047588
 
 extern u16 D_800475D8[];
+extern u16 D_800475DA;
+extern u16 D_800475DC;
+extern u16 D_800475DE;
 extern u16 previousControllerButtonStates[4]; // 0x800475E0
+extern u16 D_800475E2;
+extern u16 D_800475E4;
+extern u16 D_800475E6;
+extern u16 D_80047588;
+extern u16 D_80047588_W;
+extern u16 D_8004758E;
+extern u16 D_80047594;
+extern u16 D_8004759A;
 extern u32 D_800475F8;
 extern s32 D_80047584;
 extern u32 D_8004767C;
@@ -205,6 +220,8 @@ extern u8 D_80048024;
 extern u8 D_80048025;
 extern s32 showDemoText;
 extern u8 weaponSlots[7]; // 80048138
+extern u8 D_80048139;
+extern u8 D_8004813A;
 extern u8 D_8004813F;
 extern s16 D_80048140[];
 extern s16 D_80048156;
@@ -244,6 +261,8 @@ extern Unk8004D1C8 D_8004D1C8[];
 extern u8 D_80047F93;
 extern AlienInstance D_8004D0F8[]; // alien array base
 extern BitFlags64 D_8004DC48;
+extern BitFlags64 D_8004DC50;
+extern u8 D_8004DC5C;
 extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
 extern u16 D_8004DC5E;
@@ -359,6 +378,10 @@ extern s32 D_80031CA0_328A0;
 extern Unk80031424 *D_8006AB18[];
 extern s32 D_8006AB10;
 extern s32 D_8006AB88;
+extern u8 D_80032228_32E28[];
+extern s16 D_80031F04_32B04[];
+extern f32 D_80032A78_33678[];
+extern s16 D_80032EBA_33ABA[];
 extern s16 D_80031CAC_328AC;
 extern BhSeqFile *D_8006AB44;
 extern s32 D_8006AB30[];
@@ -1538,6 +1561,7 @@ extern void (*D_802DF350[])(s32);
 
 /* core/loader */
 extern s16 D_80068078;
+extern OSMesgQueue D_80067F58;
 extern OSMesgQueue D_80067F70;
 extern s32 D_8006AA60;
 extern s32 D_8006AA64;
@@ -1800,5 +1824,18 @@ extern f32 D_80031D54_32954;
 extern f32 D_80031D58_32958;
 extern f32 D_80031D5C_3295C;
 extern f32 D_80031D60_32960;
+extern f32 D_80031D64_32964;
+extern s32 D_80031D74_32974[];
+extern f32 D_80033CAC_348AC[];
+
+extern OSSched D_800680A0;
+extern OSMesgQueue D_8006A908;
+extern BhGfxTask D_8006A940[];
+extern u64 D_8002DEE0_2EAE0[];
+extern u64 D_8003E860_3F460[];
+extern u64 D_80160300[];
+extern u64 D_80161700[];
+extern u64 D_80165700[];
+extern u64 D_80160B00[];
 
 #endif

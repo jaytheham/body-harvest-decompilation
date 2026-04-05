@@ -109,18 +109,23 @@ typedef struct {
 
 typedef struct Unk8006AA80Node {
 	/* 0x00 */ u16 unk0;
-	/* 0x02 */ u8 pad2[0x2];
+	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s32 unk8;
-	/* 0x0C */ u8 pad0C[0x14];
+	/* 0x0C */ s16 unk0C;
+	/* 0x0E */ s8 unk0E;
+	/* 0x0F */ s8 unk0F;
+	/* 0x10 */ u8 pad10[0x10];
 	/* 0x20 */ s16 unk20;
-	/* 0x22 */ u8 pad22[0x6];
+	/* 0x22 */ s8 unk22;
+	/* 0x23 */ u8 pad23;
+	/* 0x24 */ f32 unk24;
 	/* 0x28 */ s32 unk28;
 	/* 0x2C */ s32 unk2C;
 	/* 0x30 */ struct Unk8006AA80Node *unk30;
 	/* 0x34 */ struct Unk8006AA80Node *unk34;
-} Unk8006AA80Node;
+} Unk8006AA80Node; /* size = 0x38 */
 
 typedef struct Unk8006AA84Node {
 	/* 0x00 */ u16 unk0;
@@ -455,11 +460,18 @@ typedef struct {
 	/* 0x10 */ s16 unk10;
 } Unk8014F6D0; /* size = 0x12 */
 
+typedef struct Unk80042DB8 {
+	/* 0x00 */ struct Unk80042DB8 *unk0;
+	/* 0x04 */ struct Unk80042DB8 *unk4;
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ s32 unkC;
+} Unk80042DB8;
+
 typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 pad1[3];
-	/* 0x04 */ s32 unk4;
-	/* 0x08 */ void* unk8;
+	/* 0x04 */ Unk80042DB8 *unk4;
+	/* 0x08 */ Unk80042DB8 *unk8;
 } Unk80042DA8; /* size = 0x0C */
 
 typedef struct {
@@ -994,7 +1006,9 @@ typedef struct {
 } Unk80052B40_fp; /* size = 0x0C */
 
 typedef struct {
-	/* 0x000 */ u8 pad0[0xE50];
+	/* 0x000 */ u8 pad0[0x8];
+	/* 0x008 */ s32 unk8; /* num animation frames */
+	/* 0x00C */ u8 pad0C[0xE44];
 	/* 0xE50 */ s32 unkE50;
 } Unk8007F878_404; /* size = 0xE54 */
 
@@ -1019,9 +1033,12 @@ typedef struct {
 	/* 0x18 */ s32 unk18;
 	/* 0x1C */ f32 unk1C;
 	/* 0x20 */ f32 unk20;
-	/* 0x24 */ s32 unk24;
-	/* 0x28 */ s32 unk28;
-	/* 0x2C */ s32 unk2C;
+	/* 0x24 */ s16 unk24;
+	/* 0x26 */ s16 unk26;
+	/* 0x28 */ s16 unk28;
+	/* 0x2A */ s16 unk2A;
+	/* 0x2C */ s16 unk2C;
+	/* 0x2E */ s16 unk2E;
 	/* 0x30 */ u16 unk30;
 	/* 0x32 */ u8 pad32[0xE];
 } AnimChannelState; /* size = 0x40 */
@@ -1361,4 +1378,20 @@ typedef struct {
 	/* 0x10 */ s32 unk10;
 } Unk80047FB8; /* size = 0x14 */
 
+typedef struct BhGfxTask_s {
+    /* 0x00 */ struct BhGfxTask_s *next;
+    /* 0x04 */ u32 state;
+    /* 0x08 */ u32 flags;
+    /* 0x0C */ void *framebuffer;
+    /* 0x10 */ OSTask list;
+    /* 0x50 */ OSMesgQueue *msgQ;
+    /* 0x54 */ OSMesg msg;
+    /* 0x58 */ u8 unk58[0x10];
+    /* 0x68 */ s16 unk68;
+    /* 0x6A */ u8 unk6A[0x1E];
+    /* 0x88 */ void *unk88;
+    /* 0x8C */ u32 unk8C;
+} BhGfxTask; /* size = 0x90 */
+
 #endif
+
