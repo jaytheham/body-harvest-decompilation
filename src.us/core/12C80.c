@@ -527,7 +527,27 @@ void func_80013E44_14A44(void *arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013E64_14A64.s")
+void func_80013E64_14A64(s8 arg0) {
+    if (D_8006AB88 != 0) {
+        if (arg0 < 0 || arg0 >= 4) {
+            func_8001599C_1659C();
+            return;
+        }
+        if (D_8006AB18[arg0]->unk2C == 0) {
+            func_80016ABC_176BC(arg0);
+            return;
+        }
+        alSeqpStop(D_8006AB18[arg0]);
+        D_80031CD0_328D0[arg0] = -1;
+        D_80031CE4_328E4[arg0] = 0;
+        D_80031D1C_3291C[arg0] = -1;
+        D_80031D28_32928[arg0] = 0;
+        D_80031D2C_3292C[arg0] = 0.0f;
+        D_80031D34_32934[arg0] = 0.0f;
+        D_80031D3C_3293C[arg0] = 0.0f;
+        D_80031D44_32944[arg0] = 0.0f;
+    }
+}
 
 s16 func_80013F64_14B64(void) {
 	s16 var_v1;
