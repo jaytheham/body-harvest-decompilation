@@ -656,7 +656,35 @@ void func_80015674_16274(s16 arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800156C8_162C8.s")
+void func_800156C8_162C8(u8 arg0) {
+    Unk8006AA84Node *node;
+    Unk8006AA84Node *node2;
+
+    if ((D_8006AB88 != 0) && ((node = func_800124A8_130A8(arg0)) != NULL)) {
+        if (node->unk6 >= 0) {
+            if (node->unk8 == 1) {
+                if (D_8006ABB8[node->unk6] != 1) {
+                    func_8001F820_20420(D_8006AB10, node->unk6);
+                    alSndpStop(D_8006AB10);
+                }
+            } else {
+                node2 = func_80012834_13434(node);
+                if ((node2 != NULL) && (node2->unk6 >= 0)) {
+                    if (node2->unk8 == 1) {
+                        if (D_8006ABB8[node2->unk6] != 1) {
+                            func_8001F820_20420(D_8006AB10, node2->unk6);
+                            alSndpStop(D_8006AB10);
+                        }
+                    } else {
+                        node2->unk6 = -2;
+                    }
+                }
+            }
+        } else {
+            node->unk6 = -2;
+        }
+    }
+}
 
 void func_800157D4_163D4(s16 arg0) {
 	Unk8006AA80Node *node;

@@ -96,7 +96,7 @@ void func_800153D8_15FD8(s16);
 void func_800157D4_163D4(s16);
 void func_8001F820_20420(s32 arg0, s16 arg1);
 s32 func_8001F840_20440(s32 arg0);
-void func_800156C8_162C8(s32 arg0);
+void func_800156C8_162C8(u8 arg0);
 void func_8001599C_1659C(void);
 void func_80016ABC_176BC(s8 arg0);
 void func_80017AAC_186AC(void);
