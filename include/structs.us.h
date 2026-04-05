@@ -2,6 +2,13 @@
 #define STRUCTS_US_H
 
 typedef struct {
+	/* 0x00 */ f32 v0;
+	/* 0x04 */ f32 v1;
+	/* 0x08 */ f32 v2;
+	/* 0x0C */ f32 v3;
+} Float4; /* size = 0x10 */
+
+typedef struct {
 	/* 0x00 */ u64 unk0;
 } BitFlags64; /* size = 0x08 */
 
@@ -106,7 +113,9 @@ typedef struct Unk8006AA80Node {
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s32 unk8;
-	/* 0x0C */ u8 pad0C[0x1C];
+	/* 0x0C */ u8 pad0C[0x14];
+	/* 0x20 */ s16 unk20;
+	/* 0x22 */ u8 pad22[0x6];
 	/* 0x28 */ s32 unk28;
 	/* 0x2C */ s32 unk2C;
 	/* 0x30 */ struct Unk8006AA80Node *unk30;

@@ -810,7 +810,30 @@ void func_80016C8C_1788C(f32 arg0, f32 arg1, f32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016E54_17A54.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016FD0_17BD0.s")
+void func_80016FD0_17BD0(s16 arg0) {
+    Unk8006AA80Node *node;
+    s16 temp_vol;
+    Float4 sp38;
+
+    sp38 = D_80033C9C_3489C;
+
+    if (D_8006AB88 == 0) {
+        return;
+    }
+
+    D_80031D60_32960 = ((f32 *)&sp38)[arg0];
+    node = D_8006AA80;
+    if (node != NULL) {
+        do {
+            if (node->unk6 >= 0 && D_80031D4C_3294C == 0) {
+                temp_vol = (s16) ((f32) node->unk20 * D_80031D60_32960);
+                func_8001F820_20420(D_8006AB10, node->unk6);
+                alSndpSetVol(D_8006AB10, temp_vol);
+            }
+            node = node->unk34;
+        } while (node != NULL);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800170F4_17CF4.s")
 
