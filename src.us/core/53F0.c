@@ -131,7 +131,35 @@ void func_80004A38_5638(u8 arg0, s8 *arg1, s8 *arg2, s8 *arg3) {
 	*arg3 = (s8) ((s32) (((u16 *)&D_802D48D0)[arg0] & 0x3E) >> 1);
 }
 
+#ifdef NON_MATCHING
+void func_80004AEC_56EC(void) {
+	s16 temp_t9;
+	u16 temp_v1;
+	u8 sp3B;
+	u8 sp3A;
+	u8 sp39;
+	s16 i;
+
+	if (currentLevel == 2) {
+		for (i = 0; i < 0x100; i++) {
+			func_80004A38_5638((u8)i, (s8 *)&sp3B, (s8 *)&sp3A, (s8 *)&sp39);
+			temp_t9 = (s16)(sp3B << 11) + (sp3A << 6) + (sp39 * 2);
+			((u16 *)&D_802D4AD0)[i] = temp_t9;
+			((u16 *)&D_80047748)[i] = temp_t9;
+		}
+	} else {
+		for (i = 0; i < 0x100; i++) {
+			temp_v1 = ((u16 *)&D_802D48D0)[i];
+			((u16 *)&D_802D4AD0)[i] = temp_v1;
+			((u16 *)&D_80047748)[i] = temp_v1;
+		}
+	}
+	func_80004948_5548();
+	leoInitUnit_atten();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004AEC_56EC.s")
+#endif
 
 void leoInitUnit_atten(void) {
 	leomecha_bss_0004 = 1;
