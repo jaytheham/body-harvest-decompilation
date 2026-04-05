@@ -64,7 +64,10 @@ void osSetTime(s32 arg0, s32 arg1);
 void func_80011D24_12924(void);
 s32 func_80011D6C_1296C(s32 arg0);
 void func_80011674_12274(void);
+void func_800118F8_124F8(void);
 void func_800117D8_123D8(void);
+void loadLevelData(u8 arg0);
+void loadLevelCode(u8 arg0);
 void func_80011E14_12A14(u8 arg0);
 #ifdef OVERLAY_ENTRY_AS_FUNC
 s32 func_80070270(s32 arg0);
