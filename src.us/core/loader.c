@@ -163,7 +163,46 @@ s32 func_80010490_11090(u8 arg0) {
 	return D_80031BC4_327C4[arg0];
 }
 
+#ifdef NON_MATCHING
+s32 func_800104AC_110AC(u8 arg0) {
+    s32 var_s0;
+    s32 var_s1;
+    s32 var_s2;
+    s32 temp_v1;
+
+    var_s2 = (arg0 - 1) & 0xFF;
+    var_s1 = (s32) &D_37F840;
+    if (var_s2 != 0) {
+        do {
+            temp_v1 = var_s1 & 0xF;
+            if (temp_v1 != 0) {
+                var_s1 = (var_s1 - temp_v1) + 0x10;
+            }
+            var_s1 = func_800102EC_10EEC(var_s1, 0xFE00);
+            temp_v1 = var_s1 & 0xF;
+            if (temp_v1 != 0) {
+                var_s1 = (var_s1 - temp_v1) + 0x10;
+            }
+            var_s1 = func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(func_800102EC_10EEC(var_s1, 4), 0x3800), 0x100), 0x3800), 0x100), 0x3800), 0x100), 0x100);
+            for (var_s0 = 0; var_s0 < 0xC; var_s0 = (var_s0 + 1) & 0xFF) {
+                temp_v1 = var_s1 & 0xF;
+                if (temp_v1 != 0) {
+                    var_s1 = (var_s1 - temp_v1) + 0x10;
+                }
+                var_s1 = func_80010290_10E90(func_80010290_10E90(var_s1));
+            }
+            var_s2 = (var_s2 - 1) & 0xFF;
+        } while (var_s2 != 0);
+    }
+    temp_v1 = var_s1 & 0xF;
+    if (temp_v1 != 0) {
+        var_s1 = (var_s1 - temp_v1) + 0x10;
+    }
+    return var_s1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800104AC_110AC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800105F0_111F0.s")
 
