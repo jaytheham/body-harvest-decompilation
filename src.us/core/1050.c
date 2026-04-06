@@ -261,7 +261,45 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_prepareToSaveGame.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800020E0_2CE0.s")
+// https://decomp.me/scratch/GnZVz
+#ifdef NON_MATCHING
+void func_800020E0_2CE0(s32 arg0, s32 arg1) {
+	s32 i;
+	s32 src_off;
+	s32 dst_base;
+	s32 src_next;
+	s32 dst_next;
+	u8 *dst;
+	u8 *src;
+
+	i = 2;
+	src_off = arg0 * 0x7A + 0x53;
+	dst_base = arg1 * 0x7A;
+	src_next = src_off + 1;
+	src = (u8 *)&D_800431C0 + (src_next + 1);
+	(&D_800431C0)[dst_base + 0x53] = (&D_800431C0)[src_off];
+	dst_next = dst_base + 0x53 + 1;
+	dst = (u8 *)&D_800431C0 + (dst_next + 1);
+	(&D_800431C0)[dst_next] = (&D_800431C0)[src_next];
+loop:
+	i += 4;
+	dst += 4;
+	dst[-4] = src[0];
+	dst[-3] = src[1];
+	src += 4;
+	dst[-2] = src[-2];
+	dst[-1] = src[-1];
+	if (i != 0x76) goto loop;
+
+	func_800015B4_21B4(dst_base + 0x4F, 0x76);
+	func_800015B4_21B4(0, 0x1B9);
+	if (D_80047608 != 0) {
+		osEepromLongWrite(&D_80043388, 0, &D_800431C0, 0x1BD);
+	}
+}
+	#else
+	#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800020E0_2CE0.s")
+	#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800021CC_2DCC.s")
 
