@@ -11,6 +11,12 @@ void *func_8000C6F4_D2F4(void);
 void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2);
 void func_8000C764_D364(s32 arg0);
 void func_80001144_1D44(u8 arg0, u8 arg1, u8 arg2);
+void func_8000FF40_10B40(void);
+void func_8000FF88_10B88(void);
+void func_80001424_2024(void *arg0);
+void func_80001190_1D90(void);
+void func_800020E0_2CE0(s32 arg0, s32 arg1);
+void func_800035D8_41D8(s16 arg0);
 
 // F9230
 void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3);
