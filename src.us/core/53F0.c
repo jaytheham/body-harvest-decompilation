@@ -675,7 +675,35 @@ s32 func_80007D44_8944(s32 arg0) {
 	return (sp1E - sp1A) * (sp1E - sp1A) + (sp1C - sp18) * (sp1C - sp18);
 }
 
+#ifdef NON_MATCHING
+s32 func_80007DE0_89E0(u8 *arg0) {
+loop:
+	switch (arg0[0]) {
+	case 0x98:
+		return D_80052B34->unk1C < D_80257A3A[D_80052B34->unk1A * 56];
+	case 0x9A: {
+		VehicleInstance *vi = vehicleInstances + arg0[1];
+		return vi->unk1C < D_80257A3A[vi->unk1A * 56];
+	}
+	case 0x99: {
+		BuildingInstance *bi = buildingInstances + arg0[1];
+		return (s8)bi->hitPoints < D_802590A9[bi->buildingType * 32];
+	}
+	case 0x9B: {
+		AlienInstance *alien = alienInstances + D_8004D161[arg0[1] * 2];
+		if (alien->unk20 & 0x100000) {
+			return 1;
+		}
+		return alien->hitPoints < D_802566BA[alien->specIndex * 52];
+	}
+	case 0xAF:
+		arg0 = &D_8004D180[arg0[1] * 3];
+		goto loop;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007DE0_89E0.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_80007F60_8B60(u8 *arg0) {
