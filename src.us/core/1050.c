@@ -92,7 +92,46 @@ void checkForRumblePak(void) {
 	D_80047698 = gameplayMode;
 }
 
+#ifdef NON_MATCHING
+void func_80000ED4_1AD4(void) {
+	s32 pad0;
+	Unk80047578 *sp58;
+	OSPfs *pfs;
+	s16 cmd;
+	s32 idx;
+
+	while (1) {
+		osRecvMesg(&D_800433A8, (OSMesg *)&sp58, 1);
+		if (D_80047678 != 1) {
+			continue;
+		}
+		func_8000FF40_10B40();
+		cmd = sp58->unk0;
+		idx = sp58->unk4;
+		switch (cmd) {
+		case 1:
+			if (osMotorStart(&D_80047610 + idx) != 0) {
+				D_80047678 = 0;
+			}
+			break;
+		case 0:
+			if (osMotorStop(&D_80047610 + idx) != 0) {
+				D_80047678 = 0;
+			}
+			break;
+		case 2:
+			pfs = &D_80047610 + idx;
+			if (osMotorInit(&D_80043388, pfs, 0) == 0) {
+				D_80047678 = 1;
+			}
+			osMotorStop(pfs);
+		}
+		func_8000FF88_10B88();
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000ED4_1AD4.s")
+#endif
 
 void func_80001050_1C50(s32 arg0) {
 	D_80047578.unk4 = arg0;
