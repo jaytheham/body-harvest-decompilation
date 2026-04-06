@@ -2,7 +2,29 @@
 #include "common.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A160_AD60.s")
+void func_8000A160_AD60(void) {
+    D_80053C98 = 0;
+    guOrtho(&D_80052B60, 0.0f, 320.0f, 240.0f, 0.0f, 0.0f, 1000.0f, 1.0f);
+    guLookAt(&D_80052BA0, (f32)D_80053C84, (f32)D_80053C86, 1.0f, (f32)D_80053C84, (f32)D_80053C86, 0.0f, 0.0f, 1.0f, 0.0f);
+    D_80053C88 = 0;
+    D_80053BF0 = 0;
+    D_80053BF2 = 0xFF;
+    D_80053BF4 = 0;
+    D_80053BF6 = 0;
+    D_80053BF8 = 0;
+    D_80053BFA = 0;
+    D_80053BFC = 0;
+    D_80053BFE = 0;
+    D_80053BE2 = 0;
+    D_80053BE4 = 0;
+    D_80053BE8 = 1.0f;
+    D_80053BEC = 1.0f;
+    D_80053C84 = 0;
+    D_80053C86 = 0;
+    D_80053C94 = 0x1E;
+    D_80053C96 = 0x122;
+    func_8000AFDC_BBDC();
+}
 
 #ifdef NON_MATCHING
 s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
