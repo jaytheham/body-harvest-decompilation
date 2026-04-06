@@ -1,24 +1,24 @@
 {
-  "generated": "2026-04-06T09:56:20Z",
-  "commit": "7762837",
-  "commit_timestamp": "2026-04-06T21:56:05+12:00",
+  "generated": "2026-04-06T20:12:06Z",
+  "commit": "c7356c7",
+  "commit_timestamp": "2026-04-07T08:11:54+12:00",
   "overall": {
-    "total_functions": 3002,
+    "total_functions": 3007,
     "matched": 1156,
-    "non_matching": 351,
+    "non_matching": 356,
     "asm_stubs": 1495,
-    "matched_pct": 38.51,
-    "decompiled_pct": 50.2
+    "matched_pct": 38.44,
+    "decompiled_pct": 50.28
   },
   "segments": {
     "core": {
       "display_name": "Core",
       "matched": 197,
-      "non_matching": 57,
+      "non_matching": 62,
       "asm_stubs": 126,
-      "total": 380,
-      "matched_pct": 51.8,
-      "decompiled_pct": 66.8
+      "total": 385,
+      "matched_pct": 51.2,
+      "decompiled_pct": 67.3
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -98,10 +98,10 @@
       "path": "core/1050.c",
       "segment": "core",
       "matched": 27,
-      "non_matching": 10,
+      "non_matching": 13,
       "asm_stubs": 29,
-      "total": 66,
-      "matched_pct": 40.9,
+      "total": 69,
+      "matched_pct": 39.1,
       "contributor": "jaytheham"
     },
     {
@@ -128,9 +128,9 @@
       "path": "core/1B060.c",
       "segment": "core",
       "matched": 0,
-      "non_matching": 0,
+      "non_matching": 1,
       "asm_stubs": 1,
-      "total": 1,
+      "total": 2,
       "matched_pct": 0.0,
       "contributor": "jaytheham"
     },
@@ -148,10 +148,10 @@
       "path": "core/53F0.c",
       "segment": "core",
       "matched": 50,
-      "non_matching": 10,
+      "non_matching": 11,
       "asm_stubs": 25,
-      "total": 85,
-      "matched_pct": 58.8,
+      "total": 86,
+      "matched_pct": 58.1,
       "contributor": "jaytheham"
     },
     {
@@ -540,7 +540,7 @@
       "name": "jaytheham",
       "files": 42,
       "matched": 1151,
-      "non_matching": 351,
+      "non_matching": 356,
       "asm_stubs": 1425
     },
     {
@@ -586,11 +586,19 @@
     },
     {
       "date": "2026-04-06",
-      "commit": "7762837",
-      "matched_pct": 38.51,
-      "decompiled_pct": 50.2,
+      "commit": "f09866b",
+      "matched_pct": 38.48,
+      "decompiled_pct": 50.23,
       "matched": 1156,
-      "total": 3002
+      "total": 3004
+    },
+    {
+      "date": "2026-04-07",
+      "commit": "48c9202",
+      "matched_pct": 38.44,
+      "decompiled_pct": 50.28,
+      "matched": 1156,
+      "total": 3007
     }
   ]
 }
