@@ -533,7 +533,34 @@ void func_800076D4_82D4(s32 arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007728_8328.s")
+void func_80007728_8328(u8 *arg0, s16 *arg1, s16 *arg2) {
+loop:
+    switch (arg0[0]) {
+    case 0x98:
+        *arg1 = D_80052B34->unk0;
+        *arg2 = D_80052B34->unk4;
+        return;
+    case 0x9A:
+        *arg1 = vehicleInstances[arg0[1]].unk0;
+        *arg2 = vehicleInstances[arg0[1]].unk4;
+        return;
+    case 0x9B:
+        *arg1 = alienInstances[D_8004D160[arg0[1] * 2 + 1]].unk0;
+        *arg2 = alienInstances[D_8004D160[arg0[1] * 2 + 1]].unk4;
+        return;
+    case 0x99:
+        *arg1 = buildingInstances[arg0[1]].xCoord;
+        *arg2 = buildingInstances[arg0[1]].zCoord;
+        return;
+    case 0xAD:
+        *arg1 = arg0[1] << 8;
+        *arg2 = arg0[2] << 8;
+        return;
+    case 0xAF:
+        arg0 = &D_8004D180[arg0[1] * 3];
+        goto loop;
+    }
+}
 
 u8 func_8000789C_849C(s32 arg0)
 {

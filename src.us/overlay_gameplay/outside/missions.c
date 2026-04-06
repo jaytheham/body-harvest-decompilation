@@ -132,7 +132,7 @@ void func_800746F8_836A8(void) {
 
 // readMissionByteWithIncrementCopyWrapper
 void func_80074768_83718(void) {
-	*(&D_8004D160 + (D_80149B44 * 2)) = func_8007452C_834DC();
+	D_8004D160[D_80149B44 * 2] = func_8007452C_834DC();
 	D_80149B44 += 1;
 }
 
