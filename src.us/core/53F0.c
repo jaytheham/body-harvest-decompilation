@@ -699,7 +699,49 @@ s32 func_80008478_9078(void) {
 	return 0;
 }
 
+#ifdef NON_MATCHING
+u8 func_8000851C_911C(s16 arg0) {
+	u8 *entry;
+	u8 *item;
+	s32 count;
+	s32 i;
+
+	entry = (u8 *)D_8004D1C8;
+	i = 0x3F;
+	do {
+		if (entry[0] != 0 && entry[1] == arg0) {
+			item = &D_8004D348[entry[2] * 9];
+			count = entry[3];
+			if (count != 0) {
+				count--;
+				do {
+					u8 *cur = item;
+					item += 9;
+					if (func_800081D4_8DD4(cur) == 0) goto next;
+				} while (count--);
+				item = &D_8004D348[entry[2] * 9];
+				count = entry[3];
+				osSyncPrintf(&D_80037018_37C18, entry[4] + 1);
+				if (count--) {
+					do {
+						u8 *cur2 = item;
+						item += 9;
+						func_80007A20_8620(cur2);
+					} while (count--);
+				}
+				osSyncPrintf(&D_80037034_37C34);
+				return entry[4];
+			}
+		}
+next:
+		entry += 6;
+	} while (i--);
+	osSyncPrintf(&D_80037038_37C38, arg0);
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000851C_911C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_checkMissions.s")
 

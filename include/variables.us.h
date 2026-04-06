@@ -578,6 +578,9 @@ extern char D_80036FF0_37BF0; /* osSyncPrintf format string */
 extern char D_80036FF4_37BF4; /* osSyncPrintf format string */
 extern char D_80036FFC_37BFC; /* osSyncPrintf format string */
 extern char D_80037000_37C00; /* osSyncPrintf format string */
+extern char D_80037018_37C18; /* osSyncPrintf format string */
+extern char D_80037034_37C34; /* osSyncPrintf format string */
+extern char D_80037038_37C38; /* osSyncPrintf format string */
 extern char D_80037764_38364; /* osSyncPrintf format string */
 extern char D_801417C0_150770; /* osSyncPrintf format string - alien action table full warning */
 extern char D_801417DC;
