@@ -1020,6 +1020,11 @@ typedef struct {
 	/* 0x0C */ u16 unkC;
 } AnimFrameData; /* size = 0x0E */
 
+/* 14-byte packed s16/u16 view of AnimFrameData, used for unaligned copy */
+typedef struct {
+	s16 a; s16 b; s16 c; s16 d; s16 e; s16 f; u16 g;
+} AnimFrameData14; /* size = 0x0E */
+
 /* 64-byte per-channel animation state element */
 typedef struct {
 	/* 0x00 */ s16 unk0;
@@ -1040,7 +1045,13 @@ typedef struct {
 	/* 0x2C */ s16 unk2C;
 	/* 0x2E */ s16 unk2E;
 	/* 0x30 */ u16 unk30;
-	/* 0x32 */ u8 pad32[0xE];
+	/* 0x32 */ s16 unk32;
+	/* 0x34 */ s16 unk34;
+	/* 0x36 */ s16 unk36;
+	/* 0x38 */ s16 unk38;
+	/* 0x3A */ s16 unk3A;
+	/* 0x3C */ s16 unk3C;
+	/* 0x3E */ u8 pad3E[0x2];
 } AnimChannelState; /* size = 0x40 */
 
 typedef struct {
