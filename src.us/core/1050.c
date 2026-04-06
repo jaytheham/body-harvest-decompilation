@@ -257,7 +257,44 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001830_2430.s")
 
+// https://decomp.me/scratch/5NQTK
+#ifdef NON_MATCHING
+void func_80001984_2584(void) {
+    Unk80047FB8 *dst;
+    u8 *src;
+
+loop:
+    if (validateSaveVersionAndChecksum(4, 0x47) != 0) {
+        D_800313D0 = (s16)D_800431C8;
+        dst = D_80047FB8;
+        src = &D_800431C9;
+        do {
+            dst->unk0 = src[0];
+            dst->unk1 = src[1];
+            dst->unk2 = src[2];
+            dst->unk3 = src[3];
+            dst->unk4 = src[4];
+            dst->unk5 = src[5];
+            dst->unk8 = src[6];
+            dst->unk8 += src[7] << 8;
+            dst->unk8 += src[8] << 16;
+            dst->unk8 += src[9] << 24;
+            dst->unkC = (s16)src[10];
+            dst->unk6 = 0;
+            dst->unk10 = src[11];
+            dst->unk10 += src[12] << 8;
+            dst->unk10 += src[13] << 16;
+            dst++;
+            src += 14;
+        } while (dst != &D_8004801C);
+        return;
+    }
+    func_80001830_2430();
+    goto loop;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001984_2584.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_prepareToSaveGame.s")
 
