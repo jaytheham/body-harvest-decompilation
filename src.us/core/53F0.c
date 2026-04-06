@@ -432,7 +432,6 @@ void func_800073B8_7FB8(u64 arg0) {
 	D_8004DC48.unk0 &= ~temp_ret;
 }
 
-// https://decomp.me/scratch/qADEg
 #ifdef NON_MATCHING
 void func_80007410_8010(void *arg0) {
 	s32 i;
