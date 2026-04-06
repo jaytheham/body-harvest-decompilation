@@ -908,7 +908,23 @@ void func_80016C8C_1788C(f32 arg0, f32 arg1, f32 arg2) {
 	D_80031D4C_3294C = 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016CD8_178D8.s")
+void func_80016CD8_178D8(s8 arg0) {
+    f32 temp_f0;
+
+    if (D_80031CE4_328E4[arg0] == 1 && D_80031D28_32928[arg0] == 1) {
+        temp_f0 = (f32)D_80031D74_32974[D_80031D1C_3291C[arg0]];
+        alSeqpSetVol((ALSeqPlayer *)D_8006AB18[arg0],
+            (s16)(s32)((D_80031D3C_3293C[arg0] * temp_f0 + D_80031D44_32944[arg0] * (temp_f0 * D_80031D2C_3292C[arg0]) / D_80031D34_32934[arg0]) * D_80031D64_32964));
+    }
+    D_80031D2C_3292C[arg0] = D_80031D2C_3292C[arg0] - 1.0f;
+    if (D_80031D2C_3292C[arg0] == 0.0f) {
+        if ((f64)D_80031D44_32944[arg0] > 0.0) {
+            func_80013E64_14A64(arg0);
+            return;
+        }
+        D_80031D28_32928[arg0] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016E54_17A54.s")
 
