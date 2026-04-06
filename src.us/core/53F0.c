@@ -191,7 +191,23 @@ void func_80004D38_5938(void) {
 	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 0, 0, D_80068084, D_80068088);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004DDC_59DC.s")
+void func_80004DDC_59DC(u8 arg0, u8 arg1, u8 arg2, s32 arg3, s32 arg4) {
+	if (arg3 < 0) {
+		arg3 = 0;
+	}
+	if (D_80068088 < arg4) {
+		arg4 = D_80068088;
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
+	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, K0_TO_PHYS(D_8005BB48[D_80031B84]));
+	gDPSetFillColor(D_8005BB2C++, ((((arg0 << 8) & 0xF800) | ((arg1 * 8) & 0x7C0) | (((s32)arg2 >> 2) & 0x3E) | 1) << 16) | (((arg0 << 8) & 0xF800) | ((arg1 * 8) & 0x7C0) | (((s32)arg2 >> 2) & 0x3E) | 1));
+	gDPPipeSync(D_8005BB2C++);
+	gDPFillRectangle(D_8005BB2C++, 0, arg3, D_80068084 - 1, arg4);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gDPPipeSync(D_8005BB2C++);
+}
 
 void func_80004F64_5B64(void) {
 	gDPPipeSync(D_8005BB2C++);
