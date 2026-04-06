@@ -64,3 +64,44 @@ When computing animation frame address as `base = arg0 + ((startFrame + currentF
 The target's register-exact pattern (`addu v1, v1, v0` in-place → t0/t1/t2 chain) cannot be achieved with named `start_frame` due to IDO refusing to overwrite named variable registers mid-liveness.
 
 Score achievable: ~225 (correct instruction types, wrong register names).
+
+### AnimFrameData physical vs C sizeof — array indexing stride mismatch
+
+`AnimFrameData` has `/* size = 0x0E */` (14 bytes) in the comment, but the actual C `sizeof(AnimFrameData)` is **16** in IDO C89 due to trailing padding (the last `u16 unkC` member means IDO rounds up to align the struct to its 4-byte requirement). Consequently:
+
+- Array indexing `((AnimFrameData*)ptr)[index]` generates `sll index, 4` (stride 16), **not** `multu index, 0xE` (stride 14).
+- To access data with stride 14 (as used in the ROM), always use **explicit pointer arithmetic**: `(s32)ptr + index * 0xE`, never array indexing.
+
+### IDO alignment tracking through casts — when (char*) does NOT break alignment
+
+IDO **retains** the alignment of the original pointer through these casts:
+- `(s32)aligned_ptr` — integer cast keeps "this value is N-byte aligned" metadata
+- `(char*)aligned_ptr` — char* cast also keeps the original alignment tracked
+
+So `*(s32*)((char*)aligned_ptr + offset)` or `*(s32*)((s32)aligned_ptr + offset)` still generates **aligned `lw`**, NOT `lwl/lwr`.
+
+To force `lwl/lwr` for a 32-bit read, the access type must declare a **2-byte minimum alignment**. Use a struct with `s16` as its first field, e.g.:
+```c
+typedef struct { s16 a; s16 b; s16 c; s16 d; s16 e; s16 f; u16 g; } AnimFrameData14;
+*(AnimFrameData14*)((char*)ptr + 0x50)  // generates lwl/lwr via 2-byte type min
+```
+
+### AnimFrameData14 struct copy creates an invisible 4-byte CFE temp slot
+
+Using `*(AnimFrameData14*)&sp44 = *(AnimFrameData14*)source` creates a **4-byte CFE temporary stack slot** even though the slot may never be used at runtime (IDO CODE MOTION can eliminate the spill but the slot remains). This shifts all named local variables up by 4 bytes on the stack.
+
+**Symptom:** All sp-relative addresses in the function are consistently 4 bytes too high (e.g., sp44 at sp+0x48 instead of sp+0x44). The frame size is correct but variable positions are wrong.
+
+**Impact:** This is a known limitation when using `AnimFrameData14` struct copies for sp44/sp34. The 4-byte offset cannot easily be eliminated without avoiding the struct copy pattern entirely. Score ~4000 is achievable for functions using this pattern.
+
+### bgez float-conversion from stack variable avoids andi
+
+When reading a u16 from a stack variable and converting to float:
+```c
+arg2->unk30 = sp24.unkC;
+arg2->unk20 = (f32)(u32)sp24.unkC;  // reads sp24.unkC from STACK → lhu $t8, 0x30($sp)
+```
+This generates `lhu $t8, 0x30($sp)` (stack-direct read), then `mtc1 t8; bgez t8; cvt.s.w` WITHOUT any `andi`.
+
+However, writing `(f32)(u32)arg2->unk30` instead would reload through the arg2 pointer (`lhu $t8, 0x30($s0)`) and if reading the value AFTER masking through AnimFrameData14, may generate an `andi` before `mtc1`. Use `sp24.unkC` directly for the conversion.
+

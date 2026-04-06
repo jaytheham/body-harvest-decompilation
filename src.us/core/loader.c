@@ -443,7 +443,17 @@ s32 func_80011DBC_129BC(s32 arg0) {
 	return debug_printModelSegmentEnd((void *)temp_v0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011E14_12A14.s")
+void func_80011E14_12A14(u8 arg0) {
+    gSPSegment(D_8005BB2C++, 0, 0);
+    gSPSegment(D_8005BB2C++, 1, (u32)__printfunc & 0x1FFFFFFF);
+    gSPSegment(D_8005BB2C++, 5, (u32)D_8006AA6C & 0x1FFFFFFF);
+    gSPSegment(D_8005BB2C++, 0xF, (u32)D_8006AA74 & 0x1FFFFFFF);
+    gSPSegment(D_8005BB2C++, D_80031C68_32868[arg0], (u32)D_8006AA70 & 0x1FFFFFFF);
+    if (D_80052ACA == 2 && currentLevel != LEVEL_COMET) {
+        gSPSegment(D_8005BB2C++, D_80031C68_32868[6], (u32)D_8006AA70 & 0x1FFFFFFF);
+    }
+    func_80004C8C_588C();
+}
 
 s32 func_80011F90_12B90(void *arg0) {
 	return ((s32)arg0 & 0xFFFFFF) + D_8006AA70;

@@ -61,7 +61,23 @@ void func_800048B8_54B8(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800048B8_54B8.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800048E8_54E8(void) {
+	D47F40Entry *end = (D47F40Entry *)D_80047F60;
+	D47F40Entry *ptr = (D47F40Entry *)D_80047F40;
+	do {
+		ptr++;
+		(ptr - 1)->f4 = 0;
+		(ptr - 1)->f8 = 0;
+		(ptr - 1)->fC = 0;
+		(ptr - 1)->f0 = 0;
+		ptr++;
+		ptr--;
+	} while (ptr != end);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800048E8_54E8.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80004918_5518(void) {
@@ -175,7 +191,23 @@ void func_80004D38_5938(void) {
 	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 0, 0, D_80068084, D_80068088);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004DDC_59DC.s")
+void func_80004DDC_59DC(u8 arg0, u8 arg1, u8 arg2, s32 arg3, s32 arg4) {
+	if (arg3 < 0) {
+		arg3 = 0;
+	}
+	if (D_80068088 < arg4) {
+		arg4 = D_80068088;
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
+	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, K0_TO_PHYS(D_8005BB48[D_80031B84]));
+	gDPSetFillColor(D_8005BB2C++, ((((arg0 << 8) & 0xF800) | ((arg1 * 8) & 0x7C0) | (((s32)arg2 >> 2) & 0x3E) | 1) << 16) | (((arg0 << 8) & 0xF800) | ((arg1 * 8) & 0x7C0) | (((s32)arg2 >> 2) & 0x3E) | 1));
+	gDPPipeSync(D_8005BB2C++);
+	gDPFillRectangle(D_8005BB2C++, 0, arg3, D_80068084 - 1, arg4);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gDPPipeSync(D_8005BB2C++);
+}
 
 void func_80004F64_5B64(void) {
 	gDPPipeSync(D_8005BB2C++);
@@ -517,7 +549,38 @@ void func_800076D4_82D4(s32 arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
+void func_80007728_8328(u8 *arg0, s16 *arg1, s16 *arg2) {
+loop:
+	switch (arg0[0]) {
+	case 0x98:
+		*arg1 = D_80052B34->unk0;
+		*arg2 = D_80052B34->unk4;
+		return;
+	case 0x9A:
+		*arg1 = vehicleInstances[arg0[1]].unk0;
+		*arg2 = vehicleInstances[arg0[1]].unk4;
+		return;
+	case 0x9B:
+		*arg1 = alienInstances[D_8004D160[arg0[1] * 2 + 1]].unk0;
+		*arg2 = alienInstances[D_8004D160[arg0[1] * 2 + 1]].unk4;
+		return;
+	case 0x99:
+		*arg1 = buildingInstances[arg0[1]].xCoord;
+		*arg2 = buildingInstances[arg0[1]].zCoord;
+		return;
+	case 0xAD:
+		*arg1 = arg0[1] << 8;
+		*arg2 = arg0[2] << 8;
+		return;
+	case 0xAF:
+		arg0 = &D_8004D180[arg0[1] * 3];
+		goto loop;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007728_8328.s")
+#endif
 
 u8 func_8000789C_849C(s32 arg0)
 {
@@ -683,7 +746,49 @@ s32 func_80008478_9078(void) {
 	return 0;
 }
 
+#ifdef NON_MATCHING
+u8 func_8000851C_911C(s16 arg0) {
+	u8 *entry;
+	u8 *item;
+	s32 count;
+	s32 i;
+
+	entry = (u8 *)D_8004D1C8;
+	i = 0x3F;
+	do {
+		if (entry[0] != 0 && entry[1] == arg0) {
+			item = &D_8004D348[entry[2] * 9];
+			count = entry[3];
+			if (count != 0) {
+				count--;
+				do {
+					u8 *cur = item;
+					item += 9;
+					if (func_800081D4_8DD4(cur) == 0) goto next;
+				} while (count--);
+				item = &D_8004D348[entry[2] * 9];
+				count = entry[3];
+				osSyncPrintf(&D_80037018_37C18, entry[4] + 1);
+				if (count--) {
+					do {
+						u8 *cur2 = item;
+						item += 9;
+						func_80007A20_8620(cur2);
+					} while (count--);
+				}
+				osSyncPrintf(&D_80037034_37C34);
+				return entry[4];
+			}
+		}
+next:
+		entry += 6;
+	} while (i--);
+	osSyncPrintf(&D_80037038_37C38, arg0);
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000851C_911C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_checkMissions.s")
 

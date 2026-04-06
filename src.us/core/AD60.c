@@ -2,7 +2,29 @@
 #include "common.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A160_AD60.s")
+void func_8000A160_AD60(void) {
+    D_80053C98 = 0;
+    guOrtho(&D_80052B60, 0.0f, 320.0f, 240.0f, 0.0f, 0.0f, 1000.0f, 1.0f);
+    guLookAt(&D_80052BA0, (f32)D_80053C84, (f32)D_80053C86, 1.0f, (f32)D_80053C84, (f32)D_80053C86, 0.0f, 0.0f, 1.0f, 0.0f);
+    D_80053C88 = 0;
+    D_80053BF0 = 0;
+    D_80053BF2 = 0xFF;
+    D_80053BF4 = 0;
+    D_80053BF6 = 0;
+    D_80053BF8 = 0;
+    D_80053BFA = 0;
+    D_80053BFC = 0;
+    D_80053BFE = 0;
+    D_80053BE2 = 0;
+    D_80053BE4 = 0;
+    D_80053BE8 = 1.0f;
+    D_80053BEC = 1.0f;
+    D_80053C84 = 0;
+    D_80053C86 = 0;
+    D_80053C94 = 0x1E;
+    D_80053C96 = 0x122;
+    func_8000AFDC_BBDC();
+}
 
 #ifdef NON_MATCHING
 s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
@@ -339,7 +361,31 @@ loop_3:
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D384_DF84.s")
 
+#ifdef NON_MATCHING
+void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, u8 arg3, f32 arg4) {
+    AnimFrameData sp44;
+    AnimFrameData sp34;
+    AnimFrameData sp24;
+
+    *(AnimFrameData14 *)&sp44 = *(AnimFrameData14 *)((char *)((s32)arg0 + ((*(u16 *)((s32)arg0 + arg3 * 4 + 0xC) + arg2->unk18) & 0xFFFF) * 0xE) + 0x50);
+    *(AnimFrameData14 *)&sp34 = *(AnimFrameData14 *)((char *)((s32)arg1 + ((*(u16 *)((s32)arg1 + arg3 * 4 + 0xC) + arg2->unk18) & 0xFFFF) * 0xE) + 0x50);
+    func_8000D384_DF84(&sp44, &sp34, *(s32 *)&arg4, &sp24);
+    *(s32 *)((char *)arg2 + 0x24) = sp24.unk0;
+    *(s32 *)((char *)arg2 + 0x28) = sp24.unk4;
+    *(s32 *)((char *)arg2 + 0x2C) = sp24.unk8;
+    arg2->unk1C = 0.0f;
+    arg2->unk30 = sp24.unkC;
+    arg2->unk20 = (f32)(u32)sp24.unkC;
+    arg2->unk32 = arg2->unk0;
+    arg2->unk34 = arg2->unk2;
+    arg2->unk36 = arg2->unk4;
+    arg2->unk38 = (s16)(s32)arg2->unk8;
+    arg2->unk3A = (s16)(s32)arg2->unkC;
+    arg2->unk3C = (s16)(s32)arg2->unk10;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D588_E188.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D71C_E31C.s")
 

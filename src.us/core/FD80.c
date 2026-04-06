@@ -28,7 +28,21 @@ void func_8000F1E8_FDE8(void) {
 	osDestroyThread(&D_80067A48);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F218_FE18.s")
+void func_8000F218_FE18(void) {
+    osCreateMesgQueue(&D_80067F58, D_8006A7E0, 0x32);
+    osCreateMesgQueue(&D_80067F70, D_80067FF0, 0x10);
+    osCreateMesgQueue(&D_80067F88, &D_80068030, 1);
+    osCreateMesgQueue(&D_80067FA0, &D_80067FE8, 1);
+    osSetEventMesg(4, &D_80067FA0, D_80068038);
+    osCreateMesgQueue(&D_80067FB8, &D_80067FEC, 1);
+    osViSetEvent(&D_80067FB8, D_80068038, 1);
+    osCreateMesgQueue(&D_8006A8D0, &D_8006A8C8, 1);
+    osCreateMesgQueue(&D_8006A8B0, &D_8006A8A8, 1);
+    osCreateMesgQueue(&D_8006A8F0, &D_8006A8E8, 1);
+    osCreateMesgQueue(&D_8006A908, D_8006A920, 8);
+    osCreateMesgQueue(&D_80067FD0, &D_80068034, 1);
+    osCreateMesgQueue(&D_80068060, D_80068040, 8);
+}
 
 void func_8000F368_FF68(void) {
     D_8005BB20 = (u8 *)&D_801CE710 - D_80031B84 * 0x22B00;

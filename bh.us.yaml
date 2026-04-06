@@ -71,7 +71,8 @@ segments:
       - [0x1DCC0, asm, libultra/conteepprobe.o] # libultra 2.0E 2.0F 2.0G
       - [0x1DD30, asm, libultra/contsetch.o] # libultra 2.0E 2.0F 2.0G 2.0I
       - [0x1DDA0, asm, libultra/ll.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1E060, asm] # conteeplongwrite, conteeplongread?
+      - [0x1E060, asm] # conteeplongwrite ?
+      - [0x1E1A0, asm] # conteeplongread?
       - [0x1E2E0, asm, libultra/contreaddata.o] # libultra 2.0E 2.0F 2.0G
       - [0x1E540, asm, libultra/sqrtf.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
       - [0x1E550, asm, libultra/coss.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
@@ -111,6 +112,8 @@ segments:
       - [0x22030, asm] # seqpsetbank, cspsetbank?
       - [0x22070, asm, libultra/cseq.o] # libultra 2.0E 2.0F 2.0G 2.0I
       - [0x22B30, asm] # seqpsetseq, cspsetseq, seqpsetvol, cspsetvol, seqpplay, cspplay?
+      - [0x22B70, asm]
+      - [0x22BB0, asm]
       - [0x22BE0, asm, libultra/sndpallocate.o] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
       - [0x22C80, asm, libultra/sndpsetpriority.o] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
       - [0x22CB0, asm, libultra/sndpsetfxmix.o] # libultra 2.0F 2.0G 2.0I
@@ -176,6 +179,8 @@ segments:
       - [0x29500, asm, libultra/vigetcurrcontext.o] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L
       - [0x29510, asm, libultra/viswapcontext.o] # libultra 2.0E 2.0F 2.0G 2.0I
       - [0x29870, asm]
+      - [0x29960, asm]
+      - [0x29A60, asm]
       - [0x29B20, asm, libultra/pirawdma.o] # libultra 2.0E 2.0F 2.0G 2.0I
       - [0x29C00, asm, libultra/epirawdma.o] # libultra 2.0I
       - [0x29E30, asm, libultra/devmgr.o] # libultra 2.0I

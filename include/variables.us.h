@@ -100,6 +100,7 @@ extern OSMesg D_800314CC;
 extern u8 D_80031B58_32758;
 extern Vp D_80031B60_32760[];
 extern s32 D_80031B84;
+extern s32 D_80031C68_32868[];
 extern s8 D_80031CA4;
 extern s16 D_80031CD4_328D4;
 extern s8 D_80033C5C_3485C[];
@@ -250,7 +251,7 @@ extern s32 D_8004D148; // is Snared cheat disabled
 extern s32 D_8004D150;
 extern s32 D_8004D154;
 extern s32 D_8004D158;
-extern u8 D_8004D160;
+extern u8 D_8004D160[];
 extern u8 D_8004D161[];
 extern u8 D_8004D180[];
 extern u8 D_8004D1B1;
@@ -315,14 +316,31 @@ extern VehicleInstance* D_80052B34; // Ptr to active vehicle instance
 extern Unk80052B40 D_80052B40;
 extern Unk80052B40 D_80052B48;
 extern Unk80052B40 D_80052B50;
+extern Mtx D_80052B60;
+extern Mtx D_80052BA0;
 extern s8 D_80053BDF;
 extern s16 D_80053BE0;
 extern s16 D_80053BE2;
 extern s16 D_80053BE4;
+extern f32 D_80053BE8;
+extern f32 D_80053BEC;
+extern s16 D_80053BF0;
+extern s16 D_80053BF2;
+extern s16 D_80053BF4;
+extern s16 D_80053BF6;
+extern s16 D_80053BF8;
+extern s16 D_80053BFA;
+extern s16 D_80053BFC;
+extern s16 D_80053BFE;
 extern s16 D_80053C80;
 extern s16 D_80053C82;
+extern s16 D_80053C84;
+extern s16 D_80053C86;
+extern s16 D_80053C88;
 extern s16 D_80053C90;
 extern s16 D_80053C92;
+extern s16 D_80053C94;
+extern s16 D_80053C96;
 extern s32 D_80053C8C;
 extern s32 D_80053C98;
 extern s32 D_80054668[];
@@ -578,6 +596,9 @@ extern char D_80036FF0_37BF0; /* osSyncPrintf format string */
 extern char D_80036FF4_37BF4; /* osSyncPrintf format string */
 extern char D_80036FFC_37BFC; /* osSyncPrintf format string */
 extern char D_80037000_37C00; /* osSyncPrintf format string */
+extern char D_80037018_37C18; /* osSyncPrintf format string */
+extern char D_80037034_37C34; /* osSyncPrintf format string */
+extern char D_80037038_37C38; /* osSyncPrintf format string */
 extern char D_80037764_38364; /* osSyncPrintf format string */
 extern char D_801417C0_150770; /* osSyncPrintf format string - alien action table full warning */
 extern char D_801417DC;
@@ -939,6 +960,7 @@ extern u32 D_8014D1B8[];
 extern Unk8014F618 D_8014F618;
 
 extern AlienSpec alienSpecs[0x30]; // 80256680
+extern u8 D_802566BA[]; // = alienSpecs[0].pad3A (u16 max HP table, stride 104)
 extern Unk8025669C D_8025669C[];  // 8025669C
 
 extern s32 D_80145BE8_154B98[][6];
@@ -1670,7 +1692,19 @@ extern OSThread D_80067538;
 extern OSThread D_800676E8;
 extern OSThread D_80067898;
 extern OSThread D_80067A48;
+extern OSMesgQueue D_80067FA0;
+extern OSMesgQueue D_80067FB8;
 extern OSMesgQueue D_80067FD0;
+extern OSMesg D_80067FE8;
+extern OSMesg D_80067FEC;
+extern OSMesg D_80067FF0[];
+extern OSMesg D_80068030;
+extern OSMesg D_80068034;
+extern OSMesg D_8006A7E0[];
+extern OSMesg D_8006A8A8;
+extern OSMesg D_8006A8C8;
+extern OSMesg D_8006A8E8;
+extern OSMesg D_8006A920[];
 extern u8 D_8005CF68[];
 extern u8 D_80064F70[];
 extern u8 D_80066780[];
@@ -1679,8 +1713,8 @@ extern OSMesg D_800314CC_320CC;
 extern OSMesgQueue __osSiAccessQueue;
 extern s32 __osSiAccessQueueEnabled;
 extern OSMesg siacs_bss_0000;
-extern OSMesgQueue D_80068040;
-extern OSMesg D_80068060[];
+extern OSMesg D_80068040[];
+extern OSMesgQueue D_80068060;
 extern OSMesgQueue D_8006A8B0;
 extern OSMesgQueue D_8006A8D0;
 extern OSMesgQueue D_8006A8F0;
