@@ -461,6 +461,7 @@ void func_80007548_8148(void)
 	}
 }
 
+// https://decomp.me/scratch/qADEg
 #ifdef NON_MATCHING
 void func_80007570_8170(void) {
 	s32 temp;
@@ -713,6 +714,7 @@ s32 func_80008478_9078(void) {
 	return 0;
 }
 
+// https://decomp.me/scratch/6ZUC8
 #ifdef NON_MATCHING
 u8 func_8000851C_911C(s16 arg0) {
 	u8 *entry;
