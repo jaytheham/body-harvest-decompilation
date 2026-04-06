@@ -558,11 +558,9 @@ s16 func_80013F64_14B64(void) {
 #ifdef NON_MATCHING
 void func_80014180_14D80(s8 arg0)
 {
-  int new_var;
   if (D_8006AB88)
   {
-	new_var = currentLevel * 16;
-	func_800153D8_15FD8(D_80033A68_34668[new_var + ((s8) (arg0 / 3.0f))]);
+	func_800153D8_15FD8(D_80033A68_34668[currentLevel * 16 + (s8)(arg0 / 3.0f)]);
   }
 }
 #else
