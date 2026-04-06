@@ -1404,5 +1404,41 @@ typedef struct BhGfxTask_s {
     /* 0x8C */ u32 unk8C;
 } BhGfxTask; /* size = 0x90 */
 
+typedef struct {
+    /* 0x00 */ u8 unk0[0x53];
+    /* 0x53 */ u8 unk53;
+    /* 0x54 */ u8 unk54;
+    /* 0x55 */ u8 unk55;
+    /* 0x56 */ u8 unk56;
+    /* 0x57 */ u8 unk57;
+    /* 0x58 */ u8 unk58;
+    /* 0x59 */ u8 unk59;
+    /* 0x5A */ u8 unk5A;
+    /* 0x5B */ u8 unk5B;
+    /* 0x5C */ u8 unk5C;
+    /* 0x5D */ u8 unk5D;
+    /* 0x5E */ u8 unk5E;
+    /* 0x5F */ u8 unk5F[0x04];
+    /* 0x63 */ u8 unk63;
+    /* 0x64 */ u8 unk64;
+    /* 0x65 */ u8 unk65;
+    /* 0x66 */ u8 unk66;
+    /* 0x67 */ u8 unk67[0x04];
+    /* 0x6B */ u8 unk6B;
+    /* 0x6C */ u8 unk6C;
+    /* 0x6D */ u8 unk6D;
+    /* 0x6E */ u8 unk6E;
+    /* 0x6F */ u8 unk6F[0x04];
+    /* 0x73 */ u8 unk73;
+    /* 0x74 */ u8 unk74;
+    /* 0x75 */ u8 unk75;
+    /* 0x76 */ u8 unk76;
+    /* 0x77 */ u8 unk77[0x04];
+    /* 0x7B */ u8 unk7B;
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+    /* 0x7E */ u8 unk7E;
+} SaveSlot; /* size = 0x7F */
+
 #endif
 
