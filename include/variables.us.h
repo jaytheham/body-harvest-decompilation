@@ -911,10 +911,12 @@ extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 
 extern u8 D_80254E80[]; // Tile palette data
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
+extern u8 D_80257A3A[]; // = vehicleSpecs[0].hitPoints (u16 max HP table, stride 112)
 
 extern BuildingSpec buildingSpecs[0x20]; // 0x80259090
 extern u8 D_802590A4[];
 extern u8 D_802590A8[];
+extern u8 D_802590A9[]; // = buildingSpecs[0].pad16[3] (s8 max HP table, stride 32)
 extern Unk80259490 D_80259490; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
 extern Unk80259D90 D_80259D90[];
 extern u8 D_80259D92[][0x50];
@@ -959,6 +961,7 @@ extern u32 D_8014D1B8[];
 extern Unk8014F618 D_8014F618;
 
 extern AlienSpec alienSpecs[0x30]; // 80256680
+extern u8 D_802566BA[]; // = alienSpecs[0].pad3A (u16 max HP table, stride 104)
 extern Unk8025669C D_8025669C[];  // 8025669C
 
 extern s32 D_80145BE8_154B98[][6];
