@@ -100,6 +100,7 @@ extern OSMesg D_800314CC;
 extern u8 D_80031B58_32758;
 extern Vp D_80031B60_32760[];
 extern s32 D_80031B84;
+extern s32 D_80031C68_32868[];
 extern s8 D_80031CA4;
 extern s16 D_80031CD4_328D4;
 extern s8 D_80033C5C_3485C[];
