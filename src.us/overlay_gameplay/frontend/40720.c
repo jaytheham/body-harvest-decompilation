@@ -35,18 +35,18 @@ typedef enum FrontEndState
 // calculatePlayersTotalScore
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070390_40840.s")
 
-// https://decomp.me/scratch/MMAgd
 // Stores the current level's play time in seconds and returns the total play time across all levels.
-#ifdef NON_MATCHING
 s32 func_80070420_408D0(void) {
+	s32 totalSecondsElapsed;
+	s32 i;
 	D_80052A98[currentLevel - 1].secondsElapsed = (u16)((u32)D_80052A90 / 1000U);
+	totalSecondsElapsed = 0;
+	for (i = 0; i < 6; i++){
+		totalSecondsElapsed += D_80052A98[i].secondsElapsed;
+	}
 
-	return D_80052A98[0].secondsElapsed + D_80052A98[1].secondsElapsed + D_80052A98[2].secondsElapsed +
-		   D_80052A98[3].secondsElapsed + D_80052A98[4].secondsElapsed + D_80052A98[5].secondsElapsed;
+	return totalSecondsElapsed;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070420_408D0.s")
-#endif
 
 /**
  * @brief Finds a mission entry by mission id stored in `unk26`.
