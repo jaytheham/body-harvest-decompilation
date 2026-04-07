@@ -886,7 +886,71 @@ loop_1:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000807C_8C7C.s")
 #endif
 
+#ifdef NON_MATCHING
+s32 func_800081D4_8DD4(u8 *arg0) {
+	switch (arg0[8]) {
+	case 0xB3:
+		return 1;
+	case 0xB2:
+		return 0;
+	case 0x89:
+		return func_80007D44_8944((s32)arg0) < arg0[6] * arg0[6] * 2;
+	case 0x8A:
+		return func_80007D44_8944((s32)arg0) >= arg0[6] * arg0[6] * 2;
+	case 0x8C:
+		return func_80007DE0_89E0(arg0);
+	case 0x8D:
+		return func_80007DE0_89E0(arg0) == 0;
+	case 0xB5: {
+		u32 v = *(u32 *)(D_80050AE0 + arg0[1] * 24);
+		return ((v >> 12) & 0x10) == 0x10;
+	}
+	case 0xB1: {
+		u32 v = *(u32 *)(D_80050AE0 + arg0[1] * 24);
+		u32 vr = v >> 12;
+		u32 bit16_check = (vr & 0x10) ^ 0x10;
+		u32 bit12_inv;
+		if (bit16_check != 0) {
+			return 1;
+		}
+		bit12_inv = (vr & 1) ^ 1;
+		return bit12_inv != 0;
+	}
+	case 0x8E:
+		return func_80007F60_8B60(arg0);
+	case 0x8F:
+		return func_80007F60_8B60(arg0) == 0;
+	case 0x91:
+		return func_8000807C_8C7C(arg0, arg0 + 3);
+	case 0x92:
+		return func_8000807C_8C7C(arg0, arg0 + 3) == 0;
+	case 0x95:
+		return func_800078B8_84B8(arg0[6], &D_8004D154) != 0;
+	case 0x96:
+		return func_800078B8_84B8(arg0[6], &D_8004D158) != 0;
+	case 0xAA:
+		return func_8000789C_849C(arg0[6]) == 2;
+	case 0xAB:
+		return func_8000789C_849C(arg0[6]) == 3;
+	case 0xA6:
+		if (arg0[6] == 1) {
+			D_8004D1C0 = arg0[7] - D_8004D1B0[arg0[6]];
+		}
+		return D_8004D1B0[arg0[6]] < arg0[7];
+	case 0xA7:
+		if (arg0[6] == 1) {
+			D_8004D1C0 = arg0[7] - D_8004D1B0[arg0[6]];
+		}
+		return !(D_8004D1B0[arg0[6]] < arg0[7]);
+	case 0xB9:
+		return func_8000726C_7E6C(arg0[6]);
+	case 0xBA:
+		return func_8000726C_7E6C(arg0[6]) == 0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800081D4_8DD4.s")
+#endif
 
 s32 func_80008478_9078(void) {
 	if ((currentLevel == LEVEL_GREECE) && (func_8000726C_7E6C(0xB) != 0) && (D_80052554 >= 0x401)) {
