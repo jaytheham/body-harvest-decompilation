@@ -420,7 +420,92 @@ loop:
 	#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800020E0_2CE0.s")
 	#endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800021CC_2DCC.s")
+void func_800021CC_2DCC(s32 arg0) {
+    u8 *ptr;
+    s32 i;
+
+    ptr = (u8 *)&D_800431C0 + arg0 * 0x7A + 0x53;
+
+    for (i = 0; i < 6; i++) {
+        ptr[0] = 0;
+        ptr[1] = 0;
+        ptr[2] = 0;
+        ptr[3] = 0;
+        ptr[4] = 0;
+        ptr[5] = 0;
+        ptr[6] = 0;
+        ptr[7] = 0;
+        ptr += 8;
+    }
+    ptr[0] = 1;
+    ptr[1] = 0;
+    ptr[2] = 0x7B;
+    ptr[3] = 0;
+    ptr[4] = 0;
+    ptr[5] = 0;
+    ptr[6] = 0x45;
+    ptr[7] = 0x6D;
+    ptr[8] = 0x70;
+    ptr[9] = 0x74;
+    ptr[10] = 0x79;
+    ptr[11] = 0;
+    ptr[12] = 2;
+    ptr += 0xD;
+
+    for (i = 1; i < 7; i++) {
+        *ptr = 0;
+        ptr++;
+    }
+    *ptr = 1;
+    ptr++;
+
+    for (i = 1; i < 8; i++) {
+        *ptr = 0;
+        ptr++;
+    }
+    ptr[0] = 0;
+    ptr[1] = 0;
+    ptr[2] = 0;
+    ptr[3] = 0;
+    ptr[4] = 0;
+    ptr += 5;
+
+    for (i = 0; i < 8; i++) {
+        *ptr = 0;
+        ptr++;
+    }
+
+    for (i = 0; i < 4; i++) {
+        *ptr = 0;
+        ptr++;
+    }
+
+    *ptr = 0;
+    ptr++;
+
+    for (i = 0; i < 8; i++) {
+        *ptr = 0;
+        ptr++;
+        continue;
+    }
+
+    ptr[0] = 0;
+    ptr[1] = 0;
+    ptr[2] = 0;
+    ptr[4] = 0;
+    ptr[5] = 0;
+    ptr[6] = 0;
+    ptr[3] = 0;
+    ptr[7] = 0;
+    ptr[8] = 0;
+    ptr[9] = 0;
+    ptr[10] = 0;
+    ptr[11] = 0;
+    ptr += 0xC;
+    *ptr = 0;
+
+    func_800015B4_21B4(arg0 * 0x7A + 0x4F, 0x76);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_loadSavedGame.s")
 
