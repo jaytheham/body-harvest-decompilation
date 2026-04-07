@@ -807,6 +807,9 @@ void func_8000EFB8_FBB8(void *);
 /* overlay_gameplay/outside/A40B0 */
 void func_80095100_A40B0(s16, s16);
 
+/* core/53D0 */
+void func_800047D0_53D0(s32, s32);
+
 /* core/FB00 — thread entry points */
 void func_8000F6B0_102B0(void *);
 void func_8000FE50_10A50(void *);
