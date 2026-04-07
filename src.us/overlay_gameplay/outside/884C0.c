@@ -921,26 +921,28 @@ s32 func_80080A54_8FA04(u8 arg0, s16 arg1, s16 arg2)
   s32 dz;
   s16 angle;
   s16 diff;
-	s32 result;
+  s32 result;
   new_var = alienInstances[arg0].specIndex;
   maxTurn = alienSpecs[new_var].unk42;
   dx = arg1 - alienInstances[arg0].unk0;
   dz = arg2 - alienInstances[arg0].unk4;
   angle = func_80003824_4424((f32) dx, (f32) dz);
   diff = angle - alienInstances[arg0].unk6;
-  if ((-maxTurn) >= diff)
+  if (-maxTurn >= diff)
   {
 	alienInstances[arg0].unk6 -= maxTurn;
-	result=1;
+	result = 1;
   }
   else if (maxTurn < diff)
   {
 	alienInstances[arg0].unk6 += maxTurn;
-	result= 1;
-  } else {
+	result = 1;
+  }
+  else
+  {
 	return 0;
   }
-	return result;
+  return result;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080A54_8FA04.s")
@@ -1648,7 +1650,7 @@ void func_80083EF4_92EA4(AlienInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
   }
   if ((arg0->unk20 & 0x80000) && (arg0->unk20 & 0x600))
   {
-	func_800F2D48_101CF8((arg0->unk20 & 7, arg0->unk0, arg0->unk4);
+	func_800F2D48_101CF8(arg0->unk20 & 7, arg0->unk0, arg0->unk4);
   }
   spec = &alienSpecs[sp27];
   half = arg2 / 2;
