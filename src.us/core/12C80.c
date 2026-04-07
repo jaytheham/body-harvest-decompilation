@@ -254,7 +254,42 @@ void *func_80012834_13434(void *arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001286C_1346C.s")
+void func_8001286C_1346C(void) {
+	Unk8006AA80Node *node;
+
+	osSyncPrintf(&D_800381C0_38DC0);
+	node = D_8006AA80;
+	if (node != NULL) {
+		do {
+			if (node->unk6 >= 0) {
+				alSndpSetSound(D_8006AB10, node->unk6);
+				osSyncPrintf(&D_800381D0_38DD0, node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20, node->unk28, (s32) node->unk0E);
+			}
+			node = node->unk34;
+		} while (node != NULL);
+		node = D_8006AA80;
+	}
+	osSyncPrintf(&D_80038204_38E04);
+	if (node != NULL) {
+		do {
+			if (node->unk6 == -1) {
+				osSyncPrintf(&D_80038218_38E18, node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20);
+			}
+			node = node->unk34;
+		} while (node != NULL);
+	}
+	node = D_8006AA80;
+	osSyncPrintf(&D_80038244_38E44);
+	if (node != NULL) {
+		do {
+			if (node->unk6 == -2) {
+				osSyncPrintf(&D_8003825C_38E5C, node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20);
+			}
+			node = node->unk34;
+		} while (node != NULL);
+	}
+	osSyncPrintf(&D_80038288_38E88);
+}
 
 void func_800129FC_135FC(s8 arg0, s8 arg1) {
 	s32 devAddr;
