@@ -76,7 +76,8 @@ extern u32 D_800312F8_31EF8;
 extern u32 D_800312FC_31EFC;
 extern u32 D_80031300_31F00;
 extern Unk80047FB8 D_80031310_31F10[5];
-extern u32 D_800313CC;
+extern s32 D_800313CC;
+extern f32 D_80036C88;
 extern s16 D_800313C8;
 extern s16 D_800313D0; // Language
 extern u8 D_800313F4; // World fog alpha value

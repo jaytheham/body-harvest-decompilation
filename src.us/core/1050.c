@@ -265,7 +265,64 @@ void func_80001144_1D44(u8 arg0, u8 arg1, u8 arg2) {
 	}
 }
 
+#ifdef NON_MATCHING
+void func_80001190_1D90(void) {
+    if (gameplayMode != (GameplayMode)D_80047698) {
+        func_800010C4_1CC4(0);
+        D_80047698 = gameplayMode;
+    }
+    if (gameplayMode == GAMEPLAY_MODE_UNK1 || gameplayMode == GAMEPLAY_MODE_UNK3 || gameplayMode == GAMEPLAY_MODE_UNKB) {
+        if (D_80047678 == 1) {
+            f32 temp_f0;
+            s32 temp_f8;
+            D_800313CC = D_8004767C;
+            if ((s32)D_8004768C >= 0x2711) {
+                temp_f0 = D_80036C88 / (f32)(s32)D_8004768C;
+                temp_f8 = (s32)((f32)(s32)D_8004767C * (temp_f0 * temp_f0 * temp_f0));
+                D_800313CC = temp_f8;
+                D_800313CC /= 2;
+            }
+            if (D_800313CC >= 0x100) {
+                func_80001050_1C50(0);
+            } else {
+                func_8000108C_1C8C(0);
+            }
+            if ((s32)D_8004767C >= 0x100) {
+                D_8004767C -= 0x100;
+            } else {
+                D_8004767C += (s32)(((s32)D_80047680 >> 4) * ((s32)D_80047680 >> 4) * ((s32)D_80047680 >> 4)) / 512;
+            }
+            if ((s32)D_80047688 > 0) {
+                D_80047688 -= 1;
+            } else if (D_80047684 < (s32)D_80047680) {
+                D_80047680 -= D_80047684;
+            } else {
+                D_80047684 = 0;
+                D_80047680 = 0;
+            }
+            D_8004768C += 1;
+            if ((s32)D_8004767C >= 0x100) {
+                D_80047690 = 0;
+                return;
+            }
+            D_80047690 = D_80047690 + 1;
+            if ((s32)D_80047690 >= 0x321) {
+                D_8004768C = 0;
+            }
+        } else {
+            D_80047694 = D_80047694 + 1;
+            if (D_80047694 == 0x9C4) {
+                checkForRumblePak();
+                D_80047694 = 0;
+            }
+        }
+    } else {
+        func_8000108C_1C8C(0);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001190_1D90.s")
+#endif
 
 void osViExtendVStart(s32 arg0) {
 	__additional_scanline = arg0;
