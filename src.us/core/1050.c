@@ -6,7 +6,44 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000730_1330.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_8000091C_151C.s")
+s32 func_8000091C_151C(BhAudioTask *arg0, BhAudioBuf *arg1) {
+    s32 sp3C;
+    s32 sp38;
+    s32 sp34;
+    Acmd *temp_v1;
+
+    func_80000D0C_190C();
+    sp3C = osVirtualToPhysical(arg0->outBuf);
+    if (arg1 != NULL) {
+        osAiSetNextBuffer(arg1->buf, arg1->numFrames * 4);
+    }
+    arg0->outLen = (s16)(((D_800431A8 - (func_8001BCE0_1C8E0() >> 2)) + 0xB0) & 0xFFF0);
+    if (arg0->outLen < D_800431A4) {
+        arg0->outLen = (s16)D_800431A4;
+    }
+    temp_v1 = alAudioFrame(D_8003FB20[D_800312F4_31EF4], &sp34, (s16 *)sp3C, arg0->outLen);
+    if (sp34 == 0) {
+        return 0;
+    }
+    arg0->task.next = NULL;
+    arg0->task.msgQ = &D_8003FD20;
+    arg0->task.msg = (OSMesg)((u8 *)arg0 + 0x70);
+    arg0->task.flags = 2;
+    arg0->task.list.t.data_ptr = (u64 *)D_8003FB20[D_800312F4_31EF4];
+    arg0->task.list.t.data_size = (u32)(((s32)temp_v1 - (s32)D_8003FB20[D_800312F4_31EF4]) >> 3) * 8;
+    arg0->task.list.t.type = M_AUDTASK;
+    arg0->task.list.t.ucode_boot = (u64 *)rspbootTextStart;
+    arg0->task.list.t.ucode_boot_size = (u32)((u8 *)D_8002DEE0_2EAE0 - (u8 *)rspbootTextStart);
+    arg0->task.list.t.flags = 0;
+    arg0->task.list.t.ucode = (u64 *)D_8002F310_2FF10;
+    arg0->task.list.t.ucode_data = (u64 *)D_8003F060_3FC60;
+    arg0->task.list.t.ucode_data_size = 0x800;
+    arg0->task.list.t.yield_data_ptr = NULL;
+    arg0->task.list.t.yield_data_size = 0;
+    osSendMesg(osScGetCmdQ(&D_800680A0), (OSMesg)&arg0->task, OS_MESG_BLOCK);
+    D_800312F4_31EF4 ^= 1;
+    return 1;
+}
 
 void func_80000AD4_16D4(s32 arg0)
 {
@@ -187,7 +224,38 @@ OSThread *__osGetActiveQueue(void) {
 	return __osActiveQueue2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001424_2024.s")
+void func_80001424_2024(void) {
+    OSContStatus contStatus[4];
+    u8 bitpattern;
+
+    D_800476A2 = 1;
+    __osActiveQueue2 = 1;
+    D_800475D0.button = 0x9000;
+    osCreateMesgQueue(&D_800433A8, &D_800433C0, 1);
+    osCreateThread(&D_800433C8, 0xA, (void (*)(void *))func_80000ED4_1AD4, 0, &D_80047578, 0xF);
+    osStartThread(&D_800433C8);
+    osCreateMesgQueue(&D_80043388, &D_800433A4, 1);
+    osSetEventMesg(5, &D_80043388, D_800433A0);
+    osContInit(&D_80043388, &bitpattern, contStatus);
+    D_80047584 = 1;
+    if (contStatus[0].errno == 8) {
+        D_80047584 = 0;
+    }
+    D_80047608 = osEepromProbe(&D_80043388);
+    D_800476A0 = 0;
+    osContSetCh(2);
+    guess_restoreSavedData();
+    osSendMesg(&D_8006A8F0, 0, 0);
+    D_800475E8 = 0;
+    D_800475EC = 1;
+    D_800475F0 = 0;
+    D_800475F4 = 0;
+    D_80047694 = 0;
+    D_80047678 = 0;
+    if ((bitpattern & 1) && (contStatus[0].type & 4) && (contStatus[0].status & 1)) {
+        checkForRumblePak();
+    }
+}
 
 // https://decomp.me/scratch/zsK5T
 #ifdef NON_MATCHING
@@ -253,9 +321,62 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/validateSaveVersionAndChecksum.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800016D8_22D8.s")
+#ifdef NON_MATCHING
+void func_800016D8_22D8(void) {
+	u16 i, writeIdx;
+	s32 val, val2;
 
+	D_800431C8 = (u8)D_800313D0;
+	writeIdx = 9;
+	for (i = 0; i < 5; i++) {
+		u16 j;
+		for (j = 0; j < 6; j++) {
+			(&D_800431C0)[writeIdx++] = *((u8*)(D_80047FB8 + i) + j);
+		}
+		val = ((Unk80047FB8*)((u8*)D_80047FB8 + i * 0x14))->unk8;
+		(&D_800431C0)[writeIdx++] = val;
+		(&D_800431C0)[writeIdx++] = val >> 8;
+		(&D_800431C0)[writeIdx++] = val >> 16;
+		(&D_800431C0)[writeIdx++] = val >> 24;
+		(&D_800431C0)[writeIdx++] = ((Unk80047FB8*)((u8*)D_80047FB8 + i * 0x14))->unkC;
+		val2 = ((Unk80047FB8*)((u8*)D_80047FB8 + i * 0x14))->unk10;
+		(&D_800431C0)[writeIdx++] = val2;
+		(&D_800431C0)[writeIdx++] = val2 >> 8;
+		(&D_800431C0)[writeIdx++] = val2 >> 16;
+	}
+	func_800015B4_21B4(4, 0x47);
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800016D8_22D8.s")
+#endif
+
+#ifdef NON_MATCHING
+void func_80001830_2430(void) {
+	u16 i, j, writeIdx;
+	s32 val, val2;
+
+	D_800431C8 = 0xFF;
+	writeIdx = 9;
+	for (i = 0; i < 5; i++) {
+		for (j = 0; j < 6; j++) {
+			(&D_800431C0)[writeIdx++] = *((u8*)(D_80031310_31F10 + i) + j);
+		}
+		val = ((Unk80047FB8*)((u8*)D_80031310_31F10 + i * 0x14))->unk8;
+		(&D_800431C0)[writeIdx++] = val;
+		(&D_800431C0)[writeIdx++] = val >> 8;
+		(&D_800431C0)[writeIdx++] = val >> 16;
+		(&D_800431C0)[writeIdx++] = val >> 24;
+		(&D_800431C0)[writeIdx++] = ((Unk80047FB8*)((u8*)D_80031310_31F10 + i * 0x14))->unkC;
+		val2 = ((Unk80047FB8*)((u8*)D_80031310_31F10 + i * 0x14))->unk10;
+		(&D_800431C0)[writeIdx++] = val2;
+		(&D_800431C0)[writeIdx++] = val2 >> 8;
+		(&D_800431C0)[writeIdx++] = val2 >> 16;
+	}
+	func_800015B4_21B4(4, 0x47);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001830_2430.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80001984_2584(void) {
@@ -336,7 +457,96 @@ loop:
 	#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800020E0_2CE0.s")
 	#endif
 
+#ifdef NON_MATCHING
+void func_800021CC_2DCC(s32 arg0) {
+    u8 *ptr;
+    s32 i;
+
+    ptr = (u8 *)&D_800431C0 + arg0 * 0x7A + 0x53;
+
+    for (i = 0; i < 6; i++) {
+        ptr[0] = 0;
+        ptr[1] = 0;
+        ptr[2] = 0;
+        ptr[3] = 0;
+        ptr[4] = 0;
+        ptr[5] = 0;
+        ptr[6] = 0;
+        ptr[7] = 0;
+        ptr += 8;
+    }
+    ptr[0] = 1;
+    ptr[1] = 0;
+    ptr[2] = 0x7B;
+    ptr[3] = 0;
+    ptr[4] = 0;
+    ptr[5] = 0;
+    ptr[6] = 0x45;
+    ptr[7] = 0x6D;
+    ptr[8] = 0x70;
+    ptr[9] = 0x74;
+    ptr[10] = 0x79;
+    ptr[11] = 0;
+    ptr[12] = 2;
+    ptr += 0xD;
+
+    for (i = 1; i < 7; i++) {
+        *ptr = 0;
+        ptr++;
+    }
+    *ptr = 1;
+    ptr++;
+
+    for (i = 1; i < 8; i++) {
+        *ptr = 0;
+        ptr++;
+    }
+    ptr[0] = 0;
+    ptr[1] = 0;
+    ptr[2] = 0;
+    ptr[3] = 0;
+    ptr[4] = 0;
+    ptr += 5;
+
+    for (i = 0; i < 8; i++) {
+        *ptr = 0;
+        ptr++;
+    }
+
+    for (i = 0; i < 4; i++) {
+        *ptr = 0;
+        ptr++;
+    }
+
+    *ptr = 0;
+    ptr++;
+
+    for (i = 0; i < 8; i++) {
+        *ptr = 0;
+        ptr++;
+        continue;
+    }
+
+    ptr[0] = 0;
+    ptr[1] = 0;
+    ptr[2] = 0;
+    ptr[4] = 0;
+    ptr[5] = 0;
+    ptr[6] = 0;
+    ptr[3] = 0;
+    ptr[7] = 0;
+    ptr[8] = 0;
+    ptr[9] = 0;
+    ptr[10] = 0;
+    ptr[11] = 0;
+    ptr += 0xC;
+    *ptr = 0;
+
+    func_800015B4_21B4(arg0 * 0x7A + 0x4F, 0x76);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800021CC_2DCC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_loadSavedGame.s")
 

@@ -71,6 +71,7 @@ extern Gfx D_80031200[];
 extern Gfx D_80031230[];
 extern Gfx D_80031260[];
 extern u32 D_800312F0_31EF0;
+extern s32 D_800312F4_31EF4;
 extern u32 D_800312F8_31EF8;
 extern Unk80047FB8 D_80031310_31F10[5];
 extern u32 D_800313CC;
@@ -149,6 +150,8 @@ extern GateEntry D_8003E0FC[5][8]; // shield wall gates by level
 extern Unk80042DA8 D_80042DA8;
 extern Unk80042DB8 D_80042DB8;
 extern u32 D_800431A0;
+extern s32 D_800431A4;
+extern s32 D_800431A8;
 extern u8 D_80043243;
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
@@ -960,7 +963,6 @@ extern u32 D_8014D1B8[];
 extern Unk8014F618 D_8014F618;
 
 extern AlienSpec alienSpecs[0x30]; // 80256680
-extern u8 D_802566BA[]; // = alienSpecs[0].pad3A (u16 max HP table, stride 104)
 extern Unk8025669C D_8025669C[];  // 8025669C
 
 extern s32 D_80145BE8_154B98[][6];
@@ -1028,7 +1030,7 @@ extern s16 D_801593E8;
 extern s16 D_801591D4;
 extern s32 D_800476C0;
 extern s32 __additional_scanline;
-extern OSThread *__osActiveQueue2;
+extern s32 __osActiveQueue2;
 extern s16 D_80152C96;
 extern s32 D_8016017C;
 extern s32 D_80160180;
@@ -1527,6 +1529,14 @@ extern u8 D_8003E460_3F060[];
 extern Unk8003E290Entry *D_8015922C;
 extern Unk80047578 D_80047578;
 extern OSMesgQueue D_800433A8;
+extern OSThread D_800433C8;
+extern OSMesg D_800433A0;
+extern OSMesg D_800433A4;
+extern OSMesg D_800433C0;
+extern s32 D_800475E8;
+extern s32 D_800475EC;
+extern s32 D_800475F0;
+extern s32 D_800475F4;
 extern s32 D_80031304;
 extern s32 D_80047694;
 extern u8 D_800431C0; // Save file data. 0x89 bytes, then 0x7A per save slot
@@ -1652,6 +1662,13 @@ extern char D_8003813C_38D3C;
 extern char D_80038158_38D58;
 extern char D_80038174_38D74;
 extern char D_80038198_38D98;
+extern char D_800381C0_38DC0;
+extern char D_800381D0_38DD0;
+extern char D_80038204_38E04;
+extern char D_80038218_38E18;
+extern char D_80038244_38E44;
+extern char D_8003825C_38E5C;
+extern char D_80038288_38E88;
 extern char D_80038424_39024;
 extern char D_800384E0_390E0;
 extern char D_80038500_39100;
@@ -1661,7 +1678,8 @@ extern char D_80038614_39214; /* osSyncPrintf format string */
 extern char D_80038618_39218; /* osSyncPrintf format string */
 
 /* core/FB00 */
-extern u8 D_8003FB20[];
+extern Acmd *D_8003FB20[];
+extern OSMesgQueue D_8003FD20;
 extern OSThread D_80067388;
 extern void *D_8005C760;
 
@@ -1865,6 +1883,8 @@ extern f32 D_80033CAC_348AC[];
 extern OSSched D_800680A0;
 extern OSMesgQueue D_8006A908;
 extern BhGfxTask D_8006A940[];
+extern u64 D_8002F310_2FF10[];
+extern u64 D_8003F060_3FC60[];
 extern u64 D_8002DEE0_2EAE0[];
 extern u64 D_8003E860_3F460[];
 extern u64 D_80160300[];

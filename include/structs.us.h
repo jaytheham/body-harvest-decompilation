@@ -1,6 +1,8 @@
 #ifndef STRUCTS_US_H
 #define STRUCTS_US_H
 
+#include <PR/sched.h>
+
 typedef struct {
 	/* 0x00 */ f32 v0;
 	/* 0x04 */ f32 v1;
@@ -1403,6 +1405,18 @@ typedef struct BhGfxTask_s {
     /* 0x88 */ void *unk88;
     /* 0x8C */ u32 unk8C;
 } BhGfxTask; /* size = 0x90 */
+
+typedef struct {
+    /* 0x00 */ void *buf;
+    /* 0x04 */ s16 numFrames;
+} BhAudioBuf;
+
+typedef struct {
+    /* 0x00 */ void *outBuf;
+    /* 0x04 */ s16 outLen;
+    /* 0x06 */ u16 pad;
+    /* 0x08 */ OSScTask task;
+} BhAudioTask;
 
 typedef struct {
     /* 0x00 */ u8 unk0[0x53];

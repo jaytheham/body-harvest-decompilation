@@ -376,9 +376,79 @@ void func_8000D278_DE78(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D384_DF84.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D588_E188.s")
+#ifdef NON_MATCHING
+void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, u8 arg3, f32 arg4) {
+	typedef struct { s16 a; s16 b; s16 c; s16 d; s16 e; s16 f; } AnimFrame12;
+	s32 base;
+	AnimFrameData sp44;
+	AnimFrameData sp34;
+	AnimFrameData sp24;
 
+	base = (s32)arg0 + (((*(u16 *)((s32)arg0 + arg3 * 4 + 0xC) + arg2->unk18) & 0xFFFF) * 0xE);
+	*(AnimFrame12 *)&sp44 = *(AnimFrame12 *)((char *)base + 0x50);
+	sp44.unkC = *(u16 *)((char *)base + 0x5C);
+
+	base = (s32)arg1 + (((*(u16 *)((s32)arg1 + arg3 * 4 + 0xC) + arg2->unk18) & 0xFFFF) * 0xE);
+	*(AnimFrame12 *)&sp34 = *(AnimFrame12 *)((char *)base + 0x50);
+	sp34.unkC = *(u16 *)((char *)base + 0x5C);
+
+	func_8000D384_DF84(&sp44, &sp34, *(s32 *)&arg4, &sp24);
+
+	*(AnimFrame12 *)&arg2->unk24 = *(AnimFrame12 *)&sp24;
+	arg2->unk1C = 0.0f;
+	arg2->unk30 = sp24.unkC;
+
+	arg2->unk20 = (f32)(u32)sp24.unkC;
+
+	arg2->unk32 = arg2->unk0;
+	arg2->unk34 = arg2->unk2;
+	arg2->unk36 = arg2->unk4;
+	arg2->unk38 = (s16)arg2->unk8;
+	arg2->unk3A = (s16)arg2->unkC;
+	arg2->unk3C = (s16)arg2->unk10;
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D588_E188.s")
+#endif
+
+#ifdef NON_MATCHING
+s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, s32 arg5, f32 arg6, s32 arg7) {
+	AnimChannelState *ch;
+	s32 var_s1;
+
+	arg0->unkE50 = arg4;
+	func_800101F0_10DF0(((s32)arg0) + 8, (s32)(void *)((arg4 & 0xFFFFFF) + (s32)&D_8F4960), 0x48);
+	func_800101F0_10DF0(((s32)arg0) + 0x50, (s32)(void *)((arg4 & 0xFFFFFF) + (s32)&D_8F4960 + 0x48), arg0->unk8 * 0xE);
+
+	arg1->unkE50 = arg5;
+	func_800101F0_10DF0(((s32)arg1) + 8, (s32)(void *)((arg5 & 0xFFFFFF) + (s32)&D_8F4960), 0x48);
+	func_800101F0_10DF0(((s32)arg1) + 0x50, (s32)(void *)((arg5 & 0xFFFFFF) + (s32)&D_8F4960 + 0x48), arg1->unk8 * 0xE);
+
+	var_s1 = 0;
+	if (arg3 != 0) {
+		do {
+			ch = &arg2[var_s1];
+			ch->unk18 = 0;
+			ch->unk14 = *((u16 *)(((s32)arg0) + (var_s1 * 4) + 0xE));
+			func_8000D588_E188(arg0, arg1, ch, var_s1, arg6);
+			if (arg7 != 0) {
+				ch->unk8 = (f32)ch->unk24;
+				ch->unk18 = ch->unk18 + 1;
+				ch->unk0 = ch->unk2A;
+				ch->unkC = (f32)ch->unk26;
+				ch->unk2 = ch->unk2C;
+				ch->unk4 = ch->unk2E;
+				ch->unk10 = (f32)ch->unk28;
+				func_8000D588_E188(arg0, arg1, ch, var_s1, arg6);
+			}
+			var_s1 = (var_s1 + 1) & 0xFF;
+		} while (arg3 != var_s1);
+	}
+	return arg4;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D71C_E31C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D8DC_E4DC.s")
 
