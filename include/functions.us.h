@@ -48,6 +48,7 @@ void func_80004D38_5938(void);
 void func_80004DDC_59DC(u8 arg0, u8 arg1, u8 arg2, s32 arg3, s32 arg4);
 void func_8000505C_5C5C(void);
 void func_800050C4_5CC4(void);
+void func_80005110_5D10(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4);
 void func_800056A8_62A8(void);
 void func_80006DDC_79DC(void);
 s32 func_8000726C_7E6C(u64);

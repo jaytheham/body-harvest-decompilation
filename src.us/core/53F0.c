@@ -234,7 +234,52 @@ void func_800050C4_5CC4(void) {
 	func_80004D38_5938();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005110_5D10.s")
+void func_80005110_5D10(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4) {
+	u8 alpha = 0xFF;
+	D_8005BB34[0].v.ob[0] = -arg0 / 2;
+	D_8005BB34[0].v.ob[1] = -arg1 / 2;
+	D_8005BB34[0].v.ob[2] = 0;
+	D_8005BB34[0].v.flag = 0;
+	D_8005BB34[0].v.tc[0] = D_800313E4_31FE4 + 0x40;
+	D_8005BB34[0].v.tc[1] = D_800313E4_31FE4 + 0x40;
+	D_8005BB34[0].v.cn[0] = arg2;
+	D_8005BB34[0].v.cn[1] = arg3;
+	D_8005BB34[0].v.cn[2] = arg4;
+	D_8005BB34[0].v.cn[3] = alpha;
+	D_8005BB34[1].v.ob[0] = arg0 / 2;
+	D_8005BB34[1].v.ob[1] = -arg1 / 2;
+	D_8005BB34[1].v.ob[2] = 0;
+	D_8005BB34[1].v.flag = 0;
+	D_8005BB34[1].v.tc[0] = D_800313E4_31FE4 + 0xFC0;
+	D_8005BB34[1].v.tc[1] = D_800313E4_31FE4 + 0x40;
+	D_8005BB34[1].v.cn[0] = arg2;
+	D_8005BB34[1].v.cn[1] = arg3;
+	D_8005BB34[1].v.cn[2] = arg4;
+	D_8005BB34[1].v.cn[3] = alpha;
+	D_8005BB34[2].v.ob[0] = -arg0 / 2;
+	D_8005BB34[2].v.ob[1] = arg1 / 2;
+	D_8005BB34[2].v.ob[2] = 0;
+	D_8005BB34[2].v.flag = 0;
+	D_8005BB34[2].v.tc[0] = D_800313E4_31FE4 + 0x40;
+	D_8005BB34[2].v.tc[1] = D_800313E4_31FE4 + 0xFC0;
+	D_8005BB34[2].v.cn[0] = arg2;
+	D_8005BB34[2].v.cn[1] = arg3;
+	D_8005BB34[2].v.cn[2] = arg4;
+	D_8005BB34[2].v.cn[3] = alpha;
+	D_8005BB34[3].v.ob[0] = arg0 / 2;
+	D_8005BB34[3].v.ob[1] = arg1 / 2;
+	D_8005BB34[3].v.ob[2] = 0;
+	D_8005BB34[3].v.flag = 0;
+	D_8005BB34[3].v.tc[0] = D_800313E4_31FE4 + 0xFC0;
+	D_8005BB34[3].v.tc[1] = D_800313E4_31FE4 + 0xFC0;
+	D_8005BB34[3].v.cn[0] = arg2;
+	D_8005BB34[3].v.cn[1] = arg3;
+	D_8005BB34[3].v.cn[2] = arg4;
+	D_8005BB34[3].v.cn[3] = alpha;
+	gSPVertex(D_8005BB2C++, (Vtx *)((s32)D_8005BB34 + 0x80000000), 4, 0);
+	gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 3, 2, 0);
+	D_8005BB34 += 4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800053A0_5FA0.s")
 

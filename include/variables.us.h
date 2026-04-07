@@ -80,6 +80,7 @@ extern s32 D_800313CC;
 extern f32 D_80036C88;
 extern s16 D_800313C8;
 extern s16 D_800313D0; // Language
+extern s16 D_800313E4_31FE4;
 extern u8 D_800313F4; // World fog alpha value
 extern s16 D_800313F8; // World fog near distance
 extern s16 D_800313FC; // World fog far distance
