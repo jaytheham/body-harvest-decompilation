@@ -130,6 +130,7 @@ extern char D_80036D68_37968;
 extern char D_80036D6C_3796C;
 extern char D_80036D70_37970;
 extern s32 D_800315D4_321D4;
+extern Vtx D_800315D8_321D8[];
 extern s32 D_800315D4_W;
 extern char D_80036D74_37974; /* osSyncPrintf format string - callback table full warning */
 extern char D_80036DA4_379A4;

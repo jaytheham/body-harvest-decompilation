@@ -334,7 +334,25 @@ void func_8000577C_637C(void)
 #endif
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005844_6444.s")
+void func_80005844_6444(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
+    guOrtho((Mtx *)D_8005BB38, -1.0f, 1.0f, -1.0f, 1.0f, -10.0f, 10.0f, 1.0f);
+    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+    D_8005BB38 += 0x40;
+    guLookAt((Mtx *)D_8005BB38, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+    D_8005BB38 += 0x40;
+    gDPPipeSync(D_8005BB2C++);
+    gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+    gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
+    gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+    gDPSetPrimColor(D_8005BB2C++, 0, 0, arg0, arg1, arg2, arg3);
+    gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+    gSPVertex(D_8005BB2C++, (Vtx *)((s32)D_800315D8_321D8 & 0x1FFFFFFF), 4, 0);
+    gSP1Triangle(D_8005BB2C++, 0, 2, 1, 0);
+    gSP1Triangle(D_8005BB2C++, 1, 2, 3, 0);
+    gSPPopMatrix(D_8005BB2C++, G_MTX_PROJECTION);
+    gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+}
 
 void func_80005AEC_66EC(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	D_80047734 = 1;
