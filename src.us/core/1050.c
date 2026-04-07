@@ -187,7 +187,38 @@ OSThread *__osGetActiveQueue(void) {
 	return __osActiveQueue2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001424_2024.s")
+void func_80001424_2024(void) {
+    OSContStatus contStatus[4];
+    u8 bitpattern;
+
+    D_800476A2 = 1;
+    __osActiveQueue2 = 1;
+    D_800475D0.button = 0x9000;
+    osCreateMesgQueue(&D_800433A8, &D_800433C0, 1);
+    osCreateThread(&D_800433C8, 0xA, (void (*)(void *))func_80000ED4_1AD4, 0, &D_80047578, 0xF);
+    osStartThread(&D_800433C8);
+    osCreateMesgQueue(&D_80043388, &D_800433A4, 1);
+    osSetEventMesg(5, &D_80043388, D_800433A0);
+    osContInit(&D_80043388, &bitpattern, contStatus);
+    D_80047584 = 1;
+    if (contStatus[0].errno == 8) {
+        D_80047584 = 0;
+    }
+    D_80047608 = osEepromProbe(&D_80043388);
+    D_800476A0 = 0;
+    osContSetCh(2);
+    guess_restoreSavedData();
+    osSendMesg(&D_8006A8F0, 0, 0);
+    D_800475E8 = 0;
+    D_800475EC = 1;
+    D_800475F0 = 0;
+    D_800475F4 = 0;
+    D_80047694 = 0;
+    D_80047678 = 0;
+    if ((bitpattern & 1) && (contStatus[0].type & 4) && (contStatus[0].status & 1)) {
+        checkForRumblePak();
+    }
+}
 
 // https://decomp.me/scratch/zsK5T
 #ifdef NON_MATCHING
