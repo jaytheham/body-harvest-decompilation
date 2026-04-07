@@ -257,13 +257,14 @@ void *func_80012834_13434(void *arg0) {
 void func_8001286C_1346C(void) {
 	Unk8006AA80Node *node;
 
-	osSyncPrintf(&D_800381C0_38DC0);
+	osSyncPrintf(&D_800381C0_38DC0); // Sounds playing
 	node = D_8006AA80;
 	if (node != NULL) {
 		do {
 			if (node->unk6 >= 0) {
 				alSndpSetSound(D_8006AB10, node->unk6);
 				osSyncPrintf(&D_800381D0_38DD0, node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20, node->unk28, (s32) node->unk0E);
+				//  ID%d obj %lx Slot%d State%d Vol %d T %ld Ct %d
 			}
 			node = node->unk34;
 		} while (node != NULL);
@@ -274,6 +275,7 @@ void func_8001286C_1346C(void) {
 		do {
 			if (node->unk6 == -1) {
 				osSyncPrintf(&D_80038218_38E18, node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20);
+				//  Snd ID%d obj %lx Slot%d State%d Vol %d
 			}
 			node = node->unk34;
 		} while (node != NULL);
@@ -284,11 +286,12 @@ void func_8001286C_1346C(void) {
 		do {
 			if (node->unk6 == -2) {
 				osSyncPrintf(&D_8003825C_38E5C, node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20);
+				//  Snd ID%d obj %lx Slot%d State%d Vol %d
 			}
 			node = node->unk34;
 		} while (node != NULL);
 	}
-	osSyncPrintf(&D_80038288_38E88);
+	osSyncPrintf(&D_80038288_38E88); // .
 }
 
 void func_800129FC_135FC(s8 arg0, s8 arg1) {
@@ -944,21 +947,21 @@ void func_80016C8C_1788C(f32 arg0, f32 arg1, f32 arg2) {
 }
 
 void func_80016CD8_178D8(s8 arg0) {
-    f32 temp_f0;
+	f32 temp_f0;
 
-    if (D_80031CE4_328E4[arg0] == 1 && D_80031D28_32928[arg0] == 1) {
-        temp_f0 = (f32)D_80031D74_32974[D_80031D1C_3291C[arg0]];
-        alSeqpSetVol((ALSeqPlayer *)D_8006AB18[arg0],
-            (s16)(s32)((D_80031D3C_3293C[arg0] * temp_f0 + D_80031D44_32944[arg0] * (temp_f0 * D_80031D2C_3292C[arg0]) / D_80031D34_32934[arg0]) * D_80031D64_32964));
-    }
-    D_80031D2C_3292C[arg0] = D_80031D2C_3292C[arg0] - 1.0f;
-    if (D_80031D2C_3292C[arg0] == 0.0f) {
-        if ((f64)D_80031D44_32944[arg0] > 0.0) {
-            func_80013E64_14A64(arg0);
-            return;
-        }
-        D_80031D28_32928[arg0] = 0;
-    }
+	if (D_80031CE4_328E4[arg0] == 1 && D_80031D28_32928[arg0] == 1) {
+		temp_f0 = (f32)D_80031D74_32974[D_80031D1C_3291C[arg0]];
+		alSeqpSetVol((ALSeqPlayer *)D_8006AB18[arg0],
+			(s16)(s32)((D_80031D3C_3293C[arg0] * temp_f0 + D_80031D44_32944[arg0] * (temp_f0 * D_80031D2C_3292C[arg0]) / D_80031D34_32934[arg0]) * D_80031D64_32964));
+	}
+	D_80031D2C_3292C[arg0] = D_80031D2C_3292C[arg0] - 1.0f;
+	if (D_80031D2C_3292C[arg0] == 0.0f) {
+		if ((f64)D_80031D44_32944[arg0] > 0.0) {
+			func_80013E64_14A64(arg0);
+			return;
+		}
+		D_80031D28_32928[arg0] = 0;
+	}
 }
 
 #ifdef NON_MATCHING
