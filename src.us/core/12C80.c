@@ -590,7 +590,56 @@ s16 func_80013F64_14B64(void) {
 	return var_v1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013FC4_14BC4.s")
+void func_80013FC4_14BC4(s32 arg0) {
+	Unk8006AA80Node *node;
+	s16 unk6;
+	s16 neg2;
+
+	if (D_8006AB88 != 0) {
+		node = D_8006AA80;
+		if (node != NULL) {
+			neg2 = -2;
+			do {
+				unk6 = node->unk6;
+				if (unk6 < 0) {
+					if (neg2 == unk6) {
+						func_800123A4_12FA4(node, &D_8006AA80, (Unk8006AA80Node **)&D_8006AA84);
+					} else {
+						if (node->unk0C++ >= 0x10) {
+							func_800123A4_12FA4(node, &D_8006AA80, (Unk8006AA80Node **)&D_8006AA84);
+						}
+					}
+				} else {
+					alSndpSetSound(arg0, unk6);
+					if (alSndpGetState(arg0) != 0) {
+						if (node->unk2C != 0) {
+							if (node->unk0E >= 0) {
+								node->unk0E = node->unk0E - 1;
+							}
+							if (node->unk0E == 0) {
+								func_800157D4_163D4(node->unk6);
+							}
+						}
+						if (node->unk8 == 9) {
+							func_80013E44_14A44(node);
+						}
+						D_8006ABB8[node->unk6] = 0;
+					} else if (D_8006ABB8[node->unk6] == 0 && alSndpGetState(arg0) == 0) {
+						alSndpDeallocate(arg0, node->unk6);
+						if (node->unk8 == 9) {
+							node->unk6 = -1;
+							node->unk8 = 0;
+							node->unk0C = 0;
+						} else {
+							func_800123A4_12FA4(node, &D_8006AA80, (Unk8006AA80Node **)&D_8006AA84);
+						}
+					}
+				}
+				node = node->unk34;
+			} while (node != NULL);
+		}
+	}
+}
 
 // https://decomp.me/scratch/QTO8a
 #ifdef NON_MATCHING
