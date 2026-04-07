@@ -635,7 +635,86 @@ void func_80007900_8500(u8 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007900_8500.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80007A20_8620(u8 *arg0) {
+	switch (arg0[8]) {
+		case 0xB3:
+			osSyncPrintf(&D_80036E38_37A38);
+			break;
+		case 0xB2:
+			osSyncPrintf(&D_80036E48_37A48);
+			break;
+		case 0x89:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036E58_37A58, arg0[6]);
+			func_80007900_8500(arg0 + 3);
+			break;
+		case 0x8A:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036E74_37A74, arg0[6]);
+			func_80007900_8500(arg0 + 3);
+			break;
+		case 0x8C:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036E90_37A90);
+			break;
+		case 0x8D:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036E9C_37A9C);
+			break;
+		case 0xB1:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036EAC_37AAC);
+			break;
+		case 0x8E:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036EBC_37ABC);
+			break;
+		case 0x8F:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036ECC_37ACC);
+			break;
+		case 0x91:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036EE0_37AE0);
+			func_80007900_8500(arg0 + 3);
+			break;
+		case 0x92:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036EEC_37AEC);
+			func_80007900_8500(arg0 + 3);
+			break;
+		case 0x95:
+			osSyncPrintf(&D_80036EFC_37AFC, arg0[6]);
+			break;
+		case 0x96:
+			osSyncPrintf(&D_80036F1C_37B1C, arg0[6]);
+			break;
+		case 0xAA:
+			osSyncPrintf(&D_80036F38_37B38, arg0[6]);
+			break;
+		case 0xAB:
+			osSyncPrintf(&D_80036F50_37B50, arg0[6]);
+			break;
+		case 0xA6:
+			osSyncPrintf(&D_80036F6C_37B6C, arg0[6], arg0[7]);
+			break;
+		case 0xA7:
+			osSyncPrintf(&D_80036F90_37B90, arg0[6], arg0[7]);
+			break;
+		case 0xB9:
+			osSyncPrintf(&D_80036FB4_37BB4, arg0[6]);
+			break;
+		case 0xBA:
+			osSyncPrintf(&D_80036FC8_37BC8, arg0[6]);
+			break;
+		default:
+			break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007A20_8620.s")
+#endif
 
 void func_80007C78_8878(u8 *arg0) {
 	s32 i;

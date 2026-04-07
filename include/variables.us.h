@@ -139,6 +139,25 @@ extern char D_80036DF4_379F4; /* osSyncPrintf format string */
 extern char D_80036E0C_37A0C; /* osSyncPrintf format string */
 extern char D_80036E20_37A20; /* osSyncPrintf format string */
 extern char D_80036E34_37A34; /* osSyncPrintf format string */
+extern char D_80036E38_37A38; /* osSyncPrintf format string */
+extern char D_80036E48_37A48; /* osSyncPrintf format string */
+extern char D_80036E58_37A58; /* osSyncPrintf format string */
+extern char D_80036E74_37A74; /* osSyncPrintf format string */
+extern char D_80036E90_37A90; /* osSyncPrintf format string */
+extern char D_80036E9C_37A9C; /* osSyncPrintf format string */
+extern char D_80036EAC_37AAC; /* osSyncPrintf format string */
+extern char D_80036EBC_37ABC; /* osSyncPrintf format string */
+extern char D_80036ECC_37ACC; /* osSyncPrintf format string */
+extern char D_80036EE0_37AE0; /* osSyncPrintf format string */
+extern char D_80036EEC_37AEC; /* osSyncPrintf format string */
+extern char D_80036EFC_37AFC; /* osSyncPrintf format string */
+extern char D_80036F1C_37B1C; /* osSyncPrintf format string */
+extern char D_80036F38_37B38; /* osSyncPrintf format string */
+extern char D_80036F50_37B50; /* osSyncPrintf format string */
+extern char D_80036F6C_37B6C; /* osSyncPrintf format string */
+extern char D_80036F90_37B90; /* osSyncPrintf format string */
+extern char D_80036FB4_37BB4; /* osSyncPrintf format string */
+extern char D_80036FC8_37BC8; /* osSyncPrintf format string */
 extern u8 D_80036C64[];
 extern u8 D_80036C74[];
 extern u8 D_8004337D;
