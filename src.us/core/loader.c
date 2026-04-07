@@ -205,6 +205,7 @@ s32 func_800104AC_110AC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800104AC_110AC.s")
 #endif
 
+#ifdef NON_MATCHING
 s32 func_800105F0_111F0(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32 *arg5) {
     s32 sp34;
     s32 sp30;
@@ -255,6 +256,9 @@ s32 func_800105F0_111F0(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32 
 
     return *sp28;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800105F0_111F0.s")
+#endif
 
 s32 destroyThreadIfMessageInQueue(void) {
 	s32 result;
