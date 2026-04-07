@@ -467,6 +467,7 @@ typedef struct Unk80042DB8 {
 	/* 0x04 */ struct Unk80042DB8 *unk4;
 	/* 0x08 */ s32 unk8;
 	/* 0x0C */ s32 unkC;
+	/* 0x10 */ void *unk10;
 } Unk80042DB8;
 
 typedef struct {

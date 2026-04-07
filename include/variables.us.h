@@ -73,6 +73,8 @@ extern Gfx D_80031260[];
 extern u32 D_800312F0_31EF0;
 extern s32 D_800312F4_31EF4;
 extern u32 D_800312F8_31EF8;
+extern u32 D_800312FC_31EFC;
+extern u32 D_80031300_31F00;
 extern Unk80047FB8 D_80031310_31F10[5];
 extern u32 D_800313CC;
 extern s16 D_800313C8;
@@ -1593,6 +1595,7 @@ extern void (*D_802DF350[])(s32);
 
 /* core/loader */
 extern s16 D_80068078;
+extern OSIoMesg D_8006A330[];
 extern OSMesgQueue D_80067F58;
 extern OSMesgQueue D_80067F70;
 extern s32 D_8006AA60;
