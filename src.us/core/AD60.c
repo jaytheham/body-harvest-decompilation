@@ -374,7 +374,18 @@ void func_8000D278_DE78(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D384_DF84.s")
+void func_8000D384_DF84(AnimFrameData *arg0, AnimFrameData *arg1, f32 arg2, AnimFrameData *arg3) {
+	s16 tmp;
+
+	tmp = ((AnimFrameData14 *)arg0)->d;
+	((AnimFrameData14 *)arg3)->d = (s16)(s32)((f32)tmp + (f32)(((AnimFrameData14 *)arg1)->d - tmp) * arg2);
+	((AnimFrameData14 *)arg3)->e = (s16)(s32)((f32)((AnimFrameData14 *)arg0)->e + (f32)(((AnimFrameData14 *)arg1)->e - ((AnimFrameData14 *)arg0)->e) * arg2);
+	((AnimFrameData14 *)arg3)->f = (s16)(s32)((f32)((AnimFrameData14 *)arg0)->f + (f32)(((AnimFrameData14 *)arg1)->f - ((AnimFrameData14 *)arg0)->f) * arg2);
+	((AnimFrameData14 *)arg3)->a = (s16)(s32)((f32)((AnimFrameData14 *)arg0)->a + (f32)(((AnimFrameData14 *)arg1)->a - ((AnimFrameData14 *)arg0)->a) * arg2);
+	((AnimFrameData14 *)arg3)->b = (s16)(s32)((f32)((AnimFrameData14 *)arg0)->b + (f32)(((AnimFrameData14 *)arg1)->b - ((AnimFrameData14 *)arg0)->b) * arg2);
+	((AnimFrameData14 *)arg3)->c = (s16)(s32)((f32)((AnimFrameData14 *)arg0)->c + (f32)(((AnimFrameData14 *)arg1)->c - ((AnimFrameData14 *)arg0)->c) * arg2);
+	((AnimFrameData14 *)arg3)->g = (u16)((f32)(u32)((AnimFrameData14 *)arg0)->g + (f32)(((AnimFrameData14 *)arg1)->g - ((AnimFrameData14 *)arg0)->g) * arg2);
+}
 
 #ifdef NON_MATCHING
 void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, u8 arg3, f32 arg4) {

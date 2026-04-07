@@ -24,7 +24,7 @@ void func_800035D8_41D8(s16 arg0);
 void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3);
 void func_80000D0C_190C(void);
 s32 func_8000091C_151C(BhAudioTask *arg0, BhAudioBuf *arg1);
-void* func_80000B14_1714(void);
+s32 func_80000B14_1714(u32, s32, u32);
 void func_8000108C_1C8C(s32);
 void getSaveFileName(s32, u8*);
 s32 func_800038E0_44E0(void);
@@ -70,7 +70,7 @@ s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannel
 void func_8000CD54_D954(void *arg0, AnimChannelState *arg1, u8 arg2);
 s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_8000D278_DE78(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, s32 arg3);
-void func_8000D384_DF84(AnimFrameData *arg0, AnimFrameData *arg1, s32 arg2, AnimFrameData *arg3);
+void func_8000D384_DF84(AnimFrameData *arg0, AnimFrameData *arg1, f32 arg2, AnimFrameData *arg3);
 void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, u8 arg3, f32 arg4);
 void func_8000DAFC_E6FC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, f32 arg5);
 void func_8000DC9C_E89C(s32, s32);
@@ -806,6 +806,9 @@ void func_8000EFB8_FBB8(void *);
 
 /* overlay_gameplay/outside/A40B0 */
 void func_80095100_A40B0(s16, s16);
+
+/* core/53D0 */
+void func_800047D0_53D0(s32, s32);
 
 /* core/FB00 — thread entry points */
 void func_8000F6B0_102B0(void *);
