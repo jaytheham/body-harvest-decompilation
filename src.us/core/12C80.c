@@ -926,7 +926,35 @@ void func_80016CD8_178D8(s8 arg0) {
     }
 }
 
+#ifdef NON_MATCHING
+void func_80016E54_17A54(void) {
+	Unk8006AA80Node *node;
+	f32 temp_f0;
+	s16 temp_vol;
+
+	if (D_8006AB88 != 0) {
+		node = D_8006AA80;
+		if (node != NULL) {
+			do {
+				if (node->unk6 >= 0 && D_80031D4C_3294C == 1) {
+					temp_f0 = (f32) node->unk20;
+					temp_vol = (s16)(s32)((temp_f0 * D_80031D58_32958 + D_80031D5C_3295C * (temp_f0 * D_80031D50_32950) / D_80031D54_32954) * D_80031D60_32960);
+					alSndpSetSound(D_8006AB10, node->unk6);
+					alSndpSetVol(D_8006AB10, temp_vol);
+				}
+				node = node->unk34;
+			} while (node != NULL);
+		}
+		if (D_80031D50_32950 == 0.0f) {
+			D_80031D4C_3294C = 0;
+			return;
+		}
+		D_80031D50_32950 -= 1.0f;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016E54_17A54.s")
+#endif
 
 void func_80016FD0_17BD0(s16 arg0) {
 	Unk8006AA80Node *node;
