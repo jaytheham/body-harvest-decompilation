@@ -71,6 +71,7 @@ extern Gfx D_80031200[];
 extern Gfx D_80031230[];
 extern Gfx D_80031260[];
 extern u32 D_800312F0_31EF0;
+extern s32 D_800312F4_31EF4;
 extern u32 D_800312F8_31EF8;
 extern Unk80047FB8 D_80031310_31F10[5];
 extern u32 D_800313CC;
@@ -149,6 +150,8 @@ extern GateEntry D_8003E0FC[5][8]; // shield wall gates by level
 extern Unk80042DA8 D_80042DA8;
 extern Unk80042DB8 D_80042DB8;
 extern u32 D_800431A0;
+extern s32 D_800431A4;
+extern s32 D_800431A8;
 extern u8 D_80043243;
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
@@ -1678,7 +1681,8 @@ extern char D_80038614_39214; /* osSyncPrintf format string */
 extern char D_80038618_39218; /* osSyncPrintf format string */
 
 /* core/FB00 */
-extern u8 D_8003FB20[];
+extern Acmd *D_8003FB20[];
+extern OSMesgQueue D_8003FD20;
 extern OSThread D_80067388;
 extern void *D_8005C760;
 
@@ -1882,6 +1886,8 @@ extern f32 D_80033CAC_348AC[];
 extern OSSched D_800680A0;
 extern OSMesgQueue D_8006A908;
 extern BhGfxTask D_8006A940[];
+extern u64 D_8002F310_2FF10[];
+extern u64 D_8003F060_3FC60[];
 extern u64 D_8002DEE0_2EAE0[];
 extern u64 D_8003E860_3F460[];
 extern u64 D_80160300[];

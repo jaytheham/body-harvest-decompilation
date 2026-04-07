@@ -6,7 +6,44 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000730_1330.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_8000091C_151C.s")
+s32 func_8000091C_151C(BhAudioTask *arg0, BhAudioBuf *arg1) {
+    s32 sp3C;
+    s32 sp38;
+    s32 sp34;
+    Acmd *temp_v1;
+
+    func_80000D0C_190C();
+    sp3C = osVirtualToPhysical(arg0->outBuf);
+    if (arg1 != NULL) {
+        osAiSetNextBuffer(arg1->buf, arg1->numFrames * 4);
+    }
+    arg0->outLen = (s16)(((D_800431A8 - (func_8001BCE0_1C8E0() >> 2)) + 0xB0) & 0xFFF0);
+    if (arg0->outLen < D_800431A4) {
+        arg0->outLen = (s16)D_800431A4;
+    }
+    temp_v1 = alAudioFrame(D_8003FB20[D_800312F4_31EF4], &sp34, (s16 *)sp3C, arg0->outLen);
+    if (sp34 == 0) {
+        return 0;
+    }
+    arg0->task.next = NULL;
+    arg0->task.msgQ = &D_8003FD20;
+    arg0->task.msg = (OSMesg)((u8 *)arg0 + 0x70);
+    arg0->task.flags = 2;
+    arg0->task.list.t.data_ptr = (u64 *)D_8003FB20[D_800312F4_31EF4];
+    arg0->task.list.t.data_size = (u32)(((s32)temp_v1 - (s32)D_8003FB20[D_800312F4_31EF4]) >> 3) * 8;
+    arg0->task.list.t.type = M_AUDTASK;
+    arg0->task.list.t.ucode_boot = (u64 *)rspbootTextStart;
+    arg0->task.list.t.ucode_boot_size = (u32)((u8 *)D_8002DEE0_2EAE0 - (u8 *)rspbootTextStart);
+    arg0->task.list.t.flags = 0;
+    arg0->task.list.t.ucode = (u64 *)D_8002F310_2FF10;
+    arg0->task.list.t.ucode_data = (u64 *)D_8003F060_3FC60;
+    arg0->task.list.t.ucode_data_size = 0x800;
+    arg0->task.list.t.yield_data_ptr = NULL;
+    arg0->task.list.t.yield_data_size = 0;
+    osSendMesg(osScGetCmdQ(&D_800680A0), (OSMesg)&arg0->task, OS_MESG_BLOCK);
+    D_800312F4_31EF4 ^= 1;
+    return 1;
+}
 
 void func_80000AD4_16D4(s32 arg0)
 {
