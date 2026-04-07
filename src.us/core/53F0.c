@@ -281,7 +281,33 @@ void func_80005110_5D10(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4) {
 	D_8005BB34 += 4;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800053A0_5FA0.s")
+void func_800053A0_5FA0(s16 arg0, s16 arg1, u16 arg2, u16 arg3, u8 arg4) {
+    Unk80052B40 sp60;
+    Unk80052B40 sp58;
+
+    sp60 = D_800315C4_321C4;
+    sp58 = D_800315CC_321CC;
+    sp60.unk0 = arg0;
+    sp60.unk2 = arg1;
+    sp58.unk0 = arg2;
+    sp58.unk2 = arg3;
+    guOrtho((Mtx *)D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, D_80037120_37D20, D_80037124_37D24, 1.0f);
+    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+    D_8005BB38 += 0x40;
+    gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_FOG | G_LIGHTING);
+    gDPPipeSync(D_8005BB2C++);
+    gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+    gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+    gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+    gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x1E, 0x1E, 0x1E, arg4 * 2);
+    gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+    gDPPipeSync(D_8005BB2C++);
+    func_800039D0_45D0(&sp60, 0, &sp58, D_8005BB38);
+    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+    D_8005BB38 += 0x40;
+    func_80005110_5D10(0x3C, 0x3C, 0x1E, 0x1E, 0x1E);
+    gDPPipeSync(D_8005BB2C++);
+}
 
 void func_80005654_6254(u8 arg0, u8 arg1, u8 arg2) {
 	func_800050C4_5CC4();
