@@ -420,6 +420,7 @@ loop:
 	#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800020E0_2CE0.s")
 	#endif
 
+#ifdef NON_MATCHING
 void func_800021CC_2DCC(s32 arg0) {
     u8 *ptr;
     s32 i;
@@ -506,6 +507,9 @@ void func_800021CC_2DCC(s32 arg0) {
 
     func_800015B4_21B4(arg0 * 0x7A + 0x4F, 0x76);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800021CC_2DCC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_loadSavedGame.s")
 
