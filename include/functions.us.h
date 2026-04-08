@@ -51,6 +51,7 @@ void func_8000505C_5C5C(void);
 void func_800050C4_5CC4(void);
 void func_80005110_5D10(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4);
 void func_800056A8_62A8(void);
+void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, f32 arg8, f32 arg9, u16 *arg10);
 void func_80006DDC_79DC(void);
 s32 func_8000726C_7E6C(u64);
 void func_800072CC_7ECC(u64);

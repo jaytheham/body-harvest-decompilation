@@ -136,6 +136,8 @@ extern Unk80052B40 D_800315CC_321CC;
 extern s32 D_800315D4_321D4;
 extern Vtx D_800315D8_321D8[];
 extern s32 D_800315D4_W;
+extern f32 D_80031618_32218;
+extern s32 D_8003161C_3221C;
 extern char D_80036D74_37974; /* osSyncPrintf format string - callback table full warning */
 extern char D_80036DA4_379A4;
 extern char D_80036DBC_379BC;
