@@ -1076,4 +1076,38 @@ s32 func_80004498_5098(f32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80004498_5098.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800044D4_50D4(s16 *arg0, s32 *arg1, s16 *arg2) {
+	s32 sp64;
+	s32 temp_s2_raw;
+	s32 sp5C;
+	f32 sp58;
+	f32 sp54;
+	f32 sp50;
+	f32 sp4C;
+	f32 sp48;
+	s16 temp_s0;
+	s32 temp_s2;
+
+	sp64 = arg2[0];
+	sp5C = -arg2[1];
+	temp_s2_raw = arg2[2];
+	temp_s2 = temp_s2_raw & 0xFFFF;
+	sp58 = arg0[0];
+	temp_s0 = coss(temp_s2 & 0xFFFF);
+	sp54 = (f32)(-(((f64)(f32)sins(temp_s2 & 0xFFFF) / 32768.0) * (f64)arg0[2]) + ((f64)arg0[1] * ((f64)(f32)temp_s0 / 32768.0)));
+	temp_s0 = sins(temp_s2 & 0xFFFF);
+	sp50 = (f32)(((f64)arg0[1] * ((f64)(f32)temp_s0 / 32768.0)) + (((f64)(f32)coss(temp_s2 & 0xFFFF) / 32768.0) * (f64)arg0[2]));
+	temp_s0 = coss(sp5C);
+	sp4C = (f32)((((f64)(f32)sins(sp5C) / 32768.0) * (f64)sp54) + ((f64)sp58 * ((f64)(f32)temp_s0 / 32768.0)));
+	temp_s0 = sins(sp5C);
+	sp48 = (f32)((((f64)(f32)coss(sp5C) / 32768.0) * (f64)sp54) + ((f64)-sp58 * ((f64)(f32)temp_s0 / 32768.0)));
+	temp_s0 = coss(sp64);
+	arg1[0] = (s32)((((f64)(f32)sins(sp64) / 32768.0) * (f64)sp50) + ((f64)sp4C * ((f64)(f32)temp_s0 / 32768.0)));
+	arg1[1] = (s32)sp48;
+	temp_s0 = sins(sp64);
+	arg1[2] = (s32)((((f64)(f32)coss(sp64) / 32768.0) * (f64)sp50) + ((f64)-sp4C * ((f64)(f32)temp_s0 / 32768.0)));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800044D4_50D4.s")
+#endif
