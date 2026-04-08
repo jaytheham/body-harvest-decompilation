@@ -1,8 +1,70 @@
 #include <ultra64.h>
 #include "common.h"
 
+void func_80000730_1330(s32 arg0);
+void *(*func_80000CD4_18D4(Unk80042DA8 **arg0))(void);
 
+#ifdef NON_MATCHING
+void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
+	Unk80042DB8 *s1;
+	Unk80042DB8 *s0;
+	s32 s2;
+	s32 var_v0;
+	f32 var_f0;
+	s32 i;
+
+	D_80042DA8.unk0 = 0;
+	arg0->dmaproc = (void *)func_80000CD4_18D4;
+	var_v0 = osAiSetFrequency(0x7D00);
+	arg0->outputRate = var_v0;
+	if (D_80031B58_32758 == 0) {
+		var_f0 = (f32)var_v0 / 60.0f;
+	} else {
+		var_f0 = (f32)arg0->outputRate / 50.0f;
+	}
+	D_800431A8 = (s32)var_f0;
+	if ((f32)D_800431A8 < var_f0) {
+		D_800431A8++;
+	}
+	if (D_800431A8 & 0xF) {
+		D_800431A8 = (D_800431A8 & ~0xF) + 0x10;
+	}
+	D_800431A4 = D_800431A8 - 0x10;
+	D_800431AC = D_800431A8 + 0xB0;
+	alInit(&D_8003FD58, arg0);
+	D_80042DB8.unk4 = 0;
+	D_80042DB8.unk0 = 0;
+	s1 = &D_80042DB8;
+	s0 = &D_80042DCC;
+	s2 = 0;
+	do {
+		alLink((ALLink *)s0, (ALLink *)s1);
+		s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
+		s2++;
+		s1++;
+		s0++;
+	} while (s2 < 0x31);
+	s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
+	{
+		Acmd **p;
+		for (p = D_8003FB20; (u32)p < (u32)D_8003FB28; p++) {
+			*p = alHeapAlloc(arg0->heap, 1, 0x8000);
+		}
+	}
+	for (i = 0; i < 3; i++) {
+		D_8003FB28[i] = alHeapAlloc(arg0->heap, 1, 0x90);
+		D_8003FB28[i]->unk70 = 2;
+		D_8003FB28[i]->unk74 = D_8003FB28[i];
+		D_8003FB28[i]->outBuf = alHeapAlloc(arg0->heap, 1, D_800431AC * 4);
+	}
+	osCreateMesgQueue(&D_8003FD20, D_8003FD38, 8);
+	osCreateMesgQueue(&D_8003FCE8, D_8003FD00, 8);
+	osCreateThread(&D_8003FB38, 5, (void (*)(void *))func_80000730_1330, NULL, &D_80042DA8, arg1);
+	osStartThread(&D_8003FB38);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000450_1050.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80000730_1330(s32 arg0) {

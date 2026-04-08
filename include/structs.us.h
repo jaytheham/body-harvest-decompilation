@@ -1418,12 +1418,17 @@ typedef struct {
     /* 0x04 */ s16 numFrames;
 } BhAudioBuf;
 
-typedef struct {
-    /* 0x00 */ void *outBuf;
-    /* 0x04 */ s16 outLen;
-    /* 0x06 */ u16 pad;
-    /* 0x08 */ OSScTask task;
-} BhAudioTask;
+typedef struct BhAudioTask_s {
+	/* 0x00 */ void *outBuf;
+	/* 0x04 */ s16 outLen;
+	/* 0x06 */ u16 pad;
+	/* 0x08 */ OSScTask task;
+	/* 0x60 */ u8 unk60[0x10];
+	/* 0x70 */ s16 unk70;
+	/* 0x72 */ u16 pad2;
+	/* 0x74 */ struct BhAudioTask_s *unk74;
+	/* 0x78 */ u8 unk78[0x18];
+} BhAudioTask; /* size = 0x90 */
 
 typedef struct {
     /* 0x00 */ s16 type;

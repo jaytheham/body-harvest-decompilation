@@ -179,9 +179,11 @@ extern GateEntry D_8003E0FC[5][8]; // shield wall gates by level
 
 extern Unk80042DA8 D_80042DA8;
 extern Unk80042DB8 D_80042DB8;
+extern Unk80042DB8 D_80042DCC;
 extern u32 D_800431A0;
 extern s32 D_800431A4;
 extern s32 D_800431A8;
+extern s32 D_800431AC;
 extern f32 D_800431B4;
 extern u8 D_80043243;
 extern OSMesgQueue D_80043388;
@@ -1761,8 +1763,12 @@ extern char D_80038618_39218; /* osSyncPrintf format string */
 /* core/FB00 */
 extern Acmd *D_8003FB20[];
 extern BhAudioTask *D_8003FB28[];
+extern Acmd *D_8003FB2C;
+extern OSThread D_8003FB38;
 extern OSMesgQueue D_8003FCE8;
+extern OSMesg D_8003FD00[8];
 extern OSMesgQueue D_8003FD20;
+extern OSMesg D_8003FD38[8];
 extern ALGlobals D_8003FD58;
 extern OSThread D_80067388;
 extern void *D_8005C760;
