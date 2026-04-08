@@ -347,6 +347,8 @@ extern s32 D_80052550;
 extern s32 D_80052558;
 extern GameplayMode gameplayMode; // 80052adc
 extern Unk80052B2C* D_80052B2C;
+extern s32 D_80052B38;
+extern s32 D_80052B3C;
 extern VehicleInstance* D_80052B34; // Ptr to active vehicle instance
 extern Unk80052B40 D_80052B40;
 extern Unk80052B40 D_80052B48;
