@@ -290,11 +290,13 @@ extern u8 D_8004D1B1;
 extern u8 D_8004D1B9;
 extern s16 D_8004D1C0;
 extern u8 D_8004D348[];
+extern u8 D_8004D350[];
 extern Unk8004D1C8 D_8004D1C8[];
 extern u8 D_80047F93;
 extern AlienInstance D_8004D0F8[]; // alien array base
 extern BitFlags64 D_8004DC48;
-extern BitFlags64 D_8004DC50;
+extern Flags2x32 D_8004DC50;
+extern s32 D_8004DC40;
 extern u8 D_8004DC5C;
 extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
@@ -648,6 +650,12 @@ extern char D_80037000_37C00; /* osSyncPrintf format string */
 extern char D_80037018_37C18; /* osSyncPrintf format string */
 extern char D_80037034_37C34; /* osSyncPrintf format string */
 extern char D_80037038_37C38; /* osSyncPrintf format string */
+extern char D_80037070_37C70; /* osSyncPrintf format string */
+extern char D_800370A8_37CA8; /* osSyncPrintf format string */
+extern char D_800370B0_37CB0; /* osSyncPrintf format string */
+extern char D_800370B4_37CB4; /* osSyncPrintf format string */
+extern char D_800370B8_37CB8; /* osSyncPrintf format string */
+extern char D_800370D4_37CD4; /* osSyncPrintf format string */
 extern char D_80037764_38364; /* osSyncPrintf format string */
 extern char D_801417C0_150770; /* osSyncPrintf format string - alien action table full warning */
 extern char D_801417DC;

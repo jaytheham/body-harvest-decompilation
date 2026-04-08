@@ -17,6 +17,11 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ s32 unk4;
+} Flags2x32; /* size = 0x08 */
+
+typedef struct {
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ s32 unk4;
 	/* 0x08 */ s32 outputSize;
 	/* 0x0C */ s32 offsetsRelOffset;
 	/* 0x10 */ s32 literalsRelOffset;
