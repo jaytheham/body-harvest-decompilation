@@ -461,7 +461,54 @@ s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannel
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D71C_E31C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_8000D8DC_E4DC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, f32 arg4, f32 arg5) {
+    s32 var_s0;
+    AnimChannelState *ch;
+    f32 t;
+
+    var_s0 = 0;
+    if (arg3 != 0) {
+        do {
+            ch = &arg2[var_s0];
+            if (ch->unk14 != 0) {
+                t = arg5 / (ch->unk20 - ch->unk1C);
+
+                ch->unk0 = (s16)(s32)(((f32)(ch->unk2A - ch->unk0)) * t + (f32)ch->unk0);
+                ch->unk2 = (s16)(s32)(((f32)(ch->unk2C - ch->unk2)) * t + (f32)ch->unk2);
+                ch->unk4 = (s16)(s32)(((f32)(ch->unk2E - ch->unk4)) * t + (f32)ch->unk4);
+                ch->unk8 = ((f32)ch->unk24 - ch->unk8) * t + ch->unk8;
+                ch->unkC = ((f32)ch->unk26 - ch->unkC) * t + ch->unkC;
+                ch->unk10 = ((f32)ch->unk28 - ch->unk10) * t + ch->unk10;
+                ch->unk1C = ch->unk1C + arg5;
+
+                if (ch->unk20 <= ch->unk1C) {
+                    ch->unkC = (f32)ch->unk26;
+                    ch->unk10 = (f32)ch->unk28;
+                    ch->unk18++;
+                    ch->unk8 = (f32)ch->unk24;
+                    ch->unk0 = (s16)ch->unk2A;
+                    ch->unk2 = (s16)ch->unk2C;
+                    ch->unk4 = (s16)ch->unk2E;
+                    if (ch->unk18 == ch->unk14) {
+                        ch->unk14 = 0;
+                        ch->unk18 = 0;
+                        if (var_s0 == 0) {
+                            arg1->unkE50 = 0;
+                            arg0->unkE50 = 0;
+                        }
+                    } else {
+                        func_8000D588_E188(arg0, arg1, ch, (u8)var_s0, arg4);
+                    }
+                }
+            }
+            var_s0 = (var_s0 + 1) & 0xFF;
+        } while (arg3 != var_s0);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D8DC_E4DC.s")
+#endif
 
 void func_8000DAFC_E6FC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, f32 arg5)
 {
