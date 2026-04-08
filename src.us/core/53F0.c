@@ -234,9 +234,80 @@ void func_800050C4_5CC4(void) {
 	func_80004D38_5938();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005110_5D10.s")
+void func_80005110_5D10(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4) {
+	u8 alpha = 0xFF;
+	D_8005BB34[0].v.ob[0] = -arg0 / 2;
+	D_8005BB34[0].v.ob[1] = -arg1 / 2;
+	D_8005BB34[0].v.ob[2] = 0;
+	D_8005BB34[0].v.flag = 0;
+	D_8005BB34[0].v.tc[0] = D_800313E4_31FE4 + 0x40;
+	D_8005BB34[0].v.tc[1] = D_800313E4_31FE4 + 0x40;
+	D_8005BB34[0].v.cn[0] = arg2;
+	D_8005BB34[0].v.cn[1] = arg3;
+	D_8005BB34[0].v.cn[2] = arg4;
+	D_8005BB34[0].v.cn[3] = alpha;
+	D_8005BB34[1].v.ob[0] = arg0 / 2;
+	D_8005BB34[1].v.ob[1] = -arg1 / 2;
+	D_8005BB34[1].v.ob[2] = 0;
+	D_8005BB34[1].v.flag = 0;
+	D_8005BB34[1].v.tc[0] = D_800313E4_31FE4 + 0xFC0;
+	D_8005BB34[1].v.tc[1] = D_800313E4_31FE4 + 0x40;
+	D_8005BB34[1].v.cn[0] = arg2;
+	D_8005BB34[1].v.cn[1] = arg3;
+	D_8005BB34[1].v.cn[2] = arg4;
+	D_8005BB34[1].v.cn[3] = alpha;
+	D_8005BB34[2].v.ob[0] = -arg0 / 2;
+	D_8005BB34[2].v.ob[1] = arg1 / 2;
+	D_8005BB34[2].v.ob[2] = 0;
+	D_8005BB34[2].v.flag = 0;
+	D_8005BB34[2].v.tc[0] = D_800313E4_31FE4 + 0x40;
+	D_8005BB34[2].v.tc[1] = D_800313E4_31FE4 + 0xFC0;
+	D_8005BB34[2].v.cn[0] = arg2;
+	D_8005BB34[2].v.cn[1] = arg3;
+	D_8005BB34[2].v.cn[2] = arg4;
+	D_8005BB34[2].v.cn[3] = alpha;
+	D_8005BB34[3].v.ob[0] = arg0 / 2;
+	D_8005BB34[3].v.ob[1] = arg1 / 2;
+	D_8005BB34[3].v.ob[2] = 0;
+	D_8005BB34[3].v.flag = 0;
+	D_8005BB34[3].v.tc[0] = D_800313E4_31FE4 + 0xFC0;
+	D_8005BB34[3].v.tc[1] = D_800313E4_31FE4 + 0xFC0;
+	D_8005BB34[3].v.cn[0] = arg2;
+	D_8005BB34[3].v.cn[1] = arg3;
+	D_8005BB34[3].v.cn[2] = arg4;
+	D_8005BB34[3].v.cn[3] = alpha;
+	gSPVertex(D_8005BB2C++, (Vtx *)((s32)D_8005BB34 + 0x80000000), 4, 0);
+	gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 3, 2, 0);
+	D_8005BB34 += 4;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800053A0_5FA0.s")
+void func_800053A0_5FA0(s16 arg0, s16 arg1, u16 arg2, u16 arg3, u8 arg4) {
+    Unk80052B40 sp60;
+    Unk80052B40 sp58;
+
+    sp60 = D_800315C4_321C4;
+    sp58 = D_800315CC_321CC;
+    sp60.unk0 = arg0;
+    sp60.unk2 = arg1;
+    sp58.unk0 = arg2;
+    sp58.unk2 = arg3;
+    guOrtho((Mtx *)D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, D_80037120_37D20, D_80037124_37D24, 1.0f);
+    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+    D_8005BB38 += 0x40;
+    gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_FOG | G_LIGHTING);
+    gDPPipeSync(D_8005BB2C++);
+    gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+    gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+    gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+    gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x1E, 0x1E, 0x1E, arg4 * 2);
+    gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+    gDPPipeSync(D_8005BB2C++);
+    func_800039D0_45D0(&sp60, 0, &sp58, D_8005BB38);
+    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+    D_8005BB38 += 0x40;
+    func_80005110_5D10(0x3C, 0x3C, 0x1E, 0x1E, 0x1E);
+    gDPPipeSync(D_8005BB2C++);
+}
 
 void func_80005654_6254(u8 arg0, u8 arg1, u8 arg2) {
 	func_800050C4_5CC4();
@@ -289,7 +360,25 @@ void func_8000577C_637C(void)
 #endif
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005844_6444.s")
+void func_80005844_6444(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
+    guOrtho((Mtx *)D_8005BB38, -1.0f, 1.0f, -1.0f, 1.0f, -10.0f, 10.0f, 1.0f);
+    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+    D_8005BB38 += 0x40;
+    guLookAt((Mtx *)D_8005BB38, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+    D_8005BB38 += 0x40;
+    gDPPipeSync(D_8005BB2C++);
+    gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+    gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
+    gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+    gDPSetPrimColor(D_8005BB2C++, 0, 0, arg0, arg1, arg2, arg3);
+    gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+    gSPVertex(D_8005BB2C++, (Vtx *)((s32)D_800315D8_321D8 & 0x1FFFFFFF), 4, 0);
+    gSP1Triangle(D_8005BB2C++, 0, 2, 1, 0);
+    gSP1Triangle(D_8005BB2C++, 1, 2, 3, 0);
+    gSPPopMatrix(D_8005BB2C++, G_MTX_PROJECTION);
+    gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+}
 
 void func_80005AEC_66EC(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	D_80047734 = 1;
@@ -635,7 +724,86 @@ void func_80007900_8500(u8 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007900_8500.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80007A20_8620(u8 *arg0) {
+	switch (arg0[8]) {
+		case 0xB3:
+			osSyncPrintf(&D_80036E38_37A38);
+			break;
+		case 0xB2:
+			osSyncPrintf(&D_80036E48_37A48);
+			break;
+		case 0x89:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036E58_37A58, arg0[6]);
+			func_80007900_8500(arg0 + 3);
+			break;
+		case 0x8A:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036E74_37A74, arg0[6]);
+			func_80007900_8500(arg0 + 3);
+			break;
+		case 0x8C:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036E90_37A90);
+			break;
+		case 0x8D:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036E9C_37A9C);
+			break;
+		case 0xB1:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036EAC_37AAC);
+			break;
+		case 0x8E:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036EBC_37ABC);
+			break;
+		case 0x8F:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036ECC_37ACC);
+			break;
+		case 0x91:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036EE0_37AE0);
+			func_80007900_8500(arg0 + 3);
+			break;
+		case 0x92:
+			func_80007900_8500(arg0);
+			osSyncPrintf(&D_80036EEC_37AEC);
+			func_80007900_8500(arg0 + 3);
+			break;
+		case 0x95:
+			osSyncPrintf(&D_80036EFC_37AFC, arg0[6]);
+			break;
+		case 0x96:
+			osSyncPrintf(&D_80036F1C_37B1C, arg0[6]);
+			break;
+		case 0xAA:
+			osSyncPrintf(&D_80036F38_37B38, arg0[6]);
+			break;
+		case 0xAB:
+			osSyncPrintf(&D_80036F50_37B50, arg0[6]);
+			break;
+		case 0xA6:
+			osSyncPrintf(&D_80036F6C_37B6C, arg0[6], arg0[7]);
+			break;
+		case 0xA7:
+			osSyncPrintf(&D_80036F90_37B90, arg0[6], arg0[7]);
+			break;
+		case 0xB9:
+			osSyncPrintf(&D_80036FB4_37BB4, arg0[6]);
+			break;
+		case 0xBA:
+			osSyncPrintf(&D_80036FC8_37BC8, arg0[6]);
+			break;
+		default:
+			break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007A20_8620.s")
+#endif
 
 void func_80007C78_8878(u8 *arg0) {
 	s32 i;
@@ -762,7 +930,71 @@ loop_1:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000807C_8C7C.s")
 #endif
 
+#ifdef NON_MATCHING
+s32 func_800081D4_8DD4(u8 *arg0) {
+	switch (arg0[8]) {
+	case 0xB3:
+		return 1;
+	case 0xB2:
+		return 0;
+	case 0x89:
+		return func_80007D44_8944((s32)arg0) < arg0[6] * arg0[6] * 2;
+	case 0x8A:
+		return func_80007D44_8944((s32)arg0) >= arg0[6] * arg0[6] * 2;
+	case 0x8C:
+		return func_80007DE0_89E0(arg0);
+	case 0x8D:
+		return func_80007DE0_89E0(arg0) == 0;
+	case 0xB5: {
+		u32 v = *(u32 *)(D_80050AE0 + arg0[1] * 24);
+		return ((v >> 12) & 0x10) == 0x10;
+	}
+	case 0xB1: {
+		u32 v = *(u32 *)(D_80050AE0 + arg0[1] * 24);
+		u32 vr = v >> 12;
+		u32 bit16_check = (vr & 0x10) ^ 0x10;
+		u32 bit12_inv;
+		if (bit16_check != 0) {
+			return 1;
+		}
+		bit12_inv = (vr & 1) ^ 1;
+		return bit12_inv != 0;
+	}
+	case 0x8E:
+		return func_80007F60_8B60(arg0);
+	case 0x8F:
+		return func_80007F60_8B60(arg0) == 0;
+	case 0x91:
+		return func_8000807C_8C7C(arg0, arg0 + 3);
+	case 0x92:
+		return func_8000807C_8C7C(arg0, arg0 + 3) == 0;
+	case 0x95:
+		return func_800078B8_84B8(arg0[6], &D_8004D154) != 0;
+	case 0x96:
+		return func_800078B8_84B8(arg0[6], &D_8004D158) != 0;
+	case 0xAA:
+		return func_8000789C_849C(arg0[6]) == 2;
+	case 0xAB:
+		return func_8000789C_849C(arg0[6]) == 3;
+	case 0xA6:
+		if (arg0[6] == 1) {
+			D_8004D1C0 = arg0[7] - D_8004D1B0[arg0[6]];
+		}
+		return D_8004D1B0[arg0[6]] < arg0[7];
+	case 0xA7:
+		if (arg0[6] == 1) {
+			D_8004D1C0 = arg0[7] - D_8004D1B0[arg0[6]];
+		}
+		return !(D_8004D1B0[arg0[6]] < arg0[7]);
+	case 0xB9:
+		return func_8000726C_7E6C(arg0[6]);
+	case 0xBA:
+		return func_8000726C_7E6C(arg0[6]) == 0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800081D4_8DD4.s")
+#endif
 
 s32 func_80008478_9078(void) {
 	if ((currentLevel == LEVEL_GREECE) && (func_8000726C_7E6C(0xB) != 0) && (D_80052554 >= 0x401)) {
@@ -820,9 +1052,134 @@ next:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000851C_911C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_checkMissions.s")
+#ifdef NON_MATCHING
+void guess_checkMissions(void) {
+	s32 sp5C;
+	s32 var_s0;
+	u8 *item;
+	u8 *entry;
+	s32 sp4C;
+	u8 *cur;
 
+	entry = (u8 *)D_8004D1C8;
+	sp4C = 0;
+
+	if (D_8004DC60 == 0) {
+		sp5C = 0x3F;
+		do {
+			if (!((s32)((1 << sp5C) >> 31) & D_8004DC50.unk0) && !((1 << sp5C) & D_8004DC50.unk4) && entry[0] != 0 && (s32)entry[1] >= 0x46) {
+				item = &D_8004D348[entry[2] * 9];
+				var_s0 = entry[3] - 1;
+				if (entry[3] != 0) {
+				loop_7:
+					cur = item;
+					item += 9;
+					if (func_800081D4_8DD4(cur) != 0) {
+						if (var_s0 == 0) {
+							if (D_8004DC40 == -1) {
+								sp4C = 1;
+								osSyncPrintf(&D_80037070_37C70, entry[4] + 1, entry[5]);
+								var_s0 = entry[3] - 1;
+								item = &D_8004D348[entry[2] * 9];
+								if (entry[3] != 0) {
+									do {
+										cur = item;
+										item += 9;
+										func_80007A20_8620(cur);
+										if (var_s0 != 0) {
+											if (var_s0 == 1) {
+												osSyncPrintf(&D_800370A8_37CA8);
+											} else {
+												osSyncPrintf(&D_800370B4_37CB4);
+											}
+										} else {
+											osSyncPrintf(&D_800370B0_37CB0);
+										}
+										var_s0 -= 1;
+									} while (var_s0 != 0);
+								}
+								D_8004DC40 = entry[5] * 0x1E;
+							} else if (D_8004DC40 == 0) {
+								osSyncPrintf(&D_800370B8_37CB8, entry[4] + 1);
+								func_80018D7C_1997C(entry[4]);
+								D_8004D350[entry[2] * 9] = 0xB2;
+								D_8004DC40 = -1;
+								entry[0] = 0;
+								D_8004DC50.unk0 = (s32)(D_8004DC50.unk0 | (s32)((1 << sp5C) >> 31));
+								D_8004DC50.unk4 = (s32)(D_8004DC50.unk4 | (1 << sp5C));
+							} else {
+								sp4C = 1;
+								D_8004DC40 = D_8004DC40 - 1;
+							}
+						}
+						var_s0 -= 1;
+						if (var_s0 != 0) {
+							goto loop_7;
+						}
+					}
+				}
+			}
+			entry += 6;
+			sp5C -= 1;
+		} while (sp5C != 0);
+		if (D_8004DC40 != -1 && sp4C == 0) {
+			osSyncPrintf(&D_800370D4_37CD4);
+			D_8004DC40 = -1;
+		}
+	}
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_checkMissions.s")
+#endif
+
+#ifdef NON_MATCHING
+void debug_drawTimingGraphBars(void) {
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s32 pad6;
+	s32 pad7;
+	s32 pad8;
+	s32 pad9;
+	Gfx *sp30;
+	s32 pad10;
+	s32 lrxVal;
+	Gfx *sp24;
+	s32 var_a1;
+	s32 var_a2;
+
+	if (D_80047720 != 0) {
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+		gDPSetFillColor(D_8005BB2C++, 0xFFFFFFFF);
+		var_a1 = 5;
+		var_a2 = 0x110;
+		do {
+			gDPFillRectangle(D_8005BB2C++, var_a2, 192, var_a2, 208);
+			var_a2 -= 0x30;
+		} while (var_a1--);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetFillColor(D_8005BB2C++, 0x3E003E);
+		sp30 = D_8005BB2C++;
+		lrxVal = (s32)((u64)((s64)D_80052B38 * 1000000LL) / D_80035610 / 347 + 32) & 0x3FF;
+		gDPFillRectangle(sp30, 32, 194, lrxVal, 199);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetFillColor(D_8005BB2C++, 0xF800F800);
+		sp24 = D_8005BB2C++;
+		lrxVal = (s32)((u64)((s64)D_80052B3C * 1000000LL) / D_80035610 / 347 + 32) & 0x3FF;
+		gDPFillRectangle(sp24, 32, 200, lrxVal, 205);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/debug_drawTimingGraphBars.s")
+#endif
 
 void func_80008C18_9818(void)
 {

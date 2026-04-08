@@ -265,7 +265,64 @@ void func_80001144_1D44(u8 arg0, u8 arg1, u8 arg2) {
 	}
 }
 
+#ifdef NON_MATCHING
+void func_80001190_1D90(void) {
+    if (gameplayMode != (GameplayMode)D_80047698) {
+        func_800010C4_1CC4(0);
+        D_80047698 = gameplayMode;
+    }
+    if (gameplayMode == GAMEPLAY_MODE_UNK1 || gameplayMode == GAMEPLAY_MODE_UNK3 || gameplayMode == GAMEPLAY_MODE_UNKB) {
+        if (D_80047678 == 1) {
+            f32 temp_f0;
+            s32 temp_f8;
+            D_800313CC = D_8004767C;
+            if ((s32)D_8004768C >= 0x2711) {
+                temp_f0 = D_80036C88 / (f32)(s32)D_8004768C;
+                temp_f8 = (s32)((f32)(s32)D_8004767C * (temp_f0 * temp_f0 * temp_f0));
+                D_800313CC = temp_f8;
+                D_800313CC /= 2;
+            }
+            if (D_800313CC >= 0x100) {
+                func_80001050_1C50(0);
+            } else {
+                func_8000108C_1C8C(0);
+            }
+            if ((s32)D_8004767C >= 0x100) {
+                D_8004767C -= 0x100;
+            } else {
+                D_8004767C += (s32)(((s32)D_80047680 >> 4) * ((s32)D_80047680 >> 4) * ((s32)D_80047680 >> 4)) / 512;
+            }
+            if ((s32)D_80047688 > 0) {
+                D_80047688 -= 1;
+            } else if (D_80047684 < (s32)D_80047680) {
+                D_80047680 -= D_80047684;
+            } else {
+                D_80047684 = 0;
+                D_80047680 = 0;
+            }
+            D_8004768C += 1;
+            if ((s32)D_8004767C >= 0x100) {
+                D_80047690 = 0;
+                return;
+            }
+            D_80047690 = D_80047690 + 1;
+            if ((s32)D_80047690 >= 0x321) {
+                D_8004768C = 0;
+            }
+        } else {
+            D_80047694 = D_80047694 + 1;
+            if (D_80047694 == 0x9C4) {
+                checkForRumblePak();
+                D_80047694 = 0;
+            }
+        }
+    } else {
+        func_8000108C_1C8C(0);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001190_1D90.s")
+#endif
 
 void osViExtendVStart(s32 arg0) {
 	__additional_scanline = arg0;
@@ -1019,4 +1076,38 @@ s32 func_80004498_5098(f32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80004498_5098.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800044D4_50D4(s16 *arg0, s32 *arg1, s16 *arg2) {
+	s32 sp64;
+	s32 temp_s2_raw;
+	s32 sp5C;
+	f32 sp58;
+	f32 sp54;
+	f32 sp50;
+	f32 sp4C;
+	f32 sp48;
+	s16 temp_s0;
+	s32 temp_s2;
+
+	sp64 = arg2[0];
+	sp5C = -arg2[1];
+	temp_s2_raw = arg2[2];
+	temp_s2 = temp_s2_raw & 0xFFFF;
+	sp58 = arg0[0];
+	temp_s0 = coss(temp_s2 & 0xFFFF);
+	sp54 = (f32)(-(((f64)(f32)sins(temp_s2 & 0xFFFF) / 32768.0) * (f64)arg0[2]) + ((f64)arg0[1] * ((f64)(f32)temp_s0 / 32768.0)));
+	temp_s0 = sins(temp_s2 & 0xFFFF);
+	sp50 = (f32)(((f64)arg0[1] * ((f64)(f32)temp_s0 / 32768.0)) + (((f64)(f32)coss(temp_s2 & 0xFFFF) / 32768.0) * (f64)arg0[2]));
+	temp_s0 = coss(sp5C);
+	sp4C = (f32)((((f64)(f32)sins(sp5C) / 32768.0) * (f64)sp54) + ((f64)sp58 * ((f64)(f32)temp_s0 / 32768.0)));
+	temp_s0 = sins(sp5C);
+	sp48 = (f32)((((f64)(f32)coss(sp5C) / 32768.0) * (f64)sp54) + ((f64)-sp58 * ((f64)(f32)temp_s0 / 32768.0)));
+	temp_s0 = coss(sp64);
+	arg1[0] = (s32)((((f64)(f32)sins(sp64) / 32768.0) * (f64)sp50) + ((f64)sp4C * ((f64)(f32)temp_s0 / 32768.0)));
+	arg1[1] = (s32)sp48;
+	temp_s0 = sins(sp64);
+	arg1[2] = (s32)((((f64)(f32)coss(sp64) / 32768.0) * (f64)sp50) + ((f64)-sp4C * ((f64)(f32)temp_s0 / 32768.0)));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800044D4_50D4.s")
+#endif
