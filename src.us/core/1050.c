@@ -1110,6 +1110,7 @@ void func_80004214_4E14(s16 arg0, s32 arg1) {
 	func_800039D0_45D0(0, 0, &v, arg1);
 }
 
+#ifdef NON_MATCHING
 s32 func_80004254_4E54(f32 arg0, s32 arg1, s32 *arg2, s32 *arg3) {
 	s32 exponent;
 	s32 mantissa;
@@ -1182,6 +1183,9 @@ s32 func_80004254_4E54(f32 arg0, s32 arg1, s32 *arg2, s32 *arg3) {
 	}
 	return 1;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80004254_4E54.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_80004498_5098(f32 arg0) {
