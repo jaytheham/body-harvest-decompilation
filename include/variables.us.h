@@ -73,8 +73,8 @@ extern Gfx D_80031260[];
 extern u32 D_800312F0_31EF0;
 extern s32 D_800312F4_31EF4;
 extern u32 D_800312F8_31EF8;
-extern u32 D_800312FC_31EFC;
-extern u32 D_80031300_31F00;
+extern s32 D_800312FC_31EFC;
+extern s32 D_80031300_31F00;
 extern Unk80047FB8 D_80031310_31F10[5];
 extern s32 D_800313CC;
 extern f32 D_80036C88;
@@ -180,6 +180,7 @@ extern Unk80042DB8 D_80042DB8;
 extern u32 D_800431A0;
 extern s32 D_800431A4;
 extern s32 D_800431A8;
+extern f32 D_800431B4;
 extern u8 D_80043243;
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
@@ -1736,7 +1737,10 @@ extern char D_80038618_39218; /* osSyncPrintf format string */
 
 /* core/FB00 */
 extern Acmd *D_8003FB20[];
+extern BhAudioTask *D_8003FB28[];
+extern OSMesgQueue D_8003FCE8;
 extern OSMesgQueue D_8003FD20;
+extern ALGlobals D_8003FD58;
 extern OSThread D_80067388;
 extern void *D_8005C760;
 
