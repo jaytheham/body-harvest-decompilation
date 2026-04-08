@@ -445,7 +445,24 @@ s16 func_80006710_7310(s16 arg0, s16 arg1, u16 arg2) {
 	return (s16) (s32) ((f32) arg0 + ((f32) (arg1 - arg0) * (f32) (((f64) (f32) sins_val / 32768.0) + 1.0)));
 }
 
+#ifdef NON_MATCHING
+s16 func_800067B4_73B4(s16 arg0, s16 arg1, u16 arg2, s16 arg3, s16 arg4) {
+	f32 temp_f4;
+	f32 temp_f0;
+	s32 sins_if;
+
+	temp_f0 = (f32)(arg1 - arg0);
+	if (arg2 < 0x4001) {
+		sins_if = sins(arg2 - 0x4000);
+		return (s16)((f32)arg0 + temp_f0 * (f32)(((f64)(f32)sins_if / 32768.0) + 1.0));
+	} else {
+		temp_f4 = (f32)((((f64)(f32)sins((u32)((f64)(arg2 - 0x4000) * 1.5 - 16384.0)) / 32768.0) + 1.0) * 0.5);
+		return (s16)((((f64)(f32)sins(arg2 * arg3) / 32768.0) * (f64)temp_f4 * (f64)arg4) + (f64)arg1);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800067B4_73B4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800069FC_75FC.s")
 
