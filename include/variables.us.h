@@ -196,6 +196,7 @@ extern u16 D_800475E4;
 extern u16 D_800475E6;
 extern u16 D_80047588;
 extern u16 D_80047588_W;
+extern s8 D_8004758A;
 extern u16 D_8004758E;
 extern u16 D_80047594;
 extern u16 D_8004759A;
@@ -1254,6 +1255,8 @@ extern u16 D_80034480;
 extern s32 D_8003447C;
 extern s32 D_80034484;
 extern s32 D_80034488;
+extern s32 D_80034490_35090;
+extern s32 D_80034498_35098;
 extern s32 D_80034494;
 extern s32 D_8003449C;
 extern s32 D_800344B4[]; // pointers to strings for names of many things, each entry is actually 2x s32 in size, first is pointer to string
@@ -1731,6 +1734,21 @@ extern char D_80038288_38E88;
 extern char D_80038424_39024;
 extern char D_800384E0_390E0;
 extern char D_80038500_39100;
+extern char D_80038530_39130;
+extern char D_80038534_39134;
+extern char D_8003853C_3913C;
+extern char D_80038540_39140;
+extern char D_80038554_39154;
+extern char D_8003855C_3915C;
+extern char D_8003856C_3916C;
+extern char D_80038574_39174;
+extern char D_80038588_39188;
+extern char D_80038590_39190;
+extern char D_800385A4_391A4;
+extern char D_800385A8_391A8;
+extern char D_800385BC_391BC;
+extern char D_800385C4_391C4;
+extern char D_800385D8_391D8;
 extern char D_800385E0_391E0; /* osSyncPrintf format string */
 extern char D_800385E4_391E4; /* osSyncPrintf format string */
 extern char D_80038614_39214; /* osSyncPrintf format string */
