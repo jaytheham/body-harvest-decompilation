@@ -1394,7 +1394,60 @@ s32 func_80018AC8_196C8(void) {
 	return 0;
 }
 
+#ifdef NON_MATCHING
+s32 func_80018AEC_196EC(s32 arg0, s32 arg1, s32 arg2) {
+	s32 sp24;
+	s32 var_v1;
+	s32 temp_v0;
+	s32 temp_v1;
+
+	sp24 = 0;
+	if (func_80017B78_18778() == 1) {
+		var_v1 = D_800344A4;
+		temp_v0 = var_v1 + 1;
+		var_v1 = (temp_v0 >= 0xB) ? 0xA : temp_v0;
+		if (D_8006C6C6 > 0 && D_8004802C == 0) {
+			var_v1 = 0;
+		}
+		D_800344A4 = var_v1;
+		if (var_v1 >= 0xA) {
+			if ((D_8003449C == 0) && (gameplayMode != 0)) {
+				D_8006C560 = (u16)gameplayMode;
+				gameplayMode = 9;
+				if ((D_80034484 != 0) && (D_8003447C == 0) && (D_80034488 == 0)) {
+					func_800153D8_15FD8(0x156);
+				}
+			}
+			sp24 = 1;
+			if (D_8003449C + 4 >= 0x19) {
+				D_8003449C = 0x18;
+			} else {
+				D_8003449C = D_8003449C + 4;
+			}
+		} else {
+			D_8003449C = 0;
+		}
+	} else {
+		temp_v1 = D_8003449C - 4;
+		if (D_8003449C == 0x18) {
+			gameplayMode = (GameplayMode)D_8006C560;
+		}
+		if (temp_v1 < 0) {
+			D_8003449C = 0;
+		} else {
+			D_8003449C = temp_v1;
+		}
+		D_800344A4 = 0;
+	}
+	if (D_8003449C > 0) {
+		gDPSetPrimColor(D_8005BB2C++, 0, 0, arg0, arg1, arg2, 0xFF);
+		func_800092B8_9EB8(0x3C, (D_80068088 - D_8003449C * 2 - 0x40) * 4, (D_80068084 - 0xF) * 4, ((s32)D_80068088 + D_8003449C * 2 - 0x40) * 4, 0);
+	}
+	return sp24;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018AEC_196EC.s")
+#endif
 
 void func_80018D14_19914(void) {
 	D_80034484 = 0;

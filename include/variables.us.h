@@ -249,6 +249,7 @@ extern s32 D_80047F9C; // WarpPointNumber
 extern s32 D_80047FA0;
 extern s16 D_80048026;
 extern s16 D_80048028;
+extern s32 D_8004802C;
 extern u8 D_80048024;
 extern u8 D_80048025;
 extern s32 showDemoText;
@@ -1259,6 +1260,7 @@ extern s32 D_80034490_35090;
 extern s32 D_80034498_35098;
 extern s32 D_80034494;
 extern s32 D_8003449C;
+extern s32 D_800344A4;
 extern s32 D_800344B4[]; // pointers to strings for names of many things, each entry is actually 2x s32 in size, first is pointer to string
 extern void *D_8006C550;
 extern void *D_8006C554;
@@ -1819,6 +1821,7 @@ extern OSMesgQueue D_8006A8F0;
 extern s16 D_8006C558;
 extern s16 D_8006C55C;
 extern u16 D_8006C55E;
+extern u16 D_8006C560;
 extern s16 D_8006C564;
 extern u16 D_8006C566;
 extern s16 D_8006C568;
