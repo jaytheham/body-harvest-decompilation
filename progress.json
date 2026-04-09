@@ -1,14 +1,14 @@
 {
-  "generated": "2026-04-09T11:30:08Z",
-  "commit": "d622f0f",
-  "commit_timestamp": "2026-04-09T23:29:53+12:00",
+  "generated": "2026-04-09T19:09:54Z",
+  "commit": "80ef2c9",
+  "commit_timestamp": "2026-04-10T07:09:18+12:00",
   "overall": {
-    "total_functions": 3022,
-    "matched": 1181,
-    "non_matching": 371,
-    "asm_stubs": 1470,
-    "matched_pct": 39.08,
-    "decompiled_pct": 51.36
+    "total_functions": 3020,
+    "matched": 1183,
+    "non_matching": 369,
+    "asm_stubs": 1468,
+    "matched_pct": 39.17,
+    "decompiled_pct": 51.39
   },
   "segments": {
     "core": {
@@ -31,12 +31,12 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 714,
-      "non_matching": 187,
-      "asm_stubs": 711,
-      "total": 1612,
-      "matched_pct": 44.3,
-      "decompiled_pct": 55.9
+      "matched": 716,
+      "non_matching": 185,
+      "asm_stubs": 709,
+      "total": 1610,
+      "matched_pct": 44.5,
+      "decompiled_pct": 56.0
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -467,11 +467,11 @@
     {
       "path": "overlay_gameplay/outside/missions.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 16,
-      "non_matching": 7,
-      "asm_stubs": 21,
-      "total": 44,
-      "matched_pct": 36.4,
+      "matched": 18,
+      "non_matching": 5,
+      "asm_stubs": 19,
+      "total": 42,
+      "matched_pct": 42.9,
       "contributor": "jaytheham"
     },
     {
@@ -539,9 +539,9 @@
     {
       "name": "jaytheham",
       "files": 42,
-      "matched": 1176,
-      "non_matching": 371,
-      "asm_stubs": 1400
+      "matched": 1178,
+      "non_matching": 369,
+      "asm_stubs": 1398
     },
     {
       "name": "Meridian Lex",
@@ -607,6 +607,14 @@
       "decompiled_pct": 51.36,
       "matched": 1181,
       "total": 3022
+    },
+    {
+      "date": "2026-04-10",
+      "commit": "80ef2c9",
+      "matched_pct": 39.17,
+      "decompiled_pct": 51.39,
+      "matched": 1183,
+      "total": 3020
     }
   ]
 }
