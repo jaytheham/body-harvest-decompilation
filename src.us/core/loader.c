@@ -397,30 +397,24 @@ s32 func_800119F4_125F4(s32 arg0)
 #ifdef NON_MATCHING
 s32 func_80011A40_12640(u8 arg0, s32 arg1) {
 	D_8006AA70 = arg1;
-	func_800101F0_10DF0(arg1, D_80031B90_32790[arg0], D_80031BAC_327AC[arg0] - D_80031B90_32790[arg0]);
+	func_800101F0_10DF0(D_8006AA70, D_80031B90_32790[arg0], D_80031BAC_327AC[arg0] - D_80031B90_32790[arg0]);
 	return D_80031BAC_327AC[arg0] - D_80031B90_32790[arg0] + arg1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011A40_12640.s")
 #endif
 
-#ifdef NON_MATCHING
 s32 func_80011AC8_126C8(s32 arg0) {
-	func_800101F0_10DF0(D_8006AA74 = arg0, &D_55B0A0, &D_579D50 - &D_55B0A0);
+	D_8006AA74 = arg0;
+	func_800101F0_10DF0(D_8006AA74, &D_55B0A0, &D_579D50 - &D_55B0A0);
 	return (&D_579D50 - &D_55B0A0) + arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011AC8_126C8.s")
-#endif
 
-#ifdef NON_MATCHING
 s32 func_80011B14_12714(s32 arg0) {
-	func_800101F0_10DF0(D_8006AA6C = arg0, &D_791C20, &D_7A4400 - &D_791C20);
+	D_8006AA6C = arg0;
+	func_800101F0_10DF0(D_8006AA6C, &D_791C20, &D_7A4400 - &D_791C20);
 	return (&D_7A4400 - &D_791C20) + arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011B14_12714.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_80011B60_12760(u8 arg0, s32 arg1) {
