@@ -1281,7 +1281,106 @@ s32 func_8000393C_453C(f32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_8000393C_453C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2, s32 arg3) {
+	s32 sp3C;
+	s32 sp38;
+	s32 sp34;
+	s32 sp30;
+	s32 sp2C;
+	s32 temp_v0;
+	s32 temp_t9;
+	s32 temp_t4;
+	s32 temp_t9_2;
+	s32 temp_t4_2;
+	Unk800476C8 *var_v0;
+	s32 *var_a0;
+
+	D_800476C8[0].unkC = 0;
+	D_800476C8[0].unk1C = 0;
+	D_800476C8[1].unkC = 0;
+	D_800476C8[1].unk1C = 0x10000;
+
+	if (arg0 != NULL) {
+		D_800476C8[1].unk10 = (s32)arg0->unk0 << 16;
+		D_800476C8[1].unk14 = (s32)arg0->unk2 << 16;
+		D_800476C8[1].unk18 = (s32)arg0->unk4 << 16;
+	} else {
+		D_800476C8[1].unk10 = 0;
+		D_800476C8[1].unk14 = 0;
+		D_800476C8[1].unk18 = 0;
+	}
+
+	if (arg1 != NULL) {
+		sp3C = coss((u16)arg1->unk0);
+		sp38 = sins((u16)arg1->unk0);
+		sp34 = coss((u16)arg1->unk4);
+		sp30 = sins((u16)arg1->unk4);
+		sp2C = coss((u16)arg1->unk2);
+		temp_v0 = sins((u16)arg1->unk2);
+		D_800476C8[0].unk0 = ((sp3C * sp2C) >> 15) * 2;
+		temp_t9 = (sp30 * sp38) >> 15;
+		temp_t4 = (sp3C * sp34) >> 15;
+		D_800476C8[0].unk10 = (temp_t9 - (s32)((temp_t4 * temp_v0) >> 15)) * 2;
+		temp_t9_2 = (sp38 * sp34) >> 15;
+		temp_t4_2 = (sp3C * sp30) >> 15;
+		D_800476C8[1].unk0 = (temp_t9_2 + (s32)((temp_t4_2 * temp_v0) >> 15)) * 2;
+		D_800476C8[0].unk4 = temp_v0 * 2;
+		D_800476C8[0].unk14 = ((sp34 * sp2C) >> 15) * 2;
+		D_800476C8[1].unk4 = ((-sp30 * sp2C) >> 15) * 2;
+		D_800476C8[0].unk8 = ((-sp38 * sp2C) >> 15) * 2;
+		D_800476C8[0].unk18 = (temp_t4_2 + (s32)((temp_t9_2 * temp_v0) >> 15)) * 2;
+		D_800476C8[1].unk8 = (temp_t4 - (s32)((temp_t9 * temp_v0) >> 15)) * 2;
+	} else {
+		D_800476C8[0].unk0 = 0x10000;
+		D_800476C8[0].unk10 = 0;
+		D_800476C8[1].unk0 = 0;
+		D_800476C8[0].unk4 = 0;
+		D_800476C8[0].unk14 = 0x10000;
+		D_800476C8[1].unk4 = 0;
+		D_800476C8[0].unk8 = 0;
+		D_800476C8[0].unk18 = 0;
+		D_800476C8[1].unk8 = 0x10000;
+	}
+
+	if (arg2 != NULL) {
+		D_800476C8[0].unk0 = (s32)(D_800476C8[0].unk0 * arg2->unk0) >> 8;
+		D_800476C8[0].unk4 = (s32)(D_800476C8[0].unk4 * arg2->unk0) >> 8;
+		D_800476C8[0].unk8 = (s32)(D_800476C8[0].unk8 * arg2->unk0) >> 8;
+		D_800476C8[0].unk10 = (s32)(D_800476C8[0].unk10 * arg2->unk2) >> 8;
+		D_800476C8[0].unk14 = (s32)(D_800476C8[0].unk14 * arg2->unk2) >> 8;
+		D_800476C8[0].unk18 = (s32)(D_800476C8[0].unk18 * arg2->unk2) >> 8;
+		D_800476C8[1].unk0 = (s32)(D_800476C8[1].unk0 * arg2->unk4) >> 8;
+		D_800476C8[1].unk4 = (s32)(D_800476C8[1].unk4 * arg2->unk4) >> 8;
+		D_800476C8[1].unk8 = (s32)(D_800476C8[1].unk8 * arg2->unk4) >> 8;
+	}
+
+	var_v0 = D_800476C8;
+	var_a0 = (s32 *)arg3;
+	do {
+		s32 b0 = var_v0->unk0;
+		s32 b1 = var_v0->unk4;
+		s32 b2 = var_v0->unk8;
+		s32 b3 = var_v0->unkC;
+		s32 b4 = var_v0->unk10;
+		s32 b5 = var_v0->unk14;
+		s32 b6 = var_v0->unk18;
+		s32 b7 = var_v0->unk1C;
+		var_v0++;
+		var_a0[0] = (b0 & 0xFFFF0000) | ((u32)(b1 & 0xFFFF0000) >> 16);
+		var_a0 += 4;
+		var_a0[4] = (s32)(((b0 & 0xFFFF) << 16) | (b1 & 0xFFFF));
+		var_a0[-3] = (b2 & 0xFFFF0000) | ((u32)(b3 & 0xFFFF0000) >> 16);
+		var_a0[5] = (s32)(((b2 & 0xFFFF) << 16) | (b3 & 0xFFFF));
+		var_a0[-2] = (b4 & 0xFFFF0000) | ((u32)(b5 & 0xFFFF0000) >> 16);
+		var_a0[6] = (s32)(((b4 & 0xFFFF) << 16) | (b5 & 0xFFFF));
+		var_a0[-1] = (b6 & 0xFFFF0000) | ((u32)(b7 & 0xFFFF0000) >> 16);
+		var_a0[7] = (s32)(((b6 & 0xFFFF) << 16) | (b7 & 0xFFFF));
+	} while (var_v0 != &D_80047708);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800039D0_45D0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003DE8_49E8.s")
 

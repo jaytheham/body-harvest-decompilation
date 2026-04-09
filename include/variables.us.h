@@ -230,6 +230,8 @@ extern s32 D_800476A4;
 extern s32 D_800476A8;
 extern s32 D_800476AC;
 extern s32 D_800476B0;
+extern Unk800476C8 D_800476C8[2];
+extern Unk800476C8 D_80047708;
 extern s16 D_80047720;
 extern s16 D_80047722;
 extern s32 D_8004772C;
