@@ -1749,6 +1749,15 @@ extern char D_80038244_38E44;
 extern char D_8003825C_38E5C;
 extern char D_80038288_38E88;
 extern char D_80038424_39024;
+extern char D_8003845C_3905C; /* osSyncPrintf format string */
+extern char D_80038470_39070; /* osSyncPrintf format string */
+extern char D_80038480_39080; /* osSyncPrintf format string */
+extern char D_80038484_39084; /* osSyncPrintf format string */
+extern char D_8003849C_3909C; /* osSyncPrintf format string */
+extern char D_800384A8_390A8; /* osSyncPrintf format string */
+extern char D_800384B4_390B4; /* osSyncPrintf format string */
+extern char D_800384C4_390C4; /* osSyncPrintf format string */
+extern char D_800384C8_390C8; /* osSyncPrintf format string */
 extern char D_800384E0_390E0;
 extern char D_80038500_39100;
 extern char D_80038530_39130;
@@ -1846,6 +1855,9 @@ extern u16 D_8006C566;
 extern s16 D_8006C568;
 extern s16 D_8006C56A;
 extern s8 D_8006C56C;
+extern s8 D_8006C56D;
+extern s8 D_8006C56E;
+extern s32 D_8006C570;
 extern OSViMode D_80035B30;
 extern OSViMode D_800356D0;
 extern OSViMode D_80035F90;
