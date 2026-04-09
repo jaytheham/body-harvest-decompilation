@@ -79,6 +79,8 @@ extern Unk80047FB8 D_80031310_31F10[5];
 extern s32 D_800313CC;
 extern f32 D_80036C88;
 extern s16 D_800313C8;
+extern s16 D_800313C8_31FC8;
+extern s32 D_800313C4_31FC4;
 extern s16 D_800313D0; // Language
 extern s16 D_800313E4_31FE4;
 extern u8 D_800313F4; // World fog alpha value
@@ -209,7 +211,12 @@ extern s8 D_8004758A;
 extern u16 D_8004758E;
 extern u16 D_80047594;
 extern u16 D_8004759A;
+extern s8 D_800475A2;
+extern Unk80047588 D_800475B2;
 extern u32 D_800475F8;
+extern u32 D_800475FC;
+extern s32 D_80047600;
+extern s32 D_80047604;
 extern s32 D_80047584;
 extern u32 D_8004767C;
 extern u32 D_80047680;
@@ -219,6 +226,10 @@ extern u32 D_80047690;
 extern u32 D_80047698;
 extern s16 D_800476A0;
 extern s16 D_800476A2; // enables input?
+extern s32 D_800476A4;
+extern s32 D_800476A8;
+extern s32 D_800476AC;
+extern s32 D_800476B0;
 extern s16 D_80047720;
 extern s16 D_80047722;
 extern s32 D_8004772C;
