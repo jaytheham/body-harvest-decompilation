@@ -1455,6 +1455,10 @@ typedef struct {
 } BhAudioMsg;
 
 typedef struct {
+    u8 data[0x108];
+} BhAudioGlobals; /* size = 0x108 */
+
+typedef struct {
     /* 0x00 */ u8 unk0[0x53];
     /* 0x53 */ u8 unk53;
     /* 0x54 */ u8 unk54;

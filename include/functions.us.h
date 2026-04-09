@@ -5,6 +5,7 @@
 
 // core
 void func_80012080_12C80(s32 arg0);
+void func_80000450_1050(ALSynConfig *arg0, s32 arg1);
 s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA84Node **arg2);
 void func_80013E64_14A64(s8 arg0);
 void *func_8000C6F4_D2F4(void);
