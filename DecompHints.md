@@ -17,6 +17,7 @@
 - reuse variables
 - fiddle with int promotion if relevant
 - try removing any casts and "un-natural" logic.
+- s32 vs int return type matters, especially when returning boolean operation results.
 
 ### Instruction reorderings
 - move statements around

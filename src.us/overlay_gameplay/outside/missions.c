@@ -14,39 +14,19 @@ s32 D_8013BAC0_14AA70[5][4] = {
 // Resets a bunch of memory? For missions?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074204_831B4.s")
 
-// https://decomp.me/scratch/igaHA
-#ifdef NON_MATCHING
-s32 func_8007447C_8342C(u8 arg0) {
-	s32 var_v0 = arg0 == 0x98;
-	if (var_v0 == 0) {
-		var_v0 = arg0 == 0x9A;
-		if (var_v0 == 0) {
-			var_v0 = arg0 == 0x99;
-			if (var_v0 == 0) {
-				var_v0 = arg0 == 0x9B;
-				if (var_v0 == 0) {
-					var_v0 = arg0 == 0xAD;
-					if (var_v0 == 0) {
-						var_v0 = arg0 == 0xAF;
-					}
-				}
-			}
-		}
-	}
-	return var_v0;
-}
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007447C_8342C.s")
-#endif
+int func_8007447C_8342C(u8 temp_t6) {
 
-// https://decomp.me/scratch/aFHOH
-#ifdef NON_MATCHING
-s32 func_800744E0_83490(s32 arg0) {
+	return temp_t6 == 0x98 ||
+		temp_t6 == 0x9A ||
+		temp_t6 == 0x99 ||
+		temp_t6 == 0x9B ||
+		temp_t6 == 0xAD ||
+		temp_t6 == 0xAF;
+}
+
+int func_800744E0_83490(u8 arg0) {
 	return arg0 >= 0x9C && arg0 < 0xA6;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800744E0_83490.s")
-#endif
 
 // readMissionByteWithIncrement
 u8 func_80074500_834B0(void) {
@@ -169,7 +149,7 @@ void func_80075148_840F8(void)
 	}
 	while (count--);
   }
-  while (func_800744E0_83490(func_80074558_83508() & 0xFF))
+  while (func_800744E0_83490(func_80074558_83508()))
   {
 	func_8007463C_835EC();
   }
@@ -195,7 +175,7 @@ void func_80075210_841C0(void)
 	}
 	while (count--);
   }
-  while (func_800744E0_83490(func_80074558_83508() & 0xFF))
+  while (func_800744E0_83490(func_80074558_83508()))
   {
 	func_8007463C_835EC();
   }
@@ -218,7 +198,7 @@ void func_800752D8_84288(void)
 	}
 	while (count--);
   }
-  while (func_800744E0_83490(func_80074558_83508() & 0xFF))
+  while (func_800744E0_83490(func_80074558_83508()))
   {
 	func_8007463C_835EC();
   }

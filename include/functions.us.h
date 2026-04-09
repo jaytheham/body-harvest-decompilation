@@ -586,7 +586,7 @@ void func_80019EA8_1AAA8(u8 arg0);
 s32 func_8001A37C_1AF7C(char *arg0);
 void func_80088000_96FB0(s16 arg0);
 void func_800C978C_D873C(void);
-s32 func_800744E0_83490(s32 arg0);
+int func_800744E0_83490(u8 arg0);
 void func_80132740_1416F0(Unk80160080 *arg0);
 void func_801330E4_142094(Unk80160080 *arg0);
 void func_800B33BC_C236C(s32 arg0);
