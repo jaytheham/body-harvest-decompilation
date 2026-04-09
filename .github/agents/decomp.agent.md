@@ -106,7 +106,7 @@ Think about how a person would have originally written the code in C to produce 
 
 ## Finalize
 
-If you matched the function (without using NON_MATCHING) and had to make changes to the initial C code, think about whether there is some detectable pattern or insight, and if so update `ExampleFixes` with new or updated case notes to help future decomp.
+Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated case notes to help future decomp. Only for matched functions.
 Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.
 
 ## Troubleshooting

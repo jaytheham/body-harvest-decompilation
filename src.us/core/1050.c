@@ -1,9 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-void func_80000730_1330(s32 arg0);
-void *(*func_80000CD4_18D4(Unk80042DA8 **arg0))(void);
-
 #ifdef NON_MATCHING
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	Unk80042DB8 *s1;
