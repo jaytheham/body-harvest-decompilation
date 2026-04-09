@@ -891,18 +891,13 @@ void func_80013FC4_14BC4(s32 arg0) {
 	}
 }
 
-// https://decomp.me/scratch/QTO8a
-#ifdef NON_MATCHING
 void func_80014180_14D80(s8 arg0)
 {
-  if (D_8006AB88)
-  {
-	func_800153D8_15FD8(D_80033A68_34668[currentLevel * 16 + (s8)(arg0 / 3.0f)]);
-  }
+	if (D_8006AB88) {
+		arg0 /= 3.0f;
+		func_800153D8_15FD8(D_80033A68_34668[currentLevel][arg0]);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014180_14D80.s")
-#endif
 
 s32 osBbUsbDevGetHandle(void) {
 	return -1;
@@ -1389,37 +1384,27 @@ void func_80017224_17E24(void) {
 	}
 }
 
-// https://decomp.me/scratch/n2aua
-#ifdef NON_MATCHING
 s16 func_800172E0_17EE0(u8 *arg0)
 {
-  s32 count = 0;
-  u8 *ptr = arg0;
-  int new_var;
-  new_var = 0x3B;
-  if ((((*arg0) != 0xA) && ((*arg0) != 0)) && ((*arg0) != 0x40))
-  {
-	s32 c = ptr[count];
-	do
-	{
-	  if (((((c == new_var) && (arg0 != ptr)) && ((arg0 + 1) != ptr)) && ((arg0 + 2) != ptr)) && ((arg0 + 3) != ptr))
-	  {
-		count++;
-	  }
-	  c = ptr[1];
-	  ptr++;
+	s32 count = 0;
+	u8 *ptr = arg0;
+
+	if (*arg0 != 0xa && *arg0 != 0 && *arg0 != 0x40) {
+		do {
+			// is 0x3B and not one of the first 4 iterations
+			if (*ptr == 0x3B && arg0 != ptr && arg0 + 1 != ptr && arg0 + 2 != ptr && arg0 + 3 != ptr) {
+				count++;
+			}
+			ptr++;
+		} while (*ptr != 0xa && *ptr != 0 && *ptr != 0x40);
 	}
-	while ((((c ^ 0) != 0xA) && (c != 0)) && (c != 0x40));
-  }
-  if (((D_80034494 != 0) && (D_8006C566 == 0xFFFF)) && (count == 1))
-  {
-	count = 2;
-  }
-  return count;
+
+	if (D_80034494 != 0 && D_8006C566 == 0xFFFF && count == 1) {
+		count = 2;
+	}
+
+	return count;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800172E0_17EE0.s")
-#endif
 
 // https://decomp.me/scratch/sIowK
 #ifdef NON_MATCHING

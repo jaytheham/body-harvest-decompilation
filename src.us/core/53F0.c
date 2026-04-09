@@ -37,29 +37,13 @@ s32 func_80004818_5418(s8 arg0, s8 arg1, u8 arg2) {
 	return 0;
 }
 
-// https://decomp.me/scratch/XgXp0
-#ifdef NON_MATCHING
 void func_800048B8_54B8(void)
 {
-  D47D40Entry *end;
-  D47D40Entry *p;
-  end = &D_80047970[64];
-  p = D_80047970;
-  do
-  {
-	  p--;
-	  p++;
-	p->f2 = 0;
-	p->f4 = 0;
-	p->f6 = 0;
-	p->f0 = 0;
-	p++;
-  }
-  while (p != end);
+	s32 i;
+	for (i = 0; i < ARRAY_COUNT(D_80047970); i++) {
+		D_80047970[i] = 0;
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800048B8_54B8.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800048E8_54E8(void) {
@@ -282,31 +266,31 @@ void func_80005110_5D10(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4) {
 }
 
 void func_800053A0_5FA0(s16 arg0, s16 arg1, u16 arg2, u16 arg3, u8 arg4) {
-    Unk80052B40 sp60;
-    Unk80052B40 sp58;
+	Unk80052B40 sp60;
+	Unk80052B40 sp58;
 
-    sp60 = D_800315C4_321C4;
-    sp58 = D_800315CC_321CC;
-    sp60.unk0 = arg0;
-    sp60.unk2 = arg1;
-    sp58.unk0 = arg2;
-    sp58.unk2 = arg3;
-    guOrtho((Mtx *)D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, D_80037120_37D20, D_80037124_37D24, 1.0f);
-    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-    D_8005BB38 += 0x40;
-    gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_FOG | G_LIGHTING);
-    gDPPipeSync(D_8005BB2C++);
-    gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
-    gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-    gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
-    gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x1E, 0x1E, 0x1E, arg4 * 2);
-    gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
-    gDPPipeSync(D_8005BB2C++);
-    func_800039D0_45D0(&sp60, 0, &sp58, D_8005BB38);
-    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-    D_8005BB38 += 0x40;
-    func_80005110_5D10(0x3C, 0x3C, 0x1E, 0x1E, 0x1E);
-    gDPPipeSync(D_8005BB2C++);
+	sp60 = D_800315C4_321C4;
+	sp58 = D_800315CC_321CC;
+	sp60.unk0 = arg0;
+	sp60.unk2 = arg1;
+	sp58.unk0 = arg2;
+	sp58.unk2 = arg3;
+	guOrtho((Mtx *)D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, D_80037120_37D20, D_80037124_37D24, 1.0f);
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	D_8005BB38 += 0x40;
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_FOG | G_LIGHTING);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x1E, 0x1E, 0x1E, arg4 * 2);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+	gDPPipeSync(D_8005BB2C++);
+	func_800039D0_45D0(&sp60, 0, &sp58, D_8005BB38);
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+	func_80005110_5D10(0x3C, 0x3C, 0x1E, 0x1E, 0x1E);
+	gDPPipeSync(D_8005BB2C++);
 }
 
 void func_80005654_6254(u8 arg0, u8 arg1, u8 arg2) {
@@ -327,33 +311,33 @@ s32 func_800056D0_62D0(s16 arg0, s16 arg1) {
 }
 
 // https://decomp.me/scratch/Ps8Im
+// this requires a function static (D_800315D4_W)
+// which means you may have to map all other .bss data
+// for the file where that func is in (in the best scenario you add this function last and just let splat auto map .bss) 
 #ifdef NON_MATCHING
 void func_8000577C_637C(void)
 {
+  static s32 D_800315D4_W; // has to be a function static
   s32 var_v0;
   s32 temp_hi;
-  var_v0 = D_800315D4_321D4 + 0xA;
-  if (var_v0 >= 0x12C)
+  D_800315D4_W = D_800315D4_321D4 + 0xA;
+  if (D_800315D4_W >= 0x12C)
   {
-	var_v0 = 0;
+	D_800315D4_W = 0;
   }
-  temp_hi = var_v0 % 0x12C;
+  temp_hi = D_800315D4_W % 0x12C;
 	
   if (temp_hi < 0x64)
   {
-	  D_800315D4_W = var_v0;
-	drawText(&D_80036D68_37968, 0xFA - var_v0, var_v0 + 0x96, 0x96);
-	
+	drawText(&D_80036D68_37968, 0xFA - D_800315D4_W, D_800315D4_W + 0x96, 0x96);    
 	return;
   }
   if (temp_hi < 0xC8)
   {
-	D_800315D4_W = var_v0;
-	drawText(&D_80036D6C_3796C, 0x96, 0x15E - var_v0, var_v0 + 0x32);
+	drawText(&D_80036D6C_3796C, 0x96, 0x15E - D_800315D4_W, D_800315D4_W + 0x32);
 	return;
   }
-  D_800315D4_W = var_v0;
-  drawText(&D_80036D70_37970, var_v0 - 0x32, 0x96, 0x1C2 - var_v0);
+  drawText(&D_80036D70_37970, D_800315D4_W - 0x32, 0x96, 0x1C2 - D_800315D4_W);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000577C_637C.s")
@@ -361,23 +345,23 @@ void func_8000577C_637C(void)
 
 
 void func_80005844_6444(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
-    guOrtho((Mtx *)D_8005BB38, -1.0f, 1.0f, -1.0f, 1.0f, -10.0f, 10.0f, 1.0f);
-    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-    D_8005BB38 += 0x40;
-    guLookAt((Mtx *)D_8005BB38, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-    D_8005BB38 += 0x40;
-    gDPPipeSync(D_8005BB2C++);
-    gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
-    gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
-    gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
-    gDPSetPrimColor(D_8005BB2C++, 0, 0, arg0, arg1, arg2, arg3);
-    gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
-    gSPVertex(D_8005BB2C++, (Vtx *)((s32)D_800315D8_321D8 & 0x1FFFFFFF), 4, 0);
-    gSP1Triangle(D_8005BB2C++, 0, 2, 1, 0);
-    gSP1Triangle(D_8005BB2C++, 1, 2, 3, 0);
-    gSPPopMatrix(D_8005BB2C++, G_MTX_PROJECTION);
-    gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+	guOrtho((Mtx *)D_8005BB38, -1.0f, 1.0f, -1.0f, 1.0f, -10.0f, 10.0f, 1.0f);
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	D_8005BB38 += 0x40;
+	guLookAt((Mtx *)D_8005BB38, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, arg0, arg1, arg2, arg3);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+	gSPVertex(D_8005BB2C++, (Vtx *)((s32)D_800315D8_321D8 & 0x1FFFFFFF), 4, 0);
+	gSP1Triangle(D_8005BB2C++, 0, 2, 1, 0);
+	gSP1Triangle(D_8005BB2C++, 1, 2, 3, 0);
+	gSPPopMatrix(D_8005BB2C++, G_MTX_PROJECTION);
+	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
 void func_80005AEC_66EC(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
@@ -466,35 +450,35 @@ s16 func_800067B4_73B4(s16 arg0, s16 arg1, u16 arg2, s16 arg3, s16 arg4) {
 
 #ifdef NON_MATCHING
 void func_800069FC_75FC(void) {
-    s32 sp44;
-    f32 temp_f0;
-    f32 var_f0;
-    s32 temp_f4;
-    s32 temp_v1;
+	s32 sp44;
+	f32 temp_f0;
+	f32 var_f0;
+	s32 temp_f4;
+	s32 temp_v1;
 
-    if ((currentLevel == 2) && (func_8000726C_7E6C(0x1E) == 0)) {
-        func_80004DDC_59DC(D_8004773C.unk0, D_8004773C.unk1, D_8004773C.unk2, 0, D_80068088 - 1);
-        return;
-    }
-    sp44 = (s32) (((s32) ((D_80047964 * 2) & 0xFFFF) >> 2) * 0x140) / 8192;
-    if (D_80052B34 != NULL) {
-        var_f0 = (f32) D_80052B34->unk2;
-    } else {
-        var_f0 = 0.0f;
-    }
-    temp_f4 = (s32) ((f32) (((s16) D_8004794E / 36) + D_8003161C_3221C) + (var_f0 / 15.0f));
-    if (temp_f4 >= 2) {
-        func_80004DDC_59DC(D_80047740.unk0, D_80047740.unk1, D_80047740.unk2, 0, temp_f4 - 1);
-    }
-    temp_v1 = D_80068088 - 1;
-    temp_f0 = 128.0f;
-    temp_f0 *= D_80031618_32218;
-    temp_f0 += (f32) temp_f4;
-    if (temp_f0 < (f32) temp_v1) {
-        func_80004DDC_59DC(D_8004773C.unk0, D_8004773C.unk1, D_8004773C.unk2, (s32) temp_f0, temp_v1);
-    }
-    func_80005C5C_685C(&D_802CA8D0, 2, 1, 8, sp44, temp_f4, 0x140, 0x80, 2.0f, D_80031618_32218, &D_80047748);
-    func_80005C5C_685C(&D_802CA8D0, 2, 1, 8, sp44 - 0x280, temp_f4, 0x140, 0x80, 2.0f, D_80031618_32218, NULL);
+	if ((currentLevel == 2) && (func_8000726C_7E6C(0x1E) == 0)) {
+		func_80004DDC_59DC(D_8004773C.unk0, D_8004773C.unk1, D_8004773C.unk2, 0, D_80068088 - 1);
+		return;
+	}
+	sp44 = (s32) (((s32) ((D_80047964 * 2) & 0xFFFF) >> 2) * 0x140) / 8192;
+	if (D_80052B34 != NULL) {
+		var_f0 = (f32) D_80052B34->unk2;
+	} else {
+		var_f0 = 0.0f;
+	}
+	temp_f4 = (s32) ((f32) (((s16) D_8004794E / 36) + D_8003161C_3221C) + (var_f0 / 15.0f));
+	if (temp_f4 >= 2) {
+		func_80004DDC_59DC(D_80047740.unk0, D_80047740.unk1, D_80047740.unk2, 0, temp_f4 - 1);
+	}
+	temp_v1 = D_80068088 - 1;
+	temp_f0 = 128.0f;
+	temp_f0 *= D_80031618_32218;
+	temp_f0 += (f32) temp_f4;
+	if (temp_f0 < (f32) temp_v1) {
+		func_80004DDC_59DC(D_8004773C.unk0, D_8004773C.unk1, D_8004773C.unk2, (s32) temp_f0, temp_v1);
+	}
+	func_80005C5C_685C(&D_802CA8D0, 2, 1, 8, sp44, temp_f4, 0x140, 0x80, 2.0f, D_80031618_32218, &D_80047748);
+	func_80005C5C_685C(&D_802CA8D0, 2, 1, 8, sp44 - 0x280, temp_f4, 0x140, 0x80, 2.0f, D_80031618_32218, NULL);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800069FC_75FC.s")

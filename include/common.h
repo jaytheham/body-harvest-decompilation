@@ -16,6 +16,8 @@
 #define MAX_INT                0x7FFFFFFF
 #define MAX_SHORT              0x7FFF
 
+#define ARRAY_COUNT(arr) (s32)(sizeof(arr) / sizeof(arr[0]))
+
 typedef u8 Addr[];
 
 #ifdef VERSION_US

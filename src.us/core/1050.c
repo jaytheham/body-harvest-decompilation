@@ -1014,36 +1014,32 @@ s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask)
 	}
 }
 
-// https://decomp.me/scratch/TZvk8
-#ifdef NON_MATCHING
-void func_800035D8_41D8(s16 arg0) {
-	if (!(currentControllerStates[0].button & 0x10)) {
-		s8 temp_v0 = D_800475B8.stick_x;
-		Unk80047588 *var_v1 = (Unk80047588 *)&D_800475B8;
-	loop:
-		temp_v0 = var_v1->stick_x;
-		if (arg0 < temp_v0) {
-			var_v1->stick_x = (s8)(temp_v0 - arg0);
-		} else if (temp_v0 < -arg0) {
-			var_v1->stick_x = (s8)(temp_v0 + arg0);
+void func_800035D8_41D8(s16 arg0)
+{
+	s32 i;
+
+	if (currentControllerStates[0].button & 0x10) {
+		return;
+	}
+
+	for (i = 0; i < ARRAY_COUNT(D_800475B8); i++) {
+		if (arg0 < D_800475B8[i].stick_x) {
+			D_800475B8[i].stick_x -= arg0;
+		} else if (D_800475B8[i].stick_x < (-arg0)) {
+			D_800475B8[i].stick_x += arg0;
 		} else {
-			var_v1->stick_x = 0;
+			D_800475B8[i].stick_x = 0;
 		}
-		temp_v0 = var_v1->stick_y;
-		if (arg0 < temp_v0) {
-			var_v1->stick_y = (s8)(temp_v0 - arg0);
-		} else if (temp_v0 < -arg0) {
-			var_v1->stick_y = (s8)(temp_v0 + arg0);
+		
+		if (arg0 < D_800475B8[i].stick_y) {
+			D_800475B8[i].stick_y -= arg0;
+		} else if (D_800475B8[i].stick_y < (-arg0)) {
+			D_800475B8[i].stick_y += arg0;
 		} else {
-			var_v1->stick_y = 0;
+			D_800475B8[i].stick_y = 0;
 		}
-		var_v1++;
-		if (var_v1 != (Unk80047588 *)&D_800475D0) goto loop;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800035D8_41D8.s")
-#endif
 
 s16 func_80003680_4280(f32 arg0) {
 	f32 absval;
