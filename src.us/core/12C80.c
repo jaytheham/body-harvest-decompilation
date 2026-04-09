@@ -1161,16 +1161,14 @@ void func_80015944_16544(s8 arg0, s16 arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
-void func_8001599C_1659C(void) {
-	Unk8006AA80Node sp70;
+void func_8001599C_1659C(void)
+{
 	Unk8006AA80Node *temp_v0;
-	s16 var_s1;
-	s16 var_s0;
-	s8 var_s1_2;
-	s8 var_s0_2;
+	u8 var_s0;
+	Unk8006AA80Node sp70;
 
-	if (D_8006AB88 != 0) {
+	if (D_8006AB88 != 0)
+	{
 		D_80031CA8_328A8 = 0;
 		D_80031CB4_328B4 = 0;
 		D_80031CB8_328B8 = 0;
@@ -1187,39 +1185,34 @@ void func_8001599C_1659C(void) {
 		D_80031CAC_328AC = -1;
 		D_80031CB0_328B0 = 0;
 		D_80031CA4 = -1;
-		var_s1 = 0;
-		var_s0 = 0;
-		do {
+		for (var_s0 = 0; var_s0<0x10; var_s0++)
+		{
 			alSndpSetSound(D_8006AB10, var_s0);
-			if (alSndpGetState(D_8006AB10) != 0) {
+			if (alSndpGetState(D_8006AB10) != 0)
+			{
 				temp_v0 = func_8001244C_1304C(var_s0);
-				if (temp_v0 == NULL) {
+				if (temp_v0 == NULL)
+				{
 					sp70.unk6 = var_s0;
 					func_800121B4_12DB4(sp70, &D_8006AA80, &D_8006AA84);
-				} else {
+				}
+				else
+				{
 					temp_v0->unk8 = 0;
 				}
 				alSndpStop(D_8006AB10);
 			}
-			var_s1++;
-			var_s0 = var_s1 & 0xFF;
-			var_s1 = var_s0;
-		} while (var_s0 < 0x10);
-		var_s1_2 = 0;
-		var_s0_2 = 0;
-		do {
-			D_80031CE4_328E4[var_s1_2] = 1;
-			func_80013E64_14A64(var_s0_2);
-			var_s0_2 = (var_s1_2 + 1) & 0xFF;
-			D_80031CD0_328D0[var_s1_2] = -1;
-			var_s1_2 = var_s0_2;
+		}
+
+		for (var_s0 = 0;var_s0 < 2; var_s0++)
+		{
+			D_80031CE4_328E4[var_s0] = 1;
+			func_80013E64_14A64(var_s0);
+			D_80031CD0_328D0[var_s0] = -1;
 			D_80031CD4_328D4 = -1;
-		} while (var_s0_2 < 2);
+		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_8001599C_1659C.s")
-#endif
 
 void func_80015BCC_167CC(s32 arg0) {
 	if ((D_8006AB88 != 0) && (gameplayMode == 1)) {
