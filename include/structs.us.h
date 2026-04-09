@@ -180,6 +180,13 @@ typedef struct {
 } Unk8004D1C8; /* size = 0x18 */
 
 typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
+	/* 0x02 */ u8 unk2;
+	/* 0x03 */ u8 unk3;
+} Unk80031620; /* size = 0x04 */
+
+typedef struct {
 	/* 0x00 */ s32 score;
 	/* 0x04 */ u16 secondsElapsed;
 	/* 0x06 */ s16 humansKilled;

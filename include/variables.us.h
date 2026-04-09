@@ -83,6 +83,9 @@ extern s16 D_800313C8_31FC8;
 extern s32 D_800313C4_31FC4;
 extern s16 D_800313D0; // Language
 extern s16 D_800313E4_31FE4;
+extern u8 D_800313E8;
+extern u8 D_800313EC;
+extern u8 D_800313F0;
 extern u8 D_800313F4; // World fog alpha value
 extern s16 D_800313F8; // World fog near distance
 extern s16 D_800313FC; // World fog far distance
@@ -1948,6 +1951,7 @@ extern char D_802E0E18_1F9B28[];
 extern char D_802E0E24_1F9B34[];
 extern u8 D_802CA8D0;
 extern u8 D_802D48CF;
+extern Unk80031620 D_80031620[];
 extern s16 D_80031634[];
 extern u8 D_8003153E[];
 extern Unk8014DD50 *D_802E0608;
