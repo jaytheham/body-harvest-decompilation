@@ -1421,6 +1421,7 @@ s16 func_800172E0_17EE0(u8 *arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800172E0_17EE0.s")
 #endif
 
+// https://decomp.me/scratch/sIowK
 #ifdef NON_MATCHING
 s16 func_80017394_17F94(u8 *arg0, s16 arg1) {
 	s32 var_v1;
@@ -1792,7 +1793,7 @@ void func_8001A160_1AD60(void) {
 			break;
 		}
 	}
-	if (isButtonNewlyPressed(0, 0x8000) != 0) {
+	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A) != 0) {
 		D_80034498_35098 = 1;
 	}
 }
