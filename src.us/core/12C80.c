@@ -1669,7 +1669,55 @@ void func_80018D7C_1997C(u16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800190D4_19CD4.s")
 
+#ifdef NON_MATCHING
+void func_80019ABC_1A6BC(arg0, arg1)
+s32 arg0;
+s32 arg1;
+{
+	u8 cnt;
+	Gfx *sp18;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, (u8*)((s32)D_80265880 & 0x1FFFFFFF));
+	gDPTileSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	sp18 = D_8005BB2C;
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
+	gDPPipeSync(D_8005BB2C++);
+	if (D_8003445C != 0) {
+		func_800153D8_15FD8(0x156);
+		D_8003445C = 0;
+		D_800344A8 = 0;
+	}
+	cnt = D_800344A8;
+	if ((cnt % 3) == 2) {
+		D_8006C56C = ((u8)D_8006C56C + 1) % 6;
+	}
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, (u8*)((s32)&D_80264B00[(u8)D_8006C56C * 0x240] & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 287, 683);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_RENDERTILE, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x5C, 0x5C);
+	D_8005BB2C->words.w0 = (s32)((((arg0 + 0x12) * 4 & 0xFFF) << 0xC) | 0xE4000000 | ((arg1 + 0x12) * 4 & 0xFFF));
+	D_8005BB2C->words.w1 = (s32)(((arg0 * 4 & 0xFFF) << 0xC) | (arg1 * 4 & 0xFFF));
+	D_8005BB2C++;
+	D_800344A8 = cnt + 1;
+	gImmp1(D_8005BB2C++, G_RDPHALF_1, 0x00000000);
+	gImmp1(D_8005BB2C++, G_RDPHALF_2, 0x05550555);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80019ABC_1A6BC.s")
+#endif
 
 void func_80019EA8_1AAA8(u8 arg0) {
 	D_80034478 = 1;

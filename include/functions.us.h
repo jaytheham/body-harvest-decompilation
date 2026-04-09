@@ -665,7 +665,7 @@ void func_8007AE40_162F00(void);
 void func_80083924_16B9E4(s16 arg0, s32 arg1);
 void func_8001A598_1B198(void *arg0);
 void func_8001A828_1B428(void);
-void func_80019ABC_1A6BC(void);
+void func_80019ABC_1A6BC();
 void func_8001A130_1AD30();
 s32 func_80017B78_18778(void);
 void drawText(void *arg0, ...);
