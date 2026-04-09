@@ -89,6 +89,7 @@ Occasionally, static variables can need to be declared as local static variables
 
 ### Types
 Types of different size are usually easy to distinguish, based on sign extensions (`sll x, 16; sra x, 16` indicates s16), zero extension (`and x, 0xffff` indicates u16), and loads (`lb`, `lbu` etc.). Pointers and `u32`/`s32` however are often impossible to distinguish. Some cases where they differ:
+- An arg being `&& 0xFF` or `&& 0xFFFF` repeatedly suggests that the original code was using a smaller type like u8 or s16.
 - type casts can affect order of commutative operations like + and == (see "Order of commutative operations" further down).
 - calling a function that takes `u32` vs `s32` with a `u8` variable can result in wildly different codegen (or just register changes).
 - s32 and u32 multiplications are treated as different and can't be deduplicated; the same is probably true for addition
