@@ -1314,7 +1314,6 @@ void func_80016CD8_178D8(s8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_80016E54_17A54(void) {
 	Unk8006AA80Node *node;
 	f32 temp_f0;
@@ -1340,9 +1339,6 @@ void func_80016E54_17A54(void) {
 		D_80031D50_32950 -= 1.0f;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80016E54_17A54.s")
-#endif
 
 void func_80016FD0_17BD0(s16 arg0) {
 	Unk8006AA80Node *node;
