@@ -1382,7 +1382,89 @@ void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2,
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800039D0_45D0.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
+	s32 sp3C, sp38, sp34, sp30, sp2C;
+	s32 temp1, temp2;
+	s32 i;
+	s32 *var_v0;
+	s32 *var_a0;
+
+	D_800476C8[0].unkC = 0;
+	D_800476C8[0].unk1C = 0;
+	D_800476C8[1].unkC = 0;
+	D_800476C8[1].unk1C = 0x10000;
+
+	if (arg0 != NULL) {
+		D_800476C8[1].unk10 = (s32)arg0->unk0 << 16;
+		D_800476C8[1].unk14 = (s32)arg0->unk2 << 16;
+		D_800476C8[1].unk18 = (s32)arg0->unk4 << 16;
+	} else {
+		D_800476C8[1].unk10 = 0;
+		D_800476C8[1].unk14 = 0;
+		D_800476C8[1].unk18 = 0;
+	}
+
+	if (arg1 != NULL) {
+		sp3C = coss(arg1[0]);
+		sp38 = sins(arg1[0]);
+		sp34 = coss(arg1[2]);
+		sp30 = sins(arg1[2]);
+		sp2C = coss(arg1[1]);
+		temp1 = sins(arg1[1]);
+		D_800476C8[0].unk8 = sp38 * -2;
+		D_800476C8[0].unk0 = ((sp3C * sp2C) >> 15) * 2;
+		D_800476C8[0].unk4 = ((sp3C * temp1) >> 15) * 2;
+		temp2 = (sp38 * sp30) >> 15;
+		D_800476C8[0].unk10 = (((-sp34 * temp1) >> 15) + ((temp2 * sp2C) >> 15)) * 2;
+		D_800476C8[0].unk14 = (((sp34 * sp2C) >> 15) + ((temp2 * temp1) >> 15)) * 2;
+		D_800476C8[0].unk18 = ((sp30 * sp3C) >> 15) * 2;
+		temp2 = (sp38 * sp34) >> 15;
+		D_800476C8[1].unk0 = (((sp30 * temp1) >> 15) + ((temp2 * sp2C) >> 15)) * 2;
+		D_800476C8[1].unk4 = (((-sp30 * sp2C) >> 15) + ((temp2 * temp1) >> 15)) * 2;
+		D_800476C8[1].unk8 = ((sp3C * sp34) >> 15) * 2;
+	} else {
+		D_800476C8[0].unk0 = 0x10000;
+		D_800476C8[0].unk10 = 0;
+		D_800476C8[1].unk0 = 0;
+		D_800476C8[0].unk4 = 0;
+		D_800476C8[0].unk14 = 0x10000;
+		D_800476C8[1].unk4 = 0;
+		D_800476C8[0].unk8 = 0;
+		D_800476C8[0].unk18 = 0;
+		D_800476C8[1].unk8 = 0x10000;
+	}
+
+	if (arg2 != NULL) {
+		D_800476C8[0].unk0 = (D_800476C8[0].unk0 * arg2[0]) >> 8;
+		D_800476C8[0].unk4 = (D_800476C8[0].unk4 * arg2[0]) >> 8;
+		D_800476C8[0].unk8 = (D_800476C8[0].unk8 * arg2[0]) >> 8;
+		D_800476C8[0].unk10 = (D_800476C8[0].unk10 * arg2[1]) >> 8;
+		D_800476C8[0].unk14 = (D_800476C8[0].unk14 * arg2[1]) >> 8;
+		D_800476C8[0].unk18 = (D_800476C8[0].unk18 * arg2[1]) >> 8;
+		D_800476C8[1].unk0 = (D_800476C8[1].unk0 * arg2[2]) >> 8;
+		D_800476C8[1].unk4 = (D_800476C8[1].unk4 * arg2[2]) >> 8;
+		D_800476C8[1].unk8 = (D_800476C8[1].unk8 * arg2[2]) >> 8;
+	}
+
+	var_v0 = (s32 *)D_800476C8;
+	var_a0 = arg3;
+	do {
+		var_a0[0] = ((var_v0[1] & 0xFFFF0000) >> 16) + (var_v0[0] & 0xFFFF0000);
+		var_a0 += 4;
+		var_a0[4] = (var_v0[0] << 16) + (var_v0[1] & 0xFFFF);
+		var_a0[-3] = ((var_v0[3] & 0xFFFF0000) >> 16) + (var_v0[2] & 0xFFFF0000);
+		var_a0[5] = (var_v0[2] << 16) + (var_v0[3] & 0xFFFF);
+		var_a0[-2] = ((var_v0[5] & 0xFFFF0000) >> 16) + (var_v0[4] & 0xFFFF0000);
+		var_a0[6] = (var_v0[4] << 16) + (var_v0[5] & 0xFFFF);
+		var_a0[-1] = ((var_v0[7] & 0xFFFF0000) >> 16) + (var_v0[6] & 0xFFFF0000);
+		var_a0[7] = (var_v0[6] << 16) + (var_v0[7] & 0xFFFF);
+		var_v0 += 8;
+	} while (var_v0 != (s32 *)&D_80047708);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003DE8_49E8.s")
+#endif
 
 void func_80004214_4E14(s16 arg0, s32 arg1) {
 	Unk80052B40 v;
