@@ -79,8 +79,13 @@ extern Unk80047FB8 D_80031310_31F10[5];
 extern s32 D_800313CC;
 extern f32 D_80036C88;
 extern s16 D_800313C8;
+extern s16 D_800313C8_31FC8;
+extern s32 D_800313C4_31FC4;
 extern s16 D_800313D0; // Language
 extern s16 D_800313E4_31FE4;
+extern u8 D_800313E8;
+extern u8 D_800313EC;
+extern u8 D_800313F0;
 extern u8 D_800313F4; // World fog alpha value
 extern s16 D_800313F8; // World fog near distance
 extern s16 D_800313FC; // World fog far distance
@@ -209,7 +214,12 @@ extern s8 D_8004758A;
 extern u16 D_8004758E;
 extern u16 D_80047594;
 extern u16 D_8004759A;
+extern s8 D_800475A2;
+extern Unk80047588 D_800475B2;
 extern u32 D_800475F8;
+extern u32 D_800475FC;
+extern s32 D_80047600;
+extern s32 D_80047604;
 extern s32 D_80047584;
 extern u32 D_8004767C;
 extern u32 D_80047680;
@@ -219,6 +229,12 @@ extern u32 D_80047690;
 extern u32 D_80047698;
 extern s16 D_800476A0;
 extern s16 D_800476A2; // enables input?
+extern s32 D_800476A4;
+extern s32 D_800476A8;
+extern s32 D_800476AC;
+extern s32 D_800476B0;
+extern Unk800476C8 D_800476C8[2];
+extern Unk800476C8 D_80047708;
 extern s16 D_80047720;
 extern s16 D_80047722;
 extern s32 D_8004772C;
@@ -1276,6 +1292,7 @@ extern s32 D_80034498_35098;
 extern s32 D_80034494;
 extern s32 D_8003449C;
 extern s32 D_800344A4;
+extern u8 D_800344A8;
 extern s32 D_800344B4[]; // pointers to strings for names of many things, each entry is actually 2x s32 in size, first is pointer to string
 extern void *D_8006C550;
 extern void *D_8006C554;
@@ -1936,6 +1953,7 @@ extern char D_802E0E18_1F9B28[];
 extern char D_802E0E24_1F9B34[];
 extern u8 D_802CA8D0;
 extern u8 D_802D48CF;
+extern Unk80031620 D_80031620[];
 extern s16 D_80031634[];
 extern u8 D_8003153E[];
 extern Unk8014DD50 *D_802E0608;

@@ -180,6 +180,13 @@ typedef struct {
 } Unk8004D1C8; /* size = 0x18 */
 
 typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
+	/* 0x02 */ u8 unk2;
+	/* 0x03 */ u8 unk3;
+} Unk80031620; /* size = 0x04 */
+
+typedef struct {
 	/* 0x00 */ s32 score;
 	/* 0x04 */ u16 secondsElapsed;
 	/* 0x06 */ s16 humansKilled;
@@ -1291,6 +1298,17 @@ typedef struct {
 	/* 0x02 */ u8 pad2[2];
 	/* 0x04 */ s32 unk4;
 } Unk80047578; /* size = 0x08 */
+
+typedef struct {
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ s32 unk4;
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ s32 unkC;
+	/* 0x10 */ s32 unk10;
+	/* 0x14 */ s32 unk14;
+	/* 0x18 */ s32 unk18;
+	/* 0x1C */ s32 unk1C;
+} Unk800476C8; /* size = 0x20 */
 
 
 typedef struct {

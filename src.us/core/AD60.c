@@ -221,7 +221,93 @@ void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2) {
 	}
 }
 
+#ifdef NON_MATCHING
+void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
+	extern s32 D_80059C90[16];
+	s32 sp3C, sp38, sp34, sp30, sp2C;
+	s32 temp1, temp2;
+	s32 i;
+	s32 *src;
+	s32 *dst;
+
+	D_80059C90[3] = 0;
+	D_80059C90[7] = 0;
+	D_80059C90[11] = 0;
+	D_80059C90[15] = 0x10000;
+
+	if (arg0 != NULL) {
+		D_80059C90[12] = arg0[0];
+		D_80059C90[13] = arg0[1];
+		D_80059C90[14] = arg0[2];
+	} else {
+		D_80059C90[12] = 0;
+		D_80059C90[13] = 0;
+		D_80059C90[14] = 0;
+	}
+
+	if (arg1 != NULL) {
+		sp3C = coss(arg1[0]);
+		sp38 = sins(arg1[0]);
+		sp34 = coss(arg1[2]);
+		sp30 = sins(arg1[2]);
+		sp2C = coss(arg1[1]);
+		temp1 = sins(arg1[1]);
+
+		D_80059C90[2] = -sp38 * 2;
+		D_80059C90[0] = ((sp3C * sp2C) >> 15) * 2;
+		D_80059C90[1] = ((sp3C * temp1) >> 15) * 2;
+
+		temp2 = (sp38 * sp30) >> 15;
+		D_80059C90[4] = (((-sp34 * temp1) >> 15) + ((temp2 * sp2C) >> 15)) * 2;
+		D_80059C90[5] = (((sp34 * sp2C) >> 15) + ((temp2 * temp1) >> 15)) * 2;
+		D_80059C90[6] = ((sp30 * sp3C) >> 15) * 2;
+
+		temp2 = (sp38 * sp34) >> 15;
+		D_80059C90[8] = (((sp30 * temp1) >> 15) + ((temp2 * sp2C) >> 15)) * 2;
+		D_80059C90[9] = (((-sp30 * sp2C) >> 15) + ((temp2 * temp1) >> 15)) * 2;
+		D_80059C90[10] = ((sp3C * sp34) >> 15) * 2;
+	} else {
+		D_80059C90[0] = 0x10000;
+		D_80059C90[4] = 0;
+		D_80059C90[8] = 0;
+		D_80059C90[1] = 0;
+		D_80059C90[5] = 0x10000;
+		D_80059C90[9] = 0;
+		D_80059C90[2] = 0;
+		D_80059C90[6] = 0;
+		D_80059C90[10] = 0x10000;
+	}
+
+	if (arg2 != NULL) {
+		D_80059C90[0] = (D_80059C90[0] * arg2[0]) >> 8;
+		D_80059C90[1] = (D_80059C90[1] * arg2[0]) >> 8;
+		D_80059C90[2] = (D_80059C90[2] * arg2[0]) >> 8;
+		D_80059C90[4] = (D_80059C90[4] * arg2[1]) >> 8;
+		D_80059C90[5] = (D_80059C90[5] * arg2[1]) >> 8;
+		D_80059C90[6] = (D_80059C90[6] * arg2[1]) >> 8;
+		D_80059C90[8] = (D_80059C90[8] * arg2[2]) >> 8;
+		D_80059C90[9] = (D_80059C90[9] * arg2[2]) >> 8;
+		D_80059C90[10] = (D_80059C90[10] * arg2[2]) >> 8;
+	}
+
+	src = D_80059C90;
+	dst = arg3;
+	do {
+		dst[0] = ((src[1] & 0xFFFF0000) >> 16) + (src[0] & 0xFFFF0000);
+		dst[4] = (src[0] << 16) + (src[1] & 0xFFFF);
+		dst[1] = ((src[3] & 0xFFFF0000) >> 16) + (src[2] & 0xFFFF0000);
+		dst[5] = (src[2] << 16) + (src[3] & 0xFFFF);
+		dst[2] = ((src[5] & 0xFFFF0000) >> 16) + (src[4] & 0xFFFF0000);
+		dst[6] = (src[4] << 16) + (src[5] & 0xFFFF);
+		dst[3] = ((src[7] & 0xFFFF0000) >> 16) + (src[6] & 0xFFFF0000);
+		dst[7] = (src[6] << 16) + (src[7] & 0xFFFF);
+		src += 8;
+		dst += 8;
+	} while (src != (s32*)&D_80059CD0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C81C_D41C.s")
+#endif
 
 void func_8000CC3C_D83C(AnimChannelState *arg0, s32 arg1)
 {
