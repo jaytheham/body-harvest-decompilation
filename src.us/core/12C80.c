@@ -720,68 +720,77 @@ void func_80013818_14418(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013818_14418.s")
 #endif
 
-#ifdef NON_MATCHING
-s16 func_80013B48_14748(Unk8006AA80Node *arg0, s16 arg1) {
-	s32 phantom1;
-	f32 var_f2;
-	s32 phantom2;
-	s16 sp22;
-	s32 temp_rand;
-
-	sp22 = 0;
-	if (D_8006AB88 == 0) {
-		return 0;
-	}
-	if (arg0->unk0C >= 0) {
-		arg0->unk0C = arg0->unk0C - 1;
-	}
+s16 func_80013B48_14748(Unk8006AA80Node *arg0, s16 arg1)
+{
+  s32 phantom1;
+  f32 var_f2;
+  s32 phantom2;
+  s16 sp22;
+  s32 temp_rand;
+  sp22 = 0;
+  if (D_8006AB88 == 0)
+  {
+	return 0;
+  }
+  if (arg0->unk0C >= 0)
+  {
+	arg0->unk0C = arg0->unk0C - 1;
+  }
+  {
+	s16 id;
+	id = alSndpAllocate(D_8006AB10, D_8006AB8C->instArray[arg0->unk0]->soundArray[0]);
+	if (id >= 0)
 	{
-		s16 id;
-		id = alSndpAllocate(D_8006AB10, D_8006AB8C->instArray[arg0->unk0]->soundArray[0]);
-		if (id >= 0) {
-			s16 var_a1;
-			arg0->unk6 = id;
-			D_8006ABB8[arg0->unk6] = 1;
-			alSndpSetPriority(D_8006AB10, arg0->unk6, D_80032228_32E28[arg0->unk0]);
-			alSndpSetSound(D_8006AB10, arg0->unk6);
-			var_f2 = arg0->unk24;
-			if (arg0->unk0 == 0xD3) {
-				var_f2 += (f32)func_800038E0_44E0() / D_800382F0_38EF0;
-			}
-			if (arg0->unk0 == 0x97) {
-				temp_rand = func_800038E0_44E0();
-				sp22 = (s16)(s32)((f32)temp_rand / (f32)D_80031D14_32914);
-				var_f2 += (f32)temp_rand / (f32)D_80031D10_32910;
-			}
-			if (arg0->unk0 == 0x96) {
-				sp22 = (s16)(s32)((f32)func_800038E0_44E0() / (f32)D_80031D18_32918);
-			}
-			if (arg0->unk0 == 0xEB) {
-				alSndpSetFXMix(D_8006AB10, 0x50);
-			}
-			if (D_800382F8_38EF8 < (f64)var_f2) {
-				alSndpSetPitch(D_8006AB10, var_f2);
-			}
-			if (D_80031D4C_3294C == 1) {
-				var_a1 = (s16)(s32)((((f32)arg0->unk20 * D_80031D58_32958) + ((D_80031D5C_3295C * ((f32)arg0->unk20 * D_80031D50_32950)) / D_80031D54_32954)) * D_80031D60_32960);
-			} else {
-				var_a1 = (s16)(s32)((f32)arg0->unk20 * D_80031D60_32960);
-			}
-			if (sp22 < var_a1) {
-				var_a1 -= sp22;
-			}
-			alSndpSetVol(D_8006AB10, var_a1);
-			alSndpSetPan(D_8006AB10, arg0->unk22);
-			alSndpPlay(D_8006AB10);
-			arg0->unk8 = 9;
-			return arg0->unk6;
-		}
-		return -1;
+	  s16 var_a1;
+	  arg0->unk6 = id;
+	  D_8006ABB8[arg0->unk6] = 1;
+	  alSndpSetPriority(D_8006AB10, arg0->unk6, D_80032228_32E28[arg0->unk0]);
+	  alSndpSetSound(D_8006AB10, arg0->unk6);
+	  var_f2 = arg0->unk24;
+	  if (arg0->unk0 == 0xD3)
+	  {
+		var_f2 += ((f32) func_800038E0_44E0()) / D_800382F0_38EF0;
+	  }
+	  if (arg0->unk0 == 0x97)
+	  {
+		temp_rand = func_800038E0_44E0();
+		sp22 = temp_rand / ((f32) D_80031D14_32914);
+		var_f2 += ((f32) temp_rand) / ((f32) D_80031D10_32910);
+		sp22 = temp_rand / ((f32) D_80031D14_32914);
+	  }
+	  if (arg0->unk0 == 0x96)
+	  {
+		sp22 = (s16) ((s32) (((f32) func_800038E0_44E0()) / ((f32) D_80031D18_32918)));
+	  }
+	  if (arg0->unk0 == 0xEB)
+	  {
+		alSndpSetFXMix(D_8006AB10, 0x50);
+	  }
+	  if (D_800382F8_38EF8 < ((f64) var_f2))
+	  {
+		alSndpSetPitch(D_8006AB10, var_f2);
+	  }
+	  if (D_80031D4C_3294C == 1)
+	  {
+		var_a1 = ((((arg0->unk20 * D_80031D58_32958) + ((D_80031D5C_3295C * (arg0->unk20 * D_80031D50_32950)) / D_80031D54_32954)) * D_80031D60_32960));
+	  }
+	  else
+	  {
+		var_a1 = (s16) ((s32) (((f32) arg0->unk20) * D_80031D60_32960));
+	  }
+	  if (sp22 < var_a1)
+	  {
+		var_a1 -= sp22;
+	  }
+	  alSndpSetVol(D_8006AB10, var_a1);
+	  alSndpSetPan(D_8006AB10, arg0->unk22);
+	  alSndpPlay(D_8006AB10);
+	  arg0->unk8 = 9;
+	  return arg0->unk6;
 	}
+	return -1;
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013B48_14748.s")
-#endif
 
 void func_80013E44_14A44(void *arg0) {
 	if (D_8006AB88 != 0) {
