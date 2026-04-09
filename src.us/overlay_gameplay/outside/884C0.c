@@ -3308,7 +3308,7 @@ s32 func_8008D978_9C928(u8 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008DA24_9C9D4.s")
 
-// https://decomp.me/scratch/Z11Wf
+// https://decomp.me/scratch/BnGko
 #ifdef NON_MATCHING
 void func_8008DEF4_9CEA4(u8 arg0)
 {

@@ -445,9 +445,60 @@ s16 func_80006710_7310(s16 arg0, s16 arg1, u16 arg2) {
 	return (s16) (s32) ((f32) arg0 + ((f32) (arg1 - arg0) * (f32) (((f64) (f32) sins_val / 32768.0) + 1.0)));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800067B4_73B4.s")
+#ifdef NON_MATCHING
+s16 func_800067B4_73B4(s16 arg0, s16 arg1, u16 arg2, s16 arg3, s16 arg4) {
+	f32 temp_f4;
+	f32 temp_f0;
+	s32 sins_if;
 
+	temp_f0 = (f32)(arg1 - arg0);
+	if (arg2 < 0x4001) {
+		sins_if = sins(arg2 - 0x4000);
+		return (s16)((f32)arg0 + temp_f0 * (f32)(((f64)(f32)sins_if / 32768.0) + 1.0));
+	} else {
+		temp_f4 = (f32)((((f64)(f32)sins((u32)((f64)(arg2 - 0x4000) * 1.5 - 16384.0)) / 32768.0) + 1.0) * 0.5);
+		return (s16)((((f64)(f32)sins(arg2 * arg3) / 32768.0) * (f64)temp_f4 * (f64)arg4) + (f64)arg1);
+	}
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800067B4_73B4.s")
+#endif
+
+#ifdef NON_MATCHING
+void func_800069FC_75FC(void) {
+    s32 sp44;
+    f32 temp_f0;
+    f32 var_f0;
+    s32 temp_f4;
+    s32 temp_v1;
+
+    if ((currentLevel == 2) && (func_8000726C_7E6C(0x1E) == 0)) {
+        func_80004DDC_59DC(D_8004773C.unk0, D_8004773C.unk1, D_8004773C.unk2, 0, D_80068088 - 1);
+        return;
+    }
+    sp44 = (s32) (((s32) ((D_80047964 * 2) & 0xFFFF) >> 2) * 0x140) / 8192;
+    if (D_80052B34 != NULL) {
+        var_f0 = (f32) D_80052B34->unk2;
+    } else {
+        var_f0 = 0.0f;
+    }
+    temp_f4 = (s32) ((f32) (((s16) D_8004794E / 36) + D_8003161C_3221C) + (var_f0 / 15.0f));
+    if (temp_f4 >= 2) {
+        func_80004DDC_59DC(D_80047740.unk0, D_80047740.unk1, D_80047740.unk2, 0, temp_f4 - 1);
+    }
+    temp_v1 = D_80068088 - 1;
+    temp_f0 = 128.0f;
+    temp_f0 *= D_80031618_32218;
+    temp_f0 += (f32) temp_f4;
+    if (temp_f0 < (f32) temp_v1) {
+        func_80004DDC_59DC(D_8004773C.unk0, D_8004773C.unk1, D_8004773C.unk2, (s32) temp_f0, temp_v1);
+    }
+    func_80005C5C_685C(&D_802CA8D0, 2, 1, 8, sp44, temp_f4, 0x140, 0x80, 2.0f, D_80031618_32218, &D_80047748);
+    func_80005C5C_685C(&D_802CA8D0, 2, 1, 8, sp44 - 0x280, temp_f4, 0x140, 0x80, 2.0f, D_80031618_32218, NULL);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800069FC_75FC.s")
+#endif
 
 void func_80006C4C_784C(void) {
 	gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);

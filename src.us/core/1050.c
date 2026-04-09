@@ -1,8 +1,67 @@
 #include <ultra64.h>
 #include "common.h"
 
+#ifdef NON_MATCHING
+void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
+	Unk80042DB8 *s1;
+	Unk80042DB8 *s0;
+	s32 s2;
+	s32 var_v0;
+	f32 var_f0;
+	s32 i;
 
+	D_80042DA8.unk0 = 0;
+	arg0->dmaproc = (void *)func_80000CD4_18D4;
+	var_v0 = osAiSetFrequency(0x7D00);
+	arg0->outputRate = var_v0;
+	if (D_80031B58_32758 == 0) {
+		var_f0 = (f32)var_v0 / 60.0f;
+	} else {
+		var_f0 = (f32)arg0->outputRate / 50.0f;
+	}
+	D_800431A8 = (s32)var_f0;
+	if ((f32)D_800431A8 < var_f0) {
+		D_800431A8++;
+	}
+	if (D_800431A8 & 0xF) {
+		D_800431A8 = (D_800431A8 & ~0xF) + 0x10;
+	}
+	D_800431A4 = D_800431A8 - 0x10;
+	D_800431AC = D_800431A8 + 0xB0;
+	alInit(&D_8003FD58, arg0);
+	D_80042DB8.unk4 = 0;
+	D_80042DB8.unk0 = 0;
+	s1 = &D_80042DB8;
+	s0 = &D_80042DCC;
+	s2 = 0;
+	do {
+		alLink((ALLink *)s0, (ALLink *)s1);
+		s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
+		s2++;
+		s1++;
+		s0++;
+	} while (s2 < 0x31);
+	s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
+	{
+		Acmd **p;
+		for (p = D_8003FB20; (u32)p < (u32)D_8003FB28; p++) {
+			*p = alHeapAlloc(arg0->heap, 1, 0x8000);
+		}
+	}
+	for (i = 0; i < 3; i++) {
+		D_8003FB28[i] = alHeapAlloc(arg0->heap, 1, 0x90);
+		D_8003FB28[i]->unk70 = 2;
+		D_8003FB28[i]->unk74 = D_8003FB28[i];
+		D_8003FB28[i]->outBuf = alHeapAlloc(arg0->heap, 1, D_800431AC * 4);
+	}
+	osCreateMesgQueue(&D_8003FD20, D_8003FD38, 8);
+	osCreateMesgQueue(&D_8003FCE8, D_8003FD00, 8);
+	osCreateThread(&D_8003FB38, 5, (void (*)(void *))func_80000730_1330, NULL, &D_80042DA8, arg1);
+	osStartThread(&D_8003FB38);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000450_1050.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80000730_1330(s32 arg0) {
@@ -1110,7 +1169,82 @@ void func_80004214_4E14(s16 arg0, s32 arg1) {
 	func_800039D0_45D0(0, 0, &v, arg1);
 }
 
+#ifdef NON_MATCHING
+s32 func_80004254_4E54(f32 arg0, s32 arg1, s32 *arg2, s32 *arg3) {
+	s32 exponent;
+	s32 mantissa;
+	u32 frac;
+	s32 temp;
+	s32 i;
+	s32 rem;
+	s32 temp_lo;
+
+	exponent = ((u32)(*(s32 *)&arg0 << 1) >> 24) - 0x7F;
+	mantissa = *(s32 *)&arg0 & 0x7FFFFF;
+	*arg3 = 0;
+
+	if (exponent == 0x80) {
+		if (mantissa == 0) {
+			return 0;
+		}
+	} else if (exponent == -0x7F) {
+		if (mantissa == 0) {
+			frac = 0;
+		} else {
+			frac = (s32)mantissa >> 30;
+		}
+		*arg2 = 0;
+	} else {
+		temp = mantissa + 0x800000;
+		*arg2 = temp >> (0x17 - exponent);
+		if (exponent > 0) {
+			frac = (u32)mantissa << exponent;
+		} else {
+			frac = (u32)(temp >> -exponent);
+		}
+	}
+
+	i = 0;
+	if (arg1 > 0) {
+		rem = arg1 & 3;
+		if (rem != 0) {
+			do {
+				i++;
+				frac = (frac & 0x7FFFFF) * 10;
+				temp_lo = *arg3 * 10;
+				*arg3 = temp_lo;
+				*arg3 = temp_lo + (frac >> 23) % 10;
+			} while (rem != i);
+			if (i == arg1) {
+				return 1;
+			}
+		}
+		frac &= 0x7FFFFF;
+		do {
+			frac = (frac & 0x7FFFFF) * 10;
+			i += 4;
+			temp_lo = *arg3 * 10;
+			*arg3 = temp_lo;
+			*arg3 = temp_lo + (frac >> 23) % 10;
+			frac = (frac & 0x7FFFFF) * 10;
+			temp_lo = *arg3 * 10;
+			*arg3 = temp_lo;
+			*arg3 = temp_lo + (frac >> 23) % 10;
+			frac = (frac & 0x7FFFFF) * 10;
+			temp_lo = *arg3 * 10;
+			*arg3 = temp_lo;
+			*arg3 = temp_lo + (frac >> 23) % 10;
+			frac = (frac & 0x7FFFFF) * 10;
+			temp_lo = *arg3 * 10;
+			*arg3 = temp_lo;
+			*arg3 = temp_lo + (frac >> 23) % 10;
+		} while (i != arg1);
+	}
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80004254_4E54.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_80004498_5098(f32 arg0) {

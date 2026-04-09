@@ -108,6 +108,7 @@ extern s32 D_80031B84;
 extern s32 D_80031C68_32868[];
 extern s8 D_80031CA4;
 extern s16 D_80031CD4_328D4;
+extern f32 D_800323BC_32FBC[];
 extern s8 D_80033C5C_3485C[];
 extern u8 D_80033C6C_3486C;
 extern u8 D_80033C6C_W;
@@ -117,8 +118,12 @@ extern u8 D_80033C80_W;
 extern s8 D_80033C84_34884;
 extern u8 D_80033C88_34888;
 extern u8 D_80033C88_W;
+extern s16 D_80033C90_34890;
+extern s16 D_80033C94_34894;
 extern char D_8003828C_38E8C;
 extern f32 D_80032D88_33988;
+extern f32 D_800382F0_38EF0;
+extern f64 D_800382F8_38EF8;
 extern f32 D_80038300_38F00;
 extern u64 D_80035610;
 extern char D_80037100_37D00[];
@@ -136,6 +141,8 @@ extern Unk80052B40 D_800315CC_321CC;
 extern s32 D_800315D4_321D4;
 extern Vtx D_800315D8_321D8[];
 extern s32 D_800315D4_W;
+extern f32 D_80031618_32218;
+extern s32 D_8003161C_3221C;
 extern char D_80036D74_37974; /* osSyncPrintf format string - callback table full warning */
 extern char D_80036DA4_379A4;
 extern char D_80036DBC_379BC;
@@ -177,9 +184,11 @@ extern GateEntry D_8003E0FC[5][8]; // shield wall gates by level
 
 extern Unk80042DA8 D_80042DA8;
 extern Unk80042DB8 D_80042DB8;
+extern Unk80042DB8 D_80042DCC;
 extern u32 D_800431A0;
 extern s32 D_800431A4;
 extern s32 D_800431A8;
+extern s32 D_800431AC;
 extern f32 D_800431B4;
 extern u8 D_80043243;
 extern OSMesgQueue D_80043388;
@@ -196,6 +205,7 @@ extern u16 D_800475E4;
 extern u16 D_800475E6;
 extern u16 D_80047588;
 extern u16 D_80047588_W;
+extern s8 D_8004758A;
 extern u16 D_8004758E;
 extern u16 D_80047594;
 extern u16 D_8004759A;
@@ -248,6 +258,7 @@ extern s32 D_80047F9C; // WarpPointNumber
 extern s32 D_80047FA0;
 extern s16 D_80048026;
 extern s16 D_80048028;
+extern s32 D_8004802C;
 extern u8 D_80048024;
 extern u8 D_80048025;
 extern s32 showDemoText;
@@ -430,8 +441,10 @@ extern Unk8006AA84Node *D_8006AA88[];
 extern s32 D_8006AAD0[];
 extern s32 D_8006ABB8[];
 extern s32 D_80031CA0_328A0;
+extern s16 D_80033B4C_3474C;
 extern Unk80031424 *D_8006AB18[];
 extern s32 D_8006AB10;
+extern s16 D_8006AB14;
 extern s32 D_8006AB88;
 extern u8 D_80032228_32E28[];
 extern s16 D_80031F04_32B04[];
@@ -451,11 +464,15 @@ extern s32 D_80031CF0_328F0;
 extern s32 D_80031CF8_328F8;
 extern s32 D_80031CFC_328FC;
 extern s32 D_80031D00_32900;
+extern s32 D_80031D10_32910;
+extern s16 D_80031D14_32914;
+extern s16 D_80031D18_32918;
 extern s32 D_800314C8_320C8;
 extern BhSeqFile *D_8006AB44;
 extern s32 D_8006AB30[];
 extern ALCSeq *D_8006AB20[];
 extern ALBank *D_8006AB90;
+extern ALBank *D_8006AB8C;
 extern s16 D_80033A68_34668[];
 extern s16 D_80033A74_34674[];
 extern s8 D_80031CD0_328D0[];
@@ -1253,8 +1270,11 @@ extern u16 D_80034480;
 extern s32 D_8003447C;
 extern s32 D_80034484;
 extern s32 D_80034488;
+extern s32 D_80034490_35090;
+extern s32 D_80034498_35098;
 extern s32 D_80034494;
 extern s32 D_8003449C;
+extern s32 D_800344A4;
 extern s32 D_800344B4[]; // pointers to strings for names of many things, each entry is actually 2x s32 in size, first is pointer to string
 extern void *D_8006C550;
 extern void *D_8006C554;
@@ -1268,6 +1288,7 @@ extern f32 D_8016019C;
 extern f32 D_801601A0;
 extern f32 D_801601A4;
 extern f32 D_801601A8;
+extern f64 D_80037610_38210;
 extern s32 D_80258390; // English sign strings
 extern s32 D_80258F90; // English sign string offsets (actually u16/s16?)
 extern u8 D_80258330; // signposts
@@ -1728,8 +1749,32 @@ extern char D_80038244_38E44;
 extern char D_8003825C_38E5C;
 extern char D_80038288_38E88;
 extern char D_80038424_39024;
+extern char D_8003845C_3905C; /* osSyncPrintf format string */
+extern char D_80038470_39070; /* osSyncPrintf format string */
+extern char D_80038480_39080; /* osSyncPrintf format string */
+extern char D_80038484_39084; /* osSyncPrintf format string */
+extern char D_8003849C_3909C; /* osSyncPrintf format string */
+extern char D_800384A8_390A8; /* osSyncPrintf format string */
+extern char D_800384B4_390B4; /* osSyncPrintf format string */
+extern char D_800384C4_390C4; /* osSyncPrintf format string */
+extern char D_800384C8_390C8; /* osSyncPrintf format string */
 extern char D_800384E0_390E0;
 extern char D_80038500_39100;
+extern char D_80038530_39130;
+extern char D_80038534_39134;
+extern char D_8003853C_3913C;
+extern char D_80038540_39140;
+extern char D_80038554_39154;
+extern char D_8003855C_3915C;
+extern char D_8003856C_3916C;
+extern char D_80038574_39174;
+extern char D_80038588_39188;
+extern char D_80038590_39190;
+extern char D_800385A4_391A4;
+extern char D_800385A8_391A8;
+extern char D_800385BC_391BC;
+extern char D_800385C4_391C4;
+extern char D_800385D8_391D8;
 extern char D_800385E0_391E0; /* osSyncPrintf format string */
 extern char D_800385E4_391E4; /* osSyncPrintf format string */
 extern char D_80038614_39214; /* osSyncPrintf format string */
@@ -1738,8 +1783,12 @@ extern char D_80038618_39218; /* osSyncPrintf format string */
 /* core/FB00 */
 extern Acmd *D_8003FB20[];
 extern BhAudioTask *D_8003FB28[];
+extern Acmd *D_8003FB2C;
+extern OSThread D_8003FB38;
 extern OSMesgQueue D_8003FCE8;
+extern OSMesg D_8003FD00[8];
 extern OSMesgQueue D_8003FD20;
+extern OSMesg D_8003FD38[8];
 extern ALGlobals D_8003FD58;
 extern OSThread D_80067388;
 extern void *D_8005C760;
@@ -1800,11 +1849,15 @@ extern OSMesgQueue D_8006A8F0;
 extern s16 D_8006C558;
 extern s16 D_8006C55C;
 extern u16 D_8006C55E;
+extern u16 D_8006C560;
 extern s16 D_8006C564;
 extern u16 D_8006C566;
 extern s16 D_8006C568;
 extern s16 D_8006C56A;
 extern s8 D_8006C56C;
+extern s8 D_8006C56D;
+extern s8 D_8006C56E;
+extern s32 D_8006C570;
 extern OSViMode D_80035B30;
 extern OSViMode D_800356D0;
 extern OSViMode D_80035F90;

@@ -318,7 +318,103 @@ s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CDFC_D9FC.s")
 #endif
 
+#ifdef NON_MATCHING
+// Score: ~16442. Issue: arg3 spills to stack instead of staying in $f26.
+// Current uses 6 double FP regs (f20,f22,f24,f26,f28,f30) vs target's 4 (f20,f22,f24,f26).
+// All intermediate temp_f* variables seem necessary for matching instruction order.
+void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, f32 arg3) {
+    f32 sp70;
+    f32 sp6C;
+    f32 sp68;
+    f32 sp64;
+    f32 sp60;
+    f32 sp5C;
+    f32 sp50;
+    f32 sp4C;
+    f32 sp48;
+    f32 temp_f0;
+    f32 temp_f10;
+    f32 temp_f10_2;
+    f32 temp_f12;
+    f32 temp_f14;
+    f32 temp_f18;
+    f32 temp_f2;
+    f32 temp_f2_2;
+    f32 temp_f4;
+    f32 temp_f6;
+    f32 temp_f6_2;
+    f32 temp_f8;
+    f32 temp_f8_2;
+    f64 temp_f20;
+    s32 temp_t6;
+    s32 var_s0;
+    AnimChannelState *temp_a1;
+
+    var_s0 = 0;
+    if (arg2 != 0) {
+        temp_f20 = D_80037610_38210;
+        do {
+            temp_a1 = &arg1[var_s0];
+            if (temp_a1->unk14 != 0) {
+                temp_f14 = temp_a1->unk1C;
+                temp_f18 = arg3 / (temp_a1->unk20 - temp_f14);
+                temp_f10 = (f32)(((f64)(f32)temp_a1->unk2A * temp_f20) / 4096.0);
+                sp68 = temp_f10;
+                temp_f6 = (f32)(((f64)(f32)temp_a1->unk2C * temp_f20) / 4096.0);
+                sp6C = temp_f6;
+                temp_f8 = (f32)(((f64)(f32)temp_a1->unk2E * temp_f20) / 4096.0);
+                sp70 = temp_f8;
+                temp_f4 = (f32)(((f64)(f32)temp_a1->unk0 * temp_f20) / 4096.0);
+                sp5C = temp_f4;
+                sp48 = temp_f10;
+                temp_f10_2 = (f32)(((f64)(f32)temp_a1->unk2 * temp_f20) / 4096.0);
+                sp60 = temp_f10_2;
+                sp4C = temp_f6;
+                sp50 = temp_f8;
+                temp_f8_2 = ((sp48 - temp_f4) * temp_f18) + temp_f4;
+                sp5C = temp_f8_2;
+                temp_f6_2 = (f32)(((f64)(f32)temp_a1->unk4 * temp_f20) / 4096.0);
+                sp60 = ((sp4C - temp_f10_2) * temp_f18) + temp_f10_2;
+                sp64 = temp_f6_2;
+                sp64 = ((sp50 - temp_f6_2) * temp_f18) + temp_f6_2;
+                temp_f2 = temp_a1->unk8;
+                temp_f12 = temp_a1->unkC;
+                temp_f0 = temp_a1->unk10;
+                temp_a1->unk0 = (s16)(s32)((f64)(temp_f8_2 * 4096.0f) / temp_f20);
+                temp_a1->unk2 = (s16)(s32)((f64)(sp60 * 4096.0f) / temp_f20);
+                temp_a1->unk4 = (s16)(s32)((f64)(sp64 * 4096.0f) / temp_f20);
+                temp_a1->unk8 = (((f32)temp_a1->unk24 - temp_f2) * temp_f18) + temp_f2;
+                temp_f2_2 = (f32)temp_a1->unk28;
+                temp_a1->unkC = (((f32)temp_a1->unk26 - temp_f12) * temp_f18) + temp_f12;
+                temp_a1->unk1C = temp_a1->unk1C + arg3;
+                temp_a1->unk10 = ((temp_f2_2 - temp_f0) * temp_f18) + temp_f0;
+                if (temp_a1->unk20 <= temp_a1->unk1C) {
+                    temp_t6 = temp_a1->unk18 + 1;
+                    temp_a1->unk8 = (f32)temp_a1->unk24;
+                    temp_a1->unk10 = temp_f2_2;
+                    temp_a1->unk18 = temp_t6;
+                    temp_a1->unk0 = (s16)temp_a1->unk2A;
+                    temp_a1->unk2 = (s16)temp_a1->unk2C;
+                    temp_a1->unkC = (f32)temp_a1->unk26;
+                    temp_a1->unk4 = (s16)temp_a1->unk2E;
+                    if (temp_t6 == temp_a1->unk14) {
+                        temp_a1->unk14 = 0;
+                        temp_a1->unk18 = 0;
+                        if (var_s0 == 0) {
+                            arg0->unkE50 = 0;
+                        }
+                    } else {
+                        func_8000CD54_D954(arg0, temp_a1, var_s0 & 0xFF);
+                    }
+                }
+            }
+            var_s0 = (var_s0 + 1) & 0xFF;
+        } while (arg2 != var_s0);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CF4C_DB4C.s")
+#endif
 
 void func_8000D26C_DE6C(Unk8007F878_404 *arg0, void *arg1) {
 	arg0->unkE50 = 0;
@@ -461,7 +557,54 @@ s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannel
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D71C_E31C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_8000D8DC_E4DC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, f32 arg4, f32 arg5) {
+    s32 var_s0;
+    AnimChannelState *ch;
+    f32 t;
+
+    var_s0 = 0;
+    if (arg3 != 0) {
+        do {
+            ch = &arg2[var_s0];
+            if (ch->unk14 != 0) {
+                t = arg5 / (ch->unk20 - ch->unk1C);
+
+                ch->unk0 = (s16)(s32)(((f32)(ch->unk2A - ch->unk0)) * t + (f32)ch->unk0);
+                ch->unk2 = (s16)(s32)(((f32)(ch->unk2C - ch->unk2)) * t + (f32)ch->unk2);
+                ch->unk4 = (s16)(s32)(((f32)(ch->unk2E - ch->unk4)) * t + (f32)ch->unk4);
+                ch->unk8 = ((f32)ch->unk24 - ch->unk8) * t + ch->unk8;
+                ch->unkC = ((f32)ch->unk26 - ch->unkC) * t + ch->unkC;
+                ch->unk10 = ((f32)ch->unk28 - ch->unk10) * t + ch->unk10;
+                ch->unk1C = ch->unk1C + arg5;
+
+                if (ch->unk20 <= ch->unk1C) {
+                    ch->unkC = (f32)ch->unk26;
+                    ch->unk10 = (f32)ch->unk28;
+                    ch->unk18++;
+                    ch->unk8 = (f32)ch->unk24;
+                    ch->unk0 = (s16)ch->unk2A;
+                    ch->unk2 = (s16)ch->unk2C;
+                    ch->unk4 = (s16)ch->unk2E;
+                    if (ch->unk18 == ch->unk14) {
+                        ch->unk14 = 0;
+                        ch->unk18 = 0;
+                        if (var_s0 == 0) {
+                            arg1->unkE50 = 0;
+                            arg0->unkE50 = 0;
+                        }
+                    } else {
+                        func_8000D588_E188(arg0, arg1, ch, (u8)var_s0, arg4);
+                    }
+                }
+            }
+            var_s0 = (var_s0 + 1) & 0xFF;
+        } while (arg3 != var_s0);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D8DC_E4DC.s")
+#endif
 
 void func_8000DAFC_E6FC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, f32 arg5)
 {
