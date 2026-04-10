@@ -1,5 +1,5 @@
 ---
-name: Body Harvest Match Improver
+name: BH Match Improver
 description: Decompile functions from N64 game Body Harvest
 tools:
   [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, edit/createFile, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]
@@ -54,9 +54,11 @@ If you don't know one of the values, you can use `12345678` as a placeholder and
 2. Always read the whole file `DecompHints.md` for general matching advice.
 3. Build, compare with target, and identify differences in assembly.
 4. Make a single change to the C code to try to reduce the number of differences in assembly.
-5. Go back to step 3 and repeat until the assembly matches the target. Keep trying until you get a perfect match, you can do it!
+5. Go back to step 3 and repeat until the assembly matches the target. Keep trying until you get a perfect match, never surrender!
 
 First target different/missing instructions and their ordering, and only then target register allocation.
+
+Be relentless, make as many attempts as needed, and try every possible change you can think of to get that score down to 0. You can do it!
 
 If build completes with `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue interating.
 

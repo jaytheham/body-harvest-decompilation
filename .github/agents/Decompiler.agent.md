@@ -1,5 +1,5 @@
 ---
-name: Body Harvest Decomp
+name: BH Decompiler
 description: Decompile functions from N64 game Body Harvest
 tools:
   [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, edit/createFile, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]

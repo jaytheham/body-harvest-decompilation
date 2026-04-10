@@ -1,5 +1,5 @@
 ---
-name: Symbol Renamer
+name: BH Symbol Renamer
 description: Change all instances of a symbol to a new name across the entire codebase, including C source files, header files, and symbol .txt files. Update all declarations, definitions, and references to the symbol to ensure consistency and correctness.
 tools: ["execute", "read", "edit", "search", "todo"]
 model: GPT-5 mini (copilot)
