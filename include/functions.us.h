@@ -144,6 +144,7 @@ s16 func_80013F64_14B64(void);
 void func_80013FC4_14BC4(s32 arg0);
 void func_80016CD8_178D8(s8 arg0);
 void func_80016E54_17A54(void);
+void func_80016FD0_17BD0(s16 arg0);
 void func_800170F4_17CF4(s16 arg0);
 void func_80017224_17E24(void);
 void func_8001A54C_1B14C(void *arg0, ...);

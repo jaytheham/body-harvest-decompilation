@@ -921,7 +921,176 @@ void func_800021CC_2DCC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800021CC_2DCC.s")
 #endif
 
+#ifdef NON_MATCHING
+void guess_loadSavedGame(s32 arg0) {
+    u32 sp34;
+    s32 sp30;
+    s32 saveSlot;
+    u8 *src;
+    Unk80052A98 *stat;
+    s32 shift;
+    u8 b;
+    u8 *p;
+    s16 *q;
+    s32 i;
+
+    saveSlot = arg0 * 0x7A + 0x4F;
+    if (validateSaveVersionAndChecksum(saveSlot, 0x76) != 0) {
+        src = &D_800431C0 + saveSlot + 4;
+        stat = D_80052A98;
+        b = *src;
+        do {
+            stat->score = b;
+            stat->score += (s32)src[1] << 8;
+            stat->score += (s32)src[2] << 16;
+            stat->score += (s32)src[3] << 24;
+            src += 4;
+            osSyncPrintf(&D_80036A8C_3768C, stat->score);
+            stat->humansKilled = *src++;
+            osSyncPrintf(&D_80036AA0_376A0, stat->humansKilled);
+            stat->secondsElapsed = src[0];
+            stat->secondsElapsed += src[1] << 8;
+            stat->secondsElapsed += src[2] << 16;
+            osSyncPrintf(&D_80036AAC_376AC, stat->secondsElapsed);
+            src += 3;
+            stat++;
+        } while ((u32)stat < (u32)&D_80052AC8);
+        osSyncPrintf(&D_80036AB8_376B8);
+        b = *src++;
+        currentLevel = b & 0xF;
+        D_80047FA0 = (s32)b >> 4;
+        osSyncPrintf(&D_80036AD4_376D4, currentLevel, D_80047FA0, &currentLevel);
+        D_80047F9C = *src++ & 0xF;
+        osSyncPrintf(&D_80036AEC_376EC, D_80047F9C);
+        D_80031420 = 0;
+        shift = 0;
+        do {
+            D_80031420 += *src++ << shift;
+            shift += 8;
+        } while (shift < 0x20);
+        if (D_800313D0 == 2) {
+            D_80031420 &= ~2;
+        }
+        func_80016FD0_17BD0((s16)((D_80031420 & 0x60) >> 5));
+        func_800170F4_17CF4((s16)((D_80031420 & 0x18) >> 3));
+        osSyncPrintf(&D_80036AFC_376FC, D_80031420);
+        p = D_80047FA8;
+        do {
+            *p++ = *src++;
+        } while ((u32)p < (u32)&D_80047FAE);
+        D_80047FAE = 0;
+        osSyncPrintf(&D_80036B0C_3770C);
+        p = &weaponSlots[0];
+        b = *src;
+        do {
+            src++;
+            *p = b;
+            osSyncPrintf(&D_80036B18_37718, b);
+            p++;
+        } while ((u32)p < (u32)&D_8004813F);
+        osSyncPrintf(&D_80036B1C_3771C);
+        sp34 = 0;
+        sp30 = 0;
+        osSyncPrintf(&D_80036B20_37720);
+        shift = 0;
+        do {
+            u64 shifted = __ll_lshift(*src, shift);
+            u32 newLo = (u32)shifted + sp34;
+            sp30 = (newLo < sp34 ? 1 : 0) + (u32)(shifted >> 32) + sp30;
+            sp34 = newLo;
+            src++;
+            shift += 8;
+        } while (shift < 0x40);
+        D_8004DC48.unk0 = ((u64)sp30 << 32) | sp34;
+        osSyncPrintf(&D_80036B28_37728, sp30, sp34);
+        b = *src;
+        D_8004DC5C = (s8)((s32)b >> 4);
+        D_8004DC5E = b & 0xF;
+        D_80048026 = src[1];
+        D_80048026 += src[2] << 8;
+        src += 3;
+        osSyncPrintf(&D_80036B30_37730, D_80048026);
+        D_80048028 = src[0];
+        D_80048028 += src[1] << 8;
+        src += 2;
+        D_8004DC50.unk4 = 0;
+        D_8004DC50.unk0 = 0;
+        osSyncPrintf(&D_80036B60_37760);
+        shift = 0;
+        b = *src;
+        do {
+            u64 shifted = __ll_lshift(b, shift);
+            u32 newLo = (u32)shifted + D_8004DC54;
+            D_8004DC50.unk0 = (newLo < D_8004DC54 ? 1 : 0) + (u32)(shifted >> 32) + D_8004DC50.unk0;
+            D_8004DC54 = newLo;
+            src++;
+            b = *src;
+            shift += 8;
+        } while (shift < 0x40);
+        osSyncPrintf(&D_80036B78_37778, D_8004DC50.unk0, D_8004DC50.unk4);
+        D_80052A90 = 0;
+        shift = 0;
+        do {
+            D_80052A90 += *src++ << shift;
+            shift += 8;
+        } while (shift < 0x20);
+        D_80047F98 = *src++;
+        osSyncPrintf(&D_80036B80_37780, D_80047F98);
+        if (D_80047F98 < D_80047F9C) {
+            D_80047F98 = D_80047F9C;
+        }
+        osSyncPrintf(&D_80036B94_37794, D_80047F98);
+		D_80047F94 = D_8003DFD4_3EBD4[currentLevel * 0x30 + D_80047F98 * 8];
+        D_8004D154 = 0;
+        shift = 0;
+        do {
+            D_8004D154 += *src++ << shift;
+            shift += 8;
+        } while (shift < 0x20);
+        osSyncPrintf(&D_80036BA4_377A4, D_8004D154);
+        D_8004D150 = 0;
+        D_8004D158 = 0;
+        shift = 0;
+        do {
+            D_8004D158 += *src++ << shift;
+            shift += 8;
+        } while (shift < 0x20);
+        osSyncPrintf(&D_80036BB8_377B8, D_8004D158);
+        osSyncPrintf(&D_80036BC8_377C8);
+        p = &weaponSlots[0];
+        q = &D_80048140[0];
+        i = 0;
+        do {
+            u8 slot = *p;
+            D_80048140[slot] = (s16)(*src++ << D_80031374_31F74[slot]);
+            osSyncPrintf(&D_80036BD4_377D4, i, *q);
+            i++;
+            p++;
+            q++;
+        } while (i != 7);
+        D_80048030 = *src++;
+        osSyncPrintf(&D_80036BF4_377F4, D_80048030);
+        osSyncPrintf(&D_80036C0C_3780C, D_80052ACD);
+        D_80052ACD = *src++;
+        osSyncPrintf(&D_80036C1C_3781C, D_80052ACD);
+        D_8004815C = src[0];
+        D_80048160 = src[1];
+        D_80048162 = src[2];
+        D_8004815E = src[3];
+        src += 3;
+        osSyncPrintf(&D_80036C2C_3782C, D_8004815C, D_80048160, D_80048162, D_8004815E);
+        osSyncPrintf(&D_80036C4C_3784C);
+    } else {
+        osSyncPrintf(&D_80036C50_37850, 0);
+        func_800021CC_2DCC(arg0);
+        guess_loadSavedGame(arg0);
+        D_80052A90 = 0;
+    }
+    currentSaveFileIndex = arg0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_loadSavedGame.s")
+#endif
 
 s32 func_80002A88_3688(s32 arg0) {
 	return *(&D_80043243 + (arg0 * 0x7A)) & 0xF;
