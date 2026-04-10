@@ -1827,6 +1827,19 @@ extern char D_80038218_38E18;
 extern char D_80038244_38E44;
 extern char D_8003825C_38E5C;
 extern char D_80038288_38E88;
+extern char D_800383B0_38FB0;
+extern char D_800383BC_38FBC;
+extern char D_800383C8_38FC8;
+extern char D_800383CC_38FCC;
+extern char D_800383D4_38FD4;
+extern char D_800383DC_38FDC;
+extern char D_800383E0_38FE0;
+extern char D_800383E4_38FE4;
+extern char D_800383EC_38FEC;
+extern char D_800383F8_38FF8;
+extern char D_80038404_39004;
+extern char D_8003840C_3900C;
+extern char D_80038418_39018;
 extern char D_80038424_39024;
 extern char D_8003845C_3905C; /* osSyncPrintf format string */
 extern char D_80038470_39070; /* osSyncPrintf format string */
@@ -1926,6 +1939,7 @@ extern OSMesgQueue D_8006A8B0;
 extern OSMesgQueue D_8006A8D0;
 extern OSMesgQueue D_8006A8F0;
 extern s16 D_8006C558;
+extern u16 D_8006C55A;
 extern s16 D_8006C55C;
 extern u16 D_8006C55E;
 extern u16 D_8006C560;
