@@ -104,6 +104,11 @@ s32 func_80070270(s32 arg0);
 #endif
 void func_8000F618_10218(void);
 void func_8000F478_10078(BhGfxTask *arg0);
+void func_80001108_1D08(void);
+void func_80003064_3C64(void);
+void func_80012A74_13674(void);
+void func_80004C34_5834(void);
+void func_80013818_14418(void);
 void func_80001984_2584(void);
 void loadFrontendData(void);
 void func_8001A460_1B060(LzssHeader *data, u8 *out);
@@ -836,7 +841,7 @@ void func_80095100_A40B0(s16, s16);
 void func_800047D0_53D0(s32, s32);
 
 /* core/FB00 — thread entry points */
-void func_8000F6B0_102B0(void *);
+void func_8000F6B0_102B0(s32);
 void func_8000FE50_10A50(void *);
 void __osSiCreateAccessQueue(void);
 void func_80002EF8_3AF8(void *);
