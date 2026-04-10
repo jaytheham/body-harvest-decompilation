@@ -64,6 +64,7 @@ extern u8 D_80047678;
 extern s32 D_80031120;
 extern u8 D_30130;
 extern u8 D_3F320;
+extern u8 D_1003990[];
 extern u8 D_80031160;
 extern Unk800311A0 D_800311A0;
 extern Gfx D_800311D0[];
@@ -83,6 +84,7 @@ extern s16 D_800313C8_31FC8;
 extern s32 D_800313C4_31FC4;
 extern s16 D_800313D0; // Language
 extern s16 D_800313E4_31FE4;
+extern u16 D_80031648_32248;
 extern u8 D_800313E8;
 extern u8 D_800313EC;
 extern u8 D_800313F0;
@@ -90,6 +92,7 @@ extern u8 D_800313F4; // World fog alpha value
 extern s16 D_800313F8; // World fog near distance
 extern s16 D_800313FC; // World fog far distance
 extern s32 leomecha_bss_0004;
+extern s32 D_80031374_31F74[]; /* weapon damage shift table */
 extern s32 D_80031410;
 extern s32 D_80031414;
 extern s32 D_80031420;
@@ -126,18 +129,56 @@ extern u8 D_80033C88_W;
 extern s16 D_80033C90_34890;
 extern s16 D_80033C94_34894;
 extern char D_8003828C_38E8C;
+extern char D_800382A0_38EA0; /* osSyncPrintf format string */
+extern char D_800382C8_38EC8; /* osSyncPrintf format string */
 extern f32 D_80032D88_33988;
 extern f32 D_800382F0_38EF0;
 extern f64 D_800382F8_38EF8;
 extern f32 D_80038300_38F00;
+extern WeaponLevelSpec D_80032EB8_33AB8[][21];
+extern WeaponLevelSpec D_800330B0_33CB0[][21];
+extern f32 D_80038324_38F24;
+extern f32 D_80038328_38F28;
+extern f32 D_8003832C_38F2C;
+extern f64 D_80038330_38F30;
+extern f32 D_80038338_38F38;
+extern f32 D_8004DCC0;
 extern u64 D_80035610;
 extern char D_80037100_37D00[];
 extern f32 D_80037120_37D20;
 extern f32 D_80037124_37D24;
+extern f32 D_80037450_38050;
+extern f32 D_80037454_38054;
 extern f64 D_80037138_37D38;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
 extern char D_8003685C_3745C; /* osSyncPrintf format string - save version mismatch */
 extern char D_80036870_37470; /* osSyncPrintf format string - save checksum mismatch */
+extern char D_80036884_37484; /* osSyncPrintf format string - save score */
+extern char D_80036894_37494; /* osSyncPrintf format string - save humans killed */
+extern char D_800368A0_374A0; /* osSyncPrintf format string - save seconds elapsed */
+extern char D_800368AC_374AC; /* osSyncPrintf format string */
+extern char D_800368C4_374C4; /* osSyncPrintf format string - save level/warp */
+extern char D_800368DC_374DC; /* osSyncPrintf format string - save warp point */
+extern char D_800368F4_374F4; /* osSyncPrintf format string - save play time */
+extern char D_80036904_37504; /* osSyncPrintf format string */
+extern char D_80036910_37510; /* osSyncPrintf format string - save weapon slot */
+extern char D_8003692C_3752C; /* osSyncPrintf format string */
+extern char D_80036930_37530; /* osSyncPrintf format string */
+extern char D_80036938_37538; /* osSyncPrintf format string */
+extern char D_80036940_37540; /* osSyncPrintf format string - save D_80048026 */
+extern char D_8003696C_3756C; /* osSyncPrintf format string */
+extern char D_80036984_37584; /* osSyncPrintf format string */
+extern char D_8003698C_3758C; /* osSyncPrintf format string - save D_80047F98 */
+extern char D_800369A0_375A0; /* osSyncPrintf format string - save D_8004D154 */
+extern char D_800369B4_375B4; /* osSyncPrintf format string - save D_8004D158 */
+extern char D_800369C4_375C4; /* osSyncPrintf format string */
+extern char D_800369D0_375D0; /* osSyncPrintf format string */
+extern char D_80036A04_37604; /* osSyncPrintf format string - save weapon damage */
+extern char D_80036A20_37620; /* osSyncPrintf format string - save D_80048030 */
+extern char D_80036A38_37638; /* osSyncPrintf format string - save D_80052ACD */
+extern char D_80036A48_37648; /* osSyncPrintf format string - save D_8004815x */
+extern char D_80036A68_37668; /* osSyncPrintf format string */
+extern char D_80036A6C_3766C; /* osSyncPrintf format string */
 extern char D_80036D68_37968;
 extern char D_80036D6C_3796C;
 extern char D_80036D70_37970;
@@ -261,6 +302,7 @@ extern s32 D_80047B70;
 extern u8 D_80047F80;
 extern Unk80047FB8 D_80047FB8[5];
 extern Unk80047FB8 D_8004801C;
+extern s32 D_80048020;
 extern u8 D_800431C8;
 extern u8 D_800431C9;
 extern s32 D_80047F88;
@@ -272,6 +314,8 @@ extern s32 currentSaveFileIndex;
 extern Level currentLevel; // 80047f90
 extern s32 D_80047F9C; // WarpPointNumber
 extern s32 D_80047FA0;
+extern u8 D_80047FA8[6]; /* save data bytes */
+extern u8 D_80047FAE;
 extern s16 D_80048026;
 extern s16 D_80048028;
 extern s32 D_8004802C;
@@ -283,6 +327,10 @@ extern u8 D_80048139;
 extern u8 D_8004813A;
 extern u8 D_8004813F;
 extern s16 D_80048140[];
+extern s16 D_8004815C;
+extern s16 D_8004815E;
+extern s16 D_80048160;
+extern s16 D_80048162;
 extern s16 D_80048156;
 extern s8 D_80048168; // numHumansEatenToSpawnMutant
 extern s16 D_8004816A; // numHumansKilled
@@ -460,6 +508,20 @@ extern s32 D_8006ABB8[];
 extern s32 D_80031CA0_328A0;
 extern s16 D_80033B4C_3474C;
 extern Unk80031424 *D_8006AB18[];
+extern ALCSeq *D_8006AB20[];
+extern ALCSeq *D_8006AB28;
+extern ALHeap D_8006AB98;
+extern ALSeqpConfig D_8006AB50[];
+extern ALBankFile *D_8006AB48;
+extern ALBankFile *D_8006AB4C;
+extern BhSeqFile *D_8006AB3C;
+extern s32 D_8006AB38;
+extern Unk8006AA84Node *D_8006AAC8;
+extern u8 D_80165710;
+extern u8 D_801ABC10;
+extern u8 D_963A70[];
+extern u8 D_BBB9B0[];
+extern BhAudioGlobals D_80033B54_34754;
 extern s32 D_8006AB10;
 extern s16 D_8006AB14;
 extern s32 D_8006AB88;
@@ -487,7 +549,6 @@ extern s16 D_80031D18_32918;
 extern s32 D_800314C8_320C8;
 extern BhSeqFile *D_8006AB44;
 extern s32 D_8006AB30[];
-extern ALCSeq *D_8006AB20[];
 extern ALBank *D_8006AB90;
 extern ALBank *D_8006AB8C;
 extern s16 D_80033A68_34668[][16];

@@ -637,7 +637,159 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001984_2584.s")
 #endif
 
+#ifdef NON_MATCHING
+void guess_prepareToSaveGame(s32 arg0) {
+	s32 v1;
+	Unk80052A98 *stats;
+	u8 *dest;
+	u8 *p;
+	s32 i;
+
+	v1 = arg0 * 0x7A;
+	dest = &((&D_800431C0)[v1 + 0x53]);
+
+	stats = D_80052A98;
+	do {
+		osSyncPrintf(&D_80036884_37484, stats->score);
+		dest[0] = (u8)stats->score;
+		dest[1] = (u8)(stats->score >> 8);
+		dest[2] = (u8)(stats->score >> 16);
+		dest[3] = (u8)(stats->score >> 24);
+		dest += 4;
+		osSyncPrintf(&D_80036894_37494, (s32)stats->humansKilled);
+		*dest++ = (u8)stats->humansKilled;
+		osSyncPrintf(&D_800368A0_374A0, (s32)stats->secondsElapsed);
+		dest[0] = (u8)stats->secondsElapsed;
+		dest[1] = (u8)((s32)stats->secondsElapsed >> 8);
+		dest[2] = (u8)((s32)stats->secondsElapsed >> 16);
+		dest += 3;
+		stats++;
+	} while (stats < (Unk80052A98 *)&D_80052AC8);
+
+	osSyncPrintf(&D_800368AC_374AC);
+	*dest++ = (u8)((D_80047FA0 * 0x10) | currentLevel);
+	osSyncPrintf(&D_800368C4_374C4, currentLevel, D_80047FA0);
+	*dest++ = (u8)D_80047F9C;
+	osSyncPrintf(&D_800368DC_374DC, D_80047F9C);
+	dest[0] = (u8)D_80031420;
+	dest[1] = (u8)((u32)D_80031420 >> 8);
+	dest[2] = (u8)((u32)D_80031420 >> 0x10);
+	dest[3] = (u8)((u32)D_80031420 >> 0x18);
+	dest += 4;
+	osSyncPrintf(&D_800368F4_374F4, (s32)D_80031420);
+
+	p = &D_80047FA8[0];
+	do {
+		*dest++ = *p++;
+	} while ((u32)p < (u32)&D_80047FAE);
+	osSyncPrintf(&D_80036904_37504);
+
+	for (i = 0; i < 7; i++) {
+		*dest++ = weaponSlots[i];
+		osSyncPrintf(&D_80036910_37510, i, (s32)weaponSlots[i]);
+	}
+
+	osSyncPrintf(&D_8003692C_3752C);
+	{
+		u64 flags;
+
+		flags = D_8004DC48.unk0;
+		osSyncPrintf(&D_80036930_37530);
+		*dest++ = (s8)flags;
+		*dest++ = (s8)(u32)__ull_rshift(flags, 8);
+		*dest++ = (s8)(u32)__ull_rshift(flags, 0x10);
+		*dest++ = (s8)(u32)__ull_rshift(flags, 0x18);
+		*dest++ = (s8)(u32)__ull_rshift(flags, 0x20);
+		*dest++ = (s8)(u32)__ull_rshift(flags, 0x28);
+		*dest++ = (s8)(u32)__ull_rshift(flags, 0x30);
+		*dest++ = (s8)(u32)__ull_rshift(flags, 0x38);
+		osSyncPrintf(&D_80036938_37538);
+	}
+
+	*dest++ = (u8)((D_8004DC5C * 0x10) + D_8004DC5E);
+
+	dest[1] = (u8)((s32)D_80048026 >> 8);
+	dest[0] = (u8)D_80048026;
+	dest += 3;
+	osSyncPrintf(&D_80036940_37540, (s32)D_80048026);
+
+	dest[1] = (u8)((s32)D_80048028 >> 8);
+	dest[0] = (u8)D_80048028;
+	dest += 2;
+	osSyncPrintf(&D_8003696C_3756C);
+
+	{
+		u64 flags;
+
+		flags = ((u64)(u32)D_8004DC50.unk0 << 0x20) | (u32)D_8004DC50.unk4;
+		*dest++ = (s8)flags;
+		*dest++ = (s8)(u32)__ull_rshift(flags, 8);
+		*dest++ = (s8)(u32)__ull_rshift(flags, 0x10);
+		*dest++ = (s8)(u32)__ull_rshift(flags, 0x18);
+		*dest++ = (s8)(u32)__ull_rshift(flags, 0x20);
+		*dest++ = (s8)(u32)__ull_rshift(flags, 0x28);
+		*dest++ = (s8)(u32)__ull_rshift(flags, 0x30);
+		*dest++ = (s8)(u32)__ull_rshift(flags, 0x38);
+		osSyncPrintf(&D_80036984_37584);
+	}
+
+	{
+		u32 playtime = D_80052A90;
+		if (playtime == 0) {
+			playtime = 1;
+			D_80052A90 = 1;
+		}
+		dest[0] = (s8)playtime;
+		dest[1] = (s8)(playtime >> 8);
+		dest[2] = (s8)(playtime >> 0x10);
+		dest[3] = (s8)(playtime >> 0x18);
+		dest[4] = (s8)D_80047F98;
+		dest += 5;
+		osSyncPrintf(&D_8003698C_3758C, D_80047F98);
+	}
+
+	dest[0] = (u8)D_8004D154;
+	dest[1] = (u8)((u32)D_8004D154 >> 8);
+	dest[2] = (u8)((u32)D_8004D154 >> 0x10);
+	dest[3] = (u8)((u32)D_8004D154 >> 0x18);
+	dest += 4;
+	osSyncPrintf(&D_800369A0_375A0, (s32)D_8004D154);
+
+	dest[0] = (u8)D_8004D158;
+	dest[1] = (u8)((u32)D_8004D158 >> 8);
+	dest[2] = (u8)((u32)D_8004D158 >> 0x10);
+	dest[3] = (u8)((u32)D_8004D158 >> 0x18);
+	dest += 4;
+	osSyncPrintf(&D_800369B4_375B4, (s32)D_8004D158);
+
+	osSyncPrintf(&D_800369C4_375C4);
+	osSyncPrintf(&D_800369D0_375D0);
+
+	for (i = 0; i < 7; i++) {
+		*dest++ = (s8)(D_80048140[weaponSlots[i]] >> D_80031374_31F74[weaponSlots[i]]);
+		osSyncPrintf(&D_80036A04_37604, i, (s32)D_80048140[i]);
+	}
+
+	*dest++ = (u8)D_80048030;
+	osSyncPrintf(&D_80036A20_37620, (s32)D_80048030);
+
+	*dest++ = (u8)D_80052ACD;
+	osSyncPrintf(&D_80036A38_37638, (s32)D_80052ACD);
+
+	dest[0] = (s8)D_8004815C;
+	dest[1] = (s8)D_80048160;
+	dest[2] = (s8)D_80048162;
+	dest[3] = (s8)D_8004815E;
+	dest += 3;
+	osSyncPrintf(&D_80036A48_37648, (s32)D_8004815C, (s32)D_80048160, D_80048162, (s32)D_8004815E);
+
+	osSyncPrintf(&D_80036A68_37668);
+	func_800015B4_21B4(v1 + 0x4F, 0x76);
+	osSyncPrintf(&D_80036A6C_3766C);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_prepareToSaveGame.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_800020E0_2CE0(s32 arg0, s32 arg1) {
