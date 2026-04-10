@@ -1096,7 +1096,96 @@ s32 func_800143C4_14FC4(s16 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800143C4_14FC4.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
+	VehicleSpec *spec;
+	f32 targetSpeed;
+
+	spec = &vehicleSpecs[arg0->unk1A];
+	if (!D_8006AB88) {
+		return;
+	}
+	if (arg0->unk3C <= 0) {
+		return;
+	}
+	if (D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0 == -1) {
+		return;
+	}
+	if (D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0 == 0x27) {
+		if (arg0->unk12 < 0x14) {
+			f32 dx = (f32)arg0->unk0 / 4 - D_80047954;
+			f32 dy = (f32)arg0->unk2 / 4 - D_80047958;
+			f32 dz = (f32)arg0->unk4 / 4 - D_8004795C;
+			f32 dist = sqrtf(dx * dx + dy * dy + dz * dz);
+			s32 absSpeed = (s32)(s16)arg0->unk12;
+
+			if (absSpeed < 0) {
+				absSpeed = -absSpeed;
+			}
+			func_80014A3C_1563C((s32)D_80052B34, 0x170, (f32)(absSpeed * 100) + dist, 0, -1.0f);
+			if (arg0->unk12 == 0) {
+				return;
+			}
+		}
+	}
+	if (arg1) {
+		switch (spec->unk58) {
+		default:
+			targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk14 * (f32)arg2;
+			break;
+		case 0:
+			targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk14 * (f32)arg2;
+			break;
+		case 1:
+			targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk14 * ((f32)arg2 / D_80038324_38F24);
+			break;
+		case 3:
+			targetSpeed = (D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8) * ((f32)arg2 / D_80038328_38F28) + D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8;
+			break;
+		case 5:
+			targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk14 * ((f32)arg2 / 25.0f);
+			break;
+		case 7:
+			targetSpeed = (D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8) * ((f32)arg2 / D_8003832C_38F2C) + D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8;
+			break;
+		}
+		if (targetSpeed > D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC) targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC;
+		if (targetSpeed < D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8) targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8;
+	} else {
+		if ((s32)(spec->unk4C << 9) < 0) {
+			f32 vx = arg0->unk30;
+			f32 vz = arg0->unk38;
+			f32 spd = sqrtf(vx * vx + vz * vz);
+
+			targetSpeed = (f32)((f64)spd / 60.0);
+		} else {
+			if (spec->unk58 == 3 || spec->unk58 == 7) {
+				targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC;
+			} else {
+				targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk14 * D_8004DCC0;
+			}
+		}
+		if (targetSpeed > D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC) targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC;
+		if (targetSpeed < D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8) targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8;
+	}
+	if ((f64)targetSpeed < D_80038330_38F30) {
+		targetSpeed = D_80038338_38F38;
+	}
+	{
+		f32 dx = (f32)arg0->unk0 / 4 - D_80047954;
+		f32 dy = (f32)arg0->unk2 / 4 - D_80047958;
+		f32 dz = (f32)arg0->unk4 / 4 - D_8004795C;
+		f32 dist = sqrtf(dx * dx + dy * dy + dz * dz);
+
+		func_80014A3C_1563C(
+			(s32)&vehicleSpecs[arg0->unk1A],
+			D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0,
+			dist, 0, targetSpeed);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014508_15108.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014A3C_1563C.s")
 
