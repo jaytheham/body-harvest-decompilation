@@ -77,5 +77,7 @@ If build completes with `build/bh.us.z64: OK` the function is matched and you ca
 
 ## Finalize
 
+If you're giving up (never give up! But if you must), revert the code to the best-scoring version found and wrap the function with NON_MATCHING.
+
 Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated case notes to help future decomp. Only for matched functions.
 Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.
