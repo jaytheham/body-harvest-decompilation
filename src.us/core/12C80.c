@@ -1196,14 +1196,17 @@ void func_80015210_15E10(s16 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4) {
 	Unk8006AA80Node sp50;
 
 	if (D_8006AB88 != 0) {
+		s16 temp_v1;
+
+		sp50.unk2 = D_80032228_32E28[arg0 & 0xFFFF];
+		sp50.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
 		sp50.unk6 = -1;
 		sp50.unk0C = 0;
 		sp50.unk8 = 0;
-		sp50.unk2 = D_80032228_32E28[arg0 & 0xFFFF];
-		sp50.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
+		temp_v1 = (s16)((s32)((f32)D_80031F04_32B04[arg0] * ((f32)arg4 / 200.0f)));
 		sp50.unk0 = arg0 & 0xFFFF;
-		if ((s16)((s32)((f32)D_80031F04_32B04[arg0] * ((f32)arg4 / 200.0f))) < 0x2FFF) {
-			sp50.unk20 = (s16)((s32)((f32)D_80031F04_32B04[arg0] * ((f32)arg4 / 200.0f))) + 0x2FFF;
+		if (temp_v1 < 0x2FFF) {
+			sp50.unk20 = temp_v1 + 0x2FFF;
 		} else {
 			sp50.unk20 = 0x7FFF;
 		}
