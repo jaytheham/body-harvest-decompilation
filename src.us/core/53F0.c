@@ -662,33 +662,35 @@ void func_800073B8_7FB8(u64 arg0) {
 #ifdef NON_MATCHING
 void func_80007410_8010(void *arg0) {
 	s32 i;
-	s32 j;
 
 	i = 4;
 	while (i--) {
-		if ((void *)D_8004DC68[i] == arg0) {
+		if (D_8004DC68[i] == (s32)arg0) {
 			return;
 		}
 	}
 
-	j = 3;
+	i = 3;
 	if (D_8004DC74 != 0) {
-		while (j != 0) {
-			j--;
-			if (D_8004DC68[j] == 0) {
+		for (;;) {
+			if (i == 0) {
 				break;
 			}
+			if (D_8004DC68[--i] != 0) {
+				continue;
+			}
+			break;
 		}
-		if (j == 0) {
-			j = -1;
+		if (i == 0) {
+			i = -1;
 		}
 	}
 
-	if (j == -1) {
-		osSyncPrintf(&D_80036D74_37974, (s32)arg0);
+	if (i == -1) {
+		osSyncPrintf(&D_80036D74_37974);
 		return;
 	}
-	D_8004DC68[j] = (s32)arg0;
+	D_8004DC68[i] = (s32)arg0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007410_8010.s")
