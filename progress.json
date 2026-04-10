@@ -1,24 +1,24 @@
 {
-  "generated": "2026-04-10T04:51:32Z",
-  "commit": "dc66d16",
-  "commit_timestamp": "2026-04-10T07:52:30+12:00",
+  "generated": "2026-04-10T05:09:05Z",
+  "commit": "3284aa9",
+  "commit_timestamp": "2026-04-10T17:08:54+12:00",
   "overall": {
-    "total_functions": 3025,
+    "total_functions": 3030,
     "matched": 1182,
-    "non_matching": 375,
+    "non_matching": 380,
     "asm_stubs": 1468,
-    "matched_pct": 39.07,
-    "decompiled_pct": 51.47
+    "matched_pct": 39.01,
+    "decompiled_pct": 51.55
   },
   "segments": {
     "core": {
       "display_name": "Core",
       "matched": 220,
-      "non_matching": 84,
+      "non_matching": 89,
       "asm_stubs": 102,
-      "total": 406,
-      "matched_pct": 54.2,
-      "decompiled_pct": 74.9
+      "total": 411,
+      "matched_pct": 53.5,
+      "decompiled_pct": 75.2
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -98,10 +98,10 @@
       "path": "core/1050.c",
       "segment": "core",
       "matched": 30,
-      "non_matching": 24,
+      "non_matching": 25,
       "asm_stubs": 26,
-      "total": 80,
-      "matched_pct": 37.5,
+      "total": 81,
+      "matched_pct": 37.0,
       "contributor": "jaytheham"
     },
     {
@@ -118,10 +118,10 @@
       "path": "core/12C80.c",
       "segment": "core",
       "matched": 78,
-      "non_matching": 12,
+      "non_matching": 15,
       "asm_stubs": 20,
-      "total": 110,
-      "matched_pct": 70.9,
+      "total": 113,
+      "matched_pct": 69.0,
       "contributor": "jaytheham"
     },
     {
@@ -148,10 +148,10 @@
       "path": "core/53F0.c",
       "segment": "core",
       "matched": 54,
-      "non_matching": 18,
+      "non_matching": 19,
       "asm_stubs": 21,
-      "total": 93,
-      "matched_pct": 58.1,
+      "total": 94,
+      "matched_pct": 57.4,
       "contributor": "jaytheham"
     },
     {
@@ -540,7 +540,7 @@
       "name": "jaytheham",
       "files": 42,
       "matched": 1177,
-      "non_matching": 375,
+      "non_matching": 380,
       "asm_stubs": 1398
     },
     {
@@ -610,11 +610,11 @@
     },
     {
       "date": "2026-04-10",
-      "commit": "ea520c7",
-      "matched_pct": 39.07,
-      "decompiled_pct": 51.47,
+      "commit": "f825d25",
+      "matched_pct": 39.01,
+      "decompiled_pct": 51.55,
       "matched": 1182,
-      "total": 3025
+      "total": 3030
     }
   ]
 }
