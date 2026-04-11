@@ -1520,5 +1520,20 @@ typedef struct {
     /* 0x7E */ u8 unk7E;
 } SaveSlot; /* size = 0x7F */
 
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    u16 unk10;
+} Unk8031C88; /* size = 0x14 - DMA init descriptor from boot ROM */
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+} Unk80378D0; /* size = 0x10 - DMA range descriptor */
+
 #endif
 
