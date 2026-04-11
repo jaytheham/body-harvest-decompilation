@@ -42,6 +42,15 @@ typedef struct {
 } Unk8004773C; /* size = 0x04 */
 
 typedef struct {
+	/* 0x00 */ void (*unk0)(s32, s32, s32, s32);
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[2];
+	/* 0x08 */ f32 unk8;
+	/* 0x0C */ f32 unkC;
+	/* 0x10 */ s16 unk10;
+} UnkE830ModeEntry; /* size = 0x14 */
+
+typedef struct {
 	/* 0x00 */ f32 x;
 	/* 0x04 */ f32 y;
 	/* 0x08 */ f32 z;

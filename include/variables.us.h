@@ -67,6 +67,7 @@ extern u8 D_3F320;
 extern u8 D_1003990[];
 extern u8 D_80031160;
 extern Unk800311A0 D_800311A0;
+extern Mtx D_80031120_31D20;
 extern Gfx D_800311D0[];
 extern Gfx D_80031200[];
 extern Gfx D_80031230[];
@@ -152,6 +153,9 @@ extern f32 D_8003712C_37D2C;
 extern f32 D_80037130_37D30;
 extern f32 D_80037450_38050;
 extern f32 D_80037454_38054;
+extern f32 D_80037650_38250;
+extern f32 D_80037654_38254;
+extern f32 D_80037658_38258;
 extern f64 D_80037138_37D38;
 extern u8 D_80036840[]; // Rumble pak(tm) detected!
 extern char D_8003685C_3745C; /* osSyncPrintf format string - save version mismatch */
