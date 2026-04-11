@@ -1571,7 +1571,151 @@ void func_80008CA8_98A8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008CA8_98A8.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
+	u8 *texture;
+	s32 spanY;
+	s32 textureSpanX;
+	s32 textureSpanY;
+	s32 stepX;
+	s32 stepY;
+
+	switch (arg4) {
+	case 0:
+		textureSpanX = (arg2 - arg0) * 4;
+		spanY = arg3 - arg1;
+		texture = D_1011C80;
+		textureSpanY = spanY * 4;
+		stepX = 0x400;
+		stepY = 0x400;
+		break;
+
+	case 1:
+		textureSpanX = (arg2 - arg0) * 4;
+		spanY = arg3 - arg1;
+		textureSpanY = spanY * 4;
+		stepY = 0x400;
+		stepX = 0x400;
+		texture = D_1010C80;
+		break;
+
+	case 2:
+		textureSpanX = (arg2 - arg0) * 4;
+		spanY = arg3 - arg1;
+		textureSpanY = spanY * 4;
+		stepX = 0x400;
+		stepY = 0x400;
+		texture = D_1010C80;
+		break;
+
+	case 3:
+		textureSpanX = (arg2 - arg0) * 8;
+		spanY = arg3 - arg1;
+		textureSpanY = spanY * 8;
+		stepY = 0x800;
+		stepX = 0x800;
+		texture = D_1011C80;
+		break;
+
+	default:
+		texture = D_1011C80;
+		spanY = arg3 - arg1;
+		break;
+	}
+
+	if (spanY >= 0x24U) {
+		texture = D_1011C80;
+	}
+
+	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, texture);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 256);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 4, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x3C, 0x3C);
+	gSPTextureRectangle(D_8005BB2C++, arg0, arg1, ((u32)(arg0 + arg2) >> 1), ((u32)(arg1 + arg3) >> 1), G_TX_RENDERTILE, arg0, arg1, stepX, stepY);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, texture + 0x400);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 256);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 4, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x3C, 0x3C);
+	gSPTextureRectangle(D_8005BB2C++, ((u32)(arg0 + arg2) >> 1), arg1, arg2, ((u32)(arg1 + arg3) >> 1), G_TX_RENDERTILE, textureSpanX, 0, -stepX, stepY);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, texture + 0x800);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 256);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 4, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x3C, 0x3C);
+	gSPTextureRectangle(D_8005BB2C++, arg0, ((u32)(arg1 + arg3) >> 1), ((u32)(arg0 + arg2) >> 1), arg3, G_TX_RENDERTILE, 0, textureSpanY, stepX, -stepY);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, texture + 0xC00);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 256);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 4, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x3C, 0x3C);
+	gSPTextureRectangle(D_8005BB2C++, ((u32)(arg0 + arg2) >> 1), ((u32)(arg1 + arg3) >> 1), arg2, arg3, G_TX_RENDERTILE, textureSpanX, textureSpanY, -stepX, -stepY);
+	gDPPipeSync(D_8005BB2C++);
+
+	if ((arg4 == 2) || (arg4 == 0) || (arg4 == 3)) {
+		u8 *overlayTexture;
+
+		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
+
+		if ((arg4 == 0) || (spanY >= 0x24U)) {
+			overlayTexture = D_1013080;
+		} else {
+			overlayTexture = D_1012C80;
+		}
+
+		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, overlayTexture);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x3C, 0x3C);
+		gSPTextureRectangle(D_8005BB2C++, arg0, arg1, ((u32)(arg0 + arg2) >> 1), ((u32)(arg1 + arg3) >> 1), G_TX_RENDERTILE, arg0, arg1, stepX, stepY);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, overlayTexture + 0x100);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x3C, 0x3C);
+		gSPTextureRectangle(D_8005BB2C++, ((u32)(arg0 + arg2) >> 1), arg1, arg2, ((u32)(arg1 + arg3) >> 1), G_TX_RENDERTILE, textureSpanX, 0, -stepX, stepY);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, overlayTexture + 0x200);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x3C, 0x3C);
+		gSPTextureRectangle(D_8005BB2C++, arg0, ((u32)(arg1 + arg3) >> 1), ((u32)(arg0 + arg2) >> 1), arg3, G_TX_RENDERTILE, 0, textureSpanY, stepX, -stepY);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, overlayTexture + 0x300);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x3C, 0x3C);
+		gSPTextureRectangle(D_8005BB2C++, ((u32)(arg0 + arg2) >> 1), ((u32)(arg1 + arg3) >> 1), arg2, arg3, G_TX_RENDERTILE, textureSpanX, textureSpanY, -stepX, -stepY);
+		gDPPipeSync(D_8005BB2C++);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800092B8_9EB8.s")
+#endif
 
 s32 func_80009F18_AB18(s32 arg0) {
 	s32 sp1C;
