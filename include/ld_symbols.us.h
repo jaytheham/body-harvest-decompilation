@@ -3,7 +3,6 @@
 
 #include "common.h"
 
-extern Addr _14AA40_bin;
 extern Addr _14AAC0_bin;
 extern Addr _175EB0_bin;
 extern Addr _195C80_bin;
