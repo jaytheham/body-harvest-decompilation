@@ -179,6 +179,33 @@ extern char D_80036A38_37638; /* osSyncPrintf format string - save D_80052ACD */
 extern char D_80036A48_37648; /* osSyncPrintf format string - save D_8004815x */
 extern char D_80036A68_37668; /* osSyncPrintf format string */
 extern char D_80036A6C_3766C; /* osSyncPrintf format string */
+extern char D_80036A8C_3768C; /* osSyncPrintf format string - load score */
+extern char D_80036AA0_376A0; /* osSyncPrintf format string - load humansKilled */
+extern char D_80036AAC_376AC; /* osSyncPrintf format string - load secondsElapsed */
+extern char D_80036AB8_376B8; /* osSyncPrintf format string */
+extern char D_80036AD4_376D4; /* osSyncPrintf format string - load level/warp */
+extern char D_80036AEC_376EC; /* osSyncPrintf format string - load warp point */
+extern char D_80036AFC_376FC; /* osSyncPrintf format string - load D_80031420 */
+extern char D_80036B0C_3770C; /* osSyncPrintf format string */
+extern char D_80036B18_37718; /* osSyncPrintf format string - load weapon slot */
+extern char D_80036B1C_3771C; /* osSyncPrintf format string */
+extern char D_80036B20_37720; /* osSyncPrintf format string */
+extern char D_80036B28_37728; /* osSyncPrintf format string - load bitflags */
+extern char D_80036B30_37730; /* osSyncPrintf format string - load D_80048026 */
+extern char D_80036B60_37760; /* osSyncPrintf format string */
+extern char D_80036B78_37778; /* osSyncPrintf format string - load D_8004DC50 */
+extern char D_80036B80_37780; /* osSyncPrintf format string - load D_80047F98 */
+extern char D_80036B94_37794; /* osSyncPrintf format string - load D_80047F98 clamped */
+extern char D_80036BA4_377A4; /* osSyncPrintf format string - load D_8004D154 */
+extern char D_80036BB8_377B8; /* osSyncPrintf format string - load D_8004D158 */
+extern char D_80036BC8_377C8; /* osSyncPrintf format string */
+extern char D_80036BD4_377D4; /* osSyncPrintf format string - load weapon damage */
+extern char D_80036BF4_377F4; /* osSyncPrintf format string - load D_80048030 */
+extern char D_80036C0C_3780C; /* osSyncPrintf format string - load old D_80052ACD */
+extern char D_80036C1C_3781C; /* osSyncPrintf format string - load new D_80052ACD */
+extern char D_80036C2C_3782C; /* osSyncPrintf format string - load D_8004815x */
+extern char D_80036C4C_3784C; /* osSyncPrintf format string */
+extern char D_80036C50_37850; /* osSyncPrintf format string - load failed */
 extern char D_80036D68_37968;
 extern char D_80036D6C_3796C;
 extern char D_80036D70_37970;
@@ -224,6 +251,7 @@ extern u8 D_8004337D;
 extern u16 D_8003D000_3DC00[];
 extern u16 D_8003D800_3E400[];
 extern u8 D_8003DFD4[];
+extern u8 D_8003DFD4_3EBD4[];
 extern u8 D_8003E000[];
 extern s16 D_8003E0EE[];
 extern GateEntry D_8003E0FC[5][8]; // shield wall gates by level
@@ -372,6 +400,7 @@ extern u8 D_80047F93;
 extern AlienInstance D_8004D0F8[]; // alien array base
 extern BitFlags64 D_8004DC48;
 extern Flags2x32 D_8004DC50;
+extern u32 D_8004DC54; // same address as D_8004DC50.unk4
 extern s32 D_8004DC40;
 extern u8 D_8004DC5C;
 extern s16 D_8004DC60;
@@ -413,7 +442,7 @@ extern u16 D_80052AA4;
 extern s16 D_80052AC8;
 extern u8 D_80052ACA;
 extern u8 D_80052ACB; // Rendering Flags? 1=Shadows 2=Objects
-extern s8 D_80052ACC;
+extern u8 D_80052ACC;
 extern u8 D_80052ACD; // bitfield? x02 = black adam model
 extern s32 D_80052AD0;
 extern s32 D_80052AD4;
@@ -499,6 +528,12 @@ extern s32 D_8005BB28;
 extern u8 D_801CE710;
 extern s32 D_8005BB48[];
 extern s32 D_8005BB4C[];
+extern s32 D_8005BB50;
+extern s32 D_8005BB54;
+extern s32 D_8005BF58;
+extern s32 D_8005BF5C;
+extern s32 D_8005C764;
+extern s32 D_800313D4;
 
 extern Unk8006AA80Node *D_8006AA80;
 extern Unk8006AA84Node *D_8006AA84;
@@ -527,7 +562,14 @@ extern s16 D_8006AB14;
 extern s32 D_8006AB88;
 extern u8 D_80032228_32E28[];
 extern s16 D_80031F04_32B04[];
+extern f32 D_80032430_33030[];
 extern f32 D_80032A78_33678[];
+extern s8 D_80032310_32F10;
+extern f32 D_8003833C_38F3C;
+extern f32 D_80038340_38F40;
+extern f64 D_80038348_38F48;
+extern f32 D_80038350_38F50;
+extern f64 D_80038358_38F58;
 extern s16 D_80032EBA_33ABA[];
 extern s16 D_80031CAC_328AC;
 extern s16 D_80031CA8_328A8;
@@ -754,6 +796,17 @@ extern char D_800370B0_37CB0; /* osSyncPrintf format string */
 extern char D_800370B4_37CB4; /* osSyncPrintf format string */
 extern char D_800370B8_37CB8; /* osSyncPrintf format string */
 extern char D_800370D4_37CD4; /* osSyncPrintf format string */
+extern char D_80037660_38260; /* osSyncPrintf format string */
+extern char D_8003767C_3827C; /* osSyncPrintf format string */
+extern char D_80037694_38294; /* osSyncPrintf format string */
+extern char D_800376AC_382AC; /* osSyncPrintf format string */
+extern char D_800376C0_382C0; /* osSyncPrintf format string */
+extern char D_800376D8_382D8; /* osSyncPrintf format string */
+extern char D_800376F0_382F0; /* osSyncPrintf format string */
+extern char D_8003770C_3830C; /* osSyncPrintf format string */
+extern char D_80037728_38328; /* osSyncPrintf format string */
+extern char D_8003773C_3833C; /* osSyncPrintf format string */
+extern char D_80037750_38350; /* osSyncPrintf format string */
 extern char D_80037764_38364; /* osSyncPrintf format string */
 extern char D_801417C0_150770; /* osSyncPrintf format string - alien action table full warning */
 extern char D_801417DC;
@@ -1485,7 +1538,12 @@ extern s16 D_80157F8C;
 extern s16 D_80157F8E;
 extern s16 D_80157F90;
 extern s32 D_80157FB4;
+extern s32 D_8006807C;
 extern s32 D_80068080;
+extern f32 D_80068094;
+extern f32 D_80068098;
+extern s32 D_80068328;
+extern s32 D_8006832C;
 extern VehicleInstance D_80050A74;
 extern VehicleInstance D_8004FB00;
 extern VehicleInstance D_8004F990;
@@ -1827,6 +1885,19 @@ extern char D_80038218_38E18;
 extern char D_80038244_38E44;
 extern char D_8003825C_38E5C;
 extern char D_80038288_38E88;
+extern char D_800383B0_38FB0;
+extern char D_800383BC_38FBC;
+extern char D_800383C8_38FC8;
+extern char D_800383CC_38FCC;
+extern char D_800383D4_38FD4;
+extern char D_800383DC_38FDC;
+extern char D_800383E0_38FE0;
+extern char D_800383E4_38FE4;
+extern char D_800383EC_38FEC;
+extern char D_800383F8_38FF8;
+extern char D_80038404_39004;
+extern char D_8003840C_3900C;
+extern char D_80038418_39018;
 extern char D_80038424_39024;
 extern char D_8003845C_3905C; /* osSyncPrintf format string */
 extern char D_80038470_39070; /* osSyncPrintf format string */
@@ -1893,11 +1964,13 @@ extern f32 D_80037658;
 extern void *D_80031A90;
 extern void *D_80059CDC;
 extern s16 D_80267080[];
+extern s16 FrameBufferB[];
 /* core/FB00 — thread structs, stacks, OS mode tables */
 extern OSThread D_80067388;
 extern OSThread D_80067538;
 extern OSThread D_800676E8;
 extern OSThread D_80067898;
+extern OSThread D_80067DA8;
 extern OSThread D_80067A48;
 extern OSMesgQueue D_80067FA0;
 extern OSMesgQueue D_80067FB8;
@@ -1913,8 +1986,13 @@ extern OSMesg D_8006A8C8;
 extern OSMesg D_8006A8E8;
 extern OSMesg D_8006A920[];
 extern u8 D_8005CF68[];
+extern s32 D_8005CF6C;
 extern u8 D_80064F70[];
+extern s32 D_80064F74;
+extern s32 D_80065F78;
+extern s32 D_80065F7C;
 extern u8 D_80066780[];
+extern s32 D_80066784;
 extern OSMesg D_80068038;
 extern OSMesg D_800314CC_320CC;
 extern OSMesgQueue __osSiAccessQueue;
@@ -1926,6 +2004,7 @@ extern OSMesgQueue D_8006A8B0;
 extern OSMesgQueue D_8006A8D0;
 extern OSMesgQueue D_8006A8F0;
 extern s16 D_8006C558;
+extern u16 D_8006C55A;
 extern s16 D_8006C55C;
 extern u16 D_8006C55E;
 extern u16 D_8006C560;
@@ -1937,6 +2016,7 @@ extern s8 D_8006C56C;
 extern s8 D_8006C56D;
 extern s8 D_8006C56E;
 extern s32 D_8006C570;
+extern s32 D_80035B5C;
 extern OSViMode D_80035B30;
 extern OSViMode D_800356D0;
 extern OSViMode D_80035F90;
