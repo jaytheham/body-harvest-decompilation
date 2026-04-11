@@ -1347,7 +1347,9 @@ s32 func_80008C44_9844(s32 arg0) {
 #ifdef NON_MATCHING
 void func_80008CA8_98A8(s32 arg0) {
 	Unk80052B40 sp;
-	s32 sp30;
+	u16 temp_t6;
+	s32 t3, a3, a2, a1, a0;
+	s32 pad;
 
 	guOrtho((Mtx *)D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, D_80037450_38050, D_80037454_38054, 1.0f);
 	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
@@ -1363,66 +1365,64 @@ void func_80008CA8_98A8(s32 arg0) {
 	gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-	{
-		s32 temp_ra = D_80031648_32248 / 4;
-		s32 temp_t3 = 0x1E - (temp_ra % 60);
-		s32 temp_a2;
-		s32 temp_a0;
-		s32 temp_a1;
-		s32 temp_a3;
 
-		temp_a3 = temp_t3;
-		if (temp_t3 < 0) {
-			temp_a3 = -temp_t3;
-		}
-		sp30 = D_80031648_32248 / 5;
-		temp_a2 = 0x32 - (sp30 % 100);
-		temp_a1 = temp_a2;
-		if (temp_a2 < 0) {
-			temp_a1 = -temp_a2;
-		}
-		temp_a0 = 0x14 - ((D_80031648_32248 / 10) % 20);
-		if (temp_a0 < 0) {
-			temp_a0 = -temp_a0;
-		}
-		gDPSetEnvColor(D_8005BB2C++, temp_a1 + 0x1E, temp_a3 + 0x19, temp_a0 + 0x14, 0xFF);
-		if (arg0 == 0) {
-			temp_a0 = 0x14 - (temp_ra % 40);
-			temp_a3 = temp_a0;
-			if (temp_a0 < 0) {
-				temp_a3 = -temp_a0;
-			}
-			temp_a1 = temp_t3;
-			if (temp_t3 < 0) {
-				temp_a1 = -temp_t3;
-			}
-			temp_a0 = temp_a2;
-			if (temp_a2 < 0) {
-				temp_a0 = -temp_a2;
-			}
-			gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, temp_a1 + 0x23, temp_a3 + 0x1E, temp_a0 + 0x28, 0xFF);
+	t3 = 0x1E - ((D_80031648_32248 / 4) % 60);
+	if (t3 >= 0) {
+		a3 = t3;
+	} else {
+		a3 = -t3;
+	}
+	a2 = 0x32 - ((D_80031648_32248 / 5) % 100);
+	if (a2 >= 0) {
+		a1 = a2;
+	} else {
+		a1 = -a2;
+	}
+	a0 = 0x14 - ((D_80031648_32248 / 10) % 20);
+	gDPSetEnvColor(D_8005BB2C++, a1 + 0x1E, a3 + 0x19, (a0 >= 0 ? a0 : -a0) + 0x14, 0xFF);
+	if (arg0 == 0) {
+		a0 = 0x14 - ((D_80031648_32248 / 4) % 40);
+		if (a0 >= 0) {
+			a3 = a0;
 		} else {
-			temp_a0 = 0x14 - (temp_ra % 40);
-			if (temp_a0 < 0) {
-				temp_a0 = -temp_a0;
-			}
-			temp_a3 = temp_t3;
-			if (temp_t3 < 0) {
-				temp_a3 = -temp_t3;
-			}
-			temp_a1 = temp_a2;
-			if (temp_a2 < 0) {
-				temp_a1 = -temp_a2;
-			}
-			gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, temp_a1 + 0x8C, temp_a3 + 0x23, temp_a0 + 0x1E, 0xFF);
+			a3 = -a0;
 		}
+		if (t3 >= 0) {
+			a1 = t3;
+		} else {
+			a1 = -t3;
+		}
+		if (a2 >= 0) {
+			a0 = a2;
+		} else {
+			a0 = -a2;
+		}
+		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, a1 + 0x23, a3 + 0x1E, a0 + 0x28, 0xFF);
+	} else {
+		a0 = 0x14 - ((D_80031648_32248 / 4) % 40);
+		if (a0 >= 0) {
+			a0 = a0;
+		} else {
+			a0 = -a0;
+		}
+		if (t3 >= 0) {
+			a3 = t3;
+		} else {
+			a3 = -t3;
+		}
+		if (a2 >= 0) {
+			a1 = a2;
+		} else {
+			a1 = -a2;
+		}
+		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, a1 + 0x8C, a3 + 0x23, a0 + 0x1E, 0xFF);
 	}
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_BLENDPE, G_CC_BLENDPE);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (u8 *)((s32)(&D_1003990[(sp30 % 8) * 256]) & 0x1FFFFFFF));
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (u8 *)((s32)(&D_1003990[((D_80031648_32248 / 5) % 8) * 256]) & 0x1FFFFFFF));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
 	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
@@ -1435,12 +1435,10 @@ void func_80008CA8_98A8(s32 arg0) {
 		D_800313E4_31FE4 = 0;
 	}
 	func_80005110_5D10(0x140, 0xF0, 0xFF, 0xFF, 0xFF);
-	{
-		u16 temp_t6 = (D_80031648_32248 + 1) & 0xFFFF;
-		D_80031648_32248 = temp_t6;
-		if ((s32)temp_t6 >= 0xFA1) {
-			D_80031648_32248 = 0;
-		}
+	temp_t6 = (D_80031648_32248 + 1) & 0xFFFF;
+	D_80031648_32248 = temp_t6;
+	if ((s32)temp_t6 >= 0xFA1) {
+		D_80031648_32248 = 0;
 	}
 }
 #else
