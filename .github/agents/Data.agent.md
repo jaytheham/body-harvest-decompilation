@@ -34,7 +34,7 @@ These powershell tools exist to assist you:
 2. Search for variables defined in this section e.g. `D_8013BA80_14AA30`, variables are named `D_<RAM address>_<ROM address>`.
 3. Find C files that reference these variables to determine which file this data belongs to. Note that some of the original C files may currently be combined into a single file, so you may need to split the C files into multiple files to match the original layout of the ROM.
 Not all functions in C are decompiled yet so you may need to search for variable references int the assembly files in `asm/nonmatchings` to find the correct C file.
-4. Update the yaml file to define the target section e.g. `- [0x14A8A0, .data, overlay_gameplay/outside/F6A50]` and add a comment with the RAM address range of the section e.g. `# 0x14A8A0 - 0x14AA40`.
+4. Update the yaml file to define the target section e.g. `- [0x14A8A0, .data, overlay_gameplay/outside/F6A50]`. If the target `bin` section appears to contain data for multiple C files split it into multiple sections and focus on just the data from the first section.
 5. Add definitions for these variables in the appropriate C file, make sure to use the correct types, order, and initial values as in the original ROM.
 6. Run the extract script to update the linker script, then run the build script to compile the ROM. You must do both after making yaml/code changes.
 7. Compare the built ROM against the original ROM and identify any differences in the output for the data section. You can also look at the linker script to see which order it is putting the sections into, but you cannot change the order of sections in the linker script as it is auto-generated, you must change the yaml and C code to match the original ROM.
