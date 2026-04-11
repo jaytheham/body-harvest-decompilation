@@ -1,24 +1,24 @@
 {
-  "generated": "2026-04-11T11:09:17Z",
-  "commit": "0bc0269",
-  "commit_timestamp": "2026-04-11T23:09:05+12:00",
+  "generated": "2026-04-11T20:50:59Z",
+  "commit": "235af98",
+  "commit_timestamp": "2026-04-12T08:50:48+12:00",
   "overall": {
-    "total_functions": 3034,
+    "total_functions": 3042,
     "matched": 1182,
-    "non_matching": 384,
+    "non_matching": 392,
     "asm_stubs": 1468,
-    "matched_pct": 38.96,
-    "decompiled_pct": 51.62
+    "matched_pct": 38.86,
+    "decompiled_pct": 51.74
   },
   "segments": {
     "core": {
       "display_name": "Core",
       "matched": 220,
-      "non_matching": 93,
+      "non_matching": 101,
       "asm_stubs": 102,
-      "total": 415,
-      "matched_pct": 53.0,
-      "decompiled_pct": 75.4
+      "total": 423,
+      "matched_pct": 52.0,
+      "decompiled_pct": 75.9
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -118,10 +118,10 @@
       "path": "core/12C80.c",
       "segment": "core",
       "matched": 78,
-      "non_matching": 17,
+      "non_matching": 20,
       "asm_stubs": 20,
-      "total": 115,
-      "matched_pct": 67.8,
+      "total": 118,
+      "matched_pct": 66.1,
       "contributor": "jaytheham"
     },
     {
@@ -148,30 +148,30 @@
       "path": "core/53F0.c",
       "segment": "core",
       "matched": 54,
-      "non_matching": 19,
+      "non_matching": 21,
       "asm_stubs": 21,
-      "total": 94,
-      "matched_pct": 57.4,
+      "total": 96,
+      "matched_pct": 56.2,
       "contributor": "jaytheham"
     },
     {
       "path": "core/AD60.c",
       "segment": "core",
       "matched": 13,
-      "non_matching": 10,
+      "non_matching": 11,
       "asm_stubs": 12,
-      "total": 35,
-      "matched_pct": 37.1,
+      "total": 36,
+      "matched_pct": 36.1,
       "contributor": "jaytheham"
     },
     {
       "path": "core/E830.c",
       "segment": "core",
       "matched": 1,
-      "non_matching": 8,
+      "non_matching": 9,
       "asm_stubs": 9,
-      "total": 18,
-      "matched_pct": 5.6,
+      "total": 19,
+      "matched_pct": 5.3,
       "contributor": "jaytheham"
     },
     {
@@ -198,10 +198,10 @@
       "path": "core/loader.c",
       "segment": "core",
       "matched": 31,
-      "non_matching": 7,
+      "non_matching": 8,
       "asm_stubs": 8,
-      "total": 46,
-      "matched_pct": 67.4,
+      "total": 47,
+      "matched_pct": 66.0,
       "contributor": "jaytheham"
     },
     {
@@ -540,7 +540,7 @@
       "name": "jaytheham",
       "files": 42,
       "matched": 1177,
-      "non_matching": 384,
+      "non_matching": 392,
       "asm_stubs": 1398
     },
     {
@@ -623,6 +623,14 @@
       "decompiled_pct": 51.62,
       "matched": 1182,
       "total": 3034
+    },
+    {
+      "date": "2026-04-12",
+      "commit": "3e3f4c4",
+      "matched_pct": 38.86,
+      "decompiled_pct": 51.74,
+      "matched": 1182,
+      "total": 3042
     }
   ]
 }
