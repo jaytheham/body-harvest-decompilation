@@ -1,6 +1,6 @@
 #include <ultra64.h>
+#include <stdarg.h>
 #include "common.h"
-
 
 void func_8000A160_AD60(void) {
 	D_80053C98 = 0;
@@ -127,7 +127,407 @@ s16 func_8000A43C_B03C(s8 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A43C_B03C.s")
 #endif
 
+#ifdef NON_MATCHING
+void drawText(void *arg0, ...) {
+	u8 *s3;
+	s8 *s0;
+	char *s2;
+	s32 v0;
+	s32 s1;
+	s32 s4;
+	s32 s5;
+	s32 a1;
+	s32 v1;
+	s32 a0;
+	s32 sp78;
+	s32 sp64;
+	s32 sp60;
+	s32 sp5C;
+	s32 sp58;
+
+	s3 = (u8 *)arg0;
+	v0 = *s3;
+	s0 = (s8 *)D_80052BE0 + (u16)D_80053BE0;
+	s2 = (char *)(&arg0 + 1);
+
+	if (v0 != 0) {
+		v0 &= 0xFF;
+		while (1) {
+			if (v0 == '%') {
+				s3++;
+				switch ((u8)(*s3 - '0')) {
+				case 0:
+					s3[-1] = '\0';
+					*s3 = 1;
+					s3++;
+					break;
+				case 1:
+					s3[-1] = '\0';
+					*s3 = 2;
+					s3++;
+					break;
+				case 2:
+					s3[-1] = '\0';
+					*s3 = 3;
+					s3++;
+					break;
+				case 3:
+					s3[-1] = '\0';
+					*s3 = 4;
+					s3++;
+					break;
+				case 4:
+					s3[-1] = '\0';
+					*s3 = 5;
+					s3++;
+					break;
+				case 5:
+					s3[-1] = '\0';
+					*s3 = 6;
+					s3++;
+					break;
+				}
+			} else {
+				s3++;
+			}
+			v0 = *s3;
+			if (v0 == 0) {
+				break;
+			}
+		}
+		s3 = (u8 *)arg0;
+		v0 = *s3;
+	}
+
+	s1 = 10;
+	s4 = -4;
+	s5 = 10;
+	if (v0 != 0) {
+		v0 = *s3;
+		while (1) {
+			a1 = 6;
+
+			if (v0 != '%') {
+				*s0++ = (s8)v0;
+				s3++;
+				v0 = *s3;
+			} else {
+				v0 = s3[1];
+				s3++;
+
+				if (v0 >= '0' && v0 < ':') {
+					v1 = v0;
+					v0 = s3[1];
+					a1 = v1 - '0';
+					s3++;
+					v1 = v0;
+				} else {
+					v1 = v0;
+				}
+				a0 = v1;
+
+				if (a0 <= 0) {
+					if (a0 == 0) {
+						s3++;
+						v0 = *s3;
+						continue;
+					}
+					*s0++ = (s8)v0;
+					v0 = *s3;
+					continue;
+				}
+
+				if ((u32)(v1 - 0x40) >= 0x34) {
+					*s0 = (s8)v0;
+					s0++;
+					s3++;
+					v0 = *s3;
+					continue;
+				}
+
+				switch (v1) {
+		case 'c': {
+			s2 = (char *)(((s32)s2 + 3) & s4);
+			a0 = *(s32 *)s2;
+			s2 += 4;
+			*s0++ = (s8)a0;
+			break;
+		}
+		case 'd': {
+			s2 = (char *)(((s32)s2 + 3) & s4);
+			v1 = *(s32 *)s2;
+			s2 += 4;
+			a0 = 1000000;
+			if (v1 < 0) {
+				*s0++ = '-';
+				v1 = -v1;
+			}
+			v0 = v1 / a0;
+			while (v0 % s1 == 0) {
+				sp60 = a0 / s1;
+				if (sp60 >= 2 && v1 / sp60 % s1 == 0) {
+					a0 = sp60;
+					v0 = v1 / a0;
+				} else {
+					break;
+				}
+			}
+			if (v0 != 0) {
+				while (1) {
+					s0++;
+					*(s0 - 1) = (s8)(((v1 / a0) % s1) + '0');
+					a0 /= s1;
+					if (a0 == 0) break;
+				}
+			}
+			break;
+		}
+		case 'f': {
+			sp78 = 1000000;
+			v1 = 1;
+			if ((s32)s2 & 1) {
+				s2 += 7;
+				a0 = (s32)s2 - 0x16;
+			} else if ((s32)s2 & 2) {
+				s2 += 0xA;
+				a0 = (s32)s2 - 0x28;
+			} else {
+				s2 += 7;
+				s2 = (char *)(((s32)s2 & -8) + 8);
+				a0 = (s32)s2;
+			}
+			sp5C = a1;
+			sp58 = v1;
+			sp64 = 0;
+			sp60 = 0;
+			func_80004254_4E54((f32)*(double *)(a0 - 8), a1, &sp64, &sp60);
+			a0 = sp64;
+			v0 = sp78;
+			v1 = sp58;
+			a1 = sp5C;
+			if (a0 < 0) {
+				*s0++ = '-';
+				a0 = -a0;
+				sp64 = a0;
+			}
+			sp58 = a0 / v0;
+			while (sp58 % s1 == 0) {
+				sp60 = v0 / s1;
+				if (sp60 >= 2 && a0 / sp60 % s1 == 0) {
+					v0 = sp60;
+					sp58 = a0 / v0;
+				} else {
+					break;
+				}
+			}
+			if (sp58 != 0) {
+				while (1) {
+					s0++;
+					*(s0 - 1) = (s8)(((a0 / v0) % s1) + '0');
+					v0 /= s1;
+					if (v0 == 0) break;
+				}
+			}
+			*s0++ = '.';
+			v0 = 1;
+			if (a1 >= 2) {
+				a0 = a1 - 1;
+				sp58 = a0 & 3;
+				if (sp58 != 0) {
+					a0 = sp58 + 1;
+					while (++v1 != a0) {
+						v0 *= s1;
+					}
+					if (v1 != a1) {
+						do {
+							v0 *= s1;
+							v1 += 4;
+							v0 *= s1;
+							v0 *= s1;
+							v0 *= s1;
+						} while (v1 != a1);
+					}
+				} else {
+					do {
+						v0 *= s1;
+						v1 += 4;
+						v0 *= s1;
+						v0 *= s1;
+						v0 *= s1;
+					} while (v1 != a1);
+				}
+			}
+			if (v0 != 0) {
+				while (1) {
+					s0++;
+					*(s0 - 1) = (s8)(((sp60 / v0) % s5) + '0');
+					v0 /= s1;
+					if (v0 == 0) break;
+				}
+			}
+			break;
+		}
+		case 'i':
+			*s0++ = 0x12;
+			break;
+		case 'r':
+			*s0++ = 0x13;
+			break;
+		case 's': {
+			s2 = (char *)(((s32)s2 + 3) & s4);
+			v1 = *(s32 *)s2;
+			s2 += 4;
+			v0 = *(u8 *)v1;
+			if (v0 == 0) {
+				s3++;
+				v0 = *s3;
+				continue;
+			}
+			do {
+				if (v0 != '%') {
+					*s0++ = (s8)v0;
+				} else {
+					v1++;
+					a0 = *(u8 *)v1;
+					if ((u8)(a0 - '0') < 6) {
+						switch ((u8)(a0 - '0')) {
+						case 0: *s0++ = 1; break;
+						case 1: *s0++ = 2; break;
+						case 2: *s0++ = 3; break;
+						case 3: *s0++ = 4; break;
+						case 4: *s0++ = 5; break;
+						case 5: *s0++ = 6; break;
+						}
+					} else {
+						*s0++ = '%';
+						v1--;
+					}
+				}
+				v0 = *(u8 *)++v1;
+			} while (v0 != 0);
+			s3++;
+			v0 = *s3;
+			continue;
+		}
+		case '@': {
+			s2 = (char *)(((s32)s2 + 3) & s4);
+			a0 = *(s32 *)s2;
+			s2 = (char *)(((s32)s2 + 7) & s4);
+			v1 = *(s32 *)s2;
+			s2 += 4;
+			D_80053C80 = (s16)a0;
+			D_80053C92 = (s16)((v1 * 20 + 24) >> 2);
+			a0 = D_80053C80;
+			if (a0 == 0x80) {
+				*s0++ = (s8)s5;
+				*s0++ = 0x1A;
+				*s0++ = (s8)(s16)D_80053C92;
+			} else if (a0 == 0x81) {
+				*s0++ = (s8)s5;
+				*s0++ = 0x1D;
+				*s0++ = (s8)(s16)D_80053C92;
+			} else {
+				D_80053C90 = (s16)(D_800319C1_325C1 * a0 + D_80053C94);
+				*s0++ = (s8)s5;
+				*s0++ = 0x14;
+				*s0++ = (s8)(D_80053C90 >> 2);
+				*s0++ = (s8)(s16)D_80053C92;
+			}
+			break;
+		}
+		case 'C': {
+			*s0++ = 0x15;
+			s2 = (char *)(((s32)s2 + 3) & s4);
+			a0 = *(s32 *)s2;
+			s2 = (char *)(((s32)s2 + 7) & s4);
+			*s0++ = (s8)a0;
+			v1 = *(s32 *)s2;
+			s2 = (char *)(((s32)s2 + 7) & s4);
+			*s0++ = (s8)v1;
+			a0 = *(s32 *)s2;
+			s2 += 4;
+			*s0++ = (s8)a0;
+			break;
+		}
+		case 'a': {
+			*s0++ = 0x16;
+			s2 = (char *)(((s32)s2 + 3) & s4);
+			a0 = *(s32 *)s2;
+			s2 += 4;
+			*s0++ = (s8)a0;
+			break;
+		}
+		case 'W': {
+			*s0++ = 0x18;
+			s2 = (char *)(((s32)s2 + 3) & s4);
+			a0 = *(s32 *)s2;
+			s2 = (char *)(((s32)s2 + 7) & s4);
+			*s0++ = (s8)(a0 >> 2);
+			v1 = *(s32 *)s2;
+			s2 = (char *)(((s32)s2 + 7) & s4);
+			*s0++ = (s8)(v1 >> 2);
+			a0 = *(s32 *)s2;
+			s2 = (char *)(((s32)s2 + 7) & s4);
+			*s0++ = (s8)(a0 >> 2);
+			v1 = *(s32 *)s2;
+			s2 += 4;
+			*s0++ = (s8)(v1 >> 2);
+			break;
+		}
+		case 'X': {
+			*s0++ = 0x19;
+			s2 = (char *)(((s32)s2 + 3) & s4);
+			a0 = *(s32 *)s2;
+			s2 += 4;
+			func_8000A3DC_AFDC((s16)(a0 >> 2), s0);
+			s0 += 2;
+			break;
+		}
+		case 'Y': {
+			*s0++ = 0x17;
+			s2 = (char *)(((s32)s2 + 3) & s4);
+			a0 = *(s32 *)s2;
+			s2 += 4;
+			func_8000A3DC_AFDC((s16)(a0 >> 2), s0);
+			s0 += 2;
+			break;
+		}
+		case 'H': {
+			*s0++ = 0x1B;
+			s2 = (char *)(((s32)s2 + 3) & s4) + 4;
+			func_8000A3DC_AFDC(*(s16 *)(s2 - 2), s0);
+			s0 += 2;
+			break;
+		}
+		case 'V': {
+			*s0++ = 0x1C;
+			s2 = (char *)(((s32)s2 + 3) & s4) + 4;
+			func_8000A3DC_AFDC(*(s16 *)(s2 - 2), s0);
+			s0 += 2;
+			break;
+		}
+		default:
+			*s0 = (s8)v0;
+			s0++;
+			break;
+		}
+
+				s3++;
+				v0 = *s3;
+			}
+
+			if (v0 == 0) {
+				break;
+			}
+		}
+	}
+
+	*s0 = '\0';
+	D_80053BE0 = (s16)((s8 *)s0 - (s8 *)D_80052BE0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/drawText.s")
+#endif
 
 void func_8000AFDC_BBDC(void)
 {

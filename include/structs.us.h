@@ -42,6 +42,15 @@ typedef struct {
 } Unk8004773C; /* size = 0x04 */
 
 typedef struct {
+	/* 0x00 */ void (*unk0)(s32, s32, s32, s32);
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[2];
+	/* 0x08 */ f32 unk8;
+	/* 0x0C */ f32 unkC;
+	/* 0x10 */ s16 unk10;
+} UnkE830ModeEntry; /* size = 0x14 */
+
+typedef struct {
 	/* 0x00 */ f32 x;
 	/* 0x04 */ f32 y;
 	/* 0x08 */ f32 z;
@@ -205,6 +214,13 @@ typedef struct {
 	/* 0x08 */ s32 f8;
 	/* 0x0C */ s32 fC;
 } D47F40Entry; /* size = 0x10 */
+
+typedef struct {
+	/* 0x00 */ u16 unk0;
+	/* 0x02 */ u16 unk2;
+	/* 0x04 */ u16 unk4;
+	/* 0x06 */ u16 unk6;
+} Unk800190D4; /* size = 0x08 */
 
 typedef enum VehicleFlags {
 	VEHICLE_FLAG_UNK1 = 1,
@@ -1503,6 +1519,21 @@ typedef struct {
     /* 0x7D */ u8 unk7D;
     /* 0x7E */ u8 unk7E;
 } SaveSlot; /* size = 0x7F */
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    u16 unk10;
+} Unk8031C88; /* size = 0x14 - DMA init descriptor from boot ROM */
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+} Unk80378D0; /* size = 0x10 - DMA range descriptor */
 
 #endif
 
