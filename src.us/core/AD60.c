@@ -2,12 +2,6 @@
 #include <stdarg.h>
 #include "common.h"
 
-extern s8 D_800319C1_325C1;
-
-s32 func_80004254_4E54(f32 arg0, s32 arg1, s32 *arg2, s32 *arg3);
-void func_8000A3DC_AFDC(u8 arg0, s8 *arg1);
-
-
 void func_8000A160_AD60(void) {
 	D_80053C98 = 0;
 	guOrtho(&D_80052B60, 0.0f, 320.0f, 240.0f, 0.0f, 0.0f, 1000.0f, 1.0f);

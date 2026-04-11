@@ -529,6 +529,7 @@ extern u8 D_3058A40[];
 extern u8 D_3059BA0[];
 extern u8 D_305AFA0[];
 extern u8 D_8F4960[];
+extern s8 D_800319C1_325C1;
 extern u8 D_5040770[];
 extern u8 D_5055C00;
 extern u8 D_80157E90[];
