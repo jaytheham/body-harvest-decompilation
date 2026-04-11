@@ -262,7 +262,8 @@ segments:
       - [0x14A8A0, .data, overlay_gameplay/outside/F6A50]
       - [0x14A8F0, .data, overlay_gameplay/outside/cheats]
       - [0x14AA40, .data, overlay_gameplay/outside/missions]
-      - [0x14AAC0, bin]
+      - [0x14AAC0, .data, overlay_gameplay/outside/857E0]
+      - [0x14AB20, bin]
 
   - name: overlay_gameplay_inside
     type: code
