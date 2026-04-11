@@ -215,6 +215,13 @@ typedef struct {
 	/* 0x0C */ s32 fC;
 } D47F40Entry; /* size = 0x10 */
 
+typedef struct {
+	/* 0x00 */ u16 unk0;
+	/* 0x02 */ u16 unk2;
+	/* 0x04 */ u16 unk4;
+	/* 0x06 */ u16 unk6;
+} Unk800190D4; /* size = 0x08 */
+
 typedef enum VehicleFlags {
 	VEHICLE_FLAG_UNK1 = 1,
 	VEHICLE_FLAG_AIRBORNE = 2,

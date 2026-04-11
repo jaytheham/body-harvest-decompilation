@@ -129,6 +129,8 @@ extern u8 D_80033C88_34888;
 extern u8 D_80033C88_W;
 extern s16 D_80033C90_34890;
 extern s16 D_80033C94_34894;
+extern Unk800190D4 D_8003429C[];
+extern u8 D_80034453_35053[];
 extern char D_8003828C_38E8C;
 extern char D_800382A0_38EA0; /* osSyncPrintf format string */
 extern char D_800382C8_38EC8; /* osSyncPrintf format string */
