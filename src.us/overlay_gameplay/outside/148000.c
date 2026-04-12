@@ -380,7 +380,38 @@ void func_8013A1CC_14917C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A218_1491C8.s")
 
+#ifdef NON_MATCHING
+void func_8013A4C8_149478(s16 arg0, s32 arg1) {
+	u8 sp1E;
+	u8 sp1D;
+	u8 var_a2;
+	u8 var_a3;
+	s32 sp18;
+	s16 temp_a1;
+
+	if (arg0 == -0x8000) {
+		var_a2 = 0xE;
+		var_a3 = 0xE;
+		sp1D = 0xE;
+	} else {
+		var_a2 = arg0 / 100;
+		arg0 -= var_a2 * 100;
+		var_a3 = arg0 / 10;
+		arg0 -= var_a3 * 10;
+		sp1D = arg0;
+	}
+
+	temp_a1 = ((s16*)&arg1)[1] + 4;
+	sp18 = temp_a1;
+	sp1E = var_a3;
+
+	func_8013A218_1491C8(0x2C - D_8014F1FA, temp_a1, var_a2);
+	func_8013A218_1491C8(0x33 - D_8014F1FA, ((s16*)&sp18)[1], sp1E);
+	func_8013A218_1491C8(0x3A - D_8014F1FA, ((s16*)&sp18)[1], sp1D);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A4C8_149478.s")
+#endif
 
 void func_8013A630_1495E0(void) {
 	gDPPipeSync(D_8005BB2C++);

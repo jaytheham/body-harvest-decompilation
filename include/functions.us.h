@@ -547,6 +547,7 @@ void func_80139B34_148AE4(void);
 void func_80139BF8_148BA8(void);
 void func_80139D58_148D08(void);
 void func_8013A1CC_14917C(void);
+void func_8013A218_1491C8(s16 arg0, s16 arg1, u8 arg2);
 void func_8013A630_1495E0(void);
 void func_8013A764_149714(u8);
 void func_8013B004_149FB4(void);
