@@ -264,7 +264,7 @@ segments:
       - [0x14AA40, .data, overlay_gameplay/outside/missions]
       - [0x14AAC0, .data, overlay_gameplay/outside/857E0]
       - [0x14AB20, .data, overlay_gameplay/outside/884C0]
-      - [0x14B130, bin]
+      - [0x14B210, bin]
 
   - name: overlay_gameplay_inside
     type: code
