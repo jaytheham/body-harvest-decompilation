@@ -618,7 +618,42 @@ s16 func_800B8688_C7638(s8 arg0, s8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B879C_C774C.s")
 
+#ifdef NON_MATCHING
+void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
+	D_8014F830 = 0;
+	D_8014F832 = 0x76;
+	D_8014F84C = 0.0f;
+	arg0++;
+	D_8014F850 = D_80142E48_151DF8;
+	D_8014F834 = arg2;
+	D_8014F83C = arg0 - 0x30;
+	arg1++;
+	D_8014F840 = 0x60;
+	D_8014F842 = 0x60;
+	D_8014F846 = 0;
+	D_8014F848 = 0;
+	D_8014F83E = arg1 - 0x30;
+	if (D_8014F83C < -0x80) {
+		D_8014F83C = -0x80;
+		D_8014F840 = arg0 + 0xB0;
+	}
+	if (D_8014F83C >= 0x20) {
+		D_8014F840 = 0x80 - D_8014F83C;
+		D_8014F846 = 0x60 - D_8014F840;
+	}
+	if (D_8014F83E < -0x80) {
+		D_8014F83E = -0x80;
+		D_8014F842 = arg1 + 0xB0;
+	}
+	if (D_8014F83E >= 0x20) {
+		D_8014F842 = 0x80 - D_8014F83E;
+		D_8014F848 = 0x60 - D_8014F842;
+	}
+	D_8014F844 = 0x100 - D_8014F840;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8C2C_C7BDC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8D80_C7D30.s")
 
