@@ -1,6 +1,11 @@
 #include <ultra64.h>
 #include "common.h"
 
+s32 D_8013D940_14C8F0 = 0;
+s32 D_8013D944_14C8F4 = 0;
+s32 D_8013D948_14C8F8 = 0;
+s32 D_8013D94C_14C8FC = 0xFF000000;
+
 s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32)(((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
 }
