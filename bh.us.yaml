@@ -252,7 +252,7 @@ segments:
       - [0xBF9C0, c, overlay_gameplay/outside/BF9C0] # Shield walls, gates, terrain, water
       - [0xCFE30, c, overlay_gameplay/outside/CFE30] # Special effects
       - [0xF6A50, c, overlay_gameplay/outside/F6A50] # Camera
-      - [0xF6BD8, c, overlay_gameplay/outside/F6BD8]
+      - [0xF7870, c, overlay_gameplay/outside/F6BD8]
       - [0xF7870, c, overlay_gameplay/outside/F7870] # Shadows
       - [0xF9230, c, overlay_gameplay/outside/F9230] # Animation, cutscenes, Adam/vehicle control
       - [0x124ED0, c, overlay_gameplay/outside/buildings] # & shooting
