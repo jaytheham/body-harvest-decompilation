@@ -2064,6 +2064,7 @@ extern s16 D_8014ECF0;
 extern s16 D_8013CBB4;
 extern u8 D_8013CBA4;
 extern u8 D_8013CBBC;
+extern Unk8014DD50 *D_8013CB8C;
 extern DebugPropEntry D_8013CBC0[];
 extern u8 D_802566D0[];
 extern Unk802566D8 D_802566D8[];
