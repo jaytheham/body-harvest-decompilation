@@ -271,7 +271,7 @@ segments:
       - [0x14C530, .data, overlay_gameplay/outside/B2CB0]
       - [0x14C870, .data, overlay_gameplay/outside/B8290]
       - [0x14C8F0, .data, overlay_gameplay/outside/BF9C0]
-      - [0x14C920, bin]
+      - [0x14C960, bin]
 
   - name: overlay_gameplay_inside
     type: code
