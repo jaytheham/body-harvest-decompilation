@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-extern Addr _14ABE0_bin;
+extern Addr _14D400_bin;
 extern Addr _175EB0_bin;
 extern Addr _195C80_bin;
 extern Addr _1C8E0_s;
@@ -426,6 +426,7 @@ extern Addr overlay_gameplay_outside_B8290_c;
 extern Addr overlay_gameplay_outside_BF9C0_c;
 extern Addr overlay_gameplay_outside_CFE30_c;
 extern Addr overlay_gameplay_outside_F6A50_c;
+extern Addr overlay_gameplay_outside_F6BD8_c;
 extern Addr overlay_gameplay_outside_F7870_c;
 extern Addr overlay_gameplay_outside_F9230_c;
 extern Addr overlay_gameplay_outside_buildings_c;

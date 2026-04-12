@@ -252,6 +252,7 @@ segments:
       - [0xBF9C0, c, overlay_gameplay/outside/BF9C0] # Shield walls, gates, terrain, water
       - [0xCFE30, c, overlay_gameplay/outside/CFE30] # Special effects
       - [0xF6A50, c, overlay_gameplay/outside/F6A50] # Camera
+      - [0xF7870, c, overlay_gameplay/outside/F7870_empty]
       - [0xF7870, c, overlay_gameplay/outside/F7870] # Shadows
       - [0xF9230, c, overlay_gameplay/outside/F9230] # Animation, cutscenes, Adam/vehicle control
       - [0x124ED0, c, overlay_gameplay/outside/buildings] # & shooting
@@ -264,7 +265,17 @@ segments:
       - [0x14AA40, .data, overlay_gameplay/outside/missions]
       - [0x14AAC0, .data, overlay_gameplay/outside/857E0]
       - [0x14AB20, .data, overlay_gameplay/outside/884C0]
-      - [0x14ABE0, bin]
+      - [0x14BB20, .data, overlay_gameplay/outside/A40B0]
+      - [0x14C160, .data, overlay_gameplay/outside/A49A0]
+      - [0x14C4C0, .data, overlay_gameplay/outside/A49A0]
+      - [0x14C4F0, .data, overlay_gameplay/outside/AAA70]
+      - [0x14C530, .data, overlay_gameplay/outside/B2CB0]
+      - [0x14C870, .data, overlay_gameplay/outside/B8290]
+      - [0x14C8F0, .data, overlay_gameplay/outside/BF9C0]
+      - [0x14CAC0, .data, overlay_gameplay/outside/CFE30]
+      - [0x14D3C0, .data, overlay_gameplay/outside/1416E0]
+      - [0x14D3E0, .data, overlay_gameplay/outside/F7870_empty]
+      - [0x14D400, bin]
 
   - name: overlay_gameplay_inside
     type: code
