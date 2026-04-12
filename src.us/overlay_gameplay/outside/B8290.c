@@ -465,7 +465,45 @@ void func_800ACB3C_BBAEC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ACC5C_BBC0C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ACE40_BBDF0.s")
+void func_800ACE40_BBDF0(u8 arg0) {
+	AlienInstance *inst;
+	s32 flags;
+	s32 randomValue;
+
+	inst = &alienInstances[arg0];
+	if (!(inst->unk20 & ALIEN_FLAG_FALL)) {
+		inst->unk12 = inst->unk48;
+		if (func_800ACA3C_BB9EC(arg0) != 0) {
+			randomValue = func_800038E0_44E0() >> 8;
+			inst->unkE = (s16) ((inst->unkE + randomValue) - 0x80);
+			if (inst->unk24 != 0) {
+				if (func_800ABCC8_BAC78(arg0) != 0) {
+					return;
+				}
+			} else {
+				if (!(inst->unk20 & 0x1000)) {
+					func_800ABFC0_BAF70(arg0);
+					func_800AC5BC_BB56C(arg0);
+					flags = inst->unk20;
+					if (flags & 0x80000000) {
+						inst->unk20 = flags | 0x1000;
+					}
+					return;
+				}
+			}
+			func_800AC064_BB014(arg0);
+			if ((inst->unk20 & 0x100) && !(inst->unk20 & 0x80000A0) &&
+				(func_80080840_8F7F0(arg0, 0x14) != 0) &&
+				(func_8011B584_12A534(inst->unk38, arg0) == 0)) {
+				inst->unk20 &= ~0x1A0;
+			}
+			func_800808F0_8F8A0(arg0, &inst->unkE);
+			if (func_800AC2FC_BB2AC(arg0) != 0) {
+				func_800ACB3C_BBAEC(arg0);
+			}
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ACF9C_BBF4C.s")
 
