@@ -1903,7 +1903,7 @@ void func_80107890_116840(VehicleInstance *arg0) {
 	tableEntry = &D_80140768_14F718[specPtr->unk55];
 
 	if (specPtr->unk4C & 0x20000000) {
-		retVal = func_800FA018_108FC8(arg0, arg0->unk6, specPtr->unk36, tableEntry);
+		retVal = func_800FA018_108FC8(arg0, arg0->unk6, specPtr->unk36);
 		if (tableEntry->unk8 < arg0->unkA - retVal) {
 			func_80123E90_132E40(arg0, (s16)((arg0->unkA - retVal - tableEntry->unk8) >> 2));
 		}

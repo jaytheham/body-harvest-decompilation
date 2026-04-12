@@ -916,12 +916,14 @@ void func_8009C458_AB408(void);
 void func_800BC2F8_CB2A8(s16, s16);
 void func_800BDAF4_CCAA4(void);
 void func_80070BFC_7FBAC(void);
+void func_8011DE60_12CE10(s32 arg0);
+s16 func_800FA7F0_1097A0(VehicleInstance *arg0, s16 arg1, s32 arg2);
 void func_80116784_125734(void);
 void func_800702C0_7F270(s16);
 void func_800C9530_D84E0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
 void func_800DEADC_EDA8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_80103760_112710(VehicleInstance *, VehicleInstance *);
-s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s16 arg2, WeaponSpecEntry *arg3);
+s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s16 arg2);
 
 /* java/1ED9E0 — additional function declarations */
 void func_8008EF1C_9DECC(u8);
