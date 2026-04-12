@@ -1176,7 +1176,7 @@ extern Unk80052B40 D_8013D5E8;
 extern s16 D_8013D5B4_14C564;
 extern s16 D_8013D5B8_14C568;
 extern s16 D_8013D5BC_14C56C;
-extern s16 D_8013D5C0_14C570;
+extern s16 D_8013D5C0_14C570[];
 extern BuildingInstance *D_80158FE8;
 extern u32 D_8014D1B8[];
 extern Unk8014F618 D_8014F618;
