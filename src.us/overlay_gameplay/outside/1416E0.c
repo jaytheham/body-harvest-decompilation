@@ -344,7 +344,18 @@ void func_80135380_144330(Unk80160080 *arg0)
   arg0->unk44 = (f32) (((f64) temp_f2) + (((f64) var_f12) / 12.0));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801354C0_144470.s")
+void func_801354C0_144470(Unk80160080 *arg0) {
+    f32 var_f2;
+    register VehicleInstance *v1 = D_80052B34;
+
+    arg0->unk30 = (f32)v1->unk0;
+	arg0->unk34 = (f32)(vehicleSpecs[D_80052B34->unk1A].unk38 - (vehicleSpecs[D_80052B34->unk1A].unk38 >> 2)) + (f32)v1->unk2;
+    arg0->unk38 = (f32)v1->unk4;
+	var_f2 = (f32)((arg0->unk6C == 2) ? 400.0 : 100.0);
+    arg0->unk24 = (f32)(((f64)(f32)coss((u16)v1->unk6) / 32768.0) * (f64)var_f2 + (f64)arg0->unk30);
+    arg0->unk28 = arg0->unk34;
+    arg0->unk2C = (f32)(((f64)(f32)sins((u16)v1->unk6) / 32768.0) * (f64)var_f2 + (f64)arg0->unk38);
+}
 
 void func_80135630_1445E0(Unk80160080 *arg0) {
 	s16 sp1E;
