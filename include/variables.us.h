@@ -1528,6 +1528,8 @@ extern f64 D_801443E0_153390;
 extern char D_801444F0_1534A0;
 extern char D_80144534_1534E4;
 extern char D_8014457C_15352C;
+extern char D_80144768_153718;
+extern char D_80144780_153730;
 extern s32 D_80157A04;
 extern s32 D_80157A08;
 extern s32 D_80157E4C;
