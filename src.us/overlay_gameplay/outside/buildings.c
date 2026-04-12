@@ -865,7 +865,43 @@ s32 func_8011D260_12C210(s8 arg0, s8 arg1) {
 	return temp_v0;
 }
 
+#ifdef NON_MATCHING
+s32 func_8011D2DC_12C28C(s16 arg0, s16 arg1) {
+	s32 index;
+	BuildingInstance *inst;
+	BuildingSpec *spec;
+
+	index = func_8011D260_12C210((s8)(arg0 >> 8), (s8)(arg1 >> 8));
+	if (index == -1) {
+		return -1;
+	}
+
+	inst = &buildingInstances[index];
+	if (inst->buildingType == 0x1F) {
+		return index;
+	}
+
+	spec = &buildingSpecs[inst->buildingType];
+	if (inst->unk8 & 1) {
+		if (arg0 >= inst->xCoord - spec->unk12 &&
+			inst->xCoord + spec->unk12 >= arg0 &&
+			arg1 >= inst->zCoord - spec->unk10 &&
+			inst->zCoord + spec->unk10 >= arg1) {
+			return index;
+		}
+	} else {
+		if (arg0 >= inst->xCoord - spec->unk10 &&
+			inst->xCoord + spec->unk10 >= arg0 &&
+			arg1 >= inst->zCoord - spec->unk12 &&
+			inst->zCoord + spec->unk12 >= arg1) {
+			return index;
+		}
+	}
+	return -1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D2DC_12C28C.s")
+#endif
 
 #ifdef NON_MATCHING
 // Score: 1725 (very close, mostly register allocation differences)
