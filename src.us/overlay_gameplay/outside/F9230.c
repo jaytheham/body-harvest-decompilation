@@ -2275,7 +2275,34 @@ void func_801103B4_11F364(VehicleInstance *arg0, VehicleSpec *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80110FB4_11FF64.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8011290C_1218BC.s")
+s16 func_8011290C_1218BC(VehicleInstance *arg0) {
+	volatile s16 sp26;
+	s16 var_v1;
+	VehicleSpec *spec;
+
+	spec = &vehicleSpecs[arg0->unk1A];
+	if ((arg0->unk1A == 0) || (spec->unk4C & 0x20000000)) {
+		func_8011DE60_12CE10(1);
+	}
+
+	if ((!(arg0->unk20 & 0x800) && !(arg0->unk20 & 4)) || (arg0->unk20 & 8)) {
+		arg0->unk2A = func_800FA40C_1093BC(arg0, arg0->unk6, spec->unk36);
+		arg0->unk28 = func_800FA40C_1093BC(arg0, (s16)(arg0->unk6 - 0x4000), spec->unk34);
+		var_v1 = func_800FA7F0_1097A0(arg0, arg0->unkE, spec->unk36 + arg0->unk12);
+	} else {
+		arg0->unk2A = func_800FA018_108FC8(arg0, arg0->unk6, spec->unk36);
+		arg0->unk28 = func_800FA018_108FC8(arg0, (s16)(arg0->unk6 - 0x4000), spec->unk34);
+		var_v1 = func_800FA018_108FC8(arg0, arg0->unkE, spec->unk36);
+	}
+
+	if ((arg0->unk1A == 0) || (spec->unk4C & 0x20000000)) {
+		sp26 = var_v1;
+		func_8011DE60_12CE10(0);
+		var_v1 = sp26;
+	}
+
+	return var_v1;
+}
 
 s32 func_80112A64_121A14(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	s32 temp_t6;
