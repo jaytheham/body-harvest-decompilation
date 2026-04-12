@@ -651,7 +651,27 @@ u8 func_800AD554_BC504(s32 arg0, s32 arg1, s32 arg2) {
 	return idx;
 }
 
+#ifdef NON_MATCHING
+void func_800AD698_BC648(VehicleInstance *arg0, s32 *arg1, s32 *arg2) {
+	s16 sp3E;
+	s16 sp3C;
+	s16 pad3A;
+	s16 sp38;
+	s32 angle;
+
+	sp3E = vehicleSpecs[arg0->unk1A].unk36;
+	sp3C = vehicleSpecs[arg0->unk1A].unk34;
+	angle = (arg0->unk6 + 0x4000) & 0xFFFF;
+	sp3E = (sp3E >> 1) + 0x24;
+	sp3C = (sp3C >> 1) + 0x24;
+	sp38 = coss(angle);
+	*arg1 = (s32)(((f64)arg0->unk0 + ((f64)(f32)sp38 / 32768.0) * (f64)sp3E) - ((f64)(f32)sins(angle) / 32768.0) * (f64)sp3C);
+	sp38 = sins(angle);
+	*arg2 = (s32)(((f64)(f32)coss(angle) / 32768.0) * (f64)sp3C + ((f64)arg0->unk4 + ((f64)(f32)sp38 / 32768.0) * (f64)sp3E));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD698_BC648.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD814_BC7C4.s")
 
