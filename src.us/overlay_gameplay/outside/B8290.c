@@ -505,7 +505,79 @@ void func_800ACE40_BBDF0(u8 arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
+void func_800ACF9C_BBF4C(u8 arg0) {
+	u8 *ptr;
+	u8 *end;
+	AlienInstance *base;
+	AlienInstance *alien;
+	s32 flags;
+	s32 xDist;
+	s32 zDist;
+	s32 negX;
+	s32 negZ;
+	s32 absX;
+	s32 absZ;
+	s16 x;
+	s16 z;
+
+	x = buildingInstances[arg0].xCoord;
+	z = buildingInstances[arg0].zCoord;
+	if (D_8014D507 > 0) {
+		ptr = D_8014D408;
+		end = ptr + D_8014D507;
+		base = alienInstances;
+		do {
+			alien = (AlienInstance *) ((u8 *) base + (*ptr++ * 0x50));
+			flags = alien->unk20;
+			if (!(flags & 0x80)) {
+				if (alien->unk24 == 0) {
+					xDist = x - alien->unk0;
+					negX = -xDist;
+					zDist = z - alien->unk4;
+					flags |= 0x1000;
+
+					if (negX < xDist) {
+						absX = xDist;
+					} else {
+						absX = negX;
+					}
+
+					negZ = -zDist;
+					absZ = negZ;
+					if (negZ < zDist) {
+						absZ = zDist;
+					}
+
+					if (absZ < absX) {
+						if (negX < xDist) {
+							zDist = negX;
+						} else {
+							xDist = zDist;
+						}
+					} else {
+						if (negZ < zDist) {
+							negX = zDist;
+						} else {
+							negX = negZ;
+						}
+						xDist = negX;
+					}
+
+					if (xDist < 0x800) {
+						alien->unk20 |= 0x1000;
+						alien->unk20 &= ~0x1A0;
+					}
+				}
+			}
+		} while ((u32) ptr < (u32) end);
+	}
+
+	func_8011BA80_12AA30(arg0, 0x800);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ACF9C_BBF4C.s")
+#endif
 
 void func_800AD0F0_BC0A0(u8 arg0) {
 	s16 xPos, zPos;
