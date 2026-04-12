@@ -31,7 +31,7 @@ These powershell tools exist to assist you:
 
 # Your Workflow
 1. You will be given a ROM address section to work on e.g. `- [0x14AA40, bin]`.
-2. Search for variables defined in this section e.g. `D_8013BA94_14AA44`, variables are named `D_<RAM address>_<ROM address>`.
+2. Search for variables defined in this section e.g. `D_8013BA94_14AA44`, variables are named `D_<RAM address>_<ROM address>`. There may be many variables defined in the same section, so you should focus on the first few variables in the section to start with.
 3. Search for references to these variables in .c and .s files to determine which C file this data belongs to. Note that some of the original C files may currently be combined into a single file, so you may need to split the C files into multiple files to match the original layout of the ROM.
 Not all functions in C are decompiled yet so you may need to search for variable references in the .s assembly files in `asm/nonmatchings` to determine the correct C file.
 4. Update the yaml file to define the target section e.g. `- [0x14A8A0, .data, overlay_gameplay/outside/F6A50]`. If the target `bin` section appears to contain data for multiple C files split it into multiple sections and focus on just the data from the first section.
