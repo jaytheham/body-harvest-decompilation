@@ -721,9 +721,9 @@ extern Unk80154082 D_8013CB48_14BAF8;
 extern s8 D_8013D890_14C840; // Triggers beacon warp
 extern u8 D_8013D894_14C844; // Beacon warp destination
 extern s16 D_8013D8F0_14C8A0[];
-extern Light D_8013D958_14C908;
+extern Ambient D_8013D958_14C908;
 extern Light D_8013D960_14C910;
-extern Light D_8013D970_14C920;
+extern Ambient D_8013D970_14C920;
 extern Light D_8013D978_14C928;
 extern s8 D_8013D9AC_14C95C;
 extern s8 D_8013D9B0_14C960;

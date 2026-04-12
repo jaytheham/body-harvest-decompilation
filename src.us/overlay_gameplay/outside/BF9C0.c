@@ -5,6 +5,10 @@ s32 D_8013D940_14C8F0 = 0;
 s32 D_8013D944_14C8F4 = 0;
 s32 D_8013D948_14C8F8 = 0;
 s32 D_8013D94C_14C8FC = 0xFF000000;
+s32 D_8013D950_14C900 = 0xFF000000;
+s32 D_8013D954_14C904 = 0xFF000000;
+Ambient D_8013D958_14C908 = { { { 0x20, 0x20, 0x20 }, 0x00, { 0x20, 0x20, 0x20 }, 0x00 } };
+Light D_8013D960_14C910 = { { { 0xFF, 0xFF, 0xFF }, 0x00, { 0xFF, 0xFF, 0xFF }, 0x00, { 0x32, 0x66, 0xE7 }, 0x00 } };
 
 s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32)(((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
