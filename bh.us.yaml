@@ -294,7 +294,8 @@ segments:
       - [0x167C90, c, overlay_gameplay/inside/167C90] # Camera
       - [0x16AF30, c, overlay_gameplay/inside/16AF30] # Effects
       - [0x173B60, c, overlay_gameplay/inside/173B60]
-      - [0x175EB0, bin]
+      - [0x175EB0, .data, overlay_gameplay/inside/167C90]
+      - [0x175EC0, bin]
 
   - name: overlay_level_greece
     type: code
