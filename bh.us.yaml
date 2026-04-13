@@ -278,6 +278,9 @@ segments:
       - [0x14F9B0, .data, overlay_gameplay/outside/buildings]
       - [0x14FB50, .data, overlay_gameplay/outside/13DA70]
       - [0x14FCA0, bin]
+      - [0x14FCB0, .data, overlay_gameplay/outside/145D70]
+      - [0x14FCF0, .data, overlay_gameplay/outside/148000]
+      - [0x14FD40, bin]
 
   - name: overlay_gameplay_inside
     type: code
