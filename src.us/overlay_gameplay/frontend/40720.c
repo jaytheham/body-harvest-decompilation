@@ -233,7 +233,20 @@ void func_80070B68_41018(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070B68_41018.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070BD8_41088.s")
+void func_80070BD8_41088(s16 arg0, s16 arg1) {
+    u8 missionId;
+    s32 var_v1;
+
+    var_v1 = 0x2A;
+    while (var_v1--) {
+        missionId = D_800D6DC0[var_v1].unk26;
+        if ((s32)missionId >= arg0 && arg1 >= (s32)missionId && D_800D6DC0[var_v1].unk1C == 3) {
+            D_800909B0[missionId].unk1C = 0;
+            D_800D6DC0[var_v1].unk1C = 0;
+            D_800D6DC0[var_v1].unk28 = 0;
+        }
+    }
+}
 
 /**
  * @brief If arg2 is divisible by 8 and arg2/8 is less than arg1, calls func_80070514 to process the resulting slot index.
