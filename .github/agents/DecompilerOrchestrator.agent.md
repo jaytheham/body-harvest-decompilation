@@ -1,5 +1,5 @@
 ---
-name: BH Orchestrator
+name: BH Decompiler Orchestration
 description: Manage decomp agents
 tools:
   [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, agent, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]

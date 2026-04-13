@@ -1,5 +1,5 @@
 ---
-name: BH Oracle
+name: BH Questions
 description: Answer questions about decompilation
 tools:
   [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, edit/createFile, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]
