@@ -380,7 +380,41 @@ void func_80139B34_148AE4(void) {
 	}
 }
 
+#ifdef NON_MATCHING
+void func_80139BF8_148BA8(void) {
+	D_801601CC = 0;
+	if (weaponSlots[0] >= 2) {
+		hudWeaponItems[D_801601CC].weaponSlot = 0;
+		D_801601CC = 1;
+	}
+	if (D_80048139 >= 2) {
+		hudWeaponItems[D_801601CC].weaponSlot = 1;
+		D_801601CC += 1;
+	}
+	if (D_8004813A >= 2) {
+		hudWeaponItems[D_801601CC].weaponSlot = 2;
+		D_801601CC += 1;
+	}
+	if ((weaponSlots + 3)[0] >= 2) {
+		hudWeaponItems[D_801601CC].weaponSlot = 3;
+		D_801601CC += 1;
+	}
+	if ((weaponSlots + 3)[1] >= 2) {
+		hudWeaponItems[D_801601CC].weaponSlot = 4;
+		D_801601CC += 1;
+	}
+	if ((weaponSlots + 3)[2] >= 2) {
+		hudWeaponItems[D_801601CC].weaponSlot = 5;
+		D_801601CC += 1;
+	}
+	if ((weaponSlots + 3)[3] >= 2) {
+		hudWeaponItems[D_801601CC].weaponSlot = 6;
+		D_801601CC += 1;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139BF8_148BA8.s")
+#endif
 
 // Vehicle weapon UI related?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139D58_148D08.s")

@@ -529,7 +529,39 @@ void func_800B41C8_C3178(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5090_C4040.s")
 
+#ifdef NON_MATCHING
+s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
+	arg3 &= 0xFF;
+
+	if (arg0 & 0x8000) {
+		if (arg0 & 0x400) {
+			D_8014F8A8[D_8014FD28].unk0 = arg1 + (arg4 * 0x120) + (arg3 * 0x10);
+			D_8014F8A8[D_8014FD28].unk4 = (s8)((arg0 & 0x3C0) >> 6);
+			D_8014F8A8[D_8014FD28].unk5 = (s8)((arg0 & 0x4000) >> 14);
+			D_8014F8A8[D_8014FD28].unk6 = (s8)((arg0 & 0x2000) >> 13);
+			D_8014FD28--;
+			if (D_8014FD28 == D_8014F89A) {
+				osSyncPrintf(&D_80142D30_151CE0, arg1, &D_8014FD28, arg3);
+			}
+			return 0;
+		}
+
+		D_8014F8A8[D_8014F89A].unk0 = arg1 + (arg4 * 0x120) + (arg3 * 0x10);
+		D_8014F8A8[D_8014F89A].unk4 = (s8)((arg0 & 0x3C0) >> 6);
+		D_8014F8A8[D_8014F89A].unk5 = (s8)((arg0 & 0x4000) >> 14);
+		D_8014F8A8[D_8014F89A].unk6 = (s8)((arg0 & 0x2000) >> 13);
+		D_8014F89A++;
+		if (D_8014FD28 == D_8014F89A) {
+			osSyncPrintf(&D_80142D58_151D08, arg1, &D_8014FD28, arg3);
+		}
+		return 0;
+	}
+
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5EE4_C4E94.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B604C_C4FFC.s")
 
@@ -1032,4 +1064,54 @@ void func_800BED24_CDCD4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800C0678_CF628.s")
 
+void func_800C0678_CF628(void);
+
+#ifdef NON_MATCHING
+s32 func_800C0D1C_CFCCC(s32 arg0, s32 arg1, s32 arg2) {
+	VehicleInstance *vehicle;
+	s32 temp_a0;
+	s32 temp_v0;
+	s32 var_a1;
+	s32 var_v1;
+	Level level;
+
+	if (D_8013D9C0_14C970[0] != 0) {
+		return 0;
+	}
+	if ((u8) D_8013D9B0_14C960 != 0) {
+		return 0;
+	}
+	if ((u8) D_8013D9AC_14C95C != 0) {
+		return 0;
+	}
+
+	vehicle = D_80052B34;
+	D_8013D9CC_14C97C = arg2;
+	temp_v0 = (vehicle->unk0 >> 7) - (s16) arg0;
+	temp_a0 = -temp_v0;
+	if (temp_a0 < temp_v0) {
+		var_a1 = temp_v0;
+	} else {
+		var_a1 = temp_a0;
+	}
+	temp_v0 = (vehicle->unk4 >> 7) - (s16) arg1;
+	temp_a0 = -temp_v0;
+	if (temp_a0 < temp_v0) {
+		var_v1 = temp_v0;
+	} else {
+		var_v1 = temp_a0;
+	}
+	D_8013D9C4_14C974[0] = (s16) (s32) sqrtf((f32) ((var_a1 * var_a1) + (var_v1 * var_v1)));
+	if (arg2 != 0) {
+		D_8013D9C0_14C970[0] = 0;
+	} else {
+		D_8013D9C0_14C970[0] = (s16) (D_8013D9C4_14C974[0] / 2);
+	}
+	level = currentLevel - 1;
+	D_800313F8 = D_80031634[level * 2];
+	func_80007410_8010(func_800C0678_CF628);
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800C0D1C_CFCCC.s")
+#endif

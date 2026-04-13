@@ -1149,7 +1149,51 @@ void func_800F2890_101840(u8 arg0, s32 *arg1, s32 *arg2, u8 *arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F2D48_101CF8.s")
 
+#ifdef NON_MATCHING
+void func_800F2ED8_101E88(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
+	u8 *base;
+	s32 temp_a1;
+	s32 temp_v0;
+	u8 temp_t7;
+	u8 state;
+
+	if ((s32) arg0 >= 9) {
+		osSyncPrintf(&D_80144728_1536D8);
+	}
+
+	if (D_80157FF0[arg0] != -1) {
+		osSyncPrintf(&D_80144740_1536F0);
+	}
+
+	base = &D_80158000[arg0 * 0x170];
+	state = base[0x22];
+	temp_a1 = -arg1;
+	if (state != 0x10) {
+		temp_v0 = temp_a1;
+		if (temp_a1 < arg1) {
+			temp_v0 = arg1;
+		}
+		if (((temp_v0 >= 0xD) || (arg2 != *(s16 *) &base[0x18])) && (state != 4)) {
+			temp_t7 = (arg4 & 0x80) | 1;
+			base[0x22] = temp_t7;
+			state = temp_t7 & 0xFF;
+		}
+
+		*(s16 *) &base[0x1C] = (s16) ((D_801601F0[base[0x23] * 0x16 + 0x12] * arg1) / 8);
+		*(s16 *) &base[0x18] = arg2;
+		if (state & 0x80) {
+			*(s16 *) &base[0x1A] = arg3;
+		}
+		if (temp_a1 == 0) {
+			*(s32 *) &base[0x0] = *(s32 *) &base[0x10];
+			*(s32 *) &base[0x4] = *(s32 *) &base[0x14];
+		}
+		func_800F2980_101930(base, temp_a1);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F2ED8_101E88.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_800F3038_101FE8(u8 arg0) {
@@ -2534,7 +2578,58 @@ s16 func_801081AC_11715C(s16 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010895C_11790C.s")
 
+#ifdef NON_MATCHING
+void func_80108B48_117AF8(VehicleInstance *arg0) {
+	s16 temp_a1;
+	s16 temp_a3;
+	s32 temp_v0;
+
+	if (arg0->unkA > 0) {
+		temp_v0 = -0x32;
+	} else {
+		temp_v0 = 0x32;
+	}
+	arg0->unk26 = (s16)(arg0->unk26 + temp_v0);
+	temp_a1 = arg0->unk8;
+	arg0->unk26 = (s16)(arg0->unk26 - (arg0->unk26 >> 4));
+	if (temp_a1 > 0) {
+		temp_v0 = -0x32;
+	} else {
+		temp_v0 = 0x32;
+	}
+	arg0->unk24 = (s16)(arg0->unk24 + temp_v0);
+	arg0->unk22 = (s16)(arg0->unk22 + 0x28);
+	arg0->unk24 = (s16)(arg0->unk24 - (arg0->unk24 >> 4));
+	temp_a3 = arg0->unk16;
+	arg0->unk8 = (s16)(temp_a1 + arg0->unk24);
+	arg0->unkA = (s16)(arg0->unkA + arg0->unk26);
+	arg0->unk6 = (s16)(arg0->unk6 + arg0->unk22 + temp_a3);
+	arg0->unk16 = (s16)(temp_a3 >> 1);
+	if (D_80052A8C & 1) {
+		arg0->unk34 = arg0->unk34 - 1.0f;
+	}
+	if (arg0->unk22 >= 0x7D1) {
+		arg0->unk22 = 0x7D0;
+	}
+	if (arg0->unk22 < -0x7D0) {
+		arg0->unk22 = -0x7D0;
+	}
+	if (arg0->unk24 >= 0x7D1) {
+		arg0->unk24 = 0x7D0;
+	}
+	if (arg0->unk24 < -0x7D0) {
+		arg0->unk24 = -0x7D0;
+	}
+	if (arg0->unk26 >= 0x7D1) {
+		arg0->unk26 = 0x7D0;
+	}
+	if (arg0->unk26 < -0x7D0) {
+		arg0->unk26 = -0x7D0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80108B48_117AF8.s")
+#endif
 
 void func_80108CA8_117C58(VehicleInstance *arg0) {
 	arg0->unk8 = arg0->unk8 + arg0->unk24;
@@ -2625,7 +2720,47 @@ void func_8010B5C8_11A578(VehicleInstance *arg0, f32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010B60C_11A5BC.s")
 
+#ifdef NON_MATCHING
+s32 func_8010B804_11A7B4(s32 arg0, VehicleInstance *arg1, s16 arg2, s16 arg3) {
+	VehicleSpec *sp2C;
+	s32 pad28;
+	s32 sp24;
+	s32 pad20;
+	s16 temp_t5;
+	s16 temp_t7;
+	s16 temp_a1;
+	s16 temp_v1;
+	s32 temp_lo;
+	s32 temp_v0;
+
+	sp2C = &vehicleSpecs[arg1->unk1A];
+	temp_v0 = (s32)func_800FB11C_10A0CC(arg1);
+	temp_t5 = arg2 & 0xFFF0;
+	temp_t7 = arg3 & 0xFFF0;
+	temp_lo = (u32)sp2C->unk32 * temp_v0;
+	arg2 = temp_t5;
+	arg3 = temp_t7;
+	temp_a1 = temp_v0 >> 4;
+
+	if (arg1->unk1A != 0) {
+		sp24 = temp_lo;
+		func_80122524_1314D4(arg1, temp_a1, temp_t5, arg3);
+		temp_lo = sp24;
+	}
+
+	temp_v1 = D_8013BB6C_14AB1C[currentLevel][arg0];
+	if (((temp_v1 * 300) < temp_lo) ||
+		((sp2C->unk4C & 0x20000000) && (arg1->unk20 & 2))) {
+		if (func_80078828_877D8(arg2, arg3, func_800FB160_10A110(arg1) & 0xFFFF, 1) != 0) {
+			func_80014180_14D80((s8)arg0);
+			return 1;
+		}
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010B804_11A7B4.s")
+#endif
 
 s32 func_8010B970_11A920(u8 *arg0, VehicleInstance *arg1) {
 	VehicleSpec *sp1C;
