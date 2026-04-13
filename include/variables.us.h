@@ -655,6 +655,9 @@ extern f64 D_800A4D30;
 extern f64 D_800A4D38;
 extern f64 D_800A4D40;
 extern f64 D_800A4D48;
+extern char D_800AE094_7E544;
+extern char D_800AE098_7E548;
+extern char D_800AE09C_7E54C;
 extern f64 D_800AEA68_7EF18;
 
 extern MissionData D_800D6DC0[42];

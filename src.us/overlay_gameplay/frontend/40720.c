@@ -1094,7 +1094,17 @@ void func_8007A754_4AC04(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007C4BC_4C96C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007C764_4CC14.s")
+void func_8007C764_4CC14(u16 arg0, u16 arg1) {
+    if (arg1 < arg0) {
+        drawText(&D_800AE094_7E544, 0);
+        return;
+    }
+    if ((arg0 + 0x14) < arg1) {
+        drawText(&D_800AE098_7E548, 0xFF);
+        return;
+    }
+    drawText(&D_800AE09C_7E54C, (s32)((arg1 - arg0) * 0xFF) / 20);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007C7F4_4CCA4.s")
 
