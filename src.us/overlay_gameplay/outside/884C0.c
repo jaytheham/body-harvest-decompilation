@@ -2615,29 +2615,20 @@ s32 func_800859F4_949A4(u8 arg0) {
 	return 0;
 }
 
-// https://decomp.me/scratch/WohYJ
-#ifdef NON_MATCHING
 s16 func_80085A9C_94A4C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s16 arg4)
 {
-  s16 diff;
-  diff = arg1 - arg0;
-  if (arg4 < diff && arg0 < arg2)
-  {
-	arg0 += arg4;
-	  return arg0;
-  }
-  if (diff < -arg4 && arg3 < arg0)
-  {
-	
-	  arg0 -= arg4;
-	
-  }
-  return arg0;
+	s16 diff;
+	diff = arg1 - arg0;
+	if (arg4 < diff && arg0 < arg2)
+	{
+		arg0 += arg4;
+	}
+	else if (diff < -arg4 && arg3 < arg0)
+	{
+		arg0 -= arg4;
+	}
+	return arg0;
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085A9C_94A4C.s")
-#endif
 
 // https://decomp.me/scratch/K2a1e
 #ifdef NON_MATCHING
