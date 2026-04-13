@@ -1570,6 +1570,8 @@ extern char D_80144868;
 extern char D_80144880;
 extern char D_801446A0_153650;
 extern char D_801446B8_153668;
+extern char D_80144728_1536D8;
+extern char D_80144740_1536F0;
 extern char D_801448A8_153858;
 extern char D_801448D0_153880;
 extern char D_801448E8_153898;
