@@ -2720,7 +2720,47 @@ void func_8010B5C8_11A578(VehicleInstance *arg0, f32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010B60C_11A5BC.s")
 
+#ifdef NON_MATCHING
+s32 func_8010B804_11A7B4(s32 arg0, VehicleInstance *arg1, s16 arg2, s16 arg3) {
+	VehicleSpec *sp2C;
+	s32 pad28;
+	s32 sp24;
+	s32 pad20;
+	s16 temp_t5;
+	s16 temp_t7;
+	s16 temp_a1;
+	s16 temp_v1;
+	s32 temp_lo;
+	s32 temp_v0;
+
+	sp2C = &vehicleSpecs[arg1->unk1A];
+	temp_v0 = (s32)func_800FB11C_10A0CC(arg1);
+	temp_t5 = arg2 & 0xFFF0;
+	temp_t7 = arg3 & 0xFFF0;
+	temp_lo = (u32)sp2C->unk32 * temp_v0;
+	arg2 = temp_t5;
+	arg3 = temp_t7;
+	temp_a1 = temp_v0 >> 4;
+
+	if (arg1->unk1A != 0) {
+		sp24 = temp_lo;
+		func_80122524_1314D4(arg1, temp_a1, temp_t5, arg3);
+		temp_lo = sp24;
+	}
+
+	temp_v1 = D_8013BB6C_14AB1C[currentLevel][arg0];
+	if (((temp_v1 * 300) < temp_lo) ||
+		((sp2C->unk4C & 0x20000000) && (arg1->unk20 & 2))) {
+		if (func_80078828_877D8(arg2, arg3, func_800FB160_10A110(arg1) & 0xFFFF, 1) != 0) {
+			func_80014180_14D80((s8)arg0);
+			return 1;
+		}
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010B804_11A7B4.s")
+#endif
 
 s32 func_8010B970_11A920(u8 *arg0, VehicleInstance *arg1) {
 	VehicleSpec *sp1C;
