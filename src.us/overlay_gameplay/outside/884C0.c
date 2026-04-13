@@ -981,47 +981,49 @@ void func_8007BEC0_8AE70(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007D690_8C640.s")
 
-// https://decomp.me/scratch/aN996
-#ifdef NON_MATCHING
 s32 func_8007E500_8D4B0(AlienInstance *arg0, AlienSpec *arg1, AlienInstance *arg2, AlienSpec *arg3)
 {
-  s32 var_a0;
-  s32 var_a2;
-  s32 var_v1;
-  s32 var_a1;
-  s32 dist;
-  if (((arg1->unk16 & 0xF) != 1) && ((arg3->unk16 & 0xF) != 1))
-  {
-	dist = func_80084F00_93EB0((VehicleInstance *) arg0, arg2);
- } else { dist = func_80084E54_93E04(arg0, arg2);
-  }
-  if (dist < (((var_v1 + var_a0) >= var_a1) * 0))
-  {
+	s32 var_a0;
+	s32 var_a1;
+	s32 var_v1;
+	s32 var_a2;
+	s32 dist;
+	if ((arg1->unk16 & 0xF) != 1 && (arg3->unk16 & 0xF) != 1)
+	{
+		dist = func_80084F00_93EB0((VehicleInstance *) arg0, arg2);
+	}
+	else
+	{
+		dist = func_80084E54_93E04(arg0, arg2);
+	}
+	if (dist < 0)
+	{
+		var_a1 = 0;
+		return var_a1;
+	}
+	var_a0 = arg1->unk38;
+	var_a1 = arg0->unk2;
+	var_v1 = arg2->unk2;
+	var_a2 = arg3->unk38; 
+
+	if (arg1->unk16 & 0x10)
+	{
+		var_a1 -= var_a0;
+		var_a0 *= 2;
+	}
+	if (arg3->unk16 & 0x10)
+	{
+		var_v1 -= var_a2;
+		var_a2 *= 2;
+	}
+	if (((dist < (arg1->unkC + arg3->unkC)) &&
+		((var_v1 + var_a2) >= var_a1)) &&
+		((var_a1 + var_a0) >= var_v1))
+	{
+		return 1;
+	}
 	return 0;
-  }
-  var_a0 = arg1->unk38;
-  var_a2 = arg3->unk38;
-  var_v1 = arg0->unk2;
-  var_a1 = arg2->unk2;
-  if (arg1->unk16 & 0x10)
-  {
-	var_v1 -= var_a0;
-	var_a0 *= 2;
-  }
-  if (arg3->unk16 & 0x10)
-  {
-	var_a1 -= var_a2;
-	var_a2 *= 2;
-  }
-  if (((dist < (arg1->unkC + arg3->unkC)) && ((var_a1 + var_a2) >= var_v1)) && ((var_v1 + var_a0) >= var_a1))
-  {
-	return 1;
-  }
-  return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E500_8D4B0.s")
-#endif
 
 // v0/v1 register swap (type↔specIdx1) + level 2 body eliminated by compiler
 #ifdef NON_MATCHING
