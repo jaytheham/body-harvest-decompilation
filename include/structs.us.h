@@ -1415,6 +1415,16 @@ typedef struct {
 } DebugPropEntry; /* stride = 0x1C */
 
 typedef struct {
+	/* 0x00 */ u8 pad00[0x8];
+	/* 0x08 */ f32 unk8;
+	/* 0x0C */ f32 unkC;
+	/* 0x10 */ u16 unk10;
+	/* 0x12 */ u16 unk12;
+	/* 0x14 */ u8 pad14[0xC];
+	/* 0x20 */ s32 unk20;
+} FrontendAnimState; /* size = 0x24 */
+
+typedef struct {
 	/* 0x00 */ u8 pad0[0xC];
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ u8 padE[2];

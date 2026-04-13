@@ -642,6 +642,7 @@ extern s32 D_80094900;
 extern s32 D_80094938;
 extern s16 currentFrontendState;
 extern u8 D_800949D4;
+extern FrontendAnimState D_8009499C;
 extern s32 D_8009E8D8;
 
 extern f32 D_800A08F8;

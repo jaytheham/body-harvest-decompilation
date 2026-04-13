@@ -1218,7 +1218,19 @@ void func_80080A84_50F34(FrontendStreamSlot* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081290_51740.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800819C0_51E70.s")
+void func_800819C0_51E70(FrontendAnimState *arg0) {
+	f32 temp_f0;
+
+	if (arg0->unk20 != 0) {
+		temp_f0 = arg0->unk8;
+		if ((f64) temp_f0 >= 1.0) {
+			arg0->unk10 = (u16) ((s32) (arg0->unk10 + 1) % (s32) arg0->unk12);
+			arg0->unk8 = 0.0f;
+			return;
+		}
+		arg0->unk8 = (f32)temp_f0 + arg0->unkC;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081A50_51F00.s")
 
