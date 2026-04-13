@@ -647,7 +647,17 @@ s32 func_80077E78_48328(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078424_488D4.s")
 
 // startFile (unused?)
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800788E4_48D94.s")
+void func_800788E4_48D94(void) {
+    currentLevel = 1;
+    func_800050C4_5CC4();
+    func_8000DC9C_E89C(D_8005BB48[D_80031B84], D_8005BB48[D_80031B84 ^ 1]);
+    func_8000505C_5C5C();
+    showDemoText = 0;
+    D_800313C8_31FC8 = 1;
+    func_80006DDC_79DC();
+    D_800313C8_31FC8 = 0;
+    func_80011D24_12924();
+}
 
 // Start saved game
 void func_80078968_48E18(void) {
