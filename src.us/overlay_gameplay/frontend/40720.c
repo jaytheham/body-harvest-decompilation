@@ -1240,7 +1240,40 @@ void func_8008098C_50E3C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8008098C_50E3C.s")
 #endif
 
+#ifdef NON_MATCHING
+FrontendStreamSlot* func_800809DC_50E8C(s32 arg0) {
+	FrontendStreamSlot *temp_v0;
+	s32 v1;
+	s32 limit;
+	FrontendStreamSlot **temp_a0;
+	FrontendStreamSlot **slotTable;
+	s32 *temp_a3;
+	s32 temp_a2;
+	s32 temp_t2;
+
+	v1 = (slotTable = D_800D8550, 0);
+	limit = 0xA;
+loop_1:
+	temp_a0 = slotTable;
+	temp_a0 += v1;
+	if (*temp_a0 != NULL) goto loop_inc;
+	temp_a3 = &D_800DE068;
+	temp_a2 = *temp_a3;
+	temp_v0 = &D_800D8578[v1];
+	*temp_a0 = temp_v0;
+	temp_v0->unk50 = temp_a2;
+	temp_t2 = temp_a2;
+	temp_t2 += arg0 * 14;
+	*temp_a3 = temp_t2;
+	return temp_v0;
+loop_inc:
+	v1 = (v1 + 1) & 0xFF;
+	if (limit != v1) goto loop_1;
+	osSyncPrintf(&D_800AE97C_7EE2C);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800809DC_50E8C.s")
+#endif
 
 void func_80080A84_50F34(FrontendStreamSlot* arg0) {
 	s32 index;
