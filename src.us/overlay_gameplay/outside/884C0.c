@@ -2404,34 +2404,30 @@ s32 func_800851C8_94178(u8 arg0, u8 arg1, u16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800851C8_94178.s")
 #endif
 
-// https://decomp.me/scratch/ftkqT
-#ifdef NON_MATCHING
-s32 func_80085340_942F0(u8 arg0, u16 arg1) {
+s32 func_80085340_942F0(u8 arg0, u16 arg1)
+{
 	s32 var_v1;
 	s32 diff_y;
 	s32 diff_x;
 	s16 sp22;
-	f32 sp1C;
-	f32 sp18;
-
 	diff_x = alienInstances[arg0].unk0 - D_80052B34->unk0;
 	diff_y = alienInstances[arg0].unk4 - D_80052B34->unk4;
-	sp1C = (f32)diff_x;
-	sp18 = (f32)diff_y;
-	sp22 = func_80003824_4424(sp1C, sp18);
-	if (-(func_80003824_4424(sp1C, sp18) - D_80052B34->unk6) < (sp22 - D_80052B34->unk6)) {
-		var_v1 = func_80003824_4424(sp1C, sp18) - D_80052B34->unk6;
-	} else {
-		var_v1 = -(func_80003824_4424(sp1C, sp18) - D_80052B34->unk6);
+
+	sp22 = func_80003824_4424((f32)diff_x, (f32)diff_y);
+	if ((-(func_80003824_4424((f32)diff_x, (f32)diff_y) - D_80052B34->unk6)) < (sp22 - D_80052B34->unk6))
+	{
+		var_v1 = func_80003824_4424((f32)diff_x, (f32)diff_y) - D_80052B34->unk6;
 	}
-	if (var_v1 < (s32)arg1) {
+	else
+	{
+		var_v1 = -(func_80003824_4424((f32)diff_x, (f32)diff_y) - D_80052B34->unk6);
+	}
+	if (var_v1 < (s32) arg1)
+	{
 		return 1;
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085340_942F0.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_80085448_943F8(u8 arg0) {
