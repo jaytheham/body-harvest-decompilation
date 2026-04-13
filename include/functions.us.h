@@ -384,6 +384,7 @@ void func_80018D14_19914();
 s16 func_800B0F20_BFED0(s32, s32);
 void func_800078E4_84E4(s32 arg0, s32 *arg1);
 void func_800B165C_C060C(s32);
+void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3);
 void func_800B31FC_C21AC(s8, s8);
 s32 func_800B325C_C220C(s8, s8, u16);
 s32 func_800ABCC8_BAC78(u8 arg0);

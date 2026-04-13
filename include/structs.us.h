@@ -795,6 +795,20 @@ typedef struct {
 } Unk80152D00; /* 0x30 bytes */
 
 typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s32 unk10;
+	/* 0x14 */ u8 unk14;
+	/* 0x15 */ u8 pad15[3];
+} Unk80152D00SubEntry; /* 0x18 bytes */
+
+typedef struct {
 	/* 0x00 */ u8 pad0[0x12];
 	/* 0x12 */ u16 unk12;
 	/* 0x14 */ s16 unk14;
