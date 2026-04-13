@@ -267,7 +267,6 @@ segments:
       - [0x14AB20, .data, overlay_gameplay/outside/884C0]
       - [0x14BB20, .data, overlay_gameplay/outside/A40B0]
       - [0x14C160, .data, overlay_gameplay/outside/A49A0]
-      - [0x14C4C0, .data, overlay_gameplay/outside/A49A0]
       - [0x14C4F0, .data, overlay_gameplay/outside/AAA70]
       - [0x14C530, .data, overlay_gameplay/outside/B2CB0]
       - [0x14C870, .data, overlay_gameplay/outside/B8290]
@@ -275,7 +274,13 @@ segments:
       - [0x14CAC0, .data, overlay_gameplay/outside/CFE30]
       - [0x14D3C0, .data, overlay_gameplay/outside/1416E0]
       - [0x14D3E0, .data, overlay_gameplay/outside/F7870_empty]
-      - [0x14D400, bin]
+      - [0x14D400, .data, overlay_gameplay/outside/F9230]
+      - [0x14F9B0, .data, overlay_gameplay/outside/buildings]
+      - [0x14FB50, .data, overlay_gameplay/outside/13DA70]
+      - [0x14FCA0, bin]
+      - [0x14FCB0, .data, overlay_gameplay/outside/145D70]
+      - [0x14FCF0, .data, overlay_gameplay/outside/148000]
+      - [0x14FD40, bin]
 
   - name: overlay_gameplay_inside
     type: code
