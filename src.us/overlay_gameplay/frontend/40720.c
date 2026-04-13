@@ -33,7 +33,18 @@ typedef enum FrontEndState
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070270_40720.s")
 
 // calculatePlayersTotalScore
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070390_40840.s")
+s32 func_80070390_40840(void) {
+    s32 total;
+    s32 i;
+    D_80052A98[currentLevel - 1].score = D_80052B2C->unk30;
+    D_80052A98[currentLevel - 1].humansKilled = D_8004816A;
+    D_80052A98[currentLevel - 1].secondsElapsed = (u16)((u32)D_80052A90 / 1000U);
+    total = 0;
+    for (i = 0; i < 6; i++) {
+        total += D_80052A98[i].score;
+    }
+    return total;
+}
 
 // Stores the current level's play time in seconds and returns the total play time across all levels.
 s32 func_80070420_408D0(void) {
