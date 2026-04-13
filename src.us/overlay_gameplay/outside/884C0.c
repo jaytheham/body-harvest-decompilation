@@ -3192,25 +3192,22 @@ void func_80088E10_97DC0(s16 arg0) {
 	D_8014DD50[arg0].unk2 += 0x8000;
 }
 
-// https://decomp.me/scratch/ZTo6Z
-#ifdef NON_MATCHING
 void func_80088E40_97DF0(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s8 arg5, s8 arg6, s8 arg7)
 {
-  s16 sp3A;
-  s32 sp30;
+  s32 xx;
+	s16 sp3A;
   s32 sp34;
-  s32 sp2C;
-
+s32 sp30;
+	s32 sp2C;
+	
   func_80128428_1373D8(&alienInstances[arg0], arg2, arg3, arg4, &sp34, &sp30, &sp2C);
-  func_800DF848_EE7F8((s16) sp34, (s16) sp30, (s16) sp2C, 0x50, 0);
-  sp3A = func_800C7924_D68D4((s16) sp34, (s16) sp30, (s16) sp2C, 0x40, -8, alienSpecs[alienInstances[arg0].specIndex].unkC, func_8008916C_9811C(arg0, arg1), 1);
-  func_800C80F0_D70A0((0x4000 - alienInstances[arg0].unk6) & 0xFFFF, 0, 0, sp3A);
+  func_800DF848_EE7F8(sp34, sp30, sp2C, 0x50, 0);
+	xx=  func_8008916C_9811C(arg0, arg1);
+  sp3A = func_800C7924_D68D4(sp34, sp30, sp2C, 0x40, -8, alienSpecs[alienInstances[arg0].specIndex].unkC, xx, 1);
+  func_800C80F0_D70A0((0x4000 - alienInstances[arg0].unk6), 0, 0, sp3A);
   func_800C8184_D7134(arg5, arg6, arg7, sp3A);
   func_80088E10_97DC0(arg1);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088E40_97DF0.s")
-#endif
 
 s32 func_80088F78_97F28(u8 arg0) {
 	s32 unk0 = *(s32 *)&alienSpecs[alienInstances[arg0].specIndex];
