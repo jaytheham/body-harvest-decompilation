@@ -148,7 +148,11 @@ void func_802D5288_2549C8(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DDC88_25D3C8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DDF04_25D644.s")
+// Plays a sound effect for alien arg0 and resets its unk2C counter to 0x100
+void func_802DDF04_25D644(u8 arg0) {
+    func_800A93A4_B8354(arg0, -6, -0x73, 0x13);
+    alienInstances[arg0].unk2C = 0x100;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DDF50_25D690.s")
 
