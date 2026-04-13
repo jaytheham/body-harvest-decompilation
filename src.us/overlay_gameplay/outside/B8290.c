@@ -466,7 +466,48 @@ void func_800AC0E4_BB094(u8 arg0)
   func_8012B110_13A0C0((s32) alien, 0, (InputStruct_8012B150 *) &alienInstances[alien->unk38]);
 }
 
+#ifdef NON_MATCHING
+void func_800AC198_BB148(u8 arg0) {
+	AlienInstance *alien;
+	s8 zoneIdx;
+	Unk80146688 *zone;
+	s32 dx, neg_dx, abs_dx;
+	s32 dz, neg_dz, abs_dz;
+
+	alien = &alienInstances[arg0];
+	zoneIdx = alien->unk3D;
+
+	if (zoneIdx != -1) {
+		zone = &D_80146688_155638[currentLevel - 1][zoneIdx];
+		dx = zone->unk0 - (alien->unk0 >> 8);
+		neg_dx = -dx;
+		dz = zone->unk1 - (alien->unk4 >> 8);
+		if (neg_dx < dx) { abs_dx = dx; } else { abs_dx = neg_dx; }
+		neg_dz = -dz;
+		if (neg_dz < dz) { abs_dz = dz; } else { abs_dz = neg_dz; }
+
+		if (abs_dz < abs_dx) {
+			if (neg_dx < dx) { abs_dx = dx; } else { abs_dx = neg_dx; }
+			dx = abs_dx;
+		} else {
+			if (neg_dz < dz) { neg_dx = dz; } else { neg_dx = neg_dz; }
+			dx = neg_dx;
+		}
+
+		if (zone->unk2 < dx) {
+			alien->unk20 |= 0x1100;
+			alien->unk20 &= ~0x40;
+			alien->unk14 = (s16)(zone->unk0 << 8);
+			alien->unk18 = (s16)(zone->unk1 << 8);
+			alien->unk16 = (s16)((func_800B84D0_C7480(alien->unk14, alien->unk18) >> 8) + 0x64);
+			alien->unk2C = 0xC8;
+			alien->unk38 = 0xFF;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC198_BB148.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC2FC_BB2AC.s")
 
