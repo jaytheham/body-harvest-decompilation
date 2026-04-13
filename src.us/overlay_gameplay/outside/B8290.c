@@ -236,7 +236,73 @@ void func_800AB4B4_BA464(u8 arg0) {
 	
 }
 
+#ifdef NON_MATCHING
+void func_800AB570_BA520(u8 arg0) {
+	s32 pad0;
+	s32 pad1;
+	s16 targetX;
+	s16 targetY;
+	s16 targetZ;
+	s32 dx;
+	s32 negDx;
+	s32 absDx;
+	s32 dz;
+	s32 negDz;
+	s32 absDz;
+
+	alienInstances[arg0].unk48 = 0xC0;
+	if (func_80080840_8F7F0(arg0, 0x23) != 0) {
+		alienInstances[arg0].unk48 = 0;
+		alienInstances[arg0].unk36 = 0;
+		alienInstances[arg0].unk24++;
+		return;
+	}
+
+	func_8011B3F0_12A3A0(0x64, &targetX, &targetY, &targetZ);
+	dx = alienInstances[arg0].unk0 - targetX;
+	dz = alienInstances[arg0].unk4 - targetZ;
+	negDx = -dx;
+	if (negDx < dx) {
+		absDx = dx;
+	} else {
+		absDx = negDx;
+	}
+	negDz = -dz;
+	if (negDz < dz) {
+		absDz = dz;
+	} else {
+		absDz = negDz;
+	}
+	if (absDz < absDx) {
+		if (negDx < dx) {
+			absDx = dx;
+		} else {
+			absDx = negDx;
+		}
+		dx = absDx;
+	} else {
+		if (negDz < dz) {
+			negDx = dz;
+		} else {
+			negDx = negDz;
+		}
+		dx = negDx;
+	}
+	if (!(dx < 0x4B0)) {
+		return;
+	}
+	alienInstances[arg0].unk20 &= 0xFFFDFE5F;
+	alienInstances[arg0].unk24 = 0x14;
+	alienInstances[arg0].unk38 = 0x64;
+	alienInstances[arg0].unk14 = targetX;
+	alienInstances[arg0].unk18 = targetZ;
+	alienInstances[arg0].unk20 |= 0x100;
+	alienInstances[arg0].unk48 = 0xA0;
+	alienInstances[arg0].unk16 = targetY;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB570_BA520.s")
+#endif
 
 void func_800AB6D0_BA680(u8 arg0) {
 	alienInstances[arg0].unkE += 0x100;
@@ -651,7 +717,27 @@ u8 func_800AD554_BC504(s32 arg0, s32 arg1, s32 arg2) {
 	return idx;
 }
 
+#ifdef NON_MATCHING
+void func_800AD698_BC648(VehicleInstance *arg0, s32 *arg1, s32 *arg2) {
+	s16 sp3E;
+	s16 sp3C;
+	s16 pad3A;
+	s16 sp38;
+	s32 angle;
+
+	sp3E = vehicleSpecs[arg0->unk1A].unk36;
+	sp3C = vehicleSpecs[arg0->unk1A].unk34;
+	angle = (arg0->unk6 + 0x4000) & 0xFFFF;
+	sp3E = (sp3E >> 1) + 0x24;
+	sp3C = (sp3C >> 1) + 0x24;
+	sp38 = coss(angle);
+	*arg1 = (s32)(((f64)arg0->unk0 + ((f64)(f32)sp38 / 32768.0) * (f64)sp3E) - ((f64)(f32)sins(angle) / 32768.0) * (f64)sp3C);
+	sp38 = sins(angle);
+	*arg2 = (s32)(((f64)(f32)coss(angle) / 32768.0) * (f64)sp3C + ((f64)arg0->unk4 + ((f64)(f32)sp38 / 32768.0) * (f64)sp3E));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD698_BC648.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD814_BC7C4.s")
 
