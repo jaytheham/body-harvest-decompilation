@@ -295,7 +295,9 @@ segments:
       - [0x16AF30, c, overlay_gameplay/inside/16AF30] # Effects
       - [0x173B60, c, overlay_gameplay/inside/173B60]
       - [0x175EB0, .data, overlay_gameplay/inside/167C90]
-      - [0x175EC0, bin]
+      - [0x175EC0, databin] # can use type databin or rodatabin
+      - [0x18CC70, .rodata, overlay_gameplay/inside/1648A0]
+      - [0x18CE80, rodatabin]
 
   - name: overlay_level_greece
     type: code
