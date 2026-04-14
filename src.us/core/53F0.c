@@ -823,15 +823,13 @@ void func_80007410_8010(void *arg0) {
 	if (D_8004DC74 != 0) {
 		for (;;) {
 			if (i == 0) {
+				i--;
 				break;
 			}
 			if (D_8004DC68[--i] != 0) {
 				continue;
 			}
 			break;
-		}
-		if (i == 0) {
-			i = -1;
 		}
 	}
 
