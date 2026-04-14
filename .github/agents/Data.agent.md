@@ -31,7 +31,7 @@ These powershell tools exist to assist you:
 
 ## Workflow
 1. You will be given a ROM address section to work on e.g. `- [0x14AA40, bin]`.
-2. Search for variables defined in this section e.g. `D_8013BA94_14AA44`, variables are named `D_<RAM address>_<ROM address>`. There may be many variables defined in the same section, so you should focus on the first few variables in the section to start with.
+2. Search for variables defined in this section e.g. `D_8013BA94_14AA44`, variables are named `D_<RAM address>_<ROM address>` or sometimes without the ROM address `D_<RAM address>`. There may be many variables defined in the same section, so you should focus on the first few variables in the section to start with.
 3. Search for references to these variables in .c and .s files to determine which C file this data belongs to. Note that some of the original C files may currently be combined into a single file, so you may need to split an existing C file into multiple files to match the original layout of the ROM.
 Not all functions in C are decompiled yet so you may need to search for variable references in the .s assembly files in `asm/nonmatchings` to determine the correct C file.
 4. Update the yaml file to define the target section e.g. `- [0x14A8A0, .data, overlay_gameplay/outside/F6A50]`, the third argument of the section must be the path of the c section this data belongs to. If the target `bin` section appears to contain data for multiple C files split it into multiple sections - leaving a un-named `bin` section for the remaining data - and focus on just the data from the first section. Note that data sections are always aligned to 0x10 bytes.
@@ -43,6 +43,6 @@ Then continue updating the C code to fix any differences in the output until the
 
 There are some already decompiled data sections in the yaml for reference.
 
-Do not cheat by adding all the remaining bin data as a variable in the last defined non-bin section, you must add variables to the C files which reference them, and split the yaml sections so each data section corresponds to the correct C file as needed to match the original ROM layout.
+Do not cheat by adding all the remaining bin data as a variable in the last defined non-bin section's C file, you must add variables to the C files which reference them, and split the yaml sections so each data section corresponds to the correct C file as needed to match the original ROM layout.
 
 If the build script returns `build/bh.us.z64: OK` then the built ROM perfectly matches the original ROM.
