@@ -15,8 +15,8 @@ You will be given a C file to target, follow this process:
 1. Begin by creating a new git branch named with this format: `improver-orchestrator-YYYY-mm-dd-HH-MM-SS`, make sure to include the date and time.
 2. Scan the C file to find all functions with a NON_MATCHING wrapper, these are functions which have been decompiled but do not yet match the original assembly when compiled.
 3. Orchestrate processing of these NON_MATCHING functions one at a time. For each function, you will:
-  - Remove the NON_MATCHING wrapper.
-  - Build the ROM.
+  - Remove the NON_MATCHING wrapper. While the wrapper is in place the function is not compiled at all, so removing it is necessary to test changes and see the diff score for the function.
+  - Build the ROM so the diff tool can calculate the C implementation's CURRENT score. It is normal that the build will return `FAILED` at this stage because the function does not yet match.
   - Check the current score with the diff tool, a lower score is better, `CURRENT(0)` is a match.
   - Create a new subagent, agentName `BH Match Improver`, and tell the subagent to target the unwrapped function (if the subagent gets rate-limited you can update `Improver.agent.md` to use a different model: `Auto (copilot)`).
 4. After a subagent finishes work undo any changes outside of the `ExampleFixes`, `include`, and `src.us/` directories - only changes inside these directories are allowed.
