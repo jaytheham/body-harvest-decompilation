@@ -159,16 +159,15 @@ s32 func_80010490_11090(u8 arg0) {
 	return D_80031BC4_327C4[arg0];
 }
 
-#ifdef NON_MATCHING
 s32 func_800104AC_110AC(u8 arg0) {
 	s32 var_s0;
 	s32 var_s1;
-	s32 var_s2;
 	s32 temp_v1;
 
-	var_s2 = (arg0 - 1) & 0xFF;
+	arg0--;
+	arg0 = (u8)arg0;
 	var_s1 = (s32) &D_37F840;
-	if (var_s2 != 0) {
+	if (arg0 != 0) {
 		do {
 			temp_v1 = var_s1 & 0xF;
 			if (temp_v1 != 0) {
@@ -187,8 +186,7 @@ s32 func_800104AC_110AC(u8 arg0) {
 				}
 				var_s1 = func_80010290_10E90(func_80010290_10E90(var_s1));
 			}
-			var_s2 = (var_s2 - 1) & 0xFF;
-		} while (var_s2 != 0);
+		} while (--arg0 != 0);
 	}
 	temp_v1 = var_s1 & 0xF;
 	if (temp_v1 != 0) {
@@ -196,9 +194,6 @@ s32 func_800104AC_110AC(u8 arg0) {
 	}
 	return var_s1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800104AC_110AC.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_800105F0_111F0(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32 *arg5) {
