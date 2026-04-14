@@ -51,6 +51,55 @@ Generates: a0=arg0, a1=arg1, a2=i(=0x1F), a3=&D_800522C0[0x1F]=D_8005252C, v0=co
 
 ---
 
+### Two-s16-arg `void` loop with `u8 missionId` + `bnel` multi-condition + `move v0,v1` delay slots
+
+When a void function has two s16 params and a backward-scan `while (var_v1--)` loop (indexed over a struct array) with:
+- a `u8 missionId` intermediate declared **before** the loop counter
+- three-part `&&` condition (range check + field equality) generating multiple `bnezl`/`bnel` with `move v0,v1` delay slots
+- actions clearing both `u8` and `s16` fields in two arrays
+
+**Register layout** (a2=ptr, a3=arg0, a1=arg1, v1=counter, v0=missionId intermediate):
+```
+li      v1,0x29        ; folded from 0x2A
+lbu     v0,0x26(a2)    ; missionId
+slt     at,v0,a3       ; missionId < arg0?
+bnez    at,Lskip
+slt     at,a1,v0       ; (delay) arg1 < missionId?
+bnezl   at,Lnext
+move    v0,v1          ; (delay slot) v0=counter if branch taken
+lbu     t9,0x1c(a2)
+bnel    t0,t9,Lnext
+move    v0,v1          ; (delay slot) v0=counter if branch taken
+...
+sh      zero,0x28(a2)
+Lskip: move  v0,v1      ; all-paths: v0=counter
+Lnext: addiu a2,a2,-stride
+bnez    v1,loop
+addiu   v1,v1,-1
+```
+
+**Key**: use `void` return (not `s32`) with `u8 missionId` declared first and `s32 var_v1` second, and `while (var_v1--)` with `var_v1 = 0x2A` (NOT `do {} while` with `0x29`). The `while` pattern folds the init to `li v1,0x29`, tells IDO to precompute ptr into a2, and keeps a1 free for sign-extended arg1. Using `s32` return or `do{}while` with `var_v1=0x29` plus any `temp_v0=var_v1` assignment causes IDO to swap v0/v1 (putting the loop counter in v0 instead of v1).
+
+**Example** (score 0 – fully matched):
+```c
+void func_80070BD8_41088(s16 arg0, s16 arg1) {
+    u8 missionId;
+    s32 var_v1;
+
+    var_v1 = 0x2A;
+    while (var_v1--) {
+        missionId = D_800D6DC0[var_v1].unk26;
+        if ((s32)missionId >= arg0 && arg1 >= (s32)missionId && D_800D6DC0[var_v1].unk1C == 3) {
+            D_800909B0[missionId].unk1C = 0;
+            D_800D6DC0[var_v1].unk1C = 0;
+            D_800D6DC0[var_v1].unk28 = 0;
+        }
+    }
+}
+```
+
+---
+
 ### Two-array variant: searching two arrays, `arg1-- == 0` for nth-match counter
 
 When a function searches `D_800522C0[i]` AND ALSO accesses a second array (e.g. `buildingInstances[arg0]`) inside the loop body, the register allocation changes because `a3` is taken by the second array's base pointer. The D_800522C0 iterator pointer stays in `a2` (via normal `while (i--)` precompute), and the loop counter moves to `v1`.

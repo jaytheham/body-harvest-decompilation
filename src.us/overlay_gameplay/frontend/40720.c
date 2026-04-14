@@ -33,7 +33,18 @@ typedef enum FrontEndState
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070270_40720.s")
 
 // calculatePlayersTotalScore
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070390_40840.s")
+s32 func_80070390_40840(void) {
+    s32 total;
+    s32 i;
+    D_80052A98[currentLevel - 1].score = D_80052B2C->unk30;
+    D_80052A98[currentLevel - 1].humansKilled = D_8004816A;
+    D_80052A98[currentLevel - 1].secondsElapsed = (u16)((u32)D_80052A90 / 1000U);
+    total = 0;
+    for (i = 0; i < 6; i++) {
+        total += D_80052A98[i].score;
+    }
+    return total;
+}
 
 // Stores the current level's play time in seconds and returns the total play time across all levels.
 s32 func_80070420_408D0(void) {
@@ -233,7 +244,20 @@ void func_80070B68_41018(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070B68_41018.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070BD8_41088.s")
+void func_80070BD8_41088(s16 arg0, s16 arg1) {
+    u8 missionId;
+    s32 var_v1;
+
+    var_v1 = 0x2A;
+    while (var_v1--) {
+        missionId = D_800D6DC0[var_v1].unk26;
+        if ((s32)missionId >= arg0 && arg1 >= (s32)missionId && D_800D6DC0[var_v1].unk1C == 3) {
+            D_800909B0[missionId].unk1C = 0;
+            D_800D6DC0[var_v1].unk1C = 0;
+            D_800D6DC0[var_v1].unk28 = 0;
+        }
+    }
+}
 
 /**
  * @brief If arg2 is divisible by 8 and arg2/8 is less than arg1, calls func_80070514 to process the resulting slot index.
@@ -647,7 +671,17 @@ s32 func_80077E78_48328(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078424_488D4.s")
 
 // startFile (unused?)
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800788E4_48D94.s")
+void func_800788E4_48D94(void) {
+    currentLevel = 1;
+    func_800050C4_5CC4();
+    func_8000DC9C_E89C(D_8005BB48[D_80031B84], D_8005BB48[D_80031B84 ^ 1]);
+    func_8000505C_5C5C();
+    showDemoText = 0;
+    D_800313C8_31FC8 = 1;
+    func_80006DDC_79DC();
+    D_800313C8_31FC8 = 0;
+    func_80011D24_12924();
+}
 
 // Start saved game
 void func_80078968_48E18(void) {
@@ -1060,7 +1094,17 @@ void func_8007A754_4AC04(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007C4BC_4C96C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007C764_4CC14.s")
+void func_8007C764_4CC14(u16 arg0, u16 arg1) {
+    if (arg1 < arg0) {
+        drawText(&D_800AE094_7E544, 0);
+        return;
+    }
+    if ((arg0 + 0x14) < arg1) {
+        drawText(&D_800AE098_7E548, 0xFF);
+        return;
+    }
+    drawText(&D_800AE09C_7E54C, (s32)((arg1 - arg0) * 0xFF) / 20);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007C7F4_4CCA4.s")
 
@@ -1196,7 +1240,40 @@ void func_8008098C_50E3C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8008098C_50E3C.s")
 #endif
 
+#ifdef NON_MATCHING
+FrontendStreamSlot* func_800809DC_50E8C(s32 arg0) {
+	FrontendStreamSlot *temp_v0;
+	s32 v1;
+	s32 limit;
+	FrontendStreamSlot **temp_a0;
+	FrontendStreamSlot **slotTable;
+	s32 *temp_a3;
+	s32 temp_a2;
+	s32 temp_t2;
+
+	v1 = (slotTable = D_800D8550, 0);
+	limit = 0xA;
+loop_1:
+	temp_a0 = slotTable;
+	temp_a0 += v1;
+	if (*temp_a0 != NULL) goto loop_inc;
+	temp_a3 = &D_800DE068;
+	temp_a2 = *temp_a3;
+	temp_v0 = &D_800D8578[v1];
+	*temp_a0 = temp_v0;
+	temp_v0->unk50 = temp_a2;
+	temp_t2 = temp_a2;
+	temp_t2 += arg0 * 14;
+	*temp_a3 = temp_t2;
+	return temp_v0;
+loop_inc:
+	v1 = (v1 + 1) & 0xFF;
+	if (limit != v1) goto loop_1;
+	osSyncPrintf(&D_800AE97C_7EE2C);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800809DC_50E8C.s")
+#endif
 
 void func_80080A84_50F34(FrontendStreamSlot* arg0) {
 	s32 index;
@@ -1208,7 +1285,28 @@ void func_80080A84_50F34(FrontendStreamSlot* arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
+void func_80080AD4_50F84(FrontendStreamSlot *arg0, AnimChannelState *arg1, u8 arg2) {
+	typedef struct { s16 a; s16 b; s16 c; s16 d; s16 e; s16 f; } AnimFrame12;
+	s32 temp_v0;
+
+	if (arg1->unk14 > (temp_v0 = arg1->unk18)) {
+		s32 start_frame = *(u16 *)((s32)arg0 + arg2 * 4 + 0xC);
+		AnimFrameData14 *temp_t3;
+		u16 temp_at;
+
+		start_frame += temp_v0;
+		temp_t3 = (start_frame & 0xFFFF) + (AnimFrameData14 *)arg0->unk50;
+		*(AnimFrame12 *)&arg1->unk24 = *(AnimFrame12 *)temp_t3;
+		temp_at = temp_t3->g;
+		arg1->unk1C = 0.0f;
+		arg1->unk30 = temp_at;
+		arg1->unk20 = (f32)(u32)(temp_at & 0xFFFF);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080AD4_50F84.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080B80_51030.s")
 
@@ -1218,7 +1316,19 @@ void func_80080A84_50F34(FrontendStreamSlot* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081290_51740.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800819C0_51E70.s")
+void func_800819C0_51E70(FrontendAnimState *arg0) {
+	f32 temp_f0;
+
+	if (arg0->unk20 != 0) {
+		temp_f0 = arg0->unk8;
+		if ((f64) temp_f0 >= 1.0) {
+			arg0->unk10 = (u16) ((s32) (arg0->unk10 + 1) % (s32) arg0->unk12);
+			arg0->unk8 = 0.0f;
+			return;
+		}
+		arg0->unk8 = (f32)temp_f0 + arg0->unkC;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081A50_51F00.s")
 
