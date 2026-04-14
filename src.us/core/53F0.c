@@ -878,13 +878,14 @@ void func_80007570_8170(void) {
 	D_80047F9C = 0;
 	D_80047F94 = 0;
 	weaponSlots[0] = 2;
-	weaponSlots[1] = 0;
-	weaponSlots[2] = 0;
+	D_80048139 = 0;
+	D_8004813A = 0;
 	weaponSlots[4] = 0;
 	weaponSlots[5] = 0;
 	weaponSlots[6] = 0;
 	weaponSlots[3] = 0;
 	D_8004DC48.unk0 = 1;
+	D_8004DC54 = 0;
 	D_8004DC50.unk0 = 0;
 	D_80052A90 = 0;
 	D_8004D154 = 0;
