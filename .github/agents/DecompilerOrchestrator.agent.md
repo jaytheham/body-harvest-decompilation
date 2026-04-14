@@ -13,7 +13,7 @@ This is a matching decompilation project for Body Harvest (N64). The goal is to 
 You will be given a list of functions to decompile, follow this process:
 
 1. Begin by creating a new git branch named with this format: `decomp-orchestrator-YYYY-mm-dd-HH-MM-SS`, make sure to include the date and time.
-2. Orchestrate processing of these functions one at a time. For each function, you will create a new subagent, the subagent must use agentName `BH Decompiler`, and use it to decompile a single function (if the subagent gets rate-limited you can update `decomp.agent.md` to use a different model version (`Claude Sonnet 4.5 (copilot)` and `Claude Sonnet 4.6 (copilot)` are available)).
+2. Orchestrate processing of these functions one at a time. For each function, you will create a new subagent, the subagent must use agentName `BH Decompiler`, and use it to decompile a single function (if the subagent gets rate-limited you can update `Decompiler.agent.md` to use a different model version (`Claude Sonnet 4.5 (copilot)` and `Claude Sonnet 4.6 (copilot)` are available)).
 3. After a subagent finishes work undo any changes outside of the `ExampleFixes`, `include`, and `src.us/` directories - only changes inside these directories are allowed.
 4. Move any variables, structs, or function definitions the subagent added to a c file in `src.us/` into the appropriate header file in `include/` (e.g. variables to `variables.us.h`, structs to `structs.us.h`, and function prototypes to `functions.us.h`).
 5. Then you will build the ROM, if it returns `build/bh.us.z64: OK` in the terminal output then the decompilation is successful, commit the remaining changes with a message like `Decompile func_80092ADC_A1A8C` and then return to step 2 and process the next function.

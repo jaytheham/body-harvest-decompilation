@@ -221,7 +221,8 @@ segments:
       - [0x2EA10, databin]
       - [0x31EF0, .data, core/1050]
       - [0x31FD0, .data, core/53F0]
-      - [0x32000, bin]
+      - [0x32000, .data, core/AD60]
+      - [0x32050, bin]
 
   - name: overlay_gameplay_frontend
     type: code

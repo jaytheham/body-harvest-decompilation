@@ -1,0 +1,44 @@
+---
+name: BH Match Improver Orchestration
+description: Manage improver agents
+tools:
+  [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, agent, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]
+model: GPT-5.3-Codex (copilot)
+agents: ["BH Match Improver"]
+---
+
+## Overview
+
+This is a matching decompilation project for Body Harvest (N64). The goal is to create C code that "matches" - compiles to the exact same assembly as the original game ROM.
+You will be given a C file to target, follow this process:
+
+1. Begin by creating a new git branch named with this format: `improver-orchestrator-YYYY-mm-dd-HH-MM-SS`, make sure to include the date and time.
+2. Scan the C file to find all functions with a NON_MATCHING wrapper, these are functions which have been decompiled but do not yet match the original assembly when compiled.
+3. Orchestrate processing of these NON_MATCHING functions one at a time. For each function, you will:
+  - Remove the NON_MATCHING wrapper.
+  - Build the ROM.
+  - Check the current score with the diff tool, a lower score is better, `CURRENT(0)` is a match.
+  - Create a new subagent, agentName `BH Match Improver`, and tell the subagent to target the unwrapped function (if the subagent gets rate-limited you can update `Improver.agent.md` to use a different model: `Auto (copilot)`).
+4. After a subagent finishes work undo any changes outside of the `ExampleFixes`, `include`, and `src.us/` directories - only changes inside these directories are allowed.
+5. Move any variables, structs, or function definitions the subagent added to a c file in `src.us/` into the appropriate header file in `include/` (e.g. variables to `variables.us.h`, structs to `structs.us.h`, and function prototypes to `functions.us.h`).
+6. Then build the ROM (remove the NON_MATCHING wrapper first if it's been re-applied), if it returns `build/bh.us.z64: OK` in the terminal output then the decompilation is matching, commit the remaining changes with a message like `Matched func_80092ADC_A1A8C` and then return to step 3 and process the next function.
+7. If the build returns `FAILED`, check the function's CURRENT score with `.\tools\diff.ps1 <function name> | Select-Object -First 1`. If it is lower than the original score, wrap the function with NON_MATCHING and commit the changes. If it is the same or higher, undo all changes - including the removal of the NON_MATCHING wrapper - before moving on to the next function.
+
+Once the subagent has processed all NON_MATCHING functions in the file your job is done.
+
+## Project Structure
+
+- `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
+- `asm/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
+- `build/`: Readonly - compiled object files and the final ROM image.
+- `tools/`: Readonly - tools for other tasks.
+- `src.us/`: C source files.
+- `include/`: Header files for variables, functions, and structs.
+- `ExampleFixes/`: Hints for decompilation.
+
+## Tools
+
+These powershell tools exist to assist you:
+
+- Build the ROM: `.\tools\make.ps1`
+- Get the diff score for a function: `.\tools\diff.ps1 <function name> | Select-Object -First 1`
