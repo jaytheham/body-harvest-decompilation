@@ -1287,7 +1287,6 @@ s32 func_80008478_9078(void) {
 }
 
 // https://decomp.me/scratch/6ZUC8
-#ifdef NON_MATCHING
 u8 func_8000851C_911C(s16 arg0) {
 	u8 *entry;
 	u8 *item;
@@ -1295,18 +1294,24 @@ u8 func_8000851C_911C(s16 arg0) {
 	s32 i;
 
 	entry = (u8 *)D_8004D1C8;
-	i = 0x3F;
-	do {
+	i = 0x40;
+	while (i--) {
 		if (entry[0] != 0 && entry[1] == arg0) {
-			item = &D_8004D348[entry[2] * 9];
 			count = entry[3];
-			if (count != 0) {
-				count--;
-				do {
+			item = &D_8004D348[entry[2] * 9];
+			if (count--) {
+				loop_1:
+				{
 					u8 *cur = item;
+
 					item += 9;
-					if (func_800081D4_8DD4(cur) == 0) goto next;
-				} while (count--);
+					if (func_800081D4_8DD4(cur) == 0) {
+						goto next;
+					}
+				}
+				if (count != 0) {
+					goto loop_1_check;
+				}
 				item = &D_8004D348[entry[2] * 9];
 				count = entry[3];
 				osSyncPrintf(&D_80037018_37C18, entry[4] + 1);
@@ -1319,17 +1324,18 @@ u8 func_8000851C_911C(s16 arg0) {
 				}
 				osSyncPrintf(&D_80037034_37C34);
 				return entry[4];
+				loop_1_check:
+				if (count--) {
+					goto loop_1;
+				}
 			}
 		}
 next:
 		entry += 6;
-	} while (i--);
+	}
 	osSyncPrintf(&D_80037038_37C38, arg0);
 	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000851C_911C.s")
-#endif
 
 #ifdef NON_MATCHING
 void guess_checkMissions(void) {
