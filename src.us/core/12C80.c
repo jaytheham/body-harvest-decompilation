@@ -54,80 +54,7 @@ Unk8006AA84Node *func_80012128_12D28(void) {
 	return *entry;
 }
 
-#ifdef NON_MATCHING
-s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA84Node **arg2) {
-	Unk8006AA80Node *new_node;
-	Unk8006AA80Node *sp18;
-	Unk8006AA80Node *cur;
-	Unk8006AA80Node *prev;
-	s16 saved;
-	s16 new_id;
-
-	if (D_8006AB88 == 0) {
-		return -1;
-	}
-	sp18 = *arg1;
-	D_80031CA0_328A0++;
-	if (D_80031CA0_328A0 >= 0x11) {
-		D_80031CA0_328A0--;
-		return -1;
-	}
-	new_node = (Unk8006AA80Node *)func_80012128_12D28();
-	if (new_node == NULL) {
-		return -1;
-	}
-	saved = new_node->unk4;
-	*new_node = arg0;
-	new_node->unk4 = saved;
-	if (*arg2 == NULL) {
-		new_node->unk34 = NULL;
-		new_node->unk30 = NULL;
-		new_id = D_80033B4C_3474C + 1;
-		new_node->unk10 = new_id;
-		*arg2 = (Unk8006AA84Node *)new_node;
-		*arg1 = new_node;
-	} else {
-		cur = sp18;
-		prev = NULL;
-		if (cur != NULL) {
-			do {
-				if (cur->unk2 - new_node->unk2 >= 0) {
-					prev = cur->unk30;
-					if (prev != NULL) {
-						prev->unk34 = new_node;
-						new_node->unk34 = cur;
-						new_node->unk30 = cur->unk30;
-						cur->unk30 = new_node;
-						new_id = D_80033B4C_3474C + 1;
-						new_node->unk10 = new_id;
-					} else {
-						new_node->unk34 = cur;
-						new_node->unk30 = NULL;
-						cur->unk30 = new_node;
-						new_id = D_80033B4C_3474C + 1;
-						new_node->unk10 = new_id;
-						*arg1 = new_node;
-					}
-					goto done;
-				}
-				prev = cur;
-				cur = cur->unk34;
-			} while (cur != NULL);
-		}
-		prev->unk34 = new_node;
-		new_node->unk34 = NULL;
-		new_id = D_80033B4C_3474C + 1;
-		new_node->unk30 = prev;
-		new_node->unk10 = new_id;
-		*arg2 = (Unk8006AA84Node *)new_node;
-	}
-done:
-	D_80033B4C_3474C = new_id;
-	return new_id;
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800121B4_12DB4.s")
-#endif
 
 void func_800123A4_12FA4(Unk8006AA80Node *arg0, Unk8006AA80Node **arg1, Unk8006AA80Node **arg2) {
 	if (D_8006AB88 != 0 && arg0 != NULL) {
@@ -1033,6 +960,7 @@ void func_80014208_14E08(s32 arg0, s16 arg1, s32 arg2) {
 	}
 }
 
+// https://decomp.me/scratch/5QTSy
 #ifdef NON_MATCHING
 s32 func_80014278_14E78(void) {
 	s16 soundId;
