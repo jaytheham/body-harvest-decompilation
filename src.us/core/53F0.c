@@ -1237,12 +1237,7 @@ s32 func_800081D4_8DD4(u8 *arg0) {
 		u32 v = *(u32 *)(D_80050AE0 + arg0[1] * 24);
 		u32 vr = v >> 12;
 		u32 bit16_check = (vr & 0x10) ^ 0x10;
-		u32 bit12_inv;
-		if (bit16_check != 0) {
-			return 1;
-		}
-		bit12_inv = (vr & 1) ^ 1;
-		return bit12_inv != 0;
+		return (bit16_check != 0) || (((vr & 1) ^ 1) != 0);
 	}
 	case 0x8E:
 		return func_80007F60_8B60(arg0);
@@ -1269,7 +1264,7 @@ s32 func_800081D4_8DD4(u8 *arg0) {
 		if (arg0[6] == 1) {
 			D_8004D1C0 = arg0[7] - D_8004D1B0[arg0[6]];
 		}
-		return !(D_8004D1B0[arg0[6]] < arg0[7]);
+		return D_8004D1B0[arg0[6]] >= arg0[7];
 	case 0xB9:
 		return func_8000726C_7E6C(arg0[6]);
 	case 0xBA:
