@@ -130,7 +130,7 @@ extern u8 D_80033C6C_W;
 extern s8 D_80033C70_34870[];
 extern u8 D_80033C80_34880;
 extern u8 D_80033C80_W;
-extern s8 D_80033C84_34884;
+extern s8 D_80033C84_34884[];
 extern u8 D_80033C88_34888;
 extern u8 D_80033C88_W;
 extern s16 D_80033C90_34890;
