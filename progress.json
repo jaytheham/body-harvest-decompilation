@@ -1,24 +1,24 @@
 {
-  "generated": "2026-04-14T19:56:47Z",
-  "commit": "6f4a3104",
-  "commit_timestamp": "2026-04-15T07:41:52+12:00",
+  "generated": "2026-04-14T23:51:11Z",
+  "commit": "fcdd0854",
+  "commit_timestamp": "2026-04-15T11:51:02+12:00",
   "overall": {
-    "total_functions": 3054,
-    "matched": 1199,
-    "non_matching": 404,
-    "asm_stubs": 1451,
-    "matched_pct": 39.26,
-    "decompiled_pct": 52.49
+    "total_functions": 3053,
+    "matched": 1200,
+    "non_matching": 403,
+    "asm_stubs": 1450,
+    "matched_pct": 39.31,
+    "decompiled_pct": 52.51
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 223,
-      "non_matching": 97,
-      "asm_stubs": 99,
-      "total": 419,
-      "matched_pct": 53.2,
-      "decompiled_pct": 76.4
+      "matched": 224,
+      "non_matching": 96,
+      "asm_stubs": 98,
+      "total": 418,
+      "matched_pct": 53.6,
+      "decompiled_pct": 76.6
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -147,11 +147,11 @@
     {
       "path": "core/53F0.c",
       "segment": "core",
-      "matched": 54,
-      "non_matching": 21,
-      "asm_stubs": 21,
-      "total": 96,
-      "matched_pct": 56.2,
+      "matched": 55,
+      "non_matching": 20,
+      "asm_stubs": 20,
+      "total": 95,
+      "matched_pct": 57.9,
       "contributor": "jaytheham"
     },
     {
@@ -549,9 +549,9 @@
     {
       "name": "jaytheham",
       "files": 43,
-      "matched": 1194,
-      "non_matching": 404,
-      "asm_stubs": 1381
+      "matched": 1195,
+      "non_matching": 403,
+      "asm_stubs": 1380
     },
     {
       "name": "Meridian Lex",
@@ -636,11 +636,11 @@
     },
     {
       "date": "2026-04-15",
-      "commit": "6f4a310",
-      "matched_pct": 39.26,
-      "decompiled_pct": 52.49,
-      "matched": 1199,
-      "total": 3054
+      "commit": "e4bad4c",
+      "matched_pct": 39.31,
+      "decompiled_pct": 52.51,
+      "matched": 1200,
+      "total": 3053
     }
   ]
 }
