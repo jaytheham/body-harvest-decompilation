@@ -77,16 +77,17 @@ void func_800048E8_54E8(void) {
 
 #ifdef NON_MATCHING
 void func_80004918_5518(void) {
-	D47D40Entry *end;
-	D47D40Entry *p;
-	end = (D47D40Entry *)D_80047F40;
-	p = (D47D40Entry *)D_80047D40;
-	do {
-		p->f2 = 0;
-		p->f4 = 0;
-		p->f6 = 0;
-		p->f0 = 0;
+	s16 *end;
+	s16 *p;
+	end = D_80047F40;
+	p = D_80047D40; do {
+		p += 4;
+		p[-3] = 0;
+		p[-2] = 0;
+		p[-1] = 0;
+		p[-4] = 0;
 		p++;
+		p--;
 	} while (p != end);
 }
 #else
