@@ -83,18 +83,21 @@ void func_80010228_10E28(u32 rom_addr, void *dest_buffer) {
 // https://decomp.me/scratch/cg2WJ
 #ifdef NON_MATCHING
 s32 func_80010290_10E90(s32 arg0) {
-	s32 header[6]; /* 0x18 bytes = MIO0 header at sp+0x20 */
+	s32 var_a1;
 	s32 var_v1;
+	s32 header[6]; /* 0x18 bytes = MIO0 header at sp+0x20 */
 
 	func_80010228_10E28(arg0, header);
 	if (header[0] != 0x4D494F30) {
 		return 0;
 	}
+	var_a1 = header[1] & 3;
 	var_v1 = header[1];
-	if (header[1] & 3) {
-		var_v1 = (header[1] - (header[1] & 3)) + 4;
+	if (var_a1 != 0) {
+		var_v1 = (header[1] - var_a1) + 4;
 	}
-	return arg0 + var_v1;
+	arg0 += var_v1;
+	return arg0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80010290_10E90.s")
