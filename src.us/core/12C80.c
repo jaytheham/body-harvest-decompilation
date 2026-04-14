@@ -651,6 +651,7 @@ void func_800136F0_142F0(void) {
 void func_80013720_14320(void)
 {
   s8 sp1F;
+
   if (D_8006AB88 != 0)
   {
 	sp1F = D_80033C88_34888 % 4;
