@@ -657,14 +657,20 @@ void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 
 #ifdef NON_MATCHING
 void func_80006DDC_79DC(void) {
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	void (*loadLevelCallback)(void *);
 	s32 var_s3;
 
+	loadLevelCallback = (void (*)(void *)) loadLevel;
 	D_80052ACA = 5;
 	var_s3 = 0;
 	gameplayMode = 7;
 	func_800056A8_62A8();
 	func_800056A8_62A8();
-	func_8000F190_FD90((void (*)(void *))loadLevel);
+	func_8000F190_FD90(loadLevelCallback);
 	while (destroyThreadIfMessageInQueue() == 0) {
 		func_800050C4_5CC4();
 		func_8000505C_5C5C();
@@ -728,7 +734,7 @@ void func_80006DDC_79DC(void) {
 				func_80070270(2);
 				func_80005654_6254(0xFF, 0xFF, 0xFF);
 				func_80005654_6254(0xFF, 0xFF, 0xFF);
-				func_8000F190_FD90((void (*)(void *))loadLevel);
+				func_8000F190_FD90(loadLevelCallback);
 				while (destroyThreadIfMessageInQueue() == 0) {
 					func_800050C4_5CC4();
 					func_8000505C_5C5C();
