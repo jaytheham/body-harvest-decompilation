@@ -77,16 +77,17 @@ void func_800048E8_54E8(void) {
 
 #ifdef NON_MATCHING
 void func_80004918_5518(void) {
-	D47D40Entry *end;
-	D47D40Entry *p;
-	end = (D47D40Entry *)D_80047F40;
-	p = (D47D40Entry *)D_80047D40;
-	do {
-		p->f2 = 0;
-		p->f4 = 0;
-		p->f6 = 0;
-		p->f0 = 0;
+	s16 *end;
+	s16 *p;
+	end = D_80047F40;
+	p = D_80047D40; do {
+		p += 4;
+		p[-3] = 0;
+		p[-2] = 0;
+		p[-1] = 0;
+		p[-4] = 0;
 		p++;
+		p--;
 	} while (p != end);
 }
 #else
@@ -460,13 +461,17 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 
 	if (arg10 != NULL) {
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, arg10);
-		gDPTileSync(D_8005BB2C++);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPLoadSync(D_8005BB2C++);
 		if (arg3 == 8) {
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, arg10);
+			gDPTileSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
 			gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
 		} else {
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, arg10);
+			gDPTileSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
 			gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 15);
 		}
 		gDPPipeSync(D_8005BB2C++);
@@ -652,14 +657,20 @@ void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 
 #ifdef NON_MATCHING
 void func_80006DDC_79DC(void) {
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	void (*loadLevelCallback)(void *);
 	s32 var_s3;
 
+	loadLevelCallback = (void (*)(void *)) loadLevel;
 	D_80052ACA = 5;
 	var_s3 = 0;
 	gameplayMode = 7;
 	func_800056A8_62A8();
 	func_800056A8_62A8();
-	func_8000F190_FD90((void (*)(void *))loadLevel);
+	func_8000F190_FD90(loadLevelCallback);
 	while (destroyThreadIfMessageInQueue() == 0) {
 		func_800050C4_5CC4();
 		func_8000505C_5C5C();
@@ -723,7 +734,7 @@ void func_80006DDC_79DC(void) {
 				func_80070270(2);
 				func_80005654_6254(0xFF, 0xFF, 0xFF);
 				func_80005654_6254(0xFF, 0xFF, 0xFF);
-				func_8000F190_FD90((void (*)(void *))loadLevel);
+				func_8000F190_FD90(loadLevelCallback);
 				while (destroyThreadIfMessageInQueue() == 0) {
 					func_800050C4_5CC4();
 					func_8000505C_5C5C();
@@ -812,15 +823,13 @@ void func_80007410_8010(void *arg0) {
 	if (D_8004DC74 != 0) {
 		for (;;) {
 			if (i == 0) {
+				i--;
 				break;
 			}
 			if (D_8004DC68[--i] != 0) {
 				continue;
 			}
 			break;
-		}
-		if (i == 0) {
-			i = -1;
 		}
 	}
 
@@ -869,13 +878,14 @@ void func_80007570_8170(void) {
 	D_80047F9C = 0;
 	D_80047F94 = 0;
 	weaponSlots[0] = 2;
-	weaponSlots[1] = 0;
-	weaponSlots[2] = 0;
+	D_80048139 = 0;
+	D_8004813A = 0;
 	weaponSlots[4] = 0;
 	weaponSlots[5] = 0;
 	weaponSlots[6] = 0;
 	weaponSlots[3] = 0;
 	D_8004DC48.unk0 = 1;
+	D_8004DC54 = 0;
 	D_8004DC50.unk0 = 0;
 	D_80052A90 = 0;
 	D_8004D154 = 0;
@@ -1126,21 +1136,21 @@ s32 func_80007DE0_89E0(u8 *arg0) {
 loop:
 	switch (arg0[0]) {
 	case 0x98:
-		return D_80052B34->unk1C < D_80257A3A[D_80052B34->unk1A * 56];
+		return D_80052B34->unk1C < *(u16 *)&D_80257A3A[D_80052B34->unk1A * 112];
 	case 0x9A: {
 		VehicleInstance *vi = vehicleInstances + arg0[1];
-		return vi->unk1C < D_80257A3A[vi->unk1A * 56];
+		return vi->unk1C < *(u16 *)&D_80257A3A[vi->unk1A * 112];
 	}
 	case 0x99: {
 		BuildingInstance *bi = buildingInstances + arg0[1];
-		return (s8)bi->hitPoints < D_802590A9[bi->buildingType * 32];
+		return (s8)bi->hitPoints < ((s8 *)D_802590A9)[bi->buildingType * 32];
 	}
 	case 0x9B: {
 		AlienInstance *alien = alienInstances + D_8004D161[arg0[1] * 2];
 		if (alien->unk20 & 0x100000) {
 			return 1;
 		}
-		return alien->hitPoints < D_802566BA[alien->specIndex * 52];
+		return alien->hitPoints < *(u16 *)&D_802566BA[alien->specIndex * 104];
 	}
 	case 0xAF:
 		arg0 = &D_8004D180[arg0[1] * 3];
@@ -1183,24 +1193,24 @@ loop_1:
 	switch (arg0[0]) {
 	case 0x98:
 		switch (arg1[0]) {
-		case 0x99:
-			return D_80052540 == arg1[1];
 		case 0x9A:
 			return D_80052B34 == &vehicleInstances[arg1[1]];
 		case 0xAF:
-			arg1 = &D_8004D180[arg1[1] * 3];
+			arg1 = D_8004D180 + arg1[1] * 3;
 			goto loop_1;
+		case 0x99:
+			return D_80052540 == arg1[1];
 		}
 	case 0x9B:
 		switch (arg1[0]) {
 		case 0x99:
 			return arg0[1] == (((*(u32 *)(D_80050AE0 + arg1[1] * 0x18)) << 26) >> 28);
 		case 0xAF:
-			arg1 = &D_8004D180[arg1[1] * 3];
+			arg1 = D_8004D180 + arg1[1] * 3;
 			goto loop_1;
 		}
 	case 0xAF:
-		arg0 = &D_8004D180[arg0[1] * 3];
+		arg0 = D_8004D180 + arg0[1] * 3;
 		goto loop_1;
 	}
 }
@@ -1231,12 +1241,7 @@ s32 func_800081D4_8DD4(u8 *arg0) {
 		u32 v = *(u32 *)(D_80050AE0 + arg0[1] * 24);
 		u32 vr = v >> 12;
 		u32 bit16_check = (vr & 0x10) ^ 0x10;
-		u32 bit12_inv;
-		if (bit16_check != 0) {
-			return 1;
-		}
-		bit12_inv = (vr & 1) ^ 1;
-		return bit12_inv != 0;
+		return (bit16_check != 0) || (((vr & 1) ^ 1) != 0);
 	}
 	case 0x8E:
 		return func_80007F60_8B60(arg0);
@@ -1263,7 +1268,7 @@ s32 func_800081D4_8DD4(u8 *arg0) {
 		if (arg0[6] == 1) {
 			D_8004D1C0 = arg0[7] - D_8004D1B0[arg0[6]];
 		}
-		return !(D_8004D1B0[arg0[6]] < arg0[7]);
+		return D_8004D1B0[arg0[6]] >= arg0[7];
 	case 0xB9:
 		return func_8000726C_7E6C(arg0[6]);
 	case 0xBA:
@@ -1286,7 +1291,6 @@ s32 func_80008478_9078(void) {
 }
 
 // https://decomp.me/scratch/6ZUC8
-#ifdef NON_MATCHING
 u8 func_8000851C_911C(s16 arg0) {
 	u8 *entry;
 	u8 *item;
@@ -1294,18 +1298,24 @@ u8 func_8000851C_911C(s16 arg0) {
 	s32 i;
 
 	entry = (u8 *)D_8004D1C8;
-	i = 0x3F;
-	do {
+	i = 0x40;
+	while (i--) {
 		if (entry[0] != 0 && entry[1] == arg0) {
-			item = &D_8004D348[entry[2] * 9];
 			count = entry[3];
-			if (count != 0) {
-				count--;
-				do {
+			item = &D_8004D348[entry[2] * 9];
+			if (count--) {
+				loop_1:
+				{
 					u8 *cur = item;
+
 					item += 9;
-					if (func_800081D4_8DD4(cur) == 0) goto next;
-				} while (count--);
+					if (func_800081D4_8DD4(cur) == 0) {
+						goto next;
+					}
+				}
+				if (count != 0) {
+					goto loop_1_check;
+				}
 				item = &D_8004D348[entry[2] * 9];
 				count = entry[3];
 				osSyncPrintf(&D_80037018_37C18, entry[4] + 1);
@@ -1318,17 +1328,18 @@ u8 func_8000851C_911C(s16 arg0) {
 				}
 				osSyncPrintf(&D_80037034_37C34);
 				return entry[4];
+				loop_1_check:
+				if (count--) {
+					goto loop_1;
+				}
 			}
 		}
 next:
 		entry += 6;
-	} while (i--);
+	}
 	osSyncPrintf(&D_80037038_37C38, arg0);
 	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000851C_911C.s")
-#endif
 
 #ifdef NON_MATCHING
 void guess_checkMissions(void) {
