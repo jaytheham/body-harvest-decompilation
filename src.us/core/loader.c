@@ -593,8 +593,8 @@ s32 func_800119F4_125F4(s32 arg0)
 #ifdef NON_MATCHING
 s32 func_80011A40_12640(u8 arg0, s32 arg1) {
 	D_8006AA70 = arg1;
-	func_800101F0_10DF0(D_8006AA70, D_80031B90_32790[arg0], D_80031BAC_327AC[arg0] - D_80031B90_32790[arg0]);
-	return D_80031BAC_327AC[arg0] - D_80031B90_32790[arg0] + arg1;
+	func_800101F0_10DF0(arg1, *(&D_80031B90_32790[arg0]), *(&D_80031BAC_327AC[arg0]) - *(&D_80031B90_32790[arg0]));
+	return *(&D_80031BAC_327AC[arg0]) - *(&D_80031B90_32790[arg0]) + arg1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011A40_12640.s")
