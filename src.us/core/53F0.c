@@ -1132,21 +1132,21 @@ s32 func_80007DE0_89E0(u8 *arg0) {
 loop:
 	switch (arg0[0]) {
 	case 0x98:
-		return D_80052B34->unk1C < D_80257A3A[D_80052B34->unk1A * 56];
+		return D_80052B34->unk1C < *(u16 *)&D_80257A3A[D_80052B34->unk1A * 112];
 	case 0x9A: {
 		VehicleInstance *vi = vehicleInstances + arg0[1];
-		return vi->unk1C < D_80257A3A[vi->unk1A * 56];
+		return vi->unk1C < *(u16 *)&D_80257A3A[vi->unk1A * 112];
 	}
 	case 0x99: {
 		BuildingInstance *bi = buildingInstances + arg0[1];
-		return (s8)bi->hitPoints < D_802590A9[bi->buildingType * 32];
+		return (s8)bi->hitPoints < ((s8 *)D_802590A9)[bi->buildingType * 32];
 	}
 	case 0x9B: {
 		AlienInstance *alien = alienInstances + D_8004D161[arg0[1] * 2];
 		if (alien->unk20 & 0x100000) {
 			return 1;
 		}
-		return alien->hitPoints < D_802566BA[alien->specIndex * 52];
+		return alien->hitPoints < *(u16 *)&D_802566BA[alien->specIndex * 104];
 	}
 	case 0xAF:
 		arg0 = &D_8004D180[arg0[1] * 3];
