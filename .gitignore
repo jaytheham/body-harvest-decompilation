@@ -2,9 +2,12 @@
 
 __pycache__/
 asm/
+asm.eu/
 assets/
+assets.eu/
 bin/
 build/
+build.eu/
 expected/
 junk/
 jupyter/

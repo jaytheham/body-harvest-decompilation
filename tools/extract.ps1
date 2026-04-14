@@ -1,3 +1,9 @@
-# runs the make clean && make build inside the bh-container
+param(
+    [Parameter(Mandatory=$false)]
+    [ValidateSet('us','eu', IgnoreCase=$true)]
+    [string]$Version = 'us'
+)
 
-docker exec -it bh-container bash -c "make extract"
+$versionArg = $Version.ToLower()
+
+docker exec -it bh-container bash -c "make extract VERSION=$versionArg"

@@ -13,6 +13,9 @@ options:
     #include <ultra64.h>
     #include "common.h"
   src_path: src.eu
+  asm_path: asm.eu
+  asset_path: assets.eu
+  build_path: build.eu
   extensions_path: tools/splat_ext
   lib_path: build/lib
   # migrate_rodata_to_functions: yes
@@ -46,7 +49,10 @@ segments:
     exclusive_ram_id: 800702A0
     overlay: true
     subsegments:
-      - [0x40750, bin, overlay_gameplay/frontend/40750]
+      - [0x40750, c, overlay_gameplay/frontend/40750]
+      - [0x4E450, c, overlay_gameplay/frontend/4E450]
+      - [0x52E50, c, overlay_gameplay/frontend/52E50]
+      - [0x61620, bin]
 
   - name: overlay_gameplay_outside
     type: code
@@ -55,7 +61,27 @@ segments:
     exclusive_ram_id: 800702A0
     overlay: true
     subsegments:
-      - [0x7FD80, bin, overlay_gameplay/outside/7FD80]
+      - [0x7FD80, c, overlay_gameplay/outside/7FD80]
+      - [0x82CC0, c, overlay_gameplay/outside/82CC0]
+      - [0x86340, c, overlay_gameplay/outside/86340]
+      - [0x89020, c, overlay_gameplay/outside/89020]
+      - [0xA4C10, c, overlay_gameplay/outside/A4C10]
+      - [0xA5500, c, overlay_gameplay/outside/A5500]
+      - [0xAB5D0, c, overlay_gameplay/outside/AB5D0]
+      - [0xB3810, c, overlay_gameplay/outside/B3810]
+      - [0xB8DF0, c, overlay_gameplay/outside/B8DF0]
+      - [0xBDDD0, c, overlay_gameplay/outside/BDDD0]
+      - [0xC0520, c, overlay_gameplay/outside/C0520]
+      - [0xD0990, c, overlay_gameplay/outside/D0990]
+      - [0xF75B0, c, overlay_gameplay/outside/F75B0]
+      - [0xF83D0, c, overlay_gameplay/outside/F83D0]
+      - [0xF9D90, c, overlay_gameplay/outside/F9D90]
+      - [0x125A30, c, overlay_gameplay/outside/125A30]
+      - [0x13E5D0, c, overlay_gameplay/outside/13E5D0]
+      - [0x142240, c, overlay_gameplay/outside/142240]
+      - [0x1468D0, c, overlay_gameplay/outside/1468D0]
+      - [0x148B60, c, overlay_gameplay/outside/148B60]
+      - [0x14B400, bin]
 
   - name: overlay_gameplay_inside
     type: code
@@ -64,7 +90,12 @@ segments:
     exclusive_ram_id: 800702A0
     overlay: true
     subsegments:
-      - [0x158E90, bin, overlay_gameplay/inside/158E90]
+      - [0x158E90, c, overlay_gameplay/inside/158E90]
+      - [0x165400, c, overlay_gameplay/inside/165400]
+      - [0x1687F0, c, overlay_gameplay/inside/1687F0]
+      - [0x16BA90, c, overlay_gameplay/inside/16BA90]
+      - [0x1746C0, c, overlay_gameplay/inside/1746C0]
+      - [0x176A10, bin]
 
   - name: overlay_level_greece
     type: code
@@ -139,6 +170,6 @@ segments:
     type: bin
     start: 0x32C8E0
     subsegments:
-      - [, bin, ]
+      - [0x32C8E0, bin]
 
   - [0xC00000]
