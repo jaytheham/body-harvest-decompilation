@@ -345,26 +345,22 @@ void func_80012A74_13674(void) {
 	func_80000450_1050(&synConfig, 0xA);
 
 	{
-		Unk80031424 **p_player = D_8006AB18;
-		ALCSeq **p_seq = D_8006AB20;
-		ALSeqpConfig *p_cfg = D_8006AB50;
-		do {
-			p_cfg->maxVoices   = 0x40;
-			p_cfg->maxEvents   = 0x80;
-			p_cfg->maxChannels = 0x10;
-			p_cfg->heap        = &D_8006AB98;
-			p_cfg->initOsc     = 0;
-			p_cfg->updateOsc   = 0;
-			p_cfg->stopOsc     = 0;
-			p_cfg->debugFlags  = 7;
-			*p_player = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0x7C);
-			alCSPNew((ALCSPlayer *)*p_player, p_cfg);
-			(*p_player)->unk2C = 0;
-			*p_seq = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0xF8);
-			p_seq++;
-			p_cfg++;
-			p_player++;
-		} while ((u32)p_seq < (u32)&D_8006AB28);
+		s32 i;
+
+		for (i = 0; i < 4; i++) {
+			D_8006AB50[i].maxVoices   = 0x40;
+			D_8006AB50[i].maxEvents   = 0x80;
+			D_8006AB50[i].maxChannels = 0x10;
+			D_8006AB50[i].heap        = &D_8006AB98;
+			D_8006AB50[i].initOsc     = 0;
+			D_8006AB50[i].updateOsc   = 0;
+			D_8006AB50[i].stopOsc     = 0;
+			D_8006AB50[i].debugFlags  = 7;
+			D_8006AB18[i] = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0x7C);
+			alCSPNew((ALCSPlayer *)D_8006AB18[i], &D_8006AB50[i]);
+			D_8006AB18[i]->unk2C = 0;
+			D_8006AB20[i] = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0xF8);
+		}
 	}
 
 	sndpConfig.maxSounds = 0x10;
@@ -374,10 +370,11 @@ void func_80012A74_13674(void) {
 	alSndpNew((ALSndPlayer *)D_8006AB10, &sndpConfig);
 
 	{
-		Unk8006AA84Node **p_aa = D_8006AA88;
-		do {
-			*p_aa++ = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0x38);
-		} while (p_aa != &D_8006AAC8);
+		s32 i;
+
+		for (i = 0; i < 0x10; i++) {
+			D_8006AA88[i] = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0x38);
+		}
 	}
 
 	D_8006AA84 = 0;
@@ -412,11 +409,11 @@ void func_80012A74_13674(void) {
 				maxSeqLen++;
 			}
 			{
-				s32 *p_seq_buf = D_8006AB30;
+				s32 i;
 
-				do {
-					*p_seq_buf++ = (s32)alHeapDBAlloc(0, 0, &D_8006AB98, 1, (s32)maxSeqLen);
-				} while (p_seq_buf != &D_8006AB38);
+				for (i = 0; i < 2; i++) {
+					D_8006AB30[i] = (s32)alHeapDBAlloc(0, 0, &D_8006AB98, 1, (s32)maxSeqLen);
+				}
 			}
 		}
 	}
