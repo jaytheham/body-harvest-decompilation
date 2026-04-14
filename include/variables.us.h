@@ -81,12 +81,14 @@ extern s32 D_800312F4_31EF4;
 extern u32 D_800312F8_31EF8;
 extern s32 D_800312FC_31EFC;
 extern s32 D_80031300_31F00;
+extern s32 D_80031304;
 extern Unk80047FB8 D_80031310_31F10[5];
+extern s32 D_80031374_31F74[]; /* weapon damage shift table */
+extern s32 D_800313C4_31FC4;
+extern s16 D_800313C8_31FC8;
 extern s32 D_800313CC;
 extern f32 D_80036C88;
 extern s16 D_800313C8;
-extern s16 D_800313C8_31FC8;
-extern s32 D_800313C4_31FC4;
 extern s16 D_800313D0; // Language
 extern s16 D_800313E4_31FE4;
 extern u16 D_80031648_32248;
@@ -97,7 +99,6 @@ extern u8 D_800313F4; // World fog alpha value
 extern s16 D_800313F8; // World fog near distance
 extern s16 D_800313FC; // World fog far distance
 extern s32 leomecha_bss_0004;
-extern s32 D_80031374_31F74[]; /* weapon damage shift table */
 extern s32 D_80031410;
 extern s32 D_80031414;
 extern s32 D_80031420;
@@ -557,7 +558,6 @@ extern s32 D_8005BB54;
 extern s32 D_8005BF58;
 extern s32 D_8005BF5C;
 extern s32 D_8005C764;
-extern s32 D_800313D4;
 
 extern Unk8006AA80Node *D_8006AA80;
 extern Unk8006AA84Node *D_8006AA84;
@@ -1816,7 +1816,6 @@ extern s32 D_800475E8;
 extern s32 D_800475EC;
 extern s32 D_800475F0;
 extern s32 D_800475F4;
-extern s32 D_80031304;
 extern s32 D_80047694;
 extern u8 D_800431C0; // Save file data. 0x89 bytes, then 0x7A per save slot
 extern s32 D_80047684;
