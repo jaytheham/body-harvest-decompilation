@@ -109,7 +109,37 @@ void func_800839F0_53EA0(f32 *arg0, f32 *arg1) {
 	D_800DE110 = (s16)arg1[2];
 }
 
+#ifdef NON_MATCHING
+u8 func_80083A58_53F08(u8 arg0) {
+	u8 orig;
+	u8 j;
+
+	if (D_800DE838 >= 0x96) {
+		return 0xFB;
+	}
+	orig = D_800DE839;
+	D_800DE130[orig].unk0 = arg0;
+	D_800DE130[orig].unk1 = 0;
+	D_800DE130[orig].unk4 = 0;
+	D_800DE130[orig].unk6 = -6;
+	D_800DE130[orig].unk8 = -6;
+	D_800DE838++;
+	D_800DE839 = 0x96;
+	j = orig;
+	if (orig < 0x96) {
+		do {
+			if (D_800DE130[j].unk0 == 0xFA) {
+				D_800DE839 = j;
+				j = 0x96;
+			}
+			j++;
+		} while (j < 0x96);
+	}
+	return orig;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80083A58_53F08.s")
+#endif
 
 /* Marks a D_800DE130 entry as freed (0xFA), decrements count, updates min index */
 void func_80083B14_53FC4(u8 arg0) {
