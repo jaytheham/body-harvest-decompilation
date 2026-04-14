@@ -1,7 +1,7 @@
 {
-  "generated": "2026-04-14T11:44:59Z",
-  "commit": "6ba5bcb8",
-  "commit_timestamp": "2026-04-14T23:44:48+12:00",
+  "generated": "2026-04-14T19:40:38Z",
+  "commit": "1483f25f",
+  "commit_timestamp": "2026-04-15T07:40:27+12:00",
   "overall": {
     "total_functions": 3055,
     "matched": 1198,
@@ -629,6 +629,14 @@
     {
       "date": "2026-04-14",
       "commit": "23020ea",
+      "matched_pct": 39.21,
+      "decompiled_pct": 52.47,
+      "matched": 1198,
+      "total": 3055
+    },
+    {
+      "date": "2026-04-15",
+      "commit": "e7c2469",
       "matched_pct": 39.21,
       "decompiled_pct": 52.47,
       "matched": 1198,
