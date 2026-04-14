@@ -220,7 +220,8 @@ segments:
       - [0x2EA00, asm, libultra/synsetpriority.o] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
       - [0x2EA10, databin]
       - [0x31EF0, .data, core/1050]
-      - [0x31FD0, bin]
+      - [0x31FD0, .data, core/53F0]
+      - [0x32000, bin]
 
   - name: overlay_gameplay_frontend
     type: code

@@ -3,6 +3,18 @@
 #include <ultra64.h>
 #include "common.h"
 
+s16 D_800313D0_31FD0 = 0;    // Language
+s32 D_800313D4_31FD4 = 0;
+s16 D_800313D8 = 0;
+s16 D_800313DC = 0;
+s16 D_800313E0 = 0;
+s16 D_800313E4_31FE4 = 0;
+u8 D_800313E8_31FE8 = 0x5A;
+u8 D_800313EC_31FEC = 0x50;
+u8 D_800313F0_31FF0 = 0x50;
+u8 D_800313F4_31FF4 = 0x80;
+s16 D_800313F8_31FF8 = 0x03CF;
+s16 D_800313FC_31FFC = 0x03E8;
 
 f32 func_800047F0_53F0(f32 arg0) {
 	return arg0 * arg0;
