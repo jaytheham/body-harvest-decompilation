@@ -462,9 +462,7 @@ void loadLevelData(u8 arg0) {
 
 	{
 		u8 *var_a3 = D_801FEA30;
-		u8 *var_t1 = D_801FEA30;
 		s32 var_t0 = 0;
-		u8 var_a2 = 0xFF;
 		do {
 			s32 temp_t7;
 			u16 *var_v1;
@@ -474,7 +472,7 @@ void loadLevelData(u8 arg0) {
 			*(u16 *)(var_a3 + 4) = (u16)(*(u16 *)(var_a3 + 4) ^ temp_t7);
 			*(u16 *)(var_a3 + 2) = (u16)(*(u16 *)(var_a3 + 2) ^ 0x4000 ^ temp_t7);
 			*(u16 *)(var_a3 + 0) = (u16)(*(u16 *)(var_a3 + 0) ^ temp_t7);
-			var_v1 = (u16 *)(var_t1 + 6);
+			var_v1 = (u16 *)(var_a3 + 6);
 			var_a0 = 3;
 			do {
 				*(var_v1 + 0) = (u16)(*(var_v1 + 0) ^ ((var_a0 % 2) << 14) ^ temp_t7);
@@ -483,11 +481,10 @@ void loadLevelData(u8 arg0) {
 				*(var_v1 + 3) = (u16)(*(var_v1 + 3) ^ (((var_a0 + 3) % 2) << 14) ^ temp_t7);
 				var_a0 += 4;
 				var_v1 += 4;
-			} while (var_a0 != var_a2);
+			} while (var_a0 != 0xFF);
 			var_t0 += 1;
-			var_t1 += 0x200;
 			var_a3 += 0x200;
-		} while (var_t0 != var_a2);
+		} while (var_t0 != 0xFF);
 	}
 }
 #else
