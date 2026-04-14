@@ -1189,24 +1189,24 @@ loop_1:
 	switch (arg0[0]) {
 	case 0x98:
 		switch (arg1[0]) {
-		case 0x99:
-			return D_80052540 == arg1[1];
 		case 0x9A:
 			return D_80052B34 == &vehicleInstances[arg1[1]];
 		case 0xAF:
-			arg1 = &D_8004D180[arg1[1] * 3];
+			arg1 = D_8004D180 + arg1[1] * 3;
 			goto loop_1;
+		case 0x99:
+			return D_80052540 == arg1[1];
 		}
 	case 0x9B:
 		switch (arg1[0]) {
 		case 0x99:
 			return arg0[1] == (((*(u32 *)(D_80050AE0 + arg1[1] * 0x18)) << 26) >> 28);
 		case 0xAF:
-			arg1 = &D_8004D180[arg1[1] * 3];
+			arg1 = D_8004D180 + arg1[1] * 3;
 			goto loop_1;
 		}
 	case 0xAF:
-		arg0 = &D_8004D180[arg0[1] * 3];
+		arg0 = D_8004D180 + arg0[1] * 3;
 		goto loop_1;
 	}
 }
