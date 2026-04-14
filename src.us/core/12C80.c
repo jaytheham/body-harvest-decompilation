@@ -696,7 +696,6 @@ void func_80013818_14418(void) {
 	f32 temp_f0;
 	f32 temp_f14;
 	f32 temp_f2;
-	s16 temp_v0;
 	s16 var_s0;
 
 	if (D_8006AB88 != 0) {
@@ -726,9 +725,9 @@ void func_80013818_14418(void) {
 				if (var_v0 == 0) {
 					D_80033C94_34894 = -1;
 					sp28 = D_800323BC_32FBC[func_800056D0_62D0(D_80052B34->unk0, D_80052B34->unk4)];
-					temp_f0 = ((f32)D_80052B34->unk0 / 4.0f) - D_80047954;
-					temp_f2 = ((f32)D_80052B34->unk2 / 4.0f) - D_80047958;
-					temp_f14 = ((f32)D_80052B34->unk4 / 4.0f) - D_8004795C;
+					temp_f0 = ((f32)D_80052B34->unk0 / 4) - D_80047954;
+					temp_f2 = ((f32)D_80052B34->unk2 / 4) - D_80047958;
+					temp_f14 = ((f32)D_80052B34->unk4 / 4) - D_8004795C;
 					func_80014A3C_1563C((s32)D_80052B34, 0x97, sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2) + (temp_f14 * temp_f14)), 0, sp28);
 				}
 			}
@@ -743,9 +742,7 @@ void func_80013818_14418(void) {
 			}
 		}
 		func_80013FC4_14BC4(D_8006AB10);
-		temp_v0 = func_80013F64_14B64();
-		D_8006AB14 = temp_v0;
-		if (temp_v0 > 0) {
+		if ((D_8006AB14 = func_80013F64_14B64()) > 0) {
 			Unk8006AA80Node *ptr;
 			for (var_s0 = 0; var_s0 < D_8006AB14; var_s0++) {
 				ptr = func_80012720_13320();
