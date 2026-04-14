@@ -954,38 +954,33 @@ void func_80014208_14E08(s32 arg0, s16 arg1, s32 arg2) {
 	}
 }
 
-// https://decomp.me/scratch/5QTSy
-#ifdef NON_MATCHING
-s32 func_80014278_14E78(void) {
+s32 func_80014278_14E78(void)
+{
+	Unk8006AA80Node sp50;
 	s16 soundId;
 	u16 soundIdU;
-	Unk8006AA80Node sp50;
 
-	if (D_8006AB88 == 0) {
+	if (D_8006AB88 == 0)
+	{
 		return -1;
 	}
-
-	if ((soundId = D_80032EB8_33AB8[currentLevel][D_80052B34->unk1A].unk2) == -1) {
+	soundId = D_80032EB8_33AB8[currentLevel][D_80052B34->unk1A].unk2;
+	if (soundId == -1)
+	{
 		return -1;
 	}
-
-	soundIdU = soundId;
+	soundIdU = (sp50.unk0 = soundId);
 	sp50.unk2 = D_80032228_32E28[soundIdU];
 	sp50.unk24 = D_80032A78_33678[soundIdU];
-	sp50.unk20 = D_80031F04_32B04[soundId];
-	sp50.unk0 = soundId;
 	sp50.unk6 = -1;
+	sp50.unk20 = D_80031F04_32B04[soundId];
 	sp50.unk0C = 0;
 	sp50.unk8 = 0;
 	sp50.unk0E = -1;
 	sp50.unk22 = 0x40;
 	sp50.unk0F = -1;
-
 	return func_800121B4_12DB4(sp50, &D_8006AA80, &D_8006AA84);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014278_14E78.s")
-#endif
 
 // https://decomp.me/scratch/0wfIc
 #ifdef NON_MATCHING
