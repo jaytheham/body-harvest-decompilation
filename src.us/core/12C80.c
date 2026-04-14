@@ -991,30 +991,33 @@ s32 func_80014278_14E78(void) {
 #ifdef NON_MATCHING
 s32 func_800143C4_14FC4(s16 arg0)
 {
-  Unk8006AA80Node sp58;
-  s32 sp54;
-  unsigned char new_var;
-  if (D_8006AB88 == 0)
-  {
+	Unk8006AA80Node sp58;
+	s32 sp54;
+	unsigned char new_var;
+
+	if (D_8006AB88 == 0)
+	{
 	return -1;
-  }
-  if (func_80012638_13238(arg0, D_8006AB18[0]->unk1C) != NULL)
-  {
+	}
+
+	if (func_80012638_13238(arg0, D_8006AB18[0]->unk1C) != NULL)
+	{
 	return -1;
-  }
-  sp58.unk0 = arg0;
-  sp58.unk6 = -1;
-  sp58.unk0C = 0;
-  sp58.unk8 = 0;
-  sp58.unk2 = D_80032228_32E28[arg0 & 0xFFFF];
-  sp58.unk0E = -1;
-  sp58.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
-  sp58.unk20 = D_80031F04_32B04[arg0];
-  sp58.unk28 = D_8006AB18[0]->unk1C;
-  
-  sp58.unk0F = -1;
+	}
+
+	sp58.unk0 = arg0;
+	sp58.unk6 = -1;
+	sp58.unk0C = 0;
+	sp58.unk8 = 0;
+	sp58.unk2 = D_80032228_32E28[arg0 & 0xFFFF];
+	sp58.unk0E = -1;
+	sp58.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
+	sp58.unk20 = D_80031F04_32B04[arg0];
+	sp58.unk28 = D_8006AB18[0]->unk1C;
+	sp58.unk0F = -1;
 	sp58.unk22 = 0x40;
-  return func_800121B4_12DB4(sp58, &D_8006AA80, &D_8006AA84);
+
+	return func_800121B4_12DB4(sp58, &D_8006AA80, &D_8006AA84);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800143C4_14FC4.s")
@@ -1023,7 +1026,9 @@ s32 func_800143C4_14FC4(s16 arg0)
 #ifdef NON_MATCHING
 void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	VehicleSpec *spec;
-	f32 targetSpeed;
+	f32 temp_f14;
+	f32 temp_f12;
+	f32 temp_f2;
 
 	spec = &vehicleSpecs[arg0->unk1A];
 	if (!D_8006AB88) {
@@ -1041,59 +1046,81 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 			f32 dy = (f32)arg0->unk2 / 4 - D_80047958;
 			f32 dz = (f32)arg0->unk4 / 4 - D_8004795C;
 			f32 dist = sqrtf(dx * dx + dy * dy + dz * dz);
-			s32 absSpeed = (s32)(s16)arg0->unk12;
+			s16 temp_v0 = arg0->unk12;
+			s32 temp_v1;
 
-			if (absSpeed < 0) {
-				absSpeed = -absSpeed;
+			if (temp_v0 < 0) {
+				temp_v1 = -temp_v0;
+			} else {
+				temp_v1 = temp_v0;
 			}
-			func_80014A3C_1563C((s32)D_80052B34, 0x170, (f32)(absSpeed * 100) + dist, 0, -1.0f);
+			func_80014A3C_1563C((s32)D_80052B34, 0x170, (f32)(temp_v1 * 100) + dist, 0, -1.0f);
 			if (arg0->unk12 == 0) {
 				return;
 			}
 		}
 	}
-	if (arg1) {
+	if (arg1 != 0) {
 		switch (spec->unk58) {
-		default:
-			targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk14 * (f32)arg2;
-			break;
 		case 0:
-			targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk14 * (f32)arg2;
+			temp_f14 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk14 * ((f32)arg2 / 1.0f);
+			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
+			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
 			break;
 		case 1:
-			targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk14 * ((f32)arg2 / D_80038324_38F24);
+			temp_f14 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk14 * ((f32)arg2 / D_80038324_38F24);
+			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
+			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
 			break;
 		case 3:
-			targetSpeed = (D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8) * ((f32)arg2 / D_80038328_38F28) + D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8;
-			break;
-		case 5:
-			targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk14 * ((f32)arg2 / 25.0f);
+			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
+			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
+			temp_f14 = (temp_f2 - temp_f12) * ((f32)arg2 / D_80038328_38F28) + temp_f12;
 			break;
 		case 7:
-			targetSpeed = (D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8) * ((f32)arg2 / D_8003832C_38F2C) + D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8;
+			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
+			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
+			temp_f14 = (temp_f2 - temp_f12) * ((f32)arg2 / D_8003832C_38F2C) + temp_f12;
+			break;
+		case 5:
+			temp_f14 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk14 * ((f32)arg2 / 25.0f);
+			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
+			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
+			break;
+		default:
+			temp_f14 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk14 * ((f32)arg2 / 1.0f);
+			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
+			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
 			break;
 		}
-		if (targetSpeed > D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC) targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC;
-		if (targetSpeed < D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8) targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8;
 	} else {
 		if ((s32)(spec->unk4C << 9) < 0) {
 			f32 vx = arg0->unk30;
 			f32 vz = arg0->unk38;
 			f32 spd = sqrtf(vx * vx + vz * vz);
 
-			targetSpeed = (f32)((f64)spd / 60.0);
+			temp_f14 = (f32)((f64)spd / 60.0);
+			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
+			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
 		} else {
 			if (spec->unk58 == 3 || spec->unk58 == 7) {
-				targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC;
+				temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
+				temp_f14 = temp_f2;
 			} else {
-				targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk14 * D_8004DCC0;
+				temp_f14 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk14 * D_8004DCC0;
+				temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
 			}
+			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
 		}
-		if (targetSpeed > D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC) targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC;
-		if (targetSpeed < D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8) targetSpeed = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8;
 	}
-	if ((f64)targetSpeed < D_80038330_38F30) {
-		targetSpeed = D_80038338_38F38;
+	if (temp_f2 < temp_f14) {
+		temp_f14 = temp_f2;
+	}
+	if (temp_f14 < temp_f12) {
+		temp_f14 = temp_f12;
+	}
+	if ((f64)temp_f14 < D_80038330_38F30) {
+		temp_f14 = D_80038338_38F38;
 	}
 	{
 		f32 dx = (f32)arg0->unk0 / 4 - D_80047954;
@@ -1101,12 +1128,11 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 		f32 dz = (f32)arg0->unk4 / 4 - D_8004795C;
 		f32 dist = sqrtf(dx * dx + dy * dy + dz * dz);
 
-		func_80014A3C_1563C(
-			(s32)&vehicleSpecs[arg0->unk1A],
-			D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0,
-			dist, 0, targetSpeed);
+		func_80014A3C_1563C((s32)&vehicleSpecs[arg0->unk1A], D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0,
+			dist, 0, temp_f14);
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014508_15108.s")
 #endif
@@ -1320,7 +1346,6 @@ void func_800153D8_15FD8(s16 arg0)
 		sp60.unk22 = 0x40;
 		sp60.unk0E = -1;
 		sp60.unk2C = 0;
-
 		func_800121B4_12DB4(sp60, &D_8006AA80, &D_8006AA84);
 	}
 }
