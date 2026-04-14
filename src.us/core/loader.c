@@ -195,7 +195,6 @@ s32 func_800104AC_110AC(u8 arg0) {
 	return var_s1;
 }
 
-#ifdef NON_MATCHING
 s32 func_800105F0_111F0(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32 *arg5) {
 	s32 sp34;
 	s32 sp30;
@@ -206,6 +205,7 @@ s32 func_800105F0_111F0(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32 
 	s32 var_a1_2;
 	s32 var_s0;
 	s32 var_s1;
+	s32 var_s2;
 
 	var_v0 = func_800101F0_10DF0((s32)arg0, func_800104AC_110AC(arg4), 0xFE00);
 	var_a1 = var_v0;
@@ -232,23 +232,19 @@ s32 func_800105F0_111F0(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32 
 
 	var_v0 = func_800101F0_10DF0((s32)arg2, var_a1_2, 0x100);
 	var_s0 = arg3;
-	var_s1 = 0;
-	do {
+	var_s2 = (s32)&D_803DA800;
+	for (var_s1 = 0; var_s1 < 0xC; var_s1 = (var_s1 + 1) & 0xFF) {
 		if (var_v0 & 0xF) {
 			var_v0 = (var_v0 - (var_v0 & 0xF)) + 0x10;
 		}
-		var_v0 = func_8001032C_10F2C(var_s0, var_v0, (s32)&D_803DA800);
+		var_v0 = func_8001032C_10F2C(var_s0, var_v0, var_s2);
 		var_s0 += 0x1400;
-		var_v0 = func_8001032C_10F2C(var_s0, var_v0, (s32)&D_803DA800);
-		var_s1 = (var_s1 + 1) & 0xFF;
+		var_v0 = func_8001032C_10F2C(var_s0, var_v0, var_s2);
 		var_s0 += 0x200;
-	} while (var_s1 < 0xC);
+	}
 
 	return *sp28;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800105F0_111F0.s")
-#endif
 
 s32 destroyThreadIfMessageInQueue(void) {
 	s32 result;
