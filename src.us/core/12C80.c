@@ -541,14 +541,13 @@ void func_80013324_13F24(void)
 #ifdef NON_MATCHING
 void func_80013398_13F98(void)
 {
-  s8 idx;
   s8 arr_val;
   if (D_80031CA4 != 4)
   {
 	arr_val = (s8) (D_80033C80_34880 % 16);
-	idx = arr_val;
-	arr_val = D_80033C70_34870[idx] + 0xF;
-	D_80033C80_W = D_80033C80_34880 + 1;
+	arr_val = D_80033C70_34870[arr_val];
+	D_80033C80_34880 += 1;
+	arr_val = (s8) (arr_val + 0xF);
 	func_80015C94_16894(arr_val, 4);
   }
 }
