@@ -1138,12 +1138,11 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 #endif
 
 #ifdef NON_MATCHING
-void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s32 arg3, f32 arg4) {   
+void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s32 arg3, f32 arg4) {
 	Unk8006AA80Node *node;
 	Unk8006AA80Node sp6C;
-	s16 vol;
+	s16 angle;
 	u8 pan;
-	s16 newVol;
 	u32 pan_u32;
 
 	if (D_8006AB88 != 0 && arg1 != -1 && arg1 != -1) {
@@ -1192,15 +1191,16 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s32 arg3, f32 arg4) {
 		return;
 	}
 
-	vol = (s16)(s32)(((D_80032430_33030[arg1] - arg2) / D_80032430_33030[arg1]) * (f32) D_80031F04_32B04[arg1]);
+	angle = arg3;
+	arg3 = (s16)(s32)(((D_80032430_33030[arg1] - arg2) / D_80032430_33030[arg1]) * (f32) D_80031F04_32B04[arg1]);
 
-	if (((s16 *)&arg3)[1] < -0x4000) {
-		((s16 *)&arg3)[1] = -0x8000 - ((s16 *)&arg3)[1];
-	} else if (((s16 *)&arg3)[1] >= 0x4001) {
-		((s16 *)&arg3)[1] = 0x8000 - ((s16 *)&arg3)[1];
+	if (angle < -0x4000) {
+		angle = -0x8000 - angle;
+	} else if (angle >= 0x4001) {
+		angle = 0x8000 - angle;
 	}
 
-	pan = (u8)(pan_u32 = (u32)(((f64)(f32)((s16 *)&arg3)[1] + 16384.0) / 16384.0 * 64.0));
+	pan = (u8)(pan_u32 = (u32)(((f64)(f32)angle + 16384.0) / 16384.0 * 64.0));
 
 	if ((f64) arg4 < 0.0) {
 		if ((f64) arg4 == -1.0) {
@@ -1234,21 +1234,20 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s32 arg3, f32 arg4) {
 						node->unk24 = arg4;
 					}
 				}
-				if (vol != node->unk20 && vol > 0) {
-					if (vol < 0x7FFF) {
-						if ((s16)(vol - node->unk20) >= 0x101) {
-							vol = node->unk20 + 0x100;
-						} else if ((s16)(vol - node->unk20) < -0x100) {
-							vol = node->unk20 - 0x100;
+				if (arg3 != node->unk20 && arg3 > 0) {
+					if (arg3 < 0x7FFF) {
+						if ((s16)(arg3 - node->unk20) >= 0x101) {
+							arg3 = node->unk20 + 0x100;
+						} else if ((s16)(arg3 - node->unk20) < -0x100) {
+							arg3 = node->unk20 - 0x100;
 						}
-						node->unk20 = vol;
+						node->unk20 = arg3;
 						if (D_80031D4C_3294C == 1) {
-						newVol = (s16)(s32)(((f32)vol * D_80031D58_32958 + (D_80031D5C_3295C * ((f32)vol * D_80031D50_32950)) / D_80031D54_32954) * D_80031D60_32960);
+							arg3 = (s16)(s32)(((f32)arg3 * D_80031D58_32958 + (D_80031D5C_3295C * ((f32)arg3 * D_80031D50_32950)) / D_80031D54_32954) * D_80031D60_32960);
 						} else {
-						newVol = (s16)(s32)((f32) vol * D_80031D60_32960);
+							arg3 = (s16)(s32)((f32)arg3 * D_80031D60_32960);
 						}
-						vol = newVol;
-						alSndpSetVol(D_8006AB10, vol);
+						alSndpSetVol(D_8006AB10, arg3);
 					}
 				}
 				node->unk0E = 0xF;
@@ -1266,10 +1265,10 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s32 arg3, f32 arg4) {
 
 		if (func_80012638_13238(soundIdx, D_8006AB18[0]->unk1C) == 0) {
 			sp6C.unk0 = soundIdx;
-		sp6C.unk20 = vol;
-		sp6C.unk1C = arg2;
+		sp6C.unk20 = arg3;
+		*(f32 *)((u8 *)&sp6C + 0x1C) = arg2;
 		sp6C.unk2 = D_80032228_32E28[arg1];
-		sp6C.unk18 = ((s16 *)&arg3)[1];
+		*(s16 *)((u8 *)&sp6C + 0x18) = angle;
 		sp6C.unk22 = (s8) pan_u32;
 		sp6C.unk24 = arg4;
 		sp6C.unk2C = arg0;
