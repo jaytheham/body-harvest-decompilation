@@ -1,24 +1,24 @@
 {
-  "generated": "2026-04-14T06:50:33Z",
-  "commit": "fb4b62d",
-  "commit_timestamp": "2026-04-14T18:50:22+12:00",
+  "generated": "2026-04-14T09:41:20Z",
+  "commit": "a5387d2",
+  "commit_timestamp": "2026-04-14T21:41:06+12:00",
   "overall": {
-    "total_functions": 3059,
+    "total_functions": 3057,
     "matched": 1196,
-    "non_matching": 409,
+    "non_matching": 407,
     "asm_stubs": 1454,
-    "matched_pct": 39.1,
-    "decompiled_pct": 52.47
+    "matched_pct": 39.12,
+    "decompiled_pct": 52.44
   },
   "segments": {
     "core": {
       "display_name": "Core",
       "matched": 220,
-      "non_matching": 102,
+      "non_matching": 100,
       "asm_stubs": 102,
-      "total": 424,
-      "matched_pct": 51.9,
-      "decompiled_pct": 75.9
+      "total": 422,
+      "matched_pct": 52.1,
+      "decompiled_pct": 75.8
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -118,19 +118,19 @@
       "path": "core/12C80.c",
       "segment": "core",
       "matched": 78,
-      "non_matching": 20,
+      "non_matching": 19,
       "asm_stubs": 20,
-      "total": 118,
-      "matched_pct": 66.1,
+      "total": 117,
+      "matched_pct": 66.7,
       "contributor": "jaytheham"
     },
     {
       "path": "core/1B060.c",
       "segment": "core",
       "matched": 0,
-      "non_matching": 1,
+      "non_matching": 0,
       "asm_stubs": 1,
-      "total": 2,
+      "total": 1,
       "matched_pct": 0.0,
       "contributor": "jaytheham"
     },
@@ -550,7 +550,7 @@
       "name": "jaytheham",
       "files": 43,
       "matched": 1191,
-      "non_matching": 409,
+      "non_matching": 407,
       "asm_stubs": 1384
     },
     {
@@ -628,11 +628,11 @@
     },
     {
       "date": "2026-04-14",
-      "commit": "bd9dad3",
-      "matched_pct": 39.1,
-      "decompiled_pct": 52.47,
+      "commit": "a5387d2",
+      "matched_pct": 39.12,
+      "decompiled_pct": 52.44,
       "matched": 1196,
-      "total": 3059
+      "total": 3057
     }
   ]
 }
