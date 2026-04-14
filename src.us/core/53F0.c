@@ -927,6 +927,7 @@ void func_800076D4_82D4(s32 arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
 void func_80007728_8328(u8 *arg0, s16 *arg1, s16 *arg2) {
 loop:
 	switch (arg0[0]) {
@@ -955,6 +956,9 @@ loop:
 		goto loop;
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007728_8328.s")
+#endif
 
 u8 func_8000789C_849C(s32 arg0)
 {
