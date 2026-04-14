@@ -9,65 +9,57 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	s32 var_s1;
 	s32 var_s2;
 	s32 var_v1;
-	s32 temp_t7;
+	OSIoMesg sp58;
 	s32 temp_v0;
-	s32 temp_v0_2;
-	s32 temp_v0_3;
-	s32 sp50;
-	s32 sp58;
 
-	if (D_80068078 == 1) {
+	if (1 == D_80068078) {
 		return 0;
 	}
 	osWritebackDCacheAll();
 	var_s1 = arg1;
 	var_s2 = arg2;
-	temp_t7 = arg3 / 2048;
-	var_v1 = temp_t7;
-	var_s0 = temp_t7 - 1;
-	if (temp_t7 != 0) {
-		sp50 = temp_t7;
+	var_v1 = arg3 / 2048;
+	var_s0 = var_v1 - 1;
+	if (var_v1 != 0) {
 		do {
 			osPiStartDma(&sp58, 0, 0, var_s2, var_s1, 0x800, arg0);
 			osRecvMesg(arg0, 0, 1);
 			temp_v0 = func_8001F6E0_202E0();
 			switch (temp_v0) {
-			case 2:
-				osSyncPrintf(D_80037780);
-				break;
 			case 1:
-				osSyncPrintf(D_80037794);
+				osSyncPrintf(D_80037794_38394);
+				break;
+			case 2:
+				osSyncPrintf(D_80037780_38380);
 				break;
 			case 4:
-				osSyncPrintf(D_800377A8);
+				osSyncPrintf(D_800377A8_383A8);
 				break;
 			}
 			var_s2 += 0x800;
 			var_s1 += 0x800;
-			var_s0 -= 1;
-		} while (var_s0 != 0);
-		var_v1 = sp50;
+		} while (var_s0--);
 	}
-	temp_v0_2 = arg3 - (var_v1 << 0xB);
-	if (temp_v0_2 != 0) {
-		osPiStartDma(&sp58, 0, 0, var_s2, var_s1, temp_v0_2, arg0);
+	temp_v0 = arg3 - (var_v1 << 0xB);
+	if (temp_v0 != 0) {
+		osPiStartDma(&sp58, 0, 0, var_s2, var_s1, temp_v0, arg0);
 		osRecvMesg(arg0, 0, 1);
-		temp_v0_3 = func_8001F6E0_202E0();
-		switch (temp_v0_3) {
-		case 2:
-			osSyncPrintf(D_800377BC);
-			break;
+		temp_v0 = func_8001F6E0_202E0();
+		switch (temp_v0) {
 		case 1:
-			osSyncPrintf(D_800377D0);
+			osSyncPrintf(D_800377D0_383D0);
+			break;
+		case 2:
+			osSyncPrintf(D_800377BC_383BC);
 			break;
 		case 4:
-			osSyncPrintf(D_800377E4);
+			osSyncPrintf(D_800377E4_383E4);
 			break;
 		}
 	}
 	arg2 += arg3;
 	if (D_8006AA64 == 0xBABEFACE) {
-		osSyncPrintf(D_800377F8, arg3);
+		osSyncPrintf(D_800377F8_383F8, arg3);
 	}
 	D_8006AA60 = arg3;
 	return arg2;
@@ -91,18 +83,21 @@ void func_80010228_10E28(u32 rom_addr, void *dest_buffer) {
 // https://decomp.me/scratch/cg2WJ
 #ifdef NON_MATCHING
 s32 func_80010290_10E90(s32 arg0) {
-	s32 header[6]; /* 0x18 bytes = MIO0 header at sp+0x20 */
+	s32 var_a1;
 	s32 var_v1;
+	s32 header[6]; /* 0x18 bytes = MIO0 header at sp+0x20 */
 
 	func_80010228_10E28(arg0, header);
 	if (header[0] != 0x4D494F30) {
 		return 0;
 	}
+	var_a1 = header[1] & 3;
 	var_v1 = header[1];
-	if (header[1] & 3) {
-		var_v1 = (header[1] - (header[1] & 3)) + 4;
+	if (var_a1 != 0) {
+		var_v1 = (header[1] - var_a1) + 4;
 	}
-	return arg0 + var_v1;
+	arg0 += var_v1;
+	return arg0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80010290_10E90.s")
@@ -164,16 +159,15 @@ s32 func_80010490_11090(u8 arg0) {
 	return D_80031BC4_327C4[arg0];
 }
 
-#ifdef NON_MATCHING
 s32 func_800104AC_110AC(u8 arg0) {
 	s32 var_s0;
 	s32 var_s1;
-	s32 var_s2;
 	s32 temp_v1;
 
-	var_s2 = (arg0 - 1) & 0xFF;
+	arg0--;
+	arg0 = (u8)arg0;
 	var_s1 = (s32) &D_37F840;
-	if (var_s2 != 0) {
+	if (arg0 != 0) {
 		do {
 			temp_v1 = var_s1 & 0xF;
 			if (temp_v1 != 0) {
@@ -192,8 +186,7 @@ s32 func_800104AC_110AC(u8 arg0) {
 				}
 				var_s1 = func_80010290_10E90(func_80010290_10E90(var_s1));
 			}
-			var_s2 = (var_s2 - 1) & 0xFF;
-		} while (var_s2 != 0);
+		} while (--arg0 != 0);
 	}
 	temp_v1 = var_s1 & 0xF;
 	if (temp_v1 != 0) {
@@ -201,11 +194,7 @@ s32 func_800104AC_110AC(u8 arg0) {
 	}
 	return var_s1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800104AC_110AC.s")
-#endif
 
-#ifdef NON_MATCHING
 s32 func_800105F0_111F0(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32 *arg5) {
 	s32 sp34;
 	s32 sp30;
@@ -216,6 +205,7 @@ s32 func_800105F0_111F0(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32 
 	s32 var_a1_2;
 	s32 var_s0;
 	s32 var_s1;
+	s32 var_s2;
 
 	var_v0 = func_800101F0_10DF0((s32)arg0, func_800104AC_110AC(arg4), 0xFE00);
 	var_a1 = var_v0;
@@ -242,23 +232,19 @@ s32 func_800105F0_111F0(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32 
 
 	var_v0 = func_800101F0_10DF0((s32)arg2, var_a1_2, 0x100);
 	var_s0 = arg3;
-	var_s1 = 0;
-	do {
+	var_s2 = (s32)&D_803DA800;
+	for (var_s1 = 0; var_s1 < 0xC; var_s1 = (var_s1 + 1) & 0xFF) {
 		if (var_v0 & 0xF) {
 			var_v0 = (var_v0 - (var_v0 & 0xF)) + 0x10;
 		}
-		var_v0 = func_8001032C_10F2C(var_s0, var_v0, (s32)&D_803DA800);
+		var_v0 = func_8001032C_10F2C(var_s0, var_v0, var_s2);
 		var_s0 += 0x1400;
-		var_v0 = func_8001032C_10F2C(var_s0, var_v0, (s32)&D_803DA800);
-		var_s1 = (var_s1 + 1) & 0xFF;
+		var_v0 = func_8001032C_10F2C(var_s0, var_v0, var_s2);
 		var_s0 += 0x200;
-	} while (var_s1 < 0xC);
+	}
 
 	return *sp28;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800105F0_111F0.s")
-#endif
 
 s32 destroyThreadIfMessageInQueue(void) {
 	s32 result;
@@ -476,9 +462,7 @@ void loadLevelData(u8 arg0) {
 
 	{
 		u8 *var_a3 = D_801FEA30;
-		u8 *var_t1 = D_801FEA30;
 		s32 var_t0 = 0;
-		u8 var_a2 = 0xFF;
 		do {
 			s32 temp_t7;
 			u16 *var_v1;
@@ -488,7 +472,7 @@ void loadLevelData(u8 arg0) {
 			*(u16 *)(var_a3 + 4) = (u16)(*(u16 *)(var_a3 + 4) ^ temp_t7);
 			*(u16 *)(var_a3 + 2) = (u16)(*(u16 *)(var_a3 + 2) ^ 0x4000 ^ temp_t7);
 			*(u16 *)(var_a3 + 0) = (u16)(*(u16 *)(var_a3 + 0) ^ temp_t7);
-			var_v1 = (u16 *)(var_t1 + 6);
+			var_v1 = (u16 *)(var_a3 + 6);
 			var_a0 = 3;
 			do {
 				*(var_v1 + 0) = (u16)(*(var_v1 + 0) ^ ((var_a0 % 2) << 14) ^ temp_t7);
@@ -497,11 +481,10 @@ void loadLevelData(u8 arg0) {
 				*(var_v1 + 3) = (u16)(*(var_v1 + 3) ^ (((var_a0 + 3) % 2) << 14) ^ temp_t7);
 				var_a0 += 4;
 				var_v1 += 4;
-			} while (var_a0 != var_a2);
+			} while (var_a0 != 0xFF);
 			var_t0 += 1;
-			var_t1 += 0x200;
 			var_a3 += 0x200;
-		} while (var_t0 != var_a2);
+		} while (var_t0 != 0xFF);
 	}
 }
 #else
@@ -610,8 +593,8 @@ s32 func_800119F4_125F4(s32 arg0)
 #ifdef NON_MATCHING
 s32 func_80011A40_12640(u8 arg0, s32 arg1) {
 	D_8006AA70 = arg1;
-	func_800101F0_10DF0(D_8006AA70, D_80031B90_32790[arg0], D_80031BAC_327AC[arg0] - D_80031B90_32790[arg0]);
-	return D_80031BAC_327AC[arg0] - D_80031B90_32790[arg0] + arg1;
+	func_800101F0_10DF0(arg1, *(&D_80031B90_32790[arg0]), *(&D_80031BAC_327AC[arg0]) - *(&D_80031B90_32790[arg0]));
+	return *(&D_80031BAC_327AC[arg0]) - *(&D_80031B90_32790[arg0]) + arg1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011A40_12640.s")

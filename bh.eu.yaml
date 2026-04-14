@@ -1,0 +1,144 @@
+sha1: 67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355
+options:
+  platform: n64
+  basename: bh
+  target_path: baserom.eu.z64
+  base_path: .
+  disassemble_all: yes
+  matchings_path: matchings
+  symbol_addrs_path: symbol_addrs.eu.txt
+  reloc_addrs_path: reloc_addrs.eu.txt
+  ld_symbol_header_path: include/ld_symbols.eu.h
+  generated_c_preamble: |
+    #include <ultra64.h>
+    #include "common.h"
+  src_path: src.eu
+  extensions_path: tools/splat_ext
+  lib_path: build/lib
+  # migrate_rodata_to_functions: yes
+  # workaround regex issue
+  create_undefined_funcs_auto: no
+  symbol_name_format: $VRAM_$ROM
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  image_type_in_extension: yes
+  segment_symbols_style: makerom
+segments:
+  - name: header
+    type: header
+    start: 0x0
+
+  - name: boot
+    type: bin
+    start: 0x40
+
+  - name: core
+    type: code
+    start: 0x1000
+    vram: 0x80000400
+    subsegments:
+      - [0x1000, bin, core/1000]
+
+  - name: overlay_gameplay_frontend
+    type: code
+    start: 0x40750
+    vram: 0x800702A0
+    exclusive_ram_id: 800702A0
+    overlay: true
+    subsegments:
+      - [0x40750, bin, overlay_gameplay/frontend/40750]
+
+  - name: overlay_gameplay_outside
+    type: code
+    start: 0x7FD80
+    vram: 0x800702A0
+    exclusive_ram_id: 800702A0
+    overlay: true
+    subsegments:
+      - [0x7FD80, bin, overlay_gameplay/outside/7FD80]
+
+  - name: overlay_gameplay_inside
+    type: code
+    start: 0x158E90
+    vram: 0x800702A0
+    exclusive_ram_id: 800702A0
+    overlay: true
+    subsegments:
+      - [0x158E90, bin, overlay_gameplay/inside/158E90]
+
+  - name: overlay_level_greece
+    type: code
+    start: 0x18E340
+    vram: 0x802D4D10
+    exclusive_ram_id: 802D4D10
+    overlay: true
+    subsegments:
+      - [0x18E340, bin, overlay_level/greece/18E340]
+
+  - name: overlay_level_greece_data
+    type: bin
+    start: 0x197AD0
+    subsegments:
+      - [0x197AD0, bin]
+
+  - name: overlay_level_java
+    type: code
+    start: 0x1EE540
+    vram: 0x802D4D10
+    exclusive_ram_id: 802D4D10
+    overlay: true
+    subsegments:
+      - [0x1EE540, bin, overlay_level/java/1EE540]
+
+  - name: overlay_level_java_data
+    type: bin
+    start: 0x1FA820
+    subsegments:
+      - [0x1FA820, bin]
+
+  - name: overlay_level_america
+    type: code
+    start: 0x254F70
+    vram: 0x802D4D10
+    exclusive_ram_id: 802D4D10
+    overlay: true
+    subsegments:
+      - [0x254F70, bin, overlay_level/america/254F70]
+
+  - name: overlay_level_america_data
+    type: bin
+    start: 0x2610D0
+
+  - name: overlay_level_siberia
+    type: code
+    start: 0x2B7C60
+    vram: 0x802D4D10
+    exclusive_ram_id: 802D4D10
+    overlay: true
+    subsegments:
+      - [0x2B7C60, bin, overlay_level/siberia/2B7C60]
+
+  - name: overlay_level_siberia_data
+    type: bin
+    start: 0x2C6020
+
+  - name: overlay_level_comet
+    type: code
+    start: 0x319980
+    vram: 0x802D4D10
+    exclusive_ram_id: 802D4D10
+    overlay: true
+    subsegments:
+      - [0x319980, bin, overlay_level/comet/319980]
+
+  - name: overlay_level_comet_data
+    type: bin
+    start: 0x32C8E0
+
+  - name: unknown
+    type: bin
+    start: 0x32C8E0
+    subsegments:
+      - [, bin, ]
+
+  - [0xC00000]
