@@ -669,15 +669,16 @@ void func_80006DDC_79DC(void) {
 	}
 	do {
 		D_80052ACA = 0;
-		D_800313E8 = D_80031620[currentLevel - 1].unk0;
+		pad0 = currentLevel - 1;
+		D_800313E8 = D_80031620[pad0].unk0;
 		D_80047743 = D_800313E8;
-		D_800313EC = D_80031620[currentLevel - 1].unk1;
+		D_800313EC = D_80031620[pad0].unk1;
 		D_80047744 = D_800313EC;
-		D_800313F0 = D_80031620[currentLevel - 1].unk2;
+		D_800313F0 = D_80031620[pad0].unk2;
 		D_80047745 = D_800313F0;
-		D_800313F4 = D_80031620[currentLevel - 1].unk3;
-		D_800313F8 = D_80031634[(currentLevel - 1) * 2];
-		D_800313FC = D_80031634[(currentLevel - 1) * 2 + 1];
+		D_800313F4 = D_80031620[pad0].unk3;
+		D_800313F8 = D_80031634[pad0 * 2];
+		D_800313FC = D_80031634[pad0 * 2 + 1];
 		D_80047964 = 0x53C5;
 		D_8004794E = 0xCCF;
 		D_80047960 = 244.0f;
