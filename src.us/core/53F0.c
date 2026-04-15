@@ -1601,39 +1601,39 @@ void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 
 	switch (arg4) {
 	case 0:
+		texture = D_1011C80;
 		textureSpanX = (arg2 - arg0) * 4;
 		spanY = arg3 - arg1;
-		texture = D_1011C80;
 		textureSpanY = spanY * 4;
 		stepX = 0x400;
 		stepY = 0x400;
 		break;
 
 	case 1:
+		texture = D_1010C80;
 		textureSpanX = (arg2 - arg0) * 4;
 		spanY = arg3 - arg1;
 		textureSpanY = spanY * 4;
 		stepY = 0x400;
 		stepX = 0x400;
-		texture = D_1010C80;
 		break;
 
 	case 2:
+		texture = D_1010C80;
 		textureSpanX = (arg2 - arg0) * 4;
 		spanY = arg3 - arg1;
 		textureSpanY = spanY * 4;
 		stepX = 0x400;
 		stepY = 0x400;
-		texture = D_1010C80;
 		break;
 
 	case 3:
+		texture = D_1011C80;
 		textureSpanX = (arg2 - arg0) * 8;
 		spanY = arg3 - arg1;
 		textureSpanY = spanY * 8;
 		stepY = 0x800;
 		stepX = 0x800;
-		texture = D_1011C80;
 		break;
 
 	default:
