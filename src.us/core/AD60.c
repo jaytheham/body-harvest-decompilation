@@ -1438,16 +1438,19 @@ void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChanne
 
 #ifdef NON_MATCHING
 s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, s32 arg5, f32 arg6, s32 arg7) {
+	s32 base;
 	AnimChannelState *ch;
 	s32 var_s1;
 
 	arg0->unkE50 = arg4;
-	func_800101F0_10DF0(((s32)arg0) + 8, (s32)(void *)((arg4 & 0xFFFFFF) + (s32)&D_8F4960), 0x48);
-	func_800101F0_10DF0(((s32)arg0) + 0x50, (s32)(void *)((arg4 & 0xFFFFFF) + (s32)&D_8F4960 + 0x48), arg0->unk8 * 0xE);
+	base = (arg4 & 0xFFFFFF) + (s32) &D_8F4960;
+	func_800101F0_10DF0(((s32) arg0) + 8, base, 0x48);
+	func_800101F0_10DF0(((s32) arg0) + 0x50, base + 0x48, arg0->unk8 * 0xE);
 
 	arg1->unkE50 = arg5;
-	func_800101F0_10DF0(((s32)arg1) + 8, (s32)(void *)((arg5 & 0xFFFFFF) + (s32)&D_8F4960), 0x48);
-	func_800101F0_10DF0(((s32)arg1) + 0x50, (s32)(void *)((arg5 & 0xFFFFFF) + (s32)&D_8F4960 + 0x48), arg1->unk8 * 0xE);
+	base = (arg5 & 0xFFFFFF) + (s32) &D_8F4960;
+	func_800101F0_10DF0(((s32) arg1) + 8, base, 0x48);
+	func_800101F0_10DF0(((s32) arg1) + 0x50, base + 0x48, arg1->unk8 * 0xE);
 
 	var_s1 = 0;
 	if (arg3 != 0) {
@@ -1455,7 +1458,7 @@ s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannel
 			ch = &arg2[var_s1];
 			ch->unk18 = 0;
 			ch->unk14 = *((u16 *)(((s32)arg0) + (var_s1 * 4) + 0xE));
-			func_8000D588_E188(arg0, arg1, ch, var_s1, arg6);
+			func_8000D588_E188(arg0, arg1, ch, var_s1 ^ 0, arg6);
 			if (arg7 != 0) {
 				ch->unk8 = (f32)ch->unk24;
 				ch->unk18 = ch->unk18 + 1;
