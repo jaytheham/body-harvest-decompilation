@@ -245,7 +245,54 @@ void func_802D763C_19014C(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D775C_19026C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D7D08_190818.s")
+s32 func_802D7D08_190818(u8 arg0, s32 arg1, s32 arg2) {
+	s32 sp24;
+	AlienInstance *alien;
+
+	alien = &alienInstances[arg0];
+	sp24 = 0;
+
+	alien->unkA = func_8009395C_A290C(arg0, alien->unk6);
+	alien->unk8 = func_8009395C_A290C(arg0, alien->unk6 + 0x4000);
+
+	if (((func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8) + 0x12C) < alien->unk2) {
+		func_80088760_97710(alien);
+	}
+
+	if (alien->unk20 & 0x40000000) {
+		alien->unk6 = alien->unkE;
+		if (D_80222A70 < alien->unk2) {
+			alien->unk10 = alien->unk10 + 0x30;
+		}
+		if (alien->unk47 & 4) {
+			alien->unk12 = 0;
+		}
+		if ((alien->unk47 & 2) && ((alien->unk3A == 0) || (alien->unk10 != 0))) {
+			alien->unk20 = alien->unk20 | 0x40001000;
+			alien->unk36 = 0;
+			alien->unk10 = arg2;
+			alien->unk2C = arg1;
+			sp24 = 1;
+		}
+		alien->unk3A = alien->unk10;
+	} else {
+		alien->unk12 = 0;
+		if (alien->unk2C != 0) {
+			alien->unk2C = alien->unk2C - 1;
+		} else {
+			alien->unk20 = alien->unk20 | 0x40001000;
+			alien->unk36 = 0;
+			alien->unk10 = arg2;
+			alien->unk2C = arg1;
+			sp24 = 1;
+		}
+		if (alien->unk47 & 1) {
+			alien->unk2C = 0;
+		}
+	}
+
+	return sp24;
+}
 
 void func_802D7EBC_1909CC(u8 arg0) {
 	s32 sp24;
