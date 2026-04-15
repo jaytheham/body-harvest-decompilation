@@ -105,7 +105,9 @@ void func_80000730_1330(s32 arg0) {
 				var_s0 = ((BhAudioMsg *)sp64)->audioBuf;
 			}
 			var_v0 = D_800312FC_31EFC;
-			if (var_v0 != 0) {
+			if (var_v0 == 0) {
+				D_800431B4 = 0.0f;
+			} else {
 				var_f0 = (f32)var_v0;
 				if (var_v0 < 0) {
 					var_f0 += 4294967296.0f;
@@ -115,8 +117,6 @@ void func_80000730_1330(s32 arg0) {
 					var_f10 += 4294967296.0f;
 				}
 				D_800431B4 = (f32)(((f64)(var_f0 - var_f10) * 100.0) / (f64)var_f0);
-			} else {
-				D_800431B4 = 0.0f;
 			}
 			D_800312FC_31EFC = 0;
 			D_80031300_31F00 = 0;
