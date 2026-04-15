@@ -48,7 +48,8 @@ typedef struct {
 	/* 0x08 */ f32 unk8;
 	/* 0x0C */ f32 unkC;
 	/* 0x10 */ s16 unk10;
-} UnkE830ModeEntry; /* size = 0x14 */
+	/* 0x12 */ u8 pad12[0xE];
+} UnkE830ModeEntry; /* size = 0x20 */
 
 typedef struct {
 	/* 0x00 */ f32 x;
