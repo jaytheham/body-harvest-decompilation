@@ -149,7 +149,6 @@ void drawText(void *arg0, ...) {
 	s32 s1;
 	s32 s4;
 	s32 s5;
-	s32 a1;
 	s32 v1;
 	s32 a0;
 	s32 sp78;
@@ -218,6 +217,8 @@ void drawText(void *arg0, ...) {
 	if (v0 != 0) {
 		v0 = *s3;
 		while (1) {
+			s32 a1;
+
 			a1 = 6;
 
 			if (v0 != '%') {
