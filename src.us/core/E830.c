@@ -39,26 +39,21 @@ void func_8000DC30_E830(s32 arg0, s32 arg1) {
 	} while (arg0 != 0);
 }
 
-#ifdef NON_MATCHING
 void func_8000DC9C_E89C(s32 arg0, s32 arg1)
 {
-  u8 *src = (u8 *) arg0;
-  u8 *dst = (u8 *) arg1;
-  s32 new_var;
-  s32 count = 0x95FF;
-  do
-  {
-	*((s32 *) (dst - 4)) = *((s32 *) src);
-	src += 4;
+	s32 *src = (s32 *) arg0;
+	s32 *dst = (s32 *) arg1;
+	s32 new_var;
+	s32 count = 0x95FF;
+	do
+	{
+	dst += 1;
+	dst[-1] = *src++;
 	new_var = count;
-	dst += 4;
 	count -= 1;
-  }
-  while (new_var != (1 * 0));
+	}
+	while (new_var != (1 * 0));
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000DC9C_E89C.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
