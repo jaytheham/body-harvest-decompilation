@@ -686,7 +686,127 @@ void func_802D95A8_1920B8(u8 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D962C_19213C.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(5943) */
+void func_802D9964_192474(u8 arg0) {
+	AlienInstance *alien;
+	s16 sp4E;
+	s16 sp4C;
+	s16 sp4A;
+	s16 sp46;
+	s16 sp44;
+	s32 temp_a1;
+	s32 temp_a0;
+	s32 var_v1;
+	s32 var_v0;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+
+	alien = &alienInstances[arg0];
+	sp4E = D_8014DD50[alien->unkC].unkC;
+	sp4A = D_8014DD50[sp4E].unkD;
+	sp4C = D_8014DD50[sp4A].unkD;
+	func_802D962C_19213C(arg0, sp4A, sp4C, alien);
+
+	if (D_80052B34->unk1A == 0) {
+		func_800877E8_96798(arg0, 0x73, 0x78);
+	} else {
+		func_800877E8_96798(arg0, 0x2BC, 0x320);
+	}
+
+	if (!(alien->unk20 & 0x1000) && !(alien->unk47 & 1)) {
+		sp46 = alien->unk0 - D_80052B34->unk0;
+		sp44 = alien->unk4 - D_80052B34->unk4;
+
+		if (((s32 (*)(u8, s16, s32))func_80086230_951E0)(arg0, sp4E, 0x2000) == 0) {
+			temp_a1 = -sp46;
+			temp_a0 = -sp44;
+			var_v1 = temp_a1;
+			if (temp_a1 < sp46) {
+				var_v1 = sp46;
+			}
+			var_v0 = temp_a0;
+			if (temp_a0 < sp44) {
+				var_v0 = sp44;
+			}
+			if (var_v0 < var_v1) {
+				var_v1 = temp_a1;
+				if (temp_a1 < sp46) {
+					var_v1 = sp46;
+				}
+			} else {
+				var_v1 = temp_a0;
+				if (temp_a0 < sp44) {
+					var_v1 = sp44;
+				}
+			}
+
+			if ((var_v1 >= 0x79) && (alien->unk4E != 0) && (func_80087188_96138(arg0, 0, 0x20) != 0)) {
+				alien->unk1E = 8;
+			}
+		}
+
+		temp_a1 = -sp46;
+		temp_a0 = -sp44;
+		var_v1 = temp_a1;
+		if (temp_a1 < sp46) {
+			var_v1 = sp46;
+		}
+		var_v0 = temp_a0;
+		if (temp_a0 < sp44) {
+			var_v0 = sp44;
+		}
+		if (var_v0 < var_v1) {
+			var_v1 = temp_a1;
+			if (temp_a1 < sp46) {
+				var_v1 = sp46;
+			}
+		} else {
+			var_v1 = temp_a0;
+			if (temp_a0 < sp44) {
+				var_v1 = sp44;
+			}
+		}
+
+		if (var_v1 < 0x79) {
+			var_v1 = temp_a1;
+			if (temp_a1 < sp46) {
+				var_v1 = sp46;
+			}
+			var_v0 = temp_a0;
+			if (temp_a0 < sp44) {
+				var_v0 = sp44;
+			}
+			if (var_v0 < var_v1) {
+				var_v1 = temp_a1;
+				if (temp_a1 < sp46) {
+					var_v1 = sp46;
+				}
+			} else {
+				var_v1 = temp_a0;
+				if (temp_a0 < sp44) {
+					var_v1 = sp44;
+				}
+			}
+
+			if (var_v1 >= 0x73) {
+				func_802D95A8_1920B8(arg0, sp4A, sp4C);
+			}
+		}
+
+		func_80090A6C_9FA1C(arg0, sp4C, 0xBB8);
+		func_80090A6C_9FA1C(arg0, sp4A, 0xBB8);
+	}
+
+	if (alien->unk1E != 0) {
+		alien->unk1E--;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D9964_192474.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D9C60_192770.s")
 
