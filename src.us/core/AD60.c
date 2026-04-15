@@ -1412,14 +1412,12 @@ void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChanne
 	AnimFrameData sp24;
 
 	base = (s32)arg0 + (((*(u16 *)((s32)arg0 + arg3 * 4 + 0xC) + arg2->unk18) & 0xFFFF) * 0xE);
-	*(AnimFrame12 *)&sp44 = *(AnimFrame12 *)((char *)base + 0x50);
-	sp44.unkC = *(u16 *)((char *)base + 0x5C);
+	sp44 = *(AnimFrameData *)((char *)base + 0x50);
 
 	base = (s32)arg1 + (((*(u16 *)((s32)arg1 + arg3 * 4 + 0xC) + arg2->unk18) & 0xFFFF) * 0xE);
-	*(AnimFrame12 *)&sp34 = *(AnimFrame12 *)((char *)base + 0x50);
-	sp34.unkC = *(u16 *)((char *)base + 0x5C);
+	sp34 = *(AnimFrameData *)((char *)base + 0x50);
 
-	func_8000D384_DF84(&sp44, &sp34, *(s32 *)&arg4, &sp24);
+	func_8000D384_DF84(&sp44, &sp34, arg4, &sp24);
 
 	*(AnimFrame12 *)&arg2->unk24 = *(AnimFrame12 *)&sp24;
 	arg2->unk1C = 0.0f;
