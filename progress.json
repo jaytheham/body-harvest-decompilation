@@ -1,14 +1,14 @@
 {
-  "generated": "2026-04-15T11:10:29Z",
-  "commit": "cd357356",
-  "commit_timestamp": "2026-04-15T23:10:18+12:00",
+  "generated": "2026-04-15T19:37:27Z",
+  "commit": "658270b3",
+  "commit_timestamp": "2026-04-16T07:37:12+12:00",
   "overall": {
-    "total_functions": 3046,
-    "matched": 1208,
-    "non_matching": 396,
-    "asm_stubs": 1442,
-    "matched_pct": 39.66,
-    "decompiled_pct": 52.66
+    "total_functions": 3054,
+    "matched": 1210,
+    "non_matching": 404,
+    "asm_stubs": 1440,
+    "matched_pct": 39.62,
+    "decompiled_pct": 52.85
   },
   "segments": {
     "core": {
@@ -49,12 +49,12 @@
     },
     "overlay_level/greece": {
       "display_name": "Level / Greece",
-      "matched": 33,
-      "non_matching": 2,
-      "asm_stubs": 31,
-      "total": 66,
-      "matched_pct": 50.0,
-      "decompiled_pct": 53.0
+      "matched": 35,
+      "non_matching": 10,
+      "asm_stubs": 29,
+      "total": 74,
+      "matched_pct": 47.3,
+      "decompiled_pct": 60.8
     },
     "overlay_level/java": {
       "display_name": "Level / Java",
@@ -517,11 +517,11 @@
     {
       "path": "overlay_level/greece/18D7E0.c",
       "segment": "overlay_level/greece",
-      "matched": 33,
-      "non_matching": 2,
-      "asm_stubs": 31,
-      "total": 66,
-      "matched_pct": 50.0,
+      "matched": 35,
+      "non_matching": 10,
+      "asm_stubs": 29,
+      "total": 74,
+      "matched_pct": 47.3,
       "contributor": "jaytheham"
     },
     {
@@ -549,9 +549,9 @@
     {
       "name": "jaytheham",
       "files": 43,
-      "matched": 1203,
-      "non_matching": 396,
-      "asm_stubs": 1372
+      "matched": 1205,
+      "non_matching": 404,
+      "asm_stubs": 1370
     },
     {
       "name": "Meridian Lex",
@@ -562,14 +562,6 @@
     }
   ],
   "history": [
-    {
-      "date": "2026-04-08",
-      "commit": "26d5390",
-      "matched_pct": 38.52,
-      "decompiled_pct": 50.94,
-      "matched": 1166,
-      "total": 3027
-    },
     {
       "date": "2026-04-09",
       "commit": "d622f0f",
@@ -625,6 +617,14 @@
       "decompiled_pct": 52.66,
       "matched": 1208,
       "total": 3046
+    },
+    {
+      "date": "2026-04-16",
+      "commit": "4dc4868",
+      "matched_pct": 39.62,
+      "decompiled_pct": 52.85,
+      "matched": 1210,
+      "total": 3054
     }
   ]
 }
