@@ -2033,8 +2033,8 @@ extern f64 D_80037648_38248;
 extern f32 D_80037650;
 extern f32 D_80037654;
 extern f32 D_80037658;
-extern void *D_80031A90;
-extern void *D_80059CDC;
+extern UnkE830ModeEntry D_80031A90[];
+extern UnkE830ModeEntry *D_80059CDC;
 extern s16 D_80267080[];
 extern s16 FrameBufferB[];
 /* core/FB00 — thread structs, stacks, OS mode tables */

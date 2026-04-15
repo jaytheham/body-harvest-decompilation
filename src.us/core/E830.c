@@ -186,21 +186,14 @@ void osSetTime(s32 arg0, s32 arg1) {
 	__osCurrentTime = arg1;
 }
 
-#ifdef NON_MATCHING
 /* Initialise projection state from entry arg0 in D_80031A90 table, then copy framebuffer region. */
 void func_8000E4C4_F0C4(s32 arg0) {
-	void *temp_t8;
-
-	temp_t8 = (void *)((u8 *)D_80031A90 + (arg0 << 5));
-	D_80059CDC = temp_t8;
-	D_80059CD0 = *(s16 *)((u8 *)temp_t8 + 4);
-	D_80059CE0 = *(f32 *)((u8 *)temp_t8 + 8);
+	D_80059CDC = &D_80031A90[arg0];
+	D_80059CD0 = D_80059CDC->unk4;
+	D_80059CE0 = D_80059CDC->unk8;
 	D_80059CD8 = 0;
 	func_8000DC9C_E89C((s32)&D_80267080, (s32)&D_803DA800);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E4C4_F0C4.s")
-#endif
 
 s32 func_8000E52C_F12C(s32 arg0) {
 	return arg0 * arg0;
