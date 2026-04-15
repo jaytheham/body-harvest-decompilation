@@ -19,7 +19,6 @@ void func_8000EF98_FB98(void) {
 	osViModeTable[16].fldRegs[0].yScale = 0x36D;
 }
 
-#ifdef NON_MATCHING
 void func_8000EFB8_FBB8(void *arg0) {
     s16 *ptr;
 
@@ -34,11 +33,11 @@ void func_8000EFB8_FBB8(void *arg0) {
     osCreateViManager(0xFE);
     if (osTvType == 0) {
         func_8000EF98_FB98();
-        osViSetMode(&D_80035B30);
+        osViSetMode(&D_80035B30_36730);
     } else if (osTvType == 2) {
-        osViSetMode(&D_80035F90);
+        osViSetMode(&D_80035F90_36B90);
     } else {
-        osViSetMode(&D_800356D0);
+        osViSetMode(&D_800356D0_362D0);
     }
     osViSwapBuffer(D_80267080);
     D_80067538.next = NULL;
@@ -59,6 +58,3 @@ void func_8000EFB8_FBB8(void *arg0) {
     osSetThreadPri(0, 0);
     for (;;);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/FB00/func_8000EFB8_FBB8.s")
-#endif

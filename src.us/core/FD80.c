@@ -2,19 +2,8 @@
 #include "common.h"
 
 
-/* Out-of-line epilogue of func_8000EFB8_FBB8.
- * That function saves ra with a 0x20-byte frame, then ends in an
- * infinite loop (osSetThreadPri + b self). The compiler placed the
- * matching frame restore here at the start of the next linker segment
- * (FD80). There is no caller: the function is physically unreachable
- * via jal. It cannot be reproduced as a standalone C function without
- * a prologue appearing before the restores. */
-#ifdef NON_MATCHING
-void func_8000F180_FD80(void) {
-}
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F180_FD80.s")
-#endif
+/* The FD80 restore stub is emitted out-of-line by func_8000EFB8_FBB8 when
+ * that function is compiled from C, so no standalone definition is kept here. */
 
 void func_8000F190_FD90(void (*arg0)(void *)) {
 	D_80067A48.next = NULL;

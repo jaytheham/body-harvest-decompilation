@@ -2095,6 +2095,9 @@ extern s32 D_80035B5C;
 extern OSViMode D_80035B30;
 extern OSViMode D_800356D0;
 extern OSViMode D_80035F90;
+extern OSViMode D_800356D0_362D0;
+extern OSViMode D_80035B30_36730;
+extern OSViMode D_80035F90_36B90;
 typedef struct {
 	f32 unk0;
 	f32 unk4;
