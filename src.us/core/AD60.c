@@ -575,16 +575,16 @@ void func_8000B044_BC44(void) {
     s8 *glyph_data;
     s16 glyph_advance;
     Gfx *dl;
-    s32 tmp;
     s16 tmp16;
-    f32 fx, fy, xh_f, yh_f, xl_f, yl_f;
+	f32 xh_f, yh_f, xl_f, yl_f;
     s32 xh_i, yh_i, xl_i, yl_i;
     s32 dsdx, dtdy;
 
-    D_80053C94 = 0x1E;
-    D_80053C96 = (s16)(D_80068084 - 0x1E);
-
     alpha = 0xFF;
+
+	D_80053C94 = 0x1E;
+	D_80053C96 = (s16)(D_80068084 - 0x1E);
+
     x_cursor = 0;
     y_cursor = 0;
     r = 0xFF; g = 0xFF; b = 0xFF;
@@ -809,9 +809,24 @@ void func_8000B044_BC44(void) {
                 i = (s16)(i + 1);
                 break;
             }
-            case 26: { /* set y_cursor from next 1 byte */
-                y_cursor = (s16)((s8)(u8)text_ptr[i + 1] * 4);
+			case 26: { /* newline y-scroll + center-align */
+				s16 width;
+				s16 span;
+				s16 diff;
+
+				y_cursor = (s16)((s8)(u8)text_ptr[i + 1] * 4);
+				flag_78 = 1;
                 i = (s16)(i + 1);
+
+				width = func_8000A2B8_AEB8(text_ptr, (s16)(i + 1));
+				span = (s16)(D_80053C96 - D_80053C94);
+				diff = (s16)(span - width);
+				if (diff < 0) {
+					tmp16 = (s16)((diff + 1) >> 1);
+				} else {
+					tmp16 = (s16)(diff >> 1);
+				}
+				x_cursor = (s16)(D_80053C94 + tmp16);
                 break;
             }
             case 27: { /* call func, scale x */
