@@ -1176,23 +1176,24 @@ void func_8000CC3C_D83C(AnimChannelState *arg0, s32 arg1)
 }
 
 #ifdef NON_MATCHING
-void func_8000CD54_D954(void *arg0, AnimChannelState *arg1, u8 arg2) {
+void func_8000CD54_D954(Unk8007F878_404 *arg0, AnimChannelState *arg1, u8 arg2) {
 	typedef struct { s16 a; s16 b; s16 c; s16 d; s16 e; s16 f; } AnimFrame12;
 	s32 temp_v0;
-	u16 temp_at;
-	s32 base;
 
-	temp_v0 = arg1->unk18;
-	if (arg1->unk14 > temp_v0) {
+	if (arg1->unk14 > (temp_v0 = arg1->unk18)) {
+		u16 start_frame = *(u16 *)((s32)arg0 + arg2 * 4 + 0xC);
+		s32 offset;
+
+		start_frame += temp_v0;
+		offset = start_frame * 0xE;
+		*(AnimFrame12 *)&arg1->unk24 = *(AnimFrame12 *)((s32)arg0 + offset + 0x50);
 		{
-			u16 start_frame = *(u16 *)((s32)arg0 + arg2 * 4 + 0xC);
-			base = (s32)arg0 + (((start_frame + temp_v0) & 0xFFFF) * 0xE);
+			u16 temp_at;
+
+			temp_at = arg1->unk30 = *(u16 *)((s32)arg0 + offset + 0x5C);
+			arg1->unk1C = 0.0f;
+			arg1->unk20 = (f32)(u32)(temp_at & 0xFFFF);
 		}
-		*(AnimFrame12 *)&arg1->unk24 = *(AnimFrame12 *)((char *)base + 0x50);
-		temp_at = *(u16 *)((char *)base + 0x5C);
-		arg1->unk1C = 0.0f;
-		arg1->unk30 = temp_at;
-		arg1->unk20 = (f32)(u32)(temp_at & 0xFFFF);
 	}
 }
 #else
