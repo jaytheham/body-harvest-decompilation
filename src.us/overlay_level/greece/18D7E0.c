@@ -2,7 +2,49 @@
 #include "common.h"
 
 
+#ifdef NON_MATCHING
+/* CURRENT(5) */
+void func_802D4CD0_18D7E0(s32 arg0, s32 arg1) {
+	arg1 = arg0;
+
+	if (arg0 < 0x14) {
+		((void (*)(void))D_802DDBF4_196704[arg0])();
+		return;
+	}
+
+	switch (arg1) {
+	case 0x14:
+		func_800EFEB4_FEE64(func_800F1134_1000E4, 4, 0);
+		break;
+	case 0x15:
+		func_800EFEB4_FEE64(func_800F1DDC_100D8C, 0, 1);
+		break;
+	case 0x16:
+		func_800EFEB4_FEE64(func_802D57A0_18E2B0, 5, 1);
+		break;
+	case 0x17:
+		func_802D6F7C_18FA8C();
+		break;
+	case 0x18:
+		func_802D7334_18FE44();
+		break;
+	case 0x19:
+		func_802D7360_18FE70();
+		break;
+	case 0x45:
+		func_802D6D20_18F830();
+		break;
+	case 0x44:
+		func_80007690_8290();
+		break;
+	default:
+		osSyncPrintf(&D_802DE2D0_196DE0, arg0);
+		break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D4CD0_18D7E0.s")
+#endif
 
 void func_802D4E28_18D938(void) {
 	if (func_8000726C_7E6C(0x17) != 0) {

@@ -1841,6 +1841,8 @@ extern char D_80142B38_151AE8;
 extern s32 D_802DD170;
 extern Gfx D_9052C10[];
 extern Gfx D_9052C70[];
+extern void (*D_802DDBF4_196704[])(s32);
+extern char D_802DE2D0_196DE0; /* osSyncPrintf format string */
 extern u16 D_802DE466;
 extern s16 D_8004DC58;
 extern s16 D_802DE460;
