@@ -395,6 +395,7 @@ extern s32 D_80048188;
 extern s32 D_80048190;
 extern s32 D_80048194;
 extern AlienInstance alienInstances[]; // 0x80048198
+extern s16 D_800481DD[];
 extern AlienWaveEntry D_8003BCC0[][12];
 extern u8 D_8003BCC6;
 extern char D_80142B6C_151B1C;
@@ -1035,6 +1036,7 @@ extern u8 D_8014D50A;
 extern u8 D_8014D510[];
 extern u8 D_8014D550[];
 extern Unk8014DD50 D_8014DD50[];
+extern s16 D_8014DD54[];
 extern s8 D_8014DD5C[];
 extern Unk802E71B8 D_802E71B8;
 extern Unk802E71B8 D_802E71C0;
@@ -1214,6 +1216,8 @@ extern Unk8014F618 D_8014F618;
 
 extern AlienSpec alienSpecs[0x30]; // 80256680
 extern Unk8025669C D_8025669C[];  // 8025669C
+extern Unk8014DD50 *D_802DDCD0_1967E0;
+extern s32 D_802DDCD8_1967E8;
 
 extern s32 D_80145BE8_154B98[][6];
 extern s16 D_8014EDD8;
@@ -1841,6 +1845,18 @@ extern char D_80142B38_151AE8;
 extern s32 D_802DD170;
 extern Gfx D_9052C10[];
 extern Gfx D_9052C70[];
+extern void (*D_802DDBF4_196704[])(s32);
+extern u8 D_802DDE18_196928;
+extern u8 D_802DDE24_196934;
+extern u8 D_802DDF00_196A10;
+extern u8 D_802DDF0C_196A1C;
+extern u8 D_802DE0A8_196BB8;
+extern u8 D_802DE0B4_196BC4;
+extern u8 D_802DE0C0_196BD0;
+extern u8 D_802DE25C_196D6C;
+extern u8 D_802DE268_196D78;
+extern u8 D_802DE274_196D84;
+extern char D_802DE2D0_196DE0; /* osSyncPrintf format string */
 extern u16 D_802DE466;
 extern s16 D_8004DC58;
 extern s16 D_802DE460;
