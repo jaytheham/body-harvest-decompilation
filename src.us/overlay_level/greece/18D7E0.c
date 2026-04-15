@@ -832,7 +832,87 @@ void func_802D95A8_1920B8(u8 arg0, s16 arg1, s16 arg2) {
 	alienInstances[arg0].unk36 = 0;
 }
 
+#ifdef NON_MATCHING
+/* CURRENT(2534) */
+void func_802D962C_19213C(u8 arg0, s16 arg1, s16 arg2, AlienInstance *alien) {
+	u8 currentNode;
+	u8 specIndex;
+	u8 state;
+	s16 turnSpeed;
+	s32 hit;
+	s32 sp5C;
+	s32 sp58;
+	s32 sp54;
+	AlienInstance *alienInst;
+	AlienSpec *spec;
+
+	alienInst = &alienInstances[arg0];
+
+	currentNode = alienInst->unk26;
+	specIndex = alienInst->specIndex;
+
+	if (alienInst->unk20 & 0x1000) {
+		if (arg1 == currentNode) {
+			alienInst->unk2A += 0x1000;
+		} else {
+			alienInst->unk2A -= 0x1000;
+		}
+
+		func_80081E5C_90E0C((s16) currentNode);
+
+		if (D_8014DD5E[currentNode][0] == 0) {
+			state = alienInst->unk36;
+			if (state == 3) {
+				alienInst->unk20 &= ~0x1000;
+				return;
+			}
+
+			func_80081C84_90C34(currentNode, &D_802DDCF8_196808[state]);
+			alienInst->unk36++;
+			state = alienInst->unk36;
+
+			if (state == 3) {
+				func_80137468_146418(arg0, 0x64);
+
+				if (arg1 == alienInst->unk26) {
+					hit = func_800879A4_96954(arg0, 0, 1);
+				}
+
+				if (arg2 == alienInst->unk26) {
+					spec = &alienSpecs[specIndex];
+					spec->unk2C = -spec->unk2C;
+					hit = func_800879A4_96954(arg0, 0x96, 1);
+					spec->unk2C = -spec->unk2C;
+				}
+
+				spec = &alienSpecs[specIndex];
+				if (hit != 0) {
+					func_80122524_1314D4(D_80052B34, 0x190, alienInst->unk0, alienInst->unk4);
+				}
+
+				if (arg2 == alienInst->unk26) {
+					turnSpeed = -spec->unk2C;
+				} else {
+					turnSpeed = spec->unk2C;
+				}
+
+				func_80128428_1373D8(alienInst, turnSpeed, spec->unk2E, spec->unk30, &sp5C, &sp58, &sp54);
+				func_800DEE5C_EDE0C((s16) sp5C, (s16) (sp58 + 5), (s16) sp54, 0x50, 0x14);
+				func_800C541C_D43CC((s16) sp5C, (s16) sp58, (s16) sp54, 0, -1, 0, 0x64, 0xFF, 0x28, 0x14, 0xFF, 0xFF, 0x80);
+				func_800DEA08_ED9B8((s16) sp5C, (s16) sp58, (s16) sp54, 0x96, 8, 6, 0x28, 0xC8, 0xA6, 0x85, 0x2F);
+				func_80135D44_144CF4(sp5C, sp58, sp54, 3.0f);
+				state = alienInst->unk36;
+			}
+
+			if (state == 4) {
+				alienInst->unk20 &= ~0x1000;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D962C_19213C.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(5943) */
