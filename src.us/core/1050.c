@@ -22,7 +22,6 @@ s32 D_800313C4_31FC4 = 0;
 s16 D_800313C8_31FC8 = 0;
 s32 D_800313CC = 0;
 
-
 #ifdef NON_MATCHING
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	Unk80042DB8 *s1;
@@ -42,7 +41,7 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 		var_f0 = (f32)arg0->outputRate / 50.0f;
 	}
 	D_800431A8 = (s32)var_f0;
-	if ((f32)D_800431A8 < var_f0) {
+	if ((f32)(u32)D_800431A8 < var_f0) {
 		D_800431A8++;
 	}
 	if (D_800431A8 & 0xF) {
@@ -55,14 +54,10 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	D_80042DB8.unk0 = 0;
 	s1 = &D_80042DB8;
 	s0 = &D_80042DCC;
-	s2 = 0;
-	do {
+	for (s2 = 0; s2 < 0x31; s2++, s1++, s0++) {
 		alLink((ALLink *)s0, (ALLink *)s1);
 		s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
-		s2++;
-		s1++;
-		s0++;
-	} while (s2 < 0x31);
+	}
 	s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
 	{
 		Acmd **p;
