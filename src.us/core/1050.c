@@ -1415,25 +1415,17 @@ void func_80003064_3C64(void) {
 
 // https://decomp.me/scratch/66U7q
 #ifdef NON_MATCHING
-void func_800033D4_3FD4(u32 arg0, s32 arg1) {
-	s32 temp_v0;
-	s32 temp_t6;
-	s32 temp_a2;
-	u16 *temp_a0;
-	u16 *temp_v0_2;
+void func_800033D4_3FD4(u16 arg0, s32 arg1) {
+	u16 *previousButtons;
 
-	temp_v0 = arg1 * 2;
-	temp_t6 = arg0 & 0xFFFF;
-	if (D_800475D8[arg1] & temp_t6) {
-		temp_a0 = (u16 *)(temp_v0 + (u8 *)previousControllerButtonStates);
-		if (*temp_a0 & temp_t6) {
-			temp_v0_2 = (u16 *)((arg1 * 6) + (u8 *)currentControllerStates);
-			temp_a2 = ~temp_t6;
-			*temp_v0_2 &= temp_a2;
-			if (temp_a0 != previousControllerButtonStates) {
+	if (D_800475D8[arg1] & arg0) {
+		previousButtons = &previousControllerButtonStates[arg1];
+		if (*previousButtons & arg0) {
+			currentControllerStates[arg1].button &= ~arg0;
+			if (previousButtons != previousControllerButtonStates) {
 				return;
 			}
-			D_800475F8 &= temp_a2;
+			D_800475F8 &= ~arg0;
 		}
 	}
 }
