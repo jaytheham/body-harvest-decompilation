@@ -1623,7 +1623,7 @@ void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2,
 	s32 temp_t4;
 	s32 temp_t9_2;
 	s32 temp_t4_2;
-	Unk800476C8 *var_v0;
+	s32 *var_v0;
 	s32 *var_a0;
 
 	D_800476C8[0].unkC = 0;
@@ -1685,28 +1685,20 @@ void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2,
 		D_800476C8[1].unk8 = (s32)(D_800476C8[1].unk8 * arg2->unk4) >> 8;
 	}
 
-	var_v0 = D_800476C8;
+	var_v0 = (s32 *)D_800476C8;
 	var_a0 = (s32 *)arg3;
 	do {
-		s32 b0 = var_v0->unk0;
-		s32 b1 = var_v0->unk4;
-		s32 b2 = var_v0->unk8;
-		s32 b3 = var_v0->unkC;
-		s32 b4 = var_v0->unk10;
-		s32 b5 = var_v0->unk14;
-		s32 b6 = var_v0->unk18;
-		s32 b7 = var_v0->unk1C;
-		var_v0++;
-		var_a0[0] = (b0 & 0xFFFF0000) | ((u32)(b1 & 0xFFFF0000) >> 16);
+		var_a0[0] = ((var_v0[1] & 0xFFFF0000) >> 16) + (var_v0[0] & 0xFFFF0000);
 		var_a0 += 4;
-		var_a0[4] = (s32)(((b0 & 0xFFFF) << 16) | (b1 & 0xFFFF));
-		var_a0[-3] = (b2 & 0xFFFF0000) | ((u32)(b3 & 0xFFFF0000) >> 16);
-		var_a0[5] = (s32)(((b2 & 0xFFFF) << 16) | (b3 & 0xFFFF));
-		var_a0[-2] = (b4 & 0xFFFF0000) | ((u32)(b5 & 0xFFFF0000) >> 16);
-		var_a0[6] = (s32)(((b4 & 0xFFFF) << 16) | (b5 & 0xFFFF));
-		var_a0[-1] = (b6 & 0xFFFF0000) | ((u32)(b7 & 0xFFFF0000) >> 16);
-		var_a0[7] = (s32)(((b6 & 0xFFFF) << 16) | (b7 & 0xFFFF));
-	} while (var_v0 != &D_80047708);
+		var_a0[4] = (var_v0[0] << 16) + (var_v0[1] & 0xFFFF);
+		var_a0[-3] = ((var_v0[3] & 0xFFFF0000) >> 16) + (var_v0[2] & 0xFFFF0000);
+		var_a0[5] = (var_v0[2] << 16) + (var_v0[3] & 0xFFFF);
+		var_a0[-2] = ((var_v0[5] & 0xFFFF0000) >> 16) + (var_v0[4] & 0xFFFF0000);
+		var_a0[6] = (var_v0[4] << 16) + (var_v0[5] & 0xFFFF);
+		var_a0[-1] = ((var_v0[7] & 0xFFFF0000) >> 16) + (var_v0[6] & 0xFFFF0000);
+		var_a0[7] = (var_v0[6] << 16) + (var_v0[7] & 0xFFFF);
+		var_v0 += 8;
+	} while (var_v0 != (s32 *)&D_80047708);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800039D0_45D0.s")
