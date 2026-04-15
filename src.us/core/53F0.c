@@ -415,8 +415,6 @@ void func_80005B84_6784(void) {
 
 #ifdef NON_MATCHING
 void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, f32 arg8, f32 arg9, u16 *arg10) {
-	s32 sp13C;
-	s32 sp138;
 	f32 sp128;
 	s32 sp90;
 	f32 sp88;
@@ -431,9 +429,7 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 	f32 var_f24;
 	f32 temp_f12;
 	s32 temp_a0;
-	s32 temp_t9;
 	s32 temp_s1;
-	s32 temp_t0;
 	s32 temp_t7;
 	s32 temp_t9_2;
 	s32 temp_s0;
@@ -443,11 +439,8 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 
 	sp88 = 32.0f * arg8;
 	sp84 = 32.0f * arg9;
-	temp_t9 = ((arg6 - 1) / 32) + 1;
-	sp90 = temp_t9;
-	sp13C = temp_t9;
+	sp90 = ((arg6 - 1) / 32) + 1;
 	temp_s1 = ((arg7 - 1) / 32) + 1;
-	sp138 = temp_s1;
 	sp128 = sp84;
 
 	guOrtho((Mtx *)D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, D_80037128_37D28, D_8003712C_37D2C, 1.0f);
@@ -525,14 +518,13 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 						if (temp_f12 < temp_f26) {
 							var_f24 = temp_f12;
 						}
-						temp_t0 = temp_t7;
-						gSPTextureRectangle(D_8005BB2C++, (s32)var_f18 * 4, (s32)var_f20 * 4, (s32)var_f22 * 4, (s32)var_f24 * 4, G_TX_RENDERTILE, temp_ra, temp_s0, temp_t0, temp_t9_2);
+						gSPTextureRectangle(D_8005BB2C++, (s32)var_f18 * 4, (s32)var_f20 * 4, (s32)var_f22 * 4, (s32)var_f24 * 4, G_TX_RENDERTILE, temp_ra, temp_s0, temp_t7, temp_t9_2);
 					}
 					var_t5 += 1;
-				} while (var_t5 != sp13C);
+				} while (var_t5 != sp90);
 			}
 			var_s4 += 1;
-		} while (var_s4 != sp138);
+		} while (var_s4 != temp_s1);
 	}
 
 	gDPPipeSync(D_8005BB2C++);
