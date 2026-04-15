@@ -415,8 +415,6 @@ void func_80005B84_6784(void) {
 
 #ifdef NON_MATCHING
 void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, f32 arg8, f32 arg9, u16 *arg10) {
-	s32 sp13C;
-	s32 sp138;
 	f32 sp128;
 	s32 sp90;
 	f32 sp88;
@@ -431,9 +429,7 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 	f32 var_f24;
 	f32 temp_f12;
 	s32 temp_a0;
-	s32 temp_t9;
 	s32 temp_s1;
-	s32 temp_t0;
 	s32 temp_t7;
 	s32 temp_t9_2;
 	s32 temp_s0;
@@ -443,11 +439,8 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 
 	sp88 = 32.0f * arg8;
 	sp84 = 32.0f * arg9;
-	temp_t9 = ((arg6 - 1) / 32) + 1;
-	sp90 = temp_t9;
-	sp13C = temp_t9;
+	sp90 = ((arg6 - 1) / 32) + 1;
 	temp_s1 = ((arg7 - 1) / 32) + 1;
-	sp138 = temp_s1;
 	sp128 = sp84;
 
 	guOrtho((Mtx *)D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, D_80037128_37D28, D_8003712C_37D2C, 1.0f);
@@ -525,14 +518,13 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 						if (temp_f12 < temp_f26) {
 							var_f24 = temp_f12;
 						}
-						temp_t0 = temp_t7;
-						gSPTextureRectangle(D_8005BB2C++, (s32)var_f18 * 4, (s32)var_f20 * 4, (s32)var_f22 * 4, (s32)var_f24 * 4, G_TX_RENDERTILE, temp_ra, temp_s0, temp_t0, temp_t9_2);
+						gSPTextureRectangle(D_8005BB2C++, (s32)var_f18 * 4, (s32)var_f20 * 4, (s32)var_f22 * 4, (s32)var_f24 * 4, G_TX_RENDERTILE, temp_ra, temp_s0, temp_t7, temp_t9_2);
 					}
 					var_t5 += 1;
-				} while (var_t5 != sp13C);
+				} while (var_t5 != sp90);
 			}
 			var_s4 += 1;
-		} while (var_s4 != sp138);
+		} while (var_s4 != temp_s1);
 	}
 
 	gDPPipeSync(D_8005BB2C++);
@@ -677,15 +669,16 @@ void func_80006DDC_79DC(void) {
 	}
 	do {
 		D_80052ACA = 0;
-		D_800313E8 = D_80031620[currentLevel - 1].unk0;
+		pad0 = currentLevel - 1;
+		D_800313E8 = D_80031620[pad0].unk0;
 		D_80047743 = D_800313E8;
-		D_800313EC = D_80031620[currentLevel - 1].unk1;
+		D_800313EC = D_80031620[pad0].unk1;
 		D_80047744 = D_800313EC;
-		D_800313F0 = D_80031620[currentLevel - 1].unk2;
+		D_800313F0 = D_80031620[pad0].unk2;
 		D_80047745 = D_800313F0;
-		D_800313F4 = D_80031620[currentLevel - 1].unk3;
-		D_800313F8 = D_80031634[(currentLevel - 1) * 2];
-		D_800313FC = D_80031634[(currentLevel - 1) * 2 + 1];
+		D_800313F4 = D_80031620[pad0].unk3;
+		D_800313F8 = D_80031634[pad0 * 2];
+		D_800313FC = D_80031634[pad0 * 2 + 1];
 		D_80047964 = 0x53C5;
 		D_8004794E = 0xCCF;
 		D_80047960 = 244.0f;
@@ -808,9 +801,9 @@ void func_800073B8_7FB8(u64 arg0) {
 	D_8004DC48.unk0 &= ~temp_ret;
 }
 
-#ifdef NON_MATCHING
 void func_80007410_8010(void *arg0) {
 	s32 i;
+	s32 temp;
 
 	i = 4;
 	while (i--) {
@@ -822,11 +815,12 @@ void func_80007410_8010(void *arg0) {
 	i = 3;
 	if (D_8004DC74 != 0) {
 		for (;;) {
-			if (i == 0) {
-				i--;
+			temp = i;
+			i = temp - 1;
+			if (temp == 0) {
 				break;
 			}
-			if (D_8004DC68[--i] != 0) {
+			if (D_8004DC68[i] != 0) {
 				continue;
 			}
 			break;
@@ -839,9 +833,6 @@ void func_80007410_8010(void *arg0) {
 	}
 	D_8004DC68[i] = (s32)arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007410_8010.s")
-#endif
 
 void func_800074BC_80BC(void *arg0) {
 	s32 i = 4;
@@ -1187,10 +1178,13 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007F60_8B60.s")
 #endif
 
+
 #ifdef NON_MATCHING
 s32 func_8000807C_8C7C(u8 *arg0, u8 *arg1) {
+	u8 opcode;
+
 loop_1:
-	switch (arg0[0]) {
+	switch (opcode = arg0[0]) {
 	case 0x98:
 		switch (arg1[0]) {
 		case 0x9A:
@@ -1241,7 +1235,7 @@ s32 func_800081D4_8DD4(u8 *arg0) {
 		u32 v = *(u32 *)(D_80050AE0 + arg0[1] * 24);
 		u32 vr = v >> 12;
 		u32 bit16_check = (vr & 0x10) ^ 0x10;
-		return (bit16_check != 0) || (((vr & 1) ^ 1) != 0);
+		return bit16_check || ((vr & 1) ^ 1);
 	}
 	case 0x8E:
 		return func_80007F60_8B60(arg0);
@@ -1453,12 +1447,14 @@ void debug_drawTimingGraphBars(void) {
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetFillColor(D_8005BB2C++, 0x3E003E);
 		sp30 = D_8005BB2C++;
-		lrxVal = (s32)((u64)((s64)D_80052B38 * 1000000LL) / D_80035610 / 347 + 32) & 0x3FF;
+		lrxVal = (s32)((u64)((s64)D_80052B38 * 1000000LL) / D_80035610 / 347);
+		lrxVal = (lrxVal + 32) & 0x3FF;
 		gDPFillRectangle(sp30, 32, 194, lrxVal, 199);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetFillColor(D_8005BB2C++, 0xF800F800);
 		sp24 = D_8005BB2C++;
-		lrxVal = (s32)((u64)((s64)D_80052B3C * 1000000LL) / D_80035610 / 347 + 32) & 0x3FF;
+		lrxVal = (s32)((u64)((s64)D_80052B3C * 1000000LL) / D_80035610 / 347);
+		lrxVal = (lrxVal + 32) & 0x3FF;
 		gDPFillRectangle(sp24, 32, 200, lrxVal, 205);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
@@ -1605,39 +1601,39 @@ void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 
 	switch (arg4) {
 	case 0:
+		texture = D_1011C80;
 		textureSpanX = (arg2 - arg0) * 4;
 		spanY = arg3 - arg1;
-		texture = D_1011C80;
 		textureSpanY = spanY * 4;
 		stepX = 0x400;
 		stepY = 0x400;
 		break;
 
 	case 1:
+		texture = D_1010C80;
 		textureSpanX = (arg2 - arg0) * 4;
 		spanY = arg3 - arg1;
 		textureSpanY = spanY * 4;
 		stepY = 0x400;
 		stepX = 0x400;
-		texture = D_1010C80;
 		break;
 
 	case 2:
+		texture = D_1010C80;
 		textureSpanX = (arg2 - arg0) * 4;
 		spanY = arg3 - arg1;
 		textureSpanY = spanY * 4;
 		stepX = 0x400;
 		stepY = 0x400;
-		texture = D_1010C80;
 		break;
 
 	case 3:
+		texture = D_1011C80;
 		textureSpanX = (arg2 - arg0) * 8;
 		spanY = arg3 - arg1;
 		textureSpanY = spanY * 8;
 		stepY = 0x800;
 		stepX = 0x800;
-		texture = D_1011C80;
 		break;
 
 	default:
