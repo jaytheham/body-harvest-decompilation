@@ -319,7 +319,74 @@ void func_802D5760_18E270(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D6D20_18F830.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(5142) */
+void func_802D6F7C_18FA8C(void) {
+	f32 sp5C;
+	s32 pad0;
+	s32 pad1;
+	f32 sp58;
+	f32 sp54;
+	f32 sp50;
+	f32 sp4C;
+	f32 sp48;
+	f64 temp_f20;
+	s32 i;
+	s32 temp_a1;
+	Unk8013FDA8Entry *sp30;
+	Unk8013FDA8Entry *sp2C;
+	Unk8013FDA8Entry *entry;
+
+	sp5C = (f32) (D_80257DB4 >> 1);
+	sp30 = (Unk8013FDA8Entry *) func_80011F90_12B90(D_9052A00);
+	sp2C = (Unk8013FDA8Entry *) func_80011F90_12B90(D_9052AC0);
+
+	temp_f20 = (f64) sp5C;
+	sp58 = (f32) ((((f64) (f32) sins(D_80052B34->unk6) / 32768.0) * temp_f20) + (f64) D_80052B34->unk4C);
+	sp54 = (f32) ((f64) D_80052B34->unk54 - (((f64) (f32) coss(D_80052B34->unk6) / 32768.0) * temp_f20));
+	sp48 = sqrtf(((D_8004DCAC - sp58) * (D_8004DCAC - sp58)) + ((sp54 - D_8004DCB0) * (sp54 - D_8004DCB0)));
+
+	temp_a1 = (s32) ((f32) (((-(f64) (f32) coss((func_80003824_4424(sp58 - D_8004DCAC, sp54 - D_8004DCB0) - D_80052B34->unk6) & 0xFFFF) / 32768.0) * (f64) -sp48)) * 21.0f);
+	D_8004DCAC = sp58;
+	D_8004DCB0 = sp54;
+
+	entry = (Unk8013FDA8Entry *) ((u8 *) sp30 + 0xB0);
+	for (i = 0xB; i != 0; i--) {
+		entry->unk8.unk0 = (s16) (entry->unk8.unk0 + temp_a1);
+		entry = (Unk8013FDA8Entry *) ((u8 *) entry - 0x10);
+	}
+
+	temp_a1 = ((s16) sp30->unk8.unk0 >> 0xC) << 0xC;
+	entry = (Unk8013FDA8Entry *) ((u8 *) sp30 + 0xB0);
+	for (i = 0xB; i != 0; i--) {
+		entry->unk8.unk0 = (s16) (entry->unk8.unk0 - temp_a1);
+		entry = (Unk8013FDA8Entry *) ((u8 *) entry - 0x10);
+	}
+
+	sp50 = (f32) ((f64) D_80052B34->unk4C - (((f64) (f32) sins(D_80052B34->unk6) / 32768.0) * temp_f20));
+	sp4C = (f32) ((((f64) (f32) coss(D_80052B34->unk6) / 32768.0) * temp_f20) + (f64) D_80052B34->unk54);
+	sp48 = sqrtf(((D_8004DCB4 - sp50) * (D_8004DCB4 - sp50)) + ((sp4C - D_8004DCB8) * (sp4C - D_8004DCB8)));
+
+	temp_a1 = (s32) ((f32) (((-(f64) (f32) coss((func_80003824_4424(sp50 - D_8004DCB4, sp4C - D_8004DCB8) - D_80052B34->unk6) & 0xFFFF) / 32768.0) * (f64) -sp48)) * 21.0f);
+	D_8004DCB4 = sp50;
+	D_8004DCB8 = sp4C;
+
+	entry = (Unk8013FDA8Entry *) ((u8 *) sp2C + 0xB0);
+	for (i = 0xB; i != 0; i--) {
+		entry->unk8.unk0 = (s16) (entry->unk8.unk0 + temp_a1);
+		entry = (Unk8013FDA8Entry *) ((u8 *) entry - 0x10);
+	}
+
+	temp_a1 = ((s16) sp2C->unk8.unk0 >> 0xC) << 0xC;
+	entry = (Unk8013FDA8Entry *) ((u8 *) sp2C + 0xB0);
+	for (i = 0xB; i != 0; i--) {
+		entry->unk8.unk0 = (s16) (entry->unk8.unk0 - temp_a1);
+		entry = (Unk8013FDA8Entry *) ((u8 *) entry - 0x10);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D6F7C_18FA8C.s")
+#endif
 
 void func_802D7334_18FE44(void) {
 	gSPDisplayList(D_8005BB2C++, D_9052C10);
