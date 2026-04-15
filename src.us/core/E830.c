@@ -108,14 +108,14 @@ void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000DCCC_E8CC.s")
 #endif
 
-#ifdef NON_MATCHING
 /* Rotate (D_80059CD2, D_80059CD4) by angle derived from D_80059CD0, update spin rate. */
+#ifdef NON_MATCHING
 void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	s16 sp1E;
 
 	sp1E = coss((D_80059CD0 << 5) & 0xFFFF);
-	D_80059CD2 = (s16) (s32) (((f64) (f32) sins((D_80059CD0 * 0x10) & 0xFFFF) / 32768.0) * (f64) (D_80059CD0 / 10) + ((f64) (f32) sp1E / 32768.0) * (f64) D_80059CD2);
-	D_80059CD4 = (s16) (s32) ((f64) D_80059CD4 + (f64) (D_80059CD0 / 10) * ((f64) (f32) coss((D_80059CD0 * 0x10) & 0xFFFF) / 32768.0));
+	D_80059CD2 = (s16) (s32) ((((f64) (f32) sins((D_80059CD0 * 0x10) & 0xFFFF) / 32768.0) * (f64) (D_80059CD0 / 10)) + ((f64) D_80059CD2 * ((f64) (f32) sp1E / 32768.0)));
+	D_80059CD4 = (s16) (s32) (((f64) (f32) coss((arg0 = D_80059CD0 << 4, arg0 & 0xFFFF)) / 32768.0) * (f64) (D_80059CD0 / 10) + (f64) D_80059CD4);
 	D_80059CD6 = -D_80059CD0 * 2;
 }
 #else
