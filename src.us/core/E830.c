@@ -2,42 +2,42 @@
 #include "common.h"
 
 
-#ifdef NON_MATCHING
-/* Copy a tiled subregion of a 16-bit framebuffer across 6 outer iterations.
-   Reads 32 halfwords per inner pass, skipping 0x120 halfwords between middle rows,
-   then rewinds src by 0x27E0 halfwords after each middle sweep. */
-void func_8000DC30_E830(s16 *arg0, s16 *arg1) {
+void func_8000DC30_E830(s32 arg0, s32 arg1) {
 	s16 *src;
 	s16 *dst;
 	s32 outer;
-	s32 middle;
-	s32 inner;
-	s16 val;
 
-	src = arg0;
-	dst = arg1;
+	src = (s16 *)arg0;
+	dst = (s16 *)arg1;
 	outer = 6;
 	do {
-		middle = 0x1F;
+		arg1 = 9;
 		do {
+			s32 inner;
+
 			inner = 0x1F;
 			do {
-				val = *src;
-				dst += 1;
-				src += 1;
-				*(dst - 1) = val;
+				s32 tile;
+
+				tile = 0x1F;
+				do {
+					arg0 = tile;
+					*dst++ = *src++;
+					tile -= 1;
+				} while (arg0 != 0);
+				arg0 = inner;
+				src += 0x120;
 				inner -= 1;
-			} while (inner != 0);
-			src += 0x120;
-			middle -= 1;
-		} while (middle != 0);
-		src -= 0x27E0;
+			} while (arg0 != 0);
+			arg0 = arg1;
+			src -= 0x27E0;
+			arg1 -= 1;
+		} while (arg0 != 0);
+		arg0 = outer;
+		src += 0x26C0;
 		outer -= 1;
-	} while (outer != 0);
+	} while (arg0 != 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000DC30_E830.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_8000DC9C_E89C(s32 arg0, s32 arg1)

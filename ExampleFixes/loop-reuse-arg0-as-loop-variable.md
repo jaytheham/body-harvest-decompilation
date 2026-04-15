@@ -42,6 +42,42 @@ variable, the compiler keeps the argument register (`$a1`) live for the loop, wh
 matches the target. Declaring a separate `s8 i` forces the allocator to pick a
 fresh temp register instead.
 
+## Variant: copy pointer args first, then recycle the arg regs
+
+If the function starts by copying `arg0`/`arg1` into local pointer variables, the
+original argument registers become available for later loop state. Reusing the dead
+parameter variables can be the difference between a persistent register-only diff
+and a match:
+
+```c
+// BAD — fresh locals push the loop state into a0/a1/a3/t regs differently
+void func(s16 *arg0, s16 *arg1) {
+    s16 *src = arg0;
+    s16 *dst = arg1;
+    s32 middle;
+    s32 temp;
+    ...
+}
+
+// GOOD — copy the pointers out, then reuse arg0/arg1 as the counters/temps
+void func(s32 arg0, s32 arg1) {
+    s16 *src = (s16 *)arg0;
+    s16 *dst = (s16 *)arg1;
+    ...
+    arg1 = 9;
+    do {
+        ...
+        arg0 = tile;
+        *dst++ = *src++;
+        ...
+    } while (arg0 != 0);
+}
+```
+
+This was needed in `func_8000DC30_E830`: keeping the source/destination pointers in
+`v0`/`v1` and recycling `arg0`/`arg1` after that let IDO place the nested counters
+in `a0`/`a1`/`a3`/`t0`, matching the target exactly.
+
 ## Example
 
 `func_800F375C_10270C` in `src.us/overlay_gameplay/outside/F9230.c`
