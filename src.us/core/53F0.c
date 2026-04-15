@@ -1178,10 +1178,13 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007F60_8B60.s")
 #endif
 
+
 #ifdef NON_MATCHING
 s32 func_8000807C_8C7C(u8 *arg0, u8 *arg1) {
+	u8 opcode;
+
 loop_1:
-	switch (arg0[0]) {
+	switch (opcode = arg0[0]) {
 	case 0x98:
 		switch (arg1[0]) {
 		case 0x9A:
