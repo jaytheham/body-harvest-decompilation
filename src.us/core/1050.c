@@ -1561,12 +1561,16 @@ s32 func_800038E0_44E0(void)
 /* possible: powf_i */
 f32 func_80003910_4510(f32 arg0, s32 arg1) {
 	f32 result;
-	s32 i;
 
 	result = 1.0f;
 	if (arg1 != 0) {
-		for (i = arg1; i > 0; i--) {
+		while (1) {
 			result *= arg0;
+			arg1--;
+			if (arg1 != 0) {
+				continue;
+			}
+			break;
 		}
 	}
 	return result;
