@@ -169,19 +169,15 @@ void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E048_EC48.s")
 #endif
 
-#ifdef NON_MATCHING
 /* Update projection coordinates from struct fields and screen-space offsets. */
 void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3) {
 	D_8005BAE8->unk0 = (f32) (D_8005BAE8->unk0 + D_8005BAE8->unkC);
 	D_8005BAE8->unk4 = (f32) (D_8005BAE8->unk4 + D_8005BAE8->unk10);
-	D_8005BAE8->unk10 = (f32) ((f64) D_8005BAE8->unk10 + D_80037648);
+	D_8005BAE8->unk10 = (f32) ((f64) D_8005BAE8->unk10 + D_80037648_38248);
 	D_80059CD2 = (s16) (s32) (D_8005BAE8->unk0 + (f32) (arg2 << 8));
 	D_80059CD4 = (s16) (s32) (-D_8005BAE8->unk4 - (f32) (arg3 << 8));
 	D_80059CD6 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E3DC_EFDC.s")
-#endif
 
 // Redefining osSetTime to take two s32 arguments to matches? (the .h definition takes u64)
 #ifdef NON_MATCHING
