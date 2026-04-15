@@ -1221,8 +1221,8 @@ s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, 
 	  {
 		ch->unk8 = (f32) ch->unk24;
 		ch->unk18 = ch->unk18 + 1;
-		ch->unkC = (f32) ch->unk26;
 		ch->unk0 = ch->unk2A;
+		ch->unkC = (f32) ch->unk26;
 		ch->unk2 = ch->unk2C;
 		ch->unk4 = ch->unk2E;
 		ch->unk10 = (f32) ch->unk28;
