@@ -801,9 +801,9 @@ void func_800073B8_7FB8(u64 arg0) {
 	D_8004DC48.unk0 &= ~temp_ret;
 }
 
-#ifdef NON_MATCHING
 void func_80007410_8010(void *arg0) {
 	s32 i;
+	s32 temp;
 
 	i = 4;
 	while (i--) {
@@ -815,11 +815,12 @@ void func_80007410_8010(void *arg0) {
 	i = 3;
 	if (D_8004DC74 != 0) {
 		for (;;) {
-			if (i == 0) {
-				i--;
+			temp = i;
+			i = temp - 1;
+			if (temp == 0) {
 				break;
 			}
-			if (D_8004DC68[--i] != 0) {
+			if (D_8004DC68[i] != 0) {
 				continue;
 			}
 			break;
@@ -832,9 +833,6 @@ void func_80007410_8010(void *arg0) {
 	}
 	D_8004DC68[i] = (s32)arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007410_8010.s")
-#endif
 
 void func_800074BC_80BC(void *arg0) {
 	s32 i = 4;
