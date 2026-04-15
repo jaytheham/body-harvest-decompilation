@@ -1235,7 +1235,7 @@ s32 func_800081D4_8DD4(u8 *arg0) {
 		u32 v = *(u32 *)(D_80050AE0 + arg0[1] * 24);
 		u32 vr = v >> 12;
 		u32 bit16_check = (vr & 0x10) ^ 0x10;
-		return (bit16_check != 0) || (((vr & 1) ^ 1) != 0);
+		return bit16_check || ((vr & 1) ^ 1);
 	}
 	case 0x8E:
 		return func_80007F60_8B60(arg0);
