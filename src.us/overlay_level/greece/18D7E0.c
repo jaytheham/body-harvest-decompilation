@@ -820,7 +820,54 @@ void func_802DC1B8_194CC8(u8 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC1B8_194CC8.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802DC2E4_194DF4(u8 arg0) {
+	AlienInstance *alien;
+	Unk8014DD50 *temp_v1;
+	s16 sp5C;
+	s32 sp50[3];
+	s16 sp48[3];
+	s32 sp40;
+	s32 temp;
+
+	alien = &alienInstances[arg0];
+	temp_v1 = &D_8014DD50[alien->unkC];
+	sp5C = temp_v1->unkC;
+
+	sp40 = func_8008916C_9811C(arg0, sp5C);
+
+	sp48[0] = ((u16)temp_v1->unk6 - alien->unk6) + 0x4000;
+	sp48[1] = 0;
+	sp48[2] = (u16)temp_v1->unkA;
+
+	func_800044D4_50D4((s16 *)&D_8014DD50[sp5C], sp50, sp48);
+
+	sp50[0] += alien->unk0;
+	sp50[1] += alien->unk2;
+	sp50[2] += alien->unk4;
+
+	temp = func_800DF038_EDFE8(sp50[0], sp50[1], sp50[2],
+		alienSpecs[alien->specIndex].unkC, 0, 0);
+
+	func_800C7924_D68D4(
+		sp50[0], sp50[1], sp50[2], 0x40,
+		temp, 0xC8, sp40, 1
+	);
+
+	func_80088E10_97DC0(sp5C);
+
+	alienInstances[alienInstances[alien->unk25].unk25].unk20 |= 0x8000;
+	alienInstances[alien->unk25].unk2C = 0x3C;
+	alienInstances[alien->unk25].unk1E = 6;
+
+	func_800A9738_B86E8(alien->unk25, 0x400000, 0x50);
+
+	alien->unk2C = 0x32;
+	func_80137468_146418(arg0, 0x11);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC2E4_194DF4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC500_195010.s")
 
