@@ -44,29 +44,27 @@ void func_8000A160_AD60(void) {
 s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 	u8 *ptr;
 	s32 result;
-	u8 ch;
 
 	ptr = arg0 + arg1;
 	result = 0;
 
 	if (*ptr != 0xA && *ptr != 0) {
-		ch = *ptr;
 		do {
-			if (ch >= 0x20) {
-				if (ch < 0xFD) {
-					if (result != 0 || ch != 0x20) {
-						if (ch >= 0xC1) {
-							result += D_80031720_32320[D_80031650_32250[ch - 0xC0] * 2 + 0x221];
+			if (*ptr >= 0x20) {
+				if (*ptr < 0xFD) {
+					if (result != 0 || *ptr != 0x20) {
+						if (*ptr >= 0xC1) {
+							result += D_80031720_32320[D_80031650_32250[*ptr - 0xC0] * 2 + 0x221];
 						} else {
-							result += D_80031720_32320[ch * 2 + 0x261];
+							result += D_80031720_32320[*ptr * 2 + 0x261];
 						}
 					}
 				} else {
-					result += D_80031720_32320[(((ch & 0x7F) << 8) + *(ptr + 1)) * 2 + 1];
+					result += D_80031720_32320[(((*ptr & 0x7F) << 8) + ptr[1]) * 2 + 1];
 					ptr++;
 				}
 			} else {
-				switch (ch) {
+				switch (*ptr) {
 				case 0x16:
 					ptr += 1; break;
 				case 0x14:
@@ -79,10 +77,11 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 					ptr += 4; break;
 				}
 			}
-			ch = *(ptr + 1);
 			ptr++;
-			if (ch == 0xA) break;
-		} while (ch != 0);
+			if (*ptr == 0xA) {
+				break;
+			}
+		} while (*ptr != 0);
 	}
 
 	return result;
