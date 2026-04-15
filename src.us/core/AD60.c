@@ -1038,26 +1038,31 @@ void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2) {
 
 #ifdef NON_MATCHING
 void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
-	extern s32 D_80059C90[16];
-	s32 sp3C, sp38, sp34, sp30, sp2C;
-	s32 temp1, temp2;
-	s32 i;
+	extern Unk800476C8 D_80059C90[2];
+	s32 sp3C;
+	s32 sp38;
+	s32 sp34;
+	s32 sp30;
+	s32 sp2C;
+	s32 temp1;
+	s32 temp2;
+	s32 mask;
 	s32 *src;
 	s32 *dst;
 
-	D_80059C90[3] = 0;
-	D_80059C90[7] = 0;
-	D_80059C90[11] = 0;
-	D_80059C90[15] = 0x10000;
+	D_80059C90[0].unkC = 0;
+	D_80059C90[0].unk1C = 0;
+	D_80059C90[1].unkC = 0;
+	D_80059C90[1].unk1C = 0x10000;
 
 	if (arg0 != NULL) {
-		D_80059C90[12] = arg0[0];
-		D_80059C90[13] = arg0[1];
-		D_80059C90[14] = arg0[2];
+		D_80059C90[1].unk10 = arg0[0];
+		D_80059C90[1].unk14 = arg0[1];
+		D_80059C90[1].unk18 = arg0[2];
 	} else {
-		D_80059C90[12] = 0;
-		D_80059C90[13] = 0;
-		D_80059C90[14] = 0;
+		D_80059C90[1].unk10 = 0;
+		D_80059C90[1].unk14 = 0;
+		D_80059C90[1].unk18 = 0;
 	}
 
 	if (arg1 != NULL) {
@@ -1068,57 +1073,82 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 		sp2C = coss(arg1[1]);
 		temp1 = sins(arg1[1]);
 
-		D_80059C90[2] = -sp38 * 2;
-		D_80059C90[0] = ((sp3C * sp2C) >> 15) * 2;
-		D_80059C90[1] = ((sp3C * temp1) >> 15) * 2;
+		D_80059C90[0].unk8 = -sp38 * 2;
+		D_80059C90[0].unk0 = ((sp3C * sp2C) >> 0xF) * 2;
+		D_80059C90[0].unk4 = ((sp3C * temp1) >> 0xF) * 2;
 
-		temp2 = (sp38 * sp30) >> 15;
-		D_80059C90[4] = (((-sp34 * temp1) >> 15) + ((temp2 * sp2C) >> 15)) * 2;
-		D_80059C90[5] = (((sp34 * sp2C) >> 15) + ((temp2 * temp1) >> 15)) * 2;
-		D_80059C90[6] = ((sp30 * sp3C) >> 15) * 2;
+		temp2 = (sp38 * sp30) >> 0xF;
+		D_80059C90[0].unk10 = (((-sp34 * temp1) >> 0xF) + ((temp2 * sp2C) >> 0xF)) * 2;
+		D_80059C90[0].unk14 = (((sp34 * sp2C) >> 0xF) + ((temp2 * temp1) >> 0xF)) * 2;
+		D_80059C90[0].unk18 = ((sp30 * sp3C) >> 0xF) * 2;
 
-		temp2 = (sp38 * sp34) >> 15;
-		D_80059C90[8] = (((sp30 * temp1) >> 15) + ((temp2 * sp2C) >> 15)) * 2;
-		D_80059C90[9] = (((-sp30 * sp2C) >> 15) + ((temp2 * temp1) >> 15)) * 2;
-		D_80059C90[10] = ((sp3C * sp34) >> 15) * 2;
+		temp2 = (sp38 * sp34) >> 0xF;
+		D_80059C90[1].unk0 = (((sp30 * temp1) >> 0xF) + ((temp2 * sp2C) >> 0xF)) * 2;
+		D_80059C90[1].unk4 = (((-sp30 * sp2C) >> 0xF) + ((temp2 * temp1) >> 0xF)) * 2;
+		D_80059C90[1].unk8 = ((sp3C * sp34) >> 0xF) * 2;
 	} else {
-		D_80059C90[0] = 0x10000;
-		D_80059C90[4] = 0;
-		D_80059C90[8] = 0;
-		D_80059C90[1] = 0;
-		D_80059C90[5] = 0x10000;
-		D_80059C90[9] = 0;
-		D_80059C90[2] = 0;
-		D_80059C90[6] = 0;
-		D_80059C90[10] = 0x10000;
+		D_80059C90[0].unk0 = 0x10000;
+		D_80059C90[0].unk10 = 0;
+		D_80059C90[1].unk0 = 0;
+		D_80059C90[0].unk4 = 0;
+		D_80059C90[0].unk14 = 0x10000;
+		D_80059C90[1].unk4 = 0;
+		D_80059C90[0].unk8 = 0;
+		D_80059C90[0].unk18 = 0;
+		D_80059C90[1].unk8 = 0x10000;
 	}
 
 	if (arg2 != NULL) {
-		D_80059C90[0] = (D_80059C90[0] * arg2[0]) >> 8;
-		D_80059C90[1] = (D_80059C90[1] * arg2[0]) >> 8;
-		D_80059C90[2] = (D_80059C90[2] * arg2[0]) >> 8;
-		D_80059C90[4] = (D_80059C90[4] * arg2[1]) >> 8;
-		D_80059C90[5] = (D_80059C90[5] * arg2[1]) >> 8;
-		D_80059C90[6] = (D_80059C90[6] * arg2[1]) >> 8;
-		D_80059C90[8] = (D_80059C90[8] * arg2[2]) >> 8;
-		D_80059C90[9] = (D_80059C90[9] * arg2[2]) >> 8;
-		D_80059C90[10] = (D_80059C90[10] * arg2[2]) >> 8;
+		s32 temp3;
+		s32 temp4;
+		s32 temp5;
+
+		temp3 = D_80059C90[0].unk0 * arg2[0];
+		D_80059C90[0].unk0 = temp3;
+		temp4 = D_80059C90[0].unk4 * arg2[0];
+		D_80059C90[0].unk4 = temp4;
+		D_80059C90[0].unk0 = temp3 >> 8;
+		temp5 = D_80059C90[0].unk8 * arg2[0];
+		D_80059C90[0].unk8 = temp5;
+		D_80059C90[0].unk4 = temp4 >> 8;
+		D_80059C90[0].unk8 = temp5 >> 8;
+
+		temp3 = D_80059C90[0].unk10 * arg2[1];
+		D_80059C90[0].unk10 = temp3;
+		temp4 = D_80059C90[0].unk14 * arg2[1];
+		D_80059C90[0].unk14 = temp4;
+		D_80059C90[0].unk10 = temp3 >> 8;
+		temp5 = D_80059C90[0].unk18 * arg2[1];
+		D_80059C90[0].unk18 = temp5;
+		D_80059C90[0].unk14 = temp4 >> 8;
+		D_80059C90[0].unk18 = temp5 >> 8;
+
+		temp3 = D_80059C90[1].unk0 * arg2[2];
+		D_80059C90[1].unk0 = temp3;
+		temp4 = D_80059C90[1].unk4 * arg2[2];
+		D_80059C90[1].unk4 = temp4;
+		D_80059C90[1].unk0 = temp3 >> 8;
+		temp5 = D_80059C90[1].unk8 * arg2[2];
+		D_80059C90[1].unk8 = temp5;
+		D_80059C90[1].unk4 = temp4 >> 8;
+		D_80059C90[1].unk8 = temp5 >> 8;
 	}
 
-	src = D_80059C90;
+	mask = 0xFFFF0000;
+	src = (s32 *)D_80059C90;
 	dst = arg3;
 	do {
-		dst[0] = ((src[1] & 0xFFFF0000) >> 16) + (src[0] & 0xFFFF0000);
-		dst[4] = (src[0] << 16) + (src[1] & 0xFFFF);
-		dst[1] = ((src[3] & 0xFFFF0000) >> 16) + (src[2] & 0xFFFF0000);
-		dst[5] = (src[2] << 16) + (src[3] & 0xFFFF);
-		dst[2] = ((src[5] & 0xFFFF0000) >> 16) + (src[4] & 0xFFFF0000);
-		dst[6] = (src[4] << 16) + (src[5] & 0xFFFF);
-		dst[3] = ((src[7] & 0xFFFF0000) >> 16) + (src[6] & 0xFFFF0000);
-		dst[7] = (src[6] << 16) + (src[7] & 0xFFFF);
+		dst[0] = ((src[1] & mask) >> 0x10) + (src[0] & mask);
+		dst += 4;
+		dst[4] = (src[0] << 0x10) + (src[1] & 0xFFFF);
+		dst[-3] = ((src[3] & mask) >> 0x10) + (src[2] & mask);
+		dst[5] = (src[2] << 0x10) + (src[3] & 0xFFFF);
+		dst[-2] = ((src[5] & mask) >> 0x10) + (src[4] & mask);
+		dst[6] = (src[4] << 0x10) + (src[5] & 0xFFFF);
+		dst[-1] = ((src[7] & mask) >> 0x10) + (src[6] & mask);
+		dst[7] = (src[6] << 0x10) + (src[7] & 0xFFFF);
 		src += 8;
-		dst += 8;
-	} while (src != (s32*)&D_80059CD0);
+	} while (src != (s32 *)&D_80059CD0);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C81C_D41C.s")
