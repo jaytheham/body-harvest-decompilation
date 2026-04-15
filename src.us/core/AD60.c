@@ -91,7 +91,7 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 #endif
 
 #ifdef NON_MATCHING
-void func_8000A3DC_AFDC(u8 arg0, s8 *arg1) {
+void func_8000A3DC_AFDC(s16 arg0, s8 *arg1) {
 	s16 temp_v1;
 	s32 temp_a3;
 	s32 temp_t0;
