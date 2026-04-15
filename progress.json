@@ -1,24 +1,24 @@
 {
-  "generated": "2026-04-15T06:23:37Z",
-  "commit": "27def051",
-  "commit_timestamp": "2026-04-15T18:23:28+12:00",
+  "generated": "2026-04-15T06:33:21Z",
+  "commit": "a6ff36f3",
+  "commit_timestamp": "2026-04-15T18:33:04+12:00",
   "overall": {
-    "total_functions": 3048,
-    "matched": 1205,
-    "non_matching": 398,
-    "asm_stubs": 1445,
-    "matched_pct": 39.53,
-    "decompiled_pct": 52.59
+    "total_functions": 3046,
+    "matched": 1207,
+    "non_matching": 396,
+    "asm_stubs": 1443,
+    "matched_pct": 39.63,
+    "decompiled_pct": 52.63
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 229,
-      "non_matching": 91,
-      "asm_stubs": 93,
-      "total": 413,
-      "matched_pct": 55.4,
-      "decompiled_pct": 77.5
+      "matched": 231,
+      "non_matching": 89,
+      "asm_stubs": 91,
+      "total": 411,
+      "matched_pct": 56.2,
+      "decompiled_pct": 77.9
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -177,21 +177,21 @@
     {
       "path": "core/FB00.c",
       "segment": "core",
-      "matched": 2,
-      "non_matching": 1,
-      "asm_stubs": 1,
-      "total": 4,
-      "matched_pct": 50.0,
+      "matched": 3,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 3,
+      "matched_pct": 100.0,
       "contributor": "jaytheham"
     },
     {
       "path": "core/FD80.c",
       "segment": "core",
-      "matched": 7,
-      "non_matching": 3,
-      "asm_stubs": 3,
-      "total": 13,
-      "matched_pct": 53.8,
+      "matched": 8,
+      "non_matching": 2,
+      "asm_stubs": 2,
+      "total": 12,
+      "matched_pct": 66.7,
       "contributor": "jaytheham"
     },
     {
@@ -549,9 +549,9 @@
     {
       "name": "jaytheham",
       "files": 43,
-      "matched": 1200,
-      "non_matching": 398,
-      "asm_stubs": 1375
+      "matched": 1202,
+      "non_matching": 396,
+      "asm_stubs": 1373
     },
     {
       "name": "Meridian Lex",
@@ -628,11 +628,11 @@
     },
     {
       "date": "2026-04-15",
-      "commit": "6c4d5e0",
-      "matched_pct": 39.53,
-      "decompiled_pct": 52.59,
-      "matched": 1205,
-      "total": 3048
+      "commit": "a6ff36f",
+      "matched_pct": 39.63,
+      "decompiled_pct": 52.63,
+      "matched": 1207,
+      "total": 3046
     }
   ]
 }
