@@ -22,7 +22,6 @@ s32 D_800313C4_31FC4 = 0;
 s16 D_800313C8_31FC8 = 0;
 s32 D_800313CC = 0;
 
-
 #ifdef NON_MATCHING
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	Unk80042DB8 *s1;
@@ -42,7 +41,7 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 		var_f0 = (f32)arg0->outputRate / 50.0f;
 	}
 	D_800431A8 = (s32)var_f0;
-	if ((f32)D_800431A8 < var_f0) {
+	if ((f32)(u32)D_800431A8 < var_f0) {
 		D_800431A8++;
 	}
 	if (D_800431A8 & 0xF) {
@@ -55,14 +54,10 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	D_80042DB8.unk0 = 0;
 	s1 = &D_80042DB8;
 	s0 = &D_80042DCC;
-	s2 = 0;
-	do {
+	for (s2 = 0; s2 < 0x31; s2++, s1++, s0++) {
 		alLink((ALLink *)s0, (ALLink *)s1);
 		s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
-		s2++;
-		s1++;
-		s0++;
-	} while (s2 < 0x31);
+	}
 	s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
 	{
 		Acmd **p;
@@ -110,7 +105,9 @@ void func_80000730_1330(s32 arg0) {
 				var_s0 = ((BhAudioMsg *)sp64)->audioBuf;
 			}
 			var_v0 = D_800312FC_31EFC;
-			if (var_v0 != 0) {
+			if (var_v0 == 0) {
+				D_800431B4 = 0.0f;
+			} else {
 				var_f0 = (f32)var_v0;
 				if (var_v0 < 0) {
 					var_f0 += 4294967296.0f;
@@ -120,8 +117,6 @@ void func_80000730_1330(s32 arg0) {
 					var_f10 += 4294967296.0f;
 				}
 				D_800431B4 = (f32)(((f64)(var_f0 - var_f10) * 100.0) / (f64)var_f0);
-			} else {
-				D_800431B4 = 0.0f;
 			}
 			D_800312FC_31EFC = 0;
 			D_80031300_31F00 = 0;
@@ -1420,25 +1415,17 @@ void func_80003064_3C64(void) {
 
 // https://decomp.me/scratch/66U7q
 #ifdef NON_MATCHING
-void func_800033D4_3FD4(u32 arg0, s32 arg1) {
-	s32 temp_v0;
-	s32 temp_t6;
-	s32 temp_a2;
-	u16 *temp_a0;
-	u16 *temp_v0_2;
+void func_800033D4_3FD4(u16 arg0, s32 arg1) {
+	u16 *previousButtons;
 
-	temp_v0 = arg1 * 2;
-	temp_t6 = arg0 & 0xFFFF;
-	if (D_800475D8[arg1] & temp_t6) {
-		temp_a0 = (u16 *)(temp_v0 + (u8 *)previousControllerButtonStates);
-		if (*temp_a0 & temp_t6) {
-			temp_v0_2 = (u16 *)((arg1 * 6) + (u8 *)currentControllerStates);
-			temp_a2 = ~temp_t6;
-			*temp_v0_2 &= temp_a2;
-			if (temp_a0 != previousControllerButtonStates) {
+	if (D_800475D8[arg1] & arg0) {
+		previousButtons = &previousControllerButtonStates[arg1];
+		if (*previousButtons & arg0) {
+			currentControllerStates[arg1].button &= ~arg0;
+			if (previousButtons != previousControllerButtonStates) {
 				return;
 			}
-			D_800475F8 &= temp_a2;
+			D_800475F8 &= ~arg0;
 		}
 	}
 }
@@ -1574,12 +1561,16 @@ s32 func_800038E0_44E0(void)
 /* possible: powf_i */
 f32 func_80003910_4510(f32 arg0, s32 arg1) {
 	f32 result;
-	s32 i;
 
 	result = 1.0f;
 	if (arg1 != 0) {
-		for (i = arg1; i > 0; i--) {
+		while (1) {
 			result *= arg0;
+			arg1--;
+			if (arg1 != 0) {
+				continue;
+			}
+			break;
 		}
 	}
 	return result;
@@ -1632,7 +1623,7 @@ void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2,
 	s32 temp_t4;
 	s32 temp_t9_2;
 	s32 temp_t4_2;
-	Unk800476C8 *var_v0;
+	s32 *var_v0;
 	s32 *var_a0;
 
 	D_800476C8[0].unkC = 0;
@@ -1694,28 +1685,20 @@ void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2,
 		D_800476C8[1].unk8 = (s32)(D_800476C8[1].unk8 * arg2->unk4) >> 8;
 	}
 
-	var_v0 = D_800476C8;
+	var_v0 = (s32 *)D_800476C8;
 	var_a0 = (s32 *)arg3;
 	do {
-		s32 b0 = var_v0->unk0;
-		s32 b1 = var_v0->unk4;
-		s32 b2 = var_v0->unk8;
-		s32 b3 = var_v0->unkC;
-		s32 b4 = var_v0->unk10;
-		s32 b5 = var_v0->unk14;
-		s32 b6 = var_v0->unk18;
-		s32 b7 = var_v0->unk1C;
-		var_v0++;
-		var_a0[0] = (b0 & 0xFFFF0000) | ((u32)(b1 & 0xFFFF0000) >> 16);
+		var_a0[0] = ((var_v0[1] & 0xFFFF0000) >> 16) + (var_v0[0] & 0xFFFF0000);
 		var_a0 += 4;
-		var_a0[4] = (s32)(((b0 & 0xFFFF) << 16) | (b1 & 0xFFFF));
-		var_a0[-3] = (b2 & 0xFFFF0000) | ((u32)(b3 & 0xFFFF0000) >> 16);
-		var_a0[5] = (s32)(((b2 & 0xFFFF) << 16) | (b3 & 0xFFFF));
-		var_a0[-2] = (b4 & 0xFFFF0000) | ((u32)(b5 & 0xFFFF0000) >> 16);
-		var_a0[6] = (s32)(((b4 & 0xFFFF) << 16) | (b5 & 0xFFFF));
-		var_a0[-1] = (b6 & 0xFFFF0000) | ((u32)(b7 & 0xFFFF0000) >> 16);
-		var_a0[7] = (s32)(((b6 & 0xFFFF) << 16) | (b7 & 0xFFFF));
-	} while (var_v0 != &D_80047708);
+		var_a0[4] = (var_v0[0] << 16) + (var_v0[1] & 0xFFFF);
+		var_a0[-3] = ((var_v0[3] & 0xFFFF0000) >> 16) + (var_v0[2] & 0xFFFF0000);
+		var_a0[5] = (var_v0[2] << 16) + (var_v0[3] & 0xFFFF);
+		var_a0[-2] = ((var_v0[5] & 0xFFFF0000) >> 16) + (var_v0[4] & 0xFFFF0000);
+		var_a0[6] = (var_v0[4] << 16) + (var_v0[5] & 0xFFFF);
+		var_a0[-1] = ((var_v0[7] & 0xFFFF0000) >> 16) + (var_v0[6] & 0xFFFF0000);
+		var_a0[7] = (var_v0[6] << 16) + (var_v0[7] & 0xFFFF);
+		var_v0 += 8;
+	} while (var_v0 != (s32 *)&D_80047708);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800039D0_45D0.s")
