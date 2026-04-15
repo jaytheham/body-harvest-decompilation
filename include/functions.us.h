@@ -826,7 +826,7 @@ void func_80080510_8F4C0(u8 arg0);
 void func_800AEC34_BDBE4(void *arg0);
 void func_80093164_A2114(u8 arg0);
 s16 func_8009395C_A290C(u8 arg0, s16 arg1);
-s32 func_800879A4_96954(u8 arg0, s16 arg1, s16 arg2);
+s32 func_800879A4_96954(u8 arg0, s16 arg1, u8 arg2);
 void func_80088E10_97DC0(s16 arg0);
 void func_80088E40_97DF0(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s8 arg5, s8 arg6, s8 arg7);
 void func_80087C50_96C00(u8 arg0);
