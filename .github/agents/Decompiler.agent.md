@@ -30,7 +30,7 @@ These powershell tools exist to assist you:
  Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match.
  Diff output skips matching instructions except for 3 either side of differences.
 - You can get the full assembly of a function after building by adding param `--show=target` or `--show=current` to the above diff command.
-- You must decompile Gfx macros, you are not allowed to use the raw `*->words.w0` or `*->words.w1` form. Use `.\tools\gfxdis.ps1`:
+- You must decompile Gfx macros "raw" `*->words.w0`/`*->words.w1` form will not match. Use `.\tools\gfxdis.ps1`:
 e.g.
 ```C
 dl = D_8005BB2C;
@@ -40,13 +40,12 @@ dl->words.w1 = 0x10001;
 ```
 or
 ```C
-D_8005BB2C = D_8005BB2C++;
+D_8005BB2C++;
 D_8005BB2C->words.w0 = 0xB6000000;
 D_8005BB2C->words.w1 = 0x00010001;
 ```
 Is converted by pwsh cmd `.\tools\gfxdis.ps1 -w B6000000 00010001` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
-If you don't know one of the values, you can use `12345678` as a placeholder and then fill it in after the fact.
-- Avoid using the permuter `.\tools\agent-permuter.ps1`.
+If you don't know one of the values, you can use `12345678` as a placeholder for the cmd, and then fill it in after the fact.
 
 # Decompilation Workflow
 ## Step 1: Generate cleaned C implementation
@@ -72,17 +71,11 @@ Identify and fix all these issues in the generated C code before proceeding to t
 
 Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly. Replace that line with the cleaned up C code from Step 1.
 
-Before continuing review the code and ensure all pointer arithmetic has been replaced with proper struct and array access, and all temp pointer variables are removed and replaced with direct struct/array references.
-
 ## Step 3: Build ROM
 
 Build the ROM: `.\tools\make.ps1` Important: This is the only correct way to build your C code, it ensures all symbols are correctly linked and produces a true comparison of the current vs the target.
 
-**If compilation errors occur:**
-
-- Check IDO error messages for syntax issues
-- Simplify C code (avoid complex expressions in single statements)
-- Ensure all extern symbols are declared
+Fix any build errors that occur.
 
 If build completes with `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, proceed to the next steps for analysis and iteration.
 
