@@ -230,8 +230,8 @@ s32 func_8000E53C_F13C(void) {
 	s16 temp_v0_13;
 	s16 temp_v1;
 	s32 var_t0;
-	s16 var_t5;
-	s16 var_v1;
+	s32 var_t5;
+	s32 var_v1;
 	s32 var_ra;
 	s32 var_t3;
 	s32 var_t4;
@@ -380,11 +380,11 @@ s32 func_8000E53C_F13C(void) {
 			temp_s2->v.cn[3] = 0xFF;
 
 			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, sp74);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 4, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, ((((var_t3 - var_t4) + 1) * 2) + 7) >> 3, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 			gDPLoadSync(D_8005BB2C++);
 			gDPLoadTile(D_8005BB2C++, G_TX_LOADTILE, var_t4 << 2, sp6C >> 2, var_t3 << 2, sp108 << 2);
 			gDPPipeSync(D_8005BB2C++);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 4, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, ((((var_t3 - sp114) + 1) * 2) + 7) >> 3, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, sp114 << 2, sp6C >> 2, var_t3 << 2, sp108 << 2);
 			gSPVertex(D_8005BB2C++, (Vtx *) ((u32) temp_s4 & 0x1FFFFFFF), 4, 0);
 			gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 2, 3, 0);
