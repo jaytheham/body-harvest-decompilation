@@ -19,7 +19,12 @@ You will be given a C file to target, follow this process:
   - Build the ROM so the diff tool can calculate the C implementation's CURRENT score. It is normal that the build will return `FAILED` at this stage because the function does not yet match.
   - Check the current score with the diff tool, a lower score is better, `CURRENT(0)` is a match.
   - Create a new subagent, agentName `BH Match Improver`, and tell the subagent to target the unwrapped function (if the subagent gets rate-limited you can update `Improver.agent.md` to use a different model: `Auto (copilot)`).
-4. After a subagent finishes work undo any changes outside of the `ExampleFixes`, `include`, and `src.us/` directories - only changes inside these directories are allowed.
+4. Only the following directory contents and files are allowed to be changed by subAgents, after a subagent finishes work undo any changes outside of:
+ - `/ExampleFixes`
+ - `/include`
+ - `/src.us`
+ - `symbol_addrs.us.txt`
+ - `undefined_syms.us.txt`
 5. Move any variables, structs, or function definitions the subagent added to a c file in `src.us/` into the appropriate header file in `include/` (e.g. variables to `variables.us.h`, structs to `structs.us.h`, and function prototypes to `functions.us.h`).
 6. Then build the ROM (remove the NON_MATCHING wrapper first if it's been re-applied), if it returns `build/bh.us.z64: OK` in the terminal output then the decompilation is matching, commit the remaining changes with a message like `Matched func_80092ADC_A1A8C` and then return to step 3 and process the next function.
 7. If the build returns `FAILED`, check the function's CURRENT score with `.\tools\diff.ps1 <function name> | Select-Object -First 1`. If it is lower than the original score, wrap the function with NON_MATCHING and commit the changes. If it is the same or higher, undo all changes - including the removal of the NON_MATCHING wrapper - before moving on to the next function.
