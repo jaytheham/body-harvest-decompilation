@@ -6,7 +6,7 @@
 extern Addr _14FCA0_bin;
 extern Addr _14FD40_bin;
 extern Addr _175EB0_bin;
-extern Addr _195F90_bin;
+extern Addr _195FA0_bin;
 extern Addr _1C8E0_s;
 extern Addr _1D230_s;
 extern Addr _1E060_s;
@@ -440,6 +440,7 @@ extern Addr overlay_level_america_data_bin;
 extern Addr overlay_level_comet_318E20_c;
 extern Addr overlay_level_comet_data_bin;
 extern Addr overlay_level_greece_18D7E0_c;
+extern Addr overlay_level_greece_195F90_c;
 extern Addr overlay_level_greece_data_bin;
 extern Addr overlay_level_java_1ED9E0_c;
 extern Addr overlay_level_java_data_bin;
