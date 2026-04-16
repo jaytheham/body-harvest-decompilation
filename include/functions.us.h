@@ -568,7 +568,7 @@ void func_8013B688_14A638(void);
 
 // overlay_level
 void func_802D4CD0_18D7E0(s32, s32);
-void func_802D57A0_18E2B0(void);
+s32 func_802D57A0_18E2B0(void);
 void func_802D6D20_18F830(void);
 void func_802D6F7C_18FA8C(void);
 void func_802D7334_18FE44(void);
