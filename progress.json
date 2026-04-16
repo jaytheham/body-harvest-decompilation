@@ -1,69 +1,69 @@
 {
-  "generated": "2026-04-16T19:33:27Z",
-  "commit": "522c74aa",
-  "commit_timestamp": "2026-04-17T07:33:14+12:00",
+  "generated": "2026-04-16T20:23:12Z",
+  "commit": "1b462c36",
+  "commit_timestamp": "2026-04-17T08:22:54+12:00",
   "overall": {
-    "total_functions": 3069,
-    "matched": 1210,
+    "total_functions": 2703,
+    "matched": 1264,
     "non_matching": 419,
-    "asm_stubs": 1440,
-    "matched_pct": 39.43,
-    "decompiled_pct": 53.08
+    "asm_stubs": 1020,
+    "matched_pct": 46.76,
+    "decompiled_pct": 62.26
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 232,
+      "matched": 258,
       "non_matching": 89,
-      "asm_stubs": 90,
-      "total": 411,
-      "matched_pct": 56.4,
-      "decompiled_pct": 78.1
+      "asm_stubs": 1,
+      "total": 348,
+      "matched_pct": 74.1,
+      "decompiled_pct": 99.7
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
-      "matched": 67,
+      "matched": 69,
       "non_matching": 16,
-      "asm_stubs": 148,
-      "total": 231,
-      "matched_pct": 29.0,
-      "decompiled_pct": 35.9
+      "asm_stubs": 132,
+      "total": 217,
+      "matched_pct": 31.8,
+      "decompiled_pct": 39.2
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 725,
+      "matched": 746,
       "non_matching": 198,
-      "asm_stubs": 700,
-      "total": 1623,
-      "matched_pct": 44.7,
-      "decompiled_pct": 56.9
+      "asm_stubs": 502,
+      "total": 1446,
+      "matched_pct": 51.6,
+      "decompiled_pct": 65.3
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
-      "matched": 74,
+      "matched": 75,
       "non_matching": 32,
-      "asm_stubs": 161,
-      "total": 267,
-      "matched_pct": 27.7,
-      "decompiled_pct": 39.7
+      "asm_stubs": 128,
+      "total": 235,
+      "matched_pct": 31.9,
+      "decompiled_pct": 45.5
     },
     "overlay_level/greece": {
       "display_name": "Level / Greece",
       "matched": 35,
       "non_matching": 25,
-      "asm_stubs": 29,
-      "total": 89,
-      "matched_pct": 39.3,
-      "decompiled_pct": 67.4
+      "asm_stubs": 4,
+      "total": 64,
+      "matched_pct": 54.7,
+      "decompiled_pct": 93.8
     },
     "overlay_level/java": {
       "display_name": "Level / Java",
-      "matched": 37,
+      "matched": 38,
       "non_matching": 41,
-      "asm_stubs": 64,
-      "total": 142,
-      "matched_pct": 26.1,
-      "decompiled_pct": 54.9
+      "asm_stubs": 23,
+      "total": 102,
+      "matched_pct": 37.3,
+      "decompiled_pct": 77.5
     },
     "overlay_level/america": {
       "display_name": "Level / America",
@@ -76,52 +76,52 @@
     },
     "overlay_level/siberia": {
       "display_name": "Level / Siberia",
-      "matched": 9,
+      "matched": 10,
       "non_matching": 1,
-      "asm_stubs": 85,
+      "asm_stubs": 84,
       "total": 95,
-      "matched_pct": 9.5,
-      "decompiled_pct": 10.5
+      "matched_pct": 10.5,
+      "decompiled_pct": 11.6
     },
     "overlay_level/comet": {
       "display_name": "Level / Comet",
-      "matched": 27,
+      "matched": 29,
       "non_matching": 17,
-      "asm_stubs": 93,
-      "total": 137,
-      "matched_pct": 19.7,
-      "decompiled_pct": 32.1
+      "asm_stubs": 76,
+      "total": 122,
+      "matched_pct": 23.8,
+      "decompiled_pct": 37.7
     }
   },
   "files": [
     {
       "path": "core/1050.c",
       "segment": "core",
-      "matched": 30,
+      "matched": 31,
       "non_matching": 26,
-      "asm_stubs": 26,
-      "total": 82,
-      "matched_pct": 36.6,
+      "asm_stubs": 0,
+      "total": 57,
+      "matched_pct": 54.4,
       "contributor": "jaytheham"
     },
     {
       "path": "core/10A20.c",
       "segment": "core",
-      "matched": 3,
+      "matched": 4,
       "non_matching": 1,
-      "asm_stubs": 1,
+      "asm_stubs": 0,
       "total": 5,
-      "matched_pct": 60.0,
+      "matched_pct": 80.0,
       "contributor": "jaytheham"
     },
     {
       "path": "core/12C80.c",
       "segment": "core",
-      "matched": 79,
+      "matched": 100,
       "non_matching": 18,
-      "asm_stubs": 19,
-      "total": 116,
-      "matched_pct": 68.1,
+      "asm_stubs": 1,
+      "total": 119,
+      "matched_pct": 84.0,
       "contributor": "jaytheham"
     },
     {
@@ -129,18 +129,18 @@
       "segment": "core",
       "matched": 0,
       "non_matching": 1,
-      "asm_stubs": 1,
-      "total": 2,
+      "asm_stubs": 0,
+      "total": 1,
       "matched_pct": 0.0,
       "contributor": "jaytheham"
     },
     {
       "path": "core/53D0.c",
       "segment": "core",
-      "matched": 1,
+      "matched": 2,
       "non_matching": 0,
       "asm_stubs": 0,
-      "total": 1,
+      "total": 2,
       "matched_pct": 100.0,
       "contributor": "Meridian Lex"
     },
@@ -149,19 +149,19 @@
       "segment": "core",
       "matched": 56,
       "non_matching": 19,
-      "asm_stubs": 19,
-      "total": 94,
-      "matched_pct": 59.6,
+      "asm_stubs": 0,
+      "total": 75,
+      "matched_pct": 74.7,
       "contributor": "jaytheham"
     },
     {
       "path": "core/AD60.c",
       "segment": "core",
-      "matched": 13,
+      "matched": 14,
       "non_matching": 12,
-      "asm_stubs": 12,
-      "total": 37,
-      "matched_pct": 35.1,
+      "asm_stubs": 0,
+      "total": 26,
+      "matched_pct": 53.8,
       "contributor": "jaytheham"
     },
     {
@@ -169,18 +169,18 @@
       "segment": "core",
       "matched": 6,
       "non_matching": 4,
-      "asm_stubs": 4,
-      "total": 14,
-      "matched_pct": 42.9,
+      "asm_stubs": 0,
+      "total": 10,
+      "matched_pct": 60.0,
       "contributor": "jaytheham"
     },
     {
       "path": "core/FB00.c",
       "segment": "core",
-      "matched": 3,
+      "matched": 4,
       "non_matching": 0,
       "asm_stubs": 0,
-      "total": 3,
+      "total": 4,
       "matched_pct": 100.0,
       "contributor": "jaytheham"
     },
@@ -189,9 +189,9 @@
       "segment": "core",
       "matched": 8,
       "non_matching": 2,
-      "asm_stubs": 2,
-      "total": 12,
-      "matched_pct": 66.7,
+      "asm_stubs": 0,
+      "total": 10,
+      "matched_pct": 80.0,
       "contributor": "jaytheham"
     },
     {
@@ -199,39 +199,39 @@
       "segment": "core",
       "matched": 33,
       "non_matching": 6,
-      "asm_stubs": 6,
-      "total": 45,
-      "matched_pct": 73.3,
+      "asm_stubs": 0,
+      "total": 39,
+      "matched_pct": 84.6,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/frontend/40720.c",
       "segment": "overlay_gameplay/frontend",
-      "matched": 31,
+      "matched": 32,
       "non_matching": 11,
-      "asm_stubs": 81,
-      "total": 123,
-      "matched_pct": 25.2,
+      "asm_stubs": 70,
+      "total": 113,
+      "matched_pct": 28.3,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/frontend/52690.c",
       "segment": "overlay_gameplay/frontend",
-      "matched": 36,
+      "matched": 37,
       "non_matching": 5,
-      "asm_stubs": 67,
-      "total": 108,
-      "matched_pct": 33.3,
+      "asm_stubs": 62,
+      "total": 104,
+      "matched_pct": 35.6,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/inside/158330.c",
       "segment": "overlay_gameplay/inside",
-      "matched": 22,
+      "matched": 23,
       "non_matching": 8,
-      "asm_stubs": 69,
-      "total": 99,
-      "matched_pct": 22.2,
+      "asm_stubs": 61,
+      "total": 92,
+      "matched_pct": 25.0,
       "contributor": "jaytheham"
     },
     {
@@ -239,9 +239,9 @@
       "segment": "overlay_gameplay/inside",
       "matched": 8,
       "non_matching": 12,
-      "asm_stubs": 14,
-      "total": 34,
-      "matched_pct": 23.5,
+      "asm_stubs": 2,
+      "total": 22,
+      "matched_pct": 36.4,
       "contributor": "jaytheham"
     },
     {
@@ -249,9 +249,9 @@
       "segment": "overlay_gameplay/inside",
       "matched": 14,
       "non_matching": 3,
-      "asm_stubs": 14,
-      "total": 31,
-      "matched_pct": 45.2,
+      "asm_stubs": 11,
+      "total": 28,
+      "matched_pct": 50.0,
       "contributor": "jaytheham"
     },
     {
@@ -259,9 +259,9 @@
       "segment": "overlay_gameplay/inside",
       "matched": 20,
       "non_matching": 7,
-      "asm_stubs": 59,
-      "total": 86,
-      "matched_pct": 23.3,
+      "asm_stubs": 51,
+      "total": 78,
+      "matched_pct": 25.6,
       "contributor": "jaytheham"
     },
     {
@@ -269,9 +269,9 @@
       "segment": "overlay_gameplay/inside",
       "matched": 10,
       "non_matching": 2,
-      "asm_stubs": 5,
-      "total": 17,
-      "matched_pct": 58.8,
+      "asm_stubs": 3,
+      "total": 15,
+      "matched_pct": 66.7,
       "contributor": "jaytheham"
     },
     {
@@ -279,9 +279,9 @@
       "segment": "overlay_gameplay/outside",
       "matched": 3,
       "non_matching": 2,
-      "asm_stubs": 10,
-      "total": 15,
-      "matched_pct": 20.0,
+      "asm_stubs": 8,
+      "total": 13,
+      "matched_pct": 23.1,
       "contributor": "jaytheham"
     },
     {
@@ -289,19 +289,19 @@
       "segment": "overlay_gameplay/outside",
       "matched": 19,
       "non_matching": 3,
-      "asm_stubs": 16,
-      "total": 38,
-      "matched_pct": 50.0,
+      "asm_stubs": 13,
+      "total": 35,
+      "matched_pct": 54.3,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/145D70.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 7,
+      "matched": 12,
       "non_matching": 0,
       "asm_stubs": 2,
-      "total": 9,
-      "matched_pct": 77.8,
+      "total": 14,
+      "matched_pct": 85.7,
       "contributor": "jaytheham"
     },
     {
@@ -309,9 +309,9 @@
       "segment": "overlay_gameplay/outside",
       "matched": 23,
       "non_matching": 4,
-      "asm_stubs": 9,
-      "total": 36,
-      "matched_pct": 63.9,
+      "asm_stubs": 5,
+      "total": 32,
+      "matched_pct": 71.9,
       "contributor": "jaytheham"
     },
     {
@@ -319,29 +319,29 @@
       "segment": "overlay_gameplay/outside",
       "matched": 11,
       "non_matching": 3,
-      "asm_stubs": 5,
-      "total": 19,
-      "matched_pct": 57.9,
+      "asm_stubs": 2,
+      "total": 16,
+      "matched_pct": 68.8,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/857E0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 11,
+      "matched": 12,
       "non_matching": 2,
-      "asm_stubs": 11,
-      "total": 24,
-      "matched_pct": 45.8,
+      "asm_stubs": 9,
+      "total": 23,
+      "matched_pct": 52.2,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/884C0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 143,
+      "matched": 144,
       "non_matching": 39,
-      "asm_stubs": 104,
-      "total": 286,
-      "matched_pct": 50.0,
+      "asm_stubs": 65,
+      "total": 248,
+      "matched_pct": 58.1,
       "contributor": "jaytheham"
     },
     {
@@ -349,9 +349,9 @@
       "segment": "overlay_gameplay/outside",
       "matched": 1,
       "non_matching": 2,
-      "asm_stubs": 3,
-      "total": 6,
-      "matched_pct": 16.7,
+      "asm_stubs": 1,
+      "total": 4,
+      "matched_pct": 25.0,
       "contributor": "jaytheham"
     },
     {
@@ -359,9 +359,9 @@
       "segment": "overlay_gameplay/outside",
       "matched": 4,
       "non_matching": 1,
-      "asm_stubs": 10,
-      "total": 15,
-      "matched_pct": 26.7,
+      "asm_stubs": 9,
+      "total": 14,
+      "matched_pct": 28.6,
       "contributor": "jaytheham"
     },
     {
@@ -369,9 +369,9 @@
       "segment": "overlay_gameplay/outside",
       "matched": 19,
       "non_matching": 3,
-      "asm_stubs": 20,
-      "total": 42,
-      "matched_pct": 45.2,
+      "asm_stubs": 17,
+      "total": 39,
+      "matched_pct": 48.7,
       "contributor": "jaytheham"
     },
     {
@@ -379,9 +379,9 @@
       "segment": "overlay_gameplay/outside",
       "matched": 11,
       "non_matching": 10,
-      "asm_stubs": 19,
-      "total": 40,
-      "matched_pct": 27.5,
+      "asm_stubs": 9,
+      "total": 30,
+      "matched_pct": 36.7,
       "contributor": "jaytheham"
     },
     {
@@ -389,9 +389,9 @@
       "segment": "overlay_gameplay/outside",
       "matched": 31,
       "non_matching": 7,
-      "asm_stubs": 21,
-      "total": 59,
-      "matched_pct": 52.5,
+      "asm_stubs": 14,
+      "total": 52,
+      "matched_pct": 59.6,
       "contributor": "jaytheham"
     },
     {
@@ -399,19 +399,19 @@
       "segment": "overlay_gameplay/outside",
       "matched": 24,
       "non_matching": 15,
-      "asm_stubs": 51,
-      "total": 90,
-      "matched_pct": 26.7,
+      "asm_stubs": 36,
+      "total": 75,
+      "matched_pct": 32.0,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/CFE30.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 129,
+      "matched": 130,
       "non_matching": 29,
-      "asm_stubs": 152,
-      "total": 310,
-      "matched_pct": 41.6,
+      "asm_stubs": 123,
+      "total": 282,
+      "matched_pct": 46.1,
       "contributor": "jaytheham"
     },
     {
@@ -419,9 +419,9 @@
       "segment": "overlay_gameplay/outside",
       "matched": 6,
       "non_matching": 2,
-      "asm_stubs": 2,
-      "total": 10,
-      "matched_pct": 60.0,
+      "asm_stubs": 0,
+      "total": 8,
+      "matched_pct": 75.0,
       "contributor": "jaytheham"
     },
     {
@@ -429,9 +429,9 @@
       "segment": "overlay_gameplay/outside",
       "matched": 3,
       "non_matching": 2,
-      "asm_stubs": 5,
-      "total": 10,
-      "matched_pct": 30.0,
+      "asm_stubs": 3,
+      "total": 8,
+      "matched_pct": 37.5,
       "contributor": "jaytheham"
     },
     {
@@ -447,21 +447,21 @@
     {
       "path": "overlay_gameplay/outside/F9230.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 123,
+      "matched": 126,
       "non_matching": 35,
-      "asm_stubs": 147,
-      "total": 305,
-      "matched_pct": 40.3,
+      "asm_stubs": 112,
+      "total": 273,
+      "matched_pct": 46.2,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/buildings.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 69,
+      "matched": 72,
       "non_matching": 30,
-      "asm_stubs": 87,
-      "total": 186,
-      "matched_pct": 37.1,
+      "asm_stubs": 57,
+      "total": 159,
+      "matched_pct": 45.3,
       "contributor": "jaytheham"
     },
     {
@@ -469,9 +469,9 @@
       "segment": "overlay_gameplay/outside",
       "matched": 25,
       "non_matching": 1,
-      "asm_stubs": 1,
-      "total": 27,
-      "matched_pct": 92.6,
+      "asm_stubs": 0,
+      "total": 26,
+      "matched_pct": 96.2,
       "contributor": "jaytheham"
     },
     {
@@ -479,19 +479,19 @@
       "segment": "overlay_gameplay/outside",
       "matched": 18,
       "non_matching": 5,
-      "asm_stubs": 19,
-      "total": 42,
-      "matched_pct": 42.9,
+      "asm_stubs": 14,
+      "total": 37,
+      "matched_pct": 48.6,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/trigger.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 45,
+      "matched": 52,
       "non_matching": 3,
-      "asm_stubs": 6,
-      "total": 54,
-      "matched_pct": 83.3,
+      "asm_stubs": 3,
+      "total": 58,
+      "matched_pct": 89.7,
       "contributor": "jaytheham"
     },
     {
@@ -507,11 +507,11 @@
     {
       "path": "overlay_level/comet/318E20.c",
       "segment": "overlay_level/comet",
-      "matched": 27,
+      "matched": 29,
       "non_matching": 17,
-      "asm_stubs": 93,
-      "total": 137,
-      "matched_pct": 19.7,
+      "asm_stubs": 76,
+      "total": 122,
+      "matched_pct": 23.8,
       "contributor": "jaytheham"
     },
     {
@@ -519,29 +519,29 @@
       "segment": "overlay_level/greece",
       "matched": 35,
       "non_matching": 25,
-      "asm_stubs": 29,
-      "total": 89,
-      "matched_pct": 39.3,
+      "asm_stubs": 4,
+      "total": 64,
+      "matched_pct": 54.7,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_level/java/1ED9E0.c",
       "segment": "overlay_level/java",
-      "matched": 37,
+      "matched": 38,
       "non_matching": 41,
-      "asm_stubs": 64,
-      "total": 142,
-      "matched_pct": 26.1,
+      "asm_stubs": 23,
+      "total": 102,
+      "matched_pct": 37.3,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_level/siberia/2B7100.c",
       "segment": "overlay_level/siberia",
-      "matched": 9,
+      "matched": 10,
       "non_matching": 1,
-      "asm_stubs": 85,
+      "asm_stubs": 84,
       "total": 95,
-      "matched_pct": 9.5,
+      "matched_pct": 10.5,
       "contributor": "jaytheham"
     }
   ],
@@ -549,14 +549,14 @@
     {
       "name": "jaytheham",
       "files": 43,
-      "matched": 1205,
+      "matched": 1258,
       "non_matching": 419,
-      "asm_stubs": 1370
+      "asm_stubs": 950
     },
     {
       "name": "Meridian Lex",
       "files": 2,
-      "matched": 5,
+      "matched": 6,
       "non_matching": 0,
       "asm_stubs": 70
     }
@@ -565,66 +565,66 @@
     {
       "date": "2026-04-09",
       "commit": "d622f0f",
-      "matched_pct": 39.08,
-      "decompiled_pct": 51.36,
-      "matched": 1181,
-      "total": 3022
+      "matched_pct": 45.69,
+      "decompiled_pct": 59.41,
+      "matched": 1236,
+      "total": 2705
     },
     {
       "date": "2026-04-10",
       "commit": "cb4fbd6",
-      "matched_pct": 39.01,
-      "decompiled_pct": 51.55,
-      "matched": 1182,
-      "total": 3030
+      "matched_pct": 45.75,
+      "decompiled_pct": 59.8,
+      "matched": 1237,
+      "total": 2704
     },
     {
       "date": "2026-04-11",
       "commit": "44a03dd",
-      "matched_pct": 38.96,
-      "decompiled_pct": 51.62,
-      "matched": 1182,
-      "total": 3034
+      "matched_pct": 45.75,
+      "decompiled_pct": 59.95,
+      "matched": 1237,
+      "total": 2704
     },
     {
       "date": "2026-04-12",
       "commit": "a9b9a10",
-      "matched_pct": 38.88,
-      "decompiled_pct": 51.79,
-      "matched": 1183,
-      "total": 3043
+      "matched_pct": 45.78,
+      "decompiled_pct": 60.32,
+      "matched": 1238,
+      "total": 2704
     },
     {
       "date": "2026-04-13",
       "commit": "26c0a65",
-      "matched_pct": 38.89,
-      "decompiled_pct": 52.06,
-      "matched": 1187,
-      "total": 3052
+      "matched_pct": 45.93,
+      "decompiled_pct": 60.8,
+      "matched": 1242,
+      "total": 2704
     },
     {
       "date": "2026-04-14",
       "commit": "23020ea",
-      "matched_pct": 39.21,
-      "decompiled_pct": 52.47,
-      "matched": 1198,
-      "total": 3055
+      "matched_pct": 46.34,
+      "decompiled_pct": 61.32,
+      "matched": 1253,
+      "total": 2704
     },
     {
       "date": "2026-04-15",
       "commit": "9564fe4",
-      "matched_pct": 39.66,
-      "decompiled_pct": 52.66,
-      "matched": 1208,
-      "total": 3046
+      "matched_pct": 46.69,
+      "decompiled_pct": 61.34,
+      "matched": 1262,
+      "total": 2703
     },
     {
       "date": "2026-04-16",
       "commit": "5ced683",
-      "matched_pct": 39.43,
-      "decompiled_pct": 53.08,
-      "matched": 1210,
-      "total": 3069
+      "matched_pct": 46.76,
+      "decompiled_pct": 62.26,
+      "matched": 1264,
+      "total": 2703
     }
   ]
 }
