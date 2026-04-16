@@ -1722,6 +1722,9 @@ void func_802D911C_191C2C(u8 arg0) {
 		alien->unk1E = temp_v1_2 - 1;
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D911C_191C2C.s")
+#endif
 
 void func_802D95A8_1920B8(u8 arg0, s16 arg1, s16 arg2) {
 	alienInstances[arg0].unk20 |= 0x1000;
@@ -1734,9 +1737,11 @@ void func_802D95A8_1920B8(u8 arg0, s16 arg1, s16 arg2) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(2534) */
+/* CURRENT(1719) */
 void func_802D962C_19213C(u8 arg0, s16 arg1, s16 arg2, AlienInstance *alien) {
 	u8 currentNode;
+	s32 pad0;
+	s32 pad1;
 	u8 specIndex;
 	u8 state;
 	s16 turnSpeed;
@@ -1933,9 +1938,6 @@ void func_802D9964_192474(u8 arg0) {
 		alien->unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D911C_191C2C.s")
-#endif
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D9964_192474.s")
 #endif
