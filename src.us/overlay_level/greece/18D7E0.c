@@ -948,17 +948,15 @@ void func_802D7360_18FE70(void) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(3224) */
+/* CURRENT(1580) */
 void func_802D738C_18FE9C(u8 arg0) {
 	s16 sp5E;
 	s16 sp5C;
 	s16 sp5A;
 	s16 sp58;
 	s16 sp56;
-	s16 sp54;
-	s16 sp52;
-	s16 sp50;
-	s32 sp44;
+	s16 sp50[3];
+	s32 sp44[3];
 	s32 sp40;
 	s16 sp3E;
 	s16 sp38[2];
@@ -980,17 +978,17 @@ void func_802D738C_18FE9C(u8 arg0) {
 	sp2C->unk6 = s0->unk6;
 	sp28->unk6 = -s0->unk6;
 	func_80086164_95114(arg0, sp5C);
-	sp50 = 0x3C;
-	sp52 = -8;
-	sp54 = 0x70;
-	func_800A931C_B82CC((s8)sp5C, &sp50, &sp44);
-	sp50 = (s16)sp44;
-	sp52 = (s16)((&sp44)[1]);
-	sp54 = (s16)((&sp44)[2]);
-	func_800A931C_B82CC((s8)sp5E, &sp50, &sp44);
-	alienSpecs[sp3E].unk20 = (s16)sp44;
-	alienSpecs[sp3E].unk22 = (s16)((&sp44)[1]);
-	alienSpecs[sp3E].unk24 = (s16)((&sp44)[2]);
+	sp50[0] = 0x3C;
+	sp50[1] = -8;
+	sp50[2] = 0x70;
+	func_800A931C_B82CC((s8)sp5C, sp50, &sp44);
+	sp50[0] = (s16)sp44[0];
+	sp50[1] = (s16)sp44[1];
+	sp50[2] = (s16)sp44[2];
+	func_800A931C_B82CC((s8)sp5E, sp50, &sp44);
+	alienSpecs[sp3E].unk20 = (s16)sp44[0];
+	alienSpecs[sp3E].unk22 = (s16)sp44[1];
+	alienSpecs[sp3E].unk24 = (s16)sp44[2];
 	sp40 = func_80084E54_93E04(D_80052B34, s0);
 	if (currentLevel == 1) {
 		sp34 = 0x3C;
