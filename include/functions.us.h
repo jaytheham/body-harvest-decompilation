@@ -236,6 +236,7 @@ void func_80079910_888C0(s32);
 s16 func_80079B74_88B24(Unk8014DD50 *arg0);
 s32 func_80079C8C_88C3C(s32 arg0);
 void func_80079DC0_88D70(s32 arg0);
+s32 func_8007A2A0_89250(s32 arg0);
 s32 func_80079F08_88EB8(s32 arg0);
 s32 func_8007F0E8_8E098(s32, s32, s32);
 void func_8007EB74_8DB24(void *, s32);
