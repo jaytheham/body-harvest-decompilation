@@ -1,14 +1,69 @@
+function firstDefined(obj, keys) {
+  for (const k of keys) {
+    if (obj[k] !== undefined && obj[k] !== null) return obj[k];
+  }
+  return undefined;
+}
+
+function toNumber(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
+function normalizeHistory(history) {
+  if (!history) return [];
+
+  const rows = Array.isArray(history)
+    ? history
+    : (typeof history === 'object' ? Object.values(history) : []);
+
+  return rows
+    .map((row) => {
+      const date = firstDefined(row, ['date', 'week_start', 'week', 'commit_date']);
+      const matched = toNumber(firstDefined(row, ['matched', 'matched_functions', 'matched_count']));
+      const nonMatching = toNumber(firstDefined(row, ['non_matching', 'nonmatch', 'nonMatching', 'non_matching_count']));
+
+      if (!date || matched === null || nonMatching === null) return null;
+      return { date: String(date), matched, non_matching: nonMatching };
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
+
+function showHistoryEmptyState(message) {
+  const canvas = document.getElementById('historyChart');
+  if (!canvas) return;
+
+  const wrap = canvas.parentElement;
+  if (!wrap) return;
+
+  wrap.innerHTML = `<div class="empty-history">${message}</div>`;
+}
+
 export function initHistoryChart(history) {
-  if (!history || !history.length) return;
-  const ctx = document.getElementById('historyChart').getContext('2d');
+  const normalizedHistory = normalizeHistory(history);
+  if (!normalizedHistory.length) {
+    showHistoryEmptyState('No history data available yet.');
+    return;
+  }
+
+  if (typeof Chart === 'undefined') {
+    showHistoryEmptyState('Chart library failed to load.');
+    return;
+  }
+
+  const canvas = document.getElementById('historyChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
   new Chart(ctx, {
     type: 'line',
     data: {
-      labels: history.map(h => h.date),
+      labels: normalizedHistory.map(h => h.date),
       datasets: [
         {
           label: 'Matched Functions',
-          data: history.map(h => h.matched),
+          data: normalizedHistory.map(h => h.matched),
           borderColor: '#28a828',
           backgroundColor: 'rgba(40,168,40,0.08)',
           fill: true,
@@ -18,7 +73,7 @@ export function initHistoryChart(history) {
         },
         {
           label: 'Non-Matching Functions',
-          data: history.map(h => h.non_matching),
+          data: normalizedHistory.map(h => h.non_matching),
           borderColor: '#d06010',
           backgroundColor: 'rgba(208,96,16,0.05)',
           fill: false,
