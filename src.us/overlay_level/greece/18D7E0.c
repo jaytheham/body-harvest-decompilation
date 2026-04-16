@@ -541,9 +541,8 @@ s32 func_802D57A0_18E2B0(void) {
 #endif
 
 #ifdef NON_MATCHING
+/* CURRENT(5760) */
 s32 func_802D64D0_18EFE0(void) {
-	AlienInstance *alien;
-	BuildingInstance *building;
 	u8 specIndex;
 
 	D_80157F96 = 0;
@@ -552,8 +551,7 @@ s32 func_802D64D0_18EFE0(void) {
 		specIndex = alienInstances[D_80157F94].specIndex;
 		func_800800E4_8F094((u8)D_80157F94);
 		func_80080510_8F4C0(D_80157F95);
-		alien = &alienInstances[D_80157F94];
-		alien->unk6 = alien->unkE;
+		alienInstances[D_80157F94].unk6 = alienInstances[D_80157F94].unkE;
 		D_802566C8[specIndex * 0x1A]((u8)D_80157F94);
 	}
 
@@ -573,16 +571,13 @@ s32 func_802D64D0_18EFE0(void) {
 		func_800072CC_7ECC(0x2A);
 
 		D_80157F94 = func_8007956C_8851C(0x12);
-		alien = &alienInstances[D_80157F94];
-		building = &buildingInstances[0x61];
-
-		alien->unk20 |= 0x100;
-		alien->unk20 &= 0xF7FFFFFF;
-		alien->unk0 = building->xCoord + 0x80;
-		alien->unk14 = building->xCoord + 0x600;
-		alien->unk24 = 2;
-		alien->unk4 = building->zCoord;
-		alien->unk18 = building->zCoord;
+		alienInstances[D_80157F94].unk20 |= 0x100;
+		alienInstances[D_80157F94].unk20 &= 0xF7FFFFFF;
+		alienInstances[D_80157F94].unk0 = buildingInstances[0x61].xCoord + 0x80;
+		alienInstances[D_80157F94].unk14 = buildingInstances[0x61].xCoord + 0x600;
+		alienInstances[D_80157F94].unk24 = 2;
+		alienInstances[D_80157F94].unk4 = buildingInstances[0x61].zCoord;
+		alienInstances[D_80157F94].unk18 = buildingInstances[0x61].zCoord;
 
 		func_8007A198_89148((u8)D_80157F94);
 		break;

@@ -112,7 +112,7 @@ void func_80012A74_13674(void);
 void func_80004C34_5834(void);
 void func_80013818_14418(void);
 void func_80001984_2584(void);
-void func_802D64D0_18EFE0(void);
+s32 func_802D64D0_18EFE0(void);
 void loadFrontendData(void);
 void func_8001A460_1B060(LzssHeader *data, u8 *out);
 // loader.c functions - prototype-less to preserve implicit int behavior for matching functions
@@ -852,6 +852,7 @@ void func_800AA340_B92F0(u8 arg0);
 void func_80128428_1373D8(AlienInstance *arg0, s16 arg1, s16 arg2, s16 arg3, s32 *arg4, s32 *arg5, s32 *arg6);
 void func_8012B21C_13A1CC(void);
 s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
+void func_800C7E18_D6DC8(void);
 void func_800C80F0_D70A0(u16 arg0, u16 arg1, u16 arg2, s16 arg3);
 void func_800C8184_D7134(s8 arg0, s8 arg1, s8 arg2, s16 arg3);
 void func_800C820C_D71BC(s8 arg0, s8 arg1, s8 arg2, s16 arg3);
