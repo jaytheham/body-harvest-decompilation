@@ -7,8 +7,8 @@ export function initHistoryChart(history) {
       labels: history.map(h => h.date),
       datasets: [
         {
-          label: 'Matched %',
-          data: history.map(h => h.matched_pct),
+          label: 'Matched Functions',
+          data: history.map(h => h.matched),
           borderColor: '#28a828',
           backgroundColor: 'rgba(40,168,40,0.08)',
           fill: true,
@@ -17,8 +17,8 @@ export function initHistoryChart(history) {
           pointBackgroundColor: '#28a828',
         },
         {
-          label: 'Decompiled %',
-          data: history.map(h => h.decompiled_pct),
+          label: 'Non-Matching Functions',
+          data: history.map(h => h.non_matching),
           borderColor: '#d06010',
           backgroundColor: 'rgba(208,96,16,0.05)',
           fill: false,
@@ -52,8 +52,7 @@ export function initHistoryChart(history) {
         },
         y: {
           min: 0,
-          max: 100,
-          ticks: { color: '#4a6a8a', callback: v => v + '%', font: { size: 10 } },
+          ticks: { color: '#4a6a8a', font: { size: 10 } },
           grid: { color: 'rgba(26,42,74,0.4)' },
           border: { color: '#1a2a4a' },
         },

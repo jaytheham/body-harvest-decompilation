@@ -1,7 +1,7 @@
 {
-  "generated": "2026-04-16T20:23:12Z",
-  "commit": "1b462c36",
-  "commit_timestamp": "2026-04-17T08:22:54+12:00",
+  "generated": "2026-04-16T20:34:46Z",
+  "commit": "c1693c46",
+  "commit_timestamp": "2026-04-17T08:34:28+12:00",
   "overall": {
     "total_functions": 2703,
     "matched": 1264,
@@ -563,67 +563,80 @@
   ],
   "history": [
     {
-      "date": "2026-04-09",
-      "commit": "d622f0f",
-      "matched_pct": 45.69,
-      "decompiled_pct": 59.41,
-      "matched": 1236,
+      "date": "2026-02-01",
+      "commit": "6227d6f",
+      "matched": 12,
+      "non_matching": 0,
+      "total": 111
+    },
+    {
+      "date": "2026-02-08",
+      "commit": "6722fb8",
+      "matched": 49,
+      "non_matching": 0,
+      "total": 201
+    },
+    {
+      "date": "2026-02-15",
+      "commit": "6a15832",
+      "matched": 176,
+      "non_matching": 40,
+      "total": 762
+    },
+    {
+      "date": "2026-02-22",
+      "commit": "0efa11a",
+      "matched": 478,
+      "non_matching": 153,
+      "total": 3036
+    },
+    {
+      "date": "2026-03-01",
+      "commit": "effdd6f",
+      "matched": 597,
+      "non_matching": 218,
+      "total": 2699
+    },
+    {
+      "date": "2026-03-08",
+      "commit": "536824e",
+      "matched": 678,
+      "non_matching": 271,
+      "total": 2699
+    },
+    {
+      "date": "2026-03-15",
+      "commit": "98103e7",
+      "matched": 840,
+      "non_matching": 280,
+      "total": 2699
+    },
+    {
+      "date": "2026-03-22",
+      "commit": "d71ea4e",
+      "matched": 975,
+      "non_matching": 298,
+      "total": 2699
+    },
+    {
+      "date": "2026-03-29",
+      "commit": "670c36d",
+      "matched": 1180,
+      "non_matching": 344,
       "total": 2705
     },
     {
-      "date": "2026-04-10",
-      "commit": "cb4fbd6",
-      "matched_pct": 45.75,
-      "decompiled_pct": 59.8,
-      "matched": 1237,
-      "total": 2704
-    },
-    {
-      "date": "2026-04-11",
+      "date": "2026-04-05",
       "commit": "44a03dd",
-      "matched_pct": 45.75,
-      "decompiled_pct": 59.95,
       "matched": 1237,
+      "non_matching": 384,
       "total": 2704
     },
     {
       "date": "2026-04-12",
-      "commit": "a9b9a10",
-      "matched_pct": 45.78,
-      "decompiled_pct": 60.32,
-      "matched": 1238,
-      "total": 2704
-    },
-    {
-      "date": "2026-04-13",
-      "commit": "26c0a65",
-      "matched_pct": 45.93,
-      "decompiled_pct": 60.8,
-      "matched": 1242,
-      "total": 2704
-    },
-    {
-      "date": "2026-04-14",
-      "commit": "23020ea",
-      "matched_pct": 46.34,
-      "decompiled_pct": 61.32,
-      "matched": 1253,
-      "total": 2704
-    },
-    {
-      "date": "2026-04-15",
-      "commit": "9564fe4",
-      "matched_pct": 46.69,
-      "decompiled_pct": 61.34,
-      "matched": 1262,
-      "total": 2703
-    },
-    {
-      "date": "2026-04-16",
       "commit": "5ced683",
-      "matched_pct": 46.76,
-      "decompiled_pct": 62.26,
       "matched": 1264,
+      "non_matching": 419,
       "total": 2703
     }
   ]
