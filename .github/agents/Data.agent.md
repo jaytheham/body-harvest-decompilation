@@ -45,4 +45,6 @@ There are some already decompiled data sections in the yaml for reference.
 
 Do not cheat by adding all the remaining bin data as a variable in the last defined non-bin section's C file, you must add variables to the C files which reference them, and split the yaml sections so each data section corresponds to the correct C file as needed to match the original ROM layout.
 
+Don't skip any data, if unable to determine where some data belongs, add it as a variable in the first C file you find with a reference to the same section of data, and then move it later if needed.
+
 If the build script returns `build/bh.us.z64: OK` then the built ROM perfectly matches the original ROM.

@@ -308,7 +308,8 @@ segments:
     overlay: true
     subsegments:
       - [0x18D7E0, c, overlay_level/greece/18D7E0]
-      - [0x195C80, bin]
+      - [0x195C80, .data, overlay_level/greece/18D7E0]
+      - [0x196020, bin]
 
   - name: overlay_level_greece_data
     type: bin

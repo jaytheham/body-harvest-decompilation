@@ -6,7 +6,7 @@
 extern Addr _14FCA0_bin;
 extern Addr _14FD40_bin;
 extern Addr _175EB0_bin;
-extern Addr _195C80_bin;
+extern Addr _196020_bin;
 extern Addr _1C8E0_s;
 extern Addr _1D230_s;
 extern Addr _1E060_s;
