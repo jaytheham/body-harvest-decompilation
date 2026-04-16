@@ -1520,6 +1520,7 @@ extern s16 D_80157F68;
 extern s8 D_80157F6A;
 extern s16 D_80157F94;
 extern u8 D_80157F95;
+extern s16 D_80157F9A;
 extern s16 D_80157F96;
 extern s16 D_80157F98;
 extern s16 D_80157FD0;

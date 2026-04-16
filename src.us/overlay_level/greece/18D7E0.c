@@ -541,7 +541,120 @@ s32 func_802D57A0_18E2B0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D57A0_18E2B0.s")
 #endif
 
+#ifdef NON_MATCHING
+s32 func_802D64D0_18EFE0(void) {
+	AlienInstance *alien;
+	BuildingInstance *building;
+	u8 specIndex;
+
+	D_80157F96 = 0;
+
+	if (D_80157F94 != 0xFF) {
+		specIndex = alienInstances[D_80157F94].specIndex;
+		func_800800E4_8F094((u8)D_80157F94);
+		func_80080510_8F4C0(D_80157F95);
+		alien = &alienInstances[D_80157F94];
+		alien->unk6 = alien->unkE;
+		D_802566C8[specIndex * 0x1A]((u8)D_80157F94);
+	}
+
+	switch (D_80157F8C) {
+	case 0:
+		D_80159DDF = func_8011D260_12C210(0x4A, -7);
+		D_80159DE0 = 0;
+		D_80159DE2 = 0;
+		D_80159DE4 = 0;
+		D_80157F8E = 0;
+		D_80052554 = 0x400;
+
+		D_80157F98 = func_800CDB40_DCAF0(0x4AF0, 0x3B6, -0x664);
+		D_80157F9A = func_800CDB40_DCAF0(0x4AFC, 0x3B6, -0x69C);
+
+		D_80157F8C += 1;
+		func_800072CC_7ECC(0x2A);
+
+		D_80157F94 = func_8007956C_8851C(0x12);
+		alien = &alienInstances[D_80157F94];
+		building = &buildingInstances[0x61];
+
+		alien->unk20 |= 0x100;
+		alien->unk20 &= 0xF7FFFFFF;
+		alien->unk0 = building->xCoord + 0x80;
+		alien->unk14 = building->xCoord + 0x600;
+		alien->unk24 = 2;
+		alien->unk4 = building->zCoord;
+		alien->unk18 = building->zCoord;
+
+		func_8007A198_89148((u8)D_80157F94);
+		break;
+
+	case 1:
+		D_80157F8E += 1;
+		if (D_80157F8E >= 0xD8) {
+			D_80157F8E = 0;
+			D_80157F8C += 1;
+		}
+		break;
+
+	case 2:
+		func_800E35E0_F2590(0xA0);
+		D_80157F8C += 1;
+		break;
+
+	case 3:
+		func_800E35E0_F2590(0xFF);
+		D_80157F8C += 1;
+		break;
+
+	case 4:
+		func_800E35E0_F2590(0xA0);
+		D_80157F8C += 1;
+		break;
+
+	case 5:
+		func_800CDD7C_DCD2C(D_80157F98);
+		func_800CDD7C_DCD2C(D_80157F9A);
+		func_800DFBA8_EEB58(0x4AFC, 0x3A2, -0x680, 0xB4, 6);
+		func_800C7E18_D6DC8();
+
+		func_800CA5EC_D959C(0x4AFC, 0x3A2, -0x680, 0x28, 0x32, 0x28, 0x32, 0xA, 0x19, 0xB4, 0x5A, 0x50, 0x2D, 0xFF);
+		func_800CA5EC_D959C(0x4AFC, 0x3A2, -0x680, -0x28, 0x32, -0x28, 0x32, 0xA, 0x19, 0xB4, 0x5A, 0x50, 0x2D, 0xFF);
+
+		func_800E35E0_F2590(0x50);
+		D_80157F8C += 1;
+		D_80052554 -= D_80157F8E * 8;
+		D_80157F8E += 1;
+		if (D_80157F8E >= 0x33) {
+			D_80157F8E = 0;
+			D_80157F8C += 1;
+		}
+		break;
+
+	case 6:
+		D_80157F8E += 1;
+		if (D_80157F8E >= 2) {
+			D_80157F8E = 0;
+			D_80157F8C += 1;
+		}
+		break;
+
+	case 7:
+	case 8:
+		func_800072CC_7ECC(0x28);
+		func_800073B8_7FB8(0x2A);
+		D_80159DDF = 0xFF;
+		func_80079910_888C0(D_80157F94);
+		return 1;
+
+	default:
+		break;
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D64D0_18EFE0.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(7330) */
