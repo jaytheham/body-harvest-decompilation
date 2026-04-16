@@ -1864,6 +1864,8 @@ extern u8 D_802DE274_196D84;
 extern u8 D_802DE280_196D90[];
 extern Unk800311A0 D_802DE2C0_196DD0;
 extern char D_802DE2D0_196DE0; /* osSyncPrintf format string */
+extern f32 D_802DE438_196F48;
+extern f32 D_802DE43C_196F4C;
 extern u16 D_802DE466;
 extern s16 D_8004DC58;
 extern f32 D_8004DCAC;

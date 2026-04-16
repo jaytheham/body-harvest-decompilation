@@ -1463,7 +1463,159 @@ void func_802DA378_192E88(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DA3EC_192EFC.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(18863) */
+s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
+	AlienInstance *alien;
+	VehicleInstance *vehicle;
+	u8 alienId;
+	s16 node0;
+	s16 node1;
+	s32 posX;
+	s32 posY;
+	s32 posZ;
+	u8 targetIdx;
+	s32 distSq;
+	s32 distRem;
+	s32 dx;
+	s32 dz;
+	s8 result;
+	s32 randVal;
+	f32 tempF;
+
+	alienId = arg0 & 0xFF;
+	alien = &alienInstances[alienId];
+	node0 = D_8014DD50[alien->unkC].unkC;
+	node1 = D_8014DD50[node0].unkC;
+	targetIdx = alien->specIndex;
+
+	if (alien->unk20 & 0x4000) {
+		result = func_80081F18_90EC8(alienId, 3, 4, &node0, arg1);
+		if (result == 4) {
+			alien->unk20 &= ~0x4000;
+		}
+
+		if ((alien->unk36 == 2) && (D_8014DD5E[node0][0] == 0)) {
+			func_80128504_1374B4(alien, 1, &posX, &posY, &posZ);
+			func_800DEE5C_EDE0C((s16)posX, (s16)(posY + 5), (s16)posZ, 0x50, 0xA);
+			func_800DEA08_ED9B8((s16)posX, (s16)posY, (s16)posZ, 0x1C2, 8, 6, 0x28, 0xDC, 0xA6, 0x85, 0x2F);
+			func_800C541C_D43CC((s16)posX, (s16)posY, (s16)posZ, 0, 0x7F, 0, 0x78, 0xFF, 0x3C, 0x14, 0x6A, 0x53, 0);
+
+			func_80137468_146418(alienId, 0x259);
+			func_80135D44_144CF4(posX, posY, posZ, 5.0f);
+
+			if (func_800879A4_96954(alienId, 0x50, 1) != 0) {
+				vehicle = D_80052B34;
+				func_80122524_1314D4(vehicle, 0x7D0, alien->unk0, alien->unk4);
+
+				if (vehicle->unk1A != 0) {
+					func_80137468_146418(alienId, 0x258);
+					tempF = (f32)((f64)(f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
+					func_800C541C_D43CC(vehicle->unk0, vehicle->unk2, vehicle->unk4, (s8)(s32)(tempF * 127.0f), -0x50,
+						(s32)((f32)-((f64)(f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0) * 127.0f),
+						0xB4, 0xFF, 0x28, 0x14, 0xFF, 0xFF, 0xC8);
+					return 1;
+				}
+			} else {
+				vehicle = D_80052B34;
+				dx = vehicle->unk0 - (s16)posX;
+				dz = vehicle->unk4 - (s16)posZ;
+				distSq = (dx * dx) + (dz * dz);
+				if ((distSq < 0x127690) && !(vehicle->unk20 & 2)) {
+					distRem = 0x127690 - distSq;
+					func_80102DDC_111D8C(vehicle,
+						func_80003824_4424(
+							(f32)(vehicle->unk0 - alienInstances[alien->unk25].unk0),
+							(f32)(vehicle->unk4 - alienInstances[alien->unk25].unk4)
+						),
+						(s16)(s32)(((f32)distRem / D_802DE438_196F48) + 8192.0f),
+						(f32)(distRem * 0x32) / D_802DE43C_196F4C);
+
+					vehicle->unk22 = (s16)(0x3E8 - (func_800038E0_44E0() % 2000));
+					vehicle->unk24 = (s16)(0x3E8 - (func_800038E0_44E0() % 2000));
+					vehicle->unk26 = (s16)(0x3E8 - (func_800038E0_44E0() % 2000));
+				}
+			}
+		}
+		return 1;
+	}
+
+	if (alien->unk20 & 0x1000) {
+		result = func_80081F18_90EC8(alienId, 3, 3, &node0, arg1);
+		if (result == 3) {
+			alien->unk20 &= ~0x1000;
+		}
+
+		if (result == 2) {
+			func_80137468_146418(alienId, 0x131);
+			if (!(D_80052B34->unk20 & 2) && (func_800879A4_96954(alienId, 0x50, 0) != 0)) {
+				vehicle = D_80052B34;
+				dx = vehicle->unk0 - alien->unk0;
+				dz = vehicle->unk4 - alien->unk4;
+
+				if ((targetIdx == 0x1D) || (targetIdx == 0x1F)) {
+					randVal = 0x3C;
+				} else {
+					randVal = 0x2A;
+				}
+
+				if (vehicle->unk1A == 0) {
+					func_80123AC4_132A74(vehicle);
+				} else {
+					func_80122524_1314D4(vehicle, 0x3E8, alien->unk0, alien->unk4);
+				}
+
+				func_80137468_146418(alienId, 0x258);
+				func_80102D00_111CB0(vehicle, (f32)dx / 20.0f, (f32)randVal, (f32)dz / 20.0f);
+
+				tempF = (f32)((f64)(f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
+				func_800C541C_D43CC(vehicle->unk0, vehicle->unk2, vehicle->unk4, (s8)(s32)(tempF * 127.0f), -0x50,
+					(s32)((f32)-((f64)(f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0) * 127.0f),
+					0xB4, 0xFF, 0x28, 0x14, 0xFF, 0xFF, 0xC8);
+
+				randVal = func_800038E0_44E0() * 2000;
+				if (randVal >= 0) {
+					vehicle->unk22 = (s16)(0x3E8 - (randVal >> 0x10));
+				} else {
+					vehicle->unk22 = (s16)(0x3E8 - ((randVal + 0xFFFF) >> 0x10));
+				}
+
+				randVal = func_800038E0_44E0() * 2000;
+				if (randVal >= 0) {
+					vehicle->unk24 = (s16)(0x3E8 - (randVal >> 0x10));
+				} else {
+					vehicle->unk24 = (s16)(0x3E8 - ((randVal + 0xFFFF) >> 0x10));
+				}
+
+				randVal = func_800038E0_44E0() * 2000;
+				if (randVal >= 0) {
+					vehicle->unk26 = (s16)(0x3E8 - (randVal >> 0x10));
+				} else {
+					vehicle->unk26 = (s16)(0x3E8 - ((randVal + 0xFFFF) >> 0x10));
+				}
+
+				alien->unk20 &= ~0x1000;
+				alien->unk36 = 0;
+				alien->unk20 |= 0x2000;
+				D_8014DD5E[node0][0] = 0;
+			}
+		}
+		return 1;
+	}
+
+	if (alien->unk20 & 0x2000) {
+		result = func_80081F18_90EC8(alienId, 3, 2, &node0, arg2);
+		if (result == 2) {
+			alien->unk20 &= ~0x2000;
+		}
+		return 1;
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DB16C_193C7C.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(2390) */

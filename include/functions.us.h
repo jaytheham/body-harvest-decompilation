@@ -573,7 +573,7 @@ void func_802D6D20_18F830(void);
 void func_802D6F7C_18FA8C(void);
 void func_802D7334_18FE44(void);
 void func_802D7360_18FE70(void);
-s32 func_802DB16C_193C7C(u8 arg0, void *arg1, void *arg2);
+s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2);
 void func_802DC2E4_194DF4(u8 arg0);
 
 void osViExtendVStart(s32 arg0);
