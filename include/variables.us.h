@@ -97,6 +97,7 @@ extern u8 D_800313EC;
 extern u8 D_800313F0;
 extern u8 D_800313F4; // World fog alpha value
 extern s16 D_800313F8; // World fog near distance
+extern u16 D_80257184;
 extern s16 D_800313FC; // World fog far distance
 extern s32 leomecha_bss_0004;
 extern s32 D_80031410;

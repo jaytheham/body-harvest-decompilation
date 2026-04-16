@@ -1787,4 +1787,127 @@ void func_802DCA6C_19557C(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0x99, 0x32, 0xD4);
 }
 
+#ifdef NON_MATCHING
+/* CURRENT(9737) */
+void func_802DCADC_1955EC(u8 arg0) {
+	AlienInstance *alien;
+	Unk8014DD50 *obj0;
+	Unk8014DD50 *obj1;
+	Unk8014DD50 *obj2;
+	Unk8014DD50 *obj3;
+	Unk8014DD50 *obj4;
+	s32 sp6C;
+	s32 sp68;
+	s32 sp64;
+	s16 tmpA;
+	s16 tmpB;
+	s8 obj4Next;
+	u16 angle;
+
+	alien = &alienInstances[arg0];
+	obj0 = &D_8014DD50[alien->unkC];
+	obj1 = &D_8014DD50[obj0->unkC];
+	obj2 = &D_8014DD50[obj1->unkD];
+	obj3 = &D_8014DD50[obj2->unkD];
+	obj4 = &D_8014DD50[obj3->unkD];
+	obj4Next = obj4->unkD;
+	tmpA = obj1->unkD;
+	tmpB = obj0->unkC;
+
+	if (alien->unk2C >= 0x51) {
+		obj4->unk2 = 0;
+		D_8014DD50[obj4Next].unk2 = 0;
+
+		obj2->unk6 = (u16) (65535.0 - ((((f64) (f32) coss((D_80052A8C * 0x4E20) & 0xFFFF) / 32768.0) + 1.0) * 2000.0));
+		obj3->unk6 = (u16) (((((f64) (f32) coss((D_80052A8C * 0x4E20) & 0xFFFF) / 32768.0) + 1.0) * 2000.0));
+
+		func_80090948_9F8F8(tmpB, 0x7D0);
+		func_80090948_9F8F8(tmpA, 0x7D0);
+	} else {
+		obj4->unk2 = 0x7D00;
+		D_8014DD50[obj4Next].unk2 = 0x7D00;
+
+		if ((u16) obj1->unkA < 0x2710) {
+			obj1->unkA = (u16) ((u16) obj1->unkA + 0x3E8);
+		}
+
+		if ((u16) obj2->unkA < 0x2710) {
+			obj2->unkA = (u16) ((u16) obj2->unkA + 0x3E8);
+		}
+	}
+
+	if (!(alien->unk20 & 0x100000)) {
+		func_8012B21C_13A1CC();
+		func_800A92B0_B8260();
+		alien->unk2C = 0x10E;
+		func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, D_80257184, 8);
+		func_80137468_146418(arg0, 0x11);
+		return;
+	}
+
+	if (alien->unk2C < 0xAB) {
+		func_800AA340_B92F0(arg0);
+
+		if ((alien->unk2C < 0x51) && (alien->unk2C >= 0x29) && !(D_80052A8C & 7)) {
+			func_80128504_1374B4(alien, 1, &sp6C, &sp68, &sp64);
+
+			if (D_80031420 & 3) {
+				angle = alien->unk6;
+				func_800CA5EC_D959C(
+					(s16) sp6C,
+					(s16) sp68,
+					(s16) sp64,
+					(s8) (s32) ((((f64) (f32) coss(angle) / 32768.0) * 100.0)),
+					-0x14,
+					(s32) ((((f64) (f32) sins(angle) / 32768.0) * 100.0)),
+					0x64,
+					0xA,
+					0x1E,
+					0x64,
+					D_8013E3C0[currentLevel * 3 - 3],
+					D_8013E3C0[currentLevel * 3 - 2],
+					D_8013E3C0[currentLevel * 3 - 1],
+					0xFF
+				);
+			}
+		}
+	} else {
+		D_80031414 = 1;
+
+		if (alien->unk2C >= 0xFA) {
+			alien->unkA -= 0xC8;
+			return;
+		}
+
+		if (alien->unk2C < 0xBF) {
+			alien->unkA += 0xC8;
+			return;
+		}
+
+		if (((alien->unk2C + 1) % 10) == 0) {
+			func_80128504_1374B4(alien, 1, &sp6C, &sp68, &sp64);
+			angle = alien->unk6;
+
+			func_800DEA08_ED9B8((s16) sp6C, (s16) (sp68 + 0x32), (s16) sp64, 0xB4, 0xA, 0, 0x1E, 0xB4, 0xA0, 0x96, 0);
+			func_800CA5EC_D959C(
+				(s16) sp6C,
+				(s16) (sp68 + 0x32),
+				(s16) sp64,
+				(s8) (s32) ((((f64) (f32) coss(angle) / 32768.0) * 100.0)),
+				0x50,
+				(s32) ((((f64) (f32) sins(angle) / 32768.0) * 100.0)),
+				0x64,
+				0xA,
+				0x1E,
+				0x64,
+				0xA0,
+				0x96,
+				0,
+				0xC8
+			);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DCADC_1955EC.s")
+#endif
