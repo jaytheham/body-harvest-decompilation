@@ -1,6 +1,13 @@
 #include <ultra64.h>
 #include "common.h"
 
+s32 D_802DD170[] = {
+	0x00000000,
+	0x00FA0C00,
+	0x00040000,
+	0x00120000,
+};
+
 
 #ifdef NON_MATCHING
 /* CURRENT(5) */
