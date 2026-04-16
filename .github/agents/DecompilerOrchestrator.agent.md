@@ -13,7 +13,7 @@ This is a matching decompilation project for Body Harvest (N64). The goal is to 
 You will be given a list of functions to decompile, follow this process:
 
 1. Begin by creating a new git branch named with this format: `decomp-orchestrator-YYYY-mm-dd-HH-MM-SS`, make sure to include the date and time.
-2. Orchestrate processing of these functions one at a time. For each function, you will create a new subagent, the subagent must use agentName `BH Decompiler`, and use it to decompile a single function (if the subagent gets rate-limited you can update `Decompiler.agent.md` to use a different model version (`Claude Sonnet 4.5 (copilot)` and `Claude Sonnet 4.6 (copilot)` are available)).
+2. Orchestrate processing of these functions one at a time. For each function, you will create a new subagent, the subagent must use agentName `BH Decompiler`, and use it to decompile a single function.
 3. Only the following directory contents and files are allowed to be changed by subAgents, after a subagent finishes work undo any changes outside of:
 - `/ExampleFixes`
 - `/include`
