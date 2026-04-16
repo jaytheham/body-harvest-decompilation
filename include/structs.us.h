@@ -426,7 +426,8 @@ typedef struct {
 	/* 0x40 */ s16 unk40;
 	/* 0x42 */ s16 unk42;
 	/* 0x44 */ void *unk44;
-	/* 0x48 */ u8 pad48[0x8];
+	/* 0x48 */ void (*unk48)(u8);
+	/* 0x4C */ void *unk4C;
 	/* 0x50 */ s8 unk50;
 	/* 0x51 */ u8 unk51;
 	/* 0x52 */ u8 pad52[0x2];
