@@ -1553,7 +1553,7 @@ void func_802D8BAC_1916BC(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(13) */
+/* CURRENT(18) */
 void func_802D8D84_191894(u8 arg0) {
 	AlienInstance *alien;
 	s32 pad;
@@ -1610,12 +1610,13 @@ void func_802D90C8_191BD8(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(4505) */
+/* CURRENT(3960) */
 void func_802D911C_191C2C(u8 arg0) {
 	AlienInstance *alien;
 	Unk8014DD50 *pathA;
 	Unk8014DD50 *pathB;
 	s32 distSq;
+	s16 temp_v1_2;
 	s8 sp37;
 	s8 sp2F;
 	s8 sp33;
@@ -1708,20 +1709,19 @@ void func_802D911C_191C2C(u8 arg0) {
 		func_800E24B8_F1468(arg0);
 	}
 
-	pathA = &D_8014DD50[D_8014DD50[alien->unkC].unkC];
-	alien->unkA = -alien->unk10 * 8;
+	pathA = &D_8014DD50[alien->unkC];
+	pathA = &D_8014DD50[pathA->unkC];
+	alien->unkA = alien->unk10 * -8;
 	pathB = &D_8014DD50[pathA->unkD];
 	pathB->unkA = alien->unkA;
+	temp_v1_2 = alien->unk1E;
 	distSq = (s32)(((f64)(f32)sins(((arg0 + D_80052A8C) * 0x7D0) & 0xFFFF) / 32768.0) * D_802DE400_196F10);
 	pathA->unk6 = distSq;
 	pathB->unk6 = distSq;
-	if (alien->unk1E != 0) {
-		alien->unk1E--;
+	if (temp_v1_2 != 0) {
+		alien->unk1E = temp_v1_2 - 1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D911C_191C2C.s")
-#endif
 
 void func_802D95A8_1920B8(u8 arg0, s16 arg1, s16 arg2) {
 	alienInstances[arg0].unk20 |= 0x1000;
@@ -1933,6 +1933,9 @@ void func_802D9964_192474(u8 arg0) {
 		alien->unk1E--;
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D911C_191C2C.s")
+#endif
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D9964_192474.s")
 #endif
