@@ -98,6 +98,11 @@ extern u8 D_800313F0;
 extern u8 D_800313F4; // World fog alpha value
 extern s16 D_800313F8; // World fog near distance
 extern u16 D_80257184;
+extern s16 D_80257188;
+extern s16 D_8025718A;
+extern u16 D_802571B2;
+extern s16 D_802571B6;
+extern s16 D_802571B8;
 extern s16 D_800313FC; // World fog far distance
 extern s32 leomecha_bss_0004;
 extern s32 D_80031410;
@@ -1043,6 +1048,7 @@ extern u8 D_8014D550[];
 extern Unk8014DD50 D_8014DD50[];
 extern s16 D_8014DD54[];
 extern s8 D_8014DD5C[];
+extern s8 D_8014DD5D[];
 extern Unk802E71B8 D_802E71B8;
 extern Unk802E71B8 D_802E71C0;
 extern s16 D_8014DD5E[][8];
@@ -1879,6 +1885,12 @@ extern Unk800311A0 D_802DE2C0_196DD0;
 extern char D_802DE2D0_196DE0; /* osSyncPrintf format string */
 extern f32 D_802DE438_196F48;
 extern f32 D_802DE43C_196F4C;
+extern f32 D_802DE408_196F18;
+extern f64 D_802DE410_196F20;
+extern f64 D_802DE418_196F28;
+extern f64 D_802DE420_196F30;
+extern f64 D_802DE428_196F38;
+extern f64 D_802DE430_196F40;
 extern u16 D_802DE466;
 extern s16 D_8004DC58;
 extern f32 D_8004DCAC;
