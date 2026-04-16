@@ -18,7 +18,7 @@ import re
 import subprocess
 import sys
 from collections import defaultdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 
@@ -26,8 +26,6 @@ def parse_args():
     p = argparse.ArgumentParser(description="Generate Body Harvest decomp progress data.")
     p.add_argument("--output", default="docs/progress.json", help="Output JSON path")
     p.add_argument("--repo-root", default=".", help="Repository root directory")
-    p.add_argument("--history-commits", type=int, default=200,
-                   help="Max commits to scan for history graph")
     p.add_argument(
         "--verify-with-asm",
         action="store_true",
@@ -267,56 +265,116 @@ def analyse_blob(blob: str) -> dict:
     return {"matched": matched, "non_matching": non_matching, "asm_stubs": asm_stubs, "total": total}
 
 
-def build_history(cwd: str, src_dir: Path, max_commits: int) -> list:
+def build_history_item(date_str: str, commit_sha: str, totals: dict) -> dict:
+    return {
+        "date": date_str,
+        "commit": commit_sha[:7],
+        "matched": totals["matched"],
+        "non_matching": totals["non_matching"],
+        "total": totals["total"],
+    }
+
+
+def get_totals_at_commit(cwd: str, src_rel: str, commit_sha: str, totals_cache: dict) -> dict | None:
+    if commit_sha in totals_cache:
+        return totals_cache[commit_sha]
+
+    tree_out = git_run(["ls-tree", "-r", "--name-only", commit_sha, src_rel], cwd)
+    if not tree_out:
+        totals_cache[commit_sha] = None
+        return None
+
+    totals = {"matched": 0, "non_matching": 0, "asm_stubs": 0, "total": 0}
+    for rel_path in tree_out.splitlines():
+        if not rel_path.endswith(".c"):
+            continue
+        blob = git_run(["show", f"{commit_sha}:{rel_path}"], cwd)
+        if not blob:
+            continue
+        counts = analyse_blob(blob)
+        for key in totals:
+            totals[key] += counts[key]
+
+    if totals["total"] == 0:
+        totals_cache[commit_sha] = None
+        return None
+
+    totals_cache[commit_sha] = totals
+    return totals
+
+
+def build_history(cwd: str, src_dir: Path) -> list:
     src_rel = str(src_dir.relative_to(Path(cwd)))
-    log_out = git_run(
-        ["log", f"--max-count={max_commits}", "--format=%H|%ad", "--date=short", "--", src_rel],
-        cwd
-    )
-    if not log_out:
+    start_date = datetime.strptime("2026-02-01", "%Y-%m-%d").date()
+    today = datetime.now(timezone.utc).date()
+
+    if start_date > today:
         return []
 
+    log_out = git_run(
+        [
+            "log",
+            "--format=%H|%ad",
+            "--date=short",
+            "--since=2026-02-01",
+            "--",
+            src_rel,
+        ],
+        cwd
+    )
+
+    weekly_commits: dict = {}
+    if log_out:
+        for line in log_out.splitlines():
+            if "|" not in line:
+                continue
+            sha, date_str = line.split("|", 1)
+            sha, date_str = sha.strip(), date_str.strip()
+            try:
+                commit_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+            except ValueError:
+                continue
+            if commit_date < start_date:
+                continue
+            week_index = (commit_date - start_date).days // 7
+            week_start = start_date + timedelta(days=week_index * 7)
+            if week_start not in weekly_commits:
+                weekly_commits[week_start] = sha
+
+    totals_cache: dict = {}
+    previous_item = None
+
+    baseline_sha = git_run(
+        ["log", "-1", "--format=%H", "--before=2026-02-01T00:00:00", "--", src_rel],
+        cwd,
+    )
+    if baseline_sha:
+        baseline_totals = get_totals_at_commit(cwd, src_rel, baseline_sha, totals_cache)
+        if baseline_totals:
+            previous_item = build_history_item(start_date.strftime("%Y-%m-%d"), baseline_sha, baseline_totals)
+
     history = []
-    seen_dates: set = set()
+    week_start = start_date
+    while week_start <= today:
+        date_str = week_start.strftime("%Y-%m-%d")
+        week_sha = weekly_commits.get(week_start)
 
-    for line in log_out.splitlines():
-        if "|" not in line:
-            continue
-        sha, date = line.split("|", 1)
-        sha, date = sha.strip(), date.strip()
-        if date in seen_dates:
-            continue
-        seen_dates.add(date)
+        if week_sha:
+            week_totals = get_totals_at_commit(cwd, src_rel, week_sha, totals_cache)
+            if week_totals:
+                previous_item = build_history_item(date_str, week_sha, week_totals)
+                history.append(previous_item)
+            elif previous_item:
+                carried = dict(previous_item)
+                carried["date"] = date_str
+                history.append(carried)
+        elif previous_item:
+            carried = dict(previous_item)
+            carried["date"] = date_str
+            history.append(carried)
 
-        tree_out = git_run(["ls-tree", "-r", "--name-only", sha, src_rel], cwd)
-        if not tree_out:
-            continue
+        week_start += timedelta(days=7)
 
-        totals = {"matched": 0, "non_matching": 0, "asm_stubs": 0, "total": 0}
-        for rel_path in tree_out.splitlines():
-            if not rel_path.endswith(".c"):
-                continue
-            blob = git_run(["show", f"{sha}:{rel_path}"], cwd)
-            if not blob:
-                continue
-            counts = analyse_blob(blob)
-            for key in totals:
-                totals[key] += counts[key]
-
-        if totals["total"] == 0:
-            continue
-
-        t = totals["total"]
-        history.append({
-            "date": date,
-            "commit": sha[:7],
-            "matched_pct": round(totals["matched"] / t * 100, 2),
-            "decompiled_pct": round((totals["matched"] + totals["non_matching"]) / t * 100, 2),
-            "matched": totals["matched"],
-            "total": t,
-        })
-
-    history.reverse()
     return history
 
 
@@ -434,7 +492,7 @@ def main():
     history = []
     if not verify_mode:
         print("Building history graph (this may take a moment)...", file=sys.stderr)
-        history = build_history(repo_root, src_dir, args.history_commits)
+        history = build_history(repo_root, src_dir)
     else:
         print("Verify mode: skipping git history and contributor scan for speed.", file=sys.stderr)
 
