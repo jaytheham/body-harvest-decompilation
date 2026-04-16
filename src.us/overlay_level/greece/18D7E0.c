@@ -1342,6 +1342,7 @@ void func_802D852C_19103C(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
+/* CURRENT(58) */
 void func_802D85F8_191108(u8 arg0) {
 	if (!(alienInstances[arg0].unk20 & 0x4000) &&
 		(func_8008E478_9D428(arg0) != 0 || func_8008E30C_9D2BC(arg0, 0x80000000) != 0)) {
@@ -1350,7 +1351,11 @@ void func_802D85F8_191108(u8 arg0) {
 		func_802D852C_19103C(arg0);
 		if ((arg0 & 0x3C) == (D_80052A8C & 0x3C)) {
 			if (alienInstances[arg0].unk20 & 0x100) {
-				s32 temp_t5 = (u32)(*(u32 *)(D_80050AE0 + (u8)(alienInstances[arg0].unk38) * 0x18)) >> 0xC;
+				u8 temp_v0;
+				u32 temp_t5;
+
+				temp_v0 = alienInstances[arg0].unk38;
+				temp_t5 = (u32)(*(u32 *)(D_80050AE0 + temp_v0 * 0x18)) >> 0xC;
 				if (((temp_t5 & 1) == 0) || (temp_t5 & 4)) {
 					alienInstances[arg0].unk20 &= ~0x100;
 				}
