@@ -871,7 +871,7 @@ void func_802D6D20_18F830(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(5142) */
+/* CURRENT(7362) */
 void func_802D6F7C_18FA8C(void) {
 	f32 sp5C;
 	s32 pad0;
@@ -907,7 +907,7 @@ void func_802D6F7C_18FA8C(void) {
 		entry = (Unk8013FDA8Entry *) ((u8 *) entry - 0x10);
 	}
 
-	temp_a1 = ((s16) sp30->unk8.unk0 >> 0xC) << 0xC;
+	temp_a1 = ((s16) sp30[1].unk8.unk0 >> 0xC) << 0xC;
 	entry = (Unk8013FDA8Entry *) ((u8 *) sp30 + 0xB0);
 	for (i = 0xB; i != 0; i--) {
 		entry->unk8.unk0 = (s16) (entry->unk8.unk0 - temp_a1);
@@ -928,7 +928,7 @@ void func_802D6F7C_18FA8C(void) {
 		entry = (Unk8013FDA8Entry *) ((u8 *) entry - 0x10);
 	}
 
-	temp_a1 = ((s16) sp2C->unk8.unk0 >> 0xC) << 0xC;
+	temp_a1 = ((s16) sp2C[1].unk8.unk0 >> 0xC) << 0xC;
 	entry = (Unk8013FDA8Entry *) ((u8 *) sp2C + 0xB0);
 	for (i = 0xB; i != 0; i--) {
 		entry->unk8.unk0 = (s16) (entry->unk8.unk0 - temp_a1);
