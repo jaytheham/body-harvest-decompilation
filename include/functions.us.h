@@ -112,6 +112,7 @@ void func_80012A74_13674(void);
 void func_80004C34_5834(void);
 void func_80013818_14418(void);
 void func_80001984_2584(void);
+void func_802D64D0_18EFE0(void);
 void loadFrontendData(void);
 void func_8001A460_1B060(LzssHeader *data, u8 *out);
 // loader.c functions - prototype-less to preserve implicit int behavior for matching functions

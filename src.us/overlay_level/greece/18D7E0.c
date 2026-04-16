@@ -380,7 +380,6 @@ void func_802D56E8_18E1F8(void) {
 }
 
 void func_802D5720_18E230(void) {
-	extern void func_802D64D0_18EFE0(void);
 	D_80157F94 = 0xFF;
 	func_800EFEB4_FEE64(func_802D64D0_18EFE0, 6, 1);
 	func_80013468_14068(2);
