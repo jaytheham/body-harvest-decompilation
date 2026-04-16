@@ -775,7 +775,103 @@ s32 func_802D6904_18F414(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D6904_18F414.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802D6D20_18F830(void) {
+	switch (D_80048030) {
+	case 0:
+		if (func_80004818_5418(-0x25, -0x32, 1) != 0) {
+			func_800076D4_82D4(1);
+		}
+		break;
+
+	case 1:
+		if (func_801393A0_148350(7) != 0) {
+			func_800076D4_82D4(2);
+		}
+		break;
+
+	case 2:
+		if (func_80004818_5418(-0x3E, -0x5C, 2) != 0) {
+			func_800076D4_82D4(3);
+		}
+		break;
+
+	case 3:
+		if (func_8000726C_7E6C(0xA) != 0) {
+			func_800076D4_82D4(4);
+		}
+		break;
+
+	case 4:
+		if (D_80052B34->unk1A == 7) {
+			func_800076D4_82D4(6);
+		}
+		break;
+
+	case 5:
+		if (func_80004818_5418(-0x61, 3, 3) != 0) {
+			func_800076D4_82D4(7);
+		}
+		break;
+
+	case 6:
+		if (func_80004818_5418(-0x67, 0x10, 0x10) == 0) {
+			func_800076D4_82D4(8);
+		}
+		break;
+
+	case 7:
+		if (func_80004818_5418(-0x21, 0x38, 2) != 0) {
+			func_800076D4_82D4(9);
+		}
+		break;
+
+	case 8:
+		if ((func_8000726C_7E6C(0x24) != 0) || (func_80004818_5418(-0x4E, 0x61, 1) != 0)) {
+			func_800076D4_82D4(0xA);
+		}
+		break;
+
+	case 9:
+		if (func_8000726C_7E6C(0x14) != 0) {
+			func_800076D4_82D4(0xB);
+		}
+		break;
+
+	case 0xA:
+		if (func_80004818_5418(0, 0x55, 2) != 0) {
+			func_800076D4_82D4(0xC);
+		}
+		break;
+
+	case 0xB:
+		if (func_8000726C_7E6C(0x30) != 0) {
+			func_800076D4_82D4(0xD);
+		}
+		break;
+
+	case 0xC:
+		if (func_8000726C_7E6C(0x1C) != 0) {
+			func_800076D4_82D4(0xE);
+		}
+		break;
+
+	case 0xD:
+		if (func_8000726C_7E6C(0x1E) != 0) {
+			func_800076D4_82D4(0xF);
+		}
+		break;
+
+	case 0xE:
+	case 0xF:
+	case 0x10:
+	default:
+		break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D6D20_18F830.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(5142) */
