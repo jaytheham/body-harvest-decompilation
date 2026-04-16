@@ -28,20 +28,18 @@ def parse_args():
     p.add_argument("--repo-root", default=".", help="Repository root directory")
     p.add_argument("--history-commits", type=int, default=200,
                    help="Max commits to scan for history graph")
+    p.add_argument(
+        "--verify-with-asm",
+        action="store_true",
+        help="Compare counted totals with asm/matchings + asm/nonmatchings .s totals per file",
+    )
     return p.parse_args()
 
 
 # Regex patterns
-RE_GLOBAL_ASM = re.compile(r'GLOBAL_ASM\s*\(')
+RE_PRAGMA_GLOBAL_ASM_LINE = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\(')
+RE_ENDIF_LINE = re.compile(r'^\s*#endif\b')
 RE_NON_MATCHING = re.compile(r'#ifdef\s+NON_MATCHING')
-RE_FUNC_DEF = re.compile(
-    r'^(?:static\s+)?'
-    r'(?:(?:const|volatile|unsigned|signed)\s+)*'
-    r'(?:[A-Za-z_]\w*(?:\s*\*+)?(?:\s+\*+)?)'
-    r'\s+\w+\s*\('
-    r'[^;]*\)\s*\{',
-    re.MULTILINE
-)
 
 SEGMENT_DISPLAY = {
     "core": "Core",
@@ -62,12 +60,153 @@ def analyse_file(path: Path) -> dict:
         text = path.read_text(encoding="utf-8", errors="replace")
     except OSError:
         return {"matched": 0, "non_matching": 0, "asm_stubs": 0, "total": 0}
-    asm_stubs = len(RE_GLOBAL_ASM.findall(text))
+    asm_stubs = count_global_asm_stubs(text)
     non_matching = len(RE_NON_MATCHING.findall(text))
-    total_defs = len(RE_FUNC_DEF.findall(text))
+    total_defs = count_function_defs(text)
     matched = max(0, total_defs - non_matching)
     total = matched + non_matching + asm_stubs
     return {"matched": matched, "non_matching": non_matching, "asm_stubs": asm_stubs, "total": total}
+
+
+def count_global_asm_stubs(text: str) -> int:
+    lines = text.splitlines()
+    count = 0
+    for i, line in enumerate(lines):
+        if not RE_PRAGMA_GLOBAL_ASM_LINE.match(line):
+            continue
+        next_line = lines[i + 1].strip() if i + 1 < len(lines) else ""
+        if RE_ENDIF_LINE.match(next_line):
+            continue
+        count += 1
+    return count
+
+
+def count_function_defs(text: str) -> int:
+    def strip_comments_and_literals(src: str) -> str:
+        out = []
+        i = 0
+        n = len(src)
+        while i < n:
+            c = src[i]
+            c2 = src[i + 1] if i + 1 < n else ""
+
+            if c == "/" and c2 == "/":
+                i += 2
+                while i < n and src[i] != "\n":
+                    i += 1
+                continue
+
+            if c == "/" and c2 == "*":
+                i += 2
+                while i < n:
+                    if src[i] == "\n":
+                        out.append("\n")
+                    if i + 1 < n and src[i] == "*" and src[i + 1] == "/":
+                        i += 2
+                        break
+                    i += 1
+                continue
+
+            if c == '"' or c == "'":
+                quote = c
+                out.append(" ")
+                i += 1
+                while i < n:
+                    if src[i] == "\\":
+                        i += 2
+                        continue
+                    if src[i] == quote:
+                        i += 1
+                        break
+                    if src[i] == "\n":
+                        out.append("\n")
+                    i += 1
+                continue
+
+            out.append(c)
+            i += 1
+
+        return "".join(out)
+
+    def is_function_decl(decl: str) -> bool:
+        norm = " ".join(decl.split())
+        if not norm or "=" in norm:
+            return False
+
+        lparen = norm.find("(")
+        rparen = norm.rfind(")")
+        if lparen < 0 or rparen < 0 or rparen < lparen:
+            return False
+
+        prefix = norm[:lparen].strip()
+        if not prefix:
+            return False
+
+        lower_prefix = prefix.lower()
+        if lower_prefix.startswith(("if ", "for ", "while ", "switch ", "return ", "else ", "do ", "typedef ")):
+            return False
+
+        i = len(prefix) - 1
+        while i >= 0 and (prefix[i].isalnum() or prefix[i] == "_"):
+            i -= 1
+        name = prefix[i + 1:]
+        if not name or not (name[0].isalpha() or name[0] == "_"):
+            return False
+
+        before_name = prefix[:i + 1].strip()
+        if not before_name:
+            return False
+
+        return True
+
+    cleaned = strip_comments_and_literals(text)
+    count = 0
+    brace_depth = 0
+    paren_depth = 0
+    decl_parts = []
+
+    for line in cleaned.splitlines():
+        if brace_depth == 0 and line.lstrip().startswith("#"):
+            continue
+
+        for ch in line:
+            if brace_depth == 0:
+                if ch == "(":
+                    paren_depth += 1
+                    decl_parts.append(ch)
+                    continue
+
+                if ch == ")":
+                    paren_depth = max(0, paren_depth - 1)
+                    decl_parts.append(ch)
+                    continue
+
+                if ch == ";" and paren_depth == 0:
+                    decl_parts.clear()
+                    continue
+
+                if ch == "{" and paren_depth == 0:
+                    if is_function_decl("".join(decl_parts)):
+                        count += 1
+                    decl_parts.clear()
+                    brace_depth = 1
+                    continue
+
+                if ch == "}":
+                    decl_parts.clear()
+                    continue
+
+                decl_parts.append(ch)
+            else:
+                if ch == "{":
+                    brace_depth += 1
+                elif ch == "}":
+                    brace_depth = max(0, brace_depth - 1)
+
+        if brace_depth == 0 and decl_parts:
+            decl_parts.append(" ")
+
+    return count
 
 
 def file_to_segment(rel_path: str) -> str:
@@ -77,6 +216,19 @@ def file_to_segment(rel_path: str) -> str:
     elif len(parts) >= 3:
         return parts[1]
     return "unknown"
+
+
+def count_asm_functions_for_source(repo_root: Path, src_dir: Path, source_file: Path) -> int:
+    rel_no_ext = source_file.relative_to(src_dir).with_suffix("")
+    asm_dirs = [
+        repo_root / "asm" / "matchings" / rel_no_ext,
+        repo_root / "asm" / "nonmatchings" / rel_no_ext,
+    ]
+    total = 0
+    for d in asm_dirs:
+        if d.is_dir():
+            total += sum(1 for _ in d.rglob("*.s"))
+    return total
 
 
 def git_run(args: list, cwd: str) -> str:
@@ -107,9 +259,9 @@ def get_contributors(cwd: str, src_dir: Path) -> dict:
 
 
 def analyse_blob(blob: str) -> dict:
-    asm_stubs = len(RE_GLOBAL_ASM.findall(blob))
+    asm_stubs = count_global_asm_stubs(blob)
     non_matching = len(RE_NON_MATCHING.findall(blob))
-    total_defs = len(RE_FUNC_DEF.findall(blob))
+    total_defs = count_function_defs(blob)
     matched = max(0, total_defs - non_matching)
     total = matched + non_matching + asm_stubs
     return {"matched": matched, "non_matching": non_matching, "asm_stubs": asm_stubs, "total": total}
@@ -172,6 +324,7 @@ def main():
     args = parse_args()
     repo_root = os.path.abspath(args.repo_root)
     src_dir = Path(repo_root) / "src.us"
+    verify_mode = args.verify_with_asm
 
     if not src_dir.is_dir():
         print(f"ERROR: src.us not found at {src_dir}", file=sys.stderr)
@@ -179,9 +332,10 @@ def main():
 
     print("Scanning source files...", file=sys.stderr)
     c_files = sorted(src_dir.rglob("*.c"))
-    contributors = get_contributors(repo_root, src_dir)
+    contributors = {} if verify_mode else get_contributors(repo_root, src_dir)
 
     files_data = []
+    asm_mismatches = []
     segment_totals = defaultdict(lambda: {"matched": 0, "non_matching": 0, "asm_stubs": 0, "total": 0})
     overall = {"matched": 0, "non_matching": 0, "asm_stubs": 0, "total": 0}
     contributor_stats = defaultdict(lambda: {"files": 0, "matched": 0, "non_matching": 0, "asm_stubs": 0})
@@ -190,6 +344,17 @@ def main():
         rel = str(f.relative_to(Path(repo_root)))
         seg = file_to_segment(rel)
         counts = analyse_file(f)
+        if args.verify_with_asm:
+            asm_total = count_asm_functions_for_source(Path(repo_root), src_dir, f)
+            if asm_total != counts["total"]:
+                asm_mismatches.append({
+                    "path": rel.replace("\\", "/"),
+                    "counted_total": counts["total"],
+                    "asm_total": asm_total,
+                    "matched": counts["matched"],
+                    "non_matching": counts["non_matching"],
+                    "asm_stubs": counts["asm_stubs"],
+                })
         contrib = contributors.get(rel, {})
         name = contrib.get("name", "")
 
@@ -255,17 +420,23 @@ def main():
     }
 
     # Contributors
-    contributors_out = sorted(
-        [{"name": n, "files": s["files"], "matched": s["matched"],
-          "non_matching": s["non_matching"], "asm_stubs": s["asm_stubs"]}
-         for n, s in contributor_stats.items()],
-        key=lambda x: x["matched"], reverse=True
-    )
+    contributors_out = []
+    if not verify_mode:
+        contributors_out = sorted(
+            [{"name": n, "files": s["files"], "matched": s["matched"],
+              "non_matching": s["non_matching"], "asm_stubs": s["asm_stubs"]}
+             for n, s in contributor_stats.items()],
+            key=lambda x: x["matched"], reverse=True
+        )
 
     sha, ts = get_commit_info(repo_root)
 
-    print("Building history graph (this may take a moment)...", file=sys.stderr)
-    history = build_history(repo_root, src_dir, args.history_commits)
+    history = []
+    if not verify_mode:
+        print("Building history graph (this may take a moment)...", file=sys.stderr)
+        history = build_history(repo_root, src_dir, args.history_commits)
+    else:
+        print("Verify mode: skipping git history and contributor scan for speed.", file=sys.stderr)
 
     output = {
         "generated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -278,6 +449,12 @@ def main():
         "history": history,
     }
 
+    if args.verify_with_asm:
+        output["asm_verification"] = {
+            "checked_files": len(c_files),
+            "mismatches": asm_mismatches,
+        }
+
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(output, indent=2))
@@ -287,6 +464,19 @@ def main():
         f"({overall_out['matched_pct']}%), {overall_out['decompiled_pct']}% decompiled",
         file=sys.stderr,
     )
+    if args.verify_with_asm:
+        print(
+            f"ASM verification: {len(c_files) - len(asm_mismatches)}/{len(c_files)} files match",
+            file=sys.stderr,
+        )
+        if asm_mismatches:
+            print("Top mismatches:", file=sys.stderr)
+            for m in asm_mismatches[:20]:
+                print(
+                    f"  {m['path']}: counted={m['counted_total']} asm={m['asm_total']} "
+                    f"(matched={m['matched']}, non_matching={m['non_matching']}, asm_stubs={m['asm_stubs']})",
+                    file=sys.stderr,
+                )
 
 
 if __name__ == "__main__":
