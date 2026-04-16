@@ -8,7 +8,7 @@ $root = '.\asm\nonmatchings\overlay_gameplay\frontend'
 # Normalize the root path and capture its length
 $rootAbs = (Resolve-Path $root).Path
 $rootLen = $rootAbs.Length
-$rootPrefix = 'asm/nonmatchings/overlay_gameplay/frontend'
+$rootPrefix = $root -replace '\\','/' -replace '^[./\\]+',''
 
 $topFiles = Get-ChildItem -Path $root -Recurse -File |
   Sort-Object -Property Length |
