@@ -2771,9 +2771,9 @@ void func_80086164_95114(u8 arg0, s16 arg1)
 		alienSpecs[sp27].unk42);
 }
 
-void func_80086230_951E0(u8 arg0, s16 arg1, s32 arg2) {
+s32 func_80086230_951E0(u8 arg0, s16 arg1, s32 arg2) {
 	func_80086164_95114(arg0, arg1);
-	func_80085E2C_94DDC(arg0, arg1, arg2);
+	return func_80085E2C_94DDC(arg0, arg1, arg2);
 }
 
 void func_80086270_95220(OutputStruct_8012B150 *arg0) {

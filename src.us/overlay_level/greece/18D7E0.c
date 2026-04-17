@@ -393,7 +393,7 @@ void func_802D5760_18E270(void) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(3545) */
+/* CURRENT(3500) */
 s32 func_802D57A0_18E2B0(void) {
 	s16 i;
 	u16 x;
@@ -489,7 +489,7 @@ s32 func_802D57A0_18E2B0(void) {
 			for (i = 0x8A; i != 0x90; i += 2) {
 				tile = &D_80052A94[-40].unk0[i >> 1];
 				tileByte = (u8 *)tile;
-				tileByte[1] = (u8)((tileByte[1] & 0xC0) | (((*tile) + 4) & 0x3F));
+				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 4) & 0x3F));
 			}
 		}
 
@@ -497,22 +497,22 @@ s32 func_802D57A0_18E2B0(void) {
 			for (i = 0x86; i != 0x94; i += 2) {
 				tile = &D_80052A94[-40].unk0[i >> 1];
 				tileByte = (u8 *)tile;
-				tileByte[1] = (u8)((tileByte[1] & 0xC0) | (((*tile) + 1) & 0x3F));
+				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 1) & 0x3F));
 				tile = &D_80052A94[-39].unk0[i >> 1];
 				tileByte = (u8 *)tile;
-				tileByte[1] = (u8)((tileByte[1] & 0xC0) | (((*tile) + 1) & 0x3F));
+				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 1) & 0x3F));
 				tile = &D_80052A94[-38].unk0[i >> 1];
 				tileByte = (u8 *)tile;
-				tileByte[1] = (u8)((tileByte[1] & 0xC0) | (((*tile) + 1) & 0x3F));
+				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 1) & 0x3F));
 				tile = &D_80052A94[-37].unk0[i >> 1];
 				tileByte = (u8 *)tile;
-				tileByte[1] = (u8)((tileByte[1] & 0xC0) | (((*tile) + 1) & 0x3F));
+				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 1) & 0x3F));
 				tile = &D_80052A94[-36].unk0[i >> 1];
 				tileByte = (u8 *)tile;
-				tileByte[1] = (u8)((tileByte[1] & 0xC0) | (((*tile) + 1) & 0x3F));
+				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 1) & 0x3F));
 				tile = &D_80052A94[-35].unk0[i >> 1];
 				tileByte = (u8 *)tile;
-				tileByte[1] = (u8)((tileByte[1] & 0xC0) | (((*tile) + 1) & 0x3F));
+				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 1) & 0x3F));
 			}
 		}
 
@@ -541,9 +541,8 @@ s32 func_802D57A0_18E2B0(void) {
 #endif
 
 #ifdef NON_MATCHING
+/* CURRENT(5760) */
 s32 func_802D64D0_18EFE0(void) {
-	AlienInstance *alien;
-	BuildingInstance *building;
 	u8 specIndex;
 
 	D_80157F96 = 0;
@@ -552,8 +551,7 @@ s32 func_802D64D0_18EFE0(void) {
 		specIndex = alienInstances[D_80157F94].specIndex;
 		func_800800E4_8F094((u8)D_80157F94);
 		func_80080510_8F4C0(D_80157F95);
-		alien = &alienInstances[D_80157F94];
-		alien->unk6 = alien->unkE;
+		alienInstances[D_80157F94].unk6 = alienInstances[D_80157F94].unkE;
 		D_802566C8[specIndex * 0x1A]((u8)D_80157F94);
 	}
 
@@ -573,16 +571,13 @@ s32 func_802D64D0_18EFE0(void) {
 		func_800072CC_7ECC(0x2A);
 
 		D_80157F94 = func_8007956C_8851C(0x12);
-		alien = &alienInstances[D_80157F94];
-		building = &buildingInstances[0x61];
-
-		alien->unk20 |= 0x100;
-		alien->unk20 &= 0xF7FFFFFF;
-		alien->unk0 = building->xCoord + 0x80;
-		alien->unk14 = building->xCoord + 0x600;
-		alien->unk24 = 2;
-		alien->unk4 = building->zCoord;
-		alien->unk18 = building->zCoord;
+		alienInstances[D_80157F94].unk20 |= 0x100;
+		alienInstances[D_80157F94].unk20 &= 0xF7FFFFFF;
+		alienInstances[D_80157F94].unk0 = buildingInstances[0x61].xCoord + 0x80;
+		alienInstances[D_80157F94].unk14 = buildingInstances[0x61].xCoord + 0x600;
+		alienInstances[D_80157F94].unk24 = 2;
+		alienInstances[D_80157F94].unk4 = buildingInstances[0x61].zCoord;
+		alienInstances[D_80157F94].unk18 = buildingInstances[0x61].zCoord;
 
 		func_8007A198_89148((u8)D_80157F94);
 		break;
@@ -656,9 +651,10 @@ s32 func_802D64D0_18EFE0(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(7330) */
+/* CURRENT(7200) */
 s32 func_802D6904_18F414(void) {
 	AlienInstance *alien;
+	s32 alienId;
 
 	extern char D_802DE30C_196E1C[];
 	extern char D_802DE318_196E28[];
@@ -695,7 +691,8 @@ s32 func_802D6904_18F414(void) {
 
 		D_80157F94 = func_8007956C_8851C(0x12);
 		if (D_80157F94 != 0xFF) {
-			alien = &alienInstances[D_80157F94];
+			alienId = D_80157F94;
+			alien = &alienInstances[alienId];
 			alien->unk20 &= 0xF7FFFE5F;
 			alien->unk0 = 0x4C80;
 			alien->unk4 = -0x6780;
@@ -705,7 +702,7 @@ s32 func_802D6904_18F414(void) {
 			alien->unk24 = 2;
 			alien->unkE = 0x4000;
 			alien->unk2A = 0x4000;
-			func_8007A198_89148((u8)D_80157F94);
+			func_8007A198_89148((u8)alienId);
 		}
 
 		alien = &alienInstances[D_80157F94];
@@ -874,7 +871,7 @@ void func_802D6D20_18F830(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(5142) */
+/* CURRENT(7362) */
 void func_802D6F7C_18FA8C(void) {
 	f32 sp5C;
 	s32 pad0;
@@ -882,11 +879,11 @@ void func_802D6F7C_18FA8C(void) {
 	f32 sp58;
 	f32 sp54;
 	f32 sp50;
-	f32 sp4C;
-	f32 sp48;
-	f64 temp_f20;
-	s32 i;
 	s32 temp_a1;
+	u16 sp5A;
+	u16 sp58;
+	u16 sp56;
+	u16 sp54;
 	Unk8013FDA8Entry *sp30;
 	Unk8013FDA8Entry *sp2C;
 	Unk8013FDA8Entry *entry;
@@ -910,7 +907,7 @@ void func_802D6F7C_18FA8C(void) {
 		entry = (Unk8013FDA8Entry *) ((u8 *) entry - 0x10);
 	}
 
-	temp_a1 = ((s16) sp30->unk8.unk0 >> 0xC) << 0xC;
+	temp_a1 = ((s16) sp30[1].unk8.unk0 >> 0xC) << 0xC;
 	entry = (Unk8013FDA8Entry *) ((u8 *) sp30 + 0xB0);
 	for (i = 0xB; i != 0; i--) {
 		entry->unk8.unk0 = (s16) (entry->unk8.unk0 - temp_a1);
@@ -931,7 +928,7 @@ void func_802D6F7C_18FA8C(void) {
 		entry = (Unk8013FDA8Entry *) ((u8 *) entry - 0x10);
 	}
 
-	temp_a1 = ((s16) sp2C->unk8.unk0 >> 0xC) << 0xC;
+	temp_a1 = ((s16) sp2C[1].unk8.unk0 >> 0xC) << 0xC;
 	entry = (Unk8013FDA8Entry *) ((u8 *) sp2C + 0xB0);
 	for (i = 0xB; i != 0; i--) {
 		entry->unk8.unk0 = (s16) (entry->unk8.unk0 - temp_a1);
@@ -951,29 +948,27 @@ void func_802D7360_18FE70(void) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(3224) */
+/* CURRENT(1580) */
 void func_802D738C_18FE9C(u8 arg0) {
 	s16 sp5E;
 	s16 sp5C;
 	s16 sp5A;
 	s16 sp58;
 	s16 sp56;
-	s16 sp54;
-	s16 sp52;
-	s16 sp50;
-	s32 sp44;
+	s16 sp50[3];
+	s32 sp44[3];
 	s32 sp40;
 	s16 sp3E;
 	s16 sp38[2];
 	s16 sp34;
 	Unk8014DD50 *sp2C;
 	Unk8014DD50 *sp28;
+	s32 sp4C;
 	AlienInstance *s0;
 
 	s0 = &alienInstances[arg0];
 	sp5E = s0->unkC;
 	sp2C = &D_8014DD50[sp5E];
-	sp5C = (s8)sp2C->unkC;
 	sp28 = &D_8014DD50[sp5C];
 	sp58 = (s8)sp28->unkC;
 	sp5A = (s8)D_8014DD50[sp58].unkD;
@@ -983,17 +978,17 @@ void func_802D738C_18FE9C(u8 arg0) {
 	sp2C->unk6 = s0->unk6;
 	sp28->unk6 = -s0->unk6;
 	func_80086164_95114(arg0, sp5C);
-	sp50 = 0x3C;
-	sp52 = -8;
-	sp54 = 0x70;
-	func_800A931C_B82CC((s8)sp5C, &sp50, &sp44);
-	sp50 = (s16)sp44;
-	sp52 = (s16)((&sp44)[1]);
-	sp54 = (s16)((&sp44)[2]);
-	func_800A931C_B82CC((s8)sp5E, &sp50, &sp44);
-	alienSpecs[sp3E].unk20 = (s16)sp44;
-	alienSpecs[sp3E].unk22 = (s16)((&sp44)[1]);
-	alienSpecs[sp3E].unk24 = (s16)((&sp44)[2]);
+	sp50[0] = 0x3C;
+	sp50[1] = -8;
+	sp50[2] = 0x70;
+	func_800A931C_B82CC((s8)sp5C, sp50, &sp44);
+	sp50[0] = (s16)sp44[0];
+	sp50[1] = (s16)sp44[1];
+	sp50[2] = (s16)sp44[2];
+	func_800A931C_B82CC((s8)sp5E, sp50, &sp44);
+	alienSpecs[sp3E].unk20 = (s16)sp44[0];
+	alienSpecs[sp3E].unk22 = (s16)sp44[1];
+	alienSpecs[sp3E].unk24 = (s16)sp44[2];
 	sp40 = func_80084E54_93E04(D_80052B34, s0);
 	if (currentLevel == 1) {
 		sp34 = 0x3C;
@@ -1047,8 +1042,9 @@ void func_802D763C_19014C(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(15993) */
+/* CURRENT(16204) */
 void func_802D775C_19026C(s32 arg0) {
+	AlienInstance *s0;
 	u8 sp73;
 	s32 sp68;
 	s32 sp64;
@@ -1060,7 +1056,6 @@ void func_802D775C_19026C(s32 arg0) {
 	Unk8014DD50 *sp40;
 	Unk8014DD50 *sp3C;
 	Unk8014DD50 *sp34;
-	AlienInstance *s0;
 	AlienInstance *v1;
 	s16 temp;
 
@@ -1084,7 +1079,7 @@ void func_802D775C_19026C(s32 arg0) {
 		if (s0->unk2C >= 0x49) {
 			sp34->unk2 += 0xA;
 			if (s0->unk24 != 0xFC) {
-				func_800C1ECC_D0E7C(sp68, sp64, sp60, s0->unk3C, 2);
+				func_800C1ECC_D0E7C((s16)sp68, (s16)sp64, (s16)sp60, s0->unk3C, 2);
 			}
 		} else if (s0->unk2C == 0x48) {
 			sp34->unk2 += 0xA;
@@ -1115,7 +1110,7 @@ void func_802D775C_19026C(s32 arg0) {
 				v1->unk48 = sp64 + 0xA;
 				sp34->unk2 += 0xA;
 				if (s0->unk24 != 0xFC) {
-					func_800C1ECC_D0E7C(sp68, sp64, sp60, s0->unk3C, 2);
+					func_800C1ECC_D0E7C((s16)sp68, (s16)sp64, (s16)sp60, s0->unk3C, 2);
 				}
 			}
 		}
@@ -1129,9 +1124,9 @@ void func_802D775C_19026C(s32 arg0) {
 	if (s0->unk2C < 0x48) {
 		sp44->unk6 += 0x96;
 		if (((s16)s0->unk2C % ((func_800038E0_44E0() % 7) + 1)) == 0) {
-			sp4C = func_800038E0_44E0();
-			sp4E = func_800038E0_44E0();
-			sp50 = func_800038E0_44E0();
+			sp4C = (u16)func_800038E0_44E0();
+			sp4E = (u16)func_800038E0_44E0();
+			sp50 = (u16)func_800038E0_44E0();
 			func_800DFA34_EE9E4(
 				(u16)sp4C % 100 + s0->unk0 - 0x32,
 				(u16)sp4E % 100 + s0->unk2 - 0x32,
@@ -1252,14 +1247,14 @@ void func_802D7FC0_190AD0(u8 arg0) {
 		alien->unk20 |= 0x80000000;
 	}
 }
+
 #ifdef NON_MATCHING
-/* CURRENT(2063) */
+/* CURRENT(2041) */
 void func_802D8150_190C60(u8 arg0) {
 	AlienInstance *alien;
-	AlienInstance *temp_alien;
+	u8 spec_index;
 	s32 temp_v1;
 	u8 temp_a1;
-	u8 spec_index;
 
 	spec_index = arg0 & 0xFF;
 	alien = (AlienInstance *)((u8 *)alienInstances + (((spec_index << 2) + spec_index) << 4));
@@ -1267,7 +1262,7 @@ void func_802D8150_190C60(u8 arg0) {
 	spec_index = alien->specIndex;
 	if (!(alien->unk20 & 0x100000)) {
 		if (temp_a1 != 0xFF) {
-			temp_alien = (AlienInstance *)((u8 *)alienInstances + ((((u8) temp_a1 << 2) + temp_a1) << 4));
+			AlienInstance *temp_alien = (AlienInstance *)((u8 *)alienInstances + (((temp_a1 << 2) + temp_a1) << 4));
 			if (temp_alien->specIndex == 0x1A) {
 				temp_alien->unk24 = (u8) (temp_alien->unk24 - 1);
 			}
@@ -1275,7 +1270,7 @@ void func_802D8150_190C60(u8 arg0) {
 		if (alien->unk20 & 0x600) {
 			func_80137468_146418(arg0 & 0xFF, 0xD);
 			if ((alien->unk47 & 8) || (alien->unk20 & 0x2000)) {
-				alien->unk20 = (s32) (alien->unk20 | 0x100000);
+				alien->unk20 = alien->unk20 | 0x100000;
 				func_80124B5C_133B0C(alien->unk0, alien->unk2, alien->unk4, 0x12C, 0xC8);
 				func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienSpecs[spec_index].unkC * 3) & 0xFFFF, 4);
 				alien->unk2C = 1;
@@ -1283,7 +1278,7 @@ void func_802D8150_190C60(u8 arg0) {
 			}
 			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienSpecs[spec_index].unkC * 2) & 0xFFFF, 0);
 			alien->unk10 = (s16) (alien->unk10 + (func_800038E0_44E0() >> 7) + 0x300);
-			alien->unk20 = (s32) (alien->unk20 | 0x40000000);
+			alien->unk20 = alien->unk20 | 0x40000000;
 			alien->unk14 = (s16) (0x1000 - (func_800038E0_44E0() >> 5));
 			alien->unk18 = (s16) (0x1000 - (func_800038E0_44E0() >> 5));
 			alien->unk26 = 1U;
@@ -1347,6 +1342,7 @@ void func_802D852C_19103C(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
+/* CURRENT(58) */
 void func_802D85F8_191108(u8 arg0) {
 	if (!(alienInstances[arg0].unk20 & 0x4000) &&
 		(func_8008E478_9D428(arg0) != 0 || func_8008E30C_9D2BC(arg0, 0x80000000) != 0)) {
@@ -1355,7 +1351,11 @@ void func_802D85F8_191108(u8 arg0) {
 		func_802D852C_19103C(arg0);
 		if ((arg0 & 0x3C) == (D_80052A8C & 0x3C)) {
 			if (alienInstances[arg0].unk20 & 0x100) {
-				s32 temp_t5 = (u32)(*(u32 *)(D_80050AE0 + (u8)(alienInstances[arg0].unk38) * 0x18)) >> 0xC;
+				u8 temp_v0;
+				u32 temp_t5;
+
+				temp_v0 = alienInstances[arg0].unk38;
+				temp_t5 = (u32)(*(u32 *)(D_80050AE0 + temp_v0 * 0x18)) >> 0xC;
 				if (((temp_t5 & 1) == 0) || (temp_t5 & 4)) {
 					alienInstances[arg0].unk20 &= ~0x100;
 				}
@@ -1405,69 +1405,71 @@ void func_802D8724_191234(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(2933) */
+/* CURRENT(2224) */
 void func_802D8898_1913A8(u8 arg0) {
-	s16 temp_a0;
-	s16 temp_v1_2;
-	s16 temp_v1_3;
-	s32 temp_a0_2;
-	s32 temp_a1;
-	s32 temp_t2;
-	s32 temp_v1;
-	AlienInstance *var_v0;
+	AlienInstance *alien;
+	s32 flags;
 
-	var_v0 = &alienInstances[arg0];
-	temp_v1 = var_v0->unk20;
-	if (temp_v1 & 0x600) {
-		if (!(temp_v1 & 0x100000)) {
-			temp_t2 = temp_v1 | 0x40000000;
-			var_v0->unk2C = 0x7FFF;
-			var_v0->unk10 = 0;
-			var_v0->unk20 = temp_t2;
-			var_v0->unk38 = 0;
-			var_v0->unk14 = (s16)(arg0 & 1);
-			if (temp_t2 & 0x600) {
-				func_800DF848_EE7F8(var_v0->unk0, var_v0->unk2, var_v0->unk4, (u16)((f64)alienSpecs[var_v0->specIndex].unkC * 0.75), 0);
+	alien = &alienInstances[arg0];
+	flags = alien->unk20;
+	if (flags & 0x600) {
+		if (!(flags & 0x100000)) {
+			flags |= 0x40000000;
+			alien->unk2C = 0x7FFF;
+			alien->unk10 = 0;
+			alien->unk20 = flags;
+			alien->unk38 = 0;
+			alien->unk14 = arg0 & 1;
+			if (flags & 0x600) {
+				func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16)((f64)alienSpecs[alien->specIndex].unkC * 0.75), 0);
 				return;
 			}
 		} else {
-			if (temp_v1 & 0x40000000) {
-				temp_a1 = D_80222A70;
-				if (temp_a1 < var_v0->unk2) {
-					temp_a0 = var_v0->unk14;
-					if ((temp_a0 != 0) && (temp_v1_2 = var_v0->unk38, ((temp_v1_2 < -9) == 0))) {
-						var_v0->unk38 = (s16)(temp_v1_2 - 1);
-					} else {
-						temp_v1_3 = var_v0->unk38;
-						if ((temp_a0 == 0) && (temp_v1_3 < 0xA)) {
-							var_v0->unk38 = (s16)(temp_v1_3 + 1);
+			if (flags & 0x40000000) {
+				s32 limit;
+
+				limit = D_80222A70;
+				if (limit < alien->unk2) {
+					if (alien->unk14 != 0) {
+						if (alien->unk38 >= -9) {
+							alien->unk38 = (s16)(alien->unk38 - 1);
 						}
+					} else if (alien->unk38 < 0xA) {
+						alien->unk38 = (s16)(alien->unk38 + 1);
 					}
-					temp_a0_2 = var_v0->unk38 * 0xC8;
-					var_v0->unkE = (s16)(var_v0->unkE + temp_a0_2);
-					var_v0->unk6 = (s16)(var_v0->unk6 + temp_a0_2);
-					var_v0->unk10 = (s16)(var_v0->unk10 + 0x60);
-					var_v0->unk12 = (s16)(var_v0->unk12 + 0x10);
+
+					{
+						s32 tempDelta;
+
+						tempDelta = alien->unk38 * 0xC8;
+						alien->unkE = (s16)(alien->unkE + tempDelta);
+						alien->unk6 = (s16)(alien->unk6 + tempDelta);
+					}
+					alien->unk10 = (s16)(alien->unk10 + 0x60);
+					alien->unk12 = (s16)(alien->unk12 + 0x10);
 				}
-				var_v0->unk8 = (s16)(var_v0->unk38 << 8);
-				var_v0->unkA = (s16)(var_v0->unk10 * -4);
-				if (!(var_v0->unk2C & 3)) {
-					func_800DEA08_ED9B8(var_v0->unk0, var_v0->unk2, var_v0->unk4, 0xFA, 2, 2, 0x1E, 0xC8, 0x82, 0x82, 0x82);
-					temp_a1 = D_80222A70;
-					var_v0 = &alienInstances[arg0];
+
+				alien->unk8 = (s16)(alien->unk38 << 8);
+				alien->unkA = (s16)(alien->unk10 * -4);
+				if (!(alien->unk2C & 3)) {
+					func_800DEA08_ED9B8(alien->unk0, alien->unk2, alien->unk4, 0xFA, 2, 2, 0x1E, 0xC8, 0x82, 0x82, 0x82);
+					limit = D_80222A70;
+					alien = &alienInstances[arg0];
 				}
-				if (temp_a1 < var_v0->unk30) {
-					if (var_v0->unk2 < temp_a1) {
-						var_v0->unk38 = 0;
-						var_v0->unk12 = (s16)((s16)var_v0->unk12 >> 1);
-						var_v0->unk10 = (s16)((s16)var_v0->unk10 >> 1);
+
+				if (limit < alien->unk30) {
+					if (alien->unk2 < limit) {
+						alien->unk38 = 0;
+						alien->unk12 = (s16)((s16)alien->unk12 >> 1);
+						alien->unk10 = (s16)((s16)alien->unk10 >> 1);
 					} else {
 						func_80137468_146418(arg0, 0x66);
-						var_v0 = &alienInstances[arg0];
+						alien = &alienInstances[arg0];
 					}
 				}
 			}
-			func_8008AAFC_99AAC(arg0, alienSpecs[var_v0->specIndex].unkC, 3);
+
+			func_8008AAFC_99AAC(arg0, alienSpecs[alien->specIndex].unkC, 3);
 		}
 	}
 }
@@ -1608,12 +1610,13 @@ void func_802D90C8_191BD8(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(4505) */
+/* CURRENT(3960) */
 void func_802D911C_191C2C(u8 arg0) {
 	AlienInstance *alien;
 	Unk8014DD50 *pathA;
 	Unk8014DD50 *pathB;
 	s32 distSq;
+	s16 temp_v1_2;
 	s8 sp37;
 	s8 sp2F;
 	s8 sp33;
@@ -1706,15 +1709,17 @@ void func_802D911C_191C2C(u8 arg0) {
 		func_800E24B8_F1468(arg0);
 	}
 
-	pathA = &D_8014DD50[D_8014DD50[alien->unkC].unkC];
-	alien->unkA = -alien->unk10 * 8;
+	pathA = &D_8014DD50[alien->unkC];
+	pathA = &D_8014DD50[pathA->unkC];
+	alien->unkA = alien->unk10 * -8;
 	pathB = &D_8014DD50[pathA->unkD];
 	pathB->unkA = alien->unkA;
+	temp_v1_2 = alien->unk1E;
 	distSq = (s32)(((f64)(f32)sins(((arg0 + D_80052A8C) * 0x7D0) & 0xFFFF) / 32768.0) * D_802DE400_196F10);
 	pathA->unk6 = distSq;
 	pathB->unk6 = distSq;
-	if (alien->unk1E != 0) {
-		alien->unk1E--;
+	if (temp_v1_2 != 0) {
+		alien->unk1E = temp_v1_2 - 1;
 	}
 }
 #else
@@ -1732,9 +1737,11 @@ void func_802D95A8_1920B8(u8 arg0, s16 arg1, s16 arg2) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(2534) */
+/* CURRENT(1719) */
 void func_802D962C_19213C(u8 arg0, s16 arg1, s16 arg2, AlienInstance *alien) {
 	u8 currentNode;
+	s32 pad0;
+	s32 pad1;
 	u8 specIndex;
 	u8 state;
 	s16 turnSpeed;
@@ -1814,7 +1821,7 @@ void func_802D962C_19213C(u8 arg0, s16 arg1, s16 arg2, AlienInstance *alien) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(5943) */
+/* CURRENT(717) */
 void func_802D9964_192474(u8 arg0) {
 	AlienInstance *alien;
 	s16 sp4E;
@@ -1847,27 +1854,33 @@ void func_802D9964_192474(u8 arg0) {
 		sp46 = alien->unk0 - D_80052B34->unk0;
 		sp44 = alien->unk4 - D_80052B34->unk4;
 
-		if (((s32 (*)(u8, s16, s32))func_80086230_951E0)(arg0, sp4E, 0x2000) == 0) {
+		if (func_80086230_951E0(arg0, sp4E, 0x2000) == 0) {
 			temp_a1 = -sp46;
 			temp_a0 = -sp44;
-			var_v1 = temp_a1;
 			if (temp_a1 < sp46) {
 				var_v1 = sp46;
+			} else {
+				var_v1 = temp_a1;
 			}
-			var_v0 = temp_a0;
 			if (temp_a0 < sp44) {
 				var_v0 = sp44;
+			} else {
+				var_v0 = temp_a0;
 			}
 			if (var_v0 < var_v1) {
-				var_v1 = temp_a1;
+				var_v0 = temp_a1;
 				if (temp_a1 < sp46) {
 					var_v1 = sp46;
+				} else {
+					var_v1 = var_v0;
 				}
 			} else {
-				var_v1 = temp_a0;
 				if (temp_a0 < sp44) {
-					var_v1 = sp44;
+					var_v0 = temp_a0;
+				} else {
+					var_v0 = sp44;
 				}
+				var_v1 = var_v0;
 			}
 
 			if ((var_v1 >= 0x79) && (alien->unk4E != 0) && (func_80087188_96138(arg0, 0, 0x20) != 0)) {
@@ -1877,45 +1890,57 @@ void func_802D9964_192474(u8 arg0) {
 
 		temp_a1 = -sp46;
 		temp_a0 = -sp44;
-		var_v1 = temp_a1;
 		if (temp_a1 < sp46) {
 			var_v1 = sp46;
+		} else {
+			var_v1 = temp_a1;
 		}
-		var_v0 = temp_a0;
 		if (temp_a0 < sp44) {
 			var_v0 = sp44;
+		} else {
+			var_v0 = temp_a0;
 		}
 		if (var_v0 < var_v1) {
-			var_v1 = temp_a1;
+			var_v0 = temp_a1;
 			if (temp_a1 < sp46) {
 				var_v1 = sp46;
+			} else {
+				var_v1 = var_v0;
 			}
 		} else {
-			var_v1 = temp_a0;
 			if (temp_a0 < sp44) {
-				var_v1 = sp44;
+				var_v0 = temp_a0;
+			} else {
+				var_v0 = sp44;
 			}
+			var_v1 = var_v0;
 		}
 
 		if (var_v1 < 0x79) {
-			var_v1 = temp_a1;
 			if (temp_a1 < sp46) {
 				var_v1 = sp46;
+			} else {
+				var_v1 = temp_a1;
 			}
-			var_v0 = temp_a0;
 			if (temp_a0 < sp44) {
 				var_v0 = sp44;
+			} else {
+				var_v0 = temp_a0;
 			}
 			if (var_v0 < var_v1) {
-				var_v1 = temp_a1;
+				var_v0 = temp_a1;
 				if (temp_a1 < sp46) {
 					var_v1 = sp46;
+				} else {
+					var_v1 = var_v0;
 				}
 			} else {
-				var_v1 = temp_a0;
 				if (temp_a0 < sp44) {
-					var_v1 = sp44;
+					var_v0 = temp_a0;
+				} else {
+					var_v0 = sp44;
 				}
+				var_v1 = var_v0;
 			}
 
 			if (var_v1 >= 0x73) {
@@ -1936,16 +1961,12 @@ void func_802D9964_192474(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(13576) */
+/* CURRENT(10844) */
 void func_802D9C60_192770(u8 arg0) {
 	u8 sp73;
-	u8 temp_t6;
-	s16 sp6E;
-	s16 sp6A;
-	s16 sp66;
-	s16 sp6C;
-	s16 sp68;
-	s16 sp64;
+	s32 sp6C;
+	s32 sp68;
+	s32 sp64;
 	s32 sp60;
 	s32 sp5C;
 	s16 sp5A;
@@ -1965,9 +1986,8 @@ void func_802D9C60_192770(u8 arg0) {
 	AlienInstance *alien;
 	s32 s0;
 
-	temp_t6 = arg0 & 0xFF;
-	sp73 = temp_t6;
-	alien = &alienInstances[temp_t6];
+	sp73 = arg0;
+	alien = &alienInstances[arg0];
 	if (alien->unk20 & 0x600) {
 		sp5A = D_8014DD50[alien->unkC].unkC;
 		sp40 = &D_8014DD50[sp5A];
@@ -1977,21 +1997,21 @@ void func_802D9C60_192770(u8 arg0) {
 		sp38 = &D_8014DD50[sp56];
 		sp54 = sp3C->unkC;
 		sp52 = sp38->unkC;
-		s0 = func_8008916C_9811C(temp_t6, sp5A);
-		func_80128428_1373D8(alien, sp40->unk0, sp40->unk2, sp40->unk4, (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
+		s0 = func_8008916C_9811C(arg0, sp5A);
+		func_80128428_1373D8(alien, sp40->unk0, sp40->unk2, sp40->unk4, &sp6C, &sp68, &sp64);
 		func_800C80F0_D70A0(((-(u16) sp40->unk6 - alien->unk6) + 0x4000) & 0xFFFF, 0, 0,
-			func_800C7924_D68D4(sp6E, sp6A, sp66, 0x40, -8, alienSpecs[alien->specIndex].unkC, s0, 1));
-		func_800E093C_EF8EC(sp6E, sp6A, sp66, 0);
-		func_800E093C_EF8EC(sp6E, sp6A, sp66, 0x1E);
+			func_800C7924_D68D4((s16) sp6C, (s16) sp68, (s16) sp64, 0x40, -8, alienSpecs[alien->specIndex].unkC, s0, 1));
+		func_800E093C_EF8EC((s16) sp6C, (s16) sp68, (s16) sp64, 0);
+		func_800E093C_EF8EC((s16) sp6C, (s16) sp68, (s16) sp64, 0x1E);
 		s0 = alien->unk6 & 0xFFFF;
-		alien->unk14 = sp6C;
-		alien->unk16 = sp68;
-		alien->unk18 = sp64;
+		alien->unk14 = (s16) sp6C;
+		alien->unk16 = (s16) sp68;
+		alien->unk18 = (s16) sp64;
 		sp60 = (s32) (((f64) (f32) coss(s0 & 0xFFFF) / 32768.0) * 6.0);
 		sp5C = (s32) (((f64) (f32) sins(s0 & 0xFFFF) / 32768.0) * 6.0);
 		s0 = func_8008916C_9811C(sp73, sp58);
-		func_80128428_1373D8(alien, sp3C->unk0, sp3C->unk2, sp3C->unk4, (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
-		s0 = func_800C7924_D68D4(sp6E, sp6A, sp66, 0x40, -8, alienSpecs[alien->specIndex].unkC, s0, 1);
+		func_80128428_1373D8(alien, sp3C->unk0, sp3C->unk2, sp3C->unk4, &sp6C, &sp68, &sp64);
+		s0 = func_800C7924_D68D4((s16) sp6C, (s16) sp68, (s16) sp64, 0x40, -8, alienSpecs[alien->specIndex].unkC, s0, 1);
 		func_800C80F0_D70A0((0x4000 - alien->unk6) & 0xFFFF, 0, 0, s0);
 		func_800C820C_D71BC(0, 0, 0, s0);
 		sp34 = -sp60;
@@ -2001,8 +2021,8 @@ void func_802D9C60_192770(u8 arg0) {
 			sp40 = &D_8014DD50[sp54];
 			s0 = func_8008916C_9811C(sp73, sp54);
 			func_80128428_1373D8(alien, (s16) (sp40->unk0 + sp3C->unk0), (s16) (sp40->unk2 + sp3C->unk2), (s16) (sp40->unk4 + sp3C->unk4),
-				(s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
-			s0 = func_800C7924_D68D4(sp6E, sp6A, sp66, 0x40, -8, alienSpecs[alien->specIndex].unkC, s0, 1);
+				&sp6C, &sp68, &sp64);
+			s0 = func_800C7924_D68D4((s16) sp6C, (s16) sp68, (s16) sp64, 0x40, -8, alienSpecs[alien->specIndex].unkC, s0, 1);
 			func_800C80F0_D70A0((0x4000 - alien->unk6) & 0xFFFF, 0, 0, s0);
 			func_800C820C_D71BC(0, 0, 0, s0);
 			sp43 = sp40->unkC;
@@ -2010,8 +2030,8 @@ void func_802D9C60_192770(u8 arg0) {
 			func_800C8184_D7134(sp43, 3, sp37, s0);
 		}
 		s0 = func_8008916C_9811C(sp73, sp56);
-		func_80128428_1373D8(alien, sp38->unk0, sp38->unk2, sp38->unk4, (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
-		s0 = func_800C7924_D68D4(sp6E, sp6A, sp66, 0x40, -8, alienSpecs[alien->specIndex].unkC, s0, 1);
+		func_80128428_1373D8(alien, sp38->unk0, sp38->unk2, sp38->unk4, &sp6C, &sp68, &sp64);
+		s0 = func_800C7924_D68D4((s16) sp6C, (s16) sp68, (s16) sp64, 0x40, -8, alienSpecs[alien->specIndex].unkC, s0, 1);
 		func_800C80F0_D70A0((0x4000 - alien->unk6) & 0xFFFF, 0, 0, s0);
 		func_800C820C_D71BC(0, 0, 0, s0);
 		sp63 = -sp5C;
@@ -2020,8 +2040,8 @@ void func_802D9C60_192770(u8 arg0) {
 			sp40 = &D_8014DD50[sp52];
 			s0 = func_8008916C_9811C(sp73, sp52);
 			func_80128428_1373D8(alien, (s16) (sp40->unk0 + sp38->unk0), (s16) (sp40->unk2 + sp38->unk2), (s16) (sp40->unk4 + sp38->unk4),
-				(s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
-			s0 = func_800C7924_D68D4(sp6E, sp6A, sp66, 0x40, -8, alienSpecs[alien->specIndex].unkC, s0, 1);
+				&sp6C, &sp68, &sp64);
+			s0 = func_800C7924_D68D4((s16) sp6C, (s16) sp68, (s16) sp64, 0x40, -8, alienSpecs[alien->specIndex].unkC, s0, 1);
 			func_800C80F0_D70A0((0x4000 - alien->unk6) & 0xFFFF, 0, 0, s0);
 			func_800C820C_D71BC(0, 0, 0, s0);
 			sp43 = sp40->unkC;
@@ -2046,7 +2066,7 @@ void func_802DA378_192E88(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(34048) */
+/* CURRENT(33913) */
 void func_802DA3EC_192EFC(u8 arg0) {
 	AlienInstance *alien;
 	AlienInstance *parent;
@@ -2144,11 +2164,15 @@ void func_802DA3EC_192EFC(u8 arg0) {
 
 	alien->unk2C -= 1;
 
-	if ((dist < 0x258) && (func_80084FE8_93F98(arg0, 0x3E8) != 0) && (alien->unk26 == 0) && (alien->unk1E == 0) && !(parent->unk20 & 0x8000)) {
-		alien->unk26 = 0x19;
-		alien->unkA = 0;
-		path0->unk6 = 0;
-		path1->unk6 = 0;
+	if (dist < 0x258) {
+		if (func_80084FE8_93F98(arg0, 0x3E8) != 0) {
+			if ((alien->unk26 == 0) && (alien->unk1E == 0) && !(parent->unk20 & 0x8000)) {
+				alien->unk26 = 0x19;
+				alien->unkA = 0;
+				path0->unk6 = 0;
+				path1->unk6 = 0;
+			}
+		}
 	}
 
 	if (alien->unk26 != 0) {
@@ -2279,13 +2303,10 @@ void func_802DA3EC_192EFC(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(18863) */
+/* CURRENT(17324) */
 s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 	AlienInstance *alien;
 	VehicleInstance *vehicle;
-	u8 alienId;
-	s16 node0;
-	s16 node1;
 	s32 posX;
 	s32 posY;
 	s32 posZ;
@@ -2297,34 +2318,36 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 	s8 result;
 	s32 randVal;
 	f32 tempF;
+	s16 nodes[3];
 
-	alienId = arg0 & 0xFF;
-	alien = &alienInstances[alienId];
-	node0 = D_8014DD50[alien->unkC].unkC;
-	node1 = D_8014DD50[node0].unkC;
+	arg0 &= 0xFF;
+	alien = &alienInstances[arg0];
+	nodes[2] = alien->unkC;
+	nodes[0] = D_8014DD50[nodes[2]].unkC;
+	nodes[1] = D_8014DD50[nodes[0]].unkC;
 	targetIdx = alien->specIndex;
 
 	if (alien->unk20 & 0x4000) {
-		result = func_80081F18_90EC8(alienId, 3, 4, &node0, arg1);
+		result = func_80081F18_90EC8(arg0, 3, 4, &nodes[0], arg1);
 		if (result == 4) {
 			alien->unk20 &= ~0x4000;
 		}
 
-		if ((alien->unk36 == 2) && (D_8014DD5E[node0][0] == 0)) {
+		if ((alien->unk36 == 2) && (D_8014DD5E[nodes[0]][0] == 0)) {
 			func_80128504_1374B4(alien, 1, &posX, &posY, &posZ);
 			func_800DEE5C_EDE0C((s16)posX, (s16)(posY + 5), (s16)posZ, 0x50, 0xA);
 			func_800DEA08_ED9B8((s16)posX, (s16)posY, (s16)posZ, 0x1C2, 8, 6, 0x28, 0xDC, 0xA6, 0x85, 0x2F);
 			func_800C541C_D43CC((s16)posX, (s16)posY, (s16)posZ, 0, 0x7F, 0, 0x78, 0xFF, 0x3C, 0x14, 0x6A, 0x53, 0);
 
-			func_80137468_146418(alienId, 0x259);
+			func_80137468_146418(arg0, 0x259);
 			func_80135D44_144CF4(posX, posY, posZ, 5.0f);
 
-			if (func_800879A4_96954(alienId, 0x50, 1) != 0) {
+			if (func_800879A4_96954(arg0, 0x50, 1) != 0) {
 				vehicle = D_80052B34;
 				func_80122524_1314D4(vehicle, 0x7D0, alien->unk0, alien->unk4);
 
 				if (vehicle->unk1A != 0) {
-					func_80137468_146418(alienId, 0x258);
+					func_80137468_146418(arg0, 0x258);
 					tempF = (f32)((f64)(f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
 					func_800C541C_D43CC(vehicle->unk0, vehicle->unk2, vehicle->unk4, (s8)(s32)(tempF * 127.0f), -0x50,
 						(s32)((f32)-((f64)(f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0) * 127.0f),
@@ -2356,14 +2379,14 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 	}
 
 	if (alien->unk20 & 0x1000) {
-		result = func_80081F18_90EC8(alienId, 3, 3, &node0, arg1);
+		result = func_80081F18_90EC8(arg0, 3, 3, &nodes[0], arg1);
 		if (result == 3) {
 			alien->unk20 &= ~0x1000;
 		}
 
 		if (result == 2) {
-			func_80137468_146418(alienId, 0x131);
-			if (!(D_80052B34->unk20 & 2) && (func_800879A4_96954(alienId, 0x50, 0) != 0)) {
+			func_80137468_146418(arg0, 0x131);
+			if (!(D_80052B34->unk20 & 2) && (func_800879A4_96954(arg0, 0x50, 0) != 0)) {
 				vehicle = D_80052B34;
 				dx = vehicle->unk0 - alien->unk0;
 				dz = vehicle->unk4 - alien->unk4;
@@ -2380,7 +2403,7 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 					func_80122524_1314D4(vehicle, 0x3E8, alien->unk0, alien->unk4);
 				}
 
-				func_80137468_146418(alienId, 0x258);
+				func_80137468_146418(arg0, 0x258);
 				func_80102D00_111CB0(vehicle, (f32)dx / 20.0f, (f32)randVal, (f32)dz / 20.0f);
 
 				tempF = (f32)((f64)(f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
@@ -2412,14 +2435,14 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 				alien->unk20 &= ~0x1000;
 				alien->unk36 = 0;
 				alien->unk20 |= 0x2000;
-				D_8014DD5E[node0][0] = 0;
+				D_8014DD5E[nodes[0]][0] = 0;
 			}
 		}
 		return 1;
 	}
 
 	if (alien->unk20 & 0x2000) {
-		result = func_80081F18_90EC8(alienId, 3, 2, &node0, arg2);
+		result = func_80081F18_90EC8(arg0, 3, 2, &nodes[0], arg2);
 		if (result == 2) {
 			alien->unk20 &= ~0x2000;
 		}
@@ -2433,16 +2456,18 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(2390) */
+/* CURRENT(2295) */
 void func_802DBA00_194510(u8 arg0) {
+	s32 pad0;
 	u8 sp43;
-	s32 var_a0;
+	s32 pad1;
 	s32 var_v0;
 	s32 temp_a0;
 	s32 var_a3;
 	s32 temp_v1;
 	s32 temp_a1;
 	s32 var_a2;
+	s32 var_a0;
 
 	sp43 = alienInstances[arg0].unk25;
 	func_800A93A4_B8354(arg0, -0xBB, 0x22, 0x147);
@@ -2451,15 +2476,17 @@ void func_802DBA00_194510(u8 arg0) {
 		if ((func_800038E0_44E0() % 100) == 0) {
 			var_v0 = D_80052B34->unk0 - alienInstances[arg0].unk0;
 			temp_a0 = -var_v0;
-			var_a3 = temp_a0;
 			if (temp_a0 < var_v0) {
 				var_a3 = var_v0;
+			} else {
+				var_a3 = temp_a0;
 			}
 			temp_v1 = D_80052B34->unk4 - alienInstances[arg0].unk4;
 			temp_a1 = -temp_v1;
-			var_a2 = temp_a1;
 			if (temp_a1 < temp_v1) {
 				var_a2 = temp_v1;
+			} else {
+				var_a2 = temp_a1;
 			}
 			if (var_a2 < var_a3) {
 				if (temp_a0 < var_v0) {
@@ -2473,7 +2500,7 @@ void func_802DBA00_194510(u8 arg0) {
 				}
 				var_v0 = var_a0;
 			}
-			if (var_v0 < 0x320 && !(*(s32 *)((volatile s16 *)D_800481DD + sp43 * 0x28) & 0x8000)) {
+			if (var_v0 < 0x320 && !(*(s32 *)((u8 *)&D_800481DD + (sp43 * 0x50)) & 0x8000)) {
 				alienInstances[arg0].unk36 = 0;
 				alienInstances[arg0].unk20 |= 0x1000;
 			}
@@ -2489,10 +2516,11 @@ void func_802DBB88_194698(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(2438) */
+/* CURRENT(2423) */
 void func_802DBBBC_1946CC(u8 arg0) {
 	u8 otherIndex;
 	s32 var_v0;
+	s32 pad0;
 	s32 distanceThreshold;
 	s32 flagValue;
 
@@ -2515,13 +2543,16 @@ void func_802DBBBC_1946CC(u8 arg0) {
 
 	if ((func_800038E0_44E0() % 100) == 0) {
 		s32 dx, dy, adx, ady;
+		VehicleInstance *player;
 
-		dx = D_80052B34->unk0 - alienInstances[arg0].unk0;
+		player = D_80052B34;
+
+		dx = player->unk0 - alienInstances[arg0].unk0;
 		adx = -dx;
 		if (adx < dx) {
 			adx = dx;
 		}
-		dy = D_80052B34->unk4 - alienInstances[arg0].unk4;
+		dy = player->unk4 - alienInstances[arg0].unk4;
 		ady = -dy;
 		if (ady < dy) {
 			ady = dy;
@@ -2553,22 +2584,23 @@ void func_802DBDA8_1948B8(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(2460) */
+/* CURRENT(1690) */
 void func_802DBDDC_1948EC(u8 arg0) {
-	u8 sp37;
-	s32 var_v0;
-	s32 temp_a0;
-	s32 var_a3;
-	s32 temp_v1;
-	s32 temp_a1;
-	s32 var_a2;
-	s32 var_a0;
+	u8 otherIndex;
 
-	sp37 = alienInstances[arg0].unk25;
+	otherIndex = alienInstances[arg0].unk25;
 	func_800A93A4_B8354(arg0, 0xBB, 0x24, 0x145);
 	D_8014DD50[alienInstances[arg0].unkC].unk4 = -0x96;
 	if (func_802DB16C_193C7C(arg0, &D_802DDF00_196A10, &D_802DDF0C_196A1C) == 0) {
 		if ((func_800038E0_44E0() % 100) == 0) {
+			s32 var_v0;
+			s32 temp_a0;
+			s32 var_a3;
+			s32 temp_v1;
+			s32 temp_a1;
+			s32 var_a2;
+			s32 var_a0;
+
 			var_v0 = D_80052B34->unk0 - alienInstances[arg0].unk0;
 			temp_a0 = -var_v0;
 			var_a3 = temp_a0;
@@ -2593,7 +2625,7 @@ void func_802DBDDC_1948EC(u8 arg0) {
 				}
 				var_v0 = var_a0;
 			}
-			if (var_v0 < 0x320 && !(*(s32*)((volatile s16*)D_800481DD + sp37 * 0x28) & 0x8000)) {
+			if (var_v0 < 0x320 && !(*(s32 *) ((u8 *) &alienInstances[otherIndex] + 0x45) & 0x8000)) {
 				alienInstances[arg0].unk36 = 0;
 				alienInstances[arg0].unk20 |= 0x1000;
 			}
@@ -2610,27 +2642,18 @@ void func_802DBF64_194A74(u8 arg0) {
 
 
 #ifdef NON_MATCHING
-/* CURRENT(2812) */
+/* CURRENT(2418) */
 void func_802DBF98_194AA8(u8 arg0) {
-	AlienInstance *alien;
-	AlienInstance *otherAlien;
 	u8 otherIndex;
 	s32 var_v0;
-	s32 temp_a0;
-	s32 var_a3;
-	s32 temp_v1;
-	s32 temp_a1;
-	s32 var_a2;
-	s32 var_a0;
-	s32 flagValue;
+	s32 pad0;
 	s32 distanceThreshold;
+	s32 flagValue;
 
-	alien = &alienInstances[arg0];
-	otherIndex = alien->unk25;
+	otherIndex = alienInstances[arg0].unk25;
 	func_800A93A4_B8354(arg0, 0x99, 0x32, 0xD4);
-	D_8014DD50[alien->unkC].unk4 = -0x96;
-	otherAlien = &alienInstances[otherIndex];
-	if ((otherAlien->unk20 & 0x4000) != 0x4000) {
+	D_8014DD50[alienInstances[arg0].unkC].unk4 = -0x96;
+	if ((alienInstances[otherIndex].unk20 & 0x4000) != 0x4000) {
 		var_v0 = func_802DB16C_193C7C(arg0, &D_802DE25C_196D6C, &D_802DE268_196D78);
 		flagValue = 0x1000;
 		distanceThreshold = 0x320;
@@ -2645,33 +2668,39 @@ void func_802DBF98_194AA8(u8 arg0) {
 	}
 
 	if ((func_800038E0_44E0() % 100) == 0) {
-		var_v0 = D_80052B34->unk0 - alien->unk0;
-		temp_a0 = -var_v0;
-		var_a3 = temp_a0;
-		if (temp_a0 < var_v0) {
-			var_a3 = var_v0;
+		s32 dx;
+		s32 dy;
+		s32 adx;
+		s32 ady;
+		VehicleInstance *player;
+
+		player = D_80052B34;
+
+		dx = player->unk0 - alienInstances[arg0].unk0;
+		adx = -dx;
+		if (adx < dx) {
+			adx = dx;
 		}
-		temp_v1 = D_80052B34->unk4 - alien->unk4;
-		temp_a1 = -temp_v1;
-		var_a2 = temp_a1;
-		if (temp_a1 < temp_v1) {
-			var_a2 = temp_v1;
+		dy = player->unk4 - alienInstances[arg0].unk4;
+		ady = -dy;
+		if (ady < dy) {
+			ady = dy;
 		}
-		if (var_a2 < var_a3) {
-			if (temp_a0 < var_v0) {
+		if (ady < adx) {
+			if (adx < dx) {
 			} else {
-				var_v0 = temp_a0;
+				dx = adx;
 			}
+			var_v0 = dx;
 		} else {
-			var_a0 = temp_a1;
-			if (temp_a1 < temp_v1) {
-				var_a0 = temp_v1;
+			if (ady < dy) {
+				ady = dy;
 			}
-			var_v0 = var_a0;
+			var_v0 = ady;
 		}
-		if (var_v0 < distanceThreshold && !(*(s32 *) ((u8 *) otherAlien + 0x45) & 0x8000)) {
-			alien->unk36 = 0;
-			alien->unk20 |= flagValue;
+		if (var_v0 < distanceThreshold && !(*(s32 *) ((u8 *) &alienInstances[otherIndex] + 0x45) & 0x8000)) {
+			alienInstances[arg0].unk36 = 0;
+			alienInstances[arg0].unk20 |= flagValue;
 		}
 	}
 }
@@ -2683,27 +2712,26 @@ void func_802DC184_194C94(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0x99, 0x32, 0xD4);
 }
 
-#ifdef NON_MATCHING
 void func_802DC1B8_194CC8(u8 arg0, s32 arg1) {
+	s32 nodeId;
 	s32 sp40;
 	s32 sp3C;
 	s32 sp38;
 
 	if (alienInstances[arg0].unk20 & 0x600) {
+		nodeId = D_8014DD50[alienInstances[arg0].unkC].unkC;
 		func_80128428_1373D8(&alienInstances[arg0],
-			D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk0 / 2,
-			D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk2 / 2,
-			D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk4 / 2,
+			D_8014DD50[nodeId].unk0 / 2,
+			D_8014DD50[nodeId].unk2 / 2,
+			D_8014DD50[nodeId].unk4 / 2,
 			&sp40, &sp3C, &sp38);
 		func_800DF038_EDFE8((s16)sp40, (s16)sp3C, (s16)sp38,
 			alienSpecs[alienInstances[arg0].specIndex].unkC, arg1, 0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC1B8_194CC8.s")
-#endif
 
 #ifdef NON_MATCHING
+/* CURRENT(6581) */
 void func_802DC2E4_194DF4(u8 arg0) {
 	AlienInstance *alien;
 	Unk8014DD50 *temp_v1;
@@ -2728,14 +2756,22 @@ void func_802DC2E4_194DF4(u8 arg0) {
 	sp50[0] += alien->unk0;
 	sp50[1] += alien->unk2;
 	sp50[2] += alien->unk4;
+	{
+		s32 x;
+		s32 y;
+		s32 z;
 
-	temp = func_800DF038_EDFE8(sp50[0], sp50[1], sp50[2],
-		alienSpecs[alien->specIndex].unkC, 0, 0);
+		x = sp50[0];
+		y = sp50[1];
+		z = sp50[2];
+		temp = func_800DF038_EDFE8((s16)x, (s16)y, (s16)z,
+			alienSpecs[alien->specIndex].unkC, 0, 0);
 
-	func_800C7924_D68D4(
-		sp50[0], sp50[1], sp50[2], 0x40,
-		temp, 0xC8, sp40, 1
-	);
+		func_800C7924_D68D4(
+			(s16)x, (s16)y, (s16)z, 0x40,
+			temp, 0xC8, sp40, 1
+		);
+	}
 
 	func_80088E10_97DC0(sp5C);
 
@@ -2855,7 +2891,7 @@ void func_802DCA6C_19557C(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(9737) */
+/* CURRENT(9677) */
 void func_802DCADC_1955EC(u8 arg0) {
 	AlienInstance *alien;
 	Unk8014DD50 *obj0;
@@ -2917,9 +2953,9 @@ void func_802DCADC_1955EC(u8 arg0) {
 
 		if ((alien->unk2C < 0x51) && (alien->unk2C >= 0x29) && !(D_80052A8C & 7)) {
 			func_80128504_1374B4(alien, 1, &sp6C, &sp68, &sp64);
+			angle = alien->unk6;
 
 			if (D_80031420 & 3) {
-				angle = alien->unk6;
 				func_800CA5EC_D959C(
 					(s16) sp6C,
 					(s16) sp68,
