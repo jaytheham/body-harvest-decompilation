@@ -654,7 +654,7 @@ s32 func_802D64D0_18EFE0(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(7200) */
+/* CURRENT(5880) */
 s32 func_802D6904_18F414(void) {
 	AlienInstance *alien;
 	s32 alienId;
@@ -692,9 +692,8 @@ s32 func_802D6904_18F414(void) {
 		D_80157F7C = -2.0f;
 		D_80157F80 = 100.0f;
 
-		D_80157F94 = func_8007956C_8851C(0x12);
-		if (D_80157F94 != 0xFF) {
-			alienId = D_80157F94;
+		alienId = func_8007956C_8851C(0x12);
+		if (alienId != 0xFF) {
 			alien = &alienInstances[alienId];
 			alien->unk20 &= 0xF7FFFE5F;
 			alien->unk0 = 0x4C80;
@@ -706,6 +705,7 @@ s32 func_802D6904_18F414(void) {
 			alien->unkE = 0x4000;
 			alien->unk2A = 0x4000;
 			func_8007A198_89148((u8)alienId);
+			D_80157F94 = alienId;
 		}
 
 		alien = &alienInstances[D_80157F94];
