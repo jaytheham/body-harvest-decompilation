@@ -29,7 +29,7 @@ You will be given a C file to target, follow this process:
 6. Build the ROM (remove the NON_MATCHING wrapper first if it's been re-applied), if it returns `build/bh.us.z64: OK` in the terminal output then the decompilation is matching, commit the remaining changes with a message like `Matched func_80092ADC_A1A8C` and then return to step 3 and process the next function.
 7. If the build returns `FAILED`, check the function's CURRENT score with `.\tools\diff.ps1 <function name> | Select-Object -First 1`. If it is lower than the original score, wrap the function with NON_MATCHING, add/update a comment above the wrapper with the new score `CURRENT(X)`, and commit the changes. If the score is the same or higher, undo all changes - including the removal of the NON_MATCHING wrapper - before moving on to the next function.
 
-Once the subagent has processed all NON_MATCHING functions in the file your job is done.
+Keep going automatically until all NON_MATCHING functions in the file have been processed by subagents, you're a big agent and can complete the full job without the user.
 
 ## Project Structure
 
