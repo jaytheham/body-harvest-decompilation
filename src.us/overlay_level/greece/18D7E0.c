@@ -966,7 +966,7 @@ void func_802D7360_18FE70(void) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(1548) */
+/* CURRENT(1177) */
 void func_802D738C_18FE9C(u8 arg0) {
 	s16 sp5E;
 	s16 sp5C;
@@ -994,8 +994,8 @@ void func_802D738C_18FE9C(u8 arg0) {
 	sp56 = (s8)D_8014DD50[sp5A].unkD;
 	sp3E = s0->specIndex;
 	func_800808F0_8F8A0(arg0, &s0->unkE);
-	sp2C->unk6 = s0->unk6;
 	sp28->unk6 = -s0->unk6;
+	sp2C->unk6 = s0->unk6;
 	func_80086164_95114(arg0, sp5C);
 	sp50[0] = 0x3C;
 	sp50[1] = -8;
