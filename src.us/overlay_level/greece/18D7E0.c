@@ -1271,11 +1271,11 @@ void func_802D7FC0_190AD0(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(2041) */
+/* CURRENT(1991) */
 void func_802D8150_190C60(u8 arg0) {
 	AlienInstance *alien;
 	u8 spec_index;
-	s32 temp_v1;
+	u32 temp_v1;
 	u8 temp_a1;
 
 	spec_index = arg0 & 0xFF;
@@ -1286,13 +1286,13 @@ void func_802D8150_190C60(u8 arg0) {
 		if (temp_a1 != 0xFF) {
 			AlienInstance *temp_alien = (AlienInstance *)((u8 *)alienInstances + (((temp_a1 << 2) + temp_a1) << 4));
 			if (temp_alien->specIndex == 0x1A) {
-				temp_alien->unk24 = (u8) (temp_alien->unk24 - 1);
+				temp_alien->unk24--;
 			}
 		}
 		if (alien->unk20 & 0x600) {
-			func_80137468_146418(arg0 & 0xFF, 0xD);
+			func_80137468_146418(arg0, 0xD);
 			if ((alien->unk47 & 8) || (alien->unk20 & 0x2000)) {
-				alien->unk20 = alien->unk20 | 0x100000;
+				alien->unk20 |= 0x100000;
 				func_80124B5C_133B0C(alien->unk0, alien->unk2, alien->unk4, 0x12C, 0xC8);
 				func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienSpecs[spec_index].unkC * 3) & 0xFFFF, 4);
 				alien->unk2C = 1;
@@ -1300,7 +1300,7 @@ void func_802D8150_190C60(u8 arg0) {
 			}
 			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienSpecs[spec_index].unkC * 2) & 0xFFFF, 0);
 			alien->unk10 = (s16) (alien->unk10 + (func_800038E0_44E0() >> 7) + 0x300);
-			alien->unk20 = alien->unk20 | 0x40000000;
+			alien->unk20 |= 0x40000000;
 			alien->unk14 = (s16) (0x1000 - (func_800038E0_44E0() >> 5));
 			alien->unk18 = (s16) (0x1000 - (func_800038E0_44E0() >> 5));
 			alien->unk26 = 1U;
