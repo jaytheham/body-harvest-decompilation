@@ -879,11 +879,11 @@ void func_802D6F7C_18FA8C(void) {
 	f32 sp58;
 	f32 sp54;
 	f32 sp50;
-	f32 sp4C;
-	f32 sp48;
-	f64 temp_f20;
-	s32 i;
 	s32 temp_a1;
+	u16 sp5A;
+	u16 sp58;
+	u16 sp56;
+	u16 sp54;
 	Unk8013FDA8Entry *sp30;
 	Unk8013FDA8Entry *sp2C;
 	Unk8013FDA8Entry *entry;
@@ -963,12 +963,12 @@ void func_802D738C_18FE9C(u8 arg0) {
 	s16 sp34;
 	Unk8014DD50 *sp2C;
 	Unk8014DD50 *sp28;
+	s32 sp4C;
 	AlienInstance *s0;
 
 	s0 = &alienInstances[arg0];
 	sp5E = s0->unkC;
 	sp2C = &D_8014DD50[sp5E];
-	sp5C = (s8)sp2C->unkC;
 	sp28 = &D_8014DD50[sp5C];
 	sp58 = (s8)sp28->unkC;
 	sp5A = (s8)D_8014DD50[sp58].unkD;
@@ -2789,6 +2789,7 @@ void func_802DC2E4_194DF4(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+/* CURRENT(928) */
 void func_802DC500_195010(u8 arg0) {
 	s16 sp9E;
 	s32 sp8C[3];
@@ -2891,7 +2892,7 @@ void func_802DCA6C_19557C(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(9737) */
+/* CURRENT(9677) */
 void func_802DCADC_1955EC(u8 arg0) {
 	AlienInstance *alien;
 	Unk8014DD50 *obj0;
@@ -2953,9 +2954,9 @@ void func_802DCADC_1955EC(u8 arg0) {
 
 		if ((alien->unk2C < 0x51) && (alien->unk2C >= 0x29) && !(D_80052A8C & 7)) {
 			func_80128504_1374B4(alien, 1, &sp6C, &sp68, &sp64);
+			angle = alien->unk6;
 
 			if (D_80031420 & 3) {
-				angle = alien->unk6;
 				func_800CA5EC_D959C(
 					(s16) sp6C,
 					(s16) sp68,
