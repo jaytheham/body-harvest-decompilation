@@ -2283,13 +2283,13 @@ void func_80017BF8_187F8(short arg0)
 	func_800101F0_10DF0(&D_80266E80, ((((s32) (&D_305AFA0)) & 0xFFFFFF) + offset) + D_8F4960, 0x200);
 }
 
+// CURRENT(20621)
 #ifdef NON_MATCHING
 s16 func_80017CA4_188A4(void) {
-	u32 spC4;
 	Gfx *sp94;
 	s32 sp20;
-	s16 var_t4;
-	s32 temp_t7;
+	s32 var_t4;
+	s16 temp_t7;
 	u32 var_v1;
 	u8 var_a2;
 
@@ -2431,7 +2431,6 @@ s16 func_80017CA4_188A4(void) {
 	if ((var_v1 % 10U) != 0) {
 		var_v1 = ((var_v1 / 10U) * 0xA) + 0xA;
 	}
-	spC4 = var_v1;
 	if (func_8000C6C4_D2C4() != 0) {
 		D_8006C576 = (u16)var_v1;
 	}
