@@ -654,10 +654,10 @@ s32 func_802D64D0_18EFE0(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(5880) */
+/* CURRENT(2910) */
 s32 func_802D6904_18F414(void) {
-	AlienInstance *alien;
 	s32 alienId;
+	AlienInstance *alien;
 
 	extern char D_802DE30C_196E1C[];
 	extern char D_802DE318_196E28[];
@@ -713,8 +713,7 @@ s32 func_802D6904_18F414(void) {
 		break;
 
 	case 1:
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x38) {
+		if (D_80157F8E++ >= 0x38) {
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
@@ -724,8 +723,7 @@ s32 func_802D6904_18F414(void) {
 		func_800CDD7C_DCD2C(D_80157F98);
 		func_800DFBA8_EEB58(0x4C7C, 0x350, -0x675C, 0xB4, 6);
 		D_80157F8C += 1;
-		D_80157F8E += 1;
-		if (D_80157F8E >= 5) {
+		if (D_80157F8E++ >= 5) {
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
@@ -734,8 +732,7 @@ s32 func_802D6904_18F414(void) {
 	case 3:
 		func_80124B5C_133B0C(0x4C7C, 0x350, -0x675C, 0x2711, 0x300);
 		D_80157F8C += 1;
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x29) {
+		if (D_80157F8E++ >= 0x29) {
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
@@ -751,8 +748,7 @@ s32 func_802D6904_18F414(void) {
 			func_80087AFC_96AAC((u8)D_80157F94);
 		}
 
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x1F) {
+		if (D_80157F8E++ >= 0x1F) {
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
