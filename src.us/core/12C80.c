@@ -541,13 +541,14 @@ void func_80013324_13F24(void)
 #ifdef NON_MATCHING
 void func_80013398_13F98(void)
 {
+  s8 idx;
   s8 arr_val;
   if (D_80031CA4 != 4)
   {
 	arr_val = (s8) (D_80033C80_34880 % 16);
-	arr_val = D_80033C70_34870[arr_val];
-	D_80033C80_34880 += 1;
-	arr_val = (s8) (arr_val + 0xF);
+	idx = arr_val;
+	arr_val = D_80033C70_34870[idx] + 0xF;
+	D_80033C80_W = D_80033C80_34880 + 1;
 	func_80015C94_16894(arr_val, 4);
   }
 }
@@ -651,7 +652,6 @@ void func_800136F0_142F0(void) {
 void func_80013720_14320(void)
 {
   s8 sp1F;
-
   if (D_8006AB88 != 0)
   {
 	sp1F = D_80033C88_34888 % 4;
@@ -986,33 +986,29 @@ s32 func_80014278_14E78(void)
 #ifdef NON_MATCHING
 s32 func_800143C4_14FC4(s16 arg0)
 {
-	Unk8006AA80Node sp58;
-	s32 sp54;
-	unsigned char new_var;
-
-	if (D_8006AB88 == 0)
-	{
+  Unk8006AA80Node sp58;
+  s32 sp54;
+  unsigned char new_var;
+  if (D_8006AB88 == 0)
+  {
 	return -1;
-	}
-
-	if (func_80012638_13238(arg0, D_8006AB18[0]->unk1C) != NULL)
-	{
+  }
+  if (func_80012638_13238(arg0, D_8006AB18[0]->unk1C) != NULL)
+  {
 	return -1;
-	}
-
-	sp58.unk0 = arg0;
-	sp58.unk6 = -1;
-	sp58.unk0C = 0;
-	sp58.unk8 = 0;
-	sp58.unk2 = D_80032228_32E28[arg0 & 0xFFFF];
-	sp58.unk0E = -1;
-	sp58.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
-	sp58.unk20 = D_80031F04_32B04[arg0];
-	sp58.unk28 = D_8006AB18[0]->unk1C;
-	sp58.unk0F = -1;
-	sp58.unk22 = 0x40;
-
-	return func_800121B4_12DB4(sp58, &D_8006AA80, &D_8006AA84);
+  }
+  sp58.unk0 = arg0;
+  sp58.unk6 = -1;
+  sp58.unk0C = 0;
+  sp58.unk8 = 0;
+  sp58.unk2 = D_80032228_32E28[(new_var = arg0) & 0xFFFF];
+  sp58.unk0E = -1;
+  sp58.unk24 = D_80032A78_33678[new_var & 0xFFFF];
+  sp58.unk20 = D_80031F04_32B04[arg0];
+  sp58.unk28 = D_8006AB18[0]->unk1C;
+  sp58.unk0F = -1;
+  sp58.unk22 = 0x40;
+  return func_800121B4_12DB4(sp58, &D_8006AA80, &D_8006AA84);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800143C4_14FC4.s")
@@ -2035,37 +2031,45 @@ s16 func_800172E0_17EE0(u8 *arg0)
 
 // https://decomp.me/scratch/sIowK
 #ifdef NON_MATCHING
-s16 func_80017394_17F94(u8 *arg0, s16 arg1) {
-	s32 var_v1;
-	u8 *var_v0;
-	u8 var_a0;
-
-	var_v1 = 0;
-	var_v0 = arg0;
-	if (*arg0 != 0xA && *arg0 != 0 && *arg0 != 0x40 && *arg0 != 0x3B) {
-		arg1--;
-		if (arg1 != 0) {
-			var_a0 = *arg0;
-			do {
-				if (var_a0 >= 0x20 && var_a0 < 0x80) {
-					if (var_a0 == 0x5E) {
-						var_v0 += 2;
-						arg1 -= 2;
-						var_a0 = *var_v0;
-					}
-					if (var_v1 != 0 || var_a0 != 0x20 || var_a0 != 0x26 || var_a0 != 0x25) {
-						var_v1 += D_80031720_32320[var_a0 * 2 + 0x261];
-					}
-				}
-				var_a0 = var_v0[1];
-				var_v0++;
-				arg1--;
-				if (var_a0 == 0xA || var_a0 == 0) break;
-				if (var_a0 == 0x40 || var_a0 == 0x3B) return var_v1;
-			} while (arg1 != 0);
+s16 func_80017394_17F94(u8 *arg0, s16 arg1)
+{
+  s32 var_v1;
+  u8 *var_v0;
+  u8 var_a0;
+  var_v1 = 0;
+  var_v0 = arg0;
+  if (*arg0 != 0xA && *arg0 != 0 && *arg0 != 0x40 && *arg0 != 0x3B)
+  {
+	arg1--;
+	
+	  var_a0 = *arg0;
+		while (arg1)
+	  {
+		if ((var_a0 >= 0x20) && (var_a0 < 0x80))
+		{
+		  if (var_a0 == 0x5E)
+		  {
+			var_v0 += 2;
+			arg1 -= 2;
+			var_a0 = *var_v0;
+		  }
+		  if (var_v1 != 0 || var_a0 != 0x20 || var_a0 != 0x26 || var_a0 != 0x25)
+		  {
+			var_v1 += D_80031720_32320[(var_a0 * 2) + 0x261];
+		  }
 		}
-	}
-	return var_v1;
+		var_a0 = var_v0[1];
+		var_v0++;
+		arg1--;
+		if ((var_a0 == 0xA) || (var_a0 == 0))
+		  break;
+		if ((var_a0 == 0x40) || (var_a0 == 0x3B))
+		  return var_v1;
+	  }
+	  
+	
+  }
+  return var_v1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017394_17F94.s")
