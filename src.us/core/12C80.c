@@ -1011,10 +1011,12 @@ s32 func_800143C4_14FC4(s16 arg0)
 	return func_800121B4_12DB4(sp58, &D_8006AA80, &D_8006AA84);
 }
 
+// CURRENT(615)
 #ifdef NON_MATCHING
 void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
-	VehicleSpec *spec;
 	f32 temp_f14;
+	VehicleSpec *spec;
+	WeaponLevelSpec *levelSpec;
 	f32 temp_f12;
 	f32 temp_f2;
 
@@ -1030,17 +1032,17 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	}
 	if (D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0 == 0x27) {
 		if (arg0->unk12 < 0x14) {
-			f32 dx = (f32)arg0->unk0 / 4 - D_80047954;
-			f32 dy = (f32)arg0->unk2 / 4 - D_80047958;
-			f32 dz = (f32)arg0->unk4 / 4 - D_8004795C;
-			f32 dist = sqrtf(dx * dx + dy * dy + dz * dz);
+			f32 dist = func_8001D940(
+				((f32)arg0->unk0 / 4 - D_80047954) * ((f32)arg0->unk0 / 4 - D_80047954) +
+				((f32)arg0->unk2 / 4 - D_80047958) * ((f32)arg0->unk2 / 4 - D_80047958) +
+				((f32)arg0->unk4 / 4 - D_8004795C) * ((f32)arg0->unk4 / 4 - D_8004795C));
 			s16 temp_v0 = arg0->unk12;
 			s32 temp_v1;
 
-			if (temp_v0 < 0) {
-				temp_v1 = -temp_v0;
-			} else {
+			if (temp_v0 >= 0) {
 				temp_v1 = temp_v0;
+			} else {
+				temp_v1 = -temp_v0;
 			}
 			func_80014A3C_1563C((s32)D_80052B34, 0x170, (f32)(temp_v1 * 100) + dist, 0, -1.0f);
 			if (arg0->unk12 == 0) {
@@ -1049,55 +1051,57 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 		}
 	}
 	if (arg1 != 0) {
+		levelSpec = &D_800330B0_33CB0[currentLevel][arg0->unk1A];
+
 		switch (spec->unk58) {
 		case 0:
-			temp_f14 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk14 * ((f32)arg2 / 1.0f);
-			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
-			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
+			temp_f14 = levelSpec->unk14 * ((f32)arg2 / (f32)1);
+			temp_f2 = levelSpec->unkC;
+			temp_f12 = levelSpec->unk8;
 			break;
 		case 1:
-			temp_f14 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk14 * ((f32)arg2 / D_80038324_38F24);
-			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
-			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
+			temp_f14 = levelSpec->unk14 * ((f32)arg2 / D_80038324_38F24);
+			temp_f2 = levelSpec->unkC;
+			temp_f12 = levelSpec->unk8;
 			break;
 		case 3:
-			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
-			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
+			temp_f2 = levelSpec->unkC;
+			temp_f12 = levelSpec->unk8;
 			temp_f14 = (temp_f2 - temp_f12) * ((f32)arg2 / D_80038328_38F28) + temp_f12;
 			break;
 		case 7:
-			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
-			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
+			temp_f2 = levelSpec->unkC;
+			temp_f12 = levelSpec->unk8;
 			temp_f14 = (temp_f2 - temp_f12) * ((f32)arg2 / D_8003832C_38F2C) + temp_f12;
 			break;
 		case 5:
-			temp_f14 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk14 * ((f32)arg2 / 25.0f);
-			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
-			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
+			temp_f14 = levelSpec->unk14 * ((f32)arg2 / 25.0f);
+			temp_f2 = levelSpec->unkC;
+			temp_f12 = levelSpec->unk8;
 			break;
 		default:
-			temp_f14 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk14 * ((f32)arg2 / 1.0f);
-			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
-			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
+			temp_f14 = levelSpec->unk14 * ((f32)arg2 / (f32)1);
+			temp_f2 = levelSpec->unkC;
+			temp_f12 = levelSpec->unk8;
 			break;
 		}
 	} else {
-		if ((s32)(spec->unk4C << 9) < 0) {
-			f32 vx = arg0->unk30;
-			f32 vz = arg0->unk38;
-			f32 spd = sqrtf(vx * vx + vz * vz);
+		if ((s32)(spec->unk4C << 9) >= 0) {
+			levelSpec = &D_800330B0_33CB0[currentLevel][arg0->unk1A];
+
+			if (spec->unk58 == 3 || spec->unk58 == 7) {
+				temp_f2 = levelSpec->unkC;
+				temp_f14 = temp_f2;
+			} else {
+				temp_f14 = levelSpec->unk14 * D_8004DCC0;
+				temp_f2 = levelSpec->unkC;
+			}
+			temp_f12 = levelSpec->unk8;
+		} else {
+			f32 spd = func_8001D940(arg0->unk30 * arg0->unk30 + arg0->unk38 * arg0->unk38);
 
 			temp_f14 = (f32)((f64)spd / 60.0);
 			temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
-			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
-		} else {
-			if (spec->unk58 == 3 || spec->unk58 == 7) {
-				temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
-				temp_f14 = temp_f2;
-			} else {
-				temp_f14 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk14 * D_8004DCC0;
-				temp_f2 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unkC;
-			}
 			temp_f12 = D_800330B0_33CB0[currentLevel][arg0->unk1A].unk8;
 		}
 	}
@@ -1111,10 +1115,10 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 		temp_f14 = D_80038338_38F38;
 	}
 	{
-		f32 dx = (f32)arg0->unk0 / 4 - D_80047954;
-		f32 dy = (f32)arg0->unk2 / 4 - D_80047958;
-		f32 dz = (f32)arg0->unk4 / 4 - D_8004795C;
-		f32 dist = sqrtf(dx * dx + dy * dy + dz * dz);
+		f32 dist = func_8001D940(
+			((f32)arg0->unk0 / 4 - D_80047954) * ((f32)arg0->unk0 / 4 - D_80047954) +
+			((f32)arg0->unk2 / 4 - D_80047958) * ((f32)arg0->unk2 / 4 - D_80047958) +
+			((f32)arg0->unk4 / 4 - D_8004795C) * ((f32)arg0->unk4 / 4 - D_8004795C));
 
 		func_80014A3C_1563C((s32)&vehicleSpecs[arg0->unk1A], D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0,
 			dist, 0, temp_f14);
