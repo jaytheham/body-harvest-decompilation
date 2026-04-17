@@ -1428,7 +1428,7 @@ void func_802D8724_191234(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(2124) */
+/* CURRENT(1584) */
 void func_802D8898_1913A8(u8 arg0) {
 	AlienInstance *alien;
 	s32 flags;
@@ -1450,30 +1450,30 @@ void func_802D8898_1913A8(u8 arg0) {
 		} else {
 			if (flags & 0x40000000) {
 				s32 limit;
-				s16 speed;
+				s32 speed;
 
 				limit = D_80222A70;
 				if (limit < alien->unk2) {
 					if (alien->unk14 != 0) {
 						if (alien->unk38 >= -9) {
-							alien->unk38 = (s16)(alien->unk38 - 1);
+							alien->unk38 = alien->unk38 - 1;
 						}
 					}
 					if ((alien->unk14 == 0) && (alien->unk38 < 0xA)) {
-						alien->unk38 = (s16)(alien->unk38 + 1);
+						alien->unk38 = alien->unk38 + 1;
 					}
 
 					speed = alien->unk38;
 					speed = speed * 0xC8;
-					alien->unkE = (s16)(alien->unkE + speed);
-					alien->unk6 = (s16)(alien->unk6 + speed);
+					alien->unkE = alien->unkE + speed;
+					alien->unk6 = alien->unk6 + speed;
 
-					alien->unk10 = (s16)(alien->unk10 + 0x60);
-					alien->unk12 = (s16)(alien->unk12 + 0x10);
+					alien->unk10 = alien->unk10 + 0x60;
+					alien->unk12 = alien->unk12 + 0x10;
 				}
 
 				alien->unk8 = (s16)(alien->unk38 << 8);
-				alien->unkA = (s16)(alien->unk10 * -4);
+				alien->unkA = (s16)((-alien->unk10) * 4);
 				if (!(alien->unk2C & 3)) {
 					func_800DEA08_ED9B8(alien->unk0, alien->unk2, alien->unk4, 0xFA, 2, 2, 0x1E, 0xC8, 0x82, 0x82, 0x82);
 					limit = D_80222A70;
