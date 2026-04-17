@@ -2731,6 +2731,7 @@ void func_802DC1B8_194CC8(u8 arg0, s32 arg1) {
 }
 
 #ifdef NON_MATCHING
+/* CURRENT(6581) */
 void func_802DC2E4_194DF4(u8 arg0) {
 	AlienInstance *alien;
 	Unk8014DD50 *temp_v1;
@@ -2755,14 +2756,22 @@ void func_802DC2E4_194DF4(u8 arg0) {
 	sp50[0] += alien->unk0;
 	sp50[1] += alien->unk2;
 	sp50[2] += alien->unk4;
+	{
+		s32 x;
+		s32 y;
+		s32 z;
 
-	temp = func_800DF038_EDFE8(sp50[0], sp50[1], sp50[2],
-		alienSpecs[alien->specIndex].unkC, 0, 0);
+		x = sp50[0];
+		y = sp50[1];
+		z = sp50[2];
+		temp = func_800DF038_EDFE8((s16)x, (s16)y, (s16)z,
+			alienSpecs[alien->specIndex].unkC, 0, 0);
 
-	func_800C7924_D68D4(
-		sp50[0], sp50[1], sp50[2], 0x40,
-		temp, 0xC8, sp40, 1
-	);
+		func_800C7924_D68D4(
+			(s16)x, (s16)y, (s16)z, 0x40,
+			temp, 0xC8, sp40, 1
+		);
+	}
 
 	func_80088E10_97DC0(sp5C);
 
