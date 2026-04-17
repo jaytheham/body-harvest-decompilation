@@ -1175,10 +1175,11 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007F60_8B60.s")
 #endif
 
-
+// CURRENT(785)
 #ifdef NON_MATCHING
 s32 func_8000807C_8C7C(u8 *arg0, u8 *arg1) {
-	u8 opcode;
+	s32 temp;
+	s32 opcode;
 
 loop_1:
 	switch (opcode = arg0[0]) {
@@ -1187,7 +1188,8 @@ loop_1:
 		case 0x9A:
 			return D_80052B34 == &vehicleInstances[arg1[1]];
 		case 0xAF:
-			arg1 = D_8004D180 + arg1[1] * 3;
+			temp = arg1[1];
+			arg1 = D_8004D180 + temp * 3;
 			goto loop_1;
 		case 0x99:
 			return D_80052540 == arg1[1];
@@ -1197,7 +1199,8 @@ loop_1:
 		case 0x99:
 			return arg0[1] == (((*(u32 *)(D_80050AE0 + arg1[1] * 0x18)) << 26) >> 28);
 		case 0xAF:
-			arg1 = D_8004D180 + arg1[1] * 3;
+			temp = arg1[1];
+			arg1 = D_8004D180 + temp * 3;
 			goto loop_1;
 		}
 	case 0xAF:
