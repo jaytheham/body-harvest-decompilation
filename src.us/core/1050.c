@@ -592,14 +592,17 @@ void func_800016D8_22D8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800016D8_22D8.s")
 #endif
 
+/* CURRENT(2085) */
 #ifdef NON_MATCHING
 void func_80001830_2430(void) {
-	u16 i, j, writeIdx;
+	u16 i, writeIdx;
 	s32 val, val2;
 
-	D_800431C8 = 0xFF;
+	D_800431C8 = (u8)-1;
 	writeIdx = 9;
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < 5; i = (i + 1) & 0xFFFF) {
+		u16 j;
+
 		for (j = 0; j < 6; j++) {
 			(&D_800431C0)[writeIdx++] = *((u8*)(D_80031310_31F10 + i) + j);
 		}
