@@ -2712,25 +2712,23 @@ void func_802DC184_194C94(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0x99, 0x32, 0xD4);
 }
 
-#ifdef NON_MATCHING
 void func_802DC1B8_194CC8(u8 arg0, s32 arg1) {
+	s32 nodeId;
 	s32 sp40;
 	s32 sp3C;
 	s32 sp38;
 
 	if (alienInstances[arg0].unk20 & 0x600) {
+		nodeId = D_8014DD50[alienInstances[arg0].unkC].unkC;
 		func_80128428_1373D8(&alienInstances[arg0],
-			D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk0 / 2,
-			D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk2 / 2,
-			D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk4 / 2,
+			D_8014DD50[nodeId].unk0 / 2,
+			D_8014DD50[nodeId].unk2 / 2,
+			D_8014DD50[nodeId].unk4 / 2,
 			&sp40, &sp3C, &sp38);
 		func_800DF038_EDFE8((s16)sp40, (s16)sp3C, (s16)sp38,
 			alienSpecs[alienInstances[arg0].specIndex].unkC, arg1, 0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC1B8_194CC8.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_802DC2E4_194DF4(u8 arg0) {
