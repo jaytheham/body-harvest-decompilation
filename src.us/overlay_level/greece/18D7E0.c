@@ -1381,18 +1381,19 @@ void func_802D85F8_191108(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(483) */
+/* CURRENT(218) */
 void func_802D8724_191234(u8 arg0) {
-	u8 pad;
-	u32 temp_t5;
-
 	if (!(alienInstances[arg0].unk20 & 0x4000) && (func_8008E478_9D428(arg0) != 0 || func_8008E30C_9D2BC(arg0, 0x80000000) != 0)) {
 		func_80085900_948B0(arg0, 0x3E8);
 		func_802D84A0_190FB0(arg0);
 	} else {
 		func_802D852C_19103C(arg0);
-		if ((alienInstances[arg0].unk20 & 0x100) && ((D_80052A8C & 0x3F) == (arg0 & 0x3F))) {
-			temp_t5 = (u32) *(u32 *)(D_80050AE0 + (u8)(alienInstances[arg0].unk38) * 0x18) >> 0xC;
+		if ((alienInstances[arg0].unk20 & 0x100) && ((arg0 & 0x3F) == (D_80052A8C & 0x3F))) {
+			u8 temp_v0;
+			u32 temp_t5;
+
+			temp_v0 = alienInstances[arg0].unk38;
+			temp_t5 = (u32)(*(u32 *)(D_80050AE0 + temp_v0 * 0x18)) >> 0xC;
 			if (((temp_t5 & 1) == 0) || (temp_t5 & 0x10)) {
 				alienInstances[arg0].unk20 &= ~0x100;
 			}
