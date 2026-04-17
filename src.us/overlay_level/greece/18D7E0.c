@@ -1553,7 +1553,7 @@ void func_802D8BAC_1916BC(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(18) */
+/* CURRENT(13) */
 void func_802D8D84_191894(u8 arg0) {
 	AlienInstance *alien;
 	s32 pad;
@@ -2789,7 +2789,6 @@ void func_802DC2E4_194DF4(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(928) */
 void func_802DC500_195010(u8 arg0) {
 	s16 sp9E;
 	s32 sp8C[3];
