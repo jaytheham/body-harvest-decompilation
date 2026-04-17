@@ -1,23 +1,23 @@
 {
-  "generated": "2026-04-17T19:20:41Z",
-  "commit": "c3171028",
-  "commit_timestamp": "2026-04-18T07:20:28+12:00",
+  "generated": "2026-04-17T21:26:31Z",
+  "commit": "8e25b725",
+  "commit_timestamp": "2026-04-18T09:26:17+12:00",
   "overall": {
     "total_functions": 2703,
-    "matched": 1267,
-    "non_matching": 420,
+    "matched": 1268,
+    "non_matching": 419,
     "asm_stubs": 1016,
-    "matched_pct": 46.87,
+    "matched_pct": 46.91,
     "decompiled_pct": 62.41
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 260,
-      "non_matching": 87,
+      "matched": 261,
+      "non_matching": 86,
       "asm_stubs": 1,
       "total": 348,
-      "matched_pct": 74.7,
+      "matched_pct": 75.0,
       "decompiled_pct": 99.7
     },
     "overlay_gameplay/frontend": {
@@ -147,11 +147,11 @@
     {
       "path": "core/53F0.c",
       "segment": "core",
-      "matched": 56,
-      "non_matching": 19,
+      "matched": 57,
+      "non_matching": 18,
       "asm_stubs": 0,
       "total": 75,
-      "matched_pct": 74.7,
+      "matched_pct": 76.0,
       "contributor": "jaytheham"
     },
     {
@@ -549,8 +549,8 @@
     {
       "name": "jaytheham",
       "files": 43,
-      "matched": 1261,
-      "non_matching": 420,
+      "matched": 1262,
+      "non_matching": 419,
       "asm_stubs": 946
     },
     {
@@ -634,9 +634,9 @@
     },
     {
       "date": "2026-04-12",
-      "commit": "78b00ea",
-      "matched": 1267,
-      "non_matching": 420,
+      "commit": "fcce4bc",
+      "matched": 1268,
+      "non_matching": 419,
       "total": 2703
     }
   ]
