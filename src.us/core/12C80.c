@@ -2030,50 +2030,54 @@ s16 func_800172E0_17EE0(u8 *arg0)
 }
 
 // https://decomp.me/scratch/sIowK
+// CURRENT(1450)
 #ifdef NON_MATCHING
 s16 func_80017394_17F94(u8 *arg0, s16 arg1)
 {
-  s32 var_v1;
-  u8 *var_v0;
-  u8 var_a0;
-  var_v1 = 0;
-  var_v0 = arg0;
-  if (*arg0 != 0xA && *arg0 != 0 && *arg0 != 0x40 && *arg0 != 0x3B)
-  {
-	arg1--;
-	
-	  var_a0 = *arg0;
-		while (arg1)
-	  {
-		if ((var_a0 >= 0x20) && (var_a0 < 0x80))
-		{
-		  if (var_a0 == 0x5E)
-		  {
-			var_v0 += 2;
-			arg1 -= 2;
-			var_a0 = *var_v0;
-		  }
-		  if (var_v1 != 0 || var_a0 != 0x20 || var_a0 != 0x26 || var_a0 != 0x25)
-		  {
-			var_v1 += D_80031720_32320[(var_a0 * 2) + 0x261];
-		  }
+	s32 width;
+	s32 c;
+	u8 *ptr;
+
+	width = 0;
+	ptr = arg0;
+	c = *arg0;
+	if (0xA != c && 0 != c && 0x40 != c && 0x3B != c) {
+		arg1 = (s16)(arg1 - 1);
+		if (arg1 != 0) {
+			c = *arg0;
+			while (1) {
+				if (c >= 0x20 && c < 0x80) {
+					if (c == 0x5E) {
+						arg1 = (s16)(arg1 - 2);
+						ptr += 2;
+						c = *ptr;
+					}
+
+					if (width != 0 || (c != 0x20 && c != 0x26 && c != 0x25)) {
+						width += D_80031720_32320[(c * 2) + 0x261];
+					}
+				}
+
+				c = ptr[1];
+				arg1 = (s16)(arg1 - 1);
+				if (c == 0xA) {
+					break;
+				}
+
+				ptr++;
+				if (c == 0 || c == 0x40 || c == 0x3B) {
+					break;
+				}
+
+				if (arg1 == 0) {
+					break;
+				}
+			}
 		}
-		var_a0 = var_v0[1];
-		var_v0++;
-		arg1--;
-		if ((var_a0 == 0xA) || (var_a0 == 0))
-		  break;
-		if ((var_a0 == 0x40) || (var_a0 == 0x3B))
-		  return var_v1;
-	  }
-	  
-	
-  }
-  return var_v1;
+	}
+
+	return width;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017394_17F94.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_80017490_18090(u8 *arg0) {
@@ -2988,6 +2992,9 @@ s32 func_8001A37C_1AF7C(char *arg0) {
 	}
 	return var_s0;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017394_17F94.s")
+#endif
 
 void myfree(void) {
 	gzip_data_0000 = 0;
