@@ -500,26 +500,23 @@ void func_80001424_2024(void) {
 }
 
 // https://decomp.me/scratch/zsK5T
+/* CURRENT(60) */
 #ifdef NON_MATCHING
 void func_800015B4_21B4(s32 arg0, s32 arg1) {
 	u8 *v0;
 	s32 var_v1;
-	s32 var_a2;
 	s32 var_a3;
-	u8 var_t9;
+	s32 var_a2;
+	s32 var_t9;
 
 	v0 = &D_800431C0 + arg0;
 	v0[0] = 0x1C;
 	var_v1 = (arg0 + 4) & 0xFFFF;
 	var_a2 = 0;
-	var_a3 = 0;
-	if (arg1 > 0) {
-		do {
-			var_t9 = *(&D_800431C0 + var_v1);
-			var_a3 = (var_a3 + 1) & 0xFFFF;
-			var_v1 = (var_v1 + 1) & 0xFFFF;
-			var_a2 = (var_a2 + var_t9) & 0xFFFF;
-		} while (var_a3 < arg1);
+	for (var_a3 = 0; var_a3 < arg1; var_a3 = (var_a3 + 1) & 0xFFFF) {
+		var_t9 = *(&D_800431C0 + var_v1);
+		var_a2 = (var_a2 + var_t9) & 0xFFFF;
+		var_v1 = (var_v1 + 1) & 0xFFFF;
 	}
 	v0[2] = var_a2;
 	v0[3] = var_a2 >> 8;
