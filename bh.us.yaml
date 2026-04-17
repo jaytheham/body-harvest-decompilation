@@ -311,7 +311,8 @@ segments:
       - [0x195C80, .data, overlay_level/greece/18D7E0]
       - [0x196A00, .data, overlay_level/greece/18D7E0]
       - [0x196B00, .data, overlay_level/greece/18D7E0]
-      - [0x196C00, bin]
+      - [0x196C00, .data, overlay_level/greece/18D7E0]
+      - [0x196D00, bin]
 
   - name: overlay_level_greece_data
     type: bin
