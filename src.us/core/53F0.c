@@ -647,14 +647,13 @@ void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_80006DDC_79DC(void) {
 	s32 pad0;
 	s32 pad1;
 	s32 pad2;
 	s32 pad3;
 	void (*loadLevelCallback)(void *);
-	s32 var_s3;
+	u32 var_s3;
 
 	loadLevelCallback = (void (*)(void *)) loadLevel;
 	D_80052ACA = 5;
@@ -755,9 +754,7 @@ void func_80006DDC_79DC(void) {
 	} while (var_s3 == 0);
 	D_80068080 = 4;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006DDC_79DC.s")
-#endif
+
 
 void func_800071D8_7DD8(void) {
 	func_8000505C_5C5C();
