@@ -308,6 +308,7 @@ void func_800129FC_135FC(s8 arg0, s8 arg1) {
 	}
 }
 
+// CURRENT(2715)
 #ifdef NON_MATCHING
 void func_80012A74_13674(void) {
 	ALSynConfig synConfig;
@@ -386,11 +387,12 @@ void func_80012A74_13674(void) {
 
 	{
 		ALSeqFile *seqFile;
+		u8 *seqBase = D_BBB9B0;
 		s16 seqFileSize = (s16)(D_8006AB3C->seqCount * 8 + 4);
 
-		D_8006AB44 = alHeapDBAlloc(0, 0, &D_8006AB98, 1, (s32)seqFileSize);
-		func_8000F5A8_101A8((s32)D_BBB9B0, (s32)D_8006AB44, (s32)seqFileSize);
-		alSeqFileNew((ALSeqFile *)D_8006AB44, D_BBB9B0);
+		D_8006AB44 = alHeapDBAlloc(0, 0, &D_8006AB98, 1, (s32)(D_8006AB3C->seqCount * 8 + 4));
+		func_8000F5A8_101A8((s32)seqBase, (s32)D_8006AB44, (s32)seqFileSize);
+		alSeqFileNew((ALSeqFile *)D_8006AB44, seqBase);
 		seqFile = (ALSeqFile *)D_8006AB44;
 
 		{
