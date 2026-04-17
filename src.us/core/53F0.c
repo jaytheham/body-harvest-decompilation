@@ -412,7 +412,7 @@ void func_80005B84_6784(void) {
 		}
 	}
 }
-
+// CURRENT(5487)
 #ifdef NON_MATCHING
 void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, f32 arg8, f32 arg9, u16 *arg10) {
 	f32 sp128;
