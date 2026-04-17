@@ -674,16 +674,19 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001984_2584.s")
 #endif
 
+/* CURRENT(19545) */
 #ifdef NON_MATCHING
 void guess_prepareToSaveGame(s32 arg0) {
 	s32 v1;
 	Unk80052A98 *stats;
+	u8 *saveData;
 	u8 *dest;
 	u8 *p;
 	s32 i;
 
 	v1 = arg0 * 0x7A;
-	dest = &((&D_800431C0)[v1 + 0x53]);
+	saveData = (u8 *)&D_800431C0;
+	dest = saveData + v1 + 0x53;
 
 	stats = D_80052A98;
 	do {
@@ -693,9 +696,9 @@ void guess_prepareToSaveGame(s32 arg0) {
 		dest[2] = (u8)(stats->score >> 16);
 		dest[3] = (u8)(stats->score >> 24);
 		dest += 4;
-		osSyncPrintf(&D_80036894_37494, (s32)stats->humansKilled);
-		*dest++ = (u8)stats->humansKilled;
-		osSyncPrintf(&D_800368A0_374A0, (s32)stats->secondsElapsed);
+		osSyncPrintf(&D_80036894_37494, (u16)stats->humansKilled);
+		*dest++ = (u8)(u16)stats->humansKilled;
+		osSyncPrintf(&D_800368A0_374A0, stats->secondsElapsed);
 		dest[0] = (u8)stats->secondsElapsed;
 		dest[1] = (u8)((s32)stats->secondsElapsed >> 8);
 		dest[2] = (u8)((s32)stats->secondsElapsed >> 16);
@@ -745,20 +748,19 @@ void guess_prepareToSaveGame(s32 arg0) {
 
 	*dest++ = (u8)((D_8004DC5C * 0x10) + D_8004DC5E);
 
-	dest[1] = (u8)((s32)D_80048026 >> 8);
-	dest[0] = (u8)D_80048026;
-	dest += 3;
+	*dest++ = (u8)D_80048026;
+	*dest++ = (u8)((s32)D_80048026 >> 8);
+	dest++;
 	osSyncPrintf(&D_80036940_37540, (s32)D_80048026);
 
-	dest[1] = (u8)((s32)D_80048028 >> 8);
-	dest[0] = (u8)D_80048028;
-	dest += 2;
+	*dest++ = (u8)D_80048028;
+	*dest++ = (u8)((s32)D_80048028 >> 8);
 	osSyncPrintf(&D_8003696C_3756C);
 
 	{
 		u64 flags;
 
-		flags = ((u64)(u32)D_8004DC50.unk0 << 0x20) | (u32)D_8004DC50.unk4;
+		flags = *(u64 *)&D_8004DC50;
 		*dest++ = (s8)flags;
 		*dest++ = (s8)(u32)__ull_rshift(flags, 8);
 		*dest++ = (s8)(u32)__ull_rshift(flags, 0x10);
