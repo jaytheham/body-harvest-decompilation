@@ -2642,27 +2642,18 @@ void func_802DBF64_194A74(u8 arg0) {
 
 
 #ifdef NON_MATCHING
-/* CURRENT(2812) */
+/* CURRENT(2418) */
 void func_802DBF98_194AA8(u8 arg0) {
-	AlienInstance *alien;
-	AlienInstance *otherAlien;
 	u8 otherIndex;
 	s32 var_v0;
-	s32 temp_a0;
-	s32 var_a3;
-	s32 temp_v1;
-	s32 temp_a1;
-	s32 var_a2;
-	s32 var_a0;
-	s32 flagValue;
+	s32 pad0;
 	s32 distanceThreshold;
+	s32 flagValue;
 
-	alien = &alienInstances[arg0];
-	otherIndex = alien->unk25;
+	otherIndex = alienInstances[arg0].unk25;
 	func_800A93A4_B8354(arg0, 0x99, 0x32, 0xD4);
-	D_8014DD50[alien->unkC].unk4 = -0x96;
-	otherAlien = &alienInstances[otherIndex];
-	if ((otherAlien->unk20 & 0x4000) != 0x4000) {
+	D_8014DD50[alienInstances[arg0].unkC].unk4 = -0x96;
+	if ((alienInstances[otherIndex].unk20 & 0x4000) != 0x4000) {
 		var_v0 = func_802DB16C_193C7C(arg0, &D_802DE25C_196D6C, &D_802DE268_196D78);
 		flagValue = 0x1000;
 		distanceThreshold = 0x320;
@@ -2677,33 +2668,39 @@ void func_802DBF98_194AA8(u8 arg0) {
 	}
 
 	if ((func_800038E0_44E0() % 100) == 0) {
-		var_v0 = D_80052B34->unk0 - alien->unk0;
-		temp_a0 = -var_v0;
-		var_a3 = temp_a0;
-		if (temp_a0 < var_v0) {
-			var_a3 = var_v0;
+		s32 dx;
+		s32 dy;
+		s32 adx;
+		s32 ady;
+		VehicleInstance *player;
+
+		player = D_80052B34;
+
+		dx = player->unk0 - alienInstances[arg0].unk0;
+		adx = -dx;
+		if (adx < dx) {
+			adx = dx;
 		}
-		temp_v1 = D_80052B34->unk4 - alien->unk4;
-		temp_a1 = -temp_v1;
-		var_a2 = temp_a1;
-		if (temp_a1 < temp_v1) {
-			var_a2 = temp_v1;
+		dy = player->unk4 - alienInstances[arg0].unk4;
+		ady = -dy;
+		if (ady < dy) {
+			ady = dy;
 		}
-		if (var_a2 < var_a3) {
-			if (temp_a0 < var_v0) {
+		if (ady < adx) {
+			if (adx < dx) {
 			} else {
-				var_v0 = temp_a0;
+				dx = adx;
 			}
+			var_v0 = dx;
 		} else {
-			var_a0 = temp_a1;
-			if (temp_a1 < temp_v1) {
-				var_a0 = temp_v1;
+			if (ady < dy) {
+				ady = dy;
 			}
-			var_v0 = var_a0;
+			var_v0 = ady;
 		}
-		if (var_v0 < distanceThreshold && !(*(s32 *) ((u8 *) otherAlien + 0x45) & 0x8000)) {
-			alien->unk36 = 0;
-			alien->unk20 |= flagValue;
+		if (var_v0 < distanceThreshold && !(*(s32 *) ((u8 *) &alienInstances[otherIndex] + 0x45) & 0x8000)) {
+			alienInstances[arg0].unk36 = 0;
+			alienInstances[arg0].unk20 |= flagValue;
 		}
 	}
 }
