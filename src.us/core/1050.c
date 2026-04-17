@@ -183,18 +183,21 @@ void func_80000AD4_16D4(s32 arg0)
 	}
 }
 
+/* CURRENT(667) */
 #ifdef NON_MATCHING
 s32 func_80000B14_1714(u32 arg0, s32 arg1, u32 arg2) {
-	Unk80042DB8 *var_a2;
 	Unk80042DB8 *var_s0;
-	Unk80042DB8 *var_s1;
 	s32 temp_s1;
+	s32 pad0;
+	s32 pad1;
+	Unk80042DB8 *var_s1;
+	Unk80042DB8 *var_a2;
 
 	var_a2 = NULL;
-	D_800312FC_31EFC += 1;
 	var_s1 = D_80042DA8.unk4;
-	if (var_s1 != NULL) {
-		var_s0 = var_s1;
+	D_800312FC_31EFC += 1;
+	var_s0 = var_s1;
+	if (var_s0 != NULL) {
 		do {
 			if (arg0 < (u32)var_s0->unk8) {
 				break;
