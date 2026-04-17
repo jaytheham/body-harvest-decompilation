@@ -1046,7 +1046,7 @@ void func_802D763C_19014C(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(16204) */
+/* CURRENT(16009) */
 void func_802D775C_19026C(s32 arg0) {
 	AlienInstance *s0;
 	u8 sp73;
@@ -1126,7 +1126,7 @@ void func_802D775C_19026C(s32 arg0) {
 	}
 
 	if (s0->unk2C < 0x48) {
-		sp44->unk6 += 0x96;
+		*(u16 *)&sp44->unk6 += 0x96;
 		if (((s16)s0->unk2C % ((func_800038E0_44E0() % 7) + 1)) == 0) {
 			sp4C = (u16)func_800038E0_44E0();
 			sp4E = (u16)func_800038E0_44E0();
@@ -1140,10 +1140,13 @@ void func_802D775C_19026C(s32 arg0) {
 		}
 	}
 
-	if (s0->unk2C == 1) {
-		func_800DF848_EE7F8(s0->unk0, s0->unk2, s0->unk4, (u16)((f64)alienSpecs[s0->specIndex].unkC * 1.5), 6);
+	if (s0->unk2C != 1) {
+		return;
 	}
+
+	func_800DF848_EE7F8(s0->unk0, s0->unk2, s0->unk4, (u16)((f64)alienSpecs[s0->specIndex].unkC * 1.5), 6);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D775C_19026C.s")
 #endif
