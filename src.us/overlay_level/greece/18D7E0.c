@@ -2085,15 +2085,14 @@ void func_802DA378_192E88(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(33913) */
+/* CURRENT(33017) */
 void func_802DA3EC_192EFC(u8 arg0) {
 	AlienInstance *alien;
 	AlienInstance *parent;
-	Unk8014DD50 *path0;
 	Unk8014DD50 *path1;
 	Unk8014DD50 *path2;
 	Unk8014DD50 *path3;
-	VehicleInstance *vehicle;
+	Unk8014DD50 *path4;
 	s32 dist;
 	s32 dx;
 	s32 dz;
@@ -2124,9 +2123,8 @@ void func_802DA3EC_192EFC(u8 arg0) {
 		func_80137468_146418(arg0, 0x25D);
 	}
 
-	vehicle = D_80052B34;
-	dx = alien->unk0 - vehicle->unk0;
-	dz = alien->unk4 - vehicle->unk4;
+	dx = alien->unk0 - D_80052B34->unk0;
+	dz = alien->unk4 - D_80052B34->unk4;
 	dist = (s32)sqrtf((f32)((dx * dx) + (dz * dz)));
 
 	neigh0 = parent->unk24;
@@ -2146,15 +2144,15 @@ void func_802DA3EC_192EFC(u8 arg0) {
 		}
 	}
 
-	pathA = D_8014DD5C[alien->unkC * 0x10];
+	pathA = D_8014DD5C[alien->unkC << 4];
 	func_80090948_9F8F8(pathA, 0x7D0);
-	pathB = D_8014DD5D[pathA * 0x10];
+	pathB = D_8014DD5D[pathA << 4];
 	func_80090948_9F8F8(pathB, 0x7D0);
 
-	path0 = &D_8014DD50[pathB];
-	path1 = &D_8014DD50[path0->unkD];
+	path1 = &D_8014DD50[D_8014DD50[pathB].unkD];
 	path2 = &D_8014DD50[path1->unkD];
 	path3 = &D_8014DD50[path2->unkD];
+	path4 = &D_8014DD50[path3->unkD];
 
 	if ((alien->unk2C < 2) || (parent->unk20 & 0x8000)) {
 		if (alien->unk2C <= 0) {
@@ -2165,8 +2163,8 @@ void func_802DA3EC_192EFC(u8 arg0) {
 			}
 
 			if (parent->unk20 & 0x8000) {
-				path0->unk6 = 0;
 				path1->unk6 = 0;
+				path2->unk6 = 0;
 			}
 
 			parent->unk20 &= ~0x8000;
@@ -2174,11 +2172,11 @@ void func_802DA3EC_192EFC(u8 arg0) {
 			func_80137468_146418(arg0, 0x17);
 		}
 
-		path2->unk2 = 0;
 		path3->unk2 = 0;
+		path4->unk2 = 0;
 	} else {
-		path2->unk2 = 0x7D00;
 		path3->unk2 = 0x7D00;
+		path4->unk2 = 0x7D00;
 	}
 
 	alien->unk2C -= 1;
@@ -2188,8 +2186,8 @@ void func_802DA3EC_192EFC(u8 arg0) {
 			if ((alien->unk26 == 0) && (alien->unk1E == 0) && !(parent->unk20 & 0x8000)) {
 				alien->unk26 = 0x19;
 				alien->unkA = 0;
-				path0->unk6 = 0;
 				path1->unk6 = 0;
+				path2->unk6 = 0;
 			}
 		}
 	}
@@ -2200,8 +2198,8 @@ void func_802DA3EC_192EFC(u8 arg0) {
 			alien->unk12 = 0;
 		}
 
-		path2->unk2 = 0;
 		path3->unk2 = 0;
+		path4->unk2 = 0;
 
 		if (alien->unk26 >= 0x10) {
 			s32 phase;
@@ -2211,8 +2209,8 @@ void func_802DA3EC_192EFC(u8 arg0) {
 			if (phase >= 4) {
 				inv = 9 - phase;
 				alien->unkA = (s16)(-inv * 500);
-				path0->unk6 = (s16)(-inv * 1000);
-				path1->unk6 = (s16)(inv * 1000);
+				path1->unk6 = (s16)(-inv * 1000);
+				path2->unk6 = (s16)(inv * 1000);
 			} else {
 				alien->unkA = (s16)(-phase * 1000);
 			}
@@ -2236,8 +2234,8 @@ void func_802DA3EC_192EFC(u8 arg0) {
 
 			phase2 = alien->unk26 & 3;
 			alien->unkA = (s16)(s32)((((f64)(f32)coss((u16)((((f32)phase2) / 4.0f) * D_802DE408_196F18)) / 32768.0) + 1.0) * D_802DE410_196F20);
-			path0->unk6 = (s16)(-(s32)alien->unk26 * 0x177);
-			path1->unk6 = (s16)((s32)alien->unk26 * 0x177);
+			path1->unk6 = (s16)(-(s32)alien->unk26 * 0x177);
+			path2->unk6 = (s16)((s32)alien->unk26 * 0x177);
 		}
 
 		alien->unk26 -= 1;
@@ -2282,8 +2280,8 @@ void func_802DA3EC_192EFC(u8 arg0) {
 	if ((highAlert != 0) || (parent->unk20 & 0x8000)) {
 		if (alien->unk26 == 0) {
 			alien->unkA = (s16)(s32)(((f64)(f32)coss((D_80052A8C * 0x5CC60) & 0xFFFF) / 32768.0) * D_802DE418_196F28);
-			path0->unk6 = (s16)(s32)(D_802DE428_196F38 - ((((f64)(f32)coss((D_80052A8C * 0x3A98) & 0xFFFF) / 32768.0) + 1.0) * D_802DE420_196F30));
-			path1->unk6 = (s16)(s32)(((((f64)(f32)coss((D_80052A8C * 0x3A98) & 0xFFFF) / 32768.0) + 1.0) * D_802DE430_196F40));
+			path1->unk6 = (s16)(s32)(D_802DE428_196F38 - ((((f64)(f32)coss((D_80052A8C * 0x3A98) & 0xFFFF) / 32768.0) + 1.0) * D_802DE420_196F30));
+			path2->unk6 = (s16)(s32)(((((f64)(f32)coss((D_80052A8C * 0x3A98) & 0xFFFF) / 32768.0) + 1.0) * D_802DE430_196F40));
 		}
 
 		if (parent->unk20 & 0x8000) {
