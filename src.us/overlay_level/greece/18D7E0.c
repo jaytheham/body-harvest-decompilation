@@ -2320,21 +2320,20 @@ void func_802DA3EC_192EFC(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(17324) */
 s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 	AlienInstance *alien;
 	VehicleInstance *vehicle;
+	u8 targetIdx;
+	s32 dx;
+	s32 dz;
+	s32 distRem;
 	s32 posX;
 	s32 posY;
 	s32 posZ;
-	u8 targetIdx;
 	s32 distSq;
-	s32 distRem;
-	s32 dx;
-	s32 dz;
 	s8 result;
-	s32 randVal;
 	f32 tempF;
+	s32 randVal;
 	s16 nodes[3];
 
 	arg0 &= 0xFF;
@@ -2360,25 +2359,24 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 			func_80135D44_144CF4(posX, posY, posZ, 5.0f);
 
 			if (func_800879A4_96954(arg0, 0x50, 1) != 0) {
-				vehicle = D_80052B34;
-				func_80122524_1314D4(vehicle, 0x7D0, alien->unk0, alien->unk4);
+				func_80122524_1314D4(D_80052B34, 0x7D0, alien->unk0, alien->unk4);
 
-				if (vehicle->unk1A != 0) {
+				if (D_80052B34->unk1A != 0) {
 					func_80137468_146418(arg0, 0x258);
 					tempF = (f32)((f64)(f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
-					func_800C541C_D43CC(vehicle->unk0, vehicle->unk2, vehicle->unk4, (s8)(s32)(tempF * 127.0f), -0x50,
+					func_800C541C_D43CC(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, (s8)(s32)(tempF * 127.0f), -0x50,
 						(s32)((f32)-((f64)(f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0) * 127.0f),
 						0xB4, 0xFF, 0x28, 0x14, 0xFF, 0xFF, 0xC8);
 					return 1;
 				}
 			} else {
 				vehicle = D_80052B34;
-				dx = vehicle->unk0 - (s16)posX;
-				dz = vehicle->unk4 - (s16)posZ;
+				dx = vehicle->unk0 - posX;
+				dz = vehicle->unk4 - posZ;
 				distSq = (dx * dx) + (dz * dz);
 				if ((distSq < 0x127690) && !(vehicle->unk20 & 2)) {
 					distRem = 0x127690 - distSq;
-					func_80102DDC_111D8C(vehicle,
+					func_80102DDC_111D8C(D_80052B34,
 						func_80003824_4424(
 							(f32)(vehicle->unk0 - alienInstances[alien->unk25].unk0),
 							(f32)(vehicle->unk4 - alienInstances[alien->unk25].unk4)
@@ -2386,9 +2384,9 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 						(s16)(s32)(((f32)distRem / D_802DE438_196F48) + 8192.0f),
 						(f32)(distRem * 0x32) / D_802DE43C_196F4C);
 
-					vehicle->unk22 = (s16)(0x3E8 - (func_800038E0_44E0() % 2000));
-					vehicle->unk24 = (s16)(0x3E8 - (func_800038E0_44E0() % 2000));
-					vehicle->unk26 = (s16)(0x3E8 - (func_800038E0_44E0() % 2000));
+					D_80052B34->unk22 = (s16)(0x3E8 - (func_800038E0_44E0() % 2000));
+					D_80052B34->unk24 = (s16)(0x3E8 - (func_800038E0_44E0() % 2000));
+					D_80052B34->unk26 = (s16)(0x3E8 - (func_800038E0_44E0() % 2000));
 				}
 			}
 		}
@@ -2471,7 +2469,6 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DB16C_193C7C.s")
 #endif
-
 #ifdef NON_MATCHING
 /* CURRENT(2295) */
 void func_802DBA00_194510(u8 arg0) {
