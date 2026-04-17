@@ -412,7 +412,7 @@ void func_80005B84_6784(void) {
 		}
 	}
 }
-
+// CURRENT(5487)
 #ifdef NON_MATCHING
 void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, f32 arg8, f32 arg9, u16 *arg10) {
 	f32 sp128;
@@ -647,14 +647,13 @@ void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_80006DDC_79DC(void) {
 	s32 pad0;
 	s32 pad1;
 	s32 pad2;
 	s32 pad3;
 	void (*loadLevelCallback)(void *);
-	s32 var_s3;
+	u32 var_s3;
 
 	loadLevelCallback = (void (*)(void *)) loadLevel;
 	D_80052ACA = 5;
@@ -755,9 +754,7 @@ void func_80006DDC_79DC(void) {
 	} while (var_s3 == 0);
 	D_80068080 = 4;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006DDC_79DC.s")
-#endif
+
 
 void func_800071D8_7DD8(void) {
 	func_8000505C_5C5C();
@@ -1178,10 +1175,11 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007F60_8B60.s")
 #endif
 
-
+// CURRENT(785)
 #ifdef NON_MATCHING
 s32 func_8000807C_8C7C(u8 *arg0, u8 *arg1) {
-	u8 opcode;
+	s32 temp;
+	s32 opcode;
 
 loop_1:
 	switch (opcode = arg0[0]) {
@@ -1190,7 +1188,8 @@ loop_1:
 		case 0x9A:
 			return D_80052B34 == &vehicleInstances[arg1[1]];
 		case 0xAF:
-			arg1 = D_8004D180 + arg1[1] * 3;
+			temp = arg1[1];
+			arg1 = D_8004D180 + temp * 3;
 			goto loop_1;
 		case 0x99:
 			return D_80052540 == arg1[1];
@@ -1200,7 +1199,8 @@ loop_1:
 		case 0x99:
 			return arg0[1] == (((*(u32 *)(D_80050AE0 + arg1[1] * 0x18)) << 26) >> 28);
 		case 0xAF:
-			arg1 = D_8004D180 + arg1[1] * 3;
+			temp = arg1[1];
+			arg1 = D_8004D180 + temp * 3;
 			goto loop_1;
 		}
 	case 0xAF:
@@ -1488,13 +1488,12 @@ s32 func_80008C44_9844(s32 arg0) {
 		v1--;
 	}
 }
-
+// CURRENT(8943)
 #ifdef NON_MATCHING
 void func_80008CA8_98A8(s32 arg0) {
 	Unk80052B40 sp;
-	u16 temp_t6;
 	s32 t3, a3, a2, a1, a0;
-	s32 pad;
+	s32 frame;
 
 	guOrtho((Mtx *)D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, D_80037450_38050, D_80037454_38054, 1.0f);
 	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
@@ -1511,22 +1510,23 @@ void func_80008CA8_98A8(s32 arg0) {
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 
-	t3 = 0x1E - ((D_80031648_32248 / 4) % 60);
+	frame = D_80031648_32248;
+	t3 = 0x1E - ((frame / 4) % 60);
 	if (t3 >= 0) {
 		a3 = t3;
 	} else {
 		a3 = -t3;
 	}
-	a2 = 0x32 - ((D_80031648_32248 / 5) % 100);
+	a2 = 0x32 - ((frame / 5) % 100);
 	if (a2 >= 0) {
 		a1 = a2;
 	} else {
 		a1 = -a2;
 	}
-	a0 = 0x14 - ((D_80031648_32248 / 10) % 20);
+	a0 = 0x14 - ((frame / 10) % 20);
 	gDPSetEnvColor(D_8005BB2C++, a1 + 0x1E, a3 + 0x19, (a0 >= 0 ? a0 : -a0) + 0x14, 0xFF);
 	if (arg0 == 0) {
-		a0 = 0x14 - ((D_80031648_32248 / 4) % 40);
+		a0 = 0x14 - ((frame / 4) % 40);
 		if (a0 >= 0) {
 			a3 = a0;
 		} else {
@@ -1544,7 +1544,7 @@ void func_80008CA8_98A8(s32 arg0) {
 		}
 		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, a1 + 0x23, a3 + 0x1E, a0 + 0x28, 0xFF);
 	} else {
-		a0 = 0x14 - ((D_80031648_32248 / 4) % 40);
+		a0 = 0x14 - ((frame / 4) % 40);
 		if (a0 >= 0) {
 			a0 = a0;
 		} else {
@@ -1567,7 +1567,7 @@ void func_80008CA8_98A8(s32 arg0) {
 	gDPSetCombineMode(D_8005BB2C++, G_CC_BLENDPE, G_CC_BLENDPE);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (u8 *)((s32)(&D_1003990[((D_80031648_32248 / 5) % 8) * 256]) & 0x1FFFFFFF));
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (u8 *)((s32)(&D_1003990[((frame / 5) % 8) * 256]) & 0x1FFFFFFF));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
 	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
@@ -1580,9 +1580,9 @@ void func_80008CA8_98A8(s32 arg0) {
 		D_800313E4_31FE4 = 0;
 	}
 	func_80005110_5D10(0x140, 0xF0, 0xFF, 0xFF, 0xFF);
-	temp_t6 = (D_80031648_32248 + 1) & 0xFFFF;
-	D_80031648_32248 = temp_t6;
-	if ((s32)temp_t6 >= 0xFA1) {
+	frame = (frame + 1) & 0xFFFF;
+	D_80031648_32248 = frame;
+	if (frame >= 0xFA1) {
 		D_80031648_32248 = 0;
 	}
 }

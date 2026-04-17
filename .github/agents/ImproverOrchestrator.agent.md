@@ -31,7 +31,7 @@ You will be given a C file to target, follow this process:
 
 Tell the subagents to reduce the score as much as possible, they should keep going after they make a positive improvement, and only stop when they can no longer find any changes that reduce the score.
 
-If a function contains any switch statements and has a score of less than 100 then skip it. Switch statements require additional work to acheive a perfect match - which is being done elsewhere.
+If a function already has a score of less than 100 then skip it. Don't tell the subagent this score threshold.
 
 Keep going automatically until all NON_MATCHING functions in the file have been processed by subagents, you're a competent agent and can complete the full job without reporting to the user until all functions are processed.
 
