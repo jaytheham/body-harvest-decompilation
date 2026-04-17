@@ -2801,6 +2801,7 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 #endif
 
 #ifdef NON_MATCHING
+// CURRENT(4214)
 void func_80019ABC_1A6BC(arg0, arg1)
 s32 arg0;
 s32 arg1;
@@ -2827,7 +2828,8 @@ s32 arg1;
 		D_800344A8 = 0;
 	}
 	cnt = D_800344A8;
-	if ((cnt % 3) == 2) {
+	if ((cnt % 3) != 2) {
+	} else {
 		D_8006C56C = ((u8)D_8006C56C + 1) % 6;
 	}
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, (u8*)((s32)&D_80264B00[(u8)D_8006C56C * 0x240] & 0x1FFFFFFF));
