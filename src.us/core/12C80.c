@@ -2545,6 +2545,7 @@ s32 func_80018AC8_196C8(void) {
 	return 0;
 }
 
+// CURRENT(2410)
 #ifdef NON_MATCHING
 s32 func_80018AEC_196EC(s32 arg0, s32 arg1, s32 arg2) {
 	s32 sp24;
@@ -2554,8 +2555,7 @@ s32 func_80018AEC_196EC(s32 arg0, s32 arg1, s32 arg2) {
 
 	sp24 = 0;
 	if (func_80017B78_18778() == 1) {
-		var_v1 = D_800344A4;
-		temp_v0 = var_v1 + 1;
+		temp_v0 = D_800344A4 + 1;
 		var_v1 = (temp_v0 >= 0xB) ? 0xA : temp_v0;
 		if (D_8006C6C6 > 0 && D_8004802C == 0) {
 			var_v1 = 0;
@@ -2563,7 +2563,7 @@ s32 func_80018AEC_196EC(s32 arg0, s32 arg1, s32 arg2) {
 		D_800344A4 = var_v1;
 		if (var_v1 >= 0xA) {
 			if ((D_8003449C == 0) && (gameplayMode != 0)) {
-				D_8006C560 = (u16)gameplayMode;
+				D_8006C560 = gameplayMode;
 				gameplayMode = 9;
 				if ((D_80034484 != 0) && (D_8003447C == 0) && (D_80034488 == 0)) {
 					func_800153D8_15FD8(0x156);
@@ -2581,7 +2581,7 @@ s32 func_80018AEC_196EC(s32 arg0, s32 arg1, s32 arg2) {
 	} else {
 		temp_v1 = D_8003449C - 4;
 		if (D_8003449C == 0x18) {
-			gameplayMode = (GameplayMode)D_8006C560;
+			gameplayMode = D_8006C560;
 		}
 		if (temp_v1 < 0) {
 			D_8003449C = 0;
