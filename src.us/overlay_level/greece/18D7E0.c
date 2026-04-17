@@ -544,7 +544,7 @@ s32 func_802D57A0_18E2B0(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(4783) */
+/* CURRENT(3063) */
 s32 func_802D64D0_18EFE0(void) {
 	u8 specIndex;
 	s32 alienId;
@@ -588,8 +588,7 @@ s32 func_802D64D0_18EFE0(void) {
 		break;
 
 	case 1:
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0xD8) {
+		if (D_80157F8E++ >= 0xD8) {
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
@@ -630,8 +629,7 @@ s32 func_802D64D0_18EFE0(void) {
 		break;
 
 	case 6:
-		D_80157F8E += 1;
-		if (D_80157F8E >= 2) {
+		if (D_80157F8E++ >= 2) {
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
