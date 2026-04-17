@@ -2303,13 +2303,10 @@ void func_802DA3EC_192EFC(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(18863) */
+/* CURRENT(17324) */
 s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 	AlienInstance *alien;
 	VehicleInstance *vehicle;
-	u8 alienId;
-	s16 node0;
-	s16 node1;
 	s32 posX;
 	s32 posY;
 	s32 posZ;
@@ -2321,34 +2318,36 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 	s8 result;
 	s32 randVal;
 	f32 tempF;
+	s16 nodes[3];
 
-	alienId = arg0 & 0xFF;
-	alien = &alienInstances[alienId];
-	node0 = D_8014DD50[alien->unkC].unkC;
-	node1 = D_8014DD50[node0].unkC;
+	arg0 &= 0xFF;
+	alien = &alienInstances[arg0];
+	nodes[2] = alien->unkC;
+	nodes[0] = D_8014DD50[nodes[2]].unkC;
+	nodes[1] = D_8014DD50[nodes[0]].unkC;
 	targetIdx = alien->specIndex;
 
 	if (alien->unk20 & 0x4000) {
-		result = func_80081F18_90EC8(alienId, 3, 4, &node0, arg1);
+		result = func_80081F18_90EC8(arg0, 3, 4, &nodes[0], arg1);
 		if (result == 4) {
 			alien->unk20 &= ~0x4000;
 		}
 
-		if ((alien->unk36 == 2) && (D_8014DD5E[node0][0] == 0)) {
+		if ((alien->unk36 == 2) && (D_8014DD5E[nodes[0]][0] == 0)) {
 			func_80128504_1374B4(alien, 1, &posX, &posY, &posZ);
 			func_800DEE5C_EDE0C((s16)posX, (s16)(posY + 5), (s16)posZ, 0x50, 0xA);
 			func_800DEA08_ED9B8((s16)posX, (s16)posY, (s16)posZ, 0x1C2, 8, 6, 0x28, 0xDC, 0xA6, 0x85, 0x2F);
 			func_800C541C_D43CC((s16)posX, (s16)posY, (s16)posZ, 0, 0x7F, 0, 0x78, 0xFF, 0x3C, 0x14, 0x6A, 0x53, 0);
 
-			func_80137468_146418(alienId, 0x259);
+			func_80137468_146418(arg0, 0x259);
 			func_80135D44_144CF4(posX, posY, posZ, 5.0f);
 
-			if (func_800879A4_96954(alienId, 0x50, 1) != 0) {
+			if (func_800879A4_96954(arg0, 0x50, 1) != 0) {
 				vehicle = D_80052B34;
 				func_80122524_1314D4(vehicle, 0x7D0, alien->unk0, alien->unk4);
 
 				if (vehicle->unk1A != 0) {
-					func_80137468_146418(alienId, 0x258);
+					func_80137468_146418(arg0, 0x258);
 					tempF = (f32)((f64)(f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
 					func_800C541C_D43CC(vehicle->unk0, vehicle->unk2, vehicle->unk4, (s8)(s32)(tempF * 127.0f), -0x50,
 						(s32)((f32)-((f64)(f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0) * 127.0f),
@@ -2380,14 +2379,14 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 	}
 
 	if (alien->unk20 & 0x1000) {
-		result = func_80081F18_90EC8(alienId, 3, 3, &node0, arg1);
+		result = func_80081F18_90EC8(arg0, 3, 3, &nodes[0], arg1);
 		if (result == 3) {
 			alien->unk20 &= ~0x1000;
 		}
 
 		if (result == 2) {
-			func_80137468_146418(alienId, 0x131);
-			if (!(D_80052B34->unk20 & 2) && (func_800879A4_96954(alienId, 0x50, 0) != 0)) {
+			func_80137468_146418(arg0, 0x131);
+			if (!(D_80052B34->unk20 & 2) && (func_800879A4_96954(arg0, 0x50, 0) != 0)) {
 				vehicle = D_80052B34;
 				dx = vehicle->unk0 - alien->unk0;
 				dz = vehicle->unk4 - alien->unk4;
@@ -2404,7 +2403,7 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 					func_80122524_1314D4(vehicle, 0x3E8, alien->unk0, alien->unk4);
 				}
 
-				func_80137468_146418(alienId, 0x258);
+				func_80137468_146418(arg0, 0x258);
 				func_80102D00_111CB0(vehicle, (f32)dx / 20.0f, (f32)randVal, (f32)dz / 20.0f);
 
 				tempF = (f32)((f64)(f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
@@ -2436,14 +2435,14 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 				alien->unk20 &= ~0x1000;
 				alien->unk36 = 0;
 				alien->unk20 |= 0x2000;
-				D_8014DD5E[node0][0] = 0;
+				D_8014DD5E[nodes[0]][0] = 0;
 			}
 		}
 		return 1;
 	}
 
 	if (alien->unk20 & 0x2000) {
-		result = func_80081F18_90EC8(alienId, 3, 2, &node0, arg2);
+		result = func_80081F18_90EC8(arg0, 3, 2, &nodes[0], arg2);
 		if (result == 2) {
 			alien->unk20 &= ~0x2000;
 		}
