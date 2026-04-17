@@ -1821,7 +1821,7 @@ void func_802D962C_19213C(u8 arg0, s16 arg1, s16 arg2, AlienInstance *alien) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(5943) */
+/* CURRENT(717) */
 void func_802D9964_192474(u8 arg0) {
 	AlienInstance *alien;
 	s16 sp4E;
@@ -1854,27 +1854,33 @@ void func_802D9964_192474(u8 arg0) {
 		sp46 = alien->unk0 - D_80052B34->unk0;
 		sp44 = alien->unk4 - D_80052B34->unk4;
 
-		if (((s32 (*)(u8, s16, s32))func_80086230_951E0)(arg0, sp4E, 0x2000) == 0) {
+		if (func_80086230_951E0(arg0, sp4E, 0x2000) == 0) {
 			temp_a1 = -sp46;
 			temp_a0 = -sp44;
-			var_v1 = temp_a1;
 			if (temp_a1 < sp46) {
 				var_v1 = sp46;
+			} else {
+				var_v1 = temp_a1;
 			}
-			var_v0 = temp_a0;
 			if (temp_a0 < sp44) {
 				var_v0 = sp44;
+			} else {
+				var_v0 = temp_a0;
 			}
 			if (var_v0 < var_v1) {
-				var_v1 = temp_a1;
+				var_v0 = temp_a1;
 				if (temp_a1 < sp46) {
 					var_v1 = sp46;
+				} else {
+					var_v1 = var_v0;
 				}
 			} else {
-				var_v1 = temp_a0;
 				if (temp_a0 < sp44) {
-					var_v1 = sp44;
+					var_v0 = temp_a0;
+				} else {
+					var_v0 = sp44;
 				}
+				var_v1 = var_v0;
 			}
 
 			if ((var_v1 >= 0x79) && (alien->unk4E != 0) && (func_80087188_96138(arg0, 0, 0x20) != 0)) {
@@ -1884,45 +1890,57 @@ void func_802D9964_192474(u8 arg0) {
 
 		temp_a1 = -sp46;
 		temp_a0 = -sp44;
-		var_v1 = temp_a1;
 		if (temp_a1 < sp46) {
 			var_v1 = sp46;
+		} else {
+			var_v1 = temp_a1;
 		}
-		var_v0 = temp_a0;
 		if (temp_a0 < sp44) {
 			var_v0 = sp44;
+		} else {
+			var_v0 = temp_a0;
 		}
 		if (var_v0 < var_v1) {
-			var_v1 = temp_a1;
+			var_v0 = temp_a1;
 			if (temp_a1 < sp46) {
 				var_v1 = sp46;
+			} else {
+				var_v1 = var_v0;
 			}
 		} else {
-			var_v1 = temp_a0;
 			if (temp_a0 < sp44) {
-				var_v1 = sp44;
+				var_v0 = temp_a0;
+			} else {
+				var_v0 = sp44;
 			}
+			var_v1 = var_v0;
 		}
 
 		if (var_v1 < 0x79) {
-			var_v1 = temp_a1;
 			if (temp_a1 < sp46) {
 				var_v1 = sp46;
+			} else {
+				var_v1 = temp_a1;
 			}
-			var_v0 = temp_a0;
 			if (temp_a0 < sp44) {
 				var_v0 = sp44;
+			} else {
+				var_v0 = temp_a0;
 			}
 			if (var_v0 < var_v1) {
-				var_v1 = temp_a1;
+				var_v0 = temp_a1;
 				if (temp_a1 < sp46) {
 					var_v1 = sp46;
+				} else {
+					var_v1 = var_v0;
 				}
 			} else {
-				var_v1 = temp_a0;
 				if (temp_a0 < sp44) {
-					var_v1 = sp44;
+					var_v0 = temp_a0;
+				} else {
+					var_v0 = sp44;
 				}
+				var_v1 = var_v0;
 			}
 
 			if (var_v1 >= 0x73) {
