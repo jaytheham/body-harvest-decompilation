@@ -2584,22 +2584,23 @@ void func_802DBDA8_1948B8(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(2460) */
+/* CURRENT(1690) */
 void func_802DBDDC_1948EC(u8 arg0) {
-	u8 sp37;
-	s32 var_v0;
-	s32 temp_a0;
-	s32 var_a3;
-	s32 temp_v1;
-	s32 temp_a1;
-	s32 var_a2;
-	s32 var_a0;
+	u8 otherIndex;
 
-	sp37 = alienInstances[arg0].unk25;
+	otherIndex = alienInstances[arg0].unk25;
 	func_800A93A4_B8354(arg0, 0xBB, 0x24, 0x145);
 	D_8014DD50[alienInstances[arg0].unkC].unk4 = -0x96;
 	if (func_802DB16C_193C7C(arg0, &D_802DDF00_196A10, &D_802DDF0C_196A1C) == 0) {
 		if ((func_800038E0_44E0() % 100) == 0) {
+			s32 var_v0;
+			s32 temp_a0;
+			s32 var_a3;
+			s32 temp_v1;
+			s32 temp_a1;
+			s32 var_a2;
+			s32 var_a0;
+
 			var_v0 = D_80052B34->unk0 - alienInstances[arg0].unk0;
 			temp_a0 = -var_v0;
 			var_a3 = temp_a0;
@@ -2624,7 +2625,7 @@ void func_802DBDDC_1948EC(u8 arg0) {
 				}
 				var_v0 = var_a0;
 			}
-			if (var_v0 < 0x320 && !(*(s32*)((volatile s16*)D_800481DD + sp37 * 0x28) & 0x8000)) {
+			if (var_v0 < 0x320 && !(*(s32 *) ((u8 *) &alienInstances[otherIndex] + 0x45) & 0x8000)) {
 				alienInstances[arg0].unk36 = 0;
 				alienInstances[arg0].unk20 |= 0x1000;
 			}
