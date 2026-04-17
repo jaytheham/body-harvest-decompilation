@@ -2079,19 +2079,23 @@ s16 func_80017394_17F94(u8 *arg0, s16 arg1)
 	return width;
 }
 
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017394_17F94.s")
+#endif
+
+// CURRENT(27716)
 #ifdef NON_MATCHING
 void func_80017490_18090(u8 *arg0) {
 	u8 buf[32];
-	s32 pad1;
-	s32 pad2;
 	s32 s5;
 	s32 s4;
-	s16 s3;
+	s32 s3;
 	u8 *s2;
 	s32 s1;
 	s32 sp68;
 	u8 s0;
 	s16 *pD558;
+	u8 *bufp;
 
 	s5 = 0;
 	if (D_800313D0 != 0) {
@@ -2130,23 +2134,25 @@ void func_80017490_18090(u8 *arg0) {
 		drawText(&D_800383C8_38FC8, (s16)(-(s3 >= 0 ? s3 >> 1 : (s3 + 1) >> 1) * 4 + 0x154));
 	}
 
+	bufp = buf;
+
 	while (1) {
 		if (s0 >= 0x41) {
 			if (s0 == 0x5E) {
 				s4 += 2;
 				s2 += 2;
 			} else {
-				buf[s5++] = s0;
+				bufp[s5++] = s0;
 			}
 		} else {
 			switch (s0) {
 			case 0:
 			case 0x40:
-				buf[s5] = 0;
+				bufp[s5] = 0;
 				D_8006C55A++;
 				sp68 = 1;
 				s5 = 0;
-				drawText(&D_800383E4_38FE4, buf);
+				drawText(&D_800383E4_38FE4, bufp);
 				if (func_800172E0_17EE0(s2) == 1) {
 					drawText(&D_800383EC_38FEC, 0, s1, 0, D_80068088 * 4 - 0x3DC);
 				} else {
@@ -2157,10 +2163,10 @@ void func_80017490_18090(u8 *arg0) {
 				s2--;
 				break;
 			case 0x20:
-				buf[s5] = 0;
+				bufp[s5] = 0;
 				D_8006C55A++;
 				s5 = 0;
-				drawText(&D_800383CC_38FCC, buf);
+				drawText(&D_800383CC_38FCC, bufp);
 				break;
 			case 0x24:
 				s4 += 2;
@@ -2171,10 +2177,10 @@ void func_80017490_18090(u8 *arg0) {
 				break;
 			case 0x3B: {
 				s16 lw;
-				buf[s5] = 0;
+				bufp[s5] = 0;
 				D_8006C55A++;
 				s5 = 0;
-				drawText(&D_800383D4_38FD4, buf);
+				drawText(&D_800383D4_38FD4, bufp);
 				drawText(&D_800383DC_38FDC, 0, s1);
 				s1++;
 				if (D_8003447C != 0) {
@@ -2190,7 +2196,7 @@ void func_80017490_18090(u8 *arg0) {
 				break;
 			}
 			default:
-				buf[s5++] = s0;
+				bufp[s5++] = s0;
 				break;
 			}
 		}
@@ -2203,11 +2209,11 @@ void func_80017490_18090(u8 *arg0) {
 		} else {
 			s0 = *s2;
 			if (s4 >= ((u16 *)D_8006C550)[(*pD558) + 1]) {
-				buf[s5] = 0;
+				bufp[s5] = 0;
 				D_8006C55A++;
 				sp68 = 1;
 				s5 = 0;
-				drawText(&D_80038404_39004, buf);
+				drawText(&D_80038404_39004, bufp);
 				if (func_800172E0_17EE0(s2) == 1) {
 					drawText(&D_8003840C_3900C, 0, s1, 0, D_80068088 * 4 - 0x3DC);
 				} else {
@@ -2992,9 +2998,6 @@ s32 func_8001A37C_1AF7C(char *arg0) {
 	}
 	return var_s0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017394_17F94.s")
-#endif
 
 void myfree(void) {
 	gzip_data_0000 = 0;
