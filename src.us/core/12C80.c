@@ -981,36 +981,35 @@ s32 func_80014278_14E78(void)
 }
 
 // https://decomp.me/scratch/0wfIc
-#ifdef NON_MATCHING
 s32 func_800143C4_14FC4(s16 arg0)
 {
-  Unk8006AA80Node sp58;
-  s32 sp54;
-  unsigned char new_var;
-  if (D_8006AB88 == 0)
-  {
+	Unk8006AA80Node sp58;
+	s32 sp54;
+	s16 soundId;
+	u16 soundIdU;
+
+	if (D_8006AB88 == 0)
+	{
 	return -1;
-  }
-  if (func_80012638_13238(arg0, D_8006AB18[0]->unk1C) != NULL)
-  {
+	}
+	if (func_80012638_13238(arg0, D_8006AB18[0]->unk1C) != NULL)
+	{
 	return -1;
-  }
-  sp58.unk0 = arg0;
-  sp58.unk6 = -1;
-  sp58.unk0C = 0;
-  sp58.unk8 = 0;
-  sp58.unk2 = D_80032228_32E28[(new_var = arg0) & 0xFFFF];
-  sp58.unk0E = -1;
-  sp58.unk24 = D_80032A78_33678[new_var & 0xFFFF];
-  sp58.unk20 = D_80031F04_32B04[arg0];
-  sp58.unk28 = D_8006AB18[0]->unk1C;
-  sp58.unk0F = -1;
-  sp58.unk22 = 0x40;
-  return func_800121B4_12DB4(sp58, &D_8006AA80, &D_8006AA84);
+	}
+	soundId = arg0;
+	soundIdU = (sp58.unk0 = soundId);
+	sp58.unk2 = D_80032228_32E28[soundIdU];
+	sp58.unk24 = D_80032A78_33678[soundIdU];
+	sp58.unk6 = -1;
+	sp58.unk20 = D_80031F04_32B04[soundId];
+	sp58.unk0C = 0;
+	sp58.unk8 = 0;
+	sp58.unk0E = -1;
+	sp58.unk28 = D_8006AB18[0]->unk1C;
+	sp58.unk22 = 0x40;
+	sp58.unk0F = -1;
+	return func_800121B4_12DB4(sp58, &D_8006AA80, &D_8006AA84);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800143C4_14FC4.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
