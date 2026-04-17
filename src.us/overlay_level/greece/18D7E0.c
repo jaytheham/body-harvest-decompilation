@@ -2456,16 +2456,18 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(2390) */
+/* CURRENT(2295) */
 void func_802DBA00_194510(u8 arg0) {
+	s32 pad0;
 	u8 sp43;
-	s32 var_a0;
+	s32 pad1;
 	s32 var_v0;
 	s32 temp_a0;
 	s32 var_a3;
 	s32 temp_v1;
 	s32 temp_a1;
 	s32 var_a2;
+	s32 var_a0;
 
 	sp43 = alienInstances[arg0].unk25;
 	func_800A93A4_B8354(arg0, -0xBB, 0x22, 0x147);
@@ -2474,15 +2476,17 @@ void func_802DBA00_194510(u8 arg0) {
 		if ((func_800038E0_44E0() % 100) == 0) {
 			var_v0 = D_80052B34->unk0 - alienInstances[arg0].unk0;
 			temp_a0 = -var_v0;
-			var_a3 = temp_a0;
 			if (temp_a0 < var_v0) {
 				var_a3 = var_v0;
+			} else {
+				var_a3 = temp_a0;
 			}
 			temp_v1 = D_80052B34->unk4 - alienInstances[arg0].unk4;
 			temp_a1 = -temp_v1;
-			var_a2 = temp_a1;
 			if (temp_a1 < temp_v1) {
 				var_a2 = temp_v1;
+			} else {
+				var_a2 = temp_a1;
 			}
 			if (var_a2 < var_a3) {
 				if (temp_a0 < var_v0) {
@@ -2496,7 +2500,7 @@ void func_802DBA00_194510(u8 arg0) {
 				}
 				var_v0 = var_a0;
 			}
-			if (var_v0 < 0x320 && !(*(s32 *)((volatile s16 *)D_800481DD + sp43 * 0x28) & 0x8000)) {
+			if (var_v0 < 0x320 && !(*(s32 *)((u8 *)&D_800481DD + (sp43 * 0x50)) & 0x8000)) {
 				alienInstances[arg0].unk36 = 0;
 				alienInstances[arg0].unk20 |= 0x1000;
 			}
