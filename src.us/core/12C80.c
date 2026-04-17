@@ -517,7 +517,6 @@ void func_80013314_13F14(void) {
 }
 
 // This matches except D_80033C6C_W has to be defined in addition to D_80033C6C_3486C
-#ifdef NON_MATCHING
 void func_80013324_13F24(void)
 {
 	s8 idx;
@@ -535,9 +534,6 @@ void func_80013324_13F24(void)
 		func_80015C94_16894(arr_val, 3);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013324_13F24.s")
-#endif
 
 // https://decomp.me/scratch/wNzpE
 #ifdef NON_MATCHING
