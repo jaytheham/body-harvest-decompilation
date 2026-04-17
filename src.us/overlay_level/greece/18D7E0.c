@@ -393,7 +393,7 @@ void func_802D5760_18E270(void) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(3500) */
+/* CURRENT(3137) */
 s32 func_802D57A0_18E2B0(void) {
 	s16 i;
 	u16 x;
@@ -487,7 +487,7 @@ s32 func_802D57A0_18E2B0(void) {
 
 		if (D_80157F8E == 0x46) {
 			for (i = 0x8A; i != 0x90; i += 2) {
-				tile = &D_80052A94[-40].unk0[i >> 1];
+				tile = (u16 *)((u8 *)D_80052A94[-40].unk0 + i);
 				tileByte = (u8 *)tile;
 				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 4) & 0x3F));
 			}
@@ -536,6 +536,7 @@ s32 func_802D57A0_18E2B0(void) {
 
 	return 0;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D57A0_18E2B0.s")
 #endif
