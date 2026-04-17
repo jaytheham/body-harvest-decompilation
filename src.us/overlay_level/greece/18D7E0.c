@@ -393,7 +393,7 @@ void func_802D5760_18E270(void) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(3137) */
+/* CURRENT(2962) */
 s32 func_802D57A0_18E2B0(void) {
 	s16 i;
 	u16 x;
@@ -486,8 +486,8 @@ s32 func_802D57A0_18E2B0(void) {
 		}
 
 		if (D_80157F8E == 0x46) {
-			for (i = 0x8A; i != 0x90; i += 2) {
-				tile = (u16 *)((u8 *)D_80052A94[-40].unk0 + i);
+			for (v = 0x8A; v != 0x90; v += 2) {
+				tile = (u16 *)((u8 *)D_80052A94[-40].unk0 + v);
 				tileByte = (u8 *)tile;
 				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 4) & 0x3F));
 			}
@@ -495,22 +495,24 @@ s32 func_802D57A0_18E2B0(void) {
 
 		if ((D_80157F8E & 7) == 7) {
 			for (i = 0x86; i != 0x94; i += 2) {
+				s16 row = -0x26;
+
 				tile = &D_80052A94[-40].unk0[i >> 1];
 				tileByte = (u8 *)tile;
 				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 1) & 0x3F));
 				tile = &D_80052A94[-39].unk0[i >> 1];
 				tileByte = (u8 *)tile;
 				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 1) & 0x3F));
-				tile = &D_80052A94[-38].unk0[i >> 1];
+				tile = &D_80052A94[row].unk0[i >> 1];
 				tileByte = (u8 *)tile;
 				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 1) & 0x3F));
-				tile = &D_80052A94[-37].unk0[i >> 1];
+				tile = &D_80052A94[row + 1].unk0[i >> 1];
 				tileByte = (u8 *)tile;
 				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 1) & 0x3F));
-				tile = &D_80052A94[-36].unk0[i >> 1];
+				tile = &D_80052A94[row + 2].unk0[i >> 1];
 				tileByte = (u8 *)tile;
 				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 1) & 0x3F));
-				tile = &D_80052A94[-35].unk0[i >> 1];
+				tile = &D_80052A94[row + 3].unk0[i >> 1];
 				tileByte = (u8 *)tile;
 				tileByte[1] = (u8)((tileByte[1] & 0xFFC0) | (((*tile) + 1) & 0x3F));
 			}
