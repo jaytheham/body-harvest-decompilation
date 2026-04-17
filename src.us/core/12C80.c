@@ -1129,11 +1129,12 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014508_15108.s")
 #endif
 
+// CURRENT(2375)
 #ifdef NON_MATCHING
 void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s32 arg3, f32 arg4) {
 	Unk8006AA80Node *node;
 	Unk8006AA80Node sp6C;
-	s16 angle;
+	s16 vol;
 	u8 pan;
 	u32 pan_u32;
 
@@ -1183,16 +1184,16 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s32 arg3, f32 arg4) {
 		return;
 	}
 
-	angle = arg3;
-	arg3 = (s16)(s32)(((D_80032430_33030[arg1] - arg2) / D_80032430_33030[arg1]) * (f32) D_80031F04_32B04[arg1]);
+	vol = (s16)(s32)(((D_80032430_33030[arg1] - arg2) / D_80032430_33030[arg1]) * (f32) D_80031F04_32B04[arg1]);
+	arg3 = (s16)arg3;
 
-	if (angle < -0x4000) {
-		angle = -0x8000 - angle;
-	} else if (angle >= 0x4001) {
-		angle = 0x8000 - angle;
+	if (arg3 < -0x4000) {
+		arg3 = -0x8000 - arg3;
+	} else if (arg3 >= 0x4001) {
+		arg3 = 0x8000 - arg3;
 	}
 
-	pan = (u8)(pan_u32 = (u32)(((f64)(f32)angle + 16384.0) / 16384.0 * 64.0));
+	pan = (u8)(pan_u32 = (u32)(((f64)(f32)(s16)arg3 + 16384.0) / 16384.0 * 64.0));
 
 	if ((f64) arg4 < 0.0) {
 		if ((f64) arg4 == -1.0) {
@@ -1210,13 +1211,13 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s32 arg3, f32 arg4) {
 				if ((u8)node->unk22 != (u8)pan_u32) {
 					if ((u8)pan_u32 > 0) {
 						if ((u8)pan_u32 < 0x7F) {
-						if ((s16)(pan - (u8)node->unk22) >= 0xB) {
-							pan = (u8)node->unk22 + 0xA;
-						} else if ((s16)(pan - (u8)node->unk22) < -0xA) {
-							pan = (u8)node->unk22 - 0xA;
-						}
-						alSndpSetPan(D_8006AB10, pan);
-						node->unk22 = pan;
+							if ((s16)(pan - (u8)node->unk22) >= 0xB) {
+								pan = (u8)node->unk22 + 0xA;
+							} else if ((s16)(pan - (u8)node->unk22) < -0xA) {
+								pan = (u8)node->unk22 - 0xA;
+							}
+							alSndpSetPan(D_8006AB10, pan);
+							node->unk22 = pan;
 						}
 					}
 				}
@@ -1226,20 +1227,20 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s32 arg3, f32 arg4) {
 						node->unk24 = arg4;
 					}
 				}
-				if (arg3 != node->unk20 && arg3 > 0) {
-					if (arg3 < 0x7FFF) {
-						if ((s16)(arg3 - node->unk20) >= 0x101) {
-							arg3 = node->unk20 + 0x100;
-						} else if ((s16)(arg3 - node->unk20) < -0x100) {
-							arg3 = node->unk20 - 0x100;
+				if (vol != node->unk20 && vol > 0) {
+					if (vol < 0x7FFF) {
+						if ((s16)(vol - node->unk20) >= 0x101) {
+							vol = node->unk20 + 0x100;
+						} else if ((s16)(vol - node->unk20) < -0x100) {
+							vol = node->unk20 - 0x100;
 						}
-						node->unk20 = arg3;
+						node->unk20 = vol;
 						if (D_80031D4C_3294C == 1) {
-							arg3 = (s16)(s32)(((f32)arg3 * D_80031D58_32958 + (D_80031D5C_3295C * ((f32)arg3 * D_80031D50_32950)) / D_80031D54_32954) * D_80031D60_32960);
+							vol = (s16)(s32)(((f32)vol * D_80031D58_32958 + (D_80031D5C_3295C * ((f32)vol * D_80031D50_32950)) / D_80031D54_32954) * D_80031D60_32960);
 						} else {
-							arg3 = (s16)(s32)((f32)arg3 * D_80031D60_32960);
+							vol = (s16)(s32)((f32)vol * D_80031D60_32960);
 						}
-						alSndpSetVol(D_8006AB10, arg3);
+						alSndpSetVol(D_8006AB10, vol);
 					}
 				}
 				node->unk0E = 0xF;
@@ -1253,14 +1254,14 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s32 arg3, f32 arg4) {
 	}
 
 	{
-		s32 soundIdx = arg1;
+		s16 soundIdx = arg1;
 
 		if (func_80012638_13238(soundIdx, D_8006AB18[0]->unk1C) == 0) {
 			sp6C.unk0 = soundIdx;
-		sp6C.unk20 = arg3;
+		sp6C.unk20 = vol;
 		*(f32 *)((u8 *)&sp6C + 0x1C) = arg2;
 		sp6C.unk2 = D_80032228_32E28[arg1];
-		*(s16 *)((u8 *)&sp6C + 0x18) = angle;
+		*(s16 *)((u8 *)&sp6C + 0x18) = arg3;
 		sp6C.unk22 = (s8) pan_u32;
 		sp6C.unk24 = arg4;
 		sp6C.unk2C = arg0;
