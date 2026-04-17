@@ -88,24 +88,22 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000450_1050.s")
 #endif
 
+/* CURRENT(1143) */
 #ifdef NON_MATCHING
 void func_80000730_1330(s32 arg0) {
-	OSMesg sp64;
 	OSScClient sp58;
+	OSMesg sp64;
 	BhAudioBuf *var_s0;
-	s32 var_s6;
-	s32 var_v0;
+	u32 var_v0;
+	u32 var_s6;
 	f32 var_f0;
-	f32 var_f10;
 
 	var_s6 = 0;
-	var_s0 = NULL;
+	var_s0 = 0;
 	osScAddClient(&D_800680A0, &sp58, &D_8003FCE8);
 	do {
 		osRecvMesg(&D_8003FCE8, &sp64, 1);
 		switch (((OSScMsg *)sp64)->type) {
-		case OS_SC_PRE_NMI_MSG:
-			break;
 		case OS_SC_RETRACE_MSG:
 			if (func_8000091C_151C(D_8003FB28[D_800431A0 % 3], var_s0) != 0) {
 				osRecvMesg(&D_8003FD20, &sp64, 1);
@@ -117,17 +115,12 @@ void func_80000730_1330(s32 arg0) {
 				D_800431B4 = 0.0f;
 			} else {
 				var_f0 = (f32)var_v0;
-				if (var_v0 < 0) {
-					var_f0 += 4294967296.0f;
-				}
-				var_f10 = (f32)D_80031300_31F00;
-				if (D_80031300_31F00 < 0) {
-					var_f10 += 4294967296.0f;
-				}
-				D_800431B4 = (f32)(((f64)(var_f0 - var_f10) * 100.0) / (f64)var_f0);
+				D_800431B4 = (f32)(((f64)(var_f0 - (f32)(u32)D_80031300_31F00) * 100.0) / (f64)var_f0);
 			}
 			D_800312FC_31EFC = 0;
 			D_80031300_31F00 = 0;
+			break;
+		case OS_SC_PRE_NMI_MSG:
 			break;
 		case 10:
 			var_s6 = 1;
