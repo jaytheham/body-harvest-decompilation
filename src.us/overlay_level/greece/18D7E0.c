@@ -2516,10 +2516,11 @@ void func_802DBB88_194698(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(2438) */
+/* CURRENT(2423) */
 void func_802DBBBC_1946CC(u8 arg0) {
 	u8 otherIndex;
 	s32 var_v0;
+	s32 pad0;
 	s32 distanceThreshold;
 	s32 flagValue;
 
@@ -2542,13 +2543,16 @@ void func_802DBBBC_1946CC(u8 arg0) {
 
 	if ((func_800038E0_44E0() % 100) == 0) {
 		s32 dx, dy, adx, ady;
+		VehicleInstance *player;
 
-		dx = D_80052B34->unk0 - alienInstances[arg0].unk0;
+		player = D_80052B34;
+
+		dx = player->unk0 - alienInstances[arg0].unk0;
 		adx = -dx;
 		if (adx < dx) {
 			adx = dx;
 		}
-		dy = D_80052B34->unk4 - alienInstances[arg0].unk4;
+		dy = player->unk4 - alienInstances[arg0].unk4;
 		ady = -dy;
 		if (ady < dy) {
 			ady = dy;
