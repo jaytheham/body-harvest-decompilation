@@ -951,7 +951,7 @@ void func_802D7360_18FE70(void) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(1580) */
+/* CURRENT(1548) */
 void func_802D738C_18FE9C(u8 arg0) {
 	s16 sp5E;
 	s16 sp5C;
@@ -960,18 +960,19 @@ void func_802D738C_18FE9C(u8 arg0) {
 	s16 sp56;
 	s16 sp50[3];
 	s32 sp44[3];
+	s16 sp4C;
 	s32 sp40;
 	s16 sp3E;
 	s16 sp38[2];
 	s16 sp34;
 	Unk8014DD50 *sp2C;
 	Unk8014DD50 *sp28;
-	s32 sp4C;
 	AlienInstance *s0;
 
 	s0 = &alienInstances[arg0];
 	sp5E = s0->unkC;
 	sp2C = &D_8014DD50[sp5E];
+	sp5C = (s8)sp2C->unkC;
 	sp28 = &D_8014DD50[sp5C];
 	sp58 = (s8)sp28->unkC;
 	sp5A = (s8)D_8014DD50[sp58].unkD;
