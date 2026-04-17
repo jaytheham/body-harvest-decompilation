@@ -2066,7 +2066,7 @@ void func_802DA378_192E88(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(34048) */
+/* CURRENT(33913) */
 void func_802DA3EC_192EFC(u8 arg0) {
 	AlienInstance *alien;
 	AlienInstance *parent;
@@ -2164,11 +2164,15 @@ void func_802DA3EC_192EFC(u8 arg0) {
 
 	alien->unk2C -= 1;
 
-	if ((dist < 0x258) && (func_80084FE8_93F98(arg0, 0x3E8) != 0) && (alien->unk26 == 0) && (alien->unk1E == 0) && !(parent->unk20 & 0x8000)) {
-		alien->unk26 = 0x19;
-		alien->unkA = 0;
-		path0->unk6 = 0;
-		path1->unk6 = 0;
+	if (dist < 0x258) {
+		if (func_80084FE8_93F98(arg0, 0x3E8) != 0) {
+			if ((alien->unk26 == 0) && (alien->unk1E == 0) && !(parent->unk20 & 0x8000)) {
+				alien->unk26 = 0x19;
+				alien->unkA = 0;
+				path0->unk6 = 0;
+				path1->unk6 = 0;
+			}
+		}
 	}
 
 	if (alien->unk26 != 0) {
