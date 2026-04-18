@@ -2391,7 +2391,92 @@ void func_8007FBC8_50078(u8 arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(820)
+void func_8007FBF8_500A8(void) {
+	s32 temp;
+	s32 step;
+
+	if (D_800D7970 == 1) {
+		temp = D_800D7971 - D_80094908_64DB8;
+		if (temp < 0) {
+			D_800D7971 = 0;
+			D_800D7970 = 0;
+		} else {
+			D_800D7971 = temp;
+		}
+	} else {
+		temp = D_800D7971 + D_80094908_64DB8;
+		if (temp >= 0x100) {
+			D_800D7971 = 0xFF;
+		} else {
+			D_800D7971 = temp;
+		}
+	}
+
+	if (D_800D7B0C.unk0 != D_800D7B08.unk0) {
+		if (D_800D7B0C.unk0 < D_800D7B08.unk0) {
+			step = (s16)D_800D7B08.unk0 - D_8009490C_64DBC;
+			if (step < D_800D7B0C.unk0) {
+				D_800D7B08.unk0 = D_800D7B0C.unk0;
+			} else {
+				D_800D7B08.unk0 = step;
+			}
+		} else {
+			step = (s16)D_800D7B08.unk0 + D_8009490C_64DBC;
+			if (D_800D7B0C.unk0 < step) {
+				D_800D7B08.unk0 = D_800D7B0C.unk0;
+			} else {
+				D_800D7B08.unk0 = step;
+			}
+		}
+	}
+
+	if (D_800D7B0C.unk1 != D_800D7B08.unk1) {
+		if (D_800D7B0C.unk1 < D_800D7B08.unk1) {
+			step = (s16)D_800D7B08.unk1 - D_8009490C_64DBC;
+			if (step < D_800D7B0C.unk1) {
+				D_800D7B08.unk1 = D_800D7B0C.unk1;
+			} else {
+				D_800D7B08.unk1 = step;
+			}
+		} else {
+			step = (s16)D_800D7B08.unk1 + D_8009490C_64DBC;
+			if (D_800D7B0C.unk1 < step) {
+				D_800D7B08.unk1 = D_800D7B0C.unk1;
+			} else {
+				D_800D7B08.unk1 = step;
+			}
+		}
+	}
+
+	if (D_800D7B0C.unk2 != D_800D7B08.unk2) {
+		if (D_800D7B0C.unk2 < D_800D7B08.unk2) {
+			step = (s16)D_800D7B08.unk2 - D_8009490C_64DBC;
+			if (step < D_800D7B0C.unk2) {
+				D_800D7B08.unk2 = D_800D7B0C.unk2;
+			} else {
+				D_800D7B08.unk2 = step;
+			}
+		} else {
+			step = (s16)D_800D7B08.unk2 + D_8009490C_64DBC;
+			if (D_800D7B0C.unk2 < step) {
+				D_800D7B08.unk2 = D_800D7B0C.unk2;
+			} else {
+				D_800D7B08.unk2 = step;
+			}
+		}
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_800D7B08.unk0, D_800D7B08.unk1, D_800D7B08.unk2, D_800D7971);
+	gDPFillRectangle(D_8005BB2C++, 0, 0, 320, 240);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007FBF8_500A8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007FE8C_5033C.s")
 

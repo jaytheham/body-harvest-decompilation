@@ -763,6 +763,8 @@ extern s32 D_800D7A60;
 extern u8 D_800D7A84;
 extern u8 D_800D7A8D;
 extern Unk80080588Rgb D_800D7B08;
+extern Unk80080588Rgb D_800D7B0C;
+extern u8 D_8009490C_64DBC;
 extern s32 D_80094934_64DE4;
 extern s32 D_80094998_64E48;
 extern s32 D_80095080_65530[];
