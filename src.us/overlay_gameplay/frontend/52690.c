@@ -459,7 +459,59 @@ void func_80088B54_59004(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80088E18_592C8.s")
 
+#ifdef NON_MATCHING
+// CURRENT(663)
+u8 func_800891F8_596A8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
+	s16 idx;
+	Unk800DE840 *dst;
+	Unk800DE840 *src;
+	u8 *dstBytes;
+	u8 *srcBytes;
+	u8 allocId;
+
+	if (arg4 == -3) {
+		return 0xFB;
+	}
+
+	allocId = func_80083A58_53F08(4);
+	if (allocId != 0xFB) {
+		idx = func_80083B7C_5402C(allocId);
+		if (idx == 0xFB) {
+			func_80083B14_53FC4(allocId);
+			allocId = 0xFB;
+		} else {
+			dst = &D_800DE840[idx];
+			dstBytes = (u8 *)dst;
+			if (arg4 == -8) {
+				dstBytes[0xE] = 0xC8;
+				dstBytes[0xF] = 0xC8;
+				dstBytes[0x10] = 0xC8;
+				dstBytes[0x11] = 0x64;
+				dstBytes[0x12] = 0x64;
+				dstBytes[0x13] = 0x64;
+			} else {
+				src = &D_800DE840[arg4];
+				srcBytes = (u8 *)src;
+				dstBytes[0xE] = srcBytes[0xE];
+				dstBytes[0xF] = srcBytes[0xF];
+				dstBytes[0x10] = srcBytes[0x10];
+				dstBytes[0x11] = ((u8 *)&D_800DE840[src->unk4])[8];
+				dstBytes[0x12] = ((u8 *)&D_800DE840[src->unk4])[9];
+				dstBytes[0x13] = ((u8 *)&D_800DE840[src->unk4])[0xA];
+			}
+
+			dst->unk8 = arg0;
+			dst->unkA = arg1;
+			dst->unkC = arg2;
+			((s16 *)&D_800DE130[allocId])[1] = arg3;
+		}
+	}
+
+	return allocId;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800891F8_596A8.s")
+#endif
 
 void func_80089388_59838(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	s16 idx;
