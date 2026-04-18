@@ -674,6 +674,7 @@ extern char D_800ADC48_7E0F8;
 extern char D_800AE094_7E544;
 extern char D_800AE098_7E548;
 extern char D_800AE09C_7E54C;
+extern char D_800AE958_7EE08; /* osSyncPrintf format string */
 extern char D_800AE97C_7EE2C; /* osSyncPrintf format string */
 extern f64 D_800AEA68_7EF18;
 
@@ -689,6 +690,10 @@ extern u8 D_800D7971;
 extern MissionData D_800D747A;
 extern s32* D_800D7A18;
 extern Unk80080530_Dst* D_800D7A1C;
+extern Unk80080588Entry5* D_800D7A28;
+extern Unk80080588Entry1C* D_800D7A34;
+extern Unk80080588Entry3* D_800D7A38;
+extern Unk80080588Rgb D_800D7A86;
 extern u8* D_800D7A4C;
 extern s32 D_800D8520;
 extern s8 D_800D8524;
