@@ -30,7 +30,52 @@ typedef enum FrontEndState
 	FE_STATE_LANGUAGE_SELECT = 0x18
 } FrontEndState;
 
+#ifdef NON_MATCHING
+// CURRENT(5)
+s32 func_80070270_40720(s32 arg0) {
+	switch (arg0) {
+	case 1:
+		func_800789E4_48E94();
+		break;
+	case 2:
+		D_800476A2 = 1;
+		return func_80082CBC_5316C(currentLevel - 2, &D_80052B2C->unk30);
+	case 3:
+		func_8007A038_4A4E8();
+		break;
+	case 4:
+		func_800796D0_49B80(0, 0);
+		break;
+	case 5:
+		func_800796D0_49B80(func_80070390_40840(), 0);
+		break;
+	case 6:
+		func_80076504_469B4();
+		break;
+	case 7:
+		func_8007685C_46D0C();
+		break;
+	case 8:
+		return func_8007CFB4_4D464(1);
+	case 9:
+		return func_8007CFB4_4D464(0);
+	case 10:
+		return func_8007D2B0_4D760();
+	case 11:
+		D_800946DC_64B8C = FE_STATE_PRESS_START;
+		func_800789E4_48E94();
+		break;
+	case 12:
+	case 13:
+	case 14:
+		break;
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070270_40720.s")
+#endif
 
 // calculatePlayersTotalScore
 s32 func_80070390_40840(void) {

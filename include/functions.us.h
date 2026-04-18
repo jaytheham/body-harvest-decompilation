@@ -173,9 +173,18 @@ s32 func_80010290_10E90(s32 arg0);
 s32 func_800104AC_110AC(u8 arg0);
 
 // overlay_gameplay frontend
+s32 func_80070270_40720(s32 arg0);
 s32 func_80070390_40840(void);
 MissionData* func_80070494_40944(s16 arg0);
 void func_80070514_409C4(s16 arg0);
+s32 func_8007685C_46D0C(void);
+void func_800789E4_48E94(void);
+void func_800796D0_49B80(s32 arg0, s32 arg1);
+void func_8007A038_4A4E8(void);
+s32 func_8007CFB4_4D464(s32 arg0);
+s32 func_8007D2B0_4D760(void);
+s32 func_80082CBC_5316C(s32 arg0, s32* arg1);
+void func_80076504_469B4(void);
 s32 func_800776BC_47B6C(void);
 extern MissionData* func_800706E8_40B98(s16 arg0);
 void func_8007949C_4994C(s32 arg0, s32 arg1);

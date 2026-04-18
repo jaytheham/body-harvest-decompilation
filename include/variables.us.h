@@ -649,6 +649,7 @@ extern f32 D_8008DDFC_175EBC;
 
 extern MissionData D_800909B0[42];
 extern s8 D_80090A7D;
+extern s16 D_800946DC_64B8C;
 extern s32 D_80094900;
 extern s32 D_80094938;
 extern s16 currentFrontendState;
