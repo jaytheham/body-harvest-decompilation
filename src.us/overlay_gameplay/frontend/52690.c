@@ -677,7 +677,40 @@ void func_8008ED44_5F1F4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 ar
 	D_800DE0EB = 0;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(1385)
+void func_8008EDB4_5F264(s32 arg0) {
+	s16 temp;
+	s32 value;
+	s32 modulo;
+	s32 var_s0;
+	s32 var_s4;
+	u8 *var_s1;
+	s8 *var_s2;
+
+	modulo = 120;
+	var_s4 = 0;
+	do {
+		var_s1 = &D_800AA688[(var_s4 * 4) - var_s4];
+		var_s2 = (s8 *)(arg0 + ((var_s4 * 4) - var_s4));
+		var_s0 = 0;
+		do {
+			temp = (func_800038E0_44E0() % modulo) + var_s1[var_s0] - 60;
+			value = temp;
+			if (temp < 0) {
+				value = 0;
+			} else if (value >= 0x100) {
+				value = 0xFF;
+			}
+			var_s2[var_s0] = value;
+			var_s0 = (var_s0 + 1) & 0xFF;
+		} while (var_s0 < 3);
+		var_s4 = (var_s4 + 1) & 0xFF;
+	} while (var_s4 < 4);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008EDB4_5F264.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008EEC4_5F374.s")
 
