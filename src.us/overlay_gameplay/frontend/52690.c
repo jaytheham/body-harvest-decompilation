@@ -331,7 +331,32 @@ void func_80088B54_59004(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80089764_59C14.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800899F0_59EA0.s")
+void func_800899F0_59EA0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
+	s16 idx;
+	u8* ptr;
+
+	if (D_800DE818 < 0x41) {
+		idx = func_80083B7C_5402C(0x93);
+		if (idx != -3) {
+			D_800DE840[idx].unkA = 0;
+			D_800DE840[idx].unk11 = 0;
+			D_800DE840[idx].unk2 = arg2;
+			D_800DE840[idx].unk8 = arg0;
+			D_800DE840[idx].unkC = arg1;
+
+			ptr = (u8*)&D_800DE840[idx];
+			ptr[0x12] = arg6;
+			ptr[0x0E] = arg3;
+			ptr[0x0F] = arg4;
+			ptr[0x10] = arg5;
+
+			ptr[0x13] = arg2 / 2;
+			if (!ptr[0x13]) {
+				ptr[0x13] = 1;
+			}
+		}
+	}
+}
 
 /* Traverses D_800DE840 linked list, incrementing unk11 and updating unk2 */
 void func_80089AB4_59F64(void) {
@@ -395,7 +420,26 @@ void func_8008B148_5B5F8(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	D_800DE840[idx].unkC = arg2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B19C_5B64C.s")
+void func_8008B19C_5B64C(u8 arg0, u8 arg1) {
+	Unk800DE130 *entry;
+
+	if (arg0 < 0x96) {
+		entry = &D_800DE130[arg0];
+		if (entry->unk0 == 7) {
+			if (arg1 == 0) {
+				if (entry->unk4 < 2) {
+					func_800840C4_54574(arg0);
+					func_80083B14_53FC4(arg0);
+					return;
+				}
+				D_800DE840[entry->unk6].unk11 = 0;
+			} else if (arg1 == 1) {
+				func_800840C4_54574(arg0);
+				func_80083B14_53FC4(arg0);
+			}
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B264_5B714.s")
 
@@ -411,7 +455,41 @@ void func_8008BAD8_5BF88(u8 arg0) {
 	}
 }
 
+// CURRENT(475)
+#ifdef NON_MATCHING
+void func_8008BB38_5BFE8(u8 arg0) {
+	s16 idx;
+	Unk800DE840 *entry;
+	s16 *ptrA1;
+	s16 *ptrA0;
+
+	idx = D_800DE130[arg0].unk6;
+	if ((idx != -5) && (idx != -6)) {
+		while (1) {
+			entry = &D_800DE840[idx];
+			ptrA1 = (s16 *)((u8 *)entry + 8);
+			ptrA0 = ptrA1;
+
+			if (ptrA1[3] == -1) {
+				idx = entry->unk4;
+			} else {
+				if (ptrA1[3] == 0) {
+					func_800840C4_54574(arg0);
+					func_80083B14_53FC4(arg0);
+					return;
+				}
+				ptrA0[3]--;
+				idx = entry->unk4;
+			}
+			if ((idx == -5) || (idx == -6)) {
+				return;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008BB38_5BFE8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008BC00_5C0B0.s")
 
@@ -435,7 +513,35 @@ void func_8008C73C_5CBEC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5
 	}
 }
 
+// CURRENT(710)
+#ifdef NON_MATCHING
+void func_8008C7E4_5CC94(void) {
+	s16 var_s0;
+	Unk800DE840 *temp_v1;
+	Unk8008C7E4Sub *temp_v0;
+
+	var_s0 = D_800DE80E;
+	if ((var_s0 != -5) && (var_s0 != -6)) {
+		do {
+			temp_v1 = &D_800DE840[var_s0];
+			temp_v0 = (Unk8008C7E4Sub *) ((u8 *) temp_v1 + 8);
+
+			if ((s32) temp_v1->unk18 > 0) {
+				temp_v0->unk10--;
+				temp_v0->unk0 = temp_v0->unk0 + temp_v0->unkA;
+				temp_v0->unk2 = temp_v0->unk2 + temp_v0->unkC;
+				temp_v0->unk4 = temp_v0->unk4 + temp_v0->unkE;
+				var_s0 = temp_v1->unk4;
+			} else {
+				func_80083DBC_5426C(var_s0, 0x92);
+				var_s0 = temp_v1->unk4;
+			}
+		} while ((var_s0 != -5) && (var_s0 != -6));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008C7E4_5CC94.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008C8E0_5CD90.s")
 
@@ -515,7 +621,21 @@ void func_8008DF40_5E3F0(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008E158_5E608.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008E9DC_5EE8C.s")
+/* Allocates an entry and fills color/lifetime and velocity-related byte fields */
+void func_8008E9DC_5EE8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10) {
+	u8 slot;
+
+	slot = func_8008DC34_5E0E4(arg0, arg1, arg2, 2, arg3);
+	if (slot != 0xFF) {
+		D_800E1980[slot].unkD = arg7;
+		D_800E1980[slot].unk12 = arg7 / arg6;
+		D_800E1980[slot].unk6 = arg8;
+		D_800E1980[slot].unk7 = arg9;
+		D_800E1980[slot].unk8 = arg10;
+		D_800E1980[slot].unk10 = arg4;
+		D_800E1980[slot].unk11 = arg5;
+	}
+}
 
 /* Allocates an entry and sets DE7C/DEB8 fields */
 void func_8008EAB0_5EF60(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4) {

@@ -279,7 +279,34 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800710D8_41588.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007166C_41B1C.s")
+void func_8007166C_41B1C(void)
+{
+	MissionData *entryA;
+	MissionData *entryB;
+
+	entryA = func_80070494_40944(D_800D74A4);
+	entryB = func_80070494_40944(D_800D74A6);
+
+	if (entryA != NULL && ((entryA != entryB) || (entryB == NULL)) && entryA->unk1C != 3)
+	{
+		D_800D74A6 = D_800D74A4;
+
+		if (entryB != NULL && entryB->unk16 == 4)
+		{
+			func_80070970_40E20(entryB, 1);
+		}
+
+		func_800704DC_4098C();
+		entryA->unk1C = 1;
+		entryA->unk28 = 0;
+
+		if (entryA->unk12 >= 0x4001)
+		{
+			entryA->unk12 = 0x4000;
+			entryA->unk14 = 0x400;
+		}
+	}
+}
 
 #ifdef NON_MATCHING
 void func_80071738_41BE8(void) {
@@ -315,7 +342,23 @@ void func_80071738_41BE8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075B64_46014.s")
 
 // Show version info on title screen if slot 3 named GRIMLN
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075C84_46134.s")
+void func_80075C84_46134(void) {
+	if (D_800D6DA8[0xE] == 0x47) {
+		if (D_800D6DA8[0xF] == 0x52) {
+			if (D_800D6DA8[0x13] == 0x4E) {
+				if (D_800D6DA8[0x11] == 0x4D) {
+					if (D_800D6DA8[0x12] == 0x4C) {
+						if (D_800D6DA8[0x10] == 0x49) {
+							drawText(&D_800ADC18_7E0C8, 0x14, 0x14, 0x12C, 0xF0);
+							drawText(&D_800ADC1C_7E0CC, 1, 0, &D_800ADC30_7E0E0, &D_800ADC3C_7E0EC);
+							drawText(&D_800ADC48_7E0F8, 1, 1);
+						}
+					}
+				}
+			}
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075D58_46208.s")
 
@@ -1058,7 +1101,24 @@ s32 func_8007946C_4991C(u8* arg0) {
 // displayHighScores
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800796D0_49B80.s")
 
+// CURRENT(1074)
+#ifdef NON_MATCHING
+void func_80079F30_4A3E0(s32 arg0) {
+	volatile s32 sp0;
+
+	sp0 = arg0;
+	gDPPipeSync(D_8005BB2C++);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, arg0 & 0xFF);
+	gDPPipeSync(D_8005BB2C++);
+	gDPFillRectangle(D_8005BB2C++, 0, 0, 320, 240);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80079F30_4A3E0.s")
+#endif
 
 // displayGameOver
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A038_4A4E8.s")
@@ -1082,13 +1142,66 @@ void func_8007A754_4AC04(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BB0C_4BFBC.s")
 
 // displayNoControllerNotice
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BC90_4C140.s")
+void func_8007BC90_4C140(void) {
+	func_800791A0_49650(1);
+	gDPFullSync(D_8005BB2C++);
+	gSPEndDisplayList(D_8005BB2C++);
+
+	func_8000505C_5C5C();
+
+	while (1) {
+		func_800791A0_49650(0);
+		drawText(&D_800ADFDC_7E48C, 250, 200, 200);
+		drawText(&D_800ADFE0_7E490, 128, 5);
+		func_8000B044_BC44();
+		func_80005B84_6784();
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+
+		func_8000505C_5C5C();
+
+		if (func_80005B30_6730() != 0) {
+			break;
+		}
+	}
+}
 
 // displayWrongConsoleRegionNotice
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BD98_4C248.s")
 
 // displayDmaLogo
+// CURRENT(55)
+#ifdef NON_MATCHING
+void func_8007BEC0_4C370(void) {
+	u16 counter;
+
+	counter = 0x4F;
+	func_8001355C_1415C();
+	D_800D7960 = 0;
+	D_800D7962 = 5;
+
+	while (1) {
+		func_800791A0_49650(1);
+		func_8007A774_4AC24(0);
+
+		if ((D_800D7962 == 0xB) || (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0)) {
+			func_80005AEC_66EC(0, 0, 0, 0x40);
+		}
+
+		counter--;
+		func_80005B84_6784();
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+		func_8000505C_5C5C();
+
+		if (func_80005B30_6730() != 0) {
+			break;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BEC0_4C370.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BFC4_4C474.s")
 
@@ -1222,7 +1335,43 @@ void func_80080530_509E0(Unk80080530_Src* arg0) {
 }
 
 // ambient light ?
+// CURRENT(1245)
+#ifdef NON_MATCHING
+void func_80080588_50A38(s32 arg0) {
+	u8 *temp_t0;
+	Unk80080588Entry3* temp_t3;
+	u8 temp_t5;
+	u8 temp_v1;
+	u8 temp_v1_2;
+	u8 temp_at;
+	s32 temp_t2;
+	s32 var_v0;
+
+	temp_t0 = ((arg0 & 0xFF) * 5) + (u8*)D_800D7A28;
+	temp_v1 = *temp_t0;
+	if (temp_v1 != 0xFF) {
+		temp_t3 = D_800D7A38 + temp_v1;
+		D_800D7A86.unk0 = temp_t3->unk0;
+		temp_t5 = temp_t3->unk1;
+		D_800D7A86.unk1 = temp_t5;
+		temp_at = temp_t3->unk2;
+		D_800D7A86.unk2 = temp_at;
+		osSyncPrintf(&D_800AE958_7EE08, D_800D7A86.unk0, temp_t5 & 0xFF, temp_at & 0xFF);
+	}
+
+	var_v0 = 0;
+	do {
+		temp_v1_2 = *(temp_t0 + var_v0 + 1);
+		temp_t2 = (var_v0 + 1) & 0xFF;
+		if (temp_v1_2 != 0xFF) {
+			((Unk80080588Entry1C*) ((u8*)D_800D7A34 + (temp_v1_2 * 0x1C)))->unk18 = 1;
+		}
+		var_v0 = temp_t2;
+	} while (temp_t2 < 3);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080588_50A38.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080668_50B18.s")
 
@@ -1310,7 +1459,59 @@ void func_80080AD4_50F84(FrontendStreamSlot *arg0, AnimChannelState *arg1, u8 ar
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080B80_51030.s")
 
+// CURRENT(310)
+#ifdef NON_MATCHING
+void func_80080F8C_5143C(AnimChannelState *arg0, s16 *arg1, s32 arg2) {
+	f32 zero;
+	s16 temp_t9;
+	s32 temp_t0;
+	s32 var_v0;
+	AnimChannelState *temp_v1;
+
+	zero = 0.0f;
+	arg0->unk0 = 0;
+	arg0->unk2 = 0;
+	arg0->unk4 = 0;
+	arg0->unk14 = 0;
+	arg0->unk18 = 0;
+	arg0->unk2A = 0;
+	arg0->unk2C = 0;
+	arg0->unk2E = 0;
+	arg0->unk24 = 0;
+	arg0->unk26 = 0;
+	arg0->unk28 = 0;
+	arg0->unk30 = 0;
+	var_v0 = 1;
+	arg0->unk8 = zero;
+	arg0->unkC = zero;
+	arg0->unk10 = zero;
+	arg0->unk1C = zero;
+	arg0->unk20 = zero;
+	if (arg2 != 1) {
+		do {
+			temp_v1 = &arg0[var_v0];
+			temp_v1->unk8 = (f32)arg1[0];
+			var_v0 += 1;
+			temp_t0 = var_v0 & 0xFF;
+			var_v0 = temp_t0;
+			arg1 += 8;
+			temp_v1->unkC = (f32)arg1[-7];
+			temp_t9 = arg1[-6];
+			temp_v1->unk0 = 0;
+			temp_v1->unk2 = 0;
+			temp_v1->unk4 = 0;
+			temp_v1->unk30 = 0;
+			temp_v1->unk14 = 0;
+			temp_v1->unk18 = 0;
+			temp_v1->unk1C = zero;
+			temp_v1->unk20 = zero;
+			temp_v1->unk10 = (f32)temp_t9;
+		} while (arg2 != temp_t0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080F8C_5143C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081058_51508.s")
 
