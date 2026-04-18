@@ -739,6 +739,7 @@ extern char D_800AE958_7EE08; /* osSyncPrintf format string */
 extern char D_800AE97C_7EE2C; /* osSyncPrintf format string */
 extern f64 D_800AEA40_7EEF0;
 extern f64 D_800AEA48_7EEF8;
+extern f64 D_800AEA50_7EF00;
 extern f64 D_800AEA68_7EF18;
 extern f32 D_800AEA70_7EF20;
 extern f32 D_800AEA74_7EF24;

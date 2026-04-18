@@ -3196,7 +3196,105 @@ void func_80080588_50A38(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080588_50A38.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(8571)
+void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, s32 arg3) {
+	volatile f32 sp70;
+	volatile f32 sp6C;
+	volatile f32 sp68;
+	volatile f32 sp64;
+	volatile f32 sp60;
+	volatile f32 sp5C;
+	volatile f32 sp50;
+	volatile f32 sp4C;
+	volatile f32 sp48;
+	f32 temp_f0;
+	f32 temp_f10;
+	f32 temp_f10_2;
+	f32 temp_f12;
+	f32 temp_f14;
+	f32 temp_f18;
+	f32 temp_f2;
+	f32 temp_f2_2;
+	f32 temp_f4;
+	f32 temp_f6;
+	f32 temp_f6_2;
+	f32 temp_f8;
+	f32 temp_f8_2;
+	f64 temp_f22;
+	f64 temp_f20;
+	s32 temp_t6;
+	s32 var_s0;
+	s32 count;
+	AnimChannelState *temp_a1;
+
+	count = arg3 & 0xFF;
+	var_s0 = 0;
+	if (count != 0) {
+		temp_f22 = 4096.0;
+		temp_f20 = D_800AEA50_7EF00;
+		do {
+			temp_a1 = &arg1[var_s0];
+			if (temp_a1->unk14 != 0) {
+				temp_f14 = temp_a1->unk1C;
+				temp_f18 = arg2 / (temp_a1->unk20 - temp_f14);
+				temp_f10 = (f32)(((f64)(f32)temp_a1->unk2A * temp_f20) / temp_f22);
+				sp68 = temp_f10;
+				temp_f6 = (f32)(((f64)(f32)temp_a1->unk2C * temp_f20) / temp_f22);
+				sp6C = temp_f6;
+				temp_f8 = (f32)(((f64)(f32)temp_a1->unk2E * temp_f20) / temp_f22);
+				sp70 = temp_f8;
+				temp_f4 = (f32)(((f64)(f32)temp_a1->unk0 * temp_f20) / temp_f22);
+				sp5C = temp_f4;
+				sp48 = temp_f10;
+				temp_f10_2 = (f32)(((f64)(f32)temp_a1->unk2 * temp_f20) / temp_f22);
+				sp60 = temp_f10_2;
+				sp4C = temp_f6;
+				sp50 = temp_f8;
+				temp_f8_2 = ((sp48 - temp_f4) * temp_f18) + temp_f4;
+				sp5C = temp_f8_2;
+				temp_f6_2 = (f32)(((f64)(f32)temp_a1->unk4 * temp_f20) / temp_f22);
+				sp60 = ((sp4C - temp_f10_2) * temp_f18) + temp_f10_2;
+				sp64 = temp_f6_2;
+				sp64 = ((sp50 - temp_f6_2) * temp_f18) + temp_f6_2;
+				temp_f2 = temp_a1->unk8;
+				temp_f12 = temp_a1->unkC;
+				temp_f0 = temp_a1->unk10;
+				temp_a1->unk0 = (s16)(s32)((f64)(temp_f8_2 * 70.0f) / temp_f20);
+				temp_a1->unk2 = (s16)(s32)((f64)(sp60 * 70.0f) / temp_f20);
+				temp_a1->unk4 = (s16)(s32)((f64)(sp64 * 70.0f) / temp_f20);
+				temp_a1->unk8 = (((f32)temp_a1->unk24 - temp_f2) * temp_f18) + temp_f2;
+				temp_f2_2 = (f32)temp_a1->unk28;
+				temp_a1->unkC = (((f32)temp_a1->unk26 - temp_f12) * temp_f18) + temp_f12;
+				temp_a1->unk1C = temp_a1->unk1C + arg2;
+				temp_a1->unk10 = ((temp_f2_2 - temp_f0) * temp_f18) + temp_f0;
+				if (temp_a1->unk20 <= temp_a1->unk1C) {
+					temp_t6 = temp_a1->unk18 + 1;
+					temp_a1->unk8 = (f32)temp_a1->unk24;
+					temp_a1->unk10 = temp_f2_2;
+					temp_a1->unk18 = temp_t6;
+					temp_a1->unk0 = (s16)temp_a1->unk2A;
+					temp_a1->unk2 = (s16)temp_a1->unk2C;
+					temp_a1->unkC = (f32)temp_a1->unk26;
+					temp_a1->unk4 = (s16)temp_a1->unk2E;
+					if (temp_t6 == temp_a1->unk14) {
+						temp_a1->unk14 = 0;
+						temp_a1->unk18 = 0;
+						if (var_s0 == 0) {
+							arg0->unk54 = 0;
+						}
+					} else {
+						func_80080AD4_50F84(arg0, temp_a1, var_s0 & 0xFF);
+					}
+				}
+			}
+			var_s0 = (var_s0 + 1) & 0xFF;
+		} while (count != var_s0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080668_50B18.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8008098C_50E3C(void) {
