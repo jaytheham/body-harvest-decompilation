@@ -1393,7 +1393,58 @@ void func_8008EAB0_5EF60(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4) {
 	func_8008DEB8_5E368(slot, arg3, 0);
 }
 
+#ifdef NON_MATCHING
+// CURRENT(654)
+s16 func_8008EB20_5EFD0(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5, u8 arg6) {
+	s32 pad0;
+	s32 pad1;
+	s16 ret;
+	u8 slot;
+	u8 i;
+
+	func_800038E0_44E0();
+
+	if (arg3 < 0x1E) {
+		arg3 = 0x1E;
+	}
+	if (arg3 >= 0x3E9) {
+		arg3 = 0x3E8;
+	}
+
+	ret = func_80086C58_57108(arg0, arg1, arg2, arg3, arg5, (u8)arg6);
+	if (ret != -3) {
+		if (arg3 >= 0x51) {
+			func_8008EAB0_5EF60(arg0, arg1, arg2, (s8)(((arg3 / 10) + 0x14) & 0xFF), 6);
+		}
+
+		func_8008DE44_5E2F4(func_8008DC34_5E0E4(arg0, arg1, arg2, 6, arg3 * 8), 0xB4);
+
+		slot = func_8008DC34_5E0E4(arg0, arg1, arg2, 6, arg3 * 6);
+		func_8008DE44_5E2F4(slot, 0x6E);
+		func_8008DF08_5E3B8(slot, 1);
+
+		i = 0;
+		if (arg4 > 0) {
+			while (1) {
+				i++;
+				if (i >= arg4) {
+					break;
+				}
+			}
+		}
+
+		if (arg3 < 0x96) {
+			func_8008E9DC_5EE8C(arg0, arg1, arg2, arg3, arg3 / 16, 1, 0x1E, 0x96, 0x32, 0x32, 0x32);
+		} else {
+			func_8008E9DC_5EE8C(arg0, arg1, arg2, arg3, arg3 / 16, 1, 0x3C, 0x96, 0x32, 0x32, 0x32);
+		}
+	}
+
+	return ret;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008EB20_5EFD0.s")
+#endif
 
 /* Sets D_800DE0EB flag around a call to func_8008EB20 */
 void func_8008ED44_5F1F4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5) {
