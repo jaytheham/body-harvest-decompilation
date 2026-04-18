@@ -228,6 +228,8 @@ void func_8008FAAC_5FF5C(void);
 void func_80075D58_46208(s32 arg0);
 void func_800731A8_43658(void);
 void func_800801BC_5066C(s32 arg0, s32 arg1);
+void* func_8008035C_5080C(FrontendStreamSlot* arg0, AnimChannelState* arg1, u32* arg2, s32 arg3, u8 arg4);
+void func_80080AD4_50F84(FrontendStreamSlot *arg0, AnimChannelState *arg1, u8 arg2);
 void func_80080B80_51030(s32 *arg0, s16 *arg1, s16 *arg2, s32 arg3);
 
 // overlay_gameplay outside

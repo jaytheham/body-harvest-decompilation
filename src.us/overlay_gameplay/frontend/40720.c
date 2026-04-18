@@ -1892,7 +1892,77 @@ void func_800801BC_5066C(s32 arg0, s32 arg1) {
 #endif
 
 // Called during start movie, mostly before scene changes
+#ifdef NON_MATCHING
+void* func_8008035C_5080C(FrontendStreamSlot* arg0, AnimChannelState* arg1, u32* arg2, s32 arg3, u8 arg4) {
+	s32 i;
+	s32 copiedCount;
+	s32 byteOffset;
+	AnimFrameData14* srcFrame;
+	AnimFrameData14* dstFrame;
+
+	arg0->unk54 = arg2;
+
+	for (i = 0; i < (0x48 / 0xC); i++) {
+		((u32*)arg0)[(i * 3) + 0] = arg2[(i * 3) + 0];
+		((u32*)arg0)[(i * 3) + 1] = arg2[(i * 3) + 1];
+		((u32*)arg0)[(i * 3) + 2] = arg2[(i * 3) + 2];
+	}
+
+	copiedCount = 0;
+	byteOffset = 0;
+	srcFrame = (AnimFrameData14*)((u8*)arg2 + 0x48);
+	if (arg2[0] != 0) {
+		do {
+			dstFrame = (AnimFrameData14*)((u8*)arg0->unk50 + byteOffset);
+			copiedCount += 1;
+			dstFrame->a = srcFrame->a;
+			dstFrame->b = srcFrame->b;
+			dstFrame->c = srcFrame->c;
+			dstFrame->d = srcFrame->d;
+			dstFrame->e = srcFrame->e;
+			dstFrame->f = srcFrame->f;
+			dstFrame->g = srcFrame->g;
+			byteOffset += 0xE;
+			srcFrame += 1;
+		} while ((u32)copiedCount < arg2[0]);
+	}
+
+	i = 0;
+	if (arg4 != 0) {
+		do {
+			AnimChannelState* state;
+			u16 frameLimit;
+
+			state = &arg1[i];
+			state->unk18 = 0;
+			frameLimit = *(u16*)((u8*)arg0 + (i * 4) + 0xE);
+			state->unk14 = frameLimit;
+			if (frameLimit >= 0x65) {
+				osSyncPrintf(&D_800AE920_7EDD0);
+			}
+
+			func_80080AD4_50F84(arg0, state, i & 0xFF);
+			if (arg3 != 0) {
+				state->unk8 = (f32)state->unk24;
+				state->unk18 += 1;
+				state->unkC = (f32)state->unk26;
+				state->unk0 = state->unk2A;
+				state->unk2 = state->unk2C;
+				state->unk4 = state->unk2E;
+				state->unk10 = (f32)state->unk28;
+
+				func_80080AD4_50F84(arg0, state, i & 0xFF);
+			}
+
+			i = (i + 1) & 0xFF;
+		} while (arg4 != i);
+	}
+
+	return arg2;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8008035C_5080C.s")
+#endif
 
 void func_80080530_509E0(Unk80080530_Src* arg0) {
 	Unk80080530_Dst* dst;

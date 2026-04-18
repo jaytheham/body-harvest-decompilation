@@ -900,7 +900,7 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ u8 pad[0x50];
 	/* 0x50 */ s32 unk50;
-	/* 0x54 */ u8 pad54[0x4];
+	/* 0x54 */ void* unk54;
 } FrontendStreamSlot; /* size = 0x58 */
 
 
