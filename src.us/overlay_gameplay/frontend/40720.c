@@ -3,75 +3,75 @@
 
 typedef enum FrontEndState
 {
-	FE_STATE_INTRO_MOVIE = 0,
-	FE_STATE_FILE_SELECT = 1,
-	FE_STATE_INVALID_2 = 2,
-	FE_STATE_CHOOSE_FILE_NAME = 3,
-	FE_STATE_FILE_DETAILS = 4,
-	FE_STATE_INVALID_5 = 5,
-	FE_STATE_INVALID_6 = 6,
-	FE_STATE_START_GAMEPLAY = 7,
-	FE_STATE_FILE_OPTIONS = 8,
-	FE_STATE_START_DEMO = 9,
-	FE_STATE_UNUSED_START_GAMEPLAY_1 = 0xa,
-	FE_STATE_UNUSED_START_GAMEPLAY_2 = 0xb,
-	FE_STATE_UNUSED_START_GAMEPLAY_3 = 0xc,
-	FE_STATE_CHANGE_AIM_OPTION = 0xd,
-	FE_STATE_CHANGE_BLOOD_OPTION = 0xe,
-	FE_STATE_REPLAY_LEVEL_SELECT = 0xf,
-	FE_STATE_HIGH_SCORES = 0x10,
-	FE_STATE_CHANGE_SFX_OPTION = 0x11,
-	FE_STATE_CHANGE_MUSIC_OPTION = 0x12,
-	FE_STATE_DELETE_FILE = 0x13,
-	FE_STATE_COPY_FILE = 0x14,
-	FE_STATE_PRESS_START = 0x15,
-	FE_STATE_INVALID_16 = 0x16,
-	FE_STATE_REPLAY_BOSS_SELECT = 0x17,
-	FE_STATE_LANGUAGE_SELECT = 0x18
+        FE_STATE_INTRO_MOVIE = 0,
+        FE_STATE_FILE_SELECT = 1,
+        FE_STATE_INVALID_2 = 2,
+        FE_STATE_CHOOSE_FILE_NAME = 3,
+        FE_STATE_FILE_DETAILS = 4,
+        FE_STATE_INVALID_5 = 5,
+        FE_STATE_INVALID_6 = 6,
+        FE_STATE_START_GAMEPLAY = 7,
+        FE_STATE_FILE_OPTIONS = 8,
+        FE_STATE_START_DEMO = 9,
+        FE_STATE_UNUSED_START_GAMEPLAY_1 = 0xa,
+        FE_STATE_UNUSED_START_GAMEPLAY_2 = 0xb,
+        FE_STATE_UNUSED_START_GAMEPLAY_3 = 0xc,
+        FE_STATE_CHANGE_AIM_OPTION = 0xd,
+        FE_STATE_CHANGE_BLOOD_OPTION = 0xe,
+        FE_STATE_REPLAY_LEVEL_SELECT = 0xf,
+        FE_STATE_HIGH_SCORES = 0x10,
+        FE_STATE_CHANGE_SFX_OPTION = 0x11,
+        FE_STATE_CHANGE_MUSIC_OPTION = 0x12,
+        FE_STATE_DELETE_FILE = 0x13,
+        FE_STATE_COPY_FILE = 0x14,
+        FE_STATE_PRESS_START = 0x15,
+        FE_STATE_INVALID_16 = 0x16,
+        FE_STATE_REPLAY_BOSS_SELECT = 0x17,
+        FE_STATE_LANGUAGE_SELECT = 0x18
 } FrontEndState;
 
 #ifdef NON_MATCHING
 // CURRENT(5)
 s32 func_80070270_40720(s32 arg0) {
-	switch (arg0) {
-	case 1:
-		func_800789E4_48E94();
-		break;
-	case 2:
-		D_800476A2 = 1;
-		return func_80082CBC_5316C(currentLevel - 2, &D_80052B2C->unk30);
-	case 3:
-		func_8007A038_4A4E8();
-		break;
-	case 4:
-		func_800796D0_49B80(0, 0);
-		break;
-	case 5:
-		func_800796D0_49B80(func_80070390_40840(), 0);
-		break;
-	case 6:
-		func_80076504_469B4();
-		break;
-	case 7:
-		func_8007685C_46D0C();
-		break;
-	case 8:
-		return func_8007CFB4_4D464(1);
-	case 9:
-		return func_8007CFB4_4D464(0);
-	case 10:
-		return func_8007D2B0_4D760();
-	case 11:
-		D_800946DC_64B8C = FE_STATE_PRESS_START;
-		func_800789E4_48E94();
-		break;
-	case 12:
-	case 13:
-	case 14:
-		break;
-	}
+        switch (arg0) {
+        case 1:
+                func_800789E4_48E94();
+                break;
+        case 2:
+                D_800476A2 = 1;
+                return func_80082CBC_5316C(currentLevel - 2, &D_80052B2C->unk30);
+        case 3:
+                func_8007A038_4A4E8();
+                break;
+        case 4:
+                func_800796D0_49B80(0, 0);
+                break;
+        case 5:
+                func_800796D0_49B80(func_80070390_40840(), 0);
+                break;
+        case 6:
+                func_80076504_469B4();
+                break;
+        case 7:
+                func_8007685C_46D0C();
+                break;
+        case 8:
+                return func_8007CFB4_4D464(1);
+        case 9:
+                return func_8007CFB4_4D464(0);
+        case 10:
+                return func_8007D2B0_4D760();
+        case 11:
+                D_800946DC_64B8C = FE_STATE_PRESS_START;
+                func_800789E4_48E94();
+                break;
+        case 12:
+        case 13:
+        case 14:
+                break;
+        }
 
-	return 0;
+        return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070270_40720.s")
@@ -2164,7 +2164,88 @@ void func_8007A754_4AC04(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A774_4AC24.s")
 
 // displayClearSaveData
+#ifdef NON_MATCHING
+// CURRENT(1455)
+void func_8007B618_4BAC8(void) {
+	u8 sp3D;
+	u8 sp3E;
+	s32 tempOsc;
+	s32 selection;
+	u8 oscillation;
+	s32 startReleased;
+	u16 timer;
+
+	timer = 0x4F;
+	tempOsc = 0;
+	startReleased = 0;
+	func_800791A0_49650(1);
+	gDPFullSync(D_8005BB2C++);
+	gSPEndDisplayList(D_8005BB2C++);
+	func_8000505C_5C5C();
+
+	if (isButtonNewlyPressed(0, 0x1000) != 0) {
+		selection = tempOsc;
+		sp3D = sp3E;
+		oscillation = sp3D;
+		do {
+			func_800791A0_49650(1);
+			tempOsc = oscillation;
+			oscillation = (u8)((s32)(tempOsc + 2) % 64);
+			drawText(&D_800ADE4C_7E2FC, 0x82, 0xF0, 0x64);
+			drawText(&D_800ADE50_7E300, 0x80, 0);
+			drawText(&D_800ADE64_7E314, 0x64, 0xB4, 0x3C);
+			drawText(&D_800ADE68_7E318, 0x80, 3);
+			drawText(&D_800ADE80_7E330, 0x80, 4);
+
+			if (1 == selection) {
+				drawText(&D_800ADEA4_7E354, (oscillation << 1) + 0x7F, 0x32, 0x32);
+			} else {
+				drawText(&D_800ADEA8_7E358, 0x5A, 0x5A, 0x32);
+			}
+
+			drawText(&D_800ADEAC_7E35C, 0xA, 7);
+			if (selection == 0) {
+				drawText(&D_800ADEB4_7E364, (oscillation << 1) + 0x7F, 0x32, 0x32);
+			} else {
+				drawText(&D_800ADEB8_7E368, 0x5A, 0x5A, 0x32);
+			}
+
+			drawText(&D_800ADEBC_7E36C, 0x1A, 7);
+			if ((selection == 0) && (currentControllerStates[0].stick_x < -0xA)) {
+				selection = 1;
+			}
+
+			if ((1 == selection) && (currentControllerStates[0].stick_x >= 0xB)) {
+				selection = 0;
+			}
+
+			if (isButtonNewlyPressed(0, 0x1000) == 0) {
+				startReleased = 1;
+			}
+
+			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+				if (startReleased == 1) {
+					func_80005AEC_66EC(0, 0, 0, 0x40);
+				}
+			}
+
+			timer = (timer - 1) & 0xFFFF;
+			func_8000B044_BC44();
+			func_80005B84_6784();
+			gDPFullSync(D_8005BB2C++);
+			gSPEndDisplayList(D_8005BB2C++);
+			func_8000505C_5C5C();
+		} while (func_80005B30_6730() == 0);
+
+		sp3E = oscillation;
+		if (1 == selection) {
+			D_800476A0 = 4;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007B618_4BAC8.s")
+#endif
 
 // displayCopyright
 void func_8007B900_4BDB0(void) {
