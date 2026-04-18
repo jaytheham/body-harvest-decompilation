@@ -575,7 +575,75 @@ s32 func_80071760_41C10(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072604_42AB4.s")
 
+#ifdef NON_MATCHING
+// CURRENT(3830)
+void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
+	Unk80052B40 spA4;
+	s32 unused0;
+	s32 unused1;
+	s32 unused2;
+	s32 unused3;
+	s32 unused4;
+	s32 unused5;
+	s32 unused6;
+	s32 unused7;
+	s32 unused8;
+	s32 unused9;
+	Unk80052B40 sp9C;
+	Unk80052B40 sp94;
+	s32 temp;
+	s32 varS3;
+	u16 varS4;
+	s16 varS5;
+	s32 mask;
+	Gfx* tempS6;
+
+	temp = (s32) (256.0f * (f32) ((f64) arg3 * D_800AE518_7E9C8));
+	varS3 = 0;
+	varS4 = D_8004DC5E;
+	varS5 = 0;
+	mask = 0x1FFFFFFF;
+	spA4.unk0 = arg0;
+	spA4.unk2 = arg1;
+	spA4.unk4 = arg2;
+	sp9C.unk0 = (s16) temp;
+	sp9C.unk2 = (s16) temp;
+	sp9C.unk4 = (s16) temp;
+
+	do {
+		tempS6 = D_800942D0_64780;
+		if ((varS4 != 0) && (tempS6 != NULL)) {
+			gDPPipeSync(D_8005BB2C++);
+			varS4--;
+			gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+		} else {
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+		}
+
+		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+		func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
+		gSPMatrix(D_8005BB2C++, D_8005BB38 & mask, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+
+		sp94.unk0 = 0;
+		sp94.unk4 = 0x2000;
+		D_8005BB38 += 0x40;
+		sp94.unk2 = D_80094848_64CF8 + varS3;
+		func_800039D0_45D0(&spA4, &sp94, &sp9C, D_8005BB38);
+
+		gSPMatrix(D_8005BB2C++, D_8005BB38 & mask, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		D_8005BB38 += 0x40;
+		gSPDisplayList(D_8005BB2C++, tempS6);
+		varS5++;
+		varS3 += 0x1555;
+		gDPPipeSync(D_8005BB2C++);
+	} while (varS5 < 0xC);
+
+	D_80094848_64CF8 += 0xB6;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800728F4_42DA4.s")
+#endif
 
 // Checks if selected inventory item is 0xb (weapon crystals)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072B68_43018.s")

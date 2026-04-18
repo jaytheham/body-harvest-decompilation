@@ -656,7 +656,9 @@ extern f32 D_8008DDFC_175EBC;
 
 extern MissionData D_800909B0[42];
 extern s8 D_80090A7D;
+extern Gfx *D_800942D0_64780;
 extern s16 D_800946DC_64B8C;
+extern s32 D_80094848_64CF8;
 extern u8 D_80094944_64DF4;
 extern s32 D_80094900;
 extern u8 D_80094904_64DB4;
@@ -682,6 +684,7 @@ extern f64 D_800A4D30;
 extern f64 D_800A4D38;
 extern f64 D_800A4D40;
 extern f64 D_800A4D48;
+extern f64 D_800AE518_7E9C8;
 extern char D_800ADC18_7E0C8;
 extern char D_800ADC1C_7E0CC;
 extern char D_800ADC30_7E0E0;
