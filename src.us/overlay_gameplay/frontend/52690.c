@@ -420,7 +420,26 @@ void func_8008B148_5B5F8(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	D_800DE840[idx].unkC = arg2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B19C_5B64C.s")
+void func_8008B19C_5B64C(u8 arg0, u8 arg1) {
+	Unk800DE130 *entry;
+
+	if (arg0 < 0x96) {
+		entry = &D_800DE130[arg0];
+		if (entry->unk0 == 7) {
+			if (arg1 == 0) {
+				if (entry->unk4 < 2) {
+					func_800840C4_54574(arg0);
+					func_80083B14_53FC4(arg0);
+					return;
+				}
+				D_800DE840[entry->unk6].unk11 = 0;
+			} else if (arg1 == 1) {
+				func_800840C4_54574(arg0);
+				func_80083B14_53FC4(arg0);
+			}
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B264_5B714.s")
 
