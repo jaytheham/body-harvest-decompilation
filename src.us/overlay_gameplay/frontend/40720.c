@@ -1287,7 +1287,98 @@ s32 func_800776BC_47B6C(void) {
 #endif
 
 // doFileDetailsLoop
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800779FC_47EAC.s")
+s32 func_800779FC_47EAC(void) {
+	u32 frameCounter;
+	s32 state;
+	s32 saveFileIndex;
+	s32 temp;
+	MissionData* selectedFileData;
+	MissionData* missionEntry;
+	extern s32 D_80047F84;
+	extern s32 D_80052B18;
+	extern u8 D_800D6D90[];
+	extern s32 D_800D6D98[];
+	extern s32 func_80002A88_3688(s32 arg0);
+	extern s32 func_80002B20_3720(s32 arg0);
+	extern s32 func_80002AB4(s32 arg0, u8* arg1);
+
+	frameCounter = 0;
+	state = 1;
+
+	saveFileIndex = D_80047F84 + 1;
+	func_80070904_40DB4((s16)(saveFileIndex + 1));
+
+	if (D_800D6D8C != 0) {
+		selectedFileData = &D_800909B0[saveFileIndex];
+		*((s16*) ((u8*) D_800909B0 + 0x95E)) = *((s16*) ((u8*) selectedFileData + 0x30));
+		*((s16*) ((u8*) D_800909B0 + 0x962)) = *((s16*) ((u8*) selectedFileData + 0x32));
+	}
+
+	D_800D74A6 = 0x3D;
+	D_800D74A4 = D_800D74A6;
+	temp = func_80002A88_3688(D_80047F84);
+	D_800D6D90[D_80047F84] = temp;
+	temp = func_80002B20_3720(D_80047F84);
+	D_800D6D98[D_80047F84] = temp;
+	func_80002AB4(D_80047F84, &D_800D6DA8[D_80047F84 * 7]);
+
+	while (state == 1) {
+		if (frameCounter < 0x3E8U) {
+			func_80070C64_41114(0x39, 6, (s16)frameCounter);
+		}
+
+		if (frameCounter >= 0x41U) {
+			func_80070CC4_41174();
+			func_8007166C_41B1C();
+
+			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+				state = D_800D74A4 - 0x3A;
+				missionEntry = func_80070494_40944(0x39);
+				*((s16*) ((u8*) D_800909B0 + 0x95E)) = -0x20;
+				missionEntry->unk4 = (s16)(*((s16*) ((u8*) D_800909B0 + 0x95E)) << 2);
+				D_800D74AA = 0;
+				func_800708B8_40D68(0x39);
+				D_800D6D8C = 0;
+				D_80052B18 = D_800D6D98[D_80047F84];
+				currentLevel = D_800D6D90[D_80047F84];
+			}
+
+			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+				selectedFileData = &D_800909B0[saveFileIndex];
+				state = 0;
+				missionEntry = func_80070494_40944(0x39);
+				missionEntry->unk4 = missionEntry->unk6;
+				missionEntry->unk6 = *((s16*) ((u8*) selectedFileData + 0x30)) * 4;
+				missionEntry->unk16 = 4;
+				missionEntry->unk1C = 1;
+				missionEntry->unk28 = -1;
+				missionEntry->unk12 = 0;
+				missionEntry->unk14 = 0x400;
+				D_800D6D8C = 1;
+				D_800D74AA = D_80047F84 + 2;
+			}
+		}
+
+		func_80075D58_46208(0);
+		func_800731A8_43658();
+		func_8000B044_BC44();
+		func_8000505C_5C5C();
+
+		if (frameCounter < 0x3E8U) {
+			frameCounter++;
+		}
+	}
+
+	func_800153D8_15FD8(0xC8);
+	func_8000AFDC_BBDC();
+	func_800708B8_40D68(0x3A);
+	func_800708B8_40D68(0x3B);
+	func_800708B8_40D68(0x3C);
+	func_800708B8_40D68(0x3D);
+	func_800708B8_40D68(0x3E);
+
+	return state;
+}
 
 #ifdef NON_MATCHING
 s32 func_80077CE0_48190(s32 arg0) {
@@ -1823,7 +1914,47 @@ void func_800789E4_48E94(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800789E4_48E94.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800791A0_49650.s")
+extern u8 D_40856F0[];
+extern u16 D_408A6F0[];
+extern u8 D_408A8F0[];
+extern u16 D_409E8F0[];
+extern u8 D_40A9440[];
+extern u16 D_40AAC40[];
+void func_80075710_45BC0(void);
+
+void func_800791A0_49650(s32 arg0) {
+	f32 one;
+
+	osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
+	func_80011E14_12A14(0);
+	func_80004CC8_58C8();
+	func_80004D38_5938();
+
+	gSPDisplayList(D_8005BB2C++, ((u32)D_800311A8 & 0x1FFFFFFF));
+	func_80004F64_5B64();
+	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784] & 0x1FFFFFFF);
+	gDPPipeSync(D_8005BB2C++);
+
+	if (arg0 == 3) {
+		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+		func_80075710_45BC0();
+	} else if ((arg0 == 0) || (arg0 == 2)) {
+		one = 1.0f;
+		func_80005C5C_685C(D_408A8F0, 2, 1, 8, 0, 0, 0x140, 0xF0, one, one, D_409E8F0);
+		if (arg0 == 2) {
+			gDPSetRenderMode(D_8005BB2C++, AA_EN | CVG_DST_CLAMP | ZMODE_OPA | CVG_X_ALPHA | ALPHA_CVG_SEL | FORCE_BL | G_RM_PASS,
+							 AA_EN | CVG_DST_CLAMP | ZMODE_OPA | CVG_X_ALPHA | ALPHA_CVG_SEL | FORCE_BL | G_RM_NOOP2);
+			gDPSetAlphaCompare(D_8005BB2C++, G_AC_THRESHOLD);
+			func_80005C5C_685C(D_40856F0, 2, 1, 8, 0, 0xB0, 0x140, 0x40, one, one, D_408A6F0);
+			func_80005C5C_685C(D_40A9440, 2, 1, 8, 0x18, 0xC, 0x60, 0x40, one, one, D_40AAC40);
+			gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
+		}
+	} else {
+		func_80004DDC_59DC(0, 0, 0, 0, 0xEF);
+	}
+
+	gSPDisplayList(D_8005BB2C++, ((u32)D_800311D0 & 0x1FFFFFFF));
+}
 
 /**
  * @brief Returns the byte length of a null-terminated string.
@@ -3194,7 +3325,59 @@ void func_80081A50_51F00(FrontendTextureInfo *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081A50_51F00.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(2500)
+void func_80081CAC_5215C(s32 arg0, s32 arg1, u32 arg2, u32 arg3) {
+	Gfx *dl;
+	s32 texS;
+
+	(void)arg0;
+	(void)arg1;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_800AC8F0_7CDA0);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
+	gDPPipeSync(D_8005BB2C++);
+
+	texS = D_800949D0_64E80;
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, G_TX_RENDERTILE, 0,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << 2), (31 << 2));
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE45003C0;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB4000000;
+	dl->words.w1 = texS << 16;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB3000000;
+	dl->words.w1 = (((s32)(((f32)(32.0 / (f64)(f32)arg2)) * 1024.0f) & 0xFFFF) << 16)
+				| ((s32)(((f32)(32.0 / (f64)(f32)arg3)) * 1024.0f) & 0xFFFF);
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	D_800949D0_64E80 = texS - 6;
+	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_MODULATEIA);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081CAC_5215C.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80081F9C_5244C(void) {
