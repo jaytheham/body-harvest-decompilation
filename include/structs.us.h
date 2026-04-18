@@ -1499,6 +1499,22 @@ typedef struct {
 } FrontendTextureInfo; /* size = 0x16 */
 
 typedef struct {
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ s32 unk4;
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ s32 unkC;
+	/* 0x10 */ Vec3f unk10;
+	/* 0x1C */ Vec3f unk1C;
+	/* 0x28 */ Vec3f unk28;
+	/* 0x34 */ s16 unk34;
+	/* 0x36 */ s16 unk36;
+	/* 0x38 */ s16 unk38;
+	/* 0x3A */ s16 unk3A;
+	/* 0x3C */ s16 unk3C;
+	/* 0x3E */ u8 pad3E[2];
+} FrontendCamState; /* size = 0x40 */
+
+typedef struct {
 	/* 0x00 */ u8 pad0[0xC];
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ u8 padE[2];

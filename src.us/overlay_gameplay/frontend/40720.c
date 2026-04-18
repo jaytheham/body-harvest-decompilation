@@ -1987,7 +1987,50 @@ void func_8007EB98_4F048(void) {
 void func_8007EBB0_4F060(void) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007EBB8_4F068.s")
+void func_8007EBB8_4F068(void) {
+	u16 perspNorm;
+	volatile s32 pad[4];
+
+	func_8000345C_405C(0x20);
+
+	if (D_80094930_64DE0 != 0) {
+		func_8007EEE0_4F390();
+		func_8007F188_4F638((Vec3f*)&((FrontendCamState*)D_800D7A18)->unk10,
+							 (Vec3f*)&((FrontendCamState*)D_800D7A18)->unk1C,
+							 (Vec3f*)&((FrontendCamState*)D_800D7A18)->unk28,
+							 ((FrontendCamState*)D_800D7A18)->unk38,
+							 (u16)((FrontendCamState*)D_800D7A18)->unk36,
+							 (u16)((FrontendCamState*)D_800D7A18)->unk34,
+							 ((FrontendCamState*)D_800D7A18)->unk3C);
+	}
+
+	if ((((FrontendCamState*)D_800D7A18)->unk10.x == ((FrontendCamState*)D_800D7A18)->unk1C.x)
+		&& (((FrontendCamState*)D_800D7A18)->unk10.z == ((FrontendCamState*)D_800D7A18)->unk1C.z)) {
+		osSyncPrintf(D_800AE8FC_7EDAC);
+	}
+
+	guPerspective((Mtx*)D_8005BB38, &perspNorm, (f32)((FrontendCamState*)D_800D7A18)->unk3A, D_800D7974, D_800D8510, 4000.0f, 1.0f);
+	gSPPerspNormalize(D_8005BB2C++, perspNorm);
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	D_8005BB38 += 0x40;
+
+	guLookAt((Mtx*)D_8005BB38,
+		((FrontendCamState*)D_800D7A18)->unk10.x,
+		((FrontendCamState*)D_800D7A18)->unk10.y,
+		((FrontendCamState*)D_800D7A18)->unk10.z,
+		((FrontendCamState*)D_800D7A18)->unk1C.x + D_800D8528,
+		((FrontendCamState*)D_800D7A18)->unk1C.y + D_800D8528,
+		((FrontendCamState*)D_800D7A18)->unk1C.z,
+		((FrontendCamState*)D_800D7A18)->unk28.x,
+		((FrontendCamState*)D_800D7A18)->unk28.y,
+		((FrontendCamState*)D_800D7A18)->unk28.z);
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, &D_80094958_64E08, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+
+	func_800838E0_53D90((Mtx*)(D_8005BB38 - 0x40));
+	func_800839F0_53EA0(&((FrontendCamState*)D_800D7A18)->unk10.x, &((FrontendCamState*)D_800D7A18)->unk1C.x);
+}
 
 #ifdef NON_MATCHING
 void func_8007EE0C_4F2BC(s32* arg0) {

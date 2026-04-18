@@ -664,6 +664,7 @@ extern u8 D_80094908_64DB8;
 extern s32 D_80094930_64DE0;
 extern s32 D_80094938;
 extern s32 D_80094948_64DF8;
+extern Mtx D_80094958_64E08;
 extern s16 currentFrontendState;
 extern u8 D_8009494C_64DFC;
 extern f32 D_80094950_64E00;
@@ -706,6 +707,7 @@ extern char D_800AE098_7E548;
 extern char D_800AE09C_7E54C;
 extern char D_800AD7B4_7DC64[];
 extern char D_800AD7CC_7DC7C[];
+extern char D_800AE8FC_7EDAC[];
 extern char D_800AE920_7EDD0; /* osSyncPrintf format string */
 extern char D_800AE958_7EE08; /* osSyncPrintf format string */
 extern char D_800AE97C_7EE2C; /* osSyncPrintf format string */
@@ -730,6 +732,7 @@ extern s16 D_800D7960;
 extern s16 D_800D7962;
 extern u8 D_800D7970;
 extern u8 D_800D7971;
+extern f32 D_800D7974;
 extern MissionData D_800D747A;
 extern FrontendStruct D_800D7A68;
 extern s32* D_800D7A18;
@@ -771,6 +774,7 @@ extern u8 D_80096548_669F8[];
 extern u8 D_800965D8_66A88[];
 extern u8 D_800965E8_66A98[];
 extern u8 D_800965F0_66AA0[];
+extern f32 D_800D8510;
 extern s32* D_800D8514;
 extern s32 D_800D8518;
 extern s32 D_800D8520;
