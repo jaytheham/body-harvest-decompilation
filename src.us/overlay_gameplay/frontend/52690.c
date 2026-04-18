@@ -497,7 +497,85 @@ u8 func_80084324_547D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80084324_547D4.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(260)
+void func_80084508_549B8(u8 arg0) {
+	s16 cur;
+	Unk800DE840 *entry;
+	s8 *view;
+	s8 delta;
+	s8 vel;
+	s32 v1;
+
+	cur = D_800DE130[arg0].unkA;
+	cur = D_800DE840[cur].unk4;
+	if ((cur == -5) || (cur == -6)) {
+		return;
+	}
+
+	do {
+		entry = &D_800DE840[cur];
+		view = (s8 *)entry + 8;
+
+		if (view[4] < 0) {
+			if (((u8 *)view)[0] < 0x19) {
+				s16 next = entry->unk4;
+
+				func_80083DBC_5426C(cur, arg0);
+				func_8008412C_545DC(arg0, 0);
+				cur = next;
+				continue;
+			}
+		}
+
+		delta = view[3];
+		if (delta > 0) {
+			v1 = ((u8 *)view)[2];
+			if (v1 < 0xE5) {
+				((u8 *)view)[2] = v1 + delta;
+			} else {
+				((u8 *)view)[2] = 1;
+				view[1]++;
+				if (view[1] >= 4) {
+					view[1] = 0;
+				}
+			}
+		} else {
+			v1 = ((u8 *)view)[2];
+			if (v1 >= 0x11) {
+				((u8 *)view)[2] = v1 + delta;
+			} else {
+				((u8 *)view)[2] = 0xE5;
+				view[1]--;
+				if (view[1] < 0) {
+					view[1] = 3;
+				}
+			}
+		}
+
+		delta = view[4];
+		if ((delta > 0) && (((u8 *)view)[0] >= 0xE6)) {
+			view[4] = -delta;
+			delta = view[4];
+		}
+
+		((u8 *)view)[0] += delta;
+		vel = view[8];
+		*(s16 *)(view + 6) += vel;
+		if (vel > 0) {
+			if (*(s16 *)(view + 6) >= 0xF4) {
+				view[8] = -vel;
+			}
+		} else if (*(s16 *)(view + 6) < 0xC) {
+			view[8] = -vel;
+		}
+
+		cur = entry->unk4;
+	} while ((cur != -5) && (cur != -6));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80084508_549B8.s")
+#endif
 
 /* Decrement timer and update positions or free entry */
 void func_8008472C_54BDC(u8 arg0) {
