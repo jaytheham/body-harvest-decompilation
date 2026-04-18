@@ -709,6 +709,7 @@ extern char D_800AE028_7E4D8;
 extern char D_800AE094_7E544;
 extern char D_800AE098_7E548;
 extern char D_800AE09C_7E54C;
+extern char D_800ADCC4_7E174[];
 extern char D_800AD7B4_7DC64[];
 extern char D_800AD7CC_7DC7C[];
 extern char D_800AE8FC_7EDAC[];

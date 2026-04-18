@@ -1289,7 +1289,92 @@ s32 func_80077E78_48328(s32 arg0, s32 arg1) {
 	return 0;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(210)
+s32 func_80077E88_48338(void) {
+	s32 selectedSlot;
+	s32 state;
+	u32 frameCounter;
+
+	D_800D74A6 = 0xF;
+	frameCounter = 0;
+	state = 1;
+	D_800D74A4 = D_800D74A6;
+
+	osSyncPrintf(D_800ADCC4_7E174, D_80047FA0 + 0x10, 0x13);
+
+	while (state == 1) {
+		if (frameCounter < 0x3E8U) {
+			func_80070C64_41114(0xE, 7, (s16)frameCounter);
+		}
+
+		func_80070BD8_41088(0xF, 0x14);
+
+		if (D_80047FA0 > 0) {
+			func_80070AEC_40F9C((s16)(D_80047FA0 + 0x10), 0x13);
+
+			if (((D_80048026 & 7) != 7) &&
+				(((D_80048026 & 0x38) != 0x38) || (D_80047FA0 < 2)) &&
+				(((D_80048026 & 0x1C0) != 0x1C0) || (D_80047FA0 < 3)) &&
+				(((D_80048026 & 0xE00) != 0xE00) || (D_80047FA0 < 4))) {
+				func_80070A8C_40F3C(0x14);
+			}
+		} else {
+			func_80070AEC_40F9C((s16)(D_80047FA0 + 0x10), 0x14);
+		}
+
+		if (frameCounter >= 0x41U) {
+			func_80070CC4_41174();
+			func_8007166C_41B1C();
+
+			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+				selectedSlot = D_800D74A4;
+				if (D_800D74A4 == 0x14) {
+					state = 3;
+				} else {
+					func_800153D8_15FD8(0xC8);
+					if (func_80077204_476B4() == 2) {
+						D_80048030 = 0;
+						D_800D74A6 = selectedSlot;
+						state = 2;
+						D_800D74A4 = D_800D74A6;
+						currentLevel = D_800D74A4 - 0xE;
+					} else {
+						D_800D74A6 = 0xF;
+						frameCounter = 0;
+						D_800D74A4 = D_800D74A6;
+						func_80070C64_41114(0xE, 7, 0);
+					}
+				}
+			}
+
+			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+				state = 0;
+			}
+		}
+
+		func_80075D58_46208(0);
+		func_800731A8_43658();
+		func_8000B044_BC44();
+		func_8000505C_5C5C();
+
+		if (frameCounter < 0x3E8U) {
+			frameCounter++;
+		}
+	}
+
+	if (state != 2) {
+		func_800153D8_15FD8(0xC8);
+	}
+
+	func_8000AFDC_BBDC();
+	func_800709F0_40EA0();
+
+	return state;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077E88_48338.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078110_485C0.s")
 
