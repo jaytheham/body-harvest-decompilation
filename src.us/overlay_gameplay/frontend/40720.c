@@ -342,7 +342,23 @@ void func_80071738_41BE8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075B64_46014.s")
 
 // Show version info on title screen if slot 3 named GRIMLN
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075C84_46134.s")
+void func_80075C84_46134(void) {
+	if (D_800D6DA8[0xE] == 0x47) {
+		if (D_800D6DA8[0xF] == 0x52) {
+			if (D_800D6DA8[0x13] == 0x4E) {
+				if (D_800D6DA8[0x11] == 0x4D) {
+					if (D_800D6DA8[0x12] == 0x4C) {
+						if (D_800D6DA8[0x10] == 0x49) {
+							drawText(&D_800ADC18_7E0C8, 0x14, 0x14, 0x12C, 0xF0);
+							drawText(&D_800ADC1C_7E0CC, 1, 0, &D_800ADC30_7E0E0, &D_800ADC3C_7E0EC);
+							drawText(&D_800ADC48_7E0F8, 1, 1);
+						}
+					}
+				}
+			}
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075D58_46208.s")
 
