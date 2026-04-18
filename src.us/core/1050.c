@@ -10,6 +10,9 @@ s32 D_80031304 = 1;
 s32 D_80031308_31F08 = 0;
 s32 D_8003130C_31F0C = 0;
 
+void func_80000730_1330(s32 arg0);
+void* (*func_80000CD4_18D4(Unk80042DA8** arg0))(void);
+
 Unk80047FB8 D_80031310_31F10[5] = {
     {'J', 'O', 'H', 'N', ' ', 'W', 0, 0, 500000, 4, 0, 0},
     {'S', 'T', 'A', 'C', 'E', 'Y', 0, 0, 400000, 8, 0, 0},
@@ -22,6 +25,7 @@ s32 D_800313C4_31FC4 = 0;
 s16 D_800313C8_31FC8 = 0;
 s32 D_800313CC = 0;
 
+/* CURRENT(2031) */
 #ifdef NON_MATCHING
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	Unk80042DB8 *s1;
@@ -29,16 +33,18 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	s32 s2;
 	s32 var_v0;
 	f32 var_f0;
-	s32 i;
+	f32 one;
+	Unk80042DB8 *temp_v0;
 
 	D_80042DA8.unk0 = 0;
 	arg0->dmaproc = (void *)func_80000CD4_18D4;
 	var_v0 = osAiSetFrequency(0x7D00);
 	arg0->outputRate = var_v0;
+	one = 1.0f;
 	if (D_80031B58_32758 == 0) {
-		var_f0 = (f32)var_v0 / 60.0f;
+		var_f0 = ((f32)var_v0 * one) / 60.0f;
 	} else {
-		var_f0 = (f32)arg0->outputRate / 50.0f;
+		var_f0 = ((f32)arg0->outputRate * one) / 50.0f;
 	}
 	D_800431A8 = (s32)var_f0;
 	if ((f32)(u32)D_800431A8 < var_f0) {
@@ -50,8 +56,9 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	D_800431A4 = D_800431A8 - 0x10;
 	D_800431AC = D_800431A8 + 0xB0;
 	alInit(&D_8003FD58, arg0);
-	D_80042DB8.unk4 = 0;
-	D_80042DB8.unk0 = 0;
+	temp_v0 = &D_80042DB8;
+	temp_v0->unk4 = 0;
+	temp_v0->unk0 = 0;
 	s1 = &D_80042DB8;
 	s0 = &D_80042DCC;
 	for (s2 = 0; s2 < 0x31; s2++, s1++, s0++) {
@@ -61,15 +68,16 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
 	{
 		Acmd **p;
-		for (p = D_8003FB20; (u32)p < (u32)D_8003FB28; p++) {
+		for (p = D_8003FB20; p < (Acmd **)D_8003FB28; p++) {
 			*p = alHeapAlloc(arg0->heap, 1, 0x8000);
 		}
 	}
-	for (i = 0; i < 3; i++) {
-		D_8003FB28[i] = alHeapAlloc(arg0->heap, 1, 0x90);
-		D_8003FB28[i]->unk70 = 2;
-		D_8003FB28[i]->unk74 = D_8003FB28[i];
-		D_8003FB28[i]->outBuf = alHeapAlloc(arg0->heap, 1, D_800431AC * 4);
+	s2 = 0;
+	for (; s2 < 3; s2++) {
+		D_8003FB28[s2] = alHeapAlloc(arg0->heap, 1, 0x90);
+		D_8003FB28[s2]->unk70 = 2;
+		D_8003FB28[s2]->unk74 = D_8003FB28[s2];
+		D_8003FB28[s2]->outBuf = alHeapAlloc(arg0->heap, 1, D_800431AC * 4);
 	}
 	osCreateMesgQueue(&D_8003FD20, D_8003FD38, 8);
 	osCreateMesgQueue(&D_8003FCE8, D_8003FD00, 8);
@@ -80,24 +88,22 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000450_1050.s")
 #endif
 
+/* CURRENT(1143) */
 #ifdef NON_MATCHING
 void func_80000730_1330(s32 arg0) {
-	OSMesg sp64;
 	OSScClient sp58;
+	OSMesg sp64;
 	BhAudioBuf *var_s0;
-	s32 var_s6;
-	s32 var_v0;
+	u32 var_v0;
+	u32 var_s6;
 	f32 var_f0;
-	f32 var_f10;
 
 	var_s6 = 0;
-	var_s0 = NULL;
+	var_s0 = 0;
 	osScAddClient(&D_800680A0, &sp58, &D_8003FCE8);
 	do {
 		osRecvMesg(&D_8003FCE8, &sp64, 1);
 		switch (((OSScMsg *)sp64)->type) {
-		case OS_SC_PRE_NMI_MSG:
-			break;
 		case OS_SC_RETRACE_MSG:
 			if (func_8000091C_151C(D_8003FB28[D_800431A0 % 3], var_s0) != 0) {
 				osRecvMesg(&D_8003FD20, &sp64, 1);
@@ -109,17 +115,12 @@ void func_80000730_1330(s32 arg0) {
 				D_800431B4 = 0.0f;
 			} else {
 				var_f0 = (f32)var_v0;
-				if (var_v0 < 0) {
-					var_f0 += 4294967296.0f;
-				}
-				var_f10 = (f32)D_80031300_31F00;
-				if (D_80031300_31F00 < 0) {
-					var_f10 += 4294967296.0f;
-				}
-				D_800431B4 = (f32)(((f64)(var_f0 - var_f10) * 100.0) / (f64)var_f0);
+				D_800431B4 = (f32)(((f64)(var_f0 - (f32)(u32)D_80031300_31F00) * 100.0) / (f64)var_f0);
 			}
 			D_800312FC_31EFC = 0;
 			D_80031300_31F00 = 0;
+			break;
+		case OS_SC_PRE_NMI_MSG:
 			break;
 		case 10:
 			var_s6 = 1;
@@ -182,18 +183,21 @@ void func_80000AD4_16D4(s32 arg0)
 	}
 }
 
+/* CURRENT(667) */
 #ifdef NON_MATCHING
 s32 func_80000B14_1714(u32 arg0, s32 arg1, u32 arg2) {
-	Unk80042DB8 *var_a2;
 	Unk80042DB8 *var_s0;
-	Unk80042DB8 *var_s1;
 	s32 temp_s1;
+	s32 pad0;
+	s32 pad1;
+	Unk80042DB8 *var_s1;
+	Unk80042DB8 *var_a2;
 
 	var_a2 = NULL;
-	D_800312FC_31EFC += 1;
 	var_s1 = D_80042DA8.unk4;
-	if (var_s1 != NULL) {
-		var_s0 = var_s1;
+	D_800312FC_31EFC += 1;
+	var_s0 = var_s1;
+	if (var_s0 != NULL) {
 		do {
 			if (arg0 < (u32)var_s0->unk8) {
 				break;
@@ -496,26 +500,23 @@ void func_80001424_2024(void) {
 }
 
 // https://decomp.me/scratch/zsK5T
+/* CURRENT(60) */
 #ifdef NON_MATCHING
 void func_800015B4_21B4(s32 arg0, s32 arg1) {
 	u8 *v0;
 	s32 var_v1;
-	s32 var_a2;
 	s32 var_a3;
-	u8 var_t9;
+	s32 var_a2;
+	s32 var_t9;
 
 	v0 = &D_800431C0 + arg0;
 	v0[0] = 0x1C;
 	var_v1 = (arg0 + 4) & 0xFFFF;
 	var_a2 = 0;
-	var_a3 = 0;
-	if (arg1 > 0) {
-		do {
-			var_t9 = *(&D_800431C0 + var_v1);
-			var_a3 = (var_a3 + 1) & 0xFFFF;
-			var_v1 = (var_v1 + 1) & 0xFFFF;
-			var_a2 = (var_a2 + var_t9) & 0xFFFF;
-		} while (var_a3 < arg1);
+	for (var_a3 = 0; var_a3 < arg1; var_a3 = (var_a3 + 1) & 0xFFFF) {
+		var_t9 = *(&D_800431C0 + var_v1);
+		var_a2 = (var_a2 + var_t9) & 0xFFFF;
+		var_v1 = (var_v1 + 1) & 0xFFFF;
 	}
 	v0[2] = var_a2;
 	v0[3] = var_a2 >> 8;
@@ -528,37 +529,40 @@ void func_800015B4_21B4(s32 arg0, s32 arg1) {
 #ifdef NON_MATCHING
 s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 {
-  u8 *ptr;
-  u8 version;
-  s32 stored_checksum;
-  s32 computed_checksum;
-  s32 i;
-  ptr = ((u8 *) (&D_800431C0)) + arg0;
-  version = ptr[0];
-  if (version != 0x1C)
-  {
-	osSyncPrintf(&D_8003685C_3745C, version);
-	return 0;
-  }
-  stored_checksum = ((ptr[3] << 8) + ptr[2]) & 0xFFFF;
-  ptr += 4;
-  computed_checksum = 0;
- for (i = 0;i < arg1;i = (i + 1) & 0xFFFF){
-	  computed_checksum = (computed_checksum + (*ptr)) & 0xFFFF;
-	  ptr++;
-  }
-  if (computed_checksum != stored_checksum)
-  {
-	osSyncPrintf(&D_80036870_37470, arg1, stored_checksum);
-	return 0;
-  }
-  return 1;
+	u8 *ptr;
+	u8 version;
+	s32 stored_checksum;
+	s32 computed_checksum;
+	s32 i;
+
+	ptr = ((u8 *)&D_800431C0) + arg0;
+	version = ptr[0];
+	if (version != 0x1C) {
+		osSyncPrintf(&D_8003685C_3745C, version);
+		return 0;
+	}
+
+	stored_checksum = ((ptr[3] << 8) + ptr[2]) & 0xFFFF;
+	ptr += 4;
+
+	computed_checksum = 0;
+	for (i = 0; i < arg1; i = (i + 1) & 0xFFFF) {
+		computed_checksum = (computed_checksum + (*ptr)) & 0xFFFF;
+		ptr++;
+	}
+
+	if (computed_checksum != stored_checksum) {
+		osSyncPrintf(&D_80036870_37470, arg1, stored_checksum);
+		return 0;
+	}
+	return 1;
 }
 
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/validateSaveVersionAndChecksum.s")
 #endif
 
+/* CURRENT(2060) */
 #ifdef NON_MATCHING
 void func_800016D8_22D8(void) {
 	u16 i, writeIdx;
@@ -566,7 +570,7 @@ void func_800016D8_22D8(void) {
 
 	D_800431C8 = (u8)D_800313D0;
 	writeIdx = 9;
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < 5; i = (i + 1) & 0xFFFF) {
 		u16 j;
 		for (j = 0; j < 6; j++) {
 			(&D_800431C0)[writeIdx++] = *((u8*)(D_80047FB8 + i) + j);
@@ -588,14 +592,17 @@ void func_800016D8_22D8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800016D8_22D8.s")
 #endif
 
+/* CURRENT(2085) */
 #ifdef NON_MATCHING
 void func_80001830_2430(void) {
-	u16 i, j, writeIdx;
+	u16 i, writeIdx;
 	s32 val, val2;
 
-	D_800431C8 = 0xFF;
+	D_800431C8 = (u8)-1;
 	writeIdx = 9;
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < 5; i = (i + 1) & 0xFFFF) {
+		u16 j;
+
 		for (j = 0; j < 6; j++) {
 			(&D_800431C0)[writeIdx++] = *((u8*)(D_80031310_31F10 + i) + j);
 		}
@@ -616,35 +623,48 @@ void func_80001830_2430(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001830_2430.s")
 #endif
 
+/* CURRENT(5225) */
 #ifdef NON_MATCHING
 void func_80001984_2584(void) {
-	Unk80047FB8 *dst;
+	Unk80047FB8 *dstA3;
+	Unk80047FB8 *dstA2;
+	Unk80047FB8 *dstA1;
 	u8 *src;
 
 loop:
 	if (validateSaveVersionAndChecksum(4, 0x47) != 0) {
-		D_800313D0 = (s16)D_800431C8;
-		dst = D_80047FB8;
+		D_800313D0 = D_800431C8;
+		dstA3 = D_80047FB8;
 		src = &D_800431C9;
+		dstA2 = dstA3;
+		dstA1 = dstA3;
 		do {
-			dst->unk0 = src[0];
-			dst->unk1 = src[1];
-			dst->unk2 = src[2];
-			dst->unk3 = src[3];
-			dst->unk4 = src[4];
-			dst->unk5 = src[5];
-			dst->unk8 = src[6];
-			dst->unk8 += src[7] << 8;
-			dst->unk8 += src[8] << 16;
-			dst->unk8 += src[9] << 24;
-			dst->unkC = (s16)src[10];
-			dst->unk6 = 0;
-			dst->unk10 = src[11];
-			dst->unk10 += src[12] << 8;
-			dst->unk10 += src[13] << 16;
-			dst++;
-			src += 14;
-		} while (dst != &D_8004801C);
+			s32 two = 2;
+			u32 tmp10;
+			u8 *dstBytes = (u8 *)dstA3;
+			u8 *dstBytes2 = (u8 *)dstA2;
+
+			dstBytes[0] = src[0];
+			dstBytes[1] = src[1];
+			dstBytes2 = dstBytes2 + two;
+			dstBytes2[1] = src[3];
+			dstBytes2[2] = src[4];
+			dstBytes2[3] = src[5];
+			dstBytes2[0] = src[2];
+			dstA1->unk8 = src[6];
+			dstA1->unk8 += src[7] << 8;
+			dstA1->unk8 += src[8] << 16;
+			dstA1->unk8 += src[9] << 24;
+			dstA1->unkC = (s16)src[10];
+			dstA1->unk10 = src[11];
+			tmp10 = dstA1->unk10 + (src[12] << 8);
+			dstA1->unk10 = tmp10;
+			dstA3++;
+			dstA2++;
+			dstA1++;
+			dstA1->unk6 = 0;
+			dstA1[-1].unk10 = tmp10 + (src[13] << 16);
+		} while ((src += 14, dstA3 != &D_8004801C));
 		return;
 	}
 	func_80001830_2430();
@@ -654,16 +674,19 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001984_2584.s")
 #endif
 
+/* CURRENT(19545) */
 #ifdef NON_MATCHING
 void guess_prepareToSaveGame(s32 arg0) {
 	s32 v1;
 	Unk80052A98 *stats;
+	u8 *saveData;
 	u8 *dest;
 	u8 *p;
 	s32 i;
 
 	v1 = arg0 * 0x7A;
-	dest = &((&D_800431C0)[v1 + 0x53]);
+	saveData = (u8 *)&D_800431C0;
+	dest = saveData + v1 + 0x53;
 
 	stats = D_80052A98;
 	do {
@@ -673,9 +696,9 @@ void guess_prepareToSaveGame(s32 arg0) {
 		dest[2] = (u8)(stats->score >> 16);
 		dest[3] = (u8)(stats->score >> 24);
 		dest += 4;
-		osSyncPrintf(&D_80036894_37494, (s32)stats->humansKilled);
-		*dest++ = (u8)stats->humansKilled;
-		osSyncPrintf(&D_800368A0_374A0, (s32)stats->secondsElapsed);
+		osSyncPrintf(&D_80036894_37494, (u16)stats->humansKilled);
+		*dest++ = (u8)(u16)stats->humansKilled;
+		osSyncPrintf(&D_800368A0_374A0, stats->secondsElapsed);
 		dest[0] = (u8)stats->secondsElapsed;
 		dest[1] = (u8)((s32)stats->secondsElapsed >> 8);
 		dest[2] = (u8)((s32)stats->secondsElapsed >> 16);
@@ -725,20 +748,19 @@ void guess_prepareToSaveGame(s32 arg0) {
 
 	*dest++ = (u8)((D_8004DC5C * 0x10) + D_8004DC5E);
 
-	dest[1] = (u8)((s32)D_80048026 >> 8);
-	dest[0] = (u8)D_80048026;
-	dest += 3;
+	*dest++ = (u8)D_80048026;
+	*dest++ = (u8)((s32)D_80048026 >> 8);
+	dest++;
 	osSyncPrintf(&D_80036940_37540, (s32)D_80048026);
 
-	dest[1] = (u8)((s32)D_80048028 >> 8);
-	dest[0] = (u8)D_80048028;
-	dest += 2;
+	*dest++ = (u8)D_80048028;
+	*dest++ = (u8)((s32)D_80048028 >> 8);
 	osSyncPrintf(&D_8003696C_3756C);
 
 	{
 		u64 flags;
 
-		flags = ((u64)(u32)D_8004DC50.unk0 << 0x20) | (u32)D_8004DC50.unk4;
+		flags = *(u64 *)&D_8004DC50;
 		*dest++ = (s8)flags;
 		*dest++ = (s8)(u32)__ull_rshift(flags, 8);
 		*dest++ = (s8)(u32)__ull_rshift(flags, 0x10);
