@@ -1153,7 +1153,38 @@ void func_8007BC90_4C140(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BD98_4C248.s")
 
 // displayDmaLogo
+// CURRENT(55)
+#ifdef NON_MATCHING
+void func_8007BEC0_4C370(void) {
+	u16 counter;
+
+	counter = 0x4F;
+	func_8001355C_1415C();
+	D_800D7960 = 0;
+	D_800D7962 = 5;
+
+	while (1) {
+		func_800791A0_49650(1);
+		func_8007A774_4AC24(0);
+
+		if ((D_800D7962 == 0xB) || (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0)) {
+			func_80005AEC_66EC(0, 0, 0, 0x40);
+		}
+
+		counter--;
+		func_80005B84_6784();
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+		func_8000505C_5C5C();
+
+		if (func_80005B30_6730() != 0) {
+			break;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BEC0_4C370.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BFC4_4C474.s")
 

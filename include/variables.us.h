@@ -688,6 +688,8 @@ extern s16 D_800D74A4;
 extern s16 D_800D74A6;
 extern s16 D_800D74AA;
 extern u8 D_800D6DA8[];
+extern s16 D_800D7960;
+extern s16 D_800D7962;
 extern u8 D_800D7971;
 extern MissionData D_800D747A;
 extern s32* D_800D7A18;
