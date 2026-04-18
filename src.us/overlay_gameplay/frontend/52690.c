@@ -807,7 +807,37 @@ void func_8008FA60_5FF10(void) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008FAAC_5FF5C.s")
+void func_8008FAAC_5FF5C(void) {
+	func_800033D4_3FD4(0x800, 0);
+	if (currentControllerStates[0].button & 0x800) {
+		D_800DE0B0.unk2 += 0x28;
+	}
+
+	func_800033D4_3FD4(0x400, 0);
+	if (currentControllerStates[0].button & 0x400) {
+		D_800DE0B0.unk2 -= 0x28;
+	}
+
+	func_800033D4_3FD4(0x200, 0);
+	if (currentControllerStates[0].button & 0x200) {
+		D_800DE0B0.unk0 -= 0x28;
+	}
+
+	func_800033D4_3FD4(0x100, 0);
+	if (currentControllerStates[0].button & 0x100) {
+		D_800DE0B0.unk0 += 0x28;
+	}
+
+	func_800033D4_3FD4(8, 0);
+	if (currentControllerStates[0].button & 8) {
+		D_800DE0B0.unk4 += 0x28;
+	}
+
+	func_800033D4_3FD4(4, 0);
+	if (currentControllerStates[0].button & 4) {
+		D_800DE0B0.unk4 -= 0x28;
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008FBD4_60084.s")
 
