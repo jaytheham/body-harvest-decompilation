@@ -1490,6 +1490,15 @@ typedef struct {
 } FrontendAnimState; /* size = 0x24 */
 
 typedef struct {
+	/* 0x00 */ u8 *img;
+	/* 0x04 */ u8 pad4[0xC];
+	/* 0x10 */ u16 unk10;
+	/* 0x12 */ u8 pad12[2];
+	/* 0x14 */ u8 unk14;
+	/* 0x15 */ u8 unk15;
+} FrontendTextureInfo; /* size = 0x16 */
+
+typedef struct {
 	/* 0x00 */ u8 pad0[0xC];
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ u8 padE[2];
