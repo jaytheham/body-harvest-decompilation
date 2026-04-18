@@ -1350,7 +1350,78 @@ void func_8008CC3C_5D0EC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008D510_5D9C0.s")
 
+#ifdef NON_MATCHING
+// CURRENT(2095)
+s32 func_8008D98C_5DE3C(Gfx **arg0) {
+	s32 i;
+
+	func_80088E18_592C8();
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_TF_BILERP | G_TL_LOD | G_TD_SHARPEN | G_CYC_1CYCLE);
+	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK | G_FOG | G_LIGHTING);
+	gDPPipeSync(D_8005BB2C++);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPPipeSync(D_8005BB2C++);
+
+	func_8008E158_5E608();
+	func_8008FA60_5FF10();
+
+	for (i = 0; i < 0x96; i = (i + 1) & 0xFF) {
+		u8 entryType = D_800DE130[i].unk0;
+
+		if (entryType != 0xFA) {
+			if (entryType < 0xB) {
+				switch (entryType) {
+			case 0:
+				func_800847E4_54C94((u8)i);
+				break;
+
+			case 1:
+				func_80089764_59C14((u8)i);
+				break;
+
+			case 2:
+				func_80089B38_59FE8();
+				break;
+
+			case 3:
+				func_8008A928_5ADD8((u8)i);
+				break;
+
+			case 4:
+				func_8008B534_5B9E4((u8)i);
+				break;
+
+			case 5:
+				func_8008BC00_5C0B0((u8)i);
+				break;
+
+			case 6:
+			case 7:
+			case 8:
+			case 9:
+			case 10:
+				break;
+
+			default:
+				break;
+				}
+			}
+		}
+	}
+
+	return func_800878A4_57D54();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008D98C_5DE3C.s")
+#endif
 
 /* Clears unkA field in all 50 D_800E1980 entries and resets globals */
 void func_8008DBEC_5E09C(void) {
