@@ -177,7 +177,7 @@ function activate(context) {
                     .relative(workspaceFolder.uri.fsPath, uri.fsPath)
                     .replace(/\\/g, '/');
 
-                const cmd = `.\\tools\\permute.ps1 ${relPath} ${funcName} -j${jobs}${extraArgs ? ' ' + extraArgs : ''}`;
+                const cmd = `.\\tools\\permute.ps1 ${relPath} ${funcName} --stack-diffs -j${jobs}${extraArgs ? ' ' + extraArgs : ''}`;
 
                 // Reuse an existing "Permuter" terminal or create a new one
                 let terminal = vscode.window.terminals.find(t => t.name === 'Permuter');
