@@ -1,14 +1,14 @@
 {
-  "generated": "2026-04-18T04:36:27Z",
-  "commit": "1e849d8d",
-  "commit_timestamp": "2026-04-18T15:35:32+12:00",
+  "generated": "2026-04-18T05:35:16Z",
+  "commit": "aa685c87",
+  "commit_timestamp": "2026-04-18T17:35:02+12:00",
   "overall": {
     "total_functions": 2703,
-    "matched": 1274,
-    "non_matching": 425,
-    "asm_stubs": 1004,
-    "matched_pct": 47.13,
-    "decompiled_pct": 62.86
+    "matched": 1282,
+    "non_matching": 439,
+    "asm_stubs": 982,
+    "matched_pct": 47.43,
+    "decompiled_pct": 63.67
   },
   "segments": {
     "core": {
@@ -22,12 +22,12 @@
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
-      "matched": 75,
-      "non_matching": 22,
-      "asm_stubs": 120,
+      "matched": 83,
+      "non_matching": 36,
+      "asm_stubs": 98,
       "total": 217,
-      "matched_pct": 34.6,
-      "decompiled_pct": 44.7
+      "matched_pct": 38.2,
+      "decompiled_pct": 54.8
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
@@ -207,21 +207,21 @@
     {
       "path": "overlay_gameplay/frontend/40720.c",
       "segment": "overlay_gameplay/frontend",
-      "matched": 35,
-      "non_matching": 15,
-      "asm_stubs": 63,
+      "matched": 39,
+      "non_matching": 23,
+      "asm_stubs": 51,
       "total": 113,
-      "matched_pct": 31.0,
+      "matched_pct": 34.5,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/frontend/52690.c",
       "segment": "overlay_gameplay/frontend",
-      "matched": 40,
-      "non_matching": 7,
-      "asm_stubs": 57,
+      "matched": 44,
+      "non_matching": 13,
+      "asm_stubs": 47,
       "total": 104,
-      "matched_pct": 38.5,
+      "matched_pct": 42.3,
       "contributor": "jaytheham"
     },
     {
@@ -549,9 +549,9 @@
     {
       "name": "jaytheham",
       "files": 43,
-      "matched": 1268,
-      "non_matching": 425,
-      "asm_stubs": 934
+      "matched": 1276,
+      "non_matching": 439,
+      "asm_stubs": 912
     },
     {
       "name": "Meridian Lex",
@@ -634,9 +634,9 @@
     },
     {
       "date": "2026-04-12",
-      "commit": "5889bc5",
-      "matched": 1274,
-      "non_matching": 425,
+      "commit": "aa5e29e",
+      "matched": 1282,
+      "non_matching": 439,
       "total": 2703
     }
   ]
