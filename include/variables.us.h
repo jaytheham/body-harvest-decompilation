@@ -111,6 +111,9 @@ extern s16 D_802571B8;
 extern s16 D_800313FC; // World fog far distance
 extern s32 D_800949D0_64E80;
 extern u16 D_800AC8F0_7CDA0[];
+extern Gfx* D_800942D8_64788;
+extern f32 D_800942DC_6478C;
+extern s32 D_80094844_64CF4;
 extern s32 leomecha_bss_0004;
 extern s32 D_80031410;
 extern s32 D_80031414;

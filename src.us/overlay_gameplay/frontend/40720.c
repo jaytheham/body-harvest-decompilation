@@ -573,7 +573,94 @@ s32 func_80071760_41C10(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800722A4_42754.s")
 
+#ifdef NON_MATCHING
+// CURRENT(8100)
+void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
+	s32 padTop0;
+	s32 padTop1;
+	s32 padTop2;
+	Unk80052B40 spBC;
+	Unk80052B40 spB4;
+	Unk80052B40 spAC;
+	s32 padMid0;
+	s32 padMid1;
+	s32 padMid2;
+	s32 padMid3;
+	s32 padMid4;
+	s32 sp9C;
+	s32 xPos;
+	s32 scaleInt;
+	f32 scale;
+	u16 spD4;
+	s16 i;
+	u8 count;
+	u8 remaining;
+	Gfx* displayList;
+
+	D_80094844_64CF4 += 0x2D8;
+	count = D_8004DC5C;
+	remaining = count;
+	sp9C = arg0;
+	spD4 = 0;
+
+	if (count == 1) {
+		sp9C = arg0 - 0x78;
+		spD4 = 0x50;
+	} else if (count == 2) {
+		sp9C = arg0 - 0x55;
+		spD4 = 0x50;
+	} else if (count == 3) {
+		sp9C = arg0 - 0x28;
+		spD4 = 0x50;
+	}
+
+	if (count > 0) {
+		i = 0;
+		do {
+			displayList = D_800942D8_64788;
+			if (displayList != NULL) {
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+				gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+
+				scale = D_800942DC_6478C * (f32)((f64)arg3 * 1.5);
+				xPos = ((u32)spD4 * (u32)(3 - remaining)) + sp9C;
+				remaining--;
+
+				func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
+				gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+				D_8005BB38 += 0x40;
+
+				scaleInt = (s32)(256.0f * scale);
+				spBC.unk0 = xPos;
+				spBC.unk2 = arg1;
+				spBC.unk4 = arg2;
+
+				spAC.unk0 = D_80094844_64CF4;
+				spAC.unk2 = 0;
+				spAC.unk4 = 0;
+
+				spB4.unk0 = scaleInt;
+				spB4.unk2 = scaleInt;
+				spB4.unk4 = scaleInt;
+
+				func_800039D0_45D0(&spBC, &spAC, &spB4, D_8005BB38);
+
+				gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				D_8005BB38 += 0x40;
+				gSPDisplayList(D_8005BB2C++, (Gfx*)((u32)displayList & 0x1FFFFFFF));
+				gDPPipeSync(D_8005BB2C++);
+
+				count = D_8004DC5C;
+			}
+
+			i++;
+		} while (i < count);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072604_42AB4.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(3830)
