@@ -562,6 +562,8 @@ extern u8* D_8005BB20;
 extern s32 D_8005BB24;
 extern s32 D_8005BB28;
 extern u8 D_801CE710;
+extern u8 D_40053A0[];
+extern Gfx D_4002250[];
 extern s32 D_8005BB48[];
 extern s32 D_8005BB4C[];
 extern s32 D_8005BB50;
