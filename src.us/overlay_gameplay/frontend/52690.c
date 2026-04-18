@@ -1438,7 +1438,45 @@ void func_8008FAAC_5FF5C(void) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(1070)
+void func_8008FBD4_60084(void) {
+	u8 pad;
+	u8 sp46;
+	u8 sp45;
+	u8 sp44;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u8 *)((s32)&D_100DC00 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+	gDPPipeSync(D_8005BB2C++);
+
+	D_800DE12D = 0x20;
+	D_800DE12E = 0x20;
+	D_800DE118.x = D_800DE0B0.unk0;
+	sp44 = 0x19;
+	D_800DE118.y = D_800DE0B0.unk2;
+	sp45 = 0xFF;
+	sp46 = 0x28;
+	pad = 0;
+	D_800DE118.z = D_800DE0B0.unk4;
+	D_800DE124 = &sp44;
+	D_800DE12C = 0xF0;
+	D_800DE128 = 450.0f;
+	func_8008D14C_5D5FC();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008FBD4_60084.s")
+#endif
 
 /* Appends a display list command and calls func_8008D98C */
 #ifdef NON_MATCHING
