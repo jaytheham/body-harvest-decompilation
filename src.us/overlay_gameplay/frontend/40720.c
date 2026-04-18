@@ -1101,7 +1101,24 @@ s32 func_8007946C_4991C(u8* arg0) {
 // displayHighScores
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800796D0_49B80.s")
 
+// CURRENT(1074)
+#ifdef NON_MATCHING
+void func_80079F30_4A3E0(s32 arg0) {
+	volatile s32 sp0;
+
+	sp0 = arg0;
+	gDPPipeSync(D_8005BB2C++);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, arg0 & 0xFF);
+	gDPPipeSync(D_8005BB2C++);
+	gDPFillRectangle(D_8005BB2C++, 0, 0, 320, 240);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80079F30_4A3E0.s")
+#endif
 
 // displayGameOver
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A038_4A4E8.s")
