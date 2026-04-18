@@ -331,7 +331,32 @@ void func_80088B54_59004(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80089764_59C14.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800899F0_59EA0.s")
+void func_800899F0_59EA0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
+	s16 idx;
+	u8* ptr;
+
+	if (D_800DE818 < 0x41) {
+		idx = func_80083B7C_5402C(0x93);
+		if (idx != -3) {
+			D_800DE840[idx].unkA = 0;
+			D_800DE840[idx].unk11 = 0;
+			D_800DE840[idx].unk2 = arg2;
+			D_800DE840[idx].unk8 = arg0;
+			D_800DE840[idx].unkC = arg1;
+
+			ptr = (u8*)&D_800DE840[idx];
+			ptr[0x12] = arg6;
+			ptr[0x0E] = arg3;
+			ptr[0x0F] = arg4;
+			ptr[0x10] = arg5;
+
+			ptr[0x13] = arg2 / 2;
+			if (!ptr[0x13]) {
+				ptr[0x13] = 1;
+			}
+		}
+	}
+}
 
 /* Traverses D_800DE840 linked list, incrementing unk11 and updating unk2 */
 void func_80089AB4_59F64(void) {

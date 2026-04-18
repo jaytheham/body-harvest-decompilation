@@ -697,6 +697,7 @@ extern u8 D_800DE0EB;
 extern Unk800DE130 D_800DE130[];
 extern u8 D_800DE838;
 extern u8 D_800DE839;
+extern u8 D_800DE818;
 extern s16 D_800DE81A;
 extern Unk800DE840 D_800DE840[];
 extern f32 D_800DE0F0[];
