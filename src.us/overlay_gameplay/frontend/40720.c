@@ -1771,4 +1771,52 @@ void func_80081FF0_524A0(void) {
 	D_800D8528 = -D_800D8528;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(5375)
+void func_80082074_52524(void) {
+	f32 var_f0;
+	f32 temp_f2;
+	f32 temp_f6;
+	f32 temp_f8;
+	f32 temp_f16;
+	f64 temp_f12;
+	f32* ptr;
+	s32 temp_a0;
+	s32 var_v0;
+	s32 var_v1;
+
+	ptr = &D_80094950_64E00;
+	if (D_8009494C_64DFC == 1) {
+		var_v0 = 0;
+		var_v1 = 0xFF;
+		var_f0 = D_800AEA70_7EF20;
+	} else {
+		var_v0 = 0xFF;
+		var_v1 = 0;
+		var_f0 = D_800AEA74_7EF24;
+	}
+
+	temp_f2 = *ptr;
+	temp_f6 = (f32)var_v0;
+	if (var_v0 < 0) {
+		temp_f6 += 4294967296.0f;
+	}
+	temp_f16 = temp_f2 + var_f0;
+	temp_f12 = (f64)temp_f16;
+	if (1.0 < temp_f12) {
+		*ptr = 1.0f;
+	} else {
+		*ptr = (f32)temp_f12;
+	}
+	temp_f8 = (f32)var_v1;
+	if (var_v1 < 0) {
+		temp_f8 += 4294967296.0f;
+	}
+	temp_f16 = (temp_f6 * (1.0f - temp_f2)) + (temp_f2 * temp_f8);
+	temp_a0 = (u32)temp_f16;
+	temp_a0 &= 0xFF;
+	*((s32*)((u8*)D_800D7A1C + 0x49C)) = temp_a0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80082074_52524.s")
+#endif
