@@ -1310,7 +1310,59 @@ void func_80080AD4_50F84(FrontendStreamSlot *arg0, AnimChannelState *arg1, u8 ar
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080B80_51030.s")
 
+// CURRENT(310)
+#ifdef NON_MATCHING
+void func_80080F8C_5143C(AnimChannelState *arg0, s16 *arg1, s32 arg2) {
+	f32 zero;
+	s16 temp_t9;
+	s32 temp_t0;
+	s32 var_v0;
+	AnimChannelState *temp_v1;
+
+	zero = 0.0f;
+	arg0->unk0 = 0;
+	arg0->unk2 = 0;
+	arg0->unk4 = 0;
+	arg0->unk14 = 0;
+	arg0->unk18 = 0;
+	arg0->unk2A = 0;
+	arg0->unk2C = 0;
+	arg0->unk2E = 0;
+	arg0->unk24 = 0;
+	arg0->unk26 = 0;
+	arg0->unk28 = 0;
+	arg0->unk30 = 0;
+	var_v0 = 1;
+	arg0->unk8 = zero;
+	arg0->unkC = zero;
+	arg0->unk10 = zero;
+	arg0->unk1C = zero;
+	arg0->unk20 = zero;
+	if (arg2 != 1) {
+		do {
+			temp_v1 = &arg0[var_v0];
+			temp_v1->unk8 = (f32)arg1[0];
+			var_v0 += 1;
+			temp_t0 = var_v0 & 0xFF;
+			var_v0 = temp_t0;
+			arg1 += 8;
+			temp_v1->unkC = (f32)arg1[-7];
+			temp_t9 = arg1[-6];
+			temp_v1->unk0 = 0;
+			temp_v1->unk2 = 0;
+			temp_v1->unk4 = 0;
+			temp_v1->unk30 = 0;
+			temp_v1->unk14 = 0;
+			temp_v1->unk18 = 0;
+			temp_v1->unk1C = zero;
+			temp_v1->unk20 = zero;
+			temp_v1->unk10 = (f32)temp_t9;
+		} while (arg2 != temp_t0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080F8C_5143C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081058_51508.s")
 
