@@ -174,7 +174,50 @@ void func_80083B14_53FC4(u8 arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(65)
+s16 func_80083B7C_5402C(u8 arg0) {
+	s16 idx;
+	s16 i;
+
+	if (D_800E1978 >= 0x1C2) {
+		return -3;
+	}
+
+	idx = D_800E197A;
+	D_800DE840[idx].unk0 = 1;
+	D_800DE840[idx].unk2 = 1;
+	D_800DE840[idx].unk4 = -5;
+
+	if (D_800DE130[arg0].unk4 == 0) {
+		D_800DE130[arg0].unk6 = idx;
+		D_800DE840[idx].unk6 = -4;
+	} else {
+		D_800DE840[idx].unk6 = D_800DE130[arg0].unk8;
+		D_800DE840[D_800DE130[arg0].unk8].unk4 = idx;
+	}
+
+	D_800DE130[arg0].unk8 = idx;
+	D_800DE130[arg0].unk4++;
+	D_800E1978++;
+	D_800E197A = 0x1C2;
+
+	i = idx;
+	if (idx < 0x1C2) {
+		do {
+			if (D_800DE840[i].unk0 == 0) {
+				D_800E197A = i;
+				i = 0x1C2;
+			}
+			i++;
+		} while (i < 0x1C2);
+	}
+
+	return idx;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80083B7C_5402C.s")
+#endif
 
 /* Allocate 3 linked entries for arg0; free on failure, return first idx or -3 */
 s16 func_80083C98_54148(u8 arg0) {

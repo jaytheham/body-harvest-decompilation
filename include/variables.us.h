@@ -728,6 +728,8 @@ extern u8 D_800E198D;
 extern u8 D_800E198F;
 extern s8 D_800E1992;
 extern Unk800E1980 D_800E1980[];
+extern s16 D_800E1978;
+extern s16 D_800E197A;
 extern u8 D_800E1D68;
 extern u8 D_800E1D69;
 extern Vec3f D_800E6A10;
