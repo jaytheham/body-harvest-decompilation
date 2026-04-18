@@ -1125,7 +1125,29 @@ void func_8007A754_4AC04(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BB0C_4BFBC.s")
 
 // displayNoControllerNotice
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BC90_4C140.s")
+void func_8007BC90_4C140(void) {
+	func_800791A0_49650(1);
+	gDPFullSync(D_8005BB2C++);
+	gSPEndDisplayList(D_8005BB2C++);
+
+	func_8000505C_5C5C();
+
+	while (1) {
+		func_800791A0_49650(0);
+		drawText(&D_800ADFDC_7E48C, 250, 200, 200);
+		drawText(&D_800ADFE0_7E490, 128, 5);
+		func_8000B044_BC44();
+		func_80005B84_6784();
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+
+		func_8000505C_5C5C();
+
+		if (func_80005B30_6730() != 0) {
+			break;
+		}
+	}
+}
 
 // displayWrongConsoleRegionNotice
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BD98_4C248.s")

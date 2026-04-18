@@ -671,6 +671,8 @@ extern char D_800ADC1C_7E0CC;
 extern char D_800ADC30_7E0E0;
 extern char D_800ADC3C_7E0EC;
 extern char D_800ADC48_7E0F8;
+extern char D_800ADFDC_7E48C;
+extern char D_800ADFE0_7E490;
 extern char D_800AE094_7E544;
 extern char D_800AE098_7E548;
 extern char D_800AE09C_7E54C;
