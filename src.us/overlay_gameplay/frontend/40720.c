@@ -572,7 +572,54 @@ s32 func_80077204_476B4(void) {
 #endif
 
 // displaySelectFileDifficulty
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077344_477F4.s")
+s32 func_80077344_477F4(void) {
+	u32 frameCounter;
+	s32 state;
+
+	frameCounter = 0;
+	state = 1;
+
+	func_800709F0_40EA0();
+	D_800D74A6 = 0x5A;
+	D_800D74A4 = D_800D74A6;
+
+	while (state == 1) {
+		if (frameCounter < 0x3E8U) {
+			func_80070C64_41114(0x58, 3, (s16)frameCounter);
+		}
+
+		if (frameCounter >= 0x21U) {
+			func_80070CC4_41174();
+			func_8007166C_41B1C();
+
+			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+				state = 2;
+				if (D_800D74A4 == 0x5A) {
+					D_80052ACD |= 0x80;
+				}
+			}
+
+			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+				state = 0;
+			}
+		}
+
+		func_80075D58_46208(0);
+		func_800731A8_43658();
+		func_8000B044_BC44();
+		func_8000505C_5C5C();
+
+		if (frameCounter < 0x3E8U) {
+			frameCounter++;
+		}
+	}
+
+	func_8000AFDC_BBDC();
+	func_800153D8_15FD8(0xC8);
+	func_800709F0_40EA0();
+
+	return state;
+}
 
 // doDeleteFile
 #ifdef NON_MATCHING
