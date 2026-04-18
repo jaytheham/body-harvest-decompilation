@@ -380,7 +380,52 @@ void func_800840C4_54574(u8 arg0) {
 	}
 }
 
+typedef struct {
+	/* 0x00 */ s8 unk0;
+	/* 0x01 */ s8 unk1;
+	/* 0x02 */ s8 unk2;
+	/* 0x03 */ s8 unk3;
+	/* 0x04 */ s8 unk4;
+	/* 0x05 */ u8 pad5;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ s8 unk8;
+} Frontend52690Unk8View;
+
+#ifdef NON_MATCHING
+// CURRENT(1458)
+void func_8008412C_545DC(u8 arg0, u8 arg1) {
+	s16 index;
+	Frontend52690Unk8View *temp_s0;
+
+	if ((arg0 != 0xFB) && ((index = func_80083B7C_5402C(arg0)) != -3)) {
+		temp_s0 = (Frontend52690Unk8View *)((u8 *)&D_800DE840[index] + 8);
+		temp_s0->unk1 = (s8)(func_800038E0_44E0() % 4);
+		temp_s0->unk2 = (s8)((func_800038E0_44E0() % 10) + 1);
+		temp_s0->unk3 = (s8)((func_800038E0_44E0() % 8) + 8);
+		if ((func_800038E0_44E0() % 2) == 1) {
+			temp_s0->unk3 = (s8)-temp_s0->unk3;
+		}
+		temp_s0->unk4 = (s8)((func_800038E0_44E0() % 15) + 10);
+		if ((arg1 >= 0x1A) && ((func_800038E0_44E0() % 2) == 1)) {
+			temp_s0->unk4 = (s8)-temp_s0->unk4;
+		}
+		temp_s0->unk0 = arg1;
+		if ((D_800DE0B7 == 1) || (D_800DE0B9 == 1)) {
+			temp_s0->unk6 = (s16)((func_800038E0_44E0() % 1000) + 0x19);
+		} else {
+			temp_s0->unk6 = (s16)((func_800038E0_44E0() % 200) + 0x19);
+		}
+		temp_s0->unk8 = (s8)((func_800038E0_44E0() % 20) - 10);
+		if (temp_s0->unk8 < 0) {
+			temp_s0->unk8 = (s8)(temp_s0->unk8 - 5);
+			return;
+		}
+		temp_s0->unk8 = (s8)(temp_s0->unk8 + 5);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008412C_545DC.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(3017)
