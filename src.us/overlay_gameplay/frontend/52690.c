@@ -1,8 +1,32 @@
 #include <ultra64.h>
 #include "common.h"
 
+typedef struct {
+	u16 unk0;
+	u16 unk2;
+} Frontend52690Viewport;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800821E0_52690.s")
+void func_800821E0_52690(u8 arg0, u8 arg1, u8 arg2) {
+	((Frontend52690Viewport *)D_8005BB24)->unk2 = 0x140;
+
+	gSPViewport(D_8005BB2C++, D_8005BB24 + 0x80000000);
+	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
+	gSPSetGeometryMode(D_8005BB2C++, G_SHADE | G_SHADING_SMOOTH);
+	gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)D_800311A8 & 0x1FFFFFFF));
+
+	func_80004F64_5B64();
+
+	func_80004DDC_59DC(0, 0, 0, 0, ((D_80068088 - 0xA0) / 2) - 1);
+	func_80004DDC_59DC(0, 0, 0, (D_80068088 + 0xA0) / 2, D_80068088 - 1);
+
+	func_80004DDC_59DC(arg0, arg1, arg2, (D_80068088 - 0xA0) / 2, ((D_80068088 + 0xA0) / 2) - 1);
+
+	gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)D_800311D0 & 0x1FFFFFFF));
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+}
+
+void func_800823C0_52870(void) {
+}
 
 /* Empty stub - stores three arguments and returns */
 void func_800823C8_52878(s32 arg0, s32 arg1, s32 arg2) {

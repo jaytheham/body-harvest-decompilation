@@ -43,6 +43,7 @@ void func_80004918_5518(void);
 void func_80004AEC_56EC(void);
 void func_80004C8C_588C(void);
 void func_80004CC8_58C8(void);
+void func_80004F64_5B64(void);
 VehicleInstance *func_80109960_118910(void);
 void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1);
 s32 func_8008D978_9C928(u32 arg0);

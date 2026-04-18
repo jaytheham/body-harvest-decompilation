@@ -74,6 +74,7 @@ extern u8 D_1012C80[];
 extern u8 D_1013080[];
 extern u8 D_80031160;
 extern Unk800311A0 D_800311A0;
+extern Gfx D_800311A8[];
 extern Mtx D_80031120_31D20;
 extern Gfx D_800311D0[];
 extern Gfx D_80031200[];
