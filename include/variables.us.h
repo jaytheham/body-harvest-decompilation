@@ -693,6 +693,7 @@ extern char D_800AE028_7E4D8;
 extern char D_800AE094_7E544;
 extern char D_800AE098_7E548;
 extern char D_800AE09C_7E54C;
+extern char D_800AD7CC_7DC7C[];
 extern char D_800AE920_7EDD0; /* osSyncPrintf format string */
 extern char D_800AE958_7EE08; /* osSyncPrintf format string */
 extern char D_800AE97C_7EE2C; /* osSyncPrintf format string */
@@ -708,6 +709,7 @@ extern u8 D_800D6D88;
 extern u8 D_800D6D89;
 extern u8 D_800D6D8A;
 extern s32 D_800D6D8C;
+extern u8 D_800D7490;
 extern s16 D_800D74A4;
 extern s16 D_800D74A6;
 extern s16 D_800D74AA;
