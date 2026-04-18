@@ -593,7 +593,21 @@ void func_8008DF40_5E3F0(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008E158_5E608.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008E9DC_5EE8C.s")
+/* Allocates an entry and fills color/lifetime and velocity-related byte fields */
+void func_8008E9DC_5EE8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10) {
+	u8 slot;
+
+	slot = func_8008DC34_5E0E4(arg0, arg1, arg2, 2, arg3);
+	if (slot != 0xFF) {
+		D_800E1980[slot].unkD = arg7;
+		D_800E1980[slot].unk12 = arg7 / arg6;
+		D_800E1980[slot].unk6 = arg8;
+		D_800E1980[slot].unk7 = arg9;
+		D_800E1980[slot].unk8 = arg10;
+		D_800E1980[slot].unk10 = arg4;
+		D_800E1980[slot].unk11 = arg5;
+	}
+}
 
 /* Allocates an entry and sets DE7C/DEB8 fields */
 void func_8008EAB0_5EF60(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4) {
