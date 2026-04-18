@@ -2016,7 +2016,86 @@ void func_8007BEC0_4C370(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BFC4_4C474.s")
 
+#ifdef NON_MATCHING
+// CURRENT(3430)
+void func_8007C4BC_4C96C(void) {
+	u16 fadeCounter;
+	s16 foundCount;
+	s16 startIndex;
+	s16 i;
+	s32 line;
+	s32 row;
+
+	fadeCounter = 0x4F;
+	foundCount = 0;
+	startIndex = 4;
+
+	do {
+		func_800791A0_49650(0);
+		func_8000AFDC_BBDC();
+
+		if (D_800944E8_64998[startIndex + D_80047710][0] == 0x23) {
+			foundCount++;
+		}
+
+		i = startIndex;
+		if ((fadeCounter == 0) && (foundCount == 0)) {
+			startIndex++;
+			fadeCounter = 0x4F;
+			drawText(&D_800AE070_7E520, 0x4F);
+			line = 0xC - startIndex;
+		} else {
+			drawText(&D_800AE074_7E524, fadeCounter);
+			line = 0xC - startIndex;
+		}
+
+		if (i > 0) {
+			do {
+				if (D_800944E8_64998[i - 1][0] == 0) {
+					drawText(&D_800AE078_7E528, 0xAA, 0xAA, 0xEB);
+				} else {
+					drawText(&D_800AE07C_7E52C, 0x6E, 0x6E, 0xAA);
+				}
+
+				drawText(&D_800AE080_7E530, 0xFF);
+				row = line + i;
+
+				if (foundCount == 0) {
+					if (row == 8) {
+						drawText(&D_800AE084_7E534, 0xFF - (fadeCounter * 3));
+					}
+					if (row == 0) {
+						drawText(&D_800AE088_7E538, fadeCounter * 3);
+					}
+				}
+
+				row = line + i;
+				if (row < 9) {
+					drawText(&D_800AE08C_7E53C, 0x80, row, D_800944E8_64998[i]);
+				}
+
+				i--;
+			} while ((i > 0) && ((startIndex - 0xD) < i));
+		}
+
+		func_8000B044_BC44();
+		if (foundCount == 0x190) {
+			func_80005AEC_66EC(0, 0, 0, 0x40);
+		}
+
+		if (foundCount == 0) {
+			fadeCounter = (fadeCounter - 1) & 0xFFFF;
+		}
+
+		func_80005B84_6784();
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+		func_8000505C_5C5C();
+	} while (func_80005B30_6730() == 0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007C4BC_4C96C.s")
+#endif
 
 void func_8007C764_4CC14(u16 arg0, u16 arg1) {
     if (arg1 < arg0) {

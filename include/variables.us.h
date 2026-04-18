@@ -1629,6 +1629,15 @@ extern s32 D_80258F90; // English sign string offsets (actually u16/s16?)
 extern u8 D_80258330; // signposts
 extern s16 D_80047710;
 extern s16 D_80047712;
+extern u8 *D_800944E8_64998[];
+extern char D_800AE070_7E520;
+extern char D_800AE074_7E524;
+extern char D_800AE078_7E528;
+extern char D_800AE07C_7E52C;
+extern char D_800AE080_7E530;
+extern char D_800AE084_7E534;
+extern char D_800AE088_7E538;
+extern char D_800AE08C_7E53C;
 extern s16 D_80157580; // outside camera x?
 extern s16 D_80157582; // outside camera y?
 extern s16 D_80157584; // outside camera z?
