@@ -2407,7 +2407,97 @@ void func_80080F8C_5143C(AnimChannelState *arg0, s16 *arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080F8C_5143C.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(2760)
+void func_80081058_51508(void) {
+	Vtx *vtx;
+	Gfx *dl;
+
+	vtx = D_8005BB34;
+	vtx[0].v.cn[2] = 0xFF;
+	vtx[0].v.cn[3] = 0xFF;
+	vtx[1].v.cn[2] = 0xFF;
+	vtx[1].v.cn[3] = 0xFF;
+	vtx[2].v.cn[0] = 0xFF;
+	vtx[2].v.cn[3] = 0xFF;
+	vtx[3].v.cn[0] = 0xFF;
+	vtx[3].v.cn[3] = 0xFF;
+	vtx[4].v.cn[1] = 0xFF;
+	vtx[4].v.cn[3] = 0xFF;
+	vtx[5].v.cn[1] = 0xFF;
+	vtx[5].v.cn[3] = 0xFF;
+	vtx[0].v.ob[0] = 0;
+	vtx[0].v.ob[1] = 0;
+	vtx[0].v.ob[2] = 0;
+	vtx[0].v.flag = 0;
+	vtx[0].v.tc[0] = 0;
+	vtx[0].v.tc[1] = 0;
+	vtx[0].v.cn[0] = 0;
+	vtx[0].v.cn[1] = 0;
+	vtx[1].v.ob[0] = 0x12C;
+	vtx[1].v.ob[1] = 0;
+	vtx[1].v.ob[2] = 0;
+	vtx[1].v.flag = 0;
+	vtx[1].v.tc[0] = 0;
+	vtx[1].v.tc[1] = 0;
+	vtx[1].v.cn[0] = 0;
+	vtx[1].v.cn[1] = 0;
+	vtx[2].v.ob[0] = 0;
+	vtx[2].v.ob[1] = 0;
+	vtx[2].v.ob[2] = 0;
+	vtx[2].v.flag = 0;
+	vtx[2].v.tc[0] = 0;
+	vtx[2].v.tc[1] = 0;
+	vtx[2].v.cn[1] = 0;
+	vtx[2].v.cn[2] = 0;
+	vtx[3].v.ob[0] = 0;
+	vtx[3].v.ob[1] = 0x12C;
+	vtx[3].v.ob[2] = 0;
+	vtx[3].v.flag = 0;
+	vtx[3].v.tc[0] = 0;
+	vtx[3].v.tc[1] = 0;
+	vtx[3].v.cn[1] = 0;
+	vtx[3].v.cn[2] = 0;
+	vtx[4].v.ob[0] = 0;
+	vtx[4].v.ob[1] = 0;
+	vtx[4].v.ob[2] = 0;
+	vtx[4].v.flag = 0;
+	vtx[4].v.tc[0] = 0;
+	vtx[4].v.tc[1] = 0;
+	vtx[4].v.cn[0] = 0;
+	vtx[4].v.cn[2] = 0;
+	vtx[5].v.ob[0] = 0;
+	vtx[5].v.ob[1] = 0;
+	vtx[5].v.ob[2] = 0x12C;
+	vtx[5].v.flag = 0;
+	vtx[5].v.tc[0] = 0;
+	vtx[5].v.tc[1] = 0;
+	vtx[5].v.cn[0] = 0;
+	vtx[5].v.cn[2] = 0;
+
+	gDPPipeSync(D_8005BB2C++);
+	gSPClearGeometryMode(D_8005BB2C++, -1);
+	gSPSetGeometryMode(D_8005BB2C++, G_SHADE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_LINE, G_RM_AA_ZB_XLU_LINE2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	gSPVertex(D_8005BB2C++, (Vtx *)((u32)vtx + 0x80000000), 10, 0);
+	D_8005BB34 += 6;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB5000000;
+	dl->words.w1 = 0x0000020A;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB5000000;
+	dl->words.w1 = 0x0004060A;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB5000000;
+	dl->words.w1 = 0x00080A0A;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081058_51508.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081290_51740.s")
 
