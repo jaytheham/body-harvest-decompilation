@@ -928,20 +928,22 @@ typedef struct {
 } Unk80052A94;
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x6];
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
 	/* 0x06 */ u8 unk6;
 	/* 0x07 */ u8 unk7;
 	/* 0x08 */ u8 unk8;
-	/* 0x09 */ u8 pad9;
+	/* 0x09 */ u8 unk9;
 	/* 0x0A */ s16 unkA;
-	/* 0x0C */ u8 padC;
+	/* 0x0C */ u8 unkC;
 	/* 0x0D */ u8 unkD;
-	/* 0x0E */ u8 padE;
+	/* 0x0E */ s8 unkE;
 	/* 0x0F */ u8 unkF;
 	/* 0x10 */ s8 unk10;
 	/* 0x11 */ s8 unk11;
 	/* 0x12 */ s8 unk12;
-	/* 0x13 */ u8 pad13;
+	/* 0x13 */ u8 unk13;
 } Unk800E1980; /* size = 0x14 */
 
 typedef struct {

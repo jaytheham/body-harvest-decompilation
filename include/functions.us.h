@@ -212,7 +212,7 @@ void func_8008A5F8_5AAA8(u8 arg0);
 void func_8008B264_5B714(u8 arg0);
 void func_8008BB38_5BFE8(u8 arg0);
 void func_8008C7E4_5CC94(void);
-u8 func_8008DC34_5E0E4(s16, s16, s16, s16, s16);
+u8 func_8008DC34_5E0E4(s16, s32, s32, s16, s16);
 void func_8008EB20_5EFD0(s16, s16, s16, u16, u8, s32, s32);
 void func_800840C4_54574(u8);
 u8 func_80083A58_53F08(u8);

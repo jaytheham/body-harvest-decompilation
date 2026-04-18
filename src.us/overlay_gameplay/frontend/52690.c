@@ -1022,7 +1022,55 @@ void func_8008DBEC_5E09C(void) {
 	D_800E1D69 = 0;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(7230)
+u8 func_8008DC34_5E0E4(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4) {
+	u8 var_v1;
+	u8 temp_t3;
+	Unk800E1980 *temp_a0;
+	s8 *temp_t2;
+	u8 *temp_a2;
+
+	if (D_800E1D68 >= 0x32) {
+		return 0xFF;
+	}
+
+	temp_a0 = &D_800E1980[D_800E1D69];
+	temp_a0->unk0 = arg0;
+	temp_t2 = &D_800AA694[(u8) arg3 * 8];
+	temp_a0->unkC = (u8) arg3;
+	temp_a0->unkA = (u16) arg4;
+	temp_a0->unk2 = arg1;
+	temp_a0->unk4 = arg2;
+	temp_a0->unkF = 0;
+	temp_a0->unk10 = temp_t2[1];
+	temp_a0->unk11 = temp_t2[2];
+	temp_a0->unk12 = temp_t2[3];
+
+	var_v1 = D_800E1D69;
+	temp_t3 = var_v1;
+	temp_a0 = &D_800E1980[D_800E1D69];
+	temp_a2 = &D_800AA724[(u8) arg3 * 4];
+	temp_a0->unkE = func_800038E0_44E0() % temp_t2[0];
+	temp_a0->unkD = temp_a2[3];
+	temp_a0->unk6 = temp_a2[0];
+	temp_a0->unk7 = temp_a2[1];
+	temp_a0->unk8 = temp_a2[2];
+
+	while (var_v1 < 0x32) {
+		if (D_800E1980[var_v1].unkA == 0) {
+			D_800E1D69 = var_v1;
+			var_v1 = 0x32;
+		}
+		var_v1 = (var_v1 + 1) & 0xFF;
+	}
+
+	D_800E1D68++;
+	return temp_t3;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008DC34_5E0E4.s")
+#endif
 
 /* Sets three byte fields (offsets 6,7,8) in a D_800E1980 entry */
 void func_8008DDF0_5E2A0(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
