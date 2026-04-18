@@ -349,7 +349,54 @@ s32 func_80085CB8_56168(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80085CB8_56168.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, s16 arg8,
+					 u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
+	f32 sp34;
+	f32 sp38;
+	f32 sp3C;
+	u8 temp_s5;
+	s16 temp_v0;
+	s16 temp_s1;
+	u8 i;
+
+	temp_s5 = func_80083A58_53F08(1);
+	if (temp_s5 == 0xFB) {
+		return;
+	}
+
+	temp_v0 = func_80083B7C_5402C(temp_s5);
+	if (temp_v0 == -3) {
+		func_80083B14_53FC4(temp_s5);
+		return;
+	}
+
+	D_800DE130[temp_s5].unkA = temp_v0;
+	D_800DE840[temp_v0].unk8 = arg0;
+	D_800DE840[temp_v0].unkA = arg1;
+	D_800DE840[temp_v0].unkC = arg2;
+
+	sp34 = arg3;
+	sp38 = arg4;
+	sp3C = arg5;
+	func_800837B4_53C64(&sp34, &sp34);
+
+	D_800DE840[temp_v0].unk2 = arg9;
+	D_800DE840[temp_v0].unkE = arg10;
+	D_800DE840[temp_v0].unkF = arg11;
+	D_800DE840[temp_v0].unk10 = arg12;
+	D_800DE840[temp_v0].unk12 = arg13;
+
+	temp_s1 = func_80085CB8_56168(arg8);
+	i = 0;
+	while (i < temp_s1) {
+		func_800857D4_55C84(temp_s5, (s32)&sp34, arg6, arg7);
+		i++;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80085CEC_5619C.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(260)
