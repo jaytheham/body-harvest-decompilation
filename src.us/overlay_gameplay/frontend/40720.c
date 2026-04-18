@@ -2444,7 +2444,95 @@ void func_8007F3F8_4F8A8(FrontendStruct* arg0, u8* arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F3F8_4F8A8.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(4355)
+void func_8007F580_4FA30(s32 arg0) {
+
+	s32 tempLo;
+	s32 lightSlots;
+	u8 lightCount;
+	u8 iter;
+	u8 dlLightIndex;
+	FrontendLightSource* source;
+	Unk80080588Entry1C* sourceList;
+	Light* light;
+	u8* lightBytes;
+
+	lightCount = 0;
+	iter = 0;
+	if ((s32)D_800D7A8D > 0) {
+		sourceList = D_800D7A34;
+		while (iter < (u8)D_800D7A8D) {
+			tempLo = iter * 0x1C;
+			source = (FrontendLightSource*)((u8*)sourceList + tempLo);
+			if (source->unk18 != 0) {
+				if (arg0 != 0) {
+					func_8007F830_4FCE0((Unk80080588Entry1C*)source);
+					sourceList = D_800D7A34;
+				}
+
+				light = &D_800D7A90[lightCount];
+				func_8007F3F8_4F8A8((FrontendStruct*)((u8*)sourceList + tempLo), (u8*)light + 8);
+				sourceList = D_800D7A34;
+				source = (FrontendLightSource*)((u8*)sourceList + tempLo);
+				lightBytes = (u8*)light;
+
+				lightCount = (lightCount + 1) & 0xFF;
+				lightBytes[8] = source->unk14;
+				lightBytes[12] = source->unk14;
+				lightBytes[9] = source->unk15;
+				lightBytes[13] = source->unk15;
+				lightBytes[10] = source->unk16;
+				lightBytes[14] = source->unk16;
+			}
+			iter = (iter + 1) & 0xFF;
+		}
+		iter = 0;
+	}
+
+	if (arg0 != 0) {
+		func_8007F830_4FCE0(&D_800D8530);
+		source = (FrontendLightSource*)&D_800D8530;
+		D_800D7A86.unk0 = source->unk14;
+		D_800D7A86.unk1 = source->unk15;
+		D_800D7A86.unk2 = source->unk16;
+	}
+
+	D_800D7A90[0].l.col[0] = D_800D7A86.unk0;
+	D_800D7A90[0].l.colc[0] = D_800D7A86.unk0;
+	D_800D7A90[0].l.col[1] = D_800D7A86.unk1;
+	D_800D7A90[0].l.colc[1] = D_800D7A86.unk1;
+	D_800D7A90[0].l.col[2] = D_800D7A86.unk2;
+	D_800D7A90[0].l.colc[2] = D_800D7A86.unk2;
+
+	if (lightCount == 0) {
+		lightBytes = (u8*)&D_800D7A90[0];
+		lightCount = 1;
+		lightBytes[8] = 0;
+		lightBytes[12] = 0;
+		lightBytes[9] = 0;
+		lightBytes[13] = 0;
+		lightBytes[10] = 0;
+		lightBytes[14] = 0;
+		lightBytes[16] = 0;
+		lightBytes[17] = 0;
+		lightBytes[18] = 0;
+	}
+
+	lightSlots = lightCount;
+	if (lightSlots > 0) {
+		do {
+			gSPLight(D_8005BB2C++, &D_800D7A90[iter], iter + 1);
+			iter = (iter + 1) & 0xFF;
+		} while (iter < lightSlots);
+	}
+
+	gSPLight(D_8005BB2C++, &D_800D7A90[0], lightSlots + 1);
+	gSPNumLights(D_8005BB2C++, D_80094910_64DC0[lightCount]);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F580_4FA30.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F830_4FCE0.s")
 

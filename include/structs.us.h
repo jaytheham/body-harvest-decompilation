@@ -1533,6 +1533,15 @@ typedef struct {
 } FrontendCamTrack; /* size = 0x08 */
 
 typedef struct {
+	/* 0x00 */ u8 pad0[0x14];
+	/* 0x14 */ u8 unk14;
+	/* 0x15 */ u8 unk15;
+	/* 0x16 */ u8 unk16;
+	/* 0x17 */ u8 pad17;
+	/* 0x18 */ s32 unk18;
+} FrontendLightSource; /* size = 0x1C */
+
+typedef struct {
 	/* 0x00 */ u8 pad0[0xC];
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ u8 padE[2];
