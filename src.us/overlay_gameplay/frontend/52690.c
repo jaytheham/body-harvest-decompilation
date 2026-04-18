@@ -53,7 +53,131 @@ void func_80082868_52D18(s32 arg0) {
 	gSPDisplayList(D_8005BB2C++, D_4002250);
 }
 
+#ifdef NON_MATCHING
+// CURRENT(4374)
+void func_800829E4_52E94(s32 arg0) {
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s32 digits[4];
+	s32 *digitPtr;
+	s32 *digitEnd;
+	s32 divisor;
+	s32 quotient;
+	s32 divisorStep;
+	u32 loadBlockW0;
+	u32 loadBlockW1;
+	Gfx *dl;
+
+	divisor = 1000;
+	divisorStep = 10;
+	loadBlockW0 = 0xF3000000;
+	loadBlockW1 = 0x073FF200;
+	digitPtr = digits;
+	digitEnd = digits + 4;
+	quotient = 0;
+	while (digitPtr < digitEnd) {
+		quotient = arg0 / divisor;
+		*digitPtr++ = quotient;
+		arg0 -= quotient * divisor;
+		divisor /= divisorStep;
+	}
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE8000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD68001F;
+	dl->words.w1 = (u32)(D_4002BA0 + (digits[3] << 10));
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5680000;
+	dl->words.w1 = 0x07000000;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = loadBlockW0;
+	dl->words.w1 = loadBlockW1;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE8000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD68001F;
+	dl->words.w1 = (u32)(D_4002BA0 + (digits[2] << 10));
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5680080;
+	dl->words.w1 = 0x07000000;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = loadBlockW0;
+	dl->words.w1 = loadBlockW1;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE8000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD68001F;
+	dl->words.w1 = (u32)(D_4002BA0 + (digits[1] << 10));
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5680100;
+	dl->words.w1 = 0x07000000;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = loadBlockW0;
+	dl->words.w1 = loadBlockW1;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE8000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD68001F;
+	dl->words.w1 = (u32)(D_4002BA0 + (digits[0] << 10));
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5680180;
+	dl->words.w1 = 0x07000000;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = loadBlockW0;
+	dl->words.w1 = loadBlockW1;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x06000000;
+	dl->words.w1 = (u32)D_4000170;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800829E4_52E94.s")
+#endif
 
 // transitionToNextLevel
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80082CBC_5316C.s")
