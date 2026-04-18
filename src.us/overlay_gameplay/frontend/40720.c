@@ -1611,7 +1611,73 @@ s32 func_8007946C_4991C(u8* arg0) {
 	return len;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(20222)
+void func_8007949C_4994C(s32 arg0, s32 arg1) {
+	s32 i;
+	s32 j;
+	s16 tempA3;
+	s16 tempT0;
+	s16 tempT1;
+	s16 tempT2;
+	Unk80047FB8* entry;
+	u8* src;
+	u8* dst;
+	volatile s32 tempArg1;
+
+	tempArg1 = arg1;
+	tempA3 = D_80052A98[0].secondsElapsed;
+	tempT0 = D_80052A98[0].humansKilled;
+	tempT1 = D_80052A98[1].secondsElapsed;
+	tempT2 = D_80052A98[1].humansKilled;
+
+	for (i = 0; i < 5; i++) {
+		entry = &D_80047FB8[i];
+		if (entry->unk8 < arg0) {
+			if (i < 4) {
+				for (j = 4; j != i; j--) {
+					D_80047FB8[j].unk0 = D_80047FB8[j - 1].unk0;
+					D_80047FB8[j].unk1 = D_80047FB8[j - 1].unk1;
+					D_80047FB8[j].unk2 = D_80047FB8[j - 1].unk2;
+					D_80047FB8[j].unk3 = D_80047FB8[j - 1].unk3;
+					D_80047FB8[j].unk4 = D_80047FB8[j - 1].unk4;
+					D_80047FB8[j].unk5 = D_80047FB8[j - 1].unk5;
+					D_80047FB8[j].unk8 = D_80047FB8[j - 1].unk8;
+					D_80047FB8[j].unkC = D_80047FB8[j - 1].unkC;
+					D_80047FB8[j].unk10 = D_80047FB8[j - 1].unk10;
+				}
+			}
+
+			src = D_80047FA8;
+			dst = &entry->unk0;
+			do {
+				*dst++ = *src++;
+			} while (src < &D_80047FAE);
+
+			entry->unkC = 0;
+			entry->unkC += tempT0;
+			entry->unkC += tempT2;
+			entry->unk10 = 0;
+			entry->unk10 = tempA3;
+			entry->unk10 += tempT1;
+			entry->unk10 += D_80052A98[2].secondsElapsed;
+			entry->unkC += D_80052A98[2].humansKilled;
+			entry->unk10 += D_80052A98[3].secondsElapsed;
+			entry->unkC += D_80052A98[3].humansKilled;
+			entry->unk10 += D_80052A98[4].secondsElapsed;
+			entry->unkC += D_80052A98[4].humansKilled;
+			entry->unk10 += D_80052A98[5].secondsElapsed;
+			entry->unk8 = arg0;
+			entry->unkC += D_80052A98[5].humansKilled;
+			break;
+		}
+	}
+
+	(void)tempArg1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007949C_4994C.s")
+#endif
 
 // displayHighScores
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800796D0_49B80.s")
