@@ -64,6 +64,8 @@ extern u8 D_80047678;
 extern s32 D_80031120;
 extern u8 D_30130;
 extern u8 D_3F320;
+extern u8 D_040AAE40[];
+extern u16 D_040B1A40[];
 extern u8 D_1003990[];
 extern u8 D_1010C80[];
 extern u8 D_1011C80[];

@@ -1302,7 +1302,32 @@ void func_8007A754_4AC04(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007B900_4BDB0.s")
 
 // displayPublisherLogo
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BB0C_4BFBC.s")
+void func_8007BB0C_4BFBC(void) {
+	s32 counter;
+
+	counter = 100;
+	func_800791A0_49650(1);
+	gDPFullSync(D_8005BB2C++);
+	gSPEndDisplayList(D_8005BB2C++);
+	func_8000505C_5C5C();
+
+	do {
+		func_800791A0_49650(1);
+		gDPSetTextureFilter(D_8005BB2C++, G_TF_POINT);
+		func_80005C5C_685C(D_040AAE40, 2, 1, 8, 24, 80, 288, 96, 1.0f, 1.0f, D_040B1A40);
+
+		if (counter == 0) {
+			func_80005AEC_66EC(0, 0, 0, 64);
+		}
+
+		counter = (counter - 1) & 0xFFFF;
+		func_8000B044_BC44();
+		func_80005B84_6784();
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+		func_8000505C_5C5C();
+	} while (func_80005B30_6730() == 0);
+}
 
 // displayNoControllerNotice
 void func_8007BC90_4C140(void) {
