@@ -62,3 +62,25 @@ case 1:
     result = func(arg1, var_v0 + 0x3900, size);
     break;
 ```
+
+---
+
+### 3x3 transpose loop: use `[3][3]` matrix local + `s16` loop vars before temp vec
+
+For matrix transpose helpers that call `guMtxL2F`, then run nested 0..2 loops, and later pass the 3x3 as `f32 *` to vector/matrix helpers, matching improved significantly by using this exact local shape/order:
+
+```c
+f32 sp58[4][4];
+f32 sp34[3][3];
+s16 i;
+s16 j;
+f32 sp24[3];
+```
+
+Then call with cast:
+
+```c
+func_xxx((f32 *)sp34, sp24, out);
+```
+
+Using a flat `f32 sp34[9]` with index `(i * 3) + j` needed manual padding and still left regalloc diffs in one case. Switching to `sp34[3][3]` with `s16` loop variables declared before the temp vector produced a full match (score 0) in `func_800838E0_53D90`.
