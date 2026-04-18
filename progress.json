@@ -1,14 +1,14 @@
 {
-  "generated": "2026-04-18T12:19:13Z",
-  "commit": "7346074e",
-  "commit_timestamp": "2026-04-19T00:18:59+12:00",
+  "generated": "2026-04-18T21:39:08Z",
+  "commit": "8d51b0c6",
+  "commit_timestamp": "2026-04-19T09:38:56+12:00",
   "overall": {
     "total_functions": 2704,
-    "matched": 1286,
-    "non_matching": 453,
-    "asm_stubs": 965,
-    "matched_pct": 47.56,
-    "decompiled_pct": 64.31
+    "matched": 1287,
+    "non_matching": 472,
+    "asm_stubs": 945,
+    "matched_pct": 47.6,
+    "decompiled_pct": 65.05
   },
   "segments": {
     "core": {
@@ -22,12 +22,12 @@
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
-      "matched": 87,
-      "non_matching": 50,
-      "asm_stubs": 81,
+      "matched": 88,
+      "non_matching": 69,
+      "asm_stubs": 61,
       "total": 218,
-      "matched_pct": 39.9,
-      "decompiled_pct": 62.8
+      "matched_pct": 40.4,
+      "decompiled_pct": 72.0
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
@@ -207,19 +207,19 @@
     {
       "path": "overlay_gameplay/frontend/40720.c",
       "segment": "overlay_gameplay/frontend",
-      "matched": 41,
-      "non_matching": 27,
-      "asm_stubs": 45,
+      "matched": 42,
+      "non_matching": 38,
+      "asm_stubs": 33,
       "total": 113,
-      "matched_pct": 36.3,
+      "matched_pct": 37.2,
       "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/frontend/52690.c",
       "segment": "overlay_gameplay/frontend",
       "matched": 46,
-      "non_matching": 23,
-      "asm_stubs": 36,
+      "non_matching": 31,
+      "asm_stubs": 28,
       "total": 105,
       "matched_pct": 43.8,
       "contributor": "jaytheham"
@@ -549,9 +549,9 @@
     {
       "name": "jaytheham",
       "files": 43,
-      "matched": 1280,
-      "non_matching": 453,
-      "asm_stubs": 895
+      "matched": 1281,
+      "non_matching": 472,
+      "asm_stubs": 875
     },
     {
       "name": "Meridian Lex",
