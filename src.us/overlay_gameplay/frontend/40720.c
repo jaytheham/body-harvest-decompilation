@@ -279,7 +279,34 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800710D8_41588.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007166C_41B1C.s")
+void func_8007166C_41B1C(void)
+{
+	MissionData *entryA;
+	MissionData *entryB;
+
+	entryA = func_80070494_40944(D_800D74A4);
+	entryB = func_80070494_40944(D_800D74A6);
+
+	if (entryA != NULL && ((entryA != entryB) || (entryB == NULL)) && entryA->unk1C != 3)
+	{
+		D_800D74A6 = D_800D74A4;
+
+		if (entryB != NULL && entryB->unk16 == 4)
+		{
+			func_80070970_40E20(entryB, 1);
+		}
+
+		func_800704DC_4098C();
+		entryA->unk1C = 1;
+		entryA->unk28 = 0;
+
+		if (entryA->unk12 >= 0x4001)
+		{
+			entryA->unk12 = 0x4000;
+			entryA->unk14 = 0x400;
+		}
+	}
+}
 
 #ifdef NON_MATCHING
 void func_80071738_41BE8(void) {
