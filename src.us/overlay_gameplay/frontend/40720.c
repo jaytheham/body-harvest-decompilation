@@ -513,7 +513,63 @@ void func_80076FE0_47490(s32* arg0, s32* arg1) {
 // doPressStartLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007704C_474FC.s")
 
+#ifdef NON_MATCHING
+// CURRENT(205)
+s32 func_80077204_476B4(void) {
+	u32 frameCounter;
+	s32 state;
+	volatile s16* selectedSaveSlot;
+
+	frameCounter = 0;
+	state = 1;
+
+	func_800709F0_40EA0();
+	D_800D74A6 = 0x37;
+	selectedSaveSlot = &D_800D74A4;
+	*selectedSaveSlot = D_800D74A6;
+
+	while (state == 1) {
+		if (frameCounter < 0x3E8U) {
+			func_80070C64_41114(0x36, 3, (s16)frameCounter);
+		}
+
+		if (frameCounter >= 0x21U) {
+			func_80070CC4_41174();
+			func_8007166C_41B1C();
+
+			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+				state = 0;
+				if (*selectedSaveSlot == 0x38) {
+					state = 2;
+				} else {
+					state = state;
+				}
+			}
+
+			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+				state = 0;
+			}
+		}
+
+		func_80075D58_46208(0);
+		func_800731A8_43658();
+		func_8000B044_BC44();
+		func_8000505C_5C5C();
+
+		if (frameCounter < 0x3E8U) {
+			frameCounter++;
+		}
+	}
+
+	func_8000AFDC_BBDC();
+	func_800153D8_15FD8(0xC8);
+	func_800709F0_40EA0();
+
+	return state;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077204_476B4.s")
+#endif
 
 // displaySelectFileDifficulty
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077344_477F4.s")
