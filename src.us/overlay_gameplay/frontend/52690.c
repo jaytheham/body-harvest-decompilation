@@ -731,7 +731,47 @@ u8 func_8008A460_5A910(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008A928_5ADD8.s")
 
+#ifdef NON_MATCHING
+// CURRENT(2027)
+void func_8008AEC8_5B378(s32 arg0) {
+	s16 srcIdx;
+	s16 dstIdx;
+	u8 id;
+	u8 *s0;
+	u8 *s1;
+	s8 sx;
+	s8 sy;
+	s8 sz;
+
+	id = arg0 & 0xFF;
+	srcIdx = D_800DE130[id].unk6;
+	dstIdx = func_80083B7C_5402C(id);
+	if (dstIdx != -3) {
+		s0 = (u8 *)&D_800DE840[dstIdx].unk8;
+		*(s16 *)(s0 - 6) = (func_800038E0_44E0() % 0x1C) + 0x1C;
+
+		s1 = (u8 *)&D_800DE840[srcIdx].unk8;
+		s0[6] = D_800AA640[s1[0xA] * 3];
+		s0[7] = D_800AA640[(s1[0xA] * 3) + 1];
+		s0[8] = D_800AA640[(s1[0xA] * 3) + 2];
+		s0[9] = 0x8C;
+
+		*(s16 *)&s0[0] = *(s16 *)&s1[0];
+		*(s16 *)&s0[2] = *(s16 *)&s1[2];
+		*(s16 *)&s0[4] = *(s16 *)&s1[4];
+		sx = (s8)s1[6];
+		sy = (s8)s1[7];
+		sz = (s8)s1[8];
+
+		s0[0xA] = (func_800038E0_44E0() % 4) + sx - 2;
+		s0[0xB] = (func_800038E0_44E0() % 4) + sy - 2;
+		s0[0xC] = (func_800038E0_44E0() % 4) + sz - 2;
+		s0[0xD] = 0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008AEC8_5B378.s")
+#endif
 
 /* Allocate entry with given params; returns allocId or 0xFB on failure */
 u8 func_8008B08C_5B53C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6)

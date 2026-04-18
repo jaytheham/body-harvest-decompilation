@@ -760,6 +760,7 @@ extern f32 D_800D8528;
 extern FrontendStreamSlot D_800D8578[];
 extern FrontendStreamSlot* D_800D8550[];
 extern s32 D_800D88E8;
+extern u8 D_800AA640[];
 extern s32 D_800DE068;
 extern Unk800311A0 D_800DE0B0;
 extern u8 D_800DE0B6;
