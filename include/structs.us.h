@@ -859,6 +859,17 @@ typedef struct {
 } Unk80080588Entry1C; /* size = 0x1C */
 
 typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[4];
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ u8 unk10;
+} Unk8008C7E4Sub; /* size = 0x12 */
+
+typedef struct {
 	/* 0x00 */ u8 pad0[0xC];
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ s16 unkE;
