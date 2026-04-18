@@ -222,6 +222,7 @@ void func_80088BDC_5908C(void);
 void func_80089388_59838(s16 arg0, s16 arg1, s16 arg2, u8 arg3);
 void func_800894A0_59950(u8 arg0);
 void func_8008A5F8_5AAA8(u8 arg0);
+void func_8008AEC8_5B378(u8 arg0);
 void func_8008B264_5B714(u8 arg0);
 void func_8008BB38_5BFE8(u8 arg0);
 void func_8008C7E4_5CC94(void);
