@@ -1515,6 +1515,24 @@ typedef struct {
 } FrontendCamState; /* size = 0x40 */
 
 typedef struct {
+	/* 0x00 */ f32 unk0;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ u8 pad12[2];
+	/* 0x14 */ s32 unk14;
+} FrontendCamKeyframe; /* size = 0x18 */
+
+typedef struct {
+	/* 0x00 */ FrontendCamKeyframe* unk0;
+	/* 0x04 */ s32 unk4;
+} FrontendCamTrack; /* size = 0x08 */
+
+typedef struct {
 	/* 0x00 */ u8 pad0[0xC];
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ u8 padE[2];

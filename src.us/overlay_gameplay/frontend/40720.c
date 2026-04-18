@@ -2132,7 +2132,52 @@ void func_8007EE8C_4F33C(s32** arg0) {
 	D_800D7A18[3] = 0;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(2605)
+s32 func_8007EEE0_4F390(void) {
+	FrontendCamKeyframe* keyframe;
+	f32 t;
+
+	if (((FrontendCamState*)D_800D7A18)->unkC == 0) {
+		return 0;
+	}
+
+	keyframe = (FrontendCamKeyframe*)((FrontendCamState*)D_800D7A18)->unk0;
+	if (((FrontendCamState*)D_800D7A18)->unk4 <= 0) {
+		((FrontendCamState*)D_800D7A18)->unk36 = keyframe->unkA;
+		((FrontendCamState*)D_800D7A18)->unk38 = keyframe->unkC;
+		((FrontendCamState*)D_800D7A18)->unk34 = keyframe->unkE;
+		((FrontendCamState*)D_800D7A18)->unk1C.x = keyframe->unk4;
+		((FrontendCamState*)D_800D7A18)->unk1C.y = keyframe->unk6;
+		((FrontendCamState*)D_800D7A18)->unk1C.z = keyframe->unk8;
+		((FrontendCamState*)D_800D7A18)->unk3C = keyframe->unk10;
+		((FrontendCamState*)D_800D7A18)->unk8++;
+
+		if (((FrontendCamState*)D_800D7A18)->unk8 == ((FrontendCamTrack*)((FrontendCamState*)D_800D7A18)->unkC)->unk4) {
+			((FrontendCamState*)D_800D7A18)->unkC = 0;
+		} else {
+			((FrontendCamState*)D_800D7A18)->unk0 = (s32)(((FrontendCamTrack*)((FrontendCamState*)D_800D7A18)->unkC)->unk0 + ((FrontendCamState*)D_800D7A18)->unk8);
+			((FrontendCamState*)D_800D7A18)->unk4 = ((FrontendCamKeyframe*)((FrontendCamState*)D_800D7A18)->unk0)->unk14;
+		}
+	} else {
+		t = 1.0f / (f32)((FrontendCamState*)D_800D7A18)->unk4;
+		D_800D7974 += (keyframe->unk0 - D_800D7974) * t;
+
+		((FrontendCamState*)D_800D7A18)->unk1C.x += ((f32)keyframe->unk4 - ((FrontendCamState*)D_800D7A18)->unk1C.x) * t;
+		((FrontendCamState*)D_800D7A18)->unk1C.y += ((f32)keyframe->unk6 - ((FrontendCamState*)D_800D7A18)->unk1C.y) * t;
+		((FrontendCamState*)D_800D7A18)->unk1C.z += ((f32)keyframe->unk8 - ((FrontendCamState*)D_800D7A18)->unk1C.z) * t;
+		((FrontendCamState*)D_800D7A18)->unk36 = (s16)((f32)(keyframe->unkA - ((FrontendCamState*)D_800D7A18)->unk36) * t + (f32)((FrontendCamState*)D_800D7A18)->unk36);
+		((FrontendCamState*)D_800D7A18)->unk38 = (s16)((f32)(keyframe->unkC - ((FrontendCamState*)D_800D7A18)->unk38) * t + (f32)((FrontendCamState*)D_800D7A18)->unk38);
+		((FrontendCamState*)D_800D7A18)->unk34 = (s16)((f32)(keyframe->unkE - ((FrontendCamState*)D_800D7A18)->unk34) * t + (f32)((FrontendCamState*)D_800D7A18)->unk34);
+		((FrontendCamState*)D_800D7A18)->unk3C = (s16)((f32)(keyframe->unk10 - ((FrontendCamState*)D_800D7A18)->unk3C) * t + (f32)((FrontendCamState*)D_800D7A18)->unk3C);
+	}
+
+	((FrontendCamState*)D_800D7A18)->unk4--;
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007EEE0_4F390.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(3566)
