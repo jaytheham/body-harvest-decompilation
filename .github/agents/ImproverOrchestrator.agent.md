@@ -19,7 +19,7 @@ You will be given a C file to target, follow this process:
   - Build the ROM so the diff tool can calculate the C implementation's CURRENT score. It is normal that the build will return `FAILED` at this stage because the function does not yet match.
   - Check the current score with the diff tool, a lower score is better, `CURRENT(0)` is a match.
   - Create a new subagent, agentName `BH Match Improver`, and tell the subagent to target the unwrapped function.
-4. Only the following directory contents and files are allowed to be changed by subAgents, after a subagent finishes work undo any changes outside of:
+4. Only the following directory contents and files are allowed to be changed by subAgents, after a subagent finishes, undo any changes outside of:
  - `/ExampleFixes`
  - `/include`
  - `/src.us`
