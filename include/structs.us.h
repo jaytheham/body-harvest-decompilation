@@ -887,6 +887,17 @@ typedef struct {
 } FrontendStruct; /* size = 0x14 */
 
 typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[2];
+	/* 0x08 */ f32 unk8;
+	/* 0x0C */ f32 unkC;
+	/* 0x10 */ f32 unk10;
+	/* 0x14 */ u8 pad14[0x2C];
+} Unk800801BCEntry; /* size = 0x40 */
+
+typedef struct {
 	/* 0x00 */ u8 pad[0x50];
 	/* 0x50 */ s32 unk50;
 	/* 0x54 */ u8 pad54[0x4];

@@ -1632,7 +1632,52 @@ void func_8007FBC8_50078(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007FE8C_5033C.s")
 
+#ifdef NON_MATCHING
+// CURRENT(1488)
+void func_800801BC_5066C(s32 arg0, s32 arg1) {
+	s32 sp54[3];
+	s16 sp60[3];
+	s32 var_s1;
+	u8 var_s7;
+
+	var_s7 = arg1 & 0xFF;
+	var_s1 = 1;
+	if (var_s7 != 1) {
+		do {
+			Unk800801BCEntry* entry;
+			s32* temp_a3;
+
+			entry = (Unk800801BCEntry*)(arg0 + (var_s1 << 6));
+			sp60[0] = entry->unk2 << 3;
+			sp60[1] = entry->unk4 << 3;
+			sp60[2] = entry->unk0 << 3;
+			sp54[0] = (s32)(entry->unk8 * 65536.0f);
+			sp54[1] = (s32)(entry->unkC * 65536.0f);
+			sp54[2] = (s32)(entry->unk10 * 65536.0f);
+
+			if ((D_800D8514 != NULL) && (D_800D8514[var_s1] == 0)) {
+				sp54[0] = 0x13880000;
+				sp54[1] = 0x13880000;
+				sp54[2] = 0x13880000;
+			}
+
+			if (D_80094944_64DF4 == 1) {
+				temp_a3 = D_8005BB38;
+				D_8005BB38 = temp_a3 + 0x10;
+				func_8000C81C_D41C(sp54, sp60, 0, temp_a3);
+			} else {
+				temp_a3 = D_8005BB38;
+				D_8005BB38 = temp_a3 + 0x10;
+				func_80080B80_51030(sp54, sp60, 0, temp_a3);
+			}
+
+			var_s1 = (var_s1 + 1) & 0xFF;
+		} while (var_s7 != var_s1);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800801BC_5066C.s")
+#endif
 
 // Called during start movie, mostly before scene changes
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8008035C_5080C.s")

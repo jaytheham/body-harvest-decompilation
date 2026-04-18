@@ -225,6 +225,8 @@ void func_8008F704_5FBB4(u8 arg0);
 void func_8008FAAC_5FF5C(void);
 void func_80075D58_46208(s32 arg0);
 void func_800731A8_43658(void);
+void func_800801BC_5066C(s32 arg0, s32 arg1);
+void func_80080B80_51030(s32 *arg0, s16 *arg1, s16 *arg2, s32 arg3);
 
 // overlay_gameplay outside
 void func_80070440_7F3F0(void);
