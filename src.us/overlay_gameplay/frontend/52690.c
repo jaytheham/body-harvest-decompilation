@@ -1520,7 +1520,70 @@ void func_8008B534_5B9E4(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B534_5B9E4.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(1910)
+u8 func_8008B7BC_5BC6C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
+	u8 effectId;
+	u32 stepCountU32;
+	s16 deltaX;
+	s16 deltaY;
+	s16 deltaZ;
+	s16 stepX;
+	s16 stepY;
+	s16 stepZ;
+	s16 idx;
+	s32 stepCount;
+	u8 i;
+	Unk800DE840* entry;
+
+	effectId = func_80083A58_53F08(9);
+	if (effectId != 0xFB) {
+		deltaX = arg3 - arg0;
+		deltaY = arg4 - arg1;
+		deltaZ = arg5 - arg2;
+
+		stepCountU32 = sqrtf((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ)) / 100.0f;
+		stepCount = stepCountU32 & 0xFF;
+
+		if (stepCount < 2) {
+			stepCount = 2;
+		}
+		if (stepCount >= 0x10) {
+			stepCount = 0xF;
+		}
+		if (D_800DE0B6 == 1) {
+			stepCount = 1;
+		}
+
+		stepX = deltaX / stepCount;
+		stepY = deltaY / stepCount;
+		stepZ = deltaZ / stepCount;
+
+		if (stepCount >= 0) {
+			i = 0;
+			while (i <= stepCount) {
+				idx = func_80083B7C_5402C(effectId);
+				if (idx == -3) {
+					func_800840C4_54574(effectId);
+					func_80083B14_53FC4(effectId);
+					return 0xFB;
+				}
+
+				entry = &D_800DE840[idx];
+				*(s16*)&entry->unkE = arg6;
+				entry->unk8 = arg0 + (stepX * i);
+				entry->unkA = arg1 + (stepY * i);
+				entry->unkC = arg2 + (stepZ * i);
+				i = (i + 1) & 0xFF;
+			}
+		}
+	}
+
+	return effectId;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B7BC_5BC6C.s")
+#endif
 
 /* Calls func_800840C4 and func_80083B14 if D_800DE130[arg0].unk0 == 9 */
 void func_8008BAD8_5BF88(u8 arg0) {
