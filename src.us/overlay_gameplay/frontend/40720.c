@@ -1492,7 +1492,41 @@ void func_8007F3EC_4F89C(FrontendStruct* arg0) {
 	arg0->unk10 = 0;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(4261)
+void func_8007F3F8_4F8A8(FrontendStruct* arg0, u8* arg1) {
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	f32 sp38;
+	f32 sp34;
+	f32 sp2C;
+	f32 temp_f0;
+	f32 temp_f2;
+	volatile f32 temp_f12;
+	volatile f32 temp_f14;
+	volatile f32 temp_f18;
+	f64 temp_f20;
+	f64 temp_f22;
+
+	temp_f20 = D_800AEA40_7EEF0;
+	temp_f22 = D_800AEA48_7EEF8;
+	sp34 = sinf((f32)(((f64)(f32)arg0->unk12 * temp_f20) / temp_f22));
+	sp38 = cosf((f32)(((f64)(f32)arg0->unk12 * temp_f20) / temp_f22));
+	sp2C = sinf((f32)(((f64)(f32)arg0->unk10 * temp_f20) / temp_f22));
+	temp_f0 = cosf((f32)(((f64)(f32)arg0->unk10 * temp_f20) / temp_f22));
+	temp_f12 = 0.0f;
+	temp_f14 = 100.0f;
+	temp_f18 = 1.0f;
+	temp_f2 = (temp_f12 * sp2C) + (temp_f18 * temp_f0);
+	arg1[8] = (s8)(s32)(-((temp_f2 * sp34) + (temp_f12 * sp38)) * temp_f14);
+	arg1[9] = (s8)(s32)(-((temp_f12 * temp_f0) - (temp_f18 * sp2C)) * temp_f14);
+	arg1[10] = (s8)(s32)(-((temp_f2 * sp38) - (temp_f12 * sp34)) * temp_f14);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F3F8_4F8A8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F580_4FA30.s")
 
