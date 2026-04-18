@@ -53,7 +53,131 @@ void func_80082868_52D18(s32 arg0) {
 	gSPDisplayList(D_8005BB2C++, D_4002250);
 }
 
+#ifdef NON_MATCHING
+// CURRENT(4374)
+void func_800829E4_52E94(s32 arg0) {
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s32 digits[4];
+	s32 *digitPtr;
+	s32 *digitEnd;
+	s32 divisor;
+	s32 quotient;
+	s32 divisorStep;
+	u32 loadBlockW0;
+	u32 loadBlockW1;
+	Gfx *dl;
+
+	divisor = 1000;
+	divisorStep = 10;
+	loadBlockW0 = 0xF3000000;
+	loadBlockW1 = 0x073FF200;
+	digitPtr = digits;
+	digitEnd = digits + 4;
+	quotient = 0;
+	while (digitPtr < digitEnd) {
+		quotient = arg0 / divisor;
+		*digitPtr++ = quotient;
+		arg0 -= quotient * divisor;
+		divisor /= divisorStep;
+	}
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE8000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD68001F;
+	dl->words.w1 = (u32)(D_4002BA0 + (digits[3] << 10));
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5680000;
+	dl->words.w1 = 0x07000000;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = loadBlockW0;
+	dl->words.w1 = loadBlockW1;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE8000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD68001F;
+	dl->words.w1 = (u32)(D_4002BA0 + (digits[2] << 10));
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5680080;
+	dl->words.w1 = 0x07000000;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = loadBlockW0;
+	dl->words.w1 = loadBlockW1;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE8000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD68001F;
+	dl->words.w1 = (u32)(D_4002BA0 + (digits[1] << 10));
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5680100;
+	dl->words.w1 = 0x07000000;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = loadBlockW0;
+	dl->words.w1 = loadBlockW1;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE8000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD68001F;
+	dl->words.w1 = (u32)(D_4002BA0 + (digits[0] << 10));
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5680180;
+	dl->words.w1 = 0x07000000;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = loadBlockW0;
+	dl->words.w1 = loadBlockW1;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x06000000;
+	dl->words.w1 = (u32)D_4000170;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800829E4_52E94.s")
+#endif
 
 // transitionToNextLevel
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80082CBC_5316C.s")
@@ -497,7 +621,85 @@ u8 func_80084324_547D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80084324_547D4.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(260)
+void func_80084508_549B8(u8 arg0) {
+	s16 cur;
+	Unk800DE840 *entry;
+	s8 *view;
+	s8 delta;
+	s8 vel;
+	s32 v1;
+
+	cur = D_800DE130[arg0].unkA;
+	cur = D_800DE840[cur].unk4;
+	if ((cur == -5) || (cur == -6)) {
+		return;
+	}
+
+	do {
+		entry = &D_800DE840[cur];
+		view = (s8 *)entry + 8;
+
+		if (view[4] < 0) {
+			if (((u8 *)view)[0] < 0x19) {
+				s16 next = entry->unk4;
+
+				func_80083DBC_5426C(cur, arg0);
+				func_8008412C_545DC(arg0, 0);
+				cur = next;
+				continue;
+			}
+		}
+
+		delta = view[3];
+		if (delta > 0) {
+			v1 = ((u8 *)view)[2];
+			if (v1 < 0xE5) {
+				((u8 *)view)[2] = v1 + delta;
+			} else {
+				((u8 *)view)[2] = 1;
+				view[1]++;
+				if (view[1] >= 4) {
+					view[1] = 0;
+				}
+			}
+		} else {
+			v1 = ((u8 *)view)[2];
+			if (v1 >= 0x11) {
+				((u8 *)view)[2] = v1 + delta;
+			} else {
+				((u8 *)view)[2] = 0xE5;
+				view[1]--;
+				if (view[1] < 0) {
+					view[1] = 3;
+				}
+			}
+		}
+
+		delta = view[4];
+		if ((delta > 0) && (((u8 *)view)[0] >= 0xE6)) {
+			view[4] = -delta;
+			delta = view[4];
+		}
+
+		((u8 *)view)[0] += delta;
+		vel = view[8];
+		*(s16 *)(view + 6) += vel;
+		if (vel > 0) {
+			if (*(s16 *)(view + 6) >= 0xF4) {
+				view[8] = -vel;
+			}
+		} else if (*(s16 *)(view + 6) < 0xC) {
+			view[8] = -vel;
+		}
+
+		cur = entry->unk4;
+	} while ((cur != -5) && (cur != -6));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80084508_549B8.s")
+#endif
 
 /* Decrement timer and update positions or free entry */
 void func_8008472C_54BDC(u8 arg0) {
@@ -689,7 +891,83 @@ void func_80088B54_59004(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(1125)
+void func_80088BDC_5908C(void) {
+	s16 temp_a1;
+	s16 temp_s0;
+	s16 temp_s1_unkA;
+	s16 var_s3;
+	Unk800DE840 *temp_s1;
+	Unk800DE840 *temp_s2;
+	u8 *temp_s0_2;
+	u8 *var_v0;
+
+	var_s3 = D_800DE826;
+	if ((var_s3 != -5) && (var_s3 != -6)) {
+		s16 three;
+		s16 six;
+		s8 neg14;
+
+		neg14 = -0x14;
+		six = 6;
+		three = 3;
+		while (1) {
+			temp_s1 = &D_800DE840[var_s3];
+			temp_s1_unkA = temp_s1->unkA;
+			temp_s0_2 = (u8 *)temp_s1 + 8;
+			temp_s2 = &D_800DE840[D_800DE840[temp_s1->unk4].unk4];
+			var_v0 = (u8 *)temp_s2 + 8;
+
+			temp_s1->unk8 += (s8)var_v0[0];
+			temp_s1->unkC += (s8)var_v0[2];
+			temp_s1->unkA = temp_s1_unkA + (s8)var_v0[1];
+
+			if ((s8)var_v0[1] >= -0x13) {
+				var_v0[1] = ((s8)var_v0[1]) - 1;
+			} else {
+				var_v0[1] = neg14;
+			}
+
+			var_v0[3] += (s8)var_v0[6];
+			var_v0[4] += (s8)var_v0[7];
+			var_v0[5] += (s8)var_v0[8];
+
+			if ((temp_s0_2[11] & 4) && (temp_s0_2[10] == 0)) {
+				func_80089388_59838(*(s16 *)(temp_s0_2 + 0), *(s16 *)(temp_s0_2 + 2), *(s16 *)(temp_s0_2 + 4), temp_s0_2[9]);
+			}
+
+			temp_s0_2[10]++;
+			if ((u8)temp_s0_2[10] == three) {
+				temp_s0_2[10] = 0;
+			}
+
+			temp_a1 = *(s16 *)(temp_s0_2 + 2);
+			if (temp_a1 <= 0) {
+				if (temp_s0_2[11] & 1) {
+					func_8008EB20_5EFD0(*(s16 *)(temp_s0_2 + 0), temp_a1, *(s16 *)(temp_s0_2 + 4), ((u16)(temp_s1->unk2 / six)), 0, 0, 0);
+				}
+
+				temp_s0 = temp_s2->unk4;
+				func_80083F8C_5443C(var_s3, 0x94);
+				var_s3 = temp_s0;
+			} else {
+				var_s3 = temp_s2->unk4;
+			}
+
+			if (var_s3 == -5) {
+				break;
+			}
+			if (var_s3 != -6) {
+				continue;
+			}
+			break;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80088BDC_5908C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80088E18_592C8.s")
 
@@ -774,9 +1052,128 @@ void func_80089388_59838(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	D_800DE840[idx].unk10 = D_800DE840[D_800DE130[arg3].unk6].unk10;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800894A0_59950.s")
+#ifdef NON_MATCHING
+// CURRENT(1825)
+void func_800894A0_59950(u8 arg0) {
+	Unk800DE130 *entry130;
+	Unk800DE840 *src;
+	Unk800DE840 *head;
+	Unk800DE840 *cur;
+	u8 *headBytes;
+	u8 *curBytes;
+	u8 *curBytes2;
+	s16 idx;
+	u8 slot;
 
+	slot = arg0;
+	entry130 = &D_800DE130[slot];
+	src = &D_800DE840[*(s16 *)((u8 *)entry130 + 2)];
+	head = &D_800DE840[entry130->unk6];
+
+	head->unk8 = src->unk8;
+	head->unkA = src->unkA;
+	head->unkC = src->unkC;
+
+	headBytes = (u8 *)&head->unk11;
+	idx = head->unk4;
+	if (idx == -5 || idx == -6) {
+		return;
+	}
+
+	do {
+		s8 steps;
+
+		cur = &D_800DE840[idx];
+		curBytes = (u8 *)&cur->unk8;
+		curBytes2 = curBytes;
+
+		if (curBytes[9] < 10) {
+			s16 next = cur->unk4;
+
+			func_80083DBC_5426C(idx, slot);
+			if (entry130->unk4 == 1) {
+				func_80083DBC_5426C(entry130->unk6, slot);
+				func_80083B14_53FC4(slot);
+				return;
+			}
+			idx = next;
+			continue;
+		}
+
+		steps = (s8)(0x23 - curBytes[0xA]);
+		if (steps > 0) {
+			curBytes[6] = (u8)(curBytes[6] - ((curBytes[6] - headBytes[0]) / steps));
+			curBytes[7] = (u8)(curBytes[7] - ((curBytes[7] - headBytes[1]) / steps));
+			curBytes[8] = (u8)(curBytes[8] - ((curBytes[8] - headBytes[2]) / steps));
+		}
+
+		cur->unkA += (func_800038E0_44E0() % 2) + 1;
+		cur->unk2 += (func_800038E0_44E0() % 3) + 2;
+		curBytes2[0xA]++;
+		curBytes2[9] -= 9;
+
+		idx = cur->unk4;
+	} while (idx != -5 && idx != -6);
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800894A0_59950.s")
+#endif
+
+#ifdef NON_MATCHING
+// CURRENT(3538)
+void func_80089764_59C14(s32 arg0) {
+	s16 idx;
+	s16 neg6;
+	Unk800DE840* entry;
+
+	idx = D_800DE130[arg0 & 0xFF].unk6;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100E080 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+
+	D_800DE12D = 0x20;
+	D_800DE12E = 0x20;
+	idx = D_800DE840[idx].unk4;
+	neg6 = -6;
+
+	if (idx == -5) {
+		return;
+	}
+	if (idx == neg6) {
+		return;
+	}
+
+	do {
+		entry = &D_800DE840[idx];
+		D_800DE118.x = entry->unk8;
+		D_800DE124 = &entry->unkE;
+		D_800DE12C = entry->unk11;
+		D_800DE118.y = entry->unkA;
+		D_800DE118.z = entry->unkC;
+		D_800DE128 = entry->unk2;
+		func_8008D14C_5D5FC();
+
+		idx = entry->unk4;
+		if (idx == -5) {
+			return;
+		}
+	} while (idx != neg6);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80089764_59C14.s")
+#endif
 
 void func_800899F0_59EA0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	s16 idx;
@@ -1015,9 +1412,113 @@ void func_8008B19C_5B64C(u8 arg0, u8 arg1) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B264_5B714.s")
+#ifdef NON_MATCHING
+// CURRENT(2739)
+void func_8008B264_5B714(u8 arg0) {
+	s16 idx;
+	s16 nextIdx;
+	Unk800DE130 *entry;
+	Unk800DE840 *node;
+	Unk8008B264NodeSub *nodeSub;
 
+	entry = &D_800DE130[arg0 & 0xFF];
+	idx = D_800DE840[entry->unk6].unk4;
+
+	while ((idx != -5) && (idx != -6)) {
+		node = &D_800DE840[idx];
+		nodeSub = (Unk8008B264NodeSub *) &node->unk8;
+
+		if (node->unk11 < 0xB) {
+			if ((entry->unk4 < 3) && (D_800DE840[entry->unk6].unk11 == 0)) {
+				func_800840C4_54574(arg0 & 0xFF);
+				func_80083B14_53FC4(arg0 & 0xFF);
+				return;
+			}
+
+			nextIdx = node->unk4;
+			func_80083DBC_5426C(idx, arg0 & 0xFF);
+			idx = nextIdx;
+		} else {
+			if (nodeSub->unkD == 0) {
+				nodeSub->unk9 = (nodeSub->unk9 - (func_800038E0_44E0() % 5)) - 5;
+				node->unk2 = node->unk2 + (func_800038E0_44E0() % 3) + 3;
+			} else {
+				nodeSub->unk9 = (nodeSub->unk9 - (func_800038E0_44E0() % 5)) - 5;
+				node->unk2 = node->unk2 + (func_800038E0_44E0() % 5) + 5;
+			}
+
+			nodeSub->unk0 += nodeSub->unkA;
+			nodeSub->unk2 += nodeSub->unkB;
+			nodeSub->unk4 += nodeSub->unkC;
+			nodeSub->unk6--;
+			nodeSub->unk7--;
+			nodeSub->unk8--;
+			idx = node->unk4;
+		}
+	}
+
+	if (D_800DE840[entry->unk6].unk11 == 1) {
+		func_8008AEC8_5B378(arg0 & 0xFF);
+	}
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B264_5B714.s")
+#endif
+
+#ifdef NON_MATCHING
+// CURRENT(3981)
+void func_8008B534_5B9E4(s32 arg0) {
+	s16 idx;
+	s16 neg6;
+	Unk800DE840* entry;
+
+	idx = D_800DE840[D_800DE130[arg0 & 0xFF].unk6].unk4;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u8*)((s32)&D_100E080 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+
+	D_800DE12D = 0x20;
+	D_800DE12E = 0x20;
+	neg6 = -6;
+
+	if (idx == -5) {
+		return;
+	}
+	if (idx == neg6) {
+		return;
+	}
+
+	do {
+		entry = &D_800DE840[idx];
+		D_800DE118.x = entry->unk8;
+		D_800DE124 = &entry->unkE;
+		D_800DE12C = entry->unk11;
+		D_800DE118.y = entry->unkA;
+		D_800DE118.z = entry->unkC;
+		D_800DE128 = entry->unk2;
+		func_8008D14C_5D5FC();
+
+		idx = entry->unk4;
+		if (idx == -5) {
+			return;
+		}
+	} while (idx != neg6);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B534_5B9E4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B7BC_5BC6C.s")
 
@@ -1196,7 +1697,78 @@ void func_8008CC3C_5D0EC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008D510_5D9C0.s")
 
+#ifdef NON_MATCHING
+// CURRENT(2095)
+s32 func_8008D98C_5DE3C(Gfx **arg0) {
+	s32 i;
+
+	func_80088E18_592C8();
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_TF_BILERP | G_TL_LOD | G_TD_SHARPEN | G_CYC_1CYCLE);
+	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK | G_FOG | G_LIGHTING);
+	gDPPipeSync(D_8005BB2C++);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPPipeSync(D_8005BB2C++);
+
+	func_8008E158_5E608();
+	func_8008FA60_5FF10();
+
+	for (i = 0; i < 0x96; i = (i + 1) & 0xFF) {
+		u8 entryType = D_800DE130[i].unk0;
+
+		if (entryType != 0xFA) {
+			if (entryType < 0xB) {
+				switch (entryType) {
+			case 0:
+				func_800847E4_54C94((u8)i);
+				break;
+
+			case 1:
+				func_80089764_59C14((u8)i);
+				break;
+
+			case 2:
+				func_80089B38_59FE8();
+				break;
+
+			case 3:
+				func_8008A928_5ADD8((u8)i);
+				break;
+
+			case 4:
+				func_8008B534_5B9E4((u8)i);
+				break;
+
+			case 5:
+				func_8008BC00_5C0B0((u8)i);
+				break;
+
+			case 6:
+			case 7:
+			case 8:
+			case 9:
+			case 10:
+				break;
+
+			default:
+				break;
+				}
+			}
+		}
+	}
+
+	return func_800878A4_57D54();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008D98C_5DE3C.s")
+#endif
 
 /* Clears unkA field in all 50 D_800E1980 entries and resets globals */
 void func_8008DBEC_5E09C(void) {

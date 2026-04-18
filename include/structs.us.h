@@ -1490,6 +1490,77 @@ typedef struct {
 } FrontendAnimState; /* size = 0x24 */
 
 typedef struct {
+	/* 0x00 */ u8 *img;
+	/* 0x04 */ u8 pad4[0xC];
+	/* 0x10 */ u16 unk10;
+	/* 0x12 */ u8 pad12[2];
+	/* 0x14 */ u8 unk14;
+	/* 0x15 */ u8 unk15;
+} FrontendTextureInfo; /* size = 0x16 */
+
+typedef struct {
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ s32 unk4;
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ s32 unkC;
+	/* 0x10 */ Vec3f unk10;
+	/* 0x1C */ Vec3f unk1C;
+	/* 0x28 */ Vec3f unk28;
+	/* 0x34 */ s16 unk34;
+	/* 0x36 */ s16 unk36;
+	/* 0x38 */ s16 unk38;
+	/* 0x3A */ s16 unk3A;
+	/* 0x3C */ s16 unk3C;
+	/* 0x3E */ u8 pad3E[2];
+} FrontendCamState; /* size = 0x40 */
+
+typedef struct {
+	/* 0x00 */ f32 unk0;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ u8 pad12[2];
+	/* 0x14 */ s32 unk14;
+} FrontendCamKeyframe; /* size = 0x18 */
+
+typedef struct {
+	/* 0x00 */ FrontendCamKeyframe* unk0;
+	/* 0x04 */ s32 unk4;
+} FrontendCamTrack; /* size = 0x08 */
+
+typedef struct {
+	/* 0x00 */ u8 pad0[0x14];
+	/* 0x14 */ u8 unk14;
+	/* 0x15 */ u8 unk15;
+	/* 0x16 */ u8 unk16;
+	/* 0x17 */ u8 pad17;
+	/* 0x18 */ s32 unk18;
+} FrontendLightSource; /* size = 0x1C */
+
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 unk6;
+	/* 0x07 */ u8 unk7;
+	/* 0x08 */ u8 unk8;
+	/* 0x09 */ u8 unk9;
+	/* 0x0A */ s8 unkA;
+	/* 0x0B */ s8 unkB;
+	/* 0x0C */ s8 unkC;
+	/* 0x0D */ u8 unkD;
+} Unk8008B264NodeSub; /* size = 0x0E */
+
+typedef struct {
+	/* 0x00 */ Gfx* displayList;
+	/* 0x04 */ f32 scale;
+} FrontendItemRenderData; /* size = 0x08 */
+
+typedef struct {
 	/* 0x00 */ u8 pad0[0xC];
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ u8 padE[2];
