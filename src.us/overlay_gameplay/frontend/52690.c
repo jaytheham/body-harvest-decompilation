@@ -97,7 +97,29 @@ void func_800838B8_53D68(f32 arg0, f32 *arg1, f32 *arg2) {
 	arg2[2] = arg1[2] * arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800838E0_53D90.s")
+void func_800838E0_53D90(Mtx *arg0) {
+	f32 sp58[4][4];
+	f32 sp34[3][3];
+	s16 i;
+	s16 j;
+	f32 sp24[3];
+
+	guMtxL2F(sp58, arg0);
+	for (i = 0; i < 3; i++) {
+		for (j = 0; j < 3; j++) {
+			sp34[i][j] = sp58[j][i];
+		}
+	}
+
+	sp24[0] = -0.5f;
+	sp24[1] = 0.5f;
+	sp24[2] = 0.0f;
+	func_80083610_53AC0((f32 *)sp34, sp24, D_800DE0C0);
+	sp24[0] = -sp24[0];
+	func_80083610_53AC0((f32 *)sp34, sp24, D_800DE0CC);
+	func_800836A4_53B54(D_800DE0C0, D_800DE0CC, D_800DE0D8);
+	func_800837B4_53C64(D_800DE0D8, D_800DE0D8);
+}
 
 /* Copies a 3D float vector to D_800DE100 and truncates another to s16 shorts */
 void func_800839F0_53EA0(f32 *arg0, f32 *arg1) {
