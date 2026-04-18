@@ -591,7 +591,94 @@ void func_80089AB4_59F64(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008A094_5A544.s")
 
+#ifdef NON_MATCHING
+// CURRENT(3439)
+u8 func_8008A460_5A910(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13, u8 arg14) {
+	u8 slot;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s16 idx;
+	Unk800DE840 *entry;
+	Unk800DE840 *next;
+	u8 *entryBytes;
+	u8 *nextBytes;
+	s16 temp;
+	u8 value;
+
+	pad0 = 0;
+	pad1 = 0;
+	pad2 = 0;
+	pad3 = 0;
+	pad4 = 0;
+	pad5 = 0;
+
+	slot = func_80083A58_53F08(6);
+	if (slot != 0xFB) {
+		idx = func_80083D50_54200(slot);
+		if (idx == -3) {
+			func_80083B14_53FC4(slot);
+			return 0xFB;
+		}
+
+		entry = &D_800DE840[idx];
+		entry->unk2 = arg7;
+		entry->unk8 = arg0;
+		entry->unkA = arg1;
+		entry->unkC = arg2;
+
+		next = &D_800DE840[entry->unk4];
+		nextBytes = (u8 *)&next->unk8;
+		nextBytes[0] = arg3;
+		nextBytes[1] = arg4;
+		nextBytes[2] = arg5;
+		nextBytes[3] = arg6;
+		nextBytes[4] = arg9;
+
+		entry->unkE = arg10;
+		entry->unkF = arg11;
+		entry->unk10 = arg12;
+		*((u8 *)&entry->unk14) = arg14;
+
+		entryBytes = (u8 *)&entry->unk8;
+		temp = arg10 - 0x78;
+		if (temp < 0) {
+			temp = 0;
+		}
+		entryBytes[9] = temp;
+
+		temp = arg11 - 0x78;
+		if (temp < 0) {
+			temp = 0;
+		}
+		entryBytes[0xA] = temp;
+
+		temp = arg12 - 0x78;
+		if (temp < 0) {
+			temp = 0;
+		}
+		entryBytes[0xB] = temp;
+
+		nextBytes[8] = arg13;
+
+		value = arg8;
+		if (value >= 0x97) {
+			value = 0x96;
+		} else if (value == 0) {
+			value = 1;
+		}
+		nextBytes[5] = value;
+		*(s16 *)&nextBytes[6] = 0;
+	}
+
+	return slot;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008A460_5A910.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008A5F8_5AAA8.s")
 
