@@ -1651,7 +1651,40 @@ void func_8007A754_4AC04(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007B618_4BAC8.s")
 
 // displayCopyright
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007B900_4BDB0.s")
+void func_8007B900_4BDB0(void) {
+	s32 counter;
+
+	counter = 120;
+	func_800791A0_49650(1);
+	gDPFullSync(D_8005BB2C++);
+	gSPEndDisplayList(D_8005BB2C++);
+	func_8000505C_5C5C();
+
+	do {
+		func_800791A0_49650(1);
+		drawText(&D_800ADEC4_7E374, 240, 240, 240);
+		drawText(&D_800ADEC8_7E378, 128, 0, 92, 91);
+		drawText(&D_800ADEE8_7E398, 128, 1);
+		drawText(&D_800ADF04_7E3B4, 128, 2);
+		drawText(&D_800ADF1C_7E3CC, 128, 3);
+		drawText(&D_800ADF3C_7E3EC, 48, 128, 4);
+		drawText(&D_800ADF58_7E408, 128, 5);
+		drawText(&D_800ADF7C_7E42C, 128, 6);
+		drawText(&D_800ADF9C_7E44C, 128, 7);
+		drawText(&D_800ADFC0_7E470, 0, 128, 9);
+
+		if (counter == 0) {
+			func_80005AEC_66EC(0, 0, 0, 64);
+		}
+
+		counter = (counter - 1) & 0xFFFF;
+		func_8000B044_BC44();
+		func_80005B84_6784();
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+		func_8000505C_5C5C();
+	} while (func_80005B30_6730() == 0);
+}
 
 // displayPublisherLogo
 void func_8007BB0C_4BFBC(void) {
