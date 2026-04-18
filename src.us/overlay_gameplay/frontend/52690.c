@@ -758,7 +758,76 @@ void func_8008C7E4_5CC94(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008C8E0_5CD90.s")
 
+#ifdef NON_MATCHING
+// CURRENT(5)
+void func_8008CC3C_5D0EC(void) {
+	u8 i;
+
+	for (i = 0; i < 0x96; i++) {
+		switch (D_800DE130[i].unk0) {
+			case 0:
+				func_80084508_549B8(i);
+				func_8008472C_54BDC(i);
+				break;
+
+			case 1:
+				func_80085FF0_564A0(i);
+				break;
+
+			case 2:
+				func_800870AC_5755C();
+				break;
+
+			case 3:
+				func_80088BDC_5908C();
+				break;
+
+			case 4:
+				func_800894A0_59950(i);
+				break;
+
+			case 5:
+				func_80089AB4_59F64();
+				break;
+
+			case 6:
+				func_8008A5F8_5AAA8(i);
+				break;
+
+			case 7:
+				func_8008B264_5B714(i);
+				break;
+
+			case 8:
+				func_8008BB38_5BFE8(i);
+				break;
+
+			case 9:
+				func_8008C7E4_5CC94();
+				break;
+
+			case 10:
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	if (D_800DE0B9 == 1) {
+		if (D_800DE0BA == 0) {
+			D_800DE0BB += 5;
+			if (D_800DE0BB == 0xFF) {
+				D_800DE0BA = 1;
+			}
+		} else if (D_800DE0BB >= 6) {
+			D_800DE0BB -= 5;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008CC3C_5D0EC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008CDC8_5D278.s")
 
