@@ -646,7 +646,86 @@ void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 #endif
 
 // Checks if selected inventory item is 0xb (weapon crystals)
+#ifdef NON_MATCHING
+// CURRENT(2988)
+void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
+	s32 unusedPad0;
+	s32 unusedPad1;
+	s32 unusedPad2;
+	s32 unusedPad3;
+	Unk80052B40 sp60;
+	Unk80052B40 sp58;
+	Unk80052B40 sp50;
+	FrontendItemRenderData* itemEntry;
+	Gfx* displayList;
+	s32 matrixAddr;
+	s32 scaleInt;
+	s32 displayListAddr;
+	f32 itemScale;
+
+	func_800722A4_42754(arg3);
+
+	if (D_800D74AC == 0xB) {
+		func_80072604_42AB4(-0xE6, -0x32, -0x190, arg3);
+		return;
+	}
+
+	if (D_800D74AC == 0xC) {
+		func_800728F4_42DA4(-0xB4, -0x32, -0x190, arg3);
+		return;
+	}
+
+	if (D_800D74AC == 0) {
+		return;
+	}
+
+	itemEntry = &D_800942E0_64790[((currentLevel * 13) + D_800D74AC) - 13];
+	if (D_800AED78[D_800D74AC] == 0) {
+		return;
+	}
+
+	displayList = itemEntry->displayList;
+	if (displayList == NULL) {
+		return;
+	}
+
+	D_8009484C_64CFC += 0x16C;
+	itemScale = itemEntry->scale * 2.0f;
+	arg3 = itemScale * arg3;
+	displayListAddr = (s32)displayList;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+	matrixAddr = D_8005BB38;
+	func_800039D0_45D0(NULL, NULL, &D_800311A0, matrixAddr);
+
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+
+	sp60.unk0 = arg0;
+	sp60.unk2 = arg1;
+	sp60.unk4 = arg2;
+
+	sp50.unk0 = D_8009484C_64CFC;
+	sp50.unk2 = 0;
+	sp50.unk4 = 0;
+
+	scaleInt = 256.0f * arg3;
+	sp58.unk0 = scaleInt;
+	sp58.unk2 = scaleInt;
+	sp58.unk4 = scaleInt;
+
+	func_800039D0_45D0(&sp60, &sp50, &sp58, D_8005BB38);
+
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+	gSPDisplayList(D_8005BB2C++, displayListAddr & 0x1FFFFFFF);
+	gDPPipeSync(D_8005BB2C++);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072B68_43018.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072E18_432C8.s")
 

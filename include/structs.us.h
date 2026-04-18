@@ -1556,6 +1556,11 @@ typedef struct {
 } Unk8008B264NodeSub; /* size = 0x0E */
 
 typedef struct {
+	/* 0x00 */ Gfx* displayList;
+	/* 0x04 */ f32 scale;
+} FrontendItemRenderData; /* size = 0x08 */
+
+typedef struct {
 	/* 0x00 */ u8 pad0[0xC];
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ u8 padE[2];
