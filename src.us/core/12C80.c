@@ -308,125 +308,103 @@ void func_800129FC_135FC(s8 arg0, s8 arg1) {
 	}
 }
 
-// CURRENT(2715)
+// Matched, but needs...?
+// https://decomp.me/scratch/06otn
 #ifdef NON_MATCHING
-void func_80012A74_13674(void) {
-	ALSynConfig synConfig;
-	ALSndpConfig sndpConfig;
-	BhAudioGlobals synData;
+void func_80012A74_13674(void)
+{
+	s32 i;
+  ALSynConfig synConfig;
+  ALSndpConfig sndpConfig;
+	s16 maxSeqLen;
+	ALSeqFile* seqFile;
+	s32 j;
+  BhAudioGlobals synData;
+	s16 seqFileSize;
 
-	synData = D_80033B54_34754;
-	D_8006AB88 = 1;
+  synData = D_80033B54_34754;
+  D_8006AB88 = 1;
 
-	{
-		u8 *p = &D_80165710;
-		do {
-			p++;
-			p[-1] = 0;
-		} while ((u32)p < (u32)&D_801ABC10);
+	for (i = 0; i < ARRAY_COUNT(D_80165710); i++) {
+		D_80165710[i] = 0;
 	}
-
-	alHeapInit(&D_8006AB98, &D_80165710, 0x46500);
-
-	D_8006AB48 = alHeapDBAlloc(0, 0, &D_8006AB98, 1, (s32)(D_963A70 - D_955300));
-	D_8006AB4C = D_8006AB48;
-	func_8000F5A8_101A8((s32)D_955300, (s32)D_8006AB48, (s32)(D_963A70 - D_955300));
-	alBnkfNew(D_8006AB48, D_963A70);
-	D_8006AB8C = D_8006AB48->bankArray[0];
-	D_8006AB90 = D_8006AB48->bankArray[1];
-
-	synConfig.maxVVoices = 0x50;
-	synConfig.maxPVoices = 0x18;
-	synConfig.maxUpdates = 0x200;
-	synConfig.dmaproc = 0;
-	synConfig.fxType = 6;
-	synConfig.outputRate = osAiSetFrequency(0x7D00);
-	synConfig.heap = &D_8006AB98;
-	synConfig.params = (s32 *)&synData;
-	func_80000450_1050(&synConfig, 0xA);
-
-	{
-		s32 i;
-
-		for (i = 0; i < 4; i++) {
-			D_8006AB50[i].maxVoices   = 0x40;
-			D_8006AB50[i].maxEvents   = 0x80;
-			D_8006AB50[i].maxChannels = 0x10;
-			D_8006AB50[i].heap        = &D_8006AB98;
-			D_8006AB50[i].initOsc     = 0;
-			D_8006AB50[i].updateOsc   = 0;
-			D_8006AB50[i].stopOsc     = 0;
-			D_8006AB50[i].debugFlags  = 7;
-			D_8006AB18[i] = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0x7C);
-			alCSPNew((ALCSPlayer *)D_8006AB18[i], &D_8006AB50[i]);
-			D_8006AB18[i]->unk2C = 0;
-			D_8006AB20[i] = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0xF8);
-		}
+	
+  alHeapInit(&D_8006AB98, D_80165710, sizeof(D_80165710));
+  D_8006AB4C = D_8006AB48 = alHeapDBAlloc(0, 0, &D_8006AB98, 1, (D_963A70 - D_955300));
+  func_8000F5A8_101A8(D_955300, D_8006AB48, (D_963A70 - D_955300));
+  alBnkfNew(D_8006AB48, D_963A70);
+  D_8006AB8C = D_8006AB48->bankArray[0];
+  D_8006AB90 = D_8006AB48->bankArray[1];
+  synConfig.maxVVoices = 0x50;
+  synConfig.maxPVoices = 0x18;
+  synConfig.maxUpdates = 0x200;
+  synConfig.dmaproc = 0;
+  synConfig.fxType = 6;
+  synConfig.outputRate = osAiSetFrequency(0x7D00);
+  synConfig.heap = &D_8006AB98;
+  synConfig.params = (s32 *) (&synData);
+  func_80000450_1050(&synConfig, 0xA);
+	for (i = 0; i < ARRAY_COUNT(D_8006AB50); i++) {
+	  D_8006AB50[i].maxVoices = 0x40;
+	  D_8006AB50[i].maxEvents = 0x80;
+	  D_8006AB50[i].maxChannels = 0x10;
+	  D_8006AB50[i].heap = &D_8006AB98;
+	  D_8006AB50[i].initOsc = 0;
+	  D_8006AB50[i].updateOsc = 0;
+	  D_8006AB50[i].stopOsc = 0;
+	  D_8006AB50[i].debugFlags = 7;
+	  D_8006AB18[i] = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0x7C);
+	  alCSPNew((ALCSPlayer *) D_8006AB18[i], &D_8006AB50[i]);
+	  (D_8006AB18[i])->unk2C = 0;
+	  D_8006AB20[i] = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0xF8);
 	}
-
-	sndpConfig.maxSounds = 0x10;
-	sndpConfig.maxEvents = 0x80;
-	sndpConfig.heap = &D_8006AB98;
-	D_8006AB10 = (s32)alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0x54);
-	alSndpNew((ALSndPlayer *)D_8006AB10, &sndpConfig);
-
-	{
-		s32 i;
-
-		for (i = 0; i < 0x10; i++) {
-			D_8006AA88[i] = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0x38);
-		}
+  sndpConfig.maxSounds = 0x10;
+  sndpConfig.maxEvents = 0x80;
+  sndpConfig.heap = &D_8006AB98;
+  D_8006AB10 = (s32) alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0x54);
+  alSndpNew((ALSndPlayer *) D_8006AB10, &sndpConfig);
+	for (i = 0; i < ARRAY_COUNT(D_8006AA88); i++) {
+	  D_8006AA88[i] = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 0x38);        
 	}
+  D_8006AA80 = D_8006AA84 = 0;
+  func_80012080_12C80(-1);
 
-	D_8006AA84 = 0;
-	D_8006AA80 = 0;
-	func_80012080_12C80(-1);
+  D_8006AB3C = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 4);
+  func_8000F5A8_101A8(D_BBB9B0, D_8006AB3C, 8);
+  {
 
-	D_8006AB3C = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 4);
-	func_8000F5A8_101A8((s32)D_BBB9B0, (s32)D_8006AB3C, 8);
+	  seqFileSize = (D_8006AB3C->seqCount * 8) + 4;
+
+	D_8006AB44 = alHeapDBAlloc(0, 0, &D_8006AB98, 1, (D_8006AB3C->seqCount * 8) + 4);
+	func_8000F5A8_101A8(D_BBB9B0, D_8006AB44, seqFileSize);
+	alSeqFileNew((ALSeqFile *) D_8006AB44, D_BBB9B0);
 
 	{
-		ALSeqFile *seqFile;
-		u8 *seqBase = D_BBB9B0;
-		s16 seqFileSize = (s16)(D_8006AB3C->seqCount * 8 + 4);
-
-		D_8006AB44 = alHeapDBAlloc(0, 0, &D_8006AB98, 1, (s32)(D_8006AB3C->seqCount * 8 + 4));
-		func_8000F5A8_101A8((s32)seqBase, (s32)D_8006AB44, (s32)seqFileSize);
-		alSeqFileNew((ALSeqFile *)D_8006AB44, seqBase);
-		seqFile = (ALSeqFile *)D_8006AB44;
-
+		maxSeqLen = 0;
+		seqFile = (ALSeqFile *) D_8006AB44;
+	  
+		for (j = 0; j < ((s32) seqFile->seqCount); j++)
 		{
-			s16 maxSeqLen = 0;
-
-			if (seqFile->seqCount > 0) {
-				s32 i;
-
-				for (i = 0; i < (s32)seqFile->seqCount; i++) {
-					if (maxSeqLen < seqFile->seqArray[i].len) {
-						maxSeqLen = seqFile->seqArray[i].len;
-					}
-				}
-			}
-			if (maxSeqLen & 1) {
-				maxSeqLen++;
-			}
-			{
-				s32 i;
-
-				for (i = 0; i < 2; i++) {
-					D_8006AB30[i] = (s32)alHeapDBAlloc(0, 0, &D_8006AB98, 1, (s32)maxSeqLen);
-				}
-			}
+		  if (maxSeqLen < seqFile->seqArray[j].len)
+		  {
+			maxSeqLen = seqFile->seqArray[j].len;
+		  }
+		}
+	  if (maxSeqLen & 1)
+	  {
+		maxSeqLen++;
+	  }
+		for (j = 0; j < ARRAY_COUNT(D_8006AB30); j++) {
+		  D_8006AB30[j] = (s32) alHeapDBAlloc(0, 0, &D_8006AB98, 1, (s32) maxSeqLen);  
 		}
 	}
-
-	*(s32 *)&D_8004801C = 6;
-	D_80048020 = 8;
+  }
+  *((s32 *) (&D_8004801C)) = 6;
+  D_80048020 = 8;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80012A74_13674.s")
 #endif
-
 
 s32 func_80012E88_13A88(s8 arg0) {
 	if (D_8006AB88 == 0) {
