@@ -109,6 +109,11 @@ extern u16 D_802571B2;
 extern s16 D_802571B6;
 extern s16 D_802571B8;
 extern s16 D_800313FC; // World fog far distance
+extern s32 D_800949D0_64E80;
+extern u16 D_800AC8F0_7CDA0[];
+extern Gfx* D_800942D8_64788;
+extern f32 D_800942DC_6478C;
+extern s32 D_80094844_64CF4;
 extern s32 leomecha_bss_0004;
 extern s32 D_80031410;
 extern s32 D_80031414;
@@ -696,6 +701,17 @@ extern char D_800ADC1C_7E0CC;
 extern char D_800ADC30_7E0E0;
 extern char D_800ADC3C_7E0EC;
 extern char D_800ADC48_7E0F8;
+extern char D_800ADE4C_7E2FC;
+extern char D_800ADE50_7E300;
+extern char D_800ADE64_7E314;
+extern char D_800ADE68_7E318;
+extern char D_800ADE80_7E330;
+extern char D_800ADEA4_7E354;
+extern char D_800ADEA8_7E358;
+extern char D_800ADEAC_7E35C;
+extern char D_800ADEB4_7E364;
+extern char D_800ADEB8_7E368;
+extern char D_800ADEBC_7E36C;
 extern char D_800ADEC4_7E374;
 extern char D_800ADEC8_7E378;
 extern char D_800ADEE8_7E398;
@@ -723,6 +739,7 @@ extern char D_800AE958_7EE08; /* osSyncPrintf format string */
 extern char D_800AE97C_7EE2C; /* osSyncPrintf format string */
 extern f64 D_800AEA40_7EEF0;
 extern f64 D_800AEA48_7EEF8;
+extern f64 D_800AEA50_7EF00;
 extern f64 D_800AEA68_7EF18;
 extern f32 D_800AEA70_7EF20;
 extern f32 D_800AEA74_7EF24;

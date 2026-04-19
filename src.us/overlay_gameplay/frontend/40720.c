@@ -3,75 +3,75 @@
 
 typedef enum FrontEndState
 {
-	FE_STATE_INTRO_MOVIE = 0,
-	FE_STATE_FILE_SELECT = 1,
-	FE_STATE_INVALID_2 = 2,
-	FE_STATE_CHOOSE_FILE_NAME = 3,
-	FE_STATE_FILE_DETAILS = 4,
-	FE_STATE_INVALID_5 = 5,
-	FE_STATE_INVALID_6 = 6,
-	FE_STATE_START_GAMEPLAY = 7,
-	FE_STATE_FILE_OPTIONS = 8,
-	FE_STATE_START_DEMO = 9,
-	FE_STATE_UNUSED_START_GAMEPLAY_1 = 0xa,
-	FE_STATE_UNUSED_START_GAMEPLAY_2 = 0xb,
-	FE_STATE_UNUSED_START_GAMEPLAY_3 = 0xc,
-	FE_STATE_CHANGE_AIM_OPTION = 0xd,
-	FE_STATE_CHANGE_BLOOD_OPTION = 0xe,
-	FE_STATE_REPLAY_LEVEL_SELECT = 0xf,
-	FE_STATE_HIGH_SCORES = 0x10,
-	FE_STATE_CHANGE_SFX_OPTION = 0x11,
-	FE_STATE_CHANGE_MUSIC_OPTION = 0x12,
-	FE_STATE_DELETE_FILE = 0x13,
-	FE_STATE_COPY_FILE = 0x14,
-	FE_STATE_PRESS_START = 0x15,
-	FE_STATE_INVALID_16 = 0x16,
-	FE_STATE_REPLAY_BOSS_SELECT = 0x17,
-	FE_STATE_LANGUAGE_SELECT = 0x18
+        FE_STATE_INTRO_MOVIE = 0,
+        FE_STATE_FILE_SELECT = 1,
+        FE_STATE_INVALID_2 = 2,
+        FE_STATE_CHOOSE_FILE_NAME = 3,
+        FE_STATE_FILE_DETAILS = 4,
+        FE_STATE_INVALID_5 = 5,
+        FE_STATE_INVALID_6 = 6,
+        FE_STATE_START_GAMEPLAY = 7,
+        FE_STATE_FILE_OPTIONS = 8,
+        FE_STATE_START_DEMO = 9,
+        FE_STATE_UNUSED_START_GAMEPLAY_1 = 0xa,
+        FE_STATE_UNUSED_START_GAMEPLAY_2 = 0xb,
+        FE_STATE_UNUSED_START_GAMEPLAY_3 = 0xc,
+        FE_STATE_CHANGE_AIM_OPTION = 0xd,
+        FE_STATE_CHANGE_BLOOD_OPTION = 0xe,
+        FE_STATE_REPLAY_LEVEL_SELECT = 0xf,
+        FE_STATE_HIGH_SCORES = 0x10,
+        FE_STATE_CHANGE_SFX_OPTION = 0x11,
+        FE_STATE_CHANGE_MUSIC_OPTION = 0x12,
+        FE_STATE_DELETE_FILE = 0x13,
+        FE_STATE_COPY_FILE = 0x14,
+        FE_STATE_PRESS_START = 0x15,
+        FE_STATE_INVALID_16 = 0x16,
+        FE_STATE_REPLAY_BOSS_SELECT = 0x17,
+        FE_STATE_LANGUAGE_SELECT = 0x18
 } FrontEndState;
 
 #ifdef NON_MATCHING
 // CURRENT(5)
 s32 func_80070270_40720(s32 arg0) {
-	switch (arg0) {
-	case 1:
-		func_800789E4_48E94();
-		break;
-	case 2:
-		D_800476A2 = 1;
-		return func_80082CBC_5316C(currentLevel - 2, &D_80052B2C->unk30);
-	case 3:
-		func_8007A038_4A4E8();
-		break;
-	case 4:
-		func_800796D0_49B80(0, 0);
-		break;
-	case 5:
-		func_800796D0_49B80(func_80070390_40840(), 0);
-		break;
-	case 6:
-		func_80076504_469B4();
-		break;
-	case 7:
-		func_8007685C_46D0C();
-		break;
-	case 8:
-		return func_8007CFB4_4D464(1);
-	case 9:
-		return func_8007CFB4_4D464(0);
-	case 10:
-		return func_8007D2B0_4D760();
-	case 11:
-		D_800946DC_64B8C = FE_STATE_PRESS_START;
-		func_800789E4_48E94();
-		break;
-	case 12:
-	case 13:
-	case 14:
-		break;
-	}
+        switch (arg0) {
+        case 1:
+                func_800789E4_48E94();
+                break;
+        case 2:
+                D_800476A2 = 1;
+                return func_80082CBC_5316C(currentLevel - 2, &D_80052B2C->unk30);
+        case 3:
+                func_8007A038_4A4E8();
+                break;
+        case 4:
+                func_800796D0_49B80(0, 0);
+                break;
+        case 5:
+                func_800796D0_49B80(func_80070390_40840(), 0);
+                break;
+        case 6:
+                func_80076504_469B4();
+                break;
+        case 7:
+                func_8007685C_46D0C();
+                break;
+        case 8:
+                return func_8007CFB4_4D464(1);
+        case 9:
+                return func_8007CFB4_4D464(0);
+        case 10:
+                return func_8007D2B0_4D760();
+        case 11:
+                D_800946DC_64B8C = FE_STATE_PRESS_START;
+                func_800789E4_48E94();
+                break;
+        case 12:
+        case 13:
+        case 14:
+                break;
+        }
 
-	return 0;
+        return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070270_40720.s")
@@ -573,7 +573,94 @@ s32 func_80071760_41C10(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800722A4_42754.s")
 
+#ifdef NON_MATCHING
+// CURRENT(8100)
+void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
+	s32 padTop0;
+	s32 padTop1;
+	s32 padTop2;
+	Unk80052B40 spBC;
+	Unk80052B40 spB4;
+	Unk80052B40 spAC;
+	s32 padMid0;
+	s32 padMid1;
+	s32 padMid2;
+	s32 padMid3;
+	s32 padMid4;
+	s32 sp9C;
+	s32 xPos;
+	s32 scaleInt;
+	f32 scale;
+	u16 spD4;
+	s16 i;
+	u8 count;
+	u8 remaining;
+	Gfx* displayList;
+
+	D_80094844_64CF4 += 0x2D8;
+	count = D_8004DC5C;
+	remaining = count;
+	sp9C = arg0;
+	spD4 = 0;
+
+	if (count == 1) {
+		sp9C = arg0 - 0x78;
+		spD4 = 0x50;
+	} else if (count == 2) {
+		sp9C = arg0 - 0x55;
+		spD4 = 0x50;
+	} else if (count == 3) {
+		sp9C = arg0 - 0x28;
+		spD4 = 0x50;
+	}
+
+	if (count > 0) {
+		i = 0;
+		do {
+			displayList = D_800942D8_64788;
+			if (displayList != NULL) {
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+				gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+
+				scale = D_800942DC_6478C * (f32)((f64)arg3 * 1.5);
+				xPos = ((u32)spD4 * (u32)(3 - remaining)) + sp9C;
+				remaining--;
+
+				func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
+				gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+				D_8005BB38 += 0x40;
+
+				scaleInt = (s32)(256.0f * scale);
+				spBC.unk0 = xPos;
+				spBC.unk2 = arg1;
+				spBC.unk4 = arg2;
+
+				spAC.unk0 = D_80094844_64CF4;
+				spAC.unk2 = 0;
+				spAC.unk4 = 0;
+
+				spB4.unk0 = scaleInt;
+				spB4.unk2 = scaleInt;
+				spB4.unk4 = scaleInt;
+
+				func_800039D0_45D0(&spBC, &spAC, &spB4, D_8005BB38);
+
+				gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				D_8005BB38 += 0x40;
+				gSPDisplayList(D_8005BB2C++, (Gfx*)((u32)displayList & 0x1FFFFFFF));
+				gDPPipeSync(D_8005BB2C++);
+
+				count = D_8004DC5C;
+			}
+
+			i++;
+		} while (i < count);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072604_42AB4.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(3830)
@@ -1287,7 +1374,98 @@ s32 func_800776BC_47B6C(void) {
 #endif
 
 // doFileDetailsLoop
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800779FC_47EAC.s")
+s32 func_800779FC_47EAC(void) {
+	u32 frameCounter;
+	s32 state;
+	s32 saveFileIndex;
+	s32 temp;
+	MissionData* selectedFileData;
+	MissionData* missionEntry;
+	extern s32 D_80047F84;
+	extern s32 D_80052B18;
+	extern u8 D_800D6D90[];
+	extern s32 D_800D6D98[];
+	extern s32 func_80002A88_3688(s32 arg0);
+	extern s32 func_80002B20_3720(s32 arg0);
+	extern s32 func_80002AB4(s32 arg0, u8* arg1);
+
+	frameCounter = 0;
+	state = 1;
+
+	saveFileIndex = D_80047F84 + 1;
+	func_80070904_40DB4((s16)(saveFileIndex + 1));
+
+	if (D_800D6D8C != 0) {
+		selectedFileData = &D_800909B0[saveFileIndex];
+		*((s16*) ((u8*) D_800909B0 + 0x95E)) = *((s16*) ((u8*) selectedFileData + 0x30));
+		*((s16*) ((u8*) D_800909B0 + 0x962)) = *((s16*) ((u8*) selectedFileData + 0x32));
+	}
+
+	D_800D74A6 = 0x3D;
+	D_800D74A4 = D_800D74A6;
+	temp = func_80002A88_3688(D_80047F84);
+	D_800D6D90[D_80047F84] = temp;
+	temp = func_80002B20_3720(D_80047F84);
+	D_800D6D98[D_80047F84] = temp;
+	func_80002AB4(D_80047F84, &D_800D6DA8[D_80047F84 * 7]);
+
+	while (state == 1) {
+		if (frameCounter < 0x3E8U) {
+			func_80070C64_41114(0x39, 6, (s16)frameCounter);
+		}
+
+		if (frameCounter >= 0x41U) {
+			func_80070CC4_41174();
+			func_8007166C_41B1C();
+
+			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+				state = D_800D74A4 - 0x3A;
+				missionEntry = func_80070494_40944(0x39);
+				*((s16*) ((u8*) D_800909B0 + 0x95E)) = -0x20;
+				missionEntry->unk4 = (s16)(*((s16*) ((u8*) D_800909B0 + 0x95E)) << 2);
+				D_800D74AA = 0;
+				func_800708B8_40D68(0x39);
+				D_800D6D8C = 0;
+				D_80052B18 = D_800D6D98[D_80047F84];
+				currentLevel = D_800D6D90[D_80047F84];
+			}
+
+			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+				selectedFileData = &D_800909B0[saveFileIndex];
+				state = 0;
+				missionEntry = func_80070494_40944(0x39);
+				missionEntry->unk4 = missionEntry->unk6;
+				missionEntry->unk6 = *((s16*) ((u8*) selectedFileData + 0x30)) * 4;
+				missionEntry->unk16 = 4;
+				missionEntry->unk1C = 1;
+				missionEntry->unk28 = -1;
+				missionEntry->unk12 = 0;
+				missionEntry->unk14 = 0x400;
+				D_800D6D8C = 1;
+				D_800D74AA = D_80047F84 + 2;
+			}
+		}
+
+		func_80075D58_46208(0);
+		func_800731A8_43658();
+		func_8000B044_BC44();
+		func_8000505C_5C5C();
+
+		if (frameCounter < 0x3E8U) {
+			frameCounter++;
+		}
+	}
+
+	func_800153D8_15FD8(0xC8);
+	func_8000AFDC_BBDC();
+	func_800708B8_40D68(0x3A);
+	func_800708B8_40D68(0x3B);
+	func_800708B8_40D68(0x3C);
+	func_800708B8_40D68(0x3D);
+	func_800708B8_40D68(0x3E);
+
+	return state;
+}
 
 #ifdef NON_MATCHING
 s32 func_80077CE0_48190(s32 arg0) {
@@ -1823,7 +2001,47 @@ void func_800789E4_48E94(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800789E4_48E94.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800791A0_49650.s")
+extern u8 D_40856F0[];
+extern u16 D_408A6F0[];
+extern u8 D_408A8F0[];
+extern u16 D_409E8F0[];
+extern u8 D_40A9440[];
+extern u16 D_40AAC40[];
+void func_80075710_45BC0(void);
+
+void func_800791A0_49650(s32 arg0) {
+	f32 one;
+
+	osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
+	func_80011E14_12A14(0);
+	func_80004CC8_58C8();
+	func_80004D38_5938();
+
+	gSPDisplayList(D_8005BB2C++, ((u32)D_800311A8 & 0x1FFFFFFF));
+	func_80004F64_5B64();
+	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784] & 0x1FFFFFFF);
+	gDPPipeSync(D_8005BB2C++);
+
+	if (arg0 == 3) {
+		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+		func_80075710_45BC0();
+	} else if ((arg0 == 0) || (arg0 == 2)) {
+		one = 1.0f;
+		func_80005C5C_685C(D_408A8F0, 2, 1, 8, 0, 0, 0x140, 0xF0, one, one, D_409E8F0);
+		if (arg0 == 2) {
+			gDPSetRenderMode(D_8005BB2C++, AA_EN | CVG_DST_CLAMP | ZMODE_OPA | CVG_X_ALPHA | ALPHA_CVG_SEL | FORCE_BL | G_RM_PASS,
+							 AA_EN | CVG_DST_CLAMP | ZMODE_OPA | CVG_X_ALPHA | ALPHA_CVG_SEL | FORCE_BL | G_RM_NOOP2);
+			gDPSetAlphaCompare(D_8005BB2C++, G_AC_THRESHOLD);
+			func_80005C5C_685C(D_40856F0, 2, 1, 8, 0, 0xB0, 0x140, 0x40, one, one, D_408A6F0);
+			func_80005C5C_685C(D_40A9440, 2, 1, 8, 0x18, 0xC, 0x60, 0x40, one, one, D_40AAC40);
+			gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
+		}
+	} else {
+		func_80004DDC_59DC(0, 0, 0, 0, 0xEF);
+	}
+
+	gSPDisplayList(D_8005BB2C++, ((u32)D_800311D0 & 0x1FFFFFFF));
+}
 
 /**
  * @brief Returns the byte length of a null-terminated string.
@@ -1946,7 +2164,88 @@ void func_8007A754_4AC04(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A774_4AC24.s")
 
 // displayClearSaveData
+#ifdef NON_MATCHING
+// CURRENT(1455)
+void func_8007B618_4BAC8(void) {
+	u8 sp3D;
+	u8 sp3E;
+	s32 tempOsc;
+	s32 selection;
+	u8 oscillation;
+	s32 startReleased;
+	u16 timer;
+
+	timer = 0x4F;
+	tempOsc = 0;
+	startReleased = 0;
+	func_800791A0_49650(1);
+	gDPFullSync(D_8005BB2C++);
+	gSPEndDisplayList(D_8005BB2C++);
+	func_8000505C_5C5C();
+
+	if (isButtonNewlyPressed(0, 0x1000) != 0) {
+		selection = tempOsc;
+		sp3D = sp3E;
+		oscillation = sp3D;
+		do {
+			func_800791A0_49650(1);
+			tempOsc = oscillation;
+			oscillation = (u8)((s32)(tempOsc + 2) % 64);
+			drawText(&D_800ADE4C_7E2FC, 0x82, 0xF0, 0x64);
+			drawText(&D_800ADE50_7E300, 0x80, 0);
+			drawText(&D_800ADE64_7E314, 0x64, 0xB4, 0x3C);
+			drawText(&D_800ADE68_7E318, 0x80, 3);
+			drawText(&D_800ADE80_7E330, 0x80, 4);
+
+			if (1 == selection) {
+				drawText(&D_800ADEA4_7E354, (oscillation << 1) + 0x7F, 0x32, 0x32);
+			} else {
+				drawText(&D_800ADEA8_7E358, 0x5A, 0x5A, 0x32);
+			}
+
+			drawText(&D_800ADEAC_7E35C, 0xA, 7);
+			if (selection == 0) {
+				drawText(&D_800ADEB4_7E364, (oscillation << 1) + 0x7F, 0x32, 0x32);
+			} else {
+				drawText(&D_800ADEB8_7E368, 0x5A, 0x5A, 0x32);
+			}
+
+			drawText(&D_800ADEBC_7E36C, 0x1A, 7);
+			if ((selection == 0) && (currentControllerStates[0].stick_x < -0xA)) {
+				selection = 1;
+			}
+
+			if ((1 == selection) && (currentControllerStates[0].stick_x >= 0xB)) {
+				selection = 0;
+			}
+
+			if (isButtonNewlyPressed(0, 0x1000) == 0) {
+				startReleased = 1;
+			}
+
+			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+				if (startReleased == 1) {
+					func_80005AEC_66EC(0, 0, 0, 0x40);
+				}
+			}
+
+			timer = (timer - 1) & 0xFFFF;
+			func_8000B044_BC44();
+			func_80005B84_6784();
+			gDPFullSync(D_8005BB2C++);
+			gSPEndDisplayList(D_8005BB2C++);
+			func_8000505C_5C5C();
+		} while (func_80005B30_6730() == 0);
+
+		sp3E = oscillation;
+		if (1 == selection) {
+			D_800476A0 = 4;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007B618_4BAC8.s")
+#endif
 
 // displayCopyright
 void func_8007B900_4BDB0(void) {
@@ -2897,7 +3196,105 @@ void func_80080588_50A38(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080588_50A38.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(8571)
+void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, s32 arg3) {
+	volatile f32 sp70;
+	volatile f32 sp6C;
+	volatile f32 sp68;
+	volatile f32 sp64;
+	volatile f32 sp60;
+	volatile f32 sp5C;
+	volatile f32 sp50;
+	volatile f32 sp4C;
+	volatile f32 sp48;
+	f32 temp_f0;
+	f32 temp_f10;
+	f32 temp_f10_2;
+	f32 temp_f12;
+	f32 temp_f14;
+	f32 temp_f18;
+	f32 temp_f2;
+	f32 temp_f2_2;
+	f32 temp_f4;
+	f32 temp_f6;
+	f32 temp_f6_2;
+	f32 temp_f8;
+	f32 temp_f8_2;
+	f64 temp_f22;
+	f64 temp_f20;
+	s32 temp_t6;
+	s32 var_s0;
+	s32 count;
+	AnimChannelState *temp_a1;
+
+	count = arg3 & 0xFF;
+	var_s0 = 0;
+	if (count != 0) {
+		temp_f22 = 4096.0;
+		temp_f20 = D_800AEA50_7EF00;
+		do {
+			temp_a1 = &arg1[var_s0];
+			if (temp_a1->unk14 != 0) {
+				temp_f14 = temp_a1->unk1C;
+				temp_f18 = arg2 / (temp_a1->unk20 - temp_f14);
+				temp_f10 = (f32)(((f64)(f32)temp_a1->unk2A * temp_f20) / temp_f22);
+				sp68 = temp_f10;
+				temp_f6 = (f32)(((f64)(f32)temp_a1->unk2C * temp_f20) / temp_f22);
+				sp6C = temp_f6;
+				temp_f8 = (f32)(((f64)(f32)temp_a1->unk2E * temp_f20) / temp_f22);
+				sp70 = temp_f8;
+				temp_f4 = (f32)(((f64)(f32)temp_a1->unk0 * temp_f20) / temp_f22);
+				sp5C = temp_f4;
+				sp48 = temp_f10;
+				temp_f10_2 = (f32)(((f64)(f32)temp_a1->unk2 * temp_f20) / temp_f22);
+				sp60 = temp_f10_2;
+				sp4C = temp_f6;
+				sp50 = temp_f8;
+				temp_f8_2 = ((sp48 - temp_f4) * temp_f18) + temp_f4;
+				sp5C = temp_f8_2;
+				temp_f6_2 = (f32)(((f64)(f32)temp_a1->unk4 * temp_f20) / temp_f22);
+				sp60 = ((sp4C - temp_f10_2) * temp_f18) + temp_f10_2;
+				sp64 = temp_f6_2;
+				sp64 = ((sp50 - temp_f6_2) * temp_f18) + temp_f6_2;
+				temp_f2 = temp_a1->unk8;
+				temp_f12 = temp_a1->unkC;
+				temp_f0 = temp_a1->unk10;
+				temp_a1->unk0 = (s16)(s32)((f64)(temp_f8_2 * 70.0f) / temp_f20);
+				temp_a1->unk2 = (s16)(s32)((f64)(sp60 * 70.0f) / temp_f20);
+				temp_a1->unk4 = (s16)(s32)((f64)(sp64 * 70.0f) / temp_f20);
+				temp_a1->unk8 = (((f32)temp_a1->unk24 - temp_f2) * temp_f18) + temp_f2;
+				temp_f2_2 = (f32)temp_a1->unk28;
+				temp_a1->unkC = (((f32)temp_a1->unk26 - temp_f12) * temp_f18) + temp_f12;
+				temp_a1->unk1C = temp_a1->unk1C + arg2;
+				temp_a1->unk10 = ((temp_f2_2 - temp_f0) * temp_f18) + temp_f0;
+				if (temp_a1->unk20 <= temp_a1->unk1C) {
+					temp_t6 = temp_a1->unk18 + 1;
+					temp_a1->unk8 = (f32)temp_a1->unk24;
+					temp_a1->unk10 = temp_f2_2;
+					temp_a1->unk18 = temp_t6;
+					temp_a1->unk0 = (s16)temp_a1->unk2A;
+					temp_a1->unk2 = (s16)temp_a1->unk2C;
+					temp_a1->unkC = (f32)temp_a1->unk26;
+					temp_a1->unk4 = (s16)temp_a1->unk2E;
+					if (temp_t6 == temp_a1->unk14) {
+						temp_a1->unk14 = 0;
+						temp_a1->unk18 = 0;
+						if (var_s0 == 0) {
+							arg0->unk54 = 0;
+						}
+					} else {
+						func_80080AD4_50F84(arg0, temp_a1, var_s0 & 0xFF);
+					}
+				}
+			}
+			var_s0 = (var_s0 + 1) & 0xFF;
+		} while (count != var_s0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080668_50B18.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8008098C_50E3C(void) {
@@ -3194,7 +3591,59 @@ void func_80081A50_51F00(FrontendTextureInfo *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081A50_51F00.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(2500)
+void func_80081CAC_5215C(s32 arg0, s32 arg1, u32 arg2, u32 arg3) {
+	Gfx *dl;
+	s32 texS;
+
+	(void)arg0;
+	(void)arg1;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_800AC8F0_7CDA0);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
+	gDPPipeSync(D_8005BB2C++);
+
+	texS = D_800949D0_64E80;
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, G_TX_RENDERTILE, 0,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << 2), (31 << 2));
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE45003C0;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB4000000;
+	dl->words.w1 = texS << 16;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB3000000;
+	dl->words.w1 = (((s32)(((f32)(32.0 / (f64)(f32)arg2)) * 1024.0f) & 0xFFFF) << 16)
+				| ((s32)(((f32)(32.0 / (f64)(f32)arg3)) * 1024.0f) & 0xFFFF);
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	D_800949D0_64E80 = texS - 6;
+	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_MODULATEIA);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081CAC_5215C.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80081F9C_5244C(void) {

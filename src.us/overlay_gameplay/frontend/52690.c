@@ -1520,7 +1520,70 @@ void func_8008B534_5B9E4(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B534_5B9E4.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(1910)
+u8 func_8008B7BC_5BC6C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
+	u8 effectId;
+	u32 stepCountU32;
+	s16 deltaX;
+	s16 deltaY;
+	s16 deltaZ;
+	s16 stepX;
+	s16 stepY;
+	s16 stepZ;
+	s16 idx;
+	s32 stepCount;
+	u8 i;
+	Unk800DE840* entry;
+
+	effectId = func_80083A58_53F08(9);
+	if (effectId != 0xFB) {
+		deltaX = arg3 - arg0;
+		deltaY = arg4 - arg1;
+		deltaZ = arg5 - arg2;
+
+		stepCountU32 = sqrtf((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ)) / 100.0f;
+		stepCount = stepCountU32 & 0xFF;
+
+		if (stepCount < 2) {
+			stepCount = 2;
+		}
+		if (stepCount >= 0x10) {
+			stepCount = 0xF;
+		}
+		if (D_800DE0B6 == 1) {
+			stepCount = 1;
+		}
+
+		stepX = deltaX / stepCount;
+		stepY = deltaY / stepCount;
+		stepZ = deltaZ / stepCount;
+
+		if (stepCount >= 0) {
+			i = 0;
+			while (i <= stepCount) {
+				idx = func_80083B7C_5402C(effectId);
+				if (idx == -3) {
+					func_800840C4_54574(effectId);
+					func_80083B14_53FC4(effectId);
+					return 0xFB;
+				}
+
+				entry = &D_800DE840[idx];
+				*(s16*)&entry->unkE = arg6;
+				entry->unk8 = arg0 + (stepX * i);
+				entry->unkA = arg1 + (stepY * i);
+				entry->unkC = arg2 + (stepZ * i);
+				i = (i + 1) & 0xFF;
+			}
+		}
+	}
+
+	return effectId;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B7BC_5BC6C.s")
+#endif
 
 /* Calls func_800840C4 and func_80083B14 if D_800DE130[arg0].unk0 == 9 */
 void func_8008BAD8_5BF88(u8 arg0) {
@@ -2060,7 +2123,32 @@ void func_8008EDB4_5F264(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008EDB4_5F264.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008EEC4_5F374.s")
+void func_8008EEC4_5F374(void) {
+	s32 var_s1;
+	f32 sp60[3];
+
+	if (D_800DE0B6 == 1) {
+		var_s1 = 0;
+		do {
+			sp60[0] = (f32) ((func_800038E0_44E0() % 1000) - 1000);
+			sp60[1] = (f32) ((func_800038E0_44E0() % 1000) - 500);
+			sp60[2] = (f32) ((func_800038E0_44E0() % 1000) - 1000);
+			func_800837B4_53C64(sp60, sp60);
+			func_800838B8_53D68(80.0f, sp60, sp60);
+			func_80085CEC_5619C((s16) (s32) sp60[0], (s16) (s32) sp60[1], (s16) (s32) sp60[2], -1, 0, 0, 0x46, 0x19, 3,
+							0x6E, 0xFF, 0xFF, 0xFF, 3);
+			var_s1 = (var_s1 + 1) & 0xFF;
+		} while (var_s1 < 3);
+
+		sp60[0] = (f32) ((func_800038E0_44E0() % 1000) - 500);
+		sp60[1] = (f32) ((func_800038E0_44E0() % 1000) - 500);
+		sp60[2] = (f32) ((func_800038E0_44E0() % 1000) - 500);
+		func_800837B4_53C64(sp60, sp60);
+		func_800838B8_53D68(340.0f, sp60, sp60);
+		func_8008DC34_5E0E4((s16) (s32) sp60[0], (s16) (s32) sp60[1], (s16) (s32) sp60[2], 0xD,
+						  (func_800038E0_44E0() % 0xF) + 0xF);
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008F1E0_5F690.s")
 
