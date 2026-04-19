@@ -2123,7 +2123,32 @@ void func_8008EDB4_5F264(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008EDB4_5F264.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008EEC4_5F374.s")
+void func_8008EEC4_5F374(void) {
+	s32 var_s1;
+	f32 sp60[3];
+
+	if (D_800DE0B6 == 1) {
+		var_s1 = 0;
+		do {
+			sp60[0] = (f32) ((func_800038E0_44E0() % 1000) - 1000);
+			sp60[1] = (f32) ((func_800038E0_44E0() % 1000) - 500);
+			sp60[2] = (f32) ((func_800038E0_44E0() % 1000) - 1000);
+			func_800837B4_53C64(sp60, sp60);
+			func_800838B8_53D68(80.0f, sp60, sp60);
+			func_80085CEC_5619C((s16) (s32) sp60[0], (s16) (s32) sp60[1], (s16) (s32) sp60[2], -1, 0, 0, 0x46, 0x19, 3,
+							0x6E, 0xFF, 0xFF, 0xFF, 3);
+			var_s1 = (var_s1 + 1) & 0xFF;
+		} while (var_s1 < 3);
+
+		sp60[0] = (f32) ((func_800038E0_44E0() % 1000) - 500);
+		sp60[1] = (f32) ((func_800038E0_44E0() % 1000) - 500);
+		sp60[2] = (f32) ((func_800038E0_44E0() % 1000) - 500);
+		func_800837B4_53C64(sp60, sp60);
+		func_800838B8_53D68(340.0f, sp60, sp60);
+		func_8008DC34_5E0E4((s16) (s32) sp60[0], (s16) (s32) sp60[1], (s16) (s32) sp60[2], 0xD,
+						  (func_800038E0_44E0() % 0xF) + 0xF);
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008F1E0_5F690.s")
 
