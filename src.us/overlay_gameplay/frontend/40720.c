@@ -571,7 +571,44 @@ s32 func_80071760_41C10(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071E80_42330.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800722A4_42754.s")
+extern Ambient D_800942A0_64750;
+extern Light D_800942A8_64758;
+
+void func_800722A4_42754() {
+	u16 perspNorm;
+	s16 i;
+
+	for (i = 0; i < 12; i++) {
+		D_800AED78[i] = func_8000726C_7E6C((s64)i);
+	}
+
+	D_800AED78[0xB] = D_8004DC5C;
+	D_800AED78[0xC] = D_8004DC5E;
+
+	gDPPipeSync(D_8005BB2C++);
+	gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)D_800311A8 & 0x1FFFFFFF));
+	func_80004F64_5B64();
+	gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)D_800311D0 & 0x1FFFFFFF));
+	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, (void *)((u32)D_8005BB48[D_80031B84_32784] & 0x1FFFFFFF));
+
+	guPerspective((Mtx *)(D_8005BB20 + 0x180), &perspNorm, 45.0f, 1.3333334f, 5.0f, 1000.0f, 1.0f);
+	gSPPerspNormalize(D_8005BB2C++, perspNorm);
+
+	guLookAt((Mtx *)(D_8005BB20 + 0x200), 0.0f, 0.0f, 100.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	gSPMatrix(D_8005BB2C++, (u32)(D_8005BB20 + 0x180) & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	gSPMatrix(D_8005BB2C++, (u32)(D_8005BB20 + 0x200) & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
+	gDPPipeSync(D_8005BB2C++);
+	gSPNumLights(D_8005BB2C++, 1);
+	gSPLight(D_8005BB2C++, &D_800942A8_64758, 1);
+	gSPLight(D_8005BB2C++, &D_800942A0_64750, 2);
+	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_LIGHTING | G_SHADING_SMOOTH);
+}
 
 #ifdef NON_MATCHING
 // CURRENT(8100)

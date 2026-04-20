@@ -184,7 +184,7 @@ MissionData* func_80070494_40944(s16 arg0);
 void func_80070514_409C4(s16 arg0);
 void func_80070B68_41018(s16 arg0);
 void func_80070CC4_41174(void);
-void func_800722A4_42754(f32 arg0);
+void func_800722A4_42754();
 void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3);
 void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3);
 void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3);
