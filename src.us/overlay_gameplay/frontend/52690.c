@@ -259,7 +259,277 @@ void func_800829E4_52E94(s32 arg0) {
 #endif
 
 // transitionToNextLevel
+#ifdef NON_MATCHING
+// CURRENT(14240)
+s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	Unk80052B40 sp12C;
+	u16 sp132;
+	s16 sp128;
+	Unk80052B40 sp124;
+	Unk80052B40 sp11C;
+	Unk80052B40 sp114;
+	Unk80052B40 sp10C;
+	Unk80052B40 sp104;
+	s32 sp100;
+	s32 spFC;
+	s32 spD8;
+	s32 spD0;
+	s32 spB8;
+	s32 sp88;
+	s32 sp80;
+	s32 sp74;
+	s32 sp70;
+	s16 varV0_3;
+	s32 tempA3;
+	s32 tempS0;
+	s32 tempS1;
+	s32 tempS6;
+	s32 tempT5;
+	s32 varFp;
+	s32 varS0;
+	s32 varS1;
+	s32 varS4;
+	s32 varV0;
+	s32 varV0_2;
+	s32 varV0_4;
+	Frontend52690Entry *tempV0;
+	Gfx *tempV1;
+
+	(void)arg1;
+	sp12C = D_80094A84_64F34;
+	sp124 = D_80094A8C_64F3C;
+	sp11C = D_80094A94_64F44;
+	sp114 = D_80094A9C_64F4C;
+	sp10C = D_80094AA4_64F54;
+	varS4 = 0;
+	varFp = 0;
+	sp104 = D_80094AAC_64F5C;
+	spD8 = 0;
+	tempV0 = ((Frontend52690Entry *)D_80094A1C_64ECC) + arg0;
+	spD0 = 0;
+	spFC = tempV0->unk4 + 1;
+	D_80052ACA = 4;
+	sp100 = tempV0->unk0;
+
+	func_8001363C_1423C();
+	func_8000AFDC_BBDC();
+	func_800823C0_52870();
+
+	tempT5 = (spFC + sp100 + 1) / 2;
+	tempS6 = ((tempT5 - sp100) * 0xA) + 0x10;
+	sp80 = ((spFC - sp100) * 0xA) + 0xA;
+	sp74 = tempS6 - 0x10;
+	sp88 = tempT5;
+
+	do {
+		tempS0 = tempS6 - varS4;
+		sp70 = tempS0 * 4;
+		tempS1 = -tempS0;
+
+		osRecvMesg(&D_8006A8D0, &D_80068038, 1);
+		func_80011E14_12A14(0);
+		func_80004CC8_58C8();
+		func_80004D38_5938();
+		func_800821E0_52690(0xFF, 0, 0);
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0xB900031D;
+		tempV1->words.w1 = 0x005041C8;
+
+		sp104.unk0 = varFp * 0x190;
+		sp104.unk2 = varFp * 0x64;
+		sp104.unk4 = varFp * 0xC8;
+
+		if (tempS6 < varS4) {
+			sp12C.unk2 = -0xA0;
+			sp11C.unk0 = 0;
+		}
+
+		if (tempS6 >= varS4) {
+			sp124.unk2 = (varS4 * 0x10) - 0x96;
+		} else {
+			sp124.unk2 = ((varS4 - tempS6) * 0x10) - 0x12C;
+		}
+
+		guPerspective((Mtx *)D_8005BB3C, &sp132, 55.0f, 1.3333334f, 50.0f, D_800AEC3C_7F0EC, 1.0f);
+		guLookAt((Mtx *)D_8005BB38, 0.0f, 0.0f, 0.0f, (f32)sp10C.unk0, (f32)sp10C.unk2, (f32)sp10C.unk4,
+				 0.0f, 1.0f, 0.0f);
+		spB8 = D_8005BB38;
+		func_800039D0_45D0(NULL, &sp114, NULL, D_8005BB38);
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0xBC00000E;
+		tempV1->words.w1 = sp132;
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0x01030040;
+		tempV1->words.w1 = D_8005BB3C & 0x1FFFFFFF;
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0x01020040;
+		tempV1->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+		D_8005BB38 += 0x40;
+		func_80082868_52D18(varFp & 0xF);
+		func_800823D8_52888(varS4, arg0);
+
+		sp10C.unk4 = sp70;
+		if (tempS1 < tempS0) {
+			varV0 = tempS0;
+		} else {
+			varV0 = tempS1;
+		}
+
+		if (varV0 < 0x64) {
+			sp10C.unk0 = -0xFA - ((coss((u16)((tempS0 << 0x10) / 0xC8)) * 0x1F4) / 0xFFFF);
+		}
+
+		func_800823C8_52878((s32)&sp10C, (s32)&sp104, varFp);
+		guPerspective((Mtx *)D_8005BB38, &sp132, 55.0f, 1.3333334f, 1.0f, 2000.0f, 1.0f);
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0xBC00000E;
+		tempV1->words.w1 = sp132;
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0x01030040;
+		tempV1->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0x01010040;
+		tempV1->words.w1 = spB8 & 0x1FFFFFFF;
+
+		func_800039D0_45D0(&sp124, &sp11C, NULL, D_8005BB38);
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0x01020040;
+		tempV1->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+		tempA3 = D_8005BB38 + 0x40;
+		D_8005BB38 = tempA3;
+		func_800039D0_45D0(&sp12C, NULL, NULL, tempA3);
+
+		varV0_2 = sp88;
+		if (varS4 < tempS6) {
+			varV0_2 = sp100;
+			varS1 = sp88;
+		} else {
+			varS1 = spFC;
+		}
+
+		varS0 = varV0_2;
+		while (varS0 < varS1) {
+			func_800829E4_52E94(varS0);
+			tempV1 = D_8005BB2C;
+			varS0++;
+			D_8005BB2C = tempV1 + 1;
+			tempV1->words.w0 = 0x01000040;
+			tempV1->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+		}
+
+		D_8005BB38 += 0x40;
+		func_8000345C_405C(0xD000);
+
+		if (spD0 != 0) {
+			spD8++;
+			func_8000AFDC_BBDC();
+			varV0_3 = D_800313D0_31FD0;
+
+			switch (varV0_3) {
+				case 0:
+					drawText(D_800AEB2C_7EFDC, 0x50, 0, 0);
+					drawText(D_800AEB30_7EFE0, 0x80, 2);
+					drawText(D_800AEB50_7F000, 0x80, 3);
+					drawText(D_800AEB68_7F018, 0x80, 4);
+					varV0_3 = D_800313D0_31FD0;
+					break;
+				case 1:
+					drawText(D_800AEB80_7F030, 0x50, 0, 0);
+					drawText(D_800AEB84_7F034, 0x80, 2);
+					drawText(D_800AEBA4_7F054, 0x80, 3);
+					drawText(D_800AEBC4_7F074, 0x80, 4);
+					varV0_3 = D_800313D0_31FD0;
+					break;
+				case 2:
+					drawText(D_800AEBDC_7F08C, 0x50, 0, 0);
+					drawText(D_800AEBE0_7F090, 0x80, 2);
+					drawText(D_800AEBF8_7F0A8, 0x80, 3);
+					drawText(D_800AEC14_7F0C4, 0x80, 4);
+					varV0_3 = D_800313D0_31FD0;
+					break;
+			}
+
+			switch (varV0_3) {
+				case 0:
+					drawText(D_800AEC24_7F0D4, 0x80, 6, D_800949D8_64E88[currentLevel]);
+					break;
+				case 1:
+					drawText(D_800AEC2C_7F0DC, 0x80, 6, D_800949EC_64E9C[currentLevel]);
+					break;
+				case 2:
+					drawText(D_800AEC34_7F0E4, 0x80, 6, D_80094A00_64EB0[currentLevel]);
+					break;
+			}
+
+			if (isButtonNewlyPressed(CONTROLLER_ONE, 0xD000) != 0) {
+				spD8 = 0;
+				spD0 = 0;
+				varS4++;
+			}
+
+			tempV1 = D_8005BB2C;
+			D_8005BB2C = tempV1 + 1;
+			tempV1->words.w0 = 0x03800010;
+			tempV1->words.w1 = D_8005BB24 + 0x80000000;
+			func_8000B044_BC44();
+		} else if ((varS4 == tempS6) && !(currentControllerStates[0].button & 0x9000)) {
+			spD0 = 1;
+		} else if (isButtonNewlyPressed(CONTROLLER_ONE, 0x9000) != 0) {
+			if (varS4 < tempS6) {
+				varFp = (varFp + tempS6) - varS4;
+				varS4 = tempS6;
+			} else {
+				func_80005AEC_66EC(0xFF, 0xFF, 0xFF, 0x20);
+			}
+		} else {
+			varS4++;
+		}
+
+		varFp++;
+		if (varS4 < sp74) {
+			varV0_4 = 0;
+		} else if ((tempS6 + 0x10) < varS4) {
+			varV0_4 = 0x20;
+		} else {
+			varV0_4 = (varS4 - tempS6) + 0x10;
+		}
+
+		sp114.unk0 = (varV0_4 << 0xA) + 0x8000;
+		if ((sp80 < varS4) || (varS4 == 0)) {
+			func_80005AEC_66EC(0xFF, 0xFF, 0xFF, 0x20);
+		}
+
+		func_80005B84_6784();
+		func_8000505C_5C5C();
+	} while (func_80005B30_6730() == 0);
+
+	D_80052ACA = 3;
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80082CBC_5316C.s")
+#endif
 
 /* 3x3 matrix-vector multiply: out = mat^T * vec */
 void func_80083610_53AC0(f32 *mat, f32 *vec, f32 *out) {
@@ -796,7 +1066,203 @@ void func_8008472C_54BDC(u8 arg0) {
 	}
 }
 
+void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4);
+
+#ifdef NON_MATCHING
+void func_800847E4_54C94(u8 arg0) {
+	Unk800DE130 *entry130;
+	Unk800DE130 *entry130Base;
+	Unk800DE840 *entry840;
+	u8 count;
+	u8 colorR;
+	u8 colorG;
+	u8 colorB;
+	u8 *view;
+	Vec3f origin;
+	Vec3f vecA;
+	Vec3f vecB;
+	Vec3f outA;
+	Vec3f outB;
+	f32 camDx;
+	f32 camDy;
+	f32 camDz;
+	f32 dist;
+	f32 t0;
+	f32 t1;
+	f32 p0x;
+	f32 p0y;
+	f32 p0z;
+	f32 p1x;
+	f32 p1y;
+	f32 p1z;
+	f64 distBias;
+	u8 alpha0;
+	u8 alpha1;
+	u8 triCount;
+	u16 ringScale;
+
+	entry130 = &D_800DE130[arg0];
+	entry130Base = entry130;
+	count = entry130->unk4 - 1;
+
+	if ((D_800DE0B8 == 1) || (D_800DE0B9 != 0)) {
+		colorR = 0x82;
+		colorG = 0xC8;
+		colorB = 0xFF;
+	} else {
+		colorR = 0xFF;
+		colorG = 0x9E;
+		colorB = 0x16;
+	}
+
+	entry840 = &D_800DE840[entry130->unkA];
+	view = (u8 *)entry840 + 8;
+	origin.x = ((s16 *)view)[0];
+	origin.y = ((s16 *)view)[1];
+	origin.z = ((s16 *)view)[2];
+
+	camDx = origin.x - (D_800DE100[0] * 4.0f);
+	camDy = origin.y - (D_800DE100[1] * 4.0f);
+	camDz = origin.z - (D_800DE100[2] * 4.0f);
+	dist = sqrtf((camDx * camDx) + (camDy * camDy) + (camDz * camDz));
+
+	gDPPipeSync(D_8005BB2C++);
+	gSPClearGeometryMode(D_8005BB2C++, 1);
+	gDPSetRenderMode(D_8005BB2C++, 0x504240, 0x504240);
+	D_8005BB2C->words.w0 = 0xFCFFFFFF;
+	D_8005BB2C->words.w1 = 0xFFFDF8FC;
+	D_8005BB2C++;
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, colorR, colorG, colorB, 0);
+	gDPPipeSync(D_8005BB2C++);
+
+	triCount = count;
+	if ((s32)triCount > 0) {
+		distBias = (f64)((f64)(dist / 4.0f) + 800.0);
+		do {
+			entry840 = &D_800DE840[entry840->unk4];
+
+			func_800838B8_53D68((f32)(distBias * ((f64)entry840->unkE * 0.00390625)), D_800DE0C0, (f32 *)&vecA);
+			func_800838B8_53D68((f32)(distBias * ((f64)entry840->unkE * 0.00390625)), D_800DE0CC, (f32 *)&vecB);
+
+			view = (u8 *)entry840 + 8;
+			t0 = (f32)view[2] / 256.0f;
+			t1 = (f32)(view[2] + 0xA) / 256.0f;
+
+			switch (*((s8 *)view + 1)) {
+				case 0:
+					func_80083884_53D34((f32 *)&origin, (f32 *)&vecA, (f32 *)&outA);
+					func_80083884_53D34((f32 *)&origin, (f32 *)&vecB, (f32 *)&outB);
+					break;
+				case 1:
+					func_80083884_53D34((f32 *)&origin, (f32 *)&vecB, (f32 *)&outA);
+					func_80083850_53D00((f32 *)&origin, (f32 *)&vecA, (f32 *)&outB);
+					break;
+				case 2:
+					func_80083850_53D00((f32 *)&origin, (f32 *)&vecA, (f32 *)&outA);
+					func_80083850_53D00((f32 *)&origin, (f32 *)&vecB, (f32 *)&outB);
+					break;
+				default:
+					func_80083850_53D00((f32 *)&origin, (f32 *)&vecB, (f32 *)&outA);
+					func_80083884_53D34((f32 *)&origin, (f32 *)&vecA, (f32 *)&outB);
+					break;
+			}
+
+			camDx = outB.x - outA.x;
+			camDy = outB.y - outA.y;
+			camDz = outB.z - outA.z;
+
+			p0x = (camDx * t0) + outA.x;
+			p0y = (camDy * t0) + outA.y;
+			p0z = (camDz * t0) + outA.z;
+			p1x = (camDx * t1) + outA.x;
+			p1y = (camDy * t1) + outA.y;
+			p1z = (camDz * t1) + outA.z;
+
+			if (D_800DE0B7 != 0) {
+				alpha0 = (u8)(s32)(((f32)((u32)view[0] * D_800DE0BB)) / 255.0f);
+				alpha1 = (u8)(s32)(((f32)(D_800DE0BB * 20)) / 255.0f);
+			} else {
+				alpha0 = view[0];
+				alpha1 = 20;
+			}
+
+			D_8005BB34->v.ob[0] = (s16)origin.x;
+			D_8005BB34->v.ob[1] = (s16)origin.y;
+			D_8005BB34->v.ob[2] = (s16)origin.z;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = 0;
+			D_8005BB34->v.cn[1] = 0;
+			D_8005BB34->v.cn[2] = 0;
+			D_8005BB34->v.cn[3] = alpha0;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = (s16)p1x;
+			D_8005BB34->v.ob[1] = (s16)p1y;
+			D_8005BB34->v.ob[2] = (s16)p1z;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = 0;
+			D_8005BB34->v.cn[1] = 0;
+			D_8005BB34->v.cn[2] = 0;
+			D_8005BB34->v.cn[3] = alpha1;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = (s16)p0x;
+			D_8005BB34->v.ob[1] = (s16)p0y;
+			D_8005BB34->v.ob[2] = (s16)p0z;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = 0;
+			D_8005BB34->v.cn[1] = 0;
+			D_8005BB34->v.cn[2] = 0;
+			D_8005BB34->v.cn[3] = alpha1;
+			D_8005BB34++;
+
+			gDPPipeSync(D_8005BB2C++);
+			D_8005BB2C->words.w0 = 0x04000C2F;
+			D_8005BB2C->words.w1 = ((u32)(D_8005BB34 - 3)) & 0x1FFFFFFF;
+			D_8005BB2C++;
+			gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
+
+			triCount = (triCount - 1) & 0xFF;
+		} while ((s32)triCount > 0);
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+	D_8005BB2C->words.w0 = 0xFC6218C4;
+	D_8005BB2C->words.w1 = 0xFF33FFFF;
+	D_8005BB2C++;
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_100DE80);
+	D_8005BB2C->words.w0 = 0xF5900000;
+	D_8005BB2C->words.w1 = 0x07080200;
+	D_8005BB2C++;
+	gDPLoadSync(D_8005BB2C++);
+	D_8005BB2C->words.w0 = 0xF3000000;
+	D_8005BB2C->words.w1 = 0x070FF400;
+	D_8005BB2C++;
+	gDPPipeSync(D_8005BB2C++);
+	D_8005BB2C->words.w0 = 0xF5800400;
+	D_8005BB2C->words.w1 = 0x00080200;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xF2000000;
+	D_8005BB2C->words.w1 = 0x0007C07C;
+	D_8005BB2C++;
+
+	ringScale = *(u16 *)((u8 *)&D_800DE840[entry130Base->unkA] + 2);
+	func_800853A8_55858(&origin, &colorR, D_800DE0E4, ringScale, D_800DE0BB);
+
+	gDPPipeSync(D_8005BB2C++);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+	gDPSetRenderMode(D_8005BB2C++, 0x504A50, 0x504A50);
+	gDPPipeSync(D_8005BB2C++);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800847E4_54C94.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(2122)
@@ -1421,9 +1887,265 @@ s16 func_80086C58_57108(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80086C58_57108.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800870AC_5755C.s")
+#ifdef NON_MATCHING
+// CURRENT(13418)
+void func_800870AC_5755C(void) {
+	s16 current;
 
+	current = D_800DE832;
+	while ((current != -5) && (current != -6)) {
+		s32 temp;
+		s32 step;
+		s16 linkIdx;
+		u8 scale;
+		u8 age;
+		Unk800DE840 *entry;
+		Unk800DE840 *parent;
+		u8 *entryBytes;
+		u8 *parentBytes;
+		u8 *linkBytes;
+
+		entry = &D_800DE840[current];
+		entryBytes = (u8 *)entry + 8;
+		parent = &D_800DE840[entry->unk4];
+		parentBytes = (u8 *)parent + 8;
+		linkIdx = parent->unk4;
+		scale = parentBytes[0xB];
+
+		if (entryBytes[0xC] >= (0x23 / scale)) {
+			temp = D_800DE840[linkIdx].unk4;
+			func_80083F8C_5443C(current, 0x95);
+			current = temp;
+			continue;
+		}
+
+		age = entryBytes[0xC];
+		if (age == 0) {
+			D_800DE840[linkIdx].unk8 = (func_800038E0_44E0() % 11) + 0x3C;
+		} else if (age == 1) {
+			D_800DE840[linkIdx].unk8 += (func_800038E0_44E0() % 11) + 0xF;
+		} else if (age < (7 / scale)) {
+			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 5) + 5) * scale;
+		} else if (age < (0xF / scale)) {
+			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 4) + 4) * scale;
+			parentBytes[2] -= ((func_800038E0_44E0() % 7) + 7) * scale;
+		} else if (age < (0x18 / scale)) {
+			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 4) + 3) * scale;
+			parentBytes[1] -= ((func_800038E0_44E0() % 5) + 3) * scale;
+			if ((scale * 0xF) < parentBytes[2]) {
+				parentBytes[2] -= ((func_800038E0_44E0() % 7) + 7) * scale;
+			}
+		} else if (age < (0x1C / scale)) {
+			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 3) + 2) * scale;
+			parentBytes[1] -= ((func_800038E0_44E0() % 5) + 3) * scale;
+			if ((scale * 0x19) < parentBytes[2]) {
+				parentBytes[2] -= ((func_800038E0_44E0() % 14) + 0xC) * scale;
+			}
+		} else {
+			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 2) + 2) * scale;
+			if ((scale * 0x19) < parentBytes[2]) {
+				parentBytes[2] -= ((func_800038E0_44E0() % 14) + 0xC) * scale;
+			}
+			if ((scale * 0x25) < parentBytes[1]) {
+				parentBytes[1] -= ((func_800038E0_44E0() % 15) + 0x16) * scale;
+			}
+		}
+
+		age = entryBytes[0xC];
+		if (age >= 3) {
+			step = ((0x23 / scale) - age) & 0xFF;
+			temp = entryBytes[6] - parentBytes[0];
+			entryBytes[6] -= temp / step;
+			temp = entryBytes[7] - parentBytes[1];
+			entryBytes[7] -= temp / step;
+			temp = entryBytes[8] - parentBytes[2];
+			entryBytes[8] -= temp / step;
+			temp = entryBytes[9] - parentBytes[3];
+			entryBytes[9] -= temp / step;
+			temp = entryBytes[0xA] - parentBytes[4];
+			entryBytes[0xA] -= temp / step;
+			temp = entryBytes[0xB] - parentBytes[5];
+			entryBytes[0xB] -= temp / step;
+		}
+
+		linkBytes = (u8 *)&D_800DE840[linkIdx] + 8;
+		linkBytes[2] += linkBytes[5];
+		linkBytes[3] += linkBytes[6];
+		linkBytes[4] += linkBytes[7];
+		parentBytes[6]++;
+		if (parentBytes[6] == 0x10) {
+			parentBytes[6] = 0;
+		}
+		entryBytes[0xC]++;
+		current = D_800DE840[linkIdx].unk4;
+	}
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800870AC_5755C.s")
+#endif
+
+#ifdef NON_MATCHING
+// CURRENT(40278)
+void func_800878A4_57D54(void) {
+	Unk80052B40 pos;
+	Unk80052B40 rot;
+	Unk80052B40 scale;
+	Unk80052B40 zeroVec;
+	Unk800DE840* entry;
+	Unk800DE840* parent;
+	Unk800DE840* child;
+	u8* entryBytes;
+	u8* parentBytes;
+	u8* childBytes;
+	s16 linkIdx;
+	s16 base;
+	f32 distX;
+	f32 distZ;
+	f32 len;
+	f32 fA;
+	f32 fB;
+	f32 fC;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+	gSPClearGeometryMode(D_8005BB2C++, G_FOG);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_PASS, G_RM_AA_ZB_XLU_SURF2);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
+	gDPSetCombineLERP(D_8005BB2C++, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, ENVIRONMENT, COMBINED, TEXEL0, 0, ENVIRONMENT, COMBINED);
+	gDPPipeSync(D_8005BB2C++);
+
+	linkIdx = D_800DE832;
+	if ((linkIdx != -6) && (linkIdx != -5)) {
+		do {
+		entry = &D_800DE840[linkIdx];
+		parent = &D_800DE840[entry->unk4];
+		child = &D_800DE840[parent->unk4];
+		entryBytes = (u8*)entry + 8;
+		parentBytes = (u8*)parent + 8;
+		childBytes = (u8*)child;
+
+		base = (s16)((f64)entry->unk2 * (((f64)(u16)child->unk8) * 0.03125) * 6.0);
+		fA = (f32)childBytes[0xA];
+		fB = (f32)childBytes[0xB];
+		fC = (f32)childBytes[0xC];
+
+		scale.unk2 = (s16)((((f64)fB / 32.0) + 1.0) * base);
+		scale.unk0 = (s16)((((f64)fA / 32.0) + 1.0) * base);
+		scale.unk4 = (s16)((((f64)fC / 32.0) + 1.0) * base);
+
+		pos.unk0 = entry->unk8;
+		pos.unk2 = entry->unkA;
+		pos.unk4 = entry->unkC;
+
+		distX = (D_800DE100[0] * 4.0f) - pos.unk0;
+		distZ = (D_800DE100[2] * 4.0f) - pos.unk4;
+		len = sqrtf((distX * distX) + (distZ * distZ));
+
+		zeroVec.unk0 = 0;
+		zeroVec.unk2 = parentBytes[0] << 8;
+		zeroVec.unk4 = 0;
+
+		rot.unk0 = func_80003824_4424(D_800DE0F0[2], D_800DE0F0[0]) + 0x8000;
+		rot.unk2 = 0x8000;
+		rot.unk4 = 0x4000 - func_80003824_4424((D_800DE100[1] * 4.0f) - entryBytes[2], len);
+
+		if (childBytes[8] == 1) {
+			base = (s16)((f64)entry->unk2 * (((f64)(u16)child->unk8) * 0.03125) * 6.0);
+			scale.unk0 = base + (entryBytes[4] * 0x1F4);
+			scale.unk2 = base;
+			scale.unk4 = base;
+
+			gDPSetPrimColor(D_8005BB2C++, 0, 0, 255, 255, 255, parentBytes[1]);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+			gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK | G_FOG | G_LIGHTING);
+			gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+			gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+			gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+			gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+			gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+			gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+			gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_800A9240_796F0);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0x0000, G_TX_RENDERTILE, 0,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << 2, 31 << 2);
+			gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, TEXEL0, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, TEXEL0, 0);
+			gDPPipeSync(D_8005BB2C++);
+		} else {
+			if (childBytes[8] == 2) {
+				gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+				gDPPipeSync(D_8005BB2C++);
+			}
+
+			if (entryBytes[4] < 3) {
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 255, 255, 255, 255);
+				gDPSetEnvColor(D_8005BB2C++, 255, 255, 255, 255);
+			} else {
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, entryBytes[6], entryBytes[7], entryBytes[8], parentBytes[1]);
+				gDPSetEnvColor(D_8005BB2C++, entryBytes[9], entryBytes[0xA], entryBytes[0xB], parentBytes[2]);
+			}
+
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, D_4067B10 + (parentBytes[6] << 9));
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, 4, 0,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, 4, 0, 0, 255, 1024);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << 2, 31 << 2);
+
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, D_4069B10 + (parentBytes[6] << 9));
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0040, 5, 0,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, 5, 0, 0, 255, 1024);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0040, 1, 0,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, 1, 0x40, 0, 0x40 + (31 << 2), 31 << 2);
+		}
+
+		D_8005BB38 += 0x40;
+		func_800039D0_45D0(&pos, &rot, &scale, D_8005BB38);
+		gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+
+		D_8005BB38 += 0x40;
+		D_8005BB38 += 0x40;
+		func_800039D0_45D0(NULL, &zeroVec, NULL, D_8005BB38);
+		gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+
+		D_8005BB38 += 0x40;
+		gSPDisplayList(D_8005BB2C++, D_406BC60);
+		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+
+		linkIdx = child->unk4;
+		} while ((linkIdx != -6) && (linkIdx != -5));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800878A4_57D54.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(5554)
@@ -2877,7 +3599,265 @@ void func_8008BB38_5BFE8(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008BB38_5BFE8.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(28873)
+void func_8008BC00_5C0B0(u8 arg0) {
+	s16 idx;
+	s16 nextIdx;
+	s16 rand4;
+	u8 texFrame;
+	u8 colR;
+	u8 colG;
+	u8 colB;
+	f32 curX;
+	f32 curY;
+	f32 curZ;
+	f32 curX2;
+	f32 curY2;
+	f32 curZ2;
+	f32 nextX;
+	f32 nextY;
+	f32 nextZ;
+	f32 nextX2;
+	f32 nextY2;
+	f32 nextZ2;
+	f32 spread;
+	f32 zero;
+	s32 rand;
+	Unk800DE840 *entry;
+	Gfx *dl;
+
+	idx = D_800DE130[arg0].unk6;
+
+	gDPPipeSync(D_8005BB2C++);
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFC6218C4;
+	dl->words.w1 = 0xFF33FFFF;
+	gDPPipeSync(D_8005BB2C++);
+
+	rand = func_800038E0_44E0() % 6;
+	if (rand == 1) {
+		colR = 0xC8;
+		colG = 0xFF;
+		colB = 0xC8;
+	} else if (rand == 2) {
+		colR = 0xC8;
+		colG = 0xC8;
+		colB = 0xFF;
+	} else {
+		colR = 0xFF;
+		colG = 0xFF;
+		colB = 0xFF;
+	}
+
+	if ((idx != -5) && (idx != -6)) {
+		entry = &D_800DE840[idx];
+		if (D_800DE0B6 == 1) {
+			rand4 = func_800038E0_44E0() % 4;
+			spread = (f32)((rand4 * 2) + 0x14);
+			curX2 = (f32)entry->unk8 - spread;
+			curX = (f32)entry->unk8 + spread;
+
+			rand4 = func_800038E0_44E0() % 4;
+			spread = (f32)((rand4 * 2) + 0x14);
+			curY = (f32)entry->unkA + spread;
+			curY2 = (f32)entry->unkA - spread;
+
+			rand4 = func_800038E0_44E0() % 4;
+			spread = (f32)((rand4 * 2) + 0x14);
+			curZ = (f32)entry->unkC + spread;
+			curZ2 = (f32)entry->unkC - spread;
+		} else {
+			spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+			if ((func_800038E0_44E0() % 0xB) < 6) {
+				spread = -spread;
+			}
+			curX2 = (f32)entry->unk8 - spread;
+			curX = (f32)entry->unk8 + spread;
+
+			spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+			if ((func_800038E0_44E0() % 0xB) < 6) {
+				spread = -spread;
+			}
+			curY = (f32)entry->unkA + spread;
+			curY2 = (f32)entry->unkA - spread;
+
+			spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+			if ((func_800038E0_44E0() % 0xB) < 6) {
+				spread = -spread;
+			}
+			curZ = (f32)entry->unkC + spread;
+			curZ2 = (f32)entry->unkC - spread;
+		}
+	}
+
+	if ((idx != -5) && (idx != -6)) {
+		do {
+			nextIdx = D_800DE840[idx].unk4;
+			if (nextIdx != -5) {
+				gDPPipeSync(D_8005BB2C++);
+
+				if (D_800DE0B6 == 1) {
+					texFrame = 0;
+				} else {
+					rand = func_800038E0_44E0();
+					rand4 = rand % 4;
+					if ((rand < 0) && (rand4 != 0)) {
+						rand4 -= 4;
+					}
+					texFrame = rand4 & 0xFF;
+				}
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xFD900000;
+				dl->words.w1 = (u32)(&D_100B4F0[texFrame << 9]) & 0x1FFFFFFF;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xF5900000;
+				dl->words.w1 = 0x07080200;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xE6000000;
+				dl->words.w1 = 0;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xF3000000;
+				dl->words.w1 = 0x070FF400;
+
+				gDPPipeSync(D_8005BB2C++);
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xF5800400;
+				dl->words.w1 = 0x00080200;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xF2000000;
+				dl->words.w1 = 0x0007C07C;
+
+				gDPPipeSync(D_8005BB2C++);
+
+				D_8005BB34->v.ob[0] = (s16)(s32)curX;
+				D_8005BB34->v.ob[1] = (s16)(s32)curY;
+				D_8005BB34->v.ob[2] = (s16)(s32)curZ;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = colR;
+				D_8005BB34->v.cn[1] = colG;
+				D_8005BB34->v.cn[2] = colB;
+				D_8005BB34->v.cn[3] = 0xFF;
+
+				D_8005BB34++;
+				D_8005BB34->v.ob[0] = (s16)(s32)curX2;
+				D_8005BB34->v.ob[1] = (s16)(s32)curY2;
+				D_8005BB34->v.ob[2] = (s16)(s32)curZ2;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = colR;
+				D_8005BB34->v.cn[1] = colG;
+				D_8005BB34->v.cn[2] = colB;
+				D_8005BB34->v.cn[3] = 0xFF;
+
+				D_8005BB34++;
+
+				entry = &D_800DE840[nextIdx];
+				if (D_800DE0B6 == 1) {
+					rand4 = func_800038E0_44E0() % 4;
+					spread = (f32)((rand4 * 2) + 0x14);
+					nextX = (f32)entry->unk8 + spread;
+					nextX2 = (f32)entry->unk8 - spread;
+
+					rand4 = func_800038E0_44E0() % 4;
+					spread = (f32)((rand4 * 2) + 0x14);
+					nextY = (f32)entry->unkA + spread;
+					nextY2 = (f32)entry->unkA - spread;
+
+					rand4 = func_800038E0_44E0() % 4;
+					spread = (f32)((rand4 * 2) + 0x14);
+					nextZ = (f32)entry->unkC + spread;
+					nextZ2 = (f32)entry->unkC - spread;
+				} else {
+					zero = 0.0f;
+					spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+					if ((func_800038E0_44E0() % 0xB) < 6) {
+						spread = zero - spread;
+					}
+					nextX = (f32)entry->unk8 + spread;
+					nextX2 = (f32)entry->unk8 - spread;
+
+					spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+					if ((func_800038E0_44E0() % 0xB) < 6) {
+						spread = zero - spread;
+					}
+					nextY = (f32)entry->unkA + spread;
+					nextY2 = (f32)entry->unkA - spread;
+
+					spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+					if ((func_800038E0_44E0() % 0xB) < 6) {
+						spread = zero - spread;
+					}
+					nextZ = (f32)entry->unkC + spread;
+					nextZ2 = (f32)entry->unkC - spread;
+				}
+
+				D_8005BB34->v.ob[0] = (s16)(s32)nextX;
+				D_8005BB34->v.ob[1] = (s16)(s32)nextY;
+				D_8005BB34->v.ob[2] = (s16)(s32)nextZ;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = colR;
+				D_8005BB34->v.cn[1] = colG;
+				D_8005BB34->v.cn[2] = colB;
+				D_8005BB34->v.cn[3] = 0x32;
+
+				D_8005BB34++;
+				D_8005BB34->v.ob[0] = (s16)(s32)nextX2;
+				D_8005BB34->v.ob[1] = (s16)(s32)nextY2;
+				D_8005BB34->v.ob[2] = (s16)(s32)nextZ2;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = colR;
+				D_8005BB34->v.cn[1] = colG;
+				D_8005BB34->v.cn[2] = colB;
+				D_8005BB34->v.cn[3] = 0x32;
+
+				D_8005BB34++;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0x0400103F;
+				dl->words.w1 = (u32)(D_8005BB34 - 4) & 0x1FFFFFFF;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xB1000206;
+				dl->words.w1 = 0x00040602;
+
+				curX = nextX2;
+				curY = nextY2;
+				curZ = nextZ2;
+				curX2 = nextX;
+				curY2 = nextY;
+				curZ2 = nextZ;
+			}
+
+			idx = nextIdx;
+		} while ((idx != -5) && (idx != -6));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008BC00_5C0B0.s")
+#endif
 
 /* Allocate D_800DE840 entry and fill all fields from params */
 void func_8008C73C_5CBEC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5, s16 arg6, s16 arg7, s16 arg8, u8 arg9) {
@@ -3531,7 +4511,280 @@ void func_8008DFA0_5E450(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008DFA0_5E450.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(31147)
+void func_8008E158_5E608(void) {
+	typedef struct {
+		s8 unk0;
+		s8 unk1;
+		s8 unk2;
+		s8 unk3;
+		s8 unk4;
+		s8 unk5;
+		s8 unk6;
+		s8 unk7;
+	} Unk800AA694Entry;
+
+	s32 pad0;
+	s32 pad1;
+	s32 i;
+	s32 remaining;
+
+	remaining = D_800E1D68;
+	i = 0;
+	if (remaining > 0) {
+		do {
+			Unk800E1980* entry;
+			u8 type;
+
+			entry = &D_800E1980[i];
+			if (entry->unkA != 0) {
+				if (entry->unkF == 0) {
+					u8 savedIndex;
+					Unk800AA694Entry* typeCfg;
+
+					type = entry->unkC;
+					savedIndex = i;
+					if ((type != 0xFF) || ((u8)entry->unkE != 0xFF)) {
+						Gfx* dl;
+
+						dl = D_8005BB2C;
+						D_8005BB2C = dl + 1;
+						dl->words.w0 = 0xE7000000;
+						dl->words.w1 = 0;
+
+						typeCfg = (Unk800AA694Entry*)&D_800AA694[type * 8];
+						if (typeCfg->unk5 == 0) {
+							s32 lineWords;
+							s32 lineWordsClamped;
+							s32 lineSize;
+							s32 dxt;
+							u32 texAddr;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xFC6218C4;
+							dl->words.w1 = 0xFF33FFFF;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xFD900000;
+							texAddr = (u32)(D_800AA76C[type] + (((typeCfg->unk7 * (u8)entry->unkE) * typeCfg->unk6) / 2));
+							dl->words.w1 = texAddr & 0x1FFFFFFF;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF5900000;
+							dl->words.w1 = 0x07080200;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xE6000000;
+							dl->words.w1 = 0;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF3000000;
+
+							lineWords = (((typeCfg->unk7 * typeCfg->unk6) + 3) >> 2) - 1;
+							lineWordsClamped = 0x7FF;
+							if (lineWords < 0x7FF) {
+								lineWordsClamped = lineWords;
+							}
+
+							lineSize = typeCfg->unk6 / 16;
+							if (lineSize <= 0) {
+								lineSize = 1;
+							}
+
+							dxt = (lineSize + 0x7FF) / lineSize;
+							dl->words.w1 = ((lineWordsClamped & 0xFFF) << 12) | (dxt & 0xFFF) | 0x07000000;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xE7000000;
+							dl->words.w1 = 0;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF5800000 | ((((((s8)typeCfg->unk6 >> 1) + 7) >> 3) & 0x1FF) << 9);
+							dl->words.w1 = 0x00080200;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF2000000;
+							dl->words.w1 = ((((typeCfg->unk7 - 1) << 2) & 0xFFF) | ((((typeCfg->unk6 - 1) << 2) & 0xFFF) << 12));
+						} else if (typeCfg->unk5 == 1) {
+							s32 lineWords;
+							s32 lineWordsClamped;
+							s32 lineSize;
+							s32 dxt;
+							u32 texAddr;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xFC40C281;
+							dl->words.w1 = 0xFF87FFFF;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xFD700000;
+							texAddr = (u32)(D_800AA76C[type] + ((typeCfg->unk7 * (u8)entry->unkE) * typeCfg->unk6));
+							dl->words.w1 = texAddr & 0x1FFFFFFF;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF5700000;
+							dl->words.w1 = 0x07080200;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xE6000000;
+							dl->words.w1 = 0;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF3000000;
+
+							lineWords = (((typeCfg->unk7 * typeCfg->unk6) + 1) >> 1) - 1;
+							lineWordsClamped = 0x7FF;
+							if (lineWords < 0x7FF) {
+								lineWordsClamped = lineWords;
+							}
+
+							lineSize = typeCfg->unk6 / 8;
+							if (lineSize <= 0) {
+								lineSize = 1;
+							}
+
+							dxt = (lineSize + 0x7FF) / lineSize;
+							dl->words.w1 = ((lineWordsClamped & 0xFFF) << 12) | (dxt & 0xFFF) | 0x07000000;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xE7000000;
+							dl->words.w1 = 0;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF5680000 | (((((typeCfg->unk6 + 7) >> 3) & 0x1FF) << 9));
+							dl->words.w1 = 0x00080200;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF2000000;
+							dl->words.w1 = ((((typeCfg->unk7 - 1) << 2) & 0xFFF) | ((((typeCfg->unk6 - 1) << 2) & 0xFFF) << 12));
+						} else if (typeCfg->unk5 == 2) {
+							s32 lineWords;
+							s32 lineWordsClamped;
+							s32 lineSize;
+							s32 dxt;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xFCFFFFFF;
+							dl->words.w1 = 0xFFFCF279;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xFD100000;
+							dl->words.w1 = ((u32)D_800AA76C[type]) & 0x1FFFFFFF;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF5100000;
+							dl->words.w1 = 0x07080200;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xE6000000;
+							dl->words.w1 = 0;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF3000000;
+
+							lineWords = (typeCfg->unk7 * typeCfg->unk6) - 1;
+							lineWordsClamped = 0x7FF;
+							if (lineWords < 0x7FF) {
+								lineWordsClamped = lineWords;
+							}
+
+							lineSize = (typeCfg->unk6 * 2) / 8;
+							if (lineSize <= 0) {
+								lineSize = 1;
+							}
+
+							dxt = (lineSize + 0x7FF) / lineSize;
+							dl->words.w1 = ((lineWordsClamped & 0xFFF) << 12) | (dxt & 0xFFF) | 0x07000000;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xE7000000;
+							dl->words.w1 = 0;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF5100000 | ((((((typeCfg->unk6 * 2) + 7) >> 3) & 0x1FF) << 9));
+							dl->words.w1 = 0x00080200;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF2000000;
+							dl->words.w1 = ((((typeCfg->unk7 - 1) << 2) & 0xFFF) | ((((typeCfg->unk6 - 1) << 2) & 0xFFF) << 12));
+						}
+
+						D_800DE12D = typeCfg->unk6;
+						D_800DE12E = typeCfg->unk7;
+
+						dl = D_8005BB2C;
+						D_8005BB2C = dl + 1;
+						dl->words.w0 = 0xE7000000;
+						dl->words.w1 = 0;
+					}
+
+					D_800DE118.x = (f32)entry->unk0;
+					D_800DE118.y = (f32)entry->unk2;
+					D_800DE118.z = (f32)entry->unk4;
+					D_800DE124 = (u8*)&entry->unk6;
+
+					if (type == 0xA) {
+						D_800DE128 = (f32)((u8)entry->unkD * entry->unkA);
+					} else if (type == 0xB) {
+						D_800DE128 = (f32)((u8)entry->unkD * entry->unkA);
+					} else {
+						D_800DE128 = (f32)entry->unkA;
+					}
+
+					D_800DE12C = entry->unkD;
+					typeCfg = (Unk800AA694Entry*)&D_800AA694[type * 8];
+					switch (typeCfg->unk4) {
+					case 0:
+						func_8008D14C_5D5FC();
+						break;
+					case 2:
+						func_8008CDC8_5D278();
+						break;
+					case 3:
+						func_8008D510_5D9C0();
+						break;
+					default:
+						break;
+					}
+
+					i = savedIndex;
+				}
+
+				remaining = (remaining - 1) & 0xFF;
+			}
+
+			i = (i + 1) & 0xFF;
+		} while (remaining > 0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008E158_5E608.s")
+#endif
 
 /* Allocates an entry and fills color/lifetime and velocity-related byte fields */
 void func_8008E9DC_5EE8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10) {
@@ -3991,7 +5244,203 @@ void func_8008FDF0_602A0(void) {
 	func_8008FAAC_5FF5C();
 }
 
+#ifdef NON_MATCHING
+// CURRENT(13651)
+void func_8008FE98_60348(s32 arg0) {
+	u8 *entry;
+
+	entry = (u8 *)D_800AA998 + ((arg0 & 0xFF) << 4);
+
+	switch (entry[0]) {
+		case 0:
+			entry[1] = func_8008B08C_5B53C(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6),
+									  (s8)entry[9], *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE));
+			break;
+
+		case 1:
+			func_8008B19C_5B64C(*((u8 *)D_800AA998 + ((*(s16 *)(entry + 8) << 4) + 1)), entry[0xB]);
+			break;
+
+		case 2:
+			func_80085CEC_5619C(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), (s8)entry[9],
+								*(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), 0xA0, 0xF, 0x32, 0xFF, 0xFF, 0xFF, 1,
+								*(s16 *)(entry + 0xE));
+			break;
+
+		case 3:
+			D_800DE0BE = *(s16 *)(entry + 8);
+			D_800DE0BF = *(s16 *)(entry + 0xA);
+			break;
+
+		case 4:
+			if (D_800313D0_31FD0 != 2) {
+				func_8008A460_5A910(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), (s8)entry[9],
+								   *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE), 0x1E,
+								   9, 0xFA, 0x55, 1, 0, 0xDC, 1);
+			}
+			break;
+
+		case 5:
+			if (D_800313D0_31FD0 != 2) {
+				func_8008A460_5A910(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), (s8)entry[9],
+								   *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE), 0x1E,
+								   7, 0x8C, 0x73, 0xA, 0, 0xDC, 0);
+			}
+			break;
+
+		case 6:
+			func_800840C4_54574(0x93);
+			break;
+
+		case 7:
+			if (D_800DE0B6 == 1) {
+				func_8008C73C_5CBEC(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0xFF, 0x78,
+							  0x5A, *(s16 *)(entry + 8), *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC),
+							  *(s16 *)(entry + 0xE));
+			} else {
+				func_8008C73C_5CBEC(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0xFF, 0xE6,
+							  0x32, *(s16 *)(entry + 8), *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC),
+							  *(s16 *)(entry + 0xE));
+			}
+			break;
+
+		case 8:
+			switch (*(s16 *)(entry + 0xA)) {
+				case 0:
+					func_8008EB20_5EFD0(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6),
+								   *(u16 *)(entry + 8), 0, 0, 0);
+					break;
+
+				case 1:
+					func_8008EB20_5EFD0(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6),
+								   *(u16 *)(entry + 8), 0, (s32)D_800AB448, 0);
+					break;
+
+				case 2:
+					func_8008EB20_5EFD0(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6),
+								   *(u16 *)(entry + 8), 0, 0, 1);
+					break;
+
+				case 3:
+					func_8008EB20_5EFD0(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6),
+								   *(u16 *)(entry + 8), 0, (s32)D_800AB454, 0);
+					break;
+			}
+			break;
+
+		case 9:
+			func_8008DDF0_5E2A0(
+				func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0, *(s16 *)(entry + 8)),
+				entry[0xB], entry[0xD], entry[0xF]);
+			break;
+
+		case 10:
+			func_80084324_547D4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), *(s16 *)(entry + 8),
+							 *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE), 0xB4);
+			break;
+
+		case 11:
+			D_800DE0BE = 0xFF;
+			D_800DE0BF = 0xFF;
+			break;
+
+		case 12:
+			func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0xA,
+								 *(s16 *)(entry + 8));
+			break;
+
+		case 13:
+			func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0xC,
+								 *(s16 *)(entry + 8));
+			break;
+
+		case 14:
+			func_80085CEC_5619C(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), (s8)entry[9],
+								*(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), 0xF0, 0xF, 0x32, 0xC8, 0xA0, 0xA, 1,
+								*(s16 *)(entry + 0xE));
+			break;
+
+		case 15:
+			D_800DE0B6 = 1;
+			break;
+
+		case 16:
+			D_800DE0B6 = 0;
+			break;
+
+		case 17:
+			func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0xE, 0x46);
+			break;
+
+		case 18:
+			func_8008B7BC_5BC6C(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), *(s16 *)(entry + 8),
+						   *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE));
+			break;
+
+		case 19:
+			func_8008A460_5A910(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), (s8)entry[9],
+							   *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE), 0xFA,
+							   0x1D, 0x1E, 0xFF, 0xFF, 0xFF, 0xFF, 0);
+			break;
+
+		case 20:
+			func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0xF,
+								 *(s16 *)(entry + 8));
+			break;
+
+		case 21:
+			func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0x10,
+								 *(s16 *)(entry + 8));
+			break;
+
+		case 22:
+			D_800E1D6A = 0;
+			D_800DE0B7 = 1;
+			break;
+
+		case 23:
+			D_800DE0B7 = 0;
+			break;
+
+		case 24:
+			func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0x11,
+								 *(s16 *)(entry + 8));
+			break;
+
+		case 25:
+			func_8008DBEC_5E09C();
+			break;
+
+		case 26:
+			D_800DE0B8 = 1;
+			func_80084324_547D4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), *(s16 *)(entry + 8),
+							 *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE), 0xD48);
+			break;
+
+		case 27:
+			D_800E1D6A = 1;
+			D_800DE0B7 = 1;
+			break;
+
+		case 28:
+			D_800DE0B9 = 1;
+			D_800DE0BB = 0;
+			func_80084324_547D4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), *(s16 *)(entry + 8),
+							 *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE), 0x190);
+			D_800DE0BC = 1;
+			break;
+
+		case 29:
+			D_800DE0BD = 1;
+			func_80085CEC_5619C(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), (s8)entry[9],
+								*(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), 0x8C, 0x28, 0x64, 0xFF, 0xFF, 0xFF, 1,
+								*(s16 *)(entry + 0xE));
+			break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008FE98_60348.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(1273)
