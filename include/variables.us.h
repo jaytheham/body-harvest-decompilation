@@ -846,6 +846,7 @@ extern s32 D_800D88E8;
 extern u8 D_800AA640[];
 extern Mtx D_800AA648_7AAF8;
 extern s8 D_800AA694[];
+extern s16 D_800AA7C0_7AC70[];
 extern u8 D_800AA724[];
 extern s32 D_800DE068;
 extern Unk800311A0 D_800DE0B0;
