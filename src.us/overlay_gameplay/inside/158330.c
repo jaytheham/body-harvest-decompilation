@@ -111,7 +111,25 @@ void func_80072FB4_15B074(void) {
 	func_8008B474_173534();
 }
 
+#ifdef NON_MATCHING
+/* CURRENT(2568) */
+void func_80073058_15B118(void) {
+	s32 i;
+
+	for (i = 0; i < D_800E668C; i++) {
+		u8 entryIdx = D_800E66A8[i].unk0;
+		u8 flags = D_800E66A8[i].unk2E;
+		s32 objFlags = D_800E65BC[entryIdx].unk44;
+
+		if (((flags & 1) || (objFlags & 0x40000000)) && (objFlags & 0x20000000)) {
+			D_800E66A8[i].unk2E = flags & ~1;
+			func_80077A5C_15FB1C(i, entryIdx);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80073058_15B118.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8007313C_15B1FC(void) {
