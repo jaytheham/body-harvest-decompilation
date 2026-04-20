@@ -3862,7 +3862,251 @@ void func_8007A754_4AC04(void) {
 	func_8007C7F4_4CCA4();
 }
 
+#ifdef NON_MATCHING
+// CURRENT(25552)
+void func_8007A774_4AC24(s32 arg0) {
+	s16 phase;
+	s16 timer;
+	u16 perspNorm;
+	s16 rotX;
+	s16 rotY;
+	s16 rotZ;
+	s16 posX;
+	s16 posY;
+	s16 posZ;
+	s16 tilt;
+	s16 blend;
+	s16 cameraPulse;
+	s32 isAnimated;
+
+	phase = D_800D7962;
+	D_80052A8C++;
+
+	isAnimated = 0;
+	rotY = 0x1E0;
+	posY = 0x2A8;
+	posX = 0x50;
+	rotX = -0x2D;
+	rotZ = 0;
+	posZ = 0;
+	tilt = 0;
+	blend = 0;
+
+	cameraPulse = 0;
+
+	if ((u32)(phase - 5) < 6U) {
+		switch (phase - 5) {
+		case 0:
+			timer = D_800D7960;
+			D_800D7960 = timer + 1;
+			if (timer >= 121) {
+				D_800D7962 = phase + 1;
+				D_800D7960 = 0;
+			}
+			break;
+
+		case 1:
+			timer = D_800D7960;
+			D_800D7960 = timer + 1;
+			if (timer >= 71) {
+				D_800D7960 = 0;
+				D_800D7962 = phase + 1;
+			}
+			break;
+
+		case 2:
+			timer = D_800D7960;
+			tilt = (s16)(-100 * timer);
+			D_800D7960 = timer + 1;
+			if (timer >= 101) {
+				D_800D7960 = 0;
+				D_800D7962 = phase + 1;
+			}
+			break;
+
+		case 3:
+			timer = D_800D7960;
+			rotX = (s16)(D_800AE868_7ED18 - ((f64)timer * D_800AE870_7ED20));
+			posX = (s16)(((f64)timer * 8.5) + 80.0);
+			posY = (s16)(D_800AE878_7ED28 - ((f64)timer * D_800AE880_7ED30));
+			blend = (s16)(((timer * 125) * 4) - 10000);
+			D_800D7960 = timer + 1;
+			if (timer >= 21) {
+				D_800D7960 = 0;
+				D_800D7962 = phase + 1;
+			}
+			break;
+
+		case 4:
+			timer = D_800D7960;
+			posZ = (s16)(-332 * timer);
+			posX = (s16)(250 - timer);
+			rotX = -0x2D;
+			posY = (s16)(D_800AE888_7ED38 + ((f64)timer * D_800AE890_7ED40));
+			D_800D7960 = timer + 1;
+			if (timer >= 51) {
+				D_800D7960 = 0;
+				D_800D7962 = phase + 1;
+			}
+			break;
+
+		case 5:
+			timer = D_800D7960;
+			isAnimated = 1;
+			rotX = -0x2D;
+			rotZ = (s16)(-3 * timer);
+			posZ = -15000;
+			posX = 200;
+			posY = 200;
+			D_800D7960 = timer + 1;
+			if (timer >= 301) {
+				D_800D7962 = phase + 1;
+				D_800D7960 = 0;
+			}
+			break;
+		}
+	} else {
+		posX = 200;
+		posY = 200;
+		rotX = -0x2D;
+		rotZ = -500;
+		posZ = -15000;
+	}
+
+	guPerspective(D_8005BB38, &perspNorm, 73.0f, 1.25f, 150.0f, D_800AE898_7ED48, 1.0f);
+
+	gSPPerspNormalize(D_8005BB2C++, perspNorm);
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+
+	guLookAt(D_8005BB38 + 0x40, 0.0f, 0.0f, 120.0f, 0.0f, 85.0f, 300.0f, 0.0f, 1.0f, 0.0f);
+
+	gSPMatrix(D_8005BB2C++, (Mtx *)((D_8005BB38 + 0x40) & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+	D_8005BB38 += 0x80;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | G_CLIPPING | 0xFF60CDF8);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_LIGHTING | G_SHADING_SMOOTH);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNX, 4);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNY, 4);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPX, 0xFFFC);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPY, 0xFFFC);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	gDPPipeSync(D_8005BB2C++);
+	gDPPipeSync(D_8005BB2C++);
+	gSPNumLights(D_8005BB2C++, 1);
+	gSPLight(D_8005BB2C++, &D_800942C0_64770, 1);
+	gSPLight(D_8005BB2C++, &D_800942B8_64768, 2);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | G_CLIPPING | 0xFF60CDF8);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_LIGHTING | G_SHADING_SMOOTH);
+
+	D_80052B40.unk0 = rotZ;
+	if (isAnimated == 1) {
+		D_80052B40.unk2 = (s16)((((f64)(f32)coss((u16)(D_80052A8C * 2000)) / 32768.0) * 8.0) + 40.0);
+	} else {
+		D_80052B40.unk2 = 0x28;
+	}
+
+	D_80052B40.unk4 = 0;
+	D_80052B48.unk0 = (s16)(-0x898 - (posZ / 3));
+	D_80052B48.unk2 = posZ;
+	D_80052B48.unk4 = 0x3DB8;
+	D_80052B50.unk0 = rotY;
+	D_80052B50.unk2 = rotY;
+	D_80052B50.unk4 = rotY;
+
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+
+	if (isAnimated == 1) {
+		D_80052B48.unk0 = (s16)((s32)(((f64)(f32)coss((u16)(D_80052A8C * 1000)) / 32768.0) * D_800AE8A0_7ED50));
+	} else {
+		D_80052B48.unk0 = 0;
+	}
+
+	D_80052B48.unk2 = 0;
+	D_80052B48.unk4 = blend / 5;
+	D_80052B40.unk0 = 0;
+	D_80052B40.unk2 = 0;
+	D_80052B40.unk4 = 0;
+
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+
+	gSPDisplayList(D_8005BB2C++, D_040A6650);
+
+	D_80052B40.unk0 = 0;
+	D_80052B40.unk2 = 0x30;
+	D_80052B40.unk4 = 0;
+	if (isAnimated == 1) {
+		cameraPulse = (s16)((s32)(((f64)(f32)coss((u16)(D_80052A8C * 2000)) / 32768.0) * D_800AE8A8_7ED58));
+		tilt = (s16)(((f64)(f32)sins((u16)(D_80052A8C * 1000)) / 32768.0) * D_800AE8B0_7ED60);
+	}
+
+	D_80052B48.unk0 = cameraPulse;
+	D_80052B48.unk2 = 0;
+	D_80052B48.unk4 = tilt;
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
+
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+
+	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+
+	D_80052B40.unk0 = 0;
+	D_80052B40.unk2 = -8;
+	D_80052B40.unk4 = 0;
+	D_80052B48.unk2 = 0;
+	D_80052B48.unk4 = 0;
+
+	if (isAnimated == 1) {
+		D_80052B48.unk0 = (s16)(((f64)(f32)coss((u16)(D_80052A8C * 2000)) / 32768.0) * D_800AE8B8_7ED68);
+	} else {
+		D_80052B48.unk0 = 0;
+	}
+
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+
+	D_80052B40.unk0 = rotZ;
+	D_80052B40.unk2 = rotX;
+	D_80052B40.unk4 = 0;
+
+	if (isAnimated == 1) {
+		D_80052B50.unk0 = (s16)(200.0 - (((f64)(f32)sins((u16)(D_80052A8C * 2000)) / 32768.0) * 20.0));
+		D_80052B50.unk2 = (s16)(200.0 + (((f64)(f32)sins((u16)(D_80052A8C * 2000)) / 32768.0) * 20.0));
+		D_80052B50.unk4 = (s16)(200.0 - (((f64)(f32)sins((u16)(D_80052A8C * 2000)) / 32768.0) * 20.0));
+	} else {
+		D_80052B50.unk0 = posX;
+		D_80052B50.unk2 = posY;
+		D_80052B50.unk4 = posX;
+	}
+
+	func_800039D0_45D0(&D_80052B40, 0, &D_80052B50, D_8005BB38);
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+
+	gSPDisplayList(D_8005BB2C++, D_040A8F70);
+
+	gDPPipeSync(D_8005BB2C++);
+
+	if (arg0 == 0) {
+		D_800948E0_64D90++;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A774_4AC24.s")
+#endif
 
 // displayClearSaveData
 #ifdef NON_MATCHING
