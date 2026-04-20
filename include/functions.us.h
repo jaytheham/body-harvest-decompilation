@@ -89,6 +89,7 @@ void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChanne
 void func_8000DAFC_E6FC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, f32 arg5);
 void func_8000DC9C_E89C(s32, s32);
 void func_8000E4C4_F0C4(s32 arg0);
+s32 func_8000E53C_F13C(void);
 #ifdef GAME_OSSETTIME_IMPL
 void osSetTime(s32 arg0, s32 arg1);
 #endif
@@ -988,6 +989,7 @@ void func_8000577C_637C(void);
 void func_800071D8_7DD8(void);
 void func_80008C18_9818(void);
 s32 func_80008C44_9844(s32 arg0);
+void func_80008CA8_98A8(s32 arg0);
 void playMapMusic(void);
 void playInventoryMusic(void);
 s32 guess_displayInventory(void);

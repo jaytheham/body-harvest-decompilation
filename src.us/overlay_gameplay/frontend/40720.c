@@ -2489,8 +2489,121 @@ void func_8007C764_4CC14(u16 arg0, u16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007C7F4_4CCA4.s")
 
+#ifdef NON_MATCHING
+// CURRENT(5741)
 // doSaveBeaconLoop
+s32 func_8007CFB4_4D464(s32 arg0) {
+	s16 timer;
+	s32 selection;
+
+	selection = 0;
+	timer = -1;
+	gameplayMode = 4;
+	func_8000AFDC_BBDC();
+	func_80070940_40DF0();
+	D_800D74A6 = 0x44;
+	D_800D74A4 = D_800D74A6;
+	D_800948F0_64DA0 = 0;
+
+	while (timer != 0) {
+		Gfx* dl;
+
+		func_800050C4_5CC4();
+		func_80011E14_12A14(0);
+		func_80004DDC_59DC(0, 0, 0, 0, 0xEF);
+		func_80008CA8_98A8(0);
+
+		if (D_800948F0_64DA0 >= 0x41U) {
+			if (D_800948F0_64DA0 < 0x3E8U) {
+				func_80070C64_41114(0x3F, 7, (s16)(D_800948F0_64DA0 - 0x3D));
+			}
+		}
+
+		if (arg0 != 0) {
+		} else {
+			func_80070A8C_40F3C(0x45);
+		}
+
+		if (D_800948F0_64DA0 >= 0x81U) {
+			if (timer == -1) {
+				func_80070CC4_41174();
+				func_8007166C_41B1C();
+
+				if (isButtonNewlyPressed(0, 0x9000) != 0) {
+					selection = D_800D74A4 - 0x42;
+					func_800708B8_40D68(0x43);
+					func_800708B8_40D68(0x44);
+					func_800708B8_40D68(0x45);
+					func_800153D8_15FD8(0xC8);
+					timer = 0x10;
+					if (selection == 1) {
+						func_80070C64_41114(0x46, (s16)1, 0);
+						timer = 0x50;
+					}
+				}
+
+				if (isButtonNewlyPressed(0, 0x4000) != 0) {
+					selection = 2;
+					timer = 0x10;
+				}
+			}
+		}
+
+		if (D_800948F0_64DA0 >= 0x41U) {
+			func_800731A8_43658();
+		}
+
+		func_8000B044_BC44();
+
+		if (D_800948F0_64DA0 < 0x3E8U) {
+			D_800948F0_64DA0++;
+		}
+
+		if (timer == 0x10) {
+			func_800708B8_40D68(0x40);
+			func_800708B8_40D68(0x41);
+			func_800708B8_40D68(0x42);
+			if (selection == 1) {
+				func_800708B8_40D68(0x46);
+			} else {
+				func_800708B8_40D68(0x43);
+				func_800708B8_40D68(0x44);
+				func_800708B8_40D68(0x45);
+			}
+		}
+
+		if ((timer != -1) && (timer > 0)) {
+			timer = (s16)(timer - 1);
+		}
+
+		if (D_800948F0_64DA0 < 0x55U) {
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xBA000E02;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xFCFFFFFF;
+			dl->words.w1 = 0xFFFCF279;
+			func_8000E53C_F13C();
+		}
+
+		func_8000505C_5C5C();
+	}
+
+	func_8000AFDC_BBDC();
+	if (selection == 1) {
+		return 1;
+	}
+	if (selection == 3) {
+		return 2;
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007CFB4_4D464.s")
+#endif
 
 // doInventoryLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007D2B0_4D760.s")
