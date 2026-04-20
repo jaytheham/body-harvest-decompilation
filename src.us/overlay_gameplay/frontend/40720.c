@@ -874,7 +874,98 @@ void func_800764B4_46964(void) {
 }
 
 // displayCometExplodesMovie
+#ifdef NON_MATCHING
+// CURRENT(775)
+s32 func_80076504_469B4(void) {
+	s32 result;
+	s32 fadeResult;
+	u8* fadeAlphaPtr;
+	u8* fadeColorPtr;
+
+	result = 1;
+	func_8007949C_4994C(func_80070390_40840(), 0);
+
+	D_80052ACA = 6;
+	D_8004772C = 0xFF;
+	D_80047730 = 0x40;
+	D_80047734 = 0;
+	fadeAlphaPtr = &D_8004773A;
+	fadeColorPtr = &D_80047739;
+	*fadeAlphaPtr = 0;
+	*fadeColorPtr = 0;
+	D_80047738 = 0;
+	D_800D74AA = 0;
+	D_800D6D8C = 1;
+
+	gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
+	gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
+
+	drawText(D_800ADC60, 0xE6, 0xE6, 0xE6, 0xFF);
+	func_8007D7E0_4DC90();
+	osSyncPrintf(D_800ADC68);
+	func_80013684_14284();
+
+	do {
+		func_800791A0_49650(1);
+
+		gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
+		fadeResult = func_8007D91C_4DDCC(1);
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+
+		osSendMesg(&D_8006A8B0, &D_800314CC, 1);
+		if (fadeResult != 0) {
+			result = 2;
+			func_80005AEC_66EC(0, 0, 0, 0x10);
+		}
+	} while (func_80005B30_6730() == 0);
+
+	func_8007C4BC_4C96C();
+	func_8007C7F4_4CCA4();
+
+	D_80052ACA = 6;
+	D_8004772C = 0xFF;
+	D_80047730 = 0x40;
+	D_80047734 = 0;
+	fadeAlphaPtr = &D_8004773A;
+	fadeColorPtr = &D_80047739;
+	*fadeAlphaPtr = 0;
+	*fadeColorPtr = 0;
+	D_80047738 = 0;
+	D_800D74AA = 0;
+	D_800D6D8C = 1;
+
+	gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
+	gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
+
+	func_8007D7E0_4DC90(fadeAlphaPtr, fadeColorPtr);
+	osSyncPrintf(D_800ADC74);
+
+	do {
+		func_800791A0_49650(1);
+
+		gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
+		fadeResult = func_8007D91C_4DDCC(2);
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+
+		osSendMesg(&D_8006A8B0, &D_800314CC, 1);
+		if (fadeResult != 0) {
+			result = 2;
+			func_80005AEC_66EC(0, 0, 0, 0x10);
+		}
+	} while (func_80005B30_6730() == 0);
+
+	D_80052ACA = 3;
+	func_800056A8_62A8();
+	func_800056A8_62A8();
+	func_80070940_40DF0();
+
+	return result;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076504_469B4.s")
+#endif
 
 // displayEndGameMessage
 s32 func_8007685C_46D0C(void) {
