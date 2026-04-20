@@ -1076,7 +1076,90 @@ s32 func_8007685C_46D0C(void) {
 }
 
 // doIntroMovieLoop
+#ifdef NON_MATCHING
+s32 func_800768C4_46D74(void) {
+	s32 result;
+	s32 fadeResult;
+	s16 i;
+	s16 idx;
+	s32 timingA[11];
+	s32 timingB[8];
+
+	result = 1;
+
+	for (i = 0; i < ARRAY_COUNT(timingA); i++) {
+		timingA[i] = D_80094868_64D18[i];
+	}
+	for (i = 0; i < ARRAY_COUNT(timingB); i++) {
+		timingB[i] = D_80094894_64D44[i];
+	}
+
+	D_80052ACA = 6;
+	D_8004772C = 0xFF;
+	D_80047730 = 0x40;
+	D_80047734 = 0;
+	D_80047739 = 0;
+	D_8004773A = 0;
+	D_80047738 = 0;
+	D_800D74AA = 0;
+	D_800D6D8C = 1;
+
+	gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
+	gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
+
+	drawText(&D_800ADC84_7E134, 0xE6, 0xE6, 0xE6, 0xFF);
+	func_8007D7E0_4DC90();
+	func_8007BFC4_4C474();
+
+	do {
+		func_800791A0_49650(1);
+
+		gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
+		fadeResult = func_8007D91C_4DDCC(0);
+
+		func_8000B044_BC44();
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+
+		osSendMesg(&D_8006A8B0, &D_800314CC_320CC, 1);
+
+		idx = D_800948B8_64D68;
+		if (D_800948B4_64D64 == timingA[idx]) {
+			D_800948B8_64D68++;
+			func_8001322C_13E2C(idx);
+			D_800313E0++;
+		}
+
+		idx = D_800948BC_64D6C;
+		if (D_800948B4_64D64 == timingB[idx]) {
+			D_800948BC_64D6C++;
+			func_800131A4_13DA4(idx);
+			D_800313DC++;
+		}
+
+		D_800948B4_64D64++;
+
+		if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) || (fadeResult != 0)) {
+			result = 2;
+			func_80005AEC_66EC(0, 0, 0, 0x10);
+		}
+	} while (func_80005B30_6730() == 0);
+
+	D_800313D8++;
+	D_800948B4_64D64 = 0;
+	D_80052ACA = 3;
+	D_800948BC_64D6C = 0;
+	D_800948B8_64D68 = 0;
+
+	func_800056A8_62A8();
+	func_800056A8_62A8();
+	func_80070940_40DF0();
+
+	return result;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800768C4_46D74.s")
+#endif
 
 // Called once before showing the 'Select Slot' screen
 // doFileSelectLoop
