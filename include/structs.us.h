@@ -20,6 +20,13 @@ typedef struct {
 } Flags2x32; /* size = 0x08 */
 
 typedef struct {
+	s32 unk0;
+	s32 unk4;
+	void* unk8;
+	void* unkC;
+} Frontend52690Entry;
+
+typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ s32 unk4;
 	/* 0x08 */ s32 outputSize;

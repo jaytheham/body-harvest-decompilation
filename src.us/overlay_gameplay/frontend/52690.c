@@ -32,7 +32,86 @@ void func_800823C0_52870(void) {
 void func_800823C8_52878(s32 arg0, s32 arg1, s32 arg2) {
 }
 
+#ifdef NON_MATCHING
+// CURRENT(3962)
+void func_800823D8_52888(s32 arg0, s32 arg1) {
+	Unk80052B40 spA8 = D_80094A6C_64F1C;
+	Unk80052B40 spA0 = D_80094A74_64F24;
+	Unk80052B40 sp98 = D_80094A7C_64F2C;
+	Frontend52690Entry *entry = (Frontend52690Entry *)D_80094A1C_64ECC + arg1;
+	s32 entryUnk4Plus1 = entry->unk4 + 1;
+	s32 entryUnk0 = entry->unk0;
+	s16 spAC;
+	s16 color;
+	s16 fade = 0;
+	s32 span;
+
+	if (arg0 < 0x80) {
+		fade = 0x7F - arg0;
+	}
+
+	color = (fade * 3) + 0x80;
+	spAC = 0x76C - (fade * 8);
+	sp98.unk0 = color;
+	sp98.unk2 = color;
+	sp98.unk4 = color;
+
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 255, 255, 255, (fade * 2) & 0xFF);
+	fade = 0;
+	func_800039D0_45D0(&spA8, &spA0, &sp98, D_8005BB38);
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, entry->unk8);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
+			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 2047, 256);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 0x0000, G_TX_RENDERTILE, 0,
+			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 63 << 2, 63 << 2);
+	gSPDisplayList(D_8005BB2C++, D_4000040);
+	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+
+	spA0.unk0 = 0;
+	span = (entryUnk4Plus1 - entryUnk0) * 10;
+	if ((span - 0x76) < arg0) {
+		fade = (arg0 - span) + 0x76;
+		if (fade >= 0x80) {
+			fade = 0x7F;
+		}
+	}
+
+	color = (fade * 3) + 0x80;
+	sp98.unk0 = color;
+	sp98.unk2 = color;
+	sp98.unk4 = color;
+	spAC = (fade * 8) - 0x76C;
+
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 255, 255, 255, (fade * 2) & 0xFF);
+	func_800039D0_45D0(&spA8, &spA0, &sp98, D_8005BB38);
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, entry->unkC);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
+			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 2047, 256);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 0x0000, G_TX_RENDERTILE, 0,
+			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 63 << 2, 63 << 2);
+	gSPDisplayList(D_8005BB2C++, D_4000040);
+	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+	gDPPipeSync(D_8005BB2C++);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800823D8_52888.s")
+#endif
 
 void func_80082868_52D18(s32 arg0) {
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, 255, 255, 255, 255);
