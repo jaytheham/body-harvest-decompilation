@@ -91,7 +91,35 @@ void func_80083300_16B3C0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083390_16B450.s")
 
+#ifdef NON_MATCHING
+// CURRENT(451)
+s16 func_800834CC_16B58C(s32 arg0) {
+	s16 sp26;
+	s16 sp24;
+	s16 var_a2;
+	s32 temp_s0;
+
+	temp_s0 = arg0 & 0xFF;
+	var_a2 = func_80083390_16B450(temp_s0 & 0xFF);
+	if (var_a2 != -3) {
+		sp26 = var_a2;
+		sp24 = func_80083390_16B450(temp_s0 & 0xFF);
+		if (sp24 == -3) {
+			func_800835F0_16B6B0(sp26, temp_s0 & 0xFF);
+			var_a2 = -3;
+		} else {
+			if (func_80083390_16B450(temp_s0 & 0xFF) == -3) {
+				func_800835F0_16B6B0(sp26, temp_s0 & 0xFF);
+				func_800835F0_16B6B0(sp24, temp_s0 & 0xFF);
+				var_a2 = -3;
+			}
+		}
+	}
+	return var_a2;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800834CC_16B58C.s")
+#endif
 
 s16 func_80083584_16B644(u8 arg0) {
 	s16 sp1E;
