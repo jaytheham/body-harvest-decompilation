@@ -632,7 +632,37 @@ void func_80079310_1613D0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800794BC_16157C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80079658_161718.s")
+void func_80079658_161718(void) {
+	s32 temp_v0;
+
+	if (D_800E65F4 != 0) {
+		osSyncPrintf(&D_800A4574_18C634);
+	}
+
+	temp_v0 = D_8004758E;
+	if (temp_v0 & 0x200) {
+		D_800E65C8->unk4 -= 1;
+		osSyncPrintf(&D_800A45A4_18C664, D_800E65C8->unk4, D_800E65C8->unk8);
+		temp_v0 = D_8004758E;
+	}
+
+	if (temp_v0 & 0x100) {
+		D_800E65C8->unk4 += 1;
+		osSyncPrintf(&D_800A45C4_18C684, D_800E65C8->unk4, D_800E65C8->unk8);
+		temp_v0 = D_8004758E;
+	}
+
+	if (temp_v0 & 0x800) {
+		D_800E65C8->unk8 -= 1;
+		osSyncPrintf(&D_800A45E4_18C6A4, D_800E65C8->unk4, D_800E65C8->unk8);
+		temp_v0 = D_8004758E;
+	}
+
+	if (temp_v0 & 0x400) {
+		D_800E65C8->unk8 += 1;
+		osSyncPrintf(&D_800A4604_18C6C4, D_800E65C8->unk4, D_800E65C8->unk8);
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007978C_16184C.s")
 
