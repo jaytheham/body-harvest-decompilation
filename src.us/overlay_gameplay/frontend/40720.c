@@ -894,7 +894,123 @@ s32 func_8007685C_46D0C(void) {
 
 // Called once before showing the 'Select Slot' screen
 // doFileSelectLoop
+#ifdef NON_MATCHING
+// CURRENT(3217)
+s16 func_80076C98_47148(void) {
+	u8 saveFileName[7];
+	u8* saveNamePtr;
+	s8* saveValidPtr;
+	s32* saveMetaPtr;
+	u32 frameCounter;
+	s32 saveFile;
+	s16 result;
+	s16 fade;
+	s32 hasCorruptSave;
+
+	D_800D74A6 = currentSaveFileIndex + 2;
+	D_800D74A4 = D_800D74A6;
+	frameCounter = 0;
+	result = 1;
+	hasCorruptSave = 0;
+	func_8007166C_41B1C();
+
+	((u8*)D_800909B0)[0x70] = 0;
+	((u8*)D_800909B0)[0x9A] = 0;
+	((u8*)D_800909B0)[0xC4] = 0;
+	D_800909B0[D_800D74A4].unk1C = 1;
+
+	saveFile = 2;
+	saveNamePtr = &D_800D6DB6;
+	saveMetaPtr = &D_800D6DA0;
+	saveValidPtr = &D_800D6D92;
+	do {
+		*saveValidPtr = func_80002A88_3688(saveFile);
+		*saveMetaPtr = func_80002B20_3720(saveFile);
+		getSaveFileName(saveFile, saveNamePtr);
+		saveValidPtr--;
+		if (saveNamePtr[1] != 'm') {
+			hasCorruptSave = 1;
+		}
+		saveMetaPtr--;
+		saveNamePtr -= 7;
+	} while (saveFile-- != 0);
+
+	((u8*)D_800909B0)[0xCD] = 5;
+	while (result == 1) {
+		if (frameCounter < 0x3E8U) {
+			func_80070C64_41114(1, 6, (s16)frameCounter);
+		}
+
+		if (hasCorruptSave == 0) {
+			func_80070A8C_40F3C(5);
+			func_80070A8C_40F3C(6);
+		} else {
+			func_80070B68_41018(5);
+			func_80070B68_41018(6);
+		}
+
+		if (frameCounter >= 0x41U) {
+			func_80070CC4_41174();
+			func_8007166C_41B1C();
+			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+				result = D_800D74A4;
+			}
+			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+				result = 0;
+			}
+		}
+
+		func_80075D58_46208(0);
+		func_800731A8_43658();
+		func_8000B044_BC44();
+		func_8000505C_5C5C();
+
+		if (frameCounter < 0x3E8U) {
+			frameCounter++;
+		}
+	}
+
+	saveFile = D_800D74A4 - 2;
+	if (saveFile < 3) {
+		currentSaveFileIndex = saveFile;
+	}
+
+	func_800153D8_15FD8(0xC8);
+	if (result == 0) {
+		func_800709F0_40EA0();
+		for (fade = 0xA0; fade != -8; fade -= 8) {
+			func_80075D58_46208(0);
+			func_80075B64_46014(fade);
+			func_800731A8_43658();
+			func_8000B044_BC44();
+			func_8000505C_5C5C();
+		}
+		return result;
+	}
+
+	if ((D_800D74A4 - 1) < 4) {
+		if (currentSaveFileIndex < 3) {
+			guess_loadSavedGame(currentSaveFileIndex);
+			getSaveFileName(currentSaveFileIndex, saveFileName);
+			osSyncPrintf(&D_800ADC8C_7E13C, saveFileName);
+			if (saveFileName[1] == 'm') {
+				result = 1;
+				osSyncPrintf(&D_800ADC9C_7E14C);
+			}
+
+			if (result < 5) {
+				D_800D74AA = 0;
+				func_800709F0_40EA0();
+			}
+			func_8000AFDC_BBDC();
+		}
+	}
+
+	return result;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076C98_47148.s")
+#endif
 
 s32 func_80076FD8_47488(void) {
 	return 3;
@@ -946,7 +1062,7 @@ void func_80076FE0_47490(s32* arg0, s32* arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076FE0_47490.s")
 #endif
 
-void func_80075B64_46014();
+void func_80075B64_46014(s16 arg0);
 void func_80076FE0_47490();
 
 // doPressStartLoop
