@@ -3737,8 +3737,183 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007CFB4_4D464.s")
 #endif
 
-// doInventoryLoop
+#ifdef NON_MATCHING
+// CURRENT(4772)
+s32 func_8007D2B0_4D760(void) {
+	s16 timer;
+	s32 i;
+	s16 selection;
+	s16 menuWarmup;
+	s32 renderSetupDone;
+	Gfx* dl;
+
+	gameplayMode = 0x10;
+	func_80070940_40DF0();
+
+	D_800D74A6 = 0x4A;
+	D_800D74A4 = D_800D74A6;
+	D_800948F4_64DA4 = 0;
+
+	setFullResolution();
+
+	D_800D74AE = 0;
+	D_800D74AC = 0;
+	D_800D74B0 = 0;
+
+	renderSetupDone = 0;
+	timer = -1;
+	menuWarmup = 0;
+	selection = 0;
+
+	for (i = 0; i < 12; i++) {
+		D_800AED78[i] = func_8000726C_7E6C((s64)i);
+	}
+
+	D_800AED78[0xB] = D_8004DC5C;
+	D_800AED78[0xC] = D_8004DC5E;
+
+	for (i = 0; i < 14; i++) {
+		osSyncPrintf(D_800AE448_7E8F8, i, func_8000726C_7E6C((s64)i));
+		if (D_800AED78[i] != 0) {
+			if (((s32*) &D_800942E0_64790[(currentLevel * 13) - 13])[i * 2] != 0) {
+				D_800D74AC = i;
+				break;
+			}
+		}
+	}
+
+	for (i = 7; i >= 0; i--) {
+		if (*(&D_8004813F - (7 - i)) != 0) {
+			D_800D74AE = i;
+			break;
+		}
+	}
+
+	while (timer != 0) {
+		func_800050C4_5CC4();
+		func_80011E14_12A14(0);
+		func_80004DDC_59DC(0, 0, 0, 0, 0xEF);
+		func_80008CA8_98A8(0);
+
+		if ((D_800948F4_64DA4 >= 0x41U) && (D_800948F4_64DA4 < 0x3E8U)) {
+			func_80070C64_41114(0x46, 5, (s16)(D_800948F4_64DA4 - 0x3D));
+		}
+
+		if ((D_800948F4_64DA4 >= 0x4DU) && (timer == -1)) {
+			func_800710D8_41588(0x47, selection);
+			func_8007166C_41B1C();
+
+			if (menuWarmup < 0x10) {
+				menuWarmup++;
+			} else if (isButtonNewlyPressed(0, 0x9000)) {
+				selection = D_800D74A4 - 0x47;
+				osSyncPrintf(D_800AE468_7E918, D_800D74A4, 0x47, selection);
+
+				switch (selection) {
+				case 0:
+					osSyncPrintf(D_800AE49C_7E94C, D_8004794A);
+					timer = 0x10;
+					break;
+
+				case 1:
+					func_800708B8_40D68(0x49);
+					menuWarmup = 0;
+					func_800708B8_40D68(0x4A);
+					func_80070514_409C4(0x4D);
+					func_80070514_409C4(0x4B);
+					D_800D74A4 = 0x4B;
+					func_80070494_40944(0x48)->unk1C = 2;
+					func_800153D8_15FD8(0xC8);
+					break;
+
+				case 2:
+					func_800708B8_40D68(0x48);
+					menuWarmup = 0;
+					func_800708B8_40D68(0x4A);
+					func_80070514_409C4(0x4E);
+					func_80070514_409C4(0x4C);
+					func_80070494_40944(0x49)->unk1C = 2;
+					D_800D74A4 = 0x4C;
+					func_800153D8_15FD8(0xC8);
+					break;
+
+				case 3:
+					func_800708B8_40D68(0x4D);
+					menuWarmup = 0;
+					func_800708B8_40D68(0x4B);
+					func_80070514_409C4(0x49);
+					func_80070514_409C4(0x4A);
+					D_800D74A4 = 0x48;
+					func_80070494_40944(0x48)->unk1C = 1;
+					selection = 0;
+					func_800153D8_15FD8(0xC8);
+					break;
+
+				case 4:
+					func_800708B8_40D68(0x4E);
+					menuWarmup = 0;
+					func_800708B8_40D68(0x4C);
+					func_80070514_409C4(0x48);
+					func_80070514_409C4(0x4A);
+					D_800D74A4 = 0x49;
+					func_80070494_40944(0x49)->unk1C = 1;
+					selection = 0;
+					func_800153D8_15FD8(0xC8);
+					break;
+
+				default:
+					D_800D74A4 = D_800D74A6;
+					break;
+				}
+			}
+		}
+
+		if (D_800948F4_64DA4 >= 0x41U) {
+			func_800731A8_43658();
+		}
+
+		func_8000B044_BC44();
+
+		if (D_800948F4_64DA4 < 0x3E8U) {
+			D_800948F4_64DA4++;
+		}
+
+		if (timer == 0x10) {
+			func_800153D8_15FD8(0xC8);
+			func_800708B8_40D68(0x47);
+			func_800708B8_40D68(0x48);
+			func_800708B8_40D68(0x49);
+			func_800708B8_40D68(0x4A);
+		}
+
+		if ((timer != -1) && (timer > 0)) {
+			timer = (s16)(timer - 1);
+		}
+
+		if (renderSetupDone == 0) {
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xBA000E02;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xFCFFFFFF;
+			dl->words.w1 = 0xFFFCF279;
+			renderSetupDone = func_8000E53C_F13C();
+		}
+
+		func_8000505C_5C5C();
+	}
+
+	func_8000AFDC_BBDC();
+	D_80047948 = D_800D74AE;
+	osSyncPrintf(D_800AE4C8_7E978, D_80047948);
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007D2B0_4D760.s")
+#endif
 
 void func_8007D7E0_4DC90(void) {
 	func_8008F574_5FA24();
