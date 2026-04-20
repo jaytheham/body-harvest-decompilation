@@ -938,7 +938,131 @@ void func_80085EA8_56358(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80086528_569D8.s")
 
+#ifdef NON_MATCHING
+// CURRENT(13583)
+s16 func_80086C58_57108(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 arg5) {
+	s16 ret;
+	s16 linkIdx;
+	s16 strength;
+	Unk800DE840 *entry;
+	Unk800DE840 *parent;
+	u8 *entryBytes;
+	u8 *parentBytes;
+	u8 *linkBytes;
+	u8 localColors[12];
+
+	strength = arg3;
+	ret = func_80083C98_54148(0x95);
+	if (ret != -3) {
+		entry = &D_800DE840[ret];
+		parent = &D_800DE840[entry->unk4];
+		entry->unk2 = strength;
+		linkIdx = parent->unk4;
+
+		if ((u8 *)arg4 == NULL) {
+			func_8008EDB4_5F264(localColors, entry, strength);
+			entryBytes = (u8 *)entry + 8;
+			parentBytes = (u8 *)parent + 8;
+			entryBytes[6] = localColors[0];
+			entryBytes[7] = localColors[1];
+			entryBytes[8] = localColors[2];
+			entryBytes[9] = localColors[3];
+			entryBytes[10] = localColors[4];
+			entryBytes[11] = localColors[5];
+			parentBytes[0] = localColors[6];
+			parentBytes[1] = localColors[7];
+			parentBytes[2] = localColors[8];
+			parentBytes[3] = localColors[9];
+			parentBytes[4] = localColors[10];
+			parentBytes[5] = localColors[11];
+		} else {
+			u8 *arg4Bytes;
+
+			arg4Bytes = (u8 *)arg4;
+			entryBytes = (u8 *)entry + 8;
+			parentBytes = (u8 *)parent + 8;
+			entryBytes[6] = arg4Bytes[0];
+			entryBytes[7] = arg4Bytes[1];
+			entryBytes[8] = arg4Bytes[2];
+			entryBytes[9] = arg4Bytes[3];
+			entryBytes[10] = arg4Bytes[4];
+			entryBytes[11] = arg4Bytes[5];
+			parentBytes[0] = arg4Bytes[6];
+			parentBytes[1] = arg4Bytes[7];
+			parentBytes[2] = arg4Bytes[8];
+			parentBytes[3] = arg4Bytes[9];
+			parentBytes[4] = arg4Bytes[10];
+			parentBytes[5] = arg4Bytes[11];
+		}
+
+		entryBytes = (u8 *)entry + 8;
+		parentBytes = (u8 *)parent + 8;
+		entry->unk8 = arg0;
+		entry->unkA = arg1;
+		entry->unkC = arg2;
+		entryBytes[0xC] = 0;
+		entryBytes[6] = (s8)(func_800038E0_44E0() % 16);
+		entryBytes[7] = 0;
+		entryBytes[8] = (s8)(func_800038E0_44E0() % 256);
+		entryBytes[9] = 0xFF;
+		entryBytes[10] = 0xFF;
+		if (strength < 0x4B) {
+			entryBytes[11] = 3;
+		} else if (strength < 0x96) {
+			entryBytes[11] = 2;
+		} else {
+			entryBytes[11] = 1;
+		}
+
+		linkBytes = (u8 *)&D_800DE840[linkIdx] + 8;
+		*((s16 *)linkBytes + 0) = 0;
+		if ((func_800038E0_44E0() % 3) == 1) {
+			linkBytes[2] = (s8)(func_800038E0_44E0() % 40);
+		} else {
+			linkBytes[2] = 0;
+		}
+		if ((func_800038E0_44E0() % 3) == 1) {
+			linkBytes[3] = (s8)(func_800038E0_44E0() % 40);
+		} else {
+			linkBytes[3] = 0;
+		}
+		if ((func_800038E0_44E0() % 3) == 1) {
+			linkBytes[4] = (s8)(func_800038E0_44E0() % 40);
+		} else {
+			linkBytes[4] = 0;
+		}
+		if ((func_800038E0_44E0() % 2) == 1) {
+			linkBytes[5] = (s8)(func_800038E0_44E0() % 7);
+		} else {
+			linkBytes[5] = 0;
+		}
+		if ((func_800038E0_44E0() % 2) == 1) {
+			linkBytes[6] = (s8)(func_800038E0_44E0() % 7);
+		} else {
+			linkBytes[6] = 0;
+		}
+		if ((func_800038E0_44E0() % 2) == 1) {
+			linkBytes[7] = (s8)(func_800038E0_44E0() % 7);
+		} else {
+			linkBytes[7] = 0;
+		}
+		linkBytes[8] = (u8)arg5;
+		if ((u8)arg5 == 1) {
+			linkBytes[2] = 0;
+			linkBytes[3] = 0;
+			linkBytes[4] = 0;
+			linkBytes[5] = 0x14;
+			linkBytes[6] = 0;
+			linkBytes[7] = 0;
+			parentBytes[8] = 0;
+		}
+	}
+
+	return ret;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80086C58_57108.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800870AC_5755C.s")
 
