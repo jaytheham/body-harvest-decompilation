@@ -671,6 +671,7 @@ extern FrontendItemRenderData D_800942E0_64790[];
 extern s16 D_800946DC_64B8C;
 extern s32 D_80094848_64CF8;
 extern s32 D_8009484C_64CFC;
+extern s32 D_80094850_64D00;
 extern u32 D_800948F0_64DA0;
 extern u8 D_80094944_64DF4;
 extern s32 D_80094900;

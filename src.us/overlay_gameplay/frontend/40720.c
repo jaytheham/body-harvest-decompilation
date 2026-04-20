@@ -851,7 +851,65 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072B68_43018.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
+	Unk80052B40 spC4;
+	Unk80052B40 spBC;
+	Unk80052B40 spB4;
+	FrontendItemRenderData* itemEntry;
+	Gfx* displayList;
+	s32 scaleInt;
+	s32 itemCount;
+	s16 i;
+	u32 xOffset;
+	u32 yOffset;
+	f32 itemScale;
+
+	func_800722A4_42754();
+	D_80094850_64D00 += 0x2D8;
+
+	itemCount = 0;
+	for (i = 0; i < 0xD; i++) {
+		itemEntry = &D_800942E0_64790[((currentLevel * 13) + i) - 13];
+		displayList = itemEntry->displayList;
+		if ((D_800AED78[i] != 0) && (displayList != NULL)) {
+			xOffset = ((((itemCount % 3) * 0x5A) - 0x5A) & 0xFFFF);
+			yOffset = ((((itemCount / 3) * -0x50) + 0x50) & 0xFFFF);
+			itemScale = itemEntry->scale * arg3;
+			itemCount++;
+
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+			gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+
+			func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
+			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+			D_8005BB38 += 0x40;
+
+			spC4.unk0 = (s16) (s32) ((f32) arg0 + ((f32) xOffset * arg3));
+			spC4.unk2 = (s16) (s32) ((f32) arg1 + ((f32) yOffset * arg3));
+			spC4.unk4 = arg2;
+
+			spB4.unk0 = D_80094850_64D00;
+			spB4.unk2 = 0;
+			spB4.unk4 = 0;
+
+			scaleInt = (s32) (256.0f * itemScale);
+			spBC.unk0 = scaleInt;
+			spBC.unk2 = scaleInt;
+			spBC.unk4 = scaleInt;
+
+			func_800039D0_45D0(&spC4, &spB4, &spBC, D_8005BB38);
+			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			D_8005BB38 += 0x40;
+			gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)displayList & 0x1FFFFFFF));
+			gDPPipeSync(D_8005BB2C++);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072E18_432C8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800731A8_43658.s")
 
