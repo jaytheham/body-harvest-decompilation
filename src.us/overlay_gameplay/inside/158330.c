@@ -382,7 +382,19 @@ void func_800773F4_15F4B4(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800773F4_15F4B4.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800774E0_15F5A0.s")
+void func_800774E0_15F5A0(s32 arg0, f32 *arg1, f32 *arg2) {
+	s32 objIndex;
+
+	objIndex = D_800E66A8[arg0].unk0;
+	if ((D_800E66A8[arg0].unk8 == 0) || (D_800E66A8[arg0].unk8 == 2)) {
+		*arg1 = D_800E65BC[objIndex].unk18;
+		*arg2 = D_800E65BC[objIndex].unk1A;
+		return;
+	}
+
+	*arg1 = D_800E65BC[objIndex].unk1A;
+	*arg2 = D_800E65BC[objIndex].unk18;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800775F0_15F6B0.s")
 

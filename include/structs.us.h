@@ -1387,7 +1387,10 @@ typedef struct {
 } Unk9C804; /* stride 0x38 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x44];
+	/* 0x00 */ u8 pad0[0x18];
+	/* 0x18 */ u16 unk18;
+	/* 0x1A */ u16 unk1A;
+	/* 0x1C */ u8 pad1C[0x28];
 	/* 0x44 */ s32 unk44;
 } Unk800E65BC; /* stride 0x48 */
 
