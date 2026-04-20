@@ -354,7 +354,33 @@ void func_80074D18_15CDD8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80077010_15F0D0.s")
 
+#ifdef NON_MATCHING
+// CURRENT(30)
+void func_800773F4_15F4B4(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6, s32 arg7, s32 arg8, s16 arg9) {
+	u16 sp38[3];
+	s16 sp30[3];
+	s32 sp24[3];
+
+	sp24[0] = arg1;
+	sp24[1] = arg2;
+	sp24[2] = arg3;
+	sp38[0] = arg5;
+	sp38[1] = arg6;
+	sp38[2] = arg4;
+	sp30[0] = arg9;
+	sp30[1] = arg9;
+	sp30[2] = arg9;
+	func_80076C08_15ECC8(sp24, sp38, sp30, arg7);
+
+	gSPMatrix(D_8005BB2C++, (Mtx *)(arg7 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	gSPDisplayList(D_8005BB2C++, arg0);
+	if (arg8 != 0) {
+		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800773F4_15F4B4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800774E0_15F5A0.s")
 
