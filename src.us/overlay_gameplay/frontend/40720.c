@@ -4991,7 +4991,235 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007D91C_4DDCC.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007E12C_4E5DC.s")
+typedef struct {
+	/* 0x00 */ u32 unk0;
+	/* 0x04 */ u8 unk4;
+	/* 0x05 */ u8 unk5;
+	/* 0x06 */ u8 pad6[2];
+} Unk8007E12CEntry8;
+
+void func_8007EE0C_4F2BC(s32* arg0);
+void func_8007EE8C_4F33C(s32** arg0);
+void func_8007FB90_50040();
+void func_8007FBC8_50078(u8 arg0);
+void func_80080530_509E0(Unk80080530_Src* arg0);
+void func_8008098C_50E3C(void);
+FrontendStreamSlot* func_800809DC_50E8C(s32 arg0);
+void func_80080A84_50F34(FrontendStreamSlot* arg0);
+void func_80080F8C_5143C(AnimChannelState* arg0, s16* arg1, s32 arg2);
+void func_8008FE98_60348(u8 arg0);
+
+s32 func_8007E12C_4E5DC(void) {
+	Unk8007E12CEntry8* entry;
+	Unk80080530_Dst* dst;
+	Unk8007E12CEntry8* argEntry;
+	u8 op;
+	u8 arg;
+	u8 i;
+	s32 returnValue;
+
+	returnValue = 0;
+	entry = &((Unk8007E12CEntry8*)D_800D7A54)[D_800D7A5C];
+	if (D_80094900 != entry->unk0) {
+		return returnValue;
+	}
+
+	while (1) {
+		op = entry->unk4;
+		if (op >= 0x23) {
+			osSyncPrintf(&D_800AE8E0_7ED90);
+		} else {
+			arg = entry->unk5;
+			switch (op) {
+			case 0:
+				argEntry = &((Unk8007E12CEntry8*)D_800D7A20)[arg];
+				dst = &D_800D7A1C[argEntry->unk4];
+				dst->unk8 = func_800809DC_50E8C(*(s32*)argEntry->unk0);
+				dst->unk29 = argEntry->unk5;
+				func_8008035C_5080C(dst->unk8, &D_800D7B10[dst->unk18], (u32*)argEntry->unk0, 1, dst->unk19);
+				break;
+			case 1:
+				D_80094930_64DE0 = 1;
+				func_8007EE8C_4F33C(((s32**)D_800D7A2C)[arg]);
+				break;
+			case 2:
+				if ((arg == 1) || (arg == 2)) {
+					func_8007FBC8_50078(arg);
+					arg = ((Unk8007E12CEntry8*)D_800D7A54)[D_800D7A5C].unk5;
+				}
+				D_800D7970 = arg;
+				break;
+			case 3:
+				D_80094904_64DB4 = arg;
+				break;
+			case 4:
+				if ((D_800313D0_31FD0 == 2) && (arg == 0x13)) {
+					break;
+				}
+				dst = &D_800D7A1C[arg];
+				dst->unk28 = 0xFF;
+				dst->unk29 = 0xFF;
+				dst->unk2A = 0xFF;
+				dst->unk1C = 1;
+				func_80080F8C_5143C((AnimChannelState*)&D_800D7B10[D_800D7A84], (s16*)dst->unk4, dst->unk19);
+				func_80080A84_50F34((FrontendStreamSlot*)dst->unk8);
+				dst->unk18 = D_800D7A84;
+				D_800D7A84 += dst->unk19;
+				break;
+			case 5:
+				if ((D_800313D0_31FD0 == 2) && (arg == 0x13)) {
+					break;
+				}
+				dst = &D_800D7A1C[arg];
+				func_80080A84_50F34((FrontendStreamSlot*)dst->unk8);
+				dst->unk1C = 0;
+				break;
+			case 6:
+				D_800D8510 = 1.0f;
+				D_80094900 = 0;
+				D_80094930_64DE0 = 0;
+				func_8008098C_50E3C();
+				D_800DE068 = (s32)&D_800D88E8;
+				D_800D7A84 = 0;
+				for (i = 0; i < D_800D7A58; i++) {
+					D_800D7A1C[i].unk1C = 0;
+				}
+				D_800D7970 = 0;
+				for (i = 0; i < D_800D7A8D; i++) {
+					D_800D7A34[i].unk18 = 0;
+				}
+				D_800D7974 = D_800AEA38_7EEE8;
+				D_800AC0E4_7C594 = 0.0f;
+				break;
+			case 7:
+				D_80094998_64E48 = 1;
+				returnValue = 1;
+				break;
+			case 8:
+				D_80094930_64DE0 = 0;
+				func_8007EE0C_4F2BC((s32*)(D_800D7A30 + (arg * 0x20)));
+				break;
+			case 9:
+				D_800D7A86 = D_800D7A38[arg];
+				((u8*)&D_800D8530)[0x14] = D_800D7A38[arg].unk0;
+				((u8*)&D_800D8530)[0x15] = D_800D7A38[arg].unk1;
+				((u8*)&D_800D8530)[0x16] = D_800D7A38[arg].unk2;
+				break;
+			case 10:
+				D_800D7A34[arg].unk18 = 1;
+				break;
+			case 11:
+				D_800D7A34[arg].unk18 = 0;
+				break;
+			case 12:
+				argEntry = (Unk8007E12CEntry8*)(((s32**)D_800D7A3C)[arg]);
+				if (((u8*)argEntry)[8] == 0xFF) {
+					func_8007FB90_50040(&D_800D8530);
+				} else {
+					func_8007FB90_50040(&D_800D7A34[((u8*)argEntry)[8]]);
+				}
+				break;
+			case 13:
+				func_8008F574_5FA24();
+				D_800D7A60++;
+				D_800D7A54 = ((s32*)D_800D7A50)[D_800D7A60];
+				D_800D7A5C = 0;
+				D_80094900 = 0;
+				break;
+			case 14:
+				func_80080530_509E0((Unk80080530_Src*)(D_800D7A24 + (arg * 14)));
+				break;
+			case 15:
+				for (i = 0; i < D_800D7A8D; i++) {
+					D_800D7A34[i].unk18 = 0;
+				}
+				break;
+			case 16:
+				D_800D7B08 = D_800D7A38[arg];
+				D_800D7B0C = D_800D7B08;
+				break;
+			case 17:
+				D_80094908_64DB8 = arg;
+				break;
+			case 18:
+				argEntry = &((Unk8007E12CEntry8*)D_800D7A40)[arg];
+				dst = &D_800D7A1C[argEntry->unk4];
+				dst->unk28 = arg;
+				break;
+			case 19:
+				dst = &D_800D7A1C[arg];
+				dst->unk28 = 0x15;
+				break;
+			case 20:
+				D_800D8510 = arg;
+				break;
+			case 21:
+				argEntry = &((Unk8007E12CEntry8*)D_800D7A44)[arg];
+				dst = &D_800D7A1C[argEntry->unk4];
+				dst->unk2A = arg;
+				break;
+			case 22:
+				D_800D7974 = ((f32*)D_800D7A48)[arg];
+				break;
+			case 23:
+				func_8008FE98_60348(arg);
+				break;
+			case 24:
+				D_800D7B0C = D_800D7A38[arg];
+				break;
+			case 25:
+				D_8009490C_64DBC = arg;
+				break;
+			case 26:
+				D_800AC0E4_7C594 = D_800AEA3C_7EEEC;
+				break;
+			case 27:
+				D_800949BC_64E6C = 1;
+				break;
+			case 28:
+				argEntry = &((Unk8007E12CEntry8*)D_800D7A4C)[arg];
+				if (argEntry->unk4 == 6) {
+					D_800D8518 = argEntry->unk0;
+					D_800D851C = argEntry->unk4;
+				} else {
+					D_800D8524 = argEntry->unk4;
+					D_800D8520 = argEntry->unk0;
+				}
+				break;
+			case 29:
+				D_80094948_64DF8 = 1;
+				break;
+			case 30:
+				D_80094948_64DF8 = 0;
+				break;
+			case 31:
+				D_800D8528 = arg;
+				break;
+			case 32:
+				D_8009494C_64DFC = arg;
+				D_80094950_64E00 = 0.0f;
+				break;
+			default:
+				break;
+			}
+		}
+
+		if ((returnValue == 0) && (op != 0xE)) {
+			D_800D7A5C++;
+		}
+
+		if (returnValue != 0) {
+			break;
+		}
+
+		entry = &((Unk8007E12CEntry8*)D_800D7A54)[D_800D7A5C];
+		if (D_80094900 != entry->unk0) {
+			break;
+		}
+	}
+
+	return returnValue;
+}
 
 void func_8007EBB0_4F060(void);
 
