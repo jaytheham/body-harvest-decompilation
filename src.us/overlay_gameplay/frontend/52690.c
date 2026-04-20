@@ -259,7 +259,277 @@ void func_800829E4_52E94(s32 arg0) {
 #endif
 
 // transitionToNextLevel
+#ifdef NON_MATCHING
+// CURRENT(14240)
+s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	Unk80052B40 sp12C;
+	u16 sp132;
+	s16 sp128;
+	Unk80052B40 sp124;
+	Unk80052B40 sp11C;
+	Unk80052B40 sp114;
+	Unk80052B40 sp10C;
+	Unk80052B40 sp104;
+	s32 sp100;
+	s32 spFC;
+	s32 spD8;
+	s32 spD0;
+	s32 spB8;
+	s32 sp88;
+	s32 sp80;
+	s32 sp74;
+	s32 sp70;
+	s16 varV0_3;
+	s32 tempA3;
+	s32 tempS0;
+	s32 tempS1;
+	s32 tempS6;
+	s32 tempT5;
+	s32 varFp;
+	s32 varS0;
+	s32 varS1;
+	s32 varS4;
+	s32 varV0;
+	s32 varV0_2;
+	s32 varV0_4;
+	Frontend52690Entry *tempV0;
+	Gfx *tempV1;
+
+	(void)arg1;
+	sp12C = D_80094A84_64F34;
+	sp124 = D_80094A8C_64F3C;
+	sp11C = D_80094A94_64F44;
+	sp114 = D_80094A9C_64F4C;
+	sp10C = D_80094AA4_64F54;
+	varS4 = 0;
+	varFp = 0;
+	sp104 = D_80094AAC_64F5C;
+	spD8 = 0;
+	tempV0 = ((Frontend52690Entry *)D_80094A1C_64ECC) + arg0;
+	spD0 = 0;
+	spFC = tempV0->unk4 + 1;
+	D_80052ACA = 4;
+	sp100 = tempV0->unk0;
+
+	func_8001363C_1423C();
+	func_8000AFDC_BBDC();
+	func_800823C0_52870();
+
+	tempT5 = (spFC + sp100 + 1) / 2;
+	tempS6 = ((tempT5 - sp100) * 0xA) + 0x10;
+	sp80 = ((spFC - sp100) * 0xA) + 0xA;
+	sp74 = tempS6 - 0x10;
+	sp88 = tempT5;
+
+	do {
+		tempS0 = tempS6 - varS4;
+		sp70 = tempS0 * 4;
+		tempS1 = -tempS0;
+
+		osRecvMesg(&D_8006A8D0, &D_80068038, 1);
+		func_80011E14_12A14(0);
+		func_80004CC8_58C8();
+		func_80004D38_5938();
+		func_800821E0_52690(0xFF, 0, 0);
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0xB900031D;
+		tempV1->words.w1 = 0x005041C8;
+
+		sp104.unk0 = varFp * 0x190;
+		sp104.unk2 = varFp * 0x64;
+		sp104.unk4 = varFp * 0xC8;
+
+		if (tempS6 < varS4) {
+			sp12C.unk2 = -0xA0;
+			sp11C.unk0 = 0;
+		}
+
+		if (tempS6 >= varS4) {
+			sp124.unk2 = (varS4 * 0x10) - 0x96;
+		} else {
+			sp124.unk2 = ((varS4 - tempS6) * 0x10) - 0x12C;
+		}
+
+		guPerspective((Mtx *)D_8005BB3C, &sp132, 55.0f, 1.3333334f, 50.0f, D_800AEC3C_7F0EC, 1.0f);
+		guLookAt((Mtx *)D_8005BB38, 0.0f, 0.0f, 0.0f, (f32)sp10C.unk0, (f32)sp10C.unk2, (f32)sp10C.unk4,
+				 0.0f, 1.0f, 0.0f);
+		spB8 = D_8005BB38;
+		func_800039D0_45D0(NULL, &sp114, NULL, D_8005BB38);
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0xBC00000E;
+		tempV1->words.w1 = sp132;
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0x01030040;
+		tempV1->words.w1 = D_8005BB3C & 0x1FFFFFFF;
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0x01020040;
+		tempV1->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+		D_8005BB38 += 0x40;
+		func_80082868_52D18(varFp & 0xF);
+		func_800823D8_52888(varS4, arg0);
+
+		sp10C.unk4 = sp70;
+		if (tempS1 < tempS0) {
+			varV0 = tempS0;
+		} else {
+			varV0 = tempS1;
+		}
+
+		if (varV0 < 0x64) {
+			sp10C.unk0 = -0xFA - ((coss((u16)((tempS0 << 0x10) / 0xC8)) * 0x1F4) / 0xFFFF);
+		}
+
+		func_800823C8_52878((s32)&sp10C, (s32)&sp104, varFp);
+		guPerspective((Mtx *)D_8005BB38, &sp132, 55.0f, 1.3333334f, 1.0f, 2000.0f, 1.0f);
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0xBC00000E;
+		tempV1->words.w1 = sp132;
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0x01030040;
+		tempV1->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0x01010040;
+		tempV1->words.w1 = spB8 & 0x1FFFFFFF;
+
+		func_800039D0_45D0(&sp124, &sp11C, NULL, D_8005BB38);
+
+		tempV1 = D_8005BB2C;
+		D_8005BB2C = tempV1 + 1;
+		tempV1->words.w0 = 0x01020040;
+		tempV1->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+		tempA3 = D_8005BB38 + 0x40;
+		D_8005BB38 = tempA3;
+		func_800039D0_45D0(&sp12C, NULL, NULL, tempA3);
+
+		varV0_2 = sp88;
+		if (varS4 < tempS6) {
+			varV0_2 = sp100;
+			varS1 = sp88;
+		} else {
+			varS1 = spFC;
+		}
+
+		varS0 = varV0_2;
+		while (varS0 < varS1) {
+			func_800829E4_52E94(varS0);
+			tempV1 = D_8005BB2C;
+			varS0++;
+			D_8005BB2C = tempV1 + 1;
+			tempV1->words.w0 = 0x01000040;
+			tempV1->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+		}
+
+		D_8005BB38 += 0x40;
+		func_8000345C_405C(0xD000);
+
+		if (spD0 != 0) {
+			spD8++;
+			func_8000AFDC_BBDC();
+			varV0_3 = D_800313D0_31FD0;
+
+			switch (varV0_3) {
+				case 0:
+					drawText(D_800AEB2C_7EFDC, 0x50, 0, 0);
+					drawText(D_800AEB30_7EFE0, 0x80, 2);
+					drawText(D_800AEB50_7F000, 0x80, 3);
+					drawText(D_800AEB68_7F018, 0x80, 4);
+					varV0_3 = D_800313D0_31FD0;
+					break;
+				case 1:
+					drawText(D_800AEB80_7F030, 0x50, 0, 0);
+					drawText(D_800AEB84_7F034, 0x80, 2);
+					drawText(D_800AEBA4_7F054, 0x80, 3);
+					drawText(D_800AEBC4_7F074, 0x80, 4);
+					varV0_3 = D_800313D0_31FD0;
+					break;
+				case 2:
+					drawText(D_800AEBDC_7F08C, 0x50, 0, 0);
+					drawText(D_800AEBE0_7F090, 0x80, 2);
+					drawText(D_800AEBF8_7F0A8, 0x80, 3);
+					drawText(D_800AEC14_7F0C4, 0x80, 4);
+					varV0_3 = D_800313D0_31FD0;
+					break;
+			}
+
+			switch (varV0_3) {
+				case 0:
+					drawText(D_800AEC24_7F0D4, 0x80, 6, D_800949D8_64E88[currentLevel]);
+					break;
+				case 1:
+					drawText(D_800AEC2C_7F0DC, 0x80, 6, D_800949EC_64E9C[currentLevel]);
+					break;
+				case 2:
+					drawText(D_800AEC34_7F0E4, 0x80, 6, D_80094A00_64EB0[currentLevel]);
+					break;
+			}
+
+			if (isButtonNewlyPressed(CONTROLLER_ONE, 0xD000) != 0) {
+				spD8 = 0;
+				spD0 = 0;
+				varS4++;
+			}
+
+			tempV1 = D_8005BB2C;
+			D_8005BB2C = tempV1 + 1;
+			tempV1->words.w0 = 0x03800010;
+			tempV1->words.w1 = D_8005BB24 + 0x80000000;
+			func_8000B044_BC44();
+		} else if ((varS4 == tempS6) && !(currentControllerStates[0].button & 0x9000)) {
+			spD0 = 1;
+		} else if (isButtonNewlyPressed(CONTROLLER_ONE, 0x9000) != 0) {
+			if (varS4 < tempS6) {
+				varFp = (varFp + tempS6) - varS4;
+				varS4 = tempS6;
+			} else {
+				func_80005AEC_66EC(0xFF, 0xFF, 0xFF, 0x20);
+			}
+		} else {
+			varS4++;
+		}
+
+		varFp++;
+		if (varS4 < sp74) {
+			varV0_4 = 0;
+		} else if ((tempS6 + 0x10) < varS4) {
+			varV0_4 = 0x20;
+		} else {
+			varV0_4 = (varS4 - tempS6) + 0x10;
+		}
+
+		sp114.unk0 = (varV0_4 << 0xA) + 0x8000;
+		if ((sp80 < varS4) || (varS4 == 0)) {
+			func_80005AEC_66EC(0xFF, 0xFF, 0xFF, 0x20);
+		}
+
+		func_80005B84_6784();
+		func_8000505C_5C5C();
+	} while (func_80005B30_6730() == 0);
+
+	D_80052ACA = 3;
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80082CBC_5316C.s")
+#endif
 
 /* 3x3 matrix-vector multiply: out = mat^T * vec */
 void func_80083610_53AC0(f32 *mat, f32 *vec, f32 *out) {
