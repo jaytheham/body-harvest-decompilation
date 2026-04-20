@@ -118,6 +118,7 @@ void func_80001108_1D08(void);
 void func_80003064_3C64(void);
 void func_80012A74_13674(void);
 void func_80004C34_5834(void);
+void func_80013514_14114(void);
 void func_80013818_14418(void);
 void func_80001984_2584(void);
 s32 func_802D64D0_18EFE0(void);

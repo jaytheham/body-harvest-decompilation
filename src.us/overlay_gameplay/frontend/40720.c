@@ -3360,7 +3360,171 @@ void func_8007BEC0_4C370(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BEC0_4C370.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(9857)
+void func_8007BFC4_4C474(void) {
+	s16 lineOffsets[100];
+	u8 textBuffer[58];
+	s16 holdCounter;
+	s16 startIndex;
+	s16 lineCount;
+	s16 i;
+	s32 line;
+	s32 row;
+	u16 fadeCounter;
+	u8* lineText;
+	u8 ch;
+
+	fadeCounter = 0x4F;
+	holdCounter = 0;
+	startIndex = 4;
+	lineOffsets[0] = 0;
+	lineCount = 1;
+
+	switch (D_800313D0) {
+	case 0:
+	default:
+		for (i = 0; (u16)i < 0x400; i++) {
+			ch = D_800933A0_63850[i];
+			if ((ch == 0x40) || (ch == 0x3B)) {
+				if (ch == 0x40) {
+					lineOffsets[lineCount] = i;
+					lineCount++;
+				}
+				lineOffsets[lineCount] = i + 1;
+				lineCount++;
+			}
+		}
+		break;
+	case 1:
+		for (i = 0; (u16)i < 0x400; i++) {
+			ch = D_800938A0_63D50[i];
+			if ((ch == 0x40) || (ch == 0x3B)) {
+				if (ch == 0x40) {
+					lineOffsets[lineCount] = i;
+					lineCount++;
+				}
+				lineOffsets[lineCount] = i + 1;
+				lineCount++;
+			}
+		}
+		break;
+	case 2:
+		for (i = 0; (u16)i < 0x400; i++) {
+			ch = D_80093DA0_64250[i];
+			if ((ch == 0x40) || (ch == 0x3B)) {
+				if (ch == 0x40) {
+					lineOffsets[lineCount] = i;
+					lineCount++;
+				}
+				lineOffsets[lineCount] = i + 1;
+				lineCount++;
+			}
+		}
+		break;
+	}
+
+	func_80013514_14114();
+
+	while (1) {
+		s16 currentLine;
+
+		func_800791A0_49650(0);
+		func_8000AFDC_BBDC();
+
+		if (startIndex >= 0x23) {
+			holdCounter++;
+		}
+
+		currentLine = startIndex;
+		if ((fadeCounter == 0) && (startIndex < 0x59)) {
+			startIndex++;
+			fadeCounter = 0x4F;
+			drawText(&D_800AE04C_7E4FC, 0x4F);
+			line = 0xC - startIndex;
+		} else {
+			line = 0xC - startIndex;
+			if (startIndex < 0x59) {
+				drawText(&D_800AE050_7E500, fadeCounter);
+			}
+		}
+
+		while (currentLine > 0) {
+			s16 textIndex;
+			s16 textPos;
+
+			if (currentLine < 3) {
+				drawText(&D_800AE054_7E504, 0xB4, 0xD7, 0xFE);
+			} else {
+				drawText(&D_800AE058_7E508, 0xEB, 0xE1, 0xFE);
+			}
+
+			drawText(&D_800AE05C_7E50C, 0xFF);
+			row = line + currentLine;
+			if (row == 8) {
+				drawText(&D_800AE060_7E510, 0xFF - (fadeCounter * 3));
+			}
+			if (row == 0) {
+				drawText(&D_800AE064_7E514, fadeCounter * 3);
+			}
+
+			row = line + currentLine;
+			if (row < 9) {
+				switch (D_800313D0) {
+				case 0:
+				default:
+					lineText = &D_800933A0_63850[lineOffsets[currentLine - 1]];
+					break;
+				case 1:
+					lineText = &D_800938A0_63D50[lineOffsets[currentLine - 1]];
+					break;
+				case 2:
+					lineText = &D_80093DA0_64250[lineOffsets[currentLine - 1]];
+					break;
+				}
+
+				ch = *lineText;
+				if (ch == 0x40) {
+					textBuffer[0] = 0;
+				} else {
+					textPos = 0;
+					while ((ch != 0x40) && (ch != 0x3B)) {
+						textBuffer[textPos] = ch;
+						textPos++;
+						lineText++;
+						ch = *lineText;
+					}
+					textBuffer[textPos] = 0;
+				}
+
+				drawText(&D_800AE068_7E518, 0x80, row, textBuffer);
+			}
+
+			textIndex = currentLine - 1;
+			currentLine = textIndex;
+			if ((textIndex <= 0) || ((startIndex - 0xD) >= textIndex)) {
+				break;
+			}
+		}
+
+		func_8000B044_BC44();
+		if ((holdCounter == 0x12C) || (isButtonNewlyPressed(0, BUTTON_A | BUTTON_START) != 0)) {
+			func_80005AEC_66EC(0, 0, 0, 0x40);
+		}
+
+		fadeCounter = (fadeCounter - 1) & 0xFFFF;
+		func_80005B84_6784();
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+		func_8000505C_5C5C();
+		if (func_80005B30_6730() != 0) {
+			break;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BFC4_4C474.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(3430)
