@@ -2218,7 +2218,63 @@ void func_8008F574_5FA24(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008F574_5FA24.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008F704_5FBB4.s")
+void func_8008F704_5FBB4(u8 arg0) {
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	gDPPipeSync(D_8005BB2C++);
+
+	D_8005BB34->v.ob[0] = (s16) (s32) D_800AA848[arg0][0];
+	D_8005BB34->v.ob[1] = (s16) (s32) D_800AA848[arg0][1];
+	D_8005BB34->v.ob[2] = (s16) (s32) D_800AA848[arg0][2];
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = D_800AA7D8[arg0][0];
+	D_8005BB34->v.cn[1] = D_800AA7D8[arg0][1];
+	D_8005BB34->v.cn[2] = D_800AA7D8[arg0][2];
+	D_8005BB34->v.cn[3] = D_800AA7D8[arg0][3];
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16) (s32) D_800AA848[arg0][3];
+	D_8005BB34->v.ob[1] = (s16) (s32) D_800AA848[arg0][4];
+	D_8005BB34->v.ob[2] = (s16) (s32) D_800AA848[arg0][5];
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = D_800AA7D8[arg0][4];
+	D_8005BB34->v.cn[1] = D_800AA7D8[arg0][5];
+	D_8005BB34->v.cn[2] = D_800AA7D8[arg0][6];
+	D_8005BB34->v.cn[3] = D_800AA7D8[arg0][7];
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16) (s32) D_800AA848[arg0][6];
+	D_8005BB34->v.ob[1] = (s16) (s32) D_800AA848[arg0][7];
+	D_8005BB34->v.ob[2] = (s16) (s32) D_800AA848[arg0][8];
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = D_800AA7D8[arg0][8];
+	D_8005BB34->v.cn[1] = D_800AA7D8[arg0][9];
+	D_8005BB34->v.cn[2] = D_800AA7D8[arg0][10];
+	D_8005BB34->v.cn[3] = D_800AA7D8[arg0][11];
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16) (s32) D_800AA848[arg0][9];
+	D_8005BB34->v.ob[1] = (s16) (s32) D_800AA848[arg0][10];
+	D_8005BB34->v.ob[2] = (s16) (s32) D_800AA848[arg0][11];
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = D_800AA7D8[arg0][12];
+	D_8005BB34->v.cn[1] = D_800AA7D8[arg0][13];
+	D_8005BB34->v.cn[2] = D_800AA7D8[arg0][14];
+	D_8005BB34->v.cn[3] = D_800AA7D8[arg0][15];
+
+	D_8005BB34++;
+	gSPVertex(D_8005BB2C++, (Vtx *)(((u32) (D_8005BB34 - 4)) & 0x1FFFFFFF), 4, 0);
+	gSP1Quadrangle(D_8005BB2C++, 0, 1, 2, 3, 0);
+	gDPPipeSync(D_8005BB2C++);
+}
 
 /* Calls func_8008F704 for each active slot in D_800DE0BE/BF */
 void func_8008FA60_5FF10(void) {
