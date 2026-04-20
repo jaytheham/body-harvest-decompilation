@@ -554,7 +554,141 @@ void func_80070CC4_41174(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070CC4_41174.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800710D8_41588(s16 arg0, s16 arg1) {
+	s16 selectedMissionBefore;
+	s16 i;
+
+	D_800D74A8 = (D_800D74A4 - arg0) - 1;
+	selectedMissionBefore = D_800D74A4;
+
+	if (D_8004758A < 0x15 && D_8004758A >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
+		D_80094834_64CE4 = 1;
+		D_8009483C_64CEC = 0x1E;
+	}
+
+	if (D_8004758B < 0x15 && D_8004758B >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
+		D_80094838_64CE8 = 1;
+		D_80094840_64CF0 = 0x1E;
+	}
+
+	if (D_80094834_64CE4 || --D_8009483C_64CEC == 0) {
+		if (D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) {
+			if (arg1 == 1) {
+				i = 8;
+				do {
+					if (D_800D74AE < 8) {
+						D_800D74AE += 1;
+					} else {
+						D_800D74AE = 0;
+					}
+					i--;
+				} while (weaponSlots[D_800D74AE] == 0 && i >= 0);
+
+				func_80070494_40944(0x4D)->unk28 = 0x64;
+				func_800153D8_15FD8(0xCB);
+			} else if (arg1 == 2) {
+				i = 0xD;
+				do {
+					if (D_800D74AC > 0) {
+						D_800D74AC -= 1;
+					} else {
+						D_800D74AC = 0xD;
+					}
+					i--;
+				} while ((D_800AED78[D_800D74AC] == 0 || D_800942E0_64790[((currentLevel * 13) + D_800D74AC) - 13].displayList == NULL) && i >= 0);
+
+				if (D_800D74AC != 0) {
+					func_80070494_40944(0x4E)->unk28 = 0x64;
+					func_800153D8_15FD8(0xCB);
+				}
+			} else {
+				func_800153D8_15FD8(0xC9);
+				D_800D74A4 = 0x48;
+			}
+
+			D_80094834_64CE4 = 0;
+			if (D_8009483C_64CEC < 8) {
+				D_8009483C_64CEC = 8;
+			}
+		}
+
+		if (D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
+			if (arg1 == 1) {
+				i = 8;
+				do {
+					if (D_800D74AE > 0) {
+						D_800D74AE -= 1;
+					} else {
+						D_800D74AE = 7;
+					}
+					i--;
+				} while (weaponSlots[D_800D74AE] == 0 && i >= 0);
+
+				func_80070494_40944(0x4D)->unk28 = 0x64;
+				func_800153D8_15FD8(0xCB);
+			} else if (arg1 == 2) {
+				i = 0xD;
+				do {
+					if (D_800D74AC < 0xD) {
+						D_800D74AC += 1;
+					} else {
+						D_800D74AC = 0;
+					}
+					i--;
+				} while ((D_800AED78[D_800D74AC] == 0 || D_800942E0_64790[((currentLevel * 13) + D_800D74AC) - 13].displayList == NULL) && i >= 0);
+
+				if (D_800D74AC != 0) {
+					func_80070494_40944(0x4E)->unk28 = 0x64;
+					func_800153D8_15FD8(0xCB);
+				}
+			} else {
+				D_800D74A4 = 0x49;
+				func_800153D8_15FD8(0xC9);
+			}
+
+			D_80094834_64CE4 = 0;
+			if (D_8009483C_64CEC < 8) {
+				D_8009483C_64CEC = 8;
+			}
+		}
+	}
+
+	if (D_80094838_64CE8 || --D_80094840_64CF0 == 0) {
+		if (D_8004758B >= 0x15 || isButtonNewlyPressed(0, 0x800)) {
+			if (arg1 == 0) {
+				D_800D74A4 = 0x48;
+			}
+
+			D_80094838_64CE8 = 0;
+			if (D_80094840_64CF0 < 8) {
+				D_80094840_64CF0 = 8;
+			}
+
+			if (selectedMissionBefore != D_800D74A4) {
+				func_800153D8_15FD8(0xCA);
+			}
+		}
+
+		if (D_8004758B < -0x14 || isButtonNewlyPressed(0, 0x400)) {
+			D_80094838_64CE8 = 0;
+			if (arg1 == 0) {
+				D_800D74A4 = 0x4A;
+			}
+
+			if (D_80094840_64CF0 < 8) {
+				D_80094840_64CF0 = 8;
+			}
+
+			if (selectedMissionBefore != D_800D74A4) {
+				func_800153D8_15FD8(0xC9);
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800710D8_41588.s")
+#endif
 
 void func_8007166C_41B1C(void)
 {
