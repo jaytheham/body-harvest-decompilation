@@ -1855,5 +1855,10 @@ typedef struct {
     s32 unkC;
 } Unk80378D0; /* size = 0x10 - DMA range descriptor */
 
+typedef struct {
+	char pad0[0x10];
+	f32 unk10;
+} Unk8007C1DC;
+
 #endif
 
