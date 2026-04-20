@@ -969,7 +969,185 @@ void func_80088BDC_5908C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80088BDC_5908C.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(8258)
+void func_80088E18_592C8(void) {
+	s16 cur;
+	Unk800DE840 *entry;
+	Unk800DE840 *parent;
+	Unk800DE840 *nextLink;
+	Unk80052B40 spC4;
+	Unk80052B40 spBC;
+	Unk80052B40 spB4;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s32 pad6;
+	s32 pad7;
+	s32 pad8;
+	s32 pad9;
+	s32 pad10;
+	s32 pad11;
+	s32 pad12;
+	s32 pad13;
+	s32 pad14;
+	s32 pad15;
+	s32 pad16;
+	Gfx *dl;
+	u32 color;
+	u32 cmdBA001402;
+	u32 cmdBA000E02;
+	u32 cmdFCFFFFFF;
+	u32 cmdB7000000;
+	u32 cmdE7000000;
+	u32 cmd06000000;
+	u32 primParam;
+
+	primParam = 0x00020000;
+	cmdBA001402 = 0xBA001402;
+	cmdBA000E02 = 0xBA000E02;
+	cmdFCFFFFFF = 0xFCFFFFFF;
+	cmdB7000000 = 0xB7000000;
+	cmdE7000000 = 0xE7000000;
+	cmd06000000 = 0x06000000;
+
+	cur = D_800DE826;
+	while ((cur != -6) && (cur != -5)) {
+		entry = &D_800DE840[cur];
+		parent = &D_800DE840[entry->unk4];
+		nextLink = &D_800DE840[parent->unk4];
+
+		spC4.unk0 = entry->unk2;
+		spC4.unk2 = entry->unk2;
+		spC4.unk4 = entry->unk2;
+
+		color = (entry->unkE << 24) | (entry->unkF << 16) | (entry->unk10 << 8) | 0xFF;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFA000000;
+		dl->words.w1 = color;
+
+		spB4.unk0 = entry->unk8;
+		spB4.unk2 = entry->unkA;
+		spB4.unk4 = entry->unkC;
+		spBC.unk0 = (s16)(((u8 *)nextLink)[0x0B] << 8);
+		spBC.unk2 = (s16)(((u8 *)nextLink)[0x0C] << 8);
+		spBC.unk4 = (s16)(((u8 *)nextLink)[0x0D] << 8);
+
+		if (!(((u8 *)entry)[0x13] & 8)) {
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = cmdE7000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = cmdBA001402;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = cmdBA000E02;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = cmd06000000;
+			dl->words.w1 = (u32)D_800311D0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = cmdFCFFFFFF;
+			dl->words.w1 = 0xFFFDF6FB;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xB900031D;
+			dl->words.w1 = 0x00552078;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = cmdB7000000;
+			dl->words.w1 = primParam;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = cmdE7000000;
+			dl->words.w1 = 0;
+		} else {
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = cmdE7000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = cmdBA001402;
+			dl->words.w1 = 0x00100000;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = cmdBA000E02;
+			dl->words.w1 = 0x00008000;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xB900031D;
+			dl->words.w1 = 0xC8112078;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = cmdB7000000;
+			dl->words.w1 = 0x00030001;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = cmdFCFFFFFF;
+			dl->words.w1 = 0xFFFE7838;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			if (!(((u8 *)entry)[0x13] & 0x80)) {
+				dl->words.w0 = 0xB6000000;
+			} else {
+				dl->words.w0 = cmdB7000000;
+			}
+			dl->words.w1 = primParam;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = cmdE7000000;
+			dl->words.w1 = 0;
+		}
+
+		func_800039D0_45D0(&spB4, &spBC, &spC4, D_8005BB38);
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0x01040040;
+		dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+		D_8005BB38 += 0x40;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = cmd06000000;
+		dl->words.w1 = *(u32 *)&parent->unk8;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xBD000000;
+		dl->words.w1 = 0;
+
+		cur = nextLink->unk4;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80088E18_592C8.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(663)
