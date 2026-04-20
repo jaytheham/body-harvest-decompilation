@@ -627,7 +627,38 @@ s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007C1DC *ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C1DC_16429C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C2D0_164390.s")
+s32 func_8007C2D0_164390(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5) {
+	s32 temp_v0_2;
+	s32 temp_v1;
+	s32 temp_a0;
+	s32 temp_a1;
+	s32 temp_v0;
+	s32 temp_v1_2;
+
+	temp_v0 = -arg5;
+	if (temp_v0 >= arg5) {
+		arg5 = temp_v0;
+	}
+
+	temp_v0_2 = func_80003824_4424((f32) (arg0 - arg2), (f32) (arg1 - arg3));
+	temp_v1_2 = arg5 / 2;
+	temp_a0 = (temp_v1_2 + arg4) & 0xFFFF;
+	temp_a1 = (arg4 - temp_v1_2) & 0xFFFF;
+
+	if (temp_a1 >= temp_a0) {
+		temp_v1 = temp_v0_2 & 0xFFFF;
+		if ((temp_v1 >= temp_a1) || (temp_a0 >= temp_v1)) {
+			return 1;
+		}
+	} else {
+		temp_v1 = temp_v0_2 & 0xFFFF;
+		if ((temp_v1 >= temp_a1) && (temp_a0 >= temp_v1)) {
+			return 1;
+		}
+	}
+
+	return 0;
+}
 
 #ifdef NON_MATCHING
 s32 func_8007C3C0_164480(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
