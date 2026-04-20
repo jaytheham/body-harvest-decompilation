@@ -1121,7 +1121,77 @@ void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800731A8_43658.s")
 
+#ifdef NON_MATCHING
+// CURRENT(5566)
+void func_80075710_45BC0(void) {
+	s32 matrixPtr;
+	s32 rowTextureOffset;
+	s32 rowBottomY;
+	s32 rowTopY;
+	s32 rowIndex;
+	s32 rowTop;
+	s32 rowBottom;
+	u32 textureBase;
+	u32 textureImage;
+
+	guOrtho((Mtx *)D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, D_800AE77C_7EC2C, D_800AE780_7EC30, 1.0f);
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+
+	matrixPtr = D_8005BB38 + 0x40;
+	D_8005BB38 = matrixPtr;
+	guRotate((Mtx *)matrixPtr, 0.0f, 1.0f, 0.0f, 0.0f);
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 + 0x80000000), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPLoadSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_COPY);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+
+	textureBase = (u32)D_800AED88;
+	rowBottomY = 0x20;
+	rowTopY = 0;
+	rowIndex = 0;
+	do {
+		textureImage = textureBase + (rowIndex << 11);
+		rowTop = ((rowTopY << 2) & 0xFFF);
+		rowBottom = (((rowBottomY << 2) - 1) & 0xFFF);
+		rowTextureOffset = 0;
+		do {
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, textureImage);
+			textureImage += 0x800;
+			gDPTileSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_RENDERTILE, 0,
+					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 1023, 256);
+			gDPTileSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, G_TX_RENDERTILE, 0,
+					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+			gSPTextureRectangle(D_8005BB2C++, rowTextureOffset << 2, rowTop, ((rowTextureOffset + 0x20) << 2) - 1,
+								rowBottom, G_TX_RENDERTILE, 0, 0, 0x1000, 0x400);
+			rowTextureOffset += 0x20;
+		} while (rowTextureOffset != 0x140);
+
+		rowBottomY += 0x20;
+		rowTopY += 0x20;
+		rowIndex += 0xA;
+	} while (rowBottomY != 0x120);
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_COPY);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075710_45BC0.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(240)
