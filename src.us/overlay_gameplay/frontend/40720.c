@@ -3025,7 +3025,47 @@ void func_8007F580_4FA30(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F580_4FA30.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(2105)
+void func_8007F830_4FCE0(Unk80080588Entry1C* arg0) {
+	FrontendLightAnimState* state;
+	FrontendLightTrack* track;
+	FrontendLightKeyframe* keyframe;
+	f32 factor;
+
+	state = (FrontendLightAnimState*)arg0;
+	track = state->unkC;
+	if (track == NULL) {
+		return;
+	}
+
+	keyframe = state->unk0;
+	if (state->unk4 <= 0) {
+		state->unk12 = keyframe->unk2;
+		state->unk8++;
+		state->unk10 = keyframe->unk0;
+
+		if (state->unk8 == track->unk4) {
+			state->unkC = NULL;
+		} else {
+			keyframe = &track->unk0[state->unk8];
+			state->unk0 = keyframe;
+			state->unk4 = keyframe->unk8;
+		}
+	} else {
+		factor = 1.0f / (f32)(keyframe->unk8 - (keyframe->unk8 - state->unk4));
+		state->unk12 = (s16)(s32)((f32)state->unk12 + ((f32)(keyframe->unk2 - state->unk12) * factor));
+		state->unk10 = (s16)(s32)((f32)state->unk10 + ((f32)(keyframe->unk0 - state->unk10) * factor));
+		state->unk14 = (u8)((f32)state->unk14 + ((f32)(keyframe->unk4 - state->unk14) * factor));
+		state->unk15 = (u8)((f32)state->unk15 + ((f32)(keyframe->unk5 - state->unk15) * factor));
+		state->unk16 = (u8)((f32)state->unk16 + ((f32)(keyframe->unk6 - state->unk16) * factor));
+	}
+
+	state->unk4--;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F830_4FCE0.s")
+#endif
 
 /**
  * @brief Initializes a small frontend playback/state block from a source descriptor.
