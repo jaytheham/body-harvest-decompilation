@@ -1055,6 +1055,7 @@ extern f32 D_800DE128;
 extern u8 D_800DE12C;
 extern u8 D_800DE12D;
 extern u8 D_800DE12E;
+extern u8 D_100DE80[];
 
 extern u8 D_800E198D;
 extern u8 D_800E198F;

@@ -1066,7 +1066,203 @@ void func_8008472C_54BDC(u8 arg0) {
 	}
 }
 
+void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4);
+
+#ifdef NON_MATCHING
+void func_800847E4_54C94(u8 arg0) {
+	Unk800DE130 *entry130;
+	Unk800DE130 *entry130Base;
+	Unk800DE840 *entry840;
+	u8 count;
+	u8 colorR;
+	u8 colorG;
+	u8 colorB;
+	u8 *view;
+	Vec3f origin;
+	Vec3f vecA;
+	Vec3f vecB;
+	Vec3f outA;
+	Vec3f outB;
+	f32 camDx;
+	f32 camDy;
+	f32 camDz;
+	f32 dist;
+	f32 t0;
+	f32 t1;
+	f32 p0x;
+	f32 p0y;
+	f32 p0z;
+	f32 p1x;
+	f32 p1y;
+	f32 p1z;
+	f64 distBias;
+	u8 alpha0;
+	u8 alpha1;
+	u8 triCount;
+	u16 ringScale;
+
+	entry130 = &D_800DE130[arg0];
+	entry130Base = entry130;
+	count = entry130->unk4 - 1;
+
+	if ((D_800DE0B8 == 1) || (D_800DE0B9 != 0)) {
+		colorR = 0x82;
+		colorG = 0xC8;
+		colorB = 0xFF;
+	} else {
+		colorR = 0xFF;
+		colorG = 0x9E;
+		colorB = 0x16;
+	}
+
+	entry840 = &D_800DE840[entry130->unkA];
+	view = (u8 *)entry840 + 8;
+	origin.x = ((s16 *)view)[0];
+	origin.y = ((s16 *)view)[1];
+	origin.z = ((s16 *)view)[2];
+
+	camDx = origin.x - (D_800DE100[0] * 4.0f);
+	camDy = origin.y - (D_800DE100[1] * 4.0f);
+	camDz = origin.z - (D_800DE100[2] * 4.0f);
+	dist = sqrtf((camDx * camDx) + (camDy * camDy) + (camDz * camDz));
+
+	gDPPipeSync(D_8005BB2C++);
+	gSPClearGeometryMode(D_8005BB2C++, 1);
+	gDPSetRenderMode(D_8005BB2C++, 0x504240, 0x504240);
+	D_8005BB2C->words.w0 = 0xFCFFFFFF;
+	D_8005BB2C->words.w1 = 0xFFFDF8FC;
+	D_8005BB2C++;
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, colorR, colorG, colorB, 0);
+	gDPPipeSync(D_8005BB2C++);
+
+	triCount = count;
+	if ((s32)triCount > 0) {
+		distBias = (f64)((f64)(dist / 4.0f) + 800.0);
+		do {
+			entry840 = &D_800DE840[entry840->unk4];
+
+			func_800838B8_53D68((f32)(distBias * ((f64)entry840->unkE * 0.00390625)), D_800DE0C0, (f32 *)&vecA);
+			func_800838B8_53D68((f32)(distBias * ((f64)entry840->unkE * 0.00390625)), D_800DE0CC, (f32 *)&vecB);
+
+			view = (u8 *)entry840 + 8;
+			t0 = (f32)view[2] / 256.0f;
+			t1 = (f32)(view[2] + 0xA) / 256.0f;
+
+			switch (*((s8 *)view + 1)) {
+				case 0:
+					func_80083884_53D34((f32 *)&origin, (f32 *)&vecA, (f32 *)&outA);
+					func_80083884_53D34((f32 *)&origin, (f32 *)&vecB, (f32 *)&outB);
+					break;
+				case 1:
+					func_80083884_53D34((f32 *)&origin, (f32 *)&vecB, (f32 *)&outA);
+					func_80083850_53D00((f32 *)&origin, (f32 *)&vecA, (f32 *)&outB);
+					break;
+				case 2:
+					func_80083850_53D00((f32 *)&origin, (f32 *)&vecA, (f32 *)&outA);
+					func_80083850_53D00((f32 *)&origin, (f32 *)&vecB, (f32 *)&outB);
+					break;
+				default:
+					func_80083850_53D00((f32 *)&origin, (f32 *)&vecB, (f32 *)&outA);
+					func_80083884_53D34((f32 *)&origin, (f32 *)&vecA, (f32 *)&outB);
+					break;
+			}
+
+			camDx = outB.x - outA.x;
+			camDy = outB.y - outA.y;
+			camDz = outB.z - outA.z;
+
+			p0x = (camDx * t0) + outA.x;
+			p0y = (camDy * t0) + outA.y;
+			p0z = (camDz * t0) + outA.z;
+			p1x = (camDx * t1) + outA.x;
+			p1y = (camDy * t1) + outA.y;
+			p1z = (camDz * t1) + outA.z;
+
+			if (D_800DE0B7 != 0) {
+				alpha0 = (u8)(s32)(((f32)((u32)view[0] * D_800DE0BB)) / 255.0f);
+				alpha1 = (u8)(s32)(((f32)(D_800DE0BB * 20)) / 255.0f);
+			} else {
+				alpha0 = view[0];
+				alpha1 = 20;
+			}
+
+			D_8005BB34->v.ob[0] = (s16)origin.x;
+			D_8005BB34->v.ob[1] = (s16)origin.y;
+			D_8005BB34->v.ob[2] = (s16)origin.z;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = 0;
+			D_8005BB34->v.cn[1] = 0;
+			D_8005BB34->v.cn[2] = 0;
+			D_8005BB34->v.cn[3] = alpha0;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = (s16)p1x;
+			D_8005BB34->v.ob[1] = (s16)p1y;
+			D_8005BB34->v.ob[2] = (s16)p1z;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = 0;
+			D_8005BB34->v.cn[1] = 0;
+			D_8005BB34->v.cn[2] = 0;
+			D_8005BB34->v.cn[3] = alpha1;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = (s16)p0x;
+			D_8005BB34->v.ob[1] = (s16)p0y;
+			D_8005BB34->v.ob[2] = (s16)p0z;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = 0;
+			D_8005BB34->v.cn[1] = 0;
+			D_8005BB34->v.cn[2] = 0;
+			D_8005BB34->v.cn[3] = alpha1;
+			D_8005BB34++;
+
+			gDPPipeSync(D_8005BB2C++);
+			D_8005BB2C->words.w0 = 0x04000C2F;
+			D_8005BB2C->words.w1 = ((u32)(D_8005BB34 - 3)) & 0x1FFFFFFF;
+			D_8005BB2C++;
+			gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
+
+			triCount = (triCount - 1) & 0xFF;
+		} while ((s32)triCount > 0);
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+	D_8005BB2C->words.w0 = 0xFC6218C4;
+	D_8005BB2C->words.w1 = 0xFF33FFFF;
+	D_8005BB2C++;
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_100DE80);
+	D_8005BB2C->words.w0 = 0xF5900000;
+	D_8005BB2C->words.w1 = 0x07080200;
+	D_8005BB2C++;
+	gDPLoadSync(D_8005BB2C++);
+	D_8005BB2C->words.w0 = 0xF3000000;
+	D_8005BB2C->words.w1 = 0x070FF400;
+	D_8005BB2C++;
+	gDPPipeSync(D_8005BB2C++);
+	D_8005BB2C->words.w0 = 0xF5800400;
+	D_8005BB2C->words.w1 = 0x00080200;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xF2000000;
+	D_8005BB2C->words.w1 = 0x0007C07C;
+	D_8005BB2C++;
+
+	ringScale = *(u16 *)((u8 *)&D_800DE840[entry130Base->unkA] + 2);
+	func_800853A8_55858(&origin, &colorR, D_800DE0E4, ringScale, D_800DE0BB);
+
+	gDPPipeSync(D_8005BB2C++);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+	gDPSetRenderMode(D_8005BB2C++, 0x504A50, 0x504A50);
+	gDPPipeSync(D_8005BB2C++);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800847E4_54C94.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(2122)
