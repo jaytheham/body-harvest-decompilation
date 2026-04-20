@@ -93,6 +93,35 @@ typedef struct {
 } Unk802566D8; /* size = 0x68 */
 
 typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ u8 unk4;
+	/* 0x05 */ u8 unk5;
+	/* 0x06 */ u8 unk6;
+	/* 0x07 */ u8 pad7;
+	/* 0x08 */ s32 unk8;
+} FrontendLightKeyframe; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ FrontendLightKeyframe* unk0;
+	/* 0x04 */ s32 unk4;
+} FrontendLightTrack; /* size = 0x08 */
+
+typedef struct {
+	/* 0x00 */ FrontendLightKeyframe* unk0;
+	/* 0x04 */ s32 unk4;
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ FrontendLightTrack* unkC;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ u8 unk14;
+	/* 0x15 */ u8 unk15;
+	/* 0x16 */ u8 unk16;
+	/* 0x17 */ u8 pad17;
+	/* 0x18 */ s32 unk18;
+} FrontendLightAnimState; /* size = 0x1C */
+
+typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ u8 pad04[0x64];
 } Unk8025669C; /* size = 0x68 */
@@ -909,6 +938,21 @@ typedef struct {
 	/* 0x10 */ f32 unk10;
 	/* 0x14 */ u8 pad14[0x2C];
 } Unk800801BCEntry; /* size = 0x40 */
+
+typedef struct {
+	/* 0x00 */ void* unk0;
+	/* 0x04 */ u8 pad4[0x8];
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ s16 unk14;
+	/* 0x16 */ s16 unk16;
+	/* 0x18 */ u8 unk18;
+	/* 0x19 */ u8 unk19;
+	/* 0x1A */ u8 pad1A[0x6];
+	/* 0x20 */ s32 unk20;
+} Unk8007FE8CArg; /* size = 0x24 */
 
 typedef struct {
 	/* 0x00 */ u8 pad[0x50];

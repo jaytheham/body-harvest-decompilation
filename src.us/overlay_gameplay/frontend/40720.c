@@ -874,7 +874,98 @@ void func_800764B4_46964(void) {
 }
 
 // displayCometExplodesMovie
+#ifdef NON_MATCHING
+// CURRENT(775)
+s32 func_80076504_469B4(void) {
+	s32 result;
+	s32 fadeResult;
+	u8* fadeAlphaPtr;
+	u8* fadeColorPtr;
+
+	result = 1;
+	func_8007949C_4994C(func_80070390_40840(), 0);
+
+	D_80052ACA = 6;
+	D_8004772C = 0xFF;
+	D_80047730 = 0x40;
+	D_80047734 = 0;
+	fadeAlphaPtr = &D_8004773A;
+	fadeColorPtr = &D_80047739;
+	*fadeAlphaPtr = 0;
+	*fadeColorPtr = 0;
+	D_80047738 = 0;
+	D_800D74AA = 0;
+	D_800D6D8C = 1;
+
+	gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
+	gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
+
+	drawText(D_800ADC60, 0xE6, 0xE6, 0xE6, 0xFF);
+	func_8007D7E0_4DC90();
+	osSyncPrintf(D_800ADC68);
+	func_80013684_14284();
+
+	do {
+		func_800791A0_49650(1);
+
+		gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
+		fadeResult = func_8007D91C_4DDCC(1);
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+
+		osSendMesg(&D_8006A8B0, &D_800314CC, 1);
+		if (fadeResult != 0) {
+			result = 2;
+			func_80005AEC_66EC(0, 0, 0, 0x10);
+		}
+	} while (func_80005B30_6730() == 0);
+
+	func_8007C4BC_4C96C();
+	func_8007C7F4_4CCA4();
+
+	D_80052ACA = 6;
+	D_8004772C = 0xFF;
+	D_80047730 = 0x40;
+	D_80047734 = 0;
+	fadeAlphaPtr = &D_8004773A;
+	fadeColorPtr = &D_80047739;
+	*fadeAlphaPtr = 0;
+	*fadeColorPtr = 0;
+	D_80047738 = 0;
+	D_800D74AA = 0;
+	D_800D6D8C = 1;
+
+	gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
+	gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
+
+	func_8007D7E0_4DC90(fadeAlphaPtr, fadeColorPtr);
+	osSyncPrintf(D_800ADC74);
+
+	do {
+		func_800791A0_49650(1);
+
+		gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
+		fadeResult = func_8007D91C_4DDCC(2);
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+
+		osSendMesg(&D_8006A8B0, &D_800314CC, 1);
+		if (fadeResult != 0) {
+			result = 2;
+			func_80005AEC_66EC(0, 0, 0, 0x10);
+		}
+	} while (func_80005B30_6730() == 0);
+
+	D_80052ACA = 3;
+	func_800056A8_62A8();
+	func_800056A8_62A8();
+	func_80070940_40DF0();
+
+	return result;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076504_469B4.s")
+#endif
 
 // displayEndGameMessage
 s32 func_8007685C_46D0C(void) {
@@ -894,7 +985,123 @@ s32 func_8007685C_46D0C(void) {
 
 // Called once before showing the 'Select Slot' screen
 // doFileSelectLoop
+#ifdef NON_MATCHING
+// CURRENT(3217)
+s16 func_80076C98_47148(void) {
+	u8 saveFileName[7];
+	u8* saveNamePtr;
+	s8* saveValidPtr;
+	s32* saveMetaPtr;
+	u32 frameCounter;
+	s32 saveFile;
+	s16 result;
+	s16 fade;
+	s32 hasCorruptSave;
+
+	D_800D74A6 = currentSaveFileIndex + 2;
+	D_800D74A4 = D_800D74A6;
+	frameCounter = 0;
+	result = 1;
+	hasCorruptSave = 0;
+	func_8007166C_41B1C();
+
+	((u8*)D_800909B0)[0x70] = 0;
+	((u8*)D_800909B0)[0x9A] = 0;
+	((u8*)D_800909B0)[0xC4] = 0;
+	D_800909B0[D_800D74A4].unk1C = 1;
+
+	saveFile = 2;
+	saveNamePtr = &D_800D6DB6;
+	saveMetaPtr = &D_800D6DA0;
+	saveValidPtr = &D_800D6D92;
+	do {
+		*saveValidPtr = func_80002A88_3688(saveFile);
+		*saveMetaPtr = func_80002B20_3720(saveFile);
+		getSaveFileName(saveFile, saveNamePtr);
+		saveValidPtr--;
+		if (saveNamePtr[1] != 'm') {
+			hasCorruptSave = 1;
+		}
+		saveMetaPtr--;
+		saveNamePtr -= 7;
+	} while (saveFile-- != 0);
+
+	((u8*)D_800909B0)[0xCD] = 5;
+	while (result == 1) {
+		if (frameCounter < 0x3E8U) {
+			func_80070C64_41114(1, 6, (s16)frameCounter);
+		}
+
+		if (hasCorruptSave == 0) {
+			func_80070A8C_40F3C(5);
+			func_80070A8C_40F3C(6);
+		} else {
+			func_80070B68_41018(5);
+			func_80070B68_41018(6);
+		}
+
+		if (frameCounter >= 0x41U) {
+			func_80070CC4_41174();
+			func_8007166C_41B1C();
+			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+				result = D_800D74A4;
+			}
+			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+				result = 0;
+			}
+		}
+
+		func_80075D58_46208(0);
+		func_800731A8_43658();
+		func_8000B044_BC44();
+		func_8000505C_5C5C();
+
+		if (frameCounter < 0x3E8U) {
+			frameCounter++;
+		}
+	}
+
+	saveFile = D_800D74A4 - 2;
+	if (saveFile < 3) {
+		currentSaveFileIndex = saveFile;
+	}
+
+	func_800153D8_15FD8(0xC8);
+	if (result == 0) {
+		func_800709F0_40EA0();
+		for (fade = 0xA0; fade != -8; fade -= 8) {
+			func_80075D58_46208(0);
+			func_80075B64_46014(fade);
+			func_800731A8_43658();
+			func_8000B044_BC44();
+			func_8000505C_5C5C();
+		}
+		return result;
+	}
+
+	if ((D_800D74A4 - 1) < 4) {
+		if (currentSaveFileIndex < 3) {
+			guess_loadSavedGame(currentSaveFileIndex);
+			getSaveFileName(currentSaveFileIndex, saveFileName);
+			osSyncPrintf(&D_800ADC8C_7E13C, saveFileName);
+			if (saveFileName[1] == 'm') {
+				result = 1;
+				osSyncPrintf(&D_800ADC9C_7E14C);
+			}
+
+			if (result < 5) {
+				D_800D74AA = 0;
+				func_800709F0_40EA0();
+			}
+			func_8000AFDC_BBDC();
+		}
+	}
+
+	return result;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076C98_47148.s")
+#endif
 
 s32 func_80076FD8_47488(void) {
 	return 3;
@@ -946,7 +1153,7 @@ void func_80076FE0_47490(s32* arg0, s32* arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076FE0_47490.s")
 #endif
 
-void func_80075B64_46014();
+void func_80075B64_46014(s16 arg0);
 void func_80076FE0_47490();
 
 // doPressStartLoop
@@ -1633,7 +1840,119 @@ s32 func_80077E88_48338(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077E88_48338.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(3239)
+s32 func_80078110_485C0(void) {
+	s32 state;
+	u32 frameCounter;
+	s16 var_v0;
+	s16 temp_a0;
+	MissionData* missions;
+
+	frameCounter = 0;
+	state = 1;
+	var_v0 = D_80048026;
+
+	if ((var_v0 & 0xE07) == 0xE07 && (var_v0 & 0x38) != 0x38 && (var_v0 & 0x1C0) != 0x1C0) {
+		missions = D_800909B0;
+		((u8*)missions)[0xD45] = 0x53;
+		((u8*)missions)[0xDC2] = 0x50;
+	} else {
+		missions = D_800909B0;
+		((u8*)missions)[0xD45] = 0x52;
+		((u8*)missions)[0xDC2] = 0x51;
+	}
+
+	if ((var_v0 & 0x1F8) == 0x1F8 && (temp_a0 = var_v0 & 7, temp_a0 != 7) && ((var_v0 & 0xE00) != 0xE00 || D_80047FA0 < 4)) {
+		((u8*)missions)[0xD6F] = 0x52;
+		((u8*)missions)[0xD98] = 0x51;
+	} else {
+		((u8*)missions)[0xD6F] = 0x53;
+		((u8*)missions)[0xD98] = 0x50;
+		temp_a0 = var_v0 & 7;
+	}
+
+	D_800D74A4 = 0x50;
+	if (temp_a0 != 7) {
+		D_800D74A4++;
+		if ((var_v0 & 0x38) != 0x38) {
+			D_800D74A4++;
+			if ((var_v0 & 0x1C0) != 0x1C0) {
+				D_800D74A4++;
+			}
+		}
+	}
+
+	D_800D74A6 = D_800D74A4;
+	missions[D_800D74A4].unk1C = 1;
+
+	while (state == 1) {
+		if (frameCounter < 0x3E8U) {
+			func_80070C64_41114(0x4F, 6, (s16)frameCounter);
+		}
+
+		func_80070BD8_41088(0x50, 0x54);
+		func_80070AEC_40F9C((s16)(D_80047FA0 + 0x50), 0x54);
+
+		var_v0 = D_80048026;
+		if ((var_v0 & 7) != 7) {
+			func_80070AEC_40F9C(0x50, 0x50);
+			var_v0 = D_80048026;
+		}
+
+		if ((var_v0 & 0x38) != 0x38) {
+			func_80070AEC_40F9C(0x51, 0x51);
+			var_v0 = D_80048026;
+		}
+
+		if ((var_v0 & 0x1C0) != 0x1C0) {
+			func_80070AEC_40F9C(0x52, 0x52);
+			var_v0 = D_80048026;
+		}
+
+		if ((var_v0 & 0xE00) != 0xE00) {
+			func_80070AEC_40F9C(0x53, 0x53);
+			var_v0 = D_80048026;
+		}
+
+		if ((var_v0 & 0xFFF) != 0xFFF) {
+			func_80070AEC_40F9C(0x54, 0x54);
+		}
+
+		if (frameCounter >= 0x41U) {
+			func_80070CC4_41174();
+			func_8007166C_41B1C();
+
+			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+				D_80048030 = 0;
+				state = 2;
+				currentLevel = D_800D74A4 - 0x4F;
+			}
+
+			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+				state = 0;
+			}
+		}
+
+		func_80075D58_46208(0);
+		func_800731A8_43658();
+		func_8000B044_BC44();
+		func_8000505C_5C5C();
+
+		if (frameCounter < 0x3E8U) {
+			frameCounter++;
+		}
+	}
+
+	func_800153D8_15FD8(0xC8);
+	func_8000AFDC_BBDC();
+	func_800709F0_40EA0();
+
+	return state;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078110_485C0.s")
+#endif
 
 // doChooseFileNameLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078424_488D4.s")
@@ -2489,8 +2808,121 @@ void func_8007C764_4CC14(u16 arg0, u16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007C7F4_4CCA4.s")
 
+#ifdef NON_MATCHING
+// CURRENT(5741)
 // doSaveBeaconLoop
+s32 func_8007CFB4_4D464(s32 arg0) {
+	s16 timer;
+	s32 selection;
+
+	selection = 0;
+	timer = -1;
+	gameplayMode = 4;
+	func_8000AFDC_BBDC();
+	func_80070940_40DF0();
+	D_800D74A6 = 0x44;
+	D_800D74A4 = D_800D74A6;
+	D_800948F0_64DA0 = 0;
+
+	while (timer != 0) {
+		Gfx* dl;
+
+		func_800050C4_5CC4();
+		func_80011E14_12A14(0);
+		func_80004DDC_59DC(0, 0, 0, 0, 0xEF);
+		func_80008CA8_98A8(0);
+
+		if (D_800948F0_64DA0 >= 0x41U) {
+			if (D_800948F0_64DA0 < 0x3E8U) {
+				func_80070C64_41114(0x3F, 7, (s16)(D_800948F0_64DA0 - 0x3D));
+			}
+		}
+
+		if (arg0 != 0) {
+		} else {
+			func_80070A8C_40F3C(0x45);
+		}
+
+		if (D_800948F0_64DA0 >= 0x81U) {
+			if (timer == -1) {
+				func_80070CC4_41174();
+				func_8007166C_41B1C();
+
+				if (isButtonNewlyPressed(0, 0x9000) != 0) {
+					selection = D_800D74A4 - 0x42;
+					func_800708B8_40D68(0x43);
+					func_800708B8_40D68(0x44);
+					func_800708B8_40D68(0x45);
+					func_800153D8_15FD8(0xC8);
+					timer = 0x10;
+					if (selection == 1) {
+						func_80070C64_41114(0x46, (s16)1, 0);
+						timer = 0x50;
+					}
+				}
+
+				if (isButtonNewlyPressed(0, 0x4000) != 0) {
+					selection = 2;
+					timer = 0x10;
+				}
+			}
+		}
+
+		if (D_800948F0_64DA0 >= 0x41U) {
+			func_800731A8_43658();
+		}
+
+		func_8000B044_BC44();
+
+		if (D_800948F0_64DA0 < 0x3E8U) {
+			D_800948F0_64DA0++;
+		}
+
+		if (timer == 0x10) {
+			func_800708B8_40D68(0x40);
+			func_800708B8_40D68(0x41);
+			func_800708B8_40D68(0x42);
+			if (selection == 1) {
+				func_800708B8_40D68(0x46);
+			} else {
+				func_800708B8_40D68(0x43);
+				func_800708B8_40D68(0x44);
+				func_800708B8_40D68(0x45);
+			}
+		}
+
+		if ((timer != -1) && (timer > 0)) {
+			timer = (s16)(timer - 1);
+		}
+
+		if (D_800948F0_64DA0 < 0x55U) {
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xBA000E02;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xFCFFFFFF;
+			dl->words.w1 = 0xFFFCF279;
+			func_8000E53C_F13C();
+		}
+
+		func_8000505C_5C5C();
+	}
+
+	func_8000AFDC_BBDC();
+	if (selection == 1) {
+		return 1;
+	}
+	if (selection == 3) {
+		return 2;
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007CFB4_4D464.s")
+#endif
 
 // doInventoryLoop
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007D2B0_4D760.s")
@@ -2912,7 +3344,47 @@ void func_8007F580_4FA30(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F580_4FA30.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(2105)
+void func_8007F830_4FCE0(Unk80080588Entry1C* arg0) {
+	FrontendLightAnimState* state;
+	FrontendLightTrack* track;
+	FrontendLightKeyframe* keyframe;
+	f32 factor;
+
+	state = (FrontendLightAnimState*)arg0;
+	track = state->unkC;
+	if (track == NULL) {
+		return;
+	}
+
+	keyframe = state->unk0;
+	if (state->unk4 <= 0) {
+		state->unk12 = keyframe->unk2;
+		state->unk8++;
+		state->unk10 = keyframe->unk0;
+
+		if (state->unk8 == track->unk4) {
+			state->unkC = NULL;
+		} else {
+			keyframe = &track->unk0[state->unk8];
+			state->unk0 = keyframe;
+			state->unk4 = keyframe->unk8;
+		}
+	} else {
+		factor = 1.0f / (f32)(keyframe->unk8 - (keyframe->unk8 - state->unk4));
+		state->unk12 = (s16)(s32)((f32)state->unk12 + ((f32)(keyframe->unk2 - state->unk12) * factor));
+		state->unk10 = (s16)(s32)((f32)state->unk10 + ((f32)(keyframe->unk0 - state->unk10) * factor));
+		state->unk14 = (u8)((f32)state->unk14 + ((f32)(keyframe->unk4 - state->unk14) * factor));
+		state->unk15 = (u8)((f32)state->unk15 + ((f32)(keyframe->unk5 - state->unk15) * factor));
+		state->unk16 = (u8)((f32)state->unk16 + ((f32)(keyframe->unk6 - state->unk16) * factor));
+	}
+
+	state->unk4--;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F830_4FCE0.s")
+#endif
 
 /**
  * @brief Initializes a small frontend playback/state block from a source descriptor.
@@ -3023,7 +3495,92 @@ void func_8007FBF8_500A8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007FBF8_500A8.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(3837)
+void func_8007FE8C_5033C(Unk8007FE8CArg* arg0) {
+	s32 sp64[3];
+	Unk80052B40 sp5C;
+	Unk80052B40 sp54;
+	Unk80052B40 sp4C;
+	Unk800801BCEntry* entry;
+	Gfx* dl;
+
+	sp4C = D_800949C0;
+	sp5C.unk0 = arg0->unkC;
+	sp5C.unk2 = arg0->unkE;
+	sp5C.unk4 = arg0->unk10;
+	sp54.unk0 = arg0->unk14;
+	sp54.unk2 = arg0->unk16;
+	sp54.unk4 = arg0->unk12;
+
+	entry = &D_800D7B10[arg0->unk18];
+	func_800039D0_45D0(&sp5C, &sp54, &sp4C, D_8005BB38);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01040040;
+	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+	D_8005BB38 += 0x40;
+
+	sp54.unk0 = entry->unk2 << 3;
+	sp54.unk2 = entry->unk4 << 3;
+	sp54.unk4 = entry->unk0 << 3;
+	sp64[0] = (s32)(entry->unk8 * 65536.0f);
+	sp64[1] = (s32)(entry->unkC * 65536.0f);
+	sp64[2] = (s32)(entry->unk10 * 65536.0f);
+
+	if (D_80094944_64DF4 == 1) {
+		func_8000C81C_D41C(sp64, &sp54.unk0, 0, D_8005BB38);
+	} else {
+		func_80080B80_51030(sp64, &sp54.unk0, 0, D_8005BB38);
+	}
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01000040;
+	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+	D_8005BB38 += 0x40;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBC001C06;
+	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+	if (D_800D8518 != 0) {
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = ((((u8)D_800D851C * 4) & 0xFFFF) << 8) | 0xBC000006;
+		dl->words.w1 = (D_800D8518 & 0xFFFFFF) + D_8006AA70;
+	}
+
+	if (D_800D8520 != 0) {
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = ((((u8)D_800D8524 * 4) & 0xFFFF) << 8) | 0xBC000006;
+		dl->words.w1 = (D_800D8520 & 0xFFFFFF) + D_8006AA70;
+	}
+
+	func_800801BC_5066C((s32)entry, arg0->unk19);
+
+	if ((arg0->unk20 & 0x10) != 0) {
+		func_80081290_51740();
+	} else {
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0x06000000;
+		dl->words.w1 = (u32)arg0->unk0;
+	}
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xBD000000;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007FE8C_5033C.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(1488)
