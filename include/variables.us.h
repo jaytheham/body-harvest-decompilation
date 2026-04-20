@@ -752,6 +752,7 @@ extern f64 D_800AEA50_7EF00;
 extern f64 D_800AEA68_7EF18;
 extern f32 D_800AEA70_7EF20;
 extern f32 D_800AEA74_7EF24;
+extern f32 D_800AED68_7F218;
 extern u8 D_800AED78[];
 extern s32 D_800AED88[];
 
@@ -831,6 +832,7 @@ extern FrontendStreamSlot D_800D8578[];
 extern FrontendStreamSlot* D_800D8550[];
 extern s32 D_800D88E8;
 extern u8 D_800AA640[];
+extern Mtx D_800AA648_7AAF8;
 extern s8 D_800AA694[];
 extern u8 D_800AA724[];
 extern s32 D_800DE068;

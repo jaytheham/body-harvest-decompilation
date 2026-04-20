@@ -2676,4 +2676,70 @@ void func_8008FDF0_602A0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008FE98_60348.s")
 
+#ifdef NON_MATCHING
+// CURRENT(1273)
+void func_80090648_60AF8(void) {
+	s16 i;
+	u16 perspNorm;
+	FrontendCamState* cam;
+	FrontendCamState** camPtr;
+	Gfx* dl;
+
+	gDPPipeSync(D_8005BB2C++);
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB4000000;
+	dl->words.w1 = (u32)&D_3F320;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xAF0007FF;
+	dl->words.w1 = (u32)&D_30130;
+
+	func_80011E14_12A14(0);
+	func_80004CC8_58C8();
+	func_80004D38_5938();
+
+	camPtr = (FrontendCamState**)&D_800D7A18;
+	cam = *camPtr;
+	guPerspective((Mtx*)D_8005BB38, &perspNorm, (f32)cam->unk3A, D_800D7974, D_800D8510, D_800AED68_7F218, 1.0f);
+	gSPPerspNormalize(D_8005BB2C++, perspNorm);
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+
+	D_8005BB38 += 0x40;
+	cam = *camPtr;
+	guLookAt((Mtx*)D_8005BB38,
+			 cam->unk10.x,
+			 cam->unk10.y,
+			 cam->unk10.z,
+			 cam->unk1C.x,
+			 cam->unk1C.y,
+			 cam->unk1C.z,
+			 cam->unk28.x,
+			 cam->unk28.y,
+			 cam->unk28.z);
+
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, (u32)&D_800AA648_7AAF8, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+
+	gDPPipeSync(D_8005BB2C++);
+	gSPClearGeometryMode(D_8005BB2C++, -1);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_LINE, G_RM_AA_ZB_XLU_LINE2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	gDPPipeSync(D_8005BB2C++);
+
+	for (i = 0; i < 0x96; i++) {
+		if (D_800DE130[i].unk0 == 1) {
+			func_80086528_569D8((u8)i);
+		} else if (D_800DE130[i].unk0 == 0xA) {
+			func_8008C8E0_5CD90();
+		}
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80090648_60AF8.s")
+#endif
