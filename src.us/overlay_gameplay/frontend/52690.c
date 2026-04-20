@@ -1916,7 +1916,58 @@ void func_8008CC3C_5D0EC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008CC3C_5D0EC.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008CDC8_5D278.s")
+void func_8008CDC8_5D278(void) {
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + D_800DE128);
+	D_8005BB34->v.ob[1] = (s16)(s32)D_800DE118.y;
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z + D_800DE128);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = D_800DE124[0];
+	D_8005BB34->v.cn[1] = D_800DE124[1];
+	D_8005BB34->v.cn[2] = D_800DE124[2];
+	D_8005BB34->v.cn[3] = D_800DE12C;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x - D_800DE128);
+	D_8005BB34->v.ob[1] = (s16)(s32)D_800DE118.y;
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z + D_800DE128);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = D_800DE12D << 6;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = D_800DE124[0];
+	D_8005BB34->v.cn[1] = D_800DE124[1];
+	D_8005BB34->v.cn[2] = D_800DE124[2];
+	D_8005BB34->v.cn[3] = D_800DE12C;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x - D_800DE128);
+	D_8005BB34->v.ob[1] = (s16)(s32)D_800DE118.y;
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z - D_800DE128);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = D_800DE12D << 6;
+	D_8005BB34->v.tc[1] = D_800DE12E << 6;
+	D_8005BB34->v.cn[0] = D_800DE124[0];
+	D_8005BB34->v.cn[1] = D_800DE124[1];
+	D_8005BB34->v.cn[2] = D_800DE124[2];
+	D_8005BB34->v.cn[3] = D_800DE12C;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + D_800DE128);
+	D_8005BB34->v.ob[1] = (s16)(s32)D_800DE118.y;
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z - D_800DE128);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = D_800DE12E << 6;
+	D_8005BB34->v.cn[0] = D_800DE124[0];
+	D_8005BB34->v.cn[1] = D_800DE124[1];
+	D_8005BB34->v.cn[2] = D_800DE124[2];
+	D_8005BB34->v.cn[3] = D_800DE12C;
+
+	D_8005BB34++;
+	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008D14C_5D5FC.s")
 
