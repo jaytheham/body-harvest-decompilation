@@ -473,7 +473,86 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
   }
 }
 
+#ifdef NON_MATCHING
+// CURRENT(13048)
+void func_80070CC4_41174(void)
+{
+	s16 selectedFileIndex;
+	s32 playAltMoveSfx;
+	MissionDataNav* missionData;
+	MissionDataNav* selectedFileData;
+
+	playAltMoveSfx = 0;
+
+	if (D_8004758A < 0x15 && D_8004758A >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
+		D_80094824_64CD4 = 1;
+		D_8009482C_64CDC = 0x1E;
+	}
+
+	if (D_8004758B < 0x15 && D_8004758B >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
+		D_80094828_64CD8 = 1;
+		D_80094830_64CE0 = 0x1E;
+	}
+
+	missionData = (MissionDataNav*) D_800909B0;
+	selectedFileIndex = D_800D74A4;
+	selectedFileData = &missionData[selectedFileIndex];
+
+	if (D_80094824_64CD4 || --D_8009482C_64CDC == 0) {
+		if ((D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) && selectedFileData->unk22 != 0) {
+			selectedFileIndex = selectedFileData->unk22;
+			while (selectedFileIndex != 0 && missionData[selectedFileIndex].unk1C == 3) {
+				selectedFileIndex = missionData[selectedFileIndex].unk22;
+			}
+		} else if ((D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) && selectedFileData->unk23 != 0) {
+			selectedFileIndex = selectedFileData->unk23;
+			while (selectedFileIndex != 0 && missionData[selectedFileIndex].unk1C == 3) {
+				selectedFileIndex = missionData[selectedFileIndex].unk23;
+			}
+		}
+	}
+
+	if (selectedFileIndex != D_800D74A4 && selectedFileIndex != 0) {
+		D_800D74A4 = selectedFileIndex;
+		D_80094824_64CD4 = 0;
+		if (D_8009482C_64CDC < 8) {
+			D_8009482C_64CDC = 8;
+		}
+		func_800153D8_15FD8(0xC9);
+		return;
+	}
+
+	if (D_80094828_64CD8 || --D_80094830_64CE0 == 0) {
+		if ((D_8004758B >= 0x15 || isButtonNewlyPressed(0, 0x800)) && selectedFileData->unk24 != 0) {
+			selectedFileIndex = selectedFileData->unk24;
+			while (selectedFileIndex != 0 && missionData[selectedFileIndex].unk1C == 3) {
+				selectedFileIndex = missionData[selectedFileIndex].unk24;
+			}
+			playAltMoveSfx = 1;
+		} else if ((D_8004758B < -0x14 || isButtonNewlyPressed(0, 0x400)) && selectedFileData->unk25 != 0) {
+			selectedFileIndex = selectedFileData->unk25;
+			while (selectedFileIndex != 0 && missionData[selectedFileIndex].unk1C == 3) {
+				selectedFileIndex = missionData[selectedFileIndex].unk25;
+			}
+		}
+	}
+
+	if (selectedFileIndex != D_800D74A4 && selectedFileIndex != 0) {
+		D_800D74A4 = selectedFileIndex;
+		D_80094828_64CD8 = 0;
+		if (D_80094830_64CE0 < 8) {
+			D_80094830_64CE0 = 8;
+		}
+		if (playAltMoveSfx != 0) {
+			func_800153D8_15FD8(0xCA);
+		} else {
+			func_800153D8_15FD8(0xC9);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070CC4_41174.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800710D8_41588.s")
 
