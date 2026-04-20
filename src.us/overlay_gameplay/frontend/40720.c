@@ -4030,7 +4030,126 @@ void func_80080AD4_50F84(FrontendStreamSlot *arg0, AnimChannelState *arg1, u8 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080AD4_50F84.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80080B80_51030(s32 *arg0, s16 *arg1, s16 *arg2, s32 arg3) {
+	extern Unk800476C8 D_800DE070[2];
+	extern s32 D_800DE098;
+	s32 sp3C;
+	s32 sp38;
+	s32 sp34;
+	s32 sp30;
+	s32 sp2C;
+	s32 temp1;
+	s32 temp2;
+	s32 mask;
+	s32 *src;
+	s32 *dst;
+
+	D_800DE070[0].unkC = 0;
+	D_800DE070[0].unk1C = 0;
+	D_800DE070[1].unkC = 0;
+	D_800DE070[1].unk1C = 0x10000;
+
+	if (arg0 != NULL) {
+		D_800DE070[1].unk0 = arg0[0];
+		D_800DE070[1].unk4 = arg0[1];
+		D_800DE070[1].unk8 = arg0[2];
+	} else {
+		D_800DE070[1].unk0 = 0;
+		D_800DE070[1].unk4 = 0;
+		D_800DE070[1].unk8 = 0;
+	}
+
+	if (arg1 != NULL) {
+		sp3C = coss((u16)arg1[0]);
+		sp38 = sins((u16)arg1[0]);
+		sp34 = coss((u16)arg1[2]);
+		sp30 = sins((u16)arg1[2]);
+		sp2C = coss((u16)arg1[1]);
+		temp1 = sins((u16)arg1[1]);
+
+		D_800DE070[0].unk0 = ((sp3C * sp2C) >> 0xF) * 2;
+
+		temp2 = (sp30 * sp38) >> 0xF;
+		D_800DE070[0].unk10 = (temp2 - ((s32)(((sp3C * sp34) >> 0xF) * temp1) >> 0xF)) * 2;
+
+		temp2 = (sp38 * sp34) >> 0xF;
+		D_800DE070[1].unk0 = (temp2 + ((s32)(((sp3C * sp30) >> 0xF) * temp1) >> 0xF)) * 2;
+
+		D_800DE070[0].unk4 = temp1 * 2;
+		D_800DE070[0].unk14 = ((sp34 * sp2C) >> 0xF) * 2;
+		D_800DE070[1].unk4 = ((-sp30 * sp2C) >> 0xF) * 2;
+		D_800DE070[0].unk8 = ((-sp38 * sp2C) >> 0xF) * 2;
+
+		D_800DE070[0].unk18 = (((sp3C * sp30) >> 0xF) + ((temp2 * temp1) >> 0xF)) * 2;
+		D_800DE098 = (((sp3C * sp34) >> 0xF) - ((temp1 * ((sp30 * sp38) >> 0xF)) >> 0xF)) * 2;
+	} else {
+		D_800DE070[0].unk0 = 0x10000;
+		D_800DE070[0].unk10 = 0;
+		D_800DE070[1].unk0 = 0;
+		D_800DE070[0].unk4 = 0;
+		D_800DE070[0].unk14 = 0x10000;
+		D_800DE070[1].unk4 = 0;
+		D_800DE070[0].unk8 = 0;
+		D_800DE070[0].unk18 = 0;
+		D_800DE070[1].unk8 = 0x10000;
+	}
+
+	if (arg2 != NULL) {
+		s32 temp3;
+		s32 temp4;
+		s32 temp5;
+
+		temp3 = D_800DE070[0].unk0 * arg2[0];
+		D_800DE070[0].unk0 = temp3;
+		temp4 = D_800DE070[0].unk4 * arg2[0];
+		D_800DE070[0].unk4 = temp4;
+		D_800DE070[0].unk0 = temp3 >> 8;
+		temp5 = D_800DE070[0].unk8 * arg2[0];
+		D_800DE070[0].unk8 = temp5;
+		D_800DE070[0].unk4 = temp4 >> 8;
+		D_800DE070[0].unk8 = temp5 >> 8;
+
+		temp3 = D_800DE070[0].unk10 * arg2[1];
+		D_800DE070[0].unk10 = temp3;
+		temp4 = D_800DE070[0].unk14 * arg2[1];
+		D_800DE070[0].unk14 = temp4;
+		D_800DE070[0].unk10 = temp3 >> 8;
+		temp5 = D_800DE070[0].unk18 * arg2[1];
+		D_800DE070[0].unk18 = temp5;
+		D_800DE070[0].unk14 = temp4 >> 8;
+		D_800DE070[0].unk18 = temp5 >> 8;
+
+		temp3 = D_800DE070[1].unk0 * arg2[2];
+		D_800DE070[1].unk0 = temp3;
+		temp4 = D_800DE070[1].unk4 * arg2[2];
+		D_800DE070[1].unk4 = temp4;
+		D_800DE070[1].unk0 = temp3 >> 8;
+		temp5 = D_800DE070[1].unk8 * arg2[2];
+		D_800DE070[1].unk8 = temp5;
+		D_800DE070[1].unk4 = temp4 >> 8;
+		D_800DE070[1].unk8 = temp5 >> 8;
+	}
+
+	mask = 0xFFFF0000;
+	src = (s32 *)D_800DE070;
+	dst = (s32 *)arg3;
+	do {
+		dst[0] = ((src[1] & mask) >> 0x10) + (src[0] & mask);
+		dst += 4;
+		dst[4] = (src[0] << 0x10) + (src[1] & 0xFFFF);
+		dst[-3] = ((src[3] & mask) >> 0x10) + (src[2] & mask);
+		dst[5] = (src[2] << 0x10) + (src[3] & 0xFFFF);
+		dst[-2] = ((src[5] & mask) >> 0x10) + (src[4] & mask);
+		dst[6] = (src[4] << 0x10) + (src[5] & 0xFFFF);
+		dst[-1] = ((src[7] & mask) >> 0x10) + (src[6] & mask);
+		dst[7] = (src[6] << 0x10) + (src[7] & 0xFFFF);
+		src += 8;
+	} while (src != (s32 *)&D_800DE0B0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080B80_51030.s")
+#endif
 
 // CURRENT(310)
 #ifdef NON_MATCHING
