@@ -140,6 +140,50 @@ typedef struct {
 } FrontendLightAnimState; /* size = 0x1C */
 
 typedef struct {
+	/* 0x00 */ f32 unk0;
+	/* 0x04 */ f32 unk4;
+	/* 0x08 */ f32 unk8;
+} FrontendInterpPos; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ u8 unk4;
+	/* 0x05 */ u8 unk5;
+	/* 0x06 */ u8 unk6;
+	/* 0x07 */ u8 unk7;
+} FrontendInterpVtxData; /* size = 0x08 */
+
+typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
+	/* 0x02 */ u8 unk2;
+	/* 0x03 */ u8 unk3;
+	/* 0x04 */ u8 unk4;
+	/* 0x05 */ u8 unk5;
+	/* 0x06 */ u8 unk6;
+	/* 0x07 */ u8 unk7;
+} FrontendTriData; /* size = 0x08 */
+
+typedef struct {
+	/* 0x00 */ FrontendTriData *unk0;
+	/* 0x04 */ u8 unk4;
+	/* 0x05 */ u8 unk5;
+	/* 0x06 */ u8 unk6;
+	/* 0x07 */ u8 unk7;
+} FrontendTriBatch; /* size = 0x08 */
+
+typedef struct {
+	/* 0x00 */ FrontendInterpPos *unk0;
+	/* 0x04 */ FrontendInterpPos *unk4;
+	/* 0x08 */ FrontendInterpVtxData *unk8;
+	/* 0x0C */ FrontendTriBatch *unkC;
+	/* 0x10 */ s32 unk10;
+	/* 0x14 */ s32 unk14;
+	/* 0x18 */ f32 unk18;
+} FrontendInterpState; /* size = 0x1C */
+
+typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ u8 pad04[0x64];
 } Unk8025669C; /* size = 0x68 */
