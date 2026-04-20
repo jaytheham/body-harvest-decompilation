@@ -2118,6 +2118,7 @@ extern s16 D_800FCA7A;
 extern s16 D_800FCA7C;
 extern s16 D_800FCA7E;
 extern s8 D_800FB6FE;
+extern s16 D_800FB782;
 extern s8 D_800FB7B0;
 extern s8 D_800FB7B4;
 extern s8 D_800FB7BE;

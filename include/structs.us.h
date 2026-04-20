@@ -1860,5 +1860,16 @@ typedef struct {
 	f32 unk10;
 } Unk8007C1DC;
 
+typedef struct {
+	u8 pad0[2];
+	s16 unk2;
+	s16 unk4;
+	u8 pad6[0xB];
+	u8 unk11;
+	u8 unk12;
+	u8 unk13;
+	u8 pad14[2];
+} Unk86A34Effect;
+
 #endif
 
