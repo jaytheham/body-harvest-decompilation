@@ -3464,7 +3464,225 @@ void func_8007949C_4994C(s32 arg0, s32 arg1) {
 #endif
 
 // displayHighScores
+#ifdef NON_MATCHING
+// CURRENT(7438)
+void func_800796D0_49B80(s32 arg0, s32 arg1) {
+	s16 shouldExit;
+	s16 i;
+	s16 timer;
+	volatile s32 tempArg1;
+	s32 t;
+	s32 fade;
+	s32 slide;
+	s32 minutes;
+	s32 seconds;
+	s32 centiseconds;
+	Unk80047FB8* entry;
+
+	shouldExit = 0;
+	timer = 0;
+	tempArg1 = arg1;
+
+	func_8007949C_4994C(arg0, tempArg1 & 0xFFFF);
+	func_800134CC_140CC();
+
+	do {
+		if (timer < 0x7D0) {
+			timer++;
+		}
+
+		func_800791A0_49650(0);
+		func_8000AFDC_BBDC();
+
+		drawText(&D_800ADCE0_7E190, 0xFF, 0, 0);
+		drawText(&D_800ADCE4_7E194, 0xFF);
+
+		switch (D_800313D0_31FD0) {
+		case 2:
+			drawText(&D_800ADCF8_7E1A8, 0x80, 0);
+			break;
+		case 1:
+			drawText(&D_800ADD08_7E1B8, 0x80, 0);
+			break;
+		case 0:
+		default:
+			drawText(&D_800ADCE8_7E198, 0x80, 0);
+			break;
+		}
+
+		drawText(&D_800ADD18_7E1C8, 0x14, 0x32, 0x12C, 0xFA);
+
+		for (i = 0; i < 5; i++) {
+			t = i * 250;
+			if (timer < (t + 0x14)) {
+				continue;
+			}
+			if ((i != 4) && (timer >= (t + 0x10E))) {
+				continue;
+			}
+
+			slide = (timer - t) - 0x14;
+			if (slide < 0x1F) {
+				continue;
+			}
+
+			fade = slide - 0x32;
+
+			if (i != 4) {
+				t = (fade * 6) - 0x384;
+				if (t < 0) {
+					t = 0;
+				}
+				if (t >= 0x12D) {
+					t = 0x12C;
+				}
+
+				drawText(&D_800ADD1C_7E1CC, t);
+				drawText(&D_800ADD20_7E1D0, (s32)(255.0f - (((f32)t / 300.0f) * 255.0f)));
+			}
+
+			drawText(&D_800ADD24_7E1D4, 0x80, 2, *((&D_80031548) - i));
+
+			if (fade >= 0x10) {
+				if (i == 4) {
+					func_8000577C_637C();
+				} else {
+					drawText(&D_800ADD2C_7E1DC, 0, 0xFF, 0);
+				}
+
+				drawText(&D_800ADD30_7E1E0, 0x800);
+
+				entry = (&D_80048008) - i;
+				t = 6 - func_8007946C_4991C(entry);
+				t = (t < 0) ? ((t + 1) >> 1) : (t >> 1);
+				drawText(&D_800ADD34_7E1E4, t + 4, 3, entry);
+				drawText(&D_800ADD3C_7E1EC, 0x400);
+			}
+
+			t = (fade << 4) - 0x1E0;
+			if (t < 0) {
+				t = 0;
+			}
+			if (t >= 0x281) {
+				t = 0x280;
+			}
+
+			entry = (&D_80048008) - i;
+			drawText(&D_800ADD40_7E1F0, t);
+
+			switch (D_800313D0_31FD0) {
+			case 2:
+				drawText(&D_800ADD50_7E200, -0x10, 4);
+				break;
+			case 1:
+				drawText(&D_800ADD5C_7E20C, -0x10, 4);
+				break;
+			case 0:
+			default:
+				drawText(&D_800ADD44_7E1F4, -0x10, 4);
+				break;
+			}
+
+			drawText(&D_800ADD68_7E218, -t);
+			drawText(&D_800ADD6C_7E21C, 0x30, 4, entry->unk8);
+
+			t = (fade << 4) - 0x2D0;
+			if (t < 0) {
+				t = 0;
+			}
+			if (t >= 0x281) {
+				t = 0x280;
+			}
+
+			drawText(&D_800ADD74_7E224, t);
+
+			switch (D_800313D0_31FD0) {
+			case 2:
+				drawText(&D_800ADD8C_7E23C, -0x10, 5);
+				break;
+			case 1:
+				drawText(&D_800ADD98_7E248, -0x10, 5);
+				break;
+			case 0:
+			default:
+				drawText(&D_800ADD78_7E228, -0x10, 5);
+				break;
+			}
+
+			drawText(&D_800ADDA8_7E258, -t);
+			drawText(&D_800ADDAC_7E25C, 0x30, 5, entry->unkC);
+
+			t = (fade << 4) - 0x3C0;
+			if (t < 0) {
+				t = 0;
+			}
+			if (t >= 0x281) {
+				t = 0x280;
+			}
+
+			fade = entry->unk10;
+			minutes = (fade / 60) / 60;
+			seconds = (fade / 60) % 60;
+			centiseconds = fade % 60;
+
+			if (minutes >= 100) {
+				minutes = 99;
+				seconds = 59;
+				centiseconds = 59;
+			}
+
+			drawText(&D_800ADDB4_7E264, t);
+
+			switch (D_800313D0_31FD0) {
+			case 2:
+				drawText(&D_800ADDC0_7E270, -0x10, 6);
+				break;
+			case 1:
+				drawText(&D_800ADDC8_7E278, -0x10, 6);
+				break;
+			case 0:
+			default:
+				drawText(&D_800ADDB8_7E268, -0x10, 6);
+				break;
+			}
+
+			drawText(&D_800ADDD4_7E284, -t);
+
+			if ((minutes < 10) && (seconds < 10) && (centiseconds < 10)) {
+				drawText(&D_800ADDD8_7E288, 0x30, 6, minutes, seconds, centiseconds);
+			} else if ((minutes < 10) && (seconds < 10)) {
+				drawText(&D_800ADDE8_7E298, 0x30, 6, minutes, seconds, centiseconds);
+			} else if ((minutes < 10) && (centiseconds < 10)) {
+				drawText(&D_800ADDF8_7E2A8, 0x30, 6, minutes, seconds, centiseconds);
+			} else if ((seconds < 10) && (centiseconds < 10)) {
+				drawText(&D_800ADE08_7E2B8, 0x30, 6, minutes, seconds, centiseconds);
+			} else if (minutes < 10) {
+				drawText(&D_800ADE18_7E2C8, 0x30, 6, minutes, seconds, centiseconds);
+			} else if (seconds < 10) {
+				drawText(&D_800ADE24_7E2D4, 0x30, 6, minutes, seconds, centiseconds);
+			} else if (centiseconds < 10) {
+				drawText(&D_800ADE30_7E2E0, 0x30, 6, minutes, seconds, centiseconds);
+			} else {
+				drawText(&D_800ADE3C_7E2EC, 0x30, 6, minutes, seconds, centiseconds);
+			}
+		}
+
+		if ((isButtonNewlyPressed(0, 0xD000) != 0) || ((i == 5) && (timer == 0x640))) {
+			shouldExit = 1;
+		}
+
+		func_8000B044_BC44();
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+		osSendMesg(&D_8006A8B0, &D_800314CC_320CC, 1);
+	} while (shouldExit == 0);
+
+	func_800153D8_15FD8(0xC8);
+	drawText(&D_800ADE48_7E2F8, 0xFF, 0xFF, 0xFE);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800796D0_49B80.s")
+#endif
 
 // CURRENT(1074)
 #ifdef NON_MATCHING

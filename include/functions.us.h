@@ -143,6 +143,7 @@ void func_800132CC_13ECC(void);
 void func_80013324_13F24(void);
 void func_80013398_13F98(void);
 void func_80013410_14010(void);
+void func_800134CC_140CC(void);
 void func_80013460(void);
 void func_8001355C_1415C(void);
 void func_80013684_14284(void);
