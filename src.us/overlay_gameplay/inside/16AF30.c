@@ -68,7 +68,36 @@ void func_800830F4_16B1B4(f32 arg0, Vec3f *arg1, Vec3f *arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008311C_16B1DC.s")
 
+#ifdef NON_MATCHING
+s32 func_80083224_16B2E4(s32 arg0) {
+	u8 slot;
+	u8 i;
+
+	if (D_800FB7AC >= 0xF) {
+		osSyncPrintf(&D_800A4F94_18D054, (u8) arg0);
+		slot = 0xFB;
+	} else {
+		slot = D_800FB7AD;
+		D_800FB7AC++;
+		D_800FB7AD = 0xF;
+		D_800FB6F8[slot].unk4 = 0;
+		D_800FB6F8[slot].unk6 = -6;
+		D_800FB6F8[slot].pad0[0] = arg0;
+		if (slot < 0xF) {
+			for (i = slot; i < 0xF; i++) {
+				if (D_800FB6F8[i].pad0[0] == 0xFA) {
+					D_800FB7AD = i;
+					i = 0xF;
+				}
+			}
+		}
+	}
+
+	return slot;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083224_16B2E4.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80083300_16B3C0(s32 arg0) {
