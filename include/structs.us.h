@@ -1861,6 +1861,79 @@ typedef struct {
 } Unk80378D0; /* size = 0x10 - DMA range descriptor */
 
 typedef struct {
+	u8 pad00[0x04];
+	f32 unk04;
+	f32 unk08;
+	f32 unk0C;
+	f32 unk10;
+	f32 unk14;
+	f32 unk18;
+	u8 pad1C[0x04];
+	f32 unk20;
+	f32 unk24;
+	f32 unk28;
+	f32 unk2C;
+	f32 unk30;
+	f32 unk34;
+	u8 unk38;
+	u8 pad39[0x03];
+	f32 unk3C;
+	f32 unk40;
+	f32 unk44;
+	f32 unk48;
+	f32 unk4C;
+	f32 unk50;
+	u8 unk54;
+	u8 pad55[0x03];
+	f32 unk58;
+	f32 unk5C;
+	f32 unk60;
+	f32 unk64;
+	f32 unk68;
+	f32 unk6C;
+	u8 unk70;
+} Unk158330SrcState;
+
+typedef struct {
+	u8 pad00[0x14];
+	f32 unk14;
+	f32 unk18;
+	f32 unk1C;
+	f32 unk20;
+	f32 unk24;
+	f32 unk28;
+	u8 pad2C[0x18];
+	f32 unk44;
+	f32 unk48;
+	f32 unk4C;
+	f32 unk50;
+	f32 unk54;
+	f32 unk58;
+	u8 pad5C[0x18];
+	f32 unk74;
+	f32 unk78;
+	f32 unk7C;
+	f32 unk80;
+	f32 unk84;
+	f32 unk88;
+	u8 pad8C[0x14];
+	s16 unkA0;
+	u8 padA2[0x02];
+	f32 unkA4;
+	f32 unkA8;
+	f32 unkAC;
+	f32 unkB0;
+	f32 unkB4;
+	f32 unkB8;
+	u8 padBC[0x12];
+	s16 unkD0;
+	u8 padD2[0x2E];
+	s16 unk102;
+	u8 pad104[0x2E];
+	s16 unk132;
+} Unk158330DstState;
+
+typedef struct {
 	char pad0[0x10];
 	f32 unk10;
 } Unk8007C1DC;

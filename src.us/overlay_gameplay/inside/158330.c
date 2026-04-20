@@ -162,7 +162,101 @@ void func_8007313C_15B1FC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80073200_15B2C0.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(1240) */
+void func_8007343C_15B4FC(void) {
+	Unk158330SrcState *src;
+	Unk158330SrcState *srcEnd;
+	Unk158330DstState *dst;
+	f32 tempF4;
+	f32 tempF6;
+	f32 tempF8;
+	f32 tempF10;
+	f32 tempF16;
+	f32 tempF18;
+	u8 tempT6;
+	u8 tempT7;
+	u8 tempT8;
+	u8 tempT9;
+	u8 *srcBase;
+
+	dst = (Unk158330DstState *) D_800E66A8;
+	src = (Unk158330SrcState *) &D_80047B70;
+	srcEnd = (Unk158330SrcState *) &D_80047D30;
+	do {
+		tempF4 = src->unk04;
+		tempF6 = src->unk08;
+		tempF8 = src->unk0C;
+		tempF10 = src->unk10;
+		tempF16 = src->unk14;
+		tempF18 = src->unk18;
+		dst->unk14 = tempF4;
+		dst->unk18 = tempF6;
+		dst->unk1C = tempF8;
+		dst->unk20 = tempF10;
+		dst->unk24 = tempF16;
+		dst->unk28 = tempF18;
+
+		tempF18 = src->unk34;
+		tempF16 = src->unk30;
+		tempF10 = src->unk2C;
+		tempF8 = src->unk28;
+		tempF6 = src->unk24;
+		tempF4 = src->unk20;
+		dst->unk58 = tempF18;
+		dst->unk54 = tempF16;
+		dst->unk50 = tempF10;
+		dst->unk4C = tempF8;
+		dst->unk48 = tempF6;
+		dst->unk44 = tempF4;
+
+		tempF4 = src->unk3C;
+		tempF6 = src->unk40;
+		tempF8 = src->unk44;
+		tempF10 = src->unk48;
+		tempF16 = src->unk4C;
+		tempF18 = src->unk50;
+		dst->unk74 = tempF4;
+		dst->unk78 = tempF6;
+		dst->unk7C = tempF8;
+		dst->unk80 = tempF10;
+		dst->unk84 = tempF16;
+		dst->unk88 = tempF18;
+
+		tempF18 = src->unk6C;
+		tempF16 = src->unk68;
+		tempF10 = src->unk64;
+		tempF8 = src->unk60;
+		tempF6 = src->unk5C;
+		tempF4 = src->unk58;
+		tempT7 = src->unk38;
+		tempT8 = src->unk54;
+		tempT9 = src->unk70;
+		tempT6 = src->pad1C[0];
+
+		src = (Unk158330SrcState *) ((u8 *) src + 0x70);
+		dst = (Unk158330DstState *) ((u8 *) dst + 0xC0);
+
+		dst[-1].unkB8 = tempF18;
+		dst[-1].unkB4 = tempF16;
+		dst[-1].unkB0 = tempF10;
+		dst[-1].unkAC = tempF8;
+		dst[-1].unkA8 = tempF6;
+		dst[-1].unkA4 = tempF4;
+		dst[-1].unkA0 = tempT7;
+		dst[-1].unkD0 = tempT8;
+		dst[-1].unk102 = tempT9;
+		dst[-1].unk132 = tempT6;
+	} while (src != srcEnd);
+
+	srcBase = (u8 *) &D_80047B70;
+	D_800E6A78.unkE = *(s32 *) (srcBase + 0x1C4);
+	D_800E6A78.unk4C = *(f32 *) (srcBase + 0x1C8);
+	D_800E6A78.unk54 = *(f32 *) (srcBase + 0x1CC);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007343C_15B4FC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007356C_15B62C.s")
 

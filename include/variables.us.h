@@ -370,6 +370,7 @@ extern f32 D_80047958;
 extern f32 D_8004795C;
 extern s16 D_80047970[256];
 extern s32 D_80047B70;
+extern s32 D_80047D30;
 extern u8 D_80047F80;
 extern Unk80047FB8 D_80047FB8[5];
 extern Unk80047FB8 D_80048008;
