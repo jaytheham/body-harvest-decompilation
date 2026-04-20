@@ -1220,7 +1220,77 @@ void func_80089AB4_59F64(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80089B38_59FE8.s")
 
+#ifdef NON_MATCHING
+void func_8008A094_5A544(u8 arg0) {
+	extern f64 D_800AEC70_7F120;
+	extern f64 D_800AEC78_7F128;
+	extern f64 D_800AEC80_7F130;
+
+	Unk800DE840 *entry;
+	Unk800DE840 *spawn;
+	Unk800DE840 *template;
+	u8 *spawnBytes;
+	u8 *templateBytes;
+	f32 x;
+	f32 y;
+	f32 z;
+	f32 randX;
+	f32 randY;
+	f32 randZ;
+	s16 index;
+	s16 templateIndex;
+	s32 scale;
+
+	entry = &D_800DE840[D_800DE130[arg0].unk6];
+	templateIndex = entry->unk4;
+	index = func_80083B7C_5402C(arg0);
+	if (index == -3) {
+		return;
+	}
+
+	spawn = &D_800DE840[index];
+	spawn->unk8 = entry->unk8;
+	spawn->unkA = entry->unkA;
+	spawn->unkC = entry->unkC;
+
+	template = &D_800DE840[templateIndex];
+	spawn->unk11 = template->unk10;
+	spawn->unk2 = (func_800038E0_44E0() % (entry->unk2 * 2)) + entry->unk2;
+
+	templateBytes = (u8 *)&template->unk8;
+	x = (s8)templateBytes[0];
+	y = (s8)templateBytes[1];
+	z = (s8)templateBytes[2];
+	func_800837B4_53C64(&x, &x);
+
+	randX = (f32)((f64)(f32)(func_800038E0_44E0() % templateBytes[4]) / D_800AEC70_7F120);
+	if ((func_800038E0_44E0() % 21) < 10) {
+		randX = -randX;
+	}
+	randX += x;
+
+	randY = (f32)((f64)(f32)(func_800038E0_44E0() % templateBytes[4]) / D_800AEC78_7F128);
+	if ((func_800038E0_44E0() % 21) < 10) {
+		randY = -randY;
+	}
+	randY += y;
+
+	randZ = (f32)((f64)(f32)(func_800038E0_44E0() % templateBytes[4]) / D_800AEC80_7F130);
+	if ((func_800038E0_44E0() % 21) < 10) {
+		randZ = -randZ;
+	}
+	randZ += z;
+
+	func_800837B4_53C64(&randX, &randX);
+	spawnBytes = (u8 *)&spawn->unk8;
+	scale = (s32)templateBytes[3] / 4;
+	spawnBytes[0xA] = (s8)((f32)scale * randX);
+	spawnBytes[0xB] = (s8)((f32)scale * randY);
+	spawnBytes[0xC] = (s8)((f32)scale * randZ);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008A094_5A544.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(3439)
