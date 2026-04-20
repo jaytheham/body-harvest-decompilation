@@ -2125,6 +2125,8 @@ extern s8 D_800FB7C1;
 extern s8 D_800FB7C4;
 extern u8 D_800FB7AC;
 extern u8 D_800FB7AD;
+extern s16 D_800FC8E0;
+extern s16 D_800FC8E2;
 extern u8 D_8006AC10; // english comms strings
 extern u8 D_8006C410;
 extern u8 D_8006C450; // english comms strings offsets

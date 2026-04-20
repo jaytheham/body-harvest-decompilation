@@ -527,7 +527,53 @@ void func_8008B058_173118(u8 arg0) {
 	D_800FCA78--;
 }
 
+#ifdef NON_MATCHING
+/* CURRENT(285) */
+void func_8008B0AC_17316C(void) {
+	s32 i;
+	s32 j;
+
+	func_8008A59C_17265C();
+
+	i = 0;
+	do {
+		*(((u8 *) &D_800FB6F8) + (i * 0xC)) = 0xFA;
+	} while ((i = (i + 1) & 0xFF) < 0xF);
+
+	j = 0;
+	do {
+		*(((u8 *) &D_800FB7B0) + (j * 0x16)) = 0;
+	} while ((j = (j + 1) & 0xFFFF) < 0xC8);
+
+	D_800FC8E2 = 0;
+	D_800FC8E0 = 0;
+
+	D_800FB6F8[14].pad0[0] = 3;
+	D_800FB6F8[14].unk4 = 0;
+	D_800FB6F8[14].unk6 = -6;
+	*((s16 *) &D_800FB6F8[14].pad8[0]) = -6;
+
+	D_800FB6F8[13].pad0[0] = 4;
+	D_800FB6F8[13].unk4 = 0;
+	D_800FB6F8[13].unk6 = -6;
+	*((s16 *) &D_800FB6F8[13].pad8[0]) = -6;
+
+	D_800FB6F8[12].pad0[0] = 5;
+	D_800FB6F8[12].unk4 = 0;
+	D_800FB6F8[12].unk6 = -6;
+	*((s16 *) &D_800FB6F8[12].pad8[0]) = -6;
+
+	D_800FB6F8[11].pad0[0] = 6;
+	D_800FB6F8[11].unk4 = 0;
+	D_800FB6F8[11].unk6 = -6;
+	*((s16 *) &D_800FB6F8[11].pad8[0]) = -6;
+
+	D_800FB7AD = 0;
+	D_800FB7AC = 4;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B0AC_17316C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B1A8_173268.s")
 
