@@ -2312,7 +2312,83 @@ void func_8008EEC4_5F374(void) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(905)
+void func_8008F1E0_5F690(void) {
+	f32 sp90[3];
+	f32 temp_f20;
+	f64 temp_f22;
+	f64 temp_f24;
+	s16 temp_a0;
+	s16 temp_a1;
+	s32 var_s2;
+	s32 var_s3;
+	s32 var_s4;
+	s32 var_s5;
+	s32 temp_hi;
+	s32 var_s1;
+
+	if (D_800DE0B7 == 1) {
+		var_s1 = 0;
+		if (D_800DE0BB > 0) {
+			D_800DE0BB -= 2;
+		}
+
+		var_s5 = 0x10E;
+		var_s4 = 0x5A;
+		var_s3 = 0xB4;
+		var_s2 = 0x168;
+		temp_f24 = 180.0;
+		temp_f22 = 3.14159265358979323846;
+
+		do {
+			sp90[2] = 0.0f;
+			temp_hi = func_800038E0_44E0() % var_s2;
+			temp_a1 = temp_hi;
+			temp_a0 = temp_hi;
+
+			if (temp_a0 == 0) {
+				sp90[1] = 500.0f;
+				sp90[0] = 0.0f;
+			} else if (temp_a0 < var_s4) {
+				temp_f20 = (f32)(((f64)(f32)temp_a1 * temp_f22) / temp_f24);
+				sp90[1] = cosf(temp_f20) * 500.0f;
+				sp90[0] = sinf(temp_f20) * 500.0f;
+			} else if (temp_a0 == var_s4) {
+				sp90[1] = 0.0f;
+				sp90[0] = 500.0f;
+			} else if (temp_a0 < var_s3) {
+				temp_f20 = (f32)(((f64)(f32)(var_s3 - temp_a1) * temp_f22) / temp_f24);
+				sp90[1] = cosf(temp_f20) * -500.0f;
+				sp90[0] = sinf(temp_f20) * 500.0f;
+			} else if (temp_a0 == var_s3) {
+				sp90[1] = -500.0f;
+				sp90[0] = 0.0f;
+			} else if (temp_a0 < var_s5) {
+				temp_f20 = (f32)(((f64)(f32)(temp_a1 - var_s3) * temp_f22) / temp_f24);
+				sp90[1] = cosf(temp_f20) * -500.0f;
+				sp90[0] = sinf(temp_f20) * -500.0f;
+			} else if (temp_a0 == var_s5) {
+				sp90[1] = 0.0f;
+				sp90[0] = -500.0f;
+			} else if (temp_a0 < var_s2) {
+				temp_f20 = (f32)(((f64)(f32)(var_s2 - temp_a1) * temp_f22) / temp_f24);
+				sp90[1] = cosf(temp_f20) * 500.0f;
+				sp90[0] = sinf(temp_f20) * -500.0f;
+			}
+
+			func_800837B4_53C64(sp90, sp90);
+			func_800838B8_53D68(250.0f, sp90, sp90);
+			func_80085CEC_5619C((s16)(s32)sp90[0], (s16)(s32)sp90[1], (s16)(s32)sp90[2], 0, 0, -1, 0x46, 0x1E, 3,
+							0x6E, 0xFF, 0xFF, 0xFF, 4);
+
+			var_s1 = (var_s1 + 1) & 0xFF;
+		} while (var_s1 < 3);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008F1E0_5F690.s")
+#endif
 
 /* Initializes a 12-byte struct entry at D_800DE130[arg1] */
 void func_8008F534_5F9E4(u8 arg0, u8 arg1) {
