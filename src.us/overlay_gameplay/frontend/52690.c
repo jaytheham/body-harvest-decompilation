@@ -719,7 +719,98 @@ void func_8008472C_54BDC(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800847E4_54C94.s")
 
+#ifdef NON_MATCHING
+// CURRENT(2122)
+void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
+	f32 temp_f0;
+	f32 temp_f2;
+	f32 temp_f12;
+	f32 temp_f14;
+	f32 temp_f16;
+	f32 temp_f18;
+	f32 temp_f4;
+
+	temp_f2 = (f32)(u16)arg3;
+	temp_f0 = D_800DE0C0[0];
+	temp_f0 *= temp_f2;
+	temp_f12 = D_800DE0C0[1];
+	temp_f12 *= temp_f2;
+	temp_f14 = D_800DE0C0[2];
+	temp_f14 *= temp_f2;
+	temp_f16 = D_800DE0C0[3];
+	temp_f16 *= temp_f2;
+	temp_f18 = D_800DE0C0[4];
+	temp_f18 *= temp_f2;
+	temp_f4 = D_800DE0C0[5];
+	temp_f4 *= temp_f2;
+
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x + temp_f0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y + temp_f12);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z + temp_f14);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = arg1[0];
+	D_8005BB34->v.cn[1] = arg1[1];
+	D_8005BB34->v.cn[2] = arg1[2];
+	D_8005BB34->v.cn[3] = arg4;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x + temp_f16);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y + temp_f18);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z + temp_f4);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x800;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = arg1[0];
+	D_8005BB34->v.cn[1] = arg1[1];
+	D_8005BB34->v.cn[2] = arg1[2];
+	D_8005BB34->v.cn[3] = arg4;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x - temp_f0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y - temp_f12);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z - temp_f14);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x800;
+	D_8005BB34->v.tc[1] = 0x800;
+	D_8005BB34->v.cn[0] = arg1[0];
+	D_8005BB34->v.cn[1] = arg1[1];
+	D_8005BB34->v.cn[2] = arg1[2];
+	D_8005BB34->v.cn[3] = arg4;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x - temp_f16);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y - temp_f18);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z - temp_f4);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0x800;
+	D_8005BB34->v.cn[0] = arg1[0];
+	D_8005BB34->v.cn[1] = arg1[1];
+	D_8005BB34->v.cn[2] = arg1[2];
+	D_8005BB34->v.cn[3] = arg4;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)arg0->x;
+	D_8005BB34->v.ob[1] = (s16)(s32)arg0->y;
+	D_8005BB34->v.ob[2] = (s16)(s32)arg0->z;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x400;
+	D_8005BB34->v.tc[1] = 0x400;
+	D_8005BB34->v.cn[0] = arg2[0];
+	D_8005BB34->v.cn[1] = arg2[1];
+	D_8005BB34->v.cn[2] = arg2[2];
+	D_8005BB34->v.cn[3] = arg4;
+
+	D_8005BB34++;
+	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 5) & 0x1FFFFFFF), 5, 0);
+	gSP2Triangles(D_8005BB2C++, 0, 1, 4, 0, 4, 1, 2, 0);
+	gSP2Triangles(D_8005BB2C++, 4, 2, 3, 0, 0, 3, 4, 0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800853A8_55858.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800857D4_55C84.s")
 
