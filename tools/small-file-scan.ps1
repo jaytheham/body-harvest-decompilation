@@ -3,7 +3,7 @@ param(
     [int]$First = 200
 )
 
-$root = '.\asm\nonmatchings\overlay_gameplay\frontend'
+$root = '.\asm\nonmatchings\overlay_gameplay\inside'
 
 # Normalize the root path and capture its length
 $rootAbs = (Resolve-Path $root).Path
