@@ -2117,6 +2117,7 @@ extern s16 D_800FCF46;
 extern u8 D_800A5538;
 extern u8 D_8025F540;
 extern u8 D_8025F780;
+extern s8 D_800A2690_18A750[];
 extern s8 D_800A26A0_18A760;
 extern s16 D_800FB6A0;
 extern s16 D_800FB6A2;

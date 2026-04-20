@@ -578,7 +578,44 @@ void func_8008A59C_17265C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A59C_17265C.s")
 #endif
 
+#ifdef NON_MATCHING
+/* CURRENT(30) */
+void func_8008A5E4_1726A4(void) {
+	u8 activeCount;
+	u8 i;
+	UnkFC8E8Entry *entry;
+
+	activeCount = D_800FCA78;
+	i = 0;
+	if ((s32)activeCount > 0) {
+		do {
+			entry = &(&D_800FC8E8)[i];
+			if (entry->unkA != 0) {
+				if (entry->unkF == 0) {
+					if (entry->unk12 < entry->unkD) {
+						entry->unkD = (u8)(entry->unkD - entry->unk12);
+						entry->unkE++;
+						if (entry->unkE >= D_800A2690_18A750[entry->unkC * 8]) {
+							entry->unkE = 0;
+						}
+						entry->unkA += entry->unk10;
+						entry->unk2 += entry->unk11;
+					} else {
+						func_8008B058_173118(i);
+					}
+				} else {
+					entry->unkF--;
+				}
+
+				activeCount--;
+			}
+			i++;
+		} while ((s32)activeCount > 0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A5E4_1726A4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A704_1727C4.s")
 
