@@ -940,6 +940,21 @@ typedef struct {
 } Unk800801BCEntry; /* size = 0x40 */
 
 typedef struct {
+	/* 0x00 */ void* unk0;
+	/* 0x04 */ u8 pad4[0x8];
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ s16 unk14;
+	/* 0x16 */ s16 unk16;
+	/* 0x18 */ u8 unk18;
+	/* 0x19 */ u8 unk19;
+	/* 0x1A */ u8 pad1A[0x6];
+	/* 0x20 */ s32 unk20;
+} Unk8007FE8CArg; /* size = 0x24 */
+
+typedef struct {
 	/* 0x00 */ u8 pad[0x50];
 	/* 0x50 */ s32 unk50;
 	/* 0x54 */ void* unk54;
