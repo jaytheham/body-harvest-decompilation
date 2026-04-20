@@ -941,7 +941,33 @@ void func_8007B1E0_1632A0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B2F0_1633B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B51C_1635DC.s")
+s32 func_8007B51C_1635DC(s32 arg0) {
+	s32 idx;
+
+	if ((currentLevel == 4) && (buildingInteriorToLoadId == 0x20) && (arg0 >= 0x38) && (arg0 < 0x3C)) {
+		if ((D_800E65B0 != 0) && (func_8000726C_7E6C(2) == 0)) {
+			for (idx = arg0; idx >= 0x38; idx--) {
+				if (func_8000726C_7E6C((u64)idx) == 0) {
+					D_800E65B0 = 0;
+					break;
+				}
+			}
+
+			if ((D_800E65B0 != 0) && (arg0 == 0x3B)) {
+				func_800072CC_7ECC(2);
+				func_800073B8_7FB8(1);
+				D_800E6628 &= ~8;
+				func_80086F24_16EFE4(D_8008DE78_175F38.unk2);
+				func_80086F24_16EFE4(D_8008DE78_175F38.unk6);
+				func_80086F24_16EFE4(D_8008DE78_175F38.unkA);
+				func_80086F24_16EFE4(D_8008DE78_175F38.unkE);
+			}
+		}
+		return 0;
+	}
+
+	return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B65C_16371C.s")
 

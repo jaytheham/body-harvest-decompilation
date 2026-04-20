@@ -1963,5 +1963,16 @@ typedef struct {
 	/* 0x50 */ u8 unk50;
 } Unk8007C698CellObj;
 
+typedef struct {
+	s16 unk0;
+	s16 unk2;
+	s16 unk4;
+	s16 unk6;
+	s16 unk8;
+	s16 unkA;
+	s16 unkC;
+	s16 unkE;
+} Unk8008DE78;
+
 #endif
 
