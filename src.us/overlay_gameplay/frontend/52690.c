@@ -1068,7 +1068,115 @@ s16 func_80086C58_57108(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 ar
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800878A4_57D54.s")
 
+#ifdef NON_MATCHING
+// CURRENT(5554)
+s16 func_800885A0_58A50(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, s32 arg6, u8 arg7) {
+	f32 sp40;
+	f32 sp44;
+	f32 sp48;
+	s16 ret;
+	s16 linkIdx;
+	s32 temp;
+	s16 valY;
+	u8 res;
+	Unk800DE840 *entry;
+	Unk800DE840 *parent;
+	u8 *entryBytes;
+	u8 *linkBytes;
+
+	if (D_800DE824 >= 0x23) {
+		return -3;
+	}
+
+	if (arg4 == -3) {
+		return -3;
+	}
+
+	ret = func_80083C98_54148(0x94);
+	if (ret != -3) {
+		entry = &D_800DE840[ret];
+		parent = &D_800DE840[entry->unk4];
+		entry->unk2 = arg3 * 4;
+		entry->unk8 = arg0;
+		entry->unkA = arg1;
+		entry->unkC = arg2;
+		linkIdx = parent->unk4;
+
+		entryBytes = (u8 *)entry + 8;
+		entryBytes[6] = (u8)((func_800038E0_44E0() % 80) + 20);
+		entryBytes[7] = (u8)((func_800038E0_44E0() % 80) + 20);
+		entryBytes[8] = (u8)((func_800038E0_44E0() % 80) + 20);
+		*(s32 *)((u8 *)parent + 8) = arg6;
+
+		arg5 = ((func_800038E0_44E0() % 6) + (arg5 / 7)) - 3;
+		sp40 = (f32)((func_800038E0_44E0() % 20) - 10);
+
+		temp = (func_800038E0_44E0() % 6) + 6;
+		if (temp >= 0) {
+			sp44 = (f32)((func_800038E0_44E0() % 6) + 6);
+		} else {
+			sp44 = (f32)(-6 - (func_800038E0_44E0() % 6));
+		}
+
+		sp48 = (f32)((func_800038E0_44E0() % 20) - 10);
+		func_800837B4_53C64(&sp40, &sp40);
+
+		linkBytes = (u8 *)D_800DE840 + (linkIdx * 0x1C) + 8;
+		linkBytes[0] = (u8)((s8)((f32)(u32)arg5 * sp40));
+
+		valY = (s16)((f32)(u32)arg5 * sp44);
+		if (valY >= 0) {
+			linkBytes[1] = (u8)valY;
+		} else {
+			linkBytes[1] = (u8)(-valY);
+		}
+
+		linkBytes[2] = (u8)((s8)((f32)(u32)arg5 * sp48));
+		linkBytes[3] = (u8)(func_800038E0_44E0() % 255);
+		linkBytes[4] = (u8)(func_800038E0_44E0() % 255);
+		linkBytes[5] = (u8)(func_800038E0_44E0() % 255);
+		linkBytes[6] = (u8)((func_800038E0_44E0() % 20) - 10);
+		linkBytes[7] = (u8)((func_800038E0_44E0() % 20) - 10);
+		linkBytes[8] = (u8)((func_800038E0_44E0() % 20) - 10);
+
+		if (arg7 == 0) {
+			entryBytes[0xB] = 0;
+		} else {
+			entryBytes[0xB] = 8;
+		}
+
+		if (((func_800038E0_44E0() % 100) < 40) || (arg7 != 0)) {
+			entryBytes[0xB] |= 1;
+		}
+
+		if (arg7 != 0) {
+			if (arg4 != -9) {
+				res = func_800891F8_596A8(arg0, arg1, arg2, ret, arg4);
+				entryBytes[9] = res;
+				if (res != 0xFB) {
+					entryBytes[0xB] |= 4;
+				}
+				entryBytes[0xA] = 0;
+			}
+		} else if ((func_800038E0_44E0() % 100) >= 41) {
+			res = func_800891F8_596A8(arg0, arg1, arg2, ret, arg4);
+			entryBytes[9] = res;
+			if (res != 0xFC) {
+				entryBytes[0xB] |= 4;
+			}
+			entryBytes[0xA] = 0;
+		}
+
+		if (arg7 == 2) {
+			entryBytes[0xB] |= 0x80;
+		}
+	}
+
+	return ret;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800885A0_58A50.s")
+#endif
 
 /* Stores high bytes of 3 u16 args at triple-indirect D_800DE840 chain offset +8 */
 void func_80088A38_58EE8(u16 arg0, u16 arg1, u16 arg2, s16 arg3) {
