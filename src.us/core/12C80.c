@@ -1107,151 +1107,187 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014508_15108.s")
 #endif
 
+// https://decomp.me/scratch/v7r4y
 // CURRENT(2375)
 #ifdef NON_MATCHING
-void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s32 arg3, f32 arg4) {
-	Unk8006AA80Node *node;
-	Unk8006AA80Node sp6C;
-	s16 vol;
-	u8 pan;
-	u32 pan_u32;
-
-	if (D_8006AB88 != 0 && arg1 != -1 && arg1 != -1) {
-
-	if (arg1 == 0x3E7) {
-		if (gameplayMode != 6) {
-			func_800056D0_62D0(D_80052B34->unk0, D_80052B34->unk4);
-		}
-		arg1 = 0x96;
-		if ((f64) D_80052B34->unk12 < 26.0) {
-			D_8006AB8C->instArray[0x96]->soundArray[0]->envelope->decayTime = 0x81A57 - D_80052B34->unk12 * 0x4E20;
-		}
-	}
-
-	if (gameplayMode == 1 && D_80052B34->unk1A == 3 && currentLevel == 3 && arg1 == 0x5E) {
-		return;
-	}
-
-	if (arg1 == 0xB3) {
-		if (D_80052ACA == 2 || currentLevel == 5) {
-			D_80032430_33030[0xB3] = D_8003833C_38F3C;
-			D_80031F04_32B04[0xB3] = 0x7FFF;
-		} else {
-			D_80032430_33030[0xB3] = D_80038340_38F40;
-			D_80031F04_32B04[0xB3] = 0x5FFF;
-		}
-	}
-
-	if (arg1 == 0xE8 && (f64) arg4 <= D_80038348_38F48) {
-		D_80032310_32F10 = 0x7D;
-		D_80031F04_32B04[0xE8] = 0x7FFF;
-	} else {
-		D_80031F04_32B04[0xE8] = 0x3FFF;
-		D_80032310_32F10 = 0;
-	}
-
-	if (arg1 == 0x17F) {
-		if (currentLevel == 5) {
-			D_80032430_33030[0x17F] = 1000.0f;
-		} else {
-			D_80032430_33030[0x17F] = D_80038350_38F50;
-		}
-	}
-
-	if (!(arg2 < D_80032430_33030[arg1])) {
-		return;
-	}
-
-	vol = (s16)(s32)(((D_80032430_33030[arg1] - arg2) / D_80032430_33030[arg1]) * (f32) D_80031F04_32B04[arg1]);
-	arg3 = (s16)arg3;
-
-	if (arg3 < -0x4000) {
-		arg3 = -0x8000 - arg3;
-	} else if (arg3 >= 0x4001) {
-		arg3 = 0x8000 - arg3;
-	}
-
-	pan = (u8)(pan_u32 = (u32)(((f64)(f32)(s16)arg3 + 16384.0) / 16384.0 * 64.0));
-
-	if ((f64) arg4 < 0.0) {
-		if ((f64) arg4 == -1.0) {
-			arg4 = D_80032A78_33678[arg1];
-		} else if ((f64) arg4 < -1.0) {
-			arg4 = (f32)((f64)(D_80032A78_33678[arg1] + arg4) + 1.0);
-		}
-	}
-
-	if (arg0 != 0 && (node = func_800127CC_133CC(arg0, arg1)) != NULL) {
-		node->unk0F++;
-		if (node->unk6 >= 0) {
-			alSndpSetSound(D_8006AB10, node->unk6);
-			if (alSndpGetState(D_8006AB10) == 1) {
-				if ((u8)node->unk22 != (u8)pan_u32) {
-					if ((u8)pan_u32 > 0) {
-						if ((u8)pan_u32 < 0x7F) {
-							if ((s16)(pan - (u8)node->unk22) >= 0xB) {
-								pan = (u8)node->unk22 + 0xA;
-							} else if ((s16)(pan - (u8)node->unk22) < -0xA) {
-								pan = (u8)node->unk22 - 0xA;
-							}
-							alSndpSetPan(D_8006AB10, pan);
-							node->unk22 = pan;
-						}
-					}
-				}
-				if (arg4 != node->unk24) {
-					if ((f64) D_80038358_38F58 < (f64) arg4 && (f64) arg4 < 2.0) {
-						alSndpSetPitch(D_8006AB10, arg4);
-						node->unk24 = arg4;
-					}
-				}
-				if (vol != node->unk20 && vol > 0) {
-					if (vol < 0x7FFF) {
-						if ((s16)(vol - node->unk20) >= 0x101) {
-							vol = node->unk20 + 0x100;
-						} else if ((s16)(vol - node->unk20) < -0x100) {
-							vol = node->unk20 - 0x100;
-						}
-						node->unk20 = vol;
-						if (D_80031D4C_3294C == 1) {
-							vol = (s16)(s32)(((f32)vol * D_80031D58_32958 + (D_80031D5C_3295C * ((f32)vol * D_80031D50_32950)) / D_80031D54_32954) * D_80031D60_32960);
-						} else {
-							vol = (s16)(s32)((f32)vol * D_80031D60_32960);
-						}
-						alSndpSetVol(D_8006AB10, vol);
-					}
-				}
-				node->unk0E = 0xF;
-				return;
-			}
-			if (node->unk8 != 1) {
-				return;
-			}
-			func_800157D4_163D4(node->unk6);
-		}
-	}
-
+void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4)
+{
+  Unk8006AA80Node *node;
+  Unk8006AA80Node sp6C;
+  s16 vol;
+  u8 pan;
+  u32 pan_u32;
+  if (((D_8006AB88 != 0) && (arg1 != -1)) && (arg1 != -1))
+  {
+	if (arg1 == 0x3E7)
 	{
-		s16 soundIdx = arg1;
+	  if (gameplayMode != 6)
+	  {
+		func_800056D0_62D0(D_80052B34->unk0, D_80052B34->unk4);
+	  }
+	  arg1 = 0x96;
+	  if (((f64) D_80052B34->unk12) < 26.0)
+	  {
+		D_8006AB8C->instArray[0x96]->soundArray[0]->envelope->decayTime = 0x81A57 - (D_80052B34->unk12 * 0x4E20);
+	  }
+	}
+	if ((((gameplayMode == 1) && (D_80052B34->unk1A == 3)) && (currentLevel == 3)) && (arg1 == 0x5E))
+	{
+	  return;
+	}
+	if (arg1 == 0xB3)
+	{
+	  if ((D_80052ACA == 2) || (currentLevel == 5))
+	  {
+		D_80032430_33030[0xB3] = D_8003833C_38F3C;
+		D_80031F04_32B04[0xB3] = 0x7FFF;
+	  }
+	  else
+	  {
+		D_80032430_33030[0xB3] = D_80038340_38F40;
+		D_80031F04_32B04[0xB3] = 0x5FFF;
+	  }
+	}
+	if ((arg1 == 0xE8) && (((f64) arg4) <= D_80038348_38F48))
+	{
+	  D_80032310_32F10 = 0x7D;
+	  D_80031F04_32B04[0xE8] = 0x7FFF;
+	}
+	else
+	{
+	  D_80031F04_32B04[0xE8] = 0x3FFF;
+	  D_80032310_32F10 = 0;
+	}
+	if (arg1 == 0x17F)
+	{
+	  if (currentLevel == 5)
+	  {
+		D_80032430_33030[0x17F] = 1000.0f;
+	  }
+	  else
+	  {
+		D_80032430_33030[0x17F] = D_80038350_38F50;
+	  }
+	}
+	if (arg2 < D_80032430_33030[arg1])
+	{
 
-		if (func_80012638_13238(soundIdx, D_8006AB18[0]->unk1C) == 0) {
-			sp6C.unk0 = soundIdx;
+	vol = ((D_80032430_33030[arg1] - arg2) / D_80032430_33030[arg1]) * D_80031F04_32B04[arg1];
+	
+	if (arg3 < -0x4000)
+	{
+	  arg3 = -0x8000 - arg3;
+	}
+	else
+	  if (arg3 >= 0x4001)
+	{
+	  arg3 = 0x8000 - arg3;
+	}
+	pan = pan_u32 =((((f32)arg3 + 16384.0) / 16384.0) * 64.0);
+	if (arg4 < 0.0)
+	{
+	  if (arg4 == -1.0)
+	  {
+		arg4 = D_80032A78_33678[arg1];
+	  }
+	  else
+		if (arg4 < -1.0)
+	  {
+		arg4 = D_80032A78_33678[arg1] + arg4 + 1.0;
+	  }
+	}
+	if (arg0 && (node = func_800127CC_133CC(arg0, arg1)))
+	{
+	  node->unk0F++;
+	  if (node->unk6 >= 0)
+	  {
+		alSndpSetSound(D_8006AB10, node->unk6);
+		if (alSndpGetState(D_8006AB10) == 1)
+		{
+		  if (((u8) pan_u32) != ((u8) node->unk22))
+		  {
+			if (((u8) pan_u32) > 0)
+			{
+			  if (((u8) pan_u32) < 0x7F)
+			  {
+				if (((s16) (pan - ((u8) node->unk22))) >= 0xB)
+				{
+				  pan = ((u8) node->unk22) + 0xA;
+				}
+				else
+				  if (((s16) (pan - ((u8) node->unk22))) < (-0xA))
+				{
+				  pan = ((u8) node->unk22) - 0xA;
+				}
+				alSndpSetPan(D_8006AB10, pan);
+				node->unk22 = pan;
+			  }
+			}
+		  }
+		  if (arg4 != node->unk24)
+		  {
+			if ((((f64) D_80038358_38F58) < ((f64) arg4)) && (((f64) arg4) < 2.0))
+			{
+			  alSndpSetPitch(D_8006AB10, arg4);
+			  node->unk24 = arg4;
+			}
+		  }
+		  if ((vol != node->unk20) && (vol > 0))
+		  {
+			if (vol < 0x7FFF)
+			{
+			  if (((s16) (vol - node->unk20)) >= 0x101)
+			  {
+				vol = node->unk20 + 0x100;
+			  }
+			  else
+				if (((s16) (vol - node->unk20)) < (-0x100))
+			  {
+				vol = node->unk20 - 0x100;
+			  }
+			  node->unk20 = vol;
+			  if (D_80031D4C_3294C == 1)
+			  {
+				vol = (s16) ((s32) (((((f32) vol) * D_80031D58_32958) + ((D_80031D5C_3295C * (((f32) vol) * D_80031D50_32950)) / D_80031D54_32954)) * D_80031D60_32960));
+			  }
+			  else
+			  {
+				vol = (s16) ((s32) (((f32) vol) * D_80031D60_32960));
+			  }
+			  alSndpSetVol(D_8006AB10, vol);
+			}
+		  }
+		  node->unk0E = 0xF;
+		  return;
+		}
+		if (node->unk8 != 1)
+		{
+		  return;
+		}
+		func_800157D4_163D4(node->unk6);
+	  }
+	}
+	{
+	  s16 soundIdx = arg1;
+	  if (func_80012638_13238(soundIdx, D_8006AB18[0]->unk1C) == 0)
+	  {
+		sp6C.unk0 = soundIdx;
 		sp6C.unk20 = vol;
-		*(f32 *)((u8 *)&sp6C + 0x1C) = arg2;
+		*((f32 *) (((u8 *) (&sp6C)) + 0x1C)) = arg2;
 		sp6C.unk2 = D_80032228_32E28[arg1];
-		*(s16 *)((u8 *)&sp6C + 0x18) = arg3;
+		*((s16 *) (((u8 *) (&sp6C)) + 0x18)) = arg3;
 		sp6C.unk22 = (s8) pan_u32;
 		sp6C.unk24 = arg4;
 		sp6C.unk2C = arg0;
 		sp6C.unk28 = D_8006AB18[0]->unk1C;
 		sp6C.unk0F = 0;
-		sp6C.unk0E = arg0 != 0 ? 0xF : -1;
+		sp6C.unk0E = (arg0 != 0) ? (0xF) : (-1);
 		sp6C.unk6 = -1;
 		sp6C.unk0C = 0;
 		func_800121B4_12DB4(sp6C, &D_8006AA80, &D_8006AA84);
-		}
+	  }
 	}
-	}
+  }}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014A3C_1563C.s")
