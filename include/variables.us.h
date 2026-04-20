@@ -115,6 +115,8 @@ extern s16 D_802571B6;
 extern s16 D_802571B8;
 extern s16 D_800313FC; // World fog far distance
 extern s32 D_800949D0_64E80;
+extern FrontendInterpState D_800AC0CC;
+extern u8 D_800AC0E8[];
 extern u16 D_800AC8F0_7CDA0[];
 extern Gfx* D_800942D8_64788;
 extern f32 D_800942DC_6478C;
@@ -779,6 +781,8 @@ extern char D_800AE97C_7EE2C; /* osSyncPrintf format string */
 extern f64 D_800AEA40_7EEF0;
 extern f64 D_800AEA48_7EEF8;
 extern f64 D_800AEA50_7EF00;
+extern f64 D_800AEA58_7EF08;
+extern f64 D_800AEA60_7EF10;
 extern f64 D_800AEA68_7EF18;
 extern f64 D_800AEC58_7F108;
 extern f64 D_800AEC60_7F110;
@@ -852,6 +856,7 @@ extern u32 D_800948F4_64DA4;
 extern u8 D_8009490C_64DBC;
 extern s32 D_80094934_64DE4;
 extern s32 D_80094998_64E48;
+extern Unk80052B40 D_800949C8;
 extern s32 D_80095080_65530[];
 extern Unk80080530_Dst D_800950C0_65570[];
 extern u8 D_80095698_65B48[];

@@ -5463,7 +5463,155 @@ void func_80081058_51508(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081058_51508.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(31401)
+void func_80081290_51740(void) {
+	Gfx *dl;
+	Vtx *baseVtx;
+	Unk80052B40 sp84;
+	s32 i;
+
+	sp84 = D_800949C8;
+
+	if (D_800313D0 == 2) {
+		return;
+	}
+
+	baseVtx = D_8005BB34;
+	if (D_800AC0CC.unk10 != 0) {
+		FrontendInterpPos *pos0 = D_800AC0CC.unk0;
+		FrontendInterpPos *pos1 = D_800AC0CC.unk4;
+		FrontendInterpVtxData *vtxData = D_800AC0CC.unk8;
+		for (i = 0; i < D_800AC0CC.unk10; i++) {
+			f32 t = D_800AC0CC.unk18;
+			f32 oneMinusT = 1.0f - t;
+
+			D_8005BB34->v.ob[0] = (s16) ((pos0[i].unk0 * oneMinusT) + (pos1[i].unk0 * t));
+			D_8005BB34->v.ob[1] = (s16) ((pos0[i].unk4 * oneMinusT) + (pos1[i].unk4 * t));
+			D_8005BB34->v.ob[2] = (s16) ((pos0[i].unk8 * oneMinusT) + (pos1[i].unk8 * t));
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = vtxData[i].unk0;
+			D_8005BB34->v.tc[1] = vtxData[i].unk2;
+			D_8005BB34->v.cn[0] = vtxData[i].unk4;
+			D_8005BB34->v.cn[1] = vtxData[i].unk5;
+			D_8005BB34->v.cn[2] = vtxData[i].unk6;
+			D_8005BB34->v.cn[3] = 0xFF;
+			D_8005BB34++;
+		}
+	}
+
+	if (D_800AC0CC.unk18 != 0.0f) {
+		f64 temp = (f64) D_800AC0CC.unk18 + D_800AEA58_7EF08;
+		if (temp > 1.0) {
+			D_800AC0CC.unk18 = 1.0f;
+		} else {
+			D_800AC0CC.unk18 = (f32) temp;
+		}
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_MODULATEIA);
+	gDPTileSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, D_800AC0E8);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, G_TX_RENDERTILE, 0,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+
+	sp84.unk0 = (s16) ((f64) sp84.unk0 * D_800AEA60_7EF10);
+	sp84.unk2 = (s16) ((f64) sp84.unk2 * D_800AEA60_7EF10);
+	sp84.unk4 = (s16) ((f64) sp84.unk4 * D_800AEA60_7EF10);
+
+	func_800039D0_45D0(NULL, NULL, &sp84, D_8005BB38);
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+
+	for (i = 0; i < D_800AC0CC.unk14; i++) {
+		s32 j;
+		s32 triCount;
+		FrontendTriBatch *batch = &D_800AC0CC.unkC[i];
+
+		gSPVertex(D_8005BB2C++, (Vtx *) ((u8 *) baseVtx + (batch->unk5 * 0x10)), batch->unk4, 0);
+
+		triCount = batch->unk6 / 2;
+		for (j = 0; j < triCount; j++) {
+			FrontendTriData *tri = &batch->unk0[j];
+			u8 a0;
+			u8 a1;
+			u8 a2;
+			u8 b0;
+			u8 b1;
+			u8 b2;
+
+			if (tri->unk3 == 0) {
+				a0 = tri->unk0;
+				a1 = tri->unk1;
+				a2 = tri->unk2;
+			} else if (tri->unk3 == 1) {
+				a0 = tri->unk1;
+				a1 = tri->unk2;
+				a2 = tri->unk0;
+			} else {
+				a0 = tri->unk2;
+				a1 = tri->unk0;
+				a2 = tri->unk1;
+			}
+
+			if (tri->unk7 == 0) {
+				b0 = tri->unk4;
+				b1 = tri->unk5;
+				b2 = tri->unk6;
+			} else if (tri->unk7 == 1) {
+				b0 = tri->unk5;
+				b1 = tri->unk6;
+				b2 = tri->unk4;
+			} else {
+				b0 = tri->unk6;
+				b1 = tri->unk4;
+				b2 = tri->unk5;
+			}
+
+			gSP2Triangles(D_8005BB2C++, a0, a1, a2, 0, b0, b1, b2, 0);
+		}
+
+		if (batch->unk6 & 1) {
+			u8 a0;
+			u8 a1;
+			u8 a2;
+			FrontendTriData *tri = &batch->unk0[batch->unk6 / 2];
+
+			if (tri->unk3 == 0) {
+				a0 = tri->unk0;
+				a1 = tri->unk1;
+				a2 = tri->unk2;
+			} else if (tri->unk3 == 1) {
+				a0 = tri->unk1;
+				a1 = tri->unk2;
+				a2 = tri->unk0;
+			} else {
+				a0 = tri->unk2;
+				a1 = tri->unk0;
+				a2 = tri->unk1;
+			}
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xBF000000;
+			dl->words.w1 = ((a0 * 2) << 16) | ((a1 * 2) << 8) | (a2 * 2);
+		}
+	}
+
+	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081290_51740.s")
+#endif
 
 void func_800819C0_51E70(FrontendAnimState *arg0) {
 	f32 temp_f0;
