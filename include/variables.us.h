@@ -921,6 +921,7 @@ extern u8 D_800DE0EB;
 extern LookAt D_800D78E0[];
 extern LookAt D_800D7920[];
 extern Unk800DE130 D_800DE130[];
+extern s16 D_800DE832;
 extern u8 D_800DE838;
 extern u8 D_800DE839;
 extern u8 D_800DE818;

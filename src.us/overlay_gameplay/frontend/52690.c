@@ -1421,7 +1421,102 @@ s16 func_80086C58_57108(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80086C58_57108.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(13418)
+void func_800870AC_5755C(void) {
+	s16 current;
+
+	current = D_800DE832;
+	while ((current != -5) && (current != -6)) {
+		s32 temp;
+		s32 step;
+		s16 linkIdx;
+		u8 scale;
+		u8 age;
+		Unk800DE840 *entry;
+		Unk800DE840 *parent;
+		u8 *entryBytes;
+		u8 *parentBytes;
+		u8 *linkBytes;
+
+		entry = &D_800DE840[current];
+		entryBytes = (u8 *)entry + 8;
+		parent = &D_800DE840[entry->unk4];
+		parentBytes = (u8 *)parent + 8;
+		linkIdx = parent->unk4;
+		scale = parentBytes[0xB];
+
+		if (entryBytes[0xC] >= (0x23 / scale)) {
+			temp = D_800DE840[linkIdx].unk4;
+			func_80083F8C_5443C(current, 0x95);
+			current = temp;
+			continue;
+		}
+
+		age = entryBytes[0xC];
+		if (age == 0) {
+			D_800DE840[linkIdx].unk8 = (func_800038E0_44E0() % 11) + 0x3C;
+		} else if (age == 1) {
+			D_800DE840[linkIdx].unk8 += (func_800038E0_44E0() % 11) + 0xF;
+		} else if (age < (7 / scale)) {
+			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 5) + 5) * scale;
+		} else if (age < (0xF / scale)) {
+			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 4) + 4) * scale;
+			parentBytes[2] -= ((func_800038E0_44E0() % 7) + 7) * scale;
+		} else if (age < (0x18 / scale)) {
+			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 4) + 3) * scale;
+			parentBytes[1] -= ((func_800038E0_44E0() % 5) + 3) * scale;
+			if ((scale * 0xF) < parentBytes[2]) {
+				parentBytes[2] -= ((func_800038E0_44E0() % 7) + 7) * scale;
+			}
+		} else if (age < (0x1C / scale)) {
+			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 3) + 2) * scale;
+			parentBytes[1] -= ((func_800038E0_44E0() % 5) + 3) * scale;
+			if ((scale * 0x19) < parentBytes[2]) {
+				parentBytes[2] -= ((func_800038E0_44E0() % 14) + 0xC) * scale;
+			}
+		} else {
+			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 2) + 2) * scale;
+			if ((scale * 0x19) < parentBytes[2]) {
+				parentBytes[2] -= ((func_800038E0_44E0() % 14) + 0xC) * scale;
+			}
+			if ((scale * 0x25) < parentBytes[1]) {
+				parentBytes[1] -= ((func_800038E0_44E0() % 15) + 0x16) * scale;
+			}
+		}
+
+		age = entryBytes[0xC];
+		if (age >= 3) {
+			step = ((0x23 / scale) - age) & 0xFF;
+			temp = entryBytes[6] - parentBytes[0];
+			entryBytes[6] -= temp / step;
+			temp = entryBytes[7] - parentBytes[1];
+			entryBytes[7] -= temp / step;
+			temp = entryBytes[8] - parentBytes[2];
+			entryBytes[8] -= temp / step;
+			temp = entryBytes[9] - parentBytes[3];
+			entryBytes[9] -= temp / step;
+			temp = entryBytes[0xA] - parentBytes[4];
+			entryBytes[0xA] -= temp / step;
+			temp = entryBytes[0xB] - parentBytes[5];
+			entryBytes[0xB] -= temp / step;
+		}
+
+		linkBytes = (u8 *)&D_800DE840[linkIdx] + 8;
+		linkBytes[2] += linkBytes[5];
+		linkBytes[3] += linkBytes[6];
+		linkBytes[4] += linkBytes[7];
+		parentBytes[6]++;
+		if (parentBytes[6] == 0x10) {
+			parentBytes[6] = 0;
+		}
+		entryBytes[0xC]++;
+		current = D_800DE840[linkIdx].unk4;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800870AC_5755C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800878A4_57D54.s")
 
