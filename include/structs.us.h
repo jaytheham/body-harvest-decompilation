@@ -27,6 +27,17 @@ typedef struct {
 } Frontend52690Entry;
 
 typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s8 unk6;
+	/* 0x07 */ s8 unk7;
+	/* 0x08 */ s8 unk8;
+	/* 0x09 */ u8 unk9;
+	/* 0x0A */ u8 unkA;
+} Frontend52690Unk8Motion;
+
+typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ s32 unk4;
 	/* 0x08 */ s32 outputSize;
