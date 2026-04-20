@@ -2541,6 +2541,7 @@ extern u8 D_8005CF68[];
 extern s32 D_8005CF6C;
 extern u8 D_80064F70[];
 extern s32 D_80064F74;
+extern char D_800A501C_18D0DC;
 extern s32 D_80065F78;
 extern s32 D_80065F7C;
 extern u8 D_80066780[];
