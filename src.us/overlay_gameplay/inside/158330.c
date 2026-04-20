@@ -663,7 +663,65 @@ void func_80077B40_15FC00(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800787E8_1608A8.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(145) */
+u8 func_8007899C_160A5C(s32 arg0, s32 arg1) {
+	u8 ret;
+
+	switch (D_800E66B0[arg1 * 0x30]) {
+	case 0:
+		ret = arg0;
+		ret &= 0xFF;
+		break;
+	case 1:
+		if (arg0 & 4) {
+			ret |= 2;
+		}
+		if (arg0 & 8) {
+			ret = (ret | 1) & 0xFF;
+		}
+		if (arg0 & 1) {
+			ret = (ret | 4) & 0xFF;
+		}
+		if (arg0 & 2) {
+			ret = (ret | 8) & 0xFF;
+		}
+		break;
+	case 2:
+		if (arg0 & 4) {
+			ret |= 8;
+		}
+		if (arg0 & 8) {
+			ret = (ret | 4) & 0xFF;
+		}
+		if (arg0 & 1) {
+			ret = (ret | 2) & 0xFF;
+		}
+		if (arg0 & 2) {
+			ret = (ret | 1) & 0xFF;
+		}
+		break;
+	case 3:
+		if (arg0 & 4) {
+			ret |= 1;
+		}
+		if (arg0 & 8) {
+			ret = (ret | 2) & 0xFF;
+		}
+		if (arg0 & 1) {
+			ret = (ret | 8) & 0xFF;
+		}
+		if (arg0 & 2) {
+			ret = (ret | 4) & 0xFF;
+		}
+		break;
+	}
+
+	return ret;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007899C_160A5C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80078AD4_160B94.s")
 
