@@ -3393,7 +3393,156 @@ void func_80079F30_4A3E0(s32 arg0) {
 #endif
 
 // displayGameOver
+extern void func_8000DC30_E830(s32 arg0, s32 arg1);
+extern void func_800137AC_143AC(void);
+
+#ifdef NON_MATCHING
+// CURRENT(10621)
+void func_8007A038_4A4E8(void) {
+	s32 timer;
+	s32 fade;
+	s32 pad0;
+	s32 pad1;
+	Light *lookAtX;
+	Light *lookAtY;
+	LookAt lookAt;
+	u32 dlistPtrs[8];
+	Unk80052B40 rot;
+	Unk80052B40 trans;
+	Unk80052B40 scale;
+	s32 i;
+	s32 step;
+	s16 intensity;
+	s16 blend;
+
+	dlistPtrs[0] = D_800948C0_64D70[0];
+	dlistPtrs[1] = D_800948C0_64D70[1];
+	dlistPtrs[2] = D_800948C0_64D70[2];
+	dlistPtrs[3] = D_800948C0_64D70[3];
+	dlistPtrs[4] = D_800948C0_64D70[4];
+	dlistPtrs[5] = D_800948C0_64D70[5];
+	dlistPtrs[6] = D_800948C0_64D70[6];
+	dlistPtrs[7] = D_800948C0_64D70[7];
+
+	if (showDemoText != 0) {
+		return;
+	}
+
+	func_800050C4_5CC4();
+	func_8000DC9C_E89C(D_8005BB48[D_80031B84_32784], D_8005BB48[D_80031B84_32784 ^ 1]);
+	osSetTime(((u64)0x140 << 32) | 0xF0);
+	func_8000DC30_E830((s32)D_80267080, (s32)&D_802B2080);
+	func_8000505C_5C5C();
+	func_800137AC_143AC();
+
+	fade = 0;
+	D_80052ACC = 1;
+	timer = 0x1F3;
+
+	lookAtX = &lookAt.l[0];
+	lookAtY = &lookAt.l[1];
+
+	for (;;) {
+		fade += 2;
+		osRecvMesg(&D_8006A8D0, &D_80068038, 1);
+		func_80011E14_12A14(0);
+		func_80004CC8_58C8();
+		func_80004D38_5938();
+		func_80004F64_5B64();
+		func_80004DDC_59DC(0, 0, 0, 0, 0xEF);
+
+		gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784]);
+		func_80005C5C_685C((u8 *)&D_802B2080, 0, 2, 0x10, 0, 0, 0x140, 0xE0, 1.0f, 1.0f, 0);
+
+		if (fade < 0x7F) {
+			gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784]);
+			func_80005844_6444(0, 0, 0, (fade << 1) & 0xFF);
+		} else {
+			gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784]);
+			func_80005844_6444(0, 0, 0, 0xFF);
+		}
+
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+		gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+		gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING);
+
+		guOrtho((Mtx *)D_8005BB38, -320.0f, 320.0f, -240.0f, 240.0f, 1000.0f, -1.0f, 1.0f);
+		gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+		D_8005BB38 += 0x40;
+		gSPPerspNormalize(D_8005BB2C++, 0xFFFF);
+
+		guLookAtReflect((Mtx *)D_8005BB38, &lookAt, 0.0f, 0.0f, 100.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+		gSPLookAtX(D_8005BB2C++, lookAtX);
+		gSPLookAtY(D_8005BB2C++, lookAtY);
+		gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+		D_8005BB38 += 0x40;
+		gSPMatrix(D_8005BB2C++, (Mtx *)((u32)&D_80031120_31D20 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+
+		for (i = 0, step = fade; i < 8; i++, step -= 0x10) {
+			s32 alphaStep = step;
+
+			if (i >= 4) {
+				alphaStep = step - 0x20;
+			}
+
+			intensity = alphaStep * 2;
+			if (intensity < 0) {
+				intensity = 0;
+			}
+			if (intensity > 0x100) {
+				intensity = 0x100;
+			}
+
+			scale.unk0 = intensity;
+			scale.unk2 = intensity;
+			scale.unk4 = intensity;
+			func_800039D0_45D0(0, 0, &scale, D_8005BB38);
+			gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			D_8005BB38 += 0x40;
+
+			rot.unk0 = ((i & 3) * 0x6C) - 0xA2;
+			rot.unk2 = 0x36 - ((i >> 2) * 0x6C);
+			rot.unk4 = 0x32;
+			func_800039D0_45D0(&rot, 0, 0, D_8005BB38);
+			gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			D_8005BB38 += 0x40;
+
+			blend = (alphaStep << 10) & 0xFFFF;
+			if (intensity == 0x100) {
+				blend = 0;
+			}
+
+			trans.unk0 = blend;
+			trans.unk2 = 0;
+			trans.unk4 = 0;
+			func_800039D0_45D0(0, &trans, 0, D_8005BB38);
+			gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			D_8005BB38 += 0x40;
+
+			gSPDisplayList(D_8005BB2C++, (Gfx *)dlistPtrs[i]);
+			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+		}
+
+		func_8000505C_5C5C();
+		if (isButtonNewlyPressed(0, 0xD000) != 0) {
+			break;
+		}
+
+		if (timer == 0) {
+			break;
+		}
+		timer--;
+	}
+
+	D_80052ACC = 0;
+	func_800056A8_62A8();
+	func_800056A8_62A8();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A038_4A4E8.s")
+#endif
 
 /**
  * @brief Simple wrapper calling func_8007C7F4_4CCA4.
