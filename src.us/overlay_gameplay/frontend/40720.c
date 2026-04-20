@@ -569,7 +569,136 @@ s32 func_80071760_41C10(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071900_41DB0.s")
 
+#ifdef NON_MATCHING
+// CURRENT(10239)
+void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
+	s32 weaponType;
+	volatile s32 textureIndex;
+	s32 sizeX;
+	s32 sizeY;
+	Gfx* dl;
+
+	weaponType = weaponSlots[D_800D74AE];
+	if (weaponType == 0) {
+		return;
+	}
+
+	textureIndex = ((s32*)&D_80031474)[weaponType];
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBA000E02;
+	dl->words.w1 = 0x00008000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBA001301;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xFD100000;
+	dl->words.w1 = (u32)D_80260500;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE8000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF5000100;
+	dl->words.w1 = 0x07000000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF0000000;
+	dl->words.w1 = 0x073FC000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	{
+		f32 scale;
+
+		scale = 2.0f;
+		arg2 *= scale;
+		arg3 *= scale;
+	}
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xFA000100;
+	if (weaponSlots[D_800D74AE] != 0) {
+		dl->words.w1 = 0x00AAD2FF;
+	} else {
+		dl->words.w1 = 0x002346FF;
+	}
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xB9000002;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xB900031D;
+	dl->words.w1 = 0x0F0A4000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xFC119623;
+	dl->words.w1 = 0xFF2FFFFF;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xFD500000;
+	dl->words.w1 = ((u32)(D_8025CCC0 + ((s32)textureIndex * 0x240))) & 0x1FFFFFFF;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF5500000;
+	dl->words.w1 = 0x07000000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF3000000;
+	dl->words.w1 = 0x0711F2AB;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF5480600;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF2000000;
+	dl->words.w1 = 0x0005C05C;
+
+	sizeX = (s32)(12.0f * arg2);
+	sizeY = (s32)(12.0f * arg3);
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE4000000 | ((((arg0 + sizeX + 0xC) * 4) & 0xFFF) << 12) | (((arg1 + sizeY + 0xC) * 4) & 0xFFF);
+	dl->words.w1 = ((((arg0 - sizeX + 0xC) * 4) & 0xFFF) << 12) | (((arg1 - sizeY + 0xC) * 4) & 0xFFF);
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xB4000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xB3000000;
+	dl->words.w1 = ((s32)((1.0f / arg2) * 1024.0f) << 16) | (((s32)((1.0f / arg3) * 1024.0f)) & 0xFFFF);
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071E80_42330.s")
+#endif
 
 extern Ambient D_800942A0_64750;
 extern Light D_800942A8_64758;

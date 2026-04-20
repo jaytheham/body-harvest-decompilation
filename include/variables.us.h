@@ -780,6 +780,7 @@ extern s16 D_800D74A4;
 extern s16 D_800D74A6;
 extern s16 D_800D74AA;
 extern s16 D_800D74AC;
+extern s16 D_800D74AE;
 extern u8 D_800D6DA8[];
 extern s16 D_800D7960;
 extern s16 D_800D7962;
