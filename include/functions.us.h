@@ -139,6 +139,7 @@ s32 func_80011B60_12760(u8 arg0, s32 arg1);
 void func_80012EC4_13AC4(s8 arg0, s8 arg1);
 void func_800131A4_13DA4(s16 arg0);
 void func_8001322C_13E2C(s16 arg0);
+void func_800132CC_13ECC(void);
 void func_80013324_13F24(void);
 void func_80013398_13F98(void);
 void func_80013410_14010(void);

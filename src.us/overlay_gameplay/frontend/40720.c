@@ -1502,7 +1502,100 @@ void func_80075C84_46134(void) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(1235)
+void func_80075D58_46208(s32 arg0) {
+	u16 perspectiveNormal;
+
+	func_800132CC_13ECC();
+	if (D_800946DC_64B8C != FE_STATE_PRESS_START) {
+		func_800791A0_49650(3);
+		return;
+	}
+
+	func_800791A0_49650(2);
+	guPerspective((Mtx *)D_8005BB38, &perspectiveNormal, 73.0f, 1.25f, 150.0f, D_800AE784_7EC34, 1.0f);
+	gSPPerspNormalize(D_8005BB2C++, perspectiveNormal);
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	D_8005BB38 += 0x40;
+
+	guLookAt((Mtx *)D_8005BB38, 0.0f, 300.0f, 370.0f, 0.0f, 0.0f, 0.0f, D_800AE788_7EC38, 1.0f, 0.0f);
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+	D_8005BB38 += 0x40;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNX, 4);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNY, 4);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPX, 0xFFFC);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPY, 0xFFFC);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	gDPPipeSync(D_8005BB2C++);
+
+	D_80052B40.unk0 = 10;
+	D_80052B40.unk2 = 120;
+	D_80052B40.unk4 = 0;
+
+	if (arg0 != 0) {
+		D_80052B48.unk0 = (s16)((D_80094860_64D10 * -30) + 30);
+	} else {
+		D_80052B48.unk0 = (s16)(D_80094860_64D10 * -30);
+	}
+	D_80052B48.unk2 = 0;
+	D_80052B48.unk4 = 0;
+	D_80052B50.unk0 = 200;
+	D_80052B50.unk2 = 200;
+	D_80052B50.unk4 = 200;
+
+	guLookAtReflect((Mtx *)D_8005BB38, &D_800D78E0[D_80031B84_32784], 0.0f, 300.0f, 370.0f,
+								(float)D_80052B40.unk0, (float)D_80052B40.unk2, (float)D_80052B40.unk4,
+								0.0f, 1.0f, 0.0f);
+	gSPLookAtX(D_8005BB2C++, &D_800D78E0[D_80031B84_32784].l[0]);
+	gSPLookAtY(D_8005BB2C++, &D_800D78E0[D_80031B84_32784].l[1]);
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+	gSPDisplayList(D_8005BB2C++, D_4050010);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+
+	if (arg0 != 0) {
+		D_80052B48.unk0 = (s16)((D_80094860_64D10 * 63) - 63);
+	} else {
+		D_80052B48.unk0 = (s16)(D_80094860_64D10 * 63);
+	}
+	D_80052B48.unk2 = 0;
+	D_80052B48.unk4 = 0;
+
+	guLookAtReflect((Mtx *)D_8005BB38, &D_800D7920[D_80031B84_32784], 0.0f, 300.0f, 370.0f,
+								(float)D_80052B40.unk0, (float)D_80052B40.unk2, (float)D_80052B40.unk4,
+								0.0f, 1.0f, 0.0f);
+	gSPLookAtX(D_8005BB2C++, &D_800D7920[D_80031B84_32784].l[0]);
+	gSPLookAtY(D_8005BB2C++, &D_800D7920[D_80031B84_32784].l[1]);
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+	gSPDisplayList(D_8005BB2C++, D_40519B0);
+
+	func_80075C84_46134();
+	gDPPipeSync(D_8005BB2C++);
+
+	if (arg0 == 0) {
+		D_80094860_64D10++;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075D58_46208.s")
+#endif
 
 /**
  * @brief Runs several frontend update/render passes for four ticks.
