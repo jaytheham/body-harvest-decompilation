@@ -355,7 +355,52 @@ void func_80086F58_16F018(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089408_1714C8.s")
 
+#ifdef NON_MATCHING
+// CURRENT(1192)
+u8 func_80089648_171708(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6) {
+	typedef struct {
+		u8 pad0[0x08];
+		s16 unk8;
+		s16 unkA;
+		s16 unkC;
+		s8 unkE;
+		s8 unkF;
+		s8 unk10;
+		u8 unk11;
+		u8 unk12;
+	} Unk89648Entry;
+
+	s32 temp_v0;
+	u8 slot;
+	s32 effect;
+	Unk89648Entry *entry;
+
+	temp_v0 = func_80083224_16B2E4(8);
+	slot = temp_v0;
+	if (temp_v0 != 0xFB) {
+		effect = func_80083390_16B450(slot);
+		if (effect == -3) {
+			osSyncPrintf(&D_800A5384_18D444, slot);
+			func_80083300_16B3C0(slot);
+			return 0xFB;
+		}
+
+		entry = &((Unk89648Entry *)&D_800FB7B0)[effect];
+		entry->unk8 = arg0 * 4;
+		entry->unkA = arg1 * 4;
+		entry->unkC = arg2 * 4;
+		entry->unk11 = 1;
+		entry->unkE = arg3;
+		entry->unkF = arg4;
+		entry->unk10 = arg5;
+		entry->unk12 = arg6;
+	}
+
+	return slot;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089648_171708.s")
+#endif
 
 void func_8008972C_1717EC(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	s16 temp_v0;
