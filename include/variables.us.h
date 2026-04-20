@@ -933,6 +933,7 @@ extern s16 D_800313D0_31FD0;
 extern u8 D_800AA640[];
 extern Mtx D_800AA648_7AAF8;
 extern s8 D_800AA694[];
+extern u8* D_800AA76C[];
 extern Unk800AA998Entry D_800AA998[];
 extern u8 D_800AB448[];
 extern u8 D_800AB454[];

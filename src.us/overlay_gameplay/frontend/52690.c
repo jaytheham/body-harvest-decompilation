@@ -3626,7 +3626,280 @@ void func_8008DFA0_5E450(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008DFA0_5E450.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(31147)
+void func_8008E158_5E608(void) {
+	typedef struct {
+		s8 unk0;
+		s8 unk1;
+		s8 unk2;
+		s8 unk3;
+		s8 unk4;
+		s8 unk5;
+		s8 unk6;
+		s8 unk7;
+	} Unk800AA694Entry;
+
+	s32 pad0;
+	s32 pad1;
+	s32 i;
+	s32 remaining;
+
+	remaining = D_800E1D68;
+	i = 0;
+	if (remaining > 0) {
+		do {
+			Unk800E1980* entry;
+			u8 type;
+
+			entry = &D_800E1980[i];
+			if (entry->unkA != 0) {
+				if (entry->unkF == 0) {
+					u8 savedIndex;
+					Unk800AA694Entry* typeCfg;
+
+					type = entry->unkC;
+					savedIndex = i;
+					if ((type != 0xFF) || ((u8)entry->unkE != 0xFF)) {
+						Gfx* dl;
+
+						dl = D_8005BB2C;
+						D_8005BB2C = dl + 1;
+						dl->words.w0 = 0xE7000000;
+						dl->words.w1 = 0;
+
+						typeCfg = (Unk800AA694Entry*)&D_800AA694[type * 8];
+						if (typeCfg->unk5 == 0) {
+							s32 lineWords;
+							s32 lineWordsClamped;
+							s32 lineSize;
+							s32 dxt;
+							u32 texAddr;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xFC6218C4;
+							dl->words.w1 = 0xFF33FFFF;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xFD900000;
+							texAddr = (u32)(D_800AA76C[type] + (((typeCfg->unk7 * (u8)entry->unkE) * typeCfg->unk6) / 2));
+							dl->words.w1 = texAddr & 0x1FFFFFFF;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF5900000;
+							dl->words.w1 = 0x07080200;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xE6000000;
+							dl->words.w1 = 0;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF3000000;
+
+							lineWords = (((typeCfg->unk7 * typeCfg->unk6) + 3) >> 2) - 1;
+							lineWordsClamped = 0x7FF;
+							if (lineWords < 0x7FF) {
+								lineWordsClamped = lineWords;
+							}
+
+							lineSize = typeCfg->unk6 / 16;
+							if (lineSize <= 0) {
+								lineSize = 1;
+							}
+
+							dxt = (lineSize + 0x7FF) / lineSize;
+							dl->words.w1 = ((lineWordsClamped & 0xFFF) << 12) | (dxt & 0xFFF) | 0x07000000;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xE7000000;
+							dl->words.w1 = 0;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF5800000 | ((((((s8)typeCfg->unk6 >> 1) + 7) >> 3) & 0x1FF) << 9);
+							dl->words.w1 = 0x00080200;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF2000000;
+							dl->words.w1 = ((((typeCfg->unk7 - 1) << 2) & 0xFFF) | ((((typeCfg->unk6 - 1) << 2) & 0xFFF) << 12));
+						} else if (typeCfg->unk5 == 1) {
+							s32 lineWords;
+							s32 lineWordsClamped;
+							s32 lineSize;
+							s32 dxt;
+							u32 texAddr;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xFC40C281;
+							dl->words.w1 = 0xFF87FFFF;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xFD700000;
+							texAddr = (u32)(D_800AA76C[type] + ((typeCfg->unk7 * (u8)entry->unkE) * typeCfg->unk6));
+							dl->words.w1 = texAddr & 0x1FFFFFFF;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF5700000;
+							dl->words.w1 = 0x07080200;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xE6000000;
+							dl->words.w1 = 0;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF3000000;
+
+							lineWords = (((typeCfg->unk7 * typeCfg->unk6) + 1) >> 1) - 1;
+							lineWordsClamped = 0x7FF;
+							if (lineWords < 0x7FF) {
+								lineWordsClamped = lineWords;
+							}
+
+							lineSize = typeCfg->unk6 / 8;
+							if (lineSize <= 0) {
+								lineSize = 1;
+							}
+
+							dxt = (lineSize + 0x7FF) / lineSize;
+							dl->words.w1 = ((lineWordsClamped & 0xFFF) << 12) | (dxt & 0xFFF) | 0x07000000;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xE7000000;
+							dl->words.w1 = 0;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF5680000 | (((((typeCfg->unk6 + 7) >> 3) & 0x1FF) << 9));
+							dl->words.w1 = 0x00080200;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF2000000;
+							dl->words.w1 = ((((typeCfg->unk7 - 1) << 2) & 0xFFF) | ((((typeCfg->unk6 - 1) << 2) & 0xFFF) << 12));
+						} else if (typeCfg->unk5 == 2) {
+							s32 lineWords;
+							s32 lineWordsClamped;
+							s32 lineSize;
+							s32 dxt;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xFCFFFFFF;
+							dl->words.w1 = 0xFFFCF279;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xFD100000;
+							dl->words.w1 = ((u32)D_800AA76C[type]) & 0x1FFFFFFF;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF5100000;
+							dl->words.w1 = 0x07080200;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xE6000000;
+							dl->words.w1 = 0;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF3000000;
+
+							lineWords = (typeCfg->unk7 * typeCfg->unk6) - 1;
+							lineWordsClamped = 0x7FF;
+							if (lineWords < 0x7FF) {
+								lineWordsClamped = lineWords;
+							}
+
+							lineSize = (typeCfg->unk6 * 2) / 8;
+							if (lineSize <= 0) {
+								lineSize = 1;
+							}
+
+							dxt = (lineSize + 0x7FF) / lineSize;
+							dl->words.w1 = ((lineWordsClamped & 0xFFF) << 12) | (dxt & 0xFFF) | 0x07000000;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xE7000000;
+							dl->words.w1 = 0;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF5100000 | ((((((typeCfg->unk6 * 2) + 7) >> 3) & 0x1FF) << 9));
+							dl->words.w1 = 0x00080200;
+
+							dl = D_8005BB2C;
+							D_8005BB2C = dl + 1;
+							dl->words.w0 = 0xF2000000;
+							dl->words.w1 = ((((typeCfg->unk7 - 1) << 2) & 0xFFF) | ((((typeCfg->unk6 - 1) << 2) & 0xFFF) << 12));
+						}
+
+						D_800DE12D = typeCfg->unk6;
+						D_800DE12E = typeCfg->unk7;
+
+						dl = D_8005BB2C;
+						D_8005BB2C = dl + 1;
+						dl->words.w0 = 0xE7000000;
+						dl->words.w1 = 0;
+					}
+
+					D_800DE118.x = (f32)entry->unk0;
+					D_800DE118.y = (f32)entry->unk2;
+					D_800DE118.z = (f32)entry->unk4;
+					D_800DE124 = (u8*)&entry->unk6;
+
+					if (type == 0xA) {
+						D_800DE128 = (f32)((u8)entry->unkD * entry->unkA);
+					} else if (type == 0xB) {
+						D_800DE128 = (f32)((u8)entry->unkD * entry->unkA);
+					} else {
+						D_800DE128 = (f32)entry->unkA;
+					}
+
+					D_800DE12C = entry->unkD;
+					typeCfg = (Unk800AA694Entry*)&D_800AA694[type * 8];
+					switch (typeCfg->unk4) {
+					case 0:
+						func_8008D14C_5D5FC();
+						break;
+					case 2:
+						func_8008CDC8_5D278();
+						break;
+					case 3:
+						func_8008D510_5D9C0();
+						break;
+					default:
+						break;
+					}
+
+					i = savedIndex;
+				}
+
+				remaining = (remaining - 1) & 0xFF;
+			}
+
+			i = (i + 1) & 0xFF;
+		} while (remaining > 0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008E158_5E608.s")
+#endif
 
 /* Allocates an entry and fills color/lifetime and velocity-related byte fields */
 void func_8008E9DC_5EE8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10) {
