@@ -1969,7 +1969,77 @@ void func_8008CDC8_5D278(void) {
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
+#ifdef NON_MATCHING
+// CURRENT(82)
+void func_8008D14C_5D5FC(void) {
+	f32 temp_f0;
+	f32 temp_f12;
+	f32 temp_f14;
+	f32 temp_f16;
+	f32 temp_f18;
+	f32 temp_f8;
+
+	temp_f0 = D_800DE128 * D_800DE0C0[0];
+	temp_f12 = D_800DE128 * D_800DE0C0[1];
+	temp_f14 = D_800DE128 * D_800DE0C0[2];
+	temp_f16 = D_800DE128 * D_800DE0C0[3];
+	temp_f18 = D_800DE128 * D_800DE0C0[4];
+	temp_f8 = D_800DE128 * D_800DE0C0[5];
+
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + temp_f0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + temp_f12);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z + temp_f14);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = D_800DE124[0];
+	D_8005BB34->v.cn[1] = D_800DE124[1];
+	D_8005BB34->v.cn[2] = D_800DE124[2];
+	D_8005BB34->v.cn[3] = D_800DE12C;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + temp_f16);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + temp_f18);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z + temp_f8);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = D_800DE12D << 6;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = D_800DE124[0];
+	D_8005BB34->v.cn[1] = D_800DE124[1];
+	D_8005BB34->v.cn[2] = D_800DE124[2];
+	D_8005BB34->v.cn[3] = D_800DE12C;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x - temp_f0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y - temp_f12);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z - temp_f14);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = D_800DE12D << 6;
+	D_8005BB34->v.tc[1] = D_800DE12E << 6;
+	D_8005BB34->v.cn[0] = D_800DE124[0];
+	D_8005BB34->v.cn[1] = D_800DE124[1];
+	D_8005BB34->v.cn[2] = D_800DE124[2];
+	D_8005BB34->v.cn[3] = D_800DE12C;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x - temp_f16);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y - temp_f18);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z - temp_f8);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = D_800DE12E << 6;
+	D_8005BB34->v.cn[0] = D_800DE124[0];
+	D_8005BB34->v.cn[1] = D_800DE124[1];
+	D_8005BB34->v.cn[2] = D_800DE124[2];
+	D_8005BB34->v.cn[3] = D_800DE12C;
+
+	D_8005BB34++;
+	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008D14C_5D5FC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008D510_5D9C0.s")
 
