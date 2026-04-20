@@ -7,7 +7,43 @@ s32 func_80070270_158330(s32 arg0) {
 	return 0;
 }
 
+#ifdef NON_MATCHING
+/* CURRENT(4058) */
+void func_80070294_158354(Unk8007CAA8_6A40 *arg0) {
+	s32 center;
+	s32 halfWidth;
+
+	if (D_800E65D0 == 0) {
+		return;
+	}
+
+	if ((isButtonNewlyPressed(0, 0x8000) == 0) && (D_800E65C8->unk0 != 4)) {
+		return;
+	}
+
+	center = D_800E65C8->unk28 + D_800E65CC;
+	halfWidth = D_800E65C8->unk2A;
+	if (halfWidth < 0) {
+		halfWidth = (halfWidth + 1) >> 1;
+	} else {
+		halfWidth >>= 1;
+	}
+
+	if (func_8007C3C0_164480(halfWidth,
+							 D_800E6A78.unk4C - 96.0f,
+							 D_800E6A78.unk54 - 96.0f,
+							 (f32)(center - halfWidth),
+							 (f32)(center + halfWidth),
+							 0.0f,
+							 30.0f) != 0) {
+		if (func_8007A370_162430(0, (s32)(((f64)(f32)(D_800E6A86 & 0xFFFF) * D_800A4A00_18CAC0) / 32768.0)) != 0) {
+			D_800E65A8 |= 0x800;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80070294_158354.s")
+#endif
 
 s32 func_800703D0_158490(void) {
 	return D_800E65C8->unk28 + D_800E65CC;
@@ -843,19 +879,7 @@ s32 func_8007C2D0_164390(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 a
 	return 0;
 }
 
-#ifdef NON_MATCHING
-s32 func_8007C3C0_164480(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
-	if (arg0 <= arg3 && arg2 <= arg0 && arg1 <= arg5) {
-		if (arg4 <= arg1) {
-			return 1;
-		}
-		return 0;
-	}
-	return 0;
-}
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C3C0_164480.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C428_1644E8.s")
 
