@@ -283,7 +283,24 @@ void func_8008972C_1717EC(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	*(s16 *)(temp_v1 + 0xC) = arg2 * 4;
 }
 
+#ifdef NON_MATCHING
+void func_80089794_171854(s32 arg0) {
+	u8 temp_t6;
+	UnkFB6F8Entry *temp_v0;
+
+	temp_t6 = arg0 & 0xFF;
+	if ((temp_t6 < 0xF) && (temp_v0 = &D_800FB6F8[temp_t6], temp_v0->pad0[0] == 8)) {
+		if ((s32)temp_v0->unk4 < 2) {
+			func_800839B8_16BA78(temp_t6);
+			func_80083300_16B3C0(temp_t6);
+			return;
+		}
+		*(&D_800FB7C1 + temp_v0->unk6 * 0x16) = 0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089794_171854.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089834_1718F4.s")
 
