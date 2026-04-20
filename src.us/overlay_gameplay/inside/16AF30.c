@@ -457,7 +457,22 @@ void func_8008B058_173118(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B1A8_173268.s")
 
+#if NON_MATCHING
+// CURRENT(1605)
+void func_8008B474_173534(void) {
+	func_8008311C_16B1DC();
+	(&D_800FB6F0)[0] = (s16) ((s32) D_800E6A78.unk4C - (&D_800FB6E8)[0]);
+	(&D_800FB6F0)[1] = (s16) ((s32) D_800E6A78.unk50 - (&D_800FB6E8)[1]);
+	(&D_800FB6F0)[2] = (s16) ((s32) D_800E6A78.unk54 - (&D_800FB6E8)[2]);
+	func_80086D88_16EE48(&D_800FB6F0);
+	func_8008A5E4_1726A4();
+	(&D_800FB6E8)[0] = (s16) (s32) D_800E6A78.unk4C;
+	(&D_800FB6E8)[1] = (s16) (s32) D_800E6A78.unk50;
+	(&D_800FB6E8)[2] = (s16) (s32) D_800E6A78.unk54;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B474_173534.s")
+#endif
 
 void func_8008B53C_1735FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 	D_800A26A0_18A760 = 1;
