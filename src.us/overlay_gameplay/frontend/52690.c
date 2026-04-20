@@ -1773,7 +1773,77 @@ void func_8008C7E4_5CC94(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008C7E4_5CC94.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(6709)
+void func_8008C8E0_5CD90(void) {
+	s16 index;
+	s16 x;
+	s16 y;
+	s16 z;
+	s16 *entryData;
+	u8 *entryBytes;
+	Unk800DE840 *entry;
+
+	index = D_800DE80E;
+	gDPPipeSync(D_8005BB2C++);
+	if ((index != -6) && (index != -5)) {
+		while (1) {
+			gDPPipeSync(D_8005BB2C++);
+
+			entry = &D_800DE840[index];
+			entryData = &entry->unk8;
+			entryBytes = (u8 *)entryData;
+			if (D_800DE0B6 == 1) {
+				x = entryData[0] - (entryData[5] * 3);
+				y = entryData[1] - (entryData[6] * 3);
+				z = entryData[2] - (entryData[7] * 3);
+			} else {
+				x = entryData[0] - (entryData[5] * 2);
+				y = entryData[1] - (entryData[6] * 2);
+				z = entryData[2] - (entryData[7] * 2);
+			}
+
+			D_8005BB34->v.ob[0] = (s16)(s32)(f32)entryData[0];
+			D_8005BB34->v.ob[1] = (s16)(s32)(f32)entryData[1];
+			D_8005BB34->v.ob[2] = (s16)(s32)(f32)entryData[2];
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = entryBytes[6];
+			D_8005BB34->v.cn[1] = entryBytes[7];
+			D_8005BB34->v.cn[2] = entryBytes[8];
+			D_8005BB34->v.cn[3] = 0xFF;
+
+			D_8005BB34++;
+			D_8005BB34->v.ob[0] = (s16)(s32)(f32)x;
+			D_8005BB34->v.ob[1] = (s16)(s32)(f32)y;
+			D_8005BB34->v.ob[2] = (s16)(s32)(f32)z;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0x800;
+			D_8005BB34->v.tc[1] = 0x800;
+			D_8005BB34->v.cn[0] = entryBytes[6];
+			D_8005BB34->v.cn[1] = entryBytes[7];
+			D_8005BB34->v.cn[2] = entryBytes[8];
+			D_8005BB34->v.cn[3] = 0x19;
+
+			D_8005BB34++;
+			gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 2) & 0x1FFFFFFF), 2, 0);
+			if (D_800DE0B6 == 1) {
+				gImmp1(D_8005BB2C++, G_LINE3D, 0x201);
+			} else {
+				gImmp1(D_8005BB2C++, G_LINE3D, 0x205);
+			}
+
+			index = entry->unk4;
+			if ((index == -6) || (index == -5)) {
+				break;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008C8E0_5CD90.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(5)
