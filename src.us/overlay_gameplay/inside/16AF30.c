@@ -205,7 +205,35 @@ s32 func_80084C18_16CCD8(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800852B8_16D378.s")
 
+#ifdef NON_MATCHING
+// CURRENT(280)
+void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
+	s16 temp_v0;
+	u8 *temp_v1;
+	s16 temp_t5;
+
+	temp_v0 = func_80083390_16B450(0xB);
+	if (temp_v0 != -3) {
+		temp_v1 = (u8 *)&D_800FB7B0 + temp_v0 * 0x16;
+		*(s16 *)(temp_v1 + 0xA) = 1;
+		temp_v1[0x11] = 0;
+		*(u16 *)(temp_v1 + 0x2) = arg2;
+		*(s16 *)(temp_v1 + 0x8) = arg0;
+		*(s16 *)(temp_v1 + 0xC) = arg1;
+		temp_v1[0x12] = arg6;
+		temp_v1[0xE] = arg3;
+		temp_v1[0xF] = arg4;
+		temp_v1[0x10] = arg5;
+		temp_t5 = arg2 / 2;
+		temp_v1[0x13] = temp_t5;
+		if ((temp_t5 & 0xFF) == 0) {
+			temp_v1[0x13] = 1;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008568C_16D74C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008574C_16D80C.s")
 
