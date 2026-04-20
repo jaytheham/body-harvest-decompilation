@@ -1,14 +1,14 @@
 {
-  "generated": "2026-04-20T02:22:51Z",
-  "commit": "91d75083",
-  "commit_timestamp": "2026-04-20T14:22:37+12:00",
+  "generated": "2026-04-20T04:44:15Z",
+  "commit": "9c7d2f8b",
+  "commit_timestamp": "2026-04-20T16:44:03+12:00",
   "overall": {
     "total_functions": 2704,
     "matched": 1293,
-    "non_matching": 494,
-    "asm_stubs": 917,
+    "non_matching": 504,
+    "asm_stubs": 907,
     "matched_pct": 47.82,
-    "decompiled_pct": 66.09
+    "decompiled_pct": 66.46
   },
   "segments": {
     "core": {
@@ -23,11 +23,11 @@
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
       "matched": 94,
-      "non_matching": 91,
-      "asm_stubs": 33,
+      "non_matching": 101,
+      "asm_stubs": 23,
       "total": 218,
       "matched_pct": 43.1,
-      "decompiled_pct": 84.9
+      "decompiled_pct": 89.4
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
@@ -208,8 +208,8 @@
       "path": "overlay_gameplay/frontend/40720.c",
       "segment": "overlay_gameplay/frontend",
       "matched": 45,
-      "non_matching": 51,
-      "asm_stubs": 17,
+      "non_matching": 55,
+      "asm_stubs": 13,
       "total": 113,
       "matched_pct": 39.8,
       "contributor": "jaytheham"
@@ -218,8 +218,8 @@
       "path": "overlay_gameplay/frontend/52690.c",
       "segment": "overlay_gameplay/frontend",
       "matched": 49,
-      "non_matching": 40,
-      "asm_stubs": 16,
+      "non_matching": 46,
+      "asm_stubs": 10,
       "total": 105,
       "matched_pct": 46.7,
       "contributor": "jaytheham"
@@ -550,8 +550,8 @@
       "name": "jaytheham",
       "files": 43,
       "matched": 1287,
-      "non_matching": 494,
-      "asm_stubs": 847
+      "non_matching": 504,
+      "asm_stubs": 837
     },
     {
       "name": "Meridian Lex",
@@ -641,9 +641,9 @@
     },
     {
       "date": "2026-04-19",
-      "commit": "dfebffe",
+      "commit": "283a184",
       "matched": 1293,
-      "non_matching": 494,
+      "non_matching": 504,
       "total": 2704
     }
   ]
