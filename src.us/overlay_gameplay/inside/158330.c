@@ -1020,4 +1020,44 @@ s32 func_8007C2D0_164390(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 a
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C428_1644E8.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(755) */
+s32 func_8007C698_164758(s32 arg0, s32 arg1) {
+	Unk8007C698Npc *npc;
+	u8 *cellObj;
+	s32 cellX;
+	s32 cellY;
+	s32 width;
+	s32 i;
+	u8 cellType;
+
+	cellY = arg1 / 96;
+	cellX = arg0 / 96;
+	width = D_800E6460;
+	cellY -= 1;
+	cellType = (&D_800E69A7)[width * cellY + cellX];
+
+	if (D_800E668C > 0) {
+		npc = (Unk8007C698Npc *) D_800E66A8;
+		i = 0;
+		do {
+			if (npc->unk0 == 0x1E) {
+			cellObj = (u8 *) D_800E65E8 + i;
+			if ((cellObj[0x40] + 1 == cellX) && (cellObj[0x50] == cellY) && (npc->unk24 == 0.0f)) {
+				cellType = 0xFF;
+			}
+			}
+			i++;
+			npc++;
+		} while (i < D_800E668C);
+	}
+
+	if ((cellX - 1 < 0) || (cellY < 0) || (cellX - 1 >= width) || (cellY >= D_800E6464) || (cellType == 0xFF)) {
+		return 1;
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C698_164758.s")
+#endif

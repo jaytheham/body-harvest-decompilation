@@ -1949,5 +1949,19 @@ typedef struct {
 	u8 pad14[2];
 } Unk86A34Effect;
 
+typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 pad1[0x23];
+	/* 0x24 */ f32 unk24;
+	/* 0x28 */ u8 pad28[0x8];
+} Unk8007C698Npc; /* size = 0x30 */
+
+typedef struct {
+	/* 0x00 */ u8 pad0[0x40];
+	/* 0x40 */ u8 unk40;
+	/* 0x41 */ u8 pad41[0xF];
+	/* 0x50 */ u8 unk50;
+} Unk8007C698CellObj;
+
 #endif
 
