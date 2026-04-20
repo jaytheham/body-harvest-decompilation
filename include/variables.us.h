@@ -710,6 +710,7 @@ extern u8 D_8009494C_64DFC;
 extern f32 D_80094950_64E00;
 extern u8 D_800949D4;
 extern FrontendAnimState D_8009499C;
+extern s32 D_80098FF0[];
 extern s32 D_8009E8D8;
 
 extern f32 D_800A08F8;
@@ -861,6 +862,7 @@ extern s16 D_800D7962;
 extern u8 D_800D7970;
 extern u8 D_800D7971;
 extern f32 D_800D7974;
+extern LookAt D_800D7978[];
 extern MissionData D_800D747A;
 extern FrontendStruct D_800D7A68;
 extern s32* D_800D7A18;
