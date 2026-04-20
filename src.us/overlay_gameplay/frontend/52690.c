@@ -3242,7 +3242,265 @@ void func_8008BB38_5BFE8(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008BB38_5BFE8.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(28873)
+void func_8008BC00_5C0B0(u8 arg0) {
+	s16 idx;
+	s16 nextIdx;
+	s16 rand4;
+	u8 texFrame;
+	u8 colR;
+	u8 colG;
+	u8 colB;
+	f32 curX;
+	f32 curY;
+	f32 curZ;
+	f32 curX2;
+	f32 curY2;
+	f32 curZ2;
+	f32 nextX;
+	f32 nextY;
+	f32 nextZ;
+	f32 nextX2;
+	f32 nextY2;
+	f32 nextZ2;
+	f32 spread;
+	f32 zero;
+	s32 rand;
+	Unk800DE840 *entry;
+	Gfx *dl;
+
+	idx = D_800DE130[arg0].unk6;
+
+	gDPPipeSync(D_8005BB2C++);
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFC6218C4;
+	dl->words.w1 = 0xFF33FFFF;
+	gDPPipeSync(D_8005BB2C++);
+
+	rand = func_800038E0_44E0() % 6;
+	if (rand == 1) {
+		colR = 0xC8;
+		colG = 0xFF;
+		colB = 0xC8;
+	} else if (rand == 2) {
+		colR = 0xC8;
+		colG = 0xC8;
+		colB = 0xFF;
+	} else {
+		colR = 0xFF;
+		colG = 0xFF;
+		colB = 0xFF;
+	}
+
+	if ((idx != -5) && (idx != -6)) {
+		entry = &D_800DE840[idx];
+		if (D_800DE0B6 == 1) {
+			rand4 = func_800038E0_44E0() % 4;
+			spread = (f32)((rand4 * 2) + 0x14);
+			curX2 = (f32)entry->unk8 - spread;
+			curX = (f32)entry->unk8 + spread;
+
+			rand4 = func_800038E0_44E0() % 4;
+			spread = (f32)((rand4 * 2) + 0x14);
+			curY = (f32)entry->unkA + spread;
+			curY2 = (f32)entry->unkA - spread;
+
+			rand4 = func_800038E0_44E0() % 4;
+			spread = (f32)((rand4 * 2) + 0x14);
+			curZ = (f32)entry->unkC + spread;
+			curZ2 = (f32)entry->unkC - spread;
+		} else {
+			spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+			if ((func_800038E0_44E0() % 0xB) < 6) {
+				spread = -spread;
+			}
+			curX2 = (f32)entry->unk8 - spread;
+			curX = (f32)entry->unk8 + spread;
+
+			spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+			if ((func_800038E0_44E0() % 0xB) < 6) {
+				spread = -spread;
+			}
+			curY = (f32)entry->unkA + spread;
+			curY2 = (f32)entry->unkA - spread;
+
+			spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+			if ((func_800038E0_44E0() % 0xB) < 6) {
+				spread = -spread;
+			}
+			curZ = (f32)entry->unkC + spread;
+			curZ2 = (f32)entry->unkC - spread;
+		}
+	}
+
+	if ((idx != -5) && (idx != -6)) {
+		do {
+			nextIdx = D_800DE840[idx].unk4;
+			if (nextIdx != -5) {
+				gDPPipeSync(D_8005BB2C++);
+
+				if (D_800DE0B6 == 1) {
+					texFrame = 0;
+				} else {
+					rand = func_800038E0_44E0();
+					rand4 = rand % 4;
+					if ((rand < 0) && (rand4 != 0)) {
+						rand4 -= 4;
+					}
+					texFrame = rand4 & 0xFF;
+				}
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xFD900000;
+				dl->words.w1 = (u32)(&D_100B4F0[texFrame << 9]) & 0x1FFFFFFF;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xF5900000;
+				dl->words.w1 = 0x07080200;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xE6000000;
+				dl->words.w1 = 0;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xF3000000;
+				dl->words.w1 = 0x070FF400;
+
+				gDPPipeSync(D_8005BB2C++);
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xF5800400;
+				dl->words.w1 = 0x00080200;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xF2000000;
+				dl->words.w1 = 0x0007C07C;
+
+				gDPPipeSync(D_8005BB2C++);
+
+				D_8005BB34->v.ob[0] = (s16)(s32)curX;
+				D_8005BB34->v.ob[1] = (s16)(s32)curY;
+				D_8005BB34->v.ob[2] = (s16)(s32)curZ;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = colR;
+				D_8005BB34->v.cn[1] = colG;
+				D_8005BB34->v.cn[2] = colB;
+				D_8005BB34->v.cn[3] = 0xFF;
+
+				D_8005BB34++;
+				D_8005BB34->v.ob[0] = (s16)(s32)curX2;
+				D_8005BB34->v.ob[1] = (s16)(s32)curY2;
+				D_8005BB34->v.ob[2] = (s16)(s32)curZ2;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = colR;
+				D_8005BB34->v.cn[1] = colG;
+				D_8005BB34->v.cn[2] = colB;
+				D_8005BB34->v.cn[3] = 0xFF;
+
+				D_8005BB34++;
+
+				entry = &D_800DE840[nextIdx];
+				if (D_800DE0B6 == 1) {
+					rand4 = func_800038E0_44E0() % 4;
+					spread = (f32)((rand4 * 2) + 0x14);
+					nextX = (f32)entry->unk8 + spread;
+					nextX2 = (f32)entry->unk8 - spread;
+
+					rand4 = func_800038E0_44E0() % 4;
+					spread = (f32)((rand4 * 2) + 0x14);
+					nextY = (f32)entry->unkA + spread;
+					nextY2 = (f32)entry->unkA - spread;
+
+					rand4 = func_800038E0_44E0() % 4;
+					spread = (f32)((rand4 * 2) + 0x14);
+					nextZ = (f32)entry->unkC + spread;
+					nextZ2 = (f32)entry->unkC - spread;
+				} else {
+					zero = 0.0f;
+					spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+					if ((func_800038E0_44E0() % 0xB) < 6) {
+						spread = zero - spread;
+					}
+					nextX = (f32)entry->unk8 + spread;
+					nextX2 = (f32)entry->unk8 - spread;
+
+					spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+					if ((func_800038E0_44E0() % 0xB) < 6) {
+						spread = zero - spread;
+					}
+					nextY = (f32)entry->unkA + spread;
+					nextY2 = (f32)entry->unkA - spread;
+
+					spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+					if ((func_800038E0_44E0() % 0xB) < 6) {
+						spread = zero - spread;
+					}
+					nextZ = (f32)entry->unkC + spread;
+					nextZ2 = (f32)entry->unkC - spread;
+				}
+
+				D_8005BB34->v.ob[0] = (s16)(s32)nextX;
+				D_8005BB34->v.ob[1] = (s16)(s32)nextY;
+				D_8005BB34->v.ob[2] = (s16)(s32)nextZ;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = colR;
+				D_8005BB34->v.cn[1] = colG;
+				D_8005BB34->v.cn[2] = colB;
+				D_8005BB34->v.cn[3] = 0x32;
+
+				D_8005BB34++;
+				D_8005BB34->v.ob[0] = (s16)(s32)nextX2;
+				D_8005BB34->v.ob[1] = (s16)(s32)nextY2;
+				D_8005BB34->v.ob[2] = (s16)(s32)nextZ2;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = colR;
+				D_8005BB34->v.cn[1] = colG;
+				D_8005BB34->v.cn[2] = colB;
+				D_8005BB34->v.cn[3] = 0x32;
+
+				D_8005BB34++;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0x0400103F;
+				dl->words.w1 = (u32)(D_8005BB34 - 4) & 0x1FFFFFFF;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xB1000206;
+				dl->words.w1 = 0x00040602;
+
+				curX = nextX2;
+				curY = nextY2;
+				curZ = nextZ2;
+				curX2 = nextX;
+				curY2 = nextY;
+				curZ2 = nextZ;
+			}
+
+			idx = nextIdx;
+		} while ((idx != -5) && (idx != -6));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008BC00_5C0B0.s")
+#endif
 
 /* Allocate D_800DE840 entry and fill all fields from params */
 void func_8008C73C_5CBEC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5, s16 arg6, s16 arg7, s16 arg8, u8 arg9) {
