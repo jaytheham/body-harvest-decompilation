@@ -1760,6 +1760,8 @@ extern s32 D_800E65CC;
 extern f32 D_800E65E0;
 extern Unk9C804 D_8009C804[];
 extern Unk800E66A8 D_800E66A8[];
+extern s16 D_800E66B2[];
+extern u8 D_800E66B3[];
 extern s32 D_800E668C;
 extern s32 D_800E6460;
 extern s32 D_800E6464;
