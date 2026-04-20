@@ -1769,6 +1769,7 @@ extern Vec3f D_800E6650;
 extern Vec3f D_800E6660;
 extern Vec3f D_800E6670;
 extern Vec3f D_800E6680;
+extern s32 D_800E66A4;
 extern Unk9C804 D_8009C804[];
 extern Unk800E66A8 D_800E66A8[];
 extern s16 D_800E66B2[];

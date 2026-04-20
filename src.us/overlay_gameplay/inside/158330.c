@@ -91,7 +91,56 @@ void func_800717B4_159874(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007290C_15A9CC.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(130) */
+s32 func_80072E88_15AF48(void) {
+	u32 attrBits;
+
+	switch (currentLevel) {
+		case 1:
+			if (D_800E66A4 != 1) {
+				break;
+			}
+
+			attrBits = ((u32*) D_80050AE0)[D_80052540 * 6];
+			attrBits = (attrBits << 0x1A) >> 0x1C;
+			if (attrBits != 5) {
+				break;
+			}
+			return 1;
+
+		case 2:
+		case 3:
+		case 4:
+			attrBits = D_800E66A4;
+			if (attrBits == 1) {
+				attrBits = ((u32*) D_80050AE0)[D_80052540 * 6];
+				attrBits = (attrBits << 0x1A) >> 0x1C;
+				if (attrBits == 8) {
+					return 1;
+				}
+			}
+
+			if (attrBits != 2) {
+				break;
+			}
+
+			attrBits = ((u32*) D_80050AE0)[D_80052540 * 6];
+			attrBits = (attrBits << 0x1A) >> 0x1C;
+			if ((attrBits != 0xA) && (attrBits != 6)) {
+				break;
+			}
+			return 1;
+
+		case 5:
+			return 1;
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80072E88_15AF48.s")
+#endif
 
 void func_80072FB4_15B074(void) {
 	guess_checkMissions();
