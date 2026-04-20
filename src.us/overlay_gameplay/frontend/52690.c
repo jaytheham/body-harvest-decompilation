@@ -1211,7 +1211,89 @@ void func_80085FF0_564A0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80085FF0_564A0.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(26836)
+void func_80086528_569D8(s32 arg0) {
+	Unk800DE840 *base;
+	Unk800DE840 *node;
+	Vtx *vtx;
+	s32 alpha;
+	s32 tailAlpha;
+
+	base = &D_800DE840[D_800DE130[arg0 & 0xFF].unk6];
+	alpha = (0xFF - D_800D7971) & 0xFF;
+	if (D_800D7970 == 0) {
+		alpha = 0xFF;
+	}
+
+	if ((base->unk4 == -5) || (base->unk4 == -6)) {
+		return;
+	}
+
+	tailAlpha = (s32)(((f32)(alpha * 0x14)) / 255.0f);
+	node = &D_800DE840[base->unk4];
+
+	while ((node->unk4 != -5) && (node->unk4 != -6)) {
+		vtx = D_8005BB34;
+		if (D_800DE0B7 == 1) {
+			vtx->v.ob[0] = (s16)(f32)(D_800AA7B4_7AC64[D_800E1D6A] + node->unk8);
+			vtx->v.ob[1] = (s16)(f32)(D_800AA7B8_7AC68[D_800E1D6A] + node->unkA);
+			vtx->v.ob[2] = (s16)(f32)(D_800AA7BC_7AC6C[D_800E1D6A] + node->unkC);
+			vtx->v.flag = 0;
+			vtx->v.tc[0] = 0;
+			vtx->v.tc[1] = 0;
+			vtx->v.cn[0] = base->unkE;
+			vtx->v.cn[1] = base->unkF;
+			vtx->v.cn[2] = base->unk10;
+			vtx->v.cn[3] = (u8)((node->unk11 * alpha) / 255.0f);
+
+			vtx++;
+			vtx->v.ob[0] = (s16)(f32)((D_800AA7B4_7AC64[D_800E1D6A] + node->unk8) - (s8)node->unkE);
+			vtx->v.ob[1] = (s16)(f32)((D_800AA7B8_7AC68[D_800E1D6A] + node->unkA) - (s8)node->unkF);
+			vtx->v.ob[2] = (s16)(f32)((D_800AA7BC_7AC6C[D_800E1D6A] + node->unkC) - (s8)node->unk10);
+			vtx->v.flag = 0;
+			vtx->v.tc[0] = 0;
+			vtx->v.tc[1] = 0;
+			vtx->v.cn[0] = base->unkE;
+			vtx->v.cn[1] = base->unkF;
+			vtx->v.cn[2] = base->unk10;
+			vtx->v.cn[3] = tailAlpha;
+		} else {
+			vtx->v.ob[0] = (s16)(f32)node->unk8;
+			vtx->v.ob[1] = (s16)(f32)node->unkA;
+			vtx->v.ob[2] = (s16)(f32)node->unkC;
+			vtx->v.flag = 0;
+			vtx->v.tc[0] = 0;
+			vtx->v.tc[1] = 0;
+			vtx->v.cn[0] = base->unkE;
+			vtx->v.cn[1] = base->unkF;
+			vtx->v.cn[2] = base->unk10;
+			vtx->v.cn[3] = (u8)((node->unk11 * alpha) / 255.0f);
+
+			vtx++;
+			vtx->v.ob[0] = (s16)(f32)(node->unk8 - (s8)node->unkE);
+			vtx->v.ob[1] = (s16)(f32)(node->unkA - (s8)node->unkF);
+			vtx->v.ob[2] = (s16)(f32)(node->unkC - (s8)node->unk10);
+			vtx->v.flag = 0;
+			vtx->v.tc[0] = 0;
+			vtx->v.tc[1] = 0;
+			vtx->v.cn[0] = base->unkE;
+			vtx->v.cn[1] = base->unkF;
+			vtx->v.cn[2] = base->unk10;
+			vtx->v.cn[3] = tailAlpha;
+		}
+
+		D_8005BB34 += 2;
+		gSPVertex(D_8005BB2C++, D_8005BB34 - 2, 2, 0);
+		gSPNumLights(D_8005BB2C++, 1);
+		gDPPipeSync(D_8005BB2C++);
+
+		node = &D_800DE840[node->unk4];
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80086528_569D8.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(13583)
