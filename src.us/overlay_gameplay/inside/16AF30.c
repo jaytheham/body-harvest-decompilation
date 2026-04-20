@@ -66,7 +66,27 @@ void func_800830F4_16B1B4(f32 arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->z = arg1->z * arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008311C_16B1DC.s")
+void func_8008311C_16B1DC(void) {
+	f32 sp34[3][3];
+	s16 i;
+	s16 j;
+	Vec3f sp24;
+
+	for (i = 0; i < 3; i++) {
+		for (j = 0; j < 3; j++) {
+			sp34[i][j] = D_800E7350[j][i];
+		}
+	}
+
+	sp24.x = -0.5f;
+	sp24.y = 0.5f;
+	sp24.z = 0.0f;
+	func_80082E70_16AF30(&sp34[0][0], &sp24, &D_800FB6A8);
+	sp24.x = -sp24.x;
+	func_80082E70_16AF30(&sp34[0][0], &sp24, &D_800FB6B4);
+	func_80082F04_16AFC4(&D_800FB6A8, &D_800FB6B4, &D_800FB6C0);
+	func_80083014_16B0D4(&D_800FB6C0, &D_800FB6C0);
+}
 
 #ifdef NON_MATCHING
 s32 func_80083224_16B2E4(s32 arg0) {
