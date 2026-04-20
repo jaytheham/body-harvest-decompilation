@@ -1361,13 +1361,15 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 pad1[0x1];
-	/* 0x02 */ u16 unk2;
-	/* 0x04 */ u8 pad4[0x2];
-	/* 0x06 */ u16 unk6;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
 	/* 0x08 */ u8 unk8;
 	/* 0x09 */ u8 pad9[0x5];
 	/* 0x0E */ s16 unkE;
-	/* 0x10 */ u8 pad10[0x1E];
+	/* 0x10 */ u8 pad10[0x1C];
+	/* 0x2C */ u8 unk2C;
+	/* 0x2D */ u8 pad2D[0x1];
 	/* 0x2E */ u8 unk2E;
 	/* 0x2F */ u8 pad2F[0x1];
 } Unk800E66A8; /* stride 0x30 */
