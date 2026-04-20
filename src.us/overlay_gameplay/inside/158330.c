@@ -521,7 +521,56 @@ void func_80074D18_15CDD8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007568C_15D74C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80076538_15E5F8.s")
+typedef struct {
+	/* 0x00 */ u8 pad0[0x8];
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ u8 padC[0x3C];
+} Unk80076538Obj; /* size = 0x48 */
+
+void func_80076538_15E5F8(s32 arg0) {
+	Unk800E66A8 *temp_v0;
+	Unk80076538Obj *temp_v0_2;
+	Unk80076538Obj *temp_v0_3;
+	Unk80076538Obj *temp_v0_4;
+	Unk80076538Obj *temp_v0_5;
+	s32 var_t0;
+	s32 var_v1;
+	u8 temp_a2;
+
+	temp_v0 = &D_800E66A8[arg0];
+	temp_a2 = temp_v0->unk0;
+	var_v1 = temp_v0->unk2;
+	var_t0 = temp_v0->unk6;
+
+	switch (temp_v0->unk8) {
+		case 0:
+			temp_v0_2 = &((Unk80076538Obj *) D_800E65BC)[temp_a2];
+			var_v1 += temp_v0_2->unk8;
+			var_t0 += temp_v0_2->unkA;
+			break;
+
+		case 1:
+			temp_v0_3 = &((Unk80076538Obj *) D_800E65BC)[temp_a2];
+			var_v1 += temp_v0_3->unkA;
+			var_t0 -= temp_v0_3->unk8;
+			break;
+
+		case 2:
+			temp_v0_4 = &((Unk80076538Obj *) D_800E65BC)[temp_a2];
+			var_v1 -= temp_v0_4->unk8;
+			var_t0 -= temp_v0_4->unkA;
+			break;
+
+		case 3:
+			temp_v0_5 = &((Unk80076538Obj *) D_800E65BC)[temp_a2];
+			var_v1 -= temp_v0_5->unkA;
+			var_t0 += temp_v0_5->unk8;
+			break;
+	}
+
+	func_80073714_15B7D4(5, 5, var_v1 - 0x60, 2, var_t0 - 0x60, 0xFA, 0xFA, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80076678_15E738.s")
 
