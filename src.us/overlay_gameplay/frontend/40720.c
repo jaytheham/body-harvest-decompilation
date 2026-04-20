@@ -5009,6 +5009,7 @@ void func_80080A84_50F34(FrontendStreamSlot* arg0);
 void func_80080F8C_5143C(AnimChannelState* arg0, s16* arg1, s32 arg2);
 void func_8008FE98_60348(u8 arg0);
 
+#ifdef NON_MATCHING
 s32 func_8007E12C_4E5DC(void) {
 	Unk8007E12CEntry8* entry;
 	Unk80080530_Dst* dst;
@@ -5220,6 +5221,9 @@ s32 func_8007E12C_4E5DC(void) {
 
 	return returnValue;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007E12C_4E5DC.s")
+#endif
 
 void func_8007EBB0_4F060(void);
 
