@@ -2411,7 +2411,200 @@ s32 func_80078110_485C0(void) {
 #endif
 
 // doChooseFileNameLoop
+#ifdef NON_MATCHING
+// CURRENT(3990)
+s32 func_80078424_488D4(void) {
+	s32 state;
+	u32 frameCounter;
+	s16 nameLength;
+	s32 changed;
+	s32 i;
+	u8 backupName[6];
+	u8 typedName[7];
+	s16 textWidth;
+	MissionData* entry;
+
+	D_800D74A6 = 0x16;
+	D_800D74A4 = D_800D74A6;
+	frameCounter = 0;
+	state = 1;
+	nameLength = 0;
+
+	i = 5;
+	do {
+		backupName[i] = D_80047FA8[i];
+		D_80047FA8[i] = 0x20;
+	} while (i-- != 0);
+
+	func_80070514_409C4(0x15);
+	D_800909B0[50].unk0 = 0xA0;
+	D_800909B0[50].unk2 = 0x88;
+	D_800909B0[50].unk4 = 0xD2;
+	D_800909B0[50].unk6 = 0xC2;
+	D_800909B0[50].unkC = 0x30;
+	D_800909B0[50].unkA = 0;
+	D_800909B0[50].unk10 = 0x23;
+	D_800909B0[50].unkE = 0;
+	func_80070514_409C4(0x32);
+	func_80070BD8_41088(0x16, 0x2F);
+	func_80070AEC_40F9C(0x30, 0x31);
+	D_800909B0[22].unk1C = 1;
+
+	while (state == 1) {
+		changed = 0;
+
+		if ((frameCounter < 0x1C) && ((frameCounter & 3) == 0)) {
+			s32 step;
+			s16 leftChar;
+			s16 rightChar;
+			s16 centerChar;
+
+			step = (s32)(frameCounter >> 2);
+			leftChar = (s16)(step + 0x24);
+			rightChar = (s16)(0x23 - step);
+			centerChar = (s16)(0x31 - step);
+
+			func_80070514_409C4((s16)(step + 0x16));
+			func_80070514_409C4(rightChar);
+			func_80070514_409C4(leftChar);
+			func_80070514_409C4(centerChar);
+		}
+
+		if (nameLength == 0) {
+			func_80070AEC_40F9C(0x30, 0x31);
+		}
+
+		if (frameCounter >= 0x41) {
+			func_80070CC4_41174();
+			func_8007166C_41B1C();
+
+			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+				switch (D_800D74A4) {
+				case 0x30:
+					if (nameLength > 0) {
+						nameLength--;
+						D_80047FA8[nameLength] = 0x20;
+						changed = 1;
+					}
+
+					if (nameLength == 0) {
+						func_80070AEC_40F9C(0x30, 0x31);
+						D_800D74A4 = 0x16;
+					}
+
+					if (nameLength == 5) {
+						func_80070BD8_41088(0x16, 0x2F);
+					}
+
+					entry = func_80070494_40944(0x30);
+					entry->unk12 = 0x36B0;
+					entry->unk14 = 0x100;
+					func_800153D8_15FD8(0xCB);
+					break;
+
+				case 0x31:
+					if (nameLength > 0) {
+						state = 2;
+						entry = func_80070494_40944(0x32);
+						entry->unkA = 0;
+						entry->unkE = 0;
+						entry->unk4 = 0x308;
+						entry->unk0 = 0x280;
+					}
+					break;
+
+				default:
+					if (nameLength < 6) {
+						D_80047FA8[nameLength] = (u8)(D_800D74A4 + 0x2B);
+						nameLength++;
+						changed = 1;
+					}
+
+					if (nameLength == 1) {
+						func_80070BD8_41088(0x30, 0x31);
+					}
+
+					if (nameLength == 6) {
+						D_800D74A4 = 0x31;
+						func_80070AEC_40F9C(0x16, 0x2F);
+					}
+
+					entry = func_80070494_40944(D_800D74A4);
+					entry->unk12 = 0x36B0;
+					entry->unk14 = 0x100;
+					func_800153D8_15FD8(0xCB);
+					break;
+				}
+			}
+
+			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+				D_800476A0 = 3;
+				state = 0;
+				entry = func_80070494_40944(0x32);
+				entry->unkA = 0;
+				entry->unkE = 0;
+				entry->unk4 = 0x308;
+				entry->unk0 = 0x280;
+			}
+		}
+
+		if (changed != 0) {
+			s32 len;
+
+			len = 0;
+			if (D_80047FA8[0] != 0x20) {
+				typedName[0] = D_80047FA8[0];
+				len = 1;
+				while ((len < 6) && (D_80047FA8[len] != 0x20)) {
+					typedName[len] = D_80047FA8[len];
+					len++;
+				}
+			}
+
+			typedName[len] = 0;
+			textWidth = (s16)(func_8000A2B8_AEB8(typedName, 0) + 0x30);
+			D_800909B0[50].unk0 = D_800909B0[50].unk2;
+			D_800909B0[50].unk4 = D_800909B0[50].unk6;
+			D_800909B0[50].unkA = D_800909B0[50].unkC;
+			D_800909B0[50].unkE = D_800909B0[50].unk10;
+			D_800909B0[50].unk2 = (s16)(0xA0 - (textWidth >> 1));
+			D_800909B0[50].unkC = textWidth;
+
+			func_80070494_40944(0x32)->unk16 = 0;
+			func_80070514_409C4(0x32);
+			func_80070494_40944(0x32)->unk28 = 0x64;
+		}
+
+		func_80075D58_46208(0);
+		func_800731A8_43658();
+		func_8000B044_BC44();
+		func_8000505C_5C5C();
+
+		if (frameCounter < 0x3E8) {
+			frameCounter++;
+		}
+	}
+
+	func_800153D8_15FD8(0xC8);
+	if (state != 0) {
+		if (func_80077344_477F4() == 2) {
+			D_800476A0 = 1;
+		} else {
+			D_800476A0 = 3;
+			state = func_80078424_488D4();
+		}
+	}
+
+	func_8000AFDC_BBDC();
+	func_800709F0_40EA0();
+	func_800764B4_46964();
+
+	(void)backupName;
+	return state;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078424_488D4.s")
+#endif
 
 // startFile (unused?)
 void func_800788E4_48D94(void) {
