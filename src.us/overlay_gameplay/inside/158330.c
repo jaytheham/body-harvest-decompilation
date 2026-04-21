@@ -116,7 +116,17 @@ void func_800717B4_159874(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80071854_159914.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80071D94_159E54.s")
+void func_80071D94_159E54(int arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3)
+{
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, 3 << 20);
+	gDPSetColorImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 320, K0_TO_PHYS(arg0));
+	gDPSetFillColor(D_8005BB2C++, (GPACK_RGBA5551(arg1, arg2, arg3, 1) << 16) | GPACK_RGBA5551(arg1, arg2, arg3, 1));
+	gDPPipeSync(D_8005BB2C++);
+	gDPFillRectangle(D_8005BB2C++, 0, 0, D_80068084 - 1, D_80068088);
+	gDPSetCycleType(D_8005BB2C++, 0 << 20);
+	gDPPipeSync(D_8005BB2C++);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80071F08_159FC8.s")
 
