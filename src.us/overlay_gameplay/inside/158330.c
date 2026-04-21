@@ -1284,7 +1284,89 @@ void func_800775F0_15F6B0(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800775F0_15F6B0.s")
 #endif
 
+// CURRENT(5892)
+#ifdef NON_MATCHING
+void func_8007774C_15F80C(s32 arg0, s32 arg1) {
+	Unk800E66A8 *entry;
+	Unk80076538Obj *obj;
+	s32 objType;
+	s32 x;
+	s32 z;
+	s32 y;
+	s32 var_t2;
+	s32 var_t3;
+
+	entry = &D_800E66A8[arg0];
+	obj = &((Unk80076538Obj *) D_800E65BC)[arg1];
+	objType = obj->unkC;
+	y = obj->unk10 + entry->unk4;
+	var_t2 = 0;
+	var_t3 = 0;
+
+	switch (entry->unk8) {
+		case 0:
+			x = obj->unkE + entry->unk2;
+			z = obj->unk12 + entry->unk6;
+			var_t2 = 1;
+			break;
+
+		case 1:
+			x = obj->unk12 + entry->unk2;
+			z = entry->unk6 - obj->unkE;
+			var_t3 = 1;
+			break;
+
+		case 2:
+			x = entry->unk2 - obj->unkE;
+			z = entry->unk6 - obj->unk12;
+			var_t2 = -1;
+			break;
+
+		case 3:
+			x = entry->unk2 - obj->unk12;
+			z = obj->unkE + entry->unk6;
+			var_t3 = -1;
+			break;
+	}
+
+	x -= 0x60;
+	z -= 0x60;
+
+	switch (objType) {
+		case 1:
+			entry->unkA = func_80084C68_16CD28(x, y, z, 0x50, 0xFFFF, 0xFF, 0xAA, 0x1E);
+			break;
+
+		case 2:
+			entry->unkA = func_8008506C_16D12C(x, y, z, 0x32);
+			break;
+
+		case 3:
+			entry->unkA = func_8008506C_16D12C(x, y, z, 0x50);
+			break;
+
+		case 4:
+			entry->unkA = func_80084EEC_16CFAC(x, y, z, 0x78, 0xF0, 0xC8, 0x64, 0xFF, 0xB4, 0x46, 0x32, 1);
+			break;
+
+		case 5:
+			entry->unkA = func_80089648_171708(x, y, z, (s8) (var_t3 * 0x14), 0, var_t2 * 0x14, 1);
+			break;
+
+		case 6:
+			entry->unkA = func_80089648_171708(x, y, z, 0, -0xA, 0, 2);
+			break;
+
+		case 7:
+			break;
+
+		case 8:
+			break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007774C_15F80C.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
