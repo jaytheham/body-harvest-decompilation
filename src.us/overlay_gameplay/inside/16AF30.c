@@ -545,7 +545,7 @@ void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008568C_16D74C.s")
 #endif
 
-// CURRENT(4270)
+// CURRENT(4135)
 #ifdef NON_MATCHING
 u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
 	s32 pad0;
@@ -606,16 +606,16 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 		}
 		entry[0xB] = temp;
 
-		other = other + 8;
-		other[8] = arg13;
+		entry = other + 8;
+		entry[8] = arg13;
 		life = arg8;
 		if (life >= 0x4C) {
 			life = 0x4B;
 		} else if (life == 0) {
 			life = 1;
 		}
-		other[5] = life;
-		*(u16 *)(other + 6) = 0;
+		entry[5] = life;
+		*(u16 *)(entry + 6) = 0;
 	}
 
 	return ret;
