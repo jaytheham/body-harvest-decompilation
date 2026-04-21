@@ -1033,7 +1033,65 @@ void func_80087CB8_16FD78(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089148_171208.s")
 
+// CURRENT(4710)
+#ifdef NON_MATCHING
+void func_80089408_1714C8(s32 arg0) {
+
+	Unk89408Effect *srcEffect;
+	Unk89408Pos *srcPos;
+	Unk89408Pos *dstPos;
+	s16 srcIndex;
+	s16 dstIndex;
+	s32 temp;
+	u8 index;
+	u8 color;
+
+	index = arg0 & 0xFF;
+	srcIndex = D_800FB6F8[index].unk6;
+	dstIndex = func_80083390_16B450(index);
+	if (dstIndex != -3) {
+		srcEffect = &((Unk89408Effect *) &D_800FB7B0)[srcIndex];
+		srcPos = &srcEffect->pos;
+
+		if (srcPos->unkA == 1) {
+			((Unk89408Effect *) &D_800FB7B0)[dstIndex].unk2 = (func_800038E0_44E0() % 0x23) + 0x23;
+			color = 0xAA;
+			((Unk89408Effect *) &D_800FB7B0)[dstIndex].pos.unk9 = 0x82;
+			dstPos = &((Unk89408Effect *) &D_800FB7B0)[dstIndex].pos;
+			dstPos->unk6 = color;
+			dstPos->unk7 = color;
+			dstPos->unk8 = color;
+		} else if (srcPos->unkA == 0) {
+			((Unk89408Effect *) &D_800FB7B0)[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
+			color = 0xFF;
+			((Unk89408Effect *) &D_800FB7B0)[dstIndex].pos.unk9 = color;
+			dstPos = &((Unk89408Effect *) &D_800FB7B0)[dstIndex].pos;
+			dstPos->unk6 = color;
+			dstPos->unk7 = color;
+			dstPos->unk8 = color;
+		} else {
+			((Unk89408Effect *) &D_800FB7B0)[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
+			color = 0xFF;
+			((Unk89408Effect *) &D_800FB7B0)[dstIndex].pos.unk9 = color;
+			dstPos = &((Unk89408Effect *) &D_800FB7B0)[dstIndex].pos;
+			dstPos->unk6 = 0x32;
+			dstPos->unk7 = color;
+			dstPos->unk8 = 0x82;
+		}
+
+		dstPos->unk0 = srcPos->unk0;
+		dstPos->unk2 = srcPos->unk2;
+		dstPos->unk4 = srcPos->unk4;
+		dstPos->unkA = (func_800038E0_44E0() % 6) + srcPos->unk6 - 3;
+		dstPos->unkB = (func_800038E0_44E0() % 6) + srcPos->unk7 - 3;
+		temp = func_800038E0_44E0() % 6;
+		dstPos->unkD = 0;
+		dstPos->unkC = temp + srcPos->unk8 - 3;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089408_1714C8.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(1192)
