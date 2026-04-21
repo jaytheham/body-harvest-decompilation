@@ -101,6 +101,12 @@ typedef struct {
 } func_80070420_7F3D0_UnkArg0; /* size = 0x0A */
 
 typedef struct {
+	/* 0x00 */ u8 pad0[0x8];
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+} Unk80070464Obj; /* size = 0x0C */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ u8 pad02[0x16];
 } Unk80050ADA; /* size = 0x18 */
