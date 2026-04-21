@@ -495,7 +495,61 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084258_16C318.s")
 
+// CURRENT(3224)
+#ifdef NON_MATCHING
+void func_80084628_16C6E8(s32 arg0) {
+	UnkFB6F8Entry *owner;
+	Unk84EECEffect *base;
+	Unk84EECEffect *entry;
+	s16 effect;
+	s16 spread;
+	u16 quarter;
+	u16 half;
+	u16 third;
+	s32 rnd;
+	u8 slot;
+
+	slot = arg0 & 0xFF;
+	owner = &D_800FB6F8[slot];
+	base = &((Unk84EECEffect *)&D_800FB7B0)[owner->unk6];
+	spread = base->unk2;
+	effect = func_80083390_16B450(slot);
+	if (effect == -3) {
+		return;
+	}
+
+	rnd = func_800038E0_44E0();
+	entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+	quarter = spread / 4;
+	entry->unk2 = (rnd % quarter) + quarter;
+	entry->unkE = (base->unk11 + base->unkE) / 2;
+	entry->unkF = (base->unk12 + base->unkF) / 2;
+	entry->unk10 = (base->unk13 + base->unk10) / 2;
+
+	rnd = func_800038E0_44E0();
+	entry->unk11 = (rnd % 0x32) + 0x5A;
+	half = quarter / 2;
+	third = quarter / 3;
+
+	rnd = func_800038E0_44E0();
+	entry->unk12 = (rnd % half) + third;
+	rnd = func_800038E0_44E0();
+	entry->unk14 = (rnd % half) + third;
+	rnd = func_800038E0_44E0();
+	entry->unk13 = (rnd % half) + third;
+	rnd = func_800038E0_44E0();
+	entry->unk15 = (rnd % half) + third;
+
+	rnd = func_800038E0_44E0();
+	entry->unk8 = ((rnd % spread) / 2) + base->unk8 - quarter;
+	entry->unkA = base->unkA;
+
+	rnd = func_800038E0_44E0();
+	entry->unkC = ((rnd % spread) / 2) + base->unkC - quarter;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084628_16C6E8.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80084980_16CA40(s32 arg0, s32 arg1) {
