@@ -852,7 +852,54 @@ void func_800858F4_16D9B4(s16 arg0, s16 arg1, s16 arg2) {
 	func_8008574C_16D80C(arg0, arg1, arg2, 0, 0x78, 0, 0x28, 8, 0x1E, 0x96, 0xAA, 0xB4, 0xFF, 0x78);
 }
 
+// CURRENT(566)
+#ifdef NON_MATCHING
+s32 func_80085984_16DA44(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 arg5) {
+	Unk84EECEffect *effect;
+	u8 *entry;
+	s32 half;
+	u16 randX;
+	u16 randY;
+	s16 ret;
+	s8 dirY;
+	s8 dirX;
+
+	ret = func_80083390_16B450(0xE);
+	if (ret != -3) {
+		effect = &((Unk84EECEffect *)&D_800FB7B0)[ret];
+		effect->unk2 = arg0;
+		entry = (u8 *)effect + 8;
+		half = (u8)arg1 / 2;
+		*(s16 *)&entry[0] = (func_800038E0_44E0() % (u8)arg1) + arg3 * 4 - half;
+		*(s16 *)&entry[2] = (func_800038E0_44E0() % (u8)arg1) + arg4 * 4 - half;
+		*(s16 *)&entry[4] = (func_800038E0_44E0() % (u8)arg1) + arg5 * 4 - half;
+		entry[6] = -1;
+		entry[7] = -1;
+		entry[8] = -1;
+		entry[9] = arg1;
+		entry[0xA] = func_800038E0_44E0() % 8;
+		entry[0xB] = arg2;
+		entry[0xC] = 0;
+
+		dirX = (func_800038E0_44E0() % 70) + 0x37;
+		dirY = (func_800038E0_44E0() % 70) + 0x37;
+		if ((func_800038E0_44E0() % 20) < 0xA) {
+			dirX = -dirX;
+		}
+		if ((func_800038E0_44E0() % 20) < 0xA) {
+			dirY = -dirY;
+		}
+
+		randX = func_800038E0_44E0();
+		randY = func_800038E0_44E0();
+		func_80083F08_16BFC8(arg3, arg4, arg5, dirX, (randX % 60) + 0x41, dirY, 0x1E, (randY % 60) + 0x46, (func_800038E0_44E0() % 3) + 3, 0xA, 0xC8, 0xC8, 0xFF);
+	}
+
+	return ret;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085984_16DA44.s")
+#endif
 
 void func_80085CB4_16DD74(s16 arg0, s16 arg1, s16 arg2) {
 	s32 temp_v0;
