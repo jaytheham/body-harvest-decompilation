@@ -571,7 +571,38 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084EEC_16CFAC.s")
 #endif
 
+// CURRENT(121)
+#ifdef NON_MATCHING
+s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	s16 effect;
+	u8 *temp_s0;
+	s32 half;
+	s32 third;
+
+	effect = func_80083390_16B450(0xC);
+	if (effect != -3) {
+		temp_s0 = (u8 *)&D_800FB7B0 + effect * 0x16;
+		*(s16 *)(temp_s0 + 2) = arg3;
+		*(s16 *)(temp_s0 + 8) = arg0 * 4;
+		*(s16 *)(temp_s0 + 0xA) = arg1 * 4;
+		*(s16 *)(temp_s0 + 0xC) = arg2 * 4;
+		temp_s0 += 8;
+
+		half = arg3 / 2;
+		third = arg3 / 3;
+		*(s8 *)(temp_s0 + 1) = (func_800038E0_44E0() % half) + third;
+		*(s8 *)(temp_s0 + 3) = (func_800038E0_44E0() % half) + third;
+		*(s8 *)(temp_s0 + 2) = (func_800038E0_44E0() % half) + third;
+		*(s8 *)(temp_s0 + 4) = (func_800038E0_44E0() % half) + third;
+
+		*(s16 *)(temp_s0 + 6) = func_80084EEC_16CFAC(arg0, arg1 + (arg3 / 8), arg2, arg3 * 2, 0xF0, 0xC8, 0x64, 0xFF, 0xB4, 0x46, 0x32, 1);
+	}
+
+	return effect;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008506C_16D12C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800852B8_16D378.s")
 
