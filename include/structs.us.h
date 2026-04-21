@@ -1974,5 +1974,18 @@ typedef struct {
 	s16 unkE;
 } Unk8008DE78;
 
+typedef struct {
+	u8 unk0;
+	u8 pad1;
+	s16 unk2;
+	s16 unk4;
+	s16 unk6;
+	u8 pad8[0xA];
+	s8 unk12;
+	s8 unk13;
+	u8 unk14;
+	s8 unk15;
+} Unk86728Effect;
+
 #endif
 

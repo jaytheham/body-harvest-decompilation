@@ -396,7 +396,43 @@ void func_80085CB4_16DD74(s16 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086550_16E610.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(2019) */
+void func_80086728_16E7E8(void) {
+	s16 effect;
+
+	effect = D_800FB79A;
+	if ((effect != -5) && (effect != -6)) {
+		do {
+			s16 value;
+			Unk86728Effect *entry;
+			s8 *entry8;
+
+			entry = &((Unk86728Effect *)&D_800FB7B0)[effect];
+			entry8 = (s8 *) entry + 8;
+			if ((u8)entry8[0xC] == 0) {
+				value = (func_800038E0_44E0() % 2) + 2 + entry8[0xA];
+				if (entry8[0xB] < value) {
+					entry8[0xC] = 1;
+				} else {
+					entry8[0xA] = value;
+				}
+			} else {
+				value = -5 - (func_800038E0_44E0() % 5) + entry8[0xA];
+				if (value < -entry8[0xB]) {
+					entry8[0xC] = 0;
+				} else {
+					entry8[0xA] = value;
+				}
+			}
+
+			effect = entry->unk4;
+		} while ((effect != -5) && (effect != -6));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086728_16E7E8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008688C_16E94C.s")
 
