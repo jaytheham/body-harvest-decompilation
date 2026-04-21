@@ -815,7 +815,73 @@ void func_800768B8_15E978(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800768B8_15E978.s")
 #endif
 
+// CURRENT(1928)
+#ifdef NON_MATCHING
+void func_80076A58_15EB18(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+	s32 sp3C;
+	s32 temp_s2;
+	s32 temp_t9;
+	s32 var_s0;
+	s32 var_s1;
+	s32 var_s2;
+	s32 var_s3;
+	u32 temp_v0_3;
+	Gfx *temp_v0;
+	Gfx *temp_v1;
+	u8 *var_s4;
+
+	temp_v0 = D_8005BB2C;
+	temp_s2 = arg0 & 0xFF;
+	D_8005BB2C = temp_v0 + 1;
+	var_s4 = (u8 *)(temp_v0 + 2);
+	temp_v0->words.w0 = 0xBC001C06;
+	temp_v1 = temp_v0;
+	temp_v0_3 = osVirtualToPhysical(var_s4);
+	temp_v1->words.w1 = temp_v0_3;
+
+	temp_t9 = ((temp_s2 << 6) + 5) & ~5;
+	temp_v0 = D_8005BB2C;
+	temp_v0->words.w0 = 0x06010000;
+	temp_v0->words.w1 = temp_t9 + 0x07000000;
+	D_8005BB2C = (Gfx *)(var_s4 + temp_t9);
+
+	sp3C = temp_s2;
+	func_80076C08_15ECC8((s32 *)arg2, (u16 *)arg1, (s16 *)arg3, D_8005BB38);
+	temp_v0 = D_8005BB2C;
+	D_8005BB2C = temp_v0 + 1;
+	temp_v0->words.w0 = 0x01060040;
+	temp_v0->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+	D_8005BB38 += 0x40;
+
+	if (sp3C > 0) {
+		var_s0 = arg2 + 0xC;
+		var_s2 = arg1 + 6;
+		var_s3 = arg3 + 6;
+		var_s1 = 6;
+		temp_t9 = (sp3C << 2) - sp3C;
+		temp_t9 <<= 1;
+		do {
+			func_80077010_15F0D0(var_s0, var_s2, var_s3, var_s4);
+			var_s1 += 6;
+			var_s0 += 0xC;
+			var_s2 += 6;
+			var_s3 += 6;
+			var_s4 += 0x40;
+		} while (var_s1 <= temp_t9);
+	}
+
+	temp_v0 = D_8005BB2C;
+	D_8005BB2C = temp_v0 + 1;
+	temp_v0->words.w0 = 0x06000000;
+	temp_v0->words.w1 = arg4;
+	temp_v0 = D_8005BB2C;
+	D_8005BB2C = temp_v0 + 1;
+	temp_v0->words.w1 = 0;
+	temp_v0->words.w0 = 0xBD000000;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80076A58_15EB18.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80076C08_15ECC8.s")
 
