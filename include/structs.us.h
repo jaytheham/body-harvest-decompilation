@@ -165,6 +165,11 @@ typedef struct {
 } Unk800768B8Obj; /* size = 0x48 */
 
 typedef struct {
+	/* 0x00 */ u8 pad0[0x24];
+	/* 0x24 */ s16 unk24;
+} Unk8007A168Obj; /* size = 0x26 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ u8 pad02[0x16];
 } Unk80050ADA; /* size = 0x18 */
