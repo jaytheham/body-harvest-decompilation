@@ -32,7 +32,114 @@ void func_80080168_168228(u16 arg0, u16 arg1, u16 arg2) {
 	D_800E73DC = arg2;
 }
 
+// CURRENT(8197)
+#ifdef NON_MATCHING
+void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4) {
+	volatile f32 sp74;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s32 pad6;
+	s32 pad7;
+	s32 pad8;
+	s32 pad9;
+	volatile f32 sp70;
+	volatile f32 sp68;
+	volatile f32 sp64;
+	f32 temp_f0;
+	f32 temp_f0_2;
+	f32 temp_f2;
+	f32 temp_f16;
+	f32 var_f0;
+	f32 var_f14;
+	f32 var_f16;
+	f32 var_f2;
+	u16 temp_a0;
+
+	temp_f16 = arg0->x;
+	temp_a0 = (u16) arg2;
+	sp74 = temp_f16;
+	sp68 = (f32) ((f64) (f32) sins(temp_a0) / 32768.0);
+	sp64 = (f32) ((f64) (f32) coss(temp_a0) / 32768.0);
+	sp70 = (f32) ((f64) (f32) sins((u16) arg3) / 32768.0);
+	var_f2 = arg4;
+	var_f16 = temp_f16;
+	temp_f0 = (f32) ((f64) (f32) coss((u16) arg3) / 32768.0);
+	arg0->x = temp_f0 * sp68;
+	arg0->y = -sp70;
+	arg0->z = temp_f0 * sp64;
+	if (var_f2 == 0.0f) {
+		var_f2 = 0.5f;
+	}
+	temp_f0_2 = -var_f2;
+	arg0->x *= temp_f0_2;
+	arg0->y *= temp_f0_2;
+	arg0->z *= temp_f0_2;
+	arg0->x += arg1->x;
+	arg0->y += arg1->y;
+	arg0->z += arg1->z;
+
+	if (D_800A0964_188A24 != 0) {
+		if (var_f16 < arg0->x) {
+			sp74 = var_f16;
+			if (func_8007C698_164758((s32) (D_800E6A78.unk4C + 96.0f), (s32) D_800E6A78.unk54) != 0) {
+				if (D_800E7390 == 0) {
+					D_800E7430.x = D_800E73F0.x;
+				} else {
+					D_800E73F0.x = D_800E7430.x;
+				}
+				D_800E7390 = 1;
+				var_f16 = sp74;
+				arg0->x = var_f16;
+				return;
+			}
+		}
+
+		if (arg0->x < var_f16) {
+			sp74 = var_f16;
+			if (func_8007C698_164758((s32) (D_800E6A78.unk4C - 96.0f), (s32) D_800E6A78.unk54) != 0) {
+				if (D_800E7390 == 0) {
+					D_800E7430.x = D_800E73F0.x;
+				} else {
+					D_800E73F0.x = D_800E7430.x;
+				}
+				D_800E7390 = 1;
+				var_f16 = sp74;
+				arg0->x = var_f16;
+				return;
+			}
+		}
+
+		if (D_800E7390 != 0) {
+			D_800E7430.x += (D_800E73F0.x - D_800E7430.x) / 8.0f;
+			temp_f2 = arg0->x;
+			var_f16 += (temp_f2 - var_f16) / 8.0f;
+			if (D_800E7430.x <= D_800E73F0.x) {
+				var_f14 = D_800E73F0.x - D_800E7430.x;
+			} else {
+				var_f14 = -(D_800E73F0.x - D_800E7430.x);
+			}
+			if (var_f14 < 1.0f) {
+				if (temp_f2 <= var_f16) {
+					var_f0 = var_f16 - temp_f2;
+				} else {
+					var_f0 = -(var_f16 - temp_f2);
+				}
+				if (var_f0 < 1.0f) {
+					D_800E7390 = 0;
+				}
+			}
+			D_800E73F0.x = D_800E7430.x;
+			arg0->x = var_f16;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080190_168250.s")
+#endif
 
 // CURRENT(9407)
 #ifdef NON_MATCHING

@@ -354,6 +354,7 @@ s32 func_8007A370_162430(s32 arg0, s32 arg1);
 s32 func_8007C2D0_164390(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5);
 s32 func_8007C3C0_164480(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5);
 void func_8007C420_1644E0(void);
+s32 func_8007C698_164758(s32 arg0, s32 arg1);
 void func_800794BC_16157C(void);
 void func_80079658_161718(void);
 void func_8007978C_16184C(void);
