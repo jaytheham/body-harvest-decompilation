@@ -126,6 +126,22 @@ typedef struct {
 } Unk84EECEffect; /* size = 0x16 */
 
 typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
+	/* 0x02 */ u16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[2];
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s8 unkE;
+	/* 0x0F */ s8 unkF;
+	/* 0x10 */ s8 unk10;
+	/* 0x11 */ u8 unk11;
+	/* 0x12 */ u8 pad12[4];
+} Unk87CB8Effect; /* size = 0x16 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ u8 pad02[0x16];
 } Unk80050ADA; /* size = 0x18 */

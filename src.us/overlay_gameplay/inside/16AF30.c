@@ -654,7 +654,39 @@ void func_80086F58_16F018(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087A40_16FB00.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(3405) */
+void func_80087CB8_16FD78(s32 arg0) {
+	f32 sp58[3];
+	UnkFB6F8Entry *entry;
+	Unk87CB8Effect *effectBase;
+	Unk87CB8Effect *effect;
+	s8 *color;
+	s16 next;
+
+	entry = &D_800FB6F8[arg0 & 0xFF];
+	effectBase = (Unk87CB8Effect *) &D_800FB7B0;
+	next = effectBase[entry->unk6].unk4;
+	color = &effectBase[entry->unk6].unkE;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	gDPPipeSync(D_8005BB2C++);
+
+	if ((next != -5) && (next != -6)) {
+		do {
+		effect = &((Unk87CB8Effect *) &D_800FB7B0)[next];
+		sp58[0] = effect->unk8;
+		sp58[1] = effect->unkA;
+		sp58[2] = effect->unkC;
+		func_80089148_171208(sp58, color, effectBase[entry->unk6].unk2, effect->unk11);
+		next = effect->unk4;
+		} while ((next != -5) && (next != -6));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087CB8_16FD78.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087E3C_16FEFC.s")
 
