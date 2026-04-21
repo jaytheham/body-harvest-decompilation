@@ -2128,6 +2128,7 @@ extern s32 D_800E65B8;
 extern u8 D_8008DE50_175F10[];
 extern u8 D_8008DE58_175F18;
 extern s32 D_800E662C;
+extern s32 D_800E6630;
 extern s32 D_800EAE90;
 extern s16 D_800E6632;
 extern s32 D_800E65D8;
