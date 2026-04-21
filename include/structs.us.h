@@ -1407,10 +1407,16 @@ typedef struct {
 	/* 0x0C */ u8 padC[0x4];
 	/* 0x10 */ f32 unk10;
 	/* 0x14 */ f32 unk14;
-	/* 0x18 */ u8 pad18[0x10];
+	/* 0x18 */ u8 pad18[0x8];
+	/* 0x20 */ s32 unk20;
+	/* 0x24 */ s32 unk24;
 	/* 0x28 */ s16 unk28;
 	/* 0x2A */ s16 unk2A;
-	/* 0x2C */ u8 pad2C[0xC];
+	/* 0x2C */ u8 pad2C[0x4];
+	/* 0x30 */ s16 unk30;
+	/* 0x32 */ s16 unk32;
+	/* 0x34 */ s16 unk34;
+	/* 0x36 */ s16 unk36;
 } Unk9C804; /* stride 0x38 */
 
 typedef struct {
