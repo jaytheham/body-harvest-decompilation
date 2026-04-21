@@ -1482,7 +1482,115 @@ void func_80077B40_15FC00(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80077B94_15FC54.s")
 
+// CURRENT(3740)
+#ifdef NON_MATCHING
+void func_800784B8_160578(void) {
+	s32 interiorId;
+	VehicleInstance *vehicle;
+	u16 maxHp;
+	s32 temp;
+
+	if ((currentLevel == 2) && (func_8000726C_7E6C(0x11) != 0)) {
+		interiorId = buildingInteriorToLoadId;
+		if ((interiorId == 0x7E) || (interiorId == 0x81) || (interiorId == 0x89)) {
+			temp = D_800E65AC & 3;
+			if ((D_800E65AC < 0) && (temp != 0)) {
+				temp -= 4;
+			}
+			if (temp == 0) {
+				func_800153D8_15FD8(0xB3);
+			}
+		}
+	}
+
+	if (currentLevel == 3) {
+		if (buildingInteriorToLoadId == 0x41) {
+			temp = ((u8 *)buildingInstances)[0x503];
+			temp &= 0xFFC3;
+			temp |= 0x18;
+			((u8 *)buildingInstances)[0x503] = temp;
+		}
+	} else if (currentLevel == 4) {
+		interiorId = buildingInteriorToLoadId;
+		if (interiorId >= 0x32) {
+			if (interiorId == 0x6E) {
+				if (func_8000726C_7E6C(0x37) == 0) {
+					func_800072CC_7ECC(0x37);
+				}
+				interiorId = buildingInteriorToLoadId;
+			}
+		} else {
+			switch (interiorId) {
+				case 0x1F:
+					if (func_8000726C_7E6C(0x38) != 0) {
+						vehicle = D_80052B34;
+						vehicle->unk1C += 2;
+						vehicle = D_80052B34;
+						maxHp = *(u16 *)(&D_80257A3A[vehicle->unk1A * 0x70]);
+						if (maxHp < vehicle->unk1C) {
+							vehicle->unk1C = maxHp;
+						}
+					}
+					interiorId = buildingInteriorToLoadId;
+					break;
+
+				case 0x20:
+					if ((func_8000726C_7E6C(2) == 0) && ((D_800E65AC % 10) == 0)) {
+						vehicle = D_80052B34;
+						if (vehicle->unk1C > 0) {
+							vehicle->unk20 |= 0x2000;
+							vehicle = D_80052B34;
+							temp = vehicle->unk1C - 2;
+							vehicle->unk1C = temp;
+							if (temp < 0) {
+								vehicle->unk1C = 0;
+							}
+						}
+					}
+					interiorId = buildingInteriorToLoadId;
+					break;
+
+				case 0x24:
+				case 0x25:
+				case 0x2F:
+				case 0x30:
+				case 0x31:
+					if ((D_800E65AC % 20) == 0) {
+						D_8004D1B0[1]++;
+					}
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		if (interiorId != 0x6E) {
+			func_800073B8_7FB8(0x37);
+		}
+	}
+
+	if (currentLevel == 5) {
+		interiorId = buildingInteriorToLoadId;
+		if (interiorId == 1) {
+			if ((D_800E65AC % 100) == 0) {
+				func_80014A3C_1563C((s32)D_80052B34, 0xA0, 0.0f, 0, 0.1f);
+				interiorId = buildingInteriorToLoadId;
+			}
+		}
+
+		if ((interiorId == 2) && (func_8000726C_7E6C(0x1E) == 0)) {
+			func_80014A3C_1563C((s32)D_80052B34, 0x184, 0.0f, 0, 0.2f);
+		}
+	}
+
+	if (func_8000726C_7E6C(0x27) != 0) {
+		D_800E65A8 |= 0x100;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800784B8_160578.s")
+#endif
 
 // CURRENT(1663)
 #ifdef NON_MATCHING
