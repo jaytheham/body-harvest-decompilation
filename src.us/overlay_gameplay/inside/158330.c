@@ -1,7 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-
 s32 func_80070270_158330(s32 arg0) {
 	func_8007290C_15A9CC();
 	return 0;
@@ -2275,7 +2274,68 @@ void func_8007BC18_163CD8(s32 arg0, f32 *arg1, f32 *arg2, s32 *arg3, s32 *arg4) 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007BC18_163CD8.s")
 #endif
 
+s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007C1DC *arg4);
+
+// CURRENT(1820)
+#ifdef NON_MATCHING
+s32 func_8007BEC8_163F88(Vec3f *arg0, Vec3f *arg1, f32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, Unk8007C1DC *arg7) {
+	if (arg1->x < 0.0f) {
+		D_800E6660.x = arg0->z;
+		D_800E6660.z = -arg0->x;
+		D_800E6680.x = arg1->z;
+		D_800E6680.z = -arg1->x;
+
+		if (func_8007C1DC_16429C((f32)arg6, (f32)(arg4 + arg6), (f32)-(arg3 + arg5), arg2, arg7) != 0) {
+			((Vec3f *)arg7)->x = -D_800E6670.z;
+			((Vec3f *)arg7)->z = D_800E6670.x;
+			return 1;
+		}
+	}
+
+	if (arg1->x > 0.0f) {
+		D_800E6660.x = -arg0->z;
+		D_800E6660.z = arg0->x;
+		D_800E6680.x = -arg1->z;
+		D_800E6680.z = arg1->x;
+
+		if (func_8007C1DC_16429C((f32)-(arg4 + arg6), (f32)-arg6, (f32)arg5, arg2, arg7) != 0) {
+			((Vec3f *)arg7)->x = D_800E6670.z;
+			((Vec3f *)arg7)->z = -D_800E6670.x;
+			return 2;
+		}
+	}
+
+	if (arg1->z > 0.0f) {
+		D_800E6660.x = arg0->x;
+		D_800E6660.z = arg0->z;
+		D_800E6680.x = arg1->x;
+		D_800E6680.z = arg1->z;
+
+		if (func_8007C1DC_16429C((f32)arg5, (f32)(arg3 + arg5), (f32)arg6, arg2, arg7) != 0) {
+			((Vec3f *)arg7)->x = D_800E6670.x;
+			((Vec3f *)arg7)->z = D_800E6670.z;
+			return 3;
+		}
+	}
+
+	if (arg1->z < 0.0f) {
+		D_800E6660.x = -arg0->x;
+		D_800E6660.z = -arg0->z;
+		D_800E6680.x = -arg1->x;
+		D_800E6680.z = -arg1->z;
+
+		if (func_8007C1DC_16429C((f32)-(arg3 + arg5), (f32)-arg5, (f32)-(arg4 + arg6), arg2, arg7) != 0) {
+			((Vec3f *)arg7)->x = -D_800E6670.x;
+			((Vec3f *)arg7)->z = -D_800E6670.z;
+			return 4;
+		}
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007BEC8_163F88.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(215) */
