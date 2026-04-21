@@ -701,19 +701,17 @@ void func_80085D40_16DE00(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085F28_16DFE8.s")
 
-// CURRENT(613)
 #ifdef NON_MATCHING
+// CURRENT(378)
 void func_80086550_16E610(void) {
 	s16 effect;
 	u8 alpha;
+	Unk84EECEffect *entry;
 
 	effect = D_800FB7A6;
 	if ((effect != -5) && (effect != -6)) {
 		alpha = 0xFF;
 		do {
-			Unk84EECEffect *entry;
-			u8 phase;
-
 			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
 			entry->unk13--;
 			if (entry->unk13 == 0) {
@@ -729,12 +727,11 @@ void func_80086550_16E610(void) {
 					entry->unkC += D_800FB6F0[2] * 4;
 				}
 
-				entry->unk14 = (func_800038E0_44E0() % 0x55) + 0xAA;
-				entry->unk15 = (func_800038E0_44E0() % 0x55) + 0xAA;
+				entry->unkE = (func_800038E0_44E0() % 0x55) + 0xAA;
+				entry->unkF = (func_800038E0_44E0() % 0x55) + 0xAA;
 				entry->unk10 = alpha;
-				phase = entry->unk12 + 1;
-				entry->unk12 = phase;
-				if (phase >= 8) {
+				entry->unk12++;
+				if (entry->unk12 >= 8) {
 					entry->unk12 = 0;
 				}
 
