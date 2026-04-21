@@ -175,6 +175,24 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
+	/* 0x02 */ u16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[2];
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ u16 unkE;
+	/* 0x10 */ u8 unk10;
+	/* 0x11 */ u8 unk11;
+	/* 0x12 */ s8 unk12;
+	/* 0x13 */ s8 unk13;
+	/* 0x14 */ s8 unk14;
+	/* 0x15 */ u8 unk15;
+} Unk86B34Effect; /* size = 0x16 */
+
+typedef struct {
+	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 pad1;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;

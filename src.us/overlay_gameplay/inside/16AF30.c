@@ -933,7 +933,72 @@ void func_80086A34_16EAF4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086A34_16EAF4.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80086B34_16EBF4(s32 arg0) {
+	UnkFB6F8Entry *slot;
+	Unk86B34Effect *head;
+	Unk86B34Effect *effectEntry;
+	s16 effect;
+	s16 next;
+	u8 slotIdx;
+	u16 timer;
+	u8 count;
+	u8 i;
+
+	slotIdx = arg0 & 0xFF;
+	slot = &D_800FB6F8[slotIdx];
+	head = &((Unk86B34Effect *)&D_800FB7B0)[slot->unk6];
+	effect = head->unk4;
+
+	if ((effect != -5) && (effect != -6)) {
+		do {
+			effectEntry = &((Unk86B34Effect *)&D_800FB7B0)[effect];
+
+			effectEntry->unk8 += effectEntry->unk12;
+			effectEntry->unkC += effectEntry->unk14;
+			effectEntry->unkA += effectEntry->unk13;
+
+			if (effectEntry->unk13 >= -0x13) {
+				effectEntry->unk11--;
+			} else {
+				effectEntry->unk11 = -0x14;
+			}
+
+			if (effectEntry->unk2 < 2) {
+				func_8008568C_16D74C(effectEntry->unk8, effectEntry->unkC, effectEntry->unk2, head->unkE, head->unkF, head->unk10, effectEntry->unk9);
+
+				if ((slot->unk4 < 4) && (head->unkD == 0)) {
+					func_800839B8_16BA78(slotIdx);
+					func_80083300_16B3C0(slotIdx);
+					return;
+				}
+
+				next = effectEntry->unk4;
+				func_800835F0_16B6B0(effect, slotIdx);
+				effect = next;
+			} else {
+				effect = effectEntry->unk4;
+			}
+		} while ((effect != -5) && (effect != -6));
+	}
+
+	timer = head->unkE;
+	if (timer > 0) {
+		head->unkE = timer - 1;
+		return;
+	}
+
+	count = (func_800038E0_44E0() % 3) + 2;
+	for (i = 0; i < count; i = (i + 1) & 0xFF) {
+		if (slot->unk5 > 0) {
+			func_800852B8_16D378(slotIdx);
+			slot->unk5--;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086B34_16EBF4.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(5) */
