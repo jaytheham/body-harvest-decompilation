@@ -202,6 +202,20 @@ typedef struct {
 } Unk8007A168Obj; /* size = 0x26 */
 
 typedef struct {
+	/* 0x00 */ u8 pad0[0x18];
+	/* 0x18 */ u16 unk18;
+	/* 0x1A */ u16 unk1A;
+	/* 0x1C */ u8 pad1C[0x1A];
+	/* 0x36 */ s16 unk36;
+	/* 0x38 */ s16 unk38;
+	/* 0x3A */ u8 unk3A;
+	/* 0x3B */ u8 unk3B;
+	/* 0x3C */ u8 pad3C[0x4];
+	/* 0x40 */ s32 unk40;
+	/* 0x44 */ u8 pad44[0x4];
+} Unk80076678Obj; /* size = 0x48 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ u8 pad02[0x16];
 } Unk80050ADA; /* size = 0x18 */
