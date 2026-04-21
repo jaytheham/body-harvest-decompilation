@@ -497,7 +497,57 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084628_16C6E8.s")
 
+#ifdef NON_MATCHING
+void func_80084980_16CA40(s32 arg0, s32 arg1) {
+	UnkFB6F8Entry *owner;
+	Unk84EECEffect *base;
+	Unk84EECEffect *entry;
+	s16 effect;
+	s16 spread;
+	s16 quarter;
+	s32 rnd;
+
+	owner = &D_800FB6F8[arg0 & 0xFF];
+	base = &((Unk84EECEffect *)&D_800FB7B0)[owner->unk6];
+	spread = base->unk2;
+
+	if ((arg1 & 0xFF) == 0xFB) {
+		return;
+	}
+
+	effect = func_80083390_16B450(arg1 & 0xFF);
+	if (effect == -3) {
+		return;
+	}
+
+	rnd = func_800038E0_44E0();
+	entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+	quarter = spread / 4;
+	entry->unk2 = (rnd % 5) + quarter;
+
+	rnd = func_800038E0_44E0();
+	entry->unk8 = base->unk8 + ((rnd % spread) / 2) - quarter;
+
+	rnd = func_800038E0_44E0();
+	entry->unkA = (rnd % 0xA) + base->unkA + quarter;
+
+	rnd = func_800038E0_44E0();
+	entry->unkC = base->unkC + ((rnd % spread) / 2) - quarter;
+	entry->unk11 = 0x3C;
+	entry->unk12 = 0;
+
+	rnd = func_800038E0_44E0();
+	entry->unkE = (rnd % 0x1E) + 0xB4;
+
+	rnd = func_800038E0_44E0();
+	entry->unkF = (rnd % 0x1E) + 0xA0;
+
+	rnd = func_800038E0_44E0();
+	entry->unk10 = (rnd % 0x1E) + 0xA0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084980_16CA40.s")
+#endif
 
 s32 func_80084C18_16CCD8(u8 arg0) {
 	s32 temp_v0;
@@ -511,7 +561,90 @@ s32 func_80084C18_16CCD8(u8 arg0) {
 	return result;
 }
 
+#ifdef NON_MATCHING
+u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
+	UnkFB6F8Entry *owner;
+	Unk84EECEffect *entry;
+	Unk84EECEffect *linked;
+	u8 slot;
+	s16 effect;
+	u16 temp;
+	u8 *entryColor;
+	u8 *linkedColor;
+
+	slot = func_80083224_16B2E4(0);
+	if (slot == 0xFB) {
+		return slot;
+	}
+
+	effect = func_80083584_16B644(slot);
+	if (effect == -3) {
+		osSyncPrintf(D_800A52E8_18D3A8);
+		func_80083300_16B3C0(slot);
+		return 0xFB;
+	}
+
+	owner = &D_800FB6F8[slot];
+	entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+
+	entry->unk8 = arg0 * 4;
+	owner->unkA = effect;
+	entry->unkC = arg2 * 4;
+	linked = &((Unk84EECEffect *)&D_800FB7B0)[entry->unk4];
+	entry->unkA = arg1 * 4;
+	linked->unkC = 0;
+
+	entry->unkE = arg5;
+	entry->unkF = arg6;
+	entry->unk10 = arg7;
+
+	if (arg4 == 0xFFFF) {
+		entry->unk2 = arg3;
+	} else {
+		entry->unk2 = arg3 / 16;
+	}
+
+	if (entry->unk2 < 0x10) {
+		entry->unk2 = 0x10;
+	}
+
+	linked->unk8 = arg4;
+	linked->unkA = arg3;
+	if (linked->unkA < 0x18) {
+		linked->unkA = 0x18;
+	}
+
+	temp = (u16)(arg5 + ((arg5 / 3) & 0xFF));
+	entryColor = (u8 *)entry + 8;
+	if (temp >= 0x100) {
+		entryColor[1] = 0xFF;
+	} else {
+		entryColor[1] = temp;
+	}
+
+	temp = (u16)(arg6 + ((arg6 / 3) & 0xFF));
+	if (temp >= 0x100) {
+		entryColor[2] = 0xFF;
+	} else {
+		entryColor[2] = temp;
+	}
+
+	temp = (u16)(arg7 + ((arg7 / 3) & 0xFF));
+	if (temp >= 0x100) {
+		entryColor[3] = 0xFF;
+	} else {
+		entryColor[3] = temp;
+	}
+
+	linkedColor = (u8 *)linked + 8;
+	linkedColor[1] = entryColor[3];
+	owner->unk2 = func_80084C18_16CCD8(slot);
+
+	return slot;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084C68_16CD28.s")
+#endif
 
 #ifdef NON_MATCHING
 s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11) {
@@ -1081,7 +1214,64 @@ void func_80086F58_16F018(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086FC4_16F084.s")
 
+#ifdef NON_MATCHING
+void func_80087A40_16FB00(s32 arg0) {
+	u8 slot;
+	Vec3f *pos;
+	Unk84EECEffect *effectBase;
+	s8 **color;
+	f32 *scale;
+	u8 *alpha;
+	s16 effect;
+	s16 end;
+	s16 stride;
+
+	slot = arg0 & 0xFF;
+	effect = *(s16 *)(&D_800FB6FE + (slot * 0xC));
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100E080 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
+
+	D_800FB6E5 = 0x20;
+	D_800FB6E6 = 0x20;
+
+	if ((effect != -5) && (effect != -6)) {
+		pos = &D_800FB6D0;
+		effectBase = (Unk84EECEffect *)&D_800FB7B0;
+		color = &D_800FB6DC;
+		scale = &D_800FB6E0;
+		alpha = &D_800FB6E4;
+		end = -6;
+		stride = 0x16;
+
+		do {
+			Unk84EECEffect *entry;
+
+			entry = (Unk84EECEffect *)((u8 *)effectBase + (effect * stride));
+			pos->x = entry->unk8;
+			*color = &entry->unkE;
+			*alpha = entry->unk11;
+			pos->y = entry->unkA;
+			pos->z = entry->unkC;
+			*scale = entry->unk2;
+			func_8008A1D8_172298();
+			effect = entry->unk4;
+		} while ((effect != -5) && (effect != end));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087A40_16FB00.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(3405) */
@@ -1123,11 +1313,133 @@ void func_80087CB8_16FD78(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088654_170714.s")
 
+#ifdef NON_MATCHING
+void func_80088B9C_170C5C(void) {
+	typedef struct {
+		s16 unk0;
+		s16 unk2;
+		s16 unk4;
+		s16 unk6;
+		s16 unk8;
+		s16 unkA;
+		s16 unkC;
+		s8 unkE;
+		s8 unkF;
+		s8 unk10;
+		u8 unk11;
+		u8 unk12;
+		u8 pad13[3];
+	} Unk88B9CEffect;
+
+	s16 effect;
+	Vec3f *pos;
+	s8 **color;
+	f32 *scale;
+	Unk88B9CEffect *effectBase;
+
+	D_800FB6E5 = 0x20;
+	D_800FB6E6 = 0x20;
+	effect = D_800FB782;
+	pos = &D_800FB6D0;
+	color = &D_800FB6DC;
+	scale = &D_800FB6E0;
+	effectBase = (Unk88B9CEffect *)&D_800FB7B0;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100E080 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
+
+	if ((effect != -6) && (effect != -5)) {
+		do {
+			Unk88B9CEffect *entry;
+
+			gDPPipeSync(D_8005BB2C++);
+			entry = &effectBase[effect];
+			pos->x = entry->unk8;
+			pos->y = entry->unkA;
+			pos->z = entry->unkC;
+			*color = &entry->unkE;
+			*scale = entry->unk2;
+			D_800FB6E4 = entry->unk12;
+			func_80089E54_171F14();
+			effect = entry->unk4;
+		} while ((effect != -6) && (effect != -5));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088B9C_170C5C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088DFC_170EBC.s")
 
+#ifdef NON_MATCHING
+void func_80089148_171208(f32 *arg0, s8 *arg1, u16 arg2, u8 arg3) {
+	f32 temp_f0;
+	f32 temp_f2;
+	f32 temp_f12;
+	f32 temp_f14;
+	f32 temp_f16;
+	f32 temp_f18;
+	f32 temp_f4;
+
+	temp_f2 = (f32)arg2;
+	temp_f0 = D_800FB6A8.x * temp_f2;
+	temp_f12 = D_800FB6A8.y * temp_f2;
+	temp_f14 = D_800FB6A8.z * temp_f2;
+	temp_f16 = D_800FB6B4.x * temp_f2;
+	temp_f18 = D_800FB6B4.y * temp_f2;
+	temp_f4 = D_800FB6B4.z * temp_f2;
+
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0[0] + temp_f0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0[1] + temp_f12);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0[2] + temp_f14);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = arg1[0];
+	D_8005BB34->v.cn[1] = arg1[1];
+	D_8005BB34->v.cn[2] = arg1[2];
+	D_8005BB34->v.cn[3] = arg3;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0[0] + temp_f16);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0[1] + temp_f18);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0[2] + temp_f4);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = arg1[0];
+	D_8005BB34->v.cn[1] = arg1[1];
+	D_8005BB34->v.cn[2] = arg1[2];
+	D_8005BB34->v.cn[3] = arg3;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0[0] - temp_f0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0[1] - temp_f12);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0[2] - temp_f14);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = arg1[0];
+	D_8005BB34->v.cn[1] = arg1[1];
+	D_8005BB34->v.cn[2] = arg1[2];
+	D_8005BB34->v.cn[3] = arg3;
+
+	D_8005BB34++;
+	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 3) & 0x1FFFFFFF), 3, 0);
+	gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089148_171208.s")
+#endif
 
 // CURRENT(4710)
 #ifdef NON_MATCHING
@@ -1268,7 +1580,47 @@ void func_80089794_171854(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089834_1718F4.s")
 
+#ifdef NON_MATCHING
+void func_80089BCC_171C8C(s32 arg0) {
+	s16 effect;
+	Unk84EECEffect *entry;
+	Unk84EECEffect *base;
+
+	effect = *(s16 *)(&D_800FB6FE + ((arg0 & 0xFF) * 0xC));
+	base = (Unk84EECEffect *)&D_800FB7B0;
+	effect = base[effect].unk4;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100E080 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
+
+	D_800FB6E5 = 0x20;
+	D_800FB6E6 = 0x20;
+
+	while ((effect != -5) && (effect != -6)) {
+		entry = &base[effect];
+		D_800FB6D0.x = entry->unk8;
+		D_800FB6D0.y = entry->unkA;
+		D_800FB6D0.z = entry->unkC;
+		D_800FB6DC = &entry->unkE;
+		D_800FB6E4 = entry->unk11;
+		D_800FB6E0 = entry->unk2;
+		func_8008A1D8_172298();
+		effect = entry->unk4;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089BCC_171C8C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089E54_171F14.s")
 
@@ -1496,7 +1848,69 @@ void func_8008B0AC_17316C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B0AC_17316C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_8008B1A8_173268(void) {
+	s32 i;
+	u8 mode;
+
+	gSPSegment(D_8005BB2C++, 4, OS_K0_TO_PHYSICAL(&D_80031160));
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK | G_FOG | G_LIGHTING);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_ZB_XLU_SURF, G_RM_ZB_XLU_SURF2);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPPipeSync(D_8005BB2C++);
+
+	func_80088B9C_170C5C();
+	func_8008A704_1727C4();
+
+	for (i = 0; (i & 0xFF) < 0xF; i = (i + 1) & 0xFF) {
+		mode = D_800FB6F8[i].pad0[0];
+		if (mode != 0xFA) {
+			switch (mode) {
+				case 0:
+					func_80086FC4_16F084(i & 0xFF);
+					break;
+				case 1:
+					func_80087A40_16FB00(i & 0xFF);
+					break;
+				case 2:
+					func_80087CB8_16FD78(i & 0xFF);
+					break;
+				case 3:
+					func_80087E3C_16FEFC();
+					break;
+				case 4:
+					func_800881C0_170280();
+					break;
+				case 5:
+					func_80088654_170714();
+					break;
+				case 6:
+					func_80088DFC_170EBC(i & 0xFF);
+					break;
+				case 7:
+					func_80089BCC_171C8C(i & 0xFF);
+					break;
+				case 8:
+					break;
+				default:
+					osSyncPrintf(D_800A5410_18D4D0);
+					break;
+			}
+		}
+	}
+
+	func_8008B594_173654();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B1A8_173268.s")
+#endif
 
 #if NON_MATCHING
 // CURRENT(1605)
