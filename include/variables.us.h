@@ -2153,6 +2153,7 @@ extern u8 D_800A5538;
 extern u8 D_8025F540;
 extern u8 D_8025F780;
 extern s8 D_800A2690_18A750[];
+extern u8 D_800A2698_18A758[];
 extern s8 D_800A26A0_18A760;
 extern u8 D_800A5248_18D308[];
 extern u8 D_800A5298_18D358[];
