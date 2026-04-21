@@ -1123,7 +1123,70 @@ void func_80087CB8_16FD78(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088654_170714.s")
 
+#ifdef NON_MATCHING
+void func_80088B9C_170C5C(void) {
+	typedef struct {
+		s16 unk0;
+		s16 unk2;
+		s16 unk4;
+		s16 unk6;
+		s16 unk8;
+		s16 unkA;
+		s16 unkC;
+		s8 unkE;
+		s8 unkF;
+		s8 unk10;
+		u8 unk11;
+		u8 unk12;
+		u8 pad13[3];
+	} Unk88B9CEffect;
+
+	s16 effect;
+	Vec3f *pos;
+	s8 **color;
+	f32 *scale;
+	Unk88B9CEffect *effectBase;
+
+	D_800FB6E5 = 0x20;
+	D_800FB6E6 = 0x20;
+	effect = D_800FB782;
+	pos = &D_800FB6D0;
+	color = &D_800FB6DC;
+	scale = &D_800FB6E0;
+	effectBase = (Unk88B9CEffect *)&D_800FB7B0;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100E080 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
+
+	if ((effect != -6) && (effect != -5)) {
+		do {
+			Unk88B9CEffect *entry;
+
+			gDPPipeSync(D_8005BB2C++);
+			entry = &effectBase[effect];
+			pos->x = entry->unk8;
+			pos->y = entry->unkA;
+			pos->z = entry->unkC;
+			*color = &entry->unkE;
+			*scale = entry->unk2;
+			D_800FB6E4 = entry->unk12;
+			func_80089E54_171F14();
+			effect = entry->unk4;
+		} while ((effect != -6) && (effect != -5));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088B9C_170C5C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088DFC_170EBC.s")
 
