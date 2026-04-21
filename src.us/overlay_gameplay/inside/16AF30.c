@@ -239,7 +239,78 @@ s16 func_80083584_16B644(u8 arg0) {
 	return sp1E;
 }
 
+#ifdef NON_MATCHING
+void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
+	Unk835F0Effect *effect;
+	UnkFB6F8Entry *slot;
+	s16 temp;
+
+	effect = &((Unk835F0Effect *)&D_800FB7B0)[arg0];
+	slot = &D_800FB6F8[arg1];
+
+	if (effect->unk0 == 0) {
+		osSyncPrintf(&D_800A5064_18D124, arg0, arg1);
+		return;
+	}
+
+	switch (slot->unk4) {
+		case 0:
+			osSyncPrintf(&D_800A50AC_18D16C);
+			slot->unk6 = -6;
+			*((s16 *)&slot->pad8[0]) = -6;
+			break;
+
+		case 1:
+			slot->unk6 = -6;
+			*((s16 *)&slot->pad8[0]) = -6;
+			break;
+
+		case 2:
+			temp = effect->unk6;
+			if (temp == -4) {
+				slot->unk6 = effect->unk4;
+				effect = &((Unk835F0Effect *)&D_800FB7B0)[slot->unk6];
+				effect->unk6 = -4;
+				effect->unk4 = -5;
+			} else if (effect->unk4 == -5) {
+				*((s16 *)&slot->pad8[0]) = temp;
+				effect = &((Unk835F0Effect *)&D_800FB7B0)[slot->unk6];
+				effect->unk6 = -4;
+				effect->unk4 = -5;
+			} else {
+				osSyncPrintf(&D_800A50E8_18D1A8);
+			}
+			break;
+
+		default:
+			temp = effect->unk6;
+			if (temp == -4) {
+				slot->unk6 = effect->unk4;
+				effect = &((Unk835F0Effect *)&D_800FB7B0)[slot->unk6];
+				effect->unk6 = -4;
+			} else if (effect->unk4 == -5) {
+				*((s16 *)&slot->pad8[0]) = temp;
+				effect = &((Unk835F0Effect *)&D_800FB7B0)[temp];
+				effect->unk4 = -5;
+			} else {
+				effect = &((Unk835F0Effect *)&D_800FB7B0)[effect->unk4];
+				effect->unk6 = temp;
+				effect = &((Unk835F0Effect *)&D_800FB7B0)[slot->unk6];
+				effect->unk4 = *((s16 *)&slot->pad8[0]);
+			}
+			break;
+	}
+
+	effect->unk0 = 0;
+	slot->unk4--;
+	D_800FC8E0--;
+	if (arg0 < D_800FC8E2) {
+		D_800FC8E2 = arg0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800835F0_16B6B0.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(2244) */

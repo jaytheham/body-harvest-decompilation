@@ -127,6 +127,15 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 pad1;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ u8 pad8[0xE];
+} Unk835F0Effect; /* size = 0x16 */
+
+typedef struct {
+	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ u16 unk2;
 	/* 0x04 */ s16 unk4;
