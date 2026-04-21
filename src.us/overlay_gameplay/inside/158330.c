@@ -1401,7 +1401,103 @@ s32 func_8007A370_162430(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A370_162430.s")
 #endif
 
+#ifdef NON_MATCHING
+s32 func_8007A414_1624D4(s32 arg0, s32 arg1, s32 arg2) {
+	Unk800E66A8 *entry;
+	Unk800768B8Obj *obj;
+	s32 centerX;
+	s32 centerY;
+	s32 width;
+	s32 height;
+	s32 half;
+
+	entry = &D_800E66A8[arg0];
+	obj = &D_800E65BC[entry->unk0];
+
+	switch (entry->unk8) {
+		case 0:
+			width = obj->unk34;
+			height = 0xF;
+			centerX = entry->unk2 + obj->unk32;
+			half = obj->unk1A;
+			if (half < 0) {
+				half = (half + 1) >> 1;
+			} else {
+				half >>= 1;
+			}
+			centerY = entry->unk6 + half + 0xF;
+			break;
+
+		case 1:
+			width = 0xF;
+			height = obj->unk34;
+			centerY = entry->unk6 - obj->unk32;
+			half = obj->unk1A;
+			if (half < 0) {
+				half = (half + 1) >> 1;
+			} else {
+				half >>= 1;
+			}
+			centerX = entry->unk2 + half + 0xF;
+			break;
+
+		case 2:
+			width = obj->unk34;
+			height = 0xF;
+			centerX = entry->unk2 - obj->unk32;
+			half = obj->unk1A;
+			if (half < 0) {
+				half = (half + 1) >> 1;
+			} else {
+				half >>= 1;
+			}
+			centerY = entry->unk6 - half - 0xF;
+			break;
+
+		case 3:
+			width = 0xF;
+			height = obj->unk34;
+			centerY = entry->unk6 + obj->unk32;
+			half = obj->unk1A;
+			if (half < 0) {
+				half = (half + 1) >> 1;
+			} else {
+				half >>= 1;
+			}
+			centerX = entry->unk2 - half - 0xF;
+			break;
+
+		default:
+			osSyncPrintf(&D_800A493C_18C9FC);
+			break;
+	}
+
+	if (width < 0) {
+		width = (width + 1) >> 1;
+	} else {
+		width >>= 1;
+	}
+
+	if (height < 0) {
+		height = (height + 1) >> 1;
+	} else {
+		height >>= 1;
+	}
+
+	if (func_8007C3C0_164480((f32) arg1,
+							 (f32) arg2,
+							 (f32) (centerX - width),
+							 (f32) (centerX + width),
+							 (f32) (centerY - height),
+							 (f32) (centerY + height)) != 0) {
+		return 1;
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A414_1624D4.s")
+#endif
 
 void func_8007A618_1626D8(void) {
 	D_800E65A8 &= ~4;
