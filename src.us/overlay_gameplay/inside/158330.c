@@ -809,7 +809,47 @@ void func_80074D18_15CDD8(void) {
 	}
 }
 
+// CURRENT(218)
+#ifdef NON_MATCHING
+void func_80074D98_15CE58(s32 arg0) {
+	Unk800E66A8 *entry;
+	s16 xPlus;
+	s16 xMinus;
+	s16 zPlus;
+	s16 zMinus;
+	s32 tempX;
+	s32 tempZ;
+	s32 y;
+
+	if (currentLevel != 4) {
+		return;
+	}
+
+	entry = &D_800E66A8[arg0];
+	if ((entry->unk0 != 0x18) || (buildingInteriorToLoadId != 0x20)) {
+		return;
+	}
+
+	if (func_8000726C_7E6C(2) != 0) {
+		return;
+	}
+
+	tempX = entry->unk2 - 0x60;
+	tempZ = entry->unk6 - 0x60;
+	y = (s32) (((Unk8007C698Npc *) entry)->unk24 + (f32) (entry->unk4 - 0x60) + 165.0f);
+	xPlus = tempX + 0x14;
+	zPlus = tempZ + 0x14;
+	xMinus = tempX - 0x14;
+	zMinus = tempZ - 0x14;
+
+	((s32 *) &D_8008DE78_175F38)[0] = func_80084EEC_16CFAC(xPlus, y, zPlus, 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
+	((s32 *) &D_8008DE78_175F38)[1] = func_80084EEC_16CFAC(xMinus, y, zMinus, 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
+	((s32 *) &D_8008DE78_175F38)[2] = func_80084EEC_16CFAC(xPlus, y, zMinus, 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
+	((s32 *) &D_8008DE78_175F38)[3] = func_80084EEC_16CFAC(xMinus, y, zPlus, 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80074D98_15CE58.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80074FF0_15D0B0.s")
 
