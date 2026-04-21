@@ -1361,13 +1361,15 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 pad1[0x1];
-	/* 0x02 */ u16 unk2;
-	/* 0x04 */ u8 pad4[0x2];
-	/* 0x06 */ u16 unk6;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
 	/* 0x08 */ u8 unk8;
 	/* 0x09 */ u8 pad9[0x5];
 	/* 0x0E */ s16 unkE;
-	/* 0x10 */ u8 pad10[0x1E];
+	/* 0x10 */ u8 pad10[0x1C];
+	/* 0x2C */ u8 unk2C;
+	/* 0x2D */ u8 pad2D[0x1];
 	/* 0x2E */ u8 unk2E;
 	/* 0x2F */ u8 pad2F[0x1];
 } Unk800E66A8; /* stride 0x30 */
@@ -1387,7 +1389,10 @@ typedef struct {
 } Unk9C804; /* stride 0x38 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x44];
+	/* 0x00 */ u8 pad0[0x18];
+	/* 0x18 */ u16 unk18;
+	/* 0x1A */ u16 unk1A;
+	/* 0x1C */ u8 pad1C[0x28];
 	/* 0x44 */ s32 unk44;
 } Unk800E65BC; /* stride 0x48 */
 
@@ -1854,6 +1859,150 @@ typedef struct {
     s32 unk8;
     s32 unkC;
 } Unk80378D0; /* size = 0x10 - DMA range descriptor */
+
+typedef struct {
+	u8 pad00[0x04];
+	f32 unk04;
+	f32 unk08;
+	f32 unk0C;
+	f32 unk10;
+	f32 unk14;
+	f32 unk18;
+	u8 pad1C[0x04];
+	f32 unk20;
+	f32 unk24;
+	f32 unk28;
+	f32 unk2C;
+	f32 unk30;
+	f32 unk34;
+	u8 unk38;
+	u8 pad39[0x03];
+	f32 unk3C;
+	f32 unk40;
+	f32 unk44;
+	f32 unk48;
+	f32 unk4C;
+	f32 unk50;
+	u8 unk54;
+	u8 pad55[0x03];
+	f32 unk58;
+	f32 unk5C;
+	f32 unk60;
+	f32 unk64;
+	f32 unk68;
+	f32 unk6C;
+	u8 unk70;
+} Unk158330SrcState;
+
+typedef struct {
+	u8 pad00[0x14];
+	f32 unk14;
+	f32 unk18;
+	f32 unk1C;
+	f32 unk20;
+	f32 unk24;
+	f32 unk28;
+	u8 pad2C[0x18];
+	f32 unk44;
+	f32 unk48;
+	f32 unk4C;
+	f32 unk50;
+	f32 unk54;
+	f32 unk58;
+	u8 pad5C[0x18];
+	f32 unk74;
+	f32 unk78;
+	f32 unk7C;
+	f32 unk80;
+	f32 unk84;
+	f32 unk88;
+	u8 pad8C[0x14];
+	s16 unkA0;
+	u8 padA2[0x02];
+	f32 unkA4;
+	f32 unkA8;
+	f32 unkAC;
+	f32 unkB0;
+	f32 unkB4;
+	f32 unkB8;
+	u8 padBC[0x12];
+	s16 unkD0;
+	u8 padD2[0x2E];
+	s16 unk102;
+	u8 pad104[0x2E];
+	s16 unk132;
+} Unk158330DstState;
+
+typedef struct {
+	char pad0[0x10];
+	f32 unk10;
+} Unk8007C1DC;
+
+typedef struct {
+	u8 pad0[2];
+	s16 unk2;
+	s16 unk4;
+	u8 pad6[0xB];
+	u8 unk11;
+	u8 unk12;
+	u8 unk13;
+	u8 pad14[2];
+} Unk86A34Effect;
+
+typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 pad1[0x23];
+	/* 0x24 */ f32 unk24;
+	/* 0x28 */ u8 pad28[0x8];
+} Unk8007C698Npc; /* size = 0x30 */
+
+typedef struct {
+	/* 0x00 */ u8 pad0[0x40];
+	/* 0x40 */ u8 unk40;
+	/* 0x41 */ u8 pad41[0xF];
+	/* 0x50 */ u8 unk50;
+} Unk8007C698CellObj;
+
+typedef struct {
+	s16 unk0;
+	s16 unk2;
+	s16 unk4;
+	s16 unk6;
+	s16 unk8;
+	s16 unkA;
+	s16 unkC;
+	s16 unkE;
+} Unk8008DE78;
+
+typedef struct {
+	u8 unk0;
+	u8 pad1;
+	s16 unk2;
+	s16 unk4;
+	s16 unk6;
+	u8 pad8[0xA];
+	s8 unk12;
+	s8 unk13;
+	u8 unk14;
+	s8 unk15;
+} Unk86728Effect;
+
+typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ u8 pad4[4];
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ u8 unkE;
+	/* 0x0F */ u8 unkF;
+	/* 0x10 */ u8 unk10;
+	/* 0x11 */ u8 unk11;
+	/* 0x12 */ u8 unk12;
+	/* 0x13 */ u8 pad13;
+	/* 0x14 */ s16 unk14;
+} Unk840F0Effect;
 
 #endif
 
