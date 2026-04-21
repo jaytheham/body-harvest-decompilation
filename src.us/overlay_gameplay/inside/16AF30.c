@@ -1848,7 +1848,69 @@ void func_8008B0AC_17316C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B0AC_17316C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_8008B1A8_173268(void) {
+	s32 i;
+	u8 mode;
+
+	gSPSegment(D_8005BB2C++, 4, OS_K0_TO_PHYSICAL(&D_80031160));
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK | G_FOG | G_LIGHTING);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_ZB_XLU_SURF, G_RM_ZB_XLU_SURF2);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPPipeSync(D_8005BB2C++);
+
+	func_80088B9C_170C5C();
+	func_8008A704_1727C4();
+
+	for (i = 0; (i & 0xFF) < 0xF; i = (i + 1) & 0xFF) {
+		mode = D_800FB6F8[i].pad0[0];
+		if (mode != 0xFA) {
+			switch (mode) {
+				case 0:
+					func_80086FC4_16F084(i & 0xFF);
+					break;
+				case 1:
+					func_80087A40_16FB00(i & 0xFF);
+					break;
+				case 2:
+					func_80087CB8_16FD78(i & 0xFF);
+					break;
+				case 3:
+					func_80087E3C_16FEFC();
+					break;
+				case 4:
+					func_800881C0_170280();
+					break;
+				case 5:
+					func_80088654_170714();
+					break;
+				case 6:
+					func_80088DFC_170EBC(i & 0xFF);
+					break;
+				case 7:
+					func_80089BCC_171C8C(i & 0xFF);
+					break;
+				case 8:
+					break;
+				default:
+					osSyncPrintf(D_800A5410_18D4D0);
+					break;
+			}
+		}
+	}
+
+	func_8008B594_173654();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B1A8_173268.s")
+#endif
 
 #if NON_MATCHING
 // CURRENT(1605)
