@@ -1392,7 +1392,72 @@ void func_8007978C_16184C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80079954_161A14.s")
 
+// CURRENT(230)
+#ifdef NON_MATCHING
+void func_80079C4C_161D0C(void) {
+	u8 temp_s1;
+	s32 temp_v1;
+
+	if (D_800E65F4 != 0) {
+		osSyncPrintf(&D_800A47E4_18C8A4);
+	}
+
+	temp_s1 = D_800E66A8[D_800E65F8].unk0;
+	temp_v1 = temp_s1 * 0x48;
+
+	if (((Unk800E65BC *) ((u8 *) D_800E65BC + temp_v1))->unk40 & 4) {
+		s32 temp_v0;
+		Unk800768B8Obj *temp_v0_2;
+		Unk800768B8Obj *temp_v0_3;
+
+		func_8000345C_405C(0x1000);
+		temp_v0 = D_8004758E;
+
+		if (temp_v0 & 0x1000) {
+			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2->unk34 = ((Unk800E65BC *) temp_v0_2)->unk18;
+			temp_v0_3 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_3->unk32 = 0;
+			osSyncPrintf(&D_800A4800_18C8C0, D_800E65F8);
+			temp_v0 = D_8004758E;
+		}
+
+		if (temp_v0 & 0x200) {
+			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2->unk34 -= 1;
+			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			osSyncPrintf(&D_800A4814_18C8D4, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
+			temp_v0 = D_8004758E;
+		}
+
+		if (temp_v0 & 0x100) {
+			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2->unk34 += 1;
+			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			osSyncPrintf(&D_800A4830_18C8F0, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
+			temp_v0 = D_8004758E;
+		}
+
+		if (temp_v0 & 0x800) {
+			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2->unk32 += 1;
+			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			osSyncPrintf(&D_800A484C_18C90C, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
+			temp_v0 = D_8004758E;
+		}
+
+		if (temp_v0 & 0x400) {
+			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2->unk32 -= 1;
+			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			osSyncPrintf(&D_800A4868_18C928, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
+		}
+	}
+}
+
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80079C4C_161D0C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80079E50_161F10.s")
 
