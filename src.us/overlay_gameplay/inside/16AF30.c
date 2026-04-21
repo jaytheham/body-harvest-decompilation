@@ -1408,7 +1408,65 @@ void func_80087CB8_16FD78(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087CB8_16FD78.s")
 #endif
 
+// CURRENT(2501)
+#ifdef NON_MATCHING
+void func_80087E3C_16FEFC(void) {
+	s16 effect;
+	s32 pad;
+	Vec3f dir;
+	Unk87E3CEffect *entry;
+
+	D_800FB6E5 = 0x10;
+	D_800FB6E6 = 0x10;
+	effect = D_800FB7A6;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+
+	pad = 0;
+
+	if ((effect != -5) && (effect != -6)) {
+		do {
+			s16 *pos;
+
+			entry = &((Unk87E3CEffect *)&D_800FB7B0)[effect];
+
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
+				(void *)((u32)(D_100E880 + (entry->unk12 << 7)) & 0x1FFFFFFF));
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
+				G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+				G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 2048);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 1, 0x0000, G_TX_RENDERTILE, 0,
+				G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+				G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 15 << G_TEXTURE_IMAGE_FRAC, 15 << G_TEXTURE_IMAGE_FRAC);
+			gDPPipeSync(D_8005BB2C++);
+
+			dir.x = (D_8008DDF4_175EB4 * 4.0f) - entry->unk8;
+			dir.y = (D_8008DDF8_175EB8 * 4.0f) - entry->unkA;
+			dir.z = (D_8008DDFC_175EBC * 4.0f) - entry->unkC;
+			func_80083014_16B0D4(&dir, &dir);
+
+			pos = &entry->unk8;
+			D_800FB6D0.x = pos[0] + (dir.x * ((u8 *)pos)[1]);
+			D_800FB6D0.y = pos[1] + (dir.y * ((u8 *)pos)[1]);
+			D_800FB6D0.z = pos[2] + (dir.z * ((u8 *)pos)[1]);
+			D_800FB6E4 = 0xFF;
+			D_800FB6E0 = entry->unk2;
+			D_800FB6DC = (s8 *)(pos + 3);
+			func_8008A1D8_172298();
+
+			effect = entry->unk4;
+		} while ((effect != -5) && (effect != -6));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087E3C_16FEFC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800881C0_170280.s")
 
