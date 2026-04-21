@@ -1479,7 +1479,58 @@ void func_80088B9C_170C5C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088B9C_170C5C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80088DFC_170EBC(s32 arg0) {
+	s16 effect;
+	Unk84EECEffect *base;
+	Unk84EECEffect *entry;
+
+	base = &((Unk84EECEffect *)&D_800FB7B0)[D_800FB6F8[arg0 & 0xFF].unk6];
+	entry = &((Unk84EECEffect *)&D_800FB7B0)[base->unk4];
+	effect = entry->unk4;
+
+	D_800FB6E5 = 0x10;
+	D_800FB6E6 = 0x10;
+
+	if (*(u16 *)&entry->unkE > 0) {
+		return;
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (void *)((u32)D_100D700 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
+	gDPPipeSync(D_8005BB2C++);
+
+	if ((effect != -6) && (effect != -5)) {
+		do {
+			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+
+			gDPSetPrimColor(D_8005BB2C++, 0, 0, base->unkE, base->unkF, base->unk10, entry->unk11);
+			gDPSetEnvColor(D_8005BB2C++, base->unk11, base->unk12, base->unk13, entry->unk11);
+			gDPPipeSync(D_8005BB2C++);
+
+			D_800FB6D0.x = (f32)entry->unk8;
+			D_800FB6D0.y = (f32)entry->unkA;
+			D_800FB6D0.z = (f32)entry->unkC;
+			D_800FB6DC = (s8 *)&base->unkE;
+			D_800FB6E0 = (f32)entry->unk2;
+			D_800FB6E4 = entry->unk11;
+			func_8008A1D8_172298();
+			effect = entry->unk4;
+		} while ((effect != -6) && (effect != -5));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088DFC_170EBC.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80089148_171208(f32 *arg0, s8 *arg1, u16 arg2, u8 arg3) {
