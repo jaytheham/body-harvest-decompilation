@@ -2087,7 +2087,50 @@ s32 func_8007B51C_1635DC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B65C_16371C.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(0) */
+void func_8007BC18_163CD8(s32 arg0, f32 *arg1, f32 *arg2, s32 *arg3, s32 *arg4) {
+	Unk80076678Obj *obj;
+	u8 objId;
+	u8 orient;
+
+	objId = D_800E66A8[arg0 & 0xFF].unk0;
+	orient = D_800E66A8[arg0 & 0xFF].unk8;
+	obj = &D_800E65BC[objId];
+
+	switch (orient) {
+		case 0:
+			*arg3 = obj->unk36;
+			*arg4 = obj->unk38;
+			*arg1 = obj->unk3A;
+			*arg2 = obj->unk3B;
+			break;
+
+		case 1:
+			*arg3 = obj->unk38;
+			*arg4 = -obj->unk36;
+			*arg1 = obj->unk3B;
+			*arg2 = obj->unk3A;
+			break;
+
+		case 2:
+			*arg3 = -obj->unk36;
+			*arg4 = -obj->unk38;
+			*arg1 = obj->unk3A;
+			*arg2 = obj->unk3B;
+			break;
+
+		case 3:
+			*arg3 = -obj->unk38;
+			*arg4 = obj->unk36;
+			*arg1 = obj->unk3B;
+			*arg2 = obj->unk3A;
+			break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007BC18_163CD8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007BEC8_163F88.s")
 
