@@ -1380,7 +1380,66 @@ void func_80088B9C_170C5C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088DFC_170EBC.s")
 
+#ifdef NON_MATCHING
+void func_80089148_171208(f32 *arg0, s8 *arg1, u16 arg2, u8 arg3) {
+	f32 temp_f0;
+	f32 temp_f2;
+	f32 temp_f12;
+	f32 temp_f14;
+	f32 temp_f16;
+	f32 temp_f18;
+	f32 temp_f4;
+
+	temp_f2 = (f32)arg2;
+	temp_f0 = D_800FB6A8.x * temp_f2;
+	temp_f12 = D_800FB6A8.y * temp_f2;
+	temp_f14 = D_800FB6A8.z * temp_f2;
+	temp_f16 = D_800FB6B4.x * temp_f2;
+	temp_f18 = D_800FB6B4.y * temp_f2;
+	temp_f4 = D_800FB6B4.z * temp_f2;
+
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0[0] + temp_f0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0[1] + temp_f12);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0[2] + temp_f14);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = arg1[0];
+	D_8005BB34->v.cn[1] = arg1[1];
+	D_8005BB34->v.cn[2] = arg1[2];
+	D_8005BB34->v.cn[3] = arg3;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0[0] + temp_f16);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0[1] + temp_f18);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0[2] + temp_f4);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = arg1[0];
+	D_8005BB34->v.cn[1] = arg1[1];
+	D_8005BB34->v.cn[2] = arg1[2];
+	D_8005BB34->v.cn[3] = arg3;
+
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0[0] - temp_f0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0[1] - temp_f12);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0[2] - temp_f14);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = arg1[0];
+	D_8005BB34->v.cn[1] = arg1[1];
+	D_8005BB34->v.cn[2] = arg1[2];
+	D_8005BB34->v.cn[3] = arg3;
+
+	D_8005BB34++;
+	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 3) & 0x1FFFFFFF), 3, 0);
+	gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089148_171208.s")
+#endif
 
 // CURRENT(4710)
 #ifdef NON_MATCHING
