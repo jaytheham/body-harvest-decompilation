@@ -1845,7 +1845,74 @@ void func_8007B1E0_1632A0(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B1E0_1632A0.s")
 #endif
 
+// CURRENT(626)
+#ifdef NON_MATCHING
+s32 func_8007B2F0_1633B0(s32 arg0) {
+	s32 roomId;
+	s16 *interiorFlagsPtr;
+	s32 ret;
+	s16 interiorFlags;
+
+	ret = 1;
+	roomId = ((D_800E66A8[arg0].unk2C & 0x1C) >> 2) + 0x38;
+
+	switch (((s32)(D_800E66A8[arg0].unk2C & 0xE0)) >> 5) {
+		case 0:
+			if (func_8000726C_7E6C(roomId) != 0) {
+				func_800073B8_7FB8(roomId);
+			} else {
+				func_800072CC_7ECC(roomId);
+			}
+			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
+			interiorFlags = *interiorFlagsPtr;
+			break;
+
+		case 1:
+			func_800072CC_7ECC(roomId);
+			ret = func_8007B51C_1635DC(roomId);
+			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
+			interiorFlags = *interiorFlagsPtr;
+			break;
+
+		case 2:
+			func_800073B8_7FB8(roomId);
+			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
+			interiorFlags = *interiorFlagsPtr;
+			break;
+
+		case 3:
+			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
+			interiorFlags = *interiorFlagsPtr;
+			if (!(interiorFlags & (1 << D_800E662C))) {
+				func_800072CC_7ECC(roomId);
+				interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
+				interiorFlags = *interiorFlagsPtr;
+			}
+			break;
+
+		case 4:
+			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
+			interiorFlags = *interiorFlagsPtr;
+			if (!(interiorFlags & (1 << D_800E662C))) {
+				func_800073B8_7FB8(roomId);
+				interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
+				interiorFlags = *interiorFlagsPtr;
+			}
+			break;
+
+		default:
+			osSyncPrintf(D_800A49EC_18CAAC);
+			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
+			interiorFlags = *interiorFlagsPtr;
+			break;
+	}
+
+	*interiorFlagsPtr = interiorFlags | (1 << arg0);
+	return ret;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B2F0_1633B0.s")
+#endif
 
 s32 func_8007B51C_1635DC(s32 arg0) {
 	s32 idx;
