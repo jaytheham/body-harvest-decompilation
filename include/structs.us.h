@@ -1498,7 +1498,9 @@ typedef struct {
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ u8 unk8;
-	/* 0x09 */ u8 pad9[0x5];
+	/* 0x09 */ u8 pad9[0x1];
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ u8 padC[0x2];
 	/* 0x0E */ s16 unkE;
 	/* 0x10 */ u8 pad10[0x1C];
 	/* 0x2C */ u8 unk2C;
@@ -1528,7 +1530,11 @@ typedef struct {
 } Unk9C804; /* stride 0x38 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x18];
+	/* 0x00 */ u8 pad0[0xE];
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ u8 pad14[0x4];
 	/* 0x18 */ u16 unk18;
 	/* 0x1A */ u16 unk1A;
 	/* 0x1C */ u8 pad1C[0x24];

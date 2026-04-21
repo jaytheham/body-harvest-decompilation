@@ -495,7 +495,61 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084258_16C318.s")
 
+// CURRENT(3224)
+#ifdef NON_MATCHING
+void func_80084628_16C6E8(s32 arg0) {
+	UnkFB6F8Entry *owner;
+	Unk84EECEffect *base;
+	Unk84EECEffect *entry;
+	s16 effect;
+	s16 spread;
+	u16 quarter;
+	u16 half;
+	u16 third;
+	s32 rnd;
+	u8 slot;
+
+	slot = arg0 & 0xFF;
+	owner = &D_800FB6F8[slot];
+	base = &((Unk84EECEffect *)&D_800FB7B0)[owner->unk6];
+	spread = base->unk2;
+	effect = func_80083390_16B450(slot);
+	if (effect == -3) {
+		return;
+	}
+
+	rnd = func_800038E0_44E0();
+	entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+	quarter = spread / 4;
+	entry->unk2 = (rnd % quarter) + quarter;
+	entry->unkE = (base->unk11 + base->unkE) / 2;
+	entry->unkF = (base->unk12 + base->unkF) / 2;
+	entry->unk10 = (base->unk13 + base->unk10) / 2;
+
+	rnd = func_800038E0_44E0();
+	entry->unk11 = (rnd % 0x32) + 0x5A;
+	half = quarter / 2;
+	third = quarter / 3;
+
+	rnd = func_800038E0_44E0();
+	entry->unk12 = (rnd % half) + third;
+	rnd = func_800038E0_44E0();
+	entry->unk14 = (rnd % half) + third;
+	rnd = func_800038E0_44E0();
+	entry->unk13 = (rnd % half) + third;
+	rnd = func_800038E0_44E0();
+	entry->unk15 = (rnd % half) + third;
+
+	rnd = func_800038E0_44E0();
+	entry->unk8 = ((rnd % spread) / 2) + base->unk8 - quarter;
+	entry->unkA = base->unkA;
+
+	rnd = func_800038E0_44E0();
+	entry->unkC = ((rnd % spread) / 2) + base->unkC - quarter;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084628_16C6E8.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80084980_16CA40(s32 arg0, s32 arg1) {
@@ -852,7 +906,54 @@ void func_800858F4_16D9B4(s16 arg0, s16 arg1, s16 arg2) {
 	func_8008574C_16D80C(arg0, arg1, arg2, 0, 0x78, 0, 0x28, 8, 0x1E, 0x96, 0xAA, 0xB4, 0xFF, 0x78);
 }
 
+// CURRENT(566)
+#ifdef NON_MATCHING
+s32 func_80085984_16DA44(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 arg5) {
+	Unk84EECEffect *effect;
+	u8 *entry;
+	s32 half;
+	u16 randX;
+	u16 randY;
+	s16 ret;
+	s8 dirY;
+	s8 dirX;
+
+	ret = func_80083390_16B450(0xE);
+	if (ret != -3) {
+		effect = &((Unk84EECEffect *)&D_800FB7B0)[ret];
+		effect->unk2 = arg0;
+		entry = (u8 *)effect + 8;
+		half = (u8)arg1 / 2;
+		*(s16 *)&entry[0] = (func_800038E0_44E0() % (u8)arg1) + arg3 * 4 - half;
+		*(s16 *)&entry[2] = (func_800038E0_44E0() % (u8)arg1) + arg4 * 4 - half;
+		*(s16 *)&entry[4] = (func_800038E0_44E0() % (u8)arg1) + arg5 * 4 - half;
+		entry[6] = -1;
+		entry[7] = -1;
+		entry[8] = -1;
+		entry[9] = arg1;
+		entry[0xA] = func_800038E0_44E0() % 8;
+		entry[0xB] = arg2;
+		entry[0xC] = 0;
+
+		dirX = (func_800038E0_44E0() % 70) + 0x37;
+		dirY = (func_800038E0_44E0() % 70) + 0x37;
+		if ((func_800038E0_44E0() % 20) < 0xA) {
+			dirX = -dirX;
+		}
+		if ((func_800038E0_44E0() % 20) < 0xA) {
+			dirY = -dirY;
+		}
+
+		randX = func_800038E0_44E0();
+		randY = func_800038E0_44E0();
+		func_80083F08_16BFC8(arg3, arg4, arg5, dirX, (randX % 60) + 0x41, dirY, 0x1E, (randY % 60) + 0x46, (func_800038E0_44E0() % 3) + 3, 0xA, 0xC8, 0xC8, 0xFF);
+	}
+
+	return ret;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085984_16DA44.s")
+#endif
 
 void func_80085CB4_16DD74(s16 arg0, s16 arg1, s16 arg2) {
 	s32 temp_v0;
@@ -1378,7 +1479,58 @@ void func_80088B9C_170C5C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088B9C_170C5C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80088DFC_170EBC(s32 arg0) {
+	s16 effect;
+	Unk84EECEffect *base;
+	Unk84EECEffect *entry;
+
+	base = &((Unk84EECEffect *)&D_800FB7B0)[D_800FB6F8[arg0 & 0xFF].unk6];
+	entry = &((Unk84EECEffect *)&D_800FB7B0)[base->unk4];
+	effect = entry->unk4;
+
+	D_800FB6E5 = 0x10;
+	D_800FB6E6 = 0x10;
+
+	if (*(u16 *)&entry->unkE > 0) {
+		return;
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (void *)((u32)D_100D700 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
+	gDPPipeSync(D_8005BB2C++);
+
+	if ((effect != -6) && (effect != -5)) {
+		do {
+			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+
+			gDPSetPrimColor(D_8005BB2C++, 0, 0, base->unkE, base->unkF, base->unk10, entry->unk11);
+			gDPSetEnvColor(D_8005BB2C++, base->unk11, base->unk12, base->unk13, entry->unk11);
+			gDPPipeSync(D_8005BB2C++);
+
+			D_800FB6D0.x = (f32)entry->unk8;
+			D_800FB6D0.y = (f32)entry->unkA;
+			D_800FB6D0.z = (f32)entry->unkC;
+			D_800FB6DC = (s8 *)&base->unkE;
+			D_800FB6E0 = (f32)entry->unk2;
+			D_800FB6E4 = entry->unk11;
+			func_8008A1D8_172298();
+			effect = entry->unk4;
+		} while ((effect != -6) && (effect != -5));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088DFC_170EBC.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80089148_171208(f32 *arg0, s8 *arg1, u16 arg2, u8 arg3) {
