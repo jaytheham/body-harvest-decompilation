@@ -811,6 +811,7 @@ void func_80078D68_160E28(void);
 void func_80077B94_15FC54(void);
 void func_800784B8_160578(void);
 void func_80073200_15B2C0(void);
+void func_80071304_1593C4(void);
 void func_80071510_1595D0(void);
 void func_80079330_1613F0(void);
 void func_8007453C_15C5FC(s32 arg0, s32 arg1);
