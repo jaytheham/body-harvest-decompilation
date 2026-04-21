@@ -714,8 +714,6 @@ typedef struct {
 	/* 0x14 */ u8 pad14[0x34];
 } Unk80076538Obj; /* size = 0x48 */
 
-void func_800858F4_16D9B4(s16 arg0, s16 arg1, s16 arg2);
-
 void func_80076538_15E5F8(s32 arg0) {
 	Unk800E66A8 *temp_v0;
 	Unk80076538Obj *temp_v0_2;
@@ -762,7 +760,60 @@ void func_80076538_15E5F8(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80076678_15E738.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(2112) */
+void func_800768B8_15E978(s32 arg0) {
+	s32 sp34;
+	s32 sp30;
+	s32 sp2C;
+	s32 sp28;
+	s16 temp_t0;
+	s16 temp_t1;
+	u16 temp_a3;
+	Unk800768B8Obj *temp_v0;
+	Unk800E66A8 *temp_v1;
+
+	temp_v1 = &D_800E66A8[arg0];
+	temp_v0 = &((Unk800768B8Obj *) D_800E65BC)[temp_v1->unk0];
+	temp_a3 = temp_v0->unk1A;
+	temp_t0 = temp_v0->unk32;
+	temp_t1 = temp_v0->unk34;
+
+	switch (temp_v1->unk8) {
+		case 0:
+			sp2C = temp_t1;
+			sp34 = temp_v1->unk2 + temp_t0;
+			sp30 = temp_v1->unk6 + ((s32) temp_a3 / 2) + 0xF;
+			sp28 = 0xF;
+			break;
+
+		case 1:
+			sp2C = 0xF;
+			sp28 = temp_t1;
+			sp30 = temp_v1->unk6 - temp_t0;
+			sp34 = temp_v1->unk2 + ((s32) temp_a3 / 2) + 0xF;
+			break;
+
+		case 2:
+			sp2C = temp_t1;
+			sp28 = 0xF;
+			sp34 = temp_v1->unk2 - temp_t0;
+			sp30 = (temp_v1->unk6 - ((s32) temp_a3 / 2)) - 0xF;
+			break;
+
+		case 3:
+			sp2C = 0xF;
+			sp28 = temp_t1;
+			sp30 = temp_v1->unk6 + temp_t0;
+			sp34 = (temp_v1->unk2 - ((s32) temp_a3 / 2)) - 0xF;
+			break;
+	}
+
+	func_80073714_15B7D4(sp2C, sp28, sp34 - 0x60, 5, sp30 - 0x60, 0xFA, 0, 0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800768B8_15E978.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80076A58_15EB18.s")
 
