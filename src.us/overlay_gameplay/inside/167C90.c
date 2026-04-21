@@ -188,28 +188,28 @@ s16 func_80080FD8_169098(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080FD8_169098.s")
 #endif
 
-// CURRENT(1870)
+// CURRENT(1620)
 #ifdef NON_MATCHING
 s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
-	f32 temp_f0;
 	f32 temp_f2;
 	s32 var_v1;
 
 	temp_f2 = (f32) ((f64) arg0 / D_800A4F40_18D000);
 	if (arg1 != 0) {
-		temp_f0 = temp_f2 + 15.0f;
-		if (temp_f0 < 0.0f) {
-			temp_f0 += 360.0f;
+		temp_f2 += 15.0f;
+		if (temp_f2 < 0.0f) {
+			temp_f2 += 360.0f;
 		}
-		var_v1 = (u32) (temp_f0 / 30.0f);
-		return var_v1 & 0xFF;
+		var_v1 = (u32) (temp_f2 / 30.0f);
+		var_v1 &= 0xFF;
+		return var_v1;
 	}
 
-	temp_f0 = (f32) ((f64) temp_f2 + D_800A4F48_18D008);
-	if (temp_f0 < 0.0f) {
-		temp_f0 += 360.0f;
+	temp_f2 = (f32) ((f64) temp_f2 + D_800A4F48_18D008);
+	if (temp_f2 < 0.0f) {
+		temp_f2 += 360.0f;
 	}
-	var_v1 = (u32) (temp_f0 / 45.0f);
+	var_v1 = (u32) (temp_f2 / 45.0f);
 	var_v1 &= 0xFF;
 	return var_v1;
 }
