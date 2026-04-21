@@ -384,7 +384,63 @@ s32 func_80084C18_16CCD8(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084C68_16CD28.s")
 
+#ifdef NON_MATCHING
+s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11) {
+	extern f64 D_800A5468_18D528;
+
+	s16 effect;
+	s16 x;
+	s16 y;
+	s16 z;
+	u8 scale;
+	Unk84EECEffect *entry;
+	Unk84EECEffect *other;
+
+	effect = func_80083584_16B644(0xD);
+	if (effect != -3) {
+		entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+		x = arg0 * 4;
+		y = arg1 * 4;
+		z = arg2 * 4;
+		entry->unk8 = x;
+		entry->unkA = y;
+		entry->unkC = z;
+		entry->unk2 = (s16)(s32)((f64)(f32)arg3 * D_800A5468_18D528);
+		entry->unk11 = arg10;
+		entry->unk15 = arg11;
+		entry->unkE = arg4;
+		entry->unkF = arg5;
+		entry->unk10 = arg6;
+
+		scale = 0xF;
+		if ((arg10 + 0xF) >= 0x100) {
+			scale = 0xFF - arg10;
+		}
+
+		entry->unk13 = scale;
+		entry->unk12 = 0;
+		entry->unk14 = 0;
+
+		other = &((Unk84EECEffect *)&D_800FB7B0)[entry->unk4];
+		other->unk8 = x;
+		other->unkA = y;
+		other->unkC = z;
+		other->unk11 = arg10;
+		other->unk13 = scale;
+		other->unk12 = 0;
+		other->unk14 = 0;
+		other->unk15 = arg11;
+		other->unk2 = arg3;
+		other->unkE = arg7;
+		other->unkF = arg8;
+		other->unk10 = arg9;
+	}
+
+	return effect;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084EEC_16CFAC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008506C_16D12C.s")
 
@@ -481,7 +537,37 @@ void func_80086728_16E7E8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086728_16E7E8.s")
 #endif
 
+#ifdef NON_MATCHING
+/* CURRENT(1398) */
+void func_8008688C_16E94C(void) {
+	s16 effect;
+
+	effect = D_800FB78E;
+	if ((effect != -5) && (effect != -6)) {
+		do {
+			s16 value;
+			s16 spread;
+			Unk8688CEffect *entry;
+
+			entry = &((Unk8688CEffect *)&D_800FB7B0)[effect];
+			value = entry->unk2;
+			if (value < 0) {
+				spread = (value + 3) >> 2;
+			} else {
+				spread = value >> 2;
+			}
+
+			entry->unk9 = (func_800038E0_44E0() % spread) + spread;
+			entry->unkB = (func_800038E0_44E0() % spread) + spread;
+			entry->unkA = (func_800038E0_44E0() % spread) + spread;
+			entry->unkC = (func_800038E0_44E0() % spread) + spread;
+			effect = entry->unk4;
+		} while ((effect != -5) && (effect != -6));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008688C_16E94C.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(535) */
@@ -598,7 +684,39 @@ void func_80086F58_16F018(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087A40_16FB00.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(3405) */
+void func_80087CB8_16FD78(s32 arg0) {
+	f32 sp58[3];
+	UnkFB6F8Entry *entry;
+	Unk87CB8Effect *effectBase;
+	Unk87CB8Effect *effect;
+	s8 *color;
+	s16 next;
+
+	entry = &D_800FB6F8[arg0 & 0xFF];
+	effectBase = (Unk87CB8Effect *) &D_800FB7B0;
+	next = effectBase[entry->unk6].unk4;
+	color = &effectBase[entry->unk6].unkE;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	gDPPipeSync(D_8005BB2C++);
+
+	if ((next != -5) && (next != -6)) {
+		do {
+		effect = &((Unk87CB8Effect *) &D_800FB7B0)[next];
+		sp58[0] = effect->unk8;
+		sp58[1] = effect->unkA;
+		sp58[2] = effect->unkC;
+		func_80089148_171208(sp58, color, effectBase[entry->unk6].unk2, effect->unk11);
+		next = effect->unk4;
+		} while ((next != -5) && (next != -6));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087CB8_16FD78.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087E3C_16FEFC.s")
 

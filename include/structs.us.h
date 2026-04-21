@@ -101,6 +101,70 @@ typedef struct {
 } func_80070420_7F3D0_UnkArg0; /* size = 0x0A */
 
 typedef struct {
+	/* 0x00 */ u8 pad0[0x8];
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+} Unk80070464Obj; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 pad1;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s8 unkE;
+	/* 0x0F */ s8 unkF;
+	/* 0x10 */ s8 unk10;
+	/* 0x11 */ u8 unk11;
+	/* 0x12 */ u8 unk12;
+	/* 0x13 */ u8 unk13;
+	/* 0x14 */ u8 unk14;
+	/* 0x15 */ u8 unk15;
+} Unk84EECEffect; /* size = 0x16 */
+
+typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
+	/* 0x02 */ u16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[2];
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s8 unkE;
+	/* 0x0F */ s8 unkF;
+	/* 0x10 */ s8 unk10;
+	/* 0x11 */ u8 unk11;
+	/* 0x12 */ u8 pad12[4];
+} Unk87CB8Effect; /* size = 0x16 */
+
+typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 pad1;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ u8 pad8;
+	/* 0x09 */ s8 unk9;
+	/* 0x0A */ s8 unkA;
+	/* 0x0B */ s8 unkB;
+	/* 0x0C */ s8 unkC;
+	/* 0x0D */ u8 padD[9];
+} Unk8688CEffect; /* size = 0x16 */
+
+typedef struct {
+	/* 0x00 */ u8 pad0[0x1A];
+	/* 0x1A */ u16 unk1A;
+	/* 0x1C */ u8 pad1C[0x16];
+	/* 0x32 */ s16 unk32;
+	/* 0x34 */ s16 unk34;
+	/* 0x36 */ u8 pad36[0x12];
+} Unk800768B8Obj; /* size = 0x48 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ u8 pad02[0x16];
 } Unk80050ADA; /* size = 0x18 */
@@ -1382,10 +1446,16 @@ typedef struct {
 	/* 0x0C */ u8 padC[0x4];
 	/* 0x10 */ f32 unk10;
 	/* 0x14 */ f32 unk14;
-	/* 0x18 */ u8 pad18[0x10];
+	/* 0x18 */ u8 pad18[0x8];
+	/* 0x20 */ s32 unk20;
+	/* 0x24 */ s32 unk24;
 	/* 0x28 */ s16 unk28;
 	/* 0x2A */ s16 unk2A;
-	/* 0x2C */ u8 pad2C[0xC];
+	/* 0x2C */ u8 pad2C[0x4];
+	/* 0x30 */ s16 unk30;
+	/* 0x32 */ s16 unk32;
+	/* 0x34 */ s16 unk34;
+	/* 0x36 */ s16 unk36;
 } Unk9C804; /* stride 0x38 */
 
 typedef struct {
