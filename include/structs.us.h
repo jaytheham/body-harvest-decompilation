@@ -107,6 +107,34 @@ typedef struct {
 } Unk80070464Obj; /* size = 0x0C */
 
 typedef struct {
+	/* 0x00 */ u8 pad00[0x8];
+	/* 0x08 */ u8 unk8;
+	/* 0x09 */ u8 pad09[0x07];
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ u8 pad12[0x02];
+	/* 0x14 */ f32 unk14;
+	/* 0x18 */ f32 unk18;
+	/* 0x1C */ f32 unk1C;
+	/* 0x20 */ f32 unk20;
+	/* 0x24 */ f32 unk24;
+	/* 0x28 */ f32 unk28;
+} Unk80070F7CState; /* size = 0x2C */
+
+typedef struct {
+	/* 0x00 */ u8 pad00[0x20];
+	/* 0x20 */ f32 unk20;
+	/* 0x24 */ u8 pad24[0x02];
+	/* 0x26 */ s16 unk26;
+	/* 0x28 */ s16 unk28;
+	/* 0x2A */ s16 unk2A;
+	/* 0x2C */ s16 unk2C;
+	/* 0x2E */ s16 unk2E;
+	/* 0x30 */ s16 unk30;
+	/* 0x32 */ u8 pad32[0x0E];
+	/* 0x40 */ s32 unk40;
+} Unk80070F7CObj; /* size = 0x44 */
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 pad1;
 	/* 0x02 */ s16 unk2;
