@@ -1787,6 +1787,7 @@ extern char D_800A4924_18C9E4;
 extern char D_800A4F94_18D054;
 extern f32 D_800A0980_188A40;
 extern s32 D_800A0964_188A24;
+extern s32 D_800A0A1C_188ADC;
 extern char D_800A4DC0_18CE80;
 extern char D_800A4DDC_18CE9C;
 extern char D_800A4DE0_18CEA0;
