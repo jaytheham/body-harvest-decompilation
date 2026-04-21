@@ -1921,7 +1921,79 @@ void func_80079C4C_161D0C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80079C4C_161D0C.s")
 #endif
 
+// CURRENT(758)
+#ifdef NON_MATCHING
+void func_80079E50_161F10(void) {
+	s32 var_s2;
+	s32 temp_v1;
+	s32 temp_s0;
+	Unk800E66A8 *temp_v0;
+
+	var_s2 = 0;
+	if (D_800E65F4 != 0) {
+		osSyncPrintf(&D_800A4884_18C944);
+	}
+
+	temp_v0 = &D_800E66A8[D_800E65F8];
+	if (temp_v0->unk2E & 1) {
+		temp_v1 = D_8004758E;
+		temp_s0 = temp_v0->unk0;
+
+		if (temp_v1 & 8) {
+			var_s2 = 1;
+			D_800E65BC[temp_s0].unk10 += 1;
+			osSyncPrintf(&D_800A48AC_18C96C, D_800E65F8, temp_s0, D_800E65BC[temp_s0].unk10);
+			temp_v1 = D_8004758E;
+		}
+
+		if (temp_v1 & 4) {
+			var_s2 = 1;
+			D_800E65BC[temp_s0].unk10 -= 1;
+			osSyncPrintf(&D_800A48C4_18C984, D_800E65F8, temp_s0, D_800E65BC[temp_s0].unk10);
+			temp_v1 = D_8004758E;
+		}
+
+		if (temp_v1 & 0x200) {
+			var_s2 = 1;
+			D_800E65BC[temp_s0].unkE += 1;
+			osSyncPrintf(&D_800A48DC_18C99C, D_800E65F8, temp_s0, D_800E65BC[temp_s0].unkE);
+			temp_v1 = D_8004758E;
+		}
+
+		if (temp_v1 & 0x100) {
+			var_s2 = 1;
+			D_800E65BC[temp_s0].unkE -= 1;
+			osSyncPrintf(&D_800A48F4_18C9B4, D_800E65F8, temp_s0, D_800E65BC[temp_s0].unkE);
+			temp_v1 = D_8004758E;
+		}
+
+		if (temp_v1 & 0x800) {
+			var_s2 = 1;
+			D_800E65BC[temp_s0].unk12 += 1;
+			osSyncPrintf(&D_800A490C_18C9CC, D_800E65F8, temp_s0, D_800E65BC[temp_s0].unk12);
+			temp_v1 = D_8004758E;
+		}
+
+		if (temp_v1 & 0x400) {
+			var_s2 = 1;
+			D_800E65BC[temp_s0].unk12 -= 1;
+			osSyncPrintf(&D_800A4924_18C9E4, D_800E65F8, temp_s0, D_800E65BC[temp_s0].unk12);
+		}
+
+		if ((var_s2 != 0) && (D_800E65BC[temp_s0].unk40 & 0x20000000)) {
+			temp_v0 = &D_800E66A8[D_800E65F8];
+			temp_v0->unk2E &= 0xFFFE;
+			func_80077B40_15FC00(D_800E65F8, temp_s0);
+
+			temp_v0 = &D_800E66A8[D_800E65F8];
+			temp_v0->unk2E |= 1;
+			func_80077B40_15FC00(D_800E65F8, temp_s0);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80079E50_161F10.s")
+#endif
 
 // CURRENT(45040)
 #ifdef NON_MATCHING
