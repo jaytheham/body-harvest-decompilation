@@ -700,8 +700,14 @@ typedef struct {
 	/* 0x00 */ u8 pad0[0x8];
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ s16 unkA;
-	/* 0x0C */ u8 padC[0x3C];
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ u8 pad14[0x34];
 } Unk80076538Obj; /* size = 0x48 */
+
+void func_800858F4_16D9B4(s16 arg0, s16 arg1, s16 arg2);
 
 void func_80076538_15E5F8(s32 arg0) {
 	Unk800E66A8 *temp_v0;
@@ -799,7 +805,54 @@ void func_800774E0_15F5A0(s32 arg0, f32 *arg1, f32 *arg2) {
 	*arg2 = D_800E65BC[objIndex].unk18;
 }
 
+#ifdef NON_MATCHING
+/* CURRENT(649) */
+void func_800775F0_15F6B0(s32 arg0, s32 arg1) {
+	Unk800E66A8 *entry;
+	Unk80076538Obj *obj;
+	s32 objType;
+	s32 var_t0;
+	s32 var_t1;
+	s32 var_t2;
+
+	entry = &D_800E66A8[arg0];
+	obj = &((Unk80076538Obj *) D_800E65BC)[arg1];
+	objType = obj->unkC;
+	var_t2 = obj->unk10 + entry->unk4;
+
+	switch (entry->unk8) {
+		case 0:
+			var_t0 = obj->unkE + entry->unk2;
+			var_t1 = obj->unk12 + entry->unk6;
+			break;
+
+		case 1:
+			var_t0 = obj->unk12 + entry->unk2;
+			var_t1 = entry->unk6 - obj->unkE;
+			break;
+
+		case 2:
+			var_t0 = entry->unk2 - obj->unkE;
+			var_t1 = entry->unk6 - obj->unk12;
+			break;
+
+		case 3:
+			var_t0 = entry->unk2 - obj->unk12;
+			var_t1 = obj->unkE + entry->unk6;
+			break;
+	}
+
+	var_t0 -= 0x60;
+	var_t1 -= 0x60;
+	if (objType == 5) {
+		func_800858F4_16D9B4(var_t0, var_t2, var_t1);
+	} else if (objType == 4) {
+		func_80085984_16DA44(0x28, 0x14, 0x14, var_t0, var_t2, var_t1);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800775F0_15F6B0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007774C_15F80C.s")
 
