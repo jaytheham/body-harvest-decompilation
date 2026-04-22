@@ -121,7 +121,14 @@ typedef struct {
 } Unk80070F7CState; /* size = 0x2C */
 
 typedef struct {
-	/* 0x00 */ u8 pad00[0x20];
+	/* 0x00 */ u8 pad0[0xE];
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ u8 pad14[0x4];
+	/* 0x18 */ u16 unk18;
+	/* 0x1A */ u16 unk1A;
+	/* 0x1C */ u8 pad1C[0x4];
 	/* 0x20 */ f32 unk20;
 	/* 0x24 */ u8 pad24[0x02];
 	/* 0x26 */ s16 unk26;
@@ -132,7 +139,21 @@ typedef struct {
 	/* 0x30 */ s16 unk30;
 	/* 0x32 */ u8 pad32[0x0E];
 	/* 0x40 */ s32 unk40;
-} Unk80070F7CObj; /* size = 0x44 */
+	/* 0x44 */ s32 unk44;
+} Unk80070F7CObj; /* size = 0x48 */
+
+typedef struct {
+	/* 0x00 */ u8 pad0[0xE];
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ u8 pad14[0x4];
+	/* 0x18 */ u16 unk18;
+	/* 0x1A */ u16 unk1A;
+	/* 0x1C */ u8 pad1C[0x24];
+	/* 0x40 */ s32 unk40;
+	/* 0x44 */ s32 unk44;
+} Unk800E65BC; /* stride 0x48 - bad copy of Unk80070F7CObj*/
 
 typedef struct {
 	/* 0x00 */ u8 unk0;
@@ -389,14 +410,14 @@ typedef struct {
 } Unk80047588; /* size = 0x06 */
 
 typedef struct {
-    u8 pad0[0x6];
-    u8 unk6;
-    u8 pad7[0x21];
+	u8 pad0[0x6];
+	u8 unk6;
+	u8 pad7[0x21];
 } Unk_8003CEC0;
 
 typedef struct {
-    u16 unk0;
-    s16 unk2;
+	u16 unk0;
+	s16 unk2;
 } Unk_8013D91C;
 
 typedef struct {
@@ -441,15 +462,15 @@ typedef struct Unk8006AA84Node {
 } Unk8006AA84Node;
 
 typedef struct {
-    /* 0x00 */ s32 offset;
-    /* 0x04 */ s16 unk4;
-    /* 0x06 */ s16 len;
+	/* 0x00 */ s32 offset;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 len;
 } BhSeqEntry; /* size = 0x8 */
 
 typedef struct {
-    /* 0x00 */ s16 revision;
-    /* 0x02 */ s16 seqCount;
-    /* 0x04 */ BhSeqEntry seqArray[1];
+	/* 0x00 */ s16 revision;
+	/* 0x02 */ s16 seqCount;
+	/* 0x04 */ BhSeqEntry seqArray[1];
 } BhSeqFile;
 
 typedef struct {
@@ -1589,19 +1610,6 @@ typedef struct {
 } Unk9C804; /* stride 0x38 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0xE];
-	/* 0x0E */ s16 unkE;
-	/* 0x10 */ s16 unk10;
-	/* 0x12 */ s16 unk12;
-	/* 0x14 */ u8 pad14[0x4];
-	/* 0x18 */ u16 unk18;
-	/* 0x1A */ u16 unk1A;
-	/* 0x1C */ u8 pad1C[0x24];
-	/* 0x40 */ s32 unk40;
-	/* 0x44 */ s32 unk44;
-} Unk800E65BC; /* stride 0x48 */
-
-typedef struct {
 	/* 0x00 */ f32 unk0;
 	/* 0x04 */ f32 unk4;
 	/* 0x08 */ f32 unk8;
@@ -1973,23 +1981,23 @@ typedef struct {
 } Unk80047FB8; /* size = 0x14 */
 
 typedef struct BhGfxTask_s {
-    /* 0x00 */ struct BhGfxTask_s *next;
-    /* 0x04 */ u32 state;
-    /* 0x08 */ u32 flags;
-    /* 0x0C */ void *framebuffer;
-    /* 0x10 */ OSTask list;
-    /* 0x50 */ OSMesgQueue *msgQ;
-    /* 0x54 */ OSMesg msg;
-    /* 0x58 */ u8 unk58[0x10];
-    /* 0x68 */ s16 unk68;
-    /* 0x6A */ u8 unk6A[0x1E];
-    /* 0x88 */ void *unk88;
-    /* 0x8C */ u32 unk8C;
+	/* 0x00 */ struct BhGfxTask_s *next;
+	/* 0x04 */ u32 state;
+	/* 0x08 */ u32 flags;
+	/* 0x0C */ void *framebuffer;
+	/* 0x10 */ OSTask list;
+	/* 0x50 */ OSMesgQueue *msgQ;
+	/* 0x54 */ OSMesg msg;
+	/* 0x58 */ u8 unk58[0x10];
+	/* 0x68 */ s16 unk68;
+	/* 0x6A */ u8 unk6A[0x1E];
+	/* 0x88 */ void *unk88;
+	/* 0x8C */ u32 unk8C;
 } BhGfxTask; /* size = 0x90 */
 
 typedef struct {
-    /* 0x00 */ void *buf;
-    /* 0x04 */ s16 numFrames;
+	/* 0x00 */ void *buf;
+	/* 0x04 */ s16 numFrames;
 } BhAudioBuf;
 
 typedef struct BhAudioTask_s {
@@ -2005,64 +2013,64 @@ typedef struct BhAudioTask_s {
 } BhAudioTask; /* size = 0x90 */
 
 typedef struct {
-    /* 0x00 */ s16 type;
-    /* 0x02 */ u16 pad;
-    /* 0x04 */ BhAudioBuf *audioBuf;
+	/* 0x00 */ s16 type;
+	/* 0x02 */ u16 pad;
+	/* 0x04 */ BhAudioBuf *audioBuf;
 } BhAudioMsg;
 
 typedef struct {
-    u8 data[0x108];
+	u8 data[0x108];
 } BhAudioGlobals; /* size = 0x108 */
 
 typedef struct {
-    /* 0x00 */ u8 unk0[0x53];
-    /* 0x53 */ u8 unk53;
-    /* 0x54 */ u8 unk54;
-    /* 0x55 */ u8 unk55;
-    /* 0x56 */ u8 unk56;
-    /* 0x57 */ u8 unk57;
-    /* 0x58 */ u8 unk58;
-    /* 0x59 */ u8 unk59;
-    /* 0x5A */ u8 unk5A;
-    /* 0x5B */ u8 unk5B;
-    /* 0x5C */ u8 unk5C;
-    /* 0x5D */ u8 unk5D;
-    /* 0x5E */ u8 unk5E;
-    /* 0x5F */ u8 unk5F[0x04];
-    /* 0x63 */ u8 unk63;
-    /* 0x64 */ u8 unk64;
-    /* 0x65 */ u8 unk65;
-    /* 0x66 */ u8 unk66;
-    /* 0x67 */ u8 unk67[0x04];
-    /* 0x6B */ u8 unk6B;
-    /* 0x6C */ u8 unk6C;
-    /* 0x6D */ u8 unk6D;
-    /* 0x6E */ u8 unk6E;
-    /* 0x6F */ u8 unk6F[0x04];
-    /* 0x73 */ u8 unk73;
-    /* 0x74 */ u8 unk74;
-    /* 0x75 */ u8 unk75;
-    /* 0x76 */ u8 unk76;
-    /* 0x77 */ u8 unk77[0x04];
-    /* 0x7B */ u8 unk7B;
-    /* 0x7C */ u8 unk7C;
-    /* 0x7D */ u8 unk7D;
-    /* 0x7E */ u8 unk7E;
+	/* 0x00 */ u8 unk0[0x53];
+	/* 0x53 */ u8 unk53;
+	/* 0x54 */ u8 unk54;
+	/* 0x55 */ u8 unk55;
+	/* 0x56 */ u8 unk56;
+	/* 0x57 */ u8 unk57;
+	/* 0x58 */ u8 unk58;
+	/* 0x59 */ u8 unk59;
+	/* 0x5A */ u8 unk5A;
+	/* 0x5B */ u8 unk5B;
+	/* 0x5C */ u8 unk5C;
+	/* 0x5D */ u8 unk5D;
+	/* 0x5E */ u8 unk5E;
+	/* 0x5F */ u8 unk5F[0x04];
+	/* 0x63 */ u8 unk63;
+	/* 0x64 */ u8 unk64;
+	/* 0x65 */ u8 unk65;
+	/* 0x66 */ u8 unk66;
+	/* 0x67 */ u8 unk67[0x04];
+	/* 0x6B */ u8 unk6B;
+	/* 0x6C */ u8 unk6C;
+	/* 0x6D */ u8 unk6D;
+	/* 0x6E */ u8 unk6E;
+	/* 0x6F */ u8 unk6F[0x04];
+	/* 0x73 */ u8 unk73;
+	/* 0x74 */ u8 unk74;
+	/* 0x75 */ u8 unk75;
+	/* 0x76 */ u8 unk76;
+	/* 0x77 */ u8 unk77[0x04];
+	/* 0x7B */ u8 unk7B;
+	/* 0x7C */ u8 unk7C;
+	/* 0x7D */ u8 unk7D;
+	/* 0x7E */ u8 unk7E;
 } SaveSlot; /* size = 0x7F */
 
 typedef struct {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    s32 unkC;
-    u16 unk10;
+	s32 unk0;
+	s32 unk4;
+	s32 unk8;
+	s32 unkC;
+	u16 unk10;
 } Unk8031C88; /* size = 0x14 - DMA init descriptor from boot ROM */
 
 typedef struct {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    s32 unkC;
+	s32 unk0;
+	s32 unk4;
+	s32 unk8;
+	s32 unkC;
 } Unk80378D0; /* size = 0x10 - DMA range descriptor */
 
 typedef struct {

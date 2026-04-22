@@ -1,12 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-extern char D_800A5330_18D3F0[];
-extern f64 D_800A5450_18D510;
-extern f64 D_800A5458_18D518;
-extern f64 D_800A5460_18D520;
-
-
 void func_80082E70_16AF30(f32 *arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->x = arg1->x * arg0[0] + arg1->y * arg0[3] + arg0[6] * arg1->z;
 	arg2->y = arg1->x * arg0[1] + arg1->y * arg0[4] + arg0[7] * arg1->z;
