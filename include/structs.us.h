@@ -2211,3 +2211,8 @@ typedef struct {
 
 #endif
 
+typedef struct {
+	/* 0x00 */ s8 unk0;
+	/* 0x01 */ s8 unk1;
+} UnkS8Pair; /* size = 0x02 */
+

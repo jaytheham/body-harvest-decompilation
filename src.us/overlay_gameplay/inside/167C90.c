@@ -480,7 +480,121 @@ s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800811DC_16929C.s")
 #endif
 
+#ifdef NON_MATCHING
+s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
+	s32 var_s0;
+	s32 var_s1;
+	UnkS8Pair *var_s2;
+	s32 sp50;
+	s32 sp2C;
+	u8 sp5F;
+	s32 sp58;
+	s32 sp54;
+	s8 var_a3;
+	u8 temp_v0;
+	s16 temp_x;
+	s16 temp_y;
+	s32 count;
+	s32 done;
+	s16 x;
+	s16 y;
+
+	if (arg2 > 155.0f) {
+		var_s0 = 1;
+		var_s1 = 0xC;
+		var_s2 = D_800A09A4_188A64;
+	} else {
+		var_s0 = 0;
+		var_s1 = 8;
+		var_s2 = D_800A09BC_188A7C;
+	}
+
+	if (func_80080DA8_168E68(arg1, arg0) < 0) {
+		sp50 = 1;
+	} else {
+		sp50 = 0;
+	}
+
+	sp5F = func_800811DC_16929C(arg0, var_s0);
+	temp_v0 = func_800811DC_16929C(arg1, var_s0);
+
+	sp58 = 1;
+	temp_x = (s16)(D_800E6A78.unk4C / 96.0f);
+	temp_y = (s16)(D_800E6A78.unk54 / 96.0f);
+
+	sp2C = sp5F;
+	var_a3 = (s8) sp2C;
+
+	count = 0;
+	done = 0;
+	do {
+		count = (count + 1) & 0xFF;
+		x = (s16)(var_s2[var_a3].unk0 + temp_x);
+		if (x <= 0 || D_800E6460 < x) {
+			sp58 = 0;
+			break;
+		}
+		y = (s16)(var_s2[var_a3].unk1 + temp_y);
+		if (y <= 0 || D_800E6464 < y) {
+			sp58 = 0;
+			break;
+		}
+		if (D_800E6468[(D_800E6460 + 2) * y + x] != 0xFF) {
+			sp58 = 0;
+			break;
+		}
+		if (var_a3 == (s8)(temp_v0 & 0xFF)) {
+			done = 0;
+			break;
+		}
+		var_a3 = (s8)((var_a3 + 1) % var_s1);
+	} while (!done);
+
+	var_a3 = (s8) sp2C;
+	sp54 = 1;
+	count = 0;
+	do {
+		count = (count + 1) & 0xFF;
+		x = (s16)(var_s2[var_a3].unk0 + temp_x);
+		if (x <= 0 || D_800E6460 < x) {
+			sp54 = 0;
+			break;
+		}
+		y = (s16)(var_s2[var_a3].unk1 + temp_y);
+		if (y <= 0 || D_800E6464 < y) {
+			sp54 = 0;
+			break;
+		}
+		if (D_800E6468[(D_800E6460 + 2) * y + x] != 0xFF) {
+			sp54 = 0;
+			break;
+		}
+		if (var_a3 == (s8)(temp_v0 & 0xFF)) {
+			break;
+		}
+		if (var_a3 == 0) {
+			var_a3 = (s8) var_s1;
+		}
+		var_a3 = (s8)((var_a3 - 1) % var_s1);
+	} while (!done);
+
+	if ((sp54 != 0) && (sp58 != 0)) {
+		if (sp50 != 0) {
+			return 1;
+		} else {
+			return 2;
+		}
+	} else if (sp58 != 0) {
+		return 1;
+	} else if (sp54 != 0) {
+		return 2;
+	} else {
+		return 0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800813B4_169474.s")
+#endif
 
 // CURRENT(2495)
 #ifdef NON_MATCHING
