@@ -247,7 +247,106 @@ void func_800808D0_168990(void) {
 	D_800E6A74 = 0x4000 - D_800E73E0;
 }
 
+#ifdef NON_MATCHING
+void func_80080A38_168AF8(void) {
+	f32 temp_f0;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s32 pad6;
+	s32 pad7;
+	s32 pad8;
+	s32 pad9;
+	f32 temp_f2;
+	f32 temp_f14;
+	f32 temp_f12;
+
+	if (D_800E7390 == 0) {
+		D_800E73F0.x = D_800E6AC4 - 96.0f;
+	}
+
+	D_800E73F0.y = 40.0f;
+	D_800E73F0.z = D_800E6ACC - 96.0f;
+	temp_f14 = D_800E73F0.x - D_800E7410.x;
+	temp_f0 = D_800E73F0.y - D_800E7410.y;
+	temp_f2 = D_800E73F0.z - D_800E7410.z;
+	temp_f0 = sqrtf((temp_f14 * temp_f14) + (temp_f0 * temp_f0) + (temp_f2 * temp_f2));
+
+	if (D_800A0964_188A24 != 0) {
+		D_800A0980_188A40 = 192.0f;
+	} else {
+		D_800A0980_188A40 = 40.0f;
+	}
+
+	if (D_800E73E8 <= temp_f0) {
+		temp_f12 = temp_f0 - D_800E73E8;
+	} else {
+		temp_f12 = -(temp_f0 - D_800E73E8);
+	}
+
+	if ((f64) temp_f12 > 0.5) {
+		D_800E73E8 = temp_f0;
+	}
+
+	if (D_800E73E8 > 192.0f) {
+		D_800E73E8 = 192.0f;
+	} else if (D_800E73E8 < 96.0f) {
+		D_800E73E8 = 96.0f;
+	}
+
+	if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_C_UP) != 0) && !(D_800E65A8 & 2)) {
+		if (D_800A0964_188A24 != 0) {
+			D_800A0964_188A24 = 0;
+		} else {
+			D_800A0964_188A24 = 1;
+		}
+	}
+
+	if (D_800A0964_188A24 != 0) {
+		if (D_800E739C == D_800E73A0) {
+			D_800E73A4 = D_800E739C;
+		}
+	} else {
+		D_800E73A8 = 0;
+	}
+
+	if (D_800A0964_188A24 != 0) {
+		D_800E73E0 = D_800E739C;
+	} else {
+		D_800E73E0 = func_80003824_4424(temp_f2, temp_f14);
+	}
+
+	D_800E73E4 = func_80003680_4280(D_800A0980_188A40 / D_800E73E8);
+
+	if (D_800E7480 == 0) {
+		func_80080E28_168EE8();
+	}
+
+	if (((D_800A0964_188A24 == 0) && (D_8004758B < 0)) || (D_800E7480 != 0)) {
+		func_8008247C_16A53C();
+	}
+
+	D_800E73F0.x = D_800E6AC4 - 96.0f;
+	func_80080190_168250(&D_800E7410, &D_800E73F0, D_800E73E0, D_800E73E4, D_800E73E8);
+
+	if (D_800A0964_188A24 == 0) {
+		func_80080FD8_169098();
+	}
+
+	D_800E7410.y = D_800E73F0.y + D_800A0980_188A40;
+	D_8008DDF4_175EB4 = D_800E7410.x;
+	D_8008DDF8_175EB8 = D_800E7410.y;
+	D_8008DDFC_175EBC = D_800E7410.z;
+	D_800E659C = D_800E73F0.x;
+	D_800E65A0 = D_800E73F0.y;
+	D_800E65A4 = D_800E73F0.z;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080A38_168AF8.s")
+#endif
 
 s32 func_80080DA8_168E68(s32 arg0, s32 arg1) {
 	s32 v1;
