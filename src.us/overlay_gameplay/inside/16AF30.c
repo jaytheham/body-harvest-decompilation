@@ -986,7 +986,73 @@ s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008506C_16D12C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800852B8_16D378(s32 arg0) {
+	extern f64 D_800A5470_18D530;
+	extern f64 D_800A5478_18D538;
+	extern f64 D_800A5480_18D540;
+
+	u8 slot;
+	s16 effect;
+	s16 child;
+	s16 next;
+	s32 temp_t6;
+	Unk84EECEffect *base;
+	Unk84EECEffect *entry;
+	u8 *baseBytes;
+	Vec3f sp44;
+	Vec3f sp38;
+
+	temp_t6 = arg0 & 0xFF;
+	slot = temp_t6;
+	effect = *(s16 *)(&D_800FB6FE + (slot * 0xC));
+	base = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+	next = base->unk4;
+	child = func_80083390_16B450(slot);
+	if (child != -3) {
+		entry = &((Unk84EECEffect *)&D_800FB7B0)[child];
+		entry->unk8 = base->unk8;
+		entry->unkA = base->unkA;
+		entry->unkC = base->unkC;
+
+		baseBytes = (u8 *)&((Unk84EECEffect *)&D_800FB7B0)[next];
+		entry->unk11 = baseBytes[0x10];
+
+		entry->unk2 = (func_800038E0_44E0() % (base->unk2 * 2)) + base->unk2;
+
+		sp44.x = (f32)(s8)baseBytes[8];
+		sp44.y = (f32)(s8)baseBytes[9];
+		sp44.z = (f32)(s8)baseBytes[0xA];
+		func_80083014_16B0D4(&sp44, &sp44);
+
+		sp38.x = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[0xC]) / D_800A5470_18D530);
+		if ((func_800038E0_44E0() % 21) < 10) {
+			sp38.x = -sp38.x;
+		}
+		sp38.x += sp44.x;
+
+		sp38.y = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[0xC]) / D_800A5478_18D538);
+		if ((func_800038E0_44E0() % 21) < 10) {
+			sp38.y = -sp38.y;
+		}
+		sp38.y += sp44.y;
+
+		sp38.z = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[0xC]) / D_800A5480_18D540);
+		if ((func_800038E0_44E0() % 21) < 10) {
+			sp38.z = -sp38.z;
+		}
+		sp38.z += sp44.z;
+
+		func_80083014_16B0D4(&sp38, &sp38);
+
+		((u8 *)entry)[0xA] = (s8)((s32)(baseBytes[0xB] / 4) * sp38.x);
+		((u8 *)entry)[0xB] = (s8)((s32)(baseBytes[0xB] / 4) * sp38.y);
+		((u8 *)entry)[0xC] = (s8)((s32)(baseBytes[0xB] / 4) * sp38.z);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800852B8_16D378.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(280)
