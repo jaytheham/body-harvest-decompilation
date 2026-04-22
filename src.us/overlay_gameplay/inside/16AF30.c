@@ -2106,7 +2106,177 @@ void func_800881C0_170280(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800881C0_170280.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80088654_170714(void) {
+	typedef struct {
+		s16 unk0;
+		s16 unk2;
+		s16 unk4;
+		s16 unk6;
+		s16 unk8;
+		s16 unkA;
+		s16 unkC;
+		s8 unkE;
+		s8 unkF;
+		s8 unk10;
+		u8 unk11;
+		u8 unk12;
+		u8 unk13;
+		u8 unk14;
+	} EffectEntry;
+
+	Gfx *dl;
+	Vtx *vtx;
+	EffectEntry *effect;
+	f32 f2, f12, f18, f20;
+	s16 effectIdx;
+
+	// Initialize display list
+	dl = D_8005BB2C;
+	effectIdx = D_800FB78E;
+	D_8005BB2C = dl + 1;
+	gSPClearGeometryMode(dl, G_ZBUFFER | G_FOG);
+	
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	gDPSetCombineLERP(dl, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	gDPSetTextureImage(dl, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)&D_100DE00 & 0x1FFFFFFF));
+	
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	gDPSetTile(dl, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	gDPLoadSync(dl);
+	
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	gDPLoadBlock(dl, G_TX_LOADTILE, 0, 0, 255, 1024);
+	
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	gDPPipeSync(dl);
+	
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	gDPSetTile(dl, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	gDPSetTileSize(dl, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
+
+	if ((effectIdx != -5) && (effectIdx != -6)) {
+		while ((effectIdx != -5) && (effectIdx != -6)) {
+			effect = &((EffectEntry *)&D_800FB7B0)[effectIdx];
+			
+			// Read color components
+			f2 = (f32)(u8)effect->unk11;
+			if ((s8)effect->unk11 < 0) {
+				f2 += 4294967296.0f;
+			}
+			
+			f12 = (f32)(u8)effect->unk12;
+			if ((s8)effect->unk12 < 0) {
+				f12 += 4294967296.0f;
+			}
+			
+			f18 = (f32)(u8)effect->unk13;
+			if ((s8)effect->unk13 < 0) {
+				f18 += 4294967296.0f;
+			}
+			
+			f20 = (f32)(u8)effect->unk14;
+			if ((s8)effect->unk14 < 0) {
+				f20 += 4294967296.0f;
+			}
+			
+			vtx = D_8005BB34;
+			
+			// First vertex
+			vtx->v.ob[0] = effect->unk8;
+			vtx->v.ob[1] = effect->unkA;
+			vtx->v.ob[2] = effect->unkC;
+			vtx->v.flag = 0;
+			vtx->v.tc[0] = 0x800;
+			vtx->v.tc[1] = 0;
+			vtx->v.cn[0] = 0xFF;
+			vtx->v.cn[1] = 0xE6;
+			vtx->v.cn[2] = 0x96;
+			vtx->v.cn[3] = 0x64;
+			vtx++;
+			D_8005BB34 = vtx;
+			
+			// Second vertex
+			vtx->v.ob[0] = effect->unk8;
+			vtx->v.ob[1] = effect->unk2 + effect->unkA;
+			vtx->v.ob[2] = effect->unkC;
+			vtx->v.flag = 0;
+			vtx->v.tc[0] = 0;
+			vtx->v.tc[1] = 0x800;
+			vtx->v.cn[0] = 0xFF;
+			vtx->v.cn[1] = 0xDC;
+			vtx->v.cn[2] = 0x78;
+			vtx->v.cn[3] = 0xB4;
+			vtx++;
+			D_8005BB34 = vtx;
+			
+			// Third vertex
+			vtx->v.ob[0] = (s16)(s32)((f32)effect->unk8 + (f2 * D_800FB6A8[0]));
+			vtx->v.ob[1] = (s16)(s32)((f32)effect->unkA + f12);
+			vtx->v.ob[2] = (s16)(s32)((f32)effect->unkC + (f2 * D_800FB6A8[2]));
+			vtx->v.flag = 0;
+			vtx->v.tc[0] = 0;
+			vtx->v.tc[1] = 0;
+			vtx->v.cn[0] = 0xFF;
+			vtx->v.cn[1] = 0xDC;
+			vtx->v.cn[2] = 0x78;
+			vtx->v.cn[3] = 0xB4;
+			vtx++;
+			D_8005BB34 = vtx;
+			
+			// Fourth vertex
+			vtx->v.ob[0] = (s16)(s32)((f32)effect->unk8 + (f18 * D_800FB6A8[3]));
+			vtx->v.ob[1] = (s16)(s32)((f32)effect->unkA + f20);
+			vtx->v.ob[2] = (s16)(s32)((f32)effect->unkC + (f18 * D_800FB6A8[5]));
+			vtx->v.flag = 0;
+			vtx->v.tc[0] = 0x800;
+			vtx->v.tc[1] = 0x800;
+			vtx->v.cn[0] = 0xFF;
+			vtx->v.cn[1] = 0xC8;
+			vtx->v.cn[2] = 0x64;
+			vtx->v.cn[3] = 0xB4;
+			vtx++;
+			D_8005BB34 = vtx;
+			
+			// Add geometry to command list
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			gSPVertex(dl, vtx - 4, 4, 0);
+			
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			gDPLoadSync(dl);
+			
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			gDPLoadTile(dl, G_TX_RENDERTILE, 0, 0, 31, 31);
+			
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			gDPPipeSync(dl);
+			
+			// Get next effect
+			effectIdx = effect->unk4;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088654_170714.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80088B9C_170C5C(void) {
