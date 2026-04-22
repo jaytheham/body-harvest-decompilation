@@ -617,12 +617,10 @@ void func_8007313C_15B1FC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007313C_15B1FC.s")
 #endif
 
-// CURRENT(820)
-#ifdef NON_MATCHING
 void func_80073200_15B2C0(void) {
 	if ((D_800E65D8 != 0) && !(D_800E65A8 & 8) && !(D_800E65A8 & 0x10)) {
 		D_800E65D8 = 0;
-		if (currentLevel == 1) {
+		if (currentLevel == LEVEL_GREECE) {
 			if ((D_800E6630 == 3) && (func_8000726C_7E6C((u64)9) != 0) && (buildingInteriorToLoadId == 6)) {
 				buildingInteriorToLoadId = 0xFD;
 				D_800E65A8 |= 0x100;
@@ -638,21 +636,20 @@ void func_80073200_15B2C0(void) {
 				D_800E65A8 |= 0x100;
 				return;
 			}
-		} else if (currentLevel == 3) {
+		} else if (currentLevel == LEVEL_AMERICA) {
 			if ((D_800E6630 == 6) && (func_8000726C_7E6C((u64)0x2B) != 0) && (buildingInteriorToLoadId == 0x28)) {
 				buildingInteriorToLoadId = 0xFD;
 				D_800E65A8 |= 0x100;
 				return;
 			}
-		} else if ((currentLevel == 4) && (D_800E6630 == 7) && (func_8000726C_7E6C((u64)0xD) != 0) && (buildingInteriorToLoadId == 0x3C)) {
+		} else if ((currentLevel == LEVEL_SIBERIA) && (D_800E6630 == 7) && (func_8000726C_7E6C((u64)0xD) != 0) && (buildingInteriorToLoadId == 0x3C)) {
 			buildingInteriorToLoadId = 0x45;
 			D_800E65A8 |= 0x100;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80073200_15B2C0.s")
-#endif
+
+void func_80073434_stub(void) {}
 
 #ifdef NON_MATCHING
 /* CURRENT(1240) */
