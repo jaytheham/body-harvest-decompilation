@@ -467,91 +467,89 @@ void func_80071D94_159E54(int arg0, unsigned char arg1, unsigned char arg2, unsi
 
 void func_8007279C_15A85C(void)
 {
-  if (D_800E65A8 & 0x40)
-  {
-	if (D_800E65E0 == D_800E65C8->unk10)
+	if (D_800E65A8 & 0x40)
 	{
-	  D_800E65A8 = 1;
-	  if ((*((s32 *) (&D_800E65C8->unk30))) != (-1))
-	  {
-		func_800153D8_15FD8(D_800E65C8->unk36);
-	  }
-	  D_800E65E0 = 0.0f;
-	  osSyncPrintf(&D_800A441C_18C4DC, &D_800E65E0);
-	  return;
+		if (D_800E65E0 == D_800E65C8->unk10)
+		{
+			D_800E65A8 = 1;
+			if ((*((s32 *) (&D_800E65C8->unk30))) != (-1))
+			{
+				func_800153D8_15FD8(D_800E65C8->unk36);
+			}
+			D_800E65E0 = 0.0f;
+			osSyncPrintf(&D_800A441C_18C4DC, &D_800E65E0);
+			return;
+		}
+		D_800E65DC += D_800E65C8->unk20;
+		D_800E65E0 += 1.0f;
+		do { } while (0);  
 	}
-	D_800E65DC += D_800E65C8->unk20;
-	D_800E65E0 += 1.0f;
- do { } while (0);  
-  }
-  else if (D_800E65A8 & 0x80)
-  {
-	if (D_800E65E0 == D_800E65C8->unk14)
+	else if (D_800E65A8 & 0x80)
 	{
-	  D_800E65A8 = 0x100;
-	  osSyncPrintf(&D_800A442C_18C4EC, &D_800E65E0);
-	  D_80068080 = 7;
-	  return;
+		if (D_800E65E0 == D_800E65C8->unk14)
+		{
+			D_800E65A8 = 0x100;
+			osSyncPrintf(&D_800A442C_18C4EC, &D_800E65E0);
+			D_80068080 = 7;
+			return;
+		}
+		if (D_800E65E0 == 0.0f)
+		{
+			func_800153D8_15FD8(D_800E65C8->unk32);
+		}
+		D_800E65DC += D_800E65C8->unk24;
+		D_800E65E0 += 1.0f;
 	}
-	if (D_800E65E0 == 0.0f)
-	{
-	  func_800153D8_15FD8(D_800E65C8->unk32);
-	}
-	D_800E65DC += D_800E65C8->unk24;
-	D_800E65E0 += 1.0f;
-  }
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007290C_15A9CC.s")
 
+// https://decomp.me/scratch/hiUtd
+// Matching but: rodata
 #ifdef NON_MATCHING
-/* CURRENT(130) */
-s32 func_80072E88_15AF48(void) {
-	u32 attrBits;
-
-	switch (currentLevel) {
-		case 1:
-			if (D_800E66A4 != 1) {
-				break;
-			}
-
-			attrBits = ((u32*) D_80050AE0)[D_80052540 * 6];
-			attrBits = (attrBits << 0x1A) >> 0x1C;
-			if (attrBits != 5) {
-				break;
-			}
-			return 1;
-
-		case 2:
-		case 3:
-		case 4:
-			attrBits = D_800E66A4;
-			if (attrBits == 1) {
-				attrBits = ((u32*) D_80050AE0)[D_80052540 * 6];
-				attrBits = (attrBits << 0x1A) >> 0x1C;
-				if (attrBits == 8) {
-					return 1;
-				}
-			}
-
-			if (attrBits != 2) {
-				break;
-			}
-
-			attrBits = ((u32*) D_80050AE0)[D_80052540 * 6];
-			attrBits = (attrBits << 0x1A) >> 0x1C;
-			if ((attrBits != 0xA) && (attrBits != 6)) {
-				break;
-			}
-			return 1;
-
-		case 5:
-			return 1;
+s32 func_80072E88_15AF48(void)
+{
+  switch (currentLevel)
+  {
+	case 1:
+	  if (D_800E66A4 != 1)
+	{
+	  break;
 	}
+		
+	  if ((D_80050AE0[D_80052540][0] << 0x1A) >> 0x1C != 5)
+	{
+	  break;
+	}
+	  return 1;
 
-	return 0;
+	case 2:
+	case 3:
+	case 4:
+	  if (D_800E66A4 == 1)
+	{
+	  if ((D_80050AE0[D_80052540][0] << 0x1A) >> 0x1C == 8)
+	  {
+		return 1;
+	  }
+	}
+	  if (D_800E66A4 != 2)
+	{
+	  break;
+	}
+	  
+	  if (((D_80050AE0[D_80052540][0] << 0x1A) >> 0x1C != 0xA) && ((D_80050AE0[D_80052540][0] << 0x1A) >> 0x1C != 6))
+	{
+	  break;
+	}
+	  return 1;
+
+	case 5:
+	  return 1;
+  }
+
+  return 0;
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80072E88_15AF48.s")
 #endif
@@ -574,25 +572,21 @@ void func_80072FB4_15B074(void) {
 	func_8008B474_173534();
 }
 
-#ifdef NON_MATCHING
-/* CURRENT(2568) */
-void func_80073058_15B118(void) {
+void func_80073058_15B118(void)
+{
 	s32 i;
-
-	for (i = 0; i < D_800E668C; i++) {
-		u8 entryIdx = D_800E66A8[i].unk0;
-		u8 flags = D_800E66A8[i].unk2E;
-		s32 objFlags = D_800E65BC[entryIdx].unk44;
-
-		if (((flags & 1) || (objFlags & 0x40000000)) && (objFlags & 0x20000000)) {
-			D_800E66A8[i].unk2E = flags & ~1;
+	s32 entryIdx;
+	for (i = 0; i < D_800E668C; i++)
+	{
+		entryIdx = D_800E66A8[i].unk0;
+		if (((D_800E66A8[i].unk2E & 1) || (D_800E65BC[entryIdx].unk40 & 0x40000000)) &&
+			(D_800E65BC[entryIdx].unk40 & 0x20000000))
+		{
+			D_800E66A8[i].unk2E &= -2;
 			func_80077A5C_15FB1C(i, entryIdx);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80073058_15B118.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_8007313C_15B1FC(void) {
