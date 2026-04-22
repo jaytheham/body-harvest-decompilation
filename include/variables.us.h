@@ -2223,7 +2223,7 @@ extern u8 D_800A5248_18D308[];
 extern u8 D_800A5298_18D358[];
 extern s16 D_800FB6A0;
 extern s16 D_800FB6A2;
-extern Vec3f D_800FB6A8;
+extern f32 D_800FB6A8[];
 extern Vec3f D_800FB6B4;
 extern Vec3f D_800FB6C0;
 extern Vec3f D_800FB6D0;
