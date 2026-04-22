@@ -2888,7 +2888,208 @@ void func_8008A5E4_1726A4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A5E4_1726A4.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_8008A704_1727C4(void) {
+	u8 count;
+	u8 i;
+	UnkFC8E8Entry *entry;
+	Gfx *dl;
+	s8 *tableA;
+	u8 t5;
+	s8 unk5;
+	s8 t8;
+	s8 t7;
+	u8 t9;
+	s32 mult;
+	s32 t3;
+	s32 t4;
+	s32 v0;
+	s32 t0;
+	s32 v1;
+	s8 field4;
+
+	count = D_800FCA78;
+	i = 0;
+
+	if ((s32)count <= 0) {
+		return;
+	}
+
+	do {
+		entry = &(&D_800FC8E8)[i];
+		
+		if (entry->unkA == 0) {
+			i++;
+			continue;
+		}
+		
+		if (entry->unkF != 0) {
+			count--;
+			continue;
+		}
+		
+		t5 = entry->unkC;
+		if ((t5 == 0xFF) || (entry->unkE == 0xFF)) {
+			count--;
+			continue;
+		}
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0;
+		dl->words.w1 = 0xE7000000;
+
+		tableA = &D_800A2690_18A750[t5 * 8];
+		unk5 = tableA[5];
+
+		if (unk5 == 0) {
+			// First graphics path
+			t8 = tableA[7];
+			t7 = tableA[6];
+			t9 = entry->unkE;
+			mult = t8 * t9 * t7 / 2;
+			
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xFD900000;
+			dl->words.w1 = (*(&D_800A2698_18A758[t5 * 4]) + mult) & 0x1FFFFFFF;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xFF327F3F;
+			dl->words.w1 = 0xFCFF99FF;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF5900000;
+			dl->words.w1 = 0x07080200;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xE6000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF3000000;
+
+			// Calculate parameters
+			t3 = ((s32)((t8 * t7) + 3) >> 2) - 1;
+			t4 = (t3 < 0x7FF) ? t3 : 0x7FF;
+			
+			v0 = t7 / 16;
+			t0 = (v0 <= 0) ? 1 : v0;
+			v1 = (v0 <= 0) ? 1 : v0;
+			
+			dl->words.w1 = (((s32)(t0 + 0x7FF) / v1) & 0xFFF) | 0x07000000 | ((t4 & 0xFFF) << 0xC);
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xE7000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = (s32)(((((s32)(((s8)tableA[6] >> 1) + 7) >> 3) & 0x1FF) << 9) | 0xF5800000);
+			dl->words.w1 = 0x80200;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF2000000;
+			dl->words.w1 = (((tableA[7] - 1) * 4) & 0xFFF) | ((((tableA[6] - 1) * 4) & 0xFFF) << 0xC);
+		} else if (unk5 == 1) {
+			// Second graphics path
+			t8 = tableA[7];
+			t7 = tableA[6];
+			t9 = entry->unkE;
+			mult = t8 * t9 * t7;
+			
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xFC40C281;
+			dl->words.w1 = 0xFF87FFFF;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xFD700000;
+			dl->words.w1 = (*(&D_800A2698_18A758[t5 * 4]) + mult) & 0x1FFFFFFF;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF5700000;
+			dl->words.w1 = 0x07080200;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xE6000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF3000000;
+
+			t3 = ((s32)((t8 * t7) + 1) >> 1) - 1;
+			t4 = (t3 < 0x7FF) ? t3 : 0x7FF;
+			
+			v0 = t7 / 8;
+			t0 = (v0 <= 0) ? 1 : v0;
+			v1 = (v0 <= 0) ? 1 : v0;
+			
+			dl->words.w1 = (((s32)(t0 + 0x7FF) / v1) & 0xFFF) | 0x07000000 | ((t4 & 0xFFF) << 0xC);
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xE7000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = (s32)(((((s32)(tableA[6] + 7) >> 3) & 0x1FF) << 9) | 0xF5680000);
+			dl->words.w1 = 0x80200;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF2000000;
+			dl->words.w1 = (((tableA[7] - 1) * 4) & 0xFFF) | ((((tableA[6] - 1) * 4) & 0xFFF) << 0xC);
+		}
+
+		D_800FB6E5 = tableA[6];
+		D_800FB6E6 = tableA[7];
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+
+		// Convert entry fields to floats
+		D_800FB6D0.x = (f32)entry->unk0;
+		D_800FB6D0.y = (f32)entry->unk2;
+		D_800FB6D0.z = (f32)entry->unk4;
+		D_800FB6DC = (s8 *)entry + 6;
+		D_800FB6E0 = (f32)entry->unkA;
+		D_800FB6E4 = entry->unkD;
+
+		field4 = tableA[4];
+		
+		switch (field4) {
+		case 0:
+			func_8008A1D8_172298();
+			break;
+		case 2:
+			func_80089E54_171F14();
+			break;
+		default:
+			osSyncPrintf((char *)0x800A53D4);
+			break;
+		}
+
+		count--;
+		i++;
+	} while ((count & 0xFF) > 0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A704_1727C4.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_8008AD40_172E00(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u16 arg4) {
