@@ -4011,7 +4011,137 @@ void func_8007A818_1628D8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A818_1628D8.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_8007A8AC_16296C(s32 arg0) {
+	Unk800E66A8* entry;
+	Unk80070F7CObj* room;
+	Unk8008DED0Entry* dlEntry;
+	s16* interiorFlagsPtr;
+	s32 changed;
+	s32 eventId;
+	s32 level;
+	u8 type;
+
+	entry = &D_800E66A8[D_800E662C];
+	changed = 0;
+	room = &D_800E65BC[entry->unk0];
+
+	if (room->unk40 & 8) {
+		if (entry->unk2E & 1) {
+			if (room->unk40 & 0x80) {
+				D_800E6614++;
+			} else {
+				D_800E65FC++;
+			}
+
+			if (room->unk40 & 0x40) {
+				D_800E6604++;
+			}
+		} else {
+			if (room->unk40 & 0x80) {
+				D_800E6614--;
+			} else {
+				D_800E65FC--;
+			}
+
+			if (room->unk40 & 0x40) {
+				D_800E6604--;
+				if (D_800E6604 == 0) {
+					D_800E6608 = 0;
+				}
+			}
+		}
+
+		if (D_800E6628 == 1) {
+			func_80071304_1593C4();
+			entry = &D_800E66A8[D_800E662C];
+		}
+	}
+
+	type = entry->unk2C & 3;
+	if (type == 3) {
+		arg0 = func_8007B2F0_1633B0(D_800E662C);
+	} else if (type == 2) {
+		if (entry->unk2E & 1) {
+			eventId = (entry->unk2C & 0xFC) >> 2;
+			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
+			if (!(*interiorFlagsPtr & (1 << D_800E662C))) {
+				if ((func_8007A634_1626F4(eventId) == 0) && (func_8007A6DC_16279C(eventId) == 0)) {
+					osSyncPrintf(D_800A4958_18CA18, eventId, D_800E662C);
+					osSyncPrintf(D_800A4978_18CA38, D_80048026);
+					osSyncPrintf(D_800A498C_18CA4C, buildingInteriorToLoadId);
+					func_8007A784_162844(eventId);
+					func_8007A818_1628D8(eventId);
+
+					dlEntry = &D_8008DED0_175F90[eventId];
+					if ((currentLevel != 2) || (dlEntry->unk0 != (Gfx*)0x0F019540)) {
+						D_800E65A8 |= 0x10;
+						func_8007B1E0_1632A0(D_800E662C);
+					}
+
+					if (dlEntry->unk4 == 1) {
+						interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
+						*interiorFlagsPtr |= (1 << D_800E662C);
+					}
+
+					changed = 1;
+					if (eventId == 1) {
+						D_80052B34->unk1C += vehicleSpecs[D_80052B34->unk1A].unk3A / 4;
+						if ((u16)vehicleSpecs[D_80052B34->unk1A].unk3A < D_80052B34->unk1C) {
+							D_80052B34->unk1C = vehicleSpecs[D_80052B34->unk1A].unk3A;
+						}
+					} else if (eventId == 0x10) {
+						D_80052B34->unk1C = vehicleSpecs[D_80052B34->unk1A].unk3A;
+						if ((u16)vehicleSpecs[D_80052B34->unk1A].unk3A < D_80052B34->unk1C) {
+							D_80052B34->unk1C = vehicleSpecs[D_80052B34->unk1A].unk3A;
+						}
+					} else {
+						func_80008C44_9844(eventId);
+						osSyncPrintf(D_800A49A0_18CA60, eventId);
+					}
+
+					func_8008DC44_175D04(eventId);
+				}
+			}
+		}
+	} else if (type == 1) {
+		eventId = (entry->unk2C & 0xFC) >> 2;
+		if (entry->unk2E & 1) {
+			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
+			*interiorFlagsPtr |= (1 << D_800E662C);
+
+			if (func_8000726C_7E6C((u64)(s64)eventId) == 0) {
+				func_800072CC_7ECC((u64)(s64)eventId);
+				if (eventId < 0xB) {
+					level = currentLevel;
+					if (D_8008DFA0_176060[(level * 0x2C) + eventId] != NULL) {
+						changed = 1;
+						D_800E65A8 |= 0x10;
+						func_8007B1E0_1632A0(D_800E662C);
+					}
+
+					if (!((level == 1) && (eventId == 9))) {
+						func_8008DCF4_175DB4(eventId);
+					}
+				} else if (func_80008478_9078() != 0) {
+					D_800E65A8 |= 0x100;
+					D_800E65B8 = 1;
+				}
+			}
+		}
+	}
+
+	if (arg0 != 0) {
+		if (changed != 0) {
+			func_800153D8_15FD8(0xC5);
+		} else {
+			func_800137E0();
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A8AC_16296C.s")
+#endif
 
 // CURRENT(7458)
 #ifdef NON_MATCHING
