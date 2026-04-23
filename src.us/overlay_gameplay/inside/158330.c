@@ -3020,7 +3020,287 @@ void func_80077B40_15FC00(s32 arg0, s32 arg1) {
 	func_80077A5C_15FB1C(arg0, arg1);
 }
 
+#ifdef NON_MATCHING
+void func_80077B94_15FC54(void) {
+	f32 sp4C;
+	Unk800E66A8 *var_s0;
+	Unk80070F7CObj *var_t0;
+	f32 temp_f0;
+	f32 var_f0;
+	s16 temp_a1;
+	s32 temp_a0;
+	s32 temp_a0_2;
+	s32 temp_s1;
+	s32 temp_s4;
+	s32 temp_t5;
+	s32 temp_t7;
+	s32 temp_t9;
+	s32 temp_v0_5;
+	s32 temp_v1;
+	s32 temp_v1_2;
+	s32 var_s5;
+	u16 temp_t2;
+	u16 temp_v0_6;
+	u16 temp_v0_7;
+	u8 temp_s3;
+	u8 temp_t3;
+	u8 temp_t7_2;
+	u8 temp_v0;
+	u8 temp_v0_2;
+	u8 temp_v0_3;
+	u8 temp_v0_4;
+	u8 temp_v0_8;
+	u8 temp_v0_9;
+
+	temp_a0 = D_800E65A8;
+	if (temp_a0 & 0x10) {
+		if (D_800E6638 != 0) {
+			D_800E664C -= 1;
+			D_800E6634 = (D_800E6634 + 0xE38) & 0xFFFF;
+			if (D_800E664C == 0) {
+				temp_t5 = temp_a0 & ~0x10;
+				temp_t7 = temp_t5 & ~8;
+				temp_t9 = temp_t7 & ~4;
+				D_800E65A8 = temp_t5;
+				D_800E65A8 = temp_t7;
+				D_800E65A8 = temp_t9;
+				D_800E6638 = 0;
+				D_800E65A8 = temp_t9 & ~0x20;
+				func_8007D52C_1655EC();
+			}
+		} else {
+			D_800E6650.x += D_800E6640.x;
+			D_800E664C -= 1;
+			D_800E6650.y += D_800E6640.y;
+			D_800E6650.z += D_800E6640.z;
+			if (D_800E664C == 0) {
+				D_800E6638 = 1;
+				D_800E664C = 0x1E;
+				D_800E6634 = 0;
+			}
+		}
+	}
+
+	var_s5 = 0;
+	if (D_800E668C > 0) {
+		var_s0 = D_800E66A8;
+		do {
+			temp_s3 = var_s0->unk0;
+			temp_v0 = var_s0->unk2D;
+			temp_s1 = temp_v0 & 0x3F;
+			if (temp_s3 == 0x1D) {
+				if (func_8000726C_7E6C(temp_s1) != 0) {
+					if (((s32) (D_800E6AC4 / 96.0f) == var_s0->unk2) && ((s32) (D_800E6ACC / 96.0f) == var_s0->unk6)) {
+						if (var_s0->unk2C != 0) {
+							temp_v0_2 = var_s0->unk2E;
+							if (!(temp_v0_2 & 1)) {
+								var_s0->unk2E = (u8) (temp_v0_2 | 1);
+								D_800E662C = var_s5;
+								func_8007A8AC_16296C(0);
+							}
+						}
+					} else {
+						var_s0->unk2E = (u8) (var_s0->unk2E & 0xFFFE);
+					}
+				}
+			} else {
+				var_f0 = 0.0f;
+				if ((temp_s1 != 0) && (temp_v0 & 0x40)) {
+					sp4C = 0.0f;
+					var_f0 = 0.0f;
+					if (func_8000726C_7E6C(temp_s1) != 0) {
+						temp_v0_3 = var_s0->unk2E;
+						temp_t3 = temp_v0_3 | 1;
+						if (!(temp_v0_3 & 1)) {
+							var_s0->unk2E = temp_t3;
+							var_s0->unk2E = (u8) (temp_t3 | 2);
+						}
+					} else {
+						temp_v0_4 = var_s0->unk2E;
+						temp_t7_2 = temp_v0_4 & 0xFFFE;
+						if (temp_v0_4 & 1) {
+							var_s0->unk2E = temp_t7_2;
+							var_s0->unk2E = (u8) (temp_t7_2 | 2);
+						}
+					}
+				}
+				temp_v0_5 = (s32) D_800E65BC;
+				if (var_s0->unk2E & 2) {
+					temp_v1 = ((Unk80070F7CObj *) (temp_v0_5 + (temp_s3 * 0x48)))->unk40;
+					if (!(temp_v1 & 0x40000000)) {
+						if (temp_v1 & 0x20000000) {
+							sp4C = 0.0f;
+							func_80077B40_15FC00(var_s5, temp_s3);
+						} else {
+							sp4C = 0.0f;
+							func_800775F0_15F6B0(var_s5, temp_s3);
+						}
+						var_f0 = sp4C;
+					}
+				}
+				temp_s4 = temp_s3 * 0x48;
+				var_t0 = (Unk80070F7CObj *) (temp_v0_5 + temp_s4);
+				if (var_t0->unk40 & 0x7E00) {
+					if (var_s0->unk2E & 1) {
+						temp_v0_6 = (u16) var_s0->unk10;
+						if ((s32) temp_v0_6 < (s32) var_t0->unk1E) {
+							var_f0 = var_t0->unk20;
+							var_s0->unk10 = (u16) (temp_v0_6 + 1);
+						}
+						if (var_t0->unk40 & 0x20000) {
+							var_s0->unk10 = 0;
+						}
+						if (var_t0->unk40 & 0x40000) {
+							var_f0 = 0.0f;
+						}
+					} else {
+						temp_v0_7 = (u16) var_s0->unk10;
+						if ((s32) temp_v0_7 > 0) {
+							var_s0->unk10 = (u16) (temp_v0_7 - 1);
+							var_f0 = -var_t0->unk20;
+						}
+						if (var_t0->unk40 & 0x40000) {
+							var_s0->unk10 = var_t0->unk1E;
+						}
+						if (var_t0->unk40 & 0x20000) {
+							var_f0 = 0.0f;
+						}
+					}
+					if (var_f0 != 0.0f) {
+						temp_a0_2 = var_t0->unk40 & 0x7E00;
+						if ((var_t0->unk40 & 0x01000000) && (D_80047970[buildingInteriorToLoadId] & (1 << var_s5))) {
+							var_f0 = -var_f0;
+						}
+						switch (temp_a0_2) {
+							case 0x200:
+								var_s0->unk14 = var_s0->unk14 + var_f0;
+								break;
+							case 0x400:
+								var_s0->unk18 = var_s0->unk18 + var_f0;
+								break;
+							case 0x800:
+								var_s0->unk1C = var_s0->unk1C + var_f0;
+								break;
+							case 0x1000:
+								if (!(var_t0->unk40 & 0x100)) {
+									temp_v0_8 = var_s0->unk8;
+									switch (temp_v0_8) {
+										case 0:
+											var_s0->unk20 = var_s0->unk20 + var_f0;
+											break;
+										case 1:
+											var_s0->unk28 = var_s0->unk28 + var_f0;
+											break;
+										case 2:
+											var_s0->unk20 = var_s0->unk20 - var_f0;
+											break;
+										case 3:
+											var_s0->unk28 = var_s0->unk28 - var_f0;
+											break;
+									}
+								} else {
+									var_s0->unk20 = var_s0->unk20 + var_f0;
+								}
+								break;
+							case 0x2000:
+								var_s0->unk24 = var_s0->unk24 + var_f0;
+								if (temp_s3 == 0x1E) {
+									temp_f0 = (f32) var_s0->unk4 + var_s0->unk24;
+									if ((temp_f0 > 0.0f) && (temp_f0 < 60.0f)) {
+										func_80015388_15F88(0x138);
+										var_t0 = &D_800E65BC[(u8) temp_s3];
+									}
+								}
+								break;
+							case 0x4000:
+								if (!(var_t0->unk40 & 0x100)) {
+									temp_v0_9 = var_s0->unk8;
+									switch (temp_v0_9) {
+										case 0:
+											var_s0->unk28 = var_s0->unk28 + var_f0;
+											break;
+										case 1:
+											var_s0->unk20 = var_s0->unk20 - var_f0;
+											break;
+										case 2:
+											var_s0->unk28 = var_s0->unk28 - var_f0;
+											break;
+										case 3:
+											var_s0->unk20 = var_s0->unk20 + var_f0;
+											break;
+									}
+								} else {
+									var_s0->unk28 = var_s0->unk28 + var_f0;
+								}
+								break;
+						}
+					} else {
+						if (var_t0->unk40 & 0x80000) {
+							var_s0->unk2E = (u8) (var_s0->unk2E ^ 1);
+						}
+						if ((var_t0->unk40 & 0x200000) && (var_s0->unk2E & 1) && (var_s0->unkE != -1)) {
+							var_s0->unkE = -1;
+						}
+						func_800787E8_1608A8(temp_s3 & 0xFF, var_s5 & 0xFF);
+						var_t0 = &D_800E65BC[(u8) temp_s3];
+					}
+				}
+				temp_a1 = var_t0->unk14;
+				if (temp_a1 != -1) {
+					temp_v1_2 = var_t0->unk40;
+					if (temp_v1_2 & 0x100000) {
+						if ((var_s0->unk2D & 0x40) && (temp_s1 != 0) && !(var_t0->unk44 & 8)) {
+							if (func_8000726C_7E6C(temp_s1) != 0) {
+								if (var_t0->unk40 & 0x200000) {
+									if ((s32) var_s0->unkC < (s32) var_t0->unk16) {
+										func_80014A3C_1563C((s32) var_s0, var_t0->unk14, 0, 0, -1.0f);
+										var_s0->unkC = (s16) (var_s0->unkC + 1);
+									}
+								} else {
+									func_80014A3C_1563C((s32) var_s0, var_t0->unk14, 0, 0, -1.0f);
+								}
+							}
+						} else if (var_s0->unk2E & 1) {
+							if (!(temp_v1_2 & 0x200000)) {
+								if ((currentLevel != 1) || (D_800E66A4 != 3) || (temp_s4 != 0x3F0)) {
+									func_80014A3C_1563C((s32) var_s0, temp_a1, 0, 0, -1.0f);
+								}
+								func_800787E8_1608A8(temp_s3 & 0xFF, var_s5 & 0xFF);
+							} else if ((s32) var_s0->unkC < (s32) var_t0->unk16) {
+								func_80014A3C_1563C((s32) var_s0, temp_a1, 0, 0, -1.0f);
+								temp_t2 = var_s0->unkC + 1;
+								var_s0->unkC = (s16) temp_t2;
+								if (((temp_t2 & 0xFFFF) + 1) == var_t0->unk16) {
+									func_800787E8_1608A8(temp_s3 & 0xFF, var_s5 & 0xFF);
+									if (!(var_t0->unk40 & 0x800000)) {
+										var_s0->unkC = 0;
+										var_s0->unk2E = (u8) (var_s0->unk2E & 0xFFFE);
+									}
+								}
+							}
+						} else {
+							if ((currentLevel == 1) && (D_800E66A4 == 3) && (temp_s4 == 0x3F0)) {
+								func_80014A3C_1563C((s32) var_s0, temp_a1, 0, 0, -1.0f);
+							}
+							func_800787E8_1608A8(temp_s3 & 0xFF, var_s5 & 0xFF);
+						}
+					} else if (var_s0->unk2E & 2) {
+						func_800153D8_15FD8(temp_a1);
+						func_800787E8_1608A8(temp_s3 & 0xFF, var_s5 & 0xFF);
+					}
+				} else {
+					func_800787E8_1608A8(temp_s3 & 0xFF, var_s5 & 0xFF);
+				}
+				var_s0->unk2E = (u8) (var_s0->unk2E & 0xFFFD);
+			}
+			var_s5 += 1;
+			var_s0++;
+		} while (var_s5 < D_800E668C);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80077B94_15FC54.s")
+#endif
 
 // CURRENT(3740)
 #ifdef NON_MATCHING

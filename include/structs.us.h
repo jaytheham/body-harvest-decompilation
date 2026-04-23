@@ -125,10 +125,12 @@ typedef struct {
 	/* 0x0E */ s16 unkE;
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
-	/* 0x14 */ u8 pad14[0x4];
+	/* 0x14 */ s16 unk14;
+	/* 0x16 */ s16 unk16;
 	/* 0x18 */ u16 unk18;
 	/* 0x1A */ u16 unk1A;
-	/* 0x1C */ u8 pad1C[0x4];
+	/* 0x1C */ u8 pad1C[0x2];
+	/* 0x1E */ u16 unk1E;
 	/* 0x20 */ f32 unk20;
 	/* 0x24 */ u8 pad24[0x02];
 	/* 0x26 */ s16 unk26;
@@ -147,10 +149,13 @@ typedef struct {
 	/* 0x0E */ s16 unkE;
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
-	/* 0x14 */ u8 pad14[0x4];
+	/* 0x14 */ s16 unk14;
+	/* 0x16 */ s16 unk16;
 	/* 0x18 */ u16 unk18;
 	/* 0x1A */ u16 unk1A;
-	/* 0x1C */ u8 pad1C[0x24];
+	/* 0x1C */ u8 pad1C[0x2];
+	/* 0x1E */ u16 unk1E;
+	/* 0x20 */ u8 pad20[0x20];
 	/* 0x40 */ s32 unk40;
 	/* 0x44 */ s32 unk44;
 } Unk800E65BC; /* stride 0x48 - bad copy of Unk80070F7CObj*/
@@ -1644,14 +1649,18 @@ typedef struct {
 	/* 0x08 */ u8 unk8;
 	/* 0x09 */ u8 pad9[0x1];
 	/* 0x0A */ s16 unkA;
-	/* 0x0C */ u8 padC[0x2];
+	/* 0x0C */ s16 unkC;
 	/* 0x0E */ s16 unkE;
-	/* 0x10 */ u8 pad10[0x10];
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ u8 pad12[0x2];
+	/* 0x14 */ f32 unk14;
+	/* 0x18 */ f32 unk18;
+	/* 0x1C */ f32 unk1C;
 	/* 0x20 */ f32 unk20;
 	/* 0x24 */ f32 unk24;
 	/* 0x28 */ f32 unk28;
 	/* 0x2C */ u8 unk2C;
-	/* 0x2D */ u8 pad2D[0x1];
+	/* 0x2D */ u8 unk2D;
 	/* 0x2E */ u8 unk2E;
 	/* 0x2F */ u8 pad2F[0x1];
 } Unk800E66A8; /* stride 0x30 */
