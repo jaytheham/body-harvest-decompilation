@@ -576,6 +576,7 @@ void func_80070CC4_41174(void)
 #endif
 
 #ifdef NON_MATCHING
+// CURRENT(9055)
 void func_800710D8_41588(s16 arg0, s16 arg1) {
 	s16 selectedMissionBefore;
 	s16 i;
@@ -595,11 +596,36 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 
 	if (D_80094834_64CE4 || --D_8009483C_64CEC == 0) {
 		if (D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) {
-			if (arg1 == 1) {
+			switch (arg1) {
+			case 2:
+					i = 0xD;
+				while (1) {
+						if (D_800D74AC > 0) {
+						D_800D74AC--;
+						} else {
+							D_800D74AC = 0xD;
+						}
+						i--;
+
+					if (D_800AED78[D_800D74AC] != 0 && D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList != NULL) {
+						break;
+					}
+
+					if (i < 0) {
+						break;
+					}
+				}
+
+					if (D_800D74AC != 0) {
+						func_80070494_40944(0x4E)->unk28 = 0x64;
+						func_800153D8_15FD8(0xCB);
+					}
+				break;
+			case 1:
 				i = 8;
 				do {
 					if (D_800D74AE < 8) {
-						D_800D74AE += 1;
+						D_800D74AE++;
 					} else {
 						D_800D74AE = 0;
 					}
@@ -608,24 +634,11 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 
 				func_80070494_40944(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
-			} else if (arg1 == 2) {
-				i = 0xD;
-				do {
-					if (D_800D74AC > 0) {
-						D_800D74AC -= 1;
-					} else {
-						D_800D74AC = 0xD;
-					}
-					i--;
-				} while ((D_800AED78[D_800D74AC] == 0 || D_800942E0_64790[((currentLevel * 13) + D_800D74AC) - 13].displayList == NULL) && i >= 0);
-
-				if (D_800D74AC != 0) {
-					func_80070494_40944(0x4E)->unk28 = 0x64;
-					func_800153D8_15FD8(0xCB);
-				}
-			} else {
+				break;
+			default:
 				func_800153D8_15FD8(0xC9);
 				D_800D74A4 = 0x48;
+				break;
 			}
 
 			D_80094834_64CE4 = 0;
@@ -635,11 +648,28 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 		}
 
 		if (D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
-			if (arg1 == 1) {
+			switch (arg1) {
+			case 2:
+					i = 0xD;
+					do {
+						if (D_800D74AC < 0xD) {
+						D_800D74AC++;
+						} else {
+							D_800D74AC = 0;
+						}
+						i--;
+				} while ((D_800AED78[D_800D74AC] == 0 || D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList == NULL) && i >= 0);
+
+					if (D_800D74AC != 0) {
+						func_80070494_40944(0x4E)->unk28 = 0x64;
+						func_800153D8_15FD8(0xCB);
+					}
+				break;
+			case 1:
 				i = 8;
 				do {
 					if (D_800D74AE > 0) {
-						D_800D74AE -= 1;
+						D_800D74AE--;
 					} else {
 						D_800D74AE = 7;
 					}
@@ -648,24 +678,11 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 
 				func_80070494_40944(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
-			} else if (arg1 == 2) {
-				i = 0xD;
-				do {
-					if (D_800D74AC < 0xD) {
-						D_800D74AC += 1;
-					} else {
-						D_800D74AC = 0;
-					}
-					i--;
-				} while ((D_800AED78[D_800D74AC] == 0 || D_800942E0_64790[((currentLevel * 13) + D_800D74AC) - 13].displayList == NULL) && i >= 0);
-
-				if (D_800D74AC != 0) {
-					func_80070494_40944(0x4E)->unk28 = 0x64;
-					func_800153D8_15FD8(0xCB);
-				}
-			} else {
+				break;
+			default:
 				D_800D74A4 = 0x49;
 				func_800153D8_15FD8(0xC9);
+				break;
 			}
 
 			D_80094834_64CE4 = 0;
