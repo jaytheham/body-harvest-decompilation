@@ -224,24 +224,23 @@ void func_80070514_409C4(s16 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(8185)
-MissionData* func_800706E8_40B98(s16 arg0) {
+// CURRENT(7186)
+MissionData* func_800706E8_40B98(s32 arg0) {
 	s32 index;
 	s32 stride;
+	s32 var_v1;
 	MissionData* entry;
 	MissionData* source;
+	u8 temp_v0;
 
 	index = 0x29;
 	if (D_800D7490 != 0) {
-		u8* ptr;
-
 		stride = 0x2A;
-		ptr = (u8*)D_800D6DC0 + (index * stride);
+		var_v1 = index;
 		while (index != 0) {
 			index--;
-			ptr -= stride;
-			if (ptr[0x16] == 0) {
-				break;
+			if (D_800D6DC0[index].unk16 != 0) {
+				var_v1 = index;
 			}
 		}
 	}
@@ -252,8 +251,8 @@ MissionData* func_800706E8_40B98(s16 arg0) {
 		return NULL;
 	}
 
-	entry = (MissionData*)((u8*)D_800D6DC0 + (index * stride));
-	source = (MissionData*)((u8*)D_800909B0 + (arg0 * stride));
+	entry = &D_800D6DC0[index];
+	source = &D_800909B0[(s16)arg0];
 
 	entry->unk0 = source->unk0 << 2;
 	entry->unk2 = source->unk2 << 2;
@@ -268,28 +267,31 @@ MissionData* func_800706E8_40B98(s16 arg0) {
 	entry->unk10 = source->unk10 << 2;
 	entry->unk16 = source->unk16;
 
-	if (source->unk1C == 3) {
+	if ((temp_v0 = source->unk1C) != 3) {
+		entry->unk1C = temp_v0;
+	} else {
 		source->unk1C = 0;
 		entry->unk1C = 0;
-	} else {
-		entry->unk1C = source->unk1C;
 	}
 
-	entry->unk26 = arg0;
+	entry->unk26 = (s16)arg0;
 	entry->unk28 = source->unk28;
 
-	if (D_800313D0 == 0) {
+	switch (D_800313D0) {
+	case 0:
+	default:
 		entry->unk1E = source->unk1E;
-	} else if (D_800313D0 == 1) {
+		break;
+	case 1:
 		entry->unk1E = source->unk1A;
-	} else if (D_800313D0 == 2) {
+		break;
+	case 2:
 		entry->unk1E = source->unk18;
-	} else {
-		entry->unk1E = source->unk1E;
+		break;
 	}
 
 	entry->unk20 = source->unk20;
-	if (arg0 == D_800D74A4) {
+	if ((s16)arg0 == D_800D74A4) {
 		func_800704DC_4098C();
 		entry->unk1C = 1;
 	}
