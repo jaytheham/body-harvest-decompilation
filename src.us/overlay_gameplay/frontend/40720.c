@@ -574,11 +574,10 @@ void func_80070CC4_41174(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070CC4_41174.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(9055)
+#ifdef NON_MATCHING // CURRENT(6340)
 void func_800710D8_41588(s16 arg0, s16 arg1) {
 	s16 selectedMissionBefore;
-	s16 i;
+	s32 i;
 
 	D_800D74A8 = (D_800D74A4 - arg0) - 1;
 	selectedMissionBefore = D_800D74A4;
@@ -598,22 +597,18 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			switch (arg1) {
 			case 2:
 					i = 0xD;
-				while (1) {
-						if (D_800D74AC > 0) {
-						D_800D74AC--;
-						} else {
+				do {
+						if (D_800D74AC <= 0) {
 							D_800D74AC = 0xD;
+						} else {
+						D_800D74AC--;
 						}
 						i--;
 
 					if (D_800AED78[D_800D74AC] != 0 && D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList != NULL) {
 						break;
 					}
-
-					if (i < 0) {
-						break;
-					}
-				}
+				} while ((s16)i >= 0);
 
 					if (D_800D74AC != 0) {
 						func_80070494_40944(0x4E)->unk28 = 0x64;
@@ -629,7 +624,7 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 						D_800D74AE = 0;
 					}
 					i--;
-				} while (weaponSlots[D_800D74AE] == 0 && i >= 0);
+				} while (weaponSlots[D_800D74AE] == 0 && (s16)i >= 0);
 
 				func_80070494_40944(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
@@ -650,14 +645,26 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			switch (arg1) {
 			case 2:
 					i = 0xD;
-					do {
-						if (D_800D74AC < 0xD) {
-						D_800D74AC++;
-						} else {
+				while (1) {
+						if (D_800D74AC >= 0xD) {
 							D_800D74AC = 0;
+						} else {
+						D_800D74AC++;
 						}
 						i--;
-				} while ((D_800AED78[D_800D74AC] == 0 || D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList == NULL) && i >= 0);
+
+					if (D_800AED78[D_800D74AC] != 0) {
+						if (D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList != NULL) {
+							break;
+						}
+					}
+
+					if ((s16)i >= 0) {
+						continue;
+					}
+
+					break;
+				}
 
 					if (D_800D74AC != 0) {
 						func_80070494_40944(0x4E)->unk28 = 0x64;
@@ -673,14 +680,13 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 						D_800D74AE = 7;
 					}
 					i--;
-				} while (weaponSlots[D_800D74AE] == 0 && i >= 0);
+				} while (weaponSlots[D_800D74AE] == 0 && (s16)i >= 0);
 
 				func_80070494_40944(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
 				break;
 			default:
-				D_800D74A4 = 0x49;
-				func_800153D8_15FD8(0xC9);
+				(D_800D74A4 = 0x49), func_800153D8_15FD8(0xC9);
 				break;
 			}
 
