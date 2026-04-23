@@ -188,6 +188,19 @@ typedef struct {
 } Unk165E60Timeline;
 
 typedef struct {
+	s16 unk0;
+	s16 unk2;
+	s16 unk4;
+	s16 pad6;
+	s16 unk8;
+	s16 unkA;
+	s8 unkC;
+	s8 unkD;
+	s8 unkE;
+	s8 padF;
+} UnkHudVtx;
+
+typedef struct {
     /* 0x00 */ s32 unk0;
     /* 0x04 */ s32 unk4;
     /* 0x08 */ s32 unk8;

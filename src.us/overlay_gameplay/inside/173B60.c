@@ -108,7 +108,406 @@ void func_8008BB6C_173C2C(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008BB6C_173C2C.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
+	f32 var_f14;
+	s16 temp_t1;
+	s16 temp_t3;
+	s16 temp_v0;
+	s32 sp20;
+	UnkHudVtx *temp_a0;
+	UnkHudVtx *temp_a1;
+	UnkHudVtx *temp_a3;
+	UnkHudVtx *temp_t1_2;
+	UnkHudVtx *temp_a0_2;
+	UnkHudVtx *temp_a1_2;
+	UnkHudVtx *temp_a3_2;
+	UnkHudVtx *temp_t1_3;
+	u32 temp_v0_8;
+	u32 temp_v0_9;
+	f64 temp_f2;
+	f64 temp_f2_2;
+	f64 var_f0;
+	f64 var_f0_2;
+	s32 temp_t6;
+	s32 temp_t7_3;
+	s8 var_v0_2;
+	s8 var_v0_3;
+	s8 var_v0_4;
+	s8 var_v0_5;
+	UnkHudVtx *temp_t7;
+	UnkHudVtx *temp_t9;
+	UnkHudVtx *temp_t7_2;
+
+	temp_t7 = D_8005BB34 + 1;
+	D_8005BB34 = temp_t7;
+	temp_t9 = temp_t7 + 1;
+	D_8005BB34 = temp_t9;
+	temp_t7_2 = temp_t9 + 1;
+	D_8005BB34 = temp_t7_2;
+	D_8005BB34 = temp_t7_2 + 1;
+
+	D_8005BB2C->words.w0 = 0xFA000000;
+	D_8005BB2C->words.w1 = 0x3C5078C8;
+	D_8005BB2C++;
+
+	var_f14 = arg2;
+	if (func_80004498_5098(arg2) == 0) {
+		var_f14 = 0.0f;
+	}
+
+	D_8005BB2C->words.w0 = 0xB900031D;
+	D_8005BB2C->words.w1 = 0x00504240;
+	D_8005BB2C++;
+
+	D_8005BB2C->words.w0 = 0xBA000C02;
+	D_8005BB2C->words.w1 = 0x00002000;
+	D_8005BB2C++;
+
+	D_8005BB2C->words.w0 = 0xBB000000;
+	D_8005BB2C->words.w1 = 0x80008000;
+	D_8005BB2C++;
+
+	D_8005BB2C->words.w0 = 0xFCFFFFFF;
+	D_8005BB2C->words.w1 = 0xFFFE793C;
+	D_8005BB2C++;
+
+	D_8005BB2C->words.w0 = 0xE7000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+
+	if (arg3 != 0) {
+		temp_v0 = D_800FCF22;
+	} else {
+		temp_v0 = D_800FCF26;
+	}
+
+	D_80052B40.unk0 = 0;
+	temp_t1 = arg1 + temp_v0;
+	D_80052B40.unk2 = temp_t1;
+	D_80052B40.unk4 = 0;
+	D_80052B50.unk0 = 0x100;
+	D_80052B50.unk2 = 0x100;
+	D_80052B50.unk4 = 0;
+	sp20 = temp_t1;
+
+	func_800039D0_45D0(&D_80052B40, 0, &D_80052B50, D_8005BB38);
+
+	D_8005BB2C->words.w0 = 0x01060040;
+	D_8005BB2C->words.w1 = (u32)D_8005BB38 & 0x1FFFFFFF;
+	D_8005BB2C++;
+
+	temp_t3 = arg0 + 7;
+	D_8005BB38 += 0x40;
+	func_800092B8_9EB8(((temp_t3 - arg8) - 0xF) * 4, (temp_t1 - 8) * 4, (temp_t3 + 4) * 4, (temp_t1 + 6) * 4, 3);
+
+	if (arg5 != 0) {
+		temp_t1_2 = D_8005BB34;
+		temp_a1 = temp_t1_2 + 1;
+		temp_a0 = temp_a1 + 1;
+		temp_a3 = temp_a0 + 1;
+		D_8005BB34 = temp_a3 + 1;
+
+		temp_t1_2->unk0 = temp_t3 - 0x2F;
+		temp_a3->unk0 = temp_t3 - 0x2F;
+
+		temp_a1->unk0 = (s16) ((f32) (temp_t3 - 0x30) + ((f32) arg8 * var_f14) + 1.0f);
+		temp_a1->unk2 = 3;
+		temp_a0->unk0 = temp_a1->unk0;
+		temp_t1_2->unk2 = temp_a1->unk2;
+
+		temp_a0->unk2 = -4;
+		temp_a3->unk2 = temp_a0->unk2;
+
+		temp_a0->unk4 = -1;
+		temp_a3->unk4 = temp_a0->unk4;
+		temp_a1->unk4 = temp_a0->unk4;
+		temp_t1_2->unk4 = temp_a0->unk4;
+
+		if (arg5 == 2) {
+			temp_a1->unkC = 0xFF;
+			temp_a0->unkC = 0xFF;
+			temp_a3->unkC = 0xFF;
+			temp_t1_2->unkC = 0xFF;
+
+			temp_t7_3 = arg7 << 5;
+			temp_f2 = ((f64) (1.0f - var_f14) * D_800A5700_18D7C0) + (f64) temp_t7_3;
+			if (D_800A56F8_18D7B8 < temp_f2) {
+				var_f0 = D_800A56F8_18D7B8;
+			} else {
+				var_f0 = temp_f2;
+			}
+			temp_v0_8 = (u32) var_f0;
+			temp_a1->unkD = (s8) temp_v0_8;
+			temp_a0->unkD = (s8) temp_v0_8;
+			temp_a3->unkD = (s8) temp_v0_8;
+			temp_t1_2->unkD = (s8) temp_v0_8;
+
+			if (temp_t7_3 >= 0x100) {
+				var_v0_2 = -1;
+			} else {
+				var_v0_2 = temp_t7_3;
+			}
+			temp_a1->unkE = var_v0_2;
+			temp_a0->unkE = var_v0_2;
+			temp_a3->unkE = var_v0_2;
+			temp_t1_2->unkE = var_v0_2;
+
+			temp_a1->unkA = 0;
+			temp_a3->unk8 = temp_a1->unkA;
+			temp_t1_2->unk8 = temp_a1->unkA;
+			temp_t1_2->unkA = temp_a1->unkA;
+			temp_a0->unkA = 0x400;
+			temp_a3->unkA = temp_a0->unkA;
+
+			temp_a1->unk8 = (s16) ((f32) (arg8 * D_80047712) * var_f14);
+			temp_a0->unk8 = temp_a1->unk8;
+		} else {
+			temp_a3->unkC = 0xFF;
+			temp_t1_2->unkC = 0xFF;
+
+			temp_t6 = arg7 << 5;
+			if (temp_t6 >= 0x100) {
+				var_v0_3 = -1;
+			} else {
+				var_v0_3 = temp_t6;
+			}
+			temp_a3->unkD = var_v0_3;
+			temp_t1_2->unkD = var_v0_3;
+
+			if (temp_t6 >= 0x100) {
+				var_v0_4 = -1;
+			} else {
+				var_v0_4 = temp_t6;
+			}
+			temp_a3->unkE = var_v0_4;
+			temp_t1_2->unkE = var_v0_4;
+
+			temp_a1->unkC = 0xFF;
+			temp_a0->unkC = 0xFF;
+
+			temp_f2_2 = ((f64) var_f14 * D_800A5710_18D7D0) + (f64) temp_t6;
+			if (D_800A5708_18D7C8 < temp_f2_2) {
+				var_f0_2 = D_800A5708_18D7C8;
+			} else {
+				var_f0_2 = temp_f2_2;
+			}
+			temp_v0_9 = (u32) var_f0_2;
+			temp_a1->unkD = (s8) temp_v0_9;
+			temp_a0->unkD = (s8) temp_v0_9;
+
+			if (temp_t6 >= 0x100) {
+				var_v0_5 = -1;
+			} else {
+				var_v0_5 = temp_t6;
+			}
+			temp_a1->unkE = var_v0_5;
+			temp_a0->unkE = var_v0_5;
+
+			temp_a1->unkA = 0;
+			temp_a3->unk8 = temp_a1->unkA;
+			temp_t1_2->unk8 = temp_a1->unkA;
+			temp_t1_2->unkA = temp_a1->unkA;
+			temp_a0->unkA = 0x400;
+			temp_a3->unkA = temp_a0->unkA;
+
+			temp_a1->unk8 = (s16) ((f32) (D_80047716 << 0xA) * var_f14);
+			temp_a0->unk8 = temp_a1->unk8;
+		}
+
+		D_8005BB2C->words.w0 = 0xBB000001;
+		D_8005BB2C->words.w1 = 0x80008000;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xB900031D;
+		D_8005BB2C->words.w1 = 0x0F0A4000;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xFD700000;
+		D_8005BB2C->words.w1 = (u32) D_800A41B0_18C270;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xF5700000;
+		D_8005BB2C->words.w1 = 0x0700C030;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xE6000000;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xF3000000;
+		D_8005BB2C->words.w1 = 0x0701F800;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xE7000000;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xF5680200;
+		D_8005BB2C->words.w1 = 0x0000C030;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xF2000000;
+		D_8005BB2C->words.w1 = 0x0001C01C;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xBA000C02;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xFCFFFFFF;
+		D_8005BB2C->words.w1 = 0xFFFE7339;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xB6000000;
+		D_8005BB2C->words.w1 = 0x00002000;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0x0400103F;
+		D_8005BB2C->words.w1 = ((u32) (D_8005BB34 - 4)) & 0x1FFFFFFF;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xE7000000;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xB1000204;
+		D_8005BB2C->words.w1 = 0x00000406;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xE7000000;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xBA000C02;
+		D_8005BB2C->words.w1 = 0x00002000;
+		D_8005BB2C++;
+	}
+
+	if (arg4 != 0) {
+		temp_a3_2 = D_8005BB34;
+		temp_a0_2 = temp_a3_2 + 1;
+		temp_t1_3 = temp_a0_2 + 1;
+		temp_a1_2 = temp_t1_3 + 1;
+		D_8005BB34 = temp_a1_2 + 1;
+
+		temp_a3_2->unk0 = temp_t3 - 0x30;
+		temp_t1_3->unk0 = temp_t3 - 0x30;
+		temp_a0_2->unk0 = temp_t3 - 0x42;
+
+		temp_a1_2->unk0 = temp_t3 - 0x42;
+		temp_a1_2->unk2 = 9;
+		temp_t1_3->unk2 = temp_a1_2->unk2;
+
+		temp_a0_2->unk2 = -9;
+		temp_a3_2->unk2 = temp_a0_2->unk2;
+
+		temp_a0_2->unk4 = -1;
+		temp_a3_2->unk4 = temp_a0_2->unk4;
+		temp_a1_2->unk4 = temp_a0_2->unk4;
+		temp_t1_3->unk4 = temp_a0_2->unk4;
+
+		temp_a3_2->unk8 = (arg6 * 0x30) + 0x600;
+		temp_t1_3->unk8 = temp_a3_2->unk8;
+		temp_a1_2->unkA = temp_a3_2->unk8;
+		temp_t1_3->unkA = temp_a3_2->unk8;
+
+		temp_a0_2->unk8 = -arg6 * 0x30;
+		temp_a1_2->unk8 = temp_a0_2->unk8;
+		temp_a0_2->unkA = temp_a0_2->unk8;
+		temp_a3_2->unkA = temp_a0_2->unk8;
+
+		temp_a0_2->unkC = 0xB9;
+		temp_a3_2->unkC = 0xB9;
+		temp_a1_2->unkC = 0xB9;
+		temp_t1_3->unkC = 0xB9;
+
+		temp_a0_2->unkD = 0xFF;
+		temp_a3_2->unkD = 0xFF;
+		temp_a1_2->unkD = 0xFF;
+		temp_t1_3->unkD = 0xFF;
+
+		temp_a0_2->unkE = 0xFF;
+		temp_a3_2->unkE = 0xFF;
+		temp_a1_2->unkE = 0xFF;
+		temp_t1_3->unkE = 0xFF;
+
+		D_8005BB2C->words.w0 = 0xB900031D;
+		D_8005BB2C->words.w1 = 0x00552048;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xBA000C02;
+		D_8005BB2C->words.w1 = 0x00002000;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xBA001301;
+		D_8005BB2C->words.w1 = 0x00080000;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xBB000001;
+		D_8005BB2C->words.w1 = 0x80008000;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xFD700000;
+		D_8005BB2C->words.w1 = (u32) arg4;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xF5700000;
+		D_8005BB2C->words.w1 = 0x070C0300;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xE6000000;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xF3000000;
+		D_8005BB2C->words.w1 = 0x0711F2AB;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xE7000000;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xF5680600;
+		D_8005BB2C->words.w1 = 0x000C0300;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xF2000000;
+		D_8005BB2C->words.w1 = 0x0005C05C;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xFC127E24;
+		D_8005BB2C->words.w1 = -0xC07;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0x0400103F;
+		D_8005BB2C->words.w1 = ((u32) (D_8005BB34 - 4)) & 0x1FFFFFFF;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xB1000204;
+		D_8005BB2C->words.w1 = 0x00060204;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xE7000000;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xFCFFFFFF;
+		D_8005BB2C->words.w1 = 0xFFFE793C;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xBB000000;
+		D_8005BB2C->words.w1 = 0x80008000;
+		D_8005BB2C++;
+	}
+
+	D_8005BB2C->words.w0 = 0xBD000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008BD18_173DD8.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8008C8A4_174964(void) {
