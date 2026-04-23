@@ -2187,6 +2187,8 @@ extern u8 D_8009E4D4_186594[];
 extern void *D_80157F4C;
 extern void *D_80157F50;
 extern s32 D_80157F54;
+extern f64 D_800A4B70_18CC30;
+extern char D_800A4488_18C548[];
 extern void *D_80157F58;
 extern s32 D_80157F64;
 extern s32 D_800E65B4;
