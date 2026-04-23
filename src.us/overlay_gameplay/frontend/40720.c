@@ -4337,9 +4337,11 @@ void func_8007A754_4AC04(void) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(25552)
+// CURRENT(22177)
 void func_8007A774_4AC24(s32 arg0) {
 	s16 phase;
+	s32 pad0;
+	s32 pad1;
 	s16 timer;
 	u16 perspNorm;
 	s16 rotX;
@@ -4354,92 +4356,92 @@ void func_8007A774_4AC24(s32 arg0) {
 	s32 isAnimated;
 
 	phase = D_800D7962;
-	D_80052A8C++;
+	D_80052A8C = D_80052A8C + 1;
 
 	isAnimated = 0;
-	rotY = 0x1E0;
-	posY = 0x2A8;
-	posX = 0x50;
-	rotX = -0x2D;
-	rotZ = 0;
+	rotX = 0x154;
 	posZ = 0;
+	rotZ = 0;
 	tilt = 0;
 	blend = 0;
+	posX = 0x50;
+	posY = 0x2A8;
+	rotY = 0x1E0;
 
 	cameraPulse = 0;
 
-	if ((u32)(phase - 5) < 6U) {
-		switch (phase - 5) {
-		case 0:
-			timer = D_800D7960;
-			D_800D7960 = timer + 1;
-			if (timer >= 121) {
-				D_800D7962 = phase + 1;
-				D_800D7960 = 0;
-			}
-			break;
-
-		case 1:
-			timer = D_800D7960;
-			D_800D7960 = timer + 1;
-			if (timer >= 71) {
-				D_800D7960 = 0;
-				D_800D7962 = phase + 1;
-			}
-			break;
-
-		case 2:
-			timer = D_800D7960;
-			tilt = (s16)(-100 * timer);
-			D_800D7960 = timer + 1;
-			if (timer >= 101) {
-				D_800D7960 = 0;
-				D_800D7962 = phase + 1;
-			}
-			break;
-
-		case 3:
-			timer = D_800D7960;
-			rotX = (s16)(D_800AE868_7ED18 - ((f64)timer * D_800AE870_7ED20));
-			posX = (s16)(((f64)timer * 8.5) + 80.0);
-			posY = (s16)(D_800AE878_7ED28 - ((f64)timer * D_800AE880_7ED30));
-			blend = (s16)(((timer * 125) * 4) - 10000);
-			D_800D7960 = timer + 1;
-			if (timer >= 21) {
-				D_800D7960 = 0;
-				D_800D7962 = phase + 1;
-			}
-			break;
-
-		case 4:
-			timer = D_800D7960;
-			posZ = (s16)(-332 * timer);
-			posX = (s16)(250 - timer);
-			rotX = -0x2D;
-			posY = (s16)(D_800AE888_7ED38 + ((f64)timer * D_800AE890_7ED40));
-			D_800D7960 = timer + 1;
-			if (timer >= 51) {
-				D_800D7960 = 0;
-				D_800D7962 = phase + 1;
-			}
-			break;
-
-		case 5:
-			timer = D_800D7960;
-			isAnimated = 1;
-			rotX = -0x2D;
-			rotZ = (s16)(-3 * timer);
-			posZ = -15000;
-			posX = 200;
-			posY = 200;
-			D_800D7960 = timer + 1;
-			if (timer >= 301) {
-				D_800D7962 = phase + 1;
-				D_800D7960 = 0;
-			}
-			break;
+	switch (phase - 5) {
+	case 0:
+		timer = D_800D7960;
+		rotY = (s16)(((((s32)timer << 4) - timer) << 5) / 120);
+		D_800D7960 = timer + 1;
+		if (timer >= 121) {
+			D_800D7962 = phase + 1;
+			D_800D7960 = 0;
 		}
-	} else {
+		break;
+
+	case 1:
+		timer = D_800D7960;
+		D_800D7960 = timer + 1;
+		if (timer >= 71) {
+			D_800D7960 = 0;
+			D_800D7962 = phase + 1;
+		}
+		break;
+
+	case 2:
+		timer = D_800D7960;
+		blend = (s16)(-100 * timer);
+		D_800D7960 = timer + 1;
+		if (timer >= 101) {
+			D_800D7960 = 0;
+			D_800D7962 = phase + 1;
+		}
+		break;
+
+	case 3:
+		timer = D_800D7960;
+		rotX = (s16)(D_800AE868_7ED18 - ((f64)timer * D_800AE870_7ED20));
+		posX = (s16)(((f64)timer * 8.5) + 80.0);
+		posY = (s16)(D_800AE878_7ED28 - ((f64)timer * D_800AE880_7ED30));
+		blend = (s16)(((timer * 125) * 4) - 10000);
+		D_800D7960 = timer + 1;
+		if (timer >= 21) {
+			D_800D7960 = 0;
+			D_800D7962 = phase + 1;
+		}
+		break;
+
+	case 4:
+		timer = D_800D7960;
+		posZ = (s16)(-332 * timer);
+		posX = (s16)(250 - timer);
+		rotX = -0x2D;
+		posY = (s16)(D_800AE888_7ED38 + ((f64)timer * D_800AE890_7ED40));
+		D_800D7960 = timer + 1;
+		if (timer >= 51) {
+			D_800D7960 = 0;
+			D_800D7962 = phase + 1;
+		}
+		break;
+
+	case 5:
+		timer = D_800D7960;
+		isAnimated = 1;
+		rotX = -0x2D;
+		rotZ = (s16)(-3 * timer);
+		posZ = -15000;
+		posX = 200;
+		posY = 200;
+		D_800D7960 = timer + 1;
+		if (timer >= 301) {
+			D_800D7962 = phase + 1;
+			D_800D7960 = 0;
+		}
+		break;
+
+	default:
 		posX = 200;
 		posY = 200;
 		rotX = -0x2D;
