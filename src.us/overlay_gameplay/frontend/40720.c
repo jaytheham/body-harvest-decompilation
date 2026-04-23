@@ -961,8 +961,7 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071900_41DB0.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(10239)
+#ifdef NON_MATCHING // CURRENT(2173)
 void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	s32 weaponType;
 	volatile s32 textureIndex;
@@ -977,104 +976,54 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 
 	textureIndex = ((s32*)&D_80031474)[weaponType];
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xBA000E02;
-	dl->words.w1 = 0x00008000;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xBA001301;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xFD100000;
-	dl->words.w1 = (u32)D_80260500;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE8000000;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xF5000100;
-	dl->words.w1 = 0x07000000;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE6000000;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xF0000000;
-	dl->words.w1 = 0x073FC000;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE7000000;
-	dl->words.w1 = 0;
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_80260500);
+	gDPTileSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x0100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
+	gDPPipeSync(D_8005BB2C++);
 
 	{
 		f32 scale;
 
-		scale = 2.0f;
-		arg2 *= scale;
-		arg3 *= scale;
+		scale = (f32)2;
+		arg2 = arg2 * scale;
+		arg3 = arg3 * scale;
 	}
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xFA000100;
 	if (weaponSlots[D_800D74AE] != 0) {
-		dl->words.w1 = 0x00AAD2FF;
+		gDPSetPrimColor(D_8005BB2C++, 1, 0, 0x00, 0xAA, 0xD2, 0xFF);
 	} else {
-		dl->words.w1 = 0x002346FF;
+		gDPSetPrimColor(D_8005BB2C++, 1, 0, 0x00, 0x23, 0x46, 0xFF);
 	}
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xB9000002;
-	dl->words.w1 = 0;
+	gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+	{
+		Gfx* dl;
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xB900031D;
-	dl->words.w1 = 0x0F0A4000;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xFC119623;
-	dl->words.w1 = 0xFF2FFFFF;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xFD500000;
-	dl->words.w1 = ((u32)(D_8025CCC0 + ((s32)textureIndex * 0x240))) & 0x1FFFFFFF;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xF5500000;
-	dl->words.w1 = 0x07000000;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE6000000;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xF3000000;
-	dl->words.w1 = 0x0711F2AB;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE7000000;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xF5480600;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xF2000000;
-	dl->words.w1 = 0x0005C05C;
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xFD500000;
+		dl->words.w1 = ((u32)(D_8025CCC0 + ((s32)textureIndex * 0x240))) & 0x1FFFFFFF;
+	}
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 287, 683);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (23 << 2), (23 << 2));
 
 	sizeX = (s32)(12.0f * arg2);
 	sizeY = (s32)(12.0f * arg3);
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE7000000;
-	dl->words.w1 = 0;
+	gDPPipeSync(D_8005BB2C++);
 
 	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE4000000 | ((((arg0 + sizeX + 0xC) * 4) & 0xFFF) << 12) | (((arg1 + sizeY + 0xC) * 4) & 0xFFF);
-	dl->words.w1 = ((((arg0 - sizeX + 0xC) * 4) & 0xFFF) << 12) | (((arg1 - sizeY + 0xC) * 4) & 0xFFF);
+	dl->words.w0 = 0xE4000000 | ((((arg0 + sizeX + 0xC) << 2) & 0xFFF) << 12) | (((arg1 + sizeY + 0xC) << 2) & 0xFFF);
+	dl->words.w1 = ((((arg0 - sizeX + 0xC) << 2) & 0xFFF) << 12) | (((arg1 - sizeY + 0xC) << 2) & 0xFFF);
 
 	dl = D_8005BB2C++;
 	dl->words.w0 = 0xB4000000;
@@ -1082,15 +1031,10 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 
 	dl = D_8005BB2C++;
 	dl->words.w0 = 0xB3000000;
-	dl->words.w1 = ((s32)((1.0f / arg2) * 1024.0f) << 16) | (((s32)((1.0f / arg3) * 1024.0f)) & 0xFFFF);
+	dl->words.w1 = ((s32)((1.0f / arg2) * 1024.0f) << 0x10) | (((s32)((1.0f / arg3) * 1024.0f)) & 0xFFFF);
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE7000000;
-	dl->words.w1 = 0;
+	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071E80_42330.s")
-#endif
 
 extern Ambient D_800942A0_64750;
 extern Light D_800942A8_64758;
@@ -4508,6 +4452,9 @@ void func_8007A774_4AC24(s32 arg0) {
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | G_CLIPPING | 0xFF60CDF8);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_LIGHTING | G_SHADING_SMOOTH);
 
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071E80_42330.s")
+#endif
 	D_80052B40.unk0 = rotZ;
 	if (isAnimated == 1) {
 		D_80052B40.unk2 = (s16)((((f64)(f32)coss((u16)(D_80052A8C * 2000)) / 32768.0) * 8.0) + 40.0);
