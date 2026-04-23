@@ -478,8 +478,7 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
   }
 }
 
-#ifdef NON_MATCHING
-// CURRENT(10094)
+#ifdef NON_MATCHING // CURRENT(10050)
 void func_80070CC4_41174(void)
 {
 	s16 selectedFileIndex;
@@ -1035,6 +1034,9 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 
 	gDPPipeSync(D_8005BB2C++);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071E80_42330.s")
+#endif
 
 extern Ambient D_800942A0_64750;
 extern Light D_800942A8_64758;
@@ -4452,9 +4454,6 @@ void func_8007A774_4AC24(s32 arg0) {
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | G_CLIPPING | 0xFF60CDF8);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_LIGHTING | G_SHADING_SMOOTH);
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071E80_42330.s")
-#endif
 	D_80052B40.unk0 = rotZ;
 	if (isAnimated == 1) {
 		D_80052B40.unk2 = (s16)((((f64)(f32)coss((u16)(D_80052A8C * 2000)) / 32768.0) * 8.0) + 40.0);
