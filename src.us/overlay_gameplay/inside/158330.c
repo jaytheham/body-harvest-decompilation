@@ -120,7 +120,247 @@ void func_80070464_158524(s32 *arg0, s32 *arg1, s32 arg2)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80070464_158524.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_800705E0_1586A0(void *arg0) {
+	s16 tempS16;
+	s32 i;
+	s32 interiorId;
+	s32 levelIndex;
+	s32 objectFlags;
+	s32 roomIndex;
+	s32 roomId;
+	s32 wordIndex;
+	u64 missionId;
+	u32 bitIndex;
+	u8 roomType;
+	u8 roomX;
+	u8 roomY;
+	u8 *mapData;
+	u8 *roomData;
+	u8 *mapRoot;
+	Unk80070F7CObj *obj;
+	Unk800E66A8 *entry;
+
+	D_800E65E8 = arg0;
+	D_800A0960_188A20 = D_800E65E8[0xE8];
+	D_800E7394 = arg0;
+	D_800E66A4 = D_800E65E8[0xE7];
+
+	levelIndex = D_8009C4C4_184584[currentLevel] + D_800E66A4;
+	D_800E65BC = (Unk80070F7CObj *)&D_8008E0A8_176168[levelIndex * 0x900];
+	D_800E65C0 = (Gfx **)&D_8009C1A8_184268[levelIndex << 5];
+	D_800E65C4 = (s32 *)&D_8009C4E4_1845A4[levelIndex << 5];
+	D_800E65C8 = &D_8009C804_1848C4[levelIndex];
+
+	D_800E6460 = D_800E65E8[0xE4];
+	D_800E6464 = D_800E65E8[0xE5];
+	for (i = 0; i < 0x64; i++) {
+		D_800E69A8[i] = D_800E65E8[0x80 + i];
+	}
+
+	D_800E668C = D_800E65E8[0xE6];
+	i = 0;
+	if (D_800E668C > 0) {
+		interiorId = (s32)buildingInteriorToLoadId;
+		entry = D_800E66A8;
+		for (roomIndex = 0; roomIndex < D_800E668C; roomIndex++) {
+			roomData = D_800E65E8 + roomIndex;
+			roomType = roomData[0x30] & 0x1F;
+
+			entry->unk0 = roomType;
+			entry->unk8 = (roomData[0x30] & 0x60) >> 5;
+			roomX = roomData[0x40];
+			roomY = roomData[0x50];
+			entry->unk2C = roomData[0x60];
+			entry->unkC = 0;
+			entry->unkE = -1;
+			entry->unk2E &= 0xFE;
+			entry->unk2D = roomData[0x70];
+
+			wordIndex = interiorId >> 5;
+			if ((interiorId < 0) && ((interiorId & 0x1F) != 0)) {
+				wordIndex--;
+			}
+			bitIndex = (u32)interiorId & 0x1F;
+			if ((interiorId < 0) && (bitIndex != 0)) {
+				bitIndex -= 0x20;
+			}
+
+			if (((u32 *)D_80047F40)[wordIndex] & (1U << bitIndex)) {
+				if (D_80047D40[interiorId] & (1 << i)) {
+					entry->unk2E |= 1;
+					entry->unkC = D_800E65BC[roomType].unk16;
+				}
+			} else if (roomData[0x30] & 0x80) {
+				entry->unk2E |= 1;
+			}
+
+			obj = &D_800E65BC[roomType];
+			roomId = entry->unk2D & 0x3F;
+
+			if (obj->unk40 & 0xE0000) {
+				func_80070F7C_15903C(0, roomType, i);
+				obj = &D_800E65BC[roomType];
+				if (obj->unk40 & 0x80000) {
+					entry->unk2E |= 3;
+				} else {
+					if ((roomId < 0x38) && (roomId != 0)) {
+						missionId = (((u64)((u32)(roomId >> 0x1F))) << 0x20) | (u32)roomId;
+						if ((func_8000726C_7E6C(missionId) != 0) && (entry->unk2D & 0x40)) {
+							entry->unk2E |= 1;
+						} else {
+							entry->unk2E &= 0xFE;
+						}
+					}
+					if (entry->unk2E & 1) {
+						missionId = (((u64)((u32)(roomId >> 0x1F))) << 0x20) | (u32)roomId;
+						func_800072CC_7ECC(missionId);
+						obj = &D_800E65BC[roomType];
+						if (obj->unk40 & 0x20000) {
+							entry->unk2E |= 2;
+						}
+					} else if (obj->unk40 & 0x40000) {
+						entry->unk2E |= 2;
+					}
+				}
+			} else {
+				if ((roomId < 0x38) && (roomId != 0)) {
+					missionId = (((u64)((u32)(roomId >> 0x1F))) << 0x20) | (u32)roomId;
+					if ((func_8000726C_7E6C(missionId) != 0) && (entry->unk2D & 0x40)) {
+						entry->unk2E |= 1;
+					} else {
+						entry->unk2E &= 0xFE;
+					}
+				}
+				if (entry->unk2E & 1) {
+					missionId = (((u64)((u32)(roomId >> 0x1F))) << 0x20) | (u32)roomId;
+					func_800072CC_7ECC(missionId);
+					func_80070F7C_15903C(obj->unk1E, roomType, i);
+				} else {
+					func_80070F7C_15903C(0, roomType, i);
+				}
+				obj = &D_800E65BC[roomType];
+			}
+
+			switch (roomType) {
+			case 30:
+				entry->unk4 = (s8)obj->pad1C[0];
+				switch (entry->unk8) {
+				case 0:
+					entry->unk2 = ((s32)obj->unk18 / 2) + ((s8)roomX * 0x60) + 0x60;
+					entry->unk6 = ((s32)obj->unk1A / 2) + ((s8)roomY * 0x60) + 0x60;
+					break;
+				case 1:
+					entry->unk2 = ((s32)obj->unk1A / 2) + ((s8)roomX * 0x60) + 0x60;
+					tempS16 = ((s32)obj->unk18 / 2) + ((s8)roomY * 0x60) + 0x60;
+					entry->unk6 = tempS16;
+					break;
+				case 2:
+					entry->unk2 = ((s8)roomX * 0x60) - ((s32)obj->unk18 / 2) + 0xC0;
+					tempS16 = ((s8)roomY * 0x60) - ((s32)obj->unk1A / 2) + 0xC0;
+					entry->unk6 = tempS16;
+					break;
+				case 3:
+					entry->unk2 = ((s8)roomX * 0x60) - ((s32)obj->unk1A / 2) + 0xC0;
+					tempS16 = ((s8)roomY * 0x60) - ((s32)obj->unk18 / 2) + 0xC0;
+					entry->unk6 = tempS16;
+					break;
+				}
+				objectFlags = obj->unk40;
+				break;
+
+			case 29:
+				entry->unk2 = roomX + 1;
+				entry->unk6 = roomY + 1;
+				entry->unk4 = 0;
+				objectFlags = obj->unk40;
+				break;
+
+			case 31:
+				D_800E6630 = ((*(s32 *)&D_80050AE0[D_80052540 * 0x18]) << 0x1A) >> 0x1C;
+				entry->unk2 = (roomX * 8) + 0x60;
+				entry->unk4 = (s8)obj->pad1C[0];
+				entry->unk6 = (roomY * 8) + 0x60;
+
+				mapRoot = &D_8009CD7C_184E3C[currentLevel * 0x1E];
+				mapData = &mapRoot[D_800E6630 * 2];
+				obj->unk18 = mapData[0];
+				D_800E65BC[roomType].unk1A = mapData[1];
+
+				osSyncPrintf(D_800A4380_18C440, D_800E6630, entry->unk2, entry->unk6);
+				func_8007F668_167728(D_80047F93, D_800E6633);
+				objectFlags = D_800E65BC[roomType].unk40;
+				break;
+
+			default:
+				objectFlags = obj->unk40;
+				if (*(s32 *)obj == 0) {
+					i--;
+					entry--;
+					break;
+				}
+
+				if (objectFlags & 8) {
+					if (objectFlags & 0x80) {
+						D_800E6610++;
+						if (entry->unk2E & 1) {
+							D_800E6614++;
+							if (obj->unk40 & 0x40) {
+								D_800E6604++;
+							}
+						}
+					} else {
+						D_800E6600++;
+						if (entry->unk2E & 1) {
+							D_800E65FC++;
+							if (obj->unk40 & 0x40) {
+								D_800E6604++;
+							}
+						}
+					}
+				}
+
+				if (objectFlags < 0) {
+					entry->unk2 = ((s8)roomX * 0x60) + 0x90;
+					entry->unk4 = (s8)obj->pad1C[0];
+					entry->unk6 = ((s8)roomY * 0x60) + 0x90;
+				} else {
+					entry->unk2 = (roomX * 8) + 0x60;
+					entry->unk6 = (roomY * 8) + 0x60;
+					entry->unk4 = (s8)obj->pad1C[0];
+				}
+
+				osSyncPrintf(D_800A43A8_18C468, roomType, entry->unk2, entry->unk6);
+				objectFlags = D_800E65BC[roomType].unk40;
+				break;
+			}
+
+			if (objectFlags & 0x40000000) {
+				func_8007774C_15F80C(i, roomType);
+			}
+			if (entry->unk2E & 1) {
+				objectFlags = D_800E65BC[roomType].unk40;
+				if (!(objectFlags & 0xE0000) && (objectFlags & 0x20000000)) {
+					func_8007774C_15F80C(i, roomType);
+				}
+			}
+
+			func_80074D98_15CE58(i);
+			i++;
+			entry++;
+		}
+	}
+
+	D_800E668C = i;
+	if ((D_800E6600 == 0) && (D_800E6610 == 0)) {
+		D_800E6600 = 1;
+		D_800E65FC = 1;
+	}
+	func_80071304_1593C4();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800705E0_1586A0.s")
+#endif
 
 // https://decomp.me/scratch/1UBsS
 // CURRENT(40)

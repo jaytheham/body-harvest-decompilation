@@ -464,6 +464,15 @@ extern VehicleInstance vehicleInstances[]; // 8004DCD0
 extern Unk80050ADA D_80050ADA[]; // 0x80050ADA
 extern u8 D_80050ADE[];
 extern u8 D_80050AE0[];
+extern u8 D_8008E0A8_176168[];
+extern s32 D_8009C4C4_184584[];
+extern Unk9C804 D_8009C804_1848C4[];
+extern u8 D_8009C1A8_184268[];
+extern u8 D_8009C4E4_1845A4[];
+extern u8 D_8009CD7C_184E3C[];
+extern u8 D_800A0960_188A20;
+extern char D_800A4380_18C440[];
+extern char D_800A43A8_18C468[];
 extern BuildingInstance D_80050AF0[];
 extern s8 D_80050C0B;
 extern s8 D_800519E7;
@@ -2267,6 +2276,7 @@ extern s32 D_800E662C;
 extern s32 D_800E6630;
 extern s32 D_800EAE90;
 extern s16 D_800E6632;
+extern u8 D_800E6633;
 extern s32 D_800E65D8;
 extern Unk80070F7CObj *D_800E65BC;
 extern s16 D_80047D40[];
