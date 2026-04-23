@@ -224,19 +224,15 @@ void func_8008C8A4_174964(void) {
 // doPauseMenu ?
 #ifdef NON_MATCHING
 void func_8008CF2C_174FEC(void) {
-	u8 slotScratch[9];
-	u8 *slots;
+	u8 slots[9];
 	u8 slotValue;
 	s32 i;
-	s32 language;
 	s32 x;
 	s32 y;
 	s32 texIndex;
 	s8 stickX;
 	s8 stickY;
 	s16 fade;
-
-	slots = slotScratch - 8;
 
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
@@ -311,9 +307,8 @@ void func_8008CF2C_174FEC(void) {
 		fade = D_800FCA92;
 	} else {
 		if (D_800A4344_18C404 != slotValue) {
-			language = D_800313D0;
 			D_800A4344_18C404 = slotValue;
-			switch (language) {
+			switch (D_800313D0) {
 			case 0:
 			default:
 				func_8001A54C_1B14C(D_800A428C_18C34C[slotValue], slotValue);
