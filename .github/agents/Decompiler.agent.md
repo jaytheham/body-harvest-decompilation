@@ -69,7 +69,7 @@ Identify and fix all these issues in the generated C code before proceeding to t
 
 ## Step 2: Insert C into Project
 
-Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly. Replace that line with the cleaned up C code from Step 1.
+Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly. Replace that line with the cleaned up C code from Step 1. Do not add a NON_MATCHING wrapper, that will prevent the C code from being compiled instead of the assembly.
 
 ## Step 3: Build ROM
 
