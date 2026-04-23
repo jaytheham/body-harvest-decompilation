@@ -4213,15 +4213,11 @@ void func_80079F30_4A3E0(s32 arg0) {
 extern void func_8000DC30_E830(s32 arg0, s32 arg1);
 extern void func_800137AC_143AC(void);
 
-#ifdef NON_MATCHING
-// CURRENT(10621)
+#ifdef NON_MATCHING // CURRENT(3074)
 void func_8007A038_4A4E8(void) {
 	s32 timer;
 	s32 fade;
 	s32 pad0;
-	s32 pad1;
-	Light *lookAtX;
-	Light *lookAtY;
 	LookAt lookAt;
 	u32 dlistPtrs[8];
 	Unk80052B40 rot;
@@ -4231,15 +4227,9 @@ void func_8007A038_4A4E8(void) {
 	s32 step;
 	s16 intensity;
 	s16 blend;
+	Light *lookAtLights[2];
 
-	dlistPtrs[0] = D_800948C0_64D70[0];
-	dlistPtrs[1] = D_800948C0_64D70[1];
-	dlistPtrs[2] = D_800948C0_64D70[2];
-	dlistPtrs[3] = D_800948C0_64D70[3];
-	dlistPtrs[4] = D_800948C0_64D70[4];
-	dlistPtrs[5] = D_800948C0_64D70[5];
-	dlistPtrs[6] = D_800948C0_64D70[6];
-	dlistPtrs[7] = D_800948C0_64D70[7];
+	*(DListPtrsCopy *)dlistPtrs = *(DListPtrsCopy *)D_800948C0_64D70;
 
 	if (showDemoText != 0) {
 		return;
@@ -4255,11 +4245,13 @@ void func_8007A038_4A4E8(void) {
 	fade = 0;
 	D_80052ACC = 1;
 	timer = 0x1F3;
+	step = 0x1F4;
 
-	lookAtX = &lookAt.l[0];
-	lookAtY = &lookAt.l[1];
+	lookAtLights[0] = &lookAt.l[0];
+	lookAtLights[1] = &lookAt.l[1];
 
-	for (;;) {
+	if (step != 0) {
+		for (;;) {
 		fade += 2;
 		osRecvMesg(&D_8006A8D0, &D_80068038, 1);
 		func_80011E14_12A14(0);
@@ -4268,14 +4260,14 @@ void func_8007A038_4A4E8(void) {
 		func_80004F64_5B64();
 		func_80004DDC_59DC(0, 0, 0, 0, 0xEF);
 
-		gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784]);
+		gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784] & 0x1FFFFFFF);
 		func_80005C5C_685C((u8 *)&D_802B2080, 0, 2, 0x10, 0, 0, 0x140, 0xE0, 1.0f, 1.0f, 0);
 
 		if (fade < 0x7F) {
-			gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784]);
+			gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784] & 0x1FFFFFFF);
 			func_80005844_6444(0, 0, 0, (fade << 1) & 0xFF);
 		} else {
-			gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784]);
+			gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784] & 0x1FFFFFFF);
 			func_80005844_6444(0, 0, 0, 0xFF);
 		}
 
@@ -4285,14 +4277,14 @@ void func_8007A038_4A4E8(void) {
 		gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 		gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING);
 
-		guOrtho((Mtx *)D_8005BB38, -320.0f, 320.0f, -240.0f, 240.0f, 1000.0f, -1.0f, 1.0f);
+		guOrtho((Mtx *)D_8005BB38, -320.0f, 320.0f, -240.0f, 240.0f, -1.0f, 1000.0f, 1.0f);
 		gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 		D_8005BB38 += 0x40;
 		gSPPerspNormalize(D_8005BB2C++, 0xFFFF);
 
 		guLookAtReflect((Mtx *)D_8005BB38, &lookAt, 0.0f, 0.0f, 100.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-		gSPLookAtX(D_8005BB2C++, lookAtX);
-		gSPLookAtY(D_8005BB2C++, lookAtY);
+		gSPLookAtX(D_8005BB2C++, lookAtLights[0]);
+		gSPLookAtY(D_8005BB2C++, lookAtLights[1]);
 		gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 		D_8005BB38 += 0x40;
 		gSPMatrix(D_8005BB2C++, (Mtx *)((u32)&D_80031120_31D20 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -4347,10 +4339,11 @@ void func_8007A038_4A4E8(void) {
 			break;
 		}
 
-		if (timer == 0) {
-			break;
+			if (timer == 0) {
+				break;
+			}
+			timer--;
 		}
-		timer--;
 	}
 
 	D_80052ACC = 0;
