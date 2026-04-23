@@ -139,9 +139,10 @@ void func_800704DC_4098C(void)
 }
 
 #ifdef NON_MATCHING
-// CURRENT(7230)
+// CURRENT(6365)
 void func_80070514_409C4(s16 arg0) {
 	s32 var_v1;
+	s16 missionId;
 	MissionData* temp_a0;
 	MissionData* temp_a1;
 	MissionData* var_a0;
@@ -150,6 +151,8 @@ void func_80070514_409C4(s16 arg0) {
 	if (arg0 == D_800D74AA) {
 		return;
 	}
+
+	missionId = arg0;
 
 	var_v1 = 0x29;
 	var_a0 = &D_800D6DC0[0x29];
@@ -172,8 +175,8 @@ void func_80070514_409C4(s16 arg0) {
 		return;
 	}
 
+	temp_a1 = &D_800909B0[missionId];
 	temp_a0 = &D_800D6DC0[var_v1];
-	temp_a1 = &D_800909B0[arg0];
 
 	temp_a0->unk0 = temp_a1->unk0 * 4;
 	temp_a0->unk2 = temp_a1->unk2 * 4;
@@ -188,29 +191,31 @@ void func_80070514_409C4(s16 arg0) {
 	temp_a0->unk14 = temp_a1->unk14;
 	temp_a0->unk16 = temp_a1->unk16;
 
-	temp_v0 = temp_a1->unk1C;
-	if (temp_v0 == 3) {
+	if ((temp_v0 = temp_a1->unk1C) != 3) {
+		temp_a0->unk1C = temp_v0;
+	} else {
 		temp_a1->unk1C = 0;
 		temp_a0->unk1C = 0;
-	} else {
-		temp_a0->unk1C = temp_v0;
 	}
 
-	temp_a0->unk26 = arg0;
+	temp_a0->unk26 = missionId;
 	temp_a0->unk28 = -1;
 
-	if (D_800313D0 == 0) {
+	switch (D_800313D0) {
+	case 0:
+	default:
 		temp_a0->unk1E = temp_a1->unk1E;
-	} else if (D_800313D0 == 1) {
+		break;
+	case 1:
 		temp_a0->unk1E = temp_a1->unk1A;
-	} else if (D_800313D0 == 2) {
+		break;
+	case 2:
 		temp_a0->unk1E = temp_a1->unk18;
-	} else {
-		temp_a0->unk1E = temp_a1->unk1E;
+		break;
 	}
 
 	temp_a0->unk20 = temp_a1->unk20;
-	if (arg0 == D_800D74A4) {
+	if (missionId == D_800D74A4) {
 		temp_a1->unk1C = 1;
 	}
 }
@@ -219,24 +224,23 @@ void func_80070514_409C4(s16 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(8185)
-MissionData* func_800706E8_40B98(s16 arg0) {
+// CURRENT(7186)
+MissionData* func_800706E8_40B98(s32 arg0) {
 	s32 index;
 	s32 stride;
+	s32 var_v1;
 	MissionData* entry;
 	MissionData* source;
+	u8 temp_v0;
 
 	index = 0x29;
 	if (D_800D7490 != 0) {
-		u8* ptr;
-
 		stride = 0x2A;
-		ptr = (u8*)D_800D6DC0 + (index * stride);
+		var_v1 = index;
 		while (index != 0) {
 			index--;
-			ptr -= stride;
-			if (ptr[0x16] == 0) {
-				break;
+			if (D_800D6DC0[index].unk16 != 0) {
+				var_v1 = index;
 			}
 		}
 	}
@@ -247,8 +251,8 @@ MissionData* func_800706E8_40B98(s16 arg0) {
 		return NULL;
 	}
 
-	entry = (MissionData*)((u8*)D_800D6DC0 + (index * stride));
-	source = (MissionData*)((u8*)D_800909B0 + (arg0 * stride));
+	entry = &D_800D6DC0[index];
+	source = &D_800909B0[(s16)arg0];
 
 	entry->unk0 = source->unk0 << 2;
 	entry->unk2 = source->unk2 << 2;
@@ -263,28 +267,31 @@ MissionData* func_800706E8_40B98(s16 arg0) {
 	entry->unk10 = source->unk10 << 2;
 	entry->unk16 = source->unk16;
 
-	if (source->unk1C == 3) {
+	if ((temp_v0 = source->unk1C) != 3) {
+		entry->unk1C = temp_v0;
+	} else {
 		source->unk1C = 0;
 		entry->unk1C = 0;
-	} else {
-		entry->unk1C = source->unk1C;
 	}
 
-	entry->unk26 = arg0;
+	entry->unk26 = (s16)arg0;
 	entry->unk28 = source->unk28;
 
-	if (D_800313D0 == 0) {
+	switch (D_800313D0) {
+	case 0:
+	default:
 		entry->unk1E = source->unk1E;
-	} else if (D_800313D0 == 1) {
+		break;
+	case 1:
 		entry->unk1E = source->unk1A;
-	} else if (D_800313D0 == 2) {
+		break;
+	case 2:
 		entry->unk1E = source->unk18;
-	} else {
-		entry->unk1E = source->unk1E;
+		break;
 	}
 
 	entry->unk20 = source->unk20;
-	if (arg0 == D_800D74A4) {
+	if ((s16)arg0 == D_800D74A4) {
 		func_800704DC_4098C();
 		entry->unk1C = 1;
 	}
@@ -425,22 +432,20 @@ void func_80070AEC_40F9C(s16 arg0, s16 arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_80070B68_41018(s16 arg0) {
-	u32 new_var;
+	u8 missionId;
 	s32 i;
-	new_var = 0x29;
-	i = new_var; do {
-		if (arg0 == D_800D6DC0[i].unk26 && D_800D6DC0[i].unk1C == 3) {
-			D_800909B0[D_800D6DC0[i].unk26].unk1C = 0;
+
+	i = 0x2A;
+	while (i--) {
+		missionId = D_800D6DC0[i].unk26;
+		if (arg0 == missionId && D_800D6DC0[i].unk1C == 3) {
+			D_800909B0[missionId].unk1C = 0;
 			D_800D6DC0[i].unk1C = 0;
 			D_800D6DC0[i].unk28 = 0;
 		}
-	} while (i--);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070B68_41018.s")
-#endif
 
 void func_80070BD8_41088(s16 arg0, s16 arg1) {
 	u8 missionId;
@@ -474,15 +479,12 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
 }
 
 #ifdef NON_MATCHING
-// CURRENT(13048)
+// CURRENT(10094)
 void func_80070CC4_41174(void)
 {
 	s16 selectedFileIndex;
-	s32 playAltMoveSfx;
-	MissionDataNav* missionData;
+	s32 playAltMoveSfx = 0;
 	MissionDataNav* selectedFileData;
-
-	playAltMoveSfx = 0;
 
 	if (D_8004758A < 0x15 && D_8004758A >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
 		D_80094824_64CD4 = 1;
@@ -494,20 +496,29 @@ void func_80070CC4_41174(void)
 		D_80094830_64CE0 = 0x1E;
 	}
 
-	missionData = (MissionDataNav*) D_800909B0;
 	selectedFileIndex = D_800D74A4;
-	selectedFileData = &missionData[selectedFileIndex];
+	selectedFileData = ((MissionDataNav*)D_800909B0) + selectedFileIndex;
 
 	if (D_80094824_64CD4 || --D_8009482C_64CDC == 0) {
-		if ((D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) && selectedFileData->unk22 != 0) {
+		if (D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) {
 			selectedFileIndex = selectedFileData->unk22;
-			while (selectedFileIndex != 0 && missionData[selectedFileIndex].unk1C == 3) {
-				selectedFileIndex = missionData[selectedFileIndex].unk22;
+			if (selectedFileIndex != 0) {
+				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
+					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk22;
+					if (selectedFileIndex == 0) {
+						break;
+					}
+				}
 			}
-		} else if ((D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) && selectedFileData->unk23 != 0) {
+		} else if (D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
 			selectedFileIndex = selectedFileData->unk23;
-			while (selectedFileIndex != 0 && missionData[selectedFileIndex].unk1C == 3) {
-				selectedFileIndex = missionData[selectedFileIndex].unk23;
+			if (selectedFileIndex != 0) {
+				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
+					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk23;
+					if (selectedFileIndex == 0) {
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -523,16 +534,26 @@ void func_80070CC4_41174(void)
 	}
 
 	if (D_80094828_64CD8 || --D_80094830_64CE0 == 0) {
-		if ((D_8004758B >= 0x15 || isButtonNewlyPressed(0, 0x800)) && selectedFileData->unk24 != 0) {
+		if (D_8004758B >= 0x15 || isButtonNewlyPressed(0, 0x800)) {
 			selectedFileIndex = selectedFileData->unk24;
-			while (selectedFileIndex != 0 && missionData[selectedFileIndex].unk1C == 3) {
-				selectedFileIndex = missionData[selectedFileIndex].unk24;
+			if (selectedFileIndex != 0) {
+				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
+					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk24;
+					if (selectedFileIndex == 0) {
+						break;
+					}
+				}
+				playAltMoveSfx = 1;
 			}
-			playAltMoveSfx = 1;
-		} else if ((D_8004758B < -0x14 || isButtonNewlyPressed(0, 0x400)) && selectedFileData->unk25 != 0) {
+		} else if (D_8004758B < -0x14 || isButtonNewlyPressed(0, 0x400)) {
 			selectedFileIndex = selectedFileData->unk25;
-			while (selectedFileIndex != 0 && missionData[selectedFileIndex].unk1C == 3) {
-				selectedFileIndex = missionData[selectedFileIndex].unk25;
+			if (selectedFileIndex != 0) {
+				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
+					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk25;
+					if (selectedFileIndex == 0) {
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -555,6 +576,7 @@ void func_80070CC4_41174(void)
 #endif
 
 #ifdef NON_MATCHING
+// CURRENT(9055)
 void func_800710D8_41588(s16 arg0, s16 arg1) {
 	s16 selectedMissionBefore;
 	s16 i;
@@ -574,11 +596,36 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 
 	if (D_80094834_64CE4 || --D_8009483C_64CEC == 0) {
 		if (D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) {
-			if (arg1 == 1) {
+			switch (arg1) {
+			case 2:
+					i = 0xD;
+				while (1) {
+						if (D_800D74AC > 0) {
+						D_800D74AC--;
+						} else {
+							D_800D74AC = 0xD;
+						}
+						i--;
+
+					if (D_800AED78[D_800D74AC] != 0 && D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList != NULL) {
+						break;
+					}
+
+					if (i < 0) {
+						break;
+					}
+				}
+
+					if (D_800D74AC != 0) {
+						func_80070494_40944(0x4E)->unk28 = 0x64;
+						func_800153D8_15FD8(0xCB);
+					}
+				break;
+			case 1:
 				i = 8;
 				do {
 					if (D_800D74AE < 8) {
-						D_800D74AE += 1;
+						D_800D74AE++;
 					} else {
 						D_800D74AE = 0;
 					}
@@ -587,24 +634,11 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 
 				func_80070494_40944(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
-			} else if (arg1 == 2) {
-				i = 0xD;
-				do {
-					if (D_800D74AC > 0) {
-						D_800D74AC -= 1;
-					} else {
-						D_800D74AC = 0xD;
-					}
-					i--;
-				} while ((D_800AED78[D_800D74AC] == 0 || D_800942E0_64790[((currentLevel * 13) + D_800D74AC) - 13].displayList == NULL) && i >= 0);
-
-				if (D_800D74AC != 0) {
-					func_80070494_40944(0x4E)->unk28 = 0x64;
-					func_800153D8_15FD8(0xCB);
-				}
-			} else {
+				break;
+			default:
 				func_800153D8_15FD8(0xC9);
 				D_800D74A4 = 0x48;
+				break;
 			}
 
 			D_80094834_64CE4 = 0;
@@ -614,11 +648,28 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 		}
 
 		if (D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
-			if (arg1 == 1) {
+			switch (arg1) {
+			case 2:
+					i = 0xD;
+					do {
+						if (D_800D74AC < 0xD) {
+						D_800D74AC++;
+						} else {
+							D_800D74AC = 0;
+						}
+						i--;
+				} while ((D_800AED78[D_800D74AC] == 0 || D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList == NULL) && i >= 0);
+
+					if (D_800D74AC != 0) {
+						func_80070494_40944(0x4E)->unk28 = 0x64;
+						func_800153D8_15FD8(0xCB);
+					}
+				break;
+			case 1:
 				i = 8;
 				do {
 					if (D_800D74AE > 0) {
-						D_800D74AE -= 1;
+						D_800D74AE--;
 					} else {
 						D_800D74AE = 7;
 					}
@@ -627,24 +678,11 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 
 				func_80070494_40944(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
-			} else if (arg1 == 2) {
-				i = 0xD;
-				do {
-					if (D_800D74AC < 0xD) {
-						D_800D74AC += 1;
-					} else {
-						D_800D74AC = 0;
-					}
-					i--;
-				} while ((D_800AED78[D_800D74AC] == 0 || D_800942E0_64790[((currentLevel * 13) + D_800D74AC) - 13].displayList == NULL) && i >= 0);
-
-				if (D_800D74AC != 0) {
-					func_80070494_40944(0x4E)->unk28 = 0x64;
-					func_800153D8_15FD8(0xCB);
-				}
-			} else {
+				break;
+			default:
 				D_800D74A4 = 0x49;
 				func_800153D8_15FD8(0xC9);
+				break;
 			}
 
 			D_80094834_64CE4 = 0;
@@ -5207,7 +5245,7 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 
 	selection = 0;
 	timer = -1;
-	gameplayMode = 4;
+	gameplayMode = GAMEPLAY_MODE_UNK4;
 	func_8000AFDC_BBDC();
 	func_80070940_40DF0();
 	D_800D74A6 = 0x44;
@@ -5324,7 +5362,7 @@ s32 func_8007D2B0_4D760(void) {
 	s32 renderSetupDone;
 	Gfx* dl;
 
-	gameplayMode = 0x10;
+	gameplayMode = GAMEPLAY_MODE_INVENTORY;
 	func_80070940_40DF0();
 
 	D_800D74A6 = 0x4A;
