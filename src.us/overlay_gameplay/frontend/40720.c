@@ -819,23 +819,25 @@ s32 func_80071760_41C10(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(25080)
-void func_80071900_41DB0(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
+// CURRENT(21475)
+void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 i;
 	s32 slotCol;
 	s32 slotRow;
 	u8* weaponSlot;
-	s16 baseX;
-	s16 baseY;
-	s16 sizeX;
-	s16 sizeY;
+	s32 baseX;
+	s32 baseY;
+	s32 sizeX;
+	s32 sizeY;
 	s16 posX;
 	s16 posY;
-	s32 texStep;
+	u32 texStep;
 	s32 texIndex;
 	Gfx* dl;
 
-	for (i = 0, weaponSlot = &D_8004813F; weaponSlot >= weaponSlots; weaponSlot--) {
+	i = 0;
+	weaponSlot = &D_8004813F;
+	do {
 		u8 weapon = *weaponSlot;
 
 		if (weapon == 0) {
@@ -846,9 +848,9 @@ void func_80071900_41DB0(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 		slotRow = i / 3;
 		baseX = arg0 - (s16)((64.0f * arg2) / 2.0f);
 		baseY = arg1 - (s16)((64.0f * arg3) / 2.0f);
-		posX = (s16)((f64)baseX + (((f64)slotCol * 32.0) * (f64)arg2));
+		posX = (s16)(baseX + ((slotCol * 32.0f) * arg2));
 		i++;
-		posY = (s16)((f64)baseY + (((f64)slotRow * 32.0) * (f64)arg3));
+		posY = (s16)(baseY + ((slotRow * 32.0f) * arg3));
 		texIndex = ((s32*)&D_80031474)[weapon];
 		sizeX = (s16)(12.0f * arg2);
 		sizeY = (s16)(12.0f * arg3);
@@ -871,6 +873,9 @@ void func_80071900_41DB0(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 		dl->words.w1 = 0;
 
 		dl = D_8005BB2C++;
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071900_41DB0.s")
+#endif
 		dl->words.w0 = 0xF5000100;
 		dl->words.w1 = 0x07000000;
 
@@ -953,11 +958,8 @@ void func_80071900_41DB0(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 		dl = D_8005BB2C++;
 		dl->words.w0 = 0xE7000000;
 		dl->words.w1 = 0;
-	}
+	} while (weaponSlot-- >= weaponSlots);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071900_41DB0.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(10239)
