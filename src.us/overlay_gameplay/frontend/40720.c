@@ -139,9 +139,10 @@ void func_800704DC_4098C(void)
 }
 
 #ifdef NON_MATCHING
-// CURRENT(7230)
+// CURRENT(6365)
 void func_80070514_409C4(s16 arg0) {
 	s32 var_v1;
+	s16 missionId;
 	MissionData* temp_a0;
 	MissionData* temp_a1;
 	MissionData* var_a0;
@@ -150,6 +151,8 @@ void func_80070514_409C4(s16 arg0) {
 	if (arg0 == D_800D74AA) {
 		return;
 	}
+
+	missionId = arg0;
 
 	var_v1 = 0x29;
 	var_a0 = &D_800D6DC0[0x29];
@@ -172,8 +175,8 @@ void func_80070514_409C4(s16 arg0) {
 		return;
 	}
 
+	temp_a1 = &D_800909B0[missionId];
 	temp_a0 = &D_800D6DC0[var_v1];
-	temp_a1 = &D_800909B0[arg0];
 
 	temp_a0->unk0 = temp_a1->unk0 * 4;
 	temp_a0->unk2 = temp_a1->unk2 * 4;
@@ -188,29 +191,31 @@ void func_80070514_409C4(s16 arg0) {
 	temp_a0->unk14 = temp_a1->unk14;
 	temp_a0->unk16 = temp_a1->unk16;
 
-	temp_v0 = temp_a1->unk1C;
-	if (temp_v0 == 3) {
+	if ((temp_v0 = temp_a1->unk1C) != 3) {
+		temp_a0->unk1C = temp_v0;
+	} else {
 		temp_a1->unk1C = 0;
 		temp_a0->unk1C = 0;
-	} else {
-		temp_a0->unk1C = temp_v0;
 	}
 
-	temp_a0->unk26 = arg0;
+	temp_a0->unk26 = missionId;
 	temp_a0->unk28 = -1;
 
-	if (D_800313D0 == 0) {
+	switch (D_800313D0) {
+	case 0:
+	default:
 		temp_a0->unk1E = temp_a1->unk1E;
-	} else if (D_800313D0 == 1) {
+		break;
+	case 1:
 		temp_a0->unk1E = temp_a1->unk1A;
-	} else if (D_800313D0 == 2) {
+		break;
+	case 2:
 		temp_a0->unk1E = temp_a1->unk18;
-	} else {
-		temp_a0->unk1E = temp_a1->unk1E;
+		break;
 	}
 
 	temp_a0->unk20 = temp_a1->unk20;
-	if (arg0 == D_800D74A4) {
+	if (missionId == D_800D74A4) {
 		temp_a1->unk1C = 1;
 	}
 }
