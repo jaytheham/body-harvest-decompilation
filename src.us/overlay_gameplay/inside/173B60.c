@@ -110,7 +110,116 @@ void func_8008BB6C_173C2C(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008BD18_173DD8.s")
 
+#ifdef NON_MATCHING
+void func_8008C8A4_174964(void) {
+	f32 temp_f16;
+	f32 temp_f8;
+	s32 yOffset;
+	s32 vehicleMaxHealth;
+	s32 temp_v1;
+	s16 temp_t1;
+
+	guOrtho((Mtx *)&D_800FCAD8, 0.0f, (f32) D_80068084, (f32) D_80068088, 0.0f, -1000.0f, 1000.0f, 1.0f);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	func_800039D0_45D0(0, 0, 0, D_8005BB38);
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+
+	if (D_800FCF24 != 0) {
+		D_800FCF22 += D_800FCF24;
+		if (D_800FCF22 >= 0x81) {
+			D_800FCF22 = 0x80;
+			D_800FCF24 = 0;
+		}
+		if (D_800FCF22 < 0) {
+			D_800FCF22 = 0;
+			D_800FCF24 = 0;
+		}
+	}
+
+	if (D_800FCF28 != 0) {
+		D_800FCF26 += D_800FCF28;
+		if (D_800FCF26 >= 0x81) {
+			D_800FCF26 = 0x80;
+			D_800FCF28 = 0;
+		}
+		if (D_800FCF26 < 0) {
+			D_800FCF26 = 0;
+			D_800FCF28 = 0;
+		}
+	}
+
+	if (D_800FCF26 != 0x80) {
+		yOffset = (currentLevel == 5) ? 0 : -0x14;
+
+		if (D_80052B34->unk1C > 0) {
+			vehicleMaxHealth = *(u16 *)&D_80257A3A[vehicleInstances->unk1A * 0x70];
+			temp_f8 = (f32) vehicleMaxHealth;
+			if (vehicleMaxHealth < 0) {
+				temp_f8 += 4294967296.0f;
+			}
+			func_8008BD18_173DD8(0x50, (s16) ((D_80068088 + yOffset) - 0x1E), (f32) vehicleInstances->unk1C / temp_f8, 0, &D_8025F540, 1, 0, D_800FCF44, 0x30);
+		} else {
+			func_8008BD18_173DD8(0x50, (s16) ((D_80068088 + yOffset) - 0x1E), 0.0f, 0, &D_8025F540, 0, 0, 0, 0x30);
+		}
+
+		if (currentLevel < 5) {
+			if ((D_800FCF3C != D_8004816A) && (((u8) D_800314C4 - 3) >= D_8004816A)) {
+				D_800FCF46 = 8;
+			}
+			if ((u8) D_800314C4 < D_8004816A) {
+				D_800FCF3C = (u8) D_800314C4;
+			} else {
+				D_800FCF3C = D_8004816A;
+			}
+			temp_f16 = (f32) D_800FCF3C / (f32) (u8) D_800314C4;
+			func_8008BD18_173DD8(0x50, (s16) (D_80068088 - 0x1E), temp_f16, 0, &D_8025F780, 2, 0, D_800FCF46, 0x30);
+			D_800FCF3C = D_8004816A;
+		}
+	}
+
+	if (((u8) D_800314C4 - 3) < D_8004816A) {
+		D_800FCF46 = 8 - (D_800E65AC % 8);
+	} else {
+		D_800FCF46 = 0;
+	}
+
+	if ((*(u16 *)&D_80257A3A[D_8004DCEA * 0x70] >> 2) >= D_8004DCEC) {
+		D_800FCF44 = 8 - (D_800E65AC % 8);
+	} else {
+		D_800FCF44 = 0;
+	}
+
+	drawText(&D_800A5538_18D5F8, 0, 0xFF);
+
+	if (D_8006C6C6 > 0) {
+		if ((D_8006C6C4 - 8) < D_8006C6C6) {
+			temp_t1 = D_8006C6C4 - D_8006C6C6;
+		} else {
+			temp_t1 = 8;
+			if (D_8006C6C6 < 8) {
+				temp_t1 = D_8006C6C6;
+			}
+		}
+
+		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
+		temp_v1 = 0x30 - (temp_t1 * 6);
+		func_800092B8_9EB8(0x1B8, (temp_v1 + 0xAF) * 4, 0x310, (temp_v1 + 0xD2) * 4, 0);
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPTileSync(D_8005BB2C++);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008C8A4_174964.s")
+#endif
 
 // doPauseMenu ?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008CF2C_174FEC.s")

@@ -2186,6 +2186,7 @@ extern VehicleInstance D_8004FB00;
 extern VehicleInstance D_8004F990;
 extern VehicleInstance D_8004F9EC;
 extern VehicleInstance D_8004FA48;
+extern u8 D_800A5538_18D5F8;
 extern s16 D_8015930C;
 extern char D_800A4BCC_18CC8C[];
 extern u8 D_8009E4C8_186588[];
