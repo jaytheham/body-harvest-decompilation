@@ -2611,10 +2611,10 @@ void func_80089388_59838(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	if (arg3 >= 0x96) {
 		return;
 	}
-    if (arg3 == 0xFB) {
+	if (arg3 == 0xFB) {
 		return;
 	}
-    if (D_800DE130[arg3].unk0 != 4) {
+	if (D_800DE130[arg3].unk0 != 4) {
 		return;
 	}
 	idx = func_80083B7C_5402C(arg3);
