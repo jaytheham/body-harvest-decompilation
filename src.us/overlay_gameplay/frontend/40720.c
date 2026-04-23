@@ -479,15 +479,12 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
 }
 
 #ifdef NON_MATCHING
-// CURRENT(13048)
+// CURRENT(10094)
 void func_80070CC4_41174(void)
 {
 	s16 selectedFileIndex;
-	s32 playAltMoveSfx;
-	MissionDataNav* missionData;
+	s32 playAltMoveSfx = 0;
 	MissionDataNav* selectedFileData;
-
-	playAltMoveSfx = 0;
 
 	if (D_8004758A < 0x15 && D_8004758A >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
 		D_80094824_64CD4 = 1;
@@ -499,20 +496,29 @@ void func_80070CC4_41174(void)
 		D_80094830_64CE0 = 0x1E;
 	}
 
-	missionData = (MissionDataNav*) D_800909B0;
 	selectedFileIndex = D_800D74A4;
-	selectedFileData = &missionData[selectedFileIndex];
+	selectedFileData = ((MissionDataNav*)D_800909B0) + selectedFileIndex;
 
 	if (D_80094824_64CD4 || --D_8009482C_64CDC == 0) {
-		if ((D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) && selectedFileData->unk22 != 0) {
+		if (D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) {
 			selectedFileIndex = selectedFileData->unk22;
-			while (selectedFileIndex != 0 && missionData[selectedFileIndex].unk1C == 3) {
-				selectedFileIndex = missionData[selectedFileIndex].unk22;
+			if (selectedFileIndex != 0) {
+				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
+					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk22;
+					if (selectedFileIndex == 0) {
+						break;
+					}
+				}
 			}
-		} else if ((D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) && selectedFileData->unk23 != 0) {
+		} else if (D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
 			selectedFileIndex = selectedFileData->unk23;
-			while (selectedFileIndex != 0 && missionData[selectedFileIndex].unk1C == 3) {
-				selectedFileIndex = missionData[selectedFileIndex].unk23;
+			if (selectedFileIndex != 0) {
+				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
+					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk23;
+					if (selectedFileIndex == 0) {
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -528,16 +534,26 @@ void func_80070CC4_41174(void)
 	}
 
 	if (D_80094828_64CD8 || --D_80094830_64CE0 == 0) {
-		if ((D_8004758B >= 0x15 || isButtonNewlyPressed(0, 0x800)) && selectedFileData->unk24 != 0) {
+		if (D_8004758B >= 0x15 || isButtonNewlyPressed(0, 0x800)) {
 			selectedFileIndex = selectedFileData->unk24;
-			while (selectedFileIndex != 0 && missionData[selectedFileIndex].unk1C == 3) {
-				selectedFileIndex = missionData[selectedFileIndex].unk24;
+			if (selectedFileIndex != 0) {
+				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
+					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk24;
+					if (selectedFileIndex == 0) {
+						break;
+					}
+				}
+				playAltMoveSfx = 1;
 			}
-			playAltMoveSfx = 1;
-		} else if ((D_8004758B < -0x14 || isButtonNewlyPressed(0, 0x400)) && selectedFileData->unk25 != 0) {
+		} else if (D_8004758B < -0x14 || isButtonNewlyPressed(0, 0x400)) {
 			selectedFileIndex = selectedFileData->unk25;
-			while (selectedFileIndex != 0 && missionData[selectedFileIndex].unk1C == 3) {
-				selectedFileIndex = missionData[selectedFileIndex].unk25;
+			if (selectedFileIndex != 0) {
+				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
+					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk25;
+					if (selectedFileIndex == 0) {
+						break;
+					}
+				}
 			}
 		}
 	}
