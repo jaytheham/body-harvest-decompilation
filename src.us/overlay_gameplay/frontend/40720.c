@@ -873,9 +873,6 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 		dl->words.w1 = 0;
 
 		dl = D_8005BB2C++;
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071900_41DB0.s")
-#endif
 		dl->words.w0 = 0xF5000100;
 		dl->words.w1 = 0x07000000;
 
@@ -960,6 +957,9 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 		dl->words.w1 = 0;
 	} while (weaponSlot-- >= weaponSlots);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071900_41DB0.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(10239)
@@ -3872,68 +3872,98 @@ s32 func_8007946C_4991C(u8* arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(20222)
+// CURRENT(8549)
 void func_8007949C_4994C(s32 arg0, s32 arg1) {
 	s32 i;
-	s32 j;
-	s16 tempA3;
-	s16 tempT0;
-	s16 tempT1;
-	s16 tempT2;
+	s32 tempA3;
+	s32 tempT0;
+	s32 v1;
 	Unk80047FB8* entry;
-	u8* src;
-	u8* dst;
-	volatile s32 tempArg1;
+	u8* tempS5;
+	u8* tempS7;
+	u8* tempS8;
 
-	tempArg1 = arg1;
-	tempA3 = D_80052A98[0].secondsElapsed;
-	tempT0 = D_80052A98[0].humansKilled;
-	tempT1 = D_80052A98[1].secondsElapsed;
-	tempT2 = D_80052A98[1].humansKilled;
+	tempA3 = (u16)D_80052A98[0].secondsElapsed;
+	tempT0 = *(u16*)&D_80052A98[0].humansKilled;
 
 	for (i = 0; i < 5; i++) {
-		entry = &D_80047FB8[i];
-		if (entry->unk8 < arg0) {
+		if (D_80047FB8[i].unk8 < arg0) {
+			entry = &D_80047FB8[i];
 			if (i < 4) {
-				for (j = 4; j != i; j--) {
-					D_80047FB8[j].unk0 = D_80047FB8[j - 1].unk0;
-					D_80047FB8[j].unk1 = D_80047FB8[j - 1].unk1;
-					D_80047FB8[j].unk2 = D_80047FB8[j - 1].unk2;
-					D_80047FB8[j].unk3 = D_80047FB8[j - 1].unk3;
-					D_80047FB8[j].unk4 = D_80047FB8[j - 1].unk4;
-					D_80047FB8[j].unk5 = D_80047FB8[j - 1].unk5;
-					D_80047FB8[j].unk8 = D_80047FB8[j - 1].unk8;
-					D_80047FB8[j].unkC = D_80047FB8[j - 1].unkC;
-					D_80047FB8[j].unk10 = D_80047FB8[j - 1].unk10;
+				tempS8 = (u8*)&D_80048008;
+				tempS5 = tempS8;
+				tempS7 = tempS8;
+				v1 = 4;
+				while (1) {
+					u8 tempU0;
+					u8 tempU1;
+					u8 tempU2;
+					u8 tempU3;
+					u8 tempU4;
+					u8 tempU5;
+					s32 tempW0;
+					s16 tempH0;
+					s32 tempW1;
+
+					tempU0 = tempS8[-0x14];
+					tempU1 = tempS8[-0x13];
+					tempS8[0] = tempU0;
+					tempS8[1] = tempU1;
+					tempU2 = tempS5[-0xF];
+					tempU3 = tempS5[-0x10];
+					tempU4 = tempS5[-0x11];
+					tempU5 = tempS5[-0x12];
+					tempS5[5] = tempU2;
+					tempS5[4] = tempU3;
+					tempS5[3] = tempU4;
+					tempS5[2] = tempU5;
+					tempW0 = *(s32*)(tempS7 - 0xC);
+					tempH0 = *(s16*)(tempS7 - 8);
+					tempW1 = *(s32*)(tempS7 - 4);
+					tempS5--;
+					tempS7--;
+					v1--;
+					tempS5 -= 0x13;
+					tempS7 -= 0x13;
+					tempS8 -= 0x14;
+					*(s32*)(tempS7 + 0x1C) = tempW0;
+					*(s16*)(tempS7 + 0x20) = tempH0;
+					*(s32*)(tempS7 + 0x24) = tempW1;
+					if (i == v1) {
+						break;
+					}
 				}
 			}
 
-			src = D_80047FA8;
-			dst = &entry->unk0;
-			do {
-				*dst++ = *src++;
-			} while (src < &D_80047FAE);
+			{
+				u8* src;
+				u8* dst;
+
+				src = D_80047FA8;
+				dst = &entry->unk0;
+				do {
+					*dst++ = *src++;
+				} while (src < &D_80047FAE);
+			}
 
 			entry->unkC = 0;
 			entry->unkC += tempT0;
-			entry->unkC += tempT2;
+			entry->unkC += *(u16*)&D_80052A98[1].humansKilled;
 			entry->unk10 = 0;
 			entry->unk10 = tempA3;
-			entry->unk10 += tempT1;
+			entry->unk10 += D_80052A98[1].secondsElapsed;
 			entry->unk10 += D_80052A98[2].secondsElapsed;
-			entry->unkC += D_80052A98[2].humansKilled;
+			entry->unkC += *(u16*)&D_80052A98[2].humansKilled;
 			entry->unk10 += D_80052A98[3].secondsElapsed;
-			entry->unkC += D_80052A98[3].humansKilled;
+			entry->unkC += *(u16*)&D_80052A98[3].humansKilled;
 			entry->unk10 += D_80052A98[4].secondsElapsed;
-			entry->unkC += D_80052A98[4].humansKilled;
+			entry->unkC += *(u16*)&D_80052A98[4].humansKilled;
 			entry->unk10 += D_80052A98[5].secondsElapsed;
 			entry->unk8 = arg0;
-			entry->unkC += D_80052A98[5].humansKilled;
-			break;
+			entry->unkC += *(u16*)&D_80052A98[5].humansKilled;
 		}
 	}
 
-	(void)tempArg1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007949C_4994C.s")
