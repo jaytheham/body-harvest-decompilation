@@ -4784,20 +4784,17 @@ void func_8007BEC0_4C370(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BEC0_4C370.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(9857)
+#ifdef NON_MATCHING // CURRENT(6838)
 void func_8007BFC4_4C474(void) {
-	s16 lineOffsets[100];
-	u8 textBuffer[58];
 	s16 holdCounter;
 	s16 startIndex;
+	u8 textBuffer[58];
+	s16 lineOffsets[100];
 	s16 lineCount;
-	s16 i;
+	s16 currentLine;
 	s32 line;
 	s32 row;
 	u16 fadeCounter;
-	u8* lineText;
-	u8 ch;
 
 	fadeCounter = 0x4F;
 	holdCounter = 0;
@@ -4808,41 +4805,41 @@ void func_8007BFC4_4C474(void) {
 	switch (D_800313D0) {
 	case 0:
 	default:
-		for (i = 0; (u16)i < 0x400; i++) {
-			ch = D_800933A0_63850[i];
+		for (currentLine = 0; (u16)currentLine < 0x400; currentLine = (s16)(currentLine + 1)) {
+			u8 ch = D_800933A0_63850[currentLine];
 			if ((ch == 0x40) || (ch == 0x3B)) {
 				if (ch == 0x40) {
-					lineOffsets[lineCount] = i;
-					lineCount++;
+					lineOffsets[lineCount] = currentLine;
+					lineCount = (s16)(lineCount + 1);
 				}
-				lineOffsets[lineCount] = i + 1;
-				lineCount++;
+				lineOffsets[lineCount] = currentLine + 1;
+				lineCount = (s16)(lineCount + 1);
 			}
 		}
 		break;
 	case 1:
-		for (i = 0; (u16)i < 0x400; i++) {
-			ch = D_800938A0_63D50[i];
+		for (currentLine = 0; (u16)currentLine < 0x400; currentLine = (s16)(currentLine + 1)) {
+			u8 ch = D_800938A0_63D50[currentLine];
 			if ((ch == 0x40) || (ch == 0x3B)) {
 				if (ch == 0x40) {
-					lineOffsets[lineCount] = i;
-					lineCount++;
+					lineOffsets[lineCount] = currentLine;
+					lineCount = (s16)(lineCount + 1);
 				}
-				lineOffsets[lineCount] = i + 1;
-				lineCount++;
+				lineOffsets[lineCount] = currentLine + 1;
+				lineCount = (s16)(lineCount + 1);
 			}
 		}
 		break;
 	case 2:
-		for (i = 0; (u16)i < 0x400; i++) {
-			ch = D_80093DA0_64250[i];
+		for (currentLine = 0; (u16)currentLine < 0x400; currentLine = (s16)(currentLine + 1)) {
+			u8 ch = D_80093DA0_64250[currentLine];
 			if ((ch == 0x40) || (ch == 0x3B)) {
 				if (ch == 0x40) {
-					lineOffsets[lineCount] = i;
-					lineCount++;
+					lineOffsets[lineCount] = currentLine;
+					lineCount = (s16)(lineCount + 1);
 				}
-				lineOffsets[lineCount] = i + 1;
-				lineCount++;
+				lineOffsets[lineCount] = currentLine + 1;
+				lineCount = (s16)(lineCount + 1);
 			}
 		}
 		break;
@@ -4850,9 +4847,7 @@ void func_8007BFC4_4C474(void) {
 
 	func_80013514_14114();
 
-	while (1) {
-		s16 currentLine;
-
+	do {
 		func_800791A0_49650(0);
 		func_8000AFDC_BBDC();
 
@@ -4873,8 +4868,9 @@ void func_8007BFC4_4C474(void) {
 			}
 		}
 
-		while (currentLine > 0) {
-			s16 textIndex;
+		if (currentLine > 0) {
+			do {
+			s32 row;
 			s16 textPos;
 
 			if (currentLine < 3) {
@@ -4894,6 +4890,8 @@ void func_8007BFC4_4C474(void) {
 
 			row = line + currentLine;
 			if (row < 9) {
+				u8* lineText;
+				u8 ch;
 				switch (D_800313D0) {
 				case 0:
 				default:
@@ -4912,11 +4910,13 @@ void func_8007BFC4_4C474(void) {
 					textBuffer[0] = 0;
 				} else {
 					textPos = 0;
-					while ((ch != 0x40) && (ch != 0x3B)) {
+					if (ch != 0x3B) {
+						do {
 						textBuffer[textPos] = ch;
-						textPos++;
+						textPos = (s16)(textPos + 1);
 						lineText++;
 						ch = *lineText;
+						} while ((ch != 0x40) && (ch != 0x3B));
 					}
 					textBuffer[textPos] = 0;
 				}
@@ -4924,11 +4924,8 @@ void func_8007BFC4_4C474(void) {
 				drawText(&D_800AE068_7E518, 0x80, row, textBuffer);
 			}
 
-			textIndex = currentLine - 1;
-			currentLine = textIndex;
-			if ((textIndex <= 0) || ((startIndex - 0xD) >= textIndex)) {
-				break;
-			}
+			currentLine = (s16)(currentLine - 1);
+			} while ((currentLine > 0) && ((startIndex - 0xD) < currentLine));
 		}
 
 		func_8000B044_BC44();
@@ -4941,11 +4938,9 @@ void func_8007BFC4_4C474(void) {
 		gDPFullSync(D_8005BB2C++);
 		gSPEndDisplayList(D_8005BB2C++);
 		func_8000505C_5C5C();
-		if (func_80005B30_6730() != 0) {
-			break;
-		}
-	}
+	} while (func_80005B30_6730() == 0);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BFC4_4C474.s")
 #endif
