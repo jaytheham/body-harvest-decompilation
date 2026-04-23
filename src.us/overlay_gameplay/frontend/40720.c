@@ -432,22 +432,20 @@ void func_80070AEC_40F9C(s16 arg0, s16 arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_80070B68_41018(s16 arg0) {
-	u32 new_var;
+	u8 missionId;
 	s32 i;
-	new_var = 0x29;
-	i = new_var; do {
-		if (arg0 == D_800D6DC0[i].unk26 && D_800D6DC0[i].unk1C == 3) {
-			D_800909B0[D_800D6DC0[i].unk26].unk1C = 0;
+
+	i = 0x2A;
+	while (i--) {
+		missionId = D_800D6DC0[i].unk26;
+		if (arg0 == missionId && D_800D6DC0[i].unk1C == 3) {
+			D_800909B0[missionId].unk1C = 0;
 			D_800D6DC0[i].unk1C = 0;
 			D_800D6DC0[i].unk28 = 0;
 		}
-	} while (i--);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070B68_41018.s")
-#endif
 
 void func_80070BD8_41088(s16 arg0, s16 arg1) {
 	u8 missionId;
@@ -5214,7 +5212,7 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 
 	selection = 0;
 	timer = -1;
-	gameplayMode = 4;
+	gameplayMode = GAMEPLAY_MODE_UNK4;
 	func_8000AFDC_BBDC();
 	func_80070940_40DF0();
 	D_800D74A6 = 0x44;
@@ -5331,7 +5329,7 @@ s32 func_8007D2B0_4D760(void) {
 	s32 renderSetupDone;
 	Gfx* dl;
 
-	gameplayMode = 0x10;
+	gameplayMode = GAMEPLAY_MODE_INVENTORY;
 	func_80070940_40DF0();
 
 	D_800D74A6 = 0x4A;
