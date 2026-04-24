@@ -1430,6 +1430,7 @@ s32 func_80085CB8_56168(s16 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// CURRENT(4055)
 void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, s16 arg8,
 					 u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
 	f32 sp34;
@@ -1455,17 +1456,16 @@ void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 	D_800DE840[temp_v0].unk8 = arg0;
 	D_800DE840[temp_v0].unkA = arg1;
 	D_800DE840[temp_v0].unkC = arg2;
-
-	sp34 = arg3;
-	sp38 = arg4;
-	sp3C = arg5;
-	func_800837B4_53C64(&sp34, &sp34);
-
 	D_800DE840[temp_v0].unk2 = arg9;
 	D_800DE840[temp_v0].unkE = arg10;
 	D_800DE840[temp_v0].unkF = arg11;
 	D_800DE840[temp_v0].unk10 = arg12;
 	D_800DE840[temp_v0].unk12 = arg13;
+
+	sp34 = arg3;
+	sp38 = arg4;
+	sp3C = arg5;
+	func_800837B4_53C64(&sp34, &sp34);
 
 	temp_s1 = func_80085CB8_56168(arg8);
 	i = 0;
