@@ -310,7 +310,7 @@ void func_80081FF0_524A0(void);
 void func_80082074_52524(void);
 void func_800823D8_52888(s32 arg0, s32 arg1);
 void func_800829E4_52E94(s32 arg0);
-void func_8008FD9C_6024C(void);
+s32 func_8008FD9C_6024C(void);
 void func_8008FDF0_602A0(void);
 void func_80090648_60AF8(void);
 u8 func_80089648_171708(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6);

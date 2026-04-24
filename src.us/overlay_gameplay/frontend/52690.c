@@ -5197,19 +5197,10 @@ void func_8008FBD4_60084(void) {
 #endif
 
 /* Appends a display list command and calls func_8008D98C */
-#ifdef NON_MATCHING
 s32 func_8008FD9C_6024C(void) {
-	Gfx *dl;
-
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w1 = (s32)&D_80031160 & 0x1FFFFFFF;
-	dl->words.w0 = 0x01020040;
+	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)&D_80031160 & 0x1FFFFFFF), G_MTX_LOAD | G_MTX_MODELVIEW);
 	return func_8008D98C_5DE3C(&D_8005BB2C);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008FD9C_6024C.s")
-#endif
 
 /* Compute delta positions and call update chain */
 void func_8008FDF0_602A0(void) {
