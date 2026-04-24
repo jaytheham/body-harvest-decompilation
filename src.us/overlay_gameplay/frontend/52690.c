@@ -1040,14 +1040,14 @@ void func_8008472C_54BDC(u8 arg0) {
 void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4);
 
 #ifdef NON_MATCHING
+// CURRENT(59773)
 void func_800847E4_54C94(u8 arg0) {
+	u8 color[3];
 	Unk800DE130 *entry130;
-	Unk800DE130 *entry130Base;
 	Unk800DE840 *entry840;
-	u8 count;
-	u8 colorR;
-	u8 colorG;
-	u8 colorB;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
 	u8 *view;
 	Vec3f origin;
 	Vec3f vecA;
@@ -1063,6 +1063,7 @@ void func_800847E4_54C94(u8 arg0) {
 	f32 p0x;
 	f32 p0y;
 	f32 p0z;
+	volatile u8 count;
 	f32 p1x;
 	f32 p1y;
 	f32 p1z;
@@ -1073,17 +1074,16 @@ void func_800847E4_54C94(u8 arg0) {
 	u16 ringScale;
 
 	entry130 = &D_800DE130[arg0];
-	entry130Base = entry130;
 	count = entry130->unk4 - 1;
 
 	if ((D_800DE0B8 == 1) || (D_800DE0B9 != 0)) {
-		colorR = 0x82;
-		colorG = 0xC8;
-		colorB = 0xFF;
+		color[0] = 0x82;
+		color[1] = 0xC8;
+		color[2] = 0xFF;
 	} else {
-		colorR = 0xFF;
-		colorG = 0x9E;
-		colorB = 0x16;
+		color[0] = 0xFF;
+		color[1] = 0x9E;
+		color[2] = 0x16;
 	}
 
 	entry840 = &D_800DE840[entry130->unkA];
@@ -1103,21 +1103,26 @@ void func_800847E4_54C94(u8 arg0) {
 	D_8005BB2C->words.w0 = 0xFCFFFFFF;
 	D_8005BB2C->words.w1 = 0xFFFDF8FC;
 	D_8005BB2C++;
-	gDPSetPrimColor(D_8005BB2C++, 0, 0, colorR, colorG, colorB, 0);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, color[0], color[1], color[2], 0);
 	gDPPipeSync(D_8005BB2C++);
 
 	triCount = count;
 	if ((s32)triCount > 0) {
 		distBias = (f64)((f64)(dist / 4.0f) + 800.0);
 		do {
-			entry840 = &D_800DE840[entry840->unk4];
+				f32 scale;
+			f32 texScale;
 
-			func_800838B8_53D68((f32)(distBias * ((f64)entry840->unkE * 0.00390625)), D_800DE0C0, (f32 *)&vecA);
-			func_800838B8_53D68((f32)(distBias * ((f64)entry840->unkE * 0.00390625)), D_800DE0CC, (f32 *)&vecB);
+			entry840 = &D_800DE840[entry840->unk4];
+				scale = (f32)(distBias * ((f64)*(s16 *)((u8 *)entry840 + 0xE) * 0.00390625));
+
+				func_800838B8_53D68(scale, D_800DE0C0, (f32 *)&vecA);
+				func_800838B8_53D68(scale, D_800DE0CC, (f32 *)&vecB);
 
 			view = (u8 *)entry840 + 8;
-			t0 = (f32)view[2] / 256.0f;
-			t1 = (f32)(view[2] + 0xA) / 256.0f;
+			texScale = 256.0f;
+			t0 = (f32)view[2] / texScale;
+			t1 = (f32)(view[2] + 0xA) / texScale;
 
 			switch (*((s8 *)view + 1)) {
 				case 0:
@@ -1223,8 +1228,8 @@ void func_800847E4_54C94(u8 arg0) {
 	D_8005BB2C->words.w1 = 0x0007C07C;
 	D_8005BB2C++;
 
-	ringScale = *(u16 *)((u8 *)&D_800DE840[entry130Base->unkA] + 2);
-	func_800853A8_55858(&origin, &colorR, D_800DE0E4, ringScale, D_800DE0BB);
+	ringScale = *(u16 *)((u8 *)&D_800DE840[entry130->unkA] + 2);
+	func_800853A8_55858(&origin, color, D_800DE0E4, ringScale, D_800DE0BB);
 
 	gDPPipeSync(D_8005BB2C++);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
@@ -5480,3 +5485,4 @@ void func_80090648_60AF8(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80090648_60AF8.s")
 #endif
+
