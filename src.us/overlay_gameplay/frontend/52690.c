@@ -1478,8 +1478,6 @@ void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80085CEC_5619C.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(260)
 void func_80085EA8_56358(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	u8 temp_s2;
 	s16 temp_v0;
@@ -1530,9 +1528,6 @@ void func_80085EA8_56358(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 		} while ((var_s0 = temp_t8, temp_t8 < temp_a0));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80085EA8_56358.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(11871)
