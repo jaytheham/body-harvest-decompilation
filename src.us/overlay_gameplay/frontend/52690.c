@@ -837,22 +837,20 @@ void func_80083DBC_5426C(s16 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80083DBC_5426C.s")
 #endif
 
-#ifdef NON_MATCHING
 /* Free 3 linked entries from D_800DE840 chain starting at arg0 */
 void func_80083F8C_5443C(s16 arg0, u8 arg1) {
-	s16 next1, next2;
+	s16 sp1E;
+	u8 sp27;
 
 	if (arg0 >= 0 && arg0 < 450 && arg1 < 150) {
-		next1 = D_800DE840[arg0].unk4;
-		func_80083DBC_5426C(arg0, arg1);
-		next2 = D_800DE840[next1].unk4;
-		func_80083DBC_5426C(next1, arg1);
-		func_80083DBC_5426C(next2, arg1);
+		sp1E = D_800DE840[arg0].unk4;
+		sp27 = arg1;
+		func_80083DBC_5426C(arg0 & 0xFFFFFFFFu, arg1);
+		arg0 = D_800DE840[sp1E].unk4;
+		func_80083DBC_5426C(sp1E, sp27);
+		func_80083DBC_5426C(arg0, sp27);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80083F8C_5443C.s")
-#endif
 
 /* Calls func_80083DBC twice if arg0 and arg1 are in range */
 void func_8008404C_544FC(s16 arg0, u8 arg1) {
