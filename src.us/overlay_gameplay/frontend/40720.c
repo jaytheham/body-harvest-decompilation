@@ -138,6 +138,7 @@ void func_800704DC_4098C(void)
   } while (var_v1--);
 }
 
+// https://decomp.me/scratch/TczFE
 #ifdef NON_MATCHING
 // CURRENT(6365)
 void func_80070514_409C4(s16 arg0) {
@@ -1894,22 +1895,17 @@ void func_80075710_45BC0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075710_45BC0.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(240)
-void func_80075B64_46014(u8 arg0) {
+void func_80075B64_46014(s16 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
-	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x00, 0x00, 0x00, arg0 & 0xFF);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x00, 0x00, 0x00, arg0);
 	gDPPipeSync(D_8005BB2C++);
 	gDPFillRectangle(D_8005BB2C++, 0, 0, 320, 240);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075B64_46014.s")
-#endif
 
 // Show version info on title screen if slot 3 named GRIMLN
 void func_80075C84_46134(void) {

@@ -567,6 +567,9 @@ segments:
       - [0x500A00, bin, general_gameplay_models]
 #        - [0x500A00, 0x501900, "bin", "textures"]
 #        - [0x501900, 0x504100, "bin", "alpha_one"]
+      - [0x501380, ci4, models/alpha_one/tex_501380, 64, 16]
+      - [0x501580, palette, models/alpha_one/tex_501380]
+      - [0x5015A0, bin]
 #        - [0x504110, 0x504858, "bin", "human_01"] # Each is used as a frame of animation!
 #        - [0x504858, 0x504FA0, "bin", "human_02"]
 #        - [0x504FA0, 0x5056E8, "bin", "human_03"]
@@ -583,6 +586,8 @@ segments:
 #        - [0x509640, 0x509BA8, "bin", "human_14"]
 #        - [0x509BA8, 0x50A118, "bin", "human_15"]
 # 514xxx prototype human running animation ?
+# 52EB10 HUD compass icon
+# 532BA0 HUD waypoint, harvester, shield generator icons
 
       - [0x55B0A0, bin, item_models]
 # item textures
@@ -668,15 +673,15 @@ segments:
 #    770c70                Boss monsters model bank
       - [0x791C20, bin, misc_interior_models]
       - [0x7A4400, bin, greece_interior_models]
-      - [0x7E6E50, bin, greece_interior_textures]
+      - [0x7E6E50, bin, greece_interior_textures] # MIO0
       - [0x7F9530, bin, java_interior_models]
-      - [0x83B9B0, bin, java_interior_textures]
+      - [0x83B9B0, bin, java_interior_textures] # MIO0
       - [0x8463D0, bin, america_interior_models]
-      - [0x88BE20, bin, america_interior_textures]
+      - [0x88BE20, bin, america_interior_textures] # MIO0
       - [0x898450, bin, siberia_interior_models]
-      - [0x8D9D80, bin, siberia_interior_textures]
+      - [0x8D9D80, bin, siberia_interior_textures] # MIO0
       - [0x8E4084, bin, comet_interior_models]
-      - [0x8F3850, bin, comet_interior_textures]
+      - [0x8F3850, bin, comet_interior_textures] # MIO0
 # 94e500 Daisy portrait (not compressed)
 # 94fb00 ? portrait (not compressed)
 # 951100 Robot Helper portrait (not compressed)
