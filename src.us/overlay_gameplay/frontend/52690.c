@@ -5105,13 +5105,9 @@ void func_8008FAAC_5FF5C(void) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(1070)
 void func_8008FBD4_60084(void) {
 	u8 pad;
-	u8 sp46;
-	u8 sp45;
-	u8 sp44;
+	struct { u8 unk0; u8 unk1; u8 unk2; } sp44;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u8 *)((s32)&D_100DC00 & 0x1FFFFFFF));
@@ -5130,20 +5126,17 @@ void func_8008FBD4_60084(void) {
 	D_800DE12D = 0x20;
 	D_800DE12E = 0x20;
 	D_800DE118.x = D_800DE0B0.unk0;
-	sp44 = 0x19;
 	D_800DE118.y = D_800DE0B0.unk2;
-	sp45 = 0xFF;
-	sp46 = 0x28;
-	pad = 0;
 	D_800DE118.z = D_800DE0B0.unk4;
-	D_800DE124 = &sp44;
+	sp44.unk0 = 0x19;
+	sp44.unk1 = 0xFF;
+	sp44.unk2 = 0x28;
+	pad = 0;
+	D_800DE124 = &sp44.unk0;
 	D_800DE12C = 0xF0;
 	D_800DE128 = 450.0f;
 	func_8008D14C_5D5FC();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008FBD4_60084.s")
-#endif
 
 /* Appends a display list command and calls func_8008D98C */
 s32 func_8008FD9C_6024C(void) {
