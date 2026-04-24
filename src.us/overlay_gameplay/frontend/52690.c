@@ -3542,41 +3542,33 @@ void func_8008BAD8_5BF88(u8 arg0) {
 	}
 }
 
-// CURRENT(475)
-#ifdef NON_MATCHING
 void func_8008BB38_5BFE8(u8 arg0) {
 	s16 idx;
-	Unk800DE840 *entry;
 	s16 *ptrA1;
 	s16 *ptrA0;
 
 	idx = D_800DE130[arg0].unk6;
-	if ((idx != -5) && (idx != -6)) {
-		while (1) {
-			entry = &D_800DE840[idx];
-			ptrA1 = (s16 *)((u8 *)entry + 8);
-			ptrA0 = ptrA1;
+	if (idx == -5) return;
+	if (idx == -6) return;
 
-			if (ptrA1[3] == -1) {
-				idx = entry->unk4;
-			} else {
-				if (ptrA1[3] == 0) {
-					func_800840C4_54574(arg0);
-					func_80083B14_53FC4(arg0);
-					return;
-				}
-				ptrA0[3]--;
-				idx = entry->unk4;
-			}
-			if ((idx == -5) || (idx == -6)) {
+	do {
+		ptrA0 = (s16 *)((u8 *)&D_800DE840[idx] + 8);
+		ptrA1 = ptrA0;
+
+		if (*(s16 *)&D_800DE840[idx].unkE == -1) {
+			idx = D_800DE840[idx].unk4;
+		} else {
+			if (ptrA1[3] == 0) {
+				func_800840C4_54574(arg0);
+				func_80083B14_53FC4(arg0);
 				return;
 			}
+			ptrA0[3]--;
+			idx = D_800DE840[idx].unk4;
 		}
-	}
+		if (idx == -5) return;
+	} while (idx != -6);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008BB38_5BFE8.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(28873)
