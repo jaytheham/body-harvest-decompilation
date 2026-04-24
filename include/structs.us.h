@@ -2314,3 +2314,7 @@ typedef struct {
 	/* 0x01 */ s8 unk1;
 } UnkS8Pair; /* size = 0x02 */
 
+typedef struct {
+	u32 words[8];
+} DListPtrsCopy;
+

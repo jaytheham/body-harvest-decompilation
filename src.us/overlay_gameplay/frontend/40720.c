@@ -478,8 +478,7 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
   }
 }
 
-#ifdef NON_MATCHING
-// CURRENT(10094)
+#ifdef NON_MATCHING // CURRENT(10050)
 void func_80070CC4_41174(void)
 {
 	s16 selectedFileIndex;
@@ -575,11 +574,10 @@ void func_80070CC4_41174(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070CC4_41174.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(9055)
+#ifdef NON_MATCHING // CURRENT(6340)
 void func_800710D8_41588(s16 arg0, s16 arg1) {
 	s16 selectedMissionBefore;
-	s16 i;
+	s32 i;
 
 	D_800D74A8 = (D_800D74A4 - arg0) - 1;
 	selectedMissionBefore = D_800D74A4;
@@ -599,22 +597,18 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			switch (arg1) {
 			case 2:
 					i = 0xD;
-				while (1) {
-						if (D_800D74AC > 0) {
-						D_800D74AC--;
-						} else {
+				do {
+						if (D_800D74AC <= 0) {
 							D_800D74AC = 0xD;
+						} else {
+						D_800D74AC--;
 						}
 						i--;
 
 					if (D_800AED78[D_800D74AC] != 0 && D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList != NULL) {
 						break;
 					}
-
-					if (i < 0) {
-						break;
-					}
-				}
+				} while ((s16)i >= 0);
 
 					if (D_800D74AC != 0) {
 						func_80070494_40944(0x4E)->unk28 = 0x64;
@@ -630,7 +624,7 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 						D_800D74AE = 0;
 					}
 					i--;
-				} while (weaponSlots[D_800D74AE] == 0 && i >= 0);
+				} while (weaponSlots[D_800D74AE] == 0 && (s16)i >= 0);
 
 				func_80070494_40944(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
@@ -651,14 +645,26 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			switch (arg1) {
 			case 2:
 					i = 0xD;
-					do {
-						if (D_800D74AC < 0xD) {
-						D_800D74AC++;
-						} else {
+				while (1) {
+						if (D_800D74AC >= 0xD) {
 							D_800D74AC = 0;
+						} else {
+						D_800D74AC++;
 						}
 						i--;
-				} while ((D_800AED78[D_800D74AC] == 0 || D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList == NULL) && i >= 0);
+
+					if (D_800AED78[D_800D74AC] != 0) {
+						if (D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList != NULL) {
+							break;
+						}
+					}
+
+					if ((s16)i >= 0) {
+						continue;
+					}
+
+					break;
+				}
 
 					if (D_800D74AC != 0) {
 						func_80070494_40944(0x4E)->unk28 = 0x64;
@@ -674,14 +680,13 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 						D_800D74AE = 7;
 					}
 					i--;
-				} while (weaponSlots[D_800D74AE] == 0 && i >= 0);
+				} while (weaponSlots[D_800D74AE] == 0 && (s16)i >= 0);
 
 				func_80070494_40944(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
 				break;
 			default:
-				D_800D74A4 = 0x49;
-				func_800153D8_15FD8(0xC9);
+				(D_800D74A4 = 0x49), func_800153D8_15FD8(0xC9);
 				break;
 			}
 
@@ -819,23 +824,25 @@ s32 func_80071760_41C10(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(25080)
-void func_80071900_41DB0(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
+// CURRENT(21475)
+void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 i;
 	s32 slotCol;
 	s32 slotRow;
 	u8* weaponSlot;
-	s16 baseX;
-	s16 baseY;
-	s16 sizeX;
-	s16 sizeY;
+	s32 baseX;
+	s32 baseY;
+	s32 sizeX;
+	s32 sizeY;
 	s16 posX;
 	s16 posY;
-	s32 texStep;
+	u32 texStep;
 	s32 texIndex;
 	Gfx* dl;
 
-	for (i = 0, weaponSlot = &D_8004813F; weaponSlot >= weaponSlots; weaponSlot--) {
+	i = 0;
+	weaponSlot = &D_8004813F;
+	do {
 		u8 weapon = *weaponSlot;
 
 		if (weapon == 0) {
@@ -846,9 +853,9 @@ void func_80071900_41DB0(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 		slotRow = i / 3;
 		baseX = arg0 - (s16)((64.0f * arg2) / 2.0f);
 		baseY = arg1 - (s16)((64.0f * arg3) / 2.0f);
-		posX = (s16)((f64)baseX + (((f64)slotCol * 32.0) * (f64)arg2));
-		i++;
-		posY = (s16)((f64)baseY + (((f64)slotRow * 32.0) * (f64)arg3));
+		posX = (s16)(baseX + ((slotCol * 32.0f) * arg2));
+		i = (i + 1) & 0xFF;
+		posY = (s16)(baseY + ((slotRow * 32.0f) * arg3));
 		texIndex = ((s32*)&D_80031474)[weapon];
 		sizeX = (s16)(12.0f * arg2);
 		sizeY = (s16)(12.0f * arg3);
@@ -953,14 +960,13 @@ void func_80071900_41DB0(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 		dl = D_8005BB2C++;
 		dl->words.w0 = 0xE7000000;
 		dl->words.w1 = 0;
-	}
+	} while (weaponSlot-- >= weaponSlots);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071900_41DB0.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(10239)
+#ifdef NON_MATCHING // CURRENT(2173)
 void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	s32 weaponType;
 	volatile s32 textureIndex;
@@ -975,104 +981,54 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 
 	textureIndex = ((s32*)&D_80031474)[weaponType];
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xBA000E02;
-	dl->words.w1 = 0x00008000;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xBA001301;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xFD100000;
-	dl->words.w1 = (u32)D_80260500;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE8000000;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xF5000100;
-	dl->words.w1 = 0x07000000;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE6000000;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xF0000000;
-	dl->words.w1 = 0x073FC000;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE7000000;
-	dl->words.w1 = 0;
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_80260500);
+	gDPTileSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x0100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
+	gDPPipeSync(D_8005BB2C++);
 
 	{
 		f32 scale;
 
-		scale = 2.0f;
-		arg2 *= scale;
-		arg3 *= scale;
+		scale = (f32)2;
+		arg2 = arg2 * scale;
+		arg3 = arg3 * scale;
 	}
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xFA000100;
 	if (weaponSlots[D_800D74AE] != 0) {
-		dl->words.w1 = 0x00AAD2FF;
+		gDPSetPrimColor(D_8005BB2C++, 1, 0, 0x00, 0xAA, 0xD2, 0xFF);
 	} else {
-		dl->words.w1 = 0x002346FF;
+		gDPSetPrimColor(D_8005BB2C++, 1, 0, 0x00, 0x23, 0x46, 0xFF);
 	}
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xB9000002;
-	dl->words.w1 = 0;
+	gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+	{
+		Gfx* dl;
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xB900031D;
-	dl->words.w1 = 0x0F0A4000;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xFC119623;
-	dl->words.w1 = 0xFF2FFFFF;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xFD500000;
-	dl->words.w1 = ((u32)(D_8025CCC0 + ((s32)textureIndex * 0x240))) & 0x1FFFFFFF;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xF5500000;
-	dl->words.w1 = 0x07000000;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE6000000;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xF3000000;
-	dl->words.w1 = 0x0711F2AB;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE7000000;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xF5480600;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xF2000000;
-	dl->words.w1 = 0x0005C05C;
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xFD500000;
+		dl->words.w1 = ((u32)(D_8025CCC0 + ((s32)textureIndex * 0x240))) & 0x1FFFFFFF;
+	}
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 287, 683);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (23 << 2), (23 << 2));
 
 	sizeX = (s32)(12.0f * arg2);
 	sizeY = (s32)(12.0f * arg3);
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE7000000;
-	dl->words.w1 = 0;
+	gDPPipeSync(D_8005BB2C++);
 
 	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE4000000 | ((((arg0 + sizeX + 0xC) * 4) & 0xFFF) << 12) | (((arg1 + sizeY + 0xC) * 4) & 0xFFF);
-	dl->words.w1 = ((((arg0 - sizeX + 0xC) * 4) & 0xFFF) << 12) | (((arg1 - sizeY + 0xC) * 4) & 0xFFF);
+	dl->words.w0 = 0xE4000000 | ((((arg0 + sizeX + 0xC) << 2) & 0xFFF) << 12) | (((arg1 + sizeY + 0xC) << 2) & 0xFFF);
+	dl->words.w1 = ((((arg0 - sizeX + 0xC) << 2) & 0xFFF) << 12) | (((arg1 - sizeY + 0xC) << 2) & 0xFFF);
 
 	dl = D_8005BB2C++;
 	dl->words.w0 = 0xB4000000;
@@ -1080,11 +1036,9 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 
 	dl = D_8005BB2C++;
 	dl->words.w0 = 0xB3000000;
-	dl->words.w1 = ((s32)((1.0f / arg2) * 1024.0f) << 16) | (((s32)((1.0f / arg3) * 1024.0f)) & 0xFFFF);
+	dl->words.w1 = ((s32)((1.0f / arg2) * 1024.0f) << 0x10) | (((s32)((1.0f / arg3) * 1024.0f)) & 0xFFFF);
 
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE7000000;
-	dl->words.w1 = 0;
+	gDPPipeSync(D_8005BB2C++);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071E80_42330.s")
@@ -3870,68 +3824,98 @@ s32 func_8007946C_4991C(u8* arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(20222)
+// CURRENT(8549)
 void func_8007949C_4994C(s32 arg0, s32 arg1) {
 	s32 i;
-	s32 j;
-	s16 tempA3;
-	s16 tempT0;
-	s16 tempT1;
-	s16 tempT2;
+	s32 tempA3;
+	s32 tempT0;
+	s32 v1;
 	Unk80047FB8* entry;
-	u8* src;
-	u8* dst;
-	volatile s32 tempArg1;
+	u8* tempS5;
+	u8* tempS7;
+	u8* tempS8;
 
-	tempArg1 = arg1;
-	tempA3 = D_80052A98[0].secondsElapsed;
-	tempT0 = D_80052A98[0].humansKilled;
-	tempT1 = D_80052A98[1].secondsElapsed;
-	tempT2 = D_80052A98[1].humansKilled;
+	tempA3 = (u16)D_80052A98[0].secondsElapsed;
+	tempT0 = *(u16*)&D_80052A98[0].humansKilled;
 
 	for (i = 0; i < 5; i++) {
-		entry = &D_80047FB8[i];
-		if (entry->unk8 < arg0) {
+		if (D_80047FB8[i].unk8 < arg0) {
+			entry = &D_80047FB8[i];
 			if (i < 4) {
-				for (j = 4; j != i; j--) {
-					D_80047FB8[j].unk0 = D_80047FB8[j - 1].unk0;
-					D_80047FB8[j].unk1 = D_80047FB8[j - 1].unk1;
-					D_80047FB8[j].unk2 = D_80047FB8[j - 1].unk2;
-					D_80047FB8[j].unk3 = D_80047FB8[j - 1].unk3;
-					D_80047FB8[j].unk4 = D_80047FB8[j - 1].unk4;
-					D_80047FB8[j].unk5 = D_80047FB8[j - 1].unk5;
-					D_80047FB8[j].unk8 = D_80047FB8[j - 1].unk8;
-					D_80047FB8[j].unkC = D_80047FB8[j - 1].unkC;
-					D_80047FB8[j].unk10 = D_80047FB8[j - 1].unk10;
+				tempS8 = (u8*)&D_80048008;
+				tempS5 = tempS8;
+				tempS7 = tempS8;
+				v1 = 4;
+				while (1) {
+					u8 tempU0;
+					u8 tempU1;
+					u8 tempU2;
+					u8 tempU3;
+					u8 tempU4;
+					u8 tempU5;
+					s32 tempW0;
+					s16 tempH0;
+					s32 tempW1;
+
+					tempU0 = tempS8[-0x14];
+					tempU1 = tempS8[-0x13];
+					tempS8[0] = tempU0;
+					tempS8[1] = tempU1;
+					tempU2 = tempS5[-0xF];
+					tempU3 = tempS5[-0x10];
+					tempU4 = tempS5[-0x11];
+					tempU5 = tempS5[-0x12];
+					tempS5[5] = tempU2;
+					tempS5[4] = tempU3;
+					tempS5[3] = tempU4;
+					tempS5[2] = tempU5;
+					tempW0 = *(s32*)(tempS7 - 0xC);
+					tempH0 = *(s16*)(tempS7 - 8);
+					tempW1 = *(s32*)(tempS7 - 4);
+					tempS5--;
+					tempS7--;
+					v1--;
+					tempS5 -= 0x13;
+					tempS7 -= 0x13;
+					tempS8 -= 0x14;
+					*(s32*)(tempS7 + 0x1C) = tempW0;
+					*(s16*)(tempS7 + 0x20) = tempH0;
+					*(s32*)(tempS7 + 0x24) = tempW1;
+					if (i == v1) {
+						break;
+					}
 				}
 			}
 
-			src = D_80047FA8;
-			dst = &entry->unk0;
-			do {
-				*dst++ = *src++;
-			} while (src < &D_80047FAE);
+			{
+				u8* src;
+				u8* dst;
+
+				src = D_80047FA8;
+				dst = &entry->unk0;
+				do {
+					*dst++ = *src++;
+				} while (src < &D_80047FAE);
+			}
 
 			entry->unkC = 0;
 			entry->unkC += tempT0;
-			entry->unkC += tempT2;
+			entry->unkC += *(u16*)&D_80052A98[1].humansKilled;
 			entry->unk10 = 0;
 			entry->unk10 = tempA3;
-			entry->unk10 += tempT1;
+			entry->unk10 += D_80052A98[1].secondsElapsed;
 			entry->unk10 += D_80052A98[2].secondsElapsed;
-			entry->unkC += D_80052A98[2].humansKilled;
+			entry->unkC += *(u16*)&D_80052A98[2].humansKilled;
 			entry->unk10 += D_80052A98[3].secondsElapsed;
-			entry->unkC += D_80052A98[3].humansKilled;
+			entry->unkC += *(u16*)&D_80052A98[3].humansKilled;
 			entry->unk10 += D_80052A98[4].secondsElapsed;
-			entry->unkC += D_80052A98[4].humansKilled;
+			entry->unkC += *(u16*)&D_80052A98[4].humansKilled;
 			entry->unk10 += D_80052A98[5].secondsElapsed;
 			entry->unk8 = arg0;
-			entry->unkC += D_80052A98[5].humansKilled;
-			break;
+			entry->unkC += *(u16*)&D_80052A98[5].humansKilled;
 		}
 	}
 
-	(void)tempArg1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007949C_4994C.s")
@@ -4181,15 +4165,11 @@ void func_80079F30_4A3E0(s32 arg0) {
 extern void func_8000DC30_E830(s32 arg0, s32 arg1);
 extern void func_800137AC_143AC(void);
 
-#ifdef NON_MATCHING
-// CURRENT(10621)
+#ifdef NON_MATCHING // CURRENT(3074)
 void func_8007A038_4A4E8(void) {
 	s32 timer;
 	s32 fade;
 	s32 pad0;
-	s32 pad1;
-	Light *lookAtX;
-	Light *lookAtY;
 	LookAt lookAt;
 	u32 dlistPtrs[8];
 	Unk80052B40 rot;
@@ -4199,15 +4179,9 @@ void func_8007A038_4A4E8(void) {
 	s32 step;
 	s16 intensity;
 	s16 blend;
+	Light *lookAtLights[2];
 
-	dlistPtrs[0] = D_800948C0_64D70[0];
-	dlistPtrs[1] = D_800948C0_64D70[1];
-	dlistPtrs[2] = D_800948C0_64D70[2];
-	dlistPtrs[3] = D_800948C0_64D70[3];
-	dlistPtrs[4] = D_800948C0_64D70[4];
-	dlistPtrs[5] = D_800948C0_64D70[5];
-	dlistPtrs[6] = D_800948C0_64D70[6];
-	dlistPtrs[7] = D_800948C0_64D70[7];
+	*(DListPtrsCopy *)dlistPtrs = *(DListPtrsCopy *)D_800948C0_64D70;
 
 	if (showDemoText != 0) {
 		return;
@@ -4223,11 +4197,13 @@ void func_8007A038_4A4E8(void) {
 	fade = 0;
 	D_80052ACC = 1;
 	timer = 0x1F3;
+	step = 0x1F4;
 
-	lookAtX = &lookAt.l[0];
-	lookAtY = &lookAt.l[1];
+	lookAtLights[0] = &lookAt.l[0];
+	lookAtLights[1] = &lookAt.l[1];
 
-	for (;;) {
+	if (step != 0) {
+		for (;;) {
 		fade += 2;
 		osRecvMesg(&D_8006A8D0, &D_80068038, 1);
 		func_80011E14_12A14(0);
@@ -4236,14 +4212,14 @@ void func_8007A038_4A4E8(void) {
 		func_80004F64_5B64();
 		func_80004DDC_59DC(0, 0, 0, 0, 0xEF);
 
-		gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784]);
+		gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784] & 0x1FFFFFFF);
 		func_80005C5C_685C((u8 *)&D_802B2080, 0, 2, 0x10, 0, 0, 0x140, 0xE0, 1.0f, 1.0f, 0);
 
 		if (fade < 0x7F) {
-			gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784]);
+			gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784] & 0x1FFFFFFF);
 			func_80005844_6444(0, 0, 0, (fade << 1) & 0xFF);
 		} else {
-			gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784]);
+			gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784] & 0x1FFFFFFF);
 			func_80005844_6444(0, 0, 0, 0xFF);
 		}
 
@@ -4253,14 +4229,14 @@ void func_8007A038_4A4E8(void) {
 		gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 		gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING);
 
-		guOrtho((Mtx *)D_8005BB38, -320.0f, 320.0f, -240.0f, 240.0f, 1000.0f, -1.0f, 1.0f);
+		guOrtho((Mtx *)D_8005BB38, -320.0f, 320.0f, -240.0f, 240.0f, -1.0f, 1000.0f, 1.0f);
 		gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 		D_8005BB38 += 0x40;
 		gSPPerspNormalize(D_8005BB2C++, 0xFFFF);
 
 		guLookAtReflect((Mtx *)D_8005BB38, &lookAt, 0.0f, 0.0f, 100.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-		gSPLookAtX(D_8005BB2C++, lookAtX);
-		gSPLookAtY(D_8005BB2C++, lookAtY);
+		gSPLookAtX(D_8005BB2C++, lookAtLights[0]);
+		gSPLookAtY(D_8005BB2C++, lookAtLights[1]);
 		gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 		D_8005BB38 += 0x40;
 		gSPMatrix(D_8005BB2C++, (Mtx *)((u32)&D_80031120_31D20 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -4315,10 +4291,11 @@ void func_8007A038_4A4E8(void) {
 			break;
 		}
 
-		if (timer == 0) {
-			break;
+			if (timer == 0) {
+				break;
+			}
+			timer--;
 		}
-		timer--;
 	}
 
 	D_80052ACC = 0;
@@ -4337,9 +4314,11 @@ void func_8007A754_4AC04(void) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(25552)
+// CURRENT(22177)
 void func_8007A774_4AC24(s32 arg0) {
 	s16 phase;
+	s32 pad0;
+	s32 pad1;
 	s16 timer;
 	u16 perspNorm;
 	s16 rotX;
@@ -4354,92 +4333,92 @@ void func_8007A774_4AC24(s32 arg0) {
 	s32 isAnimated;
 
 	phase = D_800D7962;
-	D_80052A8C++;
+	D_80052A8C = D_80052A8C + 1;
 
 	isAnimated = 0;
-	rotY = 0x1E0;
-	posY = 0x2A8;
-	posX = 0x50;
-	rotX = -0x2D;
-	rotZ = 0;
+	rotX = 0x154;
 	posZ = 0;
+	rotZ = 0;
 	tilt = 0;
 	blend = 0;
+	posX = 0x50;
+	posY = 0x2A8;
+	rotY = 0x1E0;
 
 	cameraPulse = 0;
 
-	if ((u32)(phase - 5) < 6U) {
-		switch (phase - 5) {
-		case 0:
-			timer = D_800D7960;
-			D_800D7960 = timer + 1;
-			if (timer >= 121) {
-				D_800D7962 = phase + 1;
-				D_800D7960 = 0;
-			}
-			break;
-
-		case 1:
-			timer = D_800D7960;
-			D_800D7960 = timer + 1;
-			if (timer >= 71) {
-				D_800D7960 = 0;
-				D_800D7962 = phase + 1;
-			}
-			break;
-
-		case 2:
-			timer = D_800D7960;
-			tilt = (s16)(-100 * timer);
-			D_800D7960 = timer + 1;
-			if (timer >= 101) {
-				D_800D7960 = 0;
-				D_800D7962 = phase + 1;
-			}
-			break;
-
-		case 3:
-			timer = D_800D7960;
-			rotX = (s16)(D_800AE868_7ED18 - ((f64)timer * D_800AE870_7ED20));
-			posX = (s16)(((f64)timer * 8.5) + 80.0);
-			posY = (s16)(D_800AE878_7ED28 - ((f64)timer * D_800AE880_7ED30));
-			blend = (s16)(((timer * 125) * 4) - 10000);
-			D_800D7960 = timer + 1;
-			if (timer >= 21) {
-				D_800D7960 = 0;
-				D_800D7962 = phase + 1;
-			}
-			break;
-
-		case 4:
-			timer = D_800D7960;
-			posZ = (s16)(-332 * timer);
-			posX = (s16)(250 - timer);
-			rotX = -0x2D;
-			posY = (s16)(D_800AE888_7ED38 + ((f64)timer * D_800AE890_7ED40));
-			D_800D7960 = timer + 1;
-			if (timer >= 51) {
-				D_800D7960 = 0;
-				D_800D7962 = phase + 1;
-			}
-			break;
-
-		case 5:
-			timer = D_800D7960;
-			isAnimated = 1;
-			rotX = -0x2D;
-			rotZ = (s16)(-3 * timer);
-			posZ = -15000;
-			posX = 200;
-			posY = 200;
-			D_800D7960 = timer + 1;
-			if (timer >= 301) {
-				D_800D7962 = phase + 1;
-				D_800D7960 = 0;
-			}
-			break;
+	switch (phase - 5) {
+	case 0:
+		timer = D_800D7960;
+		rotY = (s16)(((((s32)timer << 4) - timer) << 5) / 120);
+		D_800D7960 = timer + 1;
+		if (timer >= 121) {
+			D_800D7962 = phase + 1;
+			D_800D7960 = 0;
 		}
-	} else {
+		break;
+
+	case 1:
+		timer = D_800D7960;
+		D_800D7960 = timer + 1;
+		if (timer >= 71) {
+			D_800D7960 = 0;
+			D_800D7962 = phase + 1;
+		}
+		break;
+
+	case 2:
+		timer = D_800D7960;
+		blend = (s16)(-100 * timer);
+		D_800D7960 = timer + 1;
+		if (timer >= 101) {
+			D_800D7960 = 0;
+			D_800D7962 = phase + 1;
+		}
+		break;
+
+	case 3:
+		timer = D_800D7960;
+		rotX = (s16)(D_800AE868_7ED18 - ((f64)timer * D_800AE870_7ED20));
+		posX = (s16)(((f64)timer * 8.5) + 80.0);
+		posY = (s16)(D_800AE878_7ED28 - ((f64)timer * D_800AE880_7ED30));
+		blend = (s16)(((timer * 125) * 4) - 10000);
+		D_800D7960 = timer + 1;
+		if (timer >= 21) {
+			D_800D7960 = 0;
+			D_800D7962 = phase + 1;
+		}
+		break;
+
+	case 4:
+		timer = D_800D7960;
+		posZ = (s16)(-332 * timer);
+		posX = (s16)(250 - timer);
+		rotX = -0x2D;
+		posY = (s16)(D_800AE888_7ED38 + ((f64)timer * D_800AE890_7ED40));
+		D_800D7960 = timer + 1;
+		if (timer >= 51) {
+			D_800D7960 = 0;
+			D_800D7962 = phase + 1;
+		}
+		break;
+
+	case 5:
+		timer = D_800D7960;
+		isAnimated = 1;
+		rotX = -0x2D;
+		rotZ = (s16)(-3 * timer);
+		posZ = -15000;
+		posX = 200;
+		posY = 200;
+		D_800D7960 = timer + 1;
+		if (timer >= 301) {
+			D_800D7962 = phase + 1;
+			D_800D7960 = 0;
+		}
+		break;
+
+	default:
 		posX = 200;
 		posY = 200;
 		rotX = -0x2D;
@@ -4811,20 +4790,17 @@ void func_8007BEC0_4C370(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BEC0_4C370.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(9857)
+#ifdef NON_MATCHING // CURRENT(6838)
 void func_8007BFC4_4C474(void) {
-	s16 lineOffsets[100];
-	u8 textBuffer[58];
 	s16 holdCounter;
 	s16 startIndex;
+	u8 textBuffer[58];
+	s16 lineOffsets[100];
 	s16 lineCount;
-	s16 i;
+	s16 currentLine;
 	s32 line;
 	s32 row;
 	u16 fadeCounter;
-	u8* lineText;
-	u8 ch;
 
 	fadeCounter = 0x4F;
 	holdCounter = 0;
@@ -4835,41 +4811,41 @@ void func_8007BFC4_4C474(void) {
 	switch (D_800313D0) {
 	case 0:
 	default:
-		for (i = 0; (u16)i < 0x400; i++) {
-			ch = D_800933A0_63850[i];
+		for (currentLine = 0; (u16)currentLine < 0x400; currentLine = (s16)(currentLine + 1)) {
+			u8 ch = D_800933A0_63850[currentLine];
 			if ((ch == 0x40) || (ch == 0x3B)) {
 				if (ch == 0x40) {
-					lineOffsets[lineCount] = i;
-					lineCount++;
+					lineOffsets[lineCount] = currentLine;
+					lineCount = (s16)(lineCount + 1);
 				}
-				lineOffsets[lineCount] = i + 1;
-				lineCount++;
+				lineOffsets[lineCount] = currentLine + 1;
+				lineCount = (s16)(lineCount + 1);
 			}
 		}
 		break;
 	case 1:
-		for (i = 0; (u16)i < 0x400; i++) {
-			ch = D_800938A0_63D50[i];
+		for (currentLine = 0; (u16)currentLine < 0x400; currentLine = (s16)(currentLine + 1)) {
+			u8 ch = D_800938A0_63D50[currentLine];
 			if ((ch == 0x40) || (ch == 0x3B)) {
 				if (ch == 0x40) {
-					lineOffsets[lineCount] = i;
-					lineCount++;
+					lineOffsets[lineCount] = currentLine;
+					lineCount = (s16)(lineCount + 1);
 				}
-				lineOffsets[lineCount] = i + 1;
-				lineCount++;
+				lineOffsets[lineCount] = currentLine + 1;
+				lineCount = (s16)(lineCount + 1);
 			}
 		}
 		break;
 	case 2:
-		for (i = 0; (u16)i < 0x400; i++) {
-			ch = D_80093DA0_64250[i];
+		for (currentLine = 0; (u16)currentLine < 0x400; currentLine = (s16)(currentLine + 1)) {
+			u8 ch = D_80093DA0_64250[currentLine];
 			if ((ch == 0x40) || (ch == 0x3B)) {
 				if (ch == 0x40) {
-					lineOffsets[lineCount] = i;
-					lineCount++;
+					lineOffsets[lineCount] = currentLine;
+					lineCount = (s16)(lineCount + 1);
 				}
-				lineOffsets[lineCount] = i + 1;
-				lineCount++;
+				lineOffsets[lineCount] = currentLine + 1;
+				lineCount = (s16)(lineCount + 1);
 			}
 		}
 		break;
@@ -4877,9 +4853,7 @@ void func_8007BFC4_4C474(void) {
 
 	func_80013514_14114();
 
-	while (1) {
-		s16 currentLine;
-
+	do {
 		func_800791A0_49650(0);
 		func_8000AFDC_BBDC();
 
@@ -4900,8 +4874,9 @@ void func_8007BFC4_4C474(void) {
 			}
 		}
 
-		while (currentLine > 0) {
-			s16 textIndex;
+		if (currentLine > 0) {
+			do {
+			s32 row;
 			s16 textPos;
 
 			if (currentLine < 3) {
@@ -4921,6 +4896,8 @@ void func_8007BFC4_4C474(void) {
 
 			row = line + currentLine;
 			if (row < 9) {
+				u8* lineText;
+				u8 ch;
 				switch (D_800313D0) {
 				case 0:
 				default:
@@ -4939,11 +4916,13 @@ void func_8007BFC4_4C474(void) {
 					textBuffer[0] = 0;
 				} else {
 					textPos = 0;
-					while ((ch != 0x40) && (ch != 0x3B)) {
+					if (ch != 0x3B) {
+						do {
 						textBuffer[textPos] = ch;
-						textPos++;
+						textPos = (s16)(textPos + 1);
 						lineText++;
 						ch = *lineText;
+						} while ((ch != 0x40) && (ch != 0x3B));
 					}
 					textBuffer[textPos] = 0;
 				}
@@ -4951,11 +4930,8 @@ void func_8007BFC4_4C474(void) {
 				drawText(&D_800AE068_7E518, 0x80, row, textBuffer);
 			}
 
-			textIndex = currentLine - 1;
-			currentLine = textIndex;
-			if ((textIndex <= 0) || ((startIndex - 0xD) >= textIndex)) {
-				break;
-			}
+			currentLine = (s16)(currentLine - 1);
+			} while ((currentLine > 0) && ((startIndex - 0xD) < currentLine));
 		}
 
 		func_8000B044_BC44();
@@ -4968,11 +4944,9 @@ void func_8007BFC4_4C474(void) {
 		gDPFullSync(D_8005BB2C++);
 		gSPEndDisplayList(D_8005BB2C++);
 		func_8000505C_5C5C();
-		if (func_80005B30_6730() != 0) {
-			break;
-		}
-	}
+	} while (func_80005B30_6730() == 0);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BFC4_4C474.s")
 #endif
@@ -5557,8 +5531,7 @@ void func_8007D7E0_4DC90(void) {
 	D_800D7A8D = 0x0F;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(10692)
+#ifdef NON_MATCHING // CURRENT(3220)
 s32 func_8007D91C_4DDCC(s32 arg0) {
 	s32 fadeState;
 	s32 flags;
@@ -5570,12 +5543,18 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 	lookAtIndex = 0;
 
 	if (D_80094934_64DE4 != 0) {
-		if (arg0 == 0) {
+		switch (arg0) {
+		case 0:
 			func_8007EA0C_4EEBC(&D_80098FF0[0]);
-		} else if (arg0 == 1) {
+			break;
+		case 1:
 			func_8007EA0C_4EEBC(&D_80098FF0[1]);
-		} else if (arg0 == 2) {
+			break;
+		case 2:
 			func_8007EA0C_4EEBC(&D_80098FF0[2]);
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -5593,7 +5572,7 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 		i = (i + 1) & 0xFF;
 	}
 
-	if (D_80094948_64DF8 != 0) {
+	if (D_80094948_64DF8) {
 		func_80081F9C_5244C();
 	}
 
@@ -5609,7 +5588,7 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 	func_80081FF0_524A0();
 	func_8007EBB8_4F068();
 	func_8008FDF0_602A0();
-	if (fadeState == 0) {
+	if (!fadeState) {
 		func_8007EB98_4F048();
 	}
 
@@ -5699,7 +5678,7 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 	}
 
 	func_8008FD9C_6024C();
-	if ((D_800D7970 != 0) && ((D_800D7970 == 1) || (D_800D7970 == 2))) {
+	if ((D_800D7970 == 1) || (D_800D7970 == 2U)) {
 		func_8007FBF8_500A8();
 	}
 	func_80090648_60AF8();
