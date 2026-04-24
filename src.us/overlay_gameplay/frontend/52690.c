@@ -1413,18 +1413,15 @@ void func_800857D4_55C84(u8 arg0, f32 *arg1, s32 arg2, s32 arg3) {
 
 /* Clamps a value to the range [1, 80] */
 #ifdef NON_MATCHING
-// CURRENT(465)
+// CURRENT(260)
 s32 func_80085CB8_56168(s16 arg0) {
 	if (arg0 >= 0x51) {
-		return 0x50;
+		arg0 = 0x50;
+	} else if (arg0 == 0) {
+		arg0 = 1;
 	}
-	if (arg0 != 0) {
-		return arg0;
-	}
-	arg0 = 1;
 	return arg0;
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80085CB8_56168.s")
 #endif
