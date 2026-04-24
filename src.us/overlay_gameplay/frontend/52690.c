@@ -4950,27 +4950,26 @@ void func_8008F534_5F9E4(u8 arg0, u8 arg1) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(801)
+// CURRENT(726)
 void func_8008F574_5FA24(void) {
+	u8 var_s0;
 	s32 i;
-	s32 var_s0;
-	u8* var_a0;
-	s32 var_a1;
+	u8 *var_a0;
+	Unk800311A0 *var_v0;
 
 	D_800DE0EB = 0;
-	D_800DE0B0.unk0 = 0x78;
-	D_800DE0B0.unk2 = -0x26C;
-	D_800DE0B0.unk4 = -0xDFC;
-
-	var_s0 = 0xFF;
 	var_a0 = D_800DE0E8;
-	var_a1 = 0x28;
+	var_v0 = &D_800DE0B0;
+	var_s0 = 0xFF;
+	var_v0->unk0 = 0x78;
+	var_v0->unk2 = -0x26C;
+	var_v0->unk4 = -0xDFC;
 	D_800DE0E4[0] = var_s0;
-	D_800DE0E4[1] = D_800DE0E4[0];
-	D_800DE0E4[2] = D_800DE0E4[1];
-	var_a0[0] = var_a1;
-	var_a0[1] = var_a1;
-	var_a0[2] = var_a1;
+	D_800DE0E4[1] = var_s0;
+	D_800DE0E4[2] = var_s0;
+	var_a0[0] = 0x28;
+	var_a0[1] = 0x28;
+	var_a0[2] = 0x28;
 	func_8008DBEC_5E09C();
 
 	for (i = 0; i < 0x96; i = (i + 1) & 0xFF) {
