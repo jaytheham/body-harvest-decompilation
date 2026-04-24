@@ -4760,7 +4760,7 @@ void func_8008E9DC_5EE8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg
 }
 
 /* Allocates an entry and sets DE7C/DEB8 fields */
-void func_8008EAB0_5EF60(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4) {
+void func_8008EAB0_5EF60(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s8 arg4) {
 	u8 slot;
 
 	slot = func_8008DC34_5E0E4(arg0, arg1, arg2, 5, 10);
@@ -4769,12 +4769,12 @@ void func_8008EAB0_5EF60(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(654)
+// CURRENT(2)
 s16 func_8008EB20_5EFD0(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5, u8 arg6) {
 	s32 pad0;
-	s32 pad1;
-	s16 ret;
 	u8 slot;
+	s16 pad1;
+	s16 ret;
 	u8 i;
 
 	func_800038E0_44E0();
@@ -4789,7 +4789,7 @@ s16 func_8008EB20_5EFD0(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg
 	ret = func_80086C58_57108(arg0, arg1, arg2, arg3, arg5, (u8)arg6);
 	if (ret != -3) {
 		if (arg3 >= 0x51) {
-			func_8008EAB0_5EF60(arg0, arg1, arg2, (s8)(((arg3 / 10) + 0x14) & 0xFF), 6);
+			func_8008EAB0_5EF60(arg0, arg1, arg2, (u8)((arg3 / 10) + 0x14), 6);
 		}
 
 		func_8008DE44_5E2F4(func_8008DC34_5E0E4(arg0, arg1, arg2, 6, arg3 * 8), 0xB4);
