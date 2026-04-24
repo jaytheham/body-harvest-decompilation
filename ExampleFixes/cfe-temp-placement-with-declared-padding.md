@@ -23,6 +23,24 @@ The declared vars `sp34`, `sp30`, `sp2C` must NOT be the last declarations (put 
 
 ---
 
+### Unused non-last `s32` can move a live `s16` down by one word without changing frame size
+
+If a function already has the correct frame size, but a live `s16` local is saved at the wrong halfword slot, adding one unused `s32` BEFORE it can shift that `s16` down by 4 bytes while leaving the total frame size unchanged.
+
+Example pattern:
+
+```c
+s32 pad0;
+s16 index;
+u8 *temp_s0;
+```
+
+In one matched case this moved `index` from `sp+0x26` to the target `sp+0x22`, with the frame staying at `0x28`. The extra `s32` consumed the otherwise-unused top word of the local area, and the following live `s16` dropped into the next lower aligned halfword slot.
+
+As above, the padding variable must not be the last declaration or IDO may remove its stack slot.
+
+---
+
 ### Alignment assign-first pattern produces delay-slot move
 
 For the alignment code `beqz v1, ALIGNED; delay: move a1, v0` pattern:
