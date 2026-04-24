@@ -4886,20 +4886,16 @@ void func_8008EEC4_5F374(void) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(905)
+// CURRENT(20)
 void func_8008F1E0_5F690(void) {
-	f32 sp90[3];
 	f32 temp_f20;
-	f64 temp_f22;
-	f64 temp_f24;
 	s16 temp_a0;
-	s16 temp_a1;
 	s32 var_s2;
 	s32 var_s3;
 	s32 var_s4;
 	s32 var_s5;
-	s32 temp_hi;
 	s32 var_s1;
+	f32 sp90[3];
 
 	if (D_800DE0B7 == 1) {
 		var_s1 = 0;
@@ -4911,41 +4907,37 @@ void func_8008F1E0_5F690(void) {
 		var_s4 = 0x5A;
 		var_s3 = 0xB4;
 		var_s2 = 0x168;
-		temp_f24 = 180.0;
-		temp_f22 = 3.14159265358979323846;
 
 		do {
 			sp90[2] = 0.0f;
-			temp_hi = func_800038E0_44E0() % var_s2;
-			temp_a1 = temp_hi;
-			temp_a0 = temp_hi;
+			temp_a0 = func_800038E0_44E0() % var_s2;
 
 			if (temp_a0 == 0) {
 				sp90[1] = 500.0f;
 				sp90[0] = 0.0f;
 			} else if (temp_a0 < var_s4) {
-				temp_f20 = (f32)(((f64)(f32)temp_a1 * temp_f22) / temp_f24);
+				temp_f20 = (f32)(((f64)(f32)temp_a0 * 3.14159265358979323846) / 180.0);
 				sp90[1] = cosf(temp_f20) * 500.0f;
 				sp90[0] = sinf(temp_f20) * 500.0f;
 			} else if (temp_a0 == var_s4) {
 				sp90[1] = 0.0f;
 				sp90[0] = 500.0f;
 			} else if (temp_a0 < var_s3) {
-				temp_f20 = (f32)(((f64)(f32)(var_s3 - temp_a1) * temp_f22) / temp_f24);
+				temp_f20 = (f32)(((f64)(f32)(var_s3 - temp_a0) * 3.14159265358979323846) / 180.0);
 				sp90[1] = cosf(temp_f20) * -500.0f;
 				sp90[0] = sinf(temp_f20) * 500.0f;
 			} else if (temp_a0 == var_s3) {
 				sp90[1] = -500.0f;
 				sp90[0] = 0.0f;
 			} else if (temp_a0 < var_s5) {
-				temp_f20 = (f32)(((f64)(f32)(temp_a1 - var_s3) * temp_f22) / temp_f24);
+				temp_f20 = (f32)(((f64)(f32)(temp_a0 - var_s3) * 3.14159265358979323846) / 180.0);
 				sp90[1] = cosf(temp_f20) * -500.0f;
 				sp90[0] = sinf(temp_f20) * -500.0f;
 			} else if (temp_a0 == var_s5) {
 				sp90[1] = 0.0f;
 				sp90[0] = -500.0f;
 			} else if (temp_a0 < var_s2) {
-				temp_f20 = (f32)(((f64)(f32)(var_s2 - temp_a1) * temp_f22) / temp_f24);
+				temp_f20 = (f32)(((f64)(f32)(var_s2 - temp_a0) * 3.14159265358979323846) / 180.0);
 				sp90[1] = cosf(temp_f20) * 500.0f;
 				sp90[0] = sinf(temp_f20) * -500.0f;
 			}
