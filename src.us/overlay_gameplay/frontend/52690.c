@@ -1412,8 +1412,6 @@ void func_800857D4_55C84(u8 arg0, f32 *arg1, s32 arg2, s32 arg3) {
 #endif
 
 /* Clamps a value to the range [1, 80] */
-#ifdef NON_MATCHING
-// CURRENT(260)
 s32 func_80085CB8_56168(s16 arg0) {
 	if (arg0 >= 0x51) {
 		arg0 = 0x50;
@@ -1422,9 +1420,6 @@ s32 func_80085CB8_56168(s16 arg0) {
 	}
 	return arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80085CB8_56168.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(4055)
@@ -1480,12 +1475,7 @@ void func_80085EA8_56358(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 	s16 temp_v0;
 	s32 temp_v0_2;
 	u8 temp_a0;
-	u8 temp_arg6;
-	s16 temp_arg2;
-	s16 temp_arg3;
-	u8 temp_arg4;
-	s32 var_s0;
-	u8 temp_t8;
+	u8 var_s0;
 
 	temp_s2 = func_80083A58_53F08(1);
 	if (temp_s2 == 0xFB) {
@@ -1504,15 +1494,11 @@ void func_80085EA8_56358(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 	D_800DE840[temp_v0].unkE = 0xFF;
 	D_800DE840[temp_v0].unkF = 0xFF;
 	D_800DE840[temp_v0].unk10 = 0xFF;
+	D_800DE840[temp_v0].unk2 = arg6;
+	D_800DE840[temp_v0].unkC = arg2;
+	D_800DE840[temp_v0].unk14 = arg3;
 	*((u8*) &D_800DE840[temp_v0].unk12) = 2;
-	temp_arg6 = arg6;
-	temp_arg2 = arg2;
-	temp_arg3 = arg3;
-	temp_arg4 = arg4;
-	D_800DE840[temp_v0].unk2 = temp_arg6;
-	D_800DE840[temp_v0].unkC = temp_arg2;
-	D_800DE840[temp_v0].unk14 = temp_arg3;
-	D_800DE840[temp_v0].unk11 = temp_arg4;
+	D_800DE840[temp_v0].unk11 = arg4;
 
 	temp_v0_2 = func_80085CB8_56168(arg5);
 	temp_a0 = temp_v0_2 & 0xFF;
@@ -1521,8 +1507,7 @@ void func_80085EA8_56358(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 		do {
 			func_800857D4_55C84(temp_s2, 0, 0, 0);
 			var_s0++;
-			temp_t8 = var_s0 & 0xFF;
-		} while ((var_s0 = temp_t8, temp_t8 < temp_a0));
+		} while (var_s0 < temp_a0);
 	}
 }
 
