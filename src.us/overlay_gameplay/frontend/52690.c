@@ -3953,7 +3953,6 @@ void func_8008C8E0_5CD90(void) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(5)
 void func_8008CC3C_5D0EC(void) {
 	u8 i;
 
