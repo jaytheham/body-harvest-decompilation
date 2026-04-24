@@ -4391,13 +4391,13 @@ void func_8008DF40_5E3F0(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(450)
+// CURRENT(440)
 void func_8008DFA0_5E450(void) {
 	s16 life;
 	s32 var_s0;
-	u8 temp_a0;
-	u8 temp_t9;
+	s32 temp_a0;
 	u8 temp_v1;
+	u8 temp_t9;
 	s32 var_s2;
 	s32 var_v1;
 	Unk800E1980 *entry;
@@ -4412,7 +4412,7 @@ void func_8008DFA0_5E450(void) {
 			life = entry->unkA;
 			if (life != 0) {
 				entryBytes = (u8 *)entry;
-				temp_v1 = entryBytes[0xF];
+				temp_v1 = entry->unkF;
 				if (temp_v1 == 0) {
 					temp_a0 = entry->unkC;
 					temp_v1 = temp_a0;
@@ -4434,7 +4434,7 @@ void func_8008DFA0_5E450(void) {
 						func_8008DF40_5E3F0((u8)var_s0);
 					}
 				} else {
-					entryBytes[0xF] = temp_v1 - 1;
+					entry->unkF = temp_v1 - 1;
 				}
 
 				var_v1 = (var_s2 - 1) & 0xFF;
