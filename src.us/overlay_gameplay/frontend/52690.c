@@ -904,21 +904,21 @@ void func_8008412C_545DC(u8 arg0, u8 arg1) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(3017)
+// CURRENT(2707)
 u8 func_80084324_547D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7) {
 	s16 pad0;
 	s16 pad1;
 	s16 sp2A;
 	s16 temp_v0_2;
-	s32 temp_s2;
+	u8 temp_s2;
 	s32 temp_v0;
 	s32 temp_t1;
 	s32 var_s0;
 	s16 *temp_v1;
 
 	temp_v0 = func_80083A58_53F08(0);
-	temp_s2 = temp_v0 & 0xFF;
 	if (temp_v0 != 0xFB) {
+		temp_s2 = temp_v0 & 0xFF;
 		temp_v0_2 = func_80083B7C_5402C(temp_s2 & 0xFF);
 		sp2A = temp_v0_2;
 		if (temp_v0_2 == -3) {
