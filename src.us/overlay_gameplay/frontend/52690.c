@@ -33,7 +33,7 @@ void func_800823C8_52878(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(1271)
+// CURRENT(410)
 void func_800823D8_52888(s32 arg0, s32 arg1) {
 	Unk80052B40 spA8 = D_80094A6C_64F1C;
 	Unk80052B40 spA0 = D_80094A74_64F24;
@@ -41,7 +41,6 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	Frontend52690Entry *entry = (Frontend52690Entry *)D_80094A1C_64ECC + arg1;
 	s32 entryUnk4Plus1 = entry->unk4 + 1;
 	s32 entryUnk0 = entry->unk0;
-	volatile s16 spAC;
 	s16 fade = 0;
 	s32 span;
 
@@ -49,7 +48,7 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 		fade = 0x7F - arg0;
 	}
 
-	spAC = 0x76C - (fade * 8);
+	spA8.unk4 = 0x76C - (fade * 8);
 	sp98.unk0 = (fade * 3) + 0x80;
 	sp98.unk2 = (fade * 3) + 0x80;
 	sp98.unk4 = (fade * 3) + 0x80;
@@ -85,9 +84,9 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	sp98.unk0 = (fade * 3) + 0x80;
 	sp98.unk2 = (fade * 3) + 0x80;
 	sp98.unk4 = (fade * 3) + 0x80;
-	spAC = (fade * 8) - 0x76C;
 
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, 255, 255, 255, fade * 2);
+	spA8.unk4 = (fade * 8) - 0x76C;
 	func_800039D0_45D0(&spA8, &spA0, &sp98, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	D_8005BB38 += 0x40;
