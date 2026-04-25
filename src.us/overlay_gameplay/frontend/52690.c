@@ -33,16 +33,16 @@ void func_800823C8_52878(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(410)
+// CURRENT(356)
 void func_800823D8_52888(s32 arg0, s32 arg1) {
 	Unk80052B40 spA8 = D_80094A6C_64F1C;
 	Unk80052B40 spA0 = D_80094A74_64F24;
 	Unk80052B40 sp98 = D_80094A7C_64F2C;
 	Frontend52690Entry *entry = (Frontend52690Entry *)D_80094A1C_64ECC + arg1;
-	s32 entryUnk4Plus1 = entry->unk4 + 1;
-	s32 entryUnk0 = entry->unk0;
-	s16 fade = 0;
 	s32 span;
+	s32 entryUnk0 = entry->unk0;
+	s32 entryUnk4Plus1 = entry->unk4 + 1;
+	s16 fade = 0;
 
 	if (arg0 < 0x80) {
 		fade = 0x7F - arg0;
@@ -80,7 +80,6 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 			fade = 0x7F;
 		}
 	}
-
 	sp98.unk0 = (fade * 3) + 0x80;
 	sp98.unk2 = (fade * 3) + 0x80;
 	sp98.unk4 = (fade * 3) + 0x80;
