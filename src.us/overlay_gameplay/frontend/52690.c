@@ -32,6 +32,8 @@ void func_800823C0_52870(void) {
 void func_800823C8_52878(s32 arg0, s32 arg1, s32 arg2) {
 }
 
+#ifdef NON_MATCHING
+// CURRENT(356)
 void func_800823D8_52888(s32 arg0, s32 arg1) {
 	Unk80052B40 spA8 = D_80094A6C_64F1C;
 	Unk80052B40 spA0 = D_80094A74_64F24;
@@ -102,6 +104,9 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gDPPipeSync(D_8005BB2C++);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800823D8_52888.s")
+#endif
 
 void func_80082868_52D18(s32 arg0) {
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, 255, 255, 255, 255);
