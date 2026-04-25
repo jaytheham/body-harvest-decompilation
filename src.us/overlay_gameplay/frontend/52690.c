@@ -5352,11 +5352,8 @@ void func_8008FE98_60348(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008FE98_60348.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(957)
 void func_80090648_60AF8(void) {
 	s16 i;
-	FrontendCamState** cam;
 	u16 perspNorm;
 
 	gDPPipeSync(D_8005BB2C++);
@@ -5366,23 +5363,23 @@ void func_80090648_60AF8(void) {
 	func_80004CC8_58C8();
 	func_80004D38_5938();
 
-	cam = &D_800D7A18;
-	guPerspective((Mtx*)D_8005BB38, &perspNorm, (f32)(*cam)->unk3A, D_800D7974, D_800D8510, D_800AED68_7F218, 1.0f);
+	guPerspective((Mtx*)D_8005BB38, &perspNorm, (f32)((FrontendCamState*)D_800D7A18)->unk3A, D_800D7974, D_800D8510,
+				  D_800AED68_7F218, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, perspNorm);
 	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
 	D_8005BB38 += 0x40;
 
 	guLookAt((Mtx*)D_8005BB38,
-			 (*cam)->unk10.x,
-			 (*cam)->unk10.y,
-			 (*cam)->unk10.z,
-			 (*cam)->unk1C.x,
-			 (*cam)->unk1C.y,
-			 (*cam)->unk1C.z,
-			 (*cam)->unk28.x,
-			 (*cam)->unk28.y,
-			 (*cam)->unk28.z);
+			 ((FrontendCamState*)D_800D7A18)->unk10.x,
+			 ((FrontendCamState*)D_800D7A18)->unk10.y,
+			 ((FrontendCamState*)D_800D7A18)->unk10.z,
+			 ((FrontendCamState*)D_800D7A18)->unk1C.x,
+			 ((FrontendCamState*)D_800D7A18)->unk1C.y,
+			 ((FrontendCamState*)D_800D7A18)->unk1C.z,
+			 ((FrontendCamState*)D_800D7A18)->unk28.x,
+			 ((FrontendCamState*)D_800D7A18)->unk28.y,
+			 ((FrontendCamState*)D_800D7A18)->unk28.z);
 
 	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 	D_8005BB38 += 0x40;
@@ -5406,7 +5403,4 @@ void func_80090648_60AF8(void) {
 
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80090648_60AF8.s")
-#endif
 
