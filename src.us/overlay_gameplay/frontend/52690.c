@@ -4391,13 +4391,13 @@ void func_8008DF40_5E3F0(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(440)
+// CURRENT(410)
 void func_8008DFA0_5E450(void) {
 	s16 life;
 	s32 var_s0;
 	s32 temp_a0;
 	u8 temp_v1;
-	u8 temp_t9;
+	s32 temp_t9;
 	s32 var_s2;
 	s32 var_v1;
 	Unk800E1980 *entry;
