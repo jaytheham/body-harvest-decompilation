@@ -1025,44 +1025,48 @@ void func_800722A4_42754() {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(8100)
+// CURRENT(2310)
 void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	s32 padTop0;
 	s32 padTop1;
 	s32 padTop2;
+	u16 spD4;
 	Unk80052B40 spBC;
 	Unk80052B40 spB4;
 	Unk80052B40 spAC;
 	s32 padMid0;
 	s32 padMid1;
 	s32 padMid2;
-	s32 padMid3;
-	s32 padMid4;
 	s32 sp9C;
 	s32 xPos;
 	s32 scaleInt;
 	f32 scale;
-	u16 spD4;
 	s16 i;
-	u8 count;
-	u8 remaining;
+	s32 count;
+	s32 remaining;
+	s32 mask;
 	Gfx* displayList;
 
 	D_80094844_64CF4 += 0x2D8;
 	count = D_8004DC5C;
 	remaining = count;
+	mask = 0x1FFFFFFF;
 	sp9C = arg0;
 	spD4 = 0;
 
-	if (count == 1) {
+	switch (remaining) {
+	case 1:
 		sp9C = arg0 - 0x78;
 		spD4 = 0x50;
-	} else if (count == 2) {
+		break;
+	case 2:
 		sp9C = arg0 - 0x55;
 		spD4 = 0x50;
-	} else if (count == 3) {
+		break;
+	case 3:
 		sp9C = arg0 - 0x28;
 		spD4 = 0x50;
+		break;
 	}
 
 	if (count > 0) {
@@ -1070,16 +1074,17 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 		do {
 			displayList = D_800942D8_64788;
 			if (displayList != NULL) {
+				scale = (f32)((f64)arg3 * 1.5);
+				scale = D_800942DC_6478C * scale;
+				xPos = ((u32)spD4 * (u32)(3 - remaining)) + sp9C;
+				remaining--;
+
 				gDPPipeSync(D_8005BB2C++);
 				gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 				gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 
-				scale = D_800942DC_6478C * (f32)((f64)arg3 * 1.5);
-				xPos = ((u32)spD4 * (u32)(3 - remaining)) + sp9C;
-				remaining--;
-
 				func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
-				gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+				gSPMatrix(D_8005BB2C++, D_8005BB38 & mask, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 				D_8005BB38 += 0x40;
 
 				scaleInt = (s32)(256.0f * scale);
@@ -1097,16 +1102,16 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 
 				func_800039D0_45D0(&spBC, &spAC, &spB4, D_8005BB38);
 
-				gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				gSPMatrix(D_8005BB2C++, D_8005BB38 & mask, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				D_8005BB38 += 0x40;
-				gSPDisplayList(D_8005BB2C++, (Gfx*)((u32)displayList & 0x1FFFFFFF));
+				gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)displayList & mask));
 				gDPPipeSync(D_8005BB2C++);
 
 				count = D_8004DC5C;
 			}
 
 			i++;
-		} while (i < count);
+		} while (++i < count);
 	}
 }
 #else
