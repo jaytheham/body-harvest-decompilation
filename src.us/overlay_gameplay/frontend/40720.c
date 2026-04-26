@@ -902,18 +902,23 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071900_41DB0.s")
 #endif
 
-#ifdef NON_MATCHING // CURRENT(2173)
+#ifdef NON_MATCHING // CURRENT(2155)
 void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
-	s32 weaponType;
 	volatile s32 textureIndex;
+	s32 weaponType;
 	s32 sizeX;
 	s32 sizeY;
+	s16 posX;
+	s16 posY;
 	Gfx* dl;
 
 	weaponType = weaponSlots[D_800D74AE];
 	if (weaponType == 0) {
 		return;
 	}
+
+	posX = arg0;
+	posY = arg1;
 
 	textureIndex = ((s32*)&D_80031474)[weaponType];
 
@@ -958,13 +963,13 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (23 << 2), (23 << 2));
 
 	sizeX = (s32)(12.0f * arg2);
-	sizeY = (s32)(12.0f * arg3);
 
 	gDPPipeSync(D_8005BB2C++);
 
 	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE4000000 | ((((arg0 + sizeX + 0xC) << 2) & 0xFFF) << 12) | (((arg1 + sizeY + 0xC) << 2) & 0xFFF);
-	dl->words.w1 = ((((arg0 - sizeX + 0xC) << 2) & 0xFFF) << 12) | (((arg1 - sizeY + 0xC) << 2) & 0xFFF);
+	sizeY = (s32)(12.0f * arg3);
+	dl->words.w0 = 0xE4000000 | ((((posX + sizeX + 0xC) << 2) & 0xFFF) << 12) | (((posY + sizeY + 0xC) << 2) & 0xFFF);
+	dl->words.w1 = ((((posX - sizeX + 0xC) << 2) & 0xFFF) << 12) | (((posY - sizeY + 0xC) << 2) & 0xFFF);
 
 	dl = D_8005BB2C++;
 	dl->words.w0 = 0xB4000000;
