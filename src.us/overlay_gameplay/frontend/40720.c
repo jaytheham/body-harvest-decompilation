@@ -814,7 +814,7 @@ s32 func_80071760_41C10(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(21475)
+// CURRENT(17165)
 void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 i;
 	s32 slotCol;
@@ -831,7 +831,7 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	Gfx* dl;
 
 	i = 0;
-	weaponSlot = &D_8004813F;
+	weaponSlot = &weaponSlots[7];
 	do {
 		u8 weapon = *weaponSlot;
 
@@ -843,45 +843,22 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 		slotRow = i / 3;
 		baseX = arg0 - (s16)((64.0f * arg2) / 2.0f);
 		baseY = arg1 - (s16)((64.0f * arg3) / 2.0f);
-		posX = (s16)(baseX + ((slotCol * 32.0f) * arg2));
+		posX = (s16)(baseX + ((slotCol * 32.0) * arg2));
 		i = (i + 1) & 0xFF;
-		posY = (s16)(baseY + ((slotRow * 32.0f) * arg3));
+		posY = (s16)(baseY + ((slotRow * 32.0) * arg3));
 		texIndex = ((s32*)&D_80031474)[weapon];
 		sizeX = (s16)(12.0f * arg2);
 		sizeY = (s16)(12.0f * arg3);
 		texStep = ((s32)((1.0f / arg2) * 1024.0f) << 16) | ((s32)((1.0f / arg3) * 1024.0f) & 0xFFFF);
 
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xBA000E02;
-		dl->words.w1 = 0x00008000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xBA001301;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xFD100000;
-		dl->words.w1 = (u32)D_80260500;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE8000000;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xF5000100;
-		dl->words.w1 = 0x07000000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE6000000;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xF0000000;
-		dl->words.w1 = 0x073FC000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE7000000;
-		dl->words.w1 = 0;
+		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+		gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_80260500);
+		gDPTileSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x0100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
+		gDPPipeSync(D_8005BB2C++);
 
 		dl = D_8005BB2C++;
 		dl->words.w0 = 0xFA000100;
@@ -891,49 +868,20 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 			dl->words.w1 = 0x002346FF;
 		}
 
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xB9000002;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xB900031D;
-		dl->words.w1 = 0x0F0A4000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xFC119623;
-		dl->words.w1 = 0xFF2FFFFF;
+		gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 
 		dl = D_8005BB2C++;
 		dl->words.w0 = 0xFD500000;
 		dl->words.w1 = (((texIndex * 0x240) + (u32)D_8025CCC0) & 0x1FFFFFFF);
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xF5500000;
-		dl->words.w1 = 0x07000000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE6000000;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xF3000000;
-		dl->words.w1 = 0x0711F2AB;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE7000000;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xF5480600;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xF2000000;
-		dl->words.w1 = 0x0005C05C;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE7000000;
-		dl->words.w1 = 0;
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 287, 683);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (23 << 2), (23 << 2));
+		gDPPipeSync(D_8005BB2C++);
 
 		dl = D_8005BB2C++;
 		dl->words.w0 = (((((posX + sizeX) + 0xC) * 4) & 0xFFF) << 12) | 0xE4000000 | ((((posY + sizeY) + 0xC) * 4) & 0xFFF);
@@ -947,9 +895,7 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 		dl->words.w0 = 0xB3000000;
 		dl->words.w1 = texStep;
 
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE7000000;
-		dl->words.w1 = 0;
+		gDPPipeSync(D_8005BB2C++);
 	} while (weaponSlot-- >= weaponSlots);
 }
 #else
