@@ -220,16 +220,16 @@ void func_80070514_409C4(s16 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(5420)
+// CURRENT(5015)
 MissionData* func_800706E8_40B98(s32 arg0) {
 	s32 index;
 
 	index = 0x29;
 	if (D_800D7490 != 0) {
-		while (1) {
-			if (index == 0) break;
-			index--;
-			if (D_800D6DC0[index].unk16 == 0) break;
+		while (index != 0) {
+			if (D_800D6DC0[--index].unk16 == 0) {
+				break;
+			}
 		}
 	}
 
@@ -243,24 +243,24 @@ MissionData* func_800706E8_40B98(s32 arg0) {
 		MissionData* source = &D_800909B0[(s16)arg0];
 		u8 temp_v0;
 
-		entry->unk0 = source->unk0 << 2;
-		entry->unk2 = source->unk2 << 2;
-		entry->unk4 = source->unk4 << 2;
-		entry->unk6 = source->unk6 << 2;
+		entry->unk0 = source->unk0 * 4;
+		entry->unk2 = source->unk2 * 4;
+		entry->unk4 = source->unk4 * 4;
+		entry->unk6 = source->unk6 * 4;
 		entry->unk8 = source->unk8;
-		entry->unkA = source->unkA << 2;
-		entry->unkC = source->unkC << 2;
-		entry->unkE = source->unkE << 2;
+		entry->unkA = source->unkA * 4;
+		entry->unkC = source->unkC * 4;
+		entry->unkE = source->unkE * 4;
 		entry->unk12 = 0xFFFF;
 		entry->unk14 = 0;
-		entry->unk10 = source->unk10 << 2;
+		entry->unk10 = source->unk10 * 4;
 		entry->unk16 = source->unk16;
 
-		if ((temp_v0 = source->unk1C) != 3) {
-			entry->unk1C = temp_v0;
-		} else {
+		if ((temp_v0 = source->unk1C) == 3) {
 			source->unk1C = 0;
 			entry->unk1C = 0;
+		} else {
+			entry->unk1C = temp_v0;
 		}
 
 		entry->unk26 = (s16)arg0;
