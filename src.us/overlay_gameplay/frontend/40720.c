@@ -140,7 +140,7 @@ void func_800704DC_4098C(void)
 
 // https://decomp.me/scratch/TczFE
 #ifdef NON_MATCHING
-// CURRENT(6365)
+// CURRENT(5965)
 void func_80070514_409C4(s16 arg0) {
 	s32 var_v1;
 	s16 missionId;
@@ -158,13 +158,8 @@ void func_80070514_409C4(s16 arg0) {
 	var_v1 = 0x29;
 	var_a0 = &D_800D6DC0[0x29];
 	if (var_a0->unk16 != 0) {
-		while (1) {
+		while (var_v1--) {
 			var_a0--;
-			if (var_v1 == 0) {
-				var_v1--;
-				break;
-			}
-			var_v1--;
 			if (var_a0->unk16 == 0) {
 				break;
 			}
@@ -176,8 +171,8 @@ void func_80070514_409C4(s16 arg0) {
 		return;
 	}
 
-	temp_a1 = &D_800909B0[missionId];
 	temp_a0 = &D_800D6DC0[var_v1];
+	temp_a1 = &D_800909B0[missionId];
 
 	temp_a0->unk0 = temp_a1->unk0 * 4;
 	temp_a0->unk2 = temp_a1->unk2 * 4;
