@@ -98,6 +98,7 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A2B8_AEB8.s")
 #endif
 
+// CURRENT(360)
 #ifdef NON_MATCHING
 void func_8000A3DC_AFDC(s16 arg0, s8 *arg1) {
 	s16 temp_v1;
@@ -111,7 +112,7 @@ void func_8000A3DC_AFDC(s16 arg0, s8 *arg1) {
 	temp_t0 = temp_v1 & 0xFF;
 	var_v0 = temp_v1 & 0xFF;
 	var_a2 = (s8)temp_a3;
-	if (temp_t0 >= 0) {
+	if (var_v0 >= 0) {
 		var_v0 = (temp_t0 + 1) & 0xFF;
 	}
 	if ((s8)temp_a3 >= 0) {
