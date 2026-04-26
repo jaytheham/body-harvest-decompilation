@@ -150,6 +150,7 @@ s16 func_8000A43C_B03C(s8 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A43C_B03C.s")
 #endif
 
+// CURRENT(69695)
 #ifdef NON_MATCHING
 void drawText(void *arg0, ...) {
 	u8 *s3;
@@ -174,8 +175,9 @@ void drawText(void *arg0, ...) {
 
 	if (v0 != 0) {
 		v0 &= 0xFF;
+		a0 = '%' ^ v0;
 		while (1) {
-			if (v0 == '%') {
+			if (a0 == 0) {
 				s3++;
 				switch ((u8)(*s3 - '0')) {
 				case 0:
@@ -213,9 +215,11 @@ void drawText(void *arg0, ...) {
 				s3++;
 			}
 			v0 = *s3;
-			if (v0 == 0) {
-				break;
+			if (v0 != 0) {
+				a0 = '%' ^ v0;
+				continue;
 			}
+			break;
 		}
 		s3 = (u8 *)arg0;
 		v0 = *s3;
