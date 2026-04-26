@@ -225,79 +225,73 @@ void func_80070514_409C4(s16 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(7186)
+// CURRENT(5420)
 MissionData* func_800706E8_40B98(s32 arg0) {
 	s32 index;
-	s32 stride;
-	s32 var_v1;
-	MissionData* entry;
-	MissionData* source;
-	u8 temp_v0;
 
 	index = 0x29;
 	if (D_800D7490 != 0) {
-		stride = 0x2A;
-		var_v1 = index;
-		while (index != 0) {
+		while (1) {
+			if (index == 0) break;
 			index--;
-			if (D_800D6DC0[index].unk16 != 0) {
-				var_v1 = index;
-			}
+			if (D_800D6DC0[index].unk16 == 0) break;
 		}
 	}
 
-	stride = 0x2A;
 	if (index == -1) {
 		osSyncPrintf(D_800AD7CC_7DC7C);
 		return NULL;
 	}
 
-	entry = &D_800D6DC0[index];
-	source = &D_800909B0[(s16)arg0];
+	{
+		MissionData* entry = &D_800D6DC0[index];
+		MissionData* source = &D_800909B0[(s16)arg0];
+		u8 temp_v0;
 
-	entry->unk0 = source->unk0 << 2;
-	entry->unk2 = source->unk2 << 2;
-	entry->unk4 = source->unk4 << 2;
-	entry->unk6 = source->unk6 << 2;
-	entry->unk8 = source->unk8;
-	entry->unkA = source->unkA << 2;
-	entry->unkC = source->unkC << 2;
-	entry->unkE = source->unkE << 2;
-	entry->unk12 = 0xFFFF;
-	entry->unk14 = 0;
-	entry->unk10 = source->unk10 << 2;
-	entry->unk16 = source->unk16;
+		entry->unk0 = source->unk0 << 2;
+		entry->unk2 = source->unk2 << 2;
+		entry->unk4 = source->unk4 << 2;
+		entry->unk6 = source->unk6 << 2;
+		entry->unk8 = source->unk8;
+		entry->unkA = source->unkA << 2;
+		entry->unkC = source->unkC << 2;
+		entry->unkE = source->unkE << 2;
+		entry->unk12 = 0xFFFF;
+		entry->unk14 = 0;
+		entry->unk10 = source->unk10 << 2;
+		entry->unk16 = source->unk16;
 
-	if ((temp_v0 = source->unk1C) != 3) {
-		entry->unk1C = temp_v0;
-	} else {
-		source->unk1C = 0;
-		entry->unk1C = 0;
+		if ((temp_v0 = source->unk1C) != 3) {
+			entry->unk1C = temp_v0;
+		} else {
+			source->unk1C = 0;
+			entry->unk1C = 0;
+		}
+
+		entry->unk26 = (s16)arg0;
+		entry->unk28 = source->unk28;
+
+		switch (D_800313D0) {
+		case 0:
+		default:
+			entry->unk1E = source->unk1E;
+			break;
+		case 1:
+			entry->unk1E = source->unk1A;
+			break;
+		case 2:
+			entry->unk1E = source->unk18;
+			break;
+		}
+
+		entry->unk20 = source->unk20;
+		if ((s16)arg0 == D_800D74A4) {
+			func_800704DC_4098C();
+			entry->unk1C = 1;
+		}
+
+		return entry;
 	}
-
-	entry->unk26 = (s16)arg0;
-	entry->unk28 = source->unk28;
-
-	switch (D_800313D0) {
-	case 0:
-	default:
-		entry->unk1E = source->unk1E;
-		break;
-	case 1:
-		entry->unk1E = source->unk1A;
-		break;
-	case 2:
-		entry->unk1E = source->unk18;
-		break;
-	}
-
-	entry->unk20 = source->unk20;
-	if ((s16)arg0 == D_800D74A4) {
-		func_800704DC_4098C();
-		entry->unk1C = 1;
-	}
-
-	return entry;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800706E8_40B98.s")
