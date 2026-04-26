@@ -468,12 +468,12 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
   }
 }
 
-#ifdef NON_MATCHING // CURRENT(10050)
+#ifdef NON_MATCHING // CURRENT(9255)
 void func_80070CC4_41174(void)
 {
 	s16 selectedFileIndex;
-	s32 playAltMoveSfx = 0;
 	MissionDataNav* selectedFileData;
+	s32 playAltMoveSfx = 0;
 
 	if (D_8004758A < 0x15 && D_8004758A >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
 		D_80094824_64CD4 = 1;
@@ -492,11 +492,14 @@ void func_80070CC4_41174(void)
 		if (D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) {
 			selectedFileIndex = selectedFileData->unk22;
 			if (selectedFileIndex != 0) {
-				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
-					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk22;
-					if (selectedFileIndex == 0) {
-						break;
+				while (1) {
+					if (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
+						selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk22;
+						if (selectedFileIndex != 0) {
+							continue;
+						}
 					}
+					break;
 				}
 			}
 		} else if (D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
