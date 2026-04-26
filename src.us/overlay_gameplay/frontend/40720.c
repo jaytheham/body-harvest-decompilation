@@ -988,7 +988,7 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 extern Ambient D_800942A0_64750;
 extern Light D_800942A8_64758;
 
-void func_800722A4_42754() {
+void func_800722A4_42754(void) {
 	u16 perspNorm;
 	s16 i;
 
@@ -1183,7 +1183,7 @@ void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 
 // Checks if selected inventory item is 0xb (weapon crystals)
 #ifdef NON_MATCHING
-// CURRENT(2988)
+// CURRENT(2883)
 void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	s32 unusedPad0;
 	s32 unusedPad1;
@@ -1194,12 +1194,12 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	Unk80052B40 sp50;
 	FrontendItemRenderData* itemEntry;
 	Gfx* displayList;
+	s32 displayListAddr;
 	s32 matrixAddr;
 	s32 scaleInt;
-	s32 displayListAddr;
 	f32 itemScale;
 
-	func_800722A4_42754(arg3);
+	func_800722A4_42754();
 
 	if (D_800D74AC == 0xB) {
 		func_80072604_42AB4(-0xE6, -0x32, -0x190, arg3);
@@ -1216,16 +1216,12 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	}
 
 	itemEntry = &D_800942E0_64790[((currentLevel * 13) + D_800D74AC) - 13];
-	if (D_800AED78[D_800D74AC] == 0) {
-		return;
-	}
-
 	displayList = itemEntry->displayList;
-	if (displayList == NULL) {
+	if ((D_800AED78[D_800D74AC] == 0) || (displayList == NULL)) {
 		return;
 	}
 
-	D_8009484C_64CFC += 0x16C;
+	D_8009484C_64CFC = D_8009484C_64CFC + 0x16C;
 	itemScale = itemEntry->scale * 2.0f;
 	arg3 = itemScale * arg3;
 	displayListAddr = (s32)displayList;
@@ -1252,7 +1248,8 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	sp58.unk2 = scaleInt;
 	sp58.unk4 = scaleInt;
 
-	func_800039D0_45D0(&sp60, &sp50, &sp58, D_8005BB38);
+	matrixAddr = D_8005BB38;
+	func_800039D0_45D0(&sp60, &sp50, &sp58, matrixAddr);
 
 	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	D_8005BB38 += 0x40;
@@ -1277,7 +1274,7 @@ void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	u32 yOffset;
 	f32 itemScale;
 
-	func_800722A4_42754();
+	func_800722A4_42754(arg3);
 	D_80094850_64D00 += 0x2D8;
 
 	itemCount = 0;
