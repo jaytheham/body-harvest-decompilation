@@ -1034,14 +1034,14 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	Unk80052B40 spBC;
 	Unk80052B40 spB4;
 	Unk80052B40 spAC;
-	s32 padMid0;
-	s32 padMid1;
-	s32 padMid2;
 	s32 sp9C;
 	s32 xPos;
 	s32 scaleInt;
 	f32 scale;
 	s16 i;
+	s32 unused0;
+	s32 unused1;
+	s32 unused2;
 	s32 count;
 	s32 remaining;
 	s32 mask;
@@ -1119,29 +1119,22 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(3830)
+// CURRENT(1396)
 void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 	Unk80052B40 spA4;
+	Unk80052B40 sp9C;
+	Unk80052B40 sp94;
 	s32 unused0;
 	s32 unused1;
 	s32 unused2;
-	s32 unused3;
-	s32 unused4;
-	s32 unused5;
-	s32 unused6;
-	s32 unused7;
-	s32 unused8;
-	s32 unused9;
-	Unk80052B40 sp9C;
-	Unk80052B40 sp94;
 	s32 temp;
 	s32 varS3;
-	u16 varS4;
+	s32 varS4;
 	s16 varS5;
-	s32 mask;
+	u32 mask;
 	Gfx* tempS6;
 
-	temp = (s32) (256.0f * (f32) ((f64) arg3 * D_800AE518_7E9C8));
+	temp = (s32) ((f32) ((f64) arg3 * D_800AE518_7E9C8) * 256.0f);
 	varS3 = 0;
 	varS4 = D_8004DC5E;
 	varS5 = 0;
@@ -1176,13 +1169,13 @@ void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 
 		gSPMatrix(D_8005BB2C++, D_8005BB38 & mask, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 		D_8005BB38 += 0x40;
-		gSPDisplayList(D_8005BB2C++, tempS6);
+		gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)tempS6 & mask));
 		varS5++;
 		varS3 += 0x1555;
 		gDPPipeSync(D_8005BB2C++);
 	} while (varS5 < 0xC);
 
-	D_80094848_64CF8 += 0xB6;
+	D_80094848_64CF8 = D_80094848_64CF8 + 0xB6;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800728F4_42DA4.s")
