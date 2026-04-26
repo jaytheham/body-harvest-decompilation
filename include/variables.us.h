@@ -920,6 +920,8 @@ extern const char D_800AE4C8_7E978[];
 extern char D_800ADCC4_7E174[];
 extern char D_800AD7B4_7DC64[];
 extern char D_800AD7CC_7DC7C[];
+extern char D_800AD7E4_7DC94;
+extern char D_800AD7E8_7DC98;
 extern char D_800AE8FC_7EDAC[];
 extern char D_800AE920_7EDD0; /* osSyncPrintf format string */
 extern char D_800AE958_7EE08; /* osSyncPrintf format string */

@@ -140,7 +140,7 @@ void func_800704DC_4098C(void)
 
 // https://decomp.me/scratch/TczFE
 #ifdef NON_MATCHING
-// CURRENT(6365)
+// CURRENT(5965)
 void func_80070514_409C4(s16 arg0) {
 	s32 var_v1;
 	s16 missionId;
@@ -158,13 +158,8 @@ void func_80070514_409C4(s16 arg0) {
 	var_v1 = 0x29;
 	var_a0 = &D_800D6DC0[0x29];
 	if (var_a0->unk16 != 0) {
-		while (1) {
+		while (var_v1--) {
 			var_a0--;
-			if (var_v1 == 0) {
-				var_v1--;
-				break;
-			}
-			var_v1--;
 			if (var_a0->unk16 == 0) {
 				break;
 			}
@@ -176,8 +171,8 @@ void func_80070514_409C4(s16 arg0) {
 		return;
 	}
 
-	temp_a1 = &D_800909B0[missionId];
 	temp_a0 = &D_800D6DC0[var_v1];
+	temp_a1 = &D_800909B0[missionId];
 
 	temp_a0->unk0 = temp_a1->unk0 * 4;
 	temp_a0->unk2 = temp_a1->unk2 * 4;
@@ -225,16 +220,16 @@ void func_80070514_409C4(s16 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(5420)
+// CURRENT(5015)
 MissionData* func_800706E8_40B98(s32 arg0) {
 	s32 index;
 
 	index = 0x29;
 	if (D_800D7490 != 0) {
-		while (1) {
-			if (index == 0) break;
-			index--;
-			if (D_800D6DC0[index].unk16 == 0) break;
+		while (index != 0) {
+			if (D_800D6DC0[--index].unk16 == 0) {
+				break;
+			}
 		}
 	}
 
@@ -248,24 +243,24 @@ MissionData* func_800706E8_40B98(s32 arg0) {
 		MissionData* source = &D_800909B0[(s16)arg0];
 		u8 temp_v0;
 
-		entry->unk0 = source->unk0 << 2;
-		entry->unk2 = source->unk2 << 2;
-		entry->unk4 = source->unk4 << 2;
-		entry->unk6 = source->unk6 << 2;
+		entry->unk0 = source->unk0 * 4;
+		entry->unk2 = source->unk2 * 4;
+		entry->unk4 = source->unk4 * 4;
+		entry->unk6 = source->unk6 * 4;
 		entry->unk8 = source->unk8;
-		entry->unkA = source->unkA << 2;
-		entry->unkC = source->unkC << 2;
-		entry->unkE = source->unkE << 2;
+		entry->unkA = source->unkA * 4;
+		entry->unkC = source->unkC * 4;
+		entry->unkE = source->unkE * 4;
 		entry->unk12 = 0xFFFF;
 		entry->unk14 = 0;
-		entry->unk10 = source->unk10 << 2;
+		entry->unk10 = source->unk10 * 4;
 		entry->unk16 = source->unk16;
 
-		if ((temp_v0 = source->unk1C) != 3) {
-			entry->unk1C = temp_v0;
-		} else {
+		if ((temp_v0 = source->unk1C) == 3) {
 			source->unk1C = 0;
 			entry->unk1C = 0;
+		} else {
+			entry->unk1C = temp_v0;
 		}
 
 		entry->unk26 = (s16)arg0;
@@ -473,12 +468,12 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
   }
 }
 
-#ifdef NON_MATCHING // CURRENT(10050)
+#ifdef NON_MATCHING // CURRENT(9255)
 void func_80070CC4_41174(void)
 {
 	s16 selectedFileIndex;
-	s32 playAltMoveSfx = 0;
 	MissionDataNav* selectedFileData;
+	s32 playAltMoveSfx = 0;
 
 	if (D_8004758A < 0x15 && D_8004758A >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
 		D_80094824_64CD4 = 1;
@@ -497,11 +492,14 @@ void func_80070CC4_41174(void)
 		if (D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) {
 			selectedFileIndex = selectedFileData->unk22;
 			if (selectedFileIndex != 0) {
-				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
-					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk22;
-					if (selectedFileIndex == 0) {
-						break;
+				while (1) {
+					if (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
+						selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk22;
+						if (selectedFileIndex != 0) {
+							continue;
+						}
 					}
+					break;
 				}
 			}
 		} else if (D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
@@ -768,20 +766,19 @@ void func_80071738_41BE8(void) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(695)
+// CURRENT(283)
 s32 func_80071760_41C10(s32 arg0) {
-	s8 ch;
 	s32 textWidth;
+	s32 totalWidth;
 	s16 digitCount;
 	s16 i;
 	s16 j;
 	s32 value;
-	s32 totalWidth;
-	s32 divisor;
+	s8 ch;
 
-	value = arg0;
 	digitCount = 0;
 	totalWidth = 0;
+	value = arg0;
 
 	textWidth = func_8000A2B8_AEB8(&D_800AD7E4_7DC94, 0) * 0x1C;
 
@@ -793,19 +790,17 @@ s32 func_80071760_41C10(s32 arg0) {
 	}
 
 	if (digitCount > 0) {
-		for (i = 0; i < digitCount; i++) {
-			divisor = 1;
-
-			if (i > 0) {
-				for (j = 0; j < i; j++) {
-					divisor *= 10;
-				}
+		i = 0;
+		do {
+			s32 divisor = 1;
+			for (j = 0; j < i; j++) {
+				divisor *= 10;
 			}
 
 			value = (s32)((f32)arg0 / (f32)divisor);
-			ch = (value - ((s32)((f32)value / 10.0f) * 10)) + '0';
+			ch = (value - (s32)((f32)value / 10.0f) * 10) + '0';
 			totalWidth += func_8000A2B8_AEB8(&ch, 0) * 4;
-		}
+		} while (++i < digitCount);
 	}
 
 	if (arg0 == 0) {
@@ -819,7 +814,7 @@ s32 func_80071760_41C10(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(21475)
+// CURRENT(17165)
 void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 i;
 	s32 slotCol;
@@ -836,7 +831,7 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	Gfx* dl;
 
 	i = 0;
-	weaponSlot = &D_8004813F;
+	weaponSlot = &weaponSlots[7];
 	do {
 		u8 weapon = *weaponSlot;
 
@@ -848,45 +843,22 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 		slotRow = i / 3;
 		baseX = arg0 - (s16)((64.0f * arg2) / 2.0f);
 		baseY = arg1 - (s16)((64.0f * arg3) / 2.0f);
-		posX = (s16)(baseX + ((slotCol * 32.0f) * arg2));
+		posX = (s16)(baseX + ((slotCol * 32.0) * arg2));
 		i = (i + 1) & 0xFF;
-		posY = (s16)(baseY + ((slotRow * 32.0f) * arg3));
+		posY = (s16)(baseY + ((slotRow * 32.0) * arg3));
 		texIndex = ((s32*)&D_80031474)[weapon];
 		sizeX = (s16)(12.0f * arg2);
 		sizeY = (s16)(12.0f * arg3);
 		texStep = ((s32)((1.0f / arg2) * 1024.0f) << 16) | ((s32)((1.0f / arg3) * 1024.0f) & 0xFFFF);
 
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xBA000E02;
-		dl->words.w1 = 0x00008000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xBA001301;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xFD100000;
-		dl->words.w1 = (u32)D_80260500;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE8000000;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xF5000100;
-		dl->words.w1 = 0x07000000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE6000000;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xF0000000;
-		dl->words.w1 = 0x073FC000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE7000000;
-		dl->words.w1 = 0;
+		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+		gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_80260500);
+		gDPTileSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x0100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
+		gDPPipeSync(D_8005BB2C++);
 
 		dl = D_8005BB2C++;
 		dl->words.w0 = 0xFA000100;
@@ -896,49 +868,20 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 			dl->words.w1 = 0x002346FF;
 		}
 
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xB9000002;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xB900031D;
-		dl->words.w1 = 0x0F0A4000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xFC119623;
-		dl->words.w1 = 0xFF2FFFFF;
+		gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 
 		dl = D_8005BB2C++;
 		dl->words.w0 = 0xFD500000;
 		dl->words.w1 = (((texIndex * 0x240) + (u32)D_8025CCC0) & 0x1FFFFFFF);
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xF5500000;
-		dl->words.w1 = 0x07000000;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE6000000;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xF3000000;
-		dl->words.w1 = 0x0711F2AB;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE7000000;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xF5480600;
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xF2000000;
-		dl->words.w1 = 0x0005C05C;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE7000000;
-		dl->words.w1 = 0;
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 287, 683);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (23 << 2), (23 << 2));
+		gDPPipeSync(D_8005BB2C++);
 
 		dl = D_8005BB2C++;
 		dl->words.w0 = (((((posX + sizeX) + 0xC) * 4) & 0xFFF) << 12) | 0xE4000000 | ((((posY + sizeY) + 0xC) * 4) & 0xFFF);
@@ -952,27 +895,30 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 		dl->words.w0 = 0xB3000000;
 		dl->words.w1 = texStep;
 
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xE7000000;
-		dl->words.w1 = 0;
+		gDPPipeSync(D_8005BB2C++);
 	} while (weaponSlot-- >= weaponSlots);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071900_41DB0.s")
 #endif
 
-#ifdef NON_MATCHING // CURRENT(2173)
+#ifdef NON_MATCHING // CURRENT(2155)
 void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
-	s32 weaponType;
 	volatile s32 textureIndex;
+	s32 weaponType;
 	s32 sizeX;
 	s32 sizeY;
+	s16 posX;
+	s16 posY;
 	Gfx* dl;
 
 	weaponType = weaponSlots[D_800D74AE];
 	if (weaponType == 0) {
 		return;
 	}
+
+	posX = arg0;
+	posY = arg1;
 
 	textureIndex = ((s32*)&D_80031474)[weaponType];
 
@@ -1017,13 +963,13 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (23 << 2), (23 << 2));
 
 	sizeX = (s32)(12.0f * arg2);
-	sizeY = (s32)(12.0f * arg3);
 
 	gDPPipeSync(D_8005BB2C++);
 
 	dl = D_8005BB2C++;
-	dl->words.w0 = 0xE4000000 | ((((arg0 + sizeX + 0xC) << 2) & 0xFFF) << 12) | (((arg1 + sizeY + 0xC) << 2) & 0xFFF);
-	dl->words.w1 = ((((arg0 - sizeX + 0xC) << 2) & 0xFFF) << 12) | (((arg1 - sizeY + 0xC) << 2) & 0xFFF);
+	sizeY = (s32)(12.0f * arg3);
+	dl->words.w0 = 0xE4000000 | ((((posX + sizeX + 0xC) << 2) & 0xFFF) << 12) | (((posY + sizeY + 0xC) << 2) & 0xFFF);
+	dl->words.w1 = ((((posX - sizeX + 0xC) << 2) & 0xFFF) << 12) | (((posY - sizeY + 0xC) << 2) & 0xFFF);
 
 	dl = D_8005BB2C++;
 	dl->words.w0 = 0xB4000000;
@@ -1042,7 +988,7 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 extern Ambient D_800942A0_64750;
 extern Light D_800942A8_64758;
 
-void func_800722A4_42754() {
+void func_800722A4_42754(void) {
 	u16 perspNorm;
 	s16 i;
 
@@ -1079,44 +1025,48 @@ void func_800722A4_42754() {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(8100)
+// CURRENT(2310)
 void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	s32 padTop0;
 	s32 padTop1;
 	s32 padTop2;
+	u16 spD4;
 	Unk80052B40 spBC;
 	Unk80052B40 spB4;
 	Unk80052B40 spAC;
-	s32 padMid0;
-	s32 padMid1;
-	s32 padMid2;
-	s32 padMid3;
-	s32 padMid4;
 	s32 sp9C;
 	s32 xPos;
 	s32 scaleInt;
 	f32 scale;
-	u16 spD4;
 	s16 i;
-	u8 count;
-	u8 remaining;
+	s32 unused0;
+	s32 unused1;
+	s32 unused2;
+	s32 count;
+	s32 remaining;
+	s32 mask;
 	Gfx* displayList;
 
 	D_80094844_64CF4 += 0x2D8;
 	count = D_8004DC5C;
 	remaining = count;
+	mask = 0x1FFFFFFF;
 	sp9C = arg0;
 	spD4 = 0;
 
-	if (count == 1) {
+	switch (remaining) {
+	case 1:
 		sp9C = arg0 - 0x78;
 		spD4 = 0x50;
-	} else if (count == 2) {
+		break;
+	case 2:
 		sp9C = arg0 - 0x55;
 		spD4 = 0x50;
-	} else if (count == 3) {
+		break;
+	case 3:
 		sp9C = arg0 - 0x28;
 		spD4 = 0x50;
+		break;
 	}
 
 	if (count > 0) {
@@ -1124,16 +1074,17 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 		do {
 			displayList = D_800942D8_64788;
 			if (displayList != NULL) {
+				scale = (f32)((f64)arg3 * 1.5);
+				scale = D_800942DC_6478C * scale;
+				xPos = ((u32)spD4 * (u32)(3 - remaining)) + sp9C;
+				remaining--;
+
 				gDPPipeSync(D_8005BB2C++);
 				gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 				gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 
-				scale = D_800942DC_6478C * (f32)((f64)arg3 * 1.5);
-				xPos = ((u32)spD4 * (u32)(3 - remaining)) + sp9C;
-				remaining--;
-
 				func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
-				gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+				gSPMatrix(D_8005BB2C++, D_8005BB38 & mask, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 				D_8005BB38 += 0x40;
 
 				scaleInt = (s32)(256.0f * scale);
@@ -1151,16 +1102,16 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 
 				func_800039D0_45D0(&spBC, &spAC, &spB4, D_8005BB38);
 
-				gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				gSPMatrix(D_8005BB2C++, D_8005BB38 & mask, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				D_8005BB38 += 0x40;
-				gSPDisplayList(D_8005BB2C++, (Gfx*)((u32)displayList & 0x1FFFFFFF));
+				gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)displayList & mask));
 				gDPPipeSync(D_8005BB2C++);
 
 				count = D_8004DC5C;
 			}
 
 			i++;
-		} while (i < count);
+		} while (++i < count);
 	}
 }
 #else
@@ -1168,29 +1119,22 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(3830)
+// CURRENT(1396)
 void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 	Unk80052B40 spA4;
+	Unk80052B40 sp9C;
+	Unk80052B40 sp94;
 	s32 unused0;
 	s32 unused1;
 	s32 unused2;
-	s32 unused3;
-	s32 unused4;
-	s32 unused5;
-	s32 unused6;
-	s32 unused7;
-	s32 unused8;
-	s32 unused9;
-	Unk80052B40 sp9C;
-	Unk80052B40 sp94;
 	s32 temp;
 	s32 varS3;
-	u16 varS4;
+	s32 varS4;
 	s16 varS5;
-	s32 mask;
+	u32 mask;
 	Gfx* tempS6;
 
-	temp = (s32) (256.0f * (f32) ((f64) arg3 * D_800AE518_7E9C8));
+	temp = (s32) ((f32) ((f64) arg3 * D_800AE518_7E9C8) * 256.0f);
 	varS3 = 0;
 	varS4 = D_8004DC5E;
 	varS5 = 0;
@@ -1225,13 +1169,13 @@ void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 
 		gSPMatrix(D_8005BB2C++, D_8005BB38 & mask, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 		D_8005BB38 += 0x40;
-		gSPDisplayList(D_8005BB2C++, tempS6);
+		gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)tempS6 & mask));
 		varS5++;
 		varS3 += 0x1555;
 		gDPPipeSync(D_8005BB2C++);
 	} while (varS5 < 0xC);
 
-	D_80094848_64CF8 += 0xB6;
+	D_80094848_64CF8 = D_80094848_64CF8 + 0xB6;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800728F4_42DA4.s")
@@ -1239,7 +1183,7 @@ void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 
 // Checks if selected inventory item is 0xb (weapon crystals)
 #ifdef NON_MATCHING
-// CURRENT(2988)
+// CURRENT(2883)
 void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	s32 unusedPad0;
 	s32 unusedPad1;
@@ -1250,12 +1194,12 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	Unk80052B40 sp50;
 	FrontendItemRenderData* itemEntry;
 	Gfx* displayList;
+	s32 displayListAddr;
 	s32 matrixAddr;
 	s32 scaleInt;
-	s32 displayListAddr;
 	f32 itemScale;
 
-	func_800722A4_42754(arg3);
+	func_800722A4_42754();
 
 	if (D_800D74AC == 0xB) {
 		func_80072604_42AB4(-0xE6, -0x32, -0x190, arg3);
@@ -1272,16 +1216,12 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	}
 
 	itemEntry = &D_800942E0_64790[((currentLevel * 13) + D_800D74AC) - 13];
-	if (D_800AED78[D_800D74AC] == 0) {
-		return;
-	}
-
 	displayList = itemEntry->displayList;
-	if (displayList == NULL) {
+	if ((D_800AED78[D_800D74AC] == 0) || (displayList == NULL)) {
 		return;
 	}
 
-	D_8009484C_64CFC += 0x16C;
+	D_8009484C_64CFC = D_8009484C_64CFC + 0x16C;
 	itemScale = itemEntry->scale * 2.0f;
 	arg3 = itemScale * arg3;
 	displayListAddr = (s32)displayList;
@@ -1308,7 +1248,8 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	sp58.unk2 = scaleInt;
 	sp58.unk4 = scaleInt;
 
-	func_800039D0_45D0(&sp60, &sp50, &sp58, D_8005BB38);
+	matrixAddr = D_8005BB38;
+	func_800039D0_45D0(&sp60, &sp50, &sp58, matrixAddr);
 
 	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	D_8005BB38 += 0x40;
@@ -1333,7 +1274,7 @@ void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	u32 yOffset;
 	f32 itemScale;
 
-	func_800722A4_42754();
+	func_800722A4_42754(arg3);
 	D_80094850_64D00 += 0x2D8;
 
 	itemCount = 0;
