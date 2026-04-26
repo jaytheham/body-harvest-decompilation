@@ -40,13 +40,14 @@ void func_8000A160_AD60(void) {
 	func_8000AFDC_BBDC();
 }
 
+// CURRENT(1040)
 #ifdef NON_MATCHING
 s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
-	u8 *ptr;
 	s32 result;
+	u8 *ptr;
 
-	ptr = arg0 + arg1;
 	result = 0;
+	ptr = arg0 + arg1;
 
 	if (*ptr != 0xA && *ptr != 0) {
 		do {
@@ -60,7 +61,13 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 						}
 					}
 				} else {
-					result += D_80031720_32320[(((*ptr & 0x7F) << 8) + ptr[1]) * 2 + 1];
+					{
+						s32 jidx;
+						u8 lo = ptr[1];
+						jidx = *ptr & 0x7F;
+						jidx = (jidx << 8) + lo;
+						result += D_80031720_32320[jidx * 2 + 1];
+					}
 					ptr++;
 				}
 			} else {
@@ -86,6 +93,7 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 
 	return result;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A2B8_AEB8.s")
 #endif
@@ -113,6 +121,7 @@ void func_8000A3DC_AFDC(s16 arg0, s8 *arg1) {
 	arg1++;
 	*(u8 *)arg1 = var_v0;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A3DC_AFDC.s")
 #endif
