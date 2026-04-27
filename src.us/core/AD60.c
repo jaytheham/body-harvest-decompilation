@@ -1233,11 +1233,13 @@ s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, 
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(7638)
+// CURRENT(7256)
 // Score: ~16442. Issue: arg3 spills to stack instead of staying in $f26.
 // Current uses 6 double FP regs (f20,f22,f24,f26,f28,f30) vs target's 4 (f20,f22,f24,f26).
 // All intermediate temp_f* variables seem necessary for matching instruction order.
 void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, f32 arg3) {
+	f64 temp_f20;
+	f64 temp_f22;
 	volatile f32 sp70;
 	volatile f32 sp6C;
 	volatile f32 sp68;
@@ -1248,10 +1250,6 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
 	volatile f32 sp4C;
 	volatile f32 sp48;
 	f32 temp_f24;
-	s32 pad0;
-	s32 pad1;
-	f64 temp_f20;
-	f64 temp_f22;
 	s32 temp_t6;
 	s32 var_s0;
 	AnimChannelState *temp_a1;
@@ -1276,8 +1274,6 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
 				f32 temp_f4;
 				f32 temp_f6;
 				f32 temp_f6_2;
-				f32 temp_f8;
-				f32 temp_f8_2;
 
 				temp_f14 = temp_a1->unk1C;
 				temp_f16 = temp_a1->unk20;
@@ -1286,17 +1282,15 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
 				sp68 = temp_f10;
 				temp_f6 = (f32)(((f64)(f32)temp_a1->unk2C * temp_f20) / temp_f22);
 				sp6C = temp_f6;
-				temp_f8 = (f32)(((f64)(f32)temp_a1->unk2E * temp_f20) / temp_f22);
-				sp70 = temp_f8;
+				sp70 = (f32)(((f64)(f32)temp_a1->unk2E * temp_f20) / temp_f22);
 				temp_f4 = (f32)(((f64)(f32)temp_a1->unk0 * temp_f20) / temp_f22);
 				sp5C = temp_f4;
 				sp48 = temp_f10;
 				temp_f10_2 = (f32)(((f64)(f32)temp_a1->unk2 * temp_f20) / temp_f22);
 				sp60 = temp_f10_2;
 				sp4C = temp_f6;
-				sp50 = temp_f8;
-				temp_f8_2 = ((sp48 - temp_f4) * temp_f18) + temp_f4;
-				sp5C = temp_f8_2;
+				sp50 = sp70;
+				sp5C = ((sp48 - temp_f4) * temp_f18) + temp_f4;
 				temp_f6_2 = (f32)(((f64)(f32)temp_a1->unk4 * temp_f20) / temp_f22);
 				sp60 = ((sp4C - temp_f10_2) * temp_f18) + temp_f10_2;
 				sp64 = temp_f6_2;
@@ -1304,7 +1298,7 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
 				temp_f2 = temp_a1->unk8;
 				temp_f12 = temp_a1->unkC;
 				temp_f0 = temp_a1->unk10;
-				temp_a1->unk0 = (s16)(s32)((f64)(temp_f8_2 * temp_f24) / temp_f20);
+				temp_a1->unk0 = (s16)(s32)((f64)(sp5C * temp_f24) / temp_f20);
 				temp_a1->unk2 = (s16)(s32)((f64)(sp60 * temp_f24) / temp_f20);
 				temp_a1->unk4 = (s16)(s32)((f64)(sp64 * temp_f24) / temp_f20);
 				temp_a1->unk8 = (((f32)temp_a1->unk24 - temp_f2) * temp_f18) + temp_f2;
