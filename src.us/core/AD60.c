@@ -574,14 +574,15 @@ void func_8000AFDC_BBDC(void)
 	}
 }
 
+// CURRENT(114912)
 #ifdef NON_MATCHING
 void func_8000B044_BC44(void) {
-	s16 clip_y_min, clip_x_min, clip_y_max, clip_x_max;
-	s32 flag_78, flag_74;
-	u8 alpha;
 	s16 i;
-	s16 x_cursor, y_cursor;
 	s32 r, g, b;
+	s16 x_cursor, y_cursor;
+	s32 flag_78, flag_74;
+	s16 clip_x_min, clip_x_max, clip_y_min, clip_y_max;
+	u8 alpha;
 	u8 *text_ptr;
 	s32 char_raw;
 	s16 char_idx;
