@@ -1458,10 +1458,11 @@ void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChanne
 #endif
 
 #ifdef NON_MATCHING
+// CURRENT(522)
 s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, s32 arg5, f32 arg6, s32 arg7) {
+	s32 var_s1;
 	s32 base;
 	AnimChannelState *ch;
-	s32 var_s1;
 
 	arg0->unkE50 = arg4;
 	base = (arg4 & 0xFFFFFF) + (s32) &D_8F4960;
@@ -1495,6 +1496,7 @@ s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannel
 	}
 	return arg4;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D71C_E31C.s")
 #endif
