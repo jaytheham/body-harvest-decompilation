@@ -126,6 +126,7 @@ void func_8000A3DC_AFDC(s16 arg0, s8 *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A3DC_AFDC.s")
 #endif
 
+// CURRENT(75)
 #ifdef NON_MATCHING
 s16 func_8000A43C_B03C(s8 *arg0) {
 	s8 var_v1;
@@ -145,6 +146,7 @@ s16 func_8000A43C_B03C(s8 *arg0) {
 	}
 	return (s16)((s16)((s16)(var_v1 << 8) + var_a0) / 2);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A43C_B03C.s")
 #endif
