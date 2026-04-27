@@ -1052,6 +1052,7 @@ void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2) {
 	}
 }
 
+// CURRENT(5728)
 #ifdef NON_MATCHING
 void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	extern Unk800476C8 D_80059C90[2];
