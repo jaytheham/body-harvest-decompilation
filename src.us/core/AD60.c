@@ -571,7 +571,7 @@ void func_8000AFDC_BBDC(void)
 	}
 }
 
-// CURRENT(114912)
+// CURRENT(112386)
 #ifdef NON_MATCHING
 void func_8000B044_BC44(void) {
 	s16 i;
@@ -581,15 +581,13 @@ void func_8000B044_BC44(void) {
 	s16 clip_x_min, clip_x_max, clip_y_min, clip_y_max;
 	u8 alpha;
 	u8 *text_ptr;
-	s32 char_raw;
+	u8 char_raw;
 	s16 char_idx;
 	s16 x_pos, y_pos;
 	s16 glyph_y_off;
 	s8 *glyph_data;
 	s16 glyph_advance;
 	Gfx *dl;
-	s16 tmp16;
-	f32 xh_f, yh_f, xl_f, yl_f;
 	s32 xh_i, yh_i, xl_i, yl_i;
 	s32 dsdx, dtdy;
 
@@ -640,8 +638,7 @@ void func_8000B044_BC44(void) {
 	}
 
 	do {
-		s16 a3 = D_80053BE0;
-		char_raw = (u8)text_ptr[i];
+		char_raw = text_ptr[i];
 		if (char_raw & 0x80) {
 			char_idx = (s16)((s16)char_raw + 0x130);
 		} else {
@@ -657,7 +654,7 @@ void func_8000B044_BC44(void) {
 
 		/* Control codes */
 		if (char_raw < 0x20) {
-			s16 b0, b1, b2, b3;
+			s16 b0, b1;
 			switch (char_raw) {
 			case 1: /* gray */
 				dl = D_8005BB2C; D_8005BB2C = dl + 1;
@@ -704,11 +701,10 @@ void func_8000B044_BC44(void) {
 						s16 span = (s16)(D_80053C96 - D_80053C94);
 						s16 diff = (s16)(span - (s16)width);
 						if (diff < 0) {
-							tmp16 = (s16)((diff + 1) >> 1);
+							x_cursor = (s16)(D_80053C94 + (s16)((diff + 1) >> 1));
 						} else {
-							tmp16 = (s16)(diff >> 1);
+							x_cursor = (s16)(D_80053C94 + (s16)(diff >> 1));
 						}
-						x_cursor = (s16)(D_80053C94 + tmp16);
 					} else {
 						/* right-align */
 						x_cursor = (s16)(D_80053C96 - (s16)width - D_800319C1_325C1);
@@ -835,11 +831,10 @@ void func_8000B044_BC44(void) {
 				span = (s16)(D_80053C96 - D_80053C94);
 				diff = (s16)(span - width);
 				if (diff < 0) {
-					tmp16 = (s16)((diff + 1) >> 1);
+					x_cursor = (s16)(D_80053C94 + (s16)((diff + 1) >> 1));
 				} else {
-					tmp16 = (s16)(diff >> 1);
+					x_cursor = (s16)(D_80053C94 + (s16)(diff >> 1));
 				}
-				x_cursor = (s16)(D_80053C94 + tmp16);
 				break;
 			}
 			case 27: { /* call func, scale x */
@@ -913,14 +908,10 @@ void func_8000B044_BC44(void) {
 		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 60, 60);
 
 		/* Compute texture rectangle coordinates (10.2 fixed point) */
-		xh_f = ((f32)(x_cursor + 16) * D_80053BE8 + (f32)D_80053BE2) * 4.0f;
-		yh_f = ((f32)(y_pos + 16)) * D_80053BEC * 4.0f;
-		xl_f = ((f32)x_cursor * D_80053BE8 + (f32)D_80053BE2) * 4.0f;
-		yl_f = (f32)y_pos * D_80053BEC * 4.0f;
-		xh_i = (s32)xh_f;
-		yh_i = (s32)yh_f;
-		xl_i = (s32)xl_f;
-		yl_i = (s32)yl_f;
+		xh_i = (s32)(((x_cursor + 16) * D_80053BE8 + D_80053BE2) * 4.0f);
+		yh_i = (s32)((y_pos + 16) * D_80053BEC * 4.0f);
+		xl_i = (s32)((x_cursor * D_80053BE8 + D_80053BE2) * 4.0f);
+		yl_i = (s32)(y_pos * D_80053BEC * 4.0f);
 		dsdx = (s32)(1024.0f / D_80053BE8);
 		dtdy = (s32)(1024.0f / D_80053BEC);
 
@@ -948,7 +939,6 @@ void func_8000B044_BC44(void) {
 
 		x_cursor = (s16)(x_cursor + glyph_advance);
 		i = (s16)(i + 1);
-		a3 = D_80053BE0;
 		continue;
 	} while (i < D_80053BE0);
 
