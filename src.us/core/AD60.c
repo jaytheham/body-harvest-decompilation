@@ -151,7 +151,7 @@ s16 func_8000A43C_B03C(s8 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A43C_B03C.s")
 #endif
 
-// CURRENT(69695)
+// CURRENT(67025)
 #ifdef NON_MATCHING
 void drawText(void *arg0, ...) {
 	u8 *s3;
@@ -178,9 +178,9 @@ void drawText(void *arg0, ...) {
 		v0 &= 0xFF;
 		a0 = '%' ^ v0;
 		while (1) {
+			s3++;
 			if (a0 == 0) {
-				s3++;
-				switch ((u8)(*s3 - '0')) {
+				switch (*s3 - '0') {
 				case 0:
 					s3[-1] = '\0';
 					*s3 = 1;
@@ -212,8 +212,6 @@ void drawText(void *arg0, ...) {
 					s3++;
 					break;
 				}
-			} else {
-				s3++;
 			}
 			v0 = *s3;
 			if (v0 != 0) {
@@ -232,15 +230,14 @@ void drawText(void *arg0, ...) {
 	if (v0 != 0) {
 		v0 = *s3;
 		while (1) {
-			s32 a1;
-
-			a1 = 6;
-
 			if (v0 != '%') {
 				*s0++ = (s8)v0;
 				s3++;
 				v0 = *s3;
 			} else {
+				s32 a1;
+
+				a1 = 6;
 				v0 = s3[1];
 				s3++;
 
@@ -253,23 +250,23 @@ void drawText(void *arg0, ...) {
 				} else {
 					v1 = v0;
 				}
+
 				a0 = v1;
 
-				if (a0 <= 0) {
-					if (a0 == 0) {
+				if (v1 > 0) {
+					if ((u32)(v1 - 0x40) >= 0x34) {
+						*s0 = (s8)v0;
+						s0++;
 						s3++;
 						v0 = *s3;
 						continue;
 					}
-					*s0++ = (s8)v0;
+				} else if (v1 == 0) {
+					s3++;
 					v0 = *s3;
 					continue;
-				}
-
-				if ((u32)(v1 - 0x40) >= 0x34) {
-					*s0 = (s8)v0;
-					s0++;
-					s3++;
+				} else {
+					*s0++ = (s8)v0;
 					v0 = *s3;
 					continue;
 				}
@@ -418,8 +415,8 @@ void drawText(void *arg0, ...) {
 				} else {
 					v1++;
 					a0 = *(u8 *)v1;
-					if ((u8)(a0 - '0') < 6) {
-						switch ((u8)(a0 - '0')) {
+					if (a0 - '0' < 6) {
+						switch (a0 - '0') {
 						case 0: *s0++ = 1; break;
 						case 1: *s0++ = 2; break;
 						case 2: *s0++ = 3; break;
@@ -539,7 +536,7 @@ void drawText(void *arg0, ...) {
 			*s0 = (s8)v0;
 			s0++;
 			break;
-		}
+				}
 
 				s3++;
 				v0 = *s3;
