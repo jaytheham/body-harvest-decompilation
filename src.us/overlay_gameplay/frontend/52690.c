@@ -4905,28 +4905,28 @@ void func_8008F1E0_5F690(void) {
 				sp90[1] = 500.0f;
 				sp90[0] = 0.0f;
 			} else if (temp_a0 < var_s4) {
-				temp_f20 = (f32)(((f64)(f32)temp_a0 * 3.14159265358979323846) / 180.0);
+				temp_f20 = (f32)(((f64)(f32)temp_a0 * M_PI) / 180.0); // Not M_DTOR right?
 				sp90[1] = cosf(temp_f20) * 500.0f;
 				sp90[0] = sinf(temp_f20) * 500.0f;
 			} else if (temp_a0 == var_s4) {
 				sp90[1] = 0.0f;
 				sp90[0] = 500.0f;
 			} else if (temp_a0 < var_s3) {
-				temp_f20 = (f32)(((f64)(f32)(var_s3 - temp_a0) * 3.14159265358979323846) / 180.0);
+				temp_f20 = (f32)(((f64)(f32)(var_s3 - temp_a0) * M_PI) / 180.0);
 				sp90[1] = cosf(temp_f20) * -500.0f;
 				sp90[0] = sinf(temp_f20) * 500.0f;
 			} else if (temp_a0 == var_s3) {
 				sp90[1] = -500.0f;
 				sp90[0] = 0.0f;
 			} else if (temp_a0 < var_s5) {
-				temp_f20 = (f32)(((f64)(f32)(temp_a0 - var_s3) * 3.14159265358979323846) / 180.0);
+				temp_f20 = (f32)(((f64)(f32)(temp_a0 - var_s3) * M_PI) / 180.0);
 				sp90[1] = cosf(temp_f20) * -500.0f;
 				sp90[0] = sinf(temp_f20) * -500.0f;
 			} else if (temp_a0 == var_s5) {
 				sp90[1] = 0.0f;
 				sp90[0] = -500.0f;
 			} else if (temp_a0 < var_s2) {
-				temp_f20 = (f32)(((f64)(f32)(var_s2 - temp_a0) * 3.14159265358979323846) / 180.0);
+				temp_f20 = (f32)(((f64)(f32)(var_s2 - temp_a0) * M_PI) / 180.0);
 				sp90[1] = cosf(temp_f20) * 500.0f;
 				sp90[0] = sinf(temp_f20) * -500.0f;
 			}
