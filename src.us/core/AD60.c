@@ -1039,7 +1039,7 @@ void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2) {
 	}
 }
 
-// CURRENT(5728)
+// CURRENT(4963)
 #ifdef NON_MATCHING
 void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	extern Unk800476C8 D_80059C90[2];
@@ -1048,11 +1048,11 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	s32 sp34;
 	s32 sp30;
 	s32 sp2C;
+	u32 *src;
+	u32 *dst;
+	u32 mask;
 	s32 temp1;
 	s32 temp2;
-	s32 mask;
-	s32 *src;
-	s32 *dst;
 
 	D_80059C90[0].unkC = 0;
 	D_80059C90[0].unk1C = 0;
@@ -1070,12 +1070,12 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	}
 
 	if (arg1 != NULL) {
-		sp3C = coss(arg1[0]);
-		sp38 = sins(arg1[0]);
-		sp34 = coss(arg1[2]);
-		sp30 = sins(arg1[2]);
-		sp2C = coss(arg1[1]);
-		temp1 = sins(arg1[1]);
+		sp3C = coss((u16)arg1[0]);
+		sp38 = sins((u16)arg1[0]);
+		sp34 = coss((u16)arg1[2]);
+		sp30 = sins((u16)arg1[2]);
+		sp2C = coss((u16)arg1[1]);
+		temp1 = sins((u16)arg1[1]);
 
 		D_80059C90[0].unk8 = -sp38 * 2;
 		D_80059C90[0].unk0 = ((sp3C * sp2C) >> 0xF) * 2;
@@ -1139,8 +1139,8 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	}
 
 	mask = 0xFFFF0000;
-	src = (s32 *)D_80059C90;
-	dst = arg3;
+	src = (u32 *)D_80059C90;
+	dst = (u32 *)arg3;
 	do {
 		dst[0] = ((src[1] & mask) >> 0x10) + (src[0] & mask);
 		dst += 4;
@@ -1152,7 +1152,7 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 		dst[-1] = ((src[7] & mask) >> 0x10) + (src[6] & mask);
 		dst[7] = (src[6] << 0x10) + (src[7] & 0xFFFF);
 		src += 8;
-	} while (src != (s32 *)&D_80059CD0);
+	} while (src != (u32 *)&D_80059CD0);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C81C_D41C.s")
