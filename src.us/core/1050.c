@@ -1139,23 +1139,27 @@ void getSaveFileName(s32 arg0, u8 *arg1)
 	arg1[6] = 0;
 }
 
+/* CURRENT(2110) */
 #ifdef NON_MATCHING
 s32 func_80002B20_3720(s32 arg0) {
 	s32 stride;
+	u8 *base;
 	u8 *ptr1;
 	s32 idx;
 	u8 *ptr2;
 	s32 v1;
 	
 	stride = arg0 * 0x7A;
-	idx = 2;
-	ptr2 = (u8*)&D_800431C0 + stride + (idx << 3);
-	ptr1 = (u8*)&D_800431C0 + stride;
+	base = (u8*)&D_800431C0;
+	ptr1 = base + stride;
 	
 	v1  = ptr1[0x53];
 	v1 += ptr1[0x54] << 8;
 	v1 += ptr1[0x55] << 0x10;
 	v1 += ptr1[0x56] << 0x18;
+	idx = 2;
+	idx <<= 3;
+	ptr2 = base + stride + idx;
 	v1 += ptr1[0x5B];
 	v1 += ptr1[0x5C] << 8;
 	v1 += ptr1[0x5D] << 0x10;
