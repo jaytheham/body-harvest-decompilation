@@ -570,7 +570,7 @@ void func_800016D8_22D8(void) {
 
 	D_800431C8 = (u8)D_800313D0;
 	writeIdx = 9;
-	for (i = 0; i < 5; i = (i + 1) & 0xFFFF) {
+	for (i = 0; i < 5; i++) {
 		u16 j;
 		for (j = 0; j < 6; j++) {
 			(&D_800431C0)[writeIdx++] = *((u8*)(D_80047FB8 + i) + j);
@@ -623,13 +623,14 @@ void func_80001830_2430(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001830_2430.s")
 #endif
 
-/* CURRENT(5225) */
+/* CURRENT(5200) */
 #ifdef NON_MATCHING
 void func_80001984_2584(void) {
+	u8 *src;
 	Unk80047FB8 *dstA3;
 	Unk80047FB8 *dstA2;
 	Unk80047FB8 *dstA1;
-	u8 *src;
+
 
 loop:
 	if (validateSaveVersionAndChecksum(4, 0x47) != 0) {
@@ -639,31 +640,24 @@ loop:
 		dstA2 = dstA3;
 		dstA1 = dstA3;
 		do {
-			s32 two = 2;
-			u32 tmp10;
-			u8 *dstBytes = (u8 *)dstA3;
-			u8 *dstBytes2 = (u8 *)dstA2;
-
-			dstBytes[0] = src[0];
-			dstBytes[1] = src[1];
-			dstBytes2 = dstBytes2 + two;
-			dstBytes2[1] = src[3];
-			dstBytes2[2] = src[4];
-			dstBytes2[3] = src[5];
-			dstBytes2[0] = src[2];
+			dstA3->unk0 = src[0];
+			dstA3->unk1 = src[1];
+			dstA2->unk3 = src[3];
+			dstA2->unk4 = src[4];
+			dstA2->unk5 = src[5];
+			dstA2->unk2 = src[2];
 			dstA1->unk8 = src[6];
 			dstA1->unk8 += src[7] << 8;
 			dstA1->unk8 += src[8] << 16;
 			dstA1->unk8 += src[9] << 24;
-			dstA1->unkC = (s16)src[10];
+			dstA1->unkC = src[10];
 			dstA1->unk10 = src[11];
-			tmp10 = dstA1->unk10 + (src[12] << 8);
-			dstA1->unk10 = tmp10;
+			dstA1->unk10 += src[12] << 8;
 			dstA3++;
 			dstA2++;
 			dstA1++;
 			dstA1->unk6 = 0;
-			dstA1[-1].unk10 = tmp10 + (src[13] << 16);
+			dstA1[-1].unk10 += src[13] << 16;
 		} while ((src += 14, dstA3 != &D_8004801C));
 		return;
 	}
