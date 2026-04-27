@@ -40,7 +40,7 @@ void func_8000A160_AD60(void) {
 	func_8000AFDC_BBDC();
 }
 
-// CURRENT(1040)
+// CURRENT(10)
 #ifdef NON_MATCHING
 s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 	s32 result;
@@ -62,10 +62,8 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 					}
 				} else {
 					{
-						s32 jidx;
-						u8 lo = ptr[1];
-						jidx = *ptr & 0x7F;
-						jidx = (jidx << 8) + lo;
+						s32 jidx = (*ptr & 0x7F) << 8;
+						jidx += ptr[1];
 						result += D_80031720_32320[jidx * 2 + 1];
 					}
 					ptr++;
