@@ -1192,30 +1192,19 @@ void func_8000CC3C_D83C(AnimChannelState *arg0, s32 arg1)
   }
 }
 
-#ifdef NON_MATCHING
 void func_8000CD54_D954(Unk8007F878_404 *arg0, AnimChannelState *arg1, u8 arg2) {
 	typedef struct { s16 a; s16 b; s16 c; s16 d; s16 e; s16 f; } AnimFrame12;
 	s32 temp_v0;
 
 	if (arg1->unk14 > (temp_v0 = arg1->unk18)) {
-		u16 start_frame = *(u16 *)((s32)arg0 + arg2 * 4 + 0xC);
-		s32 offset;
+		s32 start_frame = *(u16 *)((s32)arg0 + arg2 * 4 + 0xC);
 
 		start_frame += temp_v0;
-		offset = start_frame * 0xE;
-		*(AnimFrame12 *)&arg1->unk24 = *(AnimFrame12 *)((s32)arg0 + offset + 0x50);
-		{
-			u16 temp_at;
-
-			temp_at = arg1->unk30 = *(u16 *)((s32)arg0 + offset + 0x5C);
-			arg1->unk1C = 0.0f;
-			arg1->unk20 = (f32)(u32)(temp_at & 0xFFFF);
-		}
+		*(AnimFrameData14 *)&arg1->unk24 = *(AnimFrameData14 *)((s32)arg0 + (start_frame & 0xFFFF) * 0xE + 0x50);
+		arg1->unk1C = 0.0f;
+		arg1->unk20 = (f32)(u32)arg1->unk30;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CD54_D954.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, s32 arg3, s32 arg4)
