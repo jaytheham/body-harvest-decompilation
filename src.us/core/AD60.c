@@ -40,13 +40,14 @@ void func_8000A160_AD60(void) {
 	func_8000AFDC_BBDC();
 }
 
+// CURRENT(1040)
 #ifdef NON_MATCHING
 s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
-	u8 *ptr;
 	s32 result;
+	u8 *ptr;
 
-	ptr = arg0 + arg1;
 	result = 0;
+	ptr = arg0 + arg1;
 
 	if (*ptr != 0xA && *ptr != 0) {
 		do {
@@ -60,7 +61,13 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 						}
 					}
 				} else {
-					result += D_80031720_32320[(((*ptr & 0x7F) << 8) + ptr[1]) * 2 + 1];
+					{
+						s32 jidx;
+						u8 lo = ptr[1];
+						jidx = *ptr & 0x7F;
+						jidx = (jidx << 8) + lo;
+						result += D_80031720_32320[jidx * 2 + 1];
+					}
 					ptr++;
 				}
 			} else {
@@ -86,10 +93,12 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 
 	return result;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A2B8_AEB8.s")
 #endif
 
+// CURRENT(360)
 #ifdef NON_MATCHING
 void func_8000A3DC_AFDC(s16 arg0, s8 *arg1) {
 	s16 temp_v1;
@@ -103,7 +112,7 @@ void func_8000A3DC_AFDC(s16 arg0, s8 *arg1) {
 	temp_t0 = temp_v1 & 0xFF;
 	var_v0 = temp_v1 & 0xFF;
 	var_a2 = (s8)temp_a3;
-	if (temp_t0 >= 0) {
+	if (var_v0 >= 0) {
 		var_v0 = (temp_t0 + 1) & 0xFF;
 	}
 	if ((s8)temp_a3 >= 0) {
@@ -113,6 +122,7 @@ void func_8000A3DC_AFDC(s16 arg0, s8 *arg1) {
 	arg1++;
 	*(u8 *)arg1 = var_v0;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A3DC_AFDC.s")
 #endif
@@ -140,6 +150,7 @@ s16 func_8000A43C_B03C(s8 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A43C_B03C.s")
 #endif
 
+// CURRENT(69695)
 #ifdef NON_MATCHING
 void drawText(void *arg0, ...) {
 	u8 *s3;
@@ -164,8 +175,9 @@ void drawText(void *arg0, ...) {
 
 	if (v0 != 0) {
 		v0 &= 0xFF;
+		a0 = '%' ^ v0;
 		while (1) {
-			if (v0 == '%') {
+			if (a0 == 0) {
 				s3++;
 				switch ((u8)(*s3 - '0')) {
 				case 0:
@@ -203,9 +215,11 @@ void drawText(void *arg0, ...) {
 				s3++;
 			}
 			v0 = *s3;
-			if (v0 == 0) {
-				break;
+			if (v0 != 0) {
+				a0 = '%' ^ v0;
+				continue;
 			}
+			break;
 		}
 		s3 = (u8 *)arg0;
 		v0 = *s3;
