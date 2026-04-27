@@ -1206,6 +1206,7 @@ void func_8000CD54_D954(Unk8007F878_404 *arg0, AnimChannelState *arg1, u8 arg2) 
 	}
 }
 
+// CURRENT(70)
 #ifdef NON_MATCHING
 s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, s32 arg3, s32 arg4)
 {
