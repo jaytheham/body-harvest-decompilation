@@ -1319,6 +1319,9 @@ void func_80003064_3C64(void) {
 	s32 var_a2;
 	s32 var_t2;
 	s32 var_v0_2;
+	s32 *var_v0_3;
+	s32 *var_v1_2;
+	s32 *var_ra;
 	u16 temp_t6;
 	u16 temp_t8;
 
@@ -1333,9 +1336,12 @@ void func_80003064_3C64(void) {
 		D_800476A8 = 0;
 		D_800476AC = 0;
 		D_800476A4 = 0;
-		D_80047604 = 0;
-		D_80047600 = 0;
-		D_800475FC = 0;
+		var_v0_3 = &D_80047604;
+		var_v1_2 = &D_80047600;
+		var_ra = &D_800475FC;
+		*var_v0_3 = 0;
+		*var_v1_2 = 0;
+		*var_ra = 0;
 		D_800475F8 = 0;
 	}
 
@@ -1378,29 +1384,22 @@ void func_80003064_3C64(void) {
 		}
 	}
 
-	if (currentControllerStates[0].stick_x < 0) {
-		var_v0_2 = -1;
-	} else {
-		var_v0_2 = 1;
-	}
-	var_a0 = 1;
+	var_v0_2 = (currentControllerStates[0].stick_x < 0) ? -1 : 1;
 	var_t2 = D_800313C8_31FC8 & 8;
-	if (D_800475A2 < 0) {
-		var_a0 = -1;
-	}
-	if (var_a0 != var_v0_2) {
+	var_a0 = (D_800475A2 < 0) ? -1 : 1;
+	if (var_v0_2 != var_a0) {
 		D_800475F0 = D_800475F0 + D_800475F4 + 1;
 		D_800475F4 = 8;
 	}
 
 	if (D_800313C8_31FC8 != 0) {
 		if (var_t2 != 0) {
-			if ((D_800475B8.button & 0x9000) && !(D_800475D0.button & 0x9000)) {
+			if ((D_800475B8[0].button & 0x9000) && !(D_800475D0.button & 0x9000)) {
 				func_80006DAC_79AC(0, 1);
 				D_800313C8_31FC8 = 0;
 				var_t2 = D_800313C8_31FC8 & 8;
 			}
-			D_800475D0.button = D_800475B8.button;
+			D_800475D0.button = D_800475B8[0].button;
 		}
 		if (var_t2 != 0) {
 			currentControllerStates[0].stick_x = (s8)((u32)(D_800475F8 & 0xFF000000) >> 24);
