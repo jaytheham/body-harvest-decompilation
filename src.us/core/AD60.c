@@ -151,7 +151,7 @@ s16 func_8000A43C_B03C(s8 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A43C_B03C.s")
 #endif
 
-// CURRENT(69695)
+// CURRENT(67025)
 #ifdef NON_MATCHING
 void drawText(void *arg0, ...) {
 	u8 *s3;
@@ -178,9 +178,9 @@ void drawText(void *arg0, ...) {
 		v0 &= 0xFF;
 		a0 = '%' ^ v0;
 		while (1) {
+			s3++;
 			if (a0 == 0) {
-				s3++;
-				switch ((u8)(*s3 - '0')) {
+				switch (*s3 - '0') {
 				case 0:
 					s3[-1] = '\0';
 					*s3 = 1;
@@ -212,8 +212,6 @@ void drawText(void *arg0, ...) {
 					s3++;
 					break;
 				}
-			} else {
-				s3++;
 			}
 			v0 = *s3;
 			if (v0 != 0) {
@@ -232,15 +230,14 @@ void drawText(void *arg0, ...) {
 	if (v0 != 0) {
 		v0 = *s3;
 		while (1) {
-			s32 a1;
-
-			a1 = 6;
-
 			if (v0 != '%') {
 				*s0++ = (s8)v0;
 				s3++;
 				v0 = *s3;
 			} else {
+				s32 a1;
+
+				a1 = 6;
 				v0 = s3[1];
 				s3++;
 
@@ -253,23 +250,23 @@ void drawText(void *arg0, ...) {
 				} else {
 					v1 = v0;
 				}
+
 				a0 = v1;
 
-				if (a0 <= 0) {
-					if (a0 == 0) {
+				if (v1 > 0) {
+					if ((u32)(v1 - 0x40) >= 0x34) {
+						*s0 = (s8)v0;
+						s0++;
 						s3++;
 						v0 = *s3;
 						continue;
 					}
-					*s0++ = (s8)v0;
+				} else if (v1 == 0) {
+					s3++;
 					v0 = *s3;
 					continue;
-				}
-
-				if ((u32)(v1 - 0x40) >= 0x34) {
-					*s0 = (s8)v0;
-					s0++;
-					s3++;
+				} else {
+					*s0++ = (s8)v0;
 					v0 = *s3;
 					continue;
 				}
@@ -418,8 +415,8 @@ void drawText(void *arg0, ...) {
 				} else {
 					v1++;
 					a0 = *(u8 *)v1;
-					if ((u8)(a0 - '0') < 6) {
-						switch ((u8)(a0 - '0')) {
+					if (a0 - '0' < 6) {
+						switch (a0 - '0') {
 						case 0: *s0++ = 1; break;
 						case 1: *s0++ = 2; break;
 						case 2: *s0++ = 3; break;
@@ -539,7 +536,7 @@ void drawText(void *arg0, ...) {
 			*s0 = (s8)v0;
 			s0++;
 			break;
-		}
+				}
 
 				s3++;
 				v0 = *s3;
@@ -574,7 +571,7 @@ void func_8000AFDC_BBDC(void)
 	}
 }
 
-// CURRENT(114912)
+// CURRENT(112386)
 #ifdef NON_MATCHING
 void func_8000B044_BC44(void) {
 	s16 i;
@@ -584,15 +581,13 @@ void func_8000B044_BC44(void) {
 	s16 clip_x_min, clip_x_max, clip_y_min, clip_y_max;
 	u8 alpha;
 	u8 *text_ptr;
-	s32 char_raw;
+	u8 char_raw;
 	s16 char_idx;
 	s16 x_pos, y_pos;
 	s16 glyph_y_off;
 	s8 *glyph_data;
 	s16 glyph_advance;
 	Gfx *dl;
-	s16 tmp16;
-	f32 xh_f, yh_f, xl_f, yl_f;
 	s32 xh_i, yh_i, xl_i, yl_i;
 	s32 dsdx, dtdy;
 
@@ -643,8 +638,7 @@ void func_8000B044_BC44(void) {
 	}
 
 	do {
-		s16 a3 = D_80053BE0;
-		char_raw = (u8)text_ptr[i];
+		char_raw = text_ptr[i];
 		if (char_raw & 0x80) {
 			char_idx = (s16)((s16)char_raw + 0x130);
 		} else {
@@ -660,7 +654,7 @@ void func_8000B044_BC44(void) {
 
 		/* Control codes */
 		if (char_raw < 0x20) {
-			s16 b0, b1, b2, b3;
+			s16 b0, b1;
 			switch (char_raw) {
 			case 1: /* gray */
 				dl = D_8005BB2C; D_8005BB2C = dl + 1;
@@ -707,11 +701,10 @@ void func_8000B044_BC44(void) {
 						s16 span = (s16)(D_80053C96 - D_80053C94);
 						s16 diff = (s16)(span - (s16)width);
 						if (diff < 0) {
-							tmp16 = (s16)((diff + 1) >> 1);
+							x_cursor = (s16)(D_80053C94 + (s16)((diff + 1) >> 1));
 						} else {
-							tmp16 = (s16)(diff >> 1);
+							x_cursor = (s16)(D_80053C94 + (s16)(diff >> 1));
 						}
-						x_cursor = (s16)(D_80053C94 + tmp16);
 					} else {
 						/* right-align */
 						x_cursor = (s16)(D_80053C96 - (s16)width - D_800319C1_325C1);
@@ -838,11 +831,10 @@ void func_8000B044_BC44(void) {
 				span = (s16)(D_80053C96 - D_80053C94);
 				diff = (s16)(span - width);
 				if (diff < 0) {
-					tmp16 = (s16)((diff + 1) >> 1);
+					x_cursor = (s16)(D_80053C94 + (s16)((diff + 1) >> 1));
 				} else {
-					tmp16 = (s16)(diff >> 1);
+					x_cursor = (s16)(D_80053C94 + (s16)(diff >> 1));
 				}
-				x_cursor = (s16)(D_80053C94 + tmp16);
 				break;
 			}
 			case 27: { /* call func, scale x */
@@ -916,14 +908,10 @@ void func_8000B044_BC44(void) {
 		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 60, 60);
 
 		/* Compute texture rectangle coordinates (10.2 fixed point) */
-		xh_f = ((f32)(x_cursor + 16) * D_80053BE8 + (f32)D_80053BE2) * 4.0f;
-		yh_f = ((f32)(y_pos + 16)) * D_80053BEC * 4.0f;
-		xl_f = ((f32)x_cursor * D_80053BE8 + (f32)D_80053BE2) * 4.0f;
-		yl_f = (f32)y_pos * D_80053BEC * 4.0f;
-		xh_i = (s32)xh_f;
-		yh_i = (s32)yh_f;
-		xl_i = (s32)xl_f;
-		yl_i = (s32)yl_f;
+		xh_i = (s32)(((x_cursor + 16) * D_80053BE8 + D_80053BE2) * 4.0f);
+		yh_i = (s32)((y_pos + 16) * D_80053BEC * 4.0f);
+		xl_i = (s32)((x_cursor * D_80053BE8 + D_80053BE2) * 4.0f);
+		yl_i = (s32)(y_pos * D_80053BEC * 4.0f);
 		dsdx = (s32)(1024.0f / D_80053BE8);
 		dtdy = (s32)(1024.0f / D_80053BEC);
 
@@ -951,7 +939,6 @@ void func_8000B044_BC44(void) {
 
 		x_cursor = (s16)(x_cursor + glyph_advance);
 		i = (s16)(i + 1);
-		a3 = D_80053BE0;
 		continue;
 	} while (i < D_80053BE0);
 
@@ -1052,7 +1039,7 @@ void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2) {
 	}
 }
 
-// CURRENT(5728)
+// CURRENT(4963)
 #ifdef NON_MATCHING
 void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	extern Unk800476C8 D_80059C90[2];
@@ -1061,11 +1048,11 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	s32 sp34;
 	s32 sp30;
 	s32 sp2C;
+	u32 *src;
+	u32 *dst;
+	u32 mask;
 	s32 temp1;
 	s32 temp2;
-	s32 mask;
-	s32 *src;
-	s32 *dst;
 
 	D_80059C90[0].unkC = 0;
 	D_80059C90[0].unk1C = 0;
@@ -1083,12 +1070,12 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	}
 
 	if (arg1 != NULL) {
-		sp3C = coss(arg1[0]);
-		sp38 = sins(arg1[0]);
-		sp34 = coss(arg1[2]);
-		sp30 = sins(arg1[2]);
-		sp2C = coss(arg1[1]);
-		temp1 = sins(arg1[1]);
+		sp3C = coss((u16)arg1[0]);
+		sp38 = sins((u16)arg1[0]);
+		sp34 = coss((u16)arg1[2]);
+		sp30 = sins((u16)arg1[2]);
+		sp2C = coss((u16)arg1[1]);
+		temp1 = sins((u16)arg1[1]);
 
 		D_80059C90[0].unk8 = -sp38 * 2;
 		D_80059C90[0].unk0 = ((sp3C * sp2C) >> 0xF) * 2;
@@ -1152,8 +1139,8 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	}
 
 	mask = 0xFFFF0000;
-	src = (s32 *)D_80059C90;
-	dst = arg3;
+	src = (u32 *)D_80059C90;
+	dst = (u32 *)arg3;
 	do {
 		dst[0] = ((src[1] & mask) >> 0x10) + (src[0] & mask);
 		dst += 4;
@@ -1165,7 +1152,7 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 		dst[-1] = ((src[7] & mask) >> 0x10) + (src[6] & mask);
 		dst[7] = (src[6] << 0x10) + (src[7] & 0xFFFF);
 		src += 8;
-	} while (src != (s32 *)&D_80059CD0);
+	} while (src != (u32 *)&D_80059CD0);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C81C_D41C.s")
@@ -1246,11 +1233,13 @@ s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, 
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(7638)
+// CURRENT(7256)
 // Score: ~16442. Issue: arg3 spills to stack instead of staying in $f26.
 // Current uses 6 double FP regs (f20,f22,f24,f26,f28,f30) vs target's 4 (f20,f22,f24,f26).
 // All intermediate temp_f* variables seem necessary for matching instruction order.
 void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, f32 arg3) {
+	f64 temp_f20;
+	f64 temp_f22;
 	volatile f32 sp70;
 	volatile f32 sp6C;
 	volatile f32 sp68;
@@ -1261,10 +1250,6 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
 	volatile f32 sp4C;
 	volatile f32 sp48;
 	f32 temp_f24;
-	s32 pad0;
-	s32 pad1;
-	f64 temp_f20;
-	f64 temp_f22;
 	s32 temp_t6;
 	s32 var_s0;
 	AnimChannelState *temp_a1;
@@ -1289,8 +1274,6 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
 				f32 temp_f4;
 				f32 temp_f6;
 				f32 temp_f6_2;
-				f32 temp_f8;
-				f32 temp_f8_2;
 
 				temp_f14 = temp_a1->unk1C;
 				temp_f16 = temp_a1->unk20;
@@ -1299,17 +1282,15 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
 				sp68 = temp_f10;
 				temp_f6 = (f32)(((f64)(f32)temp_a1->unk2C * temp_f20) / temp_f22);
 				sp6C = temp_f6;
-				temp_f8 = (f32)(((f64)(f32)temp_a1->unk2E * temp_f20) / temp_f22);
-				sp70 = temp_f8;
+				sp70 = (f32)(((f64)(f32)temp_a1->unk2E * temp_f20) / temp_f22);
 				temp_f4 = (f32)(((f64)(f32)temp_a1->unk0 * temp_f20) / temp_f22);
 				sp5C = temp_f4;
 				sp48 = temp_f10;
 				temp_f10_2 = (f32)(((f64)(f32)temp_a1->unk2 * temp_f20) / temp_f22);
 				sp60 = temp_f10_2;
 				sp4C = temp_f6;
-				sp50 = temp_f8;
-				temp_f8_2 = ((sp48 - temp_f4) * temp_f18) + temp_f4;
-				sp5C = temp_f8_2;
+				sp50 = sp70;
+				sp5C = ((sp48 - temp_f4) * temp_f18) + temp_f4;
 				temp_f6_2 = (f32)(((f64)(f32)temp_a1->unk4 * temp_f20) / temp_f22);
 				sp60 = ((sp4C - temp_f10_2) * temp_f18) + temp_f10_2;
 				sp64 = temp_f6_2;
@@ -1317,7 +1298,7 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
 				temp_f2 = temp_a1->unk8;
 				temp_f12 = temp_a1->unkC;
 				temp_f0 = temp_a1->unk10;
-				temp_a1->unk0 = (s16)(s32)((f64)(temp_f8_2 * temp_f24) / temp_f20);
+				temp_a1->unk0 = (s16)(s32)((f64)(sp5C * temp_f24) / temp_f20);
 				temp_a1->unk2 = (s16)(s32)((f64)(sp60 * temp_f24) / temp_f20);
 				temp_a1->unk4 = (s16)(s32)((f64)(sp64 * temp_f24) / temp_f20);
 				temp_a1->unk8 = (((f32)temp_a1->unk24 - temp_f2) * temp_f18) + temp_f2;

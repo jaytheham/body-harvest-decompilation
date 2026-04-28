@@ -526,24 +526,24 @@ void func_800015B4_21B4(s32 arg0, s32 arg1) {
 #endif
 
 // https://decomp.me/scratch/Y6mYv
+/* CURRENT(335) */
 #ifdef NON_MATCHING
 s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 {
 	u8 *ptr;
-	u8 version;
+	s32 version;
 	s32 stored_checksum;
 	s32 computed_checksum;
 	s32 i;
 
-	ptr = ((u8 *)&D_800431C0) + arg0;
-	version = ptr[0];
+	version = *(((u8 *)&D_800431C0) + arg0);
 	if (version != 0x1C) {
 		osSyncPrintf(&D_8003685C_3745C, version);
 		return 0;
 	}
 
-	stored_checksum = ((ptr[3] << 8) + ptr[2]) & 0xFFFF;
-	ptr += 4;
+	ptr = ((u8 *)&D_800431C0) + arg0 + 4;
+	stored_checksum = (u16)(((ptr[-1] << 8) + ptr[-2]) & 0xFFFF);
 
 	computed_checksum = 0;
 	for (i = 0; i < arg1; i = (i + 1) & 0xFFFF) {
@@ -551,16 +551,16 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 		ptr++;
 	}
 
-	if (computed_checksum != stored_checksum) {
-		osSyncPrintf(&D_80036870_37470, arg1, stored_checksum);
+	if (computed_checksum != (u16)stored_checksum) {
+		osSyncPrintf(&D_80036870_37470, arg1, (u16)stored_checksum);
 		return 0;
 	}
 	return 1;
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/validateSaveVersionAndChecksum.s")
 #endif
+
 
 /* CURRENT(2060) */
 #ifdef NON_MATCHING
@@ -570,7 +570,7 @@ void func_800016D8_22D8(void) {
 
 	D_800431C8 = (u8)D_800313D0;
 	writeIdx = 9;
-	for (i = 0; i < 5; i = (i + 1) & 0xFFFF) {
+	for (i = 0; i < 5; i++) {
 		u16 j;
 		for (j = 0; j < 6; j++) {
 			(&D_800431C0)[writeIdx++] = *((u8*)(D_80047FB8 + i) + j);
@@ -623,13 +623,14 @@ void func_80001830_2430(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001830_2430.s")
 #endif
 
-/* CURRENT(5225) */
+/* CURRENT(5200) */
 #ifdef NON_MATCHING
 void func_80001984_2584(void) {
+	u8 *src;
 	Unk80047FB8 *dstA3;
 	Unk80047FB8 *dstA2;
 	Unk80047FB8 *dstA1;
-	u8 *src;
+
 
 loop:
 	if (validateSaveVersionAndChecksum(4, 0x47) != 0) {
@@ -639,31 +640,24 @@ loop:
 		dstA2 = dstA3;
 		dstA1 = dstA3;
 		do {
-			s32 two = 2;
-			u32 tmp10;
-			u8 *dstBytes = (u8 *)dstA3;
-			u8 *dstBytes2 = (u8 *)dstA2;
-
-			dstBytes[0] = src[0];
-			dstBytes[1] = src[1];
-			dstBytes2 = dstBytes2 + two;
-			dstBytes2[1] = src[3];
-			dstBytes2[2] = src[4];
-			dstBytes2[3] = src[5];
-			dstBytes2[0] = src[2];
+			dstA3->unk0 = src[0];
+			dstA3->unk1 = src[1];
+			dstA2->unk3 = src[3];
+			dstA2->unk4 = src[4];
+			dstA2->unk5 = src[5];
+			dstA2->unk2 = src[2];
 			dstA1->unk8 = src[6];
 			dstA1->unk8 += src[7] << 8;
 			dstA1->unk8 += src[8] << 16;
 			dstA1->unk8 += src[9] << 24;
-			dstA1->unkC = (s16)src[10];
+			dstA1->unkC = src[10];
 			dstA1->unk10 = src[11];
-			tmp10 = dstA1->unk10 + (src[12] << 8);
-			dstA1->unk10 = tmp10;
+			dstA1->unk10 += src[12] << 8;
 			dstA3++;
 			dstA2++;
 			dstA1++;
 			dstA1->unk6 = 0;
-			dstA1[-1].unk10 = tmp10 + (src[13] << 16);
+			dstA1[-1].unk10 += src[13] << 16;
 		} while ((src += 14, dstA3 != &D_8004801C));
 		return;
 	}
@@ -674,7 +668,7 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001984_2584.s")
 #endif
 
-/* CURRENT(19545) */
+/* CURRENT(19265) */
 #ifdef NON_MATCHING
 void guess_prepareToSaveGame(s32 arg0) {
 	s32 v1;
@@ -830,44 +824,42 @@ void guess_prepareToSaveGame(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_prepareToSaveGame.s")
 #endif
 
+/* CURRENT(1868) */
 #ifdef NON_MATCHING
 void func_800020E0_2CE0(s32 arg0, s32 arg1) {
-	s32 i;
-	s32 src_off;
-	s32 dst_base;
-	s32 src_next;
-	s32 dst_next;
 	u8 *dst;
 	u8 *src;
 
-	i = 2;
-	src_off = arg0 * 0x7A + 0x53;
-	dst_base = arg1 * 0x7A;
-	src_next = src_off + 1;
-	src = (u8 *)&D_800431C0 + (src_next + 1);
-	(&D_800431C0)[dst_base + 0x53] = (&D_800431C0)[src_off];
-	dst_next = dst_base + 0x53 + 1;
-	dst = (u8 *)&D_800431C0 + (dst_next + 1);
-	(&D_800431C0)[dst_next] = (&D_800431C0)[src_next];
-loop:
-	i += 4;
-	dst += 4;
-	dst[-4] = src[0];
-	dst[-3] = src[1];
-	src += 4;
-	dst[-2] = src[-2];
-	dst[-1] = src[-1];
-	if (i != 0x76) goto loop;
+	arg0 = arg0 * 0x7A + 0x53;
+	arg1 = arg1 * 0x7A + 0x53;
+	
+	(&D_800431C0)[arg1] = (&D_800431C0)[arg0];
+	
+	dst = (u8 *)&D_800431C0 + arg1 + 2;
+	src = (u8 *)&D_800431C0 + arg0 + 2;
+	
+	(&D_800431C0)[arg1 + 1] = (&D_800431C0)[arg0 + 1];
+	
+	arg0 = 2;
+	for (; arg0 != 0x76; arg0 += 4) {
+		dst[0] = src[0];
+		dst[1] = src[1];
+		src += 4;
+		dst[2] = src[2];
+		dst[3] = src[3];
+		dst += 4;
+	}
 
-	func_800015B4_21B4(dst_base + 0x4F, 0x76);
+	arg0 = arg1 - 0x53;
+	func_800015B4_21B4(arg0 + 0x4F, 0x76);
 	func_800015B4_21B4(0, 0x1B9);
 	if (D_80047608 != 0) {
 		osEepromLongWrite(&D_80043388, 0, &D_800431C0, 0x1BD);
 	}
 }
-	#else
-	#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800020E0_2CE0.s")
-	#endif
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800020E0_2CE0.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_800021CC_2DCC(s32 arg0) {
@@ -960,26 +952,23 @@ void func_800021CC_2DCC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800021CC_2DCC.s")
 #endif
 
+/* CURRENT(18868) */
 #ifdef NON_MATCHING
 void guess_loadSavedGame(s32 arg0) {
 	u32 sp34;
-	s32 sp30;
+	u32 sp30;
 	s32 saveSlot;
 	u8 *src;
 	Unk80052A98 *stat;
 	s32 shift;
-	u8 b;
 	u8 *p;
-	s16 *q;
-	s32 i;
 
 	saveSlot = arg0 * 0x7A + 0x4F;
 	if (validateSaveVersionAndChecksum(saveSlot, 0x76) != 0) {
 		src = &D_800431C0 + saveSlot + 4;
 		stat = D_80052A98;
-		b = *src;
 		do {
-			stat->score = b;
+			stat->score = *src;
 			stat->score += (s32)src[1] << 8;
 			stat->score += (s32)src[2] << 16;
 			stat->score += (s32)src[3] << 24;
@@ -995,9 +984,13 @@ void guess_loadSavedGame(s32 arg0) {
 			stat++;
 		} while ((u32)stat < (u32)&D_80052AC8);
 		osSyncPrintf(&D_80036AB8_376B8);
-		b = *src++;
-		currentLevel = b & 0xF;
-		D_80047FA0 = (s32)b >> 4;
+		{
+			u8 b;
+
+			b = *src++;
+			currentLevel = b & 0xF;
+			D_80047FA0 = (s32)b >> 4;
+		}
 		osSyncPrintf(&D_80036AD4_376D4, currentLevel, D_80047FA0, &currentLevel);
 		D_80047F9C = *src++ & 0xF;
 		osSyncPrintf(&D_80036AEC_376EC, D_80047F9C);
@@ -1006,6 +999,7 @@ void guess_loadSavedGame(s32 arg0) {
 		do {
 			D_80031420 += *src++ << shift;
 			shift += 8;
+			continue;
 		} while (shift < 0x20);
 		if (D_800313D0 == 2) {
 			D_80031420 &= ~2;
@@ -1020,31 +1014,39 @@ void guess_loadSavedGame(s32 arg0) {
 		D_80047FAE = 0;
 		osSyncPrintf(&D_80036B0C_3770C);
 		p = &weaponSlots[0];
-		b = *src;
+		{
+			u8 b;
+
 		do {
-			src++;
+			b = *src++;
 			*p = b;
 			osSyncPrintf(&D_80036B18_37718, b);
 			p++;
 		} while ((u32)p < (u32)&D_8004813F);
+		}
 		osSyncPrintf(&D_80036B1C_3771C);
 		sp34 = 0;
 		sp30 = 0;
 		osSyncPrintf(&D_80036B20_37720);
 		shift = 0;
 		do {
-			u64 shifted = __ll_lshift(*src, shift);
+			s64 shifted = __ll_lshift(*src, shift);
 			u32 newLo = (u32)shifted + sp34;
 			sp30 = (newLo < sp34 ? 1 : 0) + (u32)(shifted >> 32) + sp30;
 			sp34 = newLo;
 			src++;
 			shift += 8;
 		} while (shift < 0x40);
-		D_8004DC48.unk0 = ((u64)sp30 << 32) | sp34;
+		((Flags2x32 *)&D_8004DC48)->unk0 = sp30;
+		((Flags2x32 *)&D_8004DC48)->unk4 = sp34;
 		osSyncPrintf(&D_80036B28_37728, sp30, sp34);
-		b = *src;
-		D_8004DC5C = (s8)((s32)b >> 4);
-		D_8004DC5E = b & 0xF;
+		{
+			u8 b;
+
+			b = *src;
+			D_8004DC5C = (s8)((s32)b >> 4);
+			D_8004DC5E = b & 0xF;
+		}
 		D_80048026 = src[1];
 		D_80048026 += src[2] << 8;
 		src += 3;
@@ -1052,21 +1054,6 @@ void guess_loadSavedGame(s32 arg0) {
 		D_80048028 = src[0];
 		D_80048028 += src[1] << 8;
 		src += 2;
-		D_8004DC50.unk4 = 0;
-		D_8004DC50.unk0 = 0;
-		osSyncPrintf(&D_80036B60_37760);
-		shift = 0;
-		b = *src;
-		do {
-			u64 shifted = __ll_lshift(b, shift);
-			u32 newLo = (u32)shifted + D_8004DC54;
-			D_8004DC50.unk0 = (newLo < D_8004DC54 ? 1 : 0) + (u32)(shifted >> 32) + D_8004DC50.unk0;
-			D_8004DC54 = newLo;
-			src++;
-			b = *src;
-			shift += 8;
-		} while (shift < 0x40);
-		osSyncPrintf(&D_80036B78_37778, D_8004DC50.unk0, D_8004DC50.unk4);
 		D_80052A90 = 0;
 		shift = 0;
 		do {
@@ -1093,9 +1080,14 @@ void guess_loadSavedGame(s32 arg0) {
 		do {
 			D_8004D158 += *src++ << shift;
 			shift += 8;
+			continue;
 		} while (shift < 0x20);
 		osSyncPrintf(&D_80036BB8_377B8, D_8004D158);
 		osSyncPrintf(&D_80036BC8_377C8);
+		{
+			s16 *q;
+			s32 i;
+
 		p = &weaponSlots[0];
 		q = &D_80048140[0];
 		i = 0;
@@ -1107,6 +1099,7 @@ void guess_loadSavedGame(s32 arg0) {
 			p++;
 			q++;
 		} while (i != 7);
+		}
 		D_80048030 = *src++;
 		osSyncPrintf(&D_80036BF4_377F4, D_80048030);
 		osSyncPrintf(&D_80036C0C_3780C, D_80052ACD);
@@ -1146,23 +1139,27 @@ void getSaveFileName(s32 arg0, u8 *arg1)
 	arg1[6] = 0;
 }
 
+/* CURRENT(2110) */
 #ifdef NON_MATCHING
 s32 func_80002B20_3720(s32 arg0) {
 	s32 stride;
+	u8 *base;
 	u8 *ptr1;
 	s32 idx;
 	u8 *ptr2;
 	s32 v1;
 	
 	stride = arg0 * 0x7A;
-	idx = 2;
-	ptr2 = (u8*)&D_800431C0 + stride + (idx << 3);
-	ptr1 = (u8*)&D_800431C0 + stride;
+	base = (u8*)&D_800431C0;
+	ptr1 = base + stride;
 	
 	v1  = ptr1[0x53];
 	v1 += ptr1[0x54] << 8;
 	v1 += ptr1[0x55] << 0x10;
 	v1 += ptr1[0x56] << 0x18;
+	idx = 2;
+	idx <<= 3;
+	ptr2 = base + stride + idx;
 	v1 += ptr1[0x5B];
 	v1 += ptr1[0x5C] << 8;
 	v1 += ptr1[0x5D] << 0x10;
@@ -1322,6 +1319,9 @@ void func_80003064_3C64(void) {
 	s32 var_a2;
 	s32 var_t2;
 	s32 var_v0_2;
+	s32 *var_v0_3;
+	s32 *var_v1_2;
+	s32 *var_ra;
 	u16 temp_t6;
 	u16 temp_t8;
 
@@ -1336,9 +1336,12 @@ void func_80003064_3C64(void) {
 		D_800476A8 = 0;
 		D_800476AC = 0;
 		D_800476A4 = 0;
-		D_80047604 = 0;
-		D_80047600 = 0;
-		D_800475FC = 0;
+		var_v0_3 = &D_80047604;
+		var_v1_2 = &D_80047600;
+		var_ra = &D_800475FC;
+		*var_v0_3 = 0;
+		*var_v1_2 = 0;
+		*var_ra = 0;
 		D_800475F8 = 0;
 	}
 
@@ -1381,29 +1384,22 @@ void func_80003064_3C64(void) {
 		}
 	}
 
-	if (currentControllerStates[0].stick_x < 0) {
-		var_v0_2 = -1;
-	} else {
-		var_v0_2 = 1;
-	}
-	var_a0 = 1;
+	var_v0_2 = (currentControllerStates[0].stick_x < 0) ? -1 : 1;
 	var_t2 = D_800313C8_31FC8 & 8;
-	if (D_800475A2 < 0) {
-		var_a0 = -1;
-	}
-	if (var_a0 != var_v0_2) {
+	var_a0 = (D_800475A2 < 0) ? -1 : 1;
+	if (var_v0_2 != var_a0) {
 		D_800475F0 = D_800475F0 + D_800475F4 + 1;
 		D_800475F4 = 8;
 	}
 
 	if (D_800313C8_31FC8 != 0) {
 		if (var_t2 != 0) {
-			if ((D_800475B8.button & 0x9000) && !(D_800475D0.button & 0x9000)) {
+			if ((D_800475B8[0].button & 0x9000) && !(D_800475D0.button & 0x9000)) {
 				func_80006DAC_79AC(0, 1);
 				D_800313C8_31FC8 = 0;
 				var_t2 = D_800313C8_31FC8 & 8;
 			}
-			D_800475D0.button = D_800475B8.button;
+			D_800475D0.button = D_800475B8[0].button;
 		}
 		if (var_t2 != 0) {
 			currentControllerStates[0].stick_x = (s8)((u32)(D_800475F8 & 0xFF000000) >> 24);
