@@ -684,15 +684,15 @@ void guess_prepareToSaveGame(s32 arg0) {
 
 	stats = D_80052A98;
 	do {
-		func_8001CC6C(&D_80036884_37484, stats->score);
+		osSyncPrintf(&D_80036884_37484, stats->score);
 		dest[0] = (u8)stats->score;
 		dest[1] = (u8)(stats->score >> 8);
 		dest[2] = (u8)(stats->score >> 16);
 		dest[3] = (u8)(stats->score >> 24);
 		dest += 4;
-		func_8001CC6C(&D_80036894_37494, (u16)stats->humansKilled);
+		osSyncPrintf(&D_80036894_37494, (u16)stats->humansKilled);
 		*dest++ = (u8)(u16)stats->humansKilled;
-		func_8001CC6C(&D_800368A0_374A0, stats->secondsElapsed);
+		osSyncPrintf(&D_800368A0_374A0, stats->secondsElapsed);
 		dest[0] = (u8)stats->secondsElapsed;
 		dest[1] = (u8)((s32)stats->secondsElapsed >> 8);
 		dest[2] = (u8)((s32)stats->secondsElapsed >> 16);
@@ -700,35 +700,35 @@ void guess_prepareToSaveGame(s32 arg0) {
 		stats++;
 	} while (stats < (Unk80052A98 *)&D_80052AC8);
 
-	func_8001CC6C(&D_800368AC_374AC);
+	osSyncPrintf(&D_800368AC_374AC);
 	*dest++ = (u8)((D_80047FA0 * 0x10) | currentLevel);
-	func_8001CC6C(&D_800368C4_374C4, currentLevel, D_80047FA0);
+	osSyncPrintf(&D_800368C4_374C4, currentLevel, D_80047FA0);
 	*dest++ = (u8)D_80047F9C;
-	func_8001CC6C(&D_800368DC_374DC, D_80047F9C);
+	osSyncPrintf(&D_800368DC_374DC, D_80047F9C);
 	dest[0] = (u8)D_80031420;
 	dest[1] = (u8)((u32)D_80031420 >> 8);
 	dest[2] = (u8)((u32)D_80031420 >> 0x10);
 	dest[3] = (u8)((u32)D_80031420 >> 0x18);
 	dest += 4;
-	func_8001CC6C(&D_800368F4_374F4, (s32)D_80031420);
+	osSyncPrintf(&D_800368F4_374F4, (s32)D_80031420);
 
 	p = &D_80047FA8[0];
 	do {
 		*dest++ = *p++;
 	} while ((u32)p < (u32)&D_80047FAE);
-	func_8001CC6C(&D_80036904_37504);
+	osSyncPrintf(&D_80036904_37504);
 
 	for (i = 0; i < 7; i++) {
 		*dest++ = weaponSlots[i];
-		func_8001CC6C(&D_80036910_37510, i, (s32)weaponSlots[i]);
+		osSyncPrintf(&D_80036910_37510, i, (s32)weaponSlots[i]);
 	}
 
-	func_8001CC6C(&D_8003692C_3752C);
+	osSyncPrintf(&D_8003692C_3752C);
 	{
 		u64 flags;
 
 		flags = D_8004DC48.unk0;
-		func_8001CC6C(&D_80036930_37530);
+		osSyncPrintf(&D_80036930_37530);
 		*dest++ = (s8)flags;
 		*dest++ = (s8)(u32)__ull_rshift(flags, 8);
 		*dest++ = (s8)(u32)__ull_rshift(flags, 0x10);
@@ -737,7 +737,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 		*dest++ = (s8)(u32)__ull_rshift(flags, 0x28);
 		*dest++ = (s8)(u32)__ull_rshift(flags, 0x30);
 		*dest++ = (s8)(u32)__ull_rshift(flags, 0x38);
-		func_8001CC6C(&D_80036938_37538);
+		osSyncPrintf(&D_80036938_37538);
 	}
 
 	*dest++ = (u8)((D_8004DC5C * 0x10) + D_8004DC5E);
@@ -745,11 +745,11 @@ void guess_prepareToSaveGame(s32 arg0) {
 	*dest++ = (u8)D_80048026;
 	*dest++ = (u8)((s32)D_80048026 >> 8);
 	dest++;
-	func_8001CC6C(&D_80036940_37540, (s32)D_80048026);
+	osSyncPrintf(&D_80036940_37540, (s32)D_80048026);
 
 	*dest++ = (u8)D_80048028;
 	*dest++ = (u8)((s32)D_80048028 >> 8);
-	func_8001CC6C(&D_8003696C_3756C);
+	osSyncPrintf(&D_8003696C_3756C);
 
 	{
 		u64 flags;
@@ -763,7 +763,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 		*dest++ = (s8)(u32)__ull_rshift(flags, 0x28);
 		*dest++ = (s8)(u32)__ull_rshift(flags, 0x30);
 		*dest++ = (s8)(u32)__ull_rshift(flags, 0x38);
-		func_8001CC6C(&D_80036984_37584);
+		osSyncPrintf(&D_80036984_37584);
 	}
 
 	{
@@ -778,7 +778,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 		dest[3] = (s8)(playtime >> 0x18);
 		dest[4] = (s8)D_80047F98;
 		dest += 5;
-		func_8001CC6C(&D_8003698C_3758C, D_80047F98);
+		osSyncPrintf(&D_8003698C_3758C, D_80047F98);
 	}
 
 	dest[0] = (u8)D_8004D154;
@@ -786,39 +786,39 @@ void guess_prepareToSaveGame(s32 arg0) {
 	dest[2] = (u8)((u32)D_8004D154 >> 0x10);
 	dest[3] = (u8)((u32)D_8004D154 >> 0x18);
 	dest += 4;
-	func_8001CC6C(&D_800369A0_375A0, (s32)D_8004D154);
+	osSyncPrintf(&D_800369A0_375A0, (s32)D_8004D154);
 
 	dest[0] = (u8)D_8004D158;
 	dest[1] = (u8)((u32)D_8004D158 >> 8);
 	dest[2] = (u8)((u32)D_8004D158 >> 0x10);
 	dest[3] = (u8)((u32)D_8004D158 >> 0x18);
 	dest += 4;
-	func_8001CC6C(&D_800369B4_375B4, (s32)D_8004D158);
+	osSyncPrintf(&D_800369B4_375B4, (s32)D_8004D158);
 
-	func_8001CC6C(&D_800369C4_375C4);
-	func_8001CC6C(&D_800369D0_375D0);
+	osSyncPrintf(&D_800369C4_375C4);
+	osSyncPrintf(&D_800369D0_375D0);
 
 	for (i = 0; i < 7; i++) {
 		*dest++ = (s8)(D_80048140[weaponSlots[i]] >> D_80031374_31F74[weaponSlots[i]]);
-		func_8001CC6C(&D_80036A04_37604, i, (s32)D_80048140[i]);
+		osSyncPrintf(&D_80036A04_37604, i, (s32)D_80048140[i]);
 	}
 
 	*dest++ = (u8)D_80048030;
-	func_8001CC6C(&D_80036A20_37620, (s32)D_80048030);
+	osSyncPrintf(&D_80036A20_37620, (s32)D_80048030);
 
 	*dest++ = (u8)D_80052ACD;
-	func_8001CC6C(&D_80036A38_37638, (s32)D_80052ACD);
+	osSyncPrintf(&D_80036A38_37638, (s32)D_80052ACD);
 
 	dest[0] = (s8)D_8004815C;
 	dest[1] = (s8)D_80048160;
 	dest[2] = (s8)D_80048162;
 	dest[3] = (s8)D_8004815E;
 	dest += 3;
-	func_8001CC6C(&D_80036A48_37648, (s32)D_8004815C, (s32)D_80048160, D_80048162, (s32)D_8004815E);
+	osSyncPrintf(&D_80036A48_37648, (s32)D_8004815C, (s32)D_80048160, D_80048162, (s32)D_8004815E);
 
-	func_8001CC6C(&D_80036A68_37668);
+	osSyncPrintf(&D_80036A68_37668);
 	func_800015B4_21B4(v1 + 0x4F, 0x76);
-	func_8001CC6C(&D_80036A6C_3766C);
+	osSyncPrintf(&D_80036A6C_3766C);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_prepareToSaveGame.s")
@@ -973,17 +973,17 @@ void guess_loadSavedGame(s32 arg0) {
 			stat->score += (s32)src[2] << 16;
 			stat->score += (s32)src[3] << 24;
 			src += 4;
-			func_8001CC6C(&D_80036A8C_3768C, stat->score);
+			osSyncPrintf(&D_80036A8C_3768C, stat->score);
 			stat->humansKilled = *src++;
-			func_8001CC6C(&D_80036AA0_376A0, stat->humansKilled);
+			osSyncPrintf(&D_80036AA0_376A0, stat->humansKilled);
 			stat->secondsElapsed = src[0];
 			stat->secondsElapsed += src[1] << 8;
 			stat->secondsElapsed += src[2] << 16;
-			func_8001CC6C(&D_80036AAC_376AC, stat->secondsElapsed);
+			osSyncPrintf(&D_80036AAC_376AC, stat->secondsElapsed);
 			src += 3;
 			stat++;
 		} while ((u32)stat < (u32)&D_80052AC8);
-		func_8001CC6C(&D_80036AB8_376B8);
+		osSyncPrintf(&D_80036AB8_376B8);
 		{
 			u8 b;
 
@@ -991,9 +991,9 @@ void guess_loadSavedGame(s32 arg0) {
 			currentLevel = b & 0xF;
 			D_80047FA0 = (s32)b >> 4;
 		}
-		func_8001CC6C(&D_80036AD4_376D4, currentLevel, D_80047FA0, &currentLevel);
+		osSyncPrintf(&D_80036AD4_376D4, currentLevel, D_80047FA0, &currentLevel);
 		D_80047F9C = *src++ & 0xF;
-		func_8001CC6C(&D_80036AEC_376EC, D_80047F9C);
+		osSyncPrintf(&D_80036AEC_376EC, D_80047F9C);
 		D_80031420 = 0;
 		shift = 0;
 		do {
@@ -1006,13 +1006,13 @@ void guess_loadSavedGame(s32 arg0) {
 		}
 		func_80016FD0_17BD0((s16)((D_80031420 & 0x60) >> 5));
 		func_800170F4_17CF4((s16)((D_80031420 & 0x18) >> 3));
-		func_8001CC6C(&D_80036AFC_376FC, D_80031420);
+		osSyncPrintf(&D_80036AFC_376FC, D_80031420);
 		p = D_80047FA8;
 		do {
 			*p++ = *src++;
 		} while ((u32)p < (u32)&D_80047FAE);
 		D_80047FAE = 0;
-		func_8001CC6C(&D_80036B0C_3770C);
+		osSyncPrintf(&D_80036B0C_3770C);
 		p = &weaponSlots[0];
 		{
 			u8 b;
@@ -1020,14 +1020,14 @@ void guess_loadSavedGame(s32 arg0) {
 		do {
 			b = *src++;
 			*p = b;
-			func_8001CC6C(&D_80036B18_37718, b);
+			osSyncPrintf(&D_80036B18_37718, b);
 			p++;
 		} while ((u32)p < (u32)&D_8004813F);
 		}
-		func_8001CC6C(&D_80036B1C_3771C);
+		osSyncPrintf(&D_80036B1C_3771C);
 		sp34 = 0;
 		sp30 = 0;
-		func_8001CC6C(&D_80036B20_37720);
+		osSyncPrintf(&D_80036B20_37720);
 		shift = 0;
 		do {
 			s64 shifted = __ll_lshift(*src, shift);
@@ -1039,7 +1039,7 @@ void guess_loadSavedGame(s32 arg0) {
 		} while (shift < 0x40);
 		((Flags2x32 *)&D_8004DC48)->unk0 = sp30;
 		((Flags2x32 *)&D_8004DC48)->unk4 = sp34;
-		func_8001CC6C(&D_80036B28_37728, sp30, sp34);
+		osSyncPrintf(&D_80036B28_37728, sp30, sp34);
 		{
 			u8 b;
 
@@ -1050,7 +1050,7 @@ void guess_loadSavedGame(s32 arg0) {
 		D_80048026 = src[1];
 		D_80048026 += src[2] << 8;
 		src += 3;
-		func_8001CC6C(&D_80036B30_37730, D_80048026);
+		osSyncPrintf(&D_80036B30_37730, D_80048026);
 		D_80048028 = src[0];
 		D_80048028 += src[1] << 8;
 		src += 2;
@@ -1061,11 +1061,11 @@ void guess_loadSavedGame(s32 arg0) {
 			shift += 8;
 		} while (shift < 0x20);
 		D_80047F98 = *src++;
-		func_8001CC6C(&D_80036B80_37780, D_80047F98);
+		osSyncPrintf(&D_80036B80_37780, D_80047F98);
 		if (D_80047F98 < D_80047F9C) {
 			D_80047F98 = D_80047F9C;
 		}
-		func_8001CC6C(&D_80036B94_37794, D_80047F98);
+		osSyncPrintf(&D_80036B94_37794, D_80047F98);
 		D_80047F94 = D_8003DFD4_3EBD4[currentLevel * 0x30 + D_80047F98 * 8];
 		D_8004D154 = 0;
 		shift = 0;
@@ -1073,7 +1073,7 @@ void guess_loadSavedGame(s32 arg0) {
 			D_8004D154 += *src++ << shift;
 			shift += 8;
 		} while (shift < 0x20);
-		func_8001CC6C(&D_80036BA4_377A4, D_8004D154);
+		osSyncPrintf(&D_80036BA4_377A4, D_8004D154);
 		D_8004D150 = 0;
 		D_8004D158 = 0;
 		shift = 0;
@@ -1082,8 +1082,8 @@ void guess_loadSavedGame(s32 arg0) {
 			shift += 8;
 			continue;
 		} while (shift < 0x20);
-		func_8001CC6C(&D_80036BB8_377B8, D_8004D158);
-		func_8001CC6C(&D_80036BC8_377C8);
+		osSyncPrintf(&D_80036BB8_377B8, D_8004D158);
+		osSyncPrintf(&D_80036BC8_377C8);
 		{
 			s16 *q;
 			s32 i;
@@ -1094,26 +1094,26 @@ void guess_loadSavedGame(s32 arg0) {
 		do {
 			u8 slot = *p;
 			D_80048140[slot] = (s16)(*src++ << D_80031374_31F74[slot]);
-			func_8001CC6C(&D_80036BD4_377D4, i, *q);
+			osSyncPrintf(&D_80036BD4_377D4, i, *q);
 			i++;
 			p++;
 			q++;
 		} while (i != 7);
 		}
 		D_80048030 = *src++;
-		func_8001CC6C(&D_80036BF4_377F4, D_80048030);
-		func_8001CC6C(&D_80036C0C_3780C, D_80052ACD);
+		osSyncPrintf(&D_80036BF4_377F4, D_80048030);
+		osSyncPrintf(&D_80036C0C_3780C, D_80052ACD);
 		D_80052ACD = *src++;
-		func_8001CC6C(&D_80036C1C_3781C, D_80052ACD);
+		osSyncPrintf(&D_80036C1C_3781C, D_80052ACD);
 		D_8004815C = src[0];
 		D_80048160 = src[1];
 		D_80048162 = src[2];
 		D_8004815E = src[3];
 		src += 3;
-		func_8001CC6C(&D_80036C2C_3782C, D_8004815C, D_80048160, D_80048162, D_8004815E);
-		func_8001CC6C(&D_80036C4C_3784C);
+		osSyncPrintf(&D_80036C2C_3782C, D_8004815C, D_80048160, D_80048162, D_8004815E);
+		osSyncPrintf(&D_80036C4C_3784C);
 	} else {
-		func_8001CC6C(&D_80036C50_37850, 0);
+		osSyncPrintf(&D_80036C50_37850, 0);
 		func_800021CC_2DCC(arg0);
 		guess_loadSavedGame(arg0);
 		D_80052A90 = 0;
