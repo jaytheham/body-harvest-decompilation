@@ -343,7 +343,23 @@ void func_802D5DE4_1EEAF4(void) {
 	vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & 0xFBFF);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5DFC_1EEB0C.s")
+void func_802D5DFC_1EEB0C(void *arg0) {
+	s32 sp30;
+	s32 sp28;
+	s32 sp24;
+	s16 temp_v0;
+	s16 temp_v1;
+	s32 temp_v1_2;
+
+	temp_v0 = (((s8 *) arg0)[1] << 8) + 0x80;
+	temp_v1 = (((s8 *) arg0)[2] << 8) + 0x80;
+	sp24 = (s32) temp_v1;
+	sp28 = (s32) temp_v0;
+	temp_v1_2 = func_800B84D0_C7480(temp_v0, temp_v1) >> 8;
+	sp30 = temp_v1_2;
+	func_80124B5C_133B0C((s16) sp28, (s16) sp30, (s16) sp24, 0x3E8, 0x96);
+	func_800DF038_EDFE8((s16) sp28, (s16) sp30, (s16) sp24, 0xC8, 0, 0);
+}
 
 void func_802D5E98_1EEBA8(void);
 
