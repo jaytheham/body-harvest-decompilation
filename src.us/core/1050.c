@@ -25,16 +25,15 @@ s32 D_800313C4_31FC4 = 0;
 s16 D_800313C8_31FC8 = 0;
 s32 D_800313CC = 0;
 
-/* CURRENT(2031) */
+/* CURRENT(1644) */
 #ifdef NON_MATCHING
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
-	Unk80042DB8 *s1;
-	Unk80042DB8 *s0;
 	s32 s2;
 	s32 var_v0;
 	f32 var_f0;
 	f32 one;
-	Unk80042DB8 *temp_v0;
+	Unk80042DB8 *s1;
+	Unk80042DB8 *s0;
 
 	D_80042DA8.unk0 = 0;
 	arg0->dmaproc = (void *)func_80000CD4_18D4;
@@ -56,9 +55,8 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	D_800431A4 = D_800431A8 - 0x10;
 	D_800431AC = D_800431A8 + 0xB0;
 	alInit(&D_8003FD58, arg0);
-	temp_v0 = &D_80042DB8;
-	temp_v0->unk4 = 0;
-	temp_v0->unk0 = 0;
+	D_80042DB8.unk4 = 0;
+	D_80042DB8.unk0 = 0;
 	s1 = &D_80042DB8;
 	s0 = &D_80042DCC;
 	for (s2 = 0; s2 < 0x31; s2++, s1++, s0++) {
@@ -68,9 +66,14 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
 	{
 		Acmd **p;
-		for (p = D_8003FB20; p < (Acmd **)D_8003FB28; p++) {
+		Acmd **end;
+
+		p = D_8003FB20;
+		end = (Acmd **)D_8003FB28;
+		do {
 			*p = alHeapAlloc(arg0->heap, 1, 0x8000);
-		}
+			p++;
+		} while (p < end);
 	}
 	s2 = 0;
 	for (; s2 < 3; s2++) {
