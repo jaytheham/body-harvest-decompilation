@@ -339,11 +339,11 @@ extern u32 D_800475FC;
 extern s32 D_80047600;
 extern s32 D_80047604;
 extern s32 D_80047584;
-extern u32 D_8004767C;
-extern u32 D_80047680;
-extern u32 D_80047688;
-extern u32 D_8004768C;
-extern u32 D_80047690;
+extern s32 D_8004767C;
+extern s32 D_80047680;
+extern s32 D_80047688;
+extern s32 D_8004768C;
+extern s32 D_80047690;
 extern u32 D_80047698;
 extern s16 D_800476A0;
 extern s16 D_800476A2; // enables input?

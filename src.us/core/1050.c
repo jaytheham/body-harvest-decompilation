@@ -25,16 +25,15 @@ s32 D_800313C4_31FC4 = 0;
 s16 D_800313C8_31FC8 = 0;
 s32 D_800313CC = 0;
 
-/* CURRENT(2031) */
+/* CURRENT(1644) */
 #ifdef NON_MATCHING
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
-	Unk80042DB8 *s1;
-	Unk80042DB8 *s0;
 	s32 s2;
 	s32 var_v0;
 	f32 var_f0;
 	f32 one;
-	Unk80042DB8 *temp_v0;
+	Unk80042DB8 *s1;
+	Unk80042DB8 *s0;
 
 	D_80042DA8.unk0 = 0;
 	arg0->dmaproc = (void *)func_80000CD4_18D4;
@@ -56,9 +55,8 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	D_800431A4 = D_800431A8 - 0x10;
 	D_800431AC = D_800431A8 + 0xB0;
 	alInit(&D_8003FD58, arg0);
-	temp_v0 = &D_80042DB8;
-	temp_v0->unk4 = 0;
-	temp_v0->unk0 = 0;
+	D_80042DB8.unk4 = 0;
+	D_80042DB8.unk0 = 0;
 	s1 = &D_80042DB8;
 	s0 = &D_80042DCC;
 	for (s2 = 0; s2 < 0x31; s2++, s1++, s0++) {
@@ -68,9 +66,14 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
 	{
 		Acmd **p;
-		for (p = D_8003FB20; p < (Acmd **)D_8003FB28; p++) {
+		Acmd **end;
+
+		p = D_8003FB20;
+		end = (Acmd **)D_8003FB28;
+		do {
 			*p = alHeapAlloc(arg0->heap, 1, 0x8000);
-		}
+			p++;
+		} while (p < end);
 	}
 	s2 = 0;
 	for (; s2 < 3; s2++) {
@@ -83,7 +86,7 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	osCreateMesgQueue(&D_8003FCE8, D_8003FD00, 8);
 	osCreateThread(&D_8003FB38, 5, (void (*)(void *))func_80000730_1330, NULL, &D_80042DA8, arg1);
 	osStartThread(&D_8003FB38);
-}
+	}
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000450_1050.s")
 #endif
@@ -395,6 +398,7 @@ void func_80001144_1D44(u8 arg0, u8 arg1, u8 arg2) {
 	}
 }
 
+// CURRENT(290)
 #ifdef NON_MATCHING
 void func_80001190_1D90(void) {
 	if (gameplayMode != (GameplayMode)D_80047698) {
@@ -404,12 +408,10 @@ void func_80001190_1D90(void) {
 	if (gameplayMode == GAMEPLAY_MODE_UNK1 || gameplayMode == GAMEPLAY_MODE_UNK3 || gameplayMode == GAMEPLAY_MODE_UNKB) {
 		if (D_80047678 == 1) {
 			f32 temp_f0;
-			s32 temp_f8;
 			D_800313CC = D_8004767C;
-			if ((s32)D_8004768C >= 0x2711) {
-				temp_f0 = D_80036C88 / (f32)(s32)D_8004768C;
-				temp_f8 = (s32)((f32)(s32)D_8004767C * (temp_f0 * temp_f0 * temp_f0));
-				D_800313CC = temp_f8;
+			if (D_8004768C >= 0x2711) {
+				temp_f0 = D_80036C88 / (f32)D_8004768C;
+				D_800313CC = (s32)((f32)D_800313CC * (temp_f0 * temp_f0 * temp_f0));
 				D_800313CC /= 2;
 			}
 			if (D_800313CC >= 0x100) {
@@ -417,26 +419,26 @@ void func_80001190_1D90(void) {
 			} else {
 				func_8000108C_1C8C(0);
 			}
-			if ((s32)D_8004767C >= 0x100) {
+			if (D_8004767C >= 0x100) {
 				D_8004767C -= 0x100;
 			} else {
-				D_8004767C += (s32)(((s32)D_80047680 >> 4) * ((s32)D_80047680 >> 4) * ((s32)D_80047680 >> 4)) / 512;
+				D_8004767C += ((D_80047680 >> 4) * (D_80047680 >> 4) * (D_80047680 >> 4)) / 512;
 			}
-			if ((s32)D_80047688 > 0) {
+			if (D_80047688 > 0) {
 				D_80047688 -= 1;
-			} else if (D_80047684 < (s32)D_80047680) {
+			} else if (D_80047684 < D_80047680) {
 				D_80047680 -= D_80047684;
 			} else {
 				D_80047684 = 0;
 				D_80047680 = 0;
 			}
 			D_8004768C += 1;
-			if ((s32)D_8004767C >= 0x100) {
+			if (D_8004767C >= 0x100) {
 				D_80047690 = 0;
 				return;
 			}
 			D_80047690 = D_80047690 + 1;
-			if ((s32)D_80047690 >= 0x321) {
+			if (D_80047690 >= 0x321) {
 				D_8004768C = 0;
 			}
 		} else {
@@ -561,27 +563,26 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/validateSaveVersionAndChecksum.s")
 #endif
 
-
-/* CURRENT(2060) */
+// CURRENT (1160)
 #ifdef NON_MATCHING
 void func_800016D8_22D8(void) {
-	u16 i, writeIdx;
+	int i;
+	u16 j, writeIdx;
 	s32 val, val2;
 
 	D_800431C8 = (u8)D_800313D0;
 	writeIdx = 9;
-	for (i = 0; i < 5; i++) {
-		u16 j;
+	for (i = 0; (u16)i < 5; i++) {
 		for (j = 0; j < 6; j++) {
-			(&D_800431C0)[writeIdx++] = *((u8*)(D_80047FB8 + i) + j);
+			(&D_800431C0)[writeIdx++] = *((u8*)(D_80047FB8 + (u16)i) + j);
 		}
-		val = ((Unk80047FB8*)((u8*)D_80047FB8 + i * 0x14))->unk8;
+		val = ((Unk80047FB8*)((u8*)D_80047FB8 + (u16)i * 0x14))->unk8;
 		(&D_800431C0)[writeIdx++] = val;
 		(&D_800431C0)[writeIdx++] = val >> 8;
 		(&D_800431C0)[writeIdx++] = val >> 16;
 		(&D_800431C0)[writeIdx++] = val >> 24;
-		(&D_800431C0)[writeIdx++] = ((Unk80047FB8*)((u8*)D_80047FB8 + i * 0x14))->unkC;
-		val2 = ((Unk80047FB8*)((u8*)D_80047FB8 + i * 0x14))->unk10;
+		(&D_800431C0)[writeIdx++] = ((Unk80047FB8*)((u8*)D_80047FB8 + (u16)i * 0x14))->unkC;
+		val2 = ((Unk80047FB8*)((u8*)D_80047FB8 + (u16)i * 0x14))->unk10;
 		(&D_800431C0)[writeIdx++] = val2;
 		(&D_800431C0)[writeIdx++] = val2 >> 8;
 		(&D_800431C0)[writeIdx++] = val2 >> 16;
@@ -626,23 +627,24 @@ void func_80001830_2430(void) {
 /* CURRENT(5200) */
 #ifdef NON_MATCHING
 void func_80001984_2584(void) {
-	u8 *src;
-	Unk80047FB8 *dstA3;
+	u16 i, writeIdx;
 	Unk80047FB8 *dstA2;
 	Unk80047FB8 *dstA1;
 
 
-loop:
-	if (validateSaveVersionAndChecksum(4, 0x47) != 0) {
-		D_800313D0 = D_800431C8;
+	for (i = 0; i < 5; i++) {
+		u16 j, iOff;
+		for (j = 0; j < 6; j++) {
+			(&D_800431C0)[writeIdx++] = *((u8*)(D_80047FB8 + i) + j);
 		dstA3 = D_80047FB8;
-		src = &D_800431C9;
+		iOff = i * 0x14;
+		val = ((Unk80047FB8*)((u8*)D_80047FB8 + iOff))->unk8;
 		dstA2 = dstA3;
 		dstA1 = dstA3;
 		do {
 			dstA3->unk0 = src[0];
-			dstA3->unk1 = src[1];
-			dstA2->unk3 = src[3];
+		(&D_800431C0)[writeIdx++] = ((Unk80047FB8*)((u8*)D_80047FB8 + iOff))->unkC;
+		val2 = ((Unk80047FB8*)((u8*)D_80047FB8 + iOff))->unk10;
 			dstA2->unk4 = src[4];
 			dstA2->unk5 = src[5];
 			dstA2->unk2 = src[2];
@@ -668,132 +670,169 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001984_2584.s")
 #endif
 
-/* CURRENT(19265) */
+// CURRENT (7171)
 #ifdef NON_MATCHING
 void guess_prepareToSaveGame(s32 arg0) {
-	s32 v1;
 	Unk80052A98 *stats;
-	u8 *saveData;
 	u8 *dest;
-	u8 *p;
 	s32 i;
 
-	v1 = arg0 * 0x7A;
-	saveData = (u8 *)&D_800431C0;
-	dest = saveData + v1 + 0x53;
+	dest = (u8 *)&D_800431C0 + arg0 * 0x7A + 0x53;
 
 	stats = D_80052A98;
 	do {
 		osSyncPrintf(&D_80036884_37484, stats->score);
-		dest[0] = (u8)stats->score;
-		dest[1] = (u8)(stats->score >> 8);
-		dest[2] = (u8)(stats->score >> 16);
-		dest[3] = (u8)(stats->score >> 24);
 		dest += 4;
-		osSyncPrintf(&D_80036894_37494, (u16)stats->humansKilled);
-		*dest++ = (u8)(u16)stats->humansKilled;
-		osSyncPrintf(&D_800368A0_374A0, stats->secondsElapsed);
-		dest[0] = (u8)stats->secondsElapsed;
+		dest[-3] = (u8)(stats->score >> 8);
+		dest[-2] = (u8)(stats->score >> 16);
+		dest[-1] = (u8)(stats->score >> 24);
+		osSyncPrintf(&D_80036894_37494, (u16)stats->humansKilled), dest[-4] = (u8)stats->score;
+		dest += 1;
+		osSyncPrintf(&D_800368A0_374A0, stats->secondsElapsed), dest[-1] = (u8)(u16)stats->humansKilled;
 		dest[1] = (u8)((s32)stats->secondsElapsed >> 8);
 		dest[2] = (u8)((s32)stats->secondsElapsed >> 16);
 		dest += 3;
 		stats++;
+		dest[-3] = (u8)stats[-1].secondsElapsed;
 	} while (stats < (Unk80052A98 *)&D_80052AC8);
 
 	osSyncPrintf(&D_800368AC_374AC);
-	*dest++ = (u8)((D_80047FA0 * 0x10) | currentLevel);
-	osSyncPrintf(&D_800368C4_374C4, currentLevel, D_80047FA0);
-	*dest++ = (u8)D_80047F9C;
-	osSyncPrintf(&D_800368DC_374DC, D_80047F9C);
-	dest[0] = (u8)D_80031420;
-	dest[1] = (u8)((u32)D_80031420 >> 8);
-	dest[2] = (u8)((u32)D_80031420 >> 0x10);
-	dest[3] = (u8)((u32)D_80031420 >> 0x18);
-	dest += 4;
-	osSyncPrintf(&D_800368F4_374F4, (s32)D_80031420);
+	{
+		u32 level;
+		u32 area;
 
-	p = &D_80047FA8[0];
-	do {
-		*dest++ = *p++;
-	} while ((u32)p < (u32)&D_80047FAE);
+		level = currentLevel;
+		area = D_80047FA0;
+		*dest++ = (u8)((area * 0x10) | level);
+		osSyncPrintf(&D_800368C4_374C4, level, area);
+	}
+	{
+		u32 value;
+
+		value = D_80047F9C;
+		*dest++ = (u8)value;
+		osSyncPrintf(&D_800368DC_374DC, value);
+	}
+	{
+		u32 value;
+
+		value = D_80031420;
+		dest[0] = (u8)value;
+		dest[1] = (u8)(value >> 8);
+		dest[2] = (u8)(value >> 0x10);
+		dest[3] = (u8)(value >> 0x18);
+		dest += 4;
+		osSyncPrintf(&D_800368F4_374F4, (s32)value);
+	}
+
+	{
+		u8 *p;
+
+		p = &D_80047FA8[0];
+		do {
+			*dest++ = *p++;
+		} while ((u32)p < (u32)&D_80047FAE);
+	}
 	osSyncPrintf(&D_80036904_37504);
 
 	for (i = 0; i < 7; i++) {
-		*dest++ = weaponSlots[i];
-		osSyncPrintf(&D_80036910_37510, i, (s32)weaponSlots[i]);
+		u8 slot;
+
+		slot = weaponSlots[i];
+		*dest++ = slot;
+		osSyncPrintf(&D_80036910_37510, i, (s32)slot);
 	}
 
 	osSyncPrintf(&D_8003692C_3752C);
 	{
-		u64 flags;
+		u64 flags1;
 
-		flags = D_8004DC48.unk0;
+		flags1 = *(u64 *)&D_8004DC48;
 		osSyncPrintf(&D_80036930_37530);
-		*dest++ = (s8)flags;
-		*dest++ = (s8)(u32)__ull_rshift(flags, 8);
-		*dest++ = (s8)(u32)__ull_rshift(flags, 0x10);
-		*dest++ = (s8)(u32)__ull_rshift(flags, 0x18);
-		*dest++ = (s8)(u32)__ull_rshift(flags, 0x20);
-		*dest++ = (s8)(u32)__ull_rshift(flags, 0x28);
-		*dest++ = (s8)(u32)__ull_rshift(flags, 0x30);
-		*dest++ = (s8)(u32)__ull_rshift(flags, 0x38);
-		osSyncPrintf(&D_80036938_37538);
+		*dest++ = (s8)flags1;
+		*dest++ = (s8)(u32)__ull_rshift(flags1, 8);
+		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x10);
+		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x18);
+		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x20);
+		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x28);
+		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x30);
+		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x38);
+		osSyncPrintf(&D_80036938_37538, ((Flags2x32 *)&D_8004DC48)->unk4, ((Flags2x32 *)&D_8004DC48)->unk0);
 	}
 
 	*dest++ = (u8)((D_8004DC5C * 0x10) + D_8004DC5E);
 
-	*dest++ = (u8)D_80048026;
-	*dest++ = (u8)((s32)D_80048026 >> 8);
-	dest++;
-	osSyncPrintf(&D_80036940_37540, (s32)D_80048026);
-
-	*dest++ = (u8)D_80048028;
-	*dest++ = (u8)((s32)D_80048028 >> 8);
-	osSyncPrintf(&D_8003696C_3756C);
-
 	{
-		u64 flags;
+		s16 value1;
 
-		flags = *(u64 *)&D_8004DC50;
-		*dest++ = (s8)flags;
-		*dest++ = (s8)(u32)__ull_rshift(flags, 8);
-		*dest++ = (s8)(u32)__ull_rshift(flags, 0x10);
-		*dest++ = (s8)(u32)__ull_rshift(flags, 0x18);
-		*dest++ = (s8)(u32)__ull_rshift(flags, 0x20);
-		*dest++ = (s8)(u32)__ull_rshift(flags, 0x28);
-		*dest++ = (s8)(u32)__ull_rshift(flags, 0x30);
-		*dest++ = (s8)(u32)__ull_rshift(flags, 0x38);
-		osSyncPrintf(&D_80036984_37584);
+		value1 = D_80048026;
+		dest += 2;
+		dest[-1] = (u8)((s32)value1 >> 8);
+		dest[-2] = (u8)value1;
+		osSyncPrintf(&D_80036940_37540, (s32)value1);
 	}
 
 	{
-		u32 playtime = D_80052A90;
-		if (playtime == 0) {
-			playtime = 1;
+		s16 value2;
+
+		value2 = D_80048028;
+		dest += 2;
+		dest[-1] = (u8)((s32)value2 >> 8);
+		dest[-2] = (u8)value2;
+		osSyncPrintf(&D_8003696C_3756C);
+	}
+
+	{
+		u64 flags2;
+
+		flags2 = *(u64 *)&D_8004DC50;
+		*dest++ = (s8)flags2;
+		*dest++ = (s8)(u32)__ull_rshift(flags2, 8);
+		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x10);
+		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x18);
+		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x20);
+		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x28);
+		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x30);
+		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x38);
+		osSyncPrintf(&D_80036984_37584, D_8004DC50.unk4, D_8004DC50.unk0);
+	}
+
+	{
+		u32 playtime;
+		u32 progress;
+
+		if (D_80052A90 == 0) {
 			D_80052A90 = 1;
 		}
+		playtime = D_80052A90;
+		progress = D_80047F98;
 		dest[0] = (s8)playtime;
 		dest[1] = (s8)(playtime >> 8);
 		dest[2] = (s8)(playtime >> 0x10);
 		dest[3] = (s8)(playtime >> 0x18);
-		dest[4] = (s8)D_80047F98;
+		dest[4] = (s8)progress;
 		dest += 5;
-		osSyncPrintf(&D_8003698C_3758C, D_80047F98);
+		osSyncPrintf(&D_8003698C_3758C, progress);
 	}
 
-	dest[0] = (u8)D_8004D154;
-	dest[1] = (u8)((u32)D_8004D154 >> 8);
-	dest[2] = (u8)((u32)D_8004D154 >> 0x10);
-	dest[3] = (u8)((u32)D_8004D154 >> 0x18);
-	dest += 4;
-	osSyncPrintf(&D_800369A0_375A0, (s32)D_8004D154);
+	{
+		u32 value;
 
-	dest[0] = (u8)D_8004D158;
-	dest[1] = (u8)((u32)D_8004D158 >> 8);
-	dest[2] = (u8)((u32)D_8004D158 >> 0x10);
-	dest[3] = (u8)((u32)D_8004D158 >> 0x18);
-	dest += 4;
-	osSyncPrintf(&D_800369B4_375B4, (s32)D_8004D158);
+		value = D_8004D154;
+		dest += 4;
+		dest[-4] = (u8)value;
+		dest[-3] = (u8)(value >> 8);
+		dest[-2] = (u8)(value >> 0x10);
+		dest[-1] = (u8)(value >> 0x18);
+		osSyncPrintf(&D_800369A0_375A0, (s32)value);
+		value = D_8004D158;
+		dest += 4;
+		dest[-4] = (u8)value;
+		dest[-3] = (u8)(value >> 8);
+		dest[-2] = (u8)(value >> 0x10);
+		dest[-1] = (u8)(value >> 0x18);
+		osSyncPrintf(&D_800369B4_375B4, (s32)value);
+	}
 
 	osSyncPrintf(&D_800369C4_375C4);
 	osSyncPrintf(&D_800369D0_375D0);
@@ -803,21 +842,42 @@ void guess_prepareToSaveGame(s32 arg0) {
 		osSyncPrintf(&D_80036A04_37604, i, (s32)D_80048140[i]);
 	}
 
-	*dest++ = (u8)D_80048030;
-	osSyncPrintf(&D_80036A20_37620, (s32)D_80048030);
+	{
+		u8 value;
 
-	*dest++ = (u8)D_80052ACD;
-	osSyncPrintf(&D_80036A38_37638, (s32)D_80052ACD);
+		value = D_80048030;
+		*dest++ = value;
+		osSyncPrintf(&D_80036A20_37620, (s32)value);
+	}
 
-	dest[0] = (s8)D_8004815C;
-	dest[1] = (s8)D_80048160;
-	dest[2] = (s8)D_80048162;
-	dest[3] = (s8)D_8004815E;
-	dest += 3;
-	osSyncPrintf(&D_80036A48_37648, (s32)D_8004815C, (s32)D_80048160, D_80048162, (s32)D_8004815E);
+	{
+		u8 value;
+
+		value = D_80052ACD;
+		*dest++ = value;
+		osSyncPrintf(&D_80036A38_37638, (s32)value);
+	}
+
+	{
+		u8 value0;
+		u8 value1;
+		u8 value2;
+		u8 value3;
+
+		value0 = D_8004815C;
+		value1 = D_80048160;
+		value2 = D_80048162;
+		value3 = D_8004815E;
+		dest[0] = (s8)value0;
+		dest[1] = (s8)value1;
+		dest[2] = (s8)value2;
+		dest[3] = (s8)value3;
+		dest += 3;
+		osSyncPrintf(&D_80036A48_37648, (s32)value0, (s32)value1, (s32)value2, (s32)value3);
+	}
 
 	osSyncPrintf(&D_80036A68_37668);
-	func_800015B4_21B4(v1 + 0x4F, 0x76);
+	func_800015B4_21B4(arg0 * 0x7A + 0x4F, 0x76);
 	osSyncPrintf(&D_80036A6C_3766C);
 }
 #else
