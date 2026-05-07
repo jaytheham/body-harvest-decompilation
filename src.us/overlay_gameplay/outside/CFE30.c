@@ -35,10 +35,9 @@ u8 D_8013DC80_14CC30[0x70] = {
 	0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0xF4, 0x80, 0x01, 0x00, 0xF4, 0x80, 0x01, 0x01, 0x00, 0x80,
 	0x01, 0x00, 0xFC, 0x80, 0x01, 0x00, 0xF8, 0x80, 0x01, 0x00, 0xF8, 0x80, 0x01, 0x01, 0x04, 0x80,
 };
-u8 D_8013DCF0_14CCA0[0x28] = {
-	0x05, 0x05, 0x9C, 0xA0, 0x05, 0x05, 0x8A, 0xA0, 0x05, 0x05, 0x8C, 0xA0, 0x05, 0x05, 0x8E, 0xA0,
-	0x05, 0x05, 0x90, 0xA0, 0x05, 0x05, 0x92, 0xA0, 0x05, 0x05, 0x94, 0xA0, 0x05, 0x05, 0x96, 0xA0,
-	0x05, 0x05, 0x98, 0xA0, 0x05, 0x05, 0x9A, 0xA0,
+u32 D_8013DCF0_14CCA0[0xA] = {
+	0x05059CA0, 0x05058AA0, 0x05058CA0, 0x05058EA0, 0x050590A0,
+	0x050592A0, 0x050594A0, 0x050596A0, 0x050598A0, 0x05059AA0,
 };
 u8 D_8013DD18_14CCC8[0x08] = {
 	0x0A, 0x0A, 0x1E, 0x08, 0x08, 0x0A, 0x0A, 0x00,
@@ -1232,7 +1231,30 @@ void func_800CF070_DE020(void) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(215)
+void func_800CF174_DE124(Vec3f *arg0, s32 arg1) {
+	arg1 = (u8)arg1;
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (D_8013DCF0_14CCA0[arg1] & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+	gDPPipeSync(D_8005BB2C++);
+	D_80153BB8 = arg0->x;
+	D_80153BBC = arg0->y;
+	D_80153BC0 = arg0->z;
+	func_800DB350_EA300();
+	D_80156EDA += 4;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF174_DE124.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF2E0_DE290.s")
 
