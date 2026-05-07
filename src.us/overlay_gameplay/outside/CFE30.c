@@ -1304,7 +1304,35 @@ void func_800D05A8_DF558(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D0C00_DFBB0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D0DE4_DFD94.s")
+s16 func_800D0DE4_DFD94(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5, u8 arg6) {
+	s32 sp3C;
+	s32 sp38;
+	s32 sp34;
+	s32 sp30;
+	s16 sp2E;
+	u8 *sp24;
+
+	if (func_800B93AC_C835C(arg0, arg2, (arg3 * 2) & 0xFFFF, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
+		sp2E = func_800C17B4_D0764(7, 1);
+		if (sp2E != -3) {
+			D_80154318[sp2E].unk2 = arg3;
+			*(u8 *)&D_80154318[sp2E].unk12 = 0xFF;
+			D_80154318[sp2E].unk11 = 0xFF;
+			D_80154318[sp2E].unk8 = arg0;
+			D_80154318[sp2E].unkA = arg1;
+			D_80154318[sp2E].unkC = arg2;
+			D_80154318[sp2E].unkE = arg4;
+			D_80154318[sp2E].unkF = arg5;
+			D_80154318[sp2E].unk10 = arg6;
+			sp24 = (u8 *)&D_80154318[sp2E].unk8;
+			sp24[0xB] = func_800DDB60_ECB10(arg0, arg1, arg2, 9, (s32)arg3 / 2);
+			func_800DDE90_ECE40(sp24[0xB], 0, 0);
+			func_800DDE54_ECE04(sp24[0xB], 0);
+		}
+		return sp2E;
+	}
+	return -3;
+}
 
 void func_800D0F5C_DFF0C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	if (arg0 != -3) {
