@@ -2447,7 +2447,35 @@ void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DF038_EDFE8.s")
 
+// CURRENT(946)
+#ifdef NON_MATCHING
+void func_800DF848_EE7F8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
+	s16 colorRow;
+	s16 i;
+	s16 j;
+	s16 randMod;
+	s32 randVal;
+	u8 tempColors[12];
+
+	colorRow = func_800038E0_44E0() % 10;
+	randVal = func_800038E0_44E0();
+
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 3; j++) {
+			if (i < 2) {
+				tempColors[(i * 3) + j] = D_8013E348_14D2F8[((((s16) colorRow << 2) - colorRow) << 1) + (i * 3) + j];
+			} else {
+				randMod = randVal % 10;
+				tempColors[(i * 3) + j] = D_8013E384_14D334[(((randMod << 2) - randMod) << 1) + (i * 3) + j - 6];
+			}
+		}
+	}
+
+	func_800DF038_EDFE8(arg0, arg1, arg2, arg3, arg4, tempColors);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DF848_EE7F8.s")
+#endif
 
 void func_800DF9C8_EE978(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5) {
 	D_80153B87 = 1;
