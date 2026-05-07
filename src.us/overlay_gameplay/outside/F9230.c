@@ -1816,7 +1816,36 @@ s16 func_800FB160_10A110(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FB160_10A110.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FB238_10A1E8.s")
+void func_800FB238_10A1E8(VehicleInstance *arg0, s32 arg1, s32 arg2, s32 arg3) {
+	u32 now;
+	u32 last;
+
+	(void)arg1;
+	(void)arg2;
+	(void)arg3;
+
+	now = D_80052A8C;
+	last = D_80159258;
+	if (now < last) {
+		D_80159258 = 0;
+		last = 0;
+	}
+
+	if (now < D_8015925C) {
+		D_8015925C = 0;
+	}
+
+	if (((now - last) >= 0xD) && ((f64)arg0->unk58 > 20.0)) {
+		func_801371B8_146168(0, 0xD6, arg0->unk0, arg0->unk2, arg0->unk4, -1.0f);
+		now = D_80052A8C;
+		D_80159258 = now;
+	}
+
+	if (((now - D_8015925C) >= 7) && ((f64)arg0->unk58 > 20.0)) {
+		func_800E0E9C_EFE4C(arg0->unk0, arg0->unk4, (u16)(vehicleSpecs[arg0->unk1A].unkC + arg0->unk12));
+		D_8015925C = D_80052A8C;
+	}
+}
 
 void func_800FB3A0_10A350(VehicleInstance *arg0, f32 arg1) {
 	arg0->unk58 = arg0->unk58 + arg1;

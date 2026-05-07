@@ -20,7 +20,8 @@ typedef struct {
 } Flags2x32; /* size = 0x08 */
 
 typedef struct {
-	s32 unk0;
+	/* 0x06 */ u8 unk6;
+	/* 0x07 */ u8 unk7;
 	s32 unk4;
 	void* unk8;
 	void* unkC;

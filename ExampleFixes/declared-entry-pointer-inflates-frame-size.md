@@ -22,3 +22,23 @@ base[6] = ...;
 Frame = 0x30 (correct). The sub-pointer `base` is declared and spilled to the stack across `jal` calls, while the struct base pointer is a cfe temp in `s0` with no stack reservation.
 
 **Key insight:** A declared pointer that the compiler places in a callee-saved register (`s0`) still reserves a stack slot, inflating the frame. An undeclared pointer that the compiler CSEs into `s0` as a cfe temp does NOT reserve a stack slot.
+
+### Padding frame to correct size with unused s32 variables
+
+When the target frame is larger than the compiled frame (e.g. target 0x40, current 0x30), add unused `s32` padding variables **before** the first real variable. IDO allocates stack slots in declaration order from HIGH to LOW address, so padding declared first goes at the highest addresses and extends the frame upward without affecting the positions of other variables.
+
+**Example:** frame is 0x10 bytes too small (0x30 vs 0x40 target):
+```c
+// Before (frame 0x30):
+s16 sp2E;
+u8 *sp24;
+
+// After (frame 0x40):
+s32 sp3C;  // unused padding
+s32 sp38;  // unused padding
+s32 sp34;  // unused padding
+s32 sp30;  // unused padding
+s16 sp2E;
+u8 *sp24;
+```
+Four s32 padding variables add 16 bytes (0x10), moving the frame from 0x30 to 0x40. `sp2E` and `sp24` keep their exact stack positions unchanged.
