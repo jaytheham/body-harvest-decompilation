@@ -2889,7 +2889,51 @@ void func_800E552C_F44DC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5538_F44E8.s")
 
+// Remove shield (wtf is a shield?)
+// CURRENT(1674) - Register allocation mismatch - significant differences in register assignment throughout
+#ifdef NON_MATCHING
+void func_800E5B78_F4B28(void) {
+	Unk80152CA0Entry *entry;
+	s16 i;
+	s16 j;
+	s16 count;
+	u32 val;
+	u32 shifted;
+
+	count = D_80152C96;
+	for (i = 0; i < count; i++) {
+		entry = &D_80152CA0[i];
+
+		// Decrement the counter if not 0
+		if (entry->unk2 != 0) {
+			entry->unk2--;
+		}
+
+		// If counter reaches 1, remove the shield
+		if (entry->unk2 == 1) {
+			// Clear the flag from the target
+			if (entry->unk1 == 2) {
+				// Vehicle shield
+				vehicleInstances[entry->unk0].unk20 &= ~0x80;
+			} else if (entry->unk1 == 1) {
+				// Building shield
+				val = buildingInstances[entry->unk0].unk8;
+				shifted = val >> 12;
+				buildingInstances[entry->unk0].unk8 = ((((shifted & ~0x1000) ^ shifted) << 12) ^ val);
+			}
+
+			// Remove this entry by copying remaining entries down
+			count--;
+			for (j = i; j < count; j++) {
+				D_80152CA0[j] = D_80152CA0[j + 1];
+			}
+			D_80152C96 = count;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5B78_F4B28.s")
+#endif
 
 // Allocate shield (wtf is a shield?)
 void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
