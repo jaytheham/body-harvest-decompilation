@@ -563,27 +563,26 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/validateSaveVersionAndChecksum.s")
 #endif
 
-
-/* CURRENT(2060) */
+// CURRENT (1160)
 #ifdef NON_MATCHING
 void func_800016D8_22D8(void) {
-	u16 i, writeIdx;
+	int i;
+	u16 j, writeIdx;
 	s32 val, val2;
 
 	D_800431C8 = (u8)D_800313D0;
 	writeIdx = 9;
-	for (i = 0; i < 5; i++) {
-		u16 j;
+	for (i = 0; (u16)i < 5; i++) {
 		for (j = 0; j < 6; j++) {
-			(&D_800431C0)[writeIdx++] = *((u8*)(D_80047FB8 + i) + j);
+			(&D_800431C0)[writeIdx++] = *((u8*)(D_80047FB8 + (u16)i) + j);
 		}
-		val = ((Unk80047FB8*)((u8*)D_80047FB8 + i * 0x14))->unk8;
+		val = ((Unk80047FB8*)((u8*)D_80047FB8 + (u16)i * 0x14))->unk8;
 		(&D_800431C0)[writeIdx++] = val;
 		(&D_800431C0)[writeIdx++] = val >> 8;
 		(&D_800431C0)[writeIdx++] = val >> 16;
 		(&D_800431C0)[writeIdx++] = val >> 24;
-		(&D_800431C0)[writeIdx++] = ((Unk80047FB8*)((u8*)D_80047FB8 + i * 0x14))->unkC;
-		val2 = ((Unk80047FB8*)((u8*)D_80047FB8 + i * 0x14))->unk10;
+		(&D_800431C0)[writeIdx++] = ((Unk80047FB8*)((u8*)D_80047FB8 + (u16)i * 0x14))->unkC;
+		val2 = ((Unk80047FB8*)((u8*)D_80047FB8 + (u16)i * 0x14))->unk10;
 		(&D_800431C0)[writeIdx++] = val2;
 		(&D_800431C0)[writeIdx++] = val2 >> 8;
 		(&D_800431C0)[writeIdx++] = val2 >> 16;
@@ -628,23 +627,24 @@ void func_80001830_2430(void) {
 /* CURRENT(5200) */
 #ifdef NON_MATCHING
 void func_80001984_2584(void) {
-	u8 *src;
-	Unk80047FB8 *dstA3;
+	u16 i, writeIdx;
 	Unk80047FB8 *dstA2;
 	Unk80047FB8 *dstA1;
 
 
-loop:
-	if (validateSaveVersionAndChecksum(4, 0x47) != 0) {
-		D_800313D0 = D_800431C8;
+	for (i = 0; i < 5; i++) {
+		u16 j, iOff;
+		for (j = 0; j < 6; j++) {
+			(&D_800431C0)[writeIdx++] = *((u8*)(D_80047FB8 + i) + j);
 		dstA3 = D_80047FB8;
-		src = &D_800431C9;
+		iOff = i * 0x14;
+		val = ((Unk80047FB8*)((u8*)D_80047FB8 + iOff))->unk8;
 		dstA2 = dstA3;
 		dstA1 = dstA3;
 		do {
 			dstA3->unk0 = src[0];
-			dstA3->unk1 = src[1];
-			dstA2->unk3 = src[3];
+		(&D_800431C0)[writeIdx++] = ((Unk80047FB8*)((u8*)D_80047FB8 + iOff))->unkC;
+		val2 = ((Unk80047FB8*)((u8*)D_80047FB8 + iOff))->unk10;
 			dstA2->unk4 = src[4];
 			dstA2->unk5 = src[5];
 			dstA2->unk2 = src[2];
