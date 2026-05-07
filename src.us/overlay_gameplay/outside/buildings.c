@@ -926,7 +926,50 @@ void func_8011CC40_12BBF0(u8 arg0, u8 arg1, u8 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011CDA4_12BD54.s")
 
+#ifdef NON_MATCHING
+// CURRENT(200)
+void func_8011D030_12BFE0(u8 arg0) {
+	BuildingInstance *inst;
+	u8 buildingType;
+	s16 xHalfSize;
+	s16 zHalfSize;
+	s32 xMax;
+	s32 zMax;
+	s32 xCell;
+	s32 zCell;
+
+	inst = &buildingInstances[arg0];
+	buildingType = inst->buildingType;
+
+	if (inst->unk8 & 1) {
+		xHalfSize = buildingSpecs[buildingType].unk12;
+		zHalfSize = buildingSpecs[buildingType].unk10;
+	} else {
+		xHalfSize = buildingSpecs[buildingType].unk10;
+		zHalfSize = buildingSpecs[buildingType].unk12;
+	}
+
+	xMax = ((inst->xCoord + xHalfSize) - 1) >> 8;
+	xCell = (inst->xCoord - xHalfSize) >> 8;
+	if (xMax >= xCell) {
+		zMax = ((inst->zCoord + zHalfSize) - 1) >> 8;
+		do {
+			zCell = (inst->zCoord - zHalfSize) >> 8;
+			if (zMax >= zCell) {
+				do {
+					func_800B316C_C211C((s8)xCell, (s8)zCell, 0x800, 0);
+					zCell++;
+					zMax = ((inst->zCoord + zHalfSize) - 1) >> 8;
+				} while (zMax >= zCell);
+				xMax = ((inst->xCoord + xHalfSize) - 1) >> 8;
+			}
+			xCell++;
+		} while (xMax >= xCell);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D030_12BFE0.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_8011D19C_12C14C(s8 arg0, s8 arg1) {
