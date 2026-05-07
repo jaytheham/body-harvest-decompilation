@@ -1000,6 +1000,7 @@ void func_8012E1F8_13D1A8(s32 arg0, s32 arg1);
 s16 func_80003740_4340(f32 arg0);
 s32 func_800056D0_62D0(s16 arg0, s16 arg1);
 s32 func_800B0A88_BFA38(s32 arg0, s32 arg1);
+void func_800B316C_C211C(s8 arg0, s8 arg1, u16 arg2, u8 arg3);
 u32 func_8001BCE0_1C8E0(void);
 void func_800015B4_21B4(s32 arg0, s32 arg1);
 void func_800016D8_22D8(void);

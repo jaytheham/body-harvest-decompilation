@@ -2941,10 +2941,13 @@ extern s32 D_80053C98;
 extern s32 D_802E3100;
 extern VehicleInstance *D_80158F8C;
 extern f64 D_80144AC0_153A70;
+extern char D_80144E84_153E34[];
+extern char D_80144EAC_153E5C[];
 extern s32 D_80149B28; // numberOfMissionConditions
 extern s16 D_80149B48; // numberOfMissions
 extern u16 D_80159DE8[];
 extern u8 D_8015D0B0[];
+extern u16 D_8015EA58;
 extern s8 D_80031D28_32928[];
 extern f32 D_80031D2C_3292C[];
 extern f32 D_80031D34_32934[];

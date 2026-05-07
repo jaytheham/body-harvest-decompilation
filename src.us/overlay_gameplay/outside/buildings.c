@@ -887,7 +887,42 @@ s32 func_8011CC20_12BBD0(u16 arg0, u8 arg1) {
 	return ((arg0 << 8) + arg1) & 0xFFFF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011CC40_12BBF0.s")
+void func_8011CC40_12BBF0(u8 arg0, u8 arg1, u8 arg2) {
+	u16 hashValues[3];
+	s32 step;
+	u32 slot;
+	u8 *slotValue;
+
+	slot = func_8011CBD8_12BB88(arg0, arg1);
+	hashValues[1] = func_8011CC20_12BBD0(arg0, arg1);
+	step = 0x17;
+	*(s32 *) D_80140A00_14F9B0 = 0;
+
+	while (1) {
+		slotValue = &D_8015D0B0[slot];
+		if (*slotValue == 0xFF) {
+			*slotValue = arg2;
+			D_80159DE8[slot] = hashValues[1];
+			func_800B316C_C211C((s8) arg0, (s8) arg1, 0x800, 1);
+			return;
+		}
+
+		slot = (step + slot) % 6500;
+		step++;
+		(*(s32 *) D_80140A00_14F9B0)++;
+
+		if (*(s32 *) D_80140A00_14F9B0 >= 0x11) {
+			D_8015EA58++;
+			if ((u16) D_8015EA58 < 0x10) {
+				osSyncPrintf(D_80144E84_153E34);
+			} else {
+				osSyncPrintf(D_80144EAC_153E5C);
+				while (1) {
+				}
+			}
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011CDA4_12BD54.s")
 
