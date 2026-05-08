@@ -120,7 +120,57 @@ void func_80074768_83718(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800747A8_83758.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(4158) */
+void func_80074970_83920(void) {
+	s32 i;
+	s32 chunkIndex;
+	volatile s32 savedIndex;
+
+	chunkIndex = -1;
+	if (func_80074558_83508() != 0xB7) {
+		if (D_801494BC != 0xAC) {
+			if (D_801494BC != 0xAE) {
+			i = savedIndex;
+			while (1) {
+				if (D_801494BC == 0x90) {
+					chunkIndex += 1;
+					i = 0;
+					func_80074500_834B0();
+				}
+
+				D_80149B60[(((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1)
+					+ (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1)
+					+ i] = func_80074500_834B0();
+				i += 1;
+
+				if ((D_801494BC == 0x80) || (D_801494BC == 0x81)) {
+					D_80149B60[(((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1)
+						+ (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1)
+						+ i] = func_80074500_834B0();
+					i += 1;
+				}
+
+				if ((func_80074558_83508() == 0xB7) || (D_801494BC == 0xAC)) {
+					break;
+				}
+
+				if (D_801494BC == 0xAE) {
+					savedIndex = i;
+					break;
+				}
+			}
+			}
+		}
+	}
+
+	if (chunkIndex >= 4) {
+		func_800078E4_84E4(D_80149B48, &D_8004D15C);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074970_83920.s")
+#endif
 
 
 // readMissionInfo
