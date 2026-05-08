@@ -1529,6 +1529,7 @@ extern s32 D_80159DC4;
 extern s16 D_80159DC8;
 extern s16 D_80159DCA;
 extern s16 D_80159DCC;
+extern u8 D_8015EA54;
 extern s16 D_80159DDA;
 extern s16 D_80159DDC;
 extern s8 D_80159DDE;
@@ -3064,5 +3065,6 @@ extern u8 D_80224680;
 extern u8 D_80224E80[];
 extern u8 D_80052560[];
 extern u16 D_80257A14;
+extern void *D_9017550;
 
 #endif

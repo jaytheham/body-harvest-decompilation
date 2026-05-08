@@ -1291,7 +1291,58 @@ void func_8011F22C_12E1DC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F244_12E1F4.s")
 
+#ifdef NON_MATCHING
+void func_8011F818_12E7C8(BuildingInstance *arg0) {
+	s32 result;
+	Gfx *dl;
+	s32 mask;
+
+	// Check if index is non-zero
+	result = func_8000726C_7E6C((s64)(((s32)arg0 - (s32)&buildingInstances[0]) / 0x18 - D_8015EA54 + 0x18));
+	if (result != 0) {
+		if ((s32)arg0->padC[1] < 0x20) {
+			arg0->padC[1] = (u8)(arg0->padC[1] + 1);
+		}
+	} else {
+		if ((s32)arg0->padC[1] > 0) {
+			arg0->padC[1] = (u8)(arg0->padC[1] - 1);
+		}
+	}
+
+	// Set up transformation matrices
+	D_80052B40.unk0 = D_80159DC8;
+	D_80052B40.unk2 = D_80159DCA;
+	D_80052B40.unk4 = D_80159DCC;
+	D_80052B48.unk0 = 0;
+	D_80052B48.unk2 = 0;
+	D_80052B48.unk4 = (s16)((s32)arg0->padC[1] * -0x154);
+
+	// Apply transformations
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
+
+	// Add graphics commands
+	mask = 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01000040;
+	dl->words.w1 = (s32)(D_8005BB38 & mask);
+
+	D_8005BB38 += 0x40;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x06000000;
+	dl->words.w1 = (s32)&D_9017550;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01020040;
+	dl->words.w1 = (s32)&D_80031160 & mask;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F818_12E7C8.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8011F9A0_12E950(s32 arg0) {
