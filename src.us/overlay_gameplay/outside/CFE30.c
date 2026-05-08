@@ -2447,7 +2447,35 @@ void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DF038_EDFE8.s")
 
+// CURRENT(946)
+#ifdef NON_MATCHING
+void func_800DF848_EE7F8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
+	s16 colorRow;
+	s16 i;
+	s16 j;
+	s16 randMod;
+	s32 randVal;
+	u8 tempColors[12];
+
+	colorRow = func_800038E0_44E0() % 10;
+	randVal = func_800038E0_44E0();
+
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 3; j++) {
+			if (i < 2) {
+				tempColors[(i * 3) + j] = D_8013E348_14D2F8[((((s16) colorRow << 2) - colorRow) << 1) + (i * 3) + j];
+			} else {
+				randMod = randVal % 10;
+				tempColors[(i * 3) + j] = D_8013E384_14D334[(((randMod << 2) - randMod) << 1) + (i * 3) + j - 6];
+			}
+		}
+	}
+
+	func_800DF038_EDFE8(arg0, arg1, arg2, arg3, arg4, tempColors);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DF848_EE7F8.s")
+#endif
 
 void func_800DF9C8_EE978(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5) {
 	D_80153B87 = 1;
@@ -2861,7 +2889,51 @@ void func_800E552C_F44DC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5538_F44E8.s")
 
+// Remove shield (wtf is a shield?)
+// CURRENT(1674) - Register allocation mismatch - significant differences in register assignment throughout
+#ifdef NON_MATCHING
+void func_800E5B78_F4B28(void) {
+	Unk80152CA0Entry *entry;
+	s16 i;
+	s16 j;
+	s16 count;
+	u32 val;
+	u32 shifted;
+
+	count = D_80152C96;
+	for (i = 0; i < count; i++) {
+		entry = &D_80152CA0[i];
+
+		// Decrement the counter if not 0
+		if (entry->unk2 != 0) {
+			entry->unk2--;
+		}
+
+		// If counter reaches 1, remove the shield
+		if (entry->unk2 == 1) {
+			// Clear the flag from the target
+			if (entry->unk1 == 2) {
+				// Vehicle shield
+				vehicleInstances[entry->unk0].unk20 &= ~0x80;
+			} else if (entry->unk1 == 1) {
+				// Building shield
+				val = buildingInstances[entry->unk0].unk8;
+				shifted = val >> 12;
+				buildingInstances[entry->unk0].unk8 = ((((shifted & ~0x1000) ^ shifted) << 12) ^ val);
+			}
+
+			// Remove this entry by copying remaining entries down
+			count--;
+			for (j = i; j < count; j++) {
+				D_80152CA0[j] = D_80152CA0[j + 1];
+			}
+			D_80152C96 = count;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5B78_F4B28.s")
+#endif
 
 // Allocate shield (wtf is a shield?)
 void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
