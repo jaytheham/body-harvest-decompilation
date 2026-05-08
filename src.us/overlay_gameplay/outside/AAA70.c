@@ -93,7 +93,69 @@ s32 func_8009BCC0_AAC70(s32 arg0, s32 arg1, u8 arg2) {
 	return 0;
 }
 
+#ifdef NON_MATCHING
+/* CURRENT(4249) */
+void func_8009BDB8_AAD68(s32 arg0, s32 arg1) {
+	Gfx *dl;
+	Gfx *spC;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s32 pad6;
+	s32 pad7;
+	volatile s32 sp0;
+
+	sp0 = arg0 &= 0xFF;
+	arg1 &= 0xFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD900000;
+	dl->words.w1 = (u32)(D_1009C70 + (arg1 << 7)) & 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5900000;
+	dl->words.w1 = 0x07014050;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xE6000000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0x0703F800;
+	dl->words.w0 = 0xF3000000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xE7000000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5800200;
+	dl->words.w1 = 0x00014050;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF2000000;
+	dl->words.w1 = 0x0003C03C;
+
+	gSPTextureRectangle(D_8005BB2C++, (s32)sp0 * 4, 0xA0, (arg0 + 0x15) * 4, 0xF4, G_TX_RENDERTILE, 0, 0, 0x0300, 0x0300);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xE7000000;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009BDB8_AAD68.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009BF64_AAF14.s")
 

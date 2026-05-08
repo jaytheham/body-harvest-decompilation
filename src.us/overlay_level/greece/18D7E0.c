@@ -674,6 +674,7 @@ void func_802D531C_18DE2C(void) {
 	D_801493E0 = 0;
 }
 
+// Pollstura suburbs buildings on fire callback
 void func_802D536C_18DE7C(void) {
 	s16 temp_diff;
 	s16 status;
