@@ -177,7 +177,75 @@ void func_80095BD4_A4B84(int arg0, unsigned char arg1, unsigned char arg2, unsig
 }
 
 // draws vehicle triangle icons on map
+#ifdef NON_MATCHING
+/* CURRENT(3203) */
+void func_80095D4C_A4CFC(s16 arg0, s16 arg1, s32 arg2, s32 arg3, u8 arg4) {
+	s32 mapIndex;
+	u8 alpha;
+	UnkHudVtx *vtx0;
+	UnkHudVtx *vtx1;
+	UnkHudVtx *vtx2;
+
+	arg2 &= 0xFF;
+	arg3 &= 0xFF;
+
+	if ((arg4 != arg2) || (arg3 != 0)) {
+		mapIndex = ((((arg1 >> 8) + 0x80) >> 2) << 6) + (((arg0 >> 8) + 0x80) >> 2);
+		if ((D_8021EA30[mapIndex] & 0xF0) == 0) {
+			return;
+		}
+	}
+
+	vtx0 = (UnkHudVtx *)D_8005BB34;
+	arg0 >>= 5;
+	arg1 = 0xFF - arg1;
+	vtx0->unk0 = arg0 - 7;
+	D_8005BB34++;
+	arg1 >>= 5;
+	vtx0->unk2 = arg1 - 0xE;
+	vtx0->unk4 = 0;
+	vtx0->unk8 = 0x400;
+	vtx0->unkA = 0x400;
+
+	vtx1 = (UnkHudVtx *)D_8005BB34;
+	vtx1->unk0 = arg0 + 7;
+	D_8005BB34++;
+	vtx1->unk2 = arg1 - 0xE;
+	vtx1->unk4 = 0;
+	vtx1->unk8 = 0x400;
+	vtx1->unkA = 0;
+
+	vtx2 = (UnkHudVtx *)D_8005BB34;
+	vtx2->unk0 = arg0;
+	D_8005BB34++;
+	vtx2->unk2 = arg1;
+	vtx2->unk4 = 0;
+	vtx2->unk8 = 0;
+	vtx2->unkA = 0x400;
+	vtx2->pad6 = 0;
+	vtx1->pad6 = 0;
+	vtx0->pad6 = 0;
+	vtx2->unkC = arg2;
+	vtx1->unkC = arg2;
+	vtx0->unkC = arg2;
+	vtx2->unkE = arg4;
+	vtx1->unkD = arg3;
+	vtx0->unkD = arg3;
+	vtx2->unkD = arg3;
+	vtx1->unkE = arg4;
+	vtx0->unkE = arg4;
+	alpha = 0xFF;
+	vtx2->padF = alpha;
+	vtx1->padF = alpha;
+	vtx0->padF = alpha;
+
+	gSPVertex(D_8005BB2C++, (Vtx *)((u32)vtx0 & 0x1FFFFFFF), 3, 0);
+	gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
+	gDPPipeSync(D_8005BB2C++);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095D4C_A4CFC.s")
+#endif
 
 // guess_drawMapTiles
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095F08_A4EB8.s")
