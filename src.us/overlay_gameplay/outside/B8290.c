@@ -762,7 +762,55 @@ s32 func_800AD240_BC1F0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD240_BC1F0.s")
 #endif
 
+// CURRENT(973)
+#ifdef NON_MATCHING
+s32 func_800AD3BC_BC36C(u8 arg0) {
+	s16 xPos;
+	s16 yPos;
+	s16 zPos;
+	u8 alienIdx;
+	BuildingInstance *building;
+	AlienInstance *alien;
+	u8 targetBuilding;
+
+	func_8011B454_12A404(arg0, &xPos, &yPos, &zPos);
+	alienIdx = func_8007956C_8851C(1) & 0xFF;
+	if (alienIdx != 0xFF) {
+		alien = &alienInstances[alienIdx];
+		building = &buildingInstances[arg0];
+
+		building->unk7--;
+		alien->unk48 = 0xA0;
+		alien->unk20 |= 0x1000;
+		alien->pad46 = arg0;
+		alien->unk0 = xPos;
+		alien->unk4 = zPos;
+		alien->unk2 = yPos;
+		alien->unk1B = func_800B0F20_BFED0(xPos, zPos);
+
+		func_8011C680_12B630(alienIdx, building->unk11);
+
+		targetBuilding = building->padC[2];
+		if (targetBuilding != 0xFF) {
+			alien->unk38 = targetBuilding;
+			alien->unk20 |= 0x80;
+		}
+
+		if ((currentLevel == 3) && (arg0 == 0x3E)) {
+			D_8004816C++;
+			func_800AD814_BC7C4(alienIdx, 0x14, 0, 0);
+		}
+
+		if ((currentLevel == 4) && (func_8000726C_7E6C((u64) 0xB) == 0) && (func_8000726C_7E6C((u64) 0xC) == 0)) {
+			func_800AD814_BC7C4(alienIdx, 1, 0, 0);
+		}
+	}
+
+	return alienIdx;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD3BC_BC36C.s")
+#endif
 
 u8 func_800AD554_BC504(s32 arg0, s32 arg1, s32 arg2) {
 	u8 idx;

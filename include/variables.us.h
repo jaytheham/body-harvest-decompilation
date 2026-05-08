@@ -413,6 +413,7 @@ extern s16 D_80048162;
 extern s16 D_80048156;
 extern s8 D_80048168; // numHumansEatenToSpawnMutant
 extern s16 D_8004816A; // numHumansKilled
+extern s16 D_8004816C;
 extern s16 D_8004816E;
 extern s16 D_80048170;
 extern s16 D_80048176;
