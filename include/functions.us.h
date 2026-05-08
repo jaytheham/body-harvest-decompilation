@@ -642,7 +642,7 @@ void func_800BED30_CDCE0(void);
 s16 func_800D951C_E84CC(void *, s16, s16, s16, s16, s16, s16, s16);
 void func_800E0134_EF0E4(void);
 void func_800E0764_EF714(s16 arg0);
-void func_800E0AE0_EFA90(s16, s16, s16, s32);
+void func_800E0AE0_EFA90(s16, s16, s16, u16);
 void func_800E0D28_EFCD8(s16, s16, s16);
 void func_800E52E8_F4298(s16, s16, s16, s16, s32, s32, s32);
 void func_800E5CF4_F4CA4(u8, u8);

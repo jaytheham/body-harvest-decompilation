@@ -2919,7 +2919,25 @@ void func_800E093C_EF8EC(s16 arg0, s16 arg1, s16 arg2, u16 arg3) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E0AE0_EFA90.s")
+void func_800E0AE0_EFA90(s16 arg0, s16 arg1, s16 arg2, u16 arg3) {
+	s32 effectIndex;
+	u16 sp4A;
+	u16 sp48;
+	u16 sp46;
+
+	if (D_80031420 & 3) {
+		sp46 = func_800038E0_44E0();
+		sp48 = func_800038E0_44E0();
+		sp4A = func_800038E0_44E0();
+		effectIndex = func_800CA5EC_D959C(arg0, arg1, arg2, (s8) (((s32) sp46 % 50) - 0x19), 0x50,
+			((s32) sp48 % 50) - 0x19, 0x19, 5, ((s32) sp4A % 8) + 0xC,
+			(func_800038E0_44E0() % 0x23) + 0x69,
+			D_8013E3C0[currentLevel * 3 - 3], D_8013E3C0[currentLevel * 3 - 2], D_8013E3C0[currentLevel * 3 - 1], 0xFF);
+		if (effectIndex != 0xFB) {
+			*(s16 *)&D_80154318[D_80154088[(u8) effectIndex].unk8].unkE = arg3;
+		}
+	}
+}
 
 void func_800E0C8C_EFC3C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5) {
 	func_800CA5EC_D959C(arg0, arg1, arg2, arg3, arg4, arg5, 0x37, 7, (func_800038E0_44E0() % 9) + 0xA, 0x64, 0xDC, 0xBE, 0x2D, 0xFF);
