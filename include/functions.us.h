@@ -694,7 +694,7 @@ void func_800FC7E0_10B790(s8, s8, s16 *, s16 *);
 void func_800FCA5C_10BA0C(void);
 void func_800FD410_10C3C0(VehicleSpec*);
 void func_800FD510_10C4C0(s32 arg0, s16 arg1);
-void func_801052E8_114298(void *, Unk80047588 *);
+void func_801052E8_114298(void *, OSContPad *);
 void func_8010065C_10F60C(s32 arg0);
 void func_80101C14_110BC4(void);
 void func_80118774_127724(s32 arg0);
@@ -1150,10 +1150,10 @@ void func_802DD140_1F5E50(u8 arg0, u8 arg1);
 void func_802E0B08_2C2F38(u8);
 void func_802D62E4_2B8714(void);
 /* overlay_gameplay/inside/1648A0 */
-f32 func_8007C96C_164A2C(Unk80047588 *arg0);
-void func_8007CAA8_164B68(VehicleInstance *arg0, Unk80047588 *arg1);
+f32 func_8007C96C_164A2C(OSContPad *arg0);
+void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1);
 void func_8007D37C_16543C(VehicleInstance *arg0, s16 arg1, s32 arg2);
-void func_8007DDA0_165E60(VehicleInstance *arg0, Unk80047588 *arg1);
+void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1);
 void func_8007EB1C_166BDC(void *arg0);
 void func_8007EFD4_167094(VehicleInstance *arg0);
 

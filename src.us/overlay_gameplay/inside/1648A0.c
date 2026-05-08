@@ -47,7 +47,7 @@ void func_8007C93C_1649FC(void) {
 }
 
 #ifdef NON_MATCHING
-f32 func_8007C96C_164A2C(Unk80047588 *arg0) {
+f32 func_8007C96C_164A2C(OSContPad *arg0) {
 	f32 temp_f0;
 	f32 var_f12;
 	f32 var_f2;
@@ -83,7 +83,7 @@ f32 func_8007C96C_164A2C(Unk80047588 *arg0) {
 #endif
 
 #ifdef NON_MATCHING
-void func_8007CAA8_164B68(VehicleInstance *arg0, Unk80047588 *arg1) {
+void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1) {
 	s16 sp4E;
 	s16 sp4C;
 	s32 sp38;
@@ -509,7 +509,7 @@ void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, s32 arg2) {
 #endif
 
 #ifdef NON_MATCHING
-void func_8007DDA0_165E60(VehicleInstance *arg0, Unk80047588 *arg1) {
+void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 	f32 speedScale;
 	s32 anim;
 	s32 flags;

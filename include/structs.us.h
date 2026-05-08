@@ -173,30 +173,30 @@ typedef struct {
 } Unk800E65BC; /* stride 0x48 - bad copy of Unk80070F7CObj*/
 
 typedef struct {
-    /* 0x00 */ s16 unk0;
-    /* 0x02 */ s16 unk2;
-    /* 0x04 */ s16 unk4;
-    /* 0x06 */ u8 pad6[0xE];
-    /* 0x14 */ s32 unk14;
-    /* 0x18 */ u8 pad18[0x8];
-    /* 0x20 */ s32 unk20;
-    /* 0x24 */ u8 pad24[0x8];
-    /* 0x2C */ s32 unk2C;
-    /* 0x30 */ s16 unk30;
-    /* 0x32 */ s16 unk32;
-    /* 0x34 */ f32 unk34;
-    /* 0x38 */ s16 unk38;
-    /* 0x3A */ u8 pad3A[0x2];
-    /* 0x3C */ f32 *unk3C;
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[0xE];
+	/* 0x14 */ s32 unk14;
+	/* 0x18 */ u8 pad18[0x8];
+	/* 0x20 */ s32 unk20;
+	/* 0x24 */ u8 pad24[0x8];
+	/* 0x2C */ s32 unk2C;
+	/* 0x30 */ s16 unk30;
+	/* 0x32 */ s16 unk32;
+	/* 0x34 */ f32 unk34;
+	/* 0x38 */ s16 unk38;
+	/* 0x3A */ u8 pad3A[0x2];
+	/* 0x3C */ f32 *unk3C;
 } Unk165E60Path;
 
 typedef struct {
-    /* 0x00 */ u8 pad0[0x3C];
-    /* 0x3C */ s32 unk3C;
-    /* 0x40 */ u8 pad40[0xA];
-    /* 0x4A */ s16 unk4A;
-    /* 0x4C */ u8 pad4C[0x8];
-    /* 0x54 */ s32 unk54;
+	/* 0x00 */ u8 pad0[0x3C];
+	/* 0x3C */ s32 unk3C;
+	/* 0x40 */ u8 pad40[0xA];
+	/* 0x4A */ s16 unk4A;
+	/* 0x4C */ u8 pad4C[0x8];
+	/* 0x54 */ s32 unk54;
 } Unk165E60Timeline;
 
 typedef struct {
@@ -213,29 +213,29 @@ typedef struct {
 } UnkHudVtx;
 
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ u8 padC[0x2];
-    /* 0x0E */ s16 unkE;
-    /* 0x10 */ u8 pad10[0x4];
-    /* 0x14 */ Unk165E60Path *unk14;
-    /* 0x18 */ Unk165E60Timeline *unk18;
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ s32 unk4;
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ u8 padC[0x2];
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ u8 pad10[0x4];
+	/* 0x14 */ Unk165E60Path *unk14;
+	/* 0x18 */ Unk165E60Timeline *unk18;
 } Unk165E60Route;
 
 typedef struct {
-    /* 0x00 */ Unk165E60Timeline *unk0;
-    /* 0x04 */ u8 pad4[0x10];
-    /* 0x14 */ Unk165E60Path *unk14;
-    /* 0x18 */ u8 pad18[0x4];
+	/* 0x00 */ Unk165E60Timeline *unk0;
+	/* 0x04 */ u8 pad4[0x10];
+	/* 0x14 */ Unk165E60Path *unk14;
+	/* 0x18 */ u8 pad18[0x4];
 } Unk165E60RouteData;
 
 typedef struct {
-    /* 0x00 */ u8 pad0[0x18];
-    /* 0x18 */ s32 unk18;
-    /* 0x1C */ f32 unk1C;
-    /* 0x20 */ u8 pad20[0x3EC];
-    /* 0x40C */ s32 unk40C;
+	/* 0x00 */ u8 pad0[0x18];
+	/* 0x18 */ s32 unk18;
+	/* 0x1C */ f32 unk1C;
+	/* 0x20 */ u8 pad20[0x3EC];
+	/* 0x40C */ s32 unk40C;
 } Unk165E60AnimState;
 
 typedef struct {
@@ -489,14 +489,6 @@ typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ u8 pad04[0x64];
 } Unk8025669C; /* size = 0x68 */
-
-typedef struct {
-	/* 0x00 */ u16 button;
-	/* 0x02 */ s8 stick_x;
-	/* 0x03 */ s8 stick_y;
-	/* 0x04 */ s8 errno;
-	/* 0x05 */ s8 pad5;
-} Unk80047588; /* size = 0x06 */
 
 typedef struct {
 	u8 pad0[0x6];

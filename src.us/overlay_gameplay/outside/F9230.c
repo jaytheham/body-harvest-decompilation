@@ -784,7 +784,7 @@ s32 func_800EB9C4_FA974(s32 arg0, Unk80157600 *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBA54_FAA04.s")
 
 #ifdef NON_MATCHING
-void func_800EBC94_FAC44(VehicleInstance *arg0, Unk80047588 *arg1) {
+void func_800EBC94_FAC44(VehicleInstance *arg0, OSContPad *arg1) {
 	s16 var_v1;
 	s8 var_v0;
 
