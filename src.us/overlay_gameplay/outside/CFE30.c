@@ -2474,7 +2474,63 @@ void func_800DA994_E9944(void) {
 	}
 }
 
+// CURRENT(3180)
+#ifdef NON_MATCHING
+void func_800DAA1C_E99CC(s32 arg0) {
+	s32 hpLimit;
+	s16 effectId;
+	s16 stopA;
+	s16 stopB;
+	u8 buildingId;
+	u32 buildingFlags;
+	BuildingInstance *building;
+	Unk80154318Entry *effect;
+
+	buildingId = arg0 & 0xFF;
+	building = &buildingInstances[buildingId];
+	hpLimit = ((s8) D_802590A9[building->buildingType << 5]) >> 2;
+	buildingFlags = building->unk8;
+	effectId = D_80154282;
+
+	if (((buildingFlags >> 12) & 0x10) != 0) {
+		stopA = -5;
+		if (effectId != stopA) {
+			stopB = -6;
+			if (effectId != stopB) {
+				while (1) {
+					effect = &D_80154318[effectId];
+					if (buildingId == *(s16 *) &effect->unk10) {
+						if (effect->unkE >= 0xF8) {
+							func_800C1E24_D0DD4((s16) effectId, 0xB, 1);
+							effectId = -5;
+							buildingFlags = building->unk8;
+							building->hitPoints = hpLimit;
+							building->unk8 = ((((buildingFlags >> 12) & -0x11) ^ (buildingFlags >> 12)) << 12) ^ buildingFlags;
+						} else {
+							effect->unkE += 6;
+							effectId = -5;
+						}
+					} else {
+						effectId = D_80154318[effect->unk4].unk4;
+					}
+
+					if ((effectId == stopA) || (effectId == stopB)) {
+						break;
+					}
+				}
+			}
+		}
+
+		if ((D_80052A8C & 7) == 0) {
+			if (hpLimit >= (s8) building->hitPoints) {
+				building->hitPoints++;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DAA1C_E99CC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DABBC_E9B6C.s")
 
