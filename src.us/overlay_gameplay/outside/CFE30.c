@@ -1752,7 +1752,38 @@ void func_800D6ADC_E5A8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D6C18_E5BC8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D6EAC_E5E5C.s")
+void func_800D6EAC_E5E5C(u8 arg0) {
+	s16 next;
+	s16 *entryData;
+	Unk80154318Entry *entry;
+
+	next = D_80154088[arg0].unk6;
+	if (next == -5 || next == -6) {
+		func_800C1418_D03C8(arg0, 0);
+		func_800C1384_D0334(arg0);
+		return;
+	}
+
+	entry = &D_80154318[next];
+	entryData = &entry->unk8;
+	if (((u8 *) entryData)[6] == 0x37) {
+		func_800C1A4C_D09FC(next, arg0, 0);
+		func_800C1384_D0334(arg0);
+		D_80153AB0 = 0;
+		return;
+	}
+
+	((u8 *) entryData)[6]++;
+	func_800D6C18_E5BC8(next, 0);
+	func_800D6C18_E5BC8(next, 1);
+	func_800D6C18_E5BC8(next, 2);
+	func_800D6C18_E5BC8(next, 3);
+	func_800D6C18_E5BC8(next, 4);
+	if (!(D_80052A8C & 1)) {
+		func_80135D08_144CB8(10.0f, 1, 1, 1);
+		func_80014A3C_1563C(0, 0xEB, 0.0f, 0, D_80144024_152FD4);
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D702C_E5FDC.s")
 

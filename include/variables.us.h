@@ -2443,6 +2443,7 @@ extern u8 D_80157531;
 extern u8 D_80157532;
 extern s8 D_80157533;
 extern u8 D_80157534;
+extern f32 D_80144024_152FD4;
 extern s16 D_80157536;
 extern s16 D_80157538;
 extern s16 D_8015753A;
