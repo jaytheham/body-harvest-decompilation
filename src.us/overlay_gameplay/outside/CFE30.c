@@ -3016,7 +3016,62 @@ void func_800E1C10_F0BC0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1F70_F0F20.s")
 
+// CURRENT(6629)
+#ifdef NON_MATCHING
+void func_800E24B8_F1468(u8 arg0) {
+	s16 sp24;
+	s16 sp26;
+	s16 sp28;
+	AlienInstance *alien;
+	s32 temp_v0;
+	s32 temp_a0;
+	s32 temp_t9;
+	s32 var_a1;
+	s16 specValue;
+
+	temp_v0 = func_800038E0_44E0();
+	alien = &alienInstances[arg0];
+	temp_t9 = ((s16) alien->unk12) >> 5;
+	temp_a0 = -temp_t9;
+	if (temp_a0 < temp_t9) {
+		var_a1 = temp_t9;
+	} else {
+		var_a1 = temp_a0;
+	}
+
+	if ((temp_v0 % 40) < (var_a1 + 10)) {
+		s32 divisor;
+		s32 temp1;
+		s32 temp2;
+		s32 temp3;
+
+		sp24 = func_800038E0_44E0();
+		sp26 = func_800038E0_44E0();
+		sp28 = func_800038E0_44E0();
+		temp_v0 = func_800038E0_44E0();
+		divisor = 30;
+		temp1 = (u16)sp24 % divisor;
+		temp2 = (u16)sp26 % divisor;
+		temp3 = (u16)sp28 % 20;
+
+		specValue = alienSpecs[alien->specIndex].unkC;
+		if (specValue < 0) {
+			specValue = (specValue + 1) >> 1;
+		} else {
+			specValue = specValue >> 1;
+		}
+
+		func_800DEED0_EDE80(
+			(s16) ((temp1 + alien->unk0) - 15),
+			(s16) (D_80222A70 + 5),
+			(s16) ((temp2 + alien->unk4) - 15),
+			((temp3 + specValue) & 0xFF),
+			((temp_v0 % 10) + 50));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E24B8_F1468.s")
+#endif
 
 void func_800E2668_F1618(void) {
 	if (currentLevel == 2) {
