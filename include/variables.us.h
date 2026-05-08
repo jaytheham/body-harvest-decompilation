@@ -1542,6 +1542,7 @@ extern f32 D_8015EA2C;
 extern f32 D_8015EA30;
 extern f32 D_8015EA34;
 extern f32 D_8015EA38;
+extern u8 D_8015EA60[];
 extern s16 D_8015EA4A;
 extern s16 D_8015EA52;
 extern u8 D_8015EB67;

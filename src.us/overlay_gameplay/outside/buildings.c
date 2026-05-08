@@ -310,7 +310,85 @@ s32 func_80117464_126414(u8 arg0) {
 
 // Is the return value from this used to determine how close a building is?
 // And if it should be drawn?
+#ifdef NON_MATCHING
+/* CURRENT(2240) */
+s32 func_80117508_1264B8(s16 arg0) {
+	s32 halfStep;
+	s32 candidate;
+	s32 step;
+	s32 distPrev;
+	s32 distThis;
+	s32 distNext;
+	s32 index;
+	u8 thisId;
+	s32 bestId;
+	BuildingInstance *building;
+
+	index = 0x7F;
+	thisId = D_8015EA60[0x7F];
+	step = 0x40;
+	do {
+		halfStep = step >> 1;
+		if ((buildingInstances[thisId].zCoord < arg0) && ((((u32)buildingInstances[thisId].unk8 >> 12) & 1) != 0)) {
+			candidate = step;
+		} else {
+			candidate = -step;
+		}
+		index += candidate;
+		thisId = D_8015EA60[index];
+		step = halfStep;
+	} while (halfStep != 0);
+
+	if (index > 0) {
+		distPrev = arg0 - buildingInstances[D_8015EA60[index - 1]].zCoord;
+	} else {
+		distPrev = 0xF423F;
+	}
+
+	distThis = arg0 - buildingInstances[thisId].zCoord;
+	if ((index < 0xFE) && (((u32)buildingInstances[D_8015EA60[index + 1]].unk8 >> 12) & 1)) {
+		distNext = arg0 - buildingInstances[D_8015EA60[index + 1]].zCoord;
+	} else {
+		distNext = 0xF423F;
+	}
+
+	if (distPrev < 0) {
+		distPrev = -distPrev;
+	}
+	if (distThis < 0) {
+		distThis = -distThis;
+	}
+	if (distNext < 0) {
+		distNext = -distNext;
+	}
+
+	if (distPrev < distThis) {
+		if (distPrev < distNext) {
+			bestId = D_8015EA60[index - 1];
+		} else {
+			bestId = D_8015EA60[index + 1];
+		}
+	} else if (distThis < distNext) {
+		bestId = thisId;
+	} else {
+		bestId = D_8015EA60[index + 1];
+	}
+
+	if ((s32)bestId > 0) {
+		building = &buildingInstances[bestId];
+		if ((building - 1)->zCoord == building->zCoord) {
+			do {
+				bestId -= 1;
+				building -= 1;
+			} while ((s32)bestId > 0 && ((building - 1)->zCoord == building->zCoord));
+		}
+	}
+
+	return bestId & 0xFF;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117508_1264B8.s")
+#endif
 
 // https://decomp.me/scratch/UNJJQ
 #ifdef NON_MATCHING
