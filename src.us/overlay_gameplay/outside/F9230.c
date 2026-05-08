@@ -1572,7 +1572,29 @@ s16 func_800F3EE4_102E94(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, u8 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F3EE4_102E94.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F4028_102FD8.s")
+s16 func_800F4028_102FD8(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u8 arg5) {
+	f32 temp_f0;
+	f32 var_f2;
+	s16 temp_a1;
+	s16 temp_a2;
+	s32 temp_t0;
+	s32 temp_t6;
+
+	temp_t6 = arg0;
+	temp_a2 = arg2;
+	temp_a1 = arg1;
+	temp_t0 = temp_t6;
+	if ((s32)arg5 >= temp_t0) {
+		temp_f0 = (f32)((s32)(arg4 * (arg5 - temp_t0)) / (s32)arg5);
+		var_f2 = (f32)temp_a1;
+		var_f2 += (((f32)(arg3 - temp_a1) * sqrtf((f32)(arg4 * arg4) - (temp_f0 * temp_f0))) / (f32)arg4);
+	} else {
+		temp_f0 = (f32)((s32)(arg4 * ((temp_t0 - arg5) + 1)) / (s32)arg5);
+		var_f2 = (f32)temp_a2;
+		var_f2 += (((f32)(arg3 - temp_a2) * sqrtf((f32)(arg4 * arg4) - (temp_f0 * temp_f0))) / (f32)arg4);
+	}
+	return (s16)(s32)var_f2;
+}
 
 s32 func_800F41E0_103190(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32) (((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
