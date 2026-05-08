@@ -181,6 +181,7 @@ void func_80080770_168830(void);
 void func_80081764_169824(void);
 void func_80081B58_169C18(void);
 void func_80073A50_15BB10(void);
+void func_80074CA0_83C50(void);
 void func_80074FF0_15D0B0(void);
 void func_8007568C_15D74C(void);
 void func_80071854_159914(void);
