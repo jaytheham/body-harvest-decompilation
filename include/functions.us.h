@@ -1045,6 +1045,7 @@ void func_80092BBC_A1B6C(u8 arg0);
 void func_800800E4_8F094(u8 arg0);
 void func_8007A198_89148(u8 arg0);
 s16 func_800CDB40_DCAF0(s16 arg0, s16 arg1, s16 arg2);
+void func_800CDBF4_DCBA4(void);
 void func_800CDD7C_DCD2C(s16 arg0);
 void func_800DFBA8_EEB58(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4);
 void func_800DAF24_E9ED4(u8 arg0);
