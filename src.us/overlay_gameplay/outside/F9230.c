@@ -944,7 +944,81 @@ void func_800EFC28_FEBD8(u8 arg0) {
 	}
 }
 
+// CURRENT(3405)
+#ifdef NON_MATCHING
+s32 func_800EFCC0_FEC70(s32 *arg0) {
+	s32 i;
+	s32 *src;
+	s32 *src1;
+	s32 *src2;
+	s32 *src3;
+	s32 *src4;
+	s32 *srcEnd;
+
+	i = 0;
+	src = (s32 *)&D_80157E90;
+
+	do {
+		arg0[0] = src[0];
+		arg0[1] = src[1];
+		arg0[2] = src[2];
+		arg0[3] = src[3];
+		arg0[4] = src[4];
+		arg0[5] = src[5];
+		i++;
+		arg0 += 6;
+		src += 6;
+	} while (i != 1);
+
+	if (i != 5) {
+		src1 = (s32 *)&D_80157E90 + (i * 6);
+		src2 = src1 + 6;
+		src3 = src1 + 12;
+		src4 = src1 + 18;
+		srcEnd = (s32 *)&D_80157ED8 + (5 * 6);
+
+		do {
+			src4 += 24;
+			arg0 += 24;
+			arg0[-24] = src1[0];
+			arg0[-23] = src1[1];
+			src1 += 24;
+			src2 += 24;
+			arg0[-22] = src1[-22];
+			src3 += 24;
+			arg0[-21] = src1[-21];
+			arg0[-20] = src1[-20];
+			arg0[-19] = src1[-19];
+			arg0[-18] = src1[-18];
+
+			arg0[-17] = src2[-24];
+			arg0[-16] = src2[-23];
+			arg0[-15] = src2[-22];
+			arg0[-14] = src2[-21];
+			arg0[-13] = src2[-20];
+			arg0[-12] = src2[-19];
+
+			arg0[-11] = src3[-24];
+			arg0[-10] = src3[-23];
+			arg0[-9] = src3[-22];
+			arg0[-8] = src3[-21];
+			arg0[-7] = src3[-20];
+			arg0[-6] = src3[-19];
+
+			arg0[-5] = src4[-24];
+			arg0[-4] = src4[-23];
+			arg0[-3] = src4[-22];
+			arg0[-2] = src4[-21];
+			arg0[-1] = src4[-20];
+			arg0[0] = src4[-19];
+		} while (src4 != srcEnd);
+	}
+
+	return 5;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EFCC0_FEC70.s")
+#endif
 
 void func_800EFE50_FEE00(u8 arg0) {
 	func_800101F0_10DF0(&D_80157E90,
