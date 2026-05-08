@@ -3087,7 +3087,35 @@ void func_8010C454_11B404(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010EA54_11DA04.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010ED84_11DD34.s")
+void func_8010ED84_11DD34(f32 *arg0, f32 *arg1, s32 arg2) {
+	f32 dist;
+	f32 mag;
+	f32 scale;
+
+	dist = D_80159D68->unkC;
+	if (arg2 != 0) {
+		mag = sqrtf((D_80159D34 * D_80159D34) + (D_80159D38 * D_80159D38));
+		if ((f64)mag < 1.0) {
+			*arg0 = 0.0f;
+			*arg1 = 0.0f;
+			return;
+		}
+		scale = dist / mag;
+		*arg0 = D_80159D60->unk0 + (D_80159D34 * scale);
+		*arg1 = D_80159D60->unk4 + (D_80159D38 * scale);
+		return;
+	}
+
+	mag = sqrtf((D_80159D3C * D_80159D3C) + (D_80159D40 * D_80159D40));
+	if ((f64)mag < 1.0) {
+		*arg0 = 0.0f;
+		*arg1 = 0.0f;
+		return;
+	}
+	scale = dist / mag;
+	*arg0 = D_80159D60->unk0 + (D_80159D3C * scale);
+	*arg1 = D_80159D60->unk4 + (D_80159D40 * scale);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010EF40_11DEF0.s")
 

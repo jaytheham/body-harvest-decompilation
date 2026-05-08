@@ -14,6 +14,17 @@ typedef struct {
 	/* 0x00 */ u64 unk0;
 } BitFlags64; /* size = 0x08 */
 
+
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+} Unk8010ED84Pos; /* size = 0x06 */
+
+typedef struct {
+	/* 0x00 */ u8 pad[0xC];
+	/* 0x0C */ s16 unkC;
+} Unk8010ED84Data; /* size = 0x0E */
 typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ s32 unk4;

@@ -3074,5 +3074,11 @@ extern u8 D_80224E80[];
 extern u8 D_80052560[];
 extern u16 D_80257A14;
 extern void *D_9017550;
+extern f32 D_80159D34;
+extern f32 D_80159D38;
+extern f32 D_80159D3C;
+extern f32 D_80159D40;
+extern Unk8010ED84Pos *D_80159D60;
+extern Unk8010ED84Data *D_80159D68;
 
 #endif
