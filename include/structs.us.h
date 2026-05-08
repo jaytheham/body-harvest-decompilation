@@ -1064,6 +1064,17 @@ typedef struct {
 } Unk8015F790; /* size = 0x24 */
 
 typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[0x2];
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ s32 unkC;
+	/* 0x10 */ u8 unk10;
+	/* 0x11 */ u8 pad11[0x3];
+} Unk8015F9D0; /* size = 0x14 */
+
+typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ s32 unk4;
 	/* 0x08 */ s32 unk8;
@@ -1779,7 +1790,7 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ u8 unk0; // type
 	/* 0x01 */ u8 unk1;
-	/* 0x02 */ u8 pad2[2];
+	/* 0x02 */ s16 unk2;
 	/* 0x04 */ u8 unk4; // numUnits
 	/* 0x05 */ u8 pad5[1];
 	/* 0x06 */ s16 unk6;

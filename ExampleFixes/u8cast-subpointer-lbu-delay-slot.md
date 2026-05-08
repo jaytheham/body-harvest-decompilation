@@ -45,3 +45,19 @@ lh    a0, 0(v0)
 lh    a1, 2(v0)
 lh    a2, 4(v0)
 ```
+
+### Variant: typed `&entry->unk8` sub-pointer can still preserve `entry + 8` base
+
+If the target only needs the compiler to keep a base pointer at `entry + 8` for later byte accesses like `lbu 6(v0)` / `sb 6(v0)`, a typed local such as `s16 *entryData = &entry->unk8;` may be sufficient.
+
+Observed matched pattern:
+```c
+entry = &D_80154318[next];
+entryData = &entry->unk8;
+if (((u8 *)entryData)[6] == 0x37) {
+    ...
+}
+((u8 *)entryData)[6]++;
+```
+
+This matched `func_800D6EAC_E5E5C`: IDO emitted `addiu v0, v1, 8` once, then used `lbu 6(v0)` / `sb 6(v0)` instead of direct `0xe(v1)` accesses. This is a useful middle ground when a named `entry` pointer is already present and the stricter `(u8 *)((u8 *)&array[i] + 8)` form is not required.
