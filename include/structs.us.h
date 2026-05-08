@@ -1790,7 +1790,7 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ u8 unk0; // type
 	/* 0x01 */ u8 unk1;
-	/* 0x02 */ u8 pad2[2];
+	/* 0x02 */ s16 unk2;
 	/* 0x04 */ u8 unk4; // numUnits
 	/* 0x05 */ u8 pad5[1];
 	/* 0x06 */ s16 unk6;
