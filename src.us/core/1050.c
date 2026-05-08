@@ -1368,9 +1368,9 @@ void func_80002EF8_3AF8(void *arg0) {
 
 #ifdef NON_MATCHING
 void func_80003064_3C64(void) {
-	Unk80047588 *var_v0;
-	Unk80047588 *var_a3;
-	Unk80047588 *temp_t7;
+	OSContPad *var_v0;
+	OSContPad *var_a3;
+	OSContPad *temp_t7;
 	u16 *var_v1;
 	u16 *var_t0;
 	s32 temp_v1;
@@ -1406,10 +1406,10 @@ void func_80003064_3C64(void) {
 	}
 
 	var_a1 = 3;
-	var_v1 = &D_800475DE;
+	var_v1 = &D_800475D8[CONTROLLER_FOUR];
 	var_t0 = &D_800475E6;
-	var_v0 = (Unk80047588 *)&D_8004759A;
-	var_a3 = (Unk80047588 *)&D_800475B2;
+	var_v0 = (OSContPad *)&D_8004759A;
+	var_a3 = (OSContPad *)&D_800475A0[CONTROLLER_FOUR];
 	var_a2 = 0x12;
 	var_t2 = D_800313C8_31FC8 & 8;
 	do {
@@ -1417,7 +1417,7 @@ void func_80003064_3C64(void) {
 		var_a3--;
 		*(var_a3 + 1) = *var_v0;
 		if (!var_t2) {
-			temp_t7 = (Unk80047588 *)((u8 *)&D_800475B8 + var_a2);
+			temp_t7 = (OSContPad *)((u8 *)&D_800475B8 + var_a2);
 			if (D_800476A2 != 0) {
 				*var_v0 = *temp_t7;
 			} else {
@@ -1446,7 +1446,7 @@ void func_80003064_3C64(void) {
 
 	var_v0_2 = (currentControllerStates[0].stick_x < 0) ? -1 : 1;
 	var_t2 = D_800313C8_31FC8 & 8;
-	var_a0 = (D_800475A2 < 0) ? -1 : 1;
+	var_a0 = (D_800475A0[0].stick_x < 0) ? -1 : 1;
 	if (var_v0_2 != var_a0) {
 		D_800475F0 = D_800475F0 + D_800475F4 + 1;
 		D_800475F4 = 8;
@@ -1517,17 +1517,17 @@ void func_8000345C_405C(u16 arg0) {
 	s32 temp_v1;
 
 	if (!(D_800313C8 & 8)) {
-		if ((D_800475D8[0] & arg0) && (previousControllerButtonStates[0] & arg0)) {
+		if ((D_800475D8[CONTROLLER_ONE] & arg0) && (previousControllerButtonStates[CONTROLLER_ONE] & arg0)) {
 			D_80047588_W = D_80047588 & ~arg0;
 		}
 		temp_v1 = ~arg0;
-		if ((D_800475DA & arg0) && (D_800475E2 & arg0)) {
+		if ((D_800475D8[CONTROLLER_TWO] & arg0) && (previousControllerButtonStates[CONTROLLER_TWO] & arg0)) {
 			D_8004758E &= temp_v1;
 		}
-		if ((D_800475DC & arg0) && (D_800475E4 & arg0)) {
+		if ((D_800475D8[CONTROLLER_THREE] & arg0) && (previousControllerButtonStates[CONTROLLER_THREE] & arg0)) {
 			D_80047594 &= temp_v1;
 		}
-		if ((D_800475DE & arg0) && (D_800475E6 & arg0)) {
+		if ((D_800475D8[CONTROLLER_FOUR] & arg0) && (previousControllerButtonStates[CONTROLLER_FOUR] & arg0)) {
 			D_8004759A &= temp_v1;
 		}
 		D_800475F8 &= temp_v1;
