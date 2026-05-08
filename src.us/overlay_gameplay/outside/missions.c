@@ -434,7 +434,69 @@ void func_80076390_85340(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076390_85340.s")
 #endif
 
+// CURRENT(6255)
+#ifdef NON_MATCHING
+s32 func_8007643C_853EC(s32 arg0) {
+	MissionCondEntry *condEntry;
+	MissionCondEntry *foundEntry;
+	u8 *missionEntry;
+	s32 i;
+	s32 temp;
+
+	if (func_800078B8_84B8(arg0, &D_8004D150) == 0) {
+		return -1;
+	}
+
+	temp = 0x80;
+	i = -1;
+	if (temp != 0) {
+		i = 0x7F;
+		condEntry = &D_801494C0[i];
+		if ((condEntry->unk0 == 2) && (arg0 == condEntry->unk1)) {
+			foundEntry = condEntry;
+		} else {
+			while (1) {
+				temp = i;
+				i -= 1;
+				condEntry -= 1;
+				if (temp == 0) {
+					break;
+				}
+				if (condEntry->unk0 == 2) {
+					foundEntry = condEntry;
+					if (arg0 == foundEntry->unk1) {
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	if (arg0 == D_80149474) {
+		D_80149474 = 0xFF;
+	}
+
+	if (i != -1) {
+		missionEntry = &D_80149B60[arg0 * 0x226];
+
+		if (missionEntry[0x32] == 0x64) {
+			if (func_800078B8_84B8(arg0, &D_8004D15C) == 0) {
+				func_8001A650_1B250(0xB);
+			}
+		} else if (missionEntry[0x32] != 0x6E) {
+			func_8001A598_1B198(&missionEntry[0x32]);
+		}
+
+		func_80073DC0_82D70(foundEntry->unk4);
+	}
+
+	func_800078E4_84E4(arg0, &D_8004D150);
+	func_800078CC_84CC(arg0, &D_8004D154);
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007643C_853EC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800765C4_85574.s")
 
