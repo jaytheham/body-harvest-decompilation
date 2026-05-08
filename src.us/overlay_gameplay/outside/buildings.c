@@ -1799,7 +1799,52 @@ u64 func_80126990_135940(u64 value) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80126B80_135B30.s")
 
+// CURRENT(270)
+#ifdef NON_MATCHING
+s32 func_80127C08_136BB8(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s32 *arg7) {
+	s32 sp3C;
+	s32 sp38;
+	s32 sp34;
+	s32 result;
+	u8 sp2F;
+
+	sp3C = arg4;
+	sp38 = arg5;
+	sp34 = arg6;
+	*arg7 = 0;
+	result = func_80126268_135218(arg1, arg2, arg3, &sp3C, &sp38, &sp34, 0, 5);
+	if (result != 0) {
+		return result;
+	}
+
+	sp3C = arg4;
+	sp38 = arg5;
+	sp34 = arg6;
+	if (func_800B1028_BFFD8(arg1, arg2, arg3, &sp3C, &sp38, &sp34, &sp2F) != 0) {
+		return 8;
+	}
+
+	D_8015F9D0.unk8 = 0;
+	sp3C = arg4;
+	sp38 = arg5;
+	sp34 = arg6;
+	func_80126B80_135B30(arg0, arg1, arg2, arg3, &sp3C, &sp38, &sp34);
+	switch (D_8015F9D0.unk8) {
+		case 5:
+			*arg7 = D_8015F9D0.unkC;
+			return 6;
+
+		case 7:
+		case 8:
+			*arg7 = D_8015F9D0.unkC;
+			return 7;
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80127C08_136BB8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80127D88_136D38.s")
 

@@ -1547,6 +1547,7 @@ extern u8 D_8015EB77;
 extern s32 D_8015EB80;
 extern Unk8015F760 D_8015EB90[64];
 extern Unk8015F790 D_8015F790[16];
+extern Unk8015F9D0 D_8015F9D0;
 extern s32 D_8015F9E4;
 extern s32 D_8015F9E8;
 extern s16 D_8015F9F8[8][4];
