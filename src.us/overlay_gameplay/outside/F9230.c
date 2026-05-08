@@ -2917,7 +2917,44 @@ VehicleInstance *func_80109960_118910(void)
   }
 }
 
+// CURRENT(657)
+#ifdef NON_MATCHING
+void func_8010999C_11894C(VehicleInstance *vehicle) {
+	s16 floorHeight;
+	s16 ceilingHeight;
+	s16 hitHeight;
+	s16 xAdjust;
+	s16 zAdjust;
+	s32 xOffset;
+	s32 xIndex;
+	s32 zOffset;
+	s32 zIndex;
+
+	xAdjust = 0;
+	if (vehicle->unk20 & 2) {
+		zAdjust = 0;
+		if (!(D_80257A4C[vehicle->unk1A].unk0 & 0x20000)) {
+			if (!(D_80159320 & 0x1800000)) {
+				xOffset = -0x1E;
+				for (xIndex = -1; xIndex != 2; xIndex++, xOffset += 0x1E) {
+					for (zIndex = -1, zOffset = -0x1E; zIndex != 2; zIndex++, zOffset += 0x1E) {
+						if ((func_800F9D60_108D10(vehicle->unk0 + xOffset, vehicle->unk4 + zOffset, &hitHeight, &ceilingHeight, &floorHeight) != -1) &&
+							(vehicle->unk2 < floorHeight) && (ceilingHeight < vehicle->unk2)) {
+							xAdjust = (s16)(xAdjust + xIndex);
+							zAdjust = (s16)(zAdjust + zIndex);
+						}
+					}
+				}
+
+				vehicle->unk30 -= xAdjust;
+				vehicle->unk38 -= zAdjust;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010999C_11894C.s")
+#endif
 
 void func_80109B34_118AE4(VehicleInstance *arg0, f32 arg1, f32 arg2) {
 	func_800FB430_10A3E0(arg0, 0.0f);
