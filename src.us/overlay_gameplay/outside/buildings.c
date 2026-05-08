@@ -700,7 +700,78 @@ void func_8011C080_12B030(u8 arg0)
 	func_8011BB94_12AB44(arg0, 1);
 }
 
+// CURRENT(5140)
+#ifdef NON_MATCHING
+s32 func_8011C0CC_12B07C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	BuildingInstance *building;
+	BuildingSpec *spec;
+	s32 halfX;
+	s32 halfZ;
+	s32 x;
+	s32 z;
+	s32 minX;
+	s32 minZ;
+	s32 maxX;
+	s32 maxZ;
+	s32 points[8];
+	s32 i;
+	s32 radiusSq;
+
+	building = &buildingInstances[arg0];
+	spec = &buildingSpecs[building->buildingType];
+
+	if (building->unk8 & 1) {
+		halfX = spec->unk12;
+		halfZ = spec->unk10;
+	} else {
+		halfX = spec->unk10;
+		halfZ = spec->unk12;
+	}
+
+	x = building->xCoord;
+	z = building->zCoord;
+	minX = x - halfX;
+	minZ = z - halfZ;
+	maxX = x + halfX;
+	maxZ = z + halfZ;
+
+	points[0] = maxX;
+	points[1] = maxZ;
+	points[2] = minX;
+	points[3] = maxZ;
+	points[4] = maxX;
+	points[5] = minZ;
+	points[6] = minX;
+	points[7] = minZ;
+
+	radiusSq = (arg3 * arg3) >> 4;
+	i = 3;
+	do {
+		s32 dx = (points[i * 2] - arg1) >> 2;
+		s32 dz = (points[(i * 2) + 1] - arg2) >> 2;
+
+		if (((dx * dx) + (dz * dz)) < radiusSq) {
+			return 1;
+		}
+	} while (i-- != 0);
+
+	if ((x - arg1) < halfX) {
+		if ((z - arg2) < (halfZ + arg3)) {
+			return 1;
+		}
+	}
+
+	if ((z - arg2) < halfZ) {
+		if ((x - arg1) < (halfX + arg3)) {
+			return 1;
+		}
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C0CC_12B07C.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_8011C25C_12B20C(s8 *arg0, s32 arg1) {

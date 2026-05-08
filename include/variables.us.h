@@ -437,6 +437,7 @@ extern char D_80142BA0_151B50;
 extern s32 D_8004D148; // is Snared cheat disabled
 extern s32 D_8004D150;
 extern s32 D_8004D154;
+extern s32 D_8004D15C;
 extern s32 D_8004D158;
 extern u8 D_8004D160[];
 extern u8 D_8004D161[];
@@ -1439,6 +1440,7 @@ extern s32 D_80149B34;
 extern s32 D_80149B40; // numberOfCommandObjects
 extern s32 D_80149B44; // numberOfCharacters
 extern s16 D_80149B4A;
+extern u8 D_80149B60[];
 extern u8 D_8014CEF0[];
 extern s16 D_8014D188[];
 extern u8 D_8014D200[];
@@ -2175,6 +2177,8 @@ extern char D_80144868;
 extern char D_80144880;
 extern char D_801446A0_153650;
 extern char D_801446B8_153668;
+extern char D_801446E8_153698;
+extern char D_80144700_1536B0;
 extern char D_80144728_1536D8;
 extern char D_80144740_1536F0;
 extern char D_801448A8_153858;
