@@ -2464,6 +2464,7 @@ extern Unk80152CA0Entry D_80152CA0[];
 extern char D_801432C4_152274;
 extern char D_80143304_1522B4;
 extern char D_80143390_152340;
+extern char D_801433D8_152388;
 extern char D_80143430_1523E0;
 extern char D_801436D8_152688;
 extern char D_80143644_1525F4;
