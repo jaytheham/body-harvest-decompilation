@@ -380,7 +380,111 @@ void func_800ABC2C_BABDC(u8 arg0) {
 	ptr->unk48 = 0x30;
 }
 
+// CURRENT(20)
+#ifdef NON_MATCHING
+s32 func_800ABCC8_BAC78(u8 arg0) {
+	if (alienInstances[arg0].unk20 & 0x600) {
+		switch (alienInstances[arg0].unk24) {
+			case 1:
+				func_800ABC2C_BABDC(arg0);
+				break;
+
+			case 3:
+			case 4:
+			case 29:
+				func_800AB8CC_BA87C(arg0);
+				return 1;
+
+			case 5:
+			case 7:
+			case 9:
+			case 13:
+				func_800AB80C_BA7BC(arg0);
+				break;
+
+			case 6:
+			case 8:
+			case 10:
+			case 14:
+				func_800AB730_BA6E0(arg0);
+				break;
+
+			case 11:
+				func_800AB570_BA520(arg0);
+				break;
+
+			case 12:
+				func_800AB4B4_BA464(arg0);
+				break;
+
+			case 20:
+				func_800AB408_BA3B8(arg0);
+				break;
+
+			case 27:
+				func_800AB390_BA340(arg0);
+				break;
+
+			case 28:
+				func_800AB32C_BA2DC(arg0);
+				break;
+		}
+	} else {
+		switch (alienInstances[arg0].unk24) {
+			case 15:
+			case 16:
+				return 1;
+
+			case 1:
+				alienInstances[arg0].unk48 = 0;
+				break;
+
+			case 3:
+			case 4:
+			case 29:
+				func_800AB8CC_BA87C(arg0);
+				return 1;
+
+			case 5:
+			case 7:
+			case 9:
+			case 13:
+				func_800AB80C_BA7BC(arg0);
+				break;
+
+			case 6:
+			case 8:
+			case 10:
+				func_800AB730_BA6E0(arg0);
+				break;
+
+			case 11:
+				func_800AB570_BA520(arg0);
+				break;
+
+			case 12:
+				func_800AB4B4_BA464(arg0);
+				break;
+
+			case 20:
+				func_800AB408_BA3B8(arg0);
+				break;
+
+			case 27:
+				func_800AB390_BA340(arg0);
+				break;
+
+			case 28:
+				func_800AB32C_BA2DC(arg0);
+				break;
+		}
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ABCC8_BAC78.s")
+#endif
 
 // NON_MATCHING: regalloc only - all instructions and ordering match, persistent
 // +2 temp register offset (score 145). Target uses v1 for rnd variable but IDO
@@ -762,7 +866,55 @@ s32 func_800AD240_BC1F0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD240_BC1F0.s")
 #endif
 
+// CURRENT(973)
+#ifdef NON_MATCHING
+s32 func_800AD3BC_BC36C(u8 arg0) {
+	s16 xPos;
+	s16 yPos;
+	s16 zPos;
+	u8 alienIdx;
+	BuildingInstance *building;
+	AlienInstance *alien;
+	u8 targetBuilding;
+
+	func_8011B454_12A404(arg0, &xPos, &yPos, &zPos);
+	alienIdx = func_8007956C_8851C(1) & 0xFF;
+	if (alienIdx != 0xFF) {
+		alien = &alienInstances[alienIdx];
+		building = &buildingInstances[arg0];
+
+		building->unk7--;
+		alien->unk48 = 0xA0;
+		alien->unk20 |= 0x1000;
+		alien->pad46 = arg0;
+		alien->unk0 = xPos;
+		alien->unk4 = zPos;
+		alien->unk2 = yPos;
+		alien->unk1B = func_800B0F20_BFED0(xPos, zPos);
+
+		func_8011C680_12B630(alienIdx, building->unk11);
+
+		targetBuilding = building->padC[2];
+		if (targetBuilding != 0xFF) {
+			alien->unk38 = targetBuilding;
+			alien->unk20 |= 0x80;
+		}
+
+		if ((currentLevel == 3) && (arg0 == 0x3E)) {
+			D_8004816C++;
+			func_800AD814_BC7C4(alienIdx, 0x14, 0, 0);
+		}
+
+		if ((currentLevel == 4) && (func_8000726C_7E6C((u64) 0xB) == 0) && (func_8000726C_7E6C((u64) 0xC) == 0)) {
+			func_800AD814_BC7C4(alienIdx, 1, 0, 0);
+		}
+	}
+
+	return alienIdx;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD3BC_BC36C.s")
+#endif
 
 u8 func_800AD554_BC504(s32 arg0, s32 arg1, s32 arg2) {
 	u8 idx;

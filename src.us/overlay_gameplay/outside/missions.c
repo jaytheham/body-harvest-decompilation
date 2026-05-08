@@ -164,7 +164,56 @@ void func_80074B2C_83ADC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074CA0_83C50.s")
 
 // readMissionConditions
+// CURRENT(2775)
+#ifdef NON_MATCHING
+void func_80074FA8_83F58(void) {
+	s32 count;
+	u8 cmd;
+
+	while (1) {
+		count = D_80149B28;
+		if (count >= 0x7F) {
+			osSyncPrintf(D_80141354_150304);
+			D_80149B4A = 1;
+			count = D_80149B28;
+		}
+
+		D_80149B28 = count + 1;
+		D_801497C0 = &D_801494C0[count];
+		D_801497C0->unk1 = D_80149B48;
+		D_801497C0->unk2 = D_80149B2C;
+		D_801497C0->unk3 = 0;
+		D_801497C0->unk4 = 0xFF;
+
+		cmd = func_80074558_83508();
+		if (cmd < 0x87) {
+			switch (cmd) {
+				case 0x82:
+					D_801497C0->unk0 = 2;
+					func_80074500_834B0();
+					break;
+				case 0x83:
+					D_801497C0->unk0 = 3;
+					func_80074500_834B0();
+					break;
+				default:
+					D_80149B28 -= 1;
+					return;
+			}
+		} else if (cmd == 0xB7) {
+			D_801497C0->unk0 = 1;
+			func_80074500_834B0();
+		} else {
+			D_80149B28 -= 1;
+			return;
+		}
+
+		func_80074CA0_83C50();
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074FA8_83F58.s")
+#endif
 
 void func_80075148_840F8(void)
 {

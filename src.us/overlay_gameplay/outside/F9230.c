@@ -1572,7 +1572,29 @@ s16 func_800F3EE4_102E94(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, u8 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F3EE4_102E94.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F4028_102FD8.s")
+s16 func_800F4028_102FD8(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u8 arg5) {
+	f32 temp_f0;
+	f32 var_f2;
+	s16 temp_a1;
+	s16 temp_a2;
+	s32 temp_t0;
+	s32 temp_t6;
+
+	temp_t6 = arg0;
+	temp_a2 = arg2;
+	temp_a1 = arg1;
+	temp_t0 = temp_t6;
+	if ((s32)arg5 >= temp_t0) {
+		temp_f0 = (f32)((s32)(arg4 * (arg5 - temp_t0)) / (s32)arg5);
+		var_f2 = (f32)temp_a1;
+		var_f2 += (((f32)(arg3 - temp_a1) * sqrtf((f32)(arg4 * arg4) - (temp_f0 * temp_f0))) / (f32)arg4);
+	} else {
+		temp_f0 = (f32)((s32)(arg4 * ((temp_t0 - arg5) + 1)) / (s32)arg5);
+		var_f2 = (f32)temp_a2;
+		var_f2 += (((f32)(arg3 - temp_a2) * sqrtf((f32)(arg4 * arg4) - (temp_f0 * temp_f0))) / (f32)arg4);
+	}
+	return (s16)(s32)var_f2;
+}
 
 s32 func_800F41E0_103190(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32) (((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
@@ -2895,7 +2917,44 @@ VehicleInstance *func_80109960_118910(void)
   }
 }
 
+// CURRENT(657)
+#ifdef NON_MATCHING
+void func_8010999C_11894C(VehicleInstance *vehicle) {
+	s16 floorHeight;
+	s16 ceilingHeight;
+	s16 hitHeight;
+	s16 xAdjust;
+	s16 zAdjust;
+	s32 xOffset;
+	s32 xIndex;
+	s32 zOffset;
+	s32 zIndex;
+
+	xAdjust = 0;
+	if (vehicle->unk20 & 2) {
+		zAdjust = 0;
+		if (!(D_80257A4C[vehicle->unk1A].unk0 & 0x20000)) {
+			if (!(D_80159320 & 0x1800000)) {
+				xOffset = -0x1E;
+				for (xIndex = -1; xIndex != 2; xIndex++, xOffset += 0x1E) {
+					for (zIndex = -1, zOffset = -0x1E; zIndex != 2; zIndex++, zOffset += 0x1E) {
+						if ((func_800F9D60_108D10(vehicle->unk0 + xOffset, vehicle->unk4 + zOffset, &hitHeight, &ceilingHeight, &floorHeight) != -1) &&
+							(vehicle->unk2 < floorHeight) && (ceilingHeight < vehicle->unk2)) {
+							xAdjust = (s16)(xAdjust + xIndex);
+							zAdjust = (s16)(zAdjust + zIndex);
+						}
+					}
+				}
+
+				vehicle->unk30 -= xAdjust;
+				vehicle->unk38 -= zAdjust;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010999C_11894C.s")
+#endif
 
 void func_80109B34_118AE4(VehicleInstance *arg0, f32 arg1, f32 arg2) {
 	func_800FB430_10A3E0(arg0, 0.0f);
