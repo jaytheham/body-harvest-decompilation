@@ -903,7 +903,54 @@ void func_8011C6A8_12B658(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C6A8_12B658.s")
 #endif
 
+// CURRENT(1298)
+#ifdef NON_MATCHING
+void func_8011C770_12B720(s32 arg0, s32 arg1) {
+	Unk80146688 *zone;
+
+	zone = &D_80146688_155638[currentLevel - 1][arg0];
+	{
+		BuildingInstance *building;
+		s32 buildingIndex;
+		s32 count;
+
+		count = 0;
+		buildingIndex = func_8011C25C_12B20C((s8 *) zone, 0);
+		if (buildingIndex != -1) {
+			do {
+				building = &buildingInstances[buildingIndex];
+				building->padC[2] = arg1;
+				building->unk8 ^= ((((u32) building->unk8 >> 12) | 0x20) ^ ((u32) building->unk8 >> 12)) << 12;
+				count++;
+			} while ((buildingIndex = func_8011C25C_12B20C((s8 *) zone, count)) != -1);
+		}
+	}
+
+	if (D_8014D507 > 0) {
+		u8 *alienIds;
+		u8 *alienIdsEnd;
+		u8 alienId;
+
+		alienIds = D_8014D408;
+		alienIdsEnd = alienIds + D_8014D507;
+		alienId = *alienIds;
+		do {
+			alienIds++;
+			if (arg0 == alienInstances[alienId].unk3D) {
+				alienInstances[alienId].unk12 = 0xA0;
+				alienInstances[alienId].unk38 = arg1;
+				alienInstances[alienId].unk20 &= -0x41E1;
+				alienInstances[alienId].unk20 |= 0x80;
+			}
+		} while ((alienIds < alienIdsEnd) && (alienId = *alienIds, 1));
+	}
+
+	D_8015EA20 = zone->unk0A;
+	D_8015EA24 = zone->unk0A;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C770_12B720.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8011C8E8_12B898(s32 arg0, s32 arg1) {
