@@ -2592,7 +2592,51 @@ void func_800DDF18_ECEC8(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DDF78_ECF28.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DE150_ED100.s")
+void func_800DE150_ED100(void) {
+	s32 i;
+	s16 activeCount;
+	UnkFC8E8Entry *entry;
+
+	i = 0;
+	activeCount = 0;
+	do {
+		entry = &D_80156EF0[i];
+		if (entry->unkA != 0) {
+			activeCount++;
+			if (entry->unkF == 0) {
+				s8 decay;
+
+				decay = entry->unk12;
+				if (decay < entry->unkD) {
+					entry->unkD = entry->unkD - decay;
+					entry->unkE++;
+					if (entry->unkE >= (s8)D_8013DFF4_14CFA4[entry->unkC * 8]) {
+						entry->unkE = 0;
+					}
+
+					entry->unkA += entry->unk10;
+					if (entry->unkA <= 0) {
+						func_800DDF18_ECEC8((u8)i);
+					}
+
+					entry->unk2 += entry->unk11;
+					if (entry->unkC == 0xE) {
+						entry->unk6 = D_8013E0A8_14D058[((s32)entry->unkE >> 1) * 3];
+						entry->unk7 = D_8013E0A8_14D058[((s32)entry->unkE >> 1) * 3 + 1];
+						entry->unk8 = D_8013E0A8_14D058[((s32)entry->unkE >> 1) * 3 + 2];
+					}
+				} else {
+					func_800DDF18_ECEC8((u8)i);
+				}
+			} else {
+				entry->unkF--;
+			}
+		}
+		i = (i + 1) & 0xFF;
+	} while (i < 0x50);
+
+	D_80157530 = activeCount;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DE2E8_ED298.s")
 
