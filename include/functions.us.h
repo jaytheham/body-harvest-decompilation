@@ -605,6 +605,8 @@ void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3);
 void func_800B31FC_C21AC(s8, s8);
 s32 func_800B325C_C220C(s8, s8, u16);
 s32 func_800ABCC8_BAC78(u8 arg0);
+void func_800AB570_BA520(u8 arg0);
+void func_800AB8CC_BA87C(u8 arg0);
 void func_800AC5BC_BB56C(u8 arg0);
 s32 func_800AC2FC_BB2AC(u8 arg0);
 void func_800B32AC_C225C(u8 *);

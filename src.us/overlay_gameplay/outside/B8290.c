@@ -380,7 +380,111 @@ void func_800ABC2C_BABDC(u8 arg0) {
 	ptr->unk48 = 0x30;
 }
 
+// CURRENT(20)
+#ifdef NON_MATCHING
+s32 func_800ABCC8_BAC78(u8 arg0) {
+	if (alienInstances[arg0].unk20 & 0x600) {
+		switch (alienInstances[arg0].unk24) {
+			case 1:
+				func_800ABC2C_BABDC(arg0);
+				break;
+
+			case 3:
+			case 4:
+			case 29:
+				func_800AB8CC_BA87C(arg0);
+				return 1;
+
+			case 5:
+			case 7:
+			case 9:
+			case 13:
+				func_800AB80C_BA7BC(arg0);
+				break;
+
+			case 6:
+			case 8:
+			case 10:
+			case 14:
+				func_800AB730_BA6E0(arg0);
+				break;
+
+			case 11:
+				func_800AB570_BA520(arg0);
+				break;
+
+			case 12:
+				func_800AB4B4_BA464(arg0);
+				break;
+
+			case 20:
+				func_800AB408_BA3B8(arg0);
+				break;
+
+			case 27:
+				func_800AB390_BA340(arg0);
+				break;
+
+			case 28:
+				func_800AB32C_BA2DC(arg0);
+				break;
+		}
+	} else {
+		switch (alienInstances[arg0].unk24) {
+			case 15:
+			case 16:
+				return 1;
+
+			case 1:
+				alienInstances[arg0].unk48 = 0;
+				break;
+
+			case 3:
+			case 4:
+			case 29:
+				func_800AB8CC_BA87C(arg0);
+				return 1;
+
+			case 5:
+			case 7:
+			case 9:
+			case 13:
+				func_800AB80C_BA7BC(arg0);
+				break;
+
+			case 6:
+			case 8:
+			case 10:
+				func_800AB730_BA6E0(arg0);
+				break;
+
+			case 11:
+				func_800AB570_BA520(arg0);
+				break;
+
+			case 12:
+				func_800AB4B4_BA464(arg0);
+				break;
+
+			case 20:
+				func_800AB408_BA3B8(arg0);
+				break;
+
+			case 27:
+				func_800AB390_BA340(arg0);
+				break;
+
+			case 28:
+				func_800AB32C_BA2DC(arg0);
+				break;
+		}
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ABCC8_BAC78.s")
+#endif
 
 // NON_MATCHING: regalloc only - all instructions and ordering match, persistent
 // +2 temp register offset (score 145). Target uses v1 for rnd variable but IDO
