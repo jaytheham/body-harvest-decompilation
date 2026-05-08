@@ -1115,7 +1115,57 @@ void func_800EFFB4_FEF64(void) {
 	D_80157F96 = 0;
 }
 
+// CURRENT(180)
+#ifdef NON_MATCHING
+void func_800F0094_FF044(void) {
+	s16 temp_v0;
+
+	temp_v0 = D_80157F68;
+	if (temp_v0 == -1) {
+		D_8004DC60 = 0;
+		return;
+	}
+
+	if (D_80157FB4 == 0) {
+		if (temp_v0 != 0) {
+			D_80157FB4 = func_800F066C_FF61C();
+			goto block_22;
+		}
+	}
+
+	D_8015EA2C = 0.0f;
+	D_801493E0 = 1;
+	if ((D_80052ACA != 2) || (currentLevel == LEVEL_COMET)) {
+		D_801493E2 = 1;
+	}
+	D_80157FB4 = 0;
+	D_80159DDF = 0xFF;
+	D_80157F68 = -1;
+	D_80068080 = 0;
+	if (D_80052550 != 0) {
+		gameplayMode = 6;
+		D_80047968 = 1;
+	} else {
+		gameplayMode = 1;
+		D_80157590 = 0;
+		D_8004DC60 = 0;
+	}
+	func_80013324_13F24();
+	func_800B4050_C3000((D_80052B2C->unk3C >> 8) + 0x77, (D_80052B2C->unk3E >> 8) + 0x77, &D_801FEA30, 0);
+	D_800476A2 = 1;
+	return;
+
+block_22:
+	D_80157F90++;
+	if ((D_80157F70 != 0) && (((s32 (*)(void))D_80157F70)() != 0)) {
+		D_80157F8C = 0;
+		D_80157F8E = 0;
+		D_80157F70 = 0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F0094_FF044.s")
+#endif
 
 void func_800F0234_FF1E4(void) {
 	D_80157F68 = 0;
