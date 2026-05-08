@@ -1291,7 +1291,58 @@ void func_8011F22C_12E1DC(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F244_12E1F4.s")
 
+#ifdef NON_MATCHING
+void func_8011F818_12E7C8(BuildingInstance *arg0) {
+	s32 result;
+	Gfx *dl;
+	s32 mask;
+
+	// Check if index is non-zero
+	result = func_8000726C_7E6C((s64)(((s32)arg0 - (s32)&buildingInstances[0]) / 0x18 - D_8015EA54 + 0x18));
+	if (result != 0) {
+		if ((s32)arg0->padC[1] < 0x20) {
+			arg0->padC[1] = (u8)(arg0->padC[1] + 1);
+		}
+	} else {
+		if ((s32)arg0->padC[1] > 0) {
+			arg0->padC[1] = (u8)(arg0->padC[1] - 1);
+		}
+	}
+
+	// Set up transformation matrices
+	D_80052B40.unk0 = D_80159DC8;
+	D_80052B40.unk2 = D_80159DCA;
+	D_80052B40.unk4 = D_80159DCC;
+	D_80052B48.unk0 = 0;
+	D_80052B48.unk2 = 0;
+	D_80052B48.unk4 = (s16)((s32)arg0->padC[1] * -0x154);
+
+	// Apply transformations
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
+
+	// Add graphics commands
+	mask = 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01000040;
+	dl->words.w1 = (s32)(D_8005BB38 & mask);
+
+	D_8005BB38 += 0x40;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x06000000;
+	dl->words.w1 = (s32)&D_9017550;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01020040;
+	dl->words.w1 = (s32)&D_80031160 & mask;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F818_12E7C8.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8011F9A0_12E950(s32 arg0) {
@@ -1850,7 +1901,39 @@ s32 func_80127C08_136BB8(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80127F9C_136F4C.s")
 
+// CURRENT(105)
+#ifdef NON_MATCHING
+void func_80128288_137238(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
+	s16 value;
+	f64 scale;
+
+	value = arg3 / ((vehicleSpecs[arg0->unk1A].unk32 >> 6) + 1);
+	if (arg0->unk1A == 0) {
+		value = value >> 2;
+	}
+
+	if (value >= 0x41) {
+		value = 0x40;
+	}
+
+	func_80102DDC_111D8C(arg0, arg1, arg2, (f32)value);
+
+	{
+		s32 trig = coss((arg0->unk6 - arg1 + 0x7FFF) & 0xFFFF);
+
+		scale = (f64)(value << 8);
+		arg0->unk26 = (s16)(s32)(-((f64)(f32)trig / 32768.0) * scale);
+	}
+	{
+		s32 trig = sins((arg0->unk6 - arg1 + 0x7FFF) & 0xFFFF);
+
+	arg0->unk20 |= 1;
+		arg0->unk24 = (s16)(s32)(-((f64)(f32)trig / 32768.0) * scale);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80128288_137238.s")
+#endif
 
 void func_80128428_1373D8(AlienInstance *arg0, s16 arg1, s16 arg2, s16 arg3, s32 *arg4, s32 *arg5, s32 *arg6) {
 	s16 sp38[3];
