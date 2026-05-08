@@ -1354,7 +1354,42 @@ void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EFBC_12DF6C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F094_12E044.s")
+void func_8011F094_12E044(BuildingInstance *arg0) {
+	if ((arg0 == &buildingInstances[func_8011D260_12C210(-0x21, 0x38)]) && (arg0->padC[1] != 2)) {
+		arg0->padC[1] = 1;
+	}
+
+	switch (arg0->padC[1]) {
+	case 0:
+		func_8012D700_13C6B0(
+			0xD,
+			((arg0 - buildingInstances) * 0x10) & 0xFFFF,
+			(s16)(arg0->xCoord + D_80159DC8),
+			(s16)(arg0->yCoord + D_80159DCA - 0x32),
+			arg0->zCoord + D_80159DCC,
+			0,
+			0,
+			0,
+			0x1A,
+			0x18,
+			0x1A,
+			0,
+			func_8011EFBC_12DF6C);
+		break;
+	case 1:
+		func_800C3BD8_D2B88(
+			(s16)(arg0->xCoord + D_80159DC8),
+			(s16)(arg0->yCoord + D_80159DCA),
+			(s16)(arg0->zCoord + D_80159DCC),
+			0x4E,
+			0xFFFF,
+			0xF0,
+			0xD9,
+			0x39);
+		arg0->padC[1] = 2;
+		break;
+	}
+}
 
 void func_8011F22C_12E1DC(s32 arg0, s32 arg1) {
 	D_8015EA52 = 0x78;
