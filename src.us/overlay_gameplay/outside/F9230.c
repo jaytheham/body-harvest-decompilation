@@ -1768,7 +1768,51 @@ s16 func_800FA690_109640(s16 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FA7F0_1097A0.s")
 
+// CURRENT(1375)
+#ifdef NON_MATCHING
+s16 func_800FAA08_1099B8(s16 arg0, s16 arg1) {
+	s16 temp_v1;
+	s16 var_a0;
+	register s16 diff;
+	s16 var_v0;
+	register u16 *var_a3;
+	s16 ret;
+	s32 temp_v0;
+
+	temp_v1 = arg0 & 0xFF;
+	temp_v0 = 0xFF - (s16)(arg1 & 0xFF);
+	if (temp_v0 < temp_v1) {
+		var_a3 = (u16 *)((u8 *)D_80052A94 + ((s16)(arg1 >> 8) << 9) + ((s16)(arg0 >> 8) * 2));
+		diff = (var_a3[0x100] & 0x3F) - (var_a3[0x101] & 0x3F);
+	} else {
+		var_a3 = (u16 *)((u8 *)D_80052A94 + ((s16)(arg1 >> 8) << 9) + ((s16)(arg0 >> 8) * 2));
+		diff = (var_a3[0] & 0x3F) - (var_a3[1] & 0x3F);
+	}
+	if (diff >= 0) {
+		var_a0 = diff;
+	} else {
+		var_a0 = -diff;
+	}
+	if (temp_v0 < temp_v1) {
+		diff = (var_a3[1] & 0x3F) - (var_a3[0x101] & 0x3F);
+	} else {
+		diff = (var_a3[0] & 0x3F) - (var_a3[0x100] & 0x3F);
+	}
+	if (diff >= 0) {
+		var_v0 = diff;
+	} else {
+		var_v0 = -diff;
+	}
+	if (var_v0 < var_a0) {
+		ret = var_a0;
+	} else {
+		ret = var_v0;
+	}
+	return ret;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FAA08_1099B8.s")
+#endif
 
 s16 func_800FAB9C_109B4C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 sp1C;
