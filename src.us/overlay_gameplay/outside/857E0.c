@@ -248,7 +248,48 @@ s32 func_80078B58_87B08(s16 arg0, s16 arg1) {
 	return value;
 }
 
+// CURRENT(3345)
+#ifdef NON_MATCHING
+s32 func_80078BC8_87B78(s16 arg0, s16 arg1) {
+	Unk80259D90* entry;
+	s32 idx;
+
+	arg0 >>= 7;
+	arg1 >>= 7;
+
+	if (((s8) D_80259D92[0][0] != -1) && (arg0 == (D_80259D94 >> 7)) && (arg1 == (D_80259D96 >> 7))) {
+		return 0;
+	}
+
+	idx = 2;
+	if ((D_80259DE2 != -1) && (arg0 == (D_80259DE4 >> 7)) && (arg1 == (D_80259DE6 >> 7))) {
+		return 1;
+	}
+
+	entry = (Unk80259D90*) D_80259E30;
+	for (; idx != 0x96; idx += 4, entry += 4) {
+		if (((s8) entry[0].unk2 != -1) && (arg0 == (entry[0].unk4 >> 7)) && (arg1 == (entry[0].unk6 >> 7))) {
+			return idx;
+		}
+
+		if (((s8) entry[1].unk2 != -1) && (arg0 == (entry[1].unk4 >> 7)) && (arg1 == (entry[1].unk6 >> 7))) {
+			return idx + 1;
+		}
+
+		if (((s8) entry[2].unk2 != -1) && (arg0 == (entry[2].unk4 >> 7)) && (arg1 == (entry[2].unk6 >> 7))) {
+			return idx + 2;
+		}
+
+		if (((s8) entry[3].unk2 != -1) && (arg0 == (entry[3].unk4 >> 7)) && (arg1 == (entry[3].unk6 >> 7))) {
+			return idx + 3;
+		}
+	}
+
+	return -1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078BC8_87B78.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078D64_87D14.s")
 
