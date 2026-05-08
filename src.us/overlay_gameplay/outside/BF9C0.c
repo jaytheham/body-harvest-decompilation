@@ -840,7 +840,53 @@ void func_800B9AC8_C8A78(void) {
 	#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9AC8_C8A78.s")
 	#endif
 
+#ifdef NON_MATCHING
+void func_800B9C28_C8BD8(void) {
+	s16 pos[2];
+	u8 color0[3];
+	u8 color1[3];
+	u8 color2[3];
+	u8 color3[3];
+	u8 color4[3];
+	u8 *src;
+
+	src = (u8 *) &D_8013DAE8_14CA98;
+	color0[0] = src[0];
+	color0[1] = src[1];
+	color0[2] = src[2];
+
+	src = (u8 *) &D_8013DAEC_14CA9C;
+	color1[0] = src[0];
+	color1[1] = src[1];
+	color1[2] = src[2];
+
+	src = (u8 *) &D_8013DAF0_14CAA0;
+	color2[0] = src[0];
+	color2[1] = src[1];
+	color2[2] = src[2];
+
+	src = (u8 *) &D_8013DAF4_14CAA4;
+	color3[0] = src[0];
+	color3[1] = src[1];
+	color3[2] = src[2];
+
+	src = (u8 *) &D_8013DAF8_14CAA8;
+	color4[0] = src[0];
+	color4[1] = src[1];
+	color4[2] = src[2];
+
+	pos[0] = D_80052B34->unk0;
+	pos[1] = D_80052B34->unk4;
+
+	func_800B99A8_C8958((Unk80152B80 *) pos, 200, 500, 255, color0, 65, 7, 0);
+	func_800B99A8_C8958((Unk80152B80 *) pos, 200, 500, 255, color1, 65, 7, 15);
+	func_800B99A8_C8958((Unk80152B80 *) pos, 200, 500, 255, color2, 65, 7, 30);
+	func_800B99A8_C8958((Unk80152B80 *) pos, 200, 500, 255, color3, 65, 7, 45);
+	func_800B99A8_C8958((Unk80152B80 *) pos, 200, 500, 255, color4, 65, 7, 60);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9C28_C8BD8.s")
+#endif
 
 // https://decomp.me/scratch/Ln5ro
 // drawTileBuffer i.e. the ground
