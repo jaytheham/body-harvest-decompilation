@@ -1203,6 +1203,7 @@ void leoInitUnit_atten(void);
 s32 func_80092A50_A1A00(s16, s16, s32);
 u8 func_800AD554_BC504(s32, s32, s32);
 void func_8011B3F0_12A3A0(s16, s16*, s16*, s16*);
+s32 func_8011B454_12A404(s16, s16 *, s16 *, s16 *);
 void func_8011C680_12B630(u8, s8);
 void debug_drawTimingGraphBars(void);
 unsigned long long func_8001D1A0_1DDA0(s32, u32, s32, s16);

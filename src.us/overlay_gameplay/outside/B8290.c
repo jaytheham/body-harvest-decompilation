@@ -725,7 +725,42 @@ void func_800AD0F0_BC0A0(u8 arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
+s32 func_800AD240_BC1F0(u8 arg0) {
+	s16 sp2E;
+	s16 sp2C;
+	s16 sp2A;
+	BuildingInstance *building;
+	AlienInstance *alien;
+	s32 alienIdx;
+
+	building = &buildingInstances[arg0];
+	if ((building->unk7 == 0) || ((currentLevel == 3) && (arg0 == 0x3E))) {
+		return 0xFF;
+	}
+
+	func_8011B454_12A404(arg0, &sp2E, &sp2A, &sp2C);
+	alienIdx = func_8007956C_8851C(1) & 0xFF;
+	if (alienIdx != 0xFF) {
+		alien = &alienInstances[alienIdx];
+		building->unk7--;
+		alien->unk20 |= 0x2000;
+		alien->unk0 = sp2E;
+		alien->unk4 = sp2C;
+		alien->unk2 = sp2A;
+		alien->pad46 = arg0;
+		alien->unk1B = func_800B0F20_BFED0(sp2E, sp2C);
+		func_8011C680_12B630(alienIdx & 0xFF, building->unk11);
+		func_800AD0F0_BC0A0(alienIdx & 0xFF);
+		if ((currentLevel == 4) && (D_80047F94 == 0) && (func_8000726C_7E6C(0xB) == 0) && (func_8000726C_7E6C(0xC) == 0)) {
+			func_800AD814_BC7C4(alienIdx, 1, 0, 0);
+		}
+	}
+	return alienIdx;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD240_BC1F0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD3BC_BC36C.s")
 
