@@ -2156,6 +2156,8 @@ extern char D_80144768_153718;
 extern char D_80144780_153730;
 extern char D_801447A8_153758;
 extern char D_801447C0_153770;
+extern char D_801447E8_153798;
+extern char D_80144800_1537B0;
 extern s32 D_80157A04;
 extern s32 D_80157A08;
 extern s32 D_80157E4C;
