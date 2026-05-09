@@ -2760,6 +2760,7 @@ void func_800DDB18_ECAC8(void) {
 	D_80157531 = 0;
 }
 
+// CURRENT(6868)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DDB60_ECB10.s")
 
 void func_800DDD30_ECCE0(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
