@@ -625,7 +625,62 @@ void func_800EA5B8_F9568(void) {
 	D_80048188 = 0;
 }
 
+// CURRENT(4121)
+#ifdef NON_MATCHING
+f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1) {
+	f32 diffX;
+	f32 diffY;
+	f32 diffZ;
+	f32 result;
+	f32 absDiffY;
+	s32 xPart;
+	s32 yPart;
+	s32 zPart;
+	s32 angle;
+
+	extern f64 D_801443D0_153380;
+	extern f64 D_801443D8_153388;
+
+	if (arg0[0] < 0) {
+		xPart = (arg0[0] + 3) >> 2;
+	} else {
+		xPart = arg0[0] >> 2;
+	}
+	diffX = arg1->x - xPart;
+
+	if (arg0[1] < 0) {
+		yPart = (arg0[1] + 3) >> 2;
+	} else {
+		yPart = arg0[1] >> 2;
+	}
+	diffY = arg1->y - (yPart + 0xE);
+
+	if (arg0[2] < 0) {
+		zPart = (arg0[2] + 3) >> 2;
+	} else {
+		zPart = arg0[2] >> 2;
+	}
+	diffZ = arg1->z - zPart;
+	angle = func_80003824_4424(sqrtf((diffX * diffX) + (diffZ * diffZ)), (diffY >= 0.0f) ? diffY : -diffY);
+
+	if (diffY < 0.0f) {
+		result = (f32)((((f64)(f32) (angle & 0xFFFF) * D_801443D0_153380) / 32768.0 / 40.0 * 0.5) + 0.5);
+	} else {
+		result = (f32)(0.5 - ((((f64)(f32) (angle & 0xFFFF) * D_801443D8_153388) / 32768.0 / 40.0) * 0.5));
+	}
+
+	if (result < 0.0f) {
+		result = 0.0f;
+	}
+	if (result > 1.0f) {
+		result = 1.0f;
+	}
+
+	return result;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA604_F95B4.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) {
