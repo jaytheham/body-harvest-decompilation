@@ -1225,6 +1225,8 @@ extern char D_80141168[];
 extern char D_80141184[];
 extern char D_801411F0_1501A0[];
 extern char D_8014121C_1501CC[];
+extern char D_80141248_1501F8[];
+extern char D_80141268_150218[];
 extern char D_80141288_150238[];
 extern char D_80036FE4_37BE4; /* osSyncPrintf format string */
 extern char D_80036FF0_37BF0; /* osSyncPrintf format string */
@@ -1431,12 +1433,15 @@ extern u8 D_801494BC;
 extern MissionCondEntry D_801494C0[];
 extern u8 D_801497BA;
 extern u8 D_801497C8[];
+extern u8 D_80149AC8[];
 extern u8 D_80149AF8[];
 extern s32 D_80149B30; // Number of mission commands?
 extern s32 D_80149B34;
+extern s32 D_80149B38;
 extern s32 D_80149B40; // numberOfCommandObjects
 extern s32 D_80149B44; // numberOfCharacters
 extern s16 D_80149B4A;
+extern u8 D_80149B50[];
 extern u8 D_80149B60[];
 extern u8 D_8014CEF0[];
 extern s16 D_8014D188[];
@@ -2151,6 +2156,8 @@ extern char D_80144768_153718;
 extern char D_80144780_153730;
 extern char D_801447A8_153758;
 extern char D_801447C0_153770;
+extern char D_801447E8_153798;
+extern char D_80144800_1537B0;
 extern s32 D_80157A04;
 extern s32 D_80157A08;
 extern s32 D_80157E4C;
@@ -2966,8 +2973,11 @@ extern f64 D_80144AC0_153A70;
 extern char D_80144E84_153E34[];
 extern char D_80144EAC_153E5C[];
 extern char D_80141354_150304[];
+extern char D_80141384_150334[];
+extern s8 D_8004D342;
 extern MissionCondEntry *D_801497C0;
 extern s32 D_80149B2C;
+extern s32 D_80149B3C;
 extern s32 D_80149B28; // numberOfMissionConditions
 extern s16 D_80149B48; // numberOfMissions
 extern u16 D_80159DE8[];

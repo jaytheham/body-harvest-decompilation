@@ -118,7 +118,64 @@ void func_80074768_83718(void) {
 	D_80149B44 += 1;
 }
 
+// CURRENT(5894)
+#ifdef NON_MATCHING
+void func_800747A8_83758(void) {
+	s32 sum;
+	s32 selectedIndex;
+	s32 randomValue;
+	s32 commandIndex;
+	volatile s32 loopIndex;
+	u8 *weight;
+	u8 *cmdEntry;
+	s32 value;
+
+	sum = 0;
+	commandIndex = 0;
+	loopIndex = 0;
+
+	if (func_80074558_83508() != 0x87) {
+		weight = &D_80149B50[loopIndex];
+		cmdEntry = &D_80149AC8[(loopIndex * 4) - loopIndex];
+		do {
+			value = func_80074500_834B0();
+			if (cmdEntry >= D_80149AF8) {
+				osSyncPrintf(D_80141248_1501F8);
+			}
+			sum += value;
+			*weight = value;
+			func_80074578_83528(cmdEntry);
+			cmdEntry += 3;
+			weight += 1;
+		} while (func_80074558_83508() != 0x87);
+	}
+
+	randomValue = func_800038E0_44E0() % sum;
+	selectedIndex = -1;
+	if (randomValue >= 0) {
+		commandIndex = selectedIndex + 1;
+		do {
+			selectedIndex = commandIndex;
+			randomValue -= D_80149B50[commandIndex];
+			commandIndex = selectedIndex + 1;
+		} while (randomValue >= 0);
+	}
+
+	commandIndex = D_80149B38;
+	if (commandIndex >= 0x10) {
+		osSyncPrintf(D_80141268_150218);
+		D_80149B4A = 1;
+		commandIndex = D_80149B38;
+	}
+
+	D_8004D180[commandIndex * 3 + 0] = D_80149AC8[selectedIndex * 3 + 0];
+	D_8004D180[commandIndex * 3 + 1] = D_80149AC8[selectedIndex * 3 + 1];
+	D_8004D180[commandIndex * 3 + 2] = D_80149AC8[selectedIndex * 3 + 2];
+	D_80149B38 = commandIndex + 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800747A8_83758.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(4158) */
@@ -342,7 +399,65 @@ void func_800752D8_84288(void)
   func_800746F8_836A8();
 }
 
+// CURRENT(75)
+#ifdef NON_MATCHING
+void func_800753A0_84350(void) {
+	u8 *temp;
+	s32 i;
+
+	temp = &D_8004D342;
+	i = 0x3F;
+	do {
+		*temp = 0;
+		temp -= 6;
+	} while (i--);
+
+	if (func_80074558_83508() == 0xB7) {
+		do {
+			D_801497C0 = (MissionCondEntry *)((u8 *)D_8004D1C8 + D_80149B3C * 6);
+			D_80149B3C++;
+
+			D_801497C0->unk0 = 4;
+			D_801497C0->unk2 = (u8)D_80149B2C;
+			D_801497C0->unk3 = 0;
+
+			func_80074500_834B0();
+			if (func_80074500_834B0() == 0xB9) {
+				D_801497C0->unk1 = (u8)func_8007452C_834DC();
+				func_80074500_834B0();
+
+				if (func_80074558_83508() == 0x94) {
+					func_80074500_834B0();
+					func_80074500_834B0();
+					func_80074500_834B0();
+					D_801497C0->unk5 = (u8)func_8007452C_834DC();
+					func_80074500_834B0();
+				} else {
+					D_801497C0->unk5 = 3;
+				}
+
+				func_80074CA0_83C50();
+				if ((D_801497C0->unk1 < 0x46) || (D_801497C0->unk1 >= 0x48)) {
+					osSyncPrintf(D_80141384_150334, D_80149B48);
+				}
+			} else {
+				func_80074500_834B0();
+				func_80074500_834B0();
+				func_80074500_834B0();
+				func_80074500_834B0();
+				D_801497C0->unk1 = (u8)func_8007452C_834DC();
+				func_80074CA0_83C50();
+			}
+
+			func_80074500_834B0();
+			func_80074500_834B0();
+			D_801497C0->unk4 = (u8)(func_8007452C_834DC() - 1);
+		} while (func_80074558_83508() == 0xB7);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800753A0_84350.s")
+#endif
 
 void func_80075574_84524(void) {
 	s32 sp24[1];

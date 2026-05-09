@@ -19,7 +19,7 @@ void func_80070294_158354(Unk8007CAA8_6A40 *arg0)
   {
 	return;
   }
-  if (isButtonNewlyPressed(0, 0x8000) == 0 && D_800E65C8->unk0 != 4)
+  if (isButtonNewlyPressed(0, BUTTON_A) == 0 && D_800E65C8->unk0 != 4)
   {
 	return;
   }

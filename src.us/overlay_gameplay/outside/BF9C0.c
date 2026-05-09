@@ -323,7 +323,83 @@ s32 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 // ClipLineToShieldWalls
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1028_BFFD8.s")
 
+// CURRENT(3890)
+#ifdef NON_MATCHING
+void func_800B165C_C060C(s32 arg0) {
+	Unk8014FD30Type *wall;
+	s32 z;
+	s32 maxZ;
+
+	wall = (Unk8014FD30Type *)(D_80147C30_156BE0 + (currentLevel * 0x90) + (arg0 * 0x18) - 0x90);
+	z = wall->unk2 >> 10;
+	maxZ = wall->unk6 >> 10;
+
+	if (z < maxZ) {
+		do {
+			s32 minX;
+			s32 maxX;
+			s32 x;
+			s32 xEnd;
+			s32 rem;
+			s32 rowOffset;
+
+			minX = wall->unk0;
+			maxX = wall->unk4;
+
+			if (!(z < (wall->unkA >> 10))) {
+				if (z < (wall->unkE >> 10)) {
+					if (minX >= wall->unk8) {
+						minX = wall->unkC;
+					} else if (wall->unkC >= maxX) {
+						maxX = wall->unk8;
+					}
+				}
+			}
+
+			rowOffset = z << 6;
+
+			if (!(z < (wall->unk12 >> 10))) {
+				if (z < (wall->unk16 >> 10)) {
+					if (minX >= wall->unk10) {
+						minX = wall->unk14;
+					} else if (wall->unk14 >= maxX) {
+						maxX = wall->unk10;
+					}
+				}
+			}
+
+			x = minX >> 10;
+			xEnd = maxX >> 10;
+
+			if (x < xEnd) {
+				rem = (xEnd - x) & 3;
+				if (rem != 0) {
+					s32 remEnd = x + rem;
+
+					do {
+						D_8021EA30[rowOffset + 0x820 + x] |= 0xF0;
+						x++;
+					} while (x != remEnd);
+				}
+
+				while (x != xEnd) {
+					D_8021EA30[rowOffset + 0x820 + x] |= 0xF0;
+					D_8021EA30[rowOffset + 0x821 + x] |= 0xF0;
+					D_8021EA30[rowOffset + 0x822 + x] |= 0xF0;
+					D_8021EA30[rowOffset + 0x823 + x] |= 0xF0;
+					x += 4;
+				}
+			}
+
+			maxZ = wall->unk6 >> 10;
+
+			z++;
+		} while (z < maxZ);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B165C_C060C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1814_C07C4.s")
 
