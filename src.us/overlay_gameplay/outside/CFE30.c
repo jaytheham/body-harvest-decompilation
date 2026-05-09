@@ -2606,7 +2606,34 @@ s16 func_800DA6F0_E96A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	return temp_s16;
 }
 
+// CURRENT(45)
+#ifdef NON_MATCHING
+void func_800DA7CC_E977C(s16 arg0, s16 arg1) {
+	u8 *entryUnk8Bytes;
+	s16 value;
+
+	entryUnk8Bytes = (u8 *)&D_80154318[arg1].unk8;
+	if (*(s16 *)entryUnk8Bytes != 0xFB) {
+		func_800DDD30_ECCE0(entryUnk8Bytes[1], D_80052B34->unk0, (s16)(D_80052B34->unk2 + 0x50), D_80052B34->unk4);
+		value = D_80154318[arg0].unkC;
+		func_800DDDE4_ECD94(entryUnk8Bytes[1], (value * 3) & 0xFF);
+	}
+
+	value = D_80154318[arg0].unkC;
+	if ((value % 3) == 0) {
+		if (value < 0xA) {
+			func_800C541C_D43CC(D_80052B34->unk0, (s16)(D_80052B34->unk2 + 0x3C), D_80052B34->unk4, 0, 0xA, 0, 0x3C, 0xFF, 0x28,
+				0x1E, 0xC8, 0xC8, 0xFF);
+			return;
+		}
+
+		func_800C541C_D43CC(D_80052B34->unk0, (s16)(D_80052B34->unk2 + 0x3C), D_80052B34->unk4, 0, 0xA, 0, 0x28, 0xFF, 1,
+			0x14, 0xC8, 0xC8, 0xFF);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA7CC_E977C.s")
+#endif
 
 void func_800DA994_E9944(void) {
 	struct {

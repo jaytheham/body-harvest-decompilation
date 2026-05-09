@@ -979,7 +979,7 @@ void func_800DA510_E94C0(s16 arg0, s16 arg1);
 void func_800DABBC_E9B6C(Vec3f *arg0, Unk800311A0 *arg1, Unk800311A0 *arg2);
 void func_800DE150_ED100(void);
 s16 func_800DA6F0_E96A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
-void func_800DA7CC_E977C(void);
+void func_800DA7CC_E977C(s16 arg0, s16 arg1);
 void func_800C1384_D0334(u8 arg0);
 void func_800C1418_D03C8(u8 arg0, s32 arg1);
 void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s32 arg4);
