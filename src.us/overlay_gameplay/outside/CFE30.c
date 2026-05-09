@@ -3103,7 +3103,29 @@ void func_800E05B4_EF564(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E0764_EF714.s")
+void func_800E0764_EF714(s16 arg0) {
+    s32 pad;
+    u16 sp52;
+    u16 sp50;
+    u16 sp4E;
+    u16 sp4C;
+
+    if ((D_80031420 & 3) == 3) {
+        arg0 = arg0 / 16;
+        if (arg0 <= 0) {
+            arg0 = 1;
+        }
+        if (arg0 >= 0x10) {
+            arg0 = 0xF;
+        }
+        sp4C = func_800038E0_44E0();
+        sp4E = func_800038E0_44E0();
+        sp50 = func_800038E0_44E0();
+        sp52 = func_800038E0_44E0();
+        pad = func_800038E0_44E0();
+        func_800CA5EC_D959C(D_80052B34->unk0, (s16) (((s32) sp4C % 20) + D_80052B34->unk2 + 0x1E), D_80052B34->unk4, (s8) (((s32) sp4E % 120) - 0x3C), 0x7F, ((s32) sp50 % 120) - 0x3C, arg0 + 0xF, 4, ((s32) sp52 % arg0) + arg0, (pad % 90) + 0x28, 0xC8, 0, 0x14, 0xFF);
+    }
+}
 
 void func_800E093C_EF8EC(s16 arg0, s16 arg1, s16 arg2, u16 arg3) {
 	s32 effectIndex;
