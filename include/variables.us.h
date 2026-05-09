@@ -2966,8 +2966,11 @@ extern f64 D_80144AC0_153A70;
 extern char D_80144E84_153E34[];
 extern char D_80144EAC_153E5C[];
 extern char D_80141354_150304[];
+extern char D_80141384_150334[];
+extern s8 D_8004D342;
 extern MissionCondEntry *D_801497C0;
 extern s32 D_80149B2C;
+extern s32 D_80149B3C;
 extern s32 D_80149B28; // numberOfMissionConditions
 extern s16 D_80149B48; // numberOfMissions
 extern u16 D_80159DE8[];
