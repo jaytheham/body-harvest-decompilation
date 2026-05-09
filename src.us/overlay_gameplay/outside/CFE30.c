@@ -2763,6 +2763,19 @@ void func_800DDB18_ECAC8(void) {
 // CURRENT(6868)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DDB60_ECB10.s")
 
+extern char D_80143D6C_152D1C;
+extern char D_80143D7C_152D2C;
+extern char D_80143DA4_152D54;
+extern char D_80143DCC_152D7C;
+extern char D_80143DF4_152DA4;
+extern char D_80143E14_152DC4;
+extern char D_80143E34_152DE4;
+extern char D_80143E50_152E00;
+extern char D_80143E58_152E08;
+extern u8 *D_80157560;
+extern u8 D_80157608;
+extern f32 D_80157610;
+
 void func_800DDD30_ECCE0(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	if (arg0 != 0xFF) {
 		UnkFC8E8Entry *entry = &D_80156EF0[arg0];
@@ -2827,7 +2840,33 @@ void func_800DDF18_ECEC8(u8 arg0) {
 	}
 }
 
+// CURRENT(50)
+#ifdef NON_MATCHING
+void func_800DDF78_ECF28(s16 arg0) {
+	u8 *entry;
+
+	osSyncPrintf(&D_80143D6C_152D1C, arg0);
+	entry = &D_80157608;
+	D_80157560 = entry;
+	entry = D_80157560;
+
+	osSyncPrintf(&D_80143D7C_152D2C, entry[0xC], entry[0xD], entry[0xE], entry[0xF], entry[0x10], entry[0x11], entry[0x12], entry[0x13]);
+	entry = D_80157560;
+	osSyncPrintf(&D_80143DA4_152D54, entry[0x14], entry[0x15], entry[0x16], entry[0x17], entry[0x18], entry[0x19], entry[0x1A], entry[0x1B]);
+	entry = D_80157560;
+	osSyncPrintf(&D_80143DCC_152D7C, entry[0x1C], entry[0x1D], entry[0x1E], entry[0x1F], entry[0x20], entry[0x21], entry[0x22], entry[0x23]);
+	entry = D_80157560;
+	osSyncPrintf(&D_80143DF4_152DA4, entry[0], entry[1], entry[2], entry[3], (f64)(*(f32*)&D_80157608));
+	entry = D_80157560;
+	osSyncPrintf(&D_80143E14_152DC4, entry[4], entry[5], entry[6], entry[7], (f64)D_8015760C);
+	entry = D_80157560;
+	osSyncPrintf(&D_80143E34_152DE4, entry[8], entry[9], entry[0xA], entry[0xB]);
+	osSyncPrintf(&D_80143E50_152E00, (f64)D_80157610);
+	osSyncPrintf(&D_80143E58_152E08);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DDF78_ECF28.s")
+#endif
 
 void func_800DE150_ED100(void) {
 	s32 i;
