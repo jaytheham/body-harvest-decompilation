@@ -3366,8 +3366,48 @@ void func_800E360C_F25BC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E4CEC_F3C9C.s")
 
-// displayLasers
+// CURRENT(380)
+#ifdef NON_MATCHING
+void func_800E5044_F3FF4(void) {
+	Unk80152D00SubEntry *entry;
+	Unk80152D00SubEntry *end;
+	s16 type1;
+
+	gDPPipeSync(D_8005BB2C++);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE);
+	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG | G_LIGHTING);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+
+	entry = (Unk80152D00SubEntry *) D_80152D00;
+	end = (Unk80152D00SubEntry *) &D_80153300;
+	type1 = 1;
+	do {
+		if (entry->unk0 == type1) {
+			s16 arg4 = entry->unkC;
+			s16 arg5 = entry->unkE;
+			s32 arg6 = entry->unk10;
+			s16 arg7 = entry->unk2;
+			u8 arg8 = entry->unk14;
+			s16 arg0 = entry->unk4;
+			s16 arg1 = entry->unk6;
+			s16 arg2 = entry->unk8;
+			s16 arg3 = entry->unkA;
+
+			func_800E3928_F28D8(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+		} else if (entry->unk0 == 2) {
+			func_800E4CEC_F3C9C(*(s32 *) &entry->unk8, ((u8 *) &entry->unk2)[1]);
+		}
+		entry++;
+	} while (entry != end);
+
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5044_F3FF4.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_800E520C_F41BC(void) {
