@@ -1115,7 +1115,57 @@ void func_800EFFB4_FEF64(void) {
 	D_80157F96 = 0;
 }
 
+// CURRENT(180)
+#ifdef NON_MATCHING
+void func_800F0094_FF044(void) {
+	s16 temp_v0;
+
+	temp_v0 = D_80157F68;
+	if (temp_v0 == -1) {
+		D_8004DC60 = 0;
+		return;
+	}
+
+	if (D_80157FB4 == 0) {
+		if (temp_v0 != 0) {
+			D_80157FB4 = func_800F066C_FF61C();
+			goto block_22;
+		}
+	}
+
+	D_8015EA2C = 0.0f;
+	D_801493E0 = 1;
+	if ((D_80052ACA != 2) || (currentLevel == LEVEL_COMET)) {
+		D_801493E2 = 1;
+	}
+	D_80157FB4 = 0;
+	D_80159DDF = 0xFF;
+	D_80157F68 = -1;
+	D_80068080 = 0;
+	if (D_80052550 != 0) {
+		gameplayMode = 6;
+		D_80047968 = 1;
+	} else {
+		gameplayMode = 1;
+		D_80157590 = 0;
+		D_8004DC60 = 0;
+	}
+	func_80013324_13F24();
+	func_800B4050_C3000((D_80052B2C->unk3C >> 8) + 0x77, (D_80052B2C->unk3E >> 8) + 0x77, &D_801FEA30, 0);
+	D_800476A2 = 1;
+	return;
+
+block_22:
+	D_80157F90++;
+	if ((D_80157F70 != 0) && (((s32 (*)(void))D_80157F70)() != 0)) {
+		D_80157F8C = 0;
+		D_80157F8E = 0;
+		D_80157F70 = 0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F0094_FF044.s")
+#endif
 
 void func_800F0234_FF1E4(void) {
 	D_80157F68 = 0;
@@ -2711,7 +2761,33 @@ void func_80102D00_111CB0(VehicleInstance *arg0, f32 arg1, f32 arg2, f32 arg3) {
 	}
 }
 
+// CURRENT(168)
+#ifdef NON_MATCHING
+void func_80102DDC_111D8C(VehicleInstance *arg0, s16 arg1, s16 arg2, f32 arg3) {
+	s16 temp;
+
+	if ((arg0->unk1C > 0) && ((gameplayMode == 1) || (arg0 != D_80052B34))) {
+		temp = coss((u16)arg2);
+		arg0->unk30 = (f32)((f64)arg0->unk30 + (((f64)(f32)coss((u16)arg1) / 32768.0) * ((f64)(f32)temp / 32768.0) * (f64)arg3));
+		arg0->unk34 = (f32)((f64)arg0->unk34 + (((f64)(f32)sins((u16)arg2) / 32768.0) * (f64)arg3));
+		temp = coss((u16)arg2);
+		arg0->unk38 = (f32)((f64)arg0->unk38 + (((f64)(f32)sins((u16)arg1) / 32768.0) * ((f64)(f32)temp / 32768.0) * (f64)arg3));
+		if (arg0->unk34 > 0.0f) {
+			if (!(arg0->unk20 & 2)) {
+				arg0->unk20 |= 2;
+				arg0->unk10 = 0;
+				func_800FB3E8_10A398(arg0, 1.0f);
+			}
+		}
+		arg0->unk20 |= 1;
+		if (arg0 == D_80052B34) {
+			D_80157A2C = arg1;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80102DDC_111D8C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80102FA4_111F54.s")
 

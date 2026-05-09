@@ -1701,7 +1701,41 @@ s32 func_80120634_12F5E4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801206B0_12F660.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80120BC4_12FB74.s")
+void func_80120BC4_12FB74(BuildingInstance *arg0) {
+	s32 angle;
+
+	if ((arg0->unk8 & 3) == 1) {
+		D_80159DC8 = -0xE0;
+		D_80159DCC = 0x19;
+	} else {
+		D_80159DC8 = -0xE0;
+		D_80159DCC = 0x19;
+	}
+
+	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
+
+	D_80052B40.unk0 = D_80159DC8;
+	D_80052B40.unk2 = D_80159DCA;
+	D_80052B40.unk4 = D_80159DCC;
+	D_80052B48.unk0 = 0;
+
+	if ((arg0->unk8 & 3) == 1) {
+		angle = D_8015EA3C;
+	} else {
+		angle = -D_8015EA3C;
+	}
+
+	D_80052B48.unk2 = (s16)(angle << 8);
+	D_80052B48.unk4 = 0;
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
+
+	gSPMatrix(D_8005BB2C++, (u32)D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+	gSPDisplayList(D_8005BB2C++, D_A01FF98);
+	gSPMatrix(D_8005BB2C++, (u32)&D_80031160 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+
+	func_801206B0_12F660();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80120D6C_12FD1C.s")
 
@@ -2030,7 +2064,66 @@ u64 func_80126990_135940(u64 value) {
 	return __ll_mul(value, value);
 }
 
+// CURRENT(9174)
+#ifdef NON_MATCHING
+u32 func_801269BC_13596C(s32 arg0, u32 arg1, s32 arg2, u32 arg3, s32 arg4, u32 arg5, s32 arg6, u32 arg7, s32 arg8, u32 arg9,
+	s32 arg10, u32 arg11) {
+	union {
+		s64 full;
+		struct {
+			s32 hi;
+			u32 lo;
+		} parts;
+	} deltaA;
+	union {
+		s64 full;
+		struct {
+			s32 hi;
+			u32 lo;
+		} parts;
+	} deltaB;
+	union {
+		s64 full;
+		struct {
+			s32 hi;
+			u32 lo;
+		} parts;
+	} temp0;
+	union {
+		s64 full;
+		struct {
+			s32 hi;
+			u32 lo;
+		} parts;
+	} temp1;
+	s64 denom;
+
+	deltaA.parts.hi = (arg4 - arg0) - (arg5 < arg1);
+	deltaA.parts.lo = arg5 - arg1;
+	deltaB.parts.hi = (arg6 - arg2) - (arg7 < arg3);
+	deltaB.parts.lo = arg7 - arg3;
+	denom = (s64)func_80126990_135940(deltaA.full) + (s64)func_80126990_135940(deltaB.full);
+
+	if (denom == 0) {
+		temp0.parts.hi = (arg8 - arg0) - (arg9 < arg1);
+		temp0.parts.lo = arg9 - arg1;
+		temp1.parts.hi = (arg10 - arg2) - (arg11 < arg3);
+		temp1.parts.lo = arg11 - arg3;
+		return (u32)(__ll_mul(temp0.full, temp0.full) + __ll_mul(temp1.full, temp1.full));
+	}
+
+	temp0.parts.hi = (arg10 - arg2) - (arg11 < arg3);
+	temp0.parts.lo = arg11 - arg3;
+	temp1.parts.hi = (arg8 - arg0) - (arg9 < arg1);
+	temp1.parts.lo = arg9 - arg1;
+	temp0.full = temp0.full * deltaA.full;
+	temp1.full = temp1.full * deltaB.full;
+
+	return (u32)((s64)func_80126990_135940(temp0.full - temp1.full) / denom);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801269BC_13596C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80126B80_135B30.s")
 

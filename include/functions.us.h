@@ -26,6 +26,7 @@ void func_800035D8_41D8(s16 arg0);
 
 // F9230
 void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3);
+s32 func_800F066C_FF61C();
 void func_80000D0C_190C(void);
 s32 func_8000091C_151C(BhAudioTask *arg0, BhAudioBuf *arg1);
 void func_80000AD4_16D4(s32 arg0);
@@ -722,6 +723,7 @@ void func_8011FA90_12EA40(BuildingInstance *, u8, s16, s16, s16, s16, s16, s16, 
 s32 func_8011D19C_12C14C(s8, s8);
 s32 func_8011D260_12C210(s8, s8);
 s32 func_80120634_12F5E4(void);
+void func_801206B0_12F660(void);
 void func_801219A4_130954(VehicleInstance *, s16);
 void func_8012101C_12FFCC(BuildingInstance *, s16);
 void func_801238DC_13288C(s16);
@@ -967,13 +969,13 @@ void func_800D9C60_E8C10(s16 arg0);
 void func_800D9754_E8704(s16 arg0);
 s16 func_800D0DE4_DFD94(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5, u8 arg6);
 void func_800D9FF8_E8FA8(void);
-void func_800D16BC_E066C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6);
+s16 func_800D16BC_E066C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6);
 void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4);
 void func_800DFA34_EE9E4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4);
 void func_800DF848_EE7F8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4);
 s32 func_800DF038_EDFE8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 arg5);
 void func_800DEA08_ED9B8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10);
-void func_800DA510_E94C0(void);
+void func_800DA510_E94C0(s16 arg0, s16 arg1);
 void func_800DABBC_E9B6C(Vec3f *arg0, Unk800311A0 *arg1, Unk800311A0 *arg2);
 void func_800DE150_ED100(void);
 s16 func_800DA6F0_E96A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3);

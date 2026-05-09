@@ -578,7 +578,45 @@ void func_800C2554_D1504(s16 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C25F8_D15A8.s")
 
+// CURRENT(1293)
+#ifdef NON_MATCHING
+void func_800C2B90_D1B40(u8 arg0, u8 arg1) {
+	s16 slot;
+	s8 *p;
+	if ((arg0 == 0xFB) || (D_80156ED8 == 2)) {
+		return;
+	}
+
+	slot = func_800C17B4_D0764(arg0, 0);
+	if (slot == -3) {
+		return;
+	}
+
+	p = (s8 *)&D_80154318[slot].unk8;
+	p[1] = func_800038E0_44E0() % 4;
+	p[2] = (func_800038E0_44E0() % 10) + 1;
+	p[3] = (func_800038E0_44E0() % 8) + 8;
+	if ((func_800038E0_44E0() % 2) == 1) {
+		p[3] = -p[3];
+	}
+
+	p[4] = (func_800038E0_44E0() % 15) + 10;
+	if ((arg1 >= 0x1A) && ((func_800038E0_44E0() % 2) == 1)) {
+		p[4] = -p[4];
+	}
+
+	p[0] = arg1;
+	p[5] = (func_800038E0_44E0() % 200) + 0x19;
+	p[6] = (func_800038E0_44E0() % 20) - 10;
+	if (p[6] < 0) {
+		p[6] -= 5;
+	} else {
+		p[6] += 5;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C2B90_D1B40.s")
+#endif
 
 // CURRENT(1972)
 #ifdef NON_MATCHING
@@ -2518,7 +2556,39 @@ s16 func_800DA450_E9400(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	return temp_v0;
 }
 
+// CURRENT(2153)
+#ifdef NON_MATCHING
+void func_800DA510_E94C0(s16 arg0, s16 arg1) {
+	Unk80154318Entry *src;
+	Unk80154318Entry *dst;
+	Vec3f dir;
+	s16 *srcPos;
+	s16 effect;
+
+	src = &D_80154318[arg0];
+	dst = &D_80154318[arg1];
+	srcPos = &src->unk8;
+
+	dir.x = srcPos[3] - dst->unk8;
+	dir.y = srcPos[4] - dst->unkA;
+	dir.z = srcPos[5] - dst->unkC;
+
+	if ((dir.x != 0.0f) || (dir.y != 0.0f) || (dir.z != 0.0f)) {
+		func_800C1024_CFFD4(&dir, &dir);
+		effect = func_800D16BC_E066C(srcPos[3], srcPos[4], srcPos[5], (s16)((f64)srcPos[3] + (400.0 * (f64)dir.x)),
+			(s32)((f64)srcPos[4] + (400.0 * (f64)dir.y)),
+			(s32)((f64)srcPos[5] + (400.0 * (f64)dir.z)), 1);
+		if (effect != 0xFB) {
+			func_800D19DC_E098C(effect & 0xFF, dst->unkF);
+		}
+		dst->unk8 = srcPos[3];
+		dst->unkA = srcPos[4];
+		dst->unkC = srcPos[5];
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA510_E94C0.s")
+#endif
 
 s16 func_800DA6F0_E96A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 temp_s32;
