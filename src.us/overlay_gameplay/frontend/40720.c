@@ -475,12 +475,12 @@ void func_80070CC4_41174(void)
 	MissionDataNav* selectedFileData;
 	s32 playAltMoveSfx = 0;
 
-	if (D_8004758A < 0x15 && D_8004758A >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
+	if (currentControllerStates[CONTROLLER_ONE].stick_x < 0x15 && currentControllerStates[CONTROLLER_ONE].stick_x >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
 		D_80094824_64CD4 = 1;
 		D_8009482C_64CDC = 0x1E;
 	}
 
-	if (D_8004758B < 0x15 && D_8004758B >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
+	if (currentControllerStates[CONTROLLER_ONE].stick_y < 0x15 && currentControllerStates[CONTROLLER_ONE].stick_y >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
 		D_80094828_64CD8 = 1;
 		D_80094830_64CE0 = 0x1E;
 	}
@@ -489,7 +489,7 @@ void func_80070CC4_41174(void)
 	selectedFileData = ((MissionDataNav*)D_800909B0) + selectedFileIndex;
 
 	if (D_80094824_64CD4 || --D_8009482C_64CDC == 0) {
-		if (D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) {
+		if (currentControllerStates[CONTROLLER_ONE].stick_x < -0x14 || isButtonNewlyPressed(0, 0x200)) {
 			selectedFileIndex = selectedFileData->unk22;
 			if (selectedFileIndex != 0) {
 				while (1) {
@@ -502,7 +502,7 @@ void func_80070CC4_41174(void)
 					break;
 				}
 			}
-		} else if (D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
+		} else if (currentControllerStates[CONTROLLER_ONE].stick_x >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
 			selectedFileIndex = selectedFileData->unk23;
 			if (selectedFileIndex != 0) {
 				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
@@ -526,7 +526,7 @@ void func_80070CC4_41174(void)
 	}
 
 	if (D_80094828_64CD8 || --D_80094830_64CE0 == 0) {
-		if (D_8004758B >= 0x15 || isButtonNewlyPressed(0, 0x800)) {
+		if (currentControllerStates[CONTROLLER_ONE].stick_y >= 0x15 || isButtonNewlyPressed(0, 0x800)) {
 			selectedFileIndex = selectedFileData->unk24;
 			if (selectedFileIndex != 0) {
 				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
@@ -537,7 +537,7 @@ void func_80070CC4_41174(void)
 				}
 				playAltMoveSfx = 1;
 			}
-		} else if (D_8004758B < -0x14 || isButtonNewlyPressed(0, 0x400)) {
+		} else if (currentControllerStates[CONTROLLER_ONE].stick_y < -0x14 || isButtonNewlyPressed(0, 0x400)) {
 			selectedFileIndex = selectedFileData->unk25;
 			if (selectedFileIndex != 0) {
 				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
@@ -575,18 +575,18 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 	D_800D74A8 = (D_800D74A4 - arg0) - 1;
 	selectedMissionBefore = D_800D74A4;
 
-	if (D_8004758A < 0x15 && D_8004758A >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
+	if (currentControllerStates[CONTROLLER_ONE].stick_x < 0x15 && currentControllerStates[CONTROLLER_ONE].stick_x >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
 		D_80094834_64CE4 = 1;
 		D_8009483C_64CEC = 0x1E;
 	}
 
-	if (D_8004758B < 0x15 && D_8004758B >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
+	if (currentControllerStates[CONTROLLER_ONE].stick_y < 0x15 && currentControllerStates[CONTROLLER_ONE].stick_y >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
 		D_80094838_64CE8 = 1;
 		D_80094840_64CF0 = 0x1E;
 	}
 
 	if (D_80094834_64CE4 || --D_8009483C_64CEC == 0) {
-		if (D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) {
+		if (currentControllerStates[CONTROLLER_ONE].stick_x < -0x14 || isButtonNewlyPressed(0, 0x200)) {
 			switch (arg1) {
 			case 2:
 					i = 0xD;
@@ -634,7 +634,7 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			}
 		}
 
-		if (D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
+		if (currentControllerStates[CONTROLLER_ONE].stick_x >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
 			switch (arg1) {
 			case 2:
 					i = 0xD;
@@ -691,7 +691,7 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 	}
 
 	if (D_80094838_64CE8 || --D_80094840_64CF0 == 0) {
-		if (D_8004758B >= 0x15 || isButtonNewlyPressed(0, 0x800)) {
+		if (currentControllerStates[CONTROLLER_ONE].stick_y >= 0x15 || isButtonNewlyPressed(0, 0x800)) {
 			if (arg1 == 0) {
 				D_800D74A4 = 0x48;
 			}
@@ -706,7 +706,7 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			}
 		}
 
-		if (D_8004758B < -0x14 || isButtonNewlyPressed(0, 0x400)) {
+		if (currentControllerStates[CONTROLLER_ONE].stick_y < -0x14 || isButtonNewlyPressed(0, 0x400)) {
 			D_80094838_64CE8 = 0;
 			if (arg1 == 0) {
 				D_800D74A4 = 0x4A;

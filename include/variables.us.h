@@ -319,13 +319,6 @@ extern OSContPad currentControllerStates[4]; // 0x80047588
 
 extern u16 D_800475D8[4]; // Controller button states
 extern u16 previousControllerButtonStates[4]; // 0x800475E0
-extern u16 D_80047588;
-extern u16 D_80047588_W;
-extern s8 D_8004758A;
-extern s8 D_8004758B;
-extern u16 D_8004758E;
-extern u16 D_80047594;
-extern u16 D_8004759A;
 extern OSContPad D_800475A0[4]; // When button is held these values sometimes reset to 0 next frame?
 extern u32 D_800475F8;
 extern u32 D_800475FC;

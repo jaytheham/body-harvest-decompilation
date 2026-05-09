@@ -2938,10 +2938,10 @@ void func_8001A130_1AD30() {
 void func_8001A160_1AD60(void) {
 	drawText(&D_80038530_39130);
 	D_80034498_35098 = 0;
-	if (D_8004758A >= 0x1F) {
+	if (currentControllerStates[CONTROLLER_ONE].stick_x >= 0x1F) {
 		D_80034490_35090 = 0;
 	}
-	if (D_8004758A < -0x1E) {
+	if (currentControllerStates[CONTROLLER_ONE].stick_x < -0x1E) {
 		D_80034490_35090 = 1;
 	}
 	drawText(&D_80038534_39134, 0, 0);

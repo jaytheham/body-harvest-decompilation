@@ -432,7 +432,7 @@ void func_80080A38_168AF8(void) {
 		func_80080E28_168EE8();
 	}
 
-	if (((D_800A0964_188A24 == 0) && (D_8004758B < 0)) || (D_800E7480 != 0)) {
+	if (((D_800A0964_188A24 == 0) && (currentControllerStates[CONTROLLER_ONE].stick_y < 0)) || (D_800E7480 != 0)) {
 		func_8008247C_16A53C();
 	}
 
@@ -709,7 +709,7 @@ void func_80081764_169824(void) {
 	u16 buttons;
 	f32 one;
 
-	buttons = D_8004758E;
+	buttons = currentControllerStates[CONTROLLER_TWO].button;
 	one = 1.0f;
 
 	if (buttons & 0x2000) {
@@ -758,7 +758,7 @@ void func_80081764_169824(void) {
 
 	func_800033D4_3FD4(0x20, 1);
 
-	buttons = D_8004758E;
+	buttons = currentControllerStates[CONTROLLER_TWO].button;
 	if (buttons & 0x20) {
 		osSyncPrintf(&D_800A4DDC_18CE9C);
 		osSyncPrintf(&D_800A4DE0_18CEA0);
