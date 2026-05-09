@@ -4272,7 +4272,7 @@ void func_80079310_1613D0(void) {
 /* CURRENT(5) */
 void func_80079330_1613F0(void) {
 	func_8000345C_405C(0x20);
-	if (D_8004758E & 0x20) {
+	if (currentControllerStates[CONTROLLER_TWO].button & 0x20) {
 		D_800E65F8++;
 		if (D_800E65F8 != D_800E668C) {
 		} else {
@@ -4282,7 +4282,7 @@ void func_80079330_1613F0(void) {
 	}
 
 	func_8000345C_405C(0x10);
-	if (D_8004758E & 0x10) {
+	if (currentControllerStates[CONTROLLER_TWO].button & 0x10) {
 		D_800E65F8--;
 		if (D_800E65F8 < 0) {
 			D_800E65F8 = D_800E668C - 1;
@@ -4292,7 +4292,7 @@ void func_80079330_1613F0(void) {
 
 	D_800E65F4 = 0;
 	func_8000345C_405C(0x8000);
-	if (D_8004758E & 0x8000) {
+	if (currentControllerStates[CONTROLLER_TWO].button & 0x8000) {
 		D_800E65F0++;
 		D_800E65F4 = 1;
 	}
@@ -4339,7 +4339,7 @@ void func_800794BC_16157C(void) {
 		osSyncPrintf(&D_800A44C4_18C584);
 	}
 
-	temp_v0 = D_8004758E;
+	temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	temp_s1 = D_800E66A8[D_800E65F8].unk0;
 
 	if (temp_v0 & 0x200) {
@@ -4348,7 +4348,7 @@ void func_800794BC_16157C(void) {
 		temp_v0_2->unk8 += 1;
 		temp_v0_2 = (Unk80070464Obj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A44F4_18C5B4, temp_v0_2->unk8, temp_v0_2->unkA);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x100) {
@@ -4357,7 +4357,7 @@ void func_800794BC_16157C(void) {
 		temp_v0_2->unk8 -= 1;
 		temp_v0_2 = (Unk80070464Obj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4514_18C5D4, temp_v0_2->unk8, temp_v0_2->unkA);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x800) {
@@ -4366,7 +4366,7 @@ void func_800794BC_16157C(void) {
 		temp_v0_2->unkA += 1;
 		temp_v0_2 = (Unk80070464Obj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4534_18C5F4, temp_v0_2->unk8, temp_v0_2->unkA);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x400) {
@@ -4385,23 +4385,23 @@ void func_80079658_161718(void) {
 		osSyncPrintf(&D_800A4574_18C634);
 	}
 
-	temp_v0 = D_8004758E;
+	temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	if (temp_v0 & 0x200) {
 		D_800E65C8->unk4 -= 1;
 		osSyncPrintf(&D_800A45A4_18C664, D_800E65C8->unk4, D_800E65C8->unk8);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x100) {
 		D_800E65C8->unk4 += 1;
 		osSyncPrintf(&D_800A45C4_18C684, D_800E65C8->unk4, D_800E65C8->unk8);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x800) {
 		D_800E65C8->unk8 -= 1;
 		osSyncPrintf(&D_800A45E4_18C6A4, D_800E65C8->unk4, D_800E65C8->unk8);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x400) {
@@ -4420,7 +4420,7 @@ void func_8007978C_16184C(void) {
 		osSyncPrintf(&D_800A4624_18C6E4);
 	}
 
-	temp_v0 = D_8004758E;
+	temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	temp_s1 = D_800E66A8[D_800E65F8].unk0;
 
 	if (temp_v0 & 0x200) {
@@ -4429,7 +4429,7 @@ void func_8007978C_16184C(void) {
 		temp_v0_2->unk18 -= 1;
 		temp_v0_2 = (Unk800E65BC *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A464C_18C70C, D_800E65F8, temp_v0_2->unk18, temp_v0_2->unk1A);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x100) {
@@ -4438,7 +4438,7 @@ void func_8007978C_16184C(void) {
 		temp_v0_2->unk18 += 1;
 		temp_v0_2 = (Unk800E65BC *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4668_18C728, D_800E65F8, temp_v0_2->unk18, temp_v0_2->unk1A);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x800) {
@@ -4447,7 +4447,7 @@ void func_8007978C_16184C(void) {
 		temp_v0_2->unk1A += 1;
 		temp_v0_2 = (Unk800E65BC *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4684_18C744, D_800E65F8, temp_v0_2->unk18, temp_v0_2->unk1A);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x400) {
@@ -4469,7 +4469,7 @@ void func_80079954_161A14(void) {
 		osSyncPrintf(&D_800A46BC_18C77C);
 	}
 
-	temp_v0 = D_8004758E;
+	temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	temp_s1 = D_800E66A8[D_800E65F8].unk0;
 
 	if (temp_v0 & 0x200) {
@@ -4478,7 +4478,7 @@ void func_80079954_161A14(void) {
 		temp_v0_2->unk3A -= 1;
 		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A46E4_18C7A4, D_800E65F8, temp_v0_2->unk3A, temp_v0_2->unk3B);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x100) {
@@ -4487,7 +4487,7 @@ void func_80079954_161A14(void) {
 		temp_v0_2->unk3A += 1;
 		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4704_18C7C4, D_800E65F8, temp_v0_2->unk3A, temp_v0_2->unk3B);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x800) {
@@ -4496,7 +4496,7 @@ void func_80079954_161A14(void) {
 		temp_v0_2->unk3B += 1;
 		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4724_18C7E4, D_800E65F8, temp_v0_2->unk3A, temp_v0_2->unk3B);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x400) {
@@ -4505,7 +4505,7 @@ void func_80079954_161A14(void) {
 		temp_v0_2->unk3B -= 1;
 		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4744_18C804, D_800E65F8, temp_v0_2->unk3A, temp_v0_2->unk3B);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 2) {
@@ -4514,7 +4514,7 @@ void func_80079954_161A14(void) {
 		temp_v0_2->unk36 -= 1;
 		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4764_18C824, D_800E65F8, temp_v0_2->unk36, temp_v0_2->unk38);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 1) {
@@ -4523,7 +4523,7 @@ void func_80079954_161A14(void) {
 		temp_v0_2->unk36 += 1;
 		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4784_18C844, D_800E65F8, temp_v0_2->unk36, temp_v0_2->unk38);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 8) {
@@ -4532,7 +4532,7 @@ void func_80079954_161A14(void) {
 		temp_v0_2->unk38 += 1;
 		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A47A4_18C864, D_800E65F8, temp_v0_2->unk36, temp_v0_2->unk38);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 4) {
@@ -4563,7 +4563,7 @@ void func_80079C4C_161D0C(void) {
 		Unk800768B8Obj *temp_v0_3;
 
 		func_8000345C_405C(0x1000);
-		temp_v0 = D_8004758E;
+		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 
 		if (temp_v0 & 0x1000) {
 			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
@@ -4571,7 +4571,7 @@ void func_80079C4C_161D0C(void) {
 			temp_v0_3 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
 			temp_v0_3->unk32 = 0;
 			osSyncPrintf(&D_800A4800_18C8C0, D_800E65F8);
-			temp_v0 = D_8004758E;
+			temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
 		if (temp_v0 & 0x200) {
@@ -4579,7 +4579,7 @@ void func_80079C4C_161D0C(void) {
 			temp_v0_2->unk34 -= 1;
 			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
 			osSyncPrintf(&D_800A4814_18C8D4, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
-			temp_v0 = D_8004758E;
+			temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
 		if (temp_v0 & 0x100) {
@@ -4587,7 +4587,7 @@ void func_80079C4C_161D0C(void) {
 			temp_v0_2->unk34 += 1;
 			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
 			osSyncPrintf(&D_800A4830_18C8F0, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
-			temp_v0 = D_8004758E;
+			temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
 		if (temp_v0 & 0x800) {
@@ -4595,7 +4595,7 @@ void func_80079C4C_161D0C(void) {
 			temp_v0_2->unk32 += 1;
 			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
 			osSyncPrintf(&D_800A484C_18C90C, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
-			temp_v0 = D_8004758E;
+			temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
 		if (temp_v0 & 0x400) {
@@ -4626,42 +4626,42 @@ void func_80079E50_161F10(void) {
 
 	temp_v0 = &D_800E66A8[D_800E65F8];
 	if (temp_v0->unk2E & 1) {
-		temp_v1 = D_8004758E;
+		temp_v1 = currentControllerStates[CONTROLLER_TWO].button;
 		temp_s0 = temp_v0->unk0;
 
 		if (temp_v1 & 8) {
 			var_s2 = 1;
 			D_800E65BC[temp_s0].unk10 += 1;
 			osSyncPrintf(&D_800A48AC_18C96C, D_800E65F8, temp_s0, D_800E65BC[temp_s0].unk10);
-			temp_v1 = D_8004758E;
+			temp_v1 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
 		if (temp_v1 & 4) {
 			var_s2 = 1;
 			D_800E65BC[temp_s0].unk10 -= 1;
 			osSyncPrintf(&D_800A48C4_18C984, D_800E65F8, temp_s0, D_800E65BC[temp_s0].unk10);
-			temp_v1 = D_8004758E;
+			temp_v1 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
 		if (temp_v1 & 0x200) {
 			var_s2 = 1;
 			D_800E65BC[temp_s0].unkE += 1;
 			osSyncPrintf(&D_800A48DC_18C99C, D_800E65F8, temp_s0, D_800E65BC[temp_s0].unkE);
-			temp_v1 = D_8004758E;
+			temp_v1 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
 		if (temp_v1 & 0x100) {
 			var_s2 = 1;
 			D_800E65BC[temp_s0].unkE -= 1;
 			osSyncPrintf(&D_800A48F4_18C9B4, D_800E65F8, temp_s0, D_800E65BC[temp_s0].unkE);
-			temp_v1 = D_8004758E;
+			temp_v1 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
 		if (temp_v1 & 0x800) {
 			var_s2 = 1;
 			D_800E65BC[temp_s0].unk12 += 1;
 			osSyncPrintf(&D_800A490C_18C9CC, D_800E65F8, temp_s0, D_800E65BC[temp_s0].unk12);
-			temp_v1 = D_8004758E;
+			temp_v1 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
 		if (temp_v1 & 0x400) {

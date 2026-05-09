@@ -1408,8 +1408,8 @@ void func_80003064_3C64(void) {
 	var_a1 = 3;
 	var_v1 = &D_800475D8[CONTROLLER_FOUR];
 	var_t0 = &D_800475E6;
-	var_v0 = (OSContPad *)&D_8004759A;
-	var_a3 = (OSContPad *)&D_800475A0[CONTROLLER_FOUR];
+	var_v0 = &currentControllerStates[CONTROLLER_FOUR];
+	var_a3 = &D_800475A0[CONTROLLER_FOUR];
 	var_a2 = 0x12;
 	var_t2 = D_800313C8_31FC8 & 8;
 	do {
@@ -1518,17 +1518,17 @@ void func_8000345C_405C(u16 arg0) {
 
 	if (!(D_800313C8 & 8)) {
 		if ((D_800475D8[CONTROLLER_ONE] & arg0) && (previousControllerButtonStates[CONTROLLER_ONE] & arg0)) {
-			D_80047588_W = D_80047588 & ~arg0;
+			currentControllerStates[CONTROLLER_ONE].button &= ~arg0;
 		}
 		temp_v1 = ~arg0;
 		if ((D_800475D8[CONTROLLER_TWO] & arg0) && (previousControllerButtonStates[CONTROLLER_TWO] & arg0)) {
-			D_8004758E &= temp_v1;
+			currentControllerStates[CONTROLLER_TWO].button &= temp_v1;
 		}
 		if ((D_800475D8[CONTROLLER_THREE] & arg0) && (previousControllerButtonStates[CONTROLLER_THREE] & arg0)) {
-			D_80047594 &= temp_v1;
+			currentControllerStates[CONTROLLER_THREE].button &= temp_v1;
 		}
 		if ((D_800475D8[CONTROLLER_FOUR] & arg0) && (previousControllerButtonStates[CONTROLLER_FOUR] & arg0)) {
-			D_8004759A &= temp_v1;
+			currentControllerStates[CONTROLLER_FOUR].button &= temp_v1;
 		}
 		D_800475F8 &= temp_v1;
 	}

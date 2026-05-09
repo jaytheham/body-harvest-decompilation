@@ -663,8 +663,8 @@ void func_8008CF2C_174FEC(void) {
 		}
 	}
 
-	stickX = D_8004758A;
-	if ((ABS(stickX) < 0x14) && (ABS(D_8004758B) < 0x14)) {
+	stickX = currentControllerStates[CONTROLLER_TWO].stick_x;
+	if ((ABS(stickX) < 0x14) && (ABS(currentControllerStates[CONTROLLER_TWO].stick_y) < 0x14)) {
 		D_800FCF20 = 1;
 	}
 
@@ -673,7 +673,7 @@ void func_8008CF2C_174FEC(void) {
 			D_800A4340_18C400--;
 			D_800FCF20 = 0;
 			func_800153D8_15FD8(0xC7);
-			stickX = D_8004758A;
+			stickX = currentControllerStates[CONTROLLER_TWO].stick_x;
 		}
 
 		if ((stickX >= 0x1F) && (D_800A4340_18C400 < 5) && (slots[D_800A4340_18C400 + 1] != 0xF) && (D_800A4348_18C408 == 0)) {
@@ -682,12 +682,12 @@ void func_8008CF2C_174FEC(void) {
 			func_800153D8_15FD8(0xC7);
 		}
 
-		stickY = D_8004758B;
+		stickY = currentControllerStates[CONTROLLER_TWO].stick_y;
 		if ((stickY >= 0x1F) && (D_800A4340_18C400 >= 2) && (slots[D_800A4340_18C400 - 3] != 0xF)) {
 			D_800A4340_18C400 -= 3;
 			D_800FCF20 = 0;
 			func_800153D8_15FD8(0xC7);
-			stickY = D_8004758B;
+			stickY = currentControllerStates[CONTROLLER_TWO].stick_y;
 		}
 
 		if ((stickY < -0x1E) && (D_800A4340_18C400 < 7) && (slots[D_800A4340_18C400 + 3] != 0xF)) {
