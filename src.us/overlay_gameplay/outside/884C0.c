@@ -4573,7 +4573,57 @@ void func_8009335C_A230C(u8 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80093438_A23E8.s")
 
+// CURRENT(2155)
+#ifdef NON_MATCHING
+void func_8009377C_A272C(u8 arg0) {
+	AlienInstance *inst;
+	u8 idx;
+	s8 temp;
+	s16 nextNode;
+	s16 dz;
+	s16 dx;
+	s32 absDz;
+	s32 absDx;
+	s32 dist;
+
+	idx = arg0;
+	inst = &alienInstances[idx];
+	temp = D_8014DD50[inst->unkC].unkC;
+	nextNode = D_8014DD50[temp].unkD;
+
+	func_80086230_951E0(idx, temp, 0x4000);
+	func_800877E8_96798(idx, 0x12C, 0x190);
+
+	dz = inst->unk0 - inst->unk14;
+	dx = inst->unk4 - inst->unk18;
+	absDz = (-dz < dz) ? dz : -dz;
+	absDx = (-dx < dx) ? dx : -dx;
+
+	if (absDx < absDz) {
+		dist = (-dz < dz) ? dz : -dz;
+	} else {
+		dist = (-dx < dx) ? dx : -dx;
+	}
+
+	if (inst->unk4E != 0) {
+		if ((func_80084FE8_93F98(idx, 0x800) != 0) && (dist < 0x3E8) && !(inst->unk20 & 0x8000)) {
+			if (func_800871CC_9617C(idx, 0, 0x28) != 0) {
+				inst->unk4B = 0;
+				inst->unk20 |= 0x8000;
+				inst->unk1E = 0x14;
+			}
+		}
+	}
+
+	func_800A3D00_B2CB0(idx, nextNode, 2, &D_8013CA24_14B9D4);
+
+	if (inst->unk1E != 0) {
+		inst->unk1E--;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8009377C_A272C.s")
+#endif
 
 // https://decomp.me/scratch/PJVa8
 #ifdef NON_MATCHING
