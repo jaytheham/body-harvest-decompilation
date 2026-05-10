@@ -208,6 +208,8 @@ void func_800786EC_8769C(u16* arg0, s32 arg1) {
 	}
 }
 
+void func_80078720_876D0(AlienInstance *alien);
+
 // https://decomp.me/scratch/S6kQ4
 #ifdef NON_MATCHING
 void func_80078720_876D0(AlienInstance *alien) {
@@ -346,7 +348,32 @@ void func_80078F5C_87F0C(s16 arg0, s16 arg1, u16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078FE0_87F90.s")
 
+#ifdef NON_MATCHING
+// CURRENT(2276)
+s32 func_800792E0_88290(u8 *arg0, s32 arg1) {
+	s32 sp44;
+	s32 sp3C;
+	s16 sp34;
+
+	sp44 = ((Unk80259D90*)arg0)->unk22;
+	sp34 = coss(arg1);
+	sp3C = 0x4000 - func_80003824_4424(100.0f, (f32)((func_800B84D0_C7480((s16)(s32)((((f64)(f32)sp34 / 32768.0) * 100.0) + (f64)((Unk80259D90*)arg0)->unk20), (s16)(s32)((((f64)(f32)sins(arg1 & 0xFFFF) / 32768.0) * 100.0) + (f64)((Unk80259D90*)arg0)->unk24)) >> 8) - sp44));
+
+	sp44 = ((Unk80259D90*)arg0)->unk42;
+	sp34 = coss(arg1 & 0xFFFF);
+	sp44 = 0x4000 - func_80003824_4424(100.0f, (f32)((func_800B84D0_C7480((s16)(s32)((((f64)(f32)sp34 / 32768.0) * 100.0) + (f64)((Unk80259D90*)arg0)->unk40), (s16)(s32)((((f64)(f32)sins(arg1 & 0xFFFF) / 32768.0) * 100.0) + (f64)((Unk80259D90*)arg0)->unk44)) >> 8) - sp44));
+
+	if (sp3C >= sp44) {
+		sp3C = sp44;
+	}
+
+	func_80076918_858C8(((Unk80259D90*)arg0) - D_80259D90, arg1, sp3C, 3);
+	func_80078720_876D0((AlienInstance*)arg0);
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800792E0_88290.s")
+#endif
 
 s32 func_800794F8_884A8(s32 arg0, s32 arg1) {
 	return 0;
