@@ -1283,7 +1283,54 @@ void func_8007EE24_8DDD4(u8 arg0) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007EE98_8DE48.s")
+void func_8007EE98_8DE48(AlienInstance *arg0, AlienInstance *arg1) {
+	s32 dx;
+	s32 dy;
+	s32 dz;
+	s32 dist;
+	s32 combinedSize;
+	f32 scale;
+	f32 pushX;
+	f32 pushY;
+	f32 pushZ;
+	AlienSpec *spec0;
+	AlienSpec *spec1;
+
+	if (((s8 *)arg0)[0xD] == -2) {
+		spec0 = (AlienSpec *)&vehicleSpecs[arg0->specIndex];
+	} else {
+		spec0 = &alienSpecs[arg0->specIndex];
+	}
+
+	if (((s8 *)arg1)[0xD] == -2) {
+		spec1 = (AlienSpec *)&vehicleSpecs[arg1->specIndex];
+	} else {
+		spec1 = &alienSpecs[arg1->specIndex];
+	}
+
+	combinedSize = spec0->unkC + spec1->unkC;
+	dx = arg0->unk0 - arg1->unk0;
+	dy = arg0->unk2 - arg1->unk2;
+	dz = arg0->unk4 - arg1->unk4;
+
+	dist = (s32)sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)));
+	if (dist == 0) {
+		dist = 1;
+	}
+
+	scale = (f32)combinedSize / (f32)(dist * 2);
+	pushX = (f32)dx * scale;
+	pushY = (f32)dy * scale;
+	pushZ = (f32)dz * scale;
+
+	arg0->unk0 = (s16)(s32)((f32)arg0->unk0 + pushX);
+	arg0->unk2 = (s16)(s32)((f32)arg0->unk2 + pushY);
+	arg0->unk4 = (s16)(s32)((f32)arg0->unk4 + pushZ);
+
+	arg1->unk0 = (s16)(s32)((f32)arg1->unk0 - pushX);
+	arg1->unk2 = (s16)(s32)((f32)arg1->unk2 - pushY);
+	arg1->unk4 = (s16)(s32)((f32)arg1->unk4 - pushZ);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007F0E8_8E098.s")
 
