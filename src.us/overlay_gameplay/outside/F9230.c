@@ -1273,7 +1273,7 @@ void func_800F0234_FF1E4(void) {
 }
 
 s32 func_800F026C_FF21C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-	s32 temp_v0;
+	int temp_v0;
 	s32 temp_v1;
 
 	temp_v0 = arg0 - arg2;
@@ -2078,6 +2078,7 @@ s16 func_800FAB9C_109B4C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	f32 var_f0;
 	s32 temp_v1;
 	s32 temp_a0;
+	f32 sp30;
 
 	sp1C = func_800B84D0_C7480(arg0, arg1) >> 8;
 	temp_v1 = arg2 - arg0;
@@ -2954,7 +2955,49 @@ void func_80102600_1115B0(VehicleInstance *arg0, s16 arg1, f32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80102600_1115B0.s")
 #endif
 
+// CURRENT(202)
+#ifdef NON_MATCHING
+void func_801027E8_111798(VehicleInstance *arg0, f32 arg1, f32 arg2, f32 arg3) {
+	f32 sp38;
+	f32 sp34;
+	f32 sp30;
+	f32 sp2C;
+	f32 sp28;
+	f32 temp_f14;
+	f32 temp_f2;
+	s32 temp_v0;
+	s16 temp;
+
+	temp = coss((u16)arg0->unkE);
+	sp38 = (f32)((((f64)(f32)coss((u16)arg0->unk10) / 32768.0) * ((f64)(f32)temp / 32768.0) * (f64)arg0->unk58) + (f64)arg1);
+	temp = sins((u16)arg0->unkE);
+	sp34 = (f32)((((f64)(f32)coss((u16)arg0->unk10) / 32768.0) * ((f64)(f32)temp / 32768.0) * (f64)arg0->unk58) + (f64)arg3);
+	temp_f2 = (f32)((((f64)(f32)sins((u16)arg0->unk10) / 32768.0) * (f64)arg0->unk58) + (f64)arg2);
+
+	temp_f14 = (sp38 * sp38) + (sp34 * sp34);
+	sp30 = temp_f2;
+	sp28 = sqrtf((temp_f2 * temp_f2) + temp_f14);
+	sp2C = sqrtf(temp_f14);
+
+	arg0->unkE = func_80003824_4424(sp38, sp34);
+	arg0->unk10 = func_80003824_4424(sp2C, sp30);
+	func_800FB430_10A3E0(arg0, sp28);
+
+	temp_v0 = func_800F9C50_108C00(arg0->unkE, arg0->unk6);
+	if ((temp_v0 >= 0x4001) || (temp_v0 < -0x4000)) {
+		arg0->unkE += 0x8000;
+		func_800FB430_10A3E0(arg0, -arg0->unk12);
+	}
+
+	if (arg0 == D_80052B34) {
+		D_80157A2C = func_80003824_4424(arg1, arg3);
+	}
+
+	arg0->unk20 |= 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801027E8_111798.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80102A0C_1119BC.s")
 
