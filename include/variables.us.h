@@ -2497,6 +2497,8 @@ extern char D_801438DC_15288C;
 extern char D_80143ED0_152E80;
 extern char D_80143EF0_152EA0;
 extern char D_80143F58_152F08;
+extern char D_80143F7C_152F2C;
+extern char D_80143F94_152F44;
 extern char D_80143FA4_152F54;
 extern f32 D_80144020_152FD0;
 extern f64 D_80144028_152FD8;

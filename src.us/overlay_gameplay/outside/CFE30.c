@@ -3778,7 +3778,69 @@ void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 }
 
 // Remove shield (wtf is a shield?)
+// CURRENT(4465)
+#ifdef NON_MATCHING
+void func_800E5E3C_F4DEC(u8 arg0, u8 arg1) {
+	s16 var_s2;
+	s16 var_v0;
+	s16 temp_a1_2;
+	s16 temp_a2_2;
+	s32 var_a3;
+	u8 temp_a1;
+	u8 temp_v0;
+	Unk80152CA0Entry *temp_v1;
+
+	osSyncPrintf(&D_80143F7C_152F2C, (s32) arg1);
+	temp_a2_2 = D_80152C96;
+	var_s2 = 0;
+	var_a3 = arg0;
+
+	if (temp_a2_2 >= 0) {
+		do {
+			temp_v1 = &D_80152CA0[var_s2];
+			temp_v0 = temp_v1->unk1;
+			if (var_a3 == temp_v0) {
+				temp_a1 = temp_v1->unk0;
+				if (arg1 == temp_a1) {
+					if (temp_v0 == 2) {
+						vehicleInstances[temp_a1].unk20 &= ~0x80;
+					} else if (temp_v0 == 1) {
+						u32 temp_v1_2;
+						u32 temp_a0;
+
+						temp_v1_2 = buildingInstances[temp_a1].unk8;
+						temp_a0 = temp_v1_2 >> 0xC;
+						buildingInstances[temp_a1].unk8 = ((((temp_a0 & ~0x1000) ^ temp_a0) << 0xC) ^ temp_v1_2);
+					}
+
+					temp_a1_2 = temp_a2_2 - 1;
+					var_v0 = var_s2;
+					if (var_s2 < temp_a1_2) {
+						do {
+							temp_v1 = &D_80152CA0[var_v0];
+							temp_v1->unk0 = (temp_v1 + 1)->unk0;
+							temp_v1->unk1 = (temp_v1 + 1)->unk1;
+							temp_v1->unk2 = (temp_v1 + 1)->unk2;
+							var_v0 += 1;
+						} while (var_v0 < temp_a1_2);
+					}
+
+					D_80152C96 = temp_a1_2;
+					temp_v1 = &D_80152CA0[var_v0];
+					((u8 *)temp_v1)[5] = 0;
+					((u8 *)temp_v1)[3] = 0;
+					osSyncPrintf(&D_80143F94_152F44, (s32) temp_a1_2, (s32) temp_a2_2, var_a3);
+					((u8 *)temp_v1)[4] = 0;
+					temp_a2_2 = D_80152C96;
+				}
+			}
+			var_s2 += 1;
+		} while (temp_a2_2 >= var_s2);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5E3C_F4DEC.s")
+#endif
 
 void func_800E6028_F4FD8(u8 arg0, u8 arg1) {
 	s16 i;
