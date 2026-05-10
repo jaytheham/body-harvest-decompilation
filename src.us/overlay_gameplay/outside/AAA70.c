@@ -192,7 +192,74 @@ void func_8009C4E8_AB498(void) {
 	D_8014F1F8 = -0x10;
 }
 
+// CURRENT(5900)
+#ifdef NON_MATCHING
+void func_8009C4F8_AB4A8(s32 arg0, s32 arg1) {
+	Gfx *dl;
+	volatile s32 x0;
+
+	x0 = arg0 &= 0xFF;
+	arg1 &= 0xFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD900000;
+	dl->words.w1 = (u32) (D_1009C70 + (arg1 << 7)) & 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5900000;
+	dl->words.w1 = 0x07014050;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xE6000000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0x0703F800;
+	dl->words.w0 = 0xF3000000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xE7000000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5800200;
+	dl->words.w1 = 0x00014050;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF2000000;
+	dl->words.w1 = 0x0003C03C;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 =
+		((((arg0 + 0xB) * 4) & 0xFFF) << 0xC) | 0xE4000000 | (((D_80068088 - 0x19) * 4) & 0xFFF);
+	dl->words.w1 = (((arg0 * 4) & 0xFFF) << 0xC) | (((D_80068088 - 0x24) * 4) & 0xFFF);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xB4000000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB3000000;
+	dl->words.w1 = 0x06000600;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xE7000000;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009C4F8_AB4A8.s")
+#endif
 
 // Additional params
 // sp10 Pointer to icon
