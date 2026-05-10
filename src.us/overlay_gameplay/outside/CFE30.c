@@ -2760,21 +2760,7 @@ void func_800DDB18_ECAC8(void) {
 	D_80157531 = 0;
 }
 
-// CURRENT(6868)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DDB60_ECB10.s")
-
-extern char D_80143D6C_152D1C;
-extern char D_80143D7C_152D2C;
-extern char D_80143DA4_152D54;
-extern char D_80143DCC_152D7C;
-extern char D_80143DF4_152DA4;
-extern char D_80143E14_152DC4;
-extern char D_80143E34_152DE4;
-extern char D_80143E50_152E00;
-extern char D_80143E58_152E08;
-extern u8 *D_80157560;
-extern u8 D_80157608;
-extern f32 D_80157610;
 
 void func_800DDD30_ECCE0(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	if (arg0 != 0xFF) {
