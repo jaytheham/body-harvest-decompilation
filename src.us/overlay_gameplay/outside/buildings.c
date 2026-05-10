@@ -1,4 +1,5 @@
 #include <ultra64.h>
+#include <stdarg.h>
 #include "common.h"
 
 u8 D_80140A00_14F9B0[0x14] = {
@@ -1128,7 +1129,44 @@ void func_8011C8E8_12B898(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C8E8_12B898.s")
 #endif
 
+// CURRENT(1476)
+#ifdef NON_MATCHING
+void func_8011C9D8_12B988(s32 arg0, s32 arg1, ...) {
+	s32 assignedTargets[8];
+	s32 i;
+	va_list args;
+	AlienInstance *alien;
+	u8 *alienIdPtr;
+
+	i = 0;
+	if (arg1 > 0) {
+		va_start(args, arg1);
+		for (i = 0; i < arg1; i++) {
+			assignedTargets[i] = va_arg(args, s32);
+		}
+		va_end(args);
+		i = 0;
+	}
+
+	if ((s32) D_8014D507 > 0) {
+		alienIdPtr = D_8014D408;
+		do {
+			alien = &alienInstances[*alienIdPtr];
+			if (arg0 == alien->unk3D) {
+				alien->unk38 = assignedTargets[i % arg1];
+				func_8011B3F0_12A3A0(alien->unk38, &alien->unk14, &alien->unk16, &alien->unk18);
+				alien->unk12 = 0xA0;
+				alien->unk20 &= -0x1E1;
+				alien->unk20 |= 0x1100;
+			}
+			i++;
+			alienIdPtr++;
+		} while (i < (s32) D_8014D507);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C9D8_12B988.s")
+#endif
 
 s32 func_8011CBD8_12BB88(u8 arg0, u8 arg1) {
 	return (s32) ((arg0 * 0x4BAD) + (arg1 * 0xD)) % 6500;
