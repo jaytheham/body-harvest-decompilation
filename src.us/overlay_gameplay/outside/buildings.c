@@ -2307,7 +2307,63 @@ s32 func_80127C08_136BB8(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80127C08_136BB8.s")
 #endif
 
+// CURRENT(120)
+#ifdef NON_MATCHING
+void func_80127D88_136D38(BuildingInstance *arg0, VehicleInstance *arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7) {
+	u8 sp3B[5];
+	u8 pad[8];
+	s32 varT0;
+	s32 varV0;
+
+	D_8015F9D0.unkC = 0;
+	D_8015F9D0.unk8 = 0xA;
+	D_8015F9D0.unk0 = arg5;
+	D_8015F9D0.unk2 = arg6;
+	D_8015F9D0.unk4 = arg7;
+
+	if (func_800B1028_BFFD8(arg2, arg3, arg4, &arg5, &arg6, &arg7, &sp3B[-5]) != 0) {
+		D_8015F9D0.unk8 = 9;
+		D_8015F9D0.unk0 = arg5;
+		D_8015F9D0.unk2 = arg6;
+		D_8015F9D0.unk4 = arg7;
+		D_8015F9D0.unk10 = sp3B[-5];
+	}
+
+	D_8015F9D0.unk0 = arg5;
+	D_8015F9D0.unk2 = arg6;
+	D_8015F9D0.unk4 = arg7;
+	if (((arg5 - arg2) | (arg6 - arg3) | (arg7 - arg4)) == 0) {
+		D_8015F9D0.unk8 = 0xB;
+		return;
+	}
+
+	if ((((s32) arg0->unk8 >> 8) & 1) == 0) {
+		varT0 = 1;
+	} else {
+		varT0 = 0;
+	}
+
+	if (arg1->unkC == -2) {
+		varV0 = 5;
+	} else {
+		varV0 = 7;
+	}
+
+	func_80126268_135218(arg2, arg3, arg4, &arg5, &arg6, &arg7, varT0, varV0);
+
+	D_8015F9D0.unk0 = arg5;
+	D_8015F9D0.unk2 = arg6;
+	D_8015F9D0.unk4 = arg7;
+	if (((arg5 - arg2) | (arg6 - arg3) | (arg7 - arg4)) == 0) {
+		D_8015F9D0.unk8 = 0xB;
+		return;
+	}
+
+	func_80126B80_135B30(arg1, arg2, arg3, arg4, &arg5, &arg6, &arg7);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80127D88_136D38.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80127F9C_136F4C.s")
 
