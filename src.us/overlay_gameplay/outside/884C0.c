@@ -1183,7 +1183,76 @@ end:
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E734_8D6E4.s")
 
+// CURRENT(7368)
+#ifdef NON_MATCHING
+void func_8007E980_8D930(AlienInstance *arg0, s16 arg1, s16 arg2) {
+	s16 diffA;
+	s16 diffB;
+	s16 absA;
+	s16 absB;
+	s16 chosen;
+	s16 chosenDiff;
+	s16 absDiff;
+	s16 divisor;
+
+	if ((arg0->specIndex < 3) || (arg0->specIndex == 0x20)) {
+		arg0->unkE = (arg1 + arg2) / 2;
+		if (arg2 >= arg1) {
+			arg0->unkE += 0x8000;
+		}
+		arg0->unk6 = arg0->unkE;
+		return;
+	}
+
+	diffA = arg0->unkE - arg1;
+	absA = -diffA;
+	if (absA < diffA) {
+		absA = diffA;
+	}
+
+	diffB = arg2 - arg0->unkE;
+	absB = -diffB;
+	if (absB < diffB) {
+		absB = diffB;
+	}
+
+	chosen = arg2;
+	chosenDiff = diffB;
+	if (absA < absB) {
+		chosen = arg1;
+		chosenDiff = diffA;
+	}
+
+	if (chosenDiff < 0) {
+		func_8007E734_8D6E4(arg0, chosen);
+		arg0->unk12 = 0;
+	} else {
+		arg0->unk12 = 0;
+	}
+
+	if (chosen == arg1) {
+		arg0->unk2A = chosen - 0x4800;
+	} else {
+		arg0->unk2A = chosen + 0x4800;
+	}
+
+	arg0->unk47 |= 2;
+
+	divisor = alienSpecs[arg0->specIndex].unk42;
+	if (divisor != 0) {
+		diffA = arg0->unk2A - arg0->unkE;
+		absDiff = -diffA;
+		if (absDiff < diffA) {
+			absDiff = diffA;
+		}
+		arg0->unk34 = (absDiff / divisor) + 0x1E;
+	} else {
+		arg0->unk34 = 1;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E980_8D930.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007EB74_8DB24.s")
 
