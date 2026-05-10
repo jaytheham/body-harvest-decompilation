@@ -1924,7 +1924,43 @@ s16 func_801225C4_131574(Unk8015F760 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801226F8_1316A8.s")
 
+// CURRENT(1561)
+#ifdef NON_MATCHING
+void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5) {
+	s16 sp64[3];
+	u16 randX;
+	u16 randZ;
+	s16 halfSpan;
+	s32 height;
+	s32 count;
+	BuildingInstance *building;
+
+	sp64[0] = arg0;
+	sp64[2] = arg2;
+	height = func_800B84D0_C7480(arg0, arg2) >> 8;
+	if (arg1 < (s16) height) {
+		sp64[1] = (s16) height;
+	} else {
+		sp64[1] = arg1;
+	}
+
+	if (arg4 != 0) {
+		count = arg4 - 1;
+		halfSpan = arg3 >> 1;
+		building = (BuildingInstance *) (D_80145BE0_154B90 + (((arg5 * 4) - arg5) << 3));
+		do {
+			randX = func_800038E0_44E0();
+			randZ = func_800038E0_44E0();
+			func_801226F8_1316A8(sp64, building, 0, 0, 0,
+				(f32) ((randX % arg3) - halfSpan),
+				(f32) (((randZ % arg3) + arg3) >> 2),
+				(f32) ((func_800038E0_44E0() % arg3) - halfSpan));
+		} while (count-- != 0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801236F0_1326A0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801238DC_13288C.s")
 
