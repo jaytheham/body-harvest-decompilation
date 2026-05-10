@@ -3138,7 +3138,93 @@ void func_8008741C_963CC(u8 arg0, s16 arg1) {
 	}
 }
 
+// CURRENT(4930)
+#ifdef NON_MATCHING
+s32 func_8008751C_964CC(u8 arg0, s32 arg1, s32 arg2)
+{
+	AlienInstance *inst;
+	s32 tempA0;
+	s32 tempA3;
+	s32 tempV0;
+	s32 tempV1;
+	s32 varA1;
+	s32 varA2;
+	s16 specVal;
+	s32 varV0;
+	s32 flags;
+	u8 specIndex;
+
+	inst = &alienInstances[arg0];
+	specIndex = inst->specIndex;
+	tempV0 = inst->unk0 - inst->unk14;
+	tempV0 = (s16)tempV0;
+	tempA3 = -tempV0;
+	tempV1 = inst->unk4 - inst->unk18;
+	tempV1 = (s16)tempV1;
+	specVal = D_802566C0[specIndex * 0x34];
+
+	if (tempA3 < tempV0) {
+		varA2 = tempV0;
+	} else {
+		varA2 = tempA3;
+	}
+
+	tempA0 = -tempV1;
+	if (tempA0 < tempV1) {
+		varA1 = tempV1;
+	} else {
+		varA1 = tempA0;
+	}
+
+	if (varA1 < varA2) {
+		if (tempA3 < tempV0) {
+			varV0 = (s16)tempV0;
+		} else {
+			varV0 = (s16)tempA3;
+		}
+	} else {
+		varA1 = tempA0;
+		if (tempA0 < tempV1) {
+			varA1 = tempV1;
+		}
+		varV0 = (s16)varA1;
+	}
+
+	flags = inst->unk20;
+	if (flags & 0x100) {
+		if (flags & 0x40) {
+			if ((s16)arg2 < varV0) {
+				specVal = -specVal;
+			} else if ((s16)arg1 < varV0) {
+				specVal = 0;
+			}
+		} else if (varV0 < (s16)arg1) {
+			specVal = -specVal;
+		} else if (varV0 < (s16)arg2) {
+			specVal = 0;
+		}
+	}
+
+	if (specVal == 0 && !(inst->unk47 & 1)) {
+		inst->unk3A = inst->unk3A - 1;
+	} else {
+		inst->unk3A = 0xFF;
+	}
+
+	if ((inst->unk3A <= 0) && ((inst->unk47 & 1) == 0)) {
+		func_800847D0_93780(arg0);
+	}
+
+	func_8008741C_963CC(arg0, specVal);
+
+	if (specVal == 0) {
+		return 1;
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008751C_964CC.s")
+#endif
 
 void func_80087720_966D0(u8 arg0, s32 arg1)
 {
@@ -3223,7 +3309,6 @@ s32 func_800879A4_96954(u8 arg0, s16 arg1, u8 arg2)
 	return 0;
   }
 }
-
 void func_80087AAC_96A5C(u8 arg0) {
 	if (!(alienInstances[arg0].unk20 & 0x300000)) {
 		alienInstances[arg0].unk12 = 0;
