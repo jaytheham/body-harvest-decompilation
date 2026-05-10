@@ -1422,7 +1422,74 @@ void func_800BD2F4_CC2A4(void)
 // DisplayGates - A gate is a portal through the shield wall
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD360_CC310.s")
 
+// CURRENT(1785)
+#ifdef NON_MATCHING
+s32 func_800BD688_CC638(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
+	s16 i;
+	s16 dist;
+	s16 tempDist;
+	s32 x;
+	s32 y;
+	s32 z;
+	s32 absX;
+	s32 absY;
+	s32 absZ;
+	s32 height;
+	u32 distSq;
+
+	height = func_800B84D0_C7480(arg0, arg2) >> 8;
+	if (height < D_80222A70) {
+		height = D_80222A70;
+	}
+
+	if (arg3 != D_80052B34) {
+		return 1;
+	}
+
+	for (i = 0; i < 8; i++) {
+		if (D_8003E0FC[currentLevel - 1][i].unk6 != 0x50) {
+			continue;
+		}
+
+		x = (D_8003E0FC[currentLevel - 1][i].unk0 << 8) - arg0;
+		absX = -x;
+		if (x >= 0) {
+			absX = x;
+		}
+
+		z = (D_8003E0FC[currentLevel - 1][i].unk4 << 8) - arg2;
+		absZ = -z;
+		if (z >= 0) {
+			absZ = z;
+		}
+
+		y = D_8003E0FC[currentLevel - 1][i].unk2 - arg1;
+		absY = -y;
+		if (y >= 0) {
+			absY = y;
+		}
+
+		distSq = (absX * absX) + (absZ * absZ) + (absY * absY);
+		dist = sqrtf((f32)distSq);
+		tempDist = dist;
+		if ((u16)tempDist < 0xFA) {
+			return 0;
+		}
+
+		if ((u16)tempDist >= 0x1F4) {
+			continue;
+		}
+
+		if ((height + 0xC8) < D_8003E0FC[currentLevel - 1][i].unk2) {
+			return 0;
+		}
+	}
+
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD688_CC638.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD8B8_CC868.s")
 
