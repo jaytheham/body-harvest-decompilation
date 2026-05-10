@@ -1962,7 +1962,66 @@ void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801236F0_1326A0.s")
 #endif
 
+// CURRENT(383)
+#ifdef NON_MATCHING
+void func_801238DC_13288C(s16 arg0) {
+	Unk8015F760 *entry;
+	BuildingInstance *building;
+	s16 linkIndex;
+	s32 buildingIndex;
+
+	if (D_8015F9E4 == 0) {
+		return;
+	}
+
+	entry = &D_8015EB90[arg0];
+	linkIndex = *(s16 *)((u8 *)entry + 0x2A);
+	if (linkIndex != -1) {
+		*((u8 *)&D_8015F790[linkIndex] + 0x1F) |= 1;
+	}
+
+	buildingIndex = entry->unk20;
+	if (D_801591A8 == 0) {
+		building = (BuildingInstance *)(D_80145BE0_154B90 + (buildingIndex * 0x18));
+
+		if ((((s32)building->unk8 >> 8) & 0x1000) || (buildingIndex == 0x5D)) {
+			func_800C3288_D2238(*((u8 *)entry + 0x2E));
+		}
+
+		if ((((s32)building->unk8 >> 8) << 9) < 0) {
+			func_800D9C60_E8C10(*(s16 *)((u8 *)entry + 0x2C));
+		}
+
+		switch (buildingIndex - 0x5C) {
+			case 5:
+				func_800D76A8_E6658(*(s16 *)((u8 *)entry + 0x2C));
+				break;
+			case 4:
+			case 7:
+				func_800D7FB4_E6F64(*(s16 *)((u8 *)entry + 0x2C));
+				break;
+			case 0:
+				func_800D4A78_E3A28(*(s16 *)((u8 *)entry + 0x2C));
+				break;
+			case 2:
+			case 0x13:
+				func_800D5588_E4538(*(s16 *)((u8 *)entry + 0x2C));
+				break;
+			case 3:
+			case 0xA:
+			case 0xC:
+				func_800D9C60_E8C10(*(s16 *)((u8 *)entry + 0x2C));
+				break;
+		}
+	}
+
+	*entry = D_8015EB90[--D_8015F9E4];
+	linkIndex = *(s16 *)((u8 *)entry + 0x2A);
+	D_8015F790[linkIndex].unk20 = entry;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801238DC_13288C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80123AC4_132A74.s")
 
@@ -2463,7 +2522,65 @@ void func_8012D84C_13C7FC()
 // debug_drawInteractionBoxes
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012D884_13C834.s")
 
+// CURRENT(20)
+#ifdef NON_MATCHING
+s32 func_8012DDA8_13CD58(s16 arg0, s16 arg1, s16 arg2, s16 arg3, void *arg4, s32 arg5, s32 *arg6) {
+	Unk8015FAD0 *entry;
+	s32 i;
+	s16 x;
+	s16 y;
+	s16 z;
+	s16 yWithOffset;
+	s32 tempFlags;
+	s32 flags;
+
+	x = arg0;
+	y = arg1;
+	z = arg2;
+	flags = 0;
+	entry = &D_8015FAD0[0x18];
+	i = 0x18;
+	do {
+		if (entry->unk2C != 0) {
+			if (x >= ((entry->unk0 >> 0x10) - entry->unk18) && ((entry->unk0 >> 0x10) + entry->unk18) >= x) {
+				yWithOffset = y + arg3;
+				if (yWithOffset >= ((entry->unk4 >> 0x10) - entry->unk1C) && ((entry->unk4 >> 0x10) + entry->unk1C) >= y) {
+					if (z >= ((entry->unk8 >> 0x10) - entry->unk1A) && ((entry->unk8 >> 0x10) + entry->unk1A) >= z) {
+						if (arg5 == 0 && entry->unk20 != NULL) {
+							entry->unk20(arg4, (s16)i);
+						}
+
+						if ((entry->unk2C == 5) || (entry->unk2C == 7) || (entry->unk2C == 0xB)) {
+							flags |= 1;
+						}
+
+						if (entry->unk2C == 6) {
+							s32 topY;
+
+							if ((tempFlags = (flags | 2), topY = (entry->unk4 >> 0x10) + entry->unk1C, yWithOffset >= topY)) {
+								flags = tempFlags;
+								if (*arg6 < topY) {
+									*arg6 = topY;
+								}
+							}
+						}
+
+						if (entry->unk2C == 7) {
+							flags |= 0xC;
+						}
+					}
+				}
+			}
+		}
+
+		entry--;
+	} while (i--);
+
+	return flags;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012DDA8_13CD58.s")
+#endif
 
 s32 func_8012DF90_13CF40(Unk8015FAD0 *arg0, void *arg1, s32 arg2) {
 
