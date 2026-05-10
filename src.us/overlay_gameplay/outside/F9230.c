@@ -2844,7 +2844,42 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801022F4_1112A4.s")
 
+// CURRENT(887)
+#ifdef NON_MATCHING
+void func_80102600_1115B0(VehicleInstance *arg0, s16 arg1, f32 arg2) {
+	s16 temp;
+	s32 diff;
+	f64 temp_f0;
+	f32 temp_f20;
+	f32 temp_f22;
+
+	temp = coss((u16)arg0->unkE);
+	temp_f0 = (f64)arg2;
+	temp_f22 = (f32)((((f64)(f32)coss((u16)arg1) / 32768.0) * temp_f0) + (((f64)(f32)temp / 32768.0) * (f64)arg0->unk58));
+	temp = sins((u16)arg0->unkE);
+	temp_f20 = (f32)((((f64)(f32)sins((u16)arg1) / 32768.0) * temp_f0) + (((f64)(f32)temp / 32768.0) * (f64)arg0->unk58));
+
+	func_800FB430_10A3E0(arg0, sqrtf((temp_f22 * temp_f22) + (temp_f20 * temp_f20)));
+	arg0->unkE = func_80003824_4424(temp_f22, temp_f20);
+
+	arg0->unk30 += (f32)(((s16)(s32)temp_f22) >> 1);
+	arg0->unk38 += (f32)(((s16)(s32)temp_f20) >> 1);
+
+	diff = func_800F9C50_108C00(arg0->unkE, arg0->unk6);
+	if ((diff >= 0x4001) || (diff < -0x4000)) {
+		arg0->unkE += 0x8000;
+		func_800FB430_10A3E0(arg0, -arg0->unk58);
+	}
+
+	if (arg0 == D_80052B34) {
+		D_80157A2C = arg1;
+	}
+
+	arg0->unk20 |= 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80102600_1115B0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801027E8_111798.s")
 
