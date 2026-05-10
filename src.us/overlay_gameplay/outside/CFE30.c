@@ -1225,7 +1225,62 @@ void func_800CCAD4_DBA84(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
+// CURRENT(2094)
+#ifdef NON_MATCHING
+void func_800CCB60_DBB10(void) {
+	s16 unitId;
+	s16 nextUnitId;
+	Unk80154318Entry *entry;
+	Unk80154318Sub *sub;
+	s32 timer;
+
+	unitId = D_80154246;
+	if ((unitId == -5) || (unitId == -6)) {
+		func_800C1418_D03C8(6, 1);
+		return;
+	}
+
+	if ((unitId != -5) && (unitId != -6)) {
+		for (;;) {
+			entry = &D_80154318[unitId];
+			timer = entry->unk15 - 1;
+			entry->unk15 = timer;
+
+			if ((timer & 0xFF) == 0) {
+				nextUnitId = entry->unk4;
+				func_800C1A4C_D09FC(unitId, 6, 1);
+				unitId = nextUnitId;
+			} else {
+				sub = (Unk80154318Sub *)&entry->unk8;
+				if ((entry->unk12 & 0x80) == 1) {
+					sub->unk0 += D_80156EE4.unk0;
+					sub->unk2 += D_80156EE4.unk2;
+					sub->unk4 += D_80156EE4.unk4;
+				}
+
+				sub->unk6 = (func_800038E0_44E0() % 85) + 0xAA;
+				sub->unk7 = (func_800038E0_44E0() % 85) + 0xAA;
+				sub->unk8 = -1;
+				sub->unkC++;
+				if (sub->unkC >= 8) {
+					sub->unkC = 0;
+				}
+
+				unitId = entry->unk4;
+			}
+
+			if (unitId == -5) {
+				break;
+			}
+			if (unitId == -6) {
+				break;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CCB60_DBB10.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CCD54_DBD04.s")
 
