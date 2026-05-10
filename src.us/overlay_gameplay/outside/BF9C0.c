@@ -1244,7 +1244,98 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, u8 arg2, u8 arg3)
 // DrawVtxBufferWater
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BB3D0_CA380.s")
+s32 func_800BB3D0_CA380(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 *arg4, s16 *arg5, s16 *arg6, s16 *arg7) {
+	s16 temp;
+
+	if (arg2 < arg0) {
+		temp = arg0;
+		arg0 = arg2;
+		arg2 = temp;
+	}
+
+	if (arg3 < arg1) {
+		temp = arg1;
+		arg1 = arg3;
+		arg3 = temp;
+	}
+
+	if (*arg6 < *arg4) {
+		temp = *arg4;
+		*arg4 = *arg6;
+		*arg6 = temp;
+	}
+
+	if (*arg7 < *arg5) {
+		temp = *arg5;
+		*arg5 = *arg7;
+		*arg7 = temp;
+	}
+
+	if (*arg4 == *arg6) {
+		if ((arg0 < *arg4) && (*arg4 < arg2)) {
+			if (arg3 < *arg5) {
+				return 0;
+			}
+
+			if (*arg7 < arg1) {
+				return 0;
+			}
+
+			if (*arg5 < arg1) {
+				*arg5 = arg1;
+			}
+
+			if (arg3 < *arg5) {
+				*arg5 = arg3;
+			}
+
+			if (*arg7 < arg1) {
+				*arg7 = arg1;
+			}
+
+			if (arg3 < *arg7) {
+				*arg7 = arg3;
+			}
+
+			goto success;
+		}
+
+		return 0;
+	}
+
+	if ((arg1 < *arg5) && (*arg5 < arg3)) {
+		if (arg2 < *arg4) {
+			return 0;
+		}
+
+		if (*arg6 < arg0) {
+			return 0;
+		}
+
+		if (*arg4 < arg0) {
+			*arg4 = arg0;
+		}
+
+		if (arg2 < *arg4) {
+			*arg4 = arg2;
+		}
+
+		if (*arg6 < arg0) {
+			*arg6 = arg0;
+		}
+
+		if (arg2 < *arg6) {
+			*arg6 = arg2;
+		}
+
+		goto success;
+	}
+
+	return 0;
+
+success:
+	return 1;
+}
 
 // DrawShieldWalls
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BB5E0_CA590.s")
