@@ -443,6 +443,8 @@ void func_801022F4_1112A4(void *, s16, s16);
 u8 func_800CD1F8_DC1A8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5);
 void func_800CD390_DC340(u8 arg0);
 void func_800F375C_10270C(s8 arg0);
+void func_800F2890_101840(u8 arg0, s32 *arg1, s32 *arg2, u8 *arg3);
+void func_800F2ED8_101E88(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4);
 void func_8007AA0C_899BC(void);
 void func_8007AAEC_89A9C(void);
 void func_8008064C_8F5FC(u8);
