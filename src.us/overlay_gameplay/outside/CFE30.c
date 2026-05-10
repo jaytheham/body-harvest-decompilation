@@ -435,7 +435,59 @@ u8 func_800C1598_D0548(u8 arg0) {
 	return func_800C14D4_D0484(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C15C0_D0570.s")
+void func_800C15C0_D0570(u8 arg0, s32 arg1, s16 arg2, s32 arg3) {
+	Unk80154318Entry *unit;
+	Unk801541F8Entry *entry;
+	s16 i;
+
+	if ((arg2 >= 0) && (arg2 < 0x190)) {
+		unit = &D_80154318[arg2];
+		unit->unk0 = 1;
+		if (arg3 != 0) {
+			unit->unk0 |= 2;
+		}
+		unit->unk1 = arg0;
+		unit->unk2 = 1;
+		unit->unk4 = -5;
+
+		if (arg1 != 0) {
+			entry = &D_801541F8[arg0];
+		} else {
+			entry = &D_80154088[arg0];
+		}
+
+		if (entry->unk4 == 0) {
+			entry->unk6 = arg2;
+			*((s16*) &unit->pad6[0]) = -4;
+		} else {
+			*((s16*) &unit->pad6[0]) = entry->unk8;
+			D_80154318[entry->unk8].unk4 = arg2;
+		}
+
+		entry->unk8 = arg2;
+		entry->unk4++;
+		D_8015430E++;
+		D_80154310 = 0x190;
+
+		for (i = arg2 + 1; i < 0x190; i++) {
+			if (!(D_80154318[i].unk0 & 1)) {
+				D_80154310 = i;
+				break;
+			}
+		}
+
+		if (D_8015430E < 0xFA) {
+			D_80156ED8 = 0;
+		} else if (D_8015430E < 0x15E) {
+			D_80156ED8 = 1;
+		} else {
+			D_80156ED8 = 2;
+		}
+		return;
+	}
+
+	osSyncPrintf(&D_80142FDC_151F8C, arg2, D_80154310, D_8015430E);
+}
 
 s16 func_800C17B4_D0764(u8 arg0, s32 arg1) {
 	s16 var_a2;

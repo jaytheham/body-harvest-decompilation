@@ -2467,6 +2467,7 @@ extern u8 D_80157530;
 extern u8 D_80157531;
 extern f64 D_80144BC8_153B78;
 extern f64 D_80144BD0_153B80;
+extern char D_80142FDC_151F8C[];
 extern u8 D_80157532;
 extern s8 D_80157533;
 extern u8 D_80157534;
