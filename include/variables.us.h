@@ -446,6 +446,7 @@ extern s32 D_8004DC40;
 extern u8 D_8004DC5C;
 extern s16 D_8004DC60;
 extern s16 D_8004DCA8;
+extern s16 D_8004DCBC;
 extern u16 D_8004DC5E;
 extern s32 D_8004DC68[4]; // Callback function pointers
 extern s32 D_8004DC74; /* = D_8004DC68[3] */
