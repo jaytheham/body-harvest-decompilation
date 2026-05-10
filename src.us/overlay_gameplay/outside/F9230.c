@@ -1991,7 +1991,39 @@ s16 func_800FA690_109640(s16 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FA690_109640.s")
 #endif
 
+// CURRENT(3227)
+#ifdef NON_MATCHING
+s16 func_800FA7F0_1097A0(VehicleInstance *arg0, s16 arg1, s32 arg2) {
+	VehicleSpec *spec;
+	s16 h1;
+	s16 h2;
+	f32 xOff;
+	f32 zOff;
+	f64 halfDist;
+	u16 angle;
+
+	angle = arg1;
+	spec = &vehicleSpecs[arg0->unk1A];
+	halfDist = (f64)(arg2 >> 1);
+	xOff = (f32)(((f64)(f32)coss(angle) / 32768.0) * halfDist);
+	zOff = (f32)(((f64)(f32)sins(angle) / 32768.0) * halfDist);
+	h1 = (s16)(func_800B85CC_C757C((s16)(s32)((f32)arg0->unk0 - (xOff * 2.0f)), (s16)(s32)((f32)arg0->unk4 - (zOff * 2.0f))) >> 8);
+	h2 = (s16)(func_800B85CC_C757C((s16)(s32)((f32)arg0->unk0 + xOff), (s16)(s32)((f32)arg0->unk4 + zOff)) >> 8);
+
+	if (!(spec->unk4C & 0x100)) {
+		if (D_80222A70 >= h1) {
+			h1 = (s16)D_80222A70;
+		}
+		if (D_80222A70 >= h2) {
+			h2 = (s16)D_80222A70;
+		}
+	}
+
+	return func_80003824_4424((f32)((f64)arg2 * 1.5), (f32)(h1 - h2));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FA7F0_1097A0.s")
+#endif
 
 // CURRENT(1375)
 #ifdef NON_MATCHING
