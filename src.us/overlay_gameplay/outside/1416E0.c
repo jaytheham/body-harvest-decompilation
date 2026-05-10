@@ -183,6 +183,8 @@ void func_80133934_1428E4(Unk80160080 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80133A54_142A04.s")
 
+// CURRENT(400)
+#ifdef NON_MATCHING
 void func_80133C9C_142C4C(Vec3f *arg0, Vec3f *arg1, void *arg2, s16 arg3, u16 arg4, s32 arg5, s16 arg6) {
     Vec3f sp44;
     f32 sp40;
@@ -222,6 +224,9 @@ void func_80133C9C_142C4C(Vec3f *arg0, Vec3f *arg1, void *arg2, s16 arg3, u16 ar
     arg0->y = arg0->y + arg1->y;
     arg0->z = arg0->z + arg1->z;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80133C9C_142C4C.s")
+#endif
 
 void func_80133E94_142E44(s32 arg0) {
 	if (arg0 >= 0x24) {
