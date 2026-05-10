@@ -1273,7 +1273,63 @@ void func_800CBDE0_DAD90(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CBE98_DAE48.s")
+void func_800CBE98_DAE48(void) {
+	s16 unitId;
+	s16 nextUnitId;
+	Unk80154318Entry *entry;
+	u8 *base;
+	s32 shouldDelete;
+	s32 deletedThisIter;
+	s8 dir;
+
+	unitId = D_8015423A;
+	shouldDelete = 0;
+	if (unitId == -5 || unitId == -6) {
+		func_800C1418_D03C8(5, 1);
+		return;
+	}
+
+	while (unitId != -5 && unitId != -6) {
+		deletedThisIter = 0;
+		entry = &D_80154318[unitId];
+		base = (u8 *)&entry->unk8;
+
+		if (entry->unk14 == 0) {
+			dir = 1;
+			*(s8 *)&base[0xB] = *(s8 *)&base[0xB] + 1;
+			if (*(s8 *)&base[0xB] >= 0x18) {
+				shouldDelete = 1;
+			}
+		} else {
+			dir = -1;
+			*(s8 *)&base[0xB] = *(s8 *)&base[0xB] - 1;
+			if (*(s8 *)&base[0xB] <= 0) {
+				shouldDelete = 1;
+			}
+		}
+
+		if (shouldDelete != 0) {
+			nextUnitId = entry->unk4;
+			func_800C1A4C_D09FC(unitId, 5, 1);
+			unitId = nextUnitId;
+			deletedThisIter = 1;
+		}
+
+		if (*(s8 *)&base[0xB] < 6) {
+			base[9] += dir * 0x28;
+		} else if (*(s8 *)&base[0xB] < 0xC) {
+			base[0xA] += dir * 0x28;
+		} else if (*(s8 *)&base[0xB] < 0x12) {
+			base[9] -= dir * 0x28;
+		} else {
+			base[0xA] -= dir * 0x28;
+		}
+
+		if (deletedThisIter == 0) {
+			unitId = D_80154318[unitId].unk4;
+		}
+	}
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CC090_DB040.s")
 
