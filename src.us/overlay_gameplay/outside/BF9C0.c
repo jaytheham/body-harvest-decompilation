@@ -1494,7 +1494,47 @@ s32 func_800BD688_CC638(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD8B8_CC868.s")
 
 // openCurrentStageGate
+#ifdef NON_MATCHING
+// CURRENT(1115)
+void func_800BDAF4_CCAA4(void) {
+	u8 stage;
+	u8 *gate;
+	s32 gateState;
+	s32 absGateState;
+	s16 x;
+	s16 y;
+	s16 z;
+
+	for (stage = 0; stage < 0x10; stage++) {
+		osSyncPrintf(&D_80142DF0_151DA0, currentLevel, D_80047F94, D_80147F00_156EB0[currentLevel][D_80047F94 - 6]);
+		if (!(D_80147F00_156EB0[currentLevel][D_80047F94 - 6] & (1 << stage))) {
+			continue;
+		}
+
+		osSyncPrintf(&D_80142DFC_151DAC, stage);
+		gate = (u8 *) &D_8003E0FC[currentLevel][stage];
+		gateState = *(s8 *) (gate - 0x4A);
+		if (gateState == 0x50) {
+			continue;
+		}
+
+		absGateState = -gateState;
+		if (absGateState < gateState) {
+			absGateState = gateState;
+		}
+
+		x = *(s16 *) (gate - 0x50) << 8;
+		z = *(s16 *) (gate - 0x4C) << 8;
+		y = *(s16 *) (gate - 0x4E);
+		*(s8 *) (gate - 0x4A) = absGateState + 1;
+		func_800DEE5C_EDE0C(x, y, z, 0x64, 3);
+		func_800DEE5C_EDE0C(x, y, z, 0x32, 3);
+		func_800D05A8_DF558(x, y, z, 0x1F4, 0xC8, 0xC8, 0xFA);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BDAF4_CCAA4.s")
+#endif
 
 void func_800BDD24_CCCD4(u8 arg0)
 {
