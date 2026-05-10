@@ -2760,7 +2760,63 @@ void func_800DDB18_ECAC8(void) {
 	D_80157531 = 0;
 }
 
+// CURRENT(5379)
+#ifdef NON_MATCHING
+u8 func_800DDB60_ECB10(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4) {
+	u8 slot;
+	u8 i;
+	u8 arg3_8;
+	u16 arg4_16;
+	s8 *params;
+	u8 *colorParams;
+	UnkFC8E8Entry *entry;
+
+	arg3_8 = arg3;
+	arg4_16 = arg4;
+
+	if ((D_80157530 >= 0x50) || (arg4_16 == 0)) {
+		return 0xFF;
+	}
+
+	slot = D_80157531;
+	entry = &D_80156EF0[slot];
+	params = (s8 *)&D_8013DFF4_14CFA4[arg3_8 * 8];
+
+	entry->unk0 = arg0;
+	entry->unk2 = arg1;
+	entry->unk4 = arg2;
+	entry->unkC = arg3_8;
+	entry->unkF = 0;
+	entry->unkA = arg4_16;
+	entry->unk10 = params[1];
+	entry->unk11 = params[2];
+	entry->unk12 = params[3];
+
+	if (arg3_8 == 0xE) {
+		entry->unkE = 0;
+	} else {
+		entry->unkE = func_800038E0_44E0() % params[0];
+	}
+
+	colorParams = &D_8013E06C_14D01C[arg3_8 * 4];
+	entry->unk6 = colorParams[0];
+	entry->unk7 = colorParams[1];
+	entry->unk8 = colorParams[2];
+	entry->unkD = colorParams[3];
+
+	for (i = slot; i < 0x50; i++) {
+		if (D_80156EF0[i].unkA == 0) {
+			D_80157531 = i;
+			i = 0x50;
+		}
+	}
+
+	D_80157530 += 1;
+	return slot;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DDB60_ECB10.s")
+#endif
 
 void func_800DDD30_ECCE0(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	if (arg0 != 0xFF) {
