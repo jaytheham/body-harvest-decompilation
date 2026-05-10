@@ -2759,7 +2759,37 @@ void func_800FF334_10E2E4(s32 arg0) {
 	func_800039D0_45D0(&D_8013FDA8_14ED58[arg0].unk8, &D_80052B48, 0, D_8005BB38);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FF390_10E340.s")
+void func_800FF390_10E340(s32 arg0) {
+	f32 sp54;
+	f32 sp50;
+	f32 sp4C;
+	f32 sp48;
+	f32 sp44;
+	f32 sp40;
+
+	D_80052B40.unk0 = D_8013FDA8_14ED58[arg0].unk8.unk0;
+	D_80052B40.unk2 = D_8013FDA8_14ED58[arg0].unk8.unk2;
+	D_80052B40.unk4 = D_8013FDA8_14ED58[arg0].unk8.unk4 + D_80159312;
+	func_800039D0_45D0(&D_80052B40, 0, 0, D_8005BB38);
+	guMtxCatL(D_8005BB38, &D_801592C0, &D_801592C0);
+
+	guMtxXFML(&D_801592C0, 0.0f, 0.0f, 0.0f, &sp54, &sp50, &sp4C);
+	guMtxXFML(&D_801592C0, 0.0f, 0.0f, 4096.0f, &sp48, &sp44, &sp40);
+
+	sp48 = sp48 - sp54;
+	sp44 = sp44 - sp50;
+	sp40 = sp40 - sp4C;
+	D_8015927E = func_80003824_4424(sp48, sp40);
+	D_80159280 = -func_80003824_4424(sqrtf((sp48 * sp48) + (sp40 * sp40)), sp44);
+
+	guMtxXFML(&D_801592C0, 4096.0f, 0.0f, 0.0f, &sp48, &sp44, &sp40);
+
+	sp48 -= sp54;
+	sp44 -= sp50;
+	sp40 -= sp4C;
+	D_80159282 = -func_80003824_4424(sqrtf((sp48 * sp48) + (sp40 * sp40)), sp44);
+	guMtxXFML(&D_801592C0, 0.0f, -34.0f, 0.0f, &D_80159284, &D_80159288, &D_8015928C);
+}
 
 void func_800FF5A8_10E558(s32 arg0) {
 	D_80052B48.unk0 = D_8015930A;
