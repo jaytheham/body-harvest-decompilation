@@ -259,7 +259,77 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, s32 arg2, s32 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097444_A63F4.s")
 
 // draw 3d adam on map
+// CURRENT(4676)
+#ifdef NON_MATCHING
+void func_80097994_A6944(void) {
+	s32 sp5C;
+	s32 sp60;
+	s32 sp64;
+	s32 tempA3;
+	s16 sp54;
+	s16 sp56;
+	s16 sp58;
+	s16 sp4C;
+	s16 sp4E;
+	s16 sp50;
+	Gfx *dl;
+
+	func_8000C790_D390(&D_80157600, (s16 *)D_8013D1B0_14C160, 0x10);
+
+	sp5C = 0;
+	sp64 = 0;
+	sp54 = D_80157600.unk2 << 3;
+	sp56 = D_80157600.unk4 << 3;
+	sp58 = D_80157600.unk0 << 3;
+	sp60 = (s32)(D_80157600.unkC * 65536.0f);
+
+	func_8000C81C_D41C(&sp5C, &sp54, NULL, D_8005BB38);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01000040;
+	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+	D_8005BB38 += 0x40;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBC001806;
+	dl->words.w1 = func_80011FAC_12BAC(&D_1001B50);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBC001C06;
+	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+	func_8000CC3C_D83C(&D_80157600, 0x10);
+
+	sp4C = 0x100;
+	sp4E = 0x100;
+	sp50 = 0x100;
+	tempA3 = D_8005BB38;
+	D_8005BB38 = tempA3 + 0x40;
+
+	func_800039D0_45D0(NULL, NULL, (Unk80052B40 *)&sp4C, tempA3);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x06000000;
+	dl->words.w1 = (u32)&D_10031E0 & 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBA000E02;
+	dl->words.w1 = 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097994_A6944.s")
+#endif
 
 // related to drawing 3d vehicles
 void func_80097B74_A6B24(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
