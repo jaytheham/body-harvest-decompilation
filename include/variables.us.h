@@ -2245,6 +2245,7 @@ extern f64 D_800A56F8_18D7B8;
 extern f64 D_800A5700_18D7C0;
 extern f64 D_800A5708_18D7C8;
 extern f64 D_800A5710_18D7D0;
+extern f64 D_80144D68_153D18;
 extern s16 D_80047716;
 extern VehicleInstance D_80050A74;
 extern VehicleInstance D_8004FB00;
