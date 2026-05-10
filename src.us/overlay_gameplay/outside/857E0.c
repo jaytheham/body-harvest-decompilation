@@ -329,7 +329,58 @@ s32 func_80078BC8_87B78(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078BC8_87B78.s")
 #endif
 
+// CURRENT(9678)
+#ifdef NON_MATCHING
+s32 func_80078D64_87D14(s16 arg0, s16 arg1, s32 arg2) {
+	typedef struct {
+		s8 unk0;
+		u8 pad1;
+		s8 unk2;
+		s8 unk3;
+		s16 unk4;
+		s16 unk6;
+		u8 pad8[0x48];
+	} Unk80259D90Search;
+	Unk80259D90Search* entry;
+	s16 x;
+	s16 z;
+	s32 i;
+
+	x = arg0 >> 8;
+	z = arg1 >> 8;
+
+	if (((s8)D_80259D92[0][0] != -1) && (x == (D_80259D94 >> 8)) && (z == (D_80259D96 >> 8)) && (arg2 == D_80259D93)) {
+		return 0;
+	}
+
+	if ((D_80259DE2 != -1) && (x == (D_80259DE4 >> 8)) && (z == (D_80259DE6 >> 8)) && (arg2 == D_80259DE3)) {
+		return 1;
+	}
+
+	entry = (Unk80259D90Search*) D_80259E30;
+	for (i = 2; i != 0x96; i += 4, entry += 4) {
+		if (((s8) entry[0].unk2 != -1) && (x == (entry[0].unk4 >> 8)) && (z == (entry[0].unk6 >> 8)) && (arg2 == (s8) entry[0].unk3)) {
+			return i;
+		}
+
+		if (((s8) entry[1].unk2 != -1) && (x == (entry[1].unk4 >> 8)) && (z == (entry[1].unk6 >> 8)) && (arg2 == (s8) entry[1].unk3)) {
+			return i + 1;
+		}
+
+		if (((s8) entry[2].unk2 != -1) && (x == (entry[2].unk4 >> 8)) && (z == (entry[2].unk6 >> 8)) && (arg2 == (s8) entry[2].unk3)) {
+			return i + 2;
+		}
+
+		if (((s8) entry[3].unk2 != -1) && (x == (entry[3].unk4 >> 8)) && (z == (entry[3].unk6 >> 8)) && (arg2 == (s8) entry[3].unk3)) {
+			return i + 3;
+		}
+	}
+
+	return -1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078D64_87D14.s")
+#endif
 
 void func_80078F5C_87F0C(s16 arg0, s16 arg1, u16 arg2) {
 	u16 temp_v1;
