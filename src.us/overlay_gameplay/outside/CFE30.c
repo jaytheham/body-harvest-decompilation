@@ -3464,7 +3464,46 @@ void func_800E360C_F25BC(void) {
 	D_8013E344_14D2F4 = 0;
 }
 
+// CURRENT(820)
+#ifdef NON_MATCHING
+	void func_800E3738_F26E8(u16 arg0, u8 arg1) {
+		u16 phase;
+		s32 phaseMod;
+
+		phase = (D_80052A8C * 25) + arg0;
+		phaseMod = phase % 300;
+		if (phaseMod < 100) {
+			u8 red;
+			u8 green;
+
+			green = 0xFA - phase;
+			red = phase + 0x96;
+			gDPSetColor(D_8005BB2C++, G_SETPRIMCOLOR, (green << 24) | (red << 16) | 0x9600 | arg1);
+			gDPSetColor(D_8005BB2C++, G_SETENVCOLOR, (red << 24) | 0x960000 | (green << 8) | arg1);
+			return;
+		}
+		if (phaseMod < 200) {
+			u8 red;
+			u8 green;
+
+			red = 0x15E - phase;
+			green = phase + 0x32;
+			gDPSetColor(D_8005BB2C++, G_SETPRIMCOLOR, 0x96000000 | (red << 16) | (green << 8) | arg1);
+			gDPSetColor(D_8005BB2C++, G_SETENVCOLOR, (red << 24) | (green << 16) | 0x9600 | arg1);
+			return;
+		} else {
+			u8 red;
+			u8 green;
+
+			red = phase - 0x32;
+			green = 0x1C2 - phase;
+			gDPSetColor(D_8005BB2C++, G_SETPRIMCOLOR, (red << 24) | 0x960000 | (green << 8) | arg1);
+			gDPSetColor(D_8005BB2C++, G_SETENVCOLOR, 0x96000000 | (green << 16) | (red << 8) | arg1);
+		}
+	}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3738_F26E8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3928_F28D8.s")
 
