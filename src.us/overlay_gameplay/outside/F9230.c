@@ -3442,7 +3442,64 @@ void func_8010C454_11B404(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010E040_11CFF0.s")
 
+// CURRENT(7771)
+#ifdef NON_MATCHING
+s32 func_8010E480_11D430(void) {
+	BuildingInstance *building;
+	Unk80152CA0Entry *entry;
+	VehicleInstance *vehicle;
+	s16 x;
+	s16 z;
+	s32 i;
+	u8 index;
+
+	if (D_80152C96 == 0) {
+		return 0;
+	}
+
+	i = D_80152C96 - 1;
+	entry = &D_80152CA0[i];
+
+	for (;;) {
+		index = entry->unk0;
+		vehicle = &vehicleInstances[index];
+
+		if (D_80159D5C != vehicle) {
+			if (entry->unk1 == 1) {
+				building = &buildingInstances[index];
+				x = (building->xCoord << 8) + 0x80;
+				z = (building->zCoord << 8) + 0x80;
+
+				if (func_8010DC00_11CBB0(x, z, 0x12) != 0) {
+					goto found;
+				}
+
+				vehicle = &vehicleInstances[entry->unk0];
+			}
+
+			if (entry->unk1 == 2) {
+				x = vehicle->unk0;
+				z = vehicle->unk4;
+				if (func_8010DC00_11CBB0(x, z, vehicleSpecs[vehicle->unk1A].unkC / 12) != 0) {
+					goto found;
+				}
+			}
+		}
+
+		entry--;
+		i--;
+		if (i == 0) {
+			return 0;
+		}
+	}
+
+found:
+	func_80102D00_111CB0(D_80159D5C, (D_80159D5C->unk0 - x) * 0.0625, 0.0f, (D_80159D5C->unk4 - z) * 0.0625);
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010E480_11D430.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010E684_11D634.s")
 
