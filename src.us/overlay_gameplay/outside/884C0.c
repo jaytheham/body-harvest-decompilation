@@ -1939,7 +1939,56 @@ s32 func_800825E8_91598(s16 arg0, s16 arg1, s32 *arg2)
   return result;
 }
 
+// CURRENT(7713)
+#ifdef NON_MATCHING
+s32 func_800826E4_91694(s32 arg0, u16 arg1, u16 arg2) {
+	AlienInstance *inst;
+	s32 distSq[3][3];
+	s16 baseX;
+	s16 baseZ;
+	u32 threshold;
+	s32 row;
+	s32 col;
+	s32 mask;
+	s32 result;
+
+	inst = &alienInstances[arg0 & 0xFF];
+	threshold = D_80256688[inst->specIndex][0];
+
+	distSq[0][0] = ((inst->unk0 & 0xFF) * (inst->unk0 & 0xFF)) + ((inst->unk4 & 0xFF) * (inst->unk4 & 0xFF));
+	distSq[0][1] = (inst->unk4 & 0xFF) * (inst->unk4 & 0xFF);
+	distSq[0][2] = ((~inst->unk0 & 0xFF) * (~inst->unk0 & 0xFF)) + ((inst->unk4 & 0xFF) * (inst->unk4 & 0xFF));
+	distSq[1][0] = (inst->unk0 & 0xFF) * (inst->unk0 & 0xFF);
+	distSq[1][1] = 0;
+	distSq[1][2] = (~inst->unk0 & 0xFF) * (~inst->unk0 & 0xFF);
+	distSq[2][0] = ((inst->unk0 & 0xFF) * (inst->unk0 & 0xFF)) + ((~inst->unk4 & 0xFF) * (~inst->unk4 & 0xFF));
+	distSq[2][1] = (~inst->unk4 & 0xFF) * (~inst->unk4 & 0xFF);
+	distSq[2][2] = ((~inst->unk0 & 0xFF) * (~inst->unk0 & 0xFF)) + ((~inst->unk4 & 0xFF) * (~inst->unk4 & 0xFF));
+
+	baseX = (inst->unk0 >> 8) - 1;
+	baseZ = (inst->unk4 >> 8) - 1;
+
+	mask = 1;
+	result = 0;
+
+	for (row = 0; row < 3; row++) {
+		for (col = 0; col < 3; col++, mask <<= 1) {
+			s8 x = (s8)(baseX + col);
+			s8 z = (s8)(baseZ + row);
+
+			if (distSq[row][col] < threshold) {
+				if (((func_800B325C_C220C(x, z, arg1) != 0) || (arg1 == 0)) && (func_800B325C_C220C(x, z, arg2) == 0)) {
+					result |= mask;
+				}
+			}
+		}
+	}
+
+	return result;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800826E4_91694.s")
+#endif
 
 s32 func_800828F0_918A0(u8 arg0, u16 arg1, u16 arg2)
 {
