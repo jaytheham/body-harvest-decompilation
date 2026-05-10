@@ -729,7 +729,48 @@ block_18:
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA8F8_F98A8.s")
 
+typedef struct {
+	/* 0x00 */ u8 pad0[0x18];
+	/* 0x18 */ s16 unk18;
+	/* 0x1A */ s16 unk1A;
+	/* 0x1C */ s16 unk1C;
+	/* 0x1E */ s16 unk1E;
+} UnkF9230AnimEntry; /* size = 0x20 */
+
+typedef struct {
+	/* 0x00 */ u8 pad0[0x20];
+	/* 0x20 */ s16 unk20;
+	/* 0x22 */ s16 unk22;
+	/* 0x24 */ s16 unk24;
+} UnkF9230SpecView;
+
+// CURRENT(9473)
+#ifdef NON_MATCHING
+void func_800EABE0_F9B90(VehicleInstance *arg0) {
+	Vec3f sp2C;
+	u16 sp2A;
+	s16 temp_v0;
+	UnkF9230SpecView *spec;
+	f64 temp_f2;
+	u16 temp_a0;
+
+	sp2C.x = (f32)((D_80159020->unk0 >= 0) ? (D_80159020->unk0 >> 2) : ((D_80159020->unk0 + 3) >> 2));
+	sp2C.y = (f32)((D_80159020->unk2 >= 0) ? (D_80159020->unk2 >> 2) : ((D_80159020->unk2 + 3) >> 2));
+	sp2C.z = (f32)((D_80159020->unk4 >= 0) ? (D_80159020->unk4 >> 2) : ((D_80159020->unk4 + 3) >> 2));
+
+	temp_f2 = func_800EA604_F95B4((s16 *)arg0, &sp2C);
+	temp_v0 = ((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk1E;
+	sp2A = (u16)(s16)(s32)(((f32)temp_v0 * (1.0f - temp_f2)) + ((f32)-temp_v0 * temp_f2));
+
+	spec = func_800FAFB8_109F68(arg0);
+	spec->unk20 = ((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk18;
+	temp_a0 = sp2A;
+	spec->unk22 = (s16)(s32)(((f64)((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk1C * ((f64)(f32)sins(temp_a0) / 32768.0)) + (((f64)(f32)((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk1A * 64.0) / (f64)(f32)D_80157A3C));
+	spec->unk24 = (s16)(s32)(((f64)(f32)coss(temp_a0) / 32768.0) * (f64)((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk1C);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EABE0_F9B90.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EADF8_F9DA8.s")
 
@@ -1950,7 +1991,39 @@ s16 func_800FA690_109640(s16 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FA690_109640.s")
 #endif
 
+// CURRENT(3227)
+#ifdef NON_MATCHING
+s16 func_800FA7F0_1097A0(VehicleInstance *arg0, s16 arg1, s32 arg2) {
+	VehicleSpec *spec;
+	s16 h1;
+	s16 h2;
+	f32 xOff;
+	f32 zOff;
+	f64 halfDist;
+	u16 angle;
+
+	angle = arg1;
+	spec = &vehicleSpecs[arg0->unk1A];
+	halfDist = (f64)(arg2 >> 1);
+	xOff = (f32)(((f64)(f32)coss(angle) / 32768.0) * halfDist);
+	zOff = (f32)(((f64)(f32)sins(angle) / 32768.0) * halfDist);
+	h1 = (s16)(func_800B85CC_C757C((s16)(s32)((f32)arg0->unk0 - (xOff * 2.0f)), (s16)(s32)((f32)arg0->unk4 - (zOff * 2.0f))) >> 8);
+	h2 = (s16)(func_800B85CC_C757C((s16)(s32)((f32)arg0->unk0 + xOff), (s16)(s32)((f32)arg0->unk4 + zOff)) >> 8);
+
+	if (!(spec->unk4C & 0x100)) {
+		if (D_80222A70 >= h1) {
+			h1 = (s16)D_80222A70;
+		}
+		if (D_80222A70 >= h2) {
+			h2 = (s16)D_80222A70;
+		}
+	}
+
+	return func_80003824_4424((f32)((f64)arg2 * 1.5), (f32)(h1 - h2));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FA7F0_1097A0.s")
+#endif
 
 // CURRENT(1375)
 #ifdef NON_MATCHING
@@ -3369,7 +3442,64 @@ void func_8010C454_11B404(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010E040_11CFF0.s")
 
+// CURRENT(7771)
+#ifdef NON_MATCHING
+s32 func_8010E480_11D430(void) {
+	BuildingInstance *building;
+	Unk80152CA0Entry *entry;
+	VehicleInstance *vehicle;
+	s16 x;
+	s16 z;
+	s32 i;
+	u8 index;
+
+	if (D_80152C96 == 0) {
+		return 0;
+	}
+
+	i = D_80152C96 - 1;
+	entry = &D_80152CA0[i];
+
+	for (;;) {
+		index = entry->unk0;
+		vehicle = &vehicleInstances[index];
+
+		if (D_80159D5C != vehicle) {
+			if (entry->unk1 == 1) {
+				building = &buildingInstances[index];
+				x = (building->xCoord << 8) + 0x80;
+				z = (building->zCoord << 8) + 0x80;
+
+				if (func_8010DC00_11CBB0(x, z, 0x12) != 0) {
+					goto found;
+				}
+
+				vehicle = &vehicleInstances[entry->unk0];
+			}
+
+			if (entry->unk1 == 2) {
+				x = vehicle->unk0;
+				z = vehicle->unk4;
+				if (func_8010DC00_11CBB0(x, z, vehicleSpecs[vehicle->unk1A].unkC / 12) != 0) {
+					goto found;
+				}
+			}
+		}
+
+		entry--;
+		i--;
+		if (i == 0) {
+			return 0;
+		}
+	}
+
+found:
+	func_80102D00_111CB0(D_80159D5C, (D_80159D5C->unk0 - x) * 0.0625, 0.0f, (D_80159D5C->unk4 - z) * 0.0625);
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010E480_11D430.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010E684_11D634.s")
 

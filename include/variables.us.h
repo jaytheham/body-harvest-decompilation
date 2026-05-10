@@ -1301,6 +1301,7 @@ extern char D_80141C08;
 extern char D_80141C24;
 extern char D_80141C38;
 extern s32 D_8014D304;
+extern u32 D_80256688[][26];
 extern s32 D_802566D4[];
 extern char D_80141D98_150D48;
 extern f64 D_80141E30;
@@ -1448,6 +1449,7 @@ extern s32 D_8014D300;
 extern s8 D_8014D308[];
 extern u8 D_8014D408[]; // unknown size, maybe 0x101
 extern u8 D_8014D507;
+extern u8 D_8014D508;
 extern u8 D_8014D509;
 extern u8 D_8014D50A;
 extern u8 D_8014D510[];
@@ -1601,9 +1603,11 @@ extern u8 D_802590A9[];
 extern Unk80259490 D_80259490; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
 extern Unk80259D90 D_80259D90[];
 extern u8 D_80259D92[][0x50];
+extern s8 D_80259D93;
 extern s16 D_80259D94;
 extern s16 D_80259D96;
 extern s8 D_80259DE2;
+extern s8 D_80259DE3;
 extern s16 D_80259DE4;
 extern s16 D_80259DE6;
 extern u8 D_80259E30[];
@@ -3102,6 +3106,7 @@ extern f32 D_80159D34;
 extern f32 D_80159D38;
 extern f32 D_80159D3C;
 extern f32 D_80159D40;
+extern VehicleInstance *D_80159D5C;
 extern Unk8010ED84Pos *D_80159D60;
 extern Unk8010ED84Data *D_80159D68;
 
