@@ -587,7 +587,50 @@ s32 func_80075E50_84E00(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075E50_84E00.s")
 #endif
 
+// CURRENT(10)
+#ifdef NON_MATCHING
+s32 func_80076088_85038(s32 arg0) {
+	switch (arg0) {
+		case 0:
+			return 1;
+		case 1:
+			return func_8000726C_7E6C(0xC);
+		case 2:
+			return 0;
+		case 3:
+			return func_8000726C_7E6C(1);
+		case 4:
+			return func_8000726C_7E6C(0xF);
+		case 5:
+			return func_8000726C_7E6C(0x20);
+		case 6:
+			return func_8000726C_7E6C(3);
+		case 7:
+			return func_8000726C_7E6C(0x30);
+		case 8:
+			return func_8000726C_7E6C(0x20);
+		case 9:
+			return func_8000726C_7E6C(0x1F);
+		case 10:
+			return func_8000726C_7E6C(0x22);
+		case 11:
+			return func_8000726C_7E6C(0x26);
+		case 12:
+			return func_8000726C_7E6C(0x1E);
+		case 13:
+			return func_8000726C_7E6C(0x24);
+		case 14:
+			return func_8000726C_7E6C(2);
+		case 15:
+			return func_8000726C_7E6C(0x23);
+		case 16:
+			return func_8000726C_7E6C(0x36);
+		case 17:
+			return func_8000726C_7E6C(0x21);
+	}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076088_85038.s")
+#endif
 
 s32 func_80076208_851B8(s32 arg0) {
   return func_800078B8_84B8(arg0, &D_8004D150);
