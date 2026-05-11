@@ -4372,6 +4372,54 @@ void func_8011592C_1248DC(s16 arg0, s16 arg1) {
 	D_801591C8 = D_801591CA;
 }
 
+// CURRENT(455)
+#ifdef NON_MATCHING
+void func_80115A74_124A24(void) {
+	VehicleInstance *var_s0;
+	s16 temp_v0;
+	s8 *var_s4;
+	s32 twelve;
+	s32 ten;
+
+	if ((currentLevel == 1) && !(D_80159320 & 0x400000) && (D_80052B34->unk1A == 3)) {
+		D_80159320 |= 0x400000;
+		func_802D4CD0_18D7E0(7, 0);
+		setRandomSeed(0xFEEDABED);
+		var_s0 = &D_80050624;
+		var_s4 = &D_80158C43;
+		twelve = 12;
+		ten = 10;
+		do {
+			VehicleInstance *temp_s1;
+
+			temp_s1 = var_s0;
+			var_s0->unk1A = 0x11;
+			func_800FAE84_109E34(var_s0);
+		loop_5:
+			func_800FB44C_10A3FC(var_s0, (f32)(((func_800038E0_44E0() % twelve) + 0x4B) << 8));
+			func_800FB484_10A434(var_s0, (f32)(((func_800038E0_44E0() % ten) - 0x66) << 8));
+			func_800FB468_10A418(var_s0, (f32)(func_800F9D24_108CD4(var_s0->unk0, var_s0->unk4) + 0x190));
+			temp_v0 = var_s0->unk0;
+			if ((temp_v0 >= 0x4E00) && (temp_v0 < 0x5501) && (var_s0->unk4 >= -0x6400)) {
+				if (temp_s1->unk4 < 0x5E01) {
+					goto loop_5;
+				}
+			}
+			temp_v0 = func_800038E0_44E0();
+			temp_s1->unkE = temp_v0;
+			temp_s1->unk6 = temp_v0;
+			temp_s1->unk46 |= 0x3F;
+			*var_s4 = 2;
+			var_s4 += 1;
+			var_s0 += 1;
+			temp_s1->unk20 = temp_s1->unk20 | 0x8040;
+			temp_s1->unk20 = temp_s1->unk20 & -2;
+		} while (var_s4 != &D_80158C49);
+	}
+	func_800FAD10_109CC0();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80115A74_124A24.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80115CC0_124C70.s")
