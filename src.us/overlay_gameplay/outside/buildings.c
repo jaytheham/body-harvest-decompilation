@@ -99,7 +99,90 @@ s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011619C_12514C.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(3558)
+s32 func_8011629C_12524C(BuildingInstance *arg0, s16 arg1, s16 arg2) {
+	BuildingInstance *temp;
+	BuildingInstance *prev;
+	BuildingInstance *instances;
+	u8 *buildingType;
+	s16 x;
+	s16 z;
+	s16 y;
+	s32 idx;
+	s32 count;
+	s32 stride;
+	s32 minusOne;
+	s8 hitPoints;
+	u8 trailType;
+
+	x = (s16)(arg0->xCoord >> 8);
+	z = (s16)(arg0->zCoord >> 8);
+	prev = NULL;
+	count = -1;
+	minusOne = -1;
+	stride = 0x18;
+	instances = buildingInstances;
+	buildingType = &D_8015EA28;
+
+	while (TRUE) {
+		x += arg1;
+		z += arg2;
+		idx = func_8011D260_12C210((s8)x, (s8)z);
+		count += 1;
+		if (idx == minusOne) {
+			continue;
+		}
+
+		temp = (BuildingInstance *)((u8 *)instances + (idx * stride));
+		if (*buildingType != temp->buildingType) {
+			prev = temp;
+			continue;
+		}
+
+		y = temp->yCoord;
+		if (y < arg0->yCoord) {
+			y = arg0->yCoord;
+		}
+
+		prev->yCoord = y;
+		temp->yCoord = prev->yCoord;
+		arg0->yCoord = prev->yCoord;
+
+		hitPoints = D_802590A9[*buildingType << 5];
+		prev->hitPoints = hitPoints;
+		temp->hitPoints = hitPoints;
+		arg0->hitPoints = hitPoints;
+
+		arg0->padC[1] = count;
+		temp->padC[1] = count;
+		prev->buildingType = 0x1F;
+		prev->rotation = (u8)((prev->rotation & 0xFC) | (arg0->unk8 & 3));
+		break;
+	}
+
+	x = (s16)(arg0->xCoord >> 8);
+	z = (s16)(arg0->zCoord >> 8);
+	trailType = count;
+
+	if (count != 0) {
+		count -= 1;
+		while (TRUE) {
+			x += arg1;
+			z += arg2;
+			func_8011CC40_12BBF0((u8)x, (u8)z, trailType);
+			if (count == 0) {
+				break;
+			}
+			count -= 1;
+		}
+	}
+
+	return count;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011629C_12524C.s")
+#endif
 
 Unk800522C0 *func_801164C4_125474(s16 arg0, s16 arg1) {
 	s32 i;

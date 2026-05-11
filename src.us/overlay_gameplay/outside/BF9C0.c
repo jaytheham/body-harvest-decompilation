@@ -1244,7 +1244,98 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, u8 arg2, u8 arg3)
 // DrawVtxBufferWater
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BB3D0_CA380.s")
+s32 func_800BB3D0_CA380(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 *arg4, s16 *arg5, s16 *arg6, s16 *arg7) {
+	s16 temp;
+
+	if (arg2 < arg0) {
+		temp = arg0;
+		arg0 = arg2;
+		arg2 = temp;
+	}
+
+	if (arg3 < arg1) {
+		temp = arg1;
+		arg1 = arg3;
+		arg3 = temp;
+	}
+
+	if (*arg6 < *arg4) {
+		temp = *arg4;
+		*arg4 = *arg6;
+		*arg6 = temp;
+	}
+
+	if (*arg7 < *arg5) {
+		temp = *arg5;
+		*arg5 = *arg7;
+		*arg7 = temp;
+	}
+
+	if (*arg4 == *arg6) {
+		if ((arg0 < *arg4) && (*arg4 < arg2)) {
+			if (arg3 < *arg5) {
+				return 0;
+			}
+
+			if (*arg7 < arg1) {
+				return 0;
+			}
+
+			if (*arg5 < arg1) {
+				*arg5 = arg1;
+			}
+
+			if (arg3 < *arg5) {
+				*arg5 = arg3;
+			}
+
+			if (*arg7 < arg1) {
+				*arg7 = arg1;
+			}
+
+			if (arg3 < *arg7) {
+				*arg7 = arg3;
+			}
+
+			goto success;
+		}
+
+		return 0;
+	}
+
+	if ((arg1 < *arg5) && (*arg5 < arg3)) {
+		if (arg2 < *arg4) {
+			return 0;
+		}
+
+		if (*arg6 < arg0) {
+			return 0;
+		}
+
+		if (*arg4 < arg0) {
+			*arg4 = arg0;
+		}
+
+		if (arg2 < *arg4) {
+			*arg4 = arg2;
+		}
+
+		if (*arg6 < arg0) {
+			*arg6 = arg0;
+		}
+
+		if (arg2 < *arg6) {
+			*arg6 = arg2;
+		}
+
+		goto success;
+	}
+
+	return 0;
+
+success:
+	return 1;
+}
 
 // DrawShieldWalls
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BB5E0_CA590.s")
@@ -1331,12 +1422,119 @@ void func_800BD2F4_CC2A4(void)
 // DisplayGates - A gate is a portal through the shield wall
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD360_CC310.s")
 
+// CURRENT(1785)
+#ifdef NON_MATCHING
+s32 func_800BD688_CC638(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
+	s16 i;
+	s16 dist;
+	s16 tempDist;
+	s32 x;
+	s32 y;
+	s32 z;
+	s32 absX;
+	s32 absY;
+	s32 absZ;
+	s32 height;
+	u32 distSq;
+
+	height = func_800B84D0_C7480(arg0, arg2) >> 8;
+	if (height < D_80222A70) {
+		height = D_80222A70;
+	}
+
+	if (arg3 != D_80052B34) {
+		return 1;
+	}
+
+	for (i = 0; i < 8; i++) {
+		if (D_8003E0FC[currentLevel - 1][i].unk6 != 0x50) {
+			continue;
+		}
+
+		x = (D_8003E0FC[currentLevel - 1][i].unk0 << 8) - arg0;
+		absX = -x;
+		if (x >= 0) {
+			absX = x;
+		}
+
+		z = (D_8003E0FC[currentLevel - 1][i].unk4 << 8) - arg2;
+		absZ = -z;
+		if (z >= 0) {
+			absZ = z;
+		}
+
+		y = D_8003E0FC[currentLevel - 1][i].unk2 - arg1;
+		absY = -y;
+		if (y >= 0) {
+			absY = y;
+		}
+
+		distSq = (absX * absX) + (absZ * absZ) + (absY * absY);
+		dist = sqrtf((f32)distSq);
+		tempDist = dist;
+		if ((u16)tempDist < 0xFA) {
+			return 0;
+		}
+
+		if ((u16)tempDist >= 0x1F4) {
+			continue;
+		}
+
+		if ((height + 0xC8) < D_8003E0FC[currentLevel - 1][i].unk2) {
+			return 0;
+		}
+	}
+
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD688_CC638.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD8B8_CC868.s")
 
 // openCurrentStageGate
+#ifdef NON_MATCHING
+// CURRENT(1115)
+void func_800BDAF4_CCAA4(void) {
+	u8 stage;
+	u8 *gate;
+	s32 gateState;
+	s32 absGateState;
+	s16 x;
+	s16 y;
+	s16 z;
+
+	for (stage = 0; stage < 0x10; stage++) {
+		osSyncPrintf(&D_80142DF0_151DA0, currentLevel, D_80047F94, D_80147F00_156EB0[currentLevel][D_80047F94 - 6]);
+		if (!(D_80147F00_156EB0[currentLevel][D_80047F94 - 6] & (1 << stage))) {
+			continue;
+		}
+
+		osSyncPrintf(&D_80142DFC_151DAC, stage);
+		gate = (u8 *) &D_8003E0FC[currentLevel][stage];
+		gateState = *(s8 *) (gate - 0x4A);
+		if (gateState == 0x50) {
+			continue;
+		}
+
+		absGateState = -gateState;
+		if (absGateState < gateState) {
+			absGateState = gateState;
+		}
+
+		x = *(s16 *) (gate - 0x50) << 8;
+		z = *(s16 *) (gate - 0x4C) << 8;
+		y = *(s16 *) (gate - 0x4E);
+		*(s8 *) (gate - 0x4A) = absGateState + 1;
+		func_800DEE5C_EDE0C(x, y, z, 0x64, 3);
+		func_800DEE5C_EDE0C(x, y, z, 0x32, 3);
+		func_800D05A8_DF558(x, y, z, 0x1F4, 0xC8, 0xC8, 0xFA);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BDAF4_CCAA4.s")
+#endif
 
 void func_800BDD24_CCCD4(u8 arg0)
 {
