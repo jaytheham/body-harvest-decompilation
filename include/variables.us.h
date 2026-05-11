@@ -1444,6 +1444,7 @@ extern u8 D_80149B50[];
 extern u8 D_80149B60[];
 extern u8 D_8014CEF0[];
 extern s16 D_8014D188[];
+extern u8 D_8014CFEC; // last entry of D_8014CEF0 array (offset 0x3F*4)
 extern u8 D_8014D200[];
 extern u8 D_8014D298[][10];
 extern s32 D_8014D2E8;
@@ -1662,6 +1663,7 @@ extern u32 D_8014D1B8[];
 extern Unk8014F618 D_8014F618;
 
 extern AlienSpec alienSpecs[0x30]; // 80256680
+extern u32 D_8014D1D4; // D_8014D1B8[7]
 extern Unk8025669C D_8025669C[];  // 8025669C
 extern Unk8014DD50 *D_802DDC88_196798;
 extern Unk8014DD50 *D_802DDCD0_1967E0;

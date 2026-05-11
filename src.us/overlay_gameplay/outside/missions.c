@@ -507,53 +507,87 @@ void func_8007562C_845DC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075AA4_84A54.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075E50_84E00.s")
-
-// CURRENT(10)
+// CURRENT(7747)
 #ifdef NON_MATCHING
-s32 func_80076088_85038(s32 arg0) {
-	switch (arg0) {
-		case 0:
-			return 1;
-		case 1:
-			return func_8000726C_7E6C(0xC);
-		case 2:
-			return 0;
-		case 3:
-			return func_8000726C_7E6C(1);
-		case 4:
-			return func_8000726C_7E6C(0xF);
-		case 5:
-			return func_8000726C_7E6C(0x20);
-		case 6:
-			return func_8000726C_7E6C(3);
-		case 7:
-			return func_8000726C_7E6C(0x30);
-		case 8:
-			return func_8000726C_7E6C(0x20);
-		case 9:
-			return func_8000726C_7E6C(0x1F);
-		case 10:
-			return func_8000726C_7E6C(0x22);
-		case 11:
-			return func_8000726C_7E6C(0x26);
-		case 12:
-			return func_8000726C_7E6C(0x1E);
-		case 13:
-			return func_8000726C_7E6C(0x24);
-		case 14:
-			return func_8000726C_7E6C(2);
-		case 15:
-			return func_8000726C_7E6C(0x23);
-		case 16:
-			return func_8000726C_7E6C(0x36);
-		case 17:
-			return func_8000726C_7E6C(0x21);
+s32 func_80075E50_84E00(void) {
+	u8 *stream;
+	u8 *cmd;
+	s32 has83After82;
+	s32 count;
+	u32 bitmask[8];
+	s32 i;
+
+	cmd = D_801497C8;
+	stream = &D_80224680;
+	has83After82 = 0;
+
+	for (i = 0; i < 8; i++) {
+		bitmask[i] = 0;
 	}
+
+	count = D_80149B30;
+	if (count != 0) {
+		count--;
+		do {
+			if (cmd[0] == 0x9C) {
+				if (vehicleInstances[cmd[1]].unk3C == 1) {
+					func_800E5CF4_F4CA4(2, cmd[1]);
+				} else {
+					vehicleInstances[cmd[1]].unk20 &= 0x7FFF;
+				}
+			}
+			cmd += 3;
+		} while (count--);
+	}
+
+	func_800FAD10_109CC0();
+
+	count = 7;
+	do {
+		D_8014D1B8[count] = 0;
+	} while (count--);
+
+	cmd = &D_8014CFEC;
+	count = 0x3F;
+	do {
+		if (cmd[1] == 0x99) {
+			D_8014D1B8[cmd[2] >> 5] |= 1 << (cmd[2] & 0x1F);
+		}
+		cmd -= 4;
+	} while (count--);
+
+	count = 0x7FF;
+	do {
+		if (stream[0] == 0x82 && stream[1] == 0x99 && stream[3] == 0x8E) {
+			bitmask[stream[2] >> 5] |= 1 << (stream[2] & 0x1F);
+		}
+		stream++;
+	} while (count--);
+
+	count = 7;
+	do {
+		D_8014D1B8[count] &= bitmask[count];
+	} while (count--);
+
+	stream = &D_80224680;
+	count = 0x7FF;
+	do {
+		if (stream[0] == 0x82) {
+			has83After82 = 0;
+		}
+		if (stream[0] == 0x83 && has83After82 == 0) {
+			has83After82 = 1;
+		}
+		stream++;
+	} while (count--);
+
+	return has83After82;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076088_85038.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075E50_84E00.s")
 #endif
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076088_85038.s")
 
 s32 func_80076208_851B8(s32 arg0) {
   return func_800078B8_84B8(arg0, &D_8004D150);
