@@ -240,43 +240,43 @@ void func_80133A54_142A04(Unk80160080 *arg0) {
 // CURRENT(400)
 #ifdef NON_MATCHING
 void func_80133C9C_142C4C(Vec3f *arg0, Vec3f *arg1, void *arg2, s16 arg3, u16 arg4, s32 arg5, s16 arg6) {
-    Vec3f sp44;
-    f32 sp40;
-    f32 temp_f0;
-    f32 sp38;
-    f32 sp34;
-    s32 sp28;
-    s32 var_v0;
+	Vec3f sp44;
+	f32 sp40;
+	f32 temp_f0;
+	f32 sp38;
+	f32 sp34;
+	s32 sp28;
+	s32 var_v0;
 
-    sp38 = (f32)((f64)(f32)sins(arg3) / 32768.0);
-    sp34 = (f32)((f64)(f32)coss(arg3) / 32768.0);
+	sp38 = (f32)((f64)(f32)sins(arg3) / 32768.0);
+	sp34 = (f32)((f64)(f32)coss(arg3) / 32768.0);
 		sp40 = (f32)((f64)(f32)sins(arg4) / 32768.0);
 		temp_f0 = (f32)((f64)(f32)coss(arg4) / 32768.0);
 
-    sp44.x = 0.0f;
-    sp44.y = 0.0f;
-    sp44.z = 1.0f;
-    *arg0 = sp44;
-    sp44.x = arg0->x;
-    sp44.y = (arg0->y * temp_f0) - (arg0->z * sp40);
-    sp44.z = (arg0->y * sp40) + (arg0->z * temp_f0);
-    arg0->x = (sp44.z * sp38) + (sp44.x * sp34);
-    arg0->y = sp44.y;
-    arg0->z = (sp44.z * sp34) - (sp44.x * sp38);
+	sp44.x = 0.0f;
+	sp44.y = 0.0f;
+	sp44.z = 1.0f;
+	*arg0 = sp44;
+	sp44.x = arg0->x;
+	sp44.y = (arg0->y * temp_f0) - (arg0->z * sp40);
+	sp44.z = (arg0->y * sp40) + (arg0->z * temp_f0);
+	arg0->x = (sp44.z * sp38) + (sp44.x * sp34);
+	arg0->y = sp44.y;
+	arg0->z = (sp44.z * sp34) - (sp44.x * sp38);
 
-    var_v0 = arg6;
-    sp44.x = 0.0f;
-    sp44.z = 0.0f;
-    sp44.y = 1.0f;
-    if (var_v0 == 0) {
-        var_v0 = 0;
-    }
-    arg0->x = arg0->x * (f32)-var_v0;
-    arg0->y = arg0->y * (f32)-var_v0;
-    arg0->z = arg0->z * (f32)-var_v0;
-    arg0->x = arg0->x + arg1->x;
-    arg0->y = arg0->y + arg1->y;
-    arg0->z = arg0->z + arg1->z;
+	var_v0 = arg6;
+	sp44.x = 0.0f;
+	sp44.z = 0.0f;
+	sp44.y = 1.0f;
+	if (var_v0 == 0) {
+		var_v0 = 0;
+	}
+	arg0->x = arg0->x * (f32)-var_v0;
+	arg0->y = arg0->y * (f32)-var_v0;
+	arg0->z = arg0->z * (f32)-var_v0;
+	arg0->x = arg0->x + arg1->x;
+	arg0->y = arg0->y + arg1->y;
+	arg0->z = arg0->z + arg1->z;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80133C9C_142C4C.s")
@@ -442,16 +442,16 @@ void func_80135380_144330(Unk80160080 *arg0)
 }
 
 void func_801354C0_144470(Unk80160080 *arg0) {
-    f32 var_f2;
-    register VehicleInstance *v1 = D_80052B34;
+	f32 var_f2;
+	register VehicleInstance *v1 = D_80052B34;
 
-    arg0->unk30 = (f32)v1->unk0;
+	arg0->unk30 = (f32)v1->unk0;
 	arg0->unk34 = (f32)(vehicleSpecs[D_80052B34->unk1A].unk38 - (vehicleSpecs[D_80052B34->unk1A].unk38 >> 2)) + (f32)v1->unk2;
-    arg0->unk38 = (f32)v1->unk4;
+	arg0->unk38 = (f32)v1->unk4;
 	var_f2 = (f32)((arg0->unk6C == 2) ? 400.0 : 100.0);
-    arg0->unk24 = (f32)(((f64)(f32)coss((u16)v1->unk6) / 32768.0) * (f64)var_f2 + (f64)arg0->unk30);
-    arg0->unk28 = arg0->unk34;
-    arg0->unk2C = (f32)(((f64)(f32)sins((u16)v1->unk6) / 32768.0) * (f64)var_f2 + (f64)arg0->unk38);
+	arg0->unk24 = (f32)(((f64)(f32)coss((u16)v1->unk6) / 32768.0) * (f64)var_f2 + (f64)arg0->unk30);
+	arg0->unk28 = arg0->unk34;
+	arg0->unk2C = (f32)(((f64)(f32)sins((u16)v1->unk6) / 32768.0) * (f64)var_f2 + (f64)arg0->unk38);
 }
 
 void func_80135630_1445E0(Unk80160080 *arg0) {
@@ -673,10 +673,10 @@ void func_80136B50_145B00(s32 arg0, s16 arg1)
 		  { }
 		  break;
 		
-		sp40 = (f32)(D_80257A0C[vehicle->unk1A * 0x38] * 2);
-		sp44.x = (f32)((f64)(f32)vehicle->unk0 - (((f64)(f32)coss((u16)arg0->unk58) / 32768.0) * (f64)sp40));
-		sp44.y = (f32)(D_80257A38[vehicle->unk1A * 0x38] + vehicle->unk2 + 0x32);
-		sp44.z = (f32)((f64)(f32)vehicle->unk4 - (((f64)(f32)sins((u16)arg0->unk58) / 32768.0) * (f64)sp40));
+		case 3:
+		  if (D_80052B34->unk0 < sp32 &&
+			  (D_80052B34->unk4 >= (sp30 - 0x13)) &&
+			  ((sp30 + 0x13) >= D_80052B34->unk4) &&
 			  D_80052B34->unkE >= 0)
 		  { }
 		  break;
