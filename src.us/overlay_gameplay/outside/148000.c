@@ -498,7 +498,47 @@ void func_8013B004_149FB4(void) {
 	func_801390F4_1480A4(weaponSlots[D_8004794A]);
 }
 
+// CURRENT(13285)
+#ifdef NON_MATCHING
+void func_8013B054_14A004(void) {
+	if (D_80048188 != 0) {
+		return;
+	}
+
+	if (D_8013FD78_14ED28 == D_80052B34) {
+		D_801601D8 = D_80140D17_14FCC7[D_80257A1C[D_80052B34->unk1A].unk0];
+	} else {
+		D_801601D8 = D_80257A1C[D_80052B34->unk1A].unk0 + 0x18;
+	}
+
+	if (D_800313D0_31FD0 == 0) {
+		return;
+	}
+
+	switch (D_801601D8) {
+		case 0x19: D_801601D8 = 0xD8; break;
+		case 0x1A: D_801601D8 = 0xD9; break;
+		case 0x1B: D_801601D8 = 0xDA; break;
+		case 0x1C: D_801601D8 = 0xDF; break;
+		case 0x1D: D_801601D8 = 0xDE; break;
+		case 0x1E: D_801601D8 = 0xDD; break;
+		case 0x1F: D_801601D8 = 0xDB; break;
+		case 0x20: D_801601D8 = 0xDC; break;
+		case 0x21: D_801601D8 = 0xE0; break;
+		case 0x22: D_801601D8 = 0xE1; break;
+		case 0x23: D_801601D8 = 0xE2; break;
+		case 0x24: D_801601D8 = 0xE3; break;
+		default:
+			return;
+	}
+
+	if (D_800313D0_31FD0 == 2) {
+		D_801601D8 += 0xC;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B054_14A004.s")
+#endif
 
 void func_8013B298_14A248(void) {
 	s32 old_value;
