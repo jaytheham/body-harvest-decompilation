@@ -422,7 +422,89 @@ void func_80079510_884C0(u8 arg0)
   *((u8*)&inst->unk1E) = 0xFF;
 }
 
+
+// CURRENT(0)
+#ifdef NON_MATCHING
+s32 func_8007956C_8851C(u8 arg0)
+{
+	u32 activeCount;
+	u8 slotIndex;
+	AlienInstance *alien;
+	AlienSpec *spec;
+	s32 specFlags;
+
+	activeCount = D_8014ECC8;
+	if (activeCount == 0xFF)
+	{
+		return -1;
+	}
+	if ((activeCount >= 0xFE) && ((arg0 == 0x19) || (arg0 == 0x1B)))
+	{
+		return -1;
+	}
+	if (currentLevel == 5)
+	{
+		if (arg0 == 0x14)
+		{
+			func_80088000_96FB0(-1);
+			activeCount = D_8014ECC8;
+		}
+	}
+
+	slotIndex = D_8014D308[activeCount];
+	alien = &alienInstances[slotIndex];
+	if (alien->unk20 & 0x600)
+	{
+		if (activeCount == 0xFE)
+		{
+			return -1;
+		}
+		else
+		{
+			D_8014D308[activeCount] = slotIndex;
+			slotIndex = D_8014D308[activeCount + 1];
+			alien = &alienInstances[slotIndex];
+		}
+	}
+
+	*alien = *(AlienInstance *)D_8013C1EC_14B19C;
+	alien->specIndex = arg0;
+	spec = &alienSpecs[arg0];
+	specFlags = spec->unk54;
+	alien->hitPoints = *(s16 *)((u8 *)spec + 0x3A);
+	if (specFlags & 0x400)
+	{
+		alien->unk20 |= 0x8000100;
+	}
+	if (specFlags & 0x2000)
+	{
+		alien->unk20 |= 0x40000;
+	}
+	if (specFlags & 0x800000)
+	{
+		alien->unk20 |= 0x400000;
+	}
+
+	D_8014ECC8 = activeCount + 1;
+	if ((arg0 == 0x19) || (arg0 == 0x1B))
+	{
+		alien->unk25 = func_8007956C_8851C(0);
+		func_80079510_884C0(slotIndex);
+	}
+	if (currentLevel == 3)
+	{
+		if ((arg0 == 8) || (arg0 == 9))
+		{
+			D_8013BD00_14ACB0[0]++;
+		}
+	}
+
+	return slotIndex;
+}
+
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007956C_8851C.s")
+#endif
 
 // Skip this and aliens freeze when they die, never disappear
 // https://decomp.me/scratch/tmc2b
@@ -635,8 +717,8 @@ s32 func_8007A2A0_89250(s32 arg0)
 	}
   }
   if (D_802566D4[alienInstances[arg0].specIndex * 0x1A] & 0x3E)
-  {
-	D_8014D304 = 0;
+
+
 	if (func_8007F0E8_8E098(arg0 & 0xFF, 0, 0) != 0)
 	{
 	  osSyncPrintf(&D_8014183C);
