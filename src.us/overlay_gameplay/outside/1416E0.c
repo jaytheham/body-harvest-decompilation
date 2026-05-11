@@ -181,7 +181,61 @@ void func_80133934_1428E4(Unk80160080 *arg0) {
 	func_801343D8_143388(arg0);
 }
 
+// CURRENT(0)
+#ifdef NON_MATCHING
+void func_80133A54_142A04(Unk80160080 *arg0) {
+	f32 sp40;
+	Vec3f sp44;
+	VehicleInstance *vehicle = D_80052B34;
+	s32 temp_a1;
+	s32 temp_a1_2;
+	s32 var_a0;
+	s32 var_a0_2;
+	s32 temp_v0;
+
+	if (D_801600F0 == 0) {
+		D_8016011C = 0.0f;
+		D_80160120 = 0.0f;
+		D_80160124 = 0.0f;
+		D_80160128 = 0.0f;
+		D_8016012C = D_8014569C_15464C;
+		D_80160130 = D_8014569C_15464C;
+		D_80160134 = D_8014569C_15464C;
+		D_80160138 = D_8014569C_15464C;
+		arg0->unk58 = vehicle->unkE;
+		vehicle = D_80052B34;
+	}
+
+	temp_v0 = func_80132730_1416E0(vehicle->unk6 - D_80052B2C->unk36, arg0->unk58);
+	if (temp_v0 >= 0xE39) {
+		temp_a1 = temp_v0 - 0xE38;
+		var_a0 = D_8015929C;
+		if (temp_a1 < D_8015929C) {
+			var_a0 = temp_a1;
+		}
+		arg0->unk58 = (s16)(arg0->unk58 - var_a0);
+	}
+	if (temp_v0 < -0xE38) {
+		temp_a1_2 = -0xE38 - temp_v0;
+		var_a0_2 = D_8015929C;
+		if (temp_a1_2 < D_8015929C) {
+			var_a0_2 = temp_a1_2;
+		}
+		arg0->unk58 = (s16)(arg0->unk58 + var_a0_2);
+	}
+
+	arg0->unk56 = 0x73;
+	sp40 = (f32)(D_80257A0C[D_80052B34->unk1A * 0x38] * 2);
+	sp44.x = (f32)((f64)D_80052B34->unk0 - (((f64)(f32)coss((u16)arg0->unk58) / 32768.0) * (f64)sp40));
+	sp44.y = (f32)(D_80257A38[D_80052B34->unk1A * 0x38] + D_80052B34->unk2 + 0x32);
+	sp44.z = (f32)((f64)D_80052B34->unk4 - (((f64)(f32)sins((u16)arg0->unk58) / 32768.0) * (f64)sp40));
+
+	func_801336CC_14267C(arg0, &sp44);
+}
+
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80133A54_142A04.s")
+#endif
 
 // CURRENT(400)
 #ifdef NON_MATCHING
@@ -619,10 +673,10 @@ void func_80136B50_145B00(s32 arg0, s16 arg1)
 		  { }
 		  break;
 		
-		case 3:
-		  if (D_80052B34->unk0 < sp32 &&
-			  (D_80052B34->unk4 >= (sp30 - 0x13)) &&
-			  ((sp30 + 0x13) >= D_80052B34->unk4) &&
+		sp40 = (f32)(D_80257A0C[vehicle->unk1A * 0x38] * 2);
+		sp44.x = (f32)((f64)(f32)vehicle->unk0 - (((f64)(f32)coss((u16)arg0->unk58) / 32768.0) * (f64)sp40));
+		sp44.y = (f32)(D_80257A38[vehicle->unk1A * 0x38] + vehicle->unk2 + 0x32);
+		sp44.z = (f32)((f64)(f32)vehicle->unk4 - (((f64)(f32)sins((u16)arg0->unk58) / 32768.0) * (f64)sp40));
 			  D_80052B34->unkE >= 0)
 		  { }
 		  break;
