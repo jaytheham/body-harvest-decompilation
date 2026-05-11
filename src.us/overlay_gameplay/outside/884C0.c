@@ -4366,7 +4366,59 @@ void func_8008D634_9C5E4(u8 arg0) {
 	}
 }
 
+// CURRENT(4390)
+#ifdef NON_MATCHING
+void func_8008D71C_9C6CC(u8 arg0) {
+	s16 temp_a3;
+
+	temp_a3 = alienInstances[arg0].unk38;
+	alienInstances[arg0].unk2C = 0x4B0 - alienSpecs[alienInstances[arg0].specIndex].unk51 * 5;
+	if (temp_a3 == 0x100) {
+		func_8008D634_9C5E4(arg0);
+		return;
+	}
+	u8 temp_v0 = alienInstances[temp_a3].specIndex;
+	if (temp_v0 == 1) {
+		if (!(alienInstances[temp_a3].unk20 & 0x40000000)) {
+			temp_v0 = alienInstances[temp_a3].unk24;
+			if ((temp_v0 != 3) && (temp_v0 != 0x1D) && (temp_v0 != 4)) {
+				if ((alienInstances[temp_a3].unk20 & 0x100000) == 0 && (temp_v0 >= 5) && (temp_v0 < 0xF)) {
+					D_80048190 -= 1;
+				}
+				if (temp_v0 == 1) {
+					func_80137468_146418(temp_a3, 0x194);
+					alienInstances[temp_a3].unk24 = 0x1D;
+				} else if ((temp_v0 == 0x14) || (temp_v0 == 0xC) || (temp_v0 == 0xB)) {
+					if ((alienInstances[temp_a3].unk20 & 0x100000) == 0) {
+						func_80137468_146418(temp_a3, 0x274);
+					}
+					alienInstances[temp_a3].unk24 = 4;
+				} else {
+					if ((alienInstances[temp_a3].unk20 & 0x100000) == 0) {
+						func_80137468_146418(temp_a3, 0x263);
+					}
+					alienInstances[temp_a3].unk24 = 3;
+				}
+				alienInstances[temp_a3].unk48 = 0;
+				alienInstances[temp_a3].unk20 &= ~0x4000;
+				alienInstances[temp_a3].unk25 = arg0;
+				alienInstances[arg0].unk24 = temp_a3;
+				func_8008D3B0_9C360(arg0);
+				alienInstances[arg0].unk48 = 0x60;
+				alienInstances[arg0].unk20 |= 0x2000;
+			}
+		}
+	} else if ((temp_v0 == 0x19) && !(alienInstances[temp_a3].unk20 & 0x308000)) {
+		alienInstances[arg0].unk20 |= 0x4000;
+		alienInstances[temp_a3].unk20 |= 0x8000;
+		alienInstances[arg0].unk48 = 0;
+		alienInstances[arg0].unk2C = 0;
+		*((u8*) &alienInstances[alienInstances[temp_a3].unk25].unk1E) = arg0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008D71C_9C6CC.s")
+#endif
 
 // https://decomp.me/scratch/lrRls
 // This one is matching but when included it screws up later functions somehow??
