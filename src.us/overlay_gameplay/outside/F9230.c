@@ -3442,7 +3442,49 @@ void func_80103DD0_112D80(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80106628_1155D8.s")
 
+// CURRENT(201)
+#ifdef NON_MATCHING
+void func_80107184_116134(VehicleInstance *arg0, s32 arg1, s32 arg2, f32 arg3) {
+	f32 sp48;
+	s32 pad;
+	f32 sp44;
+	f32 sp40;
+	f32 temp_f0;
+	s16 temp_s1;
+	s16 temp_v0;
+	s32 angle;
+
+	angle = (func_80003824_4424((f32)arg1, (f32)arg2) - arg0->unk6) & 0xFFFF;
+	temp_s1 = sins(angle);
+	sp48 = (f32)(((f64)(f32)temp_s1 / 32768.0) / ((f64)(f32)coss(angle) / 32768.0));
+
+	sp44 = (f32)vehicleSpecs[arg0->unk1A].unk36 / (f32)vehicleSpecs[arg0->unk1A].unk34;
+
+	temp_s1 = coss((u16)arg0->unkE);
+	sp40 = (f32)((((f64)(f32)coss((u16)arg0->unk10) / 32768.0) * ((f64)(f32)temp_s1 / 32768.0) * (f64)arg0->unk12) +
+		(f64)arg0->unk30);
+
+	temp_s1 = sins((u16)arg0->unkE);
+	temp_v0 = func_800F9C50_108C00(
+		func_80003824_4424(sp40, (f32)((((f64)(f32)coss((u16)arg0->unk10) / 32768.0) * ((f64)(f32)temp_s1 / 32768.0) * (f64)arg0->unk12) +
+			(f64)arg0->unk38)),
+		arg0->unk6);
+
+	if (sp48 < 0.0f) {
+		sp44 = -sp44;
+	}
+
+	if (sp44 < sp48) {
+		temp_f0 = (f32)((f64)temp_v0 * ((f64)arg3 * 0.5));
+	} else {
+		temp_f0 = -(f32)((f64)temp_v0 * ((f64)arg3 * 0.5));
+	}
+
+	arg0->unk22 = (s16)(s32)((f32)arg0->unk22 + temp_f0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80107184_116134.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801073FC_1163AC.s")
 
