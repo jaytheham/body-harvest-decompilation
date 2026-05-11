@@ -2980,7 +2980,52 @@ void func_800D9F60_E8F10(s32 arg0) {
 	}
 }
 
+// CURRENT(878)
+#ifdef NON_MATCHING
+void func_800D9FF8_E8FA8(s16 arg0, s16 arg1) {
+	typedef struct {
+		s32 w0;
+		s32 w1;
+		s32 w2;
+	} CopyWords;
+	CopyWords sp4C;
+	Unk80154318Entry *entry0;
+	Unk80154318Entry *entry1;
+	s16 *entryData0;
+	s16 *entryData1;
+
+	sp4C = *(CopyWords *)D_8013E324_14D2D4;
+
+	entry0 = &D_80154318[arg1];
+	entryData0 = (s16 *)&entry0->unk8;
+
+	if (entryData0[0] != -3) {
+		entry1 = &D_80154318[arg0];
+		entryData1 = (s16 *)&entry1->unk8;
+		func_800D9704_E86B4(entryData0[0], (s16)(entryData1[2] << 11), 0, 0);
+		func_800D96B4_E8664(entryData0[0], entryData1[3], entryData1[4], entryData1[5]);
+	}
+
+	entry1 = &D_80154318[arg0];
+	entryData1 = (s16 *)&entry1->unk8;
+	if (entryData0[1] != -3) {
+		func_800D0F5C_DFF0C(entryData0[1], entryData1[3], entryData1[4] + 0x1E, entryData1[5]);
+		func_800D0FE0_DFF90(entryData0[1], (u16)((((f64)(f32)sins((entryData1[2] << 12) & 0xFFFF) / 32768.0) * 40.0) + 100.0));
+	}
+
+	if (entryData1[2] == 8) {
+		func_800D1054_E0004(entryData0[1]);
+		entryData0[1] = -3;
+	}
+
+	if (entryData1[2] == 1) {
+		func_800DFBA8_EEB58(entryData1[3], entryData1[4], entryData1[5], 0x1F4, 8);
+		func_80124170_133120(entryData1[3], entryData1[4], entryData1[5], 0x9C40, 0x3E8, 0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9FF8_E8FA8.s")
+#endif
 
 s16 func_800DA260_E9210(s16 arg0, s16 arg1, s16 arg2) {
 	s16 temp_v0;
