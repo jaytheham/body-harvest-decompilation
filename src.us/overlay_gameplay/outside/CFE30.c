@@ -1772,7 +1772,61 @@ void func_800CDD7C_DCD2C(s16 arg0) {
 	}
 }
 
+// CURRENT(4862)
+#ifdef NON_MATCHING
+void func_800CDDE4_DCD94(void) {
+	s16 idx;
+	Unk80154318Entry *entry;
+	Unk80052B40 sp78;
+	Unk80052B40 sp80;
+	Unk80052B40 sp88;
+
+	idx = D_8015426A;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
+
+	while ((idx != -6) && (idx != -5)) {
+		gDPPipeSync(D_8005BB2C++);
+
+		entry = &D_80154318[idx];
+		if (entry->unk11 == 1) {
+			sp80.unk0 = 0;
+			sp80.unk2 = 0;
+			sp80.unk4 = 0x8000;
+			sp88.unk0 = 0x96;
+			sp88.unk2 = 0x96;
+			sp88.unk4 = 0x96;
+		} else {
+			sp80.unk0 = 0;
+			sp80.unk2 = 0;
+			sp80.unk4 = 0;
+			sp88.unk0 = 0x46;
+			sp88.unk2 = 0x46;
+			sp88.unk4 = 0x46;
+		}
+
+		sp78.unk0 = entry->unk8;
+		sp78.unk2 = entry->unkA;
+		sp78.unk4 = entry->unkC;
+
+		func_800039D0_45D0(&sp78, &sp80, &sp88, D_8005BB38);
+
+		gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		D_8005BB38 += 0x40;
+		gSPDisplayList(D_8005BB2C++, (Gfx *)0x05033E00);
+		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+
+		D_80156EDA += 0x1E;
+		idx = entry->unk4;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CDDE4_DCD94.s")
+#endif
 
 #ifdef NON_MATCHING
 u8 func_800CE040_DCFF0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5) {
