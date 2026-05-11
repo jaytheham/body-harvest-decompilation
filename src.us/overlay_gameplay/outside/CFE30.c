@@ -1247,7 +1247,101 @@ void func_800C9668_D8618(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA1B0_D9160.s")
 
+// CURRENT(4946)
+#ifdef NON_MATCHING
+s32 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8,
+						u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
+	u8 effect;
+	s16 unitIdx;
+	s16 linkedIdx;
+	s16 value;
+	u8 colorR;
+	u8 colorG;
+	u8 colorB;
+	Unk80154318Entry *unit;
+	u8 *unitBytes;
+	u8 *linkedBytes;
+	u8 intensity;
+
+	colorR = arg10;
+	colorG = arg11;
+	colorB = arg12;
+
+	if (D_80156ED9 == 2) {
+		return 0xFB;
+	}
+
+	if (func_800B93AC_C835C(arg0, arg2, 0x200, (s16) (D_80047954 * 4.0f), (s32) (D_8004795C * 4.0f), 0x4000 - D_80047950) == 0) {
+		return 0xFB;
+	}
+
+	effect = func_800C14D4_D0484(4);
+	if (effect != 0xFB) {
+		unitIdx = func_800C19D4_D0984(effect, 0);
+		if (unitIdx == -3) {
+			osSyncPrintf(&D_801435F8_1525A8);
+			func_800C1384_D0334(effect);
+			return 0xFB;
+		}
+
+		D_80154088[effect].unk1 = D_80154088[effect].unk1;
+
+		unit = &D_80154318[unitIdx];
+		linkedIdx = unit->unk4;
+		unit->unk2 = arg7;
+		unit->unk8 = arg0;
+		unit->unkA = arg1;
+		unit->unkC = arg2;
+
+		linkedBytes = (u8 *) &D_80154318[linkedIdx];
+		linkedBytes[8] = arg3;
+		linkedBytes[9] = arg4;
+		linkedBytes[0xA] = arg5;
+		linkedBytes[0xB] = arg6;
+		linkedBytes[0xC] = arg9;
+
+		unit->unkE = colorR;
+		unit->unk14 = 0;
+		unit->unkF = colorG;
+		unit->unk10 = colorB;
+
+		unitBytes = (u8 *) &unit->unk8;
+
+		value = (s16) (colorR - 0x78);
+		if (value < 0) {
+			value = 0;
+		}
+		unitBytes[9] = value;
+
+		value = (s16) (colorG - 0x78);
+		if (value < 0) {
+			value = 0;
+		}
+		unitBytes[0xA] = value;
+
+		value = (s16) (colorB - 0x78);
+		if (value < 0) {
+			value = 0;
+		}
+		unitBytes[0xB] = value;
+
+		linkedBytes[0x10] = arg13;
+
+		intensity = arg8;
+		if (intensity >= 0x97) {
+			intensity = 0x96;
+		} else if (intensity == 0) {
+			intensity = 1;
+		}
+		linkedBytes[0xD] = intensity;
+		*((s16 *) &linkedBytes[0xE]) = 0;
+	}
+
+	return effect;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA5EC_D959C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA848_D97F8.s")
 

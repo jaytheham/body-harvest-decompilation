@@ -2507,6 +2507,7 @@ extern Unk800311A0 D_80156EDC;
 extern Unk800311A0 D_80156EE4;
 extern UnkFC8E8Entry D_80156EF0[];
 extern char D_80143554_152504[];
+extern char D_801435F8_1525A8[];
 extern u8 D_8013DFA8_14CF58[][3];
 extern u8 D_80157530;
 extern u8 D_80157531;
