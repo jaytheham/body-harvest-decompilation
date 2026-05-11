@@ -1030,7 +1030,124 @@ void func_800AD698_BC648(VehicleInstance *arg0, s32 *arg1, s32 *arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD698_BC648.s")
 #endif
 
+// CURRENT(280)
+#ifdef NON_MATCHING
+void func_800AD814_BC7C4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+	AlienInstance *ptr;
+	s32 temp;
+
+	ptr = &alienInstances[arg0];
+	ptr->unk48 = 0x40;
+	ptr->unk3F = arg3;
+	ptr->unk24 = arg1;
+
+	if ((arg1 != 0x14) && (arg1 != 0xB) && (arg1 != 0xC) && (arg1 != 4)) {
+		D_8015EA14++;
+		func_8011C680_12B630((u8) arg0, -1);
+	}
+
+	switch (arg1) {
+		case 1:
+			func_800AD0F0_BC0A0((u8) arg0);
+			return;
+
+		case 2:
+			ptr->unk20 |= 0x08000100;
+			ptr->unk48 = 0x30;
+			break;
+
+		case 3:
+			temp = D_80048190;
+			if (temp == 8) {
+				D_80048190 = 0;
+				temp = 0;
+			}
+			ptr->unk20 &= ~0x1E0;
+			ptr->unk20 |= 0x08020000;
+			ptr->unk48 = 0xC0;
+			ptr->unk27 = temp;
+			ptr->unk38 = arg2;
+			D_80048190 = temp + 1;
+			break;
+
+		case 4:
+			temp = D_80048190;
+			if (temp == 8) {
+				D_80048190 = 0;
+				temp = 0;
+			}
+			ptr->unk20 &= ~0x1E0;
+			ptr->unk20 |= 0x00020080;
+			ptr->unk48 = 0xC0;
+			ptr->unk27 = temp;
+			ptr->unk38 = arg2;
+			D_80048190 = temp + 1;
+			break;
+
+		case 5:
+			if (ptr->unk20 & 0x600) {
+				ptr->unk48 = 0xA0;
+			}
+			break;
+
+		case 6:
+			ptr->unk38 = 0x100;
+			ptr->unk20 |= 0x1020;
+			break;
+
+		case 7:
+			ptr->unk48 = 0;
+			break;
+
+		case 8:
+			ptr->unk48 = 0xA0;
+			break;
+
+		case 9:
+			ptr->unk48 = 0xA0;
+			ptr->unk20 |= 0x1000;
+			ptr->unk6 = 0x4000;
+			ptr->unkE = -0x4000;
+			ptr->unk2C = 0;
+			break;
+
+		case 0xA:
+			ptr->unk3C = arg2;
+			ptr->unk20 |= 0x08001100;
+			ptr->unk48 = 0xC0;
+			func_800E7AA0_F6A50(ptr);
+			return;
+
+		case 0xB:
+		case 0xC:
+			ptr->unk38 = arg2;
+			ptr->unk20 |= 0x1100;
+			ptr->unk48 = 0xA0;
+			break;
+
+		case 0xD:
+		case 0xE:
+		case 0xF:
+		case 0x10:
+		case 0x11:
+		case 0x12:
+		case 0x13:
+		case 0x15:
+		case 0x16:
+		case 0x17:
+		case 0x18:
+		case 0x19:
+		case 0x1A:
+		case 0x1B:
+			break;
+
+		default:
+			break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD814_BC7C4.s")
+#endif
 
 u8 func_800ADA70_BCA20(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	u8 idx;
