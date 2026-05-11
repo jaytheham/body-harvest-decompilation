@@ -628,6 +628,7 @@ s32 func_80076088_85038(s32 arg0) {
 		case 17:
 			return func_8000726C_7E6C(0x21);
 	}
+}
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076088_85038.s")
 #endif
