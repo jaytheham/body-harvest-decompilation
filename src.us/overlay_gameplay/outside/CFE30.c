@@ -3721,7 +3721,89 @@ void func_800E1C10_F0BC0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1C10_F0BC0.s")
 #endif
 
+// CURRENT(3027)
+#ifdef NON_MATCHING
+void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
+	s32 shouldClamp;
+	s32 skipSecondCall;
+	s32 level;
+	s16 tempA2;
+
+	if (D_80052B34->unk3C == 0) {
+		return;
+	}
+
+	shouldClamp = 0;
+	skipSecondCall = 0;
+	if ((func_800038E0_44E0() % 100) < (arg0 + 30)) {
+		level = currentLevel;
+		switch (level) {
+			case 1:
+				if ((D_80052B34->unk1A == 4) || (D_80052B34->unk1A == 7) || (D_80052B34->unk1A == 8) || (D_80052B34->unk1A == 0x10)) {
+					shouldClamp = 1;
+				}
+				break;
+
+			case 2:
+				switch (D_80052B34->unk1A) {
+					case 5:
+						return;
+
+					case 7:
+					case 8:
+					case 0xE:
+					case 0x10:
+						shouldClamp = 1;
+						break;
+
+					default:
+						break;
+				}
+				break;
+
+			case 3:
+				if ((D_80052B34->unk1A == 1) || (D_80052B34->unk1A == 5) || (D_80052B34->unk1A == 0xE)) {
+					shouldClamp = 1;
+				}
+				break;
+
+			case 4:
+				if (D_80052B34->unk1A == 2) {
+					skipSecondCall = 1;
+					shouldClamp = 1;
+				} else if (D_80052B34->unk1A == 0x11) {
+					shouldClamp = 1;
+				}
+				break;
+
+			default:
+				break;
+		}
+
+		if (shouldClamp != 0) {
+			if (arg1 >= 0xC9) {
+				arg1 = 0xC8;
+			}
+		}
+
+		if (shouldClamp == 0) {
+			if (arg1 < 0xA7) {
+				return;
+			}
+		} else if (arg1 >= 0xC9) {
+			return;
+		}
+
+		tempA2 = D_8013DAB6_14CA66[(level * 0x5C) + (D_80052B34->unk1A * 4)];
+		func_800DEB7C_EDB2C(arg0, arg1, tempA2);
+		if ((tempA2 != 0) && (skipSecondCall == 0)) {
+			func_800DEB7C_EDB2C(arg0, arg1, -tempA2);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1D48_F0CF8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1F70_F0F20.s")
 
