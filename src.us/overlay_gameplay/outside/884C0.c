@@ -1264,7 +1264,88 @@ end:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E608_8D5B8.s")
 #endif
 
+// CURRENT(1525)
+#ifdef NON_MATCHING
+s32 func_8007E734_8D6E4(AlienInstance *arg0, s16 arg1) {
+	s16 var_a3;
+	s16 temp_v0;
+	s32 absDiff;
+	s32 magnitude;
+	s32 divisor;
+
+	temp_v0 = arg1 - arg0->unkE;
+	arg1 = (s16) arg1;
+	if ((arg0->specIndex < 3) || (arg0->specIndex == 0x20)) {
+		if (temp_v0 <= 0) {
+			arg0->unkE = arg1 - 0x4000;
+			arg0->unk6 = arg0->unkE;
+			return 1;
+		}
+		return 0;
+	}
+
+	if (arg0->unk20 & 0x1A0) {
+		var_a3 = arg0->unk2A;
+	} else {
+		var_a3 = arg0->unkE;
+	}
+
+	if (arg0->unk20 & 0x40100000) {
+		arg0->unk47 |= 2;
+	}
+
+	if (((temp_v0 < 0) && (arg0->unk12 > 0)) || ((temp_v0 > 0) && (arg0->unk12 < 0))) {
+		arg0->unk12 = 0;
+	}
+
+	temp_v0 = arg1 - var_a3;
+	if (((temp_v0 > 0) && (arg0->unk12 >= 0)) || ((temp_v0 < 0) && (arg0->unk12 < 0))) {
+		return 1;
+	}
+
+	arg0->unk47 |= 2;
+	temp_v0 = var_a3 - arg1;
+	magnitude = -temp_v0;
+	if (magnitude < temp_v0) {
+		magnitude = temp_v0;
+	} else {
+		magnitude = -temp_v0;
+	}
+
+	if (magnitude < 0x4000) {
+		if ((s16)(arg0->unkE - arg1) < 0) {
+			arg0->unk2A = arg1 + 0x800;
+		} else {
+			arg0->unk2A = arg1 - 0x800;
+		}
+	} else {
+		arg1 += 0x8000;
+		if ((s16)(arg0->unkE - arg1) < 0) {
+			arg0->unk2A = arg1 + 0x800;
+		} else {
+			arg0->unk2A = arg1 - 0x800;
+		}
+	}
+
+	divisor = alienSpecs[arg0->specIndex].unk42;
+	if (divisor != 0) {
+		temp_v0 = arg0->unk2A - arg0->unkE;
+		magnitude = -temp_v0;
+		if (magnitude < temp_v0) {
+			magnitude = temp_v0;
+		} else {
+			magnitude = -temp_v0;
+		}
+		arg0->unk34 = (magnitude / divisor) + 0x1E;
+	} else {
+		arg0->unk34 = 1;
+	}
+
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E734_8D6E4.s")
+#endif
 
 // CURRENT(7368)
 #ifdef NON_MATCHING
