@@ -1067,7 +1067,90 @@ void func_800EC468_FB418(void) { D_80157A28 &= ~0x200; }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC484_FB434.s")
 
+// CURRENT(7614)
+#ifdef NON_MATCHING
+s32 func_800ED55C_FC50C(UnkF9230Func800ED55CArg0 *arg0, s32 arg1) {
+	s32 compareAngle;
+	s32 bestDiff;
+	s32 bestResult;
+	s32 angleDiff;
+	s32 i;
+	s32 localThresholds[9];
+	s32 localHighResults[9];
+	s32 localLowResults[9];
+
+	for (i = 0; i < 9; i += 3) {
+		localThresholds[i] = D_8013FC14_14EBC4[i];
+		localThresholds[i + 1] = D_8013FC14_14EBC4[i + 1];
+		localThresholds[i + 2] = D_8013FC14_14EBC4[i + 2];
+	}
+
+	for (i = 0; i < 9; i += 3) {
+		localHighResults[i] = D_8013FC38_14EBE8[i];
+		localHighResults[i + 1] = D_8013FC38_14EBE8[i + 1];
+		localHighResults[i + 2] = D_8013FC38_14EBE8[i + 2];
+	}
+
+	for (i = 0; i < 9; i += 3) {
+		localLowResults[i] = D_8013FC5C_14EC0C[i];
+		localLowResults[i + 1] = D_8013FC5C_14EC0C[i + 1];
+		localLowResults[i + 2] = D_8013FC5C_14EC0C[i + 2];
+	}
+
+	compareAngle = (arg0->unkE + 0x10000) % 0x10000;
+	compareAngle = ((arg1 + 0x18000) % 0x10000) - compareAngle;
+	compareAngle = (compareAngle + 0x14000) % 0x10000;
+	angleDiff = localThresholds[0] - compareAngle;
+	if (angleDiff < 0) {
+		angleDiff = -angleDiff;
+	}
+
+	bestDiff = 0xFA00;
+	bestResult = 0x1A;
+
+	if (angleDiff < 0xFA00) {
+		bestDiff = angleDiff;
+		bestResult = localLowResults[0];
+		if (D_80157A3E >= 0x46) {
+			bestResult = localHighResults[0];
+		}
+	}
+
+	for (i = 1; i < 9; i += 2) {
+		angleDiff = localThresholds[i] - compareAngle;
+		if (angleDiff < 0) {
+			angleDiff = -angleDiff;
+		}
+
+		if (angleDiff < bestDiff) {
+			bestDiff = angleDiff;
+			if (D_80157A3E >= 0x46) {
+				bestResult = localHighResults[i];
+			} else {
+				bestResult = localLowResults[i];
+			}
+		}
+
+		angleDiff = localThresholds[i + 1] - compareAngle;
+		if (angleDiff < 0) {
+			angleDiff = -angleDiff;
+		}
+
+		if (angleDiff < bestDiff) {
+			bestDiff = angleDiff;
+			if (D_80157A3E >= 0x46) {
+				bestResult = localHighResults[i + 1];
+			} else {
+				bestResult = localLowResults[i + 1];
+			}
+		}
+	}
+
+	return bestResult;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED55C_FC50C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED78C_FC73C.s")
 

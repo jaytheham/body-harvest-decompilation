@@ -1007,6 +1007,7 @@ void func_800DD604_EC5B4(Gfx **arg0);
 void func_800E6A38_F59E8(void);
 void func_800CFD84_DED34(void);
 void func_800E5538_F44E8(void);
+s32 func_800ED55C_FC50C(UnkF9230Func800ED55CArg0 *arg0, s32 arg1);
 void func_800D9C98_E8C48(s16 arg0, s16 arg1);
 void func_800D9E38_E8DE8(s16 arg0, s16 arg1);
 void func_800DDD90_ECD40(u8 arg0, u8 arg1, u8 arg2, u8 arg3);
