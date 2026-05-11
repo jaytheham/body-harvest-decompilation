@@ -1732,7 +1732,58 @@ s32 func_800CE100_DD0B0(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CE6E8_DD698.s")
 
+// CURRENT(5441)
+#ifdef NON_MATCHING
+void func_800CEE00_DDDB0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	s16 idx;
+	s16 var_s0;
+	s16 temp;
+	s16 rem;
+	s16 tens;
+	Unk80154318Entry *entry;
+	u8 *p;
+
+	var_s0 = arg3;
+
+	if (func_800B93AC_C835C(arg0, arg2, 0xC8, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) == 0) {
+		return;
+	}
+
+	idx = func_800C17B4_D0764(8, 1);
+	if (idx == -3) {
+		return;
+	}
+
+	entry = &D_80154318[idx];
+	entry->unk2 = (var_s0 / 50) + 0x19;
+	entry->unk8 = arg0;
+	entry->unkA = arg1;
+	entry->unkC = arg2;
+
+	temp = var_s0 / 1000;
+	var_s0 -= temp * 1000;
+	rem = var_s0 / 100;
+	var_s0 -= rem * 100;
+	tens = var_s0 / 10;
+	p = (u8 *)&entry->unk8;
+	p[9] = (temp << 4) | rem;
+	p[0xA] = (tens << 4) | (var_s0 - (tens * 10));
+	p[0xC] = 0xFF;
+	p[0xB] = (var_s0 / 300) + 5;
+
+	if (arg3 < 1000) {
+		p[6] = 0xFF;
+		p[7] = 0xFF;
+		p[8] = 0xFF;
+	} else {
+		p[6] = 0xFF;
+		p[7] = 0xE6;
+		p[8] = 0x28;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CEE00_DDDB0.s")
+#endif
 
 void func_800CF070_DE020(void) {
 	s16 var_s0;
