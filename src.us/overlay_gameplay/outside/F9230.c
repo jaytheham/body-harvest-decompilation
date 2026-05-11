@@ -969,7 +969,58 @@ void func_800EBD9C_FAD4C(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
+// CURRENT(5575)
+#ifdef NON_MATCHING
+void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
+	VehicleInstance *vehicle;
+	VehicleSpec *spec;
+	register f64 temp_f20;
+	register f64 temp_f22;
+	s16 xOff;
+	s16 yOff;
+	s16 zOff;
+	s16 x;
+	s16 z;
+	f32 temp_f0;
+	f32 xOffF;
+	f32 zOffF;
+
+	D_80048188 = 1;
+	D_8004818C = 1;
+
+	vehicle = &vehicleInstances[arg1];
+	spec = &vehicleSpecs[vehicle->unk1A];
+	temp_f20 = D_80144468_153418;
+	temp_f22 = 32768.0;
+
+	D_801575E0.unk0 = 0;
+	D_801575E0.unk4 = 0;
+
+	xOff = (s8)spec->unk5E;
+	yOff = (s8)spec->unk5F;
+	zOff = (s8)spec->unk60;
+
+	temp_f0 = cosf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / temp_f22));
+
+	xOffF = (f32) xOff;
+	zOffF = (f32) zOff;
+	x = vehicle->unk0 + (s16) (s32) ((xOffF * temp_f0) - (sinf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / temp_f22)) * zOffF));
+
+	temp_f0 = sinf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / temp_f22));
+	z = vehicle->unk4 + (s16) (s32) ((cosf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / temp_f22)) * zOffF) + (xOffF * temp_f0));
+
+	D_801575E0.unk6 = x;
+	D_801575E0.unkA = vehicle->unk2 + yOff;
+	D_801575E0.unkE = z;
+	D_801575E0.unk12 = func_80003824_4424((f32) (s16) (arg3->unk0 - x), (f32) (s16) (arg3->unk4 - z)) + 0x8000;
+
+	D_80157E80 = arg0;
+	D_80157E82 = arg1;
+	D_80157E84 = arg2;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC0D0_FB080.s")
 
