@@ -1247,7 +1247,101 @@ void func_800C9668_D8618(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA1B0_D9160.s")
 
+// CURRENT(4946)
+#ifdef NON_MATCHING
+s32 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8,
+						u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
+	u8 effect;
+	s16 unitIdx;
+	s16 linkedIdx;
+	s16 value;
+	u8 colorR;
+	u8 colorG;
+	u8 colorB;
+	Unk80154318Entry *unit;
+	u8 *unitBytes;
+	u8 *linkedBytes;
+	u8 intensity;
+
+	colorR = arg10;
+	colorG = arg11;
+	colorB = arg12;
+
+	if (D_80156ED9 == 2) {
+		return 0xFB;
+	}
+
+	if (func_800B93AC_C835C(arg0, arg2, 0x200, (s16) (D_80047954 * 4.0f), (s32) (D_8004795C * 4.0f), 0x4000 - D_80047950) == 0) {
+		return 0xFB;
+	}
+
+	effect = func_800C14D4_D0484(4);
+	if (effect != 0xFB) {
+		unitIdx = func_800C19D4_D0984(effect, 0);
+		if (unitIdx == -3) {
+			osSyncPrintf(&D_801435F8_1525A8);
+			func_800C1384_D0334(effect);
+			return 0xFB;
+		}
+
+		D_80154088[effect].unk1 = D_80154088[effect].unk1;
+
+		unit = &D_80154318[unitIdx];
+		linkedIdx = unit->unk4;
+		unit->unk2 = arg7;
+		unit->unk8 = arg0;
+		unit->unkA = arg1;
+		unit->unkC = arg2;
+
+		linkedBytes = (u8 *) &D_80154318[linkedIdx];
+		linkedBytes[8] = arg3;
+		linkedBytes[9] = arg4;
+		linkedBytes[0xA] = arg5;
+		linkedBytes[0xB] = arg6;
+		linkedBytes[0xC] = arg9;
+
+		unit->unkE = colorR;
+		unit->unk14 = 0;
+		unit->unkF = colorG;
+		unit->unk10 = colorB;
+
+		unitBytes = (u8 *) &unit->unk8;
+
+		value = (s16) (colorR - 0x78);
+		if (value < 0) {
+			value = 0;
+		}
+		unitBytes[9] = value;
+
+		value = (s16) (colorG - 0x78);
+		if (value < 0) {
+			value = 0;
+		}
+		unitBytes[0xA] = value;
+
+		value = (s16) (colorB - 0x78);
+		if (value < 0) {
+			value = 0;
+		}
+		unitBytes[0xB] = value;
+
+		linkedBytes[0x10] = arg13;
+
+		intensity = arg8;
+		if (intensity >= 0x97) {
+			intensity = 0x96;
+		} else if (intensity == 0) {
+			intensity = 1;
+		}
+		linkedBytes[0xD] = intensity;
+		*((s16 *) &linkedBytes[0xE]) = 0;
+	}
+
+	return effect;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA5EC_D959C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA848_D97F8.s")
 
@@ -1732,7 +1826,58 @@ s32 func_800CE100_DD0B0(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CE6E8_DD698.s")
 
+// CURRENT(5441)
+#ifdef NON_MATCHING
+void func_800CEE00_DDDB0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	s16 idx;
+	s16 var_s0;
+	s16 temp;
+	s16 rem;
+	s16 tens;
+	Unk80154318Entry *entry;
+	u8 *p;
+
+	var_s0 = arg3;
+
+	if (func_800B93AC_C835C(arg0, arg2, 0xC8, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) == 0) {
+		return;
+	}
+
+	idx = func_800C17B4_D0764(8, 1);
+	if (idx == -3) {
+		return;
+	}
+
+	entry = &D_80154318[idx];
+	entry->unk2 = (var_s0 / 50) + 0x19;
+	entry->unk8 = arg0;
+	entry->unkA = arg1;
+	entry->unkC = arg2;
+
+	temp = var_s0 / 1000;
+	var_s0 -= temp * 1000;
+	rem = var_s0 / 100;
+	var_s0 -= rem * 100;
+	tens = var_s0 / 10;
+	p = (u8 *)&entry->unk8;
+	p[9] = (temp << 4) | rem;
+	p[0xA] = (tens << 4) | (var_s0 - (tens * 10));
+	p[0xC] = 0xFF;
+	p[0xB] = (var_s0 / 300) + 5;
+
+	if (arg3 < 1000) {
+		p[6] = 0xFF;
+		p[7] = 0xFF;
+		p[8] = 0xFF;
+	} else {
+		p[6] = 0xFF;
+		p[7] = 0xE6;
+		p[8] = 0x28;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CEE00_DDDB0.s")
+#endif
 
 void func_800CF070_DE020(void) {
 	s16 var_s0;
@@ -2980,7 +3125,52 @@ void func_800D9F60_E8F10(s32 arg0) {
 	}
 }
 
+// CURRENT(878)
+#ifdef NON_MATCHING
+void func_800D9FF8_E8FA8(s16 arg0, s16 arg1) {
+	typedef struct {
+		s32 w0;
+		s32 w1;
+		s32 w2;
+	} CopyWords;
+	CopyWords sp4C;
+	Unk80154318Entry *entry0;
+	Unk80154318Entry *entry1;
+	s16 *entryData0;
+	s16 *entryData1;
+
+	sp4C = *(CopyWords *)D_8013E324_14D2D4;
+
+	entry0 = &D_80154318[arg1];
+	entryData0 = (s16 *)&entry0->unk8;
+
+	if (entryData0[0] != -3) {
+		entry1 = &D_80154318[arg0];
+		entryData1 = (s16 *)&entry1->unk8;
+		func_800D9704_E86B4(entryData0[0], (s16)(entryData1[2] << 11), 0, 0);
+		func_800D96B4_E8664(entryData0[0], entryData1[3], entryData1[4], entryData1[5]);
+	}
+
+	entry1 = &D_80154318[arg0];
+	entryData1 = (s16 *)&entry1->unk8;
+	if (entryData0[1] != -3) {
+		func_800D0F5C_DFF0C(entryData0[1], entryData1[3], entryData1[4] + 0x1E, entryData1[5]);
+		func_800D0FE0_DFF90(entryData0[1], (u16)((((f64)(f32)sins((entryData1[2] << 12) & 0xFFFF) / 32768.0) * 40.0) + 100.0));
+	}
+
+	if (entryData1[2] == 8) {
+		func_800D1054_E0004(entryData0[1]);
+		entryData0[1] = -3;
+	}
+
+	if (entryData1[2] == 1) {
+		func_800DFBA8_EEB58(entryData1[3], entryData1[4], entryData1[5], 0x1F4, 8);
+		func_80124170_133120(entryData1[3], entryData1[4], entryData1[5], 0x9C40, 0x3E8, 0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9FF8_E8FA8.s")
+#endif
 
 s16 func_800DA260_E9210(s16 arg0, s16 arg1, s16 arg2) {
 	s16 temp_v0;
