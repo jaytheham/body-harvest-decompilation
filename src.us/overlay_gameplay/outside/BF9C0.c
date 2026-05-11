@@ -1491,7 +1491,85 @@ s32 func_800BD688_CC638(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD688_CC638.s")
 #endif
 
+// CURRENT(45)
+#ifdef NON_MATCHING
+void func_800BD8B8_CC868(void) {
+	u8* gate;
+	u8 i;
+	s8 state;
+	s32 absX;
+	s32 absZ;
+	s32 diff;
+	s32 gateX;
+	s32 gateZ;
+
+	if (currentLevel == 5) {
+		return;
+	}
+
+	if (D_801591AC == 5) {
+		D_80047F94 = func_800B0F20_BFED0(D_80052B34->unk0, D_80052B34->unk4);
+		func_800B0C80_BFC30();
+		func_800FAC90_109C40();
+	}
+
+	for (i = 0; i < 8; i++) {
+		gate = (u8*)&D_8003E0FC[currentLevel][i];
+		if (*(u8*)(gate - 0x47) == 2) {
+			return;
+		}
+
+		state = *(s8*)(gate - 0x4A);
+		if ((state != 0) && (state < 0x50)) {
+			*(s8*)(gate - 0x4A) = state + 4;
+			state = *(s8*)(gate - 0x4A);
+			*(s8*)(gate - 0x4A) = state - (state % 2);
+			state = *(s8*)(gate - 0x4A);
+		}
+
+		if (state >= 0x50) {
+			gateX = (*(s16*)(gate - 0x50)) << 8;
+			diff = D_80052B34->unk0 - gateX;
+			if (diff >= 0) {
+				absX = diff;
+			} else {
+				absX = -diff;
+			}
+			if (absX < 0xFA) {
+				gateZ = (*(s16*)(gate - 0x4C)) << 8;
+				diff = D_80052B34->unk4 - gateZ;
+				if (diff >= 0) {
+					absZ = diff;
+				} else {
+					absZ = -diff;
+				}
+				if (absZ < 0xFA) {
+					if (*(u8*)(gate - 0x47) == 1) {
+						if (gateZ < D_80052B34->unk4) {
+							D_80047F94 = *(u8*)(gate - 0x48);
+						} else {
+							D_80047F94 = *(u8*)(gate - 0x49);
+						}
+					} else if (gateX < D_80052B34->unk0) {
+						D_80047F94 = *(u8*)(gate - 0x48);
+					} else {
+						D_80047F94 = *(u8*)(gate - 0x49);
+					}
+					func_800B0C80_BFC30();
+					func_800FAC90_109C40();
+					*(s16*)&D_8013D9A8_14C958 = 30;
+				}
+			}
+		}
+	}
+
+	if (*(s16*)&D_8013D9A8_14C958 > 0) {
+		*(s16*)&D_8013D9A8_14C958 -= 1;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD8B8_CC868.s")
+#endif
 
 // openCurrentStageGate
 #ifdef NON_MATCHING
