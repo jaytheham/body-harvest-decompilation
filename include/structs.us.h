@@ -1848,6 +1848,23 @@ typedef struct {
 	/* 0x0A */ s16 unkA;
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ s16 unk14;
+	/* 0x16 */ s16 unk16;
+	/* 0x18 */ u8 pad18[0xB];
+	/* 0x23 */ u8 unk23;
+} UnkF9230Func800F4748Entry; /* size = 0x24 */
+
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
 } UnkF9230Func800ED55CArg0; /* size = 0x10 */
 
 typedef struct {
