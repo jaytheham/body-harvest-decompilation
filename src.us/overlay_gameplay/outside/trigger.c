@@ -93,7 +93,120 @@ void func_800AEBC4_BDB74(s32 arg0) {
 	func_800A6FD4_B5F84();
 }
 
+// CURRENT(145)
+#ifdef NON_MATCHING
+void func_800AEC34_BDBE4(void *arg0) {
+	s16 i;
+	s32 var_a3;
+	s16 tmp;
+	struct {
+		u8 pad[8];
+		Unk80222A78 sp28;
+	} sp20;
+
+	(void)arg0;
+
+	var_a3 = D_80047F94;
+	for (i = 0; i < 0xD0; i++) {
+		if (var_a3 == D_80223780[D_80222A78[i].unk9].unk12) {
+			D_80222A78[i].unk0 = 0;
+		}
+	}
+
+	if (D_80052AD0 != 0) {
+		if (D_8004816A < (u8)D_800314C4) {
+			func_800136CC_142CC();
+		}
+		func_80087E30_96DE0();
+
+		sp20.sp28.unk0 = 2;
+		sp20.sp28.unk1 = 0;
+		sp20.sp28.unk2 = 0;
+		sp20.sp28.pad3 = 0;
+		sp20.sp28.unk4 = D_8014F820 + 0x12C;
+		sp20.sp28.unk8 = 0;
+		sp20.sp28.unk9 = 0;
+		sp20.sp28.unkC = func_800AEBC4_BDB74;
+
+		func_800AE454_BD404(&sp20.sp28);
+		func_800BDAF4_CCAA4();
+		var_a3 = D_80047F94;
+	}
+
+	tmp = (currentLevel * 10) + var_a3 - 10;
+	switch (tmp) {
+		case 0:
+			D_80048030 = 6;
+			break;
+		case 1:
+			D_80048030 = 0xB;
+			break;
+		case 2:
+			D_80048030 = 0x10;
+			break;
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+			break;
+		case 10:
+			D_80048030 = 2;
+			break;
+		case 11:
+			D_80048030 = 6;
+			break;
+		case 12:
+			D_80048030 = 0xA;
+			break;
+		case 13:
+			D_80048030 = 0xD;
+			break;
+		case 14:
+		case 15:
+		case 16:
+		case 17:
+		case 18:
+		case 19:
+			break;
+		case 20:
+			D_80048030 = 2;
+			break;
+		case 21:
+			D_80048030 = 5;
+			break;
+		case 22:
+			D_80048030 = 7;
+			break;
+		case 23:
+		case 24:
+		case 25:
+		case 26:
+		case 27:
+		case 28:
+		case 29:
+			break;
+		case 30:
+			D_80048030 = 2;
+			break;
+		case 31:
+			D_80048030 = 4;
+			break;
+		case 32:
+			D_80048030 = 6;
+			break;
+		case 33:
+			D_80048030 = 9;
+			break;
+		default:
+			break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AEC34_BDBE4.s")
+#endif
 
 // spawnAlienWave arg3 changes orientation?
 u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)

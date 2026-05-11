@@ -1153,6 +1153,7 @@ extern Light D_8013D978_14C928;
 extern s8 D_8013D9AC_14C95C;
 extern s8 D_8013D9B0_14C960;
 extern s32 D_8013D9B4_14C964;
+extern s8 D_8013DAB6_14CA66[];
 extern u8 D_8013DAE0_14CA90; /* particle/effect count */
 extern u8 D_8013DAE4_14CA94; /* particle/effect free index */
 extern Unk80154082 D_8013DF80_14CF30;
@@ -1321,6 +1322,7 @@ extern f64 D_80141F00_150EB0;
 extern u8 D_80140AA4_14FA54[];
 extern Struct_80140D00 D_80140D00_14FCB0;
 extern Struct_80140D10 D_80140D10_14FCC0;
+extern u8 D_80140D17_14FCC7[];
 extern u8 D_80140D2C_14FCDC[];
 extern s16 D_80140D40_14FCF0[];
 extern u8 D_80140D68_14FD18[];
@@ -1443,6 +1445,7 @@ extern u8 D_80149B50[];
 extern u8 D_80149B60[];
 extern u8 D_8014CEF0[];
 extern s16 D_8014D188[];
+extern u8 D_8014CFEC; // last entry of D_8014CEF0 array (offset 0x3F*4)
 extern u8 D_8014D200[];
 extern u8 D_8014D298[][10];
 extern s32 D_8014D2E8;
@@ -1509,6 +1512,7 @@ extern s16 D_80152C90;
 extern u8 D_80152740[];
 extern s16 D_80157590; // outside camera status
 extern s16 D_80157A3C;
+extern s16 D_80157A3E;
 extern VehicleInstance *D_80159020;
 extern AlienInstance *D_80158FEC; // Target alien instance
 extern s16 *D_80158FF4;
@@ -1528,6 +1532,9 @@ extern s16 D_80159282;
 extern f32 D_80159284;
 extern f32 D_80159288;
 extern f32 D_8015928C;
+extern f32 D_80159290;
+extern f32 D_80159294;
+extern f32 D_80159298;
 extern Mtx D_801592C0;
 extern s32 D_80159300;
 extern s16 D_80159308;
@@ -1657,6 +1664,7 @@ extern u32 D_8014D1B8[];
 extern Unk8014F618 D_8014F618;
 
 extern AlienSpec alienSpecs[0x30]; // 80256680
+extern u32 D_8014D1D4; // D_8014D1B8[7]
 extern Unk8025669C D_8025669C[];  // 8025669C
 extern Unk8014DD50 *D_802DDC88_196798;
 extern Unk8014DD50 *D_802DDCD0_1967E0;
@@ -1670,6 +1678,7 @@ extern u16 D_8014EDDC;
 extern u8 D_8014EDE0[];
 extern s32 D_80050AD0;
 extern s32 D_80050AD4;
+extern VehicleInstance D_80050624;
 extern s32 D_80052AE0;
 extern u8 D_800A427C[];
 extern u8 D_800A427C_18C33C[];
@@ -1713,6 +1722,8 @@ extern s16 D_8014ED50;
 extern s16 D_8014ED52;
 extern s16 D_8014ED54;
 extern s16 D_8014ED56;
+extern s8 D_80158C43;
+extern s8 D_80158C49;
 extern s16 D_80158C50;
 extern f32 D_80158C58[];
 extern f32 D_80159194;
@@ -2163,6 +2174,7 @@ extern char D_801442F0_1532A0;
 extern char D_80144308_1532B8;
 extern char D_80144330_1532E0[];
 extern f64 D_801443E0_153390;
+extern f64 D_80144468_153418;
 extern char D_801444F0_1534A0;
 extern char D_80144534_1534E4;
 extern char D_8014457C_15352C;
@@ -2188,6 +2200,9 @@ extern s32 D_801575D0;
 extern s32 D_80157A34;
 extern s32 D_80157A38;
 extern s32 D_80157E70;
+extern s16 D_80157E80;
+extern s16 D_80157E82;
+extern s16 D_80157E84;
 extern char D_8003BAE0;
 extern char D_80144828[];
 extern char D_80144840[];
