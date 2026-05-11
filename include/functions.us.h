@@ -857,6 +857,7 @@ void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4
 void func_800FB430_10A3E0(VehicleInstance *arg0, f32 arg1);
 f32 func_800FB014_109FC4(VehicleInstance *arg0);
 f32 func_800FB098_10A048(VehicleInstance *arg0);
+void func_801081F0_1171A0(VehicleInstance *arg0, VehicleSpec *arg1);
 void func_8000C6B8_D2B8(s32 arg0);
 void func_80019F80_1AB80(void);
 void func_80017B08_18708(s32 arg0);
