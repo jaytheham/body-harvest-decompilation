@@ -2561,6 +2561,7 @@ extern f64 D_80144028_152FD8;
 extern UnkFunc8013B5E4 D_80257A1C[];
 extern UnkFunc8013B5E4 D_80257A4C[];
 extern char D_80145ABC_154A6C[];
+extern char D_80145AD4_154A84[];
 extern u8 D_801592A0;
 extern u8 D_801592B0;
 extern VehicleInstance* D_80158E6C;

@@ -679,8 +679,83 @@ s32 func_8013B5E4_14A594(s32 arg0) {
 	return 0;
 }
 
+// CURRENT(110)
+#ifdef NON_MATCHING
 // guess_doWeaponChange
+void func_8013B688_14A638(void) {
+	VehicleInstance* temp_v0;
+	u16 flags;
+
+	temp_v0 = D_80052B34;
+	if ((temp_v0->unk1A == 0)
+		&& ((flags = temp_v0->unk20, (flags & 0x1000))
+			|| ((flags & 2) && ((D_80159320 << 8) >= 0)))) {
+		D_801601DC = 0;
+		D_801601E4 = 0;
+		func_8013B384_14A334();
+		return;
+	}
+
+	func_8013994C_1488FC(D_801601D3);
+	func_8013A1CC_14917C();
+
+	if (func_8013B5E4_14A594(0) == 0) {
+		if ((D_801601DC == 0) || (D_801601DC == 1)) {
+			D_801601DC = 2;
+		}
+	} else {
+		if (isButtonNewlyPressed(0, 0x800) != 0) {
+			if (D_801601DC == 3) {
+				func_8013B298_14A248();
+				func_8013B5E4_14A594(0);
+				D_801601E0 = 0x23;
+			} else {
+				D_801601DC = 2;
+			}
+		}
+
+		if (isButtonNewlyPressed(0, 0x400) != 0) {
+			if (D_801601DC == 3) {
+				osSyncPrintf(&D_80145AD4_154A84);
+				func_8013B30C_14A2BC();
+				func_8013B5E4_14A594(1);
+				D_801601E0 = 0x23;
+			} else {
+				D_801601DC = 2;
+			}
+		}
+	}
+
+	if (D_801601DC == 2) {
+		if (D_801601E4 == 6) {
+			D_801601DC = 3;
+			D_801601E0 = 0x23;
+		} else {
+			D_801601E4 += 1;
+		}
+	} else if (D_801601DC == 1) {
+		if (D_801601E4 == 0) {
+			D_801601DC = 0;
+		} else {
+			D_801601E4 -= 1;
+		}
+	} else if (D_801601DC == 3) {
+		if (D_801601E0 == 0) {
+			D_801601DC = 1;
+			if (D_801601D8 != -1) {
+				func_8001A650_1B250(D_801601D8);
+				D_801601D8 = -1;
+			}
+		} else {
+			D_801601E0 -= 1;
+		}
+	}
+
+	func_8013B384_14A334();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B688_14A638.s")
+#endif
 
 s32 func_8013B8C8_14A878(void) {
 	if (D_801601DC == 0) {
