@@ -2534,6 +2534,7 @@ extern s32 D_8013E308_14D2B8[5];
 extern Unk80152CA0Entry D_80152CA0[];
 extern char D_801432C4_152274;
 extern char D_80143304_1522B4;
+extern char D_80143344_1522F4;
 extern char D_80143390_152340;
 extern char D_801433D8_152388;
 extern char D_80143430_1523E0;
