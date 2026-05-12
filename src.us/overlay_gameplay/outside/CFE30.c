@@ -1017,7 +1017,75 @@ void func_800C4AA0_D3A50(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4F48_D3EF8.s")
 
+// CURRENT(4420)
+#ifdef NON_MATCHING
+void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10,
+						 u8 arg11, u8 arg12) {
+	f32 sp44;
+	f32 sp48;
+	f32 sp4C;
+	s32 effect;
+	s32 i;
+	u8 spawnCount;
+	s16 idx;
+	Unk801541F8Entry *sfx;
+	Unk80154318Entry *entry;
+	extern char D_80143504_1524B4;
+
+	spawnCount = arg8;
+	if (spawnCount >= 0x29) {
+		spawnCount = 0x28;
+	}
+
+	if ((D_80156ED8 == 1) || (D_80156ED8 == 2) || ((0x230 - spawnCount) < ((((s32)D_8005BB30 - (s32)D_8005BB20) - 0xE380) >> 3))) {
+		spawnCount = 0;
+	}
+
+	if ((spawnCount == 0) || (func_800B93AC_C835C(arg0, arg2, 0x96, (s16)(s32)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) == 0)) {
+		return;
+	}
+
+	effect = func_800C14D4_D0484(2);
+	if (effect == 0xFB) {
+		return;
+	}
+
+	idx = func_800C17B4_D0764(effect & 0xFF, 0);
+	if (idx == -3) {
+		osSyncPrintf(&D_80143504_1524B4);
+		func_800C1384_D0334(effect & 0xFF);
+		return;
+	}
+
+	sfx = &D_80154088[effect];
+	entry = &D_80154318[idx];
+
+	sfx->unk1 = sfx->unk1;
+	sfx->unkA = idx;
+
+	entry->unk8 = arg0;
+	entry->unkA = arg1;
+	entry->unkC = arg2;
+	entry->unk12 = 1;
+	entry->unk2 = arg9;
+	entry->unkE = arg10;
+	entry->unkF = arg11;
+	entry->unk10 = arg12;
+
+	sp44 = arg3;
+	sp48 = arg4;
+	sp4C = arg5;
+	func_800C1024_CFFD4((Vec3f *)&sp44, (Vec3f *)&sp44);
+
+	i = 0;
+	while (i < spawnCount) {
+		func_800C4F48_D3EF8(effect & 0xFF, (s32)&sp44, arg6 & 0xFF, arg7 & 0xFF);
+		i = (i + 1) & 0xFF;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C541C_D43CC.s")
+#endif
 
 // CURRENT(1788)
 #ifdef NON_MATCHING
