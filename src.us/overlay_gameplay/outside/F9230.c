@@ -2821,7 +2821,78 @@ void func_800FB4A0_10A450(s16 arg0, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FB504_10A4B4.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(4786) */
+s32 func_800FC1CC_10B17C(void) {
+	s32 bestDist;
+	s16 i;
+	s16 count;
+	VehicleInstance *playerVehicle;
+
+	bestDist = 0x7FFFFFFF;
+	playerVehicle = D_80052B20;
+	count = D_80158FD8;
+
+	if (D_80159320 & 2) {
+		return 0;
+	}
+
+	if (count != 0) {
+		i = count - 1;
+		do {
+			u8 index = D_80158E80[i];
+			VehicleInstance *vehicle = &vehicleInstances[index];
+
+			if (vehicle->unk1A != 0x12) {
+				if (vehicle != D_80052B34) {
+					s32 x = (playerVehicle->unk0 - vehicle->unk0) >> 4;
+					s32 y = (playerVehicle->unk2 - vehicle->unk2) >> 4;
+					s32 z = (playerVehicle->unk4 - vehicle->unk4) >> 4;
+					s32 dist = (x * x) + (y * y) + (z * z);
+
+					if (dist < bestDist) {
+						bestDist = dist;
+						D_80158F8C = vehicle;
+					}
+				}
+			}
+		} while (i-- != 0);
+	}
+
+	if (bestDist >= 0x384) {
+		if ((u32)(D_80052A8C - D_801409E8_14F998) >= 0x3D) {
+			func_8001A650_1B250(0xD);
+			D_801409E8_14F998 = D_80052A8C;
+			D_80158F8C = 0;
+		}
+		return 0;
+	}
+
+	i = 0xB;
+	do {
+		f32 *pos = (f32 *)((u8 *)D_801593F0 + (i * 0x18));
+
+		pos[0] = playerVehicle->unk0;
+		pos[1] = playerVehicle->unk2;
+		pos[2] = playerVehicle->unk4;
+		pos[3] = 0.0f;
+		pos[4] = 0.0f;
+		pos[5] = 0.0f;
+	} while (i-- != 0);
+
+	func_8001A650_1B250(9);
+	D_80159188.x = 0.0f;
+	D_80159188.y = 0.0f;
+	D_80159188.z = 0.0f;
+	D_80158E60 = 400.0f;
+	D_80159320 |= 2;
+	D_80159320 &= 0x7FFFFFFF;
+
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FC1CC_10B17C.s")
+#endif
 
 void func_800FC434_10B3E4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s16 arg8, s16 arg9) {
 	Vtx *vtx0;
