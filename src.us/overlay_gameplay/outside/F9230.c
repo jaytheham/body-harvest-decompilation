@@ -3554,7 +3554,46 @@ void func_80107890_116840(VehicleInstance *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80107970_116920.s")
 
+// CURRENT(1435)
+#ifdef NON_MATCHING
+void func_80107EBC_116E6C(VehicleInstance *arg0) {
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s16 pad4;
+	s32 offset;
+	s16 trig;
+	f32 varX;
+	f32 varY;
+	f64 dOffset;
+
+	offset = *((s8 *)&vehicleSpecs[arg0->unk1A] + 0x52) * 4;
+	trig = coss((u16)arg0->unkE);
+	varX = (f32)((((f64)(f32)coss((u16)arg0->unk10) / 32768.0) * ((f64)(f32)trig / 32768.0) * (f64)arg0->unk58) + (f64)arg0->unk4C + (f64)arg0->unk30);
+
+	trig = sins((u16)arg0->unkE);
+	varY = (f32)((((f64)(f32)coss((u16)arg0->unk10) / 32768.0) * ((f64)(f32)trig / 32768.0) * (f64)arg0->unk58) + (f64)arg0->unk54 + (f64)arg0->unk38);
+
+	if (arg0->unk20 & 2) {
+		func_800FB3E8_10A398(arg0, (f32)((((f64)(f32)sins((u16)arg0->unk10) / 32768.0) * (f64)arg0->unk58) + (f64)arg0->unk34));
+	}
+
+	if (offset != 0) {
+		dOffset = (f64)offset;
+		varX = (f32)((f64)varX - (((f64)(f32)coss((u16)(arg0->unk6 + arg0->unk22)) / 32768.0) * dOffset));
+		varY = (f32)((f64)varY - (((f64)(f32)sins((u16)(arg0->unk6 + arg0->unk22)) / 32768.0) * dOffset));
+
+		varX = (f32)((f64)varX + (((f64)(f32)coss((u16)arg0->unk6) / 32768.0) * dOffset));
+		varY = (f32)((f64)varY + (((f64)(f32)sins((u16)arg0->unk6) / 32768.0) * dOffset));
+	}
+
+	func_800FB44C_10A3FC(arg0, varX);
+	func_800FB484_10A434(arg0, varY);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80107EBC_116E6C.s")
+#endif
 
 s16 func_80108138_1170E8(s16 arg0, s16 arg1, s16 arg2) {
 	s16 sp1E;
