@@ -772,7 +772,77 @@ void func_800EABE0_F9B90(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EABE0_F9B90.s")
 #endif
 
+#ifdef NON_MATCHING
+/* CURRENT(250) */
+void func_800EADF8_F9DA8(VehicleInstance *arg0, s16 arg1) {
+	s32 flags;
+	s32 state;
+	s16 curDir;
+	s16 directionDiff;
+	s16 tempDiv;
+	s32 index;
+
+	flags = D_80157A28 & 4;
+
+	if (flags == 4) {
+		if (D_80157A0C != 0x64) {
+			func_800EB534_FA4E4(&D_80157600, 0x64, 0, 0);
+			flags = D_80157A28 & 4;
+		}
+	} else {
+		state = D_80157A0C;
+		if ((state != 0x61) && (state != 0x62) && (state != 0x63)) {
+			func_800EB534_FA4E4(&D_80157600, 0x61, 0, 0);
+			flags = D_80157A28 & 4;
+		}
+	}
+
+	if (flags == 4) {
+		D_801575D4 = 0x5DC;
+		curDir = arg0->unkE;
+		directionDiff = curDir - arg1;
+	} else {
+		curDir = arg0->unkE;
+		state = D_80157A0C;
+		directionDiff = curDir - arg1;
+
+		if ((directionDiff < -0x4000) && (state != 0x63) && (flags == 0)) {
+			func_800EB534_FA4E4(&D_80157600, 0x63, 0, 0);
+			tempDiv = arg1 - arg0->unkE;
+			D_801575D4 = tempDiv / 10;
+			curDir = arg0->unkE;
+			directionDiff = curDir - arg1;
+		} else if ((directionDiff >= 0x4001) && (state != 0x62) && (flags == 0)) {
+			func_800EB534_FA4E4(&D_80157600, 0x62, 0, 0);
+			tempDiv = arg0->unkE - arg1;
+			D_801575D4 = tempDiv / 10;
+			curDir = arg0->unkE;
+			directionDiff = curDir - arg1;
+		} else {
+			index = state << 2;
+			index = index - state;
+			index = (index << 2) + state;
+			index <<= 2;
+
+			if (!(((u32 *)D_8013E5B0_14D560)[index >> 2] & 0x100)) {
+				D_801575D4 = 0x5DC;
+				curDir = arg0->unkE;
+				directionDiff = curDir - arg1;
+			}
+		}
+	}
+
+	if (directionDiff < -D_801575D4) {
+		arg0->unkE = curDir + D_801575D4;
+	} else if (D_801575D4 < directionDiff) {
+		arg0->unkE = curDir - D_801575D4;
+	} else {
+		arg0->unkE = arg1;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EADF8_F9DA8.s")
+#endif
 
 void func_800EB05C_FA00C(void) {
 	osSyncPrintf(&D_801442F0_1532A0); // Player start swimming
@@ -4951,3 +5021,4 @@ void func_80115CC0_124C70(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80115CC0_124C70.s")
 #endif
+
