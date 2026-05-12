@@ -2358,7 +2358,40 @@ s16 func_800F9FAC_108F5C(s16 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FA018_108FC8.s")
 
+#ifdef NON_MATCHING
+/* CURRENT(281) */
+s32 func_800FA40C_1093BC(VehicleInstance *vehicle, s16 angle, s32 distance) {
+	VehicleSpec *spec;
+	s16 height0;
+	s16 height1;
+	f32 xOffset;
+	f32 zOffset;
+	f64 halfDistance;
+	u16 savedAngle;
+
+	savedAngle = angle;
+	spec = &vehicleSpecs[vehicle->unk1A];
+	xOffset = (f32)(((f64)(f32)coss(savedAngle) / 32768.0) * (halfDistance = (f64)(distance >> 1)));
+	zOffset = (f32)(((f64)(f32)sins(savedAngle) / 32768.0) * halfDistance);
+	height0 = (s16)(func_800B85CC_C757C((s16)(s32)((f32)vehicle->unk0 - xOffset), (s16)(s32)((f32)vehicle->unk4 - zOffset)) >> 8);
+	height1 = (s16)(func_800B85CC_C757C((s16)(s32)((f32)vehicle->unk0 + xOffset), (s16)(s32)((f32)vehicle->unk4 + zOffset)) >> 8);
+	if ((vehicle == D_80052B34) && (D_80159320 & 0x400)) {
+		func_800F9CB0_108C60((s16)(s32)((f32)vehicle->unk0 - xOffset), &height0, (s16)(s32)((f32)vehicle->unk4 - zOffset));
+		func_800F9CB0_108C60((s16)(s32)((f32)vehicle->unk0 + xOffset), &height1, (s16)(s32)((f32)vehicle->unk4 + zOffset));
+	}
+	if (!(spec->unk4C & 0x100)) {
+		if (D_80222A70 >= height0) {
+			height0 = (s16)D_80222A70;
+		}
+		if (D_80222A70 >= height1) {
+			height1 = (s16)D_80222A70;
+		}
+	}
+	return func_80003824_4424((f32)distance, (f32)(height0 - height1));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FA40C_1093BC.s")
+#endif
 
 #ifdef NON_MATCHING
 s16 func_800FA690_109640(s16 arg0, s16 arg1, s16 arg2) {
