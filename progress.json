@@ -1,14 +1,14 @@
 {
-  "generated": "2026-05-12T07:58:10Z",
-  "commit": "144471f9",
-  "commit_timestamp": "2026-05-12T19:57:53+12:00",
+  "generated": "2026-05-12T19:54:07Z",
+  "commit": "65ed8a5d",
+  "commit_timestamp": "2026-05-13T07:53:45+12:00",
   "overall": {
     "total_functions": 2675,
     "matched": 1316,
-    "non_matching": 761,
-    "asm_stubs": 598,
+    "non_matching": 768,
+    "asm_stubs": 591,
     "matched_pct": 49.2,
-    "decompiled_pct": 77.64
+    "decompiled_pct": 77.91
   },
   "segments": {
     "core": {
@@ -32,11 +32,11 @@
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
       "matched": 768,
-      "non_matching": 334,
-      "asm_stubs": 344,
+      "non_matching": 341,
+      "asm_stubs": 337,
       "total": 1446,
       "matched_pct": 53.1,
-      "decompiled_pct": 76.2
+      "decompiled_pct": 76.7
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -338,8 +338,8 @@
       "path": "overlay_gameplay/outside/884C0.c",
       "segment": "overlay_gameplay/outside",
       "matched": 146,
-      "non_matching": 54,
-      "asm_stubs": 48,
+      "non_matching": 57,
+      "asm_stubs": 45,
       "total": 248,
       "matched_pct": 58.9,
       "contributor": "jaytheham"
@@ -448,8 +448,8 @@
       "path": "overlay_gameplay/outside/F9230.c",
       "segment": "overlay_gameplay/outside",
       "matched": 132,
-      "non_matching": 64,
-      "asm_stubs": 77,
+      "non_matching": 68,
+      "asm_stubs": 73,
       "total": 273,
       "matched_pct": 48.4,
       "contributor": "jaytheham"
@@ -550,8 +550,8 @@
       "name": "jaytheham",
       "files": 43,
       "matched": 1310,
-      "non_matching": 761,
-      "asm_stubs": 528
+      "non_matching": 768,
+      "asm_stubs": 521
     },
     {
       "name": "Meridian Lex",
@@ -662,9 +662,9 @@
     },
     {
       "date": "2026-05-10",
-      "commit": "f3d772b",
+      "commit": "49480da",
       "matched": 1316,
-      "non_matching": 761,
+      "non_matching": 768,
       "total": 2675
     }
   ]
