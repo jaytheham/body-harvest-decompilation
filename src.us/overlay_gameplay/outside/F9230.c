@@ -2781,122 +2781,127 @@ void func_800FC434_10B3E4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 }
 
+#ifdef NON_MATCHING
+/* CURRENT(4375) */
 void func_800FC568_10B518(void) {
+	Vtx *ptr_a1;
+	s32 counter;
+	u8 color_r, color_g, color_b, color_a;
 	s32 i;
-	Vec3f *data_ptr;
-	Vtx *vtx;
-	Gfx *gfx;
-	Vtx *vtx_start;
+	s32 j;
+	Vec3fPadded *ptr_a2;
 
-	vtx_start = D_8005BB34;
+	ptr_a1 = D_8005BB34;
+	counter = 11;
+	ptr_a2 = D_801593F0;
+	color_r = 0x8E;
+	color_g = 0x63;
+	color_b = 0x3C;
+	color_a = 0xFF;
 
-	for (i = 11; i >= 0; i--) {
-		data_ptr = &D_801593F0[i].pos;
+	do {
+		j = counter;
+		counter--;
 		
-		vtx = D_8005BB34;
-		vtx->v.ob[0] = (s16)data_ptr->x;
+		ptr_a1 = D_8005BB34;
+		ptr_a1->v.ob[0] = (s16)ptr_a2[j].pos.x;
 		
-		vtx = D_8005BB34;
-		vtx->v.ob[1] = (s16)data_ptr->y;
+		ptr_a1 = D_8005BB34;
+		ptr_a1->v.ob[1] = (s16)ptr_a2[j].pos.y;
 		
-		vtx = D_8005BB34;
-		vtx->v.ob[2] = (s16)data_ptr->z;
+		ptr_a1 = D_8005BB34;
+		ptr_a1->v.ob[2] = (s16)ptr_a2[j].pos.z;
 		
-		vtx = D_8005BB34;
-		*(u16 *)&((u8*)vtx)[6] = 0;
+		ptr_a1 = D_8005BB34;
+		ptr_a1->v.ob[3] = 0;
 		
-		vtx = D_8005BB34;
-		*(u16 *)&((u8*)vtx)[8] = 0;
+		ptr_a1 = D_8005BB34;
+		ptr_a1->v.ob[4] = 0;
 		
-		vtx = D_8005BB34;
-		*(u16 *)&((u8*)vtx)[10] = 0;
+		ptr_a1 = D_8005BB34;
+		ptr_a1->v.ob[5] = 0;
 		
-		vtx = D_8005BB34;
-		vtx->v.cn[0] = 0x8E;
+		ptr_a1 = D_8005BB34;
+		ptr_a1->v.cn[0] = color_r;
 		
-		vtx = D_8005BB34;
-		vtx->v.cn[1] = 0x63;
+		ptr_a1 = D_8005BB34;
+		ptr_a1->v.cn[1] = color_g;
 		
-		vtx = D_8005BB34;
-		vtx->v.cn[2] = 0x3C;
+		ptr_a1 = D_8005BB34;
+		ptr_a1->v.cn[2] = color_b;
 		
-		vtx = D_8005BB34;
-		vtx->v.cn[3] = 0xFF;
+		ptr_a1 = D_8005BB34;
+		ptr_a1->v.cn[3] = color_a;
 		
-		vtx = D_8005BB34;
-		D_8005BB34 = (Vtx *)((u8 *)vtx + 16);
+		ptr_a1 = D_8005BB34;
+		D_8005BB34 = (Vtx *)((u8 *)ptr_a1 + 16);
+	} while (j);
+
+	{
+		Vtx *saved_ptr;
+		Gfx *g;
+		
+		saved_ptr = ptr_a1;
+		g = D_8005BB30++;
+		g->words.w0 = 0xE7000000;
+		g->words.w1 = 0;
+		
+		g = D_8005BB30++;
+		g->words.w0 = 0x040030BF;
+		g->words.w1 = (u32)saved_ptr & 0x1FFFFFFF;
+		
+		g = D_8005BB30++;
+		g->words.w0 = 0xB5000000;
+		g->words.w1 = 0x200;
+		
+		g = D_8005BB30++;
+		g->words.w0 = 0xB5000000;
+		g->words.w1 = 0x20400;
+		
+		g = D_8005BB30++;
+		g->words.w0 = 0xB5000000;
+		g->words.w1 = 0x40600;
+		
+		g = D_8005BB30++;
+		g->words.w0 = 0xB5000000;
+		g->words.w1 = 0x60800;
+		
+		g = D_8005BB30++;
+		g->words.w0 = 0xB5000000;
+		g->words.w1 = 0x80A00;
+		
+		g = D_8005BB30++;
+		g->words.w0 = 0xB5000000;
+		g->words.w1 = 0xA0C00;
+		
+		g = D_8005BB30++;
+		g->words.w0 = 0xB5000000;
+		g->words.w1 = 0xC0E00;
+		
+		g = D_8005BB30++;
+		g->words.w0 = 0xB5000000;
+		g->words.w1 = 0x121400;
+		
+		g = D_8005BB30++;
+		g->words.w0 = 0xB5000000;
+		g->words.w1 = 0xE1000;
+		
+		g = D_8005BB30++;
+		g->words.w0 = 0xB5000000;
+		g->words.w1 = 0x101200;
+		
+		g = D_8005BB30++;
+		g->words.w0 = 0xB5000000;
+		g->words.w1 = 0x141600;
+		
+		g = D_8005BB30++;
+		g->words.w0 = 0xE7000000;
+		g->words.w1 = 0;
 	}
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0xE7000000;
-	gfx->words.w1 = 0;
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0x040030BF;
-	gfx->words.w1 = (u32)vtx_start & 0x1FFFFFFF;
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0xB5000000;
-	gfx->words.w1 = 0x200;
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0xB5000000;
-	gfx->words.w1 = 0x20400;
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0xB5000000;
-	gfx->words.w1 = 0x40600;
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0xB5000000;
-	gfx->words.w1 = 0x60800;
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0xB5000000;
-	gfx->words.w1 = 0x80A00;
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0xB5000000;
-	gfx->words.w1 = 0xA0C00;
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0xB5000000;
-	gfx->words.w1 = 0xC0E00;
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0xB5000000;
-	gfx->words.w1 = 0xE1000;
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0xB5000000;
-	gfx->words.w1 = 0x101200;
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0xB5000000;
-	gfx->words.w1 = 0x121400;
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0xB5000000;
-	gfx->words.w1 = 0x141600;
-	
-	gfx = D_8005BB30;
-	D_8005BB30++;
-	gfx->words.w0 = 0xE7000000;
-	gfx->words.w1 = 0;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FC568_10B518.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {

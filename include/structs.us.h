@@ -88,11 +88,6 @@ typedef struct {
 } Vec3f; /* size = 0x0C */
 
 typedef struct {
-	/* 0x00 */ Vec3f pos;
-	/* 0x0C */ u8 pad[0x0C];
-} Vec3fPadded; /* size = 0x18 */
-
-typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;

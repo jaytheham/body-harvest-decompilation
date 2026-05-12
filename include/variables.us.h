@@ -1748,7 +1748,6 @@ extern s16 D_80159328[0x20];
 extern s16 D_80159368[0x20];
 extern s16 D_801593A8[0x20];
 extern s16 D_801593E8;
-extern Vec3fPadded D_801593F0[12];
 extern s16 D_801591D4;
 extern s32 D_800476C0;
 extern s32 __additional_scanline;
