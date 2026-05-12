@@ -3119,7 +3119,35 @@ void func_800D90A4_E8054(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D90A4_E8054.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9294_E8244.s")
+void func_800D9294_E8244(void) {
+	s16 var_s2;
+
+	var_s2 = D_801542E2;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xF0, 0xF5, 0xFF, 0xFF);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, ((u32)D_100ACF0 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 2048);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 1, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x3C, 0x3C);
+	gDPPipeSync(D_8005BB2C++);
+
+	D_80153BC4 = &D_80153B80, D_80153BCD = 0x10, D_80153BCE = 0x10, D_80153BCC = 0xFF;
+
+	while ((var_s2 != -5) && (var_s2 != -6)) {
+		D_80153BB8.x = (f32)D_80154318[var_s2].unk8;
+		D_80153BB8.y = (f32)D_80154318[var_s2].unkA;
+		D_80153BB8.z = (f32)D_80154318[var_s2].unkC;
+		D_80153BC8 = (f32)D_80154318[var_s2].unk2;
+		func_800DB350_EA300();
+		D_80156EDA += 4;
+		var_s2 = D_80154318[var_s2].unk4;
+	}
+}
 
 s16 func_800D951C_E84CC(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7) {
 	s16 temp_v0;
