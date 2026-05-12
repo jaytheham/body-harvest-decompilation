@@ -1514,6 +1514,10 @@ extern u8 D_80152740[];
 extern s16 D_80157590; // outside camera status
 extern s16 D_80157A3C;
 extern s16 D_80157A3E;
+extern s32 D_80157A28;
+extern s32 D_80157A0C;
+extern s32 D_801575D4;
+extern s16 D_80157A2C;
 extern VehicleInstance *D_80159020;
 extern AlienInstance *D_80158FEC; // Target alien instance
 extern s16 *D_80158FF4;
