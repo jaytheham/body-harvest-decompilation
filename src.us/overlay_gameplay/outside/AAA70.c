@@ -157,7 +157,95 @@ void func_8009BDB8_AAD68(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009BDB8_AAD68.s")
 #endif
 
+// CURRENT(920)
+#ifdef NON_MATCHING
+void func_8009BF64_AAF14(u16 arg0) {
+	u8 sp47;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s32 pad6;
+	s32 pad7;
+	s32 sp1C;
+	s32 sp18;
+	s32 temp_t6;
+	s32 var_a3;
+	u16 *arg0Ptr;
+	Gfx *dl;
+
+	arg0Ptr = &arg0;
+	sp47 = (u8) ((s32) *arg0Ptr / 60);
+	arg0 = (u16) ((s32) *arg0Ptr % 60);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB6000000;
+	dl->words.w1 = 1;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0x80008000;
+	dl->words.w0 = 0xBB000001;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xBA001301;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0x005041C8;
+	dl->words.w0 = 0xB900031D;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xE7000000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xBA000E02;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFCFFB3FF;
+	dl->words.w1 = 0xFF65FEFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFA000000;
+	dl->words.w1 = 0x325AE6FF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xE7000000;
+
+	func_8009BDB8_AAD68(0x1E, sp47);
+	if ((u32) ((u32) D_80052A8C % 20U) < 0xAU) {
+		func_8009BDB8_AAD68(0x29, 0xAU);
+	}
+
+	if ((s32) arg0 < 0xA) {
+		sp1C = (s32) arg0;
+		func_8009BDB8_AAD68(0x32, 0U);
+		var_a3 = ((s32) sp1C % 10) & 0xFF;
+	} else {
+		temp_t6 = ((s32) arg0 % 10) & 0xFF;
+		sp18 = temp_t6;
+		func_8009BDB8_AAD68(0x32, ((s32) (arg0 - temp_t6) / 10) & 0xFF);
+		var_a3 = sp18;
+	}
+
+	func_8009BDB8_AAD68(0x41, var_a3 & 0xFF);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009BF64_AAF14.s")
+#endif
 
 // drawWaypointMarker ?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009C1D8_AB188.s")
