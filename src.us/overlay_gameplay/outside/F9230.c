@@ -1022,7 +1022,71 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s")
 #endif
 
+// CURRENT(3656)
+#ifdef NON_MATCHING
+void func_800EC0D0_FB080(s32 arg0) {
+	s16 sp46;
+	s16 sp44;
+	s16 sp42;
+	s16 sp40;
+	s16 sp3A;
+	f32 sp2C;
+	f32 sp28;
+	s32 temp_f6;
+	u8 *temp_v1;
+
+	D_80048188 = 1;
+	D_801575E0.unk0 = 2;
+	D_801575E0.unk4 = 0;
+	D_801575E0.unk2 = 2;
+	if (D_80157F68 <= 0) {
+		temp_v1 = (u8 *)D_80148390_157340 + ((u8 *)func_801164C4_125474(D_80052542, D_80052546))[8] * 0x18;
+		if (*(s32 *)temp_v1 == 0) {
+			if (D_80157F68 <= 0) {
+				gameplayMode = 6;
+				D_80048188 = 0;
+			}
+		} else {
+			if (*(s16 *)(temp_v1 + 0x12) == 3) {
+				D_801575E0.unk16 = 0x37;
+			} else {
+				D_801575E0.unk16 = 0x36;
+			}
+			func_801165FC_1255AC(D_80052543, D_80052547, &sp46, &sp44, &sp42, &sp40);
+			temp_f6 = (s32)(((f64)(f32)sp40 * D_80144470_153420) / 32768.0);
+			if ((temp_f6 == -0x10E) || (temp_f6 == 0x5A)) {
+				sp3A = 0;
+				sp2C = -75.0f;
+				sp28 = 0.0f;
+			} else if ((temp_f6 == -0xB4) || (temp_f6 == 0xB4)) {
+				sp3A = -0x4000;
+				sp2C = 0.0f;
+				sp28 = 75.0f;
+			} else if ((temp_f6 == -0x5A) || (temp_f6 == 0x10E)) {
+				sp3A = -0x8000;
+				sp2C = 75.0f;
+				sp28 = 0.0f;
+			} else if ((temp_f6 == 0) || (temp_f6 == 0x168)) {
+				sp3A = 0x4000;
+				sp2C = 0.0f;
+				sp28 = -75.0f;
+			} else {
+				osSyncPrintf(D_80144354_153304, temp_f6);
+			}
+			D_801575E0.unk6 = (s16)(sp46 + (s32)sp2C);
+			D_801575E0.unkE = (s16)(sp42 + (s32)sp28);
+			D_801575E0.unk8 = 0x7FFF;
+			D_801575E0.unkC = 0x7FFF;
+			D_801575E0.unk10 = 0x7FFF;
+			D_801575E0.unkA = sp44;
+			D_801575E0.unk12 = sp3A;
+		}
+	}
+	(void)arg0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC0D0_FB080.s")
+#endif
 
 void func_800EC330_FB2E0(void) {
 	Unk800522C0 *temp_v0;
@@ -4324,7 +4388,72 @@ s32 func_8010FF84_11EF34(VehicleInstance *arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010FF84_11EF34.s")
 #endif
 
+// CURRENT(1710)
+#ifdef NON_MATCHING
+s32 func_80110144_11F0F4(VehicleInstance *arg0, s32 arg1) {
+	extern u8 D_80158F80;
+	extern f32 D_80159D84;
+	extern f32 D_80159DA4;
+	s32 func_800BD688_CC638(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3);
+	void func_800C4938_D38E8(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4);
+	f32 *var_s2;
+	f32 *var_s3;
+	s16 temp_v0;
+	s32 var_s4;
+	s32 var_v0;
+	s32 i;
+
+	var_s2 = &D_80159D84;
+	var_s3 = &D_80159DA4;
+
+	i = 3;
+	while (1) {
+		var_s4 = func_800B0D10_BFCC0((s32) (*var_s2 + arg0->unk4C), (s32) (*var_s3 + arg0->unk54), 0);
+		if ((var_s4 != 0) &&
+			(func_800BD688_CC638((s16) (s32) (*var_s2 + arg0->unk4C), (s16) (s32) arg0->unk50, (s16) (s32) (*var_s3 + arg0->unk54), arg0) != 0)) {
+			if (arg1 == 0) {
+				temp_v0 = func_800B0DF4_BFDA4((s32) (*var_s2 + arg0->unk4C), (s32) (*var_s3 + arg0->unk54), 0, var_s4);
+				if ((temp_v0 == 0x4000) || (temp_v0 == -0x4000)) {
+					var_s4 = 1;
+					if (temp_v0 == 0x4000) {
+						var_v0 = 0x32;
+					} else {
+						var_v0 = -0x32;
+					}
+					arg0->unk30 += (f32) var_v0;
+				} else {
+					var_s4 = 0;
+					if (temp_v0 != 0) {
+						var_v0 = 0x32;
+					} else {
+						var_v0 = -0x32;
+					}
+					arg0->unk38 += (f32) var_v0;
+				}
+
+				if ((arg0 == D_80052B34) && (D_80158F80 == 0)) {
+					D_80158F80 = 6;
+					func_800C4938_D38E8((s16) (s32) (*var_s2 + arg0->unk4C), (s16) (arg0->unk2 + 0x2D), (s16) (s32) (*var_s3 + arg0->unk54), var_s4, 0x78);
+					func_800EBD5C_FAD0C(temp_v0);
+				}
+			}
+
+			return 10;
+		}
+
+		var_s2--;
+		var_s3--;
+		if (i-- != 0) {
+			continue;
+		}
+		break;
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80110144_11F0F4.s")
+#endif
 
 void func_801103B4_11F364(VehicleInstance *arg0, VehicleSpec *arg1) {
 	BeaconDisplayEntry *entry;

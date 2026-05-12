@@ -151,7 +151,74 @@ void func_80133288_142238(Unk80160080 *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801333D0_142380.s")
 
+// CURRENT(6064)
+#ifdef NON_MATCHING
+void func_801336CC_14267C(Unk80160080 *arg0, Vec3f *arg1) {
+	f32 sp44;
+	f64 sp20;
+	f32 temp_f0;
+	f32 temp_f12;
+	f32 temp_f2;
+	f32 temp_f14;
+	f32 temp_f16;
+	s16 temp_s0;
+	s32 temp_a0;
+	s32 temp_v0;
+	s32 var_v1;
+	VehicleInstance *temp_v1;
+
+	temp_v1 = D_80159020;
+	temp_f16 = (f32) temp_v1->unk2;
+	temp_f14 = (f32) temp_v1->unk0;
+	sp44 = temp_f16 - arg1->y;
+	temp_f0 = temp_f14 - arg1->x;
+	temp_f2 = (f32) temp_v1->unk4 - arg1->z;
+	temp_f12 = sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
+	if ((D_801600F0 == 0) || (D_80140CFC_14FCAC != 0)) {
+		s16 temp_v1_2;
+
+		temp_v1_2 = D_80140CFC_14FCAC;
+		arg0->unk5C = (s16) -func_80003824_4424(temp_f12, sp44);
+		arg0->unk5A = (s16) D_80159318;
+		if (temp_v1_2 != 0) {
+			D_80140CFC_14FCAC = temp_v1_2 - 1;
+		} else {
+			D_80140CFC_14FCAC = 1;
+		}
+	}
+	temp_v0 = func_80132730_1416E0(D_80159318, arg0->unk5A);
+	if (temp_v0 < -0xE38) {
+		temp_a0 = -0xE38 - temp_v0;
+		if (temp_a0 < 0x16D) {
+			var_v1 = temp_a0;
+		} else {
+			var_v1 = 0x16C;
+		}
+		arg0->unk5A = (s16) (arg0->unk5A + var_v1);
+		arg0->unk5C = (s16) (arg0->unk5C - var_v1);
+	}
+	if (temp_v0 >= 0xE39) {
+		temp_a0 = temp_v0 - 0xE38;
+		if (temp_a0 < 0x16D) {
+			var_v1 = temp_a0;
+		} else {
+			var_v1 = 0x16C;
+		}
+		arg0->unk5A = (s16) (arg0->unk5A - var_v1);
+		arg0->unk5C = (s16) (arg0->unk5C + var_v1);
+	}
+	temp_s0 = arg0->unk58;
+	arg0->unk54 = 0;
+	arg0->unk50 = (s16) (0x4000 - temp_s0);
+	arg0->unk52 = (s16) arg0->unk5C;
+	sp20 = (f64) 100.0f;
+	arg0->unk24 = (f32) ((((f64) (f32) coss(temp_s0 & 0xFFFF) / 32768.0) * sp20) + (f64) arg1->x);
+	arg0->unk28 = (f32) ((((f64) (f32) sins(-arg0->unk5C & 0xFFFF) / 32768.0) * sp20) + (f64) arg1->y);
+	arg0->unk2C = (f32) ((((f64) (f32) sins((u16) arg0->unk58) / 32768.0) * sp20) + (f64) arg1->z);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801336CC_14267C.s")
+#endif
 
 void func_80133934_1428E4(Unk80160080 *arg0) {
 	if (D_801493D0 != 0) {
