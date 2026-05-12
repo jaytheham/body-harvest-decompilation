@@ -2781,7 +2781,122 @@ void func_800FC434_10B3E4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FC568_10B518.s")
+void func_800FC568_10B518(void) {
+	s32 i;
+	Vec3f *data_ptr;
+	Vtx *vtx;
+	Gfx *gfx;
+	Vtx *vtx_start;
+
+	vtx_start = D_8005BB34;
+
+	for (i = 11; i >= 0; i--) {
+		data_ptr = &D_801593F0[i].pos;
+		
+		vtx = D_8005BB34;
+		vtx->v.ob[0] = (s16)data_ptr->x;
+		
+		vtx = D_8005BB34;
+		vtx->v.ob[1] = (s16)data_ptr->y;
+		
+		vtx = D_8005BB34;
+		vtx->v.ob[2] = (s16)data_ptr->z;
+		
+		vtx = D_8005BB34;
+		*(u16 *)&((u8*)vtx)[6] = 0;
+		
+		vtx = D_8005BB34;
+		*(u16 *)&((u8*)vtx)[8] = 0;
+		
+		vtx = D_8005BB34;
+		*(u16 *)&((u8*)vtx)[10] = 0;
+		
+		vtx = D_8005BB34;
+		vtx->v.cn[0] = 0x8E;
+		
+		vtx = D_8005BB34;
+		vtx->v.cn[1] = 0x63;
+		
+		vtx = D_8005BB34;
+		vtx->v.cn[2] = 0x3C;
+		
+		vtx = D_8005BB34;
+		vtx->v.cn[3] = 0xFF;
+		
+		vtx = D_8005BB34;
+		D_8005BB34 = (Vtx *)((u8 *)vtx + 16);
+	}
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0xE7000000;
+	gfx->words.w1 = 0;
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0x040030BF;
+	gfx->words.w1 = (u32)vtx_start & 0x1FFFFFFF;
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0xB5000000;
+	gfx->words.w1 = 0x200;
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0xB5000000;
+	gfx->words.w1 = 0x20400;
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0xB5000000;
+	gfx->words.w1 = 0x40600;
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0xB5000000;
+	gfx->words.w1 = 0x60800;
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0xB5000000;
+	gfx->words.w1 = 0x80A00;
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0xB5000000;
+	gfx->words.w1 = 0xA0C00;
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0xB5000000;
+	gfx->words.w1 = 0xC0E00;
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0xB5000000;
+	gfx->words.w1 = 0xE1000;
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0xB5000000;
+	gfx->words.w1 = 0x101200;
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0xB5000000;
+	gfx->words.w1 = 0x121400;
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0xB5000000;
+	gfx->words.w1 = 0x141600;
+	
+	gfx = D_8005BB30;
+	D_8005BB30++;
+	gfx->words.w0 = 0xE7000000;
+	gfx->words.w1 = 0;
+}
 
 #ifdef NON_MATCHING
 void func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
