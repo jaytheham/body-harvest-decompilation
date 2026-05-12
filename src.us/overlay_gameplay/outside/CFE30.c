@@ -1013,7 +1013,64 @@ void func_800C4AA0_D3A50(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4AA0_D3A50.s")
 #endif
 
+extern s16 D_801541FE;
+extern u16 D_100E280[];
+
+void func_800DB714_EA6C4(void);
+void func_800DBA9C_EAA4C(void);
+
+// CURRENT(0)
+#ifdef NON_MATCHING
+void func_800C4CB8_D3C68(void) {
+	Unk80154318Entry *entry;
+	u8 *entryBytes;
+	s16 index;
+
+	D_80153BCD = 0x20;
+	D_80153BCE = 0x20;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, ((u32) D_100E280 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+
+	index = D_801541FE;
+	if ((index != -5) && (index != -6)) {
+		while (1) {
+			entry = &D_80154318[index];
+			entryBytes = (u8 *) entry;
+			D_80153BB8.x = (f32) entry->unk8;
+			D_80153BC4 = &entry->unkE;
+			D_80153BCC = entryBytes[0x12];
+			D_80153BB8.y = (f32) entry->unkA;
+			D_80153BB8.z = (f32) entry->unkC;
+			D_80153BC8 = (f32) entry->unk2;
+
+			if (entryBytes[0x13] == 0) {
+				func_800DB714_EA6C4();
+			} else {
+				func_800DBA9C_EAA4C();
+			}
+
+			D_80156EDA += 4;
+			index = entry->unk4;
+			if ((index == -5) || (index == -6)) {
+				break;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4CB8_D3C68.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4F48_D3EF8.s")
 
