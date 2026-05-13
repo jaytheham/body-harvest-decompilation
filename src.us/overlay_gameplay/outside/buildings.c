@@ -2123,7 +2123,52 @@ void func_80120BC4_12FB74(BuildingInstance *arg0) {
 	func_801206B0_12F660();
 }
 
+// CURRENT(5208)
+#ifdef NON_MATCHING
+void func_80120D6C_12FD1C(BuildingInstance *arg0) {
+	s32 count;
+	s32 j;
+	s32 tcY;
+	s32 zOffset;
+	s32 yOffset;
+	s32 tcX;
+	Vtx *vtx;
+
+	count = 4;
+	zOffset = 0x50;
+	tcY = 0;
+	do {
+		j = 4;
+		yOffset = 0x50;
+		tcX = 0x800;
+		do {
+			vtx = D_8005BB34;
+			D_8005BB34 = vtx + 1;
+
+			vtx->v.ob[0] = arg0->xCoord + D_80159DC8 + yOffset + 2;
+			vtx->v.ob[1] = (s16)(s32)((((f64)(f32)sins((D_80052A8C * 0x8E0 - (j << 0xC)) & 0xFFFF) / 32768.0) * 2.0 * (f64)j) +
+				(f64)(arg0->yCoord + D_80159DCA + zOffset));
+			vtx->v.ob[2] = (s16)(s32)((((f64)(f32)sins((D_80052A8C * 0x1130 - (j << 0xC)) & 0xFFFF) / 32768.0) * 6.0 * (f64)j) +
+				(f64)(arg0->zCoord + D_80159DCC));
+			vtx->v.tc[0] = tcX;
+			vtx->v.tc[1] = tcY;
+
+			tcX -= 0x200;
+			yOffset -= 0x14;
+			j--;
+		} while (j != 0);
+
+		zOffset -= 0x14;
+		tcY += 0x200;
+	} while (--count != 0);
+
+	gSPMatrix(D_8005BB2C++, (u32)&D_80031160 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPVertex(D_8005BB2C++, D_8005BB34 - 25, 25, 0);
+	gSPDisplayList(D_8005BB2C++, &D_5038FF8);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80120D6C_12FD1C.s")
+#endif
 
 void func_8012101C_12FFCC(BuildingInstance *arg0, s16 arg1) {
 	BuildingInstance *building;
