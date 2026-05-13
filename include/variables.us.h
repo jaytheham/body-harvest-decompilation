@@ -1319,6 +1319,7 @@ extern f64 D_80141E50;
 extern f32 D_80141E58;
 extern char D_80141E80_150E30;
 extern f64 D_80141EE0;
+extern f64 D_80141EF0_150EA0;
 extern f64 D_80141EF8_150EA8;
 extern f64 D_80141F00_150EB0;
 extern u8 D_80140AA4_14FA54[];
