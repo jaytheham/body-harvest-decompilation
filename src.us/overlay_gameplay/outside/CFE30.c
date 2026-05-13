@@ -4170,7 +4170,62 @@ void func_800DFA98_EEA48(s8 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DFA98_EEA48.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(4815)
+void func_800DFBA8_EEB58(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
+	s8 sp68[0x10];
+	s32 i;
+	s8 *tempS5;
+	s32 sp5C;
+	s32 halfArg3;
+	s32 quarterArg3;
+	f32 tempF20;
+	s32 tempS1;
+	s32 tempS2;
+	s32 tempS3;
+
+	arg3 = (u16)arg3;
+	func_800DF038_EDFE8(arg0, arg1, arg2, (u16)arg3, 0, D_8013DF84_14CF34);
+	func_80135D44_144CF4(arg0, arg1, arg2, 10.0f);
+
+	i = 1;
+	tempS5 = sp68;
+	if (arg4 >= 2) {
+		if (arg3 >= 0) {
+			halfArg3 = arg3 >> 1;
+		} else {
+			halfArg3 = (arg3 + 1) >> 1;
+		}
+
+		if (arg3 >= 0) {
+			quarterArg3 = arg3 >> 2;
+		} else {
+			quarterArg3 = (arg3 + 3) >> 2;
+		}
+
+		tempF20 = D_80144190_153140;
+		sp5C = arg4;
+
+		do {
+			func_800DFA98_EEA48(tempS5);
+			func_801371B8_146168(0, 0xE8, arg0, arg1, arg2, tempF20);
+			tempS1 = func_800038E0_44E0() & 0xFFFF;
+			tempS2 = func_800038E0_44E0() & 0xFFFF;
+			tempS3 = func_800038E0_44E0() & 0xFFFF;
+			func_800DF9C8_EE978(
+				((tempS1 % arg3) * 2) + arg0 - arg3,
+				((tempS2 % arg3) * 2) + arg1 - arg3,
+				((tempS3 % arg3) * 2) + arg2 - arg3,
+				(((func_800038E0_44E0() % halfArg3) + arg3) - quarterArg3) & 0xFFFF,
+				0,
+				tempS5);
+			i = (i + 1) & 0xFF;
+		} while (i < sp5C);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DFBA8_EEB58.s")
+#endif
 
 void func_800DFE68_EEE18(s16 arg0, s16 arg1, s16 arg2) {
 	func_800DEA08_ED9B8(arg0, arg1, arg2, 0xF, 2, 1, 0x14, 0xFF, 0xFF, 0xFA, 0xDC);

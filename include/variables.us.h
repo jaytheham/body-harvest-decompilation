@@ -2195,6 +2195,7 @@ extern s32 D_8013E438_14D3E8;
 extern s32 D_8013E450;
 extern Unk8013E45C D_8013E45C[];
 extern char D_801441F0[];
+extern f32 D_80144190_153140;
 extern f64 D_80144240;
 extern f64 D_80144248;
 extern f64 D_80144250;
