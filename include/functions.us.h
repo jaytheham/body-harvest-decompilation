@@ -37,6 +37,7 @@ void func_800010C4_1CC4(s32);
 void checkForRumblePak(void);
 void getSaveFileName(s32, u8*);
 s32 func_800038E0_44E0();
+s32 func_800825E8_91598(s16, s16, s32 *);
 s16 func_80003824_4424(f32, f32);
 void func_80088154_97104(VehicleInstance *arg0, s16 arg1, s16 arg2);
 void func_800033D4_3FD4(u32 arg0, s32 arg1);

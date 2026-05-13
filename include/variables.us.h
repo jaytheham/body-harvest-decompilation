@@ -2616,6 +2616,7 @@ extern char D_801427C4;
 extern char D_801427E8;
 extern char D_801427F4;
 extern char D_80142800;
+extern char D_80142910_1518C0;
 extern f32 D_80142E20_151DD0;
 extern f32 D_80142E24_151DD4;
 extern f32 D_80142E48_151DF8;

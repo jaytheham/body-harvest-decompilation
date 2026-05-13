@@ -611,9 +611,86 @@ void func_800AC198_BB148(u8 arg0) {
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC198_BB148.s")
+
+// CURRENT (4284)
+#ifdef NON_MATCHING
+s32 func_800AC2FC_BB2AC(u8 arg0) {
+	AlienInstance *s0;
+	AlienInstance *v1;
+	s32 sp4C;
+	s32 temp;
+	s32 dx, dz;
+	s16 a0;
+	s16 a3;
+	u8 v0;
+
+	s0 = (AlienInstance *)((u8 *)&alienInstances + ((s32)arg0 * 0x50));
+	sp4C = 0x3D0900;
+	v0 = s0->unk24;
+
+	if ((v0 != 0) && (v0 != 0x14)) {
+		return 1;
+	}
+
+	if (!(s0->unk20 & 0x1A0)) {
+		a0 = -1;
+
+		if (v0 != 0x14) {
+			a0 = func_8011B6C0_12A670(s0->unk0, s0->unk4, (s16)(alienSpecs[s0->specIndex].unk51 / 20), 1, 0x102C);
+		}
+
+		if (a0 != -1) {
+			s0->unk38 = a0;
+			if (func_8011B3F0_12A3A0(a0, &s0->unk14, &s0->unk16, &s0->unk18) != 0) {
+				s0->unk48 = 0xA0;
+				s0->unk20 |= 0x100;
+				return 0;
+			}
+		} else {
+			s0->unk38 = 0xFF;
+		}
+
+		temp = func_800825E8_91598(s0->unk0, s0->unk4, &sp4C);
+		if (sp4C < 0x77A10) {
+			s0->unk20 = (s0->unk20 & ~0x1A0) | 0x60;
+			s0->unk48 = 0xA0;
+			s0->unk38 = (s16)(temp & 0xFF);
+			return 0;
+		}
+
+		s0->unk48 = 0x40;
+		s0->unk20 &= ~0x1A0;
+		s0->unkE = (s16)(s0->unkE + ((s32)(func_800038E0_44E0() << 11) / 65535) - 0x400);
+		func_800AC198_BB148(arg0);
+		return 0;
+	}
+
+	a3 = s0->unk38;
+	if (a3 == 0xFF) {
+		if (s0->unk2C != 0) {
+			s0->unk2C = s0->unk2C - 1;
+		} else {
+			osSyncPrintf(&D_80142910_1518C0);
+			s0->unk20 &= ~0x1100;
+			s0->unk48 = 0x40;
+			func_800ABE7C_BAE2C(arg0);
+		}
+	} else if (s0->unk20 & 0x40) {
+		v1 = (AlienInstance *)((u8 *)&alienInstances + (((s32)(a3 & 0xFF)) * 0x50));
+		dx = v1->unk0 - s0->unk0;
+		dz = v1->unk4 - s0->unk4;
+		if ((dx * dx) + (dz * dz) >= 0x1DE841) {
+			s0->unk20 = s0->unk20 & ~0x160;
+		}
+	}
+
+	return 1;
+}
+#else
 #endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC2FC_BB2AC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC5BC_BB56C.s")
 
