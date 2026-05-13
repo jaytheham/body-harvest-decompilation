@@ -611,6 +611,7 @@ void func_800AC198_BB148(u8 arg0) {
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC198_BB148.s")
+#endif
 
 // CURRENT (4284)
 #ifdef NON_MATCHING
@@ -687,8 +688,6 @@ s32 func_800AC2FC_BB2AC(u8 arg0) {
 	return 1;
 }
 #else
-#endif
-
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC2FC_BB2AC.s")
 #endif
 
