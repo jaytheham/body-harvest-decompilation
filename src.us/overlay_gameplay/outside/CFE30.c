@@ -1221,7 +1221,24 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C7924_D68D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C7E18_D6DC8.s")
+void func_800C7E18_D6DC8(void) {
+	s16 effectIdx;
+	s32 randomValue2;
+	s32 randomValue;
+	s32 i;
+
+	for (i = 0; i < 12; i = (i + 1) & 0xFF) {
+		randomValue = func_800038E0_44E0() & 0xFFFF;
+		effectIdx = func_800C7924_D68D4(0x4AFC, 0x348, -0x680, (randomValue % 50) + 100, -8, 100,
+			((s32 *)D_8013DD20_14CCD0)[func_800038E0_44E0() % 8], 2);
+		randomValue2 = func_800038E0_44E0() & 0xFFFF;
+		randomValue = func_800038E0_44E0() & 0xFFFF;
+		func_800C8184_D7134((randomValue2 % 30) - 15, (randomValue % 20) - 5, (func_800038E0_44E0() % 30) - 15, effectIdx);
+		randomValue2 = func_800038E0_44E0() & 0xFFFF;
+		randomValue = func_800038E0_44E0() & 0xFFFF;
+		func_800C820C_D71BC((randomValue2 % 20) - 10, (randomValue % 20) - 10, (func_800038E0_44E0() % 20) - 10, effectIdx);
+	}
+}
 
 void func_800C80F0_D70A0(u16 arg0, u16 arg1, u16 arg2, s16 arg3) {
 	s8 *p;
