@@ -655,6 +655,34 @@ s32 func_80079C8C_88C3C(s32 arg0) {
 		alienInstances[arg0].unkC = -1;
 		osSyncPrintf(&D_801417C0_150770, &alienInstances[arg0]); // No mode active components
 		return 0;
+
+	// CURRENT (399)
+	#ifdef NON_MATCHING
+	void func_800816B0_90660(u8 arg0, void *arg1) {
+		AlienInstance *alien = &alienInstances[arg0];
+		void *target = arg1;
+		s16 trig;
+		s16 *tableX;
+		s16 *tableZ;
+		u8 targetShift = alien->unk27;
+
+		if (alien->specIndex != 1) {
+			trig = sins(((AlienInstance *)target)->unkE);
+			tableX = &D_8013C270_14B220[targetShift];
+			tableZ = &D_8013C280_14B230[targetShift];
+			alien->unk14 = (s16) (s32) ((f64) alien->unk14 + (((f64) *tableX * ((f64) (f32) coss(((AlienInstance *)target)->unkE) / 32768.0)) - ((f64) *tableZ * ((f64) (f32) trig / 32768.0))));
+			trig = coss(((AlienInstance *)target)->unkE);
+			alien->unk18 = (s16) (s32) ((f64) alien->unk18 + (((f64) *tableX * ((f64) (f32) sins(((AlienInstance *)target)->unkE) / 32768.0)) + ((f64) *tableZ * ((f64) (f32) trig / 32768.0))));
+		} else {
+			trig = sins(((AlienInstance *)target)->unkE);
+			tableX = &D_8013C290_14B240[targetShift];
+			tableZ = &D_8013C2A0_14B250[targetShift];
+			alien->unk14 = (s16) (s32) ((f64) alien->unk14 + (((f64) *tableX * ((f64) (f32) coss(((AlienInstance *)target)->unkE) / 32768.0)) - ((f64) *tableZ * ((f64) (f32) trig / 32768.0))));
+			trig = coss(((AlienInstance *)target)->unkE);
+			alien->unk18 = (s16) (s32) ((f64) alien->unk18 + (((f64) *tableX * ((f64) (f32) sins(((AlienInstance *)target)->unkE) / 32768.0)) + ((f64) *tableZ * ((f64) (f32) trig / 32768.0))));
+		}
+	}
+	#else
 	}
 
 	idx = D_8014EC50[D_8014ECD0];
@@ -2291,6 +2319,7 @@ s32 func_8008153C_904EC(u8 arg0, s16 *arg1)
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800816B0_90660.s")
+#endif
 
 s32 func_8008199C_9094C(u8 arg0) {
 	AlienInstance *alien = &alienInstances[arg0];
@@ -2311,7 +2340,7 @@ s32 func_8008199C_9094C(u8 arg0) {
 		alien->unk16 = target->unk2;
 		alien->unk18 = target->unk4;
 		if (flags & 0x20000) {
-			func_800816B0_90660(arg0, target, flags, alienInstances);
+			func_800816B0_90660(arg0, target);
 		}
 		return 1;
 	}
@@ -2321,7 +2350,7 @@ s32 func_8008199C_9094C(u8 arg0) {
 		alien->unk16 = vehicle->unk2;
 		alien->unk18 = vehicle->unk4;
 		if (flags & 0x20000) {
-			func_800816B0_90660(arg0, vehicle, flags, alienInstances);
+			func_800816B0_90660(arg0, vehicle);
 		}
 		return 1;
 	}
