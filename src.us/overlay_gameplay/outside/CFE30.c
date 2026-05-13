@@ -1013,11 +1013,136 @@ void func_800C4AA0_D3A50(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4AA0_D3A50.s")
 #endif
 
+extern s16 D_801541FE;
+extern u16 D_100E280[];
+
+void func_800DB714_EA6C4(void);
+void func_800DBA9C_EAA4C(void);
+
+// CURRENT(0)
+#ifdef NON_MATCHING
+void func_800C4CB8_D3C68(void) {
+	Unk80154318Entry *entry;
+	u8 *entryBytes;
+	s16 index;
+
+	D_80153BCD = 0x20;
+	D_80153BCE = 0x20;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, ((u32) D_100E280 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+
+	index = D_801541FE;
+	if ((index != -5) && (index != -6)) {
+		while (1) {
+			entry = &D_80154318[index];
+			entryBytes = (u8 *) entry;
+			D_80153BB8.x = (f32) entry->unk8;
+			D_80153BC4 = &entry->unkE;
+			D_80153BCC = entryBytes[0x12];
+			D_80153BB8.y = (f32) entry->unkA;
+			D_80153BB8.z = (f32) entry->unkC;
+			D_80153BC8 = (f32) entry->unk2;
+
+			if (entryBytes[0x13] == 0) {
+				func_800DB714_EA6C4();
+			} else {
+				func_800DBA9C_EAA4C();
+			}
+
+			D_80156EDA += 4;
+			index = entry->unk4;
+			if ((index == -5) || (index == -6)) {
+				break;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4CB8_D3C68.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4F48_D3EF8.s")
 
+// CURRENT(4420)
+#ifdef NON_MATCHING
+void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10,
+						 u8 arg11, u8 arg12) {
+	f32 sp44;
+	f32 sp48;
+	f32 sp4C;
+	s32 effect;
+	s32 i;
+	u8 spawnCount;
+	s16 idx;
+	Unk801541F8Entry *sfx;
+	Unk80154318Entry *entry;
+	extern char D_80143504_1524B4;
+
+	spawnCount = arg8;
+	if (spawnCount >= 0x29) {
+		spawnCount = 0x28;
+	}
+
+	if ((D_80156ED8 == 1) || (D_80156ED8 == 2) || ((0x230 - spawnCount) < ((((s32)D_8005BB30 - (s32)D_8005BB20) - 0xE380) >> 3))) {
+		spawnCount = 0;
+	}
+
+	if ((spawnCount == 0) || (func_800B93AC_C835C(arg0, arg2, 0x96, (s16)(s32)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) == 0)) {
+		return;
+	}
+
+	effect = func_800C14D4_D0484(2);
+	if (effect == 0xFB) {
+		return;
+	}
+
+	idx = func_800C17B4_D0764(effect & 0xFF, 0);
+	if (idx == -3) {
+		osSyncPrintf(&D_80143504_1524B4);
+		func_800C1384_D0334(effect & 0xFF);
+		return;
+	}
+
+	sfx = &D_80154088[effect];
+	entry = &D_80154318[idx];
+
+	sfx->unk1 = sfx->unk1;
+	sfx->unkA = idx;
+
+	entry->unk8 = arg0;
+	entry->unkA = arg1;
+	entry->unkC = arg2;
+	entry->unk12 = 1;
+	entry->unk2 = arg9;
+	entry->unkE = arg10;
+	entry->unkF = arg11;
+	entry->unk10 = arg12;
+
+	sp44 = arg3;
+	sp48 = arg4;
+	sp4C = arg5;
+	func_800C1024_CFFD4((Vec3f *)&sp44, (Vec3f *)&sp44);
+
+	i = 0;
+	while (i < spawnCount) {
+		func_800C4F48_D3EF8(effect & 0xFF, (s32)&sp44, arg6 & 0xFF, arg7 & 0xFF);
+		i = (i + 1) & 0xFF;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C541C_D43CC.s")
+#endif
 
 // CURRENT(1788)
 #ifdef NON_MATCHING
@@ -2678,7 +2803,56 @@ void func_800D6ADC_E5A8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	func_80135D08_144CB8(3.0f, 1, 0x3C, 1);
 }
 
+// CURRENT(864)
+#ifdef NON_MATCHING
+void func_800D6C18_E5BC8(s16 arg0, u8 arg1) {
+	Unk80153AE0Entry *entry;
+	s16 *data;
+	u8 phase;
+
+	(void)arg0;
+	entry = &D_80153AE0[arg1];
+	phase = entry->unk13;
+	if (phase == 0) {
+		data = (s16 *)entry->unk18;
+		entry->unk0 = data[0];
+		entry->unk2 = data[1];
+		entry->unk4 = data[2];
+		((s16 *)entry)[3] = 0;
+		entry->unk8 = 0;
+		entry->unkA = 0;
+		entry->unkC = data[6];
+		((s16 *)entry)[7] = data[7];
+		entry->unk10 = data[8];
+		entry->unk13 = phase + 1;
+		entry->unk14 = 0;
+		entry->unk18 = (s32)(data + 10);
+		return;
+	}
+
+	data = (s16 *)entry->unk18;
+	if (entry->unk14 == ((u8 *)data)[0x12]) {
+		entry->unk13++;
+		phase = entry->unk13;
+		entry->unk14 = 0;
+		entry->unk18 = (s32)((u8 *)data + 0x14);
+	}
+
+	if ((u8)phase < entry->unk12) {
+		data = (s16 *)entry->unk18;
+		entry->unk0 += data[0] / ((u8 *)data)[0x12];
+		entry->unk2 += data[1] / ((u8 *)data)[0x12];
+		entry->unk4 += data[2] / ((u8 *)data)[0x12];
+		entry->unk8 = (u16)((u16)entry->unk8 + (((u16 *)data)[4] / ((u8 *)data)[0x12]));
+		entry->unkC += data[6] / ((u8 *)data)[0x12];
+		((s16 *)entry)[7] += data[7] / ((u8 *)data)[0x12];
+		entry->unk10 += data[8] / ((u8 *)data)[0x12];
+		entry->unk14++;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D6C18_E5BC8.s")
+#endif
 
 void func_800D6EAC_E5E5C(u8 arg0) {
 	s16 next;
@@ -3002,7 +3176,35 @@ void func_800D90A4_E8054(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D90A4_E8054.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9294_E8244.s")
+void func_800D9294_E8244(void) {
+	s16 var_s2;
+
+	var_s2 = D_801542E2;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xF0, 0xF5, 0xFF, 0xFF);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, ((u32)D_100ACF0 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 2048);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 1, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x3C, 0x3C);
+	gDPPipeSync(D_8005BB2C++);
+
+	D_80153BC4 = &D_80153B80, D_80153BCD = 0x10, D_80153BCE = 0x10, D_80153BCC = 0xFF;
+
+	while ((var_s2 != -5) && (var_s2 != -6)) {
+		D_80153BB8.x = (f32)D_80154318[var_s2].unk8;
+		D_80153BB8.y = (f32)D_80154318[var_s2].unkA;
+		D_80153BB8.z = (f32)D_80154318[var_s2].unkC;
+		D_80153BC8 = (f32)D_80154318[var_s2].unk2;
+		func_800DB350_EA300();
+		D_80156EDA += 4;
+		var_s2 = D_80154318[var_s2].unk4;
+	}
+}
 
 s16 func_800D951C_E84CC(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7) {
 	s16 temp_v0;
