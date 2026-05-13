@@ -2412,7 +2412,71 @@ void func_801238DC_13288C(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80123AC4_132A74.s")
 
 // 80123F04 Reduces damage to adam by 40% in easy
+// CURRENT(690)
+#ifdef NON_MATCHING
+void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
+	volatile struct Unk80013E44_arg0 sp24;
+	s32 damage;
+
+	sp24 = *(struct Unk80013E44_arg0 *)D_80140B70_14FB20;
+
+	if (D_8004DCBC == 0) {
+		arg1 >>= 1;
+	}
+
+	if ((arg0 == D_80052B34) && (D_80052ACD & 0x40)) {
+		arg1 = (s16) (s32) ((f32) (arg1 + 1) * D_8003141C);
+	}
+
+	if ((arg1 <= 0) || (D_8004818C == 1)) {
+		return;
+	}
+
+	if ((arg0 == D_80052B34) && (D_80048188 == 1)) {
+		return;
+	}
+
+	if (arg0->unk1C <= 0) {
+		return;
+	}
+
+	if (arg0 == D_80052B34) {
+		damage = arg1 * 5;
+		if (damage >= 0x100) {
+			damage = 0xFF;
+		}
+
+		func_80001144_1D44(damage & 0xFF, 0xA, 0x14);
+		if (D_80052B34->unk1A == 0) {
+			D_8014ED42 = 8;
+		} else {
+			D_8014ED46 = 8;
+		}
+	}
+
+	arg0->unk20 |= 0x2000;
+	if (arg0 == D_80158FE4) {
+		D_8014ED4A = 8;
+	}
+
+	if ((arg0 == D_80052B34) && (D_80052B34->unk1A == 0) && (D_80157A28 & 4) && (D_8015931A < 0xC8)) {
+		D_8015931A = (s16) (s32) ((f32) D_8015931A + (((f32) arg1 / (f32) arg0->unk1C) * 200.0f));
+		if (D_8015931A >= 0x190) {
+			arg0->unk1C = 0;
+		} else if (D_8015931A >= 0xC9) {
+			arg0->unk1C = (s16) (s32) (((f32) (D_8015931A - 0xC8) / 200.0f) * (f32) arg0->unk1C);
+		}
+	} else {
+		arg0->unk1C -= arg1;
+	}
+
+	if (arg0->unk1C <= 0) {
+		func_80123AC4_132A74(arg0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80123E90_132E40.s")
+#endif
 
 void func_80124118_1330C8(VehicleInstance *arg0, s16 arg1) {
 	if ((arg0->unk20 & 0x80) == 0) {

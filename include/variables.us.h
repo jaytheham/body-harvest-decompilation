@@ -117,6 +117,7 @@ extern u8 D_800313EC;
 extern u8 D_800313F0;
 extern u8 D_800313F4; // World fog alpha value
 extern s16 D_800313F8; // World fog near distance
+extern f32 D_8003141C;
 extern u16 D_80257184;
 extern s16 D_80257188;
 extern s16 D_8025718A;
@@ -2006,6 +2007,7 @@ extern Gfx D_802C9480[];
 extern Gfx D_802C9EA8[];
 extern char D_80144260_153210;
 extern s32 D_80158FDC;
+extern VehicleInstance *D_80158FE4;
 extern s32 D_80157A28;
 extern s16 D_80157A2C;
 extern s16 D_80157A40;
@@ -2094,6 +2096,7 @@ extern u16 D_80034480;
 extern s32 D_8003447C;
 extern s32 D_80034484;
 extern s32 D_80034488;
+extern s16 D_8015931A;
 extern s32 D_80034490_35090;
 extern s32 D_80034498_35098;
 extern s32 D_80034494;
