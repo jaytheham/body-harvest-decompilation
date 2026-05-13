@@ -773,7 +773,84 @@ s32 func_800C2D50_D1D00(s32 arg0, s32 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C2D50_D1D00.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C2EE4_D1E94.s")
+void func_800C2EE4_D1E94(u8 arg0) {
+	s16 currentUnitId;
+	s16 nextUnitId;
+	u8 *root;
+	u8 *p;
+
+	currentUnitId = D_80154088[arg0].unkA;
+	if (currentUnitId == -6) {
+		func_800C1384_D0334(arg0);
+		return;
+	}
+
+	root = (u8 *)&D_80154318[currentUnitId].unk8;
+	currentUnitId = D_80154318[currentUnitId].unk4;
+	if (currentUnitId == -5 || currentUnitId == -6) {
+		func_800C1418_D03C8(arg0, 0);
+		func_800C1384_D0334(arg0);
+		return;
+	}
+
+	while (currentUnitId != -5 && currentUnitId != -6) {
+		p = (u8 *)&D_80154318[currentUnitId].unk8;
+
+		if (((s8 *)p)[4] < 0 && p[0] < 0x19) {
+			if (root[9] == 2) {
+				nextUnitId = D_80154318[currentUnitId].unk4;
+				if (D_80154088[arg0].unk4 < 3) {
+					func_800C1418_D03C8(arg0, 0);
+					func_800C1384_D0334(arg0);
+					return;
+				}
+				func_800C1A4C_D09FC(currentUnitId, arg0, 0);
+				currentUnitId = nextUnitId;
+			} else {
+				nextUnitId = D_80154318[currentUnitId].unk4;
+				func_800C1A4C_D09FC(currentUnitId, arg0, 0);
+				func_800C2B90_D1B40(arg0, 0);
+				currentUnitId = nextUnitId;
+			}
+		} else {
+			if (((s8 *)p)[3] > 0) {
+				if (p[2] < 0xE5) {
+					p[2] += ((s8 *)p)[3];
+				} else {
+					p[2] = 1;
+					((s8 *)p)[1] += 1;
+					if (((s8 *)p)[1] >= 4) {
+						((s8 *)p)[1] = 0;
+					}
+				}
+			} else if (p[2] >= 0x11) {
+				p[2] += ((s8 *)p)[3];
+			} else {
+				p[2] = 0xE5;
+				((s8 *)p)[1] -= 1;
+				if (((s8 *)p)[1] < 0) {
+					((s8 *)p)[1] = 3;
+				}
+			}
+
+			if (((s8 *)p)[4] > 0 && p[0] >= 0xE6) {
+				((s8 *)p)[4] = -((s8 *)p)[4];
+			}
+
+			p[0] += ((s8 *)p)[4];
+			p[5] += ((s8 *)p)[6];
+			if (((s8 *)p)[6] > 0) {
+				if (p[5] >= 0xF4) {
+					((s8 *)p)[6] = -((s8 *)p)[6];
+				}
+			} else if (p[5] < 0xC) {
+				((s8 *)p)[6] = -((s8 *)p)[6];
+			}
+
+			currentUnitId = D_80154318[currentUnitId].unk4;
+		}
+	}
+}
 
 #ifdef NON_MATCHING
 void func_800C31AC_D215C(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
