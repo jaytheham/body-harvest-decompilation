@@ -2290,7 +2290,29 @@ s32 func_8008153C_904EC(u8 arg0, s16 *arg1)
 	return 0;
 }
 
+// CURRENT(379)
+#ifdef NON_MATCHING
+void func_800816B0_90660(u8 arg0, void *arg1) {
+	AlienInstance *alien = &alienInstances[arg0];
+	VehicleInstance *target = arg1;
+	u8 idx = alien->unk27;
+	s16 trig;
+
+	if (alien->specIndex != 1) {
+		trig = sins((u16)target->unkE);
+		alien->unk14 = (s16)(s32)((f64)alien->unk14 + (((f64)D_8013C270_14B220[idx] * ((f64)(f32)coss((u16)target->unkE) / 32768.0)) - ((f64)D_8013C280_14B230[idx] * ((f64)(f32)trig / 32768.0))));
+		trig = coss((u16)target->unkE);
+		alien->unk18 = (s16)(s32)((f64)alien->unk18 + (((f64)D_8013C270_14B220[idx] * ((f64)(f32)sins((u16)target->unkE) / 32768.0)) + ((f64)D_8013C280_14B230[idx] * ((f64)(f32)trig / 32768.0))));
+	} else {
+		trig = sins((u16)target->unkE);
+		alien->unk14 = (s16)(s32)((f64)alien->unk14 + (((f64)D_8013C290_14B240[idx] * ((f64)(f32)coss((u16)target->unkE) / 32768.0)) - ((f64)D_8013C2A0_14B250[idx] * ((f64)(f32)trig / 32768.0))));
+		trig = coss((u16)target->unkE);
+		alien->unk18 = (s16)(s32)((f64)alien->unk18 + (((f64)D_8013C290_14B240[idx] * ((f64)(f32)sins((u16)target->unkE) / 32768.0)) + ((f64)D_8013C2A0_14B250[idx] * ((f64)(f32)trig / 32768.0))));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800816B0_90660.s")
+#endif
 
 s32 func_8008199C_9094C(u8 arg0) {
 	AlienInstance *alien = &alienInstances[arg0];
