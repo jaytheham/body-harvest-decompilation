@@ -1868,7 +1868,49 @@ void func_800CD390_DC340(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD42C_DC3DC.s")
 
+// CURRENT(6594)
+#ifdef NON_MATCHING
+void func_800CD7FC_DC7AC(u8 arg0) {
+	Unk80154318Entry *entry;
+	s16 index;
+
+	entry = &D_80154318[D_80154088[arg0].unk6];
+	index = entry->unk4;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100E080 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+	D_80153BCD = 0x20;
+	D_80153BCE = 0x20;
+
+	while (1) {
+		D_80153BB8.x = (f32)entry->unk8;
+		D_80153BB8.y = (f32)entry->unkA;
+		D_80153BB8.z = (f32)entry->unkC;
+		D_80153BC4 = &entry->unkE;
+		D_80153BCC = entry->unk11;
+		D_80153BC8 = (f32)entry->unk2;
+		func_800DB350_EA300();
+		D_80156EDA += 4;
+		if ((index == -5) || (index == -6)) {
+			break;
+		}
+		entry = &D_80154318[index];
+		index = entry->unk4;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD7FC_DC7AC.s")
+#endif
 
 void func_800CDA98_DCA48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 temp_v0;
