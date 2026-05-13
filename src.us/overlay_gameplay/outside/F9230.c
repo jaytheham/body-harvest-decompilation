@@ -2179,7 +2179,48 @@ s32 func_800F41E0_103190(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32) (((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
 }
 
+// CURRENT(1540)
+#ifdef NON_MATCHING
+void func_800F4258_103208(UnkF9230Func800F4748Entry *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 *arg5, s16 *arg6) {
+	Unk801470C0Entry *entry;
+	f32 dist;
+	f32 distSq;
+	f32 baseXFloat;
+	f32 angleOffset;
+	s32 dx;
+	s32 dz;
+	s16 baseX;
+	s16 baseR;
+	s16 angle;
+
+	dx = arg3 - arg1;
+	dz = arg4 - arg2;
+	entry = &((Unk801470C0Entry *)D_801601F0)[arg0->unk23];
+	baseX = entry->unk0;
+	baseR = entry->unk2;
+
+	distSq = (f32)((dx * dx) + (dz * dz));
+	if (distSq <= 0.0f) {
+		dist = 0.0f;
+	} else {
+		dist = sqrtf(distSq);
+	}
+
+	baseXFloat = (f32)baseX;
+	distSq = -(((f32)(baseR * baseR) - (dist * dist)) - (f32)(baseX * baseX)) / ((2.0f * dist) * baseXFloat);
+	if ((f64)distSq > 1.0) {
+		distSq = 1.0f;
+	}
+
+	angleOffset = (f32)(((f64)(f32)(s16)(0x4000 - func_80003680_4280(distSq)) * 180.0) / 32768.0);
+	angle = (s16)(s32)(((f64)(f32)func_80003824_4424((f32)dx, (f32)dz) * 360.0) / 32768.0);
+
+	*arg5 = (s16)(s32)((cosf((f32)(((f64)((f32)angle + angleOffset) * 3.141592653589793) / 180.0)) * baseXFloat) + (f32)arg1);
+	*arg6 = (s16)(s32)((sinf((f32)(((f64)((f32)angle + angleOffset) * 3.141592653589793) / 180.0)) * baseXFloat) + (f32)arg2);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F4258_103208.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(295)
