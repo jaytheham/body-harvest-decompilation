@@ -428,7 +428,29 @@ void func_8013A1CC_14917C(void) {
 	func_8013B004_149FB4();
 }
 
+// CURRENT (995)
+#ifdef NON_MATCHING
+void func_8013A218_1491C8(s16 arg0, s16 arg1, u8 arg2) {
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, ((u32)&D_1009C70[arg2 << 7]) & 0x1FFFFFFF);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 2048);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 1, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
+	gDPPipeSync(D_8005BB2C++);
+	gSPTextureRectangle(D_8005BB2C++, MAX((s16)(arg0 << 2), 0), MAX((s16)(arg1 * 4), 0),
+					MAX((s16)(((arg0 + 8) << 1) << 1), 0), MAX((s16)(((arg1 + 8) << 1) << 1), 0), G_TX_RENDERTILE,
+					-(((s16)(arg0 << 2) < 0) ? MIN((((s16)(arg0 << 2) * (s16)0x0800) >> 7), 0) : 0),
+					-(((s16)(arg1 * 4) < 0) ? MIN((((s16)(arg1 * 4) * (s16)0x0800) >> 7), 0) : 0),
+					0x0800, 0x0800);
+	gDPPipeSync(D_8005BB2C++);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A218_1491C8.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8013A4C8_149478(s16 arg0, s32 arg1) {

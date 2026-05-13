@@ -1323,6 +1323,7 @@ extern f64 D_80141E50;
 extern f32 D_80141E58;
 extern char D_80141E80_150E30;
 extern f64 D_80141EE0;
+extern f64 D_80141EE8_150E98;
 extern f64 D_80141EF0_150EA0;
 extern f64 D_80141EF8_150EA8;
 extern f64 D_80141F00_150EB0;
@@ -1345,6 +1346,8 @@ extern f64 D_801426C8;
 extern f64 D_801426C0_151670;
 extern f64 D_801426C8_151678;
 extern u8 D_80142740_1516F0[]; // Found parent %d
+extern u8 D_80142754_151704[];
+extern u8 D_8014276C_15171C[];
 extern f64 D_80142778;
 extern f64 D_80142780;
 extern u8 D_80142790_151740[]; // Activate Beacon %d
@@ -2616,6 +2619,7 @@ extern char D_801427C4;
 extern char D_801427E8;
 extern char D_801427F4;
 extern char D_80142800;
+extern char D_80142910_1518C0;
 extern f32 D_80142E20_151DD0;
 extern f32 D_80142E24_151DD4;
 extern f32 D_80142E48_151DF8;

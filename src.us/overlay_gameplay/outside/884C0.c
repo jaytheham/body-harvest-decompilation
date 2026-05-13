@@ -2311,7 +2311,7 @@ s32 func_8008199C_9094C(u8 arg0) {
 		alien->unk16 = target->unk2;
 		alien->unk18 = target->unk4;
 		if (flags & 0x20000) {
-			func_800816B0_90660(arg0, target, flags, alienInstances);
+			func_800816B0_90660(arg0, target);
 		}
 		return 1;
 	}
@@ -2321,7 +2321,7 @@ s32 func_8008199C_9094C(u8 arg0) {
 		alien->unk16 = vehicle->unk2;
 		alien->unk18 = vehicle->unk4;
 		if (flags & 0x20000) {
-			func_800816B0_90660(arg0, vehicle, flags, alienInstances);
+			func_800816B0_90660(arg0, vehicle);
 		}
 		return 1;
 	}
@@ -5095,7 +5095,86 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008E978_9D928.s")
 #endif
 
+// CURRENT (13544)
+#ifdef NON_MATCHING
+void func_8008EB20_9DAD0(u8 arg0, u8 arg1, s16 arg2) {
+	AlienInstance *inst = &alienInstances[arg0];
+	UnkFC8E8Entry *entry;
+	s16 sp46;
+	s16 sp44;
+	s16 sp3E;
+	s16 sp3C;
+	u8 sp3B;
+	s16 sp38;
+	s16 sp36;
+	s16 sp2C;
+	s32 sp24;
+	u8 slot;
+
+	sp24 = 0;
+	func_8011E6FC_12D6AC(inst->unk0, inst->unk4, &sp46);
+
+	sp3E = *((s8 *)D_802566D4 + (inst->specIndex * 0x68) + 4) * 2;
+	sp3C = *((s8 *)D_802566D4 + (inst->specIndex * 0x68) + 5) * 2;
+	sp3B = (u8) (*((s8 *)D_802566D4 + (inst->specIndex * 0x68) + 7) + ((u16)arg1 / 4));
+
+	if (inst->unk20 & 0x08000000) {
+		sp24 = D_80052B34->unk20 & 2;
+		if (sp24 && (D_80222A70 >= D_80052B34->unk2)) {
+			sp24 = 0;
+		}
+	}
+
+	if (D_802566D4[inst->specIndex * 0x1A] & 1) {
+		if (sp46 >= D_80222A70) {
+			sp46 = (s16)(D_80222A70 - 0x64);
+		}
+	} else if (sp46 < D_80222A70) {
+		sp46 = (s16)D_80222A70;
+	}
+
+	sp2C = sp46 + arg1;
+	if (sp24 != 0) {
+		sp2C = D_80052B34->unk2 + 0xC8;
+	}
+
+	if (inst->unk2 < sp2C) {
+		inst->unkA -= (s16)((s32)(((f64)arg2) * MAX((f64)(sp2C - inst->unk2) / 160.0, 0.0)));
+	}
+	if (sp2C < inst->unk2) {
+		inst->unkA += (s16)((s32)(((f64)arg2) * MAX((f64)(inst->unk2 - sp2C) / 160.0, 0.0)));
+	}
+
+	inst->unkA = (s16)((s32)(((f64)inst->unkA) * D_80141EE8_150E98));
+	sp2C = -(s16)inst->unk12;
+	if (sp2C < inst->unk12) {
+		sp2C = inst->unk12;
+	} else if (sp2C < 0x101) {
+		sp2C = 0x100;
+	}
+	inst->unk10 = (s16)(-((s32)((((f64)((f32)sins(inst->unkA))) / 32768.0) * ((f64)sp2C))));
+
+	sp36 = sins(D_80052B34->unk6);
+	sp38 = coss(D_80052B34->unk6);
+	sp46 = (s16)(s32)((f64)D_80052B34->unk0 + ((f64)(f32)sp38 / 32768.0) * (f64)sp3E + ((f64)(f32)sp36 / 32768.0) * (f64)arg2 + (f64)(func_800038E0_44E0() % 8) - 4.0);
+	sp44 = D_80052B34->unk2 + sp3C;
+
+	sp36 = coss(D_80052B34->unk6);
+	sp38 = sins(D_80052B34->unk6);
+	slot = func_800DDB60_ECB10(sp46, sp44, (s16)(s32)((f64)D_80052B34->unk4 + ((f64)(f32)sp38 / 32768.0) * (f64)sp3E - ((f64)(f32)sp36 / 32768.0) * (f64)arg2 + (f64)(func_800038E0_44E0() % 8) - 4.0), 3, sp3B);
+	if (slot != 0xFF) {
+		entry = &D_80156EF0[slot];
+		entry->unkD = (s8)(0xDC - ((s8)arg1 / 2));
+		entry->unk6 = arg1;
+		entry->unk7 = arg1;
+		entry->unk8 = arg1;
+		entry->unk10 = (s8)(sp3B / 12);
+		entry->unk11 = (s8)(sp3B / 8);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008EB20_9DAD0.s")
+#endif
 
 void func_8008EDFC_9DDAC(u8 arg0) {
 	func_8008E978_9D928(arg0, alienSpecs[alienInstances[arg0].specIndex].unk58);

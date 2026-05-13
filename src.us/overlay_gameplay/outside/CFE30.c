@@ -1221,7 +1221,24 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C7924_D68D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C7E18_D6DC8.s")
+void func_800C7E18_D6DC8(void) {
+	s16 effectIdx;
+	s32 randomValue2;
+	s32 randomValue;
+	s32 i;
+
+	for (i = 0; i < 12; i = (i + 1) & 0xFF) {
+		randomValue = func_800038E0_44E0() & 0xFFFF;
+		effectIdx = func_800C7924_D68D4(0x4AFC, 0x348, -0x680, (randomValue % 50) + 100, -8, 100,
+			((s32 *)D_8013DD20_14CCD0)[func_800038E0_44E0() % 8], 2);
+		randomValue2 = func_800038E0_44E0() & 0xFFFF;
+		randomValue = func_800038E0_44E0() & 0xFFFF;
+		func_800C8184_D7134((randomValue2 % 30) - 15, (randomValue % 20) - 5, (func_800038E0_44E0() % 30) - 15, effectIdx);
+		randomValue2 = func_800038E0_44E0() & 0xFFFF;
+		randomValue = func_800038E0_44E0() & 0xFFFF;
+		func_800C820C_D71BC((randomValue2 % 20) - 10, (randomValue % 20) - 10, (func_800038E0_44E0() % 20) - 10, effectIdx);
+	}
+}
 
 void func_800C80F0_D70A0(u16 arg0, u16 arg1, u16 arg2, s16 arg3) {
 	s8 *p;
@@ -4108,7 +4125,42 @@ void func_800DEADC_EDA8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DEADC_EDA8C.s")
 #endif
 
+// CURRENT (3200)
+#ifdef NON_MATCHING
+void func_800DEB7C_EDB2C(u16 arg0, u8 arg1, s16 arg2) {
+	s16 sp46;
+	s16 sp44;
+	s16 sp3E;
+	s16 sp3C;
+	u8 sp3B;
+	s16 sp38;
+	s16 sp36;
+	u8 slot;
+	UnkFC8E8Entry *entry;
+
+	sp3E = *((s8*)D_8013DB10_14CAC0 + currentLevel * 0x5C + D_80052B34->unk1A * 4 - 0x5C) * 2;
+	sp3C = *((s8*)D_8013DB10_14CAC0 + currentLevel * 0x5C + D_80052B34->unk1A * 4 - 0x5B) * 2;
+	sp3B = (u8)(*((s8*)D_8013DB10_14CAC0 + currentLevel * 0x5C + D_80052B34->unk1A * 4 - 0x59) + arg0 / 4);
+	sp36 = sins(D_80052B34->unk6);
+	sp38 = coss(D_80052B34->unk6);
+	sp46 = (s16)(s32)((f64)D_80052B34->unk0 + ((f64)(f32)sp38 / 32768.0) * (f64)sp3E + ((f64)(f32)sp36 / 32768.0) * (f64)arg2 + (f64)(func_800038E0_44E0() % 8) - 4.0);
+	sp44 = D_80052B34->unk2 + sp3C;
+	sp36 = coss(D_80052B34->unk6);
+	sp38 = sins(D_80052B34->unk6);
+	slot = func_800DDB60_ECB10(sp46, sp44, (s16)(s32)((f64)D_80052B34->unk4 + ((f64)(f32)sp38 / 32768.0) * (f64)sp3E - ((f64)(f32)sp36 / 32768.0) * (f64)arg2 + (f64)(func_800038E0_44E0() % 8) - 4.0), 3, sp3B);
+	if (slot != 0xFF) {
+		entry = &D_80156EF0[slot];
+		entry->unkD = (s8)(0xDC - arg1 / 2);
+		entry->unk6 = arg1;
+		entry->unk7 = arg1;
+		entry->unk8 = arg1;
+		entry->unk10 = (s8)(sp3B / 12);
+		entry->unk11 = (s8)(sp3B / 8);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DEB7C_EDB2C.s")
+#endif
 
 u8 func_800DEE5C_EDE0C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4) {
 	u8 slot;
