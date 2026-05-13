@@ -1435,8 +1435,10 @@ extern s32 D_801494B4;
 extern u8* D_801494B8;
 extern u8 D_801494BC;
 extern MissionCondEntry D_801494C0[];
+extern s32 D_80149470;
 extern u8 D_801497BA;
 extern u8 D_801497C8[];
+extern u8 D_8014CCCA;
 extern u8 D_80149AC8[];
 extern u8 D_80149AF8[];
 extern s32 D_80149B30; // Number of mission commands?
@@ -1448,8 +1450,15 @@ extern s16 D_80149B4A;
 extern u8 D_80149B50[];
 extern u8 D_80149B60[];
 extern u8 D_8014CEF0[];
+extern u8 D_80149B25;
+extern u8 D_8004D17E;
+extern u8 D_8004D1AD;
+extern u8 D_8004D1BF;
+extern u8 D_8014D16E;
+extern s16 D_8014D1B6;
 extern s16 D_8014D188[];
 extern u8 D_8014CFEC; // last entry of D_8014CEF0 array (offset 0x3F*4)
+extern s32 D_8004D14C;
 extern u8 D_8014D200[];
 extern u8 D_8014D298[][10];
 extern s32 D_8014D2E8;
@@ -2699,6 +2708,7 @@ extern s16 D_802E4FB4[];
 extern s16 D_8014D17C;
 extern s16 D_8014D17E;
 extern Unk8014DD50 *D_802E566C;
+extern s16 D_8014D180;
 extern void (*D_802DF350[])(s32);
 
 /* core/loader */

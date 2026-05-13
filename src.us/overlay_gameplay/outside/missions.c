@@ -13,8 +13,136 @@ s32 D_8013BAC0_14AA70[5][4] = {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80073DC0_82D70.s")
 
+// CURRENT(6010)
 // Resets a bunch of memory? For missions?
+#ifdef NON_MATCHING
+void func_80074204_831B4(void) {
+	u8 *var_v0;
+	s32 *var_v0_2;
+	s16 *var_v0_3;
+	s32 var_a0;
+	u8 var_a1;
+	u8 var_a2;
+	u8 temp_t6;
+	s16 temp_t9;
+
+	var_v0 = D_80149B60;
+	var_a0 = 0x257F;
+	do {
+		*var_v0 = 0;
+		var_v0 += 1;
+	} while (var_a0-- != 0);
+
+	var_v0 = &D_8014CCCA;
+	var_a0 = 0x17;
+	var_a2 = 0x64;
+	var_a1 = 0x6E;
+	do {
+		var_v0[0] = var_a1;
+		var_v0[0x32] = var_a2;
+		var_v0[0x64] = var_a2;
+		var_v0 -= 0x226;
+	} while (var_a0-- != 0);
+
+	var_v0 = &D_8014CFEC;
+	var_a0 = 0x3F;
+	do {
+		temp_t6 = *var_v0;
+		var_v0 -= 4;
+		var_v0[4] = (temp_t6 & 0xFF80) | 0x7F;
+	} while (var_a0-- != 0);
+
+	var_v0 = &D_801497BA;
+	var_a0 = 0x7F;
+	var_a1 = 0xFF;
+	do {
+		var_v0[0] = 0;
+		var_v0[1] = var_a1;
+		var_v0[2] = 0;
+		var_v0[3] = 0;
+		var_v0[4] = var_a1;
+		var_v0 -= 6;
+	} while (var_a0-- != 0);
+
+	var_v0 = &D_8004D1BF;
+	var_a0 = 0xF;
+	do {
+		var_v0[0] = var_a1;
+		var_v0 -= 1;
+	} while (var_a0-- != 0);
+
+	var_v0 = &D_8014D16E;
+	var_a0 = 0xBF;
+	var_a2 = 0xC1;
+	do {
+		var_v0[0] = var_a2;
+		var_v0[1] = var_a2;
+		var_v0 -= 2;
+	} while (var_a0-- != 0);
+
+	var_v0 = &D_8004D1AD;
+	var_a0 = 0xF;
+	do {
+		var_v0[0] = var_a1;
+		var_v0 -= 3;
+	} while (var_a0-- != 0);
+
+	var_v0_2 = &D_801494B4;
+	var_a0 = 0xF;
+	do {
+		var_v0_2[0] = 0;
+		var_v0_2 -= 1;
+	} while (var_a0-- != 0);
+
+	var_v0 = &D_80149B25;
+	var_a0 = 0xF;
+	do {
+		var_v0[0] = var_a1;
+		var_v0 -= 3;
+	} while (var_a0-- != 0);
+
+	var_v0 = &D_8004D17E;
+	var_a0 = 0xF;
+	do {
+		var_v0[0] = 0;
+		var_v0[1] = 0;
+		var_v0 -= 2;
+	} while (var_a0-- != 0);
+
+	var_v0_3 = &D_8014D1B6;
+	var_a0 = 0x17;
+	do {
+		var_v0_3[0] = 0;
+		var_v0_3 -= 1;
+	} while (var_a0-- != 0);
+
+	D_80149470 = 0;
+	D_8004D15C = -1;
+
+	var_v0_2 = &D_80149B44;
+	var_v0_2[0] = 0;
+	var_v0_2[-1] = 0;
+	var_v0_2[-2] = 0;
+	var_v0_2[-3] = 0;
+	var_v0_2[-4] = 0;
+	var_v0_2[-5] = 0;
+	D_80149B28 = 0;
+	D_80149B3C = 0;
+
+	D_80149B4A = 0;
+	D_8014D180 = D_80149B4A;
+	D_8014D17E = D_8014D180;
+	D_8014D17C = D_8014D17E;
+	temp_t9 = D_8014D17C;
+	D_8004D14C = temp_t9;
+	D_80149B48 = temp_t9;
+
+	D_80149474 = 0xFF;
+	D_8004DC40 = -1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074204_831B4.s")
+#endif
 
 int func_8007447C_8342C(u8 temp_t6) {
 
