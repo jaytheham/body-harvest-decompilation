@@ -1345,6 +1345,8 @@ extern f64 D_801426C8;
 extern f64 D_801426C0_151670;
 extern f64 D_801426C8_151678;
 extern u8 D_80142740_1516F0[]; // Found parent %d
+extern u8 D_80142754_151704[];
+extern u8 D_8014276C_15171C[];
 extern f64 D_80142778;
 extern f64 D_80142780;
 extern u8 D_80142790_151740[]; // Activate Beacon %d

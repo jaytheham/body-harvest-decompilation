@@ -546,6 +546,7 @@ void func_800A03FC_AF3AC(void);
 void func_800A2260_B1210(Gfx *, Gfx *, Gfx *, Gfx *);
 void func_800A2B58_B1B08(void);
 void func_800A3490_B2440(s32 arg0);
+s32 func_800A3E74_B2E24(u8 arg0);
 void func_800A4150_B3100(u8 arg0);
 void func_800A53C0_B4370(s32, s16, s16);
 void func_800A5D3C_B4CEC(void);

@@ -147,7 +147,63 @@ u8 func_800A3DC8_B2D78(void) {
 	return 0xFF;
 }
 
+// CURRENT (132)
+#ifdef NON_MATCHING
+s32 func_800A3E74_B2E24(u8 arg0) {
+	AlienInstance *parent;
+	AlienInstance *child;
+	s32 parentType;
+	s32 dir;
+	s16 groundY;
+	u8 childIndex;
+
+	parent = &alienInstances[arg0];
+	parentType = parent->unk3C;
+	osSyncPrintf(D_80142754_151704, parentType);
+	childIndex = func_8007956C_8851C((u8) parent->unk3C);
+	osSyncPrintf(D_8014276C_15171C, childIndex);
+	if (childIndex == 0xFF) {
+		return 0;
+	}
+
+	child = &alienInstances[childIndex];
+	child->unk20 |= 0x01000000;
+	if (parentType == 0xA) {
+		child->unk3A = 0x64;
+	}
+
+	if (parentType == 0xD) {
+		dir = (func_800038E0_44E0() % 0xFA0) + parent->unk6;
+		dir -= 0x7D0;
+	} else {
+		dir = parent->unk6;
+	}
+
+	child->unkE = dir;
+	child->unk6 = dir;
+	child->unk0 = (s16) (s32) ((((f64) (f32) coss((u16) parent->unk6) / 32768.0) * 100.0) + (f64) parent->unk0);
+	child->unk4 = (s16) (s32) ((((f64) (f32) sins((u16) parent->unk6) / 32768.0) * 100.0) + (f64) parent->unk4);
+	child->unk25 = arg0;
+	child->unk26 = func_800A3DC8_B2D78();
+	child->unk12 = 0x460;
+	child->unk14 = (s16) (s32) ((((f64) (f32) coss((u16) dir) / 32768.0) * 400.0) + (f64) parent->unk0);
+	child->unk16 = parent->unk2;
+	child->unk18 = (s16) (s32) ((((f64) (f32) sins((u16) dir) / 32768.0) * 400.0) + (f64) parent->unk4);
+	child->unk2C = 0x1E;
+
+	if (D_802566D4[(child->specIndex * 0x1A)] & 1) {
+		groundY = func_800B84D0_C7480(child->unk0, child->unk4) >> 8;
+		func_8011E6FC_12D6AC(child->unk0, child->unk4, &groundY);
+		child->unk2 = groundY + 0x19;
+	} else {
+		func_80080510_8F4C0(childIndex);
+	}
+
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A3E74_B2E24.s")
+#endif
 
 void func_800A4150_B3100(u8 arg0) {
 	s32 temp_v1;
