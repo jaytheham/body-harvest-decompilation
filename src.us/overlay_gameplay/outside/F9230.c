@@ -856,7 +856,101 @@ void func_800EB090_FA040(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB0C8_FA078.s")
 
+// CURRENT(3613)
+#ifdef NON_MATCHING
+void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+	Unk80157600 *player = arg0;
+	Unk8009E8DC *anim;
+	Unk8009E8DC *nextAnim;
+	s32 currentState;
+	s32 turnOffset;
+	s32 shouldAnimate;
+
+	turnOffset = 0;
+	shouldAnimate = 0;
+
+	if (player == &D_80157A48) {
+		osSyncPrintf(&D_80144320_1532D0);
+	}
+
+	currentState = player->unk40C;
+
+	if (currentState < 0x5C) {
+		if (currentState < 0x29) {
+			switch (currentState) {
+			case 0x17:
+				turnOffset = 0x4000;
+				break;
+			case 0x18:
+				turnOffset = -0x4000;
+				break;
+			case 0x19:
+				turnOffset = -0x6000;
+				break;
+			case 0x1A:
+				turnOffset = -0x2000;
+				break;
+			case 0x1B:
+				turnOffset = 0x6000;
+				break;
+			case 0x1C:
+				turnOffset = 0x2000;
+				break;
+			}
+		} else if (currentState == 0x5B) {
+			shouldAnimate = 1;
+		}
+	} else if (currentState == 0x5C) {
+		shouldAnimate = 1;
+	}
+
+	if (turnOffset != 0) {
+		D_80052B34->unkE += turnOffset;
+		D_80157600.unk2 = 0;
+		shouldAnimate = 1;
+		currentState = player->unk40C;
+	}
+
+	if (arg2 != 0) {
+		shouldAnimate = 1;
+	}
+
+	if ((currentState == 0x16) || (currentState == 0x17)) {
+		shouldAnimate = 0;
+		D_80157600.unk0 = 0;
+		D_80157600.unk2 = 0;
+		D_80157600.unk4 = 0;
+	} else if (currentState == 0x18) {
+		D_80052B34->unkE += 0x8000;
+		D_80157600.unk2 = 0;
+	} else if (currentState == 0x10) {
+		D_80052B34->unkE = ((Unk8009E8DC *) D_8013E5AC_14D55C)[currentState].unk10;
+		D_80157600.unk2 = 0;
+	}
+
+	if (arg1 != -1) {
+		if ((arg1 == player->unk40C) && (((Unk8007F878_404 *) player->unk404)->unkE50 != 0)) {
+			return;
+		}
+
+		player->unk40C = arg1;
+		anim = &((Unk8009E8DC *) D_8013E5AC_14D55C)[arg1];
+		if (anim->unk4 & 4) {
+			nextAnim = &((Unk8009E8DC *) D_8013E5AC_14D55C)[anim->unkC];
+			func_8000D71C_E31C(player->unk404, player->unk408, player, 0x10, anim->unk0, nextAnim->unk0, *(f32*) &arg3, shouldAnimate);
+		} else {
+			func_8000CDFC_D9FC(player->unk404, player, 0x10, anim->unk0, shouldAnimate);
+		}
+
+		player->unk414 = 0.0f;
+		player->unk418 = 0.0f;
+		player->unk8 = 0.0f;
+		player->unk10 = 0.0f;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB534_FA4E4.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3) {

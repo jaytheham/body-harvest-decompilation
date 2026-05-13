@@ -2200,6 +2200,7 @@ extern f64 D_80144250;
 extern char D_801442E0_153290;
 extern char D_801442F0_1532A0;
 extern char D_80144308_1532B8;
+extern char D_80144320_1532D0;
 extern char D_80144330_1532E0[];
 extern char D_80144354_153304[];
 extern f64 D_801443E0_153390;
