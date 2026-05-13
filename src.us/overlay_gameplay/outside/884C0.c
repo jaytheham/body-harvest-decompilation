@@ -719,7 +719,86 @@ void func_80079E64_88E14(s32 arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(5412)
+s32 func_80079F08_88EB8(s32 arg0) {
+	u8 specIndex;
+	s16 floorY;
+	s16 hitY;
+	u8 hitType;
+	s32 specFlags;
+	AlienInstance *inst;
+	AlienSpec *spec;
+
+	inst = &alienInstances[arg0];
+	specIndex = inst->specIndex;
+
+	if (((specIndex == 0xD) && (inst->unk48 > 0)) || ((specIndex == 0x12) && (inst->unk24 == 5))) {
+		return 0;
+	}
+
+	if (inst->unk20 & 0x01000000) {
+		inst->unk10 = 0;
+		return 0;
+	}
+
+	floorY = (s16) (func_800B84D0_C7480(inst->unk0, inst->unk4) >> 8);
+	spec = &alienSpecs[specIndex];
+	specFlags = spec->unk54;
+
+	if (specFlags & 0x80000001) {
+		func_8011DE60_12CE10(1);
+	}
+
+	hitType = (u8) func_8011E6FC_12D6AC(inst->unk0, inst->unk4, &hitY);
+	specFlags = spec->unk54;
+
+	if (specFlags & 0x80000001) {
+		func_8011DE60_12CE10(0);
+		specFlags = spec->unk54;
+	}
+
+	if ((specFlags < 0) && (hitType != 0xFF)) {
+		if (inst->unk2 >= hitY) {
+			floorY = hitY;
+		}
+	}
+
+	if (specFlags & 0x81) {
+		if ((currentLevel != 4) || (specIndex != 7)) {
+			if (floorY < D_80222A70) {
+				floorY = (s16) D_80222A70;
+			}
+		}
+	}
+
+	floorY = floorY + spec->unk58;
+	if (!(specFlags & 0x40)) {
+		if (inst->unk2 < floorY) {
+			inst->unk2 = floorY;
+		}
+	}
+
+	if (!(specFlags & 0x841)) {
+		inst->unk2 = floorY;
+	}
+
+	if (hitType != 0xFF) {
+		if (specFlags & 0x10) {
+			if ((inst->unk2 < (hitY - 0x32)) || !(specFlags & 0x80000001)) {
+				if ((currentLevel != 3) || ((specIndex != 9) && (specIndex != 8))) {
+					return 1;
+				}
+			}
+		}
+	}
+
+	inst->unk10 = 0;
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80079F08_88EB8.s")
+#endif
 
 // https://decomp.me/scratch/PEXJ7
 #ifdef NON_MATCHING
