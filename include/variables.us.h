@@ -3177,10 +3177,17 @@ extern f32 D_80159D14;
 extern f32 D_80159D18;
 extern f32 D_80159D1C;
 extern f32 D_80159D20;
+extern f32 D_80159D24;
+extern f32 D_80159D28;
+extern f32 D_80159D2C;
+extern f32 D_80159D30;
+extern f32 D_80159D54;
+extern f32 D_80159D58;
 extern f32 D_80159D54;
 extern VehicleInstance *D_80159D5C;
 extern VehicleSpec *D_80159D64;
 extern s32 D_80159D6C;
+extern s32 D_80159D70;
 extern Unk8010ED84Pos *D_80159D60;
 extern Unk8010ED84Data *D_80159D68;
 

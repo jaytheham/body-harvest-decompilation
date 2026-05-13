@@ -4437,7 +4437,80 @@ s32 func_8010CF7C_11BF2C(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010CF7C_11BF2C.s")
 #endif
 
+// CURRENT(12945)
+#ifdef NON_MATCHING
+s32 func_8010D234_11C1E4(s16 arg0, s16 arg1) {
+	Unk8010ED84Pos *pos;
+	Unk8010D234Data *data;
+	f32 dx;
+	f32 dz;
+	f32 temp;
+	s32 count;
+
+	pos = D_80159D60;
+	dx = arg0 - pos->unk0;
+	dz = arg1 - pos->unk4;
+	count = 0;
+
+	switch (D_80159D70) {
+		case 0:
+			temp = -dx;
+			if (dx < temp) {
+				temp = dx;
+			}
+			data = (Unk8010D234Data *)D_80159D68;
+			if (temp <= (data->unk34 >> 1)) {
+				temp = -dz;
+				if (dz < temp) {
+					temp = dz;
+				}
+				if (temp <= (data->unk36 >> 1)) {
+					count = 2;
+				}
+			}
+			break;
+
+		case 1:
+			temp = -dx;
+			if (dx < temp) {
+				temp = dx;
+			}
+			data = (Unk8010D234Data *)D_80159D68;
+			if (temp <= (data->unk36 >> 1)) {
+				temp = -dz;
+				if (dz < temp) {
+					temp = dz;
+				}
+				if (temp <= (data->unk34 >> 1)) {
+					count = 2;
+				}
+			}
+			break;
+
+		case 2:
+			if (((dx * dx) + (dz * dz)) < D_80159D58) {
+				count = 2;
+			}
+			break;
+
+		case 3:
+			temp = (-D_80159D24 * dx) + dz;
+			if ((-D_80159D2C <= temp) && (temp <= D_80159D2C)) {
+				count = 1;
+			}
+
+			temp = (-D_80159D28 * dx) + dz;
+			if ((-D_80159D30 <= temp) && (temp <= D_80159D30)) {
+				count++;
+			}
+			break;
+	}
+
+	return count == 2;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010D234_11C1E4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010D4EC_11C49C.s")
 
