@@ -75,7 +75,80 @@ void func_800E94B8_F8468(void) {
 	D_801575A0 = 0;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(4475)
+s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
+	volatile s32 sp34;
+	volatile s32 sp30;
+	volatile s32 sp2C;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 baseX;
+	s32 baseY;
+	s32 baseZ;
+	s32 deltaX;
+	s32 deltaZ;
+	s32 absDeltaX;
+	s32 absDeltaZ;
+
+	baseX = (s32)D_80052B2C->unk0 << 8;
+	baseY = (s32)D_80052B2C->unk4 << 8;
+	baseZ = (s32)D_80052B2C->unk8 << 8;
+
+	deltaX = (arg0 << 8) - baseX;
+	absDeltaX = -deltaX;
+	if (absDeltaX < deltaX) {
+		absDeltaX = deltaX;
+	}
+
+	deltaZ = (arg2 << 8) - baseZ;
+	absDeltaZ = -deltaZ;
+	if (absDeltaZ < deltaZ) {
+		absDeltaZ = deltaZ;
+	}
+
+	if (absDeltaZ < absDeltaX) {
+		arg2 = ((-deltaX < deltaX) ? deltaX : -deltaX) >> 8;
+		if (arg2 != 0) {
+			sp30 = (((arg1 << 8) - baseY) << 8) / arg2;
+			sp34 = ((deltaX < 0) ? -0x100 : 0x100) << 8;
+			sp2C = (deltaZ << 8) / arg2;
+		}
+	} else {
+		arg2 = ((-deltaZ < deltaZ) ? deltaZ : -deltaZ) >> 8;
+		if (arg2 != 0) {
+			sp34 = (deltaX << 8) / arg2;
+			sp30 = (((arg1 << 8) - baseY) << 8) / arg2;
+			sp2C = ((deltaZ < 0) ? -0x100 : 0x100) << 8;
+		}
+	}
+
+	arg2 = arg2 >> 8;
+	if (arg2 != 0) {
+		arg2--;
+		for (;;) {
+			baseZ += sp2C;
+			baseX += sp34;
+			baseY += sp30;
+
+			if (baseY < func_800B84D0_C7480((s16)(baseX >> 8), (s16)(baseZ >> 8))) {
+				return 1;
+			}
+
+			if (arg2 == 0) {
+				break;
+			}
+			arg2--;
+		}
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E95BC_F856C.s")
+#endif
 
 s16 func_800E9868_F8818(s32 arg0, s32 arg1) {
 	return (s16) ((D_801493D8 * 4) + 0x310);

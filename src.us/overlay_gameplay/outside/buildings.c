@@ -629,7 +629,101 @@ s32 func_80118114_1270C4(s16 arg0) {
 	return 0;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(7353)
+void func_8011815C_12710C(void *arg0, s16 arg1, s32 arg2) {
+	BuildingInstance *building;
+	s32 buildingId;
+	s32 found;
+	s16 doorData;
+	s16 doorId;
+	s32 canEnter;
+
+	doorData = *(s16 *) ((u8 *) &D_8015FAEE + (arg1 * 0x30));
+	if (((u8 *) arg0)[0x1A] != 0) {
+		return;
+	}
+
+	if ((f64) D_8015EA30 != 0.0) {
+		return;
+	}
+
+	buildingId = (s16) (doorData >> 4);
+	building = &buildingInstances[buildingId];
+	if ((((u32) building->unk8 >> 0xC) & 0x10) != 0) {
+		return;
+	}
+
+	if ((((u32) building->unk8 >> 0xC) & 4) != 0) {
+		return;
+	}
+
+	D_80052540 = (s16) buildingId;
+	found = func_801176B0_126660();
+	D_80052540 = 0xFF;
+
+	if (found != 0) {
+		doorId = doorData & 0xF;
+		if (doorId != 0) {
+			goto open_door;
+		}
+	}
+
+	if (func_8000726C_7E6C(0, (building->unk8 << 0x14) >> 0x1A, buildingId, building) != 0) {
+		doorId = doorData & 0xF;
+		goto open_door;
+	}
+
+	if (D_8015EB78 != 0) {
+		return;
+	}
+
+	if (currentLevel == 1) {
+		if (((building->unk8 << 0x14) >> 0x1A) == 0x2E) {
+			if (func_8000726C_7E6C(0, 0xA, buildingId, building) != 0) {
+				goto finish_alarm;
+			}
+		}
+	}
+
+	func_8001A650_1B250(0);
+
+finish_alarm:
+	D_8015EB78 = 0xC8;
+	osSyncPrintf(D_80144E68_153E18, (building->unk8 << 0x14) >> 0x1A);
+	return;
+
+open_door:
+	D_80052540 = buildingId;
+	D_80052544 = doorId;
+	buildingInteriorToLoadId = (&building->door1InteriorId)[doorId];
+	if (buildingInteriorToLoadId == 0xF0) {
+		return;
+	}
+
+	D_8005254C = (D_80052540 * 0x10) + D_80052544;
+	if ((found != 0) && (doorId == 0)) {
+		D_8015EB7C = 1;
+	}
+
+	if ((buildingInteriorToLoadId == 0xFF) && (found == 0)) {
+		osSyncPrintf(D_80144E3C_153DEC);
+		return;
+	}
+
+	if (arg2 != 0) {
+		canEnter = D_8004D148 == 0;
+		if (canEnter == 0) {
+			canEnter = func_8000726C_7E6C(0, (building->unk8 << 0x14) >> 0x1A, buildingId, building) != 0;
+		}
+		func_800EC0D0_FB080(canEnter);
+	} else {
+		gameplayMode = 6;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011815C_12710C.s")
+#endif
 
 void func_801183EC_12739C(void *arg0, s16 arg1) {
 	func_8011815C_12710C(arg0, arg1, 0);
