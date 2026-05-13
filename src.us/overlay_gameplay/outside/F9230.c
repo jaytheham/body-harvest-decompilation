@@ -4790,7 +4790,105 @@ void func_8010ED84_11DD34(f32 *arg0, f32 *arg1, s32 arg2) {
 	*arg1 = D_80159D60->unk4 + (D_80159D40 * scale);
 }
 
+// CURRENT(6457)
+#ifdef NON_MATCHING
+s32 func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 *arg8, f32 *arg9) {
+	f32 temp_f0;
+	f32 temp_f18;
+	f32 var_f20;
+	f32 var_f22;
+	s32 var_v0;
+
+	var_f20 = arg0;
+	var_f22 = arg1;
+	if (arg2 < arg0) {
+		var_f20 = arg2;
+		arg2 = arg0;
+	}
+	if (arg3 < var_f22) {
+		var_f22 = arg3;
+		arg3 = arg1;
+	}
+	if (var_f20 == arg2) {
+		if (arg4 == arg6) {
+			return 0;
+		}
+		if ((!(arg4 <= var_f20) || !(var_f20 <= arg6)) && (!(var_f20 <= arg4) || !(arg6 <= var_f20))) {
+			return 0;
+		}
+		temp_f18 = arg7 - arg5;
+		if ((f64)temp_f18 == 0.0) {
+			*arg8 = var_f20;
+			var_v0 = 0;
+			*arg9 = arg5;
+			if (var_f22 <= arg5) {
+				var_v0 = 1;
+			}
+			if (var_v0 != 0) {
+				var_v0 = 0;
+				if (arg5 <= arg3) {
+					return 1;
+				}
+			}
+			return var_v0;
+		}
+		temp_f0 = temp_f18 / (arg6 - arg4);
+		var_v0 = 0;
+		*arg8 = var_f20;
+		temp_f18 = (temp_f0 * var_f20) + (arg5 - (temp_f0 * arg4));
+		*arg9 = temp_f18;
+		if (var_f22 <= temp_f18) {
+			var_v0 = 1;
+		}
+		if (var_v0 != 0) {
+			var_v0 = 0;
+			if (temp_f18 <= arg3) {
+				return 1;
+			}
+		}
+		return var_v0;
+	}
+	if (arg5 == arg7) {
+		return 0;
+	}
+	if ((!(arg5 <= var_f22) || !(var_f22 <= arg7)) && (!(var_f22 <= arg5) || !(arg7 <= var_f22))) {
+		return 0;
+	}
+	temp_f18 = arg6 - arg4;
+	if ((f64)temp_f18 == 0.0) {
+		*arg8 = arg4;
+		var_v0 = 0;
+		*arg9 = var_f22;
+		if (var_f20 <= arg4) {
+			var_v0 = 1;
+		}
+		if (var_v0 != 0) {
+			var_v0 = 0;
+			if (arg4 <= arg2) {
+				return 1;
+			}
+		}
+		return var_v0;
+	}
+	var_v0 = 0;
+	temp_f0 = (arg7 - arg5) / temp_f18;
+	temp_f18 = (var_f22 - (arg5 - (temp_f0 * arg4))) / temp_f0;
+	*arg8 = temp_f18;
+	*arg9 = var_f22;
+	if (var_f20 <= temp_f18) {
+		var_v0 = 1;
+	}
+	if (var_v0 != 0) {
+		var_v0 = 0;
+		if (temp_f18 <= arg2) {
+			var_v0 = 1;
+		}
+	}
+	return var_v0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010EF40_11DEF0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010F218_11E1C8.s")
 

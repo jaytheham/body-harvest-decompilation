@@ -2290,7 +2290,29 @@ s32 func_8008153C_904EC(u8 arg0, s16 *arg1)
 	return 0;
 }
 
+// CURRENT(379)
+#ifdef NON_MATCHING
+void func_800816B0_90660(u8 arg0, void *arg1) {
+	AlienInstance *alien = &alienInstances[arg0];
+	VehicleInstance *target = arg1;
+	u8 idx = alien->unk27;
+	s16 trig;
+
+	if (alien->specIndex != 1) {
+		trig = sins((u16)target->unkE);
+		alien->unk14 = (s16)(s32)((f64)alien->unk14 + (((f64)D_8013C270_14B220[idx] * ((f64)(f32)coss((u16)target->unkE) / 32768.0)) - ((f64)D_8013C280_14B230[idx] * ((f64)(f32)trig / 32768.0))));
+		trig = coss((u16)target->unkE);
+		alien->unk18 = (s16)(s32)((f64)alien->unk18 + (((f64)D_8013C270_14B220[idx] * ((f64)(f32)sins((u16)target->unkE) / 32768.0)) + ((f64)D_8013C280_14B230[idx] * ((f64)(f32)trig / 32768.0))));
+	} else {
+		trig = sins((u16)target->unkE);
+		alien->unk14 = (s16)(s32)((f64)alien->unk14 + (((f64)D_8013C290_14B240[idx] * ((f64)(f32)coss((u16)target->unkE) / 32768.0)) - ((f64)D_8013C2A0_14B250[idx] * ((f64)(f32)trig / 32768.0))));
+		trig = coss((u16)target->unkE);
+		alien->unk18 = (s16)(s32)((f64)alien->unk18 + (((f64)D_8013C290_14B240[idx] * ((f64)(f32)sins((u16)target->unkE) / 32768.0)) + ((f64)D_8013C2A0_14B250[idx] * ((f64)(f32)trig / 32768.0))));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800816B0_90660.s")
+#endif
 
 s32 func_8008199C_9094C(u8 arg0) {
 	AlienInstance *alien = &alienInstances[arg0];
@@ -4723,7 +4745,49 @@ void func_8008D040_9BFF0(u8 arg0)
 	}
 }
 
+// CURRENT(1694)
+#ifdef NON_MATCHING
+s32 func_8008D0E0_9C090(u8 arg0) {
+	AlienInstance *inst;
+	u16 randVal;
+
+	inst = &alienInstances[arg0];
+	func_800FB44C_10A3FC(D_80052B34, (f32)inst->unk0);
+	func_800FB468_10A418(D_80052B34, (f32)(inst->unk2 + 0xA));
+	func_800FB484_10A434(D_80052B34, (f32)inst->unk4);
+	func_800FB430_10A3E0(D_80052B34, 0.0f);
+
+	if (((D_8014ECE4 < 0) && (D_8004758A > 0)) || ((D_8014ECE4 > 0) && (D_8004758A < 0))) {
+		D_8014ECE0++;
+		if (D_80031420 & 3) {
+			randVal = func_800038E0_44E0();
+			func_800CA5EC_D959C(inst->unk0, inst->unk2, inst->unk4, (s8)((randVal % 120) - 0x3C), 0x7F, (s8)((func_800038E0_44E0() % 120) - 0x3C), 0x32, 4, 3, 0x28, 0, 0xDC, 0x1E, 0xFF);
+		}
+		if (D_8014ECE0 >= 3) {
+			func_80088760_97710(inst);
+			return 1;
+		}
+		D_80157A28 |= 0x20;
+	} else {
+		D_80157A28 &= ~0x20;
+	}
+
+	if (D_80052A8C & 1) {
+		D_80052B34->unk1C--;
+		if (D_80052B34->unk1C <= 0) {
+			func_80006DAC_79AC(0x3C, 0);
+		}
+	}
+
+	if (D_8014ECE4 != D_8004758A) {
+		inst->unkE += D_8004758A << 6;
+	}
+	D_8014ECE4 = D_8004758A;
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008D0E0_9C090.s")
+#endif
 
 void func_8008D3B0_9C360(u8 arg0) {
 	alienInstances[arg0].unk20 &= ~0x20;
@@ -6408,7 +6472,92 @@ void func_80094BE0_A3B90(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80094BE0_A3B90.s")
 #endif
 
+// CURRENT(1533)
+#ifdef NON_MATCHING
+void func_80094DE0_A3D90(u8 arg0) {
+	s16 sp5E;
+	s16 sp5C;
+	s16 sp5A;
+	s16 sp58;
+	s16 sp56;
+	s16 sp50[3];
+	s32 sp44[3];
+	s16 sp4C;
+	s32 sp40;
+	s16 sp3E;
+	s16 sp38[2];
+	s16 sp34;
+	Unk8014DD50 *sp2C;
+	Unk8014DD50 *sp28;
+	AlienInstance *s0;
+
+	s0 = &alienInstances[arg0];
+	sp5E = s0->unkC;
+	sp2C = &D_8014DD50[sp5E];
+	sp5C = (s8) sp2C->unkC;
+	sp28 = &D_8014DD50[sp5C];
+	sp58 = (s8) sp28->unkC;
+	sp5A = (s8) D_8014DD50[sp58].unkD;
+	sp56 = (s8) D_8014DD50[sp5A].unkD;
+	sp3E = s0->specIndex;
+	func_800808F0_8F8A0(arg0, &s0->unkE);
+	sp2C->unk6 = s0->unk6;
+	sp28->unk6 = -s0->unk6;
+	func_80086164_95114(arg0, sp5C);
+	sp50[0] = 0x3C;
+	sp50[1] = -8;
+	sp50[2] = 0x70;
+	func_800A931C_B82CC((s8) sp5C, sp50, sp44);
+	sp50[0] = (s16) sp44[0];
+	sp50[1] = (s16) sp44[1];
+	sp50[2] = (s16) sp44[2];
+	func_800A931C_B82CC((s8) sp5E, sp50, sp44);
+	alienSpecs[sp3E].unk20 = (s16) sp44[0];
+	alienSpecs[sp3E].unk22 = (s16) sp44[1];
+	alienSpecs[sp3E].unk24 = (s16) sp44[2];
+	sp40 = func_80084E54_93E04(D_80052B34, s0);
+	if (currentLevel == 1) {
+		sp34 = 0x3C;
+	} else {
+		sp34 = 0x1E;
+	}
+	if (func_80084FE8_93F98(arg0, 0x1000) != 0 && sp40 < 0x7D0) {
+		s0->unk26++;
+		if ((sp34 + 0x28) < s0->unk26) {
+			s0->unk1E = 0x28;
+			s0->unk20 &= ~0x2000;
+			s0->unk26 = 0;
+		}
+		if (func_80087188_96138(arg0, 0, 0x28) != 0) {
+			s0->unk36 = 0;
+			s0->unk1E = 6;
+			s0->unk20 |= 0xA000;
+			s0->unk20 |= 0x1000;
+		}
+	} else {
+		if (s0->unk1E < 0x28) {
+			s0->unk1E = 0x28;
+		}
+		s0->unk26 = 0x28;
+	}
+	if (s0->unk20 & 0x9000) {
+		if (s0->unk20 & 0x04000000) {
+			sp38[0] = sp58;
+		} else {
+			sp38[0] = sp5A;
+		}
+		sp38[1] = sp56;
+		if (func_80081F18_90EC8(arg0, 2, 2, sp38, &D_8013CB8C_14BB3C) == 2) {
+			s0->unk20 &= ~0x8000;
+		}
+	}
+	if (s0->unk1E != 0) {
+		s0->unk1E--;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80094DE0_A3D90.s")
+#endif
 
 void func_800950A8_A4058(u8 arg0) {
 	func_8008E0D8_9D088(arg0);

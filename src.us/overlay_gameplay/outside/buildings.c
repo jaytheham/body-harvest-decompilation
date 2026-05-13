@@ -1721,7 +1721,85 @@ void func_8011D438_12C3E8(u8 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D4FC_12C4AC.s")
 
+// CURRENT(9775)
+#ifdef NON_MATCHING
+void func_8011DBA0_12CB50(s32 arg3) {
+	typedef struct {
+		s32 unk0;
+		s32 unk4;
+	} Unk80140A40;
+
+	BuildingSpec *spec;
+	Unk80140A40 *unkTable;
+	u16 *unkPtr;
+	u8 *pendingPtr;
+	s16 startIndex;
+	s16 index;
+	u32 counter;
+	u16 value;
+	Unk80140A40 *entry;
+	s32 temp;
+
+	index = D_8015EB68;
+	unkPtr = (u16 *)((u8 *)&D_802B2080 + (index << 0xD));
+
+	if (D_8015EB6C != 0) {
+		D_8015EB6C--;
+		if (D_8015EB6C == 0) {
+			spec = &buildingSpecs[(u8)D_8015EB6E & 0x7F];
+			unkTable = (Unk80140A40 *)D_80140A40_14F9F0;
+			counter = 0xFFF;
+
+			do {
+				value = *unkPtr;
+				entry = &unkTable[value >> 0xD];
+				temp = (entry->unk4 + ((((s32)value >> 2) & 0x7FF) << entry->unk0)) >> 3;
+				*unkPtr = (u16)((1.0 - ((f64)temp / D_80144FA8_153F58)) * (f64)spec->unk14);
+				unkPtr++;
+			} while (counter-- != 0);
+
+			D_8015EB60[index] = (u8)D_8015EB6E;
+			index++;
+			D_8015EB68 = index;
+			if (D_8015EB68 >= 8) {
+				D_8015EB68 = 0;
+			}
+			D_8015EB6E = 0xFF;
+		}
+	}
+
+	if ((D_8015EB6A != 0) && (D_8015EB6C == 0)) {
+		startIndex = D_8015EB68;
+		D_8015EB6E = D_8015EB70;
+		index = startIndex;
+
+		while ((D_8015EB60[index] != 0xFF) && (*((u8 *)&buildingSpecs[D_8015EB60[index]] + 0x1A) & 0x10)) {
+			index++;
+			if (index >= 8) {
+				index = 0;
+			}
+			if (index == startIndex) {
+				break;
+			}
+		}
+
+		D_8015EB68 = index;
+		func_8011D4FC_12C4AC((u8)D_8015EB6E, (u16 *)((u8 *)&D_802B2080 + (D_8015EB68 << 0xD)), startIndex, arg3);
+
+		pendingPtr = &D_8015EB71;
+		while (pendingPtr < &D_8015EB77) {
+			pendingPtr[-1] = *pendingPtr;
+			pendingPtr++;
+		}
+
+		D_8015EB77 = 0xFF;
+		D_8015EB6C = 2;
+		D_8015EB6A--;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011DBA0_12CB50.s")
+#endif
 
 void func_8011DE60_12CE10(s32 arg0) {
 	D_8015EB80 = arg0;
