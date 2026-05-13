@@ -81,6 +81,8 @@ extern u8 D_1010880[];
 extern u8 D_1010C80[];
 extern u8 D_1011C80[];
 extern u8 D_1012C80[];
+extern char D_80142D80_151D30;
+extern f32 D_80142E4C_151DFC;
 extern u8 D_1013080[];
 extern u8 D_80031160;
 extern Unk800311A0 D_800311A0;

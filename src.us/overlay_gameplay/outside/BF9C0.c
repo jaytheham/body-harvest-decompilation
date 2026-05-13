@@ -879,7 +879,66 @@ void func_800B8D80_C7D30(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8D80_C7D30.s")
 #endif
 
+// CURRENT
+#ifdef NON_MATCHING
+void func_800B8F30_C7EE0(s16 arg0, s16 arg1, s32 arg2) {
+	u8 mode;
+	u16 *cell;
+	u8 *cellBytes;
+	s32 temp;
+
+	if (D_8014F838 != 0) {
+		return;
+	}
+
+	mode = arg2 & 0xFF;
+	osSyncPrintf(&D_80142D80_151D30, mode);
+
+	if (mode == 0) {
+		func_800B8C2C_C7BDC(arg0, arg1, 0x1F);
+		D_8014F832 = 0x12;
+		D_8014F850 = D_80142E4C_151DFC;
+		D_8014F838 = 3;
+		return;
+	}
+
+	if (mode == 1) {
+		if (currentLevel != LEVEL_GREECE) {
+			return;
+		}
+
+		if (func_800056D0_62D0(arg0 << 8, arg1 << 8) != 0x12) {
+			return;
+		}
+
+		cell = &D_80052A94[arg1].unk0[arg0];
+		*cell = (*cell & 0xFC3F) | 0x2C0;
+
+		cellBytes = (u8 *)cell;
+		cellBytes[0] &= 0xBF;
+		cellBytes[0] &= 0xDF;
+		cellBytes[0] |= 0x80;
+		cellBytes[0] &= 0xFB;
+		cellBytes[1] = (cellBytes[1] & 0xC0) | 0x1B;
+		cellBytes[3] = (cellBytes[3] & 0xC0) | 0x1B;
+		cellBytes[0x201] = (cellBytes[0x201] & 0xC0) | 0x1B;
+		cellBytes[0x203] = (cellBytes[0x203] & 0xC0) | 0x1B;
+
+		func_800B4050_C3000(D_8014F89C, D_8014F89D, &D_801FEA30, 0);
+		return;
+	}
+
+	if (mode == 2) {
+		temp = func_800B84D0_C7480(D_80052B34->unk0, D_80052B34->unk4);
+		func_800B8C2C_C7BDC(arg0, arg1, (s16)(temp >> 8));
+		D_8014F832 = 2;
+		D_8014F850 = 1.0f;
+		D_8014F838 = 5;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8F30_C7EE0.s")
+#endif
 
 void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2) {
 	func_800B8C2C_C7BDC(arg0, arg1, 0x1F);
