@@ -1455,7 +1455,88 @@ success:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BB5E0_CA590.s")
 
 // (short playerX, short playerZ)
+#ifdef NON_MATCHING
+// CURRENT(1464)
+void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
+	s16 tileZ;
+	s16 tileX;
+	s16 playerZCopy;
+	u16 tile;
+	u16 *tilePtr;
+	s32 stickX;
+	s32 stickY;
+	u16 randVal;
+	u32 tileBits;
+	s32 tileType;
+	s16 (*tiles)[256];
+
+	tiles = D_8014F8A0;
+	tileZ = (playerZ >> 8) + 0x80;
+	tileX = (playerX >> 8) + 0x80;
+	tilePtr = &tiles[tileZ][tileX];
+	tile = *tilePtr;
+	tileBits = (u32)tile << 0x16;
+	tileType = (s32)(tileBits >> 0x1C);
+
+	if ((tileType < 8) || (tileType >= 0xD)) {
+		return;
+	}
+
+	if ((D_8021EA30[(tileZ / 4) * 0x40 + (tileX / 4)] & 0xF) != 7) {
+		return;
+	}
+
+	if (((u32)tile >> 0xF) == 1) {
+		return;
+	}
+
+	stickX = currentControllerStates[0].stick_x;
+	if (stickX < 0) {
+		stickX = -stickX;
+	}
+
+	stickY = currentControllerStates[0].stick_y;
+	if (stickY < 0) {
+		stickY = -stickY;
+	}
+
+	if ((stickY + stickX) < 0x11) {
+		return;
+	}
+
+	if (D_80052B34->unk20 & 2) {
+		return;
+	}
+
+	if (currentLevel != 2) {
+		return;
+	}
+
+	*tilePtr = (tile & 0xFC3F) | 0x380;
+	playerZCopy = playerZ;
+	func_800DF9C8_EE978(playerX, (func_800B84D0_C7480(playerX, playerZCopy) >> 8) + 0xA, playerZCopy, 0x78, 0, 0);
+
+	if ((D_80052B34->unk1A != 7) || !(D_80052B34->unk58 < 0.0f)) {
+		randVal = func_800038E0_44E0();
+		func_80102D00_111CB0(D_80052B34,
+			(f32)(0x10 - (s32)((randVal & 0xFF) / 8)),
+			40.0f,
+			(f32)(0x10 - (s32)((func_800038E0_44E0() & 0xFF) / 8)));
+	}
+
+	D_80159320 |= 0x800;
+	D_80052B34->unk26 = 0x7FF - (func_800038E0_44E0() & 0xFFF);
+	D_80052B34->unk22 = 0x7FF - (func_800038E0_44E0() & 0xFFF);
+	D_80052B34->unk24 = 0x7FF - (func_800038E0_44E0() & 0xFFF);
+
+	if (D_80052B34->unk1A == 0) {
+		func_80124170_133120(playerX, (func_800B84D0_C7480(playerX, playerZCopy) >> 8) + 0xA, playerZCopy, 0x64, 0x64, 0);
+		func_80124118_1330C8(D_80052B34, 0x96);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BC2F8_CB2A8.s")
+#endif
 
 // CURRENT(506)
 #ifdef NON_MATCHING
