@@ -516,7 +516,7 @@ void func_80089EB4_98E64(u8, s32, s32, s32, s32);
 void func_802D5508_1EE218(void);
 void func_800893C8_98378(s32, s16, s16, s16, s16, s16, s16, s32, s32);
 s32 func_8008AAFC_99AAC(u8, s32, s32);
-void func_8008AC5C_99C0C(u8, s32);
+void func_8008AC5C_99C0C(u8);
 void func_8008B02C_99FDC(u8);
 void func_8008B058_173118(u8 arg0);
 void func_80083014_16B0D4(Vec3f *arg0, Vec3f *arg1);
