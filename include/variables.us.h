@@ -3185,12 +3185,12 @@ extern f32 D_80159D2C;
 extern f32 D_80159D30;
 extern f32 D_80159D54;
 extern f32 D_80159D58;
-extern f32 D_80159D54;
 extern VehicleInstance *D_80159D5C;
 extern VehicleSpec *D_80159D64;
 extern s32 D_80159D6C;
 extern s32 D_80159D70;
 extern Unk8010ED84Pos *D_80159D60;
 extern Unk8010ED84Data *D_80159D68;
+extern char D_80141EB0_150E60;
 
 #endif

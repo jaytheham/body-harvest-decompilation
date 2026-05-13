@@ -751,6 +751,8 @@ void func_80124BA8_133B58(void);
 void func_800D6ADC_E5A8C(s16, s16, s16, s16);
 void func_800D6C18_E5BC8(s16, u8);
 void func_800D6EAC_E5E5C(u8);
+void func_8011B6C0_12A670(s16, s16, s16, s32, s32);
+void func_8011C338_12B2E8(s8 *, s32);
 void func_800B8F30_C7EE0(s16, s16, s32);
 s32 func_80085448_943F8(u8);
 void func_80090C14_9FBC4(u8);
