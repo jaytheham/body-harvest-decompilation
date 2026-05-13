@@ -4362,7 +4362,80 @@ void func_8010C454_11B404(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010CA38_11B9E8.s")
 
+// CURRENT(12700)
+#ifdef NON_MATCHING
+s32 func_8010CF7C_11BF2C(s16 arg0, s16 arg1) {
+	VehicleInstance *vehicle;
+	VehicleSpec *spec;
+	f32 dx;
+	f32 dz;
+	f32 temp;
+	s32 count;
+
+	vehicle = D_80159D5C;
+	dx = arg0 - vehicle->unk0;
+	dz = arg1 - vehicle->unk4;
+	count = 0;
+
+	switch (D_80159D6C) {
+		case 0:
+			temp = -dx;
+			if (dx < temp) {
+				temp = dx;
+			}
+			spec = D_80159D64;
+			if (temp <= (spec->unk34 >> 1)) {
+				temp = -dz;
+				if (dz < temp) {
+					temp = dz;
+				}
+				if (temp <= (spec->unk36 >> 1)) {
+					count = 2;
+				}
+			}
+			break;
+
+		case 1:
+			temp = -dx;
+			if (dx < temp) {
+				temp = dx;
+			}
+			spec = D_80159D64;
+			if (temp <= (spec->unk36 >> 1)) {
+				temp = -dz;
+				if (dz < temp) {
+					temp = dz;
+				}
+				if (temp <= (spec->unk34 >> 1)) {
+					count = 2;
+				}
+			}
+			break;
+
+		case 2:
+			if (((dx * dx) + (dz * dz)) < D_80159D54) {
+				count = 2;
+			}
+			break;
+
+		case 3:
+			temp = (-D_80159D14 * dx) + dz;
+			if ((-D_80159D1C <= temp) && (temp <= D_80159D1C)) {
+				count = 1;
+			}
+
+			temp = (-D_80159D18 * dx) + dz;
+			if ((-D_80159D20 <= temp) && (temp <= D_80159D20)) {
+				count++;
+			}
+			break;
+	}
+
+	return count == 2;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010CF7C_11BF2C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010D234_11C1E4.s")
 
