@@ -4052,7 +4052,55 @@ void func_80101C14_110BC4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80101EF4_110EA4.s")
 
+// CURRENT(1466)
+#ifdef NON_MATCHING
+void func_801022F4_1112A4(VehicleInstance *arg0, s16 arg1, f32 arg2) {
+	s16 temp_s0;
+	f32 temp_f20, temp_f14;
+	s32 diff;
+	s32 pad1;
+	
+	if (arg0->unkC == -2) {
+		temp_s0 = coss((u16)arg0->unkE);
+		temp_f20 = (f32)((((f64)(f32)coss(arg1) / 32768.0) * (f64)arg2) + (((f64)(f32)temp_s0 / 32768.0) * (f64)arg0->unk58));
+		
+		temp_s0 = sins((u16)arg0->unkE);
+		temp_f14 = (f32)((((f64)(f32)sins(arg1) / 32768.0) * (f64)arg2) + (((f64)(f32)temp_s0 / 32768.0) * (f64)arg0->unk58));
+		
+		func_800FB430_10A3E0(arg0, sqrtf((temp_f20 * temp_f20) + (temp_f14 * temp_f14)));
+		arg0->unkE = func_80003824_4424(temp_f20, temp_f14);
+		
+		diff = func_800F9C50_108C00(arg0->unkE, arg0->unk6);
+		if ((diff >= 0x4001) || (diff < -0x4000)) {
+			arg0->unkE += 0x8000;
+			func_800FB430_10A3E0(arg0, -arg0->unk58);
+		}
+		
+		if (arg0 == D_80052B34) {
+			D_80157A2C = arg1;
+		}
+		
+		arg0->unk20 |= 1;
+	} else {
+		temp_s0 = coss((u16)arg0->unkE);
+		temp_f20 = (f32)((((f64)(f32)coss(arg1) / 32768.0) * (f64)arg2) + (((f64)(f32)temp_s0 / 32768.0) * (f64)arg0->unk12));
+		
+		temp_s0 = sins((u16)arg0->unkE);
+		temp_f14 = (f32)((((f64)(f32)sins(arg1) / 32768.0) * (f64)arg2) + (((f64)(f32)temp_s0 / 32768.0) * (f64)arg0->unk12));
+		
+		arg0->unk12 = (s16)(s32)sqrtf((temp_f20 * temp_f20) + (temp_f14 * temp_f14));
+		arg0->unkE = func_80003824_4424(temp_f20, temp_f14);
+		
+		diff = func_800F9C50_108C00(arg0->unkE, arg0->unk6);
+		if ((diff >= 0x4001) || (diff < -0x4000)) {
+			arg0->unkE += 0x8000;
+			arg0->unk12 = -arg0->unk12;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801022F4_1112A4.s")
+#endif
 
 // CURRENT(887)
 #ifdef NON_MATCHING
