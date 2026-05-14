@@ -4337,7 +4337,84 @@ void func_80102DDC_111D8C(VehicleInstance *arg0, s16 arg1, s16 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80102DDC_111D8C.s")
 #endif
 
+// CURRENT(10274)
+#ifdef NON_MATCHING
+s32 func_80102FA4_111F54(void) {
+	UnkF9230Func80102FA4Point *points;
+	UnkF9230Func80102FA4Point *cur;
+	UnkF9230Func80102FA4Point *prev;
+	f64 damping;
+	f64 spring;
+	f32 chainX;
+	f32 chainY;
+	f32 chainZ;
+	s32 i;
+	s32 ret;
+	f32 targetY;
+	f32 groundY;
+	f32 midX;
+	f32 midY;
+	f32 midZ;
+
+	points = (UnkF9230Func80102FA4Point *)D_801593F0;
+	damping = D_80144A90_153A40;
+	spring = D_80144A98_153A48;
+
+	points[11].vel.x = (f32)((f64)points[11].vel.x * damping);
+	points[11].vel.y = (f32)(((f64)points[11].vel.y * damping) - 4.0);
+	points[11].vel.z = (f32)((f64)points[11].vel.z * damping);
+	points[11].pos.x += points[11].vel.x;
+	points[11].pos.y += points[11].vel.y;
+	points[11].pos.z += points[11].vel.z;
+
+	chainX = points[11].pos.x;
+	chainY = points[11].pos.y;
+	chainZ = points[11].pos.z;
+
+	for (i = 10; i >= 1; i--) {
+		cur = &points[i];
+		prev = &points[i - 1];
+
+		midX = (f32)((f64)chainX - (((f64)(chainX - prev->pos.x)) * 0.5));
+		midY = (f32)((f64)chainY - (((f64)(chainY - prev->pos.y)) * 0.5));
+		midZ = (f32)((f64)chainZ - (((f64)(chainZ - prev->pos.z)) * 0.5));
+
+		prev->vel.x = (f32)(((f64)prev->vel.x * damping) + (f64)(midX - cur->pos.x));
+		prev->vel.y = (f32)((((f64)prev->vel.y * damping) + (f64)(midY - cur->pos.y)) - 4.0);
+		prev->vel.z = (f32)(((f64)prev->vel.z * damping) + (f64)(midZ - cur->pos.z));
+
+		chainX = (f32)((f64)cur->pos.x + ((f64)prev->vel.x * spring));
+		chainY = (f32)((f64)cur->pos.y + ((f64)prev->vel.y * spring));
+		chainZ = (f32)((f64)cur->pos.z + ((f64)prev->vel.z * spring));
+
+		prev->pos.x = chainX;
+		prev->pos.y = chainY;
+		prev->pos.z = chainZ;
+	}
+
+	points[0].vel.x = (f32)((f64)points[0].vel.x * damping);
+	points[0].vel.y = (f32)(((f64)points[0].vel.y * damping) - 4.0);
+	points[0].vel.z = (f32)((f64)points[0].vel.z * damping);
+	points[0].pos.x += points[0].vel.x;
+	points[0].pos.y += points[0].vel.y;
+	points[0].pos.z += points[0].vel.z;
+
+	for (i = 10; ; i--) {
+		targetY = points[i].pos.y;
+		ret = i;
+		groundY = (f32)func_800F9F64_108F14((s16)(s32)points[i].pos.x, (s16)(s32)points[i].pos.z);
+		if (!(groundY < targetY)) {
+			if (i == 0) {
+				ret = (s32)&D_80159320;
+				D_80159320 &= 0x7FFFFFFF;
+			}
+			return ret;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80102FA4_111F54.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103308_1122B8.s")
 

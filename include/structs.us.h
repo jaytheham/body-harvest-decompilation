@@ -1891,6 +1891,11 @@ typedef struct {
 } UnkF9230Func800ED55CArg0; /* size = 0x10 */
 
 typedef struct {
+	/* 0x00 */ Vec3f pos;
+	/* 0x0C */ Vec3f vel;
+} UnkF9230Func80102FA4Point; /* size = 0x18 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;

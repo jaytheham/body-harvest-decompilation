@@ -36,7 +36,69 @@ void func_800A931C_B82CC(s8 arg0, s16 *arg1, s32 *arg2) {
 	arg2[2] += D_8014DD50[(s32)arg0].unk4;
 }
 
+/* CURRENT(2517) */
+#ifdef NON_MATCHING
+void func_800A93A4_B8354(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
+	AlienInstance *inst;
+	AlienInstance *parent;
+	s32 pad0;
+	s32 pad1;
+	s16 rotX;
+	s16 rotY;
+	s16 rotZ;
+	s16 offA;
+	s16 offB;
+	s16 offC;
+	s16 cosVal;
+	s16 sinVal;
+	f64 tmp0;
+
+	inst = &alienInstances[arg0];
+	parent = &alienInstances[inst->unk25];
+	if ((parent->unk20 << 11) < 0) {
+		func_80088760_97710(inst);
+	}
+
+	rotX = parent->unk6;
+	rotZ = parent->unkA;
+	rotY = parent->unk8;
+
+	inst->unk0 = parent->unk0;
+	inst->unk2 = parent->unk2;
+	inst->unk4 = parent->unk4;
+	inst->unk6 = parent->unk6;
+	inst->unk8 = parent->unk8;
+	inst->unkA = parent->unkA;
+	inst->unkE = parent->unkE;
+
+	cosVal = coss((u16)rotZ);
+	sinVal = sins((u16)rotZ);
+	offA = (s16)(s32)(((f64)arg2 * ((f64)(f32)cosVal / 32768.0)) - (((f64)(f32)sinVal / 32768.0) * (f64)arg3));
+
+	sinVal = sins((u16)rotZ);
+	cosVal = coss((u16)rotZ);
+	offB = (s16)(s32)((((f64)(f32)cosVal / 32768.0) * (f64)arg3) + ((f64)arg3 * ((f64)(f32)sinVal / 32768.0)));
+
+	cosVal = coss((u16)rotY);
+	sinVal = sins((u16)rotY);
+	tmp0 = (f64)offA;
+	offC = (s16)(s32)(((f64)arg1 * ((f64)(f32)cosVal / 32768.0)) - (((f64)(f32)sinVal / 32768.0) * tmp0));
+
+	sinVal = sins((u16)rotY);
+	cosVal = coss((u16)rotY);
+	inst->unk2 += (s16)(s32)((((f64)(f32)cosVal / 32768.0) * tmp0) + ((f64)arg1 * ((f64)(f32)sinVal / 32768.0)));
+
+	cosVal = coss((u16)rotX);
+	sinVal = sins((u16)rotX);
+	inst->unk0 = (s16)(s32)((f64)inst->unk0 + (((f64)offC * ((f64)(f32)sinVal / 32768.0)) + ((f64)offB * ((f64)(f32)cosVal / 32768.0))));
+
+	sinVal = sins((u16)rotX);
+	cosVal = coss((u16)rotX);
+	inst->unk4 = (s16)(s32)((f64)inst->unk4 + (((f64)(-offC) * ((f64)(f32)cosVal / 32768.0)) + ((f64)offB * ((f64)(f32)sinVal / 32768.0))));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A93A4_B8354.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_800A9738_B86E8(u8 arg0, s32 arg1) {
