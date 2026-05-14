@@ -3833,7 +3833,93 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010065C_10F60C.s")
 
 // drawDeadVehicles
+#ifdef NON_MATCHING
+// CURRENT(guarded)
+void func_80101C14_110BC4(void) {
+	Gfx *dl;
+	s16 i;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBA000E02;
+	dl->words.w1 = 0x00008000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB6000000;
+	dl->words.w1 = 0x00020000;
+
+	if (currentLevel == 1) {
+		for (i = 0x7F; i >= 0; i--) {
+			VehicleInstance *vehicle = &vehicleInstances[D_80158E80[i]];
+			VehicleSpec *spec;
+
+			if (vehicle->unk1A != 0x11) {
+				continue;
+			}
+			if (vehicle->unk20 & 0x8000) {
+				continue;
+			}
+
+			spec = &vehicleSpecs[vehicle->unk1A];
+			if (vehicle->unk0 < (D_801493B0 - 0x200)) {
+				continue;
+			}
+			if ((D_801493AC + 0x200) < vehicle->unk0) {
+				continue;
+			}
+			if (vehicle->unk4 < (D_801493B8 - 0x200)) {
+				continue;
+			}
+			if ((D_801493B4 + 0x200) < vehicle->unk4) {
+				continue;
+			}
+			if (func_800B93AC_C835C(vehicle->unk0, vehicle->unk4, spec->unkC, (s16)D_80052B2C->unk0, (s32)D_80052B2C->unk8, 0x4000 - D_80047950) == 0) {
+				continue;
+			}
+			if (vehicle->unk1E >= 0x81) {
+				continue;
+			}
+
+			func_800FFD28_10ECD8(vehicle);
+
+			D_80052B50.unk0 = (s16)(0x100 - (vehicle->unk1E << 1));
+			D_80052B50.unk2 = (s16)(0x100 - (vehicle->unk1E << 1));
+			D_80052B50.unk4 = 0x100;
+			func_800039D0_45D0(&D_80052B50, 0, 0, D_8005BB38);
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0x01040040;
+			dl->words.w1 = (u32)D_8005BB38 & 0x1FFFFFFF;
+
+			D_8005BB38 += 0x40;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0x06000000;
+			dl->words.w1 = (u32)D_8005BB38;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xBD000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xE7000000;
+			dl->words.w1 = 0;
+		}
+	}
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB7000000;
+	dl->words.w1 = 0x00020000;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80101C14_110BC4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80101EF4_110EA4.s")
 
