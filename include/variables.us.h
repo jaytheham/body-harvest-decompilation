@@ -516,6 +516,7 @@ extern Unk80052B2C* D_80052B2C;
 extern s32 D_80052B38;
 extern s32 D_80052B3C;
 extern VehicleInstance* D_80052B34; // Ptr to active vehicle instance
+extern s16 D_80257A3C[];
 extern Unk80052B40 D_80052B40;
 extern Unk80052B40 D_80052B48;
 extern Unk80052B40 D_80052B50;

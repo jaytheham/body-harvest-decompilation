@@ -470,7 +470,98 @@ void func_8009EC90_ADC40(s16 arg0, f32 *arg1, f32 *arg2) {
 	*arg1 = (f32) (((f64) *arg2 * ((f64) (f32) sins(arg0) / 32768.0)) / ((f64) (f32) coss(arg0) / 32768.0));
 }
 
+
+// CURRENT(0)
+#ifdef NON_MATCHING
+void func_8009EE30_ADDE0(void)
+{
+	Gfx *dl;
+	Vtx *vtx;
+	s32 var_s0;
+	s32 var_s1;
+	s32 var_s2;
+	s32 pad0;
+	s32 pad1;
+	s16 var_s4;
+	f32 sp7C;
+	f32 sp78;
+
+	var_s4 = D_80257A3C[D_80052B34->unk1A];
+	if (var_s4 == 0) {
+		return;
+	}
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFCFFC3FF;
+	dl->words.w1 = 0xFF867F3F;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x0400289F;
+	dl->words.w1 = (u32) D_8005BB34 & 0x1FFFFFFF;
+
+	vtx = D_8005BB34;
+	D_8005BB34 = vtx + 1;
+	vtx->v.ob[0] = 0;
+	vtx->v.ob[1] = 0;
+	vtx->v.ob[2] = 0;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0x400;
+	vtx->v.cn[0] = 0xFF;
+	vtx->v.cn[1] = 0xA0;
+	vtx->v.cn[2] = 0xA0;
+	vtx->v.cn[3] = 0x80;
+
+	var_s2 = 0;
+	for (var_s1 = 0; var_s1 != 9; var_s1++) {
+		if (var_s2 >= 0) {
+			var_s0 = var_s2 >> 2;
+		} else {
+			var_s0 = (var_s2 + 3) >> 2;
+		}
+
+		func_8009EC90_ADC40((s16)(var_s0 - var_s4), &sp7C, &sp78);
+
+		vtx->v.ob[0] = (s16)(s32)(sp7C * 32.0f);
+		vtx->v.ob[1] = (s16)(s32)(sp78 * 32.0f);
+		vtx->v.ob[2] = 0;
+		vtx->v.flag = 0;
+		vtx->v.tc[0] = (s16)((vtx->v.ob[0] + 0x20) * 0x20);
+		vtx->v.tc[1] = (s16)((0x20 - vtx->v.ob[1]) * 0x20);
+		vtx->v.cn[0] = 0xFF;
+		vtx->v.cn[1] = 0xFF;
+		vtx->v.cn[2] = 0xFF;
+		vtx->v.cn[3] = 0x80;
+		vtx++;
+
+		var_s2 += var_s4;
+	}
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB1000204;
+	dl->words.w1 = 0x00000406;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB1000608;
+	dl->words.w1 = 0x0000080A;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB1000A0C;
+	dl->words.w1 = 0x00000C0E;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB1000E10;
+	dl->words.w1 = 0x00001012;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009EE30_ADDE0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009F130_AE0E0.s")
 
