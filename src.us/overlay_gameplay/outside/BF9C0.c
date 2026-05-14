@@ -1268,7 +1268,82 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B93AC_C835C.s")
 #endif
 
+// CURRENT(20615)
+#ifdef NON_MATCHING
+s32 func_800B960C_C85BC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+	s32 halfArg2;
+	s32 halfArg3;
+	s32 angleOffset;
+	s32 objX;
+	s32 objZ;
+	s32 diffX;
+	s32 diffZ;
+	s32 i;
+	s32 hit;
+	s32 centerX;
+	s32 centerZ;
+	s32 rangeX;
+	s32 rangeZ;
+
+	if (D_80157590 != 0 || D_8014FD2A == (u16)-0x8000) {
+		return 1;
+	}
+
+	D_8014F854 = 1;
+	angleOffset = 0x4000 - D_80047950;
+	centerX = (s16) arg0;
+	centerZ = (s16) arg1;
+	objX = (s16) D_80052B2C->unk0;
+	objZ = (s16) D_80052B2C->unk8;
+	rangeX = arg2 & 0xFFFF;
+	rangeZ = arg3 & 0xFFFF;
+	halfArg2 = (rangeX < 0) ? ((rangeX + 1) >> 1) : (rangeX >> 1);
+	halfArg3 = (rangeZ < 0) ? ((rangeZ + 1) >> 1) : (rangeZ >> 1);
+	diffX = objX - centerX;
+	if (diffX < 0) {
+		diffX = -diffX;
+	}
+	if (diffX < rangeX) {
+		diffZ = objZ - centerZ;
+		if (diffZ < 0) {
+			diffZ = -diffZ;
+		}
+		if (diffZ < rangeZ) {
+			return 1;
+		}
+	}
+
+	D_8014F854 = 0;
+	for (i = 0; i < 5; i++) {
+		switch (i) {
+			case 0:
+				hit = func_800B9228_C81D8((s32)(centerX + halfArg2), centerZ + halfArg3, objX, objZ, angleOffset);
+				break;
+			case 1:
+				hit = func_800B9228_C81D8(centerX, centerZ, objX, objZ, angleOffset);
+				break;
+			case 2:
+				hit = func_800B9228_C81D8((s32)(centerX + rangeX), centerZ, objX, objZ, angleOffset);
+				break;
+			case 3:
+				hit = func_800B9228_C81D8(centerX, (s32)(centerZ + rangeZ), objX, objZ, angleOffset);
+				break;
+			default:
+				hit = func_800B9228_C81D8((s32)(centerX + rangeX), (s32)(centerZ + rangeZ), objX, objZ, angleOffset);
+				break;
+		}
+
+		if (hit != 0) {
+			D_8014F854 = 1;
+			return D_8014F854;
+		}
+	}
+
+	return D_8014F854;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B960C_C85BC.s")
+#endif
 
 void func_800B9954_C8904(u8 arg0) {
 	D_80152B80[arg0].unk8 = 0;
