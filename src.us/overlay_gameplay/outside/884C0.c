@@ -3078,7 +3078,88 @@ void func_80083EF4_92EA4(AlienInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800840B0_93060.s")
 
+
+// CURRENT(0)
+#ifdef NON_MATCHING
+void func_800844D0_93480(s32 arg0)
+{
+	s16 sp3C;
+	s16 sp3A;
+	u8 sp39;
+	s32 sp34;
+	s8 var_s2;
+	AlienInstance *temp_s3;
+	AlienSpec *temp_v0;
+	s32 temp_a3;
+
+	temp_a3 = arg0 & 0xFF;
+	temp_s3 = &alienInstances[temp_a3];
+	var_s2 = 0;
+	sp39 = temp_s3->specIndex;
+
+	sp3C = (s16)(s8)(temp_s3->unk0 >> 8);
+	sp3A = (s16)(s8)(temp_s3->unk4 >> 8);
+
+	if (func_800B325C_C220C((s8)sp3C, (s8)sp3A, 0x800) != 0)
+	{
+		return;
+	}
+
+	temp_v0 = &alienSpecs[sp39];
+	if ((temp_v0->unk54 & 0x10) == 0 || (temp_v0->unk54 & 1) != 0)
+	{
+		return;
+	}
+
+	sp34 = (temp_s3->unk2 - temp_v0->unk58) - 0x32;
+
+	if (func_800B325C_C220C((s8)sp3C, (s8)(sp3A - 1), 0x800) != 0)
+	{
+		var_s2 = 1;
+	}
+	else if (sp34 < (func_800B84D0_C7480((s16)((sp3C << 8) + 0x80), (s16)((sp3A << 8) - 0x80)) >> 8))
+	{
+		var_s2 = 1;
+	}
+
+	if (func_800B325C_C220C((s8)(sp3C + 1), (s8)sp3A, 0x800) != 0)
+	{
+		var_s2 |= 2;
+	}
+	else if (sp34 < (func_800B84D0_C7480((s16)((sp3C << 8) + 0x180), (s16)((sp3A << 8) + 0x80)) >> 8))
+	{
+		var_s2 |= 2;
+	}
+
+	if (func_800B325C_C220C((s8)sp3C, (s8)(sp3A + 1), 0x800) != 0)
+	{
+		var_s2 |= 4;
+	}
+	else if (sp34 < (func_800B84D0_C7480((s16)((sp3C << 8) + 0x80), (s16)((sp3A << 8) + 0x180)) >> 8))
+	{
+		var_s2 |= 4;
+	}
+
+	if (func_800B325C_C220C((s8)(sp3C - 1), (s8)sp3A, 0x800) != 0)
+	{
+		var_s2 |= 8;
+	}
+	else if (sp34 < (func_800B84D0_C7480((s16)((sp3C << 8) - 0x80), (s16)((sp3A << 8) + 0x80)) >> 8))
+	{
+		var_s2 |= 8;
+	}
+
+	if (var_s2 != 0)
+	{
+		func_800840B0_93060(var_s2, temp_s3->unk2A, &sp3C, &sp3A);
+		sp3C = (s16)((sp3C << 8) + 0x80);
+		sp3A = (s16)((sp3A << 8) + 0x80);
+		temp_s3->unk2A = func_80003824_4424((f32)(sp3C - temp_s3->unk0), (f32)(sp3A - temp_s3->unk4));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800844D0_93480.s")
+#endif
 
 // https://decomp.me/scratch/dDCXt
 #ifdef NON_MATCHING
