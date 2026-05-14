@@ -5077,7 +5077,88 @@ void func_8008BF8C_9AF3C(u8 arg0)
   }
 }
 
+// CURRENT(2428)
+#ifdef NON_MATCHING
+void func_8008C0F8_9B0A8(u8 arg0) {
+	AlienInstance *inst;
+	u8 specEntry;
+	s16 randA;
+	s16 randB;
+	s16 tempA;
+	s32 threshold;
+
+	inst = &alienInstances[arg0];
+	specEntry = (u8)D_8014DD5C[inst->unkC * 0x10];
+
+	if (!(inst->unk20 & 0x600)) {
+		return;
+	}
+
+	func_80137468_146418(arg0, 0x1D);
+
+	if (!(inst->unk20 & 0x100000)) {
+		inst->unk20 &= 0xF7FFFE5F;
+		inst->unk47 &= -2;
+		inst->unk38 = (func_800038E0_44E0() % 3) + 3;
+		inst->unk20 |= 0x40000000;
+		inst->unk3A = 0;
+		inst->unk2C = 0xC8;
+		func_800DF848_EE7F8(inst->unk0, inst->unk2, inst->unk4, 0x64, 0);
+		return;
+	}
+
+	if (inst->unk2C < 4) {
+		return;
+	}
+
+	func_800A5554_B4504(arg0, 0x190, 0x3CA3D70A, (s16)specEntry);
+	inst->unkA += 0x96;
+	inst->unk10 += 0x20;
+
+	if (inst->unk38 != 0) {
+		inst->unk38--;
+	} else {
+		inst->unk38 = (func_800038E0_44E0() % 3) + 3;
+		randA = func_800038E0_44E0();
+		randB = func_800038E0_44E0();
+
+		func_800DF038_EDFE8(
+			(s16)(inst->unk0 - ((s32)(u16)randA % 128) + 0x40),
+			(s16)(inst->unk2 - ((s32)(u16)randB % 64) + 0x20),
+			(s16)(inst->unk4 - (func_800038E0_44E0() % 128) + 0x40),
+			0x32,
+			0,
+			(s32)&D_8013C178_14B128
+		);
+	}
+
+	threshold = D_80222A70;
+
+	if (inst->unk2 < threshold) {
+		inst->unk3A++;
+	}
+
+	if (!(inst->unk47 & 1)) {
+		if (inst->unk20 & 0x40000000) {
+			if (inst->unk3A < 2) {
+				return;
+			}
+		}
+	}
+
+	tempA = inst->unk2;
+	inst->unk2C = 2;
+	if (tempA < threshold) {
+		func_800DF038_EDFE8(inst->unk0, tempA, inst->unk4, (alienSpecs[inst->specIndex].unkC * 3) & 0xFFFF, 4, (s32)&D_8013C16C_14B11C);
+		func_800DEF2C_EDEDC(inst->unk0, inst->unk2, inst->unk4, 0xFF, 2);
+		return;
+	}
+
+	func_800DF848_EE7F8(inst->unk0, inst->unk2, inst->unk4, (u16)alienSpecs[inst->specIndex].unkC, 4);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008C0F8_9B0A8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008C428_9B3D8.s")
 
