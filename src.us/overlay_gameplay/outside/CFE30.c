@@ -553,7 +553,110 @@ s16 func_800C19D4_D0984(u8 arg0, s32 arg1) {
 	return var_a3;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(3090)
+void func_800C1A4C_D09FC(s16 arg0, u8 arg1, s32 arg2) {
+	typedef struct {
+		u8 unk0;
+		u8 unk1;
+		s16 unk2;
+		s16 unk4;
+		s16 unk6;
+	} Unk80154318Link;
+
+	Unk801541F8Entry* effect;
+	Unk80154318Entry* unit;
+	Unk80154318Link* unitLink;
+	Unk80154318Link* link;
+	s16 temp;
+	u8 effectType;
+
+	effectType = arg1;
+	if ((arg0 < 0) || (arg0 >= 0x190)) {
+		if (arg2 != 0) {
+			osSyncPrintf(&D_80143128_1520D8, arg0, effectType);
+		} else {
+			osSyncPrintf(&D_80143170_152120, arg0, effectType);
+		}
+		return;
+	}
+
+	unit = &D_80154318[arg0];
+	unitLink = (Unk80154318Link*) unit;
+	if ((unit->unk0 & 1) == 0) {
+		if (arg2 != 0) {
+			osSyncPrintf(&D_801431AC_15215C, arg0, effectType);
+		} else {
+			osSyncPrintf(&D_80143200_1521B0, arg0, effectType);
+		}
+		return;
+	}
+
+	if (arg2 != 0) {
+		effect = &D_801541F8[effectType];
+	} else {
+		effect = &D_80154088[effectType];
+	}
+
+	switch (effect->unk4) {
+		case 0:
+			osSyncPrintf(&D_80143248_1521F8);
+			effect->unk6 = -6;
+			effect->unk8 = -6;
+			return;
+
+		case 1:
+			effect->unk6 = -6;
+			effect->unk8 = -6;
+			break;
+
+		case 2:
+			temp = unitLink->unk6;
+			if (temp == -4) {
+				effect->unk6 = unit->unk4;
+				link = (Unk80154318Link*) &D_80154318[effect->unk6];
+				link->unk6 = -4;
+				link->unk4 = -5;
+			} else if (unit->unk4 == -5) {
+				effect->unk8 = temp;
+				link = (Unk80154318Link*) &D_80154318[effect->unk6];
+				link->unk6 = -4;
+				link->unk4 = -5;
+			} else {
+				osSyncPrintf(&D_80143284_152234);
+			}
+			break;
+
+		default:
+			temp = unitLink->unk6;
+			if (temp == -4) {
+				effect->unk6 = unit->unk4;
+				link = (Unk80154318Link*) &D_80154318[unit->unk4];
+				link->unk6 = -4;
+			} else if (unit->unk4 == -5) {
+				effect->unk8 = temp;
+				link = (Unk80154318Link*) &D_80154318[unitLink->unk6];
+				link->unk4 = -5;
+			} else {
+				link = (Unk80154318Link*) &D_80154318[unit->unk4];
+				link->unk6 = temp;
+				link = (Unk80154318Link*) &D_80154318[unitLink->unk6];
+				link->unk4 = unit->unk4;
+			}
+			break;
+	}
+
+	unit->unk0 = 0;
+	unit->unk1 = 0xFF;
+	effect->unk4--;
+	D_8015430E--;
+	if (arg0 < D_80154310) {
+		D_80154310 = arg0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1A4C_D09FC.s")
+#endif
 
 void func_800C1D40_D0CF0(s16 arg0, u8 arg1, s32 arg2)
 {
