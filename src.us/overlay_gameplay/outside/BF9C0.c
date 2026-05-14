@@ -1615,7 +1615,88 @@ void func_800BD2F4_CC2A4(void)
 }
 
 // DisplayGates - A gate is a portal through the shield wall
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD360_CC310.s")
+void func_800BD360_CC310(void)
+{
+	u8 i;
+	s16 sp88[2];
+
+	if (currentLevel == 5)
+	{
+		return;
+	}
+
+	gDPSetRenderMode(D_8005BB2C++,
+		Z_CMP | Z_UPD | IM_RD | CLR_ON_CVG | CVG_DST_WRAP | ZMODE_XLU | FORCE_BL | G_RM_PASS,
+		Z_CMP | Z_UPD | IM_RD | CLR_ON_CVG | CVG_DST_WRAP | ZMODE_XLU | FORCE_BL | GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA));
+	gSPClearGeometryMode(D_8005BB2C++, G_FOG | G_LIGHTING);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
+	gDPPipeSync(D_8005BB2C++);
+
+	for (i = 0; i < 8; i++)
+	{
+		if (D_8003E0FC[currentLevel - 1][i].unk9 == 2)
+		{
+			if (D_8003E0FC[currentLevel - 1][i].unk6 == 0)
+			{
+				return;
+			}
+			return;
+		}
+
+		sp88[1] = D_8003E0FC[currentLevel - 1][i].unk0 << 8;
+		sp88[0] = D_8003E0FC[currentLevel - 1][i].unk4 << 8;
+		if (func_800BB3D0_CA380(
+			D_80149434 - 0x800,
+			D_80149436 - 0x900,
+			D_80149434 + 0x700,
+			D_80149436 + 0x700,
+			&sp88[1],
+			&sp88[0],
+			&sp88[1],
+			&sp88[0]) != 0)
+		{
+			if (func_800B93AC_C835C(
+				D_8003E0FC[currentLevel - 1][i].unk0 << 8,
+				D_8003E0FC[currentLevel - 1][i].unk4 << 8,
+				0xA0,
+				(s16)(s32)D_80052B2C->unk0,
+				(s32)D_80052B2C->unk8,
+				0x4000 - D_80047950) != 0)
+			{
+				s8 v1;
+				s32 a0;
+				s32 absAnim;
+				s16 gateY;
+
+				func_800B84D0_C7480(
+					D_8003E0FC[currentLevel - 1][i].unk0 << 8,
+					D_8003E0FC[currentLevel - 1][i].unk4 << 8);
+
+				gateY = D_8003E0FC[currentLevel - 1][i].unk2;
+				v1 = D_8003E0FC[currentLevel - 1][i].unk6;
+				a0 = -v1;
+				if (a0 < v1)
+				{
+					absAnim = v1;
+				}
+				else
+				{
+					absAnim = a0;
+				}
+
+				func_800BC760_CB710(
+					D_8003E0FC[currentLevel - 1][i].unk0 << 8,
+					gateY,
+					D_8003E0FC[currentLevel - 1][i].unk4 << 8,
+					(u8)absAnim,
+					(D_8003E0FC[currentLevel - 1][i].unk9 << 14) + 0x4000);
+			}
+		}
+	}
+
+	gSPSetGeometryMode(D_8005BB2C++, G_FOG | G_LIGHTING);
+	gDPPipeSync(D_8005BB2C);
+}
 
 // CURRENT(1785)
 #ifdef NON_MATCHING

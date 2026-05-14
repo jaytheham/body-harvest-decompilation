@@ -118,7 +118,50 @@ void func_800A99B8_B8968(u8 arg0)
 	} 
 }
 
+// CURRENT(2825)
+#ifdef NON_MATCHING
+s32 func_800A9A90_B8A40(u8 arg0, s32 arg1, f32 arg2) {
+	AlienInstance *alien;
+	AlienInstance *leader;
+	u8 *members;
+	u8 specIndex;
+	s32 hpDelta;
+	s32 i;
+
+	alien = &alienInstances[arg0];
+	leader = &alienInstances[alien->unk25];
+	members = (u8 *)leader;
+	specIndex = alien->specIndex;
+
+	if (((u32)D_80052A8C % 100) != 0) {
+		return 0;
+	}
+
+	hpDelta = D_8013D8D8_14C888[0] - alien->hitPoints;
+
+	for (i = 1; i < arg1; i++) {
+		if (members[i - 1] != 0xFF) {
+			hpDelta += D_8013D8D8_14C888[i] - alienInstances[members[i - 1]].hitPoints;
+		}
+	}
+
+	D_8013D8D8_14C888[0] = alien->hitPoints;
+
+	for (i = 1; i < arg1; i++) {
+		if (members[i - 1] != 0xFF) {
+			D_8013D8D8_14C888[i] = alienInstances[members[i - 1]].hitPoints;
+		}
+	}
+
+	if (((f32) * (u16 *)&D_802566BA[specIndex * 0x68] * arg2) < (f32) hpDelta) {
+		return 1;
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9A90_B8A40.s")
+#endif
 
 void func_800A9DC0_B8D70(func_800A9DC0_B8D70_arg *arg0) {
 	s32 idx = arg0->unk8;
