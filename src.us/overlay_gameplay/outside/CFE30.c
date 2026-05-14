@@ -2189,7 +2189,60 @@ void func_800CCB60_DBB10(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CCB60_DBB10.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(1836)
+void func_800CCD54_DBD04(void) {
+	Vec3f dir;
+	s16 index;
+	Unk80154318Entry *entry;
+
+	D_80153BCD = 0x10;
+	D_80153BCE = 0x10;
+	index = D_80154246;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	if ((index != -5) && (index != -6)) {
+		while (1) {
+			entry = &D_80154318[index];
+
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)(D_100E880 + (entry->unk14 << 7)) & 0x1FFFFFFF));
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 2048);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 1, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
+			gDPPipeSync(D_8005BB2C++);
+
+			dir.x = (D_80153BA0.x * 4.0f) - (f32)entry->unk8;
+			dir.y = (D_80153BA0.y * 4.0f) - (f32)entry->unkA;
+			dir.z = (D_80153BA0.z * 4.0f) - (f32)entry->unkC;
+			func_800C1024_CFFD4(&dir, &dir);
+
+			D_80153BB8.x = (f32)entry->unk8 + (dir.x * (f32)entry->unk12);
+			D_80153BB8.y = (f32)entry->unkA + (dir.y * (f32)entry->unk12);
+			D_80153BB8.z = (f32)entry->unkC + (dir.z * (f32)entry->unk12);
+			D_80153BCC = 0xFF;
+			D_80153BC8 = (f32)entry->unk2;
+			D_80153BC4 = &entry->unkE;
+			func_800DB350_EA300();
+
+			index = entry->unk4;
+			if ((index == -5) || (index == -6)) {
+				break;
+			}
+		}
+	}
+
+	D_80156EDA += D_80154244 * 4;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CCD54_DBD04.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(4159)
