@@ -485,7 +485,7 @@ void func_80086164_95114(u8, s16);
 s32 func_80086230_951E0(u8, s16, s32);
 void func_800A3D00_B2CB0(u8, s16, s16, s32);
 s32 func_800868A4_95854(u8, s32, s16, s16);
-void func_80086A34_959E4(u8, s32, s16);
+s32 func_80086A34_959E4(u8, s32, s16);
 s32 func_800870D8_96088(s32, s32);
 s32 func_800871CC_9617C(u8, s32, s32);
 void func_800800DC_8F08C(s32);
