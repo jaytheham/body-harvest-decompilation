@@ -2183,6 +2183,7 @@ extern s8 D_8013B90C_14A8BC;
 extern s16 D_8014940E;
 extern s16 D_80157574;
 extern s16 D_80157576;
+extern s32 D_8015757C;
 extern f32 D_80031404;
 extern char D_8013BA80_14AA30[];
 extern f32 D_8003140C;
