@@ -4727,7 +4727,100 @@ void func_800DBA9C_EAA4C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DBA9C_EAA4C.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(2840)
+void func_800DBE20_EADD0(void) {
+	f32 distances[0x1E];
+	f32 negOne;
+	f32 negTwo;
+	f32 four;
+	u8 i;
+	u8 backPos;
+
+	negOne = -1.0f;
+	negTwo = -2.0f;
+	four = 4.0f;
+	backPos = 0x1D;
+	for (i = 0; i < 0x1E; i++) {
+		Unk801541F8Entry *effect;
+
+		effect = &D_80154088[i];
+		D_80157540[i] = 0xFE;
+		if (effect->unk0 == 0xFA) {
+			distances[i] = negOne;
+		} else if (!(effect->unk1 & 1)) {
+			distances[i] = negTwo;
+		} else if (effect->unk0 == 0) {
+			Unk80154318Entry *unit;
+			f32 dx;
+			f32 dz;
+
+			unit = &D_80154318[effect->unkA];
+			dx = (f32)unit->unk8 - (D_80153BA0.x * four);
+			dz = (f32)unit->unkC - (D_80153BA0.z * four);
+			distances[i] = sqrtf((dx * dx) + (dz * dz));
+		} else if (effect->unk0 == 1) {
+			Unk80154318Entry *unit;
+			f32 dx;
+			f32 dz;
+
+			unit = &D_80154318[effect->unkA];
+			dx = (f32)unit->unk8 - (D_80153BA0.x * four);
+			dz = (f32)unit->unkC - (D_80153BA0.z * four);
+			distances[i] = sqrtf((dx * dx) + (dz * dz));
+		} else if (effect->unk0 == 5) {
+			Unk80154318Entry *unit;
+			f32 dx;
+			f32 dz;
+
+			unit = &D_80154318[effect->unk6];
+			dx = (f32)unit->unk8 - (D_80153BA0.x * four);
+			dz = (f32)unit->unkC - (D_80153BA0.z * four);
+			distances[i] = sqrtf((dx * dx) + (dz * dz));
+		} else {
+			osSyncPrintf(&D_80143B58_152B08);
+		}
+	}
+
+	for (i = 0; i < 0x1E; i++) {
+		f32 distance;
+
+		distance = distances[i];
+		if (distance == negOne) {
+			continue;
+		}
+
+		if (distance == negTwo) {
+			D_80157540[backPos] = i;
+			backPos--;
+		} else {
+			u8 pos;
+
+			for (pos = 0; pos < 0x1E; pos++) {
+				u8 slot;
+
+				slot = D_80157540[pos];
+				if (slot == 0xFE) {
+					D_80157540[pos] = i;
+					pos = 0x1E;
+				} else if (distances[slot] < distance) {
+					if (pos < backPos) {
+						u8 end;
+
+						for (end = backPos; pos < end; end--) {
+							D_80157540[end] = D_80157540[end - 1];
+						}
+					}
+					D_80157540[pos] = i;
+					pos = 0x1E;
+				}
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DBE20_EADD0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DC18C_EB13C.s")
 
