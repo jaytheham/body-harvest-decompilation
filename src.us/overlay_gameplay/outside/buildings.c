@@ -573,7 +573,99 @@ s32 func_801176B0_126660(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801176B0_126660.s")
 #endif
 
+// CURRENT(28472)
+#ifdef NON_MATCHING
+void func_801176F4_1266A4(s16 arg0, s16 arg1, s32 arg2) {
+	AlienInstance *alien;
+	VehicleSpec *vehicleSpec;
+	s16 centerX;
+	s16 centerY;
+	s16 centerZ;
+	s16 orientation;
+	s16 halfX;
+	s16 halfZ;
+	s16 cornerX0;
+	s16 cornerX1;
+	s16 cornerZ0;
+	s16 cornerZ1;
+	s16 minX;
+	s16 maxX;
+	s16 minZ;
+	s16 maxZ;
+	u16 angle;
+	s16 specRadius;
+	s32 alienId;
+	s32 specIndex;
+	u8 *vehicleSpecIds;
+
+	vehicleSpecIds = (u8 *)&D_8004DCEA;
+	specIndex = vehicleSpecIds[arg2 * 0x5C];
+	vehicleSpec = &vehicleSpecs[specIndex];
+	centerX = 0;
+	centerY = 0;
+	centerZ = 0;
+	orientation = 0;
+	func_801165FC_1255AC((u8)arg0, (u8)arg1, &centerX, &centerY, &centerZ, &orientation);
+
+	halfX = vehicleSpec->unk34 + 0xC8;
+	halfZ = vehicleSpec->unk36 + 0xC8;
+	if (halfX < 0) {
+		halfX = -(-halfX / 2);
+	} else {
+		halfX /= 2;
+	}
+	if (halfZ < 0) {
+		halfZ = -(-halfZ / 2);
+	} else {
+		halfZ /= 2;
+	}
+
+	angle = (u16)orientation;
+	cornerX0 = (s16)(s32)((f64)centerX - (((f64)(f32)coss(angle) / 32768.0) * (f64)halfX));
+	cornerZ0 = (s16)(s32)((f64)centerZ - (((f64)(f32)sins(angle) / 32768.0) * (f64)halfX));
+	cornerX1 = (s16)(s32)((f64)centerX + ((((f64)(f32)sins(angle) / 32768.0) * (f64)halfZ) + (((f64)(f32)coss(angle) / 32768.0) * (f64)halfX)));
+	cornerZ1 = (s16)(s32)((f64)centerZ + ((((f64)(f32)coss(angle) / 32768.0) * (f64)halfZ) + (((f64)(f32)sins(angle) / 32768.0) * (f64)halfX)));
+
+	if (cornerX1 < cornerX0) {
+		minX = cornerX1;
+		maxX = cornerX0;
+	} else {
+		minX = cornerX0;
+		maxX = cornerX1;
+	}
+
+	if (cornerZ1 < cornerZ0) {
+		minZ = cornerZ1;
+		maxZ = cornerZ0;
+	} else {
+		minZ = cornerZ0;
+		maxZ = cornerZ1;
+	}
+
+	for (alienId = 0; alienId != 0xFF; alienId++) {
+		alien = &alienInstances[alienId];
+		specIndex = alien->specIndex;
+		if (specIndex < 3 || specIndex == 0x20) {
+			continue;
+		}
+
+		specRadius = alienSpecs[specIndex].unkC;
+		if (alien->unk0 < (maxX + specRadius)) {
+			if ((minX - specRadius) < alien->unk0) {
+				if (alien->unk4 < (maxZ + specRadius)) {
+					if ((minZ - specRadius) < alien->unk4) {
+						if (!(alien->unk20 & 0x100000)) {
+							func_80079910_888C0(alienId);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801176F4_1266A4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117A4C_1269FC.s")
 
