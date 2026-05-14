@@ -5253,7 +5253,122 @@ void func_800E2DB4_F1D64(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2ED4_F1E84.s")
 
+#ifdef NON_MATCHING
+// CURRENT(7717)
+void func_800E32C4_F2274(void) {
+	Gfx *dl;
+	Unk800311A0 *entry;
+	s16 tileSize;
+	s16 temp;
+	s32 widthShift;
+	s32 heightShift;
+	s32 scale;
+
+	if (D_801493CC == 0) {
+		func_800E2DB4_F1D64();
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFD900000;
+		dl->words.w1 = (u32) D_100AD70 & 0x1FFFFFFF;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF5900000;
+		dl->words.w1 = 0x07014140;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE6000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF3000000;
+		dl->words.w1 = 0x0703F800;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF5800200;
+		dl->words.w1 = 0x00014140;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF2000000;
+		dl->words.w1 = 0x0003C03C;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+
+		entry = D_80153BD0;
+		if (D_80154300 > 0) {
+			do {
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xFA000000;
+				dl->words.w1 = (D_801541F0.unk0 << 0x18) | (D_801541F0.unk1 << 0x10) | (D_801541F0.unk2 << 8) | 0xDC;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xE7000000;
+				dl->words.w1 = 0;
+
+				tileSize = entry->unk4;
+				widthShift = 4;
+				heightShift = 0xB;
+				if (tileSize < 0x28) {
+					scale = 2;
+				} else if (tileSize < 0x41) {
+					widthShift = 3;
+					scale = 3;
+				} else if (tileSize < 0x50) {
+					widthShift = 2;
+					scale = 4;
+				} else if (tileSize < 0x5F) {
+					widthShift = 3;
+					heightShift = 0xA;
+					scale = 5;
+				} else {
+					scale = 8;
+				}
+
+				temp = entry->unk2;
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xE4000000 | ((((temp >> 4) + scale) * 4) & 0xFFF) << 0xC | ((((entry->unk0 >> 4) + scale) * 4) & 0xFFF);
+				dl->words.w1 = ((((entry->unk2 >> 4) * 4) & 0xFFF) << 0xC) | (((entry->unk0 >> 4) * 4) & 0xFFF);
+
+				temp = (widthShift << heightShift) & 0xFFFF;
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xB4000000;
+				dl->words.w1 = 0;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xB3000000;
+				dl->words.w1 = ((u32) temp << 16) | (u16) temp;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xE7000000;
+				dl->words.w1 = 0;
+
+				entry++;
+			} while (--D_80154300 > 0);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E32C4_F2274.s")
+#endif
 
 void func_800E35E0_F2590(u8 arg0)
 {
