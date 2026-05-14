@@ -3996,7 +3996,110 @@ void func_80086270_95220(OutputStruct_8012B150 *arg0) {
 	arg0->unk18 = (s32) D_80052B34;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(15204)
+s32 func_800862B4_95264(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+	AlienInstance *inst;
+	AlienSpec *spec;
+	s32 i;
+	s32 minX;
+	s32 maxX;
+	s32 minZ;
+	s32 maxZ;
+	s32 absDeltaX;
+	s32 absDeltaZ;
+
+	if (alienSpecs[D_800481B2[arg0]].unk54 & 0x00400000) {
+		return 0;
+	}
+
+	if (arg1 < arg4) {
+		minX = arg1 - 0xC8;
+		maxX = arg4 + 0xC8;
+	} else {
+		minX = arg4 - 0xC8;
+		maxX = arg1 + 0xC8;
+	}
+
+	if (arg3 < arg6) {
+		minZ = arg3 - 0xC8;
+		maxZ = arg6 + 0xC8;
+	} else {
+		minZ = arg6 - 0xC8;
+		maxZ = arg3 + 0xC8;
+	}
+
+	for (i = 0; i < 0xFF; i++) {
+		s32 dist;
+
+		if (i == arg0) {
+			continue;
+		}
+
+		inst = &alienInstances[i];
+		if ((inst->unk0 < minX) || (maxX < inst->unk0)) {
+			continue;
+		}
+
+		if ((inst->unk4 < minZ) || (maxZ < inst->unk4)) {
+			continue;
+		}
+
+		if (inst->specIndex < 3) {
+			continue;
+		}
+
+		spec = &alienSpecs[inst->specIndex];
+		dist = func_801269BC_13596C(
+			arg1 >> 0x1F, arg1,
+			arg3 >> 0x1F, arg3,
+			arg4 >> 0x1F, arg4,
+			arg6 >> 0x1F, arg6,
+			inst->unk0 >> 0x1F, inst->unk0,
+			inst->unk4 >> 0x1F, inst->unk4);
+
+		if (dist >= spec->unk8) {
+			continue;
+		}
+
+		absDeltaX = arg1 - arg4;
+		if (absDeltaX < 0) {
+			absDeltaX = -absDeltaX;
+		}
+
+		absDeltaZ = arg3 - arg6;
+		if (absDeltaZ < 0) {
+			absDeltaZ = -absDeltaZ;
+		}
+
+		if (absDeltaZ < absDeltaX) {
+			dist = func_801269BC_13596C(
+				arg1 >> 0x1F, arg1,
+				arg2 >> 0x1F, arg2,
+				arg4 >> 0x1F, arg4,
+				arg5 >> 0x1F, arg5,
+				inst->unk0 >> 0x1F, inst->unk0,
+				inst->unk2 >> 0x1F, inst->unk2);
+		} else {
+			dist = func_801269BC_13596C(
+				arg3 >> 0x1F, arg3,
+				arg2 >> 0x1F, arg2,
+				arg6 >> 0x1F, arg6,
+				arg5 >> 0x1F, arg5,
+				inst->unk4 >> 0x1F, inst->unk4,
+				inst->unk2 >> 0x1F, inst->unk2);
+		}
+
+		if (dist < spec->unk8) {
+			return 1;
+		}
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800862B4_95264.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(2432)
