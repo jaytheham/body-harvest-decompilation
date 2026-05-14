@@ -1537,6 +1537,8 @@ extern s16 D_8014F846;
 extern s16 D_8014F848;
 extern f32 D_8014F84C;
 extern f32 D_8014F850;
+extern s8 D_8014F898;
+extern s8 D_8014F899;
 extern u16 D_8014F89A;
 extern u8 D_8014F89C;
 extern u8 D_8014F89D;
