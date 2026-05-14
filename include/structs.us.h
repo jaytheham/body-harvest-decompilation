@@ -971,7 +971,13 @@ typedef struct {
 	/* 0x36 */ s16 unk36;
 	/* 0x38 */ s16 unk38;
 	/* 0x3A */ u16 hitPoints;
-	/* 0x3C */ u8 pad3C[0x10];
+	/* 0x3C */ u8 pad3C[0x8];
+	/* 0x44 */ u8 unk44;
+	/* 0x45 */ u8 unk45;
+	/* 0x46 */ u8 unk46;
+	/* 0x47 */ u8 unk47;
+	/* 0x48 */ s16 unk48;
+	/* 0x4A */ u8 pad4A[0x2];
 	/* 0x4C */ u32 unk4C;
 	/* 0x50 */ u8 pad50[5];
 	/* 0x55 */ u8 unk55;
@@ -1123,11 +1129,19 @@ typedef struct {
 	/* 0x03 */ u8 pad3;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
-	/* 0x08 */ u8 pad8[0x18];
+	/* 0x08 */ u8 pad8[0x8];
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ s16 unk14;
+	/* 0x16 */ u8 pad16[0xA];
 	/* 0x20 */ s16 unk20;
 	/* 0x22 */ s16 unk22;
 	/* 0x24 */ s16 unk24;
-	/* 0x26 */ u8 pad26[0x1A];
+	/* 0x26 */ u8 pad26[0xA];
+	/* 0x30 */ s16 unk30;
+	/* 0x32 */ s16 unk32;
+	/* 0x34 */ s16 unk34;
+	/* 0x36 */ u8 pad36[0xA];
 	/* 0x40 */ s16 unk40;
 	/* 0x42 */ s16 unk42;
 	/* 0x44 */ s16 unk44;
@@ -1907,7 +1921,8 @@ typedef struct {
 } BeaconDisplayEntry; /* stride = 0x12 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x8];
+	/* 0x00 */ u8 pad0[0x4];
+	/* 0x04 */ f32 unk4;
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ s16 unkA;
 	/* 0x0C */ s32 unkC;

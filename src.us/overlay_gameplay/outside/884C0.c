@@ -1913,7 +1913,136 @@ s32 func_8007FB08_8EAB8(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007FB08_8EAB8.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(8789)
+void func_8007FDD8_8ED88(void)
+{
+	AlienInstance *inst;
+	s32 i;
+	s32 next;
+	u32 count;
+	u8 *activeList;
+	u8 specIdx;
+
+	inst = alienInstances;
+	i = 0;
+	while (i < 0xFF)
+	{
+		specIdx = inst->specIndex;
+		if (specIdx != 0)
+		{
+			inst->unk47 &= ~0xE;
+			if (inst->unk47 & 1)
+			{
+				inst->unk34--;
+				if (inst->unk34 < 0)
+				{
+					inst->unk34 = 0;
+					inst->unk47 &= ~1;
+					if (!(alienSpecs[specIdx].unk54 & 0x2000))
+					{
+						inst->unk20 &= 0xFFFBFFFF;
+						inst->unkE = inst->unk6;
+					}
+				}
+			}
+
+			if (inst->unk40 == 0)
+			{
+				if ((inst->unk0 >> 8) == (inst->unk2E >> 8))
+				{
+					if ((inst->unk4 >> 8) == (inst->unk32 >> 8))
+					{
+						goto next_inst;
+					}
+				}
+			}
+
+			func_8007FB08_8EAB8(i & 0xFF, specIdx);
+		}
+
+	next_inst:
+		i++;
+		inst++;
+	}
+
+	count = D_8014ECCC;
+	if (count != 0)
+	{
+		activeList = D_8014D510;
+		i = 0;
+		do
+		{
+			inst = (AlienInstance *)((u8 *)&alienInstances + (((*activeList << 2) + *activeList) << 4));
+			specIdx = inst->specIndex;
+			next = i + 1;
+			if (alienSpecs[specIdx].unk54 & 0x3E)
+			{
+				if ((specIdx >= 3) || !(inst->unk20 & 0x100000))
+				{
+					D_8014ECD8 = -1;
+					D_8014D304 = 0;
+					func_8007F0E8_8E098(*activeList, next & 0xFF, 1);
+					count = D_8014ECCC;
+				}
+			}
+			i = next;
+			activeList++;
+		} while ((u32)next < count);
+	}
+
+	inst = alienInstances;
+	while (inst < (AlienInstance *)&D_8004D148)
+	{
+		specIdx = inst->specIndex;
+		if ((alienSpecs[specIdx].unk54 & 0x3E) && (specIdx != 0))
+		{
+			if (inst->unk47 & 0xE)
+			{
+				inst->unk47 |= 1;
+				if (!(alienSpecs[specIdx].unk54 & 0x2000))
+				{
+					inst->unk20 &= 0xFFFBFFFF;
+					inst->unkE = inst->unk6;
+				}
+			}
+		}
+		inst++;
+	}
+
+	if (count != 0)
+	{
+		activeList = D_8014D510;
+		i = 0;
+		do
+		{
+			specIdx = *activeList;
+			inst = (AlienInstance *)((u8 *)&alienInstances + (((specIdx << 2) + specIdx) << 4));
+			if (inst->unk47 & 0x80)
+			{
+				func_8007A6B4_89664(specIdx & 0xFF);
+				inst->unk47 &= 0x7F;
+				if (func_8007A4F8_894A8(i) != 0)
+				{
+					count = D_8014ECCC;
+					i--;
+					activeList--;
+				}
+				else
+				{
+					osSyncPrintf(D_80141D50_150D00);
+					count = D_8014ECCC;
+				}
+			}
+
+			i++;
+			activeList++;
+		} while ((u32)i < count);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007FDD8_8ED88.s")
+#endif
 
 void func_800800DC_8F08C(s32 arg0) {
 }

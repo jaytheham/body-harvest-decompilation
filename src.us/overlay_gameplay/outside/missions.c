@@ -396,7 +396,78 @@ void func_80074B2C_83ADC(void) {
 #endif
 
 // guess_readMissionCondition
+#ifdef NON_MATCHING
+// CURRENT(1145)
+void func_80074CA0_83C50(void) {
+	if ((func_80074558_83508() == 0xB7) || (D_801494BC == 0x82) || (D_801494BC == 0x83) || (D_801494BC == 0x85) ||
+		(D_801494BC == 0x86) || (D_801494BC == 0x87) || (D_801494BC == 0x90) || (D_801494BC == 0xAC) ||
+		(D_801494BC == 0xAE) || (D_801494BC == 0x84)) {
+		return;
+	}
+
+	for (;;) {
+		if (D_80149B2C >= 0xFE) {
+			osSyncPrintf(D_801412B0_150260);
+			D_80149B4A = 1;
+		}
+
+		D_801497C4 = &D_8004D348[D_80149B2C * 9];
+		D_80149B2C += 1;
+
+		if (func_80074558_83508() == 0x88) {
+			func_80074500_834B0();
+		}
+
+		if (func_8007447C_8342C(func_80074558_83508()) != 0) {
+			func_80074578_83528(D_801497C4);
+			D_801497C4[8] = func_80074500_834B0();
+
+			if ((D_801497C4[8] == 0x89) || (D_801497C4[8] == 0x8A)) {
+				func_8007452C_834DC();
+				D_801497C4[6] = func_80074500_834B0();
+				if (D_801494BC != 0x8B) {
+					osSyncPrintf(D_801412DC_15028C);
+				}
+
+				func_80074578_83528(&D_801497C4[3]);
+			} else if ((D_801497C4[8] == 0x91) || (D_801497C4[8] == 0x92)) {
+				func_80074578_83528(&D_801497C4[3]);
+			}
+		} else if ((D_801494BC == 0xB3) || (D_801494BC == 0xB2)) {
+			D_801497C4[8] = func_80074500_834B0();
+		} else {
+			D_801497C4[8] = func_80074500_834B0();
+			D_801497C4[6] = func_8007452C_834DC();
+
+			if (D_801497C4[8] == 0x94) {
+				if (func_80074500_834B0() == 0x89) {
+					D_801497C4[8] = 0xA6;
+					D_801497C4[7] = func_8007452C_834DC();
+				} else if (D_801494BC == 0x8A) {
+					D_801497C4[8] = 0xA7;
+					D_801497C4[7] = func_8007452C_834DC();
+				} else {
+					osSyncPrintf(D_80141304_1502B4);
+				}
+
+				if (func_80074500_834B0() != 0x97) {
+					osSyncPrintf(D_80141330_1502E0);
+				}
+			}
+		}
+
+		D_801497C0->unk3++;
+
+		if ((func_80074558_83508() == 0xB7) || (D_801494BC == 0x82) || (D_801494BC == 0x83) || (D_801494BC == 0x85) ||
+			(D_801494BC == 0x86) || (D_801494BC == 0x87) || (D_801494BC == 0x90) || (D_801494BC == 0xAC) ||
+			(D_801494BC == 0xAE) || (D_801494BC == 0x84)) {
+			return;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074CA0_83C50.s")
+#endif
 
 // readMissionConditions
 // CURRENT(2775)

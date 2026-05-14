@@ -1617,7 +1617,67 @@ void func_800C8E10_D7DC0(s16 arg0, s16 arg1, s16 arg2, u8 arg3)
 	D_80154318[idx].unk10 = D_80154318[D_80154088[arg3].unk6].unk10;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(3165)
+void func_800C8F5C_D7F0C(u8 arg0) {
+	Unk801541F8Entry *effect;
+	Unk80154318Entry *entry;
+	Unk80154318Entry *next;
+	Unk80154318Sub *sub;
+	u8 *baseBytes;
+	u8 *subBytes;
+	s16 index;
+	s16 nextIndex;
+	s8 step;
+
+	effect = &D_80154088[arg0];
+	next = &D_80154318[effect->unk2];
+	entry = &D_80154318[effect->unk6];
+	entry->unk8 = next->unk8;
+	entry->unkA = next->unkA;
+	entry->unkC = next->unkC;
+
+	index = entry->unk4;
+	baseBytes = &entry->unk11;
+	if ((index == -5) || (index == -6)) {
+		func_800C1418_D03C8(arg0, 0);
+		func_800C1384_D0334(arg0);
+		return;
+	}
+
+	while ((index != -5) && (index != -6)) {
+		entry = &D_80154318[index];
+		sub = (Unk80154318Sub *)&entry->unk8;
+		subBytes = (u8 *)sub;
+
+		if (entry->unk11 < 10) {
+			nextIndex = entry->unk4;
+			func_800C1A4C_D09FC(index, arg0, 0);
+			if (effect->unk4 == 1) {
+				func_800C1A4C_D09FC(effect->unk6, arg0, 0);
+				func_800C1384_D0334(arg0);
+				return;
+			}
+			index = nextIndex;
+		} else {
+			step = (s8)(0x23 - sub->unkA);
+			if (step > 0) {
+				subBytes[6] -= ((s32)subBytes[6] - baseBytes[0]) / step;
+				subBytes[7] -= ((s32)subBytes[7] - baseBytes[1]) / step;
+				subBytes[8] -= ((s32)subBytes[8] - baseBytes[2]) / step;
+			}
+
+			sub->unk2 += (func_800038E0_44E0() % 2) + 1;
+			entry->unk2 += (func_800038E0_44E0() % 3) + 2;
+			sub->unkA++;
+			sub->unk9 -= 9;
+			index = entry->unk4;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8F5C_D7F0C.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(81)
@@ -5193,7 +5253,122 @@ void func_800E2DB4_F1D64(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2ED4_F1E84.s")
 
+#ifdef NON_MATCHING
+// CURRENT(7717)
+void func_800E32C4_F2274(void) {
+	Gfx *dl;
+	Unk800311A0 *entry;
+	s16 tileSize;
+	s16 temp;
+	s32 widthShift;
+	s32 heightShift;
+	s32 scale;
+
+	if (D_801493CC == 0) {
+		func_800E2DB4_F1D64();
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFD900000;
+		dl->words.w1 = (u32) D_100AD70 & 0x1FFFFFFF;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF5900000;
+		dl->words.w1 = 0x07014140;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE6000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF3000000;
+		dl->words.w1 = 0x0703F800;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF5800200;
+		dl->words.w1 = 0x00014140;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF2000000;
+		dl->words.w1 = 0x0003C03C;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+
+		entry = D_80153BD0;
+		if (D_80154300 > 0) {
+			do {
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xFA000000;
+				dl->words.w1 = (D_801541F0.unk0 << 0x18) | (D_801541F0.unk1 << 0x10) | (D_801541F0.unk2 << 8) | 0xDC;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xE7000000;
+				dl->words.w1 = 0;
+
+				tileSize = entry->unk4;
+				widthShift = 4;
+				heightShift = 0xB;
+				if (tileSize < 0x28) {
+					scale = 2;
+				} else if (tileSize < 0x41) {
+					widthShift = 3;
+					scale = 3;
+				} else if (tileSize < 0x50) {
+					widthShift = 2;
+					scale = 4;
+				} else if (tileSize < 0x5F) {
+					widthShift = 3;
+					heightShift = 0xA;
+					scale = 5;
+				} else {
+					scale = 8;
+				}
+
+				temp = entry->unk2;
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xE4000000 | ((((temp >> 4) + scale) * 4) & 0xFFF) << 0xC | ((((entry->unk0 >> 4) + scale) * 4) & 0xFFF);
+				dl->words.w1 = ((((entry->unk2 >> 4) * 4) & 0xFFF) << 0xC) | (((entry->unk0 >> 4) * 4) & 0xFFF);
+
+				temp = (widthShift << heightShift) & 0xFFFF;
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xB4000000;
+				dl->words.w1 = 0;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xB3000000;
+				dl->words.w1 = ((u32) temp << 16) | (u16) temp;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xE7000000;
+				dl->words.w1 = 0;
+
+				entry++;
+			} while (--D_80154300 > 0);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E32C4_F2274.s")
+#endif
 
 void func_800E35E0_F2590(u8 arg0)
 {

@@ -136,7 +136,66 @@ void func_800770D8_86088(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800770D8_86088.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(0)
+void func_800772EC_8629C(s32 arg0) {
+	Unk_8014D298 *temp_v0;
+	Unk80259D90 *temp_s0;
+	s32 sp70;
+	s32 sp6C;
+	s32 sp68;
+	u16 sp66;
+	s32 sp44[8];
+	s32 *temp_s1;
+	s16 *temp_s2;
+	u32 *temp_t8;
+	s32 temp_t2;
+	s32 temp_t3;
+	s32 temp_t4;
+	s32 temp_t5;
+	s32 temp_t6;
+	s32 temp_t7;
+	s32 temp_t0;
+	s32 temp_t1;
+
+	temp_v0 = (Unk_8014D298 *) &D_8014D298[arg0];
+	temp_t2 = (s32) temp_v0->unk2 * 0x7D0;
+	if (temp_t2 < temp_v0->unk6) {
+		temp_s0 = &D_80259D90[temp_v0->unk0];
+		temp_t8 = (u32 *) D_8013BCDC_14AC8C;
+
+		sp44[0] = (s32) temp_t8[0];
+		sp44[1] = (s32) temp_t8[1];
+		sp44[2] = (s32) temp_t8[2];
+		sp44[3] = (s32) temp_t8[3];
+		sp44[4] = (s32) temp_t8[4];
+		sp44[5] = (s32) temp_t8[5];
+		sp44[6] = (s32) temp_t8[6];
+		sp44[7] = (s32) temp_t8[7];
+
+		temp_t3 = currentLevel;
+		temp_t4 = temp_s0->unk0;
+		temp_t5 = temp_t4 * 0xC;
+		temp_t6 = temp_t3 * 0x18;
+		temp_t7 = ((temp_t6 + temp_t5) << 4) - 0xC0;
+		temp_s2 = (s16 *) ((u8 *) D_8013BB14_14AAC4 + temp_t7);
+		sp66 = (u16) (((temp_v0->unk4 + 0x2000) & 0xFFFF) >> 0xE);
+		temp_s1 = &sp44[sp66 * 2];
+		sp70 = temp_s0->unk20;
+		sp6C = temp_s0->unk22;
+		sp68 = temp_s0->unk24;
+
+		temp_s0->unk10 = (s16) (s32) ((((f64) (f32) sins(sp66) / 32768.0) * (f64) (temp_s1[0] * temp_s2[2])) + (f64) sp70);
+		temp_s0->unk14 = (s16) (s32) ((((f64) (f32) sins(sp66) / 32768.0) * (f64) (temp_s1[1] * temp_s2[2])) + (f64) sp68);
+		temp_s0->unk12 = (s16) (s32) ((((f64) (f32) coss(sp66) / 32768.0) * (f64) temp_s2[2]) + (f64) sp6C);
+		temp_s0->unk30 = (s16) (s32) ((((f64) (f32) sins(sp66) / 32768.0) * (f64) (temp_s1[0] * temp_s2[2])) + (f64) temp_s0->unk40);
+		temp_s0->unk34 = (s16) (s32) ((((f64) (f32) sins(sp66) / 32768.0) * (f64) (temp_s1[1] * temp_s2[2])) + (f64) temp_s0->unk44);
+		temp_s0->unk32 = (s16) (s32) ((((f64) (f32) coss(sp66) / 32768.0) * (f64) temp_s2[2]) + (f64) temp_s0->unk42);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800772EC_8629C.s")
+#endif
 
 // displayTrees
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_8007764C_865FC.s")
