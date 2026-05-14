@@ -2361,6 +2361,8 @@ extern s32 D_80157F54;
 extern f64 D_800A4B70_18CC30;
 extern char D_800A4488_18C548[];
 extern void *D_80157F58;
+extern s32 D_80157F5C;
+extern s32 D_80157F60;
 extern s32 D_80157F64;
 extern s32 D_800E65B4;
 extern s32 D_800E65B8;
