@@ -5433,7 +5433,72 @@ void func_800E360C_F25BC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3928_F28D8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E4CEC_F3C9C.s")
+void func_800E4CEC_F3C9C(s32 arg0, u8 arg1) {
+	s16 sp84, sp82, sp80;
+	s32 sp70, sp68, sp64, sp60, sp5C;
+	s16 sp6E, sp6C, sp62, sp5E, sp66;
+	u8 sp7B, sp7A, sp79;
+	s32 temp_v0;
+	Gfx *temp_v0_2;
+	Gfx *temp_v0_3;
+	Gfx *temp_v0_4;
+	Gfx *temp_v0_5;
+	Gfx *temp_v0_6;
+	
+	func_80128504_1374B4((AlienInstance *) arg0, 0, &sp70, &sp6C, &sp68);
+	sp60 = 0;
+	sp64 = sp70;
+	sp5C = sp68;
+	
+	func_80126268_135218((s16) sp70, sp6E, (s16) sp68, &sp64, &sp60, &sp5C, 1, 5);
+	
+	if (func_800B325C_C220C((s8) (sp64 >> 8), (s8) (sp5C >> 8), 0x1000) != 0) {
+		if (!(D_80052A8C & 7)) {
+			func_800E0E9C_EFE4C(sp66, sp5E, 0xC8);
+			func_800DEA08_ED9B8(sp66, sp62, sp5E, 0x32, 0xA, 8, 0x1E, 0xC8, 0xC8, 0xC8, 0xFF);
+		}
+	} else {
+		if (!(D_80052A8C & 7)) {
+			func_800DEA08_ED9B8(sp66, sp62, sp5E, 0x32, 0xA, 0, 0x1E, 0xC8, 0x88, 0x67, 0x11);
+		}
+		if (!(D_80052A8C & 1)) {
+			func_800C541C_D43CC(sp66, sp62, sp5E, 0, 0x7F, 0, 0x32, 0xFF, 0x28, 0xA, 0x6A, 0x53, 0);
+		}
+	}
+	
+	func_800E3928_F28D8((s16) sp70, sp6E, (s16) sp68, sp66, sp60, sp5C, 0, (s32) arg1, 3);
+	
+	temp_v0_2 = D_8005BB2C;
+	D_8005BB2C = temp_v0_2 + 1;
+	temp_v0_2->words.w0 = 0xFCFFFFFF;
+	temp_v0_2->words.w1 = 0xFFFDF6FB;
+	
+	temp_v0_3 = D_8005BB2C;
+	D_8005BB2C = temp_v0_3 + 1;
+	temp_v0_3->words.w0 = 0xFA000000;
+	temp_v0_3->words.w1 = (sp7B << 24) | (sp7A << 16) | (sp79 << 8) | 0xFF;
+	
+	sp80 = (s16) sp70;
+	sp82 = (s16) sp6C;
+	sp84 = (s16) sp68;
+	func_800039D0_45D0((Unk80052B40 *) &sp80, 0, 0, D_8005BB38);
+	
+	temp_v0_4 = D_8005BB2C;
+	D_8005BB2C = temp_v0_4 + 1;
+	temp_v0_4->words.w0 = 0x01040040;
+	temp_v0_4->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+	
+	temp_v0_5 = D_8005BB2C;
+	D_8005BB38 += 0x40;
+	D_8005BB2C = temp_v0_5 + 1;
+	temp_v0_5->words.w0 = 0x06000000;
+	temp_v0_5->words.w1 = (u32) D_50332A0;
+	
+	temp_v0_6 = D_8005BB2C;
+	D_8005BB2C = temp_v0_6 + 1;
+	temp_v0_6->words.w0 = 0xBD000000;
+	temp_v0_6->words.w1 = 0;
+}
 
 // CURRENT(380)
 #ifdef NON_MATCHING
