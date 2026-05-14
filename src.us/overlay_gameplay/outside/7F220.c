@@ -37,7 +37,7 @@ void func_800702C0_7F270(s16 arg0) {
 		referenceTick = D_80149444;
 		break;
 	}
-	
+
 	if (currentTick < referenceTick) {
 		referenceTick += 1;
 	}
@@ -45,11 +45,11 @@ void func_800702C0_7F270(s16 arg0) {
 	// curt = t1
 
 	elapsedMicro = (u32)__ull_div(__ll_mul((u64)(currentTick - referenceTick), 0xF4240ULL), D_80035610);
-	
+
 	if (gameplayMode == 1) {
 		D_80052A90 += elapsedMicro / 1000U;
 	}
-	
+
 	D_80149444 = currentTick;
 }
 #else
@@ -269,7 +269,88 @@ void func_80070BFC_7FBAC(void) {
 }
 
 // drawSky?
+#ifdef NON_MATCHING
+// CURRENT(9485)
+void func_80070CC0_7FC70(void) {
+	Gfx *dl;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x06000000;
+	dl->words.w1 = (u32) D_800311A8 & 0x1FFFFFFF;
+	func_80004F64_5B64();
+	func_800069FC_75FC();
+
+	if (D_80157590 == 3) {
+		goto alternate;
+	}
+
+	if (D_8004DC60 != 0) {
+		D_8004DC60 -= 1;
+	}
+
+	if (D_8004DC60 == 0) {
+		goto alternate;
+	}
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBA001402;
+	dl->words.w1 = 0x00300000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF6000000 | (((D_80068084 - 1) & 0x3FF) << 14) | (((D_8004DC60 - 1) & 0x3FF) << 2);
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF6000000 | (((D_80068084 - 1) & 0x3FF) << 14) | (((D_80068088 - 1) & 0x3FF) << 2);
+	dl->words.w1 = (((D_80068088 - D_8004DC60 - 1) & 0x3FF) << 2);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBA001402;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xED000000;
+	dl->words.w1 = (((s32) ((f32) (D_80068088 - D_8004DC60) * 4.0f) & 0xFFF) << 12) | ((s32) ((f32) D_80068084 * 4.0f) & 0xFFF);
+
+	goto end;
+
+alternate:
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xED000000;
+	dl->words.w1 = (((s32) ((f32) D_80068084 * 4.0f) & 0xFFF) << 12) | ((s32) ((f32) D_80068088 * 4.0f) & 0xFFF);
+
+end:
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x06000000;
+	dl->words.w1 = (u32) D_800311D0 & 0x1FFFFFFF;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070CC0_7FC70.s")
+#endif
 
 // Set world fog
 void func_80070FB8_7FF68(void) {
@@ -317,7 +398,7 @@ void func_80071228_801D8(void) {
 	Gfx* savedDl31200;
 	Gfx* savedDl311D0;
 	s32 savedX;
-	s32 savedY;
+		s32 savedY;
 	s32 savedZ;
 	s32 phase;
 	s32 offset;
@@ -325,7 +406,6 @@ void func_80071228_801D8(void) {
 	s32 level;
 	u32 segAddr31160;
 	u32 matrixBase;
-
 	func_800E8890_F7840();
 
 	segAddr31160 = ((u32)&D_80031160) & 0x1FFFFFFF;
@@ -343,7 +423,6 @@ void func_80071228_801D8(void) {
 	if (currentControllerStates[0].button == 0x30) {
 		osSyncPrintf(D_80140DD8);
 	}
-
 	func_800B19F8_C09A8();
 	if (currentControllerStates[0].button == 0x30) {
 		osSyncPrintf(D_80140DEC);
