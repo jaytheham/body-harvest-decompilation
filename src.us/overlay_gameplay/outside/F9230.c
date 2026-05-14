@@ -4644,7 +4644,90 @@ void func_80109370_118320(VehicleInstance *arg0, VehicleSpec *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80109370_118320.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(3725)
+void func_801095BC_11856C(VehicleInstance *vehicle) {
+	s32 sp38;
+	f32 sp30;
+	s16 sp2A;
+	s32 sp20;
+	f32 var_f12;
+	f32 var_f2;
+	f64 temp_f0;
+	f64 var_f0;
+	s16 temp_a1;
+	s32 var_v0;
+	s32 var_v1;
+	s32 var_v1_2;
+	u8 temp_v1;
+	VehicleSpec *spec;
+
+	temp_v1 = vehicle->unk1A;
+	spec = &vehicleSpecs[temp_v1];
+	sp38 = spec->unk46 << 8;
+	sp30 = (f32)((((s32)spec->unk48 << 4) - spec->unk48) << 4);
+	if ((temp_v1 != 0) || !(vehicle->unk20 & 0x800)) {
+		if (!(vehicle->unk20 & 4)) {
+			var_v1 = -vehicle->unk2A;
+			if (var_v1 < vehicle->unk2A) {
+				var_v1 = vehicle->unk2A;
+			}
+			if (var_v1 >= 0x961) {
+				sp2A = sins(vehicle->unk2A & 0xFFFF);
+				func_80102DDC_111D8C(vehicle, vehicle->unk6, 0,
+					(f32)((((f64)(f32)coss((u16)sp38) / 32768.0) * (((f64)(f32)sp2A / 32768.0) * 2.5)) *
+						  (f64)D_8015922C->unk4));
+			}
+
+			temp_a1 = vehicle->unk28;
+			var_v1_2 = -temp_a1;
+			if (var_v1_2 < temp_a1) {
+				var_v1_2 = temp_a1;
+			}
+			if (var_v1_2 >= 0x961) {
+				sp20 = sp38;
+				sp2A = sins(temp_a1 & 0xFFFF);
+				func_80102DDC_111D8C(vehicle, (s16)(vehicle->unk6 - 0x4000), 0,
+					(f32)((((f64)(f32)coss((u16)sp20) / 32768.0) * (((f64)(f32)sp2A / 32768.0) * 2.5)) *
+						  (f64)D_8015922C->unk4));
+			}
+
+			var_f2 = (f32)((f64)vehicle->unk58 / D_80144BE0_153B90);
+			var_f0 = (f64)var_f2;
+			if (D_80144BE8_153B98 < var_f0) {
+				var_f2 = D_80144BF0_153BA0;
+				var_f0 = (f64)var_f2;
+			}
+			if (var_f0 < D_80144BF8_153BA8) {
+				var_f2 = D_80144C00_153BB0;
+			}
+
+			if (vehicle->unk28 > 0) {
+				var_f12 = var_f2;
+			} else {
+				var_f12 = -var_f2;
+			}
+
+			temp_f0 = (f64)vehicle->unk28 * 0.0625;
+			var_v0 = (s32)((f64)var_f12 * (temp_f0 * temp_f0));
+			if (sp30 < (f32)var_v0) {
+				var_v0 = (s32)sp30;
+			}
+			if ((f32)var_v0 < -sp30) {
+				var_v0 = (s32)-sp30;
+			}
+
+			if (vehicle->unk12 >= 0) {
+				vehicle->unk16 = (s16)-var_v0;
+			} else {
+				vehicle->unk16 = (s16)var_v0;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801095BC_11856C.s")
+#endif
 
 void func_801098E8_118898(VehicleInstance *vehicle) {
 	D_8015922C = &D_8003E290[func_800056D0_62D0(vehicle->unk0, vehicle->unk4)];
