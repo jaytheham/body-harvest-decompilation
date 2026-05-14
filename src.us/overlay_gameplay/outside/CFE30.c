@@ -4265,7 +4265,215 @@ void func_800DAA1C_E99CC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DAA1C_E99CC.s")
 #endif
 
+extern char D_80143A50_152A00[];
+extern char D_80143A94_152A44[];
+extern char D_80143AD4_152A84[];
+extern char D_80143B18_152AC8[];
+void func_800C5894_D4844(u8 arg0);
+void func_800C22EC_D129C(u8 arg0);
+void func_800C8F5C_D7F0C(u8 arg0);
+void func_800CA848_D97F8(u8 arg0);
+void func_800CD42C_DC3DC(u8 arg0);
+void func_800CE1C0_DD170(u8 arg0);
+void func_800D1A94_E0A44(u8 arg0);
+void func_800C3E2C_D2DDC(void);
+void func_800C4AA0_D3A50(void);
+void func_800C6558_D5508(void);
+void func_800C8294_D7244(void);
+void func_800CCB60_DBB10(void);
+void func_800CF948_DE8F8(void);
+void func_800D0C00_DFBB0(void);
+void func_800D25D0_E1580(void);
+void func_800D36EC_E269C(void);
+void func_800D80B4_E7064(void);
+void func_800D90A4_E8054(void);
+void func_800D9B54_E8B04(void);
+
+/* CURRENT(2700) */
+#ifdef NON_MATCHING
+void func_800DABBC_E9B6C(void) {
+	s32 i;
+	s32 temp;
+	u8 type;
+	s32 tmp2;
+
+	for (i = 0; i < 0x1E; i = (i + 1) & 0xFF) {
+		if ((type = D_80154088[i].unk0) < 10) {
+			switch (type) {
+				case 0:
+					func_800C5894_D4844((u8)i);
+					continue;
+
+				case 1:
+					func_800C22EC_D129C((u8)i);
+					continue;
+
+				case 2:
+					func_800C2EE4_D1E94((u8)i);
+					continue;
+
+				case 3:
+					func_800C8F5C_D7F0C((u8)i);
+					continue;
+
+				case 4:
+					func_800CA848_D97F8((u8)i);
+					continue;
+
+				case 5:
+					func_800CD42C_DC3DC((u8)i);
+					continue;
+
+				case 6:
+					func_800CE1C0_DD170((u8)i);
+					continue;
+
+				case 7:
+					func_800D1A94_E0A44((u8)i);
+					continue;
+
+				case 8:
+					func_800D6140_E50F0((u8)i);
+					continue;
+
+				case 9:
+					func_800D6EAC_E5E5C((u8)i);
+					continue;
+
+				default:
+					break;
+			}
+		}
+
+		if (type == 0xFA) {
+			continue;
+		}
+
+		temp = (type < 10) ? 0 : 1;
+		if (temp != 0) {
+			osSyncPrintf(D_80143A50_152A00);
+		} else {
+			osSyncPrintf(D_80143A94_152A44);
+		}
+	}
+
+	i = 0;
+	while (1) {
+		if ((type = D_801541F8[i].unk0) < 0x20) {
+			switch (type - 10) {
+				case 0:
+					func_800C3E2C_D2DDC();
+					goto next2;
+
+				case 1:
+					func_800C4AA0_D3A50();
+					goto next2;
+
+				case 2:
+					func_800C6558_D5508();
+					goto next2;
+
+				case 3:
+					func_800C8294_D7244();
+					goto next2;
+
+				case 4:
+					func_800C9668_D8618();
+					goto next2;
+
+				case 5:
+					func_800CB394_DA344();
+					goto next2;
+
+				case 6:
+					func_800CBE98_DAE48();
+					goto next2;
+
+				case 7:
+					func_800CCB60_DBB10();
+					goto next2;
+
+				case 8:
+					func_800CDBF4_DCBA4();
+					goto next2;
+
+				case 9:
+					func_800CF070_DE020();
+					goto next2;
+
+				case 10:
+					func_800CF948_DE8F8();
+					goto next2;
+
+				case 11:
+					func_800D0C00_DFBB0();
+					goto next2;
+
+				case 12:
+					func_800D25D0_E1580();
+					goto next2;
+
+				case 13:
+					func_800D36EC_E269C();
+					goto next2;
+
+				case 14:
+					func_800D3D40_E2CF0();
+					goto next2;
+
+				case 15:
+					func_800D4B44_E3AF4();
+					goto next2;
+
+				case 16:
+					func_800D5684_E4634();
+					goto next2;
+
+				case 17:
+					func_800D7790_E6740();
+					goto next2;
+
+				case 18:
+					func_800D80B4_E7064();
+					goto next2;
+
+				case 19:
+					func_800D90A4_E8054();
+					goto next2;
+
+				case 20:
+					func_800D95D0_E8580();
+					goto next2;
+
+				case 21:
+					func_800D9B54_E8B04();
+					goto next2;
+
+				default:
+					break;
+			}
+		}
+
+		if (type == 0xFA) {
+			goto next2;
+		}
+
+		if ((i < 10) && (i >= 0)) {
+			osSyncPrintf(D_80143AD4_152A84, i);
+		} else {
+			osSyncPrintf(D_80143B18_152AC8);
+		}
+
+	next2:
+		i = (i + 1) & 0xFF;
+		if (i >= 0x16) {
+			break;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DABBC_E9B6C.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_800DAF24_E9ED4(u8 arg0) {
@@ -5157,7 +5365,7 @@ void func_800E1C10_F0BC0(void) {
 	D_80156EE4.unk0 = D_80052B34->unk0 - D_80156EDC.unk0;
 	D_80156EE4.unk2 = D_80052B34->unk2 - D_80156EDC.unk2;
 	D_80156EE4.unk4 = D_80052B34->unk4 - D_80156EDC.unk4;
-	func_800DABBC_E9B6C(&D_80153BA0, &D_80156EE4, &D_80156EDC);
+	func_800DABBC_E9B6C();
 	func_800DE150_ED100();
 	if (D_8013E3F4_14D3A4 < (s32)D_80154304) {
 		D_8013E3F4_14D3A4 = D_80154304;
