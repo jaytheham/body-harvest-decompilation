@@ -6295,7 +6295,91 @@ s32 func_800E60CC_F507C(u8 arg0, u8 arg1) {
 	return 0;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(15923)
+void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	Unk800E614CFxSlot *slots;
+	Unk800E614CFxSlot *slot;
+	s32 slotIdx;
+
+	if (arg0 > 0x7A00) {
+		arg0 = 0x7A00;
+	}
+	if (arg0 < -0x7A00) {
+		arg0 = -0x7A00;
+	}
+
+	if (arg2 > 0x7A00) {
+		arg2 = 0x7A00;
+	}
+	if (arg2 < -0x7A00) {
+		arg2 = -0x7A00;
+	}
+
+	if ((currentLevel == 1 || currentLevel == 3) && D_80052ACA != 2) {
+		slots = (Unk800E614CFxSlot *) &D_80153300;
+		slotIdx = 0;
+		while (slots[slotIdx].unk1E6 != 0) {
+			slotIdx++;
+		}
+
+		if (arg3 != 0) {
+			s32 i;
+			s32 xBase;
+			s32 zBase;
+
+			xBase = arg0 << 8;
+			zBase = arg2 << 8;
+
+			for (i = arg3 - 1;; i--) {
+				Unk800E614CFxEntry *entry;
+				s32 z;
+
+				entry = &slots[slotIdx].entries[i];
+				entry->unk0 = (func_800038E0_44E0() * 2) + xBase;
+				z = (func_800038E0_44E0() * 2) + zBase;
+				entry->unk8 = z;
+				entry->unk4 = func_800B84D0_C7480((s16) (entry->unk0 >> 8), (s16) (z >> 8));
+				if (entry->unk4 < ((D_80222A70 + 0xC8) << 8)) {
+					entry->unk4 = (((func_800038E0_44E0() % 100) + D_80222A70) + 0xC8) << 8;
+				}
+				entry->unkC = 0;
+				entry->unk10 = 0;
+				entry->unk14 = 0;
+				entry->unk18 = func_800038E0_44E0() & 0x1F;
+
+				if (i == 0) {
+					break;
+				}
+			}
+		}
+
+		slot = &slots[slotIdx];
+		slot->unk1C0 = arg0 << 8;
+		slot->unk1C4 = arg1 << 8;
+		slot->unk1C8 = arg2 << 8;
+
+		{
+			s16 angle;
+			s32 scale;
+
+			angle = func_800038E0_44E0();
+			scale = D_800313F4 * 100;
+			slot->unk1CC = (s32) ((((f64) coss((u16) angle)) / 32768.0) * (f64) scale);
+			slot->unk1D0 = 0;
+			slot->unk1D4 = (s32) ((((f64) sins((u16) angle)) / 32768.0) * (f64) scale);
+		}
+
+		slot->unk1DC = 0;
+		slot->unk1E0 = 0x708;
+		slot->unk1E8 = 0x32;
+		slot->unk1E6 = arg3;
+		slot->unk1E4 = func_800038E0_44E0();
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E614C_F50FC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E64B4_F5464.s")
 
