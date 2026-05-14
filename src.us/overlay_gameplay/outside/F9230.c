@@ -727,7 +727,136 @@ block_18:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA7DC_F978C.s")
 #endif
 
+// CURRENT(7595)
+#ifdef NON_MATCHING
+void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
+	s16 temp_diff;
+	s16 abs_diff;
+	s16 v1;
+	s32 level;
+	s32 flags;
+	s32 step;
+	s32 offset;
+	s32 entry_flags;
+	s32 entry_val;
+	s32 neg_step;
+
+	D_8015757C = 0;
+
+	// Load current angle and calculate difference
+	temp_diff = arg0->unkE - arg1;
+	v1 = temp_diff;
+
+	// Calculate absolute value
+	if (temp_diff < 0) {
+		v1 = -temp_diff;
+		abs_diff = -temp_diff;
+	} else {
+		abs_diff = temp_diff;
+	}
+
+	// Check if difference is too large
+	if (abs_diff >= 0xA001) {
+		D_8015757C = 1;
+		temp_diff = arg0->unkE - arg1;
+		v1 = temp_diff;
+	}
+
+	// First condition: v1 < -0x4000
+	if (v1 < -0x4000) {
+		level = D_80157A0C;
+		if (level != 0xE && !(D_80157A28 & 4)) {
+			// Calculate offset into state array
+			offset = level * 0x34;
+			
+			// Access state entry
+			entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
+			
+			// Modify state at 0x2DC
+			if (entry_flags & 0x20) {
+				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2DC)) |= 0x20;
+			} else {
+				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2DC)) &= ~0x20;
+			}
+			
+			// Modify state at 0x2E0
+			if (entry_flags & 0x100) {
+				entry_val = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 8));
+				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2E0)) = entry_val;
+			} else {
+				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2E0)) = level;
+			}
+			
+			func_800EB534_FA4E4(&D_80157600, 0xE, 0, 0);
+			
+			// Calculate step
+			step = (arg1 - arg0->unkE) / 7;
+			D_801575D4 = step;
+			temp_diff = arg0->unkE - arg1;
+			v1 = temp_diff;
+		}
+	} else if (v1 >= 0x4001) {
+		// Second condition: v1 >= 0x4001
+		level = D_80157A0C;
+		if (level != 0xF && !(D_80157A28 & 4)) {
+			// Calculate offset into state array
+			offset = level * 0x34;
+			
+			// Access state entry
+			entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
+			
+			// Modify state at 0x310
+			if (entry_flags & 0x20) {
+				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x310)) |= 0x20;
+			} else {
+				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x310)) &= ~0x20;
+			}
+			
+			// Modify state at 0x314
+			if (entry_flags & 0x100) {
+				entry_val = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 8));
+				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x314)) = entry_val;
+			} else {
+				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x314)) = level;
+			}
+			
+			func_800EB534_FA4E4(&D_80157600, 0xF, 0, 0);
+			
+			// Calculate step
+			step = (arg0->unkE - arg1) / 7;
+			D_801575D4 = step;
+			temp_diff = arg0->unkE - arg1;
+			v1 = temp_diff;
+		}
+	} else {
+		// Default case
+		level = D_80157A0C;
+		offset = level * 0x34;
+		
+		entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
+		
+		if (!(entry_flags & 0x100)) {
+			D_801575D4 = 0x5DC;
+			temp_diff = arg0->unkE - arg1;
+			v1 = temp_diff;
+		}
+	}
+
+	// Clamp angle
+	step = D_801575D4;
+	neg_step = -step;
+
+	if (v1 < neg_step) {
+		arg0->unkE = arg0->unkE + step;
+	} else if (step < v1) {
+		arg0->unkE = arg0->unkE - step;
+	} else {
+		arg0->unkE = arg1;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA8F8_F98A8.s")
+#endif
 
 typedef struct {
 	/* 0x00 */ u8 pad0[0x18];
@@ -3833,11 +3962,145 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010065C_10F60C.s")
 
 // drawDeadVehicles
+#ifdef NON_MATCHING
+// CURRENT(guarded)
+void func_80101C14_110BC4(void) {
+	Gfx *dl;
+	s16 i;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBA000E02;
+	dl->words.w1 = 0x00008000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB6000000;
+	dl->words.w1 = 0x00020000;
+
+	if (currentLevel == 1) {
+		for (i = 0x7F; i >= 0; i--) {
+			VehicleInstance *vehicle = &vehicleInstances[D_80158E80[i]];
+			VehicleSpec *spec;
+
+			if (vehicle->unk1A != 0x11) {
+				continue;
+			}
+			if (vehicle->unk20 & 0x8000) {
+				continue;
+			}
+
+			spec = &vehicleSpecs[vehicle->unk1A];
+			if (vehicle->unk0 < (D_801493B0 - 0x200)) {
+				continue;
+			}
+			if ((D_801493AC + 0x200) < vehicle->unk0) {
+				continue;
+			}
+			if (vehicle->unk4 < (D_801493B8 - 0x200)) {
+				continue;
+			}
+			if ((D_801493B4 + 0x200) < vehicle->unk4) {
+				continue;
+			}
+			if (func_800B93AC_C835C(vehicle->unk0, vehicle->unk4, spec->unkC, (s16)D_80052B2C->unk0, (s32)D_80052B2C->unk8, 0x4000 - D_80047950) == 0) {
+				continue;
+			}
+			if (vehicle->unk1E >= 0x81) {
+				continue;
+			}
+
+			func_800FFD28_10ECD8(vehicle);
+
+			D_80052B50.unk0 = (s16)(0x100 - (vehicle->unk1E << 1));
+			D_80052B50.unk2 = (s16)(0x100 - (vehicle->unk1E << 1));
+			D_80052B50.unk4 = 0x100;
+			func_800039D0_45D0(&D_80052B50, 0, 0, D_8005BB38);
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0x01040040;
+			dl->words.w1 = (u32)D_8005BB38 & 0x1FFFFFFF;
+
+			D_8005BB38 += 0x40;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0x06000000;
+			dl->words.w1 = (u32)D_8005BB38;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xBD000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xE7000000;
+			dl->words.w1 = 0;
+		}
+	}
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB7000000;
+	dl->words.w1 = 0x00020000;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80101C14_110BC4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80101EF4_110EA4.s")
 
+// CURRENT(1466)
+#ifdef NON_MATCHING
+void func_801022F4_1112A4(VehicleInstance *arg0, s16 arg1, f32 arg2) {
+	s16 temp_s0;
+	f32 temp_f20, temp_f14;
+	s32 diff;
+	s32 pad1;
+	
+	if (arg0->unkC == -2) {
+		temp_s0 = coss((u16)arg0->unkE);
+		temp_f20 = (f32)((((f64)(f32)coss(arg1) / 32768.0) * (f64)arg2) + (((f64)(f32)temp_s0 / 32768.0) * (f64)arg0->unk58));
+		
+		temp_s0 = sins((u16)arg0->unkE);
+		temp_f14 = (f32)((((f64)(f32)sins(arg1) / 32768.0) * (f64)arg2) + (((f64)(f32)temp_s0 / 32768.0) * (f64)arg0->unk58));
+		
+		func_800FB430_10A3E0(arg0, sqrtf((temp_f20 * temp_f20) + (temp_f14 * temp_f14)));
+		arg0->unkE = func_80003824_4424(temp_f20, temp_f14);
+		
+		diff = func_800F9C50_108C00(arg0->unkE, arg0->unk6);
+		if ((diff >= 0x4001) || (diff < -0x4000)) {
+			arg0->unkE += 0x8000;
+			func_800FB430_10A3E0(arg0, -arg0->unk58);
+		}
+		
+		if (arg0 == D_80052B34) {
+			D_80157A2C = arg1;
+		}
+		
+		arg0->unk20 |= 1;
+	} else {
+		temp_s0 = coss((u16)arg0->unkE);
+		temp_f20 = (f32)((((f64)(f32)coss(arg1) / 32768.0) * (f64)arg2) + (((f64)(f32)temp_s0 / 32768.0) * (f64)arg0->unk12));
+		
+		temp_s0 = sins((u16)arg0->unkE);
+		temp_f14 = (f32)((((f64)(f32)sins(arg1) / 32768.0) * (f64)arg2) + (((f64)(f32)temp_s0 / 32768.0) * (f64)arg0->unk12));
+		
+		arg0->unk12 = (s16)(s32)sqrtf((temp_f20 * temp_f20) + (temp_f14 * temp_f14));
+		arg0->unkE = func_80003824_4424(temp_f20, temp_f14);
+		
+		diff = func_800F9C50_108C00(arg0->unkE, arg0->unk6);
+		if ((diff >= 0x4001) || (diff < -0x4000)) {
+			arg0->unkE += 0x8000;
+			arg0->unk12 = -arg0->unk12;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801022F4_1112A4.s")
+#endif
 
 // CURRENT(887)
 #ifdef NON_MATCHING
