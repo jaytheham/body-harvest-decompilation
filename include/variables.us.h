@@ -427,6 +427,8 @@ extern u8 D_8003BCC6;
 extern char D_80142B6C_151B1C;
 extern char D_80142B7C_151B2C;
 extern char D_80142BA0_151B50;
+extern char D_80142C14_151BC4;
+extern char D_80142C28_151BD8;
 extern s32 D_8004D148; // is Snared cheat disabled
 extern s32 D_8004D150;
 extern s32 D_8004D154;
@@ -1154,6 +1156,7 @@ extern Unk80154082 D_8013CB48_14BAF8;
 extern Unk8014DD50 *D_8013CB8C_14BB3C;
 extern s8 D_8013D890_14C840; // Triggers beacon warp
 extern u8 D_8013D894_14C844; // Beacon warp destination
+extern u8 D_8013D8C0_14C870[];
 extern s16 D_8013D8F0_14C8A0[];
 extern Ambient D_8013D958_14C908;
 extern Light D_8013D960_14C910;

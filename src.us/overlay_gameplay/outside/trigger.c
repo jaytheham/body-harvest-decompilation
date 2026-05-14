@@ -725,10 +725,119 @@ void func_800B0390_BF340(Unk80222A78 *arg0) {
 	func_802D4CD0_18D7E0(0x14, 0);
 }
 
+#ifdef NON_MATCHING
+// CURRENT(4495)
+u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2) {
+	typedef struct {
+		s16 unk0;
+		s16 unk2;
+		s16 unk4;
+		u8 unk6;
+		u8 unk7;
+	} Unk8003CEC0Entry;
+
+	Unk80222A78 sp60;
+	u8 sp5F;
+	u8 sp5E;
+	AlienInstance *sp58;
+	s32 sp4C;
+	s16 i;
+	u8 temp_s0;
+	u8 temp_v0;
+	Unk8003CEC0Entry *entry;
+	AlienInstance *leader;
+	AlienInstance *parent;
+	AlienInstance *follower;
+
+	temp_s0 = arg0;
+	if (currentLevel != 5) {
+		func_80011A40_12640(6, D_8006AA70);
+	}
+
+	temp_v0 = func_8007956C_8851C(D_8003CEC6[temp_s0 * 0x28]);
+	sp5E = temp_v0;
+	if ((temp_v0 & 0xFF) == 0xFF) {
+		return 0xFF;
+	}
+
+	sp5F = temp_v0;
+	leader = &alienInstances[sp5F];
+	leader->unk0 = arg1;
+	leader->unk4 = arg2;
+	leader->unk1B = (u8)func_800B0F20_BFED0(arg1, arg2);
+	leader->unk2C = 0;
+
+	if (currentLevel == 5) {
+		leader->unkE = 0;
+		leader->unk6 = leader->unkE;
+	} else {
+		leader->unkE = 0x4000;
+		leader->unk6 = leader->unkE;
+	}
+
+	parent = &alienInstances[leader->unk25];
+	*(s16 *)&parent->unk24 = arg1;
+	*(s16 *)&parent->unk26 = arg2;
+	D_80140AC4_14FA74 = (s32)leader;
+	sp58 = parent;
+	sp4C = sp5F;
+
+	osSyncPrintf(&D_80142C14_151BC4, sp5F, leader->unk25);
+	D_80140AB0_14FA60[0] = &alienInstances[sp5F];
+
+	i = 1;
+	while (i < 5) {
+		u8 slotSpec;
+		u8 followerId;
+
+		entry = (Unk8003CEC0Entry *)((u8 *)&D_8003CEC0[temp_s0] + (i * 8));
+		slotSpec = entry->unk6;
+		if (slotSpec == 0) {
+			break;
+		}
+
+		followerId = func_8007956C_8851C(slotSpec);
+		if (followerId == 0xFF) {
+			leader->unk20 |= (1 << (i + 0xB));
+		} else {
+			follower = &alienInstances[followerId];
+			follower->unk0 = entry->unk4 + arg1;
+			follower->unk4 = arg2 - entry->unk0;
+			follower->unk25 = sp5F;
+			follower->unk1B = leader->unk1B;
+
+			sp60.unk0 = 3;
+			sp60.unk1 = i;
+			sp60.unk2 = (s8)sp4C;
+			sp60.unk8 = followerId;
+			sp60.unkC = func_800B02FC_BF2AC;
+			func_800AE454_BD404(&sp60);
+
+			osSyncPrintf(&D_80142C28_151BD8, followerId);
+			((u8 *)sp58)[i - 1] = followerId;
+			D_80140AB0_14FA60[i] = &alienInstances[followerId];
+		}
+
+		i++;
+	}
+
+	sp60.unk0 = 3;
+	sp60.unk8 = sp5E;
+	sp60.unkC = func_800B0288_BF238;
+	func_800AE454_BD404(&sp60);
+
+	((s32 *)D_8013D8C0_14C870)[0] = 0;
+	D_8014F828 = 0;
+	D_801493E2 = 1;
+
+	return sp5F;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800B03CC_BF37C.s")
+#endif
 
 void func_800B06C4_BF674(Unk80222A78 *arg0) {
-	func_800B03CC_BF37C(arg0->unk8, (s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80), arg0);
+	func_800B03CC_BF37C(arg0->unk8, (s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80));
 }
 
 // This is matching but there's something whacky going on with D_8013D91C

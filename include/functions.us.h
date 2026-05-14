@@ -594,7 +594,7 @@ void func_800B0068_BF018(void *);
 void func_800B01E4_BF194(void *);
 void func_800F9118_1080C8(s32 arg0);
 void func_800B034C_BF2FC(void);
-void func_800B03CC_BF37C(u8, s16, s16, Unk80222A78 *);
+u8 func_800B03CC_BF37C(u8, s16, s16);
 s32 func_8011B584_12A534(s32, s32);
 s32 func_80117464_126414(u8 arg0);
 void func_800C3288_D2238(u8 arg0);
