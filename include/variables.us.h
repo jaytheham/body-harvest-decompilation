@@ -2596,6 +2596,7 @@ extern char D_80143688_152638;
 extern char D_80143478_152428;
 extern char D_80143814_1527C4;
 extern char D_80143860_152810;
+extern char D_80143770_152720;
 extern char D_801437C0_152770;
 extern char D_8014390C_1528BC;
 extern char D_80143958_152908;

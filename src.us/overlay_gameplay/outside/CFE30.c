@@ -2639,7 +2639,78 @@ void func_800D1054_E0004(s16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D10D0_E0080.s")
 
+#ifdef NON_MATCHING
+// CURRENT(5538)
+s16 func_800D16BC_E066C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
+	s16 sp50;
+	u8 sp47;
+	s16 temp_s2;
+	s16 temp_s3;
+	s16 temp_s4;
+	s16 var_a1;
+	s32 temp_at;
+	s32 temp_lo;
+	s32 temp_t1;
+	s16 temp_v0_3;
+	s32 var_s0;
+	s32 var_s1;
+	s32 var_v1;
+	s32 stride;
+	u32 temp_v0_2;
+	Unk80154318Entry *base;
+	Unk80154318Entry *temp_v1;
+
+	sp47 = func_800C1598_D0548(8);
+	if (sp47 != 0xFB) {
+		temp_s2 = arg3 - arg0;
+		temp_s3 = arg4 - arg1;
+		temp_s4 = arg5 - arg2;
+		temp_v0_2 = (u32)(sqrtf((f32)((temp_s2 * temp_s2) + (temp_s3 * temp_s3) + (temp_s4 * temp_s4))) / 100.0f);
+		var_v1 = (s32)(temp_v0_2 & 0xFF);
+		if (var_v1 < 2) {
+			var_v1 = 2;
+		}
+		var_s1 = var_v1;
+		if (var_v1 >= 0x10) {
+			var_v1 = 0xF;
+			var_s1 = 0xF;
+		}
+		var_a1 = temp_s4 / var_s1;
+		var_s0 = 0;
+		if (var_s1 >= 0) {
+			base = D_80154318;
+			stride = 0x1C;
+			temp_s2 = temp_s2 / var_s1;
+			temp_s3 = temp_s3 / var_s1;
+			do {
+				sp50 = var_a1;
+				temp_v0_3 = func_800C18D0_D0880(sp47);
+				if (temp_v0_3 == -3) {
+					osSyncPrintf(&D_80143770_152720);
+					func_800C1418_D03C8(sp47, 0);
+					func_800C1384_D0334(sp47);
+					return 0xFB;
+				}
+				temp_v1 = (Unk80154318Entry *)((u8 *)base + (temp_v0_3 * stride));
+				temp_v1->unkE = arg6;
+				temp_v1->unkF = 1;
+				temp_v1->unk8 = arg0 + (temp_s2 * var_s0);
+				temp_v1->unkA = arg1 + (temp_s3 * var_s0);
+				temp_lo = var_a1 * var_s0;
+				temp_t1 = (var_s0 + 1) & 0xFF;
+				temp_at = var_s1 < temp_t1;
+				var_s0 = temp_t1;
+				temp_v1->unkC = arg2 + temp_lo;
+				var_a1 = sp50;
+			} while (temp_at == 0);
+		}
+	}
+
+	return sp47;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D16BC_E066C.s")
+#endif
 
 void func_800D19DC_E098C(u8 arg0, u8 arg1) {
 	s16 temp_v0 = D_80154088[arg0].unk6;
