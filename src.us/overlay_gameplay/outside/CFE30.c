@@ -1617,7 +1617,67 @@ void func_800C8E10_D7DC0(s16 arg0, s16 arg1, s16 arg2, u8 arg3)
 	D_80154318[idx].unk10 = D_80154318[D_80154088[arg3].unk6].unk10;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(3165)
+void func_800C8F5C_D7F0C(u8 arg0) {
+	Unk801541F8Entry *effect;
+	Unk80154318Entry *entry;
+	Unk80154318Entry *next;
+	Unk80154318Sub *sub;
+	u8 *baseBytes;
+	u8 *subBytes;
+	s16 index;
+	s16 nextIndex;
+	s8 step;
+
+	effect = &D_80154088[arg0];
+	next = &D_80154318[effect->unk2];
+	entry = &D_80154318[effect->unk6];
+	entry->unk8 = next->unk8;
+	entry->unkA = next->unkA;
+	entry->unkC = next->unkC;
+
+	index = entry->unk4;
+	baseBytes = &entry->unk11;
+	if ((index == -5) || (index == -6)) {
+		func_800C1418_D03C8(arg0, 0);
+		func_800C1384_D0334(arg0);
+		return;
+	}
+
+	while ((index != -5) && (index != -6)) {
+		entry = &D_80154318[index];
+		sub = (Unk80154318Sub *)&entry->unk8;
+		subBytes = (u8 *)sub;
+
+		if (entry->unk11 < 10) {
+			nextIndex = entry->unk4;
+			func_800C1A4C_D09FC(index, arg0, 0);
+			if (effect->unk4 == 1) {
+				func_800C1A4C_D09FC(effect->unk6, arg0, 0);
+				func_800C1384_D0334(arg0);
+				return;
+			}
+			index = nextIndex;
+		} else {
+			step = (s8)(0x23 - sub->unkA);
+			if (step > 0) {
+				subBytes[6] -= ((s32)subBytes[6] - baseBytes[0]) / step;
+				subBytes[7] -= ((s32)subBytes[7] - baseBytes[1]) / step;
+				subBytes[8] -= ((s32)subBytes[8] - baseBytes[2]) / step;
+			}
+
+			sub->unk2 += (func_800038E0_44E0() % 2) + 1;
+			entry->unk2 += (func_800038E0_44E0() % 3) + 2;
+			sub->unkA++;
+			sub->unk9 -= 9;
+			index = entry->unk4;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8F5C_D7F0C.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(81)
