@@ -2994,7 +2994,83 @@ void func_80127D88_136D38(BuildingInstance *arg0, VehicleInstance *arg1, s16 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80127D88_136D38.s")
 #endif
 
+// CURRENT(6200)
+#ifdef NON_MATCHING
+void func_80127F9C_136F4C(s16 arg0, s16 arg1, s16 arg2) {
+	s32 count;
+	u8 *indices;
+	VehicleInstance *vehicle;
+	AlienInstance *alien;
+	s32 threshold;
+	s32 dx;
+	s32 dz;
+	AlienSpec *spec;
+	u8 *tbl;
+	s16 *tbl16;
+	s16 val;
+	s32 bldg;
+	s32 offset;
+	s16 vehicleIdx;
+
+	count = D_80158FD8;
+	if (count != 0) {
+		count--;
+		indices = &D_80158E80[count];
+		
+		while (1) {
+			vehicleIdx = *indices;
+			vehicle = &vehicleInstances[vehicleIdx];
+			threshold = *(s32 *)((u8 *)&vehicleSpecs[vehicle->unk1A] + 0x08);
+			dx = func_800047FC_53FC(vehicle->unk0 - arg0);
+			dz = func_800047FC_53FC(vehicle->unk4 - arg1);
+			
+			if ((dx + dz) < threshold) {
+				tbl = (u8 *)&D_80145BE2_154B92 + (arg2 * 0x18);
+				func_80124C40_133BF0(vehicle, *(s16 *)tbl, arg0, arg1);
+			}
+			
+			if (count == 0) break;
+			indices--;
+			count--;
+		}
+	}
+	
+	alien = (AlienInstance *)&D_8004D0F8;
+	offset = arg2 * 0x18;
+	count = 0xFE;
+	
+	while (count != 0) {
+		if (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0) {
+			spec = &alienSpecs[alien->specIndex];
+			dx = func_800047FC_53FC(alien->unk0 - arg0);
+			dz = func_800047FC_53FC(alien->unk4 - arg1);
+			
+			if ((dx + dz) < spec->unk8) {
+				tbl16 = (s16 *)((u8 *)&D_80145BE0_154B90 + offset);
+				func_80124C40_133BF0((void *)alien, tbl16[1], arg0, arg1);
+			}
+		}
+		alien = (AlienInstance *)((u8 *)alien - 0x50);
+		count--;
+	}
+	
+	bldg = func_8011D260_12C210((s8)(arg0 >> 8), (s8)(arg1 >> 8));
+	
+	if ((bldg != -1) && (D_80158FE8 == &buildingInstances[bldg])) {
+		tbl16 = (s16 *)((u8 *)&D_80145BE0_154B90 + offset);
+		val = tbl16[1];
+		if (func_8011BEA0_12AE50(bldg & 0xFF, val >> 7) != 0) {
+			D_8014ED48 = 8;
+		}
+	}
+	
+	func_800F9F00_108EB0(arg0, arg1);
+	tbl16 = (s16 *)((u8 *)&D_80145BE0_154B90 + offset);
+	func_80124170_133120(arg0, func_800F9F00_108EB0(arg0, arg1), arg1, tbl16[1], (s32)tbl16[2], NULL);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80127F9C_136F4C.s")
+#endif
 
 // CURRENT(105)
 #ifdef NON_MATCHING
