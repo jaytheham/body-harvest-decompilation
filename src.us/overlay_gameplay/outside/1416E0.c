@@ -793,7 +793,78 @@ s16 func_801361A4_145154(Unk80160080 *arg0)
   return ret;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(1849)
+void func_80136214_1451C4(Unk80160080 *arg0) {
+	s16 sp66;
+	s16 sp62;
+	Vec3f sp54;
+	Vec3f sp48;
+	s32 sp44;
+	s32 sp40;
+	s32 sp3C;
+	Vec3f *sp30;
+	s16 temp_s1;
+	s32 var_v0;
+
+	temp_s1 = 0x4000 - arg0->unk5E;
+	sp66 = 0x4000 - D_80160146;
+	if (temp_s1 != sp66) {
+		sp44 = (s32) arg0->unk30;
+		sp40 = (s32) arg0->unk34;
+		sp3C = (s32) arg0->unk38;
+		sp30 = (Vec3f *) &arg0->unkC;
+		func_80133C9C_142C4C(&sp54, sp30, &sp48, sp66, arg0->unk4A, arg0->unk4C, arg0->unk4E);
+		if (func_80126268_135218((s16) sp54.x, (s16) sp54.y, (s16) sp54.z, &sp44, &sp40, &sp3C, 0, 4) == 3) {
+			if (func_80132730_1416E0(sp66, temp_s1) < 0) {
+				if ((temp_s1 < 0) && ((temp_s1 % 16384) != 0)) {
+					sp62 = (temp_s1 / 16384) << 0xE;
+				} else {
+					sp62 = ((temp_s1 / 16384) << 0xE) + 0x4000;
+				}
+				if (func_80132730_1416E0(sp66, sp62) < 0) {
+					var_v0 = 1;
+				} else {
+					var_v0 = 0;
+				}
+			} else {
+				if ((temp_s1 <= 0) || !(temp_s1 & 0x3FFF)) {
+					sp62 = ((temp_s1 / 16384) << 0xE) - 0x4000;
+				} else {
+					sp62 = (temp_s1 / 16384) << 0xE;
+				}
+				if (func_80132730_1416E0(sp66, sp62) > 0) {
+					var_v0 = 1;
+				} else {
+					var_v0 = 0;
+				}
+			}
+
+			if (var_v0 != 0) {
+				sp44 = (s32) arg0->unk30;
+				sp40 = (s32) arg0->unk34;
+				sp3C = (s32) arg0->unk38;
+				func_80133C9C_142C4C(&sp54, sp30, &sp48, sp62, arg0->unk4A, arg0->unk4C, arg0->unk4E);
+				if (func_80126268_135218((s16) sp54.x, (s16) sp54.y, (s16) sp54.z, &sp44, &sp40, &sp3C, 0, 4) == 3) {
+					D_80160146 = arg0->unk5E;
+					return;
+				}
+				D_80160146 = 0x4000 - sp62;
+				if (arg0->unk68 == 0) {
+					arg0->unk68 = 1;
+					D_8016015F = 0;
+					arg0->unk64 = 0x64;
+					*(s16 *)arg0->pad66 = 0x64;
+				}
+			} else {
+				D_80160146 = arg0->unk5E;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80136214_1451C4.s")
+#endif
 
 void func_80136570_145520(void) {
 	D_80034488 = 1;
