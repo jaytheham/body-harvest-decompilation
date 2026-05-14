@@ -5504,6 +5504,8 @@ void func_800E360C_F25BC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3928_F28D8.s")
 
+/* CURRENT(560) */
+#ifdef NON_MATCHING
 void func_800E4CEC_F3C9C(s32 arg0, u8 arg1) {
 	s16 sp84, sp82, sp80;
 	s32 sp70, sp68, sp64, sp60, sp5C;
@@ -5570,6 +5572,9 @@ void func_800E4CEC_F3C9C(s32 arg0, u8 arg1) {
 	temp_v0_6->words.w0 = 0xBD000000;
 	temp_v0_6->words.w1 = 0;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E4CEC_F3C9C.s")
+#endif
 
 // CURRENT(380)
 #ifdef NON_MATCHING
