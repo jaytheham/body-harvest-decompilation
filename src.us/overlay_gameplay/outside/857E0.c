@@ -397,7 +397,93 @@ void func_80078F5C_87F0C(s16 arg0, s16 arg1, u16 arg2) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(3695)
+s32 func_80078FE0_87F90(u8 *arg0, VehicleInstance *arg1, s32 *arg2) {
+	s8 *context;
+	VehicleInstance *vehicle;
+	s32 *result;
+	VehicleSpec *spec;
+	f32 speedFactor;
+	f64 direction;
+	s32 scaled;
+
+	context = (s8 *)arg0;
+	vehicle = arg1;
+	result = arg2;
+
+	spec = (VehicleSpec *)func_800FAFB8_109F68(vehicle);
+	if ((currentLevel == 3) && ((vehicle->unk1A == 9) || (vehicle->unk1A == 8))) {
+		return 1;
+	}
+
+	if (*(s8 *)((u8 *)vehicle + 0xD) == -2) {
+		speedFactor = func_800FB11C_10A0CC(vehicle);
+	} else {
+		if ((-(s32)vehicle->unk12) < vehicle->unk12) {
+			speedFactor = (f32)vehicle->unk12;
+		} else {
+			speedFactor = (f32)(-vehicle->unk12);
+		}
+	}
+
+	scaled = (s32)((f32)spec->unk32 * speedFactor);
+
+	if ((context[3] == 1) || (context[3] == 2)) {
+		if (((f64)(f32)coss((u16)vehicle->unkE) / 32768.0) >= 0.0) {
+			direction = (f64)(f32)coss((u16)vehicle->unkE) / 32768.0;
+		} else {
+			direction = -((f64)(f32)coss((u16)vehicle->unkE) / 32768.0);
+		}
+
+		if (*(s16 *)context < *(s16 *)(context + 0x10)) {
+			*result = 0;
+		} else {
+			*result = 0x8000;
+		}
+	} else {
+		if (((f64)(f32)sins((u16)vehicle->unkE) / 32768.0) >= 0.0) {
+			direction = (f64)(f32)sins((u16)vehicle->unkE) / 32768.0;
+		} else {
+			direction = -((f64)(f32)sins((u16)vehicle->unkE) / 32768.0);
+		}
+
+		if (vehicle->unk4 < *(s16 *)(arg0 + 0x14)) {
+			*result = 0x4000;
+		} else {
+			*result = -0x4000;
+		}
+	}
+
+	scaled = (s32)(direction * (f64)scaled);
+	if (scaled < 0x7531) {
+		if (scaled < 0x249F1) {
+			return 0;
+		}
+
+		if (*(s8 *)context != 0xE) {
+			return 0;
+		}
+		return 1;
+	}
+
+	if (*(s8 *)context == 0xF) {
+		return 1;
+	}
+
+	if (scaled < 0x249F1) {
+		return 0;
+	}
+
+	if (*(s8 *)context != 0xE) {
+		return 0;
+	}
+
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078FE0_87F90.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(2276)
