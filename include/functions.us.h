@@ -892,7 +892,7 @@ void func_800B33BC_C236C(s32 arg0);
 void func_80135CB8_144C68(void);
 void func_8000345C_405C(u16 arg0);
 void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2);
-void func_801333D0_142380(void);
+void func_801333D0_142380(Unk80160080 *arg0);
 void func_801336CC_14267C(Unk80160080 *arg0, Vec3f *arg1);
 void func_80133A54_142A04(Unk80160080 *arg0);
 void func_80133C9C_142C4C(Vec3f *arg0, Vec3f *arg1, void *arg2, s16 arg3, u16 arg4, s32 arg5, s16 arg6);
