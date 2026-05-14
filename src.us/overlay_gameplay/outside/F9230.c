@@ -4907,7 +4907,94 @@ s32 func_8010B970_11A920(u8 *arg0, VehicleInstance *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010BA04_11A9B4.s")
 
+#ifdef NON_MATCHING
+void func_8010C14C_11B0FC(void) {
+	s32 state;
+	s32 temp;
+	s32 sp3C;
+	s32 sp38;
+	s32 sp34;
+	VehicleInstance *vehicle;
+
+	state = D_801409F8_14F9A8;
+	if ((u32)state >= 5U) {
+		return;
+	}
+
+	switch (state) {
+		case 0:
+			D_80159312 = 0;
+			func_8001A650_1B250(8);
+			D_8013B934_14A8E4 = 1000;
+			func_800153D8_15FD8(0xD0);
+			D_801409F8_14F9A8++;
+			D_80159D10 = 0;
+			break;
+
+		case 1:
+			temp = D_80159D10;
+			D_80159308 = func_800065A4_71A4(0, -0x1B58, temp);
+			temp += 0x2C8;
+			D_80159D10 = temp;
+			if (temp >= 0x10000) {
+				func_800156C8_162C8(0xD0);
+				func_800153D8_15FD8(0xD1);
+				D_801409F8_14F9A8++;
+				D_80159D10 = 0;
+			}
+			break;
+
+		case 2:
+			temp = D_80159D10 + 1;
+			D_80159D10 = temp;
+			if (temp >= 10) {
+				func_800153D8_15FD8(0x63);
+				D_801409F8_14F9A8++;
+				D_80159D10 = 0;
+				func_80128428_1373D8((AlienInstance *) D_80052B34, 0, 0x64, -0xD8, &sp3C, &sp38, &sp34);
+				func_800DF038_EDFE8((s16) sp3C, (s16) sp38, (s16) sp34, 0x46, 0, 0);
+				return;
+			}
+			break;
+
+		case 3:
+			D_80159312 += D_80159D10;
+			D_80159D10++;
+			if (D_80159312 >= 0x1A9) {
+				D_801409F8_14F9A8++;
+				D_80159D10 = 0;
+			}
+			break;
+
+		case 4:
+			vehicle = &vehicleInstances[D_80159316];
+			vehicle->unk20 |= 0x10;
+			D_80158E64 = &D_8004F374;
+			D_8004F374.unk1A = 0xE;
+			func_800FAE84_109E34(D_80158E64);
+			func_800FB44C_10A3FC(D_80158E64, D_80159284);
+			func_800FB468_10A418(D_80158E64, D_80159288);
+			func_800FB484_10A434(D_80158E64, D_8015928C);
+			func_800FB430_10A3E0(D_80158E64, 30.0f);
+			D_80158E64->unk6 = D_8015927E;
+			D_80158E64->unkA = D_80159280;
+			D_80158E64->unk8 = D_80159282;
+			D_80158E64->unk20 |= 0x8042;
+			func_800FAD10_109CC0();
+			func_800FD510_10C4C0(0, 0x3F);
+			D_80258062 = 0xC8;
+			func_80107EBC_116E6C(D_80158E64);
+			D_801591AC = 0;
+			D_8015930E = 0;
+			D_80159312 = 0;
+			D_80159308 = 0;
+			D_801409F8_14F9A8 = 0;
+			break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010C14C_11B0FC.s")
+#endif
 
 void func_8010C454_11B404(void) {
 	VehicleInstance *vehicle;
