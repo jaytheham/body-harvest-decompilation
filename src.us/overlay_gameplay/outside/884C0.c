@@ -950,7 +950,118 @@ s32 func_8007A4F8_894A8(s32 arg0)
   return 1;
 }
 
+#ifdef NON_MATCHING
+// CURRENT(7656)
+void func_8007A6B4_89664(u8 arg0)
+{
+	AlienInstance* alien;
+	s16 startX;
+	s16 startZ;
+	s32 x;
+	s32 z;
+	s32 absX;
+	s32 absZ;
+	s32 stepX;
+	s32 stepZ;
+	s32 i;
+	u8 stage;
+
+	i = 0;
+	if (currentLevel == 3) {
+		stage = D_800481B2[arg0 * sizeof(AlienInstance)];
+		if ((stage == 9) || (stage == 8)) {
+			return;
+		}
+	}
+
+	alien = &alienInstances[arg0];
+	startX = alien->unk0;
+	startZ = alien->unk4;
+	x = startX - D_80149434;
+	z = startZ - D_80149436;
+	if (x < 0) {
+		absX = -x;
+	} else {
+		absX = x;
+	}
+	if (z < 0) {
+		absZ = -z;
+	} else {
+		absZ = z;
+	}
+
+	stepX = 0;
+	stepZ = 0;
+	if (absZ < absX) {
+		if (x >= 0) {
+			stepX = 0x100;
+		} else {
+			stepX = -0x100;
+		}
+	} else {
+		if (z >= 0) {
+			stepZ = 0x100;
+		} else {
+			stepZ = -0x100;
+		}
+	}
+
+	if (stepX != 0) {
+		x = D_80149434 + (s16)((f64)(stepX * 18) * 0.5);
+		z = startZ;
+	} else if (stepZ != 0) {
+		x = startX;
+		z = D_80149436 + (s16)((f64)(stepZ * 18) * 0.5);
+	}
+
+	alien->unk0 = x;
+	alien->unk2E = x;
+	alien->unk4 = z;
+	alien->unk32 = z;
+
+	stage = alien->unk1B;
+	if (D_80047F94 == stage) {
+		if ((func_800B0D10_BFCC0(alien->unk0, alien->unk4, ((s16*)&D_8025668C)[alien->specIndex * 0x34]) == 0) &&
+			(func_8007F9C8_8E978(arg0, alien->specIndex) == 0)) {
+			return;
+		}
+
+		while (1) {
+			alien->unk0 -= stepX;
+			alien->unk4 -= stepZ;
+			osSyncPrintf(&D_80141904_1508B4, alien->unk0, alien->unk4, D_80149434, D_80149436, stepX, stepZ);
+			i++;
+			if (i >= 10) {
+				return;
+			}
+			if (func_800B0D10_BFCC0(alien->unk0, alien->unk4, ((s16*)&D_8025668C)[alien->specIndex * 0x34]) == 0) {
+				if (func_8007F9C8_8E978(arg0, alien->specIndex) == 0) {
+					return;
+				}
+			}
+		}
+	} else if (stage == 0xFF) {
+		if (func_8007F9C8_8E978(arg0, alien->specIndex) == 0) {
+			return;
+		}
+
+		while (1) {
+			alien->unk0 -= stepX;
+			alien->unk4 -= stepZ;
+			osSyncPrintf(&D_80141950_150900, alien->unk0, alien->unk4, D_80149434, D_80149436, stepX, stepZ);
+			i++;
+			if (i >= 10) {
+				return;
+			}
+			if (func_8007F9C8_8E978(arg0, alien->specIndex) == 0) {
+				return;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007A6B4_89664.s")
+#endif
 
 void func_8007AA0C_899BC(void)
 {
