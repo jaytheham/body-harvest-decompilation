@@ -438,7 +438,110 @@ void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009D96C_AC91C.s")
 
 // drawAlienHealth
+extern f64 D_80142728_1516D8;
+extern f64 D_80142730_1516E0;
+extern f32 D_8013D668_14C618;
+extern f32 D_8014F6A4;
+extern s16 D_8014F6A8;
+extern s16 D_8014F6AC;
+extern f32 D_8014F6B0;
+extern s32 D_8014F6B4;
+extern s16 D_8014F6C0;
+extern f32 D_8014F6C4;
+
+s32 func_8013B8C8_14A878(void);
+void func_8009C6CC_AB67C(s16 arg0, s32 arg1, f32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
+
+#ifdef NON_MATCHING
+// CURRENT(11423)
+void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+	f32 alpha;
+	f32 interp;
+	f64 interpD;
+	s16 width;
+	u8 state;
+	u8 mode;
+
+	alpha = arg0;
+	width = arg3;
+
+	if (width != 0) {
+		if (func_80018AA0_196A0() == 0) {
+			if (func_8013B8C8_14A878() == 0) {
+				goto block_5c;
+			}
+		}
+	}
+
+	interp = D_8013D668_14C618;
+	interpD = interp;
+	if (interpD > 0.0) {
+		if (interpD < D_80142728_1516D8) {
+			interp = 0.0f;
+		} else {
+			interp = (f32)(interpD - D_80142728_1516D8);
+		}
+		interpD = interp;
+	}
+
+	if (arg1 != 0) {
+		width = D_8014F6C0;
+		alpha = D_8014F6C4;
+	} else {
+		alpha = 1.0f;
+		width = 1;
+	}
+	goto store_results;
+
+block_5c:
+	state = (u8)D_8014F202;
+	if ((state == 4) && (D_80052A8C & 4)) {
+		return;
+	}
+
+	mode = (u8)D_8014F203;
+	if ((state != mode) || (D_8014F6B4 != arg4)) {
+		if (mode == 0) {
+			D_8014F6A4 = 0.0f;
+			D_8014F6A8 = 0;
+			D_8013D668_14C618 = 0.0f;
+		} else {
+			D_8014F6A4 = D_8014F6B0;
+			D_8014F6A8 = D_8014F6AC;
+			D_8013D668_14C618 = 0.0f;
+		}
+	}
+
+	interp = D_8013D668_14C618;
+	interpD = interp;
+	if (interpD < 1.0) {
+		D_8014F6B0 = ((alpha - D_8014F6A4) * interp) + D_8014F6A4;
+		interp = (f32)(interpD + D_80142730_1516E0);
+		interpD = interp;
+		D_8014F6AC = D_8014F6A8 + (s16)(interp * (width - D_8014F6A8));
+	} else {
+		interp = 1.0f;
+		interpD = 1.0;
+		D_8014F6B0 = alpha;
+		D_8014F6AC = width;
+	}
+
+store_results:
+	D_8014F6C4 = alpha;
+	D_8014F6C0 = width;
+	D_8013D668_14C618 = interp;
+
+	if (interpD >= 0.0) {
+		if (((u8)D_8014F202 != 0) || (interpD < 1.0)) {
+			func_8009C6CC_AB67C((s16)((interp * 64.0f) - 32.0f), 0x8B, alpha, 0, arg1, 2, 0, (s16)arg2, width);
+		}
+	}
+
+	D_8014F6B4 = arg4;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009E994_AD944.s")
+#endif
 
 void func_8009EC90_ADC40(s16 arg0, f32 *arg1, f32 *arg2) {
 	s32 var_v0;

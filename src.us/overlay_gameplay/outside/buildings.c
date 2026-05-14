@@ -952,7 +952,84 @@ void func_8011BA80_12AA30(u8 arg0, s16 arg1) {
 #endif
 
 // draw explosion etc when building is damaged/destroyed
+#ifdef NON_MATCHING
+// CURRENT(6030)
+void func_8011BB94_12AB44(s32 arg0, s32 arg1) {
+	BuildingInstance *building;
+	BuildingSpec *spec;
+	u32 flags;
+	s32 radius;
+	s32 x;
+	s32 y;
+	s32 z;
+	s32 temp;
+	u32 *srcWords;
+	u32 unkSp6C[3];
+
+	srcWords = (u32 *)D_80140AA4_14FA54;
+	unkSp6C[0] = srcWords[0];
+	unkSp6C[1] = srcWords[1];
+	unkSp6C[2] = srcWords[2];
+
+	building = &buildingInstances[arg0];
+	spec = &buildingSpecs[building->buildingType];
+
+	radius = (s32)sqrtf((f32)((spec->unk12 * spec->unk12) + (spec->unk10 * spec->unk10)));
+	x = building->xCoord;
+	z = building->zCoord;
+	y = (func_800B84D0_C7480((s16)x, (s16)z) >> 8) + 0x32;
+
+	temp = (s8)spec->pad16[3];
+	temp = temp / 2;
+	if (((s8)building->unk10 >= temp) && ((s8)building->hitPoints < temp)) {
+		building->padC[0] = 0xA;
+		if (func_80117464_126414((u8)arg0) != 0) {
+			if (radius < 0x82) {
+				radius = 0x82;
+			}
+
+			temp = func_800038E0_44E0() % 4;
+			if ((temp < 0) && ((temp & 3) != 0)) {
+				temp -= 4;
+			}
+			func_800DF038_EDFE8((s16)x, (s16)y, (s16)z, radius, temp + 4, 0);
+			func_80135D44(x, y, z, 3.0f);
+		}
+	}
+
+	if ((s8)building->hitPoints <= 0) {
+		flags = (u32)(building->unk8 >> 12);
+		if ((flags & 0x1000) && (arg1 == 0)) {
+			building->hitPoints = 1;
+			return;
+		}
+
+		if (flags & 0x10) {
+			func_800D3614_E25C4((u8)arg0);
+		}
+
+		building->padC[0] = 0x23;
+		if (func_80117464_126414((u8)arg0) != 0) {
+			if (radius < 0xA0) {
+				radius = 0xA0;
+			}
+
+			func_800DF038_EDFE8((s16)x, (s16)y, (s16)z, radius, 0xC, 0);
+			func_800DEE5C_EDE0C((s16)x, (s16)(y + 0xA), (s16)z, 0x78, 0x10);
+			func_80135D44(x, y, z, 3.0f);
+
+			if (func_800B325C_C220C((s8)(x >> 8), (s8)(z >> 8), 0x1000) == 0) {
+				func_800DEA08_ED9B8((s16)x, (s16)y, (s16)z, radius * 2, 5, 0, 0x64, 0xFF, 0, 0, 0);
+				func_800B8D80_C7D30((s16)x, (s16)z, (s16)(radius >> 8), 0);
+			}
+		}
+	}
+
+	return;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BB94_12AB44.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
