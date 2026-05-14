@@ -405,7 +405,69 @@ void func_800AB80C_BA7BC(u8 arg0) {
 	}
 }
 
+// CURRENT(5564)
+#ifdef NON_MATCHING
+void func_800AB8CC_BA87C(u8 arg0) {
+	AlienInstance *inst = &alienInstances[arg0];
+	AlienInstance *spec = &alienInstances[inst->unk25];
+	s32 helper0;
+	s32 helper1;
+	s32 helper2;
+	s32 result;
+
+	if (spec->specIndex == 2) {
+		if (spec->unk20 & 0x4000) {
+			result = func_8008FF54_9EF04(spec->unk25, &helper0, &helper1, &helper2);
+			inst->unk2 = (s16)(((spec->unk2C * (helper1 - result)) / 0xF) + result);
+			return;
+		}
+
+		inst->unk2 = (s16)(((f32)sins((u16)((D_80052A8C + spec->unk25) * 0x1388)) * 4.0f / 7.0f) + spec->unk2);
+		return;
+	}
+
+	if (spec->specIndex != 0x19) {
+		inst->unk24 = 0;
+		inst->unk2C = 0xC;
+		inst->unk20 |= 0x4000;
+		return;
+	}
+
+	result = func_8008FF54_9EF04(spec->unk25, &helper0, &helper1, &helper2);
+	inst->unk0 = (s16)helper0;
+	inst->unk2 = (s16)helper1;
+	inst->unk4 = (s16)helper2;
+
+	if (spec->unk20 & 0x600) {
+		inst->unk2 += *(s16 *)&D_8014DD52[spec->unkC * 0x10];
+	}
+
+	inst->unk2C++;
+	if ((inst->unk2C % 0xC) != 0) {
+		return;
+	}
+
+	if ((inst->unk24 == 1) || (inst->unk24 == 0x1D)) {
+		s32 rand0;
+		s32 rand1;
+		s32 rand2;
+		s32 rand3;
+
+		rand0 = func_800038E0_44E0();
+		rand1 = func_800038E0_44E0();
+		rand2 = func_800038E0_44E0();
+		rand3 = func_800038E0_44E0();
+		func_800CA5EC_D959C(inst->unk0, inst->unk2, inst->unk4,
+			(s8)((rand0 % 50) - 0x19), 0x50, (s8)((rand1 % 50) - 0x19), 0x19, 5,
+			(u8)((rand2 % 8) + 0xC), (u8)((rand3 % 0x23) + 0x69), 0, 0xFF, 0, 0xFF);
+		return;
+	}
+
+	func_800E05B4_EF564(inst->unk0, inst->unk2, inst->unk4, 0x64);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB8CC_BA87C.s")
+#endif
 
 void func_800ABC2C_BABDC(u8 arg0) {
 	AlienInstance *ptr = &alienInstances[arg0];
