@@ -600,6 +600,7 @@ extern u8 D_800AA7D8[][16];
 extern f32 D_800AA848[][12];
 extern s8 D_800319C1_325C1;
 extern u8 D_5040770[];
+extern u8 D_5047470[];
 extern u8 D_5038FF8;
 extern u8 D_5055C00;
 extern s32 D_50332A0;
