@@ -2955,7 +2955,87 @@ s16 func_800F9FAC_108F5C(s16 arg0, s16 arg1) {
 	return (s16) var_v1;
 }
 
+// CURRENT(6141)
+#ifdef NON_MATCHING
+s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
+	VehicleSpec *spec;
+	s16 h0;
+	s16 h1;
+	s16 h2;
+	s16 h3;
+	s16 h4;
+	s16 h5;
+	s16 h6;
+	s16 h7;
+	s16 temp;
+	f32 xOffset;
+	f32 zOffset;
+	f64 halfDistance;
+	s32 trigValue;
+	u16 angle;
+	u16 flags;
+
+	angle = arg1;
+	spec = &vehicleSpecs[arg0->unk1A];
+	trigValue = coss(angle);
+	halfDistance = (f64)(arg2 >> 1);
+	xOffset = (f32)(((f64)(f32)trigValue / 32768.0) * halfDistance);
+	trigValue = sins(angle);
+	zOffset = (f32)(((f64)(f32)trigValue / 32768.0) * halfDistance);
+	func_800F9D60_108D10((s16)(s32)((f32)arg0->unk0 - xOffset), (s16)(s32)((f32)arg0->unk4 - zOffset), &h0, &temp, &h4);
+	func_800F9D60_108D10((s16)(s32)((f32)arg0->unk0 + xOffset), (s16)(s32)((f32)arg0->unk4 + zOffset), &h1, &temp, &h5);
+
+	trigValue = coss(angle);
+	halfDistance = (f64)(arg2 >> 2);
+	xOffset = (f32)(((f64)(f32)trigValue / 32768.0) * halfDistance);
+	trigValue = sins(angle);
+	zOffset = (f32)(((f64)(f32)trigValue / 32768.0) * halfDistance);
+	func_800F9D60_108D10((s16)(s32)((f32)arg0->unk0 - xOffset), (s16)(s32)((f32)arg0->unk4 - zOffset), &h2, &temp, &h6);
+	func_800F9D60_108D10((s16)(s32)((f32)arg0->unk0 + xOffset), (s16)(s32)((f32)arg0->unk4 + zOffset), &h3, &temp, &h7);
+
+	if (!(spec->unk4C & 0x100)) {
+		if (D_80222A70 >= h0) {
+			h0 = (s16)D_80222A70;
+		}
+		if (D_80222A70 >= h1) {
+			h1 = (s16)D_80222A70;
+		}
+		if (D_80222A70 >= h2) {
+			h2 = (s16)D_80222A70;
+		}
+		if (D_80222A70 >= h3) {
+			h3 = (s16)D_80222A70;
+		}
+	}
+
+	flags = arg0->unk20;
+	if ((flags & 0x800) || (flags & 4)) {
+		if (h4 >= h0) {
+			h0 = h4;
+		}
+		if (h5 >= h1) {
+			h1 = h5;
+		}
+		if (h6 >= h2) {
+			h2 = h6;
+		}
+		if (h7 >= h3) {
+			h3 = h7;
+		}
+	}
+
+	if (h2 >= h0) {
+		h0 = h2;
+	}
+	if (h3 >= h1) {
+		h1 = h3;
+	}
+
+	return func_80003824_4424((f32)arg2, (f32)(h0 - h1));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FA018_108FC8.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(281) */
