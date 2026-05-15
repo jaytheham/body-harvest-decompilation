@@ -3071,7 +3071,76 @@ void func_801238DC_13288C(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801238DC_13288C.s")
 #endif
 
+// CURRENT(2610)
+#ifdef NON_MATCHING
+void func_80123AC4_132A74(VehicleInstance *arg0) {
+	s16 i;
+	s16 sp44;
+	VehicleInstance *temp;
+	f64 div;
+
+	if (!(arg0->unk20 & 0x8000)) {
+		return;
+	}
+
+	if (arg0->unk1A != 0) {
+		sp44 = func_800DF038_EDFE8(arg0->unk0, arg0->unk2, arg0->unk4, vehicleSpecs[arg0->unk1A].unk36 * 2, (func_800038E0_44E0() % 3) + 3, 0);
+	}
+
+	arg0->unk1C = 0;
+
+	temp = D_80052B34;
+	if (arg0 == temp) {
+		if ((arg0->unk20 & 2) && (arg0->unk1A != 0) && (gameplayMode == 1)) {
+			arg0->unk3C = 0;
+			D_801591AC = 6;
+			D_801591B8 = 2;
+			osSyncPrintf(D_80145070_154020);
+			return;
+		}
+
+		if ((arg0->unk1A == 0) && (gameplayMode != 0xC)) {
+			if (D_80222A70 < temp->unk2) {
+				func_801371B8_146168(0, 0x185, temp->unk0, temp->unk2, temp->unk4, 0.25f);
+			}
+
+			func_80133260_142210(&D_80160080);
+			func_80006DAC_79AC(0x64, 0);
+			func_8009C458_AB408();
+			return;
+		}
+	} else if (arg0->unk20 & 0x400) {
+		func_800AE190_BD140(2);
+		div = D_80145160_154110;
+		for (i = 0; i < 2; i++) {
+			func_801371B8_146168(0, 0x185, arg0->unk0, arg0->unk2, arg0->unk4, (f32)(((f64)((f32)(func_800038E0_44E0() % 100)) / div) + 0.25));
+			func_800C7924_D68D4(arg0->unk0, arg0->unk2, arg0->unk4, 0x10, sp44, vehicleSpecs[arg0->unk1A].unk36 * 2, D_502D390, 1);
+		}
+	}
+
+	if ((currentLevel == 4) && (arg0->unk1A == 0xD) && !(arg0->unk20 & 0x10)) {
+		osSyncPrintf(D_80145088_154038);
+		func_800D6ADC_E5A8C(arg0->unk0, arg0->unk2, arg0->unk4, 5);
+		temp = D_80052B34;
+		if (temp->unk1A != 0) {
+			func_800DF038_EDFE8(temp->unk0, temp->unk2, temp->unk4, vehicleSpecs[temp->unk1A].unk36 * 2, (func_800038E0_44E0() % 3) + 3, 0);
+			temp->unk1C = 0;
+			func_800FDD8C_10CD3C(temp);
+			func_800FDEA8_10CE58(D_80052B2C, 1);
+		}
+		func_80123AC4_132A74(temp);
+	}
+
+	func_800FDD8C_10CD3C(arg0);
+	if ((arg0 == D_80052B34) && (arg0->unk1A != 0)) {
+		osSyncPrintf(D_801450A4_154054);
+		func_800FDEA8_10CE58(D_80052B2C, 1);
+		D_8015F9EC = 0xA;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80123AC4_132A74.s")
+#endif
 
 // 80123F04 Reduces damage to adam by 40% in easy
 // CURRENT(690)
