@@ -2750,7 +2750,101 @@ void func_800F4748_1036F8(UnkF9230Arg0 *arg0, u8 arg1, u8 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F4748_1036F8.s")
 #endif
 
+// CURRENT(3132)
+#ifdef NON_MATCHING
+void func_800F49A4_103954(void *arg0) {
+	UnkF9230Arg0 *base;
+	AlienInstance *alien;
+	u8 *anim;
+	u8 *entry;
+	s16 spB2;
+	s16 spA8;
+	s16 spA6;
+	s16 posX;
+	s16 posZ;
+	s16 animFrame;
+	s16 footX;
+	s16 footZ;
+	s16 currX;
+	s16 currZ;
+	s16 rootY;
+	s16 yawDeg;
+	s16 distA;
+	s16 distB;
+	s16 legRadius;
+	u8 limbCount;
+	u8 animLerp;
+	u8 parentAlien;
+	s32 i;
+	f32 yawRad;
+
+	base = arg0;
+	parentAlien = base->unk144;
+	posX = (s16)*(s32 *)&base->unk0[0x10];
+	posZ = (s16)*(s32 *)&base->unk0[0x14];
+
+	anim = &D_801601F0[base->unk0[0x23] * 0x16];
+	limbCount = anim[0x0C];
+	animLerp = anim[0x12];
+
+	for (i = 0; i < limbCount; i = (i + 1) & 0xFF) {
+		entry = &base->unk0[(i * 0x24) + 0x24];
+		if (entry[0x23] != 0) {
+			continue;
+		}
+
+		animFrame = (s16)(animLerp * 2);
+		footX = func_800F41E0_103190(*(s16 *)&entry[0x14], *(s16 *)&entry[0x1A], *(s16 *)&base->unk0[0x1E], animFrame);
+		footZ = func_800F41E0_103190(*(s16 *)&entry[0x18], *(s16 *)&entry[0x1C], *(s16 *)&base->unk0[0x1E], animFrame);
+		*(s16 *)&entry[0x1E] = footX;
+		*(s16 *)&entry[0x20] = footZ;
+
+		if (base->unk0[0x22] == 0x10) {
+			*(s16 *)&entry[0x16] = *(s16 *)&base->unk0[0x16A];
+		} else {
+			alien = &alienInstances[parentAlien];
+			*(s16 *)&entry[0x16] = *(s16 *)&D_8014DD52[alien->unkC * 0x10] + alien->unk2;
+		}
+
+		spB2 = *(s16 *)&entry[0x16];
+		animFrame = *(s16 *)&base->unk0[0x1E];
+
+		if (!(animLerp < animFrame)) {
+			if (!(i & 1)) {
+				func_800F4748_1036F8(base, animFrame & 0xFF, i & 0xFF);
+				animFrame = *(s16 *)&base->unk0[0x1E];
+			}
+		}
+
+		if (!(animFrame < animLerp)) {
+			if ((i % 2) == 1) {
+				func_800F4748_1036F8(base, (animFrame - animLerp) & 0xFF, i & 0xFF);
+			}
+		}
+
+		currX = *(s16 *)&entry[0x0A];
+		currZ = *(s16 *)&entry[0x0C];
+		rootY = *(s16 *)&entry[0x02];
+
+		yawDeg = (s16)(((f64)(f32)func_80003824_4424((f32)(currX - footX), (f32)(currZ - footZ)) * 180.0) / 32768.0);
+
+		distA = (s16)sqrtf((f32)(((currX - posX) * (currX - posX)) + ((currZ - posZ) * (currZ - posZ))));
+		distB = (s16)sqrtf((f32)(((footX - posX) * (footX - posX)) + ((footZ - posZ) * (footZ - posZ))));
+
+		func_800F4258_103208(base, distB, spB2, distA, rootY, &spA8, &spA6);
+
+		yawRad = (f32)(((f64)yawDeg * 3.141592653589793) / 180.0);
+		legRadius = (s16)(sinf(yawRad) * (f32)spA8);
+		spA8 = (s16)(cosf(yawRad) * (f32)spA8);
+
+		*(s16 *)&entry[0x0E] = posX + spA8;
+		*(s16 *)&entry[0x10] = spA6;
+		*(s16 *)&entry[0x12] = posZ + legRadius;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F49A4_103954.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F4DB0_103D60.s")
 
