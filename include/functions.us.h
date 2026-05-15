@@ -169,6 +169,7 @@ void func_80001984_2584(void);
 s32 func_802D64D0_18EFE0(void);
 void loadFrontendData(void);
 void func_8001A460_1B060(LzssHeader *data, u8 *out);
+void __dummy(void);
 // loader.c functions - prototype-less to preserve implicit int behavior for matching functions
 s32 func_8001032C_10F2C();
 void func_8000F1E8_FDE8(void);
