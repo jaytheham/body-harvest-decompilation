@@ -690,6 +690,8 @@ void func_800E8890_F7840(void);
 s32 func_800703B0_7F360(s16 arg0, s16 arg1);
 s32 func_800B9228_C81D8(s32 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4);
 s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5);
+void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3);
+void func_800D702C_E5FDC(s16 arg0, s32 arg1);
 void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s32 arg4);
 void func_800E94B8_F8468(void);
 Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1);
