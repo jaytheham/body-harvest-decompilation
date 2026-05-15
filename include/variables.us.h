@@ -1340,7 +1340,6 @@ extern char D_80141BE4;
 extern char D_80141C08;
 extern char D_80141C24;
 extern char D_80141C38;
-extern s8 D_80140B03_14FAB3;
 extern s32 D_8014D304;
 extern u32 D_80256688[][26];
 extern s16 D_802566C0[];
