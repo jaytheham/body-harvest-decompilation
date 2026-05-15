@@ -3539,7 +3539,90 @@ void func_800FD4D4_10C484(void *arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(762)
+void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
+	Unk80052B2C *playerData;
+	VehicleSpec *spec;
+	s16 vehicleGroup;
+	s32 wasAudioActive;
+
+	wasAudioActive = 0;
+	if (func_800E60CC_F507C(2, *((u8 *)D_80052B2C + 0x35)) != 0) {
+		func_800E5E3C_F4DEC(2, *((u8 *)D_80052B2C + 0x35));
+		wasAudioActive = 1;
+	}
+
+	playerData = &((Unk80052B2C *)&D_80052AE8)[(s16)arg0];
+	playerData->unk34 = arg1;
+	D_80159318 = 0;
+
+	vehicleGroup = playerData->unk34;
+	playerData->unk38 = &vehicleInstances[vehicleGroup];
+	D_80052B34 = playerData->unk38;
+	spec = &vehicleSpecs[D_80052B34->unk1A];
+
+	if (*(s16 *)((u8 *)spec + 0x3C) < 0) {
+		playerData->unk36 = -0x7FFF;
+	} else {
+		playerData->unk36 = 0;
+	}
+
+	D_801591EA = 0;
+	D_80052B34->unk2E = 0xFA;
+	D_801493DC = 0;
+	D_80159230 = 0;
+	D_8015F9EC = 0;
+	D_80052B34->unk20 |= 1;
+
+	func_800FD410_10C3C0(spec);
+
+	if (D_80052B34->unk1A != 0) {
+		D_8015930A = D_80159232;
+		D_8015930C = D_80159234;
+		D_8013FD88_14ED38 = 1;
+		func_80001144_1D44(0x10, 0, 0);
+		func_8001A650_1B250(*((s16 *)((u8 *)&D_80257A1A + (D_80052B34->unk1A * sizeof(VehicleSpec)))));
+		func_80139778_148728();
+	}
+
+	if (spec->weapon1 != 0) {
+		D_80050AD4 = 0;
+	} else {
+		D_80050AD4 = 4;
+	}
+
+	if (wasAudioActive != 0) {
+		func_800E5CF4_F4CA4(2, (u8)arg1);
+	}
+
+	D_80052B34->unkE = D_80052B34->unk6;
+	D_80052B34->unk10 = 0;
+	D_80052B34->unk30 = 0.0f;
+	D_80052B34->unk34 = 0.0f;
+	D_80052B34->unk38 = 0.0f;
+
+	if (D_8014940E != 0) {
+		D_8013B910_14A8C0[1] = 0x12C;
+		D_8013B910_14A8C0[2] = 0x12C;
+	}
+
+	if ((D_80052B34->unk1A != 0) && (D_80052B34->unk3C == 0) && ((currentLevel != 2) || (D_80052B34->unk1A != 1))) {
+		func_801371B8_146168(0, 0x37, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
+	} else {
+		func_801371B8_146168(0, *(s16 *)((u8 *)spec + 0x68), D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
+	}
+
+	D_801591D8 = 0;
+	D_801591D6 = 0;
+	D_8004DCAC = (f32)D_80052B34->unk0;
+	D_8004DCB0 = (f32)D_80052B34->unk4;
+	D_8004DCB4 = (f32)D_80052B34->unk0;
+	D_8004DCB8 = (f32)D_80052B34->unk4;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FD510_10C4C0.s")
+#endif
 
 // CURRENT(7084)
 #ifdef NON_MATCHING

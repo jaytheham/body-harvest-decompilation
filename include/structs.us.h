@@ -2389,6 +2389,34 @@ typedef struct {
 	/* 0x14 */ s16 unk14;
 } Unk840F0Effect;
 
+typedef struct {
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ s32 unk4;
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ s32 unkC;
+	/* 0x10 */ s32 unk10;
+	/* 0x14 */ s32 unk14;
+	/* 0x18 */ s16 unk18;
+	/* 0x1A */ u8 pad1A[2];
+} Unk800E614CFxEntry;
+
+typedef struct {
+	/* 0x000 */ Unk800E614CFxEntry entries[16];
+	/* 0x1C0 */ s32 unk1C0;
+	/* 0x1C4 */ s32 unk1C4;
+	/* 0x1C8 */ s32 unk1C8;
+	/* 0x1CC */ s32 unk1CC;
+	/* 0x1D0 */ s32 unk1D0;
+	/* 0x1D4 */ s32 unk1D4;
+	/* 0x1D8 */ u8 pad1D8[4];
+	/* 0x1DC */ s32 unk1DC;
+	/* 0x1E0 */ s32 unk1E0;
+	/* 0x1E4 */ s16 unk1E4;
+	/* 0x1E6 */ s16 unk1E6;
+	/* 0x1E8 */ s16 unk1E8;
+	/* 0x1EA */ u8 pad1EA[2];
+} Unk800E614CFxSlot;
+
 #endif
 
 typedef struct {
