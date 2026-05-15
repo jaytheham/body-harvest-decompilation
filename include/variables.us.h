@@ -1481,6 +1481,9 @@ extern char D_801412B0_150260[];
 extern char D_801412DC_15028C[];
 extern char D_80141304_1502B4[];
 extern char D_80141330_1502E0[];
+extern char D_80141DCC_150D7C[];
+extern char D_80141DE0_150D90[];
+extern char D_80141DF8_150DA8[];
 extern s32 D_80149B40; // numberOfCommandObjects
 extern s32 D_80149B44; // numberOfCharacters
 extern s16 D_80149B4A;
