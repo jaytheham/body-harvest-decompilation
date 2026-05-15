@@ -5164,7 +5164,85 @@ void func_80089EB4_98E64(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 }
 
 
+#ifdef NON_MATCHING
+/* CURRENT(1144) */
+void func_80089FAC_98F5C(u8 arg0) {
+	AlienInstance *alien;
+	u8 specIndex;
+
+	alien = &alienInstances[arg0];
+	specIndex = alien->specIndex;
+
+	if (!(alien->unk20 & 0x100000)) {
+		func_80137468_146418(arg0, 0xD);
+		if (alien->unk20 & 0x600) {
+			AlienSpec *alienSpec;
+
+			alienSpec = &alienSpecs[specIndex];
+			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16)(alienSpec->unkC * 2), 0);
+			if (!(alien->unk20 & 0x1000)) {
+				alien->unk38 = func_800C3BD8_D2B88(
+					alien->unk0,
+					alien->unk2 + 0x1E,
+					alien->unk4,
+					(u16)((f64)alienSpec->unkC * 1.5),
+					0x3C,
+					0xF0,
+					0x78,
+					0);
+			}
+			alien->unk2C = 0x3C;
+			alien->unk2A = alien->unkE + 0x8000;
+			alien->unk12 = -0x100;
+			alien->unk20 &= ~0x40;
+			alien->unkE = alien->unk6;
+		}
+	} else {
+		if (alien->unk2C >= 0x1F) {
+			func_800808F0_8F8A0(arg0, &alien->unkE);
+		} else if (alien->unk2C == 0x1E) {
+			alien->unk12 = -0x20;
+		} else {
+			alien->unkE -= 0x5FA;
+			alien->unk6 = alien->unkE;
+			func_80087C74_96C24(arg0);
+			if (alien->unk2C == 1) {
+				alien->unk38 = -1;
+				if (alien->unk20 & 0x600) {
+					func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, ((u16 *)&D_8025668C)[specIndex * 0x34], 2);
+				}
+			}
+		}
+	}
+
+	if ((alien->unk2C == 1) && (D_80031420 & 3)) {
+		func_800CA5EC_D959C(
+			alien->unk0,
+			alien->unk2,
+			alien->unk4,
+			0,
+			1,
+			0,
+			0x50,
+			4,
+			0x14,
+			0x80,
+			D_8013E3C0[currentLevel * 3 - 3],
+			D_8013E3C0[currentLevel * 3 - 2],
+			D_8013E3C0[currentLevel * 3 - 1],
+			0xFF);
+	}
+
+	if (alien->unk38 != -3) {
+		func_800C3D88_D2D38(alien->unk0, alien->unk2 + 0x1E, alien->unk4, alien->unk38);
+	}
+
+	func_80137468_146418(arg0, 0x1F);
+	func_80080510_8F4C0(arg0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80089FAC_98F5C.s")
+#endif
 
 void func_8008A32C_992DC(u8 arg0) {
 	AlienInstance *alien;
@@ -5336,7 +5414,88 @@ void func_8008B870_9A820(u8 arg0) {
 	func_80137468_146418(idx, 0x11);
 }
 
+#ifdef NON_MATCHING
+/* CURRENT(985) */
+void func_8008B8E4_9A894(u8 arg0)
+{
+	Unk8014DD50 *route;
+	s32 effectType;
+	s32 delay;
+	s16 waitCounter;
+	s32 flags;
+	s32 timer;
+	s16 nodes[2];
+	s16 rand[3];
+	AlienInstance *inst;
+
+	inst = &alienInstances[arg0];
+	if (!(inst->unk20 & 0x100000)) {
+		osSyncPrintf(D_80141DCC_150D7C);
+		func_8008B870_9A820(arg0);
+		return;
+	}
+
+	osSyncPrintf(D_80141DE0_150D90);
+	nodes[0] = D_8014DD50[inst->unkC].unkC;
+	if (nodes[0] != -1) {
+		flags = inst->unk20;
+		nodes[1] = D_8014DD50[nodes[0]].unkC;
+		if (flags & 0x1000) {
+			if (func_80081F18_90EC8(arg0, 2, 5, &nodes[0], &D_8013C38C_14B33C) == 5) {
+				inst->unk20 &= ~0x1000;
+				inst->unk20 |= 0x2000;
+			}
+		} else if (flags & 0x2000) {
+			func_800822BC_9126C(arg0, nodes[0], 6, (s32) D_8013C394_14B344, (s32) D_8013C3F4_14B3A4);
+		}
+	}
+
+	waitCounter = inst->unk3A;
+	if (waitCounter != 0) {
+		inst->unk3A = waitCounter - 1;
+	} else {
+		timer = inst->unk2C;
+		if (timer >= 0x3F) {
+			delay = 3;
+			if (timer >= 0x97) {
+				delay = 0xA;
+			} else if (timer >= 0x6F) {
+				delay = 5;
+			}
+
+			inst->unk3A = func_800038E0_44E0(delay) % delay;
+			effectType = func_800038E0_44E0() % 3;
+			rand[0] = func_800038E0_44E0();
+			rand[1] = func_800038E0_44E0();
+			rand[2] = func_800038E0_44E0();
+			func_800DFA34_EE9E4(
+				(s16)((inst->unk0 - ((u16)rand[0] % 0x190)) + 0xC8),
+				(s16)(((u16)rand[1] % 0xFA) + inst->unk2),
+				(s16)((inst->unk4 - ((u16)rand[2] % 0x190)) + 0xC8),
+				(u16)((func_800038E0_44E0() % 0x46) + 0x32),
+				effectType);
+		}
+	}
+
+	if ((inst->unk2C == 0x34) || (inst->unk2C == 0x33)) {
+		func_800E35E0_F2590(0x80);
+	}
+
+	if ((inst->unk2C == 0x34) || (inst->unk2C == 0xF)) {
+		func_800DF848_EE7F8(inst->unk0, (s16)(inst->unk2 + 0x1E), inst->unk4, 0x1F4, 0xA);
+	}
+
+	if (inst->unk2C == 0x2A) {
+		osSyncPrintf(D_80141DF8_150DA8);
+		route = &D_8014DD50[inst->unkC];
+		func_80079DC0_88D70(route->unkC);
+		inst->unk20 |= 0x8000;
+		route->unkC = -1;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008B8E4_9A894.s")
+#endif
 
 // CURRENT(2386)
 #ifdef NON_MATCHING

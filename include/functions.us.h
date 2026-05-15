@@ -716,6 +716,7 @@ s16 func_800F9FAC_108F5C(s16 arg0, s16 arg1);
 void func_800F4DB0_103D60(void);
 void func_800FAC90_109C40(void);
 void func_800FAD10_109CC0(void);
+void func_800FAE84_109E34(VehicleInstance *);
 void func_800FB44C_10A3FC(VehicleInstance *, f32);
 void func_800FB468_10A418(VehicleInstance *, f32);
 void func_800FB484_10A434(VehicleInstance *, f32);
@@ -1119,6 +1120,10 @@ void func_800EF650_FE600(AlienInstance *);
 void func_800EFEB4_FEE64(void *arg0, s16 arg1, s32 arg2);
 void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2);
 s32 func_800CA5EC_D959C(s16, s16, s16, s8, s8, s8, u8, u16, u8, u8, u8, u8, u8, u8);
+void func_800CA1B0_D9160(u8 arg0);
+void func_800CA848_D97F8(s32 arg0);
+s32 func_8012DDA8_13CD58(s16 arg0, s16 arg1, s16 arg2, s16 arg3, void *arg4, s32 arg5, s32 *arg6);
+s32 func_8012DF90_13CF40(Unk8015FAD0 *arg0, void *arg1, s32 arg2);
 s16 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3);
 s16 func_800F3EE4_102E94(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, u8 arg5);
 void func_80013468_14068(s16 arg0);
@@ -1270,6 +1275,7 @@ s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s16 arg2);
 void func_8008EF1C_9DECC(u8);
 s32 func_800C2274_D1224(s16, s16, s16, u8);
 s16 func_800C3BD8_D2B88(s16, s16, s16, u16, u16, u8, u8, u8);
+void func_800C3D88_D2D38(s16, s16, s16, s16);
 void func_801095BC_11856C(VehicleInstance *arg0);
 void func_8010B60C_11A5BC(VehicleInstance *arg0, VehicleInstance *arg1);
 void func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s32 arg2, s32 arg3, s32 arg4, f32 arg5, f32 arg6, f32 arg7);
@@ -1290,5 +1296,12 @@ void debug_drawTimingGraphBars(void);
 unsigned long long func_8001D1A0_1DDA0(s32, u32, s32, s16);
 u8 func_800D5FD4_E4F84(s16, s16, s16, u8, u8, u8);
 f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1);
+
+/* 1416E0 */
+void func_800B42B0_C3260(s32);
+void func_800B4660_C3610(s32);
+void func_800B49A4_C3954(s32);
+void func_800B4D4C_C3CFC(s32);
+void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1);
 
 #endif

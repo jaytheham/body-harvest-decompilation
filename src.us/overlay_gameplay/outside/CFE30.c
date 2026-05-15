@@ -1897,7 +1897,94 @@ s32 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA5EC_D959C.s")
 #endif
 
+#ifdef NON_MATCHING
+/* CURRENT(4842) */
+void func_800CA848_D97F8(s32 arg0) {
+	s16 currentUnitId;
+	s16 nextUnitId;
+	Unk801541F8Entry *effect;
+	Unk80154318Entry *root;
+	Unk80154318Entry *leader;
+	Unk80154318Sub *rootBytes;
+	Unk80154318Entry *current;
+	Unk80154318Sub *currentBytes;
+	u8 count;
+	u8 i;
+
+	arg0 &= 0xFF;
+	effect = &D_80154088[arg0];
+	root = &D_80154318[effect->unk6];
+	leader = &D_80154318[root->unk4];
+	rootBytes = (Unk80154318Sub *)&root->unk8;
+	currentUnitId = leader->unk4;
+	if (currentUnitId != -5 && currentUnitId != -6) {
+		while (1) {
+			current = &D_80154318[currentUnitId];
+			currentBytes = (Unk80154318Sub *)&current->unk8;
+			if (D_80222A70 >= currentBytes->unk2) {
+				func_800DEF2C_EDEDC(currentBytes->unk0, (s16)(D_80222A70 + 3), currentBytes->unk4, 0x32, 1);
+				func_800C9530_D84E0(currentBytes->unk0, currentBytes->unk4, (u16)current->unk2, rootBytes->unk6,
+					rootBytes->unk7, rootBytes->unk8, currentBytes->unk9);
+				if (effect->unk4 < 4 && ((u8 *)&leader->unk8)[5] == 0) {
+					func_800C1418_D03C8(arg0, 0);
+					func_800C1384_D0334(arg0);
+					return;
+				}
+				nextUnitId = current->unk4;
+				func_800C1A4C_D09FC(currentUnitId, arg0, 0);
+				currentUnitId = nextUnitId;
+			} else {
+				currentBytes->unk0 += (s8)currentBytes->unkA;
+				currentBytes->unk4 += (s8)currentBytes->unkC;
+				currentBytes->unk2 += (s8)currentBytes->unkB;
+				if ((s8)currentBytes->unkB >= -0x13) {
+					currentBytes->unkB = (u8)((s8)currentBytes->unkB - 1);
+				} else {
+					currentBytes->unkB = (u8)-0x14;
+				}
+				if ((func_800B84D0_C7480(currentBytes->unk0, currentBytes->unk4) >> 8) >= currentBytes->unk2) {
+					if (rootBytes->unkC == 0) {
+						func_800C9530_D84E0(currentBytes->unk0, currentBytes->unk4, (u16)current->unk2, rootBytes->unk6,
+							rootBytes->unk7, rootBytes->unk8, currentBytes->unk9);
+					}
+					if (effect->unk4 < 4 && ((u8 *)&leader->unk8)[5] == 0) {
+						func_800C1418_D03C8(arg0, 0);
+						func_800C1384_D0334(arg0);
+						return;
+					}
+					nextUnitId = current->unk4;
+					func_800C1A4C_D09FC(currentUnitId, arg0, 0);
+					currentUnitId = nextUnitId;
+				} else {
+					currentUnitId = current->unk4;
+				}
+			}
+			if (currentUnitId == -5 || currentUnitId == -6) {
+				break;
+			}
+		}
+	}
+	if (*((u16 *)&leader->unkE) > 0) {
+		*((u16 *)&leader->unkE) -= 1;
+		return;
+	}
+	count = (func_800038E0_44E0() % 3) + 2;
+	for (i = 0; i < count; i++) {
+		if (((u8 *)&leader->unk8)[5] > 0) {
+			func_800CA1B0_D9160(arg0);
+			((u8 *)&leader->unk8)[5] -= 1;
+		}
+	}
+	if (effect->unk4 < 3) {
+		func_800C1418_D03C8(arg0, 0);
+		func_800C1384_D0334(arg0);
+		return;
+	}
+	func_80137368_146318(root->unk8, root->unkA, root->unkC, 6, arg0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA848_D97F8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CABC8_D9B78.s")
 
@@ -4370,7 +4457,6 @@ extern char D_80143B18_152AC8[];
 void func_800C5894_D4844(u8 arg0);
 void func_800C22EC_D129C(u8 arg0);
 void func_800C8F5C_D7F0C(u8 arg0);
-void func_800CA848_D97F8(u8 arg0);
 void func_800CD42C_DC3DC(u8 arg0);
 void func_800CE1C0_DD170(u8 arg0);
 void func_800D1A94_E0A44(u8 arg0);
