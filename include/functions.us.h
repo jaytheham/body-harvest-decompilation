@@ -783,6 +783,7 @@ int func_8012235C_13130C(Unk8004D0F8 *);
 void func_800D6ADC_E5A8C(s16, s16, s16, s16);
 void func_800D6C18_E5BC8(s16, u8);
 void func_800D6EAC_E5E5C(u8);
+void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s32 arg6);
 void func_800DFA98_EEA48(s8 *arg0);
 s32 func_8011B6C0_12A670(s16, s16, s16, u16, u16);
 void func_8011C338_12B2E8(s8 *, s32);
