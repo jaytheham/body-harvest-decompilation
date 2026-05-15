@@ -950,7 +950,94 @@ s32 func_80118670_127620(s16 arg0, s16 arg1) {
 // displayBuildings
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118774_127724.s")
 
+// CURRENT(3586)
+#ifdef NON_MATCHING
+void func_8011A2A0_129250(void) {
+	VehicleInstance *var_s1;
+	s8 *var_s3;
+	s32 var_s4;
+	BuildingInstance *var_s5;
+	s8 *var_s6;
+	s16 var_s0;
+	s16 var_s2;
+	s32 var_v1;
+	s32 temp_v0_4;
+	s8 temp_v0;
+	s8 temp_v0_2;
+	s8 temp_v0_3;
+	u16 temp_t4;
+	extern s8 D_80140B03_14FAB3;
+
+	if ((D_80052B34->unk0 >= 0x5701) && (D_80052B34->unk0 < 0x6000)) {
+		if ((D_80052B34->unk4 >= 0x5001) && (D_80052B34->unk4 < 0x5B00) && (func_8000726C_7E6C(2) == 0)) {
+			var_s4 = func_8011D260_12C210(0x5B, 0x5C);
+			if (var_s4 != -1) {
+				var_s5 = &buildingInstances[var_s4];
+				D_80158E78 = NULL;
+				var_s3 = &D_8015EB86;
+				var_s6 = &D_80140B03_14FAB3;
+				var_s1 = &D_80050624;
+				var_s4 = 0;
+				do {
+					var_s1->unk1A = 0x12;
+					func_800FAE84_109E34(var_s1);
+					if (var_s3 == &D_8015EB86) {
+						func_800FB44C_10A3FC(var_s1, (f32) (var_s5->xCoord + 0x11B));
+					} else {
+						func_800FB44C_10A3FC(var_s1, (f32) (var_s5->xCoord - 0x11F));
+					}
+					func_800FB468_10A418(var_s1, (f32) (var_s5->yCoord + 0x1A8));
+					func_800FB484_10A434(var_s1, (f32) (var_s5->zCoord - 0x1D3));
+					temp_v0 = var_s6[-0x73];
+					var_s1->unkE = -0x4000;
+					temp_t4 = var_s1->unk20 | 0x8000;
+					var_s1->unk20 = temp_t4;
+					var_s1->unk46 = (var_s1->unk46 & 0xC0) | 0x3F;
+					var_s1->unk20 = temp_t4 & 0xFFFE;
+					var_s6[-0x73] = temp_v0 - 1;
+					var_s1->unk6 = var_s1->unkE;
+					if (temp_v0 <= 0) {
+						D_80140A90_14FA40[var_s4] = (func_800038E0_44E0() & 0x3F) + 0x3C;
+						*var_s3 = (func_800038E0_44E0() & 0x1F) + 0x10;
+						*(&D_8015EB88 + var_s4) = (func_800038E0_44E0() & 3) + 9;
+					}
+					temp_v0_2 = *var_s3;
+					*var_s3 = temp_v0_2 - 1;
+					if (temp_v0_2 > 0) {
+						temp_v0_3 = *(&D_8015EB88 + var_s4);
+						if ((u32)((u32) D_80052A8C % (u32) temp_v0_3) < (u32)(temp_v0_3 >> 1)) {
+							temp_v0_4 = func_800038E0_44E0();
+							if (var_s3 == &D_8015EB86) {
+								var_v1 = 0x32;
+							} else {
+								var_v1 = -0x32;
+							}
+							var_s2 = (var_v1 + D_80052B34->unk0 + (temp_v0_4 & 0x7F)) - 0x3F;
+							var_s0 = D_80052B34->unk4;
+							if (var_s0 < 0x51A4) {
+								var_s0 = 0x51A4;
+							}
+							var_s0 = (var_s0 + (func_800038E0_44E0() & 0x7F)) - 0x3F;
+							if (var_s4 == 0) {
+								D_80158E78 = &D_80050A18;
+							} else {
+								D_80158E78 = &D_80050A74;
+							}
+							func_80129354_138304((s32) var_s1, 0, var_s2, func_800F9FAC_108F5C(var_s2, var_s0), var_s0);
+						}
+					}
+					var_s3++;
+					var_s1++;
+					var_s4++;
+					var_s6++;
+				} while (var_s3 != &D_8015EB87);
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011A2A0_129250.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011A604_1295B4.s")
 
