@@ -76,6 +76,7 @@ extern u8 D_100DA00[];
 extern u8 D_100DC00[];
 extern u8 D_100DE00[];
 extern u8 D_100E080[];
+extern u8 D_100E480[];
 extern u8 D_100E880[];
 extern u8 D_1010880[];
 extern u8 D_1010C80[];
@@ -127,6 +128,7 @@ extern s16 D_8025718A;
 extern u16 D_802571B2;
 extern s16 D_802571B6;
 extern s16 D_802571B8;
+extern s16 D_802571D0;
 extern s16 D_800313FC; // World fog far distance
 extern s32 D_800949D0_64E80;
 extern FrontendInterpState D_800AC0CC;
@@ -1314,6 +1316,7 @@ extern char D_80141A10;
 extern char D_80141A1C;
 extern char D_80141A28;
 extern char D_80141A38;
+extern s8 D_80154080;
 extern u8 D_80154220;
 extern char D_80141A48;
 extern char D_80141A4C;
@@ -1542,6 +1545,7 @@ extern u8 D_8014D508;
 extern u8 D_8014D509;
 extern u8 D_8014D50A;
 extern u8 D_8013BCDC_14AC8C[0x24];
+extern u8 D_8013D768_14C718;
 extern u8 D_8014D510[];
 extern u8 D_8014D550[];
 extern Unk8014DD50 D_8014DD50[];
@@ -1559,6 +1563,7 @@ extern s32 D_8014ECE0;
 extern s8 D_8014ECE4;
 extern Unk8014DD50 D_8014E4D0[];
 extern Unk8014F6D0 D_8014F6D0[0x10];
+extern s16 D_8014F698;
 extern s32 D_8014F800;
 extern s32 D_8014F820;
 extern s32 D_8014F824;
@@ -1608,6 +1613,7 @@ extern AlienInstance *D_80158FEC; // Target alien instance
 extern s16 *D_80158FF4;
 extern s16 D_8015904C;
 extern InputStruct_8012B150 D_80159050[];
+extern s32 D_801591B4;
 extern u32 D_80159258;
 extern u32 D_8015925C;
 extern s16 D_80159248;
@@ -1707,6 +1713,7 @@ extern u8 D_80266E80[];
 
 extern u32 D_80222A30[]; // terrain object model pointers
 extern s32 D_80222A70;
+extern s16 D_80222A72;
 extern Unk80222A78 D_80222A78[0xD0]; // trigger array (does this actually start at 70 or 74?)
 
 extern s32 D_80223778;
