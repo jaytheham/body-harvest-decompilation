@@ -5164,7 +5164,85 @@ void func_80089EB4_98E64(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 }
 
 
+#ifdef NON_MATCHING
+/* CURRENT(1144) */
+void func_80089FAC_98F5C(u8 arg0) {
+	AlienInstance *alien;
+	u8 specIndex;
+
+	alien = &alienInstances[arg0];
+	specIndex = alien->specIndex;
+
+	if (!(alien->unk20 & 0x100000)) {
+		func_80137468_146418(arg0, 0xD);
+		if (alien->unk20 & 0x600) {
+			AlienSpec *alienSpec;
+
+			alienSpec = &alienSpecs[specIndex];
+			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16)(alienSpec->unkC * 2), 0);
+			if (!(alien->unk20 & 0x1000)) {
+				alien->unk38 = func_800C3BD8_D2B88(
+					alien->unk0,
+					alien->unk2 + 0x1E,
+					alien->unk4,
+					(u16)((f64)alienSpec->unkC * 1.5),
+					0x3C,
+					0xF0,
+					0x78,
+					0);
+			}
+			alien->unk2C = 0x3C;
+			alien->unk2A = alien->unkE + 0x8000;
+			alien->unk12 = -0x100;
+			alien->unk20 &= ~0x40;
+			alien->unkE = alien->unk6;
+		}
+	} else {
+		if (alien->unk2C >= 0x1F) {
+			func_800808F0_8F8A0(arg0, &alien->unkE);
+		} else if (alien->unk2C == 0x1E) {
+			alien->unk12 = -0x20;
+		} else {
+			alien->unkE -= 0x5FA;
+			alien->unk6 = alien->unkE;
+			func_80087C74_96C24(arg0);
+			if (alien->unk2C == 1) {
+				alien->unk38 = -1;
+				if (alien->unk20 & 0x600) {
+					func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, ((u16 *)&D_8025668C)[specIndex * 0x34], 2);
+				}
+			}
+		}
+	}
+
+	if ((alien->unk2C == 1) && (D_80031420 & 3)) {
+		func_800CA5EC_D959C(
+			alien->unk0,
+			alien->unk2,
+			alien->unk4,
+			0,
+			1,
+			0,
+			0x50,
+			4,
+			0x14,
+			0x80,
+			D_8013E3C0[currentLevel * 3 - 3],
+			D_8013E3C0[currentLevel * 3 - 2],
+			D_8013E3C0[currentLevel * 3 - 1],
+			0xFF);
+	}
+
+	if (alien->unk38 != -3) {
+		func_800C3D88_D2D38(alien->unk0, alien->unk2 + 0x1E, alien->unk4, alien->unk38);
+	}
+
+	func_80137468_146418(arg0, 0x1F);
+	func_80080510_8F4C0(arg0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80089FAC_98F5C.s")
+#endif
 
 void func_8008A32C_992DC(u8 arg0) {
 	AlienInstance *alien;
