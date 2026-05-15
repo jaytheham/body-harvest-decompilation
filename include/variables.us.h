@@ -1713,6 +1713,7 @@ extern u8 D_80266E80[];
 
 extern u32 D_80222A30[]; // terrain object model pointers
 extern s32 D_80222A70;
+extern s16 D_80222A72;
 extern Unk80222A78 D_80222A78[0xD0]; // trigger array (does this actually start at 70 or 74?)
 
 extern s32 D_80223778;

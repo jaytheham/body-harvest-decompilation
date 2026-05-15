@@ -6150,7 +6150,94 @@ s32 func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010EF40_11DEF0.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010F218_11E1C8.s")
+void func_8010F218_11E1C8(void) {
+	VehicleInstance *vehicle;
+
+	vehicle = D_80052B34;
+	if (!(D_80257A4C[vehicle->unk1A].unk0 & 0x10000000) || (vehicle->unk1A == 0)) {
+		if ((gameplayMode != 0xB) && (gameplayMode != 3)) {
+			if ((currentLevel == 5) && (D_8015931A < 0xC8)) {
+				D_8015931A = 0xC8;
+			}
+
+			if (D_8015931A < 0) {
+				D_8015931A = 0;
+			}
+			if (D_8015931A >= 0xC9) {
+				D_8015931A = 0xC8;
+			}
+
+			D_8015931A++;
+
+			if (vehicle->unk1A == 0) {
+				if (D_8015931A == 0xC8) {
+					func_8001A650_1B250(5);
+					vehicle = D_80052B34;
+				}
+			} else if (D_8015931A < 0xC8) {
+				D_8015931A = 0xC8;
+			}
+
+			if (D_8015931A >= 0xC9) {
+				if (currentLevel != 5) {
+					func_80123E90_132E40(vehicle, 8);
+					vehicle = D_80052B34;
+				}
+
+				if (currentLevel == 5) {
+					func_801371B8_146168(vehicle, 0xFE, vehicle->unk0, D_80222A72, vehicle->unk4, 0.5f);
+					vehicle = D_80052B34;
+				}
+
+				if (vehicle->unk1A == 0) {
+					func_800CC7B0_DB760(5, 0x28, 5, vehicle->unk0, vehicle->unk2, vehicle->unk4);
+
+					if (currentLevel == 5) {
+						if (!(D_80052A8C & 7)) {
+							vehicle = D_80052B34;
+							func_800DEA08_ED9B8(vehicle->unk0, vehicle->unk2, vehicle->unk4, 0x1E, 4, 2,
+							                    0x1E, 0xC8, 0xFF, 0xD2, 0xAA);
+						}
+						func_80123E90_132E40(D_80052B34, 8);
+					}
+
+					vehicle = D_80052B34;
+				} else if (currentLevel == 5) {
+					if (!(D_80052A8C & 7)) {
+						func_800DEA08_ED9B8(vehicle->unk0, vehicle->unk2 + 0x32, vehicle->unk4, 0xC8, 4, 4, 0x28,
+						                    0xC8, 0xFF, 0xD2, 0xAA);
+						vehicle = D_80052B34;
+					}
+					func_80123E90_132E40(vehicle, 0x28);
+					vehicle = D_80052B34;
+				}
+			}
+
+			if (D_80159320 & 0x20000) {
+				if (vehicle == NULL) {
+					func_80123E90_132E40(vehicle, 4);
+					vehicle = D_80052B34;
+				}
+
+				if (D_8015931A >= 0xC9) {
+					func_80123E90_132E40(vehicle, 8);
+					vehicle = D_80052B34;
+				}
+			}
+
+			if (vehicle->unk1C <= 0) {
+				D_80157A38 = 3;
+				vehicle->unk2E -= 5;
+				vehicle = D_80052B34;
+				if (vehicle->unk2E < 0x32) {
+					vehicle->unk2E = 0x32;
+				}
+			}
+
+			D_8013FD84_14ED34 = 0x28;
+		}
+	}
+}
 
 void func_8010F5D8_11E588(VehicleInstance *arg0) {
 	u8 temp_v0;
