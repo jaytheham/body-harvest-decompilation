@@ -804,6 +804,7 @@ void func_8012B26C_13A21C(void);
 void func_8012D808_13C7B8(s32);
 void func_8012D824_13C7D4(void);
 void func_8012D84C_13C7FC();
+void func_80137130_1460E0(s32, s32, s16, s16, s16);
 void func_801371B8_146168(s32, s32, s16, s16, s16, f32);
 void func_80137468_146418(s32, s32);
 void func_8012E258_13D208(void);
