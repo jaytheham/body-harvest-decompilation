@@ -702,7 +702,118 @@ void func_8007562C_845DC(void) {
   }
 }
 
+// CURRENT(10)
+#ifdef NON_MATCHING
+void func_800756DC_8468C(void) {
+	u8 *missionStart;
+
+	D_801494B8 = &D_80224680;
+	missionStart = D_801494B8;
+
+	func_80074204_831B4();
+
+	if (func_80074558_83508() != 0xA8) {
+		if ((D_801494BC != 0x90) && (D_801494BC != 0xB0)) {
+			osSyncPrintf(D_801413B8_150368);
+			goto doneParsing;
+		}
+	}
+
+	if (func_80074558_83508() == 0xA8) {
+		do {
+			func_80074500_834B0();
+			func_80074768_83718();
+		} while (func_80074558_83508() == 0xA8);
+	}
+
+	if (func_80074558_83508() == 0x87) {
+		func_80074500_834B0();
+	}
+
+	if (func_80074558_83508() == 0xB0) {
+		do {
+			func_80074500_834B0();
+			func_800747A8_83758();
+		} while (func_80074558_83508() == 0xB0);
+	}
+
+	if (func_80074558_83508() == 0x87) {
+		func_80074500_834B0();
+	}
+
+	if (func_80074558_83508() != 0x87) {
+		do {
+			D_80149470 += 1;
+
+			if (func_80074558_83508() == 0x90) {
+				func_80074970_83920();
+			} else {
+				func_800078CC_84CC(D_80149B48, &D_8004D15C);
+			}
+
+			func_80074B2C_83ADC();
+			func_80074FA8_83F58();
+
+			if (func_80074558_83508() == 0x84) {
+				func_80074500_834B0();
+				func_80075148_840F8();
+			}
+
+			if (func_80074558_83508() == 0x85) {
+				func_80074500_834B0();
+				func_80075210_841C0();
+			}
+
+			if (func_80074558_83508() == 0x86) {
+				func_80074500_834B0();
+				func_800752D8_84288();
+			}
+
+			D_80149B48 += 1;
+			if (D_80149B48 >= 0x19) {
+				osSyncPrintf(D_801413E0_150390);
+				D_80149B4A = 1;
+			}
+		} while (func_80074558_83508() != 0x87);
+	}
+
+	func_80074500_834B0();
+	func_800753A0_84350();
+	func_80074500_834B0();
+	func_80075574_84524();
+
+	if (D_80149B4A != 0) {
+		osSyncPrintf(D_80141404_1503B4);
+		osSyncPrintf(D_80141408_1503B8, D_80149B48, 0x18);
+		osSyncPrintf(D_80141430_1503E0, D_80149B28, 0x80);
+		osSyncPrintf(D_80141458_150408, D_80149B3C, 0x40);
+		osSyncPrintf(D_80141480_150430, D_80149B2C, 0xFF);
+		osSyncPrintf(D_801414A8_150458, D_80149B30, 0xFE);
+		osSyncPrintf(D_801414D0_150480, D_80149B34, 0x40);
+		osSyncPrintf(D_801414F8_1504A8, D_80149B38, 0x10);
+		osSyncPrintf(D_80141520_1504D0, D_80149B40, 0x10);
+		osSyncPrintf(D_80141548_1504F8, D_80149B44, 0x10);
+		osSyncPrintf(D_80141570_150520, (s32)(D_801494B8 - missionStart), 0x800);
+	}
+
+doneParsing:
+	switch (currentLevel) {
+		case 1:
+			func_802D4CD0_18D7E0(0x12, 0);
+			break;
+		case 2:
+			func_802D4CD0_18D7E0(0x13, 0);
+			break;
+		case 3:
+		case 4:
+		case 5:
+			func_802D4CD0_18D7E0(0, 0);
+			break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800756DC_8468C.s")
+#endif
 
 // CURRENT(8177)
 #ifdef NON_MATCHING
