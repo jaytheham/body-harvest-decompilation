@@ -1095,7 +1095,109 @@ s32 func_8011B584_12A534(s32 arg0, s32 arg1) {
 	return 0;
 }
 
+// CURRENT(22351)
+#ifdef NON_MATCHING
+s32 func_8011B6C0_12A670(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4) {
+	s8 candidates[8];
+	s16 xPos;
+	s16 zPos;
+	s16 bestDist;
+	u16 mask;
+	u16 rejectMask;
+	u8 count;
+	s32 hi;
+	s32 lo;
+
+	xPos = arg0 >> 8;
+	zPos = arg1 >> 8;
+	bestDist = arg2;
+	mask = arg3;
+	rejectMask = arg4;
+	count = 0;
+	hi = func_80117508_1264B8((s16)(zPos << 8));
+	lo = hi;
+
+	if ((hi == 0xFE) ||
+		((((buildingInstances[(u8)hi].zCoord >> 8) - zPos) >= bestDist) &&
+		 ((zPos - (buildingInstances[(u8)hi].zCoord >> 8)) >= bestDist))) {
+		return -1;
+	}
+
+	for (;;) {
+		s16 dzHi;
+		s16 dzLo;
+		s16 dist;
+
+		hi++;
+		lo--;
+
+		if (hi == 0xFF) {
+			hi--;
+		} else {
+			u32 flags = buildingInstances[(u8)hi].unk8 >> 12;
+			if ((flags & mask) && !(flags & rejectMask)) {
+				s16 dx = (buildingInstances[(u8)hi].xCoord >> 8) - xPos;
+				s16 dz = (buildingInstances[(u8)hi].zCoord >> 8) - zPos;
+				s16 absDx = (dx < 0) ? -dx : dx;
+				s16 absDz = (dz < 0) ? -dz : dz;
+
+				dist = (absDz < absDx) ? absDx : absDz;
+				if (dist > 0) {
+					if (dist < (bestDist - 1)) {
+						count = 0;
+					}
+					if (((bestDist + 1) >= dist) && (count != 8)) {
+						candidates[count] = hi;
+						count = (u8)(count + 1);
+						bestDist = dist;
+					}
+				}
+			}
+		}
+
+		if (lo == -1) {
+			lo++;
+		} else {
+			u32 flags = buildingInstances[(u8)lo].unk8 >> 12;
+			if ((flags & mask) && !(flags & rejectMask)) {
+				s16 dx = (buildingInstances[(u8)lo].xCoord >> 8) - xPos;
+				s16 dz = zPos - (buildingInstances[(u8)lo].zCoord >> 8);
+				s16 absDx = (dx < 0) ? -dx : dx;
+				s16 absDz = (dz < 0) ? -dz : dz;
+
+				dist = (absDz < absDx) ? absDx : absDz;
+				if (dist != 0) {
+					if (dist < (bestDist - 1)) {
+						count = 0;
+					}
+					if (((bestDist + 1) >= dist) && (count != 8)) {
+						candidates[count] = lo;
+						count = (u8)(count + 1);
+						bestDist = dist;
+					}
+				}
+			}
+		}
+
+		dzHi = (buildingInstances[(u8)hi].zCoord >> 8) - zPos;
+		dzLo = zPos - (buildingInstances[(u8)lo].zCoord >> 8);
+		if (!((dzHi < bestDist) || (dzLo < bestDist))) {
+			break;
+		}
+		if ((hi == 0xFE) && (lo == 0)) {
+			break;
+		}
+	}
+
+	if (count == 0) {
+		return -1;
+	}
+
+	return candidates[(u32)D_80052A8C % count];
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011B6C0_12A670.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8011BA80_12AA30(u8 arg0, s16 arg1) {
@@ -2969,7 +3071,76 @@ void func_801238DC_13288C(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801238DC_13288C.s")
 #endif
 
+// CURRENT(2610)
+#ifdef NON_MATCHING
+void func_80123AC4_132A74(VehicleInstance *arg0) {
+	s16 i;
+	s16 sp44;
+	VehicleInstance *temp;
+	f64 div;
+
+	if (!(arg0->unk20 & 0x8000)) {
+		return;
+	}
+
+	if (arg0->unk1A != 0) {
+		sp44 = func_800DF038_EDFE8(arg0->unk0, arg0->unk2, arg0->unk4, vehicleSpecs[arg0->unk1A].unk36 * 2, (func_800038E0_44E0() % 3) + 3, 0);
+	}
+
+	arg0->unk1C = 0;
+
+	temp = D_80052B34;
+	if (arg0 == temp) {
+		if ((arg0->unk20 & 2) && (arg0->unk1A != 0) && (gameplayMode == 1)) {
+			arg0->unk3C = 0;
+			D_801591AC = 6;
+			D_801591B8 = 2;
+			osSyncPrintf(D_80145070_154020);
+			return;
+		}
+
+		if ((arg0->unk1A == 0) && (gameplayMode != 0xC)) {
+			if (D_80222A70 < temp->unk2) {
+				func_801371B8_146168(0, 0x185, temp->unk0, temp->unk2, temp->unk4, 0.25f);
+			}
+
+			func_80133260_142210(&D_80160080);
+			func_80006DAC_79AC(0x64, 0);
+			func_8009C458_AB408();
+			return;
+		}
+	} else if (arg0->unk20 & 0x400) {
+		func_800AE190_BD140(2);
+		div = D_80145160_154110;
+		for (i = 0; i < 2; i++) {
+			func_801371B8_146168(0, 0x185, arg0->unk0, arg0->unk2, arg0->unk4, (f32)(((f64)((f32)(func_800038E0_44E0() % 100)) / div) + 0.25));
+			func_800C7924_D68D4(arg0->unk0, arg0->unk2, arg0->unk4, 0x10, sp44, vehicleSpecs[arg0->unk1A].unk36 * 2, D_502D390, 1);
+		}
+	}
+
+	if ((currentLevel == 4) && (arg0->unk1A == 0xD) && !(arg0->unk20 & 0x10)) {
+		osSyncPrintf(D_80145088_154038);
+		func_800D6ADC_E5A8C(arg0->unk0, arg0->unk2, arg0->unk4, 5);
+		temp = D_80052B34;
+		if (temp->unk1A != 0) {
+			func_800DF038_EDFE8(temp->unk0, temp->unk2, temp->unk4, vehicleSpecs[temp->unk1A].unk36 * 2, (func_800038E0_44E0() % 3) + 3, 0);
+			temp->unk1C = 0;
+			func_800FDD8C_10CD3C(temp);
+			func_800FDEA8_10CE58(D_80052B2C, 1);
+		}
+		func_80123AC4_132A74(temp);
+	}
+
+	func_800FDD8C_10CD3C(arg0);
+	if ((arg0 == D_80052B34) && (arg0->unk1A != 0)) {
+		osSyncPrintf(D_801450A4_154054);
+		func_800FDEA8_10CE58(D_80052B2C, 1);
+		D_8015F9EC = 0xA;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80123AC4_132A74.s")
+#endif
 
 // 80123F04 Reduces damage to adam by 40% in easy
 // CURRENT(690)

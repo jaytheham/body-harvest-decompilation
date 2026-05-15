@@ -3298,7 +3298,90 @@ void func_800D3D40_E2CF0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D3E3C_E2DEC.s")
 
+// CURRENT(4047)
+#ifdef NON_MATCHING
+void func_800D45B4_E3564(void) {
+	s16 index;
+	s16 minusSix;
+
+	index = D_801542A6;
+	if (index == -5) {
+		return;
+	}
+
+	minusSix = -6;
+	if (index == minusSix) {
+		return;
+	}
+
+	while (1) {
+		Unk80154318Entry *entry;
+		s16 *points;
+		s16 dx;
+		s16 dy;
+		s16 dz;
+		s16 quarterX;
+		s16 quarterY;
+		s16 quarterZ;
+		s16 scaleX;
+		s16 scaleZ;
+		s16 trig;
+		u8 alpha;
+		s16 sinVal;
+		s16 cosVal;
+		f64 stepZ;
+		f64 stepX;
+
+		entry = &D_80154318[index];
+		points = &entry->unk8;
+
+		dx = (s16)(*(s16 *)&entry->unkE - entry->unk8);
+		dy = (s16)(*(s16 *)&entry->unk10 - entry->unkA);
+		dz = (s16)(entry->unk12 - entry->unkC);
+		alpha = (u8)((0xFF - (entry->unk14 * 0x12)) & 0xFF);
+
+		trig = coss(0x888);
+		cosVal = trig;
+		sinVal = sins(0x888);
+
+		quarterZ = (s16)(dz / 4);
+		stepZ = (f64)quarterZ;
+		quarterX = (s16)(dx / 4);
+		stepX = (f64)quarterX;
+
+		scaleX = (s16)(s32)((((f64)(f32)sinVal / 32768.0) * stepZ) + (((f64)(f32)cosVal / 32768.0) * stepX));
+		trig = coss(0x888);
+		cosVal = trig;
+		sinVal = sins(0x888);
+		scaleZ = (s16)(s32)((((f64)(f32)cosVal / 32768.0) * stepZ) - (((f64)(f32)sinVal / 32768.0) * stepX));
+
+		func_800D3E3C_E2DEC(points[0], points[1], points[2], *(s16 *)&entry->unkE, *(s16 *)&entry->unk10, entry->unk12, alpha);
+
+		quarterY = (s16)(dy / 4);
+		func_800D3E3C_E2DEC(points[0], points[1], points[2], (s16)(points[0] + scaleX), (s16)(points[1] + quarterY), (s16)(points[2] + scaleZ), alpha);
+		func_800D3E3C_E2DEC(*(s16 *)&entry->unkE, *(s16 *)&entry->unk10, entry->unk12, (s16)(points[0] + scaleX), (s16)(points[1] + quarterY), (s16)(points[2] + scaleZ), alpha);
+
+		trig = coss(0xF778);
+		cosVal = trig;
+		sinVal = sins(0xF778);
+		scaleX = (s16)(s32)((((f64)(f32)sinVal / 32768.0) * stepZ) + (((f64)(f32)cosVal / 32768.0) * stepX));
+		trig = coss(0xF778);
+		cosVal = trig;
+		sinVal = sins(0xF778);
+		scaleZ = (s16)(s32)((((f64)(f32)cosVal / 32768.0) * stepZ) - (((f64)(f32)sinVal / 32768.0) * stepX));
+
+		func_800D3E3C_E2DEC(points[0], points[1], points[2], (s16)(points[0] + scaleX), (s16)(points[1] + quarterY), (s16)(points[2] + scaleZ), alpha);
+		func_800D3E3C_E2DEC(*(s16 *)&entry->unkE, *(s16 *)&entry->unk10, entry->unk12, (s16)(points[0] + scaleX), (s16)(points[1] + quarterY), (s16)(points[2] + scaleZ), alpha);
+
+		index = entry->unk4;
+		if (index == -5 || index == minusSix) {
+			return;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D45B4_E3564.s")
+#endif
 
 #ifdef NON_MATCHING
 s16 func_800D49CC_E397C(s16 arg0, s16 arg1, s16 arg2) {
