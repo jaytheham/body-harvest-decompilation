@@ -6941,7 +6941,83 @@ void func_80091A78_A0A28(u8 arg0) {
 	alienInstances[arg0].unk2C = 0x64;
 }
 
+// CURRENT(5019)
+#ifdef NON_MATCHING
+s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2) {
+	u8 sp7B;
+	s16 sp6C[6];
+	f32 sp60;
+	f32 sp5C;
+	s16 sp5A;
+	s32 temp_t7;
+	s32 temp_v0;
+	s32 var_a0;
+	s32 var_a1;
+	s32 var_v1;
+	u8 temp_a2;
+	AlienInstance *temp_s0;
+	Unk8014DD50 *temp_v1_2;
+
+	temp_s0 = &alienInstances[arg0];
+	sp5A = D_8014DD5C[temp_s0->unkC * 0x10];
+	temp_v0 = func_8011D260_12C210(arg1, arg2);
+	temp_a2 = temp_v0 & 0xFF;
+	if (temp_a2 == 0xFF) {
+		return 0;
+	}
+
+	temp_v0 = temp_s0->unk12;
+	var_a0 = -temp_v0;
+	if (var_a0 < temp_v0) {
+		var_a0 = temp_v0;
+	}
+
+	sp7B = temp_a2;
+	var_v1 = temp_s0->unk20;
+	var_a1 = (D_802566D2[temp_s0->specIndex * 0x68] * var_a0);
+	var_a1 = (var_a1 / 0xC8) >> 5;
+	if ((var_v1 << 4) >= 0) {
+		func_8011BEA0_12AE50(temp_a2 & 0xFF, var_a1);
+		var_v1 = temp_s0->unk20;
+		if (var_v1 & 0x600) {
+			func_80137468_146418(arg0, 8);
+			var_v1 = temp_s0->unk20;
+		}
+
+		if (var_v1 & 0x600) {
+			sp60 = (f32)((f64)(f32)sins((temp_s0->unk6 - 0x4000) & 0xFFFF) / 32768.0);
+			temp_v1_2 = &D_8014DD50[sp5A];
+			sp5C = (f32)-((f64)(f32)coss((temp_s0->unk6 - 0x4000) & 0xFFFF) / 32768.0);
+			func_80128428_1373D8(temp_s0, temp_v1_2->unk0, temp_v1_2->unk2, temp_v1_2->unk4 + 0x1E,
+				(s32 *)&sp6C[4], (s32 *)&sp6C[2], (s32 *)&sp6C[0]);
+			func_800DE9B8_ED968(sp6C[5], sp6C[3], sp6C[1], 0xFF);
+			func_800DEE5C_EDE0C(sp6C[5], (s16)((func_800B84D0_C7480(sp6C[5], sp6C[1]) >> 8) + 5), sp6C[1], 0x78, 0x10);
+			func_800C541C_D43CC(sp6C[5], sp6C[3], sp6C[1], (s8)(s32)(sp60 * 127.0f), 0x50,
+				(s32)(sp5C * 127.0f), 0x3C, 0xFF, 0x50, 0x28, 0xFF, 0xFF, 0x80);
+			func_800DEA08_ED9B8(sp6C[5], sp6C[3], sp6C[1], 0x96, 8, 6, 0x28, 0xC8, 0x1E, 0x1E, 0x1E);
+			func_80135D44_144CF4(*(s32 *)&sp6C[4], *(s32 *)&sp6C[2], *(s32 *)&sp6C[0], 3.0f);
+			var_v1 = temp_s0->unk20;
+		}
+	}
+
+	temp_t7 = var_v1 & ~0x1000;
+	temp_s0->unk20 = temp_t7;
+	var_v1 = temp_t7;
+	if ((temp_t7 << 4) >= 0) {
+		if (!(((*(u32 *)(D_80050AE0 + (sp7B * 0x18))) >> 12) & 0x100C)) {
+			*(s16 *)(D_800481D0 + (temp_s0->unk25 * 0x50)) = (s16)sp7B;
+			var_v1 = temp_s0->unk20;
+		}
+		temp_s0->unk20 = var_v1 & ~0x100;
+	}
+
+	func_80091A78_A0A28(arg0);
+	return 1;
+}
+
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80091AC0_A0A70.s")
+#endif
 
 // CURRENT(0)
 #ifdef NON_MATCHING

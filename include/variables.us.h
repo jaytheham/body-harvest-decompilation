@@ -424,6 +424,7 @@ extern s32 D_80048188;
 extern s32 D_80048190;
 extern s32 D_80048194;
 extern AlienInstance alienInstances[]; // 0x80048198
+extern u8 D_800481D0[];
 extern s16 D_800481DD[];
 extern AlienWaveEntry D_8003BCC0[][12];
 extern u8 D_8003BCC6;
@@ -465,6 +466,7 @@ extern VehicleInstance D_8004F374;
 extern Unk80050ADA D_80050ADA[]; // 0x80050ADA
 extern u8 D_80050ADE[];
 extern u8 D_80050AE0[];
+extern u8 D_802566D2[];
 extern u8 D_8008E0A8_176168[];
 extern s32 D_8009C4C4_184584[];
 extern Unk9C804 D_8009C804_1848C4[];
