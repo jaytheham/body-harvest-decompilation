@@ -1297,4 +1297,11 @@ unsigned long long func_8001D1A0_1DDA0(s32, u32, s32, s16);
 u8 func_800D5FD4_E4F84(s16, s16, s16, u8, u8, u8);
 f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1);
 
+/* 1416E0 */
+void func_800B42B0_C3260(s32);
+void func_800B4660_C3610(s32);
+void func_800B49A4_C3954(s32);
+void func_800B4D4C_C3CFC(s32);
+void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1);
+
 #endif

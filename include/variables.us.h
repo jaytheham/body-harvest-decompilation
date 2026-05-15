@@ -1868,6 +1868,7 @@ extern Vec3f D_801600F8;
 extern char D_80145650;
 extern f32 D_8014567C;
 extern f32 D_80145698_154648;
+extern f32 D_801456A8_154658;
 extern s32 D_801591BC;
 extern f32 D_801456D8_154688;
 extern f32 D_801456DC_15468C;
