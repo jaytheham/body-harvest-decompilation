@@ -6304,7 +6304,144 @@ void func_800E2DB4_F1D64(void) {
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
 }
 
+// CURRENT(7084)
+#ifdef NON_MATCHING
+void func_800E2ED4_F1E84(void) {
+	Gfx *dl;
+	Unk800311A0 *entry;
+	s32 scroll;
+	u8 i;
+	u8 next;
+
+	if (D_801493CC == 0) {
+		func_800E2DB4_F1D64();
+
+		if (D_80154080 < 0) {
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xFD900000;
+			dl->words.w1 = (u32)(&D_100E480[(-D_80154080) * 0x80]) & 0x1FFFFFFF;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF5900000;
+			dl->words.w1 = 0x07014140;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xE6000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF3000000;
+			dl->words.w1 = 0x0703F800;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xE7000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF5800200;
+			dl->words.w1 = 0x00014140;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF2000000;
+			dl->words.w1 = 0x0003C03C;
+			scroll = 0x200;
+		} else {
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xFD900000;
+			dl->words.w1 = (u32)(&D_100E480[D_80154080 * 0x80]) & 0x1FFFFFFF;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF5900000;
+			dl->words.w1 = 0x07014140;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xE6000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF3000000;
+			dl->words.w1 = 0x0703F800;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xE7000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF5800200;
+			dl->words.w1 = 0x00014140;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF2000000;
+			dl->words.w1 = 0x0003C03C;
+			scroll = 0;
+		}
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+
+		i = 0;
+		if (D_80154300 > 0) {
+			do {
+				entry = &D_80153BD0[i];
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xFA000000;
+			dl->words.w1 = (D_801541F0.unk0 << 0x18) | (D_801541F0.unk1 << 0x10) | (D_801541F0.unk2 << 8) | 0x23;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xE7000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 =
+				0xE4000000 |
+				((((((entry->unk2 >> 4) + 0x10) * 4) & 0xFFF) << 12) |
+				((((entry->unk0 >> 4) + 0x10) * 4) & 0xFFF));
+			dl->words.w1 = (((entry->unk2 >> 4) * 4) & 0xFFF) | ((((entry->unk0 >> 4) * 4) & 0xFFF) << 12);
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xB4000000;
+			dl->words.w1 = scroll << 0x10;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xB3000000;
+			dl->words.w1 = 0x04000400;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xE7000000;
+			dl->words.w1 = 0;
+
+				next = (i + 1) & 0xFF;
+				i = next;
+			} while (next < D_80154300);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2ED4_F1E84.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(7717)
