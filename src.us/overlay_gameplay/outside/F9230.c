@@ -2635,7 +2635,49 @@ void func_800F97FC_1087AC(void) {
 }
 
 // drawLegs
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F98C0_108870.s")
+void func_800F98C0_108870(void) {
+	s32 i;
+	u32 textureAddr;
+
+	gDPPipeSync(D_8005BB2C++);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_SHADING_SMOOTH | 0x0000CDF8);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_SHADING_SMOOTH);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
+	gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	gDPSetCombineLERP(D_8005BB2C++, TEXEL0, 0, SHADE, 0, 0, TEXEL0, SHADE, TEXEL0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C0, 0x7C0);
+	gSPTexture(D_8005BB2C++, 0x07C0, 0, 0, G_TX_RENDERTILE, G_ON);
+	textureAddr = (u32)D_5047470 & 0x1FFFFFFF;
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, textureAddr);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+		   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 31, 256);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+		   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0);
+	gDPPipeSync(D_8005BB2C++);
+	gDPTileSync(D_8005BB2C++);
+
+	i = 0;
+	do {
+		func_800F8B24_107AD4(i);
+		i++;
+	} while (i != 8);
+
+	gDPPipeSync(D_8005BB2C++);
+	gSPClearGeometryMode(D_8005BB2C++, G_TEXTURE_GEN);
+	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+}
 
 s32 func_800F9C40_108BF0(s32 arg0) { return arg0 * arg0; }
 

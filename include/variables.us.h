@@ -424,6 +424,7 @@ extern s32 D_80048188;
 extern s32 D_80048190;
 extern s32 D_80048194;
 extern AlienInstance alienInstances[]; // 0x80048198
+extern u8 D_800481D0[];
 extern s16 D_800481DD[];
 extern AlienWaveEntry D_8003BCC0[][12];
 extern u8 D_8003BCC6;
@@ -465,6 +466,7 @@ extern VehicleInstance D_8004F374;
 extern Unk80050ADA D_80050ADA[]; // 0x80050ADA
 extern u8 D_80050ADE[];
 extern u8 D_80050AE0[];
+extern u8 D_802566D2[];
 extern u8 D_8008E0A8_176168[];
 extern s32 D_8009C4C4_184584[];
 extern Unk9C804 D_8009C804_1848C4[];
@@ -527,6 +529,7 @@ extern s32 D_80052B3C;
 extern VehicleInstance* D_80052B34; // Ptr to active vehicle instance
 extern s16 D_80257A3C[];
 extern Unk80052B40 D_80052B40;
+extern s16 D_80052B44;
 extern Unk80052B40 D_80052B48;
 extern Unk80052B40 D_80052B50;
 extern Mtx D_80052B60;
@@ -600,6 +603,7 @@ extern u8 D_800AA7D8[][16];
 extern f32 D_800AA848[][12];
 extern s8 D_800319C1_325C1;
 extern u8 D_5040770[];
+extern u8 D_5047470[];
 extern u8 D_5038FF8;
 extern u8 D_5055C00;
 extern s32 D_50332A0;
@@ -657,6 +661,13 @@ extern u8 D_80165710[0x46500];
 extern u8 D_801ABC10;
 extern u8 D_963A70[];
 extern u8 D_BBB9B0[];
+extern u8 D_B008828;
+extern u8 D_B008F88;
+extern f64 D_80144FF0_153FA0;
+extern f64 D_80144FF8_153FA8;
+extern f64 D_80145000_153FB0;
+extern f64 D_80145008_153FB8;
+extern f64 D_80145010_153FC0;
 extern BhAudioGlobals D_80033B54_34754;
 extern s32 D_8006AB10;
 extern s16 D_8006AB14;
@@ -2569,6 +2580,7 @@ extern u8 D_8006C410;
 extern u8 D_8006C450; // english comms strings offsets
 extern UnkFB6F8Entry D_800FB6F8[];
 extern u8 D_100AD70[];
+extern u8 D_100B0F0[];
 
 extern Unk80154082 D_80154082;
 extern Unk80154082 D_801541F0;
