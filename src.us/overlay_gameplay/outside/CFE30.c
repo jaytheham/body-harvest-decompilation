@@ -2421,7 +2421,83 @@ void func_800CD390_DC340(u8 arg0) {
 	}
 }
 
+// CURRENT(5289)
+#ifdef NON_MATCHING
+void func_800CD42C_DC3DC(s32 arg0) {
+	Unk801541F8Entry *effect;
+	Unk80154318Entry *entry;
+	Unk89834Pos *sub;
+	s16 index;
+	s16 nextIndex;
+	s16 temp;
+	u8 effectId;
+
+	effectId = arg0 & 0xFF;
+	effect = &D_80154088[effectId];
+	index = D_80154318[effect->unk6].unk4;
+
+	if (((index == -5) || (index == -6)) && (D_80154318[effect->unk6].unk11 == 0)) {
+		func_800C1418_D03C8(effectId, 0);
+		func_800C1384_D0334(effectId);
+		return;
+	}
+
+	if ((index != -5) && (index != -6)) {
+		while (1) {
+			entry = &D_80154318[index];
+			if (entry->unk11 < 0xD) {
+				if ((effect->unk4 < 3) && (D_80154318[effect->unk6].unk11 == 0)) {
+					func_800C1418_D03C8(effectId, 0);
+					func_800C1384_D0334(effectId);
+					return;
+				}
+
+				nextIndex = entry->unk4;
+				func_800C1A4C_D09FC(index, effectId, 0);
+				index = nextIndex;
+			} else {
+				sub = (Unk89834Pos *)&entry->unk8;
+				if (sub->unkD == 0) {
+					sub->unk9 = (u8)(sub->unk9 - (func_800038E0_44E0() % 4) - 4);
+					entry->unk2 = (s16)(entry->unk2 + (func_800038E0_44E0() % 3) + 3);
+				} else {
+					sub->unk9 = (u8)(sub->unk9 - (func_800038E0_44E0() % 6) - 6);
+					entry->unk2 = (s16)(entry->unk2 + (func_800038E0_44E0() % 6) + 6);
+				}
+
+				sub->unk0 = (s16)(sub->unk0 + sub->unkA);
+				sub->unk4 = (s16)(sub->unk4 + sub->unkC);
+				sub->unk2 = (s16)(sub->unk2 + sub->unkB);
+				sub->unk6 = (s8)(sub->unk6 - 4);
+				sub->unk7 = (s8)(sub->unk7 - 4);
+				sub->unk8 = (s8)(sub->unk8 - 4);
+
+				temp = (s16)(func_800B84D0_C7480(sub->unk0, sub->unk4) >> 8);
+				if (sub->unk2 < temp) {
+					sub->unk2 = temp;
+					if (sub->unkD == 0) {
+						sub->unkD = 1;
+						sub->unkA = (s8)(sub->unkA + (func_800038E0_44E0() % 20) - 10);
+						sub->unkC = (s8)(sub->unkC + (func_800038E0_44E0() % 20) - 10);
+					}
+				}
+
+				index = entry->unk4;
+			}
+
+			if ((index == -5) || (index == -6)) {
+				break;
+			}
+		}
+	}
+
+	if (D_80154318[effect->unk6].unk11 == 1) {
+		func_800CD0B0_DC060(effectId);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD42C_DC3DC.s")
+#endif
 
 // CURRENT(6594)
 #ifdef NON_MATCHING
@@ -4534,7 +4610,7 @@ extern char D_80143B18_152AC8[];
 void func_800C5894_D4844(u8 arg0);
 void func_800C22EC_D129C(u8 arg0);
 void func_800C8F5C_D7F0C(u8 arg0);
-void func_800CD42C_DC3DC(u8 arg0);
+void func_800CD42C_DC3DC(s32 arg0);
 void func_800CE1C0_DD170(u8 arg0);
 void func_800D1A94_E0A44(u8 arg0);
 void func_800C3E2C_D2DDC(void);
