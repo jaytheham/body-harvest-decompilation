@@ -5622,7 +5622,70 @@ found:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010E480_11D430.s")
 #endif
 
+// CURRENT(4450)
+#ifdef NON_MATCHING
+s32 func_8010E684_11D634(VehicleInstance *arg0, AlienInstance *arg1) {
+	AlienSpec *spec;
+	f32 playerX;
+	f32 alienX;
+	f32 playerZ;
+	f32 alienZ;
+	f32 valueX;
+	f32 valueZ;
+	s32 deltaX;
+	s32 deltaZ;
+	s32 i;
+
+	spec = &alienSpecs[arg1->specIndex];
+	if (D_80159D6C == 2) {
+		return 1;
+	}
+
+	playerX = arg0->unk0;
+	alienX = arg1->unk0;
+	playerZ = arg0->unk4;
+	alienZ = arg1->unk4;
+
+	for (i = 0; i < 4; i++) {
+		valueX = D_80159D78[i] + playerX;
+		valueZ = D_80159D98[i] + playerZ;
+
+		deltaX = (s32)(valueX - alienX);
+		deltaZ = (s32)(valueZ - alienZ);
+
+		if (((deltaX * deltaX) + (deltaZ * deltaZ)) < spec->unk8) {
+			return 1;
+		}
+	}
+
+	D_80159D78[4] =
+		(((f64)(f32)coss(arg0->unk6) / 32768.0) * (f64)spec->unkC) + (f64)arg1->unk0;
+	D_80159D98[4] =
+		(((f64)(f32)sins(arg0->unk6) / 32768.0) * (f64)spec->unkC) + (f64)arg1->unk4;
+	D_80159D78[5] =
+		(f64)arg1->unk0 - (((f64)(f32)coss(arg0->unk6) / 32768.0) * (f64)spec->unkC);
+	D_80159D98[5] =
+		(f64)arg1->unk4 - (((f64)(f32)sins(arg0->unk6) / 32768.0) * (f64)spec->unkC);
+	D_80159D78[6] =
+		(f64)arg1->unk0 - (((f64)(f32)sins(arg0->unk6) / 32768.0) * (f64)spec->unkC);
+	D_80159D98[6] =
+		(((f64)(f32)coss(arg0->unk6) / 32768.0) * (f64)spec->unkC) + (f64)arg1->unk4;
+	D_80159D78[7] =
+		(((f64)(f32)sins(arg0->unk6) / 32768.0) * (f64)spec->unkC) + (f64)arg1->unk0;
+	D_80159D98[7] =
+		(f64)arg1->unk4 - (((f64)(f32)coss(arg0->unk6) / 32768.0) * (f64)spec->unkC);
+
+	for (i = 4; i < 8; i++) {
+		if (func_8010CF7C_11BF2C((s16)(s32)D_80159D78[i], (s16)(s32)D_80159D98[i]) != 0) {
+			return 1;
+		}
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010E684_11D634.s")
+#endif
 
 // CURRENT(7430)
 #ifdef NON_MATCHING
