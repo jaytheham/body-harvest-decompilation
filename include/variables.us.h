@@ -1611,6 +1611,8 @@ extern UnkF9230Func80102FA4Point D_80159420[];
 extern VehicleInstance *D_80158E64;
 extern VehicleInstance *D_80158E78;
 extern s32 D_80159D10;
+extern f32 D_80159D84;
+extern f32 D_80159DA4;
 extern s32 D_80159DC4;
 extern s16 D_80159DC8;
 extern s16 D_80159DCA;
