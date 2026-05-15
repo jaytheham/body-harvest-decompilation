@@ -1095,7 +1095,109 @@ s32 func_8011B584_12A534(s32 arg0, s32 arg1) {
 	return 0;
 }
 
+// CURRENT(22351)
+#ifdef NON_MATCHING
+s32 func_8011B6C0_12A670(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4) {
+	s8 candidates[8];
+	s16 xPos;
+	s16 zPos;
+	s16 bestDist;
+	u16 mask;
+	u16 rejectMask;
+	u8 count;
+	s32 hi;
+	s32 lo;
+
+	xPos = arg0 >> 8;
+	zPos = arg1 >> 8;
+	bestDist = arg2;
+	mask = arg3;
+	rejectMask = arg4;
+	count = 0;
+	hi = func_80117508_1264B8((s16)(zPos << 8));
+	lo = hi;
+
+	if ((hi == 0xFE) ||
+		((((buildingInstances[(u8)hi].zCoord >> 8) - zPos) >= bestDist) &&
+		 ((zPos - (buildingInstances[(u8)hi].zCoord >> 8)) >= bestDist))) {
+		return -1;
+	}
+
+	for (;;) {
+		s16 dzHi;
+		s16 dzLo;
+		s16 dist;
+
+		hi++;
+		lo--;
+
+		if (hi == 0xFF) {
+			hi--;
+		} else {
+			u32 flags = buildingInstances[(u8)hi].unk8 >> 12;
+			if ((flags & mask) && !(flags & rejectMask)) {
+				s16 dx = (buildingInstances[(u8)hi].xCoord >> 8) - xPos;
+				s16 dz = (buildingInstances[(u8)hi].zCoord >> 8) - zPos;
+				s16 absDx = (dx < 0) ? -dx : dx;
+				s16 absDz = (dz < 0) ? -dz : dz;
+
+				dist = (absDz < absDx) ? absDx : absDz;
+				if (dist > 0) {
+					if (dist < (bestDist - 1)) {
+						count = 0;
+					}
+					if (((bestDist + 1) >= dist) && (count != 8)) {
+						candidates[count] = hi;
+						count = (u8)(count + 1);
+						bestDist = dist;
+					}
+				}
+			}
+		}
+
+		if (lo == -1) {
+			lo++;
+		} else {
+			u32 flags = buildingInstances[(u8)lo].unk8 >> 12;
+			if ((flags & mask) && !(flags & rejectMask)) {
+				s16 dx = (buildingInstances[(u8)lo].xCoord >> 8) - xPos;
+				s16 dz = zPos - (buildingInstances[(u8)lo].zCoord >> 8);
+				s16 absDx = (dx < 0) ? -dx : dx;
+				s16 absDz = (dz < 0) ? -dz : dz;
+
+				dist = (absDz < absDx) ? absDx : absDz;
+				if (dist != 0) {
+					if (dist < (bestDist - 1)) {
+						count = 0;
+					}
+					if (((bestDist + 1) >= dist) && (count != 8)) {
+						candidates[count] = lo;
+						count = (u8)(count + 1);
+						bestDist = dist;
+					}
+				}
+			}
+		}
+
+		dzHi = (buildingInstances[(u8)hi].zCoord >> 8) - zPos;
+		dzLo = zPos - (buildingInstances[(u8)lo].zCoord >> 8);
+		if (!((dzHi < bestDist) || (dzLo < bestDist))) {
+			break;
+		}
+		if ((hi == 0xFE) && (lo == 0)) {
+			break;
+		}
+	}
+
+	if (count == 0) {
+		return -1;
+	}
+
+	return candidates[(u32)D_80052A8C % count];
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011B6C0_12A670.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8011BA80_12AA30(u8 arg0, s16 arg1) {
