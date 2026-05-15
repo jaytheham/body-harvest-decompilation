@@ -2672,7 +2672,94 @@ void func_801219F4_1309A4(void* arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80121A64_130A14.s")
 
+#ifdef NON_MATCHING
+// CURRENT(5649)
+void func_80121EB4_130E64(s16 *arg0) {
+	f32 sp38;
+	f32 sp34;
+	f32 temp_f0;
+	f64 temp_f16;
+	s32 temp_a0;
+	s32 temp_a3;
+	s32 temp_f6;
+	Gfx *temp_s0;
+
+	temp_f6 = (s32) ((((f64) (f32) sins(((*arg0 + D_80052A8C) * 0x2EE) & 0xFFFF)) / 32768.0) * D_80144FF0_153FA0);
+	sp38 = (f32) (D_80145000_153FB0 - ((((f64) (f32) coss(temp_f6 & 0xFFFF)) / 32768.0) * D_80144FF8_153FA8));
+	temp_f16 = ((f64) (f32) sins((s16) temp_f6 & 0xFFFF)) / 32768.0;
+
+	D_80052B40.unk0 = 0xD9;
+	D_80052B40.unk2 = 0x1CD;
+	D_80052B40.unk4 = 0;
+	D_80052B48.unk0 = 0;
+	D_80052B48.unk2 = (s16) temp_f6;
+	D_80052B48.unk4 = 0;
+
+	sp34 = (f32) (D_80145010_153FC0 - (temp_f16 * D_80145008_153FB8));
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
+
+	temp_s0 = D_8005BB2C;
+	D_8005BB2C = temp_s0 + 1;
+	temp_s0->words.w0 = 0x01040040;
+	temp_s0->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+	temp_s0 = D_8005BB2C;
+	D_8005BB38 += 0x40;
+	D_8005BB2C = temp_s0 + 1;
+	temp_s0->words.w0 = 0x06000000;
+	temp_s0->words.w1 = (u32) &D_B008828;
+
+	temp_s0 = D_8005BB2C;
+	D_8005BB2C = temp_s0 + 1;
+	temp_s0->words.w1 = 0;
+	temp_s0->words.w0 = 0xBD000000;
+
+	temp_f0 = 0.0f;
+	D_80052B40.unk0 = (s16) (s32) sp38;
+	D_80052B40.unk2 = (s16) (s32) sp34;
+	D_80052B44 = (s16) (s32) temp_f0;
+	func_800039D0_45D0(&D_80052B40, NULL, NULL, D_8005BB38);
+
+	temp_s0 = D_8005BB2C;
+	D_8005BB2C = temp_s0 + 1;
+	temp_s0->words.w0 = 0x01000040;
+	temp_s0->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+	temp_a0 = D_8005BB38 + 0x40;
+	D_8005BB38 = temp_a0;
+	guAlign((Mtx *) temp_a0, temp_f0, (f32) 0x2D - sp34, -((f32) -0x63 - sp38), temp_f0);
+
+	temp_s0 = D_8005BB2C;
+	D_8005BB2C = temp_s0 + 1;
+	temp_s0->words.w0 = 0x01000040;
+	temp_s0->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+	temp_a3 = D_8005BB38 + 0x40;
+	D_8005BB38 = temp_a3;
+	D_80052B50.unk0 = 0xC8;
+	D_80052B50.unk2 = 0xC8;
+	D_80052B50.unk4 = 0xC8;
+	func_800039D0_45D0(NULL, NULL, &D_80052B50, temp_a3);
+
+	temp_s0 = D_8005BB2C;
+	D_8005BB2C = temp_s0 + 1;
+	temp_s0->words.w0 = 0x01000040;
+	temp_s0->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+	temp_s0 = D_8005BB2C;
+	D_8005BB38 += 0x40;
+	D_8005BB2C = temp_s0 + 1;
+	temp_s0->words.w0 = 0x06000000;
+	temp_s0->words.w1 = (u32) &D_B008F88;
+
+	temp_s0 = D_8005BB2C;
+	D_8005BB2C = temp_s0 + 1;
+	temp_s0->words.w1 = (u32) (&D_80031160) & 0x1FFFFFFF;
+	temp_s0->words.w0 = 0x01020040;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80121EB4_130E64.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_80122244_1311F4(Unk80152B80 *arg0) {
