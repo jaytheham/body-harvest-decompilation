@@ -127,6 +127,7 @@ extern s16 D_8025718A;
 extern u16 D_802571B2;
 extern s16 D_802571B6;
 extern s16 D_802571B8;
+extern s16 D_802571D0;
 extern s16 D_800313FC; // World fog far distance
 extern s32 D_800949D0_64E80;
 extern FrontendInterpState D_800AC0CC;
