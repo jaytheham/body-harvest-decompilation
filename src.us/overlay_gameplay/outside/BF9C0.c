@@ -649,7 +649,109 @@ void func_800B41C8_C3178(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	}
 }
 
+// CURRENT(15401)
+#ifdef NON_MATCHING
+void func_800B42B0_C3260(s32 arg0) {
+	u8 sp6F;
+	s8 sp6A;
+	s8 sp69;
+	s8 sp68;
+	s8 sp64;
+	s8 sp63;
+	s8 sp62;
+	s8 sp61;
+	s8 sp60;
+	u16 *sp5C;
+	s8 sp59;
+	u8 sp54[3];
+	u16 *tempS6;
+	u16 *tempS7;
+	u8 temp;
+	s32 tmp;
+	s32 i;
+	s32 lane;
+	u8 *entry;
+	u8 idx;
+	s8 nextCol;
+
+	(void)arg0;
+
+	D_8014F89C = D_80151DD8[0x964]++;
+	D_8014F89D = D_80151DD8[0x965];
+	D_8014F899 = D_80151DD8[0x961];
+	D_8014F898 = D_80151DD8[0x960];
+	D_8014F89C++;
+
+	sp5C = &D_8014F8A0[0][0];
+	sp6F = 0;
+	sp59 = D_8014F898;
+
+	do {
+		tmp = D_8014F89D + sp6F;
+		temp = (D_8014F89C + (tmp << 8) + 0x12) & 0xFF;
+		tempS6 = sp5C + (((D_8014F89C + (tmp << 8) + 0x12) & 0xFFFF));
+		tempS7 = tempS6;
+
+		sp60 = tempS6[-0x100] & 0x3F;
+		sp61 = tempS6[-1] & 0x3F;
+		sp62 = tempS7[0] & 0x3F;
+		sp63 = tempS6[1] & 0x3F;
+		sp64 = tempS6[0x100] & 0x3F;
+
+		func_800B1814_C07C4(tmp & 0xFF, temp, sp54, sp5C);
+		func_800B2CF0_C1CA0(&sp60, sp54, &sp68);
+
+		for (i = 0; i < 0x40; i++) {
+			entry = &D_8014FD48[i * 2];
+			if (((D_8014F89C + 0x12) == entry[0]) && ((D_8014F89D + sp6F) == entry[1])) {
+				idx = (func_800038E0_44E0() % 60) & 0xFF;
+				nextCol = idx + 0x14;
+				if (nextCol < 0) {
+					sp68 = 0;
+				} else {
+					sp68 = nextCol;
+				}
+
+				nextCol = idx - 5;
+				if (nextCol < 0) {
+					sp69 = 0;
+				} else {
+					sp69 = nextCol;
+				}
+
+				nextCol = idx - 0x19;
+				if (nextCol < 0) {
+					sp6A = 0;
+				} else {
+					sp6A = nextCol;
+				}
+			}
+		}
+
+		entry = &D_80151DD8[(u8)sp59 * 0x78 + D_8014F899 * 6];
+		*(u16 *)entry = *tempS7;
+
+		if (tempS6[-1] & 0x800) {
+			entry[2] = (((s32)(u8)sp68 >> 2) * 3);
+			entry[4] = (((s32)(u8)sp6A >> 2) * 3);
+			entry[3] = (((s32)(u8)sp69 >> 2) * 3);
+		} else {
+			entry[2] = (u8)sp68;
+			entry[3] = (u8)sp69;
+			entry[4] = (u8)sp6A;
+		}
+
+		lane = (sp59 + 1) % 19;
+		sp59 = lane;
+		sp6F = (sp6F + 1) & 0xFF;
+	} while (sp6F < 0x13);
+
+	D_8014F899 = (D_8014F899 + 1) % 19;
+	D_80151DD8[0x961] = D_8014F899;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B42B0_C3260.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(13622)
