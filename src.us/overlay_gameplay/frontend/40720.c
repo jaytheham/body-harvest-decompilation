@@ -6337,7 +6337,7 @@ void func_8007FBF8_500A8(void)
 	}
   }
   gDPPipeSync(D_8005BB2C++);
-  gDPSetRenderMode(D_8005BB2C++, ((((((((0x8 | 0x40) | 0x100) | 0x80) | 0x4000) | 0) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (0 << 18), ((((((((0x8 | 0x40) | 0x100) | 0x80) | 0x4000) | 0) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (0 << 16));
+  gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
   gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
   gDPSetPrimColor(D_8005BB2C++, 0, 0, D_800D7B08.unk0, D_800D7B08.unk1, D_800D7B08.unk2, D_800D7971);
   gDPFillRectangle(D_8005BB2C++, 0, 0, 320, 240);
