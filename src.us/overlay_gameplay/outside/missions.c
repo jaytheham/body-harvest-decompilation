@@ -11,7 +11,143 @@ s32 D_8013BAC0_14AA70[5][4] = {
 	0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF
 };
 
+// CURRENT(12710)
+#ifdef NON_MATCHING
+void func_80073DC0_82D70(s32 arg0) {
+	u8 *entry;
+	u8 *next;
+	u8 opcode;
+	f32 spread;
+	s16 sp5A;
+	s16 sp5C;
+
+	if (arg0 == 0xFF) {
+		return;
+	}
+
+	entry = &D_801497C8[arg0 * 3];
+	opcode = entry[0];
+	next = entry + 3;
+	if (opcode == 0xA9) {
+		return;
+	}
+
+	spread = D_80141598_150548;
+
+	while (1) {
+		switch (opcode) {
+			case 0x9C:
+				func_800FD858_10C808(entry[1]);
+				break;
+
+			case 0x9D:
+				func_80073B30_82AE0(entry[1]);
+				break;
+
+			case 0x9E: {
+				BuildingInstance *building;
+				u8 *waveEntry;
+
+				waveEntry = &D_80149AF8[(entry[2] << 2) - entry[2]];
+				if (waveEntry[0] == 0x99) {
+					building = &buildingInstances[waveEntry[1]];
+					building->rotation &= 0xC3;
+					building->rotation |= (entry[1] << 2) & 0x3C;
+				} else {
+					u8 alienIdx;
+
+					func_80007728_8328(waveEntry, &sp5C, &sp5A);
+					alienIdx = func_8007956C_8851C(D_8004D160[entry[1] * 2]);
+					alienInstances[alienIdx].unk0 = sp5C - 0x104;
+					alienInstances[alienIdx].unk4 = sp5A;
+					D_8004D160[(entry[1] * 2) + 1] = alienIdx;
+				}
+				break;
+			}
+
+			case 0x9F:
+				func_800AF764_BE714(entry[1]);
+				break;
+
+			case 0xA0: {
+				s32 r0;
+				s32 r1;
+				s16 x;
+				s16 z;
+
+				r0 = func_800038E0_44E0() & 0xFFFF;
+				r1 = func_800038E0_44E0();
+
+				x = (s16)((f32)D_80052B34->unk0 + (f32)(r0 & 0x3FF) + (D_8003140C * 500.0f) - spread);
+				z = (s16)((f32)D_80052B34->unk4 + (f32)(r1 & 0x3FF) + (D_80031404 * 500.0f) - spread);
+				func_800A8A68_B7A18(x, D_80052B34->unk2 + 0x100, z, entry[1]);
+				break;
+			}
+
+			case 0xA1: {
+				u8 cmd = entry[1];
+
+				if ((cmd >= 0xA5) && (cmd < 0xAC)) {
+					s16 variant = cmd - 0xA3;
+
+					switch (variant) {
+						case 3:
+						case 4:
+							func_801391DC_14818C(variant, 10);
+							break;
+						case 5:
+							func_801391DC_14818C(variant, 100);
+							break;
+						case 6:
+							func_801391DC_14818C(variant, 5);
+							break;
+						case 7:
+							func_801391DC_14818C(variant, 3);
+							break;
+						case 9:
+							func_801391DC_14818C(variant, 8);
+							break;
+						default:
+							func_801391DC_14818C(variant, -0x8000);
+							break;
+					}
+				} else if (cmd < 0x65) {
+					D_80052B2C->unk30 += cmd * 100;
+					} else {
+					func_800072CC_7ECC(((s32)(cmd - 0x64)) >> 0x1F);
+				}
+				break;
+			}
+
+			case 0xA2:
+				func_802D4CD0_18D7E0((entry[1] - (currentLevel * 20)) + 0x14, 0);
+				break;
+
+			case 0xA3:
+				D_8004D1B0[entry[1]] = 0;
+				if (entry[1] == 1) {
+					D_80149474 = D_80149B48;
+					D_8004D1C0 = 0;
+				}
+				break;
+
+			case 0xA4:
+			case 0xA5:
+				func_80018D7C_1997C((u16)(((currentLevel * 50) + entry[1]) - 0x32));
+				break;
+		}
+
+		entry = next;
+		next += 3;
+		opcode = entry[0];
+		if (opcode == 0xA9) {
+			break;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80073DC0_82D70.s")
+#endif
 
 // CURRENT(6010)
 // Resets a bunch of memory? For missions?
