@@ -1989,7 +1989,77 @@ void func_800C9668_D8618(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C978C_D873C.s")
 
+// CURRENT(6335)
+#ifdef NON_MATCHING
+void func_800CA1B0_D9160(u8 arg0) {
+	s32 effect;
+	s16 newUnitIdx;
+	s16 parentIdx;
+	Unk80154318Entry *effectUnit;
+	u8 *parentBytes;
+	Vec3f sp44;
+	Vec3f sp38;
+
+	effect = arg0 & 0xFF;
+	effectUnit = &D_80154318[D_80154088[effect].unk6];
+	parentIdx = effectUnit->unk4;
+
+	if (D_80156ED8 == 1) {
+		if ((func_800038E0_44E0() % 9) < 3) {
+			return;
+		}
+	}
+
+	if ((D_80156ED8 == 1) && ((func_800038E0_44E0() % 10) <= 0)) {
+		return;
+	}
+
+	newUnitIdx = func_800C17B4_D0764(effect & 0xFF, 0);
+	if (newUnitIdx != -3) {
+		Unk80154318Entry *newUnit;
+
+		newUnit = &D_80154318[newUnitIdx];
+		newUnit->unk8 = effectUnit->unk8;
+		newUnit->unkA = effectUnit->unkA;
+		newUnit->unkC = effectUnit->unkC;
+
+		parentBytes = (u8 *)&D_80154318[parentIdx].unk8;
+		newUnit->unk11 = parentBytes[8];
+		newUnit->unk2 = (func_800038E0_44E0() % (effectUnit->unk2 * 2)) + effectUnit->unk2;
+
+		sp44.x = (f32)(s8)parentBytes[0];
+		sp44.y = (f32)(s8)parentBytes[1];
+		sp44.z = (f32)(s8)parentBytes[2];
+		func_800C1024_CFFD4(&sp44, &sp44);
+
+		sp38.x = (f32)((f64)(f32)(func_800038E0_44E0() % parentBytes[4]) / D_80143FE0_152F90);
+		if ((func_800038E0_44E0() % 0x15) < 0xA) {
+			sp38.x = -sp38.x;
+		}
+		sp38.x += sp44.x;
+
+		sp38.y = (f32)((f64)(f32)(func_800038E0_44E0() % parentBytes[4]) / D_80143FE8_152F98);
+		if ((func_800038E0_44E0() % 0x15) < 0xA) {
+			sp38.y = -sp38.y;
+		}
+		sp38.y += sp44.y;
+
+		sp38.z = (f32)((f64)(f32)(func_800038E0_44E0() % parentBytes[4]) / D_80143FF0_152FA0);
+		if ((func_800038E0_44E0() % 0x15) < 0xA) {
+			sp38.z = -sp38.z;
+		}
+		sp38.z += sp44.z;
+
+		func_800C1024_CFFD4(&sp38, &sp38);
+
+		((u8 *)&D_80154318[newUnitIdx].unk8)[0xA] = (s8)((f32)((s32)(parentBytes[3] / 4)) * sp38.x);
+		((u8 *)&D_80154318[newUnitIdx].unk8)[0xB] = (s8)((f32)((s32)(parentBytes[3] / 4)) * sp38.y);
+		((u8 *)&D_80154318[newUnitIdx].unk8)[0xC] = (s8)((f32)((s32)(parentBytes[3] / 4)) * sp38.z);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA1B0_D9160.s")
+#endif
 
 // CURRENT(4946)
 #ifdef NON_MATCHING
