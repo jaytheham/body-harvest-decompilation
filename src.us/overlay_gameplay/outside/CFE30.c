@@ -1160,7 +1160,95 @@ void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3D88_D2D38.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(4910)
+void func_800C3E2C_D2DDC(void) {
+	Unk80154318Entry *entry;
+	Unk80154318Entry *linkedEntry;
+	Unk80154318Sub *entrySub;
+	Unk80154318Sub *linkedSub;
+	s16 idx;
+	s16 sizeQuarter;
+	s16 color;
+	s32 randA;
+	s32 randB;
+	s32 mod8;
+
+	idx = D_8015428E;
+	if ((idx == -5) || (idx == -6)) {
+		func_800C1418_D03C8(0xC, 1);
+		return;
+	}
+
+	while ((idx != -5) && (idx != -6)) {
+		entry = &D_80154318[idx];
+		entrySub = (Unk80154318Sub *)&entry->unk8;
+		linkedEntry = &D_80154318[entry->unk4];
+		linkedSub = (Unk80154318Sub *)&linkedEntry->unk8;
+
+		((u8 *)linkedEntry)[0xC]++;
+		if (((u8 *)linkedEntry)[0xC] == 0x10) {
+			((u8 *)linkedEntry)[0xC] = 0;
+		}
+
+		mod8 = func_800038E0_44E0() % 8;
+		if (mod8 == 0) {
+			randA = func_800038E0_44E0() & 0xFFFF;
+			randB = func_800038E0_44E0() & 0xFFFF;
+			sizeQuarter = entry->unk2 / 4;
+
+			color = func_800DDB60_ECB10(
+				(s16)(entrySub->unk0 + ((randA % entry->unk2) / 2) - sizeQuarter),
+				(s16)((randB % (entry->unk2 / 2)) + entrySub->unk2),
+				(s16)(entrySub->unk4 + ((func_800038E0_44E0() % entry->unk2) / 2) - sizeQuarter),
+				0xC,
+				sizeQuarter);
+
+			randA = func_800038E0_44E0() & 0xFFFF;
+			randB = func_800038E0_44E0() & 0xFFFF;
+			func_800DDD90_ECD40(
+				color,
+				(u8)((randA % 50) + 0x46),
+				(u8)((randB % 50) + 0x46),
+				(u8)((func_800038E0_44E0() % 50) + 0x46));
+		}
+
+		func_80137368_146318(entrySub->unk0, entrySub->unk2, entrySub->unk4, 1, idx);
+
+		if (*(u16 *)linkedSub != 0xFFFF) {
+			if (((u8 *)linkedSub)[5] > 0) {
+				entry->unk2 += linkedSub->unk2 / 8;
+				entrySub->unk2 += linkedSub->unk2 / 16;
+				((u8 *)linkedSub)[5]--;
+				(*(u16 *)linkedSub)--;
+				idx = linkedEntry->unk4;
+				continue;
+			}
+
+			if (*(u16 *)linkedSub >= 8) {
+				(*(u16 *)linkedSub)--;
+				idx = linkedEntry->unk4;
+				continue;
+			}
+
+			if (*(u16 *)linkedSub == 0) {
+				idx = linkedEntry->unk4;
+				func_800C1E24_D0DD4(idx, 0xC, 1);
+				idx = linkedEntry->unk4;
+				continue;
+			}
+
+			entry->unk2 -= linkedSub->unk2 / 8;
+			entrySub->unk2 -= linkedSub->unk2 / 16;
+			(*(u16 *)linkedSub)--;
+		}
+
+		idx = linkedEntry->unk4;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3E2C_D2DDC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4274_D3224.s")
 
