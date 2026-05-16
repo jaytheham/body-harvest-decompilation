@@ -174,8 +174,148 @@ void func_80095100_A40B0(s16 arg0, s16 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A40B0/func_80095100_A40B0.s")
 #endif
 
-// Debug - menu navigation?
+#ifdef NON_MATCHING
+// CURRENT(9198)
+void func_80095530_A44E0(s16 arg0) {
+	typedef struct {
+		s32 unk0;
+		s32 unk4;
+		s32 unk8;
+		s32 unkC;
+		s32 unk10;
+		s16 unk14;
+		u16 pad16;
+		u32 type;
+	} DebugPropEntryNav;
+
+	DebugPropEntry *entry;
+	DebugPropEntryNav *entryNav;
+	u8 *propPtr;
+	s32 value;
+	s32 value2;
+	u32 type;
+	s16 shift;
+	s16 propIndex;
+	s32 alienIndex;
+
+	propIndex = arg0;
+	if (propIndex < 0x20) {
+		entry = &D_8013CBC0_14BB70[propIndex];
+		propPtr = (u8 *) vehicleSpecs + ((D_80052B20->unk1A * 7) << 4) + (entry->unk8 - entry->unk4);
+	} else if (arg0 < 0x35) {
+		entry = &D_8013CBC0_14BB70[arg0];
+		propPtr = (u8 *) entry->unk4;
+	} else if (arg0 < 0x40) {
+		entry = &D_8013CBC0_14BB70[arg0];
+		alienIndex = (s8) D_802566D0[((D_8013CBA4_14BB54 * 3 * 4) + D_8013CBA4_14BB54) * 8];
+		propPtr = (u8 *) D_801601F0 + (((alienIndex * 4 - alienIndex) * 4 - alienIndex) * 2) + (entry->unk8 - entry->unk4);
+	} else if (arg0 < 0x51) {
+		entry = &D_8013CBC0_14BB70[arg0];
+		propPtr = (u8 *) alienSpecs + (((D_8013CBA4_14BB54 * 3 * 4) + D_8013CBA4_14BB54) * 8) + (entry->unk8 - entry->unk4);
+	} else if (arg0 < 0x60) {
+		entry = &D_8013CBC0_14BB70[arg0];
+		propPtr = (u8 *) entry->unk4;
+	} else if (arg0 < 0x64) {
+		entry = &D_8013CBC0_14BB70[arg0];
+		propPtr = (u8 *) D_8003E290 + (D_8013CBBC_14BB6C << 4) + (entry->unk8 - entry->unk4);
+	} else {
+		entry = &D_8013CBC0_14BB70[arg0];
+		propPtr = (u8 *) D_80140768_14F718 + ((D_80257A55[(D_80052B34->unk1A * 7) << 4] * 4 + D_80257A55[(D_80052B34->unk1A * 7) << 4]) * 2) + (entry->unk8 - entry->unk4);
+	}
+
+	entryNav = (DebugPropEntryNav *) entry;
+	type = entryNav->type;
+	value2 = arg0;
+
+	switch (type) {
+	case 0:
+		value = *(u8 *) propPtr;
+		break;
+	case 1:
+		value = *(s8 *) propPtr;
+		break;
+	case 2:
+	case 5:
+		value = *(s16 *) propPtr;
+		break;
+	case 3:
+		value = *(s32 *) propPtr;
+		break;
+	case 4:
+		value = (s32)(f32)((f64)(f32)*(f32 *)propPtr * D_80142380_151330);
+		break;
+	case 6:
+		value2 = *(s8 *) propPtr;
+		value = *(s8 *) (propPtr + 1);
+		break;
+	case 7:
+		value2 = *(s16 *) propPtr;
+		value = *(s16 *) (propPtr + 4);
+		break;
+	default:
+		value = *(s32 *) propPtr;
+		break;
+	}
+
+	if (currentControllerStates[0].button & 0x200) {
+		value--;
+	}
+	if (currentControllerStates[0].button & 0x100) {
+		value++;
+	}
+
+	shift = entryNav->unk14;
+	if (type == 6) {
+		value2 += currentControllerStates[0].stick_x >> shift;
+		value -= currentControllerStates[0].stick_y >> shift;
+		if (value2 < entryNav->unkC) {
+			value2 = entryNav->unkC;
+		}
+		if (value2 > entryNav->unk10) {
+			value2 = entryNav->unk10;
+		}
+	} else {
+		value += (currentControllerStates[0].stick_y >> shift) + (currentControllerStates[0].stick_x >> (shift + 2));
+	}
+
+	if (value < entryNav->unkC) {
+		value = entryNav->unkC;
+	}
+	if (value > entryNav->unk10) {
+		value = entryNav->unk10;
+	}
+
+	if (type < 7) {
+		switch (type) {
+		case 0:
+		case 1:
+			*(s8 *) propPtr = value;
+			break;
+		case 2:
+		case 5:
+			*(s16 *) propPtr = value;
+			break;
+		case 3:
+			*(s32 *) propPtr = value;
+			break;
+		case 4:
+			*(f32 *) propPtr = (f32) ((f64) value / D_801423A8_151358);
+			break;
+		case 6:
+			*(s8 *) propPtr = value2;
+			*(s8 *) (propPtr + 1) = value;
+			break;
+		default:
+			*(s32 *) propPtr = value;
+			break;
+		}
+	} else {
+		*(s32 *) propPtr = value;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A40B0/func_80095530_A44E0.s")
+#endif
 
 // Debug - display menu items
 #ifdef NON_MATCHING

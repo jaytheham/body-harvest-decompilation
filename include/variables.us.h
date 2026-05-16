@@ -526,6 +526,7 @@ extern Unk80052B2C D_80052AE8;
 extern s32 D_80052550;
 extern s32 D_80052558;
 extern GameplayMode gameplayMode; // 80052adc
+extern VehicleInstance* D_80052B20;
 extern Unk80052B2C* D_80052B2C;
 extern s32 D_80052B38;
 extern s32 D_80052B3C;
@@ -3131,6 +3132,8 @@ extern u8 D_801421B8[];
 extern f64 D_80142328;
 extern f64 D_80142350;
 extern f64 D_80142358;
+extern f64 D_80142380_151330;
+extern f64 D_801423A8_151358;
 extern Unk_8003CEC0 D_8003CEC0[5];
 extern Unk_8013D91C D_8013D91C[6];
 
