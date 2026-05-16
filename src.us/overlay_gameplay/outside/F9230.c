@@ -4712,7 +4712,146 @@ void func_80101C14_110BC4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80101C14_110BC4.s")
 #endif
 
+// CURRENT(6685)
+#ifdef NON_MATCHING
+void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
+	Gfx *dl;
+	Unk8013FDA8Entry *entry;
+	u8 *specBytes;
+	s16 temp;
+	s32 sp40;
+	s32 count;
+	s32 var_v0;
+	s32 i;
+	s32 loops;
+
+	specBytes = (u8 *)&vehicleSpecs[arg0];
+	i = specBytes[0x53];
+	loops = specBytes[0x54];
+	count = 0;
+	sp40 = D_8005BB38;
+	D_8005BB38 = sp40 + 0x40;
+
+	D_80052B40.unk0 = arg1 >> 2;
+	D_80052B40.unk2 = arg2 >> 2;
+	D_80052B40.unk4 = arg3 >> 2;
+
+	D_80052B48.unk0 = (s16)arg4;
+	D_80052B48.unk2 = (s16)arg6;
+	D_80052B48.unk4 = (s16)arg5;
+
+	temp = (s16)(256.0 / ((f64)(f32)*(s16 *)&specBytes[0xC] * 0.125));
+	D_80052B50.unk0 = temp;
+	D_80052B50.unk2 = temp;
+	D_80052B50.unk4 = temp;
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, sp40);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01060040;
+	dl->words.w1 = (u32)sp40 & 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x06000000;
+	dl->words.w1 = *(u32 *)&specBytes[0x0];
+
+	if (loops != 0) {
+		entry = &D_8013FDA8_14ED58[(s32)i];
+		for (loops--; ; loops--) {
+			func_800FE910_10D8C0(i);
+
+			if (entry->pad0[0] & 1) {
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0x01040040;
+				dl->words.w1 = (u32)D_8005BB38 & 0x1FFFFFFF;
+				count++;
+				D_8005BB38 += 0x40;
+			} else {
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0x01000040;
+				dl->words.w1 = (u32)D_8005BB38 & 0x1FFFFFFF;
+				D_8005BB38 += 0x40;
+			}
+
+			if (*(u32 *)&entry->unk0[0] != 0x050312E8) {
+				if (i == 0xE) {
+					func_802D4CD0_18D7E0(0x19, 0);
+				} else if (i == 0xF) {
+					func_802D4CD0_18D7E0(0x18, 0);
+				} else {
+					if (entry->pad0[0] & 0x20) {
+						dl = D_8005BB2C;
+						D_8005BB2C = dl + 1;
+						dl->words.w0 = 0xB6000000;
+						dl->words.w1 = 0x00003000;
+
+						D_80052B50.unk0 = -0x100;
+						D_80052B50.unk2 = 0x100;
+						D_80052B50.unk4 = 0x100;
+						func_800039D0_45D0(0, 0, &D_80052B50, D_8005BB38);
+
+						dl = D_8005BB2C;
+						D_8005BB2C = dl + 1;
+						dl->words.w0 = 0x01000040;
+						dl->words.w1 = (u32)D_8005BB38 & 0x1FFFFFFF;
+						D_8005BB38 += 0x40;
+					} else {
+						dl = D_8005BB2C;
+						D_8005BB2C = dl + 1;
+						dl->words.w0 = 0xB6000000;
+						dl->words.w1 = 0x00001000;
+
+						dl = D_8005BB2C;
+						D_8005BB2C = dl + 1;
+						dl->words.w0 = 0xB7000000;
+						dl->words.w1 = 0x00002000;
+					}
+
+					if ((*(u32 *)&entry->unk0[0] != 0x050445A0) && (*(u32 *)&entry->unk0[0] != 0x09043D50)) {
+						dl = D_8005BB2C;
+						D_8005BB2C = dl + 1;
+						dl->words.w0 = 0x06000000;
+						dl->words.w1 = *(u32 *)&entry->unk0[0];
+					}
+				}
+			}
+
+			i++;
+			entry++;
+
+			if (entry[-1].pad0[0] & 2) {
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xBD000000;
+				dl->words.w1 = 0;
+				count--;
+			}
+
+			if (loops == 0) {
+				break;
+			}
+		}
+	}
+
+	var_v0 = count;
+	count--;
+	if (var_v0 != 0) {
+		do {
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xBD000000;
+			dl->words.w1 = 0;
+			var_v0 = count;
+			count--;
+		} while (var_v0 != 0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80101EF4_110EA4.s")
+#endif
 
 // CURRENT(1466)
 #ifdef NON_MATCHING
