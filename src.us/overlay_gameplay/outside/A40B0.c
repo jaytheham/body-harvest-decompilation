@@ -174,8 +174,9 @@ void func_80095100_A40B0(s16 arg0, s16 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A40B0/func_80095100_A40B0.s")
 #endif
 
-#ifdef NON_MATCHING
+// Debug - menu navigation?
 // CURRENT(9198)
+#ifdef NON_MATCHING
 void func_80095530_A44E0(s16 arg0) {
 	typedef struct {
 		s32 unk0;
