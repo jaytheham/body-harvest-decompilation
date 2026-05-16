@@ -6300,7 +6300,89 @@ s32 func_8008E478_9D428(u8 arg0)
   return 0;
 }
 
+// CURRENT(6298)
+#ifdef NON_MATCHING
+s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
+{
+	AlienInstance *inst;
+	s16 sp8E;
+	s16 sp8C;
+	s16 sp8A;
+	s16 sp78;
+	s16 sp76;
+	f32 f24;
+	f32 f26;
+	s16 i;
+	u8 specIndex;
+	s32 found;
+
+	inst = &alienInstances[arg0];
+	found = 0;
+	specIndex = inst->specIndex;
+
+	if (inst->unk12 == 0) {
+		return arg1;
+	}
+
+	f26 = (f32)(((f64)(f32)sins((inst->unk6 - 0x4000) & 0xFFFF) / 32768.0) * 256.0);
+	f24 = (f32)(((f64)(f32)coss((inst->unk6 - 0x4000) & 0xFFFF) / 32768.0) * -256.0);
+
+	if (inst->unk12 < 0) {
+		f26 = -f26;
+		f24 = -f24;
+	}
+
+	switch ((s16)(D_80052A8C % 3U)) {
+		case 0:
+			sp78 = (s16)(s32)((f64)(*(s16 *)&alienSpecs[specIndex].pad34[0]) *
+				((f64)(f32)sins((u16)inst->unk6) / 32768.0) * 2.0 + (f64)inst->unk0);
+			sp76 = (s16)(s32)((f64)inst->unk4 - ((f64)(*(s16 *)&alienSpecs[specIndex].pad34[0]) *
+				((f64)(f32)coss((u16)inst->unk6) / 32768.0) * 2.0));
+			break;
+
+		case 1:
+			sp78 = inst->unk0;
+			sp76 = inst->unk4;
+			break;
+
+		case 2:
+			sp78 = (s16)(s32)((f64)inst->unk0 - ((f64)(*(s16 *)&alienSpecs[specIndex].pad34[0]) *
+				((f64)(f32)sins((u16)inst->unk6) / 32768.0) * 2.0));
+			sp76 = (s16)(s32)((f64)(*(s16 *)&alienSpecs[specIndex].pad34[0]) *
+				((f64)(f32)coss((u16)inst->unk6) / 32768.0) * 2.0 + (f64)inst->unk4);
+			break;
+	}
+
+	i = arg2;
+	for (; i >= 0; i--) {
+		func_8011E6FC_12D6AC((s16)(s32)((f32)sp78 - (f26 * (f32)i)), (s16)(s32)((f32)sp76 - (f24 * (f32)i)), &sp8C);
+		if (sp8C < D_80222A70) {
+			sp8C = (s16)D_80222A70;
+		}
+
+		if (i == 0) {
+			sp8E = sp8C;
+		}
+
+		if (sp8C < D_80052B34->unk2) {
+			sp8C = D_80052B34->unk2;
+		}
+
+		if (inst->unk2 < (sp8C + arg1)) {
+			found = 1;
+			sp8A = sp8C;
+		}
+	}
+
+	if (found) {
+		return (sp8A - sp8E) + arg1;
+	}
+
+	return (sp8C - sp8E) + arg1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008E524_9D4D4.s")
+#endif
 
 // https://decomp.me/scratch/V6LCq
 #ifdef NON_MATCHING

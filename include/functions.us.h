@@ -518,7 +518,7 @@ s32 func_80087E30_96DE0(void);
 void func_80088760_97710(AlienInstance*);
 void func_8008E978_9D928(u8, s32);
 s32 func_80085900_948B0(u8, s32);
-s32 func_8008E524_9D4D4(u8, s32, s32);
+s32 func_8008E524_9D4D4(u8, s32, u8);
 void func_8008EE5C_9DE0C(u8, s16, s16);
 void func_8008F0BC_9E06C(u8, s32);
 void func_8008F6C0_9E670(u8);
