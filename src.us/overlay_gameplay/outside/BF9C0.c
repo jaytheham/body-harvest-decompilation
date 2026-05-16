@@ -477,7 +477,67 @@ void func_800B19F8_C09A8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2854_C1804.s")
 
+// CURRENT(7590)
+#ifdef NON_MATCHING
+void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
+	f32 sp24;
+	s32 pad0;
+	s32 pad1;
+	f32 sp20;
+	f32 sp1C;
+	f32 sp2C;
+	f32 sp28;
+	s8 sp1A;
+	s8 sp19;
+	s8 sp18;
+	f32 temp_f2;
+	s32 temp_v0;
+	u8 *arg0_u8;
+	f32 *temp_v0_2;
+	f32 *temp_v1;
+
+	pad0 = 0;
+	pad1 = 0;
+
+	arg0_u8 = (u8 *)arg0;
+	sp2C = (f32)((arg0_u8[3] - arg0_u8[1]) << 5);
+	sp28 = (f32)((arg0_u8[4] - arg0_u8[0]) << 5);
+	temp_f2 = (f32)(D_80142E18_151DC8 / (f64)sqrtf((sp2C * sp2C) + 262144.0f + (sp28 * sp28)));
+	sp18 = (s8)(s32)(temp_f2 * sp2C);
+	sp19 = (s8)(s32)(temp_f2 * 512.0f);
+	sp1A = (s8)(s32)(temp_f2 * sp28);
+
+	temp_v0 = (s32)(((f32)sp18 * D_8013DAC0_14CA70[0]) + ((f32)sp19 * D_8013DAC0_14CA70[1]) + ((f32)sp1A * D_8013DAC0_14CA70[2]));
+	if (temp_v0 <= 0) {
+		temp_v0 = 1;
+	} else if (temp_v0 >= 0x80) {
+		temp_v0 = 0x7F;
+	}
+
+	temp_f2 = (f32)((f64)temp_v0 / D_80142E18_151DC8);
+	if ((arg0_u8[2] << 5) < D_80222A70) {
+		temp_v0 = currentLevel * 0xC;
+		temp_v0_2 = (f32 *)((u8 *)D_8013DA48_14C9F8 + temp_v0);
+		temp_v1 = (f32 *)((u8 *)D_8013DA84_14CA34 + temp_v0);
+		sp1C = temp_v0_2[-3] + (temp_f2 * (temp_v1[-3] - temp_v0_2[-3]));
+		sp20 = temp_v0_2[-2] + (temp_f2 * (temp_v1[-2] - temp_v0_2[-2]));
+		sp24 = temp_v0_2[-1] + (temp_f2 * (temp_v1[-1] - temp_v0_2[-1]));
+	} else {
+		temp_v0 = currentLevel * 0xC;
+		temp_v0_2 = (f32 *)((u8 *)D_8013D9D0_14C980 + temp_v0);
+		temp_v1 = (f32 *)((u8 *)D_8013DA0C_14C9BC + temp_v0);
+		sp1C = temp_v0_2[-3] + (temp_f2 * (temp_v1[-3] - temp_v0_2[-3]));
+		sp20 = temp_v0_2[-2] + (temp_f2 * (temp_v1[-2] - temp_v0_2[-2]));
+		sp24 = temp_v0_2[-1] + (temp_f2 * (temp_v1[-1] - temp_v0_2[-1]));
+	}
+
+	arg2[0] = (s8)(u32)((f32)arg1[0] * sp1C);
+	arg2[1] = (s8)(u32)((f32)arg1[1] * sp20);
+	arg2[2] = (s8)(u32)((f32)arg1[2] * sp24);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2CF0_C1CA0.s")
+#endif
 
 void func_800B316C_C211C(s8 arg0, s8 arg1, u16 arg2, u8 arg3) {
 	s32 x = arg0 + 0x80;
