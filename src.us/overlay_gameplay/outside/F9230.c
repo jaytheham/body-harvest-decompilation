@@ -4503,7 +4503,95 @@ void func_800FFCB8_10EC68(s32 arg0) {
 	func_800039D0_45D0(&D_80052B40, 0, 0, D_8005BB38);
 }
 
+// CURRENT(2040)
+#ifdef NON_MATCHING
+void func_800FFD28_10ECD8(VehicleInstance *arg0) {
+	VehicleSpec *specPtr;
+	Gfx *dl;
+	s16 temp;
+	s16 yOffset;
+
+	specPtr = &vehicleSpecs[arg0->unk1A];
+
+	func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01020040;
+	dl->words.w1 = (u32)D_8005BB38 & 0x1FFFFFFF;
+	D_8005BB38 += 0x40;
+
+	D_80052B40.unk0 = arg0->unk0;
+	D_80052B40.unk2 = arg0->unk2;
+	D_80052B40.unk4 = arg0->unk4;
+
+	D_80052B48.unk0 = (s16)(0x4000 - arg0->unk6);
+	D_80052B48.unk2 = (s16)-arg0->unk8;
+	D_80052B48.unk4 = arg0->unkA;
+
+	if ((D_80222A70 == arg0->unk2) && !(specPtr->unk4C & 0x100)) {
+		D_80052B48.unk2 += (s16)(s32)(((f64)(f32)sins((u16)(D_80052A8E << 11)) / 32768.0) * 512.0);
+		D_80052B48.unk4 += (s16)(s32)(((f64)(f32)coss((u16)(D_80052A8E << 11)) / 32768.0) * 512.0);
+	}
+
+	if (specPtr->unk55 != 0) {
+		WeaponSpecEntry *tableEntry;
+
+		tableEntry = &D_80140768_14F718[specPtr->unk55];
+		D_80052B40.unk2 += tableEntry->unk0;
+	}
+
+	if ((arg0->unk1A == 2) && (currentLevel == 3)) {
+		yOffset = arg0->unk2 - D_80222A70;
+		if (yOffset >= 0x19) {
+			yOffset = 0x18;
+		}
+		if (yOffset < 0) {
+			yOffset = 0;
+		}
+		D_80052B40.unk2 += yOffset;
+	}
+
+	if ((currentLevel == 2) && (arg0->unk1A == 5)) {
+		D_80052B40.unk2 += 0x1F4;
+	}
+
+	if (arg0 == D_80052B34) {
+		temp = D_801591C6;
+		D_801591C6 = 0;
+		D_80052B40.unk2 += temp;
+	}
+
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01000040;
+	dl->words.w1 = (u32)D_8005BB38 & 0x1FFFFFFF;
+	D_8005BB38 += 0x40;
+
+	if (((arg0 == D_80052B34) || (arg0 == (VehicleInstance *)D_80158E74)) && (currentLevel == 3) && (arg0->unk1A == 0x11)) {
+		if (arg0 == D_80052B34) {
+			D_80052B48.unk0 = D_8015930A;
+		} else {
+			D_80052B48.unk0 = D_80159232;
+		}
+
+		D_80052B48.unk2 = 0;
+		D_80052B48.unk4 = 0;
+
+		func_800039D0_45D0(NULL, &D_80052B48, NULL, D_8005BB38);
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0x01000040;
+		dl->words.w1 = (u32)D_8005BB38 & 0x1FFFFFFF;
+		D_8005BB38 += 0x40;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FFD28_10ECD8.s")
+#endif
 
 void func_80100114_10F0C4(VehicleInstance *arg0) {
 	D_80052B40.unk0 = (s16)(s32)arg0->unk4C;

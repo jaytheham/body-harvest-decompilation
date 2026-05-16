@@ -503,6 +503,7 @@ extern u8 D_80052547;
 extern u32 D_80052A90; // millseconds played in current level
 extern s32 D_80052A88;
 extern s32 D_80052A8C;
+extern s16 D_80052A8E;
 extern Unk80052A94 *D_80052A94; // This is a ptr to a [512][512] array of Heightmap data? Is 256x256 s16?
 extern s8 D_8015273E;
 extern s16 D_802DE468;
@@ -1852,6 +1853,7 @@ extern s32 D_801591B0;
 extern s32 D_801591B8;
 extern s16 D_801591C0;
 extern s16 D_801591C2;
+extern s16 D_801591C6;
 extern s16 D_801591C8;
 extern s16 D_801591CA;
 extern s16 D_80159232;
