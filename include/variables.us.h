@@ -2165,6 +2165,7 @@ extern Vec3f D_80153AC4;
 extern Vec3f D_80153AD0;
 extern Vec3f D_80153BA0;
 extern u8 D_80153B80;
+extern s16 D_80153B88;
 extern Vec3f D_80153BB8;
 extern void *D_80153BC4;
 extern f32 D_80153BC8;
