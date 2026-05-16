@@ -6123,7 +6123,80 @@ s32 func_8010DC00_11CBB0(s32 arg0, s32 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010DC00_11CBB0.s")
 #endif
 
+// CURRENT(1666)
+#ifdef NON_MATCHING
+s32 func_8010E040_11CFF0(s32 arg0, s32 arg1, s32 arg2) {
+	f32 dx;
+	f32 dz;
+	f32 *xOffsets;
+	f32 *zOffsets;
+	s32 radius;
+	s32 xDelta;
+	s32 zDelta;
+	s32 absX;
+	s32 absZ;
+	s16 trig;
+
+	radius = arg2;
+
+	if (D_80159D70 == 2) {
+		dx = (f32)(D_80159D60->unk0 - arg0);
+		dz = (f32)(D_80159D60->unk4 - arg1);
+		return sqrtf((dx * dx) + (dz * dz)) <= (f32)(D_80159D68->unkC + radius);
+	}
+
+	xOffsets = &D_80159D94;
+	zOffsets = &D_80159DB4;
+	for (;;) {
+		xDelta = ((s32)*xOffsets + D_80159D60->unk0) - arg0;
+		zDelta = ((s32)*zOffsets + D_80159D60->unk4) - arg1;
+		xOffsets--;
+		zOffsets--;
+
+		absX = (-xDelta < xDelta) ? xDelta : -xDelta;
+
+		if (radius >= absX) {
+			absZ = (-zDelta < zDelta) ? zDelta : -zDelta;
+
+			if ((radius >= absZ) && (((xDelta * xDelta) + (zDelta * zDelta)) < (radius * radius))) {
+				return 1;
+			}
+		}
+
+		if ((u32)zOffsets < (u32)&D_80159DAC) {
+			break;
+		}
+ 	}
+
+	trig = coss(*(u16 *)((u8 *)D_80159D60 + 6));
+	if (func_8010D234_11C1E4((s16)(s32)((((f64)(f32)trig / 32768.0) * (f64)radius) + (f64)arg0),
+			(s16)(s32)((((f64)(f32)sins(*(u16 *)((u8 *)D_80159D60 + 6)) / 32768.0) * (f64)radius) + (f64)arg1)) != 0) {
+		return 1;
+	}
+
+	trig = coss(*(u16 *)((u8 *)D_80159D60 + 6));
+	if (func_8010D234_11C1E4((s16)(s32)((f64)arg0 - ((((f64)(f32)trig / 32768.0) * (f64)radius))),
+			(s16)(s32)((f64)arg1 - ((((f64)(f32)sins(*(u16 *)((u8 *)D_80159D60 + 6)) / 32768.0) * (f64)radius)))) != 0) {
+		return 1;
+	}
+
+	trig = sins(*(u16 *)((u8 *)D_80159D60 + 6));
+	if (func_8010D234_11C1E4((s16)(s32)((f64)arg0 - ((((f64)(f32)trig / 32768.0) * (f64)radius))),
+			(s16)(s32)((((f64)(f32)coss(*(u16 *)((u8 *)D_80159D60 + 6)) / 32768.0) * (f64)radius) + (f64)arg1)) != 0) {
+		return 1;
+	}
+
+	trig = sins(*(u16 *)((u8 *)D_80159D60 + 6));
+	if (func_8010D234_11C1E4((s16)(s32)((((f64)(f32)trig / 32768.0) * (f64)radius) + (f64)arg0),
+			(s16)(s32)((f64)arg1 - ((((f64)(f32)coss(*(u16 *)((u8 *)D_80159D60 + 6)) / 32768.0) * (f64)radius)))) != 0) {
+		return 1;
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010E040_11CFF0.s")
+#endif
 
 // CURRENT(7771)
 #ifdef NON_MATCHING
