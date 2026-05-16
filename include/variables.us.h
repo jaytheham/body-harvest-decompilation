@@ -502,6 +502,7 @@ extern s16 D_80052546;
 extern u8 D_80052547;
 extern u32 D_80052A90; // millseconds played in current level
 extern s32 D_80052A88;
+extern s16 D_80154276;
 extern s32 D_80052A8C;
 extern s16 D_80052A8E;
 extern Unk80052A94 *D_80052A94; // This is a ptr to a [512][512] array of Heightmap data? Is 256x256 s16?
@@ -526,6 +527,7 @@ extern Unk80052B2C D_80052AE8;
 extern s32 D_80052550;
 extern s32 D_80052558;
 extern GameplayMode gameplayMode; // 80052adc
+extern VehicleInstance* D_80052B20;
 extern Unk80052B2C* D_80052B2C;
 extern s32 D_80052B38;
 extern s32 D_80052B3C;
@@ -1643,7 +1645,10 @@ extern s16 D_80159318;
 extern s16 D_80159316;
 extern f64 D_80144A90_153A40;
 extern f64 D_80144A98_153A48;
+extern f64 D_80144AA0_153A50;
+extern f64 D_80144AA8_153A58;
 extern UnkF9230Func80102FA4Point D_80159420[];
+extern UnkF9230Func80102FA4Point D_801594E0[];
 extern VehicleInstance *D_80158E64;
 extern VehicleInstance *D_80158E78;
 extern s32 D_80159D10;
@@ -2648,6 +2653,7 @@ extern s16 D_801542BE;
 extern s16 D_801542CA;
 extern s16 D_801542D6;
 extern s16 D_80154282;
+extern s16 D_8015428E;
 extern s16 D_8015422E;
 extern s16 D_8015425E;
 extern s16 D_8015426A;
@@ -3128,6 +3134,8 @@ extern u8 D_801421B8[];
 extern f64 D_80142328;
 extern f64 D_80142350;
 extern f64 D_80142358;
+extern f64 D_80142380_151330;
+extern f64 D_801423A8_151358;
 extern Unk_8003CEC0 D_8003CEC0[5];
 extern Unk_8013D91C D_8013D91C[6];
 

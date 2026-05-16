@@ -709,7 +709,185 @@ void func_800A8C44_B7BF4(s16 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A8C44_B7BF4.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(4305)
+s32 func_800A8E18_B7DC8(s32 arg0) {
+	s32 result;
+	VehicleInstance* temp_v0;
+	VehicleInstance* temp_a2;
+	u16 temp_v1;
+
+	result = 0;
+	if ((u32)arg0 < 0x1C) {
+		switch (arg0) {
+			case 0:
+				result = func_801391DC_14818C(9, -0x8000);
+				break;
+			case 1:
+				temp_a2 = &vehicleInstances[0];
+				if (temp_a2->unk1C != 0) {
+					temp_v0 = D_80052B34;
+					temp_v1 = vehicleSpecs[temp_v0->unk1A].hitPoints;
+					if (temp_v0->unk1C < temp_v1) {
+						if (arg0 == 1) {
+							temp_v0->unk1C += temp_v1 / 4;
+							result = 1;
+							temp_v1 = vehicleSpecs[temp_v0->unk1A].hitPoints;
+							if (temp_v1 < temp_v0->unk1C) {
+								temp_v0->unk1C = temp_v1;
+							}
+						} else {
+							temp_v0->unk1C = temp_v1;
+							result = 1;
+						}
+					} else {
+						temp_v1 = vehicleSpecs[temp_a2->unk1A].hitPoints;
+						if (temp_a2->unk1C < temp_v1) {
+							if (arg0 == 1) {
+								temp_a2->unk1C += temp_v1 / 4;
+								result = 1;
+								if (temp_v1 < temp_a2->unk1C) {
+									temp_a2->unk1C = temp_v1;
+								}
+							} else {
+								temp_a2->unk1C = temp_v1;
+								result = 1;
+							}
+						}
+					}
+				}
+				break;
+
+			case 2:
+				result = func_801391DC_14818C(1, -0x8000);
+				break;
+
+			case 3:
+				result = func_801391DC_14818C(2, -0x8000);
+				break;
+
+			case 4:
+				if ((currentLevel == 4) && (D_80047F94 == 0)) {
+					result = func_801391DC_14818C(3, 0);
+				} else {
+					result = func_801391DC_14818C(3, 0xA);
+				}
+				break;
+
+			case 5:
+				result = func_801391DC_14818C(4, 0xA);
+				break;
+
+			case 6:
+				result = func_801391DC_14818C(5, 0x64);
+				break;
+
+			case 7:
+				result = func_801391DC_14818C(6, 5);
+				break;
+
+			case 8:
+				result = func_801391DC_14818C(7, 3);
+				break;
+
+			case 9:
+				if (func_800E60CC_F507C(2, *((u8*) D_80052B2C + 0x35)) != 0) {
+					D_8014F7F4 += 0x258;
+					result = 1;
+				} else {
+					D_8014F7F4 = 0x258;
+					func_800E5CF4_F4CA4(2, *((u8*) D_80052B2C + 0x35));
+					result = 1;
+				}
+				break;
+
+			case 10:
+				result = func_80139150_148100(3, 5);
+				break;
+
+			case 11:
+				result = func_80139150_148100(3, 0x14);
+				break;
+
+			case 12:
+				result = func_80139150_148100(6, 3);
+				break;
+
+			case 13:
+				result = func_80139150_148100(6, 0xA);
+				break;
+
+			case 14:
+				result = func_80139150_148100(0xA, 0x19);
+				break;
+
+			case 15:
+				result = func_80139150_148100(5, 0x32);
+				break;
+
+			case 16:
+				result = func_80139150_148100(4, 0x14);
+				break;
+
+			case 17:
+				D_8004DC5C++;
+				if (D_8004DC5C == 3) {
+					result = func_801391DC_14818C(0xA, 0x32);
+					func_800DA994_E9944();
+					func_8001A650_1B250(0x15);
+				}
+				break;
+
+			case 18:
+				D_8004DC5E++;
+				break;
+
+			case 19:
+				result = func_80139150_148100(0xE, 0x14);
+				break;
+
+			case 20:
+				result = func_80139150_148100(0xE, 0xA);
+				break;
+
+			case 21:
+				result = func_80139150_148100(0x10, 3);
+				break;
+
+			case 22:
+				result = func_80139150_148100(0x11, 5);
+				break;
+
+			case 23:
+				result = func_80139150_148100(0xF, 0x1E);
+				break;
+
+			case 24:
+				result = func_80139150_148100(0xF, 0xF);
+				break;
+
+			case 25:
+				result = func_80139150_148100(3, 2);
+				break;
+
+			case 26:
+				break;
+
+			case 27:
+				break;
+
+		}
+	}
+
+	if (result != 0) {
+		func_80139020_147FD0(arg0);
+	}
+
+	return result;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A8E18_B7DC8.s")
+#endif
 
 // guess_givePowerUp
 void func_800A9238_B81E8() {

@@ -2195,7 +2195,7 @@ void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 	u8 *base;
 	u8 *entry;
 	s16 v1;
-	s16 i;
+	s32 i;
 	u8 var_a3;
 	s16 var_a2;
 
@@ -4603,7 +4603,113 @@ void func_80100114_10F0C4(VehicleInstance *arg0) {
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, (s32)&D_801592C0);
 }
 
+#ifdef NON_MATCHING
+// CURRENT(2650)
+void func_801001B4_10F164(void) {
+	s16 *xPtr;
+	s16 *yPtr;
+	s16 *zPtr;
+	s16 x;
+	s16 y;
+	s16 z;
+	s16 i;
+
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+	gSPMatrix(D_8005BB2C++, (u32)&D_80031160 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+
+	xPtr = &D_80159328[31];
+	yPtr = &D_80159368[31];
+	zPtr = &D_801593A8[31];
+	i = 31;
+	do {
+		x = *xPtr;
+		y = *yPtr;
+		z = *zPtr;
+
+		if ((x != 0) || (y != 0) || (z != 0)) {
+			D_8005BB34->v.ob[0] = x;
+			D_8005BB34->v.ob[1] = y;
+			D_8005BB34->v.ob[2] = z;
+			D_8005BB34->v.cn[0] = 0xFF;
+			D_8005BB34->v.cn[1] = 0xFF;
+			D_8005BB34->v.cn[2] = 0xFF;
+			D_8005BB34->v.cn[3] = 0xFF;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = x + 0x10;
+			D_8005BB34->v.ob[1] = y + 0x40;
+			D_8005BB34->v.ob[2] = z;
+			D_8005BB34->v.cn[0] = 0xFF;
+			D_8005BB34->v.cn[1] = 0xFF;
+			D_8005BB34->v.cn[2] = 0xFF;
+			D_8005BB34->v.cn[3] = 0xFF;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = x - 0x10;
+			D_8005BB34->v.ob[1] = y + 0x40;
+			D_8005BB34->v.ob[2] = z;
+			D_8005BB34->v.cn[0] = 0xFF;
+			D_8005BB34->v.cn[1] = 0xFF;
+			D_8005BB34->v.cn[2] = 0xFF;
+			D_8005BB34->v.cn[3] = 0xFF;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = x;
+			D_8005BB34->v.ob[1] = y + 0x40;
+			D_8005BB34->v.ob[2] = z + 0x10;
+			D_8005BB34->v.cn[0] = 0xFF;
+			D_8005BB34->v.cn[1] = 0xFF;
+			D_8005BB34->v.cn[2] = 0xFF;
+			D_8005BB34->v.cn[3] = 0xFF;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = x;
+			D_8005BB34->v.ob[1] = y + 0x40;
+			D_8005BB34->v.ob[2] = z - 0x10;
+			D_8005BB34->v.cn[0] = 0xFF;
+			D_8005BB34->v.cn[1] = 0xFF;
+			D_8005BB34->v.cn[2] = 0xFF;
+			D_8005BB34->v.cn[3] = 0xFF;
+			D_8005BB34++;
+
+			gSPVertex(D_8005BB2C++, (u32)(D_8005BB34 - 5) & 0x1FFFFFFF, 5, 0);
+			gDPPipeSync(D_8005BB2C++);
+			gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 0, 3, 4, 0);
+			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+		}
+
+		xPtr--;
+		yPtr--;
+		zPtr--;
+	} while (i-- != 0);
+
+	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
+	gDPPipeSync(D_8005BB2C++);
+
+	xPtr = &D_80159328[31];
+	yPtr = &D_80159368[31];
+	zPtr = &D_801593A8[31];
+	i = 31;
+	do {
+		*xPtr = 0;
+		*yPtr = 0;
+		*zPtr = 0;
+		xPtr--;
+		yPtr--;
+		zPtr--;
+	} while (i-- != 0);
+
+	D_801593E8 = 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801001B4_10F164.s")
+#endif
 
 void func_801005CC_10F57C(s32 arg0, s32 arg1) {
 	VehicleInstance *sp1C;
@@ -5157,7 +5263,79 @@ s32 func_80102FA4_111F54(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80102FA4_111F54.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(8943)
+void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1) {
+	UnkF9230Func80102FA4Point *point;
+	f32 midX;
+	f32 midY;
+	f32 midZ;
+	f32 chainX;
+	f32 chainY;
+	f32 chainZ;
+	f32 posX;
+	f32 posY;
+	f32 posZ;
+	f64 damping;
+	f64 spring;
+
+	damping = D_80144AA0_153A50;
+	midX = (f32)((f64)arg0->unk0 - ((f64)((f32)arg0->unk0 - D_801593F0[10].pos.x) * 0.5));
+	midY = (f32)((f64)arg0->unk2 - ((f64)((f32)arg0->unk2 - D_801593F0[10].pos.y) * 0.5));
+	midZ = (f32)((f64)arg0->unk4 - ((f64)((f32)arg0->unk4 - D_801593F0[10].pos.z) * 0.5));
+
+	D_801593F0[11].vel.x = (f32)(((f64)D_801593F0[11].vel.x * damping) + (f64)(midX - D_801593F0[11].pos.x));
+	D_801593F0[11].vel.y = (f32)((((f64)D_801593F0[11].vel.y * damping) + (f64)(midY - D_801593F0[11].pos.y)) - 4.0);
+	D_801593F0[11].vel.z = (f32)(((f64)D_801593F0[11].vel.z * damping) + (f64)(midZ - D_801593F0[11].pos.z));
+
+	D_801593F0[11].pos.x = (f32)arg0->unk0;
+	D_801593F0[11].pos.y = (f32)(arg0->unk2 + 0x26);
+	D_801593F0[11].pos.z = (f32)arg0->unk4;
+
+	chainX = D_801594E0[0].pos.x;
+	chainY = D_801594E0[0].pos.y;
+	chainZ = D_801594E0[0].pos.z;
+	spring = D_80144AA8_153A58;
+
+	point = D_801594E0;
+	while ((u32)point >= (u32)D_80159420) {
+		posX = point->pos.x;
+		posY = point->pos.y;
+		posZ = point->pos.z;
+
+		point--;
+
+		midX = (f32)((f64)chainX - ((f64)(chainX - point->pos.x) * 0.5));
+		midY = (f32)((f64)chainY - ((f64)(chainY - point->pos.y) * 0.5));
+		midZ = (f32)((f64)chainZ - ((f64)(chainZ - point->pos.z) * 0.5));
+
+		point->vel.x = (f32)(((f64)point->vel.x * damping) + (f64)(midX - posX));
+		point->vel.y = (f32)((((f64)point->vel.y * damping) + (f64)(midY - posY)) - 4.0);
+		point->vel.z = (f32)(((f64)point->vel.z * damping) + (f64)(midZ - posZ));
+
+		chainX = (f32)((f64)posX + ((f64)point->vel.x * spring));
+		point->pos.x = chainX;
+		chainY = (f32)((f64)posY + ((f64)point->vel.y * spring));
+		point->pos.y = chainY;
+		chainZ = (f32)((f64)posZ + ((f64)point->vel.z * spring));
+		point->pos.z = chainZ;
+	}
+
+	midX = (f32)((f64)D_801593F0[1].pos.x - ((f64)(D_801593F0[1].pos.x - (f32)arg1->unk0) * 0.5));
+	midY = (f32)((f64)D_801593F0[1].pos.y - ((f64)(D_801593F0[1].pos.y - (f32)arg1->unk2) * 0.5));
+	midZ = (f32)((f64)D_801593F0[1].pos.z - ((f64)(D_801593F0[1].pos.z - (f32)arg1->unk4) * 0.5));
+
+	D_801593F0[0].vel.x = (f32)(((f64)D_801593F0[0].vel.x * damping) + (f64)(midX - D_801593F0[0].pos.x));
+	D_801593F0[0].vel.y = (f32)((((f64)D_801593F0[0].vel.y * damping) + (f64)(midY - D_801593F0[0].pos.y)) - 4.0);
+	D_801593F0[0].vel.z = (f32)(((f64)D_801593F0[0].vel.z * damping) + (f64)(midZ - D_801593F0[0].pos.z));
+
+	D_801593F0[0].pos.x = (f32)arg1->unk0;
+	D_801593F0[0].pos.y = (f32)(D_80257A38[arg1->unk1A * 0x38] + arg1->unk2);
+	D_801593F0[0].pos.z = (f32)arg1->unk4;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103308_1122B8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103760_112710.s")
 
