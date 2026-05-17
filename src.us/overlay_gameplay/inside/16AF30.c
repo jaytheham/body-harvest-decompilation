@@ -884,23 +884,30 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084C68_16CD28.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(240)
+// CURRENT(2760)
 #ifdef NON_MATCHING
 s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11) {
 	extern f64 D_800A5468_18D528;
 
-	s32 effect;
+	s16 effect;
 	s16 x;
 	s16 y;
 	s16 z;
 	u8 scale;
 	Unk84EECEffect *entry;
 	Unk84EECEffect *other;
+	u8 *entryBytes;
+	u8 *base;
+	s32 offset;
 
 	effect = func_80083584_16B644(0xD);
 	if (effect != -3) {
-		entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+		base = (u8 *)&D_800FB7B0;
+		offset = (effect << 2) - effect;
+		offset = (offset << 2) - effect;
+		offset <<= 1;
+		entry = (Unk84EECEffect *)(base + offset);
+		entryBytes = (u8 *)entry + 8;
 		x = arg0 * 4;
 		y = arg1 * 4;
 		z = arg2 * 4;
@@ -919,11 +926,14 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 			scale = 0xFF - arg10;
 		}
 
-		entry->unk13 = scale;
-		entry->unk12 = 0;
-		entry->unk14 = 0;
+		entryBytes[0xB] = scale;
+		entryBytes[0xA] = 0;
+		entryBytes[0xC] = 0;
 
-		other = &((Unk84EECEffect *)&D_800FB7B0)[entry->unk4];
+		offset = (entry->unk4 << 2) - entry->unk4;
+		offset = (offset << 2) - entry->unk4;
+		offset <<= 1;
+		other = (Unk84EECEffect *)(base + offset);
 		other->unk8 = x;
 		other->unkA = y;
 		other->unkC = z;
@@ -940,9 +950,6 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 
 	return effect;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084EEC_16CFAC.s")
-#endif
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084EEC_16CFAC.s")
 #endif
