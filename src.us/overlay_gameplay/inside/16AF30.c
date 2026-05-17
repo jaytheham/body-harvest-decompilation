@@ -87,27 +87,31 @@ void func_8008311C_16B1DC(void) {
 	func_80083014_16B0D4(&D_800FB6C0, &D_800FB6C0);
 }
 
+// CURRENT(240)
 #ifdef NON_MATCHING
-s32 func_80083224_16B2E4(s32 arg0) {
+s32 func_80083224_16B2E4(u8 arg0) {
 	s32 slot;
-	u8 i;
+	u8 count;
+	u8 *slotPtr;
+	s32 i;
 
-	if (D_800FB7AC >= 0xF) {
-		osSyncPrintf(&D_800A4F94_18D054, (u8) arg0);
+	count = D_800FB7AC;
+	if (count >= 0xF) {
+		osSyncPrintf(&D_800A4F94_18D054, arg0);
 		slot = 0xFB;
 	} else {
 		slot = D_800FB7AD;
-		D_800FB7AC++;
+		slotPtr = (u8 *)D_800FB6F8 + (slot * 0xC);
+		D_800FB7AC = count + 1;
 		D_800FB7AD = 0xF;
-		D_800FB6F8[slot].unk4 = 0;
-		D_800FB6F8[slot].unk6 = -6;
-		D_800FB6F8[slot].pad0[0] = arg0;
-		if (slot < 0xF) {
-			for (i = slot; i < 0xF; i++) {
-				if (D_800FB6F8[i].pad0[0] == 0xFA) {
-					D_800FB7AD = i;
-					i = 0xF;
-				}
+		slotPtr[4] = 0;
+		*(s16 *)&slotPtr[6] = -6;
+		*(s16 *)&slotPtr[8] = -6;
+		slotPtr[0] = arg0;
+		for (i = slot; i < 0xF; i = (i + 1) & 0xFF) {
+			if (*((u8 *)D_800FB6F8 + (i * 0xC)) == 0xFA) {
+				D_800FB7AD = i;
+				i = 0xF;
 			}
 		}
 	}
