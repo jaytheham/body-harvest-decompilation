@@ -1019,7 +1019,7 @@ s32 func_80083224_16B2E4(u8 arg0);
 void func_80083300_16B3C0(s32 arg0);
 void func_800835F0_16B6B0(s16 arg0, u8 arg1);
 s16 func_80083390_16B450(u8 arg0);
-void func_80083A20_16BAE0(s32 arg0, Vec3f *arg1, s32 arg2, s32 arg3);
+void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3);
 void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12);
 void func_800839B8_16BA78(s32 arg0);
 s32 func_80018AA0_196A0(void);

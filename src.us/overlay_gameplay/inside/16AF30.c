@@ -366,8 +366,9 @@ void func_800839B8_16BA78(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800839B8_16BA78.s")
 #endif
 
+// CURRENT(9480)
 #ifdef NON_MATCHING
-void func_80083A20_16BAE0(s32 arg0, Vec3f *arg1, s32 arg2, s32 arg3) {
+void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	typedef struct {
 		s16 unk0;
 		s16 unk2;
@@ -381,8 +382,13 @@ void func_80083A20_16BAE0(s32 arg0, Vec3f *arg1, s32 arg2, s32 arg3) {
 		s16 unkC;
 	} Unk83A20Pos;
 
+	typedef struct {
+		u8 pad0[8];
+		Unk83A20Pos pos;
+	} Unk83A20Entry;
+
 	f32 sp3C;
-	f32 sp38;
+	volatile f32 sp38;
 	f32 sp34;
 	s16 sp32;
 	s16 sp30;
@@ -394,40 +400,37 @@ void func_80083A20_16BAE0(s32 arg0, Vec3f *arg1, s32 arg2, s32 arg3) {
 	s16 temp_v1_2;
 	s16 temp_v1_3;
 	s32 temp_hi;
-	s32 slot;
-	u8 arg2Byte;
-	u8 arg3Byte;
 	Unk83A20Pos *temp_s0;
 	Unk83A20Pos *temp_s1;
 
-	slot = arg0 & 0xFF;
-	arg2Byte = arg2;
-	arg3Byte = arg3;
-	temp_s0 = &((Unk83A20Pos *)&D_800FB7B0)[D_800FB6F8[slot].unk6];
-	temp_v0 = func_80083390_16B450(slot);
+	temp_s0 = &((Unk83A20Entry *)&D_800FB7B0)[D_800FB6F8[arg0].unk6].pos;
+	temp_v0 = func_80083390_16B450(arg0);
 	if (temp_v0 != -3) {
 		if (temp_s0->unkA == 1) {
-			temp_s1 = &((Unk83A20Pos *)&D_800FB7B0)[temp_v0];
+			temp_s1 = &((Unk83A20Entry *)&D_800FB7B0)[temp_v0].pos;
 			temp_s1->unk0 = temp_s0->unk0;
 			temp_s1->unk2 = temp_s0->unk2;
 			temp_s1->unk4 = temp_s0->unk4;
-			sp34 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3Byte) / D_800A5450_18D510);
+			sp34 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5450_18D510);
 			if ((func_800038E0_44E0() % 21) < 10) {
-				sp34 = 0.0f - sp34;
+				temp_f0 = sp34;
+				sp34 = 0.0f - temp_f0;
 			}
 			sp34 += arg1->x;
-			sp38 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3Byte) / D_800A5458_18D518);
+			sp38 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5458_18D518);
 			if ((func_800038E0_44E0() % 21) < 10) {
-				sp38 = 0.0f - sp38;
+				temp_f0 = sp38;
+				sp38 = 0.0f - temp_f0;
 			}
 			sp38 += arg1->y;
-			sp3C = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3Byte) / D_800A5460_18D520);
+			sp3C = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5460_18D520);
 			if ((func_800038E0_44E0() % 21) < 10) {
-				sp3C = 0.0f - sp3C;
+				temp_f0 = sp3C;
+				sp3C = 0.0f - temp_f0;
 			}
 			sp3C += arg1->z;
 			func_80083014_16B0D4((Vec3f *)&sp34, (Vec3f *)&sp34);
-			temp_f0 = (f32) ((s32) arg2Byte / 4);
+			temp_f0 = (f32) ((s32) arg2 / 4);
 			temp_s1->unk6 = (s8) (s32) (temp_f0 * sp34);
 			temp_s1->unk7 = (s8) (s32) (temp_f0 * sp38);
 			temp_s1->unk9 = 0xFF;
@@ -442,7 +445,7 @@ void func_80083A20_16BAE0(s32 arg0, Vec3f *arg1, s32 arg2, s32 arg3) {
 		sp2E = (func_800038E0_44E0() % (temp_v1_2 * 2)) - temp_v1_2;
 		temp_v1_3 = temp_s0->unkC;
 		temp_hi = func_800038E0_44E0() % (temp_v1_3 * 2);
-		temp_s1 = &((Unk83A20Pos *)&D_800FB7B0)[sp32];
+		temp_s1 = &((Unk83A20Entry *)&D_800FB7B0)[sp32].pos;
 		temp_s1->unk0 = temp_s0->unk0 + sp30;
 		temp_a0 = temp_hi - temp_v1_3;
 		temp_s1->unk2 = temp_s0->unk2 + sp2E;
