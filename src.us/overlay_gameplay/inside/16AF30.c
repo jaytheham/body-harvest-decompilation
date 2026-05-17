@@ -990,6 +990,7 @@ s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008506C_16D12C.s")
 #endif
 
+// CURRENT(3233)
 #ifdef NON_MATCHING
 void func_800852B8_16D378(s32 arg0) {
 	extern f64 D_800A5470_18D530;
@@ -1003,6 +1004,7 @@ void func_800852B8_16D378(s32 arg0) {
 	s32 temp_t6;
 	Unk84EECEffect *base;
 	Unk84EECEffect *entry;
+	Unk84EECEffect *other;
 	u8 *baseBytes;
 	Vec3f sp44;
 	Vec3f sp38;
@@ -1019,39 +1021,40 @@ void func_800852B8_16D378(s32 arg0) {
 		entry->unkA = base->unkA;
 		entry->unkC = base->unkC;
 
-		baseBytes = (u8 *)&((Unk84EECEffect *)&D_800FB7B0)[next];
-		entry->unk11 = baseBytes[0x10];
+		other = &((Unk84EECEffect *)&D_800FB7B0)[next];
+		entry->unk11 = other->unk10;
+		baseBytes = (u8 *)&other->unk8;
 
 		entry->unk2 = (func_800038E0_44E0() % (base->unk2 * 2)) + base->unk2;
 
-		sp44.x = (f32)(s8)baseBytes[8];
-		sp44.y = (f32)(s8)baseBytes[9];
-		sp44.z = (f32)(s8)baseBytes[0xA];
+		sp44.x = (f32)(s8)baseBytes[0];
+		sp44.y = (f32)(s8)baseBytes[1];
+		sp44.z = (f32)(s8)baseBytes[2];
 		func_80083014_16B0D4(&sp44, &sp44);
 
-		sp38.x = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[0xC]) / D_800A5470_18D530);
+		sp38.x = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[4]) / D_800A5470_18D530);
 		if ((func_800038E0_44E0() % 21) < 10) {
-			sp38.x = -sp38.x;
+			sp38.x = 0.0f - sp38.x;
 		}
 		sp38.x += sp44.x;
 
-		sp38.y = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[0xC]) / D_800A5478_18D538);
+		sp38.y = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[4]) / D_800A5478_18D538);
 		if ((func_800038E0_44E0() % 21) < 10) {
-			sp38.y = -sp38.y;
+			sp38.y = 0.0f - sp38.y;
 		}
 		sp38.y += sp44.y;
 
-		sp38.z = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[0xC]) / D_800A5480_18D540);
+		sp38.z = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[4]) / D_800A5480_18D540);
 		if ((func_800038E0_44E0() % 21) < 10) {
-			sp38.z = -sp38.z;
+			sp38.z = 0.0f - sp38.z;
 		}
 		sp38.z += sp44.z;
 
 		func_80083014_16B0D4(&sp38, &sp38);
 
-		((u8 *)entry)[0xA] = (s8)((s32)(baseBytes[0xB] / 4) * sp38.x);
-		((u8 *)entry)[0xB] = (s8)((s32)(baseBytes[0xB] / 4) * sp38.y);
-		((u8 *)entry)[0xC] = (s8)((s32)(baseBytes[0xB] / 4) * sp38.z);
+		((u8 *)entry)[0xA] = (s8)((s32)(baseBytes[3] / 4) * sp38.x);
+		((u8 *)entry)[0xB] = (s8)((s32)(baseBytes[3] / 4) * sp38.y);
+		((u8 *)entry)[0xC] = (s8)((s32)(baseBytes[3] / 4) * sp38.z);
 	}
 }
 #else
