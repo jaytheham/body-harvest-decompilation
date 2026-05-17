@@ -1767,12 +1767,14 @@ typedef struct {
 } UnkFC8E8Entry; /* stride 0x14 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[2];
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ u8 unk4;
 	/* 0x05 */ u8 unk5;
 	/* 0x06 */ s16 unk6;
-	/* 0x08 */ u8 pad8[4];
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ u8 padA[2];
 } UnkFB6F8Entry; /* stride 0xC */
 
 typedef struct {

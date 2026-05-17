@@ -2630,7 +2630,7 @@ extern s16 D_800FC8E2;
 extern u8 D_8006AC10; // english comms strings
 extern u8 D_8006C410;
 extern u8 D_8006C450; // english comms strings offsets
-extern UnkFB6F8Entry D_800FB6F8[];
+extern UnkFB6F8Entry D_800FB6F8[0xF];
 extern u8 D_100AD70[];
 extern u8 D_100B0F0[];
 

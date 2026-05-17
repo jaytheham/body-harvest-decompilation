@@ -87,35 +87,41 @@ void func_8008311C_16B1DC(void) {
 	func_80083014_16B0D4(&D_800FB6C0, &D_800FB6C0);
 }
 
-// CURRENT(240)
+// https://decomp.me/scratch/qmTkk
+// CURRENT(200)
 #ifdef NON_MATCHING
-	s32 slot;
-	u8 count;
-	u8 *slotPtr;
-	s32 i;
-
-	count = D_800FB7AC;
-	if (count >= 0xF) {
-		osSyncPrintf(&D_800A4F94_18D054, arg0);
-		slot = 0xFB;
-	} else {
-		slot = D_800FB7AD;
-		slotPtr = (u8 *)D_800FB6F8 + (slot * 0xC);
-		D_800FB7AC = count + 1;
-		D_800FB7AD = 0xF;
-		slotPtr[4] = 0;
-		*(s16 *)&slotPtr[6] = -6;
-		*(s16 *)&slotPtr[8] = -6;
-		slotPtr[0] = arg0;
-		for (i = slot; i < 0xF; i = (i + 1) & 0xFF) {
-			if (*((u8 *)D_800FB6F8 + (i * 0xC)) == 0xFA) {
-				D_800FB7AD = i;
-				i = 0xF;
-			}
-		}
+s32 func_80083224_16B2E4(u8 arg0)
+{
+  s32 slot;
+  u8 count;
+  UnkFB6F8Entry *slotPtr;
+  s32 i;
+  count = D_800FB7AC;
+  if (count >= 0xF)
+  {
+	osSyncPrintf(&D_800A4F94_18D054, arg0);
+	slot = 0xFB;
+  }
+  else
+  {
+	slot = D_800FB7AD;
+	slotPtr = ((u8 *) D_800FB6F8) + (slot * 0xC);
+	slotPtr->unk0 = arg0;
+	slotPtr->unk4 = 0;
+	slotPtr->unk6 = -6;
+	slotPtr->unk8 = -6;
+	D_800FB7AC = count + 1;
+	D_800FB7AD = 0xF;
+	for (i = slot; i < 0xF; i = (i + 1) & 0xFF)
+	{
+	  if ((*(((u8 *) D_800FB6F8) + (i * 0xC))) == 0xFA)
+	  {
+		D_800FB7AD = i;
+		i = 0xF;
+	  }
 	}
-
-	return slot;
+  }
+  return slot;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083224_16B2E4.s")
@@ -163,11 +169,11 @@ s16 func_80083390_16B450(u8 arg0) {
 			D_800FB6F8[arg0].unk6 = effect;
 			((Unk835F0Effect *)&D_800FB7B0)[effect].unk6 = -4;
 		} else {
-			((Unk835F0Effect *)&D_800FB7B0)[effect].unk6 = *((s16 *)&D_800FB6F8[arg0].pad8[0]);
-			((Unk835F0Effect *)&D_800FB7B0)[*((s16 *)&D_800FB6F8[arg0].pad8[0])].unk4 = effect;
+			((Unk835F0Effect *)&D_800FB7B0)[effect].unk6 = D_800FB6F8[arg0].unk8;
+			((Unk835F0Effect *)&D_800FB7B0)[D_800FB6F8[arg0].unk8].unk4 = effect;
 		}
 
-		*((s16 *)&D_800FB6F8[arg0].pad8[0]) = effect;
+		D_800FB6F8[arg0].unk8 = effect;
 		D_800FB6F8[arg0].unk4++;
 		D_800FC8E0++;
 		D_800FC8E2 = 0xC8;
