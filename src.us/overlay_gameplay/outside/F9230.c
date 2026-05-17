@@ -983,7 +983,129 @@ void func_800EB090_FA040(void) {
 	D_80157A28 &= ~4;
 }
 
+// CURRENT(16512)
+#ifdef NON_MATCHING
+void func_800EB0C8_FA078(VehicleInstance *arg0) {
+	f32 speedScale;
+	f32 xDiff;
+	f32 zDiff;
+	f32 xStep;
+	f32 zStep;
+	f32 xStepScaled;
+	f32 zStepScaled;
+	f32 yawRad;
+	f32 slopeDeg;
+	f32 targetX;
+	f32 targetZ;
+	s32 stateFlags;
+
+	stateFlags = ((Unk8009E8DC *) D_8013E5B0_14D560)[D_80157600.unk40C].unk0;
+	speedScale = 1.0f;
+
+	if (stateFlags & 0x10) {
+		func_800FB430_10A3E0(NULL, 0.0f);
+		stateFlags = ((Unk8009E8DC *) D_8013E5B0_14D560)[D_80157A0C].unk0;
+	}
+
+	if (stateFlags & 0x800) {
+		s16 *path;
+
+		func_800FB430_10A3E0(arg0, 0.0f);
+
+		xDiff = (D_80157600.unk8 - D_80157600.unk414) / 4.0f;
+		zDiff = (D_80157600.unk10 - D_80157600.unk418) / 4.0f;
+
+		yawRad = (f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0);
+		xStep = (cosf(yawRad) * zDiff) - (sinf(yawRad) * xDiff);
+
+		yawRad = (f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0);
+		zStep = (cosf(yawRad) * xDiff) + (sinf(yawRad) * zDiff);
+
+		slopeDeg = (f32)(((f64)(f32)func_800FA690_109640(arg0->unk0, arg0->unk4, arg0->unkE) * 360.0) / 32768.0);
+		if (slopeDeg < -10.0f) {
+			u16 flags = D_80052B34->unk20;
+
+			if (!(flags & 0x800) && !(flags & 4) && !(D_80157A28 & 4)) {
+				if (slopeDeg < -10.0f) {
+					speedScale = 1.25f;
+				}
+				if (slopeDeg < -15.0f) {
+					speedScale = 1.5f;
+				}
+				if (slopeDeg < -20.0f) {
+					speedScale = 1.75f;
+				}
+				if (slopeDeg < -25.0f) {
+					speedScale = 2.0f;
+				}
+			}
+		}
+
+		xStepScaled = xStep * speedScale;
+		zStepScaled = zStep * speedScale;
+
+		if (D_80048188 != 0) {
+			s16 targetPosX;
+			s16 targetPosZ;
+			s16 dx;
+			s16 dz;
+			s16 absDx;
+			s16 absDz;
+			f32 absXStep;
+			f32 absZStep;
+
+			path = (s16 *) &D_801575E0 + D_801575E0.unk4;
+			targetPosX = path[3];
+			if (targetPosX != 0x7FFF) {
+				targetPosZ = path[7];
+
+				dx = targetPosX - arg0->unk0;
+				dz = targetPosZ - arg0->unk4;
+				absDx = (dx >= 0) ? dx : -dx;
+				absDz = (dz >= 0) ? dz : -dz;
+
+				if (xStepScaled >= 0.0f) {
+					absXStep = xStepScaled;
+				} else {
+					absXStep = -xStepScaled;
+				}
+
+				if ((f32)absDx < absXStep) {
+					targetX = targetPosX;
+				} else {
+					targetX = arg0->unk4C + xStepScaled;
+				}
+
+				if (zStepScaled >= 0.0f) {
+					absZStep = zStepScaled;
+				} else {
+					absZStep = -zStepScaled;
+				}
+
+				if ((f32)absDz < absZStep) {
+					targetZ = targetPosZ;
+				} else {
+					targetZ = arg0->unk54 + zStepScaled;
+				}
+			} else {
+				targetX = arg0->unk4C + xStepScaled;
+				targetZ = arg0->unk54 + zStepScaled;
+			}
+		} else {
+			targetX = arg0->unk4C + xStepScaled;
+			targetZ = arg0->unk54 + zStepScaled;
+		}
+
+		func_800FB44C_10A3FC(arg0, targetX);
+		func_800FB484_10A434(arg0, targetZ);
+	}
+
+	D_80157600.unk414 = D_80157600.unk8;
+	D_80157600.unk418 = D_80157600.unk10;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB0C8_FA078.s")
+#endif
 
 // CURRENT(3613)
 #ifdef NON_MATCHING
