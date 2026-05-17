@@ -89,7 +89,6 @@ void func_8008311C_16B1DC(void) {
 
 // CURRENT(240)
 #ifdef NON_MATCHING
-s32 func_80083224_16B2E4(u8 arg0) {
 	s32 slot;
 	u8 count;
 	u8 *slotPtr;
@@ -368,6 +367,7 @@ void func_800839B8_16BA78(s32 arg0) {
 
 // CURRENT(9480)
 #ifdef NON_MATCHING
+
 void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	typedef struct {
 		s16 unk0;
@@ -674,7 +674,7 @@ void func_80084258_16C318(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084258_16C318.s")
 #endif
 
-// CURRENT(3224)
+// CURRENT(2624)
 #ifdef NON_MATCHING
 void func_80084628_16C6E8(s32 arg0) {
 	UnkFB6F8Entry *owner;
@@ -682,15 +682,17 @@ void func_80084628_16C6E8(s32 arg0) {
 	Unk84EECEffect *entry;
 	s16 effect;
 	s16 spread;
-	u16 quarter;
-	u16 half;
-	u16 third;
+	s16 quarter;
+	s16 half;
+	s16 third;
 	s32 rnd;
 	u8 slot;
+	s32 index;
 
 	slot = arg0 & 0xFF;
 	owner = &D_800FB6F8[slot];
-	base = &((Unk84EECEffect *)&D_800FB7B0)[owner->unk6];
+	index = owner->unk6;
+	base = &((Unk84EECEffect *)&D_800FB7B0)[index];
 	spread = base->unk2;
 	effect = func_80083390_16B450(slot);
 	if (effect == -3) {
@@ -698,7 +700,8 @@ void func_80084628_16C6E8(s32 arg0) {
 	}
 
 	rnd = func_800038E0_44E0();
-	entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+	index = effect;
+	entry = &((Unk84EECEffect *)&D_800FB7B0)[index];
 	quarter = spread / 4;
 	entry->unk2 = (rnd % quarter) + quarter;
 	entry->unkE = (base->unk11 + base->unkE) / 2;
@@ -725,7 +728,9 @@ void func_80084628_16C6E8(s32 arg0) {
 
 	rnd = func_800038E0_44E0();
 	entry->unkC = ((rnd % spread) / 2) + base->unkC - quarter;
+
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084628_16C6E8.s")
 #endif
@@ -1196,9 +1201,12 @@ s32 func_80085984_16DA44(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 a
 		randY = func_800038E0_44E0();
 		func_80083F08_16BFC8(arg3, arg4, arg5, dirX, (randX % 60) + 0x41, dirY, 0x1E, (randY % 60) + 0x46, (func_800038E0_44E0() % 3) + 3, 0xA, 0xC8, 0xC8, 0xFF);
 	}
-
-	return ret;
-}
+		temp = base->unkE;
+		entry->unkE = (temp + base->unk11) / 2;
+		temp = base->unkF;
+		entry->unkF = (temp + base->unk12) / 2;
+		temp = base->unk10;
+		entry->unk10 = (temp + base->unk13) / 2;
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085984_16DA44.s")
 #endif
