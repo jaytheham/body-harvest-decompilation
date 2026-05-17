@@ -571,6 +571,7 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800840F0_16C1B0.s")
 #endif
 
+// CURRENT(6001)
 #ifdef NON_MATCHING
 void func_80084258_16C318(s32 arg0) {
 	typedef struct {
@@ -586,8 +587,7 @@ void func_80084258_16C318(s32 arg0) {
 
 	s16 effect;
 	s16 nextEffect;
-	s16 sentinel;
-	s32 slot;
+	u8 slot;
 	u8 life;
 	UnkFB6F8Entry *owner;
 	Unk84EECEffect *a3;
@@ -595,20 +595,19 @@ void func_80084258_16C318(s32 arg0) {
 	Unk84258Pos *s2;
 	Unk84258Pos *v0;
 
-	slot = arg0 & 0xFF;
+	slot = arg0;
 	owner = &D_800FB6F8[slot];
 	effect = owner->unk6;
 	a3 = &((Unk84EECEffect *)&D_800FB7B0)[effect];
 	effect = a3->unk4;
 	s2 = (Unk84258Pos *)&a3->unk8;
-	sentinel = -5;
 
-	while (effect != sentinel && effect != -6) {
+	while (effect != -5 && effect != -6) {
 		if (s2->unkA == 2) {
 			life = s2->unk9;
 			if (life == 0) {
-				func_800839B8_16BA78(slot & 0xFF);
-				func_80083300_16B3C0(slot & 0xFF);
+				func_800839B8_16BA78(slot);
+				func_80083300_16B3C0(slot);
 				return;
 			}
 
@@ -630,13 +629,13 @@ void func_80084258_16C318(s32 arg0) {
 
 			if (v0->unk9 < 0xF) {
 				if (owner->unk4 < 3) {
-					func_800839B8_16BA78(slot & 0xFF);
-					func_80083300_16B3C0(slot & 0xFF);
+					func_800839B8_16BA78(slot);
+					func_80083300_16B3C0(slot);
 					return;
 				}
 
 				nextEffect = entry->unk4;
-				func_800835F0_16B6B0(effect, slot & 0xFF);
+				func_800835F0_16B6B0(effect, slot);
 				effect = nextEffect;
 				continue;
 			}
@@ -652,10 +651,10 @@ void func_80084258_16C318(s32 arg0) {
 				v0->unk2 = 2;
 				v0->unk7 = 0;
 			}
-			if (v0->unk7 < -0x13) {
-				v0->unk7 = -0x14;
-			} else {
+			if (v0->unk7 >= -0x13) {
 				v0->unk7 -= 1;
+			} else {
+				v0->unk7 = -0x14;
 			}
 
 			a3 = entry;
