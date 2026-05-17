@@ -1058,32 +1058,33 @@ void func_800852B8_16D378(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800852B8_16D378.s")
 #endif
 
+// CURRENT(20)
 #ifdef NON_MATCHING
-// CURRENT(280)
 void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
-	s16 temp_v0;
-	u8 *temp_v1;
-	s16 temp_t5;
+	s16 temp_arg0;
+	s16 effect;
+	Unk84EECEffect *entry;
 
-	temp_v0 = func_80083390_16B450(0xB);
-	if (temp_v0 != -3) {
-		temp_v1 = (u8 *)&D_800FB7B0 + temp_v0 * 0x16;
-		*(s16 *)(temp_v1 + 0xA) = 1;
-		temp_v1[0x11] = 0;
-		*(u16 *)(temp_v1 + 0x2) = arg2;
-		*(s16 *)(temp_v1 + 0x8) = arg0;
-		*(s16 *)(temp_v1 + 0xC) = arg1;
-		temp_v1[0x12] = arg6;
-		temp_v1[0xE] = arg3;
-		temp_v1[0xF] = arg4;
-		temp_v1[0x10] = arg5;
-		temp_t5 = arg2 / 2;
-		temp_v1[0x13] = temp_t5;
-		if ((temp_t5 & 0xFF) == 0) {
-			temp_v1[0x13] = 1;
+	temp_arg0 = arg0;
+	effect = func_80083390_16B450(0xB);
+	if (effect != -3) {
+		entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+		entry->unk8 = temp_arg0;
+		entry->unkA = 1;
+		entry->unk11 = 0;
+		entry->unk2 = arg2;
+		entry->unkC = arg1;
+		entry->unk12 = arg6;
+		entry->unkE = arg3;
+		entry->unkF = arg4;
+		entry->unk10 = arg5;
+		entry->unk13 = arg2 / 2;
+		if ((entry->unk13 & 0xFF) == 0) {
+			entry->unk13 = 1;
 		}
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008568C_16D74C.s")
 #endif
