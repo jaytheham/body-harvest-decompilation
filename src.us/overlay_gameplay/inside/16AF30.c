@@ -220,13 +220,16 @@ s16 func_80083584_16B644(u8 arg0) {
 	return sp1E;
 }
 
+// CURRENT(3520)
 #ifdef NON_MATCHING
 void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
+	Unk835F0Effect *baseEffect;
 	Unk835F0Effect *effect;
 	UnkFB6F8Entry *slot;
 	s16 temp;
 
-	effect = &((Unk835F0Effect *)&D_800FB7B0)[arg0];
+	baseEffect = &((Unk835F0Effect *)&D_800FB7B0)[arg0];
+	effect = baseEffect;
 	slot = &D_800FB6F8[arg1];
 
 	if (effect->unk0 == 0) {
@@ -282,7 +285,7 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 			break;
 	}
 
-	effect->unk0 = 0;
+	baseEffect->unk0 = 0;
 	slot->unk4--;
 	D_800FC8E0--;
 	if (arg0 < D_800FC8E2) {
