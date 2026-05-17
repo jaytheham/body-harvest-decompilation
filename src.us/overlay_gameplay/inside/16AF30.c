@@ -1217,12 +1217,9 @@ s32 func_80085984_16DA44(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 a
 		randY = func_800038E0_44E0();
 		func_80083F08_16BFC8(arg3, arg4, arg5, dirX, (randX % 60) + 0x41, dirY, 0x1E, (randY % 60) + 0x46, (func_800038E0_44E0() % 3) + 3, 0xA, 0xC8, 0xC8, 0xFF);
 	}
-		temp = base->unkE;
-		entry->unkE = (temp + base->unk11) / 2;
-		temp = base->unkF;
-		entry->unkF = (temp + base->unk12) / 2;
-		temp = base->unk10;
-		entry->unk10 = (temp + base->unk13) / 2;
+
+	return ret;
+}
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085984_16DA44.s")
 #endif
