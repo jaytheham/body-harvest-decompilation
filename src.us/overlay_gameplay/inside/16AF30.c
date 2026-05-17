@@ -735,6 +735,7 @@ void func_80084628_16C6E8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084628_16C6E8.s")
 #endif
 
+/* CURRENT(5385) */
 #ifdef NON_MATCHING
 void func_80084980_16CA40(s32 arg0, s32 arg1) {
 	UnkFB6F8Entry *owner;
@@ -799,6 +800,7 @@ s32 func_80084C18_16CCD8(u8 arg0) {
 	return result;
 }
 
+// CURRENT(9570)
 #ifdef NON_MATCHING
 u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	UnkFB6F8Entry *owner;
@@ -808,7 +810,6 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 	s16 effect;
 	u16 temp;
 	u8 *entryColor;
-	u8 *linkedColor;
 
 	slot = func_80083224_16B2E4(0);
 	if (slot == 0xFB) {
@@ -817,7 +818,7 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 
 	effect = func_80083584_16B644(slot);
 	if (effect == -3) {
-		osSyncPrintf(D_800A52E8_18D3A8);
+		osSyncPrintf((char *)0x800A52E8);
 		func_80083300_16B3C0(slot);
 		return 0xFB;
 	}
@@ -826,7 +827,7 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 	entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
 
 	entry->unk8 = arg0 * 4;
-	owner->unkA = effect;
+	*(s16 *)((u8 *)owner + 0xA) = effect;
 	entry->unkC = arg2 * 4;
 	linked = &((Unk84EECEffect *)&D_800FB7B0)[entry->unk4];
 	entry->unkA = arg1 * 4;
@@ -874,8 +875,7 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 		entryColor[3] = temp;
 	}
 
-	linkedColor = (u8 *)linked + 8;
-	linkedColor[1] = entryColor[3];
+	((u8 *)linked)[9] = entryColor[3];
 	owner->unk2 = func_80084C18_16CCD8(slot);
 
 	return slot;
@@ -884,6 +884,8 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084C68_16CD28.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(240)
 #ifdef NON_MATCHING
 s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11) {
 	extern f64 D_800A5468_18D528;
@@ -938,6 +940,9 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 
 	return effect;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084EEC_16CFAC.s")
+#endif
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084EEC_16CFAC.s")
 #endif
