@@ -332,19 +332,19 @@ fail:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083814_16B8D4.s")
 #endif
 
+// CURRENT(1290)
 #ifdef NON_MATCHING
 void func_80083924_16B9E4(s16 arg0, s32 arg1) {
 	s16 sp1E;
-	u8 temp_t8;
 
-	temp_t8 = arg1 & 0xFF;
-	if (arg0 >= 0 && arg0 < 0xC8 && temp_t8 < 0xF) {
+	arg1 &= 0xFF;
+	if (arg0 >= 0 && arg0 < 0xC8 && arg1 < 0xF) {
 		sp1E = *(s16 *)(&D_800FB7B4 + (s32) arg0 * 0x16);
-		func_800835F0_16B6B0(arg0, temp_t8);
-		func_800835F0_16B6B0(sp1E, temp_t8);
+		func_800835F0_16B6B0(arg0, arg1);
+		func_800835F0_16B6B0(sp1E, arg1);
 		return;
 	}
-	osSyncPrintf(&D_800A5168, temp_t8);
+	osSyncPrintf((char *)0x800A5168, arg1);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083924_16B9E4.s")
