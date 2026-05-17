@@ -296,13 +296,13 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800835F0_16B6B0.s")
 #endif
 
-#ifdef NON_MATCHING
 /* CURRENT(2244) */
+#ifdef NON_MATCHING
 void func_80083814_16B8D4(s32 arg0, s32 arg1) {
 	s16 sp1E;
 	s16 sp22;
-	s16 temp_t6;
 	u8 temp_t7;
+	s16 temp_t6;
 
 	temp_t6 = arg0;
 	arg1 &= 0xFF;
