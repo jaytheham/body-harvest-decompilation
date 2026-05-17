@@ -461,22 +461,23 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083A20_16BAE0.s")
 #endif
 
+// CURRENT(2240)
 #ifdef NON_MATCHING
 void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12) {
 	s16 effect;
-	s32 slot;
+	u8 slot;
 	Unk84EECEffect *entry;
 	Vec3f dir;
 	s32 i;
 	u8 count;
 
 	i = func_80083224_16B2E4(2);
-	slot = i & 0xFF;
+	slot = i;
 	if (i != 0xFB) {
-		effect = func_80083390_16B450(slot & 0xFF);
+		effect = func_80083390_16B450(slot);
 		if (effect == -3) {
 			osSyncPrintf(&D_800A51A8_18D268);
-			func_80083300_16B3C0(slot & 0xFF);
+			func_80083300_16B3C0(slot);
 			return;
 		}
 
@@ -505,11 +506,8 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 
 		i = 0;
 		if ((s32) count > 0) {
-			s32 arg6Int = arg6;
-			s32 arg7Int = arg7;
-
 			do {
-				func_80083A20_16BAE0(slot & 0xFF, &dir, arg6Int & 0xFF, arg7Int & 0xFF);
+				func_80083A20_16BAE0(slot, &dir, arg6, arg7);
 				i = (i + 1) & 0xFF;
 			} while (i < (s32) count);
 		}
