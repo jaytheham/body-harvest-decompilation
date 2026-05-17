@@ -147,61 +147,46 @@ void func_80083300_16B3C0(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083300_16B3C0.s")
 #endif
 
-#ifdef NON_MATCHING
 s16 func_80083390_16B450(u8 arg0) {
-	typedef struct {
-		u8 unk0;
-		u8 pad1;
-		s16 unk2;
-		s16 unk4;
-		s16 unk6;
-		u8 pad8[0xE];
-	} Unk83390Effect;
-
-	UnkFB6F8Entry *temp_s1;
-	Unk83390Effect *temp_s0;
 	s16 i;
-	s32 effect;
+	s16 effect;
 
 	if (D_800FC8E0 >= 0xC8) {
-		osSyncPrintf(&D_800A501C_18D0DC, arg0);
-		return -3;
-	}
-
-	effect = D_800FC8E2;
-	temp_s1 = &D_800FB6F8[arg0];
-	temp_s0 = &((Unk83390Effect *)&D_800FB7B0)[effect];
-	temp_s0->unk0 = 1;
-	temp_s0->unk2 = 1;
-	temp_s0->unk4 = -5;
-
-	if (temp_s1->unk4 == 0) {
-		temp_s1->unk6 = effect;
-		temp_s0->unk6 = -4;
+		osSyncPrintf(&D_800A501C_18D0DC);
+		effect = -3;
 	} else {
-		temp_s0->unk6 = *((s16 *)&temp_s1->pad8[0]);
-		((Unk83390Effect *)&D_800FB7B0)[temp_s0->unk6].unk4 = effect;
-	}
+		effect = D_800FC8E2;
+		((Unk835F0Effect *)&D_800FB7B0)[effect].unk0 = 1;
+		((Unk835F0Effect *)&D_800FB7B0)[effect].unk2 = 1;
+		((Unk835F0Effect *)&D_800FB7B0)[effect].unk4 = -5;
 
-	*((s16 *)&temp_s1->pad8[0]) = effect;
-	temp_s1->unk4++;
-	D_800FC8E0++;
-	D_800FC8E2 = 0xC8;
-
-	if (effect < 0xC8) {
-		for (i = effect; i < 0xC8; i++) {
-			if (((Unk83390Effect *)&D_800FB7B0)[i].unk0 == 0) {
-				D_800FC8E2 = i;
-				break;
-			}
+		if (D_800FB6F8[arg0].unk4 == 0) {
+			D_800FB6F8[arg0].unk6 = effect;
+			((Unk835F0Effect *)&D_800FB7B0)[effect].unk6 = -4;
+		} else {
+			((Unk835F0Effect *)&D_800FB7B0)[effect].unk6 = *((s16 *)&D_800FB6F8[arg0].pad8[0]);
+			((Unk835F0Effect *)&D_800FB7B0)[*((s16 *)&D_800FB6F8[arg0].pad8[0])].unk4 = effect;
 		}
+
+		*((s16 *)&D_800FB6F8[arg0].pad8[0]) = effect;
+		D_800FB6F8[arg0].unk4++;
+		D_800FC8E0++;
+		D_800FC8E2 = 0xC8;
+
+		i = effect;
+		if (effect < 0xC8) {
+			do {
+				if (((Unk835F0Effect *)&D_800FB7B0)[i].unk0 == 0) {
+					D_800FC8E2 = i;
+					i = 0xC8;
+				}
+				i++;
+			} while (i < 0xC8);
+			}
 	}
 
 	return effect;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083390_16B450.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(451)
