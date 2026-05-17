@@ -33,17 +33,17 @@ f32 func_80082FC4_16B084(Vec3f *arg0) {
 	return var_f12;
 }
 
+// CURRENT(502)
 #ifdef NON_MATCHING
 void func_80083014_16B0D4(Vec3f *arg0, Vec3f *arg1) {
 	f32 temp_f0;
-
 	temp_f0 = func_80082FC4_16B084(arg0);
 	if ((f64) temp_f0 == 0.0) {
-		osSyncPrintf(D_800A4F70, arg0);
+		osSyncPrintf(D_800A4F70_18D030, arg0);
 		*arg1 = *arg0;
-	} else {
-		func_80082F74_16B034(temp_f0, arg0, arg1);
+		return;
 	}
+	func_80082F74_16B034(temp_f0, arg0, arg1);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083014_16B0D4.s")
