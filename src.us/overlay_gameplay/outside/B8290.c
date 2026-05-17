@@ -936,7 +936,97 @@ s32 func_800AC2FC_BB2AC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC2FC_BB2AC.s")
 #endif
 
+// CURRENT(8459)
+#ifdef NON_MATCHING
+void func_800AC5BC_BB56C(u8 arg0) {
+	AlienInstance *alien;
+	s32 triggered;
+	u8 specIdx;
+	f32 speedAbs;
+	s32 limit;
+	s32 dx;
+	s32 dz;
+	s32 neg;
+	s16 cs;
+	s16 sn;
+	s32 temp;
+	s16 yaw;
+	s16 delta;
+
+	triggered = 0;
+	specIdx = D_80052B34->unk1A;
+	if ((specIdx != 0) && ((D_80052B34->unk20 & 2) == 0) && (D_80052B34->unk12 != 0)) {
+		speedAbs = D_80052B34->unk58;
+		if (-speedAbs >= speedAbs) {
+			speedAbs = -speedAbs;
+		}
+
+		alien = &alienInstances[arg0];
+		limit = (s32)(speedAbs * 30.0f + (f32)(D_80257A36[(s32)specIdx * 0x38] >> 1));
+		dx = alien->unk0 - D_80052B34->unk0;
+		dz = alien->unk4 - D_80052B34->unk4;
+		neg = -dx;
+		temp = neg;
+		if (neg < dx) {
+			temp = dx;
+		}
+
+		if (temp < limit) {
+			neg = -dz;
+			temp = neg;
+			if (neg < dz) {
+				temp = dz;
+			}
+
+			if (temp < limit) {
+				cs = coss((u16)D_80052B34->unk6);
+				sn = sins((u16)D_80052B34->unk6);
+				temp = (s32)((((f64)(f32)sn / 32768.0) * (f64)dz) + (((f64)(f32)cs / 32768.0) * (f64)dx));
+
+				sn = sins((u16)D_80052B34->unk6);
+				cs = coss((u16)D_80052B34->unk6);
+				if ((temp < limit && D_80052B34->unk58 > 0.0f) || (-limit < temp && D_80052B34->unk58 < 0.0f)) {
+					temp = (s32)((((f64)(f32)cs / 32768.0) * (f64)dz) + (((f64)(f32)sn / 32768.0) * (f64)(-dx)));
+					if (temp < 0) {
+						temp = -temp;
+					}
+
+					if (temp < (D_80257A34[(s32)D_80052B34->unk1A * 0x38] >> 1)) {
+						triggered = 1;
+					}
+				}
+			}
+		}
+	}
+
+	alien = &alienInstances[arg0];
+	if ((triggered == 0) && ((D_80158FEC != alien) || (func_800A2A88_B1A38() == 0))) {
+		return;
+	}
+
+	yaw = (s16)(D_80052B34->unk6 - D_80052B2C->unk36 + 0x4000);
+	delta = (s16)(alien->unkE - yaw);
+	temp = -delta;
+	if (temp < delta) {
+		temp = delta;
+	}
+	if (temp >= 0x4001) {
+		yaw = (s16)(yaw + 0x8000);
+	}
+
+	alien->unk14 = (s16)(s32)((((f64)(f32)coss((u16)yaw)) / 32768.0) * D_80142A10_1519C0 + (f64)alien->unk0);
+	sn = sins((u16)yaw);
+	alien->unk20 &= ~0x1E0;
+	alien->unk20 |= 0x1100;
+	alien->unk18 = (s16)(s32)((((f64)(f32)sn) / 32768.0) * D_80142A18_1519C8 + (f64)alien->unk4);
+	alien->unk16 = (s16)((func_800B84D0_C7480(alien->unk14, alien->unk18) >> 8) + 0x64);
+	alien->unk2C = 0x32;
+	alien->unk38 = 0xFF;
+	alien->unk48 = 0xA0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC5BC_BB56C.s")
+#endif
 
 s32 func_800ACA3C_BB9EC(u8 arg0) {
 	AlienInstance *ptr = &alienInstances[arg0];

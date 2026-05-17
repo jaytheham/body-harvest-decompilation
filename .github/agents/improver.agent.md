@@ -2,7 +2,7 @@
 name: BH Match Improver
 description: Decompile functions from N64 game Body Harvest
 tools:
-  [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, edit/createFile, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]
+  [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, edit/createFile, edit/editFiles, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]
 model: Auto (copilot)
 ---
 
@@ -28,7 +28,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
  Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match.
  Diff output skips matching instructions except for 3 either side of differences.
 - You can get the full assembly of a function after building by adding param `--show=target` or `--show=current` to the above diff command.
-- You must decompile Gfx macros "raw" `*->words.w0`/`*->words.w1` form will not match. Use `.\tools\gfxdis.ps1`:
+- You must decompile Gfx macros. The "raw" `*->words.w0`/`*->words.w1` form will not match. Use `.\tools\gfxdis.ps1`:
 e.g.
 ```C
 dl = D_8005BB2C;

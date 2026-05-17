@@ -2,8 +2,8 @@
 name: BH Match Improver Orchestration
 description: Manage improver agents
 tools:
-  [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, agent, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]
-model: GPT-5.3-Codex (copilot)
+  [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, agent, edit/editFiles, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]
+model: Auto (copilot)
 agents: ["BH Match Improver"]
 ---
 
@@ -34,6 +34,8 @@ Tell the subagents to reduce the score as much as possible, they should keep goi
 If a function already has a score of less than 100 then skip it. Don't tell the subagent this score threshold.
 
 Keep going automatically until all NON_MATCHING functions in the file have been processed by subagents, you're a competent agent and can complete the full job without reporting to the user until all functions are processed.
+
+Retain any existing comments.
 
 ## Project Structure
 
