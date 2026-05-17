@@ -275,38 +275,31 @@ Unk800522C0 *func_801164C4_125474(s16 arg0, s16 arg1) {
 	return NULL;
 }
 
-#ifdef NON_MATCHING
-void func_80116554_125504(s32 arg0, s16 *arg1, s16 *arg2) {
+void func_80116554_125504(s16 arg0, s16 *arg1, s16 *arg2) {
 	s16 sp6;
 	s16 sp4;
-	s16 var_t9;
 
 	switch (arg0 & 3) {
 		case 0:
-		sp6 = *arg1;
-		var_t9 = *arg2;
-		sp4 = var_t9;
+			sp6 = *arg1;
+			sp4 = *arg2;
 			break;
 		case 1:
-		sp6 = *arg2;
-		sp4 = -*arg1;
+			sp6 = *arg2;
+			sp4 = -*arg1;
 			break;
 		case 2:
-		sp6 = -*arg1;
-		sp4 = -*arg2;
+			sp6 = -*arg1;
+			sp4 = -*arg2;
 			break;
 		case 3:
-		sp6 = -*arg2;
-		var_t9 = *arg1;
-		sp4 = var_t9;
+			sp6 = -*arg2;
+			sp4 = *arg1;
 			break;
 	}
 	*arg1 = sp6;
 	*arg2 = sp4;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80116554_125504.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_801165FC_1255AC(u8 arg0, u8 arg1, s16 *arg2, s16 *arg3, s16 *arg4, s16 *arg5) {
