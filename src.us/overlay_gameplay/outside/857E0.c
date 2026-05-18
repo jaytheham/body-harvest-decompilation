@@ -425,11 +425,13 @@ s32 func_80078B58_87B08(s16 arg0, s16 arg1) {
 	return value;
 }
 
-// CURRENT(3345)
+// CURRENT(480)
 #ifdef NON_MATCHING
 s32 func_80078BC8_87B78(s16 arg0, s16 arg1) {
-	Unk80259D90* entry;
 	s32 idx;
+	Unk80259D90* entry;
+	s32 x;
+	s32 z;
 
 	arg0 >>= 7;
 	arg1 >>= 7;
@@ -439,26 +441,48 @@ s32 func_80078BC8_87B78(s16 arg0, s16 arg1) {
 	}
 
 	idx = 2;
-	if ((D_80259DE2 != -1) && (arg0 == (D_80259DE4 >> 7)) && (arg1 == (D_80259DE6 >> 7))) {
-		return 1;
+	if (D_80259DE2 != -1) {
+		x = D_80259DE4;
+		z = D_80259DE6;
+		if ((arg0 == (x >> 7)) && (arg1 == (z >> 7))) {
+			return 1;
+		}
 	}
 
-	entry = (Unk80259D90*) D_80259E30;
+	entry = &D_80259D90[2];
 	for (; idx != 0x96; idx += 4, entry += 4) {
-		if (((s8) entry[0].unk2 != -1) && (arg0 == (entry[0].unk4 >> 7)) && (arg1 == (entry[0].unk6 >> 7))) {
-			return idx;
+		if ((s8) entry[0].unk2 != -1) {
+			x = entry[0].unk4;
+			if (arg0 == (x >> 7)) {
+				z = entry[0].unk6;
+				if (arg1 == (z >> 7)) {
+					return idx;
+				}
+			}
 		}
 
-		if (((s8) entry[1].unk2 != -1) && (arg0 == (entry[1].unk4 >> 7)) && (arg1 == (entry[1].unk6 >> 7))) {
-			return idx + 1;
+		if ((s8) entry[1].unk2 != -1) {
+			x = entry[1].unk4;
+			z = entry[1].unk6;
+			if ((arg0 == (x >> 7)) && (arg1 == (z >> 7))) {
+				return idx + 1;
+			}
 		}
 
-		if (((s8) entry[2].unk2 != -1) && (arg0 == (entry[2].unk4 >> 7)) && (arg1 == (entry[2].unk6 >> 7))) {
-			return idx + 2;
+		if ((s8) entry[2].unk2 != -1) {
+			x = entry[2].unk4;
+			z = entry[2].unk6;
+			if ((arg0 == (x >> 7)) && (arg1 == (z >> 7))) {
+				return idx + 2;
+			}
 		}
 
-		if (((s8) entry[3].unk2 != -1) && (arg0 == (entry[3].unk4 >> 7)) && (arg1 == (entry[3].unk6 >> 7))) {
-			return idx + 3;
+		if ((s8) entry[3].unk2 != -1) {
+			x = entry[3].unk4;
+			z = entry[3].unk6;
+			if ((arg0 == (x >> 7)) && (arg1 == (z >> 7))) {
+				return idx + 3;
+			}
 		}
 	}
 
