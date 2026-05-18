@@ -7435,12 +7435,11 @@ void func_80092DFC_A1DAC(u8 arg0) {
 	}
 }
 
+/* CURRENT(1235) */
 #ifdef NON_MATCHING
-/* CURRENT(1965) */
 void func_80092EF4_A1EA4(u8 arg0) {
 	u8 sp3F;
 	s16 sp38;
-	AlienSpec *sp30;
 	{
 		AlienInstance *alien = &alienInstances[arg0];
 
@@ -7457,10 +7456,15 @@ void func_80092EF4_A1EA4(u8 arg0) {
 			alien->unk6 = alien->unkE;
 			{
 				Unk8014DD50 *temp_v1 = &D_8014DD50[D_8014DD50[alien->unkC].unkC];
+				u16 temp_a0;
+				s8 temp_a1;
 
-				if (temp_v1->unk8 >= 0x7D1) {
-					temp_v1->unk8 -= 0x7D0;
-					D_8014DD50[temp_v1->unkD].unk8 += 0x7D0;
+				temp_a0 = temp_v1->unk8;
+				temp_a1 = temp_v1->unkD;
+
+				if (temp_a0 >= 0x7D1) {
+					temp_v1->unk8 = temp_a0 - 0x7D0;
+					D_8014DD50[temp_a1].unk8 += 0x7D0;
 				}
 			}
 			func_8011E6FC_12D6AC(alien->unk0, alien->unk4, &sp38);
@@ -7473,9 +7477,8 @@ void func_80092EF4_A1EA4(u8 arg0) {
 				if (currentLevel == 1) {
 					func_80124B5C_133B0C(alien->unk0, alien->unk2, alien->unk4, 0x50, 0x100);
 				} else {
-					sp30 = &alienSpecs[sp3F];
 					func_80124B5C_133B0C(alien->unk0, alien->unk2, alien->unk4, 0x320, 0x100);
-					func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16)(sp30->unkC * 4), 0);
+					func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16)(alienSpecs[sp3F].unkC * 4), 0);
 				}
 			}
 		} else {
