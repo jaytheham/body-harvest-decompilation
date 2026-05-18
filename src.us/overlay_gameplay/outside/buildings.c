@@ -1374,8 +1374,8 @@ void func_8011C080_12B030(u8 arg0)
 	func_8011BB94_12AB44(arg0, 1);
 }
 
-// CURRENT(5140)
 #ifdef NON_MATCHING
+// CURRENT(4954)
 s32 func_8011C0CC_12B07C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	BuildingInstance *building;
 	BuildingSpec *spec;
@@ -1390,6 +1390,9 @@ s32 func_8011C0CC_12B07C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 points[8];
 	s32 i;
 	s32 radiusSq;
+	s32 *corner;
+	s32 cornerX;
+	s32 cornerZ;
 
 	building = &buildingInstances[arg0];
 	spec = &buildingSpecs[building->buildingType];
@@ -1419,14 +1422,17 @@ s32 func_8011C0CC_12B07C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	points[7] = minZ;
 
 	radiusSq = (arg3 * arg3) >> 4;
-	i = 3;
+	i = 4;
+	corner = &points[6];
 	do {
-		s32 dx = (points[i * 2] - arg1) >> 2;
-		s32 dz = (points[(i * 2) + 1] - arg2) >> 2;
+		cornerX = (corner[0] - arg1) >> 2;
+		cornerZ = (corner[1] - arg2) >> 2;
 
-		if (((dx * dx) + (dz * dz)) < radiusSq) {
+		if (((cornerX * cornerX) + (cornerZ * cornerZ)) < radiusSq) {
 			return 1;
 		}
+
+		corner -= 2;
 	} while (i-- != 0);
 
 	if ((x - arg1) < halfX) {
