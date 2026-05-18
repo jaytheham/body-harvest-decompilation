@@ -415,7 +415,7 @@ void func_80074B2C_83ADC(void);
 void func_80074FA8_83F58(void);
 void func_800753A0_84350(void);
 s32 func_8007643C_853EC(s32 arg0);
-void func_80116554_125504(s32 arg0, s16 *arg1, s16 *arg2);
+void func_80116554_125504(s16 arg0, s16 *arg1, s16 *arg2);
 void func_800756DC_8468C(void);
 s32 func_80075E50_84E00(void);
 s32 func_8007622C_851DC(s32 arg0);
