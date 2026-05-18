@@ -4672,7 +4672,7 @@ void func_8008741C_963CC(u8 arg0, s16 arg1) {
 	}
 }
 
-// CURRENT(4930)
+// CURRENT(3190)
 #ifdef NON_MATCHING
 s32 func_8008751C_964CC(u8 arg0, s32 arg1, s32 arg2)
 {
