@@ -5550,7 +5550,80 @@ void func_80107184_116134(VehicleInstance *arg0, s32 arg1, s32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80107184_116134.s")
 #endif
 
+// CURRENT(3443)
+#ifdef NON_MATCHING
+s32 func_801073FC_1163AC(VehicleInstance *arg0, VehicleInstance *arg1, s32 arg2, s32 arg3) {
+	VehicleSpec *sp6C;
+	VehicleSpec *sp68;
+	u16 sp66;
+	u16 sp64;
+	f32 sp60;
+	f32 sp5C;
+	f32 sp54;
+	f32 sp50;
+	f32 sp4C;
+	s16 sp4A;
+	f32 sp44;
+	f32 sp40;
+	s32 sp34;
+	s32 sp30;
+	s16 temp_s0;
+	s16 temp_s1;
+
+	sp6C = &vehicleSpecs[arg0->unk1A];
+	sp68 = &vehicleSpecs[arg1->unk1A];
+
+	switch (currentLevel) {
+	case 1:
+		if (arg0->unk1A == 0x11) {
+			func_800FDD8C_10CD3C(arg0);
+			return 0;
+		}
+		if (arg1->unk1A == 0x11) {
+			func_800FDD8C_10CD3C(arg1);
+			return 0;
+		}
+		break;
+	case 4:
+		if ((arg0->unk1A == 0x11) && (arg1->unk1A != 0x12) && (D_80159300 == 0)) {
+			func_80122524_1314D4(arg1, (s16)(arg0->unk12 * 5), arg0->unk0, arg0->unk4);
+		}
+		break;
+	}
+
+	sp66 = func_800FB160_10A110(arg0);
+	sp64 = func_800FB160_10A110(arg1);
+	sp60 = func_800FB11C_10A0CC(arg0);
+	sp5C = func_800FB11C_10A0CC(arg1);
+	sp34 = sp66;
+	temp_s0 = coss((u16)sp34);
+	sp4A = temp_s0;
+	sp30 = sp64;
+	temp_s1 = coss((u16)sp30);
+	sp54 = (f32)((((f64)(f32)temp_s0 / 32768.0) * (f64)sp60) - (((f64)(f32)temp_s1 / 32768.0) * (f64)sp5C));
+	temp_s0 = sins((u16)sp34);
+	sp4A = temp_s0;
+	temp_s1 = sins((u16)sp30);
+	sp50 = (f32)((((f64)(f32)temp_s0 / 32768.0) * (f64)sp60) - (((f64)(f32)temp_s1 / 32768.0) * (f64)sp5C));
+	sp4C = sqrtf((sp54 * sp54) + (sp50 * sp50));
+	sp40 = (f32)sp6C->unk32 / (f32)(sp6C->unk32 + sp68->unk32);
+	if ((sp6C->unk16 == 1) || (sp68->unk16 == 1)) {
+		sp4A = func_80003824_4424((f32)(arg1->unk0 - arg0->unk0), (f32)(arg1->unk4 - arg0->unk4));
+		func_80102DDC_111D8C(arg0, sp4A, 0, (f32)-((f64)((1.0f - sp40) * sp4C) * 1.5));
+		func_80102DDC_111D8C(arg1, sp4A, 0, (f32)((f64)(sp4C * sp40) * 1.5));
+	} else {
+		sp4A = func_80003824_4424(sp54, sp50);
+		sp44 = (f32)((f64)sp4C * D_80144BA0_153B50);
+		func_80102DDC_111D8C(arg0, sp4A, 0, (f32)-((f64)((1.0f - sp40) * sp4C) * 1.5));
+		func_80102DDC_111D8C(arg1, sp4A, 0, (f32)((f64)(sp4C * sp40) * 1.5));
+		func_80107184_116134(arg0, arg2, arg3, (1.0f - sp40) * sp44 * 2.0f);
+		func_80107184_116134(arg1, (arg0->unk0 + arg2) - arg1->unk0, (arg0->unk4 + arg3) - arg1->unk4, sp44 * sp40 * 2.0f);
+	}
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801073FC_1163AC.s")
+#endif
 
 void func_80107890_116840(VehicleInstance *arg0) {
 	VehicleSpec *specPtr;

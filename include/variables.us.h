@@ -2680,6 +2680,7 @@ extern char D_801435F8_1525A8[];
 extern u8 D_8013DFA8_14CF58[][3];
 extern u8 D_80157530;
 extern u8 D_80157531;
+extern f64 D_80144BA0_153B50;
 extern f64 D_80144BC8_153B78;
 extern f64 D_80144BD0_153B80;
 extern f64 D_80144BE0_153B90;
