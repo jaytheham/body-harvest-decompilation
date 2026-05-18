@@ -5416,7 +5416,7 @@ s32 func_8008AAFC_99AAC(u8 arg0, s32 arg1, s32 arg2) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(5630)
+// CURRENT(5620)
 void func_8008AC5C_99C0C(u8 arg0)
 {
 	s32 sp84;
