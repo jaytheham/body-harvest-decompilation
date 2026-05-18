@@ -149,24 +149,28 @@ void func_80133288_142238(Unk80160080 *arg0) {
 	func_801343D8_143388(arg0);
 }
 
+// CURRENT(2155)
 #ifdef NON_MATCHING
-// CURRENT(6064)
 void func_801333D0_142380(Unk80160080 *arg0) {
 	Vec3f sp3C;
 	s32 temp_v0;
 	VehicleInstance *vehicle;
-	f64 temp_f20;
+	f32 temp_f20;
 
 	vehicle = D_80052B34;
 	if (D_801600F0 == 0) {
+		f32 lodColor;
+
+		lodColor = D_80145698_154648;
+
 		D_8016011C = 0.0f;
 		D_80160120 = 0.0f;
 		D_80160124 = 0.0f;
 		D_80160128 = 0.0f;
-		D_8016012C = D_80145698_154648;
-		D_80160130 = D_80145698_154648;
-		D_80160134 = D_80145698_154648;
-		D_80160138 = D_80145698_154648;
+		D_8016012C = lodColor;
+		D_80160130 = lodColor;
+		D_80160134 = lodColor;
+		D_80160138 = lodColor;
 		arg0->unk58 = vehicle->unkE;
 	}
 
@@ -176,19 +180,19 @@ void func_801333D0_142380(Unk80160080 *arg0) {
 	}
 
 	if (D_80160190 == 1) {
-		vehicle = D_80052B34;
-		temp_v0 = func_80132730_1416E0(vehicle->unkE, arg0->unk58);
+		temp_v0 = func_80132730_1416E0(D_80052B34->unkE, arg0->unk58);
+		temp_v0 = (s16)temp_v0;
 		if (temp_v0 < 0) {
 			arg0->unk58 = (s16)(arg0->unk58 - (temp_v0 / 8));
 		} else {
 			arg0->unk58 = (s16)(arg0->unk58 + (temp_v0 / 8));
 		}
 
-		if (ABS(temp_v0) >= 1001) {
+		if (((-temp_v0 < temp_v0) ? -temp_v0 : temp_v0) >= 1001) {
 			D_80140CF8_14FCA8 = 1;
 		}
 
-		if ((ABS(temp_v0) < 200) && (D_80140CF8_14FCA8 == 1)) {
+		if ((((-temp_v0 < temp_v0) ? -temp_v0 : temp_v0) < 200) && (D_80140CF8_14FCA8 == 1)) {
 			arg0->unk58 = D_80052B34->unkE;
 			D_80160190 = 0;
 			D_80140CF8_14FCA8 = 0;
@@ -197,8 +201,8 @@ void func_801333D0_142380(Unk80160080 *arg0) {
 
 	if (D_80157570 != 0) {
 		if (D_801575CC == 0) {
-			vehicle = D_80052B34;
-			temp_v0 = func_80132730_1416E0(vehicle->unkE, arg0->unk58);
+			temp_v0 = func_80132730_1416E0(D_80052B34->unkE, arg0->unk58);
+			temp_v0 = (s16)temp_v0;
 			if (temp_v0 < 0) {
 				arg0->unk58 = (s16)(arg0->unk58 + 0x16C);
 			} else {
@@ -211,8 +215,7 @@ void func_801333D0_142380(Unk80160080 *arg0) {
 
 	D_80157578 = arg0->unk58;
 	arg0->unk56 = 0xB9;
-	temp_f20 = (f64)30.0f;
-	vehicle = D_80052B34;
+	temp_f20 = 30.0f;
 	sp3C.x = (f32)((f64)vehicle->unk0 - (((f64)(f32)coss((u16)arg0->unk58) / 32768.0) * temp_f20));
 	sp3C.y = (f32)(vehicle->unk2 + 0x4B);
 	sp3C.z = (f32)((f64)vehicle->unk4 - (((f64)(f32)sins((u16)arg0->unk58) / 32768.0) * temp_f20));
