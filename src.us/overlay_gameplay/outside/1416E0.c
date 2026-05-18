@@ -731,15 +731,17 @@ void func_801357EC_14479C(Unk80160080 *arg0) {
 }
 
 // toggleCameraNearFarMode?
-// CURRENT(1155)
+// CURRENT(680)
 #ifdef NON_MATCHING
 void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
-	f64 temp_f0_2;
 	f32 var_f14;
 	u8 temp_v0;
 
 	if ((currentLevel == 4) && (D_80052B34->unk1A == 0xF)) {
 		arg0->unk6C = 1;
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801358E8_144898.s")
+#endif
 		arg0->unk52 = 0x71C;
 		arg0->unk56 = arg1;
 		return;
@@ -768,9 +770,11 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 				D_8016013C = 1;
 			} else {
 				f32 temp_f0 = D_80160128;
+				s16 temp_s0;
 
 				D_80160128 = 0.0f;
-				D_80160138 = (f32)(1.0 / (f64)(s16)(s32)(temp_f0 / D_80160138));
+				temp_s0 = (s16)(s32)(temp_f0 / D_80160138);
+				D_80160138 = (f32)(1.0 / (f64)temp_s0);
 				var_f14 = D_801456E4_154694;
 			}
 
@@ -782,8 +786,11 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 					D_80160134 = var_f14;
 					D_80160140 = 1;
 				} else {
+					s16 temp_s0;
+
 					D_80160124 = 0.0f;
-					D_80160134 = (f32)(1.0 / (f64)(s16)(s32)(temp_f0 / D_80160134));
+					temp_s0 = (s16)(s32)(temp_f0 / D_80160134);
+					D_80160134 = (f32)(1.0 / (f64)temp_s0);
 				}
 			}
 
@@ -810,6 +817,8 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 	}
 
 	if (D_80160158 != 0) {
+		f64 temp_f0_2;
+
 		temp_f0_2 = (f64)D_80160128;
 		if (temp_f0_2 >= 1.0) {
 			func_80015860_16460(D_8016015C);
@@ -819,20 +828,16 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 				func_800B33BC_C236C(0x38);
 			}
 		} else {
-			u8 temp_v0_2;
-
-			temp_v0_2 = arg0->unk6C;
-			if (temp_v0_2 == 1) {
+			temp_v0 = arg0->unk6C;
+			if (temp_v0 == 1) {
 				func_80014208_14E08(D_8016015C, (s16)(s32)((1.0 - temp_f0_2) * D_801456E8_154698), 0x40);
-			} else if (temp_v0_2 == 2) {
+			} else if (temp_v0 == 2) {
 				func_80014208_14E08(D_8016015C, (s16)(s32)(temp_f0_2 * D_801456F0_1546A0), 0x40);
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801358E8_144898.s")
-#endif
+
 
 void func_80135CB8_144C68(void) {
 	D_80160160 = 0;
