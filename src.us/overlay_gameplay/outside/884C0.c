@@ -1971,7 +1971,7 @@ s32 func_8007F9C8_8E978(u8 arg0, u8 arg1) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(10384)
+// CURRENT(10169)
 s32 func_8007FB08_8EAB8(u8 arg0, u8 arg1) {
 	s16 result = -1;
 	AlienInstance *inst;
