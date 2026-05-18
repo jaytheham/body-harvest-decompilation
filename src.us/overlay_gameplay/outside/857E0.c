@@ -279,11 +279,14 @@ void func_80078720_876D0(AlienInstance *alien);
 
 // https://decomp.me/scratch/S6kQ4
 #ifdef NON_MATCHING
+// CURRENT(421)
 void func_80078720_876D0(AlienInstance *alien) {
 	s16 new_var;
-	s32 sp20;
-	s32 *new_var2;
+	s32 pad0;
+	s32 pad1;
 	s32 sp1C;
+	s32 *new_var2;
+	s32 sp20;
 	if (sp1C)
 	{
 	}
