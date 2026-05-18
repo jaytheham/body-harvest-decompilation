@@ -319,7 +319,7 @@ void func_80133934_1428E4(Unk80160080 *arg0) {
 	func_801343D8_143388(arg0);
 }
 
-// CURRENT(0)
+// CURRENT(200)
 #ifdef NON_MATCHING
 void func_80133A54_142A04(Unk80160080 *arg0) {
 	f32 sp40;
