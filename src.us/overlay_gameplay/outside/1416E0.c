@@ -993,8 +993,8 @@ s16 func_801361A4_145154(Unk80160080 *arg0)
   return ret;
 }
 
+// CURRENT(1599)
 #ifdef NON_MATCHING
-// CURRENT(1849)
 void func_80136214_1451C4(Unk80160080 *arg0) {
 	s16 sp66;
 	s16 sp62;
@@ -1009,6 +1009,10 @@ void func_80136214_1451C4(Unk80160080 *arg0) {
 
 	temp_s1 = 0x4000 - arg0->unk5E;
 	sp66 = 0x4000 - D_80160146;
+
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80136214_1451C4.s")
+#endif
 	if (temp_s1 != sp66) {
 		sp44 = (s32) arg0->unk30;
 		sp40 = (s32) arg0->unk34;
@@ -1062,9 +1066,7 @@ void func_80136214_1451C4(Unk80160080 *arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80136214_1451C4.s")
-#endif
+
 
 void func_80136570_145520(void) {
 	D_80034488 = 1;
