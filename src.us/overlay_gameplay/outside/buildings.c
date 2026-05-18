@@ -544,26 +544,20 @@ s32 func_80117508_1264B8(s16 arg0) {
 #endif
 
 // https://decomp.me/scratch/UNJJQ
-#ifdef NON_MATCHING
 s32 func_801176B0_126660(void)
 {
   s32 i;
-  s32 target = D_80052540;Unk80148620 *ptr = &D_80148620_1575D0;
-  
-  for (i = 0xF; i--;ptr--)
+  Unk80148620 *ptr;
+  for (i = 0xF; i--;)
   {
-	if (target == ptr->unk0)
-	{
-	  return ptr;
-	}
-	
+    if (D_80148620_1575D0[i].unk0 == D_80052540)
+    {
+      ptr = &D_80148620_1575D0[i];
+      return (s32)ptr;
+    }
   }
-
   return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801176B0_126660.s")
-#endif
 
 // CURRENT(28472)
 #ifdef NON_MATCHING
