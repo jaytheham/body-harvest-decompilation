@@ -656,6 +656,7 @@ void func_80117F10_126EC0(void) {
 	D_8015EA2C = D_80144F34_153EE4;
 }
 
+// CURRENT(196)
 #ifdef NON_MATCHING
 void func_80117F34_126EE4(void) {
 	s16 sp46;
@@ -663,6 +664,7 @@ void func_80117F34_126EE4(void) {
 	s16 sp42;
 	s16 sp40;
 	s32 temp_v0;
+	s32 sp38;
 	s16 sp3A;
 	void *sp34;
 
@@ -681,13 +683,12 @@ void func_80117F34_126EE4(void) {
 	func_800FB468_10A418(D_80052B34, (f32)sp44);
 	func_800FB484_10A434(D_80052B34, (f32)((((f64)(f32)sins(D_80052B34->unkE) / 32768.0) * (f64)sp3A) + (f64)sp42));
 
-	if (D_80052544 == 0) {
-		if ((temp_v0 = func_801176B0_126660()) != 0) {
-			func_80117A4C_1269FC(temp_v0);
-		}
+	if ((D_80052544 == 0) && ((sp38 = func_801176B0_126660()) != 0)) {
+		func_80117A4C_1269FC(sp38);
 	}
 	D_80052A88 = 1;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117F34_126EE4.s")
 #endif
