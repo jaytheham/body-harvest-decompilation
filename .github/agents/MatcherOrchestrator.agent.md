@@ -1,10 +1,10 @@
 ---
-name: BH Match Improver Orchestration
-description: Manage improver agents
+name: BH Match Orchestration
+description: Manage matcher agents
 tools:
   [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, agent, edit/editFiles, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]
 model: Auto (copilot)
-agents: ["BH Match Improver"]
+agents: ["BH Matcher"]
 ---
 
 ## Overview
@@ -12,13 +12,13 @@ agents: ["BH Match Improver"]
 This is a matching decompilation project for Body Harvest (N64). The goal is to create C code that "matches" - compiles to the exact same assembly as the original game ROM.
 You will be given a C file to target, follow this process:
 
-1. Begin by creating a new git branch named with this format: `improver-orchestrator-YYYY-mm-dd-HH-MM-SS`, make sure to include the date and time.
+1. Begin by creating a new git branch named with this format: `matcher-orchestrator-YYYY-mm-dd-HH-MM-SS`, make sure to include the date and time.
 2. Scan the C file to find all functions with a NON_MATCHING wrapper, these are functions which have been decompiled but do not yet match the original assembly when compiled.
 3. Orchestrate processing of these NON_MATCHING functions one at a time. For each function, you will:
   - Remove the NON_MATCHING wrapper. While the wrapper is in place the function is not compiled at all, so removing it is necessary to test changes and see the diff score for the function.
   - Build the ROM so the diff tool can calculate the C implementation's CURRENT score. It is normal that the build will return `FAILED` at this stage because the function does not yet match.
   - Check the current score with the diff tool, a lower score is better, `CURRENT(0)` is a match.
-  - Create a new subagent, agentName `BH Match Improver`, and tell the subagent to target the unwrapped function.
+  - Create a new subagent, agentName `BH Matcher`, and tell the subagent to target the unwrapped function.
 4. Only the following directory contents and files are allowed to be changed by subAgents, after a subagent finishes, undo any changes outside of:
  - `/ExampleFixes`
  - `/include`
@@ -31,9 +31,11 @@ You will be given a C file to target, follow this process:
 
 Tell the subagents to reduce the score as much as possible, they should keep going after they make a positive improvement, and only stop when they can no longer find any changes that reduce the score.
 
+Only ask each subagent to target one function.
+
 If a function already has a score of less than 100 then skip it. Don't tell the subagent this score threshold.
 
-Keep going automatically until all NON_MATCHING functions in the file have been processed by subagents, you're a competent agent and can complete the full job without reporting to the user until all functions are processed.
+Keep going automatically without pausing until all NON_MATCHING functions in the file have been processed by subagents.
 
 Retain any existing comments.
 
