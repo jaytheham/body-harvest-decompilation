@@ -559,11 +559,10 @@ s32 func_801176B0_126660(void)
   return 0;
 }
 
-// CURRENT(28472)
+// CURRENT(16433)
 #ifdef NON_MATCHING
 void func_801176F4_1266A4(s16 arg0, s16 arg1, s32 arg2) {
 	AlienInstance *alien;
-	VehicleSpec *vehicleSpec;
 	s16 centerX;
 	s16 centerY;
 	s16 centerZ;
@@ -574,43 +573,35 @@ void func_801176F4_1266A4(s16 arg0, s16 arg1, s32 arg2) {
 	s16 cornerX1;
 	s16 cornerZ0;
 	s16 cornerZ1;
-	s16 minX;
-	s16 maxX;
-	s16 minZ;
-	s16 maxZ;
+	s32 minX;
+	s32 maxX;
+	s32 minZ;
+	s32 maxZ;
 	u16 angle;
-	s16 specRadius;
+	f64 halfXf;
+	s32 specRadius;
 	s32 alienId;
+	s32 alienSpecIndex;
 	s32 specIndex;
-	u8 *vehicleSpecIds;
 
-	vehicleSpecIds = (u8 *)&D_8004DCEA;
-	specIndex = vehicleSpecIds[arg2 * 0x5C];
-	vehicleSpec = &vehicleSpecs[specIndex];
+	specIndex = ((u8 *)&D_8004DCEA)[arg2 * 0x5C];
 	centerX = 0;
 	centerY = 0;
 	centerZ = 0;
 	orientation = 0;
+
+	halfX = vehicleSpecs[specIndex].unk34 + 0xC8;
+	halfZ = vehicleSpecs[specIndex].unk36 + 0xC8;
+	halfX /= 2;
+
 	func_801165FC_1255AC((u8)arg0, (u8)arg1, &centerX, &centerY, &centerZ, &orientation);
 
-	halfX = vehicleSpec->unk34 + 0xC8;
-	halfZ = vehicleSpec->unk36 + 0xC8;
-	if (halfX < 0) {
-		halfX = -(-halfX / 2);
-	} else {
-		halfX /= 2;
-	}
-	if (halfZ < 0) {
-		halfZ = -(-halfZ / 2);
-	} else {
-		halfZ /= 2;
-	}
-
 	angle = (u16)orientation;
-	cornerX0 = (s16)(s32)((f64)centerX - (((f64)(f32)coss(angle) / 32768.0) * (f64)halfX));
-	cornerZ0 = (s16)(s32)((f64)centerZ - (((f64)(f32)sins(angle) / 32768.0) * (f64)halfX));
-	cornerX1 = (s16)(s32)((f64)centerX + ((((f64)(f32)sins(angle) / 32768.0) * (f64)halfZ) + (((f64)(f32)coss(angle) / 32768.0) * (f64)halfX)));
-	cornerZ1 = (s16)(s32)((f64)centerZ + ((((f64)(f32)coss(angle) / 32768.0) * (f64)halfZ) + (((f64)(f32)sins(angle) / 32768.0) * (f64)halfX)));
+	halfXf = (f64)halfX;
+	cornerX0 = (s16)(s32)((f64)centerX - (((f64)(f32)coss(angle) / 32768.0) * halfXf));
+	cornerZ0 = (s16)(s32)((f64)centerZ - (((f64)(f32)sins(angle) / 32768.0) * halfXf));
+	cornerX1 = (s16)(s32)((f64)centerX + ((((f64)(f32)sins(angle) / 32768.0) * (f64)halfZ) + (((f64)(f32)coss(angle) / 32768.0) * halfXf)));
+	cornerZ1 = (s16)(s32)((f64)centerZ + ((((f64)(f32)coss(angle) / 32768.0) * (f64)halfZ) + (((f64)(f32)sins(angle) / 32768.0) * halfXf)));
 
 	if (cornerX1 < cornerX0) {
 		minX = cornerX1;
@@ -630,25 +621,30 @@ void func_801176F4_1266A4(s16 arg0, s16 arg1, s32 arg2) {
 
 	for (alienId = 0; alienId != 0xFF; alienId++) {
 		alien = &alienInstances[alienId];
-		specIndex = alien->specIndex;
-		if (specIndex < 3 || specIndex == 0x20) {
+		alienSpecIndex = alien->specIndex;
+		if (alienSpecIndex < 3 || alienSpecIndex == 0x20) {
 			continue;
 		}
 
-		specRadius = alienSpecs[specIndex].unkC;
-		if (alien->unk0 < (maxX + specRadius)) {
-			if ((minX - specRadius) < alien->unk0) {
-				if (alien->unk4 < (maxZ + specRadius)) {
-					if ((minZ - specRadius) < alien->unk4) {
-						if (!(alien->unk20 & 0x100000)) {
-							func_80079910_888C0(alienId);
-						}
-					}
-				}
-			}
+		specRadius = alienSpecs[alienSpecIndex].unkC;
+		if (!(alien->unk0 < (maxX + specRadius))) {
+			continue;
+		}
+		if (!((minX - specRadius) < alien->unk0)) {
+			continue;
+		}
+		if (!(alien->unk4 < (maxZ + specRadius))) {
+			continue;
+		}
+		if (!((minZ - specRadius) < alien->unk4)) {
+			continue;
+		}
+		if (!(alien->unk20 & 0x100000)) {
+			func_80079910_888C0(alienId);
 		}
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801176F4_1266A4.s")
 #endif
