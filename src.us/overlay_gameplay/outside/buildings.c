@@ -2729,7 +2729,86 @@ void func_801219F4_1309A4(void* arg0, s16 arg1) {
 	}
 }
 
+// CURRENT(3553)
+#ifdef NON_MATCHING
+void func_80121A64_130A14(BuildingInstance *arg0) {
+	BuildingInstance *building;
+	s16 temp;
+	s32 i;
+	s16 *tempS16;
+
+	building = &buildingInstances[func_8011D260_12C210(0x45, 0x12)];
+	tempS16 = (s16 *)D_80140AA0_14FA50;
+	func_8011FA90_12EA40(arg0, 6, 0, 0x195, 0x11B, 0x32, 0xA, 0x36, 0xF);
+	if (arg0 != building) {
+		return;
+	}
+
+	if (func_8000726C_7E6C(0xFULL) == 0) {
+		if ((D_80052558 & 1) == 0) {
+			return;
+		}
+	}
+
+	if (D_80048178 >= 0) {
+		D_8015EA3E = 0;
+		D_8015EA40 = 0;
+		D_8015EA42 = 0x144;
+	}
+
+	if (D_80052558 & 1) {
+		D_80048178--;
+		if ((D_80048178 < -10) && (*tempS16 >= 0x4001)) {
+			func_8012D84C_13C7FC();
+			D_80052558 &= ~1;
+			return;
+		}
+
+		temp = *tempS16;
+		if (D_80048178 == 0) {
+			func_800DF038_EDFE8(building->xCoord, building->yCoord, building->zCoord, 0xDC, 0, 0);
+		}
+
+		if (D_80048178 < 0) {
+			if ((D_80048178 >= -9) && (temp >= 0x4001)) {
+				D_8015EA42 += 0xD0;
+			} else {
+				temp = temp + (D_80048178 * -20) - 0xC8;
+				*tempS16 = temp;
+				if (temp >= 0x4001) {
+					func_800DF038_EDFE8((s16)(building->xCoord - D_8015EA42), building->yCoord, building->zCoord, 0xB4, 0, 0);
+				}
+			}
+		}
+	}
+
+	temp = *tempS16;
+	if (temp < 0x4001) {
+		D_80052B40.unk0 = D_8015EA3E;
+		D_80052B48.unk0 = 0;
+		D_80052B48.unk2 = 0;
+		D_80052B48.unk4 = temp;
+		D_80052B50.unk0 = 0x88;
+		D_80052B50.unk2 = 0x123;
+		D_80052B50.unk4 = 0x3E;
+		D_80052B40.unk2 = D_8015EA40;
+		D_80052B40.unk4 = D_8015EA42;
+		*tempS16 = temp;
+		func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
+		gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		D_8005BB38 += 0x40;
+		gSPDisplayList(D_8005BB2C++, D_A002120);
+	}
+
+	i = (arg0 - buildingInstances) * 0x10;
+	func_8012D700_13C6B0(0xD, (i + 1) & 0xFFFF, arg0->xCoord + D_80159DC8, arg0->yCoord + D_80159DCA, arg0->zCoord + D_80159DCC, 0, 0, 0,
+					   0x3C, 0x32, 0x20, NULL, func_801219F4_1309A4);
+	func_8012D700_13C6B0(0xD, (i + 2) & 0xFFFF, arg0->xCoord + D_80159DC8, arg0->yCoord + D_80159DCA, arg0->zCoord - D_80159DCC, 0, 0, 0,
+					   0x3C, 0x32, 0x20, NULL, func_801219F4_1309A4);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80121A64_130A14.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(5649)

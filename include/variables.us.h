@@ -393,6 +393,7 @@ extern u8 D_80047FA8[6]; /* save data bytes */
 extern u8 D_80047FAE;
 extern s16 D_80048026;
 extern Gfx D_A01FF98[];
+extern Gfx D_A002120[];
 extern s16 D_80048028;
 extern s32 D_8004802C;
 extern u8 D_80048024;
@@ -1677,6 +1678,9 @@ extern f32 D_8015EA38;
 extern s16 D_8015EA3C;
 extern u8 D_8015EA60[];
 extern s16 D_8015EA4A;
+extern s16 D_8015EA3E;
+extern s16 D_8015EA40;
+extern s16 D_8015EA42;
 extern s16 D_8015EA52;
 extern f64 D_80144FA8_153F58;
 extern u8 D_8015EB60[];
