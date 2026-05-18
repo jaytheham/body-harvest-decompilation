@@ -322,16 +322,12 @@ void func_80133934_1428E4(Unk80160080 *arg0) {
 	func_801343D8_143388(arg0);
 }
 
-// CURRENT(200)
+// CURRENT(2152)
 #ifdef NON_MATCHING
 void func_80133A54_142A04(Unk80160080 *arg0) {
 	f32 sp40;
 	Vec3f sp44;
 	VehicleInstance *vehicle = D_80052B34;
-	s32 temp_a1;
-	s32 temp_a1_2;
-	s32 var_a0;
-	s32 var_a0_2;
 	s32 temp_v0;
 
 	if (D_801600F0 == 0) {
@@ -349,20 +345,12 @@ void func_80133A54_142A04(Unk80160080 *arg0) {
 
 	temp_v0 = func_80132730_1416E0(vehicle->unk6 - D_80052B2C->unk36, arg0->unk58);
 	if (temp_v0 >= 0xE39) {
-		temp_a1 = temp_v0 - 0xE38;
-		var_a0 = D_8015929C;
-		if (temp_a1 < D_8015929C) {
-			var_a0 = temp_a1;
-		}
-		arg0->unk58 = (s16)(arg0->unk58 - var_a0);
+		s32 temp_a1 = temp_v0 - 0xE38;
+		arg0->unk58 = (s16)(arg0->unk58 - ((temp_a1 < D_8015929C) ? temp_a1 : D_8015929C));
 	}
 	if (temp_v0 < -0xE38) {
-		temp_a1_2 = -0xE38 - temp_v0;
-		var_a0_2 = D_8015929C;
-		if (temp_a1_2 < D_8015929C) {
-			var_a0_2 = temp_a1_2;
-		}
-		arg0->unk58 = (s16)(arg0->unk58 + var_a0_2);
+		s32 temp_a1 = -0xE38 - temp_v0;
+		arg0->unk58 = (s16)(arg0->unk58 + ((temp_a1 < D_8015929C) ? temp_a1 : D_8015929C));
 	}
 
 	arg0->unk56 = 0x73;
@@ -373,10 +361,10 @@ void func_80133A54_142A04(Unk80160080 *arg0) {
 
 	func_801336CC_14267C(arg0, &sp44);
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80133A54_142A04.s")
 #endif
+
 
 // CURRENT(400)
 #ifdef NON_MATCHING
