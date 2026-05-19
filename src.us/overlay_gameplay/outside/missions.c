@@ -459,8 +459,8 @@ void func_800747A8_83758(void) {
 #ifdef NON_MATCHING
 /* CURRENT(4158) */
 void func_80074970_83920(void) {
-	s32 i;
 	s32 chunkIndex;
+	s32 i;
 	volatile s32 savedIndex;
 
 	chunkIndex = -1;
@@ -487,14 +487,20 @@ void func_80074970_83920(void) {
 					i += 1;
 				}
 
-				if ((func_80074558_83508() == 0xB7) || (D_801494BC == 0xAC)) {
+				if (func_80074558_83508() == 0xB7) {
 					break;
 				}
 
-				if (D_801494BC == 0xAE) {
-					savedIndex = i;
+				if (D_801494BC == 0xAC) {
 					break;
 				}
+
+				if (D_801494BC != 0xAE) {
+					continue;
+				}
+
+				savedIndex = i;
+				break;
 			}
 			}
 		}
@@ -547,7 +553,6 @@ void func_80074B2C_83ADC(void) {
 #endif
 
 // guess_readMissionCondition
-#ifdef NON_MATCHING
 // CURRENT(1145)
 void func_80074CA0_83C50(void) {
 	if ((func_80074558_83508() == 0xB7) || (D_801494BC == 0x82) || (D_801494BC == 0x83) || (D_801494BC == 0x85) ||
@@ -562,8 +567,7 @@ void func_80074CA0_83C50(void) {
 			D_80149B4A = 1;
 		}
 
-		D_801497C4 = &D_8004D348[D_80149B2C * 9];
-		D_80149B2C += 1;
+		D_801497C4 = &D_8004D348[D_80149B2C++ * 9];
 
 		if (func_80074558_83508() == 0x88) {
 			func_80074500_834B0();
@@ -574,9 +578,8 @@ void func_80074CA0_83C50(void) {
 			D_801497C4[8] = func_80074500_834B0();
 
 			if ((D_801497C4[8] == 0x89) || (D_801497C4[8] == 0x8A)) {
-				func_8007452C_834DC();
-				D_801497C4[6] = func_80074500_834B0();
-				if (D_801494BC != 0x8B) {
+				D_801497C4[6] = func_8007452C_834DC();
+				if (func_80074500_834B0() != 0x8B) {
 					osSyncPrintf(D_801412DC_15028C);
 				}
 
@@ -616,9 +619,6 @@ void func_80074CA0_83C50(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074CA0_83C50.s")
-#endif
 
 // readMissionConditions
 // CURRENT(2775)
