@@ -5550,7 +5550,80 @@ void func_80107184_116134(VehicleInstance *arg0, s32 arg1, s32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80107184_116134.s")
 #endif
 
+// CURRENT(3443)
+#ifdef NON_MATCHING
+s32 func_801073FC_1163AC(VehicleInstance *arg0, VehicleInstance *arg1, s32 arg2, s32 arg3) {
+	VehicleSpec *sp6C;
+	VehicleSpec *sp68;
+	u16 sp66;
+	u16 sp64;
+	f32 sp60;
+	f32 sp5C;
+	f32 sp54;
+	f32 sp50;
+	f32 sp4C;
+	s16 sp4A;
+	f32 sp44;
+	f32 sp40;
+	s32 sp34;
+	s32 sp30;
+	s16 temp_s0;
+	s16 temp_s1;
+
+	sp6C = &vehicleSpecs[arg0->unk1A];
+	sp68 = &vehicleSpecs[arg1->unk1A];
+
+	switch (currentLevel) {
+	case 1:
+		if (arg0->unk1A == 0x11) {
+			func_800FDD8C_10CD3C(arg0);
+			return 0;
+		}
+		if (arg1->unk1A == 0x11) {
+			func_800FDD8C_10CD3C(arg1);
+			return 0;
+		}
+		break;
+	case 4:
+		if ((arg0->unk1A == 0x11) && (arg1->unk1A != 0x12) && (D_80159300 == 0)) {
+			func_80122524_1314D4(arg1, (s16)(arg0->unk12 * 5), arg0->unk0, arg0->unk4);
+		}
+		break;
+	}
+
+	sp66 = func_800FB160_10A110(arg0);
+	sp64 = func_800FB160_10A110(arg1);
+	sp60 = func_800FB11C_10A0CC(arg0);
+	sp5C = func_800FB11C_10A0CC(arg1);
+	sp34 = sp66;
+	temp_s0 = coss((u16)sp34);
+	sp4A = temp_s0;
+	sp30 = sp64;
+	temp_s1 = coss((u16)sp30);
+	sp54 = (f32)((((f64)(f32)temp_s0 / 32768.0) * (f64)sp60) - (((f64)(f32)temp_s1 / 32768.0) * (f64)sp5C));
+	temp_s0 = sins((u16)sp34);
+	sp4A = temp_s0;
+	temp_s1 = sins((u16)sp30);
+	sp50 = (f32)((((f64)(f32)temp_s0 / 32768.0) * (f64)sp60) - (((f64)(f32)temp_s1 / 32768.0) * (f64)sp5C));
+	sp4C = sqrtf((sp54 * sp54) + (sp50 * sp50));
+	sp40 = (f32)sp6C->unk32 / (f32)(sp6C->unk32 + sp68->unk32);
+	if ((sp6C->unk16 == 1) || (sp68->unk16 == 1)) {
+		sp4A = func_80003824_4424((f32)(arg1->unk0 - arg0->unk0), (f32)(arg1->unk4 - arg0->unk4));
+		func_80102DDC_111D8C(arg0, sp4A, 0, (f32)-((f64)((1.0f - sp40) * sp4C) * 1.5));
+		func_80102DDC_111D8C(arg1, sp4A, 0, (f32)((f64)(sp4C * sp40) * 1.5));
+	} else {
+		sp4A = func_80003824_4424(sp54, sp50);
+		sp44 = (f32)((f64)sp4C * D_80144BA0_153B50);
+		func_80102DDC_111D8C(arg0, sp4A, 0, (f32)-((f64)((1.0f - sp40) * sp4C) * 1.5));
+		func_80102DDC_111D8C(arg1, sp4A, 0, (f32)((f64)(sp4C * sp40) * 1.5));
+		func_80107184_116134(arg0, arg2, arg3, (1.0f - sp40) * sp44 * 2.0f);
+		func_80107184_116134(arg1, (arg0->unk0 + arg2) - arg1->unk0, (arg0->unk4 + arg3) - arg1->unk4, sp44 * sp40 * 2.0f);
+	}
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801073FC_1163AC.s")
+#endif
 
 void func_80107890_116840(VehicleInstance *arg0) {
 	VehicleSpec *specPtr;
@@ -7066,7 +7139,165 @@ void func_8010FAC8_11EA78(u8 arg0, s32 arg1) {
 	D_80158F98[idx].unk4 = arg1;
 }
 
+// CURRENT(8988)
+#ifdef NON_MATCHING
+s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
+	Unk80158F98 *entry;
+	s32 i;
+	s32 ret;
+	f64 scale;
+	f64 twenty;
+	f64 half;
+	VehicleSpec *vspec;
+	AlienSpec *aspec;
+
+	entry = D_80158F98;
+	i = D_80158FDC;
+	ret = 0;
+	if (i != 0) {
+		i--;
+		half = 0.5;
+		twenty = 20.0;
+		scale = D_80144D18_153CC8;
+		aspec = alienSpecs;
+		vspec = vehicleSpecs;
+
+		do {
+			switch (entry->unk0) {
+				case 1: {
+					VehicleInstance *other;
+
+					other = (VehicleInstance *)entry->unk4;
+					if (other != NULL) {
+						func_8010F93C_11E8EC((Unk80052B40 *)arg0, (Unk80052B40 *)other);
+					}
+					continue;
+				}
+
+				case 2: {
+					VehicleInstance *other;
+
+					other = (VehicleInstance *)entry->unk4;
+					if (other != NULL) {
+						func_8010F834_11E7E4((Unk80052B40 *)arg0, other->unk0, other->unk2, other->unk4);
+					}
+					continue;
+				}
+
+				case 3: {
+					VehicleInstance *other;
+
+					other = (VehicleInstance *)entry->unk4;
+					if (other != NULL) {
+						func_8010F96C_11E91C((Unk80052B40 *)arg0, (Unk80052B40_fp *)other);
+					}
+					continue;
+				}
+
+				case 4: {
+					VehicleInstance *other;
+
+					other = (VehicleInstance *)entry->unk4;
+					if (other != NULL) {
+						func_8010F9B4_11E964((Unk80052B40 *)arg0, (s32)other);
+					}
+					continue;
+				}
+
+				case 5:
+					arg0->unk20 &= ~entry->unk4;
+					break;
+
+				case 6:
+					arg0->unk20 |= entry->unk4;
+					break;
+
+				case 7:
+					arg0->unk20 |= 0x800;
+					arg0->unk20 &= 0xFFFD;
+					func_800FB468_10A418(arg0, (f32)entry->unk4);
+					if (arg0->unk34 < 0.0f) {
+						arg0->unk34 = 0.0f;
+					}
+					if (currentLevel != 4) {
+						continue;
+					}
+					if (arg0->unk1A != 0xE) {
+						continue;
+					}
+					func_800FDB58_10CB08(arg0);
+					ret = 1;
+					continue;
+
+				case 8:
+					arg0->unk20 &= 0xF7FF;
+					D_80159320 |= 0x200000;
+					break;
+
+				case 9:
+					func_800FB468_10A418(arg0, (f32)entry->unk4);
+					arg0->unk34 = 0.0f;
+					if (currentLevel != 4) {
+						continue;
+					}
+					if (arg0->unk1A != 0xE) {
+						continue;
+					}
+					func_800FDB58_10CB08(arg0);
+					ret = 1;
+					continue;
+
+				case 10: {
+					VehicleInstance *other;
+					s32 speed;
+					s16 value;
+					f32 speedF;
+
+					speed = 0x1770;
+					if (vspec[arg0->unk1A].unk32 >= 0x1771) {
+						speed = vspec[arg0->unk1A].unk32;
+					}
+
+					other = (VehicleInstance *)entry->unk4;
+					speedF = func_800FB11C_10A0CC(arg0);
+					value = (s16)(s32)(((f64)((f32)speed * speedF)) / scale);
+
+					if ((twenty < (f64)func_800FB11C_10A0CC(arg0)) && (aspec[other->unk1A].unk32 < 0x7D1)) {
+						func_80088154_97104((VehicleInstance *)entry->unk4, value, func_800FB160_10A110(arg0));
+					}
+
+					func_80083EF4_92EA4((AlienInstance *)other, arg0, (s16)(vspec[arg0->unk1A].unk32 * arg0->unk12), arg0->unkE);
+					if (D_800475F0 >= 0x33) {
+						func_80083EF4_92EA4((AlienInstance *)entry->unk4, arg0, -0x63C0, (s16)-other->unkE);
+					}
+
+					if (other->unk1A >= 3) {
+						func_800FB430_10A3E0(arg0, (f32)((f64)arg0->unk58 * half));
+						func_800FB11C_10A0CC(arg0);
+						if (aspec[other->unk1A].unk32 >= 0x1771) {
+							continue;
+						}
+					}
+					continue;
+				}
+
+				case 11:
+					break;
+
+				case 12:
+					func_80088154_97104((VehicleInstance *)entry->unk4, 0x7FFE, arg0->unk6);
+					break;
+			}
+
+			entry++;
+		} while (i-- != 0);
+	}
+
+	return ret;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010FAFC_11EAAC.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(180)

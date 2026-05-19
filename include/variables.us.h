@@ -393,6 +393,7 @@ extern u8 D_80047FA8[6]; /* save data bytes */
 extern u8 D_80047FAE;
 extern s16 D_80048026;
 extern Gfx D_A01FF98[];
+extern Gfx D_A002120[];
 extern s16 D_80048028;
 extern s32 D_8004802C;
 extern u8 D_80048024;
@@ -1419,6 +1420,7 @@ extern f64 D_80144F08;
 extern f32 D_80144F30_153EE0;
 extern f32 D_80144F34_153EE4;
 extern f64 D_80144FA0_153F50;
+extern f64 D_80144FC0_153F70;
 extern f32 D_80144FC8;
 extern u8 D_801454C0[];
 extern u8 D_801454C8[];
@@ -1615,6 +1617,7 @@ extern s32 D_80157A0C;
 extern s32 D_801575D4;
 extern s16 D_80157A2C;
 extern VehicleInstance *D_80159020;
+extern u8 D_80158C42;
 extern AlienInstance *D_80158FEC; // Target alien instance
 extern s16 *D_80158FF4;
 extern s16 D_8015904C;
@@ -1677,6 +1680,15 @@ extern f32 D_8015EA38;
 extern s16 D_8015EA3C;
 extern u8 D_8015EA60[];
 extern s16 D_8015EA4A;
+extern s16 D_8015EA4C;
+extern s16 D_8015EA4E;
+extern s16 D_8015EA50;
+extern s16 D_8015EA3E;
+extern s16 D_8015EA40;
+extern s16 D_8015EA42;
+extern s16 D_8015EA44;
+extern s16 D_8015EA46;
+extern s16 D_8015EA48;
 extern s16 D_8015EA52;
 extern f64 D_80144FA8_153F58;
 extern u8 D_8015EB60[];
@@ -1689,6 +1701,7 @@ extern u8 D_8015EB70;
 extern u8 D_8015EB71;
 extern u8 D_8015EB77;
 extern s32 D_8015EB80;
+extern u16 D_8015EB84;
 extern Unk8015F760 D_8015EB90[64];
 extern Unk8015F790 D_8015F790[16];
 extern Unk8015F9D0 D_8015F9D0;
@@ -1734,6 +1747,7 @@ extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 // 80224680 missions
 
 extern u8 D_80254E80[]; // Tile palette data
+extern u16 D_80256E0A;
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
 extern u8 D_80257A3A[];
 
@@ -1897,6 +1911,10 @@ extern s8 D_8016014A; // Vehicle camera rotation amount (0-7)
 extern s32 D_80160154;
 extern s32 D_8016018C;
 extern s32 D_80160190;
+extern Vec3f D_80160108;
+extern s32 D_80160114;
+extern s16 D_80160118;
+extern s16 D_8016011A;
 extern f32 D_8016011C;
 extern f32 D_80160120;
 extern f32 D_80160124;
@@ -1919,6 +1937,11 @@ extern char D_80145650;
 extern f32 D_8014567C;
 extern f32 D_80145698_154648;
 extern f32 D_801456A8_154658;
+extern f64 D_801456B0_154660;
+extern f64 D_801456B8_154668;
+extern f64 D_801456C0_154670;
+extern f64 D_801456C8_154678;
+extern f64 D_801456D0_154680;
 extern s32 D_801591BC;
 extern f32 D_801456D8_154688;
 extern f32 D_801456DC_15468C;
@@ -2430,6 +2453,7 @@ extern f64 D_800A56F8_18D7B8;
 extern f64 D_800A5700_18D7C0;
 extern f64 D_800A5708_18D7C8;
 extern f64 D_800A5710_18D7D0;
+extern f64 D_80144D18_153CC8;
 extern f64 D_80144D68_153D18;
 extern s16 D_80047716;
 extern VehicleInstance D_80050A74;
@@ -2680,6 +2704,7 @@ extern char D_801435F8_1525A8[];
 extern u8 D_8013DFA8_14CF58[][3];
 extern u8 D_80157530;
 extern u8 D_80157531;
+extern f64 D_80144BA0_153B50;
 extern f64 D_80144BC8_153B78;
 extern f64 D_80144BD0_153B80;
 extern f64 D_80144BE0_153B90;
