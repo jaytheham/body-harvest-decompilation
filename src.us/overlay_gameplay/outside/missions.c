@@ -621,7 +621,7 @@ void func_80074CA0_83C50(void) {
 }
 
 // readMissionConditions
-// CURRENT(2775)
+// CURRENT(30)
 #ifdef NON_MATCHING
 void func_80074FA8_83F58(void) {
 	s32 count;
@@ -635,34 +635,32 @@ void func_80074FA8_83F58(void) {
 			count = D_80149B28;
 		}
 
-		D_80149B28 = count + 1;
 		D_801497C0 = &D_801494C0[count];
+		D_80149B28 = count + 1;
 		D_801497C0->unk1 = D_80149B48;
 		D_801497C0->unk2 = D_80149B2C;
 		D_801497C0->unk3 = 0;
 		D_801497C0->unk4 = 0xFF;
 
 		cmd = func_80074558_83508();
-		if (cmd < 0x87) {
-			switch (cmd) {
-				case 0x82:
-					D_801497C0->unk0 = 2;
-					func_80074500_834B0();
-					break;
-				case 0x83:
-					D_801497C0->unk0 = 3;
-					func_80074500_834B0();
-					break;
-				default:
-					D_80149B28 -= 1;
-					return;
-			}
-		} else if (cmd == 0xB7) {
-			D_801497C0->unk0 = 1;
-			func_80074500_834B0();
-		} else {
-			D_80149B28 -= 1;
-			return;
+		switch (cmd) {
+			case 0xB7:
+				D_801497C0->unk0 = 1;
+				func_80074500_834B0();
+				break;
+			case 0x82:
+				D_801497C0->unk0 = 2;
+				func_80074500_834B0();
+				break;
+			case 0x83:
+				D_801497C0->unk0 = 3;
+				func_80074500_834B0();
+				break;
+			case 0x84:
+			case 0x85:
+			case 0x86:
+				D_80149B28 -= 1;
+				return;
 		}
 
 		func_80074CA0_83C50();
