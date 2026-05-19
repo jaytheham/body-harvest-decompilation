@@ -550,11 +550,11 @@ s32 func_801176B0_126660(void)
   Unk80148620 *ptr;
   for (i = 0xF; i--;)
   {
-    if (D_80148620_1575D0[i].unk0 == D_80052540)
-    {
-      ptr = &D_80148620_1575D0[i];
-      return (s32)ptr;
-    }
+	if (D_80148620_1575D0[i].unk0 == D_80052540)
+	{
+	  ptr = &D_80148620_1575D0[i];
+	  return (s32)ptr;
+	}
   }
   return 0;
 }
@@ -1399,30 +1399,30 @@ s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 #endif
 
 void func_8011BF7C_12AF2C(u8 arg0) {
-    BuildingInstance *inst = &buildingInstances[arg0];
-    BuildingSpec *spec = &buildingSpecs[inst->buildingType];
+	BuildingInstance *inst = &buildingInstances[arg0];
+	BuildingSpec *spec = &buildingSpecs[inst->buildingType];
 
-    if ((s8)inst->hitPoints <= 0) {
-        return;
-    }
-    if (!((inst->unk8 >> 12) & 1)) {
-        return;
-    }
-    if ((inst->unk8 >> 12) & 0x10) {
-        return;
-    }
-    func_800D249C_E144C(
-        inst->xCoord,
-        (s16)(s32)((f64)inst->yCoord + (f64)spec->unk14 * D_80144FA0_153F50),
-        inst->zCoord,
-        0xC8,
-        0x55,
-        0x55,
-        (s32)arg0,
-        0
-    );
-    inst->hitPoints = 1;
-    inst->unk8 = (((inst->unk8 >> 12 | 0x10) ^ (inst->unk8 >> 12)) << 12) ^ inst->unk8;
+	if ((s8)inst->hitPoints <= 0) {
+		return;
+	}
+	if (!((inst->unk8 >> 12) & 1)) {
+		return;
+	}
+	if ((inst->unk8 >> 12) & 0x10) {
+		return;
+	}
+	func_800D249C_E144C(
+		inst->xCoord,
+		(s16)(s32)((f64)inst->yCoord + (f64)spec->unk14 * D_80144FA0_153F50),
+		inst->zCoord,
+		0xC8,
+		0x55,
+		0x55,
+		(s32)arg0,
+		0
+	);
+	inst->hitPoints = 1;
+	inst->unk8 = (((inst->unk8 >> 12 | 0x10) ^ (inst->unk8 >> 12)) << 12) ^ inst->unk8;
 }
 
 void func_8011C080_12B030(u8 arg0)
@@ -2629,9 +2629,9 @@ void func_8011F9A0_12E950(s32 arg0) {
 #endif
 
 void func_8011FA90_12EA40(BuildingInstance *arg0, u8 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s32 arg8) {
-    func_80116554_125504((s16)(arg0->unk8 & 3), &arg2, &arg4);
-    func_80116554_125504((s16)(arg0->unk8 & 3), &arg5, &arg7);
-    func_8012D700_13C6B0(arg1, ((arg0 - buildingInstances) * 0x10 + arg8) & 0xFFFF, (s16)(arg0->xCoord + arg2), (s16)(arg0->yCoord + arg3), arg0->zCoord + arg4, 0, 0, 0, (s32)arg5, (s32)arg7, (s32)arg6, func_8011E9F4_12D9A4, 0);
+	func_80116554_125504((s16)(arg0->unk8 & 3), &arg2, &arg4);
+	func_80116554_125504((s16)(arg0->unk8 & 3), &arg5, &arg7);
+	func_8012D700_13C6B0(arg1, ((arg0 - buildingInstances) * 0x10 + arg8) & 0xFFFF, (s16)(arg0->xCoord + arg2), (s16)(arg0->yCoord + arg3), arg0->zCoord + arg4, 0, 0, 0, (s32)arg5, (s32)arg7, (s32)arg6, func_8011E9F4_12D9A4, 0);
 }
 
 void func_8011FB98_12EB48(BuildingInstance *arg0) {
@@ -3564,7 +3564,7 @@ void func_80125CA0_134C50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80125CA0_134C50.s")
 #endif
 
-// CURRENT(0)
+// CURRENT(200)
 #ifdef NON_MATCHING
 Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, f32 *arg6) {
 	extern Cheat cheatData[];

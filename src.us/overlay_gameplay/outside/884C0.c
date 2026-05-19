@@ -5169,7 +5169,7 @@ void func_800893C8_98378(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	func_80081E5C_90E0C(arg1);
 }
 
-// CURRENT(0)
+// CURRENT(200)
 #ifdef NON_MATCHING
 void func_80089574_98524(u8 arg0) {
 	u16 sp48;

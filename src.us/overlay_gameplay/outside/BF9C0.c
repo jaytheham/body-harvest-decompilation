@@ -473,7 +473,7 @@ void func_800B19F8_C09A8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1A68_C0A18.s")
 
-// CURRENT(0)
+// CURRENT(200)
 #ifdef NON_MATCHING
 void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 	s16 baseX;
