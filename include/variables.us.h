@@ -1617,6 +1617,7 @@ extern s32 D_80157A0C;
 extern s32 D_801575D4;
 extern s16 D_80157A2C;
 extern VehicleInstance *D_80159020;
+extern u8 D_80158C42;
 extern AlienInstance *D_80158FEC; // Target alien instance
 extern s16 *D_80158FF4;
 extern s16 D_8015904C;
@@ -1746,6 +1747,7 @@ extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 // 80224680 missions
 
 extern u8 D_80254E80[]; // Tile palette data
+extern u16 D_80256E0A;
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
 extern u8 D_80257A3A[];
 
