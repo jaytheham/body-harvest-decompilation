@@ -473,7 +473,113 @@ void func_800B19F8_C09A8(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1A68_C0A18.s")
 
+// CURRENT(0)
+#ifdef NON_MATCHING
+void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
+	s16 baseX;
+	s16 baseY;
+	s16 centerX;
+	s16 centerY;
+	s16 mapOffX;
+	s16 mapOffY;
+	s16 fracX;
+	s16 fracY;
+	s16 radius;
+	s16 start;
+	s16 end;
+	s16 x;
+	s16 y;
+	s16 xDist;
+	s16 yDist;
+	s16 mapX;
+	s16 mapY;
+	s16 dist;
+	s16 falloff;
+	s16 intensity;
+	u8 *color;
+	u8 *dst;
+
+	color = (u8 *)arg1;
+	baseX = (arg0[0] >> 8) + 1;
+	baseY = (arg0[1] >> 8) + 1;
+	fracX = arg0[0] & 0xFF;
+	fracY = arg0[1] & 0xFF;
+	centerX = D_8014F89C - 0x7F;
+	centerY = D_8014F89D - 0x7F;
+	mapOffX = (D_8014F899 + baseX) - centerX;
+	mapOffY = (D_8014F898 + baseY) - centerY;
+	radius = (u8)((f32)(arg2 + arg3) / 256.0f);
+	start = 1 - radius;
+	end = radius + 1;
+
+	for (x = start; x < end; x++) {
+		if (x <= 0) {
+			xDist = fracX + (x * -0x100);
+		} else {
+			xDist = ((0x100 - fracX) + (x << 8)) - 0x100;
+		}
+
+		for (y = start; y < end; y++) {
+			if (y <= 0) {
+				yDist = fracY + (y * -0x100);
+			} else {
+				yDist = ((0x100 - fracY) + (y << 8)) - 0x100;
+			}
+
+			dist = (s16)((s32)sqrtf((f32)((xDist * xDist) + (yDist * yDist))) - arg2);
+			if (dist > 0) {
+				falloff = arg3 - dist;
+				if (falloff > 0) {
+					intensity = (s16)(((f32)falloff / (f32)arg3) * 255.0f);
+					if (intensity >= 0x100) {
+						intensity = 0xFF;
+					}
+				} else {
+					continue;
+				}
+			} else {
+				intensity = 0xFF;
+			}
+
+			if (intensity <= 0) {
+				continue;
+			}
+
+			mapX = x + baseX;
+			if ((mapX < centerX) || (mapX > (s16)(centerX + 0x13))) {
+				continue;
+			}
+
+			mapY = y + baseY;
+			if ((mapY < centerY) || (mapY > (s16)(centerY + 0x13))) {
+				continue;
+			}
+
+			dst = &D_80152740[((u16)((s16)((y + mapOffY) % 0x13)) * 0x39) + ((u16)((s16)((x + mapOffX) % 0x13)) * 3)];
+
+			dist = ((color[0] * intensity) >> 8) + dst[0];
+			if (dist >= 0x100) {
+				dist = 0xFF;
+			}
+			dst[0] = dist;
+
+			dist = ((color[1] * intensity) >> 8) + dst[1];
+			if (dist >= 0x100) {
+				dist = 0xFF;
+			}
+			dst[1] = dist;
+
+			dist = ((color[2] * intensity) >> 8) + dst[2];
+			if (dist >= 0x100) {
+				dist = 0xFF;
+			}
+			dst[2] = dist;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
+#endif
 
 // CURRENT(10974)
 #ifdef NON_MATCHING
