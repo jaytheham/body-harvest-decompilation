@@ -1092,33 +1092,41 @@ void func_80075AA4_84A54(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075AA4_84A54.s")
 #endif
 
-// CURRENT(7747)
+// CURRENT(6989)
 #ifdef NON_MATCHING
 s32 func_80075E50_84E00(void) {
 	u8 *stream;
-	u8 *cmd;
 	s32 has83After82;
-	s32 count;
 	u32 bitmask[8];
-	s32 i;
+	u8 *cmd;
+	s32 count;
+	u32 vehicleOffset;
+	u8 idx;
 
 	cmd = D_801497C8;
 	stream = &D_80224680;
 	has83After82 = 0;
 
-	for (i = 0; i < 8; i++) {
-		bitmask[i] = 0;
+	for (count = 0; count < 8; count++) {
+		bitmask[count] = 0;
 	}
 
 	count = D_80149B30;
+
 	if (count != 0) {
 		count--;
 		do {
 			if (cmd[0] == 0x9C) {
-				if (vehicleInstances[cmd[1]].unk3C == 1) {
-					func_800E5CF4_F4CA4(2, cmd[1]);
+				idx = cmd[1];
+				vehicleOffset = idx;
+				vehicleOffset = (vehicleOffset << 2) - vehicleOffset;
+				vehicleOffset = (vehicleOffset << 3) - idx;
+				vehicleOffset <<= 2;
+
+				if (((VehicleInstance *)((u8 *)vehicleInstances + vehicleOffset))->unk3C == 1) {
+					func_800E5CF4_F4CA4(2, idx);
 				} else {
-					vehicleInstances[cmd[1]].unk20 &= 0x7FFF;
+					((VehicleInstance *)((u8 *)vehicleInstances + vehicleOffset))->unk20 &= 0x7FFF;
 				}
 			}
 			cmd += 3;
