@@ -1347,7 +1347,8 @@ s32 func_8007643C_853EC(s32 arg0) {
 	s32 temp;
 
 	if (func_800078B8_84B8(arg0, &D_8004D150) != 0) {
-		temp = 0x80;
+		i = 0x80;
+		temp = i;
 	} else {
 		return -1;
 	}
@@ -1407,37 +1408,42 @@ s32 func_8007643C_853EC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007643C_853EC.s")
 #endif
 
-// CURRENT(4495)
+// CURRENT(3690)
 #ifdef NON_MATCHING
 s32 func_800765C4_85574(s32 arg0) {
+	MissionCondEntry *condEntry;
 	MissionCondEntry *foundEntry;
-	MissionCondEntry *entry;
 	u8 *missionEntry;
-	s32 temp;
 	s32 i;
+	s32 temp;
 
-	if (func_800078B8_84B8(arg0, &D_8004D150) == 0) {
+	if (func_800078B8_84B8(arg0, &D_8004D150) != 0) {
+		temp = 0x80;
+	} else {
 		return -1;
 	}
 
-	temp = 0x80;
 	i = -1;
 	if (temp != 0) {
+		s32 condType;
+
 		i = temp - 1;
-		entry = &D_801494C0[i];
-		if ((entry->unk0 == 3) && (arg0 == entry->unk1)) {
-			foundEntry = entry;
+		condType = 3;
+		condEntry = &D_801494C0[i];
+		foundEntry = condEntry;
+		if ((condEntry->unk0 == condType) && (arg0 == condEntry->unk1)) {
+			foundEntry = condEntry;
 		} else {
 			while (1) {
 				temp = i;
 				i -= 1;
-				entry -= 1;
-				foundEntry = entry;
+				condEntry -= 1;
+				foundEntry = condEntry;
 				if (temp == 0) {
 					break;
 				}
-				if ((entry->unk0 == 3) && (arg0 == foundEntry->unk1)) {
-					foundEntry = entry;
+				if ((condEntry->unk0 == condType) && (arg0 == foundEntry->unk1)) {
+					foundEntry = condEntry;
 					break;
 				}
 			}
@@ -1466,8 +1472,7 @@ s32 func_800765C4_85574(s32 arg0) {
 
 	func_800078E4_84E4(arg0, &D_8004D150);
 	func_800078CC_84CC(arg0, &D_8004D158);
-	func_80013460();
-	return 0;
+	return (func_80013460(), 0);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800765C4_85574.s")
