@@ -396,34 +396,38 @@ void func_80074768_83718(void) {
 	D_80149B44 += 1;
 }
 
-// CURRENT(5160)
+// CURRENT(5068)
 #ifdef NON_MATCHING
 void func_800747A8_83758(void) {
 	s32 sum;
 	s32 selectedIndex;
 	s32 randomValue;
-	s32 commandIndex;
-	s32 loopIndex;
+	s32 loopIndex[1];
 	u8 *cmdEntry;
 	u8 *weight;
-	s32 value;
+	s32 commandIndex;
 
 	sum = 0;
-	loopIndex = 0;
+	loopIndex[0] = 0;
 
 	if (func_80074558_83508() != 0x87) {
-		commandIndex = (loopIndex * 4) - loopIndex;
-		weight = &D_80149B50[loopIndex];
+		commandIndex = (loopIndex[0] * 4) - loopIndex[0];
+		weight = &D_80149B50[loopIndex[0]];
 		cmdEntry = &D_80149AC8[commandIndex];
 		do {
-			value = func_80074500_834B0();
-			sum += value;
+			randomValue = func_80074500_834B0();
+			sum += randomValue;
 			if (cmdEntry >= D_80149AF8) {
 				osSyncPrintf(D_80141248_1501F8);
 			}
-			*weight = value;
-			func_80074578_83528(cmdEntry);
-			cmdEntry += 3;
+			*weight = randomValue;
+			{
+				u8 *entryBefore;
+
+				entryBefore = cmdEntry;
+				cmdEntry += 3;
+				func_80074578_83528(entryBefore);
+			}
 			weight += 1;
 		} while (func_80074558_83508() != 0x87);
 	}
