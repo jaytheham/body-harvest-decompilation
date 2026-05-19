@@ -1491,6 +1491,7 @@ void func_80076754_85704(void)
   D_8004D154 = -1;
 }
 
+// CURRENT(830)
 #ifdef NON_MATCHING
 void func_8007679C_8574C(s16 arg0) {
 	MissionCondEntry *entry;
@@ -1500,7 +1501,7 @@ void func_8007679C_8574C(s16 arg0) {
 	i = 0x7F;
 	do {
 		if (entry->unk1 == arg0 && entry->unk0 == 1) {
-			func_80073DC0_82D70(entry->unk4, i, arg0);
+			func_80073DC0_82D70(entry->unk4);
 			break;
 		}
 		entry++;
