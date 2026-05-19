@@ -4015,7 +4015,108 @@ void func_80128504_1374B4(AlienInstance *arg0, s32 arg1, s32 *arg2, s32 *arg3, s
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80128650_137600.s")
 
+// CURRENT(17973)
+#ifdef NON_MATCHING
+void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+	s32 halfX;
+	s32 halfY;
+	s32 halfZ;
+	f32 length;
+	f32 dirX;
+	f32 dirY;
+	f32 dirZ;
+	s32 startStep;
+	f32 startStepF;
+	s32 midX;
+	s32 midY;
+	s32 midZ;
+	s32 endStep;
+	f32 endStepF;
+	f32 midStepF;
+
+	halfX = (arg3 - arg0) >> 1;
+	halfY = (arg4 - arg1) >> 1;
+	halfZ = (arg5 - arg2) >> 1;
+
+	length = sqrtf((f32)((halfX * halfX) + (halfY * halfY) + (halfZ * halfZ))) * 2.0f;
+	if (length == 0.0f) {
+		return;
+	}
+
+	dirX = (f32)halfX / length;
+	dirY = (f32)halfY / length;
+	dirZ = (f32)halfZ / length;
+
+	startStep = (func_800038E0_44E0(length) % 30);
+	startStep = (s32)(((f32)startStep * length) / 100.0f);
+	startStepF = (f32)startStep;
+
+	midX = (s32)((f32)arg0 + (dirX * startStepF));
+	midY = (s32)((f32)arg1 + (dirY * startStepF));
+	midZ = (s32)((f32)arg2 + (dirZ * startStepF));
+
+	endStep = (func_800038E0_44E0(length) % 30);
+	endStep = (s32)(((f32)endStep * length) / 100.0f);
+	endStepF = (f32)endStep;
+
+	arg3 = (s32)((f32)arg3 - (dirX * endStepF));
+	arg4 = (s32)((f32)arg4 - (dirY * endStepF));
+	arg5 = (s32)((f32)arg5 - (dirZ * endStepF));
+
+	gDPSetRenderMode(D_8005BB30++, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
+	gDPSetCycleType(D_8005BB30++, G_CYC_1CYCLE);
+	gDPSetCombineMode(D_8005BB30++, G_CC_SHADE, G_CC_SHADE);
+	gSPClearGeometryMode(D_8005BB30++, G_FOG);
+
+	D_8005BB34->v.ob[0] = midX;
+	D_8005BB34->v.ob[1] = midY;
+	D_8005BB34->v.ob[2] = midZ;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0x6E;
+	D_8005BB34->v.cn[1] = 0xD2;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+
+	midStepF = (f32)(s32)((f64)((length - (f32)startStep) - endStepF) * 0.5);
+	D_8005BB34->v.ob[0] = (s16)(s32)((f32)midX + (dirX * midStepF));
+	D_8005BB34->v.ob[1] = (s16)(s32)((f32)midY + (dirY * midStepF));
+	D_8005BB34->v.ob[2] = (s16)(s32)((f32)midZ + (dirZ * midStepF));
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0xFF;
+	D_8005BB34->v.cn[1] = 0xFF;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0x96;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = arg3;
+	D_8005BB34->v.ob[1] = arg4;
+	D_8005BB34->v.ob[2] = arg5;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0x50;
+	D_8005BB34->v.cn[1] = 0x28;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+
+	gDPPipeSync(D_8005BB30++);
+	gSPVertex(D_8005BB30++, D_8005BB34 - 3, 3, 0);
+	D_8005BB30->words.w0 = 0xB5000000;
+	D_8005BB30->words.w1 = 0x00000200;
+	D_8005BB30++;
+	D_8005BB30->words.w0 = 0xB5000000;
+	D_8005BB30->words.w1 = 0x00020400;
+	D_8005BB30++;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80128E48_137DF8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80129354_138304.s")
 
