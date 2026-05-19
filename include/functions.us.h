@@ -46,6 +46,7 @@ void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2);
 s32 func_800825E8_91598(s16, s16, s32 *);
 s16 func_80003824_4424(f32, f32);
 void func_80088154_97104(VehicleInstance *arg0, s16 arg1, s16 arg2);
+void func_80083EF4_92EA4(AlienInstance *arg0, s32 arg1, s16 arg2, s16 arg3);
 void func_80107184_116134(VehicleInstance *arg0, s32 arg1, s32 arg2, f32 arg3);
 s16 func_800FB160_10A110(VehicleInstance *arg0);
 void func_800033D4_3FD4(u32 arg0, s32 arg1);
