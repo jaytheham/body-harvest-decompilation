@@ -396,31 +396,31 @@ void func_80074768_83718(void) {
 	D_80149B44 += 1;
 }
 
-// CURRENT(5894)
+// CURRENT(5160)
 #ifdef NON_MATCHING
 void func_800747A8_83758(void) {
 	s32 sum;
 	s32 selectedIndex;
 	s32 randomValue;
 	s32 commandIndex;
-	volatile s32 loopIndex;
-	u8 *weight;
+	s32 loopIndex;
 	u8 *cmdEntry;
+	u8 *weight;
 	s32 value;
 
 	sum = 0;
-	commandIndex = 0;
 	loopIndex = 0;
 
 	if (func_80074558_83508() != 0x87) {
+		commandIndex = (loopIndex * 4) - loopIndex;
 		weight = &D_80149B50[loopIndex];
-		cmdEntry = &D_80149AC8[(loopIndex * 4) - loopIndex];
+		cmdEntry = &D_80149AC8[commandIndex];
 		do {
 			value = func_80074500_834B0();
+			sum += value;
 			if (cmdEntry >= D_80149AF8) {
 				osSyncPrintf(D_80141248_1501F8);
 			}
-			sum += value;
 			*weight = value;
 			func_80074578_83528(cmdEntry);
 			cmdEntry += 3;
@@ -435,8 +435,7 @@ void func_800747A8_83758(void) {
 		do {
 			selectedIndex = commandIndex;
 			randomValue -= D_80149B50[commandIndex];
-			commandIndex = selectedIndex + 1;
-		} while (randomValue >= 0);
+		} while ((commandIndex = selectedIndex + 1, randomValue >= 0));
 	}
 
 	commandIndex = D_80149B38;
@@ -446,9 +445,11 @@ void func_800747A8_83758(void) {
 		commandIndex = D_80149B38;
 	}
 
-	D_8004D180[commandIndex * 3 + 0] = D_80149AC8[selectedIndex * 3 + 0];
-	D_8004D180[commandIndex * 3 + 1] = D_80149AC8[selectedIndex * 3 + 1];
-	D_8004D180[commandIndex * 3 + 2] = D_80149AC8[selectedIndex * 3 + 2];
+	cmdEntry = &D_8004D180[commandIndex * 3];
+	weight = &D_80149AC8[selectedIndex * 3];
+	cmdEntry[0] = weight[0];
+	cmdEntry[1] = weight[1];
+	cmdEntry[2] = weight[2];
 	D_80149B38 = commandIndex + 1;
 }
 #else
