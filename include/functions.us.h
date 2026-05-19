@@ -769,7 +769,7 @@ s32 func_801165FC_1255AC(u8, u8, s16 *, s16 *, s16 *, s16 *);
 void func_8011694C_1258FC(void);
 s32 func_80117508_1264B8(s16 arg0);
 s32 func_801176B0_126660(void);
-void func_80117A4C_1269FC(s32);
+void func_80117A4C_1269FC(void *);
 void func_80117F10_126EC0(void);
 void func_80116784_125734();  
 void func_8011A604_1295B4(void);

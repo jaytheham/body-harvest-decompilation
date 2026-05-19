@@ -649,7 +649,65 @@ void func_801176F4_1266A4(s16 arg0, s16 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801176F4_1266A4.s")
 #endif
 
+// CURRENT(6507)
+#ifdef NON_MATCHING
+void func_80117A4C_1269FC(void *arg0) {
+	s16 sp3A;
+	s16 sp38;
+	s16 sp36;
+	s16 sp34;
+	s16 sp30;
+	void *sp40;
+	VehicleInstance *temp_s0;
+
+	temp_s0 = &vehicleInstances[((u8 *)arg0)[5]];
+	temp_s0->unk1A = ((u8 *)arg0)[4];
+	sp40 = arg0;
+	func_800FDD48_10CCF8(((u8 *)arg0)[5], sp40);
+	func_800FAE84_109E34(temp_s0);
+	temp_s0->unk20 |= 0x8049;
+	func_801165FC_1255AC(D_80052543, 0, &sp3A, &sp38, &sp36, &sp34);
+	func_800FB44C_10A3FC(temp_s0,
+						 (f32)(((f64)D_80257A36[temp_s0->unk1A * 0x38] * ((f64)(f32)coss((-0x4000 - sp34) & 0xFFFF) / 32768.0)) +
+							   (f64)sp3A));
+	func_800FB468_10A418(temp_s0, (f32)sp38);
+	func_800FB484_10A434(temp_s0,
+						 (f32)(((f64)D_80257A36[temp_s0->unk1A * 0x38] * ((f64)(f32)sins((-0x4000 - sp34) & 0xFFFF) / 32768.0)) +
+							   (f64)sp36));
+	temp_s0->unk6 = 0x4000 - sp34;
+	func_800FD510_10C4C0(0, ((u8 *)sp40)[5]);
+	func_800FDD48_10CCF8(0);
+	D_8015EA2C = D_80144F10_153EC0;
+	D_8015EA30 = 0.0f;
+	D_80159260 = 0x3E;
+	D_8015930E = 1;
+	D_80159262 = 0;
+	D_8005254C &= ~7;
+	D_80158BD0[((u8 *)sp40)[5]] = 0;
+	if (currentLevel == 3) {
+		sp30 = coss((-0x4000 - sp34) & 0xFFFF);
+		func_80112A98_121A48((s32)((((f64)(f32)sp30 / 32768.0) * D_80144F18_153EC8) + (f64)sp3A),
+							(s32)((((f64)(f32)sins((-0x4000 - sp34) & 0xFFFF) / 32768.0) * D_80144F18_153EC8) + (f64)sp36),
+							0x258);
+	} else {
+		sp30 = coss((-0x4000 - sp34) & 0xFFFF);
+		func_80112A98_121A48((s32)((((f64)(f32)sp30 / 32768.0) * 200.0) + (f64)sp3A),
+							(s32)((((f64)(f32)sins((-0x4000 - sp34) & 0xFFFF) / 32768.0) * 200.0) + (f64)sp36),
+							0x190);
+	}
+	func_801176F4_1266A4(D_80052543, 0, ((u8 *)sp40)[5]);
+	if ((currentLevel == 1) && ((((s32)((u8 *)sp40 - (u8 *)D_80148620_1575D0) >> 3) == 3))) {
+		D_80159262 = 1;
+		func_800FB44C_10A3FC(temp_s0,
+						 (f32)((f64)sp3A - ((((f64)(f32)coss((-0x4000 - sp34) & 0xFFFF)) / 32768.0) * D_80144F20_153ED0)));
+		func_800FB484_10A434(temp_s0,
+						 (f32)((f64)sp36 - ((((f64)(f32)sins((-0x4000 - sp34) & 0xFFFF)) / 32768.0) * D_80144F28_153ED8)));
+	}
+	func_800EFEB4_FEE64(0, 3, 0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117A4C_1269FC.s")
+#endif
 
 void func_80117F10_126EC0(void) {
 	D_8015EA30 = D_80144F30_153EE0;
