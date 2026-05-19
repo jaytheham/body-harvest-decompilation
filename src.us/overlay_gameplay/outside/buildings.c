@@ -2312,7 +2312,113 @@ void func_8011EAF8_12DAA8(s32 arg0, s32 arg1) {
 	}
 }
 
+// CURRENT(9768)
+#ifdef NON_MATCHING
+void func_8011EB40_12DAF0(BuildingInstance *arg0) {
+	f64 tempF22;
+	s16 tempS1;
+	s32 varS0;
+	s16 state;
+	s16 *tempEA48;
+	Gfx *tempS0;
+
+	tempS0 = D_8005BB2C;
+	D_8005BB2C = tempS0 + 1;
+	tempS0->words.w1 = 0x00020000;
+	tempS0->words.w0 = 0xB7000000;
+
+	D_80052B40.unk0 = D_80159DC8 + D_8015EA4C;
+	D_80052B40.unk2 = D_80159DCA + D_8015EA4E;
+	D_80052B40.unk4 = D_80159DCC + D_8015EA50;
+	D_80052B48.unk0 = 0;
+	D_80052B48.unk4 = 0;
+	D_80052B48.unk2 = D_8015EA48;
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
+
+	tempS0 = D_8005BB2C;
+	D_8005BB2C = tempS0 + 1;
+	tempS0->words.w0 = 0x01000040;
+	tempS0->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+	tempS0 = D_8005BB2C;
+	D_8005BB38 += 0x40;
+	D_8005BB2C = tempS0 + 1;
+	tempS0->words.w0 = 0x06000000;
+	tempS0->words.w1 = D_80159DC4 & 0x1FFFFFFF;
+
+	tempS0 = D_8005BB2C;
+	D_8005BB2C = tempS0 + 1;
+	tempS0->words.w0 = 0x01020040;
+	tempS0->words.w1 = (u32)&D_80031160 & 0x1FFFFFFF;
+
+	if (gameplayMode != 2) {
+		tempEA48 = &D_8015EA48;
+		state = D_8015EA4A;
+		if (state < 3) {
+			if ((state == 2) && (D_8015EA44 > 0)) {
+				D_8015EA44 -= 0x40;
+			}
+			*tempEA48 += D_8015EA44;
+		}
+
+		D_8015EB84 = *tempEA48 + 0x78D;
+
+		switch (state) {
+		case 3:
+			D_8015EA46 += 1;
+			D_8015EA4E -= D_8015EA46;
+			if (D_8015EA4E < -0x5E) {
+				D_8015EA4A = state = 4;
+				D_8015EA4E = -0x5E;
+			}
+			break;
+		case 4:
+			break;
+		}
+
+		if (state == 1) {
+			varS0 = 3;
+			tempF22 = D_80144FC0_153F70;
+			do {
+				tempS1 = sins(D_8015EB84);
+				func_8012D700_13C6B0(
+					1,
+					(((((s32)((u8 *)arg0 - (u8 *)buildingInstances) / 0x18) * 0x10) + varS0) & 0xFFFF),
+					(s16)(arg0->xCoord + D_80159DC8 - 0x62),
+					(s16)(s32)((((f64)(f32)tempS1 / 32768.0) * tempF22) + (f64)(arg0->yCoord + D_80159DCA + 0x26)),
+					(s32)((((f64)(f32)coss(D_8015EB84) / 32768.0) * tempF22) + (f64)(arg0->zCoord + D_80159DCC - 0xB5)),
+					0,
+					0,
+					0,
+					0x14,
+					0x28,
+					0x28,
+					&func_8011EABC_12DA6C,
+					NULL);
+				D_8015EB84 = (s16)D_8015EB84 + 0x4000;
+				varS0 -= 1;
+			} while (varS0 != 0);
+
+			func_8012D700_13C6B0(
+				1,
+				(((((s32)((u8 *)arg0 - (u8 *)buildingInstances) / 0x18) * 0x10) + 5) & 0xFFFF),
+				(s16)(arg0->xCoord - 0x8E),
+				(s16)(arg0->yCoord + D_80159DCA),
+				arg0->zCoord - 0x21,
+				0,
+				0,
+				0,
+				0x13,
+				0x14,
+				0x14,
+				NULL,
+				&func_8011EAF8_12DAA8);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EB40_12DAF0.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
