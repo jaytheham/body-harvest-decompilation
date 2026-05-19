@@ -964,13 +964,11 @@ doneParsing:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800756DC_8468C.s")
 #endif
 
-// CURRENT(8177)
+// CURRENT(1656)
 #ifdef NON_MATCHING
 void func_80075AA4_84A54(void) {
 	MissionCondEntry *cond;
-	u8 *missionPtr;
 	s32 i;
-	s32 count;
 	u32 missionTimer;
 	s32 *callback;
 
@@ -989,95 +987,106 @@ void func_80075AA4_84A54(void) {
 		break;
 	}
 
-	missionTimer = D_80052A8C;
-	if (missionTimer >= 0xDD) {
+	if ((u32)D_80052A8C >= 0xDD) {
 		guess_checkMissions();
-		missionTimer = D_80052A8C;
 	}
+	missionTimer = D_80052A8C;
 
-	if ((missionTimer % 20) == 0) {
-		volatile u8 *slot;
+	{
+		u8 *slot;
 		s32 ageCount;
 
-		slot = &D_8004D1BE;
 		ageCount = 14;
-		do {
-			if (*slot != 0xFF) {
-				*slot = (u8)(*slot + 1);
-			}
-			slot--;
-		} while (ageCount-- != 0);
+		if ((missionTimer % 20) == 0) {
+			slot = &D_8004D1BE;
+			do {
+				if (*slot != -1) {
+					*slot = *slot + 1;
+				}
+				slot--;
+			} while (ageCount--);
+		}
 	}
 
-	count = D_80149B28;
-	if (count != 0) {
-		cond = &D_801494C0[count - 1];
+	{
+		s32 count;
+
+		count = D_80149B28;
+		if (count != 0) {
+			s32 condCount;
+
+			condCount = count - 1;
+			cond = &D_801494C0[condCount];
 
 		do {
 			D_801497C0 = cond;
-			D_80149B48 = cond->unk1;
+			D_80149B48 = D_801497C0->unk1;
 
-			if (cond->unk0 != 0) {
-				if (cond->unk0 == 1) {
-					if ((func_800078B8_84B8(cond->unk1, &D_8004D150) != 0) ||
+			if (D_801497C0->unk0 != 0) {
+				if (D_801497C0->unk0 == 1) {
+					if ((func_800078B8_84B8(D_801497C0->unk1, &D_8004D150) != 0) ||
 						(func_800078B8_84B8(D_801497C0->unk1, &D_8004D154) != 0) ||
 						(func_800078B8_84B8(D_801497C0->unk1, &D_8004D158) != 0)) {
 						goto next_cond;
 					}
 				} else {
-					if (func_800078B8_84B8(cond->unk1, &D_8004D150) == 0) {
+					if (func_800078B8_84B8(D_801497C0->unk1, &D_8004D150) == 0) {
 						goto next_cond;
 					}
 				}
 
 				D_801497C4 = &D_8004D348[D_801497C0->unk2 * 9];
-
-				for (i = D_801497C0->unk3; i != 0; i--) {
-					if (func_800081D4_8DD4(D_801497C4) == 0) {
-						goto next_cond;
-					}
-
-					D_801497C4 += 9;
-
-					if (i == 1) {
-						switch (D_801497C0->unk0) {
-						case 1:
-							if (func_800078B8_84B8(D_801497C0->unk1, &D_8004D15C) == 0) {
-								D_8004D14C = 0x73;
-							}
-
-							missionPtr = &D_80149B60[D_801497C0->unk1 * 0x226];
-							if (*missionPtr != 0x6E) {
-								func_8001A598_1B198(missionPtr);
-							}
-
-							__dummy();
-							func_800078CC_84CC(D_801497C0->unk1, &D_8004D150);
-							func_80073DC0_82D70(D_801497C0->unk4);
-							break;
-						case 2:
-							func_8007643C_853EC(D_801497C0->unk1);
-							break;
-						case 3:
-							func_800765C4_85574(D_801497C0->unk1);
-							break;
+				i = D_801497C0->unk3;
+				if (i != 0) {
+					i--;
+					do {
+						if (func_800081D4_8DD4(D_801497C4) == 0) {
+							goto next_cond;
 						}
-					}
+
+						D_801497C4 += 9;
+
+						if (i == 0) {
+							switch (D_801497C0->unk0) {
+							case 1:
+								if (func_800078B8_84B8(D_801497C0->unk1, &D_8004D15C) == 0) {
+									D_8004D14C = 0x73;
+								}
+
+								if (D_80149B60[D_801497C0->unk1 * 0x226] != 0x6E) {
+									func_8001A598_1B198(&D_80149B60[D_801497C0->unk1 * 0x226]);
+								}
+
+								__dummy();
+								func_800078CC_84CC(D_801497C0->unk1, &D_8004D150);
+								func_80073DC0_82D70(D_801497C0->unk4);
+								break;
+							case 2:
+								func_8007643C_853EC(D_801497C0->unk1);
+								break;
+							case 3:
+								func_800765C4_85574(D_801497C0->unk1);
+								break;
+							}
+						}
+					} while (i-- != 0);
 				}
 			}
 
-		next_cond:
-			cond--;
-		} while (--count != 0);
+			next_cond:
+				cond--;
+			} while (condCount-- != 0);
+		}
 	}
 
 	callback = &D_80149478[15];
-	for (i = 0; i < 16; i++) {
+	i = 15;
+	do {
 		if (*callback != 0) {
 			((void (*)(void))*callback)();
 		}
 		callback--;
-	}
+	} while (i-- != 0);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075AA4_84A54.s")
