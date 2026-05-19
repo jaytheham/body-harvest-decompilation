@@ -3163,6 +3163,7 @@ extern u8 D_802566D0[];
 extern u8 D_802566BA[];
 extern void (*D_802566C8[])(u8);
 extern Unk802566D8 D_802566D8[];
+extern u8 D_802567A1;
 extern s8 D_80257A55[];
 extern u8 D_80140768[];
 extern WeaponSpecEntry D_80140768_14F718[];
