@@ -62,6 +62,7 @@ void func_80004F64_5B64(void);
 void func_800069FC_75FC(void);
 VehicleInstance *func_80109960_118910(void);
 void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1);
+void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1);
 s32 func_8008D978_9C928(u32 arg0);
 void func_80004D38_5938(void);
 void func_80004DDC_59DC(u8 arg0, u8 arg1, u8 arg2, s32 arg3, s32 arg4);

@@ -5498,7 +5498,95 @@ void func_80103DD0_112D80(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801047C8_113778.s")
 
+// CURRENT(3252)
+#ifdef NON_MATCHING
+void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
+	VehicleSpec *spec;
+	f32 maxSteer;
+	f32 sp2C;
+	s16 trig;
+	s8 stickX;
+	s8 stickY;
+	u8 temp;
+
+	spec = &vehicleSpecs[arg0->unk1A];
+	maxSteer = (f32)spec->unk48;
+
+	func_800F9F00_108EB0(arg0->unk0, arg0->unk4);
+
+	D_80158E5C = 0.0f;
+	D_80158E58 = 0.0f;
+	arg0->unk28 = 0;
+	arg0->unk2A = 0;
+
+	func_80103DD0_112D80();
+
+	if (D_801591AC == 0 && arg0->unk3C != 0 && (!(spec->unk4C & 0x10000) || !(D_80159320 & 0x40000))) {
+		if (currentControllerStates[0].button & 0x8000) {
+			arg0->unk34 += 20.0f;
+		}
+
+		if (currentControllerStates[0].button & 0x4000) {
+			arg0->unk34 -= 20.0f;
+		}
+
+		if (arg1->button & 0x10) {
+			arg0->unk28 = (s16)(arg1->stick_x * -80);
+		} else {
+			arg0->unk34 = (f32)((f64)arg0->unk34 - ((f64)arg0->unk34 * D_80144B58_153B08));
+			arg0->unk2A = (s16)(arg1->stick_y * 80);
+			arg0->unk28 = (s16)(arg1->stick_x * -40);
+
+			stickX = arg1->stick_x;
+			if (-stickX < stickX) {
+				stickX = arg1->stick_x;
+			} else {
+				stickX = -arg1->stick_x;
+			}
+
+			D_80158E5C = (f32)(((f64)(f32)(stickX * arg1->stick_x) / D_80144B60_153B10) * (f64)maxSteer);
+		}
+
+		if (!(arg0->unk20 & 2) && arg0->unk34 < 0.0f) {
+			arg0->unk34 = 0.0f;
+		}
+
+		trig = sins((u16)arg0->unkA);
+		temp = ((u8 *)spec)[0x3E];
+		sp2C = (f32)((((f64)(f32)trig / 32768.0) * (f64)((f32)temp * D_801591F0)) / 12.0);
+
+		trig = coss((u16)arg0->unk6);
+		func_80102D00_111CB0(arg0, (f32)(((f64)(f32)trig / 32768.0) * (f64)sp2C), 0.0f,
+							(f32)(((f64)(f32)sins((u16)arg0->unk6) / 32768.0) * (f64)sp2C));
+
+		trig = sins((u16)arg0->unk8);
+		temp = ((u8 *)spec)[0x3E];
+		sp2C = (f32)((((f64)(f32)trig / 32768.0) * (f64)((f32)temp * D_801591F0)) / 12.0);
+
+		trig = sins((u16)arg0->unk6);
+		func_80102D00_111CB0(arg0, (f32)(((f64)(f32)trig / 32768.0) * (f64)sp2C), 0.0f,
+							-(f32)(((f64)(f32)coss((u16)arg0->unk6) / 32768.0) * (f64)sp2C));
+
+		if (currentControllerStates[0].button & 0x4000) {
+			func_800FB430_10A3E0(D_80052B34, (f32)((f64)D_80052B34->unk58 * D_80144B68_153B18));
+			D_80052B34->unk30 = (f32)((f64)D_80052B34->unk30 * D_80144B70_153B20);
+			D_80052B34->unk34 = (f32)((f64)D_80052B34->unk34 * D_80144B70_153B20);
+			D_80052B34->unk38 = (f32)((f64)D_80052B34->unk38 * D_80144B70_153B20);
+		}
+
+		if (arg0->unk3C <= 0) {
+			if (*(s16 *)((u8 *)&vehicleSpecs[D_80052B34->unk1A] + 0x66) == 0) {
+				D_80158E5C = 0.0f;
+			}
+
+			D_80158E58 = 0.0f;
+				arg0->unk3C = 0;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80104E00_113DB0.s")
+#endif
 
 // The button press check is Z to shoot the gun.
 // Skiiping this call stops adam responding to input
