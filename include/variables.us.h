@@ -2774,6 +2774,7 @@ extern char D_80143F58_152F08;
 extern char D_80143F7C_152F2C;
 extern char D_80143F94_152F44;
 extern char D_80143FA4_152F54;
+extern f32 D_8014401C_152FCC;
 extern f32 D_80144020_152FD0;
 extern f64 D_80144028_152FD8;
 extern UnkFunc8013B5E4 D_80257A1C[];
