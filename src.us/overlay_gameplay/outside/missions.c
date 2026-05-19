@@ -163,7 +163,7 @@ void func_80073DC0_82D70(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80073DC0_82D70.s")
 #endif
 
-// CURRENT(6010)
+// CURRENT(3870)
 // Resets a bunch of memory? For missions?
 #ifdef NON_MATCHING
 void func_80074204_831B4(void) {
@@ -181,7 +181,7 @@ void func_80074204_831B4(void) {
 	do {
 		*var_v0 = 0;
 		var_v0 += 1;
-	} while (var_a0-- != 0);
+	} while (var_a0--);
 
 	var_v0 = &D_8014CCCA;
 	var_a0 = 0x17;
@@ -192,7 +192,7 @@ void func_80074204_831B4(void) {
 		var_v0[0x32] = var_a2;
 		var_v0[0x64] = var_a2;
 		var_v0 -= 0x226;
-	} while (var_a0-- != 0);
+	} while (var_a0--);
 
 	var_v0 = &D_8014CFEC;
 	var_a0 = 0x3F;
@@ -200,7 +200,7 @@ void func_80074204_831B4(void) {
 		temp_t6 = *var_v0;
 		var_v0 -= 4;
 		var_v0[4] = (temp_t6 & 0xFF80) | 0x7F;
-	} while (var_a0-- != 0);
+	} while (var_a0--);
 
 	var_v0 = &D_801497BA;
 	var_a0 = 0x7F;
@@ -212,14 +212,14 @@ void func_80074204_831B4(void) {
 		var_v0[3] = 0;
 		var_v0[4] = var_a1;
 		var_v0 -= 6;
-	} while (var_a0-- != 0);
+	} while (var_a0--);
 
 	var_v0 = &D_8004D1BF;
 	var_a0 = 0xF;
 	do {
 		var_v0[0] = var_a1;
 		var_v0 -= 1;
-	} while (var_a0-- != 0);
+	} while (var_a0--);
 
 	var_v0 = &D_8014D16E;
 	var_a0 = 0xBF;
@@ -228,28 +228,28 @@ void func_80074204_831B4(void) {
 		var_v0[0] = var_a2;
 		var_v0[1] = var_a2;
 		var_v0 -= 2;
-	} while (var_a0-- != 0);
+	} while (var_a0--);
 
 	var_v0 = &D_8004D1AD;
 	var_a0 = 0xF;
 	do {
 		var_v0[0] = var_a1;
 		var_v0 -= 3;
-	} while (var_a0-- != 0);
+	} while (var_a0--);
 
 	var_v0_2 = &D_801494B4;
 	var_a0 = 0xF;
 	do {
 		var_v0_2[0] = 0;
 		var_v0_2 -= 1;
-	} while (var_a0-- != 0);
+	} while (var_a0--);
 
 	var_v0 = &D_80149B25;
 	var_a0 = 0xF;
 	do {
 		var_v0[0] = var_a1;
 		var_v0 -= 3;
-	} while (var_a0-- != 0);
+	} while (var_a0--);
 
 	var_v0 = &D_8004D17E;
 	var_a0 = 0xF;
@@ -257,14 +257,14 @@ void func_80074204_831B4(void) {
 		var_v0[0] = 0;
 		var_v0[1] = 0;
 		var_v0 -= 2;
-	} while (var_a0-- != 0);
+	} while (var_a0--);
 
 	var_v0_3 = &D_8014D1B6;
 	var_a0 = 0x17;
 	do {
 		var_v0_3[0] = 0;
 		var_v0_3 -= 1;
-	} while (var_a0-- != 0);
+	} while (var_a0--);
 
 	D_80149470 = 0;
 	D_8004D15C = -1;
