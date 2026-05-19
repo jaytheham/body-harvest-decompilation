@@ -250,7 +250,142 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, s32 arg2, s32 arg3, u8 arg4) {
 // guess_drawMapTiles
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095F08_A4EB8.s")
 
+// CURRENT(12294)
+#ifdef NON_MATCHING
+void func_800966EC_A569C(s16 *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
+	UnkHudVtx *vtx0;
+	UnkHudVtx *vtx1;
+	UnkHudVtx *vtx2;
+	UnkHudVtx *vtx3;
+	Gfx *dl;
+	s16 wave;
+	s16 absWave;
+	s16 trig;
+	s16 value;
+	s32 temp_f16;
+	s32 temp_f10;
+
+	vtx0 = (UnkHudVtx *) D_8005BB34;
+	D_8005BB34 = (Vtx *) (vtx0 + 1);
+	vtx1 = (UnkHudVtx *) D_8005BB34;
+	D_8005BB34 = (Vtx *) (vtx1 + 1);
+	vtx2 = (UnkHudVtx *) D_8005BB34;
+	D_8005BB34 = (Vtx *) (vtx2 + 1);
+	vtx3 = (UnkHudVtx *) D_8005BB34;
+	D_8005BB34 = (Vtx *) (vtx3 + 1);
+
+	if (arg3 == 0.0f) {
+		return;
+	}
+
+	arg3 *= 8.0f;
+	arg1 = (s16) (arg1 >> 5);
+	arg2 = (s16) (arg2 >> 5);
+	if (arg4 == 1) {
+	}
+
+	temp_f16 = (s32) arg3;
+	temp_f10 = (s32) -arg3;
+	vtx1->unk2 = (s16) temp_f10;
+	vtx0->unk2 = (s16) temp_f10;
+	vtx2->unk0 = (s16) temp_f10;
+	vtx0->unk0 = (s16) temp_f10;
+	vtx3->unk2 = (s16) temp_f16;
+	vtx2->unk2 = (s16) temp_f16;
+	vtx3->unk0 = (s16) temp_f16;
+	vtx1->unk0 = (s16) temp_f16;
+	vtx3->unk4 = 0;
+	value = vtx3->unk4;
+	vtx2->unk4 = value;
+	vtx1->unk4 = value;
+	vtx0->unk4 = value;
+
+	if (arg4 == 4) {
+		wave = (s16) (((((f64) sins(D_8013D50C_14C4BC) / 32768.0) * ((f32) arg0[0] / D_801424E0_151490)) * 200.0));
+		trig = coss((u16) -D_80052B34->unk6);
+		if (wave >= 0) {
+			absWave = wave;
+		} else {
+			absWave = -wave;
+		}
+		D_80052B40.unk0 = (s16) ((f64) arg1 - ((f64) ((f32) absWave + arg3) * ((f64) trig / 32768.0)));
+
+		trig = sins((u16) -D_80052B34->unk6);
+		if (wave >= 0) {
+			absWave = wave;
+		} else {
+			absWave = -wave;
+		}
+
+		D_80052B40.unk4 = 0;
+		D_80052B48.unk0 = 0;
+		D_80052B40.unk2 = (s16) ((f64) -arg2 - ((f64) ((f32) absWave + arg3) * ((f64) trig / 32768.0)));
+		D_80052B48.unk4 = 0;
+		D_80052B48.unk2 = (s16) (-0x4000 - D_80052B34->unk6);
+		func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
+		D_8013D50C_14C4BC += 0x300;
+	} else {
+		D_80052B40.unk2 = (s16) -arg2;
+		D_80052B40.unk4 = 0;
+		D_80052B40.unk0 = arg1;
+		func_800039D0_45D0(&D_80052B40, NULL, NULL, D_8005BB38);
+	}
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01040040;
+	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+	D_8005BB38 += 0x40;
+
+	vtx3->unkA = 0;
+	value = vtx3->unkA;
+	vtx2->unkA = value;
+	vtx2->unk8 = value;
+	vtx0->unk8 = value;
+	vtx1->unkA = 0x800;
+	value = vtx1->unkA;
+	vtx1->unk8 = value;
+	vtx3->unk8 = value;
+	vtx0->unkA = value;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB900031D;
+	dl->words.w1 = 0x00504240;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x0400103F;
+	dl->words.w1 = (u32) vtx0 & 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB1000204;
+	dl->words.w1 = 0x00040206;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB900031D;
+	dl->words.w1 = 0x00552048;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBD000000;
+	dl->words.w1 = 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800966EC_A569C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80096BC4_A5B74.s")
 
