@@ -3564,7 +3564,120 @@ void func_80125CA0_134C50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80125CA0_134C50.s")
 #endif
 
+// CURRENT(0)
+#ifdef NON_MATCHING
+Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, f32 *arg6) {
+	extern Cheat cheatData[];
+	Unk80259D90 *temp_s0;
+	Unk80259D90 *spD0;
+	s16 i;
+	s16 temp_a0;
+	s16 temp_s1_3;
+	s16 temp_v0;
+	s16 temp_v1;
+	s16 temp_v1_2;
+	s16 var_s1;
+	s16 var_v0_2;
+	s32 found;
+	s32 temp_s1;
+	s32 temp_s1_2;
+	s16 *temp_s2;
+	s32 var_s4;
+	s32 var_s5;
+	f32 spCC;
+	f32 spC4;
+	f32 temp_f0;
+	f32 temp_f0_2;
+	f32 temp_f0_3;
+	f32 temp_f2;
+	f32 temp_f20;
+	f32 temp_f20_2;
+	f32 temp_f22;
+	f32 temp_f22_2;
+	f32 var_f2;
+	f32 var_f30;
+
+	spD0 = NULL;
+	var_s4 = *arg3;
+	found = 0;
+	var_s5 = *arg5;
+	temp_s1 = func_800047FC_53FC((s16)(arg0 - var_s4));
+	var_f30 = sqrtf((f32)(func_800047FC_53FC((s16)(arg2 - var_s5)) + temp_s1));
+
+	for (i = 0x95; i != 0; i--) {
+		temp_s0 = &D_80259D90[i];
+		if (temp_s0->unk0 >= 0xE) {
+			spD0 = temp_s0;
+			temp_f20 = (f32)arg0;
+			temp_f22 = (f32)arg2;
+
+			if (func_8010EF40_11DEF0((f32)temp_s0->unk10, (f32)temp_s0->unk14, (f32)temp_s0->unk30, (f32)temp_s0->unk34,
+				temp_f20, temp_f22, (f32)var_s4, (f32)var_s5, &spCC, &spC4) != 0) {
+				temp_s1_2 = func_800047FC_53FC((s16)(s32)(temp_f20 - spCC));
+				temp_f0 = sqrtf((f32)(func_800047FC_53FC((s16)(s32)(temp_f22 - spC4)) + temp_s1_2));
+
+				if (temp_f0 < var_f30) {
+					temp_f2 = temp_f0 / var_f30;
+					*arg6 = temp_f2;
+					temp_v1 = temp_s0->unk42;
+					temp_a0 = temp_s0->unk22;
+					var_v0_2 = temp_v1;
+					temp_f22_2 = (temp_f2 * (f32)(*arg4 - arg1)) + (f32)arg1;
+
+					if (temp_a0 < temp_v1) {
+						var_v0_2 = temp_a0;
+					}
+
+					if ((f32)var_v0_2 <= temp_f22_2) {
+						temp_v0 = temp_s0->unk32;
+						temp_v1_2 = temp_s0->unk12;
+						var_s1 = temp_v0;
+
+						if (temp_v0 < temp_v1_2) {
+							var_s1 = temp_v1_2;
+						}
+
+						if (temp_f22_2 <= (f32)var_s1) {
+							temp_s2 = (s16 *)func_80011F90_12B90(*(void **)((u8 *)temp_s0 + 8));
+
+							if (temp_s0->unk10 == temp_s0->unk30) {
+								var_f2 = spC4;
+							} else {
+								var_f2 = spCC;
+							}
+
+							temp_f0_2 = (f32)((f64)var_f2 * 0.00390625);
+							temp_s1_3 = temp_s0->unk22 - temp_s0->unk12;
+							temp_f20_2 = (f32)((f64)((s16 *)((u8 *)cheatData + 0x11A))[currentLevel * 0xC + temp_s0->unk0 * 6]
+								* ((f64)-((temp_f0_2 - (f32)(s32)temp_f0_2) * 32.0)));
+							temp_f0_3 = (f32)(((f64)(temp_f22_2 - (f32)(func_800B84D0_C7480((s16)(s32)spCC, (s16)(s32)spC4) >> 8))
+								* (32.0 / (f64)temp_s1_3)) + 31.0);
+
+							if (((temp_f0_3 >= 0.0f) || ((f64)temp_f0_3 <= 31.0))
+								&& (temp_s2[(s16)((((s32)temp_f0_3 << 5) - ((s32)temp_f20_2 & 0x1F)) + 0x1F)] & 1)) {
+								var_f30 = temp_f0;
+								found = 1;
+								var_s4 = (s32)spCC;
+								var_s5 = (s32)spC4;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (found != 0) {
+		temp_s1 = func_800047FC_53FC((s16)(arg0 - *arg3));
+		*arg6 = var_f30 / sqrtf((f32)(func_800047FC_53FC((s16)(arg2 - *arg5)) + temp_s1));
+		return spD0;
+	}
+
+	return NULL;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80125D70_134D20.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80126268_135218.s")
 
