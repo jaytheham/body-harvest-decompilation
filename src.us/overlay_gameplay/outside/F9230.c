@@ -1354,9 +1354,8 @@ void func_800EBA54_FAA04(Unk80052B40 *arg0, s32 arg1, AnimChannelState *arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBA54_FAA04.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_800EBC94_FAC44(VehicleInstance *arg0, OSContPad *arg1) {
-	s16 var_v1;
+	s32 var_v1;
 	s8 var_v0;
 
 	arg0->unk22 = 0;
@@ -1376,9 +1375,6 @@ void func_800EBC94_FAC44(VehicleInstance *arg0, OSContPad *arg1) {
 	}
 	arg0->unkE += var_v1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBC94_FAC44.s")
-#endif
 
 void func_800EBD5C_FAD0C(s32 arg0) {
 	D_80157A28 |= 0x1000;
