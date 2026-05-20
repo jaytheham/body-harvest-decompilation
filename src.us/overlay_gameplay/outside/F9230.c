@@ -1702,7 +1702,7 @@ s32 func_800EF0B0_FE060(s32 arg0) {
 // normal or evil adam to be rendered
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF14C_FE0FC.s")
 
-// CURRENT(1932)
+// CURRENT(491)
 #ifdef NON_MATCHING
 s32 func_800EF650_FE600(AlienInstance *arg0) {
 	s32 pad;
@@ -1721,12 +1721,16 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 
 	func_800EBA54_FAA04((Unk80052B40 *) arg0, D_80157A48.unk40C, &D_80157A48);
 
-	if ((arg0->unk20 < 0) && (D_80157E78 == 0)) {
-		if (((arg0->unk20 & 0x40000000) == 0) && (D_80157E70 == 0)) {
-			osSyncPrintf(&D_801443BC_15336C);
-			func_800EB534_FA4E4(&D_80157A48, (D_80157E74 >> 0xE) + 0x14, 0, 0);
+	{
+		s32 temp = arg0->unk20;
+		s32 temp2 = temp << 1;
+		if (temp2 < 0 && D_80157E78 == 0) {
+			if (((temp & 0x40000000) == 0) && (D_80157E70 == 0)) {
+				osSyncPrintf(&D_801443BC_15336C);
+				func_800EB534_FA4E4(&D_80157A48, (D_80157E74 >> 0xE) + 0x14, 0, 0);
+			}
+			D_80157E78 = 0x1E;
 		}
-		D_80157E78 = 0x1E;
 	}
 
 	if (D_80157E78 != 0) {
