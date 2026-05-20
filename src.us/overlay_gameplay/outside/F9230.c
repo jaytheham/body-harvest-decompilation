@@ -727,14 +727,13 @@ s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA7DC_F978C.s")
 #endif
 
-// CURRENT(7595)
+// CURRENT(3630)
 #ifdef NON_MATCHING
 void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	s16 temp_diff;
-	s16 abs_diff;
-	s16 v1;
+	s32 abs_diff;
+	s32 v1;
 	s32 level;
-	s32 flags;
 	s32 step;
 	s32 offset;
 	s32 entry_flags;
@@ -748,11 +747,9 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	v1 = temp_diff;
 
 	// Calculate absolute value
-	if (temp_diff < 0) {
-		v1 = -temp_diff;
-		abs_diff = -temp_diff;
-	} else {
-		abs_diff = temp_diff;
+	abs_diff = v1;
+	if (v1 < 0) {
+		abs_diff = -v1;
 	}
 
 	// Check if difference is too large
@@ -790,7 +787,7 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 			func_800EB534_FA4E4(&D_80157600, 0xE, 0, 0);
 			
 			// Calculate step
-			step = (arg1 - arg0->unkE) / 7;
+			step = (s16)(arg1 - arg0->unkE) / 7;
 			D_801575D4 = step;
 			temp_diff = arg0->unkE - arg1;
 			v1 = temp_diff;
@@ -823,7 +820,7 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 			func_800EB534_FA4E4(&D_80157600, 0xF, 0, 0);
 			
 			// Calculate step
-			step = (arg0->unkE - arg1) / 7;
+			step = (s16)(arg0->unkE - arg1) / 7;
 			D_801575D4 = step;
 			temp_diff = arg0->unkE - arg1;
 			v1 = temp_diff;
