@@ -2034,18 +2034,14 @@ void func_800EFFB4_FEF64(void) {
 }
 
 // CURRENT(180)
-#ifdef NON_MATCHING
 void func_800F0094_FF044(void) {
-	s16 temp_v0;
-
-	temp_v0 = D_80157F68;
-	if (temp_v0 == -1) {
+	if (-1 == D_80157F68) {
 		D_8004DC60 = 0;
 		return;
 	}
 
 	if (D_80157FB4 == 0) {
-		if (temp_v0 != 0) {
+		if (D_80157F68 != 0) {
 			D_80157FB4 = func_800F066C_FF61C();
 			goto block_22;
 		}
@@ -2069,7 +2065,18 @@ void func_800F0094_FF044(void) {
 		D_8004DC60 = 0;
 	}
 	func_80013324_13F24();
-	func_800B4050_C3000((D_80052B2C->unk3C >> 8) + 0x77, (D_80052B2C->unk3E >> 8) + 0x77, &D_801FEA30, 0);
+	{
+		s16 temp_a0;
+		s16 temp_a1;
+		s32 temp_v1_2;
+		s32 temp_t0;
+
+		temp_a0 = D_80052B2C->unk3C;
+		temp_a1 = D_80052B2C->unk3E;
+		temp_v1_2 = (temp_a0 >> 8) + 0x77;
+		temp_t0 = (temp_a1 >> 8) + 0x77;
+		func_800B4050_C3000((u8)temp_v1_2, (u8)temp_t0, &D_801FEA30, 0);
+	}
 	D_800476A2 = 1;
 	return;
 
@@ -2081,9 +2088,6 @@ block_22:
 		D_80157F70 = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F0094_FF044.s")
-#endif
 
 void func_800F0234_FF1E4(void) {
 	D_80157F68 = 0;
