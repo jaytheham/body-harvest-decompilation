@@ -1964,24 +1964,26 @@ void func_800EFE50_FEE00(u8 arg0) {
 /// 7 = Dark Adam blowing up planes
 /// 	
 /// a2 = bool, pause gameplay while cutscene active?
+// CURRENT(943)
 #ifdef NON_MATCHING
-void func_800EFEB4_FEE64(void *arg0, s16 arg1, s32 arg2) {
+void func_800EFEB4_FEE64(void (*arg0)(void), s16 arg1, s32 arg2) {
 	s32 sp18 = arg1;
+	s16 sp26 = arg1;
 
 	if (D_80052AD0 != 0) {
-		if (arg1 == 1) {
+		if (sp26 == 1) {
 			D_8015EA2C = 0.0f;
 		}
 		D_800476A2 = 0;
 		D_80047968 = 0;
-		func_800EFE50_FEE00(arg1);
+		func_800EFE50_FEE00((u8)sp26);
 		D_80157F6A = (s8)sp18;
 		if (arg2 != 0) {
 			gameplayMode = 3;
 		} else {
 			gameplayMode = 0xB;
 		}
-		if (arg1 != 3) {
+		if (sp26 != 3) {
 			D_801493E2 = 0;
 		}
 		D_80157F8C = 0;
@@ -1989,7 +1991,7 @@ void func_800EFEB4_FEE64(void *arg0, s16 arg1, s32 arg2) {
 		D_80157F90 = 0;
 		D_80157F70 = (s32)arg0;
 		if (arg0 != NULL) {
-			((void (*)(void))arg0)();
+			arg0();
 		}
 		func_800F0340_FF2F0(&D_80157E90, 0, 5);
 	}
