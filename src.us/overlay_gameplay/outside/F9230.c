@@ -525,6 +525,7 @@ void func_800EA2B0_F9260(s32 arg0) { D_801575DC = arg0; }
 
 // guess_attemptDoAnimation
 // https://decomp.me/scratch/4eqv8
+// CURRENT(200)
 #ifdef NON_MATCHING
 void func_800EA2BC_F926C(void)
 {
@@ -537,6 +538,7 @@ void func_800EA2BC_F926C(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA2BC_F926C.s")
 #endif
 
+// CURRENT(8)
 #ifdef NON_MATCHING
 void func_800EA2FC_F92AC(s16 arg0) {
 	Unk8009E8DC *anim;
@@ -569,9 +571,10 @@ void *func_800EA3E8_F9398(s16 arg0) {
 }
 
 // guess_initAnimations
+// CURRENT(1655)
 #ifdef NON_MATCHING
 void func_800EA434_F93E4(void) {
-	f32 temp_zero = 0.0f;
+	f32 temp_zero;
 
 	D_8004818C = 0;
 	D_80157600.unk404 = func_8000C6F4_D2F4();
@@ -581,7 +584,7 @@ void func_800EA434_F93E4(void) {
 	func_8000C790_D390(&D_80157600, &D_8003BAE0, 0x10);
 	temp_zero = 0.0f;
 	D_80157600.unk40C = 0x27;
-	func_800EB534_FA4E4(&D_80157600, 0x23, 7, 0);
+	func_800EB534_FA4E4(&D_80157600, 0x23, 7, temp_zero);
 	D_80157600.unk8 = temp_zero;
 	D_80157600.unk10 = temp_zero;
 	D_80157600.unkC = 145.0f;
@@ -599,7 +602,7 @@ void func_800EA434_F93E4(void) {
 	D_80157A48.unk10 = temp_zero;
 	D_80157A48.unk40C = 0x27;
 	D_80157A48.unkC = 145.0f;
-	func_800EB534_FA4E4(&D_80157A48, 0x23, 7, 0);
+	func_800EB534_FA4E4(&D_80157A48, 0x23, 7, temp_zero);
 	D_801575E0.unk0 = 0;
 	D_801575E0.unk2 = 0;
 	D_801575E0.unk4 = 0;
@@ -682,6 +685,7 @@ f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA604_F95B4.s")
 #endif
 
+// CURRENT(400)
 #ifdef NON_MATCHING
 s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) {
 	s32 temp_v1;
@@ -697,11 +701,11 @@ s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) 
 		var_v0 = -temp_v1;
 	}
 	if (var_v0 >= 0x8001) {
-		u32 var_at = 0x10000;
 		if (temp_v1 > 0) {
-			var_at = 0xFFFF0000;
+			var_a0 = temp_v1 - 0x10000;
+		} else {
+			var_a0 = temp_v1 + 0x10000;
 		}
-		var_a0 = temp_v1 + var_at;
 	}
 	if (var_a0 >= 0) {
 		var_v0_2 = var_a0;
@@ -709,32 +713,27 @@ s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) 
 		var_v0_2 = -var_a0;
 	}
 	if (var_v0_2 < (s16) (s32) ((f64) ((arg4 / 2) * 32768.0f) / D_801443E0_153390)) {
-		goto block_18;
+		return 0;
 	}
-	if (var_a0 >= 0) {
-		if (arg0 >= -4) {
-			return 2;
-		}
-		goto block_18;
+	if ((var_a0 >= 0) && (arg0 >= -4)) {
+		return 2;
 	}
 	if ((var_a0 < 0) && (arg0 < 5)) {
 		return 1;
 	}
-block_18:
 	return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA7DC_F978C.s")
 #endif
 
-// CURRENT(7595)
+// CURRENT(3630)
 #ifdef NON_MATCHING
 void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	s16 temp_diff;
-	s16 abs_diff;
-	s16 v1;
+	s32 abs_diff;
+	s32 v1;
 	s32 level;
-	s32 flags;
 	s32 step;
 	s32 offset;
 	s32 entry_flags;
@@ -748,11 +747,9 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	v1 = temp_diff;
 
 	// Calculate absolute value
-	if (temp_diff < 0) {
-		v1 = -temp_diff;
-		abs_diff = -temp_diff;
-	} else {
-		abs_diff = temp_diff;
+	abs_diff = v1;
+	if (v1 < 0) {
+		abs_diff = -v1;
 	}
 
 	// Check if difference is too large
@@ -790,7 +787,7 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 			func_800EB534_FA4E4(&D_80157600, 0xE, 0, 0);
 			
 			// Calculate step
-			step = (arg1 - arg0->unkE) / 7;
+			step = (s16)(arg1 - arg0->unkE) / 7;
 			D_801575D4 = step;
 			temp_diff = arg0->unkE - arg1;
 			v1 = temp_diff;
@@ -823,7 +820,7 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 			func_800EB534_FA4E4(&D_80157600, 0xF, 0, 0);
 			
 			// Calculate step
-			step = (arg0->unkE - arg1) / 7;
+			step = (s16)(arg0->unkE - arg1) / 7;
 			D_801575D4 = step;
 			temp_diff = arg0->unkE - arg1;
 			v1 = temp_diff;
@@ -873,29 +870,42 @@ typedef struct {
 	/* 0x24 */ s16 unk24;
 } UnkF9230SpecView;
 
-// CURRENT(9473)
+// CURRENT(5156)
 #ifdef NON_MATCHING
 void func_800EABE0_F9B90(VehicleInstance *arg0) {
 	Vec3f sp2C;
 	u16 sp2A;
+	s32 temp;
 	s16 temp_v0;
 	UnkF9230SpecView *spec;
-	f64 temp_f2;
-	u16 temp_a0;
+	f32 temp_f2;
 
-	sp2C.x = (f32)((D_80159020->unk0 >= 0) ? (D_80159020->unk0 >> 2) : ((D_80159020->unk0 + 3) >> 2));
-	sp2C.y = (f32)((D_80159020->unk2 >= 0) ? (D_80159020->unk2 >> 2) : ((D_80159020->unk2 + 3) >> 2));
-	sp2C.z = (f32)((D_80159020->unk4 >= 0) ? (D_80159020->unk4 >> 2) : ((D_80159020->unk4 + 3) >> 2));
+	temp = D_80159020->unk0;
+	if (temp < 0) {
+		temp += 3;
+	}
+	sp2C.x = (f32)(temp >> 2);
+
+	temp = D_80159020->unk2;
+	if (temp < 0) {
+		temp += 3;
+	}
+	sp2C.y = (f32)(temp >> 2);
+
+	temp = D_80159020->unk4;
+	if (temp < 0) {
+		temp += 3;
+	}
+	sp2C.z = (f32)(temp >> 2);
 
 	temp_f2 = func_800EA604_F95B4((s16 *)arg0, &sp2C);
-	temp_v0 = ((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk1E;
+	temp_v0 = *(s16 *)((u8 *)D_8013E45C_14D40C + (D_801575DC << 5) + 0x1E);
 	sp2A = (u16)(s16)(s32)(((f32)temp_v0 * (1.0f - temp_f2)) + ((f32)-temp_v0 * temp_f2));
 
 	spec = func_800FAFB8_109F68(arg0);
-	spec->unk20 = ((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk18;
-	temp_a0 = sp2A;
-	spec->unk22 = (s16)(s32)(((f64)((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk1C * ((f64)(f32)sins(temp_a0) / 32768.0)) + (((f64)(f32)((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk1A * 64.0) / (f64)(f32)D_80157A3C));
-	spec->unk24 = (s16)(s32)(((f64)(f32)coss(temp_a0) / 32768.0) * (f64)((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk1C);
+	spec->unk20 = *(s16 *)((u8 *)D_8013E45C_14D40C + (D_801575DC << 5) + 0x18);
+	spec->unk22 = (s16)(s32)(((f64)(*(s16 *)((u8 *)D_8013E45C_14D40C + (D_801575DC << 5) + 0x1C)) * ((f64)(f32)sins(sp2A) / 32768.0)) + (((f64)(f32)(*(s16 *)((u8 *)D_8013E45C_14D40C + (D_801575DC << 5) + 0x1A)) * 64.0) / (f64)(f32)D_80157A3C));
+	spec->unk24 = (s16)(s32)(((f64)(f32)coss(sp2A) / 32768.0) * (f64)(*(s16 *)((u8 *)D_8013E45C_14D40C + (D_801575DC << 5) + 0x1C)));
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EABE0_F9B90.s")
@@ -983,7 +993,7 @@ void func_800EB090_FA040(void) {
 	D_80157A28 &= ~4;
 }
 
-// CURRENT(16512)
+// CURRENT(7490)
 #ifdef NON_MATCHING
 void func_800EB0C8_FA078(VehicleInstance *arg0) {
 	f32 speedScale;
@@ -991,37 +1001,38 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 	f32 zDiff;
 	f32 xStep;
 	f32 zStep;
-	f32 xStepScaled;
-	f32 zStepScaled;
-	f32 yawRad;
 	f32 slopeDeg;
-	f32 targetX;
-	f32 targetZ;
 	s32 stateFlags;
 
-	stateFlags = ((Unk8009E8DC *) D_8013E5B0_14D560)[D_80157600.unk40C].unk0;
+	stateFlags = *(s32 *)((u8 *)D_8013E5B0_14D560 + (D_80157600.unk40C * 0x34));
 	speedScale = 1.0f;
 
 	if (stateFlags & 0x10) {
-		func_800FB430_10A3E0(NULL, 0.0f);
-		stateFlags = ((Unk8009E8DC *) D_8013E5B0_14D560)[D_80157A0C].unk0;
+		func_800FB430_10A3E0(NULL, 0);
+		stateFlags = *(s32 *)((u8 *)D_8013E5B0_14D560 + (D_80157A0C * 0x34));
 	}
 
 	if (stateFlags & 0x800) {
-		s16 *path;
+		f32 sinYaw;
+		f32 cosYaw;
 
-		func_800FB430_10A3E0(arg0, 0.0f);
+		func_800FB430_10A3E0(arg0, 0);
 
-		xDiff = (D_80157600.unk8 - D_80157600.unk414) / 4.0f;
-		zDiff = (D_80157600.unk10 - D_80157600.unk418) / 4.0f;
+		xDiff = D_80157600.unk8 - D_80157600.unk414;
+		zDiff = D_80157600.unk10 - D_80157600.unk418;
+		xDiff /= 4.0f;
+		zDiff /= 4.0f;
 
-		yawRad = (f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0);
-		xStep = (cosf(yawRad) * zDiff) - (sinf(yawRad) * xDiff);
+		cosYaw = cosf((f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0));
+		sinYaw = sinf((f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0));
+		xStep = (cosYaw * zDiff) - (sinYaw * xDiff);
 
-		yawRad = (f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0);
-		zStep = (cosf(yawRad) * xDiff) + (sinf(yawRad) * zDiff);
+		sinYaw = sinf((f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0));
+		cosYaw = cosf((f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0));
+		zStep = (cosYaw * xDiff) + (sinYaw * zDiff);
 
-		slopeDeg = (f32)(((f64)(f32)func_800FA690_109640(arg0->unk0, arg0->unk4, arg0->unkE) * 360.0) / 32768.0);
+		slopeDeg = (f32)(((f64)(f32)func_800FA690_109640(arg0->unk0, arg0->unk4, arg0->unkE) * 360.0) /
+				 32768.0);
 		if (slopeDeg < -10.0f) {
 			u16 flags = D_80052B34->unk20;
 
@@ -1041,63 +1052,70 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 			}
 		}
 
-		xStepScaled = xStep * speedScale;
-		zStepScaled = zStep * speedScale;
+		xStep *= speedScale;
+		zStep *= speedScale;
 
 		if (D_80048188 != 0) {
-			s16 targetPosX;
-			s16 targetPosZ;
-			s16 dx;
-			s16 dz;
-			s16 absDx;
-			s16 absDz;
-			f32 absXStep;
-			f32 absZStep;
+			s16 *path;
+			s16 pathX;
+			s16 pathZ;
+			s32 delta;
+			s32 absDelta;
+			f32 absStep;
 
-			path = (s16 *) &D_801575E0 + D_801575E0.unk4;
-			targetPosX = path[3];
-			if (targetPosX != 0x7FFF) {
-				targetPosZ = path[7];
+			path = (s16 *)&D_801575E0 + D_801575E0.unk4;
+			pathX = path[3];
+			if (pathX != 0x7FFF) {
+				pathZ = path[7];
+				delta = (s16)(pathX - arg0->unk0);
 
-				dx = targetPosX - arg0->unk0;
-				dz = targetPosZ - arg0->unk4;
-				absDx = (dx >= 0) ? dx : -dx;
-				absDz = (dz >= 0) ? dz : -dz;
-
-				if (xStepScaled >= 0.0f) {
-					absXStep = xStepScaled;
+				if (delta < 0) {
+					absDelta = -delta;
 				} else {
-					absXStep = -xStepScaled;
+					absDelta = delta;
 				}
 
-				if ((f32)absDx < absXStep) {
-					targetX = targetPosX;
+				if (xStep >= 0.0f) {
+					absStep = xStep;
 				} else {
-					targetX = arg0->unk4C + xStepScaled;
+					absStep = -xStep;
 				}
 
-				if (zStepScaled >= 0.0f) {
-					absZStep = zStepScaled;
+				if ((f32)absDelta < absStep) {
+					xDiff = pathX;
 				} else {
-					absZStep = -zStepScaled;
+					xDiff = arg0->unk4C + xStep;
 				}
 
-				if ((f32)absDz < absZStep) {
-					targetZ = targetPosZ;
+				delta = (s16)(pathZ - arg0->unk4);
+				if (delta < 0) {
+					absDelta = -delta;
 				} else {
-					targetZ = arg0->unk54 + zStepScaled;
+					absDelta = delta;
+				}
+
+				if (zStep >= 0.0f) {
+					absStep = zStep;
+				} else {
+					absStep = -zStep;
+				}
+
+				if ((f32)absDelta < absStep) {
+					zDiff = pathZ;
+				} else {
+					zDiff = arg0->unk54 + zStep;
 				}
 			} else {
-				targetX = arg0->unk4C + xStepScaled;
-				targetZ = arg0->unk54 + zStepScaled;
+				xDiff = arg0->unk4C + xStep;
+				zDiff = arg0->unk54 + zStep;
 			}
 		} else {
-			targetX = arg0->unk4C + xStepScaled;
-			targetZ = arg0->unk54 + zStepScaled;
+			xDiff = arg0->unk4C + xStep;
+			zDiff = arg0->unk54 + zStep;
 		}
 
-		func_800FB44C_10A3FC(arg0, targetX);
-		func_800FB484_10A434(arg0, targetZ);
+		func_800FB44C_10A3FC(arg0, xDiff);
+		func_800FB484_10A434(arg0, zDiff);
 	}
 
 	D_80157600.unk414 = D_80157600.unk8;
@@ -1107,13 +1125,10 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB0C8_FA078.s")
 #endif
 
-// CURRENT(3613)
+// CURRENT(3279)
 #ifdef NON_MATCHING
-void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	Unk80157600 *player = arg0;
-	Unk8009E8DC *anim;
-	Unk8009E8DC *nextAnim;
-	s32 currentState;
 	s32 turnOffset;
 	s32 shouldAnimate;
 
@@ -1124,11 +1139,9 @@ void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
 		osSyncPrintf(&D_80144320_1532D0);
 	}
 
-	currentState = player->unk40C;
-
-	if (currentState < 0x5C) {
-		if (currentState < 0x29) {
-			switch (currentState) {
+	if (player->unk40C < 0x5C) {
+		if (player->unk40C < 0x29) {
+			switch (player->unk40C) {
 			case 0x17:
 				turnOffset = 0x4000;
 				break;
@@ -1148,10 +1161,10 @@ void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
 				turnOffset = 0x2000;
 				break;
 			}
-		} else if (currentState == 0x5B) {
+		} else if (player->unk40C == 0x5B) {
 			shouldAnimate = 1;
 		}
-	} else if (currentState == 0x5C) {
+	} else if (player->unk40C == 0x5C) {
 		shouldAnimate = 1;
 	}
 
@@ -1159,38 +1172,38 @@ void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
 		D_80052B34->unkE += turnOffset;
 		D_80157600.unk2 = 0;
 		shouldAnimate = 1;
-		currentState = player->unk40C;
 	}
 
 	if (arg2 != 0) {
 		shouldAnimate = 1;
 	}
 
-	if ((currentState == 0x16) || (currentState == 0x17)) {
+	if ((player->unk40C == 0x16) || (player->unk40C == 0x17)) {
 		shouldAnimate = 0;
 		D_80157600.unk0 = 0;
 		D_80157600.unk2 = 0;
 		D_80157600.unk4 = 0;
-	} else if (currentState == 0x18) {
+	} else if (player->unk40C == 0x18) {
 		D_80052B34->unkE += 0x8000;
 		D_80157600.unk2 = 0;
-	} else if (currentState == 0x10) {
-		D_80052B34->unkE = ((Unk8009E8DC *) D_8013E5AC_14D55C)[currentState].unk10;
+	} else if (player->unk40C == 0x10) {
+		D_80052B34->unkE = ((Unk8009E8DC *) D_8013E5AC_14D55C)[player->unk40C].unk10;
 		D_80157600.unk2 = 0;
 	}
 
 	if (arg1 != -1) {
-		if ((arg1 == player->unk40C) && (((Unk8007F878_404 *) player->unk404)->unkE50 != 0)) {
+		if ((arg1 == player->unk40C) && (((Unk8007F878_404 *)player->unk404)->unkE50 != 0)) {
 			return;
 		}
 
 		player->unk40C = arg1;
-		anim = &((Unk8009E8DC *) D_8013E5AC_14D55C)[arg1];
-		if (anim->unk4 & 4) {
-			nextAnim = &((Unk8009E8DC *) D_8013E5AC_14D55C)[anim->unkC];
-			func_8000D71C_E31C(player->unk404, player->unk408, player, 0x10, anim->unk0, nextAnim->unk0, *(f32*) &arg3, shouldAnimate);
+		if (((Unk8009E8DC *) D_8013E5AC_14D55C)[arg1].unk4 & 4) {
+			func_8000D71C_E31C(player->unk404, player->unk408, (AnimChannelState *)player, 0x10,
+				((Unk8009E8DC *) D_8013E5AC_14D55C)[arg1].unk0,
+				((Unk8009E8DC *) D_8013E5AC_14D55C)[((Unk8009E8DC *) D_8013E5AC_14D55C)[arg1].unkC].unk0, arg3, shouldAnimate);
 		} else {
-			func_8000CDFC_D9FC(player->unk404, player, 0x10, anim->unk0, shouldAnimate);
+			func_8000CDFC_D9FC(player->unk404, (AnimChannelState *)player, 0x10,
+				((Unk8009E8DC *) D_8013E5AC_14D55C)[arg1].unk0, shouldAnimate);
 		}
 
 		player->unk414 = 0.0f;
@@ -1203,27 +1216,35 @@ void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB534_FA4E4.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3) {
-	s32 temp_v0 = arg0->unk40C;
-	
-	if (!((((Unk8009E8DC*)D_8013E5AC_14D55C)[temp_v0].unk4) & 8)) {
-		if (arg3 > 0.0f) {
-			if ((arg2 != temp_v0) && (temp_v0 >= 3)) {
-				func_800EB534_FA4E4(arg0, arg2, 0, *(s32*)&arg3);
+	s32 animIdx;
+	s32 animCheck;
+	Unk8009E8DC *anim;
+
+	animIdx = arg0->unk40C;
+	animCheck = animIdx;
+	anim = &((Unk8009E8DC*)D_8013E5AC_14D55C)[animIdx];
+	if (anim->unk4 & 8) {
+		return;
+	}
+
+	if (arg3 > 0.0f) {
+		if (arg2 != animCheck) {
+			if (animCheck >= 3) {
+				func_800EB534_FA4E4(arg0, arg2, 0, arg3);
 				return;
 			}
-			if (((Unk8007F878_404*)arg0->unk404)->unkE50 == 0) {
-				func_800EB534_FA4E4(arg0, arg2, ((Unk8009E8DC*)D_8013E5AC_14D55Cs)[arg2].unk8, *(s32*)&arg3);
-			}
-		} else if ((temp_v0 < 0x24) || (temp_v0 == 0x3B)) {
-			func_800EB534_FA4E4(arg0, 0, 0, 0);
+		}
+
+		if (((Unk8007F878_404*)arg0->unk404)->unkE50 == 0) {
+			func_800EB534_FA4E4(arg0, arg2, ((Unk8009E8DC*)D_8013E5AC_14D55C)[arg2].unk8, arg3);
+		}
+	} else {
+		if ((animCheck < 0x24) || (animCheck == 0x3B)) {
+			func_800EB534_FA4E4(arg0, arg1, 0, 0.0f);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB7CC_FA77C.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800EB8A4_FA854(Unk80157600 *arg0, f32 arg1) {
@@ -1273,15 +1294,16 @@ f32 func_800EB9BC_FA96C(void *arg0) {
 	return ((f32 *)arg0)[0x7];
 }
 
+// CURRENT(465)
 #ifdef NON_MATCHING
 s32 func_800EB9C4_FA974(s32 arg0, Unk80157600 *arg1) {
 	Unk8013E45C *temp_v0;
 	s16 temp_v1;
 	f32 temp_f0;
 
-	temp_v0 = &D_8013E45C[arg0];
+	temp_v0 = &((Unk8013E45C *)D_8013E45C_14D40C)[arg0];
 	temp_v1 = temp_v0->unkC;
-	if (((arg1->unk298 == temp_v1) && (arg1->unk29C == temp_v0->unk10)) ||
+	if (((temp_v1 == arg1->unk298) && (temp_v0->unk10 == arg1->unk29C)) ||
 		((temp_f0 = temp_v0->unk10, (-1.0f == temp_f0)) && (temp_v1 < arg1->unk298)) ||
 		((-1.0f == temp_f0) && (temp_v1 == -1))) {
 		return 1;
@@ -1332,9 +1354,8 @@ void func_800EBA54_FAA04(Unk80052B40 *arg0, s32 arg1, AnimChannelState *arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBA54_FAA04.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_800EBC94_FAC44(VehicleInstance *arg0, OSContPad *arg1) {
-	s16 var_v1;
+	s32 var_v1;
 	s8 var_v0;
 
 	arg0->unk22 = 0;
@@ -1354,9 +1375,6 @@ void func_800EBC94_FAC44(VehicleInstance *arg0, OSContPad *arg1) {
 	}
 	arg0->unkE += var_v1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBC94_FAC44.s")
-#endif
 
 void func_800EBD5C_FAD0C(s32 arg0) {
 	D_80157A28 |= 0x1000;
@@ -1437,13 +1455,14 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s")
 #endif
 
-// CURRENT(3656)
+// CURRENT(378)
 #ifdef NON_MATCHING
 void func_800EC0D0_FB080(s32 arg0) {
 	s16 sp46;
 	s16 sp44;
 	s16 sp42;
 	s16 sp40;
+	f64 sp3C;
 	s16 sp3A;
 	f32 sp2C;
 	f32 sp28;
@@ -1469,24 +1488,38 @@ void func_800EC0D0_FB080(s32 arg0) {
 			}
 			func_801165FC_1255AC(D_80052543, D_80052547, &sp46, &sp44, &sp42, &sp40);
 			temp_f6 = (s32)(((f64)(f32)sp40 * D_80144470_153420) / 32768.0);
-			if ((temp_f6 == -0x10E) || (temp_f6 == 0x5A)) {
-				sp3A = 0;
-				sp2C = -75.0f;
-				sp28 = 0.0f;
-			} else if ((temp_f6 == -0xB4) || (temp_f6 == 0xB4)) {
-				sp3A = -0x4000;
-				sp2C = 0.0f;
-				sp28 = 75.0f;
-			} else if ((temp_f6 == -0x5A) || (temp_f6 == 0x10E)) {
-				sp3A = -0x8000;
-				sp2C = 75.0f;
-				sp28 = 0.0f;
-			} else if ((temp_f6 == 0) || (temp_f6 == 0x168)) {
-				sp3A = 0x4000;
-				sp2C = 0.0f;
-				sp28 = -75.0f;
-			} else {
-				osSyncPrintf(D_80144354_153304, temp_f6);
+			switch (temp_f6) {
+				case 0:
+				case 0x168:
+					sp3A = 0x4000;
+					sp2C = 0.0f;
+					sp28 = -75.0f;
+					break;
+
+				case -0x5A:
+				case 0x10E:
+					sp3A = -0x8000;
+					sp2C = 75.0f;
+					sp28 = 0.0f;
+					break;
+
+				case -0x10E:
+				case 0x5A:
+					sp3A = 0;
+					sp2C = -75.0f;
+					sp28 = 0.0f;
+					break;
+
+				case -0xB4:
+				case 0xB4:
+					sp3A = -0x4000;
+					sp2C = 0.0f;
+					sp28 = 75.0f;
+					break;
+
+				default:
+					osSyncPrintf(D_80144354_153304, temp_f6);
+					break;
 			}
 			D_801575E0.unk6 = (s16)(sp46 + (s32)sp2C);
 			D_801575E0.unkE = (s16)(sp42 + (s32)sp28);
@@ -1521,7 +1554,7 @@ void func_800EC3A0_FB350(s16 arg0) {
 			if ((D_80048188 == 0) && (arg0 != D_801575E0.unk0)) {
 				D_80048188 = 1;
 				D_801575E0.unk0 = arg0;
-				D_80157600.unk420 = &D_8013E450;
+				D_80157600.unk420 = &D_8013E450_14D400;
 				D_80157600.unk424 = 0;
 				D_801575E0.unk6 = 0x7FFF;
 				D_801575E0.unkA = 0x7FFF;
@@ -1533,7 +1566,7 @@ void func_800EC3A0_FB350(s16 arg0) {
 		case 5:
 			D_80048188 = 1;
 			D_801575E0.unk0 = arg0;
-			break;
+			return;
 	}
 }
 #else
@@ -7033,7 +7066,7 @@ void func_8010F218_11E1C8(void) {
 						if (!(D_80052A8C & 7)) {
 							vehicle = D_80052B34;
 							func_800DEA08_ED9B8(vehicle->unk0, vehicle->unk2, vehicle->unk4, 0x1E, 4, 2,
-							                    0x1E, 0xC8, 0xFF, 0xD2, 0xAA);
+												0x1E, 0xC8, 0xFF, 0xD2, 0xAA);
 						}
 						func_80123E90_132E40(D_80052B34, 8);
 					}
@@ -7042,7 +7075,7 @@ void func_8010F218_11E1C8(void) {
 				} else if (currentLevel == 5) {
 					if (!(D_80052A8C & 7)) {
 						func_800DEA08_ED9B8(vehicle->unk0, vehicle->unk2 + 0x32, vehicle->unk4, 0xC8, 4, 4, 0x28,
-						                    0xC8, 0xFF, 0xD2, 0xAA);
+											0xC8, 0xFF, 0xD2, 0xAA);
 						vehicle = D_80052B34;
 					}
 					func_80123E90_132E40(vehicle, 0x28);
@@ -7440,8 +7473,8 @@ s32 func_8010FF84_11EF34(VehicleInstance *arg0, s32 arg1) {
 			}
 		}
 		alien--;
-    }
-    return 0;
+	}
+	return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010FF84_11EF34.s")

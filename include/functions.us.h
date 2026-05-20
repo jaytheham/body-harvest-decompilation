@@ -25,7 +25,7 @@ void func_800020E0_2CE0(s32 arg0, s32 arg1);
 void func_800035D8_41D8(s16 arg0);
 
 // F9230
-void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3);
 void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3);
 void func_800EB8A4_FA854(Unk80157600 *arg0, f32 arg1);
 s32 func_800EB9C4_FA974(s32 arg0, Unk80157600 *arg1);
