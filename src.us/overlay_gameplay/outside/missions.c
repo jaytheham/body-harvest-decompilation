@@ -1334,7 +1334,7 @@ void func_80076390_85340(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076390_85340.s")
 #endif
 
-// CURRENT(3690)
+// CURRENT(3615)
 #ifdef NON_MATCHING
 s32 func_8007643C_853EC(s32 arg0) {
 	MissionCondEntry *condEntry;
