@@ -1117,23 +1117,26 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB0C8_FA078.s")
 #endif
 
-// CURRENT(3279)
+// CURRENT(2141)
 #ifdef NON_MATCHING
 void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	Unk80157600 *player = arg0;
-	s32 turnOffset;
+	s32 state;
 	s32 shouldAnimate;
+	s32 turnOffset;
 
-	turnOffset = 0;
 	shouldAnimate = 0;
+	turnOffset = 0;
 
 	if (player == &D_80157A48) {
 		osSyncPrintf(&D_80144320_1532D0);
 	}
 
-	if (player->unk40C < 0x5C) {
-		if (player->unk40C < 0x29) {
-			switch (player->unk40C) {
+	state = player->unk40C;
+
+	if (state < 0x5C) {
+		if (state < 0x29) {
+			switch (state) {
 			case 0x17:
 				turnOffset = 0x4000;
 				break;
@@ -1153,11 +1156,13 @@ void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 				turnOffset = 0x2000;
 				break;
 			}
-		} else if (player->unk40C == 0x5B) {
+		} else if (state == 0x5B) {
 			shouldAnimate = 1;
 		}
-	} else if (player->unk40C == 0x5C) {
-		shouldAnimate = 1;
+	} else {
+		if (state == 0x5C) {
+			shouldAnimate = 1;
+		}
 	}
 
 	if (turnOffset != 0) {
