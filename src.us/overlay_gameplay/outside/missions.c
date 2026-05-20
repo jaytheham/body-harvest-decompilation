@@ -396,34 +396,38 @@ void func_80074768_83718(void) {
 	D_80149B44 += 1;
 }
 
-// CURRENT(5160)
+// CURRENT(5068)
 #ifdef NON_MATCHING
 void func_800747A8_83758(void) {
 	s32 sum;
 	s32 selectedIndex;
 	s32 randomValue;
-	s32 commandIndex;
-	s32 loopIndex;
+	s32 loopIndex[1];
 	u8 *cmdEntry;
 	u8 *weight;
-	s32 value;
+	s32 commandIndex;
 
 	sum = 0;
-	loopIndex = 0;
+	loopIndex[0] = 0;
 
 	if (func_80074558_83508() != 0x87) {
-		commandIndex = (loopIndex * 4) - loopIndex;
-		weight = &D_80149B50[loopIndex];
+		commandIndex = (loopIndex[0] * 4) - loopIndex[0];
+		weight = &D_80149B50[loopIndex[0]];
 		cmdEntry = &D_80149AC8[commandIndex];
 		do {
-			value = func_80074500_834B0();
-			sum += value;
+			randomValue = func_80074500_834B0();
+			sum += randomValue;
 			if (cmdEntry >= D_80149AF8) {
 				osSyncPrintf(D_80141248_1501F8);
 			}
-			*weight = value;
-			func_80074578_83528(cmdEntry);
-			cmdEntry += 3;
+			*weight = randomValue;
+			{
+				u8 *entryBefore;
+
+				entryBefore = cmdEntry;
+				cmdEntry += 3;
+				func_80074578_83528(entryBefore);
+			}
 			weight += 1;
 		} while (func_80074558_83508() != 0x87);
 	}
@@ -964,13 +968,13 @@ doneParsing:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800756DC_8468C.s")
 #endif
 
-// CURRENT(1656)
+// CURRENT(716)
 #ifdef NON_MATCHING
 void func_80075AA4_84A54(void) {
-	MissionCondEntry *cond;
+	s32 condCount;
 	s32 i;
-	u32 missionTimer;
 	s32 *callback;
+	MissionCondEntry *cond;
 
 	if (D_8004771E == 10) {
 		func_802D4CD0_18D7E0(D_8004771C, 0);
@@ -990,14 +994,13 @@ void func_80075AA4_84A54(void) {
 	if ((u32)D_80052A8C >= 0xDD) {
 		guess_checkMissions();
 	}
-	missionTimer = D_80052A8C;
 
 	{
 		u8 *slot;
 		s32 ageCount;
 
 		ageCount = 14;
-		if ((missionTimer % 20) == 0) {
+		if (((u32)D_80052A8C % 20) == 0) {
 			slot = &D_8004D1BE;
 			do {
 				if (*slot != -1) {
@@ -1008,15 +1011,9 @@ void func_80075AA4_84A54(void) {
 		}
 	}
 
-	{
-		s32 count;
-
-		count = D_80149B28;
-		if (count != 0) {
-			s32 condCount;
-
-			condCount = count - 1;
-			cond = &D_801494C0[condCount];
+	condCount = D_80149B28;
+	if (condCount--) {
+		cond = &D_801494C0[condCount];
 
 		do {
 			D_801497C0 = cond;
@@ -1035,64 +1032,67 @@ void func_80075AA4_84A54(void) {
 					}
 				}
 
-				D_801497C4 = &D_8004D348[D_801497C0->unk2 * 9];
-				i = D_801497C0->unk3;
-				if (i != 0) {
-					i--;
-					do {
-						if (func_800081D4_8DD4(D_801497C4) == 0) {
-							goto next_cond;
-						}
-
-						D_801497C4 += 9;
-
-						if (i == 0) {
-							switch (D_801497C0->unk0) {
-							case 1:
-								if (func_800078B8_84B8(D_801497C0->unk1, &D_8004D15C) == 0) {
-									D_8004D14C = 0x73;
-								}
-
-								if (D_80149B60[D_801497C0->unk1 * 0x226] != 0x6E) {
-									func_8001A598_1B198(&D_80149B60[D_801497C0->unk1 * 0x226]);
-								}
-
-								__dummy();
-								func_800078CC_84CC(D_801497C0->unk1, &D_8004D150);
-								func_80073DC0_82D70(D_801497C0->unk4);
-								break;
-							case 2:
-								func_8007643C_853EC(D_801497C0->unk1);
-								break;
-							case 3:
-								func_800765C4_85574(D_801497C0->unk1);
-								break;
+				{
+					i = D_801497C0->unk3;
+					D_801497C4 = &D_8004D348[D_801497C0->unk2 * 9];
+					if (i != 0) {
+						i--;
+						do {
+							if (func_800081D4_8DD4(D_801497C4) == 0) {
+								goto next_cond;
 							}
-						}
-					} while (i-- != 0);
+
+							D_801497C4 += 9;
+
+							if (i == 0) {
+								switch (D_801497C0->unk0) {
+								case 1:
+									if (func_800078B8_84B8(D_801497C0->unk1, &D_8004D15C) == 0) {
+										D_8004D14C = 0x73;
+									}
+
+									if (D_80149B60[D_801497C0->unk1 * 0x226] != 0x6E) {
+										func_8001A598_1B198(&D_80149B60[D_801497C0->unk1 * 0x226]);
+									}
+
+									__dummy();
+									func_800078CC_84CC(D_801497C0->unk1, &D_8004D150);
+									func_80073DC0_82D70(D_801497C0->unk4);
+									break;
+								case 2:
+									func_8007643C_853EC(D_801497C0->unk1);
+									break;
+								case 3:
+									func_800765C4_85574(D_801497C0->unk1);
+									break;
+								}
+							}
+						} while (i--);
+					}
 				}
 			}
 
-			next_cond:
-				cond--;
-			} while (condCount-- != 0);
-		}
+		next_cond:
+			cond--;
+		} while (condCount--);
 	}
 
-	callback = &D_80149478[15];
-	i = 15;
-	do {
-		if (*callback != 0) {
-			((void (*)(void))*callback)();
-		}
-		callback--;
-	} while (i-- != 0);
+	{
+		condCount = 15;
+		callback = &D_801494B4;
+		do {
+			if (*callback != 0) {
+				((void (*)(void))*callback)();
+			}
+			callback--;
+		} while (condCount--);
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075AA4_84A54.s")
 #endif
 
-// CURRENT(6989)
+// CURRENT(6115)
 #ifdef NON_MATCHING
 s32 func_80075E50_84E00(void) {
 	u8 *stream;
@@ -1100,16 +1100,10 @@ s32 func_80075E50_84E00(void) {
 	u32 bitmask[8];
 	u8 *cmd;
 	s32 count;
-	u32 vehicleOffset;
-	u8 idx;
 
 	cmd = D_801497C8;
 	stream = &D_80224680;
 	has83After82 = 0;
-
-	for (count = 0; count < 8; count++) {
-		bitmask[count] = 0;
-	}
 
 	count = D_80149B30;
 
@@ -1117,6 +1111,9 @@ s32 func_80075E50_84E00(void) {
 		count--;
 		do {
 			if (cmd[0] == 0x9C) {
+				u32 vehicleOffset;
+				u8 idx;
+
 				idx = cmd[1];
 				vehicleOffset = idx;
 				vehicleOffset = (vehicleOffset << 2) - vehicleOffset;
@@ -1337,7 +1334,7 @@ void func_80076390_85340(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076390_85340.s")
 #endif
 
-// CURRENT(3690)
+// CURRENT(3615)
 #ifdef NON_MATCHING
 s32 func_8007643C_853EC(s32 arg0) {
 	MissionCondEntry *condEntry;
@@ -1408,7 +1405,7 @@ s32 func_8007643C_853EC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007643C_853EC.s")
 #endif
 
-// CURRENT(3690)
+// CURRENT(2420)
 #ifdef NON_MATCHING
 s32 func_800765C4_85574(s32 arg0) {
 	MissionCondEntry *condEntry;
@@ -1418,16 +1415,15 @@ s32 func_800765C4_85574(s32 arg0) {
 	s32 temp;
 
 	if (func_800078B8_84B8(arg0, &D_8004D150) != 0) {
-		temp = 0x80;
+		i = 0x80;
 	} else {
 		return -1;
 	}
 
-	i = -1;
-	if (temp != 0) {
+	if (i != 0) {
 		s32 condType;
 
-		i = temp - 1;
+		i -= 1;
 		condType = 3;
 		condEntry = &D_801494C0[i];
 		foundEntry = condEntry;
@@ -1461,10 +1457,9 @@ s32 func_800765C4_85574(s32 arg0) {
 			if (func_800078B8_84B8(arg0, &D_8004D15C) == 0) {
 				func_8001A650_1B250(0xC);
 			}
+		} else if (missionEntry[0x64] == 0x6E) {
 		} else {
-			if (missionEntry[0x64] != 0x6E) {
-				func_8001A598_1B198(&missionEntry[0x64]);
-			}
+			func_8001A598_1B198(&missionEntry[0x64]);
 		}
 
 		func_80073DC0_82D70(foundEntry->unk4);
