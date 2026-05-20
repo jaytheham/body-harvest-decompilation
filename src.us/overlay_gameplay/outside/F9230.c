@@ -1216,27 +1216,35 @@ void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB534_FA4E4.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3) {
-	s32 temp_v0 = arg0->unk40C;
-	
-	if (!((((Unk8009E8DC*)D_8013E5AC_14D55C)[temp_v0].unk4) & 8)) {
-		if (arg3 > 0.0f) {
-			if ((arg2 != temp_v0) && (temp_v0 >= 3)) {
+	s32 animIdx;
+	s32 animCheck;
+	Unk8009E8DC *anim;
+
+	animIdx = arg0->unk40C;
+	animCheck = animIdx;
+	anim = &((Unk8009E8DC*)D_8013E5AC_14D55C)[animIdx];
+	if (anim->unk4 & 8) {
+		return;
+	}
+
+	if (arg3 > 0.0f) {
+		if (arg2 != animCheck) {
+			if (animCheck >= 3) {
 				func_800EB534_FA4E4(arg0, arg2, 0, arg3);
 				return;
 			}
-			if (((Unk8007F878_404*)arg0->unk404)->unkE50 == 0) {
-				func_800EB534_FA4E4(arg0, arg2, ((Unk8009E8DC*)D_8013E5AC_14D55Cs)[arg2].unk8, arg3);
-			}
-		} else if ((temp_v0 < 0x24) || (temp_v0 == 0x3B)) {
-			func_800EB534_FA4E4(arg0, 0, 0, 0.0f);
+		}
+
+		if (((Unk8007F878_404*)arg0->unk404)->unkE50 == 0) {
+			func_800EB534_FA4E4(arg0, arg2, ((Unk8009E8DC*)D_8013E5AC_14D55C)[arg2].unk8, arg3);
+		}
+	} else {
+		if ((animCheck < 0x24) || (animCheck == 0x3B)) {
+			func_800EB534_FA4E4(arg0, arg1, 0, 0.0f);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB7CC_FA77C.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800EB8A4_FA854(Unk80157600 *arg0, f32 arg1) {
