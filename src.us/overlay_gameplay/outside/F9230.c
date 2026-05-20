@@ -993,7 +993,7 @@ void func_800EB090_FA040(void) {
 	D_80157A28 &= ~4;
 }
 
-// CURRENT(16512)
+// CURRENT(7490)
 #ifdef NON_MATCHING
 void func_800EB0C8_FA078(VehicleInstance *arg0) {
 	f32 speedScale;
@@ -1001,37 +1001,38 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 	f32 zDiff;
 	f32 xStep;
 	f32 zStep;
-	f32 xStepScaled;
-	f32 zStepScaled;
-	f32 yawRad;
 	f32 slopeDeg;
-	f32 targetX;
-	f32 targetZ;
 	s32 stateFlags;
 
-	stateFlags = ((Unk8009E8DC *) D_8013E5B0_14D560)[D_80157600.unk40C].unk0;
+	stateFlags = *(s32 *)((u8 *)D_8013E5B0_14D560 + (D_80157600.unk40C * 0x34));
 	speedScale = 1.0f;
 
 	if (stateFlags & 0x10) {
-		func_800FB430_10A3E0(NULL, 0.0f);
-		stateFlags = ((Unk8009E8DC *) D_8013E5B0_14D560)[D_80157A0C].unk0;
+		func_800FB430_10A3E0(NULL, 0);
+		stateFlags = *(s32 *)((u8 *)D_8013E5B0_14D560 + (D_80157A0C * 0x34));
 	}
 
 	if (stateFlags & 0x800) {
-		s16 *path;
+		f32 sinYaw;
+		f32 cosYaw;
 
-		func_800FB430_10A3E0(arg0, 0.0f);
+		func_800FB430_10A3E0(arg0, 0);
 
-		xDiff = (D_80157600.unk8 - D_80157600.unk414) / 4.0f;
-		zDiff = (D_80157600.unk10 - D_80157600.unk418) / 4.0f;
+		xDiff = D_80157600.unk8 - D_80157600.unk414;
+		zDiff = D_80157600.unk10 - D_80157600.unk418;
+		xDiff /= 4.0f;
+		zDiff /= 4.0f;
 
-		yawRad = (f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0);
-		xStep = (cosf(yawRad) * zDiff) - (sinf(yawRad) * xDiff);
+		cosYaw = cosf((f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0));
+		sinYaw = sinf((f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0));
+		xStep = (cosYaw * zDiff) - (sinYaw * xDiff);
 
-		yawRad = (f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0);
-		zStep = (cosf(yawRad) * xDiff) + (sinf(yawRad) * zDiff);
+		sinYaw = sinf((f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0));
+		cosYaw = cosf((f32)(((f64)(f32)arg0->unkE * 3.141592653589793) / 32768.0));
+		zStep = (cosYaw * xDiff) + (sinYaw * zDiff);
 
-		slopeDeg = (f32)(((f64)(f32)func_800FA690_109640(arg0->unk0, arg0->unk4, arg0->unkE) * 360.0) / 32768.0);
+		slopeDeg = (f32)(((f64)(f32)func_800FA690_109640(arg0->unk0, arg0->unk4, arg0->unkE) * 360.0) /
+				 32768.0);
 		if (slopeDeg < -10.0f) {
 			u16 flags = D_80052B34->unk20;
 
@@ -1051,63 +1052,70 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 			}
 		}
 
-		xStepScaled = xStep * speedScale;
-		zStepScaled = zStep * speedScale;
+		xStep *= speedScale;
+		zStep *= speedScale;
 
 		if (D_80048188 != 0) {
-			s16 targetPosX;
-			s16 targetPosZ;
-			s16 dx;
-			s16 dz;
-			s16 absDx;
-			s16 absDz;
-			f32 absXStep;
-			f32 absZStep;
+			s16 *path;
+			s16 pathX;
+			s16 pathZ;
+			s32 delta;
+			s32 absDelta;
+			f32 absStep;
 
-			path = (s16 *) &D_801575E0 + D_801575E0.unk4;
-			targetPosX = path[3];
-			if (targetPosX != 0x7FFF) {
-				targetPosZ = path[7];
+			path = (s16 *)&D_801575E0 + D_801575E0.unk4;
+			pathX = path[3];
+			if (pathX != 0x7FFF) {
+				pathZ = path[7];
+				delta = (s16)(pathX - arg0->unk0);
 
-				dx = targetPosX - arg0->unk0;
-				dz = targetPosZ - arg0->unk4;
-				absDx = (dx >= 0) ? dx : -dx;
-				absDz = (dz >= 0) ? dz : -dz;
-
-				if (xStepScaled >= 0.0f) {
-					absXStep = xStepScaled;
+				if (delta < 0) {
+					absDelta = -delta;
 				} else {
-					absXStep = -xStepScaled;
+					absDelta = delta;
 				}
 
-				if ((f32)absDx < absXStep) {
-					targetX = targetPosX;
+				if (xStep >= 0.0f) {
+					absStep = xStep;
 				} else {
-					targetX = arg0->unk4C + xStepScaled;
+					absStep = -xStep;
 				}
 
-				if (zStepScaled >= 0.0f) {
-					absZStep = zStepScaled;
+				if ((f32)absDelta < absStep) {
+					xDiff = pathX;
 				} else {
-					absZStep = -zStepScaled;
+					xDiff = arg0->unk4C + xStep;
 				}
 
-				if ((f32)absDz < absZStep) {
-					targetZ = targetPosZ;
+				delta = (s16)(pathZ - arg0->unk4);
+				if (delta < 0) {
+					absDelta = -delta;
 				} else {
-					targetZ = arg0->unk54 + zStepScaled;
+					absDelta = delta;
+				}
+
+				if (zStep >= 0.0f) {
+					absStep = zStep;
+				} else {
+					absStep = -zStep;
+				}
+
+				if ((f32)absDelta < absStep) {
+					zDiff = pathZ;
+				} else {
+					zDiff = arg0->unk54 + zStep;
 				}
 			} else {
-				targetX = arg0->unk4C + xStepScaled;
-				targetZ = arg0->unk54 + zStepScaled;
+				xDiff = arg0->unk4C + xStep;
+				zDiff = arg0->unk54 + zStep;
 			}
 		} else {
-			targetX = arg0->unk4C + xStepScaled;
-			targetZ = arg0->unk54 + zStepScaled;
+			xDiff = arg0->unk4C + xStep;
+			zDiff = arg0->unk54 + zStep;
 		}
 
-		func_800FB44C_10A3FC(arg0, targetX);
-		func_800FB484_10A434(arg0, targetZ);
+		func_800FB44C_10A3FC(arg0, xDiff);
+		func_800FB484_10A434(arg0, zDiff);
 	}
 
 	D_80157600.unk414 = D_80157600.unk8;
