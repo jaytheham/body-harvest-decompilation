@@ -1,6 +1,0 @@
-TARGET                                                   CURRENT (0)                                
-f92ac:    addiu   sp,sp,-0x28                            f92ac:    addiu   sp,sp,-0x28              
-f92b0:    sw      a0,0x28(sp)                            f92b0:    sw      a0,0x28(sp)              
-f92b4:    lh      t6,0x2a(sp)                            f92b4:    lh      t6,0x2a(sp)              
-f92b8:    lui     a1,0x8015                              f92b8:    lui     a1,0x8015                
-f92bc:    sw      ra,0x1c(sp)                            f92bc:    sw      ra,0x1c(sp)              
