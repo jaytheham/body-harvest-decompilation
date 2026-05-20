@@ -538,6 +538,7 @@ void func_800EA2BC_F926C(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA2BC_F926C.s")
 #endif
 
+// CURRENT(8)
 #ifdef NON_MATCHING
 void func_800EA2FC_F92AC(s16 arg0) {
 	Unk8009E8DC *anim;
