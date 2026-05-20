@@ -571,9 +571,10 @@ void *func_800EA3E8_F9398(s16 arg0) {
 }
 
 // guess_initAnimations
+// CURRENT(1655)
 #ifdef NON_MATCHING
 void func_800EA434_F93E4(void) {
-	f32 temp_zero = 0.0f;
+	f32 temp_zero;
 
 	D_8004818C = 0;
 	D_80157600.unk404 = func_8000C6F4_D2F4();
@@ -583,7 +584,7 @@ void func_800EA434_F93E4(void) {
 	func_8000C790_D390(&D_80157600, &D_8003BAE0, 0x10);
 	temp_zero = 0.0f;
 	D_80157600.unk40C = 0x27;
-	func_800EB534_FA4E4(&D_80157600, 0x23, 7, 0);
+	func_800EB534_FA4E4(&D_80157600, 0x23, 7, temp_zero);
 	D_80157600.unk8 = temp_zero;
 	D_80157600.unk10 = temp_zero;
 	D_80157600.unkC = 145.0f;
@@ -601,7 +602,7 @@ void func_800EA434_F93E4(void) {
 	D_80157A48.unk10 = temp_zero;
 	D_80157A48.unk40C = 0x27;
 	D_80157A48.unkC = 145.0f;
-	func_800EB534_FA4E4(&D_80157A48, 0x23, 7, 0);
+	func_800EB534_FA4E4(&D_80157A48, 0x23, 7, temp_zero);
 	D_801575E0.unk0 = 0;
 	D_801575E0.unk2 = 0;
 	D_801575E0.unk4 = 0;
@@ -1111,7 +1112,7 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 
 // CURRENT(3613)
 #ifdef NON_MATCHING
-void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	Unk80157600 *player = arg0;
 	Unk8009E8DC *anim;
 	Unk8009E8DC *nextAnim;
@@ -1190,7 +1191,7 @@ void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, s32 arg3) {
 		anim = &((Unk8009E8DC *) D_8013E5AC_14D55C)[arg1];
 		if (anim->unk4 & 4) {
 			nextAnim = &((Unk8009E8DC *) D_8013E5AC_14D55C)[anim->unkC];
-			func_8000D71C_E31C(player->unk404, player->unk408, player, 0x10, anim->unk0, nextAnim->unk0, *(f32*) &arg3, shouldAnimate);
+			func_8000D71C_E31C(player->unk404, player->unk408, player, 0x10, anim->unk0, nextAnim->unk0, arg3, shouldAnimate);
 		} else {
 			func_8000CDFC_D9FC(player->unk404, player, 0x10, anim->unk0, shouldAnimate);
 		}
@@ -1212,14 +1213,14 @@ void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	if (!((((Unk8009E8DC*)D_8013E5AC_14D55C)[temp_v0].unk4) & 8)) {
 		if (arg3 > 0.0f) {
 			if ((arg2 != temp_v0) && (temp_v0 >= 3)) {
-				func_800EB534_FA4E4(arg0, arg2, 0, *(s32*)&arg3);
+				func_800EB534_FA4E4(arg0, arg2, 0, arg3);
 				return;
 			}
 			if (((Unk8007F878_404*)arg0->unk404)->unkE50 == 0) {
-				func_800EB534_FA4E4(arg0, arg2, ((Unk8009E8DC*)D_8013E5AC_14D55Cs)[arg2].unk8, *(s32*)&arg3);
+				func_800EB534_FA4E4(arg0, arg2, ((Unk8009E8DC*)D_8013E5AC_14D55Cs)[arg2].unk8, arg3);
 			}
 		} else if ((temp_v0 < 0x24) || (temp_v0 == 0x3B)) {
-			func_800EB534_FA4E4(arg0, 0, 0, 0);
+			func_800EB534_FA4E4(arg0, 0, 0, 0.0f);
 		}
 	}
 }
