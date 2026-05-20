@@ -525,6 +525,7 @@ void func_800EA2B0_F9260(s32 arg0) { D_801575DC = arg0; }
 
 // guess_attemptDoAnimation
 // https://decomp.me/scratch/4eqv8
+// CURRENT(200)
 #ifdef NON_MATCHING
 void func_800EA2BC_F926C(void)
 {
