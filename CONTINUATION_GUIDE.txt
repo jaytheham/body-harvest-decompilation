@@ -1,0 +1,57 @@
+## ORCHESTRATION CONTINUATION GUIDE
+
+Current Status:
+- Branch: matcher-orchestrator-2026-05-20-16-11-10
+- Functions Processed: 3 (func_800EA2BC_F926C, func_800EA2FC_F92AC, func_800EA434_F93E4)
+- Functions Remaining: 51
+
+## Strategy for Remaining Functions
+
+### Tier 1: Low-Score Functions (100-500)
+These should be processed first as they're likely closest to matching:
+- func_800F0094_FF044 (180)
+- func_80102DDC_111D8C (168)
+- func_801027E8_111798 (202)
+- func_80107184_116134 (201)
+- func_800EBA54_FAA04 (420)
+- func_80115A74_124A24 (455)
+
+### Tier 2: Medium Functions (500-2000)
+- func_800F32EC_10229C (635)
+- func_8010999C_11894C (657)
+- func_800EF9F0_FE9A0 (737)
+- func_80102600_1115B0 (887)
+- func_800FEDBC_10DD6C (1333)
+- func_801022F4_1112A4 (1466)
+- func_80107EBC_116E6C (1435)
+
+### Processing Instructions for Each Function:
+
+1. Find function in F9230.c by searching for the function name
+2. Note the CURRENT score from comment above #ifdef NON_MATCHING
+3. Remove the #ifdef NON_MATCHING wrapper
+4. Run: .\tools\make.ps1
+5. Run: .\tools\diff.ps1 <funcname> | Select-Object -First 1
+6. If score >= 100, invoke BH Matcher subagent to optimize
+7. After subagent finishes:
+   - Re-check score with diff.ps1
+   - If improved: wrap with new CURRENT(score) and commit
+   - If same or worse: unwrap and commit anyway (it's now documented)
+
+### Expected Outcomes:
+- ~20-30% of Tier 1 functions should reach score < 50
+- ~10-15% of Tier 2 functions should reach score < 100
+- Some functions will hit diminishing returns (pseudo-instruction differences, register allocation limits)
+
+### Batch Processing Commands:
+
+Get all functions with scores:
+  grep -E '// CURRENT\([0-9]+\)' src.us/overlay_gameplay/outside/F9230.c | grep -oE '[0-9]+' | sort -n
+
+View specific function:
+  grep -n 'func_800F0094_FF044' src.us/overlay_gameplay/outside/F9230.c
+
+Create session log:
+  git log --oneline -n 1 > current_session.txt
+  date >> current_session.txt
+
