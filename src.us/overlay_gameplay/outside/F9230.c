@@ -1554,7 +1554,7 @@ void func_800EC3A0_FB350(s16 arg0) {
 			if ((D_80048188 == 0) && (arg0 != D_801575E0.unk0)) {
 				D_80048188 = 1;
 				D_801575E0.unk0 = arg0;
-				D_80157600.unk420 = &D_8013E450;
+				D_80157600.unk420 = &D_8013E450_14D400;
 				D_80157600.unk424 = 0;
 				D_801575E0.unk6 = 0x7FFF;
 				D_801575E0.unkA = 0x7FFF;
@@ -1566,7 +1566,7 @@ void func_800EC3A0_FB350(s16 arg0) {
 		case 5:
 			D_80048188 = 1;
 			D_801575E0.unk0 = arg0;
-			break;
+			return;
 	}
 }
 #else
@@ -7066,7 +7066,7 @@ void func_8010F218_11E1C8(void) {
 						if (!(D_80052A8C & 7)) {
 							vehicle = D_80052B34;
 							func_800DEA08_ED9B8(vehicle->unk0, vehicle->unk2, vehicle->unk4, 0x1E, 4, 2,
-							                    0x1E, 0xC8, 0xFF, 0xD2, 0xAA);
+												0x1E, 0xC8, 0xFF, 0xD2, 0xAA);
 						}
 						func_80123E90_132E40(D_80052B34, 8);
 					}
@@ -7075,7 +7075,7 @@ void func_8010F218_11E1C8(void) {
 				} else if (currentLevel == 5) {
 					if (!(D_80052A8C & 7)) {
 						func_800DEA08_ED9B8(vehicle->unk0, vehicle->unk2 + 0x32, vehicle->unk4, 0xC8, 4, 4, 0x28,
-						                    0xC8, 0xFF, 0xD2, 0xAA);
+											0xC8, 0xFF, 0xD2, 0xAA);
 						vehicle = D_80052B34;
 					}
 					func_80123E90_132E40(vehicle, 0x28);
@@ -7473,8 +7473,8 @@ s32 func_8010FF84_11EF34(VehicleInstance *arg0, s32 arg1) {
 			}
 		}
 		alien--;
-    }
-    return 0;
+	}
+	return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010FF84_11EF34.s")
