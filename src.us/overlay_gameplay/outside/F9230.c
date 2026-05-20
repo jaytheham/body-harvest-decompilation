@@ -1455,13 +1455,14 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s")
 #endif
 
-// CURRENT(3656)
+// CURRENT(378)
 #ifdef NON_MATCHING
 void func_800EC0D0_FB080(s32 arg0) {
 	s16 sp46;
 	s16 sp44;
 	s16 sp42;
 	s16 sp40;
+	f64 sp3C;
 	s16 sp3A;
 	f32 sp2C;
 	f32 sp28;
@@ -1487,24 +1488,38 @@ void func_800EC0D0_FB080(s32 arg0) {
 			}
 			func_801165FC_1255AC(D_80052543, D_80052547, &sp46, &sp44, &sp42, &sp40);
 			temp_f6 = (s32)(((f64)(f32)sp40 * D_80144470_153420) / 32768.0);
-			if ((temp_f6 == -0x10E) || (temp_f6 == 0x5A)) {
-				sp3A = 0;
-				sp2C = -75.0f;
-				sp28 = 0.0f;
-			} else if ((temp_f6 == -0xB4) || (temp_f6 == 0xB4)) {
-				sp3A = -0x4000;
-				sp2C = 0.0f;
-				sp28 = 75.0f;
-			} else if ((temp_f6 == -0x5A) || (temp_f6 == 0x10E)) {
-				sp3A = -0x8000;
-				sp2C = 75.0f;
-				sp28 = 0.0f;
-			} else if ((temp_f6 == 0) || (temp_f6 == 0x168)) {
-				sp3A = 0x4000;
-				sp2C = 0.0f;
-				sp28 = -75.0f;
-			} else {
-				osSyncPrintf(D_80144354_153304, temp_f6);
+			switch (temp_f6) {
+				case 0:
+				case 0x168:
+					sp3A = 0x4000;
+					sp2C = 0.0f;
+					sp28 = -75.0f;
+					break;
+
+				case -0x5A:
+				case 0x10E:
+					sp3A = -0x8000;
+					sp2C = 75.0f;
+					sp28 = 0.0f;
+					break;
+
+				case -0x10E:
+				case 0x5A:
+					sp3A = 0;
+					sp2C = -75.0f;
+					sp28 = 0.0f;
+					break;
+
+				case -0xB4:
+				case 0xB4:
+					sp3A = -0x4000;
+					sp2C = 0.0f;
+					sp28 = 75.0f;
+					break;
+
+				default:
+					osSyncPrintf(D_80144354_153304, temp_f6);
+					break;
 			}
 			D_801575E0.unk6 = (s16)(sp46 + (s32)sp2C);
 			D_801575E0.unkE = (s16)(sp42 + (s32)sp28);
