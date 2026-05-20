@@ -870,29 +870,42 @@ typedef struct {
 	/* 0x24 */ s16 unk24;
 } UnkF9230SpecView;
 
-// CURRENT(9473)
+// CURRENT(5156)
 #ifdef NON_MATCHING
 void func_800EABE0_F9B90(VehicleInstance *arg0) {
 	Vec3f sp2C;
 	u16 sp2A;
+	s32 temp;
 	s16 temp_v0;
 	UnkF9230SpecView *spec;
-	f64 temp_f2;
-	u16 temp_a0;
+	f32 temp_f2;
 
-	sp2C.x = (f32)((D_80159020->unk0 >= 0) ? (D_80159020->unk0 >> 2) : ((D_80159020->unk0 + 3) >> 2));
-	sp2C.y = (f32)((D_80159020->unk2 >= 0) ? (D_80159020->unk2 >> 2) : ((D_80159020->unk2 + 3) >> 2));
-	sp2C.z = (f32)((D_80159020->unk4 >= 0) ? (D_80159020->unk4 >> 2) : ((D_80159020->unk4 + 3) >> 2));
+	temp = D_80159020->unk0;
+	if (temp < 0) {
+		temp += 3;
+	}
+	sp2C.x = (f32)(temp >> 2);
+
+	temp = D_80159020->unk2;
+	if (temp < 0) {
+		temp += 3;
+	}
+	sp2C.y = (f32)(temp >> 2);
+
+	temp = D_80159020->unk4;
+	if (temp < 0) {
+		temp += 3;
+	}
+	sp2C.z = (f32)(temp >> 2);
 
 	temp_f2 = func_800EA604_F95B4((s16 *)arg0, &sp2C);
-	temp_v0 = ((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk1E;
+	temp_v0 = *(s16 *)((u8 *)D_8013E45C_14D40C + (D_801575DC << 5) + 0x1E);
 	sp2A = (u16)(s16)(s32)(((f32)temp_v0 * (1.0f - temp_f2)) + ((f32)-temp_v0 * temp_f2));
 
 	spec = func_800FAFB8_109F68(arg0);
-	spec->unk20 = ((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk18;
-	temp_a0 = sp2A;
-	spec->unk22 = (s16)(s32)(((f64)((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk1C * ((f64)(f32)sins(temp_a0) / 32768.0)) + (((f64)(f32)((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk1A * 64.0) / (f64)(f32)D_80157A3C));
-	spec->unk24 = (s16)(s32)(((f64)(f32)coss(temp_a0) / 32768.0) * (f64)((UnkF9230AnimEntry *)D_8013E45C_14D40C)[D_801575DC].unk1C);
+	spec->unk20 = *(s16 *)((u8 *)D_8013E45C_14D40C + (D_801575DC << 5) + 0x18);
+	spec->unk22 = (s16)(s32)(((f64)(*(s16 *)((u8 *)D_8013E45C_14D40C + (D_801575DC << 5) + 0x1C)) * ((f64)(f32)sins(sp2A) / 32768.0)) + (((f64)(f32)(*(s16 *)((u8 *)D_8013E45C_14D40C + (D_801575DC << 5) + 0x1A)) * 64.0) / (f64)(f32)D_80157A3C));
+	spec->unk24 = (s16)(s32)(((f64)(f32)coss(sp2A) / 32768.0) * (f64)(*(s16 *)((u8 *)D_8013E45C_14D40C + (D_801575DC << 5) + 0x1C)));
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EABE0_F9B90.s")
