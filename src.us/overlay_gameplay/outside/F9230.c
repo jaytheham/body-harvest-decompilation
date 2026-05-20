@@ -2119,14 +2119,11 @@ void func_800F02EC_FF29C(s16 arg0)
   D_80157F54 = 0;
 }
 
+// CURRENT(1880)
 #ifdef NON_MATCHING
-// CURRENT(11385)
 void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2) {
 	Unk84EECEffect *entry;
-	VehicleInstance *vehicle;
-	BuildingInstance *building;
 	s16 *entryS16;
-	u8 type;
 
 	D_80157F58 = arg0;
 	D_80157F5C = 0;
@@ -2136,32 +2133,40 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2) {
 	func_800F02EC_FF29C(D_80157F5C + D_80157F60);
 	entry = D_80157F4C;
 	entryS16 = (s16 *)entry;
-	type = entry->unk11;
 
-	if (type == 0) {
+	switch (entry->unk11) {
+	case 0:
 		D_80157586 = entry->unk6;
 		D_80157588 = entry->unk8;
 		D_8015758A = entry->unkA;
-	} else if (type == 1) {
-		vehicle = D_80052B34;
-		D_80157586 = vehicle->unk0 >> 2;
-		D_80157588 = vehicle->unk2 >> 2;
-		D_80157588 += D_80257A38[vehicle->unk1A * 56] >> 3;
-		D_8015758A = vehicle->unk4 >> 2;
-	} else if (type == 2) {
-		building = &buildingInstances[entryS16[7]];
-		D_80157586 = (building->xCoord >> 2) + D_80159DE0;
-		D_80157588 = (building->yCoord >> 2) + D_80159DE2;
-		D_80157588 += ((s16 *) D_802590A4)[building->buildingType * 16] >> 3;
-		D_8015758A = (building->zCoord >> 2) + D_80159DE4;
-	} else if (type == 3) {
-		vehicle = &vehicleInstances[entryS16[7]];
-		D_80157586 = vehicle->unk0 >> 2;
-		D_80157588 = vehicle->unk2 >> 2;
-		D_8015758A = vehicle->unk4 >> 2;
+		break;
+	case 1:
+		D_80157586 = D_80052B34->unk0 >> 2;
+		D_80157588 = D_80052B34->unk2 >> 2;
+		D_80157588 += D_80257A38[D_80052B34->unk1A * 56] >> 3;
+		D_8015758A = D_80052B34->unk4 >> 2;
+		break;
+	case 2:
+		{
+			s16 *yPtr;
+			u16 tempYBase;
+
+			yPtr = &D_80157588;
+			tempYBase = D_80159DE2;
+		D_80157586 = (buildingInstances[entryS16[7]].xCoord >> 2) + *(u16 *)&D_80159DE0;
+			yPtr[0] = (buildingInstances[entryS16[7]].yCoord >> 2) + tempYBase;
+			yPtr[0] += ((s16 *)D_802590A4)[buildingInstances[entryS16[7]].buildingType * 16] >> 3;
+		D_8015758A = (buildingInstances[entryS16[7]].zCoord >> 2) + *(u16 *)&D_80159DE4;
+		}
+		break;
+	case 3:
+		D_80157586 = vehicleInstances[entryS16[7]].unk0 >> 2;
+		D_80157588 = vehicleInstances[entryS16[7]].unk2 >> 2;
+		D_8015758A = vehicleInstances[entryS16[7]].unk4 >> 2;
+		break;
 	}
 
-	if ((u8)entry->unk10 == 0) {
+	if (entry->unk10 == 0) {
 		D_80157580 = D_80157586 + entryS16[0];
 		D_80157582 = D_80157588 + entryS16[1];
 		D_80157584 = D_8015758A + entryS16[2];
@@ -2180,6 +2185,7 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F0340_FF2F0.s")
 #endif
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F066C_FF61C.s")
 
