@@ -1793,29 +1793,23 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF650_FE600.s")
 #endif
 
-// CURRENT(737)
+// CURRENT(252)
 #ifdef NON_MATCHING
 void func_800EF9F0_FE9A0(s16 arg0) {
 	s32 modelDisplayList;
-	s32 matrixAddr;
-	Unk80052B40 sp5C;
-	Unk80052B40 sp48;
-	s32 spPad[6];
 	AlienInstance *alien;
-	Gfx *dl;
+	Unk80052B40 sp5C;
+	s32 spPad[2];
+	Unk80052B40 sp48;
 
 	alien = &alienInstances[arg0];
 	modelDisplayList = alienSpecs[alien->specIndex].unk0;
 
 	func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0x01020040;
-	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-	matrixAddr = D_8005BB38 + 0x40;
-	D_8005BB38 = matrixAddr;
+	D_8005BB38 += 0x40;
 
 	sp48.unk0 = 0x4000 - alien->unk6;
 	sp48.unk2 = 0;
@@ -1824,15 +1818,11 @@ void func_800EF9F0_FE9A0(s16 arg0) {
 	sp5C.unk2 = alien->unk2;
 	sp5C.unk4 = alien->unk4;
 
-	func_800039D0_45D0(&sp5C, &sp48, &D_800311A0, matrixAddr);
+	func_800039D0_45D0(&sp5C, &sp48, &D_800311A0, D_8005BB38);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0x01000040;
-	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-	matrixAddr = D_8005BB38 + 0x40;
-	D_8005BB38 = matrixAddr;
+	D_8005BB38 += 0x40;
 
 	sp5C.unk0 = 0;
 	sp5C.unk4 = 0;
@@ -1841,25 +1831,16 @@ void func_800EF9F0_FE9A0(s16 arg0) {
 	sp48.unk4 = D_80157A48.unk0 << 3;
 	sp5C.unk2 = (s16)D_80157A48.unkC;
 
-	func_800039D0_45D0(&sp5C, &sp48, NULL, matrixAddr);
+	func_800039D0_45D0(&sp5C, &sp48, NULL, D_8005BB38);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0x01000040;
-	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
 	D_8005BB38 += 0x40;
-	dl->words.w0 = 0xBC001C06;
-	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+	gSPSegment(D_8005BB2C++, 0x07, D_8005BB38 & 0x1FFFFFFF);
 
 	func_8000CC3C_D83C((AnimChannelState *)&D_80157A48, 0x10);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0x06000000;
-	dl->words.w1 = modelDisplayList;
+	gSPDisplayList(D_8005BB2C++, modelDisplayList);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF9F0_FE9A0.s")
