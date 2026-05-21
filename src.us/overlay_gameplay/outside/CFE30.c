@@ -1020,7 +1020,7 @@ void func_800C3288_D2238(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3300_D22B0.s")
 
 #ifdef NON_MATCHING
-/* CURRENT(3435) */
+/* CURRENT(2126) */
 s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	s16 slot;
 	s32 color;
@@ -1035,6 +1035,7 @@ s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 	Unk80154318Sub *entrySub;
 
 	slot = func_800C19D4_D0984(0xC, 1);
+	width = arg3;
 	if (slot != -3) {
 		entry = &D_80154318[slot];
 		entry->unk8 = arg0;
@@ -1051,7 +1052,6 @@ s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 		entry->unkF = colorG;
 		entry->unk10 = colorB;
 
-		width = arg3;
 		if (width < 0x10) {
 			width = 0x10;
 		}
@@ -1071,29 +1071,33 @@ s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 
 		entrySub = (Unk80154318Sub *)&linkedEntry->unk8;
 		entrySub->unk2 = width;
-		linkedEntry->unk8 = height;
-		((u8 *)&linkedEntry->unk8)[5] = 8;
+		entrySub->unk0 = height;
+		entrySub->unk7 = 8;
 
 		entrySub = (Unk80154318Sub *)&entry->unk8;
 
 		color = colorR;
-		color = (color / 2) + colorR;
+		color = (u8)(color / 2) + color;
 		if ((u16)color >= 0x100) {
 			color = 0xFF;
 		}
 		entrySub->unk9 = color;
 
 		color = colorG;
-		color = (color / 2) + colorG;
+		color = (u8)(color / 2) + color;
 		if ((u16)color >= 0x100) {
 			color = 0xFF;
+		} else {
+			color = (u16)color;
 		}
 		entrySub->unkA = color;
 
 		color = colorB;
-		color = (color / 2) + colorB;
+		color = (u8)(color / 2) + color;
 		if ((u16)color >= 0x100) {
 			color = 0xFF;
+		} else {
+			color = (u16)color;
 		}
 		entrySub->unkB = color;
 	}
