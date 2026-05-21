@@ -751,19 +751,15 @@ s32 func_800C2274_D1224(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	return temp_v1;
 }
 
-// CURRENT(2021)
 #ifdef NON_MATCHING
+// CURRENT(1038)
 void func_800C22EC_D129C(u8 arg0) {
-	s16 unitId;
 	s16 nextUnit;
-	Unk801541F8Entry* effect;
-	Unk80154318Entry* unit;
-	Unk80154318Sub* motion;
+	s16 unitId;
 
-	effect = &D_80154088[arg0];
-	unitId = effect->unk6;
+	unitId = D_80154088[arg0].unk6;
 
-	if ((arg0 == 0xFB) || (effect->unk0 == 0xFA)) {
+	if ((arg0 == 0xFB) || (D_80154088[arg0].unk0 == 0xFA)) {
 		osSyncPrintf(&D_80143344_1522F4);
 		return;
 	}
@@ -775,8 +771,11 @@ void func_800C22EC_D129C(u8 arg0) {
 	}
 
 	if (unitId != -5) {
-		if (effect->unk4 > 0) {
+		if (D_80154088[arg0].unk4 > 0) {
 		do {
+			Unk80154318Entry* unit;
+			Unk80154318Sub* motion;
+
 			unit = &D_80154318[unitId];
 			if (unit->unk11 < 0x14) {
 				nextUnit = unit->unk4;
@@ -803,7 +802,7 @@ void func_800C22EC_D129C(u8 arg0) {
 			if (unitId == -5) {
 				break;
 			}
-			} while (effect->unk4 > 0);
+			} while (D_80154088[arg0].unk4 > 0);
 		}
 	}
 }
