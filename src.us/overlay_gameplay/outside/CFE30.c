@@ -1365,75 +1365,78 @@ void func_800C4CB8_D3C68(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4CB8_D3C68.s")
 #endif
 
-// CURRENT(9623)
+// CURRENT(5791)
 #ifdef NON_MATCHING
 void func_800C4F48_D3EF8(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	f32 sp3C;
-	f32 sp38;
+	volatile f32 sp38;
 	f32 sp34;
-	s16 sp32;
+	f32 temp_f0;
+	s16 idx;
+	s16 scale;
 	s16 sp30;
 	s16 sp2E;
-	s16 sp2C;
-	Unk80154318Sub *effectUnit;
-	Unk80154318Sub *newUnit;
+	s16 temp;
+	u8 *effectUnit;
+	u8 *newUnit;
 
-	effectUnit = (Unk80154318Sub *)((u8 *)&D_80154318[D_80154088[arg0 & 0xFF].unk6] + 8);
-	sp32 = func_800C17B4_D0764(arg0 & 0xFF, 0);
-	if (sp32 == -3) {
+	effectUnit = (u8 *)&D_80154318[D_80154088[arg0].unk6] + 8;
+	idx = func_800C17B4_D0764(arg0, 0);
+	if (idx == -3) {
 		return;
 	}
 
-	if (effectUnit->unkA == 1) {
-		newUnit = (Unk80154318Sub *)((u8 *)&D_80154318[sp32] + 8);
-		newUnit->unk0 = effectUnit->unk0;
-		newUnit->unk2 = effectUnit->unk2;
-		newUnit->unk4 = effectUnit->unk4;
+	if (effectUnit[0xA] == 1) {
+		newUnit = (u8 *)&D_80154318[idx] + 8;
+		*(s16 *)&newUnit[0] = *(s16 *)&effectUnit[0];
+		*(s16 *)&newUnit[2] = *(s16 *)&effectUnit[2];
+		*(s16 *)&newUnit[4] = *(s16 *)&effectUnit[4];
 
 		sp34 = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / D_80143FC0_152F70);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
-			sp34 = 0.0f - sp34;
+			temp_f0 = sp34;
+			sp34 = 0.0f - temp_f0;
 		}
 		sp34 += arg1->x;
 
 		sp38 = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / D_80143FC8_152F78);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
-			sp38 = 0.0f - sp38;
+			temp_f0 = sp38;
+			sp38 = 0.0f - temp_f0;
 		}
 		sp38 += arg1->y;
 
 		sp3C = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / D_80143FD0_152F80);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
-			sp3C = 0.0f - sp3C;
+			temp_f0 = sp3C;
+			sp3C = 0.0f - temp_f0;
 		}
 		sp3C += arg1->z;
 
 		func_800C1024_CFFD4((Vec3f *)&sp34, (Vec3f *)&sp34);
-
-		sp32 = arg2;
-		sp32 = sp32 / 4;
-		newUnit->unk6 = (s8)(s32)((f32)sp32 * sp34);
-		newUnit->unk7 = (s8)(s32)((f32)sp32 * sp38);
-		newUnit->unk9 = 0xFF;
-		newUnit->unkA = 0;
-		newUnit->unk8 = (s8)(s32)((f32)sp32 * sp3C);
+		scale = arg2;
+		scale = scale / 4;
+		((s8 *)newUnit)[6] = (s8)(s32)((f32)scale * sp34);
+		((s8 *)newUnit)[7] = (s8)(s32)((f32)scale * sp38);
+		newUnit[9] = 0xFF;
+		newUnit[0xA] = 0;
+		((s8 *)newUnit)[8] = (s8)(s32)((f32)scale * sp3C);
 		return;
 	}
 
-	sp30 = (func_800038E0_44E0() % (*(s16 *)&effectUnit->unkC * 2)) - *(s16 *)&effectUnit->unkC;
-	sp2E = (func_800038E0_44E0() % (*(s16 *)&effectUnit->unkC * 2)) - *(s16 *)&effectUnit->unkC;
-	sp2C = (func_800038E0_44E0() % (*(s16 *)&effectUnit->unkC * 2)) - *(s16 *)&effectUnit->unkC;
+	sp30 = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
+	sp2E = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
+	temp = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
+	newUnit = (u8 *)&D_80154318[idx] + 8;
+	*(s16 *)&newUnit[0] = *(s16 *)&effectUnit[0] + sp30;
+	*(s16 *)&newUnit[2] = *(s16 *)&effectUnit[2] + sp2E;
+	*(s16 *)&newUnit[4] = *(s16 *)&effectUnit[4] + temp;
 
-	newUnit = (Unk80154318Sub *)((u8 *)&D_80154318[sp32] + 8);
-	newUnit->unk0 = effectUnit->unk0 + sp30;
-	newUnit->unk2 = effectUnit->unk2 + sp2E;
-	newUnit->unk4 = effectUnit->unk4 + sp2C;
-
-	newUnit->unk6 = (s8)-(sp30 / (s32)effectUnit->unk9);
-	newUnit->unk7 = (s8)-(sp2E / (s32)effectUnit->unk9);
-	newUnit->unk8 = (s8)-(sp2C / (s32)effectUnit->unk9);
-	newUnit->unk9 = 0xC;
-	newUnit->unkA = 0;
+	((s8 *)newUnit)[6] = (s8)-(sp30 / (s32)effectUnit[9]);
+	((s8 *)newUnit)[7] = (s8)-(sp2E / (s32)effectUnit[9]);
+	((s8 *)newUnit)[8] = (s8)-(temp / (s32)effectUnit[9]);
+	newUnit[9] = 0xC;
+	newUnit[0xA] = 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4F48_D3EF8.s")
