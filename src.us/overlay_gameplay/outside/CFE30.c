@@ -752,7 +752,7 @@ s32 func_800C2274_D1224(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(1038)
+// CURRENT(230)
 void func_800C22EC_D129C(u8 arg0) {
 	s16 nextUnit;
 	s16 unitId;
@@ -777,12 +777,12 @@ void func_800C22EC_D129C(u8 arg0) {
 			Unk80154318Sub* motion;
 
 			unit = &D_80154318[unitId];
+			motion = (Unk80154318Sub*)&unit->unk8;
 			if (unit->unk11 < 0x14) {
 				nextUnit = unit->unk4;
 				func_800C2554_D1504(unitId, arg0);
 				unitId = nextUnit;
 			} else {
-				motion = (Unk80154318Sub*)&unit->unk8;
 				if (motion->unkA == 1) {
 					motion->unk2 -= (func_800038E0_44E0() % 3) + 3;
 					motion->unk9 -= 15;
@@ -8310,6 +8310,7 @@ void func_800E7894_F6844(s16 arg0, s16 arg1, s16 arg2) {
 	func_800DB350_EA300();
 	func_800E77B4_F6764();
 }
+
 
 
 
