@@ -1686,13 +1686,21 @@ loop_5:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C5894_D4844.s")
 #endif
 
+// CURRENT(2644)
 #ifdef NON_MATCHING
 void func_800C5D14_D4CC4(s32 arg0) {
 	Unk801541F8Entry *sp3C;
+	s32 padStack0;
+	s32 padStack1;
 	s16 var_t1;
 	u8 var_t2;
 	u8 var_t3;
-	u8 var_t4;
+	s32 var_t4;
+	u32 vtxCmd;
+	u32 addrMask;
+	u32 setOtherMode;
+	u32 pipeSyncCmd;
+	u8 constAlpha;
 	Gfx *dl;
 	Unk80154318Entry *colorEntry;
 	Unk80154318Entry *entry;
@@ -1713,6 +1721,11 @@ void func_800C5D14_D4CC4(s32 arg0) {
 		}
 
 		if (var_t1 != -5 && var_t1 != -6) {
+			vtxCmd = 0x0400081F;
+			addrMask = 0x1FFFFFFF;
+			setOtherMode = 0xB5000000;
+			pipeSyncCmd = 0xE7000000;
+			constAlpha = 0x14;
 			do {
 				entry = &D_80154318[var_t1];
 				D_8005BB34->n.ob[0] = (s16)(f32)entry->unk8;
@@ -1735,21 +1748,21 @@ void func_800C5D14_D4CC4(s32 arg0) {
 					D_8005BB34->v.cn[0] = var_t2;
 					D_8005BB34->v.cn[1] = var_t3;
 					D_8005BB34->v.cn[2] = var_t4;
-					D_8005BB34->v.cn[3] = 0x14;
+					D_8005BB34->v.cn[3] = constAlpha;
 				D_8005BB34++;
 					dl = D_8005BB30;
 					D_8005BB30 = dl + 1;
-					dl->words.w0 = 0x0400081F;
-					dl->words.w1 = ((u32)(D_8005BB34 - 2) & 0x1FFFFFFF);
+					dl->words.w0 = vtxCmd;
+					dl->words.w1 = ((u32)(D_8005BB34 - 2) & addrMask);
 
 					dl = D_8005BB30;
 					D_8005BB30 = dl + 1;
-					dl->words.w0 = 0xB5000000;
+					dl->words.w0 = setOtherMode;
 					dl->words.w1 = ((u32)entry->unk2 & 0xFF) | 0x200;
 
 					dl = D_8005BB30;
 					D_8005BB30 = dl + 1;
-					dl->words.w0 = 0xE7000000;
+					dl->words.w0 = pipeSyncCmd;
 					dl->words.w1 = 0;
 				var_t1 = entry->unk4;
 			} while (var_t1 != -5 && var_t1 != -6);
