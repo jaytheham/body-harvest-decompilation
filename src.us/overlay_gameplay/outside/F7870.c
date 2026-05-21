@@ -76,7 +76,7 @@ void func_800E94B8_F8468(void) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(4475)
+// CURRENT(2664)
 s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
 	volatile s32 sp34;
 	volatile s32 sp30;
@@ -92,6 +92,10 @@ s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
 	s32 deltaZ;
 	s32 absDeltaX;
 	s32 absDeltaZ;
+	s32 stepZLocal;
+	s32 stepXLocal;
+	s32 stepYLocal;
+	s32 stepSign;
 
 	baseX = (s32)D_80052B2C->unk0 << 8;
 	baseY = (s32)D_80052B2C->unk4 << 8;
@@ -112,8 +116,14 @@ s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
 	if (absDeltaZ < absDeltaX) {
 		arg2 = ((-deltaX < deltaX) ? deltaX : -deltaX) >> 8;
 		if (arg2 != 0) {
+			if (deltaX < 0) {
+				stepSign = -0x100;
+			} else {
+				stepSign = 0x100;
+			}
+
+			sp34 = stepSign << 8;
 			sp30 = (((arg1 << 8) - baseY) << 8) / arg2;
-			sp34 = ((deltaX < 0) ? -0x100 : 0x100) << 8;
 			sp2C = (deltaZ << 8) / arg2;
 		}
 	} else {
@@ -126,9 +136,15 @@ s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
 	}
 
 	arg2 = arg2 >> 8;
+	stepZLocal = sp2C;
+	stepXLocal = sp34;
+	stepYLocal = sp30;
 	if (arg2 != 0) {
 		arg2--;
-		for (;;) {
+		sp2C = stepZLocal;
+		sp34 = stepXLocal;
+		sp30 = stepYLocal;
+		do {
 			baseZ += sp2C;
 			baseX += sp34;
 			baseY += sp30;
@@ -136,12 +152,7 @@ s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
 			if (baseY < func_800B84D0_C7480((s16)(baseX >> 8), (s16)(baseZ >> 8))) {
 				return 1;
 			}
-
-			if (arg2 == 0) {
-				break;
-			}
-			arg2--;
-		}
+		} while (arg2--);
 	}
 
 	return 0;
