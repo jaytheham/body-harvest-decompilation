@@ -668,26 +668,18 @@ void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2)
 }
 
 #ifdef NON_MATCHING
-// CURRENT(2471)
+// CURRENT(2074)
 void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	s16 sp42;
 	s32 sp3C;
 	Unk801541F8Entry *sp38;
-	s32 sp2C;
-	s16 temp_v0_2;
-	s32 temp_s0;
-	Unk801541F8Entry *temp_t9;
-	u8 temp_v0;
 	Unk80154318Sub *temp_s0_2;
-	Unk80154318Sub *temp_s0_3;
-	Unk80154318Entry *temp_v1;
+	u8 temp_v0;
 
-	temp_s0 = arg3 & 0xFF;
-	sp3C = temp_s0;
-	if (temp_s0 < 0x1E) {
-		temp_t9 = &D_80154088[temp_s0];
-		sp38 = temp_t9;
-		if (temp_t9->unk0 == 0) {
+	sp3C = arg3 & 0xFF;
+	if (sp3C < 0x1E) {
+		sp38 = &D_80154088[sp3C];
+		if (sp38->unk0 == 0) {
 			temp_v0 = D_80156ED8;
 			if (temp_v0 == 1) {
 				if ((func_800038E0_44E0() % 9) < 6) {
@@ -696,36 +688,32 @@ void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 			} else {
 block_5:
 				if ((temp_v0 != 2) || ((func_800038E0_44E0() % 9) < 3)) {
-					temp_v0_2 = func_800C18D0_D0880(temp_s0 & 0xFF);
-					sp42 = temp_v0_2;
-					if (temp_v0_2 != -3) {
+					sp42 = func_800C18D0_D0880(sp3C & 0xFF);
+					if (sp42 != -3) {
 						if ((arg4 == 0) || (arg4 == 2)) {
-							sp2C = arg4;
-							temp_v1 = &D_80154318[sp42];
-							temp_v1->unk2 = (func_800038E0_44E0() % 12) + 0x10;
-							temp_s0_2 = (Unk80154318Sub *) &temp_v1->unk8;
+							D_80154318[sp42].unk2 = (func_800038E0_44E0() % 12) + 0x10;
+							temp_s0_2 = (Unk80154318Sub *) &D_80154318[sp42].unk8;
 							temp_s0_2->unk0 = (func_800038E0_44E0() % 13) + arg0 - 6;
 							temp_s0_2->unk2 = (func_800038E0_44E0() % 19) + arg1 - 9;
 							temp_s0_2->unk4 = (func_800038E0_44E0() % 13) + arg2 - 6;
-							temp_s0_2->unk6 = 0xF5;
-							temp_s0_2->unk7 = 0xF5;
-							temp_s0_2->unk8 = 0xF5;
+							temp_s0_2->unk6 = (u8) 0xF5;
+							temp_s0_2->unk7 = (u8) 0xF5;
+							temp_s0_2->unk8 = (u8) 0xF5;
 							temp_s0_2->unk9 = 0xFF;
-							if (sp2C == 0) {
+							if (arg4 == 0) {
 								func_80137368_146318(temp_s0_2->unk0, temp_s0_2->unk2, temp_s0_2->unk4, 4, sp3C);
 							}
 						} else if (arg4 == 1) {
-							temp_v1 = &D_80154318[sp42];
-							temp_v1->unk2 = (func_800038E0_44E0() % 20) + 0x14;
-							temp_s0_3 = (Unk80154318Sub *) &temp_v1->unk8;
-							temp_s0_3->unk0 = (func_800038E0_44E0() % 20) + arg0 - 0xA;
-							temp_s0_3->unk2 = (func_800038E0_44E0() % 20) + arg1 - 0xA;
-							temp_s0_3->unk4 = (func_800038E0_44E0() % 20) + arg2 - 0xA;
-							temp_s0_3->unk6 = (func_800038E0_44E0() % 100) + 0x82;
-							temp_s0_3->unk7 = (func_800038E0_44E0() % 100) + 0x82;
-							temp_s0_3->unk8 = (func_800038E0_44E0() % 100) + 0x82;
-							temp_s0_3->unk9 = 0xFF;
-							func_80137368_146318(temp_s0_3->unk0, temp_s0_3->unk2, temp_s0_3->unk4, 5, sp3C);
+							D_80154318[sp42].unk2 = (func_800038E0_44E0() % 20) + 0x14;
+							temp_s0_2 = (Unk80154318Sub *) &D_80154318[sp42].unk8;
+							temp_s0_2->unk0 = (func_800038E0_44E0() % 20) + arg0 - 0xA;
+							temp_s0_2->unk2 = (func_800038E0_44E0() % 20) + arg1 - 0xA;
+							temp_s0_2->unk4 = (func_800038E0_44E0() % 20) + arg2 - 0xA;
+							temp_s0_2->unk6 = (func_800038E0_44E0() % 100) + 0x82;
+							temp_s0_2->unk7 = (func_800038E0_44E0() % 100) + 0x82;
+							temp_s0_2->unk8 = (func_800038E0_44E0() % 100) + 0x82;
+							temp_s0_2->unk9 = 0xFF;
+							func_80137368_146318(temp_s0_2->unk0, temp_s0_2->unk2, temp_s0_2->unk4, 5, sp3C);
 						}
 						D_80154329[sp42].unk1 = arg4;
 						sp38->unkA = sp42;
