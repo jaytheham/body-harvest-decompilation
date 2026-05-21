@@ -984,29 +984,20 @@ void func_800C2EE4_D1E94(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(495)
 void func_800C31AC_D215C(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
-	s16 idx;
-	s32 type;
 	Unk80154318Sub *sub;
 
-	idx = arg3;
-	type = D_80154088[idx].unk0;
-	if (idx >= 0x1E || type != 1 || type == 0xFA
-		|| !(D_80154318[D_80154088[idx].unkA].unk0 & 1)) {
+	if (arg3 >= 0x1E || D_80154088[arg3].unk0 != 1 || D_80154088[arg3].unk0 == 0xFA
+		|| !(D_80154318[D_80154088[arg3].unkA].unk0 & 1)) {
 		osSyncPrintf(&D_80143430_1523E0, arg1, arg2);
 		return;
 	}
-	sub = (Unk80154318Sub *)&D_80154318[D_80154088[idx].unkA].unk8;
+	sub = (Unk80154318Sub *)&D_80154318[D_80154088[arg3].unkA].unk8;
 	sub->unk0 = arg0;
 	sub->unk2 = arg1;
 	sub->unk4 = arg2;
-	func_80137368_146318(arg0, arg1, arg2, 0, D_80154088[idx].unkA);
+	func_80137368_146318(arg0, arg1, arg2, 0, D_80154088[arg3].unkA);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C31AC_D215C.s")
-#endif
 
 void func_800C3288_D2238(u8 arg0) {
 	if (arg0 >= 0x1E || D_80154088[arg0].unk0 != 1) {
