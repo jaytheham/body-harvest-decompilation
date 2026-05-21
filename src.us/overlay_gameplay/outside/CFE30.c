@@ -2088,7 +2088,7 @@ void func_800C820C_D71BC(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8294_D7244.s")
 
-// CURRENT(4582)
+// CURRENT(3860)
 #ifdef NON_MATCHING
 void func_800C8814_D77C4(void) {
 	s16 effectIdx;
@@ -2096,12 +2096,11 @@ void func_800C8814_D77C4(void) {
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linked;
 	u8 *entrySubBytes;
-	u32 linkedDl;
 	u8 *nextSubBytes;
-	s32 pad[8];
 	Unk80052B40 spDC;
 	Unk80052B40 spE4;
 	Unk80052B40 spEC;
+	s32 pad[6];
 
 	effectIdx = D_80154216;
 	if ((effectIdx != -6) && (effectIdx != -5)) {
@@ -2156,8 +2155,7 @@ void func_800C8814_D77C4(void) {
 
 				gSPMatrix(D_8005BB2C++, (void *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				D_8005BB38 += 0x40;
-				linkedDl = *(u32 *)&linked->unk8;
-				gSPDisplayList(D_8005BB2C++, (Gfx *)linkedDl);
+				gSPDisplayList(D_8005BB2C++, (Gfx *)*(u32 *)&linked->unk8);
 				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 			}
 
