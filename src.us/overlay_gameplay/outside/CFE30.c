@@ -668,14 +668,13 @@ void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2)
 }
 
 #ifdef NON_MATCHING
-// CURRENT(2074)
+// CURRENT(1969)
 void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
-	s16 sp42;
+	Unk80154318Sub *temp_s0_2;
 	s32 sp3C;
 	Unk801541F8Entry *sp38;
-	Unk80154318Sub *temp_s0_2;
+	s16 sp42;
 	u8 temp_v0;
-
 	sp3C = arg3 & 0xFF;
 	if (sp3C < 0x1E) {
 		sp38 = &D_80154088[sp3C];
@@ -696,9 +695,10 @@ block_5:
 							temp_s0_2->unk0 = (func_800038E0_44E0() % 13) + arg0 - 6;
 							temp_s0_2->unk2 = (func_800038E0_44E0() % 19) + arg1 - 9;
 							temp_s0_2->unk4 = (func_800038E0_44E0() % 13) + arg2 - 6;
-							temp_s0_2->unk6 = (u8) 0xF5;
-							temp_s0_2->unk7 = (u8) 0xF5;
-							temp_s0_2->unk8 = (u8) 0xF5;
+							temp_v0 = 0xF5;
+							temp_s0_2->unk6 = temp_v0;
+							temp_s0_2->unk7 = temp_v0;
+							temp_s0_2->unk8 = temp_v0;
 							temp_s0_2->unk9 = 0xFF;
 							if (arg4 == 0) {
 								func_80137368_146318(temp_s0_2->unk0, temp_s0_2->unk2, temp_s0_2->unk4, 4, sp3C);
