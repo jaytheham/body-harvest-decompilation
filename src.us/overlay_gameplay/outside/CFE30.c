@@ -862,50 +862,48 @@ void func_800C2B90_D1B40(u8 arg0, u8 arg1) {
 	}
 }
 
-// CURRENT(1972)
-#ifdef NON_MATCHING
-s32 func_800C2D50_D1D00(s32 arg0, s32 arg1, s32 arg2, u8 arg3, u8 arg4, u8 arg5) {
+s32 func_800C2D50_D1D00(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
 	s16 unitId;
 	u8 effectId;
 	u8 i;
+	s16 posX = arg0;
+	s16 posY = arg1;
+	s16 posZ = arg2;
+	u8* color;
 
 	if (arg3 == 0) {
 		return 0xFB;
 	}
 
 	effectId = func_800C1598_D0548(1);
-	if (effectId == 0xFB) {
-		return effectId;
-	}
+	if (effectId != 0xFB) {
+		unitId = func_800C18D0_D0880(effectId);
+		if (unitId == -3) {
+			func_800C1384_D0334(effectId);
+			effectId = 0xFB;
+			osSyncPrintf(&D_801433D8_152388);
+		} else {
+			D_80154088[effectId].unkA = unitId;
+			D_80154088[effectId].unk1 |= 1;
+			color = &D_8013DFE4_14CF94[arg4 * 3];
 
-	unitId = func_800C18D0_D0880(effectId);
-	if (unitId == -3) {
-		func_800C1384_D0334(effectId);
-		osSyncPrintf(&D_801433D8_152388);
-		return 0xFB;
-	}
+			D_80154318[unitId].unk2 = arg3;
+			D_80154318[unitId].unk8 = posX;
+			D_80154318[unitId].unkA = posY;
+			D_80154318[unitId].unkC = posZ;
+			D_80154318[unitId].unkE = color[0];
+			D_80154318[unitId].unkF = color[1];
+			D_80154318[unitId].unk10 = color[2];
+			D_80154318[unitId].unk11 = arg5;
 
-	D_80154088[effectId].unkA = unitId;
-	D_80154088[effectId].unk1 |= 1;
-
-	D_80154318[unitId].unk2 = arg3;
-	D_80154318[unitId].unk8 = (s16)arg0;
-	D_80154318[unitId].unkA = (s16)arg1;
-	D_80154318[unitId].unkC = (s16)arg2;
-	D_80154318[unitId].unkE = D_8013DFE4_14CF94[arg4 * 3];
-	D_80154318[unitId].unkF = D_8013DFE4_14CF94[(arg4 * 3) + 1];
-	D_80154318[unitId].unk10 = D_8013DFE4_14CF94[(arg4 * 3) + 2];
-	D_80154318[unitId].unk11 = arg5;
-
-	for (i = 0; i < 8; i++) {
-		func_800C2B90_D1B40(effectId, func_800038E0_44E0() % 0xE6);
+			for (i = 0; i < 8; i++) {
+				func_800C2B90_D1B40(effectId, func_800038E0_44E0() % 0xE6);
+			}
+		}
 	}
 
 	return effectId;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C2D50_D1D00.s")
-#endif
 
 void func_800C2EE4_D1E94(u8 arg0) {
 	s16 currentUnitId;
