@@ -5617,12 +5617,8 @@ void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 void func_80107184_116134(VehicleInstance *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	f32 sp48;
 	s32 pad;
-	#ifdef NON_MATCHING
 	f32 sp40;
 	f32 temp_f0;
-	#else
-	#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F2980_101930.s")
-	#endif
 
 	angle = (func_80003824_4424((f32)arg1, (f32)arg2) - arg0->unk6) & 0xFFFF;
 	temp_s1 = sins(angle);
