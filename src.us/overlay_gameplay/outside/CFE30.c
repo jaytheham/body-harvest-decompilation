@@ -1258,13 +1258,14 @@ s32 func_800C4A64_D3A14(u8 arg0, u8 arg1) {
 	return 0;
 }
 
-// CURRENT(1773)
+// CURRENT(1023)
 #ifdef NON_MATCHING
 void func_800C4AA0_D3A50(void) {
 	s16 idx;
+	s16 nextIdx;
 	Unk80154318Entry *entry;
 	u8 *sub;
-	u8 blue;
+	s32 blue;
 
 	idx = D_801541F8[0].unk6;
 	if ((idx == -5) || (idx == -6)) {
@@ -1278,7 +1279,8 @@ void func_800C4AA0_D3A50(void) {
 			sub = (u8 *)&entry->unk8;
 			if (((u8 *)&entry->unk12)[0] < 4) {
 				func_800C1A4C_D09FC(idx, 0, 1);
-				idx = entry->unk4;
+				nextIdx = entry->unk4;
+				idx = nextIdx;
 			} else {
 				sub[0xA] -= 3;
 				entry->unk2 += 8;
