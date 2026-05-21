@@ -1578,37 +1578,29 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C56A4_D4654.s")
 #endif
 
-// CURRENT(10530)
+// CURRENT(6828)
 #ifdef NON_MATCHING
 void func_800C5894_D4844(u8 arg0) {
 	Unk801541F8Entry *sp3C;
 	Unk80154318Entry *var_a3;
 	Unk80154318Sub *temp_s0;
 	Unk80154318Sub *temp_s2;
-	s16 temp_a0;
 	s16 temp_s0_3;
-	s16 temp_v0;
-	s16 temp_v0_3;
-	s16 temp_v1;
 	s16 var_s1;
 	s16 var_s3;
-	s32 temp_s6;
+	u8 temp_s6;
 	s32 temp_v0_4;
-	s32 temp_v1_2;
 	s32 temp_v1_3;
-	s8 temp_v0_5;
 	u8 temp_a1;
-	u8 temp_t2;
-	u8 temp_v0_2;
 
-	temp_s6 = arg0 & 0xFF;
+	temp_s6 = arg0;
 	sp3C = &D_80154088[temp_s6];
 	var_s1 = D_80154318[sp3C->unk6].unk4;
 	temp_s2 = (Unk80154318Sub *)&D_80154318[sp3C->unk6].unk8;
 	var_s3 = 0;
 	if ((var_s1 == -5) || (var_s1 == -6)) {
-		func_800C1418_D03C8(temp_s6 & 0xFF, 0);
-		func_800C1384_D0334(temp_s6 & 0xFF);
+		func_800C1418_D03C8(temp_s6, 0);
+		func_800C1384_D0334(temp_s6);
 		return;
 	}
 	if ((var_s1 != -5) && (var_s1 != -6)) {
@@ -1617,54 +1609,48 @@ loop_5:
 		if (temp_s2->unkA == 2) {
 			temp_a1 = temp_s2->unk9;
 			if (temp_a1 == 0) {
-				func_800C1418_D03C8(temp_s6 & 0xFF, 0);
-				func_800C1384_D0334(temp_s6 & 0xFF);
+				func_800C1418_D03C8(temp_s6, 0);
+				func_800C1384_D0334(temp_s6);
 				return;
 			}
 			var_a3 = &D_80154318[var_s1];
 			temp_s0 = (Unk80154318Sub *)&var_a3->unk8;
-			temp_v1 = temp_s0->unk0;
-			temp_v0 = temp_s0->unk2;
-			temp_a0 = temp_s0->unk4;
-			temp_s0->unk6 = (s8)((temp_s2->unk0 - temp_v1) / temp_a1);
-			temp_s0->unk7 = (s8)((temp_s2->unk2 - temp_v0) / temp_s2->unk9);
-			temp_s0->unk8 = (s8)((temp_s2->unk4 - temp_a0) / temp_s2->unk9);
-			temp_v0_2 = temp_s0->unk9;
-			temp_s0->unk0 = (s16)(temp_v1 + temp_s0->unk6);
-			temp_s0->unk2 = (s16)(temp_v0 + temp_s0->unk7);
-			temp_s0->unk4 = (s16)(temp_a0 + temp_s0->unk8);
-			if ((s32)temp_v0_2 < 0xEB) {
-				temp_s0->unk9 = (u8)(temp_v0_2 + 0x14);
+			temp_s0->unk6 = (s8)((temp_s2->unk0 - temp_s0->unk0) / temp_a1);
+			temp_s0->unk7 = (s8)((temp_s2->unk2 - temp_s0->unk2) / temp_s2->unk9);
+			temp_s0->unk8 = (s8)((temp_s2->unk4 - temp_s0->unk4) / temp_s2->unk9);
+			temp_s0->unk0 = (s16)(temp_s0->unk0 + temp_s0->unk6);
+			temp_s0->unk2 = (s16)(temp_s0->unk2 + temp_s0->unk7);
+			temp_s0->unk4 = (s16)(temp_s0->unk4 + temp_s0->unk8);
+			if ((s32)temp_s0->unk9 < 0xEB) {
+				temp_s0->unk9 = (u8)(temp_s0->unk9 + 0x14);
 			}
 			goto block_25;
 		} else {
 			var_a3 = &D_80154318[var_s1];
 			temp_s0 = (Unk80154318Sub *)&var_a3->unk8;
-			temp_v0_3 = temp_s0->unk2;
-			if (((s32)temp_s0->unk9 < 0xF) || !(D_80222A70 < temp_v0_3)) {
+			if (((s32)temp_s0->unk9 < 0xF) || !(D_80222A70 < temp_s0->unk2)) {
 				if ((s32)sp3C->unk4 < 3) {
-					func_800C1418_D03C8(temp_s6 & 0xFF, 0);
-					func_800C1384_D0334(temp_s6 & 0xFF);
+					func_800C1418_D03C8(temp_s6, 0);
+					func_800C1384_D0334(temp_s6);
 					return;
 				}
 				temp_s0_3 = var_a3->unk4;
-				func_800C1A4C_D09FC(var_s1, temp_s6 & 0xFF, 0);
+				func_800C1A4C_D09FC(var_s1, temp_s6, 0);
 				var_s3--;
 				var_s1 = temp_s0_3;
 				goto block_26;
 			} else {
 				temp_s0->unk0 = (s16)(temp_s0->unk0 + temp_s0->unk6);
 				temp_s0->unk4 = (s16)(temp_s0->unk4 + temp_s0->unk8);
-				temp_s0->unk2 = (s16)(temp_v0_3 + temp_s0->unk7);
+				temp_s0->unk2 = (s16)(temp_s0->unk2 + temp_s0->unk7);
 				temp_v0_4 = func_800B84D0_C7480(temp_s0->unk0, temp_s0->unk4);
-				temp_t2 = temp_s0->unkA + 1;
-				temp_s0->unkA = temp_t2;
-				if ((temp_t2 & 0xFF) >= 0xB) {
-					temp_v1_2 = temp_s0->unk9 - 0x14;
-					if (temp_v1_2 < 0) {
+				temp_s0->unkA++;
+				if ((temp_s0->unkA & 0xFF) >= 0xB) {
+					temp_v0_4 = temp_s0->unk9 - 0x14;
+					if (temp_v0_4 < 0) {
 						temp_s0->unk9 = 0;
 					} else {
-						temp_s0->unk9 = (u8)temp_v1_2;
+						temp_s0->unk9 = (u8)temp_v0_4;
 					}
 				}
 				temp_v1_3 = temp_v0_4 >> 8;
@@ -1672,11 +1658,10 @@ loop_5:
 					temp_s0->unk2 = (s16)((s16)temp_v1_3 + 2);
 					temp_s0->unk7 = 0;
 				}
-				temp_v0_5 = temp_s0->unk7;
-				if (temp_v0_5 < -0x13) {
+				if (temp_s0->unk7 < -0x13) {
 					temp_s0->unk7 = -0x14;
 				} else {
-					temp_s0->unk7 = (s8)(temp_v0_5 - 1);
+					temp_s0->unk7 = (s8)(temp_s0->unk7 - 1);
 				}
 				goto block_25;
 			}
