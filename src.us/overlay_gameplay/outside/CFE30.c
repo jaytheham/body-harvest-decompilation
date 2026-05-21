@@ -1514,13 +1514,13 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C541C_D43CC.s")
 #endif
 
-// CURRENT(1788)
+// CURRENT(690)
 #ifdef NON_MATCHING
-void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5, u8 arg6) {
-	u8 count;
+void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
+	s32 count;
 	u8 effect;
 	s16 idx;
-	u8 i;
+	s32 i;
 
 	if (D_80156ED9 == 2) {
 		return;
@@ -1538,8 +1538,7 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg
 	if (count == 0) {
 		return;
 	}
-
-	if (func_800B93AC_C835C(arg0, arg2, arg3, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) == 0) {
+	if (func_800B93AC_C835C(arg0, arg2, (u16)arg3, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) == 0) {
 		return;
 	}
 
@@ -1562,6 +1561,7 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg
 	D_80154318[idx].unkF = 0xFF;
 	D_80154318[idx].unk10 = 0xFF;
 	((u8 *)&D_80154318[idx])[0x12] = 2;
+	i = 0;
 	D_80154318[idx].unk2 = arg6;
 	D_80154318[idx].unk8 = arg0;
 	D_80154318[idx].unkA = arg1;
@@ -1569,7 +1569,6 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg
 	*(s16 *)&D_80154318[idx].unk14 = arg3;
 	D_80154318[idx].unk11 = arg4;
 
-	i = 0;
 	while (i < count) {
 		func_800C4F48_D3EF8(effect, 0, 0, 0);
 		i = (i + 1) & 0xFF;
