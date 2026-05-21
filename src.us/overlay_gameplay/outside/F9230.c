@@ -2335,65 +2335,62 @@ void func_800F2980_101930(void *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F2980_101930.s")
 #endif
 
+// CURRENT(2010)
 #ifdef NON_MATCHING
-// CURRENT(3673)
 void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 	u8 *base;
 	u8 *entry;
-	s16 v1;
-	s32 i;
-	u8 var_a3;
-	s16 var_a2;
+	s16 i;
+	s16 temp;
+	u8 count;
 
-	var_a3 = arg0 & 0xFF;
-	var_a2 = arg2;
-	if (var_a3 >= 9) {
+	if (arg0 >= 9) {
 		osSyncPrintf(&D_801446E8_153698);
 	}
 
-	if (D_80157FF0[var_a3] != -1) {
+	if (D_80157FF0[arg0] != -1) {
 		osSyncPrintf(&D_80144700_1536B0);
 	}
 
-	base = &D_80158000[var_a3 * 0x170];
+	base = &D_80158000[arg0 * 0x170];
 	if (base[0x22] == 2) {
 		return;
 	}
 
 	*(s32 *)&base[0x0] = (s16)arg1;
-	*(s32 *)&base[0x4] = var_a2;
-	*(s32 *)&base[0x14] = var_a2;
+	*(s32 *)&base[0x4] = arg2;
+	*(s32 *)&base[0x14] = arg2;
 	*(s32 *)&base[0x10] = (s16)arg1;
-	*(s32 *)&base[0xC] = var_a2;
+	*(s32 *)&base[0xC] = arg2;
 	*(s16 *)&base[0x1C] = 0;
 	*(s32 *)&base[0x8] = (s16)arg1;
 
 	func_800F2980_101930(base);
 
-	i = 0;
-	var_a3 = D_801601F0[base[0x23] * 0x16 + 0xC];
-	if (var_a3 > 0) {
+	count = D_801601F0[base[0x23] * 0x16 + 0xC];
+	if (count > 0) {
+		i = 0;
 		do {
 			entry = &base[i * 0x24];
-			i += 1;
 			if (entry[0x47] == 0) {
-				v1 = *(s16 *)&entry[0x3E];
-				*(s16 *)&entry[0x42] = v1;
-				*(s16 *)&entry[0x38] = v1;
+				temp = *(s16 *)&entry[0x3E];
+				*(s16 *)&entry[0x42] = temp;
+				*(s16 *)&entry[0x38] = temp;
 
-				v1 = *(s16 *)&entry[0x40];
-				*(s16 *)&entry[0x44] = v1;
-				*(s16 *)&entry[0x3C] = v1;
+				temp = *(s16 *)&entry[0x40];
+				*(s16 *)&entry[0x44] = temp;
+				*(s16 *)&entry[0x3C] = temp;
 
-				v1 = *(s16 *)&entry[0x2A];
-				*(s16 *)&entry[0x2E] = v1;
-				*(s16 *)&entry[0x24] = v1;
+				temp = *(s16 *)&entry[0x2A];
+				*(s16 *)&entry[0x2E] = temp;
+				*(s16 *)&entry[0x24] = temp;
 
-				v1 = *(s16 *)&entry[0x2C];
-				*(s16 *)&entry[0x30] = v1;
-				*(s16 *)&entry[0x28] = v1;
+				temp = *(s16 *)&entry[0x2C];
+				*(s16 *)&entry[0x30] = temp;
+				*(s16 *)&entry[0x28] = temp;
 			}
-		} while (i < var_a3);
+			i += 1;
+		} while (i < count);
 	}
 
 	*(s16 *)&base[0x1E] = 0;
@@ -3828,9 +3825,6 @@ void func_800FC568_10B518(void) {
 	} while (j);
 
 	{
-		Vtx *saved_ptr;
-		Gfx *g;
-		
 		saved_ptr = ptr_a1;
 		g = D_8005BB30++;
 		g->words.w0 = 0xE7000000;
