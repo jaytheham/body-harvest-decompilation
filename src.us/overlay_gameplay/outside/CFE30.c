@@ -1442,7 +1442,7 @@ void func_800C4F48_D3EF8(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4F48_D3EF8.s")
 #endif
 
-// CURRENT(4420)
+// CURRENT(3535)
 #ifdef NON_MATCHING
 void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10,
 						 u8 arg11, u8 arg12) {
@@ -1453,6 +1453,7 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 	s32 i;
 	u8 spawnCount;
 	s16 idx;
+	Vec3f *vec;
 	Unk801541F8Entry *sfx;
 	Unk80154318Entry *entry;
 	extern char D_80143504_1524B4;
@@ -1485,26 +1486,27 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 	sfx = &D_80154088[effect];
 	entry = &D_80154318[idx];
 
-	sfx->unk1 = sfx->unk1;
-	sfx->unkA = idx;
+	((u8 *)sfx)[1] = ((u8 *)sfx)[1];
+	*(s16 *)((u8 *)sfx + 0xA) = idx;
 
-	entry->unk8 = arg0;
-	entry->unkA = arg1;
-	entry->unkC = arg2;
-	entry->unk12 = 1;
-	entry->unk2 = arg9;
-	entry->unkE = arg10;
-	entry->unkF = arg11;
-	entry->unk10 = arg12;
+	*(s16 *)((u8 *)entry + 8) = arg0;
+	*(s16 *)((u8 *)entry + 0xA) = arg1;
+	*(s16 *)((u8 *)entry + 0xC) = arg2;
+	((u8 *)entry)[0x12] = 1;
+	*(s16 *)((u8 *)entry + 2) = arg9;
+	((u8 *)entry)[0xE] = arg10;
+	((u8 *)entry)[0xF] = arg11;
+	((u8 *)entry)[0x10] = arg12;
 
 	sp44 = arg3;
 	sp48 = arg4;
 	sp4C = arg5;
-	func_800C1024_CFFD4((Vec3f *)&sp44, (Vec3f *)&sp44);
+	vec = (Vec3f *)&sp44;
+	func_800C1024_CFFD4(vec, vec);
 
 	i = 0;
 	while (i < spawnCount) {
-		func_800C4F48_D3EF8(effect & 0xFF, (s32)&sp44, arg6 & 0xFF, arg7 & 0xFF);
+		func_800C4F48_D3EF8(effect & 0xFF, (s32)vec, arg6 & 0xFF, arg7 & 0xFF);
 		i = (i + 1) & 0xFF;
 	}
 }
