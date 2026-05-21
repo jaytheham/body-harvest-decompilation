@@ -2257,7 +2257,7 @@ void func_800F2890_101840(u8 arg0, s32 *arg1, s32 *arg2, u8 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F2890_101840.s")
 #endif
 
-// CURRENT(7659)
+// CURRENT(5555)
 #ifdef NON_MATCHING
 void func_800F2980_101930(void *arg0) {
 	s32 sp7C;
@@ -2265,7 +2265,7 @@ void func_800F2980_101930(void *arg0) {
 	s16 sp6E;
 	s16 sp6C;
 	s16 sp6A;
-	s16 sp68;
+	volatile s16 sp68;
 	f64 var_f20;
 	f64 var_f22;
 	f64 var_f24;
@@ -2276,7 +2276,6 @@ void func_800F2980_101930(void *arg0) {
 	s32 var_s3;
 	u8 temp_s0;
 	u8 temp_v1;
-	u8 *base;
 	u8 *temp_s1;
 	u8 *temp_v0;
 	u8 *var_s2;
@@ -2300,13 +2299,12 @@ void func_800F2980_101930(void *arg0) {
 	}
 	sp7C = (s32) ((((f64) (f32) coss(var_v0 & 0xFFFF) / 32768.0) * (f64) *(s16 *) &((u8 *) arg0)[0x1C]) +
 				 (f64) *(s32 *) &((u8 *) arg0)[0x00]);
-	base = arg0;
 	var_s3 = 0;
-	var_s2 = base;
-	sp78 = (s32) ((((f64) (f32) sins(*(u16 *) &base[0x18]) / 32768.0) * (f64) *(s16 *) &base[0x1C]) +
-				 (f64) *(s32 *) &base[0x04]);
-	*(s32 *) &base[0x08] = sp7C;
-	*(s32 *) &base[0x0C] = sp78;
+	var_s2 = arg0;
+	sp78 = (s32) ((((f64) (f32) sins(*(u16 *) &((u8 *) arg0)[0x18]) / 32768.0) * (f64) *(s16 *) &((u8 *) arg0)[0x1C]) +
+				 (f64) *(s32 *) &((u8 *) arg0)[0x04]);
+	*(s32 *) &((u8 *) arg0)[0x08] = sp7C;
+	*(s32 *) &((u8 *) arg0)[0x0C] = sp78;
 	temp_s7 = (s32) temp_s0 / 2;
 	if (temp_s7 > 0) {
 		do {
@@ -2321,7 +2319,7 @@ void func_800F2980_101930(void *arg0) {
 				*(s16 *) &var_s2[0x3E] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * var_f26) + var_f22);
 				*(s16 *) &var_s2[0x40] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * var_f26) + var_f24);
 				var_v0 = (s16) (sp68 + var_s4 + 0x4000);
-				temp_s1 = base + (var_s3 * 0x24) + (temp_s7 * 0x24);
+				temp_s1 = (u8 *) arg0 + (var_s3 * 0x24) + (temp_s7 * 0x24);
 				*(s16 *) &temp_s1[0x2A] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * var_f20) + var_f22);
 				*(s16 *) &temp_s1[0x2C] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * var_f20) + var_f24);
 				*(s16 *) &temp_s1[0x3E] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * var_f26) + var_f22);
@@ -5625,12 +5623,12 @@ void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 void func_80107184_116134(VehicleInstance *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	f32 sp48;
 	s32 pad;
-	f32 sp44;
+	#ifdef NON_MATCHING
 	f32 sp40;
 	f32 temp_f0;
-	s16 temp_s1;
-	s16 temp_v0;
-	s32 angle;
+	#else
+	#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F2980_101930.s")
+	#endif
 
 	angle = (func_80003824_4424((f32)arg1, (f32)arg2) - arg0->unk6) & 0xFFFF;
 	temp_s1 = sins(angle);
