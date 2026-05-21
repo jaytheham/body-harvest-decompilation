@@ -987,7 +987,7 @@ void func_800C2EE4_D1E94(u8 arg0) {
 #ifdef NON_MATCHING
 // CURRENT(495)
 void func_800C31AC_D215C(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
-	s32 idx;
+	s16 idx;
 	s32 type;
 	Unk80154318Sub *sub;
 
@@ -1129,18 +1129,18 @@ void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(4910)
+// CURRENT(3461)
 void func_800C3E2C_D2DDC(void) {
+	s32 idx;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linkedEntry;
 	Unk80154318Sub *entrySub;
 	Unk80154318Sub *linkedSub;
-	s16 idx;
-	s16 sizeQuarter;
-	s16 color;
-	s32 randA;
+	s32 sizeQuarter;
 	s32 randB;
+	s32 randA;
 	s32 mod8;
+	u8 color;
 
 	idx = D_8015428E;
 	if ((idx == -5) || (idx == -6)) {
@@ -1152,23 +1152,25 @@ void func_800C3E2C_D2DDC(void) {
 		entry = &D_80154318[idx];
 		entrySub = (Unk80154318Sub *)&entry->unk8;
 		linkedEntry = &D_80154318[entry->unk4];
-		linkedSub = (Unk80154318Sub *)&linkedEntry->unk8;
 
 		((u8 *)linkedEntry)[0xC]++;
 		if (((u8 *)linkedEntry)[0xC] == 0x10) {
 			((u8 *)linkedEntry)[0xC] = 0;
 		}
+		linkedSub = (Unk80154318Sub *)&linkedEntry->unk8;
 
-		mod8 = func_800038E0_44E0() % 8;
+		mod8 = func_800038E0_44E0();
+		mod8 %= 8;
 		if (mod8 == 0) {
 			randA = func_800038E0_44E0() & 0xFFFF;
 			randB = func_800038E0_44E0() & 0xFFFF;
+			mod8 = func_800038E0_44E0() & 0xFFFF;
 			sizeQuarter = entry->unk2 / 4;
 
 			color = func_800DDB60_ECB10(
 				(s16)(entrySub->unk0 + ((randA % entry->unk2) / 2) - sizeQuarter),
 				(s16)((randB % (entry->unk2 / 2)) + entrySub->unk2),
-				(s16)(entrySub->unk4 + ((func_800038E0_44E0() % entry->unk2) / 2) - sizeQuarter),
+				(s16)(entrySub->unk4 + ((mod8 % entry->unk2) / 2) - sizeQuarter),
 				0xC,
 				sizeQuarter);
 
@@ -5924,10 +5926,14 @@ void func_800DAF24_E9ED4(u8 arg0) {
 	u8 count;
 	Unk801541F8Entry *entry;
 
-	count = (func_800038E0_44E0() % 3) + 1;
+	#ifdef NON_MATCHING
+	// CURRENT(3461)
 	entry = &D_80154088[arg0];
 	for (i = 0; i < count; i++) {
 		if (entry->unk4 < 0x96) {
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3E2C_D2DDC.s")
+#endif
 			func_800CA1B0_D9160(arg0);
 		}
 	}
