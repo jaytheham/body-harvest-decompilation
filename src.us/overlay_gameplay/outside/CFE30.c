@@ -1091,10 +1091,9 @@ s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3BD8_D2B88.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	Unk80154318Entry *entry;
-	extern char D_801434C0;
+	extern char D_801434C0_152470;
 
 	if (arg3 != -3) {
 		entry = &D_80154318[arg3];
@@ -1105,11 +1104,8 @@ void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_801434C0); // EFFECTS WARNING : Call to move a fire effect which doesn't exist
+	osSyncPrintf(&D_801434C0_152470); // EFFECTS WARNING : Call to move a fire effect which doesn't exist
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3D88_D2D38.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(3461)
