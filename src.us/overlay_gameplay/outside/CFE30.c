@@ -1108,7 +1108,7 @@ void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(3461)
+// CURRENT(2821)
 void func_800C3E2C_D2DDC(void) {
 	s32 idx;
 	Unk80154318Entry *entry;
@@ -1118,6 +1118,7 @@ void func_800C3E2C_D2DDC(void) {
 	s32 sizeQuarter;
 	s32 randB;
 	s32 randA;
+	s32 temp;
 	s32 mod8;
 	u8 color;
 
@@ -1138,12 +1139,15 @@ void func_800C3E2C_D2DDC(void) {
 		}
 		linkedSub = (Unk80154318Sub *)&linkedEntry->unk8;
 
-		mod8 = func_800038E0_44E0();
-		mod8 %= 8;
+		temp = func_800038E0_44E0();
+		mod8 = temp & 7;
+		if ((temp < 0) && (mod8 != 0)) {
+			mod8 -= 8;
+		}
 		if (mod8 == 0) {
 			randA = func_800038E0_44E0() & 0xFFFF;
 			randB = func_800038E0_44E0() & 0xFFFF;
-			mod8 = func_800038E0_44E0() & 0xFFFF;
+			mod8 = func_800038E0_44E0();
 			sizeQuarter = entry->unk2 / 4;
 
 			color = func_800DDB60_ECB10(
