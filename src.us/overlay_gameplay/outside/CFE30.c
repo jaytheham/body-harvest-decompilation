@@ -1449,7 +1449,6 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 	f32 sp44;
 	f32 sp48;
 	f32 sp4C;
-	s32 effect;
 	s32 i;
 	u8 spawnCount;
 	s16 idx;
@@ -2438,6 +2437,7 @@ void func_800C9668_D8618(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C978C_D873C.s")
 
 // CURRENT(6335)
+// CURRENT(3380)
 #ifdef NON_MATCHING
 void func_800CA1B0_D9160(u8 arg0) {
 	s32 effect;
@@ -2462,7 +2462,7 @@ void func_800CA1B0_D9160(u8 arg0) {
 		return;
 	}
 
-	newUnitIdx = func_800C17B4_D0764(effect & 0xFF, 0);
+	newUnitIdx = func_800C17B4_D0764(effect, 0);
 	if (newUnitIdx != -3) {
 		Unk80154318Entry *newUnit;
 
@@ -2482,19 +2482,19 @@ void func_800CA1B0_D9160(u8 arg0) {
 
 		sp38.x = (f32)((f64)(f32)(func_800038E0_44E0() % parentBytes[4]) / D_80143FE0_152F90);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
-			sp38.x = -sp38.x;
+			sp38.x = 0.0f - sp38.x;
 		}
 		sp38.x += sp44.x;
 
 		sp38.y = (f32)((f64)(f32)(func_800038E0_44E0() % parentBytes[4]) / D_80143FE8_152F98);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
-			sp38.y = -sp38.y;
+			sp38.y = 0.0f - sp38.y;
 		}
 		sp38.y += sp44.y;
 
 		sp38.z = (f32)((f64)(f32)(func_800038E0_44E0() % parentBytes[4]) / D_80143FF0_152FA0);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
-			sp38.z = -sp38.z;
+			sp38.z = 0.0f - sp38.z;
 		}
 		sp38.z += sp44.z;
 
@@ -8207,9 +8207,6 @@ void func_800E7338_F62E8(void) {
 				0);
 			D_80157534 = *(u8 *)&D_80157533;
 			D_80157532--;
-		}
-	}
-}
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7338_F62E8.s")
 #endif
