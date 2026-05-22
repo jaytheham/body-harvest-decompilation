@@ -7887,7 +7887,111 @@ void func_80113248_1221F8(VehicleInstance *arg0) {
 	}
 }
 
+// CURRENT(1361)
+#ifdef NON_MATCHING
+void func_80113310_1222C0(VehicleInstance *arg0) {
+	VehicleSpec *spec;
+	WeaponSpecEntry *tableEntry;
+	s16 sp4E;
+	s16 sp4C;
+	s16 sp4A;
+	s32 pad;
+	s16 varA2;
+	s32 wasAboveWater;
+
+	spec = &vehicleSpecs[arg0->unk1A];
+	tableEntry = &D_80140768_14F718[spec->unk55];
+	wasAboveWater = D_80222A70 < arg0->unk2;
+
+	if ((arg0->unk1A == 0) || (spec->unk4C & 0x20000000)) {
+		func_8011DE60_12CE10(1);
+	}
+
+	func_800F9D60_108D10(arg0->unk0, arg0->unk4, &sp4E, &sp4C, &sp4A);
+
+	if ((arg0->unk1A == 0) || (spec->unk4C & 0x20000000)) {
+		func_8011DE60_12CE10(0);
+	}
+
+	if (arg0->unk1A == 0) {
+		sp4E = func_800F9D24_108CD4(arg0->unk0, arg0->unk4);
+	}
+
+	if (!(spec->unk4C & 0x100) && (sp4E < D_80222A70)) {
+		sp4E = D_80222A70;
+	}
+
+	varA2 = sp4E;
+	if ((arg0->unk20 & 0x800) && (sp4A >= sp4E)) {
+		varA2 = sp4A;
+	}
+
+	if (!(arg0->unk20 & 2)) {
+		if ((varA2 + 0x32) < arg0->unk2) {
+			arg0->unk20 |= 2;
+		} else if ((arg0->unk1A != 0) || ((varA2 - 0x20) < arg0->unk2) || (varA2 == sp4E)) {
+			func_800FB468_10A418(arg0, (f32)varA2);
+		}
+	} else {
+		if (arg0->unk2 < varA2) {
+			func_80107890_116840(arg0);
+			func_80107970_116920(arg0, varA2);
+			func_800FB468_10A418(arg0, (f32)varA2);
+		} else if ((spec->unk4C & 0x20000000) && (arg0->unk2 < D_80222A70) && ((arg0 != D_80052B34) || (D_801591AC != 6))) {
+			if (arg0->unkA < tableEntry->unk8) {
+				if (!(spec->unk4C & 0x100)) {
+					func_80107890_116840(arg0);
+					func_80107970_116920(arg0, D_80222A70);
+				} else if ((f32)tableEntry->unk2 < arg0->unk58) {
+					if (spec->unk4C & 0x20000) {
+						arg0->unk2 = (spec->unk38 >> 1) + D_80222A70 + 1;
+					} else {
+						arg0->unk2 = D_80222A70 + 1;
+						if (arg0->unk10 < 0) {
+							arg0->unk10 = 0;
+						}
+						if (arg0->unkA > 0) {
+							arg0->unkA -= 0x800;
+						}
+					}
+
+					if (arg0->unk34 < 0.0f) {
+						arg0->unk34 = 0.0f;
+					}
+				}
+			} else {
+				func_80123E90_132E40(arg0, (arg0->unkA - tableEntry->unk8) >> 3);
+			}
+		} else if ((spec->unk4C & 0x20000000) && (D_8015926C < (arg0->unk2 - func_800F9F00_108EB0(arg0->unk0, arg0->unk4)))) {
+			if (arg0->unk34 > 0.0f) {
+				arg0->unk34 = 0.0f;
+			}
+
+			if (!(spec->unk4C & 0x20000)) {
+				if (arg0->unk10 > 0) {
+					arg0->unk10 = 0;
+				}
+				if (arg0->unkA < 0) {
+					arg0->unkA += 0x800;
+				}
+			}
+
+			func_800FB468_10A418(arg0, (f32)(func_800F9F00_108EB0(arg0->unk0, arg0->unk4) + D_8015926C));
+		}
+	}
+
+	if ((D_80222A70 >= arg0->unk2) && (arg0->unk1A != 0) && (arg0 == D_80052B34) && !(spec->unk4C & 0x10000000)) {
+		if (wasAboveWater) {
+			func_800FB238_10A1E8(arg0, arg0->unk0, arg0->unk4, (s16)(D_80257A0C[arg0->unk1A] + arg0->unk12));
+		} else if (((f64)arg0->unk58 > 5.0) && (D_80052A8C & 1)) {
+			func_800E1F70_F0F20(arg0);
+			func_801372B4_146264(arg0->unk0, arg0->unk2, arg0->unk4, 1);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80113310_1222C0.s")
+#endif
 
 // CURRENT(2944)
 #ifdef NON_MATCHING
