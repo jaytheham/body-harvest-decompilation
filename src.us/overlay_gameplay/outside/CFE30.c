@@ -6438,7 +6438,180 @@ void func_800DC18C_EB13C(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 
 void func_800DD5E0_EC590(void) { D_80156EDA = 0; func_800C978C_D873C(); }
 
+// CURRENT(5435)
+#ifdef NON_MATCHING
+void func_800DD604_EC5B4(Gfx **arg0) {
+	u8 i;
+	u8 type;
+
+	D_80153B88 = 0;
+	func_800C8814_D77C4();
+	func_800CDDE4_DCD94();
+	func_800DBE20_EADD0();
+	func_800E7660_F6610();
+
+	gDPPipeSync(D_8005BB30++);
+	gSPClearGeometryMode(D_8005BB30++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | G_CLIPPING | 0xFF60CDF8);
+	gDPSetCycleType(D_8005BB30++, G_CYC_1CYCLE);
+	gSPSetGeometryMode(D_8005BB30++, G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH);
+	gDPSetRenderMode(D_8005BB30++, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
+	gDPSetCombineMode(D_8005BB30++, G_CC_SHADE, G_CC_SHADE);
+	gDPPipeSync(D_8005BB30++);
+
+	func_800DE2E8_ED298();
+	func_800CB4F8_DA4A8();
+
+	for (i = 0; i < 0x1E; i++) {
+		type = D_80157540[i];
+
+		if (D_80156EDA >= 0x321) {
+			osSyncPrintf(D_80143B8C_152B3C);
+			continue;
+		}
+
+		if (D_80052ACB != 0) {
+			osSyncPrintf(D_80143BD4_152B84);
+			continue;
+		}
+
+		if (type == 0xFE) {
+			continue;
+		}
+
+		type = D_80154088[type].unk0;
+		if (type == 0xFA) {
+			continue;
+		}
+
+		if (type < 10) {
+			switch (type) {
+				case 0:
+					func_800C3300_D22B0();
+					continue;
+				case 1:
+					func_800C25F8_D15A8();
+					continue;
+				case 2:
+					func_800C5D14_D4CC4();
+					continue;
+				case 3:
+					func_800C927C_D822C();
+					continue;
+				case 4:
+					func_800CABC8_D9B78();
+					continue;
+				case 5:
+					func_800CD7FC_DC7AC();
+					continue;
+				case 6:
+					func_800CE6E8_DD698();
+					continue;
+				case 7:
+					func_800D1C24_E0BD4();
+					continue;
+				case 8:
+					func_800D6290_E5240();
+					continue;
+				case 9:
+					func_800D7284_E6234();
+					continue;
+			}
+		}
+
+		if (type >= 10) {
+			osSyncPrintf(D_80143C08_152BB8);
+		} else {
+			osSyncPrintf(D_80143C40_152BF0);
+		}
+	}
+
+	for (i = 0; i < 0x16; i++) {
+		if (D_80156EDA >= 0x321) {
+			osSyncPrintf(D_80143C74_152C24);
+			continue;
+		}
+
+		if (D_80052ACB != 0) {
+			osSyncPrintf(D_80143CBC_152C6C);
+			continue;
+		}
+
+		type = D_801541F8[i].unk0;
+		switch (type - 10) {
+			case 0:
+				func_800C4274_D3224();
+				continue;
+			case 1:
+				func_800C4CB8_D3C68();
+				continue;
+			case 2:
+				func_800CC090_DB040();
+				continue;
+			case 3:
+				func_800CCD54_DBD04();
+				continue;
+			case 4:
+				func_800CF2E0_DE290();
+				continue;
+			case 5:
+				func_800D2ECC_E1E7C();
+				continue;
+			case 6:
+				func_800D45B4_E3564();
+				continue;
+			case 7:
+				func_800D4C10_E3BC0();
+				continue;
+			case 8:
+				func_800D5AF4_E4AA4();
+				continue;
+			case 9:
+				func_800D7870_E6820();
+				continue;
+			case 10:
+				func_800D8190_E7140();
+				continue;
+			case 11:
+				func_800D9294_E8244();
+				continue;
+			case 12:
+				func_800D978C_E873C();
+				continue;
+		}
+
+		if (type < 10) {
+			osSyncPrintf(D_80143CF0_152CA0);
+		} else {
+			osSyncPrintf(D_80143D2C_152CDC);
+		}
+	}
+
+	if (currentLevel == LEVEL_SIBERIA) {
+		if (func_8000726C_7E6C(0x1EULL) == 0) {
+			func_800E2ED4_F1E84();
+		}
+	} else if ((currentLevel == LEVEL_JAVA) && (D_80052ACA != 2)) {
+		func_800E32C4_F2274();
+	}
+
+	func_800C6D80_D5D30();
+	func_800D10D0_E0080();
+
+	if (D_8013E344_14D2F4 >= 6) {
+		func_800E360C_F25BC();
+	}
+
+	if (D_80156EDA >= 0x28B) {
+		D_80156ED9 = 1;
+	} else if (D_80156EDA >= 0x321) {
+		D_80156ED9 = 2;
+	} else {
+		D_80156ED9 = 0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DD604_EC5B4.s")
+#endif
 
 void func_800DDB18_ECAC8(void) {
 	u8 i;
