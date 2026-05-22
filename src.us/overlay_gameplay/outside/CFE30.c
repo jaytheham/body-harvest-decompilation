@@ -2979,6 +2979,9 @@ void func_800CCB60_DBB10(void) {
 		} while ((unitId != -5) && (unitId != -6));
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CCB60_DBB10.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(1836)
