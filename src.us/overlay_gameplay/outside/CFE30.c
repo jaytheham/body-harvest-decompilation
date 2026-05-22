@@ -3281,13 +3281,11 @@ s16 func_800CDB40_DCAF0(s16 arg0, s16 arg1, s16 arg2) {
 	return index;
 }
 
-// CURRENT(455)
+// CURRENT(35)
 #ifdef NON_MATCHING
 void func_800CDBF4_DCBA4(void) {
 	s16 temp_s0_2;
 	s16 var_s2;
-	Unk80154318Sub *temp_s0;
-	Unk80154318Entry *temp_s1;
 
 	var_s2 = D_8015426A;
 	if ((var_s2 == -5) || (var_s2 == -6)) {
@@ -3299,24 +3297,26 @@ void func_800CDBF4_DCBA4(void) {
 		do {
 			s16 temp_t5;
 			s16 temp_a2;
+			Unk80154318Sub *temp_s0;
 
-			temp_s1 = &D_80154318[var_s2];
-			temp_s0 = (Unk80154318Sub *)&temp_s1->unk8;
-			if (temp_s1->unk11 == 1) {
-				var_s2 = temp_s1->unk4;
-			} else if (*(s16*)&temp_s0->unk6 == 0) {
-				func_80124170_133120(temp_s0->unk0, temp_s0->unk2, temp_s0->unk4, 0x2711, 0x300, NULL);
-				func_800DFBA8_EEB58(temp_s0->unk0, temp_s0->unk2, temp_s0->unk4, 0xB4, 6);
-				func_800DDF18_ECEC8(temp_s0->unk8);
-				temp_s0_2 = temp_s1->unk4;
-				func_800C1A4C_D09FC(var_s2, 9, 1);
-				var_s2 = temp_s0_2;
+			temp_s0 = (Unk80154318Sub *)&D_80154318[var_s2].unk8;
+			if (D_80154318[var_s2].unk11 == 1) {
+				var_s2 = D_80154318[var_s2].unk4;
 			} else {
-				temp_t5 = temp_s0->unk4;
-				temp_a2 = temp_s0->unk0;
-				*(s16*)&temp_s0->unk6 -= 1;
-				var_s2 = temp_s1->unk4;
-				func_801371B8_146168(temp_s0, 0xFE, temp_a2, temp_s0->unk2, temp_t5, -1.0f);
+				if (*(s16*)&temp_s0->unk6 == 0) {
+					func_80124170_133120(temp_s0->unk0, temp_s0->unk2, temp_s0->unk4, 0x2711, 0x300, NULL);
+					func_800DFBA8_EEB58(temp_s0->unk0, temp_s0->unk2, temp_s0->unk4, 0xB4, 6);
+					func_800DDF18_ECEC8(temp_s0->unk8);
+					temp_s0_2 = D_80154318[var_s2].unk4;
+					func_800C1A4C_D09FC(var_s2, 9, 1);
+					var_s2 = temp_s0_2;
+				} else {
+					temp_a2 = temp_s0->unk0;
+					temp_t5 = temp_s0->unk4;
+					*(s16*)&temp_s0->unk6 -= 1;
+					var_s2 = D_80154318[var_s2].unk4;
+					func_801371B8_146168(temp_s0, 0xFE, temp_a2, temp_s0->unk2, temp_t5, -1.0f);
+				}
 			}
 		} while ((var_s2 != -5) && (var_s2 != -6));
 	}
