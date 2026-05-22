@@ -4152,14 +4152,13 @@ loop_6:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D25D0_E1580.s")
 #endif
 
-// CURRENT(5418)
+// CURRENT(4753)
 #ifdef NON_MATCHING
 void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, u8 arg6, u8 arg7) {
 	s16 sp0;
 	s16 temp;
 	s16 temp2;
 	s16 temp3;
-	s16 temp4;
 	s16 temp5;
 	u8 *color;
 
@@ -4181,7 +4180,6 @@ void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.ob[1] = temp;
 	temp2 = (s16)(f32)arg2;
 	D_8005BB34->v.ob[2] = temp2;
-	temp3 = (s16)(f32)arg3;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x80;
 	D_8005BB34->v.tc[1] = 0;
@@ -4192,9 +4190,10 @@ void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.cn[3] = color[3];
 
 	D_8005BB34++;
-	temp4 = (s16)(f32)arg1;
-	D_8005BB34->v.ob[0] = temp4;
+	arg1 = (s16)(f32)arg1;
+	D_8005BB34->v.ob[0] = arg1;
 	D_8005BB34->v.ob[1] = temp;
+	temp3 = (s16)(f32)arg3;
 	D_8005BB34->v.ob[2] = temp3;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x780;
@@ -4206,7 +4205,7 @@ void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 
 	D_8005BB34++;
 	temp5 = (s16)(f32)arg4;
-	D_8005BB34->v.ob[0] = temp4;
+	D_8005BB34->v.ob[0] = arg1;
 	D_8005BB34->v.ob[1] = temp5;
 	D_8005BB34->v.ob[2] = temp3;
 	D_8005BB34->v.flag = 0;
