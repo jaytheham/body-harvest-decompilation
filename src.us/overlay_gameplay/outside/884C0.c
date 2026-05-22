@@ -3376,7 +3376,127 @@ s32 func_80083060_92010(s16 arg0, s16 arg1, s32 arg2, u8 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80083060_92010.s")
 #endif
 
+// CURRENT(4881)
+#ifdef NON_MATCHING
+s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
+	AlienInstance *alien;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 i;
+	s32 nearCount;
+	s32 spanCount;
+	s16 baseAngle;
+	s16 lowAngle;
+	s16 highAngle;
+	s16 leftAngle;
+	s16 rightAngle;
+	s16 angle;
+	s16 delta;
+	s16 facingDir;
+	s32 x;
+	s32 z;
+	f64 radius;
+	u8 hitBuilding;
+	u8 blockedBuilding;
+	u8 chosenBuilding;
+	u8 specIndex;
+
+	alien = &alienInstances[arg0];
+	specIndex = alien->specIndex;
+	facingDir = alien->unk12;
+	baseAngle = alien->unkE;
+	radius = (f64)((s16 *)&D_8025668C)[specIndex * 0x34];
+	chosenBuilding = 0xFF;
+	blockedBuilding = 0xFF;
+	hitBuilding = 0xFF;
+	if (facingDir < 0) {
+		baseAngle += 0x8000;
+	}
+
+	nearCount = 0;
+	spanCount = 0;
+
+	for (i = 0; i < 8; i++) {
+		angle = (s16)(i << 13);
+		x = (s32)((((f64)(f32)coss((u16)angle) / 32768.0) * radius) + (f64)alien->unk0);
+		z = (s32)((((f64)(f32)sins((u16)angle) / 32768.0) * radius) + (f64)alien->unk4);
+
+		if (func_80083060_92010(x, z, arg0, &hitBuilding) != 0) {
+			if ((hitBuilding != 0xFF) && (func_80082E38_91DE8(arg0, buildingInstances[hitBuilding].yCoord) == 0) &&
+				((specIndex != 0x16) || ((buildingInstances[hitBuilding].buildingType != D_8015EA28) && (buildingInstances[hitBuilding].buildingType != 0x1F)))) {
+				chosenBuilding = hitBuilding;
+				continue;
+			}
+
+			delta = (s16)(angle - baseAngle);
+			alien->unk28 = (s8)(x >> 8);
+			alien->unk29 = (s8)(z >> 8);
+			blockedBuilding = hitBuilding;
+			if (ABS(delta) < 0x4000) {
+				nearCount++;
+			}
+			if (spanCount == 0) {
+				lowAngle = angle;
+				highAngle = angle;
+				spanCount++;
+			} else if ((s16)(angle - lowAngle) < 0) {
+				lowAngle = angle;
+			} else {
+				highAngle = angle;
+				spanCount++;
+			}
+		}
+	}
+
+	if (chosenBuilding != 0xFF) {
+		alien->unk20 |= 0x02000000;
+		alien->pad4A = chosenBuilding;
+	} else {
+		alien->unk20 &= 0xFDFFFFFF;
+	}
+
+	if (nearCount == 0) {
+		if (spanCount != 0) {
+			alien->unk34 = 6;
+			alien->unk47 |= 1;
+			alien->unk2A = alien->unkE;
+		}
+		alien->unk28 = -1;
+		alien->unk29 = -1;
+		return 0;
+	}
+
+	for (i = 1; i != 8; i++) {
+		s16 offset;
+
+		offset = (s16)(i << 10);
+		angle = (s16)(lowAngle - offset);
+		x = (s32)((((f64)(f32)coss((u16)angle) / 32768.0) * radius) + (f64)alien->unk0);
+		z = (s32)((((f64)(f32)sins((u16)angle) / 32768.0) * radius) + (f64)alien->unk4);
+		if ((func_80083060_92010(x, z, arg0, &hitBuilding) != 0) &&
+			((hitBuilding == 0xFF) || (func_80082E38_91DE8(arg0, buildingInstances[hitBuilding].yCoord) != 0))) {
+			leftAngle = angle;
+		}
+
+		angle = (s16)(highAngle + offset);
+		x = (s32)((((f64)(f32)coss((u16)angle) / 32768.0) * radius) + (f64)alien->unk0);
+		z = (s32)((((f64)(f32)sins((u16)angle) / 32768.0) * radius) + (f64)alien->unk4);
+		if ((func_80083060_92010(x, z, arg0, &hitBuilding) != 0) &&
+			((hitBuilding == 0xFF) || (func_80082E38_91DE8(arg0, buildingInstances[hitBuilding].yCoord) != 0))) {
+			rightAngle = angle;
+		}
+	}
+
+	*arg1 = leftAngle - 0x400;
+	*arg2 = rightAngle + 0x400;
+	*arg3 = blockedBuilding;
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800831A4_92154.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800836D0_92680.s")
 
