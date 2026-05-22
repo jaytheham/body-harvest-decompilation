@@ -3205,14 +3205,13 @@ void func_800CD42C_DC3DC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD42C_DC3DC.s")
 #endif
 
-// CURRENT(6594)
+// CURRENT(4380)
 #ifdef NON_MATCHING
 void func_800CD7FC_DC7AC(u8 arg0) {
-	Unk80154318Entry *entry;
 	s16 index;
+	Unk80154318Entry *entry;
 
-	entry = &D_80154318[D_80154088[arg0].unk6];
-	index = entry->unk4;
+	index = D_80154318[D_80154088[arg0].unk6].unk4;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
@@ -3229,25 +3228,21 @@ void func_800CD7FC_DC7AC(u8 arg0) {
 	D_80153BCD = 0x20;
 	D_80153BCE = 0x20;
 
-	while (1) {
-		D_80153BB8.x = (f32)entry->unk8;
-		D_80153BB8.y = (f32)entry->unkA;
-		D_80153BB8.z = (f32)entry->unkC;
-		D_80153BC4 = &entry->unkE;
-		D_80153BCC = entry->unk11;
-		D_80153BC8 = (f32)entry->unk2;
-		func_800DB350_EA300();
-		D_80156EDA += 4;
-		if ((index == -5) || (index == -6)) {
-			break;
-		}
-		entry = &D_80154318[index];
-		index = entry->unk4;
+	if ((index != -5) && (index != -6)) {
+		do {
+			entry = &D_80154318[index];
+			D_80153BB8.x = (f32)entry->unk8;
+			D_80153BC4 = &entry->unkE;
+			D_80153BCC = entry->unk11;
+			D_80153BB8.y = (f32)entry->unkA;
+			D_80153BB8.z = (f32)entry->unkC;
+			D_80153BC8 = (f32)entry->unk2;
+			func_800DB350_EA300();
+			D_80156EDA += 4;
+			index = entry->unk4;
+		} while ((index != -5) && (index != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD7FC_DC7AC.s")
-#endif
 
 void func_800CDA98_DCA48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 temp_v0;
@@ -3358,6 +3353,9 @@ void func_800CDDE4_DCD94(void) {
 		if (entry->unk11 == 1) {
 			sp80.unk0 = 0;
 			sp80.unk2 = 0;
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD7FC_DC7AC.s")
+#endif
 			sp80.unk4 = 0x8000;
 			sp88.unk0 = 0x96;
 			sp88.unk2 = 0x96;
@@ -8203,12 +8201,6 @@ void func_800E7338_F62E8(void) {
 				0);
 			D_80157534 = *(u8 *)&D_80157533;
 			D_80157532--;
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7338_F62E8.s")
-#endif
-
-#ifdef NON_MATCHING
-void func_800E74DC_F648C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
 	u8 temp_t2;
 	u8 var_v1;
 	s32 temp_lo;
