@@ -393,6 +393,7 @@ extern u8 D_80047FA8[6]; /* save data bytes */
 extern u8 D_80047FAE;
 extern s16 D_80048026;
 extern Gfx D_A01FF98[];
+extern Gfx D_A01F868[];
 extern Gfx D_A002120[];
 extern s16 D_80048028;
 extern s32 D_8004802C;
