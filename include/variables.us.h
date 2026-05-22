@@ -2216,6 +2216,7 @@ extern u8 D_80153BCC;
 extern s8 D_80153BCD;
 extern s8 D_80153BCE;
 extern u8 D_100C700;
+extern char D_801438A8_152858[];
 extern OSContPad D_800475B8[4];
 extern OSContPad D_800475D0;
 extern u8 D_8015FAFC;

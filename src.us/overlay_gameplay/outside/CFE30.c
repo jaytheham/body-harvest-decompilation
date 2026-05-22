@@ -4578,7 +4578,114 @@ void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5760_E4710.s")
 #endif
 
+// CURRENT(5385)
+#ifdef NON_MATCHING
+void func_800D5AF4_E4AA4(void) {
+	s16 angle;
+	s16 curr;
+	s16 next;
+	u16 radius;
+	s8 xStep;
+	s8 yStep;
+	s8 *entryBytes;
+	s32 mode;
+	Unk80154318Entry *entry;
+	Unk80154318Entry *parent;
+	s16 negSix;
+
+	D_80153BCD = 0x20;
+	D_80153BCE = 0x20;
+	D_80153BC4 = &D_80153B80;
+	D_80153BC8 = 55.0f;
+	D_80153BCC = 0xFF;
+	curr = D_801542BE;
+
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
+		((((func_800038E0_44E0() % 8) << 9) + (u32) &D_100C700) & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+
+	if (curr == -5) {
+		return;
+	}
+
+	negSix = -6;
+	if (curr == negSix) {
+		return;
+	}
+
+	while (1) {
+		entry = &D_80154318[curr];
+		entryBytes = (s8 *)&entry->unk8;
+		parent = &D_80154318[entry->unk4];
+
+		radius = ((u16)parent->unk8) << 2;
+		if (radius >= 0x29) {
+			radius = 0x28;
+		}
+
+		angle = (s16)(((u16)parent->unk8 * 15) % 360);
+		xStep = entryBytes[6];
+		if (xStep > 0) {
+			yStep = entryBytes[8];
+			if (yStep > 0) {
+				next = (s16)(0x10000 - func_80003740_4340((f32)(xStep / yStep)));
+			} else if (yStep < 0) {
+				next = (s16)(func_80003740_4340((f32)(xStep / yStep)) + 0x8000);
+			} else {
+				next = -0x4000;
+			}
+			mode = gameplayMode;
+		} else if (xStep < 0) {
+			yStep = entryBytes[8];
+			if (yStep > 0) {
+				next = func_80003740_4340((f32)(xStep / yStep));
+			} else if (yStep < 0) {
+				next = (s16)(0x8000 - func_80003740_4340((f32)(xStep / yStep)));
+			} else {
+				next = 0x4000;
+			}
+			mode = gameplayMode;
+		} else {
+			yStep = entryBytes[8];
+			next = 0;
+			if (yStep > 0) {
+				mode = gameplayMode;
+			} else if (yStep < 0) {
+				next = -0x8000;
+				mode = gameplayMode;
+			} else {
+				osSyncPrintf(D_801438A8_152858);
+				return;
+			}
+		}
+
+		if (mode == 1) {
+			func_800D5760_E4710(curr, radius, angle, next, 0);
+			func_800D5760_E4710(curr, radius, angle, next, 1);
+			func_800D5760_E4710(curr, radius, angle, next, 2);
+		}
+
+		curr = parent->unk4;
+		if (curr == -5) {
+			return;
+		}
+		if (curr == negSix) {
+			return;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5AF4_E4AA4.s")
+#endif
 
 // CURRENT(20)
 #ifdef NON_MATCHING
