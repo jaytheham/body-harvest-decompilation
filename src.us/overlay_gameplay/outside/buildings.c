@@ -2768,7 +2768,128 @@ s32 func_80120634_12F5E4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80120634_12F5E4.s")
 #endif
 
+// CURRENT(4395)
+#ifdef NON_MATCHING
+void func_801206B0_12F660(void) {
+	BuildingInstance *instA;
+	BuildingInstance *instB;
+	VehicleInstance *playerVehicle;
+	s16 idx;
+	s8 xCell;
+	s8 zCell;
+
+	if (!(D_80052558 & 8)) {
+		D_80052558 |= 8;
+
+		playerVehicle = func_80109960_118910();
+		D_8015EA34 = D_8015EA38;
+		D_8015EA38 = playerVehicle->unk54;
+
+		xCell = (s8)((s16)playerVehicle->unk0 >> 8);
+		zCell = (s8)((s16)playerVehicle->unk4 >> 8);
+
+		for (zCell += 1;; zCell += 1) {
+			idx = func_8011D260_12C210(xCell, zCell);
+			if (idx != -1) {
+				instA = &buildingInstances[idx];
+				if (*(s32 *)&buildingSpecs[instA->buildingType] == (s32)D_A01F868) {
+					break;
+				}
+			}
+		}
+
+		zCell = (s8)((s16)playerVehicle->unk4 >> 8);
+		for (zCell -= 1;; zCell -= 1) {
+			idx = func_8011D260_12C210(xCell, zCell);
+			if (idx != -1) {
+				instB = &buildingInstances[idx];
+				if (*(s32 *)&buildingSpecs[instB->buildingType] == (s32)D_A01F868) {
+					break;
+				}
+			}
+		}
+
+		D_8015EA3C = (s16)((f32)D_8015EA3C + (D_8015EA34 - D_8015EA38));
+
+		D_8005BB34->v.ob[0] = instA->xCoord + 0x19;
+		D_8005BB34->v.ob[1] = instA->yCoord + 0x39C;
+		D_8005BB34->v.ob[2] = instA->zCoord + 0xDF;
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = 0;
+		D_8005BB34->v.tc[1] = 0;
+		D_8005BB34->v.cn[0] = 0;
+		D_8005BB34->v.cn[1] = 0;
+		D_8005BB34->v.cn[2] = 0;
+		D_8005BB34->v.cn[3] = 0xFF;
+
+		D_8005BB34[1].v.ob[0] = instB->xCoord - 0x1E;
+		D_8005BB34[1].v.ob[1] = instB->yCoord + 0x39C;
+		D_8005BB34[1].v.ob[2] = instB->zCoord - 0xDF;
+		D_8005BB34[1].v.flag = 0;
+		D_8005BB34[1].v.tc[0] = 0;
+		D_8005BB34[1].v.tc[1] = 0;
+		D_8005BB34[1].v.cn[0] = 0;
+		D_8005BB34[1].v.cn[1] = 0;
+		D_8005BB34[1].v.cn[2] = 0;
+		D_8005BB34[1].v.cn[3] = 0xFF;
+
+		D_8005BB34[2].v.ob[0] = instA->xCoord + 0x19;
+		D_8005BB34[2].v.ob[1] = instA->yCoord + 0x2D9;
+		D_8005BB34[2].v.ob[2] = instA->zCoord + 0xDF;
+		D_8005BB34[2].v.flag = 0;
+		D_8005BB34[2].v.tc[0] = 0;
+		D_8005BB34[2].v.tc[1] = 0;
+		D_8005BB34[2].v.cn[0] = 0;
+		D_8005BB34[2].v.cn[1] = 0;
+		D_8005BB34[2].v.cn[2] = 0;
+		D_8005BB34[2].v.cn[3] = 0xFF;
+
+		D_8005BB34[3].v.ob[0] = playerVehicle->unk0 + 0xF;
+		D_8005BB34[3].v.ob[1] = playerVehicle->unk2 + 0x190;
+		D_8005BB34[3].v.ob[2] = playerVehicle->unk4;
+		D_8005BB34[3].v.flag = 0;
+		D_8005BB34[3].v.tc[0] = 0;
+		D_8005BB34[3].v.tc[1] = 0;
+		D_8005BB34[3].v.cn[0] = 0;
+		D_8005BB34[3].v.cn[1] = 0;
+		D_8005BB34[3].v.cn[2] = 0;
+		D_8005BB34[3].v.cn[3] = 0xFF;
+
+		D_8005BB34[4].v.ob[0] = instB->xCoord - 0x1E;
+		D_8005BB34[4].v.ob[1] = instB->yCoord + 0x2D9;
+		D_8005BB34[4].v.ob[2] = instB->zCoord - 0xDF;
+		D_8005BB34[4].v.flag = 0;
+		D_8005BB34[4].v.tc[0] = 0;
+		D_8005BB34[4].v.tc[1] = 0;
+		D_8005BB34[4].v.cn[0] = 0;
+		D_8005BB34[4].v.cn[1] = 0;
+		D_8005BB34[4].v.cn[2] = 0;
+		D_8005BB34[4].v.cn[3] = 0xFF;
+
+		gDPPipeSync(D_8005BB30++);
+		gDPSetCombineMode(D_8005BB30++, G_CC_SHADE, G_CC_PASS2);
+		gDPSetRenderMode(
+			D_8005BB30++,
+			AA_EN | Z_CMP | IM_RD | CVG_DST_CLAMP | ZMODE_OPA | ALPHA_CVG_SEL | G_RM_FOG_SHADE_A,
+			AA_EN | Z_CMP | IM_RD | CVG_DST_CLAMP | ZMODE_OPA | ALPHA_CVG_SEL |
+				GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM));
+		gDPSetCycleType(D_8005BB30++, G_CYC_2CYCLE);
+		gSPSetGeometryMode(D_8005BB30++, G_FOG);
+		gSPVertex(D_8005BB30++, D_8005BB34, 5, 0);
+		D_8005BB30->words.w0 = 0xB5000000;
+		D_8005BB30++->words.w1 = 0x00000200;
+		D_8005BB30->words.w0 = 0xB5000000;
+		D_8005BB30++->words.w1 = 0x00040600;
+		D_8005BB30->words.w0 = 0xB5000000;
+		D_8005BB30++->words.w1 = 0x00060800;
+		gDPPipeSync(D_8005BB30++);
+
+		D_8005BB34 += 5;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801206B0_12F660.s")
+#endif
 
 void func_80120BC4_12FB74(BuildingInstance *arg0) {
 	s32 angle;

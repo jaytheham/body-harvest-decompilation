@@ -3376,7 +3376,127 @@ s32 func_80083060_92010(s16 arg0, s16 arg1, s32 arg2, u8 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80083060_92010.s")
 #endif
 
+// CURRENT(4881)
+#ifdef NON_MATCHING
+s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
+	AlienInstance *alien;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 i;
+	s32 nearCount;
+	s32 spanCount;
+	s16 baseAngle;
+	s16 lowAngle;
+	s16 highAngle;
+	s16 leftAngle;
+	s16 rightAngle;
+	s16 angle;
+	s16 delta;
+	s16 facingDir;
+	s32 x;
+	s32 z;
+	f64 radius;
+	u8 hitBuilding;
+	u8 blockedBuilding;
+	u8 chosenBuilding;
+	u8 specIndex;
+
+	alien = &alienInstances[arg0];
+	specIndex = alien->specIndex;
+	facingDir = alien->unk12;
+	baseAngle = alien->unkE;
+	radius = (f64)((s16 *)&D_8025668C)[specIndex * 0x34];
+	chosenBuilding = 0xFF;
+	blockedBuilding = 0xFF;
+	hitBuilding = 0xFF;
+	if (facingDir < 0) {
+		baseAngle += 0x8000;
+	}
+
+	nearCount = 0;
+	spanCount = 0;
+
+	for (i = 0; i < 8; i++) {
+		angle = (s16)(i << 13);
+		x = (s32)((((f64)(f32)coss((u16)angle) / 32768.0) * radius) + (f64)alien->unk0);
+		z = (s32)((((f64)(f32)sins((u16)angle) / 32768.0) * radius) + (f64)alien->unk4);
+
+		if (func_80083060_92010(x, z, arg0, &hitBuilding) != 0) {
+			if ((hitBuilding != 0xFF) && (func_80082E38_91DE8(arg0, buildingInstances[hitBuilding].yCoord) == 0) &&
+				((specIndex != 0x16) || ((buildingInstances[hitBuilding].buildingType != D_8015EA28) && (buildingInstances[hitBuilding].buildingType != 0x1F)))) {
+				chosenBuilding = hitBuilding;
+				continue;
+			}
+
+			delta = (s16)(angle - baseAngle);
+			alien->unk28 = (s8)(x >> 8);
+			alien->unk29 = (s8)(z >> 8);
+			blockedBuilding = hitBuilding;
+			if (ABS(delta) < 0x4000) {
+				nearCount++;
+			}
+			if (spanCount == 0) {
+				lowAngle = angle;
+				highAngle = angle;
+				spanCount++;
+			} else if ((s16)(angle - lowAngle) < 0) {
+				lowAngle = angle;
+			} else {
+				highAngle = angle;
+				spanCount++;
+			}
+		}
+	}
+
+	if (chosenBuilding != 0xFF) {
+		alien->unk20 |= 0x02000000;
+		alien->pad4A = chosenBuilding;
+	} else {
+		alien->unk20 &= 0xFDFFFFFF;
+	}
+
+	if (nearCount == 0) {
+		if (spanCount != 0) {
+			alien->unk34 = 6;
+			alien->unk47 |= 1;
+			alien->unk2A = alien->unkE;
+		}
+		alien->unk28 = -1;
+		alien->unk29 = -1;
+		return 0;
+	}
+
+	for (i = 1; i != 8; i++) {
+		s16 offset;
+
+		offset = (s16)(i << 10);
+		angle = (s16)(lowAngle - offset);
+		x = (s32)((((f64)(f32)coss((u16)angle) / 32768.0) * radius) + (f64)alien->unk0);
+		z = (s32)((((f64)(f32)sins((u16)angle) / 32768.0) * radius) + (f64)alien->unk4);
+		if ((func_80083060_92010(x, z, arg0, &hitBuilding) != 0) &&
+			((hitBuilding == 0xFF) || (func_80082E38_91DE8(arg0, buildingInstances[hitBuilding].yCoord) != 0))) {
+			leftAngle = angle;
+		}
+
+		angle = (s16)(highAngle + offset);
+		x = (s32)((((f64)(f32)coss((u16)angle) / 32768.0) * radius) + (f64)alien->unk0);
+		z = (s32)((((f64)(f32)sins((u16)angle) / 32768.0) * radius) + (f64)alien->unk4);
+		if ((func_80083060_92010(x, z, arg0, &hitBuilding) != 0) &&
+			((hitBuilding == 0xFF) || (func_80082E38_91DE8(arg0, buildingInstances[hitBuilding].yCoord) != 0))) {
+			rightAngle = angle;
+		}
+	}
+
+	*arg1 = leftAngle - 0x400;
+	*arg2 = rightAngle + 0x400;
+	*arg3 = blockedBuilding;
+	return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800831A4_92154.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800836D0_92680.s")
 
@@ -7241,7 +7361,118 @@ void func_80090C14_9FBC4(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80090C14_9FBC4.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_80090D0C_9FCBC(u8 arg0) {
+	AlienInstance *inst;
+	AlienInstance *parent;
+	s32 *parentTimer;
+	Unk8014DD50 *route;
+	s32 parentFlags;
+	s16 specSlot;
+	s16 pathNodes[2];
+	s32 pos0;
+	s32 pos1;
+	s32 pos2;
+	s32 tmp;
+	s16 headingDelta;
+	s8 pathResult;
+	u8 specIdx;
+
+	inst = &alienInstances[arg0];
+	specIdx = inst->specIndex;
+	specSlot = D_8014DD5C[inst->unkC * 0x10];
+
+	func_80086230_951E0(arg0, specSlot, 0x17E8);
+
+	parent = &alienInstances[inst->unk25];
+	parentTimer = (s32 *)&parent->unk10;
+	inst->unk20 |= 0x08008100;
+	parentFlags = parent->unk20;
+	*parentTimer = *parentTimer - 1;
+
+	if (parentFlags & 0x10000) {
+		if (*parentTimer == 0) {
+			*parentTimer = 1;
+		}
+
+		pathNodes[0] = inst->unkC;
+		pathNodes[1] = D_8014DD5C[pathNodes[0] * 0x10];
+		pathResult = func_80081F18_90EC8(arg0, 2, 5, pathNodes, &D_8013C848_14B7F8);
+
+		if ((inst->unk36 == 2) || (pathResult == 1)) {
+			if (func_80086A34_959E4(arg0, 1, (s16)(func_800870D8_96088(0x40, 0x1F) + 0x8000)) != 0) {
+				func_80137468_146418(arg0, 0xA);
+				inst->unk1E = 8;
+			}
+			inst->unk1E--;
+		}
+
+		if (pathResult == 5) {
+			parent->unk20 &= 0xFFFEFFFF;
+		}
+		return;
+	}
+
+	if (parentFlags & 0x20000) {
+		if (*parentTimer == 0) {
+			*parentTimer = 1;
+		}
+
+		if (inst->unk1E > 0) {
+			inst->unk1E--;
+		} else {
+			parent->unk20 &= 0xFFFDFFFF;
+			func_800871CC_9617C(arg0, 0, 0x2D - (currentLevel * 5));
+		}
+
+		route = &D_8014DD50[specSlot];
+		func_80128428_1373D8(inst, route->unk0, route->unk2 + 0xA, route->unk4 + 0x37, &pos2, &pos1, &pos0);
+		func_800C56A4_D4654((s16)pos2, (s16)pos1, (s16)pos0, 0x8C, 0xA, 0x10, 0x28);
+		return;
+	}
+
+	func_8008751C_964CC(arg0, 0x15E, 0x1F4);
+	if (func_80084FE8_93F98(arg0, 0x4000) != 0) {
+		inst->unk20 &= ~0x40;
+		if ((D_80052A8C % ((func_800038E0_44E0() % 5) + 4)) == 0) {
+			route = &D_8014DD50[specSlot];
+			func_80128428_1373D8(inst, route->unk0, route->unk2 + 0xA, route->unk4 + 0x14, &pos2, &pos1, &pos0);
+			func_800CC7B0_DB760(0x28, 0x32, (func_800038E0_44E0() % 6) + 6, (s16)pos2, pos1, pos0);
+			func_801371B8_146168((s32)inst, 0x13F, inst->unk0, inst->unk2, inst->unk4, -1.0f);
+		}
+	} else {
+		inst->unk20 |= 0x40;
+	}
+
+	if ((*parentTimer <= 0) || (inst->unk47 & 1)) {
+		inst->unk20 &= 0xF7FF7EBF;
+		*parentTimer = 0;
+		D_8014DD50[D_8014DD50[D_8014DD50[D_8014DD50[specSlot].unkC].unkD].unkD].unk2 = -4;
+		return;
+	}
+
+	if (func_80084E54_93E04((VehicleInstance *) inst, (AlienInstance *) D_80052B34) < 0x2EE) {
+		headingDelta = inst->unkE - inst->unk2A;
+		tmp = headingDelta;
+		if (tmp < 0) {
+			tmp = -tmp;
+		}
+
+		if (tmp < alienSpecs[specIdx].unk42) {
+			if (inst->unk20 & 0x40) {
+				parent->unk20 |= 0x10000;
+				inst->unk36 = 0;
+				inst->unk1E = 0;
+			} else {
+				parent->unk20 |= 0x20000;
+				inst->unk1E = 0x28;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80090D0C_9FCBC.s")
+#endif
 
 // CURRENT(0)
 #ifdef NON_MATCHING

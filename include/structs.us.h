@@ -1945,9 +1945,11 @@ typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 pad6[6];
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
 	/* 0x0C */ s16 unkC;
-	/* 0x0E */ u8 padE[2];
+	/* 0x0E */ s16 unkE;
 	/* 0x10 */ s16 unk10;
 } BeaconDisplayEntry; /* stride = 0x12 */
 
