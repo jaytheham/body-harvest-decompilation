@@ -7440,7 +7440,59 @@ void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1D48_F0CF8.s")
 #endif
 
+// CURRENT(6532)
+#ifdef NON_MATCHING
+void func_800E1F70_F0F20(VehicleInstance *arg0) {
+	s16 randA;
+	s16 randB;
+	s16 randC;
+	u8 temp;
+
+	if (-arg0->unk58 < arg0->unk58) {
+		temp = arg0->unk58;
+	} else {
+		temp = -arg0->unk58;
+	}
+
+	if (arg0->unk1A == 0) {
+		if ((func_800038E0_44E0() % 30) < (temp + 10)) {
+			randA = func_800038E0_44E0();
+			randB = func_800038E0_44E0();
+			randC = func_800038E0_44E0();
+			func_800DEED0_EDE80(
+				(((u16)randA % 28) + D_80052B34->unk0) - 14,
+				D_80222A70 + 3,
+				(((u16)randB % 28) + D_80052B34->unk4) - 14,
+				(((u16)randC % 5) + temp + 10) & 0xFF,
+				(func_800038E0_44E0() % 10) + temp + 45);
+		}
+	} else if ((func_800038E0_44E0() % 40) < (temp + 10)) {
+		if (D_80257A4C[arg0->unk1A].unk0 & 0x20000) {
+			randA = func_800038E0_44E0();
+			randB = func_800038E0_44E0();
+			randC = func_800038E0_44E0();
+			func_800DEED0_EDE80(
+				(((u16)randA % 40) + arg0->unk0) - 20,
+				D_80222A70 + 3,
+				(((u16)randB % 40) + arg0->unk4) - 20,
+				(((u16)randC % 40) + D_80257A0C[arg0->unk1A * 0x38]) & 0xFF,
+				(func_800038E0_44E0() % 10) + ((s32)temp / 2) + 60);
+		} else {
+			randA = func_800038E0_44E0();
+			randB = func_800038E0_44E0();
+			randC = func_800038E0_44E0();
+			func_800DEED0_EDE80(
+				(((u16)randA % 40) + arg0->unk0) - 20,
+				D_80222A70 + 3,
+				(((u16)randB % 40) + arg0->unk4) - 20,
+				(((u16)randC % 20) + (D_80257A0C[arg0->unk1A * 0x38] / 2)) & 0xFF,
+				(func_800038E0_44E0() % 10) + ((s32)temp / 2) + 60);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1F70_F0F20.s")
+#endif
 
 // CURRENT(6629)
 #ifdef NON_MATCHING
