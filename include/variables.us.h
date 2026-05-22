@@ -2662,6 +2662,14 @@ extern s8 D_800FB7C1;
 extern s8 D_800FB7C4;
 extern u8 D_800FB7AC;
 extern u8 D_800FB7AD;
+extern Ambient D_800942A0_64750;
+extern Light D_800942A8_64758;
+extern u8 D_40856F0[];
+extern u16 D_408A6F0[];
+extern u8 D_408A8F0[];
+extern u16 D_409E8F0[];
+extern u8 D_40A9440[];
+extern u16 D_40AAC40[];
 extern s16 D_800FC8E0;
 extern s16 D_800FC8E2;
 extern u8 D_8006AC10; // english comms strings

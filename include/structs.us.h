@@ -1804,6 +1804,18 @@ typedef struct {
 } Unk80154318Entry; /* stride = 0x1C */
 
 typedef struct {
+	u16 unk0;
+	u16 unk2;
+} Frontend52690Viewport;
+
+typedef struct {
+	/* 0x00 */ u32 unk0;
+	/* 0x04 */ u8 unk4;
+	/* 0x05 */ u8 unk5;
+	/* 0x06 */ u8 pad6[2];
+} Unk8007E12CEntry8;
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;

@@ -1,8 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-
 #ifdef NON_MATCHING
 s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	s32 var_s0;
