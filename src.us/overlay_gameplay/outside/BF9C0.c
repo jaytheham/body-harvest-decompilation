@@ -2831,8 +2831,6 @@ void func_800BED24_CDCD4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800C0678_CF628.s")
 
-void func_800C0678_CF628(void);
-
 #ifdef NON_MATCHING
 s32 func_800C0D1C_CFCCC(s32 arg0, s32 arg1, s32 arg2) {
 	VehicleInstance *vehicle;

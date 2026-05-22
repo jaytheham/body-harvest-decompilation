@@ -7889,12 +7889,6 @@ void func_80113248_1221F8(VehicleInstance *arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80113310_1222C0.s")
 
-extern f64 D_80144D70_153D20;
-extern f64 D_80144D78_153D28;
-extern f64 D_80144D80_153D30;
-extern s16 D_80158C52;
-extern VehicleInstance *D_80158E7C;
-
 // CURRENT(2944)
 #ifdef NON_MATCHING
 s32 func_80113808_1227B8(VehicleInstance *arg0) {

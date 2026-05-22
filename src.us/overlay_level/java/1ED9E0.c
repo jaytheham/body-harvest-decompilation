@@ -345,8 +345,6 @@ void func_802D5DE4_1EEAF4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5DFC_1EEB0C.s")
 
-void func_802D5E98_1EEBA8(void);
-
 #ifdef NON_MATCHING
 void func_802D5E98_1EEBA8(void) {
 	s32 v0;
@@ -703,7 +701,6 @@ s32 func_802D68F4_1EF604(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D68F4_1EF604.s")
 #endif
-
 
 void func_802D6DBC_1EFACC(void) {
 	D_802E0FB8 = 0;

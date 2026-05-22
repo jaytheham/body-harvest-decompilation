@@ -234,7 +234,6 @@ u8 D_8013E40C_14D3BC[4] = {
 };
 
 
-
 void func_800C0E80_CFE30(f32 *mat, f32 *vec, f32 *out) {
 	out[0] = vec[0] * mat[0] + vec[1] * mat[3] + vec[2] * mat[6];
 	out[1] = vec[0] * mat[1] + vec[1] * mat[4] + vec[2] * mat[7];
@@ -1305,12 +1304,6 @@ void func_800C4AA0_D3A50(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4AA0_D3A50.s")
 #endif
-
-extern s16 D_801541FE;
-extern u16 D_100E280[];
-
-void func_800DB714_EA6C4(void);
-void func_800DBA9C_EAA4C(void);
 
 // CURRENT(0)
 #ifdef NON_MATCHING
@@ -5801,29 +5794,6 @@ void func_800DAA1C_E99CC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DAA1C_E99CC.s")
 #endif
 
-extern char D_80143A50_152A00[];
-extern char D_80143A94_152A44[];
-extern char D_80143AD4_152A84[];
-extern char D_80143B18_152AC8[];
-void func_800C5894_D4844(u8 arg0);
-void func_800C22EC_D129C(u8 arg0);
-void func_800C8F5C_D7F0C(u8 arg0);
-void func_800CD42C_DC3DC(s32 arg0);
-void func_800CE1C0_DD170(u8 arg0);
-void func_800D1A94_E0A44(u8 arg0);
-void func_800C3E2C_D2DDC(void);
-void func_800C4AA0_D3A50(void);
-void func_800C6558_D5508(void);
-void func_800C8294_D7244(void);
-void func_800CCB60_DBB10(void);
-void func_800CF948_DE8F8(void);
-void func_800D0C00_DFBB0(void);
-void func_800D25D0_E1580(void);
-void func_800D36EC_E269C(void);
-void func_800D80B4_E7064(void);
-void func_800D90A4_E8054(void);
-void func_800D9B54_E8B04(void);
-
 /* CURRENT(2700) */
 #ifdef NON_MATCHING
 void func_800DABBC_E9B6C(void) {
@@ -6940,11 +6910,6 @@ void func_800E00F4_EF0A4(u8 arg0, u8 arg1) {
 	entry->unk6 = -6;
 	entry->unk8 = -6;
 }
-
-extern char D_80143EB4_152E64;
-extern u8 D_80153B84;
-void func_800E2668_F1618(void);
-void func_801184E4_127494(s8 arg0);
 
 // guess_initSpecialEffects
 void func_800E0134_EF0E4(void) {
