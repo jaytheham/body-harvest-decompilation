@@ -4531,15 +4531,16 @@ void func_800D5684_E4634(void) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(16881)
-void func_800D5760_E4710(s16 arg0, s32 arg1, s16 arg2, u16 arg3, u8 arg4) {
+// CURRENT(8242)
+void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 	Unk80154318Entry *entry;
 	Unk80154318Sub *sub;
 	u8 *parentBytes;
-	f64 dist;
+	u16 dist;
 	f32 scaleSin;
 	f32 scaleCos;
 	s16 angle;
+	s16 parent;
 	s16 x;
 	s16 y;
 	s16 z;
@@ -4547,14 +4548,15 @@ void func_800D5760_E4710(s16 arg0, s32 arg1, s16 arg2, u16 arg3, u8 arg4) {
 	angle = (s16)((((arg2 + (arg4 * 0x78)) << 0x10) / 360) & 0xFFFF);
 	entry = &D_80154318[arg0];
 	sub = (Unk80154318Sub *)&entry->unk8;
-	dist = (f64)(u32)(arg1 & 0xFFFF);
+	parent = entry->unk4;
+	dist = arg1 & 0xFFFF;
 	scaleSin = (f32)(((f64)(f32)sins((u16)angle) / 32768.0) * dist);
 	scaleCos = (f32)(((f64)(f32)coss((u16)angle) / 32768.0) * dist);
 	x = (s16)((s32)(((f64)(f32)coss(arg3) / 32768.0) * (f64)scaleSin) + entry->unk8);
 	y = (s16)((s32)scaleCos + entry->unkA);
 	z = (s16)((s32)((((f64)(f32)sins(arg3) / 32768.0) * (f64)-scaleSin)) + entry->unkC);
 
-	parentBytes = (u8 *)&D_80154318[entry->unk4].unk8;
+	parentBytes = (u8 *)&D_80154318[parent].unk8;
 	if (arg4 == 0) {
 		func_800D6084_E5034(sub->unk9, x, y, z, parentBytes[2], parentBytes[3], parentBytes[4]);
 	} else if (arg4 == 1) {
@@ -4563,7 +4565,7 @@ void func_800D5760_E4710(s16 arg0, s32 arg1, s16 arg2, u16 arg3, u8 arg4) {
 		func_800D6084_E5034(sub->unkB, x, y, z, parentBytes[2], parentBytes[3], parentBytes[4]);
 	}
 
-	if (entry->unk4 == -5) {
+	if (parent == -5) {
 		D_80153BC4 = &D_80153B80;
 		D_80153BC8 = 55.0f;
 		D_80153BCC = 0xFF;
