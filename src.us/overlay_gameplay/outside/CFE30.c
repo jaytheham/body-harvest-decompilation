@@ -4025,7 +4025,7 @@ void func_800D25A4_E1554(s16 arg0) {
 	*(&D_80154327 + (arg0 * 0x1C)) = 1;
 }
 
-// CURRENT(6715)
+// CURRENT(6585)
 #ifdef NON_MATCHING
 void func_800D25D0_E1580(void) {
 	s32 sp50;
@@ -4054,6 +4054,14 @@ void func_800D25D0_E1580(void) {
 	var_s3 = D_80154282;
 	if ((var_s3 == -5) || (var_s3 == -6)) {
 		func_800C1418_D03C8(0xB, 1);
+		return;
+	}
+
+	if (var_s3 != -5) {
+		if (var_s3 == -6) {
+			return;
+		}
+	} else {
 		return;
 	}
 
