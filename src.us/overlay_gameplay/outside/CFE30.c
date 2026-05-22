@@ -5629,10 +5629,6 @@ void func_800DA994_E9944(void) {
 				9,
 				0x78));
 	}
-		#else
-		#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CCB60_DBB10.s")
-		#endif
-
 }
 
 // CURRENT(3180)
