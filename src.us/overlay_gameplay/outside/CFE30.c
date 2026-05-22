@@ -3128,8 +3128,10 @@ void func_800CD390_DC340(u8 arg0) {
 	}
 }
 
-// CURRENT(5289)
+void func_800CD0B0_DC060(u8 arg0);
+
 #ifdef NON_MATCHING
+// CURRENT(3159)
 void func_800CD42C_DC3DC(s32 arg0) {
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
@@ -3150,8 +3152,9 @@ void func_800CD42C_DC3DC(s32 arg0) {
 	}
 
 	if ((index != -5) && (index != -6)) {
-		while (1) {
+		do {
 			entry = &D_80154318[index];
+			sub = (Unk89834Pos *)&entry->unk8;
 			if (entry->unk11 < 0xD) {
 				if ((effect->unk4 < 3) && (D_80154318[effect->unk6].unk11 == 0)) {
 					func_800C1418_D03C8(effectId, 0);
@@ -3163,7 +3166,6 @@ void func_800CD42C_DC3DC(s32 arg0) {
 				func_800C1A4C_D09FC(index, effectId, 0);
 				index = nextIndex;
 			} else {
-				sub = (Unk89834Pos *)&entry->unk8;
 				if (sub->unkD == 0) {
 					sub->unk9 = (u8)(sub->unk9 - (func_800038E0_44E0() % 4) - 4);
 					entry->unk2 = (s16)(entry->unk2 + (func_800038E0_44E0() % 3) + 3);
@@ -3173,8 +3175,8 @@ void func_800CD42C_DC3DC(s32 arg0) {
 				}
 
 				sub->unk0 = (s16)(sub->unk0 + sub->unkA);
-				sub->unk4 = (s16)(sub->unk4 + sub->unkC);
 				sub->unk2 = (s16)(sub->unk2 + sub->unkB);
+				sub->unk4 = (s16)(sub->unk4 + sub->unkC);
 				sub->unk6 = (s8)(sub->unk6 - 4);
 				sub->unk7 = (s8)(sub->unk7 - 4);
 				sub->unk8 = (s8)(sub->unk8 - 4);
@@ -3192,10 +3194,7 @@ void func_800CD42C_DC3DC(s32 arg0) {
 				index = entry->unk4;
 			}
 
-			if ((index == -5) || (index == -6)) {
-				break;
-			}
-		}
+		} while ((index != -5) && (index != -6));
 	}
 
 	if (D_80154318[effect->unk6].unk11 == 1) {
