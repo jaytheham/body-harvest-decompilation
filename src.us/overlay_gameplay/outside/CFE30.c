@@ -5004,9 +5004,11 @@ void func_800D7790_E6740(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7870_E6820.s")
 
+// CURRENT(50)
 #ifdef NON_MATCHING
 s16 func_800D7EF8_E6EA8(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 dummy;
+	s16 dummy2;
 	s16 temp_v0;
 
 	temp_v0 = func_800C17B4_D0764(0x12, 1);
@@ -5014,8 +5016,8 @@ s16 func_800D7EF8_E6EA8(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 		D_80154318[temp_v0].unk8 = arg0;
 		D_80154318[temp_v0].unkA = arg1;
 		D_80154318[temp_v0].unkC = arg2;
-		D_80154318[temp_v0].unkE = arg0 + 5;
-		D_80154318[temp_v0].unk10 = arg1 + 1;
+		*((s16 *)&D_80154318[temp_v0].unkE) = (s16)(arg0 + 5);
+		*((s16 *)&D_80154318[temp_v0].unk10) = (s16)(arg1 + 1);
 		D_80154318[temp_v0].unk12 = arg2 + 5;
 		D_80154318[temp_v0].unk2 = arg3;
 		D_80154318[temp_v0].unk14 = func_800C2274_D1224(arg0, arg1, arg2, 0);
