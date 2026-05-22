@@ -4392,8 +4392,10 @@ void func_800D45B4_E3564(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D45B4_E3564.s")
 #endif
 
+// CURRENT(15)
 #ifdef NON_MATCHING
 s16 func_800D49CC_E397C(s16 arg0, s16 arg1, s16 arg2) {
+	s32 padStack;
 	s16 slot;
 	Unk80154318Entry *entry;
 
@@ -4404,8 +4406,8 @@ s16 func_800D49CC_E397C(s16 arg0, s16 arg1, s16 arg2) {
 		entry->unk8 = arg0;
 		entry->unkA = arg1;
 		entry->unkC = arg2;
-		entry->unkE = arg0;
-		entry->unk10 = arg1;
+		*(s16 *)&entry->unkE = arg0;
+		*(s16 *)&entry->unk10 = arg1;
 		entry->unk12 = arg2;
 		entry->unk14 = 0;
 		func_800DDB60_ECB10(arg0, arg1, arg2, 0xD, 0x1E);
