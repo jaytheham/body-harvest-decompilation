@@ -7715,7 +7715,101 @@ s32 func_80112A64_121A14(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	return (temp_t6 * temp_t6) + (temp_t7 * temp_t7);
 }
 
+// CURRENT(12555)
+#ifdef NON_MATCHING
+void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
+	s16 yRotation;
+
+	if (arg2 == 0) {
+		Unk80259490 *spawnData = &((Unk80259490 *)&D_80259490)[127];
+		VehicleInstance *vehicle = &D_80050A74;
+
+		do {
+			s16 x = (s16)((spawnData->unk0 << 8) + 0x80);
+			s16 z = (s16)((spawnData->unk2 << 8) + 0x80);
+
+			if (spawnData->unk6 == 0) {
+				vehicle->unk20 &= 0xFFFF7FFF;
+			} else {
+				s32 buildingIndex;
+				u16 temp;
+
+				vehicle->unk20 |= 0x8001;
+				func_800FB44C_10A3FC(vehicle, x);
+				func_800FB484_10A434(vehicle, z);
+				buildingIndex = func_8011E6FC_12D6AC(vehicle->unk0, vehicle->unk4, &yRotation);
+				func_800FB468_10A418(vehicle, yRotation);
+
+				if (buildingIndex != -1) {
+					vehicle->unk20 |= 0x800;
+				}
+
+				vehicle->unkE = 0x4000 - spawnData->unk8;
+				vehicle->unk6 = 0x4000 - spawnData->unk8;
+				vehicle->unk3C = (s16)((f64)(vehicleSpecs[spawnData->unk6].unk61 << 8) * ((f64)spawnData->unkA / 100.0));
+
+				temp = vehicleSpecs[vehicle->unk1A].hitPoints;
+				vehicle->unk1C = (s16)((f64)(f32)temp * ((f64)*(s16 *)((u8 *)spawnData + 0x10) / 100.0));
+			}
+
+			spawnData--;
+			vehicle--;
+		} while (spawnData >= &((Unk80259490 *)&D_80259490)[2]);
+	} else {
+		s16 i;
+		u8 *entry;
+
+		if (D_80158FD8 > 0) {
+			i = D_80158FD8 - 1;
+			entry = &D_80158E80[i];
+			do {
+				VehicleInstance *vehicle = &vehicleInstances[*entry];
+
+				if (vehicle != D_80052B34) {
+					s32 range = arg2 >> 2;
+
+					if (func_80112A64_121A14(arg0, arg1, vehicle->unk0, vehicle->unk4) < (range * range)) {
+						Unk80259490 *spawnData = &((Unk80259490 *)&D_80259490)[vehicle->unk46 & 0x3F];
+						s16 x = (s16)((spawnData->unk0 << 8) + 0x80);
+						s16 z = (s16)((spawnData->unk2 << 8) + 0x80);
+
+						if (spawnData->unk6 == 0) {
+							vehicle->unk20 &= 0xFFFF7FFF;
+						} else {
+							s32 buildingIndex;
+							u16 temp;
+							VehicleInstance *vehicleByI = &vehicleInstances[i];
+
+							vehicle->unk20 |= 0x8001;
+							func_800FB44C_10A3FC(vehicle, x);
+							func_800FB484_10A434(vehicle, z);
+							buildingIndex = func_8011E6FC_12D6AC(vehicle->unk0, vehicle->unk4, &yRotation);
+							func_800FB468_10A418(vehicle, yRotation);
+
+							if (buildingIndex != -1) {
+								vehicle->unk20 |= 0x800;
+							}
+
+							vehicle->unkE = 0x4000 - spawnData->unk8;
+							vehicle->unk6 = 0x4000 - spawnData->unk8;
+							vehicle->unk3C = (s16)((f64)(vehicleSpecs[spawnData->unk6].unk61 << 8) * ((f64)spawnData->unkA / 100.0));
+
+							temp = vehicleSpecs[vehicleByI->unk1A].hitPoints;
+							vehicle->unk1C = (s16)((f64)(f32)temp * ((f64)*(s16 *)((u8 *)spawnData + 0x10) / 100.0));
+						}
+					}
+				}
+				entry--;
+			} while (i-- > 0);
+		}
+	}
+
+	func_800FAC90_109C40();
+	func_800FAD10_109CC0();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80112A98_121A48.s")
+#endif
 
 // CURRENT(40)
 #ifdef NON_MATCHING
