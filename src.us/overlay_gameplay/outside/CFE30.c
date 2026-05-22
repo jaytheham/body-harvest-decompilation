@@ -3586,7 +3586,7 @@ void func_800CF80C_DE7BC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(9195)
+// CURRENT(2320)
 void func_800CF948_DE8F8(void) {
 	s16 curr;
 
@@ -3597,32 +3597,31 @@ void func_800CF948_DE8F8(void) {
 	}
 
 	while (curr != -5 && curr != -6) {
-		Unk80154318Entry *entry = &D_80154318[curr];
-		Unk80154318Sub *data = (Unk80154318Sub *)&entry->unk8;
-		u8 *dataBytes = (u8 *)data;
+		u8 *entry = (u8 *)&D_80154318[curr];
+		u8 *data = (u8 *)entry + 8;
 		s16 temp_s1;
 
-		if ((dataBytes[0x10] & 1) == 1) {
-			*(s32 *)&dataBytes[0xC] = *(s32 *)&dataBytes[0xC] - 1;
+		if ((data[0x10] & 1) == 1) {
+			*(s32 *)&data[0xC] = *(s32 *)&data[0xC] - 1;
 		} else {
-			*(s32 *)&dataBytes[0xC] = *(s32 *)&dataBytes[0xC] + 1;
+			*(s32 *)&data[0xC] = *(s32 *)&data[0xC] + 1;
 		}
 
-		if (*(s32 *)&dataBytes[0xC] <= 0 || *(s32 *)&dataBytes[0xC] >= 0x19) {
-			temp_s1 = entry->unk4;
+		if (*(s32 *)&data[0xC] <= 0 || *(s32 *)&data[0xC] >= 0x19) {
+			temp_s1 = *(s16 *)&entry[4];
 			func_800C1A4C_D09FC(curr, 0xA, 1);
 			curr = temp_s1;
 			continue;
 		}
 
-		if (*(s32 *)&dataBytes[0xC] < 0x10) {
+		if (*(s32 *)&data[0xC] < 0x10) {
 			s32 i;
 
 			for (i = 0; i < D_80158FD8; i = (i + 1) & 0xFF) {
-				s16 radius = entry->unk2;
-				s16 absRadius;
+				s16 radius = *(s16 *)&entry[2];
 				VehicleInstance *vehicle = &vehicleInstances[D_80158E80[i]];
-				s32 dx = data->unk0 - vehicle->unk0;
+				s32 absRadius;
+				s32 dx;
 				s32 absX;
 				s32 dy;
 				s32 absY;
@@ -3630,49 +3629,51 @@ void func_800CF948_DE8F8(void) {
 				s32 absZ;
 				s32 maxDist;
 
-				if (radius < 0) {
-					absRadius = -radius;
-				} else {
+				absRadius = -radius;
+				if (absRadius < radius) {
 					absRadius = radius;
 				}
 
-				if (dx < 0) {
-					absX = -dx;
-				} else {
+				maxDist = *(s16 *)((u8 *)D_80257A0C + (vehicle->unk1A * 0x70));
+				maxDist = maxDist + absRadius + 0x64;
+
+				dx = *(s16 *)&data[0] - vehicle->unk0;
+				if (-dx < dx) {
 					absX = dx;
+				} else {
+					absX = -dx;
 				}
 
-				dy = data->unk2 - vehicle->unk2;
-				if (dy < 0) {
-					absY = -dy;
-				} else {
+				dy = *(s16 *)&data[2] - vehicle->unk2;
+				if (-dy < dy) {
 					absY = dy;
-				}
-
-				dz = data->unk4 - vehicle->unk4;
-				if (dz < 0) {
-					absZ = -dz;
 				} else {
-					absZ = dz;
+					absY = -dy;
 				}
 
-				maxDist = *(s16 *)((u8 *)D_80257A0C + (vehicle->unk1A * 0x70)) + absRadius + 0x64;
+				dz = *(s16 *)&data[4] - vehicle->unk4;
+				if (-dz < dz) {
+					absZ = dz;
+				} else {
+					absZ = -dz;
+				}
+
 				if (absX < maxDist && absY < maxDist && absZ < maxDist) {
-					s32 distSq = (absX * absX) + (absY * absY) + (absZ * absZ);
-					if ((s32)sqrtf((f32)distSq) < maxDist && entry->unk2 > 0 && !(vehicle->unk20 & 2)) {
+					u32 distSq = (absX * absX) + (absY * absY) + (absZ * absZ);
+					if ((s32)sqrtf((f32)distSq) < maxDist && *(s16 *)&entry[2] > 0 && !(vehicle->unk20 & 2)) {
 						func_80102DDC_111D8C(vehicle, func_80003824_4424((f32)-absX, (f32)-absZ), 0, 9.0f);
 					}
 				}
 			}
-		} else if (*(s32 *)&dataBytes[0xC] == 0x10 && !(dataBytes[0x10] & 2)) {
+		} else if (*(s32 *)&data[0xC] == 0x10 && !(data[0x10] & 2)) {
 			u32 i;
 
 			for (i = 0; i < D_8014ECCC; i = (i + 1) & 0xFF) {
 				AlienInstance *alien = &alienInstances[D_8014D510[i]];
-				s32 dx = data->unk0 - alien->unk0;
-				s32 dy = data->unk2 - alien->unk2;
-				s32 dz = data->unk4 - alien->unk4;
-				s16 radius = entry->unk2;
+				s32 dx = *(s16 *)&data[0] - alien->unk0;
+				s32 dy = *(s16 *)&data[2] - alien->unk2;
+				s32 dz = *(s16 *)&data[4] - alien->unk4;
+				s16 radius = *(s16 *)&entry[2];
 
 				if ((dx * dx) + (dy * dy) + (dz * dz) < (s32)(D_80256688[alien->specIndex][0] + (radius * radius))) {
 					func_80088760_97710(alien);
@@ -3680,7 +3681,7 @@ void func_800CF948_DE8F8(void) {
 			}
 		}
 
-		curr = entry->unk4;
+		curr = *(s16 *)&entry[4];
 	}
 }
 #else
