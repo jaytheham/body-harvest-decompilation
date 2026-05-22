@@ -3332,7 +3332,7 @@ void func_800CDD7C_DCD2C(s16 arg0) {
 	}
 }
 
-// CURRENT(4862)
+// CURRENT(3858)
 #ifdef NON_MATCHING
 void func_800CDDE4_DCD94(void) {
 	s16 idx;
@@ -3340,6 +3340,7 @@ void func_800CDDE4_DCD94(void) {
 	Unk80052B40 sp78;
 	Unk80052B40 sp80;
 	Unk80052B40 sp88;
+	s32 offset;
 
 	idx = D_8015426A;
 
@@ -3349,31 +3350,34 @@ void func_800CDDE4_DCD94(void) {
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
 
-	while ((idx != -6) && (idx != -5)) {
-		gDPPipeSync(D_8005BB2C++);
+	if ((idx != -6) && (idx != -5)) {
+		do {
+			gDPPipeSync(D_8005BB2C++);
 
-		entry = &D_80154318[idx];
+			offset = ((s32)idx << 3) - idx;
+			offset <<= 2;
+			entry = (Unk80154318Entry *)((u8 *)D_80154318 + offset);
 		if (entry->unk11 == 1) {
-			sp80.unk0 = 0;
-			sp80.unk2 = 0;
-			sp80.unk4 = 0x8000;
+			sp78.unk0 = 0;
+			sp78.unk2 = 0;
+			sp78.unk4 = 0x8000;
 			sp88.unk0 = 0x96;
 			sp88.unk2 = 0x96;
 			sp88.unk4 = 0x96;
 		} else {
-			sp80.unk0 = 0;
-			sp80.unk2 = 0;
-			sp80.unk4 = 0;
+			sp78.unk0 = 0;
+			sp78.unk2 = 0;
+			sp78.unk4 = 0;
 			sp88.unk0 = 0x46;
 			sp88.unk2 = 0x46;
 			sp88.unk4 = 0x46;
 		}
 
-		sp78.unk0 = entry->unk8;
-		sp78.unk2 = entry->unkA;
-		sp78.unk4 = entry->unkC;
+		sp80.unk0 = entry->unk8;
+		sp80.unk2 = entry->unkA;
+		sp80.unk4 = entry->unkC;
 
-		func_800039D0_45D0(&sp78, &sp80, &sp88, D_8005BB38);
+		func_800039D0_45D0(&sp80, &sp78, &sp88, D_8005BB38);
 
 		gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 		D_8005BB38 += 0x40;
@@ -3382,6 +3386,7 @@ void func_800CDDE4_DCD94(void) {
 
 		D_80156EDA += 0x1E;
 		idx = entry->unk4;
+		} while ((idx != -6) && (idx != -5));
 	}
 }
 #else
