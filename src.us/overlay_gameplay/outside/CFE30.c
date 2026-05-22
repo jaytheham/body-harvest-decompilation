@@ -2879,7 +2879,6 @@ void func_800CBE98_DAE48(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(210)
-s16 func_800CC7B0_DB760(s16 arg0, s16 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5) {
 	s32 sp4C;
 	Unk80154318Entry *temp_v1;
 	u16 sp58;
@@ -3526,7 +3525,8 @@ void func_800CF070_DE020(void) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(215)
+// CURRENT(25)
+#ifdef NON_MATCHING
 void func_800CF174_DE124(Vec3f *arg0, s32 arg1) {
 	arg1 = (u8)arg1;
 	gDPPipeSync(D_8005BB2C++);
@@ -5637,6 +5637,9 @@ void func_800DA994_E9944(void) {
 				9,
 				0x78));
 	}
+		#else
+		#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF174_DE124.s")
+		#endif
 }
 
 // CURRENT(3180)
@@ -8209,9 +8212,6 @@ void func_800E7338_F62E8(void) {
 				0);
 			D_80157534 = *(u8 *)&D_80157533;
 			D_80157532--;
-	u8 temp_t2;
-	u8 var_v1;
-	s32 temp_lo;
 
 	temp_t2 = arg3;
 	D_80157532 = temp_t2;
