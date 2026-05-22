@@ -1700,7 +1700,117 @@ s32 func_800EF0B0_FE060(s32 arg0) {
 
 // This checks the player modifier and writes values that cause either
 // normal or evil adam to be rendered
+// CURRENT(7680)
+#ifdef NON_MATCHING
+void func_800EF14C_FE0FC(void *arg0) {
+	f32 sp6C[10];
+	struct {
+		s32 unk0;
+		s32 unk4;
+		u16 unk8;
+	} sp60;
+	Unk80052B40 spA8;
+	Unk80052B40 spA4;
+	Unk80052B40 sp9C;
+	struct {
+		s32 unk0;
+		s32 unk4;
+		s32 unk8;
+	} spAC;
+	s32 i;
+	u16 timer;
+
+	for (i = 0; i < 10; i++) {
+		sp6C[i] = D_8013FC80_14EC30[i];
+	}
+
+	*(volatile s32 *)&sp60.unk0 = D_8013FCA8_14EC58[0];
+	*(volatile s32 *)&sp60.unk4 = D_8013FCA8_14EC58[1];
+	*(volatile u16 *)&sp60.unk8 = ((u16 *)D_8013FCA8_14EC58)[4];
+
+	if (D_80157A3C != 0) {
+		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+
+		func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
+		gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+		D_8005BB38 += 0x40;
+
+		spA8.unk0 = ((s16 *)arg0)[0];
+		spA8.unk2 = ((s16 *)arg0)[1];
+		spA8.unk4 = ((s16 *)arg0)[2];
+		spA4.unk2 = 0;
+		spA4.unk4 = 0;
+		spA4.unk0 = 0x4000 - ((s16 *)arg0)[7];
+		sp9C.unk2 = (s16)(0x1000 / (D_80157A3C + 1));
+		sp9C.unk0 = D_80157A3C;
+		sp9C.unk4 = D_80157A3C;
+
+		func_800039D0_45D0(&spA8, &spA4, &sp9C, D_8005BB38);
+		gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		D_8005BB38 += 0x40;
+
+		spAC.unk0 = 0;
+		spAC.unk8 = 0;
+		spA4.unk0 = D_80157600.unk2 << 3;
+		spA4.unk2 = D_80157600.unk4 << 3;
+		spA4.unk4 = D_80157600.unk0 << 3;
+		spAC.unk4 = (s32)(D_80157600.unkC * 65536.0f);
+
+		func_8000C81C_D41C(&spAC.unk0, &spA4, NULL, (s32 *)D_8005BB38);
+		gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		D_8005BB38 += 0x40;
+
+		gSPSegment(D_8005BB2C++, 0x07, D_8005BB38 & 0x1FFFFFFF);
+		gSPSegment(D_8005BB2C++, 0x06, func_80011FAC_12BAC(((s32 *)D_8013E470_14D420)[D_801575DC << 3]));
+
+		func_8000CC3C_D83C(&D_80157600, 0x10);
+
+		sp9C.unk2 = 0x100;
+		sp9C.unk0 = 0x100;
+		sp9C.unk4 = 0x100;
+		if ((D_80157600.unk40C == 0x38) && (func_800EB9B4_FA964(&D_80157600) == 3)) {
+			if (((u16 *)D_8013FCB4_14EC64)[0] == 0) {
+				func_800D0614_DF5C4(D_80052B34->unk0, D_80052B34->unk2 + 0x36, D_80052B34->unk4, 0x55, 0xFA, 0xA0, 0x50,
+								 0);
+				func_80001144_1D44(0x14, 0, 5);
+				func_801371B8_146168(0, 0x16A, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 1.0f);
+				((u16 *)D_8013FCB4_14EC64)[0] = 5;
+			}
+
+			sp9C.unk2 = (s16)(sp6C[(s32)func_800EB9BC_FA96C(&D_80157600)] * 256.0f);
+			sp9C.unk0 = sp9C.unk2;
+			sp9C.unk4 = sp9C.unk2;
+		}
+
+		i = D_8005BB38;
+		D_8005BB38 += 0x40;
+		func_800039D0_45D0(NULL, NULL, &sp9C, i);
+
+		timer = (u16)D_8013FCB4_14EC64[0];
+		if ((s16)timer > 0) {
+			((u16 *)D_8013FCB4_14EC64)[0] = timer;
+			if (gameplayMode == 1) {
+				timer = (timer - 1) & 0xFFFF;
+				((u16 *)D_8013FCB4_14EC64)[0] = timer;
+			}
+		}
+
+		if ((s16)timer >= 6) {
+			((u16 *)D_8013FCB4_14EC64)[0] = 5;
+		}
+
+		if (D_80052ACD & 2) {
+			gSPDisplayList(D_8005BB2C++, (Gfx *)((s32)&D_50408F0 & 0x1FFFFFFF));
+			return;
+		}
+
+		gSPDisplayList(D_8005BB2C++, (Gfx *)((s32)&D_10031E0 & 0x1FFFFFFF));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF14C_FE0FC.s")
+#endif
 
 // CURRENT(491)
 #ifdef NON_MATCHING
