@@ -2509,7 +2509,7 @@ void func_800CA1B0_D9160(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA1B0_D9160.s")
 #endif
 
-// CURRENT(4946)
+// CURRENT(4556)
 #ifdef NON_MATCHING
 s32 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8,
 						u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
@@ -2523,6 +2523,7 @@ s32 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 	Unk80154318Entry *unit;
 	u8 *unitBytes;
 	u8 *linkedBytes;
+	u8 *linkedSubBytes;
 	u8 intensity;
 
 	colorR = arg10;
@@ -2561,6 +2562,7 @@ s32 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 		linkedBytes[0xA] = arg5;
 		linkedBytes[0xB] = arg6;
 		linkedBytes[0xC] = arg9;
+		linkedSubBytes = &linkedBytes[8];
 
 		unit->unkE = colorR;
 		unit->unk14 = 0;
@@ -2587,7 +2589,7 @@ s32 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 		}
 		unitBytes[0xB] = value;
 
-		linkedBytes[0x10] = arg13;
+		linkedSubBytes[8] = arg13;
 
 		intensity = arg8;
 		if (intensity >= 0x97) {
@@ -2595,8 +2597,8 @@ s32 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 		} else if (intensity == 0) {
 			intensity = 1;
 		}
-		linkedBytes[0xD] = intensity;
-		*((s16 *) &linkedBytes[0xE]) = 0;
+		linkedSubBytes[5] = intensity;
+		*((s16 *) &linkedSubBytes[6]) = 0;
 	}
 
 	return effect;
