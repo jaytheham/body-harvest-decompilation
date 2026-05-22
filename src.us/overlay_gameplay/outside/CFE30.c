@@ -2932,14 +2932,14 @@ void func_800CCAD4_DBA84(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-// CURRENT(2094)
+// CURRENT(1279)
 #ifdef NON_MATCHING
 void func_800CCB60_DBB10(void) {
 	s16 unitId;
 	s16 nextUnitId;
 	Unk80154318Entry *entry;
 	Unk80154318Sub *sub;
-	s32 timer;
+	u8 alpha;
 
 	unitId = D_80154246;
 	if ((unitId == -5) || (unitId == -6)) {
@@ -2947,13 +2947,14 @@ void func_800CCB60_DBB10(void) {
 		return;
 	}
 
-	if ((unitId != -5) && (unitId != -6)) {
-		for (;;) {
-			entry = &D_80154318[unitId];
-			timer = entry->unk15 - 1;
-			entry->unk15 = timer;
+	alpha = 0xFF;
 
-			if ((timer & 0xFF) == 0) {
+	if ((unitId != -5) && (unitId != -6)) {
+		do {
+			entry = &D_80154318[unitId];
+			entry->unk15--;
+
+			if ((entry->unk15 & 0xFF) == 0) {
 				nextUnitId = entry->unk4;
 				func_800C1A4C_D09FC(unitId, 6, 1);
 				unitId = nextUnitId;
@@ -2967,7 +2968,7 @@ void func_800CCB60_DBB10(void) {
 
 				sub->unk6 = (func_800038E0_44E0() % 85) + 0xAA;
 				sub->unk7 = (func_800038E0_44E0() % 85) + 0xAA;
-				sub->unk8 = -1;
+				sub->unk8 = alpha;
 				sub->unkC++;
 				if (sub->unkC >= 8) {
 					sub->unkC = 0;
@@ -2975,19 +2976,9 @@ void func_800CCB60_DBB10(void) {
 
 				unitId = entry->unk4;
 			}
-
-			if (unitId == -5) {
-				break;
-			}
-			if (unitId == -6) {
-				break;
-			}
-		}
+		} while ((unitId != -5) && (unitId != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CCB60_DBB10.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(1836)
@@ -5638,6 +5629,9 @@ void func_800DA994_E9944(void) {
 				9,
 				0x78));
 	}
+		#else
+		#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CCB60_DBB10.s")
+		#endif
 
 }
 
