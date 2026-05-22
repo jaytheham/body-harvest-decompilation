@@ -5103,40 +5103,26 @@ void func_800D8FA0_E7F50(s16 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D8FA0_E7F50.s")
 #endif
 
-// CURRENT(1180)
+// CURRENT(1123)
 #ifdef NON_MATCHING
 void func_800D90A4_E8054(void) {
 	s16 curr;
-	s16 endA;
-	s16 endB;
 	s16 next;
-	s32 div;
-	s32 stride;
-	volatile s32 *heightLimit;
-	Unk80154318Entry *entryBase;
 	Unk80154318Entry *entry;
 	Unk80154318Sub *entrySub;
-	s32 rand;
 
-	endA = -5;
-	endB = -6;
 	curr = D_801542E2;
-	if ((curr == endA) || (curr == endB)) {
+	if ((curr == -5) || (curr == -6)) {
 		func_800C1418_D03C8(0x13, 1);
 		return;
 	}
-	heightLimit = &D_80222A70;
-	entryBase = D_80154318;
-	stride = 0x1C;
-	div = 5;
-	while ((curr != endA) && (curr != endB)) {
-		rand = func_800038E0_44E0();
-		entry = (Unk80154318Entry *)((u8 *)entryBase + (curr * stride));
+	while ((curr != -5) && (curr != -6)) {
+		entry = &D_80154318[curr];
 		entrySub = (Unk80154318Sub *)&entry->unk8;
-		entrySub->unk0 = entrySub->unk0 + entrySub->unk6 + (rand % div) - 2;
-		entrySub->unk2 = entrySub->unk2 + entrySub->unk7 + (func_800038E0_44E0() % div) - 2;
-		entrySub->unk4 = entrySub->unk4 + entrySub->unk8 + (func_800038E0_44E0() % div) - 2;
-		if (entrySub->unk2 >= *heightLimit) {
+		entrySub->unk0 = entrySub->unk0 + entrySub->unk6 + (func_800038E0_44E0() % 5) - 2;
+		entrySub->unk2 = entrySub->unk2 + entrySub->unk7 + (func_800038E0_44E0() % 5) - 2;
+		entrySub->unk4 = entrySub->unk4 + entrySub->unk8 + (func_800038E0_44E0() % 5) - 2;
+		if (entrySub->unk2 >= D_80222A70) {
 			next = entry->unk4;
 			func_800C1A4C_D09FC(curr, 0x13, 1);
 			curr = next;
