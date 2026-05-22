@@ -4312,11 +4312,11 @@ void func_800D3D40_E2CF0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D3E3C_E2DEC.s")
 
-// CURRENT(4047)
+// CURRENT(2425)
 #ifdef NON_MATCHING
 void func_800D45B4_E3564(void) {
 	s16 index;
-	s16 minusSix;
+	s32 minusSix;
 
 	index = D_801542A6;
 	if (index == -5) {
@@ -4329,8 +4329,6 @@ void func_800D45B4_E3564(void) {
 	}
 
 	while (1) {
-		Unk80154318Entry *entry;
-		s16 *points;
 		s16 dx;
 		s16 dy;
 		s16 dz;
@@ -4339,12 +4337,13 @@ void func_800D45B4_E3564(void) {
 		s16 quarterZ;
 		s16 scaleX;
 		s16 scaleZ;
-		s16 trig;
 		u8 alpha;
 		s16 sinVal;
 		s16 cosVal;
 		f64 stepZ;
 		f64 stepX;
+		Unk80154318Entry *entry;
+		s16 *points;
 
 		entry = &D_80154318[index];
 		points = &entry->unk8;
@@ -4354,8 +4353,7 @@ void func_800D45B4_E3564(void) {
 		dz = (s16)(entry->unk12 - entry->unkC);
 		alpha = (u8)((0xFF - (entry->unk14 * 0x12)) & 0xFF);
 
-		trig = coss(0x888);
-		cosVal = trig;
+		cosVal = coss(0x888);
 		sinVal = sins(0x888);
 
 		quarterZ = (s16)(dz / 4);
@@ -4363,31 +4361,28 @@ void func_800D45B4_E3564(void) {
 		quarterX = (s16)(dx / 4);
 		stepX = (f64)quarterX;
 
-		scaleX = (s16)(s32)((((f64)(f32)sinVal / 32768.0) * stepZ) + (((f64)(f32)cosVal / 32768.0) * stepX));
-		trig = coss(0x888);
-		cosVal = trig;
+		scaleX = (s16)((((f64)(f32)sinVal / 32768.0) * stepZ) + (((f64)(f32)cosVal / 32768.0) * stepX));
+		cosVal = coss(0x888);
 		sinVal = sins(0x888);
-		scaleZ = (s16)(s32)((((f64)(f32)cosVal / 32768.0) * stepZ) - (((f64)(f32)sinVal / 32768.0) * stepX));
+		scaleZ = (s16)((((f64)(f32)cosVal / 32768.0) * stepZ) - (((f64)(f32)sinVal / 32768.0) * stepX));
 
-		func_800D3E3C_E2DEC(points[0], points[1], points[2], *(s16 *)&entry->unkE, *(s16 *)&entry->unk10, entry->unk12, alpha);
+		func_800D3E3C_E2DEC(points[0], points[1], points[2], points[3], points[4], points[5], alpha);
 
 		quarterY = (s16)(dy / 4);
 		func_800D3E3C_E2DEC(points[0], points[1], points[2], (s16)(points[0] + scaleX), (s16)(points[1] + quarterY), (s16)(points[2] + scaleZ), alpha);
-		func_800D3E3C_E2DEC(*(s16 *)&entry->unkE, *(s16 *)&entry->unk10, entry->unk12, (s16)(points[0] + scaleX), (s16)(points[1] + quarterY), (s16)(points[2] + scaleZ), alpha);
+		func_800D3E3C_E2DEC(points[3], points[4], points[5], (s16)(points[0] + scaleX), (s16)(points[1] + quarterY), (s16)(points[2] + scaleZ), alpha);
 
-		trig = coss(0xF778);
-		cosVal = trig;
+		cosVal = coss(0xF778);
 		sinVal = sins(0xF778);
-		scaleX = (s16)(s32)((((f64)(f32)sinVal / 32768.0) * stepZ) + (((f64)(f32)cosVal / 32768.0) * stepX));
-		trig = coss(0xF778);
-		cosVal = trig;
+		scaleX = (s16)((((f64)(f32)sinVal / 32768.0) * stepZ) + (((f64)(f32)cosVal / 32768.0) * stepX));
+		cosVal = coss(0xF778);
 		sinVal = sins(0xF778);
-		scaleZ = (s16)(s32)((((f64)(f32)cosVal / 32768.0) * stepZ) - (((f64)(f32)sinVal / 32768.0) * stepX));
+		scaleZ = (s16)((((f64)(f32)cosVal / 32768.0) * stepZ) - (((f64)(f32)sinVal / 32768.0) * stepX));
 
 		func_800D3E3C_E2DEC(points[0], points[1], points[2], (s16)(points[0] + scaleX), (s16)(points[1] + quarterY), (s16)(points[2] + scaleZ), alpha);
-		func_800D3E3C_E2DEC(*(s16 *)&entry->unkE, *(s16 *)&entry->unk10, entry->unk12, (s16)(points[0] + scaleX), (s16)(points[1] + quarterY), (s16)(points[2] + scaleZ), alpha);
+		func_800D3E3C_E2DEC(points[3], points[4], points[5], (s16)(points[0] + scaleX), (s16)(points[1] + quarterY), (s16)(points[2] + scaleZ), alpha);
 
-		index = entry->unk4;
+		index = D_80154318[index].unk4;
 		if (index == -5 || index == minusSix) {
 			return;
 		}
