@@ -1809,6 +1809,17 @@ typedef struct {
 } Frontend52690Viewport;
 
 typedef struct {
+	/* 0x00 */ u8 pad0[0x8];
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ u8 pad14[0x34];
+} Unk80076538Obj; /* size = 0x48 */
+
+typedef struct {
 	/* 0x00 */ u32 unk0;
 	/* 0x04 */ u8 unk4;
 	/* 0x05 */ u8 unk5;

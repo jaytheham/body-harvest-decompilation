@@ -422,7 +422,6 @@ void func_80079510_884C0(u8 arg0)
   *((u8*)&inst->unk1E) = 0xFF;
 }
 
-
 // CURRENT(0)
 #ifdef NON_MATCHING
 s32 func_8007956C_8851C(u8 arg0)

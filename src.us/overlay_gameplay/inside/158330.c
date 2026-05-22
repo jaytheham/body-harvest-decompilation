@@ -2887,17 +2887,6 @@ void func_8007568C_15D74C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007568C_15D74C.s")
 #endif
 
-typedef struct {
-	/* 0x00 */ u8 pad0[0x8];
-	/* 0x08 */ s16 unk8;
-	/* 0x0A */ s16 unkA;
-	/* 0x0C */ s16 unkC;
-	/* 0x0E */ s16 unkE;
-	/* 0x10 */ s16 unk10;
-	/* 0x12 */ s16 unk12;
-	/* 0x14 */ u8 pad14[0x34];
-} Unk80076538Obj; /* size = 0x48 */
-
 void func_80076538_15E5F8(s32 arg0) {
 	Unk800E66A8 *temp_v0;
 	Unk80076538Obj *temp_v0_2;
@@ -5476,8 +5465,6 @@ void func_8007BC18_163CD8(s32 arg0, f32 *arg1, f32 *arg2, s32 *arg3, s32 *arg4) 
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007BC18_163CD8.s")
 #endif
-
-s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007C1DC *arg4);
 
 // CURRENT(1820)
 #ifdef NON_MATCHING
