@@ -3445,7 +3445,7 @@ s32 func_800CE100_DD0B0(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CE6E8_DD698.s")
 
-// CURRENT(5441)
+// CURRENT(4564)
 #ifdef NON_MATCHING
 void func_800CEE00_DDDB0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 idx;
@@ -3453,12 +3453,14 @@ void func_800CEE00_DDDB0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 temp;
 	s16 rem;
 	s16 tens;
+	s16 temp_a2;
 	Unk80154318Entry *entry;
 	u8 *p;
 
 	var_s0 = arg3;
 
-	if (func_800B93AC_C835C(arg0, arg2, 0xC8, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) == 0) {
+	temp_a2 = D_80047950;
+	if (func_800B93AC_C835C(arg0, arg2, 0xC8, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - temp_a2) == 0) {
 		return;
 	}
 
@@ -3467,8 +3469,9 @@ void func_800CEE00_DDDB0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 		return;
 	}
 
+	temp = var_s0 / 50;
 	entry = &D_80154318[idx];
-	entry->unk2 = (var_s0 / 50) + 0x19;
+	entry->unk2 = temp + 0x19;
 	entry->unk8 = arg0;
 	entry->unkA = arg1;
 	entry->unkC = arg2;
