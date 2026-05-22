@@ -3928,17 +3928,15 @@ void func_800D1A1C_E09CC(u8 arg0) {
 	osSyncPrintf(&D_801437C0_152770); // EFFECTS WARNING : You have tried to kill a lightning effect which doesn't exist
 }
 
-// CURRENT(5045)
+// CURRENT(3721)
 #ifdef NON_MATCHING
 void func_800D1A94_E0A44(u8 arg0) {
+	Unk80154318Sub *sp34;
 	s16 sp42;
 	s16 sp40;
 	s16 sp3E;
 	s16 sp3C;
-	s8 sp3A;
-	s8 sp39;
-	s8 sp38;
-	Unk80154318Sub *sp34;
+	u8 sp38[3];
 	s16 var_a1;
 	Unk801541F8Entry *temp_t3;
 	Unk80154318Entry *temp_v0;
@@ -3953,38 +3951,37 @@ void func_800D1A94_E0A44(u8 arg0) {
 
 	if (var_a1 != -5 && var_a1 != -6) {
 		while (1) {
-			u8 unk6;
-
 			temp_v0 = &D_80154318[var_a1];
 			sp34 = (Unk80154318Sub *)&temp_v0->unk8;
-			if ((u8)temp_v0->unkE != 0xFF) {
-				unk6 = ((u8 *)sp34)[6];
-				if (unk6 == 0) {
-				func_800C1418_D03C8(arg0, 0);
-				func_800C1384_D0334(arg0);
-				return;
+			if ((u8)temp_v0->unkE == 0xFF) {
+				var_a1 = temp_v0->unk4;
+			} else {
+				if (((u8 *)sp34)[6] == 0) {
+					func_800C1418_D03C8(arg0, 0);
+					func_800C1384_D0334(arg0);
+					return;
+				}
+				((u8 *)sp34)[6]--;
+				var_a1 = temp_v0->unk4;
 			}
-				((u8 *)sp34)[6] = (u8)(unk6 - 1);
-			}
-			var_a1 = temp_v0->unk4;
 			if (var_a1 == -5 || var_a1 == -6) {
 				break;
 			}
 		}
 	}
 
-	sp3A = -1;
-	sp39 = -1;
-	sp38 = -1;
+	sp38[2] = 0xFF;
+	sp38[1] = 0xFF;
+	sp38[0] = 0xFF;
 	temp_v0 = &D_80154318[temp_t3->unk6];
-	sp34 = (Unk80154318Sub *)&temp_v0->unk8;
 	sp40 = temp_v0->unk8;
+	sp34 = (Unk80154318Sub *)&temp_v0->unk8;
 	sp42 = sp34->unk4;
 	temp_v0 = &D_80154318[temp_t3->unk8];
 	sp3C = temp_v0->unk8;
 	sp3E = temp_v0->unkC;
-	func_800B1A68_C0A18(&sp40, &sp3C, &sp38, (Unk80152D00 *)D_80154318);
-	func_80137368_146318(sp34->unk0, sp34->unk2, sp34->unk4, 7, (s32)arg0);
+	func_800B1A68_C0A18(&sp40, &sp3C, (s8 *)sp38, (Unk80152D00 *)D_80154318);
+	func_80137368_146318(sp34->unk0, sp34->unk2, sp34->unk4, 7, arg0);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D1A94_E0A44.s")
