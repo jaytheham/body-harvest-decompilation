@@ -3205,7 +3205,7 @@ void func_800CD42C_DC3DC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD42C_DC3DC.s")
 #endif
 
-// CURRENT(4380)
+// CURRENT(25)
 #ifdef NON_MATCHING
 void func_800CD7FC_DC7AC(u8 arg0) {
 	s16 index;
@@ -3243,6 +3243,9 @@ void func_800CD7FC_DC7AC(u8 arg0) {
 		} while ((index != -5) && (index != -6));
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD7FC_DC7AC.s")
+#endif
 
 void func_800CDA98_DCA48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 temp_v0;
@@ -3353,9 +3356,6 @@ void func_800CDDE4_DCD94(void) {
 		if (entry->unk11 == 1) {
 			sp80.unk0 = 0;
 			sp80.unk2 = 0;
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD7FC_DC7AC.s")
-#endif
 			sp80.unk4 = 0x8000;
 			sp88.unk0 = 0x96;
 			sp88.unk2 = 0x96;
