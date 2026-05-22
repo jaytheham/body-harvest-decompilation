@@ -431,6 +431,7 @@ extern u8 D_800481D0[];
 extern s16 D_800481DD[];
 extern AlienWaveEntry D_8003BCC0[][12];
 extern u8 D_8003BCC6;
+extern char D_80142B50_151B00;
 extern char D_80142B6C_151B1C;
 extern char D_80142B7C_151B2C;
 extern char D_80142BA0_151B50;
