@@ -1143,6 +1143,7 @@ s32 func_800A9F34_B8EE4(u8 arg0);
 void func_80007690_8290(void);
 void func_80007410_8010(void *arg0);
 void func_80092ADC_A1A8C(void);
+void func_800CD0B0_DC060(u8 arg0);
 void func_80092BBC_A1B6C(u8 arg0);
 void func_800800E4_8F094(u8 arg0);
 void func_8007A198_89148(u8 arg0);

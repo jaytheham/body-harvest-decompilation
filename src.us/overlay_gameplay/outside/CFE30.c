@@ -2879,6 +2879,7 @@ void func_800CBE98_DAE48(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(210)
+s16 func_800CC7B0_DB760(s16 arg0, s16 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5) {
 	s32 sp4C;
 	Unk80154318Entry *temp_v1;
 	u16 sp58;
@@ -3126,8 +3127,6 @@ void func_800CD390_DC340(u8 arg0) {
 		}
 	}
 }
-
-void func_800CD0B0_DC060(u8 arg0);
 
 #ifdef NON_MATCHING
 // CURRENT(3159)
