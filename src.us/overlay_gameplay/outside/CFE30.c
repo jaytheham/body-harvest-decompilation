@@ -8207,7 +8207,12 @@ void func_800E7338_F62E8(void) {
 				0);
 			D_80157534 = *(u8 *)&D_80157533;
 			D_80157532--;
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7338_F62E8.s")
+#endif
 
+#ifdef NON_MATCHING
+void func_800E74DC_F648C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
 	temp_t2 = arg3;
 	D_80157532 = temp_t2;
 	var_v1 = temp_t2;
