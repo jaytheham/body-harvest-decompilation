@@ -4689,7 +4689,7 @@ void func_800D6ADC_E5A8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	func_80135D08_144CB8(3.0f, 1, 0x3C, 1);
 }
 
-// CURRENT(864)
+// CURRENT(675)
 #ifdef NON_MATCHING
 void func_800D6C18_E5BC8(s16 arg0, u8 arg1) {
 	Unk80153AE0Entry *entry;
@@ -4698,8 +4698,7 @@ void func_800D6C18_E5BC8(s16 arg0, u8 arg1) {
 
 	(void)arg0;
 	entry = &D_80153AE0[arg1];
-	phase = entry->unk13;
-	if (phase == 0) {
+	if ((phase = entry->unk13) == 0) {
 		data = (s16 *)entry->unk18;
 		entry->unk0 = data[0];
 		entry->unk2 = data[1];
@@ -4710,7 +4709,8 @@ void func_800D6C18_E5BC8(s16 arg0, u8 arg1) {
 		entry->unkC = data[6];
 		((s16 *)entry)[7] = data[7];
 		entry->unk10 = data[8];
-		entry->unk13 = phase + 1;
+		phase++;
+		entry->unk13 = phase;
 		entry->unk14 = 0;
 		entry->unk18 = (s32)(data + 10);
 		return;
@@ -4718,8 +4718,8 @@ void func_800D6C18_E5BC8(s16 arg0, u8 arg1) {
 
 	data = (s16 *)entry->unk18;
 	if (entry->unk14 == ((u8 *)data)[0x12]) {
-		entry->unk13++;
-		phase = entry->unk13;
+		phase++;
+		entry->unk13 = phase;
 		entry->unk14 = 0;
 		entry->unk18 = (s32)((u8 *)data + 0x14);
 	}
@@ -4729,7 +4729,7 @@ void func_800D6C18_E5BC8(s16 arg0, u8 arg1) {
 		entry->unk0 += data[0] / ((u8 *)data)[0x12];
 		entry->unk2 += data[1] / ((u8 *)data)[0x12];
 		entry->unk4 += data[2] / ((u8 *)data)[0x12];
-		entry->unk8 = (u16)((u16)entry->unk8 + (((u16 *)data)[4] / ((u8 *)data)[0x12]));
+		entry->unk8 = (u16)((((u16 *)data)[4] / ((u8 *)data)[0x12]) + (u16)entry->unk8);
 		entry->unkC += data[6] / ((u8 *)data)[0x12];
 		((s16 *)entry)[7] += data[7] / ((u8 *)data)[0x12];
 		entry->unk10 += data[8] / ((u8 *)data)[0x12];
