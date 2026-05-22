@@ -2,9 +2,6 @@
 #include "common.h"
 
 
-/* The FD80 restore stub is emitted out-of-line by func_8000EFB8_FBB8 when
- * that function is compiled from C, so no standalone definition is kept here. */
-
 void func_8000F190_FD90(void (*arg0)(void *)) {
 	D_80067A48.next = NULL;
 	D_80067A48.queue = NULL;

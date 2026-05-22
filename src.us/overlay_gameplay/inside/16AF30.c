@@ -2587,6 +2587,7 @@ void func_8008972C_1717EC(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	*(s16 *)(temp_v1 + 0xA) = arg1 * 4;
 	*(s16 *)(temp_v1 + 0xC) = arg2 * 4;
 }
+
 #ifdef NON_MATCHING
 void func_80089794_171854(s32 arg0) {
 	u8 temp_t6;

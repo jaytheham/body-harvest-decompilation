@@ -649,7 +649,6 @@ void func_802D4F74_18DA84(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D4F74_18DA84.s")
 #endif
 
-
 void func_802D5290_18DDA0(void) {
 	D_8004DC58 = 0;
 	D_802DE460 = 0;
@@ -3256,8 +3255,6 @@ void func_802DC500_195010(u8 arg0) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC500_195010.s")
 #endif
-
-void func_802DC500_195010(u8 arg0);
 
 void func_802DC91C_19542C(u8 arg0) {
 	alienInstances[arg0].unk14 = -0x8D;

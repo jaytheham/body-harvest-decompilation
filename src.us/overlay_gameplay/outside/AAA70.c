@@ -438,20 +438,6 @@ void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009D96C_AC91C.s")
 
 // drawAlienHealth
-extern f64 D_80142728_1516D8;
-extern f64 D_80142730_1516E0;
-extern f32 D_8013D668_14C618;
-extern f32 D_8014F6A4;
-extern s16 D_8014F6A8;
-extern s16 D_8014F6AC;
-extern f32 D_8014F6B0;
-extern s32 D_8014F6B4;
-extern s16 D_8014F6C0;
-extern f32 D_8014F6C4;
-
-s32 func_8013B8C8_14A878(void);
-void func_8009C6CC_AB67C(s16 arg0, s32 arg1, f32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
-
 #ifdef NON_MATCHING
 // CURRENT(11423)
 void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
@@ -572,7 +558,6 @@ void func_8009EC90_ADC40(s16 arg0, f32 *arg1, f32 *arg2) {
 	}
 	*arg1 = (f32) (((f64) *arg2 * ((f64) (f32) sins(arg0) / 32768.0)) / ((f64) (f32) coss(arg0) / 32768.0));
 }
-
 
 // CURRENT(0)
 #ifdef NON_MATCHING

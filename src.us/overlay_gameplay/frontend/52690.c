@@ -1,11 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-typedef struct {
-	u16 unk0;
-	u16 unk2;
-} Frontend52690Viewport;
-
 void func_800821E0_52690(u8 arg0, u8 arg1, u8 arg2) {
 	((Frontend52690Viewport *)D_8005BB24)->unk2 = 0x140;
 
@@ -1035,8 +1030,6 @@ void func_8008472C_54BDC(u8 arg0) {
 		ptr[2] += ptr[5];
 	}
 }
-
-void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4);
 
 #ifdef NON_MATCHING
 // CURRENT(59773)
@@ -5410,4 +5403,3 @@ void func_80090648_60AF8(void) {
 
 	gDPPipeSync(D_8005BB2C++);
 }
-

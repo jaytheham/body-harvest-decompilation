@@ -422,7 +422,6 @@ void func_80079510_884C0(u8 arg0)
   *((u8*)&inst->unk1E) = 0xFF;
 }
 
-
 // CURRENT(0)
 #ifdef NON_MATCHING
 s32 func_8007956C_8851C(u8 arg0)
@@ -1369,7 +1368,118 @@ void func_8007B2A0_8A250(u8 arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B370_8A320.s")
 
+// CURRENT(3823)
+#ifdef NON_MATCHING
+void func_8007B9CC_8A97C(s32 arg0) {
+	AlienInstance *alien;
+	AlienSpec *spec;
+	Unk80052B40 sp70;
+	Unk80052B40 sp68;
+	Unk80052B40 sp60;
+	s32 sp5C;
+	s8 sp50;
+	s8 sp51;
+	s8 sp52;
+	s16 sp4E;
+	s16 sp4C;
+	Gfx *dl;
+	u8 specIndex;
+	s32 flags;
+	s16 yOffset;
+	void *model;
+
+	extern Gfx D_50509D8[];
+
+	alien = &alienInstances[arg0 & 0xFF];
+	specIndex = alien->specIndex;
+	sp60 = *(Unk80052B40 *)&D_8013C23C_14B1EC[0];
+	sp5C = alien->unkC;
+
+	if (specIndex == 0x1B) {
+		sp50 = 0xFF;
+		sp51 = 0xFF;
+		sp52 = 0xFF;
+		sp4C = alien->unk0;
+		sp4E = alien->unk4;
+
+		if (currentLevel == 3) {
+			f32 temp_f0;
+
+			temp_f0 = (((s16)(func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8) - alien->unk2) + 0x4B0) / 600.0f;
+			func_800B2354_C1304(&sp4C, &sp50, (s16)(temp_f0 * 256.0f), (s16)(temp_f0 * 800.0f));
+		} else {
+			func_800B2354_C1304(&sp4C, &sp50, 0x100, 0x320);
+		}
+	}
+
+	sp70.unk2 = alien->unk2 >> 2;
+	sp70.unk0 = alien->unk0 >> 2;
+	sp70.unk4 = alien->unk4 >> 2;
+	sp68.unk0 = 0x4000 - alien->unk6;
+	sp68.unk2 = alien->unk44 + alien->unk8;
+	sp68.unk4 = alien->unk42 + alien->unkA;
+
+	flags = alien->unk20;
+	if (!(flags & 0x40000000) && (alienSpecs[specIndex].unk54 & 0x80)) {
+		sp68.unk2 += (s32)(((f64)(f32)sins((D_80052A8C << 11) & 0xFFFF) / 32768.0) * 512.0);
+		sp68.unk4 += (s32)(((f64)(f32)coss(((D_80052A8C + 0xC) << 11) & 0xFFFF) / 32768.0) * 512.0);
+	}
+
+	spec = &alienSpecs[specIndex];
+	if (flags & 0x80000000) {
+		func_800038E0_44E0();
+	}
+
+	if ((specIndex != 2) && (specIndex != 0x20)) {
+		yOffset = *(s16 *)&alien->pad4C[0];
+		sp60.unk2 += yOffset;
+		if (!(spec->unk54 & 0x4000)) {
+			sp60.unk0 -= yOffset;
+			sp60.unk4 -= yOffset;
+		}
+	}
+
+	if ((specIndex != 2) && (specIndex != 0x20)) {
+		func_800039D0_45D0(&sp70, &sp68, &sp60, D_8005BB38);
+	} else {
+		func_800039D0_45D0(&sp70, &sp68, (Unk80052B40 *)&D_800311A0, D_8005BB38);
+	}
+
+	setRandomSeed(D_80052A8C);
+	if ((alien->unk20 & 0x100000) && (gameplayMode != 2)) {
+		sp68.unk2 = (func_800038E0_44E0() / 64) + alien->unk8 + alien->unk44;
+		sp68.unk4 = (func_800038E0_44E0() / 64) + alien->unkA + alien->unk42;
+	}
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0x01020040;
+	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+	dl = D_8005BB2C++;
+	D_8005BB38 += 0x40;
+	dl->words.w0 = 0x01000040;
+	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+	if (sp5C != -1) {
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xBC001C06;
+		dl->words.w1 = osVirtualToPhysical((void *)(D_8005BB38 + 0x40));
+	}
+
+	func_8007B170_8A120(sp5C);
+
+	model = (void *)spec->unk0;
+	if ((specIndex == 0x1A) && (alien->unk20 & 0x100000) && (alien->unk20 & 0x8000)) {
+		model = D_50509D8;
+	}
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0x06000000;
+	dl->words.w1 = (u32)model;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B9CC_8A97C.s")
+#endif
 
 // drawComplexObjectShadows e.g. humans
 // https://decomp.me/scratch/mrFc0

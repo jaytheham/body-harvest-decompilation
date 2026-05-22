@@ -992,9 +992,6 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071E80_42330.s")
 #endif
 
-extern Ambient D_800942A0_64750;
-extern Light D_800942A8_64758;
-
 void func_800722A4_42754(void) {
 	u16 perspNorm;
 	s16 i;
@@ -2316,9 +2313,6 @@ void func_80076FE0_47490(s32* arg0, s32* arg1) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076FE0_47490.s")
 #endif
-
-void func_80075B64_46014(s16 arg0);
-void func_80076FE0_47490();
 
 // doPressStartLoop
 s32 func_8007704C_474FC(void) {
@@ -3671,14 +3665,6 @@ void func_800789E4_48E94(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800789E4_48E94.s")
 #endif
 
-extern u8 D_40856F0[];
-extern u16 D_408A6F0[];
-extern u8 D_408A8F0[];
-extern u16 D_409E8F0[];
-extern u8 D_40A9440[];
-extern u16 D_40AAC40[];
-void func_80075710_45BC0(void);
-
 void func_800791A0_49650(s32 arg0) {
 	f32 one;
 
@@ -4070,9 +4056,6 @@ void func_80079F30_4A3E0(s32 arg0) {
 #endif
 
 // displayGameOver
-extern void func_8000DC30_E830(s32 arg0, s32 arg1);
-extern void func_800137AC_143AC(void);
-
 #ifdef NON_MATCHING // CURRENT(3074)
 void func_8007A038_4A4E8(void) {
 	s32 timer;
@@ -4693,7 +4676,6 @@ void func_8007BEC0_4C370(void)
 	  break;
 	}
   }
-
 }
 
 #ifdef NON_MATCHING // CURRENT(6838)
@@ -5594,24 +5576,6 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007D91C_4DDCC.s")
 #endif
 
-typedef struct {
-	/* 0x00 */ u32 unk0;
-	/* 0x04 */ u8 unk4;
-	/* 0x05 */ u8 unk5;
-	/* 0x06 */ u8 pad6[2];
-} Unk8007E12CEntry8;
-
-void func_8007EE0C_4F2BC(s32* arg0);
-void func_8007EE8C_4F33C(s32** arg0);
-void func_8007FB90_50040();
-void func_8007FBC8_50078(u8 arg0);
-void func_80080530_509E0(Unk80080530_Src* arg0);
-void func_8008098C_50E3C(void);
-FrontendStreamSlot* func_800809DC_50E8C(s32 arg0);
-void func_80080A84_50F34(FrontendStreamSlot* arg0);
-void func_80080F8C_5143C(AnimChannelState* arg0, s16* arg1, s32 arg2);
-void func_8008FE98_60348(u8 arg0);
-
 #ifdef NON_MATCHING
 s32 func_8007E12C_4E5DC(void) {
 	Unk8007E12CEntry8* entry;
@@ -5827,8 +5791,6 @@ s32 func_8007E12C_4E5DC(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007E12C_4E5DC.s")
 #endif
-
-void func_8007EBB0_4F060(void);
 
 #ifdef NON_MATCHING
 // CURRENT(450)
@@ -7395,4 +7357,3 @@ void func_80082074_52524(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80082074_52524.s")
 #endif
-

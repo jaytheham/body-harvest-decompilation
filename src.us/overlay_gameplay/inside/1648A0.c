@@ -909,8 +909,6 @@ void func_8007EB1C_166BDC(void *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007EB1C_166BDC.s")
 #endif
 
-
-
 #ifdef NON_MATCHING
 void func_8007EFD4_167094(VehicleInstance *arg0) {
 	s32 spBC;
@@ -1224,5 +1222,3 @@ void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007F8F4_1679B4.s")
 #endif
-
-

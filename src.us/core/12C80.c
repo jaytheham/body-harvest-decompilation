@@ -494,7 +494,6 @@ void func_80013314_13F14(void) {
 	D_80031CA4 = -1;
 }
 
-// This matches except D_80033C6C_W has to be defined in addition to D_80033C6C_3486C
 void func_80013324_13F24(void)
 {
 	s8 idx;
@@ -1102,7 +1101,6 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 			dist, 0, temp_f14);
 	}
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014508_15108.s")
 #endif
@@ -1882,9 +1880,9 @@ s8 func_800165EC_171EC(void) {
 		osSyncPrintf(&D_800382C8_38EC8);
 	}
 }
-	#else
-	#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800165EC_171EC.s")
-	#endif
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800165EC_171EC.s")
+#endif
 
 void func_80016ABC_176BC(s8 arg0) {
 	D_80031CD0_328D0[arg0] = -1;
@@ -2089,10 +2087,8 @@ s16 func_80017394_17F94(u8 *arg0, s16 arg1)
 			}
 		}
 	}
-
 	return width;
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017394_17F94.s")
 #endif
@@ -2694,7 +2690,6 @@ void func_80018D7C_1997C(u16 arg0) {
 		}
 	}
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018D7C_1997C.s")
 #endif
@@ -3015,5 +3010,3 @@ s32 func_8001A37C_1AF7C(char *arg0) {
 void myfree(void) {
 	gzip_data_0000 = 0;
 }
-
-

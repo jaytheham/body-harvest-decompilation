@@ -755,7 +755,6 @@ void func_80006DDC_79DC(void) {
 	D_80068080 = 4;
 }
 
-
 void func_800071D8_7DD8(void) {
 	func_8000505C_5C5C();
 	func_800056A8_62A8();
@@ -851,6 +850,7 @@ void func_800074F4_80F4(void) {
 		}
 	}
 }
+
 void func_80007548_8148(void)
 {
 	s32 i = 4;
@@ -1490,6 +1490,7 @@ s32 func_80008C44_9844(s32 arg0) {
 		v1--;
 	}
 }
+
 // CURRENT(8943)
 #ifdef NON_MATCHING
 void func_80008CA8_98A8(s32 arg0) {

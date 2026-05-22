@@ -275,8 +275,6 @@ void func_800786EC_8769C(u16* arg0, s32 arg1) {
 	}
 }
 
-void func_80078720_876D0(AlienInstance *alien);
-
 // https://decomp.me/scratch/S6kQ4
 #ifdef NON_MATCHING
 // CURRENT(421)

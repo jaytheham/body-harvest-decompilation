@@ -121,10 +121,10 @@ void func_8000A3DC_AFDC(s16 arg0, s8 *arg1) {
 	arg1++;
 	*(u8 *)arg1 = var_v0;
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A3DC_AFDC.s")
 #endif
+
 s16 func_8000A43C_B03C(s8 *arg0)
 {
 	s8 var_v1;
@@ -1327,7 +1327,6 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
 		} while (arg2 != var_s0);
 	}
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CF4C_DB4C.s")
 #endif
@@ -1429,7 +1428,6 @@ void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChanne
 	arg2->unk3A = (s16)arg2->unkC;
 	arg2->unk3C = (s16)arg2->unk10;
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D588_E188.s")
 #endif
@@ -1473,7 +1471,6 @@ s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannel
 	}
 	return arg4;
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D71C_E31C.s")
 #endif
