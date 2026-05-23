@@ -3259,7 +3259,150 @@ void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F842C_1073DC.s")
 
+// CURRENT(20852)
+#ifdef NON_MATCHING
+void func_800F8B24_107AD4(s32 arg0) {
+	Unk80052B40 sp140;
+	Unk80052B40 sp138;
+	s32 sp100[3];
+	s32 spF4[3];
+	s32 spE8[3];
+	u8 *base;
+	u8 *anim;
+	s32 i;
+	s32 updateState;
+	u8 state;
+	Mtx spA8;
+
+	if (D_80157FF0[arg0] != -1) {
+		return;
+	}
+
+	base = &D_80158000[arg0 * 0x170];
+	anim = &((u8 *)D_801601F0)[((u8 *)base)[0x23] * 0x16];
+
+	if ((func_800B93AC_C835C(*(s16 *)&base[0x12], *(s16 *)&base[0x16], *(u16 *)&anim[6], (s16)D_80052B2C->unk0,
+						 (s32)D_80052B2C->unk8, 0x4000 - D_80047950)
+			!= 0)
+		|| (base[0x22] == 8)) {
+		if (anim[0x14] != 0) {
+			gDPPipeSync(D_8005BB2C++);
+			guLookAtReflect(&spA8, (LookAt *)&base[0x148], 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f);
+			gSPLookAtX(D_8005BB2C++, (Light *)&base[0x148]);
+			gSPLookAtY(D_8005BB2C++, (Light *)&base[0x158]);
+			gDPPipeSync(D_8005BB2C++);
+		}
+
+		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xFFFFFFFF);
+		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xFFFFFFFF);
+		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x808080FF);
+		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, 0x808080FF);
+
+		state = base[0x22];
+		updateState = 0;
+		if ((state == 2) || (state == 4) || (state == 8)) {
+			updateState = 1;
+		}
+
+		if (updateState != 0) {
+			func_800F842C_1073DC(arg0);
+			state = base[0x22];
+		}
+
+		if (state == 0x10) {
+			AlienInstance *alien;
+
+			alien = &alienInstances[base[0x144]];
+			sp140.unk0 = alien->unk0;
+			sp140.unk2 = D_8014DD50[alien->unkC].unk2 + alien->unk2;
+			sp140.unk4 = alien->unk4;
+			func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
+			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			D_8005BB38 += 0x40;
+
+			sp138.unk0 = -*(s16 *)&base[0x18];
+			sp138.unk2 = -D_8014DD50[alien->unkC].unkA;
+			sp138.unk4 = 0;
+			func_800039D0_45D0(NULL, &sp138, NULL, D_8005BB38);
+			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			D_8005BB38 += 0x40;
+
+			sp140.unk2 = *(s16 *)&base[0x16A];
+			sp140.unk0 = -sp140.unk0;
+			sp140.unk2 = -sp140.unk2;
+			sp140.unk4 = -sp140.unk4;
+			func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
+			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			D_8005BB38 += 0x40;
+
+			state = base[0x22];
+		}
+
+		for (i = 0; i < anim[0xC]; i++) {
+			u8 *entry;
+			s16 arg7;
+
+			entry = &base[i * 0x24];
+			if (entry[0x47] != 0) {
+				continue;
+			}
+
+			if (state == 0x10) {
+				arg7 = *(s16 *)&base[0x16A];
+			} else {
+				arg7 = *(s16 *)&entry[0x3A];
+			}
+
+			sp100[0] = *(s16 *)&entry[0x2E];
+			sp100[1] = *(s16 *)&entry[0x26];
+			sp100[2] = *(s16 *)&entry[0x30];
+			spF4[0] = *(s16 *)&entry[0x42];
+			spF4[1] = arg7;
+			spF4[2] = *(s16 *)&entry[0x44];
+			spE8[0] = *(s16 *)&entry[0x36];
+			spE8[1] = *(s16 *)&entry[0x38];
+			spE8[2] = *(s16 *)&entry[0x3A];
+
+			if (base[0x22] == 4) {
+				s32 rnd;
+				s32 mod;
+
+				rnd = func_800038E0_44E0();
+				mod = rnd & 0xF;
+				if ((rnd < 0) && (mod != 0)) {
+					mod -= 0x10;
+				}
+				spE8[0] = spE8[0] + mod - 8;
+
+				rnd = func_800038E0_44E0();
+				mod = rnd & 0xF;
+				if ((rnd < 0) && (mod != 0)) {
+					mod -= 0x10;
+				}
+				spE8[2] = spE8[2] + mod - 8;
+			}
+
+			switch (anim[0x14]) {
+				case 0:
+					func_800F7790_106740(sp100, spE8, spF4, base[0x23]);
+					break;
+				case 1:
+					func_800F554C_1044FC(sp100, spE8, spF4, base[0x23]);
+					break;
+				case 2:
+					func_800F63D0_105380(sp100, spE8, spF4, base[0x23]);
+					break;
+			}
+		}
+
+		if (state & 0x10) {
+			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F8B24_107AD4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F9118_1080C8.s")
 
