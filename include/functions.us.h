@@ -48,7 +48,7 @@ s16 func_80003824_4424(f32, f32);
 void func_80088154_97104(VehicleInstance *arg0, s16 arg1, s16 arg2);
 void func_80083EF4_92EA4(AlienInstance *arg0, s32 arg1, s16 arg2, s16 arg3);
 void func_80107184_116134(VehicleInstance *arg0, s32 arg1, s32 arg2, f32 arg3);
-void func_80107970_116920(VehicleInstance *arg0, s16 arg1);
+void func_80107970_116920(VehicleInstance *arg0, s32 arg1);
 s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1);
 s32 func_8010FAFC_11EAAC(VehicleInstance *arg0);
 void func_80115604_1245B4(VehicleInstance *arg0);
