@@ -1440,6 +1440,12 @@ extern u8 D_801454D0[];
 extern u8 D_801454D8[];
 extern u8 D_801454E0[];
 extern u8 D_801454E8[];
+extern u8 D_801454C0_154470[];
+extern u8 D_801454C8_154478[];
+extern u8 D_801454D0_154480[];
+extern u8 D_801454D8_154488[];
+extern u8 D_801454E0_154490[];
+extern u8 D_801454E8_154498[];
 extern char D_80145A30_1549E0; // select 
 extern char D_80145A38_1549E8; // %d,
 extern char D_80145A3C_1549EC; // .
@@ -1625,6 +1631,7 @@ extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
 extern Unk80152D00 D_80152D00[];
 extern u8 D_80152B88; /* unk8 field of first particle/effect entry */
 extern Unk80152D00Pair D_80153300; /* one past end of D_80152D00 */
+extern Unk800E614CFxSlot D_801538C4;
 extern s16 D_80152C90;
 extern u8 D_80152740[];
 extern s16 D_80157590; // outside camera status
@@ -2475,6 +2482,8 @@ extern f64 D_800A56F8_18D7B8;
 extern f64 D_800A5700_18D7C0;
 extern f64 D_800A5708_18D7C8;
 extern f64 D_800A5710_18D7D0;
+extern f64 D_80144CF8_153CA8;
+extern f64 D_80144D00_153CB0;
 extern f64 D_80144D18_153CC8;
 extern f64 D_80144D68_153D18;
 extern s16 D_80047716;
@@ -2835,6 +2844,8 @@ extern char D_80143FA4_152F54;
 extern f32 D_80144018_152FC8;
 extern f32 D_8014401C_152FCC;
 extern f32 D_80144020_152FD0;
+extern f64 D_80144008_152FB8;
+extern f64 D_801441E8_153198;
 extern f64 D_80144028_152FD8;
 extern UnkFunc8013B5E4 D_80257A1C[];
 extern UnkFunc8013B5E4 D_80257A4C[];
@@ -3444,6 +3455,10 @@ extern f32 D_80159D34;
 extern f32 D_80159D38;
 extern f32 D_80159D3C;
 extern f32 D_80159D40;
+extern f32 D_80159D44;
+extern f32 D_80159D48;
+extern f32 D_80159D4C;
+extern f32 D_80159D50;
 extern f32 D_80159D14;
 extern f32 D_80159D18;
 extern f32 D_80159D1C;
