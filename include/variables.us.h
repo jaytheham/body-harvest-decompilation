@@ -1440,6 +1440,12 @@ extern u8 D_801454D0[];
 extern u8 D_801454D8[];
 extern u8 D_801454E0[];
 extern u8 D_801454E8[];
+extern u8 D_801454C0_154470[];
+extern u8 D_801454C8_154478[];
+extern u8 D_801454D0_154480[];
+extern u8 D_801454D8_154488[];
+extern u8 D_801454E0_154490[];
+extern u8 D_801454E8_154498[];
 extern char D_80145A30_1549E0; // select 
 extern char D_80145A38_1549E8; // %d,
 extern char D_80145A3C_1549EC; // .
