@@ -5721,7 +5721,142 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103308_1122B8.s")
 #endif
 
+// CURRENT(15449)
+#ifdef NON_MATCHING
+void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
+	VehicleSpec *spec0;
+	VehicleSpec *spec1;
+	UnkF9230Func80102FA4Point *point;
+	f32 dist;
+	f32 invDist;
+	f32 ratio;
+	f32 oneMinus;
+	f32 temp;
+	s16 dx;
+	s16 dy;
+	s16 dz;
+	s16 x0;
+	s16 y0;
+	s16 z0;
+	s16 x1;
+	s16 y1;
+	s16 z1;
+	s16 i;
+	u32 mass0;
+
+	/* Not present in shared headers yet. */
+	extern Vec3f D_80159188;
+	extern f32 D_80158E60;
+	extern f64 D_80144AB0_153A60;
+	extern f64 D_80144AB8_153A68;
+	void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1);
+
+	spec0 = &vehicleSpecs[arg0->unk1A];
+	spec1 = func_800FAFB8_109F68(arg1);
+
+	if (arg1->unkC == -2) {
+		if (arg1->unk1A == 0x11) {
+			if ((arg1->unk6 + 0x2000) & 0x4000) {
+				D_80159188.z = arg1->unk38;
+			} else {
+				D_80159188.x = arg1->unk30;
+			}
+		} else {
+			D_80159188.x = arg1->unk30;
+			D_80159188.z = arg1->unk38;
+		}
+		D_80159188.y = arg1->unk34;
+		arg1->unk20 |= 1;
+	} else {
+		func_800FB3C4_10A374(arg1, D_80159188.x);
+		func_800FB3E8_10A398(arg1, D_80159188.y);
+		func_800FB40C_10A3BC(arg1, D_80159188.z);
+	}
+
+	dx = arg0->unk0 - arg1->unk0;
+	dy = arg0->unk2 - arg1->unk2;
+	dz = arg0->unk4 - arg1->unk4;
+
+	dist = (f32)(s32)sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)));
+	mass0 = spec0->unk32;
+	invDist = D_80158E60 / dist;
+	ratio = (f32)mass0 / (f32)(mass0 + spec1->unk32);
+	oneMinus = 1.0f - ratio;
+
+	x0 = (s16)(s32)((f32)arg0->unk0 - ((f32)dx * oneMinus));
+	y0 = (s16)(s32)((f32)arg0->unk2 - ((f32)dy * oneMinus));
+	z0 = (s16)(s32)((f32)arg0->unk4 - ((f32)dz * oneMinus));
+
+	if (D_80158E60 <= dist) {
+		if ((D_80158E60 * 2.0f) <= dist) {
+			func_800FDE00_10CDB0();
+			return;
+		}
+
+		dx = arg0->unk0 - x0;
+		dy = arg0->unk2 - y0;
+		dz = arg0->unk4 - z0;
+
+		x1 = (s16)(s32)((f32)dx * invDist);
+		y1 = (s16)(s32)((f32)dy * invDist);
+		z1 = (s16)(s32)((f32)dz * invDist);
+
+		func_80102D00_111CB0(
+			arg0,
+			(f32)((f64)((x0 + x1) - arg0->unk0) * D_80144AB0_153A60),
+			(f32)((f64)((y0 + y1) - arg0->unk2) * D_80144AB0_153A60),
+			(f32)((f64)((z0 + z1) - arg0->unk4) * D_80144AB0_153A60));
+
+		dx = arg1->unk0 - x0;
+		dy = arg1->unk2 - y0;
+		dz = arg1->unk4 - z0;
+
+		x1 = (s16)(s32)((f32)dx * invDist);
+		y1 = (s16)(s32)((f32)dy * invDist);
+		z1 = (s16)(s32)((f32)dz * invDist);
+
+		dx = (x0 + x1) - arg1->unk0;
+		dy = (y0 + y1) - arg1->unk2;
+		dz = (z0 + z1) - arg1->unk4;
+
+		if (arg1->unk1A == 0x11) {
+			dy = 0;
+			if ((arg1->unk6 + 0x2000) & 0x4000) {
+				dx = 0;
+			} else {
+				dz = 0;
+			}
+		}
+
+		func_80102D00_111CB0(arg1, (f32)dx, (f32)dy, (f32)dz);
+
+		arg1->unk30 = (f32)((f64)arg1->unk30 * D_80144AB8_153A68);
+		arg1->unk34 = (f32)((f64)arg1->unk34 * D_80144AB8_153A68);
+		arg1->unk38 = (f32)((f64)arg1->unk38 * D_80144AB8_153A68);
+	}
+
+	i = 2;
+	do {
+		func_80103308_1122B8(arg0, arg1);
+	} while (i-- != 0);
+
+	point = &D_801593F0[11];
+	i = 0xB;
+	do {
+		temp = (f32)func_800F9F64_108F14((s16)(s32)point->pos.x, (s16)(s32)point->pos.z) + 15.0f;
+		if (point->pos.y < temp) {
+			point->pos.y = temp;
+		}
+		point--;
+	} while (i-- != 0);
+
+	if (arg1->unk2 >= arg0->unk2 + 0x78) {
+		func_800FDE00_10CDB0();
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103760_112710.s")
+#endif
 
 void func_80103D18_112CC8(VehicleInstance *arg0, VehicleInstance *arg1) {
 	func_80103760_112710(arg0, D_80158F8C);
