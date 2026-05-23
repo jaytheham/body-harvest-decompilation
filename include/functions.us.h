@@ -552,6 +552,7 @@ void func_8008AC5C_99C0C(u8);
 void func_8008B02C_99FDC(u8);
 void func_8008B058_173118(u8 arg0);
 void func_80083014_16B0D4(Vec3f *arg0, Vec3f *arg1);
+void func_800ACF9C_BBF4C(u8 arg0);
 void func_8008A59C_17265C(void);
 s32 func_8008D0E0_9C090(u8);
 void func_8008D4A0_9C450(unsigned int);
