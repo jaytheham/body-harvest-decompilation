@@ -1452,7 +1452,103 @@ void func_80136570_145520(void) {
 }
 
 // displaySignposts
+// CURRENT(4071)
+#ifdef NON_MATCHING
+void func_801365E0_145590(void) {
+	typedef struct {
+		s8 unk0;
+		s8 unk1;
+		u8 unk2;
+	} SignpostData;
+
+	Unk80052B40 spE0;
+	Unk80052B40 spD8;
+	Unk80052B40 spD0;
+	s16 spCC;
+	void (*sp68)(s32, s16);
+	s16 var_fp;
+	s16 var_s0;
+	s16 var_s1;
+	s32 width;
+	s32 height;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+	gSPClearGeometryMode(D_8005BB2C++, -1);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPSetColorDither(D_8005BB2C++, G_CD_NOISE);
+	gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xFFFFFFFF);
+	gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xFFFFFFFF);
+	gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x808080FF);
+	gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, 0x808080FF);
+
+	var_fp = 0;
+	while (var_fp < 0x20) {
+		var_s0 = ((SignpostData *)((var_fp * 3) + (u8 *)&D_80258330))->unk0;
+		if ((var_s0 != 0) || (((SignpostData *)((var_fp * 3) + (u8 *)&D_80258330))->unk1 != 0)) {
+			var_s0 = ((s16)var_s0 << 8) + 0x80;
+			var_s1 = ((s16)((SignpostData *)((var_fp * 3) + (u8 *)&D_80258330))->unk1 << 8) + 0x80;
+			func_8011E6FC_12D6AC(var_s0, var_s1, &spCC);
+			if ((var_s0 >= D_801493B0) && (D_801493AC >= var_s0) && (var_s1 >= D_801493B8) &&
+				(D_801493B4 >= var_s1) &&
+				(func_800B93AC_C835C(var_s0, var_s1, 0x13, (s16) D_80052B2C->unk0, (s32) D_80052B2C->unk8,
+					0x4000 - D_80047950) != 0)) {
+				spE0.unk0 = var_s0 >> 2;
+				spE0.unk2 = spCC >> 2;
+				spE0.unk4 = var_s1 >> 2;
+				spD8.unk0 = (((u32)(((SignpostData *)((var_fp * 3) + (u8 *)&D_80258330))->unk2 << 0x1D)) >> 0x1E) << 0xE;
+				spD8.unk2 = 0;
+				spD8.unk4 = 0;
+				spD0.unk0 = 0x20;
+				spD0.unk2 = 0x20;
+				spD0.unk4 = 0x20;
+				sp68 = func_80136B50_145B00;
+				func_800039D0_45D0(&spE0, &spD8, &spD0, D_8005BB38);
+				gSPMatrix(D_8005BB2C++, (Mtx *) (D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+				D_8005BB38 += 0x40;
+				gDPPipeSync(D_8005BB2C++);
+				gSPDisplayList(D_8005BB2C++, D_504D1D0);
+				if ((((u32)(((SignpostData *)((var_fp * 3) + (u8 *)&D_80258330))->unk2 << 0x1D)) >> 0x1E) & 1) {
+					width = 0x10;
+					height = 0x13;
+				} else {
+					width = 0x13;
+					height = 0x10;
+				}
+				func_8012D700_13C6B0(5, (var_fp + 0x2000) & 0xFFFF, var_s0, spCC, var_s1, 0, 0, 0, width, height, 0x35, NULL,
+					func_8012E1F8_13D1A8);
+				switch (((u32)(((SignpostData *)((var_fp * 3) + (u8 *)&D_80258330))->unk2 << 0x1D)) >> 0x1E) {
+					case 0:
+						var_s1 += 0x18;
+						break;
+
+					case 1:
+						var_s0 = (s16) (var_s0 + 0x18);
+						break;
+
+					case 2:
+						var_s1 -= 0x18;
+						break;
+
+					case 3:
+						var_s0 = (s16) (var_s0 - 0x18);
+						break;
+				}
+				func_8012D700_13C6B0(4, (var_fp + 0x2000) & 0xFFFF, var_s0, spCC, var_s1, 0, 0, 0, width, height, 0x35, sp68,
+					NULL);
+			}
+		}
+		var_fp++;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801365E0_145590.s")
+#endif
 
 // https://decomp.me/scratch/NQ4OJ
 // Check if player is reading signpost

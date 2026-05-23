@@ -2617,8 +2617,147 @@ void func_80080BC0_8FB70(u8 arg0, s16 arg1, s16 arg2, u8 arg3)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080BC0_8FB70.s")
 #endif
 
+// CURRENT(5404)
+#ifdef NON_MATCHING
+s32 func_80080D98_8FD48(u8 arg0, s32 arg1) {
+	AlienInstance *alien = &alienInstances[arg0];
+	VehicleInstance *target;
+	f32 speedSq;
+	f32 minSpeedSq;
+	u8 alienSpec = alien->specIndex;
+	u8 humanType;
+	u8 targetIdx = arg1;
+	u16 randVal;
+	u32 flags;
+	u32 tempFlags;
 
+	if (alienSpec == 1) {
+		humanType = alien->unk24;
+		if ((humanType == 1) && (alien->unk20 & 0x4000)) {
+			alien->unk2C++;
+			return 0;
+		}
+		if ((humanType == 0x13) || (humanType == 0x18)) {
+			return 0;
+		}
+
+		if (targetIdx == alien->unk38) {
+			flags = alien->unk20;
+			if (((flags & 0x80) && !(flags & 0x20000)) || (humanType == 0x1B)) {
+				osSyncPrintf(&D_80141D88_150D38);
+				if ((currentLevel == 4) && (D_80047F94 == 2)) {
+					func_800153D8_15FD8(0xC5);
+				}
+				func_80079910_888C0(arg0);
+				D_801591C4++;
+				D_8015EA20--;
+				return 0;
+			}
+		}
+
+		if (alien->unk2 < D_80222A70) {
+			return 0;
+		}
+	}
+
+	if ((alienSpec == 2) && (&vehicleInstances[targetIdx] == D_80052B34) && (D_80052B34->unk1A == 0)) {
+		return 0;
+	}
+
+	target = &vehicleInstances[targetIdx];
+	speedSq = (target->unk30 * target->unk30) + (target->unk38 * target->unk38);
+	minSpeedSq = (f32)(((u16)target->unk12) * ((u16)target->unk12));
+	if (speedSq < minSpeedSq) {
+		speedSq = minSpeedSq;
+	}
+
+	if ((speedSq < 16.0f) || (target->unk1A == 0)) {
+		if (func_8007EB74_8DB24(alien, (AlienInstance *)target) != 0) {
+			func_8007ED9C_8DD4C(arg0);
+		}
+
+		alienSpec = alien->specIndex;
+		if ((alienSpec == 1) && !(alien->unk20 & 0x1000) && (alien->unk24 == 0)) {
+			func_800ABE7C_BAE2C(arg0);
+			alienSpec = alien->specIndex;
+		}
+
+		if ((alienSpec == 1) && (alien->unk24 == 1) && !(alien->unk20 & 0x4000) && (target->unk1A == 0) && (D_80052AD0 != 0) && !(D_80052A8C & 0xF)) {
+			func_80124118_1330C8(D_80052B34, 0x50);
+			D_80157A28 |= 2;
+			if ((D_80031420 & 3) == 3) {
+				randVal = func_800038E0_44E0();
+				func_800CA5EC_D959C(
+					D_80052B34->unk0,
+					D_80052B34->unk2 + 0x32,
+					D_80052B34->unk4,
+					(s8)((randVal % 120) - 0x3C),
+					0x7F,
+					(func_800038E0_44E0() % 120) - 0x3C,
+					0x14,
+					2,
+					8,
+					0xFF,
+					0xFF,
+					0,
+					0,
+					0xFF
+				);
+			}
+
+			func_80102DDC_111D8C(
+				D_80052B34,
+				func_80003824_4424((f32)(D_80052B34->unk0 - alien->unk0), (f32)(D_80052B34->unk4 - alien->unk4)),
+				0,
+				10.0f
+			);
+			func_80137468_146418(arg0, 2);
+		}
+
+		return 1;
+	}
+
+	if (!(D_80257A4C[target->unk1A].unk0 & 0x20)) {
+		return 0;
+	}
+
+	func_80088760_97710(alien);
+	alienSpec = alien->specIndex;
+	if (alienSpec == 1) {
+		if (D_80052B34->unk1A == 6) {
+			alien->unk20 |= 0x100000;
+			humanType = alien->unk24;
+			if ((humanType == 1) || (humanType == 0x1D)) {
+				sins((target->unkE + 0x4000) & 0xFFFF);
+				coss((target->unkE + 0x4000) & 0xFFFF);
+				D_80159320 |= 0x02000000;
+				func_800A8A68_B7A18(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 0x1B);
+			}
+		}
+		alien->unk26 = 1;
+	}
+
+	if (target == D_80052B34) {
+		tempFlags = D_80159320 | 0x400;
+		D_80159320 = tempFlags;
+		((Unk8010ED84Pos *)&D_80159218)->unk0 = alien->unk0;
+		((Unk8010ED84Pos *)&D_80159218)->unk2 = alien->unk2;
+		((Unk8010ED84Pos *)&D_80159218)->unk4 = alien->unk4;
+
+		if ((alienSpec == 1) && (alien->unk24 != 1) && (alien->unk24 != 0x1D)) {
+			D_80159320 = tempFlags | 0x40000000;
+		} else {
+			D_80159320 &= 0xBFFFFFFF;
+		}
+
+		func_80137468_146418(arg0, 2);
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080D98_8FD48.s")
+#endif
 
 // https://decomp.me/scratch/B1BlZ
 #ifdef NON_MATCHING
