@@ -2294,6 +2294,7 @@ extern f32 D_801601A0;
 extern f32 D_801601A4;
 extern f32 D_801601A8;
 extern f64 D_80037610_38210;
+extern Gfx D_504D1D0[];
 extern s32 D_80258390; // English sign strings
 extern s32 D_80258F90; // English sign string offsets (actually u16/s16?)
 extern u8 D_80258330; // signposts
