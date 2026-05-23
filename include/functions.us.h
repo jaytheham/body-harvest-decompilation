@@ -731,7 +731,7 @@ void func_800EC450_FB400(void);
 void func_800F2980_101930(void *arg0);
 void func_800F2D48_101CF8(u8, s16, s16);
 void func_800F3670_102620(void);
-s32 func_800F3990_102940(s32 arg0, s32 arg1);
+s16 func_800F3990_102940(u8 arg0, u8 arg1);
 void func_800F4258_103208(UnkF9230Func800F4748Entry *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 *arg5, s16 *arg6);
 void func_800F4748_1036F8(UnkF9230Arg0 *arg0, u8 arg1, u8 arg2);
 void func_800F49A4_103954(void *arg0);

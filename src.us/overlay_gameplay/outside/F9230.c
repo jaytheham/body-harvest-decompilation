@@ -2830,7 +2830,141 @@ s16 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F384C_1027FC.s")
 #endif
 
+// CURRENT(17262)
+#ifdef NON_MATCHING
+s16 func_800F3990_102940(u8 arg0, u8 arg1) {
+	s16 spBA;
+	s16 ret;
+	s16 baseAngle;
+	s16 alienX;
+	s16 alienZ;
+	s16 alienY;
+	s16 i;
+	s16 halfCount;
+	s32 slot;
+	s32 temp;
+	u8 allocCount;
+	u8 specIdx;
+	u8 alienIdx;
+	u8 *walker;
+	u8 *anim;
+	AlienInstance *inst;
+	f64 f22;
+	f64 f24;
+	f64 f26;
+	f64 f28;
+
+	alienIdx = arg0;
+	specIdx = arg1;
+	inst = &alienInstances[alienIdx];
+	alienX = inst->unk0;
+	alienZ = inst->unk4;
+	alienY = inst->unkE;
+
+	if (D_80157FF8 >= 8) {
+		osSyncPrintf((&D_801448A8_153858 + 0x6C), D_80157FF8, specIdx);
+		return -1;
+	}
+
+	slot = 0;
+	while (1) {
+		if (D_80157FF0[slot] != -1) {
+			D_80157FF0[slot] = -1;
+			ret = slot;
+			break;
+		}
+
+		slot = (slot + 1) & 0xFF;
+		if (slot >= 8) {
+			ret = slot;
+			break;
+		}
+	}
+
+	allocCount = D_80157FF8 + 1;
+	D_80157FF8 = allocCount;
+	osSyncPrintf((&D_801448A8_153858 + 0x8C), ret, allocCount, specIdx);
+
+	walker = &D_80158000[slot * 0x170];
+	anim = &D_801601F0[specIdx * 0x16];
+
+	*(s32 *)&walker[0x00] = alienX;
+	*(s32 *)&walker[0x04] = alienZ;
+	*(s32 *)&walker[0x10] = alienX;
+	*(s32 *)&walker[0x14] = alienZ;
+	*(s16 *)&walker[0x18] = alienY;
+	*(s16 *)&walker[0x1A] = alienY;
+	*(s16 *)&walker[0x1C] = 0;
+	walker[0x22] = 0;
+	*(s16 *)&walker[0x20] = 0;
+	walker[0x144] = alienIdx;
+	*(s32 *)&walker[0x08] = alienX;
+	*(s32 *)&walker[0x0C] = alienZ;
+	*(s16 *)&walker[0x1E] = 0;
+	walker[0x23] = specIdx;
+
+	baseAngle = *(s16 *)&anim[0xE];
+	spBA = *(s16 *)&anim[0x10];
+	halfCount = (s16)((u8)anim[0xC] / 2);
+
+	if (halfCount > 0) {
+		f22 = (f64)*(s16 *)&anim[0x4];
+		f24 = (f64)alienX;
+		f26 = (f64)alienZ;
+		f28 = (f64)*(s16 *)&anim[0x6];
+
+		i = 0;
+		temp = halfCount * 0x24;
+		while (i < halfCount) {
+			u8 *a;
+			u8 *an;
+			u8 *b;
+			u8 *bn;
+			s16 y;
+			s16 ang;
+
+			a = &walker[i * 0x24];
+			a[0x47] = 0;
+			an = &a[0x24];
+
+			ang = (s16)(((*(s16 *)&walker[0x18] - baseAngle) - 0x4000) & 0xFFFF);
+			*(s16 *)&an[0x14] = (s16)(s32)((((f64)(f32)coss(ang) / 32768.0) * f22) + f24);
+			*(s16 *)&an[0x18] = (s16)(s32)((((f64)(f32)sins(ang) / 32768.0) * f22) + f26);
+			y = D_8014DD50[inst->unkC].unk2 + inst->unk2;
+			*(s16 *)&an[0x16] = y;
+			*(s16 *)&a[0x24] = (s16)(s32)((((f64)(f32)coss(ang) / 32768.0) * f28) + f24);
+			*(s16 *)&an[0x4] = (s16)(s32)((((f64)(f32)sins(ang) / 32768.0) * f28) + f26);
+			*(s16 *)&an[0x2] = func_800F384C_1027FC((UnkF9230Arg0 *)walker, *(s16 *)&an[0x16], *(s16 *)&a[0x24], *(s16 *)&an[0x4]);
+			*(s16 *)&an[0xA] = *(s16 *)&a[0x24];
+			*(s16 *)&an[0xC] = *(s16 *)&an[0x4];
+
+			b = &walker[(i * 0x24) + temp];
+			b[0x47] = 0;
+			bn = &b[0x24];
+
+			ang = (s16)(((*(s16 *)&walker[0x18] + baseAngle) + 0x4000) & 0xFFFF);
+			*(s16 *)&bn[0x14] = (s16)(s32)((((f64)(f32)coss(ang) / 32768.0) * f22) + f24);
+			*(s16 *)&bn[0x18] = (s16)(s32)((((f64)(f32)sins(ang) / 32768.0) * f22) + f26);
+			y = D_8014DD50[inst->unkC].unk2 + inst->unk2;
+			*(s16 *)&bn[0x16] = y;
+			*(s16 *)&b[0x24] = (s16)(s32)((((f64)(f32)coss(ang) / 32768.0) * f28) + f24);
+			*(s16 *)&bn[0x4] = (s16)(s32)((((f64)(f32)sins(ang) / 32768.0) * f28) + f26);
+			*(s16 *)&bn[0x2] = func_800F384C_1027FC((UnkF9230Arg0 *)walker, *(s16 *)&bn[0x16], *(s16 *)&b[0x24], *(s16 *)&bn[0x4]);
+			*(s16 *)&bn[0xA] = *(s16 *)&b[0x24];
+			*(s16 *)&bn[0xC] = *(s16 *)&bn[0x4];
+
+			i = (i + 1) & 0xFF;
+			baseAngle += spBA;
+		}
+	}
+
+	func_800F2980_101930(walker);
+	func_800F49A4_103954(walker);
+	return ret;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F3990_102940.s")
+#endif
 
 #ifdef NON_MATCHING
 // Regalloc in else block: compiler reuses $f2 for 0.5 division instead of loading fresh.
