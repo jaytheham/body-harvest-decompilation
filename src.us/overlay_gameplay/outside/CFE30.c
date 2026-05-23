@@ -4155,7 +4155,106 @@ void func_800D1054_E0004(s16 arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(6934)
+void func_800D10D0_E0080(void) {
+	Unk80052B40 spF0;
+	Unk80052B40 spE8;
+	Unk80052B40 spE0;
+	s16 spD8[2];
+	u8 spDC[3];
+	f32 temp_f0;
+	f32 temp_f2;
+	s16 var_v0;
+	s32 var_s5;
+	Unk80154318Entry *var_s3;
+	u8 *var_s1;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+	gSPClearGeometryMode(D_8005BB2C++, G_FOG);
+	gDPPipeSync(D_8005BB2C++);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_PASS, G_RM_AA_ZB_XLU_SURF2);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM2);
+
+	var_v0 = D_80154252;
+	if ((var_v0 != -6) && (var_v0 != -5)) {
+		do {
+			var_s3 = &D_80154318[var_v0];
+			var_s1 = (u8 *)&var_s3->unk8;
+			if (*(u8 *)&var_s3->unk12 < 3) {
+				var_s5 = var_s3->unk2 * var_s1[0xA];
+				if (var_s5 < 0) {
+					var_s5 = (var_s5 + 1) >> 1;
+				} else {
+					var_s5 >>= 1;
+				}
+			} else {
+				var_s5 = var_s3->unk2;
+			}
+
+			spF0.unk0 = var_s5 * 6;
+			spF0.unk2 = var_s5 * 6;
+			spF0.unk4 = var_s5 * 6;
+
+			if (func_800B93AC_C835C(((Unk80052B40 *)var_s1)->unk0, ((Unk80052B40 *)var_s1)->unk4, (u16)spF0.unk0,
+												(s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
+				spE0.unk0 = ((Unk80052B40 *)var_s1)->unk0;
+				spE0.unk2 = ((Unk80052B40 *)var_s1)->unk2;
+				spE0.unk4 = ((Unk80052B40 *)var_s1)->unk4;
+
+				temp_f0 = (D_80153BA0.x * 4.0f) - (f32)((Unk80052B40 *)var_s1)->unk0;
+				temp_f2 = (D_80153BA0.z * 4.0f) - (f32)((Unk80052B40 *)var_s1)->unk4;
+				temp_f0 = sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
+
+				spE8.unk0 = func_80003824_4424(D_80153B90.z, D_80153B90.x) + 0x8000;
+				spE8.unk2 = 0x8000;
+				spE8.unk4 = 0x4000 - func_80003824_4424((D_80153BA0.y * 4.0f) - (f32)((Unk80052B40 *)var_s1)->unk2, temp_f0);
+
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, var_s1[6], var_s1[7], var_s1[8], var_s1[9]);
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, ((u32)D_100B2F0 & 0x1FFFFFFF));
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+				gDPLoadSync(D_8005BB2C++);
+				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+				gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+
+				D_8005BB38 += 0x40;
+				func_800039D0_45D0(&spE0, &spE8, &spF0, D_8005BB38);
+				gSPMatrix(D_8005BB2C++, (D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				D_8005BB38 += 0x40;
+				gSPDisplayList(D_8005BB2C++, D_504B640);
+				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+
+				D_80156EDA += 0x15;
+				spDC[0] = var_s1[6];
+				spDC[1] = var_s1[7];
+				spDC[2] = var_s1[8];
+				spD8[0] = ((Unk80052B40 *)var_s1)->unk0;
+				spD8[1] = ((Unk80052B40 *)var_s1)->unk4;
+				func_800B2354_C1304(spD8, spDC, (s16)var_s5, 0x12C);
+			}
+
+			var_v0 = var_s3->unk4;
+		} while ((var_v0 != -6) && (var_v0 != -5));
+	}
+}
+
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D10D0_E0080.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(3865)

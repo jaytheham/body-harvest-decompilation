@@ -622,9 +622,11 @@ extern u8 D_5055C00;
 extern s32 D_50332A0;
 extern u8 D_80157E90[];
 extern u8 D_80157ED8[];
+extern u16 D_100B2F0[];
 extern u8 D_1009C70[];
 extern u8 D_1001B50[];
 extern u8 D_10031E0[];
+extern Gfx D_504B640[];
 extern char D_80142DF0_151DA0; /* osSyncPrintf format string */
 extern char D_80142DFC_151DAC; /* osSyncPrintf format string */
 extern char D_80142D10_151CC0; /* osSyncPrintf format string */
