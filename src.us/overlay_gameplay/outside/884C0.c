@@ -5383,7 +5383,133 @@ s32 func_800880B8_97068(void)
 
 // 000881d4 Multiplies Adam's weapon damage by 1.8 in easy mode
 // 800885C8 halves alien death points in easy
+// CURRENT(3783)
+#ifdef NON_MATCHING
+s32 func_80088154_97104(AlienInstance *arg0, s16 arg1, s16 arg2) {
+	u8 sp3B;
+	AlienSpec *sp30;
+	s32 sp2C;
+	f64 sp20;
+	s32 temp_v0_3;
+	s32 temp_v1;
+	u8 temp_t0;
+	u8 temp_v0;
+	u8 temp_v0_2;
+	u8 temp_v0_5;
+	u8 var_a3;
+
+	temp_v0 = arg0->unk1B;
+	var_a3 = arg0->specIndex;
+	temp_t0 = var_a3;
+	if ((D_80047F94 != temp_v0) && (temp_v0 != 0xFF)) {
+		return 0;
+	}
+	if ((D_8004DCBC != 0) || (currentLevel == 5)) {
+		arg1 = (s16)(arg1 >> 1);
+	}
+	if (D_80052ACD & 0x40) {
+		arg1 = (s16)((f32)arg1 * D_80031418);
+	}
+	if ((arg0->unk20 & ALIEN_FLAG_INVINCIBLE) || (arg0 == (AlienInstance*)D_80140AC4_14FA74)) {
+		arg1 = 0;
+	}
+	if (D_8013BD04_14ACB4 != 0) {
+		arg1 *= 10;
+	}
+	if (arg1 == 0) {
+		return 0;
+	}
+	sp2C = temp_t0;
+	if (temp_t0 == 1) {
+		temp_v0_2 = arg0->unk24;
+		if (temp_v0_2 == 0x13) {
+			return 0;
+		}
+		if ((temp_v0_2 != 1) && (temp_v0_2 != 0x1D)) {
+			sp3B = temp_t0;
+			func_800E05B4_EF564(arg0->unk0, (s16)((func_800038E0_44E0() % 30) + arg0->unk2 + 0x1E), arg0->unk4, arg1);
+			temp_t0 = sp3B;
+			var_a3 = arg0->specIndex;
+		}
+	}
+
+	arg0->unk20 |= 0x80000000;
+	if (var_a3 == 0x12) {
+		D_80157E74 = (arg2 - arg0->unk6) + 0x2000;
+		var_a3 = arg0->specIndex;
+	}
+	temp_v1 = alienSpecs[var_a3].unk3A;
+	sp30 = &alienSpecs[temp_t0];
+	if (!(sp30->unk54 & 0x4000) || (arg0->unk20 & ALIEN_FLAG_FALL)) {
+		temp_v0_3 = coss((arg2 - arg0->unk6) & 0xFFFF);
+		sp20 = (f64)((s32)(arg1 << 0xF) / temp_v1);
+		arg0->unk42 = (s16)((f64)arg0->unk42 + (sp20 * ((f64)(f32)temp_v0_3 / 32768.0)));
+		arg0->unk44 = (s16)((f64)arg0->unk44 + (sp20 * ((f64)(f32)sins((arg2 - arg0->unk6) & 0xFFFF) / 32768.0)));
+		if (arg0->unk42 >= 0x1001) {
+			arg0->unk42 = 0x1000;
+		}
+		if (arg0->unk42 < -0x1000) {
+			arg0->unk42 = -0x1000;
+		}
+		if (arg0->unk44 >= 0x1001) {
+			arg0->unk44 = 0x1000;
+		}
+		if (arg0->unk44 < -0x1000) {
+			arg0->unk44 = -0x1000;
+		}
+	}
+
+	if (arg0->hitPoints > 0) {
+		arg0->hitPoints = (s16)(arg0->hitPoints - arg1);
+		if (arg0->hitPoints > 0) {
+			if ((sp2C >= 2) && (arg0->unk20 & 0x600) && (arg0->unk37 == 0)) {
+				arg0->unk37 = 8;
+			}
+			return 0;
+		}
+		if (((sp2C == 0x12) && (currentLevel != 5)) || ((currentLevel == 5) && (sp2C == 0x26))) {
+			if (arg0->hitPoints < 0xA) {
+				arg0->hitPoints = 0xA;
+			}
+			return 0;
+		}
+		if (!(arg0->unk20 & 0x300000)) {
+			if (sp30->unk14 != 0) {
+				if (D_80052ACD & 0x80) {
+					D_80052B2C->unk30 = D_80052B2C->unk30 + (sp30->unk14 >> 1);
+					func_800CEE00_DDDB0(arg0->unk0, arg0->unk2, arg0->unk4, (s16)(sp30->unk14 >> 1));
+				} else {
+					D_80052B2C->unk30 = D_80052B2C->unk30 + sp30->unk14;
+					func_800CEE00_DDDB0(arg0->unk0, arg0->unk2, arg0->unk4, sp30->unk14);
+				}
+			}
+			if (sp2C == 1) {
+				arg0->unk26 = 0;
+			}
+			if ((sp2C == 3) || (sp2C == 6) || (sp2C == 4)) {
+				temp_v0_5 = arg0->unk25;
+				if ((temp_v0_5 != 0xFF) && (D_800481B2[temp_v0_5 * 0x50] == 0x19)) {
+					func_800AFF9C_BEF4C(temp_v0_5, sp2C, 0x2BC - (currentLevel * 0x46));
+				}
+			}
+			if ((sp2C == 0xD) || (sp2C == 0xE) || (sp2C == 4) || (sp2C == 0x16)) {
+				arg0->unkE = arg2;
+			}
+			if (((currentLevel == 1) && (sp2C == 9)) || ((currentLevel == 2) && (sp2C == 0x26))) {
+				arg0->unk20 |= 0x4000;
+			}
+			if (((sp2C == 0xE) || (sp2C == 0xD) || (sp2C == 4)) && ((s32)sp30->unk3A < arg1)) {
+				arg0->unk47 |= 0x20;
+			}
+			func_80088760_97710(arg0);
+		}
+		return 1;
+	}
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088154_97104.s")
+#endif
 
 // maybe kill alien?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088760_97710.s")

@@ -141,6 +141,7 @@ extern s32 D_80094844_64CF4;
 extern s32 leomecha_bss_0004;
 extern s32 D_80031410;
 extern s32 D_80031414;
+extern f32 D_80031418;
 extern s32 D_80031420;
 extern u32 D_80031424[];
 extern s32 D_8003142C;
