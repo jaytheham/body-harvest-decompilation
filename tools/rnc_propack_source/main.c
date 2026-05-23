@@ -631,6 +631,8 @@ void proc_6(vars_t *v)
 
         v->pack_block_pos = v->pack_block_end - v->pack_block_start;
 
+        if (v->dict_size + v->pack_block_pos > 0xFFFF)
+            return;
         memmove(v->mem1, &v->pack_block_start[-v->dict_size], v->dict_size + v->pack_block_pos);
 
         if ((v->pack_block_max < v->pack_block_end) || ((v->pack_block_max == v->pack_block_end) && !v->bytes_left) || v->v17 == 0xFFFE)
