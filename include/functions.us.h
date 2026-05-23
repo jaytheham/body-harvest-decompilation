@@ -48,7 +48,7 @@ s16 func_80003824_4424(f32, f32);
 void func_80088154_97104(VehicleInstance *arg0, s16 arg1, s16 arg2);
 void func_80083EF4_92EA4(AlienInstance *arg0, s32 arg1, s16 arg2, s16 arg3);
 void func_80107184_116134(VehicleInstance *arg0, s32 arg1, s32 arg2, f32 arg3);
-void func_80107970_116920(VehicleInstance *arg0, s16 arg1);
+void func_80107970_116920(VehicleInstance *arg0, s32 arg1);
 s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1);
 s32 func_8010FAFC_11EAAC(VehicleInstance *arg0);
 void func_80115604_1245B4(VehicleInstance *arg0);
@@ -731,7 +731,7 @@ void func_800EC450_FB400(void);
 void func_800F2980_101930(void *arg0);
 void func_800F2D48_101CF8(u8, s16, s16);
 void func_800F3670_102620(void);
-s32 func_800F3990_102940(s32 arg0, s32 arg1);
+s16 func_800F3990_102940(u8 arg0, u8 arg1);
 void func_800F4258_103208(UnkF9230Func800F4748Entry *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 *arg5, s16 *arg6);
 void func_800F4748_1036F8(UnkF9230Arg0 *arg0, u8 arg1, u8 arg2);
 void func_800F49A4_103954(void *arg0);
@@ -827,7 +827,8 @@ s32 func_800877E8_96798(u8, s16, s16);
 s32 func_80004818_5418(s8, s8, u8);
 void func_80128504_1374B4(AlienInstance *arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
 void func_80124B5C_133B0C(s16, s16, s16, s32, s32);
-OutputStruct_8012B150 *func_80129354_138304(s32, s32, s16, s16, s16);
+OutputStruct_8012B150 *func_80129354_138304(s32, s32, s32, s32, s32);
+OutputStruct_8012B150 *func_80129864_138814(s32, s32, s32, s32, s32);
 void func_8012B110_13A0C0(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2);
 void func_8012B26C_13A21C(void);
 void func_8012D808_13C7B8(s32);
@@ -866,6 +867,8 @@ s32 func_8013B5E4_14A594(s32 arg0);
 void func_8013B688_14A638(void);
 
 void func_800DA994_E9944(void);
+void func_800DAA1C_E99CC(s32 arg0);
+void func_800E049C_EF44C(s16 arg0, s16 arg1, s16 arg2);
 
 // overlay_level
 void func_802D4CD0_18D7E0(s32, s32);
