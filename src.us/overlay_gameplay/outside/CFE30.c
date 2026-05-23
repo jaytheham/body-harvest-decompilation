@@ -404,18 +404,18 @@ u8 func_800C14D4_D0484(u8 arg0) {
 	if ((gameplayMode == GAMEPLAY_MODE_UNK2) || (gameplayMode == GAMEPLAY_MODE_UNK9)) {
 		osSyncPrintf(&D_80142F44_151EF4); // Do not allocate because in pause
 	}
-	
+
 	if (arg0 >= 0xA) {
 		temp = 1;
 	} else {
 		temp = 0;
 	}
-	
+
 	if (temp != 0) {
 		osSyncPrintf(&D_80142F68_151F18, arg0); // ERROR: tried to allocate a permanent effect
 		return 0xFB;
 	}
-	
+
 	if (D_80154304 >= 0x1E) {
 		osSyncPrintf(&D_80142F98_151F48, arg0); // WARNING : Out of space to create a new dynamic effect of type %d
 		temp_slot = 0xFB;
@@ -8305,7 +8305,115 @@ void func_800E2750_F1700(u8 arg0) {
 	}
 }
 
+// CURRENT(10695)
+#ifdef NON_MATCHING
+void func_800E2830_F17E0(void) {
+	Unk800311A0 *entry;
+	Unk800311A0 *replace;
+	s32 count;
+	u8 i;
+	s32 yLimit;
+	u16 speed;
+	s16 xOffset;
+	s16 didShrink;
+	didShrink = 0;
+	if (D_8013E408_14D3B8 == 5) {
+		if ((*(volatile s32 *)&D_80154300) < D_80154308) {
+			func_800E2750_F1700((*(volatile s32 *)&D_80154300) & 0xFF);
+			(*(volatile s32 *)&D_80154300) += 1;
+		}
+		D_8013E408_14D3B8 = 0;
+	} else {
+		D_8013E408_14D3B8++;
+	}
+
+	D_80154080 = (s8)(func_80003824_4424(D_80153B90.z, D_80153B90.x) / 2048);
+	if ((D_80154080 >= 8) && (D_80154080 < 16)) {
+		D_80154080 = 15 - D_80154080;
+	} else if ((D_80154080 < -7) && (D_80154080 >= -15)) {
+		D_80154080 = -15 - D_80154080;
+	} else if ((D_80154080 == 16) || (D_80154080 == -16)) {
+		D_80154080 = 0;
+	}
+
+	if ((D_80154082.unk0 < D_801541F0.unk0) && (D_801541F0.unk0 >= 3)) {
+		D_801541F0.unk0 -= 3;
+	} else if ((D_801541F0.unk0 < D_80154082.unk0) && (D_801541F0.unk0 < 0xFD)) {
+		D_801541F0.unk0 += 3;
+	}
+
+	if ((D_80154082.unk1 < D_801541F0.unk1) && (D_801541F0.unk1 >= 3)) {
+		D_801541F0.unk1 -= 3;
+	} else if ((D_801541F0.unk1 < D_80154082.unk1) && (D_801541F0.unk1 < 0xFD)) {
+		D_801541F0.unk1 += 3;
+	}
+
+	if ((D_80154082.unk2 < D_801541F0.unk2) && (D_801541F0.unk2 >= 3)) {
+		D_801541F0.unk2 -= 3;
+	} else if ((D_801541F0.unk2 < D_80154082.unk2) && (D_801541F0.unk2 < 0xFD)) {
+		D_801541F0.unk2 += 3;
+	}
+
+	count = (*(volatile s32 *)&D_80154300);
+	i = (u8)(count - count);
+	if (count > 0) {
+		do {
+			yLimit = D_80068088 * 0x10;
+			entry = &D_80153BD0[i];
+			speed = entry->unk4;
+
+			if (currentLevel == LEVEL_SIBERIA) {
+				xOffset = (s16)(s32)((((f64)(f32)sins((u16)(((i + D_80052A8C) << 11) & 0xFFFF)) / 32768.0) *
+									(f64)(((s32)D_80154300 / 5) + 0x10)) + (f64)((D_80154080 * speed * 2) >> 4));
+			} else {
+				xOffset = (s16)((s32)(speed * D_80154080 * 2) >> 4);
+			}
+
+			entry->unk2 += speed;
+			entry->unk0 += xOffset;
+
+			if (yLimit < entry->unk2) {
+				if ((D_80154308 < count) && (didShrink == 0)) {
+					(*(volatile s32 *)&D_80154300) = count - 1;
+					count = (*(volatile s32 *)&D_80154300);
+					didShrink = 1;
+					if (count != i) {
+						replace = &D_80153BD0[count];
+						*(s32 *)&entry->unk0 = *(s32 *)&replace->unk0;
+						i = (i - 1) & 0xFF;
+						entry->unk4 = replace->unk4;
+					}
+				} else {
+					func_800E2750_F1700(i & 0xFF);
+					count = (*(volatile s32 *)&D_80154300);
+				}
+			} else {
+				if ((D_80068084 * 0x10) < entry->unk0) {
+					entry->unk0 = 0;
+					if (currentLevel == LEVEL_JAVA) {
+						entry->unk4 = (func_800038E0_44E0() % 100) + 0x4B;
+					} else if (currentLevel == LEVEL_SIBERIA) {
+						entry->unk4 = (func_800038E0_44E0() % 75) + 0x19;
+					}
+					count = (*(volatile s32 *)&D_80154300);
+				} else if (entry->unk0 < 0) {
+					entry->unk0 = D_80068084 * 0x10;
+					if (currentLevel == LEVEL_JAVA) {
+						entry->unk4 = (func_800038E0_44E0() % 100) + 0x4B;
+					} else if (currentLevel == LEVEL_SIBERIA) {
+						entry->unk4 = (func_800038E0_44E0() % 75) + 0x19;
+					}
+					count = (*(volatile s32 *)&D_80154300);
+				}
+			}
+
+			i = (i + 1) & 0xFF;
+		} while (i < count);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2830_F17E0.s")
+#endif
 
 void func_800E2DB4_F1D64(void) {
 	gDPPipeSync(D_8005BB2C++);
