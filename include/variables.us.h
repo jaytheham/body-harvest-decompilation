@@ -1631,6 +1631,7 @@ extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
 extern Unk80152D00 D_80152D00[];
 extern u8 D_80152B88; /* unk8 field of first particle/effect entry */
 extern Unk80152D00Pair D_80153300; /* one past end of D_80152D00 */
+extern Unk800E614CFxSlot D_801538C4;
 extern s16 D_80152C90;
 extern u8 D_80152740[];
 extern s16 D_80157590; // outside camera status
@@ -2844,6 +2845,7 @@ extern f32 D_80144018_152FC8;
 extern f32 D_8014401C_152FCC;
 extern f32 D_80144020_152FD0;
 extern f64 D_80144008_152FB8;
+extern f64 D_801441E8_153198;
 extern f64 D_80144028_152FD8;
 extern UnkFunc8013B5E4 D_80257A1C[];
 extern UnkFunc8013B5E4 D_80257A4C[];

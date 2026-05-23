@@ -8969,7 +8969,161 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E614C_F50FC.s")
 #endif
 
+// CURRENT(9670)
+#ifdef NON_MATCHING
+void func_800E64B4_F5464(void) {
+	Unk800E614CFxSlot *slot;
+	s32 pad0;
+	s32 pad1;
+	Unk800E614CFxEntry *entry;
+	s32 slotCount;
+	s32 activeCount;
+	f64 scale;
+
+	activeCount = 0;
+	if (currentLevel != 1) {
+		return;
+	}
+
+	scale = D_801441E8_153198;
+	slot = &D_801538C4;
+	for (slotCount = 4; slotCount != 0; slotCount--) {
+		s16 fxCount;
+
+		fxCount = slot->unk1E6;
+		if (fxCount != 0) {
+			s32 x;
+			s32 z;
+			s32 distance;
+
+			x = slot->unk1C0 + slot->unk1CC;
+			slot->unk1C0 = x;
+			z = slot->unk1C8 + slot->unk1D4;
+			slot->unk1C8 = z;
+			slot->unk1DC += slot->unk1E0;
+			slot->unk1C4 = func_800B84D0_C7480((s16) (x >> 8), (s16) (z >> 8));
+			if (slot->unk1C4 < (D_80222A70 << 8)) {
+				slot->unk1C4 = D_80222A70 << 8;
+			}
+
+			slot->unk1C4 += slot->unk1DC;
+			if (slot->unk1C0 >= 0x7A0001) {
+				slot->unk1CC = -0x1770;
+				slot->unk1D4 = 0;
+				slot->unk1E4 = -0x8000;
+			}
+			if (slot->unk1C0 < (s32) 0xFF860000) {
+				slot->unk1CC = 0x1770;
+				slot->unk1D4 = 0;
+				slot->unk1E4 = 0;
+			}
+
+			if (slot->unk1C8 >= 0x7A0001) {
+				slot->unk1CC = 0;
+				slot->unk1D4 = -0x1770;
+				slot->unk1E4 = -0x4000;
+			}
+			if (slot->unk1C8 < (s32) 0xFF860000) {
+				slot->unk1CC = 0;
+				slot->unk1D4 = 0x1770;
+				slot->unk1E4 = 0x4000;
+			}
+
+			if (slot->unk1E8-- <= 0) {
+				s16 angle;
+
+				slot->unk1E8 = func_800038E0_44E0() & 0x24;
+				slot->unk1E0 = 0;
+				angle = (slot->unk1E4 + (func_800038E0_44E0() & 0x1FFF)) - 0xFFF;
+				slot->unk1E4 = angle;
+				slot->unk1CC = (s32) (((f64) (f32) coss((u16) angle) / 32768.0) * scale);
+				slot->unk1D4 = (s32) (((f64) (f32) sins((u16) slot->unk1E4) / 32768.0) * scale);
+			}
+
+			distance = func_800047FC_53FC((s16) ((((slot->unk1C0 >> 8) - D_80052B34->unk0) >> 8)));
+			distance += func_800047FC_53FC((s16) ((((slot->unk1C8 >> 8) - D_80052B34->unk4) >> 8)));
+			if (distance >= 0x1F5) {
+				slot->unk1E6 = 0;
+			} else {
+				s32 remain;
+
+				activeCount++;
+				remain = fxCount;
+				entry = &slot->entries[fxCount - 1];
+				while (remain != 0) {
+					s32 delta;
+
+					delta = -0x46;
+					if (entry->unk0 < slot->unk1C0) {
+						delta = 0x46;
+					}
+					entry->unkC += delta;
+					entry->unk0 += entry->unkC;
+
+					delta = -0x14;
+					if (entry->unk4 < slot->unk1C4) {
+						delta = 0x1E;
+					}
+					entry->unk10 += delta;
+					entry->unk4 += entry->unk10;
+
+					delta = -0x46;
+					if (entry->unk8 < slot->unk1C8) {
+						delta = 0x46;
+					}
+					entry->unk18--;
+					entry->unk14 += delta;
+					entry->unk8 += entry->unk14;
+
+					if (entry->unk18 < 0) {
+						entry->unk18 = 0x1F;
+					}
+
+					if (entry->unk10 > 0x6A4) {
+						entry->unk10 = 0x6A4;
+					} else if (entry->unk10 < -0x6A4) {
+						entry->unk10 = -0x6A4;
+					}
+
+					if (entry->unkC > 0x1B58) {
+						entry->unkC = 0x1B58;
+					} else if (entry->unkC < -0x1B58) {
+						entry->unkC = -0x1B58;
+					}
+
+					if (entry->unk14 > 0x1B58) {
+						entry->unk14 = 0x1B58;
+					} else if (entry->unk14 < -0x1B58) {
+						entry->unk14 = -0x1B58;
+					}
+
+					entry--;
+					remain--;
+				}
+			}
+		}
+
+		slot--;
+	}
+
+	if (!(D_80052A8C & 0x1F) && (activeCount < 4)) {
+		s16 cosVal;
+		s16 sinVal;
+		s32 random;
+
+		random = func_800038E0_44E0();
+		cosVal = coss((u16) random);
+		sinVal = sins((u16) func_800038E0_44E0());
+		func_800E614C_F50FC(
+			(s16) (s32) (((((f64) (f32) cosVal / 32768.0) * 256.0) * 12.0) + (f64) D_80052B34->unk0),
+			0,
+			(s16) (s32) (((((f64) (f32) sinVal / 32768.0) * 256.0) * 12.0) + (f64) D_80052B34->unk4),
+			(s16) ((func_800038E0_44E0() % 16) + 1));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E64B4_F5464.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
 

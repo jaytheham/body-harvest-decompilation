@@ -1085,6 +1085,7 @@ void func_80137368_146318(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4);
 void func_801372B4_146264(s16 arg0, s16 arg1, s16 arg2, u8 arg3);
 void func_800DD604_EC5B4(Gfx **arg0);
 void func_800E360C_F25BC(void);
+void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_800E6A38_F59E8(void);
 void func_800E7660_F6610(void);
 void func_800CF174_DE124(Vec3f *arg0, s32 arg1);
