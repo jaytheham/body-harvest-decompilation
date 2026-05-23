@@ -1556,12 +1556,18 @@ extern s32 D_8014D2F0;
 extern s32 D_8014D2F4;
 extern s32 D_8014D300;
 extern s8 D_8014D308[];
+extern u8 D_8013BCCC_14AC7C[8];
+extern u8 D_8013BCD4_14AC84[8];
 extern u8 D_8014D408[]; // unknown size, maybe 0x101
 extern u8 D_8014D507;
 extern u8 D_8014D508;
 extern u8 D_8014D509;
 extern u8 D_8014D50A;
 extern u8 D_8013BCDC_14AC8C[0x24];
+extern s16 D_801416A0_150650[];
+extern s16 D_801416A8_150658[];
+extern s16 D_801416B0_150660[];
+extern s16 D_801416C0_150670[];
 extern u8 D_8013D768_14C718;
 extern u8 D_8014D510[];
 extern u8 D_8014D550[];
