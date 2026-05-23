@@ -2676,6 +2676,7 @@ extern u8 D_40A9440[];
 extern u16 D_40AAC40[];
 extern f64 D_80142728_1516D8;
 extern f64 D_80142730_1516E0;
+extern char D_801450EC_15409C[];
 extern f32 D_8013D668_14C618;
 extern f32 D_8014F6A4;
 extern s16 D_8014F6A8;

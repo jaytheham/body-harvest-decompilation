@@ -4239,8 +4239,6 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80128E48_137DF8.s")
 #endif
 
-extern char D_801450EC_15409C[];
-
 // CURRENT(8502)
 #ifdef NON_MATCHING
 OutputStruct_8012B150 *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
