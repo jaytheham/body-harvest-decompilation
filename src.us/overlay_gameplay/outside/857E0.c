@@ -14,6 +14,57 @@ s16 D_8013BB14_14AAC4[46] = {
     0x0C01, (s16)0xED70, 0x0064, 0x0005
 };
 
+typedef struct {
+	/* 0x00 */ s8 unk0;
+	/* 0x01 */ s8 unk1;
+	/* 0x02 */ s8 unk2;
+	/* 0x03 */ s8 unk3;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ u32 unk8;
+	/* 0x0C */ u8 padC[4];
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ s16 unk14;
+	/* 0x16 */ s16 unk16;
+	/* 0x18 */ s16 unk18;
+	/* 0x1A */ s16 unk1A;
+	/* 0x1C */ u8 unk1C;
+	/* 0x1D */ u8 unk1D;
+	/* 0x1E */ u8 unk1E;
+	/* 0x1F */ u8 unk1F;
+	/* 0x20 */ s16 unk20;
+	/* 0x22 */ s16 unk22;
+	/* 0x24 */ s16 unk24;
+	/* 0x26 */ s16 unk26;
+	/* 0x28 */ s16 unk28;
+	/* 0x2A */ s16 unk2A;
+	/* 0x2C */ u8 unk2C;
+	/* 0x2D */ u8 unk2D;
+	/* 0x2E */ u8 unk2E;
+	/* 0x2F */ u8 unk2F;
+	/* 0x30 */ s16 unk30;
+	/* 0x32 */ s16 unk32;
+	/* 0x34 */ s16 unk34;
+	/* 0x36 */ s16 unk36;
+	/* 0x38 */ s16 unk38;
+	/* 0x3A */ s16 unk3A;
+	/* 0x3C */ u8 unk3C;
+	/* 0x3D */ u8 unk3D;
+	/* 0x3E */ u8 unk3E;
+	/* 0x3F */ u8 unk3F;
+	/* 0x40 */ s16 unk40;
+	/* 0x42 */ s16 unk42;
+	/* 0x44 */ s16 unk44;
+	/* 0x46 */ s16 unk46;
+	/* 0x48 */ s16 unk48;
+	/* 0x4A */ s16 unk4A;
+	/* 0x4C */ u8 unk4C;
+	/* 0x4D */ u8 unk4D;
+	/* 0x4E */ u8 unk4E;
+	/* 0x4F */ u8 unk4F;
+} Unk857E0Obj; /* size = 0x50 */
+
 s32 func_80076830_857E0(void) {
 	s32 index;
 	u8* ptr;
@@ -73,7 +124,199 @@ void func_800769A8_85958(s32 arg0) {
 	*((Unk_8014D298 *) D_8014D298[arg0]) = *((Unk_8014D298 *) D_8014D298[D_8014D2EC = D_8014D2EC - 1]);
 }
 
+#ifdef NON_MATCHING
+// CURRENT(22088)
+void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
+	Unk80052B40 spA8;
+	Unk80052B40 spA0;
+	Unk80052B40 sp98;
+	u16* table;
+	Unk857E0Obj* entry;
+	s16 x;
+	s16 z;
+	s16 yBase;
+	s32 pattern;
+	u16 packed;
+	s32 outer;
+	s32 inner;
+	s32 obj;
+	s32 type;
+	s32 temp;
+	s16* tempTable;
+	s32 xOff;
+	s32 zOff;
+	s32 c0;
+	s32 c1;
+	s32 c2;
+
+	*(u32*) &spA0 = *(u32*) D_8013BCCC_14AC7C;
+	spA0.unk4 = *(u16*) &D_8013BCCC_14AC7C[4];
+	*(u32*) &sp98 = *(u32*) D_8013BCD4_14AC84;
+	sp98.unk4 = *(u16*) &D_8013BCD4_14AC84[4];
+
+	if (D_8014D2E8 == 0x96) {
+		return;
+	}
+
+	arg1 += 0x20;
+	arg2 += 0x20;
+	if ((arg1 < 0) || (arg1 >= 0x40) || (arg2 < 0) || (arg2 >= 0x40)) {
+		return;
+	}
+
+	pattern = D_80221A30[arg2][arg1];
+	if (pattern == 0xFF) {
+		return;
+	}
+
+	table = D_8021FA30[pattern];
+	for (outer = 0; outer != 0x10; outer++, table++) {
+		packed = *table;
+		if (packed == 0) {
+			continue;
+		}
+
+		inner = 0;
+		type = packed & 0xF;
+		do {
+			if (type != 0) {
+				obj = func_80076830_857E0();
+				if (obj == -1) {
+					return;
+				}
+
+				entry = (Unk857E0Obj*) &D_80259D90[obj];
+				entry->unk0 = type;
+				entry->unk1 = outer;
+				entry->unk2 = arg0;
+				entry->unk3 = inner;
+
+				xOff = (((arg1 << 2) + (outer & 3)) << 8) - 0x8000;
+				zOff = (((arg2 << 2) + (outer >> 2)) << 8) - 0x8000;
+				x = D_801416A0_150650[inner * 2] + xOff;
+				z = D_801416A8_150658[inner * 2] + zOff;
+				entry->unk4 = x;
+				entry->unk6 = z;
+
+				if (type < 0xE) {
+					spA8.unk0 = x;
+					spA8.unk2 = (s16) (func_800B84D0_C7480(x, z) >> 8);
+					spA8.unk4 = z;
+					entry->unk8 = D_80222A30[type];
+
+					temp = (s16) ((((u32) ((u32) (x * z) * 0x41C64E6D)) + 0x3039) >> 0x10);
+					if (temp < 0) {
+						temp = (temp + 0xFF) >> 8;
+					} else {
+						temp >>= 8;
+					}
+					if (temp < 0) {
+						temp &= 0x1F;
+						if (temp != 0) {
+							temp -= 0x20;
+						}
+					}
+					sp98.unk0 = temp + 0xF0;
+					sp98.unk2 = temp + 0xF0;
+
+					temp = (s16) ((((u32) ((u32) x * 0x41C64E6D)) + 0x3039) >> 0x10);
+					if (temp < 0) {
+						temp = (temp + 0xFF) >> 8;
+					} else {
+						temp >>= 8;
+					}
+					if (temp < 0) {
+						temp &= 0x1F;
+						if (temp != 0) {
+							temp -= 0x20;
+						}
+					}
+					sp98.unk4 = temp + 0xF0;
+
+					if (D_8013BC0C_14ABBC[(currentLevel << 4) + type] == 2) {
+						spA0.unk0 = inner << 0xE;
+					}
+					func_800039D0_45D0(&spA8, &spA0, &sp98, (s32) &((Unk857E0Obj*) &D_80259D90[obj])->unk10);
+				} else {
+					if ((inner == 0) || (inner == 3)) {
+						c0 = 0xFF;
+						c1 = 0xFF;
+						c2 = 0xFF;
+					} else {
+						c0 = 0xC8;
+						c1 = 0xC8;
+						c2 = 0xC8;
+					}
+
+					tempTable = (s16*) ((u8*) D_8013BB14_14AAC4 + (((currentLevel * 0x18) + (type * 0xC)) - 0xC0));
+					entry->unk8 = *(u32*) tempTable;
+
+					x = *(s16*) ((u8*) D_801416B0_150660 + (inner * 4)) + xOff;
+					z = *(s16*) ((u8*) D_801416C0_150670 + (inner * 4)) + zOff;
+					temp = func_800B84D0_C7480(x, z) >> 8;
+					yBase = tempTable[2];
+
+					entry->unk10 = x;
+					entry->unk12 = yBase + temp;
+					entry->unk14 = z;
+					entry->unk16 = 0;
+					entry->unk18 = 0;
+					entry->unk1A = 0;
+					entry->unk1C = c0;
+					entry->unk1D = c1;
+					entry->unk1E = c2;
+					entry->unk1F = 0xFF;
+
+					entry->unk20 = x;
+					entry->unk22 = temp;
+					entry->unk24 = z;
+					entry->unk26 = 0;
+					entry->unk28 = 0;
+					entry->unk2A = (tempTable[4] << 0xB) - 0x20;
+					entry->unk2C = c0;
+					entry->unk2D = c1;
+					entry->unk2E = c2;
+					entry->unk2F = 0xFF;
+
+					x = *(s16*) ((u8*) D_801416B0_150660 + (inner * 4) + 2) + xOff;
+					z = *(s16*) ((u8*) D_801416C0_150670 + (inner * 4) + 2) + zOff;
+					temp = func_800B84D0_C7480(x, z) >> 8;
+					yBase = tempTable[6];
+
+					entry->unk30 = x;
+					entry->unk32 = yBase + temp;
+					entry->unk34 = z;
+					entry->unk36 = 0;
+					entry->unk38 = yBase << 0xB;
+					entry->unk3A = 0;
+					entry->unk3C = c0;
+					entry->unk3D = c1;
+					entry->unk3E = c2;
+					entry->unk3F = 0xFF;
+
+					entry->unk40 = x;
+					entry->unk42 = temp;
+					entry->unk44 = z;
+					entry->unk46 = 0;
+					entry->unk48 = yBase << 0xB;
+					entry->unk4A = (tempTable[8] << 0xB) - 0x20;
+					entry->unk4C = c0;
+					entry->unk4D = c1;
+					entry->unk4E = c2;
+					entry->unk4F = 0xFF;
+				}
+			}
+
+			inner++;
+			packed = packed >> 4;
+			type = packed & 0xF;
+		} while (packed != 0);
+	}
+}
+
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80076A10_859C0.s")
+#endif
 
 void func_80076FCC_85F7C(s32 arg0, s32 arg1) {
 	s32 i;

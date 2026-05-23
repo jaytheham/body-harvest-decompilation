@@ -622,11 +622,14 @@ extern u8 D_5055C00;
 extern s32 D_50332A0;
 extern u8 D_80157E90[];
 extern u8 D_80157ED8[];
+extern u16 D_100B2F0[];
 extern u8 D_1009C70[];
 extern u8 D_1001B50[];
 extern u8 D_10031E0[];
+extern Gfx D_504B640[];
 extern char D_80142DF0_151DA0; /* osSyncPrintf format string */
 extern char D_80142DFC_151DAC; /* osSyncPrintf format string */
+extern char D_80142D10_151CC0; /* osSyncPrintf format string */
 extern u8* D_8005BB20;
 extern s32 D_8005BB24;
 extern s32 D_8005BB28;
@@ -1556,12 +1559,18 @@ extern s32 D_8014D2F0;
 extern s32 D_8014D2F4;
 extern s32 D_8014D300;
 extern s8 D_8014D308[];
+extern u8 D_8013BCCC_14AC7C[8];
+extern u8 D_8013BCD4_14AC84[8];
 extern u8 D_8014D408[]; // unknown size, maybe 0x101
 extern u8 D_8014D507;
 extern u8 D_8014D508;
 extern u8 D_8014D509;
 extern u8 D_8014D50A;
 extern u8 D_8013BCDC_14AC8C[0x24];
+extern s16 D_801416A0_150650[];
+extern s16 D_801416A8_150658[];
+extern s16 D_801416B0_150660[];
+extern s16 D_801416C0_150670[];
 extern u8 D_8013D768_14C718;
 extern u8 D_8014D510[];
 extern u8 D_8014D550[];
@@ -2749,6 +2758,7 @@ extern u8 D_80154327;
 extern u8 D_80154328;
 extern Unk80154318Entry D_80154329[];
 extern Unk801541F8Entry D_80154088[]; // Special effects
+extern Unk8015408EEntry D_8015408E[];
 extern Unk801541F8Entry D_801541F8[];
 extern u8 D_80156ED8;
 extern u8 D_80156ED9;
@@ -2764,6 +2774,7 @@ extern f64 D_80144BA0_153B50;
 extern f64 D_80144BA8_153B58;
 extern f64 D_80144BC8_153B78;
 extern f64 D_80144BD0_153B80;
+extern f64 D_80144BD8_153B88;
 extern f64 D_80144BE0_153B90;
 extern f64 D_80144BE8_153B98;
 extern f32 D_80144BF0_153BA0;
@@ -2821,6 +2832,7 @@ extern char D_80143F58_152F08;
 extern char D_80143F7C_152F2C;
 extern char D_80143F94_152F44;
 extern char D_80143FA4_152F54;
+extern f32 D_80144018_152FC8;
 extern f32 D_8014401C_152FCC;
 extern f32 D_80144020_152FD0;
 extern f64 D_80144028_152FD8;
