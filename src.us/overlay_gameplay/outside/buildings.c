@@ -4239,7 +4239,127 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80128E48_137DF8.s")
 #endif
 
+extern char D_801450EC_15409C[];
+
+// CURRENT(8502)
+#ifdef NON_MATCHING
+OutputStruct_8012B150 *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+	AlienInstance *alien;
+	OutputStruct_8012B150 *result;
+	u8 *entry;
+	s16 *ammo;
+	s16 weaponType;
+	s32 pad0;
+	s32 pad1;
+	s32 power;
+	s32 x;
+	s32 y;
+	s32 z;
+	s32 distance;
+	s32 i;
+	s32 halfDistance;
+	s32 quarterDistance;
+	s32 val;
+	void *temp;
+
+	alien = (AlienInstance *)arg0;
+	temp = func_800FAFB8_109F68((VehicleInstance *)alien);
+	if ((alien->unk1E > 0) && (D_801591A8 == 0)) {
+		return NULL;
+	}
+
+	if (arg1 == 0) {
+		weaponType = *(s16 *)((u8 *)temp + 0x1E);
+	} else {
+		weaponType = *(s16 *)((u8 *)temp + 0x2A);
+	}
+
+	if ((arg0 == (s32)D_80052B34) && (D_801591A8 == 0)) {
+		ammo = &D_80048140[weaponSlots[D_8004794A]];
+		if (*ammo > 0) {
+			*ammo -= 1;
+		} else if (*ammo != -0x8000) {
+			return NULL;
+		}
+	}
+
+	entry = D_80145BE0_154B90 + (weaponType * 0x18);
+	if (((weaponType == 2) || (weaponType == 0x6A)) && (D_801591A8 == 0)) {
+		power = *(s16 *)(entry + 2) * 4;
+
+		func_80128504_1374B4(alien, arg1, &x, &y, &z);
+		x = arg2 - x;
+		y = arg3 - y;
+		z = arg4 - z;
+		distance = (s32)sqrtf((f32)((x * x) + (y * y) + (z * z)));
+		distance = (s16)distance;
+		distance /= 5;
+
+		i = (entry == (D_80145BE0_154B90 + 0x30)) ? 5 : 9;
+
+		*(s32 *)(D_80145BE0_154B90 + 0x38) = (((((*(s32 *)(D_80145BE0_154B90 + 0x38) >> 8) & 0xFFFDFFFF) ^
+				((u32)*(s32 *)(D_80145BE0_154B90 + 0x38) >> 8)) << 8) ^ *(s32 *)(D_80145BE0_154B90 + 0x38));
+
+		if (i != 0) {
+			halfDistance = distance / 2;
+			quarterDistance = distance / 4;
+			for (i -= 1; i != 0; i -= 1) {
+				x = (func_800038E0_44E0() % distance) - halfDistance;
+				y = (func_800038E0_44E0() % halfDistance) - quarterDistance;
+				z = (func_800038E0_44E0() % distance) - halfDistance;
+
+				alien->unk1E = 0;
+				func_80129864_138814((s32)alien, arg1, arg2 + x, arg3 + y, arg4 + z);
+			}
+		}
+
+		alien->unk1E = 0;
+		*(s32 *)(D_80145BE0_154B90 + 0x38) = ((((((*(s32 *)(D_80145BE0_154B90 + 0x38) >> 8) | 0x20000) ^
+				((u32)*(s32 *)(D_80145BE0_154B90 + 0x38) >> 8)) << 8) ^ *(s32 *)(D_80145BE0_154B90 + 0x38)));
+		result = func_80129864_138814((s32)alien, arg1, arg2, arg3, arg4);
+	} else {
+		power = *(s16 *)(entry + 2);
+		result = func_80129864_138814((s32)alien, arg1, arg2, arg3, arg4);
+	}
+
+	if ((D_801591A8 == 0) && (arg0 == (s32)D_80052B34)) {
+		if (D_80052B34->unk1A != 0) {
+			power /= 2;
+		}
+
+		if (entry == (D_80145BE0_154B90 + 0x9D8)) {
+			val = (power * 3) / 4;
+			if (val > 0xC8) {
+				val = 0xC8;
+			}
+
+			i = power / 16;
+			if (i > 0x50) {
+				i = 0x50;
+			}
+
+			func_80001144_1D44(val & 0xFF, 5, (0x64 - i) & 0xFF);
+			osSyncPrintf(D_801450EC_15409C);
+		} else {
+			val = power * 3;
+			if (val > 0xC8) {
+				val = 0xC8;
+			}
+
+			i = power / 4;
+			if (i > 0x50) {
+				i = 0x50;
+			}
+
+			func_80001144_1D44(val & 0xFF, 5, (0x64 - i) & 0xFF);
+		}
+	}
+
+	return result;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80129354_138304.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80129864_138814.s")
 
