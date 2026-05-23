@@ -2749,6 +2749,7 @@ extern u8 D_80154327;
 extern u8 D_80154328;
 extern Unk80154318Entry D_80154329[];
 extern Unk801541F8Entry D_80154088[]; // Special effects
+extern Unk8015408EEntry D_8015408E[];
 extern Unk801541F8Entry D_801541F8[];
 extern u8 D_80156ED8;
 extern u8 D_80156ED9;
