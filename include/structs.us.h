@@ -991,7 +991,8 @@ typedef struct {
 	/* 0x5F */ u8 unk5F;
 	/* 0x60 */ u8 unk60;
 	/* 0x61 */ u8 unk61; // Max fuel (/ 0x100) ?
-	/* 0x62 */ u8 pad62[0xE];
+	/* 0x62 */ u8 unk62;
+	/* 0x63 */ u8 pad63[0xD];
 } VehicleSpec; /* size = 0x70 */
 
 typedef struct {
