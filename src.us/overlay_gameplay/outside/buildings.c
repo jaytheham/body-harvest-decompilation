@@ -4400,7 +4400,207 @@ void func_8012D84C_13C7FC()
 }
 
 // debug_drawInteractionBoxes
+// CURRENT(5837)
+#ifdef NON_MATCHING
+void func_8012D884_13C834(void) {
+	Unk8015FAD0 *var_s3;
+	s16 temp_a3;
+	s16 temp_s0;
+	s16 temp_s2;
+	s16 temp_s4;
+	s16 temp_t0;
+	s16 temp_t2;
+	s16 temp_t3;
+	s16 temp_t4;
+	s16 temp_t5;
+	s32 temp_t7;
+	s32 temp_t8;
+	s32 temp_t9;
+	s32 var_v1;
+	s32 var_s5;
+	Gfx *temp_a0;
+	Gfx *temp_s2_2;
+	Gfx *temp_v1;
+
+	var_s3 = D_8015FAD0;
+	if (D_80047710 == -0x63) {
+		temp_a0 = D_8005BB2C;
+		D_8005BB2C = temp_a0 + 1;
+		var_v1 = 0x19;
+		var_s5 = 0x18;
+		temp_a0->words.w1 = (u32)&D_80031160 & 0x1FFFFFFF;
+		temp_a0->words.w0 = 0x01020040;
+		if (var_v1 != 0) {
+			do {
+				if (var_s3->unk2C != 0) {
+					temp_s2 = var_s3->unk18;
+					temp_t9 = var_s3->unk0 >> 0x10;
+					temp_s4 = var_s3->unk1A;
+					temp_a3 = var_s3->unk1C;
+					temp_t0 = temp_t9 + temp_s2;
+					D_8005BB34->v.ob[0] = temp_t0;
+					temp_t8 = var_s3->unk4 >> 0x10;
+					temp_t7 = var_s3->unk8 >> 0x10;
+					temp_t2 = temp_t8 + temp_a3;
+					D_8005BB34->v.ob[1] = temp_t2;
+					temp_t3 = temp_t7 + temp_s4;
+					temp_t4 = temp_t8 - temp_a3;
+					D_8005BB34->v.ob[2] = temp_t3;
+					temp_t5 = temp_t7 - temp_s4;
+					temp_s0 = temp_t9 - temp_s2;
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0;
+					D_8005BB34->v.tc[1] = 0;
+					D_8005BB34->v.cn[0] = 0;
+					D_8005BB34->v.cn[1] = 0;
+					D_8005BB34->v.cn[2] = 0;
+					D_8005BB34->v.cn[3] = 0xFF;
+					D_8005BB34[1].v.ob[0] = temp_t0;
+					D_8005BB34[1].v.ob[1] = temp_t4;
+					D_8005BB34[1].v.ob[2] = temp_t3;
+					D_8005BB34[1].v.flag = 0;
+					D_8005BB34[1].v.tc[0] = 0;
+					D_8005BB34[1].v.tc[1] = 0;
+					D_8005BB34[1].v.cn[0] = 0;
+					D_8005BB34[1].v.cn[1] = 0;
+					D_8005BB34[1].v.cn[2] = 0xFF;
+					D_8005BB34[1].v.cn[3] = 0xFF;
+					D_8005BB34[2].v.ob[0] = temp_t0;
+					D_8005BB34[2].v.ob[1] = temp_t2;
+					D_8005BB34[2].v.ob[2] = temp_t5;
+					D_8005BB34[2].v.flag = 0;
+					D_8005BB34[2].v.tc[0] = 0;
+					D_8005BB34[2].v.tc[1] = 0;
+					D_8005BB34[2].v.cn[0] = 0;
+					D_8005BB34[2].v.cn[1] = 0xFF;
+					D_8005BB34[2].v.cn[2] = 0;
+					D_8005BB34[2].v.cn[3] = 0xFF;
+					D_8005BB34[3].v.ob[0] = temp_t0;
+					D_8005BB34[3].v.ob[1] = temp_t4;
+					D_8005BB34[3].v.ob[2] = temp_t5;
+					D_8005BB34[3].v.flag = 0;
+					D_8005BB34[3].v.tc[0] = 0;
+					D_8005BB34[3].v.tc[1] = 0;
+					D_8005BB34[3].v.cn[0] = 0;
+					D_8005BB34[3].v.cn[1] = 0xFF;
+					D_8005BB34[3].v.cn[2] = 0xFF;
+					D_8005BB34[3].v.cn[3] = 0xFF;
+					D_8005BB34[4].v.ob[0] = temp_s0;
+					D_8005BB34[4].v.ob[1] = temp_t2;
+					D_8005BB34[4].v.ob[2] = temp_t3;
+					D_8005BB34[4].v.flag = 0;
+					D_8005BB34[4].v.tc[0] = 0;
+					D_8005BB34[4].v.tc[1] = 0;
+					D_8005BB34[4].v.cn[0] = 0xFF;
+					D_8005BB34[4].v.cn[1] = 0;
+					D_8005BB34[4].v.cn[2] = 0;
+					D_8005BB34[4].v.cn[3] = 0xFF;
+					D_8005BB34[5].v.ob[0] = temp_s0;
+					D_8005BB34[5].v.ob[1] = temp_t4;
+					D_8005BB34[5].v.ob[2] = temp_t3;
+					D_8005BB34[5].v.flag = 0;
+					D_8005BB34[5].v.tc[0] = 0;
+					D_8005BB34[5].v.tc[1] = 0;
+					D_8005BB34[5].v.cn[0] = 0xFF;
+					D_8005BB34[5].v.cn[1] = 0;
+					D_8005BB34[5].v.cn[2] = 0xFF;
+					D_8005BB34[5].v.cn[3] = 0xFF;
+					D_8005BB34[6].v.ob[0] = temp_s0;
+					D_8005BB34[6].v.ob[1] = temp_t2;
+					D_8005BB34[6].v.ob[2] = temp_t5;
+					D_8005BB34[6].v.flag = 0;
+					D_8005BB34[6].v.tc[0] = 0;
+					D_8005BB34[6].v.tc[1] = 0;
+					D_8005BB34[6].v.cn[0] = 0xFF;
+					D_8005BB34[6].v.cn[1] = 0xFF;
+					D_8005BB34[6].v.cn[2] = 0;
+					D_8005BB34[6].v.cn[3] = 0xFF;
+					D_8005BB34[7].v.ob[0] = temp_s0;
+					D_8005BB34[7].v.ob[1] = temp_t4;
+					D_8005BB34[7].v.ob[2] = temp_t5;
+					D_8005BB34[7].v.flag = 0;
+					D_8005BB34[7].v.tc[0] = 0;
+					D_8005BB34[7].v.tc[1] = 0;
+					D_8005BB34[7].v.cn[0] = 0xFF;
+					D_8005BB34[7].v.cn[1] = 0xFF;
+					D_8005BB34[7].v.cn[2] = 0xFF;
+					D_8005BB34[7].v.cn[3] = 0xFF;
+
+					temp_v1 = D_8005BB30;
+					D_8005BB30 = temp_v1 + 1;
+					temp_v1->words.w0 = 0x0400207F;
+					temp_v1->words.w1 = (u32)D_8005BB34;
+
+					temp_v1 = D_8005BB30;
+					D_8005BB30 = temp_v1 + 1;
+					temp_v1->words.w0 = 0xB5000000;
+					temp_v1->words.w1 = 0x00000200;
+
+					temp_v1 = D_8005BB30;
+					D_8005BB30 = temp_v1 + 1;
+					temp_v1->words.w0 = 0xB5000000;
+					temp_v1->words.w1 = 0x00020600;
+
+					temp_v1 = D_8005BB30;
+					D_8005BB30 = temp_v1 + 1;
+					temp_v1->words.w0 = 0xB5000000;
+					temp_v1->words.w1 = 0x00060400;
+
+					temp_v1 = D_8005BB30;
+					D_8005BB30 = temp_v1 + 1;
+					temp_v1->words.w0 = 0xB5000000;
+					temp_v1->words.w1 = 0x00040000;
+
+					temp_v1 = D_8005BB30;
+					D_8005BB30 = temp_v1 + 1;
+					temp_v1->words.w0 = 0xB5000000;
+					temp_v1->words.w1 = 0x00080A00;
+
+					temp_v1 = D_8005BB30;
+					D_8005BB30 = temp_v1 + 1;
+					temp_v1->words.w0 = 0xB5000000;
+					temp_v1->words.w1 = 0x000A0E00;
+
+					temp_v1 = D_8005BB30;
+					D_8005BB30 = temp_v1 + 1;
+					temp_v1->words.w0 = 0xB5000000;
+					temp_v1->words.w1 = 0x000E0C00;
+
+					temp_v1 = D_8005BB30;
+					D_8005BB30 = temp_v1 + 1;
+					temp_v1->words.w0 = 0xB5000000;
+					temp_v1->words.w1 = 0x000C0800;
+
+					temp_v1 = D_8005BB30;
+					D_8005BB30 = temp_v1 + 1;
+					temp_v1->words.w0 = 0xB5000000;
+					temp_v1->words.w1 = 0x000E0600;
+
+					temp_v1 = D_8005BB30;
+					D_8005BB30 = temp_v1 + 1;
+					temp_v1->words.w0 = 0xB5000000;
+					temp_v1->words.w1 = 0x000C0400;
+
+					temp_v1 = D_8005BB30;
+					D_8005BB30 = temp_v1 + 1;
+					temp_v1->words.w0 = 0xB5000000;
+					temp_v1->words.w1 = 0x000A0200;
+
+					temp_s2_2 = D_8005BB30;
+					D_8005BB30 = temp_s2_2 + 1;
+					temp_s2_2->words.w0 = 0xB5000000;
+					temp_s2_2->words.w1 = 0x00080000;
+
+					D_8005BB34 += 8;
+				}
+				var_s3++;
+			} while (var_s5-- != 0);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012D884_13C834.s")
+#endif
 
 // CURRENT(20)
 #ifdef NON_MATCHING
