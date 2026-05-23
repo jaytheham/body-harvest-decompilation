@@ -3921,7 +3921,100 @@ void func_800D05A8_DF558(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg
 	func_800D0614_DF5C4(arg0, arg1, arg2, arg3, arg4, arg5, arg6, 1);
 }
 
+#ifdef NON_MATCHING
+// CURRENT(14358)
+s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5, u8 arg6, s32 arg7) {
+	s16 effectId;
+	u16 distanceU16;
+	s32 distance;
+	Unk80154318Entry *entry;
+	Unk80154318Sub *sub;
+	s32 burstCount;
+
+	distanceU16 = arg3;
+	distance = distanceU16;
+	if (func_800B93AC_C835C(arg0, arg2, (distanceU16 * 2) & 0xFFFF, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
+		effectId = func_800C17B4_D0764(7, 1);
+		if (effectId != -3) {
+			entry = &D_80154318[effectId];
+			sub = (Unk80154318Sub *)&entry->unk8;
+			func_801371B8_146168(sub, 0x188, arg0, arg1, arg2, D_80144018_152FC8);
+
+			entry->unk2 = distance;
+			sub->unk0 = arg0;
+			sub->unk2 = arg1;
+			sub->unk4 = arg2;
+			sub->unk6 = arg4;
+			sub->unk7 = arg5;
+			sub->unk8 = arg6;
+			sub->unk9 = 0xFF;
+			sub->unkA = 0;
+			sub->unkB = func_800DDB60_ECB10(arg0, arg1, arg2, 9, distance / 6);
+			func_800DDE90_ECE40(sub->unkB, (s8)(distance / 30), 0);
+
+			if (D_80156ED8 == 1) {
+				burstCount = 2;
+			} else if (D_80156ED8 == 2) {
+				burstCount = 0;
+			} else {
+				burstCount = (func_800038E0_44E0() % 3) + 3;
+				burstCount &= 0xFF;
+			}
+
+			if (distance >= 1000) {
+				func_80135D44_144CF4(arg0, arg1, arg2, 8.0f);
+			} else if (distance >= 501) {
+				func_80135D44_144CF4(arg0, arg1, arg2, 3.0f);
+			} else if (distance >= 200) {
+				func_80135D44_144CF4(arg0, arg1, arg2, 2.0f);
+			}
+
+			if (arg7 == 1 && burstCount > 0) {
+		s32 i;
+		s32 halfDistance;
+		Vec3f dir;
+		s16 spread;
+		s16 x;
+		s16 y;
+		s16 z;
+
+		halfDistance = distance / 2;
+		i = 0;
+		do {
+			spread = ((func_800038E0_44E0() % distance) / 4) + halfDistance;
+
+			dir.x = (f32)(func_800038E0_44E0() % 0xFE) + 1.0f;
+			if ((func_800038E0_44E0() % 0xB) < 6) {
+				dir.x = 0.0f - dir.x;
+			}
+
+			dir.y = (f32)(func_800038E0_44E0() % 0xFE) + 1.0f;
+			if ((func_800038E0_44E0() % 0xB) < 6) {
+				dir.y = 0.0f - dir.y;
+			}
+
+			dir.z = (f32)(func_800038E0_44E0() % 0xFE) + 1.0f;
+			if ((func_800038E0_44E0() % 0xB) < 6) {
+				dir.z = 0.0f - dir.z;
+			}
+
+			func_800C1024_CFFD4(&dir, &dir);
+			x = arg0 + (s16)(s32)(dir.x * spread);
+			y = arg1 + (s16)(s32)(dir.y * spread);
+			z = arg2 + (s16)(s32)(dir.z * spread);
+			func_800D16BC_E066C(arg0, arg1, arg2, x, y, z, (func_800038E0_44E0() % 6) + 6);
+			i = (i + 1) & 0xFF;
+		} while (i < burstCount);
+			}
+		}
+		return effectId;
+	}
+
+	return -3;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D0614_DF5C4.s")
+#endif
 
 // CURRENT(2618)
 #ifdef NON_MATCHING
