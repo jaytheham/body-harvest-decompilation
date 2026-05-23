@@ -720,7 +720,131 @@ void func_800970C0_A6070(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800970C0_A6070.s")
 #endif
 
+// CURRENT(13095)
+#ifdef NON_MATCHING
+void func_80097444_A63F4(s16 arg0, s16 arg1) {
+	UnkHudVtx *vtx0;
+	UnkHudVtx *vtx1;
+	UnkHudVtx *vtx2;
+	UnkHudVtx *vtx3;
+	Gfx *dl;
+	u32 addrMask;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	Unk80052B40 base;
+	Unk80052B40 pos;
+	s32 row;
+	s32 col;
+	s32 loopLimit;
+	s32 xStep;
+	s16 y;
+
+	gDPPipeSync(D_8005BB2C++);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetColorDither(D_8005BB2C++, G_CD_NOISE);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0, 0, 0x78);
+
+	base.unk0 = 0;
+	base.unk2 = arg0 + 0x4000;
+	base.unk4 = arg1;
+	addrMask = 0x1FFFFFFF;
+
+	for (row = 0; row < 9; row++) {
+		if (row == 0) {
+			loopLimit = 8;
+			xStep = -4;
+		} else {
+			loopLimit = 1;
+			xStep = -5;
+		}
+
+		y = ((4 - row) << 8) + 0x80;
+		for (col = 0; col < loopLimit; col++) {
+			pos.unk0 = (xStep << 8) + 0x80;
+			pos.unk2 = y;
+			pos.unk4 = 0x32;
+
+			func_800039D0_45D0(&pos, &base, NULL, D_8005BB38);
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0x01040040;
+			dl->words.w1 = D_8005BB38 & addrMask;
+
+			vtx0 = (UnkHudVtx *) D_8005BB34;
+			D_8005BB34 = (Vtx *) (vtx0 + 1);
+			vtx1 = (UnkHudVtx *) D_8005BB34;
+			D_8005BB34 = (Vtx *) (vtx1 + 1);
+			vtx2 = (UnkHudVtx *) D_8005BB34;
+			D_8005BB34 = (Vtx *) (vtx2 + 1);
+			vtx3 = (UnkHudVtx *) D_8005BB34;
+			D_8005BB34 = (Vtx *) (vtx3 + 1);
+			D_8005BB38 += 0x40;
+
+			vtx0->unk0 = -0x40;
+			vtx0->unk2 = -0x40;
+			vtx0->unk4 = 0;
+			vtx1->unk0 = 0x40;
+			vtx1->unk2 = -0x40;
+			vtx1->unk4 = 0;
+			vtx2->unk0 = -0x40;
+			vtx2->unk2 = 0x40;
+			vtx2->unk4 = 0;
+			vtx3->unk0 = 0x40;
+			vtx3->unk2 = 0x40;
+			vtx3->unk4 = 0;
+
+			vtx0->unk8 = -0x20;
+			vtx0->unkA = 0x07E0;
+			vtx2->unk8 = -0x20;
+			vtx2->unkA = -0x20;
+			vtx3->unk8 = 0x07E0;
+			vtx3->unkA = -0x20;
+			vtx1->unk8 = 0x07E0;
+			vtx1->unkA = 0x07E0;
+
+			if (row == 0) {
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1,
+								   ((u32 *) D_8013D4CC_14C47C)[col] & addrMask);
+			} else {
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1,
+								   ((u32 *) D_8013D4E8_14C498)[row] & addrMask);
+			}
+
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+
+			gSPVertex(D_8005BB2C++, (Vtx *) ((u32) vtx0 & addrMask), 4, 0);
+			gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
+			gSP1Triangle(D_8005BB2C++, 2, 1, 3, 0);
+			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+
+			xStep++;
+		}
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097444_A63F4.s")
+#endif
 
 // draw 3d adam on map
 // CURRENT(4676)
