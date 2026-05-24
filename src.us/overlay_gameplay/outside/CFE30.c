@@ -7856,7 +7856,121 @@ void func_800DE150_ED100(void) {
 	D_80157530 = activeCount;
 }
 
+// CURRENT (23293)
+#ifdef NON_MATCHING
+void func_800DE2E8_ED298(void) {
+	s32 i;
+
+	i = 0;
+	do {
+		UnkFC8E8Entry *entry;
+		u8 type;
+		s8 *cfg;
+
+		entry = &D_80156EF0[i];
+		if ((entry->unkA != 0) && (func_800B9228_C81D8(entry->unk0, entry->unk4, (s16)(s32)(D_80047954 * 4.0f), (s16)(s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) && (entry->unkF == 0)) {
+			type = entry->unkC;
+			cfg = (s8 *)&D_8013DFF4_14CFA4[type * 8];
+
+			if ((type != 0xFF) || (entry->unkE != 0xFF)) {
+				gDPPipeSync(D_8005BB2C++);
+				if (cfg[5] == 0) {
+					s32 texOffset;
+					s32 loadCount;
+					s32 wordsPerLine;
+
+					texOffset = (cfg[7] * entry->unkE) * cfg[6];
+					gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+					gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+					gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
+					gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
+						(void *)((((u32 *)D_8013E0C0_14D070)[type] + (texOffset / 2)) & 0x1FFFFFFF));
+					gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+						G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+					gDPLoadSync(D_8005BB2C++);
+
+					loadCount = (((cfg[7] * cfg[6]) + 3) >> 2) - 1;
+					if (loadCount >= 0x7FF) {
+						loadCount = 0x7FF;
+					}
+
+					wordsPerLine = cfg[6] / 0x10;
+					if (wordsPerLine <= 0) {
+						wordsPerLine = 1;
+					}
+
+					gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, loadCount, (wordsPerLine + 0x7FF) / wordsPerLine);
+					gDPPipeSync(D_8005BB2C++);
+					gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, (((cfg[6] >> 1) + 7) >> 3), 0, G_TX_RENDERTILE, 0,
+						G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+					gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, ((cfg[7] - 1) << 2) & 0xFFF, ((cfg[6] - 1) << 2) & 0xFFF);
+				} else if (cfg[5] == 1) {
+					s32 texOffset;
+					s32 loadCount;
+					s32 wordsPerLine;
+
+					texOffset = (cfg[7] * entry->unkE) * cfg[6];
+					gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0);
+					gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1,
+						(void *)((((u32 *)D_8013E0C0_14D070)[type] + texOffset) & 0x1FFFFFFF));
+					gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+						G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+					gDPLoadSync(D_8005BB2C++);
+
+					loadCount = (((cfg[7] * cfg[6]) + 1) >> 1) - 1;
+					if (loadCount >= 0x7FF) {
+						loadCount = 0x7FF;
+					}
+
+					wordsPerLine = cfg[6] / 8;
+					if (wordsPerLine <= 0) {
+						wordsPerLine = 1;
+					}
+
+					gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, loadCount, (wordsPerLine + 0x7FF) / wordsPerLine);
+					gDPPipeSync(D_8005BB2C++);
+					gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, ((cfg[6] + 7) >> 3), 0, G_TX_RENDERTILE, 0,
+						G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+					gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, ((cfg[7] - 1) << 2) & 0xFFF, ((cfg[6] - 1) << 2) & 0xFFF);
+				}
+
+				D_80153BCD = cfg[6];
+				D_80153BCE = cfg[7];
+				gDPPipeSync(D_8005BB2C++);
+			}
+
+			D_80153BB8.x = (f32)entry->unk0;
+			D_80153BB8.y = (f32)entry->unk2;
+			D_80153BB8.z = (f32)entry->unk4;
+			D_80153BC4 = &entry->unk6;
+			D_80153BC8 = (f32)entry->unkA;
+			D_80153BCC = entry->unkD;
+
+			switch (cfg[4]) {
+				case 0:
+					func_800DB350_EA300();
+					break;
+
+				case 2:
+					func_800DAFCC_E9F7C();
+					break;
+
+				default:
+					osSyncPrintf(&D_80143E78_152E28);
+					break;
+			}
+		}
+
+		i = (i + 1) & 0xFF;
+	} while (i < 0x50);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DE2E8_ED298.s")
+#endif
 
 void func_800DE9B8_ED968(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	func_800DDB60_ECB10(arg0, arg1, arg2, 1, (s32) arg3);

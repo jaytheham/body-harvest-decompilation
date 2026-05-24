@@ -122,7 +122,113 @@ void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012EBC0_13DB70.s")
 #endif
 
+// CURRENT(425)
+#ifdef NON_MATCHING
+s32 func_8012EC3C_13DBEC(s32 arg0)
+{
+	u16 ch;
+	s32 index;
+
+	ch = arg0 & 0xFF;
+	if (ch == 0x20) {
+		return 0;
+	}
+
+	if (ch == 0xE9) {
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, ((u32) D_505A0A0 & 0x1FFFFFFF));
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+		return 1;
+	} else if (ch == 0xE8) {
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, ((u32) D_505A2A0 & 0x1FFFFFFF));
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+		return 1;
+	} else if (ch == 0x26) {
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, ((u32) D_5059EA0 & 0x1FFFFFFF));
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+		return 1;
+	} else if (ch == 0x3A) {
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, ((u32) D_505A4A0 & 0x1FFFFFFF));
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+		return 1;
+	}
+
+	if ((ch >= 0x41) && (ch < 0x5B)) {
+		index = ch - 0x41;
+	} else {
+		index = ch - 0x61;
+	}
+
+	if ((index >= 0) && (index < 0x1A)) {
+		u32 *texture;
+
+		texture = &D_80140BC8_14FB78[index];
+		if (*texture != 0) {
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (*texture & 0x1FFFFFFF));
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+			return 1;
+		}
+		return 0;
+	}
+
+	index = ch - 0x30;
+	if ((index >= 0) && (index < 0xA)) {
+		u32 *texture;
+
+		texture = &D_80140BA0_14FB50[index];
+		if (*texture != 0) {
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (*texture & 0x1FFFFFFF));
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+			return 1;
+		}
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012EC3C_13DBEC.s")
+#endif
 
 // https://decomp.me/scratch/RaB1d
 // This does match but doesn't compile right at the moment:
@@ -319,6 +425,117 @@ void func_801306C4_13F674(u8 *arg0)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80130BA0_13FB50.s")
 
+// CURRENT(3070)
+#ifdef NON_MATCHING
+void func_80131280_140230(u8 *arg0)
+{
+	u8 scoreText[0x18];
+	s32 temp;
+
+	if (D_80140CB4_14FC64 != 0) {
+		D_80140CB4_14FC64 = 0;
+		D_80140CB8_14FC68 = 0;
+		D_80140CBC_14FC6C = 0;
+		D_80140CC0_14FC70 = 0;
+		D_80140CC4_14FC74 = 0;
+		D_80140CC8_14FC78 = 0;
+		D_80140CD4_14FC84 = 0;
+		D_80140CD8_14FC88 = 0;
+		D_80140CCC_14FC7C = 0;
+		D_80140CD0_14FC80 = 0;
+		D_80140CDC_14FC8C = 0x82;
+	}
+
+	if (((s32) D_80140CDC_14FC8C >= 0x6F) && (D_80140CC0_14FC70 != 0)) {
+		D_80140CDC_14FC8C -= 2;
+	}
+
+	func_8012EAC0_13DA70(func_8012FFB0_13EF60(), scoreText);
+
+	if (D_80140CB8_14FC68 == 0) {
+		temp = func_8012F4E0_13E490(arg0, 0xA, 0x14, 0x28, D_80140C70_14FC20, D_80140CC0_14FC70 == 0, D_80140CBC_14FC6C == 0, 0x14);
+		D_80140CC0_14FC70 = temp;
+		D_80140CBC_14FC6C = 1;
+		if (temp != 0) {
+			switch (D_800313D0_31FD0) {
+			case 0:
+			default:
+				D_80140CC8_14FC78 = func_8012F4E0_13E490(D_801455D8_154588, 0x12, 0x18, 0x50, D_80140C70_14FC20, D_80140CC8_14FC78 == 0, D_80140CC4_14FC74 == 0, 0x14);
+				break;
+			case 2:
+				D_80140CC8_14FC78 = func_8012F4E0_13E490(D_801455E0_154590, 0xF, 0x18, 0x6E, D_80140C70_14FC20, D_80140CC8_14FC78 == 0, D_80140CC4_14FC74 == 0, 0x14);
+				break;
+			case 1:
+				D_80140CC8_14FC78 = func_8012F4E0_13E490(D_801455F0_1545A0, 0x12, 0x18, 0x6E, D_80140C70_14FC20, D_80140CC8_14FC78 == 0, D_80140CC4_14FC74 == 0, 0x14);
+				break;
+			}
+
+			D_80140CC4_14FC74 = 1;
+		}
+
+		switch (D_800313D0_31FD0) {
+		case 0:
+		default:
+			func_8012F4E0_13E490(D_801455F8_1545A8, 0x12, 0x18, D_80140CDC_14FC8C, D_80140C70_14FC20, 0, 0, 0);
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		}
+
+		D_80140CD4_14FC84 = func_80131858_140808(scoreText, 0x14, 0x1E, 0xA0, D_80140CD4_14FC84 == 0, D_80140CD8_14FC88 == 0);
+		D_80140CD8_14FC88 = 1;
+	} else {
+		if (D_80140CC0_14FC70 == 0) {
+			D_80140CC0_14FC70 = func_8012F4E0_13E490(arg0, 0xA, 0x14, 0x28, D_80140C70_14FC20, D_80140CC0_14FC70 == 0, D_80140CBC_14FC6C == 0, 8);
+			D_80140CBC_14FC6C = 1;
+
+			switch (D_800313D0_31FD0) {
+			case 0:
+			default:
+				func_8012F4E0_13E490(D_80145600_1545B0, 0x12, 0x18, 0x50, D_80140C70_14FC20, 1, 0, 8);
+				func_8012F4E0_13E490(D_80145608_1545B8, 0x12, 0x18, 0x6E, D_80140C70_14FC20, 1, 0, 8);
+				break;
+			case 2:
+				func_8012F4E0_13E490(D_80145610_1545C0, 0xF, 0x18, 0x6E, D_80140C70_14FC20, 1, 0, 8);
+				break;
+			case 1:
+				func_8012F4E0_13E490(D_80145620_1545D0, 0x12, 0x18, 0x50, D_80140C70_14FC20, 1, 0, 8);
+				func_8012F4E0_13E490(D_80145628_1545D8, 0x12, 0x18, 0x6E, D_80140C70_14FC20, 1, 0, 8);
+				break;
+			}
+
+			func_8012F4E0_13E490(scoreText, 0x14, 0x1E, 0x91, D_80140C74_14FC24, 1, 0, 0x28);
+		}
+	}
+
+	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_START | BUTTON_Z | BUTTON_A) != 0) {
+		if ((D_80140CC0_14FC70 == 0) || (D_80140CC8_14FC78 == 0) || ((s32) D_80140CDC_14FC8C >= 0x6F) || (D_80140CD4_14FC84 == 0)) {
+			D_80140CC0_14FC70 = 1;
+			D_80140CBC_14FC6C = 0;
+			D_80140CC8_14FC78 = 1;
+			D_80140CC4_14FC74 = 0;
+			D_80140CDC_14FC8C = 0x6E;
+			D_80140CD4_14FC84 = 1;
+		} else {
+			D_80140CB8_14FC68 = 1;
+			D_80140CBC_14FC6C = 0;
+			D_80140CC0_14FC70 = 0;
+			D_80140CC4_14FC74 = 0;
+			D_80140CC8_14FC78 = 0;
+			D_80140CCC_14FC7C = 0;
+			D_80140CD0_14FC80 = 0;
+		}
+	}
+
+	if ((D_80140CB8_14FC68 != 0) && (D_80140CC0_14FC70 != 0)) {
+		D_80140CB4_14FC64 = 1;
+		D_8015FF80 = 0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80131280_140230.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80131858_140808.s")
