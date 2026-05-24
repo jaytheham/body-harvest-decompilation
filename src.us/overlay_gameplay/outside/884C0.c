@@ -5634,7 +5634,160 @@ s32 func_80088154_97104(AlienInstance *arg0, s16 arg1, s16 arg2) {
 #endif
 
 // maybe kill alien?
+// CURRENT(6335)
+#ifdef NON_MATCHING
+void func_80088760_97710(AlienInstance* alien) {
+	u8 specIndex;
+
+	if (alien->unk20 & 0x300000) {
+		return;
+	}
+
+	specIndex = alien->specIndex;
+	alien->unk2C = 0x14;
+
+	if ((specIndex >= 3) && (specIndex != 0x20)) {
+		u8 waveIndex = alien->unk3E;
+
+		if (waveIndex != 0xFF) {
+			D_80223780[waveIndex].unk10--;
+			if ((D_80223780[waveIndex].unk10 == 0) && (D_80052ACA != 2)) {
+				func_800AF52C_BE4DC(waveIndex);
+			}
+		}
+	}
+
+	if (specIndex == 2) {
+		s32 alienIndex;
+		AlienInstance* target;
+		s32 flags;
+
+		flags = alien->unk20;
+		if (flags & 0x2000) {
+			if (flags & 0x4000) {
+				target = &alienInstances[alien->unk25];
+				if (!(target->unk20 & 0x300000) && (target->specIndex == 0x19)) {
+					alien->hitPoints = 0xA;
+					return;
+				}
+			}
+
+			alienIndex = alien - alienInstances;
+			if (D_80048184 == alienIndex) {
+				D_80052B34->unk20 &= 0xEFFF;
+				alien->unk20 &= ~0x400;
+				if (func_80110FB4_11FF64(D_80052B34, 1) != 0) {
+					D_80052B34->unk20 |= 0x1000;
+					alien->hitPoints = 0xA;
+					alien->unk20 |= 0x400;
+					return;
+				}
+
+				alien->unk20 |= 0x400;
+				D_80048184 = -1;
+				D_80048180 = 0;
+				func_80102DDC_111D8C(D_80052B34, func_800038E0_44E0(), 0x3000, 20.0f);
+			} else {
+				target = &alienInstances[alien->unk24];
+				if (target->unk24 == 0x1D) {
+					target->unk24 = 1;
+					alienInstances[alien->unk24].unk48 = 0x30;
+				} else if (target->unk24 == 4) {
+					target->unk24 = 0x14;
+					alienInstances[alien->unk24].unk48 = 0xA0;
+				} else {
+					target->unk24 = 0;
+					alienInstances[alien->unk24].unk48 = 0x40;
+				}
+
+				target = &alienInstances[alien->unk24];
+				flags = target->unk20;
+				if (!(flags & 0x100000)) {
+					target->unk20 = flags | 0x40004000;
+					D_800481A6[alien->unk24 * 0x28] = func_800038E0_44E0();
+					D_800481AA[alien->unk24 * 0x28] = func_800038E0_44E0() >> 6;
+					D_800481A8[alien->unk24 * 0x28] = (func_800038E0_44E0() >> 8) + 0x200;
+					D_800481C4[alien->unk24 * 0x28] = 0x64;
+				}
+			}
+		}
+	}
+
+	if ((specIndex == 1) && ((alien->unk24 == 1) || (alien->unk24 == 0x1D)) && (func_8000726C_7E6C(0xB) == 0) && (func_8000726C_7E6C(0xC) == 0)) {
+		u16 r1;
+		u16 r2;
+		u16 r3;
+
+		alien->hitPoints = 0xA;
+		alien->unk20 |= 0x4000;
+		alien->unk2C = (func_800038E0_44E0() % 0x28) + 0x3C;
+
+		if ((D_80031420 & 3) == 3) {
+			r1 = func_800038E0_44E0();
+			r2 = func_800038E0_44E0();
+			r3 = func_800038E0_44E0();
+			func_800CA5EC_D959C(
+				alien->unk0,
+				alien->unk2,
+				alien->unk4,
+				(r1 % 0x32) - 0x19,
+				0x50,
+				(r2 % 0x32) - 0x19,
+				0x19,
+				5,
+				(r3 % 8) + 0xC,
+				(func_800038E0_44E0() % 0x23) + 0x69,
+				0,
+				0xFF,
+				0,
+				0xFF);
+		}
+		return;
+	}
+
+	if ((specIndex == 0xA) && (alien->unk20 & 0x2000)) {
+		D_8004817C--;
+		if (D_8004817C == 0) {
+			func_8007643C_853EC(alien->unk3F);
+		}
+	}
+
+	if ((specIndex == 0x1C) && (currentLevel == 4)) {
+		alien->unk2C = 0x50;
+	}
+
+	if (!(alienSpecs[specIndex].unk54 & 0x8000)) {
+		alien->unk12 = 0;
+	}
+
+	if (alien->unk47 & 0x20) {
+		func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, alienSpecs[specIndex].unkC, 0);
+		alien->unk2C = 1;
+	} else {
+		s32 alienIndex;
+		void (*deathCallback)(u8);
+
+		alienIndex = alien - alienInstances;
+		deathCallback = alienSpecs[specIndex].unk5C;
+		if (deathCallback != NULL) {
+			deathCallback(alienIndex & 0xFF);
+		} else {
+			func_80089EB4_98E64(alienIndex & 0xFF, 0x28, 0, 2, 0);
+		}
+	}
+
+	if ((alien->unk20 & 0x80000) && (alien->unk20 & 0x600)) {
+		func_800F2ED8_101E88(alien->unk20 & 7, 0, alien->unkE, alien->unk6, 0);
+	}
+
+	alien->unk20 |= 0x100000;
+	if ((alien->unk20 & 0x01000000) && (D_800481B2[alien->unk25 * 0x50] == 0x1A)) {
+		func_800A4150_B3100(alien->unk25);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088760_97710.s")
+#endif
 
 void func_80088E10_97DC0(s16 arg0) {
 	D_8014DD50[arg0].unk2 += 0x8000;
