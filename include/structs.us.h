@@ -800,7 +800,8 @@ typedef struct {
 	/* 0x04 */ u8 pad4[0x4];
 	/* 0x08 */ s32 unk8;
 	/* 0x0C */ s16 unkC;
-	/* 0x0E */ u8 padE[0x8];
+	/* 0x0E */ u8 padE[0x6];
+	/* 0x14 */ s16 unk14;
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 pad17;
 	/* 0x18 */ s32 unk18; // Ptr to name
@@ -816,7 +817,7 @@ typedef struct {
 	/* 0x32 */ u16 unk32;
 	/* 0x34 */ u8 pad34[4];
 	/* 0x38 */ s16 unk38;
-	/* 0x3A */ u8 pad3A[0x2];
+	/* 0x3A */ u16 unk3A;
 	/* 0x3C */ s16 unk3C;
 	/* 0x3E */ s16 unk3E;
 	/* 0x40 */ s16 unk40;
