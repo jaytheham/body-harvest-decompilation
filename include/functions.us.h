@@ -1077,7 +1077,7 @@ s16 func_800D16BC_E066C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 ar
 void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4);
 void func_800DEB7C_EDB2C(u16 arg0, u8 arg1, s16 arg2);
 void func_800DFA34_EE9E4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4);
-void func_800DF848_EE7F8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4);
+s16 func_800DF848_EE7F8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4);
 void func_800DF9C8_EE978(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5);
 s32 func_800DF038_EDFE8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 arg5);
 void func_800DE9B8_ED968(s16 arg0, s16 arg1, s16 arg2, u8 arg3);
@@ -1408,6 +1408,7 @@ void func_800C9530_D84E0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5
 void func_800DEADC_EDA8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_80103760_112710(VehicleInstance *, VehicleInstance *);
 s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s16 arg2);
+void func_800F32EC_10229C(u8 arg0, u8 arg1);
 
 /* java/1ED9E0 — additional function declarations */
 void func_8008EF1C_9DECC(u8);
