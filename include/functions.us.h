@@ -1209,6 +1209,7 @@ void func_800CCB60_DBB10(void);
 void func_800CF948_DE8F8(void);
 void func_800D0C00_DFBB0(void);
 void func_800D25D0_E1580(void);
+void func_801027E8_111798(VehicleInstance *arg0, f32 arg1, f32 arg2, f32 arg3);
 void func_800D36EC_E269C(void);
 void func_800D80B4_E7064(void);
 void func_800D90A4_E8054(void);

@@ -6036,8 +6036,6 @@ void func_80103DD0_112D80(void) {
 // Do vehicle acceleration?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103E54_112E04.s")
 
-void func_801027E8_111798(VehicleInstance *arg0, f32 arg1, f32 arg2, f32 arg3);
-
 // CURRENT(5016)
 #ifdef NON_MATCHING
 void func_801047C8_113778(VehicleInstance *arg0, OSContPad *arg1) {
