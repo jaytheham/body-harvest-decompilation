@@ -749,7 +749,7 @@ typedef struct {
 	/* 0x34 */ s16 unk34; // Collision counter?
 	/* 0x36 */ u8 unk36; // Anim counter?
 	/* 0x37 */ u8 unk37; // Hit counter?
-	/* 0x38 */ s16 unk38; // target building/vehicle instance id
+	/* 0x38 */ s16 unk38; // target building/vehicle instance id. Some code loads 0x39 as a u8 by loading it into a u8 var
 	/* 0x3A */ s16 unk3A; // Wait counter?
 	/* 0x3C */ s8 unk3C;
 	/* 0x3D */ s8 unk3D;
@@ -1809,6 +1809,13 @@ typedef struct {
 	/* 0x15 */ u8 unk15;
 	/* 0x16 */ u8 pad16[6];
 } Unk80154318Entry; /* stride = 0x1C */
+
+typedef struct {
+	/* 0x00 */ u32 unk0;
+	/* 0x04 */ u8 pad4[0x8];
+	/* 0x0C */ u32 unkC;
+	/* 0x10 */ u8 pad10[0x8];
+} Unk80050AE0; /* stride = 0x18 */
 
 typedef struct {
 	u16 unk0;
