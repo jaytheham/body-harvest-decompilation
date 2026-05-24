@@ -1310,29 +1310,21 @@ void func_800762E0_85290(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800762E0_85290.s")
 #endif
 
-// CURRENT(105)
-#ifdef NON_MATCHING
-void func_80076390_85340(void) {
+void func_80076390_85340(void)
+{
   s32 *ptr158 = &D_8004D158;
   s32 *ptr150 = &D_8004D150;
-  {
-	u8 *entry = &D_801497BA;
-	s32 i = 0x7F;
-
-	do {
-	  if ((entry[0] == 3) && (func_80076208_851B8(entry[1]) != 0)) {
+ { u8 *entry = &D_801497BA; s32 i = 0x7F; do { if ((entry[0] == 3) && (func_80076208_851B8(entry[1]) != 0)) {
 		func_800078E4_84E4(entry[1], ptr150);
 		func_800078CC_84CC(entry[1], ptr158);
 		func_80073DC0_82D70(entry[4]);
 	  }
 	  entry -= 6;
-	} while (i--);
+	}
+	while (i--);
   }
   func_80013460();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076390_85340.s")
-#endif
 
 // CURRENT(3615)
 #ifdef NON_MATCHING
