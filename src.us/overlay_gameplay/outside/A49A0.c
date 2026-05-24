@@ -958,7 +958,7 @@ void func_80097CB4_A6C64(UnkA6C64Keyframe *arg0, UnkA6C64Keyframe *arg1, UnkA6C6
   arg2->unk10 = arg0->unk10 + ((arg1->unk10 - arg0->unk10) * arg3);
 }
 
-// CURRENT(0)
+// CURRENT(?)
 #ifdef NON_MATCHING
 void func_80097E1C_A6DCC(void *arg0) {
 	u16 sp46;

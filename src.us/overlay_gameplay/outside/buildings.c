@@ -2124,8 +2124,202 @@ void func_8011D438_12C3E8(u8 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D438_12C3E8.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D4FC_12C4AC.s")
+// CURRENT(?)
+#ifdef NON_MATCHING
+void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1, s16 startIndex, s32 arg3) {
+	BuildingSpec *spec;
+	u32 *specWords;
+	u8 value;
+	u8 buildingIndex;
+	Gfx *dl;
 
+	value = arg0 & 0xFF;
+	buildingIndex = value & 0x7F;
+	if (buildingIndex >= 0x19) {
+		osSyncPrintf(D_80144EC8_153E78, value);
+		return;
+	}
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x06000000;
+	dl->words.w1 = (u32) D_80031260_31E60 & 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x03800010;
+	dl->words.w1 = (u32) D_140A80;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB6000000;
+	dl->words.w1 = 1;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB7000000;
+	dl->words.w1 = 0x204;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xED000000;
+	dl->words.w1 = 0x00100100;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBC000404;
+	dl->words.w1 = 1;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBC000C04;
+	dl->words.w1 = 1;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBC001404;
+	dl->words.w1 = 0xFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBC001C04;
+	dl->words.w1 = 0xFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBA001402;
+	dl->words.w1 = 0x00300000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFF10003F;
+	dl->words.w1 = 0xFFFCFFFC;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF60FC0FC;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFE000000;
+	dl->words.w1 = (u32) D_802C2080 & 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB900031D;
+	dl->words.w1 = 0x00552078;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFCFFFFFF;
+	dl->words.w1 = 0xFFFE793C;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB7000000;
+	dl->words.w1 = 0x80008000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBB000000;
+	dl->words.w1 = 0x80008000;
+
+	D_8005BB38 += 0x40;
+
+	spec = &buildingSpecs[buildingIndex];
+	specWords = (u32 *) spec;
+	D_80052B40.unk0 = 0;
+	D_80052B40.unk2 = 0;
+	D_80052B40.unk4 = 0;
+	D_80052B44 = -(s16) spec->unk14;
+	D_80052B48.unk0 = 0;
+	D_80052B48.unk2 = 0x8000;
+	D_80052B48.unk4 = 0x4000;
+	D_80052B50.unk0 = (s16) (s32) (((256.0 / (f64) (spec->unk10 * 2)) * 128.0));
+	D_80052B50.unk2 = 0x100;
+	D_80052B54 = (s16) (s32) (((256.0 / (f64) (spec->unk12 * 2)) * 128.0));
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01060040;
+	dl->words.w1 = (u32) D_8005BB38 & 0x1FFFFFFF;
+	D_8005BB38 += 0x40;
+
+	guOrtho(D_8005BB38, -64.0f, 64.0f, 64.0f, 0.0f, 1.0f, (f32) spec->unk14, 1.0f);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01030040;
+	dl->words.w1 = (u32) D_8005BB38 & 0x1FFFFFFF;
+	D_8005BB38 += 0x40;
+
+	if (arg0 & 0x80) {
+		if ((u32) D_5002D40 == specWords[0]) {
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0x06000000;
+			dl->words.w1 = (u32) func_800E88C0_F7870((s32) D_5002D40, 2);
+		} else if (specWords[1] != 0) {
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0x06000000;
+			dl->words.w1 = (u32) func_800E88C0_F7870((s32) specWords[1], 2);
+		} else {
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0x06000000;
+			dl->words.w1 = (u32) func_800E88C0_F7870((s32) specWords[0], 2);
+		}
+	} else if ((u32) D_5002D40 == specWords[0]) {
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0x06000000;
+		dl->words.w1 = (u32) func_800E88C0_F7870((s32) D_5002D40, 2);
+	} else {
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0x06000000;
+		dl->words.w1 = (u32) func_800E88C0_F7870((s32) specWords[0], 2);
+	}
+
+	if (D_8015EA28 == value) {
+		D_80052B40.unk0 = 0x100;
+		D_80052B40.unk2 = 0;
+		D_80052B40.unk4 = 0;
+		func_800039D0_45D0(&D_80052B40, NULL, NULL, D_8005BB38);
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0x01040040;
+		dl->words.w1 = (u32) D_8005BB38 & 0x1FFFFFFF;
+		D_8005BB38 += 0x40;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xBD000000;
+		dl->words.w1 = 0;
+	}
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D4FC_12C4AC.s")
+#endif
 // CURRENT(9775)
 #ifdef NON_MATCHING
 void func_8011DBA0_12CB50(s32 arg3) {

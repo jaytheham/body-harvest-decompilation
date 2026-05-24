@@ -585,6 +585,32 @@ typedef struct {
 } Unk801601F0; /* size = 0x16 */
 
 typedef struct {
+	u8 pad0[0x8];
+	s32 unk8;
+	s16 unkC;
+	u8 padE[0x8];
+	s16 unk16;
+	u8 pad18[0x1C];
+	s16 unk34;
+	s16 unk36;
+	s16 unk38;
+	u8 pad3A[0xC];
+	u16 unk46;
+} Unk80258250Entry;
+
+typedef struct {
+	s16 unk0;
+	s16 unk2;
+	s16 unk4;
+	s16 unk6;
+	s16 unk8;
+	s16 unkA;
+	s16 unkC;
+	s16 unkE;
+	s16 unk10;
+} Unk80259D7EEntry;
+
+typedef struct {
 	/* 0x00 */ s32 score;
 	/* 0x04 */ u16 secondsElapsed;
 	/* 0x06 */ s16 humansKilled;
