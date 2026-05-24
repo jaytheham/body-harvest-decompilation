@@ -456,7 +456,7 @@ extern u8 D_8004D1B9;
 extern s16 D_8004D1C0;
 extern u8 D_8004D348[];
 extern u8 D_8004D350[];
-extern Unk8004D1C8 D_8004D1C8[];
+extern MissionCondEntry D_8004D1C8[];
 extern u8 D_80047F93;
 extern AlienInstance D_8004D0F8[]; // alien array base
 extern BitFlags64 D_8004DC48;

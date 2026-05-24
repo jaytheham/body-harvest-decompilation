@@ -829,20 +829,13 @@ void func_80075574_84524(void) {
 
 void func_800755E0_84590(void)
 {
-  Unk8004D1C8 *var_v0;
-  Unk8004D1C8 * var_v1;
   s32 i;
-	s32 new_var;
   func_80074204_831B4();
-  new_var = 0x10;
-  
-  for (i = 0; &D_8004D1C8[new_var] != &D_8004D1C8[i]; i++)
+  for (i = 0; i < 0x40; i++)
   {
-	D_8004D1C8[i].unk6 = 0;
-	D_8004D1C8[i].unkC = 0;
-	D_8004D1C8[i].unk12 = 0;
 	D_8004D1C8[i].unk0 = 0;
   }
+
   D_8004D150 = 0;
 }
 
