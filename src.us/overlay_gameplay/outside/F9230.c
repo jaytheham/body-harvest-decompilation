@@ -9294,61 +9294,53 @@ void func_80115A74_124A24(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80115A74_124A24.s")
 #endif
 
-// CURRENT(20)
-#ifdef NON_MATCHING
-void func_80115CC0_124C70(void) {
-	VehicleInstance *var_s0;
-	VehicleInstance *var_s3;
-	VehicleInstance *var_s4;
-	s32 var_s1;
-	s32 var_s2;
-
-	var_s0 = vehicleInstances;
-	var_s2 = 0;
-	var_s1 = 0x7F;
-	do {
-		if (var_s0->unk1A == 0x11) {
-			if ((var_s0->unk6 + 0x2000) & 0x4000) {
-				var_s0->unk6 = -0x4000;
-				var_s0->unkE = var_s0->unk6;
-				func_800FB44C_10A3FC(var_s0, (f32)(s16)((var_s0->unk0 & 0xFF00) + 0xC3));
-				var_s3 = var_s0;
-			} else {
-				var_s0->unk6 = -0x8000;
-				var_s0->unkE = var_s0->unk6;
-				func_800FB484_10A434(var_s0, (f32)(s16)((var_s0->unk4 & 0xFF00) + 0x37));
-				var_s4 = var_s0;
-			}
+void func_80115CC0_124C70(void)
+{
+  VehicleInstance *var_s0;
+  VehicleInstance *var_s3;
+  VehicleInstance *var_s4;
+  s32 var_s1;
+  s32 var_s2;
+  var_s0 = vehicleInstances;
+  var_s2 = 0;
+  var_s1 = 0x7F;
+  do
+  {
+	if (var_s0->unk1A == 0x11)
+	{
+	  if ((var_s0->unk6 + 0x2000) & 0x4000)
+	  {
+		var_s0->unk6 = -0x4000;
+		var_s0->unkE = var_s0->unk6;
+		func_800FB44C_10A3FC(var_s0, (f32) ((s16) ((var_s0->unk0 & 0xFF00) + 0xC3)));
+		var_s3 = var_s0;
+	  }
+	  else
+	  {
+		var_s0->unk6 = -0x8000;
+		var_s0->unkE = var_s0->unk6;
+ func_800FB484_10A434(var_s0, (f32) ((s16) ((var_s0->unk4 & 0xFF00) + 0x37))); var_s4 = var_s0; } } var_s0++; } while (var_s1--); var_s0 = vehicleInstances; var_s1 = 0x7F; do { if (var_s0->unk1A == 0x12) { if (var_s2 & 1) {
+		if (var_s4->unk20 & 0x8000)
+		{
+		  func_800FB44C_10A3FC(var_s0, (var_s4->unk4C + 452.0f) + ((f32) ((var_s2 >> 1) * 0x165)));
+		  func_800FB484_10A434(var_s0, var_s4->unk54);
+		  var_s0->unk6 = -0x8000;
+		  var_s0->unkE = var_s0->unk6;
 		}
-		var_s0++;
-	} while (var_s1--);
-
-	var_s0 = vehicleInstances;
-	var_s1 = 0x7F;
-	do {
-		if (var_s0->unk1A == 0x12) {
-			if (var_s2 & 1) {
-				if (var_s4->unk20 & 0x8000) {
-					func_800FB44C_10A3FC(var_s0, var_s4->unk4C + 452.0f + (f32)((var_s2 >> 1) * 0x165));
-					func_800FB484_10A434(var_s0, var_s4->unk54);
-					var_s0->unk6 = -0x8000;
-					var_s0->unkE = var_s0->unk6;
-				}
-			} else if (var_s3->unk20 & 0x8000) {
-				func_800FB44C_10A3FC(var_s0, var_s3->unk4C);
-				func_800FB484_10A434(var_s0, var_s3->unk54 + 452.0f + (f32)((var_s2 >> 1) * 0x165));
-				var_s0->unk6 = -0x4000;
-				var_s0->unkE = var_s0->unk6;
-			}
-
-			var_s0->unk20 |= 1;
-			func_800FB430_10A3E0(var_s0, 0.0f);
-			var_s2++;
-		}
-		var_s0++;
-	} while (var_s1--);
+	  }
+	  else
+		if (var_s3->unk20 & 0x8000)
+	  {
+		func_800FB44C_10A3FC(var_s0, var_s3->unk4C);
+		func_800FB484_10A434(var_s0, (var_s3->unk54 + 452.0f) + ((f32) ((var_s2 >> 1) * 0x165)));
+		var_s0->unk6 = -0x4000;
+		var_s0->unkE = var_s0->unk6;
+	  }
+	  var_s0->unk20 |= 1;
+	  func_800FB430_10A3E0(var_s0, 0.0f);
+	  var_s2++;
+	}
+	var_s0++;
+  }
+  while (var_s1--);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80115CC0_124C70.s")
-#endif
-
