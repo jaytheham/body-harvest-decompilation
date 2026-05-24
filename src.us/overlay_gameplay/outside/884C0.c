@@ -1366,7 +1366,129 @@ void func_8007B2A0_8A250(u8 arg0)
   gSPDisplayList(D_8005BB2C++, (Gfx *) alienSpecs[specIndex].unk0);
 }
 
+// CURRENT(38295)
+#ifdef NON_MATCHING
+void func_8007B370_8A320(s32 arg0) {
+	AlienInstance *temp_t3;
+	f32 var_f0;
+	s16 temp_v0;
+	s16 var_t4;
+	s32 temp_f16;
+	u8 temp_v0_2;
+	Gfx *temp_a1;
+	Gfx *temp_v0_3;
+	Gfx *temp_v0_4;
+	Gfx *temp_v0_5;
+	Gfx *temp_v0_6;
+	Gfx *temp_v0_7;
+	Gfx *temp_v0_8;
+	Gfx *temp_v0_9;
+	Gfx *temp_v0_10;
+	Gfx *temp_v0_11;
+	Gfx *temp_v0_12;
+	Gfx *temp_v0_13;
+	Gfx *temp_v0_14;
+	Gfx *temp_v0_15;
+	s32 sp88;
+	s16 sp78;
+	s16 sp7A;
+	s16 sp7C;
+	s16 sp80;
+	s16 sp82;
+	s16 sp84;
+	f32 sp74;
+
+	sp88 = arg0;
+	temp_t3 = &alienInstances[arg0 & 0xFF];
+	temp_v0 = temp_t3->unk48;
+	if (temp_v0 < 0xF) {
+		var_f0 = (f32)((f64)(f32)sins((u32)((f32)(temp_v0 << 0xE) / 15.0f) & 0xFFFF) / 32768.0);
+	} else {
+		var_f0 = (f32)((f64)(f32)sins((u32)((f32)((temp_v0 * -0x4000) + 0x50000) / 5.0f) & 0xFFFF) / 32768.0);
+	}
+	temp_v0_2 = temp_t3->specIndex;
+	var_t4 = ((s16 *)&D_8025668C)[temp_v0_2 * 0x34];
+	if (temp_v0_2 == 0x1A) {
+		var_t4 = (s16)(s32)((f64)var_t4 * 1.5);
+	}
+	sp80 = var_t4 * 0xA;
+	temp_f16 = (s32)((f32)sp80 * var_f0);
+	sp80 = (s16)temp_f16;
+	sp82 = (s16)((s16)temp_f16 / 2);
+	sp84 = (s16)temp_f16;
+	sp78 = (s16)((s16)temp_t3->unk0 / 4);
+	sp7A = (s16)((s16)temp_t3->unk2 / 4);
+	sp7C = (s16)((s16)temp_t3->unk4 / 4);
+
+	temp_v0_3 = D_8005BB2C;
+	temp_v0_4 = D_8005BB2C;
+	temp_v0_5 = D_8005BB2C;
+	temp_v0_6 = D_8005BB2C;
+	temp_v0_7 = D_8005BB2C;
+	temp_v0_8 = D_8005BB2C;
+	temp_v0_9 = D_8005BB2C;
+	temp_v0_10 = D_8005BB2C;
+	temp_v0_11 = D_8005BB2C;
+	temp_v0_12 = D_8005BB2C;
+	temp_v0_13 = D_8005BB2C;
+	temp_v0_14 = D_8005BB2C;
+	temp_v0_15 = D_8005BB2C;
+	sp74 = var_f0;
+	temp_v0_3->words.w1 = (u32)&D_80031230;
+	temp_v0_3->words.w0 = 0x06000000;
+	temp_v0_4->words.w1 = 0;
+	temp_v0_4->words.w0 = 0xBA000E02;
+	temp_v0_5->words.w0 = 0xFD700000;
+	temp_v0_5->words.w1 = (u32)(D_50327B0 + ((D_80052A8C & 7) << 8));
+	temp_v0_6->words.w0 = 0xF5700000;
+	temp_v0_6->words.w1 = 0x07010040;
+	temp_v0_7->words.w1 = 0;
+	temp_v0_7->words.w0 = 0xE6000000;
+	temp_v0_8->words.w1 = 0x0707F400;
+	temp_v0_8->words.w0 = 0xF3000000;
+	temp_v0_9->words.w1 = 0;
+	temp_v0_9->words.w0 = 0xE7000000;
+	temp_v0_10->words.w0 = 0xF5680400;
+	temp_v0_10->words.w1 = 0x00010040;
+	temp_v0_11->words.w0 = 0xF2000000;
+	temp_v0_11->words.w1 = 0x0003C03C;
+	temp_v0_12->words.w1 = 0x10001000;
+	temp_v0_12->words.w0 = 0xBB000001;
+	temp_v0_13->words.w1 = 0xFF2FFFFF;
+	temp_v0_13->words.w0 = 0xFC119623;
+	temp_v0_14->words.w1 = 0x004049D8;
+	temp_v0_14->words.w0 = 0xB900031D;
+	if (temp_t3->unk48 != 0) {
+		temp_v0_15->words.w0 = 0x01020040;
+		temp_v0_15->words.w1 = (u32)(D_8005BB38 & 0x1FFFFFFF);
+		temp_a1 = D_8005BB2C;
+		D_8005BB38 += 0x40;
+		temp_a1->words.w0 = 0xFA000000;
+		temp_a1->words.w1 = (u32)(((u8)(128.0f * sp74)) | 0xC8C8FF00);
+		temp_v0_15 = D_8005BB2C;
+		temp_v0_15->words.w1 = (u32)&D_50332A0;
+		temp_v0_15->words.w0 = 0x06000000;
+		temp_v0_15 = D_8005BB2C;
+		temp_v0_15->words.w1 = 0;
+		temp_v0_15->words.w0 = 0xBD000000;
+	}
+	temp_v0_15 = D_8005BB2C;
+	temp_v0_15->words.w1 = (u32)&D_80031200;
+	temp_v0_15->words.w0 = 0x06000000;
+	temp_v0_15 = D_8005BB2C;
+	temp_v0_15->words.w1 = 0xFFFE7838;
+	temp_v0_15->words.w0 = 0xFCFFFFFF;
+	temp_v0_15 = D_8005BB2C;
+	temp_v0_15->words.w1 = 0x00008000;
+	temp_v0_15->words.w0 = 0xBA000E02;
+	temp_v0_15 = D_8005BB2C;
+	temp_v0_15->words.w1 = 0;
+	temp_v0_15->words.w0 = 0xE7000000;
+}
+
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B370_8A320.s")
+#endif
 
 // CURRENT(3823)
 #ifdef NON_MATCHING
