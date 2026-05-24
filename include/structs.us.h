@@ -575,6 +575,16 @@ typedef struct {
 } Unk80031620; /* size = 0x04 */
 
 typedef struct {
+	/* 0x00 */ u8 pad0[8];
+    /* 0x08 */ s16 unk8;
+    /* 0x0A */ u8 padA[8];
+	/* 0x12 */ u8 unk12;
+	/* 0x13 */ u8 unk13;
+    /* 0x14 */ u8 unk14;
+	///* 0x16 */ u8 pad15[2]; no???
+} Unk801601F0; /* size = 0x16 */
+
+typedef struct {
 	/* 0x00 */ s32 score;
 	/* 0x04 */ u16 secondsElapsed;
 	/* 0x06 */ s16 humansKilled;

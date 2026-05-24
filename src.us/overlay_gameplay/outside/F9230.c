@@ -3090,48 +3090,46 @@ s32 func_800F450C_1034BC(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F450C_1034BC.s")
 #endif
 
-// CURRENT(92)
+// https://decomp.me/scratch/gNcUf
+// CURRENT(72)
 #ifdef NON_MATCHING
-void func_800F4748_1036F8(UnkF9230Arg0 *arg0, u8 arg1, u8 arg2) {
-	UnkF9230Func800F4748Entry *entry;
-	UnkF9230Func800F4748Entry *next;
-	s32 pad0;
-	s32 pad1;
-	s32 tempA;
-	s16 sp3A;
-	s16 sp3E;
-	s16 sp40;
-	u8 animLerp;
-
-	entry = &((UnkF9230Func800F4748Entry *)arg0)[arg2];
-	animLerp = D_801601F0[(arg0->unk0[0x23] * 0x16) + 0x12];
-
-	if (entry[1].unk23 == 0) {
-		next = entry + 1;
-
-		if (arg0->unk0[0x22] == 0x10) {
-			next->unkA = (func_800038E0_44E0() % 10) + next->unk0;
-			next->unkC = (func_800038E0_44E0() % 10) + next->unk4;
-			return;
-		}
-
-		tempA = func_800F41E0_103190(next->unk0, next->unk6, arg1, animLerp);
-		next->unkC = func_800F41E0_103190(next->unk4, next->unk8, arg1, animLerp);
-		next->unkA = tempA;
-
-		sp40 = func_800F384C_1027FC(arg0, next->unk16, next->unk0, next->unk4);
-		sp3E = func_800F384C_1027FC(arg0, next->unk16, next->unk6, next->unk8);
-		sp3A = next->unk2;
-
-		next->unk2 = func_800F3EE4_102E94(arg1, sp40, sp3E, (s16)(sp40 + D_801601F0[(arg0->unk0[0x23] * 0x16) + 0x13]), 0x20, animLerp);
-
-		if ((D_801601F0[(arg0->unk0[0x23] * 0x16) + 0x14] == 2)
-			|| ((D_801601F0[(arg0->unk0[0x23] * 0x16) + 0x14] == 1) && (((Unk801470C0Entry *)&D_801601F0[arg0->unk0[0x23] * 0x16])->unk8 >= 0x10))) {
-			if ((sp3E == next->unk2) && (next->unk2 < sp3A)) {
-				func_80137468_146418(arg0->unk144, 6);
-			}
-		}
+void func_800F4748_1036F8(UnkF9230Arg0 *arg0, u8 arg1, u8 arg2)
+{
+  UnkF9230Func800F4748Entry *entry;
+  s32 pad0;
+  s32 pad1;
+  s16 sp40;
+  u8 animLerp;s32 tempA;UnkF9230Func800F4748Entry *next;
+  
+  s16 sp3A;
+  s16 sp3E;
+  
+  entry = &((UnkF9230Func800F4748Entry *) arg0)[arg2];
+  animLerp = D_801601F0[arg0->unk0[0x23]].unk12;
+  if (entry[1].unk23 == 0)
+  {
+	next = entry + 1;
+	if (arg0->unk0[0x22] == 0x10)
+	{
+	  next->unkA = (func_800038E0_44E0() % 10) + next->unk0;
+	  next->unkC = (func_800038E0_44E0() % 10) + next->unk4;
+	  return;
 	}
+	tempA = func_800F41E0_103190(next->unk0, next->unk6, arg1, animLerp);
+	next->unkC = func_800F41E0_103190(next->unk4, next->unk8, arg1, animLerp);
+	next->unkA = tempA;
+	sp40 = func_800F384C_1027FC(arg0, next->unk16, next->unk0, next->unk4);
+	sp3E = func_800F384C_1027FC(arg0, next->unk16, next->unk6, next->unk8);
+	sp3A = next->unk2;
+	next->unk2 = func_800F3EE4_102E94(arg1, sp40, sp3E, (s16) (sp40 + D_801601F0[arg0->unk0[0x23]].unk13), 0x20, animLerp);
+	if ((D_801601F0[arg0->unk0[0x23]].unk14 == 2) || ((D_801601F0[arg0->unk0[0x23]].unk14 == 1) && (D_801601F0[arg0->unk0[0x23]].unk8 >= 0x10)))
+	{
+	  if ((sp3E == next->unk2) && (next->unk2 < sp3A))
+	  {
+		func_80137468_146418(arg0->unk144, 6);
+	  }
+	}
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F4748_1036F8.s")
@@ -5258,7 +5256,7 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 
 // drawDeadVehicles
 #ifdef NON_MATCHING
-// CURRENT(guarded)
+// CURRENT(5000)
 void func_80101C14_110BC4(void) {
 	Gfx *dl;
 	s16 i;
@@ -5690,28 +5688,28 @@ void func_80102DDC_111D8C(VehicleInstance *arg0, s16 arg1, s16 arg2, f32 arg3)
 {u8 temp2;
  
   s16 temp;
-    
+	
   if ((arg0->unk1C > 0) && ((gameplayMode == 1) || (arg0 != D_80052B34)))
   {
-    temp = coss(arg2);
-    arg0->unk30 += ((((f32) coss(arg1)) / 32768.0) * (((f32) temp) / 32768.0)) * arg3;
-    arg0->unk34 += (((f32) sins(arg2)) / 32768.0) * arg3;
-    temp = coss(arg2);
-    arg0->unk38 = arg0->unk38 + (((((f32) sins(arg1)) / 32768.0) * (((f32) temp) / 32768.0)) * arg3);
-    if (arg0->unk34 > 0.0f)
-    {
-      if (!(arg0->unk20 & 2))
-      {
-        arg0->unk20 |= 2;
-        arg0->unk10 = 0;
-        func_800FB3E8_10A398(arg0, 1.0f);
-      }
-    }
-    arg0->unk20 |= 1;
-    if (arg0 == D_80052B34)
-    {
-      D_80157A2C = arg1;
-    }
+	temp = coss(arg2);
+	arg0->unk30 += ((((f32) coss(arg1)) / 32768.0) * (((f32) temp) / 32768.0)) * arg3;
+	arg0->unk34 += (((f32) sins(arg2)) / 32768.0) * arg3;
+	temp = coss(arg2);
+	arg0->unk38 = arg0->unk38 + (((((f32) sins(arg1)) / 32768.0) * (((f32) temp) / 32768.0)) * arg3);
+	if (arg0->unk34 > 0.0f)
+	{
+	  if (!(arg0->unk20 & 2))
+	  {
+		arg0->unk20 |= 2;
+		arg0->unk10 = 0;
+		func_800FB3E8_10A398(arg0, 1.0f);
+	  }
+	}
+	arg0->unk20 |= 1;
+	if (arg0 == D_80052B34)
+	{
+	  D_80157A2C = arg1;
+	}
   }
 }
 #else
