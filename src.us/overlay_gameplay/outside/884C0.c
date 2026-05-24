@@ -6874,9 +6874,6 @@ void func_8008C7B0_9B760(u8 arg0) {
 	func_80081F18_90EC8(arg0, 0xC, 1, sp28, &D_8013C514_14B4C4);
 }
 
-void func_8008C428_9B3D8(s32 arg0);
-void func_80089200_981B0(u8 arg0, u32 arg1, s32 arg2);
-
 // CURRENT(6775)
 #ifdef NON_MATCHING
 void func_8008C8B8_9B868(u8 arg0) {
