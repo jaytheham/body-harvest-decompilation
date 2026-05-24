@@ -223,7 +223,129 @@ void func_800A4150_B3100(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A41B0_B3160.s")
 
+#ifdef NON_MATCHING
+void func_800A4C28_B3BD8(u8 arg0) {
+	AlienInstance *alien = &alienInstances[arg0];
+	AlienSpec *spec = &alienSpecs[alien->specIndex];
+	Unk8014DD50 *node;
+	u8 *levelTable = (u8 *)D_8013D786_14C736;
+	u8 *routeTable = (u8 *)D_8014E4D6;
+	s16 coords[3];
+	s32 point[3];
+	s16 direction;
+	s32 originalSpecValue;
+	s8 nextNode;
+	s8 nextNextNode;
+	s8 nextNextNextNode;
+	s8 result;
+
+	if (currentLevel < 4) {
+		nextNode = D_8014DD50[alien->unkC].unkC;
+		node = &D_8014DD50[nextNode];
+		direction = node->unkC;
+		nextNextNode = D_8014DD50[node->unkD].unkD;
+		nextNextNextNode = D_8014DD50[nextNextNode].unkD;
+	} else {
+		nextNode = D_8014DD50[alien->unkD].unkC;
+		node = &D_8014DD50[nextNode];
+		direction = node->unkC;
+		nextNextNode = D_8014DD50[node->unkD].unkD;
+		nextNextNextNode = D_8014DD50[nextNextNode].unkD;
+		func_80086230_951E0(arg0, nextNextNode, 0x2000);
+		func_80086230_951E0(arg0, nextNextNextNode, 0x2000);
+	}
+
+	if (D_8014DD50[nextNextNextNode].unkD != -1) {
+		func_80090948_9F8F8(nextNextNode, 0x7D0);
+		func_80090948_9F8F8(nextNextNextNode, 0x7D0);
+	} else if (currentLevel != 4) {
+		nextNextNode = -1;
+		nextNextNextNode = -1;
+	}
+
+	func_80085E2C_94DDC(arg0, direction, 0x4000);
+	if (alien->unk20 & 0x2000) {
+		if (currentLevel < 4) {
+			coords[0] = direction;
+			coords[1] = node->unkE;
+			coords[2] = node->unk4;
+			if (node->unkE == 0 && alien->unk36 < 5) {
+				*((s16 *)(levelTable + (alien->unk36 * 0x10))) = direction;
+			}
+			*((s16 *)(routeTable + (nextNode * 0x10))) = direction;
+			result = func_80081F18_90EC8(arg0, 2, 6, coords, (Unk8014DD50 **)&D_8013D840_14C7F0);
+			if (alien->unk36 == 3) {
+				originalSpecValue = spec->unk24;
+				point[0] = (s32)((f32)sins((u16)direction) * ((f32)originalSpecValue / 32768.0f));
+				func_80128428_1373D8(alien, (s16)point[0], spec->unk22, (s16)((f32)((f32)coss((u16)direction) * ((f32)originalSpecValue / 32768.0f)) + node->unk4), &point[0], &point[1], &point[2]);
+				func_800C56A4_D4654((s16)point[2], (s16)point[1], (s16)point[0], 0x8C, 0xF, 3, 0x28);
+			}
+			if (result == 4) {
+				alien->unk1E = 0;
+				originalSpecValue = spec->unk24;
+				spec->unk20 = (s16)((f32)sins((u16)direction) * ((f32)originalSpecValue / 32768.0f));
+				spec->unk24 = (s16)((f32)((f32)coss((u16)direction) * ((f32)originalSpecValue / 32768.0f)) + node->unk4);
+				if (func_80084FE8_93F98(arg0, 0x3FFF) == 0) {
+					func_80086D70_95D20(arg0, 0, (s16)-direction);
+				} else {
+					func_800871CC_9617C(arg0, 0, 0);
+				}
+				spec->unk24 = (s16)originalSpecValue;
+				if (alien->unk3A != 0) {
+					alien->unk36 = 2;
+				}
+			}
+			if (result == 6) {
+				alien->unk20 &= 0xFFBFDFFF;
+			}
+		} else {
+			if (D_8013D888_14C838 != 0) {
+				coords[0] = -0x3D;
+				coords[1] = 9;
+				coords[2] = 0x72;
+				func_800A931C_B82CC(nextNextNode, coords, point);
+			} else {
+				coords[0] = 0x3D;
+				coords[1] = 9;
+				coords[2] = 0x72;
+				func_800A931C_B82CC(nextNextNextNode, coords, point);
+			}
+			coords[0] = (s16)point[0];
+			coords[1] = (s16)point[1];
+			coords[2] = (s16)point[2];
+			func_800A931C_B82CC(alien->unkD, coords, point);
+			spec->unk20 = (s16)point[0];
+			spec->unk22 = (s16)point[1];
+			spec->unk24 = (s16)point[2];
+			spec->unk1C = (D_80047F94 == 2) ? 0x33 : 0x2F;
+			if (!(alien->unk20 & 0x5000) && (func_80084FE8_93F98(arg0, 0x27D0) != 0) && (func_800871CC_9617C(arg0, 0, 0) != 0)) {
+				alien->unk1E = 0x28;
+				alien->unk4B = 0;
+				alien->unk20 |= 0x8000;
+				D_8013D888_14C838 = (D_8013D888_14C838 == 0);
+			}
+			if (alien->unk1E != 0) {
+				alien->unk1E--;
+			}
+		}
+	} else if ((func_80084FE8_93F98(arg0, 0x3FFF) != 0) && ((alien->unk20 & 0x1000) == 0)) {
+		alien->unk20 |= 0x2000;
+		alien->unk36 = 0;
+		alien->unk3A = (s16)(currentLevel * 0x12C);
+		*((s16 *)(levelTable + 0)) = direction;
+		func_80137468_146418(arg0, 0x17);
+	} else if (alien->unk3A != 0) {
+		alien->unk3A--;
+	}
+
+	func_800A41B0_B3160(arg0);
+	if (alien->unk20 & 0x800000) {
+		alien->unk20 &= 0xFF7FFFFF;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A4C28_B3BD8.s")
+#endif
 
 s32 func_800A52F8_B42A8(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	s32 temp_a0;
