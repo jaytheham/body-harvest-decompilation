@@ -67,6 +67,7 @@ extern u8 D_3F320;
 extern u8 D_040AAE40[];
 extern u16 D_040B1A40[];
 extern u8 D_1003990[];
+extern u8 D_100ACB0[];
 extern u8 D_100ACF0[];
 extern u8 D_100AEF0[];
 extern u8 D_100B4F0[];

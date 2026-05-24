@@ -1213,7 +1213,212 @@ void func_800A2B58_B1B08(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2B58_B1B08.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(16691)
+void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
+	AAA70Unk8014F618Head *temp_s0;
+	Gfx *dl;
+	f32 posX;
+	f32 posY;
+	f32 posZ;
+	f32 diffX;
+	f32 diffY;
+	f32 diffZ;
+	f32 camDiffX;
+	f32 camDiffY;
+	f32 camDiffZ;
+	f32 distScale;
+	f32 flatDiffX;
+	f32 flatDiffZ;
+	f32 flatDistF;
+	s32 flatDist;
+	s32 temp_a1;
+	s16 size;
+	u8 pulse;
+	u32 color;
+
+	(void)arg3;
+	temp_s0 = (AAA70Unk8014F618Head *)&D_8014F618;
+	posX = (f32)arg0;
+	posY = (f32)arg1;
+	posZ = (f32)arg2;
+
+	D_8014F618.unk66 = 1;
+	temp_s0->unk0 = posX;
+	temp_s0->unk4 = posY;
+	temp_s0->unk8 = posZ;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01020040;
+	dl->words.w1 = (u32)&D_80031160 & 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB6000000;
+	dl->words.w1 = 0x00032001;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB7000000;
+	dl->words.w1 = 4;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBB000001;
+	dl->words.w1 = 0x80008000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBA000C02;
+	dl->words.w1 = 0x2000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBA000602;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBA001301;
+	dl->words.w1 = 0x00080000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB900031D;
+	dl->words.w1 = 0x00504240;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBA000E02;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	if (D_8014F618.unk70 == 1) {
+		D_8014F618.unk6F += 0xF;
+		pulse = D_8014F618.unk6F;
+	} else if (D_8014F618.unk70 == 2) {
+		D_8014F618.unk6F -= 0xF;
+		pulse = D_8014F618.unk6F;
+	} else {
+		pulse = D_8014F618.unk6F;
+		if (pulse < 0xA) {
+			D_8014F618.unk6F = pulse + 0xA;
+			pulse = D_8014F618.unk6F;
+		} else if (pulse >= 0x15) {
+			D_8014F618.unk6F = pulse - 0xA;
+			pulse = D_8014F618.unk6F;
+		}
+	}
+
+	if ((pulse >= 0x79) && (D_8014F618.unk70 == 1)) {
+		D_8014F618.unk70 = 2;
+	}
+	if ((pulse < 0xF) && (D_8014F618.unk70 == 2)) {
+		D_8014F618.unk70 = 1;
+	}
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFCFFB3FF;
+	dl->words.w1 = 0xFF65FEFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFA000000;
+	color = D_8014F618.unk79 << 8;
+	color |= D_8014F618.unk77 << 24;
+	color |= D_8014F618.unk78 << 16;
+	color |= D_8014F618.unk69;
+	dl->words.w1 = color;
+
+	diffX = (f32)(D_80052B34->unk0 - arg0);
+	diffY = (f32)(D_80052B34->unk2 - arg1);
+	diffZ = (f32)(D_80052B34->unk4 - arg2);
+	sqrtf((diffX * diffX) + (diffY * diffY) + (diffZ * diffZ));
+
+	camDiffX = (D_80047954 * 4.0f) - posX;
+	camDiffY = (D_80047958 * 4.0f) - posY;
+	camDiffZ = (D_8004795C * 4.0f) - posZ;
+	distScale = sqrtf((camDiffX * camDiffX) + (camDiffY * camDiffY) + (camDiffZ * camDiffZ));
+
+	size = (s16)(s32)distScale;
+	*(s16 *)&D_8014F618.unk60 = size;
+	distScale /= 6.0f;
+	temp_s0->unkC = distScale * ((f32 *)&D_80153AB8)[0];
+	temp_s0->unk10 = distScale * ((f32 *)&D_80153AB8)[1];
+	temp_s0->unk14 = distScale * ((f32 *)&D_80153AB8)[2];
+	temp_s0->unk18 = distScale * ((f32 *)&D_80153AB8)[3];
+	temp_s0->unk1C = distScale * ((f32 *)&D_80153AB8)[4];
+	temp_s0->unk20 = distScale * ((f32 *)&D_80153AB8)[5];
+	temp_s0->unk24 = temp_s0->unk0 + temp_s0->unk18;
+	temp_s0->unk28 = temp_s0->unk4 + temp_s0->unk1C;
+	temp_s0->unk2C = temp_s0->unk8 + temp_s0->unk20;
+	func_800A2260_B1210(NULL, NULL, NULL, NULL);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFA000000;
+	color = D_8014F618.unk73 << 8;
+	color |= D_8014F618.unk71 << 24;
+	color |= D_8014F618.unk72 << 16;
+	color |= D_8014F618.unk6B;
+	dl->words.w1 = color;
+
+	flatDiffX = D_80052B2C->unk0 - posX;
+	flatDiffZ = D_80052B2C->unk8 - posZ;
+	flatDist = (s32)((f32)(s32)(flatDiffX * flatDiffX) + (flatDiffZ * flatDiffZ));
+	flatDistF = sqrtf((f32)flatDist);
+
+	D_80052B40.unk0 = arg0;
+	D_80052B40.unk2 = arg1;
+	D_80052B40.unk4 = arg2;
+
+	temp_a1 = (s32)flatDistF;
+	D_80052B48.unk0 = func_80003824_4424(D_80052B2C->unk14 - D_80052B2C->unk8, D_80052B2C->unkC - D_80052B2C->unk0);
+	D_80052B48.unk2 = D_8014F618.unk6D << 8;
+	D_80052B48.unk4 = 0x4000 - func_80003824_4424(D_80052B2C->unk4 - posY, (f32)temp_a1);
+
+	size = (s16)(s32)((f32)D_8014F618.unk6F + distScale);
+	D_80052B50.unk0 = size;
+	D_80052B50.unk2 = size;
+	D_80052B50.unk4 = size;
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x01000040;
+	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+
+	D_8005BB38 += 0x40;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x06000000;
+	dl->words.w1 = (u32)D_100ACB0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2D98_B1D48.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A3490_B2440.s")
 

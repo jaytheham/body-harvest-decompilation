@@ -15,6 +15,22 @@ typedef struct {
 } BitFlags64; /* size = 0x08 */
 
 
+
+typedef struct {
+	/* 0x00 */ f32 unk0;
+	/* 0x04 */ f32 unk4;
+	/* 0x08 */ f32 unk8;
+	/* 0x0C */ f32 unkC;
+	/* 0x10 */ f32 unk10;
+	/* 0x14 */ f32 unk14;
+	/* 0x18 */ f32 unk18;
+	/* 0x1C */ f32 unk1C;
+	/* 0x20 */ f32 unk20;
+	/* 0x24 */ f32 unk24;
+	/* 0x28 */ f32 unk28;
+	/* 0x2C */ f32 unk2C;
+} AAA70Unk8014F618Head; /* size = 0x30 */
+
 typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
