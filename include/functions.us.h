@@ -897,6 +897,8 @@ void func_800EB090_FA040(void);
 s16 func_800EB9B4_FA964(void *arg0);
 f32 func_800EB9BC_FA96C(void *arg0);
 s32 func_800F02E4_FF294(void);
+void func_800F3038_101FE8(u8 arg0);
+void func_800F34AC_10245C(s32 arg0);
 s32 func_800B84D0_C7480(s16 arg0, s16 arg1);
 s32 func_800B8D80_C7D30(s16 arg0, s16 arg1, s16 arg2, s32 arg3);
 s32 func_800B85CC_C757C(s16 arg0, s16 arg1);
