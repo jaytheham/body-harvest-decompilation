@@ -8358,7 +8358,174 @@ void func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008FF54_9EF04.s")
 #endif
 
+// CURRENT(11639)
+#ifdef NON_MATCHING
+void func_8009012C_9F0DC(u8 arg0) {
+	AlienInstance *inst;
+	AlienInstance *parent;
+	AlienInstance *targetInst;
+	Unk8014DD50 *node;
+	u8 specIdx;
+	s32 parentFlags;
+	s32 step;
+	s16 parentNode;
+	s16 targetSpeed;
+	s16 pathNodes[3];
+	s8 pathResult;
+	s16 target;
+	s32 dx;
+	s32 dz;
+	s32 radius;
+	s32 i;
+
+	inst = (AlienInstance *)((u8 *)alienInstances + (arg0 * 0x50));
+	parentFlags = inst->unk20;
+	parentNode = inst->unkC;
+	specIdx = inst->specIndex;
+	targetSpeed = 0;
+	step = 1;
+	if (!(parentFlags & 0x600)) {
+		step = 4;
+	}
+
+	parent = (AlienInstance *)((u8 *)alienInstances + (inst->unk25 * 0x50));
+
+	if ((inst->unk3A >= 0xBB9) && !(parentFlags & 0x8000)) {
+		parent->unk20 |= 0x2000;
+		func_80087AAC_96A5C(arg0);
+	}
+
+	inst->unk3A += step;
+	if (!(inst->unk20 & 0x8000)) {
+		if (func_800808F0_8F8A0(arg0, &inst->unkE) != 0) {
+			return;
+		}
+	}
+
+	if (inst->unk2C > 0) {
+		inst->unk2C -= step;
+	}
+
+	if ((parentFlags & 0x100) && !(parentFlags & 0x4000)) {
+		dx = inst->unk0 - inst->unk14;
+		dz = inst->unk4 - inst->unk18;
+		targetSpeed = alienSpecs[specIdx].unk40;
+
+		if (parentFlags & 0x2000) {
+			radius = (((0xC8 - alienSpecs[specIdx].unk51) / 30) + 3) << 8;
+		} else {
+			radius = 0x300;
+		}
+
+		if (!(inst->unk20 & 0x600) || (((dx * dx) + (dz * dz)) < (radius * radius)) || (inst->unk47 & 1)) {
+			inst->unk20 &= ~0x100;
+			if (parentFlags & 0x2000) {
+				inst->unk20 |= 0x4000;
+			} else {
+				parent->unk20 |= 0x1000;
+			}
+			inst->unk3A = 0;
+		}
+	} else {
+		if (inst->unk47 & 1) {
+			targetSpeed = D_802566C0[specIdx * 0x34];
+		} else if (!(inst->unk20 & 0x4100) && !(parent->unk20 & 0x1000) && (inst->unk26 > 0)) {
+			target = func_80082394_91344(inst->unk0, inst->unk4, 8);
+			if (target < 0xFF) {
+				targetInst = &alienInstances[(u8)target];
+				osSyncPrintf(&D_80141E94_150E44, target, targetInst->unk0, targetInst->unk4);
+				inst->unk14 = targetInst->unk0;
+				inst->unk16 = targetInst->unk2;
+				inst->unk18 = targetInst->unk4;
+				inst->unk20 |= 0x100;
+				targetSpeed = D_802566C0[specIdx * 0x34];
+			}
+		}
+	}
+
+	if (!(inst->unk20 & 0x8000) && (inst->unk20 & 0x600)) {
+		if (inst->unk12 < targetSpeed) {
+			inst->unk12 += alienSpecs[specIdx].unk3E * step;
+		} else if (targetSpeed < inst->unk12) {
+			inst->unk12 -= alienSpecs[specIdx].unk3E * step;
+		}
+	}
+
+	if (((parentFlags & 0x4000) || (parent->unk20 & 0x1000)) && (inst->unk26 > 0) && (inst->unk2C <= 0)) {
+		if (!(inst->unk20 & 0x8000) && ((inst->unk12 >> 5) == 0)) {
+			inst->unk2C = 0x32;
+			if (inst->unk20 & 0x600) {
+				inst->unk20 |= 0x8000;
+				inst->unk36 = 0;
+			} else if (func_8008FE18_9EDC8(arg0) != 0) {
+				inst->unk26 -= 1;
+			}
+		}
+	}
+
+	if (inst->unk20 & 0x8000) {
+		if (parent->unk1B != 0xFF) {
+			if (inst->unk20 & 0x600) {
+				node = &D_8014DD50[parentNode];
+				pathNodes[0] = node->unkC;
+				node = &D_8014DD50[pathNodes[0]];
+				pathNodes[1] = node->unkC;
+				node = &D_8014DD50[pathNodes[1]];
+				pathNodes[2] = node->unkD;
+				pathResult = func_80081F18_90EC8(arg0, 3, 8, pathNodes, &D_8013C9D0_14B980);
+				if (pathResult != 8) {
+					goto skip_parent_cleanup;
+				}
+			}
+
+			inst->unk20 &= ~0x8000;
+			func_80079910_888C0(parent->unk1B);
+			parent->unk1B = 0xFF;
+			if (inst->unk24 >= D_80048168) {
+				parent->unk20 |= 0x8000;
+				parent->unk20 |= 0x6000;
+				func_80087AAC_96A5C(arg0);
+				inst->unk26 = 4;
+			}
+		} else if (parent->unk1E == 0xFF) {
+			if (inst->unk20 & 0x600) {
+				pathNodes[0] = parentNode;
+				pathNodes[1] = D_8014DD50[parentNode].unkC;
+				pathResult = func_80081F18_90EC8(arg0, 2, 3, pathNodes, &D_8013C7A0_14B750);
+				if (pathResult == 1) {
+					func_80137468_146418(arg0, 1);
+					if (func_8008FE18_9EDC8(arg0) != 0) {
+						inst->unk26 -= 1;
+					}
+				}
+				if (pathResult == 3) {
+					inst->unk20 &= ~0x8000;
+				}
+			} else {
+				inst->unk20 &= ~0x8000;
+				if (func_8008FE18_9EDC8(arg0) != 0) {
+					inst->unk26 -= 1;
+				}
+			}
+		}
+	} else if ((parentFlags & 0x1000) && (inst->unk2C <= 0)) {
+		inst->unk20 &= ~0xF000;
+	}
+
+skip_parent_cleanup:
+	if ((parentFlags & 0x2000) && (((D_80050AE0[inst->unk38].unk0 >> 12) & 4) != 0)) {
+		inst->unk20 &= ~0x6000;
+		return;
+	}
+
+	i = (D_80050AE0[inst->unk38].unk0 >> 12) & 1;
+	if (i == 0) {
+		inst->unk20 &= ~0x6000;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8009012C_9F0DC.s")
+#endif
 
 void func_800908C4_9F874(u8 arg0) {
 	AlienInstance *inst = &alienInstances[alienInstances[arg0].unk25];
