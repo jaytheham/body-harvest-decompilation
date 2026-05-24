@@ -5683,29 +5683,36 @@ void func_80102D00_111CB0(VehicleInstance *arg0, f32 arg1, f32 arg2, f32 arg3) {
 	}
 }
 
-// CURRENT(168)
+// https://decomp.me/scratch/g7oMu
+// CURRENT(30)
 #ifdef NON_MATCHING
-void func_80102DDC_111D8C(VehicleInstance *arg0, s16 arg1, s16 arg2, f32 arg3) {
-	s16 temp;
-
-	if ((arg0->unk1C > 0) && ((gameplayMode == 1) || (arg0 != D_80052B34))) {
-		temp = coss((u16)arg2);
-		arg0->unk30 = (f32)((f64)arg0->unk30 + (((f64)(f32)coss((u16)arg1) / 32768.0) * ((f64)(f32)temp / 32768.0) * (f64)arg3));
-		arg0->unk34 = (f32)((f64)arg0->unk34 + (((f64)(f32)sins((u16)arg2) / 32768.0) * (f64)arg3));
-		temp = coss((u16)arg2);
-		arg0->unk38 = (f32)((f64)arg0->unk38 + (((f64)(f32)sins((u16)arg1) / 32768.0) * ((f64)(f32)temp / 32768.0) * (f64)arg3));
-		if (arg0->unk34 > 0.0f) {
-			if (!(arg0->unk20 & 2)) {
-				arg0->unk20 |= 2;
-				arg0->unk10 = 0;
-				func_800FB3E8_10A398(arg0, 1.0f);
-			}
-		}
-		arg0->unk20 |= 1;
-		if (arg0 == D_80052B34) {
-			D_80157A2C = arg1;
-		}
-	}
+void func_80102DDC_111D8C(VehicleInstance *arg0, s16 arg1, s16 arg2, f32 arg3)
+{u8 temp2;
+ 
+  s16 temp;
+    
+  if ((arg0->unk1C > 0) && ((gameplayMode == 1) || (arg0 != D_80052B34)))
+  {
+    temp = coss(arg2);
+    arg0->unk30 += ((((f32) coss(arg1)) / 32768.0) * (((f32) temp) / 32768.0)) * arg3;
+    arg0->unk34 += (((f32) sins(arg2)) / 32768.0) * arg3;
+    temp = coss(arg2);
+    arg0->unk38 = arg0->unk38 + (((((f32) sins(arg1)) / 32768.0) * (((f32) temp) / 32768.0)) * arg3);
+    if (arg0->unk34 > 0.0f)
+    {
+      if (!(arg0->unk20 & 2))
+      {
+        arg0->unk20 |= 2;
+        arg0->unk10 = 0;
+        func_800FB3E8_10A398(arg0, 1.0f);
+      }
+    }
+    arg0->unk20 |= 1;
+    if (arg0 == D_80052B34)
+    {
+      D_80157A2C = arg1;
+    }
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80102DDC_111D8C.s")
@@ -6806,7 +6813,7 @@ void func_80108D80_117D30(VehicleInstance *arg0, VehicleSpec *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80108D80_117D30.s")
 #endif
 
-// CURRENT(0)
+// CURRENT(4000)
 #ifdef NON_MATCHING
 void func_80109370_118320(VehicleInstance *arg0, VehicleSpec *arg1) {
 	s32 temp_v0;
