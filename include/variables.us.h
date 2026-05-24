@@ -613,6 +613,8 @@ extern TileCoord D_801475F0[];
 extern s8 D_8014667F_15562F[];
 extern Unk80146688 D_80146688_155638[][0x20];
 extern f32 D_801424E0;
+extern f64 D_801424D0_151480;
+extern f64 D_801424D8_151488;
 extern s32 D_8014ECD8;
 extern f32 D_8014ED0C;
 extern f32 D_8014ED10;

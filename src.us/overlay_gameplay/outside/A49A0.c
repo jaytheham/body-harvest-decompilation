@@ -248,7 +248,167 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, s32 arg2, s32 arg3, u8 arg4) {
 #endif
 
 // guess_drawMapTiles
+// CURRENT(28104)
+#ifdef NON_MATCHING
+s32 func_80095F08_A4EB8(void) {
+	s16* dst;
+	s16 x;
+	s16 y;
+	s32 level4XMin;
+	s32 level4XMax;
+	s32 level4YMin;
+	s32 level4YMax;
+	s32 levelLimit;
+	u16 i;
+	f32 f30;
+	f64 f28;
+	f64 f26;
+	f64 f24;
+	f64 f22;
+
+	dst = (s16*) D_8006AA6C;
+	x = -0x80;
+	y = -0x80;
+	levelLimit = (D_80222A70 >> 5) & 0xFFFF;
+
+	if (currentLevel == 4) {
+		level4XMin = *((s16*) (D_80147C30_156BE0 + 0x1E0)) >> 8;
+		level4XMax = *((s16*) (D_80147C30_156BE0 + 0x1E4)) >> 8;
+		level4YMin = *((s16*) (D_80147C30_156BE0 + 0x1E2)) >> 8;
+		level4YMax = *((s16*) (D_80147C30_156BE0 + 0x1E6)) >> 8;
+	}
+
+	f30 = 2147483648.0f;
+	f28 = 500000.0;
+	f26 = 300.0;
+	f24 = 1.0;
+	f22 = 30.0;
+
+	i = 0xFFFF;
+	do {
+		u16 mapValue;
+		u8 mapMask;
+		s16 outColor;
+		s32 mapIndex;
+
+		if (currentLevel == 4) {
+			levelLimit = 6;
+			if ((x >= level4XMin) && (x < level4XMax) && (y >= level4YMin) && (y < level4YMax)) {
+				levelLimit = 0x20;
+			}
+		}
+
+		mapValue = D_80052A94[y].unk0[x];
+		mapIndex = ((((y + 0x80) >> 2) << 6) + ((x + 0x80) >> 2));
+		mapMask = D_8021EA30[mapIndex] & 0xF0;
+
+		if (mapValue & 0x800) {
+			outColor = mapMask ? 0xFFDF : 0;
+		} else {
+			u16 height;
+
+			height = mapValue & 0x3F;
+			if (height < levelLimit) {
+				s32 rnd;
+				u32 r0;
+				u32 r1;
+				f32 ratio;
+				u32 distX;
+				u32 distY;
+				u32 dist;
+				s16 intensity;
+				s32 c0;
+				s32 c2;
+
+				rnd = func_800038E0_44E0();
+				r0 = rnd & 0xFF;
+				r1 = (rnd & 0xFF00) >> 8;
+				ratio = (f32) (((f64) r0 + f22) / ((f64) r1 + f22));
+				distX = (u32) ((f32) (x * x) * ratio);
+				distY = (u32) ((f32) (y * y) * ratio);
+				dist = distX + distY;
+
+				if (dist < 0x14) {
+					intensity = (s16) f26;
+				} else {
+					intensity = (s16) (f28 / (f64) dist);
+				}
+
+				if (intensity >= 0x12D) {
+					intensity = 0x12C;
+				}
+
+				c0 = (((intensity >> 3) * 0x10) >> 9) & 0xFFFF;
+				c2 = (((((intensity >> 2) * 0x10) + (intensity * 0xF0)) >> 9)) & 0xFFFF;
+				outColor = func_800959F0_A49A0(c0, c0 & 0xFFFF, c2) & 0xFFFF;
+			} else if (mapValue & 0x8000) {
+				s16 tileType;
+
+				tileType = (mapValue >> 10) & 0xF;
+				if (((((mapValue >> 15) & 1) == 1) && (tileType >= 4) && (tileType < 0xC)) || (tileType == 0xD)) {
+					outColor = (D_8021EA30[mapIndex] & 0xF0) ? 0x528A : 0;
+				} else {
+					outColor = (D_8021EA30[mapIndex] & 0xF0) ? 0x8410 : 0;
+				}
+			} else {
+				s32 rnd;
+				u32 r0;
+				u32 r1;
+				f32 ratio;
+				u32 ax;
+				u32 ay;
+				s16 intensity;
+				s16 shaded;
+				s16 mapDark;
+
+				rnd = func_800038E0_44E0();
+				r0 = rnd & 0xFF;
+				r1 = (rnd & 0xFF00) >> 8;
+				ratio = (f32) (((f64) r0 + f24) / ((f64) r1 + f24));
+
+				ax = (s32) (((f32) (x * x) * ratio) + f30);
+				ay = (s32) (((f32) (y * y) * ratio) + f30);
+				if ((ax | ay) != 0) {
+					intensity = (s16) (D_801424D0_151480 / (f64) (ax + ay));
+				} else {
+					intensity = (s16) D_801424D8_151488;
+				}
+
+				shaded = intensity + func_80095A6C_A4A1C(x, y, height);
+				if (shaded < 0) {
+					shaded = 0;
+				}
+
+				mapDark = D_8021EA30[mapIndex] & 0xF0;
+				outColor = func_800959F0_A49A0(((shaded * ((0x100 - mapDark) + (mapDark >> 2))) >> 8) & 0xFFFF,
+					shaded & 0xFFFF,
+					((shaded * (0x100 - mapDark)) >> 7) & 0xFFFF) & 0xFFFF;
+			}
+		}
+
+		x += 1;
+		*dst = outColor;
+		dst++;
+
+		if (!((x + 0x80) & 0x1F)) {
+			y += 1;
+			x -= 0x20;
+			if (!((y + 0x80) & 0x1F)) {
+				x += 0x20;
+				y -= 0x20;
+				if (x >= 0x80) {
+					x = -0x80;
+					y += 0x20;
+				}
+			}
+		}
+	} while (i-- != 0);
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095F08_A4EB8.s")
+#endif
 
 // CURRENT(12294)
 #ifdef NON_MATCHING

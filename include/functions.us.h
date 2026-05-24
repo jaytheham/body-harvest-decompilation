@@ -937,6 +937,7 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1);
 s32 func_80004254_4E54(f32 arg0, s32 arg1, s32 *arg2, s32 *arg3);
 void func_8000A3DC_AFDC(s16 arg0, s8 *arg1);
 void func_800959DC_A498C(void);
+s32 func_800959F0_A49A0(s32 arg0, s32 arg1, s32 arg2);
 void func_800EA298_F9248(s16 arg0);
 s32 func_800F9C40_108BF0(s32 arg0);
 void func_8010FABC_11EA6C(void);
