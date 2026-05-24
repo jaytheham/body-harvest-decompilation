@@ -3295,7 +3295,13 @@ void func_800CBE98_DAE48(void) {
 	}
 }
 
+// CURRENT(0)
+#ifdef NON_MATCHING
+void func_800CC090_DB040(void) {
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CC090_DB040.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(210)
