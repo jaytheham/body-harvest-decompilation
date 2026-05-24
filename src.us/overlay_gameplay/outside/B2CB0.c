@@ -677,7 +677,186 @@ void func_800A5F24_B4ED4(s32 arg0) {
 #endif
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A6020_B4FD0.s")
 
+#ifdef NON_MATCHING
+// CURRENT(14213)
+void func_800A68CC_B587C(void) {
+	s16 sp2E;
+	s16 sp2C;
+	s16 sp28;
+	s16 sp26;
+	f32 sp20;
+	f32 sp1C;
+	s16 temp;
+	u8 temp2;
+
+	if (func_8000726C_7E6C(0x27ULL) != 0) {
+		func_800A5F24_B4ED4(-1);
+		func_800073B8_7FB8(0x27ULL);
+	}
+
+	D_8004794C = 2;
+	switch (D_8013D890_14C840) {
+	case 0:
+		D_8004794C = 0;
+		break;
+
+	case 1:
+		func_800EC450_FB400();
+		func_800153D8_15FD8(0xD7);
+		D_8013D890_14C840 = 2;
+		break;
+
+	case 2:
+		D_80157A3C -= 4;
+		D_80052B34->unk2 = (D_80052B34->unk2 - (D_80157A3C << 1)) + 0x80;
+
+		if (D_80157A3C == 8) {
+			func_800E35E0_F2590(0x50);
+		}
+
+		if (D_80157A3C == 4) {
+			func_800E35E0_F2590(0xA0);
+		}
+
+		if (D_80157A3C <= 0) {
+			func_800E35E0_F2590(0xFF);
+			D_80157A3C = 0;
+			D_8013D890_14C840 = 3;
+			func_80135D44_144CF4(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 2.0f);
+		}
+
+		temp = D_80157A3C;
+		if (temp < 0) {
+			temp += 3;
+		}
+		func_800A6020_B4FD0(temp >> 2);
+		D_8014F808 = 0;
+		break;
+
+	case 3:
+		D_80052B34->unk2 = (D_80052B34->unk2 - (D_80157A3C << 1)) + 0x80;
+		temp2 = D_8014F808 + 1;
+		D_8014F808 = temp2;
+
+		if (temp2 < 0xB) {
+			temp = D_80157A3C;
+			if (temp < 0) {
+				temp += 3;
+			}
+			func_800A6020_B4FD0((temp >> 2) - temp2);
+		} else {
+			temp = D_80157A3C;
+			if (temp < 0) {
+				temp += 3;
+			}
+			func_800A6020_B4FD0((temp >> 2) + temp2 - 0x14);
+		}
+
+		if (D_8014F808 == 0xA) {
+			sp2E = (*(s16*)(D_8003E000 + (currentLevel * 0x30) + (D_8013D894_14C844 * 8) - 0x30)) << 8;
+			sp2C = (*(s16*)(D_8003E000 + (currentLevel * 0x30) + (D_8013D894_14C844 * 8) - 0x2E) + 1) << 8;
+			sp28 = *(s16*)(D_8003E000 + (currentLevel * 0x30) + (D_8013D894_14C844 * 8) - 0x2A);
+
+			if (D_8013D894_14C844 == 0) {
+				D_80047F94 = 0;
+			} else {
+				D_80047F94 = D_8013D894_14C844 - 1;
+			}
+
+			func_800B0C80_BFC30();
+
+			sp20 = sp2E;
+			func_800FB44C_10A3FC(D_80052B34, sp20);
+			sp1C = sp2C;
+			func_800FB484_10A434(D_80052B34, sp1C);
+
+			temp = (s16)(func_800B84D0_C7480(sp2E, sp2C) >> 8);
+			if ((currentLevel == 3) && (D_8013D894_14C844 == 1)) {
+				temp = 0x7D0;
+			}
+			func_800FB468_10A418(D_80052B34, temp);
+			D_80052B34->unkE = sp28;
+
+			D_801493A0 = -0x6F;
+			D_80149398 = 0x6F;
+			D_801493A4 = -0x6F;
+			D_8014939C = 0x6F;
+			func_800B4050_C3000((u8)((sp2E >> 8) + 0x77), (u8)((sp2C >> 8) + 0x77), D_801FEA30, 0);
+
+			D_80052AE8.unk0 = sp20;
+			D_80052AE8.unk4 = 4000.0f;
+			D_80052AE8.unkC = sp20;
+			D_80052AE8.unk8 = sp1C;
+			D_80052AE8.unk14 = sp1C;
+			D_80052AE8.unk10 = 1000.0f;
+			D_80052AE8.unk18 = sp2E;
+			D_80052AE8.unk1A = sp2C;
+			D_80052AE8.unk3C = sp2E;
+			D_80052AE8.unk3E = sp2C;
+			D_80052B34->unk6 = sp28;
+
+			sp26 = coss(D_80052B2C->unk1E);
+			D_80052B2C->unk0 = (((f64)(f32)coss(0xFA0) / 32768.0) * (f64)D_80052B2C->unk1C * ((f64)(f32)sp26 / 32768.0)) + D_80052B2C->unkC;
+			D_80052B2C->unk4 = (((f64)(f32)sins(D_80052B2C->unk1E) / 32768.0) * (f64)D_80052B2C->unk1C) + D_80052B34->unk2;
+			D_80052B2C->unk8 = (((f64)(f32)sins(0xFA0) / 32768.0) * (f64)D_80052B2C->unk1C * ((f64)(f32)sp26 / 32768.0)) + D_80052B2C->unk14;
+			func_800153D8_15FD8(0xD7);
+		}
+
+		if (D_8014F808 == 0x12) {
+			func_800E35E0_F2590(0x50);
+		}
+
+		if (D_8014F808 == 0x13) {
+			func_800E35E0_F2590(0xA0);
+		}
+
+		if (D_8014F808 >= 0x14) {
+			func_800E35E0_F2590(0xFF);
+			D_8013D890_14C840 = 4;
+			func_80135D44_144CF4(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 5.0f);
+		}
+		break;
+
+	case 4:
+		D_80157A3C += 4;
+		D_80052B34->unk2 = (D_80052B34->unk2 - (D_80157A3C << 1)) + 0x80;
+
+		if (D_80157A3C >= 0x40) {
+			D_80157A3C = 0x40;
+			D_8013D890_14C840 = 5;
+			D_8014F808 = 0;
+		}
+
+		temp = D_80157A3C;
+		if (temp < 0) {
+			temp += 3;
+		}
+		func_800A6020_B4FD0(temp >> 2);
+		break;
+
+	case 5:
+		func_800A6020_B4FD0(D_8014F808 + 0x10);
+		if (D_8014F808 == 0xA) {
+			D_8013D890_14C840 = 6;
+		}
+
+		D_8014F808++;
+		func_800EC468_FB418();
+		func_800FAC90_109C40();
+		D_8013D890_14C840 = 0;
+		D_801493E2 = 1;
+		break;
+
+	case 6:
+		break;
+
+	default:
+		break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A68CC_B587C.s")
+#endif
 
 // Launch beacon?
 #ifdef NON_MATCHING

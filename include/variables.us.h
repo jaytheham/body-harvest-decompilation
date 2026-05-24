@@ -2902,6 +2902,7 @@ extern BeaconDisplayEntry D_8014F7DE;
 extern s32 D_8014F7F0;
 extern s32 D_8014F7F4;
 extern s32 D_8014F804;
+extern u8 D_8014F808;
 extern char D_801427A4;
 extern char D_801427B0;
 extern char D_801427C4;
