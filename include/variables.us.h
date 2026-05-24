@@ -2916,7 +2916,7 @@ extern s32 D_800475EC;
 extern s32 D_800475F0;
 extern s32 D_800475F4;
 extern s32 D_80047694;
-extern u8 D_800431C0; // Save file data. 0x89 bytes, then 0x7A per save slot
+extern u8 D_800431C0[]; // Save file data. 0x89 bytes, then 0x7A per save slot
 extern s32 D_80047684;
 extern u8 D_80047608;
 
