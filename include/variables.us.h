@@ -2671,6 +2671,7 @@ extern char D_80143DF4_152DA4;
 extern char D_80143E14_152DC4;
 extern char D_80143E34_152DE4;
 extern char D_80143E50_152E00;
+extern char D_80143E78_152E28;
 extern char D_80143E58_152E08;
 extern u8 *D_80157560;
 extern u8 D_80157608;
