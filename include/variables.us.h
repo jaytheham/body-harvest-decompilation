@@ -2512,6 +2512,7 @@ extern char D_80144988_153938[];
 extern char D_80144990_153940[];
 extern char D_80144998_153948[];
 extern char D_801449A0_153950[];
+extern char D_801449A8_153958[];
 extern u8 D_80157FF8;
 extern s8 D_80157FF0[];
 extern u8 D_80158000[];

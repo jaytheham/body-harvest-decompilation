@@ -3231,7 +3231,196 @@ void func_800F49A4_103954(void *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F49A4_103954.s")
 #endif
 
+// CURRENT(26550)
+#ifdef NON_MATCHING
+void func_800F4DB0_103D60(void) {
+	extern void func_8007A4F8_894A8(u8, void *, u8, u8);
+	u8 i;
+	s32 var_fp;
+
+	var_fp = 1;
+	i = 0;
+	while (i < 8) {
+		if (D_80157FF0[i] == -1) {
+			u8 *base;
+			u8 *anim;
+			u8 *alienBase;
+			u8 state;
+			u8 alienIdx;
+			s32 limbCount;
+			s32 limb;
+
+			base = &D_80158000[i * 0x170];
+			if (((i + D_80052A8C) & 0xF) == 0) {
+				state = base[0x22];
+				if ((state != 2) && (state != 4) && (state != 8) && (state != 0x10)) {
+					alienIdx = base[0x144];
+					alienBase = (u8 *)&alienInstances[alienIdx];
+					if ((alienBase[0x1A] == 0) || !(*(s32 *)&alienBase[0x20] & 0x80000) || ((*(s32 *)&alienBase[0x20] & 0x80000) && ((*(s32 *)&alienBase[0x20] & 7) != i))) {
+						if (alienBase[0x1A] != 0) {
+							if (*(s32 *)&alienBase[0x20] & 0x600) {
+								func_8007A4F8_894A8(alienIdx, base, alienIdx, i);
+								alienBase = (u8 *)&alienInstances[base[0x144]];
+								func_800DF848_EE7F8(*(s16 *)&alienBase[0x0], *(s16 *)&alienBase[0x2], *(s16 *)&alienBase[0x4], *(u16 *)((u8 *)&D_8025668C + alienBase[0x1A] * 0x68), 0);
+								func_800F3038_101FE8(i);
+							} else {
+								func_80079910_888C0(alienIdx);
+								func_800F375C_10270C((s8)i);
+							}
+						}
+						osSyncPrintf(D_801449A8_153958);
+						i = (i + 1) & 0xFF;
+						continue;
+					}
+				}
+			}
+
+			alienBase = (u8 *)&alienInstances[base[0x144]];
+			if ((alienBase[0x1B] != 0xFF) && (D_80047F94 != alienBase[0x1B])) {
+				base[0x22] = 0;
+			}
+
+			state = base[0x22];
+			if ((state == 0) || (state == 4)) {
+				anim = &((u8 *)D_801601F0)[base[0x23] * 0x16];
+				limbCount = anim[0xC];
+				for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
+					u8 *entry;
+
+					entry = &base[limb * 0x24];
+					if (entry[0x47] == 0) {
+						alienBase = (u8 *)&alienInstances[base[0x144]];
+						*(s16 *)&entry[0x3A] = *(s16 *)&D_8014DD52[(*(s16 *)&alienBase[0xC]) * 0x10] + *(s16 *)&alienBase[0x2];
+					}
+				}
+				if (base[0x22] == 0) {
+					i = (i + 1) & 0xFF;
+					continue;
+				}
+				state = base[0x22];
+			}
+
+			if ((state == 2) || (state == 4) || (state == 8)) {
+				s16 v;
+				s16 speed;
+
+				base[0x168] = base[0x168] + 1;
+				v = *(s16 *)&base[0x16C] >> 3;
+				if (v < 0) {
+					v = -v;
+				}
+				speed = *(s16 *)&base[0x16C] - v - 2;
+				*(s16 *)&base[0x16C] = speed;
+
+				if (state == 2) {
+					if (base[0x168] == 0x28) {
+						func_800F375C_10270C((s8)i);
+					}
+				} else if (state == 8) {
+					if (speed < 0) {
+						*(s16 *)&base[0x16C] = speed / 2;
+					}
+					if (base[0x168] == 0x78) {
+						func_800F375C_10270C((s8)i);
+					}
+				} else if (state == 4) {
+					anim = &((u8 *)D_801601F0)[base[0x23] * 0x16];
+					limbCount = anim[0xC];
+					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
+						if (base[limb * 0x24 + 0x47] != 2) {
+							var_fp = 0;
+						}
+					}
+					if (var_fp != 0) {
+						func_800F375C_10270C((s8)i);
+					}
+				}
+
+				*(s16 *)&base[0x16A] = *(s16 *)&base[0x16A] + *(s16 *)&base[0x16C];
+			} else {
+				u8 *animData;
+				u8 lerp;
+				s16 frame;
+				s16 frame2x;
+
+				animData = &((u8 *)D_801601F0)[base[0x23] * 0x16];
+				lerp = animData[0x12];
+
+				if (*(s16 *)&base[0x1E] == 0) {
+					s32 x;
+					s32 z;
+
+					x = *(s32 *)&base[0x8];
+					z = *(s32 *)&base[0xC];
+					*(s32 *)&base[0x0] = x;
+					*(s32 *)&base[0x10] = x;
+					*(s32 *)&base[0x4] = z;
+					*(s32 *)&base[0x14] = z;
+
+					limbCount = animData[0xC];
+					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
+						u8 *entry;
+
+						entry = &base[limb * 0x24];
+						if (entry[0x47] == 0) {
+							*(s16 *)&entry[0x38] = *(s16 *)&entry[0x3E];
+							*(s16 *)&entry[0x3C] = *(s16 *)&entry[0x40];
+						}
+					}
+
+					func_800F2980_101930(base);
+					if (*(s16 *)&base[0x18] == *(s16 *)&base[0x1A]) {
+						s16 d;
+
+						d = *(s16 *)&base[0x1C];
+						if (d < 0) {
+							d = -d;
+						}
+						if ((d < 0xC) && (base[0x22] != 0x10)) {
+							base[0x22] = 0;
+						}
+					}
+				}
+
+				frame = *(s16 *)&base[0x1E];
+				frame2x = lerp * 2;
+				if ((frame2x == frame) || (lerp == frame)) {
+					animData = &((u8 *)D_801601F0)[base[0x23] * 0x16];
+					limbCount = animData[0xC];
+					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
+						u8 *entry;
+
+						entry = &base[limb * 0x24];
+						if (entry[0x47] == 0) {
+							if ((frame2x == *(s16 *)&base[0x1E]) && ((limb % 2) == 1)) {
+								*(s16 *)&entry[0x24] = *(s16 *)&entry[0x2A];
+								*(s16 *)&entry[0x28] = *(s16 *)&entry[0x2C];
+							}
+							if ((lerp == *(s16 *)&base[0x1E]) && !(limb & 1)) {
+								*(s16 *)&entry[0x24] = *(s16 *)&entry[0x2A];
+								*(s16 *)&entry[0x28] = *(s16 *)&entry[0x2C];
+							}
+						}
+					}
+				}
+
+				*(s32 *)&base[0x10] = func_800F41E0_103190(*(s32 *)&base[0x0], *(s32 *)&base[0x8], *(s16 *)&base[0x1E], frame2x);
+				*(s32 *)&base[0x14] = func_800F41E0_103190(*(s32 *)&base[0x4], *(s32 *)&base[0xC], *(s16 *)&base[0x1E], frame2x);
+				func_800F49A4_103954(base);
+
+				*(s16 *)&base[0x1E] = (*(s16 *)&base[0x1E] + 1) % (frame2x + 1);
+				if (!(base[0x22] & 0x80)) {
+					*(s16 *)&base[0x1A] = *(s16 *)&base[0x18];
+				}
+			}
+		}
+
+		i = (i + 1) & 0xFF;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F4DB0_103D60.s")
+#endif
 
 void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 	f32 x = arg0->x;
