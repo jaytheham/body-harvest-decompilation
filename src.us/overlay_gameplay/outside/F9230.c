@@ -6036,7 +6036,136 @@ void func_80103DD0_112D80(void) {
 // Do vehicle acceleration?
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80103E54_112E04.s")
 
+void func_801027E8_111798(VehicleInstance *arg0, f32 arg1, f32 arg2, f32 arg3);
+
+// CURRENT(5016)
+#ifdef NON_MATCHING
+void func_801047C8_113778(VehicleInstance *arg0, OSContPad *arg1) {
+	VehicleSpec *spec;
+	s32 pad0;
+	s32 pad1;
+	WeaponSpecEntry *tableEntry;
+	f32 maxSteer;
+	f32 sp2C;
+	s16 sp2A;
+	s16 trig;
+	s32 specFlags;
+	s32 stickX;
+	s32 absStickX;
+	s32 tempS8;
+	s32 negInput;
+
+	spec = &vehicleSpecs[arg0->unk1A];
+	tableEntry = &D_80140768_14F718[spec->unk55];
+	maxSteer = (f32)spec->unk48;
+
+	D_80158E5C = 0.0f;
+	D_80158E58 = 0.0f;
+	arg0->unk28 = 0;
+	arg0->unk2A = 0;
+
+	func_80103DD0_112D80();
+
+	if (D_801591AC == 0 && arg0->unk3C != 0) {
+		specFlags = spec->unk4C;
+		if (!(specFlags & 0x10000) || !(D_80159320 & 0x40000)) {
+			if (arg0->unk1A == 0 || (specFlags & 0x20000000)) {
+				func_8011DE60_12CE10(1);
+			}
+
+			sp2A = arg0->unk2 - func_800F9FAC_108F5C(arg0->unk0, arg0->unk4);
+
+			if (arg0->unk1A == 0 || (spec->unk4C & 0x20000000)) {
+				func_8011DE60_12CE10(0);
+			}
+
+			if (D_80159304 == 0 || currentLevel != 3 || arg0->unk1A != 0xD) {
+				u16 buttons = currentControllerStates[0].button;
+				if (buttons & 0x8000) {
+					func_80001144_1D44(0x1E, 5, 3);
+					arg0->unk20 |= 2;
+					arg0->unk34 += (f32)*(s16 *)((u8 *)tableEntry + 6);
+					buttons = currentControllerStates[0].button;
+				}
+
+				if (buttons & 0x4000) {
+					func_80001144_1D44(0x14, 5, 3);
+					arg0->unk34 -= (f32)*(s16 *)((u8 *)tableEntry + 6);
+				}
+			}
+
+			arg0->unk34 = (f32)((f64)arg0->unk34 * D_80144B28_153AD8);
+
+			if (sp2A >= 0x97 || (currentLevel == 3 && arg0->unk1A == 0xD)) {
+				arg0->unk2A = (s16)(arg1->stick_y * 80);
+				arg0->unk28 = (s16)(arg1->stick_x * -40);
+			}
+
+			stickX = arg1->stick_x;
+			absStickX = -stickX;
+			if (absStickX < stickX) {
+				absStickX = stickX;
+			}
+
+			tempS8 = -D_80047590;
+			D_80158E5C = (f32)(((f64)(f32)(absStickX * stickX) / D_80144B30_153AE0) * (f64)maxSteer);
+
+			if (D_80047590 >= 0) {
+				tempS8 = D_80047590;
+			}
+
+			if (tempS8 >= 0xB) {
+				negInput = -D_80047590;
+				arg0->unk28 += (s16)((((negInput << 4) - negInput) << 2) - negInput);
+			}
+
+			specFlags = arg0->unk20 & 2;
+			if (specFlags == 0 && arg0->unk34 < 0.0f) {
+				arg0->unk34 = 0.0f;
+				specFlags = arg0->unk20 & 2;
+			}
+
+			if (specFlags != 0 && !(currentControllerStates[0].button & 0x10)) {
+				trig = sins((u16)arg0->unkA);
+				sp2C = (f32)((((f64)(f32)trig / 32768.0) * (f64)((f32)*((u8 *)spec + 0x3E) * D_801591F0)) * D_80144B38_153AE8);
+
+				trig = coss((u16)arg0->unk6);
+				func_801027E8_111798(arg0,
+					(f32)(((f64)(f32)trig / 32768.0) * (f64)sp2C),
+					0.0f,
+					(f32)(((f64)(f32)sins((u16)arg0->unk6) / 32768.0) * (f64)sp2C));
+
+				trig = sins((u16)arg0->unk8);
+				sp2C = (f32)((((f64)(f32)trig / 32768.0) * (f64)((f32)*((u8 *)spec + 0x3E) * D_801591F0)) * D_80144B40_153AF0);
+
+				trig = sins((u16)arg0->unk6);
+				func_801027E8_111798(arg0,
+					(f32)(((f64)(f32)trig / 32768.0) * (f64)sp2C),
+					0.0f,
+					-(f32)(((f64)(f32)coss((u16)arg0->unk6) / 32768.0) * (f64)sp2C));
+			}
+
+			if (currentControllerStates[0].button & 0x4000) {
+				func_800FB430_10A3E0(D_80052B34, (f32)((f64)D_80052B34->unk58 * D_80144B48_153AF8));
+				D_80052B34->unk30 = (f32)((f64)D_80052B34->unk30 * D_80144B50_153B00);
+				D_80052B34->unk34 = (f32)((f64)D_80052B34->unk34 * D_80144B50_153B00);
+				D_80052B34->unk38 = (f32)((f64)D_80052B34->unk38 * D_80144B50_153B00);
+			}
+
+			if (arg0->unk3C <= 0) {
+				if (*(s16 *)((u8 *)&vehicleSpecs[D_80052B34->unk1A] + 0x66) == 0) {
+					D_80158E5C = 0.0f;
+				}
+
+				D_80158E58 = 0.0f;
+				arg0->unk3C = 0;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801047C8_113778.s")
+#endif
 
 // CURRENT(3252)
 #ifdef NON_MATCHING
