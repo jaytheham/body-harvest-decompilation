@@ -3255,7 +3255,7 @@ void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F7790_106740.s")
 
-// CURRENT(0)
+// CURRENT(?)
 #ifdef NON_MATCHING
 void func_800F842C_1073DC(s32 arg0) {
 	u8 *base;
@@ -4333,7 +4333,6 @@ void func_800FC568_10B518(void) {
 	{
 		saved_ptr = ptr_a1;
 		g = D_8005BB30++;
-// CURRENT(0)
 		g->words.w0 = 0xE7000000;
 		g->words.w1 = 0;
 		
@@ -4452,39 +4451,6 @@ void func_800FC90C_10B8BC(VehicleInstance *arg0, s16 *arg1) {
 }
 
 #ifdef NON_MATCHING
-typedef struct {
-	u8 pad0[0x8];
-	s32 unk8;
-	s16 unkC;
-	u8 padE[0x8];
-	s16 unk16;
-	u8 pad18[0x1C];
-	s16 unk34;
-	s16 unk36;
-	s16 unk38;
-	u8 pad3A[0xC];
-	u16 unk46;
-} Unk80258250Entry;
-
-typedef struct {
-	s16 unk0;
-	s16 unk2;
-	s16 unk4;
-	s16 unk6;
-	s16 unk8;
-	s16 unkA;
-	s16 unkC;
-	s16 unkE;
-	s16 unk10;
-} Unk80259D7EEntry;
-
-extern u8 D_80258250[];
-extern u8 D_80257A70[];
-extern u8 D_80259D7E[];
-extern f64 D_80144A78_153A28;
-extern s8 D_80158C4F;
-extern u8 vehicleSpecs[];
-
 void func_800FCA5C_10BA0C(void) {
 	s16 sp66;
 	u8 *var_s0;

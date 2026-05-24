@@ -2124,14 +2124,7 @@ void func_8011D438_12C3E8(u8 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D438_12C3E8.s")
 #endif
 
-extern u8 D_140A80[];
-extern u8 D_5002D40[];
-extern u8 D_80031260_31E60[];
-extern u8 D_80144EC8_153E78[];
-extern u8 D_802C2080[];
-extern s16 D_80052B54;
-
-// CURRENT(0)
+// CURRENT(?)
 #ifdef NON_MATCHING
 void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1, s16 startIndex, s32 arg3) {
 	BuildingSpec *spec;

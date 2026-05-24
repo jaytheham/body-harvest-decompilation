@@ -422,7 +422,7 @@ void func_80079510_884C0(u8 arg0)
   *((u8*)&inst->unk1E) = 0xFF;
 }
 
-// CURRENT(0)
+// CURRENT(?)
 #ifdef NON_MATCHING
 s32 func_8007956C_8851C(u8 arg0)
 {
@@ -3940,7 +3940,7 @@ loop:
 #endif
 
 
-// CURRENT(0)
+// CURRENT(?)
 #ifdef NON_MATCHING
 void func_800844D0_93480(s32 arg0)
 {
@@ -8426,7 +8426,7 @@ void func_80090D0C_9FCBC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80090D0C_9FCBC.s")
 #endif
 
-// CURRENT(0)
+// CURRENT(?)
 #ifdef NON_MATCHING
 void func_80091220_A01D0(u8 arg0) {
 	AlienInstance *instance = &alienInstances[arg0];
@@ -8744,7 +8744,7 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80091AC0_A0A70.s")
 #endif
 
-// CURRENT(0)
+// CURRENT(?)
 #ifdef NON_MATCHING
 void func_80091E70_A0E20(u8 arg0) {
 	u8 alienId = arg0;

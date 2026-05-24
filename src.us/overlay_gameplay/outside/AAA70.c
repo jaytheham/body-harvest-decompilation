@@ -559,7 +559,7 @@ void func_8009EC90_ADC40(s16 arg0, f32 *arg1, f32 *arg2) {
 	*arg1 = (f32) (((f64) *arg2 * ((f64) (f32) sins(arg0) / 32768.0)) / ((f64) (f32) coss(arg0) / 32768.0));
 }
 
-// CURRENT(0)
+// CURRENT(?)
 #ifdef NON_MATCHING
 void func_8009EE30_ADDE0(void)
 {

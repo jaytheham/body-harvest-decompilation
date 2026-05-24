@@ -388,7 +388,7 @@ void func_800770D8_86088(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(0)
+// CURRENT(?)
 void func_800772EC_8629C(s32 arg0) {
 	Unk_8014D298 *temp_v0;
 	Unk80259D90 *temp_s0;
@@ -912,7 +912,7 @@ s32 func_80078FE0_87F90(u8 *arg0, VehicleInstance *arg1, s32 *arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078FE0_87F90.s")
 #endif
 
-// CURRENT(0)
+// CURRENT(?)
 s32 func_800792E0_88290(u8 *arg0, s32 arg1) {
 	s32 sp44;
 	s32 pad1;
