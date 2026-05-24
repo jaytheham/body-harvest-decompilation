@@ -9231,7 +9231,208 @@ void func_800E552C_F44DC(void) {
 	D_80152C96 = 0;
 }
 
+// CURRENT(28573)
+#ifdef NON_MATCHING
+void func_800E5538_F44E8(void) {
+	s16 spCC;
+	s16 spCA;
+	s16 spC8;
+	s16 spC4;
+	s16 spC2;
+	s16 spC0;
+	s16 spBC;
+	s16 spBA;
+	s16 spB8;
+	f64 temp_f20;
+	s16 temp_t9;
+	s16 var_a2;
+	s16 var_a3;
+	s16 var_t0;
+	s16 var_t1;
+	s16 var_t2;
+	s32 temp_a0;
+	s32 temp_s5;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s32 pad6;
+	s32 pad7;
+	s32 temp_t7;
+	s32 var_s2;
+	u8 temp_v0_4;
+	u8 temp_v0_7;
+	u8 temp_v1_2;
+	VehicleInstance *vehicle;
+	BuildingInstance *building;
+	Unk80152CA0Entry *entry;
+	Gfx *dl;
+	s32 segment;
+	s32 alpha;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	temp_s5 = D_80052A8C;
+	temp_s5 = (temp_s5 * 4) & 0xFF;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB900031D;
+	dl->words.w1 = 0x00504A50;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB7000000;
+	dl->words.w1 = 0x00020000;
+
+	var_s2 = 0;
+	if (D_80152C96 > 0) {
+		temp_f20 = D_801441E0_153190;
+		do {
+			entry = &D_80152CA0[var_s2];
+			temp_v0_4 = entry->unk1;
+			var_a3 = 0x64;
+			if (temp_v0_4 != 0) {
+				temp_a0 = 0x40 - (temp_s5 / 2);
+				if (temp_v0_4 == 2) {
+					vehicle = &vehicleInstances[entry->unk0];
+					var_t0 = vehicle->unk0;
+					var_t1 = vehicle->unk2;
+					var_t2 = vehicle->unk4;
+					var_a2 = D_80257A0C[vehicle->unk1A] * 28;
+				} else {
+					building = &buildingInstances[entry->unk0];
+					var_t0 = building->xCoord;
+					var_t1 = building->yCoord;
+					var_t2 = building->zCoord;
+					var_a2 = D_802590A4[building->buildingType] * 15;
+				}
+
+				temp_v0_7 = entry->unk2;
+				if (temp_v0_7 != 0) {
+					var_a3 = temp_v0_7;
+				}
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xFA000000;
+				alpha = (s32)((f64)var_a3 * temp_f20);
+				dl->words.w1 = 0x64A0F000 | (alpha & 0xFF);
+
+				if (temp_a0 < 0) {
+					temp_t7 = -temp_a0;
+				} else {
+					temp_t7 = temp_a0;
+				}
+				spB8 = (temp_t7 * 2) + var_a2;
+				if (temp_a0 < 0) {
+					temp_t7 = -temp_a0;
+				} else {
+					temp_t7 = temp_a0;
+				}
+				spBA = (temp_t7 * 2) + var_a2;
+				if (temp_a0 < 0) {
+					temp_t7 = -temp_a0;
+				} else {
+					temp_t7 = temp_a0;
+				}
+				spBC = (temp_t7 * 2) + var_a2;
+
+				if (entry->unk2 != 0) {
+					temp_v1_2 = entry->unk2;
+					spB8 += ((0x64 - temp_v1_2) * spB8) / 0xC8;
+					spBA += ((0x64 - entry->unk2) * spBA) / 0xC8;
+					spBC += ((0x64 - entry->unk2) * spBC) / 0xC8;
+				}
+
+				spC0 = temp_s5 << 8;
+				spC2 = 0;
+				spC4 = 0;
+				spC8 = var_t0;
+				spCA = var_t1;
+				spCC = var_t2;
+				segment = D_8005BB38 + 0x40;
+				D_8005BB38 = segment;
+				func_800039D0_45D0((Unk80052B40 *)&spC8, (Unk80052B40 *)&spC0, (Unk80052B40 *)&spB8, segment);
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xFD700000;
+				dl->words.w1 = (s16)(((s32)(((temp_s5 / 4) % 8) << 8) / 2)) + (u32)&D_50327B0;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xF5700000;
+				dl->words.w1 = 0x07010040;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xE6000000;
+				dl->words.w1 = 0;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xF3000000;
+				dl->words.w1 = 0x0707F400;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xE7000000;
+				dl->words.w1 = 0;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xF5680400;
+				dl->words.w1 = 0x00010040;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xF2000000;
+				dl->words.w1 = 0x0003C03C;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xBB000001;
+				dl->words.w1 = 0x10001000;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xE7000000;
+				dl->words.w1 = 0;
+
+				dl = D_8005BB2C;
+				dl->words.w0 = 0xFC11FFFF;
+				dl->words.w1 = 0xFFFFF638;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0x01040040;
+				dl->words.w1 = (u32)D_8005BB38 & 0x1FFFFFFF;
+
+				dl = D_8005BB2C;
+				D_8005BB38 += 0x40;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0x06000000;
+				dl->words.w1 = (u32)&D_50332A0;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xBD000000;
+				dl->words.w1 = 0;
+			}
+
+			temp_t7 = (var_s2 + 1) & 0xFF;
+			var_s2 = temp_t7;
+		} while (temp_t7 < D_80152C96);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5538_F44E8.s")
+#endif
 
 // Remove shield (wtf is a shield?)
 // CURRENT(1674) - Register allocation mismatch - significant differences in register assignment throughout
