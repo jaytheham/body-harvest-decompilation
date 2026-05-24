@@ -3006,7 +3006,87 @@ void func_800BDDB4_CCD64(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BDDCC_CCD7C.s")
 
+#ifdef NON_MATCHING
+// CURRENT(24105)
+void func_800BE5C0_CD570(void) {
+	s16 i;
+	u8 sp57;
+	u8 sp56;
+	u8 sp55;
+	u8 intensity;
+	u16 colorA;
+	u16 colorB;
+	u16 *colors;
+
+	if (D_80151DD0 == 0) {
+		return;
+	}
+
+	if (D_80151DD0 == 2) {
+		func_800B4050_C3000(D_8014F89C, D_8014F89D, D_801FEA30, 0);
+		intensity = (u8)D_8013D9AC_14C95C;
+		if (intensity != 0) {
+			colors = (u16 *)&D_802D4AD0;
+			for (i = 0; i < 0x100; i++) {
+				func_80004A38_5638(i & 0xFF, &sp57, &sp56, &sp55);
+				colors[i] = (func_800B0A10_BF9C0((s32)sp57 / 2, sp57, intensity, 0x40) << 11)
+							+ (func_800B0A10_BF9C0((s32)sp56 / 2, sp56, intensity, 0x40) << 6)
+							+ (func_800B0A10_BF9C0((s32)sp55 / 2, sp55, intensity, 0x40) * 2);
+			}
+
+			func_80004A38_5638(D_802CA8D0, &sp57, &sp56, &sp55);
+			colorA = (func_800B0A10_BF9C0((s32)sp57 / 2, sp57, intensity - 1, 0x40) << 11)
+					+ (func_800B0A10_BF9C0((s32)sp56 / 2, sp56, intensity - 1, 0x40) << 6)
+					+ (func_800B0A10_BF9C0((s32)sp55 / 2, sp55, intensity - 1, 0x40) * 2);
+
+			func_80004A38_5638(D_802D48CF, &sp57, &sp56, &sp55);
+			colorB = (func_800B0A10_BF9C0((s32)sp57 / 2, sp57, intensity - 1, 0x40) << 11)
+					+ (func_800B0A10_BF9C0((s32)sp56 / 2, sp56, intensity - 1, 0x40) << 6)
+					+ (func_800B0A10_BF9C0((s32)sp55 / 2, sp55, intensity - 1, 0x40) * 2);
+
+			func_800049D4_55D4(colorA, colorB);
+			leoInitUnit_atten();
+
+			D_80047743 = func_800B0A10_BF9C0((s32)D_800313E8 / 2, D_800313E8, intensity, 0x40);
+			D_80047744 = func_800B0A10_BF9C0((s32)D_800313EC / 2, D_800313EC, intensity, 0x40);
+			D_80047745 = func_800B0A10_BF9C0((s32)D_800313F0 / 2, D_800313F0, intensity, 0x40);
+		}
+	}
+
+	if ((D_80151DD0 == 3) || (D_80151DD0 == 4)) {
+		func_800B4050_C3000(D_8014F89C, D_8014F89D, D_801FEA30, 0);
+		intensity = (u8)D_8013D9AC_14C95C;
+		if (intensity != 0) {
+			colors = (u16 *)&D_802D4AD0;
+			for (i = 0; i < 0x100; i++) {
+				func_80004A38_5638(i & 0xFF, &sp57, &sp56, &sp55);
+				colors[i] = (func_800B0A10_BF9C0(0, (s32)sp57 / 2, intensity, 0x96) << 11)
+							+ (func_800B0A10_BF9C0(0, (s32)sp56 / 2, intensity, 0x96) << 6)
+							+ (func_800B0A10_BF9C0(0, (s32)sp55 / 2, intensity, 0x96) * 2);
+			}
+
+			func_80004A38_5638(D_802CA8D0, &sp57, &sp56, &sp55);
+			colorA = (func_800B0A10_BF9C0(0, (s32)sp57 / 2, intensity - 1, 0x96) << 11)
+					+ (func_800B0A10_BF9C0(0, (s32)sp56 / 2, intensity - 1, 0x96) << 6)
+					+ (func_800B0A10_BF9C0(0, (s32)sp55 / 2, intensity - 1, 0x96) * 2);
+
+			func_80004A38_5638(D_802D48CF, &sp57, &sp56, &sp55);
+			colorB = (func_800B0A10_BF9C0(0, (s32)sp57 / 2, intensity - 1, 0x96) << 11)
+					+ (func_800B0A10_BF9C0(0, (s32)sp56 / 2, intensity - 1, 0x96) << 6)
+					+ (func_800B0A10_BF9C0(0, (s32)sp55 / 2, intensity - 1, 0x96) * 2);
+
+			func_800049D4_55D4(colorA, colorB);
+			leoInitUnit_atten();
+
+			D_80047743 = func_800B0A10_BF9C0(0, (s32)D_800313E8 / 2, intensity, 0x96);
+			D_80047744 = func_800B0A10_BF9C0(0, (s32)D_800313EC / 2, intensity, 0x96);
+			D_80047745 = func_800B0A10_BF9C0(0, (s32)D_800313F0 / 2, intensity, 0x96);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BE5C0_CD570.s")
+#endif
 
 void func_800BECE0_CDC90(void) {
 	D_8013D9B0_14C960 = 0x4B;
