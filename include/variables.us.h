@@ -637,6 +637,8 @@ extern u8 D_50408F0[];
 extern u8 D_5047470[];
 extern u8 D_50327B0[];
 extern u8 D_5038FF8;
+extern u8 D_5039AB0[];
+extern u8 D_5039EB0[];
 extern u8 D_5055C00;
 extern u8 D_5059EA0[];
 extern u8 D_505A0A0[];
