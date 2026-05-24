@@ -5616,6 +5616,8 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D3E3C_E2DEC.s")
 #endif
+
+// CURRENT(2425)
 #ifdef NON_MATCHING
 void func_800D45B4_E3564(void) {
 	s16 index;
