@@ -61,6 +61,8 @@ s32 func_800047FC_53FC(s16 arg0);
 void func_800048B8_54B8(void);
 void func_800048E8_54E8(void);
 void func_80004918_5518(void);
+void func_80004948_5548(void);
+void func_800049D4_55D4(u16 arg0, u16 arg1);
 void func_80004AEC_56EC(void);
 void func_80004C8C_588C(void);
 void func_80004CC8_58C8(void);

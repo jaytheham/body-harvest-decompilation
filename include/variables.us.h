@@ -1558,6 +1558,11 @@ extern char D_801414A8_150458[];
 extern char D_801414D0_150480[];
 extern char D_801414F8_1504A8[];
 extern char D_80141520_1504D0[];
+extern f64 D_80142E70_151E20;
+extern f64 D_80142E78_151E28;
+extern f64 D_80142E80_151E30;
+extern f64 D_80142E88_151E38;
+extern f32 D_80142E90_151E40;
 extern char D_80141548_1504F8[];
 extern char D_80141570_150520[];
 extern char D_80141DCC_150D7C[];
@@ -1649,6 +1654,7 @@ extern u8 D_8014FDD0[];
 
 extern u8 D_80151DD0;
 extern u8 D_80151DD8[];
+extern s16 D_80152B7C;
 extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
 extern Unk80152D00 D_80152D00[];
 extern u8 D_80152B88; /* unk8 field of first particle/effect entry */
