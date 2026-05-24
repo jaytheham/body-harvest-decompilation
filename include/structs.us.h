@@ -15,6 +15,22 @@ typedef struct {
 } BitFlags64; /* size = 0x08 */
 
 
+
+typedef struct {
+	/* 0x00 */ f32 unk0;
+	/* 0x04 */ f32 unk4;
+	/* 0x08 */ f32 unk8;
+	/* 0x0C */ f32 unkC;
+	/* 0x10 */ f32 unk10;
+	/* 0x14 */ f32 unk14;
+	/* 0x18 */ f32 unk18;
+	/* 0x1C */ f32 unk1C;
+	/* 0x20 */ f32 unk20;
+	/* 0x24 */ f32 unk24;
+	/* 0x28 */ f32 unk28;
+	/* 0x2C */ f32 unk2C;
+} AAA70Unk8014F618Head; /* size = 0x30 */
+
 typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
@@ -1942,6 +1958,33 @@ typedef struct {
 	/* 0x18 */ u8 pad18[0xB];
 	/* 0x23 */ u8 unk23;
 } UnkF9230Func800F4748Entry; /* size = 0x24 */
+
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ s16 unk14;
+	/* 0x16 */ s16 unk16;
+	/* 0x18 */ s16 unk18;
+	/* 0x1A */ s16 unk1A;
+	/* 0x1C */ s16 unk1C;
+	/* 0x1E */ s16 unk1E;
+	/* 0x20 */ s16 unk20;
+	/* 0x22 */ u8 unk22;
+	/* 0x23 */ u8 unk23;
+} UnkF9230ShadowLimb; /* size = 0x24 */
+
+typedef struct {
+	/* 0x000 */ UnkF9230ShadowLimb limbs[9];
+	/* 0x144 */ u8 pad144[0x2C];
+} UnkF9230ShadowWalker; /* size = 0x170 */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
