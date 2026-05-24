@@ -1309,7 +1309,104 @@ void func_800C3E2C_D2DDC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3E2C_D2DDC.s")
 #endif
 
+// CURRENT(58)
+#ifdef NON_MATCHING
+void func_800C4274_D3224(void) {
+	s16 unitId;
+	s16 nextUnit;
+	Vec3f spAC;
+	Vec3f spA0;
+	Unk80154318Sub *sub;
+	Unk80154318Entry *entry;
+
+	unitId = D_8015428E;
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPPipeSync(D_8005BB2C++);
+
+	if ((unitId != -5) && (unitId != -6)) {
+		do {
+			entry = &D_80154318[unitId];
+			nextUnit = entry->unk4;
+			sub = (Unk80154318Sub *)&entry->unk8;
+
+			if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)entry->unk2, (s16)(f32)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
+					(void *)((u32)(&D_1007A70[((u8 *)&D_80154318[nextUnit].unkC)[0] << 9]) & 0x1FFFFFFF));
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+					G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+				gDPLoadSync(D_8005BB2C++);
+				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 0xFF, 0x400);
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+				gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+				gDPPipeSync(D_8005BB2C++);
+
+				func_800C1128_D00D8((f32)entry->unk2, &D_80153AB8, &spAC);
+				func_800C1128_D00D8((f32)entry->unk2, &D_80153AC4, &spA0);
+
+				D_8005BB34->v.ob[0] = (s16)((f32)sub->unk0 + spAC.x);
+				D_8005BB34->v.ob[1] = (s16)((f32)sub->unk2 + spAC.y);
+				D_8005BB34->v.ob[2] = (s16)((f32)sub->unk4 + spAC.z);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = ((u8 *)&sub->unk6)[0];
+				D_8005BB34->v.cn[1] = ((u8 *)&sub->unk6)[1];
+				D_8005BB34->v.cn[2] = ((u8 *)&sub->unk6)[2];
+				D_8005BB34->v.cn[3] = 0xFF;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)((f32)sub->unk0 + spA0.x);
+				D_8005BB34->v.ob[1] = (s16)((f32)sub->unk2 + spA0.y);
+				D_8005BB34->v.ob[2] = (s16)((f32)sub->unk4 + spA0.z);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = ((u8 *)&sub->unk6)[0];
+				D_8005BB34->v.cn[1] = ((u8 *)&sub->unk6)[1];
+				D_8005BB34->v.cn[2] = ((u8 *)&sub->unk6)[2];
+				D_8005BB34->v.cn[3] = 0xFF;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)((f32)sub->unk0 - spAC.x);
+				D_8005BB34->v.ob[1] = (s16)((f32)sub->unk2 - spAC.y);
+				D_8005BB34->v.ob[2] = (s16)((f32)sub->unk4 - spAC.z);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = ((u8 *)&sub->unk6)[3];
+				D_8005BB34->v.cn[1] = ((u8 *)&sub->unk6)[4];
+				D_8005BB34->v.cn[2] = ((u8 *)&sub->unk6)[5];
+				D_8005BB34->v.cn[3] = 0xFF;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)((f32)sub->unk0 - spA0.x);
+				D_8005BB34->v.ob[1] = (s16)((f32)sub->unk2 - spA0.y);
+				D_8005BB34->v.ob[2] = (s16)((f32)sub->unk4 - spA0.z);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = ((u8 *)&sub->unk6)[3];
+				D_8005BB34->v.cn[1] = ((u8 *)&sub->unk6)[4];
+				D_8005BB34->v.cn[2] = ((u8 *)&sub->unk6)[5];
+				D_8005BB34->v.cn[3] = 0xFF;
+				D_8005BB34++;
+
+				gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+				gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
+				D_80156EDA += 4;
+			}
+
+			unitId = D_80154318[nextUnit].unk4;
+		} while ((unitId != -5) && (unitId != -6));
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4274_D3224.s")
+#endif
 
 void func_800C4900_D38B0(s16 arg0) {
 	if (arg0 != -3) {
