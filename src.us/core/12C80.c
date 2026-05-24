@@ -665,6 +665,8 @@ void func_800137F0_143F0(s32 arg0) {
 void func_80013810_14410(s8 arg0) {
 }
 
+// https://decomp.me/scratch/6mw74
+// CURRENT(0)
 #ifdef NON_MATCHING
 void func_80013818_14418(void) {
 	f32 sp28;
