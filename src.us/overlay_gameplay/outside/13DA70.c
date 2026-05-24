@@ -292,7 +292,7 @@ void func_8012F2DC_13E28C(s32 arg0, s32 arg1, s32 arg2)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F4E0_13E490.s")
 
-void func_8012FE6C_13EE1C(s8 arg0) {
+void func_8012FE6C_13EE1C(s16 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
@@ -319,7 +319,148 @@ s32 func_8012FFB0_13EF60(void)
 	return score;
 }
 
+// CURRENT(25610)
+#ifdef NON_MATCHING
+void func_8013001C_13EFCC(void)
+{
+	u8 levelText[0x18];
+	s16 x0;
+	s16 y0;
+	s16 x1;
+	s16 y1;
+	u16 phase;
+	s32 next;
+	s32 mode;
+	u8* levelName;
+
+	if (gameplayMode == 10) {
+		if (D_80140C80_14FC30 != 0) {
+			if ((s32)D_80140C7C_14FC2C > 0) {
+				D_80160050 = -0x1000;
+			} else {
+				D_8013D580_14C530 = 1;
+				D_80140C80_14FC30 = 0;
+			}
+		} else if (D_80140C7C_14FC2C == 0) {
+			if (D_80052ACA == 2) {
+				D_8015FF80 = 5;
+			} else {
+				D_8015FF80 = 1;
+			}
+			D_80140C7C_14FC2C = 0x400;
+			D_80160050 = 0x1000;
+		}
+	}
+
+	if ((s32)D_80140C7C_14FC2C > 0) {
+		func_8012FE6C_13EE1C((s16)(((f32)D_80140C7C_14FC2C / 65535.0f) * 180.0f));
+
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
+
+		phase = (u16)D_80140C7C_14FC2C;
+		x0 = func_80006520_7120((s16)(D_80068084 * 2), 0x70, phase);
+		y0 = x0 + func_80006520_7120(0, (s16)((D_80068084 * 4) - 0xE0), phase);
+		x1 = func_80006520_7120((s16)(D_80068088 * 2), 0x60, phase);
+		y1 = x1 + func_80006520_7120(0, (s16)((D_80068088 * 4) - 0xC0), phase);
+		func_800092B8_9EB8(x0, x1, y0, y1, 0);
+
+		next = (s32)D_80140C7C_14FC2C + D_80160050;
+		if ((next >= 0x10000) && (D_80160050 > 0)) {
+			D_80160050 = 0;
+			D_80140C7C_14FC2C = 0xFFFF;
+		} else if ((next <= 0) && (D_80160050 < 0)) {
+			D_80160050 = 0;
+			D_80140C7C_14FC2C = 0;
+		} else {
+			D_80140C7C_14FC2C = next;
+		}
+	}
+
+	if (D_80140C7C_14FC2C != 0xFFFF) {
+		return;
+	}
+
+	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+	drawText("MISSION", 0, 0);
+	drawText("COMPLETE", (D_80068084 / 2) - 0x82, (D_80068088 / 2) - 0x64, (D_80068084 / 2) + 0x82, (D_80068088 / 2) + 0x64);
+
+	switch (D_8015FF80) {
+	case 0:
+		D_80140C80_14FC30 = 1;
+		break;
+
+	case 1:
+		mode = D_800313D0_31FD0;
+		if (mode == 2) {
+			func_801306C4_13F674("BONUS AWARD");
+		} else if (mode == 1) {
+			func_801306C4_13F674("MISSION SCORE");
+		} else {
+			func_801306C4_13F674("MISSION BONUS");
+		}
+		return;
+
+	case 2:
+		func_80130BA0_13FB50();
+		return;
+
+	case 3:
+		mode = D_800313D0_31FD0;
+		if (mode == 2) {
+			levelName = D_80031520[currentLevel];
+			func_8012EBC0_13DB70(levelName, "-B", levelText);
+		} else if (mode == 1) {
+			levelName = D_80031508[currentLevel];
+			func_8012EBC0_13DB70(levelName, "-A", levelText);
+		} else {
+			levelName = D_800314F0[currentLevel];
+			func_8012EBC0_13DB70(levelName, "-C", levelText);
+		}
+
+		if ((currentLevel == 4) && (func_8000726C_7E6C(0x14) != 0)) {
+			levelText[0x14] = '4';
+		} else {
+			levelText[0x14] = (u8)(D_80047F94 + '1');
+		}
+		levelText[0x15] = '\0';
+		func_8012EBC0_13DB70(levelText, &levelText[0x14], levelText);
+		func_80131280_140230(levelText);
+		return;
+
+	case 4:
+		mode = D_800313D0_31FD0;
+		if (mode == 2) {
+			func_801306C4_13F674("GAME OVER");
+		} else if (mode == 1) {
+			func_801306C4_13F674("MISSION OVER");
+		} else {
+			func_801306C4_13F674("FINAL SCORE");
+		}
+		return;
+
+	case 5:
+		mode = D_800313D0_31FD0;
+		if (mode == 2) {
+			levelName = D_80031520[currentLevel];
+			func_8012EBC0_13DB70(levelName, "-Y", levelText);
+		} else if (mode == 1) {
+			levelName = D_80031508[currentLevel];
+			func_8012EBC0_13DB70(levelName, "-X", levelText);
+		} else {
+			levelName = D_800314F0[currentLevel];
+			func_8012EBC0_13DB70(levelName, "-Z", levelText);
+		}
+		func_80131280_140230(levelText);
+		break;
+
+	default:
+		break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8013001C_13EFCC.s")
+#endif
 
 // CURRENT(2200)
 #ifdef NON_MATCHING
