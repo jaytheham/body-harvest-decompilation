@@ -7062,7 +7062,182 @@ s16 func_801081AC_11715C(s16 arg0, s16 arg1) {
 	return (s16) ((func_8011E6FC_12D6AC(arg0, arg1, &sp1E) + 1) != 0);
 }
 
+// CURRENT(14173)
+#ifdef NON_MATCHING
+void func_801081F0_1171A0(VehicleInstance *arg0, VehicleSpec *arg1) {
+	f32 damping;
+	WeaponSpecEntry *tableEntry;
+	s16 sp44;
+	s16 temp;
+	s16 temp2;
+	s16 temp3;
+	s16 steer;
+	s16 yawStep;
+	s16 speedDelta;
+	s32 tableIndex;
+	s32 turn;
+	s32 temp_v0;
+	s32 absTurnLimit;
+
+	damping = (f32) ((f64) arg1->unk45 * (1.0 / 256.0));
+	tableEntry = &D_80140768_14F718[arg1->unk55];
+	tableIndex = func_800FAE60_109E10(arg0);
+	sp44 = func_800FAE60_109E10(arg0);
+
+	if (func_800E60CC_F507C(2, sp44 & 0xFF) != 0) {
+		func_800E5E3C_F4DEC(2, (u8) sp44);
+	}
+
+	coss((u16) arg0->unk10);
+	sins((u16) arg0->unk10);
+
+	if (!(arg1->unk4C & 0x20000)) {
+		switch (D_80159268) {
+			case 1:
+				D_8015926C = 0xBB8;
+				if ((arg0->unk10 > 0) && ((s16) (arg0->unk10 + 0x6A8) < 0)) {
+					arg0->unk8 = (s16) (arg0->unk8 + 0x8000);
+					arg0->unk10 = 0;
+					arg0->unk6 = (s16) (arg0->unk6 + 0x8000);
+					arg0->unkE = (s16) (arg0->unkE + 0x8000);
+					arg0->unk28 = arg0->unk8;
+					D_80159268 = 2;
+				} else {
+					arg0->unk10 = (s16) (arg0->unk10 + 0x6A8);
+					arg0->unk28 = 0;
+					arg0->unk2A = (s16) -arg0->unk10;
+					func_800FB3E8_10A398(arg0, -25.0f);
+					D_801593EC = 0;
+				}
+				break;
+
+			case 2:
+				arg0->unk10 = 0;
+				arg0->unk2A = 0;
+				temp = func_800065A4_71A4(0x7FFF, 0, (u16) (D_801593EC << 12));
+				arg0->unk8 = temp;
+				arg0->unk28 = temp;
+				temp_v0 = func_80003824_4424((f32) (D_80052B34->unk0 - 0x3600), (f32) (D_80052B34->unk4 - 0x5000));
+				turn = D_80052B34->unk6 - temp_v0;
+				if (turn >= 0x1F5) {
+					D_80052B34->unk6 -= 0x1F4;
+					turn = D_80052B34->unk6 - temp_v0;
+				}
+				if (turn < -0x1F4) {
+					D_80052B34->unk6 += 0x1F4;
+				}
+
+				D_801593EC++;
+				if (D_801593EC >= 0x10) {
+					D_80159268 = 4;
+				}
+				break;
+
+			case 4:
+				D_80159268 = 0;
+				D_8015930E = 0;
+				D_8015926C = 0x7D0;
+				D_801593EC = 0;
+				break;
+
+			case 0:
+				if (D_80159320 & 0x80000) {
+					steer = arg0->unkA;
+					if (steer < 0) {
+						steer = -steer;
+					}
+					if (steer < 0x180) {
+						D_80159230 = arg0->unkA;
+					} else if (arg0->unkA > 0) {
+						D_80159230 = -0x180;
+					} else {
+						D_80159230 = 0x180;
+					}
+				} else {
+					absTurnLimit = 6;
+					if ((currentLevel == 4) && (arg0->unk1A == 0xE)) {
+						absTurnLimit = 0x10;
+					}
+					D_80159230 = (s16) (absTurnLimit * D_8004758B);
+				}
+
+				coss((u16) (-arg0->unkA - D_80159230));
+				sins((u16) (-arg0->unkA - D_80159230));
+				arg0->unk10 = (s16) (-arg0->unkA - D_80159230);
+				arg0->unk2A = (s16) -arg0->unk10;
+
+				if (arg0->unk2A < -0x2000) {
+					arg0->unk2A = -0x2000;
+				}
+				if (arg0->unk2A > 0x4000) {
+					arg0->unk2A = 0x4000;
+				}
+
+				steer = arg0->unk12;
+				if (steer < 0) {
+					steer = -steer;
+				}
+
+				temp = (s16) (tableEntry->unk2 - steer);
+				if (temp > 0) {
+					arg0->unk2A = (s16) (arg0->unk2A + (temp * 0x32));
+				}
+
+				if (arg0->unkA > 0) {
+					func_800FB430_10A3E0(arg0, (f32) ((f64) (arg0->unk58 + 1.0f) * (1.0 + ((f64) arg0->unkA / D_80144BB0_153B60))));
+				} else {
+					func_800FB430_10A3E0(arg0, (f32) ((f64) arg0->unk58 * (1.0 + ((f64) arg0->unkA / D_80144BB8_153B68))));
+				}
+				break;
+		}
+	}
+
+	arg0->unk26 = (s16) (arg0->unk26 + (func_800F9C50_108C00(arg0->unk2A, arg0->unkA) / arg1->unk44));
+	temp = arg0->unk26;
+	arg0->unk24 = (s16) (arg0->unk24 + (func_800F9C50_108C00(arg0->unk28, arg0->unk8) / arg1->unk44));
+	temp2 = arg0->unk24;
+	temp3 = arg0->unk22;
+	yawStep = arg0->unk16;
+
+	arg0->unkA = (s16) (arg0->unkA + temp);
+	arg0->unk8 = (s16) (arg0->unk8 + temp2);
+	arg0->unk6 = (s16) (arg0->unk6 + temp3 + yawStep);
+
+	arg0->unk26 = (s16) (s32) ((f32) temp * damping);
+	arg0->unk24 = (s16) (s32) ((f32) temp2 * damping);
+	arg0->unk22 = (s16) (s32) ((f32) temp3 * damping);
+	arg0->unk16 = (s16) (s32) ((f32) yawStep * damping);
+
+	arg0->unk30 = (f32) ((f64) arg0->unk30 * D_80144BC0_153B70);
+	arg0->unk34 = (f32) ((f64) arg0->unk34 * D_80144BC0_153B70);
+	arg0->unk38 = (f32) ((f64) arg0->unk38 * D_80144BC0_153B70);
+
+	func_800FB430_10A3E0(arg0, arg0->unk58 * 1.0f);
+	temp_v0 = func_800F9C50_108C00(arg0->unk6, arg0->unkE);
+	speedDelta = (s16) (s32) ((arg0->unk58 - D_80158C58[tableIndex]) * (f32) arg1->unk44 * 30.0f);
+
+	if (speedDelta >= 0x1556) {
+		speedDelta = 0x1555;
+	}
+	if (speedDelta < -0x1555) {
+		speedDelta = -0x1555;
+	}
+
+	temp = (s16) (temp_v0 / 5);
+	arg0->unkE = (s16) (arg0->unkE + temp);
+
+	if (!(arg1->unk4C & 0x20000)) {
+		arg0->unk2A = (s16) (speedDelta * 4);
+		if (arg0->unk12 >= 0) {
+			arg0->unk28 = (s16) (-8 * temp);
+		} else {
+			arg0->unk28 = (s16) (8 * temp);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801081F0_1171A0.s")
+#endif
 
 void func_8010895C_11790C(VehicleInstance *arg0) {
 	s32 sp24;
@@ -7627,7 +7802,136 @@ s32 func_8010B970_11A920(u8 *arg0, VehicleInstance *arg1) {
 	return 0;
 }
 
+// CURRENT(25049)
+#ifdef NON_MATCHING
+void func_8010BA04_11A9B4(void) {
+	VehicleInstance *vehicle;
+	VehicleSpec *spec;
+	VehicleInstance *otherVehicle;
+	s32 *modePtr;
+	s32 modeTemp;
+	s32 temp;
+	u16 flags;
+	f32 tempF0;
+	f32 hitPointsF;
+
+	vehicle = D_80052B34;
+	spec = &vehicleSpecs[vehicle->unk1A];
+
+	if ((D_8015930E == 0) && (currentLevel == 1) && (vehicle->unk1A == 3)) {
+		if ((vehicle->unk0 < 0x3601) || (vehicle->unk4 >= -0x5400)) {
+			if (!(vehicle->unk20 & 2)) {
+				D_80158BD0[vehicle - vehicleInstances] = 0x20;
+				func_800FDEA8_10CE58(D_80052B2C, 0);
+				vehicle = D_80052B34;
+			} else {
+				D_8004DC58 = 3;
+				D_8015930E = 1;
+				D_80159268 = 1;
+			}
+		}
+	}
+
+	D_80159238 = 0.0f;
+	D_8015923C = 0.0f;
+
+	if (D_80159320 & 0x00800000) {
+		otherVehicle = func_80109960_118910();
+		tempF0 = (f32)((f64)(f32)sins(D_80159250) / 32768.0);
+		D_80159238 = (f32)((f64)((vehicle->unk54 - otherVehicle->unk54) * tempF0) * D_80144CD8_153C88);
+		D_8015923C = tempF0 * 418.0f;
+		vehicle->unk30 = 0.0f;
+		vehicle->unk34 = 0.0f;
+		vehicle->unk38 = 0.0f;
+		func_800FB40C_10A3BC(vehicle, D_8015EA38 - D_8015EA34);
+		vehicle = D_80052B34;
+	}
+
+	if (!(vehicle->unk20 & 2) && (D_80159320 & 0x00400000) && (D_80159268 != 0)) {
+		D_8015930E = 0;
+		D_80159268 = 0;
+	}
+
+	if ((vehicle->unk1A != 0) && (vehicle->unk2 >= D_80222A70) && (D_801591AC != 6)) {
+		temp = (s32)func_800FB11C_10A0CC(vehicle);
+		flags = temp & 0xFFFF;
+		hitPointsF = spec->hitPoints;
+		temp = (s32)(((f32)vehicle->unk1C * 255.0f) / hitPointsF);
+		func_800E1D48_F0CF8(flags, temp & 0xFF);
+		vehicle = D_80052B34;
+	}
+
+	if ((vehicle->unk1A != 0) && !(vehicle->unk20 & 2) && (func_800F9C50_108C00(vehicle->unk6, vehicle->unkE) >= 0x4000)) {
+		vehicle = D_80052B34;
+		vehicle->unkE += 0x8000;
+		vehicle->unk12 = -vehicle->unk12;
+		vehicle->unk10 = -vehicle->unk10;
+
+		if (vehicle->unk12 < (((s16 *)((u8 *)spec + 0x42))[0] * 2)) {
+			vehicle->unk34 = -(vehicle->unk12 >> 1);
+			vehicle->unk12 >>= 1;
+			vehicle->unk20 |= 2;
+			vehicle->unk24 = (s16)(vehicle->unk24 + (func_800038E0_44E0() & 0x3FF) - 0x1FF);
+			vehicle = D_80052B34;
+			vehicle->unk22 = (s16)(vehicle->unk22 + (func_800038E0_44E0() & 0x3FF) - 0x1FF);
+			vehicle = D_80052B34;
+			vehicle->unk26 = (s16)(vehicle->unk26 + (func_800038E0_44E0() & 0x3FF) - 0x1FF);
+		}
+	}
+
+	if (D_801591C0 < 4) {
+		D_801591C0--;
+	} else {
+		D_801591C0 -= D_801591C0 >> 2;
+	}
+
+	if (D_801591C0 < 0) {
+		D_801591C0 = 0;
+	}
+
+	modePtr = &D_80050AD4;
+	modeTemp = *modePtr;
+	if (modeTemp == 3) {
+		gameplayMode = 0;
+		*modePtr = D_80050AD0;
+		modeTemp = *modePtr;
+	}
+
+	if (modeTemp == 0xD) {
+		gameplayMode = 0x10;
+		*modePtr = D_80050AD0;
+		modeTemp = *modePtr;
+	}
+
+	if (modeTemp == 0xC) {
+		gameplayMode = 8;
+		*modePtr = D_80050AD0;
+	}
+
+	if ((currentControllerStates[0].button & 4) && (gameplayMode != 3) && (gameplayMode != 0xB) && (D_80159300 == 0)) {
+		vehicle = D_80052B34;
+		flags = vehicle->unk20;
+		if (!(flags & 0x400)) {
+			if (!(flags & 2) || ((D_80222A70 >= vehicle->unk2) && !((D_80257A4C[vehicle->unk1A].unk0 < 0) && (D_80257A4C[vehicle->unk1A].unk0 & 0x100)))) {
+				if (!((currentLevel == 4) && (vehicle->unk1A == 0xE)) && (D_80159264 == 0)) {
+					func_800FDEA8_10CE58(D_80052B2C, 0);
+					vehicle = D_80052B34;
+				}
+			}
+		}
+	}
+
+	if ((*modePtr >= 2) && ((currentLevel != 3) || (vehicle->unk1A != 3))) {
+		func_8000345C_405C(0x2000);
+	}
+
+	if (!(D_80159320 & 2) && (D_80158E60 > 700.0f)) {
+		D_80158E60 -= 10.0f;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010BA04_11A9B4.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_8010C14C_11B0FC(void) {
