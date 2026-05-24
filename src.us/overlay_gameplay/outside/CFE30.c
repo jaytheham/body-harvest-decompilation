@@ -5919,7 +5919,129 @@ void func_800D7790_E6740(void) {
 	}
 }
 
+// CURRENT(950)
+#ifdef NON_MATCHING
+void func_800D7870_E6820(void) {
+	s16 idx;
+	Unk80154318Entry *entry;
+	Unk80154318Sub *sub;
+	f32 off0;
+	f32 scale;
+	f32 off1;
+	f32 off2;
+	f32 off3;
+	f32 off4;
+	f32 off5;
+
+	idx = D_801542CA;
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPPipeSync(D_8005BB2C++);
+
+	if ((idx == -5) || (idx == -6)) {
+		return;
+	}
+
+	while (1) {
+		gDPPipeSync(D_8005BB2C++);
+		entry = &D_80154318[idx];
+
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)(D_100AEF0 + (entry->unkE << 7)) & 0x1FFFFFFF));
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
+				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 2048);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 1, 0x0000, G_TX_RENDERTILE, 0,
+				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 15 << G_TEXTURE_IMAGE_FRAC, 15 << G_TEXTURE_IMAGE_FRAC);
+		gDPPipeSync(D_8005BB2C++);
+
+		sub = (Unk80154318Sub *)&entry->unk8;
+		scale = (f32)entry->unk2;
+		off0 = scale * D_80153AB8.x;
+		off1 = scale * D_80153AB8.y;
+		off2 = scale * D_80153AB8.z;
+		off3 = scale * ((f32 *)&D_80153AB8)[3];
+		off4 = scale * ((f32 *)&D_80153AB8)[4];
+		off5 = scale * ((f32 *)&D_80153AB8)[5];
+
+		D_8005BB34->v.ob[0] = (s16)(s32)((f32)sub->unk0 + off0);
+		D_8005BB34->v.ob[1] = (s16)(s32)((f32)sub->unk2 + off1);
+		D_8005BB34->v.ob[2] = (s16)(s32)((f32)sub->unk4 + off2);
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = 0;
+		D_8005BB34->v.tc[1] = 0;
+		D_8005BB34->v.cn[0] = 0xFF;
+		D_8005BB34->v.cn[1] = 0x9E;
+		D_8005BB34->v.cn[2] = 0x16;
+		D_8005BB34->v.cn[3] = 0xFF;
+
+		D_8005BB34++;
+		D_8005BB34->v.ob[0] = (s16)(s32)((f32)sub->unk0 + off3);
+		D_8005BB34->v.ob[1] = (s16)(s32)((f32)sub->unk2 + off4);
+		D_8005BB34->v.ob[2] = (s16)(s32)((f32)sub->unk4 + off5);
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = 0x400;
+		D_8005BB34->v.tc[1] = 0;
+		D_8005BB34->v.cn[0] = 0xFF;
+		D_8005BB34->v.cn[1] = 0x9E;
+		D_8005BB34->v.cn[2] = 0x16;
+		D_8005BB34->v.cn[3] = 0xFF;
+
+		D_8005BB34++;
+		D_8005BB34->v.ob[0] = (s16)(s32)((f32)sub->unk0 - off0);
+		D_8005BB34->v.ob[1] = (s16)(s32)((f32)sub->unk2 - off1);
+		D_8005BB34->v.ob[2] = (s16)(s32)((f32)sub->unk4 - off2);
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = 0x400;
+		D_8005BB34->v.tc[1] = 0x400;
+		D_8005BB34->v.cn[0] = 0xFF;
+		D_8005BB34->v.cn[1] = 0x9E;
+		D_8005BB34->v.cn[2] = 0x16;
+		D_8005BB34->v.cn[3] = 0xFF;
+
+		D_8005BB34++;
+		D_8005BB34->v.ob[0] = (s16)(s32)((f32)sub->unk0 - off3);
+		D_8005BB34->v.ob[1] = (s16)(s32)((f32)sub->unk2 - off4);
+		D_8005BB34->v.ob[2] = (s16)(s32)((f32)sub->unk4 - off5);
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = 0;
+		D_8005BB34->v.tc[1] = 0x400;
+		D_8005BB34->v.cn[0] = 0xFF;
+		D_8005BB34->v.cn[1] = 0x9E;
+		D_8005BB34->v.cn[2] = 0x16;
+		D_8005BB34->v.cn[3] = 0xFF;
+
+		D_8005BB34++;
+		D_8005BB34->v.ob[0] = (s16)(s32)(f32)sub->unk0;
+		D_8005BB34->v.ob[1] = (s16)(s32)(f32)sub->unk2;
+		D_8005BB34->v.ob[2] = (s16)(s32)(f32)sub->unk4;
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = 0x200;
+		D_8005BB34->v.tc[1] = 0x200;
+		D_8005BB34->v.cn[0] = 0xFF;
+		D_8005BB34->v.cn[1] = 0xFF;
+		D_8005BB34->v.cn[2] = 0xFF;
+		D_8005BB34->v.cn[3] = 0xFF;
+
+		D_8005BB34++;
+		gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 5) & 0x1FFFFFFF), 5, 0);
+		gSP2Triangles(D_8005BB2C++, 0, 1, 4, 0, 4, 1, 2, 0);
+		gSP2Triangles(D_8005BB2C++, 4, 2, 3, 0, 0, 3, 4, 0);
+
+		D_80156EDA += 5;
+		idx = D_80154318[idx].unk4;
+		if ((idx == -5) || (idx == -6)) {
+			break;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7870_E6820.s")
+#endif
 
 // CURRENT(50)
 #ifdef NON_MATCHING
