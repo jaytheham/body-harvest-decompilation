@@ -2174,7 +2174,242 @@ void func_8007EE98_8DE48(AlienInstance *arg0, AlienInstance *arg1) {
 	arg1->unk4 = (s16)(s32)((f32)arg1->unk4 - pushZ);
 }
 
+// CURRENT(21299)
+#ifdef NON_MATCHING
+s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
+	AlienInstance *inst;
+	AlienSpec *spec;
+	VehicleInstance *vehicle;
+	AlienInstance *other;
+	AlienSpec *otherSpec;
+	u8 selfIndex;
+	u8 i;
+	u8 start;
+	u8 specIndex;
+	u8 otherIndex;
+	u8 otherSpecIndex;
+	u8 soundId;
+	s16 xA;
+	s16 zA;
+	s16 xB;
+	s16 zB;
+	s32 moved;
+	s32 collisionCheck;
+	s32 recurseFlag;
+	s32 ret;
+
+	selfIndex = arg0 & 0xFF;
+	start = arg1 & 0xFF;
+	inst = &alienInstances[selfIndex];
+	specIndex = inst->specIndex;
+	soundId = 0xFF;
+	moved = 0;
+	collisionCheck = 0;
+	recurseFlag = 0;
+	ret = 0;
+
+	if (inst->unk47 & 0x80) {
+		return 0;
+	}
+
+	D_8014D304++;
+	if (D_8014D304 >= 9) {
+		inst->unk47 |= 0x80;
+		osSyncPrintf(&D_80141CE4_150C94, alienSpecs[specIndex].unk18);
+	}
+
+	spec = &alienSpecs[specIndex];
+
+	if ((inst->unk0 != inst->unk2E) || (inst->unk2 != inst->unk30) || (inst->unk4 != inst->unk32) || (arg2 == 0)) {
+		s32 flags;
+
+		flags = spec->unk54;
+		if (flags & 0x20) {
+			collisionCheck = func_800836D0_92680(selfIndex, &xA, &zA);
+			flags = spec->unk54;
+		}
+
+		if (flags & 0x10) {
+			s32 absSpeed;
+
+			if (flags & 0x80000001) {
+				func_8011DE60_12CE10(1);
+			}
+
+			moved = func_800831A4_92154(selfIndex, &xB, &zB, &soundId);
+
+			if (spec->unk54 & 0x80000001) {
+				func_8011DE60_12CE10(0);
+			}
+
+			if (soundId != 0xFF) {
+				absSpeed = inst->unk12;
+				if (absSpeed < 0) {
+					absSpeed = -absSpeed;
+				}
+
+				if (soundId != 0) {
+					func_8011BEA0_12AE50(soundId, (D_802566D2[inst->specIndex * 0x68] * (absSpeed + 1)) / 6400);
+				}
+			}
+		}
+
+		if ((collisionCheck != 0) || (moved != 0)) {
+			if (collisionCheck == 0) {
+				xA = xB;
+				zA = zB;
+			}
+
+			if (moved != 0) {
+				if ((s16)(xB - xA) < 0) {
+					xA = xB;
+				}
+				if ((s16)(zB - zA) > 0) {
+					zA = zB;
+				}
+			}
+
+			func_8007E980_8D930(inst, xA, zA);
+
+			if (arg2 == 0) {
+				if ((currentLevel != 3) || ((specIndex != 9) && (specIndex != 8))) {
+					ret = 1;
+					goto done;
+				}
+			} else {
+				func_8007ED9C_8DD4C(selfIndex);
+				recurseFlag = 1;
+			}
+
+			inst->unk47 |= 4;
+		}
+	}
+
+	if ((spec->unk54 & 8) && ((inst->unk0 != inst->unk2E) || (inst->unk2 != inst->unk30) || (inst->unk4 != inst->unk32) || (arg2 == 0)) && (D_80158FD8 > 0)) {
+		for (i = 0; i < D_80158FD8; i = (i + 1) & 0xFF) {
+			u8 vehIndex;
+			s32 hitType;
+
+			vehIndex = D_80158E80[i];
+			vehicle = &vehicleInstances[vehIndex];
+			if ((D_80052B34 == vehicle) && ((D_801591AC == 6) || (D_80048180 != 0) || (inst->unk20 & 0x100000))) {
+				continue;
+			}
+
+			if (func_8007E608_8D5B8(inst, (AlienInstance *)vehicle) == 0) {
+				continue;
+			}
+
+			func_8010C4EC_11B49C(vehicle);
+			if (func_8010E684_11D634(vehicle, inst) == 0) {
+				continue;
+			}
+
+			if ((specIndex < 3) || (specIndex == 0x20)) {
+				func_80080D98_8FD48(selfIndex, vehIndex);
+				continue;
+			}
+
+			hitType = func_8007EB74_8DB24(inst, (AlienInstance *)vehicle);
+			if (arg2 == 0) {
+				if ((currentLevel != 3) || ((specIndex != 9) && (specIndex != 8))) {
+					ret = 1;
+					goto done;
+				}
+			} else if (D_8014ECD8 == vehIndex) {
+				osSyncPrintf(&D_80141D10_150CC0, D_800344B4_350B4[vehicleSpecs[vehicle->unk1A].unk18 * 2], spec->unk18, arg2);
+				inst->unk47 |= 0x80;
+			} else {
+				D_8014ECD8 = vehIndex;
+				recurseFlag = 1;
+				if (hitType != 0) {
+					func_8007ED9C_8DD4C(selfIndex);
+				}
+			}
+
+			if (D_80052B34 == vehicle) {
+				inst->unk47 |= 8;
+				if (D_800475F0 >= 0x33) {
+					func_80083EF4_92EA4(inst, D_80052B34, -0x63C0, inst->unkE);
+				}
+			}
+		}
+	}
+
+	if (!(inst->unk47 & 0x80) && (spec->unk54 & 4) && (start < D_8014ECCC)) {
+		for (i = start; i < D_8014ECCC; i = (i + 1) & 0xFF) {
+			otherIndex = D_8014D510[i];
+			other = &alienInstances[otherIndex];
+			otherSpecIndex = other->specIndex;
+			otherSpec = &alienSpecs[otherSpecIndex];
+
+			if (!(otherSpec->unk54 & 4) || (selfIndex == otherIndex) || (other->unk47 & 0x80)) {
+				continue;
+			}
+
+			if ((((otherSpecIndex == 0x1A) || ((otherSpecIndex >= 0x1B) && (otherSpecIndex < 0x20))) && (inst->unk20 & 0x01000000)) ||
+			    (((specIndex == 0x1A) || ((specIndex >= 0x1B) && (specIndex < 0x20))) && (other->unk20 & 0x01000000))) {
+				continue;
+			}
+
+			if (func_8007E608_8D5B8(inst, other) == 0) {
+				continue;
+			}
+
+			if (((specIndex == 0x16) && (otherSpec->unk54 & 0xC1)) || ((otherSpecIndex == 0x16) && (otherSpec->unk54 & 0xC1))) {
+				if (specIndex == 0x16) {
+					func_80088760_97710(other);
+				} else {
+					func_80088760_97710(inst);
+				}
+				continue;
+			}
+
+			func_8007EB74_8DB24(inst, other);
+			if (arg2 == 0) {
+				ret = 1;
+				goto done;
+			}
+
+			recurseFlag = 1;
+
+			if (inst->unk20 & 0x40000000) {
+				if (((inst->unk2 < other->unk2) && (inst->unk10 > 0)) || ((other->unk2 < inst->unk2) && (inst->unk10 < 0))) {
+					inst->unk10 = 0;
+				}
+			}
+			func_8007ED9C_8DD4C(selfIndex);
+
+			if (other->unk20 & 0x40000000) {
+				if (((other->unk2 < inst->unk2) && (other->unk10 > 0)) || ((inst->unk2 < other->unk2) && (other->unk10 < 0))) {
+					other->unk10 = 0;
+				}
+			}
+			func_8007ED9C_8DD4C(otherIndex);
+
+			D_8014ECD4 = selfIndex;
+			func_8007F0E8_8E098(otherIndex, 0, arg2);
+			D_8014ECD4 = -1;
+			if (D_8014ECD4 == otherIndex) {
+				osSyncPrintf(&D_80141D30_150CE0, otherSpec->unk18, spec->unk18);
+				inst->unk47 |= 0x80;
+			}
+		}
+	}
+
+done:
+	if (recurseFlag != 0) {
+		func_8007F0E8_8E098(selfIndex, 0, arg2);
+	}
+	D_8014D304--;
+	if (ret != 0) {
+		return ret;
+	}
+	return recurseFlag;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007F0E8_8E098.s")
+#endif
 
 s32 func_8007F9C8_8E978(u8 arg0, u8 arg1) {
 	s16 var_v1 = -1;
