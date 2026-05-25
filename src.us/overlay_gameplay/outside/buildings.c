@@ -5558,4 +5558,281 @@ void func_8012E204_13D1B4(s16 arg0, s32 arg1) {
 	callback(arg1, arg0);
 }
 
+// CURRENT(30589)
+#ifdef NON_MATCHING
+void func_8012E258_13D208(void) {
+	s32 i;
+	s32 activeCount;
+	s32 dy;
+	s32 dx;
+	s16 x;
+	s16 z;
+	s16 y;
+	s16 halfX;
+	s16 halfZ;
+	s16 halfY;
+	s16 minY;
+	s16 maxY;
+	s16 minX;
+	s16 maxX;
+	s16 minZ;
+	s16 maxZ;
+	s16 dMinZ;
+	s16 dMaxZ;
+	s16 dMaxX;
+	s16 dMinX;
+	s16 pushX;
+	s16 pushZ;
+	s16 side;
+	s16 behavior;
+	s16 collisionIdx;
+	f32 minForward;
+	f32 minStrafe;
+	VehicleInstance *vehicle;
+	Unk8015FAD0 *entry;
+	u8 *activeList;
+
+	D_80159320 &= 0xFEFFFFFF;
+	D_80159320 &= 0xFF7FFFFF;
+
+	activeCount = D_80158FD8;
+	if (activeCount == 0) {
+		return;
+	}
+
+	activeList = &D_80158E80[activeCount - 1];
+	while (activeCount != 0) {
+		activeCount--;
+		vehicle = &vehicleInstances[activeList[0]];
+
+		if ((currentLevel != 2) || (vehicle->unk1A != 5)) {
+			entry = &D_8015FAD0[0x18];
+			i = 0x18;
+			do {
+				if ((entry->unk2C == 0) || (entry->unk2C >= 4)) {
+					continue;
+				}
+
+				x = entry->unk0 >> 0x10;
+				z = entry->unk8 >> 0x10;
+				y = entry->unk4 >> 0x10;
+				halfX = entry->unk18;
+				halfZ = entry->unk1A;
+				halfY = entry->unk1C;
+
+				if (halfZ < halfX) {
+					minY = halfX;
+				} else {
+					minY = halfZ;
+				}
+
+				dy = vehicle->unk0 - x;
+				if (dy < 0) {
+					dy = -dy;
+				}
+
+				minY = minY + vehicleSpecs[vehicle->unk1A].unkC + 0x64;
+				if (dy >= minY) {
+					continue;
+				}
+
+				dx = vehicle->unk4 - z;
+				if (dx < 0) {
+					dx = -dx;
+				}
+				if (dx >= minY) {
+					continue;
+				}
+
+				if ((vehicleSpecs[vehicle->unk1A].unk38 + vehicle->unk2 < (y - halfY)) || ((y + halfY) < vehicle->unk2)) {
+					continue;
+				}
+
+				func_8010C4EC_11B49C(vehicle);
+
+				minZ = 0x7FFF;
+				maxZ = -0x8000;
+				minX = -0x8000;
+				maxX = 0x7FFF;
+
+				{
+					s32 j;
+					f32 *xCorners;
+					f32 *zCorners;
+
+					xCorners = &D_80159D84;
+					zCorners = &D_80159DA4;
+					for (j = 3; j >= 0; j--) {
+						f32 fx;
+						f32 fz;
+
+						fx = *xCorners + vehicle->unk4C;
+						fz = *zCorners + vehicle->unk54;
+
+						if ((f32)minX < fx) {
+							minX = (s16)fx;
+						}
+						if (fx < (f32)maxX) {
+							maxX = (s16)fx;
+						}
+						if (fz < (f32)minZ) {
+							minZ = (s16)fz;
+						}
+						if ((f32)maxZ < fz) {
+							maxZ = (s16)fz;
+						}
+
+						xCorners--;
+						zCorners--;
+					}
+				}
+
+				dMaxZ = (maxZ - z) + halfZ;
+				dMinZ = -((minZ - z) - halfZ);
+				dMaxX = (minX - x) + halfX;
+				dMinX = -((maxX - x) - halfX);
+
+				side = 0;
+				if ((dMinZ <= 0) || (dMaxZ <= 0) || (dMaxX <= 0) || (dMinX <= 0)) {
+					behavior = 0;
+				} else {
+					s32 best;
+
+					best = 0x7FFF;
+					if ((dMinZ > 0) && (dMinZ < best)) {
+						best = dMinZ;
+						side = 1;
+					}
+					if ((dMaxZ > 0) && (dMaxZ < best)) {
+						best = dMaxZ;
+						side = 2;
+					}
+					if ((dMaxX > 0) && (dMaxX < best)) {
+						best = dMaxX;
+						side = 3;
+					}
+					if ((dMinX > 0) && (dMinX < best)) {
+						side = 4;
+					}
+
+					if ((side > 0) && (entry->unk2C == 2)) {
+						osSyncPrintf(&D_801453B0_154360);
+						func_800FB468_10A418(vehicle, (f32)(y + halfY));
+						vehicle->unk34 = 0.0f;
+
+						if (entry->unk20 != NULL) {
+							((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
+						}
+						return;
+					}
+					behavior = 0;
+				}
+
+				collisionIdx = vehicleSpecs[vehicle->unk1A].unk38 >> 1;
+				pushX = 0;
+				pushZ = 0;
+
+				if (side == 1) {
+					pushZ = dMinZ;
+				}
+				if (side == 2) {
+					pushZ = -dMaxZ;
+				}
+				if (side == 3) {
+					pushX = -dMaxX;
+				}
+				if (side == 4) {
+					pushX = dMinX;
+				}
+
+				if (side > 0) {
+					behavior = 2;
+					if (((y + halfY) - vehicle->unk2) < collisionIdx) {
+						behavior = 1;
+					} else {
+						minForward = (f32)pushX;
+						minStrafe = (f32)pushZ;
+					}
+				} else {
+					s16 xMax;
+					s16 xMin;
+					s16 zMax;
+					s16 zMin;
+
+					xMax = x + halfX;
+					xMin = x - halfX;
+					zMax = z + halfZ;
+					zMin = z - halfZ;
+
+					if (func_8010CF7C_11BF2C(xMax, zMax) != 0) {
+						behavior = 2;
+						if (((y + halfY) - vehicle->unk2) < collisionIdx) {
+							behavior = 1;
+						} else {
+							minForward = 10.0f;
+							minStrafe = 10.0f;
+						}
+					}
+
+					if (func_8010CF7C_11BF2C(xMax, zMin) != 0) {
+						behavior = 2;
+						if (((y + halfY) - vehicle->unk2) < collisionIdx) {
+							behavior = 1;
+						} else {
+							minForward = 10.0f;
+							minStrafe = -10.0f;
+						}
+					}
+
+					if (func_8010CF7C_11BF2C(xMin, zMax) != 0) {
+						behavior = 2;
+						if (((y + halfY) - vehicle->unk2) < collisionIdx) {
+							behavior = 1;
+						} else {
+							minForward = -10.0f;
+							minStrafe = 10.0f;
+						}
+					}
+
+					if (func_8010CF7C_11BF2C(xMin, zMin) != 0) {
+						behavior = 2;
+						if (((y + halfY) - vehicle->unk2) < collisionIdx) {
+							behavior = 1;
+						} else {
+							minForward = -10.0f;
+							minStrafe = -10.0f;
+						}
+					}
+				}
+
+				if (behavior == 1) {
+					func_800FB468_10A418(vehicle, (f32)(y + halfY));
+					vehicle->unk34 = 0.0f;
+					func_800FB3C4_10A374(vehicle, (f32)((f64)entry->unkC / 65536.0));
+					func_800FB40C_10A3BC(vehicle, (f32)((f64)entry->unk14 / 65536.0));
+					if (entry->unk20 != NULL) {
+						((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
+					}
+				}
+
+				if (behavior == 2) {
+					func_800FB430_10A3E0(vehicle, 0.0f);
+					func_800FB3C4_10A374(vehicle, minForward);
+					func_800FB40C_10A3BC(vehicle, minStrafe);
+					if (entry->unk20 != NULL) {
+						((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
+					}
+				}
+
+				if ((behavior == 3) && (entry->unk20 != NULL)) {
+					((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
+				}
+			} while ((entry--, i-- != 0));
+		}
+
+		activeList--;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E258_13D208.s")
+#endif
