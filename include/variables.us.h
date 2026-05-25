@@ -75,6 +75,7 @@ extern u8 D_100BD00[];
 extern u16 D_100BCF0[];
 extern u8 D_100BF00[];
 extern u8 D_1007A70[];
+extern u16 D_1009A70[];
 extern u8 D_100D700[];
 extern u8 D_100D800[];
 extern u8 D_100DA00[];

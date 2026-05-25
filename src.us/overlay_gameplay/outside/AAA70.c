@@ -1094,7 +1094,223 @@ void func_800A1DD8_B0D88(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1DD8_B0D88.s")
 #endif
 
+// CURRENT(11789)
+#ifdef NON_MATCHING
+void func_800A2260_B1210() {
+	Gfx *dl;
+	f32 *ghostPos;
+	f32 sp6C;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s32 pad6;
+	s32 pad7;
+	f32 sp68;
+	f32 sp64;
+	f32 sp60;
+	f32 sp5C;
+	f32 sp58;
+	f32 sp8;
+	f32 temp_f8;
+	f32 temp_f4;
+	f64 half;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD900000;
+	dl->words.w1 = (u32)D_1009A70 & 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5900000;
+	dl->words.w1 = 0x07080200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xE6000000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0x070FF400;
+	dl->words.w0 = 0xF3000000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xE7000000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5800400;
+	dl->words.w1 = 0x00080200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF2000000;
+	dl->words.w1 = 0x0007C07C;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xE7000000;
+
+	ghostPos = (f32 *)&D_8014F618;
+	half = 0.5;
+	sp8 = ghostPos[8];
+	sp64 = (f32)((f64)(ghostPos[3] + ghostPos[6]) * half);
+	sp68 = (f32)((f64)(ghostPos[4] + ghostPos[7]) * half);
+	temp_f8 = (f32)((f64)(ghostPos[5] + sp8) * half);
+	sp6C = temp_f8;
+	sp58 = (f32)((f64)(ghostPos[3] - ghostPos[6]) * half);
+	temp_f4 = (f32)((f64)(ghostPos[4] - ghostPos[7]) * half);
+	sp5C = temp_f4;
+	sp60 = (f32)((f64)(ghostPos[5] - sp8) * half);
+
+	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos[0] + ghostPos[3]);
+	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos[1] + ghostPos[4]);
+	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos[2] + ghostPos[5]);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos[0] + sp64);
+	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos[1] + sp68);
+	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos[2] + sp6C);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x800;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos[0] + ghostPos[6]);
+	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos[1] + ghostPos[7]);
+	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos[2] + ghostPos[8]);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos[0] + sp58);
+	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos[1] + sp5C);
+	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos[2] + sp60);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0x800;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = (s16)(s32)ghostPos[0];
+	D_8005BB34->v.ob[1] = (s16)(s32)ghostPos[1];
+	D_8005BB34->v.ob[2] = (s16)(s32)ghostPos[2];
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x800;
+	D_8005BB34->v.tc[1] = 0x800;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos[0] - sp58);
+	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos[1] - temp_f4);
+	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos[2] - sp60);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0x800;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos[0] - ghostPos[6]);
+	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos[1] - ghostPos[7]);
+	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos[2] - ghostPos[8]);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos[0] - sp64);
+	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos[1] - sp68);
+	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos[2] - sp6C);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x800;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos[0] - ghostPos[3]);
+	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos[1] - ghostPos[4]);
+	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos[2] - ghostPos[5]);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x0400248F;
+	dl->words.w1 = (u32)(D_8005BB34 - 9) & 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB1000208;
+	dl->words.w1 = 0x00000806;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB1040A02;
+	dl->words.w1 = 0x000A0802;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB10E0608;
+	dl->words.w1 = 0x000C060E;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB110080A;
+	dl->words.w1 = 0x000E0810;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w1 = 0;
+	dl->words.w0 = 0xE7000000;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2260_B1210.s")
+#endif
 
 s32 func_800A2A88_B1A38(void) {
 	s32 temp_v0;
