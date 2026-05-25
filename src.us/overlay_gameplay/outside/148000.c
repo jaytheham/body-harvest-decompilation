@@ -652,7 +652,117 @@ void func_8013A630_1495E0(void) {
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADE);
 }
 
+#ifdef NON_MATCHING
+// CURRENT(27704)
+void func_8013A764_149714(u8 arg0) {
+	s16 ammo;
+	s16 yPos;
+	s16 x0;
+	s16 y0;
+	s16 s0;
+	s16 t0;
+	u8 state;
+	s32 pad0;
+	s32 pad1;
+	HudWeaponItem* item;
+	u8* color;
+
+	if (D_8014F1FA >= 0x51) {
+		return;
+	}
+
+	ammo = func_8013994C_1488FC(arg0);
+	func_8013A630_1495E0();
+
+	if (ammo == 0) {
+		state = 0;
+	} else if (D_801601D0 == arg0) {
+		state = 1;
+	} else {
+		state = 2;
+	}
+
+	item = &hudWeaponItems[arg0];
+	color = &D_80140D68_14FD18[state * 3];
+
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, color[0], color[1], color[2], item->opacity);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_80260500);
+	gDPTileSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x100, G_TX_LOADTILE, 0,
+			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
+	gDPPipeSync(D_8005BB2C++);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE,
+				 PRIMITIVE, K4, TEXEL0, 0, 0, 0, PRIM_LOD_FRAC, PRIMITIVE);
+
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1,
+				  D_8025CCC0 + (((s32*) &D_80031474)[weaponSlots[item->weaponSlot]] * 0x240));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			   G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 287, 683);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_RENDERTILE, 0,
+			   G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (23 << G_TEXTURE_IMAGE_FRAC), (23 << G_TEXTURE_IMAGE_FRAC));
+	gDPPipeSync(D_8005BB2C++);
+
+	if (D_801601D0 != arg0) {
+		x0 = (item->yPosition + 2) * 4;
+		y0 = (0x1B - D_8014F1FA) * 4;
+		yPos = item->yPosition + 1;
+		gSPTextureRectangle(D_8005BB2C++, x0, y0, (item->yPosition + 0x10) * 4, (0x29 - D_8014F1FA) * 4,
+					  G_TX_RENDERTILE, 0, 0, 0x06DB, 0x06DB);
+	} else {
+		x0 = (item->yPosition + 3) * 4;
+		y0 = (0x15 - D_8014F1FA) * 4;
+		yPos = item->yPosition + 4;
+		gSPTextureRectangle(D_8005BB2C++, x0, y0, (item->yPosition + 0x15) * 4, (0x27 - D_8014F1FA) * 4,
+					  G_TX_RENDERTILE, 0, 0, 0x0555, 0x0555);
+	}
+
+	color = &D_80140D74_14FD24[state * 3];
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0,
+				 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, color[0], color[1], color[2], item->opacity);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, D_100ADF0);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
+	gDPPipeSync(D_8005BB2C++);
+
+	x0 = yPos * 4;
+	y0 = (0x27 - D_8014F1FA) * 4;
+	s0 = -(((x0 < 0) ? MIN(((x0 * (s16) 0x800) >> 7), 0) : 0));
+	t0 = -(((y0 < 0) ? MIN(((y0 * (s16) 0x800) >> 7), 0) : 0));
+
+	gSPTextureRectangle(D_8005BB2C++, MAX(x0, 0), MAX(y0, 0), MAX((yPos + 0x10) * 4, 0), MAX((0x47 - D_8014F1FA) * 4, 0),
+				  G_TX_RENDERTILE, s0, t0, 0x400, 0x400);
+	gDPPipeSync(D_8005BB2C++);
+
+	if (state == 1) {
+		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, item->opacity);
+	}
+
+	func_8013A4C8_149478(ammo, yPos);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A764_149714.s")
+#endif
 
 void func_8013AF58_149F08(void) {
 	u8 i;
