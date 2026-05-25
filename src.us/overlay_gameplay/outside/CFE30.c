@@ -1114,7 +1114,174 @@ void func_800C3288_D2238(u8 arg0) {
 	func_800C1384_D0334(arg0);
 }
 
+// CURRENT(25829)
+#ifdef NON_MATCHING
+void func_800C3300_D22B0(s32 arg0) {
+	Unk801541F8Entry *effect;
+	Unk80154318Entry *entry;
+	Unk80154318Sub *baseSub;
+	Unk80154318Sub *sub;
+	Vec3f basePos;
+	Vec3f left;
+	Vec3f right;
+	Vec3f point0;
+	Vec3f point1;
+	f32 distX;
+	f32 distY;
+	f32 distZ;
+	f32 dist;
+	f32 stepScale;
+	f32 finalScale;
+	f32 interpScale;
+	f32 lerpX;
+	f32 lerpY;
+	f32 lerpZ;
+	f64 ringDist;
+	s8 mode;
+	u8 count;
+
+	effect = &D_80154088[arg0 & 0xFF];
+	entry = &D_80154318[effect->unkA];
+	count = effect->unk4 - 1;
+	baseSub = (Unk80154318Sub *)&entry->unk8;
+
+	if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)(entry->unk2 * 4), (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f),
+			0x4000 - D_80047950) != 0) {
+		basePos.x = baseSub->unk0;
+		basePos.y = baseSub->unk2;
+		basePos.z = baseSub->unk4;
+
+		distX = basePos.x - (D_80153BA0.x * 4.0f);
+		distY = basePos.y - (D_80153BA0.y * 4.0f);
+		distZ = basePos.z - (D_80153BA0.z * 4.0f);
+		dist = sqrtf((distX * distX) + (distY * distY) + (distZ * distZ));
+
+		if (baseSub->unk9 == 0) {
+			func_800DC5B8_EB568(&basePos, dist, -1, -1);
+		}
+
+		gDPPipeSync(D_8005BB2C++);
+		gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, 0, 0, 0, SHADE, 0, 0, 0, PRIMITIVE, 0, 0, 0, SHADE);
+		gDPSetPrimColor(D_8005BB2C++, 0, 0, baseSub->unk6, baseSub->unk7, baseSub->unk8, 0);
+		gDPPipeSync(D_8005BB2C++);
+
+		if ((s8)count > 0) {
+			ringDist = ((f64)(dist / 4.0f)) + 800.0;
+
+			while ((s8)count > 0) {
+				entry = &D_80154318[entry->unk4];
+				sub = (Unk80154318Sub *)&entry->unk8;
+
+				stepScale = (f32)((f64)sub->unkD * (1.0 / 256.0));
+				interpScale = (f32)(ringDist * stepScale);
+
+				func_800C1128_D00D8(interpScale, &D_80153AB8, &left);
+				func_800C1128_D00D8(interpScale, &D_80153AC4, &right);
+
+				finalScale = (f32)(sub->unk2 + 10) / 256.0f;
+				stepScale = (f32)sub->unk2 / 256.0f;
+				mode = ((s8 *)sub)[1];
+
+				switch (mode) {
+					case 0:
+						func_800C10F4_D00A4(&basePos, &left, &point0);
+						func_800C10F4_D00A4(&basePos, &right, &point1);
+						break;
+					case 1:
+						func_800C10F4_D00A4(&basePos, &right, &point0);
+						func_800C10C0_D0070(&basePos, &left, &point1);
+						break;
+					case 2:
+						func_800C10C0_D0070(&basePos, &left, &point0);
+						func_800C10C0_D0070(&basePos, &right, &point1);
+						break;
+					default:
+						func_800C10C0_D0070(&basePos, &right, &point0);
+						func_800C10F4_D00A4(&basePos, &left, &point1);
+						break;
+				}
+
+				lerpX = point1.x - point0.x;
+				lerpY = point1.y - point0.y;
+				lerpZ = point1.z - point0.z;
+
+				D_8005BB34->v.ob[0] = (s16)basePos.x;
+				D_8005BB34->v.ob[1] = (s16)basePos.y;
+				D_8005BB34->v.ob[2] = (s16)basePos.z;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0;
+				D_8005BB34->v.cn[1] = 0;
+				D_8005BB34->v.cn[2] = 0;
+				D_8005BB34->v.cn[3] = ((u8 *)sub)[0];
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)((lerpX * finalScale) + point0.x);
+				D_8005BB34->v.ob[1] = (s16)((lerpY * finalScale) + point0.y);
+				D_8005BB34->v.ob[2] = (s16)((lerpZ * finalScale) + point0.z);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0;
+				D_8005BB34->v.cn[1] = 0;
+				D_8005BB34->v.cn[2] = 0;
+				D_8005BB34->v.cn[3] = 0x14;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)((lerpX * stepScale) + point0.x);
+				D_8005BB34->v.ob[1] = (s16)((lerpY * stepScale) + point0.y);
+				D_8005BB34->v.ob[2] = (s16)((lerpZ * stepScale) + point0.z);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0;
+				D_8005BB34->v.cn[1] = 0;
+				D_8005BB34->v.cn[2] = 0;
+				D_8005BB34->v.cn[3] = 0x14;
+				D_8005BB34++;
+
+				gDPPipeSync(D_8005BB2C++);
+				gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 3) & 0x1FFFFFFF), 3, 0);
+				gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
+
+				D_80156EDA += 3;
+				count--;
+			}
+		}
+
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_MODULATEIA);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, D_100DE80);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 0xFF, 0x400);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0,
+				   (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+
+		if (baseSub->unk9 != 2) {
+			func_800DC18C_EB13C(&basePos, &((u8 *)baseSub)[6], &D_80153B80,
+				*((u16 *)((u8 *)&D_80154318[effect->unkA] + 0x1A)), 0xFF);
+			D_80156EDA += 4;
+		}
+
+		gDPPipeSync(D_8005BB2C++);
+		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_ZB_XLU_SURF, G_RM_ZB_XLU_SURF2);
+		gDPPipeSync(D_8005BB2C++);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3300_D22B0.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(1025) */
