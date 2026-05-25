@@ -3297,7 +3297,147 @@ void func_800CB394_DA344(void) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(5155)
+void func_800CB4F8_DA4A8(void) {
+	s16 unitId;
+	Unk80154318Entry *entry;
+	u8 *entryBytes;
+	s16 *entryPos;
+	f64 scale;
+
+	if (D_80156EDA >= 0x28B) {
+		return;
+	}
+
+	if (D_80156ED9 == 2) {
+		return;
+	}
+
+	D_80153BCD = 0x20;
+	unitId = D_8015422E;
+	D_80153BCE = 0x20;
+	if (unitId == -5) {
+		return;
+	}
+
+	if (unitId == -6) {
+		return;
+	}
+
+	scale = D_80143FF8_152FA8;
+	while (1) {
+		entry = &D_80154318[unitId];
+		entryBytes = (u8 *)&entry->unk8;
+		entryPos = (s16 *)entryBytes;
+		if ((entry->unk14 == 0) || ((D_80052A8C % (entry->unk14 * 2)) < entry->unk14)) {
+			if (func_800B93AC_C835C(
+					(s16)(entryPos[0] * 4),
+					(s16)(entryPos[1] * 4),
+					(u16)entry->unk2,
+					(s16)(D_80047954 * 4.0f),
+					(s32)(D_8004795C * 4.0f),
+					0x4000 - D_80047950
+				) != 0) {
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u8 *)((u32)D_100DA00 & 0x1FFFFFFF));
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+				gDPLoadSync(D_8005BB2C++);
+				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+				gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << 2, 31 << 2);
+				gDPPipeSync(D_8005BB2C++);
+
+				D_80153BB8.x = (f32)(entryPos[0] * 4);
+				D_80153BB8.y = (f32)((func_800B84D0_C7480((s16)(entryPos[0] * 4), (s16)(entryPos[1] * 4)) >> 8) + 2);
+				D_80153BB8.z = (f32)(entryPos[1] * 4);
+				D_80153BC4 = &D_80153B84;
+				D_80153BC8 = (f32)(entry->unk2 >> 2);
+				D_80153BCC = 0x69;
+				func_800DAFCC_E9F7C();
+
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
+							   (u8 *)((u32)&D_100BF00[entryBytes[0xA] << 9] & 0x1FFFFFFF));
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+				gDPLoadSync(D_8005BB2C++);
+				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+				gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << 2, 31 << 2);
+				gDPPipeSync(D_8005BB2C++);
+
+				D_80153BB8.x = (f32)(entryPos[0] * 4);
+				D_80153BB8.y = (f32)((entryPos[1] + (entryBytes[9] / 50)) * 4);
+				D_80153BB8.z = (f32)(entryPos[1] * 4);
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0, 0, 0);
+				D_80153BC4 = &entry->unkE;
+				D_80153BC8 = (f32)((f64)(f32)entry->unk2 * scale);
+				D_80153BCC = 0xFF;
+				func_800DB350_EA300();
+
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_1010880);
+				gDPNoOpTag(D_8005BB2C++, 0xE8000000);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x0100, G_TX_LOADTILE, 0,
+						   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+						   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+				gDPLoadSync(D_8005BB2C++);
+				gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1,
+							   (u8 *)(((u32 *)D_8013DC80_14CC30)[entryBytes[0xB]] & 0x1FFFFFFF));
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+				gDPLoadSync(D_8005BB2C++);
+				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 511, 512);
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, G_TX_RENDERTILE, 0,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+				gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << 2, 31 << 2);
+				gDPPipeSync(D_8005BB2C++);
+
+				D_80153BB8.x = (f32)(entryPos[0] * 4);
+				D_80153BB8.y = (f32)((entryPos[1] + (entryBytes[9] / 50)) * 4);
+				D_80153BB8.z = (f32)(entryPos[1] * 4);
+				D_80153BC4 = &D_80153B84;
+				D_80153BC8 = (f32)((f64)(f32)entry->unk2 * 0.5);
+				func_800DB350_EA300();
+
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+				D_80156EDA += 0xC;
+			}
+		}
+
+		unitId = entry->unk4;
+		if (unitId == -5) {
+			break;
+		}
+
+		if (unitId == -6) {
+			break;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CB4F8_DA4A8.s")
+#endif
 
 void func_800CBD1C_DACCC(s16 arg0) {
 	Unk80154318Entry *entry;
