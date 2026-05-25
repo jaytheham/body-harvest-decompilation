@@ -30,8 +30,8 @@ typedef enum FrontEndState
 		FE_STATE_LANGUAGE_SELECT = 0x18
 } FrontEndState;
 
-#ifdef NON_MATCHING
 // CURRENT(5)
+#ifdef NON_MATCHING
 s32 func_80070270_40720(s32 arg0) {
 		switch (arg0) {
 		case 1:
@@ -139,8 +139,8 @@ void func_800704DC_4098C(void)
 }
 
 // https://decomp.me/scratch/TczFE
-#ifdef NON_MATCHING
 // CURRENT(5965)
+#ifdef NON_MATCHING
 void func_80070514_409C4(s16 arg0) {
 	s32 var_v1;
 	s16 missionId;
@@ -219,8 +219,8 @@ void func_80070514_409C4(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070514_409C4.s")
 #endif
 
-#ifdef NON_MATCHING
 // CURRENT(5015)
+#ifdef NON_MATCHING
 MissionData* func_800706E8_40B98(s32 arg0) {
 	s32 index;
 
@@ -820,8 +820,8 @@ s32 func_80071760_41C10(s32 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071760_41C10.s")
 #endif
 
-#ifdef NON_MATCHING
 // CURRENT(17165)
+#ifdef NON_MATCHING
 void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 i;
 	s32 slotCol;
@@ -909,7 +909,8 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071900_41DB0.s")
 #endif
 
-#ifdef NON_MATCHING // CURRENT(2155)
+ // CURRENT(2155)
+#ifdef NON_MATCHING
 void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	volatile s32 textureIndex;
 	s32 weaponType;
@@ -1122,8 +1123,8 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072604_42AB4.s")
 #endif
 
-#ifdef NON_MATCHING
 // CURRENT(1396)
+#ifdef NON_MATCHING
 void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 	Unk80052B40 spA4;
 	Unk80052B40 sp9C;

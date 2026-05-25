@@ -675,7 +675,208 @@ void func_800A5F24_B4ED4(s32 arg0) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A5F24_B4ED4.s")
 #endif
+// CURRENT(18077)
+#ifdef NON_MATCHING
+void func_800A6020_B4FD0(s16 arg0) {
+	u8 sp56;
+	u8 sp55;
+	f64 var_f20;
+	s32 temp_a0;
+	s32 temp_a0_2;
+	s32 temp_lo;
+	s32 temp_t2;
+	s32 temp_t6;
+	s32 temp_t8;
+	s32 temp_t9;
+	s32 var_a3;
+	s32 var_s3;
+	s32 var_s3_2;
+	s32 var_s3_3;
+	s32 var_s3_4;
+	s32 var_s4;
+	s32 var_s4_2;
+	s32 var_s5;
+	s32 var_s5_2;
+	s32 var_s5_3;
+	s32 var_s5_4;
+	s32 var_v0;
+	s32 var_v1;
+	s8 temp_fp;
+	u8 var_a2;
+	Gfx* temp_v0;
+	Gfx* temp_v0_2;
+	Gfx* temp_v0_3;
+	Gfx* temp_v0_4;
+	Gfx* temp_v0_5;
+	Gfx* temp_v0_6;
+	Gfx* temp_v0_7;
+	Gfx* temp_v0_8;
+	Gfx* temp_v0_9;
+
+	var_s4 = (D_80052A8C * 0x640) & 0xFFFF;
+	var_a2 = 0xFF;
+	var_v0 = ((arg0 * 3) + 4) & 0xFFFF;
+	var_v1 = (0x28 - arg0) & 0xFFFF;
+	if (arg0 < 0x10) {
+		if (arg0 < 0) {
+			var_a2 = ((arg0 * 0x19) + 0xFA) & 0xFF;
+			var_v0 = 4;
+			var_v1 = 0x32;
+		}
+		var_s5 = 0;
+		if (arg0 < 0) {
+			sp55 = (arg0 * 0x19) + 0xFF;
+		} else {
+			sp55 = 0xFF - (arg0 * 0x10);
+		}
+		var_s3 = 0;
+		if ((arg0 >= 0xB) && (D_8013D890_14C840 != 5)) {
+			var_v0 = 0x22;
+			var_a2 = (0x28A - (arg0 * 0x28)) & 0xFF;
+		}
+		if ((arg0 >= 0x15) && (D_8013D890_14C840 == 5)) {
+			var_v1 = 4;
+			sp55 = 0;
+			var_a2 = (0x41A - (arg0 * 0x28)) & 0xFF;
+		}
+		var_f20 = (f64)var_v0;
+		if (var_v0 < 0) {
+			var_f20 += 4294967296.0;
+		}
+		temp_lo = (s32)(var_v1 * 4) / 10;
+		temp_fp = ((s32)sp55 / 2) + 0x7F;
+		arg0 = arg0;
+		sp56 = var_a2;
+		do {
+			temp_t8 = ((var_s3 * var_v1) - 0x96) & 0xFFFF;
+			D_8005BB34->v.ob[0] = (s16)(s32)((((f64)(f32)coss(var_s4 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
+			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + temp_t8);
+			D_8005BB34->v.ob[2] = (s16)(s32)((((f64)(f32)sins(var_s4 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = 0x23;
+			temp_t6 = (var_s4 + 0xFA0) & 0xFFFF;
+			D_8005BB34->v.cn[1] = 0x5A;
+			D_8005BB34->v.cn[2] = 0xA0;
+			D_8005BB34->v.cn[3] = 0;
+			D_8005BB34 += 1;
+			D_8005BB34->v.ob[0] = (s16)(s32)((((f64)(f32)coss(temp_t6 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
+			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + ((temp_t8 + temp_lo) & 0xFFFF));
+			var_s3 = (var_s5 + 1) & 0xFF;
+			var_s5 = var_s3;
+			D_8005BB34->v.ob[2] = (s16)(s32)((((f64)(f32)sins(temp_t6 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = sp55;
+			var_s4 = (temp_t6 + 0x1770) & 0xFFFF;
+			D_8005BB34->v.cn[1] = temp_fp;
+			D_8005BB34->v.cn[2] = 0xFF;
+			D_8005BB34->v.cn[3] = sp56;
+			D_8005BB34 += 1;
+		} while (var_s3 < 0x10);
+		var_s5_2 = 0;
+		var_s4_2 = ((D_80052A8C * 0x640) + 0x8000) & 0xFFFF;
+		var_s3_2 = 0;
+		do {
+			temp_t2 = ((var_s3_2 * var_v1) - 0x96) & 0xFFFF;
+			D_8005BB34->v.ob[0] = (s16)(s32)((((f64)(f32)coss(var_s4_2 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
+			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + temp_t2);
+			D_8005BB34->v.ob[2] = (s16)(s32)((((f64)(f32)sins(var_s4_2 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = 0x23;
+			temp_t9 = (var_s4_2 + 0xFA0) & 0xFFFF;
+			D_8005BB34->v.cn[1] = 0x5A;
+			D_8005BB34->v.cn[2] = 0xA0;
+			D_8005BB34->v.cn[3] = 0;
+			D_8005BB34 += 1;
+			D_8005BB34->v.ob[0] = (s16)(s32)((((f64)(f32)coss(temp_t9 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
+			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + ((temp_t2 + temp_lo) & 0xFFFF));
+			var_s3_2 = (var_s5_2 + 1) & 0xFF;
+			var_s5_2 = var_s3_2;
+			D_8005BB34->v.ob[2] = (s16)(s32)((((f64)(f32)sins(temp_t9 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = sp55;
+			var_s4_2 = (temp_t9 + 0x1770) & 0xFFFF;
+			D_8005BB34->v.cn[1] = temp_fp;
+			D_8005BB34->v.cn[2] = 0xFF;
+			D_8005BB34->v.cn[3] = sp56;
+			D_8005BB34 += 1;
+		} while (var_s3_2 < 0x10);
+		temp_v0 = D_8005BB30;
+		D_8005BB30 = temp_v0 + 1;
+		temp_v0->words.w1 = 0;
+		temp_v0->words.w0 = 0xBA001402;
+		temp_v0_2 = D_8005BB30;
+		D_8005BB30 = temp_v0_2 + 1;
+		temp_v0_2->words.w1 = 0x205;
+		temp_v0_2->words.w0 = 0xB7000000;
+		temp_v0_3 = D_8005BB30;
+		D_8005BB30 = temp_v0_3 + 1;
+		temp_v0_3->words.w0 = 0xB900031D;
+		temp_v0_3->words.w1 = 0x407858;
+		temp_v0_4 = D_8005BB30;
+		D_8005BB30 = temp_v0_4 + 1;
+		temp_v0_4->words.w1 = 0xFFFE793C;
+		temp_v0_4->words.w0 = 0xFCFFFFFF;
+		temp_v0_5 = D_8005BB30;
+		var_a3 = 6;
+		D_8005BB30 = temp_v0_5 + 1;
+		temp_v0_5->words.w1 = 0;
+		temp_v0_5->words.w0 = 0xE7000000;
+		if ((arg0 >= 0xC) && (D_8013D890_14C840 != 5)) {
+			var_a3 = (0x10 - arg0) & 0xFF;
+		}
+		if ((arg0 >= 0x16) && (D_8013D890_14C840 == 5)) {
+			var_a3 = (0x1A - arg0) & 0xFF;
+		}
+		if (arg0 < -4) {
+			var_a3 = (arg0 + 0xA) & 0xFF;
+		}
+		temp_v0_6 = D_8005BB30;
+		var_s5_3 = 0;
+		D_8005BB30 = temp_v0_6 + 1;
+		temp_v0_6->words.w0 = 0x040081FF;
+		var_s3_3 = 0;
+		temp_v0_6->words.w1 = (u32)(D_8005BB34 - 0x40);
+		do {
+			if (!(var_s3_3 & 1)) {
+				temp_a0 = var_s3_3 * 2;
+				temp_v0_7 = D_8005BB30;
+				D_8005BB30 = temp_v0_7 + 1;
+				temp_v0_7->words.w1 = ((temp_a0 & 0xFF) << 0x10) | (((temp_a0 + 2) & 0xFF) << 8) | (var_a3 & 0xFF);
+				temp_v0_7->words.w0 = 0xB5000000;
+			}
+			var_s3_3 = (var_s5_3 + 1) & 0xFF;
+			var_s5_3 = var_s3_3;
+		} while (var_s3_3 < 0x1F);
+		var_s5_4 = 0;
+		var_s3_4 = 0;
+		temp_v0_8 = D_8005BB30;
+		D_8005BB30 = temp_v0_8 + 1;
+		temp_v0_8->words.w0 = 0x040081FF;
+		temp_v0_8->words.w1 = (u32)(D_8005BB34 - 0x20);
+		do {
+			if (!(var_s3_4 & 1)) {
+				temp_a0_2 = var_s3_4 * 2;
+				temp_v0_9 = D_8005BB30;
+				D_8005BB30 = temp_v0_9 + 1;
+				temp_v0_9->words.w1 = ((temp_a0_2 & 0xFF) << 0x10) | (((temp_a0_2 + 2) & 0xFF) << 8) | (var_a3 & 0xFF);
+				temp_v0_9->words.w0 = 0xB5000000;
+			}
+			var_s3_4 = (var_s5_4 + 1) & 0xFF;
+			var_s5_4 = var_s3_4;
+		} while (var_s3_4 < 0x1F);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A6020_B4FD0.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(14213)

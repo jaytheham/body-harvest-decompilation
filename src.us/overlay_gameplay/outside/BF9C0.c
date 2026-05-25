@@ -3004,7 +3004,135 @@ void func_800BDDB4_CCD64(void) {
 	D_8013D9AC_14C95C = 0;
 }
 
+// CURRENT(8803)
+#ifdef NON_MATCHING
+void func_800BDDCC_CCD7C(void) {
+	s16 sp5E;
+	s16 sp5C;
+	s16 sp5A;
+	s8 sp56;
+	s8 sp55;
+	s8 sp54;
+	s16 sp52;
+	s16 sp50;
+	s32 sp4C;
+	s16 temp;
+	u32 ticks;
+	u8 state;
+	u8 timer;
+
+	state = D_80151DD0;
+	if ((state == 0) && ((u8)D_8013D9AC_14C95C == 0)) {
+		if ((D_8004816A >= ((u8)D_800314C4 - 2)) || (func_8000726C_7E6C(0x33) != 0)) {
+			D_80151DD0 = 1;
+			D_8013D9AC_14C95C = 0x40;
+		}
+		state = D_80151DD0;
+		timer = (u8)D_8013D9AC_14C95C;
+	} else {
+		timer = (u8)D_8013D9AC_14C95C;
+		if ((state == 1) && (timer == 0)) {
+			if ((D_8004816A >= ((u8)D_800314C4 - 1)) || (func_8000726C_7E6C(0x33) != 0)) {
+				D_80151DD0 = 2;
+				D_8013D9AC_14C95C = 0x40;
+			}
+			state = D_80151DD0;
+			timer = (u8)D_8013D9AC_14C95C;
+		} else if ((state == 2) && (timer == 0)) {
+			if ((D_8004816A >= (u8)D_800314C4) || (func_8000726C_7E6C(0x33) != 0)) {
+				D_80151DD0 = 3;
+				D_8013D9AC_14C95C = 0x96;
+				func_800755E0_84590();
+				sp5E = 0xFE;
+				do {
+					D_80050AE0[sp5E].pad4[3] = 0;
+					func_8011BB94_12AB44(sp5E, 1);
+				} while (sp5E-- != 0);
+				func_80087F08_96EB8();
+			}
+			state = D_80151DD0;
+			timer = (u8)D_8013D9AC_14C95C;
+		} else if ((state == 3) && (timer == 0) && (currentLevel != 5)) {
+			func_80006DAC_79AC(0x64, 0);
+			func_80123AC4_132A74(D_80052B34);
+			func_80123AC4_132A74(D_80052B34);
+			func_800DFBA8_EEB58(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 0xFA, 6);
+			D_80151DD0 = 4;
+			state = 4;
+		}
+	}
+
+	if ((state == 3) && (timer == 0x28) && (currentLevel != 5)) {
+		func_80018D7C_1997C(0xE5);
+		state = D_80151DD0;
+		timer = (u8)D_8013D9AC_14C95C;
+	}
+
+	if (timer != 0) {
+		D_8013D9AC_14C95C = timer - 1;
+	}
+
+	if ((state == 1) && ((D_80052A8C % 5U) == 0)) {
+		sp5C = ((func_800038E0_44E0() / 32) + D_80052B34->unk0) - 0x404;
+		sp5A = ((func_800038E0_44E0() / 32) + D_80052B34->unk4) - 0x404;
+		sp4C = func_800B84D0_C7480(sp5C, sp5A);
+		func_800C541C_D43CC(sp5C, (s16)(sp4C >> 8), sp5A, 0, 0x7F, 0, 0x32, 0xA0, (func_800038E0_44E0() % 5) + 5,
+						  0xA, 0xFF, 0xFF, 0xFF);
+		state = D_80151DD0;
+	}
+
+	if (state == 2) {
+		ticks = D_80052A8C;
+		if ((ticks % 3U) == 0) {
+			sp5C = ((func_800038E0_44E0() / 32) + D_80052B34->unk0) - 0x404;
+			sp5A = ((func_800038E0_44E0() / 32) + D_80052B34->unk4) - 0x404;
+			sp4C = func_800B84D0_C7480(sp5C, sp5A);
+			func_800C541C_D43CC(sp5C, (s16)(sp4C >> 8), sp5A, 0, 0x7F, 0, 0x50, 0xA0, (func_800038E0_44E0() % 10) + 5,
+							  0xA, 0xFF, 0xFF, 0xFF);
+			ticks = D_80052A8C;
+		}
+
+		if ((ticks % 9U) == 0) {
+			sp5C = ((func_800038E0_44E0() / 32) + D_80052B34->unk0) - 0x404;
+			sp5A = ((func_800038E0_44E0() / 32) + D_80052B34->unk4) - 0x404;
+			sp4C = func_800B84D0_C7480(sp5C, sp5A);
+			func_800DF9C8_EE978(sp5C, (s16)(sp4C >> 8), sp5A, 0x32, 0, 0);
+		}
+	}
+
+	state = D_80151DD0;
+	if ((state == 3) || (state == 4)) {
+		ticks = D_80052A8C;
+		if ((ticks & 7) == 0) {
+			sp50 = ((func_800038E0_44E0() / 32) + D_80052B34->unk0) - 0x404;
+			sp52 = ((func_800038E0_44E0() / 32) + D_80052B34->unk4) - 0x404;
+			sp54 = (func_800038E0_44E0() / 512) + 0x7F;
+			sp55 = (func_800038E0_44E0() / 512) + 0x7F;
+			sp56 = (func_800038E0_44E0() / 512) + 0x7F;
+			func_800B99A8_C8958((Unk80152B80 *)&sp50, 0x1E, 0x1F4, 0xFF, (u8 *)&sp54, 0x50, 0xA, 0);
+			ticks = D_80052A8C;
+		}
+
+		if ((ticks % 5U) == 0) {
+			sp5C = ((func_800038E0_44E0() / 32) + D_80052B34->unk0) - 0x404;
+			sp5A = ((func_800038E0_44E0() / 32) + D_80052B34->unk4) - 0x404;
+			sp4C = func_800B84D0_C7480(sp5C, sp5A);
+			func_800DF9C8_EE978(sp5C, (s16)(sp4C >> 8), sp5A, (func_800038E0_44E0() % 0x32) + 0x3C, 0, 0);
+			ticks = D_80052A8C;
+		}
+
+		if ((ticks % 10U) == 3) {
+			sp5C = ((func_800038E0_44E0() / 32) + D_80052B34->unk0) - 0x404;
+			sp5A = ((func_800038E0_44E0() / 32) + D_80052B34->unk4) - 0x404;
+			sp4C = func_800B84D0_C7480(sp5C, sp5A);
+			temp = (s16)(sp4C >> 8);
+			func_800D16BC_E066C(sp5C, temp, sp5A, sp5C, temp + 0xBB8, sp5A, 0xD);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BDDCC_CCD7C.s")
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(24105)

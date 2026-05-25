@@ -1228,11 +1228,8 @@ s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CDFC_D9FC.s")
 #endif
 
-#ifdef NON_MATCHING
 // CURRENT(7256)
-// Score: ~16442. Issue: arg3 spills to stack instead of staying in $f26.
-// Current uses 6 double FP regs (f20,f22,f24,f26,f28,f30) vs target's 4 (f20,f22,f24,f26).
-// All intermediate temp_f* variables seem necessary for matching instruction order.
+#ifdef NON_MATCHING
 void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, f32 arg3) {
 	f64 temp_f20;
 	f64 temp_f22;
@@ -1432,8 +1429,8 @@ void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChanne
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D588_E188.s")
 #endif
 
-#ifdef NON_MATCHING
 // CURRENT(522)
+#ifdef NON_MATCHING
 s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, s32 arg5, f32 arg6, s32 arg7) {
 	s32 var_s1;
 	s32 base;
