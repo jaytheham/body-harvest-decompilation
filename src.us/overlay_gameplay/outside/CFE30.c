@@ -6145,7 +6145,176 @@ void func_800D6140_E50F0(u8 arg0) {
 	}
 }
 
+// CURRENT(32643)
+#ifdef NON_MATCHING
+void func_800D6290_E5240(u8 arg0) {
+	s16 index;
+	s16 nextIndex;
+	s16 deltaZ;
+	s16 deltaX;
+	Unk80154318Entry *entry;
+	Unk80154318Entry *nextEntry;
+	Vtx *vtx;
+
+	index = D_8015408E[arg0 & 0xFF].unk0;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100BD00 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+
+	entry = &D_80154318[index];
+	nextEntry = &D_80154318[entry->unk4];
+	if (nextEntry->unk8 < entry->unk8) {
+		deltaZ = 0xF;
+		if (nextEntry->unkC < entry->unkC) {
+			deltaX = -0xF;
+		} else {
+			deltaX = 0xF;
+		}
+	} else {
+		deltaZ = -0xF;
+		deltaX = 0xF;
+		if (nextEntry->unkC < entry->unkC) {
+			deltaX = -0xF;
+		}
+	}
+
+	if ((index != -5) && (index != -6)) {
+		while (1) {
+			entry = &D_80154318[index];
+			nextIndex = entry->unk4;
+			if (nextIndex != -5) {
+				nextEntry = &D_80154318[nextIndex];
+
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = entry->unk8;
+				vtx->v.ob[1] = (func_800038E0_44E0() % 5) + entry->unkA + 0xF;
+				vtx->v.ob[2] = entry->unkC;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0;
+				vtx->v.tc[1] = 0;
+				vtx->v.cn[0] = entry->unkE;
+				vtx->v.cn[1] = entry->unkF;
+				vtx->v.cn[2] = entry->unk10;
+				vtx->v.cn[3] = entry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = entry->unk8;
+				vtx->v.ob[1] = entry->unkA - (func_800038E0_44E0() % 5) - 0xF;
+				vtx->v.ob[2] = entry->unkC;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0;
+				vtx->v.tc[1] = 0x800;
+				vtx->v.cn[0] = entry->unkE;
+				vtx->v.cn[1] = entry->unkF;
+				vtx->v.cn[2] = entry->unk10;
+				vtx->v.cn[3] = entry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = nextEntry->unk8;
+				vtx->v.ob[1] = nextEntry->unkA - (func_800038E0_44E0() % 5) - 0xF;
+				vtx->v.ob[2] = nextEntry->unkC;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0x800;
+				vtx->v.tc[1] = 0x800;
+				vtx->v.cn[0] = nextEntry->unkE;
+				vtx->v.cn[1] = nextEntry->unkF;
+				vtx->v.cn[2] = nextEntry->unk10;
+				vtx->v.cn[3] = nextEntry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = nextEntry->unk8;
+				vtx->v.ob[1] = (func_800038E0_44E0() % 5) + nextEntry->unkA + 0xF;
+				vtx->v.ob[2] = nextEntry->unkC;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0x800;
+				vtx->v.tc[1] = 0;
+				vtx->v.cn[0] = nextEntry->unkE;
+				vtx->v.cn[1] = nextEntry->unkF;
+				vtx->v.cn[2] = nextEntry->unk10;
+				vtx->v.cn[3] = nextEntry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = entry->unk8 + deltaX;
+				vtx->v.ob[1] = entry->unkA;
+				vtx->v.ob[2] = entry->unkC + deltaZ;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0;
+				vtx->v.tc[1] = 0;
+				vtx->v.cn[0] = entry->unkE;
+				vtx->v.cn[1] = entry->unkF;
+				vtx->v.cn[2] = entry->unk10;
+				vtx->v.cn[3] = entry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = entry->unk8 - deltaX;
+				vtx->v.ob[1] = entry->unkA;
+				vtx->v.ob[2] = entry->unkC - deltaZ;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0;
+				vtx->v.tc[1] = 0x800;
+				vtx->v.cn[0] = entry->unkE;
+				vtx->v.cn[1] = entry->unkF;
+				vtx->v.cn[2] = entry->unk10;
+				vtx->v.cn[3] = entry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = nextEntry->unk8 - deltaX;
+				vtx->v.ob[1] = nextEntry->unkA;
+				vtx->v.ob[2] = nextEntry->unkC - deltaZ;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0x800;
+				vtx->v.tc[1] = 0x800;
+				vtx->v.cn[0] = nextEntry->unkE;
+				vtx->v.cn[1] = nextEntry->unkF;
+				vtx->v.cn[2] = nextEntry->unk10;
+				vtx->v.cn[3] = nextEntry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = nextEntry->unk8 + deltaX;
+				vtx->v.ob[1] = nextEntry->unkA;
+				vtx->v.ob[2] = nextEntry->unkC + deltaZ;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0x800;
+				vtx->v.tc[1] = 0;
+				vtx->v.cn[0] = nextEntry->unkE;
+				vtx->v.cn[1] = nextEntry->unkF;
+				vtx->v.cn[2] = nextEntry->unk10;
+				vtx->v.cn[3] = nextEntry->unk11;
+
+				D_8005BB34++;
+				gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 8) & 0x1FFFFFFF), 8, 0);
+				gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
+				gSP2Triangles(D_8005BB2C++, 4, 5, 7, 0, 7, 5, 6, 0);
+				D_80156EDA += 8;
+			}
+
+			index = nextIndex;
+			if ((nextIndex == -5) || (nextIndex == -6)) {
+				break;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D6290_E5240.s")
+#endif
 
 void func_800D6A84_E5A34(u8 arg0)
 {
