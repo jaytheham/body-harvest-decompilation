@@ -54,6 +54,8 @@ s32 func_8010CA38_11B9E8(VehicleInstance *arg0);
 s32 func_801073FC_1163AC(VehicleInstance *arg0, VehicleInstance *arg1, s32 arg2, s32 arg3);
 s32 func_8010E040_11CFF0(s16 arg0, s16 arg1, s16 arg2);
 s32 func_80076088_85038(s32 arg0);
+void func_800755E0_84590(void);
+void func_80087F08_96EB8(void);
 void func_800EBE74_FAE24(s32 arg0, u8 arg1, s16 arg2, s32 arg3);
 void func_80107970_116920(VehicleInstance *arg0, s32 arg1);
 s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1);
