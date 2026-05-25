@@ -2404,7 +2404,223 @@ void func_8011DE60_12CE10(s32 arg0) {
 	D_8015EB80 = arg0;
 }
 
+// CURRENT(21902)
+#ifdef NON_MATCHING
+s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
+	BuildingInstance *inst;
+	BuildingInstance *instA;
+	BuildingInstance *instB;
+	BuildingSpec *spec;
+	f32 localX;
+	f32 localZ;
+	f32 absX;
+	f32 absZ;
+	s16 outA;
+	s16 outB;
+	s16 instanceId;
+	s16 dist;
+	s16 delta;
+	s16 sampleY;
+	s32 cellY;
+	s32 searchIndex;
+	s32 specType;
+	s32 rot;
+	s32 needSeamFix;
+	u8 *history;
+
+	cellY = func_800B84D0_C7480(arg0, arg1) >> 8;
+	instanceId = arg3;
+	inst = &buildingInstances[instanceId];
+	if (inst->buildingType == 0x1F) {
+		specType = D_8015EA28;
+	} else {
+		specType = inst->buildingType;
+	}
+	history = &D_8015EB67;
+
+	for (searchIndex = 7; searchIndex != 0; searchIndex--) {
+		s32 historyBase = 0;
+
+		if (((inst->unk8 >> 0xC) & 4) != 0) {
+			historyBase = 0x80;
+		}
+
+		if (history[-searchIndex] == (u8)(historyBase + specType)) {
+			break;
+		}
+	}
+
+	if ((D_8015EA28 == inst->buildingType) && (D_80052554 >= 0x401)) {
+		*arg2 = 1000;
+		return instanceId;
+	}
+
+	spec = &buildingSpecs[specType];
+	spec->pad16[4] |= 0x10;
+
+	if (inst->buildingType == 0x1F) {
+		if ((inst->unk8 & 1) != 0) {
+			localX = 5.0f;
+			localZ = (f32)((arg0 & 0xFF) >> 2);
+		} else {
+			localX = 5.0f;
+			localZ = (f32)((arg1 & 0xFF) >> 2);
+		}
+		needSeamFix = 0;
+	} else {
+		rot = inst->unk8 & 3;
+		localX = (f32)(arg0 - inst->xCoord);
+		localZ = (f32)(arg1 - inst->zCoord);
+
+		switch (rot) {
+		case 0:
+			localX = -localX;
+			break;
+		case 1: {
+			f32 temp = localX;
+			localX = localZ;
+			localZ = temp;
+			break;
+		}
+		case 2:
+			localZ = -localZ;
+			break;
+		case 3: {
+			f32 temp = localZ;
+			localZ = -localX;
+			localX = -temp;
+			break;
+		}
+		}
+
+		if (localX >= 0.0f) {
+			absX = localX;
+		} else {
+			absX = -localX;
+		}
+
+		if ((f32)spec->unk10 < absX) {
+			*arg2 = (s16)cellY;
+			return -1;
+		}
+
+		if (localZ >= 0.0f) {
+			absZ = localZ;
+		} else {
+			absZ = -localZ;
+		}
+
+		if ((f32)spec->unk12 < absZ) {
+			*arg2 = (s16)cellY;
+			return -1;
+		}
+
+		localX = (f32)(((f64)localX * (32.0 / (f64)spec->unk10)) + 32.0);
+		localZ = (f32)(((f64)localZ * (32.0 / (f64)spec->unk12)) + 32.0);
+		needSeamFix = 0;
+		if (D_8015EA28 == inst->buildingType) {
+			if ((rot & 1) != 0) {
+				if (((arg1 & 0xFF) >> 2) < 7) {
+					needSeamFix = 1;
+				}
+			} else if (((arg1 & 0xFF) >> 2) < 7) {
+				needSeamFix = 1;
+			}
+		}
+	}
+
+	if (D_80144FB0_153F60 < (f64)localX) {
+		localX = 63.0f;
+	}
+	if (D_80144FB0_153F60 < (f64)localZ) {
+		localZ = 63.0f;
+	}
+
+	if (searchIndex == -1) {
+		*arg2 = inst->yCoord + spec->unk14;
+		if (*arg2 < cellY) {
+			*arg2 = (s16)cellY;
+			return -1;
+		}
+		return instanceId;
+	}
+
+	*arg2 = (s16)*(u16 *)((u8 *)&D_802B2080 + (searchIndex << 0xD) + (((s16)(s32)localX) * 2) + (((s16)(s32)localZ) << 7));
+
+	if ((D_8015EA29 == inst->buildingType) && (gameplayMode == 3) && ((f64)localZ > 48.0)) {
+		*arg2 = (s16)(s32)(((64.0 - (f64)localZ) * D_80144FB8_153F68) + 16.0);
+	}
+
+	if (D_8015EB80 != 0) {
+		switch (currentLevel) {
+		case LEVEL_GREECE:
+			if ((*(s32 *)&buildingSpecs[inst->buildingType] == (s32)D_900AD50) && (localX > 23.0f) && (localX < 41.0f) && (localZ > 45.0f)) {
+				*arg2 = 0;
+			}
+			break;
+		case LEVEL_JAVA:
+			if ((*(s32 *)&buildingSpecs[inst->buildingType] == (s32)D_A014AD8) && (localX > 26.0f) && (localX < 38.0f) && (localZ > 55.0f)) {
+				if ((func_8011D260_12C210(0x45, 0x12) != (s32)(inst - buildingInstances)) || (func_8000726C_7E6C((u64)0xFULL) != 0)) {
+					*arg2 = 0;
+				}
+			} else if ((*(s32 *)&buildingSpecs[inst->buildingType] == (s32)D_A01EC58) && (localX > 21.0f) && (localX < 43.0f) && (localZ > 51.0f)) {
+				*arg2 = 0;
+			}
+			break;
+		case LEVEL_AMERICA:
+			if ((*(s32 *)&buildingSpecs[inst->buildingType] == (s32)D_B00E4E8) && (localX > 19.0f) && (localX < 45.0f)) {
+				*arg2 = 0;
+			}
+			break;
+		}
+	}
+
+	if ((inst->buildingType == 0x1F) || (needSeamFix != 0)) {
+		func_80115F20_124ED0(arg0, arg1, &outA, &outB);
+		instA = &buildingInstances[outA];
+		instB = &buildingInstances[outB];
+
+		if (instA->xCoord == instB->xCoord) {
+			delta = instB->zCoord - instA->zCoord;
+			if (delta >= 0) {
+				dist = delta;
+			} else {
+				dist = -delta;
+			}
+			sampleY = ((delta >> 1) + instA->zCoord) - arg1;
+		} else {
+			delta = instB->xCoord - instA->xCoord;
+			if (delta >= 0) {
+				dist = delta;
+			} else {
+				dist = -delta;
+			}
+			sampleY = ((delta >> 1) + instA->xCoord) - arg0;
+		}
+
+		*arg2 -= func_8011619C_12514C((s16)func_80118670_127620((s8)(arg0 >> 8), (s8)(arg1 >> 8)), (s16)((dist - 0xE6) >> 1), sampleY);
+	}
+
+	if (*arg2 == 0) {
+		*arg2 = (s16)(func_800B84D0_C7480(arg0, arg1) >> 8);
+		return -1;
+	}
+
+	*arg2 = *arg2 + inst->yCoord;
+	if (*arg2 < cellY) {
+		*arg2 = (s16)cellY;
+		return -1;
+	}
+
+	if (((spec->pad16[4] & 8) == 0) && (D_8015EB80 == 0) && (*arg2 != 0)) {
+		*arg2 = spec->unk14 + inst->yCoord;
+	}
+
+	return instanceId;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011DE6C_12CE1C.s")
+#endif
 
 s32 func_8011E6FC_12D6AC(s16 arg0, s16 arg1, s16 *arg2) {
 	s32 temp_v0;
