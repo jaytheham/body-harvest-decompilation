@@ -9126,7 +9126,129 @@ void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DEF2C_EDEDC.s")
 #endif
 
+void func_80137234_1461E4();
+
+#ifdef NON_MATCHING
+// CURRENT(18263)
+s32 func_800DF038_EDFE8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s8 *arg5) {
+	s16 result;
+	s16 i;
+	s16 j;
+	s16 spreadCount;
+	s16 halfRadius;
+	s16 radius;
+	s16 temp;
+	u16 clampedRadius;
+	u16 r0;
+	u8 tempColors[12];
+	u8 loopCount;
+	s32 slot;
+
+	clampedRadius = arg3;
+	func_800038E0_44E0();
+	radius = clampedRadius;
+
+	if (func_800B93AC_C835C(arg0, arg2, clampedRadius * 2, (s16) (D_80047954 * 4.0f), (s16) (D_8004795C * 4.0f),
+			0x4000 - D_80047950) == 0) {
+		return -3;
+	}
+
+	if (radius < 0x1E) {
+		clampedRadius = 0x1E;
+		radius = 0x1E;
+	}
+
+	if (radius >= 0x12D) {
+		clampedRadius = 0x12C;
+	}
+
+	if ((arg1 < (D_80222A70 - 0x32)) && ((currentLevel != 4) || (D_80047F94 != 2) || (gameplayMode != 0xB))) {
+		for (i = 0; i < 4; i++) {
+			for (j = 0; j < 3; j++) {
+				if (currentLevel == 5) {
+					tempColors[(i * 3) + j] = D_8013DF9C_14CF4C[(i * 3) + j];
+				} else {
+					tempColors[(i * 3) + j] = D_8013DF90_14CF40[(i * 3) + j];
+				}
+			}
+		}
+
+		radius = clampedRadius;
+		result = func_800C613C_D50EC(arg0, arg1, arg2, clampedRadius, tempColors);
+		spreadCount = radius / 10;
+		if (spreadCount > 0) {
+			halfRadius = radius >> 1;
+			for (i = 0; i < spreadCount; i++) {
+				r0 = func_800038E0_44E0() & 0xFFFF;
+				func_800D8FA0_E7F50((r0 % radius) + arg0 - halfRadius, arg1,
+					(func_800038E0_44E0() % radius) + arg2 - halfRadius);
+			}
+		}
+	} else {
+		result = func_800C613C_D50EC(arg0, arg1, arg2, clampedRadius, arg5);
+	}
+
+	if (result == -3) {
+		return result;
+	}
+
+	radius = clampedRadius;
+	if (radius >= 0x12C) {
+		func_80135D44_144CF4(arg0, arg1, arg2, 8.0f);
+	} else if (radius >= 0x96) {
+		func_80135D44_144CF4(arg0, arg1, arg2, 3.0f);
+	} else if (radius >= 0x50) {
+		func_80135D44_144CF4(arg0, arg1, arg2, 2.0f);
+	}
+
+	if (radius >= 0x51) {
+		spreadCount = radius / 10;
+		func_800DEE5C_EDE0C(arg0, arg1, arg2, spreadCount + 0x14, 6);
+		func_80137234_1461E4(0x15F, arg0, arg1, arg2, spreadCount);
+	}
+
+	func_800DDE1C_ECDCC(func_800DDB60_ECB10(arg0, arg1, arg2, 7, radius * 8), 0xB4);
+	slot = func_800DDB60_ECB10(arg0, arg1, arg2, 7, radius * 6);
+	func_800DDE1C_ECDCC(slot, 0x6E);
+	func_800DDEE0_ECE90(slot, 1);
+
+	if (D_80153B87 == 0) {
+		temp = radius / 6;
+		if ((u16) temp >= 0x29) {
+			temp = 0x28;
+		}
+		func_800C541C_D43CC(arg0, arg1, arg2, 0, 0x7F, 0, clampedRadius, 0xB4, temp, 6, 0xFF, 0xFF, 0xFF);
+	}
+
+	if (radius < 0x96) {
+		func_80137234_1461E4(0xEA, arg0, arg1, arg2, clampedRadius);
+	} else if (radius >= 0x191) {
+		func_80137234_1461E4(0xE8, arg0, arg1, arg2, clampedRadius);
+	} else {
+		func_80137234_1461E4(0xE9, arg0, arg1, arg2, clampedRadius);
+	}
+
+	loopCount = arg4;
+	if (loopCount > 0) {
+		i = 0;
+		do {
+			func_800C7924_D68D4(arg0, arg1, arg2, radius, result, clampedRadius,
+				((s32 *) D_8013DD20_14CCD0)[func_800038E0_44E0() % 8], 0);
+			i = (i + 1) & 0xFF;
+		} while (i < loopCount);
+	}
+
+	if (radius < 0x96) {
+		func_800DEA08_ED9B8(arg0, arg1, arg2, radius, radius / 16, 1, 0x1E, 0xFA, 0x32, 0x32, 0x32);
+	} else {
+		func_800DEA08_ED9B8(arg0, arg1, arg2, radius, radius / 16, 1, 0x3C, 0xFA, 0x32, 0x32, 0x32);
+	}
+
+	return result;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DF038_EDFE8.s")
+#endif
 
 // CURRENT(946)
 #ifdef NON_MATCHING
