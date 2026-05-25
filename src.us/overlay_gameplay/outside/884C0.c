@@ -3759,7 +3759,196 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800831A4_92154.s")
 #endif
 
+// CURRENT(43731)
+#ifdef NON_MATCHING
+s32 func_800836D0_92680(u8 arg0, s16 *arg1, s16 *arg2) {
+	AlienInstance *alien;
+	AlienSpec *spec;
+	f32 outA;
+	f32 outB;
+	s16 minAngle;
+	s16 maxAngle;
+	s16 range;
+	s16 startX;
+	s16 startZ;
+	s16 absSpeed;
+	s32 maxDistSq;
+	s32 foundAny;
+	s32 row;
+	s32 col;
+	s32 visibleMask;
+	s32 sampleX;
+	s32 list;
+	s32 quad;
+
+	alien = &alienInstances[arg0];
+	spec = &alienSpecs[alien->specIndex];
+	startX = (alien->unk0 >> 8) - 1;
+	startZ = (alien->unk4 >> 8) - 1;
+	range = spec->unkC;
+	absSpeed = alien->unk12;
+	if (absSpeed < 0) {
+		absSpeed = -absSpeed;
+	}
+	maxDistSq = spec->unk32 * absSpeed;
+	foundAny = 0;
+	visibleMask = 1;
+	list = func_800826E4_91694(arg0, 0, 0);
+
+	for (row = 0; row < 3; row++) {
+		for (col = 0; col < 3; col++, visibleMask <<= 1) {
+			s16 tileX;
+			s16 tileZ;
+			u32 bits;
+
+			if (!(list & visibleMask)) {
+				continue;
+			}
+
+			tileX = startX + col;
+			tileZ = startZ + row;
+			bits = func_80078530_874E0(tileX, tileZ, col);
+			quad = 0;
+
+			while (bits != 0) {
+				s32 kind;
+				s32 levelIdx;
+				s32 hit;
+
+				kind = bits & 0xF;
+				levelIdx = (currentLevel << 4) + kind;
+				hit = 0;
+
+				if (kind < 0xE) {
+					s16 x;
+					s16 z;
+					s32 dx;
+					s32 dz;
+					s32 dy;
+					s32 maxRange;
+					s32 limitY;
+					s16 angle;
+
+					x = (tileX << 8) + ((quad & 1) << 7) + 0x40;
+					z = (tileZ << 8) + (((quad >> 1) & 1) << 7) + 0x40;
+					dx = x - alien->unk0;
+					dz = z - alien->unk4;
+					dy = range + ((s16 *)D_8013BC0C_14ABBC)[levelIdx];
+					angle = func_80003824_4424((f32)dx, (f32)dz);
+					limitY = ((s16 *)D_8013BB6C_14AB1C)[levelIdx] + (func_800B84D0_C7480(x, z) >> 8);
+					maxRange = dy * dy;
+					if (((dx * dx) + (dz * dz) < maxRange) && (alien->unk2 < limitY)) {
+						if (((maxDistSq >= 0x7A121) || (spec->unk32 >= 0x4001)) &&
+							(func_80078828_877D8(x, z, angle & 0xFFFF, 0) != 0)) {
+							alien->unk12 = 0;
+						} else {
+							hit = 1;
+							minAngle = angle;
+							maxAngle = angle;
+						}
+					}
+				} else {
+					s32 off = quad * 2;
+					s16 x0;
+					s16 z0;
+					s16 x1;
+					s16 z1;
+					s32 dx0;
+					s32 dz0;
+					s32 dx1;
+					s32 dz1;
+					s32 dy;
+					s32 rangeSq;
+					s32 h;
+					s16 angleA;
+					s16 angleB;
+					s32 actor;
+					s16 baseX;
+					s16 baseZ;
+
+					baseX = tileX << 8;
+					baseZ = tileZ << 8;
+					x0 = D_801416B0_150660[off + 0] + baseX;
+					x1 = D_801416B0_150660[off + 1] + baseX;
+					z0 = D_801416C0_150670[off + 0] + baseZ;
+					z1 = D_801416C0_150670[off + 1] + baseZ;
+					dx0 = x0 - alien->unk0;
+					dz0 = z0 - alien->unk4;
+					angleA = func_80003824_4424((f32)dx0, (f32)dz0);
+					dy = range + ((s16 *)D_8013BC0C_14ABBC)[levelIdx];
+					rangeSq = dy * dy;
+					h = ((s16 *)D_8013BB6C_14AB1C)[levelIdx] + (func_800B84D0_C7480(x0, z0) >> 8);
+					if (((dx0 * dx0) + (dz0 * dz0) < rangeSq) && (alien->unk2 < h)) {
+						hit = 1;
+					}
+
+					dx1 = alien->unk0 - x1;
+					dz1 = alien->unk4 - z1;
+					angleB = func_80003824_4424((f32)-dx1, (f32)-dz1);
+					h = ((s16 *)D_8013BB6C_14AB1C)[levelIdx] + (func_800B84D0_C7480(x1, z1) >> 8);
+					if (alien->unk2 < h) {
+						if (((dx1 * dx1) + (dz1 * dz1)) < rangeSq) {
+							hit = 1;
+						}
+						if (func_8010EF40_11DEF0(
+								(f32)x0, (f32)z0, (f32)x1, (f32)z1, (f32)alien->unk0, (f32)alien->unk4,
+								(f32)((s32)((((f64)(f32)coss(alien->unkE)) / 32768.0) * (f64)dy) + alien->unk0),
+								(f32)((s32)((((f64)(f32)sins(alien->unkE)) / 32768.0) * (f64)dy) + alien->unk4),
+								&outA, &outB) != 0) {
+							hit = 1;
+						}
+
+						if (hit) {
+							actor = func_80078D64_87D14(baseX, baseZ, quad);
+							if ((actor != -1) && (kind != 0xE)) {
+								u8 *entry;
+
+								entry = (u8 *)&D_80259D90[actor];
+								if (func_80078FE0_87F90(entry, (VehicleInstance *)alien, &sampleX) != 0) {
+									hit = 0;
+									func_800792E0_88290(entry, sampleX);
+								}
+							}
+						}
+					}
+
+					if (hit) {
+						minAngle = angleA;
+						maxAngle = angleB;
+					}
+				}
+
+				if (hit) {
+					s16 delta;
+
+					if (!foundAny) {
+						foundAny = 1;
+						*arg1 = minAngle;
+						*arg2 = maxAngle;
+					} else {
+						delta = minAngle - *arg1;
+						if (delta < 0) {
+							*arg1 = minAngle;
+						}
+
+						delta = maxAngle - *arg2;
+						if (delta > 0) {
+							*arg2 = maxAngle;
+						}
+					}
+				}
+
+				bits = (u16)(bits >> 4);
+				quad++;
+			}
+		}
+	}
+
+	return foundAny != 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800836D0_92680.s")
+#endif
 
 // https://decomp.me/scratch/cC8xU
 #ifdef NON_MATCHING
