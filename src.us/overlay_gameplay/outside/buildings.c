@@ -4658,7 +4658,162 @@ void func_80128504_1374B4(AlienInstance *arg0, s32 arg1, s32 *arg2, s32 *arg3, s
 	func_80128428_1373D8(arg0, (s16)(s32)x, (s16)(s32)y, (s16)(s32)z, arg2, arg3, arg4);
 }
 
+// CURRENT(13117)
+#ifdef NON_MATCHING
+void func_80128650_137600(Unk8015F760 *arg0, s32 arg1) {
+	BuildingInstance *building;
+	f32 *motion;
+	VehicleInstance *vehicle;
+	AlienInstance *alien;
+	AlienSpec *alienSpec;
+	s16 floorY;
+	s32 i;
+	s32 instId;
+	s32 absY;
+	s32 absX;
+	s32 y;
+
+	building = (BuildingInstance *)&D_80145BE0_154B90[arg0->unk20 * sizeof(BuildingInstance)];
+
+	for (i = 0x17; i >= 0; i--) {
+		D_8015FA40[(i * 3) + 2] = 0x7FFF;
+	}
+
+	D_80159320 |= 0x40;
+	D_80158FEC = NULL;
+	D_80158FE8 = NULL;
+	D_80158FE4 = NULL;
+
+	motion = (f32 *)((u8 *)arg0 + 0xC);
+	for (i = 0;; i++) {
+		if ((f64)motion[0] < 0.0) {
+			motion[0] = (f32)((f64)motion[0] + D_801451B8_154168);
+		}
+
+		if ((i >> 1) < 0x18) {
+			D_8015FA40[(i >> 1) * 3 + 0] = (s16)(s32)arg0->unk0;
+			D_8015FA40[(i >> 1) * 3 + 1] = (s16)(s32)arg0->unk4;
+			D_8015FA40[(i >> 1) * 3 + 2] = (s16)(s32)arg0->unk8;
+		}
+
+		arg0->unk0 += motion[1] * motion[0];
+		arg0->unk4 += motion[2] * motion[0];
+		arg0->unk14 -= 3.0f;
+		arg0->unk8 += motion[3] * motion[0];
+		if (arg0->unk14 > 100.0f) {
+			arg0->unk14 = 100.0f;
+		}
+
+		floorY = (s16)(func_800B84D0_C7480((s16)(s32)arg0->unk0, (s16)(s32)arg0->unk8) >> 8);
+		if (arg0->unk4 < floorY) {
+			arg0->unk4 = floorY;
+			D_8015F9D0.unk8 = 1;
+			break;
+		}
+
+		if (!((((s32)building->unk8) >> 8) & 1) && (arg0->unk4 < D_80222A70)) {
+			arg0->unk4 = D_80222A70;
+			D_8015F9D0.unk8 = 2;
+			break;
+		}
+
+		if (((((s32)building->unk8) >> 8) & 0x200) && ((f32)D_80222A70 < arg0->unk4)) {
+			arg0->unk4 = D_80222A70;
+			D_8015F9D0.unk8 = 0xC;
+			break;
+		}
+
+		if (func_800B0D10_BFCC0((s32)arg0->unk0, (s32)arg0->unk8, 0) != 0) {
+			D_8015F9D0.unk8 = 6;
+			break;
+		}
+
+		instId = func_8012E114_13D0C4((s16)(s32)arg0->unk0, (s16)(s32)arg0->unk4, (s16)(s32)arg0->unk8);
+		if (instId != -1) {
+			if ((void *)D_8015FAD0[instId].unk20 == (void *)func_8012E1F8_13D1A8) {
+				D_8015F9D0.unk8 = 6;
+			} else {
+				D_8015F9D0.unk8 = 0xE;
+			}
+			D_8015F9DC = instId;
+			break;
+		}
+
+		if (D_80158FD8 != 0) {
+			i = D_80158FD8 - 1;
+			while (1) {
+				vehicle = &vehicleInstances[D_80158E80[i]];
+				absY = func_800047FC_53FC((s16)(s32)((f32)vehicle->unk2 - arg0->unk4));
+				absX = func_800047FC_53FC((s16)(s32)((f32)vehicle->unk0 - arg0->unk0));
+				if ((func_800047FC_53FC((s16)(s32)((f32)vehicle->unk4 - arg0->unk8)) + absX + absY) < *(s32 *)((u8 *)&vehicleSpecs[vehicle->unk1A] + 0x8)) {
+					if ((s32)vehicle != arg0->unk24) {
+						D_8015F9D0.unk8 = 5;
+						D_80158FE4 = vehicle;
+						break;
+					}
+				}
+
+				if (i == 0) {
+					break;
+				}
+				i--;
+			}
+		}
+
+		if (D_8015F9D0.unk8 == 5) {
+			break;
+		}
+
+		instId = func_8011E6FC_12D6AC((s16)(s32)arg0->unk0, (s16)(s32)arg0->unk8, &floorY);
+		if (instId != -1) {
+			y = (s32)arg0->unk4;
+			if ((buildingInstances[instId].yCoord < y) && (y < floorY)) {
+				if (D_801591A8 != 0) {
+					D_80158FE8 = &buildingInstances[instId];
+				}
+				D_8015F9D0.unk8 = 3;
+				break;
+			}
+		}
+
+		alien = (AlienInstance *)&D_8004D0F8;
+		for (instId = 0xFE; instId != 0; instId--) {
+			if (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0) {
+				alienSpec = &alienSpecs[alien->specIndex];
+				absY = func_800047FC_53FC((s16)(s32)((f32)alien->unk2 - arg0->unk4));
+				absX = func_800047FC_53FC((s16)(s32)((f32)alien->unk0 - arg0->unk0));
+				if ((func_800047FC_53FC((s16)(s32)((f32)alien->unk4 - arg0->unk8)) + absX + absY) < alienSpec->unk8) {
+					if (((s32)alien != arg0->unk24) && ((f32)alien->unk2 < arg0->unk4) && (arg0->unk4 < (f32)(alien->unk2 + alienSpec->unk38))) {
+						D_8015F9D0.unk8 = 7;
+						D_80158FEC = alien;
+						break;
+					}
+				}
+			}
+			alien--;
+		}
+
+		if (D_8015F9D0.unk8 == 7) {
+			break;
+		}
+	}
+
+	D_8015F9D0.unk0 = (s16)(s32)arg0->unk0;
+	D_8015F9D0.unk2 = (s16)(s32)arg0->unk4;
+	D_8015F9D0.unk4 = (s16)(s32)arg0->unk8;
+
+	if (arg1 != 0) {
+		D_80159220[0] = (s16)(s32)arg0->unk0;
+		D_80159220[1] = (s16)(s32)arg0->unk4;
+		D_80159220[2] = (s16)(s32)arg0->unk8;
+		D_80159226 = (s16)i;
+	}
+
+	func_801238DC_13288C((s16)(((u8 *)arg0 - (u8 *)D_8015EB90) / 0x30));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80128650_137600.s")
+#endif
 
 // CURRENT(17973)
 #ifdef NON_MATCHING

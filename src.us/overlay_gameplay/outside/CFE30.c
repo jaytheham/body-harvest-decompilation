@@ -2092,7 +2092,110 @@ s16 func_800C613C_D50EC(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C613C_D50EC.s")
 #endif
 
+// CURRENT(10655)
+#ifdef NON_MATCHING
+void func_800C6558_D5508(void) {
+	Unk80154318Entry *entry;
+	Unk80154318Entry *linked;
+	Unk80154318Entry *next;
+	u8 *entryBytes;
+	u8 *linkedBytes;
+	u8 *nextBytes;
+	s16 idx;
+	s16 linkedIdx;
+	s16 nextIdx;
+	u8 age;
+	u8 scale;
+	u8 steps;
+	s32 randVal;
+
+	idx = D_8015420A;
+	if ((idx == -5) || (idx == -6)) {
+		func_800C1418_D03C8(1, 1);
+		return;
+	}
+
+	while ((idx != -5) && (idx != -6)) {
+		entry = &D_80154318[idx];
+		entryBytes = (u8*) &entry->unk8;
+		linked = &D_80154318[entry->unk4];
+		linkedBytes = (u8*) &linked->unk8;
+		linkedIdx = linked->unk4;
+
+		if (entry->unk14 >= (0x23 / ((u8*) linked)[0x13])) {
+			nextIdx = D_80154318[linkedIdx].unk4;
+			func_800C1D40_D0CF0(idx, 1, 1);
+			idx = nextIdx;
+			continue;
+		}
+
+		age = entryBytes[0xC];
+		scale = linkedBytes[0xB];
+		next = &D_80154318[linkedIdx];
+		nextBytes = (u8*) &next->unk8;
+
+		if (age == 0) {
+			next->unk8 = (func_800038E0_44E0() % 11) + 0x3C;
+		} else if (age == 1) {
+			next->unk8 += (func_800038E0_44E0() % 11) + 0xF;
+		} else if (age < (7 / scale)) {
+			next->unk8 += ((func_800038E0_44E0() % 5) + 5) * scale;
+		} else if (age < (0xF / scale)) {
+			randVal = func_800038E0_44E0();
+			next->unk8 += ((randVal % 4) + 4) * scale;
+			linkedBytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * scale;
+		} else if (age < (0x18 / scale)) {
+			randVal = func_800038E0_44E0();
+			next->unk8 += ((randVal % 4) + 3) * scale;
+			linkedBytes[9] -= ((func_800038E0_44E0() % 5) + 3) * scale;
+			if ((linkedBytes[0xB] * 0xF) < linkedBytes[0xA]) {
+				linkedBytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * linkedBytes[0xB];
+			}
+		} else if (age < (0x1C / scale)) {
+			next->unk8 += ((func_800038E0_44E0() % 3) + 2) * scale;
+			linkedBytes[9] -= ((func_800038E0_44E0() % 5) + 3) * scale;
+			if ((linkedBytes[0xB] * 0x19) < linkedBytes[0xA]) {
+				linkedBytes[0xA] -= ((func_800038E0_44E0() % 14) + 0xC) * linkedBytes[0xB];
+			}
+		} else {
+			randVal = func_800038E0_44E0();
+			next->unk8 += ((randVal % 2) + 2) * scale;
+			if ((linkedBytes[0xB] * 0x19) < linkedBytes[0xA]) {
+				linkedBytes[0xA] -= ((func_800038E0_44E0() % 14) + 0xC) * linkedBytes[0xB];
+			}
+			if ((linkedBytes[0xB] * 0x25) < linkedBytes[9]) {
+				linkedBytes[9] -= ((func_800038E0_44E0() % 15) + 0x16) * linkedBytes[0xB];
+			}
+		}
+
+		age = entryBytes[0xC];
+		if (age < 3) {
+			;
+		} else {
+			steps = ((0x23 / linkedBytes[0xB]) - age) & 0xFF;
+			entryBytes[6] = entryBytes[6] - ((entryBytes[6] - linkedBytes[0]) / steps);
+			entryBytes[7] = entryBytes[7] - ((entryBytes[7] - linkedBytes[1]) / steps);
+			entryBytes[8] = entryBytes[8] - ((entryBytes[8] - linkedBytes[2]) / steps);
+			entryBytes[9] = entryBytes[9] - ((entryBytes[9] - linkedBytes[3]) / steps);
+			entryBytes[0xA] = entryBytes[0xA] - ((entryBytes[0xA] - linkedBytes[4]) / steps);
+			entryBytes[0xB] = entryBytes[0xB] - ((entryBytes[0xB] - linkedBytes[5]) / steps);
+		}
+
+		nextBytes[2] += nextBytes[5];
+		nextBytes[3] += nextBytes[6];
+		nextBytes[4] += nextBytes[7];
+		linkedBytes[6]++;
+		if (linkedBytes[6] == 0x10) {
+			linkedBytes[6] = 0;
+		}
+
+		entryBytes[0xC]++;
+		idx = next->unk4;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C6558_D5508.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C6D80_D5D30.s")
 
@@ -5847,7 +5950,177 @@ void func_800D4B44_E3AF4(void) {
 	}
 }
 
+// CURRENT(23749)
+#ifdef NON_MATCHING
+void func_800D4C10_E3BC0(void) {
+	s16 index;
+	f32 zeroF;
+	f32 fortyF;
+	u8 (*palette)[3];
+
+	index = D_801542B2;
+	zeroF = 0.0f;
+	fortyF = 40.0f;
+	palette = D_8013DFA8_14CF58;
+	if (index == -5 || index == -6) {
+		return;
+	}
+
+	while (index != -5 && index != -6) {
+		Unk80154318Entry *entry;
+		f32 spFC[3];
+		f32 spF0[3];
+		f32 spE4[3];
+		f32 len;
+		f32 segLen;
+		s16 cosVal;
+		u32 texAddr;
+		s32 steps;
+		s16 radius;
+		s32 i;
+		s32 fadeStep;
+		f32 x;
+		f32 y;
+		f32 z;
+		f32 r;
+		s16 yLo;
+		u8 c0;
+		u8 c1;
+		u8 c2;
+		u8 alpha;
+		s32 mod;
+
+		entry = &D_80154318[index];
+		spFC[0] = (f32)(*(s16 *)&entry->unkE - entry->unk8);
+		spFC[1] = (f32)(*(s16 *)&entry->unk10 - entry->unkA);
+		spFC[2] = (f32)(*(s16 *)&entry->unk12 - entry->unkC);
+		len = sqrtf((spFC[0] * spFC[0]) + (spFC[1] * spFC[1]) + (spFC[2] * spFC[2]));
+
+		if (len == zeroF) {
+			index = entry->unk4;
+			continue;
+		}
+
+		texAddr = ((u32)D_100DC00) & 0x1FFFFFFF;
+		cosVal = coss(0x4000);
+		spE4[0] = (f32)((((f64)(f32)sins(0x4000) / 32768.0) * (f64)spFC[2]) +
+			(((f64)spFC[0]) * ((f64)(f32)cosVal / 32768.0)));
+		spE4[1] = zeroF;
+		cosVal = coss(0x4000);
+		spE4[2] = (f32)((((f64)spFC[2]) * ((f64)(f32)cosVal / 32768.0)) -
+			(((f64)(f32)sins(0x4000) / 32768.0) * (f64)spFC[0]));
+
+		func_800C1024_CFFD4((Vec3f *)spE4, (Vec3f *)spE4);
+		func_800C1024_CFFD4((Vec3f *)spFC, (Vec3f *)spF0);
+		func_800C1128_D00D8(fortyF, (Vec3f *)spF0, (Vec3f *)spF0);
+		segLen = sqrtf((spF0[0] * spF0[0]) + (spF0[1] * spF0[1]) + (spF0[2] * spF0[2]));
+
+		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, texAddr);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+		gDPPipeSync(D_8005BB2C++);
+
+		x = (f32)*(s16 *)&entry->unkE;
+		y = (f32)*(s16 *)&entry->unk10;
+		z = (f32)*(s16 *)&entry->unk12;
+
+		steps = (s32)(len / segLen);
+		if (steps < 0) {
+			steps = 0;
+		}
+		if (steps >= 0xA) {
+			steps = 9;
+		}
+
+		radius = (s16)((steps * 8) + 0xA);
+		if (steps > 0) {
+			fadeStep = 0x96 / steps;
+			for (i = 0; i < steps; i++) {
+				x -= spF0[0];
+				y -= spF0[1];
+				z -= spF0[2];
+				r = (f32)radius;
+
+				mod = i % 3;
+				c0 = palette[mod][0];
+				c1 = palette[mod][1];
+				c2 = palette[mod][2];
+				alpha = (u8)((i * fadeStep) + 0x64);
+
+				D_8005BB34->v.ob[0] = (s16)(s32)((r * spE4[0]) + x);
+				yLo = (s16)(s32)(r + y);
+				D_8005BB34->v.ob[1] = yLo;
+				D_8005BB34->v.ob[2] = (s16)(s32)((r * spE4[2]) + z);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = c0;
+				D_8005BB34->v.cn[1] = c1;
+				D_8005BB34->v.cn[2] = c2;
+				D_8005BB34->v.cn[3] = alpha;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)(s32)(x - (r * spE4[0]));
+				D_8005BB34->v.ob[1] = yLo;
+				D_8005BB34->v.ob[2] = (s16)(s32)(z - (r * spE4[2]));
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = c0;
+				D_8005BB34->v.cn[1] = c1;
+				D_8005BB34->v.cn[2] = c2;
+				D_8005BB34->v.cn[3] = alpha;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)(s32)(x - (r * spE4[0]));
+				D_8005BB34->v.ob[1] = (s16)(s32)(y - r);
+				D_8005BB34->v.ob[2] = (s16)(s32)(z - (r * spE4[2]));
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = c0;
+				D_8005BB34->v.cn[1] = c1;
+				D_8005BB34->v.cn[2] = c2;
+				D_8005BB34->v.cn[3] = alpha;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)(s32)((r * spE4[0]) + x);
+				D_8005BB34->v.ob[1] = (s16)(s32)(y - r);
+				D_8005BB34->v.ob[2] = (s16)(s32)((r * spE4[2]) + z);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = c0;
+				D_8005BB34->v.cn[1] = c1;
+				D_8005BB34->v.cn[2] = c2;
+				D_8005BB34->v.cn[3] = alpha;
+				D_8005BB34++;
+
+				gSPVertex(D_8005BB2C++, D_8005BB34 - 4, 4, 0);
+				gSP2Triangles(D_8005BB2C++, 0, 2, 1, 0, 0, 3, 2, 0);
+
+				radius -= 8;
+				if (radius <= 0) {
+					radius = 1;
+				}
+			}
+		}
+
+		index = entry->unk4;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D4C10_E3BC0.s")
+#endif
 
 // CURRENT(1450)
 #ifdef NON_MATCHING
@@ -6145,7 +6418,176 @@ void func_800D6140_E50F0(u8 arg0) {
 	}
 }
 
+// CURRENT(32643)
+#ifdef NON_MATCHING
+void func_800D6290_E5240(u8 arg0) {
+	s16 index;
+	s16 nextIndex;
+	s16 deltaZ;
+	s16 deltaX;
+	Unk80154318Entry *entry;
+	Unk80154318Entry *nextEntry;
+	Vtx *vtx;
+
+	index = D_8015408E[arg0 & 0xFF].unk0;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100BD00 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+
+	entry = &D_80154318[index];
+	nextEntry = &D_80154318[entry->unk4];
+	if (nextEntry->unk8 < entry->unk8) {
+		deltaZ = 0xF;
+		if (nextEntry->unkC < entry->unkC) {
+			deltaX = -0xF;
+		} else {
+			deltaX = 0xF;
+		}
+	} else {
+		deltaZ = -0xF;
+		deltaX = 0xF;
+		if (nextEntry->unkC < entry->unkC) {
+			deltaX = -0xF;
+		}
+	}
+
+	if ((index != -5) && (index != -6)) {
+		while (1) {
+			entry = &D_80154318[index];
+			nextIndex = entry->unk4;
+			if (nextIndex != -5) {
+				nextEntry = &D_80154318[nextIndex];
+
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = entry->unk8;
+				vtx->v.ob[1] = (func_800038E0_44E0() % 5) + entry->unkA + 0xF;
+				vtx->v.ob[2] = entry->unkC;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0;
+				vtx->v.tc[1] = 0;
+				vtx->v.cn[0] = entry->unkE;
+				vtx->v.cn[1] = entry->unkF;
+				vtx->v.cn[2] = entry->unk10;
+				vtx->v.cn[3] = entry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = entry->unk8;
+				vtx->v.ob[1] = entry->unkA - (func_800038E0_44E0() % 5) - 0xF;
+				vtx->v.ob[2] = entry->unkC;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0;
+				vtx->v.tc[1] = 0x800;
+				vtx->v.cn[0] = entry->unkE;
+				vtx->v.cn[1] = entry->unkF;
+				vtx->v.cn[2] = entry->unk10;
+				vtx->v.cn[3] = entry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = nextEntry->unk8;
+				vtx->v.ob[1] = nextEntry->unkA - (func_800038E0_44E0() % 5) - 0xF;
+				vtx->v.ob[2] = nextEntry->unkC;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0x800;
+				vtx->v.tc[1] = 0x800;
+				vtx->v.cn[0] = nextEntry->unkE;
+				vtx->v.cn[1] = nextEntry->unkF;
+				vtx->v.cn[2] = nextEntry->unk10;
+				vtx->v.cn[3] = nextEntry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = nextEntry->unk8;
+				vtx->v.ob[1] = (func_800038E0_44E0() % 5) + nextEntry->unkA + 0xF;
+				vtx->v.ob[2] = nextEntry->unkC;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0x800;
+				vtx->v.tc[1] = 0;
+				vtx->v.cn[0] = nextEntry->unkE;
+				vtx->v.cn[1] = nextEntry->unkF;
+				vtx->v.cn[2] = nextEntry->unk10;
+				vtx->v.cn[3] = nextEntry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = entry->unk8 + deltaX;
+				vtx->v.ob[1] = entry->unkA;
+				vtx->v.ob[2] = entry->unkC + deltaZ;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0;
+				vtx->v.tc[1] = 0;
+				vtx->v.cn[0] = entry->unkE;
+				vtx->v.cn[1] = entry->unkF;
+				vtx->v.cn[2] = entry->unk10;
+				vtx->v.cn[3] = entry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = entry->unk8 - deltaX;
+				vtx->v.ob[1] = entry->unkA;
+				vtx->v.ob[2] = entry->unkC - deltaZ;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0;
+				vtx->v.tc[1] = 0x800;
+				vtx->v.cn[0] = entry->unkE;
+				vtx->v.cn[1] = entry->unkF;
+				vtx->v.cn[2] = entry->unk10;
+				vtx->v.cn[3] = entry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = nextEntry->unk8 - deltaX;
+				vtx->v.ob[1] = nextEntry->unkA;
+				vtx->v.ob[2] = nextEntry->unkC - deltaZ;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0x800;
+				vtx->v.tc[1] = 0x800;
+				vtx->v.cn[0] = nextEntry->unkE;
+				vtx->v.cn[1] = nextEntry->unkF;
+				vtx->v.cn[2] = nextEntry->unk10;
+				vtx->v.cn[3] = nextEntry->unk11;
+
+				D_8005BB34++;
+				vtx = D_8005BB34;
+				vtx->v.ob[0] = nextEntry->unk8 + deltaX;
+				vtx->v.ob[1] = nextEntry->unkA;
+				vtx->v.ob[2] = nextEntry->unkC + deltaZ;
+				vtx->v.flag = 0;
+				vtx->v.tc[0] = 0x800;
+				vtx->v.tc[1] = 0;
+				vtx->v.cn[0] = nextEntry->unkE;
+				vtx->v.cn[1] = nextEntry->unkF;
+				vtx->v.cn[2] = nextEntry->unk10;
+				vtx->v.cn[3] = nextEntry->unk11;
+
+				D_8005BB34++;
+				gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 8) & 0x1FFFFFFF), 8, 0);
+				gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
+				gSP2Triangles(D_8005BB2C++, 4, 5, 7, 0, 7, 5, 6, 0);
+				D_80156EDA += 8;
+			}
+
+			index = nextIndex;
+			if ((nextIndex == -5) || (nextIndex == -6)) {
+				break;
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D6290_E5240.s")
+#endif
 
 void func_800D6A84_E5A34(u8 arg0)
 {
