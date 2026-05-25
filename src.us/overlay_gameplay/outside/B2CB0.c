@@ -1109,7 +1109,239 @@ s16 func_800A7B84_B6B34(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A7B84_B6B34.s")
 #endif
 
+// CURRENT(28813)
+#ifdef NON_MATCHING
+void func_800A7C6C_B6C1C(void) {
+	struct BeaconColor {
+		u8 r;
+		u8 g;
+		u8 b;
+	} spA4;
+	s32 pad[4];
+	s16 spAA;
+	s16 spA8;
+	s16 i;
+	u8* levelData;
+	u8* beacon;
+	s16 tempX;
+	s16 tempZ;
+	s16 levelX;
+	s16 levelZ;
+	s16 terrainY;
+	s16 j;
+	s16 vehicleCount;
+	u8 vehicleIndex;
+	VehicleInstance* vehicle;
+	s16 range;
+	s16 deltaX;
+	s16 deltaZ;
+	s16 absX;
+	s16 absZ;
+	s32 distSq;
+
+	spA4 = *(struct BeaconColor*) D_8013D8B0_14C860;
+
+	if (currentLevel == 5) {
+		return;
+	}
+
+	func_8000345C_405C(0x8000);
+	if (D_8004794C > 0) {
+		D_8004794C--;
+	}
+
+	for (i = 0; i < 6; i++) {
+		levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
+		beacon = levelData + (i * 4);
+
+		switch (beacon[-0x16]) {
+			case 1:
+				if (beacon[-0x15] == 0x19) {
+					if ((func_8000726C_7E6C(0x14) != 0) && (currentLevel == 4)) {
+						func_80018D7C_1997C(0xDE);
+					} else if ((currentLevel == 4) && (D_80047F94 == 2)) {
+						func_80018D7C_1997C(0xDD);
+						func_80013324_13F24();
+					} else {
+						func_80018D7C_1997C(0xD4);
+						func_80013324_13F24();
+					}
+
+					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
+					beacon = levelData + (i * 4);
+				}
+
+				if (beacon[-0x15] == 0) {
+					beacon[-0x16] = 2;
+				}
+
+				if (beacon[-0x15] == 0xA) {
+					func_800EFEB4_FEE64(NULL, D_8013D898_14C848[currentLevel + 0x13], 0);
+					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
+					beacon = levelData + (i * 4);
+				}
+				break;
+
+			case 2:
+				tempX = ((s8) beacon[-0x18]) << 8;
+				tempZ = ((s8) beacon[-0x17]) << 8;
+				D_8014F7FA = func_800B84D0_C7480(tempX, tempZ) >> 8;
+
+				levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
+				beacon = levelData + (i * 4);
+
+				beacon[-0x16] = 3;
+				beacon[-0x15] = 0x64;
+
+				levelX = *(s16*) (D_8013D898_14C848 + (currentLevel * 4));
+				levelZ = *(s16*) (D_8013D898_14C848 + (currentLevel * 4) + 2);
+				terrainY = (func_800B84D0_C7480(levelX, levelZ) >> 8) + 0x8C;
+
+				func_800DF038_EDFE8(levelX, terrainY, levelZ, 0x46, 0, NULL);
+				D_8014F7FE = func_800C21F0_D11A0(D_8014F80A, 0x2710, D_8014F80C, 0);
+
+				levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
+				beacon = levelData + (i * 4);
+				break;
+
+			case 3:
+				func_800C1ECC_D0E7C(D_8014F80A, D_8014F812, D_8014F80C, D_8014F7FE, 0);
+
+				levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
+				beacon = levelData + (i * 4);
+				if (beacon[-0x15] == 0) {
+					beacon[-0x16] = 4;
+					beacon[-0x15] = 0x3C;
+				}
+				break;
+
+			case 4:
+				func_800C1ECC_D0E7C(D_8014F80A, D_8014F812, D_8014F80C, D_8014F7FE, 0);
+
+				vehicleCount = D_80158FD8;
+				for (j = 0; j < vehicleCount; j++) {
+					vehicleIndex = D_80158E80[j];
+					vehicle = &vehicleInstances[vehicleIndex];
+
+					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
+					beacon = levelData + (i * 4);
+
+					range = D_80257A0C[vehicle->unk1A * 0x2E] + 0x50;
+					deltaX = (((s8) beacon[-0x18]) << 8) - vehicle->unk0;
+					deltaZ = (((s8) beacon[-0x17]) << 8) - vehicle->unk4;
+					absX = deltaX;
+					absZ = deltaZ;
+					if (absX < 0) {
+						absX = -absX;
+					}
+					if (absZ < 0) {
+						absZ = -absZ;
+					}
+
+					if ((absX <= range) && (absZ <= range)) {
+						distSq = (absX * absX) + (absZ * absZ);
+						if ((s16) sqrtf((f32) distSq) < range) {
+							func_80102DDC_111D8C(vehicle, func_80003824_4424((f32) absX, (f32) absZ), 0, 6.0f);
+						}
+					}
+				}
+
+				levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
+				beacon = levelData + (i * 4);
+				if (beacon[-0x15] == 0) {
+					beacon[-0x16] = 5;
+					beacon[-0x15] = 0x28;
+					D_8014F800 = 0;
+					func_800A5BD0_B4B80(i);
+
+					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
+					beacon = levelData + (i * 4);
+
+					tempX = ((s8) beacon[-0x18]) << 8;
+					tempZ = ((s8) beacon[-0x17]) << 8;
+					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
+					func_801371B8_146168(0, 0x181, tempX, terrainY, tempZ, 0.5f);
+					func_800A7B84_B6B34(tempX, tempZ);
+					if ((currentLevel == 1) && (D_80047F94 == 0)) {
+						func_80018D7C_1997C(0x101);
+					}
+				}
+				break;
+
+			case 5:
+				if (beacon[-0x15] == 0) {
+					beacon[-0x16] = 6;
+					beacon[-0x15] = 0x32;
+
+					tempX = ((s8) beacon[-0x18]) << 8;
+					tempZ = ((s8) beacon[-0x17]) << 8;
+					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
+					func_801371B8_146168(0, 0x17C, tempX, terrainY, tempZ, 0.25f);
+
+					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
+					beacon = levelData + (i * 4);
+				}
+				break;
+
+			case 6:
+				if (beacon[-0x15] == 0) {
+					beacon[-0x16] = 7;
+					beacon[-0x15] = 0x14;
+					if ((D_8014F800 == 0) && (D_8014F804 == -1)) {
+						D_8014F804 = i;
+					}
+				}
+				break;
+
+			case 7:
+				if (beacon[-0x15] == 0) {
+					beacon[-0x16] = 9;
+					beacon[-0x15] = 5;
+				}
+				break;
+
+			case 8:
+				if (beacon[-0x15] == 0) {
+					beacon[-0x16] = 9;
+					beacon[-0x15] = 5;
+				}
+				break;
+
+			case 9:
+				if (beacon[-0x15] == 0) {
+					tempX = ((s8) beacon[-0x18]) << 8;
+					tempZ = ((s8) beacon[-0x17]) << 8;
+					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
+					func_801371B8_146168(0, 0x17D, tempX, terrainY, tempZ, D_80142888_151838);
+
+					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
+					beacon = levelData + (i * 4);
+
+					spA8 = ((s8) beacon[-0x18]) << 8;
+					spAA = ((s8) beacon[-0x17]) << 8;
+					func_800B99A8_C8958((Unk80152B80*) &spA8, 0x1E, 0x1F4, 0xFF, (u8*) &spA4, 0x50, 0xA, 0);
+
+					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
+					beacon = levelData + (i * 4);
+					beacon[-0x16] = 0xA;
+					beacon[-0x15] = 5;
+				}
+				break;
+
+			case 10:
+				if (beacon[-0x15] == 0) {
+					beacon[-0x16] = 8;
+					beacon[-0x15] = 0x19;
+				}
+				break;
+		}
+
+		beacon[-0x15] = beacon[-0x15] - 1;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A7C6C_B6C1C.s")
+#endif
 
 // CURRENT(8051)
 #ifdef NON_MATCHING
