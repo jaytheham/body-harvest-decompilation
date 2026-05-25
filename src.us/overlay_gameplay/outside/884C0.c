@@ -2174,7 +2174,242 @@ void func_8007EE98_8DE48(AlienInstance *arg0, AlienInstance *arg1) {
 	arg1->unk4 = (s16)(s32)((f32)arg1->unk4 - pushZ);
 }
 
+// CURRENT(21299)
+#ifdef NON_MATCHING
+s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
+	AlienInstance *inst;
+	AlienSpec *spec;
+	VehicleInstance *vehicle;
+	AlienInstance *other;
+	AlienSpec *otherSpec;
+	u8 selfIndex;
+	u8 i;
+	u8 start;
+	u8 specIndex;
+	u8 otherIndex;
+	u8 otherSpecIndex;
+	u8 soundId;
+	s16 xA;
+	s16 zA;
+	s16 xB;
+	s16 zB;
+	s32 moved;
+	s32 collisionCheck;
+	s32 recurseFlag;
+	s32 ret;
+
+	selfIndex = arg0 & 0xFF;
+	start = arg1 & 0xFF;
+	inst = &alienInstances[selfIndex];
+	specIndex = inst->specIndex;
+	soundId = 0xFF;
+	moved = 0;
+	collisionCheck = 0;
+	recurseFlag = 0;
+	ret = 0;
+
+	if (inst->unk47 & 0x80) {
+		return 0;
+	}
+
+	D_8014D304++;
+	if (D_8014D304 >= 9) {
+		inst->unk47 |= 0x80;
+		osSyncPrintf(&D_80141CE4_150C94, alienSpecs[specIndex].unk18);
+	}
+
+	spec = &alienSpecs[specIndex];
+
+	if ((inst->unk0 != inst->unk2E) || (inst->unk2 != inst->unk30) || (inst->unk4 != inst->unk32) || (arg2 == 0)) {
+		s32 flags;
+
+		flags = spec->unk54;
+		if (flags & 0x20) {
+			collisionCheck = func_800836D0_92680(selfIndex, &xA, &zA);
+			flags = spec->unk54;
+		}
+
+		if (flags & 0x10) {
+			s32 absSpeed;
+
+			if (flags & 0x80000001) {
+				func_8011DE60_12CE10(1);
+			}
+
+			moved = func_800831A4_92154(selfIndex, &xB, &zB, &soundId);
+
+			if (spec->unk54 & 0x80000001) {
+				func_8011DE60_12CE10(0);
+			}
+
+			if (soundId != 0xFF) {
+				absSpeed = inst->unk12;
+				if (absSpeed < 0) {
+					absSpeed = -absSpeed;
+				}
+
+				if (soundId != 0) {
+					func_8011BEA0_12AE50(soundId, (D_802566D2[inst->specIndex * 0x68] * (absSpeed + 1)) / 6400);
+				}
+			}
+		}
+
+		if ((collisionCheck != 0) || (moved != 0)) {
+			if (collisionCheck == 0) {
+				xA = xB;
+				zA = zB;
+			}
+
+			if (moved != 0) {
+				if ((s16)(xB - xA) < 0) {
+					xA = xB;
+				}
+				if ((s16)(zB - zA) > 0) {
+					zA = zB;
+				}
+			}
+
+			func_8007E980_8D930(inst, xA, zA);
+
+			if (arg2 == 0) {
+				if ((currentLevel != 3) || ((specIndex != 9) && (specIndex != 8))) {
+					ret = 1;
+					goto done;
+				}
+			} else {
+				func_8007ED9C_8DD4C(selfIndex);
+				recurseFlag = 1;
+			}
+
+			inst->unk47 |= 4;
+		}
+	}
+
+	if ((spec->unk54 & 8) && ((inst->unk0 != inst->unk2E) || (inst->unk2 != inst->unk30) || (inst->unk4 != inst->unk32) || (arg2 == 0)) && (D_80158FD8 > 0)) {
+		for (i = 0; i < D_80158FD8; i = (i + 1) & 0xFF) {
+			u8 vehIndex;
+			s32 hitType;
+
+			vehIndex = D_80158E80[i];
+			vehicle = &vehicleInstances[vehIndex];
+			if ((D_80052B34 == vehicle) && ((D_801591AC == 6) || (D_80048180 != 0) || (inst->unk20 & 0x100000))) {
+				continue;
+			}
+
+			if (func_8007E608_8D5B8(inst, (AlienInstance *)vehicle) == 0) {
+				continue;
+			}
+
+			func_8010C4EC_11B49C(vehicle);
+			if (func_8010E684_11D634(vehicle, inst) == 0) {
+				continue;
+			}
+
+			if ((specIndex < 3) || (specIndex == 0x20)) {
+				func_80080D98_8FD48(selfIndex, vehIndex);
+				continue;
+			}
+
+			hitType = func_8007EB74_8DB24(inst, (AlienInstance *)vehicle);
+			if (arg2 == 0) {
+				if ((currentLevel != 3) || ((specIndex != 9) && (specIndex != 8))) {
+					ret = 1;
+					goto done;
+				}
+			} else if (D_8014ECD8 == vehIndex) {
+				osSyncPrintf(&D_80141D10_150CC0, D_800344B4_350B4[vehicleSpecs[vehicle->unk1A].unk18 * 2], spec->unk18, arg2);
+				inst->unk47 |= 0x80;
+			} else {
+				D_8014ECD8 = vehIndex;
+				recurseFlag = 1;
+				if (hitType != 0) {
+					func_8007ED9C_8DD4C(selfIndex);
+				}
+			}
+
+			if (D_80052B34 == vehicle) {
+				inst->unk47 |= 8;
+				if (D_800475F0 >= 0x33) {
+					func_80083EF4_92EA4(inst, D_80052B34, -0x63C0, inst->unkE);
+				}
+			}
+		}
+	}
+
+	if (!(inst->unk47 & 0x80) && (spec->unk54 & 4) && (start < D_8014ECCC)) {
+		for (i = start; i < D_8014ECCC; i = (i + 1) & 0xFF) {
+			otherIndex = D_8014D510[i];
+			other = &alienInstances[otherIndex];
+			otherSpecIndex = other->specIndex;
+			otherSpec = &alienSpecs[otherSpecIndex];
+
+			if (!(otherSpec->unk54 & 4) || (selfIndex == otherIndex) || (other->unk47 & 0x80)) {
+				continue;
+			}
+
+			if ((((otherSpecIndex == 0x1A) || ((otherSpecIndex >= 0x1B) && (otherSpecIndex < 0x20))) && (inst->unk20 & 0x01000000)) ||
+			    (((specIndex == 0x1A) || ((specIndex >= 0x1B) && (specIndex < 0x20))) && (other->unk20 & 0x01000000))) {
+				continue;
+			}
+
+			if (func_8007E608_8D5B8(inst, other) == 0) {
+				continue;
+			}
+
+			if (((specIndex == 0x16) && (otherSpec->unk54 & 0xC1)) || ((otherSpecIndex == 0x16) && (otherSpec->unk54 & 0xC1))) {
+				if (specIndex == 0x16) {
+					func_80088760_97710(other);
+				} else {
+					func_80088760_97710(inst);
+				}
+				continue;
+			}
+
+			func_8007EB74_8DB24(inst, other);
+			if (arg2 == 0) {
+				ret = 1;
+				goto done;
+			}
+
+			recurseFlag = 1;
+
+			if (inst->unk20 & 0x40000000) {
+				if (((inst->unk2 < other->unk2) && (inst->unk10 > 0)) || ((other->unk2 < inst->unk2) && (inst->unk10 < 0))) {
+					inst->unk10 = 0;
+				}
+			}
+			func_8007ED9C_8DD4C(selfIndex);
+
+			if (other->unk20 & 0x40000000) {
+				if (((other->unk2 < inst->unk2) && (other->unk10 > 0)) || ((inst->unk2 < other->unk2) && (other->unk10 < 0))) {
+					other->unk10 = 0;
+				}
+			}
+			func_8007ED9C_8DD4C(otherIndex);
+
+			D_8014ECD4 = selfIndex;
+			func_8007F0E8_8E098(otherIndex, 0, arg2);
+			D_8014ECD4 = -1;
+			if (D_8014ECD4 == otherIndex) {
+				osSyncPrintf(&D_80141D30_150CE0, otherSpec->unk18, spec->unk18);
+				inst->unk47 |= 0x80;
+			}
+		}
+	}
+
+done:
+	if (recurseFlag != 0) {
+		func_8007F0E8_8E098(selfIndex, 0, arg2);
+	}
+	D_8014D304--;
+	if (ret != 0) {
+		return ret;
+	}
+	return recurseFlag;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007F0E8_8E098.s")
+#endif
 
 s32 func_8007F9C8_8E978(u8 arg0, u8 arg1) {
 	s16 var_v1 = -1;
@@ -9282,7 +9517,215 @@ void func_80091E70_A0E20(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80091E70_A0E20.s")
 #endif
 
+// CURRENT(18369)
+#ifdef NON_MATCHING
+void func_800920C0_A1070(u8 arg0) {
+	u8 useAttack;
+	u8 id;
+	s16 targetSpeed;
+	s16 sp86;
+	s16 sp80;
+	s16 sp7E;
+	s32 sp78;
+	s32 sp74;
+	s32 sp70;
+	f32 sp6C;
+	f32 scale;
+	s32 moveBlocked;
+	AlienSpec *spec;
+	Unk8014DD50 *entry2;
+	Unk8014DD50 *entry3;
+	Unk8014DD50 *entry;
+	AlienInstance *alien;
+
+	alien = &alienInstances[arg0];
+	id = alien->specIndex;
+	spec = &alienSpecs[id];
+	targetSpeed = spec->unk40;
+	entry2 = &D_8014DD50[alien->unkC];
+	sp86 = entry2->unkC;
+	entry3 = &D_8014DD50[sp86];
+	sp80 = D_8014DD50[entry3->unkD].unkD;
+	entry = entry3;
+	useAttack = 0;
+
+	func_80128428_1373D8(alien, entry3->unk0, (s16) ((entry->unk2 + entry3->unk2) - 0x16), (s16) (entry->unk4 + entry3->unk4 + 0x32), &sp78, &sp74, &sp70);
+	if (sp80 != -1) {
+		sp7E = D_8014DD5D[sp80];
+		func_80090948_9F8F8(sp80, 0x5DC);
+		func_80090948_9F8F8(sp7E, 0x5DC);
+	}
+
+	func_80090948_9F8F8(sp86, 0x7D0);
+	if (((alien->unk2E >> 8) != (alien->unk0 >> 8)) || ((alien->unk32 >> 8) != (alien->unk4 >> 8))) {
+		useAttack = 1;
+	}
+
+	moveBlocked = func_800919C0_A0970(arg0, useAttack);
+
+	if (!(alien->unk20 & 0x2000)) {
+		if ((alien->unk47 & 4) && (func_80091AC0_A0A70(arg0, alien->unk28, alien->unk29) != 0)) {
+			targetSpeed = 0;
+			alien->unk47 &= (u8)0xFA;
+		}
+
+		if (alien->unk47 & 8) {
+			s32 capped;
+			s16 fx;
+
+			alien->unk47 &= (u8)0xF6;
+			targetSpeed = 0;
+
+			if ((D_80052B34->unk1A != 0) && (alien->unk12 > 0)) {
+				func_80137468_146418(arg0, 0x135);
+
+				capped = vehicleSpecs[D_80052B34->unk1A].unk32;
+				if (capped >= 0x2711) {
+					capped = 0x2710;
+				}
+
+				scale = (f32) (1.0 - ((f64) (f32) capped / 10000.0)) * ((f32) alien->unk12 / 512.0f);
+				fx = (s16) (s32) ((f32) D_80145BE2_154B92[D_8025669C[id].unk0].unk0 * scale);
+				func_80122524_1314D4(D_80052B34, fx, alien->unk0, alien->unk4);
+
+				func_80128288_137238(D_80052B34, alien->unk6, (s16) (s32) ((f64) scale * 120.0), (s16) (s32) ((f64) scale * 180.0));
+
+				sp6C = (f32) ((f64) (f32) sins((u16)(alien->unk6 + 0x4000)) / 32768.0);
+				func_800C541C_D43CC(
+					D_80052B34->unk0,
+					D_80052B34->unk2,
+					D_80052B34->unk4,
+					(s8) (s32) (sp6C * 127.0f),
+					0x50,
+					(s8) (s32) (-((f64) (f32) coss((u16)(alien->unk6 + 0x4000)) / 32768.0) * 127.0),
+					0x3C,
+					0x80,
+					0x14,
+					0x14,
+					0xFF,
+					0xFF,
+					0xC8
+				);
+			}
+
+			func_80091A78_A0A28(arg0);
+			if (alien->unk1E != 0) {
+				alien->unk1E--;
+			}
+		}
+
+		if (alien->unk20 & 0x1000) {
+			targetSpeed = 0x200;
+
+			if (!(alien->unk20 & 0x08000000) && ((arg0 & 0xF) == (D_80052A8C & 0xF))) {
+				if (func_800B325C_C220C((s8) (alien->unk14 >> 8), (s8) (alien->unk18 >> 8), 0x800) == 0) {
+					alien->unk20 &= ~0x1100;
+				}
+			}
+
+			if (alien->unk47 & 1) {
+				alien->unk20 &= ~0x1100;
+			}
+		}
+	} else {
+		s16 timer;
+		s8 arm;
+
+		alien->unk2C--;
+		if (entry3->unkC != -1) {
+			entry = &D_8014DD50[(s16) entry3->unkC];
+		}
+
+		timer = alien->unk2C;
+		arm = entry->unkD;
+
+		if (timer < 0x46) {
+			targetSpeed = -0x80;
+			if ((timer <= 0) || (alien->unk47 & 1)) {
+				alien->unk20 &= ~0x2000;
+				alien->unk47 &= (u8)0xFA;
+			}
+
+			entry3->unk6 = (s16) (s32) (((f64) (f32) sins((u16) ((alien->unk2C * 0x17E8) & 0xFFFF)) / 32768.0) * 50.0);
+		} else {
+			targetSpeed = 0;
+			if ((D_80052B34->unk1A == 0) && (alien->unk20 & 0x08000000)) {
+				s16 swing;
+				s16 negSwing;
+				s16 absSwing;
+				u8 savedArg0;
+
+				swing = (s16) (s32) (sinf((f32) ((((f64) (timer - 0x46) * 6.0) / 30.0))) * (f32) (timer * 0x32));
+				negSwing = -swing;
+				absSwing = swing;
+				if (negSwing >= swing) {
+					absSwing = negSwing;
+					negSwing = -negSwing;
+				}
+
+				entry->unk6 = negSwing;
+				D_8014DD50[arm].unk6 = absSwing;
+
+				if ((negSwing == 0) && (timer != 0x63)) {
+					savedArg0 = arg0;
+					func_80137468_146418(arg0, 0x22);
+					if ((func_80084F00_93EB0(D_80052B34, alien) < 0xC8) && (func_80084FE8_93F98(arg0, 0x400) != 0)) {
+						alien->unk1E = 0;
+						func_80122524_1314D4(D_80052B34, 0x64, alien->unk0, alien->unk4);
+						func_80137468_146418(savedArg0, 2);
+					}
+				}
+
+				if (((alien->unk2C + 5) % 10) == 0) {
+					sp6C = (f32) ((f64) (f32) sins((u16)(alien->unk6 + 0x4000)) / 32768.0);
+					func_800CA5EC_D959C(
+						(s16) sp78,
+						(s16) sp74,
+						(s16) sp70,
+						(s8) (s32) (sp6C * 127.0f),
+						0,
+						(s8) (s32) (-((f64) (f32) coss((u16)(alien->unk6 + 0x4000)) / 32768.0) * 127.0),
+						0x28,
+						3,
+						0xC,
+						0xFF,
+						0xAA,
+						0xFF,
+						0,
+						0x8C
+					);
+				}
+			}
+		}
+	}
+
+	if ((D_80052A8C % ((func_800038E0_44E0() % 20) + 0xA)) == 0) {
+		func_800CA5EC_D959C((s16) sp78, (s16) sp74, (s16) sp70, 0, 0, 0, 0xA, 3, 6, 0xFF, 0xAA, 0xFF, 0, 0x8C);
+	}
+
+	if ((moveBlocked != 0) && (targetSpeed > 0)) {
+		targetSpeed = 0;
+	}
+
+	if (alien->unk12 < targetSpeed) {
+		alien->unk12 += spec->unk3E;
+		if (targetSpeed < alien->unk12) {
+			alien->unk12 = targetSpeed;
+		}
+	} else if (targetSpeed < alien->unk12) {
+		alien->unk12 -= spec->unk3E;
+		if (alien->unk12 < targetSpeed) {
+			alien->unk12 = targetSpeed;
+		}
+	}
+
+	if (alien->unk1E != 0) {
+		alien->unk1E--;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800920C0_A1070.s")
+#endif
 
 s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 {
