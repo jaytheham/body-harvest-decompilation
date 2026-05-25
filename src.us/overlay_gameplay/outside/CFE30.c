@@ -4735,7 +4735,122 @@ void func_800CF948_DE8F8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF948_DE8F8.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(2388)
+void func_800CFD84_DED34(void) {
+	typedef struct {
+		u8 unk0;
+		u8 unk1;
+		s16 radius;
+		s16 next;
+		s16 prev;
+		s16 x;
+		s16 y;
+		s16 z;
+		u8 r;
+		u8 g;
+		u8 b;
+		u8 a;
+		s32 life;
+		u8 flags;
+		u8 unk19;
+		u8 pad1A[2];
+	} UnkTrailEntry;
+
+	s16 curr;
+	s32 padStack0;
+	s32 padStack1;
+	curr = D_80154276;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPTileSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_PASS, G_RM_AA_ZB_XLU_SURF2);
+	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_FOG | G_LIGHTING);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
+	gSPTexture(D_8005BB2C++, 0x1000, 0x1000, 0, G_TX_RENDERTILE, G_ON);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM2);
+
+	if (curr != -6 && curr != -5) {
+		do {
+		UnkTrailEntry *entry = (UnkTrailEntry *)&D_80154318[curr];
+
+		if (entry->life >= 9) {
+			Unk80052B40 pos;
+			Unk80052B40 rot;
+			Unk80052B40 scale;
+			s16 absRadius;
+			f32 size;
+
+			if (entry->radius >= 0) {
+				absRadius = entry->radius;
+			} else {
+				absRadius = -entry->radius;
+			}
+
+			if (entry->life < 20) {
+				size = D_80144014_152FC4 * (f32)(entry->life - 5);
+			} else {
+				size = 25.0f + (2.5f * (f32)(20 - entry->life));
+			}
+
+			scale.unk0 = (s16)((f32)absRadius * size);
+			scale.unk2 = (s16)((f32)absRadius * size);
+			scale.unk4 = (s16)((f32)absRadius * size);
+
+			if (func_800B93AC_C835C(entry->x, entry->z, (u16)scale.unk0,
+				(s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
+				u8 alpha;
+				s16 texOffset;
+
+				if (entry->life < 20) {
+					alpha = (u8)((f32)(entry->life - 8) * D_80144010_152FC0);
+				} else {
+					alpha = (u8)(250.0f + ((f32)(20 - entry->life) * 50.0f));
+				}
+
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, entry->r, entry->g, entry->b, alpha);
+
+				rot.unk0 = 0;
+				rot.unk2 = 0;
+				rot.unk4 = entry->life << 10;
+				pos.unk0 = entry->x;
+				pos.unk2 = entry->y;
+				pos.unk4 = entry->z;
+				texOffset = (entry->life % 8) << 8;
+
+				func_800039D0_45D0(&pos, &rot, &scale, D_8005BB38);
+
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, D_50327B0 + texOffset);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+					G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+				gDPLoadSync(D_8005BB2C++);
+				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 2, 0, G_TX_RENDERTILE, 0,
+					G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+				gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << 2), (15 << 2));
+				gDPPipeSync(D_8005BB2C++);
+				gDPTileSync(D_8005BB2C++);
+				gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				D_8005BB38 += 0x40;
+				gSPDisplayList(D_8005BB2C++, (Gfx *)&D_50332A0);
+				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+
+				D_80156EDA += 0x2F;
+			}
+		}
+
+			curr = entry->next;
+		} while (curr != -6 && curr != -5);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CFD84_DED34.s")
+#endif
 
 void func_800D05A8_DF558(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	func_800D0614_DF5C4(arg0, arg1, arg2, arg3, arg4, arg5, arg6, 1);
