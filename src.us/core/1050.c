@@ -22,7 +22,7 @@ s32 D_800313C4_31FC4 = 0;
 s16 D_800313C8_31FC8 = 0;
 s32 D_800313CC = 0;
 
-/* CURRENT(1644) */
+// CURRENT(1644)
 #ifdef NON_MATCHING
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	s32 s2;
@@ -88,7 +88,7 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000450_1050.s")
 #endif
 
-/* CURRENT(1143) */
+// CURRENT(1143)
 #ifdef NON_MATCHING
 void func_80000730_1330(s32 arg0) {
 	OSScClient sp58;
@@ -183,7 +183,7 @@ void func_80000AD4_16D4(s32 arg0)
 	}
 }
 
-/* CURRENT(667) */
+// CURRENT(667)
 #ifdef NON_MATCHING
 s32 func_80000B14_1714(u32 arg0, s32 arg1, u32 arg2) {
 	Unk80042DB8 *var_s0;
@@ -527,7 +527,7 @@ void func_800015B4_21B4(s32 arg0, s32 arg1) {
 
 
 // https://decomp.me/scratch/Y6mYv
-/* CURRENT(335) */
+// CURRENT(335)
 #ifdef NON_MATCHING
 s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 {
@@ -592,7 +592,7 @@ void func_800016D8_22D8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800016D8_22D8.s")
 #endif
 
-/* CURRENT(2085) */
+// CURRENT(2085)
 #ifdef NON_MATCHING
 void func_80001830_2430(void) {
 	u16 i, writeIdx;
@@ -623,7 +623,7 @@ void func_80001830_2430(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001830_2430.s")
 #endif
 
-/* CURRENT(5200) */
+// CURRENT(5200)
 #ifdef NON_MATCHING
 void func_80001984_2584(void) {
 	u16 i, writeIdx;
@@ -883,7 +883,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_prepareToSaveGame.s")
 #endif
 
-/* CURRENT(1868) */
+// CURRENT(1868)
 #ifdef NON_MATCHING
 void func_800020E0_2CE0(s32 arg0, s32 arg1) {
 	u8 *dst;
@@ -1011,7 +1011,7 @@ void func_800021CC_2DCC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800021CC_2DCC.s")
 #endif
 
-/* CURRENT(18868) */
+// CURRENT(18868)
 #ifdef NON_MATCHING
 void guess_loadSavedGame(s32 arg0) {
 	u32 sp34;
@@ -1198,7 +1198,7 @@ void getSaveFileName(s32 arg0, u8 *arg1)
 	arg1[6] = 0;
 }
 
-/* CURRENT(2110) */
+// CURRENT(2110)
 #ifdef NON_MATCHING
 s32 func_80002B20_3720(s32 arg0) {
 	s32 stride;
