@@ -2830,6 +2830,7 @@ extern s16 D_8015430E;
 extern s16 D_80154310;
 extern u8 D_8013E3C0[];
 extern u8 D_8013E344_14D2F4;
+extern s16 D_8015420A;
 extern s16 D_80154216;
 extern s16 D_80154222;
 extern s16 D_8015423A;
