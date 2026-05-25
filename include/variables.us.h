@@ -574,6 +574,7 @@ extern Unk80052B40 D_80052B40;
 extern s16 D_80052B44;
 extern Unk80052B40 D_80052B48;
 extern Unk80052B40 D_80052B50;
+extern s32 D_80052B58;
 extern Mtx D_80052B60;
 extern Mtx D_80052BA0;
 extern s8 D_80053BDF;
