@@ -1878,6 +1878,8 @@ extern u8 D_80259E30[];
 extern Unk80259D98 D_80259D98[];
 
 extern u8 D_D03E780[];
+extern u8 D_5032190[];
+extern u8 D_5032390[];
 
 extern f32 D_8014F1E4;
 extern f32 D_8014F1E8;
@@ -1928,6 +1930,8 @@ extern Unk8014DD50 D_802DDCF8_196808[];
 
 extern s32 D_80145BE8_154B98[][6];
 extern s16 D_8014EDD8;
+extern s32 D_8014ED04;
+extern s32 D_8014ED08;
 extern u16 D_8014EDDA;
 extern u16 D_8014EDDC;
 extern u8 D_8014EDE0[];
