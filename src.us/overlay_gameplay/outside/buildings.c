@@ -4234,8 +4234,178 @@ void func_80124118_1330C8(VehicleInstance *arg0, s16 arg1) {
 		}
 	}
 }
+// CURRENT(18762)
+#ifdef NON_MATCHING
+void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, VehicleInstance *arg5) {
+	s32 radiusSq;
+	s32 count;
+	f32 scale;
+	u8 *activeList;
+	VehicleInstance *vehicle;
+	AlienInstance *alien;
+	BuildingInstance *building;
+	s32 hitObj;
 
+	arg4 = arg4 >> 2;
+	if (arg4 == 0) {
+		return;
+	}
+
+	radiusSq = arg4 * arg4;
+	scale = (f32)arg3 / (f32)radiusSq;
+
+	count = D_80158FD8;
+	if (count != 0) {
+		count--;
+		activeList = &D_80158E80[count];
+
+		while (1) {
+			s32 dx;
+			s32 dy;
+			s32 dz;
+			u32 distSq;
+			u32 dist;
+			s32 damage;
+			s32 result;
+			f32 pushScale;
+			VehicleSpec *vehSpec;
+
+			vehicle = &vehicleInstances[*activeList];
+			vehSpec = &vehicleSpecs[vehicle->unk1A];
+			if (((vehicle->unk20 & 0x40) != 0) && (vehicle != arg5)) {
+				dx = (arg0 - vehicle->unk0) >> 2;
+				dy = (arg1 - vehicle->unk2) >> 2;
+				dz = (arg2 - vehicle->unk4) >> 2;
+				distSq = (dx * dx) + (dy * dy) + (dz * dz);
+				if ((u32)radiusSq >= distSq) {
+					dist = (u32)sqrtf((f32)distSq);
+					damage = (s32)(((f32)(arg4 - dist) * scale) * (f32)(arg4 - dist));
+					if (damage != 0) {
+						result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, vehicle->unk0, vehicle->unk2 + vehSpec->unk38, vehicle->unk4, &hitObj);
+						if (result == 3) {
+							damage >>= 2;
+						} else if ((VehicleInstance *)hitObj != vehicle) {
+							damage >>= 1;
+						}
+
+						if (result != 8) {
+							if ((arg3 == 0x2711) && (vehicle->unk1A == 0x12) && (currentLevel == 1)) {
+								D_8015FA38 = 1;
+							} else {
+								D_8015FA38 = 0;
+							}
+
+							if ((vehicle != D_80052B34) || (D_8015F9EC == 0)) {
+								if (damage >= 0x8000) {
+									damage = 0x7FFF;
+								}
+								func_80122524_1314D4(vehicle, (s16)damage, arg0, arg2);
+							}
+
+							pushScale = -(((f32)(damage << 5) / (f32)(dist + 1)) * 2.0f) / (f32)vehSpec->unk32;
+							if (vehicle->unk1A == 0) {
+								func_80102D00_111CB0(vehicle, (f32)((f64)((f32)dx * pushScale) / 100.0), (f32)((f64)-pushScale / 10.0), (f32)((f64)((f32)dz * pushScale) / 100.0));
+								D_80052B34->unkA = 0x7FFF;
+								D_80052B34->unk8 = 0;
+								D_80052B34->unk22 = 0;
+								D_80052B34->unk26 = 0;
+								D_80052B34->unk24 = 0;
+								func_800FB430_10A3E0(D_80052B34, 0);
+								D_80159320 |= 0x800;
+								D_80052B34->unk20 |= 2;
+								func_800FB3E8_10A398(D_80052B34, 1.0f);
+							} else {
+								func_80102D00_111CB0(vehicle, (f32)((f64)((f32)dx * pushScale) / 10.0), (f32)((f32)dy * pushScale), (f32)((f64)((f32)dz * pushScale) / 10.0));
+							}
+						}
+					}
+				}
+			}
+
+			if (count == 0) {
+				break;
+			}
+			activeList--;
+			count--;
+		}
+	}
+
+	alien = (AlienInstance *)&D_8004D0F8;
+	for (count = 0xFE; count != 0; count--) {
+		s32 dx;
+		s32 dy;
+		s32 dz;
+		u32 distSq;
+		u32 dist;
+		s32 damage;
+		s32 result;
+
+		if ((arg5 != (VehicleInstance *)alien) && ((currentLevel == 5) || (alien->specIndex != 0x12)) && ((alien->unk1B == 0xFF) || (D_80047F94 == alien->unk1B)) && (alien->specIndex != 0)) {
+			AlienSpec *alienSpec;
+
+			alienSpec = &alienSpecs[alien->specIndex];
+			dx = (arg0 - alien->unk0) >> 2;
+			dy = (arg1 - alien->unk2) >> 2;
+			dz = (arg2 - alien->unk4) >> 2;
+			distSq = (dx * dx) + (dy * dy) + (dz * dz);
+			if ((u32)radiusSq >= distSq) {
+				dist = (u32)sqrtf((f32)distSq);
+				damage = (s32)(((f32)(arg4 - dist) * scale) * (f32)(arg4 - dist));
+				if (damage != 0) {
+					result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, alien->unk0, alienSpec->unk18 + alien->unk2, alien->unk4, &hitObj);
+					if (result == 3) {
+						damage >>= 2;
+					} else if ((AlienInstance *)hitObj != alien) {
+						damage >>= 1;
+					}
+
+					if (result != 8) {
+						if (damage >= 0x8000) {
+							damage = 0x7FFF;
+						}
+						func_80124C40_133BF0(alien, (s16)damage, arg0, arg2);
+					}
+				}
+			}
+		}
+
+		alien = (AlienInstance *)((u8 *)alien - 0x50);
+	}
+
+	building = (BuildingInstance *)((u8 *)D_800522C0 - 0x18);
+	for (count = 0xFE; count != 0; count--) {
+		s32 dx;
+		s32 dy;
+		s32 dz;
+		u32 distSq;
+
+		if ((s8)building->hitPoints > 0) {
+			dx = (arg0 - building->xCoord) >> 2;
+			dy = (arg1 - building->yCoord) >> 2;
+			dz = (arg2 - building->zCoord) >> 2;
+			distSq = (dx * dx) + (dy * dy) + (dz * dz);
+			if ((u32)radiusSq >= distSq) {
+				if (arg3 >= 0x10001) {
+					func_8011C080_12B030(count & 0xFF);
+				} else {
+					s32 damage;
+					u32 dist;
+
+					dist = (u32)sqrtf((f32)distSq);
+					damage = (s32)(((f32)(arg4 - dist) * scale) * (f32)(arg4 - dist)) >> 7;
+					if ((damage != 0) && (func_8011BEA0_12AE50(count & 0xFF, damage) != 0) && (building == D_80158FE8)) {
+						D_8014ED48 = 8;
+					}
+				}
+			}
+		}
+
+		building = (BuildingInstance *)((u8 *)building - 0x18);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124170_133120.s")
+#endif
 
 void func_80124B5C_133B0C(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4) {
 	func_80124170_133120(arg0, arg1, arg2, arg3, arg4, 0);
