@@ -3231,7 +3231,196 @@ void func_800F49A4_103954(void *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F49A4_103954.s")
 #endif
 
+// CURRENT(26550)
+#ifdef NON_MATCHING
+void func_800F4DB0_103D60(void) {
+	extern void func_8007A4F8_894A8(u8, void *, u8, u8);
+	u8 i;
+	s32 var_fp;
+
+	var_fp = 1;
+	i = 0;
+	while (i < 8) {
+		if (D_80157FF0[i] == -1) {
+			u8 *base;
+			u8 *anim;
+			u8 *alienBase;
+			u8 state;
+			u8 alienIdx;
+			s32 limbCount;
+			s32 limb;
+
+			base = &D_80158000[i * 0x170];
+			if (((i + D_80052A8C) & 0xF) == 0) {
+				state = base[0x22];
+				if ((state != 2) && (state != 4) && (state != 8) && (state != 0x10)) {
+					alienIdx = base[0x144];
+					alienBase = (u8 *)&alienInstances[alienIdx];
+					if ((alienBase[0x1A] == 0) || !(*(s32 *)&alienBase[0x20] & 0x80000) || ((*(s32 *)&alienBase[0x20] & 0x80000) && ((*(s32 *)&alienBase[0x20] & 7) != i))) {
+						if (alienBase[0x1A] != 0) {
+							if (*(s32 *)&alienBase[0x20] & 0x600) {
+								func_8007A4F8_894A8(alienIdx, base, alienIdx, i);
+								alienBase = (u8 *)&alienInstances[base[0x144]];
+								func_800DF848_EE7F8(*(s16 *)&alienBase[0x0], *(s16 *)&alienBase[0x2], *(s16 *)&alienBase[0x4], *(u16 *)((u8 *)&D_8025668C + alienBase[0x1A] * 0x68), 0);
+								func_800F3038_101FE8(i);
+							} else {
+								func_80079910_888C0(alienIdx);
+								func_800F375C_10270C((s8)i);
+							}
+						}
+						osSyncPrintf(D_801449A8_153958);
+						i = (i + 1) & 0xFF;
+						continue;
+					}
+				}
+			}
+
+			alienBase = (u8 *)&alienInstances[base[0x144]];
+			if ((alienBase[0x1B] != 0xFF) && (D_80047F94 != alienBase[0x1B])) {
+				base[0x22] = 0;
+			}
+
+			state = base[0x22];
+			if ((state == 0) || (state == 4)) {
+				anim = &((u8 *)D_801601F0)[base[0x23] * 0x16];
+				limbCount = anim[0xC];
+				for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
+					u8 *entry;
+
+					entry = &base[limb * 0x24];
+					if (entry[0x47] == 0) {
+						alienBase = (u8 *)&alienInstances[base[0x144]];
+						*(s16 *)&entry[0x3A] = *(s16 *)&D_8014DD52[(*(s16 *)&alienBase[0xC]) * 0x10] + *(s16 *)&alienBase[0x2];
+					}
+				}
+				if (base[0x22] == 0) {
+					i = (i + 1) & 0xFF;
+					continue;
+				}
+				state = base[0x22];
+			}
+
+			if ((state == 2) || (state == 4) || (state == 8)) {
+				s16 v;
+				s16 speed;
+
+				base[0x168] = base[0x168] + 1;
+				v = *(s16 *)&base[0x16C] >> 3;
+				if (v < 0) {
+					v = -v;
+				}
+				speed = *(s16 *)&base[0x16C] - v - 2;
+				*(s16 *)&base[0x16C] = speed;
+
+				if (state == 2) {
+					if (base[0x168] == 0x28) {
+						func_800F375C_10270C((s8)i);
+					}
+				} else if (state == 8) {
+					if (speed < 0) {
+						*(s16 *)&base[0x16C] = speed / 2;
+					}
+					if (base[0x168] == 0x78) {
+						func_800F375C_10270C((s8)i);
+					}
+				} else if (state == 4) {
+					anim = &((u8 *)D_801601F0)[base[0x23] * 0x16];
+					limbCount = anim[0xC];
+					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
+						if (base[limb * 0x24 + 0x47] != 2) {
+							var_fp = 0;
+						}
+					}
+					if (var_fp != 0) {
+						func_800F375C_10270C((s8)i);
+					}
+				}
+
+				*(s16 *)&base[0x16A] = *(s16 *)&base[0x16A] + *(s16 *)&base[0x16C];
+			} else {
+				u8 *animData;
+				u8 lerp;
+				s16 frame;
+				s16 frame2x;
+
+				animData = &((u8 *)D_801601F0)[base[0x23] * 0x16];
+				lerp = animData[0x12];
+
+				if (*(s16 *)&base[0x1E] == 0) {
+					s32 x;
+					s32 z;
+
+					x = *(s32 *)&base[0x8];
+					z = *(s32 *)&base[0xC];
+					*(s32 *)&base[0x0] = x;
+					*(s32 *)&base[0x10] = x;
+					*(s32 *)&base[0x4] = z;
+					*(s32 *)&base[0x14] = z;
+
+					limbCount = animData[0xC];
+					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
+						u8 *entry;
+
+						entry = &base[limb * 0x24];
+						if (entry[0x47] == 0) {
+							*(s16 *)&entry[0x38] = *(s16 *)&entry[0x3E];
+							*(s16 *)&entry[0x3C] = *(s16 *)&entry[0x40];
+						}
+					}
+
+					func_800F2980_101930(base);
+					if (*(s16 *)&base[0x18] == *(s16 *)&base[0x1A]) {
+						s16 d;
+
+						d = *(s16 *)&base[0x1C];
+						if (d < 0) {
+							d = -d;
+						}
+						if ((d < 0xC) && (base[0x22] != 0x10)) {
+							base[0x22] = 0;
+						}
+					}
+				}
+
+				frame = *(s16 *)&base[0x1E];
+				frame2x = lerp * 2;
+				if ((frame2x == frame) || (lerp == frame)) {
+					animData = &((u8 *)D_801601F0)[base[0x23] * 0x16];
+					limbCount = animData[0xC];
+					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
+						u8 *entry;
+
+						entry = &base[limb * 0x24];
+						if (entry[0x47] == 0) {
+							if ((frame2x == *(s16 *)&base[0x1E]) && ((limb % 2) == 1)) {
+								*(s16 *)&entry[0x24] = *(s16 *)&entry[0x2A];
+								*(s16 *)&entry[0x28] = *(s16 *)&entry[0x2C];
+							}
+							if ((lerp == *(s16 *)&base[0x1E]) && !(limb & 1)) {
+								*(s16 *)&entry[0x24] = *(s16 *)&entry[0x2A];
+								*(s16 *)&entry[0x28] = *(s16 *)&entry[0x2C];
+							}
+						}
+					}
+				}
+
+				*(s32 *)&base[0x10] = func_800F41E0_103190(*(s32 *)&base[0x0], *(s32 *)&base[0x8], *(s16 *)&base[0x1E], frame2x);
+				*(s32 *)&base[0x14] = func_800F41E0_103190(*(s32 *)&base[0x4], *(s32 *)&base[0xC], *(s16 *)&base[0x1E], frame2x);
+				func_800F49A4_103954(base);
+
+				*(s16 *)&base[0x1E] = (*(s16 *)&base[0x1E] + 1) % (frame2x + 1);
+				if (!(base[0x22] & 0x80)) {
+					*(s16 *)&base[0x1A] = *(s16 *)&base[0x18];
+				}
+			}
+		}
+
+		i = (i + 1) & 0xFF;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F4DB0_103D60.s")
+#endif
 
 void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 	f32 x = arg0->x;
@@ -8355,7 +8544,195 @@ s32 func_8010D234_11C1E4(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010D234_11C1E4.s")
 #endif
 
+// CURRENT(32922)
+#ifdef NON_MATCHING
+s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstance *arg4) {
+	f32 xIn;
+	f32 zIn;
+	f32 xArg;
+	f32 zArg;
+	f32 slopeMain;
+	f32 interceptMain;
+	f32 slopeEdge;
+	f32 interceptEdge;
+	f32 x0;
+	f32 z0;
+	f32 x1;
+	f32 z1;
+	f32 x2;
+	f32 z2;
+	f32 xHit;
+	f32 zHit;
+	f32 dx;
+	f32 dz;
+	s32 sideFlags[4];
+	s32 sideA;
+	s32 sideB;
+	s32 startSide;
+	s32 i;
+	s32 outer;
+	s32 closestCorner;
+	s32 farthestCorner;
+	s32 bestDist;
+	s32 worstDist;
+	s32 distSq;
+	s32 chosenCorner;
+	s32 firstCorner;
+	s32 secondCorner;
+	s16 firstAng;
+	s16 secondAng;
+	s16 centerAng;
+
+	func_80003824_4424((f32)(*arg3 - arg1), (f32)(*arg2 - arg0));
+	func_8010C4EC_11B49C(arg4);
+
+	xArg = (f32)arg0;
+	zArg = (f32)arg1;
+	xIn = (f32)*arg2;
+	zIn = (f32)*arg3;
+
+	dx = xArg - xIn;
+	if (xIn > xArg) {
+		dx = -dx;
+	}
+	if (dx < 5.0f) {
+		xIn = xArg + 5.0f;
+	}
+
+	slopeMain = (zIn - zArg) / (xIn - xArg);
+	interceptMain = zArg - (slopeMain * xArg);
+
+	for (i = 3; i >= 0; i--) {
+		z0 = D_80159D5C->unk54 + (&D_80159DA4)[i];
+		x0 = D_80159D5C->unk4C + (&D_80159D84)[i];
+		sideFlags[i] = interceptMain < (z0 - (x0 * slopeMain));
+	}
+
+	bestDist = 0x7FFFFFFF;
+	worstDist = 0;
+	closestCorner = -1;
+	farthestCorner = -1;
+
+	for (outer = 2; outer > 0; outer--) {
+		if ((sideFlags[0] == sideFlags[outer]) || (sideFlags[0] == sideFlags[outer + 1])) {
+			continue;
+		}
+
+		x0 = arg4->unk4C;
+		z0 = arg4->unk54;
+
+		for (i = 3; i >= 0; i--) {
+			dx = ((&D_80159D84)[i] + x0) - xArg;
+			dz = ((&D_80159DA4)[i] + z0) - zArg;
+			distSq = ((s32)dx * (s32)dx) + ((s32)dz * (s32)dz);
+
+			if (distSq < bestDist) {
+				bestDist = distSq;
+				closestCorner = i;
+			}
+
+			if (distSq > worstDist) {
+				worstDist = distSq;
+				farthestCorner = i;
+			}
+		}
+
+		x1 = D_80159D78[closestCorner] + x0;
+		z1 = D_80159D98[closestCorner] + z0;
+
+		slopeEdge = (zArg - z1) / (xArg - x1);
+		interceptEdge = z1 - (slopeEdge * x1);
+		startSide = interceptEdge < (zIn - (xIn * slopeEdge));
+
+		firstCorner = -1;
+		secondCorner = -1;
+		for (i = 3; i >= 0; i--) {
+			if ((i == closestCorner) || (i == farthestCorner)) {
+				continue;
+			}
+
+			x2 = D_80159D78[i] + D_80159D5C->unk4C;
+			z2 = D_80159D98[i] + D_80159D5C->unk54;
+			if (startSide == (interceptEdge < (z2 - (slopeEdge * x2)))) {
+				if (firstCorner == -1) {
+					firstCorner = i;
+					firstAng = func_80003824_4424(z2 - zArg, x2 - xArg);
+				} else {
+					secondCorner = i;
+					secondAng = func_80003824_4424(z2 - zArg, x2 - xArg);
+				}
+			}
+		}
+
+		if (secondCorner == -1) {
+			chosenCorner = firstCorner;
+		} else {
+			centerAng = func_80003824_4424(z1 - zArg, x1 - xArg);
+			firstAng = func_800F9C50_108C00(centerAng, firstAng);
+			secondAng = func_800F9C50_108C00(centerAng, secondAng);
+			chosenCorner = secondCorner;
+			if (((secondAng < 0) ? -secondAng : secondAng) < ((firstAng < 0) ? -firstAng : firstAng)) {
+				chosenCorner = firstCorner;
+			}
+		}
+
+		if (chosenCorner == -1) {
+			*arg2 = -0x7FFF;
+			*arg3 = -0x7FFF;
+			return 0;
+		}
+
+		x0 = arg4->unk4C;
+		z0 = arg4->unk54;
+		x1 = D_80159D78[closestCorner] + x0;
+		z1 = D_80159D98[closestCorner] + z0;
+		xIn = D_80159D78[chosenCorner] + x0;
+		zIn = D_80159D98[chosenCorner] + z0;
+
+		dx = xIn - x1;
+		if (x1 > xIn) {
+			dx = -dx;
+		}
+		if (dx < 5.0f) {
+			xIn = x1 + 5.0f;
+		}
+
+		dz = zIn - z1;
+		if (z1 > zIn) {
+			dz = -dz;
+		}
+		if (dz < 5.0f) {
+			zIn = z1 + 5.0f;
+		}
+
+		slopeEdge = (zIn - z1) / (xIn - x1);
+		interceptEdge = z1 - (slopeEdge * x1);
+
+		x2 = D_80159D5C->unk4C;
+		z2 = D_80159D5C->unk54;
+		sideA = interceptEdge < (z2 - (slopeEdge * x2));
+		sideB = interceptEdge < (zArg - (slopeEdge * xArg));
+
+		xHit = (interceptMain - interceptEdge) / (slopeEdge - slopeMain);
+		zHit = (slopeMain * xHit) + interceptMain;
+
+		if ((D_80144D08_153CB8 < (f64)zHit) || ((f64)zHit < -32768.0) ||
+			(D_80144D10_153CC0 < (f64)xHit) || ((f64)xHit < -32768.0)) {
+			*arg2 = -0x7FFF;
+			*arg3 = -0x7FFF;
+		} else {
+			*arg2 = (s16)(s32)xHit;
+			*arg3 = (s16)(s32)zHit;
+		}
+
+		return sideA != sideB;
+	}
+
+	return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010D4EC_11C49C.s")
+#endif
 
 // CURRENT(4281)
 #ifdef NON_MATCHING
