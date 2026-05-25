@@ -5847,7 +5847,177 @@ void func_800D4B44_E3AF4(void) {
 	}
 }
 
+// CURRENT(23749)
+#ifdef NON_MATCHING
+void func_800D4C10_E3BC0(void) {
+	s16 index;
+	f32 zeroF;
+	f32 fortyF;
+	u8 (*palette)[3];
+
+	index = D_801542B2;
+	zeroF = 0.0f;
+	fortyF = 40.0f;
+	palette = D_8013DFA8_14CF58;
+	if (index == -5 || index == -6) {
+		return;
+	}
+
+	while (index != -5 && index != -6) {
+		Unk80154318Entry *entry;
+		f32 spFC[3];
+		f32 spF0[3];
+		f32 spE4[3];
+		f32 len;
+		f32 segLen;
+		s16 cosVal;
+		u32 texAddr;
+		s32 steps;
+		s16 radius;
+		s32 i;
+		s32 fadeStep;
+		f32 x;
+		f32 y;
+		f32 z;
+		f32 r;
+		s16 yLo;
+		u8 c0;
+		u8 c1;
+		u8 c2;
+		u8 alpha;
+		s32 mod;
+
+		entry = &D_80154318[index];
+		spFC[0] = (f32)(*(s16 *)&entry->unkE - entry->unk8);
+		spFC[1] = (f32)(*(s16 *)&entry->unk10 - entry->unkA);
+		spFC[2] = (f32)(*(s16 *)&entry->unk12 - entry->unkC);
+		len = sqrtf((spFC[0] * spFC[0]) + (spFC[1] * spFC[1]) + (spFC[2] * spFC[2]));
+
+		if (len == zeroF) {
+			index = entry->unk4;
+			continue;
+		}
+
+		texAddr = ((u32)D_100DC00) & 0x1FFFFFFF;
+		cosVal = coss(0x4000);
+		spE4[0] = (f32)((((f64)(f32)sins(0x4000) / 32768.0) * (f64)spFC[2]) +
+			(((f64)spFC[0]) * ((f64)(f32)cosVal / 32768.0)));
+		spE4[1] = zeroF;
+		cosVal = coss(0x4000);
+		spE4[2] = (f32)((((f64)spFC[2]) * ((f64)(f32)cosVal / 32768.0)) -
+			(((f64)(f32)sins(0x4000) / 32768.0) * (f64)spFC[0]));
+
+		func_800C1024_CFFD4((Vec3f *)spE4, (Vec3f *)spE4);
+		func_800C1024_CFFD4((Vec3f *)spFC, (Vec3f *)spF0);
+		func_800C1128_D00D8(fortyF, (Vec3f *)spF0, (Vec3f *)spF0);
+		segLen = sqrtf((spF0[0] * spF0[0]) + (spF0[1] * spF0[1]) + (spF0[2] * spF0[2]));
+
+		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, texAddr);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+		gDPPipeSync(D_8005BB2C++);
+
+		x = (f32)*(s16 *)&entry->unkE;
+		y = (f32)*(s16 *)&entry->unk10;
+		z = (f32)*(s16 *)&entry->unk12;
+
+		steps = (s32)(len / segLen);
+		if (steps < 0) {
+			steps = 0;
+		}
+		if (steps >= 0xA) {
+			steps = 9;
+		}
+
+		radius = (s16)((steps * 8) + 0xA);
+		if (steps > 0) {
+			fadeStep = 0x96 / steps;
+			for (i = 0; i < steps; i++) {
+				x -= spF0[0];
+				y -= spF0[1];
+				z -= spF0[2];
+				r = (f32)radius;
+
+				mod = i % 3;
+				c0 = palette[mod][0];
+				c1 = palette[mod][1];
+				c2 = palette[mod][2];
+				alpha = (u8)((i * fadeStep) + 0x64);
+
+				D_8005BB34->v.ob[0] = (s16)(s32)((r * spE4[0]) + x);
+				yLo = (s16)(s32)(r + y);
+				D_8005BB34->v.ob[1] = yLo;
+				D_8005BB34->v.ob[2] = (s16)(s32)((r * spE4[2]) + z);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = c0;
+				D_8005BB34->v.cn[1] = c1;
+				D_8005BB34->v.cn[2] = c2;
+				D_8005BB34->v.cn[3] = alpha;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)(s32)(x - (r * spE4[0]));
+				D_8005BB34->v.ob[1] = yLo;
+				D_8005BB34->v.ob[2] = (s16)(s32)(z - (r * spE4[2]));
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = c0;
+				D_8005BB34->v.cn[1] = c1;
+				D_8005BB34->v.cn[2] = c2;
+				D_8005BB34->v.cn[3] = alpha;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)(s32)(x - (r * spE4[0]));
+				D_8005BB34->v.ob[1] = (s16)(s32)(y - r);
+				D_8005BB34->v.ob[2] = (s16)(s32)(z - (r * spE4[2]));
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = c0;
+				D_8005BB34->v.cn[1] = c1;
+				D_8005BB34->v.cn[2] = c2;
+				D_8005BB34->v.cn[3] = alpha;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)(s32)((r * spE4[0]) + x);
+				D_8005BB34->v.ob[1] = (s16)(s32)(y - r);
+				D_8005BB34->v.ob[2] = (s16)(s32)((r * spE4[2]) + z);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = c0;
+				D_8005BB34->v.cn[1] = c1;
+				D_8005BB34->v.cn[2] = c2;
+				D_8005BB34->v.cn[3] = alpha;
+				D_8005BB34++;
+
+				gSPVertex(D_8005BB2C++, D_8005BB34 - 4, 4, 0);
+				gSP2Triangles(D_8005BB2C++, 0, 2, 1, 0, 0, 3, 2, 0);
+
+				radius -= 8;
+				if (radius <= 0) {
+					radius = 1;
+				}
+			}
+		}
+
+		index = entry->unk4;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D4C10_E3BC0.s")
+#endif
 
 // CURRENT(1450)
 #ifdef NON_MATCHING
