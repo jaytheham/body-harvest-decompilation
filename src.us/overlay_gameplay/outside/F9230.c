@@ -2534,7 +2534,340 @@ void func_800F1004_FFFB4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F1004_FFFB4.s")
 #endif
 
+// CURRENT(35533)
+#ifdef NON_MATCHING
+void func_800F1134_1000E4(void) {
+	s16 p3X;
+	s16 p3Z;
+	s16 minX;
+	s16 maxX;
+	s16 minZ;
+	s16 maxZ;
+	s16 y;
+	s16 ringY;
+	s16 timer;
+	s16 sfxVol;
+	s16 i;
+	s16 angle;
+	s16 xOffset;
+	s16 zOffset;
+	u8 color[4];
+	Unk80152B80 pos;
+	s32 localDl[3];
+	BuildingInstance *building;
+	AlienInstance *alien;
+	VehicleInstance *vehicle;
+
+	localDl[0] = D_8013FCC4_14EC74[0];
+	localDl[1] = D_8013FCC4_14EC74[1];
+	localDl[2] = D_8013FCC4_14EC74[2];
+
+	func_80013468_14068(0x11);
+	D_80157FA4 = &buildingInstances[func_80120634_12F5E4()];
+	D_80159DDF = func_80120634_12F5E4();
+
+	alien = &alienInstances[D_80157F94];
+	p3X = alien->unk0;
+	p3Z = alien->unk4;
+
+	if (currentLevel == LEVEL_AMERICA) {
+		building = &buildingInstances[D_80159DDF];
+		y = building->xCoord;
+		ringY = building->zCoord;
+		maxZ = ringY + 0x64;
+		maxX = y + 0x78;
+		minZ = ringY - 0x50;
+		minX = y - 0x78;
+		p3Z = minZ;
+		p3X = y;
+	} else {
+		building = &buildingInstances[D_80159DDF];
+		y = building->xCoord;
+		ringY = building->zCoord;
+		p3X = y - 0x64;
+		maxX = y + 0x64;
+		maxZ = ringY + 0x78;
+		minX = y + 0x50;
+		minZ = ringY - 0x78;
+		p3Z = ringY;
+	}
+
+	if ((u16)D_80157F8C >= 10) {
+		return;
+	}
+
+	switch (D_80157F8C) {
+		case 0:
+			D_80157FA8 = 1;
+			D_801493E0 = 0;
+
+			if (D_80157F8E == 1) {
+				func_8012B21C_13A1CC();
+			}
+
+			if (D_80157F8E == 0x5E) {
+				func_800B91C8_C8178((p3X >> 8) + 1, p3Z >> 8, 0x14);
+			}
+
+			if (D_80157F8E >= 0x5B) {
+				if ((D_80052A8C & 1) == 0) {
+					func_80014A3C_1563C(0, 0xEB, 0.0f, 0, D_80144658_153608);
+					func_80135D08_144CB8(10.0f, 1, 1, 1);
+				}
+			}
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x8D) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 1:
+			if (D_80157F8E == 0xA) {
+				building = D_80157FA4;
+				y = building->yCoord;
+				p3X = building->xCoord;
+				p3Z = building->zCoord;
+
+				D_80157FD2 = func_800CD1F8_DC1A8(p3X, y, p3Z, 0, -35, 0);
+				D_80157FD4 = func_800CD1F8_DC1A8(maxX, y, maxZ, 0, -35, 0);
+				D_80157FD6 = func_800CD1F8_DC1A8(minX, y, minZ, 0, -35, 0);
+				func_80135D44_144CF4(p3X, y, p3Z, 3.0f);
+
+				func_800DF9C8_EE978(p3X, y, p3Z, 0x32, 0, 0);
+				func_800DF9C8_EE978(maxX, y, maxZ, 0x32, 0, 0);
+				func_800DF9C8_EE978(minX, y, minZ, 0x32, 0, 0);
+			}
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0xD) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 2:
+			if (D_80157F8E >= 0x15) {
+				building = D_80157FA4;
+				building->yCoord += D_80157F8E / 10;
+			}
+
+			building = D_80157FA4;
+			y = building->yCoord;
+			func_800CD2E8_DC298(p3X, y, p3Z, D_80157FD3);
+			func_800CD2E8_DC298(maxX, y, maxZ, D_80157FD5);
+			func_800CD2E8_DC298(minX, y, minZ, D_80157FD7);
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x60) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 3:
+			y = func_800B84D0_C7480(p3X, p3Z) >> 8;
+			if (D_80157F8E == 0) {
+				building = D_80157FA4;
+				building->xCoord = p3X;
+				building->zCoord = p3Z;
+				building->yCoord = y;
+			}
+
+			D_80159DE2 = 200 - (D_80157F8E * 2);
+			if ((s16)D_80159DE2 < 0) {
+				D_80159DE2 = 0;
+			}
+
+			building = D_80157FA4;
+			y = building->yCoord + (D_80159DE2 * 4);
+			if (D_80159DE2 == 2) {
+				building = &buildingInstances[D_80159DDF];
+				func_80135D44_144CF4(building->xCoord, building->yCoord, building->zCoord, 2.0f);
+			}
+
+			if (D_80157F8E < 0x64) {
+				func_800CD2E8_DC298(p3X, y, p3Z, D_80157FD3);
+				func_800CD2E8_DC298(maxX, y, maxZ, D_80157FD5);
+				func_800CD2E8_DC298(minX, y, minZ, D_80157FD7);
+			}
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x6A) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 4:
+			D_80052ACC = 0;
+			D_8015930E = 0;
+
+			building = D_80157FA4;
+			y = building->yCoord;
+			p3X = building->xCoord;
+			p3Z = building->zCoord;
+
+			if (D_80157F8E == 0) {
+				func_800CD390_DC340(D_80157FD3);
+				func_800CD390_DC340(D_80157FD5);
+				func_800CD390_DC340(D_80157FD7);
+			}
+
+			func_800C56A4_D4654(p3X, y + 0x32, p3Z, 0x190, 0x14, 5, 2);
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x33) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 5:
+			building = D_80157FA4;
+			y = building->yCoord;
+			p3X = building->xCoord;
+			p3Z = building->zCoord;
+
+			if (D_80157F8E < 0x1E) {
+				func_800C56A4_D4654(p3X, y + 0x32, p3Z, 0x190, 0x14, 5, 2);
+			}
+
+			if ((D_80157F8E % 0x12) == 0) {
+				func_800D05A8_DF558(p3X, y, p3Z, 0x3E8, 0xFA, 0x64, 0x14);
+				ringY = y + 0x1E;
+				func_800DEE5C_EDE0C(p3X, ringY, p3Z, 0xA, 2);
+				func_800DEE5C_EDE0C(p3X, ringY, p3Z, 0xD, 1);
+
+				color[0] = 0xFA;
+				color[1] = 0x64;
+				color[2] = 0x14;
+				pos.unk0 = p3X;
+				pos.unk2 = y;
+				pos.unk4 = p3Z;
+				func_800B99A8_C8958(&pos, 0x1E, 0x1F4, 0xFF, color, 0x50, 0xA, 0);
+			}
+
+			if (D_80157F8E == 0x30) {
+				func_800DF9C8_EE978(p3X, y, p3Z, 0x190, 0, localDl);
+			}
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x33) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 6:
+			building = D_80157FA4;
+			y = building->yCoord;
+			p3X = building->xCoord;
+			p3Z = building->zCoord;
+
+			D_80052ACA = 2;
+			func_8012D84C_13C7FC();
+
+			if (D_80157F8E == 0) {
+				D_801493E0 = 1;
+				if (D_80052B34->unk1A != 0) {
+					func_800FDEA8_10CE58(D_80052B2C, 1);
+				}
+
+				func_8011592C_1248DC(p3X, p3Z);
+				func_800FD510_10C4C0(0, 0x72);
+
+				for (i = 0; i < D_80158FD8; i++) {
+					vehicle = &vehicleInstances[D_80158E80[i]];
+					if (vehicle->unk1A != 0x13) {
+						vehicle->unk20 &= 0x7FFF;
+					}
+				}
+
+				D_8013FD78_14ED28->unkA = 0;
+				func_800FAD10_109CC0();
+				D_80052B34->unk6 = -0x41E3;
+
+				ringY = y + 0x1E;
+				func_800DEE5C_EDE0C(p3X, ringY, p3Z, 0xD, 2);
+				func_800DEE5C_EDE0C(p3X, ringY, p3Z, 0xF, 1);
+				func_800E35E0_F2590(0xFF);
+			}
+
+			timer = D_80157F8E;
+			D_80157F8E = timer + 1;
+			if (timer > 0) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 7:
+			building = D_80157FA4;
+			y = building->yCoord;
+			p3X = building->xCoord;
+			p3Z = building->zCoord;
+
+			if (D_80157F8E < 5) {
+				sfxVol = (0xFF - (D_80157F8E * 0x33)) & 0xFF;
+				func_800E35E0_F2590(sfxVol);
+			}
+
+			ringY = y + 0x1E;
+			for (i = 0; i < 6; i++) {
+				if (D_80157F8E == 0) {
+					D_80157FDC[i] = func_800DA6F0_E96A0(p3X, ringY, p3Z, 1);
+				} else {
+					angle = (i * 0x2AAA) & 0xFFFF;
+					xOffset = (s16)((coss(angle) / 32768.0) * (D_80157F8E * 40));
+					zOffset = (s16)((sins(angle) / 32768.0) * (D_80157F8E * 40));
+					func_800D9B14_E8AC4(p3X + xOffset, ringY, p3Z + zOffset, D_80157FDC[i]);
+				}
+			}
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x47) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 8:
+			if (D_80157F8E == 0) {
+				for (i = 0; i < 6; i++) {
+					func_800D9C60_E8C10(D_80157FDC[i]);
+				}
+				D_80159DDF = 0xFF;
+			}
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x15) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 9:
+			D_80157FD0 = 100;
+			func_80007410_8010(func_800F1004_FFFB4);
+			func_800FAC90_109C40();
+			return;
+	}
+
+	return;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F1134_1000E4.s")
+#endif
 
 // CURRENT(21609)
 #ifdef NON_MATCHING
@@ -11370,6 +11703,7 @@ s32 func_8010FF84_11EF34(VehicleInstance *arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010FF84_11EF34.s")
 #endif
 
+// Push player away from shield wall
 // CURRENT(1710)
 #ifdef NON_MATCHING
 s32 func_80110144_11F0F4(VehicleInstance *arg0, s32 arg1) {

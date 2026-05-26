@@ -3730,5 +3730,14 @@ extern char D_80143F14_152EC4[];
 extern u8 D_801475F0_1565A0[];
 extern u8 D_801479B0_156960[];
 extern f64 D_80142E68_151E18;
+extern s32 D_80157FA8;
+extern f32 D_80144658_153608;
+extern s16 D_80157FD2;
+extern s16 D_80157FD4;
+extern s16 D_80157FD6;
+extern u8 D_80157FD3;
+extern u8 D_80157FD5;
+extern u8 D_80157FD7;
+extern u8 D_80157FDC[];
 
 #endif
