@@ -7773,6 +7773,7 @@ void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 // Skiiping this call stops adam responding to input
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801052E8_114298.s")
 
+// CURRENT(17202)
 #ifdef NON_MATCHING
 void func_80106628_1155D8(VehicleInstance *arg0) {
 	VehicleSpec *spec;
@@ -7802,10 +7803,18 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 	func_80014508_15108(arg0, 1, 1);
 
 	gridAngleX = arg0->unk0 - arg0->unk40;
-	absDeltaX = (gridAngleX < 0) ? -gridAngleX : gridAngleX;
+	if (-gridAngleX < gridAngleX) {
+		absDeltaX = gridAngleX;
+	} else {
+		absDeltaX = -gridAngleX;
+	}
 
 	gridAngleY = arg0->unk4 - arg0->unk42;
-	absDeltaY = (gridAngleY < 0) ? -gridAngleY : gridAngleY;
+	if (-gridAngleY < gridAngleY) {
+		absDeltaY = gridAngleY;
+	} else {
+		absDeltaY = -gridAngleY;
+	}
 
 	if ((absDeltaX < 0x61) && (absDeltaY < 0x61)) {
 		gridX = arg0->unk47;
@@ -7895,7 +7904,7 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 					} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xB);
 				}
 				arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
-				if ((gridX + 2) < arg0->unk47) {
+				if ((gridX + 2) < (s8)arg0->unk47) {
 					gridX++;
 				}
 			} else {
@@ -7905,7 +7914,7 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 					} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xB);
 				}
 				arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
-				if (arg0->unk47 < (gridX - 2)) {
+				if ((s8)arg0->unk47 < (gridX - 2)) {
 					gridX--;
 				}
 			}
@@ -7917,7 +7926,7 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 					} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xA);
 				}
 				arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
-				if ((gridY + 2) < arg0->unk48) {
+				if ((gridY + 2) < (s8)arg0->unk48) {
 					gridY++;
 				}
 			} else {
@@ -7927,7 +7936,7 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 					} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xA);
 				}
 				arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
-				if (arg0->unk48 < (gridY - 2)) {
+				if ((s8)arg0->unk48 < (gridY - 2)) {
 					gridY--;
 				}
 			}
