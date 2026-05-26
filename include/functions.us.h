@@ -1499,5 +1499,10 @@ void func_800B4660_C3610(s32);
 void func_800B49A4_C3954(s32);
 void func_800B4D4C_C3CFC(s32);
 void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1);
+s32 func_80118114_1270C4(s16 arg0);
+s32 func_8011C594_12B544(u8 arg0);
+s32 func_8011C4D4_12B484(void);
+s32 func_8011C42C_12B3DC(s32 arg0);
+void func_8011CDA4_12BD54(void);
 
 #endif

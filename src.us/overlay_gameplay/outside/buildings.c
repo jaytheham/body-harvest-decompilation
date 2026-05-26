@@ -443,7 +443,302 @@ s32 func_801168E8_125898(s16 arg0, s16 arg1) {
 }
 
 // guess_initBuildingsDoors
+#ifdef NON_MATCHING
+// CURRENT(0)
+void func_8011694C_1258FC(void) {
+	Unk800522C0 *doorRef;
+	s32 unusedPad0;
+	s32 unusedPad1;
+	s32 unusedPad2;
+	s32 unusedPad3;
+	BuildingSpec *spec;
+	UnkBuildDoorMap *doorMap;
+	UnkBuildGridCell *gridCell;
+	BuildingInstance *inst;
+	Unk80146688 *zone;
+	s32 i;
+	s32 j;
+	s16 idx;
+	s16 idx2;
+	s32 bestDelta;
+	s16 bestGrid;
+	u8 targetType;
+	u32 flags;
+
+	D_8015EB80 = 0;
+	spec = buildingSpecs;
+	doorRef = &D_8005252C;
+	for (i = 0x1F; i >= 0; i--) {
+		if (doorRef->unk13 != 0) {
+			for (j = 0x1F; j >= 0; j--) {
+				if ((s32) spec[j].pad0 == doorRef->unkC) {
+					doorRef->unkC = j;
+				}
+			}
+		} else {
+			doorRef->unkC = 0x3E8;
+		}
+		doorRef = (Unk800522C0 *) ((u8 *) doorRef - 0x14);
+	}
+
+	for (i = 0x1F; i >= 0; i--) {
+		buildingSpecs[i].pad16[7] = 0;
+		buildingSpecs[i].pad16[6] = 0xFF;
+	}
+
+	doorMap = (UnkBuildDoorMap *) D_80052A7C;
+	for (i = 0x6D; i >= 0; i--) {
+		if (doorMap->unkA != doorMap->unk8) {
+			for (j = 0x1F; j >= 0; j--) {
+				spec = &buildingSpecs[j];
+				if ((s32) spec->pad0 == doorMap->unk0) {
+					doorMap->unk0 = j;
+					spec->pad16[7] += 1;
+					if (spec->pad16[6] == 0xFF) {
+						spec->pad16[6] = i;
+					}
+				}
+			}
+		} else {
+			doorMap->unk0 = 0x3E8;
+		}
+		doorMap = (UnkBuildDoorMap *) ((u8 *) doorMap - 0x0C);
+	}
+
+	func_80116784_125734();
+	D_8015EA44 = 0x100;
+	D_8015EA46 = 0;
+	D_8015EA48 = 0;
+	D_8015EA4A = 1;
+	D_8015EA4C = 0;
+	D_8015EA4E = 0;
+	D_8015EA50 = 0;
+
+	if (currentLevel == 1) {
+		D_80052554 = 0x400;
+	} else {
+		D_80052554 = 0;
+	}
+
+	D_8015EB78 = 0;
+	D_8005254C = -1;
+	D_8015EA2C = 0.0f;
+	D_8015EA30 = 0.0f;
+
+	for (i = -1;; i--) {
+		for (j = -1;; j--) {
+			func_800B316C_C211C((s8) i, (s8) j, 0x800, 0);
+			if (j == 0) {
+				break;
+			}
+		}
+		if (i == 0) {
+			break;
+		}
+	}
+
+	D_8015EA28 = 0xFF;
+	for (i = 0x1F; i >= 0; i--) {
+		if ((s32) buildingSpecs[i].pad0 == ((s32 *) D_80140A00_14F9B0)[currentLevel]) {
+			D_8015EA28 = i;
+		}
+		if ((s32) buildingSpecs[i].pad0 == (s32) D_5002D40) {
+			D_8015EA29 = i;
+		}
+	}
+
+	for (i = 0x1F; i >= 0; i--) {
+		spec = &buildingSpecs[i];
+		if (currentLevel == 1) {
+			if ((i == D_8015EA28) || (i == 4) || (i == 6) || (i == 0x14)) {
+				spec->pad16[4] |= 8;
+			}
+		} else if (currentLevel == 2) {
+			if ((i == D_8015EA28) || (i == 6) || (i == 0xD) || (i == 0xE) || (i == 0x10) || (i == 0x16)) {
+				spec->pad16[4] |= 8;
+			}
+		} else if (currentLevel == 3) {
+			if ((i == 7) || (i == 0x12) || (i == 0xC) || (i == 0x15)) {
+				spec->pad16[4] |= 8;
+			}
+		} else if ((currentLevel == 4) && ((i == 4) || (i == 5) || (i == 0x10) || (i == 0x14))) {
+			spec->pad16[4] |= 8;
+		}
+	}
+
+	gridCell = (UnkBuildGridCell *) D_800522A8;
+	targetType = D_8015EA28;
+	for (i = 0xFE; i >= 0; i--) {
+		if (gridCell->unk6 == targetType) {
+			gridCell->unk0 = (gridCell->unk0 & 0xFF00) + 0x80;
+			gridCell->unk4 = (gridCell->unk4 & 0xFF00) + 0x80;
+			targetType = D_8015EA28;
+		}
+		gridCell = (UnkBuildGridCell *) ((u8 *) gridCell - 0x18);
+	}
+
+	for (i = 0xFE; i >= 0; i--) {
+		inst = &buildingInstances[i];
+		if (inst->buildingType == D_8015EA28) {
+			bestDelta = -0x10000;
+			bestGrid = 0xFF;
+			if ((inst->unk8 & 3) == 0) {
+				gridCell = (UnkBuildGridCell *) D_800522A8;
+				for (j = 0xFE; j >= 0; j--) {
+					if ((inst->zCoord >> 8) == (gridCell->unk4 >> 8)) {
+						idx = inst->xCoord - gridCell->unk0;
+						if ((idx < 0) && (bestDelta < idx)) {
+							bestDelta = idx;
+							bestGrid = j;
+						}
+					}
+					gridCell = (UnkBuildGridCell *) ((u8 *) gridCell - 0x18);
+				}
+				if (bestGrid != 0xFF) {
+					buildingInstances[(u8) bestGrid].buildingType = 0x1F;
+				}
+			} else if ((inst->unk8 & 3) == 3) {
+				bestDelta = -0x10000;
+				bestGrid = 0xFF;
+				gridCell = (UnkBuildGridCell *) D_800522A8;
+				for (j = 0xFE; j >= 0; j--) {
+					if ((inst->xCoord >> 8) == (gridCell->unk0 >> 8)) {
+						idx = inst->zCoord - gridCell->unk4;
+						if ((idx < 0) && (bestDelta < idx)) {
+							bestDelta = idx;
+							bestGrid = j;
+						}
+					}
+					gridCell = (UnkBuildGridCell *) ((u8 *) gridCell - 0x18);
+				}
+				if (bestGrid != 0xFF) {
+					buildingInstances[(u8) bestGrid].buildingType = 0x1F;
+				}
+			}
+		}
+	}
+
+	spec = &buildingSpecs[D_8015EA28];
+	D_80048172 = 0;
+	spec->unk10 = 0x80;
+	spec->unk12 = 0x80;
+	spec->unk14 = 0x80;
+	spec->pad16[2] = 0;
+	spec->pad16[3] = 0x1F;
+	buildingSpecs[0x1F].unk10 = 0x80;
+	buildingSpecs[0x1F].unk12 = 0x80;
+	buildingSpecs[0x1F].unk14 = 0x1000;
+	buildingSpecs[0x1F].pad16[2] = 0;
+	buildingSpecs[0x1F].pad16[3] = 0x1F;
+	buildingSpecs[0x1F].pad16[4] |= 8;
+	D_8015EB6A = D_80048172;
+	D_8015EB6C = D_8015EB6A;
+	D_8015EB68 = D_8015EB6C;
+	D_8015EB6E = 0xFF;
+
+	for (i = 7; i >= 0; i--) {
+		D_8015EB60[i] = 0xFF;
+	}
+	for (i = 7; i >= 0; i--) {
+		((&D_8015EB70)[i]) = 0xFF;
+	}
+
+	for (i = 0; i < 0xFF; i++) {
+		D_8015EA60[i] = i;
+		inst = &buildingInstances[i];
+		spec = &buildingSpecs[inst->buildingType];
+
+		if ((spec->pad16[4] & 4) || ((((u32) inst->unk8 >> 28) != 0xF)) || (func_80118114_1270C4(i) != 0)) {
+			flags = inst->unk8;
+			inst->unk8 = ((((flags >> 12) | 0x1000) ^ (flags >> 12)) << 12) ^ flags;
+		}
+
+		flags = inst->unk8;
+		if (spec->pad16[2] == 0) {
+			inst->unk8 = ((((flags >> 12) | 8) ^ (flags >> 12)) << 12) ^ flags;
+		} else {
+			inst->unk8 = ((((flags >> 12) | 0x8000) ^ (flags >> 12)) << 12) ^ flags;
+		}
+
+		if ((((u32) inst->unk8 >> 12) & 1) == 0) {
+			inst->zCoord = 0x7FFF;
+		} else {
+			D_80048172++;
+		}
+
+		((u8 *) inst)[0xE] = 0xFF;
+		inst->unk11 = func_8011C594_12B544((u8) i);
+	}
+
+	for (i = 0x1F; i >= 0; i--) {
+		buildingSpecs[i].pad16[5] = 0xFF;
+	}
+
+	for (i = 0x1C; i >= 0; i--) {
+		for (j = 0x1F; j >= 0; j--) {
+			if ((s32) buildingSpecs[j].pad0 == D_801486A0_157650[i * 5]) {
+				buildingSpecs[j].pad16[5] = i;
+			}
+		}
+	}
+
+	D_8015EA14 = func_8011C4D4_12B484();
+	D_8015EA18 = D_8015EA14;
+
+	if (D_8014667F_15562F[currentLevel] > 0) {
+		for (i = 0; i < D_8014667F_15562F[currentLevel]; i++) {
+			zone = &D_80146688_155638[currentLevel - 1][i];
+			((s16 *) ((u8 *) zone + 8))[0] = func_8011C42C_12B3DC((s32) zone);
+			zone->unk0A = ((s16 *) ((u8 *) zone + 8))[0];
+			zone->unk0C = 0;
+			((u8 *) zone)[0xE] = 0xFF;
+		}
+	}
+
+	func_8011CDA4_12BD54();
+
+	for (i = 0xFE; i >= 0; i--) {
+		inst = &buildingInstances[i];
+		if (inst->buildingType == D_8015EA28) {
+			switch (inst->unk8 & 3) {
+				case 0:
+					func_8011629C_12524C(inst, 1, 0);
+					break;
+				case 3:
+					func_8011629C_12524C(inst, 0, 1);
+					break;
+			}
+		}
+	}
+
+	if (currentLevel == 1) {
+		D_8015EA54 = func_8011D260_12C210(0x40, -0x1C);
+		D_8015EA55 = func_8011D260_12C210(0x42, -0x1C);
+		D_8015EA56 = func_8011D260_12C210(0x43, -0x1C);
+	} else if (currentLevel == 5) {
+		for (i = 0xFE; i >= 0; i--) {
+			inst = &buildingInstances[i];
+			inst->hitPoints = inst->hitPoints * 3;
+		}
+	}
+
+	for (i = 0xFE; i >= 0; i--) {
+		inst = &buildingInstances[i];
+			if ((((u32) inst->unk8 >> 12) & 1) != 0) {
+			for (j = 2; j >= 0; j--) {
+					if ((&inst->door1InteriorId)[j] != 0xFF) {
+					if (func_801168E8_125898(inst->buildingType, j) == 0) {
+						idx2 = j + 1;
+						osSyncPrintf(D_80144DC0_153D70, idx2, i, inst->xCoord >> 8, inst->zCoord >> 8, idx2);
+					}
+				}
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011694C_1258FC.s")
+#endif
 
 s32 func_80117464_126414(u8 arg0) {
 	s16 minX;

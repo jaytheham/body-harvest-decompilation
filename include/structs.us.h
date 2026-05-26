@@ -2535,6 +2535,20 @@ typedef struct {
 	/* 0x1EA */ u8 pad1EA[2];
 } Unk800E614CFxSlot;
 
+typedef struct {
+	s32 unk0;
+	s16 unk8;
+	s16 unkA;
+} UnkBuildDoorMap;
+
+typedef struct {
+	s16 unk0;
+	s16 unk2;
+	s16 unk4;
+	u8 unk6;
+	u8 pad7[0x11];
+} UnkBuildGridCell;
+
 #endif
 
 typedef struct {

@@ -3716,5 +3716,13 @@ extern s32 D_80159D70;
 extern Unk8010ED84Pos *D_80159D60;
 extern Unk8010ED84Data *D_80159D68;
 extern char D_80141EB0_150E60;
+extern u8 D_80052A7C[];
+extern u8 D_800522A8[];
+extern s32 D_801486A0_157650[];
+extern char D_80144DC0_153D70[];
+extern s16 D_80048172;
+extern s32 D_8015EB78;
+extern u8 D_8015EA55;
+extern u8 D_8015EA56;
 
 #endif
