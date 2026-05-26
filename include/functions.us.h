@@ -704,6 +704,7 @@ void func_800BD2F4_CC2A4(void);
 void func_800B19F8_C09A8(void);
 void func_800B9DB8_C8D68(s32 arg0);
 void func_800BA5B0_C9560(s32 arg0, s32 arg1);
+void n_alSynFreeFX(s32 arg0);
 void func_800BB5E0_CA590(void);
 void func_800BD360_CC310(void);
 void func_800BD8B8_CC868(void);
