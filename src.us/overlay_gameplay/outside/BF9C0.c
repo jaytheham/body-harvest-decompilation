@@ -1889,7 +1889,345 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B4D4C_C3CFC.s")
 #endif
 
+// CURRENT(53460)
+#ifdef NON_MATCHING
+void func_800B5090_C4040(s32 *arg0, s32 arg1) {
+	Vtx **vtxPtr;
+	u8 *base;
+	s16 tilesMinX;
+	s16 tilesMinY;
+	u8 ringX;
+	u8 ringY;
+	u8 mapX;
+	u8 mapY;
+	u8 row;
+	s32 col;
+	s32 colWrap;
+	s32 rowWrap;
+	s32 waveX;
+	s32 waveY;
+	s16 heightX;
+	s16 heightY;
+	s16 worldX;
+	s16 worldY;
+	s16 posX;
+	s16 posY;
+	s16 posZ;
+	s16 hueX;
+	s16 hueY;
+	s16 cellH;
+	s16 inA;
+	s16 inB;
+	s16 amp;
+	s16 scrollX;
+	s16 scrollY;
+	s32 tileType;
+	s32 i;
+	s16 *tileCenter;
+	u8 *ringRow;
+	u8 *ringCell;
+	u8 *shade;
+	u8 *shadeMix;
+	s8 edgeParityX;
+	s8 edgeParityY;
+	s8 color0;
+	s8 color1;
+	s8 color2;
+	s8 blur0;
+	s8 blur1;
+	s8 blur2;
+	s32 rand60;
+	s32 frameAngle;
+	f64 ratio;
+
+	(void)arg1;
+
+	D_8014F89A = 0;
+	base = D_80151DD8;
+	ringX = (u8)base[0x961];
+	D_8014F899 = (s8)ringX;
+	ringY = (u8)base[0x960];
+	D_8014F898 = (s8)ringY;
+	mapX = base[0x964];
+	D_8014F89C = mapX;
+	mapY = base[0x965];
+	D_8014F89D = mapY;
+
+	vtxPtr = (Vtx **)arg0;
+	scrollX = D_80149434;
+	scrollY = D_80149436;
+	tilesMinX = scrollX + 0x701;
+	tilesMinY = scrollY + 0x701;
+
+	row = 0;
+	rowWrap = 0;
+	mapX = ringY;
+	color0 = (s8)base[0x960];
+	color1 = base[0x964];
+	color2 = base[0x965];
+
+	do {
+		s32 rowOffset;
+		u8 ringCol;
+
+		rowOffset = (color0 * 0x78);
+		ringRow = &D_80151DD8[rowOffset];
+		shade = &D_80152740[(color0 * 0x39) + (ringX * 3)];
+		worldY = ((s8)color2 - 0x80) << 8;
+		edgeParityY = (s8)color2 % 2;
+		mapY = color1;
+		col = ringX;
+		ringCol = 0;
+
+		do {
+			s16 *tileEast;
+			s16 *tileWest;
+			s16 *tileNorth;
+			s16 *tileSouth;
+			s32 c0;
+			s32 c1;
+			s32 c2;
+
+			colWrap = (col * 6);
+			tileCenter = (s16 *)(ringRow + colWrap);
+
+			if (col != 0x12) {
+				tileEast = (s16 *)(ringRow + colWrap + 6);
+			} else {
+				tileEast = (s16 *)ringRow;
+			}
+
+			if (col != 0) {
+				tileWest = (s16 *)(ringRow + colWrap - 6);
+			} else {
+				tileWest = (s16 *)(ringRow + 0x6C);
+			}
+
+			if (color0 != 0x12) {
+				tileSouth = (s16 *)(D_80151DD8 + rowOffset + colWrap + 0x78);
+			} else {
+				tileSouth = (s16 *)(D_80151DD8 + colWrap);
+			}
+
+			if (color0 != 0) {
+				tileNorth = (s16 *)(D_80151DD8 + rowOffset + colWrap - 0x78);
+			} else {
+				tileNorth = (s16 *)(D_80151DD8 + colWrap + 0x870);
+			}
+
+			shadeMix = &shade[(col * 3) - (ringX * 3)];
+			c0 = shadeMix[0];
+			if (c0 != 0) {
+				c0 += (u8)((u8 *)tileCenter)[2];
+				if (c0 > 0xFF) {
+					c0 = 0xFF;
+				}
+
+				c1 = shadeMix[1] + (u8)((u8 *)tileCenter)[3];
+				if (c1 > 0xFF) {
+					c1 = 0xFF;
+				}
+
+				c2 = shadeMix[2] + (u8)((u8 *)tileCenter)[4];
+				if (c2 > 0xFF) {
+					c2 = 0xFF;
+				}
+			} else {
+				c0 = (u8)((u8 *)tileCenter)[2];
+				c1 = (u8)((u8 *)tileCenter)[3];
+				c2 = (u8)((u8 *)tileCenter)[4];
+			}
+			blur0 = (s8)c0;
+			blur1 = (s8)c1;
+			blur2 = (s8)c2;
+
+			edgeParityX = (s8)color1 % 2;
+			if (edgeParityX == 1) {
+				hueX = D_8013DACC_14CA7C[currentLevel - 1];
+			} else {
+				hueX = D_8013DAD4_14CA84[currentLevel - 1];
+			}
+
+			if (edgeParityY == 1) {
+				hueY = D_8013DAD0_14CA80[currentLevel - 1];
+			} else {
+				hueY = D_8013DAD8_14CA88[currentLevel - 1];
+			}
+
+			cellH = ((*tileCenter) & 0x3F) << 5;
+			posZ = cellH;
+
+			if (scrollX < 0) {
+				inA = scrollX + 1;
+				inB = -scrollX - 1;
+				inA = (inB < inA) ? inB : inA;
+				inA = (s8)inA;
+				waveX = 0xFF - inA;
+			} else {
+				waveX = (s8)scrollX;
+			}
+
+			worldX = worldY;
+			if (tilesMinX < worldX) {
+				posX = worldX + waveX - 0x100;
+				inA = ((*tileWest) & 0x3F) << 5;
+				posZ = func_800B0A10_BF9C0(inA, cellH, waveX, 0x100);
+				if (edgeParityX == 1) {
+					hueX = waveX;
+				} else {
+					hueX = 0xFF - waveX;
+				}
+			} else if (worldX < (scrollX - 0x901)) {
+				posX = worldX + waveX;
+				inA = ((*tileEast) & 0x3F) << 5;
+				posZ = func_800B0A10_BF9C0(cellH, inA, waveX, 0x100);
+				if (edgeParityX == 1) {
+					hueX = 0xFF - waveX;
+				} else {
+					hueX = waveX;
+				}
+			} else {
+				posX = worldX;
+			}
+
+			if (scrollY < 0) {
+				inA = scrollY + 1;
+				inB = -scrollY - 1;
+				inA = (inB < inA) ? inB : inA;
+				inA = (s8)inA;
+				waveY = 0xFF - inA;
+			} else {
+				waveY = (s8)scrollY;
+			}
+
+			if (tilesMinY < worldY) {
+				posY = worldY + waveY - 0x100;
+				inA = ((*tileNorth) & 0x3F) << 5;
+				posZ = func_800B0A10_BF9C0(inA, posZ, waveY, 0x100);
+				if (edgeParityY == 1) {
+					hueY = waveY;
+				} else {
+					hueY = 0xFF - waveY;
+				}
+			} else if (worldY < (scrollY - 0x901)) {
+				posY = worldY + waveY;
+				inA = ((*tileSouth) & 0x3F) << 5;
+				posZ = func_800B0A10_BF9C0(posZ, inA, waveY, 0x100);
+				if (edgeParityY == 1) {
+					hueY = 0xFF - waveY;
+				} else {
+					hueY = waveY;
+				}
+			} else {
+				posY = worldY;
+			}
+
+			hueX = (hueX * 8) + D_8013DADC_14CA8C[currentLevel - 1];
+			hueY = (hueY * 8) + D_8013DADC_14CA8C[currentLevel - 1];
+
+			if ((posZ < (D_80222A70 - 0x46)) && (D_801493CC == 0)) {
+				s16 dist;
+
+				dist = ((D_80222A70 - posZ) - 0x46) / 10;
+				frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
+				ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
+				posZ = (s16)(posZ - (s16)((f64)dist * ratio));
+			}
+
+			if ((D_80222A70 + 0x3C) < posZ && (D_801493CC != 0)) {
+				s16 dist2;
+
+				dist2 = ((D_80222A70 - posZ) - 0x3C) / 20;
+				frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
+				ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
+				posZ = (s16)(posZ - (s16)((f64)dist2 * ratio));
+			}
+
+			tileType = func_800056D0_62D0(posX, posY) & 0xFF;
+			switch (currentLevel) {
+				case 1:
+					if (tileType == 0x10) {
+						amp = 0x1E;
+						frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
+						ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
+						hueX = (s16)(hueX - (s16)((f64)amp * ratio));
+						ratio = ((f64)(f32)sins(frameAngle) / 32768.0);
+						hueY = (s16)(hueY - (s16)((f64)amp * ratio));
+					}
+					break;
+				case 2:
+					if (tileType == 0x10 || tileType == 0x15) {
+						amp = (tileType == 0x10) ? 0x1E : 0x50;
+						frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
+						ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
+						hueX = (s16)(hueX - (s16)((f64)amp * ratio));
+						ratio = ((f64)(f32)sins(frameAngle) / 32768.0);
+						hueY = (s16)(hueY - (s16)((f64)amp * ratio));
+					}
+					break;
+				case 3:
+					if (tileType == 0x10) {
+						amp = 0x1E;
+						frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
+						ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
+						hueX = (s16)(hueX - (s16)((f64)amp * ratio));
+						ratio = ((f64)(f32)sins(frameAngle) / 32768.0);
+						hueY = (s16)(hueY - (s16)((f64)amp * ratio));
+					}
+					break;
+				case 4:
+					if (tileType == 0x10) {
+						amp = 0x1E;
+						frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
+						ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
+						hueX = (s16)(hueX - (s16)((f64)amp * ratio));
+						ratio = ((f64)(f32)sins(frameAngle) / 32768.0);
+						hueY = (s16)(hueY - (s16)((f64)amp * ratio));
+					}
+					break;
+				case 5:
+					if (tileType == 0x10 || tileType == 0x14) {
+						amp = 0x28;
+						frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
+						ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
+						hueX = (s16)(hueX - (s16)((f64)amp * ratio));
+						ratio = ((f64)(f32)sins(frameAngle) / 32768.0);
+						hueY = (s16)(hueY - (s16)((f64)amp * ratio));
+					}
+					break;
+			}
+
+			if (D_8015273E != 0) {
+				posZ += (D_8015273E * 4);
+			}
+
+			(*vtxPtr)->v.ob[0] = posX;
+			(*vtxPtr)->v.ob[1] = posZ;
+			(*vtxPtr)->v.ob[2] = posY;
+			(*vtxPtr)->v.flag = 0;
+			(*vtxPtr)->v.tc[0] = hueX;
+			(*vtxPtr)->v.tc[1] = hueY;
+			(*vtxPtr)->v.cn[0] = (u8)blur0;
+			(*vtxPtr)->v.cn[1] = (u8)blur1;
+			(*vtxPtr)->v.cn[2] = (u8)blur2;
+			(*vtxPtr)->v.cn[3] = 0xFF;
+			*vtxPtr = *vtxPtr + 1;
+
+			mapY++;
+			ringCol = (ringCol + 1) & 0xFF;
+			col = (col + 1) % 0x13;
+		} while (ringCol < 0x12);
+
+		color0 = (color0 + 1) % 0x13;
+		color1 = D_8014F89C;
+		color2++;
+		row = (row + 1) & 0xFF;
+		rowWrap = row;
+	} while (rowWrap < 0x12);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5090_C4040.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
