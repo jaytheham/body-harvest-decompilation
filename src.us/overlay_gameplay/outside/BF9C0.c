@@ -1258,7 +1258,136 @@ void func_800B33BC_C236C(s32 arg0) {
 	}
 }
 
+// CURRENT(92233)
+#ifdef NON_MATCHING
+void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
+	u8 spA8;
+	u8 spA9;
+	u8 spAA;
+	s8 spAC[5];
+	s16 sp94;
+	u32 baseXWord;
+	s32 row;
+	s32 col;
+	s32 i;
+	u8 mode;
+	s32 mapIndex;
+	s32 tmp;
+	f32 f0;
+	u8 colorR;
+	u8 colorG;
+	u8 colorB;
+	u8 *entry;
+
+	(void)arg3;
+
+	D_8014F8A0 = (s16 (*)[256])arg2;
+	sp94 = D_8014F89C;
+
+	for (row = 0; row < 0x13; row = (row + 1) & 0xFF) {
+		baseXWord = (D_8014F89D + row) & 0xFF;
+
+		for (col = 0; col < 0x13; col = (col + 1) & 0xFF) {
+			mapIndex = (u16)(sp94 + col + (baseXWord << 8));
+
+			spAC[0] = ((u16 *)arg2)[mapIndex - 0x100] & 0x3F;
+			spAC[1] = ((u16 *)arg2)[mapIndex - 1] & 0x3F;
+			spAC[2] = ((u16 *)arg2)[mapIndex] & 0x3F;
+			spAC[3] = ((u16 *)arg2)[mapIndex + 1] & 0x3F;
+			spAC[4] = ((u16 *)arg2)[mapIndex + 0x100] & 0x3F;
+
+			func_800B1814_C07C4(((u8 *)&baseXWord)[3], (sp94 + col) & 0xFF, &colorR, (s16 *)arg2);
+			mode = D_80151DD0;
+
+			if (mode == 2) {
+				colorR = func_800B0A10_BF9C0((s32)(s8)colorR / 2, colorR, (u8)D_8013D9AC_14C95C, 0x40) & 0xFF;
+				colorG = func_800B0A10_BF9C0((s32)(s8)colorG / 2, colorG, (u8)D_8013D9AC_14C95C, 0x40) & 0xFF;
+				colorB = func_800B0A10_BF9C0((s32)(s8)colorB / 2, colorB, (u8)D_8013D9AC_14C95C, 0x40) & 0xFF;
+				mode = D_80151DD0;
+			}
+
+			if (mode == 3) {
+				colorR = func_800B0A10_BF9C0(0, (s32)(s8)colorR / 2, (u8)D_8013D9AC_14C95C, 0x96) & 0xFF;
+				colorG = func_800B0A10_BF9C0(0, (s32)(s8)colorG / 2, (u8)D_8013D9AC_14C95C, 0x96) & 0xFF;
+				colorB = func_800B0A10_BF9C0(0, (s32)(s8)colorB / 2, (u8)D_8013D9AC_14C95C, 0x96) & 0xFF;
+				mode = D_80151DD0;
+			}
+
+			if (mode == 4) {
+				colorR = 0;
+				colorG = 0;
+				colorB = 0;
+			}
+
+			if (D_8013D9B0_14C960 != 0) {
+				if (D_8013D9B0_14C960 >= 0x3D) {
+					f0 = (f32)((1.0 - ((f64)(f32)coss((u16)((s32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3C) / 15.0f) * 32768.0f))) / 32768.0)) / 2.0);
+				} else {
+					f0 = (f32)((((f64)(f32)coss((u16)((s32)(((f32)(s16)D_8013D9B0_14C960 / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2.0);
+				}
+
+				if (D_8013D9B4_14C964 != 0) {
+					colorR = ((s32)((((f32)colorR * f0) / 2.0f) + ((s32)colorR >> 1))) & 0xFF;
+					colorG = ((s32)((((f32)colorG * f0) / 2.0f) + ((s32)colorG >> 1))) & 0xFF;
+					colorB = ((s32)((((f32)colorB * f0) / 2.0f) + ((s32)colorB >> 1))) & 0xFF;
+				} else {
+					colorR = ((s32)(((f64)((f32)colorR * f0) * 0.75) + ((s32)colorR >> 2))) & 0xFF;
+					colorG = ((s32)(((f64)((f32)colorG * f0) * 0.75) + ((s32)colorG >> 2))) & 0xFF;
+					colorB = ((s32)(((f64)((f32)colorB * f0) * 0.75) + ((s32)colorB >> 2))) & 0xFF;
+				}
+			}
+
+			if (D_8013D9C8_14C978 != 0) {
+				colorR = 0xFF;
+				colorG = 0xFF;
+				colorB = 0xFF;
+			}
+
+			func_800B2CF0_C1CA0(spAC, &colorR, (s8 *)&spA8);
+
+			entry = &D_80151DD8[((((s32)((s8)D_80151DD8[0x960] + row) % 19) & 0xFFFF) * 0x78) +
+				((((s32)((s8)D_80151DD8[0x961] + col) % 19) & 0xFFFF) * 6)];
+			entry[2] = spA8;
+			entry[4] = spAA;
+			entry[3] = spA9;
+		}
+	}
+
+	for (row = 0; row < 0x13; row = (row + 1) & 0xFF) {
+		for (col = 0; col < 0x13; col = (col + 1) & 0xFF) {
+			for (i = 0; i < 0x40; i = (i + 1) & 0xFF) {
+				if (((sp94 + col) == D_8014FD48[i * 2]) && ((D_8014F89D + row) == D_8014FD48[(i * 2) + 1])) {
+					entry = &D_80151DD8[(row * 0x78) + (col * 6)];
+					tmp = ((D_8014FD48[(i * 2) + 1] * D_8014FD48[i * 2]) % 60) & 0xFF;
+
+					if ((tmp + 0x14) < 0) {
+						entry[2] = 0;
+					} else {
+						entry[2] = tmp + 0x14;
+					}
+
+					if ((tmp - 5) < 0) {
+						entry[3] = 0;
+					} else {
+						entry[3] = tmp - 5;
+					}
+
+					if ((tmp - 0x19) < 0) {
+						entry[4] = 0;
+					} else {
+						entry[4] = tmp - 0x19;
+					}
+				}
+			}
+		}
+	}
+
+	(void)arg0;
+	(void)arg1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B345C_C240C.s")
+#endif
 
 // https://decomp.me/scratch/TODO
 #ifdef NON_MATCHING

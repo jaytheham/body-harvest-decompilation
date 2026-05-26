@@ -2364,7 +2364,185 @@ void func_800C6558_D5508(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C6558_D5508.s")
 #endif
 
+// CURRENT(37116)
+#ifdef NON_MATCHING
+void func_800C6D80_D5D30(void) {
+	s16 sp15C;
+	s16 sp15A;
+	s16 sp158;
+	s16 sp154;
+	s16 sp152;
+	s16 sp150;
+	s16 sp14C;
+	s16 sp14A;
+	s16 sp148;
+	s16 sp144;
+	s16 sp142;
+	s16 sp140;
+	s8 sp13E;
+	s8 sp13D;
+	s8 sp13C;
+	s16 sp13A;
+	s16 sp138;
+	f32 temp_f0;
+	f32 temp_f0_2;
+	f32 temp_f0_3;
+	f32 temp_f2;
+	f32 var_f0;
+	s16 temp_a3;
+	s16 var_a2;
+	s16 var_t1;
+	s32 temp_f16;
+	u16 temp_u16;
+	Unk80154318Entry *entry;
+	Unk80154318Entry *linked;
+	Unk80154318Entry *next;
+
+	var_t1 = D_8015420A;
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+	gSPClearGeometryMode(D_8005BB2C++, G_FOG);
+	gDPPipeSync(D_8005BB2C++);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_PASS, G_RM_AA_ZB_XLU_SURF2);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
+	gDPSetCombineLERP(D_8005BB2C++, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, ENVIRONMENT,
+					COMBINED, TEXEL0, 0, ENVIRONMENT, COMBINED);
+	gDPPipeSync(D_8005BB2C++);
+
+	if ((var_t1 == -6) || (var_t1 == -5)) {
+		return;
+	}
+
+	do {
+		entry = &D_80154318[var_t1];
+		linked = &D_80154318[entry->unk4];
+		next = &D_80154318[linked->unk4];
+
+		temp_u16 = (u16)next->unk8;
+		temp_f16 = (s32)((f64)(f32)entry->unk2 * ((f64)(f32)temp_u16 * 0.03125) * 6.0);
+		sp15C = temp_f16;
+		sp15A = temp_f16;
+		sp158 = temp_f16;
+
+		if (func_800B93AC_C835C(entry->unk8, entry->unkC, temp_f16 & 0xFFFF, (s16)(s32)(D_80047954 * 4.0f),
+								(s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
+			u8 *linkedBytes;
+			Unk80154318Sub *entrySub;
+			Unk80154318Sub *linkedSub;
+
+			linkedBytes = (u8 *)&next->unk8;
+			sp158 = (s16)(s32)((f32)(((f64)linkedBytes[2] / D_80143FD8_152F88) + 1.0) * (f32)sp158);
+			sp15A = (s16)(s32)((f32)(((f64)linkedBytes[3] / D_80143FD8_152F88) + 1.0) * (f32)sp15A);
+			sp15C = (s16)(s32)((f32)(((f64)linkedBytes[4] / D_80143FD8_152F88) + 1.0) * (f32)sp15C);
+
+			entrySub = (Unk80154318Sub *)&entry->unk8;
+			linkedSub = (Unk80154318Sub *)&linked->unk8;
+
+			sp140 = entry->unk8;
+			sp142 = entrySub->unk2;
+			sp144 = entrySub->unk4;
+
+			temp_f0 = (D_80153BA0.x * 4.0f) - (f32)entry->unk8;
+			temp_f2 = (D_80153BA0.z * 4.0f) - (f32)entrySub->unk4;
+			temp_f0_2 = sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
+
+			sp150 = 0;
+			sp152 = ((u8)linkedSub->unk8) << 8;
+			sp154 = 0;
+			sp148 = func_80003824_4424(D_80153B90.z, D_80153B90.x) + 0x8000;
+			sp14A = 0x8000;
+			sp14C = 0x4000 - func_80003824_4424((D_80153BA4 * 4.0f) - (f32)entrySub->unk2, temp_f0_2);
+
+			if (entrySub->unkC < 3) {
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF);
+				gDPSetEnvColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF);
+			} else {
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, (u8)entrySub->unk6, (u8)entrySub->unk7, (u8)entrySub->unk8,
+						(u8)linkedSub->unk9);
+				gDPSetEnvColor(D_8005BB2C++, (u8)entrySub->unk9, (u8)entrySub->unkA, (u8)entrySub->unkB,
+						(u8)linkedSub->unkA);
+			}
+
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
+						  ((u32)&D_50474F0[((u8)linkedSub->unk6) << 9]) & 0x1FFFFFFF);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, 4, 0,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, 4, 0, 0, 255, 1024);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << 2), (31 << 2));
+
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
+						  ((u32)&D_50494F0[((u8)linkedSub->unk6) << 9]) & 0x1FFFFFFF);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0040, 5, 0,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, 5, 0, 0, 255, 1024);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0040, 1, 0,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, 1, 0, 0, (31 << 2), (31 << 2));
+
+			D_8005BB38 += 0x40;
+			func_800039D0_45D0((Unk80052B40 *)&sp140, (Unk80052B40 *)&sp148, (Unk80052B40 *)&sp158, D_8005BB38);
+			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+
+			D_8005BB38 += 0x40;
+			func_800039D0_45D0(NULL, (Unk80052B40 *)&sp150, NULL, D_8005BB38 + 0x40);
+			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+
+			D_8005BB38 += 0x40;
+			gSPDisplayList(D_8005BB2C++, D_504B640);
+			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+
+			temp_a3 = entry->unk2;
+			D_80156EDA += 0x15;
+			if (temp_a3 >= 0x4C) {
+				sp13C = 0x7F;
+				sp13D = 0x6B;
+				sp13E = 0x5C;
+				sp138 = entry->unk8;
+				sp13A = entrySub->unk4;
+
+				if (temp_a3 >= 0x2E) {
+					var_f0 = 1.0f;
+					if (temp_a3 < 0x64) {
+						var_a2 = (entrySub->unkC * 5) + 0x80;
+						var_f0 = (f32)temp_a3 / 128.0f;
+					} else {
+						var_a2 = (entrySub->unkC * 8) + (temp_a3 >> 1) + 0x80;
+					}
+
+					temp_f0_3 = ((f32)(0x24 - entrySub->unkC) / 32.0f) * var_f0;
+					sp13C = (s8)(u32)(127.0f * temp_f0_3);
+					sp13D = (s8)(u32)(107.0f * temp_f0_3);
+					sp13E = (s8)(u32)(92.0f * temp_f0_3);
+
+					func_800B2354_C1304(&sp138, &sp13C, var_a2, (entrySub->unkC * 0x12) + 0x80);
+				}
+			}
+		}
+
+		var_t1 = next->unk4;
+	} while ((var_t1 != -6) && (var_t1 != -5));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C6D80_D5D30.s")
+#endif
 
 // CURRENT(200)
 #ifdef NON_MATCHING

@@ -1567,6 +1567,13 @@ typedef struct {
 } Unk8013FDA8Entry; /* size = 0x10 */
 
 typedef struct {
+	s32 model;
+	void (*updateMtx)(u8);
+	Unk80052B40 offset;
+	u16 flags;
+} ShadowPartEntry;
+
+typedef struct {
 	/* 0x00 */ f32 unk0;
 	/* 0x04 */ f32 unk4;
 	/* 0x08 */ f32 unk8;
