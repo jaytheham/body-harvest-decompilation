@@ -3724,5 +3724,7 @@ extern s16 D_80048172;
 extern s32 D_8015EB78;
 extern u8 D_8015EA55;
 extern u8 D_8015EA56;
+extern u16 D_1014480[];
+extern u16 D_1014680[];
 
 #endif

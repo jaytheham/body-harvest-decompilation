@@ -3852,7 +3852,394 @@ void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F63D0_105380.s")
 
+// CURRENT(56921)
+#ifdef NON_MATCHING
+void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
+	f32 sp134;
+	f32 sp130;
+	f32 sp12C;
+	f32 sp120[3];
+	f32 sp11C;
+	f32 spF8;
+	f32 spF4;
+	volatile f32 four;
+	f32 three;
+	s16 spEA;
+	s16 spE8;
+	s16 spE6;
+	s16 spE4;
+	s16 spE2;
+	s16 spE0;
+	s16 spD2;
+	s16 spD0;
+	s16 spCE;
+	s32 sp34;
+	s32 sp30;
+	s32 pad[32];
+
+	f32 radius;
+	f32 radiusScaled;
+	s16 angle;
+	s32 cosTerm;
+	s32 sinTerm;
+	s16 xStep;
+	s16 yStep;
+	s16 zStep;
+	s32 xTri;
+	s32 zTri;
+	s16 halfSin;
+	s16 halfCos;
+	u8 *levelColor;
+	u8 cR;
+	u8 cG;
+	u8 cB;
+	volatile Vtx *vtx;
+	Gfx *dl;
+
+	radius = (f32)D_801601F0[arg3].unk8;
+	four = 4.0f;
+	three = 3.0f;
+	radiusScaled = (radius * three) / four;
+	if (D_8013FCD0_14EC80 != 0) {
+		radiusScaled *= four;
+		radius *= 2.0f;
+	}
+
+	sp12C = (f32)(arg1[0] - arg0[0]);
+	sp130 = (f32)(arg1[1] - arg0[1]);
+	sp134 = (f32)(arg1[2] - arg0[2]);
+	spF8 = radiusScaled;
+	spF4 = radius;
+	func_800F54AC_10445C((Vec3f *)&sp12C, (Vec3f *)&sp12C);
+
+	angle = func_80003824_4424((f32)(arg0[2] - arg2[2]), (f32)(arg0[0] - arg2[0]));
+	sp11C = (f32)((f64)(f32)sins((angle + 0x4000) & 0xFFFF) / 32768.0);
+	cosTerm = coss((angle + 0x4000) & 0xFFFF);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	{
+		s32 i;
+
+		for (i = 0; i < 3; i++) {
+			sp120[i] = (&sp12C)[i] * 127.0f;
+		}
+	}
+
+	levelColor = &D_8013FCD4_14EC84[(currentLevel * 9) - 9];
+	spEA = levelColor[0];
+	spE8 = levelColor[1];
+	spE6 = levelColor[2];
+	spE4 = (spEA >= 0xB4) ? (spEA - 0xB4) : 0;
+	spE2 = (spE8 >= 0xB4) ? (spE8 - 0xB4) : 0;
+	spE0 = (spE6 >= 0xB4) ? (spE6 - 0xB4) : 0;
+	spD0 = levelColor[7];
+	spD2 = levelColor[6];
+	spCE = levelColor[8];
+	cR = levelColor[3];
+	cG = levelColor[4];
+	cB = levelColor[5];
+
+	vtx = D_8005BB34;
+	vtx->v.ob[0] = arg0[0];
+	vtx->v.ob[1] = arg0[1];
+	vtx->v.ob[2] = arg0[2];
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = cR;
+	vtx->v.cn[1] = cG;
+	vtx->v.cn[2] = cB;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	sinTerm = (s32)(spF8 * sp11C);
+	cosTerm = (s32)(spF8 * (f32)((f64)(f32)cosTerm / 32768.0));
+	xStep = (s16)(s32)(sp12C * spF4);
+	yStep = (s16)(s32)(sp130 * spF4);
+	zStep = (s16)(s32)(sp134 * spF4);
+	xTri = ((s16)xStep) * 3;
+	zTri = ((s16)zStep) * 3;
+
+	vtx->v.ob[0] = arg1[0] + (s16)sinTerm + xTri;
+	vtx->v.ob[1] = arg1[1] + yStep;
+	vtx->v.ob[2] = arg1[2] + (s16)cosTerm + zTri;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0x200;
+	vtx->v.cn[0] = cR;
+	vtx->v.cn[1] = cG;
+	vtx->v.cn[2] = cB;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg1[0] - (s16)sinTerm + xTri;
+	vtx->v.ob[1] = arg1[1] + yStep;
+	vtx->v.ob[2] = arg1[2] - (s16)cosTerm + zTri;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0x200;
+	vtx->v.cn[0] = cR;
+	vtx->v.cn[1] = cG;
+	vtx->v.cn[2] = cB;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg1[0] + (xStep * 4);
+	vtx->v.ob[1] = arg1[1] + (yStep * 4) + 5;
+	vtx->v.ob[2] = arg1[2] + (zStep * 4);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = spD2;
+	vtx->v.cn[1] = spD0;
+	vtx->v.cn[2] = spCE;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	halfSin = ((s16)sinTerm >= 0) ? ((s16)sinTerm >> 1) : (((s16)sinTerm + 1) >> 1);
+	halfCos = ((s16)cosTerm >= 0) ? ((s16)cosTerm >> 1) : (((s16)cosTerm + 1) >> 1);
+
+	vtx->v.ob[0] = arg1[0];
+	vtx->v.ob[1] = arg1[1];
+	vtx->v.ob[2] = arg1[2];
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = spE4;
+	vtx->v.cn[1] = spE2;
+	vtx->v.cn[2] = spE0;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg1[0] + halfSin;
+	vtx->v.ob[1] = (s16)(s32)((f32)arg1[1] - spF4);
+	vtx->v.ob[2] = arg1[2] + halfCos;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0x200;
+	vtx->v.cn[0] = spE4;
+	vtx->v.cn[1] = spE2;
+	vtx->v.cn[2] = spE0;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg1[0] - halfSin;
+	vtx->v.ob[1] = (s16)(s32)((f32)arg1[1] - spF4);
+	vtx->v.ob[2] = arg1[2] - halfCos;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0x200;
+	vtx->v.cn[0] = spE4;
+	vtx->v.cn[1] = spE2;
+	vtx->v.cn[2] = spE0;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg2[0];
+	vtx->v.ob[1] = arg2[1];
+	vtx->v.ob[2] = arg2[2];
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = spEA;
+	vtx->v.cn[1] = spE8;
+	vtx->v.cn[2] = spE6;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg2[0] + halfSin;
+	vtx->v.ob[1] = (s16)(s32)((f32)arg2[1] - spF4);
+	vtx->v.ob[2] = arg2[2] + halfCos;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x200;
+	vtx->v.cn[0] = spEA;
+	vtx->v.cn[1] = spE8;
+	vtx->v.cn[2] = spE6;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg2[0] - halfSin;
+	vtx->v.ob[1] = (s16)(s32)((f32)arg2[1] - spF4);
+	vtx->v.ob[2] = arg2[2] - halfCos;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x200;
+	vtx->v.cn[0] = spEA;
+	vtx->v.cn[1] = spE8;
+	vtx->v.cn[2] = spE6;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	D_8005BB34 = (Vtx *)vtx;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB7000000;
+	dl->words.w1 = 0x00010000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB6000000;
+	dl->words.w1 = 0x00020000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBB000001;
+	dl->words.w1 = 0x80008000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFC1219FF;
+	dl->words.w1 = 0xFFFFFE38;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD100000;
+	dl->words.w1 = (u32)D_1014480;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5100000;
+	dl->words.w1 = 0x07080200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF3000000;
+	dl->words.w1 = 0x070FF200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5100800;
+	dl->words.w1 = 0x00080200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF2000000;
+	dl->words.w1 = 0x0003C03C;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x0400289F;
+	dl->words.w1 = (u32)(D_8005BB34 - 10) & 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00000206;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00000604;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00000402;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00020406;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD100000;
+	dl->words.w1 = (u32)D_1014680;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5100000;
+	dl->words.w1 = 0x07080200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF3000000;
+	dl->words.w1 = 0x070FF200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5100800;
+	dl->words.w1 = 0x00080200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF2000000;
+	dl->words.w1 = 0x0003C03C;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x000C120E;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x000C0E08;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00080E10;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x0008100A;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBB000000;
+	dl->words.w1 = 0x80008000;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F7790_106740.s")
+#endif
 
 // CURRENT(?)
 #ifdef NON_MATCHING
