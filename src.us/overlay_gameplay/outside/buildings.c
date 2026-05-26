@@ -443,8 +443,8 @@ s32 func_801168E8_125898(s16 arg0, s16 arg1) {
 }
 
 // guess_initBuildingsDoors
+// CURRENT(?)
 #ifdef NON_MATCHING
-// CURRENT(0)
 void func_8011694C_1258FC(void) {
 	Unk800522C0 *doorRef;
 	s32 unusedPad0;
