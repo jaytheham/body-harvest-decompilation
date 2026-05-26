@@ -221,7 +221,282 @@ void func_800A4150_B3100(u8 arg0) {
 	}
 }
 
+// CURRENT(36663)
+#ifdef NON_MATCHING
+void func_800A41B0_B3160(u8 arg0) {
+	AlienInstance *alien;
+	Unk8014DD50 *node;
+	s16 routeId;
+	s16 timer;
+	s16 levelStep;
+	s32 flags;
+	s8 armA;
+	s8 armB;
+
+	alien = &alienInstances[arg0];
+	routeId = alien->unkC;
+
+	if (routeId != -1) {
+		s8 n0;
+
+		node = D_8014DD50;
+		n0 = node[routeId].unkC;
+		if (currentLevel < 4) {
+			s8 n1;
+			s8 n2;
+			s8 n3;
+
+			n1 = node[n0].unkD;
+			n2 = node[n1].unkD;
+			n3 = node[n2].unkD;
+			if (n3 == -1) {
+				armA = n1;
+				armB = n2;
+			} else {
+				armA = n3;
+				armB = node[n3].unkD;
+			}
+		} else {
+			armA = node[n0].unkD;
+			armB = node[armA].unkD;
+		}
+	}
+
+	flags = alien->unk20;
+	if (flags & 0x1000) {
+		alien->unk2C++;
+		timer = alien->unk2C;
+
+		if (flags & 0x4000) {
+			if (routeId != 0xFF) {
+				s16 swing;
+
+				swing = (s16) (0x2000 - (timer << 9));
+				D_8014DD50[armA].unk6 = swing;
+				D_8014DD50[armB].unk6 = -swing;
+			}
+
+			if (timer >= 0x11) {
+				flags &= ~0x5000;
+				alien->unk20 = flags;
+			}
+		} else {
+			if ((timer < 0x10) && (routeId != 0xFF)) {
+				s16 swing;
+
+				swing = (s16) (timer << 7);
+				D_8014DD50[armA].unk6 = swing;
+				D_8014DD50[armB].unk6 = -swing;
+			} else if ((timer < 0x18) && (routeId != 0xFF)) {
+				s16 swing;
+
+				swing = (s16) (timer << 7);
+				D_8014DD50[armA].unk6 = swing;
+				D_8014DD50[armB].unk6 = -swing;
+			} else if (routeId != 0xFF) {
+				D_8014DD50[armA].unk6 = 0x2000;
+				D_8014DD50[armB].unk6 = (s16) 0xE000;
+			}
+
+			levelStep = 0xA;
+			if ((currentLevel == 1) || (currentLevel == 3)) {
+				levelStep = 0xF;
+			}
+
+			if ((timer >= 0x10) && (((u16 *) &D_802566BA[alien->specIndex * 0x68])[0] / 10 < alien->hitPoints) && ((timer % levelStep) == 0) && (alien->unk3D != 0)) {
+				s16 randA;
+				s16 randB;
+				s8 velX;
+				s8 velZ;
+				f32 fx;
+				f32 fz;
+				f32 cosDir;
+				f32 sinDir;
+
+				func_80137468_146418(arg0, 0x19);
+				cosDir = (f32) ((f64) (f32) coss((u16) alien->unk6) / 32768.0);
+				sinDir = (f32) ((f64) (f32) sins((u16) alien->unk6) / 32768.0);
+				fx = 180.0f * cosDir;
+				fz = 180.0f * sinDir;
+				randA = (s16) func_800038E0_44E0();
+				randB = (s16) func_800038E0_44E0();
+				velX = (s8) (s32) (127.0f * cosDir);
+				velZ = (s8) (s32) (127.0f * sinDir);
+
+				func_800CA5EC_D959C(
+					(s16) (s32) ((f32) alien->unk0 + fx),
+					(s16) (alien->unk2 + 0xA),
+					(s16) (s32) ((f32) alien->unk4 + fz),
+					velX,
+					(s8) (s32) (127.0f * sinDir),
+					velZ,
+					0x1E,
+					(randA % 5) + 4,
+					0x3C,
+					4,
+					(randB % 90) + 0x28,
+					0xF0,
+					0xC8,
+					0x14);
+
+				randA = (s16) func_800038E0_44E0();
+				randB = (s16) func_800038E0_44E0();
+				func_800CA5EC_D959C(
+					(s16) (s32) ((f32) alien->unk0 + fx),
+					(s16) (alien->unk2 + 0x1E),
+					(s16) (s32) ((f32) alien->unk4 + fz),
+					velX,
+					velZ,
+					(s8) (s32) (((f32) randA / 32768.0f) * 127.0f),
+					0x28,
+					(randA % 5) + 4,
+					0x46,
+					4,
+					(randB % 90) + 0x28,
+					0xF0,
+					0xC8,
+					0x14);
+
+				randA = (s16) func_800038E0_44E0();
+				randB = (s16) func_800038E0_44E0();
+				func_800CA5EC_D959C(
+					(s16) (s32) ((f32) alien->unk0 + fx),
+					(s16) (alien->unk2 + 0x32),
+					(s16) (s32) ((f32) alien->unk4 + fz),
+					velX,
+					velZ,
+					(s8) (s32) (((f32) randA / 32768.0f) * 127.0f),
+					0x32,
+					(randA % 5) + 4,
+					0x46,
+					4,
+					(randB % 90) + 0x28,
+					0xF0,
+					0xC8,
+					0x14);
+
+				if (alien->unk3D != 0) {
+					alien->unk3D--;
+				}
+
+				if (func_800A3E74_B2E24(arg0) == 0) {
+					func_800A4150_B3100(arg0);
+				} else {
+					alien->unk24++;
+				}
+				flags = alien->unk20;
+			}
+		}
+	} else if (alien->unk26 != 0) {
+		alien->unk26--;
+		flags = alien->unk20;
+	}
+
+	if ((flags < 0) && (((u16 *) &D_802566BA[alien->specIndex * 0x68])[0] / 10 < alien->hitPoints)) {
+		if (!((currentLevel == 4) && (alien->unk1B == 2))) {
+			u8 attackCap;
+
+			if (currentLevel < 3) {
+				attackCap = 0xC;
+			} else {
+				attackCap = 6;
+			}
+
+			if (alien->unk24 < attackCap) {
+				if ((alien->unk26 == 0) && !(flags & 0x1000)) {
+					flags |= 0x1000;
+					flags &= ~0x4000;
+					alien->unk20 = flags;
+					alien->unk2C = 0;
+					alien->unk26 = (u8) ((func_800038E0_44E0() % 0x32) + 0x14);
+
+					switch (currentLevel) {
+					case 1:
+						alien->unk3C = 0xD;
+						alien->unk3D = 6;
+						break;
+					case 2:
+						alien->unk3C = 0xA;
+						alien->unk3D = 3;
+						break;
+					case 3:
+						alien->unk3C = 0xA;
+						alien->unk3D = 3;
+						break;
+					case 4:
+						if (alien->unk1B == 2) {
+							alien->unk3C = 7;
+							alien->unk3D = 2;
+						} else {
+							alien->unk3C = 0xA;
+							alien->unk3D = 3;
+						}
+						break;
+					}
+				}
+
+				if (alien->pad46 == 0) {
+					s16 x;
+					s16 y;
+					s16 z;
+					s16 spread;
+					s16 dist;
+					u8 *color;
+					f32 side;
+					f32 forward;
+
+					side = (f32) ((f64) (f32) sins((u16) (alien->unk6 + 0x4000)) / 32768.0);
+					forward = (f32) -((f64) (f32) coss((u16) (alien->unk6 + 0x4000)) / 32768.0);
+
+					if (currentLevel == 1) {
+						dist = 0x140;
+					} else if (currentLevel == 4) {
+						dist = 0xC8;
+					} else {
+						dist = 0xFA;
+					}
+
+					x = (s16) (s32) ((f32) alien->unk0 + (side * dist));
+					y = alien->unk2 + 0x50;
+					z = (s16) (s32) ((f32) alien->unk4 + (forward * dist));
+
+					if (alien->unk20 & 0x600) {
+						if (D_80031420 & 3) {
+							color = &D_8013E3C0[currentLevel * 3 - 3];
+							func_800CA5EC_D959C(
+								x,
+								y,
+								z,
+								(s8) (s32) (side * 127.0f),
+								0,
+								(s8) (s32) (forward * 127.0f),
+								0x46,
+								7,
+								0x14,
+								0xC8,
+								color[0],
+								color[1],
+								color[2],
+								0xFF);
+						}
+
+						spread = (s16) ((func_800038E0_44E0() + 0x1C2) >> 9);
+						color = &D_8013E3C0[currentLevel * 3 - 3];
+						func_800DEA08_ED9B8(x, y, z, spread, 0xC, 6, 0x28, 0xFF, color[0], color[1], color[2]);
+						alien->pad46 = 0xA;
+					}
+				}
+			}
+		}
+	}
+
+	if (alien->pad46 != 0) {
+		alien->pad46--;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A41B0_B3160.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_800A4C28_B3BD8(u8 arg0) {
