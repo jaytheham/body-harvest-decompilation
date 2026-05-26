@@ -2864,7 +2864,387 @@ success:
 }
 
 // DrawShieldWalls
+// CURRENT(37669)
+#ifdef NON_MATCHING
+void func_800BB5E0_CA590(void) {
+	Gfx *gfx;
+	s32 padStack[18];
+	ShieldWallPoint *pointTable;
+	ShieldWallLink *linkTable;
+	s16 linkIndex;
+	s16 linkCount;
+	s16 level;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0x06000000;
+	gfx->words.w1 = (u32)D_80031230;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xBA001301;
+	gfx->words.w1 = 0x00080000;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xBB000001;
+	gfx->words.w1 = 0x80008000;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xBA000C02;
+	gfx->words.w1 = 0x00002000;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xBA000E02;
+	gfx->words.w1 = 0;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xB900031D;
+	gfx->words.w1 = 0x004049D8;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xB7000000;
+	gfx->words.w1 = 0x00020200;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xFB000000;
+	gfx->words.w1 = 0x470AD464;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xFA00FFFF;
+	gfx->words.w1 = 0x62EFFFC8;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xBA000C02;
+	gfx->words.w1 = 0x00002000;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xBB000001;
+	gfx->words.w1 = 0x80008000;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xFD700000;
+	gfx->words.w1 = (u32)D_1003990 & 0x1FFFFFFF;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xF5700000;
+	gfx->words.w1 = 0x07010040;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xE6000000;
+	gfx->words.w1 = 0;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xF3000000;
+	gfx->words.w1 = 0x0707F400;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xE7000000;
+	gfx->words.w1 = 0;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xF5680400;
+	gfx->words.w1 = 0x00010040;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xF2000000;
+	gfx->words.w1 = 0x0003C03C;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xE7000000;
+	gfx->words.w1 = 0;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xFC309861;
+	gfx->words.w1 = 0x5532FF7F;
+
+	level = currentLevel;
+	linkCount = D_8003E0EE[level] * 8;
+	if (linkCount > 0) {
+		s16 i;
+		f64 texScale;
+
+		pointTable = (ShieldWallPoint *)(D_801475F0_1565A0 - 0xC0);
+		linkTable = (ShieldWallLink *)(D_801479B0_156960 - 0x80);
+		texScale = D_80142E68_151E18;
+
+		for (i = 0; i < linkCount; i++) {
+			ShieldWallLink *link;
+			s8 p0Index;
+
+			link = &linkTable[level * 64 + i];
+			p0Index = link->startIdx;
+			if (p0Index != -1) {
+				ShieldWallPoint *p0;
+				ShieldWallPoint *p1;
+				s16 startX;
+				s16 startZ;
+				s16 endX;
+				s16 endZ;
+
+				p0 = &pointTable[level * 48 + p0Index];
+				p1 = &pointTable[level * 48 + link->endIdx];
+				startX = p0->x << 8;
+				startZ = p0->z << 8;
+				endX = p1->x << 8;
+				endZ = p1->z << 8;
+
+				if (func_800BB3D0_CA380((s16)(D_80149434 - 0x800), (s16)(D_80149436 - 0x900), (s16)(D_80149434 + 0x700),
+										 (s16)(D_80149436 + 0x700), &startX, &startZ, &endX, &endZ) != 0) {
+					s16 minY;
+					s16 segment;
+					s32 dx;
+					s32 dz;
+					f32 segmentDx;
+					f32 segmentDz;
+
+					minY = 0x7D00;
+					dx = endX - startX;
+					dz = endZ - startZ;
+					if (dx < 0) {
+						dx += 3;
+					}
+					if (dz < 0) {
+						dz += 3;
+					}
+					segmentDx = (f32)(dx / 4);
+					segmentDz = (f32)(dz / 4);
+
+					for (segment = 0; segment < 4; segment++) {
+						s16 segStartX;
+						s16 segStartZ;
+						s16 segEndX;
+						s16 segEndZ;
+						s16 colorStart;
+						s16 colorEnd;
+						s16 texStartS;
+						s16 texStartT;
+						s16 texEndS;
+						s16 texEndT;
+						u32 scrollS;
+						u32 scrollT;
+						s8 alphaStart;
+						s8 alphaEnd;
+						u8 color[3];
+						s16 t;
+
+						segStartX = (s16)(s32)((f32)startX + (segmentDx * segment));
+						segStartZ = (s16)(s32)((f32)startZ + (segmentDz * segment));
+
+						for (t = 0; t < 9; t++) {
+							s16 sampleY;
+							s32 sampled;
+
+							sampleY = func_800B84D0_C7480((s16)(s32)((f32)segStartX + ((segmentDx / 8.0f) * t)),
+													 (s16)(s32)((f32)segStartZ + ((segmentDz / 8.0f) * t)))
+										  >> 8;
+							sampled = sampleY;
+							if ((s16)sampled < minY) {
+								minY = (s16)sampled;
+							}
+						}
+
+						if (segment != 3) {
+							s16 nextSegment;
+
+							nextSegment = segment + 1;
+							segEndX = (s16)(s32)((f32)startX + (segmentDx * nextSegment));
+							segEndZ = (s16)(s32)((f32)startZ + (segmentDz * nextSegment));
+						} else {
+							segEndX = endX;
+							segEndZ = endZ;
+						}
+
+						colorStart = 0x20 - (D_80052A8C & 0x3F);
+						if (colorStart < 0) {
+							colorStart = -colorStart;
+						}
+						color[0] = 0x62 - colorStart;
+
+						colorEnd = 0x80 - ((D_80052A8C * 8) & 0xFF);
+						if (colorEnd < 0) {
+							colorEnd = -colorEnd;
+						}
+						color[1] = 0xEF - colorEnd;
+						color[2] = 0xFF - colorEnd;
+
+						func_800B1A68_C0A18(&segStartX, &segEndX, color, D_80152D00);
+
+						if (segStartX == segEndX) {
+							scrollT = 0;
+							scrollS = (u32)(D_80052A8C * 10) % 32000U;
+						} else {
+							scrollS = 0;
+							scrollT = (u32)(D_80052A8C * 10) % 32000U;
+						}
+
+						if ((gameplayMode != 3) && (gameplayMode != 0xB)) {
+							alphaStart = (s8)func_800BA52C_C94DC((s16)(s32)((f32)segStartZ - D_80052B2C->unk8),
+													 (s16)(s32)((f32)segStartX - D_80052B2C->unk0), 0, 0x64);
+							alphaEnd = func_800BA52C_C94DC((s16)(s32)((f32)segEndZ - D_80052B2C->unk8),
+												   (s16)(s32)((f32)segEndX - D_80052B2C->unk0), 0, 0x64);
+						} else {
+							alphaStart = (s8)func_800BA52C_C94DC((s16)(s32)((f32)segStartZ - D_80157F08.unk8),
+													 (s16)(s32)((f32)segStartX - D_80157F08.unk0), 0, 0x64);
+							alphaEnd = func_800BA52C_C94DC((s16)(s32)((f32)segEndZ - D_80157F08.unk8),
+												   (s16)(s32)((f32)segEndX - D_80157F08.unk0), 0, 0x64);
+						}
+
+						texStartS = (s16)((f64)(startX - segStartX) * texScale + (f64)scrollS);
+						texStartT = (s16)((f64)(startZ - segStartZ) * texScale + (f64)scrollT);
+						texEndS = (s16)((f64)(startX - segEndX) * texScale + (f64)scrollS);
+						texEndT = (s16)((f64)(startZ - segEndZ) * texScale + (f64)scrollT);
+
+						D_8005BB34[0].v.ob[0] = segStartX;
+						D_8005BB34[0].v.ob[1] = minY;
+						D_8005BB34[0].v.ob[2] = segStartZ;
+						D_8005BB34[0].v.flag = 0;
+						D_8005BB34[0].v.tc[0] = texStartS;
+						D_8005BB34[0].v.tc[1] = texStartT;
+						D_8005BB34[0].v.cn[0] = 0x46;
+						D_8005BB34[0].v.cn[1] = 0x46;
+						D_8005BB34[0].v.cn[2] = 0x96;
+						D_8005BB34[0].v.cn[3] = alphaStart;
+
+						D_8005BB34[1].v.ob[0] = segStartX;
+						D_8005BB34[1].v.ob[1] = 0xBB8;
+						D_8005BB34[1].v.ob[2] = segStartZ;
+						D_8005BB34[1].v.flag = 0;
+						D_8005BB34[1].v.tc[0] = texStartS;
+						D_8005BB34[1].v.tc[1] = texStartT;
+						D_8005BB34[1].v.cn[0] = 0x46;
+						D_8005BB34[1].v.cn[1] = 0x46;
+						D_8005BB34[1].v.cn[2] = 0x96;
+						D_8005BB34[1].v.cn[3] = alphaStart;
+
+						D_8005BB34[2].v.ob[0] = segEndX;
+						D_8005BB34[2].v.ob[1] = minY;
+						D_8005BB34[2].v.ob[2] = segEndZ;
+						D_8005BB34[2].v.flag = 0;
+						D_8005BB34[2].v.tc[0] = texEndS;
+						D_8005BB34[2].v.tc[1] = texEndT;
+						D_8005BB34[2].v.cn[0] = 0x46;
+						D_8005BB34[2].v.cn[1] = 0x46;
+						D_8005BB34[2].v.cn[2] = 0x96;
+						D_8005BB34[2].v.cn[3] = alphaEnd;
+
+						D_8005BB34[3].v.ob[0] = segEndX;
+						D_8005BB34[3].v.ob[1] = 0xBB8;
+						D_8005BB34[3].v.ob[2] = segEndZ;
+						D_8005BB34[3].v.flag = 0;
+						D_8005BB34[3].v.tc[0] = texEndS;
+						D_8005BB34[3].v.tc[1] = texEndT;
+						D_8005BB34[3].v.cn[0] = 0x46;
+						D_8005BB34[3].v.cn[1] = 0x46;
+						D_8005BB34[3].v.cn[2] = 0x96;
+						D_8005BB34[3].v.cn[3] = alphaEnd;
+
+						D_8005BB34[4].v.ob[0] = segStartX;
+						D_8005BB34[4].v.ob[1] = 0xFA0;
+						D_8005BB34[4].v.ob[2] = segStartZ;
+						D_8005BB34[4].v.flag = 0;
+						D_8005BB34[4].v.tc[0] = texStartS;
+						D_8005BB34[4].v.tc[1] = texStartT;
+						D_8005BB34[4].v.cn[0] = 0x46;
+						D_8005BB34[4].v.cn[1] = 0x46;
+						D_8005BB34[4].v.cn[2] = 0x96;
+						D_8005BB34[4].v.cn[3] = 0;
+
+						D_8005BB34[5].v.ob[0] = segEndX;
+						D_8005BB34[5].v.ob[1] = 0xBB8;
+						D_8005BB34[5].v.ob[2] = segEndZ;
+						D_8005BB34[5].v.flag = 0;
+						D_8005BB34[5].v.tc[0] = texEndS;
+						D_8005BB34[5].v.tc[1] = texEndT;
+						D_8005BB34[5].v.cn[0] = 0x46;
+						D_8005BB34[5].v.cn[1] = 0x46;
+						D_8005BB34[5].v.cn[2] = 0x96;
+						D_8005BB34[5].v.cn[3] = alphaEnd;
+
+						D_8005BB34[6].v.ob[0] = segEndX;
+						D_8005BB34[6].v.ob[1] = 0xFA0;
+						D_8005BB34[6].v.ob[2] = segEndZ;
+						D_8005BB34[6].v.flag = 0;
+						D_8005BB34[6].v.tc[0] = texEndS;
+						D_8005BB34[6].v.tc[1] = texEndT;
+						D_8005BB34[6].v.cn[0] = 0x46;
+						D_8005BB34[6].v.cn[1] = 0x46;
+						D_8005BB34[6].v.cn[2] = 0x96;
+						D_8005BB34[6].v.cn[3] = 0;
+
+						D_8005BB34[7].v.ob[0] = segEndX;
+						D_8005BB34[7].v.ob[1] = 0xFA0;
+						D_8005BB34[7].v.ob[2] = segEndZ;
+						D_8005BB34[7].v.flag = 0;
+						D_8005BB34[7].v.tc[0] = texEndS;
+						D_8005BB34[7].v.tc[1] = texEndT;
+						D_8005BB34[7].v.cn[0] = 0x46;
+						D_8005BB34[7].v.cn[1] = 0x46;
+						D_8005BB34[7].v.cn[2] = 0x96;
+						D_8005BB34[7].v.cn[3] = 0;
+
+						gfx = D_8005BB2C;
+						D_8005BB2C = gfx + 1;
+						gfx->words.w0 = 0x0400207F;
+						gfx->words.w1 = (u32)D_8005BB34 | 0x80000000;
+
+						D_8005BB34 += 8;
+
+						gfx = D_8005BB2C;
+						D_8005BB2C = gfx + 1;
+						gfx->words.w0 = 0xBF000000;
+						gfx->words.w1 = 0x00000204;
+
+						gfx = D_8005BB2C;
+						D_8005BB2C = gfx + 1;
+						gfx->words.w0 = 0xBF000000;
+						gfx->words.w1 = 0x00020406;
+
+						gfx = D_8005BB2C;
+						D_8005BB2C = gfx + 1;
+						gfx->words.w0 = 0xBF000000;
+						gfx->words.w1 = 0x00080A0C;
+
+						gfx = D_8005BB2C;
+						D_8005BB2C = gfx + 1;
+						gfx->words.w0 = 0xBF000000;
+						gfx->words.w1 = 0x000A0C0E;
+					}
+				}
+			}
+		}
+	}
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0xE7000000;
+	gfx->words.w1 = 0;
+
+	gfx = D_8005BB2C;
+	D_8005BB2C = gfx + 1;
+	gfx->words.w0 = 0x06000000;
+	gfx->words.w1 = (u32)D_80031200;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BB5E0_CA590.s")
+#endif
 
 // (short playerX, short playerZ)
 #ifdef NON_MATCHING

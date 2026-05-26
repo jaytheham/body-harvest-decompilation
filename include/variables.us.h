@@ -3727,5 +3727,8 @@ extern u8 D_8015EA56;
 extern u16 D_1014480[];
 extern u16 D_1014680[];
 extern char D_80143F14_152EC4[];
+extern u8 D_801475F0_1565A0[];
+extern u8 D_801479B0_156960[];
+extern f64 D_80142E68_151E18;
 
 #endif

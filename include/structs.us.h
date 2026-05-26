@@ -2552,6 +2552,16 @@ typedef struct {
 } Unk800E0F4CEntry; /* size = 0x10 */
 
 typedef struct {
+	s16 x;
+	s16 z;
+} ShieldWallPoint;
+
+typedef struct {
+	s8 startIdx;
+	s8 endIdx;
+} ShieldWallLink;
+
+typedef struct {
 	s32 unk0;
 	s16 unk8;
 	s16 unkA;
