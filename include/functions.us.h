@@ -898,6 +898,7 @@ s32 func_801393A0_148350(s32);
 void func_80139460_148410();
 void func_801394DC_14848C(void);
 void func_8013958C_14853C(void);
+void func_801396A8_148658(s32 arg0);
 void func_80139778_148728(void);
 void func_80139984_148934(void);
 void func_80139B34_148AE4(void);
