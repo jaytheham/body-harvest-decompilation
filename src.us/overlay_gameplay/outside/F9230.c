@@ -7773,7 +7773,300 @@ void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 // Skiiping this call stops adam responding to input
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801052E8_114298.s")
 
+#ifdef NON_MATCHING
+void func_80106628_1155D8(VehicleInstance *arg0) {
+	VehicleSpec *spec;
+	s16 gridAngleX;
+	s16 gridAngleY;
+	s16 mapX;
+	s16 mapY;
+	s16 absDeltaX;
+	s16 absDeltaY;
+	s16 tileFlipX;
+	s16 tileFlipY;
+	s16 tempS16;
+	s16 steerDelta;
+	s16 absSteerDelta;
+	s32 steerStep;
+	s8 gridX;
+	s8 gridY;
+	s8 stepX;
+	s8 stepY;
+	u8 tileType;
+	u8 tileFlags;
+	u8 nextMoveMask;
+	u8 moveMask;
+
+	spec = &vehicleSpecs[arg0->unk1A];
+	arg0->unk20 |= 1;
+	func_80014508_15108(arg0, 1, 1);
+
+	gridAngleX = arg0->unk0 - arg0->unk40;
+	absDeltaX = (gridAngleX < 0) ? -gridAngleX : gridAngleX;
+
+	gridAngleY = arg0->unk4 - arg0->unk42;
+	absDeltaY = (gridAngleY < 0) ? -gridAngleY : gridAngleY;
+
+	if ((absDeltaX < 0x61) && (absDeltaY < 0x61)) {
+		gridX = arg0->unk47;
+		gridY = arg0->unk48;
+
+		tempS16 = func_800B325C_C220C(gridX, gridY, 0xFFFF);
+		tileType = (tempS16 & 0x7C0) >> 6;
+		tileFlipX = ((tempS16 & 0x4000) == 0) ^ ((gridX & 1) == 0);
+		tileFlipY = ((tempS16 & 0x2000) == 0) ^ ((gridY & 1) == 0);
+		tileFlags = D_801407F4_14F7A4[tileType * 6 + 4];
+		nextMoveMask = 0;
+
+		if (tileFlipX != 0) {
+			if (tileFlags & 8) {
+				nextMoveMask = 4;
+			}
+			if (tileFlags & 4) {
+				nextMoveMask = (nextMoveMask | 8) & 0xFF;
+			}
+		} else {
+			nextMoveMask = tileFlags & 0xC;
+			moveMask = tileFlags;
+		}
+
+		if (tileFlipY != 0) {
+			if (tileFlags & 1) {
+				nextMoveMask = (nextMoveMask | 2) & 0xFF;
+			}
+			if (tileFlags & 2) {
+				nextMoveMask = (nextMoveMask | 1) & 0xFF;
+			}
+		} else {
+			nextMoveMask = (nextMoveMask | (tileFlags & 3)) & 0xFF;
+		}
+
+		moveMask = nextMoveMask;
+		if (nextMoveMask & arg0->unk44) {
+			if ((func_800038E0_44E0(nextMoveMask, tileFlipX, nextMoveMask, tileFlipY) >= 0xC351) &&
+				((tileType == 0xF) || (tileType == 0x12) || (tileType == 0x13))) {
+				moveMask = arg0->unk44;
+				if (moveMask & 3) {
+					nextMoveMask &= 0xC;
+				}
+				if (moveMask & 0xC) {
+					nextMoveMask &= 3;
+				}
+			} else {
+				moveMask = tileType;
+				nextMoveMask = arg0->unk44;
+			}
+		} else {
+			moveMask = tileType;
+			if (arg0->unk44 & 3) {
+				nextMoveMask &= 0xC;
+			} else {
+				nextMoveMask &= 3;
+			}
+		}
+
+		if (nextMoveMask == 0) {
+			if (arg0->unk44 & 3) {
+				nextMoveMask = (~arg0->unk44) & 3;
+			} else {
+				nextMoveMask = (~arg0->unk44) & 0xC;
+			}
+		}
+
+		if ((nextMoveMask & 3) == 3) {
+			if (func_800038E0_44E0(nextMoveMask, moveMask) >= 0x8000) {
+				nextMoveMask = 1;
+			} else {
+				nextMoveMask = 2;
+			}
+		} else if ((nextMoveMask & 0xC) == 0xC) {
+			if (func_800038E0_44E0(nextMoveMask, moveMask) >= 0x8000) {
+				nextMoveMask = 8;
+			} else {
+				nextMoveMask = 4;
+			}
+		}
+
+		if (moveMask == 0xB) {
+			if (nextMoveMask & 4) {
+				if ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xB) {
+					do {
+						gridX--;
+					} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xB);
+				}
+				arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
+				if ((gridX + 2) < arg0->unk47) {
+					gridX++;
+				}
+			} else {
+				if ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xB) {
+					do {
+						gridX++;
+					} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xB);
+				}
+				arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
+				if (arg0->unk47 < (gridX - 2)) {
+					gridX--;
+				}
+			}
+		} else if (moveMask == 0xA) {
+			if (nextMoveMask & 1) {
+				if ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xA) {
+					do {
+						gridY--;
+					} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xA);
+				}
+				arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
+				if ((gridY + 2) < arg0->unk48) {
+					gridY++;
+				}
+			} else {
+				if ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xA) {
+					do {
+						gridY++;
+					} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xA);
+				}
+				arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
+				if (arg0->unk48 < (gridY - 2)) {
+					gridY--;
+				}
+			}
+		} else if (moveMask == 0xE) {
+			switch (arg0->unk44) {
+			case 1:
+				stepX = -1;
+				stepY = (tileFlipX != 0) ? -1 : 1;
+				break;
+			case 2:
+				stepX = 1;
+				stepY = (tileFlipX != 0) ? -1 : 1;
+				break;
+			case 8:
+				stepY = 1;
+				stepX = (tileFlipY != 0) ? -1 : 1;
+				break;
+			case 4:
+				stepY = -1;
+				stepX = (tileFlipY != 0) ? -1 : 1;
+				break;
+			}
+
+			if ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xE) {
+				do {
+					gridX += stepY;
+					gridY += stepX;
+				} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xE);
+			}
+
+			arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
+		} else {
+			if (nextMoveMask == 1) {
+				gridY--;
+			}
+			if (nextMoveMask == 8) {
+				gridX++;
+			}
+			if (nextMoveMask == 2) {
+				gridY++;
+			}
+			if (nextMoveMask == 4) {
+				gridX--;
+			}
+
+			arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x80;
+		}
+
+		func_800FC7E0_10B790(gridX, gridY, &mapX, &mapY);
+
+		if (nextMoveMask == 1) {
+			mapX += 0x10;
+		}
+		if (nextMoveMask == 2) {
+			mapX -= 0x10;
+		}
+		if (nextMoveMask == 8) {
+			mapY += 0x10;
+		}
+		if (nextMoveMask == 4) {
+			mapY -= 0x10;
+		}
+
+		if (arg0->unk44 == 1) {
+			mapX += 0x10;
+		}
+		if (arg0->unk44 == 2) {
+			mapX -= 0x10;
+		}
+		if (arg0->unk44 == 8) {
+			mapY += 0x10;
+		}
+		if (arg0->unk44 == 4) {
+			mapY -= 0x10;
+		}
+
+		arg0->unk47 = gridX;
+		arg0->unk48 = gridY;
+		arg0->unk44 = nextMoveMask;
+		arg0->unk40 = (gridX << 8) + mapX;
+		arg0->unk42 = (gridY << 8) + mapY;
+	}
+
+	gridAngleX = arg0->unk40 - arg0->unk0;
+	gridAngleY = arg0->unk42 - arg0->unk4;
+	tempS16 = func_80003824_4424((f32)gridAngleX, (f32)gridAngleY);
+	steerDelta = func_800F9C50_108C00(tempS16, arg0->unk6);
+	absSteerDelta = (steerDelta < 0) ? -steerDelta : steerDelta;
+
+	if ((arg0->unk46 >> 14) == 1) {
+		arg0->unk45 = 0x28;
+	} else {
+		arg0->unk45 = 0x1E;
+	}
+
+	if (absSteerDelta >= 0x3556) {
+		steerStep = 0x5B0;
+		arg0->unk45 = 5;
+	} else if (absSteerDelta < 0x11C8) {
+		steerStep = 0x16C;
+	} else if (absSteerDelta < 0x238F) {
+		steerStep = 0x2D8;
+		arg0->unk45 = 0x14;
+	} else {
+		steerStep = 0x444;
+		arg0->unk45 = 0xA;
+	}
+
+	if (absSteerDelta < 0x222) {
+		arg0->unk6 = tempS16;
+	}
+
+	if (func_800F9C50_108C00(tempS16, arg0->unk6) > 0) {
+		arg0->unk6 += steerStep;
+	}
+
+	if (func_800F9C50_108C00(tempS16, arg0->unk6) < 0) {
+		arg0->unk6 -= steerStep;
+	}
+
+	steerDelta = ((*(s16 *)((u8 *)spec + 0x40)) * arg0->unk45) / 100;
+	if (arg0->unk20 & 0x800) {
+		steerDelta = (f64)steerDelta * 0.5;
+	}
+
+	if (steerDelta < arg0->unk12) {
+		func_800FB3A0_10A350(arg0, -1.0f);
+	}
+
+	if (arg0->unk12 < steerDelta) {
+		func_800FB3A0_10A350(arg0, 2.0f);
+		if (arg0->unk45 >= 0x3D) {
+			func_800FB3A0_10A350(arg0, 1.0f);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80106628_1155D8.s")
+#endif
 
 // CURRENT(201)
 #ifdef NON_MATCHING

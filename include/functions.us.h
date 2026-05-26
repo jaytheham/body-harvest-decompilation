@@ -1188,6 +1188,7 @@ u32 func_8001BCE0_1C8E0(void);
 void func_800015B4_21B4(s32 arg0, s32 arg1);
 void func_800016D8_22D8(void);
 void func_800021CC_2DCC(s32 arg0);
+void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2);
 void guess_prepareToSaveGame(s32 arg0);
 s32 func_8001D5A0_1E1A0(OSMesgQueue *arg0, u8 arg1, u8 *arg2, s32 arg3);
 s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1);
