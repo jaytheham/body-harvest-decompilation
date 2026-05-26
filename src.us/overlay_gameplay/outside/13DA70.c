@@ -122,6 +122,7 @@ void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012EBC0_13DB70.s")
 #endif
 
+// Load letter textures for end of stage window
 // CURRENT(425)
 #ifdef NON_MATCHING
 s32 func_8012EC3C_13DBEC(s32 arg0)
@@ -529,6 +530,7 @@ s32 func_8012FFB0_13EF60(void)
 	return score;
 }
 
+// End of level state manager
 // CURRENT(25610)
 #ifdef NON_MATCHING
 void func_8013001C_13EFCC(void)

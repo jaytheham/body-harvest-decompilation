@@ -2535,6 +2535,56 @@ typedef struct {
 	/* 0x1EA */ u8 pad1EA[2];
 } Unk800E614CFxSlot;
 
+typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
+	/* 0x02 */ u8 unk2;
+	/* 0x03 */ u8 unk3;
+	/* 0x04 */ u8 unk4;
+	/* 0x05 */ u8 unk5;
+	/* 0x06 */ u8 unk6;
+	/* 0x07 */ u8 unk7;
+	/* 0x08 */ u8 unk8;
+	/* 0x09 */ u8 unk9;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
+} Unk800E0F4CEntry; /* size = 0x10 */
+
+typedef struct {
+	s16 x;
+	s16 z;
+} ShieldWallPoint;
+
+typedef struct {
+	s8 startIdx;
+	s8 endIdx;
+} ShieldWallLink;
+
+typedef struct {
+	s16 unk0;
+	s16 unk2;
+	s16 unk4;
+	u8 pad06[0x14];
+	u8 unk1A;
+	u8 pad1B[0x4];
+	s32 unk20;
+} CameraAlienRef;
+
+typedef struct {
+	s32 unk0;
+	s16 unk8;
+	s16 unkA;
+} UnkBuildDoorMap;
+
+typedef struct {
+	s16 unk0;
+	s16 unk2;
+	s16 unk4;
+	u8 unk6;
+	u8 pad7[0x11];
+} UnkBuildGridCell;
+
 #endif
 
 typedef struct {

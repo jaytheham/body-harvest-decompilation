@@ -2534,7 +2534,340 @@ void func_800F1004_FFFB4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F1004_FFFB4.s")
 #endif
 
+// CURRENT(35533)
+#ifdef NON_MATCHING
+void func_800F1134_1000E4(void) {
+	s16 p3X;
+	s16 p3Z;
+	s16 minX;
+	s16 maxX;
+	s16 minZ;
+	s16 maxZ;
+	s16 y;
+	s16 ringY;
+	s16 timer;
+	s16 sfxVol;
+	s16 i;
+	s16 angle;
+	s16 xOffset;
+	s16 zOffset;
+	u8 color[4];
+	Unk80152B80 pos;
+	s32 localDl[3];
+	BuildingInstance *building;
+	AlienInstance *alien;
+	VehicleInstance *vehicle;
+
+	localDl[0] = D_8013FCC4_14EC74[0];
+	localDl[1] = D_8013FCC4_14EC74[1];
+	localDl[2] = D_8013FCC4_14EC74[2];
+
+	func_80013468_14068(0x11);
+	D_80157FA4 = &buildingInstances[func_80120634_12F5E4()];
+	D_80159DDF = func_80120634_12F5E4();
+
+	alien = &alienInstances[D_80157F94];
+	p3X = alien->unk0;
+	p3Z = alien->unk4;
+
+	if (currentLevel == LEVEL_AMERICA) {
+		building = &buildingInstances[D_80159DDF];
+		y = building->xCoord;
+		ringY = building->zCoord;
+		maxZ = ringY + 0x64;
+		maxX = y + 0x78;
+		minZ = ringY - 0x50;
+		minX = y - 0x78;
+		p3Z = minZ;
+		p3X = y;
+	} else {
+		building = &buildingInstances[D_80159DDF];
+		y = building->xCoord;
+		ringY = building->zCoord;
+		p3X = y - 0x64;
+		maxX = y + 0x64;
+		maxZ = ringY + 0x78;
+		minX = y + 0x50;
+		minZ = ringY - 0x78;
+		p3Z = ringY;
+	}
+
+	if ((u16)D_80157F8C >= 10) {
+		return;
+	}
+
+	switch (D_80157F8C) {
+		case 0:
+			D_80157FA8 = 1;
+			D_801493E0 = 0;
+
+			if (D_80157F8E == 1) {
+				func_8012B21C_13A1CC();
+			}
+
+			if (D_80157F8E == 0x5E) {
+				func_800B91C8_C8178((p3X >> 8) + 1, p3Z >> 8, 0x14);
+			}
+
+			if (D_80157F8E >= 0x5B) {
+				if ((D_80052A8C & 1) == 0) {
+					func_80014A3C_1563C(0, 0xEB, 0.0f, 0, D_80144658_153608);
+					func_80135D08_144CB8(10.0f, 1, 1, 1);
+				}
+			}
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x8D) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 1:
+			if (D_80157F8E == 0xA) {
+				building = D_80157FA4;
+				y = building->yCoord;
+				p3X = building->xCoord;
+				p3Z = building->zCoord;
+
+				D_80157FD2 = func_800CD1F8_DC1A8(p3X, y, p3Z, 0, -35, 0);
+				D_80157FD4 = func_800CD1F8_DC1A8(maxX, y, maxZ, 0, -35, 0);
+				D_80157FD6 = func_800CD1F8_DC1A8(minX, y, minZ, 0, -35, 0);
+				func_80135D44_144CF4(p3X, y, p3Z, 3.0f);
+
+				func_800DF9C8_EE978(p3X, y, p3Z, 0x32, 0, 0);
+				func_800DF9C8_EE978(maxX, y, maxZ, 0x32, 0, 0);
+				func_800DF9C8_EE978(minX, y, minZ, 0x32, 0, 0);
+			}
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0xD) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 2:
+			if (D_80157F8E >= 0x15) {
+				building = D_80157FA4;
+				building->yCoord += D_80157F8E / 10;
+			}
+
+			building = D_80157FA4;
+			y = building->yCoord;
+			func_800CD2E8_DC298(p3X, y, p3Z, D_80157FD3);
+			func_800CD2E8_DC298(maxX, y, maxZ, D_80157FD5);
+			func_800CD2E8_DC298(minX, y, minZ, D_80157FD7);
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x60) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 3:
+			y = func_800B84D0_C7480(p3X, p3Z) >> 8;
+			if (D_80157F8E == 0) {
+				building = D_80157FA4;
+				building->xCoord = p3X;
+				building->zCoord = p3Z;
+				building->yCoord = y;
+			}
+
+			D_80159DE2 = 200 - (D_80157F8E * 2);
+			if ((s16)D_80159DE2 < 0) {
+				D_80159DE2 = 0;
+			}
+
+			building = D_80157FA4;
+			y = building->yCoord + (D_80159DE2 * 4);
+			if (D_80159DE2 == 2) {
+				building = &buildingInstances[D_80159DDF];
+				func_80135D44_144CF4(building->xCoord, building->yCoord, building->zCoord, 2.0f);
+			}
+
+			if (D_80157F8E < 0x64) {
+				func_800CD2E8_DC298(p3X, y, p3Z, D_80157FD3);
+				func_800CD2E8_DC298(maxX, y, maxZ, D_80157FD5);
+				func_800CD2E8_DC298(minX, y, minZ, D_80157FD7);
+			}
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x6A) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 4:
+			D_80052ACC = 0;
+			D_8015930E = 0;
+
+			building = D_80157FA4;
+			y = building->yCoord;
+			p3X = building->xCoord;
+			p3Z = building->zCoord;
+
+			if (D_80157F8E == 0) {
+				func_800CD390_DC340(D_80157FD3);
+				func_800CD390_DC340(D_80157FD5);
+				func_800CD390_DC340(D_80157FD7);
+			}
+
+			func_800C56A4_D4654(p3X, y + 0x32, p3Z, 0x190, 0x14, 5, 2);
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x33) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 5:
+			building = D_80157FA4;
+			y = building->yCoord;
+			p3X = building->xCoord;
+			p3Z = building->zCoord;
+
+			if (D_80157F8E < 0x1E) {
+				func_800C56A4_D4654(p3X, y + 0x32, p3Z, 0x190, 0x14, 5, 2);
+			}
+
+			if ((D_80157F8E % 0x12) == 0) {
+				func_800D05A8_DF558(p3X, y, p3Z, 0x3E8, 0xFA, 0x64, 0x14);
+				ringY = y + 0x1E;
+				func_800DEE5C_EDE0C(p3X, ringY, p3Z, 0xA, 2);
+				func_800DEE5C_EDE0C(p3X, ringY, p3Z, 0xD, 1);
+
+				color[0] = 0xFA;
+				color[1] = 0x64;
+				color[2] = 0x14;
+				pos.unk0 = p3X;
+				pos.unk2 = y;
+				pos.unk4 = p3Z;
+				func_800B99A8_C8958(&pos, 0x1E, 0x1F4, 0xFF, color, 0x50, 0xA, 0);
+			}
+
+			if (D_80157F8E == 0x30) {
+				func_800DF9C8_EE978(p3X, y, p3Z, 0x190, 0, localDl);
+			}
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x33) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 6:
+			building = D_80157FA4;
+			y = building->yCoord;
+			p3X = building->xCoord;
+			p3Z = building->zCoord;
+
+			D_80052ACA = 2;
+			func_8012D84C_13C7FC();
+
+			if (D_80157F8E == 0) {
+				D_801493E0 = 1;
+				if (D_80052B34->unk1A != 0) {
+					func_800FDEA8_10CE58(D_80052B2C, 1);
+				}
+
+				func_8011592C_1248DC(p3X, p3Z);
+				func_800FD510_10C4C0(0, 0x72);
+
+				for (i = 0; i < D_80158FD8; i++) {
+					vehicle = &vehicleInstances[D_80158E80[i]];
+					if (vehicle->unk1A != 0x13) {
+						vehicle->unk20 &= 0x7FFF;
+					}
+				}
+
+				D_8013FD78_14ED28->unkA = 0;
+				func_800FAD10_109CC0();
+				D_80052B34->unk6 = -0x41E3;
+
+				ringY = y + 0x1E;
+				func_800DEE5C_EDE0C(p3X, ringY, p3Z, 0xD, 2);
+				func_800DEE5C_EDE0C(p3X, ringY, p3Z, 0xF, 1);
+				func_800E35E0_F2590(0xFF);
+			}
+
+			timer = D_80157F8E;
+			D_80157F8E = timer + 1;
+			if (timer > 0) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 7:
+			building = D_80157FA4;
+			y = building->yCoord;
+			p3X = building->xCoord;
+			p3Z = building->zCoord;
+
+			if (D_80157F8E < 5) {
+				sfxVol = (0xFF - (D_80157F8E * 0x33)) & 0xFF;
+				func_800E35E0_F2590(sfxVol);
+			}
+
+			ringY = y + 0x1E;
+			for (i = 0; i < 6; i++) {
+				if (D_80157F8E == 0) {
+					D_80157FDC[i] = func_800DA6F0_E96A0(p3X, ringY, p3Z, 1);
+				} else {
+					angle = (i * 0x2AAA) & 0xFFFF;
+					xOffset = (s16)((coss(angle) / 32768.0) * (D_80157F8E * 40));
+					zOffset = (s16)((sins(angle) / 32768.0) * (D_80157F8E * 40));
+					func_800D9B14_E8AC4(p3X + xOffset, ringY, p3Z + zOffset, D_80157FDC[i]);
+				}
+			}
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x47) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 8:
+			if (D_80157F8E == 0) {
+				for (i = 0; i < 6; i++) {
+					func_800D9C60_E8C10(D_80157FDC[i]);
+				}
+				D_80159DDF = 0xFF;
+			}
+
+			timer = D_80157F8E + 1;
+			D_80157F8E = timer;
+			if (timer >= 0x15) {
+				D_80157F8E = 0;
+				D_80157F8C++;
+			}
+			break;
+
+		case 9:
+			D_80157FD0 = 100;
+			func_80007410_8010(func_800F1004_FFFB4);
+			func_800FAC90_109C40();
+			return;
+	}
+
+	return;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F1134_1000E4.s")
+#endif
 
 // CURRENT(21609)
 #ifdef NON_MATCHING
@@ -3852,7 +4185,394 @@ void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F63D0_105380.s")
 
+// CURRENT(56921)
+#ifdef NON_MATCHING
+void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
+	f32 sp134;
+	f32 sp130;
+	f32 sp12C;
+	f32 sp120[3];
+	f32 sp11C;
+	f32 spF8;
+	f32 spF4;
+	volatile f32 four;
+	f32 three;
+	s16 spEA;
+	s16 spE8;
+	s16 spE6;
+	s16 spE4;
+	s16 spE2;
+	s16 spE0;
+	s16 spD2;
+	s16 spD0;
+	s16 spCE;
+	s32 sp34;
+	s32 sp30;
+	s32 pad[32];
+
+	f32 radius;
+	f32 radiusScaled;
+	s16 angle;
+	s32 cosTerm;
+	s32 sinTerm;
+	s16 xStep;
+	s16 yStep;
+	s16 zStep;
+	s32 xTri;
+	s32 zTri;
+	s16 halfSin;
+	s16 halfCos;
+	u8 *levelColor;
+	u8 cR;
+	u8 cG;
+	u8 cB;
+	volatile Vtx *vtx;
+	Gfx *dl;
+
+	radius = (f32)D_801601F0[arg3].unk8;
+	four = 4.0f;
+	three = 3.0f;
+	radiusScaled = (radius * three) / four;
+	if (D_8013FCD0_14EC80 != 0) {
+		radiusScaled *= four;
+		radius *= 2.0f;
+	}
+
+	sp12C = (f32)(arg1[0] - arg0[0]);
+	sp130 = (f32)(arg1[1] - arg0[1]);
+	sp134 = (f32)(arg1[2] - arg0[2]);
+	spF8 = radiusScaled;
+	spF4 = radius;
+	func_800F54AC_10445C((Vec3f *)&sp12C, (Vec3f *)&sp12C);
+
+	angle = func_80003824_4424((f32)(arg0[2] - arg2[2]), (f32)(arg0[0] - arg2[0]));
+	sp11C = (f32)((f64)(f32)sins((angle + 0x4000) & 0xFFFF) / 32768.0);
+	cosTerm = coss((angle + 0x4000) & 0xFFFF);
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	{
+		s32 i;
+
+		for (i = 0; i < 3; i++) {
+			sp120[i] = (&sp12C)[i] * 127.0f;
+		}
+	}
+
+	levelColor = &D_8013FCD4_14EC84[(currentLevel * 9) - 9];
+	spEA = levelColor[0];
+	spE8 = levelColor[1];
+	spE6 = levelColor[2];
+	spE4 = (spEA >= 0xB4) ? (spEA - 0xB4) : 0;
+	spE2 = (spE8 >= 0xB4) ? (spE8 - 0xB4) : 0;
+	spE0 = (spE6 >= 0xB4) ? (spE6 - 0xB4) : 0;
+	spD0 = levelColor[7];
+	spD2 = levelColor[6];
+	spCE = levelColor[8];
+	cR = levelColor[3];
+	cG = levelColor[4];
+	cB = levelColor[5];
+
+	vtx = D_8005BB34;
+	vtx->v.ob[0] = arg0[0];
+	vtx->v.ob[1] = arg0[1];
+	vtx->v.ob[2] = arg0[2];
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = cR;
+	vtx->v.cn[1] = cG;
+	vtx->v.cn[2] = cB;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	sinTerm = (s32)(spF8 * sp11C);
+	cosTerm = (s32)(spF8 * (f32)((f64)(f32)cosTerm / 32768.0));
+	xStep = (s16)(s32)(sp12C * spF4);
+	yStep = (s16)(s32)(sp130 * spF4);
+	zStep = (s16)(s32)(sp134 * spF4);
+	xTri = ((s16)xStep) * 3;
+	zTri = ((s16)zStep) * 3;
+
+	vtx->v.ob[0] = arg1[0] + (s16)sinTerm + xTri;
+	vtx->v.ob[1] = arg1[1] + yStep;
+	vtx->v.ob[2] = arg1[2] + (s16)cosTerm + zTri;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0x200;
+	vtx->v.cn[0] = cR;
+	vtx->v.cn[1] = cG;
+	vtx->v.cn[2] = cB;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg1[0] - (s16)sinTerm + xTri;
+	vtx->v.ob[1] = arg1[1] + yStep;
+	vtx->v.ob[2] = arg1[2] - (s16)cosTerm + zTri;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0x200;
+	vtx->v.cn[0] = cR;
+	vtx->v.cn[1] = cG;
+	vtx->v.cn[2] = cB;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg1[0] + (xStep * 4);
+	vtx->v.ob[1] = arg1[1] + (yStep * 4) + 5;
+	vtx->v.ob[2] = arg1[2] + (zStep * 4);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = spD2;
+	vtx->v.cn[1] = spD0;
+	vtx->v.cn[2] = spCE;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	halfSin = ((s16)sinTerm >= 0) ? ((s16)sinTerm >> 1) : (((s16)sinTerm + 1) >> 1);
+	halfCos = ((s16)cosTerm >= 0) ? ((s16)cosTerm >> 1) : (((s16)cosTerm + 1) >> 1);
+
+	vtx->v.ob[0] = arg1[0];
+	vtx->v.ob[1] = arg1[1];
+	vtx->v.ob[2] = arg1[2];
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = spE4;
+	vtx->v.cn[1] = spE2;
+	vtx->v.cn[2] = spE0;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg1[0] + halfSin;
+	vtx->v.ob[1] = (s16)(s32)((f32)arg1[1] - spF4);
+	vtx->v.ob[2] = arg1[2] + halfCos;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0x200;
+	vtx->v.cn[0] = spE4;
+	vtx->v.cn[1] = spE2;
+	vtx->v.cn[2] = spE0;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg1[0] - halfSin;
+	vtx->v.ob[1] = (s16)(s32)((f32)arg1[1] - spF4);
+	vtx->v.ob[2] = arg1[2] - halfCos;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0x200;
+	vtx->v.cn[0] = spE4;
+	vtx->v.cn[1] = spE2;
+	vtx->v.cn[2] = spE0;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg2[0];
+	vtx->v.ob[1] = arg2[1];
+	vtx->v.ob[2] = arg2[2];
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = spEA;
+	vtx->v.cn[1] = spE8;
+	vtx->v.cn[2] = spE6;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg2[0] + halfSin;
+	vtx->v.ob[1] = (s16)(s32)((f32)arg2[1] - spF4);
+	vtx->v.ob[2] = arg2[2] + halfCos;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x200;
+	vtx->v.cn[0] = spEA;
+	vtx->v.cn[1] = spE8;
+	vtx->v.cn[2] = spE6;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg2[0] - halfSin;
+	vtx->v.ob[1] = (s16)(s32)((f32)arg2[1] - spF4);
+	vtx->v.ob[2] = arg2[2] - halfCos;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x200;
+	vtx->v.cn[0] = spEA;
+	vtx->v.cn[1] = spE8;
+	vtx->v.cn[2] = spE6;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	D_8005BB34 = (Vtx *)vtx;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB7000000;
+	dl->words.w1 = 0x00010000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xB6000000;
+	dl->words.w1 = 0x00020000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBB000001;
+	dl->words.w1 = 0x80008000;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFC1219FF;
+	dl->words.w1 = 0xFFFFFE38;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD100000;
+	dl->words.w1 = (u32)D_1014480;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5100000;
+	dl->words.w1 = 0x07080200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF3000000;
+	dl->words.w1 = 0x070FF200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5100800;
+	dl->words.w1 = 0x00080200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF2000000;
+	dl->words.w1 = 0x0003C03C;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0x0400289F;
+	dl->words.w1 = (u32)(D_8005BB34 - 10) & 0x1FFFFFFF;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00000206;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00000604;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00000402;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00020406;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xFD100000;
+	dl->words.w1 = (u32)D_1014680;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5100000;
+	dl->words.w1 = 0x07080200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF3000000;
+	dl->words.w1 = 0x070FF200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF5100800;
+	dl->words.w1 = 0x00080200;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xF2000000;
+	dl->words.w1 = 0x0003C03C;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x000C120E;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x000C0E08;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00080E10;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x0008100A;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xBB000000;
+	dl->words.w1 = 0x80008000;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F7790_106740.s")
+#endif
 
 // CURRENT(?)
 #ifdef NON_MATCHING
@@ -4954,7 +5674,350 @@ void func_800FB4A0_10A450(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
+// CURRENT(21992)
+#ifdef NON_MATCHING
+void func_800FB504_10A4B4(void) {
+	VehicleInstance *vehicle;
+	VehicleSpec *spec;
+	CameraAlienRef *scanAlien;
+	AlienInstance *alien;
+	AlienInstance *targetAlien;
+	InputStruct_8012B150 *cameraTarget;
+	s16 steerClamp;
+	s16 pitchClamp;
+	s16 pitch;
+	s16 yaw;
+	s16 bestIndex;
+	s16 diff;
+	s16 cosVal;
+	s16 restoreSigned;
+	s32 worldX;
+	s32 worldY;
+	s32 worldZ;
+	s32 restoreSpeed;
+	s32 bestScore;
+	s32 targetDist;
+	s32 nextX;
+	s32 nextY;
+	s32 nextZ;
+	s32 i;
+	s32 selectedInput;
+	s32 tmp;
+	u16 inputButtons;
+	u16 animFrame;
+	u16 *animBase;
+
+	bestIndex = -1;
+	yaw = D_80159318;
+	vehicle = D_80052B34;
+
+	if (vehicle == NULL) {
+		D_80158FF4 = NULL;
+		return;
+	}
+
+	spec = &vehicleSpecs[vehicle->unk1A];
+	steerClamp = *(s16 *) ((u8 *) spec + 0x3C);
+	if (steerClamp < 0) {
+		steerClamp = -steerClamp;
+	}
+
+	pitchClamp = D_80052B2C->unk36;
+
+	if (D_80050AD4 == 1) {
+		if (*(u32 *) ((u8 *) spec + 0x4C) & 0x08000000) {
+			restoreSpeed = *(s16 *) ((u8 *) spec + 0x2C);
+			if (restoreSpeed < 0) {
+				*(s16 *) ((u8 *) spec + 0x2C) = -restoreSpeed;
+			}
+		}
+		func_80128504_1374B4((AlienInstance *) vehicle, 1, &worldX, &worldY, &worldZ);
+	} else {
+		if (*(u32 *) ((u8 *) spec + 0x4C) & 0x08000000) {
+			restoreSpeed = *(s16 *) ((u8 *) spec + 0x20);
+			if (restoreSpeed < 0) {
+				*(s16 *) ((u8 *) spec + 0x20) = -restoreSpeed;
+			}
+		}
+		func_80128504_1374B4((AlienInstance *) vehicle, 0, &worldX, &worldY, &worldZ);
+	}
+
+	if (!(*(u32 *) ((u8 *) spec + 0x4C) & 0x00800000)) {
+		s32 hasPitch = *(u32 *) ((u8 *) spec + 0x4C) & 0x00010000;
+		inputButtons = currentControllerStates[0].button;
+		if ((hasPitch || (*(u32 *) ((u8 *) spec + 0x4C) & 0x00080000)) && ((inputButtons & 0x10) || ((currentLevel == 2) && (D_80052B34->unk1A == 1)))) {
+			if (hasPitch) {
+				pitchClamp -= (D_8004758A * D_8004758A * D_8004758A) >> 8;
+			} else {
+				pitchClamp = 0;
+			}
+
+			tmp = (D_8004758B * D_8004758B * D_8004758B) >> 9;
+			if (D_80031420_32020 & 4) {
+				yaw += tmp;
+			} else {
+				yaw -= tmp;
+			}
+
+			D_80159320 |= 0x40000;
+		} else {
+			yaw = 0;
+			pitchClamp = 0;
+			D_80159320 &= 0xFFFBFFFF;
+		}
+	} else {
+		D_80159320 &= 0xFFFBFFFF;
+		pitchClamp = 0;
+		yaw = 0;
+		inputButtons = currentControllerStates[0].button;
+		if ((inputButtons & 0x10) && (D_80052B34->unk20 & 2)) {
+			D_801591BC = 1;
+		} else {
+			D_801591BC = 0;
+		}
+	}
+
+	D_80158FF0 = 0;
+
+	if (D_80159048 == 0) {
+		bestScore = 0x17E8;
+		for (i = 0xFE; i != 0; i--) {
+			scanAlien = (CameraAlienRef *) &D_8004D0F8[i];
+
+			if (scanAlien->unk1A >= 2) {
+				u16 angleDiff;
+				s32 dx;
+				s32 dz;
+				s32 distSq;
+
+				if ((scanAlien->unk20 & 0x00100000) || (scanAlien->unk20 & 0x00400000)) {
+					continue;
+				}
+
+				if ((scanAlien->unk1A == 0) || (scanAlien->unk1A == 1)) {
+					continue;
+				}
+
+				dx = (worldX - scanAlien->unk0) >> 1;
+				dz = (worldZ - scanAlien->unk4) >> 1;
+				distSq = (dx * dx) + (dz * dz);
+
+				if ((u32) distSq >= 0x3C8000) {
+					continue;
+				}
+
+				angleDiff = func_80003824_4424((f32) dx, (f32) dz);
+				diff = func_800F9C50_108C00(D_80052B34->unk6 - D_80052B2C->unk36, angleDiff) - 0x8000;
+				tmp = diff;
+				if (tmp < -0x8000) {
+					tmp += 0x10000;
+				}
+
+				if (tmp < 0) {
+					tmp = -tmp;
+				}
+
+				if (tmp < bestScore) {
+					bestScore = tmp;
+					bestIndex = i;
+				}
+			}
+		}
+
+		if (bestIndex == -1) {
+			D_80158FEC = NULL;
+		} else {
+			D_80158FEC = &alienInstances[bestIndex];
+		}
+	}
+
+	targetAlien = D_80158FEC;
+	targetDist = 0;
+	if (targetAlien != NULL) {
+		s32 dx = (worldX - targetAlien->unk0) >> 1;
+		s32 dz = (worldZ - targetAlien->unk4) >> 1;
+		targetDist = (s32) sqrtf((f32) ((dx * dx) + (dz * dz)));
+	}
+
+	inputButtons = currentControllerStates[0].button;
+	if (!(inputButtons & 0x10)) {
+		targetAlien = D_80158FEC;
+		if (targetAlien != NULL) {
+			yaw = func_80003824_4424((f32) targetDist, (f32) ((targetAlien->unk2 - worldY) >> 1));
+		} else {
+			yaw = 0;
+		}
+		D_80159048 = 0;
+	}
+
+	if (yaw >= 0x1F41) {
+		yaw = 0x1F40;
+	}
+
+	if ((D_80052B34->unk1A == 0) || (D_80052B34->unk20 & 2)) {
+		if (yaw < -0x1F40) {
+			yaw = -0x1F40;
+		}
+	} else if (yaw < -0x7D0) {
+		yaw = -0x7D0;
+	}
+
+	if (steerClamp < pitchClamp) {
+		pitchClamp = steerClamp;
+	}
+
+	pitch = pitchClamp;
+	if (pitch < -steerClamp) {
+		pitch = -steerClamp;
+	}
+
+	pitchClamp = pitch;
+
+	diff = func_800F9C50_108C00(D_80052B2C->unk36, pitch);
+	tmp = -diff;
+	if (tmp < diff) {
+		tmp = diff;
+	}
+
+	if (tmp < D_8015929C) {
+		D_80052B2C->unk36 = pitchClamp;
+	} else {
+		tmp = D_8015929C;
+		if (diff >= 0) {
+			tmp = -tmp;
+		}
+		D_80052B2C->unk36 += tmp;
+	}
+
+	if ((currentLevel == 4) && (D_80052B34->unk1A == 0xC)) {
+		diff = D_80052B2C->unk36;
+		if (diff >= 0) {
+			tmp = diff;
+		} else {
+			tmp = -diff;
+		}
+
+		if (tmp < 0x4000) {
+			cosVal = (s16) (((f64) (f32) coss(diff & 0xFFFF) / 32768.0) * D_80144A58_153A08);
+			if (yaw < cosVal) {
+				yaw = cosVal;
+			}
+		}
+	}
+
+	diff = func_800F9C50_108C00(D_80159318, yaw);
+	tmp = -diff;
+	if (tmp < diff) {
+		tmp = diff;
+	}
+
+	if (tmp < 0x190) {
+		D_80159318 = yaw;
+	} else {
+		if (diff < 0) {
+			D_80159318 += 0x190;
+		} else {
+			D_80159318 -= 0x190;
+		}
+	}
+
+	if (*(s16 *) ((u8 *) spec + 0x3C) < 0) {
+		D_80052B2C->unk36 += 0x8000;
+	}
+
+	if ((D_80052B34->unk20 & 2) && (D_80257A4C[D_80052B34->unk1A].unk0 & 0x20000000)) {
+		D_80159318 = -D_80052B34->unkA;
+	}
+
+	D_8015F9F0 = 0x2C;
+	cosVal = coss((D_80052B34->unk6 - D_80052B2C->unk36) & 0xFFFF);
+	nextX = (s32) ((((f64) (f32) coss((u16) D_80159318) / 32768.0) * ((f64) (f32) cosVal / 32768.0) * D_80144A60_153A10) + (f64) worldX);
+	nextY = (s32) ((((f64) (f32) sins((u16) D_80159318) / 32768.0) * D_80144A68_153A18) + (f64) worldY);
+	cosVal = sins((D_80052B34->unk6 - D_80052B2C->unk36) & 0xFFFF);
+	nextZ = (s32) ((((f64) (f32) coss((u16) D_80159318) / 32768.0) * ((f64) (f32) cosVal / 32768.0) * D_80144A70_153A20) + (f64) worldZ);
+
+	tmp = D_801493A0 << 8;
+	if (nextX < tmp) {
+		f32 scale = (f32) (tmp - worldX) / (f32) (nextX - worldX);
+		nextX = tmp;
+		nextY = (s32) ((f32) worldY + ((f32) (nextY - worldY) * scale));
+		nextZ = (s32) ((f32) worldZ + ((f32) (nextZ - worldZ) * scale));
+	}
+
+	tmp = D_801493A4 << 8;
+	if (nextZ < tmp) {
+		f32 scale = (f32) (tmp - worldZ) / (f32) (nextZ - worldZ);
+		nextZ = tmp;
+		nextX = (s32) ((f32) worldX + ((f32) (nextX - worldX) * scale));
+		nextY = (s32) ((f32) worldY + ((f32) (nextY - worldY) * scale));
+	}
+
+	tmp = D_80149398 << 8;
+	if (tmp < nextX) {
+		f32 scale = (f32) (tmp - worldX) / (f32) (nextX - worldX);
+		nextX = tmp;
+		nextY = (s32) ((f32) worldY + ((f32) (nextY - worldY) * scale));
+		nextZ = (s32) ((f32) worldZ + ((f32) (nextZ - worldZ) * scale));
+	}
+
+	tmp = D_8014939C << 8;
+	if (tmp < nextZ) {
+		f32 scale = (f32) (tmp - worldZ) / (f32) (nextZ - worldZ);
+		nextZ = tmp;
+		nextX = (s32) ((f32) worldX + ((f32) (nextX - worldX) * scale));
+		nextY = (s32) ((f32) worldY + ((f32) (nextY - worldY) * scale));
+	}
+
+	D_80159000.unk0 = nextX;
+	D_80159000.unk2 = nextY;
+	D_80159000.unk4 = nextZ;
+
+	if (D_80050AD4 == 1) {
+		selectedInput = spec->weapon2;
+	} else {
+		selectedInput = spec->weapon1;
+	}
+
+	animBase = (u16 *) &D_80145BE0_154B90[selectedInput * 0x18];
+	animFrame = animBase[0];
+	if (animFrame >= 0x1195) {
+		animFrame = 0x1194;
+		animBase[0] = animFrame;
+	}
+
+	D_801591A8 = 1;
+	if (D_80050AD4 == 1) {
+		i = 1;
+	} else {
+		i = 0;
+	}
+
+	cameraTarget = (InputStruct_8012B150 *) D_80158FEC;
+	if (cameraTarget == NULL) {
+		cameraTarget = (InputStruct_8012B150 *) D_80158FF4;
+	}
+
+	func_8012B150_13A100((s32) D_80052B34, i, (InputStruct_8012B150 *) D_80158FF4, (s32) cameraTarget);
+
+	D_801591B4 = D_801591F8.unk20;
+	animBase[0] = animFrame;
+	D_80159028.unk0 = D_801591F8.unk18;
+	D_80159028.unk2 = D_801591F8.unk1C;
+	D_80159028.unk4 = D_801591F8.unk20;
+	D_801591A8 = 0;
+
+	if (*(u32 *) ((u8 *) spec + 0x4C) & 0x08000000) {
+		restoreSigned = (s16) restoreSpeed;
+		if (D_80050AD4 == 1) {
+			*(s16 *) ((u8 *) spec + 0x2C) = restoreSigned;
+		} else {
+			*(s16 *) ((u8 *) spec + 0x20) = restoreSigned;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FB504_10A4B4.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(4786) */
@@ -7773,7 +8836,309 @@ void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 // Skiiping this call stops adam responding to input
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801052E8_114298.s")
 
+// CURRENT(17202)
+#ifdef NON_MATCHING
+void func_80106628_1155D8(VehicleInstance *arg0) {
+	VehicleSpec *spec;
+	s16 gridAngleX;
+	s16 gridAngleY;
+	s16 mapX;
+	s16 mapY;
+	s16 absDeltaX;
+	s16 absDeltaY;
+	s16 tileFlipX;
+	s16 tileFlipY;
+	s16 tempS16;
+	s16 steerDelta;
+	s16 absSteerDelta;
+	s32 steerStep;
+	s8 gridX;
+	s8 gridY;
+	s8 stepX;
+	s8 stepY;
+	u8 tileType;
+	u8 tileFlags;
+	u8 nextMoveMask;
+	u8 moveMask;
+
+	spec = &vehicleSpecs[arg0->unk1A];
+	arg0->unk20 |= 1;
+	func_80014508_15108(arg0, 1, 1);
+
+	gridAngleX = arg0->unk0 - arg0->unk40;
+	if (-gridAngleX < gridAngleX) {
+		absDeltaX = gridAngleX;
+	} else {
+		absDeltaX = -gridAngleX;
+	}
+
+	gridAngleY = arg0->unk4 - arg0->unk42;
+	if (-gridAngleY < gridAngleY) {
+		absDeltaY = gridAngleY;
+	} else {
+		absDeltaY = -gridAngleY;
+	}
+
+	if ((absDeltaX < 0x61) && (absDeltaY < 0x61)) {
+		gridX = arg0->unk47;
+		gridY = arg0->unk48;
+
+		tempS16 = func_800B325C_C220C(gridX, gridY, 0xFFFF);
+		tileType = (tempS16 & 0x7C0) >> 6;
+		tileFlipX = ((tempS16 & 0x4000) == 0) ^ ((gridX & 1) == 0);
+		tileFlipY = ((tempS16 & 0x2000) == 0) ^ ((gridY & 1) == 0);
+		tileFlags = D_801407F4_14F7A4[tileType * 6 + 4];
+		nextMoveMask = 0;
+
+		if (tileFlipX != 0) {
+			if (tileFlags & 8) {
+				nextMoveMask = 4;
+			}
+			if (tileFlags & 4) {
+				nextMoveMask = (nextMoveMask | 8) & 0xFF;
+			}
+		} else {
+			nextMoveMask = tileFlags & 0xC;
+			moveMask = tileFlags;
+		}
+
+		if (tileFlipY != 0) {
+			if (tileFlags & 1) {
+				nextMoveMask = (nextMoveMask | 2) & 0xFF;
+			}
+			if (tileFlags & 2) {
+				nextMoveMask = (nextMoveMask | 1) & 0xFF;
+			}
+		} else {
+			nextMoveMask = (nextMoveMask | (tileFlags & 3)) & 0xFF;
+		}
+
+		moveMask = nextMoveMask;
+		if (nextMoveMask & arg0->unk44) {
+			if ((func_800038E0_44E0(nextMoveMask, tileFlipX, nextMoveMask, tileFlipY) >= 0xC351) &&
+				((tileType == 0xF) || (tileType == 0x12) || (tileType == 0x13))) {
+				moveMask = arg0->unk44;
+				if (moveMask & 3) {
+					nextMoveMask &= 0xC;
+				}
+				if (moveMask & 0xC) {
+					nextMoveMask &= 3;
+				}
+			} else {
+				moveMask = tileType;
+				nextMoveMask = arg0->unk44;
+			}
+		} else {
+			moveMask = tileType;
+			if (arg0->unk44 & 3) {
+				nextMoveMask &= 0xC;
+			} else {
+				nextMoveMask &= 3;
+			}
+		}
+
+		if (nextMoveMask == 0) {
+			if (arg0->unk44 & 3) {
+				nextMoveMask = (~arg0->unk44) & 3;
+			} else {
+				nextMoveMask = (~arg0->unk44) & 0xC;
+			}
+		}
+
+		if ((nextMoveMask & 3) == 3) {
+			if (func_800038E0_44E0(nextMoveMask, moveMask) >= 0x8000) {
+				nextMoveMask = 1;
+			} else {
+				nextMoveMask = 2;
+			}
+		} else if ((nextMoveMask & 0xC) == 0xC) {
+			if (func_800038E0_44E0(nextMoveMask, moveMask) >= 0x8000) {
+				nextMoveMask = 8;
+			} else {
+				nextMoveMask = 4;
+			}
+		}
+
+		if (moveMask == 0xB) {
+			if (nextMoveMask & 4) {
+				if ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xB) {
+					do {
+						gridX--;
+					} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xB);
+				}
+				arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
+				if ((gridX + 2) < (s8)arg0->unk47) {
+					gridX++;
+				}
+			} else {
+				if ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xB) {
+					do {
+						gridX++;
+					} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xB);
+				}
+				arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
+				if ((s8)arg0->unk47 < (gridX - 2)) {
+					gridX--;
+				}
+			}
+		} else if (moveMask == 0xA) {
+			if (nextMoveMask & 1) {
+				if ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xA) {
+					do {
+						gridY--;
+					} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xA);
+				}
+				arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
+				if ((gridY + 2) < (s8)arg0->unk48) {
+					gridY++;
+				}
+			} else {
+				if ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xA) {
+					do {
+						gridY++;
+					} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xA);
+				}
+				arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
+				if ((s8)arg0->unk48 < (gridY - 2)) {
+					gridY--;
+				}
+			}
+		} else if (moveMask == 0xE) {
+			switch (arg0->unk44) {
+			case 1:
+				stepX = -1;
+				stepY = (tileFlipX != 0) ? -1 : 1;
+				break;
+			case 2:
+				stepX = 1;
+				stepY = (tileFlipX != 0) ? -1 : 1;
+				break;
+			case 8:
+				stepY = 1;
+				stepX = (tileFlipY != 0) ? -1 : 1;
+				break;
+			case 4:
+				stepY = -1;
+				stepX = (tileFlipY != 0) ? -1 : 1;
+				break;
+			}
+
+			if ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xE) {
+				do {
+					gridX += stepY;
+					gridY += stepX;
+				} while ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xE);
+			}
+
+			arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x40;
+		} else {
+			if (nextMoveMask == 1) {
+				gridY--;
+			}
+			if (nextMoveMask == 8) {
+				gridX++;
+			}
+			if (nextMoveMask == 2) {
+				gridY++;
+			}
+			if (nextMoveMask == 4) {
+				gridX--;
+			}
+
+			arg0->unk46 = (arg0->unk46 & 0xFF3F) | 0x80;
+		}
+
+		func_800FC7E0_10B790(gridX, gridY, &mapX, &mapY);
+
+		if (nextMoveMask == 1) {
+			mapX += 0x10;
+		}
+		if (nextMoveMask == 2) {
+			mapX -= 0x10;
+		}
+		if (nextMoveMask == 8) {
+			mapY += 0x10;
+		}
+		if (nextMoveMask == 4) {
+			mapY -= 0x10;
+		}
+
+		if (arg0->unk44 == 1) {
+			mapX += 0x10;
+		}
+		if (arg0->unk44 == 2) {
+			mapX -= 0x10;
+		}
+		if (arg0->unk44 == 8) {
+			mapY += 0x10;
+		}
+		if (arg0->unk44 == 4) {
+			mapY -= 0x10;
+		}
+
+		arg0->unk47 = gridX;
+		arg0->unk48 = gridY;
+		arg0->unk44 = nextMoveMask;
+		arg0->unk40 = (gridX << 8) + mapX;
+		arg0->unk42 = (gridY << 8) + mapY;
+	}
+
+	gridAngleX = arg0->unk40 - arg0->unk0;
+	gridAngleY = arg0->unk42 - arg0->unk4;
+	tempS16 = func_80003824_4424((f32)gridAngleX, (f32)gridAngleY);
+	steerDelta = func_800F9C50_108C00(tempS16, arg0->unk6);
+	absSteerDelta = (steerDelta < 0) ? -steerDelta : steerDelta;
+
+	if ((arg0->unk46 >> 14) == 1) {
+		arg0->unk45 = 0x28;
+	} else {
+		arg0->unk45 = 0x1E;
+	}
+
+	if (absSteerDelta >= 0x3556) {
+		steerStep = 0x5B0;
+		arg0->unk45 = 5;
+	} else if (absSteerDelta < 0x11C8) {
+		steerStep = 0x16C;
+	} else if (absSteerDelta < 0x238F) {
+		steerStep = 0x2D8;
+		arg0->unk45 = 0x14;
+	} else {
+		steerStep = 0x444;
+		arg0->unk45 = 0xA;
+	}
+
+	if (absSteerDelta < 0x222) {
+		arg0->unk6 = tempS16;
+	}
+
+	if (func_800F9C50_108C00(tempS16, arg0->unk6) > 0) {
+		arg0->unk6 += steerStep;
+	}
+
+	if (func_800F9C50_108C00(tempS16, arg0->unk6) < 0) {
+		arg0->unk6 -= steerStep;
+	}
+
+	steerDelta = ((*(s16 *)((u8 *)spec + 0x40)) * arg0->unk45) / 100;
+	if (arg0->unk20 & 0x800) {
+		steerDelta = (f64)steerDelta * 0.5;
+	}
+
+	if (steerDelta < arg0->unk12) {
+		func_800FB3A0_10A350(arg0, -1.0f);
+	}
+
+	if (arg0->unk12 < steerDelta) {
+		func_800FB3A0_10A350(arg0, 2.0f);
+		if (arg0->unk45 >= 0x3D) {
+			func_800FB3A0_10A350(arg0, 1.0f);
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_80106628_1155D8.s")
+#endif
 
 // CURRENT(201)
 #ifdef NON_MATCHING
@@ -10681,6 +12046,7 @@ s32 func_8010FF84_11EF34(VehicleInstance *arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010FF84_11EF34.s")
 #endif
 
+// Push player away from shield wall
 // CURRENT(1710)
 #ifdef NON_MATCHING
 s32 func_80110144_11F0F4(VehicleInstance *arg0, s32 arg1) {
