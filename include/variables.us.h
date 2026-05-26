@@ -3728,6 +3728,8 @@ extern u8 D_8015EA55;
 extern u8 D_8015EA56;
 extern u16 D_1014480[];
 extern u16 D_1014680[];
+extern u16 D_1014080[];
+extern u16 D_1013E80[];
 extern char D_80143F14_152EC4[];
 extern u8 D_801475F0_1565A0[];
 extern u8 D_801479B0_156960[];
