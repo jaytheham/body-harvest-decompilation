@@ -1680,6 +1680,7 @@ extern u8 D_8014F7FE;
 extern s32 D_8014F800;
 extern s16 D_8014F80A;
 extern s16 D_8014F80C;
+extern s32 D_8014F810;
 extern s16 D_8014F812;
 extern s32 D_8014F820;
 extern s32 D_8014F824;
