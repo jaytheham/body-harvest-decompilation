@@ -60,7 +60,219 @@ Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1) {
 #endif
 
 // castVehicleShadows?
+typedef struct {
+	s32 model;
+	void (*updateMtx)(u8);
+	Unk80052B40 offset;
+	u16 flags;
+} ShadowPartEntry;
+
+extern Gfx D_13E440[];
+extern s32 D_800344B4_350B4[];
+extern void *D_801575A4;
+extern char D_8014429C_15324C[];
+extern char D_801442BC_15326C[];
+extern char D_801442C0_153270[];
+extern char D_801442C4_153274[];
+extern f32 D_801442CC_15327C;
+extern u8 D_5030BA0[];
+extern u8 D_5030CE8[];
+extern u8 D_5030E30[];
+extern u8 D_5030F18[];
+extern u8 D_5030FF8[];
+extern u8 D_50310D8[];
+extern u8 D_5031BC0[];
+extern u8 D_5031DB0[];
+extern u8 D_5031F30[];
+extern u8 D_5032038[];
+extern u8 D_50445A0[];
+extern u8 D_9043D50[];
+
+// CURRENT(16124)
+#ifdef NON_MATCHING
+void func_800E8A00_F79B0(void) {
+	VehicleSpec *vehicleSpec;
+	ShadowPartEntry *part;
+	s32 vehicleIndex;
+	s32 savedVehicleIndex;
+	s32 stackDepth;
+	s32 model;
+	u16 perspNorm;
+	s32 partStart;
+	s32 partCount;
+	s16 partFlags;
+	f32 size;
+
+	vehicleIndex = D_80052AD8 - 5;
+	stackDepth = 0;
+	savedVehicleIndex = D_80052B34->unk1A;
+
+	if ((vehicleIndex < 0x14) && (vehicleIndex > 0)) {
+		vehicleSpec = &vehicleSpecs[vehicleIndex];
+		if ((*(s32 *) vehicleSpec != 0) && (vehicleIndex != 0x13)) {
+			D_801575A4 = (void *) (&D_802C4080[vehicleIndex << 10]);
+			D_80052B34->unk8 = 0;
+			D_80052B34->unkA = 0;
+			D_80052B34->unk6 = 0;
+			D_80052B34->unk1A = (u8) vehicleIndex;
+			osSyncPrintf(D_8014429C_15324C, vehicleSpec->unk18, D_800344B4_350B4[vehicleSpec->unk18 * 2]);
+		} else {
+			D_801575A4 = D_802C4080;
+		}
+	} else {
+		D_801575A4 = D_802C4080;
+	}
+
+	if ((D_80052B34->unk1A == 0) || (D_80052B34->unk1A == 0x13)) {
+		D_80052B34->unk1A = (u8) savedVehicleIndex;
+		return;
+	}
+
+	vehicleSpec = &vehicleSpecs[D_80052B34->unk1A];
+
+	gSPViewport(D_8005BB2C++, D_13E440);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG | G_LIGHTING);
+	gSPSetGeometryMode(D_8005BB2C++, G_SHADE | G_SHADING_SMOOTH);
+	gSPDisplayList(D_8005BB2C++, D_80031260_31E60);
+	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 0, 0, 32, 32);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNX, 1);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNY, 1);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPX, 0x0000FFFF);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPY, 0x0000FFFF);
+	gSPDisplayList(D_8005BB2C++, D_800311A8);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
+	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 32, D_801575A4);
+	gDPSetFillColor(D_8005BB2C++, 0);
+	gDPPipeSync(D_8005BB2C++);
+	gDPFillRectangle(D_8005BB2C++, 0, 0, 31, 31);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG | G_LIGHTING);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 9, 9, 9, 0xFF);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+
+	D_80052B40.unk0 = 0;
+	D_80052B40.unk2 = 0;
+	D_80052B40.unk4 = -0x2BC;
+
+	D_80052B48.unk0 = (s16) -D_80052B34->unk8;
+	D_80052B48.unk2 = 0;
+	D_80052B48.unk4 = (s16) (D_80052B34->unkA + 0x4000);
+
+	size = (f32) ((u8 *) vehicleSpec)[0x65];
+	D_80052B50.unk0 = (s16) (s32) (32768.0 / (f64) ((f32) (((u8 *) vehicleSpec)[0x6C] * 2) + size));
+	D_80052B50.unk4 = (s16) (s32) (32768.0 / (f64) ((f32) (((u8 *) vehicleSpec)[0x6D] * 2) + size));
+	D_80052B50.unk2 = (s16) -((D_80052B50.unk0 + D_80052B50.unk4) >> 1);
+
+	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
+
+	gSPMatrix(D_8005BB2C++, (Mtx *) ((u32) D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+
+	D_8005BB38 += 0x40;
+	guPerspective(D_8005BB38, &perspNorm, 20.0f, 1.0f, 50.0f, D_801442CC_15327C, 1.0f);
+
+	gSPPerspNormalize(D_8005BB2C++, perspNorm);
+
+	gSPMatrix(D_8005BB2C++, (Mtx *) ((u32) D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+
+	D_8005BB38 += 0x40;
+
+	if ((vehicleIndex < 0x15) && (vehicleIndex > 0) && (*(s32 *) (&vehicleSpecs[vehicleIndex]) != 0)) {
+		osSyncPrintf(D_801442BC_15326C);
+	}
+
+	if (D_80052B34->unk1A != 0) {
+		gSPDisplayList(D_8005BB2C++, func_800E88C0_F7870(*(s32 *) vehicleSpec, 1));
+	} else {
+		gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
+
+		func_800EF14C_FE0FC(D_80052B34);
+
+		gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
+	}
+
+	if ((vehicleIndex < 0x15) && (vehicleIndex > 0) && (*(s32 *) (&vehicleSpecs[vehicleIndex]) != 0)) {
+		osSyncPrintf(D_801442C0_153270);
+	}
+
+	partCount = ((u8 *) vehicleSpec)[0x54];
+	partStart = ((u8 *) vehicleSpec)[0x53];
+	if (partCount != 0) {
+		partCount--;
+		part = (ShadowPartEntry *) (&D_8013FDA8_14ED58[partStart]);
+
+		do {
+			model = part->model;
+			part->updateMtx(partStart);
+			partFlags = part->flags;
+
+			if (partFlags & 1) {
+				gSPMatrix(D_8005BB2C++, (Mtx *) ((u32) D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				stackDepth++;
+			} else {
+				gSPMatrix(D_8005BB2C++, (Mtx *) ((u32) D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			}
+			D_8005BB38 += 0x40;
+
+			if ((partStart != ((u8 *) vehicleSpec)[0x63]) && (partStart != ((u8 *) vehicleSpec)[0x64])) {
+				if (partFlags & 0x20) {
+					gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
+
+					D_80052B50.unk0 = -0x100;
+					D_80052B50.unk2 = 0x100;
+					D_80052B50.unk4 = 0x100;
+					func_800039D0_45D0(NULL, NULL, &D_80052B50, D_8005BB38);
+
+					gSPMatrix(D_8005BB2C++, (Mtx *) ((u32) D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+					D_8005BB38 += 0x40;
+				} else {
+					gSPClearGeometryMode(D_8005BB2C++, G_CULL_FRONT);
+
+					gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
+				}
+
+				if ((model != (s32) D_5031BC0) && (model != (s32) D_5031F30) && (model != (s32) D_5031DB0) &&
+					(model != (s32) D_5032038) && (model != (s32) D_5030BA0) && (model != (s32) D_5030CE8) &&
+					(model != (s32) D_5030E30) && (model != (s32) D_5030F18) && (model != (s32) D_5030FF8) &&
+					(model != (s32) D_50310D8) && (model != (s32) D_9043D50) && (model != (s32) D_50445A0)) {
+					gSPDisplayList(D_8005BB2C++, func_800E88C0_F7870(model, 0));
+				}
+			}
+
+			partStart++;
+			part++;
+
+			if ((partFlags & 2) && (stackDepth > 0)) {
+				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+				stackDepth--;
+			}
+
+		} while (partCount-- != 0);
+	}
+
+	while (stackDepth > 0) {
+		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+		stackDepth--;
+	}
+
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNX, 4);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNY, 4);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPX, 0x0000FFFC);
+	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPY, 0x0000FFFC);
+	gSPSetGeometryMode(D_8005BB2C++, G_FOG);
+
+	D_80052B34->unk1A = (u8) savedVehicleIndex;
+
+	if ((vehicleIndex < 0x15) && (vehicleIndex > 0) && (*(s32 *) (&vehicleSpecs[vehicleIndex]) != 0)) {
+		osSyncPrintf(D_801442C4_153274);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E8A00_F79B0.s")
+#endif
 
 // SetupForShadows ?
 void func_800E94B8_F8468(void) {
