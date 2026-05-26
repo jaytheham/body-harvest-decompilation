@@ -2536,6 +2536,22 @@ typedef struct {
 } Unk800E614CFxSlot;
 
 typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 unk1;
+	/* 0x02 */ u8 unk2;
+	/* 0x03 */ u8 unk3;
+	/* 0x04 */ u8 unk4;
+	/* 0x05 */ u8 unk5;
+	/* 0x06 */ u8 unk6;
+	/* 0x07 */ u8 unk7;
+	/* 0x08 */ u8 unk8;
+	/* 0x09 */ u8 unk9;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
+} Unk800E0F4CEntry; /* size = 0x10 */
+
+typedef struct {
 	s32 unk0;
 	s16 unk8;
 	s16 unkA;
