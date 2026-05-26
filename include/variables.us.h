@@ -3739,5 +3739,16 @@ extern u8 D_80157FD3;
 extern u8 D_80157FD5;
 extern u8 D_80157FD7;
 extern u8 D_80157FDC[];
+extern f64 D_80144A58_153A08;
+extern f64 D_80144A60_153A10;
+extern f64 D_80144A68_153A18;
+extern f64 D_80144A70_153A20;
+extern s32 D_80031420_32020;
+extern s32 D_80158FF0;
+extern s16 D_8015F9F0;
+extern s32 D_80159048;
+extern InputStruct_8012B150 D_80159000;
+extern InputStruct_8012B150 D_80159028;
+extern OutputStruct_8012B150 D_801591F8;
 
 #endif

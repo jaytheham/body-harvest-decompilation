@@ -5674,7 +5674,350 @@ void func_800FB4A0_10A450(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
+// CURRENT(21992)
+#ifdef NON_MATCHING
+void func_800FB504_10A4B4(void) {
+	VehicleInstance *vehicle;
+	VehicleSpec *spec;
+	CameraAlienRef *scanAlien;
+	AlienInstance *alien;
+	AlienInstance *targetAlien;
+	InputStruct_8012B150 *cameraTarget;
+	s16 steerClamp;
+	s16 pitchClamp;
+	s16 pitch;
+	s16 yaw;
+	s16 bestIndex;
+	s16 diff;
+	s16 cosVal;
+	s16 restoreSigned;
+	s32 worldX;
+	s32 worldY;
+	s32 worldZ;
+	s32 restoreSpeed;
+	s32 bestScore;
+	s32 targetDist;
+	s32 nextX;
+	s32 nextY;
+	s32 nextZ;
+	s32 i;
+	s32 selectedInput;
+	s32 tmp;
+	u16 inputButtons;
+	u16 animFrame;
+	u16 *animBase;
+
+	bestIndex = -1;
+	yaw = D_80159318;
+	vehicle = D_80052B34;
+
+	if (vehicle == NULL) {
+		D_80158FF4 = NULL;
+		return;
+	}
+
+	spec = &vehicleSpecs[vehicle->unk1A];
+	steerClamp = *(s16 *) ((u8 *) spec + 0x3C);
+	if (steerClamp < 0) {
+		steerClamp = -steerClamp;
+	}
+
+	pitchClamp = D_80052B2C->unk36;
+
+	if (D_80050AD4 == 1) {
+		if (*(u32 *) ((u8 *) spec + 0x4C) & 0x08000000) {
+			restoreSpeed = *(s16 *) ((u8 *) spec + 0x2C);
+			if (restoreSpeed < 0) {
+				*(s16 *) ((u8 *) spec + 0x2C) = -restoreSpeed;
+			}
+		}
+		func_80128504_1374B4((AlienInstance *) vehicle, 1, &worldX, &worldY, &worldZ);
+	} else {
+		if (*(u32 *) ((u8 *) spec + 0x4C) & 0x08000000) {
+			restoreSpeed = *(s16 *) ((u8 *) spec + 0x20);
+			if (restoreSpeed < 0) {
+				*(s16 *) ((u8 *) spec + 0x20) = -restoreSpeed;
+			}
+		}
+		func_80128504_1374B4((AlienInstance *) vehicle, 0, &worldX, &worldY, &worldZ);
+	}
+
+	if (!(*(u32 *) ((u8 *) spec + 0x4C) & 0x00800000)) {
+		s32 hasPitch = *(u32 *) ((u8 *) spec + 0x4C) & 0x00010000;
+		inputButtons = currentControllerStates[0].button;
+		if ((hasPitch || (*(u32 *) ((u8 *) spec + 0x4C) & 0x00080000)) && ((inputButtons & 0x10) || ((currentLevel == 2) && (D_80052B34->unk1A == 1)))) {
+			if (hasPitch) {
+				pitchClamp -= (D_8004758A * D_8004758A * D_8004758A) >> 8;
+			} else {
+				pitchClamp = 0;
+			}
+
+			tmp = (D_8004758B * D_8004758B * D_8004758B) >> 9;
+			if (D_80031420_32020 & 4) {
+				yaw += tmp;
+			} else {
+				yaw -= tmp;
+			}
+
+			D_80159320 |= 0x40000;
+		} else {
+			yaw = 0;
+			pitchClamp = 0;
+			D_80159320 &= 0xFFFBFFFF;
+		}
+	} else {
+		D_80159320 &= 0xFFFBFFFF;
+		pitchClamp = 0;
+		yaw = 0;
+		inputButtons = currentControllerStates[0].button;
+		if ((inputButtons & 0x10) && (D_80052B34->unk20 & 2)) {
+			D_801591BC = 1;
+		} else {
+			D_801591BC = 0;
+		}
+	}
+
+	D_80158FF0 = 0;
+
+	if (D_80159048 == 0) {
+		bestScore = 0x17E8;
+		for (i = 0xFE; i != 0; i--) {
+			scanAlien = (CameraAlienRef *) &D_8004D0F8[i];
+
+			if (scanAlien->unk1A >= 2) {
+				u16 angleDiff;
+				s32 dx;
+				s32 dz;
+				s32 distSq;
+
+				if ((scanAlien->unk20 & 0x00100000) || (scanAlien->unk20 & 0x00400000)) {
+					continue;
+				}
+
+				if ((scanAlien->unk1A == 0) || (scanAlien->unk1A == 1)) {
+					continue;
+				}
+
+				dx = (worldX - scanAlien->unk0) >> 1;
+				dz = (worldZ - scanAlien->unk4) >> 1;
+				distSq = (dx * dx) + (dz * dz);
+
+				if ((u32) distSq >= 0x3C8000) {
+					continue;
+				}
+
+				angleDiff = func_80003824_4424((f32) dx, (f32) dz);
+				diff = func_800F9C50_108C00(D_80052B34->unk6 - D_80052B2C->unk36, angleDiff) - 0x8000;
+				tmp = diff;
+				if (tmp < -0x8000) {
+					tmp += 0x10000;
+				}
+
+				if (tmp < 0) {
+					tmp = -tmp;
+				}
+
+				if (tmp < bestScore) {
+					bestScore = tmp;
+					bestIndex = i;
+				}
+			}
+		}
+
+		if (bestIndex == -1) {
+			D_80158FEC = NULL;
+		} else {
+			D_80158FEC = &alienInstances[bestIndex];
+		}
+	}
+
+	targetAlien = D_80158FEC;
+	targetDist = 0;
+	if (targetAlien != NULL) {
+		s32 dx = (worldX - targetAlien->unk0) >> 1;
+		s32 dz = (worldZ - targetAlien->unk4) >> 1;
+		targetDist = (s32) sqrtf((f32) ((dx * dx) + (dz * dz)));
+	}
+
+	inputButtons = currentControllerStates[0].button;
+	if (!(inputButtons & 0x10)) {
+		targetAlien = D_80158FEC;
+		if (targetAlien != NULL) {
+			yaw = func_80003824_4424((f32) targetDist, (f32) ((targetAlien->unk2 - worldY) >> 1));
+		} else {
+			yaw = 0;
+		}
+		D_80159048 = 0;
+	}
+
+	if (yaw >= 0x1F41) {
+		yaw = 0x1F40;
+	}
+
+	if ((D_80052B34->unk1A == 0) || (D_80052B34->unk20 & 2)) {
+		if (yaw < -0x1F40) {
+			yaw = -0x1F40;
+		}
+	} else if (yaw < -0x7D0) {
+		yaw = -0x7D0;
+	}
+
+	if (steerClamp < pitchClamp) {
+		pitchClamp = steerClamp;
+	}
+
+	pitch = pitchClamp;
+	if (pitch < -steerClamp) {
+		pitch = -steerClamp;
+	}
+
+	pitchClamp = pitch;
+
+	diff = func_800F9C50_108C00(D_80052B2C->unk36, pitch);
+	tmp = -diff;
+	if (tmp < diff) {
+		tmp = diff;
+	}
+
+	if (tmp < D_8015929C) {
+		D_80052B2C->unk36 = pitchClamp;
+	} else {
+		tmp = D_8015929C;
+		if (diff >= 0) {
+			tmp = -tmp;
+		}
+		D_80052B2C->unk36 += tmp;
+	}
+
+	if ((currentLevel == 4) && (D_80052B34->unk1A == 0xC)) {
+		diff = D_80052B2C->unk36;
+		if (diff >= 0) {
+			tmp = diff;
+		} else {
+			tmp = -diff;
+		}
+
+		if (tmp < 0x4000) {
+			cosVal = (s16) (((f64) (f32) coss(diff & 0xFFFF) / 32768.0) * D_80144A58_153A08);
+			if (yaw < cosVal) {
+				yaw = cosVal;
+			}
+		}
+	}
+
+	diff = func_800F9C50_108C00(D_80159318, yaw);
+	tmp = -diff;
+	if (tmp < diff) {
+		tmp = diff;
+	}
+
+	if (tmp < 0x190) {
+		D_80159318 = yaw;
+	} else {
+		if (diff < 0) {
+			D_80159318 += 0x190;
+		} else {
+			D_80159318 -= 0x190;
+		}
+	}
+
+	if (*(s16 *) ((u8 *) spec + 0x3C) < 0) {
+		D_80052B2C->unk36 += 0x8000;
+	}
+
+	if ((D_80052B34->unk20 & 2) && (D_80257A4C[D_80052B34->unk1A].unk0 & 0x20000000)) {
+		D_80159318 = -D_80052B34->unkA;
+	}
+
+	D_8015F9F0 = 0x2C;
+	cosVal = coss((D_80052B34->unk6 - D_80052B2C->unk36) & 0xFFFF);
+	nextX = (s32) ((((f64) (f32) coss((u16) D_80159318) / 32768.0) * ((f64) (f32) cosVal / 32768.0) * D_80144A60_153A10) + (f64) worldX);
+	nextY = (s32) ((((f64) (f32) sins((u16) D_80159318) / 32768.0) * D_80144A68_153A18) + (f64) worldY);
+	cosVal = sins((D_80052B34->unk6 - D_80052B2C->unk36) & 0xFFFF);
+	nextZ = (s32) ((((f64) (f32) coss((u16) D_80159318) / 32768.0) * ((f64) (f32) cosVal / 32768.0) * D_80144A70_153A20) + (f64) worldZ);
+
+	tmp = D_801493A0 << 8;
+	if (nextX < tmp) {
+		f32 scale = (f32) (tmp - worldX) / (f32) (nextX - worldX);
+		nextX = tmp;
+		nextY = (s32) ((f32) worldY + ((f32) (nextY - worldY) * scale));
+		nextZ = (s32) ((f32) worldZ + ((f32) (nextZ - worldZ) * scale));
+	}
+
+	tmp = D_801493A4 << 8;
+	if (nextZ < tmp) {
+		f32 scale = (f32) (tmp - worldZ) / (f32) (nextZ - worldZ);
+		nextZ = tmp;
+		nextX = (s32) ((f32) worldX + ((f32) (nextX - worldX) * scale));
+		nextY = (s32) ((f32) worldY + ((f32) (nextY - worldY) * scale));
+	}
+
+	tmp = D_80149398 << 8;
+	if (tmp < nextX) {
+		f32 scale = (f32) (tmp - worldX) / (f32) (nextX - worldX);
+		nextX = tmp;
+		nextY = (s32) ((f32) worldY + ((f32) (nextY - worldY) * scale));
+		nextZ = (s32) ((f32) worldZ + ((f32) (nextZ - worldZ) * scale));
+	}
+
+	tmp = D_8014939C << 8;
+	if (tmp < nextZ) {
+		f32 scale = (f32) (tmp - worldZ) / (f32) (nextZ - worldZ);
+		nextZ = tmp;
+		nextX = (s32) ((f32) worldX + ((f32) (nextX - worldX) * scale));
+		nextY = (s32) ((f32) worldY + ((f32) (nextY - worldY) * scale));
+	}
+
+	D_80159000.unk0 = nextX;
+	D_80159000.unk2 = nextY;
+	D_80159000.unk4 = nextZ;
+
+	if (D_80050AD4 == 1) {
+		selectedInput = spec->weapon2;
+	} else {
+		selectedInput = spec->weapon1;
+	}
+
+	animBase = (u16 *) &D_80145BE0_154B90[selectedInput * 0x18];
+	animFrame = animBase[0];
+	if (animFrame >= 0x1195) {
+		animFrame = 0x1194;
+		animBase[0] = animFrame;
+	}
+
+	D_801591A8 = 1;
+	if (D_80050AD4 == 1) {
+		i = 1;
+	} else {
+		i = 0;
+	}
+
+	cameraTarget = (InputStruct_8012B150 *) D_80158FEC;
+	if (cameraTarget == NULL) {
+		cameraTarget = (InputStruct_8012B150 *) D_80158FF4;
+	}
+
+	func_8012B150_13A100((s32) D_80052B34, i, (InputStruct_8012B150 *) D_80158FF4, (s32) cameraTarget);
+
+	D_801591B4 = D_801591F8.unk20;
+	animBase[0] = animFrame;
+	D_80159028.unk0 = D_801591F8.unk18;
+	D_80159028.unk2 = D_801591F8.unk1C;
+	D_80159028.unk4 = D_801591F8.unk20;
+	D_801591A8 = 0;
+
+	if (*(u32 *) ((u8 *) spec + 0x4C) & 0x08000000) {
+		restoreSigned = (s16) restoreSpeed;
+		if (D_80050AD4 == 1) {
+			*(s16 *) ((u8 *) spec + 0x2C) = restoreSigned;
+		} else {
+			*(s16 *) ((u8 *) spec + 0x20) = restoreSigned;
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800FB504_10A4B4.s")
+#endif
 
 #ifdef NON_MATCHING
 /* CURRENT(4786) */

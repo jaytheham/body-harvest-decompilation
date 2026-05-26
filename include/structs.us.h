@@ -2562,6 +2562,16 @@ typedef struct {
 } ShieldWallLink;
 
 typedef struct {
+	s16 unk0;
+	s16 unk2;
+	s16 unk4;
+	u8 pad06[0x14];
+	u8 unk1A;
+	u8 pad1B[0x4];
+	s32 unk20;
+} CameraAlienRef;
+
+typedef struct {
 	s32 unk0;
 	s16 unk8;
 	s16 unkA;

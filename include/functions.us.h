@@ -1510,5 +1510,6 @@ void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2);
 void func_800D9B14_E8AC4(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_8011592C_1248DC(s16 arg0, s16 arg1);
 void func_800F1004_FFFB4(void);
+void func_8012B150_13A100(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2, s32 arg3);
 
 #endif
