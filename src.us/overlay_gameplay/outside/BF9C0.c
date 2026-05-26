@@ -3658,6 +3658,7 @@ void func_800BD360_CC310(void)
 	gDPPipeSync(D_8005BB2C);
 }
 
+// Is player in a gate?
 // CURRENT(1785)
 #ifdef NON_MATCHING
 s32 func_800BD688_CC638(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
