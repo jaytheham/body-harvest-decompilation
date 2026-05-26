@@ -60,34 +60,6 @@ Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1) {
 #endif
 
 // castVehicleShadows?
-typedef struct {
-	s32 model;
-	void (*updateMtx)(u8);
-	Unk80052B40 offset;
-	u16 flags;
-} ShadowPartEntry;
-
-extern Gfx D_13E440[];
-extern s32 D_800344B4_350B4[];
-extern void *D_801575A4;
-extern char D_8014429C_15324C[];
-extern char D_801442BC_15326C[];
-extern char D_801442C0_153270[];
-extern char D_801442C4_153274[];
-extern f32 D_801442CC_15327C;
-extern u8 D_5030BA0[];
-extern u8 D_5030CE8[];
-extern u8 D_5030E30[];
-extern u8 D_5030F18[];
-extern u8 D_5030FF8[];
-extern u8 D_50310D8[];
-extern u8 D_5031BC0[];
-extern u8 D_5031DB0[];
-extern u8 D_5031F30[];
-extern u8 D_5032038[];
-extern u8 D_50445A0[];
-extern u8 D_9043D50[];
-
 // CURRENT(16124)
 #ifdef NON_MATCHING
 void func_800E8A00_F79B0(void) {

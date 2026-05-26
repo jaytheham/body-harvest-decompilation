@@ -5766,7 +5766,6 @@ void func_800FDE00_10CDB0(void) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(0)
 void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1) {
 	VehicleInstance *vehicle;
 	VehicleSpec *spec;
