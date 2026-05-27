@@ -5243,19 +5243,22 @@ void func_8008554C_944FC(u8 arg0)
 	}
 }
 
+// CURRENT(145)
 #ifdef NON_MATCHING
-void func_80085690_94640(u8 arg0, u16 arg1) {
+void func_80085690_94640(u8 arg0, s16 arg1) {
 	AlienInstance *inst;
-	s32 sp18;
+	s16 sp18;
 
-	if (func_80084FE8_93F98(arg0, arg1) != 0) {
+	sp18 = arg1;
+	if (func_80084FE8_93F98(arg0, sp18 & 0xFFFF) != 0) {
 		inst = &alienInstances[arg0];
 		if (inst->unk1E == 0) {
-			func_80122524_1314D4(D_80052B34, D_80145BE2[D_8025669C[inst->specIndex].unk0].unk0, inst->unk0, inst->unk4);
+			func_80122524_1314D4(D_80052B34, D_80145BE2_154B92[D_8025669C[inst->specIndex].unk0].unk0, inst->unk0, inst->unk4);
 			inst->unk1E = 0x1C;
 		}
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085690_94640.s")
 #endif
