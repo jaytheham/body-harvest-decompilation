@@ -1739,12 +1739,21 @@ void func_800A1DD8_B0D88(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1DD8_B0D88.s")
 #endif
 
-// CURRENT(11789)
+// CURRENT(11437)
 #ifdef NON_MATCHING
 void func_800A2260_B1210() {
 	Gfx *dl;
 	f32 *ghostPos;
 	f32 sp6C;
+	f32 sp64;
+	f32 sp68;
+	f32 sp60;
+	f32 sp5C;
+	f32 sp58;
+	f32 sp8;
+	f32 temp_f8;
+	f32 temp_f4;
+	f64 half;
 	s32 pad0;
 	s32 pad1;
 	s32 pad2;
@@ -1753,15 +1762,6 @@ void func_800A2260_B1210() {
 	s32 pad5;
 	s32 pad6;
 	s32 pad7;
-	f32 sp68;
-	f32 sp64;
-	f32 sp60;
-	f32 sp5C;
-	f32 sp58;
-	f32 sp8;
-	f32 temp_f8;
-	f32 temp_f4;
-	f64 half;
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
@@ -1876,7 +1876,7 @@ void func_800A2260_B1210() {
 	D_8005BB34++;
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos[0] - sp58);
-	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos[1] - temp_f4);
+	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos[1] - sp5C);
 	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos[2] - sp60);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
