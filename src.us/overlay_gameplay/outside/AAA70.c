@@ -1542,7 +1542,7 @@ void func_800A1A18_B09C8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1A18_B09C8.s")
 #endif
 
-// CURRENT(5595)
+// CURRENT(3131)
 #ifdef NON_MATCHING
 void func_800A1DD8_B0D88(s32 arg0) {
 	Gfx *dl;
@@ -1553,19 +1553,17 @@ void func_800A1DD8_B0D88(s32 arg0) {
 	f32 tempF16;
 	f32 tempF18;
 	f32 tempF10;
-	f32 *scale;
 	f32 *basePos;
 
 	arg0 &= 0xFF;
-	scale = (f32*)&D_80153AB8;
 
 	tempF0 = (f32)((f64)(*(u16*)(((u8*)&D_8014F618) + 0x60)) * 0.03125);
-	tempF2 = tempF0 * scale[0];
-	tempF12 = tempF0 * scale[1];
-	tempF14 = tempF0 * scale[2];
-	tempF16 = tempF0 * scale[3];
-	tempF18 = tempF0 * scale[4];
-	tempF10 = tempF0 * scale[5];
+	tempF2 = tempF0 * D_80153AB8.x;
+	tempF12 = tempF0 * D_80153AB8.y;
+	tempF14 = tempF0 * D_80153AB8.z;
+	tempF16 = tempF0 * ((f32*)&D_80153AB8)[3];
+	tempF18 = tempF0 * ((f32*)&D_80153AB8)[4];
+	tempF10 = tempF0 * ((f32*)&D_80153AB8)[5];
 
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, ((u32)(D_1009C70 + ((((u8*)&D_8014F618)[0x62 + arg0]) << 7))) & 0x1FFFFFFF);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
