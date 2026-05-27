@@ -33,22 +33,22 @@ typedef u16 Button;
 s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask);
 
 typedef enum GameplayMode {
-	GAMEPLAY_MODE_LEVEL_MAP = 0,
-	GAMEPLAY_MODE_UNK1 = 1,
-	GAMEPLAY_MODE_UNK2 = 2, // pause menu?
+	GAMEPLAY_MODE_LEVEL_MAP = 0, // Actually something else?
+	GAMEPLAY_MODE_UNK1 = 1, // Normal gameplay
+	GAMEPLAY_MODE_UNK2 = 2, // pause menu
 	GAMEPLAY_MODE_UNK3 = 3, // Cutscene mode?
-	GAMEPLAY_MODE_UNK4 = 4,
+	GAMEPLAY_MODE_UNK4 = 4, // Beacon UI
 	GAMEPLAY_MODE_UNK5 = 5,
-	GAMEPLAY_MODE_UNK6 = 6, // inside building?
-	GAMEPLAY_MODE_UNK7 = 7,
+	GAMEPLAY_MODE_UNK6 = 6, // entering building?
+	GAMEPLAY_MODE_UNK7 = 7, // loading level?
 	GAMEPLAY_MODE_UNK8 = 8,
-	GAMEPLAY_MODE_UNK9 = 9, // talking to an NPC?
-	GAMEPLAY_MODE_END_OF_LEVEL = 0xA,
-	GAMEPLAY_MODE_UNKB = 0xB,
-	GAMEPLAY_MODE_UNKC = 0xC,
+	GAMEPLAY_MODE_UNK9 = 9, // Talking to NPC/Signpost/Daisy
+	GAMEPLAY_MODE_END_OF_LEVEL = 0xA, // Show score screens
+	GAMEPLAY_MODE_UNKB = 0xB, // Beacon launch cutscene/Shield gen destroyed cutscene
+	GAMEPLAY_MODE_UNKC = 0xC, // When killed/quitting/boss killed
 	GAMEPLAY_MODE_UNKD = 0xD,
 	GAMEPLAY_MODE_UNKE = 0xE,
-	GAMEPLAY_MODE_UNKF = 0xF,
+	GAMEPLAY_MODE_UNKF = 0xF, // When quitting/changing level after 0xC
 	GAMEPLAY_MODE_INVENTORY = 0x10
 } GameplayMode;
 
