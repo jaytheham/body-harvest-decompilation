@@ -435,8 +435,6 @@ void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 	}
 }
 
-void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-
 // Draws Health/Human/vehicle/+more bars on HUD
 #ifdef NON_MATCHING
 void func_8009D96C_AC91C(void) {
