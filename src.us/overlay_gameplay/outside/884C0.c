@@ -9838,43 +9838,41 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80091AC0_A0A70.s")
 #endif
 
-// CURRENT(?)
+// CURRENT(5522)
 #ifdef NON_MATCHING
 void func_80091E70_A0E20(u8 arg0) {
-	u8 alienId = arg0;
-	AlienInstance *alien = &alienInstances[alienId];
-	u8 specIndex = alien->specIndex;
-	s16 x = alien->unk0;
-	s16 z = alien->unk4;
-	s16 depth = alien->unk2E;
+	AlienInstance *alien = &alienInstances[arg0];
+	AlienSpec *spec = &alienSpecs[alien->specIndex];
+	s32 targetSpeed = spec->unk40;
+	s32 x = alien->unk0 >> 8;
+	s32 z = alien->unk4 >> 8;
 	u8 useAttack = 0;
 
-	if ((x >> 8) != (depth >> 8)) {
-		useAttack = 1;
-	} else if ((z >> 8) != (alien->unk32 >> 8)) {
+	if ((x != (alien->unk2E >> 8)) || (z != (alien->unk32 >> 8))) {
 		useAttack = 1;
 	}
 
+	func_800919C0_A0970(arg0, useAttack);
+
 	if (useAttack != 0) {
-		if (func_800919C0_A0970(alienId, useAttack) != 0) {
-			if (func_800B325C_C220C((s8)x, (s8)z, 0x800) != 0) {
-				func_80091AC0_A0A70(alienId, (s8)x, (s8)z);
-			}
+		if (func_800B325C_C220C((s8)x, (s8)z, 0x800) != 0) {
+			func_80091AC0_A0A70(arg0, (s8)x, (s8)z);
 		}
 	}
 
 	if ((alien->unk20 & 0x8000000) == 0) {
 		if ((alien->unk20 & 0x1000) != 0) {
 			if ((alien->unk20 & 0x2000) == 0) {
-				if ((D_80052A8C & 0x1C) == (alienId & 0x1C)) {
+				if ((D_80052A8C & 0x1C) == (arg0 & 0x1C)) {
 					if (func_800B325C_C220C((s8)(alien->unk14 >> 8), (s8)(alien->unk18 >> 8), 0x800) == 0) {
-						alien->unk20 &= ~0x1101;
+						alien->unk20 &= ~0x1100;
 					}
 				}
 			}
 		}
 
 		if ((alien->unk20 & 0x2000) != 0) {
+			targetSpeed = -0x80;
 			alien->unk2C -= 4;
 			if (alien->unk2C <= 0) {
 				alien->unk20 &= ~0x2000;
@@ -9882,10 +9880,10 @@ void func_80091E70_A0E20(u8 arg0) {
 		}
 	}
 
-	if (alien->unk12 < alienSpecs[specIndex].unk40) {
-		alien->unk12 += alienSpecs[specIndex].unk3E * 4;
-	} else if (alien->unk12 > alienSpecs[specIndex].unk40) {
-		alien->unk12 -= alienSpecs[specIndex].unk3E * 4;
+	if (alien->unk12 < targetSpeed) {
+		alien->unk12 += spec->unk3E * 4;
+	} else if (alien->unk12 > targetSpeed) {
+		alien->unk12 -= spec->unk3E * 4;
 	}
 }
 
