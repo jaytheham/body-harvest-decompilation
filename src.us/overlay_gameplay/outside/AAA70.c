@@ -1859,29 +1859,20 @@ void func_800A2B58_B1B08(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2B58_B1B08.s")
 #endif
 
+// CURRENT(11390)
 #ifdef NON_MATCHING
-// CURRENT(16691)
 void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	AAA70Unk8014F618Head *temp_s0;
 	Gfx *dl;
 	f32 posX;
 	f32 posY;
 	f32 posZ;
-	f32 diffX;
-	f32 diffY;
-	f32 diffZ;
-	f32 camDiffX;
-	f32 camDiffY;
-	f32 camDiffZ;
 	f32 distScale;
-	f32 flatDiffX;
-	f32 flatDiffZ;
 	f32 flatDistF;
 	s32 flatDist;
 	s32 temp_a1;
 	s16 size;
 	u8 pulse;
-	u32 color;
 
 	(void)arg3;
 	temp_s0 = (AAA70Unk8014F618Head *)&D_8014F618;
@@ -1933,21 +1924,15 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
-	color = D_8014F618.unk79 << 8;
-	color |= D_8014F618.unk77 << 24;
-	color |= D_8014F618.unk78 << 16;
-	color |= D_8014F618.unk69;
-	gDPSetPrimColor(D_8005BB2C++, 0, 0, color >> 24, (color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk77, D_8014F618.unk78, D_8014F618.unk79, D_8014F618.unk69);
 
-	diffX = (f32)(D_80052B34->unk0 - arg0);
-	diffY = (f32)(D_80052B34->unk2 - arg1);
-	diffZ = (f32)(D_80052B34->unk4 - arg2);
-	sqrtf((diffX * diffX) + (diffY * diffY) + (diffZ * diffZ));
+	sqrtf(((f32)(D_80052B34->unk0 - arg0) * (f32)(D_80052B34->unk0 - arg0)) +
+		  ((f32)(D_80052B34->unk2 - arg1) * (f32)(D_80052B34->unk2 - arg1)) +
+		  ((f32)(D_80052B34->unk4 - arg2) * (f32)(D_80052B34->unk4 - arg2)));
 
-	camDiffX = (D_80047954 * 4.0f) - posX;
-	camDiffY = (D_80047958 * 4.0f) - posY;
-	camDiffZ = (D_8004795C * 4.0f) - posZ;
-	distScale = sqrtf((camDiffX * camDiffX) + (camDiffY * camDiffY) + (camDiffZ * camDiffZ));
+	distScale = sqrtf((((D_80047954 * 4.0f) - posX) * ((D_80047954 * 4.0f) - posX)) +
+				 ((D_80047958 * 4.0f) - posY) * ((D_80047958 * 4.0f) - posY) +
+				 ((D_8004795C * 4.0f) - posZ) * ((D_8004795C * 4.0f) - posZ));
 
 	size = (s16)(s32)distScale;
 	*(s16 *)&D_8014F618.unk60 = size;
@@ -1965,15 +1950,10 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl;
-	color = D_8014F618.unk73 << 8;
-	color |= D_8014F618.unk71 << 24;
-	color |= D_8014F618.unk72 << 16;
-	color |= D_8014F618.unk6B;
-	gDPSetPrimColor(D_8005BB2C++, 0, 0, color >> 24, (color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk71, D_8014F618.unk72, D_8014F618.unk73, D_8014F618.unk6B);
 
-	flatDiffX = D_80052B2C->unk0 - posX;
-	flatDiffZ = D_80052B2C->unk8 - posZ;
-	flatDist = (s32)((f32)(s32)(flatDiffX * flatDiffX) + (flatDiffZ * flatDiffZ));
+	flatDist = (s32)((f32)(s32)((D_80052B2C->unk0 - posX) * (D_80052B2C->unk0 - posX)) +
+				 (D_80052B2C->unk8 - posZ) * (D_80052B2C->unk8 - posZ));
 	flatDistF = sqrtf((f32)flatDist);
 
 	D_80052B40.unk0 = arg0;
