@@ -1299,6 +1299,7 @@ void func_800A13E8_B0398(void) {
 }
 
 // drawDebugTimingGraphs
+// CURRENT(5565)
 #ifdef NON_MATCHING
 void func_800A140C_B03BC(void) {
 	s32 iter;
@@ -1310,7 +1311,6 @@ void func_800A140C_B03BC(void) {
 	s16 *shiftPtr;
 
 	if (D_80047720 != 0) {
-		shiftPtr = &D_80047722;
 		debug_drawTimingGraphBars();
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCycleType(D_8005BB2C++, 3 << 20);
@@ -1320,7 +1320,7 @@ void func_800A140C_B03BC(void) {
 		lry = 0xD3;
 		uly = 0xCF;
 		rowPtr = D_8014F5F0;
-		shiftPtr = &D_80047722;
+		shiftPtr = ((s16 *)&D_80047720) + 1;
 		do {
 			s32 j;
 			acc.h.lo = 0;
@@ -1333,7 +1333,7 @@ void func_800A140C_B03BC(void) {
 				acc.h.hi = acc.h.hi + carry;
 				acc.h.lo = new_lo;
 			} while (j--);
-			acc.ull = func_8001D1A0_1DDA0(acc.h.hi, acc.h.lo, (s32)*shiftPtr >> 31, *shiftPtr);
+			acc.ull = __ull_rshift(acc.ull, (long long)*shiftPtr);
 			if (acc.h.hi != 0 || acc.h.lo >= 0xC9U) {
 				acc.h.hi = 0;
 				acc.h.lo = 0xC8;
