@@ -649,36 +649,29 @@ void func_8009D96C_AC91C(void) {
 #endif
 
 // drawAlienHealth
+// CURRENT(10486)
 #ifdef NON_MATCHING
-// CURRENT(11423)
-void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4) {
 	f32 alpha;
 	f32 interp;
-	f64 interpD;
-	s16 width;
-	u8 state;
-	u8 mode;
+	s32 width;
+	s32 state;
+	s32 mode;
 
 	alpha = arg0;
 	width = arg3;
 
-	if (width != 0) {
-		if (func_80018AA0_196A0() == 0) {
-			if (func_8013B8C8_14A878() == 0) {
-				goto block_5c;
-			}
-		}
+	if ((width != 0) && (func_80018AA0_196A0() == 0) && (func_8013B8C8_14A878() == 0)) {
+		goto block_5c;
 	}
 
 	interp = D_8013D668_14C618;
-	interpD = interp;
-	if (interpD > 0.0) {
-		if (interpD < D_80142728_1516D8) {
+	if (interp > 0.0f) {
+		if ((f64)interp < D_80142728_1516D8) {
 			interp = 0.0f;
 		} else {
-			interp = (f32)(interpD - D_80142728_1516D8);
+			interp = (f32)((f64)interp - D_80142728_1516D8);
 		}
-		interpD = interp;
 	}
 
 	if (arg1 != 0) {
@@ -710,15 +703,12 @@ block_5c:
 	}
 
 	interp = D_8013D668_14C618;
-	interpD = interp;
-	if (interpD < 1.0) {
+	if ((f64)interp < 1.0) {
 		D_8014F6B0 = ((alpha - D_8014F6A4) * interp) + D_8014F6A4;
-		interp = (f32)(interpD + D_80142730_1516E0);
-		interpD = interp;
+		interp = (f32)((f64)interp + D_80142730_1516E0);
 		D_8014F6AC = D_8014F6A8 + (s16)(interp * (width - D_8014F6A8));
 	} else {
 		interp = 1.0f;
-		interpD = 1.0;
 		D_8014F6B0 = alpha;
 		D_8014F6AC = width;
 	}
@@ -728,8 +718,8 @@ store_results:
 	D_8014F6C0 = width;
 	D_8013D668_14C618 = interp;
 
-	if (interpD >= 0.0) {
-		if (((u8)D_8014F202 != 0) || (interpD < 1.0)) {
+	if (interp >= 0.0f) {
+		if (((u8)D_8014F202 != 0) || ((f64)interp < 1.0)) {
 			func_8009C6CC_AB67C((s16)((interp * 64.0f) - 32.0f), 0x8B, alpha, 0, arg1, 2, 0, (s16)arg2, width);
 		}
 	}
