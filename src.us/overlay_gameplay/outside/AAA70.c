@@ -841,20 +841,17 @@ void func_8009EE30_ADDE0(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009EE30_ADDE0.s")
 #endif
 
-// CURRENT(29213)
+// CURRENT(18243)
 #ifdef NON_MATCHING
 void func_8009F130_AE0E0(void) {
-	Gfx *dl;
 	s16 alpha;
-	s16 x;
-	s16 y;
+	u8 menuVals[9];
 	s32 stickX;
 	s32 stickY;
 	s32 i;
 	s32 icon;
-	u8 menuVals[9];
 	u8 *menuPtr;
-	u8 selected;
+	s32 selected;
 
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
@@ -896,21 +893,25 @@ void func_8009F130_AE0E0(void) {
 	}
 
 	stickX = D_8004758A;
-	if (stickX < 0) {
-		x = -stickX;
-	} else {
-		x = stickX;
-	}
+	{
+		s16 x;
 
-	if (x < 0x14) {
-		stickY = D_8004758B;
-		if (stickY < 0) {
-			y = -stickY;
+		if (stickX < 0) {
+			x = -stickX;
 		} else {
-			y = stickY;
+			x = stickX;
 		}
-		if (y < 0x14) {
-			D_8014F1E0 = 1;
+
+		if (x < 0x14) {
+			stickY = D_8004758B;
+			if (stickY < 0) {
+				x = -stickY;
+			} else {
+				x = stickY;
+			}
+			if (x < 0x14) {
+				D_8014F1E0 = 1;
+			}
 		}
 	}
 
@@ -945,7 +946,6 @@ void func_8009F130_AE0E0(void) {
 
 	alpha = D_8014ED56;
 	selected = menuVals[D_8013D730_14C6E0];
-
 	if ((alpha != 0xFF) || (D_80052AD0 == 0)) {
 		D_8013D734_14C6E4 = -1;
 		func_8001A54C_1B14C(D_801426B8_151668);
@@ -987,6 +987,9 @@ void func_8009F130_AE0E0(void) {
 		u8 item = *menuPtr;
 
 		if (item != 0xF) {
+			s16 x;
+			s16 y;
+
 			x = (s16) ((((i % 3) << 5) + (D_80068084 / 2)) - 0x2C);
 			icon = D_8013D66C_14C61C[item];
 
