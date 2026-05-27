@@ -267,13 +267,24 @@ void func_8009C4E8_AB498(void) {
 	D_8014F1F8 = -0x10;
 }
 
-// CURRENT(5900)
+// CURRENT(1737)
 #ifdef NON_MATCHING
 void func_8009C4F8_AB4A8(s32 arg0, s32 arg1) {
 	Gfx *dl;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s32 pad6;
+	s32 pad7;
+	s32 pad8;
+	s32 pad9;
 	volatile s32 x0;
 
-	x0 = arg0 &= 0xFF;
+	arg0 &= 0xFF;
+	x0 = arg0;
 	arg1 &= 0xFF;
 
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u32)(D_1009C70 + (arg1 << 7)) & 0x1FFFFFFF);
@@ -284,7 +295,7 @@ void func_8009C4F8_AB4A8(s32 arg0, s32 arg1) {
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 1, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
 	gSPTextureRectangle(D_8005BB2C++,
-		arg0 * 4,
+		x0 * 4,
 		(D_80068088 - 0x24) * 4,
 		(arg0 + 0xB) * 4,
 		(D_80068088 - 0x19) * 4,
