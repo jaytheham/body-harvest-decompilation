@@ -831,71 +831,67 @@ s32 func_8007A198_89148(s32 arg0)
 
 // guess_addActiveObject Skipping seems to result in aliens with no physical presence
 // https://decomp.me/scratch/s8PwY
+// CURRENT(1018)
 #ifdef NON_MATCHING
 s32 func_8007A2A0_89250(s32 arg0)
 {
-  u8 sp34;
-  int new_var;
-  int new_var2;
-  sp34 = alienInstances[arg0].specIndex;
+	AlienInstance *inst;
+	u8 sp34;
+
+	inst = &alienInstances[arg0];
+	sp34 = inst->specIndex;
   if (D_8014ECCC == 0x40)
   {
-	osSyncPrintf(&D_801417DC);
+	osSyncPrintf(&D_801417DC_15078C);
 	return -1;
   }
-  new_var2 = alienInstances[arg0].unk20 & 0x600;
-  if (new_var2)
+	if (inst->unk20 & 0x600)
   {
-	osSyncPrintf(&D_801417F8, arg0);
+	osSyncPrintf(&D_801417F8_1507A8, arg0);
 	return -1;
   }
   D_8014D510[D_8014ECCC] = arg0;
   if (func_80079F08_88EB8(arg0) != 0)
   {
-	osSyncPrintf(&D_8014180C);
+	osSyncPrintf(&D_8014180C_1507BC);
 	return -1;
-	if (alienInstances[arg0].unkC)
-	{
-	}
   }
-  if (D_802566D4[alienInstances[arg0].specIndex * 0x1A] & 0x3E)
+	if (D_802566D4[inst->specIndex * 0x1A] & 0x3E)
 	{
 		D_8014D304 = 0;
 
-	if (func_8007F0E8_8E098(arg0 & 0xFF, 0, 0) != 0)
+	if (func_8007F0E8_8E098((u8)arg0, 0, 0) != 0)
 	{
-	  osSyncPrintf(&D_8014183C);
+	  osSyncPrintf(&D_8014183C_1507EC);
 	  return -1;
 	}
   }
   if (func_80079C8C_88C3C(arg0) == 0)
   {
-	osSyncPrintf(&D_80141868);
+	osSyncPrintf(&D_80141868_150818);
 	return -1;
   }
-  if (alienSpecs[sp34].unk50 != (-1))
+  if ((s8)alienSpecs[sp34].unk50 != (-1))
   {
-	s8 slot = (s8) func_800F3990_102940(arg0 & 0xFF, alienSpecs[sp34].unk50 & 0xFF);
+	s8 slot = (s8)func_800F3990_102940((u8)arg0, (u8)alienSpecs[sp34].unk50);
 	if (slot == (-1))
 	{
-	  osSyncPrintf(&D_8014189C);
-	  func_80079DC0_88D70(alienInstances[arg0].unkC);
+	  osSyncPrintf(&D_8014189C_15084C);
+	  func_80079DC0_88D70(inst->unkC);
 	  return -1;
 	}
-	new_var = slot | 0x80000;
-	alienInstances[arg0].unk20 &= ~7;
-	alienInstances[arg0].unk20 |= new_var;
+	inst->unk20 = (inst->unk20 & ~7) | (slot | 0x80000);
   }
-  if (alienSpecs[sp34].unk54 & 0x02000000)
+  if ((alienSpecs[sp34].unk54 << 6) < 0)
   {
-	alienInstances[arg0].unk3C = func_800CD1F8_DC1A8(0, 0, 0, 0, -0x3C, 0);
-	alienInstances[arg0].unk3D = func_800CD1F8_DC1A8(0, 0, 0, 0, -0x3C, 0);
+	inst->unk3C = func_800CD1F8_DC1A8(0, 0, 0, 0, -0x3C, 0);
+	inst->unk3D = func_800CD1F8_DC1A8(0, 0, 0, 0, -0x3C, 0);
   }
-  func_80079E64_88E14(arg0);
-  alienInstances[arg0].unk20 |= 0x600;
-  D_8014D510[D_8014ECCC] = arg0;
-  D_8014ECCC++;
-  return D_8014ECCC - 1;
+	func_80079E64_88E14(arg0);
+	inst->unk20 |= 0x600;
+	D_8014D510[D_8014ECCC] = arg0;
+	D_8014ECCC++;
+	return D_8014ECCC - 1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007A2A0_89250.s")
