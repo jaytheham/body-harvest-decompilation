@@ -2268,16 +2268,19 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2D98_B1D48.s")
 #endif
 
-// CURRENT(28003)
+// CURRENT(7752)
 #ifdef NON_MATCHING
 void func_800A3490_B2440(VehicleInstance *arg0) {
 	u8 *sp6C;
+	s32 pad0;
+	s16 pad1;
+	s16 pad2;
 	s16 sp62;
 	s16 sp60;
 	u8 sp56;
-	u8 var_a3;
-	u8 var_t4;
 	u8 var_t5;
+	u8 var_t4;
+	u8 var_a3;
 	s32 temp_v0;
 	s32 temp_ra;
 	s32 var_t0;
@@ -2287,11 +2290,11 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 	f32 temp_f0;
 
 	sp6C = func_800FAFB8_109F68(arg0);
-	D_8014F67E = 0;
 	sp56 = (u8)D_8013D5B8_14C568;
 	var_a3 = 0x2D;
 	var_t4 = 0x2E;
 	var_t5 = 0x91;
+	D_8014F67E = 0;
 
 	if (func_800A2A88_B1A38() != 0) {
 		if ((D_80158FE8 != NULL) && (func_800A18CC_B087C() != 0)) {
@@ -2306,14 +2309,19 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 			var_t5 = 0;
 		}
 
-		if (D_8013D770_14C720 < 0) {
-			D_8013D770_14C720 = 0;
+		temp_v0 = D_8013D770_14C720;
+		if (temp_v0 < 0) {
+			temp_v0 = 0;
 		}
-		if (D_8013D770_14C720 >= 0x1F) {
-			D_8013D770_14C720 = 0x1E;
+		D_8013D770_14C720 = temp_v0;
+		if (temp_v0 >= 0x1F) {
+			temp_v0 = 0x1E;
+			D_8013D770_14C720 = temp_v0;
 		}
-		if (D_8013D76C_14C71C > 0) {
-			D_8013D76C_14C71C--;
+
+		temp_v0 = D_8013D76C_14C71C;
+		if (temp_v0 > 0) {
+			D_8013D76C_14C71C = temp_v0 - 1;
 		}
 
 		*(s32 *)&D_8013D5D0_14C580 = arg0->unk0;
@@ -2336,9 +2344,9 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, temp_a0, temp_a0, temp_a0, temp_a0);
 				} else {
 					temp_f0 = (f32)(0xFF - sp56) / 115.0f;
-					var_a3 = ((s32)((f32)var_a3 + ((f32)(0xFF - var_a3) * temp_f0))) & 0xFF;
-					var_t4 = ((s32)((f32)var_t4 + ((f32)(0xFF - var_t4) * temp_f0))) & 0xFF;
-					var_t5 = ((s32)((f32)var_t5 + ((f32)(0xFF - var_t5) * temp_f0))) & 0xFF;
+					var_a3 = (u8)((f32)var_a3 + ((f32)(0xFF - var_a3) * temp_f0));
+					var_t4 = (u8)((f32)var_t4 + ((f32)(0xFF - var_t4) * temp_f0));
+					var_t5 = (u8)((f32)var_t5 + ((f32)(0xFF - var_t5) * temp_f0));
 					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, var_a3, var_t4, var_t5, 0xFF);
 				}
 				break;
