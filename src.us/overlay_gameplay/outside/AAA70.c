@@ -1414,24 +1414,37 @@ void func_800A17EC_B079C(void) {
 	func_800A1764_B0714();
 }
 
+// CURRENT(793)
 #ifdef NON_MATCHING
 s32 func_800A1828_B07D8(u8 arg0, u8 arg1, u8 arg2) {
-	s32 target = arg1;
-	s32 step = arg2;
-	s32 current = arg0;
+	s32 a0;
+	s32 a1;
+	s32 a2;
+	s32 a3;
 
-	if (target < current) {
-		if (current < step || (current - target) < step) {
-			return arg1;
+	a0 = arg0;
+	a1 = arg1;
+	a2 = arg2;
+
+	if (a1 < a0) {
+		a3 = a2;
+		if ((a0 < a2) || ((a0 - a1) < a2)) {
+			return a1 & 0xFF;
 		}
-		return current - step;
-	} else if (current < target) {
-		if ((0xFF - step) < current || (target - current) < step) {
-			return arg1;
-		}
-		current = (current + step) & 0xFF;
+		a0 = a0 - a3;
+		return a0 & 0xFF;
 	}
-	return current;
+
+	if (a0 < a1) {
+		a3 = a2;
+		if (((0xFF - a2) < a0) || ((a1 - a0) < a2)) {
+			return a1 & 0xFF;
+		}
+		a0 = a0 + a3;
+		a0 &= 0xFF;
+	}
+
+	return a0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1828_B07D8.s")
