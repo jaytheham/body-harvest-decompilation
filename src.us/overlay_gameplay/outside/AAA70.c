@@ -772,22 +772,20 @@ void func_8009EC90_ADC40(s16 arg0, f32 *arg1, f32 *arg2) {
 	*arg1 = (f32) (((f64) *arg2 * ((f64) (f32) sins(arg0) / 32768.0)) / ((f64) (f32) coss(arg0) / 32768.0));
 }
 
-// CURRENT(?)
+// CURRENT(2811)
 #ifdef NON_MATCHING
 void func_8009EE30_ADDE0(void)
 {
 	Gfx *dl;
-	Vtx *vtx;
 	s32 var_s0;
 	s32 var_s1;
 	s32 var_s2;
-	s32 pad0;
-	s32 pad1;
+	s32 var_v1;
 	s16 var_s4;
 	f32 sp7C;
 	f32 sp78;
 
-	var_s4 = D_80257A3C[D_80052B34->unk1A];
+	var_s4 = *(s16 *)&D_80257A3A[(D_80052B34->unk1A * 0x70) + 2];
 	if (var_s4 == 0) {
 		return;
 	}
@@ -795,21 +793,21 @@ void func_8009EE30_ADDE0(void)
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, SHADE, 0, TEXEL0, 0, 0, 0, 0, SHADE, SHADE, 0, TEXEL0, 0);
 	gSPVertex(D_8005BB2C++, (u32) D_8005BB34 & 0x1FFFFFFF, 10, 0);
 
-	vtx = D_8005BB34;
-	D_8005BB34 = vtx + 1;
-	vtx->v.ob[0] = 0;
-	vtx->v.ob[1] = 0;
-	vtx->v.ob[2] = 0;
-	vtx->v.flag = 0;
-	vtx->v.tc[0] = 0x400;
-	vtx->v.tc[1] = 0x400;
-	vtx->v.cn[0] = 0xFF;
-	vtx->v.cn[1] = 0xA0;
-	vtx->v.cn[2] = 0xA0;
-	vtx->v.cn[3] = 0x80;
+	D_8005BB34->v.ob[0] = 0;
+	D_8005BB34->v.ob[1] = 0;
+	D_8005BB34->v.ob[2] = 0;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x400;
+	D_8005BB34->v.tc[1] = 0x400;
+	D_8005BB34->v.cn[0] = 0xFF;
+	D_8005BB34->v.cn[1] = 0xA0;
+	D_8005BB34->v.cn[2] = 0xA0;
+	D_8005BB34->v.cn[3] = 0x80;
+	D_8005BB34++;
 
 	var_s2 = 0;
-	for (var_s1 = 0; var_s1 != 9; var_s1++) {
+	var_s1 = 0;
+	while (var_s1 != 9) {
 		if (var_s2 >= 0) {
 			var_s0 = var_s2 >> 2;
 		} else {
@@ -817,19 +815,22 @@ void func_8009EE30_ADDE0(void)
 		}
 
 		func_8009EC90_ADC40((s16)(var_s0 - var_s4), &sp7C, &sp78);
+		var_s0 = (s32)(sp7C * 32.0f);
+		var_v1 = (s32)(sp78 * 32.0f);
 
-		vtx->v.ob[0] = (s16)(s32)(sp7C * 32.0f);
-		vtx->v.ob[1] = (s16)(s32)(sp78 * 32.0f);
-		vtx->v.ob[2] = 0;
-		vtx->v.flag = 0;
-		vtx->v.tc[0] = (s16)((vtx->v.ob[0] + 0x20) * 0x20);
-		vtx->v.tc[1] = (s16)((0x20 - vtx->v.ob[1]) * 0x20);
-		vtx->v.cn[0] = 0xFF;
-		vtx->v.cn[1] = 0xFF;
-		vtx->v.cn[2] = 0xFF;
-		vtx->v.cn[3] = 0x80;
-		vtx++;
+		D_8005BB34->v.ob[0] = (s16)((f64)var_s0 * 0.75);
+		D_8005BB34->v.ob[1] = (s16)((f64)var_v1 * 0.75);
+		D_8005BB34->v.ob[2] = 0;
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = (s16)((var_s0 + 0x20) * 0x20);
+		D_8005BB34->v.tc[1] = (s16)((0x20 - var_v1) * 0x20);
+		D_8005BB34->v.cn[0] = 0xFF;
+		D_8005BB34->v.cn[1] = 0xFF;
+		D_8005BB34->v.cn[2] = 0xFF;
+		D_8005BB34->v.cn[3] = 0x80;
+		D_8005BB34++;
 
+		var_s1++;
 		var_s2 += var_s4;
 	}
 
