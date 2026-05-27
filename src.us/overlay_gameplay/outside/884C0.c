@@ -5119,6 +5119,7 @@ s32 func_800850DC_9408C(s32 arg0, u16 arg1) {
 #endif
 
 // https://decomp.me/scratch/c6ii8
+// CURRENT(356)
 #ifdef NON_MATCHING
 s32 func_800851C8_94178(u8 arg0, u8 arg1, u16 arg2) {
 	Unk8014DD50 *weapon;
@@ -5126,13 +5127,13 @@ s32 func_800851C8_94178(u8 arg0, u8 arg1, u16 arg2) {
 	s32 sp54;
 	s32 sp50;
 	s32 sp4C;
+	s32 var_v1;
 	s16 sp44;
 	f32 sp34;
 	f32 sp30;
-	s32 var_v1;
 
-	alien = &alienInstances[arg0];
 	weapon = &D_8014DD50[arg1];
+	alien = &alienInstances[arg0];
 	func_80128428_1373D8(alien, weapon->unk0, 0, weapon->unk4, &sp54, &sp50, &sp4C);
 	sp34 = (f32)(D_80052B34->unk0 - sp54);
 	sp30 = (f32)(D_80052B34->unk4 - sp4C);
@@ -5142,11 +5143,12 @@ s32 func_800851C8_94178(u8 arg0, u8 arg1, u16 arg2) {
 	} else {
 		var_v1 = -(s16)(func_80003824_4424(sp34, sp30) - alien->unk6 + (u16)weapon->unk6);
 	}
-	if (var_v1 < (s32)arg2) {
+	if (var_v1 < arg2) {
 		return 1;
 	}
 	return 0;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800851C8_94178.s")
 #endif
