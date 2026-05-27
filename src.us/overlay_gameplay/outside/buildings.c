@@ -5058,8 +5058,305 @@ void func_80124C40_133BF0(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124C40_133BF0.s")
 #endif
 
+// CURRENT(49074)
+#ifdef NON_MATCHING
 // displayBullets
+void func_80124D60_133D10(void) {
+	Unk8015F760 *bullet;
+	u8 *weaponEntry;
+	s32 i;
+	s32 objType;
+	u8 sparkType;
+	s32 weaponFlags;
+	u8 *trailColor;
+	s16 pos[2];
+	s8 color[4];
+	s16 *hudPos;
+	u8 *extraPtr;
+
+	gDPPipeSync(D_8005BB2C++);
+	D_8005BB2C->words.w0 = 0xFCFFFFFF;
+	D_8005BB2C->words.w1 = 0xFFFE7838;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xB900031D;
+	D_8005BB2C->words.w1 = 0xC8112078;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xBA000E02;
+	D_8005BB2C->words.w1 = 0x00008000;
+	D_8005BB2C++;
+
+	func_800C1150_D0100();
+
+	D_8005BB30->words.w0 = 0xFCFFFFFF;
+	D_8005BB30->words.w1 = 0xFFFE793C;
+	D_8005BB30++;
+	D_8005BB30->words.w0 = 0xB6000000;
+	D_8005BB30->words.w1 = 0x00010000;
+	D_8005BB30++;
+	D_8005BB30->words.w0 = 0xB900031D;
+	D_8005BB30->words.w1 = 0x407858;
+	D_8005BB30++;
+	D_8005BB30->words.w0 = 0xBA001402;
+	D_8005BB30->words.w1 = 0x00100000;
+	D_8005BB30++;
+
+	if (D_8015F9E4 != 0) {
+		bullet = &D_8015EB90[D_8015F9E4 - 1];
+
+		for (i = D_8015F9E4 - 1; i >= 0; i--, bullet--) {
+			u8 *bulletBytes = (u8 *)bullet;
+			objType = bullet->unk20;
+			weaponEntry = D_80145BE0_154B90 + (objType * 0x18);
+			sparkType = weaponEntry[0x16];
+
+			if ((gameplayMode == 1) || (gameplayMode == 0xC) || (gameplayMode == 3) || (gameplayMode == 0xB)) {
+				weaponFlags = *(s32 *)(weaponEntry + 8) >> 8;
+				if ((weaponFlags & 0x1000) || (objType == 0x5D)) {
+					func_800C31AC_D215C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bulletBytes[0x2E]);
+				} else if ((weaponFlags << 9) >= 0) {
+					if ((objType >= 0x5C) && (objType < 0x70)) {
+						switch (objType - 0x5C) {
+							case 0:
+								func_800D4AB0_E3A60(*(s16 *)(bulletBytes + 0x2C), (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
+								break;
+							case 2:
+								func_800D55C0_E4570(*(s16 *)(bulletBytes + 0x2C), (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
+								break;
+							case 5:
+								func_800D76F4_E66A4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, *(s16 *)(bulletBytes + 0x2C));
+								break;
+							case 4:
+								func_800D8000_E6FB0((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, *(s16 *)(bulletBytes + 0x2C));
+								break;
+							case 3:
+							case 0xA:
+							case 0xC:
+							case 0x10:
+							case 0x13:
+								func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, *(s16 *)(bulletBytes + 0x2C));
+								break;
+							default:
+								break;
+						}
+					}
+				} else {
+					func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, *(s16 *)(bulletBytes + 0x2C));
+				}
+
+				if ((((s32)(*(s32 *)(weaponEntry + 8) >> 8)) & 0x10000) != 0) {
+					if ((objType == 0x1D) || (objType == 0x2A) || (objType == 0x0C)) {
+						if ((D_80052A8C % 3) == 0) {
+							func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bulletBytes[0x2E], 2);
+						}
+					} else if (objType == 0x5B) {
+						func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bulletBytes[0x2E], 1);
+					} else {
+						func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bulletBytes[0x2E], 0);
+					}
+				}
+			}
+
+			if (sparkType == 0x80) {
+				trailColor = ((u8 *)D_80140B44_14FAF4 - 0x39C) + (objType * 0xB);
+
+				color[0] = trailColor[0];
+				color[1] = trailColor[1];
+				color[2] = trailColor[2];
+				color[3] = trailColor[6];
+
+				if ((D_80052A8C & 1) == 0) {
+					color[0] = (color[0] + 0x96 > 0xFF) ? 0xFF : color[0] + 0x96;
+					color[1] = (color[1] + 0x96 > 0xFF) ? 0xFF : color[1] + 0x96;
+					color[2] = (color[2] + 0x96 > 0xFF) ? 0xFF : color[2] + 0x96;
+					color[3] = (color[3] + 0x4B > 0xFF) ? 0xFF : color[3] + 0x4B;
+				}
+
+				D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
+				D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
+				D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = color[3];
+				D_8005BB34->v.cn[1] = trailColor[7];
+				D_8005BB34->v.cn[2] = trailColor[8];
+				D_8005BB34->v.cn[3] = trailColor[9];
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
+				D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
+				D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = color[0];
+				D_8005BB34->v.cn[1] = color[1];
+				D_8005BB34->v.cn[2] = color[2];
+				D_8005BB34->v.cn[3] = 0xFF;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
+				D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
+				D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = color[3];
+				D_8005BB34->v.cn[1] = color[3];
+				D_8005BB34->v.cn[2] = color[3];
+				D_8005BB34->v.cn[3] = trailColor[0xA];
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
+				D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
+				D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = color[3];
+				D_8005BB34->v.cn[1] = trailColor[7];
+				D_8005BB34->v.cn[2] = trailColor[8];
+				D_8005BB34->v.cn[3] = trailColor[9];
+				D_8005BB34++;
+
+				gDPPipeSync(D_8005BB30++);
+				gSPVertex(D_8005BB30++, D_8005BB34 - 4, 4, 0);
+				D_8005BB30->words.w0 = 0xB5000000;
+				D_8005BB30->words.w1 = 0x0400103F;
+				D_8005BB30++;
+				D_8005BB30->words.w0 = 0xB5000000;
+				D_8005BB30->words.w1 = 0x0004060D;
+				D_8005BB30++;
+				D_8005BB30->words.w0 = 0xB5000000;
+				D_8005BB30->words.w1 = 0x00000204;
+				D_8005BB30++;
+
+				gSPDisplayList(D_8005BB30++, ((u32 *)&D_80140AD8_14FA88)[sparkType] & 0x1FFFFFFF);
+			} else if (sparkType != 0) {
+				if ((*(s32 *)(weaponEntry + 8) & 0x01000000) == 0) {
+					D_80052B40.unk0 = (s16)(s32)bullet->unk0 >> 2;
+					D_80052B40.unk2 = (s16)(s32)bullet->unk4 >> 2;
+					D_80052B40.unk4 = (s16)(s32)bullet->unk8 >> 2;
+
+					if (*(s16 *)(weaponEntry + 0xE) != 0) {
+						D_80052B48.unk0 = 0x4000 - *(s16 *)(bulletBytes + 0x10);
+						D_80052B48.unk2 = 0;
+						D_80052B48.unk4 = -func_80003824_4424((f32)*(s16 *)(bulletBytes + 0x14), (f32)*(s16 *)(bulletBytes + 0x12));
+					} else {
+						D_80052B48.unk0 = bulletBytes[0x1C] << 8;
+						D_80052B48.unk2 = bulletBytes[0x1D] << 8;
+						D_80052B48.unk4 = 0;
+					}
+
+					func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_800311A0, D_8005BB38);
+					gSPVertex(D_8005BB2C++, D_8005BB38, 4, 0);
+					D_8005BB38 += 0x40;
+					gSPDisplayList(D_8005BB2C++, ((u32 *)&D_80140AD8_14FA88)[sparkType]);
+				}
+			}
+
+			if (((s8)weaponEntry[0xB]) != 0) {
+				extraPtr = D_80140B7C_14FB2C + 0xF0 + (((weaponEntry[0xB] & 7) * 3));
+				color[0] = (s8)((extraPtr[0] * (weaponEntry[0xB] & 0xF8)) >> 9);
+				color[1] = (s8)((extraPtr[1] * (weaponEntry[0xB] & 0xF8)) >> 9);
+				color[2] = (s8)((extraPtr[2] * (weaponEntry[0xB] & 0xF8)) >> 9);
+				color[3] = 0;
+				pos[0] = (s16)(s32)bullet->unk0;
+				pos[1] = (s16)(s32)bullet->unk8;
+				func_800B2354_C1304(pos, color, 0x100, 0x258);
+			}
+		}
+	}
+
+	if (((D_80159320 & 0x40) != 0) && (gameplayMode == 1) && (currentLevel == 2) && func_800A2A88_B1A38()) {
+		s32 alpha;
+
+		hudPos = &D_8015FA40[0x45];
+		for (i = 0x17; i >= 0; i--) {
+			D_8005BB34->v.ob[0] = hudPos[0];
+			D_8005BB34->v.ob[1] = hudPos[1];
+			D_8005BB34->v.ob[2] = hudPos[2];
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+
+			alpha = 0x80 - (i * 4);
+			D_8005BB34->v.cn[0] = alpha;
+			D_8005BB34->v.cn[1] = alpha;
+			D_8005BB34->v.cn[2] = alpha;
+			D_8005BB34->v.cn[3] = 0x40;
+			D_8005BB34++;
+			hudPos -= 3;
+		}
+
+		gSPVertex(D_8005BB30++, D_8005BB34 - 24, 24, 0);
+		hudPos = &D_8015FA40[6];
+		for (i = 0x16; i >= 0; i--) {
+			if ((hudPos[0] != 0x7FFF) && (hudPos[-3] != 0x7FFF)) {
+				D_8005BB30->words.w0 = 0xB5000000;
+				D_8005BB30->words.w1 = ((((i * 2) & 0xFF) << 16) | ((((i * 2) + 2) & 0xFF) << 8) | 4);
+				D_8005BB30++;
+			}
+			hudPos += 3;
+		}
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+	D_8005BB2C->words.w0 = 0xFCFFFFFF;
+	D_8005BB2C->words.w1 = 0xFFFDF6FB;
+	D_8005BB2C++;
+
+	{
+		s16 *fadeData;
+		s16 *fadeEnd;
+
+		fadeData = &D_8015F9F8[0][0];
+		fadeEnd = fadeData + (8 * 4);
+		while (fadeData != fadeEnd) {
+			if (fadeData[3] != 0) {
+				s32 fade;
+				s32 invFade;
+
+				fade = (fadeData[3] << 6) - 1;
+				invFade = (0xFF - fade) & 0xFF;
+				D_80052B40.unk0 = fadeData[0];
+				D_80052B40.unk2 = fadeData[1];
+				D_80052B40.unk4 = fadeData[2];
+
+				D_8005BB2C->words.w0 = 0xFA000000;
+				D_8005BB2C->words.w1 = 0xFF000000 | (invFade << 16) | (invFade << 8) | invFade;
+				D_8005BB2C++;
+
+				func_800039D0_45D0(&D_80052B40, NULL, &D_80052B48, D_8005BB38);
+				gSPVertex(D_8005BB2C++, D_8005BB38, 4, 0);
+				D_8005BB38 += 0x40;
+				gSPDisplayList(D_8005BB2C++, &D_50332A0);
+				D_8005BB2C->words.w0 = 0xBD000000;
+				D_8005BB2C->words.w1 = 0;
+				D_8005BB2C++;
+			}
+
+			fadeData += 4;
+		}
+	}
+
+	D_8005BB2C->words.w0 = 0xB7000000;
+	D_8005BB2C->words.w1 = 0x00030000;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xBB000000;
+	D_8005BB2C->words.w1 = 0x80008000;
+	D_8005BB2C++;
+	gDPPipeSync(D_8005BB2C++);
+	D_8005BB2C->words.w0 = 0xB900031D;
+	D_8005BB2C->words.w1 = 0xC8442478;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xB9000002;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124D60_133D10.s")
+#endif
 
 void func_80125C48_134BF8(s16 arg0, s16 arg1, s16 arg2) {
 	s32 index;
