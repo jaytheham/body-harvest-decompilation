@@ -4733,7 +4733,7 @@ loop:
 #endif
 
 
-// CURRENT(?)
+// CURRENT(13111)
 #ifdef NON_MATCHING
 void func_800844D0_93480(s32 arg0)
 {
@@ -4742,30 +4742,36 @@ void func_800844D0_93480(s32 arg0)
 	u8 sp39;
 	s32 sp34;
 	s8 var_s2;
+	s16 temp_s0;
+	s16 temp_s1;
 	AlienInstance *temp_s3;
 	AlienSpec *temp_v0;
+	s32 temp_v1;
 	s32 temp_a3;
 
 	temp_a3 = arg0 & 0xFF;
 	temp_s3 = &alienInstances[temp_a3];
 	var_s2 = 0;
+	temp_s0 = temp_s3->unk0;
+	temp_s1 = temp_s3->unk4;
 	sp39 = temp_s3->specIndex;
 
-	sp3C = (s16)(s8)(temp_s3->unk0 >> 8);
-	sp3A = (s16)(s8)(temp_s3->unk4 >> 8);
+	sp3C = (s16)(s8)(temp_s0 >> 8);
+	sp3A = (s16)(s8)(temp_s1 >> 8);
 
-	if (func_800B325C_C220C((s8)sp3C, (s8)sp3A, 0x800) != 0)
+	if (func_800B325C_C220C((s8)sp3C, (s8)sp3A, 0x800) == 0)
 	{
 		return;
 	}
 
 	temp_v0 = &alienSpecs[sp39];
-	if ((temp_v0->unk54 & 0x10) == 0 || (temp_v0->unk54 & 1) != 0)
+	temp_v1 = temp_v0->unk54;
+	if ((temp_v1 & 0x10) == 0 || (temp_v1 & 1) != 0)
 	{
 		return;
 	}
 
-	sp34 = (temp_s3->unk2 - temp_v0->unk58) - 0x32;
+	sp34 = temp_s3->unk2 - temp_v0->unk58 - 0x32;
 
 	if (func_800B325C_C220C((s8)sp3C, (s8)(sp3A - 1), 0x800) != 0)
 	{
@@ -4808,7 +4814,7 @@ void func_800844D0_93480(s32 arg0)
 		func_800840B0_93060(var_s2, temp_s3->unk2A, &sp3C, &sp3A);
 		sp3C = (s16)((sp3C << 8) + 0x80);
 		sp3A = (s16)((sp3A << 8) + 0x80);
-		temp_s3->unk2A = func_80003824_4424((f32)(sp3C - temp_s3->unk0), (f32)(sp3A - temp_s3->unk4));
+		temp_s3->unk2A = func_80003824_4424((f32)(sp3C - temp_s0), (f32)(sp3A - temp_s1));
 	}
 }
 #else
