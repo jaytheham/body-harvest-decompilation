@@ -1100,6 +1100,7 @@ void func_8007AA0C_899BC(void)
 
 // R on controller 2 debug prints current vehicle info + target info (if any)
 // Skipping this stops aliens/humans moving
+// CURRENT(360)
 #ifdef NON_MATCHING
 void func_8007AAEC_89A9C(void)
 {
@@ -1115,94 +1116,94 @@ void func_8007AAEC_89A9C(void)
   {
 	if (vehicle != NULL)
 	{
-	  osSyncPrintf(&D_80141990, vehicle - vehicleInstances);
-	  osSyncPrintf(&D_8014199C, D_800344B4[vehicleSpecs[vehicle->unk1A].unk18 * 2]);
-	  osSyncPrintf(&D_801419A8, (s32) vehicle->unk0, vehicle->unk2, vehicle->unk4);
-	  osSyncPrintf(&D_801419B8, (s32) vehicle->unk6, vehicle->unkA, vehicle->unk8);
-	  osSyncPrintf(&D_801419C8, (s32) vehicle->unkE);
-	  osSyncPrintf(&D_801419D8, (s32) vehicle->unk10);
-	  osSyncPrintf(&D_801419E8, (s32) vehicle->unk12);
-	  osSyncPrintf(&D_801419F4, (double) vehicle->unk30, (double) vehicle->unk34, (double) vehicle->unk38);
-	  osSyncPrintf(&D_80141A04, (s32) vehicle->unk20);
+	  osSyncPrintf(&D_80141990_150940, vehicle - vehicleInstances);
+	  osSyncPrintf(&D_8014199C_15094C, D_800344B4_350B4[vehicleSpecs[vehicle->unk1A].unk18 * 2]);
+	  osSyncPrintf(&D_801419A8_150958, (s32) vehicle->unk0, vehicle->unk2, vehicle->unk4);
+	  osSyncPrintf(&D_801419B8_150968, (s32) vehicle->unk6, vehicle->unkA, vehicle->unk8);
+	  osSyncPrintf(&D_801419C8_150978, (s32) vehicle->unkE);
+	  osSyncPrintf(&D_801419D8_150988, (s32) vehicle->unk10);
+	  osSyncPrintf(&D_801419E8_150998, (s32) vehicle->unk12);
+	  osSyncPrintf(&D_801419F4_1509A4, (double) vehicle->unk30, (double) vehicle->unk34, (double) vehicle->unk38);
+	  osSyncPrintf(&D_80141A04_1509B4, (s32) vehicle->unk20);
 	  if (vehicle->unk20 & 2)
 	  {
-		osSyncPrintf(&D_80141A10);
+		osSyncPrintf(&D_80141A10_1509C0);
 	  }
 	  if (vehicle->unk20 & 0x800)
 	  {
-		osSyncPrintf(&D_80141A1C);
+		osSyncPrintf(&D_80141A1C_1509CC);
 	  }
 	  if (vehicle->unk20 & 4)
 	  {
-		osSyncPrintf(&D_80141A28);
+		osSyncPrintf(&D_80141A28_1509D8);
 	  }
 	  if (vehicle->unk20 & 8)
 	  {
-		osSyncPrintf(&D_80141A38);
+		osSyncPrintf(&D_80141A38_1509E8);
 	  }
-	  osSyncPrintf(&D_80141A48);
+	  osSyncPrintf(&D_80141A48_1509F8);
 	}
 	if (alien != NULL)
 	{
-	  osSyncPrintf(&D_80141A4C, alien - alienInstances);
-	  osSyncPrintf(&D_80141A58, alienSpecs[alien->specIndex].unk18);
+	  osSyncPrintf(&D_80141A4C_1509FC, alien - alienInstances);
+	  osSyncPrintf(&D_80141A58_150A08, alienSpecs[alien->specIndex].unk18);
 	  if (alien->specIndex == 1)
 	  {
-		osSyncPrintf(&D_80141A64, (s32) alien->unk24);
+		osSyncPrintf(&D_80141A64_150A14, (s32) alien->unk24);
 	  }
-	  osSyncPrintf(&D_80141A74, (s32) alien->unk0, alien->unk2, alien->unk4);
-	  osSyncPrintf(&D_80141A84, (s32) alien->unk6, alien->unkA, alien->unk8);
-	  osSyncPrintf(&D_80141A94, (s32) alien->unkE);
-	  osSyncPrintf(&D_80141AA4, (s32) alien->unk2A);
-	  osSyncPrintf(&D_80141ABC, (s32) alien->unk12);
-	  osSyncPrintf(&D_80141AC8, (s32) alien->unk10);
-	  osSyncPrintf(&D_80141AD8, alien->unk20);
+	  osSyncPrintf(&D_80141A74_150A24, (s32) alien->unk0, alien->unk2, alien->unk4);
+	  osSyncPrintf(&D_80141A84_150A34, (s32) alien->unk6, alien->unkA, alien->unk8);
+	  osSyncPrintf(&D_80141A94_150A44, (s32) alien->unkE);
+	  osSyncPrintf(&D_80141AA4_150A54, (s32) alien->unk2A);
+	  osSyncPrintf(&D_80141ABC_150A6C, (s32) alien->unk12);
+	  osSyncPrintf(&D_80141AC8_150A78, (s32) alien->unk10);
+	  osSyncPrintf(&D_80141AD8_150A88, alien->unk20);
 	  if (alien->unk20 & 0x20)
 	  {
-		osSyncPrintf(&D_80141AE8);
+		osSyncPrintf(&D_80141AE8_150A98);
 	  }
 	  if (alien->unk20 & 0x80)
 	  {
-		osSyncPrintf(&D_80141AF4);
+		osSyncPrintf(&D_80141AF4_150AA4);
 	  }
 	  if (alien->unk20 & 0x100)
 	  {
-		osSyncPrintf(&D_80141B04);
+		osSyncPrintf(&D_80141B04_150AB4);
 	  }
 	  if (alien->unk20 & 0x08000000)
 	  {
-		osSyncPrintf(&D_80141B10);
+		osSyncPrintf(&D_80141B10_150AC0);
 	  }
 	  if (alien->unk20 & 0x40)
 	  {
-		osSyncPrintf(&D_80141B18);
+		osSyncPrintf(&D_80141B18_150AC8);
 	  }
 	  if (alien->unk20 & 0x40000000)
 	  {
-		osSyncPrintf(&D_80141B20);
+		osSyncPrintf(&D_80141B20_150AD0);
 	  }
 	  if (alien->unk20 & 0x400000)
 	  {
-		osSyncPrintf(&D_80141B28);
+		osSyncPrintf(&D_80141B28_150AD8);
 	  }
-	  osSyncPrintf(&D_80141B34);
-	  osSyncPrintf(&D_80141B38, (s32) alien->hitPoints);
-	  osSyncPrintf(&D_80141B48, (s32) alien->unk47);
-	  osSyncPrintf(&D_80141B60, (s32) alien->unk38, alien->unk14, alien->unk16, (s32) alien->unk18);
-	  osSyncPrintf(&D_80141B78, (s32) alien->unk28, (s32) alien->unk29);
-	  osSyncPrintf(&D_80141B94, (s32) alien->unk2C, alien->unk34, (s32) alien->unk36, alien->unk37, alien->unk3A, alien->unk40, (s32) alien->unk1E);
-	  osSyncPrintf(&D_80141BD8, (s32) alien->unk1B);
+	  osSyncPrintf(&D_80141B34_150AE4);
+	  osSyncPrintf(&D_80141B38_150AE8, (s32) alien->hitPoints);
+	  osSyncPrintf(&D_80141B48_150AF8, (s32) alien->unk47);
+	  osSyncPrintf(&D_80141B60_150B10, (s32) alien->unk38, alien->unk14, alien->unk16, (s32) alien->unk18);
+	  osSyncPrintf(&D_80141B78_150B28, (s32) alien->unk28, (s32) alien->unk29);
+	  osSyncPrintf(&D_80141B94_150B44, (s32) alien->unk2C, alien->unk34, (s32) alien->unk36, alien->unk37, alien->unk3A, alien->unk40, (s32) alien->unk1E);
+	  osSyncPrintf(&D_80141BD8_150B88, (s32) alien->unk1B);
 	  if ((alien->specIndex == 0x19) || (alien->specIndex == 0x1B))
 	  {
 		AlienInstance *parent;
 		  parent = &alienInstances[alien->unk25];
-		osSyncPrintf(&D_80141BE4);
+		osSyncPrintf(&D_80141BE4_150B94);
 		
-		osSyncPrintf(&D_80141C08, *((s32 *) (&parent->unk10)), *((s32 *) (&parent->unk14)));
-		osSyncPrintf(&D_80141C24, parent->unk20);
+		osSyncPrintf(&D_80141C08_150BB8, *((s32 *) (&parent->unk10)), *((s32 *) (&parent->unk14)));
+		osSyncPrintf(&D_80141C24_150BD4, parent->unk20);
 		if (alien->specIndex == 0x19)
 		{
-		  osSyncPrintf(&D_80141C38, (s32) parent->unk1B, ((u8 *) parent)[0x1E]);
+		  osSyncPrintf(&D_80141C38_150BE8, (s32) parent->unk1B, ((u8 *) parent)[0x1E]);
 		}
 	  }
 	}
