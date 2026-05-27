@@ -1072,7 +1072,7 @@ void func_8009FB1C_AEACC(s16 arg0, s16 arg1) {
 	D_8014F1F0 = (f32) arg1;
 }
 
-// CURRENT(18218)
+// CURRENT(12828)
 #ifdef NON_MATCHING
 void func_8009FB58_AEB08(void) {
 	AlienInstance *alien;
@@ -1117,16 +1117,20 @@ void func_8009FB58_AEB08(void) {
 		s16 centerX;
 		s16 centerZ;
 		s16 x;
-		s16 z;
 
 		centerX = ((s16)D_8006C56D << 8) + 0x80;
-		centerZ = ((s16)D_8006C56E << 8) + 0x80;
 		x = player->unk0;
-		if ((x < (centerX - 0x200)) || ((centerX + 0x200) < x) ||
-			((z = player->unk4), (z < (centerZ - 0x200))) || ((centerZ + 0x200) < z)) {
+		if ((x < (centerX - 0x200)) || ((centerX + 0x200) < x)) {
+			centerZ = ((s16)D_8006C56E << 8) + 0x80;
 			func_8009C1D8_AB188(centerX, centerZ, 1);
 		} else {
-			gzip_data_0000 = 0;
+			x = player->unk4;
+			centerZ = ((s16)D_8006C56E << 8) + 0x80;
+			if ((x < (centerZ - 0x200)) || ((centerZ + 0x200) < x)) {
+				func_8009C1D8_AB188(centerX, centerZ, 1);
+			} else {
+				gzip_data_0000 = 0;
+			}
 		}
 	}
 
