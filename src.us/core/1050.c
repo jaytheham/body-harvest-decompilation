@@ -1536,7 +1536,7 @@ void func_8000345C_405C(u16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_8000345C_405C.s")
 #endif
 
-s32 isButtonNewlyPressed(Controller controllerNum, Button buttonMask)
+s32 isButtonNewlyPressed(s32 controllerNum, u16 buttonMask)
 {
 	s32 result = (currentControllerStates[controllerNum].button & buttonMask) != 0;
 	if (result)
