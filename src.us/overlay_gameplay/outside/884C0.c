@@ -9519,12 +9519,11 @@ void func_80090D0C_9FCBC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80090D0C_9FCBC.s")
 #endif
 
-// CURRENT(?)
+// CURRENT(1176)
 #ifdef NON_MATCHING
 void func_80091220_A01D0(u8 arg0) {
 	AlienInstance *instance = &alienInstances[arg0];
 	AlienInstance *parent = &alienInstances[instance->unk25];
-	Unk8014DD50 *tableEntry;
 	s16 sp50;
 	s16 sp54;
 	s16 sp58;
@@ -9533,18 +9532,21 @@ void func_80091220_A01D0(u8 arg0) {
 	u32 divisor;
 
 	instanceValue = instance->unkC;
-	if (parent->unk10 != 0) {
+	if (*(s32 *)&parent->unk10 != 0) {
 		func_80090D0C_9FCBC(arg0);
 	} else {
 		func_8009012C_9F0DC(arg0);
 		if (instance->unk20 < 0) {
 			if ((instance->unk20 & 0x8000) == 0) {
+				s8 nodeIdx;
+
 				*(s32 *) &parent->unk10 = 0x190;
 				instance->unk20 |= 0x8000;
 				instance->unk34 = 1;
-
-				tableEntry = &D_8014DD50[D_8014DD50[instanceValue].unkC];
-				D_8014DD50[tableEntry->unkD].unk2 = -0x7D00;
+				nodeIdx = D_8014DD50[instance->unkC].unkC;
+				nodeIdx = D_8014DD50[nodeIdx].unkC;
+				nodeIdx = D_8014DD50[nodeIdx].unkD;
+				D_8014DD50[D_8014DD50[nodeIdx].unkD].unk2 = -0x7D00;
 			} else if ((instance->unk47 & 1) == 0) {
 				func_80090C14_9FBC4(arg0);
 			}
@@ -9555,12 +9557,11 @@ void func_80091220_A01D0(u8 arg0) {
 		randomValue = func_800038E0_44E0();
 		divisor = (randomValue % 0x28) + 0x14;
 		if (((u32) D_80052A8C % divisor) == 0) {
-			tableEntry = &D_8014DD50[D_8014DD50[instanceValue].unkC];
 			func_80128428_1373D8(
 				instance,
-				tableEntry->unk0,
-				tableEntry->unk2 - 0x14,
-				tableEntry->unk4 + 0x38,
+				D_8014DD50[D_8014DD50[instanceValue].unkC].unk0,
+				D_8014DD50[D_8014DD50[instanceValue].unkC].unk2 - 0x14,
+				D_8014DD50[D_8014DD50[instanceValue].unkC].unk4 + 0x38,
 				&sp58,
 				&sp54,
 				&sp50);
