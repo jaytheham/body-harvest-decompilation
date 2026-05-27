@@ -2143,7 +2143,6 @@ void func_800EFFB4_FEF64(void) {
 	D_80157F96 = 0;
 }
 
-// CURRENT(180)
 void func_800F0094_FF044(void) {
 	if (-1 == D_80157F68) {
 		D_8004DC60 = 0;
@@ -2167,10 +2166,10 @@ void func_800F0094_FF044(void) {
 	D_80157F68 = -1;
 	D_80068080 = 0;
 	if (D_80052550 != 0) {
-		gameplayMode = 6;
+		gameplayMode = GAMEPLAY_MODE_UNK6;
 		D_80047968 = 1;
 	} else {
-		gameplayMode = 1;
+		gameplayMode = GAMEPLAY_MODE_UNK1;
 		D_80157590 = 0;
 		D_8004DC60 = 0;
 	}
