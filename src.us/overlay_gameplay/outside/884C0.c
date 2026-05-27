@@ -2183,8 +2183,9 @@ s32 func_8007E500_8D4B0(AlienInstance *arg0, AlienSpec *arg1, AlienInstance *arg
 }
 
 // v0/v1 register swap (type↔specIdx1) + level 2 body eliminated by compiler
+// CURRENT(10)
 #ifdef NON_MATCHING
-void func_8007E608_8D5B8(AlienInstance *arg0, AlienInstance *arg1) {
+s32 func_8007E608_8D5B8(AlienInstance *arg0, AlienInstance *arg1) {
 	AlienSpec *spec0;
 	AlienSpec *spec1;
 	s32 saved0, saved1;
@@ -2229,6 +2230,7 @@ end:
 	spec0->unk8 = saved0;
 	spec1->unk8 = saved1;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E608_8D5B8.s")
 #endif
@@ -2985,9 +2987,6 @@ void func_8007FDD8_8ED88(void)
 				{
 					osSyncPrintf(D_80141D50_150D00);
 					count = D_8014ECCC;
-				}
-			}
-
 			i++;
 			activeList++;
 		} while ((u32)i < count);
