@@ -4181,7 +4181,400 @@ void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 	}
 }
 
+// CURRENT(74661)
+#ifdef NON_MATCHING
+void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
+	f32 radius;
+	f32 sinA;
+	f32 cosA;
+	f32 sinB;
+	f32 cosB;
+	f32 radiusThird;
+	f32 radiusTwoThirds;
+	f32 halfRadius;
+	s32 angleA;
+	s32 angleB;
+	s32 sinAComp;
+	s32 cosAComp;
+	s32 sinBComp;
+	s32 cosBComp;
+	s32 yDrop;
+	s16 halfSinB;
+	s16 halfCosB;
+	u8 *levelColor;
+	s16 colorA;
+	s16 colorB;
+	s16 colorC;
+	s16 colorAClamped;
+	s16 colorBClamped;
+	s16 colorCClamped;
+	s16 colorTopA;
+	s16 colorTopB;
+	s16 colorTopC;
+	u8 cR;
+	u8 cG;
+	u8 cB;
+	Vtx *vtx;
+	Gfx *dl;
+
+	radius = D_801601F0[arg3].unk8;
+	if (D_8013FCD0_14EC80 != 0) {
+		radius *= 2.0f;
+	}
+
+	angleA = func_80003824_4424((f32)(arg0[2] - arg2[2]), (f32)(arg0[0] - arg2[0]));
+	sinA = (f32)((f64)(f32)sins((angleA + 0x4000) & 0xFFFF) / 32768.0);
+	cosA = (f32)((f64)(f32)coss((angleA + 0x4000) & 0xFFFF) / 32768.0);
+
+	angleB = arg0[0x23] & 0xFFFF;
+	sinB = (f32)((f64)(f32)sins(angleB) / 32768.0);
+	cosB = (f32)((f64)(f32)coss(angleB) / 32768.0);
+
+	levelColor = &D_8013FCD4_14EC84[currentLevel * 9];
+	colorA = levelColor[0x24];
+	colorB = levelColor[0x25];
+	colorC = levelColor[0x26];
+	colorAClamped = (colorA >= 0xB4) ? (colorA - 0xB4) : 0;
+	colorBClamped = (colorB >= 0xB4) ? (colorB - 0xB4) : 0;
+	colorCClamped = (colorC >= 0xB4) ? (colorC - 0xB4) : 0;
+	colorTopA = levelColor[0x2A];
+	colorTopB = levelColor[0x2B];
+	colorTopC = levelColor[0x2C];
+	cR = levelColor[0x27];
+	cG = levelColor[0x28];
+	cB = levelColor[0x29];
+
+	radiusThird = radius / 3.0f;
+	sinAComp = (s32)(radiusThird * sinA);
+	cosAComp = (s32)(radiusThird * cosA);
+	sinBComp = (s32)(radiusThird * sinB);
+	cosBComp = (s32)(radiusThird * cosB);
+
+	vtx = D_8005BB34;
+	vtx->v.ob[0] = arg0[0];
+	vtx->v.ob[1] = arg0[1];
+	vtx->v.ob[2] = arg0[2];
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = 0;
+	vtx->v.cn[1] = 0;
+	vtx->v.cn[2] = 0;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = (arg0[0] + sinAComp) - sinBComp;
+	vtx->v.ob[1] = arg0[1];
+	vtx->v.ob[2] = (arg0[2] + cosAComp) - cosBComp;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0x80;
+	vtx->v.cn[0] = 0;
+	vtx->v.cn[1] = 0;
+	vtx->v.cn[2] = 0;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = (arg0[0] - sinAComp) - sinBComp;
+	vtx->v.ob[1] = arg0[1];
+	vtx->v.ob[2] = (arg0[2] - cosAComp) - cosBComp;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0x80;
+	vtx->v.cn[0] = 0;
+	vtx->v.cn[1] = 0;
+	vtx->v.cn[2] = 0;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg1[0];
+	vtx->v.ob[1] = arg1[1];
+	vtx->v.ob[2] = arg1[2];
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = cR;
+	vtx->v.cn[1] = cG;
+	vtx->v.cn[2] = cB;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	radiusTwoThirds = radiusThird * 2.0f;
+	sinAComp = (s32)(radius * sinA);
+	cosAComp = (s32)(radius * cosA);
+	sinBComp = (s32)(radiusTwoThirds * sinB);
+	cosBComp = (s32)(radiusTwoThirds * cosB);
+	yDrop = (s32)((f32)arg1[1] - (radiusTwoThirds / 2.0f));
+
+	vtx->v.ob[0] = (arg1[0] + sinAComp) - sinBComp;
+	vtx->v.ob[1] = yDrop;
+	vtx->v.ob[2] = (arg1[2] + cosAComp) - cosBComp;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x80;
+	vtx->v.cn[0] = cR;
+	vtx->v.cn[1] = 0;
+	vtx->v.cn[2] = cB;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = (arg1[0] - sinAComp) - sinBComp;
+	vtx->v.ob[1] = yDrop;
+	vtx->v.ob[2] = (arg1[2] - cosAComp) - cosBComp;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x80;
+	vtx->v.cn[0] = cR;
+	vtx->v.cn[1] = 0;
+	vtx->v.cn[2] = cB;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = (arg1[0] + sinAComp) - sinBComp;
+	vtx->v.ob[1] = yDrop;
+	vtx->v.ob[2] = (arg1[2] + cosAComp) - cosBComp;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x80;
+	vtx->v.cn[0] = colorAClamped;
+	vtx->v.cn[1] = colorBClamped;
+	vtx->v.cn[2] = colorCClamped;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = (arg1[0] - sinAComp) - sinBComp;
+	vtx->v.ob[1] = yDrop;
+	vtx->v.ob[2] = (arg1[2] - cosAComp) - cosBComp;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x80;
+	vtx->v.cn[0] = colorAClamped;
+	vtx->v.cn[1] = colorBClamped;
+	vtx->v.cn[2] = colorCClamped;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	halfSinB = (sinBComp >= 0) ? (sinBComp >> 1) : ((sinBComp + 1) >> 1);
+	halfCosB = (cosBComp >= 0) ? (cosBComp >> 1) : ((cosBComp + 1) >> 1);
+	halfRadius = radius / 2.0f;
+
+	vtx->v.ob[0] = arg1[0] - halfSinB;
+	vtx->v.ob[1] = (s16)(arg1[1] + (s32)(radius * 2.0f));
+	vtx->v.ob[2] = arg1[2] - halfCosB;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = colorTopA;
+	vtx->v.cn[1] = colorTopB;
+	vtx->v.cn[2] = colorTopC;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg1[0] - sinBComp;
+	vtx->v.ob[1] = (s16)(s32)((f32)arg1[1] + halfRadius);
+	vtx->v.ob[2] = arg1[2] - cosBComp;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = cR;
+	vtx->v.cn[1] = cG;
+	vtx->v.cn[2] = cB;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg1[0] - sinBComp;
+	vtx->v.ob[1] = (s16)(s32)((f32)arg1[1] + halfRadius);
+	vtx->v.ob[2] = arg1[2] - cosBComp;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x400;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = colorAClamped;
+	vtx->v.cn[1] = colorBClamped;
+	vtx->v.cn[2] = colorCClamped;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg2[0];
+	vtx->v.ob[1] = arg2[1];
+	vtx->v.ob[2] = arg2[2];
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x280;
+	vtx->v.tc[1] = 0x400;
+	vtx->v.cn[0] = colorA;
+	vtx->v.cn[1] = colorB;
+	vtx->v.cn[2] = colorC;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg2[0] + halfSinB;
+	vtx->v.ob[1] = (s16)(s32)((f32)arg2[1] - radiusTwoThirds);
+	vtx->v.ob[2] = arg2[2] + halfCosB;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x400;
+	vtx->v.cn[0] = colorA;
+	vtx->v.cn[1] = colorB;
+	vtx->v.cn[2] = colorC;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	vtx->v.ob[0] = arg2[0] - halfSinB;
+	vtx->v.ob[1] = (s16)(s32)((f32)arg2[1] - radiusTwoThirds);
+	vtx->v.ob[2] = arg2[2] - halfCosB;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x400;
+	vtx->v.cn[0] = colorA;
+	vtx->v.cn[1] = colorB;
+	vtx->v.cn[2] = colorC;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+
+	D_8005BB34 = vtx;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xB7000000;
+	dl->words.w1 = 0x00010000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xB6000000;
+	dl->words.w1 = 0x00020000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBB000001;
+	dl->words.w1 = 0x80008000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xFC1219FF;
+	dl->words.w1 = 0xFFFFFE38;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0x040038DF;
+	dl->words.w1 = (u32)(D_8005BB34 - 14) & 0x1FFFFFFF;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xFD100000;
+	dl->words.w1 = (u32)D_1014080;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF5100000;
+	dl->words.w1 = 0x07080200;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF3000000;
+	dl->words.w1 = 0x073FF100;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF5101000;
+	dl->words.w1 = 0x00080200;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF2000000;
+	dl->words.w1 = 0x0007C07C;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x0006100A;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00081006;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x0010120A;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00081210;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00000208;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00000806;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00000A04;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x0000060A;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xFD100000;
+	dl->words.w1 = (u32)D_1013E80;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF5100000;
+	dl->words.w1 = 0x07080200;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF3000000;
+	dl->words.w1 = 0x070FF200;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF5100800;
+	dl->words.w1 = 0x00080200;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF2000000;
+	dl->words.w1 = 0x0003C03C;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x0016140C;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00160C18;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x0016140E;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x0016141A;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F554C_1044FC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F63D0_105380.s")
 

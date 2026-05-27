@@ -1375,7 +1375,291 @@ void func_8011A2A0_129250(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011A2A0_129250.s")
 #endif
 
+// CURRENT(21919)
+#ifdef NON_MATCHING
+void func_8011A604_1295B4(void) {
+	s32 i;
+	s32 temp;
+	s32 x;
+	s32 z;
+	s32 maxSize;
+	s32 y;
+	s32 rand1;
+	s32 rand2;
+	s32 rand3;
+	f32 vecX;
+	f32 vecY;
+	f32 vecZ;
+	f32 tempF12;
+	f32 tempF0;
+	f64 tempF64;
+	s16 buildingId;
+	s16 yTerrain;
+	s16 xPos;
+	s16 zPos;
+	s16 localX;
+	s16 localZ;
+	s16 hp;
+	s16 varA3;
+	u32 flags;
+	u32 gameTick;
+	u8 *activeEntry;
+	u8 entryId;
+	BuildingInstance *inst;
+	BuildingSpec *spec;
+	void *found;
+	u8 *model;
+
+	func_8011A2A0_129250();
+	if ((f64) D_8015EA30 != 0.0) {
+		tempF12 = D_8015EA2C;
+		tempF64 = (f64) tempF12;
+		if (tempF64 < 1.0) {
+			D_8015EA2C = tempF12 + D_8015EA30;
+			tempF64 = (f64) D_8015EA2C;
+		}
+
+		if (tempF64 >= 1.0) {
+			D_8015EA2C = 1.0f;
+			D_8015EA30 = D_80144F80_153F30;
+			found = (void *) func_801176B0_126660();
+			if ((currentLevel == 1) && (found == (void *) ((u8 *) D_80148620_1575D0 + 0x20))) {
+				if (D_80052544 == 0) {
+					((u8 *) found)[4] = 2;
+				} else {
+					((u8 *) found)[4] = 3;
+				}
+			}
+			if (found != NULL) {
+				if (D_80052544 == 0) {
+					func_80117A4C_1269FC(found);
+				}
+				tempF64 = (f64) D_8015EA2C;
+			} else {
+				tempF64 = (f64) D_8015EA2C;
+			}
+		}
+
+		if (tempF64 <= 0.0) {
+			D_8015EA2C = 0.0f;
+			D_8015EA30 = 0.0f;
+		}
+	}
+
+	if (D_8015EB78 != 0) {
+		D_8015EB78 -= 1;
+	}
+
+	if ((currentLevel == 1) && (func_8000726C_7E6C((u64) 0x1A) != 0) && (func_8000726C_7E6C((u64) 0x19) != 0) &&
+		(func_8000726C_7E6C((u64) 0x17) == 0)) {
+		func_802D4CD0_18D7E0(0x16, 0);
+		func_800072CC_7ECC((u64) 0x17);
+	}
+
+	activeEntry = &D_8015EA60[0];
+	for (i = 0; i < 0xFF; i++, activeEntry++) {
+		entryId = *activeEntry;
+		inst = &buildingInstances[entryId];
+		flags = (u32) inst->unk8 >> 12;
+		if (!(flags & 1)) {
+			continue;
+		}
+
+		spec = &buildingSpecs[inst->buildingType];
+		if (flags & 0x8000) {
+			buildingId = entryId & 0xFF;
+			if (!(flags & 0x10000) && (func_80117464_126414(buildingId & 0xFF) != 0)) {
+				func_800AD240_BC1F0(buildingId & 0xFF);
+				flags = (u32) inst->unk8 >> 12;
+				inst->unk8 ^= ((flags ^ (flags & 0xFFFF7FFF)) << 12);
+			}
+		}
+
+		if (inst->state >= 2) {
+			inst->state--;
+			if (inst->hitPoints <= 0) {
+				xPos = inst->xCoord;
+				zPos = inst->zCoord;
+				x = xPos;
+				z = zPos;
+				yTerrain = func_800B84D0_C7480(xPos, zPos) >> 8;
+				maxSize = spec->unk12;
+				if (maxSize < spec->unk10) {
+					maxSize = spec->unk10;
+				}
+
+				inst->yCoord += (s16) (((inst->yCoord - yTerrain) - spec->unk14) / inst->state);
+
+				vecY = 0.0f;
+				vecX = (f32) (x / 4) - D_80047954;
+				vecZ = (f32) (z / 4) - D_8004795C;
+				guNormalize(&vecX, &vecY, &vecZ);
+
+				tempF0 = (f32) maxSize;
+				vecX *= tempF0;
+				vecZ *= tempF0;
+
+				gameTick = D_80052A8C;
+				if (!(gameTick & 7)) {
+					func_800DEA08_ED9B8(xPos, yTerrain, zPos, maxSize * 2, 0x14, 0, 0x28, 0xC8, 0x88, 0x67, 0x11);
+				}
+				if (!(gameTick & 3)) {
+					func_80135D44_144CF4(x, yTerrain, z, 3.0f);
+				}
+				if (!(gameTick & 1)) {
+					y = yTerrain;
+					func_800C541C_D43CC(xPos, yTerrain, zPos, 0, 0x7F, 0, 0xC8, 0xFF, 0x50, 0x14, 0x6A, 0x53, 0);
+					func_800C541C_D43CC(xPos, y, zPos, 0, -0x7F, 0, 0xC8, 0xFF, 0x50, 0x14, 0xFF, 0xFF, 0);
+				}
+			}
+		} else {
+			hp = inst->hitPoints;
+			if (hp <= 0) {
+				func_8011D030_12BFE0(entryId & 0xFF);
+				if (D_80052ACA != 2) {
+					if ((((u32) inst->unk8 >> 12) & 4) == 0) {
+						D_80048174++;
+					}
+					D_80048176++;
+					func_800AE190_BD140(inst->unk7);
+				}
+
+				if ((((u32) buildingInstances[*activeEntry].unk8 >> 12) & 1) && (i < 0xFE)) {
+					u8 *cursor;
+
+					for (cursor = &D_8015EA60[i]; cursor < &D_8015EA60[0xFE]; cursor++) {
+						*cursor = cursor[1];
+						if ((((u32) buildingInstances[*cursor].unk8 >> 12) & 1) == 0) {
+							break;
+						}
+					}
+				}
+
+				if (inst->unk11 != -1) {
+					D_80146688_155638[currentLevel - 1][inst->unk11].unk0A -= inst->unk7;
+				}
+
+				flags = (u32) inst->unk8 >> 12;
+				inst->unk7 = 0;
+				inst->unk8 ^= ((flags ^ (flags & ~1)) << 12);
+				i--;
+				activeEntry--;
+				inst->yCoord = (s16) (func_800B84D0_C7480(inst->xCoord, inst->zCoord) >> 8);
+
+				model = *(u8 **) spec;
+				if (currentLevel == 3) {
+					if (model == D_B00D230) {
+						func_8012D84C_13C7FC(currentLevel);
+					}
+				} else if (currentLevel == 4) {
+					if (model == D_C012598) {
+						func_8012D84C_13C7FC(currentLevel);
+					}
+				} else if (currentLevel == 5) {
+					if (model == D_D011660) {
+						func_800A8A68_B7A18(inst->xCoord, inst->yCoord, inst->zCoord, 0x1A);
+					} else if (model == D_D00C4B8) {
+						func_800A8A68_B7A18(inst->xCoord, inst->yCoord, inst->zCoord, 0x16);
+					} else if (model == D_D00AB08) {
+						func_800A8A68_B7A18(inst->xCoord, inst->yCoord, inst->zCoord, 0x18);
+					} else if (model == D_D012098) {
+						func_800A8A68_B7A18(inst->xCoord, inst->yCoord, inst->zCoord, 0x16);
+						func_800A8A68_B7A18(inst->xCoord, inst->yCoord, inst->zCoord, 0x1A);
+					} else if (model == D_D0091C8) {
+						func_800A8A68_B7A18(inst->xCoord, inst->yCoord, inst->zCoord, 0x16);
+					} else if (model == D_D015C38) {
+						func_800A8A68_B7A18(inst->xCoord, inst->yCoord, inst->zCoord, 0x17);
+					} else if (model == D_D00CF28) {
+						func_800A8A68_B7A18(inst->xCoord, inst->yCoord, inst->zCoord, 0x1A);
+					} else if (model == D_D009D48) {
+						func_800A8A68_B7A18(inst->xCoord, inst->yCoord, inst->zCoord, 0x18);
+					} else if (model == D_D010EB0) {
+						func_800A8A68_B7A18(inst->xCoord, inst->yCoord, inst->zCoord, 0x10);
+					}
+				}
+			} else {
+				flags = (u32) inst->unk8 >> 12;
+				if (flags & 4) {
+					buildingId = entryId & 0xFF;
+					if (!(flags & 0x10) && (hp < ((s8) spec->pad16[3] >> 2))) {
+						inst->unk8 ^= (((flags ^ (flags | 0x210)) << 12));
+						if ((currentLevel < 5) && ((currentLevel != 4) || (inst->buildingType != 4)) &&
+							((currentLevel != 3) || (inst->buildingType != 2))) {
+							func_800D249C_E144C(inst->xCoord, (s16) (s32) ((f64) inst->yCoord + ((f64) spec->unk14 * D_80144F88_153F38)),
+												 inst->zCoord, 0xC8, 0x55, 0x55, (s32) entryId, 0);
+						}
+					}
+
+					if ((func_80117464_126414(buildingId & 0xFF) != 0) && !(((i * 7) + D_80052A8C) & 0x1F)) {
+						rand1 = func_800038E0_44E0() & 0xFFFF;
+						rand2 = func_800038E0_44E0() & 0xFFFF;
+						rand3 = func_800038E0_44E0() & 0xFFFF;
+						func_800DEA08_ED9B8((s16) (((rand1 >> 9) + inst->xCoord) - 0x40),
+											 (s16) ((inst->yCoord + spec->unk14) - (rand2 >> 9)),
+											 (s16) (((rand3 >> 9) + inst->zCoord) - 0x40),
+											 (s16) ((s32) (func_800038E0_44E0() + 0xFA) >> 9),
+											 8,
+											 8,
+											 0x32,
+											 0xC8,
+											 0xA0,
+											 0xA0,
+											 0xA0);
+					}
+
+					if ((((u32) inst->unk8 >> 12) & 0x200) && (((u32) (entryId + D_80052A8C) % 80U) == 0)) {
+						inst->state = 0;
+						func_8011BEA0_12AE50(buildingId & 0xFF, 1);
+					}
+				} else if (hp < ((s8) spec->pad16[3] >> 1)) {
+					inst->unk8 ^= (((flags ^ (flags | 0x24)) << 12));
+					if (D_80052ACA != 2) {
+						D_80048174++;
+					}
+				}
+			}
+		}
+
+		if (inst->state == 1) {
+			inst->state = 0;
+		}
+
+		if ((((u32) inst->unk8 >> 12) & 0x20) && (inst->unk7 != 0) && (((u32) D_80052A8C % 12U) == 0)) {
+			func_800AD3BC_BC36C(entryId & 0xFF);
+		}
+
+		model = *(u8 **) spec;
+		if ((currentLevel == 3) && (model == D_B007F80)) {
+			xPos = inst->xCoord;
+			zPos = inst->zCoord;
+			temp = D_80052B34->unk0 - xPos;
+			y = D_80052B34->unk4 - zPos;
+			if ((temp * temp) + (y * y) < 0x3D0900) {
+				func_801371B8_146168(inst, 0x32, xPos, inst->yCoord, zPos, D_80144F90_153F40);
+			}
+		} else if ((currentLevel == 1) && (model == D_90193F8) && (func_8000726C_7E6C((u64) 0x13) == 0)) {
+			xPos = inst->xCoord;
+			zPos = inst->zCoord;
+			temp = D_80052B34->unk0 - xPos;
+			y = D_80052B34->unk4 - zPos;
+			if ((temp * temp) + (y * y) < 0x3D0900) {
+				func_801371B8_146168(inst, 0x175, xPos, inst->yCoord, zPos, D_80144F94_153F44);
+			}
+		} else if (((currentLevel == 2) && (model == D_A01E340)) || ((currentLevel == 4) && (model == D_C014920)) ||
+				   ((currentLevel == 5) && (model == D_D010EB0))) {
+			xPos = inst->xCoord;
+			zPos = inst->zCoord;
+			temp = D_80052B34->unk0 - xPos;
+			y = D_80052B34->unk4 - zPos;
+			if ((temp * temp) + (y * y) < 0x3D0900) {
+				func_801371B8_146168(inst, 0x17F, xPos, inst->yCoord, zPos, D_80144F98_153F48);
+			}
+		}
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011A604_1295B4.s")
+#endif
 
 void func_8011B3F0_12A3A0(s16 arg0, s16 *arg1, s16 *arg2, s16 *arg3) {
 	s16 sp26;
@@ -4774,8 +5058,305 @@ void func_80124C40_133BF0(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124C40_133BF0.s")
 #endif
 
+// CURRENT(49074)
+#ifdef NON_MATCHING
 // displayBullets
+void func_80124D60_133D10(void) {
+	Unk8015F760 *bullet;
+	u8 *weaponEntry;
+	s32 i;
+	s32 objType;
+	u8 sparkType;
+	s32 weaponFlags;
+	u8 *trailColor;
+	s16 pos[2];
+	s8 color[4];
+	s16 *hudPos;
+	u8 *extraPtr;
+
+	gDPPipeSync(D_8005BB2C++);
+	D_8005BB2C->words.w0 = 0xFCFFFFFF;
+	D_8005BB2C->words.w1 = 0xFFFE7838;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xB900031D;
+	D_8005BB2C->words.w1 = 0xC8112078;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xBA000E02;
+	D_8005BB2C->words.w1 = 0x00008000;
+	D_8005BB2C++;
+
+	func_800C1150_D0100();
+
+	D_8005BB30->words.w0 = 0xFCFFFFFF;
+	D_8005BB30->words.w1 = 0xFFFE793C;
+	D_8005BB30++;
+	D_8005BB30->words.w0 = 0xB6000000;
+	D_8005BB30->words.w1 = 0x00010000;
+	D_8005BB30++;
+	D_8005BB30->words.w0 = 0xB900031D;
+	D_8005BB30->words.w1 = 0x407858;
+	D_8005BB30++;
+	D_8005BB30->words.w0 = 0xBA001402;
+	D_8005BB30->words.w1 = 0x00100000;
+	D_8005BB30++;
+
+	if (D_8015F9E4 != 0) {
+		bullet = &D_8015EB90[D_8015F9E4 - 1];
+
+		for (i = D_8015F9E4 - 1; i >= 0; i--, bullet--) {
+			u8 *bulletBytes = (u8 *)bullet;
+			objType = bullet->unk20;
+			weaponEntry = D_80145BE0_154B90 + (objType * 0x18);
+			sparkType = weaponEntry[0x16];
+
+			if ((gameplayMode == 1) || (gameplayMode == 0xC) || (gameplayMode == 3) || (gameplayMode == 0xB)) {
+				weaponFlags = *(s32 *)(weaponEntry + 8) >> 8;
+				if ((weaponFlags & 0x1000) || (objType == 0x5D)) {
+					func_800C31AC_D215C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bulletBytes[0x2E]);
+				} else if ((weaponFlags << 9) >= 0) {
+					if ((objType >= 0x5C) && (objType < 0x70)) {
+						switch (objType - 0x5C) {
+							case 0:
+								func_800D4AB0_E3A60(*(s16 *)(bulletBytes + 0x2C), (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
+								break;
+							case 2:
+								func_800D55C0_E4570(*(s16 *)(bulletBytes + 0x2C), (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
+								break;
+							case 5:
+								func_800D76F4_E66A4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, *(s16 *)(bulletBytes + 0x2C));
+								break;
+							case 4:
+								func_800D8000_E6FB0((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, *(s16 *)(bulletBytes + 0x2C));
+								break;
+							case 3:
+							case 0xA:
+							case 0xC:
+							case 0x10:
+							case 0x13:
+								func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, *(s16 *)(bulletBytes + 0x2C));
+								break;
+							default:
+								break;
+						}
+					}
+				} else {
+					func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, *(s16 *)(bulletBytes + 0x2C));
+				}
+
+				if ((((s32)(*(s32 *)(weaponEntry + 8) >> 8)) & 0x10000) != 0) {
+					if ((objType == 0x1D) || (objType == 0x2A) || (objType == 0x0C)) {
+						if ((D_80052A8C % 3) == 0) {
+							func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bulletBytes[0x2E], 2);
+						}
+					} else if (objType == 0x5B) {
+						func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bulletBytes[0x2E], 1);
+					} else {
+						func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bulletBytes[0x2E], 0);
+					}
+				}
+			}
+
+			if (sparkType == 0x80) {
+				trailColor = ((u8 *)D_80140B44_14FAF4 - 0x39C) + (objType * 0xB);
+
+				color[0] = trailColor[0];
+				color[1] = trailColor[1];
+				color[2] = trailColor[2];
+				color[3] = trailColor[6];
+
+				if ((D_80052A8C & 1) == 0) {
+					color[0] = (color[0] + 0x96 > 0xFF) ? 0xFF : color[0] + 0x96;
+					color[1] = (color[1] + 0x96 > 0xFF) ? 0xFF : color[1] + 0x96;
+					color[2] = (color[2] + 0x96 > 0xFF) ? 0xFF : color[2] + 0x96;
+					color[3] = (color[3] + 0x4B > 0xFF) ? 0xFF : color[3] + 0x4B;
+				}
+
+				D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
+				D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
+				D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = color[3];
+				D_8005BB34->v.cn[1] = trailColor[7];
+				D_8005BB34->v.cn[2] = trailColor[8];
+				D_8005BB34->v.cn[3] = trailColor[9];
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
+				D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
+				D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = color[0];
+				D_8005BB34->v.cn[1] = color[1];
+				D_8005BB34->v.cn[2] = color[2];
+				D_8005BB34->v.cn[3] = 0xFF;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
+				D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
+				D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = color[3];
+				D_8005BB34->v.cn[1] = color[3];
+				D_8005BB34->v.cn[2] = color[3];
+				D_8005BB34->v.cn[3] = trailColor[0xA];
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
+				D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
+				D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = color[3];
+				D_8005BB34->v.cn[1] = trailColor[7];
+				D_8005BB34->v.cn[2] = trailColor[8];
+				D_8005BB34->v.cn[3] = trailColor[9];
+				D_8005BB34++;
+
+				gDPPipeSync(D_8005BB30++);
+				gSPVertex(D_8005BB30++, D_8005BB34 - 4, 4, 0);
+				D_8005BB30->words.w0 = 0xB5000000;
+				D_8005BB30->words.w1 = 0x0400103F;
+				D_8005BB30++;
+				D_8005BB30->words.w0 = 0xB5000000;
+				D_8005BB30->words.w1 = 0x0004060D;
+				D_8005BB30++;
+				D_8005BB30->words.w0 = 0xB5000000;
+				D_8005BB30->words.w1 = 0x00000204;
+				D_8005BB30++;
+
+				gSPDisplayList(D_8005BB30++, ((u32 *)&D_80140AD8_14FA88)[sparkType] & 0x1FFFFFFF);
+			} else if (sparkType != 0) {
+				if ((*(s32 *)(weaponEntry + 8) & 0x01000000) == 0) {
+					D_80052B40.unk0 = (s16)(s32)bullet->unk0 >> 2;
+					D_80052B40.unk2 = (s16)(s32)bullet->unk4 >> 2;
+					D_80052B40.unk4 = (s16)(s32)bullet->unk8 >> 2;
+
+					if (*(s16 *)(weaponEntry + 0xE) != 0) {
+						D_80052B48.unk0 = 0x4000 - *(s16 *)(bulletBytes + 0x10);
+						D_80052B48.unk2 = 0;
+						D_80052B48.unk4 = -func_80003824_4424((f32)*(s16 *)(bulletBytes + 0x14), (f32)*(s16 *)(bulletBytes + 0x12));
+					} else {
+						D_80052B48.unk0 = bulletBytes[0x1C] << 8;
+						D_80052B48.unk2 = bulletBytes[0x1D] << 8;
+						D_80052B48.unk4 = 0;
+					}
+
+					func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_800311A0, D_8005BB38);
+					gSPVertex(D_8005BB2C++, D_8005BB38, 4, 0);
+					D_8005BB38 += 0x40;
+					gSPDisplayList(D_8005BB2C++, ((u32 *)&D_80140AD8_14FA88)[sparkType]);
+				}
+			}
+
+			if (((s8)weaponEntry[0xB]) != 0) {
+				extraPtr = D_80140B7C_14FB2C + 0xF0 + (((weaponEntry[0xB] & 7) * 3));
+				color[0] = (s8)((extraPtr[0] * (weaponEntry[0xB] & 0xF8)) >> 9);
+				color[1] = (s8)((extraPtr[1] * (weaponEntry[0xB] & 0xF8)) >> 9);
+				color[2] = (s8)((extraPtr[2] * (weaponEntry[0xB] & 0xF8)) >> 9);
+				color[3] = 0;
+				pos[0] = (s16)(s32)bullet->unk0;
+				pos[1] = (s16)(s32)bullet->unk8;
+				func_800B2354_C1304(pos, color, 0x100, 0x258);
+			}
+		}
+	}
+
+	if (((D_80159320 & 0x40) != 0) && (gameplayMode == 1) && (currentLevel == 2) && func_800A2A88_B1A38()) {
+		s32 alpha;
+
+		hudPos = &D_8015FA40[0x45];
+		for (i = 0x17; i >= 0; i--) {
+			D_8005BB34->v.ob[0] = hudPos[0];
+			D_8005BB34->v.ob[1] = hudPos[1];
+			D_8005BB34->v.ob[2] = hudPos[2];
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+
+			alpha = 0x80 - (i * 4);
+			D_8005BB34->v.cn[0] = alpha;
+			D_8005BB34->v.cn[1] = alpha;
+			D_8005BB34->v.cn[2] = alpha;
+			D_8005BB34->v.cn[3] = 0x40;
+			D_8005BB34++;
+			hudPos -= 3;
+		}
+
+		gSPVertex(D_8005BB30++, D_8005BB34 - 24, 24, 0);
+		hudPos = &D_8015FA40[6];
+		for (i = 0x16; i >= 0; i--) {
+			if ((hudPos[0] != 0x7FFF) && (hudPos[-3] != 0x7FFF)) {
+				D_8005BB30->words.w0 = 0xB5000000;
+				D_8005BB30->words.w1 = ((((i * 2) & 0xFF) << 16) | ((((i * 2) + 2) & 0xFF) << 8) | 4);
+				D_8005BB30++;
+			}
+			hudPos += 3;
+		}
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+	D_8005BB2C->words.w0 = 0xFCFFFFFF;
+	D_8005BB2C->words.w1 = 0xFFFDF6FB;
+	D_8005BB2C++;
+
+	{
+		s16 *fadeData;
+		s16 *fadeEnd;
+
+		fadeData = &D_8015F9F8[0][0];
+		fadeEnd = fadeData + (8 * 4);
+		while (fadeData != fadeEnd) {
+			if (fadeData[3] != 0) {
+				s32 fade;
+				s32 invFade;
+
+				fade = (fadeData[3] << 6) - 1;
+				invFade = (0xFF - fade) & 0xFF;
+				D_80052B40.unk0 = fadeData[0];
+				D_80052B40.unk2 = fadeData[1];
+				D_80052B40.unk4 = fadeData[2];
+
+				D_8005BB2C->words.w0 = 0xFA000000;
+				D_8005BB2C->words.w1 = 0xFF000000 | (invFade << 16) | (invFade << 8) | invFade;
+				D_8005BB2C++;
+
+				func_800039D0_45D0(&D_80052B40, NULL, &D_80052B48, D_8005BB38);
+				gSPVertex(D_8005BB2C++, D_8005BB38, 4, 0);
+				D_8005BB38 += 0x40;
+				gSPDisplayList(D_8005BB2C++, &D_50332A0);
+				D_8005BB2C->words.w0 = 0xBD000000;
+				D_8005BB2C->words.w1 = 0;
+				D_8005BB2C++;
+			}
+
+			fadeData += 4;
+		}
+	}
+
+	D_8005BB2C->words.w0 = 0xB7000000;
+	D_8005BB2C->words.w1 = 0x00030000;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xBB000000;
+	D_8005BB2C->words.w1 = 0x80008000;
+	D_8005BB2C++;
+	gDPPipeSync(D_8005BB2C++);
+	D_8005BB2C->words.w0 = 0xB900031D;
+	D_8005BB2C->words.w1 = 0xC8442478;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xB9000002;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80124D60_133D10.s")
+#endif
 
 void func_80125C48_134BF8(s16 arg0, s16 arg1, s16 arg2) {
 	s32 index;
