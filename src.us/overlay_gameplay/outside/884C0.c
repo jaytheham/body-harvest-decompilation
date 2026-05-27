@@ -1,6 +1,8 @@
 #include <ultra64.h>
 #include "common.h"
 
+#define D_8013C1A7_14B157 (&D_8013C178_14B128[0x2F])
+
 s16 D_8013BB70_14AB20[14] = {
 	0x0001, 0x0000, 0x0000, 0x0000, 0x0028, 0x0001, 0x0001, 0x0000,
 	0x0000, 0x0000, 0x0028, 0x0001, 0x0001, 0x0000
@@ -503,16 +505,17 @@ s32 func_8007956C_8851C(u8 arg0)
 
 // Skip this and aliens freeze when they die, never disappear
 // https://decomp.me/scratch/tmc2b
+// CURRENT(190)
 #ifdef NON_MATCHING
 void func_800797A4_88754(s32 arg0, u8 arg1)
 {
-  s16 i;
-  s16 nibble;
+	s16 i;
+	s16 nibble;
   if ((arg1) == 0)
   {
 	return;
   }
-  if ((i && i) && i)   {  }
+	if ((i && i) && i)   {  }
   if ((arg1) >= 0x19)
   {
 	return;
@@ -544,7 +547,7 @@ void func_800797A4_88754(s32 arg0, u8 arg1)
 		  alienInstances[arg0].unk0,
 		  alienInstances[arg0].unk2,
 		  alienInstances[arg0].unk4,
-		  D_8013C1A7[nibble]);
+		  D_8013C1A7_14B157[nibble]);
 	}
   }
 }
