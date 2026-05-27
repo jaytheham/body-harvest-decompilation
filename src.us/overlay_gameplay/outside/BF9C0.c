@@ -584,6 +584,11 @@ void func_800B165C_C060C(s32 arg0) {
 				while (x != xEnd) {
 					D_8021EA30[rowOffset + 0x820 + x] |= 0xF0;
 					D_8021EA30[rowOffset + 0x821 + x] |= 0xF0;
+					D_8021EA30[rowOffset + 0x822 + x] |= 0xF0;
+					D_8021EA30[rowOffset + 0x823 + x] |= 0xF0;
+					x += 4;
+				}
+			}
 			maxZ = wall->unk6 >> 10;
 
 			z++;
@@ -4234,7 +4239,6 @@ void func_800BD20C_CC1BC(void)
 					  ? D_8003E0FC[currentLevel - 1][var_a0].unk6
 					  : -D_8003E0FC[currentLevel - 1][var_a0].unk6) + 1);
 			}
-		}
 		}
 	}
 }
