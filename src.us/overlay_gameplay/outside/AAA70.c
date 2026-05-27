@@ -321,18 +321,12 @@ void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 }
 
 // Draws Health/Human/vehicle/+more bars on HUD
+// CURRENT(24215)
 #ifdef NON_MATCHING
 void func_8009D96C_AC91C(void) {
 	AlienInstance *alien;
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	s32 pad3;
-	s32 pad4;
-	s32 pad5;
 	VehicleInstance *vehicle;
 	BuildingInstance *building;
-	Gfx *dl;
 	f32 sp98;
 	s32 sp8C;
 	s16 sp8A;
@@ -342,18 +336,7 @@ void func_8009D96C_AC91C(void) {
 	s16 sp76;
 	s16 sp74;
 	s16 sp72;
-	f32 sp3C;
-	f32 sp38;
-	s16 tempA0;
 	s16 varV0;
-	s16 varV1;
-	s16 varT2;
-	s32 varT1;
-	s32 tempV1;
-	s32 tempT7_2;
-	s8 tempA3;
-	s8 varV1_2;
-	u16 tempU16;
 
 	alien = D_80158FEC;
 
@@ -404,14 +387,16 @@ void func_8009D96C_AC91C(void) {
 
 	if (gameplayMode != 0xC) {
 		if ((alien != NULL) && (alien->specIndex != 0)) {
+			u16 tempU16;
+
 			if (alien->unk20 & 0x100000) {
 				sp98 = 0.0f;
 			} else {
-				sp98 = (f32) alien->hitPoints / 100.0f;
+				sp98 = (f32) ((f64) (f32) alien->hitPoints / 100.0);
 			}
 
 			tempU16 = *(u16 *) &D_802566BA[alien->specIndex * 0x68];
-			sp8A = (s16) ((f32) tempU16 * 0.5f);
+			sp8A = (s16) (((f64) tempU16 / 100.0) * 50.0);
 			func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
 
 			tempU16 = *(u16 *) &D_802566BA[alien->specIndex * 0x68];
@@ -426,11 +411,13 @@ void func_8009D96C_AC91C(void) {
 			}
 		} else if (currentControllerStates[CONTROLLER_ONE].button & 0x10) {
 			if (D_80158FE4 != NULL) {
+				u16 tempU16;
+
 				vehicle = D_80158FE4;
 				if ((currentLevel != 1) || (vehicle->unk1A != 0x12)) {
-					sp98 = (f32) vehicle->unk1C / 100.0f;
+					sp98 = (f32) ((f64) (f32) vehicle->unk1C / 100.0);
 					tempU16 = *(u16 *) &D_80257A3A[vehicle->unk1A * 0x70];
-					sp8A = (s16) ((f32) tempU16 * 0.5f);
+					sp8A = (s16) (((f64) tempU16 / 100.0) * 50.0);
 					func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
 
 					tempU16 = *(u16 *) &D_80257A3A[vehicle->unk1A * 0x70];
@@ -441,6 +428,9 @@ void func_8009D96C_AC91C(void) {
 					sp84 = (f32) vehicle->unk1C / (f32) tempU16;
 				}
 			} else if (D_80158FE8 != NULL) {
+				s8 tempA3;
+				s8 varV1_2;
+
 				building = D_80158FE8;
 				varV1_2 = *(s8 *) &building->hitPoints;
 				tempA3 = (s8) D_802590A9[building->buildingType << 5];
@@ -448,17 +438,15 @@ void func_8009D96C_AC91C(void) {
 					varV1_2 = (s8) ((s16) varV1_2 / 3);
 				}
 
-				sp3C = (f32) varV1_2;
-				sp38 = (f32) tempA3;
-				sp98 = sp3C * 0.0625f;
-				sp8A = (s16) (sp38 * 3.125f);
+				sp98 = (f32) ((f64) (f32) varV1_2 * 0.0625);
+				sp8A = (s16) (((f64) (f32) tempA3 / 100.0) * 312.5);
 				func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
 
 				D_8014F202 = 1;
 				sp8C = (s32) &D_8025F0C0;
 				sp82 = D_8014ED48;
 				sp7C = (s32) building;
-				sp84 = sp3C / sp38;
+				sp84 = (f32) varV1_2 / (f32) tempA3;
 			}
 		}
 	}
@@ -476,6 +464,9 @@ void func_8009D96C_AC91C(void) {
 	D_8014F203 = D_8014F202;
 
 	if (D_8014F1FA != 0x80) {
+		s16 tempA0;
+		s32 varT1;
+
 		tempA0 = 5 - (D_8015931A / 200);
 
 		if (currentLevel == 5) {
@@ -498,6 +489,8 @@ void func_8009D96C_AC91C(void) {
 				func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), (f32) (0xC8 - D_8015931A) / 200.0f, 0,
 					(s32) &D_8025F540, 4, varV0, D_8014ED4C, 0x30);
 			} else {
+				u16 tempU16;
+
 				tempU16 = *(u16 *) &D_80257A3A[D_8004DCEA * 0x70];
 				if (D_8004DCEC >= ((s32) tempU16 >> 2)) {
 					D_8014ED4C = D_8014ED42;
@@ -531,6 +524,9 @@ void func_8009D96C_AC91C(void) {
 	}
 
 	if (D_8014F1F4 != 0x80) {
+		s8 varV1_2;
+		u16 tempU16;
+
 		vehicle = D_80052B34;
 		varV1_2 = vehicle->unk1A;
 
@@ -556,17 +552,15 @@ void func_8009D96C_AC91C(void) {
 			sp72 = D_8014F6A0;
 		}
 
-		sp3C = (f32) sp74;
-		sp38 = (f32) sp72;
-		sp98 = (f32) ((f64) sp3C / 100.0);
-		sp8A = (s16) ((f64) sp38 * 0.48);
+		sp98 = (f32) ((f64) (f32) sp74 / 100.0);
+		sp8A = (s16) (((f64) (f32) sp72 / 100.0) * 48.0);
 		func_8009D900_AC8B0(&sp8A, &sp98, 0x30);
 
 		if (sp74 >= (sp72 >> 2)) {
 			D_8014ED4E = D_8014ED46;
 		}
 
-			func_8009C6CC_AB67C((s16) (D_80068084 - 0x20), (s16) (D_80068088 - 0x1E), sp3C / sp38, 1,
+			func_8009C6CC_AB67C((s16) (D_80068084 - 0x20), (s16) (D_80068088 - 0x1E), (f32) sp74 / (f32) sp72, 1,
 				(s32) &D_8025EE80, 1, 0, D_8014ED4E, sp8A);
 
 		if (D_80052B34->unk1A != 0x13) {
@@ -603,15 +597,18 @@ void func_8009D96C_AC91C(void) {
 		D_8014ED52 = 0;
 	}
 
-	tempU16 = *(u16 *) &D_80257A3A[D_8004DCEA * 0x70];
-	if (D_8004DCEC < ((s32) tempU16 >> 2)) {
-		D_8014ED4C = 8 - (D_80052A8C & 7);
-	} else {
-		D_8014ED4C = 0;
+	{
+		u16 tempU16;
+
+		tempU16 = *(u16 *) &D_80257A3A[D_8004DCEA * 0x70];
+		if (D_8004DCEC < ((s32) tempU16 >> 2)) {
+			D_8014ED4C = 8 - (D_80052A8C & 7);
+		} else {
+			D_8014ED4C = 0;
+		}
 	}
 
-	varV1 = sp72 >> 2;
-	if (sp74 < varV1) {
+	if (sp74 < (sp72 >> 2)) {
 		D_8014ED4E = 8 - (D_80052A8C & 7);
 	} else {
 		D_8014ED4E = 0;
@@ -626,6 +623,8 @@ void func_8009D96C_AC91C(void) {
 	drawText(&D_80142510_1514C0, 0, 0xFF);
 
 	if ((D_8006C6C6 > 0) && (func_80018AC8_196C8() == 0)) {
+		s16 varT2;
+
 		if ((D_8006C6C4 - 8) < D_8006C6C6) {
 			varT2 = D_8006C6C4 - D_8006C6C6;
 		} else {
@@ -637,9 +636,8 @@ void func_8009D96C_AC91C(void) {
 
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
 
-		tempT7_2 = D_80068084 >> 1;
-		tempV1 = 0x30 - (varT2 * 6);
-		func_800092B8_9EB8((tempT7_2 - 0x2A) * 4, (tempV1 + 0xAF) * 4, (tempT7_2 + 0x2C) * 4, (tempV1 + 0xD2) * 4, 0);
+		func_800092B8_9EB8(((D_80068084 >> 1) - 0x2A) * 4, ((0x30 - (varT2 * 6)) + 0xAF) * 4,
+			((D_80068084 >> 1) + 0x2C) * 4, ((0x30 - (varT2 * 6)) + 0xD2) * 4, 0);
 	}
 
 	gDPPipeSync(D_8005BB2C++);
