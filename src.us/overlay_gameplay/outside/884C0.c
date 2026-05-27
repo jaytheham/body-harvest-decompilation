@@ -1600,11 +1600,11 @@ void func_8007B9CC_8A97C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B9CC_8A97C.s")
 #endif
 
+// CURRENT(0)
+#ifdef NON_MATCHING
 // drawComplexObjectShadows e.g. humans
 // https://decomp.me/scratch/mrFc0
-#ifdef NON_MATCHING
 void func_8007BEC0_8AE70(void) {
-	s32 sp58;
 	s32 i;
 	AlienInstance *inst;
 	u8 *ptr;
@@ -1631,15 +1631,20 @@ void func_8007BEC0_8AE70(void) {
 					continue;
 				}
 			}
-			if (func_8011E6FC_12D6AC(inst->unk0, inst->unk4, (s16 *)&sp58) != -1) {
-				continue;
+			{
+				u8 sp58Buf[0xC];
+				if (func_8011E6FC_12D6AC(inst->unk0, inst->unk4, (s16 *)(sp58Buf + 4)) != -1) {
+					continue;
+				}
 			}
 			if (inst->unk20 & 0x10000000) {
-				func_800E988C_F883C(inst, &alienSpecs[inst->specIndex]);
+				u8 specIndex = inst->specIndex;
+				func_800E988C_F883C(inst, &alienSpecs[specIndex]);
 			}
 		}
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007BEC0_8AE70.s")
 #endif
