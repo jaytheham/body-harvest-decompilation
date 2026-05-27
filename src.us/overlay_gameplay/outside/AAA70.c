@@ -974,19 +974,16 @@ void func_8009FB1C_AEACC(s16 arg0, s16 arg1) {
 	D_8014F1F0 = (f32) arg1;
 }
 
-// CURRENT(20492)
+// CURRENT(18218)
 #ifdef NON_MATCHING
 void func_8009FB58_AEB08(void) {
 	AlienInstance *alien;
+	VehicleInstance *player;
 	Gfx *dl;
 	s16 *scannerValues;
 	s16 *ed04Shorts;
 	s16 *ed08Shorts;
-	s32 alpha;
-	s32 distance;
-	s32 i;
 	s32 mapTexture;
-	u8 pulse;
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
@@ -1044,11 +1041,14 @@ void func_8009FB58_AEB08(void) {
 	dl->words.w0 = 0xF2000000;
 	dl->words.w1 = 0x0007C07C;
 
-	alpha = (D_80052A8C * 12) & 0xFF;
+	{
+		s32 alpha;
+		alpha = (D_80052A8C * 12) & 0xFF;
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
 	dl->words.w0 = 0xFA00FFFF;
 	dl->words.w1 = (alpha << 0x18) | (alpha << 0x10) | 0xFF;
+	}
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
@@ -1090,6 +1090,7 @@ void func_8009FB58_AEB08(void) {
 	dl->words.w0 = 0xE7000000;
 	dl->words.w1 = 0;
 
+	player = D_80052B34;
 	if (gzip_data_0000 != 0) {
 		s16 centerX;
 		s16 centerZ;
@@ -1098,9 +1099,9 @@ void func_8009FB58_AEB08(void) {
 
 		centerX = ((s16)D_8006C56D << 8) + 0x80;
 		centerZ = ((s16)D_8006C56E << 8) + 0x80;
-		x = D_80052B34->unk0;
+		x = player->unk0;
 		if ((x < (centerX - 0x200)) || ((centerX + 0x200) < x) ||
-			((z = D_80052B34->unk4), (z < (centerZ - 0x200))) || ((centerZ + 0x200) < z)) {
+			((z = player->unk4), (z < (centerZ - 0x200))) || ((centerZ + 0x200) < z)) {
 			func_8009C1D8_AB188(centerX, centerZ, 1);
 		} else {
 			gzip_data_0000 = 0;
@@ -1108,11 +1109,14 @@ void func_8009FB58_AEB08(void) {
 	}
 
 	scannerValues = D_8014D188;
-	for (i = 0; i < 0x18; i++) {
+	{
+		s32 i;
+		for (i = 0; i < 0x18; i++) {
 		if (scannerValues[0] > 0) {
 			func_80076208_851B8(i);
 		}
-		scannerValues += 2;
+		scannerValues++;
+	}
 	}
 
 	dl = D_8005BB2C;
@@ -1123,6 +1127,9 @@ void func_8009FB58_AEB08(void) {
 	ed04Shorts = (s16 *)&D_8014ED04;
 	ed08Shorts = (s16 *)&D_8014ED08;
 	if (D_8014ED04 != 0x186A0) {
+		s32 alpha;
+		s32 distance;
+
 		alpha = (D_80052A8C * 20) & 0xFF;
 		dl = D_8005BB2C;
 		D_8005BB2C = dl + 1;
@@ -1131,8 +1138,8 @@ void func_8009FB58_AEB08(void) {
 
 		func_8009C1D8_AB188(ed04Shorts[1], ed08Shorts[1], 1);
 
-		distance = func_800F9C40_108BF0(D_80052B34->unk0 - D_8014ED04);
-		distance += func_800F9C40_108BF0(D_80052B34->unk4 - D_8014ED08);
+		distance = func_800F9C40_108BF0(player->unk0 - D_8014ED04);
+		distance += func_800F9C40_108BF0(player->unk4 - D_8014ED08);
 		if ((u32)distance < 0x190000U) {
 			D_8014ED04 = 0x186A0;
 		}
@@ -1258,10 +1265,15 @@ void func_8009FB58_AEB08(void) {
 	dl->words.w1 = 0;
 
 	alien = (AlienInstance *)D_8004D0F8;
-	for (i = 0xFE; i != 0; i--) {
+	{
+		s32 i;
+		for (i = 0xFE; i != 0; i--) {
 		if ((alien->specIndex == 0x19) && ((alien->unk20 & 0x100000) == 0)) {
-			distance = func_800F9C40_108BF0((D_80052B34->unk0 - alien->unk0) >> 2);
-			distance += func_800F9C40_108BF0((D_80052B34->unk4 - alien->unk4) >> 2);
+			s32 distance;
+			u8 pulse;
+
+			distance = func_800F9C40_108BF0((player->unk0 - alien->unk0) >> 2);
+			distance += func_800F9C40_108BF0((player->unk4 - alien->unk4) >> 2);
 			if (distance >= 0xC351) {
 				pulse = (D_80052A8C * 0x10) & 0xFF;
 				dl = D_8005BB2C;
@@ -1273,6 +1285,7 @@ void func_8009FB58_AEB08(void) {
 			}
 		}
 		alien = (AlienInstance *)((u8 *)alien - 0x50);
+	}
 	}
 }
 #else
