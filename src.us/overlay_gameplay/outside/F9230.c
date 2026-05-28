@@ -1250,6 +1250,7 @@ void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	}
 }
 
+// CURRENT(125)
 #ifdef NON_MATCHING
 void func_800EB8A4_FA854(Unk80157600 *arg0, f32 arg1) {
 	Unk8009E8DC *anim;
@@ -1264,15 +1265,18 @@ void func_800EB8A4_FA854(Unk80157600 *arg0, f32 arg1) {
 
 	if (anim->unk14 != 0) {
 		if (anim->unk4 & 1) {
+			s32 animArg2;
+
+			animArg2 = anim->unk8;
 			if (anim->unk18 == arg0->unk41C) {
 				func_800EB534_FA4E4(arg0, anim->unk1C, 0, arg1);
 				arg0->unk41C = 0;
 				return;
-			} else {
-				func_800EB534_FA4E4(arg0, animIdx, anim->unk8, arg1);
-				arg0->unk41C = arg0->unk41C + 1;
-				return;
 			}
+
+			func_800EB534_FA4E4(arg0, animIdx, animArg2, arg1);
+			arg0->unk41C++;
+			return;
 		}
 		func_800EB534_FA4E4(arg0, anim->unk1C, 0, arg1);
 		return;
