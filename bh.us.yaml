@@ -591,29 +591,29 @@ segments:
 
       - [0x55B0A0, bin, item_models]
 # item textures
-#        - [0x5610A0, 0x5612E0, "bin", "weapon_crystal"]
-#        - [0x, 0x, "bin", "alien_artifact"]
-#        - [0x, 0x, "bin", "alien_artifact_2"]
-#        - [0x, 0x, "bin", "totem_part_a"]
-#        - [0x, 0x, "bin", "totem_part_man"]
-#        - [0x, 0x, "bin", "totem_part_bird"]
-#        - [0x, 0x, "bin", "headset"]
-#        - [0x, 0x, "bin", "page_of_binary"]
-#        - [0x, 0x, "bin", "orange_key_card"]
+#        - [0x5610A0, 0x5612E0, "bin", "weapon_crystal"] // 0F006140
+#        - [0x, 0x, "bin", "alien_artifact"] // 0F006E78?
+#        - [0x, 0x, "bin", "alien_artifact_2"] // 0F006E78?
+#        - [0x, 0x, "bin", "totem_part_a"] // 0F007F50
+#        - [0x, 0x, "bin", "totem_part_man"] // 0F009198
+#        - [0x, 0x, "bin", "totem_part_bird"] // 0F00A998
+#        - [0x, 0x, "bin", "headset"] // 0F00BD58
+#        - [0x, 0x, "bin", "page_of_binary"] // 0F00C148
+#        - [0x, 0x, "bin", "orange_key_card"] // 0F00C6F0? red
 #        - [0x, 0x, "bin", "gold_key_card"]
-#        - [0x, 0x, "bin", "key_card"]
+#        - [0x, 0x, "bin", "key_card"] // 0F00CA38 green
 #        - [0x, 0x, "bin", "kris_knife"]
-#        - [0x, 0x, "bin", "medicine_bottle"]
-#        - [0x, 0x, "bin", "howitzer_shell"]
-#        - [0x, 0x, "bin", "airboat_part"]
-#        - [0x, 0x, "bin", "grenade"]
-#        - [0x, 0x, "bin", "greece_puzzle_piece"]
-#        - [0x, 0x, "bin", "gold_key_1a"]
+#        - [0x, 0x, "bin", "medicine_bottle"] // 0F00D590
+#        - [0x, 0x, "bin", "howitzer_shell"] // ROM=569058
+#        - [0x, 0x, "bin", "airboat_part"] // ROM=569778? 0F00E6B0
+#        - [0x, 0x, "bin", "grenade"] // ROM=56A140?
+#        - [0x, 0x, "bin", "greece_puzzle_piece"] // 0F00F700
+#        - [0x, 0x, "bin", "gold_key_1a"] // 0F010EA8?
 #        - [0x, 0x, "bin", "gold_key_1b"]
 #        - [0x, 0x, "bin", "gold_key_2"]
 #        - [0x, 0x, "bin", "silver_key_1"]
 #        - [0x, 0x, "bin", "silver_key_2"]
-#        - [0x, 0x, "bin", "gold_key_3"]
+#        - [0x, 0x, "bin", "gold_key_3"] // 0F013D38?
 #        - [0x, 0x, "bin", "nitro_icon"] # beta?
 #        - [0x, 0x, "bin", "dynamite"] # unused?
 #        - [0x, 0x, "bin", "rocket_launcher"] # unused?
@@ -621,18 +621,18 @@ segments:
 #        - [0x, 0x, "bin", "machinegun"] # unused?
 #        - [0x, 0x, "bin", "shotgun"] # unused?
 #        - [0x, 0x, "bin", "hunting_rifle"] # unused?
-#        - [0x, 0x, "bin", "deflect_icon"] # beta?
+#        - [0x, 0x, "bin", "deflect_icon"] # beta? 0F019C40 (guessed offset)
 #        - [0x, 0x, "bin", "fuel_can"]
-#        - [0x, 0x, "bin", "nitro_fuel_can"]
-#        - [0x, 0x, "bin", "wrench"] # beta?
-#        - [0x, 0x, "bin", "ankh"] # beta?
-#        - [0x, 0x, "bin", "windmill_cog"]
-#        - [0x, 0x, "bin", "atlantis_crank"]
-#        - [0x, 0x, "bin", "train_starting_handle"] # ?
-#        - [0x, 0x, "bin", "kris_blade"]
+#        - [0x, 0x, "bin", "nitro_fuel_can"] // 0F01B130
+#        - [0x, 0x, "bin", "wrench"] # beta? 0F01BBF0 (guessed offset)
+#        - [0x, 0x, "bin", "ankh"] # beta? 0F01C670 (guessed offset)
+#        - [0x, 0x, "bin", "windmill_cog"] // 0F01D7E0 80310668?
+#        - [0x, 0x, "bin", "atlantis_crank"] // 0F01DCC0?
+#        - [0x, 0x, "bin", "train_starting_handle"] // 0F01DF50?
+#        - [0x, 0x, "bin", "kris_blade"] // 0F01E1C8
 #        - [0x, 0x, "bin", "kris_hilt"]
 #        - [0x, 0x, "bin", "kris_handle"]
-#        - [0x5796B0, 0x579D48, "rua_rua_idol"]
+#        - [0x5796B0, 0x579D48, "rua_rua_idol"] // 0F01EA70
       - [0x579D50, bin, greece_models]
 #        - [0x579D50, 0x5838F0, "bin", "textures"]
 #        - [0x5838F0, 0x584210, "bin", "watergate_structure"]
