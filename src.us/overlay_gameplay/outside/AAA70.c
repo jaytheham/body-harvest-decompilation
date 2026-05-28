@@ -1076,16 +1076,15 @@ void func_8009FB1C_AEACC(s16 arg0, s16 arg1) {
 	D_8014F1F0 = (f32) arg1;
 }
 
-// CURRENT(12828)
+// CURRENT(8983)
 #ifdef NON_MATCHING
 void func_8009FB58_AEB08(void) {
 	AlienInstance *alien;
 	VehicleInstance *player;
-	Gfx *dl;
+	s32 pad0;
+	s32 pad1;
 	s16 *scannerValues;
-	s16 *ed04Shorts;
-	s16 *ed08Shorts;
-	s32 mapTexture;
+	u32 mapTexture;
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
@@ -1100,12 +1099,7 @@ void func_8009FB58_AEB08(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
-
-	{
-		s32 alpha;
-		alpha = (D_80052A8C * 12) & 0xFF;
-		gDPSetPrimColor(D_8005BB2C++, 255, 255, alpha, alpha, 0, 0xFF);
-	}
+	gDPSetPrimColor(D_8005BB2C++, 255, 255, (D_80052A8C * 12) & 0xFF, (D_80052A8C * 12) & 0xFF, 0, 0xFF);
 
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, (u32)D_5032390);
 	gDPTileSync(D_8005BB2C++);
@@ -1141,26 +1135,21 @@ void func_8009FB58_AEB08(void) {
 	scannerValues = D_8014D188;
 	{
 		s32 i;
-		for (i = 0; i < 0x18; i++) {
-		if (scannerValues[0] > 0) {
-			func_80076208_851B8(i);
+		for (i = 0; i < 0x18; i++, scannerValues++) {
+			if (*scannerValues > 0) {
+				func_80076208_851B8(i);
+			}
 		}
-		scannerValues++;
-	}
 	}
 
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 
-	ed04Shorts = (s16 *)&D_8014ED04;
-	ed08Shorts = (s16 *)&D_8014ED08;
 	if (D_8014ED04 != 0x186A0) {
-		s32 alpha;
 		s32 distance;
 
-		alpha = (D_80052A8C * 20) & 0xFF;
-		gDPSetPrimColor(D_8005BB2C++, 255, 255, alpha, 0, alpha, 0xFF);
+		gDPSetPrimColor(D_8005BB2C++, 255, 255, (D_80052A8C * 20) & 0xFF, 0, (D_80052A8C * 20) & 0xFF, 0xFF);
 
-		func_8009C1D8_AB188(ed04Shorts[1], ed08Shorts[1], 1);
+		func_8009C1D8_AB188(((s16 *)&D_8014ED04)[1], ((s16 *)&D_8014ED08)[1], 1);
 
 		distance = func_800F9C40_108BF0(player->unk0 - D_8014ED04);
 		distance += func_800F9C40_108BF0(player->unk4 - D_8014ED08);
@@ -1213,13 +1202,11 @@ void func_8009FB58_AEB08(void) {
 		for (i = 0xFE; i != 0; i--) {
 		if ((alien->specIndex == 0x19) && ((alien->unk20 & 0x100000) == 0)) {
 			s32 distance;
-			u8 pulse;
 
 			distance = func_800F9C40_108BF0((player->unk0 - alien->unk0) >> 2);
 			distance += func_800F9C40_108BF0((player->unk4 - alien->unk4) >> 2);
 			if (distance >= 0xC351) {
-				pulse = (D_80052A8C * 0x10) & 0xFF;
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0, 0, pulse);
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0, 0, (D_80052A8C * 0x10) & 0xFF);
 
 				func_8009C1D8_AB188(alien->unk0, alien->unk4, 1);
 			}
