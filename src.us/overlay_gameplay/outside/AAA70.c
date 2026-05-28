@@ -1797,11 +1797,10 @@ s32 func_800A2A88_B1A38(void) {
 }
 
 // drawGhostTarget - R-trigger aiming reticle?
-// CURRENT(4270)
+// CURRENT(30)
 #ifdef NON_MATCHING
 void func_800A2B58_B1B08(void) {
 	Gfx *dl;
-	u32 color;
 
 	if (D_8014F618.unk66 != 1) {
 		return;
@@ -1823,11 +1822,10 @@ void func_800A2B58_B1B08(void) {
 	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
-	color = (D_8014F618.unk77 << 24) | (D_8014F618.unk78 << 16) | (D_8014F618.unk79 << 8) | ((u8)(D_8014F618.unk69 >> 1));
-	gDPSetPrimColor(D_8005BB2C++, 0, 0, color >> 24, (color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk77, D_8014F618.unk78, D_8014F618.unk79, D_8014F618.unk69 / 2);
 	gDPPipeSync(D_8005BB2C++);
 
-	func_800A2260_B1210(NULL, NULL, NULL, NULL);
+	func_800A2260_B1210();
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2B58_B1B08.s")
