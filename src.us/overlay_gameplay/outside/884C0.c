@@ -1806,7 +1806,7 @@ void func_8007D424_8C3D4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007D424_8C3D4.s")
 #endif
 
-// CURRENT(23990)
+// CURRENT(23426)
 #ifdef NON_MATCHING
 void func_8007D690_8C640(void) {
 	s16 sp9A;
@@ -1819,7 +1819,7 @@ void func_8007D690_8C640(void) {
 	var_fp = 0;
 	if (var_v0 != 0) {
 		do {
-			u8 temp_s5;
+			s32 temp_s5;
 			AlienInstance *temp_s0;
 			u8 temp_s1;
 			s32 temp_s6;
@@ -2177,6 +2177,7 @@ block_167:
 
 	func_8011DE60_12CE10(0);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007D690_8C640.s")
 #endif
