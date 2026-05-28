@@ -1281,9 +1281,6 @@ void func_8007AF8C_89F3C(void)
 	inst = alienInstances;
 	idx = 0;
 	do
-	{
-		type = inst->specIndex;
-		if ((type == 1) && (inst->unk24 != 0x13))
 		{
 			D_8014D408[baseTypeA - countTypeA] = idx;
 			countTypeA--;
@@ -10623,7 +10620,7 @@ void func_80093AE4_A2A94(u8 arg0, s32 arg1) {
 	alienInstances[arg0].unk20 |= 0x40000000;
 }
 
-// CURRENT(29159)
+// CURRENT(28849)
 #ifdef NON_MATCHING
 void func_80093C7C_A2C2C(u8 arg0) {
 	AlienInstance *alien;
@@ -10631,11 +10628,12 @@ void func_80093C7C_A2C2C(u8 arg0) {
 	s32 pad1;
 	s32 pad2;
 	s32 pad3;
-	AlienSpec *spec;
+	s32 dist;
 	Unk8014DD50 *path0;
 	Unk8014DD50 *path1;
 	Unk8014DD50 *path2;
 	Unk8014DD50 *pathWork;
+	AlienSpec *spec;
 	s16 pathNode;
 	s16 pathNext;
 	s16 spB0;
@@ -10643,7 +10641,6 @@ void func_80093C7C_A2C2C(u8 arg0) {
 	s16 sp9E;
 	s16 tempS16;
 	s16 yawTarget;
-	s32 dist;
 	s32 deltaX;
 	s32 deltaZ;
 	s32 absVal;
@@ -10658,7 +10655,7 @@ void func_80093C7C_A2C2C(u8 arg0) {
 	f32 vecY;
 	f32 vecZ;
 	u16 pathAngle;
-	Unk80154082 sp84;
+	u32 sp84;
 
 	alien = &alienInstances[arg0];
 	path0 = &D_8014DD50[alien->unkC];
@@ -10667,7 +10664,7 @@ void func_80093C7C_A2C2C(u8 arg0) {
 	pathNext = (s16)path1->unkD;
 	path2 = &D_8014DD50[pathNext];
 	spec = &alienSpecs[alien->specIndex];
-	sp84 = *(Unk80154082 *)D_8013CAFC_14BAAC;
+	sp84 = *(u32 *)D_8013CAFC_14BAAC;
 
 	if ((alien->hitPoints < ((s16)spec->unk3A / 4)) && (D_80222A70 < alien->unk2)) {
 		func_80089200_981B0(arg0, 4, 0x5A);
@@ -10876,6 +10873,7 @@ void func_80093C7C_A2C2C(u8 arg0) {
 		alien->unk1E--;
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80093C7C_A2C2C.s")
 #endif
