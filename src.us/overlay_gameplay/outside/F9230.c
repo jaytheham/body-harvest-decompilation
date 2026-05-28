@@ -914,14 +914,13 @@ void func_800EABE0_F9B90(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EABE0_F9B90.s")
 #endif
 
+/* CURRENT(135) */
 #ifdef NON_MATCHING
-/* CURRENT(250) */
 void func_800EADF8_F9DA8(VehicleInstance *arg0, s16 arg1) {
 	s32 flags;
 	s32 state;
 	s16 curDir;
 	s16 directionDiff;
-	s16 tempDiv;
 	s32 index;
 
 	flags = D_80157A28 & 4;
@@ -950,14 +949,12 @@ void func_800EADF8_F9DA8(VehicleInstance *arg0, s16 arg1) {
 
 		if ((directionDiff < -0x4000) && (state != 0x63) && (flags == 0)) {
 			func_800EB534_FA4E4(&D_80157600, 0x63, 0, 0);
-			tempDiv = arg1 - arg0->unkE;
-			D_801575D4 = tempDiv / 10;
+			D_801575D4 = (s16)(arg1 - arg0->unkE) / 10;
 			curDir = arg0->unkE;
 			directionDiff = curDir - arg1;
 		} else if ((directionDiff >= 0x4001) && (state != 0x62) && (flags == 0)) {
 			func_800EB534_FA4E4(&D_80157600, 0x62, 0, 0);
-			tempDiv = arg0->unkE - arg1;
-			D_801575D4 = tempDiv / 10;
+			D_801575D4 = (s16)(arg0->unkE - arg1) / 10;
 			curDir = arg0->unkE;
 			directionDiff = curDir - arg1;
 		} else {
