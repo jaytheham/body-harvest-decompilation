@@ -1946,13 +1946,10 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2D98_B1D48.s")
 #endif
 
-// CURRENT(7752)
+// CURRENT(7663)
 #ifdef NON_MATCHING
 void func_800A3490_B2440(VehicleInstance *arg0) {
 	u8 *sp6C;
-	s32 pad0;
-	s16 pad1;
-	s16 pad2;
 	s16 sp62;
 	s16 sp60;
 	u8 sp56;
@@ -1960,15 +1957,16 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 	u8 var_t4;
 	u8 var_a3;
 	s32 temp_v0;
+	s32 temp_v1;
 	s32 temp_ra;
 	s32 var_t0;
-	s32 var_v1;
 	s32 alpha;
-	s32 temp_a0;
-	f32 temp_f0;
 
 	sp6C = func_800FAFB8_109F68(arg0);
 	sp56 = (u8)D_8013D5B8_14C568;
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A3490_B2440.s")
+#endif
 	var_a3 = 0x2D;
 	var_t4 = 0x2E;
 	var_t5 = 0x91;
@@ -1981,25 +1979,25 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 			temp_v0 = 0;
 		}
 
-		if ((temp_v0 != 0) || (D_801591B4 == 7) || (D_801591B4 == 8)) {
+		if (!((temp_v0 == 0) && (D_801591B4 != 7) && (D_801591B4 != 8))) {
 			var_a3 = 0xFF;
 			var_t4 = 0;
 			var_t5 = 0;
 		}
 
-		temp_v0 = D_8013D770_14C720;
-		if (temp_v0 < 0) {
-			temp_v0 = 0;
+		temp_v1 = D_8013D770_14C720;
+		if (temp_v1 < 0) {
+			temp_v1 = 0;
 		}
-		D_8013D770_14C720 = temp_v0;
-		if (temp_v0 >= 0x1F) {
-			temp_v0 = 0x1E;
-			D_8013D770_14C720 = temp_v0;
+		D_8013D770_14C720 = temp_v1;
+		if (temp_v1 >= 0x1F) {
+			temp_v1 = 0x1E;
+			D_8013D770_14C720 = temp_v1;
 		}
 
-		temp_v0 = D_8013D76C_14C71C;
-		if (temp_v0 > 0) {
-			D_8013D76C_14C71C = temp_v0 - 1;
+		temp_v1 = D_8013D76C_14C71C;
+		if (temp_v1 > 0) {
+			D_8013D76C_14C71C = temp_v1 - 1;
 		}
 
 		*(s32 *)&D_8013D5D0_14C580 = arg0->unk0;
@@ -2010,7 +2008,6 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 		sp60 = (s16)(s32)(D_80052B2C->unk8 - (f32)arg0->unk4);
 		temp_ra = (((s32)sqrtf((f32)(func_800047FC_53FC((s16)(s32)(D_80052B2C->unk4 - (f32)arg0->unk2)) + (sp62 * sp62) + (sp60 * sp60))) - D_8013D774_14C724) / 2) + D_8013D774_14C724;
 		D_8013D774_14C724 = temp_ra;
-		var_t0 = 4;
 
 		switch (D_8013D5B4_14C564) {
 			case 3:
@@ -2018,13 +2015,12 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 				break;
 			case 1:
 				if (sp56 < 0x8C) {
-					temp_a0 = ((sp56 * 0xFF) / 140) & 0xFF;
-					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, temp_a0, temp_a0, temp_a0, temp_a0);
+					alpha = ((sp56 * 0xFF) / 140) & 0xFF;
+					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, alpha, alpha, alpha, alpha);
 				} else {
-					temp_f0 = (f32)(0xFF - sp56) / 115.0f;
-					var_a3 = (u8)((f32)var_a3 + ((f32)(0xFF - var_a3) * temp_f0));
-					var_t4 = (u8)((f32)var_t4 + ((f32)(0xFF - var_t4) * temp_f0));
-					var_t5 = (u8)((f32)var_t5 + ((f32)(0xFF - var_t5) * temp_f0));
+					var_a3 = (u8)((f32)var_a3 + ((f32)(0xFF - var_a3) * ((f32)(0xFF - sp56) / 115.0f)));
+					var_t4 = (u8)((f32)var_t4 + ((f32)(0xFF - var_t4) * ((f32)(0xFF - sp56) / 115.0f)));
+					var_t5 = (u8)((f32)var_t5 + ((f32)(0xFF - var_t5) * ((f32)(0xFF - sp56) / 115.0f)));
 					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, var_a3, var_t4, var_t5, 0xFF);
 				}
 				break;
@@ -2033,12 +2029,11 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 				break;
 		}
 
-		var_v1 = (0x587 - temp_ra) / 12;
-		while (var_t0 >= 2) {
+		for (var_t0 = 4; var_t0 >= 2;) {
 			if ((D_8013D5B4_14C564 == 1) && (sp56 < 0x8D)) {
-				alpha = (sp56 * 2) - var_v1;
+				alpha = (sp56 * 2) - ((0x587 - temp_ra) / 12);
 			} else {
-				alpha = 0xFF - var_v1;
+				alpha = 0xFF - ((0x587 - temp_ra) / 12);
 			}
 
 			func_800A2D98_B1D48(((s16 *)&D_8013D5D0_14C580)[1], ((s16 *)&D_8013D5D4_14C584)[1], ((s16 *)&D_8013D5D8_14C588)[1], (s16)alpha);
@@ -2055,25 +2050,18 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 				alpha = (0xFF - (D_8013D5C0_14C570[0] * 0xC)) & 0xFF;
 				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, alpha);
 			} else {
-				temp_a0 = (D_80052A8C & 7) * 0x10;
-				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, (temp_a0 * 2) + 0x32, temp_a0 + 0x32, 0xFF);
+				alpha = (D_80052A8C & 7) * 0x10;
+				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, (alpha * 2) + 0x32, alpha + 0x32, 0xFF);
 			}
 		}
 
-		{
-			Gfx *dl;
-
-			gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
-			gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
-			gDPPipeSync(D_8005BB2C++);
-			gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
-			gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
-		}
+		gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A3490_B2440.s")
-#endif
 
 s32 func_800A3CD0_B2C80(void) {
 	if (D_8014F1FA == 0) {
