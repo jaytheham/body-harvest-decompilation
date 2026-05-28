@@ -726,10 +726,9 @@ s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA7DC_F978C.s")
 #endif
 
-// CURRENT(3630)
+// CURRENT(2310)
 #ifdef NON_MATCHING
 void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
-	s16 temp_diff;
 	s32 abs_diff;
 	s32 v1;
 	s32 level;
@@ -742,102 +741,107 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	D_8015757C = 0;
 
 	// Load current angle and calculate difference
-	temp_diff = arg0->unkE - arg1;
-	v1 = temp_diff;
+	v1 = (s16)(arg0->unkE - arg1);
 
 	// Calculate absolute value
-	abs_diff = v1;
-	if (v1 < 0) {
+	if (v1 >= 0) {
+		abs_diff = v1;
+	} else {
 		abs_diff = -v1;
 	}
 
 	// Check if difference is too large
 	if (abs_diff >= 0xA001) {
 		D_8015757C = 1;
-		temp_diff = arg0->unkE - arg1;
-		v1 = temp_diff;
+		v1 = (s16)(arg0->unkE - arg1);
 	}
 
 	// First condition: v1 < -0x4000
 	if (v1 < -0x4000) {
 		level = D_80157A0C;
-		if (level != 0xE && !(D_80157A28 & 4)) {
-			// Calculate offset into state array
+		if (level != 0xE) {
+			if (!(D_80157A28 & 4)) {
+				// Calculate offset into state array
 			offset = level * 0x34;
-			
+
 			// Access state entry
 			entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
-			
+
 			// Modify state at 0x2DC
 			if (entry_flags & 0x20) {
 				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2DC)) |= 0x20;
 			} else {
 				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2DC)) &= ~0x20;
 			}
-			
+
 			// Modify state at 0x2E0
-			if (entry_flags & 0x100) {
+			if (!(entry_flags & 0x100)) {
+				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2E0)) = level;
+			} else {
 				entry_val = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 8));
 				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2E0)) = entry_val;
-			} else {
-				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2E0)) = level;
 			}
-			
+
 			func_800EB534_FA4E4(&D_80157600, 0xE, 0, 0);
-			
+
 			// Calculate step
 			step = (s16)(arg1 - arg0->unkE) / 7;
 			D_801575D4 = step;
-			temp_diff = arg0->unkE - arg1;
-			v1 = temp_diff;
+				v1 = (s16)(arg0->unkE - arg1);
+				goto clamp_angle;
+			}
 		}
-	} else if (v1 >= 0x4001) {
+	}
+
+	if (v1 >= 0x4001) {
 		// Second condition: v1 >= 0x4001
 		level = D_80157A0C;
-		if (level != 0xF && !(D_80157A28 & 4)) {
-			// Calculate offset into state array
+		if (level != 0xF) {
+			if (!(D_80157A28 & 4)) {
+				// Calculate offset into state array
 			offset = level * 0x34;
-			
+
 			// Access state entry
 			entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
-			
+
 			// Modify state at 0x310
 			if (entry_flags & 0x20) {
 				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x310)) |= 0x20;
 			} else {
 				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x310)) &= ~0x20;
 			}
-			
+
 			// Modify state at 0x314
-			if (entry_flags & 0x100) {
+			if (!(entry_flags & 0x100)) {
+				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x314)) = level;
+			} else {
 				entry_val = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 8));
 				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x314)) = entry_val;
-			} else {
-				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x314)) = level;
 			}
-			
+
 			func_800EB534_FA4E4(&D_80157600, 0xF, 0, 0);
-			
+
 			// Calculate step
 			step = (s16)(arg0->unkE - arg1) / 7;
 			D_801575D4 = step;
-			temp_diff = arg0->unkE - arg1;
-			v1 = temp_diff;
-		}
-	} else {
-		// Default case
-		level = D_80157A0C;
-		offset = level * 0x34;
-		
-		entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
-		
-		if (!(entry_flags & 0x100)) {
-			D_801575D4 = 0x5DC;
-			temp_diff = arg0->unkE - arg1;
-			v1 = temp_diff;
+				v1 = (s16)(arg0->unkE - arg1);
+				goto clamp_angle;
+			}
 		}
 	}
 
+	// Default case
+	level = D_80157A0C;
+	offset = level * 0x34;
+
+	entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
+
+	if (!(entry_flags & 0x100)) {
+		D_801575D4 = 0x5DC;
+		v1 = (s16)(arg0->unkE - arg1);
+	}
+
+clamp_angle:
 	// Clamp angle
 	step = D_801575D4;
 	neg_step = -step;
