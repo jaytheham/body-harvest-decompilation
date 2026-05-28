@@ -1264,7 +1264,7 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072B68_43018.s")
 #endif
-
+// display inventory models
 #ifdef NON_MATCHING
 void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	Unk80052B40 spC4;

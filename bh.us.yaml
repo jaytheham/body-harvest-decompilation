@@ -422,11 +422,11 @@ segments:
     start: 0x32BD80
     subsegments:
       - [0x32BD80, bin, 32BD80]
-      - [0x3767C0, bin, icons] # MIO0
+      - [0x3767C0, bin, icons] # MIO0 HuD icons, weapons, pause menu
       - [0x379554, bin, icons_palette] # MIO0
       - [0x379690, bin, japanese_and_english_font] # MIO0
       - [0x37EB8C, bin, japanese_and_english_font_palette] # MIO0
-      - [0x37EBD0, bin, message_alert_icons] # MIO0
+      - [0x37EBD0, bin, message_alert_icons] # MIO0 "E" in circle - multiple frames
       - [0x37F5E4, bin, message_alert_icons_palette] # MIO0
       - [0x37F840, bin, greece_inside_layouts] #  0x100 in size each.
       # Position reflects door number from building instances
@@ -683,7 +683,7 @@ segments:
       - [0x8E4084, bin, comet_interior_models]
       - [0x8F3850, bin, comet_interior_textures] # MIO0
 # 94e500 Daisy portrait (not compressed)
-# 94fb00 ? portrait (not compressed)
+# 94fb00 Black Adam portrait (not compressed)
 # 951100 Robot Helper portrait (not compressed)
 # 952700 Tortured Daisy portrait (not compressed)
 # 953D00 Greece Pilot portrait dupe ? (not compressed)
