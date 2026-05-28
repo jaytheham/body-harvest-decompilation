@@ -4368,7 +4368,7 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800831A4_92154.s")
 #endif
 
-// CURRENT(43731)
+// CURRENT(41675)
 #ifdef NON_MATCHING
 s32 func_800836D0_92680(u8 arg0, s16 *arg1, s16 *arg2) {
 	AlienInstance *alien;
@@ -4396,7 +4396,7 @@ s32 func_800836D0_92680(u8 arg0, s16 *arg1, s16 *arg2) {
 	startZ = (alien->unk4 >> 8) - 1;
 	range = spec->unkC;
 	absSpeed = alien->unk12;
-	if (absSpeed < 0) {
+	if (-absSpeed >= absSpeed) {
 		absSpeed = -absSpeed;
 	}
 	maxDistSq = spec->unk32 * absSpeed;
@@ -4416,7 +4416,7 @@ s32 func_800836D0_92680(u8 arg0, s16 *arg1, s16 *arg2) {
 
 			tileX = startX + col;
 			tileZ = startZ + row;
-			bits = func_80078530_874E0(tileX, tileZ, col);
+			bits = func_80078530_874E0(tileX, tileZ);
 			quad = 0;
 
 			while (bits != 0) {
@@ -4442,9 +4442,9 @@ s32 func_800836D0_92680(u8 arg0, s16 *arg1, s16 *arg2) {
 					z = (tileZ << 8) + (((quad >> 1) & 1) << 7) + 0x40;
 					dx = x - alien->unk0;
 					dz = z - alien->unk4;
-					dy = range + ((s16 *)D_8013BC0C_14ABBC)[levelIdx];
+					dy = range + D_8013BC0C_14ABBC[levelIdx];
 					angle = func_80003824_4424((f32)dx, (f32)dz);
-					limitY = ((s16 *)D_8013BB6C_14AB1C)[levelIdx] + (func_800B84D0_C7480(x, z) >> 8);
+					limitY = D_8013BB6C_14AB1C[levelIdx] + (func_800B84D0_C7480(x, z) >> 8);
 					maxRange = dy * dy;
 					if (((dx * dx) + (dz * dz) < maxRange) && (alien->unk2 < limitY)) {
 						if (((maxDistSq >= 0x7A121) || (spec->unk32 >= 0x4001)) &&
@@ -4484,9 +4484,9 @@ s32 func_800836D0_92680(u8 arg0, s16 *arg1, s16 *arg2) {
 					dx0 = x0 - alien->unk0;
 					dz0 = z0 - alien->unk4;
 					angleA = func_80003824_4424((f32)dx0, (f32)dz0);
-					dy = range + ((s16 *)D_8013BC0C_14ABBC)[levelIdx];
+					dy = range + D_8013BC0C_14ABBC[levelIdx];
 					rangeSq = dy * dy;
-					h = ((s16 *)D_8013BB6C_14AB1C)[levelIdx] + (func_800B84D0_C7480(x0, z0) >> 8);
+					h = D_8013BB6C_14AB1C[levelIdx] + (func_800B84D0_C7480(x0, z0) >> 8);
 					if (((dx0 * dx0) + (dz0 * dz0) < rangeSq) && (alien->unk2 < h)) {
 						hit = 1;
 					}
@@ -4494,7 +4494,7 @@ s32 func_800836D0_92680(u8 arg0, s16 *arg1, s16 *arg2) {
 					dx1 = alien->unk0 - x1;
 					dz1 = alien->unk4 - z1;
 					angleB = func_80003824_4424((f32)-dx1, (f32)-dz1);
-					h = ((s16 *)D_8013BB6C_14AB1C)[levelIdx] + (func_800B84D0_C7480(x1, z1) >> 8);
+					h = D_8013BB6C_14AB1C[levelIdx] + (func_800B84D0_C7480(x1, z1) >> 8);
 					if (alien->unk2 < h) {
 						if (((dx1 * dx1) + (dz1 * dz1)) < rangeSq) {
 							hit = 1;
@@ -4553,8 +4553,9 @@ s32 func_800836D0_92680(u8 arg0, s16 *arg1, s16 *arg2) {
 		}
 	}
 
-	return foundAny != 0;
+	return foundAny;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800836D0_92680.s")
 #endif
