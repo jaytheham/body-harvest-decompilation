@@ -9395,63 +9395,61 @@ void func_80090C14_9FBC4(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80090C14_9FBC4.s")
 #endif
 
+// CURRENT(3433)
 #ifdef NON_MATCHING
 void func_80090D0C_9FCBC(u8 arg0) {
 	AlienInstance *inst;
+	s32 pad0;
+	s32 pad1;
 	AlienInstance *parent;
-	s32 *parentTimer;
 	Unk8014DD50 *route;
 	s32 parentFlags;
+	s32 parentTimer;
 	s16 specSlot;
 	s16 pathNodes[2];
-	s32 pos0;
-	s32 pos1;
-	s32 pos2;
-	s32 tmp;
-	s16 headingDelta;
 	s8 pathResult;
 	u8 specIdx;
+	s32 pos2;
+	s32 pos1;
+	s32 pos0;
+	s32 tmp;
 
 	inst = &alienInstances[arg0];
 	specIdx = inst->specIndex;
 	specSlot = D_8014DD5C[inst->unkC * 0x10];
-
 	func_80086230_951E0(arg0, specSlot, 0x17E8);
 
 	parent = &alienInstances[inst->unk25];
-	parentTimer = (s32 *)&parent->unk10;
 	inst->unk20 |= 0x08008100;
+	parentTimer = *(s32 *)&parent->unk10;
 	parentFlags = parent->unk20;
-	*parentTimer = *parentTimer - 1;
+	parentTimer--;
+	*(s32 *)&parent->unk10 = parentTimer;
 
-	if (parentFlags & 0x10000) {
-		if (*parentTimer == 0) {
-			*parentTimer = 1;
+	if ((parentFlags << 0xF) < 0) {
+		if (parentTimer == 0) {
+			*(s32 *)&parent->unk10 = 1;
 		}
-
 		pathNodes[0] = inst->unkC;
 		pathNodes[1] = D_8014DD5C[pathNodes[0] * 0x10];
 		pathResult = func_80081F18_90EC8(arg0, 2, 5, pathNodes, &D_8013C848_14B7F8);
-
 		if ((inst->unk36 == 2) || (pathResult == 1)) {
-			if (func_80086A34_959E4(arg0, 1, (s16)(func_800870D8_96088(0x40, 0x1F) + 0x8000)) != 0) {
+			if (func_80086A34_959E4(arg0, 1, (s16)(func_800870D8_96088(0x40, 0x1F) + 0x8000))) {
 				func_80137468_146418(arg0, 0xA);
 				inst->unk1E = 8;
 			}
 			inst->unk1E--;
 		}
-
 		if (pathResult == 5) {
 			parent->unk20 &= 0xFFFEFFFF;
 		}
 		return;
 	}
 
-	if (parentFlags & 0x20000) {
-		if (*parentTimer == 0) {
-			*parentTimer = 1;
+	if ((parentFlags << 0xE) < 0) {
+		if (*(s32 *)&parent->unk10 == 0) {
+			*(s32 *)&parent->unk10 = 1;
 		}
-
 		if (inst->unk1E > 0) {
 			inst->unk1E--;
 		} else {
@@ -9466,32 +9464,33 @@ void func_80090D0C_9FCBC(u8 arg0) {
 	}
 
 	func_8008751C_964CC(arg0, 0x15E, 0x1F4);
-	if (func_80084FE8_93F98(arg0, 0x4000) != 0) {
+	if (func_80084FE8_93F98(arg0, 0x4000)) {
+		u32 divisor;
+
 		inst->unk20 &= ~0x40;
-		if ((D_80052A8C % ((func_800038E0_44E0() % 5) + 4)) == 0) {
+		divisor = (func_800038E0_44E0() % 5) + 4;
+		if (((u32)D_80052A8C % divisor) == 0) {
 			route = &D_8014DD50[specSlot];
 			func_80128428_1373D8(inst, route->unk0, route->unk2 + 0xA, route->unk4 + 0x14, &pos2, &pos1, &pos0);
-			func_800CC7B0_DB760(0x28, 0x32, (func_800038E0_44E0() % 6) + 6, (s16)pos2, pos1, pos0);
+			func_800CC7B0_DB760(0x28, 0x32, (u8)((func_800038E0_44E0() % 6) + 6), (s16)pos2, pos1, pos0);
 			func_801371B8_146168((s32)inst, 0x13F, inst->unk0, inst->unk2, inst->unk4, -1.0f);
 		}
 	} else {
 		inst->unk20 |= 0x40;
 	}
 
-	if ((*parentTimer <= 0) || (inst->unk47 & 1)) {
+	if ((*(s32 *)&parent->unk10 <= 0) || (inst->unk47 & 1)) {
 		inst->unk20 &= 0xF7FF7EBF;
-		*parentTimer = 0;
+		*(s32 *)&parent->unk10 = 0;
 		D_8014DD50[D_8014DD50[D_8014DD50[D_8014DD50[specSlot].unkC].unkD].unkD].unk2 = -4;
 		return;
 	}
 
-	if (func_80084E54_93E04((VehicleInstance *) inst, (AlienInstance *) D_80052B34) < 0x2EE) {
-		headingDelta = inst->unkE - inst->unk2A;
-		tmp = headingDelta;
+	if (func_80084E54_93E04((VehicleInstance *)inst, (AlienInstance *)D_80052B34) < 0x2EE) {
+		tmp = (s16)(inst->unkE - inst->unk2A);
 		if (tmp < 0) {
 			tmp = -tmp;
 		}
-
 		if (tmp < alienSpecs[specIdx].unk42) {
 			if (inst->unk20 & 0x40) {
 				parent->unk20 |= 0x10000;
@@ -9504,6 +9503,7 @@ void func_80090D0C_9FCBC(u8 arg0) {
 		}
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80090D0C_9FCBC.s")
 #endif
