@@ -614,8 +614,8 @@ segments:
 #        - [0x, 0x, "bin", "silver_key_1"]
 #        - [0x, 0x, "bin", "silver_key_2"]
 #        - [0x, 0x, "bin", "gold_key_3"] // 0F013D38?
-#        - [0x, 0x, "bin", "nitro_icon"] # beta?
-#        - [0x, 0x, "bin", "dynamite"] # unused?
+#        - [0x, 0x, "bin", "nitro_icon"] # beta? 0F014748
+#        - [0x, 0x, "bin", "dynamite"] # unused? 0F015128
 #        - [0x, 0x, "bin", "rocket_launcher"] # unused?
 #        - [0x, 0x, "bin", "scoped_pistol"] # unused?
 #        - [0x, 0x, "bin", "machinegun"] # unused?
@@ -632,7 +632,7 @@ segments:
 #        - [0x, 0x, "bin", "kris_blade"] // 0F01E1C8
 #        - [0x, 0x, "bin", "kris_hilt"]
 #        - [0x, 0x, "bin", "kris_handle"]
-#        - [0x5796B0, 0x579D48, "rua_rua_idol"] // 0F01EA70
+#        - [0x5796B0, 0x579D48, "rua_rua_idol"] // 80311500 0F01EA70
       - [0x579D50, bin, greece_models]
 #        - [0x579D50, 0x5838F0, "bin", "textures"]
 #        - [0x5838F0, 0x584210, "bin", "watergate_structure"]
