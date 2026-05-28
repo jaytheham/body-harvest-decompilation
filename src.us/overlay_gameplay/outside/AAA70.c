@@ -1964,9 +1964,6 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 
 	sp6C = func_800FAFB8_109F68(arg0);
 	sp56 = (u8)D_8013D5B8_14C568;
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A3490_B2440.s")
-#endif
 	var_a3 = 0x2D;
 	var_t4 = 0x2E;
 	var_t5 = 0x91;
@@ -2062,6 +2059,9 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A3490_B2440.s")
+#endif
 
 s32 func_800A3CD0_B2C80(void) {
 	if (D_8014F1FA == 0) {
