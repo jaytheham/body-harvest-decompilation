@@ -624,10 +624,11 @@ void func_800EA5B8_F9568(void) {
 	D_80048188 = 0;
 }
 
-// CURRENT(4121)
+// CURRENT(3950)
 #ifdef NON_MATCHING
 f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1) {
 	f32 diffX;
+	s32 pad0;
 	f32 diffY;
 	f32 diffZ;
 	f32 result;
@@ -663,7 +664,9 @@ f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1) {
 	angle = func_80003824_4424(sqrtf((diffX * diffX) + (diffZ * diffZ)), (diffY >= 0.0f) ? diffY : -diffY);
 
 	if (diffY < 0.0f) {
-		result = (f32)((((f64)(f32) (angle & 0xFFFF) * D_801443D0_153380) / 32768.0 / 40.0 * 0.5) + 0.5);
+		absDiffY = (f32)(((f64)(f32) (angle & 0xFFFF) * D_801443D0_153380) / 32768.0);
+		absDiffY = (f32)((f64) absDiffY / 40.0);
+		result = (f32)(((f64) absDiffY * 0.5) + 0.5);
 	} else {
 		result = (f32)(0.5 - ((((f64)(f32) (angle & 0xFFFF) * D_801443D8_153388) / 32768.0 / 40.0) * 0.5));
 	}
