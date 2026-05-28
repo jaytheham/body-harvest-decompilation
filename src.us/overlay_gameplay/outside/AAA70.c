@@ -844,7 +844,7 @@ void func_8009EE30_ADDE0(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009EE30_ADDE0.s")
 #endif
 
-// CURRENT(18243)
+// CURRENT(17729)
 #ifdef NON_MATCHING
 void func_8009F130_AE0E0(void) {
 	s16 alpha;
@@ -863,6 +863,7 @@ void func_8009F130_AE0E0(void) {
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x0100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
 	gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
+	gDPPipeSync(D_8005BB2C++);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
