@@ -567,7 +567,7 @@ void *func_800EA3E8_F9398(s16 arg0) {
 }
 
 // guess_initAnimations
-// CURRENT(1655)
+// CURRENT(1205)
 #ifdef NON_MATCHING
 void func_800EA434_F93E4(void) {
 	f32 temp_zero;
@@ -581,9 +581,9 @@ void func_800EA434_F93E4(void) {
 	temp_zero = 0.0f;
 	D_80157600.unk40C = 0x27;
 	func_800EB534_FA4E4(&D_80157600, 0x23, 7, temp_zero);
-	D_80157600.unk8 = temp_zero;
-	D_80157600.unk10 = temp_zero;
 	D_80157600.unkC = 145.0f;
+	D_80157600.unk10 = temp_zero;
+	D_80157600.unk8 = temp_zero;
 	D_801575D0 = 0;
 	D_80157A28 = 1;
 	D_801575DC = (s32) D_80047948;
@@ -594,10 +594,10 @@ void func_800EA434_F93E4(void) {
 	D_80157A48.unk410 = 1.0f;
 	func_8000C790_D390(&D_80157A48, &D_8003BAE0, 0x10);
 	D_80157E70 = 0;
+	D_80157A48.unkC = 145.0f;
 	D_80157A48.unk8 = temp_zero;
 	D_80157A48.unk10 = temp_zero;
 	D_80157A48.unk40C = 0x27;
-	D_80157A48.unkC = 145.0f;
 	func_800EB534_FA4E4(&D_80157A48, 0x23, 7, temp_zero);
 	D_801575E0.unk0 = 0;
 	D_801575E0.unk2 = 0;
