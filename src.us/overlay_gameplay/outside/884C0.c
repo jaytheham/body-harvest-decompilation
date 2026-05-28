@@ -2592,17 +2592,17 @@ void func_8007EE98_8DE48(AlienInstance *arg0, AlienInstance *arg1) {
 	arg1->unk4 = (s16)(s32)((f32)arg1->unk4 - pushZ);
 }
 
-// CURRENT(21665)
+// CURRENT(21299)
 #ifdef NON_MATCHING
 s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
-	u8 selfIndex;
-	u8 start;
 	AlienInstance *inst;
 	AlienSpec *spec;
 	VehicleInstance *vehicle;
 	AlienInstance *other;
 	AlienSpec *otherSpec;
+	u8 selfIndex;
 	u8 i;
+	u8 start;
 	u8 specIndex;
 	u8 otherIndex;
 	u8 otherSpecIndex;
@@ -2614,15 +2614,17 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	s32 moved;
 	s32 collisionCheck;
 	s32 recurseFlag;
+	s32 ret;
 
-	selfIndex = arg0;
-	start = arg1;
+	selfIndex = arg0 & 0xFF;
+	start = arg1 & 0xFF;
 	inst = &alienInstances[selfIndex];
 	specIndex = inst->specIndex;
 	soundId = 0xFF;
 	moved = 0;
 	collisionCheck = 0;
 	recurseFlag = 0;
+	ret = 0;
 
 	if (inst->unk47 & 0x80) {
 		return 0;
@@ -2689,8 +2691,8 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 
 			if (arg2 == 0) {
 				if ((currentLevel != 3) || ((specIndex != 9) && (specIndex != 8))) {
-					D_8014D304--;
-					return 1;
+					ret = 1;
+					goto done;
 				}
 			} else {
 				func_8007ED9C_8DD4C(selfIndex);
@@ -2729,8 +2731,8 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 			hitType = func_8007EB74_8DB24(inst, (AlienInstance *)vehicle);
 			if (arg2 == 0) {
 				if ((currentLevel != 3) || ((specIndex != 9) && (specIndex != 8))) {
-					D_8014D304--;
-					return 1;
+					ret = 1;
+					goto done;
 				}
 			} else if (D_8014ECD8 == vehIndex) {
 				osSyncPrintf(&D_80141D10_150CC0, D_800344B4_350B4[vehicleSpecs[vehicle->unk1A].unk18 * 2], spec->unk18, arg2);
@@ -2783,8 +2785,8 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 
 			func_8007EB74_8DB24(inst, other);
 			if (arg2 == 0) {
-				D_8014D304--;
-				return 1;
+				ret = 1;
+				goto done;
 			}
 
 			recurseFlag = 1;
@@ -2818,8 +2820,15 @@ done:
 		func_8007F0E8_8E098(selfIndex, 0, arg2);
 	}
 	D_8014D304--;
+	if (ret != 0) {
+		return ret;
+	}
 	return recurseFlag;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007F0E8_8E098.s")
+#endif
+
 s32 func_8007F9C8_8E978(u8 arg0, u8 arg1) {
 	s16 var_v1 = -1;
 
@@ -2962,10 +2971,6 @@ void func_8007FDD8_8ED88(void)
 		{
 			inst = (AlienInstance *)((u8 *)&alienInstances + (((*activeList << 2) + *activeList) << 4));
 			specIdx = inst->specIndex;
-
-	#else
-	#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007F0E8_8E098.s")
-	#endif
 			next = i + 1;
 			if (alienSpecs[specIdx].unk54 & 0x3E)
 			{
