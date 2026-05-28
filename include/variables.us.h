@@ -3176,7 +3176,7 @@ extern s16 D_80257DB4;
 extern u8 D_80158BD0[];
 extern s16 D_80052554;
 extern Unk80146212 D_80146212_1551C2[];
-extern s16 D_80146492[];
+extern s16 D_80146492_155442[];
 extern s32 D_802E4E84[];
 extern char D_802E7AE4[];
 extern char D_802E7A30[];

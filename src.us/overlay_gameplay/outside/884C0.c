@@ -7988,11 +7988,13 @@ void func_8008D3F4_9C3A4(u8 arg0) {
 }
 
 // https://decomp.me/scratch/mZdi4
+// CURRENT(120)
 #ifdef NON_MATCHING
 void func_8008D4A0_9C450(unsigned int arg0)
 {
-  s16 target;
-  s32 dummy;
+	s16 target;
+	s8 unk3D;
+	s32 dummy;
   if (!(alienInstances[arg0].unk20 & 0x4000))
   {
 	target = func_80082394_91344(alienInstances[arg0].unk0, alienInstances[arg0].unk4, ((s32) alienSpecs[alienInstances[arg0].specIndex].unk51) / 20);
@@ -8017,13 +8019,15 @@ void func_8008D4A0_9C450(unsigned int arg0)
 		alienInstances[arg0].unk20 &= ~0x1020;
 		return;
 	  }
-	  if ((alienInstances[arg0].unk3D == (-1)) || (D_80146492[(currentLevel << 8) + (alienInstances[arg0].unk3D << 3)] == 0))
+	  unk3D = alienInstances[arg0].unk3D;
+	  if ((unk3D == (-1)) || (D_80146492_155442[(currentLevel << 8) + (unk3D << 3)] == 0))
 	  {
 		func_8008D3B0_9C360(arg0);
 	  }
 	}
   }
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008D4A0_9C450.s")
 #endif
