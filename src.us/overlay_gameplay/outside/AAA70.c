@@ -1833,20 +1833,16 @@ void func_800A2B58_B1B08(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2B58_B1B08.s")
 #endif
 
-// CURRENT(11390)
+// CURRENT(11278)
 #ifdef NON_MATCHING
 void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	AAA70Unk8014F618Head *temp_s0;
-	Gfx *dl;
 	f32 posX;
 	f32 posY;
 	f32 posZ;
 	f32 distScale;
-	f32 flatDistF;
-	s32 flatDist;
-	s32 temp_a1;
-	s16 size;
-	u8 pulse;
+	s32 flatDistI;
+	s32 pulse;
 
 	(void)arg3;
 	temp_s0 = (AAA70Unk8014F618Head *)&D_8014F618;
@@ -1908,8 +1904,7 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 				 ((D_80047958 * 4.0f) - posY) * ((D_80047958 * 4.0f) - posY) +
 				 ((D_8004795C * 4.0f) - posZ) * ((D_8004795C * 4.0f) - posZ));
 
-	size = (s16)(s32)distScale;
-	*(s16 *)&D_8014F618.unk60 = size;
+	*(s16 *)&D_8014F618.unk60 = (s16)distScale;
 	distScale /= 6.0f;
 	temp_s0->unkC = distScale * ((f32 *)&D_80153AB8)[0];
 	temp_s0->unk10 = distScale * ((f32 *)&D_80153AB8)[1];
@@ -1922,27 +1917,23 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	temp_s0->unk2C = temp_s0->unk8 + temp_s0->unk20;
 	func_800A2260_B1210(NULL, NULL, NULL, NULL);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl;
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk71, D_8014F618.unk72, D_8014F618.unk73, D_8014F618.unk6B);
 
-	flatDist = (s32)((f32)(s32)((D_80052B2C->unk0 - posX) * (D_80052B2C->unk0 - posX)) +
-				 (D_80052B2C->unk8 - posZ) * (D_80052B2C->unk8 - posZ));
-	flatDistF = sqrtf((f32)flatDist);
+	flatDistI = (s32)((f32)(s32)((D_80052B2C->unk0 - posX) * (D_80052B2C->unk0 - posX)) +
+				  (D_80052B2C->unk8 - posZ) * (D_80052B2C->unk8 - posZ));
+	flatDistI = (s32)sqrtf((f32)flatDistI);
 
 	D_80052B40.unk0 = arg0;
 	D_80052B40.unk2 = arg1;
 	D_80052B40.unk4 = arg2;
 
-	temp_a1 = (s32)flatDistF;
 	D_80052B48.unk0 = func_80003824_4424(D_80052B2C->unk14 - D_80052B2C->unk8, D_80052B2C->unkC - D_80052B2C->unk0);
 	D_80052B48.unk2 = D_8014F618.unk6D << 8;
-	D_80052B48.unk4 = 0x4000 - func_80003824_4424(D_80052B2C->unk4 - posY, (f32)temp_a1);
+	D_80052B48.unk4 = 0x4000 - func_80003824_4424(D_80052B2C->unk4 - posY, (f32)flatDistI);
 
-	size = (s16)(s32)((f32)D_8014F618.unk6F + distScale);
-	D_80052B50.unk0 = size;
-	D_80052B50.unk2 = size;
-	D_80052B50.unk4 = size;
+	D_80052B50.unk0 = (s16)(s32)((f32)D_8014F618.unk6F + distScale);
+	D_80052B50.unk2 = D_80052B50.unk0;
+	D_80052B50.unk4 = D_80052B50.unk0;
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
