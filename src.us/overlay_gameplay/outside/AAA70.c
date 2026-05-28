@@ -332,7 +332,7 @@ void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 }
 
 // Draws Health/Human/vehicle/+more bars on HUD
-// CURRENT(24215)
+// CURRENT(19959)
 #ifdef NON_MATCHING
 void func_8009D96C_AC91C(void) {
 	AlienInstance *alien;
@@ -397,28 +397,30 @@ void func_8009D96C_AC91C(void) {
 	D_8014F202 = 0;
 
 	if (gameplayMode != 0xC) {
-		if ((alien != NULL) && (alien->specIndex != 0)) {
-			u16 tempU16;
+		if (alien != NULL) {
+			if (alien->specIndex != 0) {
+				u16 tempU16;
 
-			if (alien->unk20 & 0x100000) {
-				sp98 = 0.0f;
-			} else {
-				sp98 = (f32) ((f64) (f32) alien->hitPoints / 100.0);
-			}
+				if (alien->unk20 & 0x100000) {
+					sp98 = 0.0f;
+				} else {
+					sp98 = (f32) ((f64) (f32) alien->hitPoints / 100.0);
+				}
 
-			tempU16 = *(u16 *) &D_802566BA[alien->specIndex * 0x68];
-			sp8A = (s16) (((f64) tempU16 / 100.0) * 50.0);
-			func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
+				tempU16 = *(u16 *) &D_802566BA[alien->specIndex * 0x68];
+				sp8A = (s16) (((f64) tempU16 / 100.0) * 50.0);
+				func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
 
-			tempU16 = *(u16 *) &D_802566BA[alien->specIndex * 0x68];
-			D_8014F202 = 3;
-			sp8C = (s32) &D_8025EC40;
-			sp7C = (s32) alien;
-			sp82 = D_8014ED44;
-			sp84 = (f32) alien->hitPoints / (f32) tempU16;
+				tempU16 = *(u16 *) &D_802566BA[alien->specIndex * 0x68];
+				D_8014F202 = 3;
+				sp8C = (s32) &D_8025EC40;
+				sp7C = (s32) alien;
+				sp82 = D_8014ED44;
+				sp84 = (f32) alien->hitPoints / (f32) tempU16;
 
-			if (D_80158FF0 != 0) {
-				D_8014F202 = 4;
+				if (D_80158FF0 != 0) {
+					D_8014F202 = 4;
+				}
 			}
 		} else if (currentControllerStates[CONTROLLER_ONE].button & 0x10) {
 			if (D_80158FE4 != NULL) {
@@ -462,7 +464,7 @@ void func_8009D96C_AC91C(void) {
 		}
 	}
 
-	if (D_8014F202 == 0) {
+	if ((u8) D_8014F202 == 0) {
 		sp82 = 0;
 		sp8A = 0;
 		sp7C = 0;
