@@ -1803,7 +1803,7 @@ void func_8007D424_8C3D4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007D424_8C3D4.s")
 #endif
 
-// CURRENT(23426)
+// CURRENT(22760)
 #ifdef NON_MATCHING
 void func_8007D690_8C640(void) {
 	s16 sp9A;
@@ -1999,7 +1999,7 @@ block_11:
 										(((func_800B84D0_C7480(temp_s0->unk0, temp_s0->unk4) >> 8) + 0x64) >= temp_s0->unk2)) {
 										s16 temp_v0_9;
 
-										temp_v0_9 = *(s16 *) &alienSpecs[temp_s0->specIndex].unk0;
+										temp_v0_9 = alienSpecs[temp_s0->specIndex].unkC;
 										if (temp_v0_9 >= 0x96) {
 											func_800B8D80_C7D30(temp_s0->unk0, temp_s0->unk4, 0, 1);
 										} else if (temp_v0_9 >= 0x64) {
@@ -2055,9 +2055,9 @@ block_11:
 
 									var_v0_7 = (temp_t5_2 >= 0) ? temp_t5_2 : -temp_t5_2;
 									func_80102D00_111CB0(D_80052B34,
-										(f32) ((1.0 - (f64) (var_t0 / temp_t2)) * (f64) (var_t1 * -8)),
+										(f32) ((0.0 - (f64) (var_t0 / temp_t2)) * (f64) (var_t1 * -8)),
 										0,
-										(f32) ((1.0 - (f64) (var_v0_7 / temp_t2)) * (f64) (var_v1_2 * -8)));
+										(f32) ((0.0 - (f64) (var_v0_7 / temp_t2)) * (f64) (var_v1_2 * -8)));
 
 									if (temp_s0->unk48 == 0) {
 										temp_s0->unk48 = 0x14;
