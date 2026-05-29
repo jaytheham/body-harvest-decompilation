@@ -1,23 +1,23 @@
 {
-  "generated": "2026-05-29T04:59:02Z",
-  "commit": "2f0bbbd4",
-  "commit_timestamp": "2026-05-29T16:58:45+12:00",
+  "generated": "2026-05-29T08:00:00Z",
+  "commit": "46393581",
+  "commit_timestamp": "2026-05-29T19:59:31+12:00",
   "overall": {
-    "total_functions": 2522,
-    "matched": 1202,
+    "total_functions": 2705,
+    "matched": 1385,
     "non_matching": 1039,
     "asm_stubs": 281,
-    "matched_pct": 47.66,
-    "decompiled_pct": 88.86
+    "matched_pct": 51.2,
+    "decompiled_pct": 89.61
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 232,
+      "matched": 265,
       "non_matching": 83,
       "asm_stubs": 1,
-      "total": 316,
-      "matched_pct": 73.4,
+      "total": 349,
+      "matched_pct": 75.9,
       "decompiled_pct": 99.7
     },
     "overlay_gameplay/frontend": {
@@ -31,12 +31,12 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 643,
+      "matched": 793,
       "non_matching": 625,
       "asm_stubs": 26,
-      "total": 1294,
-      "matched_pct": 49.7,
-      "decompiled_pct": 98.0
+      "total": 1444,
+      "matched_pct": 54.9,
+      "decompiled_pct": 98.2
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -97,11 +97,11 @@
     {
       "path": "core/1050.c",
       "segment": "core",
-      "matched": 0,
+      "matched": 32,
       "non_matching": 25,
       "asm_stubs": 0,
-      "total": 25,
-      "matched_pct": 0.0,
+      "total": 57,
+      "matched_pct": 56.1,
       "contributor": "jaytheham"
     },
     {
@@ -117,11 +117,11 @@
     {
       "path": "core/12C80.c",
       "segment": "core",
-      "matched": 102,
+      "matched": 103,
       "non_matching": 16,
       "asm_stubs": 1,
-      "total": 119,
-      "matched_pct": 85.7,
+      "total": 120,
+      "matched_pct": 85.8,
       "contributor": "jaytheham"
     },
     {
@@ -337,11 +337,11 @@
     {
       "path": "overlay_gameplay/outside/884C0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 0,
+      "matched": 146,
       "non_matching": 100,
       "asm_stubs": 1,
-      "total": 101,
-      "matched_pct": 0.0,
+      "total": 247,
+      "matched_pct": 59.1,
       "contributor": "jaytheham"
     },
     {
@@ -407,11 +407,11 @@
     {
       "path": "overlay_gameplay/outside/CFE30.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 147,
+      "matched": 151,
       "non_matching": 128,
       "asm_stubs": 2,
-      "total": 277,
-      "matched_pct": 53.1,
+      "total": 281,
+      "matched_pct": 53.7,
       "contributor": "jaytheham"
     },
     {
@@ -549,7 +549,7 @@
     {
       "name": "jaytheham",
       "files": 43,
-      "matched": 1196,
+      "matched": 1379,
       "non_matching": 1039,
       "asm_stubs": 211
     },
@@ -579,107 +579,107 @@
     {
       "date": "2026-02-15",
       "commit": "6a15832",
-      "matched": 176,
+      "matched": 177,
       "non_matching": 40,
-      "total": 762
+      "total": 763
     },
     {
       "date": "2026-02-22",
       "commit": "0efa11a",
-      "matched": 478,
+      "matched": 479,
       "non_matching": 153,
-      "total": 3036
+      "total": 3037
     },
     {
       "date": "2026-03-01",
       "commit": "effdd6f",
-      "matched": 597,
+      "matched": 598,
       "non_matching": 218,
-      "total": 2699
+      "total": 2700
     },
     {
       "date": "2026-03-08",
       "commit": "536824e",
-      "matched": 678,
+      "matched": 679,
       "non_matching": 271,
-      "total": 2699
+      "total": 2700
     },
     {
       "date": "2026-03-15",
       "commit": "98103e7",
-      "matched": 840,
+      "matched": 841,
       "non_matching": 280,
-      "total": 2699
+      "total": 2700
     },
     {
       "date": "2026-03-22",
       "commit": "d71ea4e",
-      "matched": 975,
+      "matched": 976,
       "non_matching": 298,
-      "total": 2699
+      "total": 2700
     },
     {
       "date": "2026-03-29",
       "commit": "670c36d",
-      "matched": 1180,
+      "matched": 1181,
       "non_matching": 344,
-      "total": 2705
+      "total": 2706
     },
     {
       "date": "2026-04-05",
       "commit": "44a03dd",
-      "matched": 1237,
+      "matched": 1239,
       "non_matching": 384,
-      "total": 2704
+      "total": 2706
     },
     {
       "date": "2026-04-12",
       "commit": "c343c0d",
-      "matched": 1283,
+      "matched": 1285,
       "non_matching": 452,
-      "total": 2703
+      "total": 2705
     },
     {
       "date": "2026-04-19",
       "commit": "5e8d27d",
-      "matched": 1324,
+      "matched": 1326,
       "non_matching": 626,
-      "total": 2706
+      "total": 2708
     },
     {
       "date": "2026-04-26",
       "commit": "4d7e83d",
-      "matched": 1325,
+      "matched": 1327,
       "non_matching": 625,
-      "total": 2706
+      "total": 2708
     },
     {
       "date": "2026-05-03",
       "commit": "970f57c",
-      "matched": 1307,
+      "matched": 1339,
       "non_matching": 680,
-      "total": 2675
+      "total": 2707
     },
     {
       "date": "2026-05-10",
       "commit": "873dd5b",
-      "matched": 1332,
+      "matched": 1364,
       "non_matching": 888,
-      "total": 2675
+      "total": 2707
     },
     {
       "date": "2026-05-17",
       "commit": "5108678",
-      "matched": 1343,
+      "matched": 1379,
       "non_matching": 943,
-      "total": 2670
+      "total": 2706
     },
     {
       "date": "2026-05-24",
-      "commit": "d671dcc",
-      "matched": 1202,
+      "commit": "213f137",
+      "matched": 1385,
       "non_matching": 1039,
-      "total": 2522
+      "total": 2705
     }
   ]
 }
