@@ -1896,6 +1896,10 @@ extern Unk80259D98 D_80259D98[];
 extern u8 D_D03E780[];
 extern u8 D_5032190[];
 extern u8 D_5032390[];
+extern u8 D_503CF60[];
+extern u8 D_5040A80[];
+extern u8 D_5041480[];
+extern u32 D_80256750;
 
 extern f32 D_8014F1E4;
 extern f32 D_8014F1E8;
