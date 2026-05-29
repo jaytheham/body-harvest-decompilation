@@ -4896,7 +4896,400 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F554C_1044FC.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(22311)
+void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
+	f32 sp15C;
+	f32 sp160;
+	f32 sp164;
+	f32 sp158;
+	s32 sp150;
+	f32 sp13C;
+	f32 sp134;
+	f32 sp130;
+	s32 sp128;
+	s32 sp124;
+	s32 sp120;
+	s16 sp11A;
+	s16 sp118;
+	s16 sp116;
+	s16 sp114;
+	s16 sp112;
+	s16 sp110;
+	s16 sp10C;
+	s16 sp10A;
+	s16 sp108;
+	s16 sp106;
+	s16 sp104;
+	f32 sp54;
+	s32 sp44;
+	s32 sp3C;
+	s32 sp38;
+	s32 sp2C;
+	s32 pad[13];
+	f32 temp_f0;
+	f32 temp_f0_2;
+	f32 temp_f12;
+	f32 temp_f14;
+	f32 var_f16;
+	f32 var_f2;
+	s16 temp_a2;
+	s16 temp_v1_2;
+	s16 temp_v1_3;
+	s32 temp_f10;
+	s32 temp_f10_2;
+	s32 temp_f4;
+	s32 temp_f6;
+	s32 temp_f6_2;
+	s32 temp_f6_3;
+	s32 temp_f6_4;
+	s32 temp_f6_5;
+	s32 temp_f8;
+	s32 temp_ra_2;
+	s32 temp_t2;
+	s32 temp_t7;
+	s32 temp_t7_2;
+	s32 temp_t7_3;
+	s32 temp_t7_4;
+	s32 temp_t8;
+	s32 temp_v0;
+	s32 temp_v0_2;
+	s32 temp_v0_3;
+	s32 temp_v0_4;
+	s32 temp_v1_4;
+	s32 temp_v1_5;
+	s32 var_t5;
+	s32 var_t5_2;
+	u8 temp_ra;
+	u8 *temp_a3;
+	Gfx *dl;
+	Vtx *vtx;
+
+	var_f2 = (f32)D_801601F8[(arg3 & 0xFF) * 0x16];
+	var_f16 = (var_f2 * 3.0f) / 4.0f;
+	if (D_8013FCD0_14EC80 != 0) {
+		var_f16 *= 2.0f;
+		var_f2 *= 2.0f;
+	}
+
+	temp_f0 = (f32)((f64)var_f16 * D_80144A38_1539E8);
+	sp13C = temp_f0;
+	sp15C = (f32)(arg1[0] - arg0[0]);
+	sp160 = (f32)(arg1[1] - arg0[1]);
+	sp134 = var_f16;
+	sp130 = var_f2;
+	sp54 = temp_f0;
+	sp164 = (f32)(arg1[2] - arg0[2]);
+	func_800F54AC_10445C((Vec3f *)&sp15C, (Vec3f *)&sp15C);
+	temp_v0 = func_80003824_4424((f32)(arg0[2] - arg2[2]), (f32)(arg0[0] - arg2[0]));
+	sp150 = temp_v0;
+	temp_f14 = (f32)((f64)(f32)sins((temp_v0 + 0x4000) & 0xFFFF) / 32768.0);
+	sp158 = temp_f14;
+	temp_v0_2 = coss((sp150 + 0x4000) & 0xFFFF);
+	dl = D_8005BB2C++;
+	temp_f12 = sp130 * 2.0f;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+	temp_f6 = (s32)(sp15C * temp_f12);
+	temp_f10 = (s32)(sp164 * temp_f12);
+	temp_a3 = &D_8013FCD4_14EC84[currentLevel * 9];
+	sp11A = temp_a3[0x51];
+	sp118 = temp_a3[0x52];
+	sp116 = temp_a3[0x53];
+	temp_a2 = sp11A - 0x82;
+	if (temp_a2 < 0) {
+		sp114 = 0;
+	} else {
+		sp114 = temp_a2;
+	}
+	temp_v1_2 = sp118 - 0x82;
+	if (temp_v1_2 < 0) {
+		sp112 = 0;
+	} else {
+		sp112 = temp_v1_2;
+	}
+	temp_v1_3 = sp116 - 0x82;
+	if (temp_v1_3 < 0) {
+		sp110 = 0;
+	} else {
+		sp110 = temp_v1_3;
+	}
+	sp10C = temp_a3[0x55];
+	sp10A = temp_a3[0x56];
+	sp108 = temp_a3[0x57];
+	sp106 = temp_a3[0x58];
+	sp104 = temp_a3[0x59];
+	temp_ra = temp_a3[0x54];
+	vtx = D_8005BB34++;
+	vtx->v.ob[0] = (s16)((f32)arg0[0] - (sp15C * 4.0f));
+	vtx->v.ob[1] = (s16)arg0[1];
+	vtx->v.ob[2] = (s16)((f32)arg0[2] - (sp164 * 4.0f));
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = 0;
+	vtx->v.cn[1] = 0;
+	vtx->v.cn[2] = 0;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	temp_f6_2 = (s32)(sp54 * temp_f14);
+	vtx->v.ob[0] = (s16)(arg0[0] + temp_f6_2 + (s16)temp_f6);
+	vtx->v.ob[1] = (s16)arg0[1];
+	temp_f0_2 = (f32)((f64)(f32)temp_v0_2 / 32768.0);
+	temp_f6_3 = (s32)(sp54 * temp_f0_2);
+	vtx->v.ob[2] = (s16)(arg0[2] + (s16)temp_f6_3 + (s16)temp_f10);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x180;
+	vtx->v.cn[0] = 0;
+	vtx->v.cn[1] = 0;
+	vtx->v.cn[2] = 0;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	vtx->v.ob[0] = (s16)((arg0[0] - temp_f6_2) + (s16)temp_f6);
+	vtx->v.ob[1] = (s16)arg0[1];
+	vtx->v.ob[2] = (s16)((arg0[2] - (s16)temp_f6_3) + (s16)temp_f10);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x180;
+	vtx->v.cn[0] = 0;
+	vtx->v.cn[1] = 0;
+	vtx->v.cn[2] = 0;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	vtx->v.ob[0] = (s16)(arg1[0] - ((s16)temp_f6 / 3));
+	vtx->v.ob[1] = (s16)(arg1[1] + ((s16)(s32)(sp160 * temp_f12) / 3));
+	vtx->v.ob[2] = (s16)(arg1[2] - (s16)temp_f10);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x180;
+	vtx->v.cn[0] = (u8)sp108;
+	vtx->v.cn[1] = (s8)sp106;
+	vtx->v.cn[2] = (s8)sp104;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	vtx->v.ob[0] = (s16)(arg1[0] + temp_f6_2 + (s16)temp_f6);
+	vtx->v.ob[1] = (s16)arg1[1];
+	vtx->v.ob[2] = (s16)(arg1[2] + (s16)temp_f6_3 + (s16)temp_f10);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = temp_ra;
+	vtx->v.cn[1] = (s8)sp10C;
+	vtx->v.cn[2] = (s8)sp10A;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	vtx = D_8005BB34;
+	temp_f4 = (s32)(sp134 * temp_f14);
+	vtx->v.ob[0] = (s16)((arg1[0] - temp_f6_2) + (s16)temp_f6);
+	vtx->v.ob[1] = (s16)arg1[1];
+	vtx->v.ob[2] = (s16)((arg1[2] - (s32)(sp13C * temp_f0_2)) + (s16)temp_f10);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = temp_ra;
+	vtx->v.cn[1] = (s8)sp10C;
+	vtx->v.cn[2] = (s8)sp10A;
+	vtx->v.cn[3] = 0xFF;
+	temp_f6_4 = (s32)(sp15C * sp130);
+	temp_f8 = (s32)(sp160 * sp134);
+	temp_f10_2 = (s32)(sp164 * sp130);
+	temp_ra_2 = (s16)temp_f6_4 * 3;
+	temp_f6_5 = (s32)(sp134 * temp_f0_2);
+	vtx->v.ob[0] = (s16)(arg1[0] + (s16)temp_f4 + temp_ra_2);
+	vtx->v.ob[1] = (s16)(arg1[1] + temp_f8);
+	temp_t7 = (s16)temp_f10_2 * 3;
+	sp2C = (s32)(s16)temp_f6_5;
+	sp3C = temp_t7;
+	vtx->v.ob[2] = (s16)(arg1[2] + (s16)temp_f6_5 + temp_t7);
+	sp44 = (s32)(s16)temp_f4;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x240;
+	vtx->v.tc[1] = 0x258;
+	vtx->v.cn[0] = (u8)sp114;
+	vtx->v.cn[1] = (s8)sp112;
+	vtx->v.cn[2] = (s8)sp110;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	vtx->v.ob[0] = (s16)(arg1[0] + (s16)sp44 + temp_ra_2);
+	vtx->v.ob[1] = (s16)(arg1[1] + temp_f8);
+	vtx->v.ob[2] = (s16)(arg1[2] + (s16)temp_f6_5 + temp_t7);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x258;
+	vtx->v.cn[0] = (u8)sp114;
+	vtx->v.cn[1] = (s8)sp112;
+	vtx->v.cn[2] = (s8)sp110;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	vtx->v.ob[0] = (s16)(arg1[0] - (s16)sp44 + temp_ra_2);
+	vtx->v.ob[1] = (s16)(arg1[1] + temp_f8);
+	vtx->v.ob[2] = (s16)(arg1[2] - (s16)temp_f6_5 + temp_t7);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x258;
+	vtx->v.cn[0] = (u8)sp114;
+	vtx->v.cn[1] = (s8)sp112;
+	vtx->v.cn[2] = (s8)sp110;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	vtx->v.ob[0] = (s16)sp120;
+	vtx->v.ob[1] = (s16)sp124;
+	vtx->v.ob[2] = (s16)sp128;
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x240;
+	vtx->v.tc[1] = 0x258;
+	vtx->v.cn[0] = (u8)sp114;
+	vtx->v.cn[1] = (s8)sp112;
+	vtx->v.cn[2] = (s8)sp110;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	vtx->v.ob[0] = (s16)(sp120 + (s16)temp_t8);
+	vtx->v.ob[1] = (s16)((f32)sp124 - sp130);
+	vtx->v.ob[2] = (s16)(temp_t7_3 + (s16)temp_t7_4);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x258;
+	vtx->v.cn[0] = (u8)sp114;
+	vtx->v.cn[1] = (s8)sp112;
+	vtx->v.cn[2] = (s8)sp110;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	vtx->v.ob[0] = (s16)(temp_t7_2 - (s16)temp_t8);
+	vtx->v.ob[1] = (s16)((f32)sp124 - sp130);
+	vtx->v.ob[2] = (s16)(sp128 - (s16)temp_t7_4);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0x258;
+	vtx->v.cn[0] = (u8)sp114;
+	vtx->v.cn[1] = (s8)sp112;
+	vtx->v.cn[2] = (s8)sp110;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	vtx->v.ob[0] = (s16)arg2[0];
+	vtx->v.ob[1] = (s16)arg2[1];
+	vtx->v.ob[2] = (s16)arg2[2];
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0x240;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = (u8)sp11A;
+	vtx->v.cn[1] = (s8)sp3C;
+	vtx->v.cn[2] = (s8)sp38;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	vtx->v.ob[0] = (s16)(arg2[0] + (s16)temp_t8);
+	vtx->v.ob[1] = (s16)((f32)arg2[1] - sp130);
+	vtx->v.ob[2] = (s16)(arg2[2] + (s16)temp_t7_4);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = (u8)sp11A;
+	vtx->v.cn[1] = (s8)sp3C;
+	vtx->v.cn[2] = (s8)sp38;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	vtx->v.ob[0] = (s16)(arg2[0] - (s16)temp_t8);
+	vtx->v.ob[1] = (s16)((f32)arg2[1] - sp130);
+	vtx->v.ob[2] = (s16)(arg2[2] - (s16)temp_t7_4);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = (u8)sp11A;
+	vtx->v.cn[1] = (s8)sp3C;
+	vtx->v.cn[2] = (s8)sp38;
+	vtx->v.cn[3] = 0xFF;
+	vtx++;
+	vtx->v.ob[0] = (s16)((sp15C * 4.0f) + (f32)arg0[0]);
+	vtx->v.ob[1] = (s16)arg0[1];
+	vtx->v.ob[2] = (s16)((sp164 * 4.0f) + (f32)arg0[2]);
+	vtx->v.flag = 0;
+	vtx->v.tc[0] = 0;
+	vtx->v.tc[1] = 0;
+	vtx->v.cn[0] = 0;
+	vtx->v.cn[1] = 0;
+	vtx->v.cn[2] = 0;
+	vtx->v.cn[3] = 0xFF;
+	D_8005BB34 = vtx;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xB7000000;
+	dl->words.w1 = 0x00010000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xB6000000;
+	dl->words.w1 = 0x00020000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBB000001;
+	dl->words.w1 = 0x80008000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xFC1219FF;
+	dl->words.w1 = 0xFFFFFE38;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0x04004D2F;
+	dl->words.w1 = (u32)((s32)(D_8005BB34 - 0x13) & 0x1FFFFFFF);
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xFD100000;
+	dl->words.w1 = (u32)D_1014880;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF5100000;
+	dl->words.w1 = 0x07010040;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE6000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF3000000;
+	dl->words.w1 = 0x070FF200;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF5100800;
+	dl->words.w1 = 0x00080200;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xF2000000;
+	dl->words.w1 = 0x0003C03C;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x0016140C;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x00160C18;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x0016140E;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBF000000;
+	dl->words.w1 = 0x0016141A;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F63D0_105380.s")
+#endif
 
 // CURRENT(56921)
 #ifdef NON_MATCHING
