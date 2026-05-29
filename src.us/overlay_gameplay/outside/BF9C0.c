@@ -2265,7 +2265,279 @@ s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B604C_C4FFC.s")
 
 // Draw rotated tiles e.g. roads
+// CURRENT(94016)
+#ifdef NON_MATCHING
+void func_800B753C_C64EC(void) {
+	struct {
+		s16 counts[8];
+		s16 indices[8][0x121];
+	} sp11C;
+	s32 group;
+
+	for (group = 0; group < 8; group++) {
+		sp11C.counts[group] = -1;
+	}
+
+	D_8005BB2C->words.w0 = 0xFD100000;
+	D_8005BB2C->words.w1 = (u32)(D_80254E80 + 0x200) & 0x1FFFFFFF;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xE8000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xF5000100;
+	D_8005BB2C->words.w1 = 0x07000000;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xE6000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xF0000000;
+	D_8005BB2C->words.w1 = 0x073FC000;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xE7000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xE6000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+
+	if ((D_8014FD28 + 1) < 0x90) {
+		s32 i;
+
+		for (i = D_8014FD28 + 1; i < 0x90; i++) {
+			s32 bucket = ((u8)D_8014F8A8[i].unk4) / 2;
+
+			sp11C.counts[bucket]++;
+			sp11C.indices[bucket][sp11C.counts[bucket]] = i;
+		}
+	}
+
+	D_8005BB2C->words.w0 = 0xE8000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+
+	for (group = 0; group < 8; group++) {
+		s16 lineCount = sp11C.counts[group] + 1;
+		s16 rowOffset = 0;
+
+		if (sp11C.counts[group] == -1) {
+			continue;
+		}
+
+		D_8005BB2C->words.w0 = 0xFD500000;
+		D_8005BB2C->words.w1 = ((u32)(D_80224E80 + (group << 11) + 0x4000)) & 0x1FFFFFFF;
+		D_8005BB2C++;
+		D_8005BB2C->words.w0 = 0xF5500000;
+		D_8005BB2C->words.w1 = 0x07000000;
+		D_8005BB2C++;
+		D_8005BB2C->words.w0 = 0xE6000000;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+		D_8005BB2C->words.w0 = 0xF3000000;
+		D_8005BB2C->words.w1 = 0x073FF200;
+		D_8005BB2C++;
+		D_8005BB2C->words.w0 = 0xE7000000;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+		D_8005BB2C->words.w0 = 0xF5480800;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+		D_8005BB2C->words.w0 = 0xF2000000;
+		D_8005BB2C->words.w1 = 0x0007C0FC;
+		D_8005BB2C++;
+
+		while (lineCount > 0) {
+			s16 run = lineCount;
+			s32 i;
+			u8 v0 = 0;
+			u8 v1 = 4;
+			u8 v2 = 2;
+			u8 v3 = 6;
+
+			if (run >= 9) {
+				run = 8;
+			}
+
+			for (i = 0; i < run; i++) {
+				Vtx *src = D_8014F8A8[sp11C.indices[group][rowOffset + i]].unk0;
+
+				D_8005BB34[0] = src[0];
+				D_8005BB34[1] = src[1];
+				D_8005BB34[2] = src[0x12];
+				D_8005BB34[3] = src[0x13];
+				D_8005BB34 += 5;
+			}
+
+			D_8005BB2C->words.w0 = 0x04000000 | ((((run * 4) << 10) | ((run * 0x40) - 1)) & 0xFFFF);
+			D_8005BB2C->words.w1 = (u32)(D_8005BB34 - (run * 4));
+			D_8005BB2C++;
+
+			for (i = 0; i < run; i++) {
+				Unk800B753CEntry *entry = &D_8014F8A8[sp11C.indices[group][rowOffset + i]];
+
+				D_8005BB2C->words.w0 = 0xE8000000;
+				D_8005BB2C->words.w1 = 0;
+				D_8005BB2C++;
+				D_8005BB2C->words.w0 = 0xF5480800 | ((((u8)entry->unk4 & 1) << 7) & 0x1FF);
+				D_8005BB2C->words.w1 = 0x00014050 | ((((u8)entry->unk5) & 3) << 8) | ((((u8)entry->unk6) & 3) << 18);
+				D_8005BB2C++;
+				D_8005BB2C->words.w0 = 0xE7000000;
+				D_8005BB2C->words.w1 = 0;
+				D_8005BB2C++;
+				D_8005BB2C->words.w0 = 0xB1000000 | (v0 << 16) | (v1 << 8) | v2;
+				D_8005BB2C->words.w1 = (v2 << 16) | (v1 << 8) | v3;
+				D_8005BB2C++;
+
+				v0 += 8;
+				v1 += 8;
+				v2 += 8;
+				v3 += 8;
+			}
+
+			if (lineCount >= 9) {
+				lineCount -= 8;
+			} else {
+				lineCount = 0;
+			}
+
+			rowOffset += 8;
+		}
+	}
+
+	D_8005BB2C->words.w0 = 0xE7000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xFD100000;
+	D_8005BB2C->words.w1 = (u32)D_80254E80 & 0x1FFFFFFF;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xE8000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xF5000100;
+	D_8005BB2C->words.w1 = 0x07000000;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xE6000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xF0000000;
+	D_8005BB2C->words.w1 = 0x073FC000;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xE7000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+	D_8005BB2C->words.w0 = 0xE6000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+
+	for (group = 0; group < 8; group++) {
+		sp11C.counts[group] = -1;
+	}
+
+	if ((s32)D_8014F89A > 0) {
+		s32 i;
+
+		for (i = 0; i < (s32)D_8014F89A; i++) {
+			s32 bucket = ((u8)D_8014F8A8[i].unk4) / 2;
+
+			sp11C.counts[bucket]++;
+			sp11C.indices[bucket][sp11C.counts[bucket]] = i;
+		}
+	}
+
+	for (group = 0; group < 8; group++) {
+		s16 lineCount = sp11C.counts[group] + 1;
+		s16 rowOffset = 0;
+
+		if (sp11C.counts[group] == -1) {
+			continue;
+		}
+
+		D_8005BB2C->words.w0 = 0xFD500000;
+		D_8005BB2C->words.w1 = ((u32)(D_80224E80 + (group << 11))) & 0x1FFFFFFF;
+		D_8005BB2C++;
+		D_8005BB2C->words.w0 = 0xF5500000;
+		D_8005BB2C->words.w1 = 0x07000000;
+		D_8005BB2C++;
+		D_8005BB2C->words.w0 = 0xE6000000;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+		D_8005BB2C->words.w0 = 0xF3000000;
+		D_8005BB2C->words.w1 = 0x073FF200;
+		D_8005BB2C++;
+		D_8005BB2C->words.w0 = 0xE7000000;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+		D_8005BB2C->words.w0 = 0xF5480800;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+		D_8005BB2C->words.w0 = 0xF2000000;
+		D_8005BB2C->words.w1 = 0x0007C0FC;
+		D_8005BB2C++;
+
+		while (lineCount > 0) {
+			s16 run = lineCount;
+			s32 i;
+			u8 v0 = 0;
+			u8 v1 = 4;
+			u8 v2 = 2;
+			u8 v3 = 6;
+
+			if (run >= 9) {
+				run = 8;
+			}
+
+			for (i = 0; i < run; i++) {
+				Vtx *src = D_8014F8A8[sp11C.indices[group][rowOffset + i]].unk0;
+
+				D_8005BB34[0] = src[0];
+				D_8005BB34[1] = src[1];
+				D_8005BB34[2] = src[0x12];
+				D_8005BB34[3] = src[0x13];
+				D_8005BB34 += 5;
+			}
+
+			D_8005BB2C->words.w0 = 0x04000000 | ((((run * 4) << 10) | ((run * 0x40) - 1)) & 0xFFFF);
+			D_8005BB2C->words.w1 = (u32)(D_8005BB34 - (run * 4));
+			D_8005BB2C++;
+
+			for (i = 0; i < run; i++) {
+				Unk800B753CEntry *entry = &D_8014F8A8[sp11C.indices[group][rowOffset + i]];
+
+				D_8005BB2C->words.w0 = 0xE8000000;
+				D_8005BB2C->words.w1 = 0;
+				D_8005BB2C++;
+				D_8005BB2C->words.w0 = 0xF5480800 | ((((u8)entry->unk4 & 1) << 7) & 0x1FF);
+				D_8005BB2C->words.w1 = 0x00014050 | ((((u8)entry->unk5) & 3) << 8) | ((((u8)entry->unk6) & 3) << 18);
+				D_8005BB2C++;
+				D_8005BB2C->words.w0 = 0xE7000000;
+				D_8005BB2C->words.w1 = 0;
+				D_8005BB2C++;
+				D_8005BB2C->words.w0 = 0xB1000000 | (v0 << 16) | (v1 << 8) | v2;
+				D_8005BB2C->words.w1 = (v2 << 16) | (v1 << 8) | v3;
+				D_8005BB2C++;
+
+				v0 += 8;
+				v1 += 8;
+				v2 += 8;
+				v3 += 8;
+			}
+
+			if (lineCount >= 9) {
+				lineCount -= 8;
+			} else {
+				lineCount = 0;
+			}
+
+			rowOffset += 8;
+		}
+	}
+
+	D_8005BB2C->words.w0 = 0xE7000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B753C_C64EC.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_800B84D0_C7480(s16 arg0, s16 arg1) {
@@ -3071,7 +3343,7 @@ void func_800B9DB8_C8D68(u8 arg0)
   while (ra < 5);
   gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEI, G_CC_PASS2);
   gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
-  func_800B753C_C64EC(spFC);
+	func_800B753C_C64EC();
   gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
 }
 #else
