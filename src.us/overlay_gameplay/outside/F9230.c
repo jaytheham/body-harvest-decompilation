@@ -1582,7 +1582,7 @@ void func_800EC468_FB418(void) { D_80157A28 &= ~0x200; }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC484_FB434.s")
 
-// CURRENT(7614)
+// CURRENT(4925)
 #ifdef NON_MATCHING
 s32 func_800ED55C_FC50C(UnkF9230Func800ED55CArg0 *arg0, s32 arg1) {
 	s32 compareAngle;
@@ -1593,26 +1593,43 @@ s32 func_800ED55C_FC50C(UnkF9230Func800ED55CArg0 *arg0, s32 arg1) {
 	s32 localThresholds[9];
 	s32 localHighResults[9];
 	s32 localLowResults[9];
+	s32 *src;
+	s32 *dst;
+	s32 playerAngle;
 
-	for (i = 0; i < 9; i += 3) {
-		localThresholds[i] = D_8013FC14_14EBC4[i];
-		localThresholds[i + 1] = D_8013FC14_14EBC4[i + 1];
-		localThresholds[i + 2] = D_8013FC14_14EBC4[i + 2];
+	playerAngle = (s16)arg0->unkE;
+
+	src = D_8013FC14_14EBC4;
+	dst = localThresholds;
+	while (src != (D_8013FC14_14EBC4 + 9)) {
+		dst[0] = src[0];
+		dst[1] = src[1];
+		dst[2] = src[2];
+		src += 3;
+		dst += 3;
 	}
 
-	for (i = 0; i < 9; i += 3) {
-		localHighResults[i] = D_8013FC38_14EBE8[i];
-		localHighResults[i + 1] = D_8013FC38_14EBE8[i + 1];
-		localHighResults[i + 2] = D_8013FC38_14EBE8[i + 2];
+	src = D_8013FC38_14EBE8;
+	dst = localHighResults;
+	while (src != (D_8013FC38_14EBE8 + 9)) {
+		dst[0] = src[0];
+		dst[1] = src[1];
+		dst[2] = src[2];
+		src += 3;
+		dst += 3;
 	}
 
-	for (i = 0; i < 9; i += 3) {
-		localLowResults[i] = D_8013FC5C_14EC0C[i];
-		localLowResults[i + 1] = D_8013FC5C_14EC0C[i + 1];
-		localLowResults[i + 2] = D_8013FC5C_14EC0C[i + 2];
+	src = D_8013FC5C_14EC0C;
+	dst = localLowResults;
+	while (src != (D_8013FC5C_14EC0C + 9)) {
+		dst[0] = src[0];
+		dst[1] = src[1];
+		dst[2] = src[2];
+		src += 3;
+		dst += 3;
 	}
 
-	compareAngle = (arg0->unkE + 0x10000) % 0x10000;
+	compareAngle = (playerAngle + 0x10000) % 0x10000;
 	compareAngle = ((arg1 + 0x18000) % 0x10000) - compareAngle;
 	compareAngle = (compareAngle + 0x14000) % 0x10000;
 	angleDiff = localThresholds[0] - compareAngle;
@@ -1659,6 +1676,9 @@ s32 func_800ED55C_FC50C(UnkF9230Func800ED55CArg0 *arg0, s32 arg1) {
 				bestResult = localLowResults[i + 1];
 			}
 		}
+
+		i++;
+		i--;
 	}
 
 	return bestResult;
