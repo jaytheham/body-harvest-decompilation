@@ -9655,7 +9655,176 @@ void func_800DC18C_EB13C(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DC18C_EB13C.s")
 #endif
 
+// CURRENT(54017)
+#ifdef NON_MATCHING
+void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s32 arg2, s32 arg3) {
+	Vec3f viewDir;
+	Vec3f toTarget;
+	Vec3f pos;
+	Vec3f beamVec;
+	Vec3f beamDir;
+	f32 beamLen;
+	f32 facing;
+	f32 angleDelta;
+	f32 maxDist;
+	f64 absAngleDelta;
+	f32 phase;
+	f32 alphaF;
+	s32 alpha;
+	s32 flicker;
+	u8 col[3];
+	s32 i;
+	u8 strength;
+
+	(void)arg3;
+
+	D_80153BCD = 0x20;
+	D_80153BCE = 0x20;
+
+	viewDir.x = D_80153B90.x;
+	viewDir.y = D_80153B90.y;
+	viewDir.z = D_80153B90.z;
+	func_800C1024_CFFD4(&viewDir, &viewDir);
+
+	toTarget.x = (D_80153BA0.x * 4.0f) - arg0->x;
+	toTarget.y = (D_80153BA0.y * 4.0f) - arg0->y;
+	toTarget.z = (D_80153BA0.z * 4.0f) - arg0->z;
+	beamLen = func_800C0FD4_CFF84(&toTarget);
+	func_800C1024_CFFD4(&toTarget, &toTarget);
+
+	facing = func_800C1090_D0040(&toTarget, &viewDir);
+
+	if ((((f64)(f32)(s16)(0x4000 - func_80003680_4280(facing)) * D_80144BB0_153B60) / 32768.0) <= D_80144BB8_153B68) {
+		angleDelta = (f32)(D_80144BB8_153B68 - (((f64)(f32)(s16)(0x4000 - func_80003680_4280(facing)) * D_80144BC0_153B70) / 32768.0));
+	} else {
+		angleDelta = (f32)-(D_80144BB8_153B68 - (((f64)(f32)(s16)(0x4000 - func_80003680_4280(facing)) * D_80144BC8_153B78) / 32768.0));
+	}
+
+	absAngleDelta = (f64)angleDelta;
+	strength = 0xFF;
+	if (absAngleDelta < 2.5) {
+		strength = 0xFF;
+	} else if (absAngleDelta < 5.0) {
+		strength = (u8)((f64)(f32)(5.0 - absAngleDelta) * D_80144BD0_153B80);
+	}
+
+	alpha = strength;
+	if ((arg1 <= 150.0f) && (angleDelta < 15.0f)) {
+		alpha = 0xFF;
+	}
+
+	maxDist = D_80144BF0_153BA0;
+	if ((arg1 > 330.0f) && (arg1 <= (f32)D_80144BD8_153B88)) {
+		maxDist = (f32)D_80144BD8_153B88;
+		alphaF = (f32)alpha;
+		if (alpha < 0) {
+			alphaF += 4294967296.0f;
+		}
+		alpha = (u8)(s32)(alphaF * (f32)(D_80144BE0_153B90 * (f64)((f32)D_80144BE8_153B98 - arg1)));
+	} else if (maxDist < arg1) {
+		alpha = 0;
+	}
+
+	if ((s8)arg2 != -1) {
+		alpha = (u8)(((f32)alpha * (f32)(s8)arg2) / 100.0f);
+	}
+
+	if (D_8013E344_14D2F4 < (u8)alpha) {
+		D_8013E344_14D2F4 = alpha;
+	}
+	if (D_8013E344_14D2F4 >= 0xB5) {
+		D_8013E344_14D2F4 = 0xB4;
+	}
+
+	if ((angleDelta < 22.0f) && (absAngleDelta > 2.5) && (arg1 < maxDist)) {
+		func_800C1128_D00D8(2.0f * facing, &viewDir, &pos);
+		func_800C10C0_D0070(&toTarget, &pos, &toTarget);
+		func_800C1128_D00D8(beamLen, &toTarget, &beamVec);
+
+		pos.x = (D_80153BA0.x * 4.0f) + beamVec.x;
+		pos.y = (D_80153BA0.y * 4.0f) + beamVec.y;
+		pos.z = (D_80153BA0.z * 4.0f) + beamVec.z;
+
+		beamDir.x = arg0->x - pos.x;
+		beamDir.y = arg0->y - pos.y;
+		beamDir.z = arg0->z - pos.z;
+
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, D_100DA00);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+
+		if (absAngleDelta < 5.0) {
+			phase = (f32)(u16)((D_80144AF0_153AA0 - (f64)arg1) / 16.0);
+			flicker = (u16)(s32)(phase * ((f32)D_80144AF8_153AA8 * (f32)(0xFF - alpha)));
+		} else {
+			phase = (f32)(u16)((D_80144B00_153AB0 - (f64)arg1) / 16.0);
+			flicker = (u16)(s32)(phase / (angleDelta / 4.0f));
+		}
+
+		if (flicker >= 0x100) {
+			flicker = 0xFF;
+		}
+
+		phase = (f32)(u16)(arg1 / 20.0f);
+		for (i = 0; i < 6; i++) {
+			u32 scale = (u32)(D_8013DFB4_14CF64[i] * phase);
+			f32 d = D_8013DFCC_14CF7C[i];
+
+			col[0] = D_8013E330_14D2E0[(i * 3) + 0];
+			col[1] = D_8013E330_14D2E0[(i * 3) + 1];
+			col[2] = D_8013E330_14D2E0[(i * 3) + 2];
+
+			D_80153BB8.x = (f32)(arg0->x - (d * (beamDir.x / 4.0f)));
+			D_80153BB8.y = (f32)(arg0->y - (d * (beamDir.y / 4.0f)));
+			D_80153BB8.z = (f32)(arg0->z - (d * (beamDir.z / 4.0f)));
+			D_80153BC4 = col;
+			D_80153BC8 = (f32)(u16)scale;
+			D_80153BCC = flicker;
+			func_800DB350_EA300();
+		}
+
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, D_100DC00);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+
+		D_80153BB8.x = (f32)((f64)arg0->x + ((f64)(beamDir.x / 3.0f) * D_80144B08_153AB8));
+		D_80153BB8.y = (f32)((f64)arg0->y + ((f64)(beamDir.y / 3.0f) * D_80144B08_153AB8));
+		D_80153BB8.z = (f32)((f64)arg0->z + ((f64)(beamDir.z / 3.0f) * D_80144B08_153AB8));
+		D_80153BC4 = &D_80153B80;
+		D_80153BC8 = (f32)(u16)(phase * 1.0f);
+		D_80153BCC = flicker;
+		func_800DB350_EA300();
+
+		D_80153BB8.x = arg0->x + ((beamDir.x / 3.0f) * 2.0f);
+		D_80153BB8.y = arg0->y + ((beamDir.y / 3.0f) * 2.0f);
+		D_80153BB8.z = arg0->z + ((beamDir.z / 3.0f) * 2.0f);
+		D_80153BC8 = (f32)(u16)((f64)phase * 3.0);
+		func_800DB350_EA300();
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DC5B8_EB568.s")
+#endif
 
 void func_800DD5E0_EC590(void) { D_80156EDA = 0; func_800C978C_D873C(); }
 
