@@ -4567,7 +4567,203 @@ s16 func_801225C4_131574(Unk8015F760 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801225C4_131574.s")
 #endif
 
+// CURRENT(20678)
+#ifdef NON_MATCHING
+void func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s16 arg3, s16 arg4, f32 arg5, f32 arg6, f32 arg7) {
+	VehicleInstance *vehicle = (VehicleInstance *)arg0;
+	Unk8015F760 *entry;
+	s16 sp7A;
+	s16 sp78;
+	s16 sp76;
+	s16 sp74;
+	s16 sp70;
+	s16 sp6E;
+	s16 sp6C;
+	s16 sp5C;
+	u16 sp72;
+	u8 temp_v0;
+	s16 var_v0;
+	f32 absArg5;
+	f32 negArg7;
+
+	sp7A = vehicle->unk0 + arg2;
+	sp78 = vehicle->unk2 + arg3;
+	sp76 = vehicle->unk4 + arg4;
+
+	absArg5 = -arg5;
+	if (absArg5 < arg5) {
+		absArg5 = arg5;
+	}
+
+	if (absArg5 > 0.0f) {
+		sp74 = func_80003824_4424(arg5, arg7);
+	} else {
+		negArg7 = -arg7;
+		if (negArg7 < arg7) {
+			negArg7 = arg7;
+		}
+		if (negArg7 > 0.0f) {
+			sp74 = func_80003824_4424(arg5, arg7);
+		} else {
+			sp74 = 0;
+		}
+	}
+
+	if ((vehicle->unkC == -2) && (vehicleSpecs[vehicle->unk1A].pad50[0] != 0xFF)) {
+		sp72 = (u16)(vehicleSpecs[vehicle->unk1A].pad50[0] << 8);
+		negArg7 = sqrtf((arg5 * arg5) + (arg7 * arg7));
+		arg6 = (f32)((((f64)(f32)sins(sp72) / 32768.0) * (f64)negArg7) / ((f64)(f32)sins((0x4000 - (s16)sp72) & 0xFFFF) / 32768.0));
+	} else {
+		sp72 = (u16)func_80003824_4424(sqrtf((arg5 * arg5) + (arg7 * arg7)), arg6);
+	}
+
+	if (D_8015F9E4 >= 0x40) {
+		return;
+	}
+
+	entry = &D_8015EB90[D_8015F9E4++];
+	entry->unk0 = (f32)sp7A;
+	entry->unk4 = (f32)sp78;
+	entry->unk8 = (f32)sp76;
+
+	if (*(s16 *)((u8 *)arg1 + 0xE) != 0) {
+		if ((((s32)arg1->unk8 >> 8) & 8) != 0) {
+			*(f32 *)((u8 *)entry + 0xC) = 1.0f;
+		} else {
+			*(f32 *)((u8 *)entry + 0xC) = 0.0f;
+		}
+		*(s16 *)((u8 *)entry + 0x10) = sp74;
+		*(s16 *)((u8 *)entry + 0x12) = (s16)(s32)arg6;
+		entry->unk18 = 0.0f;
+		*(s16 *)((u8 *)entry + 0x14) = arg1->door2InteriorId;
+	} else {
+		if ((((s32)arg1->unk8 >> 8) & 0x2000) != 0) {
+			*(f32 *)((u8 *)entry + 0xC) = 1.0f;
+		} else {
+			*(f32 *)((u8 *)entry + 0xC) = 0.0f;
+		}
+
+		entry->unk10 = arg5;
+		entry->unk14 = arg6;
+		entry->unk18 = arg7;
+		*(s8 *)((u8 *)entry + 0x1D) = (s8)((s32)(0x4000 - (s16)sp72) >> 8);
+		*(s8 *)((u8 *)entry + 0x1C) = (s8)((s32)(0x4000 - sp74) >> 8);
+
+		if ((vehicle == D_80052B34) && (arg1->door2InteriorId < 0x32)) {
+			sp5C = coss(D_80052B34->unk10);
+			entry->unk10 = (f32)((f64)entry->unk10 + ((((f64)(f32)coss(D_80052B34->unkE) / 32768.0) * ((f64)(f32)sp5C / 32768.0) * (f64)D_80052B34->unk58) + (f64)D_80052B34->unk30));
+			entry->unk14 = (f32)((f64)entry->unk14 + ((((f64)(f32)sins(D_80052B34->unk10) / 32768.0) * (f64)D_80052B34->unk58) + (f64)D_80052B34->unk34));
+			sp5C = coss(D_80052B34->unk10);
+			entry->unk18 = (f32)((f64)entry->unk18 + ((((f64)(f32)sins(D_80052B34->unkE) / 32768.0) * ((f64)(f32)sp5C / 32768.0) * (f64)D_80052B34->unk58) + (f64)D_80052B34->unk38));
+		}
+	}
+
+	entry->unk20 = ((u8 *)arg1 - D_80145BE0_154B90) / 24;
+	entry->unk24 = (s32)vehicle;
+	entry->unk28 = (s16)((s32)arg1->xCoord / (s32)arg1->door2InteriorId);
+	if ((D_80145BE8_154B98[entry->unk20][0] >> 8) & 0x100) {
+		*(s16 *)((u8 *)entry + 0x2A) = func_801225C4_131574(entry);
+	}
+
+	*(u8 *)((u8 *)entry + 0x2E) = 0;
+	*(s16 *)((u8 *)entry + 0x2C) = 0;
+
+	if (((s32)arg1->unk8 >> 8) & 0x10000) {
+		if (entry->unk20 == 0xC) {
+			*(u8 *)((u8 *)entry + 0x2E) = (u8)func_800C21F0_D11A0((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 2);
+			func_800DEA08_ED9B8(sp7A, sp78, sp76, 0xF, 3, 1, 0x1E, 0xFF, 0xE1, 0xDC, 0xA0);
+		} else if ((entry->unk20 == 0x1D) || (entry->unk20 == 0x2A)) {
+			*(u8 *)((u8 *)entry + 0x2E) = (u8)func_800C21F0_D11A0((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 2);
+		} else if (entry->unk20 == 0x5B) {
+			*(u8 *)((u8 *)entry + 0x2E) = (u8)func_800C21F0_D11A0((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 1);
+		} else {
+			*(u8 *)((u8 *)entry + 0x2E) = (u8)func_800C21F0_D11A0((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 0);
+		}
+	} else if (((s32)arg1->unk8 >> 8) & 0x400000) {
+		if (entry->unk20 == 0x6D) {
+			var_v0 = func_800DA450_E9400((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 5);
+			*(s16 *)((u8 *)entry + 0x2C) = var_v0;
+		} else {
+			*(s16 *)((u8 *)entry + 0x2C) = func_800DA450_E9400((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 6);
+
+			if (entry->unk20 == 0x26) {
+				negArg7 = -arg7;
+
+				sp70 = (s16)(s32)(entry->unk0 - (arg5 * 0.5f));
+				sp6E = (s16)(s32)(entry->unk4 - (arg6 * 0.5f));
+				sp6C = (s16)(s32)(entry->unk8 - (arg7 * 0.5f));
+
+				func_800DEA08_ED9B8((s16)(s32)(arg5 * 0.5f), (s16)(s32)(arg6 * 0.5f), sp70, sp6E, sp6C, 0x32, 6, 2, 0x19, 0xFF, 0xE1);
+				func_800DE9B8_ED968(sp70, sp6E, sp6C, 0x64);
+				func_800C541C_D43CC(sp70, sp6E, sp6C, (s8)(s32)(absArg5 * 0.5f), -0x28, (s8)(s32)(negArg7 * 0.5f), 0x1E, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
+
+				sp70 = (s16)(s32)(entry->unk0 + (arg5 * 0.5f));
+				sp6E = (s16)(s32)(entry->unk4 + (arg6 * 0.5f));
+				sp6C = (s16)(s32)(entry->unk8 + (arg7 * 0.5f));
+
+				func_800DEA08_ED9B8(sp70, sp6E, sp6C, 0x32, 6, 2, 0x19, 0xFF, 0xE1, 0xDC, 0xA0);
+				func_800DE9B8_ED968(sp70, sp6E, sp6C, 0x64);
+
+				entry->unk0 = (f32)sp70;
+				entry->unk4 = (f32)sp6E;
+				entry->unk8 = (f32)sp6C;
+			} else if (entry->unk20 == 0x27) {
+				negArg7 = -arg7;
+				func_800DEA08_ED9B8((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 0x32, 6, 2, 0x19, 0xFF, 0xE1, 0xDC, 0xA0);
+				func_800C541C_D43CC((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, (s8)(s32)(absArg5 * 0.5f), 0, (s8)(s32)(negArg7 * 0.5f), 0x14, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
+				func_800DE9B8_ED968((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 0x64);
+			} else if (entry->unk20 == 0x28) {
+			}
+		}
+	} else if (((s32)arg1->unk8 >> 8) & 0x1000) {
+		temp_v0 = *((u8 *)arg1 + 0x16);
+		*(u8 *)((u8 *)entry + 0x2E) = func_800C2D50_D1D00((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, ((temp_v0 * 0xC) + 0x1E) & 0xFF, temp_v0, 0);
+	} else {
+		if (entry->unk20 == 0x5C) {
+			var_v0 = func_800D49CC_E397C((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8);
+			*(s16 *)((u8 *)entry + 0x2C) = var_v0;
+		} else if ((entry->unk20 == 0x5E) || (entry->unk20 == 0x6F)) {
+			var_v0 = func_800D5424_E43D4((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 0x78, 0xFA, 0xB4);
+			*(s16 *)((u8 *)entry + 0x2C) = var_v0;
+		} else if (entry->unk20 == 0x61) {
+			var_v0 = func_800D7624_E65D4((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8);
+			*(s16 *)((u8 *)entry + 0x2C) = var_v0;
+		} else if (entry->unk20 == 0x60) {
+			var_v0 = func_800D7EF8_E6EA8((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 0x46);
+			*(s16 *)((u8 *)entry + 0x2C) = var_v0;
+		} else if (entry->unk20 == 0x63) {
+			var_v0 = func_800D7EF8_E6EA8((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 0x8C);
+			*(s16 *)((u8 *)entry + 0x2C) = var_v0;
+		} else if (entry->unk20 == 0x5F) {
+			var_v0 = func_800DA6F0_E96A0((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 1);
+			*(s16 *)((u8 *)entry + 0x2C) = var_v0;
+		} else if (entry->unk20 == 0x68) {
+			var_v0 = func_800DA6F0_E96A0((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 3);
+			*(s16 *)((u8 *)entry + 0x2C) = var_v0;
+		} else if (entry->unk20 == 0x66) {
+			var_v0 = func_800DA6F0_E96A0((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 4);
+			*(s16 *)((u8 *)entry + 0x2C) = var_v0;
+		} else if (entry->unk20 == 0x6C) {
+			var_v0 = func_800DA260_E9210((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8);
+			*(s16 *)((u8 *)entry + 0x2C) = var_v0;
+		}
+	}
+
+	if (*(u8 *)((u8 *)entry + 0x2E) == 0xFB) {
+		osSyncPrintf(&D_80145020_153FD0, entry->unk20);
+		D_8015F9E4--;
+		return;
+	}
+
+	if (*(s16 *)((u8 *)entry + 0x2C) == -3) {
+		osSyncPrintf(&D_80145048_153FF8, entry->unk20);
+		D_8015F9E4--;
+		return;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801226F8_1316A8.s")
+#endif
 
 // CURRENT(1561)
 #ifdef NON_MATCHING

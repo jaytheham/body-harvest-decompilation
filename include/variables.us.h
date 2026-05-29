@@ -1775,6 +1775,8 @@ extern f64 D_80144AA8_153A58;
 extern f64 D_80144CD8_153C88;
 extern f64 D_80144D08_153CB8;
 extern f64 D_80144D10_153CC0;
+extern char D_80145020_153FD0[];
+extern char D_80145048_153FF8[];
 extern UnkF9230Func80102FA4Point D_80159420[];
 extern UnkF9230Func80102FA4Point D_801594E0[];
 extern VehicleInstance *D_80158E64;
