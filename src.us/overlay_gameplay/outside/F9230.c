@@ -2317,21 +2317,21 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F0340_FF2F0.s")
 #endif
 
-// CURRENT(21157)
+// CURRENT(24469)
 #ifdef NON_MATCHING
 s32 func_800F066C_FF61C(void) {
 	Unk84EECEffect *entry;
 	s16 *entryS16;
-	s16 s0;
-	s16 s1;
-	s16 a3;
+	s32 finished;
+	s32 s0;
+	s32 s1;
+	s32 a3;
 	s16 sp2C;
 	s16 sp2E;
 	s16 sp30;
 	s16 x;
 	s16 y;
 	s16 z;
-	s32 finished;
 
 	finished = 0;
 	entry = D_80157F4C;
@@ -2441,11 +2441,10 @@ s32 func_800F066C_FF61C(void) {
 			f32 sp24;
 			f32 sp3C;
 			f32 sinAngle;
-			f32 cosAngle;
 
 			sinAngle = sinf((f32)((D_80157FC8 * D_801445D8_153588) / D_801445E0_153590));
-			cosAngle = cosf((f32)((D_80157FC8 * D_801445E8_153598) / D_801445F0_1535A0));
-			sp3C = (cosAngle * (f32)D_80157FC4) + ((f32)D_80157FC0 * sinAngle);
+			sp3C = (cosf((f32)((D_80157FC8 * D_801445E8_153598) / D_801445F0_1535A0)) * (f32)D_80157FC4)
+				+ ((f32)D_80157FC0 * sinAngle);
 			sp24 = cosf((f32)((D_80157FC8 * D_801445F8_1535A8) / D_80144600_1535B0));
 			sinAngle = sinf((f32)((D_80157FC8 * D_80144608_1535B8) / D_80144610_1535C0));
 
