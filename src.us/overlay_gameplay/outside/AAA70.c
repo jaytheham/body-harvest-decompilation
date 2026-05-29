@@ -1213,7 +1213,460 @@ void func_8009FB58_AEB08(void) {
 #endif
 
 // displayScanner
+// CURRENT(22016)
+#ifdef NON_MATCHING
+void func_800A03FC_AF3AC(void) {
+	Unk80052B40 sp170;
+	Unk80052B40 sp168;
+	Unk80052B40 sp160;
+	s32 pad[66];
+	AlienInstance *alien;
+	VehicleInstance *vehicle;
+	s16 mapX;
+	s16 mapZ;
+	s16 tempA0;
+	s32 i;
+	s32 temp;
+	s32 idx;
+	s32 tempMatrixColor;
+	Gfx *dl;
+
+	sp168 = D_8013D744_14C6F4;
+	sp160 = D_8013D74C_14C6FC;
+	D_8013D754_14C704++;
+
+	temp = (D_8013D754_14C704 % 8) / 2;
+	sp170.unk0 = D_80068084 - 0x2C;
+	sp170.unk2 = 0x2C;
+	sp170.unk4 = -1;
+
+	if (D_80157590 != 3) {
+		if (gameplayMode == 0xA) {
+			func_8009C458_AB408();
+		} else if ((func_80017B78_18778() != 1) && (func_80018A58_19658() == 0) && (D_80052AC8 != 2) && (D_80052AD0 != 0)) {
+			func_8009C470_AB420();
+		}
+
+		D_8013D592_14C542 = (((temp * 8) + 0x19) << 8 & 0xF800) | ((((temp * 0x19) + 0x64) * 8) & 0x7C0) | (((temp * 2 + 0xA) >> 2) & 0x3E) | 1;
+		D_8013D596_14C546 = (((temp * 4) + 0xC) << 8 & 0xF800) | ((((temp * 0xC) + 0x32) * 8) & 0x7C0) | (((temp + 5) >> 2) & 0x3E) | 1;
+
+		i = 0xFF;
+		do {
+			((u32 *)D_8014EDE0)[i] = 0;
+		} while (i--);
+
+		i = 0;
+		while (i < 0xFF) {
+			alien = &alienInstances[i];
+
+			if ((alien->specIndex >= 3) || ((alien->specIndex == 1) && ((alien->unk24 == 1) || (alien->unk24 == 0xF) || (alien->unk24 == 0x10)))) {
+				mapX = ((alien->unk0 - D_80052B34->unk0) + 0x1000) >> 8;
+				mapZ = ((alien->unk4 - D_80052B34->unk4) + 0x1000) >> 8;
+
+				if (func_8009BC48_AABF8(mapX, mapZ, 1) != 0) {
+					if (alien->specIndex == 1) {
+						if (func_800038E0_44E0(alien->specIndex) < 0x64) {
+							func_800153D8_15FD8(0xF3);
+						}
+					} else {
+						func_80015BCC_167CC(alien->specIndex);
+					}
+				} else if (D_80052ACA == 2) {
+					func_80015BCC_167CC(alien->specIndex);
+				}
+
+				if (!(alien->unk20 & 0x100000) && (alien->specIndex != 1)) {
+					func_8009BCC0_AAC70(mapX, mapZ, 2);
+					func_8009BCC0_AAC70(mapX, mapZ - 1, 4);
+					func_8009BCC0_AAC70(mapX - 1, mapZ, 4);
+					func_8009BCC0_AAC70(mapX + 1, mapZ, 4);
+					func_8009BCC0_AAC70(mapX, mapZ + 1, 4);
+				}
+			}
+
+			i = (s16)(i + 1);
+		}
+
+		tempA0 = D_80158FD8;
+		i = 0;
+		while (i < tempA0) {
+			vehicle = &vehicleInstances[D_80158E80[i]];
+
+			if ((D_80052B34 != vehicle) && ((currentLevel != 1) || (vehicle->unk1A != 0x12))) {
+				mapX = ((vehicle->unk0 - D_80052B34->unk0) + 0x1000) >> 8;
+				mapZ = ((vehicle->unk4 - D_80052B34->unk4) + 0x1000) >> 8;
+
+				func_8009BCC0_AAC70(mapX, mapZ, 1);
+				func_8009BCC0_AAC70(mapX, mapZ + 1, 3);
+				func_8009BCC0_AAC70(mapX - 1, mapZ, 3);
+				func_8009BCC0_AAC70(mapX + 1, mapZ, 3);
+				func_8009BCC0_AAC70(mapX, mapZ + 1, 3);
+			}
+
+			i = (s16)(i + 1);
+		}
+
+		osWritebackDCacheAll();
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xB6000000;
+		dl->words.w1 = 0x00023001;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xBC00000E;
+		dl->words.w1 = 0x0000FFFF;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0x01030040;
+		dl->words.w1 = (u32)&D_8014ED98 & 0x1FFFFFFF;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xB900031D;
+		dl->words.w1 = 0x00504240;
+
+		tempMatrixColor = ((D_8014F1FA * -0x100) + 0x8000) >> 7;
+		D_80052B50.unk0 = tempMatrixColor;
+		D_80052B50.unk2 = tempMatrixColor;
+		D_80052B50.unk4 = tempMatrixColor;
+		func_800039D0_45D0(&sp170, NULL, &D_80052B50, D_8005BB38);
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0x01060040;
+		dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+		D_8005BB38 += 0x40;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xBA000E02;
+		dl->words.w1 = 0;
+
+		if (D_8014EDD8 == 0) {
+			sp160.unk2 = D_80052B2C->unk36 + 0x8000;
+			sp168.unk2 = D_80047950 + 0x8000;
+		} else {
+			sp160.unk2 = 0;
+			sp168.unk2 = 0;
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xB9000002;
+			dl->words.w1 = 3;
+		}
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xBB000001;
+		dl->words.w1 = 0x80008000;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFD700000;
+		dl->words.w1 = (u32)D_502E110 & 0x1FFFFFFF;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF5700000;
+		dl->words.w1 = 0x07000000;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE6000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF3000000;
+		dl->words.w1 = 0x071FF200;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF5680800;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF2000000;
+		dl->words.w1 = 0x0007C07C;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFC127E24;
+		dl->words.w1 = 0xFFFFF3F9;
+
+		func_800039D0_45D0(NULL, &sp168, NULL, D_8005BB38);
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0x01040040;
+		dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+		D_8005BB38 += 0x40;
+
+		idx = (u32)&D_8013D5E8_14C598 & 0x1FFFFFFF;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0x0400103F;
+		dl->words.w1 = idx;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xB1020004;
+		dl->words.w1 = 0x00020406;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xB9000002;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xB900031D;
+		dl->words.w1 = 0x00504240;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFD100000;
+		dl->words.w1 = (u32)&D_8013D590_14C540 & 0x1FFFFFFF;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE8000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF5000100;
+		dl->words.w1 = 0x07000000;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE6000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF0000000;
+		dl->words.w1 = 0x0703C000;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xBA000E02;
+		dl->words.w1 = 0x00008000;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFCFFFFFF;
+		dl->words.w1 = 0xFFFCF279;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFD500000;
+		dl->words.w1 = (u32)&D_8014EDE0 & 0x1FFFFFFF;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF5500000;
+		dl->words.w1 = 0x07000000;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE6000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF3000000;
+		dl->words.w1 = 0x070FF400;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF5400400;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF2000000;
+		dl->words.w1 = 0x0007C07C;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0x0400103F;
+		dl->words.w1 = idx;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xB1020004;
+		dl->words.w1 = 0x00020406;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xBD000000;
+		dl->words.w1 = 0;
+
+		tempMatrixColor = ((D_8014F1FA * -0x116) + 0x8B00) >> 7;
+		D_80052B50.unk0 = tempMatrixColor;
+		D_80052B50.unk2 = tempMatrixColor;
+		D_80052B50.unk4 = tempMatrixColor;
+		func_800039D0_45D0(&sp170, &sp168, &D_80052B50, D_8005BB38);
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0x01060040;
+		dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+		D_8005BB38 += 0x40;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xBA000E02;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xB900031D;
+		dl->words.w1 = 0x00504240;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFA000000;
+		dl->words.w1 = 0x602020FF;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFC119623;
+		dl->words.w1 = 0xFF2FFFFF;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xBB000001;
+		dl->words.w1 = 0xFFFFFFFF;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xBA000E02;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFD700000;
+		dl->words.w1 = (u32)D_503C8B0 & 0x1FFFFFFF;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF5700000;
+		dl->words.w1 = 0x07054150;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE6000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF3000000;
+		dl->words.w1 = 0x071FF200;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF5680800;
+		dl->words.w1 = 0x00054150;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF2000000;
+		dl->words.w1 = 0x0007C07C;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0x0400103F;
+		dl->words.w1 = (u32)&D_8013D628_14C5D8 & 0x1FFFFFFF;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xB1020004;
+		dl->words.w1 = 0x00020406;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xBB000001;
+		dl->words.w1 = 0x80008000;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xB7000000;
+		dl->words.w1 = 0x00000200;
+
+		func_8009D96C_AC91C();
+		func_8001A130_1AD30(0x4A - D_8014F1FA, D_80068088 - 0x50);
+
+		if ((isButtonNewlyPressed(0, 0x20) != 0) && (D_80052B34->unk1A != 0)) {
+			func_8001A068_1AC68();
+		}
+
+		D_80053BF8 = 0x7F;
+		D_80053BF0 = D_80053BF8;
+		D_80053BFA = 0xC8;
+		D_80053BF2 = D_80053BFA;
+		D_80053BFC = 0xDC;
+		D_80053BF4 = D_80053BFC;
+		D_80053BF6 = 0;
+		D_80053BFE = 0xFF;
+
+		if (func_80018AEC_196EC(0x1E, 0x1E, 0x64) != 0) {
+			func_8009C458_AB408();
+			if (func_80018AA0_196A0() != 0) {
+				D_80053BF8 = 0x7F;
+				D_80053BF0 = D_80053BF8;
+				D_80053BFA = 0xC8;
+				D_80053BF2 = D_80053BFA;
+				D_80053BFC = 0xDC;
+				D_80053BF4 = D_80053BFC;
+				D_80053BF6 = 0;
+				D_80053BFE = 0xFF;
+
+				dl = D_8005BB2C;
+				D_8005BB2C = dl + 1;
+				dl->words.w0 = 0xE7000000;
+				dl->words.w1 = 0;
+				func_80017CA4_188A4();
+			}
+		}
+
+		func_8013001C_13EFCC();
+		if (D_8014ED56 >= 0x21) {
+			func_8009F130_AE0E0();
+		} else {
+			D_8014ED54 = 0;
+		}
+
+		func_8001A828_1B428();
+		func_8013AF58_149F08();
+		func_8009FB58_AEB08();
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xBB000000;
+		dl->words.w1 = 0x80008000;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFCFFFFFF;
+		dl->words.w1 = 0xFFFE793C;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xBA000E02;
+		dl->words.w1 = 0;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A03FC_AF3AC.s")
+#endif
 
 void func_800A1364_B0314(void)
 {
