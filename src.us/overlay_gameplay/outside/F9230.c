@@ -1589,7 +1589,7 @@ s32 func_800ED55C_FC50C(UnkF9230Func800ED55CArg0 *arg0, s32 arg1) {
 	s32 bestDiff;
 	s32 bestResult;
 	s32 angleDiff;
-	s32 i;
+	s16 i;
 	s32 localThresholds[9];
 	s32 localHighResults[9];
 	s32 localLowResults[9];
@@ -2554,19 +2554,19 @@ void func_800F1004_FFFB4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F1004_FFFB4.s")
 #endif
 
-// CURRENT(35533)
+// CURRENT(29635)
 #ifdef NON_MATCHING
 void func_800F1134_1000E4(void) {
-	s16 p3X;
-	s16 p3Z;
+	s32 p3X;
+	s32 p3Z;
 	s16 minX;
 	s16 maxX;
 	s16 minZ;
 	s16 maxZ;
 	s16 y;
 	s16 ringY;
-	s16 timer;
-	s16 sfxVol;
+	s32 timer;
+	s32 sfxVol;
 	s16 i;
 	s16 angle;
 	s16 xOffset;
@@ -2612,11 +2612,8 @@ void func_800F1134_1000E4(void) {
 		p3Z = ringY;
 	}
 
-	if ((u16)D_80157F8C >= 10) {
-		return;
-	}
-
-	switch (D_80157F8C) {
+	if ((u16)D_80157F8C < 10) {
+		switch ((u16)D_80157F8C) {
 		case 0:
 			D_80157FA8 = 1;
 			D_801493E0 = 0;
@@ -2881,6 +2878,7 @@ void func_800F1134_1000E4(void) {
 			func_80007410_8010(func_800F1004_FFFB4);
 			func_800FAC90_109C40();
 			return;
+		}
 	}
 
 	return;
