@@ -19,7 +19,19 @@ import subprocess
 import sys
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
+from functools import lru_cache
 from pathlib import Path
+
+VENDOR_PYTHON_DIR = Path(__file__).resolve().parent / "third_party" / "python_vendor"
+if VENDOR_PYTHON_DIR.is_dir():
+    sys.path.insert(0, str(VENDOR_PYTHON_DIR))
+
+try:
+    from tree_sitter_languages import get_parser as ts_get_parser
+    _TREE_SITTER_IMPORT_ERROR = None
+except ImportError as exc:
+    ts_get_parser = None
+    _TREE_SITTER_IMPORT_ERROR = exc
 
 
 def parse_args():
@@ -80,131 +92,27 @@ def count_global_asm_stubs(text: str) -> int:
 
 
 def count_function_defs(text: str) -> int:
-    def strip_comments_and_literals(src: str) -> str:
-        out = []
-        i = 0
-        n = len(src)
-        while i < n:
-            c = src[i]
-            c2 = src[i + 1] if i + 1 < n else ""
+    parser = get_c_parser()
+    tree = parser.parse(text.encode("utf-8", errors="replace"))
 
-            if c == "/" and c2 == "/":
-                i += 2
-                while i < n and src[i] != "\n":
-                    i += 1
-                continue
-
-            if c == "/" and c2 == "*":
-                i += 2
-                while i < n:
-                    if src[i] == "\n":
-                        out.append("\n")
-                    if i + 1 < n and src[i] == "*" and src[i + 1] == "/":
-                        i += 2
-                        break
-                    i += 1
-                continue
-
-            if c == '"' or c == "'":
-                quote = c
-                out.append(" ")
-                i += 1
-                while i < n:
-                    if src[i] == "\\":
-                        i += 2
-                        continue
-                    if src[i] == quote:
-                        i += 1
-                        break
-                    if src[i] == "\n":
-                        out.append("\n")
-                    i += 1
-                continue
-
-            out.append(c)
-            i += 1
-
-        return "".join(out)
-
-    def is_function_decl(decl: str) -> bool:
-        norm = " ".join(decl.split())
-        if not norm or "=" in norm:
-            return False
-
-        lparen = norm.find("(")
-        rparen = norm.rfind(")")
-        if lparen < 0 or rparen < 0 or rparen < lparen:
-            return False
-
-        prefix = norm[:lparen].strip()
-        if not prefix:
-            return False
-
-        lower_prefix = prefix.lower()
-        if lower_prefix.startswith(("if ", "for ", "while ", "switch ", "return ", "else ", "do ", "typedef ")):
-            return False
-
-        i = len(prefix) - 1
-        while i >= 0 and (prefix[i].isalnum() or prefix[i] == "_"):
-            i -= 1
-        name = prefix[i + 1:]
-        if not name or not (name[0].isalpha() or name[0] == "_"):
-            return False
-
-        before_name = prefix[:i + 1].strip()
-        if not before_name:
-            return False
-
-        return True
-
-    cleaned = strip_comments_and_literals(text)
     count = 0
-    brace_depth = 0
-    paren_depth = 0
-    decl_parts = []
-
-    for line in cleaned.splitlines():
-        if brace_depth == 0 and line.lstrip().startswith("#"):
-            continue
-
-        for ch in line:
-            if brace_depth == 0:
-                if ch == "(":
-                    paren_depth += 1
-                    decl_parts.append(ch)
-                    continue
-
-                if ch == ")":
-                    paren_depth = max(0, paren_depth - 1)
-                    decl_parts.append(ch)
-                    continue
-
-                if ch == ";" and paren_depth == 0:
-                    decl_parts.clear()
-                    continue
-
-                if ch == "{" and paren_depth == 0:
-                    if is_function_decl("".join(decl_parts)):
-                        count += 1
-                    decl_parts.clear()
-                    brace_depth = 1
-                    continue
-
-                if ch == "}":
-                    decl_parts.clear()
-                    continue
-
-                decl_parts.append(ch)
-            else:
-                if ch == "{":
-                    brace_depth += 1
-                elif ch == "}":
-                    brace_depth = max(0, brace_depth - 1)
-
-        if brace_depth == 0 and decl_parts:
-            decl_parts.append(" ")
+    stack = [tree.root_node]
+    while stack:
+        node = stack.pop()
+        if node.type == "function_definition":
+            count += 1
+        stack.extend(reversed(node.named_children))
 
     return count
+
+
+@lru_cache(maxsize=1)
+def get_c_parser():
+    if ts_get_parser is None:
+        raise RuntimeError(
+            "tree-sitter parser dependency missing. Ensure vendored packages exist under third_party/python_vendor."
+        ) from _TREE_SITTER_IMPORT_ERROR
+    return ts_get_parser("c")
 
 
 def file_to_segment(rel_path: str) -> str:
