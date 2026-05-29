@@ -176,17 +176,18 @@ void func_80095BD4_A4B84(int arg0, unsigned char arg1, unsigned char arg2, unsig
 }
 
 // draws vehicle triangle icons on map
+/* CURRENT(3118) */
 #ifdef NON_MATCHING
-/* CURRENT(3203) */
 void func_80095D4C_A4CFC(s16 arg0, s16 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	s32 mapIndex;
-	u8 alpha;
+	u32 vtx0Addr;
+	s32 alpha;
 	UnkHudVtx *vtx0;
 	UnkHudVtx *vtx1;
 	UnkHudVtx *vtx2;
 
-	arg2 &= 0xFF;
 	arg3 &= 0xFF;
+	arg2 &= 0xFF;
 
 	if ((arg4 != arg2) || (arg3 != 0)) {
 		mapIndex = ((((arg1 >> 8) + 0x80) >> 2) << 6) + (((arg0 >> 8) + 0x80) >> 2);
@@ -215,6 +216,7 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	vtx1->unkA = 0;
 
 	vtx2 = (UnkHudVtx *)D_8005BB34;
+	vtx0Addr = (u32)vtx0 & 0x1FFFFFFF;
 	vtx2->unk0 = arg0;
 	D_8005BB34++;
 	vtx2->unk2 = arg1;
@@ -238,7 +240,7 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	vtx1->padF = alpha;
 	vtx0->padF = alpha;
 
-	gSPVertex(D_8005BB2C++, (Vtx *)((u32)vtx0 & 0x1FFFFFFF), 3, 0);
+	gSPVertex(D_8005BB2C++, (Vtx *)vtx0Addr, 3, 0);
 	gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 	gDPPipeSync(D_8005BB2C++);
 }
