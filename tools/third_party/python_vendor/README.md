@@ -9,5 +9,8 @@ This directory contains repo-local copies of Python packages required by `tools/
 
 Notes:
 
-- These binaries are platform and Python-version specific (currently copied from Windows x64, Python 3.12).
-- If you change Python version or platform, refresh this directory from a matching environment.
+- Vendored binaries currently cover:
+	- Windows x64, CPython 3.12 (`*.cp312-win_amd64.pyd` + `languages.dll`)
+	- Linux x64, CPython 3.10 (`*.cpython-310-x86_64-linux-gnu.so` + `languages.so`)
+	- Linux x64, CPython 3.12 (`*.cpython-312-x86_64-linux-gnu.so` + `languages.so`)
+- If you need additional platforms or Python ABIs, add matching compiled modules to this directory.

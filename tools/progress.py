@@ -110,7 +110,7 @@ def count_function_defs(text: str) -> int:
 def get_c_parser():
     if ts_get_parser is None:
         raise RuntimeError(
-            "tree-sitter parser dependency missing. Ensure vendored packages exist under third_party/python_vendor."
+            "tree-sitter parser dependency missing. Ensure vendored packages exist under tools/third_party/python_vendor."
         ) from _TREE_SITTER_IMPORT_ERROR
     return ts_get_parser("c")
 
