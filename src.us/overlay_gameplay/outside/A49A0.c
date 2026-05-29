@@ -985,31 +985,27 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 #endif
 
 // draw 3d adam on map
-// CURRENT(4676)
+// CURRENT(1872)
 #ifdef NON_MATCHING
 void func_80097994_A6944(void) {
-	s32 sp5C;
-	s32 sp60;
-	s32 sp64;
-	s32 tempA3;
-	s16 sp54;
-	s16 sp56;
-	s16 sp58;
-	s16 sp4C;
-	s16 sp4E;
-	s16 sp50;
 	Gfx *dl;
+	s32 sp5C;
+	volatile s32 sp60;
+	volatile s32 sp64;
+	Unk80052B40 sp54;
+	Unk80052B40 sp4C;
+	s32 tempA3;
 
 	func_8000C790_D390(&D_80157600, (s16 *)D_8013D1B0_14C160, 0x10);
 
 	sp5C = 0;
 	sp64 = 0;
-	sp54 = D_80157600.unk2 << 3;
-	sp56 = D_80157600.unk4 << 3;
-	sp58 = D_80157600.unk0 << 3;
+	sp54.unk0 = D_80157600.unk2 << 3;
+	sp54.unk2 = D_80157600.unk4 << 3;
+	sp54.unk4 = D_80157600.unk0 << 3;
 	sp60 = (s32)(D_80157600.unkC * 65536.0f);
 
-	func_8000C81C_D41C(&sp5C, &sp54, NULL, D_8005BB38);
+	func_8000C81C_D41C(&sp5C, &sp54.unk0, NULL, D_8005BB38);
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
@@ -1030,13 +1026,13 @@ void func_80097994_A6944(void) {
 
 	func_8000CC3C_D83C(&D_80157600, 0x10);
 
-	sp4C = 0x100;
-	sp4E = 0x100;
-	sp50 = 0x100;
+	sp4C.unk0 = 0x100;
+	sp4C.unk2 = 0x100;
+	sp4C.unk4 = 0x100;
 	tempA3 = D_8005BB38;
 	D_8005BB38 = tempA3 + 0x40;
 
-	func_800039D0_45D0(NULL, NULL, (Unk80052B40 *)&sp4C, tempA3);
+	func_800039D0_45D0(NULL, NULL, &sp4C, tempA3);
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
