@@ -1409,13 +1409,11 @@ void func_800EBD9C_FAD4C(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-// CURRENT(5575)
+// CURRENT(4219)
 #ifdef NON_MATCHING
 void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	VehicleInstance *vehicle;
-	VehicleSpec *spec;
-	register f64 temp_f20;
-	register f64 temp_f22;
+	f64 temp_f20;
 	s16 xOff;
 	s16 yOff;
 	s16 zOff;
@@ -1427,27 +1425,25 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 
 	D_80048188 = 1;
 	D_8004818C = 1;
+	temp_f20 = D_80144468_153418;
 
 	vehicle = &vehicleInstances[arg1];
-	spec = &vehicleSpecs[vehicle->unk1A];
-	temp_f20 = D_80144468_153418;
-	temp_f22 = 32768.0;
 
 	D_801575E0.unk0 = 0;
 	D_801575E0.unk4 = 0;
 
-	xOff = (s8)spec->unk5E;
-	yOff = (s8)spec->unk5F;
-	zOff = (s8)spec->unk60;
+	xOff = (s8)vehicleSpecs[vehicle->unk1A].unk5E;
+	yOff = (s8)vehicleSpecs[vehicle->unk1A].unk5F;
+	zOff = (s8)vehicleSpecs[vehicle->unk1A].unk60;
 
-	temp_f0 = cosf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / temp_f22));
+	temp_f0 = cosf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / 32768.0));
 
 	xOffF = (f32) xOff;
 	zOffF = (f32) zOff;
-	x = vehicle->unk0 + (s16) (s32) ((xOffF * temp_f0) - (sinf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / temp_f22)) * zOffF));
+	x = vehicle->unk0 + (s16) (s32) ((xOffF * temp_f0) - (sinf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / 32768.0)) * zOffF));
 
-	temp_f0 = sinf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / temp_f22));
-	z = vehicle->unk4 + (s16) (s32) ((cosf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / temp_f22)) * zOffF) + (xOffF * temp_f0));
+	temp_f0 = sinf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / 32768.0));
+	z = vehicle->unk4 + (s16) (s32) ((cosf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / 32768.0)) * zOffF) + (xOffF * temp_f0));
 
 	D_801575E0.unk6 = x;
 	D_801575E0.unkA = vehicle->unk2 + yOff;
