@@ -1544,16 +1544,19 @@ void func_80073200_15B2C0(void) {
 	if ((D_800E65D8 != 0) && !(D_800E65A8 & 8) && !(D_800E65A8 & 0x10)) {
 		D_800E65D8 = 0;
 		if (currentLevel == LEVEL_GREECE) {
+			// Fire station
 			if ((D_800E6630 == 3) && (func_8000726C_7E6C((u64)9) != 0) && (buildingInteriorToLoadId == 6)) {
 				buildingInteriorToLoadId = 0xFD;
-				D_800E65A8 |= 0x100;
+				D_800E65A8 |= 0x100; // This value makes you exit the building immediately?
 				return;
 			}
+			// Airfield hanger
 			if ((D_800E6630 == 0xB) && (func_8000726C_7E6C((u64)0xF) != 0) && (buildingInteriorToLoadId == 0x33)) {
 				buildingInteriorToLoadId = 0xFC;
 				D_800E65A8 |= 0x100;
 				return;
 			}
+			// Boatshed
 			if ((D_800E6630 == 0xA) && (func_8000726C_7E6C((u64)0x11) != 0) && (buildingInteriorToLoadId == 0x51)) {
 				buildingInteriorToLoadId = 0xFB;
 				D_800E65A8 |= 0x100;
