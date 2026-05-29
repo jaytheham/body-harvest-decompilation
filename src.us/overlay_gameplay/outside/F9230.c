@@ -9940,7 +9940,59 @@ void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 
 // The button press check is Z to shoot the gun.
 // Skiiping this call stops adam responding to input
+#ifdef NON_MATCHING
+// CURRENT(198379)
+void func_801052E8_114298(Unk80052B2C *arg0, OSContPad *arg1) {
+	VehicleInstance *vehicle;
+	VehicleSpec *spec;
+	s32 specMode;
+	u16 buttons;
+
+	vehicle = arg0->unk38;
+	spec = &vehicleSpecs[vehicle->unk1A];
+	specMode = (s32) spec->unk4C;
+	buttons = arg1->button;
+
+	if ((D_801591AC == 0) && (D_8015930E == 0) && (D_801493E2 != 0)) {
+		D_80158E58 = 0.0f;
+		D_80158E5C = 0.0f;
+
+		if ((specMode < 0) && ((vehicle->unk20 & 2) == 0) && ((buttons & 0x8000) != 0) && ((D_80159320 << 13) >= 0)) {
+			vehicle->unk20 |= 2;
+			vehicle->unk2E++;
+			func_800FB3E8_10A398(vehicle, 1.0f);
+		}
+	}
+
+	if (specMode == 0) {
+		if ((vehicle->unk1A == 5) && ((buttons & 0x2000) != 0)) {
+			D_801409F4_14F9A4 = 0;
+			D_8015927C = 1;
+		}
+	} else if ((specMode == 2) || (specMode == 3) || (specMode == 4)) {
+		return;
+	}
+
+	if ((vehicle->unk1A == 0xD) && (D_80050AD4 == 0) && ((buttons & 0x2000) != 0)) {
+		D_801591AC = 2;
+		D_80159316 = D_80149440;
+		return;
+	}
+
+	if ((vehicle->unk1A == 0xE) && ((buttons & 0x2000) != 0)) {
+		if (vehicle->unk1E == 0) {
+			vehicle->unk1E = 0x14;
+		}
+		return;
+	}
+
+	if ((currentLevel == 1) && (vehicle->unk1A == 8) && (D_80159260 == 0) && (D_80050AD4 == 0)) {
+		D_801591AC = 2;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_801052E8_114298.s")
+#endif
 
 // CURRENT(17202)
 #ifdef NON_MATCHING

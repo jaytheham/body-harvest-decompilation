@@ -810,7 +810,7 @@ void func_800FC7E0_10B790(s8, s8, s16 *, s16 *);
 void func_800FCA5C_10BA0C(void);
 void func_800FD410_10C3C0(VehicleSpec*);
 void func_800FD510_10C4C0(s32 arg0, s16 arg1);
-void func_801052E8_114298(void *, OSContPad *);
+void func_801052E8_114298(Unk80052B2C *, OSContPad *);
 void func_8010065C_10F60C(s32 arg0);
 void func_80101C14_110BC4(void);
 void func_80118774_127724(s32 arg0);
