@@ -497,6 +497,9 @@ extern u32 D_800510C8;
 extern BuildingInstance buildingInstances[0xFF];
 extern u32 buildingInteriorToLoadId;
 extern Unk800522C0 D_800522C0[0x20];
+extern char D_80141C4C_150BFC[];
+extern f32 D_80141E18_150DC8;
+extern f32 D_80141E1C_150DCC;
 extern s32 D_8015EB7C;
 extern s8 D_8015EB86;
 extern s8 D_8015EB87;
@@ -1919,6 +1922,8 @@ extern u8 D_503C8B0[];
 extern u8 D_503CF60[];
 extern u8 D_5040A80[];
 extern u8 D_5041480[];
+extern u8 D_5041680[];
+extern u8 D_5041880[];
 extern u32 D_80256750;
 
 extern f32 D_8014F1E4;
