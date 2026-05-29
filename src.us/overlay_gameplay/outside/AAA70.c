@@ -317,7 +317,327 @@ void func_8009C4F8_AB4A8(s32 arg0, s32 arg1) {
 // sp1c Alters color of the bar - used to make it flash
 // sp20 Length of the bar background
 // drawHudBarWithIcon
+#ifdef NON_MATCHING
+// CURRENT(32816)
+void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, s32 arg7, s16 arg8) {
+	UnkHudVtx *vtx0;
+	UnkHudVtx *vtx1;
+	UnkHudVtx *vtx2;
+	UnkHudVtx *vtx3;
+	UnkHudVtx *iconVtx0;
+	UnkHudVtx *iconVtx1;
+	UnkHudVtx *iconVtx2;
+	UnkHudVtx *iconVtx3;
+	s32 tempT2;
+	s32 iconSwap;
+
+	vtx0 = (UnkHudVtx *)D_8005BB34;
+	D_8005BB34 = D_8005BB34 + 1;
+	vtx1 = (UnkHudVtx *)D_8005BB34;
+	D_8005BB34 = D_8005BB34 + 1;
+	vtx2 = (UnkHudVtx *)D_8005BB34;
+	D_8005BB34 = D_8005BB34 + 1;
+	vtx3 = (UnkHudVtx *)D_8005BB34;
+	D_8005BB34 = D_8005BB34 + 1;
+
+	iconSwap = 0;
+
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x3C, 0x50, 0x78, 0xC8);
+
+	if ((arg5 == 2) && (arg8 >= 0x6F)) {
+		arg8 = 0x6E;
+	}
+
+	if (func_80004498_5098(arg2) == 0) {
+		arg2 = 0.0f;
+	}
+
+	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	gDPPipeSync(D_8005BB2C++);
+
+	if (arg3 != 0) {
+		tempT2 = D_8014F1F4;
+	} else {
+		tempT2 = D_8014F1FA;
+	}
+
+	D_80052B40.unk0 = 0;
+	if (arg5 == 2) {
+		D_80052B40.unk2 = 0;
+	} else {
+		D_80052B40.unk2 = arg1 + tempT2;
+	}
+	D_80052B40.unk4 = 0;
+	D_80052B50.unk0 = 0x100;
+	D_80052B50.unk2 = 0x100;
+	D_80052B50.unk4 = 0;
+
+	func_800039D0_45D0(&D_80052B40, 0, &D_80052B50, D_8005BB38);
+
+	gSPMatrix(D_8005BB2C++, (u32)D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	D_8005BB38 += 0x40;
+
+	if (arg3 != 0) {
+		arg0 = arg0 - 7;
+		func_800092B8_9EB8(((arg0 - arg8) - 6) * 4, ((arg1 + tempT2) - 8) * 4, (arg0 + 9) * 4,
+			((arg1 + tempT2) + 6) * 4, 3);
+	} else {
+		arg0 = arg0 + 7;
+		if (arg5 == 2) {
+			func_800092B8_9EB8((arg0 - 0x11) * 4, ((arg1 - arg8) - 0xE) * 4, (arg0 - 2) * 4, (arg1 - 5) * 4, 3);
+		} else {
+			func_800092B8_9EB8(((arg0 - arg8) - 0xE) * 4, ((arg1 + tempT2) - 8) * 4, (arg0 + 5) * 4,
+				((arg1 + tempT2) + 6) * 4, 3);
+		}
+	}
+
+	if (arg5 != 0) {
+		vtx0 = (UnkHudVtx *)D_8005BB34;
+		D_8005BB34 = D_8005BB34 + 1;
+		vtx1 = (UnkHudVtx *)D_8005BB34;
+		D_8005BB34 = D_8005BB34 + 1;
+		vtx2 = (UnkHudVtx *)D_8005BB34;
+		D_8005BB34 = D_8005BB34 + 1;
+		vtx3 = (UnkHudVtx *)D_8005BB34;
+		D_8005BB34 = D_8005BB34 + 1;
+
+		if (arg5 == 2) {
+			vtx0->unk0 = arg0 - 0xD;
+			vtx3->unk0 = arg0 - 0xD;
+			vtx1->unk0 = arg0 - 5;
+			vtx2->unk0 = arg0 - 5;
+
+			vtx1->unk2 = arg1 - 0xA;
+			vtx0->unk2 = arg1 - 0xA;
+			vtx2->unk2 = (s16)(((f32)(arg1 - 9) - ((f32)arg8 * arg2)) - 1.0f);
+			vtx3->unk2 = vtx2->unk2;
+
+			vtx2->unk4 = -1;
+			vtx3->unk4 = vtx2->unk4;
+			vtx1->unk4 = vtx2->unk4;
+			vtx0->unk4 = vtx2->unk4;
+
+			vtx1->unkC = 0xFF;
+			vtx0->unkC = 0xFF;
+			vtx1->unkD = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
+			vtx0->unkD = vtx1->unkD;
+			vtx1->unkE = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
+			vtx0->unkE = vtx1->unkE;
+
+			vtx2->unkC = 0xFF;
+			vtx3->unkC = 0xFF;
+			vtx2->unkD = (u32)((((f64)arg2 * D_801426D8_151688) + (f64)(arg7 << 5)) > D_801426D0_151680 ? D_801426D0_151680 : (((f64)arg2 * D_801426D8_151688) + (f64)(arg7 << 5)));
+			vtx3->unkD = vtx2->unkD;
+			vtx2->unkE = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
+			vtx3->unkE = vtx2->unkE;
+
+			vtx3->unk8 = 0;
+			vtx2->unk8 = vtx3->unk8;
+			vtx2->unkA = vtx3->unk8;
+			vtx1->unkA = vtx3->unk8;
+			vtx1->unk8 = (s16)((f32)(arg8 * D_80047710 * 0x10) * arg2);
+			vtx0->unk8 = vtx1->unk8;
+			vtx3->unkA = 0x400;
+			vtx0->unkA = vtx3->unkA;
+		} else {
+			if (arg3 != 0) {
+				vtx0->unk0 = arg0 - 1;
+				vtx3->unk0 = arg0 - 1;
+				vtx1->unk0 = (s16)(((f32)arg0 - ((f32)arg8 * arg2)) - 1.0f);
+			} else {
+				vtx0->unk0 = arg0 - 0x2F;
+				vtx3->unk0 = arg0 - 0x2F;
+				vtx1->unk0 = (s16)((f32)(arg0 - 0x30) + ((f32)arg8 * arg2) + 1.0f);
+			}
+			vtx2->unk0 = vtx1->unk0;
+
+			vtx1->unk2 = 3;
+			vtx0->unk2 = vtx1->unk2;
+			vtx2->unk2 = -4;
+			vtx3->unk2 = vtx2->unk2;
+
+			vtx2->unk4 = -1;
+			vtx3->unk4 = vtx2->unk4;
+			vtx1->unk4 = vtx2->unk4;
+			vtx0->unk4 = vtx2->unk4;
+
+			if (arg5 == 3) {
+				vtx1->unkC = 0xFF;
+				vtx2->unkC = 0xFF;
+				vtx3->unkC = 0xFF;
+				vtx0->unkC = 0xFF;
+
+				if (D_8013D5DC_14C58C != 0) {
+					vtx1->unkD = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
+					vtx2->unkD = vtx1->unkD;
+					vtx3->unkD = vtx1->unkD;
+					vtx0->unkD = vtx1->unkD;
+				} else {
+					vtx1->unkD = (u32)((((f64)(1.0f - arg2) * D_801426E8_151698) + (f64)(arg7 << 5)) > D_801426E0_151690 ? D_801426E0_151690 : (((f64)(1.0f - arg2) * D_801426E8_151698) + (f64)(arg7 << 5)));
+					vtx2->unkD = vtx1->unkD;
+					vtx3->unkD = vtx1->unkD;
+					vtx0->unkD = vtx1->unkD;
+				}
+
+				vtx1->unkE = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
+				vtx2->unkE = vtx1->unkE;
+				vtx3->unkE = vtx1->unkE;
+				vtx0->unkE = vtx1->unkE;
+			} else if (arg5 == 4) {
+				vtx3->unkC = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
+				vtx0->unkC = vtx3->unkC;
+				vtx3->unkD = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
+				vtx0->unkD = vtx3->unkD;
+				vtx3->unkE = 0xFF;
+				vtx0->unkE = 0xFF;
+
+				vtx1->unkC = (u32)((((f64)arg2 * D_801426F8_1516A8) + (f64)(arg7 << 5)) > D_801426F0_1516A0 ? D_801426F0_1516A0 : (((f64)arg2 * D_801426F8_1516A8) + (f64)(arg7 << 5)));
+				vtx2->unkC = vtx1->unkC;
+				vtx1->unkD = (u32)((((f64)arg2 * D_801426F8_1516A8) + (f64)(arg7 << 5)) > D_801426F0_1516A0 ? D_801426F0_1516A0 : (((f64)arg2 * D_801426F8_1516A8) + (f64)(arg7 << 5)));
+				vtx2->unkD = vtx1->unkD;
+				vtx1->unkE = 0xFF;
+				vtx2->unkE = 0xFF;
+			} else {
+				vtx3->unkC = 0xFF;
+				vtx0->unkC = 0xFF;
+				vtx3->unkD = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
+				vtx0->unkD = vtx3->unkD;
+				vtx3->unkE = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
+				vtx0->unkE = vtx3->unkE;
+
+				vtx1->unkC = 0xFF;
+				vtx2->unkC = 0xFF;
+				vtx1->unkD = (u32)((((f64)arg2 * D_80142708_1516B8) + (f64)(arg7 << 5)) > D_80142700_1516B0 ? D_80142700_1516B0 : (((f64)arg2 * D_80142708_1516B8) + (f64)(arg7 << 5)));
+				vtx2->unkD = vtx1->unkD;
+				vtx1->unkE = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
+				vtx2->unkE = vtx1->unkE;
+			}
+
+			vtx1->unkA = 0;
+			vtx3->unk8 = vtx1->unkA;
+			vtx0->unk8 = vtx1->unkA;
+			vtx0->unkA = vtx1->unkA;
+			vtx2->unkA = 0x400;
+			vtx3->unkA = vtx2->unkA;
+			vtx1->unk8 = (s16)((f64)arg8 * 128.0 * (f64)arg2);
+			vtx2->unk8 = vtx1->unk8;
+		}
+
+		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, D_8013D540_14C4F0);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 31, 2048);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 1, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 3, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (7 << G_TEXTURE_IMAGE_FRAC), (7 << G_TEXTURE_IMAGE_FRAC));
+		gDPSetTextureFilter(D_8005BB2C++, G_TF_POINT);
+		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADEDECALA, G_CC_SHADEDECALA);
+		gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK);
+		gSPVertex(D_8005BB2C++, ((u32)(D_8005BB34 - 4)) & 0x1FFFFFFF, 4, 0);
+		gDPPipeSync(D_8005BB2C++);
+		gSP1Quadrangle(D_8005BB2C++, 0, 1, 2, 3, 0);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+	}
+
+	if (arg4 != NULL) {
+		iconVtx0 = (UnkHudVtx *)D_8005BB34;
+		D_8005BB34 = D_8005BB34 + 1;
+		iconVtx1 = (UnkHudVtx *)D_8005BB34;
+		D_8005BB34 = D_8005BB34 + 1;
+		iconVtx2 = (UnkHudVtx *)D_8005BB34;
+		D_8005BB34 = D_8005BB34 + 1;
+		iconVtx3 = (UnkHudVtx *)D_8005BB34;
+		D_8005BB34 = D_8005BB34 + 1;
+
+		if (arg5 == 2) {
+			iconVtx0->unk0 = arg0 - 0x12;
+			iconVtx2->unk0 = arg0 - 0x12;
+			iconVtx1->unk0 = arg0;
+			iconVtx3->unk0 = arg0;
+
+			iconVtx3->unk2 = arg1 + 9;
+			iconVtx2->unk2 = arg1 + 9;
+			iconVtx1->unk2 = arg1 - 9;
+			iconVtx0->unk2 = arg1 - 9;
+		} else {
+			iconVtx0->unk0 = arg0 - (arg3 != 0 ? 0 : 0x30);
+			iconVtx2->unk0 = iconVtx0->unk0;
+			iconVtx1->unk0 = arg0 - (arg3 != 0 ? -0x12 : 0x42);
+			iconVtx3->unk0 = iconVtx1->unk0;
+
+			iconVtx3->unk2 = 9;
+			iconVtx2->unk2 = iconVtx3->unk2;
+			iconVtx1->unk2 = -9;
+			iconVtx0->unk2 = iconVtx1->unk2;
+		}
+
+		iconVtx1->unk4 = -1;
+		iconVtx0->unk4 = iconVtx1->unk4;
+		iconVtx3->unk4 = iconVtx1->unk4;
+		iconVtx2->unk4 = iconVtx1->unk4;
+
+		iconVtx0->unk8 = (arg6 * 0x30) + 0x600;
+		iconVtx2->unk8 = iconVtx0->unk8;
+		iconVtx3->unkA = iconVtx0->unk8;
+		iconVtx2->unkA = iconVtx0->unk8;
+		iconVtx1->unk8 = -arg6 * 0x30;
+		iconVtx3->unk8 = iconVtx1->unk8;
+		iconVtx1->unkA = iconVtx1->unk8;
+		iconVtx0->unkA = iconVtx1->unk8;
+
+		iconVtx1->unkC = 0xB9;
+		iconVtx0->unkC = 0xB9;
+		iconVtx3->unkC = 0xB9;
+		iconVtx2->unkC = 0xB9;
+		iconVtx1->unkD = 0xFF;
+		iconVtx0->unkD = 0xFF;
+		iconVtx3->unkD = 0xFF;
+		iconVtx2->unkD = 0xFF;
+		iconVtx1->unkE = 0xFF;
+		iconVtx0->unkE = 0xFF;
+		iconVtx3->unkE = 0xFF;
+		iconVtx2->unkE = 0xFF;
+
+		if ((arg5 == 2) && (arg4 == &D_8025CCC0[0x1F80]) && (D_80158FEC != NULL) && (*(u16 *)((u8 *)D_80158FEC + 0x1A) == 1)) {
+			arg4 = &D_8025F780;
+			D_8013D5E0_14C590 = (s32)&D_8025F780;
+			iconSwap = 1;
+		}
+
+		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+		gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+		gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, arg4);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 287, 683);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 3, 0, G_TX_RENDERTILE, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (23 << G_TEXTURE_IMAGE_FRAC), (23 << G_TEXTURE_IMAGE_FRAC));
+		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIDECALA, G_CC_MODULATEIDECALA);
+		gSPVertex(D_8005BB2C++, ((u32)(D_8005BB34 - 4)) & 0x1FFFFFFF, 4, 0);
+		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 3, 1, 2, 0);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+	}
+
+	if (iconSwap != 0) {
+		iconSwap = 1;
+	}
+
+	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009C6CC_AB67C.s")
+#endif
 
 void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 	f32 temp_f0;
