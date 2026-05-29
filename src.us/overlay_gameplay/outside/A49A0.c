@@ -544,9 +544,6 @@ void func_800966EC_A569C(s16 *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
 	dl->words.w1 = 0;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097444_A63F4.s")
-#endif
-#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800966EC_A569C.s")
 #endif
 
@@ -983,6 +980,9 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 
 	gDPPipeSync(D_8005BB2C++);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097444_A63F4.s")
+#endif
 
 // draw 3d adam on map
 // CURRENT(4676)
