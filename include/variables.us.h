@@ -3743,6 +3743,8 @@ extern s32 D_80159D6C;
 extern s32 D_80159D70;
 extern Unk8010ED84Pos *D_80159D60;
 extern Unk8010ED84Data *D_80159D68;
+extern char D_801450DC_15408C;
+extern u8 D_80147090_156040[];
 extern char D_80141EB0_150E60;
 extern u8 D_80052A7C[];
 extern u8 D_800522A8[];
