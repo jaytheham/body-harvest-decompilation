@@ -567,7 +567,7 @@ void *func_800EA3E8_F9398(s16 arg0) {
 }
 
 // guess_initAnimations
-// CURRENT(1655)
+// CURRENT(1205)
 #ifdef NON_MATCHING
 void func_800EA434_F93E4(void) {
 	f32 temp_zero;
@@ -581,9 +581,9 @@ void func_800EA434_F93E4(void) {
 	temp_zero = 0.0f;
 	D_80157600.unk40C = 0x27;
 	func_800EB534_FA4E4(&D_80157600, 0x23, 7, temp_zero);
-	D_80157600.unk8 = temp_zero;
-	D_80157600.unk10 = temp_zero;
 	D_80157600.unkC = 145.0f;
+	D_80157600.unk10 = temp_zero;
+	D_80157600.unk8 = temp_zero;
 	D_801575D0 = 0;
 	D_80157A28 = 1;
 	D_801575DC = (s32) D_80047948;
@@ -594,10 +594,10 @@ void func_800EA434_F93E4(void) {
 	D_80157A48.unk410 = 1.0f;
 	func_8000C790_D390(&D_80157A48, &D_8003BAE0, 0x10);
 	D_80157E70 = 0;
+	D_80157A48.unkC = 145.0f;
 	D_80157A48.unk8 = temp_zero;
 	D_80157A48.unk10 = temp_zero;
 	D_80157A48.unk40C = 0x27;
-	D_80157A48.unkC = 145.0f;
 	func_800EB534_FA4E4(&D_80157A48, 0x23, 7, temp_zero);
 	D_801575E0.unk0 = 0;
 	D_801575E0.unk2 = 0;
@@ -624,10 +624,11 @@ void func_800EA5B8_F9568(void) {
 	D_80048188 = 0;
 }
 
-// CURRENT(4121)
+// CURRENT(3950)
 #ifdef NON_MATCHING
 f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1) {
 	f32 diffX;
+	s32 pad0;
 	f32 diffY;
 	f32 diffZ;
 	f32 result;
@@ -663,7 +664,9 @@ f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1) {
 	angle = func_80003824_4424(sqrtf((diffX * diffX) + (diffZ * diffZ)), (diffY >= 0.0f) ? diffY : -diffY);
 
 	if (diffY < 0.0f) {
-		result = (f32)((((f64)(f32) (angle & 0xFFFF) * D_801443D0_153380) / 32768.0 / 40.0 * 0.5) + 0.5);
+		absDiffY = (f32)(((f64)(f32) (angle & 0xFFFF) * D_801443D0_153380) / 32768.0);
+		absDiffY = (f32)((f64) absDiffY / 40.0);
+		result = (f32)(((f64) absDiffY * 0.5) + 0.5);
 	} else {
 		result = (f32)(0.5 - ((((f64)(f32) (angle & 0xFFFF) * D_801443D8_153388) / 32768.0 / 40.0) * 0.5));
 	}
@@ -723,10 +726,9 @@ s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA7DC_F978C.s")
 #endif
 
-// CURRENT(3630)
+// CURRENT(2310)
 #ifdef NON_MATCHING
 void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
-	s16 temp_diff;
 	s32 abs_diff;
 	s32 v1;
 	s32 level;
@@ -739,102 +741,107 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	D_8015757C = 0;
 
 	// Load current angle and calculate difference
-	temp_diff = arg0->unkE - arg1;
-	v1 = temp_diff;
+	v1 = (s16)(arg0->unkE - arg1);
 
 	// Calculate absolute value
-	abs_diff = v1;
-	if (v1 < 0) {
+	if (v1 >= 0) {
+		abs_diff = v1;
+	} else {
 		abs_diff = -v1;
 	}
 
 	// Check if difference is too large
 	if (abs_diff >= 0xA001) {
 		D_8015757C = 1;
-		temp_diff = arg0->unkE - arg1;
-		v1 = temp_diff;
+		v1 = (s16)(arg0->unkE - arg1);
 	}
 
 	// First condition: v1 < -0x4000
 	if (v1 < -0x4000) {
 		level = D_80157A0C;
-		if (level != 0xE && !(D_80157A28 & 4)) {
-			// Calculate offset into state array
+		if (level != 0xE) {
+			if (!(D_80157A28 & 4)) {
+				// Calculate offset into state array
 			offset = level * 0x34;
-			
+
 			// Access state entry
 			entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
-			
+
 			// Modify state at 0x2DC
 			if (entry_flags & 0x20) {
 				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2DC)) |= 0x20;
 			} else {
 				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2DC)) &= ~0x20;
 			}
-			
+
 			// Modify state at 0x2E0
-			if (entry_flags & 0x100) {
+			if (!(entry_flags & 0x100)) {
+				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2E0)) = level;
+			} else {
 				entry_val = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 8));
 				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2E0)) = entry_val;
-			} else {
-				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2E0)) = level;
 			}
-			
+
 			func_800EB534_FA4E4(&D_80157600, 0xE, 0, 0);
-			
+
 			// Calculate step
 			step = (s16)(arg1 - arg0->unkE) / 7;
 			D_801575D4 = step;
-			temp_diff = arg0->unkE - arg1;
-			v1 = temp_diff;
+				v1 = (s16)(arg0->unkE - arg1);
+				goto clamp_angle;
+			}
 		}
-	} else if (v1 >= 0x4001) {
+	}
+
+	if (v1 >= 0x4001) {
 		// Second condition: v1 >= 0x4001
 		level = D_80157A0C;
-		if (level != 0xF && !(D_80157A28 & 4)) {
-			// Calculate offset into state array
+		if (level != 0xF) {
+			if (!(D_80157A28 & 4)) {
+				// Calculate offset into state array
 			offset = level * 0x34;
-			
+
 			// Access state entry
 			entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
-			
+
 			// Modify state at 0x310
 			if (entry_flags & 0x20) {
 				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x310)) |= 0x20;
 			} else {
 				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x310)) &= ~0x20;
 			}
-			
+
 			// Modify state at 0x314
-			if (entry_flags & 0x100) {
+			if (!(entry_flags & 0x100)) {
+				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x314)) = level;
+			} else {
 				entry_val = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 8));
 				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x314)) = entry_val;
-			} else {
-				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x314)) = level;
 			}
-			
+
 			func_800EB534_FA4E4(&D_80157600, 0xF, 0, 0);
-			
+
 			// Calculate step
 			step = (s16)(arg0->unkE - arg1) / 7;
 			D_801575D4 = step;
-			temp_diff = arg0->unkE - arg1;
-			v1 = temp_diff;
-		}
-	} else {
-		// Default case
-		level = D_80157A0C;
-		offset = level * 0x34;
-		
-		entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
-		
-		if (!(entry_flags & 0x100)) {
-			D_801575D4 = 0x5DC;
-			temp_diff = arg0->unkE - arg1;
-			v1 = temp_diff;
+				v1 = (s16)(arg0->unkE - arg1);
+				goto clamp_angle;
+			}
 		}
 	}
 
+	// Default case
+	level = D_80157A0C;
+	offset = level * 0x34;
+
+	entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
+
+	if (!(entry_flags & 0x100)) {
+		D_801575D4 = 0x5DC;
+		v1 = (s16)(arg0->unkE - arg1);
+	}
+
+clamp_angle:
 	// Clamp angle
 	step = D_801575D4;
 	neg_step = -step;
@@ -907,14 +914,13 @@ void func_800EABE0_F9B90(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EABE0_F9B90.s")
 #endif
 
+/* CURRENT(135) */
 #ifdef NON_MATCHING
-/* CURRENT(250) */
 void func_800EADF8_F9DA8(VehicleInstance *arg0, s16 arg1) {
 	s32 flags;
 	s32 state;
 	s16 curDir;
 	s16 directionDiff;
-	s16 tempDiv;
 	s32 index;
 
 	flags = D_80157A28 & 4;
@@ -943,14 +949,12 @@ void func_800EADF8_F9DA8(VehicleInstance *arg0, s16 arg1) {
 
 		if ((directionDiff < -0x4000) && (state != 0x63) && (flags == 0)) {
 			func_800EB534_FA4E4(&D_80157600, 0x63, 0, 0);
-			tempDiv = arg1 - arg0->unkE;
-			D_801575D4 = tempDiv / 10;
+			D_801575D4 = (s16)(arg1 - arg0->unkE) / 10;
 			curDir = arg0->unkE;
 			directionDiff = curDir - arg1;
 		} else if ((directionDiff >= 0x4001) && (state != 0x62) && (flags == 0)) {
 			func_800EB534_FA4E4(&D_80157600, 0x62, 0, 0);
-			tempDiv = arg0->unkE - arg1;
-			D_801575D4 = tempDiv / 10;
+			D_801575D4 = (s16)(arg0->unkE - arg1) / 10;
 			curDir = arg0->unkE;
 			directionDiff = curDir - arg1;
 		} else {
@@ -989,7 +993,7 @@ void func_800EB090_FA040(void) {
 	D_80157A28 &= ~4;
 }
 
-// CURRENT(5765)
+// CURRENT(5740)
 #ifdef NON_MATCHING
 void func_800EB0C8_FA078(VehicleInstance *arg0) {
 	extern f64 D_801443E8_153398;
@@ -1009,12 +1013,12 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 	f32 slopeDeg;
 	s32 stateFlags;
 
-	stateFlags = ((Unk8009E8DC *)D_8013E5B0_14D560)[D_80157600.unk40C].unk0;
+	stateFlags = ((Unk8009E8DC *)(D_8013E5B0_14D560 - 0x10))[D_80157600.unk40C].unk0;
 	speedScale = 1.0f;
 
 	if (stateFlags & 0x10) {
 		func_800FB430_10A3E0(arg0, 0);
-		stateFlags = ((Unk8009E8DC *)D_8013E5B0_14D560)[D_80157A0C].unk0;
+		stateFlags = ((Unk8009E8DC *)(D_8013E5B0_14D560 - 0x10))[D_80157A0C].unk0;
 	}
 
 	if (stateFlags & 0x800) {
@@ -1079,7 +1083,13 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 					absDelta = delta;
 				}
 
-				if ((f32)absDelta < (xStep >= 0.0f ? xStep : -xStep)) {
+				if (xStep >= 0.0f) {
+					zDiff = xStep;
+				} else {
+					zDiff = -xStep;
+				}
+
+				if ((f32)absDelta < zDiff) {
 					xDiff = pathX;
 				} else {
 					xDiff = arg0->unk4C + xStep;
@@ -1117,16 +1127,13 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB0C8_FA078.s")
 #endif
 
-// CURRENT(2141)
+// CURRENT(1351)
 #ifdef NON_MATCHING
 void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	Unk80157600 *player = arg0;
 	s32 state;
-	s32 shouldAnimate;
-	s32 turnOffset;
-
-	shouldAnimate = 0;
-	turnOffset = 0;
+	s32 shouldAnimate = 0;
+	s32 turnOffset = 0;
 
 	if (player == &D_80157A48) {
 		osSyncPrintf(&D_80144320_1532D0);
@@ -1134,34 +1141,34 @@ void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 
 	state = player->unk40C;
 
-	if (state < 0x5C) {
-		if (state < 0x29) {
-			switch (state) {
-			case 0x17:
-				turnOffset = 0x4000;
-				break;
-			case 0x18:
-				turnOffset = -0x4000;
-				break;
-			case 0x19:
-				turnOffset = -0x6000;
-				break;
-			case 0x1A:
-				turnOffset = -0x2000;
-				break;
-			case 0x1B:
-				turnOffset = 0x6000;
-				break;
-			case 0x1C:
-				turnOffset = 0x2000;
-				break;
-			}
-		} else if (state == 0x5B) {
+	if (state >= 0x5C) {
+		if (state == 0x5C) {
+			shouldAnimate = 1;
+		}
+	} else if (state >= 0x29) {
+		if (state == 0x5B) {
 			shouldAnimate = 1;
 		}
 	} else {
-		if (state == 0x5C) {
-			shouldAnimate = 1;
+		switch (state) {
+		case 0x17:
+			turnOffset = 0x4000;
+			break;
+		case 0x18:
+			turnOffset = -0x4000;
+			break;
+		case 0x19:
+			turnOffset = -0x6000;
+			break;
+		case 0x1A:
+			turnOffset = -0x2000;
+			break;
+		case 0x1B:
+			turnOffset = 0x6000;
+			break;
+		case 0x1C:
+			turnOffset = 0x2000;
+			break;
 		}
 	}
 
@@ -1243,6 +1250,7 @@ void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	}
 }
 
+// CURRENT(125)
 #ifdef NON_MATCHING
 void func_800EB8A4_FA854(Unk80157600 *arg0, f32 arg1) {
 	Unk8009E8DC *anim;
@@ -1257,15 +1265,18 @@ void func_800EB8A4_FA854(Unk80157600 *arg0, f32 arg1) {
 
 	if (anim->unk14 != 0) {
 		if (anim->unk4 & 1) {
+			s32 animArg2;
+
+			animArg2 = anim->unk8;
 			if (anim->unk18 == arg0->unk41C) {
 				func_800EB534_FA4E4(arg0, anim->unk1C, 0, arg1);
 				arg0->unk41C = 0;
 				return;
-			} else {
-				func_800EB534_FA4E4(arg0, animIdx, anim->unk8, arg1);
-				arg0->unk41C = arg0->unk41C + 1;
-				return;
 			}
+
+			func_800EB534_FA4E4(arg0, animIdx, animArg2, arg1);
+			arg0->unk41C++;
+			return;
 		}
 		func_800EB534_FA4E4(arg0, anim->unk1C, 0, arg1);
 		return;
@@ -1398,13 +1409,11 @@ void func_800EBD9C_FAD4C(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-// CURRENT(5575)
+// CURRENT(4219)
 #ifdef NON_MATCHING
 void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	VehicleInstance *vehicle;
-	VehicleSpec *spec;
-	register f64 temp_f20;
-	register f64 temp_f22;
+	f64 temp_f20;
 	s16 xOff;
 	s16 yOff;
 	s16 zOff;
@@ -1416,27 +1425,25 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 
 	D_80048188 = 1;
 	D_8004818C = 1;
+	temp_f20 = D_80144468_153418;
 
 	vehicle = &vehicleInstances[arg1];
-	spec = &vehicleSpecs[vehicle->unk1A];
-	temp_f20 = D_80144468_153418;
-	temp_f22 = 32768.0;
 
 	D_801575E0.unk0 = 0;
 	D_801575E0.unk4 = 0;
 
-	xOff = (s8)spec->unk5E;
-	yOff = (s8)spec->unk5F;
-	zOff = (s8)spec->unk60;
+	xOff = (s8)vehicleSpecs[vehicle->unk1A].unk5E;
+	yOff = (s8)vehicleSpecs[vehicle->unk1A].unk5F;
+	zOff = (s8)vehicleSpecs[vehicle->unk1A].unk60;
 
-	temp_f0 = cosf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / temp_f22));
+	temp_f0 = cosf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / 32768.0));
 
 	xOffF = (f32) xOff;
 	zOffF = (f32) zOff;
-	x = vehicle->unk0 + (s16) (s32) ((xOffF * temp_f0) - (sinf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / temp_f22)) * zOffF));
+	x = vehicle->unk0 + (s16) (s32) ((xOffF * temp_f0) - (sinf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / 32768.0)) * zOffF));
 
-	temp_f0 = sinf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / temp_f22));
-	z = vehicle->unk4 + (s16) (s32) ((cosf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / temp_f22)) * zOffF) + (xOffF * temp_f0));
+	temp_f0 = sinf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / 32768.0));
+	z = vehicle->unk4 + (s16) (s32) ((cosf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / 32768.0)) * zOffF) + (xOffF * temp_f0));
 
 	D_801575E0.unk6 = x;
 	D_801575E0.unkA = vehicle->unk2 + yOff;
@@ -1575,37 +1582,54 @@ void func_800EC468_FB418(void) { D_80157A28 &= ~0x200; }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC484_FB434.s")
 
-// CURRENT(7614)
+// CURRENT(4925)
 #ifdef NON_MATCHING
 s32 func_800ED55C_FC50C(UnkF9230Func800ED55CArg0 *arg0, s32 arg1) {
 	s32 compareAngle;
 	s32 bestDiff;
 	s32 bestResult;
 	s32 angleDiff;
-	s32 i;
+	s16 i;
 	s32 localThresholds[9];
 	s32 localHighResults[9];
 	s32 localLowResults[9];
+	s32 *src;
+	s32 *dst;
+	s32 playerAngle;
 
-	for (i = 0; i < 9; i += 3) {
-		localThresholds[i] = D_8013FC14_14EBC4[i];
-		localThresholds[i + 1] = D_8013FC14_14EBC4[i + 1];
-		localThresholds[i + 2] = D_8013FC14_14EBC4[i + 2];
+	playerAngle = (s16)arg0->unkE;
+
+	src = D_8013FC14_14EBC4;
+	dst = localThresholds;
+	while (src != (D_8013FC14_14EBC4 + 9)) {
+		dst[0] = src[0];
+		dst[1] = src[1];
+		dst[2] = src[2];
+		src += 3;
+		dst += 3;
 	}
 
-	for (i = 0; i < 9; i += 3) {
-		localHighResults[i] = D_8013FC38_14EBE8[i];
-		localHighResults[i + 1] = D_8013FC38_14EBE8[i + 1];
-		localHighResults[i + 2] = D_8013FC38_14EBE8[i + 2];
+	src = D_8013FC38_14EBE8;
+	dst = localHighResults;
+	while (src != (D_8013FC38_14EBE8 + 9)) {
+		dst[0] = src[0];
+		dst[1] = src[1];
+		dst[2] = src[2];
+		src += 3;
+		dst += 3;
 	}
 
-	for (i = 0; i < 9; i += 3) {
-		localLowResults[i] = D_8013FC5C_14EC0C[i];
-		localLowResults[i + 1] = D_8013FC5C_14EC0C[i + 1];
-		localLowResults[i + 2] = D_8013FC5C_14EC0C[i + 2];
+	src = D_8013FC5C_14EC0C;
+	dst = localLowResults;
+	while (src != (D_8013FC5C_14EC0C + 9)) {
+		dst[0] = src[0];
+		dst[1] = src[1];
+		dst[2] = src[2];
+		src += 3;
+		dst += 3;
 	}
 
-	compareAngle = (arg0->unkE + 0x10000) % 0x10000;
+	compareAngle = (playerAngle + 0x10000) % 0x10000;
 	compareAngle = ((arg1 + 0x18000) % 0x10000) - compareAngle;
 	compareAngle = (compareAngle + 0x14000) % 0x10000;
 	angleDiff = localThresholds[0] - compareAngle;
@@ -1652,6 +1676,9 @@ s32 func_800ED55C_FC50C(UnkF9230Func800ED55CArg0 *arg0, s32 arg1) {
 				bestResult = localLowResults[i + 1];
 			}
 		}
+
+		i++;
+		i--;
 	}
 
 	return bestResult;
@@ -1700,28 +1727,28 @@ s32 func_800EF0B0_FE060(s32 arg0) {
 
 // This checks the player modifier and writes values that cause either
 // normal or evil adam to be rendered
-// CURRENT(7680)
+// CURRENT(6578)
 #ifdef NON_MATCHING
-void func_800EF14C_FE0FC(void *arg0) {
+void func_800EF14C_FE0FC(VehicleInstance *arg0) {
+	struct {
+		s32 unk0;
+		s32 unk4;
+		s32 unk8;
+	} spAC;
+	Unk80052B40 spA8;
+	Unk80052B40 spA4;
+	Unk80052B40 sp9C;
 	f32 sp6C[10];
 	struct {
 		s32 unk0;
 		s32 unk4;
 		u16 unk8;
 	} sp60;
-	Unk80052B40 spA8;
-	Unk80052B40 spA4;
-	Unk80052B40 sp9C;
-	struct {
-		s32 unk0;
-		s32 unk4;
-		s32 unk8;
-	} spAC;
 	s32 i;
 	u16 timer;
 
 	for (i = 0; i < 10; i++) {
-		sp6C[i] = D_8013FC80_14EC30[i];
+		((s32 *)sp6C)[i] = ((s32 *)D_8013FC80_14EC30)[i];
 	}
 
 	*(volatile s32 *)&sp60.unk0 = D_8013FCA8_14EC58[0];
@@ -1788,15 +1815,15 @@ void func_800EF14C_FE0FC(void *arg0) {
 		func_800039D0_45D0(NULL, NULL, &sp9C, i);
 
 		timer = (u16)D_8013FCB4_14EC64[0];
-		if ((s16)timer > 0) {
+		if (timer > 0) {
 			((u16 *)D_8013FCB4_14EC64)[0] = timer;
 			if (gameplayMode == 1) {
-				timer = (timer - 1) & 0xFFFF;
+				timer = timer - 1;
 				((u16 *)D_8013FCB4_14EC64)[0] = timer;
 			}
 		}
 
-		if ((s16)timer >= 6) {
+		if (timer >= 6) {
 			((u16 *)D_8013FCB4_14EC64)[0] = 5;
 		}
 
@@ -1832,9 +1859,6 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 	func_800EBA54_FAA04((Unk80052B40 *) arg0, D_80157A48.unk40C, &D_80157A48);
 
 	{
-		s32 temp = arg0->unk20;
-		s32 temp2 = temp << 1;
-		if (temp2 < 0 && D_80157E78 == 0) {
 			if (((temp & 0x40000000) == 0) && (D_80157E70 == 0)) {
 				osSyncPrintf(&D_801443BC_15336C);
 				func_800EB534_FA4E4(&D_80157A48, (D_80157E74 >> 0xE) + 0x14, 0, 0);
@@ -2074,10 +2098,11 @@ void func_800EFE50_FEE00(u8 arg0) {
 /// 7 = Dark Adam blowing up planes
 /// 	
 /// a2 = bool, pause gameplay while cutscene active?
-// CURRENT(943)
+// CURRENT(330)
 #ifdef NON_MATCHING
-void func_800EFEB4_FEE64(void (*arg0)(void), s16 arg1, s32 arg2) {
-	s32 sp18 = arg1;
+void func_800EFEB4_FEE64(void *arg0, s16 arg1, s32 arg2) {
+	s32 pad1C;
+	s32 sp18;
 	s16 sp26 = arg1;
 
 	if (D_80052AD0 != 0) {
@@ -2086,8 +2111,12 @@ void func_800EFEB4_FEE64(void (*arg0)(void), s16 arg1, s32 arg2) {
 		}
 		D_800476A2 = 0;
 		D_80047968 = 0;
-		func_800EFE50_FEE00((u8)sp26);
-		D_80157F6A = (s8)sp18;
+		sp18 = sp26;
+		func_800EFE50_FEE00((u8)sp18);
+		{
+			s32 *sp1C = &sp18;
+			D_80157F6A = (s8)(*sp1C);
+		}
 		if (arg2 != 0) {
 			gameplayMode = 3;
 		} else {
@@ -2101,7 +2130,7 @@ void func_800EFEB4_FEE64(void (*arg0)(void), s16 arg1, s32 arg2) {
 		D_80157F90 = 0;
 		D_80157F70 = (s32)arg0;
 		if (arg0 != NULL) {
-			arg0();
+			((void (*)(void))arg0)();
 		}
 		func_800F0340_FF2F0(&D_80157E90, 0, 5);
 	}
@@ -2228,7 +2257,7 @@ void func_800F02EC_FF29C(s16 arg0)
   D_80157F54 = 0;
 }
 
-// CURRENT(1880)
+// CURRENT(1725)
 #ifdef NON_MATCHING
 void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2) {
 	Unk84EECEffect *entry;
@@ -2239,7 +2268,7 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2) {
 	D_80157F60 = (s16)arg1;
 	D_80157F68 = arg2 - (s16)arg1;
 
-	func_800F02EC_FF29C(D_80157F5C + D_80157F60);
+	func_800F02EC_FF29C(D_80157F60 + D_80157F5C);
 	entry = D_80157F4C;
 	entryS16 = (s16 *)entry;
 
@@ -2256,17 +2285,10 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2) {
 		D_8015758A = D_80052B34->unk4 >> 2;
 		break;
 	case 2:
-		{
-			s16 *yPtr;
-			u16 tempYBase;
-
-			yPtr = &D_80157588;
-			tempYBase = D_80159DE2;
 		D_80157586 = (buildingInstances[entryS16[7]].xCoord >> 2) + *(u16 *)&D_80159DE0;
-			yPtr[0] = (buildingInstances[entryS16[7]].yCoord >> 2) + tempYBase;
-			yPtr[0] += ((s16 *)D_802590A4)[buildingInstances[entryS16[7]].buildingType * 16] >> 3;
+		D_80157588 = (buildingInstances[entryS16[7]].yCoord >> 2) + D_80159DE2;
+		D_80157588 += ((s16 *)D_802590A4)[buildingInstances[entryS16[7]].buildingType * 16] >> 3;
 		D_8015758A = (buildingInstances[entryS16[7]].zCoord >> 2) + *(u16 *)&D_80159DE4;
-		}
 		break;
 	case 3:
 		D_80157586 = vehicleInstances[entryS16[7]].unk0 >> 2;
@@ -2295,21 +2317,21 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F0340_FF2F0.s")
 #endif
 
-// CURRENT(21157)
+// CURRENT(24469)
 #ifdef NON_MATCHING
 s32 func_800F066C_FF61C(void) {
 	Unk84EECEffect *entry;
 	s16 *entryS16;
-	s16 s0;
-	s16 s1;
-	s16 a3;
+	s32 finished;
+	s32 s0;
+	s32 s1;
+	s32 a3;
 	s16 sp2C;
 	s16 sp2E;
 	s16 sp30;
 	s16 x;
 	s16 y;
 	s16 z;
-	s32 finished;
 
 	finished = 0;
 	entry = D_80157F4C;
@@ -2419,11 +2441,10 @@ s32 func_800F066C_FF61C(void) {
 			f32 sp24;
 			f32 sp3C;
 			f32 sinAngle;
-			f32 cosAngle;
 
 			sinAngle = sinf((f32)((D_80157FC8 * D_801445D8_153588) / D_801445E0_153590));
-			cosAngle = cosf((f32)((D_80157FC8 * D_801445E8_153598) / D_801445F0_1535A0));
-			sp3C = (cosAngle * (f32)D_80157FC4) + ((f32)D_80157FC0 * sinAngle);
+			sp3C = (cosf((f32)((D_80157FC8 * D_801445E8_153598) / D_801445F0_1535A0)) * (f32)D_80157FC4)
+				+ ((f32)D_80157FC0 * sinAngle);
 			sp24 = cosf((f32)((D_80157FC8 * D_801445F8_1535A8) / D_80144600_1535B0));
 			sinAngle = sinf((f32)((D_80157FC8 * D_80144608_1535B8) / D_80144610_1535C0));
 
@@ -2533,19 +2554,19 @@ void func_800F1004_FFFB4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800F1004_FFFB4.s")
 #endif
 
-// CURRENT(35533)
+// CURRENT(29635)
 #ifdef NON_MATCHING
 void func_800F1134_1000E4(void) {
-	s16 p3X;
-	s16 p3Z;
+	s32 p3X;
+	s32 p3Z;
 	s16 minX;
 	s16 maxX;
 	s16 minZ;
 	s16 maxZ;
 	s16 y;
 	s16 ringY;
-	s16 timer;
-	s16 sfxVol;
+	s32 timer;
+	s32 sfxVol;
 	s16 i;
 	s16 angle;
 	s16 xOffset;
@@ -2591,11 +2612,8 @@ void func_800F1134_1000E4(void) {
 		p3Z = ringY;
 	}
 
-	if ((u16)D_80157F8C >= 10) {
-		return;
-	}
-
-	switch (D_80157F8C) {
+	if ((u16)D_80157F8C < 10) {
+		switch ((u16)D_80157F8C) {
 		case 0:
 			D_80157FA8 = 1;
 			D_801493E0 = 0;
@@ -2860,6 +2878,7 @@ void func_800F1134_1000E4(void) {
 			func_80007410_8010(func_800F1004_FFFB4);
 			func_800FAC90_109C40();
 			return;
+		}
 	}
 
 	return;
@@ -3126,37 +3145,41 @@ void func_800F2980_101930(void *arg0) {
 	s16 var_v0;
 	s16 temp_s7;
 	s32 var_s3;
+	u8 temp_a0idx;
 	u8 temp_s0;
 	u8 temp_v1;
+	u8 *base;
 	u8 *temp_s1;
 	u8 *temp_v0;
 	u8 *var_s2;
 
-	temp_v0 = &D_801601F0[((u8 *) arg0)[0x23] * 0x16];
+	base = arg0;
+	temp_a0idx = base[0x23];
+	temp_v0 = &((u8 *) D_801601F0)[((((temp_a0idx << 2) - temp_a0idx) << 2) - temp_a0idx) << 1];
 	sp6E = *(s16 *) &temp_v0[0x10];
 	sp6C = *(s16 *) &temp_v0[0x06];
 	sp6A = *(s16 *) &temp_v0[0x04];
-	temp_v1 = ((u8 *) arg0)[0x22];
+	temp_v1 = base[0x22];
 	temp_s0 = temp_v0[0x0C];
 	var_s4 = *(s16 *) &temp_v0[0x0E];
 	if (temp_v1 & 0x80) {
-		sp68 = *(s16 *) &((u8 *) arg0)[0x1A];
-		var_v0 = *(s16 *) &((u8 *) arg0)[0x18];
+		sp68 = *(s16 *) &base[0x1A];
+		var_v0 = *(s16 *) &base[0x18];
 	} else {
-		var_v0 = *(s16 *) &((u8 *) arg0)[0x18];
+		var_v0 = *(s16 *) &base[0x18];
 		sp68 = var_v0;
 	}
 	if (temp_v1 == 0x10) {
 		sp68 = 0;
 	}
-	sp7C = (s32) ((((f64) (f32) coss(var_v0 & 0xFFFF) / 32768.0) * (f64) *(s16 *) &((u8 *) arg0)[0x1C]) +
-				 (f64) *(s32 *) &((u8 *) arg0)[0x00]);
+	sp7C = (s32) ((((f64) (f32) coss(var_v0 & 0xFFFF) / 32768.0) * (f64) *(s16 *) &base[0x1C]) +
+				 (f64) *(s32 *) &base[0x00]);
 	var_s3 = 0;
 	var_s2 = arg0;
-	sp78 = (s32) ((((f64) (f32) sins(*(u16 *) &((u8 *) arg0)[0x18]) / 32768.0) * (f64) *(s16 *) &((u8 *) arg0)[0x1C]) +
-				 (f64) *(s32 *) &((u8 *) arg0)[0x04]);
-	*(s32 *) &((u8 *) arg0)[0x08] = sp7C;
-	*(s32 *) &((u8 *) arg0)[0x0C] = sp78;
+	sp78 = (s32) ((((f64) (f32) sins(*(u16 *) &base[0x18]) / 32768.0) * (f64) *(s16 *) &base[0x1C]) +
+				 (f64) *(s32 *) &base[0x04]);
+	*(s32 *) &base[0x08] = sp7C;
+	*(s32 *) &base[0x0C] = sp78;
 	temp_s7 = (s32) temp_s0 / 2;
 	if (temp_s7 > 0) {
 		do {
@@ -3171,7 +3194,7 @@ void func_800F2980_101930(void *arg0) {
 				*(s16 *) &var_s2[0x3E] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * var_f26) + var_f22);
 				*(s16 *) &var_s2[0x40] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * var_f26) + var_f24);
 				var_v0 = (s16) (sp68 + var_s4 + 0x4000);
-				temp_s1 = (u8 *) arg0 + (var_s3 * 0x24) + (temp_s7 * 0x24);
+				temp_s1 = base + (var_s3 * 0x24) + (temp_s7 * 0x24);
 				*(s16 *) &temp_s1[0x2A] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * var_f20) + var_f22);
 				*(s16 *) &temp_s1[0x2C] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * var_f20) + var_f24);
 				*(s16 *) &temp_s1[0x3E] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * var_f26) + var_f22);
