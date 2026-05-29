@@ -699,11 +699,9 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80096BC4_A5B74.s")
 #endif
 
+/* CURRENT(5113) */
 #ifdef NON_MATCHING
-/* CURRENT(6473) */
 void func_800970C0_A6070(void) {
-	Gfx **dlHead;
-	Vtx **vtxHead;
 	Gfx *dl;
 	UnkHudVtx *vtx0;
 	UnkHudVtx *vtx1;
@@ -711,86 +709,69 @@ void func_800970C0_A6070(void) {
 	UnkHudVtx *vtx3;
 	s32 row;
 	s32 col;
-	s32 tileRow;
 	s32 x0;
 	s32 x1;
 	s32 y0;
 	s32 y1;
-	s16 stNeg;
-	s16 stPos;
-	u32 cmdTri;
-	u32 cmdTexImg;
-	u32 cmdPipe;
-	s32 loopLimit;
+	s32 tileRow;
 
-	dlHead = &D_8005BB2C;
-	vtxHead = &D_8005BB34;
-	stNeg = -0x20;
-	stPos = 0x07E0;
-	cmdTri = 0xBF000000;
-	cmdTexImg = 0xFD100000;
-	cmdPipe = 0xE7000000;
-	loopLimit = 8;
-
-	dl = *dlHead;
-	*dlHead = dl + 1;
-	dl->words.w0 = cmdPipe;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
 	dl->words.w1 = 0;
 
-	dl = *dlHead;
-	*dlHead = dl + 1;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
 	dl->words.w0 = 0xB6000000;
 	dl->words.w1 = 0x00023001;
 
-	dl = *dlHead;
-	*dlHead = dl + 1;
-	dl->words.w1 = 0x00552048;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
 	dl->words.w0 = 0xB900031D;
+	dl->words.w1 = 0x00552048;
 
-	dl = *dlHead;
-	*dlHead = dl + 1;
-	dl->words.w1 = 0xFFFCF279;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
 	dl->words.w0 = 0xFCFFFFFF;
+	dl->words.w1 = 0xFFFCF279;
 
-	dl = *dlHead;
-	*dlHead = dl + 1;
-	dl->words.w1 = 0x80008000;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
 	dl->words.w0 = 0xBB000001;
+	dl->words.w1 = 0x80008000;
 
-	dl = *dlHead;
-	*dlHead = dl + 1;
-	dl->words.w1 = 0x00080000;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
 	dl->words.w0 = 0xBA001301;
+	dl->words.w1 = 0x00080000;
 
-	dl = *dlHead;
-	*dlHead = dl + 1;
-	dl->words.w1 = 0x00000080;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
 	dl->words.w0 = 0xBA000602;
+	dl->words.w1 = 0x00000080;
 
-	dl = *dlHead;
-	*dlHead = dl + 1;
-	dl->words.w1 = 0x00002000;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
 	dl->words.w0 = 0xBA000C02;
+	dl->words.w1 = 0x00002000;
 
-	row = 0;
-	while (row != loopLimit) {
+	for (row = 0; row < 8; row++) {
 		y1 = -((row - 4) << 8);
 		y0 = y1 - 0x100;
 		tileRow = row << 3;
-		col = 0;
 
-		while (col != loopLimit) {
+		for (col = 0; col < 8; col++) {
 			x0 = (col - 4) << 8;
 			x1 = x0 + 0x100;
 
-			vtx0 = (UnkHudVtx *) *vtxHead;
-			vtx1 = vtx0 + 1;
-			*vtxHead = (Vtx *) vtx1;
-			vtx2 = vtx1 + 1;
-			*vtxHead = (Vtx *) vtx2;
-			vtx3 = vtx2 + 1;
-			*vtxHead = (Vtx *) vtx3;
-			*vtxHead = (Vtx *) (vtx3 + 1);
+			vtx0 = (UnkHudVtx *) D_8005BB34;
+			D_8005BB34 = (Vtx *) (vtx0 + 1);
+			vtx1 = (UnkHudVtx *) D_8005BB34;
+			D_8005BB34 = (Vtx *) (vtx1 + 1);
+			vtx2 = (UnkHudVtx *) D_8005BB34;
+			D_8005BB34 = (Vtx *) (vtx2 + 1);
+			vtx3 = (UnkHudVtx *) D_8005BB34;
+			D_8005BB34 = (Vtx *) (vtx3 + 1);
 
 			vtx0->unk0 = x0;
 			vtx0->unk2 = y0;
@@ -805,75 +786,71 @@ void func_800970C0_A6070(void) {
 			vtx3->unk2 = y1;
 			vtx3->unk4 = 0;
 
-			vtx0->unk8 = stNeg;
-			vtx0->unkA = stPos;
-			vtx2->unk8 = stNeg;
-			vtx2->unkA = stNeg;
-			vtx3->unk8 = stPos;
-			vtx3->unkA = stNeg;
-			vtx1->unk8 = stPos;
-			vtx1->unkA = stPos;
+			vtx0->unk8 = -0x20;
+			vtx0->unkA = 0x7E0;
+			vtx2->unk8 = -0x20;
+			vtx2->unkA = -0x20;
+			vtx3->unk8 = 0x7E0;
+			vtx3->unkA = -0x20;
+			vtx1->unk8 = 0x7E0;
+			vtx1->unkA = 0x7E0;
 
-			dl = *dlHead;
-			*dlHead = dl + 1;
-			dl->words.w0 = cmdTexImg;
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xFD100000;
 			dl->words.w1 = D_8006AA6C + ((tileRow + col) << 11);
 
-			dl = *dlHead;
-			*dlHead = dl + 1;
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
 			dl->words.w0 = 0xF5100000;
 			dl->words.w1 = 0x07080200;
 
-			dl = *dlHead;
-			*dlHead = dl + 1;
-			dl->words.w1 = 0;
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
 			dl->words.w0 = 0xE6000000;
-
-			dl = *dlHead;
-			*dlHead = dl + 1;
-			dl->words.w1 = 0x073FF100;
-			dl->words.w0 = 0xF3000000;
-
-			dl = *dlHead;
-			*dlHead = dl + 1;
 			dl->words.w1 = 0;
-			dl->words.w0 = cmdPipe;
 
-			dl = *dlHead;
-			*dlHead = dl + 1;
-			dl->words.w1 = 0x00080200;
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xF3000000;
+			dl->words.w1 = 0x073FF100;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xE7000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
 			dl->words.w0 = 0xF5101000;
+			dl->words.w1 = 0x00080200;
 
-			dl = *dlHead;
-			*dlHead = dl + 1;
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
 			dl->words.w0 = 0xF2000000;
 			dl->words.w1 = 0x0007C07C;
 
-			dl = *dlHead;
-			*dlHead = dl + 1;
-			dl->words.w1 = (u32) vtx0 & 0x1FFFFFFF;
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
 			dl->words.w0 = 0x0400103F;
+			dl->words.w1 = (u32) vtx0 & 0x1FFFFFFF;
 
-			dl = *dlHead;
-			*dlHead = dl + 1;
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xBF000000;
 			dl->words.w1 = 0x00000204;
-			dl->words.w0 = cmdTri;
 
-			dl = *dlHead;
-			*dlHead = dl + 1;
+			dl = D_8005BB2C;
+			D_8005BB2C = dl + 1;
+			dl->words.w0 = 0xBF000000;
 			dl->words.w1 = 0x00040206;
-			dl->words.w0 = cmdTri;
-
-			col++;
 		}
-
-		row++;
 	}
 
-	dl = *dlHead;
-	*dlHead = dl + 1;
+	dl = D_8005BB2C;
+	D_8005BB2C = dl + 1;
+	dl->words.w0 = 0xE7000000;
 	dl->words.w1 = 0;
-	dl->words.w0 = cmdPipe;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800970C0_A6070.s")
