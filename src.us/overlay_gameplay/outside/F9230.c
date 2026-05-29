@@ -1727,28 +1727,28 @@ s32 func_800EF0B0_FE060(s32 arg0) {
 
 // This checks the player modifier and writes values that cause either
 // normal or evil adam to be rendered
-// CURRENT(7680)
+// CURRENT(6578)
 #ifdef NON_MATCHING
-void func_800EF14C_FE0FC(void *arg0) {
+void func_800EF14C_FE0FC(VehicleInstance *arg0) {
+	struct {
+		s32 unk0;
+		s32 unk4;
+		s32 unk8;
+	} spAC;
+	Unk80052B40 spA8;
+	Unk80052B40 spA4;
+	Unk80052B40 sp9C;
 	f32 sp6C[10];
 	struct {
 		s32 unk0;
 		s32 unk4;
 		u16 unk8;
 	} sp60;
-	Unk80052B40 spA8;
-	Unk80052B40 spA4;
-	Unk80052B40 sp9C;
-	struct {
-		s32 unk0;
-		s32 unk4;
-		s32 unk8;
-	} spAC;
 	s32 i;
 	u16 timer;
 
 	for (i = 0; i < 10; i++) {
-		sp6C[i] = D_8013FC80_14EC30[i];
+		((s32 *)sp6C)[i] = ((s32 *)D_8013FC80_14EC30)[i];
 	}
 
 	*(volatile s32 *)&sp60.unk0 = D_8013FCA8_14EC58[0];
@@ -1815,15 +1815,15 @@ void func_800EF14C_FE0FC(void *arg0) {
 		func_800039D0_45D0(NULL, NULL, &sp9C, i);
 
 		timer = (u16)D_8013FCB4_14EC64[0];
-		if ((s16)timer > 0) {
+		if (timer > 0) {
 			((u16 *)D_8013FCB4_14EC64)[0] = timer;
 			if (gameplayMode == 1) {
-				timer = (timer - 1) & 0xFFFF;
+				timer = timer - 1;
 				((u16 *)D_8013FCB4_14EC64)[0] = timer;
 			}
 		}
 
-		if ((s16)timer >= 6) {
+		if (timer >= 6) {
 			((u16 *)D_8013FCB4_14EC64)[0] = 5;
 		}
 
@@ -1859,9 +1859,6 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 	func_800EBA54_FAA04((Unk80052B40 *) arg0, D_80157A48.unk40C, &D_80157A48);
 
 	{
-		s32 temp = arg0->unk20;
-		s32 temp2 = temp << 1;
-		if (temp2 < 0 && D_80157E78 == 0) {
 			if (((temp & 0x40000000) == 0) && (D_80157E70 == 0)) {
 				osSyncPrintf(&D_801443BC_15336C);
 				func_800EB534_FA4E4(&D_80157A48, (D_80157E74 >> 0xE) + 0x14, 0, 0);
