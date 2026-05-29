@@ -97,32 +97,31 @@ u32 D_8013D534_14C4E4 = 0x00000000;
 u32 D_8013D538_14C4E8[2] = { 0x00000000, 0x00000000 };
 
 // https://decomp.me/scratch/efEMb
+/* CURRENT(1125) */
 #ifdef NON_MATCHING
 s32 func_800959F0_A49A0(s32 arg0, s32 arg1, s32 arg2) {
-	s32 temp_t6;
-	s32 temp_t7;
 	s32 temp_t8;
+	s32 temp_t7;
+	s32 temp_t6;
+	volatile s32 sp0;
+	volatile s32 sp4;
+	volatile s32 sp8;
 
 	temp_t6 = arg0 & 0xFFFF;
+	sp4 = arg1;
 	temp_t7 = arg1 & 0xFFFF;
+	sp0 = arg2;
 	temp_t8 = arg2 & 0xFFFF;
 	arg2 = temp_t8;
 	arg1 = temp_t7;
+	sp8 = arg0;
 	if (temp_t6 < 0x1F) {
 		arg0 = temp_t6 & 0xFFFF;
 	} else {
 		arg0 = 0x1F;
 	}
-	if (arg1 < 0x1F) {
-		arg1 = arg1 & 0xFFFF;
-	} else {
-		arg1 = 0x1F;
-	}
-	if (arg2 < 0x3F) {
-		arg2 = arg2 & 0xFFFF;
-	} else {
-		arg2 = 0x3F;
-	}
+	arg1 = (arg1 < 0x1F) ? (arg1 & 0xFFFF) : 0x1F;
+	arg2 = (arg2 < 0x3F) ? (arg2 & 0xFFFF) : 0x3F;
 	return ((arg0 << 0xB) + (arg1 << 6) + (arg2 & 0x3F)) & 0xFFFF;
 }
 #else
