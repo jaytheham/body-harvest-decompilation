@@ -2257,7 +2257,7 @@ void func_800F02EC_FF29C(s16 arg0)
   D_80157F54 = 0;
 }
 
-// CURRENT(1880)
+// CURRENT(1725)
 #ifdef NON_MATCHING
 void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2) {
 	Unk84EECEffect *entry;
@@ -2268,7 +2268,7 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2) {
 	D_80157F60 = (s16)arg1;
 	D_80157F68 = arg2 - (s16)arg1;
 
-	func_800F02EC_FF29C(D_80157F5C + D_80157F60);
+	func_800F02EC_FF29C(D_80157F60 + D_80157F5C);
 	entry = D_80157F4C;
 	entryS16 = (s16 *)entry;
 
@@ -2285,17 +2285,10 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2) {
 		D_8015758A = D_80052B34->unk4 >> 2;
 		break;
 	case 2:
-		{
-			s16 *yPtr;
-			u16 tempYBase;
-
-			yPtr = &D_80157588;
-			tempYBase = D_80159DE2;
 		D_80157586 = (buildingInstances[entryS16[7]].xCoord >> 2) + *(u16 *)&D_80159DE0;
-			yPtr[0] = (buildingInstances[entryS16[7]].yCoord >> 2) + tempYBase;
-			yPtr[0] += ((s16 *)D_802590A4)[buildingInstances[entryS16[7]].buildingType * 16] >> 3;
+		D_80157588 = (buildingInstances[entryS16[7]].yCoord >> 2) + D_80159DE2;
+		D_80157588 += ((s16 *)D_802590A4)[buildingInstances[entryS16[7]].buildingType * 16] >> 3;
 		D_8015758A = (buildingInstances[entryS16[7]].zCoord >> 2) + *(u16 *)&D_80159DE4;
-		}
 		break;
 	case 3:
 		D_80157586 = vehicleInstances[entryS16[7]].unk0 >> 2;
