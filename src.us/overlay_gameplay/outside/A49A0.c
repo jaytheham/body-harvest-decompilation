@@ -1092,38 +1092,45 @@ void func_80097CB4_A6C64(UnkA6C64Keyframe *arg0, UnkA6C64Keyframe *arg1, UnkA6C6
   arg2->unk10 = arg0->unk10 + ((arg1->unk10 - arg0->unk10) * arg3);
 }
 
-// CURRENT(?)
+typedef struct {
+	s16 unk0;
+	s16 unk2;
+	s16 unk4;
+	s16 unk6;
+	f32 unk8;
+	f32 unkC;
+	f32 unk10;
+} Unk80097E1C;
+
+// CURRENT(6780)
 #ifdef NON_MATCHING
-void func_80097E1C_A6DCC(void *arg0) {
-	u16 sp46;
+void func_80097E1C_A6DCC(Unk80097E1C *arg0) {
+	u16 sp66;
 	s16 temp;
 
-	temp = coss(*(s16 *)((u8 *)arg0 + 2));
-	sp46 = (u16)temp;
-	temp = sins(*(s16 *)((u8 *)arg0 + 4));
-	D_8014ED0C = (f32)(((((f64)(f32)temp / 7.0) * ((f64)(s16)sp46 / 7.0)) * (f64)*(s16 *)arg0) + (f64)*(f32 *)((u8 *)arg0 + 8));
+	temp = coss(arg0->unk2);
+	D_8014ED0C = (f32)(((((f64)(f32)sins(arg0->unk4) / 7.0f) * ((f64)temp / 7.0f)) * (f64)arg0->unk0) + (f64)arg0->unk8);
 
-	temp = sins(*(s16 *)((u8 *)arg0 + 2));
-	sp46 = (u16)temp;
-	temp = sins(*(s16 *)((u8 *)arg0 + 4));
-	D_8014ED10 = (f32)(((((f64)(f32)temp / 7.0) * ((f64)(s16)sp46 / 7.0)) * (f64)*(s16 *)arg0) + (f64)*(f32 *)((u8 *)arg0 + 0xC));
+	temp = sins(arg0->unk2);
+	D_8014ED10 = (f32)(((((f64)(f32)sins(arg0->unk4) / 7.0f) * ((f64)temp / 7.0f)) * (f64)arg0->unk0) + (f64)arg0->unkC);
 
-	temp = coss(*(s16 *)((u8 *)arg0 + 4));
-	D_8014ED14 = (f32)((((f64)temp / 7.0) * (f64)*(s16 *)arg0) + (f64)*(f32 *)((u8 *)arg0 + 0x10));
+	temp = coss(arg0->unk4);
+	D_8014ED14 = (f32)((((f64)temp / 7.0f) * (f64)arg0->unk0) + (f64)arg0->unk10);
 
-	guPerspective((Mtx *)D_8005BB38, &sp46, (f32)D_80149404, 1.0f, 25.0f, 2000.0f, 1.0f);
-	gSPPerspNormalize(D_8005BB2C++, sp46);
+	guPerspective((Mtx *)D_8005BB38, &sp66, (f32)D_80149404, 1.0f, 25.0f, 2000.0f, 1.0f);
+	gSPPerspNormalize(D_8005BB2C++, sp66);
 	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	gSPMatrix(D_8005BB30++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	D_8005BB38 += 0x40;
 
-	guLookAt((Mtx *)D_8005BB38, D_8014ED0C, D_8014ED10, D_8014ED14, *(f32 *)((u8 *)arg0 + 8), *(f32 *)((u8 *)arg0 + 0xC), *(f32 *)((u8 *)arg0 + 0x10), 0.0f, 0.0f, 1.0f);
+	guLookAt((Mtx *)D_8005BB38, D_8014ED0C, D_8014ED10, D_8014ED14, arg0->unk8, arg0->unkC, arg0->unk10, 0.0f, 0.0f, 1.0f);
 	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPMatrix(D_8005BB30++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 	gSPMatrix(D_8005BB30++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 	D_8005BB38 += 0x40;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097E1C_A6DCC.s")
 #endif
