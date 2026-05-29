@@ -1275,6 +1275,17 @@ extern char D_80140E88[];
 extern char D_80140EA0[];
 extern char D_80140EC0[];
 extern char D_80140ED0[];
+extern char D_801410A4_150054[];
+extern char D_801410BC_15006C[];
+extern char D_801410C0_150070[];
+extern char D_801410C8_150078[];
+extern char D_801410DC_15008C[];
+extern char D_801410F8_1500A8[];
+extern char D_80141114_1500C4[];
+extern char D_80141130_1500E0[];
+extern char D_8014114C_1500FC[];
+extern char D_80141168_150118[];
+extern char D_80141184_150134[];
 extern char D_80140EE4[];
 extern char D_80140EF8[];
 extern char D_80140F10[];
@@ -3130,6 +3141,7 @@ extern s32 D_800475F0;
 extern s32 D_800475F4;
 extern s32 D_80047694;
 extern u8 D_800431C0[]; // Save file data. 0x89 bytes, then 0x7A per save slot
+extern u16 D_8004758E;
 extern s32 D_80047684;
 extern u8 D_80047608;
 
