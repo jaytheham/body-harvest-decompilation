@@ -666,7 +666,7 @@ void func_800B19F8_C09A8(void) {
 	} while (i < 0x13);
 }
 
-// CURRENT(25314)
+// CURRENT(25249)
 #ifdef NON_MATCHING
 void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3) {
 	u8 sp6E;
@@ -708,13 +708,13 @@ void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3) {
 	u8 *temp_v0_2;
 
 	temp_t5 = D_8014F89C - 0x7F;
-	temp_v1 = arg0[0];
 	temp_s0 = D_8014F89D - 0x7F;
+	temp_s1 = D_8014F899 - temp_t5;
+	temp_s2 = D_8014F898 - temp_s0;
+	temp_v1 = arg0[0];
 	temp_t3 = arg0[1];
 	temp_t4 = arg1[0];
 	temp_s3 = arg1[1];
-	temp_s1 = D_8014F899 - temp_t5;
-	temp_s2 = D_8014F898 - temp_s0;
 	var_a3 = (temp_v1 >> 8) + 1;
 	var_t0 = (temp_t3 >> 8) + 1;
 	var_t1 = (temp_t4 >> 8) + 1;
