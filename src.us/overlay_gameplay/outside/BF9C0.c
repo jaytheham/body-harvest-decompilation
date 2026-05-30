@@ -2262,7 +2262,364 @@ s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5EE4_C4E94.s")
 #endif
 
+s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4);
+
+// CURRENT(128303)
+#ifdef NON_MATCHING
+void func_800B604C_C4FFC(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6) {
+	struct {
+		s16 counts[8];
+		s16 tiles[8][16];
+		s16 order[8][16];
+	} sp12C;
+	Vtx *srcBase;
+	Vtx *copiedBase;
+	s16 width;
+	s16 height;
+	s16 x;
+	s16 y;
+	s32 bucket;
+	s32 modeByte;
+
+	for (bucket = 0; bucket < 8; bucket++) {
+		sp12C.counts[bucket] = -1;
+	}
+
+	srcBase = (Vtx *)arg0;
+
+	if ((arg1 == 0) && (arg2 == 0) && (arg3 == 4) && (arg4 == 4)) {
+		for (y = 0; y < 5; y++) {
+			for (x = 0; x < 5; x++) {
+				D_8005BB34[0] = srcBase[(y * 0x12) + x];
+				D_8005BB34++;
+			}
+		}
+
+		D_8005BB2C->words.w0 = 0x0408658F;
+		D_8005BB2C->words.w1 = (u32)(D_8005BB34 - 0x19);
+		D_8005BB2C++;
+
+		copiedBase = D_8005BB34 - 0x19;
+		modeByte = D_8014F857;
+
+		for (y = 0; y < 4; y++) {
+			for (x = 0; x < 4; x++) {
+				u16 tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
+				Vtx *v = copiedBase + (y * 5) + x;
+
+				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, (u8)arg6)) {
+						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
+						s16 idx = ++sp12C.counts[b];
+
+						sp12C.tiles[b][idx] = tile;
+						sp12C.order[b][idx] = (y * 5) + x;
+					}
+				}
+			}
+		}
+
+		for (bucket = 0; bucket < 8; bucket++) {
+			s16 i;
+			s16 count = sp12C.counts[bucket];
+
+			if (count < 0) {
+				continue;
+			}
+
+			D_8005BB2C->words.w0 = 0xFD500000;
+			D_8005BB2C->words.w1 = (((u32)&D_80224E80[(((((u8)arg6) * 8) + bucket) << 11)]) & 0x1FFFFFFF);
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF5500000;
+			D_8005BB2C->words.w1 = 0x07000000;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xE6000000;
+			D_8005BB2C->words.w1 = 0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF3000000;
+			D_8005BB2C->words.w1 = 0x073FF200;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xE7000000;
+			D_8005BB2C->words.w1 = 0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF5480800;
+			D_8005BB2C->words.w1 = 0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF2000000;
+			D_8005BB2C->words.w1 = 0x0007C0FC;
+			D_8005BB2C++;
+
+			for (i = 0; i <= count; i++) {
+				u16 tile = (u16)sp12C.tiles[bucket][i];
+				s16 base = (sp12C.order[bucket][i] + 4) * 2;
+				u32 t = ((u8)((tile & 0x3C0) >> 6)) & 1;
+
+				D_8005BB2C->words.w0 = 0xE8000000;
+				D_8005BB2C->words.w1 = 0;
+				D_8005BB2C++;
+				D_8005BB2C->words.w0 = 0xF5480800 | ((t << 7) & 0x1FF);
+				D_8005BB2C->words.w1 = 0x00014050 | ((((tile & 0x2000) >> 13) & 3) << 18) | ((((tile & 0x4000) >> 14) & 3) << 8);
+				D_8005BB2C++;
+				D_8005BB2C->words.w0 = 0xB1000000 | (((base + 2) & 0xFF) << 16) | ((base & 0xFF) << 8) | ((base + 0xA) & 0xFF);
+				D_8005BB2C->words.w1 = (((base + 2) & 0xFF) << 16) | (((base + 0xA) & 0xFF) << 8) | ((base + 0xC) & 0xFF);
+				D_8005BB2C++;
+			}
+		}
+		return;
+	}
+
+	width = arg3 - arg1;
+	height = arg4 - arg2;
+
+	if ((width * height) < 0xC) {
+		s16 cols = width + 1;
+		s16 rows = height + 1;
+		s32 total = rows * cols;
+
+		for (y = 0; y < rows; y++) {
+			for (x = 0; x < cols; x++) {
+				D_8005BB34[0] = srcBase[(y * 0x12) + x];
+				D_8005BB34++;
+			}
+		}
+
+		D_8005BB2C->words.w0 = 0x04080000 | ((((total << 10) | ((total << 4) - 1)) & 0xFFFF));
+		D_8005BB2C->words.w1 = (u32)(D_8005BB34 - total);
+		D_8005BB2C++;
+		copiedBase = D_8005BB34 - total;
+		modeByte = (u8)D_8014F854;
+
+		for (y = 0; y < height; y++) {
+			for (x = 0; x < width; x++) {
+				u16 tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
+				Vtx *v = copiedBase + (y * cols) + x;
+
+				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, (u8)arg6)) {
+						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
+						s16 idx = ++sp12C.counts[b];
+
+						sp12C.tiles[b][idx] = tile;
+						sp12C.order[b][idx] = (y * cols) + x;
+					}
+				}
+			}
+		}
+
+		for (bucket = 0; bucket < 8; bucket++) {
+			s16 i;
+			s16 count = sp12C.counts[bucket];
+
+			if (count < 0) {
+				continue;
+			}
+
+			D_8005BB2C->words.w0 = 0xFD500000;
+			D_8005BB2C->words.w1 = (((u32)&D_80224E80[(((((u8)arg6) * 8) + bucket) << 11)]) & 0x1FFFFFFF);
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF5500000;
+			D_8005BB2C->words.w1 = 0x07000000;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xE6000000;
+			D_8005BB2C->words.w1 = 0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF3000000;
+			D_8005BB2C->words.w1 = 0x073FF200;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xE7000000;
+			D_8005BB2C->words.w1 = 0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF5480800;
+			D_8005BB2C->words.w1 = 0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF2000000;
+			D_8005BB2C->words.w1 = 0x0007C0FC;
+			D_8005BB2C++;
+
+			for (i = 0; i <= count; i++) {
+				u16 tile = (u16)sp12C.tiles[bucket][i];
+				s16 base = (sp12C.order[bucket][i] + 4) * 2;
+				s16 edge = (sp12C.order[bucket][i] + 4 + cols) * 2;
+				u32 t = ((u8)((tile & 0x3C0) >> 6)) & 1;
+
+				D_8005BB2C->words.w0 = 0xF5480800 | ((t << 7) & 0x1FF);
+				D_8005BB2C->words.w1 = 0x00014050 | ((((tile & 0x2000) >> 13) & 3) << 18) | ((((tile & 0x4000) >> 14) & 3) << 8);
+				D_8005BB2C++;
+				D_8005BB2C->words.w0 = 0xB1000000 | (((base + 2) & 0xFF) << 16) | ((base & 0xFF) << 8) | (edge & 0xFF);
+				D_8005BB2C->words.w1 = (((base + 2) & 0xFF) << 16) | ((edge & 0xFF) << 8) | ((edge + 2) & 0xFF);
+				D_8005BB2C++;
+			}
+		}
+		return;
+	}
+
+	if (height == 4) {
+		s16 cols = 4;
+		s16 rows = 5;
+		s32 total = rows * cols;
+
+		for (y = 0; y < rows; y++) {
+			for (x = 0; x < cols; x++) {
+				D_8005BB34[0] = srcBase[(y * 0x12) + x];
+				D_8005BB34++;
+			}
+		}
+
+		D_8005BB2C->words.w0 = 0x04080000 | ((((total << 10) | ((total << 4) - 1)) & 0xFFFF));
+		D_8005BB2C->words.w1 = (u32)(D_8005BB34 - total);
+		D_8005BB2C++;
+		copiedBase = D_8005BB34 - total;
+		modeByte = (u8)D_8014F854;
+
+		for (y = 0; y < 4; y++) {
+			for (x = 0; x < 3; x++) {
+				u16 tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
+				Vtx *v = copiedBase + (y * cols) + x;
+
+				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, (u8)arg6)) {
+						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
+						s16 idx = ++sp12C.counts[b];
+
+						sp12C.tiles[b][idx] = tile;
+						sp12C.order[b][idx] = (y * cols) + x;
+					}
+				}
+			}
+		}
+
+		for (bucket = 0; bucket < 8; bucket++) {
+			s16 i;
+			s16 count = sp12C.counts[bucket];
+
+			if (count < 0) {
+				continue;
+			}
+
+			D_8005BB2C->words.w0 = 0xFD500000;
+			D_8005BB2C->words.w1 = (((u32)&D_80224E80[(((((u8)arg6) * 8) + bucket) << 11)]) & 0x1FFFFFFF);
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF5500000;
+			D_8005BB2C->words.w1 = 0x07000000;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xE6000000;
+			D_8005BB2C->words.w1 = 0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF3000000;
+			D_8005BB2C->words.w1 = 0x073FF200;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xE7000000;
+			D_8005BB2C->words.w1 = 0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF5480800;
+			D_8005BB2C->words.w1 = 0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF2000000;
+			D_8005BB2C->words.w1 = 0x0007C0FC;
+			D_8005BB2C++;
+
+			for (i = 0; i <= count; i++) {
+				u16 tile = (u16)sp12C.tiles[bucket][i];
+				s16 base = (sp12C.order[bucket][i] + 4) * 2;
+				s16 edge = (sp12C.order[bucket][i] + 8) * 2;
+				u32 t = ((u8)((tile & 0x3C0) >> 6)) & 1;
+
+				D_8005BB2C->words.w0 = 0xF5480800 | ((t << 7) & 0x1FF);
+				D_8005BB2C->words.w1 = 0x00014050 | ((((tile & 0x2000) >> 13) & 3) << 18) | ((((tile & 0x4000) >> 14) & 3) << 8);
+				D_8005BB2C++;
+				D_8005BB2C->words.w0 = 0xB1000000 | (((base + 2) & 0xFF) << 16) | ((base & 0xFF) << 8) | (edge & 0xFF);
+				D_8005BB2C->words.w1 = (((base + 2) & 0xFF) << 16) | ((edge & 0xFF) << 8) | ((edge + 2) & 0xFF);
+				D_8005BB2C++;
+			}
+		}
+		return;
+	}
+
+	else {
+		s16 cols = 5;
+		s16 rows = 4;
+		s32 total = rows * cols;
+
+		for (y = 0; y < rows; y++) {
+			for (x = 0; x < cols; x++) {
+				D_8005BB34[0] = srcBase[(y * 0x12) + x];
+				D_8005BB34++;
+			}
+		}
+
+		D_8005BB2C->words.w0 = 0x04080000 | ((((total << 10) | ((total << 4) - 1)) & 0xFFFF));
+		D_8005BB2C->words.w1 = (u32)(D_8005BB34 - total);
+		D_8005BB2C++;
+		copiedBase = D_8005BB34 - total;
+		modeByte = (u8)D_8014F854;
+
+		for (y = 0; y < 3; y++) {
+			for (x = 0; x < 4; x++) {
+				u16 tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
+				Vtx *v = copiedBase + (y * cols) + x;
+
+				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, (u8)arg6)) {
+						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
+						s16 idx = ++sp12C.counts[b];
+
+						sp12C.tiles[b][idx] = tile;
+						sp12C.order[b][idx] = (y * cols) + x;
+					}
+				}
+			}
+		}
+
+		for (bucket = 0; bucket < 8; bucket++) {
+			s16 i;
+			s16 count = sp12C.counts[bucket];
+
+			if (count < 0) {
+				continue;
+			}
+
+			D_8005BB2C->words.w0 = 0xFD500000;
+			D_8005BB2C->words.w1 = (((u32)&D_80224E80[(((((u8)arg6) * 8) + bucket) << 11)]) & 0x1FFFFFFF);
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF5500000;
+			D_8005BB2C->words.w1 = 0x07000000;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xE6000000;
+			D_8005BB2C->words.w1 = 0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF3000000;
+			D_8005BB2C->words.w1 = 0x073FF200;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xE7000000;
+			D_8005BB2C->words.w1 = 0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF5480800;
+			D_8005BB2C->words.w1 = 0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xF2000000;
+			D_8005BB2C->words.w1 = 0x0007C0FC;
+			D_8005BB2C++;
+
+			for (i = 0; i <= count; i++) {
+				u16 tile = (u16)sp12C.tiles[bucket][i];
+				s16 base = (sp12C.order[bucket][i] + 4) * 2;
+				s16 edge = (sp12C.order[bucket][i] + 9) * 2;
+				u32 t = ((u8)((tile & 0x3C0) >> 6)) & 1;
+
+				D_8005BB2C->words.w0 = 0xF5480800 | ((t << 7) & 0x1FF);
+				D_8005BB2C->words.w1 = 0x00014050 | ((((tile & 0x2000) >> 13) & 3) << 18) | ((((tile & 0x4000) >> 14) & 3) << 8);
+				D_8005BB2C++;
+				D_8005BB2C->words.w0 = 0xB1000000 | (((base + 2) & 0xFF) << 16) | ((base & 0xFF) << 8) | (edge & 0xFF);
+				D_8005BB2C->words.w1 = (((base + 2) & 0xFF) << 16) | ((edge & 0xFF) << 8) | ((edge + 2) & 0xFF);
+				D_8005BB2C++;
+			}
+		}
+		return;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B604C_C4FFC.s")
+#endif
 
 // Draw rotated tiles e.g. roads
 // CURRENT(94016)
