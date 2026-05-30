@@ -1451,7 +1451,7 @@ void func_802D4E70_2545B0(s32 arg0);
 void func_802D4CD0_254410(s32 arg0, s32 arg1);
 void setVideoInterfaceXSize(s32 width);
 void setVideoInterfaceYSize(s32 height);
-
+s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4);
 /* core/loader */
 extern void (*__printfunc)(s32, s32);
 
