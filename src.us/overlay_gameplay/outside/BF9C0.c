@@ -979,7 +979,7 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 
 // CURRENT(10974)
 #ifdef NON_MATCHING
-void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s32 arg2, s32 arg3) {
+void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s32 sp70;
 	s32 sp6C;
 	s32 sp68;
@@ -1058,13 +1058,13 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s32 arg2, s32 arg3) {
 					sp6C = var_t1;
 					sp62 = var_t2;
 					sp60 = var_t3;
-					temp_v0_2 = (s32) sqrtf((f32) ((var_v0_2 * var_v0_2) + (var_v0 * var_v0))) - (s16) arg2;
+					temp_v0_2 = (s32) sqrtf((f32) ((var_v0_2 * var_v0_2) + (var_v0 * var_v0))) - arg2;
 					temp_t7 = (s16) temp_v0_2;
 					var_v1 = temp_t7;
 					if ((s16) temp_t7 < 0) {
 						var_v1 = (s16) (temp_t7 * -1);
 					}
-					temp_v1_3 = (s16) arg3 - var_v1;
+					temp_v1_3 = arg3 - var_v1;
 					if (temp_v1_3 > 0) {
 						temp_v0_3 = var_s2 + var_t0;
 						var_v1_2 = (s16) (((f32) temp_v1_3 / (f32) (s16) arg3) * 255.0f);
