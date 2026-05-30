@@ -864,7 +864,7 @@ void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1A68_C0A18.s")
 #endif
 
-// CURRENT(200)
+// CURRENT(11404)
 #ifdef NON_MATCHING
 void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 	s16 baseX;
@@ -887,6 +887,8 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 	s16 dist;
 	s16 falloff;
 	s16 intensity;
+	f32 temp_f10;
+	u32 temp_f8;
 	u8 *color;
 	u8 *dst;
 
@@ -899,7 +901,10 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 	centerY = D_8014F89D - 0x7F;
 	mapOffX = (D_8014F899 + baseX) - centerX;
 	mapOffY = (D_8014F898 + baseY) - centerY;
-	radius = (u8)((f32)(arg2 + arg3) / 256.0f);
+	temp_f10 = (f32)(arg2 + arg3);
+	temp_f8 = 0x43800000;
+	temp_f10 = temp_f10 / *(f32 *)&temp_f8;
+	radius = (u8)((u32)temp_f10 + 1);
 	start = 1 - radius;
 	end = radius + 1;
 
