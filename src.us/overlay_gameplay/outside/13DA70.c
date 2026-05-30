@@ -98,11 +98,12 @@ void func_8012EAC0_13DA70(s32 arg0, u8 *arg1)
 }
 
 /* Concatenates two strings (arg0 + arg1) into the output buffer arg2 */
+// CURRENT(305)
 #ifdef NON_MATCHING
 void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 	s16 i;
 	s16 j;
-	u8 *ptr;
+	u32 ch;
 
 	i = 0;
 	if (*arg0 != 0) {
@@ -111,12 +112,13 @@ void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 			i++;
 		} while (arg0[i] != 0);
 	}
-	j = 0;
+	j = i;
+	i = 0;
 	do {
-		ptr = &arg1[j];
-		arg2[i + j] = *ptr;
-		j++;
-	} while (*ptr > 0U);
+		ch = arg1[i];
+		arg2[j + i] = ch;
+		i++;
+	} while (ch > 0U);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012EBC0_13DB70.s")
@@ -260,30 +262,30 @@ void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F24C_13E1FC.s")
 #endif
 
+// CURRENT(2415)
 #ifdef NON_MATCHING
-// CURRENT(5182)
 void func_8012F2DC_13E28C(s32 arg0, s32 arg1, s32 arg2)
 {
 	f32 temp_f10;
 	f32 var_f0;
-	s32 temp_t9;
 	s32 var_v1;
 	u8 temp_v0;
+	u16 temp_a0;
 
-	if (((f64) (f32) coss((D_80140C78_14FC28 * 0x3E8) & 0xFFFF) / 32768.0) >= 0.0) {
-		var_f0 = (f32) ((f64) (f32) coss((D_80140C78_14FC28 * 0x3E8) & 0xFFFF) / 32768.0);
+	temp_a0 = (D_80140C78_14FC28 * 0x3E8) & 0xFFFF;
+	if (((f64) (f32) coss(temp_a0) / 32768.0) >= 0.0) {
+		temp_a0 = (D_80140C78_14FC28 * 0x3E8) & 0xFFFF;
+		var_f0 = (f32) ((f64) (f32) coss(temp_a0) / 32768.0);
 	} else {
-		var_f0 = (f32) -((f64) (f32) coss((D_80140C78_14FC28 * 0x3E8) & 0xFFFF) / 32768.0);
+		temp_a0 = (D_80140C78_14FC28 * 0x3E8) & 0xFFFF;
+		var_f0 = (f32) -((f64) (f32) coss(temp_a0) / 32768.0);
 	}
 
-	var_v1 = 0;
-	do {
+	for (var_v1 = 0; var_v1 < 3; var_v1 = (var_v1 + 1) & 0xFF) {
 		temp_v0 = *(u8 *) (arg0 + var_v1);
-		temp_t9 = (var_v1 + 1) & 0xFF;
 		temp_f10 = (f32) (0xFF - temp_v0);
 		*(u8 *) (arg1 + var_v1) = (u32) (temp_f10 * var_f0) + temp_v0;
-		var_v1 = temp_t9;
-	} while (temp_t9 < 3);
+	}
 
 	D_80140C78_14FC28 += arg2;
 }
@@ -291,15 +293,14 @@ void func_8012F2DC_13E28C(s32 arg0, s32 arg1, s32 arg2)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F2DC_13E28C.s")
 #endif
 
-// CURRENT(43415)
+// CURRENT(34709)
 #ifdef NON_MATCHING
 s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, u8 arg7)
 {
 	s32 i;
 	s32 textWidth;
-	s32 textLen;
+	u8 textLen;
 	s32 x;
-	s32 yTop;
 	s32 allMatched;
 	u8 pulseColor[4];
 	s32 flags;
@@ -308,20 +309,32 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 	flags = arg7;
 
 	if (arg6 != 0) {
-		s32 target;
 		s32 idx;
 
-		target = (flags & 4) ? 100 : 0;
-		D_8015FF88 = target;
+		if ((flags & 4) != 0) {
+			D_8015FF88 = 100;
+		} else {
+			D_8015FF88 = 0;
+		}
 
-		for (idx = 0; idx < 48; idx++) {
-			D_8015FF90[idx] = target;
+		for (idx = 0; idx < 48; idx += 2) {
+			if ((flags & 4) != 0) {
+				D_8015FF90[idx] = 100;
+			} else {
+				D_8015FF90[idx] = 0;
+			}
+
+			if ((flags & 4) != 0) {
+				D_8015FF90[idx + 1] = 100;
+			} else {
+				D_8015FF90[idx + 1] = 0;
+			}
 		}
 	}
 
 	if (arg5 != 0) {
-		for (i = 45; i >= 0; i--) {
-			D_8015FF90[i + 2] = D_8015FF90[i];
+		for (i = 18; i >= 0; i--) {
+			D_8015FF90[i + 1] = D_8015FF90[i];
 		}
 		D_8015FF90[0] = D_8015FF88;
 	}
@@ -340,10 +353,9 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 		textLen++;
 	}
 
-	x = (D_80068084 >> 1) - (textWidth >> 1);
+	x = (D_80068084 / 2) - (textWidth >> 1);
 
 	for (i = 0; i < textLen; i++) {
-		s32 endX;
 		u8 ch;
 
 		ch = arg0[i];
@@ -352,7 +364,6 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 			continue;
 		}
 
-		yTop = arg3 + arg2;
 		if ((ch == 'i') || (ch == 'I') || (ch == '1')) {
 			x -= arg1 >> 1;
 		}
@@ -372,9 +383,6 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 				s32 alpha;
 				s32 sHalf;
 				s32 bandHeight;
-				s32 dsdx;
-				s32 dtdy;
-				s32 useBaseColor;
 
 				colIndex = rowBase + band;
 				if (colIndex >= 0x30) {
@@ -400,23 +408,11 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 					sHalf = 1;
 				}
 
-				useBaseColor = 0;
-				if ((flags & 4) != 0) {
-					if (alpha == 0) {
-						useBaseColor = 1;
-					}
-				} else if (alpha == 100) {
-					useBaseColor = 1;
-				}
-
-				if (useBaseColor || ((flags & 8) != 0)) {
+				if ((((flags & 4) != 0) && (alpha == 0)) || (((flags & 4) == 0) && (alpha == 100)) || ((flags & 8) != 0)) {
 					gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
 				} else {
-					s32 fadeA;
-
 					func_8012F24C_13E1FC(pulseColor, 5);
-					fadeA = (s32) ((((f32) (7 - band)) / 7.0f) * 255.0f);
-					gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], fadeA & 0xFF);
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], ((s32) ((((f32) (7 - band)) / 7.0f) * 255.0f)) & 0xFF);
 				}
 
 				bandHeight = alpha;
@@ -424,37 +420,28 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 					bandHeight = ((flags & 4) != 0) ? 0 : 100;
 				}
 
-				dsdx = (s32) ((1.0f / (((f32) (sHalf * 2)) / 32.0f)) * 1024.0f);
-				dtdy = (s32) ((1.0f / (((f32) ((bandHeight * 2) + arg2)) / 32.0f)) * 1024.0f);
-
 				gDPPipeSync(D_8005BB2C++);
 				gSPTextureRectangle(
 					D_8005BB2C++,
 					(centerX - sHalf) << 2,
 					(arg3 - bandHeight) << 2,
 					(centerX + sHalf) << 2,
-					(yTop + bandHeight) << 2,
+					(arg3 + arg2 + bandHeight) << 2,
 					G_TX_RENDERTILE,
 					0,
 					0,
-					dsdx,
-					dtdy
+					(s32) ((1.0f / (((f32) (sHalf * 2)) / 32.0f)) * 1024.0f),
+					(s32) ((1.0f / (((f32) ((bandHeight * 2) + arg2)) / 32.0f)) * 1024.0f)
 				);
 			}
 
-			endX = x + arg1;
+			x += arg1;
 		} else {
-			s32 dsdx;
-			s32 dtdy;
-
 			if ((flags & 0x20) != 0) {
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], 0xFF);
 			} else {
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
 			}
-
-			dsdx = (s32) ((1.0f / (((f32) arg1) / 32.0f)) * 1024.0f);
-			dtdy = (s32) ((1.0f / (((f32) arg2) / 32.0f)) * 1024.0f);
 
 			gDPPipeSync(D_8005BB2C++);
 			gSPTextureRectangle(
@@ -462,18 +449,18 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 				x << 2,
 				arg3 << 2,
 				(x + arg1) << 2,
-				yTop << 2,
+				(arg3 + arg2) << 2,
 				G_TX_RENDERTILE,
 				0,
 				0,
-				dsdx,
-				dtdy
+				(s32) ((1.0f / (((f32) arg1) / 32.0f)) * 1024.0f),
+				(s32) ((1.0f / (((f32) arg2) / 32.0f)) * 1024.0f)
 			);
 
-			endX = x + arg1;
+			x += arg1;
 		}
 
-		x = endX + 2;
+		x += 2;
 	}
 
 	if (arg5 != 0) {
@@ -531,7 +518,7 @@ s32 func_8012FFB0_13EF60(void)
 }
 
 // End of level state manager
-// CURRENT(25610)
+// CURRENT(24920)
 #ifdef NON_MATCHING
 void func_8013001C_13EFCC(void)
 {
@@ -674,7 +661,7 @@ void func_8013001C_13EFCC(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8013001C_13EFCC.s")
 #endif
 
-// CURRENT(2200)
+// CURRENT(415)
 #ifdef NON_MATCHING
 void func_801306C4_13F674(u8 *arg0)
 {

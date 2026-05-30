@@ -699,7 +699,7 @@ void func_800AB570_BA520(u8 arg0);
 void func_800AB8CC_BA87C(u8 arg0);
 void func_800AC5BC_BB56C(u8 arg0);
 s32 func_800AC2FC_BB2AC(u8 arg0);
-void func_800B32AC_C225C(u8 *);
+void func_800B32AC_C225C(u16 *);
 void func_800B345C_C240C(u8, u8, u8 *, u8);
 void func_800B4050_C3000(u8, u8, u8 *, u8);
 void func_800B41C8_C3178(u8, u8, u8*, u8);
