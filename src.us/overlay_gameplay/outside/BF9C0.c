@@ -534,7 +534,8 @@ void func_800B165C_C060C(s32 arg0) {
 			s32 x;
 			s32 xEnd;
 			s32 rem;
-			s32 rowOffset;
+			s32 curX;
+			u8 *row;
 
 			minX = wall->unk0;
 			maxX = wall->unk4;
@@ -548,8 +549,6 @@ void func_800B165C_C060C(s32 arg0) {
 					}
 				}
 			}
-
-			rowOffset = z << 6;
 
 			if (!(z < (wall->unk12 >> 10))) {
 				if (z < (wall->unk16 >> 10)) {
@@ -565,23 +564,31 @@ void func_800B165C_C060C(s32 arg0) {
 			xEnd = maxX >> 10;
 
 			if (x < xEnd) {
+				row = D_8021EA30 + (z << 6);
+				curX = x;
 				rem = (xEnd - x) & 3;
 				if (rem != 0) {
-					s32 remEnd = x + rem;
+					s32 remEnd = rem + x;
 
 					do {
-						D_8021EA30[rowOffset + 0x820 + x] |= 0xF0;
-						x++;
-					} while (x != remEnd);
+						row[curX + 0x820] |= 0xF0;
+						curX++;
+					} while (remEnd != curX);
+
+					if (curX == xEnd) {
+						goto done_row;
+					}
 				}
 
-				while (x != xEnd) {
-					D_8021EA30[rowOffset + 0x820 + x] |= 0xF0;
-					D_8021EA30[rowOffset + 0x821 + x] |= 0xF0;
-					D_8021EA30[rowOffset + 0x822 + x] |= 0xF0;
-					D_8021EA30[rowOffset + 0x823 + x] |= 0xF0;
-					x += 4;
-				}
+				do {
+					row[curX + 0x820] |= 0xF0;
+					row[curX + 0x821] |= 0xF0;
+					row[curX + 0x822] |= 0xF0;
+					row[curX + 0x823] |= 0xF0;
+					curX += 4;
+				} while (curX != xEnd);
+			done_row:
+				;
 			}
 			maxZ = wall->unk6 >> 10;
 
