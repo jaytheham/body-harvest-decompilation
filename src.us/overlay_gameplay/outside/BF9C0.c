@@ -870,6 +870,7 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 	s32 sp54;
 	s32 sp50;
 	s32 sp4C;
+	f32 temp_f8;
 	f32 temp_f10;
 	s16 temp_ra;
 	s16 temp_s3;
@@ -985,7 +986,7 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
 #endif
 
-// CURRENT(10974)
+// CURRENT(8672)
 #ifdef NON_MATCHING
 void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s32 sp70;
@@ -997,6 +998,7 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s32 sp54;
 	s32 sp50;
 	s32 sp4C;
+	f32 temp_f8;
 	f32 temp_f10;
 	s16 temp_ra;
 	s16 temp_s3;
@@ -1022,20 +1024,18 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s32 temp_t7;
 	s32 temp_v0_2;
 	s32 var_a3;
-	s32 var_t0;
-	s32 var_t1;
 	s32 var_v1;
 	u8 *var_a0;
 
 	temp_v0 = arg0->unk0;
 	temp_s4 = D_8014F89D - 0x7F;
-	var_t0 = (temp_v0 >> 8) + 1;
+	sp70 = (temp_v0 >> 8) + 1;
 	temp_v1 = arg0->unk2;
 	temp_s3 = D_8014F89C - 0x7F;
-	var_t1 = (temp_v1 >> 8) + 1;
-	var_t2 = (D_8014F899 + var_t0) - temp_s3;
-	var_t3 = (D_8014F898 + var_t1) - temp_s4;
-	temp_f10 = (f32) (arg2 + arg3) / 256.0f;
+	sp6C = (temp_v1 >> 8) + 1;
+	var_t2 = (D_8014F899 + sp70) - temp_s3;
+	var_t3 = (D_8014F898 + sp6C) - temp_s4;
+	temp_f10 = (f32) (arg2 + arg3) / 256;
 	sp68 = temp_v0 & 0xFF;
 	temp_s5 = temp_v1 & 0xFF;
 	temp_t5 = (u8) (((u32) temp_f10) + 1);
@@ -1050,7 +1050,7 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		do {
 			var_s0 = (s16) ((u32) sp58 >> 16);
 			if (var_s2 <= 0) {
-				var_v0 = 0 + (var_s2 * -0x100);
+					var_v0 = 0 + (var_s2 * -0x100);
 			} else {
 				var_v0 = ((0x100 - sp68) + (var_s2 << 8)) - 0x100;
 			}
@@ -1062,8 +1062,6 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 						var_v0_2 = ((0x100 - temp_s5) + (var_s0 << 8)) - 0x100;
 					}
 					sp4C = var_a3;
-					sp70 = var_t0;
-					sp6C = var_t1;
 					sp62 = var_t2;
 					sp60 = var_t3;
 					temp_v0_2 = (s32) sqrtf((f32) ((var_v0_2 * var_v0_2) + (var_v0 * var_v0))) - arg2;
@@ -1074,13 +1072,13 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 					}
 					temp_v1_3 = arg3 - var_v1;
 					if (temp_v1_3 > 0) {
-						temp_v0_3 = var_s2 + var_t0;
+						temp_v0_3 = var_s2 + sp70;
 						var_v1_2 = (s16) (((f32) temp_v1_3 / (f32) (s16) arg3) * 255.0f);
 						if (var_v1_2 >= 0x100) {
 							var_v1_2 = 0xFF;
 						}
 						if (temp_v0_3 >= temp_s3) {
-							temp_v0_4 = var_s0 + var_t1;
+							temp_v0_4 = var_s0 + sp6C;
 							if (((s16) (temp_s3 + 0x13) >= temp_v0_3) && (temp_v0_4 >= temp_s4) && ((s16) (temp_s4 + 0x13) >= temp_v0_4)) {
 								var_v0_3 = (s16) (((s32) arg1[0] * var_v1_2) >> 8);
 								if (var_v0_3 >= 0x100) {
