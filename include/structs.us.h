@@ -2023,6 +2023,13 @@ typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+} UnkF9230Func8010065CEntry; /* size = 0x08 */
+
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
 	/* 0x06 */ u8 pad6[2];
 	/* 0x08 */ f32 unk8;
 	/* 0x0C */ f32 unkC;
