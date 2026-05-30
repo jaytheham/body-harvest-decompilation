@@ -600,56 +600,58 @@ void func_800B165C_C060C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B165C_C060C.s")
 #endif
 
-// CURRENT(11776)
+// CURRENT(6223)
 #ifdef NON_MATCHING
-void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
+void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2, s16 *arg3) {
 	s32 x = arg0 & 0xFF;
 	s32 y = arg1 & 0xFF;
 	s32 tileX = ((x >> 1) - 1) & 0xFF;
 	s32 tileY = (y >> 1) & 0xFF;
-	u16 r0;
-	u16 g0;
-	u16 b0;
-	u16 r1;
-	u16 g1;
-	u16 b1;
+	u16 top[3];
+	u16 bot[3];
+	s32 rowBase0 = tileX << 7;
+	s32 rowBase1 = tileX << 7;
 	u8 c00 = D_80260700[(tileX << 7) + tileY];
-	u8 c01 = D_80260700[(tileX << 7) + tileY + 1];
-	u16 c10 = D_80260700[(tileX << 7) + tileY + 0x80];
-	u16 c11 = D_80260700[(tileX << 7) + tileY + 0x81];
-	u16 c00Tmp;
-	u16 c01Tmp;
+	u8 c10 = D_80260700[rowBase1 + tileY + 0x80];
+	u8 c11 = D_80260700[rowBase1 + tileY + 0x81];
+	u8 c01 = D_80260700[rowBase0 + tileY + 1];
+
+	(void)arg3;
 
 	if (!(x & 1)) {
-		r0 = ((u8*) D_80264700)[c00 * 4 + 0];
-		g0 = ((u8*) D_80264700)[c00 * 4 + 1];
-		b0 = ((u8*) D_80264700)[c00 * 4 + 2];
+		u8 *palette = (u8*) D_80264700;
 
-		r1 = ((u8*) D_80264700)[c01 * 4 + 0];
-		g1 = ((u8*) D_80264700)[c01 * 4 + 1];
-		b1 = ((u8*) D_80264700)[c01 * 4 + 2];
-		c00Tmp = c00;
-		c01Tmp = c01;
+		top[0] = palette[c00 * 4 + 0];
+		top[1] = palette[c00 * 4 + 1];
+		top[2] = palette[c00 * 4 + 2];
+
+		bot[0] = palette[c01 * 4 + 0];
+		bot[1] = palette[c01 * 4 + 1];
+		bot[2] = palette[c01 * 4 + 2];
 	} else {
-		c00Tmp = c00;
-		c01Tmp = c01;
-		r0 = (((u8*) D_80264700)[c00Tmp * 4 + 0] + ((u8*) D_80264700)[c10 * 4 + 0]) >> 1;
-		g0 = (((u8*) D_80264700)[c00Tmp * 4 + 1] + ((u8*) D_80264700)[c10 * 4 + 1]) >> 1;
-		b0 = (((u8*) D_80264700)[c00Tmp * 4 + 2] + ((u8*) D_80264700)[c10 * 4 + 2]) >> 1;
+		u8 *palette = (u8*) D_80264700;
 
-		r1 = (((u8*) D_80264700)[c01Tmp * 4 + 0] + ((u8*) D_80264700)[c11 * 4 + 0]) >> 1;
-		g1 = (((u8*) D_80264700)[c01Tmp * 4 + 1] + ((u8*) D_80264700)[c11 * 4 + 1]) >> 1;
-		b1 = (((u8*) D_80264700)[c01Tmp * 4 + 2] + ((u8*) D_80264700)[c11 * 4 + 2]) >> 1;
+		top[0] = (palette[c00 * 4 + 0] + palette[c10 * 4 + 0]) >> 1;
+		top[1] = (palette[c00 * 4 + 1] + palette[c10 * 4 + 1]) >> 1;
+		top[2] = (palette[c00 * 4 + 2] + palette[c10 * 4 + 2]) >> 1;
+
+		bot[0] = (palette[c01 * 4 + 0] + palette[c11 * 4 + 0]) >> 1;
+		bot[1] = (palette[c01 * 4 + 1] + palette[c11 * 4 + 1]) >> 1;
+		bot[2] = (palette[c01 * 4 + 2] + palette[c11 * 4 + 2]) >> 1;
 	}
 
-	if (!(y & 1)) {
-		arg2[0] = r0;
-		arg2[1] = g0;
-		arg2[2] = b0;
-	} else {
-		arg2[0] = (r0 + r1) >> 1;
-		arg2[1] = (g0 + g1) >> 1;
-		arg2[2] = (b0 + b1) >> 1;
+	{
+		u16 top0 = top[0];
+
+		if (!(y & 1)) {
+			arg2[0] = top0;
+			arg2[1] = top[1];
+			arg2[2] = top[2];
+		} else {
+			arg2[0] = (top0 + bot[0]) >> 1;
+			arg2[1] = (top[1] + bot[1]) >> 1;
+			arg2[2] = (top[2] + bot[2]) >> 1;
+		}
 	}
 }
 #else
