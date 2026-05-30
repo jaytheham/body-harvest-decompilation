@@ -74,7 +74,7 @@ If build returns `build/bh.us.z64: OK` the function is matched and you can stop 
 
 ## Finalize
 
-If you're finished (keep going! But if you must finish), revert the code to the best-scoring version found and wrap the function with NON_MATCHING. Add/update a comment above the function with that best score: `// CURRENT(123)`.
+If you're finished (keep going! But if you must finish), revert the code to the best-scoring version found. Add/update a comment above the function with that best score: `// CURRENT(123)`.
 
 Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated notes to help future decomp. Only for matched functions.
 Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.
