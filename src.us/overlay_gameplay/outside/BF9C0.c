@@ -70,8 +70,8 @@ s32 D_8013DB08_14CAB8 = 0;
 
 s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32)(((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
-}
-
+// CURRENT(1800)
+#ifdef NON_MATCHING
 #ifdef NON_MATCHING
 s32 func_800B0A88_BFA38(s32 arg0, s32 arg1) {
 	s32 a0;
@@ -592,6 +592,9 @@ void func_800B165C_C060C(s32 arg0) {
 			}
 			maxZ = wall->unk6 >> 10;
 
+			#else
+			#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B32AC_C225C.s")
+			#endif
 			z++;
 		} while (z < maxZ);
 	}
@@ -1211,21 +1214,21 @@ s32 func_800B325C_C220C(s8 arg0, s8 arg1, u16 arg2)
 {
   return (D_8014F8A0[128 + arg1][128 + arg0] & arg2) & 0xFFFF;
 }
-
-
+// CURRENT(1800)
 #ifdef NON_MATCHING
-void func_800B32AC_C225C(u8 *arg0) {
-	s32 x;
-	s32 y;
-	s32 i;
+void func_800B32AC_C225C(u16 *arg0) {
+	u8 x;
+	u8 y;
+	u32 end;
+	u32 i;
 	s32 level;
-	u16 *cell;
-	u16 val;
+	u16 *start;
 
 	x = 0;
 	y = 0;
 	level = D_80222A70 / 32;
-	cell = (u16 *)arg0;
+	start = arg0;
+	end = 0x1FE02;
 	i = 0;
 
 	do {
@@ -1236,27 +1239,22 @@ void func_800B32AC_C225C(u8 *arg0) {
 				level = 0x20;
 			}
 		}
-
-		val = cell[0];
-		if (((cell[0] & 0x3F) < level) || ((cell[1] & 0x3F) < level) || ((cell[0x100] & 0x3F) < level) ||
-			((cell[0x101] & 0x3F) < level)) {
-			cell[0] = val | 0x1000;
+		if (((arg0[0] & 0x3F) < level) || ((arg0[1] & 0x3F) < level) || ((arg0[0x100] & 0x3F) < level) ||
+			((arg0[0x101] & 0x3F) < level)) {
+			arg0[0] |= 0x1000;
 		} else {
-			cell[0] = val & ~0x1000;
+			arg0[0] &= ~0x1000;
 		}
 
 		x = (x + 1) & 0xFF;
 		if (x == 0) {
 			y = (y + 1) & 0xFF;
 		}
-		cell++;
-	} while (i != 0x1FE02);
+		arg0++;
+	} while (i != end);
 
-	*((u16 *)arg0) = 0;
+	*start = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B32AC_C225C.s")
-#endif
 
 void func_800B33BC_C236C(s32 arg0) {
 	s16 coss_val;
@@ -3662,6 +3660,9 @@ void func_800B9DB8_C8D68(u8 arg0)
   {
 	col_idx = (sp6C + ra) & 0xFF;
 	sp60 = &D_8021EA30[col_idx << 6];
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B32AC_C225C.s")
+#endif
 	sp54 = col_idx;
 	sp50 = (s16) ((col_idx << 10) + 0x8000);
 	s7 = 0;
