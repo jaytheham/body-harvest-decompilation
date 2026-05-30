@@ -14,7 +14,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
 ## Project Structure
 
 - `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
-- `asm/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
+- `asm/matchings`: Readonly - target assembly of matched functions.
 - `src.us/`: C source files.
 - `include/`: Header files for variables, functions, and structs.
 - `build/`: Readonly - compiled object files and the built ROM image.
@@ -51,13 +51,13 @@ If you don't know one of the values, you can use `12345678` as a placeholder for
 2. Always read the whole file `DecompHints.md` for general matching advice.
 3. Build, compare with target, identify differences.
 4. Make a single change to the C code to try to reduce the number of differences in assembly.
-5. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match, never surrender!
+5. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
 
-First target different/missing instructions and their ordering, target register allocation last.
+First target different/missing instructions and their ordering, target register allocation and stack placement last.
 
 Be relentless, make as many attempts as needed, and try every possible change you can think of to get that score down to 0. You can do it!
 
-If build completes with `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
+If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
 - Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
@@ -74,7 +74,7 @@ If build completes with `build/bh.us.z64: OK` the function is matched and you ca
 
 ## Finalize
 
-If you're giving up (never give up! But if you must), revert the code to the best-scoring version found and wrap the function with NON_MATCHING. Add/update a comment above the function with the final score: `// CURRENT(123)`.
+If you're finished (keep going! But if you must finish), revert the code to the best-scoring version found and wrap the function with NON_MATCHING. Add/update a comment above the function with that best score: `// CURRENT(123)`.
 
-Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated case notes to help future decomp. Only for matched functions.
+Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated notes to help future decomp. Only for matched functions.
 Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.
