@@ -81,7 +81,7 @@ There are 2 known versions of the ROM:
 | E - North America | `5326696F/FE9A99C3` | `BBB6666F5014A473747EE4145F036D9FB25D7348` | `B6.5`  |
 | P - European      | `0B58B8CD/B7B291D2` | `67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355` | `F2.6`  |
 
-Only US and EU versions were released to the public. If you are in possession of a beta/prototype ROM, please let me know.
+Only US and EU versions were released to the public. If you are in possession of a beta/prototype ROM please contact me!
 
 # Repo layout
 
@@ -92,7 +92,7 @@ build/           ; build folder (not checked in)
 include/
   2.0I/          ; libultra 2.0I headers
 lib/libultra.a   ; libultra 2.0I static library
-src.{us|eu})/
+src.{us|eu}/
 tools/
   ido5.3_recomp/ ; static recompilation of IDO 5.3 compiler
   splat_ext      ; custom splat extensions

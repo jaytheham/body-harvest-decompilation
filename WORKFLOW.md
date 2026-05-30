@@ -42,13 +42,12 @@ A **zone breach** (build error) is not — fix before continuing.
 
 ## 2. Finding Work
 
-1. Open `CLAIMED.md` — find a file with status `unclaimed` in your target subsystem
-2. Claim it (see `CONTRIBUTING.md` — Claiming Work)
-3. Check how many NON_MATCHING functions it has:
+1. Pick a C file.
+2. Check how many NON_MATCHING functions it has:
    ```sh
    grep -c "NON_MATCHING" src.us/<path/to/file>.c
    ```
-4. Start with the smallest/simplest function — short instruction count, low register
+3. Start with the smallest/simplest function — short instruction count, low register
    pressure. Function size approximation from assembly file:
    ```sh
    wc -l asm/us/overlay_gameplay/outside/<ADDR>.s
@@ -217,7 +216,6 @@ reclaim: cheats.c — 24/25 functions matching
 ### What to include in a commit
 
 - Modified `.c` source file
-- Updated `CLAIMED.md` (status → `complete` if file is done)
 - Nothing else — do not commit `asm/`, `build/`, `assets/` (they are gitignored)
 
 ### Branch naming
@@ -236,6 +234,3 @@ Examples: `reclaim/cheats`, `reclaim/884C0`, `reclaim/missions`
 - Build must pass — include `make --jobs` output if any doubt
 
 ---
-
-*See `CONTRIBUTING.md` for subsystem groups, claiming, and collaboration protocol.*
-*See `CLAIMED.md` for current file ownership.*
