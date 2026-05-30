@@ -98,11 +98,12 @@ void func_8012EAC0_13DA70(s32 arg0, u8 *arg1)
 }
 
 /* Concatenates two strings (arg0 + arg1) into the output buffer arg2 */
+// CURRENT(305)
 #ifdef NON_MATCHING
 void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 	s16 i;
 	s16 j;
-	u8 *ptr;
+	u32 ch;
 
 	i = 0;
 	if (*arg0 != 0) {
@@ -111,12 +112,13 @@ void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 			i++;
 		} while (arg0[i] != 0);
 	}
-	j = 0;
+	j = i;
+	i = 0;
 	do {
-		ptr = &arg1[j];
-		arg2[i + j] = *ptr;
-		j++;
-	} while (*ptr > 0U);
+		ch = arg1[i];
+		arg2[j + i] = ch;
+		i++;
+	} while (ch > 0U);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012EBC0_13DB70.s")
