@@ -518,7 +518,7 @@ s32 func_8012FFB0_13EF60(void)
 }
 
 // End of level state manager
-// CURRENT(25610)
+// CURRENT(24920)
 #ifdef NON_MATCHING
 void func_8013001C_13EFCC(void)
 {
