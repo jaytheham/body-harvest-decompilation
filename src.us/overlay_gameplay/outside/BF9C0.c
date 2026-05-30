@@ -72,18 +72,18 @@ s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32)(((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
 }
 
-// CURRENT(1800)
+// CURRENT(180)
 #ifdef NON_MATCHING
 s32 func_800B0A88_BFA38(s32 arg0, s32 arg1) {
+	u16 *v1;
 	s32 a0;
 	s32 a1;
 	s32 a2;
 	s32 a3;
 	s32 v0;
 	s32 t0;
-	u16 *v1;
 
-	v1 = &D_80052A94[arg1].unk0[arg0];
+	v1 = D_80052A94[arg1].unk0 + arg0;
 	a2 = v1[0] & 0x3F;
 	a3 = v1[1] & 0x3F;
 	v0 = a2 - a3;
