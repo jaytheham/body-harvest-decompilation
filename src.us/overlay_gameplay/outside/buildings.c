@@ -7092,7 +7092,13 @@ void func_8012B21C_13A1CC(void) {
 	}
 }
 
+// CURRENT(386105)
+#ifdef NON_MATCHING
+void func_8012B26C_13A21C(void) {
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012B26C_13A21C.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_8012D600_13C5B0(void) {
