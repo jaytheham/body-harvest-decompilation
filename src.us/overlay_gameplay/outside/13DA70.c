@@ -661,7 +661,7 @@ void func_8013001C_13EFCC(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8013001C_13EFCC.s")
 #endif
 
-// CURRENT(2200)
+// CURRENT(415)
 #ifdef NON_MATCHING
 void func_801306C4_13F674(u8 *arg0)
 {
