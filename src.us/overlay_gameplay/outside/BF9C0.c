@@ -600,7 +600,7 @@ void func_800B165C_C060C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B165C_C060C.s")
 #endif
 
-// CURRENT(6223)
+// CURRENT(6218)
 #ifdef NON_MATCHING
 void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2, s16 *arg3) {
 	s32 x = arg0 & 0xFF;
@@ -609,17 +609,14 @@ void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2, s16 *arg3) {
 	s32 tileY = (y >> 1) & 0xFF;
 	u16 top[3];
 	u16 bot[3];
-	s32 rowBase0 = tileX << 7;
-	s32 rowBase1 = tileX << 7;
+	u16 top0;
 	u8 c00 = D_80260700[(tileX << 7) + tileY];
-	u8 c10 = D_80260700[rowBase1 + tileY + 0x80];
-	u8 c11 = D_80260700[rowBase1 + tileY + 0x81];
-	u8 c01 = D_80260700[rowBase0 + tileY + 1];
-
-	(void)arg3;
+	u8 c10 = D_80260700[(tileX << 7) + tileY + 0x80];
+	u8 c11 = D_80260700[(tileX << 7) + tileY + 0x81];
+	u8 c01 = D_80260700[(tileX << 7) + tileY + 1];
 
 	if (!(x & 1)) {
-		u8 *palette = (u8*) D_80264700;
+		u8 *palette = (u8 *)D_80264700;
 
 		top[0] = palette[c00 * 4 + 0];
 		top[1] = palette[c00 * 4 + 1];
@@ -629,7 +626,7 @@ void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2, s16 *arg3) {
 		bot[1] = palette[c01 * 4 + 1];
 		bot[2] = palette[c01 * 4 + 2];
 	} else {
-		u8 *palette = (u8*) D_80264700;
+		u8 *palette = (u8 *)D_80264700;
 
 		top[0] = (palette[c00 * 4 + 0] + palette[c10 * 4 + 0]) >> 1;
 		top[1] = (palette[c00 * 4 + 1] + palette[c10 * 4 + 1]) >> 1;
@@ -640,18 +637,15 @@ void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2, s16 *arg3) {
 		bot[2] = (palette[c01 * 4 + 2] + palette[c11 * 4 + 2]) >> 1;
 	}
 
-	{
-		u16 top0 = top[0];
-
-		if (!(y & 1)) {
-			arg2[0] = top0;
-			arg2[1] = top[1];
-			arg2[2] = top[2];
-		} else {
-			arg2[0] = (top0 + bot[0]) >> 1;
-			arg2[1] = (top[1] + bot[1]) >> 1;
-			arg2[2] = (top[2] + bot[2]) >> 1;
-		}
+	top0 = top[0];
+	if (!(y & 1)) {
+		arg2[0] = top0;
+		arg2[1] = top[1];
+		arg2[2] = top[2];
+	} else {
+		arg2[0] = (top0 + bot[0]) >> 1;
+		arg2[1] = (top[1] + bot[1]) >> 1;
+		arg2[2] = (top[2] + bot[2]) >> 1;
 	}
 }
 #else
