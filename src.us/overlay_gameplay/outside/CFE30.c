@@ -11748,7 +11748,361 @@ void func_800E360C_F25BC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3738_F26E8.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(500)
+void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s32 arg6, s16 arg7, u8 arg8) {
+	s16 rot;
+	s16 size;
+	s16 x1;
+	s16 z1;
+	s16 x2;
+	s16 z2;
+	u8 alpha0;
+	u8 red0;
+	u8 green0;
+	u8 blue0;
+	u8 alpha1;
+	u8 red1;
+	u8 green1;
+	u8 blue1;
+	u8 maxStep;
+	f32 stepScale;
+
+	rot = func_80003824_4424((f32)(arg3 - arg0), (f32)(arg5 - arg2));
+	rot = (s16)(rot + 0x4000);
+
+	maxStep = D_8013DD18_14CCC8[arg8];
+	stepScale = (f32)(0xFF / maxStep);
+
+	switch (arg8) {
+		case 0:
+			if (arg7 == maxStep) {
+				alpha0 = 0xFF;
+				red0 = 0xFA;
+				green0 = 0x64;
+				blue0 = 0xFF;
+				alpha1 = 0xFF;
+				red1 = 0xFF;
+				green1 = 0;
+				blue1 = 0;
+			} else {
+				alpha0 = (u8)(((s32)((f32)arg7 * stepScale) & 0xFF) >> 1);
+				red0 = 0x96;
+				green0 = 0;
+				blue0 = 0;
+				alpha1 = 0;
+				red1 = 0x96;
+				green1 = 0;
+				blue1 = 0;
+			}
+			size = 0xC;
+			break;
+		case 1:
+			if (arg7 == maxStep) {
+				alpha0 = 0xFF;
+				red0 = 0xFF;
+				green0 = 0;
+				blue0 = 0;
+				alpha1 = 0x96;
+				red1 = 0xFF;
+				green1 = 0;
+				blue1 = 0x32;
+			} else {
+				alpha0 = (u8)(((s32)((f32)arg7 * stepScale) & 0xFF) >> 1);
+				red0 = 0x96;
+				green0 = 0;
+				blue0 = 0;
+				alpha1 = 0;
+				red1 = 0x96;
+				green1 = 0;
+				blue1 = 0;
+			}
+			size = 0xA;
+			break;
+		case 2:
+			if (arg7 >= (s16)(maxStep - 1)) {
+				alpha0 = 0xFF;
+				red0 = 0xFF;
+				green0 = 0x78;
+				blue0 = 0xFF;
+				alpha1 = 0x64;
+				red1 = 0xFF;
+				green1 = 0x64;
+				blue1 = 0x32;
+				func_80135D44_144CF4(arg3, arg4, arg5, 2.0f);
+			} else {
+				alpha0 = (u8)(((s32)((f32)arg7 * stepScale) & 0xFF) >> 1);
+				red0 = 0xAA;
+				green0 = 0x64;
+				blue0 = 0xFF;
+				alpha1 = 0xFF;
+				red1 = 0xFF;
+				green1 = 0xFF;
+				blue1 = 0;
+			}
+			size = 0x1E;
+			break;
+		case 3:
+			alpha0 = 0xFF;
+			red0 = 0xFF;
+			green0 = 0x78;
+			blue0 = 0xFF;
+			alpha1 = 0x64;
+			red1 = 0xFF;
+			green1 = 0x64;
+			blue1 = 0x32;
+			size = 0xF;
+			break;
+		case 4:
+			if (arg7 == maxStep) {
+				alpha0 = 0xFF;
+				red0 = 0xFF;
+				green0 = 0x78;
+				blue0 = 0xFF;
+				alpha1 = 0x64;
+				red1 = 0xFF;
+				green1 = 0x64;
+				blue1 = 0x32;
+			} else {
+				alpha0 = (u8)(((s32)((f32)arg7 * stepScale) & 0xFF) >> 1);
+				red0 = (u8)(0xFF - (s32)((f32)(maxStep - arg7) * stepScale));
+				green0 = 0;
+				blue0 = 0;
+				alpha1 = 0x64;
+				red1 = 0xFF;
+				green1 = 0x64;
+				blue1 = 0;
+			}
+			size = 0xA;
+			break;
+		case 5:
+			if (arg7 == maxStep) {
+				alpha0 = 0xFF;
+				red0 = 0xDC;
+				green0 = 0;
+				blue0 = 0xFF;
+				alpha1 = 0x8C;
+				red1 = 0xDC;
+				green1 = 0;
+				blue1 = 0xFF;
+			} else {
+				s16 rem = (s16)(maxStep - arg7);
+				f32 t0 = (((523.0f / maxStep) * rem) * 3.0f) + 220.0f;
+				f32 t1 = (((115.0f / maxStep) * rem) * 3.0f) + 140.0f;
+				f32 t2 = ((f32)rem * stepScale) * 3.0f;
+
+				if (t0 > 255.0f) {
+					red0 = 0xFF;
+				} else {
+					red0 = (u8)t0;
+				}
+
+				if (t1 > 255.0f) {
+					alpha1 = 0xFF;
+				} else {
+					alpha1 = (u8)t1;
+				}
+
+				if (t2 > 255.0f) {
+					green0 = 0xFF;
+				} else {
+					green0 = (u8)t2;
+				}
+
+				alpha0 = (u8)(((s32)((f32)arg7 * stepScale) & 0xFF) >> 1);
+				blue0 = green0;
+				red1 = red0;
+				green1 = 0;
+				blue1 = 0;
+			}
+			size = 0xC;
+			break;
+		case 6:
+		default:
+			if (arg7 > (maxStep >> 1)) {
+				alpha0 = 0x46;
+				red0 = 0xFF;
+				green0 = 0;
+				blue0 = 0xFF;
+				alpha1 = 0xFF;
+				red1 = 0xFF;
+				green1 = 0;
+				blue1 = 0;
+			} else {
+				s16 half = (s16)(maxStep >> 1);
+				s16 rem = (s16)(half - arg7);
+				s16 dec = (s16)(0x46 - (((u32)rem * 0x46) / half));
+
+				if (dec < 0) {
+					dec = 0;
+				}
+				alpha0 = (u8)dec;
+				red0 = (u8)(0xFF - (s32)(((f32)rem * stepScale) * 2.0f));
+				green0 = 0;
+				blue0 = 0;
+				alpha1 = 0xFF;
+				red1 = 0xFF;
+				green1 = 0;
+				blue1 = 0;
+			}
+			size = 0x14;
+			break;
+	}
+
+	if (arg8 == 3) {
+		s16 n = (s16)(D_8013DD18_14CCC8[arg8] - arg7 + size);
+		x1 = (s16)((f32)n * D_80153AB8.x);
+		z1 = (s16)((f32)n * D_80153AB8.z);
+		x2 = (s16)((f32)n * D_80153AC4.x);
+		z2 = (s16)((f32)n * D_80153AC4.z);
+	} else {
+		u16 angle;
+		s16 n;
+		f64 scale;
+
+		angle = (u16)rot;
+		n = (s16)(D_8013DD18_14CCC8[arg8] + size - arg7);
+		scale = (f64)n;
+
+		x1 = (s16)(((f64)coss(angle) / 32768.0) * scale);
+		z1 = (s16)(((f64)sins(angle) / 32768.0) * scale);
+		x2 = (s16)(((f64)coss(angle) / 32768.0) * scale);
+		z2 = (s16)(((f64)sins(angle) / 32768.0) * scale);
+	}
+
+	D_8005BB34->v.ob[0] = arg0;
+	D_8005BB34->v.ob[1] = arg1;
+	D_8005BB34->v.ob[2] = arg2;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = -0x20;
+	D_8005BB34->v.tc[1] = -0x20;
+	D_8005BB34->v.cn[0] = red0;
+	D_8005BB34->v.cn[1] = green0;
+	D_8005BB34->v.cn[2] = blue0;
+	D_8005BB34->v.cn[3] = alpha0;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = arg3;
+	D_8005BB34->v.ob[1] = arg4;
+	D_8005BB34->v.ob[2] = arg5;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x7E0;
+	D_8005BB34->v.tc[1] = -0x20;
+	D_8005BB34->v.cn[0] = red0;
+	D_8005BB34->v.cn[1] = green0;
+	D_8005BB34->v.cn[2] = blue0;
+	D_8005BB34->v.cn[3] = alpha0;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = arg0 + x1;
+	D_8005BB34->v.ob[1] = arg1;
+	D_8005BB34->v.ob[2] = arg2 + z1;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = -0x20;
+	D_8005BB34->v.tc[1] = 0x1E0;
+	D_8005BB34->v.cn[0] = red1;
+	D_8005BB34->v.cn[1] = alpha1;
+	D_8005BB34->v.cn[2] = green1;
+	D_8005BB34->v.cn[3] = blue1;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = arg0 - x1;
+	D_8005BB34->v.ob[1] = arg1;
+	D_8005BB34->v.ob[2] = arg2 - z1;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = -0x20;
+	D_8005BB34->v.tc[1] = 0x1E0;
+	D_8005BB34->v.cn[0] = red1;
+	D_8005BB34->v.cn[1] = alpha1;
+	D_8005BB34->v.cn[2] = green1;
+	D_8005BB34->v.cn[3] = blue1;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = arg3 + x2;
+	D_8005BB34->v.ob[1] = arg4;
+	D_8005BB34->v.ob[2] = arg5 + z2;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x7E0;
+	D_8005BB34->v.tc[1] = 0x1E0;
+	D_8005BB34->v.cn[0] = red1;
+	D_8005BB34->v.cn[1] = alpha1;
+	D_8005BB34->v.cn[2] = green1;
+	D_8005BB34->v.cn[3] = blue1;
+	D_8005BB34++;
+
+	D_8005BB34->v.ob[0] = arg3 - x2;
+	D_8005BB34->v.ob[1] = arg4;
+	D_8005BB34->v.ob[2] = arg5 - z2;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x7E0;
+	D_8005BB34->v.tc[1] = 0x1E0;
+	D_8005BB34->v.cn[0] = red1;
+	D_8005BB34->v.cn[1] = alpha1;
+	D_8005BB34->v.cn[2] = green1;
+	D_8005BB34->v.cn[3] = blue1;
+	D_8005BB34++;
+
+	D_8005BB2C->words.w0 = 0xE7000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+
+	D_8005BB2C->words.w0 = 0xBB000000;
+	D_8005BB2C->words.w1 = 0x80008000;
+	D_8005BB2C++;
+
+	D_8005BB2C->words.w0 = 0xFCFFFFFF;
+	D_8005BB2C->words.w1 = 0xFFFE793C;
+	D_8005BB2C++;
+
+	D_8005BB2C->words.w0 = 0xB900031D;
+	D_8005BB2C->words.w1 = 0x005049D8;
+	D_8005BB2C++;
+
+	D_8005BB2C->words.w0 = 0xB6000000;
+	D_8005BB2C->words.w1 = 0x00020000;
+	D_8005BB2C++;
+
+	D_8005BB2C->words.w0 = 0xB7000000;
+	D_8005BB2C->words.w1 = 0x00000200;
+	D_8005BB2C++;
+
+	D_8005BB2C->words.w0 = 0xE7000000;
+	D_8005BB2C->words.w1 = 0;
+	D_8005BB2C++;
+
+	D_8005BB2C->words.w0 = 0x0400185F;
+	D_8005BB2C->words.w1 = ((u32)(D_8005BB34 - 6) & 0x1FFFFFFF);
+	D_8005BB2C++;
+
+	D_8005BB2C->words.w0 = 0xB1000804;
+	D_8005BB2C->words.w1 = 0x00000208;
+	D_8005BB2C++;
+
+	D_8005BB2C->words.w0 = 0xB1000602;
+	D_8005BB2C->words.w1 = 0x00060A02;
+	D_8005BB2C++;
+
+	if (arg6 != 0) {
+		D_8005BB2C->words.w0 = 0xE7000000;
+		D_8005BB2C->words.w1 = 0;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xBB000000;
+		D_8005BB2C->words.w1 = 0x80008000;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xFCFFFFFF;
+		D_8005BB2C->words.w1 = 0xFFFE793C;
+		D_8005BB2C++;
+
+		D_8005BB2C->words.w0 = 0xB900031D;
+		D_8005BB2C->words.w1 = 0x00552078;
+		D_8005BB2C++;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3928_F28D8.s")
+#endif
 
 /* CURRENT(560) */
 #ifdef NON_MATCHING

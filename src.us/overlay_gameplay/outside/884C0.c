@@ -1690,7 +1690,531 @@ void func_8007BEC0_8AE70(void) {
 #endif
 
 // drawComplexObjects eg: humans, alien torsos & heads
+#ifdef NON_MATCHING
+void func_8007C044_8AFF4(void) {
+	Unk80052B40 smallScale;
+	Unk80052B40 fullScale;
+	AlienInstance *inst;
+	AlienSpec *spec;
+	LookAt *lookAt;
+	Gfx *dl;
+	s16 drewType1;
+	s16 drewType2Or20;
+	s16 savedX;
+	s16 savedY;
+	s16 savedZ;
+	s16 rotation;
+	s16 animIndex;
+	s16 colorOffset;
+	s32 swappedTexture;
+	s32 lod;
+	s32 flags;
+	s32 color;
+	s32 i;
+	f32 dx;
+	f32 dy;
+	f32 dz;
+	f32 distance;
+
+	smallScale = *(Unk80052B40 *)D_8013C260_14B210;
+	fullScale = *(Unk80052B40 *)D_8013C268_14B218;
+	drewType1 = 0;
+	drewType2Or20 = 0;
+	swappedTexture = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xB6000000;
+	dl->words.w1 = 0x00020000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBA000E02;
+	dl->words.w1 = 0x00008000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xB900031D;
+	dl->words.w1 = 0xC8112078;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xFCFFFFFF;
+	dl->words.w1 = 0xFFFE7838;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBB000000;
+	dl->words.w1 = 0x80008000;
+
+	for (i = 0; i < (s32)D_8014ECCC; i++) {
+		u8 alienId;
+		u8 specIndex;
+
+		alienId = D_8014D510[i];
+		inst = &alienInstances[alienId];
+		flags = inst->unk20;
+
+		if ((flags & 0x200) && !(flags & 0x80000)) {
+			continue;
+		}
+
+		specIndex = inst->specIndex;
+		if (specIndex == 0) {
+			continue;
+		}
+
+		if ((D_80052ACA != 2) &&
+			(func_800B93AC_C835C(inst->unk0, inst->unk4, (alienSpecs[specIndex].unkC + 0x100) & 0xFFFF,
+				(s16)D_80052B2C->unk0, (s32)D_80052B2C->unk8, 0x4000 - D_80047950) == 0)) {
+			inst->unk20 &= 0xEFFFFFFF;
+			continue;
+		}
+
+		inst->unk20 |= 0x10000000;
+		if (specIndex == 1) {
+			drewType1 = 1;
+			continue;
+		}
+
+		if ((specIndex == 2) || (specIndex == 0x20)) {
+			drewType2Or20 = 1;
+			continue;
+		}
+
+		spec = &alienSpecs[specIndex];
+		if (spec->unk54 & 0x200000) {
+			lookAt = (LookAt *)&D_8014D550[i << 5];
+			guLookAtReflect((Mtx *)D_8005BB38, lookAt, D_80047954, D_80047958, D_8004795C, inst->unk0 / 4.0f,
+				inst->unk2 / 4.0f, inst->unk4 / 4.0f, 0.0f, 1.0f, 0.0f);
+
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0x03840010;
+			dl->words.w1 = (u32)lookAt;
+
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0x03820010;
+			dl->words.w1 = (u32)((u8 *)lookAt + 0x10);
+
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0xBC00000A;
+			dl->words.w1 = 0xFFFFFFFF;
+
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0xBC00040A;
+			dl->words.w1 = 0xFFFFFFFF;
+
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0xBC00200A;
+			dl->words.w1 = 0x808080FF;
+
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0xBC00240A;
+			dl->words.w1 = 0x808080FF;
+		}
+
+		if (spec->unk54 & 0x10000) {
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0xB7000000;
+			dl->words.w1 = 0x00020000;
+		}
+
+		if (inst->unk20 & 0x80000000) {
+			func_800710D4_80084(0xFF, 0x32, 0);
+		}
+
+		if (specIndex == 0x12) {
+			func_800EF9F0_FE9A0(alienId);
+		} else {
+			func_8007B9CC_8A97C(alienId);
+		}
+
+		if (inst->unk20 & 0x80000000) {
+			func_80070FB8_7FF68();
+		}
+
+		if (spec->unk54 & 0x10000) {
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0xB6000000;
+			dl->words.w1 = 0x00020000;
+		}
+
+		if ((spec->unk54 & 0x40000) && (inst->unk48 != 0) && !(inst->unk20 & 0x100000)) {
+			func_8007B370_8A320(alienId);
+		}
+	}
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0x01020040;
+	dl->words.w1 = ((u32)&D_80031160) & 0x1FFFFFFF;
+
+	if (drewType1 != 0) {
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xB6000000;
+		dl->words.w1 = 0x00002000;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xB7000000;
+		dl->words.w1 = 0x00020000;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xBC000002;
+		dl->words.w1 = 0x80000040;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0x03860010;
+		dl->words.w1 = (u32)D_8013BD40_14ACF0;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0x03880010;
+		dl->words.w1 = (u32)D_8013BD38_14ACE8;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xBA000E02;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xFD08000F;
+		dl->words.w1 = (u32)D_5041480;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xF5080040;
+		dl->words.w1 = 0x07010040;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xE6000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xF3000000;
+		dl->words.w1 = 0x071FF200;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xE8000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xF5100840;
+		dl->words.w1 = 0x02010040;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xF2000000;
+		dl->words.w1 = 0x0203C03C;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xF5100800;
+		dl->words.w1 = 0x01010040;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xF5080000;
+		dl->words.w1 = 0x07010040;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xF2000000;
+		dl->words.w1 = 0x0103C03C;
+
+		for (i = 0; i < D_8014D507; i++) {
+			u8 alienId;
+			u8 state;
+
+			alienId = D_8014D408[i];
+			inst = &alienInstances[alienId];
+			flags = inst->unk20;
+			state = inst->unk24;
+
+			if (((flags & 0x600) == 0) || (state == 0x13) || !(flags & 0x10000000)) {
+				continue;
+			}
+
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0xE7000000;
+			dl->words.w1 = 0;
+
+			if ((state == 1) || (state == 0x1D)) {
+				if (swappedTexture == 0) {
+					dl = D_8005BB2C++;
+					dl->words.w0 = 0xFD08000F;
+					dl->words.w1 = (u32)D_5041880;
+
+					dl = D_8005BB2C++;
+					dl->words.w0 = 0xF5080040;
+					dl->words.w1 = 0x07010040;
+
+					dl = D_8005BB2C++;
+					dl->words.w0 = 0xE6000000;
+					dl->words.w1 = 0;
+
+					dl = D_8005BB2C++;
+					dl->words.w0 = 0xF3000000;
+					dl->words.w1 = 0x071FF200;
+
+					dl = D_8005BB2C++;
+					dl->words.w0 = 0xE8000000;
+					dl->words.w1 = 0;
+
+					dl = D_8005BB2C++;
+					dl->words.w0 = 0xF5080000;
+					dl->words.w1 = 0x07010040;
+					swappedTexture = 1;
+				}
+
+				dl = D_8005BB2C++;
+				dl->words.w0 = 0xFD08000F;
+				dl->words.w1 = (u32)D_5041680;
+			} else {
+				if (swappedTexture != 0) {
+					dl = D_8005BB2C++;
+					dl->words.w0 = 0xFD08000F;
+					dl->words.w1 = (u32)D_5041480;
+
+					dl = D_8005BB2C++;
+					dl->words.w0 = 0xF5080040;
+					dl->words.w1 = 0x07010040;
+
+					dl = D_8005BB2C++;
+					dl->words.w0 = 0xE6000000;
+					dl->words.w1 = 0;
+
+					dl = D_8005BB2C++;
+					dl->words.w0 = 0xF3000000;
+					dl->words.w1 = 0x071FF200;
+
+					dl = D_8005BB2C++;
+					dl->words.w0 = 0xE8000000;
+					dl->words.w1 = 0;
+
+					dl = D_8005BB2C++;
+					dl->words.w0 = 0xF5080000;
+					dl->words.w1 = 0x07010040;
+					swappedTexture = 0;
+				}
+
+				dl = D_8005BB2C++;
+				dl->words.w0 = 0xFD08000F;
+				dl->words.w1 = (u32)&D_5040A80[(alienId % 5) << 9];
+			}
+
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0xE6000000;
+			dl->words.w1 = 0;
+
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0xF3000000;
+			dl->words.w1 = 0x071FF200;
+
+			savedX = inst->unk0;
+			savedY = inst->unk2;
+			savedZ = inst->unk4;
+			rotation = 0x4000 - inst->unkE;
+
+			dx = savedX - (D_80047954 * 4.0f);
+			dy = savedY - (D_80047958 * 4.0f);
+			dz = savedZ - (D_8004795C * 4.0f);
+			distance = sqrtf((dx * dx) + (dy * dy) + (dz * dz));
+
+			if (distance < D_80141E18_150DC8) {
+				lod = 0;
+			} else if (distance < 900.0f) {
+				lod = 1;
+			} else if (distance < D_80141E1C_150DCC) {
+				lod = 2;
+			} else {
+				lod = 3;
+			}
+
+			animIndex = 0x40;
+			if (!(flags & 0x100000)) {
+				if ((flags & 0x40000000) || (state == 3) || (state == 4) || (state == 0x1D)) {
+					animIndex = (((alienId + D_80052A8C) & 0xE) >> 1) + 0x10;
+				} else if (flags & 0x4000) {
+					animIndex = 0x40;
+				} else if (state == 1) {
+					animIndex = (((alienId + D_80052A8C) & 0x1C) >> 2) + 0x38;
+				} else if (inst->unk2 < (D_80222A70 - 0x1E)) {
+					animIndex = (((alienId + D_80052A8C) & 0xE) >> 1) + 0x30;
+				} else if (inst->unk12 == 0x40) {
+					animIndex = ((alienId + D_80052A8C) / 3U) & 7;
+				} else if (((flags & 0x8000) && (flags & 0x20)) || (state == 0x10)) {
+					if (gameplayMode != 2) {
+						inst->unk36++;
+					}
+					if (inst->unk36 == 0x20) {
+						inst->unk36 = 0x10;
+					}
+					animIndex = (inst->unk36 / 2) + 0x18;
+					osSyncPrintf(D_80141C4C_150BFC);
+				} else if (inst->unk12 == 0) {
+					animIndex = 0;
+				} else if ((inst->unk26 == 0) || (state != 0)) {
+					animIndex = (((alienId + D_80052A8C) & 0xE) >> 1) + 8;
+				} else {
+					animIndex = (((alienId + D_80052A8C) & 0xE) >> 1) + 0x28;
+				}
+			}
+
+			if ((state == 0x14) || (state == 4) || (state == 0xB) || (state == 0xC)) {
+				func_800039D0_45D0((Unk80052B40 *)&savedX, (Unk80052B40 *)&rotation, &smallScale, D_8005BB38);
+			} else {
+				func_800039D0_45D0((Unk80052B40 *)&savedX, (Unk80052B40 *)&rotation, &fullScale, D_8005BB38);
+			}
+
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0x01040040;
+			dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+			D_8005BB38 += 0x40;
+
+			if (inst->unk20 & 0x80000000) {
+				func_800710D4_80084(0xFF, 0xFF, 0xFF);
+			}
+
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0x06000000;
+			dl->words.w1 = D_8013BD50_14AD00[lod][animIndex];
+
+			if (inst->unk20 & 0x80000000) {
+				func_80070FB8_7FF68();
+			}
+
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0xBD000000;
+			dl->words.w1 = 0;
+		}
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xB7000000;
+		dl->words.w1 = 0x00002000;
+	}
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xE7000000;
+	dl->words.w1 = 0;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBA000E02;
+	dl->words.w1 = 0;
+
+	if (drewType2Or20 != 0) {
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0x06000000;
+		dl->words.w1 = (u32)D_80031230;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xFD70000F;
+		dl->words.w1 = ((u32)&D_503CF60[((u32)D_80052A8C % 7) << 9]) & 0x1FFFFFFF;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xB900031D;
+		dl->words.w1 = 0x005049D8;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xB7000000;
+		dl->words.w1 = 0x00020000;
+
+		for (i = D_8014D507; i < D_8014D508; i++) {
+			u8 alienId;
+
+			alienId = D_8014D408[i];
+			inst = &alienInstances[alienId];
+			flags = inst->unk20;
+
+			if ((inst->specIndex == 0) || ((flags & 0x600) == 0) || !(flags & 0x10000000)) {
+				continue;
+			}
+
+			if (flags & 0x100000) {
+				colorOffset = -0x30;
+				dx = 1.0f;
+			} else if (flags & 0x4000) {
+				colorOffset = inst->unk2C * 8;
+				dx = 1.0f;
+			} else {
+				colorOffset = (s16)((sins(((alienId + D_80052A8C) << 13) & 0xFFFF) * 32.0f) / 32768.0f);
+				dx = 1.0f;
+			}
+
+			if (inst->specIndex == 0x20) {
+				dx = (3 - inst->unk26) * 0.5f;
+			}
+
+			savedX = D_800311A0.unk0;
+			savedY = D_800311A0.unk2;
+			savedZ = D_800311A0.unk4;
+			D_800311A0.unk2 += colorOffset;
+			D_800311A0.unk0 -= colorOffset >> 1;
+			D_800311A0.unk4 -= colorOffset >> 1;
+
+			if (inst->unk20 & 0x80000000) {
+				dl = D_8005BB2C++;
+				dl->words.w0 = 0xBC00000A;
+				dl->words.w1 = 0xFFFFFFFF;
+
+				dl = D_8005BB2C++;
+				dl->words.w0 = 0xBC00040A;
+				dl->words.w1 = 0xFFFFFFFF;
+
+				dl = D_8005BB2C++;
+				dl->words.w0 = 0xBC00200A;
+				dl->words.w1 = 0x7F7F7FFF;
+
+				color = 0x7F7F7FFF;
+			} else if (inst->specIndex == 0x20) {
+				dl = D_8005BB2C++;
+				dl->words.w0 = 0xBC00000A;
+				dl->words.w1 = 0xE50020FF;
+
+				dl = D_8005BB2C++;
+				dl->words.w0 = 0xBC00040A;
+				dl->words.w1 = 0xE50020FF;
+
+				dl = D_8005BB2C++;
+				dl->words.w0 = 0xBC00200A;
+				dl->words.w1 = 0x7F0010FF;
+
+				color = 0x7F0010FF;
+			} else {
+				dl = D_8005BB2C++;
+				dl->words.w0 = 0xBC00000A;
+				dl->words.w1 = 0x80E580FF;
+
+				dl = D_8005BB2C++;
+				dl->words.w0 = 0xBC00040A;
+				dl->words.w1 = 0x80E580FF;
+
+				dl = D_8005BB2C++;
+				dl->words.w0 = 0xBC00200A;
+				dl->words.w1 = 0x407F40FF;
+
+				color = 0x407F40FF;
+			}
+
+			dl = D_8005BB2C++;
+			dl->words.w0 = 0xBC00240A;
+			dl->words.w1 = color;
+
+			D_800311A0.unk0 = (s16)((f32)D_800311A0.unk0 * dx);
+			D_800311A0.unk2 = (s16)((f32)D_800311A0.unk2 * dx);
+			D_800311A0.unk4 = (s16)((f32)D_800311A0.unk4 * dx);
+			func_8007B9CC_8A97C(alienId);
+			D_800311A0.unk0 = savedX;
+			D_800311A0.unk2 = savedY;
+			D_800311A0.unk4 = savedZ;
+		}
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0x06000000;
+		dl->words.w1 = (u32)D_80031200;
+
+		dl = D_8005BB2C++;
+		dl->words.w0 = 0xB6000000;
+		dl->words.w1 = 0x00020000;
+	}
+
+	for (i = 0; i < 0xFF; i++) {
+		alienInstances[i].unk20 &= 0x7FFFFFFF;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007C044_8AFF4.s")
+#endif
 
 // Disable and aliens don't spawn visibly (show on radar tho)
 #ifdef NON_MATCHING
