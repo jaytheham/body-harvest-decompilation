@@ -320,11 +320,9 @@ s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 #endif
 
 // ClipLineToShieldWalls
+// CURRENT(4946)
 #ifdef NON_MATCHING
-// CURRENT(14085)
 s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, u8 *arg6) {
-	s32 sp3C;
-	s32 sp38;
 	Unk8014FD30Type *var_v1;
 	f32 temp_f0;
 	f32 temp_f12;
@@ -427,8 +425,8 @@ block_12:
 	}
 
 	var_v1 = &D_8014FD30;
-	var_a3 = sp38;
-	var_a2 = sp3C;
+	var_a3 = 0;
+	var_a2 = 0;
 loop_14:
 	temp_a0 = var_v1->unk8;
 	temp_a1 = var_v1->unkC;
@@ -503,9 +501,6 @@ loop_14:
 	if ((u8 *) var_v1 != ((u8 *) &D_8014FD30 + 0x10)) {
 		goto loop_14;
 	}
-	sp38 = var_a3;
-	sp3C = var_a2;
-
 block_42:
 	return var_t3;
 
