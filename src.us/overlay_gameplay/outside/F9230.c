@@ -8765,7 +8765,409 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 	D_80159320 |= 0x800000;
 }
 
+// CURRENT(22935)
+#ifdef NON_MATCHING
+void func_8010065C_10F60C(s32 arg0) {
+	s32 index;
+	s32 stackPad[54];
+	s32 i;
+	s32 count;
+	s32 matrixCount;
+	s32 *mtxSrc;
+	s32 *mtxDst;
+	u8 specPart;
+	u8 listIndex;
+	u8 *vehicleIndexPtr;
+	VehicleInstance *vehicle;
+	VehicleSpec *spec;
+	u8 *specBytes;
+	ShadowPartEntry *shadowPart;
+	void (*updateMtx)(s32);
+	u8 *model;
+
+	mtxSrc = (s32 *)&D_80031120_31D20;
+	mtxDst = (s32 *)&D_801592C0;
+	for (i = 0; i < (sizeof(Mtx) / sizeof(s32)); i++) {
+		*mtxDst++ = *mtxSrc++;
+	}
+
+	gDPPipeSync(D_8005BB30++);
+	gDPSetCombineMode(D_8005BB30++, G_CC_SHADE, G_CC_PASS2);
+	gDPSetRenderMode(D_8005BB30++,
+		AA_EN | Z_CMP | IM_RD | CVG_DST_CLAMP | ZMODE_OPA | ALPHA_CVG_SEL | G_RM_FOG_SHADE_A,
+		AA_EN | Z_CMP | IM_RD | CVG_DST_CLAMP | ZMODE_OPA | ALPHA_CVG_SEL |
+			GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM));
+	gDPSetCycleType(D_8005BB30++, G_CYC_2CYCLE);
+	gSPSetGeometryMode(D_8005BB30++, G_FOG);
+
+	if (arg0 == 0) {
+		func_801001B4_10F164();
+	}
+
+	if (arg0 != 0) {
+		func_800FC568_10B518();
+	}
+
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+	gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
+
+	if (D_80052B34->unk1A != 0) {
+		if (D_80159264 != 0) {
+			func_800EA5B8_F9568();
+		}
+	}
+	D_80159264 = (D_80052B34->unk1A == 0);
+
+	if (arg0 == 0) {
+		i = 7;
+		while (i != 0) {
+			D_80158B90[i].unk6 = -0x8000;
+			i--;
+		}
+		D_801593EA = 0;
+		guLookAtReflect(D_8005BB38, (LookAt *)&D_801592A0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f,
+						0.0f);
+	}
+
+	if ((currentLevel == 2) && (arg0 == 0)) {
+		VehicleInstance *adam = func_80109960_118910();
+
+		func_8012D700_13C6B0(2, 0x7FFF, adam->unk0 + 0xB, adam->unk2 + 0x39, adam->unk4, 0, 0, 0, 0x5D,
+							D_8013FD74_14ED24, 0x19, &func_80100638_10F5E8, &func_8012E1F8_13D1A8);
+		func_8012D700_13C6B0(7, 0x7FFE, adam->unk0 + 0x67, adam->unk2 + 0x69, adam->unk4, 0, 0, 0, 0x15,
+							0x89, 0x3F, &func_801005CC_10F57C, NULL);
+		func_8012D700_13C6B0(7, 0x7FFD, adam->unk0 - 0x4F, adam->unk2 + 0x69, adam->unk4, 0, 0, 0, 0x15,
+							0x89, 0x3F, &func_801005CC_10F57C, NULL);
+		func_8012D700_13C6B0(7, 0x7FFC, adam->unk0 + 0x47, adam->unk2 + 0x69, adam->unk4 + 0x95, 0, 0, 0,
+							D_8013FD70_14ED20, 0x14, 0x40, &func_801005CC_10F57C, NULL);
+		func_8012D700_13C6B0(7, 0x7FFB, adam->unk0 - 0x32, adam->unk2 + 0x69, adam->unk4 + 0x95, 0, 0, 0,
+							D_8013FD70_14ED20, 0x14, 0x40, &func_801005CC_10F57C, NULL);
+		func_8012D700_13C6B0(7, 0x7FFA, adam->unk0 + 0x47, adam->unk2 + 0x69, adam->unk4 - 0x98, 0, 0, 0,
+							D_8013FD70_14ED20, 0x14, 0x40, &func_801005CC_10F57C, NULL);
+		func_8012D700_13C6B0(7, 0x7FF9, adam->unk0 - 0x32, adam->unk2 + 0x69, adam->unk4 - 0x98, 0, 0, 0,
+							D_8013FD70_14ED20, 0x14, 0x40, &func_801005CC_10F57C, NULL);
+	}
+
+	if (arg0 == 0) {
+		D_80158FE0 = 0;
+	}
+
+	if (D_80158FD8 != 0) {
+		count = D_80158FD8 - 1;
+		vehicleIndexPtr = &D_80158E80[count];
+		for (index = count; index != 0; index--, vehicleIndexPtr--) {
+			vehicle = &vehicleInstances[*vehicleIndexPtr];
+			spec = &vehicleSpecs[vehicle->unk1A];
+			specBytes = (u8 *)spec;
+
+			if (arg0 != 0) {
+				if (vehicle != D_80052B34) {
+					continue;
+				}
+			} else if (vehicle == D_80052B34) {
+				continue;
+			}
+
+			if ((currentLevel == 1) && (vehicle->unk1A == 0x11)) {
+				D_80158B90[D_801593EA].unk0 = vehicle->unk0;
+				D_80158B90[D_801593EA].unk4 = vehicle->unk4;
+				D_80158B90[D_801593EA].unk2 = func_800F9D24_108CD4(vehicle->unk0, vehicle->unk4);
+				D_80158B90[D_801593EA].unk6 = vehicle->unk2;
+
+				D_8005BB34->v.ob[0] = vehicle->unk0;
+				D_8005BB34->v.ob[1] = D_80158B90[D_801593EA].unk2;
+				D_8005BB34->v.ob[2] = vehicle->unk4;
+				D_8005BB34->v.cn[0] = 0x8E;
+				D_8005BB34->v.cn[1] = 0x63;
+				D_8005BB34->v.cn[2] = 0x3C;
+				D_8005BB34->v.cn[3] = 0xFF;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = vehicle->unk0;
+				D_8005BB34->v.ob[1] = vehicle->unk2;
+				D_8005BB34->v.ob[2] = vehicle->unk4;
+				D_8005BB34->v.cn[0] = 0x8E;
+				D_8005BB34->v.cn[1] = 0x63;
+				D_8005BB34->v.cn[2] = 0x3C;
+				D_8005BB34->v.cn[3] = 0xFF;
+				D_8005BB34++;
+
+				gDPPipeSync(D_8005BB30++);
+				gSPVertex(D_8005BB30++, (u32)(D_8005BB34 - 2) & 0x1FFFFFFF, 2, 0);
+				gDPSetTextureLUT(D_8005BB30++, G_TT_NONE);
+				gDPPipeSync(D_8005BB30++);
+
+				D_801593EA++;
+			}
+
+			if ((vehicle->unk0 < (D_801493B0 - 0x200)) || ((D_801493AC + 0x200) < vehicle->unk0)) {
+				continue;
+			}
+			if ((vehicle->unk4 < (D_801493B8 - 0x200)) || ((D_801493B4 + 0x200) < vehicle->unk4)) {
+				continue;
+			}
+
+			D_80158F00[D_80158FE0] = *vehicleIndexPtr;
+			D_80158FE0++;
+
+			if ((func_800B93AC_C835C(vehicle->unk0, vehicle->unk4, spec->unkC, (s16)D_80052B2C->unk0,
+								D_80052B2C->unk8, 0x4000 - D_80047950) == 0) || !(vehicle->unk20 & 0x8000) ||
+				((D_801493E0 == 0) && (vehicle == D_80052B34))) {
+				continue;
+			}
+
+			D_8005BB2C->words.w0 = 0x03840010;
+			D_8005BB2C->words.w1 = (u32)&D_801592A0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0x03820010;
+			D_8005BB2C->words.w1 = (u32)&D_801592B0;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xBC00000A;
+			D_8005BB2C->words.w1 = 0xFFFFFFFF;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xBC00040A;
+			D_8005BB2C->words.w1 = 0xFFFFFFFF;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xBC00200A;
+			D_8005BB2C->words.w1 = 0x808080FF;
+			D_8005BB2C++;
+			D_8005BB2C->words.w0 = 0xBC00240A;
+			D_8005BB2C->words.w1 = 0x808080FF;
+			D_8005BB2C++;
+
+			if ((vehicle->unk20 & 0x2000) && !((index + D_80052A8C) & 3)) {
+				func_800710D4_80084(0xFF, 0xFF, 0xFF);
+			}
+
+			if ((currentLevel == 2) && (vehicle->unk1A == 1) && (vehicle == D_80052B34)) {
+				gSPClearGeometryMode(D_8005BB2C++, G_FOG);
+				gDPSetRenderMode(D_8005BB2C++, G_RM_PASS, G_RM_AA_ZB_XLU_SURF2);
+			}
+
+			if (vehicle->unk1A == 0) {
+				gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+				func_800FB3E8_10A398(D_80052B34, D_80159238);
+				func_800FB40C_10A3BC(D_80052B34, D_8015923C);
+				func_800EF14C_FE0FC(D_80052B34);
+				func_800FB3E8_10A398(D_80052B34, -D_80159238);
+				func_800FB40C_10A3BC(D_80052B34, -D_8015923C);
+				gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+			} else {
+				func_800FFD28_10ECD8(vehicle, &D_80159238);
+
+				if (((currentLevel == 4) && ((vehicle->unk1A == 6) || (vehicle->unk1A == 0xD))) ||
+					(vehicle->unk1A == 0x13)) {
+					func_80100114_10F0C4(vehicle);
+				}
+
+				gDPSetTextureLOD(D_8005BB2C++, G_TL_LOD);
+				if (*(s32 *)spec != 0) {
+					gSPDisplayList(D_8005BB2C++, (Gfx *)(*(s32 *)spec));
+				}
+
+				if ((spec->unk4C & 0x01000000) && (vehicle == D_80052B34)) {
+					D_80052B40.unk0 = spec->unk5E * 2;
+					D_80052B40.unk2 = spec->unk5F * 2;
+					D_80052B40.unk4 = spec->unk60 * 2;
+					D_80052B50.unk0 = 0x37;
+					D_80052B50.unk2 = 0x37;
+					D_80052B50.unk4 = 0x37;
+					func_800039D0_45D0(&D_80052B40, 0, &D_80052B50, D_8005BB38);
+
+					gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF,
+							  G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+					D_8005BB38 += 0x40;
+					gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
+					gSPDisplayList(D_8005BB2C++, D_50445A0);
+					gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+					gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+				}
+
+				matrixCount = 0;
+				listIndex = specBytes[0x53];
+				shadowPart = (ShadowPartEntry *)&D_8013FDA8_14ED58[listIndex];
+				for (count = specBytes[0x54] - 1; count != 0; count--) {
+					model = (u8 *)shadowPart->model;
+
+					if (shadowPart->flags & 0x40) {
+						for (i = 0; i < 2; i++) {
+							gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+							matrixCount--;
+						}
+					}
+					if (shadowPart->flags & 0x80) {
+						for (i = 0; i < 3; i++) {
+							gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+							matrixCount--;
+						}
+					}
+					if (shadowPart->flags & 0x100) {
+						for (i = 0; i < 4; i++) {
+							gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+							matrixCount--;
+						}
+					}
+
+					if ((currentLevel == 4) && (vehicle->unk1A == 0xD) && (vehicle->unk20 & 0x10)) {
+						count--;
+					}
+
+					updateMtx = (void (*)(s32))shadowPart->updateMtx;
+					if ((vehicle == D_80052B34) || (vehicle == (VehicleInstance *)D_80158E74) ||
+						((currentLevel == 2) && (vehicle->unk1A == 5))) {
+						if ((vehicle == D_80052B34) && (updateMtx == func_800FF5A8_10E558)) {
+							if (D_8015930C >= 0x2619) {
+								if (model == D_5032130) {
+									model = D_5031990;
+								} else if (model == D_5032038) {
+									model = D_50318A0;
+								} else if (model == D_5031F30) {
+									model = D_50317A0;
+								} else if (model == D_5031DB0) {
+									model = D_5031650;
+								} else if (model == D_5031BC0) {
+									model = D_50314B0;
+								}
+							}
+
+							if ((currentLevel == 4) &&
+								(((vehicle->unk1A == 5) && (listIndex == 0x85)) ||
+								 ((vehicle->unk1A == 9) && (listIndex == 0x8D)))) {
+								func_800FF604_10E5B4(listIndex);
+							} else {
+								func_800FF5A8_10E558(listIndex);
+							}
+						} else if ((vehicle == (VehicleInstance *)D_80158E74) &&
+								   (updateMtx == func_800FF5A8_10E558)) {
+							if (D_80159234 >= 0x2619) {
+								if (model == D_5032130) {
+									model = D_5031990;
+								} else if (model == D_5032038) {
+									model = D_50318A0;
+								} else if (model == D_5031F30) {
+									model = D_50317A0;
+								} else if (model == D_5031DB0) {
+									model = D_5031650;
+								} else if (model == D_5031BC0) {
+									model = D_50314B0;
+								}
+							}
+
+							if ((currentLevel == 4) &&
+								(((vehicle->unk1A == 5) && (listIndex == 0x85)) ||
+								 ((vehicle->unk1A == 9) && (listIndex == 0x8D)))) {
+								func_800FF6C0_10E670(listIndex);
+							} else {
+								func_800FF664_10E614(listIndex);
+							}
+						} else {
+							updateMtx(listIndex);
+						}
+					} else if (updateMtx == func_800FEB04_10DAB4) {
+						updateMtx(listIndex);
+					} else {
+						func_800FE910_10D8C0(listIndex);
+					}
+
+					if (shadowPart->flags & 1) {
+						gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF,
+								  G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+						matrixCount++;
+					} else {
+						gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF,
+								  G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+					}
+					D_8005BB38 += 0x40;
+
+					if (((model != D_50312E8) || (vehicle == D_80158E78) ||
+						((model == D_50312E8) &&
+						 (((listIndex == specBytes[0x63]) &&
+						   ((D_80050AD4 == 0) || (vehicle == D_8013FD78_14ED28))) ||
+						  ((listIndex == specBytes[0x64]) &&
+						   ((D_80050AD4 == 1) || (vehicle == D_8013FD78_14ED28)))) &&
+						 !(D_80159320 & 0x10000) && (D_80031414 == 0) && (vehicle == D_80052B34) &&
+						 (D_8015930E == 0) && (gameplayMode == 1) &&
+						 (vehicle->unk1E == 0) && (currentControllerStates[0].button & 0x2000))) &&
+						((vehicle == D_80052B34) || ((model != D_50445A0) && (model != D_9043D50)))) {
+						switch (listIndex) {
+							case 14:
+								func_802D4CD0_18D7E0(0x18, 0);
+								break;
+							case 15:
+								func_802D4CD0_18D7E0(0x19, 0);
+								break;
+							default:
+								if (shadowPart->flags & 0x20) {
+									gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+									D_80052B50.unk0 = -0x100;
+									D_80052B50.unk2 = 0x100;
+									D_80052B50.unk4 = 0x100;
+									func_800039D0_45D0(NULL, 0, &D_80052B50, D_8005BB38);
+									gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF,
+											  G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+									D_8005BB38 += 0x40;
+								} else {
+									gSPSetGeometryMode(D_8005BB2C++, G_FOG);
+									gDPSetTextureLOD(D_8005BB2C++, G_TL_LOD);
+								}
+
+								if ((model == D_50445A0) || (model == D_9043D50)) {
+									gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
+								}
+								gSPDisplayList(D_8005BB2C++, model);
+								if ((model == D_50445A0) || (model == D_9043D50)) {
+									gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+								}
+								break;
+						}
+
+						if (shadowPart->flags & 0x10) {
+							gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+							shadowPart->offset.unk0 = -shadowPart->offset.unk0;
+							func_800FF258_10E208(listIndex);
+							gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF,
+									  G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+							D_8005BB38 += 0x40;
+							gSPDisplayList(D_8005BB2C++, model);
+							shadowPart->offset.unk0 = -shadowPart->offset.unk0;
+						}
+					}
+
+					listIndex++;
+					if ((shadowPart->flags & 2) && (matrixCount > 0)) {
+						gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+						matrixCount--;
+					}
+					shadowPart++;
+				}
+
+				while (matrixCount != 0) {
+					gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+					matrixCount--;
+				}
+			}
+
+			if ((currentLevel == 2) && (vehicle->unk1A == 1) && (vehicle == D_80052B34)) {
+				gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
+				gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+			}
+
+			if (D_80159320 & 0x100000) {
+				func_80070FB8_7FF68();
+			}
+			if (vehicle->unk20 & 0x2000) {
+				func_80070FB8_7FF68();
+				vehicle->unk20 &= ~0x2000;
+			}
+		}
+	}
+
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureLOD(D_8005BB2C++, G_TL_LOD);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8010065C_10F60C.s")
+#endif
 
 // drawDeadVehicles
 #ifdef NON_MATCHING
