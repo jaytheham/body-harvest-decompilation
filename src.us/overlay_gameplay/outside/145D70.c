@@ -172,7 +172,49 @@ void func_80137368_146318(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	}
 }
 
+/* CURRENT(267676) */
+#ifdef NON_MATCHING
+void func_80137468_146418(s32 arg0, s32 arg1) {
+	AlienInstance *alien;
+
+	if (D_8006AB88 == 0) {
+		return;
+	}
+
+	func_800038E0_44E0();
+	D_80140D2C_14FCDC[0] += 1;
+
+	alien = &alienInstances[arg0];
+
+	switch (arg1) {
+		case 1:
+			func_80137130_1460E0(0, 0x14B, alien->unk0, alien->unk2, alien->unk4);
+			break;
+		case 2:
+			func_80137130_1460E0(0, 0xAB, alien->unk0, alien->unk2, alien->unk4);
+			break;
+		case 3:
+			func_80137130_1460E0(0, 0xDB, alien->unk0, alien->unk2, alien->unk4);
+			break;
+		case 4:
+			func_80137130_1460E0(0, 0xB3, alien->unk0, alien->unk2, alien->unk4);
+			break;
+		case 8:
+			func_80137130_1460E0(0, 0xE6, alien->unk0, alien->unk2, alien->unk4);
+			break;
+		case 9:
+			func_80137130_1460E0(0, 0xCC, alien->unk0, alien->unk2, alien->unk4);
+			break;
+		case 0xA:
+			func_80137130_1460E0(0, 0xB0, alien->unk0, alien->unk2, alien->unk4);
+			break;
+		default:
+			break;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/145D70/func_80137468_146418.s")
+#endif
 
 void func_80139018_147FC8(s32 arg0) {
 
