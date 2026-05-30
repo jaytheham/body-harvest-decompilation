@@ -262,30 +262,30 @@ void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F24C_13E1FC.s")
 #endif
 
+// CURRENT(2415)
 #ifdef NON_MATCHING
-// CURRENT(5182)
 void func_8012F2DC_13E28C(s32 arg0, s32 arg1, s32 arg2)
 {
 	f32 temp_f10;
 	f32 var_f0;
-	s32 temp_t9;
 	s32 var_v1;
 	u8 temp_v0;
+	u16 temp_a0;
 
-	if (((f64) (f32) coss((D_80140C78_14FC28 * 0x3E8) & 0xFFFF) / 32768.0) >= 0.0) {
-		var_f0 = (f32) ((f64) (f32) coss((D_80140C78_14FC28 * 0x3E8) & 0xFFFF) / 32768.0);
+	temp_a0 = (D_80140C78_14FC28 * 0x3E8) & 0xFFFF;
+	if (((f64) (f32) coss(temp_a0) / 32768.0) >= 0.0) {
+		temp_a0 = (D_80140C78_14FC28 * 0x3E8) & 0xFFFF;
+		var_f0 = (f32) ((f64) (f32) coss(temp_a0) / 32768.0);
 	} else {
-		var_f0 = (f32) -((f64) (f32) coss((D_80140C78_14FC28 * 0x3E8) & 0xFFFF) / 32768.0);
+		temp_a0 = (D_80140C78_14FC28 * 0x3E8) & 0xFFFF;
+		var_f0 = (f32) -((f64) (f32) coss(temp_a0) / 32768.0);
 	}
 
-	var_v1 = 0;
-	do {
+	for (var_v1 = 0; var_v1 < 3; var_v1 = (var_v1 + 1) & 0xFF) {
 		temp_v0 = *(u8 *) (arg0 + var_v1);
-		temp_t9 = (var_v1 + 1) & 0xFF;
 		temp_f10 = (f32) (0xFF - temp_v0);
 		*(u8 *) (arg1 + var_v1) = (u32) (temp_f10 * var_f0) + temp_v0;
-		var_v1 = temp_t9;
-	} while (temp_t9 < 3);
+	}
 
 	D_80140C78_14FC28 += arg2;
 }
