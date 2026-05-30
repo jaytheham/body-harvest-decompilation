@@ -1476,102 +1476,107 @@ void func_800B41C8_C3178(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	}
 }
 
-// CURRENT(15401)
+// CURRENT(11440)
 #ifdef NON_MATCHING
 void func_800B42B0_C3260(s32 arg0) {
 	u8 sp6F;
 	s8 sp6A;
 	s8 sp69;
 	s8 sp68;
-	s8 sp64;
-	s8 sp63;
-	s8 sp62;
-	s8 sp61;
-	s8 sp60;
+	s8 sp60[5];
 	u16 *sp5C;
 	s8 sp59;
 	u8 sp54[3];
-	u16 *tempS6;
-	u16 *tempS7;
-	u8 temp;
-	s32 tmp;
-	s32 i;
-	s32 lane;
-	u8 *entry;
-	u8 idx;
-	s8 nextCol;
+	s32 temp_t9;
+	s32 temp_v1;
+	s32 var_s0;
+	s32 var_s1;
+	u16 *temp_s6;
+	u16 *temp_s7;
+	u8 *temp_v0;
+	u8 *temp_v0_4;
 
 	(void)arg0;
 
 	D_8014F89C = D_80151DD8[0x964]++;
 	D_8014F89D = D_80151DD8[0x965];
-	D_8014F899 = D_80151DD8[0x961];
-	D_8014F898 = D_80151DD8[0x960];
+	D_8014F899 = ((s8 *)D_80151DD8)[0x961];
+	D_8014F898 = ((s8 *)D_80151DD8)[0x960];
+	sp5C = &D_8014F8A0[0][0];
 	D_8014F89C++;
 
-	sp5C = &D_8014F8A0[0][0];
+	var_s1 = 0;
 	sp6F = 0;
 	sp59 = D_8014F898;
 
 	do {
-		tmp = D_8014F89D + sp6F;
-		temp = (D_8014F89C + (tmp << 8) + 0x12) & 0xFF;
-		tempS6 = sp5C + (((D_8014F89C + (tmp << 8) + 0x12) & 0xFFFF));
-		tempS7 = tempS6;
+		temp_v1 = D_8014F89D + var_s1;
+		temp_t9 = (D_8014F89C + (temp_v1 << 8) + 0x12) & 0xFFFF;
+		temp_s6 = sp5C + temp_t9;
+		temp_s7 = sp5C + temp_t9;
 
-		sp60 = tempS6[-0x100] & 0x3F;
-		sp61 = tempS6[-1] & 0x3F;
-		sp62 = tempS7[0] & 0x3F;
-		sp63 = tempS6[1] & 0x3F;
-		sp64 = tempS6[0x100] & 0x3F;
+		sp60[0] = temp_s6[-0x100] & 0x3F;
+		sp60[1] = temp_s6[-1] & 0x3F;
+		sp60[2] = temp_s7[0] & 0x3F;
+		sp60[3] = temp_s6[1] & 0x3F;
+		sp60[4] = temp_s6[0x100] & 0x3F;
 
-		func_800B1814_C07C4(tmp & 0xFF, temp, sp54, sp5C);
-		func_800B2CF0_C1CA0(&sp60, sp54, &sp68);
+		func_800B1814_C07C4(temp_v1 & 0xFF, (D_8014F89C + 0x12) & 0xFF, sp54, sp5C);
+		func_800B2CF0_C1CA0(sp60, sp54, &sp68);
 
-		for (i = 0; i < 0x40; i++) {
-			entry = &D_8014FD48[i * 2];
-			if (((D_8014F89C + 0x12) == entry[0]) && ((D_8014F89D + sp6F) == entry[1])) {
-				idx = (func_800038E0_44E0() % 60) & 0xFF;
-				nextCol = idx + 0x14;
-				if (nextCol < 0) {
-					sp68 = 0;
-				} else {
-					sp68 = nextCol;
-				}
+		var_s0 = 0;
+	loop_2:
+		temp_v0 = &D_8014FD48[var_s0 * 2];
+		if (((D_8014F89C + 0x12) == temp_v0[0]) && ((D_8014F89D + var_s1) == temp_v0[1])) {
+			s32 temp_t8;
+			s32 temp_v0_2;
+			s32 temp_v0_3;
+			s32 temp_v1_2;
 
-				nextCol = idx - 5;
-				if (nextCol < 0) {
-					sp69 = 0;
-				} else {
-					sp69 = nextCol;
-				}
+			temp_t8 = (func_800038E0_44E0() % 60) & 0xFF;
+			temp_v1_2 = temp_t8 + 0x14;
+			if (temp_v1_2 < 0) {
+				sp68 = 0;
+			} else {
+				sp68 = temp_v1_2;
+			}
 
-				nextCol = idx - 0x19;
-				if (nextCol < 0) {
-					sp6A = 0;
-				} else {
-					sp6A = nextCol;
-				}
+			temp_v0_2 = temp_t8 - 5;
+			if (temp_v0_2 < 0) {
+				sp69 = 0;
+			} else {
+				sp69 = temp_v0_2;
+			}
+
+			temp_v0_3 = temp_t8 - 0x19;
+			if (temp_v0_3 < 0) {
+				sp6A = 0;
+			} else {
+				sp6A = temp_v0_3;
 			}
 		}
-
-		entry = &D_80151DD8[(u8)sp59 * 0x78 + D_8014F899 * 6];
-		*(u16 *)entry = *tempS7;
-
-		if (tempS6[-1] & 0x800) {
-			entry[2] = (((s32)(u8)sp68 >> 2) * 3);
-			entry[4] = (((s32)(u8)sp6A >> 2) * 3);
-			entry[3] = (((s32)(u8)sp69 >> 2) * 3);
-		} else {
-			entry[2] = (u8)sp68;
-			entry[3] = (u8)sp69;
-			entry[4] = (u8)sp6A;
+		var_s0 = (var_s0 + 1) & 0xFF;
+		if (var_s0 < 0x40) {
+			goto loop_2;
 		}
 
-		lane = (sp59 + 1) % 19;
-		sp59 = lane;
-		sp6F = (sp6F + 1) & 0xFF;
-	} while (sp6F < 0x13);
+		temp_v0_4 = &D_80151DD8[(u8)sp59 * 0x78 + D_8014F899 * 6];
+		*(u16 *)temp_v0_4 = *temp_s7;
+
+		if (temp_s6[-1] & 0x800) {
+			temp_v0_4[2] = (((u8)sp68 / 4) * 3);
+			temp_v0_4[4] = (((u8)sp6A / 4) * 3);
+			temp_v0_4[3] = (((u8)sp69 / 4) * 3);
+		} else {
+			temp_v0_4[2] = (u8)sp68;
+			temp_v0_4[3] = (u8)sp69;
+			temp_v0_4[4] = (u8)sp6A;
+		}
+
+		sp59 = ((u8)sp59 + 1) % 19;
+		var_s1 = (sp6F + 1) & 0xFF;
+		sp6F = var_s1;
+	} while (var_s1 < 0x13);
 
 	D_8014F899 = (D_8014F899 + 1) % 19;
 	D_80151DD8[0x961] = D_8014F899;
@@ -3665,9 +3670,6 @@ void func_800B9DB8_C8D68(u8 arg0)
   sp68 = sp10C / 4;
   do
   {
-	col_idx = (sp6C + ra) & 0xFF;
-	sp60 = &D_8021EA30[col_idx << 6];
-	sp54 = col_idx;
 	sp50 = (s16) ((col_idx << 10) + 0x8000);
 	s7 = 0;
 	var_t5 = 0;
