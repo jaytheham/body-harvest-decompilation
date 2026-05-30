@@ -1284,7 +1284,83 @@ s32 func_80118670_127620(s16 arg0, s16 arg1) {
 #endif
 
 // displayBuildings
+// CURRENT(266412)
+#ifdef NON_MATCHING
+void func_80118774_127724(s32 arg0) {
+	s16 baseX;
+	s16 baseZ;
+	s16 clampedX;
+	s16 nearA;
+	s16 nearB;
+	s16 idx;
+	BuildingInstance *building;
+	VehicleInstance *player;
+	u8 orderA[0x10];
+	u8 orderB[0x10];
+	Gfx *dl;
+	s32 i;
+
+	(void) arg0;
+
+	baseX = D_80149436 - 0x900;
+	baseZ = D_80149434 - 0x900;
+
+	if ((s16)(baseX - 0x4B0) < -0x8000) {
+		clampedX = -0x8000;
+	} else {
+		clampedX = (s16)(baseX - 0x4B0);
+	}
+
+	idx = func_80117508_1264B8(clampedX);
+	building = &buildingInstances[idx];
+
+	player = D_80052B34;
+	func_80115F20_124ED0(player->unk0, player->unk4, &nearA, &nearB);
+
+	if ((currentLevel == 2) && ((D_80159320 << 8) < 0)) {
+		D_80159DDF = func_8011D260_12C210(-0x10, 0x4D);
+		D_80159DE0 = 0;
+		D_80159DE2 = 0;
+		D_80159DE4 = 0;
+	}
+
+	D_80052558 &= -9;
+
+	for (i = 0; i < 0x10; i++) {
+		orderA[i] = 0xFF;
+		orderB[i] = 0xFF;
+	}
+
+	if (func_8000726C_7E6C(0x2A) == 0) {
+		s16 tx;
+		s16 tz;
+
+		if ((gameplayMode == 0xB) || (gameplayMode == 3)) {
+			tx = D_80157F08.unk18 >> 6;
+			tz = D_80157F08.unk1A >> 6;
+		} else {
+			tx = D_80052B2C->unk18 >> 8;
+			tz = D_80052B2C->unk1A >> 8;
+		}
+
+		D_80052554 = func_80118670_127620(tx, tz);
+	}
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xBA000E02;
+	dl->words.w1 = 0x00008000;
+
+	dl = D_8005BB2C++;
+	dl->words.w0 = 0xB7000000;
+	dl->words.w1 = 0x00002000;
+
+	if (func_801185F8_1275A8(building, baseX) == 0) {
+		return;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118774_127724.s")
+#endif
 
 // CURRENT(3586)
 #ifdef NON_MATCHING
@@ -7768,3 +7844,7 @@ void func_8012E258_13D208(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8012E258_13D208.s")
 #endif
+
+
+
+
