@@ -2279,40 +2279,60 @@ s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5EE4_C4E94.s")
 #endif
 
-// CURRENT(128303)
+// CURRENT(75264)
 #ifdef NON_MATCHING
-void func_800B604C_C4FFC(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6) {
+void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, u8 arg6) {
 	struct {
 		s16 counts[8];
 		s16 tiles[8][16];
 		s16 order[8][16];
 	} sp12C;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s32 pad6;
+	s32 pad7;
+	s32 pad8;
+	s32 pad9;
+	s32 pad10;
+	s32 pad11;
+	s32 pad12;
+	s32 pad13;
 	Vtx *srcBase;
 	Vtx *copiedBase;
 	s16 width;
 	s16 height;
 	s16 x;
 	s16 y;
-	s32 bucket;
-	s32 modeByte;
+	s16 bucket;
+	u8 modeByte;
 
-	for (bucket = 0; bucket < 8; bucket++) {
+	bucket = 0;
+	do {
 		sp12C.counts[bucket] = -1;
-	}
+		bucket = (s16)(bucket + 1);
+	} while (bucket < 8);
 
-	srcBase = (Vtx *)arg0;
+	srcBase = arg0;
 
 	if ((arg1 == 0) && (arg2 == 0) && (arg3 == 4) && (arg4 == 4)) {
-		for (y = 0; y < 5; y++) {
-			for (x = 0; x < 5; x++) {
-				D_8005BB34[0] = srcBase[(y * 0x12) + x];
-				D_8005BB34++;
-			}
-		}
+		bucket = 0;
+		do {
+			Vtx *src = srcBase + (bucket * 0x12);
 
-		D_8005BB2C->words.w0 = 0x0408658F;
-		D_8005BB2C->words.w1 = (u32)(D_8005BB34 - 0x19);
-		D_8005BB2C++;
+			D_8005BB34[0] = src[0];
+			D_8005BB34[1] = src[1];
+			D_8005BB34[2] = src[2];
+			D_8005BB34[3] = src[3];
+			D_8005BB34[4] = src[4];
+			D_8005BB34 += 5;
+			bucket = (s16)(bucket + 1);
+		} while (bucket < 5);
+
+		gSPVertex(D_8005BB2C++, (D_8005BB34 - 0x19), 25, 0);
 
 		copiedBase = D_8005BB34 - 0x19;
 		modeByte = D_8014F857;
@@ -2342,36 +2362,24 @@ void func_800B604C_C4FFC(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 a
 				continue;
 			}
 
-			D_8005BB2C->words.w0 = 0xFD500000;
-			D_8005BB2C->words.w1 = (((u32)&D_80224E80[(((((u8)arg6) * 8) + bucket) << 11)]) & 0x1FFFFFFF);
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF5500000;
-			D_8005BB2C->words.w1 = 0x07000000;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xE6000000;
-			D_8005BB2C->words.w1 = 0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF3000000;
-			D_8005BB2C->words.w1 = 0x073FF200;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xE7000000;
-			D_8005BB2C->words.w1 = 0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF5480800;
-			D_8005BB2C->words.w1 = 0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF2000000;
-			D_8005BB2C->words.w1 = 0x0007C0FC;
-			D_8005BB2C++;
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, &D_80224E80[(((((u8)arg6) * 8) + bucket) << 11)]);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, G_TX_RENDERTILE, 0,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (63 << G_TEXTURE_IMAGE_FRAC));
 
 			for (i = 0; i <= count; i++) {
 				u16 tile = (u16)sp12C.tiles[bucket][i];
 				s16 base = (sp12C.order[bucket][i] + 4) * 2;
 				u32 t = ((u8)((tile & 0x3C0) >> 6)) & 1;
 
-				D_8005BB2C->words.w0 = 0xE8000000;
-				D_8005BB2C->words.w1 = 0;
-				D_8005BB2C++;
+				gDPTileSync(D_8005BB2C++);
 				D_8005BB2C->words.w0 = 0xF5480800 | ((t << 7) & 0x1FF);
 				D_8005BB2C->words.w1 = 0x00014050 | ((((tile & 0x2000) >> 13) & 3) << 18) | ((((tile & 0x4000) >> 14) & 3) << 8);
 				D_8005BB2C++;
@@ -2398,9 +2406,7 @@ void func_800B604C_C4FFC(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 a
 			}
 		}
 
-		D_8005BB2C->words.w0 = 0x04080000 | ((((total << 10) | ((total << 4) - 1)) & 0xFFFF));
-		D_8005BB2C->words.w1 = (u32)(D_8005BB34 - total);
-		D_8005BB2C++;
+		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 0);
 		copiedBase = D_8005BB34 - total;
 		modeByte = (u8)D_8014F854;
 
@@ -2429,27 +2435,17 @@ void func_800B604C_C4FFC(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 a
 				continue;
 			}
 
-			D_8005BB2C->words.w0 = 0xFD500000;
-			D_8005BB2C->words.w1 = (((u32)&D_80224E80[(((((u8)arg6) * 8) + bucket) << 11)]) & 0x1FFFFFFF);
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF5500000;
-			D_8005BB2C->words.w1 = 0x07000000;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xE6000000;
-			D_8005BB2C->words.w1 = 0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF3000000;
-			D_8005BB2C->words.w1 = 0x073FF200;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xE7000000;
-			D_8005BB2C->words.w1 = 0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF5480800;
-			D_8005BB2C->words.w1 = 0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF2000000;
-			D_8005BB2C->words.w1 = 0x0007C0FC;
-			D_8005BB2C++;
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, &D_80224E80[(((((u8)arg6) * 8) + bucket) << 11)]);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, G_TX_RENDERTILE, 0,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (63 << G_TEXTURE_IMAGE_FRAC));
 
 			for (i = 0; i <= count; i++) {
 				u16 tile = (u16)sp12C.tiles[bucket][i];
@@ -2480,9 +2476,7 @@ void func_800B604C_C4FFC(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 a
 			}
 		}
 
-		D_8005BB2C->words.w0 = 0x04080000 | ((((total << 10) | ((total << 4) - 1)) & 0xFFFF));
-		D_8005BB2C->words.w1 = (u32)(D_8005BB34 - total);
-		D_8005BB2C++;
+		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 0);
 		copiedBase = D_8005BB34 - total;
 		modeByte = (u8)D_8014F854;
 
@@ -2511,27 +2505,17 @@ void func_800B604C_C4FFC(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 a
 				continue;
 			}
 
-			D_8005BB2C->words.w0 = 0xFD500000;
-			D_8005BB2C->words.w1 = (((u32)&D_80224E80[(((((u8)arg6) * 8) + bucket) << 11)]) & 0x1FFFFFFF);
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF5500000;
-			D_8005BB2C->words.w1 = 0x07000000;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xE6000000;
-			D_8005BB2C->words.w1 = 0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF3000000;
-			D_8005BB2C->words.w1 = 0x073FF200;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xE7000000;
-			D_8005BB2C->words.w1 = 0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF5480800;
-			D_8005BB2C->words.w1 = 0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF2000000;
-			D_8005BB2C->words.w1 = 0x0007C0FC;
-			D_8005BB2C++;
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, &D_80224E80[(((((u8)arg6) * 8) + bucket) << 11)]);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, G_TX_RENDERTILE, 0,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (63 << G_TEXTURE_IMAGE_FRAC));
 
 			for (i = 0; i <= count; i++) {
 				u16 tile = (u16)sp12C.tiles[bucket][i];
@@ -2562,9 +2546,7 @@ void func_800B604C_C4FFC(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 a
 			}
 		}
 
-		D_8005BB2C->words.w0 = 0x04080000 | ((((total << 10) | ((total << 4) - 1)) & 0xFFFF));
-		D_8005BB2C->words.w1 = (u32)(D_8005BB34 - total);
-		D_8005BB2C++;
+		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 0);
 		copiedBase = D_8005BB34 - total;
 		modeByte = (u8)D_8014F854;
 
@@ -2593,27 +2575,17 @@ void func_800B604C_C4FFC(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 a
 				continue;
 			}
 
-			D_8005BB2C->words.w0 = 0xFD500000;
-			D_8005BB2C->words.w1 = (((u32)&D_80224E80[(((((u8)arg6) * 8) + bucket) << 11)]) & 0x1FFFFFFF);
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF5500000;
-			D_8005BB2C->words.w1 = 0x07000000;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xE6000000;
-			D_8005BB2C->words.w1 = 0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF3000000;
-			D_8005BB2C->words.w1 = 0x073FF200;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xE7000000;
-			D_8005BB2C->words.w1 = 0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF5480800;
-			D_8005BB2C->words.w1 = 0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xF2000000;
-			D_8005BB2C->words.w1 = 0x0007C0FC;
-			D_8005BB2C++;
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, &D_80224E80[(((((u8)arg6) * 8) + bucket) << 11)]);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, G_TX_RENDERTILE, 0,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (63 << G_TEXTURE_IMAGE_FRAC));
 
 			for (i = 0; i <= count; i++) {
 				u16 tile = (u16)sp12C.tiles[bucket][i];
