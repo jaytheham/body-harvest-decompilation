@@ -1442,6 +1442,7 @@ void func_802E3584_3276D4(u8, s16, s8, Unk802E71B8 *);
 void func_802DF290_3233E0(void);
 void func_802D6670_31A7C0(void);
 void func_802D5BFC_319D4C(void);
+Unk8006AA80Node *func_80012778_13378(s32 arg0);
 s32 func_80087188_96138(u8, s32, s32);
 void func_800F1134_1000E4(void);
 s32 func_800F1DDC_100D8C(void);
