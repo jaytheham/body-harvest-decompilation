@@ -25,7 +25,7 @@ void func_80012080_12C80(s32 arg0)
 	D_80031CA0_328A0 -= 1;
 }
 
-Unk8006AA84Node *func_80012128_12D28(void) {
+Unk8006AA84Node *func_80012128_12D28() {
 	s32 i;
 	s32 j;
 	s32 *slot;
@@ -54,7 +54,94 @@ Unk8006AA84Node *func_80012128_12D28(void) {
 	return *entry;
 }
 
+// CURRENT(5568)
+#ifdef NON_MATCHING
+s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA84Node **arg2) {
+	Unk8006AA80Node *temp_a0;
+	Unk8006AA80Node *temp_v0;
+	Unk8006AA80Node *temp_v1;
+	Unk8006AA80Node *sp18;
+	Unk8006AA80Node *var_a0;
+	Unk8006AA80Node *var_v1;
+	Unk8006AA80Node **arg2_80;
+	s16 temp_v0_2;
+	s16 temp_a1;
+	s16 var_v0;
+	s32 temp_t8;
+
+	if (D_8006AB88 == 0) {
+		return -1;
+	}
+	temp_t8 = D_80031CA0_328A0 + 1;
+	temp_a0 = *arg1;
+	D_80031CA0_328A0 = temp_t8;
+	if (temp_t8 >= 0x11) {
+		D_80031CA0_328A0 = temp_t8 - 1;
+		return -1;
+	}
+	sp18 = temp_a0;
+	temp_v0 = func_80012128_12D28(temp_a0, &D_80031CA0_328A0);
+	var_a0 = sp18;
+	if (temp_v0 == NULL) {
+		return -1;
+	}
+	temp_v0_2 = temp_v0->unk4;
+	*temp_v0 = arg0;
+	temp_v0->unk4 = temp_v0_2;
+
+	arg2_80 = (Unk8006AA80Node **)arg2;
+	if (*arg2_80 == NULL) {
+		temp_v0->unk34 = NULL;
+		temp_v0->unk30 = NULL;
+		var_v0 = D_80033B4C_3474C + 1;
+		temp_v0->unk10 = var_v0;
+		*arg2_80 = temp_v0;
+		*arg1 = temp_v0;
+	} else {
+		var_v1 = NULL;
+		if (var_a0 != NULL) {
+			temp_a1 = temp_v0->unk2;
+			do {
+				var_v1 = var_a0;
+				if ((var_a0->unk2 - temp_a1) < 0) {
+					var_a0 = var_a0->unk34;
+				} else {
+					temp_v1 = var_a0->unk30;
+					if (temp_v1 != NULL) {
+						temp_v1->unk34 = temp_v0;
+						temp_v0->unk34 = var_a0;
+						temp_v0->unk30 = var_a0->unk30;
+						var_a0->unk30 = temp_v0;
+						var_v0 = D_80033B4C_3474C + 1;
+						temp_v0->unk10 = var_v0;
+					} else {
+						temp_v0->unk34 = var_a0;
+						temp_v0->unk30 = NULL;
+						var_a0->unk30 = temp_v0;
+						var_v0 = D_80033B4C_3474C + 1;
+						temp_v0->unk10 = var_v0;
+						*arg1 = temp_v0;
+					}
+					D_80033B4C_3474C = var_v0;
+					return var_v0;
+				}
+			} while (var_a0 != NULL);
+		}
+
+		var_v1->unk34 = temp_v0;
+		temp_v0->unk34 = NULL;
+		var_v0 = D_80033B4C_3474C + 1;
+		temp_v0->unk30 = var_v1;
+		temp_v0->unk10 = var_v0;
+		*arg2_80 = temp_v0;
+	}
+
+	D_80033B4C_3474C = var_v0;
+	return var_v0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800121B4_12DB4.s")
+#endif
 
 void func_800123A4_12FA4(Unk8006AA80Node *arg0, Unk8006AA80Node **arg1, Unk8006AA80Node **arg2) {
 	if (D_8006AB88 != 0 && arg0 != NULL) {
