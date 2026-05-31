@@ -2609,42 +2609,66 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 #endif
 
 // Draw rotated tiles e.g. roads
-// CURRENT(94016)
+// CURRENT(61465)
 #ifdef NON_MATCHING
 void func_800B753C_C64EC(void) {
+	s32 group;
 	struct {
+		s16 pad[0x34];
 		s16 counts[8];
 		s16 indices[8][0x121];
+		s16 pad2[4];
 	} sp11C;
-	s32 group;
 
-	for (group = 0; group < 8; group++) {
-		sp11C.counts[group] = -1;
+	{
+		s16 *count = sp11C.counts;
+		s16 *countEnd = sp11C.counts + 8;
+
+		while (count < countEnd) {
+			*count++ = -1;
+		}
 	}
 
-	D_8005BB2C->words.w0 = 0xFD100000;
-	D_8005BB2C->words.w1 = (u32)(D_80254E80 + 0x200) & 0x1FFFFFFF;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xE8000000;
-	D_8005BB2C->words.w1 = 0;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xF5000100;
-	D_8005BB2C->words.w1 = 0x07000000;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xE6000000;
-	D_8005BB2C->words.w1 = 0;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xF0000000;
-	D_8005BB2C->words.w1 = 0x073FC000;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xE7000000;
-	D_8005BB2C->words.w1 = 0;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xE6000000;
-	D_8005BB2C->words.w1 = 0;
-	D_8005BB2C++;
+	{
+		Gfx *dl;
 
-	if ((D_8014FD28 + 1) < 0x90) {
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFD100000;
+		dl->words.w1 = (u32)(D_80254E80 + 0x200) & 0x1FFFFFFF;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE8000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF5000100;
+		dl->words.w1 = 0x07000000;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE6000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF0000000;
+		dl->words.w1 = 0x073FC000;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE6000000;
+		dl->words.w1 = 0;
+	}
+
+	{
 		s32 i;
 
 		for (i = D_8014FD28 + 1; i < 0x90; i++) {
@@ -2747,33 +2771,57 @@ void func_800B753C_C64EC(void) {
 		}
 	}
 
-	D_8005BB2C->words.w0 = 0xE7000000;
-	D_8005BB2C->words.w1 = 0;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xFD100000;
-	D_8005BB2C->words.w1 = (u32)D_80254E80 & 0x1FFFFFFF;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xE8000000;
-	D_8005BB2C->words.w1 = 0;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xF5000100;
-	D_8005BB2C->words.w1 = 0x07000000;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xE6000000;
-	D_8005BB2C->words.w1 = 0;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xF0000000;
-	D_8005BB2C->words.w1 = 0x073FC000;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xE7000000;
-	D_8005BB2C->words.w1 = 0;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xE6000000;
-	D_8005BB2C->words.w1 = 0;
-	D_8005BB2C++;
+	{
+		Gfx *dl;
 
-	for (group = 0; group < 8; group++) {
-		sp11C.counts[group] = -1;
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xFD100000;
+		dl->words.w1 = (u32)D_80254E80 & 0x1FFFFFFF;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE8000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF5000100;
+		dl->words.w1 = 0x07000000;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE6000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xF0000000;
+		dl->words.w1 = 0x073FC000;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE7000000;
+		dl->words.w1 = 0;
+
+		dl = D_8005BB2C;
+		D_8005BB2C = dl + 1;
+		dl->words.w0 = 0xE6000000;
+		dl->words.w1 = 0;
+	}
+
+	{
+		s16 *count = sp11C.counts;
+		s16 *countEnd = sp11C.counts + 8;
+
+		while (count < countEnd) {
+			*count++ = -1;
+		}
 	}
 
 	if ((s32)D_8014F89A > 0) {
