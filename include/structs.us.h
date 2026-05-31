@@ -2161,6 +2161,29 @@ typedef struct {
 } UnkPos16_8012B26C;
 
 typedef struct {
+	/* 0x00 */ Gfx *unk0;
+	/* 0x04 */ Gfx *unk4;
+	/* 0x08 */ Gfx *unk8;
+	/* 0x0C */ u16 unkC;
+	/* 0x0E */ u16 unkE;
+	/* 0x10 */ u16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ u8 pad14[0x2];
+	/* 0x16 */ s16 unk16;
+} UnkBuildingProp_80118774; /* size = 0x18 */
+
+typedef struct {
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ void (*unk4)(BuildingInstance *arg0);
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ s16 unkA;
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ u8 padE;
+	/* 0x0F */ u8 unkF;
+	/* 0x10 */ s32 unk10;
+} UnkBuildingAction_80118774; /* size = 0x14 */
+
+typedef struct {
 	s16 x;
 	s16 y;
 	s16 z;
