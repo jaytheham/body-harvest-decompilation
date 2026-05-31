@@ -2155,6 +2155,33 @@ typedef struct {
 } GateEntry; /* 0xA bytes */
 
 typedef struct {
+	s16 x;
+	s16 y;
+	s16 z;
+} UnkPos16_8012B26C;
+
+typedef struct {
+	s16 x;
+	s16 y;
+	s16 z;
+	s16 radius;
+	u8 pad8[4];
+} Unk80147090Entry_8012B26C;
+
+typedef struct {
+	f32 unk0;
+	s16 unk4;
+	s16 unk6;
+	s16 unk8;
+	s16 unkA;
+	union {
+		f32 asFloat;
+		UnkPos16_8012B26C *asPos;
+		s32 asS32;
+	} unkC;
+} UnkProjectileCtrl_8012B26C;
+
+typedef struct {
 	/* 0x00 */ s32 unk0; // Pointer to label string
 	/* 0x04 */ s32 unk4;
 	/* 0x08 */ s32 unk8;

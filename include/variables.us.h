@@ -215,6 +215,12 @@ extern f64 D_801424F0_1514A0;
 extern f64 D_801424F8_1514A8;
 extern f64 D_80142500_1514B0;
 extern f64 D_80142508_1514B8;
+extern u8 D_8015F9AC[];
+extern u8 D_801450FC_1540AC[];
+extern u8 D_80147098_156048[];
+extern u8 D_802566DA[];
+extern f64 D_80145200_1541B0;
+extern f64 D_80145208_1541B8;
 
 extern u8 D_1010A80[];
 extern u8 D_50323B0[];
