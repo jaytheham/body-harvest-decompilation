@@ -531,7 +531,7 @@ s32 func_8012FFB0_13EF60(void)
 }
 
 // End of level state manager
-// CURRENT(24920)
+// CURRENT(8735)
 #ifdef NON_MATCHING
 void func_8013001C_13EFCC(void)
 {
@@ -565,16 +565,22 @@ void func_8013001C_13EFCC(void)
 	}
 
 	if ((s32)D_80140C7C_14FC2C > 0) {
-		func_8012FE6C_13EE1C((s16)(((f32)D_80140C7C_14FC2C / 65535.0f) * 180.0f));
+		func_8012FE6C_13EE1C((s16)(((f32)(s32)D_80140C7C_14FC2C / 65535.0f) * 180.0f));
 
 		gDPPipeSync(D_8005BB2C++);
-		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
+		gDPTileSync(D_8005BB2C++);
+		gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_FOG | G_LIGHTING);
+		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+		gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_TEX_EDGE, G_RM_TEX_EDGE2);
 
 		phase = (u16)D_80140C7C_14FC2C;
 		x0 = func_80006520_7120((s16)(D_80068084 * 2), 0x70, phase);
 		y0 = x0 + func_80006520_7120(0, (s16)((D_80068084 * 4) - 0xE0), phase);
 		x1 = func_80006520_7120((s16)(D_80068088 * 2), 0x60, phase);
 		y1 = x1 + func_80006520_7120(0, (s16)((D_80068088 * 4) - 0xC0), phase);
+		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
 		func_800092B8_9EB8(x0, x1, y0, y1, 0);
 
 		next = (s32)D_80140C7C_14FC2C + D_80160050;
@@ -594,8 +600,8 @@ void func_8013001C_13EFCC(void)
 	}
 
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-	drawText("MISSION", 0, 0);
-	drawText("COMPLETE", (D_80068084 / 2) - 0x82, (D_80068088 / 2) - 0x64, (D_80068084 / 2) + 0x82, (D_80068088 / 2) + 0x64);
+	drawText(D_80145408_1543B8, 0, 0);
+	drawText(D_80145410_1543C0, (D_80068084 / 2) - 0x82, (D_80068088 / 2) - 0x64, (D_80068084 / 2) + 0x82, (D_80068088 / 2) + 0x64);
 
 	switch (D_8015FF80) {
 	case 0:
@@ -604,12 +610,17 @@ void func_8013001C_13EFCC(void)
 
 	case 1:
 		mode = D_800313D0_31FD0;
-		if (mode == 2) {
-			func_801306C4_13F674("BONUS AWARD");
-		} else if (mode == 1) {
-			func_801306C4_13F674("MISSION SCORE");
-		} else {
-			func_801306C4_13F674("MISSION BONUS");
+		switch (mode) {
+		case 1:
+			func_801306C4_13F674(D_8014543C_1543EC);
+			break;
+		case 2:
+			func_801306C4_13F674(D_80145428_1543D8);
+			break;
+		case 0:
+		default:
+			func_801306C4_13F674(D_80145414_1543C4);
+			break;
 		}
 		return;
 
@@ -619,15 +630,20 @@ void func_8013001C_13EFCC(void)
 
 	case 3:
 		mode = D_800313D0_31FD0;
-		if (mode == 2) {
-			levelName = D_80031520[currentLevel];
-			func_8012EBC0_13DB70(levelName, "-B", levelText);
-		} else if (mode == 1) {
+		switch (mode) {
+		case 1:
 			levelName = D_80031508[currentLevel];
-			func_8012EBC0_13DB70(levelName, "-A", levelText);
-		} else {
+			func_8012EBC0_13DB70(levelName, D_80145460_154410, levelText);
+			break;
+		case 2:
+			levelName = D_80031520[currentLevel];
+			func_8012EBC0_13DB70(levelName, D_80145458_154408, levelText);
+			break;
+		case 0:
+		default:
 			levelName = D_800314F0[currentLevel];
-			func_8012EBC0_13DB70(levelName, "-C", levelText);
+			func_8012EBC0_13DB70(levelName, D_80145450_154400, levelText);
+			break;
 		}
 
 		if ((currentLevel == 4) && (func_8000726C_7E6C(0x14) != 0)) {
@@ -642,28 +658,41 @@ void func_8013001C_13EFCC(void)
 
 	case 4:
 		mode = D_800313D0_31FD0;
-		if (mode == 2) {
-			func_801306C4_13F674("GAME OVER");
-		} else if (mode == 1) {
-			func_801306C4_13F674("MISSION OVER");
-		} else {
-			func_801306C4_13F674("FINAL SCORE");
+		switch (mode) {
+		case 1:
+			func_801306C4_13F674(D_8014548C_15443C);
+			break;
+		case 2:
+			func_801306C4_13F674(D_8014547C_15442C);
+			break;
+		case 0:
+		default:
+			func_801306C4_13F674(D_8014546C_15441C);
+			break;
 		}
 		return;
 
 	case 5:
 		mode = D_800313D0_31FD0;
-		if (mode == 2) {
-			levelName = D_80031520[currentLevel];
-			func_8012EBC0_13DB70(levelName, "-Y", levelText);
-		} else if (mode == 1) {
+		switch (mode) {
+		case 1:
 			levelName = D_80031508[currentLevel];
-			func_8012EBC0_13DB70(levelName, "-X", levelText);
-		} else {
+			func_8012EBC0_13DB70(levelName, D_801454B4_154464, levelText);
+			break;
+		case 2:
+			levelName = D_80031520[currentLevel];
+			func_8012EBC0_13DB70(levelName, D_801454A8_154458, levelText);
+			break;
+		case 0:
+		default:
 			levelName = D_800314F0[currentLevel];
-			func_8012EBC0_13DB70(levelName, "-Z", levelText);
+			func_8012EBC0_13DB70(levelName, D_8014549C_15444C, levelText);
+			break;
 		}
 		func_80131280_140230(levelText);
+		break;
+
+	case 6:
 		break;
 
 	default:
