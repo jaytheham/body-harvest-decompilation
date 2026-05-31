@@ -292,7 +292,7 @@ void func_8012F2DC_13E28C(s32 arg0, s32 arg1, s32 arg2)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F2DC_13E28C.s")
 #endif
 
-// CURRENT(34709)
+// CURRENT(31894)
 #ifdef NON_MATCHING
 s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, u8 arg7)
 {
@@ -316,7 +316,7 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 			D_8015FF88 = 0;
 		}
 
-		for (idx = 0; idx < 48; idx += 2) {
+		for (idx = 0; &D_8015FF90[idx] != (s32 *) &D_80160050; idx += 4) {
 			if ((flags & 4) != 0) {
 				D_8015FF90[idx] = 100;
 			} else {
@@ -327,6 +327,18 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 				D_8015FF90[idx + 1] = 100;
 			} else {
 				D_8015FF90[idx + 1] = 0;
+			}
+
+			if ((flags & 4) != 0) {
+				D_8015FF90[idx + 2] = 100;
+			} else {
+				D_8015FF90[idx + 2] = 0;
+			}
+
+			if ((flags & 4) != 0) {
+				D_8015FF90[idx + 3] = 100;
+			} else {
+				D_8015FF90[idx + 3] = 0;
 			}
 		}
 	}
@@ -385,7 +397,7 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 
 				colIndex = rowBase + band;
 				if (colIndex >= 0x30) {
-					osSyncPrintf(D_801453C0_154370);
+					osSyncPrintf(&D_801453C0_154370);
 				}
 
 				if ((flags & 0x10) != 0) {
@@ -466,21 +478,23 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 		s32 target;
 		s32 next;
 
-		target = ((flags & 4) != 0) ? 0 : 100;
-
 		if ((flags & 4) != 0) {
+			target = ((flags & 4) != 0) ? 0 : 100;
 			next = D_8015FF88 - 10;
 			if (next < target) {
-				next = target;
+				D_8015FF88 = ((flags & 4) != 0) ? 0 : 100;
+			} else {
+				D_8015FF88 = next;
 			}
 		} else {
+			target = ((flags & 4) != 0) ? 0 : 100;
 			next = D_8015FF88 + 10;
-			if (next > target) {
-				next = target;
+			if (target < next) {
+				D_8015FF88 = ((flags & 4) != 0) ? 0 : 100;
+			} else {
+				D_8015FF88 = next;
 			}
 		}
-
-		D_8015FF88 = next;
 	}
 
 	return allMatched;
