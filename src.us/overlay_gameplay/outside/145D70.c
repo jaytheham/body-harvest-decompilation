@@ -172,6 +172,7 @@ void func_80137368_146318(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	}
 }
 
+// Play alien sounds?
 #ifdef NON_MATCHING
 void func_80137468_146418(s32 arg0, s32 arg1) {
 	AlienInstance *sp2C;
