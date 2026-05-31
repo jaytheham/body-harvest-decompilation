@@ -98,25 +98,24 @@ void func_8012EAC0_13DA70(s32 arg0, u8 *arg1)
 }
 
 /* Concatenates two strings (arg0 + arg1) into the output buffer arg2 */
-// CURRENT(305)
+// CURRENT(215)
 #ifdef NON_MATCHING
 void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 	s16 i;
 	s16 j;
-	u32 ch;
+	s32 ch;
 
 	i = 0;
 	if (*arg0 != 0) {
 		do {
-			arg2[i] = arg0[i];
-			i++;
+			arg2[i] = arg0[i], i++;
 		} while (arg0[i] != 0);
 	}
 	j = i;
 	i = 0;
 	do {
+		arg2[j + i] = arg1[i];
 		ch = arg1[i];
-		arg2[j + i] = ch;
 		i++;
 	} while (ch > 0U);
 }
