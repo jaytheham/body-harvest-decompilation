@@ -1454,6 +1454,9 @@ void func_80127D88_136D38(BuildingInstance *arg0, VehicleInstance *arg1, s16 arg
 void setVideoInterfaceXSize(s32 width);
 void setVideoInterfaceYSize(s32 height);
 void func_800EABE0_F9B90(VehicleInstance *arg0);
+extern void func_80133E94_142E44(s32 arg0);
+extern void func_800EADF8_F9DA8(VehicleInstance *arg0, s16 arg1);
+extern s32 func_800EF0B0_FE060(s32 arg0);
 void func_800CDA98_DCA48(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_8012E204_13D1B4(s16 arg0, s32 arg1);
 void func_800D9F60_E8F10(s32 arg0);
