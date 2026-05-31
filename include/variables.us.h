@@ -116,6 +116,9 @@ extern s16 D_800313C8;
 extern s16 D_800313D0; // Language
 extern s16 D_800313E4_31FE4;
 extern u16 D_80031648_32248;
+extern f32 D_801451C8_154178;
+extern s16 D_80158F84;
+extern s16 *D_80158F90;
 extern u8 D_800313E8;
 extern u8 D_800313EC;
 extern u8 D_800313F0;

@@ -1449,9 +1449,21 @@ void func_802D563C_254D7C(void);
 void func_802D5110_254850(s32 arg0);
 void func_802D4E70_2545B0(s32 arg0);
 void func_802D4CD0_254410(s32 arg0, s32 arg1);
+void func_80125CA0_134C50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_80127D88_136D38(BuildingInstance *arg0, VehicleInstance *arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7);
 void setVideoInterfaceXSize(s32 width);
 void setVideoInterfaceYSize(s32 height);
+void func_800EABE0_F9B90(VehicleInstance *arg0);
+void func_800CDA98_DCA48(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
+void func_8012E204_13D1B4(s16 arg0, s32 arg1);
+void func_800D9F60_E8F10(s32 arg0);
+void func_800E5450_F4400(s32 arg0, s32 arg1);
+s16 func_800D3C88_E2C38(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5);
+s32 func_800794F8_884A8(s32 arg0, s32 arg1);
+void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
+void func_80128650_137600(Unk8015F760 *arg0, s32 arg1);
 s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4);
+void func_800D9DD8_E8D88(s16 arg0, s16 arg1, s16 arg2);
 /* core/loader */
 extern void (*__printfunc)(s32, s32);
 

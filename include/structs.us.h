@@ -2239,6 +2239,23 @@ typedef struct {
 } Unk8008B264NodeSub; /* size = 0x0E */
 
 typedef struct {
+	s16 unk0;
+	s16 unk2;
+	s16 unk4;
+	s16 unk6;
+	s32 unk8;
+	s16 unkC;
+	s16 unkE;
+	s16 unk10;
+	u8 unk12;
+	u8 unk13;
+	u8 unk14;
+	u8 unk15;
+	u8 unk16;
+	u8 unk17;
+} WeaponEntry_80129864;
+
+typedef struct {
 	/* 0x00 */ Gfx* displayList;
 	/* 0x04 */ f32 scale;
 } FrontendItemRenderData; /* size = 0x08 */
