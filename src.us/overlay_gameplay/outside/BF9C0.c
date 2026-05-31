@@ -1909,93 +1909,68 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B4D4C_C3CFC.s")
 #endif
 
-// CURRENT(53460)
+// CURRENT(13468)
 #ifdef NON_MATCHING
-void func_800B5090_C4040(s32 *arg0, s32 arg1) {
+void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	Vtx **vtxPtr;
 	u8 *base;
 	s16 tilesMinX;
 	s16 tilesMinY;
-	u8 ringX;
-	u8 ringY;
-	u8 mapX;
-	u8 mapY;
-	u8 row;
+	s8 ringX;
+	s8 ringY;
+	u8 rowWrap;
 	s32 col;
 	s32 colWrap;
-	s32 rowWrap;
-	s32 waveX;
-	s32 waveY;
-	s16 heightX;
-	s16 heightY;
-	s16 worldX;
-	s16 worldY;
-	s16 posX;
-	s16 posY;
-	s16 posZ;
-	s16 hueX;
-	s16 hueY;
-	s16 cellH;
-	s16 inA;
-	s16 inB;
-	s16 amp;
 	s16 scrollX;
 	s16 scrollY;
-	s32 tileType;
-	s32 i;
 	s16 *tileCenter;
 	u8 *ringRow;
-	u8 *ringCell;
 	u8 *shade;
 	u8 *shadeMix;
 	s8 edgeParityX;
 	s8 edgeParityY;
-	s8 color0;
-	s8 color1;
-	s8 color2;
-	s8 blur0;
-	s8 blur1;
-	s8 blur2;
-	s32 rand60;
+	u8 color0;
+	u8 color1;
+	u8 color2;
+	u8 blur0;
+	u8 blur1;
+	u8 blur2;
 	s32 frameAngle;
 	f64 ratio;
-
-	(void)arg1;
+	s16 worldBaseY;
+	volatile s16 arg1Spill;
 
 	D_8014F89A = 0;
+	arg1Spill = arg1;
 	base = D_80151DD8;
-	ringX = (u8)base[0x961];
+	ringX = ((s8 *)base)[0x961];
 	D_8014F899 = (s8)ringX;
-	ringY = (u8)base[0x960];
+	ringY = ((s8 *)base)[0x960];
 	D_8014F898 = (s8)ringY;
-	mapX = base[0x964];
-	D_8014F89C = mapX;
-	mapY = base[0x965];
-	D_8014F89D = mapY;
+	D_8014F89C = base[0x964];
+	D_8014F89D = base[0x965];
 
-	vtxPtr = (Vtx **)arg0;
+	vtxPtr = arg0;
 	scrollX = D_80149434;
 	scrollY = D_80149436;
 	tilesMinX = scrollX + 0x701;
 	tilesMinY = scrollY + 0x701;
 
-	row = 0;
 	rowWrap = 0;
-	mapX = ringY;
-	color0 = (s8)base[0x960];
+	color0 = base[0x960];
 	color1 = base[0x964];
 	color2 = base[0x965];
 
 	do {
-		s32 rowOffset;
 		u8 ringCol;
 
-		rowOffset = (color0 * 0x78);
-		ringRow = &D_80151DD8[rowOffset];
+		ringRow = &D_80151DD8[color0 * 0x78];
 		shade = &D_80152740[(color0 * 0x39) + (ringX * 3)];
-		worldY = ((s8)color2 - 0x80) << 8;
-		edgeParityY = (s8)color2 % 2;
-		mapY = color1;
+		worldBaseY = ((s8)color2 - 0x80) << 8;
+		edgeParityY = color2 & 1;
+		if ((s8)color2 < 0 && edgeParityY != 0) {
+			edgeParityY -= 2;
+		}
 		col = ringX;
 		ringCol = 0;
 
@@ -2007,6 +1982,23 @@ void func_800B5090_C4040(s32 *arg0, s32 arg1) {
 			s32 c0;
 			s32 c1;
 			s32 c2;
+			s32 waveX;
+			s32 waveY;
+			s16 worldX;
+			s16 worldY;
+			s16 posX;
+			s16 posY;
+			s16 posZ;
+			s16 hueX;
+			s16 hueY;
+			s16 cellH;
+			s16 inA;
+			s16 inB;
+			s16 amp;
+			s16 baseHue;
+			s32 tileType;
+
+			worldY = worldBaseY;
 
 			colWrap = (col * 6);
 			tileCenter = (s16 *)(ringRow + colWrap);
@@ -2024,13 +2016,13 @@ void func_800B5090_C4040(s32 *arg0, s32 arg1) {
 			}
 
 			if (color0 != 0x12) {
-				tileSouth = (s16 *)(D_80151DD8 + rowOffset + colWrap + 0x78);
+				tileSouth = (s16 *)(D_80151DD8 + color0 * 0x78 + colWrap + 0x78);
 			} else {
 				tileSouth = (s16 *)(D_80151DD8 + colWrap);
 			}
 
 			if (color0 != 0) {
-				tileNorth = (s16 *)(D_80151DD8 + rowOffset + colWrap - 0x78);
+				tileNorth = (s16 *)(D_80151DD8 + color0 * 0x78 + colWrap - 0x78);
 			} else {
 				tileNorth = (s16 *)(D_80151DD8 + colWrap + 0x870);
 			}
@@ -2057,11 +2049,14 @@ void func_800B5090_C4040(s32 *arg0, s32 arg1) {
 				c1 = (u8)((u8 *)tileCenter)[3];
 				c2 = (u8)((u8 *)tileCenter)[4];
 			}
-			blur0 = (s8)c0;
-			blur1 = (s8)c1;
-			blur2 = (s8)c2;
+			blur0 = c0;
+			blur1 = c1;
+			blur2 = c2;
 
-			edgeParityX = (s8)color1 % 2;
+			edgeParityX = color1 & 1;
+			if ((s8)color1 < 0 && edgeParityX != 0) {
+				edgeParityX -= 2;
+			}
 			if (edgeParityX == 1) {
 				hueX = D_8013DACC_14CA7C[currentLevel - 1];
 			} else {
@@ -2080,9 +2075,10 @@ void func_800B5090_C4040(s32 *arg0, s32 arg1) {
 			if (scrollX < 0) {
 				inA = scrollX + 1;
 				inB = -scrollX - 1;
-				inA = (inB < inA) ? inB : inA;
-				inA = (s8)inA;
-				waveX = 0xFF - inA;
+				if (inA < inB) {
+					inB = inA;
+				}
+				waveX = 0xFF - (s8)inB;
 			} else {
 				waveX = (s8)scrollX;
 			}
@@ -2113,9 +2109,10 @@ void func_800B5090_C4040(s32 *arg0, s32 arg1) {
 			if (scrollY < 0) {
 				inA = scrollY + 1;
 				inB = -scrollY - 1;
-				inA = (inB < inA) ? inB : inA;
-				inA = (s8)inA;
-				waveY = 0xFF - inA;
+				if (inA < inB) {
+					inB = inA;
+				}
+				waveY = 0xFF - (s8)inB;
 			} else {
 				waveY = (s8)scrollY;
 			}
@@ -2142,8 +2139,9 @@ void func_800B5090_C4040(s32 *arg0, s32 arg1) {
 				posY = worldY;
 			}
 
-			hueX = (hueX * 8) + D_8013DADC_14CA8C[currentLevel - 1];
-			hueY = (hueY * 8) + D_8013DADC_14CA8C[currentLevel - 1];
+			baseHue = D_8013DADC_14CA8C[currentLevel - 1];
+			hueX = (hueX * 8) + baseHue;
+			hueY = (hueY * 8) + baseHue;
 
 			if ((posZ < (D_80222A70 - 0x46)) && (D_801493CC == 0)) {
 				s16 dist;
@@ -2227,22 +2225,20 @@ void func_800B5090_C4040(s32 *arg0, s32 arg1) {
 			(*vtxPtr)->v.flag = 0;
 			(*vtxPtr)->v.tc[0] = hueX;
 			(*vtxPtr)->v.tc[1] = hueY;
-			(*vtxPtr)->v.cn[0] = (u8)blur0;
-			(*vtxPtr)->v.cn[1] = (u8)blur1;
-			(*vtxPtr)->v.cn[2] = (u8)blur2;
+			(*vtxPtr)->v.cn[0] = blur0;
+			(*vtxPtr)->v.cn[1] = blur1;
+			(*vtxPtr)->v.cn[2] = blur2;
 			(*vtxPtr)->v.cn[3] = 0xFF;
 			*vtxPtr = *vtxPtr + 1;
 
-			mapY++;
-			ringCol = (ringCol + 1) & 0xFF;
+			ringCol++;
 			col = (col + 1) % 0x13;
 		} while (ringCol < 0x12);
 
 		color0 = (color0 + 1) % 0x13;
 		color1 = D_8014F89C;
 		color2++;
-		row = (row + 1) & 0xFF;
-		rowWrap = row;
+		rowWrap++;
 	} while (rowWrap < 0x12);
 }
 #else
