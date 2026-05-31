@@ -33,7 +33,7 @@ Tell the subagents to reduce the score as much as possible, they should keep goi
 
 Only ask each subagent to target one function.
 
-Subagents are not to commit any changes. After they finish you will check the current changes, then add the NON_MATCHING wrapper if needed, fix any errors, revert any unintended changes, and fix whatever else is necessary to return the build to `build/bh.us.z64: OK` before committing. Only commit when the build is OK.
+Subagents are not to commit any changes. After they finish you will check the current changes, then add the NON_MATCHING wrapper if needed, fix any errors, revert any unintended changes, and fix whatever else is necessary to return the build to `build/bh.us.z64: OK` before committing. Make sure the function has a comment with the current score before committing. Only commit when the build is OK.
 
 If a function already has a score of less than 100 then skip it. Don't tell the subagent this score threshold.
 

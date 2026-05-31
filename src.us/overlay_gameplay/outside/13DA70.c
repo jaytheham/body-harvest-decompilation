@@ -236,6 +236,7 @@ s32 func_8012EC3C_13DBEC(s32 arg0)
 // This does match but doesn't compile right at the moment:
 // this requires D_8015FF84 as a function static so this may cause .bss issues
 // shouldn't be a problem if you match the entire TU / file
+// CURRENT(0)
 #ifdef NON_MATCHING
 void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 {
