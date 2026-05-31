@@ -2155,7 +2155,7 @@ typedef struct {
 } GateEntry; /* 0xA bytes */
 
 typedef struct {
-	/* 0x00 */ s32 unk0;
+	/* 0x00 */ s32 unk0; // Pointer to label string
 	/* 0x04 */ s32 unk4;
 	/* 0x08 */ s32 unk8;
 	/* 0x0C */ u8 pad0C[0xC];

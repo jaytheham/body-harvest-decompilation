@@ -1581,6 +1581,7 @@ void func_800C4900_D38B0(s16 arg0) {
 	}
 }
 
+// Draws ripples on shield wall when hit?
 #ifdef NON_MATCHING
 void func_800C4938_D38E8(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	s32 val;
