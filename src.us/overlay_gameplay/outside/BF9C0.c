@@ -982,7 +982,7 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s32 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
 #endif
 
-// CURRENT(8672)
+// CURRENT(8140)
 #ifdef NON_MATCHING
 void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s32 sp70;
@@ -999,10 +999,10 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 temp_ra;
 	s16 temp_s3;
 	s16 temp_s4;
-	s16 temp_v0;
+	s32 temp_v0;
 	s16 temp_v0_3;
 	s16 temp_v0_4;
-	s16 temp_v1;
+	s32 temp_v1;
 	s16 temp_v1_3;
 	s16 var_s0;
 	s16 var_s2;
@@ -1015,12 +1015,12 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 var_v0_5;
 	s16 var_v1_2;
 	s32 temp_fp;
-	s32 temp_s5;
+	u8 temp_s5;
 	s32 temp_t5;
-	s32 temp_t7;
+	s16 temp_t7;
 	s32 temp_v0_2;
 	s32 var_a3;
-	s32 var_v1;
+	s16 var_v1;
 	u8 *var_a0;
 
 	temp_v0 = arg0->unk0;
@@ -1034,7 +1034,7 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	temp_f10 = (f32) (arg2 + arg3) / 256;
 	sp68 = temp_v0 & 0xFF;
 	temp_s5 = temp_v1 & 0xFF;
-	temp_t5 = (u8) (((u32) temp_f10) + 1);
+	temp_t5 = (((u32) temp_f10) + 1) & 0xFF;
 	temp_ra = 1 - temp_t5;
 	temp_fp = temp_t5 + 1;
 	var_s2 = temp_ra;
@@ -1069,7 +1069,7 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 					temp_v1_3 = arg3 - var_v1;
 					if (temp_v1_3 > 0) {
 						temp_v0_3 = var_s2 + sp70;
-						var_v1_2 = (s16) (((f32) temp_v1_3 / (f32) (s16) arg3) * 255.0f);
+						var_v1_2 = (s16) (((f32) temp_v1_3 / (f32) arg3) * 255.0f);
 						if (var_v1_2 >= 0x100) {
 							var_v1_2 = 0xFF;
 						}
