@@ -1854,7 +1854,7 @@ s32 func_800164C4_170C4(void) {
 	return var_s1;
 }
 
-// CURRENT(3166)
+// CURRENT(2338)
 #ifdef NON_MATCHING
 s8 func_800165EC_171EC(void) {
 	s32 sp48;
@@ -1881,11 +1881,11 @@ s8 func_800165EC_171EC(void) {
 
 	i = 0;
 	do {
-		if (D_80031CD0_328D0[i] != -1 && D_80031CA4 != 2) {
+		if (*(s8*)((s32)(D_80031CD0_328D0) + i) != -1 && D_80031CA4 != 2) {
 			func_80016ABC_176BC(i);
 			return i;
 		}
-		if (func_80012E88_13A88(i) == 0 && D_80031CE4_328E4[i] == 0 && D_80031CD0_328D0[i] == -1) {
+		if (func_80012E88_13A88(i) == 0 && D_80031CE4_328E4[i] == 0 && *(s8*)((s32)(D_80031CD0_328D0) + i) == -1) {
 			func_80016ABC_176BC(i);
 			return i;
 		}
