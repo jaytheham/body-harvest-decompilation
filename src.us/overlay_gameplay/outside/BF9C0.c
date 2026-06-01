@@ -180,7 +180,7 @@ void func_800B0C80_BFC30(void) {
 	D_8014FD30 = *(Unk8014FD30Type *)(D_80147C30_156BE0 + currentLevel * 0x90 + D_80047F94 * 0x18 - 0x90);
 }
 
-// CURRENT(415)
+// CURRENT(405)
 #ifdef NON_MATCHING
 s32 func_800B0D10_BFCC0(s32 arg0, s32 arg1, s32 arg2) {
 	Unk8014FD30Type *a2;
@@ -197,18 +197,14 @@ s32 func_800B0D10_BFCC0(s32 arg0, s32 arg1, s32 arg2) {
 		|| (a3 = arg1 + arg2, D_8014FD30.unk6 < a3)) {
 		return 1;
 	}
-	a1 = 0;
-	a2 = &D_8014FD30;
-	do {
+	for (a1 = 0, a2 = &D_8014FD30; a1 != 2; a1++, a2 = (Unk8014FD30Type *)((u8 *)a2 + 8)) {
 		if (a2->unkC == a2->unk8) {
 			break;
 		}
 		if (a2->unk8 < v1 && v0 < a2->unkC && a2->unkA < a3 && a0 < a2->unkE) {
 			return a1 + 2;
 		}
-		a1++;
-		a2 = (Unk8014FD30Type *)((u8 *)a2 + 8);
-	} while (a1 != 2);
+	}
 	return 0;
 }
 #else
@@ -600,9 +596,9 @@ void func_800B165C_C060C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B165C_C060C.s")
 #endif
 
-// CURRENT(6218)
+// CURRENT(6028)
 #ifdef NON_MATCHING
-void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2, s16 *arg3) {
+void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
 	s32 x = arg0 & 0xFF;
 	s32 y = arg1 & 0xFF;
 	s32 tileX = ((x >> 1) - 1) & 0xFF;
@@ -858,9 +854,9 @@ void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1A68_C0A18.s")
 #endif
 
-// CURRENT(10872)
+// CURRENT(9868)
 #ifdef NON_MATCHING
-void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
+void func_800B2354_C1304(s16 *arg0, u8 *arg1, s32 arg2, s16 arg3) {
 	s32 sp70;
 	s32 sp6C;
 	s32 sp68;
@@ -875,10 +871,10 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 	s16 temp_ra;
 	s16 temp_s3;
 	s16 temp_s4;
-	s16 temp_v0;
+	s32 temp_v0;
 	s16 temp_v0_3;
 	s16 temp_v0_4;
-	s16 temp_v1;
+	s32 temp_v1;
 	s16 temp_v1_3;
 	s16 var_s0;
 	s16 var_s2;
@@ -891,9 +887,9 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 	s16 var_v0_5;
 	s16 var_v1_2;
 	s32 temp_fp;
-	s32 temp_s5;
+	u8 temp_s5;
 	s32 temp_t5;
-	s32 temp_t7;
+	s16 temp_t7;
 	s32 temp_v0_2;
 	s32 var_a3;
 	u8 *var_a0;
@@ -906,10 +902,10 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 	sp6C = (temp_v1 >> 8) + 1;
 	var_t2 = (D_8014F899 + sp70) - temp_s3;
 	var_t3 = (D_8014F898 + sp6C) - temp_s4;
-	temp_f10 = (f32)(arg2 + arg3) / 256.0f;
+	temp_f10 = (f32)(arg2 + arg3) / 256;
 	sp68 = temp_v0 & 0xFF;
 	temp_s5 = temp_v1 & 0xFF;
-	temp_t5 = (u8)(((u32)temp_f10) + 1);
+	temp_t5 = (((u32)temp_f10) + 1) & 0xFF;
 	temp_ra = 1 - temp_t5;
 	temp_fp = temp_t5 + 1;
 	var_s2 = temp_ra;
@@ -960,17 +956,17 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 								if (var_v0_3 >= 0x100) {
 									var_v0_3 = 0xFF;
 								}
-								var_a0[0] = (s8)var_v0_3;
+								var_a0[0] = var_v0_3;
 								var_v0_4 = (s16)(((s32)arg1[1] * var_v1_2) >> 8) + var_a0[1];
 								if (var_v0_4 >= 0x100) {
 									var_v0_4 = 0xFF;
 								}
-								var_a0[1] = (s8)var_v0_4;
+								var_a0[1] = var_v0_4;
 								var_v0_5 = (s16)(((s32)arg1[2] * var_v1_2) >> 8) + var_a0[2];
 								if (var_v0_5 >= 0x100) {
 									var_v0_5 = 0xFF;
 								}
-								var_a0[2] = (s8)var_v0_5;
+								var_a0[2] = var_v0_5;
 							}
 						}
 					}
@@ -986,7 +982,7 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
 #endif
 
-// CURRENT(8672)
+// CURRENT(8140)
 #ifdef NON_MATCHING
 void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s32 sp70;
@@ -1003,10 +999,10 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 temp_ra;
 	s16 temp_s3;
 	s16 temp_s4;
-	s16 temp_v0;
+	s32 temp_v0;
 	s16 temp_v0_3;
 	s16 temp_v0_4;
-	s16 temp_v1;
+	s32 temp_v1;
 	s16 temp_v1_3;
 	s16 var_s0;
 	s16 var_s2;
@@ -1019,12 +1015,12 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 var_v0_5;
 	s16 var_v1_2;
 	s32 temp_fp;
-	s32 temp_s5;
+	u8 temp_s5;
 	s32 temp_t5;
-	s32 temp_t7;
+	s16 temp_t7;
 	s32 temp_v0_2;
 	s32 var_a3;
-	s32 var_v1;
+	s16 var_v1;
 	u8 *var_a0;
 
 	temp_v0 = arg0->unk0;
@@ -1038,7 +1034,7 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	temp_f10 = (f32) (arg2 + arg3) / 256;
 	sp68 = temp_v0 & 0xFF;
 	temp_s5 = temp_v1 & 0xFF;
-	temp_t5 = (u8) (((u32) temp_f10) + 1);
+	temp_t5 = (((u32) temp_f10) + 1) & 0xFF;
 	temp_ra = 1 - temp_t5;
 	temp_fp = temp_t5 + 1;
 	var_s2 = temp_ra;
@@ -1073,7 +1069,7 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 					temp_v1_3 = arg3 - var_v1;
 					if (temp_v1_3 > 0) {
 						temp_v0_3 = var_s2 + sp70;
-						var_v1_2 = (s16) (((f32) temp_v1_3 / (f32) (s16) arg3) * 255.0f);
+						var_v1_2 = (s16) (((f32) temp_v1_3 / (f32) arg3) * 255.0f);
 						if (var_v1_2 >= 0x100) {
 							var_v1_2 = 0xFF;
 						}
@@ -1310,7 +1306,7 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			spAC[3] = ((u16 *)arg2)[mapIndex + 1] & 0x3F;
 			spAC[4] = ((u16 *)arg2)[mapIndex + 0x100] & 0x3F;
 
-			func_800B1814_C07C4(baseXWord & 0xFF, (sp94 + col) & 0xFF, spA0, (s16 *)arg2);
+			func_800B1814_C07C4(baseXWord & 0xFF, (sp94 + col) & 0xFF, spA0);
 			mode = D_80151DD0;
 
 			if (mode == 2) {
@@ -1526,7 +1522,7 @@ void func_800B42B0_C3260(s32 arg0) {
 		sp60[3] = temp_s6[1] & 0x3F;
 		sp60[4] = temp_s6[0x100] & 0x3F;
 
-		func_800B1814_C07C4(temp_v1 & 0xFF, (D_8014F89C + 0x12) & 0xFF, sp54, sp5C);
+		func_800B1814_C07C4(temp_v1 & 0xFF, (D_8014F89C + 0x12) & 0xFF, sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, &sp68);
 
 		var_s0 = 0;
@@ -1635,7 +1631,7 @@ void func_800B4660_C3610(s32 arg0) {
 		sp60[2] = temp_s6[0] & 0x3F;
 		sp60[3] = temp_s6[1] & 0x3F;
 		sp60[4] = temp_s6[0x100] & 0x3F;
-		func_800B1814_C07C4(temp_v1 & 0xFF, D_8014F89C, sp54, sp5C);
+		func_800B1814_C07C4(temp_v1 & 0xFF, D_8014F89C, sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 		var_s0 = 0;
 	loop_2:
@@ -1742,7 +1738,7 @@ void func_800B49A4_C3954(s32 arg0) {
 		sp60[3] = temp_s6[1] & 0x3F;
 		sp60[4] = temp_s6[0x100] & 0x3F;
 
-		func_800B1814_C07C4(temp_a3 & 0xFF, temp_v1 & 0xFF, sp54, sp5C);
+		func_800B1814_C07C4(temp_a3 & 0xFF, temp_v1 & 0xFF, sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 		var_s0 = 0;
 	loop_2:
@@ -1850,7 +1846,7 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 		sp60[2] = temp_s6[0] & 0x3F;
 		sp60[3] = temp_s6[1] & 0x3F;
 		sp60[4] = temp_s6[0x100] & 0x3F;
-		func_800B1814_C07C4(D_8014F89D, temp_v1 & 0xFF, sp54, sp5C);
+		func_800B1814_C07C4(D_8014F89D, temp_v1 & 0xFF, sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 		var_s0 = 0;
 	loop_2:
