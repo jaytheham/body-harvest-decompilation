@@ -3,7 +3,7 @@ name: BH Matcher
 description: Decompile functions from N64 game Body Harvest
 tools:
   [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, edit/createFile, edit/editFiles, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]
-model: DeepSeek V4 Pro (deepseek)
+model: DeepSeek V4 Flash (deepseek)
 ---
 
 ## Overview
