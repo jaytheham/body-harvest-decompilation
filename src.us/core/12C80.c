@@ -60,7 +60,7 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 	Unk8006AA80Node *node;
 	Unk8006AA80Node *src;
 	Unk8006AA80Node *prev;
-	s16 saved_unk4;
+	s16 temp;
 
 	if (D_8006AB88 == 0) {
 		return -1;
@@ -75,19 +75,19 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 	if (node == NULL) {
 		return -1;
 	}
-	saved_unk4 = node->unk4;
+	temp = node->unk4;
 	*node = arg0;
-	node->unk4 = saved_unk4;
+	node->unk4 = temp;
 
 	if (*arg2 == NULL) {
-		saved_unk4 = D_80033B4C_3474C + 1;
+		temp = D_80033B4C_3474C + 1;
 		node->unk34 = NULL;
 		node->unk30 = NULL;
-		node->unk10 = saved_unk4;
+		node->unk10 = temp;
 		*arg2 = (Unk8006AA84Node *)node;
 		*arg1 = node;
-		D_80033B4C_3474C = saved_unk4;
-		return saved_unk4;
+		D_80033B4C_3474C = temp;
+		return temp;
 	}
 
 	prev = NULL;
@@ -102,30 +102,30 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 					node->unk34 = src;
 					node->unk30 = src->unk30;
 					src->unk30 = node;
-					saved_unk4 = D_80033B4C_3474C + 1;
-					node->unk10 = saved_unk4;
+					temp = D_80033B4C_3474C + 1;
+					node->unk10 = temp;
 				} else {
 					node->unk34 = src;
 					node->unk30 = NULL;
 					src->unk30 = node;
-					saved_unk4 = D_80033B4C_3474C + 1;
-					node->unk10 = saved_unk4;
+					temp = D_80033B4C_3474C + 1;
+					node->unk10 = temp;
 					*arg1 = node;
 				}
-				D_80033B4C_3474C = saved_unk4;
-				return saved_unk4;
+				D_80033B4C_3474C = temp;
+				return temp;
 			}
 		} while (src != NULL);
 	}
 
 	prev->unk34 = node;
 	node->unk34 = NULL;
-	saved_unk4 = D_80033B4C_3474C + 1;
+	temp = D_80033B4C_3474C + 1;
 	node->unk30 = prev;
-	node->unk10 = saved_unk4;
+	node->unk10 = temp;
 	*arg2 = (Unk8006AA84Node *)node;
-	D_80033B4C_3474C = saved_unk4;
-	return saved_unk4;
+	D_80033B4C_3474C = temp;
+	return temp;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800121B4_12DB4.s")
@@ -588,23 +588,21 @@ void func_80013324_13F24(void)
 }
 
 // https://decomp.me/scratch/wNzpE
-#ifdef NON_MATCHING
 void func_80013398_13F98(void)
 {
-  s8 idx;
   s8 arr_val;
+  s8 idx;
+  u8 newVal;
   if (D_80031CA4 != 4)
   {
-	arr_val = (s8) (D_80033C80_34880 % 16);
-	idx = arr_val;
+	arr_val = D_80033C80_34880 % 16;
+	idx = (s8) arr_val;
+	newVal = D_80033C80_34880 + 1;
 	arr_val = D_80033C70_34870[idx] + 0xF;
-	D_80033C80_W = D_80033C80_34880 + 1;
+	D_80033C80_W = newVal;
 	func_80015C94_16894(arr_val, 4);
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013398_13F98.s")
-#endif
 
 void func_80013410_14010(void) {
 	if (D_80031B58_32758 == 1) {

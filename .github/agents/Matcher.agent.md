@@ -55,6 +55,8 @@ If you don't know one of the values, you can use `12345678` as a placeholder for
 
 First target different/missing instructions and their ordering, target register allocation and stack placement last.
 
+If a function has identical logic to the target, and the only remaining differences are in register or stack allocation, stop work and mark the function with a `// Only Regalloc/Stack not matching` comment in addition to the score comment.
+
 Be relentless, make as many attempts as needed, and try every possible change you can think of to get that score down to 0. You can do it!
 
 If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.

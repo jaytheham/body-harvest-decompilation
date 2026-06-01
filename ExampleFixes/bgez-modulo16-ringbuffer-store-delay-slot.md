@@ -16,14 +16,4 @@ func_80015C94_16894(arr_val, 4);
 - Store after call → jal 15c9c (wrong, IDO delay-slot optimization skips callee prologue) or causes reload
 - Store before call with _W alias → jal 15c94 (correct), store at correct position
 
-**Remaining hardcoded register issue (score 575, not 0):**
-The sister function `func_80013324_13F24` (using `% 15`) generates matching code because:
-- `div` instruction uses `at` as the divisor operand (at = 15), preventing early pre-load of write address into `at`
-- After div, `at` is free → compiler uses `at` for array base → andi uses `a0` in bgez delay slot
-
-With `% 16` (power-of-2, bgez/andi pattern):
-- No instruction uses `at` as divisor → compiler freely pre-loads write alias address into `at` at 13fbc
-- This forces array base into `a0` → andi uses `v1` → suboptimal allocation
-- The permuter (10,000 iterations) also could not find a better score than 575
-
 **Reminder:** The `jal 15c9c` (vs correct `jal 15c94`) happens when sra sign-extension ends up in the jal delay slot. IDO then "skips" the callee's first 2 instructions (which don't use a0/a1). Avoid this by ensuring sign extension completes before the jal (which requires the store, not the sra, in the delay slot).
