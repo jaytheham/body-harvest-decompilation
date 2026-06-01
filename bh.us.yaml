@@ -38,16 +38,16 @@ segments:
     vram: 0x80000400
     subsegments:
       - [0x1000, asm, core/1000]
-      - [0x1050, c, core/1050]
+      - [0x1050, c, core/1050] # Save data
       - [0x53D0, c, core/53D0]
-      - [0x53F0, c, core/53F0]
+      - [0x53F0, c, core/53F0] # Objectives
       - [0xAD60, c, core/AD60]
       - [0xE830, c, core/E830]
       - [0xFB00, c, core/FB00]
       - [0xFD80, c, core/FD80]
       - [0x10A20, c, core/10A20]
       - [0x10BC0, c, core/loader] # original src filename
-      - [0x12C80, c, core/12C80]
+      - [0x12C80, c, core/12C80] # Sounds, Dialogue
       - [0x1B060, c, core/1B060]
       - [0x1B100, asm, core/1B100]
       - [0x1B7E0, asm, libultra/aisetfreq.o] # libultra 2.0E 2.0F 2.0G 2.0I

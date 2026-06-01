@@ -54,13 +54,15 @@ Unk8006AA84Node *func_80012128_12D28() {
 	return *entry;
 }
 
-// CURRENT(4535)
+// CURRENT(2275)
 #ifdef NON_MATCHING
 s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA84Node **arg2) {
 	Unk8006AA80Node *node;
 	Unk8006AA80Node *src;
 	Unk8006AA80Node *prev;
 	s16 temp;
+	s16 *counter;
+	s32 diff;
 
 	if (D_8006AB88 == 0) {
 		return -1;
@@ -79,57 +81,58 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 	*node = arg0;
 	node->unk4 = temp;
 
+	counter = &D_80033B4C_3474C;
 	if (*arg2 == NULL) {
-		temp = D_80033B4C_3474C + 1;
+		temp = *counter + 1;
 		node->unk34 = NULL;
 		node->unk30 = NULL;
 		node->unk10 = temp;
 		*arg2 = (Unk8006AA84Node *)node;
 		*arg1 = node;
-		D_80033B4C_3474C = temp;
+		*counter = temp;
 		return temp;
 	}
 
 	prev = NULL;
-	if (src != NULL) {
-		do {
+	while (src != NULL) {
+		diff = src->unk2 - node->unk2;
+		if (diff < 0) {
 			prev = src;
-			if ((src->unk2 - node->unk2) < 0) {
-				src = src->unk34;
+			src = src->unk34;
+		} else {
+			if (src->unk30 != NULL) {
+				node->unk30 = src->unk30;
+				src->unk30->unk34 = node;
+				node->unk34 = src;
+				src->unk30 = node;
+				temp = *counter + 1;
+				node->unk10 = temp;
 			} else {
-				if (src->unk30 != NULL) {
-					src->unk30->unk34 = node;
-					node->unk34 = src;
-					node->unk30 = src->unk30;
-					src->unk30 = node;
-					temp = D_80033B4C_3474C + 1;
-					node->unk10 = temp;
-				} else {
-					node->unk34 = src;
-					node->unk30 = NULL;
-					src->unk30 = node;
-					temp = D_80033B4C_3474C + 1;
-					node->unk10 = temp;
-					*arg1 = node;
-				}
-				D_80033B4C_3474C = temp;
-				return temp;
+				node->unk30 = NULL;
+				node->unk34 = src;
+				src->unk30 = node;
+				temp = *counter + 1;
+				node->unk10 = temp;
+				*arg1 = node;
 			}
-		} while (src != NULL);
+			*counter = temp;
+			return temp;
+		}
 	}
 
 	prev->unk34 = node;
 	node->unk34 = NULL;
-	temp = D_80033B4C_3474C + 1;
+	temp = *counter + 1;
 	node->unk30 = prev;
 	node->unk10 = temp;
 	*arg2 = (Unk8006AA84Node *)node;
-	D_80033B4C_3474C = temp;
+	*counter = temp;
 	return temp;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800121B4_12DB4.s")
 #endif
+
 
 void func_800123A4_12FA4(Unk8006AA80Node *arg0, Unk8006AA80Node **arg1, Unk8006AA80Node **arg2) {
 	if (D_8006AB88 != 0 && arg0 != NULL) {
@@ -1366,6 +1369,7 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014A3C_1563C.s")
 #endif
 
+// CURRENT(235)
 #ifdef NON_MATCHING
 void func_80015210_15E10(s16 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4) {
 	Unk8006AA80Node sp50;
