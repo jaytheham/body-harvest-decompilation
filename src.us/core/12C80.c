@@ -2630,7 +2630,7 @@ s32 func_80018AC8_196C8(void) {
 	return 0;
 }
 
-// CURRENT(2410)
+// CURRENT(2270)
 #ifdef NON_MATCHING
 s32 func_80018AEC_196EC(s32 arg0, s32 arg1, s32 arg2) {
 	s32 sp24;
