@@ -221,7 +221,7 @@ extern u8 D_80147098_156048[];
 extern u8 D_802566DA[];
 extern f64 D_80145200_1541B0;
 extern f64 D_80145208_1541B8;
-
+extern f64 D_80037620_38220;
 extern u8 D_1010A80[];
 extern u8 D_50323B0[];
 extern u8 D_50325B0[];
