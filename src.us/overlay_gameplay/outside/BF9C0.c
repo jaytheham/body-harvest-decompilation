@@ -854,9 +854,9 @@ void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1A68_C0A18.s")
 #endif
 
-// CURRENT(10872)
+// CURRENT(9868)
 #ifdef NON_MATCHING
-void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
+void func_800B2354_C1304(s16 *arg0, u8 *arg1, s32 arg2, s16 arg3) {
 	s32 sp70;
 	s32 sp6C;
 	s32 sp68;
@@ -871,10 +871,10 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 	s16 temp_ra;
 	s16 temp_s3;
 	s16 temp_s4;
-	s16 temp_v0;
+	s32 temp_v0;
 	s16 temp_v0_3;
 	s16 temp_v0_4;
-	s16 temp_v1;
+	s32 temp_v1;
 	s16 temp_v1_3;
 	s16 var_s0;
 	s16 var_s2;
@@ -887,9 +887,9 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 	s16 var_v0_5;
 	s16 var_v1_2;
 	s32 temp_fp;
-	s32 temp_s5;
+	u8 temp_s5;
 	s32 temp_t5;
-	s32 temp_t7;
+	s16 temp_t7;
 	s32 temp_v0_2;
 	s32 var_a3;
 	u8 *var_a0;
@@ -902,10 +902,10 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 	sp6C = (temp_v1 >> 8) + 1;
 	var_t2 = (D_8014F899 + sp70) - temp_s3;
 	var_t3 = (D_8014F898 + sp6C) - temp_s4;
-	temp_f10 = (f32)(arg2 + arg3) / 256.0f;
+	temp_f10 = (f32)(arg2 + arg3) / 256;
 	sp68 = temp_v0 & 0xFF;
 	temp_s5 = temp_v1 & 0xFF;
-	temp_t5 = (u8)(((u32)temp_f10) + 1);
+	temp_t5 = (((u32)temp_f10) + 1) & 0xFF;
 	temp_ra = 1 - temp_t5;
 	temp_fp = temp_t5 + 1;
 	var_s2 = temp_ra;
@@ -956,17 +956,17 @@ void func_800B2354_C1304(s16 *arg0, s8 *arg1, s32 arg2, s16 arg3) {
 								if (var_v0_3 >= 0x100) {
 									var_v0_3 = 0xFF;
 								}
-								var_a0[0] = (s8)var_v0_3;
+								var_a0[0] = var_v0_3;
 								var_v0_4 = (s16)(((s32)arg1[1] * var_v1_2) >> 8) + var_a0[1];
 								if (var_v0_4 >= 0x100) {
 									var_v0_4 = 0xFF;
 								}
-								var_a0[1] = (s8)var_v0_4;
+								var_a0[1] = var_v0_4;
 								var_v0_5 = (s16)(((s32)arg1[2] * var_v1_2) >> 8) + var_a0[2];
 								if (var_v0_5 >= 0x100) {
 									var_v0_5 = 0xFF;
 								}
-								var_a0[2] = (s8)var_v0_5;
+								var_a0[2] = var_v0_5;
 							}
 						}
 					}
