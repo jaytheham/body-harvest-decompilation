@@ -25,7 +25,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
 - Compare target and your current assembly for a specific function after building:
  `.\tools\diff.ps1 <target function name> <ROM address of next function>"`.
  E.g. `.\tools\diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`.
- Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match.
+ Diff output includes a score for the specified range of assembly e.g. `CURRENT (46)`, 0 is a perfect match.
  Diff output skips matching instructions except for 3 either side of differences.
 - You can get the full assembly of a function after building by adding param `--show=target` or `--show=current` to the above diff command.
 - You must decompile Gfx macros. The "raw" `*->words.w0`/`*->words.w1` form will not match. Use `.\tools\gfxdis.ps1`:
@@ -54,8 +54,6 @@ If you don't know one of the values, you can use `12345678` as a placeholder for
 5. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
 
 First target different/missing instructions and their ordering, target register allocation and stack placement last.
-
-Be relentless, make as many attempts as needed, and try every possible change you can think of to get that score down to 0. You can do it!
 
 If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
