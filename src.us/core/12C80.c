@@ -2698,7 +2698,7 @@ void func_80018D58_19958(void) {
 	D_8003449C = 0;
 }
 
-// CURRENT(4782)
+// CURRENT(4796)
 #ifdef NON_MATCHING
 void func_80018D7C_1997C(u16 arg0) {
 	s32 sp20;

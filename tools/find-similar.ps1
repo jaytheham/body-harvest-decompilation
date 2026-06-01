@@ -17,4 +17,10 @@ $oldEAP = $script:ErrorActionPreference
 $script:ErrorActionPreference = 'Continue'
 $result = & ".\tools\coddog\coddog.exe" match -t 0.65 $FunctionName 2>&1
 $script:ErrorActionPreference = $oldEAP
-$result | Select-String "%" | Select-Object -First 3
+$matches = $result | Select-String "%" | Select-Object -First 3
+
+if ($matches) {
+    $matches
+} else {
+    Write-Host "no results"
+}
