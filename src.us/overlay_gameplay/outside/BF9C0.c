@@ -596,9 +596,9 @@ void func_800B165C_C060C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B165C_C060C.s")
 #endif
 
-// CURRENT(6218)
+// CURRENT(6028)
 #ifdef NON_MATCHING
-void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2, s16 *arg3) {
+void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
 	s32 x = arg0 & 0xFF;
 	s32 y = arg1 & 0xFF;
 	s32 tileX = ((x >> 1) - 1) & 0xFF;
@@ -1306,7 +1306,7 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			spAC[3] = ((u16 *)arg2)[mapIndex + 1] & 0x3F;
 			spAC[4] = ((u16 *)arg2)[mapIndex + 0x100] & 0x3F;
 
-			func_800B1814_C07C4(baseXWord & 0xFF, (sp94 + col) & 0xFF, spA0, (s16 *)arg2);
+			func_800B1814_C07C4(baseXWord & 0xFF, (sp94 + col) & 0xFF, spA0);
 			mode = D_80151DD0;
 
 			if (mode == 2) {
@@ -1522,7 +1522,7 @@ void func_800B42B0_C3260(s32 arg0) {
 		sp60[3] = temp_s6[1] & 0x3F;
 		sp60[4] = temp_s6[0x100] & 0x3F;
 
-		func_800B1814_C07C4(temp_v1 & 0xFF, (D_8014F89C + 0x12) & 0xFF, sp54, sp5C);
+		func_800B1814_C07C4(temp_v1 & 0xFF, (D_8014F89C + 0x12) & 0xFF, sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, &sp68);
 
 		var_s0 = 0;
@@ -1631,7 +1631,7 @@ void func_800B4660_C3610(s32 arg0) {
 		sp60[2] = temp_s6[0] & 0x3F;
 		sp60[3] = temp_s6[1] & 0x3F;
 		sp60[4] = temp_s6[0x100] & 0x3F;
-		func_800B1814_C07C4(temp_v1 & 0xFF, D_8014F89C, sp54, sp5C);
+		func_800B1814_C07C4(temp_v1 & 0xFF, D_8014F89C, sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 		var_s0 = 0;
 	loop_2:
@@ -1738,7 +1738,7 @@ void func_800B49A4_C3954(s32 arg0) {
 		sp60[3] = temp_s6[1] & 0x3F;
 		sp60[4] = temp_s6[0x100] & 0x3F;
 
-		func_800B1814_C07C4(temp_a3 & 0xFF, temp_v1 & 0xFF, sp54, sp5C);
+		func_800B1814_C07C4(temp_a3 & 0xFF, temp_v1 & 0xFF, sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 		var_s0 = 0;
 	loop_2:
@@ -1846,7 +1846,7 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 		sp60[2] = temp_s6[0] & 0x3F;
 		sp60[3] = temp_s6[1] & 0x3F;
 		sp60[4] = temp_s6[0x100] & 0x3F;
-		func_800B1814_C07C4(D_8014F89D, temp_v1 & 0xFF, sp54, sp5C);
+		func_800B1814_C07C4(D_8014F89D, temp_v1 & 0xFF, sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 		var_s0 = 0;
 	loop_2:
