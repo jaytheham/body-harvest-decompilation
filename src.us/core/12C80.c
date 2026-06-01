@@ -2769,10 +2769,11 @@ void func_80018D7C_1997C(u16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018D7C_1997C.s")
 #endif
 
+// CURRENT(6205)
 #ifdef NON_MATCHING
 void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
-	u8 *texture;
 	Unk800190D4 *entry;
+	u8 *texture;
 	s32 sp12C;
 	s32 sp128;
 	s32 pad0;
