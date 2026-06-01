@@ -739,7 +739,7 @@ void func_80013810_14410(s8 arg0) {
 }
 
 // https://decomp.me/scratch/6mw74
-// CURRENT(?)
+// CURRENT(2130)
 #ifdef NON_MATCHING
 void func_80013818_14418(void) {
 	f32 sp28;
