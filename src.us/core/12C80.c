@@ -2884,7 +2884,7 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800190D4_19CD4.s")
 #endif
 
-// CURRENT(4214)
+// CURRENT(4239) — Only Regalloc/Stack not matching
 #ifdef NON_MATCHING
 void func_80019ABC_1A6BC(arg0, arg1)
 s32 arg0;
