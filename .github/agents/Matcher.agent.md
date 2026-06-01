@@ -3,7 +3,7 @@ name: BH Matcher
 description: Decompile functions from N64 game Body Harvest
 tools:
   [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, edit/createFile, edit/editFiles, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]
-model: Auto (copilot)
+model: DeepSeek V4 Pro (deepseek)
 ---
 
 ## Overview
@@ -74,7 +74,7 @@ If build returns `build/bh.us.z64: OK` the function is matched and you can stop 
 
 ## Finalize
 
-If you haven't matched the function after 20 attempts, revert the code to the best-scoring version found. Add/update a comment above the function with that best score: `// CURRENT(123)`.
+If you haven't matched the function after 10 attempts, revert the code to the best-scoring version found. Add/update a comment above the function with that best score: `// CURRENT(123)`.
 
 Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated notes to help future decomp. Only for matched functions.
 Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.
