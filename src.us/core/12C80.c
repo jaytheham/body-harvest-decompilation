@@ -54,80 +54,89 @@ Unk8006AA84Node *func_80012128_12D28() {
 	return *entry;
 }
 
-// CURRENT(2275)
+// https://decomp.me/scratch/XY5gv
+// CURRENT(865)
 #ifdef NON_MATCHING
-s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA84Node **arg2) {
-	Unk8006AA80Node *node;
-	Unk8006AA80Node *src;
-	Unk8006AA80Node *prev;
-	s16 temp;
-	s16 *counter;
-	s32 diff;
-
-	if (D_8006AB88 == 0) {
-		return -1;
-	}
-	src = *arg1;
-	D_80031CA0_328A0 += 1;
-	if (D_80031CA0_328A0 >= 0x11) {
-		D_80031CA0_328A0 -= 1;
-		return -1;
-	}
-	node = func_80012128_12D28();
-	if (node == NULL) {
-		return -1;
-	}
-	temp = node->unk4;
-	*node = arg0;
-	node->unk4 = temp;
-
-	counter = &D_80033B4C_3474C;
-	if (*arg2 == NULL) {
-		temp = *counter + 1;
-		node->unk34 = NULL;
-		node->unk30 = NULL;
-		node->unk10 = temp;
-		*arg2 = (Unk8006AA84Node *)node;
-		*arg1 = node;
-		*counter = temp;
-		return temp;
-	}
-
-	prev = NULL;
-	while (src != NULL) {
-		diff = src->unk2 - node->unk2;
-		if (diff < 0) {
-			prev = src;
-			src = src->unk34;
-		} else {
-			if (src->unk30 != NULL) {
-				node->unk30 = src->unk30;
-				src->unk30->unk34 = node;
-				node->unk34 = src;
-				src->unk30 = node;
-				temp = *counter + 1;
-				node->unk10 = temp;
-			} else {
-				node->unk30 = NULL;
-				node->unk34 = src;
-				src->unk30 = node;
-				temp = *counter + 1;
-				node->unk10 = temp;
-				*arg1 = node;
-			}
-			*counter = temp;
-			return temp;
-		}
-	}
-
-	prev->unk34 = node;
+s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA84Node **arg2)
+{
+  Unk8006AA80Node *node;
+  Unk8006AA80Node *src;
+  Unk8006AA80Node *prev;
+  s16 temp;
+  s16 *counter;
+  s32 diff;
+  if (D_8006AB88 == 0)
+  {
+	return -1;
+  }
+  src = *arg1;
+  D_80031CA0_328A0 += 1;
+  if (D_80031CA0_328A0 >= 0x11)
+  {
+	D_80031CA0_328A0 -= 1;
+	return -1;
+  }
+  node = func_80012128_12D28();
+  if (node == NULL)
+  {
+	return -1;
+  }
+  temp = node->unk4;
+  *node = arg0;
+  node->unk4 = temp;
+  counter = &D_80033B4C_3474C;
+  if ((*arg2) == NULL)
+  {
+	temp = (*counter) + 1;
 	node->unk34 = NULL;
-	temp = *counter + 1;
-	node->unk30 = prev;
+	node->unk30 = NULL;
 	node->unk10 = temp;
-	*arg2 = (Unk8006AA84Node *)node;
+	*arg2 = (Unk8006AA84Node *) node;
+	*arg1 = node;
 	*counter = temp;
 	return temp;
+  }
+  prev = NULL;
+  while (src != NULL)
+  {
+	diff = src->unk2 - node->unk2;
+	if (diff < 0)
+	{
+	  prev = src;
+	  src = src->unk34;
+	}
+	else
+	{
+	  if (src->unk30 != NULL)
+	  {
+		   temp = (*counter) + 1;
+		  src->unk30->unk34 = node;
+		  node->unk34 = src;
+		node->unk30 = src->unk30;
+		src->unk30 = node;
+		node->unk10 = temp;
+	  }
+	  else
+	  {
+		  temp = (*counter) + 1;
+		node->unk34 = src;
+		  node->unk30 = NULL;
+		src->unk30 = node;
+		node->unk10 = temp;
+		*arg1 = node;
+	  }
+	  *counter = temp;
+	  return temp;
+	}
+  }
+  temp = (*counter) + 1;
+  prev->unk34 = node;
+  node->unk34 = NULL;
+  node->unk30 = prev;
+  node->unk10 = temp;
+  *arg2 = (Unk8006AA84Node *) node;
+  *counter = temp;
+  return temp;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800121B4_12DB4.s")
@@ -386,7 +395,7 @@ void func_800129FC_135FC(s8 arg0, s8 arg1) {
 	}
 }
 
-// Matched, but needs...?
+// CURRENT(0), but needs...?
 // https://decomp.me/scratch/06otn
 #ifdef NON_MATCHING
 void func_80012A74_13674(void)
@@ -410,7 +419,7 @@ void func_80012A74_13674(void)
   alHeapInit(&D_8006AB98, D_80165710, sizeof(D_80165710));
   D_8006AB4C = D_8006AB48 = alHeapDBAlloc(0, 0, &D_8006AB98, 1, (D_963A70 - D_955300));
   func_8000F5A8_101A8(D_955300, D_8006AB48, (D_963A70 - D_955300));
-  alBnkfNew(D_8006AB48, D_963A70);
+  alBnkfNew(D_8006AB48, D_963A70_2);
   D_8006AB8C = D_8006AB48->bankArray[0];
   D_8006AB90 = D_8006AB48->bankArray[1];
   synConfig.maxVVoices = 0x50;
@@ -742,71 +751,92 @@ void func_80013810_14410(s8 arg0) {
 }
 
 // https://decomp.me/scratch/6mw74
-// CURRENT(2130)
+// CURRENT(0) Needs bss?
 #ifdef NON_MATCHING
-void func_80013818_14418(void) {
-	f32 sp28;
-	f32 temp_f0;
-	f32 temp_f14;
-	f32 temp_f2;
-	s16 var_s0;
+void func_80013818_14418(void)
+{
+	static s16 D_80033C94_34894;
+	static s16 D_8006AB14;
+  s16 var_s0;
+  f32 sp28;
+  f32 temp_f0;
+  f32 temp_f14;
+  f32 temp_f2;
+  if (D_8006AB88 == 0)
+  {
+	  return;
+  }
+	func_80017224_17E24();
+	for (var_s0 = 0; var_s0 < 2; var_s0++)
+	{
+	  if (D_80031D28_32928[var_s0] != 0)
+	  {
+		func_80016CD8_178D8((s8) var_s0);
+	  }
+	}
 
-	if (D_8006AB88 != 0) {
-		func_80017224_17E24();
-		for (var_s0 = 0; var_s0 < 2; var_s0++) {
-			if (D_80031D28_32928[var_s0] != 0) {
-				func_80016CD8_178D8((s8)var_s0);
-			}
+	if (D_80031D4C_3294C != 0)
+	{
+	  func_80016E54_17A54();
+	}
+	if (D_80031CD4_328D4 != -1)
+	{
+	  D_80031CD4_328D4 -= 1;
+	  if (D_80031CD4_328D4 == -1)
+	  {
+		func_80013324_13F24();
+	  }
+	}
+	if ((((D_80052ACA == 0) || (D_80052ACA == 1)) || (D_80052ACA == 2)) && (gameplayMode == 1))
+	{
+	  {
+		if (D_80033C94_34894 > 0)
+		{
+		  D_80033C94_34894--;
 		}
-		if (D_80031D4C_3294C != 0) {
-			func_80016E54_17A54();
+
+		if (D_80033C94_34894 == 0)
+		{
+		  D_80033C94_34894 = -1;
+		  sp28 = D_800323BC_32FBC[func_800056D0_62D0(D_80052B34->unk0, D_80052B34->unk4)];
+		  temp_f0 = (((f32) D_80052B34->unk0) / 4) - D_80047954;
+		  temp_f2 = (((f32) D_80052B34->unk2) / 4) - D_80047958;
+		  temp_f14 = (((f32) D_80052B34->unk4) / 4) - D_8004795C;
+		  func_80014A3C_1563C((s32) D_80052B34, 0x97, sqrtf(((temp_f0 * temp_f0) + (temp_f2 * temp_f2)) + (temp_f14 * temp_f14)), 0, sp28);
 		}
-		if (D_80031CD4_328D4 != -1) {
-			D_80031CD4_328D4 -= 1;
-			if (D_80031CD4_328D4 == -1) {
-				func_80013324_13F24();
-			}
+	  }
+	  if (((((currentLevel == 3) && (gameplayMode == 1)) && (D_80052ACA != 3)) && (D_80052B34->unk1A == 3)) && (currentControllerStates[0].button & 0x2000))
+	  {
+		func_80014A3C_1563C((s32) D_80052B34, 0x35, 0.0f, 0, -1.0f);
+	  }
+	}
+	if (D_80031CD4_328D4 != -1)
+	{
+	  D_80031CD4_328D4 -= 1;
+	  if (D_80031CD4_328D4 == -1)
+	  {
+		func_80013324_13F24();
+	  }
+	}
+	func_80013FC4_14BC4(D_8006AB10);
+	D_8006AB14 = func_80013F64_14B64();
+
+	if (D_8006AB14 > 0)
+	{
+	  Unk8006AA80Node *ptr;
+	  for (var_s0 = 0; var_s0 < D_8006AB14; var_s0++)
+	  {
+		ptr = func_80012720_13320();
+		if (ptr == NULL)
+		{
+		  break;
 		}
-		if (((D_80052ACA == 0) || (D_80052ACA == 1) || (D_80052ACA == 2)) && (gameplayMode == 1)) {
-			{
-				s16 var_v0;
-				var_v0 = D_80033C94_34894;
-				if (var_v0 > 0) {
-					var_v0--;
-				}
-				D_80033C94_34894 = var_v0;
-				if (var_v0 == 0) {
-					D_80033C94_34894 = -1;
-					sp28 = D_800323BC_32FBC[func_800056D0_62D0(D_80052B34->unk0, D_80052B34->unk4)];
-					temp_f0 = ((f32)D_80052B34->unk0 / 4) - D_80047954;
-					temp_f2 = ((f32)D_80052B34->unk2 / 4) - D_80047958;
-					temp_f14 = ((f32)D_80052B34->unk4 / 4) - D_8004795C;
-					func_80014A3C_1563C((s32)D_80052B34, 0x97, sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2) + (temp_f14 * temp_f14)), 0, sp28);
-				}
-			}
-			if ((currentLevel == 3) && (gameplayMode == 1) && (D_80052ACA != 3) && (D_80052B34->unk1A == 3) && (currentControllerStates[0].button & 0x2000)) {
-				func_80014A3C_1563C((s32)D_80052B34, 0x35, 0.0f, 0, -1.0f);
-			}
+		if ((func_80013B48_14748(ptr, D_80033C90_34890) != (-1)) && (ptr->unk0 == 0x96))
+		{
+		  D_80033C94_34894 = 1;
 		}
-		if (D_80031CD4_328D4 != -1) {
-			D_80031CD4_328D4 -= 1;
-			if (D_80031CD4_328D4 == -1) {
-				func_80013324_13F24();
-			}
-		}
-		func_80013FC4_14BC4(D_8006AB10);
-		if ((D_8006AB14 = func_80013F64_14B64()) > 0) {
-			Unk8006AA80Node *ptr;
-			for (var_s0 = 0; var_s0 < D_8006AB14; var_s0++) {
-				ptr = func_80012720_13320();
-				if (ptr == NULL) {
-					break;
-				}
-				if (func_80013B48_14748(ptr, D_80033C90_34890) != -1 && ptr->unk0 == 0x96) {
-					D_80033C94_34894 = 1;
-				}
-			}
-		}
+	  }
+
 	}
 }
 #else
@@ -1066,6 +1096,7 @@ s32 func_800143C4_14FC4(s16 arg0)
 	return func_800121B4_12DB4(sp58, &D_8006AA80, &D_8006AA84);
 }
 
+// https://decomp.me/scratch/qeywv
 // CURRENT(615)
 #ifdef NON_MATCHING
 void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2) {
@@ -1369,30 +1400,26 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014A3C_1563C.s")
 #endif
 
-// CURRENT(235)
+// https://decomp.me/scratch/ZQpri
+// CURRENT(215)
 #ifdef NON_MATCHING
-void func_80015210_15E10(s16 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4) {
-	Unk8006AA80Node sp50;
-
-	if (D_8006AB88 != 0) {
-		s16 temp_v1;
-
-		sp50.unk2 = D_80032228_32E28[arg0 & 0xFFFF];
-		sp50.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
-		sp50.unk6 = -1;
-		sp50.unk0C = 0;
-		sp50.unk8 = 0;
-		temp_v1 = (s16)((s32)((f32)D_80031F04_32B04[arg0] * ((f32)arg4 / 200.0f)));
-		sp50.unk0 = arg0 & 0xFFFF;
-		if (temp_v1 < 0x2FFF) {
-			sp50.unk20 = temp_v1 + 0x2FFF;
-		} else {
-			sp50.unk20 = 0x7FFF;
-		}
-		sp50.unk0E = -1;
-		sp50.unk22 = 0x40;
-		func_800121B4_12DB4(sp50, &D_8006AA80, &D_8006AA84);
-	}
+void func_80015210_15E10(s16 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4)
+{
+  Unk8006AA80Node sp50;
+  s16 temp_v1;
+  if (D_8006AB88 != 0)
+  {  
+	sp50.unk2 = D_80032228_32E28[arg0 & 0xFFFF];
+	sp50.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
+	sp50.unk6 = -1;
+	sp50.unk0C = 0;
+	sp50.unk8 = 0;
+	temp_v1 = D_80031F04_32B04[arg0] * (arg4 / 200.0f);
+	sp50.unk0 = arg0 & 0xFFFF;
+	if (temp_v1 < 0x2FFF) { temp_v1 += 0x2FFF; }
+	else { temp_v1 = 0x7FFF; }sp50.unk20 = temp_v1;  sp50.unk0E = -1; sp50.unk22 = 0x40;
+	func_800121B4_12DB4(sp50, &D_8006AA80, &D_8006AA84);
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015210_15E10.s")
