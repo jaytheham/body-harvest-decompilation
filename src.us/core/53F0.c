@@ -393,7 +393,7 @@ void func_80005B84_6784(void) {
 	}
 }
 
-// CURRENT(5487)
+// CURRENT(5338)
 #ifdef NON_MATCHING
 void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, f32 arg8, f32 arg9, u16 *arg10) {
 	f32 sp128;
@@ -408,15 +408,7 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 	f32 var_f20;
 	f32 var_f22;
 	f32 var_f24;
-	f32 temp_f12;
-	s32 temp_a0;
 	s32 temp_s1;
-	s32 temp_t7;
-	s32 temp_t9_2;
-	s32 temp_s0;
-	s32 temp_ra;
-	s32 var_s4;
-	s32 var_t5;
 
 	sp88 = 32.0f * arg8;
 	sp84 = 32.0f * arg9;
@@ -426,9 +418,8 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 
 	guOrtho((Mtx *)D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, D_80037128_37D28, D_8003712C_37D2C, 1.0f);
 	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-	temp_a0 = D_8005BB38 + 0x40;
-	D_8005BB38 = temp_a0;
-	guRotate((Mtx *)temp_a0, 0.0f, 1.0f, 0.0f, 0.0f);
+	D_8005BB38 += 0x40;
+	guRotate((Mtx *)D_8005BB38, 0.0f, 1.0f, 0.0f, 0.0f);
 	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 + 0x80000000), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	D_8005BB38 += 0x40;
 	gDPPipeSync(D_8005BB2C++);
@@ -458,7 +449,8 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
 
 	if (temp_s1 > 0) {
-		temp_f12 = D_80037130_37D30;
+		s32 var_s4;
+		s32 var_t5;
 		var_s4 = 0;
 		do {
 			var_t5 = 0;
@@ -466,15 +458,17 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 				temp_f16 = (f32)arg5 + ((f32)var_s4 * sp128);
 				temp_f26 = temp_f16 + sp128;
 				do {
+					s32 var_ra;
+					s32 var_s0;
 					var_f20 = temp_f16;
 					var_f24 = temp_f26;
-					temp_ra = 0;
-					temp_s0 = 0;
+					var_ra = 0;
+					var_s0 = 0;
 					temp_f0 = (f32)arg4 + ((f32)var_t5 * sp88);
 					temp_f2 = temp_f0 + sp88;
 					var_f18 = temp_f0;
 					var_f22 = temp_f2;
-					if (!(temp_f2 <= 0.0f) && !(temp_f26 <= 0.0f) && !(temp_f12 < temp_f0) && !(temp_f12 < temp_f16)) {
+					if (!(temp_f2 <= 0.0f) && !(temp_f26 <= 0.0f) && !(D_80037130_37D30 < temp_f0) && !(D_80037130_37D30 < temp_f16)) {
 						gDPSetTextureImage(D_8005BB2C++, arg1, arg2, 1, arg0 + (((var_s4 * sp90) + var_t5) * ((s32)(arg3 << 0xA) / 8)));
 						gDPTileSync(D_8005BB2C++);
 						gDPSetTile(D_8005BB2C++, arg1, arg2, 0, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
@@ -483,23 +477,21 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 						gDPTileSync(D_8005BB2C++);
 						gDPSetTile(D_8005BB2C++, arg1, arg2, ((((s32)(arg3 << 5) / 8) + 7) >> 3), 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 						gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
-						temp_t7 = (s32)((1.0f / (sp88 / 32)) * 1024.0f);
-						temp_t9_2 = (s32)((1.0f / (sp84 / 32)) * 1024.0f);
 						if (temp_f0 < 0.0f) {
 							var_f18 = 0.0f;
-							temp_ra = (s32)(-temp_f0 / arg8) << 5;
+							var_ra = (s32)(-temp_f0 / arg8) << 5;
 						}
-						if (temp_f12 < temp_f2) {
-							var_f22 = temp_f12;
+						if (D_80037130_37D30 < temp_f2) {
+							var_f22 = D_80037130_37D30;
 						}
 						if (temp_f16 < 0.0f) {
 							var_f20 = 0.0f;
-							temp_s0 = (s32)(-temp_f16 / arg9) << 5;
+							var_s0 = (s32)(-temp_f16 / arg9) << 5;
 						}
-						if (temp_f12 < temp_f26) {
-							var_f24 = temp_f12;
+						if (D_80037130_37D30 < temp_f26) {
+							var_f24 = D_80037130_37D30;
 						}
-						gSPTextureRectangle(D_8005BB2C++, (s32)var_f18 * 4, (s32)var_f20 * 4, (s32)var_f22 * 4, (s32)var_f24 * 4, G_TX_RENDERTILE, temp_ra, temp_s0, temp_t7, temp_t9_2);
+						gSPTextureRectangle(D_8005BB2C++, (s32)var_f18 * 4, (s32)var_f20 * 4, (s32)var_f22 * 4, (s32)var_f24 * 4, G_TX_RENDERTILE, var_ra, var_s0, (s32)((1.0f / (sp88 / 32)) * 1024.0f), (s32)((1.0f / (sp84 / 32)) * 1024.0f));
 					}
 					var_t5 += 1;
 				} while (var_t5 != sp90);
