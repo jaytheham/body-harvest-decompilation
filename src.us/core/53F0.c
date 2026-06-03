@@ -57,42 +57,22 @@ void func_800048B8_54B8(void)
 	}
 }
 
-#ifdef NON_MATCHING
-void func_800048E8_54E8(void) {
-	D47F40Entry *end = (D47F40Entry *)D_80047F60;
-	D47F40Entry *ptr = (D47F40Entry *)D_80047F40;
-	do {
-		ptr++;
-		(ptr - 1)->f4 = 0;
-		(ptr - 1)->f8 = 0;
-		(ptr - 1)->fC = 0;
-		(ptr - 1)->f0 = 0;
-		ptr++;
-		ptr--;
-	} while (ptr != end);
+void func_800048E8_54E8(void)
+{
+	s32 i;
+  for (i = 0; i < (sizeof(D_80047F40) / sizeof(D_80047F40[0])); i++)
+  {
+	D_80047F40[i]= 0;
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800048E8_54E8.s")
-#endif
 
-#ifdef NON_MATCHING
 void func_80004918_5518(void) {
-	s16 *end;
-	s16 *p;
-	end = D_80047F40;
-	p = D_80047D40; do {
-		p += 4;
-		p[-3] = 0;
-		p[-2] = 0;
-		p[-1] = 0;
-		p[-4] = 0;
-		p++;
-		p--;
-	} while (p != end);
+	s32 i;
+  for (i = 0; i < (sizeof(D_80047D40) / sizeof(D_80047D40[0])); i++)
+  {
+	D_80047D40[i]= 0;
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80004918_5518.s")
-#endif
 
 void func_80004948_5548(void) {
 	u16 temp_v0;

@@ -2965,8 +2965,8 @@ extern s16 D_800E6632;
 extern u8 D_800E6633;
 extern s32 D_800E65D8;
 extern Unk80070F7CObj *D_800E65BC;
-extern s16 D_80047D40[];
-extern s16 D_80047F40[];
+extern s16 D_80047D40[0x100];
+extern s32 D_80047F40[8];
 extern s16 D_80047F60[];
 extern s16 D_80047F7E; // Last item of an array of powerup values?
 extern u8 D_800FC8F5;
