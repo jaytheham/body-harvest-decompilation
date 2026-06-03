@@ -902,7 +902,7 @@ void func_800076D4_82D4(s32 arg0) {
 	}
 }
 
-#ifdef TRUE
+#ifdef NON_MATCHING
 void func_80007728_8328(u8 *arg0, s16 *arg1, s16 *arg2) {
 loop:
 	switch (arg0[0]) {
@@ -1188,7 +1188,7 @@ loop_1:
 	case 0x9B:
 		switch (arg1[0]) {
 		case 0x99:
-			return arg0[1] == (((*(u32 *)(D_80050AE0 + arg1[1] * 0x18)) << 26) >> 28);
+			return arg0[1] == (((D_80050AE0[arg1[1]].unk0) << 26) >> 28);
 		case 0xAF:
 			temp = arg1[1];
 			arg1 = D_8004D180 + temp * 3;
@@ -1203,6 +1203,7 @@ loop_1:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000807C_8C7C.s")
 #endif
 
+// CURRENT(10) - need rodata
 #ifdef NON_MATCHING
 s32 func_800081D4_8DD4(u8 *arg0) {
 	switch (arg0[8]) {
@@ -1219,14 +1220,12 @@ s32 func_800081D4_8DD4(u8 *arg0) {
 	case 0x8D:
 		return func_80007DE0_89E0(arg0) == 0;
 	case 0xB5: {
-		u32 v = *(u32 *)(D_80050AE0 + arg0[1] * 24);
+		u32 v = D_80050AE0[arg0[1]].unk0;
 		return ((v >> 12) & 0x10) == 0x10;
 	}
 	case 0xB1: {
-		u32 v = *(u32 *)(D_80050AE0 + arg0[1] * 24);
-		u32 vr = v >> 12;
-		u32 bit16_check = (vr & 0x10) ^ 0x10;
-		return bit16_check || ((vr & 1) ^ 1);
+		u32 v = D_80050AE0[arg0[1]].unk0;
+		return ((v >> 12) & 0x10) == 0 || ((v >> 12) & 1) == 0;
 	}
 	case 0x8E:
 		return func_80007F60_8B60(arg0);
