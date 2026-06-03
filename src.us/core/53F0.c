@@ -841,41 +841,46 @@ void func_80007548_8148(void)
 }
 
 // https://decomp.me/scratch/qADEg
+// CURRENT(855)
 #ifdef NON_MATCHING
-void func_80007570_8170(void) {
-	s32 temp;
-	D_80047F98 = 0;
-	D_80047F9C = 0;
-	D_80047F94 = 0;
+void func_80007570_8170(void)
+{
+  s32 temp;
+	s32 i;
+  D_80047F98 = 0;
+  D_80047F9C = 0;
+  D_80047F94 = 0;
 	weaponSlots[0] = 2;
-	D_80048139 = 0;
-	D_8004813A = 0;
-	weaponSlots[4] = 0;
-	weaponSlots[5] = 0;
-	weaponSlots[6] = 0;
-	weaponSlots[3] = 0;
-	D_8004DC48.unk0 = 1;
-	D_8004DC54 = 0;
+	for (i=1; i < 7; i++)
+	{
+	  weaponSlots[i] = 0;
+	}
+
+  D_8004DC48.unk0 = 1;
 	D_8004DC50.unk0 = 0;
-	D_80052A90 = 0;
-	D_8004D154 = 0;
-	D_8004D150 = 0;
-	D_8004D158 = 0;
-	D_80048030 = 0;
-	D_8004DC5C = 0;
-	temp = (s32)D_80048028 >> (currentLevel * 3 + 0x1D);
-	if (temp & 1) {
-		D_8004DC5C = 1;
-	}
-	if (temp & 2) {
-		D_8004DC5C += 1;
-	}
-	if (temp & 4) {
-		D_8004DC5C += 1;
-	}
-	D_80052A98[currentLevel - 1].score = 0;
-	D_80052A98[currentLevel - 1].humansKilled = 0;
-	D_80052A98[currentLevel - 1].secondsElapsed = 0;
+	
+  D_80052A90 = 0;
+  D_8004D154 = 0;
+  D_8004D150 = 0;
+  D_8004D158 = 0;
+  D_80048030 = 0;
+  D_8004DC5C = 0;
+  temp = ((s32) D_80048028) >> ((currentLevel * 3) + 0x1D);
+  if (temp & 1)
+  {
+	D_8004DC5C = 1;
+  }
+  if (temp & 2)
+  {
+	D_8004DC5C += 1;
+  }
+  if (temp & 4)
+  {
+	D_8004DC5C += 1;
+  }
+  D_80052A98[currentLevel - 1].score = 0;
+  D_80052A98[currentLevel - 1].humansKilled = 0;
+  D_80052A98[currentLevel - 1].secondsElapsed = 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007570_8170.s")
@@ -897,7 +902,7 @@ void func_800076D4_82D4(s32 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
+#ifdef TRUE
 void func_80007728_8328(u8 *arg0, s16 *arg1, s16 *arg2) {
 loop:
 	switch (arg0[0]) {
@@ -951,6 +956,8 @@ void func_800078E4_84E4(s32 arg0, s32 *arg1) {
 	*arg1 &= ~(1 << arg0);
 }
 
+// https://decomp.me/scratch/E3Lvj
+// MATCHED - Needs rodata
 #ifdef NON_MATCHING
 void func_80007900_8500(u8 *arg0) {
 	switch (arg0[0]) {
@@ -982,6 +989,7 @@ void func_80007900_8500(u8 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007900_8500.s")
 #endif
 
+// MATCHED - Needs rodata
 #ifdef NON_MATCHING
 void func_80007A20_8620(u8 *arg0) {
 	switch (arg0[8]) {
@@ -1101,6 +1109,7 @@ s32 func_80007D44_8944(s32 arg0) {
 	return (sp1E - sp1A) * (sp1E - sp1A) + (sp1C - sp18) * (sp1C - sp18);
 }
 
+// MATCHED - needs rodata
 #ifdef NON_MATCHING
 s32 func_80007DE0_89E0(u8 *arg0) {
 loop:
