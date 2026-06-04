@@ -1325,6 +1325,7 @@ next:
 	return 1;
 }
 
+// CURRENT(4924)
 #ifdef NON_MATCHING
 void guess_checkMissions(void) {
 	s32 sp5C;
@@ -1405,6 +1406,7 @@ void guess_checkMissions(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_checkMissions.s")
 #endif
 
+// CURRENT(80)
 #ifdef NON_MATCHING
 void debug_drawTimingGraphBars(void) {
 	s32 pad1;

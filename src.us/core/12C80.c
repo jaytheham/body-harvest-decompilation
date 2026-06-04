@@ -1885,6 +1885,7 @@ s32 func_800164C4_170C4(void) {
 	return var_s1;
 }
 
+// https://decomp.me/scratch/CQbLj
 // CURRENT(2338)
 #ifdef NON_MATCHING
 s8 func_800165EC_171EC(void) {
@@ -2199,7 +2200,7 @@ s16 func_80017394_17F94(u8 *arg0, s16 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017394_17F94.s")
 #endif
 
-// CURRENT(27716)
+// CURRENT(27406)
 #ifdef NON_MATCHING
 void func_80017490_18090(u8 *arg0) {
 	u8 buf[32];
