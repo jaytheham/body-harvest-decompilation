@@ -2733,9 +2733,11 @@ void func_80018D58_19958(void) {
 	D_8003449C = 0;
 }
 
-// CURRENT(4796)
+// CURRENT(2518)
 #ifdef NON_MATCHING
 void func_80018D7C_1997C(u16 arg0) {
+	s32 pad0;
+	s32 pad1;
 	s32 sp20;
 
 	D_80034494 = 0;
@@ -2761,6 +2763,7 @@ void func_80018D7C_1997C(u16 arg0) {
 				func_8001A024_1AC24();
 				return;
 			}
+			sp20 = ((arg0 - 0xCD) & 0xFF);
 			if (((u8 *)D_80034460 + *(u16 *)((u8 *)D_8006C550 + ((arg0 - 0xCD) & 0xFF) * 2))[0] == 0x5E) {
 				osSyncPrintf(&D_80038470_39070,
 					((u8 *)D_80034460 + *(u16 *)((u8 *)D_8006C550 + ((arg0 - 0xCD) & 0xFF) * 2))[0],
