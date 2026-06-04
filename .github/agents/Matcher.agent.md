@@ -53,7 +53,7 @@ If you don't know one of the values, you can use `12345678` as a placeholder for
 4. Make a single change to the C code to try to reduce the number of differences in assembly.
 5. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
 
-First target different/missing instructions and their ordering, target register allocation and stack placement last.
+First target incorrect/missing/out-of-order instructions, ignore register allocation and stack placement until the instructions match.
 
 If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
@@ -72,7 +72,7 @@ If build returns `build/bh.us.z64: OK` the function is matched and you can stop 
 
 ## Finalize
 
-If you haven't matched the function after 10 attempts, revert the code to the best-scoring version found. Add/update a comment above the function with that best score: `// CURRENT(123)`.
+If you haven't matched the function after 10 attempts, revert the code to the best-scoring version you found. Add/update a comment above the function with that best score: `// CURRENT(123)`.
 
 Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated notes to help future decomp. Only for matched functions.
 Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.

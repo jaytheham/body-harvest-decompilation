@@ -2400,7 +2400,7 @@ void func_80017BF8_187F8(short arg0)
 	func_800101F0_10DF0(&D_80266E80, ((((s32) (&D_305AFA0)) & 0xFFFFFF) + offset) + D_8F4960, 0x200);
 }
 
-// CURRENT(20621)
+// CURRENT(20481)
 #ifdef NON_MATCHING
 s16 func_80017CA4_188A4(void) {
 	Gfx *sp94;
