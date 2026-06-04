@@ -2662,22 +2662,25 @@ s32 func_80018AC8_196C8(void) {
 	return 0;
 }
 
-// CURRENT(2270)
+// CURRENT(15)
 #ifdef NON_MATCHING
 s32 func_80018AEC_196EC(s32 arg0, s32 arg1, s32 arg2) {
 	s32 sp24;
-	s32 var_v1;
 	s32 temp_v0;
+	s32 var_v1;
+	s32 *ptr;
 	s32 temp_v1;
 
 	sp24 = 0;
 	if (func_80017B78_18778() == 1) {
-		temp_v0 = D_800344A4 + 1;
+		ptr = &D_800344A4;
+		var_v1 = *ptr;
+		temp_v0 = var_v1 + 1;
 		var_v1 = (temp_v0 >= 0xB) ? 0xA : temp_v0;
 		if (D_8006C6C6 > 0 && D_8004802C == 0) {
 			var_v1 = 0;
 		}
-		D_800344A4 = var_v1;
+		*ptr = var_v1;
 		if (var_v1 >= 0xA) {
 			if ((D_8003449C == 0) && (gameplayMode != 0)) {
 				D_8006C560 = gameplayMode;
@@ -2709,9 +2712,9 @@ s32 func_80018AEC_196EC(s32 arg0, s32 arg1, s32 arg2) {
 	}
 	if (D_8003449C > 0) {
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, arg0, arg1, arg2, 0xFF);
-		func_800092B8_9EB8(0x3C, (D_80068088 - D_8003449C * 2 - 0x40) * 4, (D_80068084 - 0xF) * 4, ((s32)D_80068088 + D_8003449C * 2 - 0x40) * 4, 0);
+		func_800092B8_9EB8(0x3C, (D_80068088 - D_8003449C * 2 - 0x40) << 2, (D_80068084 - 0xF) << 2, (((s32)D_80068088 + D_8003449C * 2 - 0x40) << 2), 0);
 	}
-	return sp24;
+	return (sp24);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018AEC_196EC.s")
