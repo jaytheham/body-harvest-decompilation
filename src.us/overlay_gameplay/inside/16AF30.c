@@ -660,24 +660,22 @@ block_26:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084258_16C318.s")
 #endif
 
-// CURRENT(2624)
+// CURRENT(1833)
 #ifdef NON_MATCHING
 void func_80084628_16C6E8(s32 arg0) {
-	UnkFB6F8Entry *owner;
 	Unk84EECEffect *base;
 	Unk84EECEffect *entry;
 	s16 effect;
 	s16 spread;
-	s16 quarter;
-	s16 half;
-	s16 third;
+	u16 quarter;
+	s32 half;
+	s32 third;
 	s32 rnd;
 	u8 slot;
 	s32 index;
 
 	slot = arg0 & 0xFF;
-	owner = &D_800FB6F8[slot];
-	index = owner->unk6;
+	index = D_800FB6F8[slot].unk6;
 	base = &((Unk84EECEffect *)&D_800FB7B0)[index];
 	spread = base->unk2;
 	effect = func_80083390_16B450(slot);
@@ -696,10 +694,10 @@ void func_80084628_16C6E8(s32 arg0) {
 
 	rnd = func_800038E0_44E0();
 	entry->unk11 = (rnd % 0x32) + 0x5A;
+	rnd = func_800038E0_44E0();
 	half = quarter / 2;
 	third = quarter / 3;
 
-	rnd = func_800038E0_44E0();
 	entry->unk12 = (rnd % half) + third;
 	rnd = func_800038E0_44E0();
 	entry->unk14 = (rnd % half) + third;
