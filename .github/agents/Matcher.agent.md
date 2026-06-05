@@ -55,6 +55,8 @@ If you don't know one of the values, you can use `12345678` as a placeholder for
 
 First target incorrect/missing/out-of-order instructions, ignore register allocation and stack placement until the instructions match.
 
+Don't rely on just the score to tell if a change is an improvement, always check the actual diff to see if the changes are in the right direction. Sometimes a change can produce more accurate instructions, but change register/stack allocation in a way that causes more differences overall, so the score can be worse even though the change is an improvement.
+
 If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
 - Add any missing declarations of data symbols used by the function to `include/variables.us.h`.

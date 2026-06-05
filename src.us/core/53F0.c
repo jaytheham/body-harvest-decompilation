@@ -1481,11 +1481,10 @@ s32 func_80008C44_9844(s32 arg0) {
 	}
 }
 
-// CURRENT(8943)
+// CURRENT(2755)
 #ifdef NON_MATCHING
 void func_80008CA8_98A8(s32 arg0) {
 	Unk80052B40 sp;
-	s32 t3, a3, a2, a1, a0;
 	s32 frame;
 
 	guOrtho((Mtx *)D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, D_80037450_38050, D_80037454_38054, 1.0f);
@@ -1504,56 +1503,11 @@ void func_80008CA8_98A8(s32 arg0) {
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 
 	frame = D_80031648_32248;
-	t3 = 0x1E - ((frame / 4) % 60);
-	if (t3 >= 0) {
-		a3 = t3;
-	} else {
-		a3 = -t3;
-	}
-	a2 = 0x32 - ((frame / 5) % 100);
-	if (a2 >= 0) {
-		a1 = a2;
-	} else {
-		a1 = -a2;
-	}
-	a0 = 0x14 - ((frame / 10) % 20);
-	gDPSetEnvColor(D_8005BB2C++, a1 + 0x1E, a3 + 0x19, (a0 >= 0 ? a0 : -a0) + 0x14, 0xFF);
+	gDPSetEnvColor(D_8005BB2C++, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x1E, ((0x1E - ((frame / 4) % 60)) >= 0 ? (0x1E - ((frame / 4) % 60)) : -(0x1E - ((frame / 4) % 60))) + 0x19, (0x14 - ((frame / 10) % 20) >= 0 ? 0x14 - ((frame / 10) % 20) : -(0x14 - ((frame / 10) % 20))) + 0x14, 0xFF);
 	if (arg0 == 0) {
-		a0 = 0x14 - ((frame / 4) % 40);
-		if (a0 >= 0) {
-			a3 = a0;
-		} else {
-			a3 = -a0;
-		}
-		if (t3 >= 0) {
-			a1 = t3;
-		} else {
-			a1 = -t3;
-		}
-		if (a2 >= 0) {
-			a0 = a2;
-		} else {
-			a0 = -a2;
-		}
-		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, a1 + 0x23, a3 + 0x1E, a0 + 0x28, 0xFF);
+		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, ((0x1E - ((frame / 4) % 60)) >= 0 ? (0x1E - ((frame / 4) % 60)) : -(0x1E - ((frame / 4) % 60))) + 0x23, (0x14 - ((frame / 4) % 40) >= 0 ? 0x14 - ((frame / 4) % 40) : -(0x14 - ((frame / 4) % 40))) + 0x1E, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x28, 0xFF);
 	} else {
-		a0 = 0x14 - ((frame / 4) % 40);
-		if (a0 >= 0) {
-			a0 = a0;
-		} else {
-			a0 = -a0;
-		}
-		if (t3 >= 0) {
-			a3 = t3;
-		} else {
-			a3 = -t3;
-		}
-		if (a2 >= 0) {
-			a1 = a2;
-		} else {
-			a1 = -a2;
-		}
-		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, a1 + 0x8C, a3 + 0x23, a0 + 0x1E, 0xFF);
+		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x8C, ((0x1E - ((frame / 4) % 60)) >= 0 ? (0x1E - ((frame / 4) % 60)) : -(0x1E - ((frame / 4) % 60))) + 0x23, (0x14 - ((frame / 4) % 40) >= 0 ? 0x14 - ((frame / 4) % 40) : -(0x14 - ((frame / 4) % 40))) + 0x1E, 0xFF);
 	}
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPPipeSync(D_8005BB2C++);
