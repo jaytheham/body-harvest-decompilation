@@ -88,14 +88,14 @@ void func_8008311C_16B1DC(void) {
 }
 
 // https://decomp.me/scratch/qmTkk
-// CURRENT(200)
+// CURRENT(115)
 #ifdef NON_MATCHING
 s32 func_80083224_16B2E4(u8 arg0)
 {
-  s32 slot;
+  u8 slot;
   u8 count;
   UnkFB6F8Entry *slotPtr;
-  s32 i;
+  u8 i;
   count = D_800FB7AC;
   if (count >= 0xF)
   {
@@ -105,20 +105,22 @@ s32 func_80083224_16B2E4(u8 arg0)
   else
   {
 	slot = D_800FB7AD;
-	slotPtr = ((u8 *) D_800FB6F8) + (slot * 0xC);
+	slotPtr = &D_800FB6F8[slot];
 	slotPtr->unk0 = arg0;
 	slotPtr->unk4 = 0;
 	slotPtr->unk6 = -6;
 	slotPtr->unk8 = -6;
 	D_800FB7AC = count + 1;
 	D_800FB7AD = 0xF;
-	for (i = slot; i < 0xF; i = (i + 1) & 0xFF)
-	{
-	  if ((*(((u8 *) D_800FB6F8) + (i * 0xC))) == 0xFA)
-	  {
-		D_800FB7AD = i;
-		i = 0xF;
-	  }
+	i = slot;
+	if (i < 0xF) {
+	  do {
+		if (D_800FB6F8[i].unk0 == 0xFA) {
+		  D_800FB7AD = i;
+		  i = 0xF;
+		}
+		i++;
+	  } while (i < 0xF);
 	}
   }
   return slot;
