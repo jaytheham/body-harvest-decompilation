@@ -719,20 +719,20 @@ void func_80084628_16C6E8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084628_16C6E8.s")
 #endif
 
-/* CURRENT(5385) */
+/* CURRENT(2601) */
 #ifdef NON_MATCHING
 void func_80084980_16CA40(s32 arg0, s32 arg1) {
-	UnkFB6F8Entry *owner;
-	Unk84EECEffect *base;
 	Unk84EECEffect *entry;
+	s16 *baseFields;
+	s16 baseIdx;
 	s16 effect;
 	s16 spread;
-	s16 quarter;
+	u16 quarter;
 	s32 rnd;
 
-	owner = &D_800FB6F8[arg0 & 0xFF];
-	base = &((Unk84EECEffect *)&D_800FB7B0)[owner->unk6];
-	spread = base->unk2;
+	baseIdx = D_800FB6F8[arg0 & 0xFF].unk6;
+	baseFields = &((Unk84EECEffect *)&D_800FB7B0)[baseIdx].unk8;
+	spread = baseFields[-3];
 
 	if ((arg1 & 0xFF) == 0xFB) {
 		return;
@@ -744,18 +744,18 @@ void func_80084980_16CA40(s32 arg0, s32 arg1) {
 	}
 
 	rnd = func_800038E0_44E0();
-	entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
 	quarter = spread / 4;
-	entry->unk2 = (rnd % 5) + quarter;
+	((Unk84EECEffect *)&D_800FB7B0)[effect].unk2 = (rnd % 5) + quarter;
 
 	rnd = func_800038E0_44E0();
-	entry->unk8 = base->unk8 + ((rnd % spread) / 2) - quarter;
+	entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+	entry->unk8 = baseFields[0] + ((rnd % spread) / 2) - quarter;
 
 	rnd = func_800038E0_44E0();
-	entry->unkA = (rnd % 0xA) + base->unkA + quarter;
+	entry->unkA = (rnd % 0xA) + baseFields[1] + quarter;
 
 	rnd = func_800038E0_44E0();
-	entry->unkC = base->unkC + ((rnd % spread) / 2) - quarter;
+	entry->unkC = baseFields[2] + ((rnd % spread) / 2) - quarter;
 	entry->unk11 = 0x3C;
 	entry->unk12 = 0;
 
