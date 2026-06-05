@@ -487,7 +487,7 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083F08_16BFC8.s")
 #endif
 
-/* CURRENT(470) */
+// CURRENT(375)
 #ifdef NON_MATCHING
 void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	u8 slot;
@@ -498,11 +498,11 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 
 	effect = func_80083224_16B2E4(2);
 	if (effect != 0xFB) {
-		slot = effect & 0xFF;
-		effect = func_80083390_16B450(slot & 0xFF);
+		slot = effect;
+		effect = func_80083390_16B450(slot);
 		if (effect == -3) {
 			osSyncPrintf(&D_800A5248_18D308);
-			func_80083300_16B3C0(slot & 0xFF);
+			func_80083300_16B3C0(slot);
 			return;
 		}
 
