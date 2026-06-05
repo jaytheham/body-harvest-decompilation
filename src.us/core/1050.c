@@ -22,11 +22,10 @@ s32 D_800313C4_31FC4 = 0;
 s16 D_800313C8_31FC8 = 0;
 s32 D_800313CC = 0;
 
-// CURRENT(1644)
+// CURRENT(595)
 #ifdef NON_MATCHING
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	s32 s2;
-	s32 var_v0;
 	f32 var_f0;
 	f32 one;
 	Unk80042DB8 *s1;
@@ -34,11 +33,11 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 
 	D_80042DA8.unk0 = 0;
 	arg0->dmaproc = (void *)func_80000CD4_18D4;
-	var_v0 = osAiSetFrequency(0x7D00);
-	arg0->outputRate = var_v0;
+	s2 = osAiSetFrequency(0x7D00);
+	arg0->outputRate = s2;
 	one = 1.0f;
 	if (D_80031B58_32758 == 0) {
-		var_f0 = ((f32)var_v0 * one) / 60.0f;
+		var_f0 = ((f32)s2 * one) / 60.0f;
 	} else {
 		var_f0 = ((f32)arg0->outputRate * one) / 50.0f;
 	}
@@ -54,36 +53,28 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 	alInit(&D_8003FD58, arg0);
 	D_80042DB8.unk4 = 0;
 	D_80042DB8.unk0 = 0;
-	s1 = &D_80042DB8;
 	s0 = &D_80042DCC;
+	s1 = &D_80042DB8;
 	for (s2 = 0; s2 < 0x31; s2++, s1++, s0++) {
 		alLink((ALLink *)s0, (ALLink *)s1);
 		s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
 	}
 	s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
-	{
-		Acmd **p;
-		Acmd **end;
-
-		p = D_8003FB20;
-		end = (Acmd **)D_8003FB28;
-		do {
-			*p = alHeapAlloc(arg0->heap, 1, 0x8000);
-			p++;
-		} while (p < end);
-	}
 	s2 = 0;
-	for (; s2 < 3; s2++) {
-		D_8003FB28[s2] = alHeapAlloc(arg0->heap, 1, 0x90);
-		D_8003FB28[s2]->unk70 = 2;
-		D_8003FB28[s2]->unk74 = D_8003FB28[s2];
-		D_8003FB28[s2]->outBuf = alHeapAlloc(arg0->heap, 1, D_800431AC * 4);
+	for (; s2 < 2; s2++) {
+		D_8003FB20[s2] = alHeapAlloc(arg0->heap, 1, 0x8000);
+	}
+	for (s2 = 0; s2 < 3; s2++) {
+		D_8003FB20[s2 + 2] = (Acmd *)alHeapAlloc(arg0->heap, 1, 0x90);
+		((BhAudioTask *)D_8003FB20[s2 + 2])->unk70 = 2;
+		((BhAudioTask *)D_8003FB20[s2 + 2])->unk74 = (BhAudioTask *)D_8003FB20[s2 + 2];
+		((BhAudioTask *)D_8003FB20[s2 + 2])->outBuf = alHeapAlloc(arg0->heap, 1, D_800431AC * 4);
 	}
 	osCreateMesgQueue(&D_8003FD20, D_8003FD38, 8);
 	osCreateMesgQueue(&D_8003FCE8, D_8003FD00, 8);
 	osCreateThread(&D_8003FB38, 5, (void (*)(void *))func_80000730_1330, NULL, &D_80042DA8, arg1);
 	osStartThread(&D_8003FB38);
-	}
+}
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000450_1050.s")
 #endif
