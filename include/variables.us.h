@@ -2426,6 +2426,7 @@ extern char D_800A4FD8;
 extern char D_800A4FD8_18D098;
 extern char D_800A5128_18D1E8;
 extern char D_800A5168;
+extern char D_800A5168_18D228;
 extern char D_800A51A8_18D268[];
 extern char D_800A51F8_18D2B8[];
 extern s32 D_800E6A1C;
