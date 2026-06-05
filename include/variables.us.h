@@ -811,6 +811,7 @@ extern s32 D_8005BB54;
 extern s32 D_8005BF58;
 extern s32 D_8005BF5C;
 extern s32 D_8005C764;
+extern char D_800A52E8_18D3A8[];
 extern char D_800A5330_18D3F0[];
 extern f64 D_800A5450_18D510;
 extern f64 D_800A5458_18D518;

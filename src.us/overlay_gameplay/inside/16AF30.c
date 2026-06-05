@@ -784,7 +784,7 @@ s32 func_80084C18_16CCD8(u8 arg0) {
 	return result;
 }
 
-// CURRENT(9570)
+// CURRENT(8388)
 #ifdef NON_MATCHING
 u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	UnkFB6F8Entry *owner;
@@ -792,8 +792,6 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 	Unk84EECEffect *linked;
 	u8 slot;
 	s16 effect;
-	u16 temp;
-	u8 *entryColor;
 
 	slot = func_80083224_16B2E4(0);
 	if (slot == 0xFB) {
@@ -802,7 +800,7 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 
 	effect = func_80083584_16B644(slot);
 	if (effect == -3) {
-		osSyncPrintf((char *)0x800A52E8);
+		osSyncPrintf(D_800A52E8_18D3A8);
 		func_80083300_16B3C0(slot);
 		return 0xFB;
 	}
@@ -831,35 +829,31 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 		entry->unk2 = 0x10;
 	}
 
-	linked->unk8 = arg4;
 	linked->unkA = arg3;
 	if (linked->unkA < 0x18) {
 		linked->unkA = 0x18;
 	}
 
-	temp = (u16)(arg5 + ((arg5 / 3) & 0xFF));
-	entryColor = (u8 *)entry + 8;
-	if (temp >= 0x100) {
-		entryColor[1] = 0xFF;
+	linked->unk8 = arg4;
+
+	if ((u16)(arg5 + ((arg5 / 3) & 0xFF)) >= 0x100) {
+		entry->unk11 = 0xFF;
 	} else {
-		entryColor[1] = temp;
+		entry->unk11 = (u16)(arg5 + ((arg5 / 3) & 0xFF));
 	}
 
-	temp = (u16)(arg6 + ((arg6 / 3) & 0xFF));
-	if (temp >= 0x100) {
-		entryColor[2] = 0xFF;
+	if ((u16)(arg6 + ((arg6 / 3) & 0xFF)) >= 0x100) {
+		entry->unk12 = 0xFF;
 	} else {
-		entryColor[2] = temp;
+		entry->unk12 = (u16)(arg6 + ((arg6 / 3) & 0xFF));
 	}
 
-	temp = (u16)(arg7 + ((arg7 / 3) & 0xFF));
-	if (temp >= 0x100) {
-		entryColor[3] = 0xFF;
+	if ((u16)(arg7 + ((arg7 / 3) & 0xFF)) >= 0x100) {
+		entry->unk13 = 0xFF;
 	} else {
-		entryColor[3] = temp;
+		entry->unk13 = (u16)(arg7 + ((arg7 / 3) & 0xFF));
 	}
 
-	((u8 *)linked)[9] = entryColor[3];
 	owner->unk2 = func_80084C18_16CCD8(slot);
 
 	return slot;
