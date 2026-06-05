@@ -129,21 +129,15 @@ s32 func_80083224_16B2E4(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083224_16B2E4.s")
 #endif
 
-// CURRENT(720)
-#ifdef NON_MATCHING
-void func_80083300_16B3C0(s32 arg0) {
-	u8 count;
-	u8 next;
+#ifdef TRUE
+void func_80083300_16B3C0(u8 arg0) {
 
-	arg0 &= 0xFF;
 	if (D_800FB6F8[arg0].unk0 == 0xFA) {
-		osSyncPrintf((char *)((0x800A0000) + 0x4FD8));
+		osSyncPrintf(&D_800A4FD8_18D098);
 	} else {
-		count = D_800FB7AC;
-		next = D_800FB7AD;
 		D_800FB6F8[arg0].unk0 = 0xFA;
-		D_800FB7AC = count - 1;
-		if (arg0 < next) {
+		D_800FB7AC = D_800FB7AC - 1;
+		if (arg0 < D_800FB7AD) {
 			D_800FB7AD = arg0;
 		}
 	}

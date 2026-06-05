@@ -2423,6 +2423,7 @@ extern f64 D_800A4AC0_18CB80;
 extern f64 D_800A4B90_18CC50;
 extern f32 D_800A4B98_18CC58;
 extern char D_800A4FD8;
+extern char D_800A4FD8_18D098;
 extern char D_800A5128_18D1E8;
 extern char D_800A5168;
 extern char D_800A51A8_18D268[];

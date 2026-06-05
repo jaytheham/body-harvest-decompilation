@@ -1144,7 +1144,7 @@ void drawText(void *arg0, ...);
 void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4);
 void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 s32 func_80083224_16B2E4(u8 arg0);
-void func_80083300_16B3C0(s32 arg0);
+void func_80083300_16B3C0(u8 arg0);
 void func_800835F0_16B6B0(s16 arg0, u8 arg1);
 s16 func_80083390_16B450(u8 arg0);
 void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3);
