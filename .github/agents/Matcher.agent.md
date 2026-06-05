@@ -16,7 +16,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
 - `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
 - `asm/matchings`: Readonly - target assembly of matched functions.
 - `src.us/`: C source files.
-- `include/`: Header files for variables, functions, structs, library types and macros.
+- `include/`: Headers for variables, functions, structs, library types, and macros.
 - `build/`: Readonly - compiled object files and the built ROM image.
 
 ## Powershell Tools
@@ -47,7 +47,7 @@ If you don't know one of the values, you can use `12345678` as a placeholder for
 - Check for similar already matched functions using `.\tools\find-similar.ps1 <current func name>` e.g. `.\tools\find-similar.ps1 func_800AFA98_BEA48` and see how they were written in C to achieve similar assembly output.
 
 # Your Workflow
-1. Remove the NON_MATCHING wrapper from the target function so the C code will be included in the build.
+1. Change the `#ifdef NON_MATCHING` line above the function to `#ifdef TRUE` so the C code will be included in the build.
 2. Always read the whole file `DecompHints.md` for general matching advice.
 3. Build, compare with target, identify differences.
 4. Make a single change to the C code to try to reduce the number of differences in assembly.
@@ -55,7 +55,7 @@ If you don't know one of the values, you can use `12345678` as a placeholder for
 
 First target incorrect/missing/out-of-order instructions, ignore register allocation and stack placement until the instructions match.
 
-Don't rely on just the score to tell if a change is an improvement, always check the actual diff to see if the changes are in the right direction. Sometimes a change can produce more accurate instructions, but change register/stack allocation in a way that causes more differences overall, so the score can be worse even though the change is an improvement.
+Don't rely on just the score to tell if a change is an improvement, always check the actual diff. Sometimes a change can produce more accurate instructions, but change register/stack allocation in a way that causes more differences overall, so the score can be worse even though the change is an improvement.
 
 If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
@@ -74,7 +74,7 @@ If build returns `build/bh.us.z64: OK` the function is matched and you can stop 
 
 ## Finalize
 
-If you haven't matched the function after 10 attempts, revert the code to the best-scoring version you found. Add/update a comment above the function with that best score: `// CURRENT(123)`.
+If you haven't matched the function after 12 attempts, revert the code to the best-scoring version you found. Add/update a comment above the function with that best score: `// CURRENT(123)`.
 
 Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated notes to help future decomp. Only for matched functions.
 Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.

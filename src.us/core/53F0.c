@@ -1537,6 +1537,7 @@ void func_80008CA8_98A8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008CA8_98A8.s")
 #endif
 
+// CURRENT(10319)
 #ifdef NON_MATCHING
 void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	u8 *texture;
@@ -1561,8 +1562,8 @@ void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 		textureSpanX = (arg2 - arg0) * 4;
 		spanY = arg3 - arg1;
 		textureSpanY = spanY * 4;
-		stepY = 0x400;
 		stepX = 0x400;
+		stepY = 0x400;
 		break;
 
 	case 2:
@@ -1579,8 +1580,8 @@ void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 		textureSpanX = (arg2 - arg0) * 8;
 		spanY = arg3 - arg1;
 		textureSpanY = spanY * 8;
-		stepY = 0x800;
 		stepX = 0x800;
+		stepY = 0x800;
 		break;
 
 	default:
