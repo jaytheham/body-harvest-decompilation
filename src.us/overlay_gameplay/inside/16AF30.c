@@ -541,7 +541,7 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800840F0_16C1B0.s")
 #endif
 
-// CURRENT(6001)
+// CURRENT(2581)
 #ifdef NON_MATCHING
 void func_80084258_16C318(s32 arg0) {
 	typedef struct {
@@ -555,15 +555,11 @@ void func_80084258_16C318(s32 arg0) {
 		u8 unkA;
 	} Unk84258Pos;
 
-	s16 effect;
-	s16 nextEffect;
 	u8 slot;
-	u8 life;
 	UnkFB6F8Entry *owner;
+	s16 effect;
 	Unk84EECEffect *a3;
-	Unk84EECEffect *entry;
 	Unk84258Pos *s2;
-	Unk84258Pos *v0;
 
 	slot = arg0;
 	owner = &D_800FB6F8[slot];
@@ -572,7 +568,11 @@ void func_80084258_16C318(s32 arg0) {
 	effect = a3->unk4;
 	s2 = (Unk84258Pos *)&a3->unk8;
 
-	while (effect != -5 && effect != -6) {
+	if ((effect != -5) && (effect != -6)) {
+		u8 life;
+		Unk84258Pos *dstPos;
+
+loop_5:
 		if (s2->unkA == 2) {
 			life = s2->unk9;
 			if (life == 0) {
@@ -581,23 +581,36 @@ void func_80084258_16C318(s32 arg0) {
 				return;
 			}
 
-			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
-			v0 = (Unk84258Pos *)&entry->unk8;
-			v0->unk6 = (s8)((s2->unk0 - v0->unk0) / life);
-			v0->unk7 = (s8)((s2->unk2 - v0->unk2) / s2->unk9);
-			v0->unk8 = (s8)((s2->unk4 - v0->unk4) / s2->unk9);
-			v0->unk0 += v0->unk6;
-			v0->unk2 += v0->unk7;
-			v0->unk4 += v0->unk8;
-			if (v0->unk9 < 0xEB) {
-				v0->unk9 += 0x14;
-			}
-			a3 = entry;
-		} else {
-			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
-			v0 = (Unk84258Pos *)&entry->unk8;
+			{
+				Unk84EECEffect *entry;
+				s16 pos0;
+				s16 pos2;
+				s16 pos4;
 
-			if (v0->unk9 < 0xF) {
+				entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+				dstPos = (Unk84258Pos *)&entry->unk8;
+				pos0 = dstPos->unk0;
+				pos2 = dstPos->unk2;
+				pos4 = dstPos->unk4;
+				dstPos->unk6 = (s8)((s2->unk0 - pos0) / life);
+				dstPos->unk7 = (s8)((s2->unk2 - pos2) / s2->unk9);
+				dstPos->unk8 = (s8)((s2->unk4 - pos4) / s2->unk9);
+				dstPos->unk0 = pos0 + dstPos->unk6;
+				dstPos->unk2 = pos2 + dstPos->unk7;
+				dstPos->unk4 = pos4 + dstPos->unk8;
+				if (dstPos->unk9 < 0xEB) {
+					dstPos->unk9 += 0x14;
+				}
+				a3 = entry;
+			}
+		} else {
+			Unk84EECEffect *entry;
+			s16 nextEffect;
+
+			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+			dstPos = (Unk84258Pos *)&entry->unk8;
+
+			if (dstPos->unk9 < 0xF) {
 				if (owner->unk4 < 3) {
 					func_800839B8_16BA78(slot);
 					func_80083300_16B3C0(slot);
@@ -607,30 +620,33 @@ void func_80084258_16C318(s32 arg0) {
 				nextEffect = entry->unk4;
 				func_800835F0_16B6B0(effect, slot);
 				effect = nextEffect;
-				continue;
-			}
-
-			v0->unk0 += v0->unk6;
-			v0->unk4 += v0->unk8;
-			v0->unk2 += v0->unk7;
-			v0->unkA += 1;
-			if (v0->unkA >= 0xB) {
-				v0->unk9 -= 0xA;
-			}
-			if (v0->unk2 < 2) {
-				v0->unk2 = 2;
-				v0->unk7 = 0;
-			}
-			if (v0->unk7 >= -0x13) {
-				v0->unk7 -= 1;
+				goto block_26;
 			} else {
-				v0->unk7 = -0x14;
+				dstPos->unk0 += dstPos->unk6;
+				dstPos->unk4 += dstPos->unk8;
+				dstPos->unk2 += dstPos->unk7;
+				dstPos->unkA += 1;
+				if (dstPos->unkA >= 0xB) {
+					dstPos->unk9 -= 0xA;
+				}
+				if (dstPos->unk2 < 2) {
+					dstPos->unk2 = 2;
+					dstPos->unk7 = 0;
+				}
+				if (dstPos->unk7 >= -0x13) {
+					dstPos->unk7 -= 1;
+				} else {
+					dstPos->unk7 = -0x14;
+				}
+				a3 = entry;
 			}
-
-			a3 = entry;
 		}
 
 		effect = a3->unk4;
+block_26:
+		if ((effect != -5) && (effect != -6)) {
+			goto loop_5;
+		}
 	}
 
 	if (s2->unkA == 2) {
