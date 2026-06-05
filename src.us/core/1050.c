@@ -19,7 +19,6 @@ Unk80047FB8 D_80031310_31F10[5] = {
 };
 s32 D_80031374_31F74[20] = {0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 s32 D_800313C4_31FC4 = 0;
-s16 D_800313C8_31FC8 = 0;
 s32 D_800313CC = 0;
 
 // CURRENT(595)
@@ -1361,24 +1360,19 @@ void func_80002EF8_3AF8(void *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80002EF8_3AF8.s")
 #endif
 
+// CURRENT(5020)
 #ifdef NON_MATCHING
 void func_80003064_3C64(void) {
+	s32 sp4;
+	s32 sp8;
+	s32 spC;
+	s32 sp10;
+	u32 sp14;
+	s32 var_t2;
 	OSContPad *var_v0;
-	OSContPad *var_a3;
-	OSContPad *temp_t7;
 	u16 *var_v1;
 	u16 *var_t0;
-	s32 temp_v1;
-	s32 var_a0;
-	s32 var_a1;
-	s32 var_a2;
-	s32 var_t2;
-	s32 var_v0_2;
-	s32 *var_v0_3;
-	s32 *var_v1_2;
-	s32 *var_ra;
-	u16 temp_t6;
-	u16 temp_t8;
+	OSContPad *var_a3;
 
 	if (D_800313C8_31FC8 == 1) {
 		D_800313C8_31FC8 = 0;
@@ -1391,45 +1385,41 @@ void func_80003064_3C64(void) {
 		D_800476A8 = 0;
 		D_800476AC = 0;
 		D_800476A4 = 0;
-		var_v0_3 = &D_80047604;
-		var_v1_2 = &D_80047600;
-		var_ra = &D_800475FC;
-		*var_v0_3 = 0;
-		*var_v1_2 = 0;
-		*var_ra = 0;
+		D_80047604 = 0;
+		D_80047600 = 0;
+		D_800475FC = 0;
 		D_800475F8 = 0;
 	}
 
-	var_a1 = 3;
-	var_v1 = &D_800475D8[CONTROLLER_FOUR];
-	var_t0 = &D_800475E6;
-	var_v0 = &currentControllerStates[CONTROLLER_FOUR];
-	var_a3 = &D_800475A0[CONTROLLER_FOUR];
-	var_a2 = 0x12;
+	spC = 0x12;
 	var_t2 = D_800313C8_31FC8 & 8;
+	sp8 = 3;
+	var_v0 = &currentControllerStates[CONTROLLER_FOUR];
+	var_v1 = &D_800475D8[CONTROLLER_FOUR];
+	var_t0 = &previousControllerButtonStates[CONTROLLER_FOUR];
+	var_a3 = &D_800475A0[CONTROLLER_FOUR];
 	do {
-		var_a0 = var_a1;
 		var_a3--;
 		*(var_a3 + 1) = *var_v0;
 		if (!var_t2) {
-			temp_t7 = (OSContPad *)((u8 *)&D_800475B8 + var_a2);
+			OSContPad *sp10 = (OSContPad *)((u8 *)&D_800475B8 + spC);
 			if (D_800476A2 != 0) {
-				*var_v0 = *temp_t7;
+				*var_v0 = *sp10;
 			} else {
 				var_v0->button = 0;
 				var_v0->stick_x = 0;
 				var_v0->stick_y = 0;
 			}
 		}
-		temp_t6 = *var_v1;
-		temp_t8 = var_v0->button;
-		var_a2 -= 6;
+		sp14 = *var_v1;
+		sp10 = var_v0->button;
+		spC -= 6;
 		var_v0--;
 		var_t0--;
 		var_v1--;
-		*(var_t0 + 1) = temp_t6;
-		*(var_v1 + 1) = temp_t8;
-	} while (var_a1--);
+		*(var_t0 + 1) = sp14;
+		*(var_v1 + 1) = sp10;
+	} while (sp8--);
 
 	if (D_800475F0 != 0) {
 		if (D_800475F4 != 0) {
@@ -1439,10 +1429,10 @@ void func_80003064_3C64(void) {
 		}
 	}
 
-	var_v0_2 = (currentControllerStates[0].stick_x < 0) ? -1 : 1;
+	sp4 = (currentControllerStates[0].stick_x < 0) ? -1 : 1;
 	var_t2 = D_800313C8_31FC8 & 8;
-	var_a0 = (D_800475A0[0].stick_x < 0) ? -1 : 1;
-	if (var_v0_2 != var_a0) {
+	sp10 = (D_800475A0[0].stick_x < 0) ? -1 : 1;
+	if (sp4 != sp10) {
 		D_800475F0 = D_800475F0 + D_800475F4 + 1;
 		D_800475F4 = 8;
 	}
@@ -1466,19 +1456,19 @@ void func_80003064_3C64(void) {
 				D_800475FC--;
 				return;
 			}
-			temp_v1 = ((s32 *)__additional_scanline)[D_800313C4_31FC4];
+			sp10 = ((s32 *)__additional_scanline)[D_800313C4_31FC4];
 			D_800313C4_31FC4++;
-			if (temp_v1 == 0x7FFFFFFF) {
+			if (sp10 == 0x7FFFFFFF) {
 				func_80006DAC_79AC(0, 1);
 				D_800313C8_31FC8 = 0;
 				return;
 			}
-			if ((temp_v1 & 0xFFFF) == 0xC00) {
-				D_800475FC = (u32)(temp_v1 & (s32)0xFFFF0000) >> 16;
+			if ((sp10 & 0xFFFF) == 0xC00) {
+				D_800475FC = (u32)(sp10 & (s32)0xFFFF0000) >> 16;
 				D_800475FC = D_800475FC - 1;
 				return;
 			}
-			D_800475F8 = temp_v1;
+			D_800475F8 = sp10;
 		}
 	}
 }
