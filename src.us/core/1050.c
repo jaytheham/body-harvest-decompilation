@@ -79,11 +79,11 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000450_1050.s")
 #endif
 
-// CURRENT(1143)
+// CURRENT(1172)
 #ifdef NON_MATCHING
 void func_80000730_1330(s32 arg0) {
-	OSScClient sp58;
 	OSMesg sp64;
+	OSScClient sp58;
 	BhAudioBuf *var_s0;
 	u32 var_v0;
 	u32 var_s6;
@@ -105,7 +105,7 @@ void func_80000730_1330(s32 arg0) {
 			if (var_v0 == 0) {
 				D_800431B4 = 0.0f;
 			} else {
-				var_f0 = (f32)var_v0;
+				var_f0 = (f32)(u32)var_v0;
 				D_800431B4 = (f32)(((f64)(var_f0 - (f32)(u32)D_80031300_31F00) * 100.0) / (f64)var_f0);
 			}
 			D_800312FC_31EFC = 0;
@@ -174,15 +174,15 @@ void func_80000AD4_16D4(s32 arg0)
 	}
 }
 
-// CURRENT(667)
+// CURRENT(675)
 #ifdef NON_MATCHING
 s32 func_80000B14_1714(u32 arg0, s32 arg1, u32 arg2) {
 	Unk80042DB8 *var_s0;
-	s32 temp_s1;
 	s32 pad0;
 	s32 pad1;
 	Unk80042DB8 *var_s1;
 	Unk80042DB8 *var_a2;
+	s32 temp_s1;
 
 	var_a2 = NULL;
 	var_s1 = D_80042DA8.unk4;
@@ -224,8 +224,8 @@ s32 func_80000B14_1714(u32 arg0, s32 arg1, u32 arg2) {
 	}
 	temp_s1 = arg0 & 1;
 	arg0 = arg0 - temp_s1;
-	var_s0->unk8 = (s32)arg0;
-	var_s0->unkC = (s32)D_800431A0;
+	var_s0->unk8 = arg0;
+	var_s0->unkC = D_800431A0;
 	osPiStartDma(&D_8006A330[D_800312F0_31EF0++], 0, 0, arg0, var_s0->unk10, 0x400, &D_80067F58);
 	D_80031300_31F00 += 1;
 	return osVirtualToPhysical(var_s0->unk10) + temp_s1;
@@ -313,6 +313,7 @@ void checkForRumblePak(void) {
 	D_80047698 = gameplayMode;
 }
 
+// CURRENT(835)
 #ifdef NON_MATCHING
 void func_80000ED4_1AD4(void) {
 	s32 pad0;
@@ -518,64 +519,68 @@ void func_800015B4_21B4(s32 arg0, s32 arg1) {
 
 
 // https://decomp.me/scratch/Y6mYv
-// CURRENT(335)
+// CURRENT(65)
 #ifdef NON_MATCHING
 s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 {
-	u8 *ptr;
-	s32 version;
-	s32 stored_checksum;
-	s32 computed_checksum;
-	s32 i;
+  u8 *ptr;
+  u8 version;
+  u16 stored_checksum;
+  u16 computed_checksum;
+  u16 i;
+  ptr = D_800431C0 + arg0;
+  //version = ptr[0];
+  if (ptr[0] != 0x1C)
+  {
+	  // Version %d failed
+	osSyncPrintf(&D_8003685C_3745C, ptr[0]);
+	return 0;
+  }
+  stored_checksum = (ptr[2] + (ptr[3] << 8));
+  ptr += 4;
+  computed_checksum = 0;
+ 
+  for (i = 0; i < arg1; i++)
+  {
+	computed_checksum += *ptr++;
+  }
 
-	version = *(((u8 *)&D_800431C0) + arg0);
-	if (version != 0x1C) {
-		osSyncPrintf(&D_8003685C_3745C, version);
-		return 0;
-	}
-
-	ptr = ((u8 *)&D_800431C0) + arg0 + 4;
-	stored_checksum = (u16)(((ptr[-1] << 8) + ptr[-2]) & 0xFFFF);
-
-	computed_checksum = 0;
-	for (i = 0; i < arg1; i = (i + 1) & 0xFFFF) {
-		computed_checksum = (computed_checksum + (*ptr)) & 0xFFFF;
-		ptr++;
-	}
-
-	if (computed_checksum != (u16)stored_checksum) {
-		osSyncPrintf(&D_80036870_37470, arg1, (u16)stored_checksum);
-		return 0;
-	}
-	return 1;
+  if (computed_checksum != stored_checksum)
+  {
+	  // Checksum failed
+	osSyncPrintf(&D_80036870_37470);
+	return 0;
+  }
+  return 1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/validateSaveVersionAndChecksum.s")
 #endif
 
-// CURRENT (1160)
+// https://decomp.me/scratch/vCY8e
+// CURRENT (960)
 #ifdef NON_MATCHING
 void func_800016D8_22D8(void) {
 	int i;
 	u16 j, writeIdx;
 	s32 val, val2;
 
-	D_800431C8 = (u8)D_800313D0;
+	D_800431C8 = (u8)D_800313D0_31FD0;
 	writeIdx = 9;
 	for (i = 0; (u16)i < 5; i++) {
 		for (j = 0; j < 6; j++) {
-			(&D_800431C0)[writeIdx++] = *((u8*)(D_80047FB8 + (u16)i) + j);
+			D_800431C0[writeIdx++] = *((u8*)(D_80047FB8 + (u16)i) + j);
 		}
 		val = ((Unk80047FB8*)((u8*)D_80047FB8 + (u16)i * 0x14))->unk8;
-		(&D_800431C0)[writeIdx++] = val;
-		(&D_800431C0)[writeIdx++] = val >> 8;
-		(&D_800431C0)[writeIdx++] = val >> 16;
-		(&D_800431C0)[writeIdx++] = val >> 24;
-		(&D_800431C0)[writeIdx++] = ((Unk80047FB8*)((u8*)D_80047FB8 + (u16)i * 0x14))->unkC;
+		D_800431C0[writeIdx++] = val;
+		D_800431C0[writeIdx++] = val >> 8;
+		D_800431C0[writeIdx++] = val >> 16;
+		D_800431C0[writeIdx++] = val >> 24;
+		D_800431C0[writeIdx++] = ((Unk80047FB8*)((u8*)D_80047FB8 + (u16)i * 0x14))->unkC;
 		val2 = ((Unk80047FB8*)((u8*)D_80047FB8 + (u16)i * 0x14))->unk10;
-		(&D_800431C0)[writeIdx++] = val2;
-		(&D_800431C0)[writeIdx++] = val2 >> 8;
-		(&D_800431C0)[writeIdx++] = val2 >> 16;
+		D_800431C0[writeIdx++] = val2;
+		D_800431C0[writeIdx++] = val2 >> 8;
+		D_800431C0[writeIdx++] = val2 >> 16;
 	}
 	func_800015B4_21B4(4, 0x47);
 }
