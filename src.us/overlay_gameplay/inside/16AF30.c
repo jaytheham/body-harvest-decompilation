@@ -219,16 +219,16 @@ s16 func_80083584_16B644(u8 arg0) {
 	return sp1E;
 }
 
-// CURRENT(3520)
+// CURRENT(3281)
 #ifdef NON_MATCHING
 void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
-	Unk835F0Effect *baseEffect;
 	Unk835F0Effect *effect;
 	UnkFB6F8Entry *slot;
 	s16 temp;
+	Unk835F0Effect *baseEffect;
 
-	baseEffect = &((Unk835F0Effect *)&D_800FB7B0)[arg0];
-	effect = baseEffect;
+	effect = &((Unk835F0Effect *)&D_800FB7B0)[arg0];
+	baseEffect = effect;
 	slot = &D_800FB6F8[arg1];
 
 	if (effect->unk0 == 0) {
@@ -240,12 +240,12 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 		case 0:
 			osSyncPrintf(&D_800A50AC_18D16C);
 			slot->unk6 = -6;
-			*((s16 *)&slot->pad8[0]) = -6;
-			break;
+			slot->unk8 = -6;
+			return;
 
 		case 1:
 			slot->unk6 = -6;
-			*((s16 *)&slot->pad8[0]) = -6;
+			slot->unk8 = -6;
 			break;
 
 		case 2:
@@ -256,7 +256,7 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 				effect->unk6 = -4;
 				effect->unk4 = -5;
 			} else if (effect->unk4 == -5) {
-				*((s16 *)&slot->pad8[0]) = temp;
+				slot->unk8 = temp;
 				effect = &((Unk835F0Effect *)&D_800FB7B0)[slot->unk6];
 				effect->unk6 = -4;
 				effect->unk4 = -5;
@@ -269,17 +269,17 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 			temp = effect->unk6;
 			if (temp == -4) {
 				slot->unk6 = effect->unk4;
-				effect = &((Unk835F0Effect *)&D_800FB7B0)[slot->unk6];
+				effect = &((Unk835F0Effect *)&D_800FB7B0)[effect->unk4];
 				effect->unk6 = -4;
 			} else if (effect->unk4 == -5) {
-				*((s16 *)&slot->pad8[0]) = temp;
+				slot->unk8 = temp;
 				effect = &((Unk835F0Effect *)&D_800FB7B0)[temp];
 				effect->unk4 = -5;
 			} else {
 				effect = &((Unk835F0Effect *)&D_800FB7B0)[effect->unk4];
 				effect->unk6 = temp;
 				effect = &((Unk835F0Effect *)&D_800FB7B0)[slot->unk6];
-				effect->unk4 = *((s16 *)&slot->pad8[0]);
+				effect->unk4 = slot->unk8;
 			}
 			break;
 	}
