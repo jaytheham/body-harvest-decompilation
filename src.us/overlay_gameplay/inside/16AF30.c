@@ -349,16 +349,14 @@ void func_80083924_16B9E4(s16 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083924_16B9E4.s")
 #endif
 
-// CURRENT(703)
-#ifdef NON_MATCHING
-void func_800839B8_16BA78(s32 arg0) {
-	if ((s32) D_800FB6F8[arg0 & 0xFF].unk4 <= 0) {
-		return;
+// CURRENT(0)
+#ifdef TRUE
+void func_800839B8_16BA78(u8 arg0) {
+	if (D_800FB6F8[arg0].unk4 > 0) {
+		do {
+			func_800835F0_16B6B0(D_800FB6F8[arg0].unk6, arg0);
+		} while (D_800FB6F8[arg0].unk4 > 0);
 	}
-
-	do {
-		func_800835F0_16B6B0(D_800FB6F8[arg0 & 0xFF].unk6, arg0 & 0xFF);
-	} while ((s32) D_800FB6F8[arg0 & 0xFF].unk4 > 0);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800839B8_16BA78.s")
