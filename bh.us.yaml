@@ -41,7 +41,7 @@ segments:
       - [0x1050, c, core/1050] # Save data
       - [0x53D0, c, core/53D0]
       - [0x53F0, c, core/53F0] # Objectives
-      - [0xAD60, c, core/AD60]
+      - [0xAD60, c, core/AD60] # Text rendering?
       - [0xE830, c, core/E830]
       - [0xFB00, c, core/FB00]
       - [0xFD80, c, core/FD80]
