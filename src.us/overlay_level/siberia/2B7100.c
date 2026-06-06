@@ -521,7 +521,18 @@ void func_802D6340_2B8770(void) {
 	func_80007410_8010(&func_802D62E4_2B8714);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6364_2B8794.s")
+void func_802D6364_2B8794(void) {
+    u8 temp;
+
+    temp = func_8007956C_8851C(0x13);
+    if (temp != 0xFF) {
+        osSyncPrintf(&D_802E2EE8_2C5318);
+        alienInstances[temp].unk0 = buildingInstances[0xA0].xCoord + 0x320;
+        alienInstances[temp].unkE = 0;
+        alienInstances[temp].unk4 = buildingInstances[0xA0].zCoord;
+        func_80080510_8F4C0(temp);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D63E8_2B8818.s")
 
