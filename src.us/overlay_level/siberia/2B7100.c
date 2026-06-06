@@ -534,7 +534,29 @@ void func_802D6364_2B8794(void) {
     }
 }
 
+#ifdef NON_MATCHING
+// Score: CURRENT(64) - frame 0x40 instead of 0x38
+void func_802D63E8_2B8818(s32 arg0, s16 *arg1) {
+    s32 x;
+    s32 y;
+    s32 z;
+    s16 sp2A;
+    s16 sp28;
+    u16 randVal;
+
+    x = buildingInstances[arg0].xCoord;
+    y = buildingInstances[arg0].yCoord;
+    z = buildingInstances[arg0].zCoord;
+    sp2A = arg1[0];
+    sp28 = arg1[2];
+    func_80116554_125504((s16)(buildingInstances[arg0].unk8 & 3), &sp2A, &sp28);
+    randVal = func_800038E0_44E0();
+    func_800DF038_EDFE8(sp2A + x, arg1[1] + y, sp28 + z, (randVal % 50) + 200,
+                        func_800038E0_44E0() & 1, 0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D63E8_2B8818.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D64DC_2B890C.s")
 
