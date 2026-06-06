@@ -515,7 +515,7 @@ block_43:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1028_BFFD8.s")
 #endif
 
-// CURRENT(3160)
+// CURRENT(2910)
 #ifdef NON_MATCHING
 void func_800B165C_C060C(s32 arg0) {
 	Unk8014FD30Type *wall;
@@ -547,13 +547,16 @@ void func_800B165C_C060C(s32 arg0) {
 					}
 				}
 			}
-
-			if (!(z < (wall->unk12 >> 10))) {
-				if (z < (wall->unk16 >> 10)) {
-					if (minX >= wall->unk10) {
-						minX = wall->unk14;
-					} else if (wall->unk14 >= maxX) {
-						maxX = wall->unk10;
+			{
+				s32 zUnk12 = wall->unk12 >> 10;
+				if (!(z < zUnk12)) {
+					s32 zUnk16 = wall->unk16 >> 10;
+					if (z < zUnk16) {
+						if (minX >= wall->unk10) {
+							minX = wall->unk14;
+						} else if (wall->unk14 >= maxX) {
+							maxX = wall->unk10;
+						}
 					}
 				}
 			}
