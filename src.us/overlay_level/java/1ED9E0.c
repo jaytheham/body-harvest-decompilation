@@ -1202,7 +1202,107 @@ void func_802D7EAC_1F0BBC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7EAC_1F0BBC.s")
 #endif
 
+// CURRENT(22434)
+#ifdef NON_MATCHING
+void func_802D7FCC_1F0CDC(s32 arg0) {
+	AlienInstance *s0;
+	u8 sp73;
+	s32 sp68;
+	s32 sp64;
+	s32 sp60;
+	s16 sp50;
+	s16 sp4E;
+	s16 sp4C;
+	Unk8014DD50 *sp44;
+	Unk8014DD50 *sp40;
+	Unk8014DD50 *sp3C;
+	Unk8014DD50 *sp34;
+	arg0 &= 0xFF;
+	s0 = &alienInstances[arg0];
+
+	if ((s0->unk20 << 11) < 0) {
+		sp44 = &D_8014DD50[(u8)D_8014DD50[(u8)s0->unkC].unkC];
+		sp40 = &D_8014DD50[(u8)sp44->unkC];
+		sp3C = &D_8014DD50[(u8)sp40->unkD];
+		sp73 = (u8)sp3C->unkD;
+
+		if (s0->unk2C < 0x51) {
+			sp34 = &D_8014DD50[sp73];
+			func_80128428_1373D8(s0, sp34->unk0 + sp44->unk0, sp34->unk2 + sp44->unk2, sp34->unk4 + sp44->unk4, &sp68, &sp64, &sp60);
+
+			if (s0->unk2C >= 0x4B) {
+				sp34->unk2 += 0xA;
+				if (s0->unk24 != 0xFC) {
+					func_800C1ECC_D0E7C((s16)sp68, (s16)sp64, (s16)sp60, s0->unk3C, 2);
+				}
+			} else if (s0->unk2C == 0x4A) {
+				AlienInstance *v1;
+
+				sp34->unk2 += 0xA;
+				arg0 = func_8007956C_8851C(0xD);
+				v1 = &alienInstances[(s16)arg0];
+				s0->unk3C = (s8)arg0;
+				s0->unk26 = 0;
+				v1->unk48 = sp64 + 0xA;
+				v1->unk1B = s0->unk1B;
+				v1->unk2E = sp68;
+				v1->unk0 = sp68;
+				v1->unk32 = sp60;
+				v1->unk4 = sp60;
+				v1->unk30 = v1->unk48;
+				v1->unk2 = v1->unk48;
+				v1->unk20 |= 0x40000000;
+				v1->unk12 = 0x200;
+				v1->unk6 = s0->unk6;
+				v1->unkE = s0->unk6;
+				func_8007A2A0_89250((s16)arg0);
+			} else if (s0->unk26 == 0) {
+				AlienInstance *v1;
+
+				v1 = &alienInstances[(s8)s0->unk3C];
+				if (v1->unk20 & 0x600) {
+					func_80088E10_97DC0(sp73);
+					s0->unk26 = 1;
+				} else {
+					v1->unk48 = sp64 + 0xA;
+					sp34->unk2 += 0xA;
+					if (s0->unk24 != 0xFC) {
+						func_800C1ECC_D0E7C((s16)sp68, (s16)sp64, (s16)sp60, s0->unk3C, 2);
+					}
+				}
+			}
+		}
+
+		if ((u16)sp3C->unkA < 0x1000) {
+			sp3C->unkA += 0x400;
+			sp40->unkA += 0x400;
+		}
+
+		if (s0->unk2C < 0x4A) {
+			*(u16 *)&sp44->unk6 += 0x96;
+			if (((s16)s0->unk2C % ((func_800038E0_44E0() % 7) + 1)) == 0) {
+				sp4C = (u16)func_800038E0_44E0();
+				sp4E = (u16)func_800038E0_44E0();
+				sp50 = (u16)func_800038E0_44E0();
+				func_800DFA34_EE9E4(
+					(u16)sp4C % 100 + s0->unk0 - 0x32,
+					(u16)sp4E % 100 + s0->unk2 - 0x32,
+					(u16)sp50 % 100 + s0->unk4 - 0x32,
+					((func_800038E0_44E0() % 20) + 0x14) & 0xFFFF,
+					0);
+			}
+		}
+
+		if (s0->unk2C == 1) {
+			func_800DF848_EE7F8(s0->unk0, s0->unk2, s0->unk4, (u16)(s32)((f64)((s16 *)&D_8025668C)[s0->specIndex * 0x34] * 1.5), 6);
+		}
+	} else {
+		func_802D7EAC_1F0BBC(arg0);
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7FCC_1F0CDC.s")
+#endif
 
 #ifdef NON_MATCHING
 /* Alien state machine: compute movement deltas, check height threshold, update flags based on unk20 bit 30 */

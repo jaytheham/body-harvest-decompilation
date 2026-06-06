@@ -1404,6 +1404,7 @@ void func_802D5578_18E088(void);
 void func_802D9C60_192770(u8 arg0);
 void func_802D962C_19213C(u8 arg0, s16 arg1, s16 arg2, AlienInstance *arg3);
 void func_802D536C_18DE7C(void);
+void func_802D7EAC_1F0BBC(s32);
 s32 func_802D7D08_190818(u8, s32, s32);
 void func_802D4F74_18DA84(void);
 void func_802D5660_18E170(void);
