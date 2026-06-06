@@ -4032,4 +4032,8 @@ extern InputStruct_8012B150 D_80159000;
 extern InputStruct_8012B150 D_80159028;
 extern OutputStruct_8012B150 D_801591F8;
 
+/* overlay_level/siberia/2B7100 */
+extern void (*D_802E0DF0_2C3220[])(void);
+extern char D_802E2E90_2C52C0[];
+
 #endif

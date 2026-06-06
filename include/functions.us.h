@@ -1625,4 +1625,9 @@ void func_8011592C_1248DC(s16 arg0, s16 arg1);
 void func_800F1004_FFFB4(void);
 void func_8012B150_13A100(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2, s32 arg3);
 
+/* overlay_level/siberia/2B7100 */
+void func_802D4CD0_2B7100(s32 arg0, s32 arg1);
+void func_802D4DCC_2B71FC(void);
+void func_802D7398_2B97C8(void);
+
 #endif

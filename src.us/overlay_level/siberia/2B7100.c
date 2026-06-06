@@ -1,7 +1,37 @@
 #include <ultra64.h>
 #include "common.h"
 
+#ifdef NON_MATCHING
+void func_802D4CD0_2B7100(s32 arg0, s32 arg1) {
+    arg1 = arg0;
+    if (arg0 < 0x14) {
+        D_802E0DF0_2C3220[arg0]();
+        return;
+    }
+    switch (arg1) {
+    case 0x1E:
+        func_800EFEB4_FEE64(func_802D7398_2B97C8, 0x1E, 0);
+        break;
+    case 0x14:
+        func_800EFEB4_FEE64(func_800F1134_1000E4, 0x1A, 0);
+        break;
+    case 0x15:
+        func_800EFEB4_FEE64(func_800F1DDC_100D8C, 0x15, 1);
+        break;
+    case 0x45:
+        func_802D4DCC_2B71FC();
+        break;
+    case 0x44:
+        func_80007690_8290();
+        break;
+    default:
+        osSyncPrintf(D_802E2E90_2C52C0);
+        break;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4CD0_2B7100.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4DCC_2B71FC.s")
 
