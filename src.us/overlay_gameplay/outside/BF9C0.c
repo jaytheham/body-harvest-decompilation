@@ -512,7 +512,7 @@ block_43:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1028_BFFD8.s")
 #endif
 
-// CURRENT(3620)
+// CURRENT(3160)
 #ifdef NON_MATCHING
 void func_800B165C_C060C(s32 arg0) {
 	Unk8014FD30Type *wall;
@@ -529,7 +529,6 @@ void func_800B165C_C060C(s32 arg0) {
 			s32 maxX;
 			s32 x;
 			s32 xEnd;
-			s32 rem;
 			s32 curX;
 			u8 *row;
 
@@ -560,17 +559,16 @@ void func_800B165C_C060C(s32 arg0) {
 			xEnd = maxX >> 10;
 
 			if (x < xEnd) {
+				s32 rem;
+
 				row = D_8021EA30 + (z << 6);
 				curX = x;
 				rem = (xEnd - x) & 3;
 				if (rem != 0) {
-					s32 remEnd = rem + x;
-
 					do {
 						row[curX + 0x820] |= 0xF0;
 						curX++;
-					} while (remEnd != curX);
-
+					} while (curX < (rem + x));
 					if (curX == xEnd) {
 						goto done_row;
 					}
@@ -582,7 +580,7 @@ void func_800B165C_C060C(s32 arg0) {
 					row[curX + 0x822] |= 0xF0;
 					row[curX + 0x823] |= 0xF0;
 					curX += 4;
-				} while (curX != xEnd);
+				} while (curX < xEnd);
 			done_row:
 				;
 			}
