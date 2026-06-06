@@ -329,7 +329,24 @@ void func_802D5980_2B7DB0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5980_2B7DB0.s")
 #endif
 
+// CURRENT(80)
+#ifdef NON_MATCHING
+void func_802D5B58_2B7F88(void) {
+    s32 i;
+    AlienInstance *alien;
+
+    vehicleInstances[29].unk20 &= 0xFF7F;
+    osSyncPrintf(D_802E2EC8_2C52F8);
+    for (i = 0; i < D_8014D507; i++) {
+        alien = &alienInstances[D_8014D408[i]];
+        if (alien->specIndex == 1 && alien->unk24 == 1) {
+            func_80088760_97710(alien);
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5B58_2B7F88.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5C24_2B8054.s")
 
