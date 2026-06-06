@@ -70,11 +70,12 @@ Place `baserom.eu.z64` in the root of the repository, and suffix each `make` com
 
 ## Building `NON_MATCHING` Version
 
-Functions that are close to - but not yet - a byte-perfect match are wrapped with NON_MATCHING to exclude from the build. In order to build/test the non-matching, pass `NON_MATCHING=1` to the `make` commands.
+Functions that are not yet a byte-perfect match are wrapped with NON_MATCHING to exclude from the build. In order to build/test the non-matching, pass `NON_MATCHING=1` to the `make` commands.
+These functions range from actually matched - but require rodata to be configured - through to nowhere close to matching, and may not be functionally equivalent to the target ASM yet.
 
 # ROM Versions
 
-There are 2 known versions of the ROM:
+There are 2 known ROMs of the game:
 
 | Country Code      |      CRC1/CRC2      |                  ROM SHA1                  | Version |
 | :---------------- | :-----------------: | :----------------------------------------: | :-----: |
