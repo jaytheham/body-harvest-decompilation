@@ -3,7 +3,7 @@ name: BH Decompiler
 description: Decompile functions from N64 game Body Harvest
 tools:
   [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, edit/createFile, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]
-model: Auto (copilot)
+model: DeepSeek V4 Flash (deepseek)
 ---
 
 ## Overview
@@ -83,6 +83,7 @@ If build completes with `build/bh.us.z64: OK` the function is matched and you ca
 
 - At this point always read the whole file `DecompHints.md` for general matching advice.
 - Use `.\tools\diff.ps1` to compare the target and current assembly to identify differences: note instruction order, registers, immediates, branch conditions.
+- Find matched C code from other decomp projects with specific assembly patterns using `.\tools\Search-AsmMatch.ps1 -Offset 0x16AF30 -Size 0x50 -Threshold 0.3` where Offset is the Body Havest baserom.us.z64 file offset, and Size is the number of bytes to search for. Always try to use this tool it's good! Best to use it for a smaller range of assembly that includes the differences you are trying to fix, rather than the whole function, to get more relevant results.
 - Check for any structurally similar functions using `.\tools\find-similar.ps1 <current func name>` e.g. `.\tools\find-similar.ps1 func_800AFA98_BEA48`
 
 ## Step 5+: Iterate Until Match
