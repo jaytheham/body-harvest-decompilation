@@ -180,8 +180,9 @@ void func_800B0C80_BFC30(void) {
 	D_8014FD30 = *(Unk8014FD30Type *)(D_80147C30_156BE0 + currentLevel * 0x90 + D_80047F94 * 0x18 - 0x90);
 }
 
-// CURRENT(405)
 #ifdef NON_MATCHING
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0D10_BFCC0.s")
+#else
 s32 func_800B0D10_BFCC0(s32 arg0, s32 arg1, s32 arg2) {
 	Unk8014FD30Type *a2;
 	s32 v0, v1, a0, a3;
@@ -197,7 +198,8 @@ s32 func_800B0D10_BFCC0(s32 arg0, s32 arg1, s32 arg2) {
 		|| (a3 = arg1 + arg2, D_8014FD30.unk6 < a3)) {
 		return 1;
 	}
-	for (a1 = 0, a2 = &D_8014FD30; a1 != 2; a1++, a2 = (Unk8014FD30Type *)((u8 *)a2 + 8)) {
+	for (a1 = 0; a1 != 2; a1++) {
+		a2 = (Unk8014FD30Type *)((u8 *)&D_8014FD30 + a1 * 8);
 		if (a2->unkC == a2->unk8) {
 			break;
 		}
@@ -207,8 +209,6 @@ s32 func_800B0D10_BFCC0(s32 arg0, s32 arg1, s32 arg2) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0D10_BFCC0.s")
 #endif
 
 s32 func_800B0DF4_BFDA4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
