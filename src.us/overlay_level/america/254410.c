@@ -2,7 +2,33 @@
 #include "common.h"
 
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D4CD0_254410.s")
+void func_802D4CD0_254410(s32 arg0, s32 arg1) {
+    if (arg0 < 0x14) {
+        D_802DF350[arg0](arg0);
+    } else {
+        switch (arg0) {
+        case 0x14:
+            func_800EFEB4_FEE64(func_800F1134_1000E4, 0x13, 0);
+            break;
+        case 0x15:
+            func_800EFEB4_FEE64(func_800F1DDC_100D8C, 0x10, 1);
+            break;
+        case 0x1A:
+            D_801493E0 = 0;
+            func_800EFEB4_FEE64(func_802D563C_254D7C, 0x12, 0);
+            break;
+        case 0x1C:
+            func_802D5110_254850(arg0);
+            break;
+        case 0x45:
+            func_802D4E70_2545B0(arg0);
+            break;
+        case 0x44:
+            func_80007690_8290();
+            break;
+        }
+    }
+}
 
 void func_802D4DD4_254514(void) {
     func_800FB468_10A418(&D_8004F990, 1970.0f);
