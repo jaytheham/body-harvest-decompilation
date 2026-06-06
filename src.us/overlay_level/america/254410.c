@@ -230,7 +230,10 @@ void func_802D53BC_254AFC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D53BC_254AFC.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5440_254B80.s")
+void func_802D5440_254B80(void) {
+    func_802D53BC_254AFC();
+    func_80007410_8010(func_802D536C_254AAC);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D546C_254BAC.s")
 
