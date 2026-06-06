@@ -25,7 +25,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
 - Compare target and your current assembly for a specific function after building:
  `.\tools\diff.ps1 <target function name> <ROM address of next function>"`.
  E.g. `.\tools\diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`.
- Diff output includes a score for the specified range of assembly e.g. `CURRENT (46)`, 0 is a perfect match.
+ Diff output includes a score for the specified range of assembly e.g. `CURRENT (46)`, lower is better, 0 is a perfect match.
  Diff output skips matching instructions except for 3 either side of differences.
 - You can get the full assembly of a function after building by adding param `--show=target` or `--show=current` to the above diff command.
 - You must decompile Gfx macros. The "raw" `*->words.w0`/`*->words.w1` form will not match. Use `.\tools\gfxdis.ps1`:
@@ -45,12 +45,13 @@ D_8005BB2C->words.w1 = 0x00010001;
 Is converted by pwsh cmd `.\tools\gfxdis.ps1 -w B6000000 00010001` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
 If you don't know one of the values, you can use `12345678` as a placeholder for the cmd, and then fill it in after the fact.
 - Check for similar already matched Body Harvest functions using `.\tools\find-similar.ps1 <current func name>` e.g. `.\tools\find-similar.ps1 func_800AFA98_BEA48` and see how they were written in C to achieve similar assembly output.
-- Find matched C code from other decomp projectswith specific assembly patterns using `.\tools\Search-AsmMatch.ps1 -Offset 0x16AF30 -Size 0x60 -Threshold 0.3` where Offset is the Body Havest ROM file offset, and Size is the number of bytes to search for. Always try to use this tool it's good!
+- Find matched C code from other decomp projects with specific assembly patterns using `.\tools\Search-AsmMatch.ps1 -Offset 0x16AF30 -Size 0x60 -Threshold 0.3` where Offset is the Body Havest baserom.us.z64 file offset, and Size is the number of bytes to search for. Always try to use this tool it's good!
 
 # Your Workflow
 1. Change the `#ifdef NON_MATCHING` line above the function to `#ifdef TRUE` so the C code will be included in the build.
 2. Always read the whole file `DecompHints.md` for general matching advice.
 3. Build, compare with target, identify differences.
+4. Before making any changes use `.\tools\Search-AsmMatch.ps1` to search for similar assembly patterns in matched functions in other decomp projects, and see how they were achieved in C. This is a very powerful tool, it can save you a lot of time.
 4. Make a single change to the C code to try to reduce the number of differences in assembly.
 5. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
 

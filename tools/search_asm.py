@@ -58,7 +58,7 @@ def load_index(path: str):
 
 
 def search(index: dict, rom_bytes: bytes, rom_offset: int, byte_count: int,
-           threshold: float = 0.8, max_results: int = 10, window_size: int = None):
+           threshold: float = 0.8, max_results: int = 4, window_size: int = None):
     """Search the index for similar instruction blocks."""
     
     if window_size is None:
@@ -235,7 +235,7 @@ def main():
     parser.add_argument('--rom', default=None, help='Path to BH baserom.z64 (default: baserom.us.z64)')
     parser.add_argument('--index', default=None, help='Path to reference index JSON')
     parser.add_argument('--threshold', type=float, default=0.8, help='Minimum similarity (0.0-1.0)')
-    parser.add_argument('--max-results', type=int, default=10, help='Max results to show')
+    parser.add_argument('--max-results', type=int, default=4, help='Max results to show')
     parser.add_argument('--window-size', type=int, default=None, help='Window size (must match index)')
     args = parser.parse_args()
 

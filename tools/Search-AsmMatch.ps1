@@ -16,7 +16,7 @@
 .PARAMETER Threshold
     Minimum similarity score 0.0-1.0 (default: 0.3).
 .PARAMETER MaxResults
-    Maximum number of results to show (default: 10).
+    Maximum number of results to show (default: 4).
 .EXAMPLE
     .\tools\Search-AsmMatch.ps1 -Offset 0x16B0D4 -Size 0x7C
     .\tools\Search-AsmMatch.ps1 -Offset 0x16AF30 -Size 0x9C -Threshold 0.5
@@ -30,7 +30,7 @@ param(
     [string]$RomPath = (Join-Path (Join-Path $PSScriptRoot "..") "baserom.us.z64"),
     [string]$IndexPath = (Join-Path (Join-Path $PSScriptRoot "..") "reference_index.json"),
     [double]$Threshold = 0.3,
-    [int]$MaxResults = 10
+    [int]$MaxResults = 4
 )
 
 $ErrorActionPreference = "Stop"
