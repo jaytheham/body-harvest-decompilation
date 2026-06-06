@@ -117,7 +117,7 @@ def parse_splat_yaml(yaml_path: str, repo_root: str, default_src: str = "src"):
                  seg_name, seg_vram_base, seg_rom_base, follows_vram
       segment_vram_map — dict: seg_name → {VramBase, RomBase, RomStart, RomEnd, FollowsVram}
     """
-    with open(yaml_path, 'r') as f:
+    with open(yaml_path, 'r', encoding='utf-8') as f:
         doc = yaml.safe_load(f)
 
     if not doc or 'segments' not in doc:
@@ -224,7 +224,7 @@ def parse_sf64_yamls(repo_root: str):
     header_yaml = os.path.join(rev_dir, 'header.yaml')
     sym_paths = []
     if os.path.exists(header_yaml):
-        with open(header_yaml, 'r') as f:
+        with open(header_yaml, 'r', encoding='utf-8') as f:
             header_doc = yaml.safe_load(f)
         sym_config = header_doc.get('options', {}).get('symbol_addrs_path', [])
         if isinstance(sym_config, list):
@@ -238,7 +238,7 @@ def parse_sf64_yamls(repo_root: str):
         yp = os.path.join(rev_dir, yf)
         if not os.path.exists(yp):
             continue
-        with open(yp, 'r') as f:
+        with open(yp, 'r', encoding='utf-8') as f:
             doc = yaml.safe_load(f)
 
         if not isinstance(doc, list):
@@ -344,7 +344,7 @@ def parse_symbol_addrs(repo_root: str, sym_paths: list) -> list:
     for sym_file in sym_paths:
         if not os.path.exists(sym_file):
             continue
-        with open(sym_file, 'r') as f:
+        with open(sym_file, 'r', encoding='utf-8') as f:
             lines = f.readlines()
 
         for line in lines:
