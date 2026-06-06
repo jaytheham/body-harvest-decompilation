@@ -150,7 +150,24 @@ void func_802D5190_2548D0(void) {
     *ptr = ((((val >> 12) | 0x20) ^ (val >> 12)) << 12) ^ val;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D51B8_2548F8.s")
+void func_802D51B8_2548F8(void) {
+    if (D_80052B34->unk1A != 0xA) {
+        return;
+    }
+
+    if (func_8000726C_7E6C(4) != 0) {
+        if (D_802E0D78_2604B8 <= (f64)D_80052B34->unk58) {
+            vehicleSpecs[0xA].unk3E = 0x42;
+            vehicleSpecs[0xA].unk40 = 0x82;
+            if ((u32)D_80052A8C % 12U == 0) {
+                func_800DF038_EDFE8(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 0x32, 0, 0);
+            }
+        } else {
+            vehicleSpecs[0xA].unk3E = 0x21;
+            vehicleSpecs[0xA].unk40 = 0x44;
+        }
+    }
+}
 
 void func_802D5288_2549C8(s32 arg0) {
     func_800072CC_7ECC((u64)0x2C);
