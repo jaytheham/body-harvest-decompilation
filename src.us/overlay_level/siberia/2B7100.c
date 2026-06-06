@@ -33,7 +33,54 @@ void func_802D4CD0_2B7100(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4CD0_2B7100.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802D4DCC_2B71FC(void) {
+    switch (D_80048030) {
+    case 0:
+        if (func_8000726C_7E6C(3)) {
+            func_800076D4_82D4(1);
+        }
+        break;
+    case 1:
+    case 5:
+    case 9:
+    case 10:
+        break;
+    case 2:
+        if (func_80004818_5418(0x1D, 0x29, 3)) {
+            func_800076D4_82D4(3);
+        }
+        break;
+    case 3:
+        if (func_8000726C_7E6C(2) || func_8000726C_7E6C(0x25)) {
+            func_800076D4_82D4(4);
+        }
+        break;
+    case 4:
+        if (func_80004818_5418(-0x59, 0x1A, 3)) {
+            func_800076D4_82D4(5);
+        }
+        break;
+    case 6:
+        if (func_80004818_5418(-0x32, -0xF, 3)) {
+            func_800076D4_82D4(7);
+        }
+        break;
+    case 7:
+        if (func_8000726C_7E6C(0x30)) {
+            func_800076D4_82D4(8);
+        }
+        break;
+    case 8:
+        if (func_8000726C_7E6C(0x1C)) {
+            func_800076D4_82D4(9);
+        }
+        break;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4DCC_2B71FC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4F1C_2B734C.s")
 
