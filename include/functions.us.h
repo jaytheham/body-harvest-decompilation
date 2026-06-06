@@ -1284,6 +1284,8 @@ void func_800074BC_80BC(void *arg0);
 void func_800076D4_82D4(s32 arg0);
 void func_800AE190_BD140(s16);
 void func_800AE1C0_BD170(void);
+void func_800AE1EC_BD19C(void);
+void func_80102A0C_1119BC(void *arg0, s16 arg1, s16 arg2, f32 arg3);
 void func_8011C080_12B030(u8);
 void func_802D6E70_1EFB80();
 void func_800A93A4_B8354(u8 arg0, s32 arg1, s32 arg2, s32 arg3);

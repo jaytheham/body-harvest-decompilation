@@ -348,7 +348,59 @@ void func_802D5B58_2B7F88(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5B58_2B7F88.s")
 #endif
 
+// CURRENT(1108)
+#ifdef NON_MATCHING
+void func_802D5C24_2B8054(void) {
+    s32 rand1;
+    s16 temp;
+    u16 rand2, rand3;
+    s32 doFinal;
+
+    if (vehicleInstances[30].unk1C <= 0) {
+        func_80124118_1330C8((VehicleInstance *)&D_8004F038, (s16)(vehicleInstances[54].unk1C * 2));
+        func_800074BC_80BC(func_802D5C24_2B8054);
+        func_800076D4_82D4(2);
+    }
+    func_80014508_15108((VehicleInstance *)&D_8004E798, 1, 2);
+    if (((u32)D_80052A8C % 12U) == 0 && D_8014D17C < 5) {
+        D_8014D17C++;
+    }
+    func_80102A0C_1119BC(&D_8004E798, vehicleInstances[30].unk6, 0, 2.5f);
+    rand1 = func_800038E0_44E0();
+    if (((u32)D_80052A8C % ((rand1 & 7) + 4)) == 0 && vehicleInstances[54].unk1C > 0) {
+        rand2 = func_800038E0_44E0();
+        rand3 = func_800038E0_44E0();
+        func_800DEA08_ED9B8(
+            (s16)((rand2 % 25) + vehicleInstances[54].unk0 + 0x50),
+            (s16)((rand3 % 25) + vehicleInstances[54].unk2 + 0x64),
+            (s16)((func_800038E0_44E0() % 25) + vehicleInstances[54].unk4 + 0x14),
+            0x50, 8, 0xE, 0x28, 0xF0, 0x2F, 0x7B, 0x2E
+        );
+    }
+    temp = vehicleInstances[30].unk0;
+    doFinal = temp < 0x1C60;
+    if (temp < 0x1940) {
+        func_80124118_1330C8((VehicleInstance *)&D_8004E798, (s16)(vehicleInstances[30].unk1C * 2));
+        func_800072CC_7ECC(0xC);
+        func_800AE1EC_BD19C();
+        func_800DEA08_ED9B8(
+            (s16)(vehicleInstances[54].unk0 + D_80047710),
+            vehicleInstances[54].unk2,
+            vehicleInstances[54].unk4,
+            0x190, 8, 1, 0xC8, 0xFF, 0x2F, 0x7B, 0x2E
+        );
+        doFinal = D_8004E798 < 0x1C60;
+    }
+    if (doFinal) {
+        if (D_802E30EC == 0) {
+            func_800EFEB4_FEE64(0, 0x1B, 0);
+            D_802E30EC = 1;
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5C24_2B8054.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5F28_2B8358.s")
 

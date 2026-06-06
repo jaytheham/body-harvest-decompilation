@@ -3748,6 +3748,8 @@ extern u8 D_802D48D0;
 extern u8 D_802D4AD0;
 extern VehicleInstance D_8004DFB0;
 extern s16 D_8004EE88;
+extern s16 D_8004E798;
+extern s16 D_8004F038;
 extern u8 D_802E04A0_1F91B0;
 extern s32 D_802E06E0[];
 extern s32 D_80256DEC;
