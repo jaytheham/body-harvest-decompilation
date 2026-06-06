@@ -1404,6 +1404,7 @@ void func_802D5578_18E088(void);
 void func_802D9C60_192770(u8 arg0);
 void func_802D962C_19213C(u8 arg0, s16 arg1, s16 arg2, AlienInstance *arg3);
 void func_802D536C_18DE7C(void);
+void func_802D7EAC_1F0BBC(s32);
 s32 func_802D7D08_190818(u8, s32, s32);
 void func_802D4F74_18DA84(void);
 void func_802D5660_18E170(void);
@@ -1412,6 +1413,7 @@ void func_80080510_8F4C0(u8 arg0);
 void func_800AEC34_BDBE4(void *arg0);
 void func_80093164_A2114(u8 arg0);
 s16 func_8009395C_A290C(u8 arg0, s16 arg1);
+s8 func_80082084_91034(u8 arg0, u8 arg1, u8 arg2, s16 *arg3, Unk8014DD50 **arg4);
 s32 func_800879A4_96954(u8 arg0, s16 arg1, u8 arg2);
 void func_80088E10_97DC0(s16 arg0);
 void func_80088E40_97DF0(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s8 arg5, s8 arg6, s8 arg7);
@@ -1508,7 +1510,7 @@ void func_80002EF8_3AF8(void *);
 void func_8000F218_FE18(void);
 
 /* overlay_level/java/1ED9E0 */
-void func_802D51F8_1EDF08(void);
+s32 func_802D51F8_1EDF08(void);
 void func_802D5508_1EE218(void);
 void func_802D57F4_1EE504(void);
 void func_802D5590_1EE2A0(void);
