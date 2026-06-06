@@ -2390,7 +2390,46 @@ void func_802DAF5C_1F3C6C(u8 arg0) {
 	func_80089EB4_98E64(arg0, 0x3C, 0, 6, 3);
 }
 
+#ifdef NON_MATCHING
+// CURRENT(360)
+void func_802DAFD0_1F3CE0(u8 arg0, s16 arg1) {
+    s32 pad[3];
+    s16 sp48[2];
+    s8 sp47;
+    AlienInstance *temp_s0;
+    AlienSpec *temp_v0_3;
+
+    sp48[0] = arg1;
+    sp48[1] = D_8014DD5C[arg1 * 0x10];
+    sp47 = func_80082084_91034(arg0, 2, 0xA, sp48, &D_802E0870_1F9580);
+
+    if (sp47 == 2 || sp47 == 5 || sp47 == 8) {
+        func_80137468_146418(arg0, 0xCC);
+    }
+
+    temp_s0 = &alienInstances[arg0];
+
+    if (temp_s0->unk4B == 2 || temp_s0->unk4B == 5 || temp_s0->unk4B == 8) {
+        temp_v0_3 = &alienSpecs[temp_s0->specIndex];
+        temp_v0_3->unk20 = 0;
+        temp_v0_3->unk22 = -0x14;
+        temp_v0_3->unk24 = 0x3C;
+
+        if (func_800879A4_96954(arg0, 0x1E, 0) != 0) {
+            func_80122524_1314D4(D_80052B34, 0x28, temp_s0->unk0, temp_s0->unk4);
+        }
+    }
+
+    if (sp47 == 0xA) {
+        temp_s0->unk20 &= ~0xC000;
+        temp_s0->unk47 |= 1;
+        temp_s0->unk34 = (func_800038E0_44E0() >> 0xB) + 0x20;
+        temp_s0->unk4B = 0xFF;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DAFD0_1F3CE0.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_802DB14C_1F3E5C(u8 arg0) {
