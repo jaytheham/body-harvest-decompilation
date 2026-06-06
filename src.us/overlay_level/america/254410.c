@@ -258,7 +258,20 @@ void func_802D546C_254BAC(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5530_254C70.s")
+void func_802D5530_254C70(void) {
+    u8 id;
+
+    func_800076D4_82D4(9);
+    func_800BDAF4_CCAA4();
+    func_800074BC_80BC(func_802D536C_254AAC);
+
+    id = D_802E0E44;
+    if (id != 0xFF) {
+        if (alienInstances[id].specIndex == 0x12) {
+            func_80087AAC_96A5C(id);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D55A0_254CE0.s")
 
