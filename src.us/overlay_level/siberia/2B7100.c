@@ -402,7 +402,91 @@ void func_802D5C24_2B8054(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5C24_2B8054.s")
 #endif
 
+// CURRENT(93)
+#ifdef NON_MATCHING
+void func_802D5F28_2B8358(void) {
+    s32 alienId;
+
+    if (D_80157F94 != 0xFF) {
+        if (D_800481B2[D_80157F94 * 0x50] == 0) {
+            D_80157F94 = 0xFF;
+            goto afterFirstBlock;
+        }
+        func_800800E4_8F094((u8)D_80157F94);
+        func_80080510_8F4C0(D_80157F95);
+        alienInstances[D_80157F94].unk6 = alienInstances[D_80157F94].unkE;
+        D_802566C8[alienInstances[D_80157F94].specIndex * 0x1A]((u8)D_80157F94);
+    }
+afterFirstBlock:
+
+    osSyncPrintf(D_802E2EDC_2C530C, D_802E30EC, D_8014D17C);
+
+    switch (D_802E30EC) {
+    case 0:
+        D_80157F8E = 0;
+        D_80157F8C++;
+        D_80157F84 = 200.0f;
+        D_80157F88 = 0.0f;
+        D_80157F78 = 400.0f;
+        D_80157F7C = -2.0f;
+        D_80157F80 = 100.0f;
+        alienId = func_8007956C_8851C(0x12);
+        D_802E30F0 = alienId;
+        if (alienId != 0xFF) {
+            alienInstances[alienId].unk20 &= 0xF7FFFE5F;
+            alienInstances[alienId].unk0 = 0x6700;
+            alienInstances[alienId].unk4 = -0x6680;
+            alienInstances[alienId].unk14 = 0x6700;
+            alienInstances[alienId].unk18 = -0x6280;
+            alienInstances[alienId].unk20 |= 0x100;
+            alienInstances[alienId].unk24 = 2;
+            alienInstances[alienId].unkE = 0x4000;
+            alienInstances[alienId].unk2A = 0x4000;
+            func_8007A198_89148(alienId);
+            D_80157F94 = (s16)D_802E30F0;
+        }
+        D_802E30EC++;
+        break;
+
+    case 1:
+        D_8014D17C++;
+        if (D_8014D17C < 0x28) {
+            return;
+        }
+        D_8014D17C = 0;
+        D_802E30EC++;
+        break;
+
+    case 2:
+        D_8014D17C++;
+        if (D_8014D17C <= 0) {
+            return;
+        }
+        D_8014D17C = 0;
+        D_802E30EC++;
+        break;
+
+    case 3:
+        D_8014D17C++;
+        if (D_8014D17C < 0x14) {
+            return;
+        }
+        D_8014D17C = 0;
+        D_802E30EC++;
+        break;
+
+    case 4:
+        func_80079910_888C0(D_802E30F0);
+        func_800074BC_80BC(func_802D5F28_2B8358);
+        func_80007410_8010(func_802D5C24_2B8054);
+        D_802E30EC = 0;
+        D_8014D17C = 0;
+        break;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5F28_2B8358.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6220_2B8650.s")
 
