@@ -44,7 +44,8 @@ D_8005BB2C->words.w1 = 0x00010001;
 ```
 Is converted by pwsh cmd `.\tools\gfxdis.ps1 -w B6000000 00010001` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
 If you don't know one of the values, you can use `12345678` as a placeholder for the cmd, and then fill it in after the fact.
-- Check for similar already matched functions using `.\tools\find-similar.ps1 <current func name>` e.g. `.\tools\find-similar.ps1 func_800AFA98_BEA48` and see how they were written in C to achieve similar assembly output.
+- Check for similar already matched Body Harvest functions using `.\tools\find-similar.ps1 <current func name>` e.g. `.\tools\find-similar.ps1 func_800AFA98_BEA48` and see how they were written in C to achieve similar assembly output.
+- Find matched C code from other decomp projectswith specific assembly patterns using `.\tools\Search-AsmMatch.ps1 -Offset 0x16AF30 -Size 0x60 -Threshold 0.3` where Offset is the Body Havest ROM file offset, and Size is the number of bytes to search for. Always try to use this tool it's good!
 
 # Your Workflow
 1. Change the `#ifdef NON_MATCHING` line above the function to `#ifdef TRUE` so the C code will be included in the build.

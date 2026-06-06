@@ -28,5 +28,8 @@ progress*.csv
 *.ply
 ctx.c
 ctx.c.m2c
+
+# generated
+reference_index.json
 pah.conf
 .vscode/
