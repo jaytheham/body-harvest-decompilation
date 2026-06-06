@@ -8,15 +8,8 @@ assets.eu/
 bin/
 build/
 build.eu/
-expected/
-junk/
-jupyter/
-levels/
 nonmatchings/
-py/
-rnc/
-rodata/
-
+reference/
 
 # symlinks
 
