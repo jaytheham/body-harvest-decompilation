@@ -72,10 +72,9 @@ s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32)(((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
 }
 
-// CURRENT(180)
+// CURRENT(165)
 #ifdef NON_MATCHING
 s32 func_800B0A88_BFA38(s32 arg0, s32 arg1) {
-	u16 *v1;
 	s32 a0;
 	s32 a1;
 	s32 a2;
@@ -83,9 +82,8 @@ s32 func_800B0A88_BFA38(s32 arg0, s32 arg1) {
 	s32 v0;
 	s32 t0;
 
-	v1 = D_80052A94[arg1].unk0 + arg0;
-	a2 = v1[0] & 0x3F;
-	a3 = v1[1] & 0x3F;
+	a2 = D_80052A94[arg1].unk0[arg0] & 0x3F;
+	a3 = D_80052A94[arg1].unk0[arg0 + 1] & 0x3F;
 	v0 = a2 - a3;
 	t0 = -v0;
 	if (t0 < v0) {
@@ -97,7 +95,7 @@ s32 func_800B0A88_BFA38(s32 arg0, s32 arg1) {
 		return 1;
 	}
 
-	a1 = v1[0x101] & 0x3F;
+	a1 = D_80052A94[arg1].unk0[arg0 + 0x101] & 0x3F;
 	v0 = a3 - a1;
 	t0 = -v0;
 	if (t0 < v0) {
@@ -109,7 +107,7 @@ s32 func_800B0A88_BFA38(s32 arg0, s32 arg1) {
 		return 1;
 	}
 
-	a3 = v1[0x100] & 0x3F;
+	a3 = D_80052A94[arg1].unk0[arg0 + 0x100] & 0x3F;
 	v0 = a1 - a3;
 	t0 = -v0;
 	if (t0 < v0) {
