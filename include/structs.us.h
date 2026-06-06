@@ -1013,7 +1013,11 @@ typedef struct {
 	/* 0x36 */ s16 unk36;
 	/* 0x38 */ s16 unk38;
 	/* 0x3A */ u16 hitPoints;
-	/* 0x3C */ u8 pad3C[0x8];
+	/* 0x3C */ u8 pad3C[0x2];
+	/* 0x3E */ u8 unk3E;
+	/* 0x3F */ u8 pad3F;
+	/* 0x40 */ s16 unk40;
+	/* 0x42 */ u8 pad42[0x2];
 	/* 0x44 */ u8 unk44;
 	/* 0x45 */ u8 unk45;
 	/* 0x46 */ u8 unk46;

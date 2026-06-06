@@ -607,6 +607,7 @@ extern s16 D_8004DCBC;
 extern u16 D_8004DC5E;
 extern s32 D_8004DC68[4]; // Callback function pointers
 extern s32 D_8004DC74; /* = D_8004DC68[3] */
+extern u8 D_8004D1B2;
 extern VehicleInstance vehicleInstances[]; // 8004DCD0
 extern VehicleInstance D_8004F374;
 extern Unk80050ADA D_80050ADA[]; // 0x80050ADA
@@ -2056,6 +2057,7 @@ extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 
 extern u8 D_80254E80[]; // Tile palette data
 extern u16 D_80256E0A;
+extern f64 D_802E0D78_2604B8;
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
 extern u8 D_80257A3A[];
 
@@ -3717,7 +3719,9 @@ extern char D_802E0D84_1F9A94[];
 extern const char D_802E0DA8_1F9AB8[];
 extern char D_802E0E10_1F9B20[];
 extern char D_802E0E30[];
+extern s16 D_802E0E34;
 extern char D_802E0E3C_1F9B4C[];
+extern u8 D_802E0E44;
 extern char D_802E0E60_1F9B70[];
 extern Unk802E04F8Entry D_802E04F8_1F9208[];
 extern s16 D_802E0FB0;
@@ -3758,6 +3762,9 @@ extern u8 D_8003153E[];
 extern Unk8014DD50 *D_802E0608;
 extern Unk8014DD50 *D_802E0B08;
 extern Unk8014DD50 *D_802E0C9C;
+extern char D_802E0CF0_260430[];
+extern char D_802E0D08_260448[];
+extern char D_802E0D28_260468[];
 extern s16 D_802E30F4;
 extern s32 D_802E3098;
 extern s32 D_802E3094;
