@@ -117,7 +117,23 @@ void func_802D507C_1EDD8C(s32 arg0) {
 	func_800073B8_7FB8(0xBLL);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D50B0_1EDDC0.s")
+void func_802D50B0_1EDDC0(void) {
+	u8 alien_id;
+	Unk80222A78 callback_struct;
+
+	alien_id = func_8007956C_8851C(0x25);
+	if (alien_id != 0xFF) {
+		alienInstances[alien_id].unk0 = -0x109A;
+		alienInstances[alien_id].unk2 = 0x46B;
+		alienInstances[alien_id].unk4 = 0x43E0;
+		alienInstances[alien_id].unkE = 0x4000;
+		alienInstances[alien_id].unk1B = 0;
+		callback_struct.unk0 = 3;
+		callback_struct.unk8 = alien_id;
+		callback_struct.unkC = func_802D507C_1EDD8C;
+		func_800AE454_BD404(&callback_struct);
+	}
+}
 
 void func_802D513C_1EDE4C(s32 arg0) {
 	osSyncPrintf(&D_802E0DA8_1F9AB8);
