@@ -157,8 +157,7 @@ void func_802D5170_1EDE80(void) {
 	func_800073B8_7FB8(0xCLL);
 }
 
-// CURRENT(6632) - jump table fixed via binary split at offset 0x9F0 in 1F91B0.bin
-// s0 caching of &D_80157F8E persists (callee-saved register for address rematerialization)
+// CURRENT(6632)
 #ifdef NON_MATCHING
 s32 func_802D51F8_1EDF08(void) {
 	s16 temp;
