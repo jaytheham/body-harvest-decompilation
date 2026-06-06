@@ -1,0 +1,55 @@
+TARGET                                                   CURRENT (110)                              
+bfed0:    lui     v0,0x8004                              bfed0:    lui     v0,0x8004                
+bfed4:    lw      v0,0x7f90(v0)                          bfed4:    lw      v0,0x7f90(v0)            
+bfed8:    lui     t7,0x8014                              bfed8:    lui     t7,0x8014                
+[2m<3 lines>[22m                                                                                           
+bfee8:    addu    t6,t6,v0                               bfee8:    addu    t6,t6,v0                 
+bfeec:    sll     t6,t6,0x4                              bfeec:    sll     t6,t6,0x4                
+bfef0:    addu    a2,t6,t7                               bfef0:    addu    a2,t6,t7                 
+[33mbfef4:[39m    move    [35ma3[39m,[36ma2[39m                           [33mr[39m      [33mbfef4:[39m    move    [35mv1[39m,[36mzero[39m                  
+[33mbfef8:[39m    move    [32mv1[39m,[31mzero[39m                         [33mr[39m      [33mbfef8:[39m    move    [32ma3[39m,[31ma2[39m                    
+bfefc:    li      t5,0x10                                bfefc:    li      t5,0x10                  
+bff00:    li      t4,8                                   bff00:    li      t4,8                     
+bff04:    li      t3,6                                   bff04:    li      t3,6                     
+[2m<11 lines>[22m                                                                                          
+bff34:    addiu   v1,v1,1                                bff34:    addiu   v1,v1,1                  
+bff38:    lh      t7,6(a3)                               bff38:    lh      t7,6(a3)                 
+bff3c:    sll     t8,v1,0x2                              bff3c:    sll     t8,v1,0x2                
+[33mbff40:[39m    subu    [93mt8[39m,t8,v1                        [33mr[39m      [33mbff40:[39m    subu    [93mt0[39m,t8,v1                 
+bff44:    slt     at,a1,t7                               bff44:    slt     at,a1,t7                 
+bff48:    beqz    at,bffc0 [36m~>[39m                            bff48:    beqz    at,bffc0 [36m~>[39m              
+[33mbff4c:[39m    move    [95mt0[39m,zero                         [33mr[39m      [33mbff4c:[39m    move    [95mv0[39m,zero                  
+[33mbff50:[39m    sll     [93mt8[39m,[93mt8[39m,0x3                       [33mr[39m      [33mbff50:[39m    sll     [96mt9[39m,[93mt0[39m,0x3                
+[33mbff54:[39m    addu    t1,a2,[93mt8[39m                        [33mr[39m      [33mbff54:[39m    addu    t1,a2,[96mt9[39m                 
+[33mbff58:[39m [95m~>[39m lh      [96mv0[39m,8(t1)                        [33mr[39m      [33mbff58:[39m [95m~>[39m lh      [93mt0[39m,8(t1)                 
+bff5c:    lh      t2,0xc(t1)                             bff5c:    lh      t2,0xc(t1)               
+[33mbff60:[39m    slt     at,a0,[96mv0[39m                        [33mr[39m      [33mbff60:[39m    slt     at,a0,[93mt0[39m                 
+[33mbff64:[39m    bne     [96mv0[39m,t2,bff74 [32m~>[39m                  [33mr[39m      [33mbff64:[39m    bne     [93mt0[39m,t2,bff74 [32m~>[39m           
+bff68:    nop                                            bff68:    nop                              
+bff6c:    jr      ra                                     bff6c:    jr      ra                       
+bff70:    andi    v0,v1,0xff                             bff70:    andi    v0,v1,0xff               
+bff74: [32m~>[39m bnez    at,bffa4 [31m~>[39m                            bff74: [32m~>[39m bnez    at,bffa4 [31m~>[39m              
+bff78:    slt     at,t2,a0                               bff78:    slt     at,t2,a0                 
+bff7c:    bnez    at,bffa4 [31m~>[39m                            bff7c:    bnez    at,bffa4 [31m~>[39m              
+bff80:    nop                                            bff80:    nop                              
+[33mbff84:[39m    lh      [92mt9[39m,0xa(t1)                      [33mr[39m      [33mbff84:[39m    lh      [92mt6[39m,0xa(t1)               
+[33mbff88:[39m    slt     at,[92mt9[39m,a1                        [33mr[39m      [33mbff88:[39m    slt     at,[92mt6[39m,a1                 
+bff8c:    beqz    at,bffa4 [31m~>[39m                            bff8c:    beqz    at,bffa4 [31m~>[39m              
+bff90:    nop                                            bff90:    nop                              
+[33mbff94:[39m    lh      [90mt6[39m,0xe(t1)                      [33mr[39m      [33mbff94:[39m    lh      [90mt7[39m,0xe(t1)               
+[33mbff98:[39m    slt     at,a1,[90mt6[39m                        [33mr[39m      [33mbff98:[39m    slt     at,a1,[90mt7[39m                 
+bff9c:    bnezl   at,bffc4 [35m~>[39m                            bff9c:    bnezl   at,bffc4 [35m~>[39m              
+bffa0:    addiu   v1,v1,1                                bffa0:    addiu   v1,v1,1                  
+[33mbffa4:[39m [31m~>[39m bnel    [95mt0[39m,t4,bffb8 [93m~>[39m                  [33mr[39m      [33mbffa4:[39m [31m~>[39m bnel    [95mv0[39m,t4,bffb8 [93m~>[39m           
+[33mbffa8:[39m    addiu   [95mt0[39m,[95mt0[39m,8                         [33mr[39m      [33mbffa8:[39m    addiu   [95mv0[39m,[95mv0[39m,8                  
+bffac:    jr      ra                                     bffac:    jr      ra                       
+bffb0:    andi    v0,v1,0xff                             bffb0:    andi    v0,v1,0xff               
+[33mbffb4:[39m    addiu   [95mt0[39m,[95mt0[39m,8                         [33mr[39m      [33mbffb4:[39m    addiu   [95mv0[39m,[95mv0[39m,8                  
+[33mbffb8:[39m [93m~>[39m bne     [95mt0[39m,t5,bff58 [95m~>[39m                  [33mr[39m      [33mbffb8:[39m [93m~>[39m bne     [95mv0[39m,t5,bff58 [95m~>[39m           
+bffbc:    addiu   t1,t1,8                                bffbc:    addiu   t1,t1,8                  
+bffc0: [36m~>[39m addiu   v1,v1,1                                bffc0: [36m~>[39m addiu   v1,v1,1                  
+bffc4: [35m~>[39m bne     v1,t3,bff08 [96m~>[39m                         bffc4: [35m~>[39m bne     v1,t3,bff08 [96m~>[39m           
+[2m<959 lines>[22m                                                                                         
+c0ec4:    multu   t9,t1                                  c0ec4:    multu   t9,t1                    
+c0ec8:    mflo    t6                                     c0ec8:    mflo    t6                       
+c0ecc:    addu    v0,t8,t6                               c0ecc:    addu    v0,t8,t6                 

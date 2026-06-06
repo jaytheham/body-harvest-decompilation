@@ -264,7 +264,7 @@ s32 func_800B0DF4_BFDA4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	return -0x8000;
 }
 
-// CURRENT(185)
+// CURRENT(110)
 #ifdef NON_MATCHING
 s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 	Unk8014FD30Type *a2;
@@ -277,9 +277,10 @@ s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 	s16 v0;
 	s16 t2;
 
+	v1 = 0;
 	cl = currentLevel - 1;
 	a2 = (Unk8014FD30Type *)((u8 *)&D_80147C30_156BE0 + cl * 0x90);
-	for (v1 = 0, a3 = a2; v1 != 6; v1++, a3 = (Unk8014FD30Type *)((u8 *)a3 + 0x18)) {
+	for (a3 = a2; v1 != 6; v1++, a3 = (Unk8014FD30Type *)((u8 *)a3 + 0x18)) {
 		if (arg0 < a3->unk0 || a3->unk4 < arg0 || a3->unk2 >= arg1) {
 			continue;
 		}
