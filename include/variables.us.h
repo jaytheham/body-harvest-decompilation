@@ -3759,6 +3759,8 @@ extern u8 D_8003153E[];
 extern Unk8014DD50 *D_802E0608;
 extern Unk8014DD50 *D_802E0B08;
 extern Unk8014DD50 *D_802E0C9C;
+extern char D_802E0CF0_260430[];
+extern char D_802E0D08_260448[];
 extern s16 D_802E30F4;
 extern s32 D_802E3098;
 extern s32 D_802E3094;
