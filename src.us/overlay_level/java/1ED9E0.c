@@ -157,7 +157,105 @@ void func_802D5170_1EDE80(void) {
 	func_800073B8_7FB8(0xCLL);
 }
 
+// CURRENT(6632) - jump table fixed via binary split at offset 0x9F0 in 1F91B0.bin
+// s0 caching of &D_80157F8E persists (callee-saved register for address rematerialization)
+#ifdef NON_MATCHING
+s32 func_802D51F8_1EDF08(void) {
+    s16 temp;
+
+    switch (D_80157F8C) {
+    case 0:
+        temp = D_80157F8E;
+        if (temp >= 0x10) {
+            vehicleInstances[58].unk6 += 0x28A;
+        }
+        D_80157F8E = temp + 1;
+        if (temp >= 0x29) {
+            D_80157F8E = 0;
+            D_80157F8C++;
+        }
+        return 0;
+
+    case 1:
+        temp = D_80157F8E;
+        if (temp == 0xF) {
+            func_800DF038_EDFE8(0x3950, 0x640, 0x3C9C, 0x50, 0, 0);
+            func_80135D44_144CF4(0x3950, 0x640, 0x3C9C, 3.0f);
+            func_801371B8_146168(0, 0x5B, 0x3950, 0x640, 0x3C9C, -1.0f);
+            temp = D_80157F8E;
+        }
+        D_80157F8E = temp + 1;
+        if (temp >= 0x29) {
+            D_80157F8E = 0;
+            D_80157F8C++;
+        }
+        return 0;
+
+    case 2:
+        temp = D_80157F8E;
+        if (temp == 0xF) {
+            func_800DF038_EDFE8(0x3950, 0x640, 0x3C9C, 0x50, 0, 0);
+            temp = D_80157F8E;
+        }
+        D_80157F8E = temp + 1;
+        if (temp >= 0x33) {
+            D_80157F8E = 0;
+            D_80157F8C++;
+        }
+        return 0;
+
+    case 3:
+        temp = D_80157F8E;
+        if (temp == 0) {
+            s16 sp46;
+            s16 sp3C[3];
+            OutputStruct_8012B150 *result;
+
+            sp3C[0] = 0x4500;
+            sp3C[1] = sp46 * 400 + 400;
+            sp3C[2] = 0x2800;
+            result = func_801226F8_1316A8(sp3C, &D_80145E98, 0, 0, 0, 0.0f, 0.0f, 0.0f);
+            if (result != NULL) {
+                ((s16 *)result)[20] = 100;
+            }
+            for (temp = 0; temp < 0xFF; temp++) {
+                if (alienInstances[temp].specIndex == 7 &&
+                    alienInstances[temp].unk0 >= 0x3F25 &&
+                    alienInstances[temp].unk0 < 0x4ADC &&
+                    alienInstances[temp].unk4 >= 0x2225 &&
+                    alienInstances[temp].unk4 < 0x2DDC) {
+                    sp46 = temp;
+                    func_80088760_97710(&alienInstances[temp]);
+                }
+            }
+        }
+        if (temp < 2) {
+            D_80157F8E = temp + 1;
+        } else {
+            D_80157F8E = 0;
+            D_80157F8C++;
+        }
+        return 0;
+
+    case 4:
+        temp = D_80157F8E;
+        D_80157F8E = temp + 1;
+        if (temp >= 0x65) {
+            D_80157F8E = 0;
+            D_80157F8C++;
+        }
+        return 0;
+
+    case 5:
+        return 1;
+
+    default:
+        return 0;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D51F8_1EDF08.s")
+#endif
 
 void func_802D5508_1EE218(void) {
 	if (D_802E0FB0-- <= 0) {

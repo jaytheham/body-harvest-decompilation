@@ -1508,7 +1508,7 @@ void func_80002EF8_3AF8(void *);
 void func_8000F218_FE18(void);
 
 /* overlay_level/java/1ED9E0 */
-void func_802D51F8_1EDF08(void);
+s32 func_802D51F8_1EDF08(void);
 void func_802D5508_1EE218(void);
 void func_802D57F4_1EE504(void);
 void func_802D5590_1EE2A0(void);
