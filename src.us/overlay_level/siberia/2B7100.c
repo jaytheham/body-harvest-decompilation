@@ -115,7 +115,110 @@ void func_802D4F1C_2B734C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4F1C_2B734C.s")
 #endif
 
+// CURRENT(48775)
+#ifdef NON_MATCHING
+void func_802D5058_2B7488(void) {
+    f32 sp1C;
+    s32 sp18;
+    f32 var_f12;
+    s32 temp_f10;
+    s32 i;
+    s16 temp_v0;
+    s16 temp_a1;
+    s32 r, g, b;
+    s32 new_r, new_g, new_b;
+    f32 f0, f2;
+    f32 temp_f4;
+    s32 *e44;
+    s16 *palSrc;
+    s16 *palDst;
+    s16 *palCopy;
+
+    e44 = (s32 *)&D_802E0E44;
+    var_f12 = -1.0f;
+    if (D_80047F94 == 0) {
+        sp1C = -1.0f;
+        var_f12 = -1.0f;
+        sp18 = 0;
+        if (func_8000726C_7E6C(0xC)) {
+            var_f12 = 1.0f;
+            *e44 = 1;
+        } else {
+            var_f12 = sp1C;
+            temp_v0 = D_80052B34->unk4;
+            if (temp_v0 < 0x3C00 && temp_v0 >= 0x2879) {
+                var_f12 = (f32)(1.0 - (f64)((f32)(0x3C00 - temp_v0) / D_802E2F84_2C53B4));
+                *e44 = 1;
+            } else if (temp_v0 >= 0x3C01) {
+                if (*e44 == 0) {
+                    var_f12 = 1.0f;
+                    *e44 = 1;
+                }
+            }
+        }
+    } else if (*e44 != 0) {
+        var_f12 = 0.0f;
+        *e44 = 0;
+    }
+
+    palSrc = (s16 *)&D_802E30A0;
+    palDst = (s16 *)&D_802D48D0;
+    palCopy = (s16 *)&D_802D4AD0;
+    i = 0;
+
+    if ((f64)var_f12 != -1.0) {
+        s16 temp_s16;
+        u8 color0, color1, color2;
+        u8 *levelColors;
+        
+        temp_f10 = (s32)((f64)(200 - D_80154300) * D_802E2F88_2C53B8 + D_802E2F90_2C53C0);
+        temp_s16 = (s16)temp_f10;
+        D_800313F8 = (s16)((f32)temp_s16 + ((f32)(0x3B6 - temp_s16)) * var_f12);
+
+        levelColors = (u8 *)&D_80031620[0].unk0;
+        levelColors += (currentLevel - 1) * 4;
+        color0 = levelColors[0];
+        color1 = levelColors[1];
+        color2 = levelColors[2];
+
+        D_80047743 = (s8)((f32)color0 + ((f32)(0x2F - color0)) * var_f12);
+        D_800313E8 = D_80047743;
+        D_80047744 = (s8)((f32)color1 + ((f32)(0x7B - color1)) * var_f12);
+        D_800313EC = D_80047744;
+        D_80047745 = (s8)((f32)color2 + ((f32)(0x2E - color2)) * var_f12);
+        D_800313F0 = D_80047745;
+
+        f0 = -12.0f * var_f12;
+        f2 = -3.0f * var_f12;
+
+        for (; i < 0x26; i++) {
+            temp_a1 = palSrc[i];
+            r = ((temp_a1 & 0xF800) >> 11) & 0xFF;
+            g = ((temp_a1 & 0x7C0) >> 6) & 0xFF;
+            b = ((temp_a1 & 0x3E) >> 1) & 0xFF;
+
+            new_r = (s32)((f32)r + f0);
+            new_g = (s32)((f32)g + f2);
+            new_b = (s32)((f32)b + f0);
+
+            palDst[i] = ((new_r & 0xFF) << 11);
+            palDst[i] = ((new_r & 0xFF) << 11) | ((new_g & 0xFF) << 6);
+            palDst[i] = ((new_r & 0xFF) << 11) | ((new_g & 0xFF) << 6) | ((new_b & 0xFF) << 1);
+            palCopy[i] = ((new_r & 0xFF) << 11) | ((new_g & 0xFF) << 6) | ((new_b & 0xFF) << 1);
+        }
+
+        leoInitUnit_atten();
+        func_80004C34_5834();
+        func_80004948_5548();
+    }
+
+    if (gameplayMode == 6) {
+        *e44 = 0;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5058_2B7488.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5754_2B7B84.s")
 
