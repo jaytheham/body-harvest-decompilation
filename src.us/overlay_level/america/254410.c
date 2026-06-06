@@ -208,7 +208,27 @@ void func_802D536C_254AAC(void) {
     }
 }
 
+// CURRENT(120)
+#ifdef NON_MATCHING
+void func_802D53BC_254AFC(void) {
+    u8 id;
+
+    id = func_8007956C_8851C(0x12);
+    D_802E0E44 = id;
+    if (id == 0xFF) {
+        return;
+    }
+
+    D_80157E7C = 5;
+    D_80256DEC = 0x6F;
+    alienInstances[id].unk0 = 0x555C;
+    alienInstances[id].unk4 = 0x568A;
+    alienInstances[id].unk2 = 0;
+    alienInstances[id].unk24 = 4;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D53BC_254AFC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5440_254B80.s")
 
