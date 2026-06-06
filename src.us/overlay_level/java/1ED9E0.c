@@ -457,7 +457,24 @@ void func_802D5DE4_1EEAF4(void) {
 	vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & 0xFBFF);
 }
 
+// CURRENT(8) - 4-byte stack alignment gap for sp30 (cfe temp at 0x30 vs declared at 0x2C)
+#ifdef NON_MATCHING
+void func_802D5DFC_1EEB0C(Unk8004773C *arg0) {
+	s32 sp24;
+	s32 sp28;
+	s32 sp30;
+
+	sp28 = ((s16)arg0->unk1 << 8) + 0x80;
+	sp24 = ((s16)arg0->unk2 << 8) + 0x80;
+
+	sp30 = func_800B84D0_C7480((s16)sp28, (s16)sp24) >> 8;
+
+	func_80124B5C_133B0C((s16)sp28, (s16)sp30, (s16)sp24, 1000, 150);
+	func_800DF038_EDFE8((s16)sp28, (s16)sp30, (s16)sp24, 200, 0, 0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5DFC_1EEB0C.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_802D5E98_1EEBA8(void) {
