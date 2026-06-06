@@ -12,12 +12,12 @@ agents: ["BH Matcher"]
 This is a matching decompilation project for Body Harvest (N64). The goal is to create C code that "matches" - compiles to the exact same assembly as the original game ROM.
 You will be given a C file to target, follow this process:
 
-1. Begin by creating a new git branch named with this format: `matcher-orchestrator-YYYY-mm-dd-HH-MM-SS`, make sure to include the date and time.
+1. Begin by creating a new git branch named with this format: `matcher-YYYY-mm-dd-HH-MM-SS`, make sure to include the date and time.
 2. Scan the C file to find all functions with a NON_MATCHING wrapper, these are functions which have been decompiled but do not yet match the original assembly when compiled.
 3. Orchestrate processing of these NON_MATCHING functions one at a time. For each function, you will:
   - Replace the `NON_MATCHING` before the target function with `TRUE` so the C code is included in the build instead of the assembly file.
   - Build the ROM so the diff tool can calculate the C implementation's CURRENT closeness value. It is normal that the build will return `FAILED` at this stage because the function does not yet match.
-  - Check the current closeness value with the diff tool, a lower value is better, `CURRENT(0)` is a match.
+  - After building check the current closeness value with the diff tool, a lower value is better, `CURRENT(0)` is a match.
   - Create a new subagent, agentName `BH Matcher`, and tell the subagent to target the function.
 4. Only the following directory contents and files are allowed to be changed by subagents, after a subagent finishes, undo any changes outside of:
  - `/ExampleFixes`
@@ -27,7 +27,7 @@ You will be given a C file to target, follow this process:
  - `undefined_syms.us.txt`
 5. Move any variables, structs, or function definitions the subagent added to a C file in `src.us/` into the appropriate header file in `include/` (e.g. variables to `variables.us.h`, structs to `structs.us.h`, and function prototypes to `functions.us.h`).
 6. Build the ROM (first replace `NON_MATCHING` with `TRUE` before the target function if it's been re-applied), if it returns `build/bh.us.z64: OK` in the terminal output then the decompilation is matching, commit the remaining changes with a message like `Matched func_80092ADC_A1A8C` and then return to step 3 and process the next function.
-7. If the build returns `FAILED`, check the function's CURRENT closeness value with `.\tools\diff.ps1 <function name> | Select-Object -First 1`. If it is lower than the original value, restore `NON_MATCHING`, add/update a comment above the wrapper with the new value `CURRENT(X)`, and commit the changes. If the value is the same or higher, undo all changes - including the removal of `NON_MATCHING` and check the build is OK before moving on to the next function.
+7. If the build returns `FAILED`, check the function's CURRENT closeness value with `diff.ps1`. If it is lower than the original value, restore `NON_MATCHING`, add/update a comment above the wrapper with the new value `CURRENT(X)`, and commit the changes. If the value is the same or higher, undo all changes - including the removal of `NON_MATCHING` and check the build is OK before moving on to the next function.
 
 Tell the subagents to reduce the closeness value as much as possible, they should keep going after they make a positive improvement, and only stop when they can no longer find any changes that reduce the value.
 
@@ -56,4 +56,4 @@ Retain any existing comments.
 These powershell tools exist to assist you:
 
 - Build the ROM: `.\tools\make.ps1`
-- Get the diff closeness value for a function: `.\tools\diff.ps1 <function name> | Select-Object -First 1`
+- Get the diff closeness value for a function: `.\tools\diff.ps1 <target function name> <ROM address of next function> | Select-Object -First 1`. Functions are named like `func_<RAM address>_<ROM address>`.
