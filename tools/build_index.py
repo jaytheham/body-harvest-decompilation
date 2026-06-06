@@ -65,28 +65,85 @@ def normalize_instruction(inst: int, relaxed: bool = False, opcode_only: bool = 
 
 # ─── YAML Parsing ─────────────────────────────────────────────────────────────
 
+def _parse_hex(val):
+    """Parse a value that may be int, hex string, or 'auto'."""
+    if isinstance(val, str):
+        if val == 'auto':
+            return None
+        return int(val, 16)
+    return val
+
+
+def _build_segment_vram_map(segments_list):
+    """After all YAMLs are parsed, build a lookup of segment name → {RomBase, VramBase, RomStart, RomEnd}.
+    
+    Also resolves 'follows_vram' chains.
+    """
+    seg_map = {}
+    # First pass: collect all segments with explicit VRAM
+    for s in segments_list:
+        name = s.get('seg_name')
+        if not name:
+            continue
+        vram = s.get('seg_vram_base')
+        rom_base = s.get('seg_rom_base')
+        rom_start = s.get('start_offset')
+        rom_end = s.get('end_offset')
+        follows = s.get('follows_vram')
+        if vram is not None and rom_base is not None:
+            seg_map[name] = {
+                'VramBase': vram,
+                'RomBase': rom_base,
+                'RomStart': rom_start,
+                'RomEnd': rom_end,
+                'FollowsVram': follows,
+            }
+
+    # Resolve follows_vram chains
+    for name, info in seg_map.items():
+        if info['FollowsVram'] and info['FollowsVram'] in seg_map:
+            parent = seg_map[info['FollowsVram']]
+            info['VramBase'] = parent['VramBase']
+            info['RomBase'] = parent['RomBase']
+
+    return seg_map
+
+
 def parse_splat_yaml(yaml_path: str, repo_root: str, default_src: str = "src"):
     """Parse a splat-style yaml and extract code subsegments with ROM ranges.
     
-    Returns list of dicts with keys: start_offset, end_offset, source_file, source_root
+    Returns (segments, segment_vram_map) where:
+      segments — list of dicts with keys: start_offset, end_offset, source_file, source_root,
+                 seg_name, seg_vram_base, seg_rom_base, follows_vram
+      segment_vram_map — dict: seg_name → {VramBase, RomBase, RomStart, RomEnd, FollowsVram}
     """
     with open(yaml_path, 'r') as f:
         doc = yaml.safe_load(f)
 
     if not doc or 'segments' not in doc:
-        return []
+        return [], {}
 
     segments = []
     src_path = default_src
     if doc.get('options', {}).get('src_path'):
         src_path = doc['options']['src_path']
 
+    # Collect symbol_addrs paths for later use
+    sym_paths = []
+    sym_config = doc.get('options', {}).get('symbol_addrs_path', [])
+    if isinstance(sym_config, list):
+        for sp in sym_config:
+            full_sp = os.path.normpath(os.path.join(repo_root, sp))
+            sym_paths.append(full_sp)
+    elif isinstance(sym_config, str):
+        sym_paths.append(os.path.normpath(os.path.join(repo_root, sym_config)))
     for seg in doc['segments']:
         if not isinstance(seg, dict) or seg.get('type') != 'code':
             continue
-        seg_start = seg.get('start', 0)
-        if isinstance(seg_start, str):
-            seg_start = int(seg_start, 16)
+        seg_start = _parse_hex(seg.get('start', 0))
+        seg_vram = _parse_hex(seg.get('vram'))
+        seg_name = seg.get('name', '')
+        follows_vram = seg.get('follows_vram')
 
         subsegments = seg.get('subsegments', [])
         if not subsegments:
@@ -101,21 +158,14 @@ def parse_splat_yaml(yaml_path: str, repo_root: str, default_src: str = "src"):
                 raw_start = sub[0]
                 if raw_start == 'auto':
                     continue
-                if isinstance(raw_start, str):
-                    sub_start = int(raw_start, 16)
-                else:
-                    sub_start = raw_start
+                sub_start = _parse_hex(raw_start)
                 sub_type = str(sub[1]) if len(sub) > 1 else 'c'
                 sub_name = str(sub[2]) if len(sub) > 2 else ''
                 entries.append((sub_start, sub_type, sub_name))
             elif isinstance(sub, dict):
                 if 'start' not in sub:
                     continue
-                raw_start = sub['start']
-                if isinstance(raw_start, str):
-                    sub_start = int(raw_start, 16)
-                else:
-                    sub_start = raw_start
+                sub_start = _parse_hex(sub['start'])
                 sub_type = str(sub.get('type', 'c'))
                 sub_name = str(sub.get('name', ''))
                 entries.append((sub_start, sub_type, sub_name))
@@ -142,13 +192,22 @@ def parse_splat_yaml(yaml_path: str, repo_root: str, default_src: str = "src"):
                 'end_offset': end_offset,
                 'source_file': src_file,
                 'source_root': src_path,
+                'seg_name': seg_name,
+                'seg_vram_base': seg_vram,
+                'seg_rom_base': seg_start,
+                'follows_vram': follows_vram,
             })
 
-    return segments
+    seg_map = _build_segment_vram_map(segments)
+    return segments, seg_map, sym_paths
 
 
 def parse_sf64_yamls(repo_root: str):
-    """Parse sf64-style multi-yaml structure (header.yaml + main.yaml + overlays.yaml)."""
+    """Parse sf64-style multi-yaml structure (header.yaml + main.yaml + overlays.yaml).
+    
+    Returns (segments, segment_vram_map, sym_paths).
+    See parse_splat_yaml for return type details.
+    """
     # Find the rev directory
     yaml_dirs = []
     for root, dirs, files in os.walk(os.path.join(repo_root, 'yamls')):
@@ -156,10 +215,24 @@ def parse_sf64_yamls(repo_root: str):
             yaml_dirs.append(root)
 
     if not yaml_dirs:
-        return []
+        return [], {}, []
 
     rev_dir = yaml_dirs[0]
     all_segments = []
+
+    # Read header.yaml for symbol_addrs_paths and other options
+    header_yaml = os.path.join(rev_dir, 'header.yaml')
+    sym_paths = []
+    if os.path.exists(header_yaml):
+        with open(header_yaml, 'r') as f:
+            header_doc = yaml.safe_load(f)
+        sym_config = header_doc.get('options', {}).get('symbol_addrs_path', [])
+        if isinstance(sym_config, list):
+            for sp in sym_config:
+                full_sp = os.path.normpath(os.path.join(repo_root, sp))
+                sym_paths.append(full_sp)
+        elif isinstance(sym_config, str):
+            sym_paths.append(os.path.normpath(os.path.join(repo_root, sym_config)))
 
     for yf in ('main.yaml', 'overlays.yaml'):
         yp = os.path.join(rev_dir, yf)
@@ -175,6 +248,11 @@ def parse_sf64_yamls(repo_root: str):
             if not isinstance(seg, dict) or seg.get('type') != 'code':
                 continue
 
+            seg_start = _parse_hex(seg.get('start', 0))
+            seg_vram = _parse_hex(seg.get('vram'))
+            seg_name = seg.get('name', '')
+            follows_vram = seg.get('follows_vram')
+
             subsegments = seg.get('subsegments', [])
             if not subsegments:
                 continue
@@ -188,10 +266,7 @@ def parse_sf64_yamls(repo_root: str):
                     raw_start = sub[0]
                     if raw_start == 'auto':
                         continue
-                    if isinstance(raw_start, str):
-                        sub_start = int(raw_start, 16)
-                    else:
-                        sub_start = raw_start
+                    sub_start = _parse_hex(raw_start)
                     sub_type = str(sub[1]) if len(sub) > 1 else 'c'
                     sub_name = str(sub[2]) if len(sub) > 2 else ''
                     entries.append((sub_start, sub_type, sub_name))
@@ -217,9 +292,250 @@ def parse_sf64_yamls(repo_root: str):
                     'end_offset': end_offset,
                     'source_file': src_file,
                     'source_root': src_path,
+                    'seg_name': seg_name,
+                    'seg_vram_base': seg_vram,
+                    'seg_rom_base': seg_start,
+                    'follows_vram': follows_vram,
                 })
 
-    return all_segments
+    seg_map = _build_segment_vram_map(all_segments)
+    return all_segments, seg_map, sym_paths
+
+
+# ─── Symbol Address Parsing ──────────────────────────────────────────────────────
+
+# Patterns for identifying data symbols (not functions) by name
+_DATA_SYMBOL_PREFIXES = ('D_', 'img_', 's', 'g')
+_DATA_SYMBOL_SUFFIXES = ('_bin', '_png', '_pal', '_rgba16', '_rgba32',
+                         '_ci4', '_ci8', '_ia4', '_ia8', '_ia16',
+                         '_i4', '_i8', '_tlut', '.h')
+
+
+def _looks_like_function(name: str) -> bool:
+    """Heuristic: return True if the symbol name looks like a function."""
+    # Strip common prefixes like i1_, i2_, D_menu_ etc.
+    base = name
+    # Overlay-prefixed names like D_i1_8019A04C are data
+    if base.startswith('D_'):
+        return False
+    if base.startswith('img_'):
+        return False
+    # Name ending in data-like suffix
+    for suffix in _DATA_SYMBOL_SUFFIXES:
+        if base.endswith(suffix):
+            return False
+    return True
+
+
+def parse_symbol_addrs(repo_root: str, sym_paths: list) -> list:
+    """Parse symbol_addrs*.txt files and return list of symbol dicts.
+    
+    Each dict has keys: Name, VramAddr, RomAddr (optional), SegmentName (optional).
+    
+    Handles formats:
+        name = 0xADDR;
+        name = 0xADDR; // type:func
+        name = 0xADDR; // segment:ovl_i1
+        name = 0xADDR; // rom:0xROM
+    """
+    symbols = []
+    seen = set()
+
+    for sym_file in sym_paths:
+        if not os.path.exists(sym_file):
+            continue
+        with open(sym_file, 'r') as f:
+            lines = f.readlines()
+
+        for line in lines:
+            line = line.strip()
+            # Skip empty, comments, linker-section lines
+            if not line or line.startswith('//') or line.startswith('#'):
+                continue
+            # Skip lines that are linker-style symbol definitions (e.g., D_1 = 0x1;)
+            if '//ignore:true' in line:
+                continue
+
+            # Parse: name = 0xADDR; // comments
+            if '=' not in line:
+                continue
+
+            parts = line.split('=', 1)
+            name = parts[0].strip()
+            rest = parts[1].strip()
+
+            # Extract hex address (first token before ; or //)
+            addr_str = rest.split(';')[0].split('/')[0].strip()
+            if not addr_str.startswith('0x') and not addr_str.startswith('0X'):
+                continue
+
+            try:
+                addr = int(addr_str, 16)
+            except ValueError:
+                continue
+
+            # Skip duplicate names
+            if name in seen:
+                continue
+            seen.add(name)
+
+            # Parse comments
+            seg_name = None
+            rom_addr = None
+            sym_type = None
+
+            if '//' in line:
+                comment = line.split('//', 1)[1]
+                # Extract type:func or type:u8 etc.
+                type_match = __import__('re').search(r'type:(\S+)', comment)
+                if type_match:
+                    sym_type = type_match.group(1)
+                # Extract segment:NAME
+                seg_match = __import__('re').search(r'segment:(\S+)', comment)
+                if seg_match:
+                    seg_name = seg_match.group(1)
+                # Extract rom:0xROM
+                rom_match = __import__('re').search(r'rom:0x([0-9A-Fa-f]+)', comment)
+                if rom_match:
+                    rom_addr = int(rom_match.group(1), 16)
+
+            # Determine if this is a function symbol
+            is_func = _looks_like_function(name)
+            if sym_type == 'func':
+                is_func = True
+            elif sym_type is not None and sym_type != 'func':
+                is_func = False
+
+            if not is_func:
+                continue
+
+            sym = {
+                'Name': name,
+                'VramAddr': addr,
+                'SegmentName': seg_name,
+            }
+            if rom_addr is not None:
+                sym['RomAddr'] = rom_addr
+
+            symbols.append(sym)
+
+    return symbols
+
+
+def vram_to_rom(symbols: list, seg_map: dict) -> list:
+    """Convert symbol VRAM addresses to ROM offsets using segment mapping.
+    
+    For each symbol, finds the segment whose VRAM range contains the symbol's
+    address and computes ROM offset. Also handles symbols with explicit RomAddr.
+    
+    Returns list of symbols with added 'RomAddr' field where conversion succeeded.
+    """
+    # Build VRAM-range index from seg_map: list of (vram_start, vram_end, rom_base, name)
+    seg_ranges = []
+    for name, info in seg_map.items():
+        vram_start = info['VramBase']
+        # Estimate VRAM end from ROM range
+        rom_size = info['RomEnd'] - info['RomBase']
+        vram_end = vram_start + rom_size
+        seg_ranges.append((vram_start, vram_end, info['RomBase'], info['VramBase'], name))
+
+    seg_ranges.sort(key=lambda x: x[0])
+
+    result = []
+    for sym in symbols:
+        # If symbol already has explicit ROM address, use it
+        if 'RomAddr' in sym:
+            result.append(sym)
+            continue
+
+        vram = sym['VramAddr']
+
+        # Try explicit segment annotation first
+        if sym['SegmentName'] and sym['SegmentName'] in seg_map:
+            info = seg_map[sym['SegmentName']]
+            rom = info['RomBase'] + (vram - info['VramBase'])
+            sym['RomAddr'] = rom
+            result.append(sym)
+            continue
+
+        # Fall back to VRAM range matching
+        found = False
+        for vs, ve, rb, vb, sn in seg_ranges:
+            if vs <= vram < ve:
+                rom = rb + (vram - vb)
+                sym['RomAddr'] = rom
+                result.append(sym)
+                found = True
+                break
+
+        if not found:
+            # Symbol address doesn't match any segment - skip it
+            pass
+
+    return result
+
+
+def build_symbol_index(symbols_with_rom: list, file_index: dict) -> dict:
+    """Build a SymbolIndex mapping each file to its functions with ROM ranges.
+    
+    SymbolIndex structure: { "Repo|SourceFile": [{"Name":str, "RomStart":int, "RomEnd":int}, ...] }
+    
+    For each file in file_index, finds all symbols whose ROM addresses fall within
+    the file's segment range, sorts them by address, and infers end addresses.
+    """
+    # Build a lookup: (RepoName, SourceFile) → list of symbols
+    file_symbols = defaultdict(list)
+
+    for sym in symbols_with_rom:
+        rom = sym.get('RomAddr')
+        if rom is None:
+            continue
+
+        # Find which file this symbol belongs to by checking ROM ranges
+        for fp, fi in file_index.items():
+            repo_name = fi['RepoName']
+            source_file = fi['SourceFile']
+            for seg in fi.get('Segments', []):
+                if seg['StartOffset'] <= rom < seg['EndOffset']:
+                    key = f"{repo_name}|{source_file}"
+                    file_symbols[key].append({
+                        'Name': sym['Name'],
+                        'RomAddr': rom,
+                    })
+                    break
+            else:
+                continue
+            break
+
+    # Sort by ROM address and compute end addresses
+    symbol_index = {}
+    for key, syms in file_symbols.items():
+        syms.sort(key=lambda s: s['RomAddr'])
+        # Look up the file's ROM range to get end bounds
+        file_end = None
+        for fp, fi in file_index.items():
+            if f"{fi['RepoName']}|{fi['SourceFile']}" == key:
+                for seg in fi.get('Segments', []):
+                    se = seg['EndOffset']
+                    if file_end is None or se > file_end:
+                        file_end = se
+
+        entries = []
+        for i, s in enumerate(syms):
+            rom_start = s['RomAddr']
+            if i + 1 < len(syms):
+                rom_end = syms[i + 1]['RomAddr']
+            else:
+                rom_end = file_end if file_end else rom_start + 0x1000
+            entries.append({
+                'Name': s['Name'],
+                'RomStart': rom_start,
+                'RomEnd': rom_end,
+            })
+
+        symbol_index[key] = entries
+
+    return symbol_index
 
 
 # ─── Index Building ───────────────────────────────────────────────────────────
@@ -237,11 +553,15 @@ def build_repo_index(repo_path: str, repo_name: str, window_size: int,
 
     # Find segments
     all_segments = []
+    all_seg_maps = []
+    all_sym_paths = []
 
     # 1. Try splat yaml files in repo root
     for yf in glob.glob(os.path.join(repo_path, '*.yaml')):
-        segs = parse_splat_yaml(yf, repo_path)
+        segs, seg_map, sym_paths = parse_splat_yaml(yf, repo_path)
         all_segments.extend(segs)
+        all_seg_maps.append(seg_map)
+        all_sym_paths.extend(sym_paths)
 
     # 2. Try config/ subdirectory (Pilotwings64 style)
     config_dir = os.path.join(repo_path, 'config')
@@ -250,12 +570,16 @@ def build_repo_index(repo_path: str, repo_name: str, window_size: int,
             for yf in files:
                 if yf.endswith('.yaml'):
                     yp = os.path.join(root, yf)
-                    segs = parse_splat_yaml(yp, repo_path)
+                    segs, seg_map, sym_paths = parse_splat_yaml(yp, repo_path)
                     all_segments.extend(segs)
+                    all_seg_maps.append(seg_map)
+                    all_sym_paths.extend(sym_paths)
 
     # 3. Try sf64 style
-    segs = parse_sf64_yamls(repo_path)
+    segs, seg_map, sym_paths = parse_sf64_yamls(repo_path)
     all_segments.extend(segs)
+    all_seg_maps.append(seg_map)
+    all_sym_paths.extend(sym_paths)
 
     if not all_segments:
         print(f"    No code segments found, skipping.")
@@ -347,10 +671,34 @@ def build_repo_index(repo_path: str, repo_name: str, window_size: int,
             total_windows += 1
 
     print(f"    Indexed {total_instructions} instructions, {total_windows} windows", flush=True)
+
+    # ── Build SymbolIndex ────────────────────────────────────────────────────
+    symbol_index = {}
+    if all_sym_paths:
+        # Merge segment maps
+        merged_seg_map = {}
+        for sm in all_seg_maps:
+            merged_seg_map.update(sm)
+
+        symbols = parse_symbol_addrs(repo_path, all_sym_paths)
+        if symbols:
+            symbols_with_rom = vram_to_rom(symbols, merged_seg_map)
+            if symbols_with_rom:
+                symbol_index = build_symbol_index(symbols_with_rom, file_index)
+                print(f"    Indexed {len(symbols_with_rom)} function symbols, "
+                      f"{len(symbol_index)} files have symbol data", flush=True)
+            else:
+                print(f"    No symbols could be mapped to ROM addresses", flush=True)
+        else:
+            print(f"    No function symbols found in symbol_addrs files", flush=True)
+    else:
+        print(f"    No symbol_addrs files found", flush=True)
+
     return {
         'RepoName': repo_name,
         'HashIndex': dict(hash_index),
         'FileIndex': file_index,
+        'SymbolIndex': symbol_index,
         'TotalWindows': total_windows,
         'TotalInstrs': total_instructions,
     }
@@ -390,6 +738,7 @@ def main():
 
     combined_hash_index = {}
     combined_file_index = {}
+    combined_symbol_index = {}
     all_repo_data = {}
     total_windows = 0
     total_repos = 0
@@ -413,6 +762,11 @@ def main():
                 else:
                     combined_file_index[fp]['Segments'].extend(fi['Segments'])
 
+            # Merge symbol index
+            for key, entries in result.get('SymbolIndex', {}).items():
+                if key not in combined_symbol_index:
+                    combined_symbol_index[key] = entries
+
             total_windows += result['TotalWindows']
             all_repo_data[name] = {
                 'TotalWindows': result['TotalWindows'],
@@ -428,13 +782,14 @@ def main():
 
     norm_mode = 'opcode-only' if args.opcode_only else ('relaxed' if args.relaxed else 'strict')
     output = {
-        'IndexVersion': 1,
+        'IndexVersion': 2,
         'WindowSize': args.window_size,
         'Normalization': norm_mode,
         'BuildDate': __import__('datetime').datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         'Repos': all_repo_data,
         'HashIndex': combined_hash_index,
         'FileIndex': combined_file_index,
+        'SymbolIndex': combined_symbol_index,
     }
 
     json_str = json.dumps(output, separators=(',', ':'))

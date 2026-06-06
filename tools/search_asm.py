@@ -143,6 +143,7 @@ def search(index: dict, rom_bytes: bytes, rom_offset: int, byte_count: int,
 
     # Resolve file paths from FileIndex and merge duplicate entries
     file_index = index.get('FileIndex', {})
+    symbol_index = index.get('SymbolIndex', {})
     seen_keys = set()
     unique_results = []
 
@@ -162,9 +163,40 @@ def search(index: dict, rom_bytes: bytes, rom_offset: int, byte_count: int,
                 r['Segments'] = fi.get('Segments', [])
                 break
 
+        # Look up function info from SymbolIndex
+        sym_key = f"{r['RepoName']}|{r['SourceFile']}"
+        if sym_key in symbol_index:
+            r['Functions'] = _find_functions_for_offsets(r['RomOffsets'], symbol_index[sym_key])
+        else:
+            r['Functions'] = None
+
         unique_results.append(r)
 
     return unique_results
+
+
+def _find_functions_for_offsets(rom_offsets, func_list):
+    """Given sorted ROM offsets and a list of {Name, RomStart, RomEnd} entries,
+    return the unique function names whose ranges overlap with the offsets."""
+    if not func_list or not rom_offsets:
+        return []
+
+    min_off = rom_offsets[0]
+    max_off = rom_offsets[-1]
+
+    matched = []
+    for func in func_list:
+        fs = func['RomStart']
+        fe = func['RomEnd']
+        # Check overlap: [fs, fe) intersects [min_off, max_off]
+        if fs < max_off and fe > min_off:
+            # Trim to the actual overlap for display
+            show_start = max(fs, min_off)
+            show_end = min(fe, max_off)
+            matched.append((func['Name'], show_start, show_end, fs))
+
+    matched.sort(key=lambda x: x[3])  # sort by original function start
+    return matched
 
 
 def display_results(results, max_results: int, workspace_root: str):
@@ -220,12 +252,23 @@ def display_results(results, max_results: int, workspace_root: str):
                                for s in r['Segments'])
             print(f"  Segment(s): {seg_str}")
 
+        # Show function names
+        functions = r.get('Functions')
+        if functions is not None:
+            if functions:
+                func_strs = []
+                for name, show_start, show_end, orig_start in functions:
+                    func_strs.append(f"{name} (0x{show_start:X}-0x{show_end:X})")
+                print(f"  Functions: {', '.join(func_strs)}")
+            else:
+                print(f"  Functions: (no function symbols in range)")
+
         print()
 
     if len(results) > max_results:
         print(f"... and {len(results) - max_results} more matches below threshold range.")
 
-    print("Tip: Open the matched file and look for code near the shown ROM offset range.")
+    print("Tip: Open the matched file and look for the functions listed above.")
 
 
 def main():
