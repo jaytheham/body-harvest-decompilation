@@ -82,7 +82,38 @@ void func_802D4DCC_2B71FC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4DCC_2B71FC.s")
 #endif
 
+// CURRENT(3010)
+#ifdef NON_MATCHING
+void func_802D4F1C_2B734C(void) {
+    u8 sp35;
+    u8 sp34;
+    u8 sp33;
+    s16 i;
+    s16 sp33_adj;
+
+    D_800313F8 = 0x3B6;
+    D_80047743 = 0x2F;
+    D_800313E8 = 0x2F;
+    D_80047744 = 0x7B;
+    D_800313EC = 0x7B;
+    D_80047745 = 0x2E;
+    D_800313F0 = 0x2E;
+    i = 0;
+    do {
+        func_80004A38_5638((u8)i, (s8 *)&sp35, (s8 *)&sp34, (s8 *)&sp33);
+        *((u16 *)&D_802E30A0 + i) = *((u16 *)&D_802D48D0 + i);
+        sp33_adj = sp33 - 12;
+        *(volatile u16 *)((u16 *)&D_802D48D0 + i) = (sp35 - 12) << 11;
+        *(volatile u16 *)((u16 *)&D_802D48D0 + i) = ((sp35 - 12) << 11) + ((sp34 - 3) << 6);
+        *((u16 *)&D_802D48D0 + i) = ((sp35 - 12) << 11) + ((sp34 - 3) << 6) + sp33_adj * 2;
+        i++;
+    } while (i < 0x26);
+    func_80004948_5548();
+    leoInitUnit_atten();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4F1C_2B734C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5058_2B7488.s")
 

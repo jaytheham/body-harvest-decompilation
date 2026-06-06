@@ -3772,6 +3772,7 @@ extern char D_802E0D08_260448[];
 extern char D_802E0D28_260468[];
 extern s16 D_802E30F4;
 extern s32 D_802E3098;
+extern u8 D_802E30A0;
 extern s32 D_802E3094;
 extern s32 D_802E30EC;
 extern char D_802E2EE8_2C5318;
