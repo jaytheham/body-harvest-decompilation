@@ -273,7 +273,13 @@ void func_802D5530_254C70(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D55A0_254CE0.s")
+void func_802D55A0_254CE0(void) {
+    if (buildingInstances[191].door1InteriorId == 12) {
+        buildingInstances[191].door1InteriorId = 50;
+    } else {
+        osSyncPrintf(D_802E0D28_260468);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D55E4_254D24.s")
 
