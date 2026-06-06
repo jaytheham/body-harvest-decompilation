@@ -967,7 +967,7 @@ s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008506C_16D12C.s")
 #endif
 
-// CURRENT(3233)
+// CURRENT(3129)
 #ifdef NON_MATCHING
 void func_800852B8_16D378(s32 arg0) {
 	extern f64 D_800A5470_18D530;
@@ -975,22 +975,16 @@ void func_800852B8_16D378(s32 arg0) {
 	extern f64 D_800A5480_18D540;
 
 	u8 slot;
-	s16 effect;
 	s16 child;
-	s16 next;
-	s32 temp_t6;
-	Unk84EECEffect *base;
-	Unk84EECEffect *entry;
-	Unk84EECEffect *other;
-	u8 *baseBytes;
 	Vec3f sp44;
 	Vec3f sp38;
+	s32 pad1;
+	Unk84EECEffect *base;
+	Unk84EECEffect *entry;
+	u8 *baseBytes;
 
-	temp_t6 = arg0 & 0xFF;
-	slot = temp_t6;
-	effect = *(s16 *)(&D_800FB6FE + (slot * 0xC));
-	base = &((Unk84EECEffect *)&D_800FB7B0)[effect];
-	next = base->unk4;
+	slot = arg0 & 0xFF;
+	base = &((Unk84EECEffect *)&D_800FB7B0)[*(s16 *)(&D_800FB6FE + (slot * 0xC))];
 	child = func_80083390_16B450(slot);
 	if (child != -3) {
 		entry = &((Unk84EECEffect *)&D_800FB7B0)[child];
@@ -998,9 +992,9 @@ void func_800852B8_16D378(s32 arg0) {
 		entry->unkA = base->unkA;
 		entry->unkC = base->unkC;
 
-		other = &((Unk84EECEffect *)&D_800FB7B0)[next];
-		entry->unk11 = other->unk10;
-		baseBytes = (u8 *)&other->unk8;
+		baseBytes = ((u8 *)&D_800FB7B0) + base->unk4 * 0x16;
+		entry->unk11 = ((Unk84EECEffect *)baseBytes)->unk10;
+		baseBytes += 8;
 
 		entry->unk2 = (func_800038E0_44E0() % (base->unk2 * 2)) + base->unk2;
 
@@ -1029,9 +1023,9 @@ void func_800852B8_16D378(s32 arg0) {
 
 		func_80083014_16B0D4(&sp38, &sp38);
 
-		((u8 *)entry)[0xA] = (s8)((s32)(baseBytes[3] / 4) * sp38.x);
-		((u8 *)entry)[0xB] = (s8)((s32)(baseBytes[3] / 4) * sp38.y);
-		((u8 *)entry)[0xC] = (s8)((s32)(baseBytes[3] / 4) * sp38.z);
+		entry->unk12 = (s8)((s32)(baseBytes[3] / 4) * sp38.x);
+		entry->unk13 = (s8)((s32)(baseBytes[3] / 4) * sp38.y);
+		entry->unk14 = (s8)((s32)(baseBytes[3] / 4) * sp38.z);
 	}
 }
 #else
