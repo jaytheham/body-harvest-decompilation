@@ -1,0 +1,155 @@
+TARGET                                                   CURRENT (1713)                             
+1f3258:    andi    t6,a0,0xff                            1f3258:    andi    t6,a0,0xff              
+1f325c:    sll     t7,t6,0x2                             1f325c:    sll     t7,t6,0x2               
+1f3260:    addu    t7,t7,t6                              1f3260:    addu    t7,t7,t6                
+[2m<19 lines>[22m                                                                                          
+1f32b0:    lb      a2,0xd(t6)                            1f32b0:    lb      a2,0xd(t6)              
+1f32b4:    sw      a3,0x18(sp)                           1f32b4:    sw      a3,0x18(sp)             
+1f32b8:    sb      a0,0x53(sp)                           1f32b8:    sb      a0,0x53(sp)             
+1f32bc:    sh      v1,[93m0x4e(sp)[39m                    [33ms[39m      1f32bc:    sh      v1,[93m0x4a(sp)[39m             
+1f32c0:    sh      a1,[95m0x4a(sp)[39m                    [33ms[39m      1f32c0:    sh      a1,[95m0x46(sp)[39m             
+1f32c4:    jal     2da210                                1f32c4:    jal     2da210                  
+1f32c8:    sh      a2,[96m0x4c(sp)[39m                    [33ms[39m      1f32c8:    sh      a2,[96m0x48(sp)[39m             
+1f32cc:    lui     t7,0x8005                             1f32cc:    lui     t7,0x8005               
+1f32d0:    lw      t7,0x2b34(t7)                         1f32d0:    lw      t7,0x2b34(t7)           
+1f32d4:    li      a2,0x78                               1f32d4:    li      a2,0x78                 
+[2m<19 lines>[22m                                                                                          
+1f3324:    lbu     a0,0x53(sp)                           1f3324:    lbu     a0,0x53(sp)             
+1f3328:    andi    t3,t2,0x1                             1f3328:    andi    t3,t2,0x1               
+1f332c:    bnez    t3,1f3534 [31m~>[39m                          1f332c:    bnez    t3,1f3528 [31m~>[39m            
+1f3330:    lh      a1,[93m0x4e(sp)[39m                    [33ms[39m      1f3330:    lh      a1,[93m0x4a(sp)[39m             
+1f3334:    lw      v0,0x2b34(v0)                         1f3334:    lw      v0,0x2b34(v0)           
+1f3338:    lh      t4,[94m0[39m(v1)                       [94mi[39m      1f3338:    lh      t4,[94m4[39m(v1)                
+1f333c:    lh      t8,[94m4[39m(v1)                       [94mi[39m      1f333c:    lh      t8,[94m0[39m(v1)                
+1f3340:    lh      t5,[94m0[39m(v0)                       [94mi[39m      1f3340:    lh      t5,[94m4[39m(v0)                
+1f3344:    lh      t9,[94m4[39m(v0)                       [94mi[39m      1f3344:    lh      t9,[94m0[39m(v0)                
+1f3348:    li      a2,0x2000                             1f3348:    li      a2,0x2000               
+1f334c:    subu    t7,t4,t5                              1f334c:    subu    t7,t4,t5                
+1f3350:    subu    t2,t8,t9                              1f3350:    subu    t2,t8,t9                
+1f3354:    sh      t2,0x44(sp)                           1f3354:    sh      t2,0x44(sp)             
+1f3358:    jal     86230                                 1f3358:    jal     86230                   
+1f335c:    sh      t7,[92m0x46(sp)[39m                    [33ms[39m      1f335c:    sh      t7,[92m0x42(sp)[39m             
+1f3360:    lh      a3,[92m0x46(sp)[39m                    [33ms[39m      1f3360:    lh      a3,[92m0x42(sp)[39m             
+1f3364:    bnez    v0,1f3420 [93m~>[39m                          1f3364:    bnez    v0,1f341c [93m~>[39m            
+1f3368:    lh      t0,0x44(sp)                           1f3368:    lh      t0,0x44(sp)             
+[33m1f336c:[39m    negu    [35ma1[39m,[36ma3[39m                          [33mr[39m      [33m1f336c:[39m    negu    [35ma0[39m,[36mt0[39m                   
+[33m1f3370:[39m    slt     at,[35ma1[39m,[36ma3[39m                       [33mr[39m      [33m1f3370:[39m    slt     at,[35ma0[39m,[36mt0[39m                
+1f3374:    beqz    at,1f3384 [95m~>[39m                          1f3374:    beqz    at,1f3384 [95m~>[39m            
+[33m1f3378:[39m    negu    [32ma0[39m,[31mt0[39m                          [33mr[39m      [33m1f3378:[39m    negu    [32mv1[39m,[31ma3[39m                   
+1f337c:    b       1f3388 [96m~>[39m                             1f337c:    b       1f3388 [96m~>[39m               
+[33m1f3380:[39m    move    [93mv1[39m,[36ma3[39m                          [33mr[39m      [33m1f3380:[39m    move    [93ma1[39m,[36mt0[39m                   
+[33m1f3384:[39m [95m~>[39m move    [93mv1[39m,[35ma1[39m                          [33mr[39m      [33m1f3384:[39m [95m~>[39m move    [93ma1[39m,[35ma0[39m                   
+[33m1f3388:[39m [96m~>[39m slt     at,[32ma0[39m,[31mt0[39m                       [33mr[39m      [33m1f3388:[39m [96m~>[39m slt     at,[32mv1[39m,[31ma3[39m                
+1f338c:    beqz    at,1f339c [92m~>[39m                          1f338c:    beqz    at,1f339c [92m~>[39m            
+[33m1f3390:[39m    move    v0,[32ma0[39m                          [33mr[39m      [33m1f3390:[39m    move    v0,[32mv1[39m                   
+1f3394:    b       1f339c [92m~>[39m                             1f3394:    b       1f339c [92m~>[39m               
+[33m1f3398:[39m    move    v0,[31mt0[39m                          [33mr[39m      [33m1f3398:[39m    move    v0,[31ma3[39m                   
+[33m1f339c:[39m [92m~>[39m slt     at,v0,[93mv1[39m                       [33mr[39m      [33m1f339c:[39m [92m~>[39m slt     at,v0,[93ma1[39m                
+1f33a0:    beqz    at,1f33c4 [90m~>[39m                          1f33a0:    beqz    at,1f33c4 [90m~>[39m            
+1f33a4:    lw      t3,0x18(sp)                           1f33a4:    lw      t3,0x18(sp)             
+[33m1f33a8:[39m    slt     at,[35ma1[39m,[36ma3[39m                       [33mr[39m      [33m1f33a8:[39m    slt     at,[35ma0[39m,[36mt0[39m                
+1f33ac:    beqz    at,1f33bc [35m~>[39m                          1f33ac:    beqz    at,1f33bc [35m~>[39m            
+[94m1f33b0:[39m    [94mmove    v0,a1[39m                          [94m|[39m      [94m1f33b0:[39m    [94mnop     [39m                        
+1f33b4:    b       1f33dc [36m~>[39m                             1f33b4:    b       1f33d8 [36m~>[39m               
+[33m1f33b8:[39m    move    [93mv1[39m,[36ma3[39m                          [33mr[39m      [33m1f33b8:[39m    move    [95mv0[39m,[36mt0[39m                   
+1f33bc: [35m~>[39m b       1f33dc [36m~>[39m                             1f33bc: [35m~>[39m b       1f33d8 [36m~>[39m               
+[33m1f33c0:[39m    move    [93mv1[39m,[95mv0[39m                          [33mr[39m      [33m1f33c0:[39m    move    [95mv0[39m,[35ma0[39m                   
+[33m1f33c4:[39m [90m~>[39m slt     at,[32ma0[39m,[31mt0[39m                       [33mr[39m      [33m1f33c4:[39m [90m~>[39m slt     at,[32mv1[39m,[31ma3[39m                
+1f33c8:    beqz    at,[94m1f33d8[39m [32m~>[39m                   [94mi[39m      1f33c8:    beqz    at,[94m1f33d8[39m [36m~>[39m            
+[33m1f33cc:[39m    move    v0,[32ma0[39m                          [33mr[39m      [33m1f33cc:[39m    move    v0,[32mv1[39m                   
+1f33d0:    b       [94m1f33d8[39m [32m~>[39m                      [94mi[39m      1f33d0:    b       [94m1f33d8[39m [36m~>[39m               
+[33m1f33d4:[39m    move    v0,[31mt0[39m                          [33mr[39m      [33m1f33d4:[39m    move    v0,[31ma3[39m                   
+[31m1f33d8:[39m [32m~>[39m [31mmove    v1,v0[39m                          [31m<[39m                                                 
+[33m1f33dc:[39m [36m~>[39m slti    at,[93mv1[39m,0x79                     [33mr[39m      [33m1f33d8:[39m [36m~>[39m slti    at,[95mv0[39m,0x79              
+1f33e0:    bnezl   at,1f3424 [31m~>[39m                          1f33dc:    bnezl   at,1f3420 [32m~>[39m            
+[33m1f33e4:[39m    negu    [35ma1[39m,[36ma3[39m                          [33mr[39m      [33m1f33e0:[39m    negu    [35ma0[39m,[36mt0[39m                   
+1f33e8:    lb      t4,0x4e(t3)                           1f33e4:    lb      t4,0x4e(t3)             
+1f33ec:    lbu     a0,0x53(sp)                           1f33e8:    lbu     a0,0x53(sp)             
+1f33f0:    move    a1,zero                               1f33ec:    move    a1,zero                 
+1f33f4:    beqz    t4,1f3420 [93m~>[39m                          1f33f0:    beqz    t4,1f341c [93m~>[39m            
+1f33f8:    li      a2,0x20                               1f33f4:    li      a2,0x20                 
+1f33fc:    sh      a3,[92m0x46(sp)[39m                    [33ms[39m      1f33f8:    sh      a3,[92m0x42(sp)[39m             
+1f3400:    jal     87188                                 1f33fc:    jal     87188                   
+1f3404:    sh      t0,0x44(sp)                           1f3400:    sh      t0,0x44(sp)             
+1f3408:    lh      a3,[92m0x46(sp)[39m                    [33ms[39m      1f3404:    lh      a3,[92m0x42(sp)[39m             
+1f340c:    beqz    v0,1f3420 [93m~>[39m                          1f3408:    beqz    v0,1f341c [93m~>[39m            
+1f3410:    lh      t0,0x44(sp)                           1f340c:    lh      t0,0x44(sp)             
+1f3414:    lw      t6,0x18(sp)                           1f3410:    lw      t6,0x18(sp)             
+1f3418:    li      t5,8                                  1f3414:    li      t5,8                    
+1f341c:    sh      t5,0x1e(t6)                           1f3418:    sh      t5,0x1e(t6)             
+[33m1f3420:[39m [93m~>[39m negu    [35ma1[39m,[36ma3[39m                          [33mr[39m      [33m1f341c:[39m [93m~>[39m negu    [35ma0[39m,[36mt0[39m                   
+[33m1f3424:[39m [31m~>[39m slt     at,[35ma1[39m,[36ma3[39m                       [33mr[39m      [33m1f3420:[39m [32m~>[39m slt     at,[35ma0[39m,[36mt0[39m                
+1f3428:    beqz    at,1f3438 [93m~>[39m                          1f3424:    beqz    at,1f3434 [31m~>[39m            
+[33m1f342c:[39m    negu    [32ma0[39m,[31mt0[39m                          [33mr[39m      [33m1f3428:[39m    negu    [32mv1[39m,[31ma3[39m                   
+1f3430:    b       1f343c [95m~>[39m                             1f342c:    b       1f3438 [93m~>[39m               
+[33m1f3434:[39m    move    [93mv1[39m,[36ma3[39m                          [33mr[39m      [33m1f3430:[39m    move    [93ma1[39m,[36mt0[39m                   
+[33m1f3438:[39m [93m~>[39m move    [93mv1[39m,[35ma1[39m                          [33mr[39m      [33m1f3434:[39m [31m~>[39m move    [93ma1[39m,[35ma0[39m                   
+[33m1f343c:[39m [95m~>[39m slt     at,[32ma0[39m,[31mt0[39m                       [33mr[39m      [33m1f3438:[39m [93m~>[39m slt     at,[32mv1[39m,[31ma3[39m                
+1f3440:    beqz    at,1f3450 [96m~>[39m                          1f343c:    beqz    at,1f344c [95m~>[39m            
+[33m1f3444:[39m    move    v0,[32ma0[39m                          [33mr[39m      [33m1f3440:[39m    move    v0,[32mv1[39m                   
+1f3448:    b       1f3450 [96m~>[39m                             1f3444:    b       1f344c [95m~>[39m               
+[33m1f344c:[39m    move    v0,[31mt0[39m                          [33mr[39m      [33m1f3448:[39m    move    v0,[31ma3[39m                   
+[33m1f3450:[39m [96m~>[39m slt     at,v0,[93mv1[39m                       [33mr[39m      [33m1f344c:[39m [95m~>[39m slt     at,v0,[93ma1[39m                
+1f3454:    beqz    at,1f3474 [92m~>[39m                          1f3450:    beqz    at,1f3470 [96m~>[39m            
+[33m1f3458:[39m    slt     at,[35ma1[39m,[36ma3[39m                       [33mr[39m      [33m1f3454:[39m    slt     at,[35ma0[39m,[36mt0[39m                
+1f345c:    beqz    at,1f346c [90m~>[39m                          1f3458:    beqz    at,1f3468 [92m~>[39m            
+[94m1f3460:[39m    [94mmove    v0,a1[39m                          [94m|[39m      [94m1f345c:[39m    [94mnop     [39m                        
+1f3464:    b       1f348c [35m~>[39m                             1f3460:    b       1f3484 [90m~>[39m               
+[33m1f3468:[39m    move    [93mv1[39m,[36ma3[39m                          [33mr[39m      [33m1f3464:[39m    move    [95mv0[39m,[36mt0[39m                   
+1f346c: [90m~>[39m b       1f348c [35m~>[39m                             1f3468: [92m~>[39m b       1f3484 [90m~>[39m               
+[33m1f3470:[39m    move    [93mv1[39m,[95mv0[39m                          [33mr[39m      [33m1f346c:[39m    move    [95mv0[39m,[35ma0[39m                   
+[33m1f3474:[39m [92m~>[39m slt     at,[32ma0[39m,[31mt0[39m                       [33mr[39m      [33m1f3470:[39m [96m~>[39m slt     at,[32mv1[39m,[31ma3[39m                
+1f3478:    beqz    at,1f3488 [36m~>[39m                          1f3474:    beqz    at,1f3480 [35m~>[39m            
+[33m1f347c:[39m    move    [95mv0[39m,[32ma0[39m                          [33mr[39m      [33m1f3478:[39m    move    [93ma1[39m,[32mv1[39m                   
+[31m1f3480:[39m    [31mb       1f3488[39m [36m~>[39m                      [31m<[39m                                                 
+[33m1f3484:[39m    move    [95mv0[39m,[31mt0[39m                          [33mr[39m      [33m1f347c:[39m    move    [93ma1[39m,[31ma3[39m                   
+[33m1f3488:[39m [36m~>[39m move    [93mv1[39m,[95mv0[39m                          [33mr[39m      [33m1f3480:[39m [35m~>[39m move    [95mv0[39m,[93ma1[39m                   
+[33m1f348c:[39m [35m~>[39m slti    at,[93mv1[39m,0x79                     [33mr[39m      [33m1f3484:[39m [90m~>[39m slti    at,[95mv0[39m,0x79              
+1f3490:    beqz    at,1f3510 [32m~>[39m                          1f3488:    beqz    at,1f3504 [36m~>[39m            
+[33m1f3494:[39m    slt     at,[35ma1[39m,[36ma3[39m                       [33mr[39m      [33m1f348c:[39m    slt     at,[35ma0[39m,[36mt0[39m                
+1f3498:    beqz    at,1f34a8 [31m~>[39m                          1f3490:    beqz    at,1f34a0 [32m~>[39m            
+[33m1f349c:[39m    move    [93mv1[39m,[35ma1[39m                          [33mr[39m      [33m1f3494:[39m    move    [95mv0[39m,[35ma0[39m                   
+1f34a0:    b       1f34a8 [31m~>[39m                             1f3498:    b       1f34a0 [32m~>[39m               
+[33m1f34a4:[39m    move    [93mv1[39m,[36ma3[39m                          [33mr[39m      [33m1f349c:[39m    move    [95mv0[39m,[36mt0[39m                   
+[33m1f34a8:[39m [31m~>[39m slt     at,[32ma0[39m,[31mt0[39m                       [33mr[39m      [33m1f34a0:[39m [32m~>[39m slt     at,[32mv1[39m,[31ma3[39m                
+1f34ac:    beqz    at,1f34bc [93m~>[39m                          1f34a4:    beqz    at,1f34b4 [31m~>[39m            
+[33m1f34b0:[39m    move    [95mv0[39m,[32ma0[39m                          [33mr[39m      [33m1f34a8:[39m    move    [93ma1[39m,[32mv1[39m                   
+1f34b4:    b       1f34bc [93m~>[39m                             1f34ac:    b       1f34b4 [31m~>[39m               
+[33m1f34b8:[39m    move    [95mv0[39m,[31mt0[39m                          [33mr[39m      [33m1f34b0:[39m    move    [93ma1[39m,[31ma3[39m                   
+[33m1f34bc:[39m [93m~>[39m slt     at,[95mv0[39m,[93mv1[39m                       [33mr[39m      [33m1f34b4:[39m [31m~>[39m slt     at,[93ma1[39m,[95mv0[39m                
+1f34c0:    beqz    at,1f34e4 [95m~>[39m                          1f34b8:    beqz    at,1f34dc [93m~>[39m            
+[33m1f34c4:[39m    lh      [96ma2[39m,[96m0x4c(sp)[39m                    [33mr[39m      [33m1f34bc:[39m    lh      [93ma1[39m,[95m0x46(sp)[39m             
+[33m1f34c8:[39m    slt     at,[35ma1[39m,[36ma3[39m                       [33mr[39m      [33m1f34c0:[39m    slt     at,[35ma0[39m,[36mt0[39m                
+1f34cc:    beqz    at,1f34dc [96m~>[39m                          1f34c4:    beqz    at,1f34d4 [95m~>[39m            
+[94m1f34d0:[39m    [94mmove    v0,a1[39m                          [94m|[39m      [94m1f34c8:[39m    [94mnop     [39m                        
+1f34d4:    b       1f34fc [92m~>[39m                             1f34cc:    b       1f34f0 [96m~>[39m               
+[33m1f34d8:[39m    move    [93mv1[39m,[36ma3[39m                          [33mr[39m      [33m1f34d0:[39m    move    [95mv0[39m,[36mt0[39m                   
+1f34dc: [96m~>[39m b       1f34fc [92m~>[39m                             1f34d4: [95m~>[39m b       1f34f0 [96m~>[39m               
+[33m1f34e0:[39m    move    [93mv1[39m,[95mv0[39m                          [33mr[39m      [33m1f34d8:[39m    move    [95mv0[39m,[35ma0[39m                   
+[33m1f34e4:[39m [95m~>[39m slt     at,[32ma0[39m,[31mt0[39m                       [33mr[39m      [33m1f34dc:[39m [93m~>[39m slt     at,[32mv1[39m,[31ma3[39m                
+1f34e8:    beqz    at,[94m1f34f8[39m [90m~>[39m                   [94mi[39m      1f34e0:    beqz    at,[94m1f34f0[39m [96m~>[39m            
+[33m1f34ec:[39m    move    v0,[32ma0[39m                          [33mr[39m      [33m1f34e4:[39m    move    v0,[32mv1[39m                   
+1f34f0:    b       [94m1f34f8[39m [90m~>[39m                      [94mi[39m      1f34e8:    b       [94m1f34f0[39m [96m~>[39m               
+[33m1f34f4:[39m    move    v0,[31mt0[39m                          [33mr[39m      [33m1f34ec:[39m    move    v0,[31ma3[39m                   
+[31m1f34f8:[39m [90m~>[39m [31mmove    v1,v0[39m                          [31m<[39m                                                 
+[33m1f34fc:[39m [92m~>[39m slti    at,[93mv1[39m,0x73                     [33mr[39m      [33m1f34f0:[39m [96m~>[39m slti    at,[95mv0[39m,0x73              
+1f3500:    bnez    at,1f3510 [32m~>[39m                          1f34f4:    bnez    at,1f3504 [36m~>[39m            
+1f3504:    lbu     a0,0x53(sp)                           1f34f8:    lbu     a0,0x53(sp)             
+1f3508:    jal     2da18c                                1f34fc:    jal     2da18c                  
+[33m1f350c:[39m    lh      [35ma1[39m,[95m0x4a(sp)[39m                    [33mr[39m      [33m1f3500:[39m    lh      [96ma2[39m,[96m0x48(sp)[39m             
+1f3510: [32m~>[39m lbu     a0,0x53(sp)                           1f3504: [36m~>[39m lbu     a0,0x53(sp)             
+1f3514:    lh      a1,[96m0x4c(sp)[39m                    [33ms[39m      1f3508:    lh      a1,[96m0x48(sp)[39m             
+1f3518:    jal     90a6c                                 1f350c:    jal     90a6c                   
+1f351c:    li      a2,0xbb8                              1f3510:    li      a2,0xbb8                
+1f3520:    lbu     a0,0x53(sp)                           1f3514:    lbu     a0,0x53(sp)             
+1f3524:    lh      a1,[95m0x4a(sp)[39m                    [33ms[39m      1f3518:    lh      a1,[95m0x46(sp)[39m             
+1f3528:    jal     90a6c                                 1f351c:    jal     90a6c                   
+1f352c:    li      a2,0xbb8                              1f3520:    li      a2,0xbb8                
+1f3530:    lw      v1,0x18(sp)                           1f3524:    lw      v1,0x18(sp)             
+[2m<5 lines>[22m                                                                                           
+1f3548:    addiu   sp,sp,0x50                            1f353c:    addiu   sp,sp,0x50              
+1f354c:    jr      ra                                    1f3540:    jr      ra                      
+1f3550:    nop                                           1f3544:    nop                             
+                                                  [32m>[39m      [32m1f3548:[39m    [32mandi    t6,a0,0xff[39m              
+                                                  [32m>[39m      [32m1f354c:[39m    [32msll     t7,t6,0x2[39m               
+                                                  [32m>[39m      [32m1f3550:[39m    [32maddiu   sp,sp,-0x70[39m             
