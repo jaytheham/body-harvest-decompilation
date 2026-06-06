@@ -1013,7 +1013,75 @@ void func_802D795C_1F066C(void) {
 	func_800074BC_80BC(&func_802D6E70_1EFB80);
 }
 
+// CURRENT(5) - jump table offset 0xe90 vs 0xf20 (rodata layout)
+#ifdef NON_MATCHING
+void func_802D7980_1F0690(void) {
+    switch (D_80048030) {
+    case 0:
+        if (func_80004818_5418(-0x11, 0x43, 2) != 0) {
+            func_800076D4_82D4(1);
+        }
+        break;
+    case 1:
+        if (func_8000726C_7E6C(1) != 0) {
+            func_800076D4_82D4(2);
+        }
+        break;
+    case 2:
+        if (func_80004818_5418(0x2C, 0x61, 3) != 0) {
+            func_800076D4_82D4(3);
+        }
+        break;
+    case 3:
+        if (func_80004818_5418(0x5B, 0x5F, 3) != 0) {
+            func_800076D4_82D4(4);
+        }
+        break;
+    case 4:
+        if (func_80004818_5418(0x49, 0x23, 2) != 0) {
+            func_800076D4_82D4(5);
+        }
+        break;
+    case 5:
+        if (func_80004818_5418(0x4E, 0x12, 2) != 0) {
+            func_800076D4_82D4(6);
+        }
+        break;
+    case 6:
+        if (func_80004818_5418(0x6A, -0xB, 3) != 0) {
+            func_800076D4_82D4(7);
+        }
+        break;
+    case 7:
+    case 8:
+        break;
+    case 9:
+        if (func_80004818_5418(7, -0x50, 8) != 0) {
+            func_800076D4_82D4(0xA);
+        }
+        break;
+    case 10:
+        if (func_80004818_5418(-0x2F, -0x46, 3) != 0) {
+            func_800076D4_82D4(0xB);
+        }
+        break;
+    case 11:
+        if (func_80004818_5418(-0x64, -0x23, 6) != 0) {
+            func_800076D4_82D4(0xC);
+        }
+        break;
+    case 12:
+        if (func_8000726C_7E6C(0x21) != 0) {
+            func_800076D4_82D4(0xD);
+        }
+        break;
+    case 13:
+        break;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7980_1F0690.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7B68_1F0878.s")
 
