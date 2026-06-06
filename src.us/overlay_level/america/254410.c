@@ -235,7 +235,28 @@ void func_802D5440_254B80(void) {
     func_80007410_8010(func_802D536C_254AAC);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D546C_254BAC.s")
+void func_802D546C_254BAC(void) {
+    s16 i;
+    u8 id;
+    AlienInstance *temp;
+
+    for (i = 0; i < 0xFF; i++) {
+        temp = &alienInstances[i];
+        if (temp->specIndex == 0x24) {
+            temp->unk20 |= 0x401000;
+            temp->unk2C = 200;
+        }
+    }
+
+    func_800074BC_80BC(func_802D536C_254AAC);
+
+    id = D_802E0E44;
+    if (id != 0xFF) {
+        if (alienInstances[id].specIndex == 0x12) {
+            func_80087AAC_96A5C(id);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5530_254C70.s")
 
