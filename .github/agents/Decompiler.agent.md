@@ -109,4 +109,4 @@ Move any newly declared variables or functions from the C source file to `includ
 | --------------------------------- | ----------------------------------------------------------- |
 | `undeclared identifier`           | Add `extern` to `include/variables.us.h`                    |
 | Link error (missing symbol)       | Ensure symbol is declared with `extern` in a header         |
-Jump table problems - ignore problems with jump tables for now, we will fix these in a later pass once all functions are matched, as they require special handling.
+Jump table problems - ignore problems with jump tables target addresses for now, we will fix these in a later pass once all functions are matched, as they require special handling.
