@@ -488,7 +488,19 @@ afterFirstBlock:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5F28_2B8358.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6220_2B8650.s")
+void func_802D6220_2B8650(void) {
+    D_802E30F4--;
+    if (D_802E30F4 == 0) {
+        vehicleInstances[30].unk20 &= ~0x80;
+        D_801493E0 = 0;
+        D_802E3094 = 0;
+        func_8012D808_13C7B8(D_802E3098);
+        D_802E30EC = 0;
+        D_8014D17C = 0;
+        func_800EFEB4_FEE64(0, 0x1C, 0);
+        func_80007410_8010(&func_802D5F28_2B8358);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D62B4_2B86E4.s")
 
