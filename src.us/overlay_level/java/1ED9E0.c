@@ -2107,7 +2107,9 @@ void func_802DA210_1F2F20(u8 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DA210_1F2F20.s")
 #endif
 
+// CURRENT(1548)
 void func_802DA210_1F2F20(u8 arg0, s16 arg1, s16 arg2);
+#ifdef NON_MATCHING
 void func_802DA548_1F3258(u8 arg0) {
     void *sp18;
     s16 sp4E;
@@ -2252,6 +2254,9 @@ void func_802DA548_1F3258(u8 arg0) {
         ((AlienInstance *)sp18)->unk1E = temp_v0 - 1;
     }
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DA548_1F3258.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_802DA844_1F3554(u8 arg0) {
