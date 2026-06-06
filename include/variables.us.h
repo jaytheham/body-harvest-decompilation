@@ -607,6 +607,7 @@ extern s16 D_8004DCBC;
 extern u16 D_8004DC5E;
 extern s32 D_8004DC68[4]; // Callback function pointers
 extern s32 D_8004DC74; /* = D_8004DC68[3] */
+extern u8 D_8004D1B2;
 extern VehicleInstance vehicleInstances[]; // 8004DCD0
 extern VehicleInstance D_8004F374;
 extern Unk80050ADA D_80050ADA[]; // 0x80050ADA

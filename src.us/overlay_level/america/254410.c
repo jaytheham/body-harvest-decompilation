@@ -200,7 +200,13 @@ void func_802D52B0_2549F0(void) {
     func_800AE454_BD404(&sp24);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D536C_254AAC.s")
+void func_802D536C_254AAC(void) {
+    s16 temp = 0x96 - D_8004D1B2;
+    func_8009BF64_AAF14((u16)temp);
+    if (temp == -1) {
+        func_800074BC_80BC(func_802D536C_254AAC);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D53BC_254AFC.s")
 

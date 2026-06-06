@@ -7,6 +7,7 @@ previousControllerButtonStates = 0x800475E0; // size:0x8
 weaponSlots = 0x80048138;
 alienInstances = 0x80048198; // size:0x4FB0
 
+D_8004D1B2 = 0x8004D1B2;
 vehicleInstances = 0x8004DCD0; // size:0x2E00
 buildingInstances = 0x80050AD8; // size:0x23DC
 buildingInteriorToLoadId = 0x80052548;
