@@ -2542,7 +2542,79 @@ void func_802DB428_1F4138(u8 arg0) {
 	alienInstances[arg0].unk12 = 0;
 }
 
+#ifdef NON_MATCHING
+void func_802DB468_1F4178(u8 arg0) {
+    AlienInstance *alien;
+    s32 sp6C;
+    s32 sp64;
+    s32 sp60;
+    s32 sp5C;
+    s16 sp5A;
+    s16 sp56;
+
+    func_80137468_146418(arg0, 0x25);
+    alien = &alienInstances[arg0];
+    if (alien->unk20 < 0) {
+        func_800CA5EC_D959C(alien->unk0, alien->unk2, alien->unk4, 0, 1, 0, 0x50, 4, 0xA, 0xFF, 0xC8, 0x32, 0, 0xFF);
+    }
+    if (alien->unk20 & 0x40000000) {
+        if (alien->unk10 < 0) {
+            alien->unk20 &= 0xBFFFFFFF;
+        }
+    } else {
+        sp6C = func_80084E54_93E04((VehicleInstance *)alien, D_80052B34);
+        if (sp6C < 0x258) {
+            func_8008E978_9D928(arg0, 0xC8);
+        } else {
+            func_8008E978_9D928(arg0, 0x190);
+        }
+        if (alien->unk20 & 0x2000) {
+            if (alien->unk2C != 0) {
+                alien->unk2C--;
+            }
+            if ((alien->unk2C >= 9) && (alien->unk2C & 1)) {
+                alien->unk4C++;
+            }
+            if (alien->unk2C == 2) {
+                func_80128504_1374B4(alien, 0, (s32*)&sp64, (s32*)&sp60, (s32*)&sp5C);
+                sp5A = alien->unk6;
+                if (func_800868A4_95854(arg0, 0, 0, 0x1194) != 0) {
+                    sp56 = coss(sp5A);
+                    func_800CA5EC_D959C((s16)sp64, (s16)sp60, (s16)sp5C, (s8)(s32)((f64)(f32)sp56 / 32768.0 * 100.0), -0x2E, (s32)((f64)(f32)sins(sp5A) / 32768.0 * 100.0), 0x96, 7, 0x1E, 0x14, 0xC8, 0x32, 0, 0xFF);
+                    alien->unk1E = 0x28;
+                    func_80137468_146418(arg0, 0xCD);
+                }
+            }
+            if (alien->unk2C < 3) {
+                s16 val = alien->unk4C;
+                if (val < 0) {
+                    val = (val + 1) / 2;
+                } else {
+                    val = val / 2;
+                }
+                alien->unk4C = val;
+            }
+            if (alien->unk2C == 0) {
+                alien->unk4C = 0;
+                alien->unk20 &= ~0x2000;
+            }
+        } else {
+            func_800B84D0_C7480(alien->unk0, alien->unk4);
+            if ((sp6C < 0x190) && (alien->unk1E == 0)) {
+                alien->unk2C = 0x20;
+                alien->unk20 |= 0x2000;
+            }
+        }
+    }
+    func_8008EF1C_9DECC(arg0);
+    func_8008751C_964CC(arg0, 0xFA, 0xF0);
+    if (alien->unk1E != 0) {
+        alien->unk1E--;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB468_1F4178.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB7A4_1F44B4.s")
 

@@ -1590,7 +1590,7 @@ void func_8007B9CC_8A97C(s32 arg0) {
 	}
 
 	if ((specIndex != 2) && (specIndex != 0x20)) {
-		yOffset = *(s16 *)&alien->pad4C[0];
+		yOffset = alien->unk4C;
 		sp60.unk2 += yOffset;
 		if (!(spec->unk54 & 0x4000)) {
 			sp60.unk0 -= yOffset;
@@ -2402,10 +2402,10 @@ block_11:
 
 							sp80 = var_f0;
 							D_8014DD50[temp_s0->unkC].unk2 = (s16) (s32) ((f64) D_8014DD50[temp_s0->unkC].unk2 -
-								((f64) ((f32) (*(s16 *) &temp_s0->pad4C[0]) * var_f0) * 0.25));
-							*(s16 *) &temp_s0->pad4C[0] = (s16) (s32) (((f64) (f32) sins((((temp_s5 * 9) + D_80052A8C) << 10) & 0xFFFF) / 32768.0) * 4.0);
+								((f64) ((f32) temp_s0->unk4C * var_f0) * 0.25));
+							temp_s0->unk4C = (s16) (s32) (((f64) (f32) sins((((temp_s5 * 9) + D_80052A8C) << 10) & 0xFFFF) / 32768.0) * 4.0);
 							D_8014DD50[temp_s0->unkC].unk2 = (s16) (s32) ((f64) D_8014DD50[temp_s0->unkC].unk2 +
-								((f64) ((f32) (*(s16 *) &temp_s0->pad4C[0]) * var_f0) * 0.25));
+								((f64) ((f32) temp_s0->unk4C * var_f0) * 0.25));
 						}
 					}
 
