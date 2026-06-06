@@ -502,7 +502,10 @@ void func_802D6220_2B8650(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D62B4_2B86E4.s")
+void func_802D62B4_2B86E4(void) {
+    D_802E30F4 = 0x4B;
+    func_80007410_8010(&func_802D6220_2B8650);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D62E4_2B8714.s")
 
