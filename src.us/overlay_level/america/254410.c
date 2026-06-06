@@ -144,7 +144,11 @@ void func_802D516C_2548AC(void) {
     func_800073B8_7FB8((u64)0x36);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5190_2548D0.s")
+void func_802D5190_2548D0(void) {
+    u32 *ptr = (u32*)((u8*)buildingInstances + 0x5D8);
+    u32 val = *ptr;
+    *ptr = ((((val >> 12) | 0x20) ^ (val >> 12)) << 12) ^ val;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D51B8_2548F8.s")
 
