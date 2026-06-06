@@ -18,7 +18,7 @@ void func_802D4CD0_254410(s32 arg0, s32 arg1) {
             func_800EFEB4_FEE64(func_802D563C_254D7C, 0x12, 0);
             break;
         case 0x1C:
-            func_802D5110_254850(arg0);
+            func_802D5110_254850();
             break;
         case 0x45:
             func_802D4E70_2545B0();
@@ -130,7 +130,11 @@ void func_802D5044_254784(void) {
     ((u8*)buildingInstances)[0x5DF] = ((s8*)D_802590A9)[((u8*)buildingInstances)[0x5D6] * 32];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5110_254850.s")
+void func_802D5110_254850(void) {
+    D_802E0E34 = 0;
+    func_80007410_8010(func_802D4FBC_2546FC);
+    func_80007410_8010(func_802D5044_254784);
+}
 
 void func_802D5148_254888(void) {
     func_800073B8_7FB8((u64)0x36);
