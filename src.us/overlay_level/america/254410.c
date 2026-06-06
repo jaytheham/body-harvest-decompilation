@@ -89,7 +89,20 @@ void func_802D4E70_2545B0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D4E70_2545B0.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D4FBC_2546FC.s")
+void func_802D4FBC_2546FC(void) {
+    D_802E0E34++;
+    if (D_802E0E34 != 0x96) {
+        return;
+    }
+    func_800076D4_82D4(1);
+    func_80013468_14068(0x10);
+    func_800EFEB4_FEE64(NULL, 0x14, 0);
+    func_800072CC_7ECC(0x1E);
+    D_801493E0 = 0;
+    D_8004816C = 0;
+    func_802D5190_2548D0();
+    func_800074BC_80BC(func_802D4FBC_2546FC);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5044_254784.s")
 
