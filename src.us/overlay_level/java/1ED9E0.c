@@ -1083,8 +1083,98 @@ void func_802D7980_1F0690(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7980_1F0690.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7B68_1F0878.s")
+// CURRENT(1291) - uses s16 sp38[2] instead of sp38/sp3A
+#ifdef NON_MATCHING
+void func_802D7B68_1F0878(u8 arg0) {
+	s16 sp5E;
+	s16 sp5C;
+	s16 sp5A;
+	s16 sp58;
+	s16 sp56;
+	s16 sp50[3];
+	s32 sp44[3];
+	s32 sp40;
+	s16 sp3E;
+	s16 sp34;
+	s16 sp38[2];
+	AlienInstance *s0;
 
+	s0 = &alienInstances[arg0];
+	sp3E = s0->specIndex;
+	sp5E = s0->unkC;
+	sp5C = D_8014DD50[sp5E].unkC;
+	sp58 = D_8014DD50[sp5C].unkC;
+	sp5A = D_8014DD50[sp58].unkD;
+	sp56 = D_8014DD50[sp5A].unkD;
+	func_800808F0_8F8A0(arg0, &s0->unkE);
+	D_8014DD50[sp5E].unk6 = s0->unk6;
+	func_80086164_95114(arg0, sp5C);
+	D_8014DD50[sp5C].unk6 = -s0->unk6;
+	sp50[0] = 0x3C;
+	sp50[1] = -8;
+	sp50[2] = 0x70;
+	func_800A931C_B82CC((s8) sp5C, sp50, sp44);
+	sp50[0] = (s16) sp44[0];
+	sp50[1] = (s16) sp44[1];
+	sp50[2] = (s16) sp44[2];
+	func_800A931C_B82CC((s8) sp5E, sp50, sp44);
+	alienSpecs[sp3E].unk20 = (s16) sp44[0];
+	alienSpecs[sp3E].unk22 = (s16) sp44[1];
+	alienSpecs[sp3E].unk24 = (s16) sp44[2];
+	sp40 = func_80084E54_93E04(D_80052B34, s0);
+	if ((func_8000726C_7E6C((u64)0x11) != 0) && (func_8000726C_7E6C((u64)0x2C) == 0) && (func_80084FE8_93F98(arg0, 0x418) != 0)) {
+		s0->unk20 &= ~0x08000000;
+		s0->unk14 = buildingInstances[50].xCoord;
+		s0->unk16 = buildingInstances[50].yCoord;
+		s0->unk18 = buildingInstances[50].zCoord;
+		if (func_80087188_96138(arg0, 0, 0x28) != 0) {
+			s0->unk1E = 5;
+		}
+		if (s0->unk1E != 0) {
+			s0->unk1E--;
+		}
+	} else {
+		if (currentLevel == 1) {
+			sp34 = 0x3C;
+		} else {
+			sp34 = 0x1E;
+		}
+		if ((func_80084FE8_93F98(arg0, 0x830) != 0) && (sp40 < 0x7D0)) {
+			s0->unk26++;
+			if ((sp34 + 0x28) < s0->unk26) {
+				s0->unk1E = 0x28;
+				s0->unk20 &= ~0x2000;
+				s0->unk26 = 0;
+			}
+			if (func_80087188_96138(arg0, 0, 0x28) != 0) {
+				s0->unk36 = 0;
+				s0->unk1E = 6;
+				s0->unk20 |= 0xA000;
+				s0->unk20 |= 0x1000;
+			}
+		} else {
+			s0->unk26 = 0;
+			s0->unk1E = 0;
+		}
+		if (s0->unk20 & 0x9000) {
+			if (s0->unk20 & 0x04000000) {
+				sp38[0] = sp58;
+			} else {
+				sp38[0] = sp5A;
+			}
+			sp38[1] = sp56;
+			if (func_80081F18_90EC8(arg0, 2, 2, sp38, &D_802E05C0_1F92D0) == 2) {
+				s0->unk20 &= ~0x8000;
+			}
+		}
+		if (s0->unk1E != 0) {
+			s0->unk1E--;
+		}
+	}
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7B68_1F0878.s")
+#endif
 #ifdef NON_MATCHING
 void func_802D7EAC_1F0BBC(u8 arg0) {
 	AlienInstance *alien;
