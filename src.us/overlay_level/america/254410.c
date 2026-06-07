@@ -5,6 +5,10 @@
 s16 func_8008EB20_5EFD0();
 void func_802D62A0_2559E0(u8 arg0);
 void func_802D65BC_255CFC(u8 arg0);
+typedef struct { s16 lo; s16 hi; } UnkArg802D7840;
+void func_802D7968_2570A8(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
+s32 func_802D7840_256F80(s32 arg0, UnkArg802D7840 arg1);
+void func_802D7C00_257340(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7);
 
 
 void func_802D4CD0_254410(s32 arg0, s32 arg1) {
@@ -804,8 +808,6 @@ void func_802D736C_256AAC(s32 arg0) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D736C_256AAC.s")
 #endif
-
-typedef struct { s16 lo; s16 hi; } UnkArg802D7840;
 
 // CURRENT(2630)
 #ifdef NON_MATCHING
