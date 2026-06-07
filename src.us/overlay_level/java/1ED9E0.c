@@ -4482,7 +4482,26 @@ void func_802DFC28_1F8938(u8 arg0) {
 	func_8008B02C_99FDC(arg0);
 }
 
+#ifdef NON_MATCHING
+void func_802DFCA8_1F89B8(u8 arg0) {
+    AlienInstance *temp_v1;
+
+    temp_v1 = &alienInstances[arg0];
+    if (!(temp_v1->unk20 & 0x100000)) {
+        func_80137468_146418(arg0, 0x11);
+    }
+    if (temp_v1->unk2C == 1) {
+        AlienInstance *temp_v0;
+
+        temp_v0 = &alienInstances[temp_v1->unk25];
+        temp_v0->unk20 &= ~0x8000000;
+        D_802566C2[temp_v0->specIndex * 0x34] = 0x400;
+    }
+    func_80089EB4_98E64(arg0, 0x14, 3, 7, 1);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DFCA8_1F89B8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DFD80_1F8A90.s")
 
