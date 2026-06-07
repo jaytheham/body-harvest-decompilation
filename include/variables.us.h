@@ -1558,6 +1558,7 @@ extern char D_80141D30_150CE0[];
 extern s32 D_8014D304;
 extern u32 D_80256688[][26];
 extern s16 D_802566C0[];
+extern s16 D_802566C2[];
 extern s32 D_802566D4[];
 extern char D_80141D50_150D00[];
 extern char D_80141D88_150D38;
@@ -2159,6 +2160,7 @@ extern u32 D_8014D1D4; // D_8014D1B8[7]
 extern Unk8025669C D_8025669C[];  // 8025669C
 extern Unk8014DD50 *D_802DDC88_196798;
 extern Unk8014DD50 *D_802DDCD0_1967E0;
+extern AlienSpec D_802E0CE4_1F99F4; // 0x802E0CE4
 extern Unk8014DD50 *D_802E05C0_1F92D0;
 extern Unk8014DD50 *D_802E0870_1F9580;
 extern s8 D_802E0878_1F9588[];
@@ -2329,7 +2331,7 @@ extern s16 D_8016015C;
 extern s16 D_8015929C;
 extern s32 D_801493D0;
 extern s32 D_801600F0;
-extern s16 D_80257A0C[];
+extern s16 D_80257A0C[]; // Wrong. Use vehicleSpecs array unkC field instead.
 extern s16 D_80257A38[];
 extern Unk80160080 D_80160080;
 extern s32 D_80160160;
@@ -3737,6 +3739,15 @@ extern char D_802E0E3C_1F9B4C[];
 extern u8 D_802E0E44;
 extern char D_802E0E60_1F9B70[];
 extern Unk802E04F8Entry D_802E04F8_1F9208[];
+extern u8 D_802E0CB4_1F99C4[];
+extern u8 D_802E0CBC_1F99CC[];
+extern struct { s32 w; u16 h; } D_802E0CC4_1F99D4;
+extern struct { s32 w; u16 h; } D_802E0CCC_1F99DC;
+extern struct { s32 w; u16 h; } D_802E0CD4_1F99E4;
+extern struct { s32 w; u16 h; } D_802E0CDC_1F99EC;
+extern f64 D_802E0F90_1F9CA0;
+extern f64 D_802E0F98_1F9CA8;
+extern f64 D_802E0FA0_1F9CB0;
 extern s16 D_802E0FB0;
 extern s16 D_802E0FB2;
 extern s16 D_802E0FB4;
