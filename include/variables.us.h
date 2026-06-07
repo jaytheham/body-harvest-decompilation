@@ -3821,6 +3821,7 @@ extern s8 D_802E0570;
 extern s8 D_802E0580;
 extern f64 D_802E0EB0;
 extern s32 D_80053C98;
+extern s32 D_802E0EBC_2C32EC[];
 extern s32 D_802E3100;
 extern f32 D_802E2F84_2C53B4;
 extern f64 D_802E2F88_2C53B8;
