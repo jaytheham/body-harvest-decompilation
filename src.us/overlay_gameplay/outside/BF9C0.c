@@ -2920,34 +2920,37 @@ void func_800B753C_C64EC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B753C_C64EC.s")
 #endif
 
-s32 func_800B84D0_C7480(s16 arg0, s16 arg1)
+// Get height of terrain at given position
+s32 func_800B84D0_C7480(s16 xPosition, s16 zPosition)
 {
   u32 temp_v0;
   u32 temp_a3;
-  u32 var_v1;
-  u32 new_var;
-  u32 var_a2;
+  u32 xPositionInTile;
+  u32 zPositionInTile;
+  u32 tileRowIndex;
   s32 var_t0;
   s32 var_t1;
   s32 var_t2;
-  var_v1 = arg0 & 0xFF;
-  var_a2 = arg1 & 0xFF;
-  new_var = arg1 >> 8;
-  if ((var_v1 + var_a2) < 0x100U)
+  xPositionInTile = xPosition & 0xFF;
+  zPositionInTile = zPosition & 0xFF;
+  tileRowIndex = zPosition >> 8;
+  // Pick the bottom-left vs top-right triangle.
+  if ((xPositionInTile + zPositionInTile) < 0x100U)
   {
-	var_t0 = D_80052A94[new_var].unk0[arg0 >> 8] & 0x3F;
-	var_t1 = (D_80052A94[new_var].unk0[(arg0 >> 8) + 1] & 0x3F) - var_t0;
-	var_t2 = (D_80052A94[new_var + 1].unk0[arg0 >> 8] & 0x3F) - var_t0;
+	var_t0 = D_80052A94[tileRowIndex].unk0[xPosition >> 8] & 0x3F;
+	var_t1 = (D_80052A94[tileRowIndex].unk0[(xPosition >> 8) + 1] & 0x3F) - var_t0;
+	var_t2 = (D_80052A94[tileRowIndex + 1].unk0[xPosition >> 8] & 0x3F) - var_t0;
   }
   else
   {
-	var_v1 = 0x100 - var_v1;
-	var_a2 = 0x100 - var_a2;
-	var_t0 = D_80052A94[new_var + 1].unk0[(arg0 >> 8) + 1] & 0x3F;
-	var_t1 = (D_80052A94[new_var + 1].unk0[arg0 >> 8] & 0x3F) - var_t0;
-	var_t2 = (D_80052A94[new_var].unk0[(arg0 >> 8) + 1] & 0x3F) - var_t0;
+	xPositionInTile = 0x100 - xPositionInTile;
+	zPositionInTile = 0x100 - zPositionInTile;
+	var_t0 = D_80052A94[tileRowIndex + 1].unk0[(xPosition >> 8) + 1] & 0x3F;
+	var_t1 = (D_80052A94[tileRowIndex + 1].unk0[xPosition >> 8] & 0x3F) - var_t0;
+	var_t2 = (D_80052A94[tileRowIndex].unk0[(xPosition >> 8) + 1] & 0x3F) - var_t0;
   }
-  return (((var_t0 << 8) + (var_t1 * var_v1)) + (var_t2 * var_a2)) << 5;
+  //Barycentric interpolation
+  return (((var_t0 << 8) + (var_t1 * xPositionInTile)) + (var_t2 * zPositionInTile)) << 5;
 }
 
 s32 func_800B85CC_C757C(s16 arg0, s16 arg1) {
