@@ -962,7 +962,10 @@ s32 func_802D7398_2B97C8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7398_2B97C8.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7508_2B9938.s")
+void func_802D7508_2B9938(void) {
+    func_800072CC_7ECC(0x33);
+    func_800EFEB4_FEE64(func_802D7398_2B97C8, 0x1E, 0);
+}
 
 /* possible: updateStageTimer */
 void func_802D7540_2B9970(void) {
