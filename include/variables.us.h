@@ -1886,7 +1886,9 @@ extern u8 D_8014F89D;
 extern s16 (*D_8014F8A0)[256]; /* pointer to world tile data (256x256 s16 array) */
 extern Unk800B753CEntry D_8014F8A8[];
 extern u16 D_8014FD28;
-extern Unk8014FD30Type D_8014FD30; // Level bounding shield wall collision data?
+// I think this is actually an array of 3, and Unk8014FD30Type should be 8 bytes?
+// Either that or the later 8 s16s should be 2 arrays of 4 s16s
+extern Unk8014FD30Type D_8014FD30; // Current stage shield wall bounds
 extern u8 D_8014FD48[];
 extern u16 D_8014FDC8;
 extern u8 D_8014FDD0[];

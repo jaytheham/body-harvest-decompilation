@@ -2083,7 +2083,7 @@ typedef struct {
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;
 	/* 0x16 */ s16 unk16;
-} Unk8014FD30Type; /* 0x18 bytes Level Shield Wall Collision Data? */
+} Unk8014FD30Type; /* 0x18 bytes Stage Shield Wall bounds */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;

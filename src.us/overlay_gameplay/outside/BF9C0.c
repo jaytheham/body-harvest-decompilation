@@ -176,10 +176,13 @@ s32 func_800B0C4C_BFBFC(s32 arg0, s32 arg1) {
 	return D_8014FDD0[(arg1 << 5) + (arg0 >> 3)] & (1 << (arg0 & 7));
 }
 
+// Set current shield wall bounds
 void func_800B0C80_BFC30(void) {
 	D_8014FD30 = *(Unk8014FD30Type *)(D_80147C30_156BE0 + currentLevel * 0x90 + D_80047F94 * 0x18 - 0x90);
 }
 
+// Is target position outside the current stage shield wall bounds, or overlapping one of the 2 sub-regions?
+// Each stage has 1 main shield wall, and 0-2 overlapping sub-regions
 s32 func_800B0D10_BFCC0(s32 xPosition, s32 zPosition, s32 bufferRadius) {
 	Unk8014FD30Type *a2;
 	s32 minX, maxX, minZ, maxZ;
@@ -193,7 +196,7 @@ s32 func_800B0D10_BFCC0(s32 xPosition, s32 zPosition, s32 bufferRadius) {
 		|| (maxX = xPosition + bufferRadius, D_8014FD30.unk4 < maxX)
 		|| (minZ = zPosition - bufferRadius, minZ < D_8014FD30.unk2)
 		|| (maxZ = zPosition + bufferRadius, D_8014FD30.unk6 < maxZ)) {
-		return 1;
+		return 1; // Outside the main shield wall zone entirely
 	}
 	for (index = 0; index != 2; index++) {
 		a2 = (Unk8014FD30Type *)((u8 *)&D_8014FD30 + index * 8);
@@ -201,40 +204,41 @@ s32 func_800B0D10_BFCC0(s32 xPosition, s32 zPosition, s32 bufferRadius) {
 			break;
 		}
 		if (a2->unk8 < maxX && minX < a2->unkC && a2->unkA < maxZ && minZ < a2->unkE) {
-			return index + 2;
+			return index + 2; // Overlapping sub-region
 		}
 	}
-	return 0;
+	return 0; // Inside the main shield wall zone, not overlapping any sub-region
 }
 
-s32 func_800B0DF4_BFDA4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+// Get direction to bounce from shield wall if outside bounds or overlapping sub-region
+s32 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 levelBoundsCheckResult) {
 	s32 extW, extH;
 	s32 dx, dz;
 	s32 overlapX;
 
-	if (arg3 == 1) {
-		if (arg0 - arg2 < D_8014FD30.unk0) {
+	if (levelBoundsCheckResult == 1) {
+		if (xPosition - bufferRadius < D_8014FD30.unk0) {
 			return 0x4000;
 		}
-		if (D_8014FD30.unk4 < arg0 + arg2) {
+		if (D_8014FD30.unk4 < xPosition + bufferRadius) {
 			return -0x4000;
 		}
-		if (arg1 - arg2 < D_8014FD30.unk2) {
+		if (zPosition - bufferRadius < D_8014FD30.unk2) {
 			return -0x8000;
 		}
-		if (D_8014FD30.unk6 < arg1 + arg2) {
+		if (D_8014FD30.unk6 < zPosition + bufferRadius) {
 			return 0;
 		}
 	}
 
-	extW = *((s16 *)((u8 *)&D_8014FD30 + arg3 * 8) - 2) - *((s16 *)((u8 *)&D_8014FD30 + arg3 * 8) - 4);
-	extH = *((s16 *)((u8 *)&D_8014FD30 + arg3 * 8) - 1) - *((s16 *)((u8 *)&D_8014FD30 + arg3 * 8) - 3);
+	extW = *((s16 *)((u8 *)&D_8014FD30 + levelBoundsCheckResult * 8) - 2) - *((s16 *)((u8 *)&D_8014FD30 + levelBoundsCheckResult * 8) - 4);
+	extH = *((s16 *)((u8 *)&D_8014FD30 + levelBoundsCheckResult * 8) - 1) - *((s16 *)((u8 *)&D_8014FD30 + levelBoundsCheckResult * 8) - 3);
 	extW >>= 1;
 	extH >>= 1;
-	extW += arg2;
-	extH += arg2;
-	dx = (arg0 + arg2) - *((s16 *)((u8 *)&D_8014FD30 + arg3 * 8) - 4) - extW;
-	dz = (arg1 + arg2) - *((s16 *)((u8 *)&D_8014FD30 + arg3 * 8) - 3) - extH;
+	extW += bufferRadius;
+	extH += bufferRadius;
+	dx = (xPosition + bufferRadius) - *((s16 *)((u8 *)&D_8014FD30 + levelBoundsCheckResult * 8) - 4) - extW;
+	dz = (zPosition + bufferRadius) - *((s16 *)((u8 *)&D_8014FD30 + levelBoundsCheckResult * 8) - 3) - extH;
 
 	if (dx < 0) {
 		overlapX = dx + extW;
@@ -5045,6 +5049,7 @@ s32 func_800BD688_CC638(s16 targetX, s16 targetY, s16 targetZ, VehicleInstance *
   return 1;
 }
 
+// Change level bounds if player passes through a gate
 // CURRENT(45)
 #ifdef NON_MATCHING
 void func_800BD8B8_CC868(void) {
