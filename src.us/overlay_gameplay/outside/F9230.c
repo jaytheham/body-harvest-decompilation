@@ -14690,13 +14690,15 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 			else {
 				VehicleInstance *var_s2 = &vehicleInstances[sp44_val];
 				if ((var_s2->unk1A != 0) || (arg0->unk1A != 5)) {
-					s32 specBound = vehicleSpecs[var_s2->unk1A].unkC;
-					s32 bound = specBound + arg1->unkC;
 					s32 deltaX = arg0->unk0 - var_s2->unk0;
 					s32 deltaZ = arg0->unk4 - var_s2->unk4;
-					deltaX = deltaX < 0 ? -deltaX : deltaX;
-					deltaZ = deltaZ < 0 ? -deltaZ : deltaZ;
-					if (deltaX < bound && deltaZ < bound) {
+					s32 specBound = vehicleSpecs[var_s2->unk1A].unkC;
+					s32 bound = specBound + arg1->unkC;
+					s32 absX = deltaX >= 0 ? deltaX : -deltaX;
+					
+					if (absX < bound) {
+						s32 absZ = deltaZ >= 0 ? deltaZ : -deltaZ;
+						if (absZ < bound) {
 							s32 var_s4 = 0;
 							func_8010CA38_11B9E8(var_s2);
 							if ((D_80159D6C == 2) && (D_80159D70 == 2)) {
@@ -14779,7 +14781,7 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 								return 6;
 							}
 							if ((var_s2->unk1A == 0) || (arg0->unk1A == 0)) { D_80052A88 = 0; }
-					}
+					}}
 				}
 			}
 	}
