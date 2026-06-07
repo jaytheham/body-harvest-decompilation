@@ -715,7 +715,15 @@ void func_802D6684_255DC4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D6684_255DC4.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D6824_255F64.s")
+void func_802D6824_255F64(u8 arg0) {
+    AlienInstance *alien;
+
+    func_80137468_146418(arg0, 0x1C);
+    alien = &alienInstances[arg0];
+    alien->unk6 = alien->unkE;
+    alien->unk20 &= ~0x10;
+    func_8008076C_8F71C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D6890_255FD0.s")
 
