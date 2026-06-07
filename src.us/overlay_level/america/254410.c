@@ -2152,7 +2152,23 @@ void func_802DAEDC_25A61C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DAEDC_25A61C.s")
 #endif
 
+// CURRENT(508)
+#ifdef NON_MATCHING
+void func_802DB644_25AD84(u8 arg0) {
+    AlienInstance *inst = &alienInstances[arg0];
+
+    if (inst->unk20 & 0x1000) {
+        if (inst->unk2C != 0) {
+            inst->unk2C--;
+        }
+    } else {
+        inst->unk20 |= 0x400000;
+        func_800800DC_8F08C(arg0);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DB644_25AD84.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DB6B0_25ADF0.s")
 
