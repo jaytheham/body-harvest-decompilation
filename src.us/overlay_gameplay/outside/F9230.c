@@ -14669,21 +14669,20 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8011049C_11F44C.s")
 #endif
 
-// CURRENT(8334)
-#ifdef TRUE
+// https://decomp.me/scratch/kdokH
+// CURRENT(6373)
+#ifdef NON_MATCHING
 s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 	s16 sp76;
 	s16 sp74;
-	s16 spCount;
 	s16 temp_s7;
 
 	sp76 = func_800FAE60_109E10(arg0);
 	sp74 = func_800FADF8_109DA8(sp76);
 
-	spCount = D_80158FD8;
-	temp_s7 = spCount;
+	temp_s7 = D_80158FD8;
 	while (temp_s7--) {
-			u8 *sp44; u8 sp44_val; sp44_val = (*(sp44 = &D_80158E80[temp_s7]));
+			u8 sp44_val = D_80158E80[temp_s7];
 			if ((arg0 == D_80158E64) && (temp_s7 == D_80159316)) { continue; }
 			if (sp44_val == sp76) { continue; }
 			if ((currentLevel == 2) && (arg0->unk1A == 0) && (vehicleInstances[sp44_val].unk1A == 5)) { }
@@ -14692,8 +14691,7 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 				if ((var_s2->unk1A != 0) || (arg0->unk1A != 5)) {
 					s32 deltaX = arg0->unk0 - var_s2->unk0;
 					s32 deltaZ = arg0->unk4 - var_s2->unk4;
-					s32 specBound = vehicleSpecs[var_s2->unk1A].unkC;
-					s32 bound = specBound + arg1->unkC;
+					s32 bound = vehicleSpecs[var_s2->unk1A].unkC + arg1->unkC;
 					s32 absX = deltaX >= 0 ? deltaX : -deltaX;
 					
 					if (absX < bound) {
@@ -14733,11 +14731,11 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 											s0++; s1++;
 										}
 									}
-								}
+								} else { continue; }
 							}
 							if (var_s4 != 0) {
 								if ((currentLevel == 4) && (arg0->unk1A == 0x10)) {
-									s32 tempVal = vehicleSpecs[var_s2->unk1A].unk55 << 8;
+									s32 tempVal = vehicleSpecs[var_s2->unk1A].unk61 << 8;
 									if (var_s2->unk3C < tempVal) { var_s2->unk3C = tempVal; D_8014D17C++; }
 								}
 								if ((arg0->unk20 & 0x400) && (var_s2->unk1A == 0)) {
@@ -14753,24 +14751,21 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 										return 7;
 									}
 									if (arg2 != 0) { return 7; }
-									{
-									s32 _i = D_80158BD0[*sp44];
-									if (func_80076088_85038(_i) == 0) {
-										if (_i == 3) { func_8001A650_1B250(0xD6); return 7; }
+									if (func_80076088_85038(D_80158BD0[sp44_val]) == 0) {
+										if (D_80158BD0[sp44_val] == 3) { func_8001A650_1B250(0xD6); return 7; }
 										if (((currentLevel != 1) || (var_s2->unk1A != 0x12)) && ((currentLevel != 4) || (var_s2->unk1A != 0x12)) && (var_s2->unk1A != 0x13)) {
 											func_8001A650_1B250(0x12);
 										}
 										return 7;
 									}
-									}
 									if (D_80159300 != 0) { return 7; }
-									if (func_800E60CC_F507C(2, *sp44) != 0) { return 7; }
+									if (func_800E60CC_F507C(2, sp44_val) != 0) { return 7; }
 									*(s16 *)((u8 *)D_80158E80 - 0x18) = arg0->unk0;
 									*((u8 *)D_80158E80 - 0x10) = 0xC8;
 									*((u8 *)D_80158E80 - 0xF) = 0xC8;
 									*((u8 *)D_80158E80 - 0xE) = 0xC8;
 									*(s16 *)((u8 *)D_80158E80 - 0x16) = arg0->unk4;
-									func_800EBE74_FAE24(0, *sp44, sp74, D_80052B34);
+									func_800EBE74_FAE24(0, sp44_val, sp74, D_80052B34);
 									D_80159300 = 0x18;
 									D_80052A88 = 0;
 									return 0;
