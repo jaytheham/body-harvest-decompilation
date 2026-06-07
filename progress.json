@@ -1,14 +1,14 @@
 {
-  "generated": "2026-06-06T20:00:36Z",
-  "commit": "5ed17f29",
-  "commit_timestamp": "2026-06-07T08:00:17+12:00",
+  "generated": "2026-06-07T00:24:51Z",
+  "commit": "e151865b",
+  "commit_timestamp": "2026-06-07T12:24:28+12:00",
   "overall": {
     "total_functions": 2705,
-    "matched": 1407,
-    "non_matching": 1073,
-    "asm_stubs": 225,
-    "matched_pct": 52.01,
-    "decompiled_pct": 91.68
+    "matched": 1412,
+    "non_matching": 1085,
+    "asm_stubs": 208,
+    "matched_pct": 52.2,
+    "decompiled_pct": 92.31
   },
   "segments": {
     "core": {
@@ -76,12 +76,12 @@
     },
     "overlay_level/siberia": {
       "display_name": "Level / Siberia",
-      "matched": 10,
-      "non_matching": 1,
-      "asm_stubs": 84,
+      "matched": 15,
+      "non_matching": 13,
+      "asm_stubs": 67,
       "total": 95,
-      "matched_pct": 10.5,
-      "decompiled_pct": 11.6
+      "matched_pct": 15.8,
+      "decompiled_pct": 29.5
     },
     "overlay_level/comet": {
       "display_name": "Level / Comet",
@@ -537,11 +537,11 @@
     {
       "path": "overlay_level/siberia/2B7100.c",
       "segment": "overlay_level/siberia",
-      "matched": 10,
-      "non_matching": 1,
-      "asm_stubs": 84,
+      "matched": 15,
+      "non_matching": 13,
+      "asm_stubs": 67,
       "total": 95,
-      "matched_pct": 10.5,
+      "matched_pct": 15.8,
       "contributor": "jaytheham"
     }
   ],
@@ -549,9 +549,9 @@
     {
       "name": "jaytheham",
       "files": 44,
-      "matched": 1405,
-      "non_matching": 1073,
-      "asm_stubs": 225
+      "matched": 1410,
+      "non_matching": 1085,
+      "asm_stubs": 208
     },
     {
       "name": "Meridian Lex",
@@ -686,6 +686,13 @@
       "commit": "3365ed1",
       "matched": 1407,
       "non_matching": 1062,
+      "total": 2705
+    },
+    {
+      "date": "2026-06-07",
+      "commit": "cafdf6c",
+      "matched": 1412,
+      "non_matching": 1085,
       "total": 2705
     }
   ]
