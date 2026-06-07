@@ -8228,8 +8228,9 @@ void func_800FD4D4_10C484(void *arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
+// Set new player vehicle
 // CURRENT(762)
+#ifdef NON_MATCHING
 void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
 	Unk80052B2C *playerData;
 	VehicleSpec *spec;
@@ -14807,7 +14808,7 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, void *arg1, s32 arg2) {
 									}
 
 									if ((arg0->unk1A == 0) && !(var_s2->unk20 & 0x400)) {
-										if (!(currentControllerStates[0].button & 4) && (D_80052A88 == 0) && (arg2 == 0)) {
+										if (!(currentControllerStates[0].button & BUTTON_C_DOWN) && (D_80052A88 == 0) && (arg2 == 0)) {
 											if (temp_v0_4 & 2) {
 												func_8010FAC8_11EA78(1, (s32)var_s2);
 											}
