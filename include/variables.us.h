@@ -3740,6 +3740,8 @@ extern char D_802E0E60_1F9B70[];
 extern Unk802E04F8Entry D_802E04F8_1F9208[];
 extern u8 D_802E0CB4_1F99C4[];
 extern u8 D_802E0CBC_1F99CC[];
+extern struct { s32 w; u16 h; } D_802E0CC4_1F99D4;
+extern struct { s32 w; u16 h; } D_802E0CCC_1F99DC;
 extern f64 D_802E0F90_1F9CA0;
 extern f64 D_802E0F98_1F9CA8;
 extern f64 D_802E0FA0_1F9CB0;
