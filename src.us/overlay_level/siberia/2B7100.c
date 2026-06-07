@@ -977,7 +977,12 @@ void func_802D7540_2B9970(void) {
 	}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7598_2B99C8.s")
+void func_802D7598_2B99C8(void) {
+    *(u16 *)&buildingInstances[150].state &= 0xF03F;
+    osSyncPrintf(D_802E2F3C_2C536C);
+    D_8014D17C = 0;
+    func_80007410_8010(func_802D7540_2B9970);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D75E4_2B9A14.s")
 

@@ -4064,6 +4064,7 @@ extern char D_802E2EB0_2C52E0[];
 extern char D_802E2EC8_2C52F8[];
 extern char D_802E2EF8_2C5328[];
 extern char D_802E2F04_2C5334[];
+extern char D_802E2F3C_2C536C[];
 extern s16 D_802E309C;
 
 #endif
