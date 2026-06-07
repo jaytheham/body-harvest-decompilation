@@ -506,7 +506,29 @@ void func_802D5D08_255448(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5D08_255448.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5F88_2556C8.s")
+void func_802D5F88_2556C8(u8 arg0) {
+    s32 pad_top1;
+    s32 pad_top2;
+    s32 pad_top3;
+    s16 sp3A;
+    s32 pad_mid1;
+    s16 cosVal;
+    s16 sinVal;
+    AlienInstance *alien;
+
+    alien = &alienInstances[arg0];
+    alien->unk47 &= 0xFFFE;
+    alien->unk20 |= 0x40000000;
+    alien->unk2C = 0x7FFF;
+    sp3A = D_8014DD5C[alien->unkC * 16];
+    cosVal = (s16)(((f64)(f32)coss(alien->unk6) / 32768.0) * 6.0);
+    sinVal = (s16)(((f64)(f32)sins(alien->unk6) / 32768.0) * 6.0);
+    func_80088E40_97DF0(arg0, sp3A, D_8014DD50[sp3A].unk0, D_8014DD50[sp3A].unk2, D_8014DD50[sp3A].unk4, -sinVal, 8, cosVal);
+    func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, *(u16 *)((u8 *)&D_8025668C + alien->specIndex * 0x68), 0);
+    if (alien->unk25 != 0xFF) {
+        alienInstances[alien->unk25].unk24--;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D6138_255878.s")
 
