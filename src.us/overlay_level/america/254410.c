@@ -805,7 +805,47 @@ void func_802D736C_256AAC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D736C_256AAC.s")
 #endif
 
+typedef struct { s16 lo; s16 hi; } UnkArg802D7840;
+
+// CURRENT(2630)
+#ifdef NON_MATCHING
+s32 func_802D7840_256F80(s32 arg0, UnkArg802D7840 arg1) {
+    s16 sp40[4];
+    s32 temp_s0;
+    AlienInstance *temp_s1;
+    s32 temp_v0;
+
+    temp_s0 = arg0 & 0xFF;
+    temp_s1 = &alienInstances[temp_s0];
+
+    if (temp_s1->unk20 & 0x2000) {
+        sp40[0] = arg1.hi;
+        sp40[1] = D_8014DD50[sp40[0]].unkC;
+        sp40[3] = temp_s1->unkC;
+        sp40[2] = D_8014DD50[sp40[1]].unkC;
+
+        temp_v0 = func_80081F18_90EC8(temp_s0 & 0xFF, 4, 3, sp40, &D_802DFB28_25F268);
+        if (temp_v0 == 2) {
+            if (func_80084FE8_93F98(temp_s0 & 0xFF, 0x800) != 0) {
+                func_800871CC_9617C(temp_s0 & 0xFF, 1, 0xF);
+            } else {
+                func_80087188_96138(temp_s0 & 0xFF, 1, 0xF);
+            }
+            func_80137468_146418(temp_s0, 0x25C);
+            temp_s1->unk1E = 0xF;
+            return 1;
+        }
+
+        if (temp_v0 == 3) {
+            temp_s1->unk20 &= ~0x2000;
+        }
+    }
+
+    return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D7840_256F80.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D7968_2570A8.s")
 
