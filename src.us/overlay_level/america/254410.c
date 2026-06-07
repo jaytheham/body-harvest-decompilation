@@ -9,6 +9,8 @@ typedef struct { s16 lo; s16 hi; } UnkArg802D7840;
 void func_802D7968_2570A8(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 s32 func_802D7840_256F80(s32 arg0, s32 arg1);
 void func_802D7C00_257340(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7);
+void func_8008741C_963CC(u8 arg0, s16 arg1);
+extern Unk8014DD50 D_802DFF78_25F6B8[];
 
 
 void func_802D4CD0_254410(s32 arg0, s32 arg1) {
@@ -1050,7 +1052,118 @@ void func_802D83D0_257B10(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D83D0_257B10.s")
 #endif
 
+// CURRENT(26632)
+#ifdef NON_MATCHING
+void func_802D86D8_257E18(u8 arg0) {
+    AlienInstance *alien;
+    s16 spA0[11];
+    s32 sp84;
+    s32 sp80;
+    s32 sp7C;
+    f32 sp78;
+    f32 sp74;
+    Unk8014DD50 *sp64;
+    Unk8014DD50 *sp60;
+    Unk8014DD50 *sp5C;
+    Unk8014DD50 *sp58;
+    Unk8014DD50 *sp54;
+    s32 sp50;
+    s32 caseVal;
+
+    alien = &alienInstances[arg0];
+    if (alien->unk20 & 0x600) {
+        if (!(alien->unk20 & 0x100000)) {
+            alien->unk36 = 0;
+            alien->unk4B = 0;
+            alien->unk2C = 0x7D00;
+            func_80137468_146418(arg0, 0x10);
+            func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, *(u16 *)((u8 *)&D_8025668C + alien->specIndex * 0x68), 0);
+            return;
+        }
+        spA0[0] = D_8014DD50[alien->unkC].unkC;
+        sp64 = &D_8014DD50[spA0[0]];
+        spA0[2] = sp64->unkD;
+        spA0[1] = sp64->unkC;
+        sp60 = &D_8014DD50[spA0[2]];
+        spA0[3] = sp60->unkC;
+        spA0[5] = sp60->unkD;
+        sp5C = &D_8014DD50[spA0[3]];
+        sp58 = &D_8014DD50[spA0[5]];
+        spA0[6] = sp58->unkC;
+        spA0[4] = sp5C->unkC;
+        spA0[8] = sp58->unkD;
+        sp54 = &D_8014DD50[spA0[6]];
+        spA0[7] = sp54->unkC;
+        spA0[9] = D_8014DD50[spA0[8]].unkC;
+        spA0[10] = D_8014DD50[spA0[9]].unkC;
+        if (alien->unk2C >= 0x3D) {
+            s16 spAC;
+            s16 spBE;
+            s16 spB2;
+            spAC = spA0[6];
+            spBE = spA0[0];
+            spB2 = spA0[3];
+            func_8008741C_963CC(arg0, -0xC8);
+            caseVal = func_80081F18_90EC8(arg0, 0xB, 6, spA0, &D_802DFF78_25F6B8);
+            if (caseVal == 2) {
+                sp50 = (alien->unk6 + 0x6000) & 0xFFFF;
+                sp78 = (f32)(((f64)(f32)sins(sp50) / 32768.0) * 15.0);
+                func_80088E40_97DF0(arg0, spA0[7], (s16)(D_8014DD50[spA0[7]].unk0 + sp58->unk0 + sp54->unk0), (s16)(D_8014DD50[spA0[7]].unk2 + sp58->unk2 + sp54->unk2), D_8014DD50[spA0[7]].unk4 + sp58->unk4 + sp54->unk4, (s32)sp78, 0xF, (s32)(f32)(((f64)(f32)coss(sp50) / 32768.0) * -15.0));
+                sp50 = (alien->unk6 + 0x8000) & 0xFFFF;
+                sp78 = (f32)(((f64)(f32)sins(sp50) / 32768.0) * 15.0);
+                func_80088E40_97DF0(arg0, spAC, (s16)(sp54->unk0 + sp58->unk0), (s16)(sp54->unk2 + sp58->unk2), sp54->unk4 + sp58->unk4, (s32)sp78, 0xF, (s32)(f32)(((f64)(f32)coss(sp50) / 32768.0) * -15.0));
+                return;
+            }
+            if (caseVal == 3) {
+                sp50 = (alien->unk6 + 0x2000) & 0xFFFF;
+                sp78 = (f32)(((f64)(f32)sins(sp50) / 32768.0) * 15.0);
+                func_80088E40_97DF0(arg0, spA0[4], (s16)(D_8014DD50[spA0[4]].unk0 + sp60->unk0 + sp5C->unk0), (s16)(D_8014DD50[spA0[4]].unk2 + sp60->unk2 + sp5C->unk2), D_8014DD50[spA0[4]].unk4 + sp60->unk4 + sp5C->unk4, (s32)sp78, 0xF, (s32)(f32)(((f64)(f32)coss(sp50) / 32768.0) * -15.0));
+                sp50 = alien->unk6 & 0xFFFF;
+                sp78 = (f32)(((f64)(f32)sins(sp50) / 32768.0) * 15.0);
+                func_80088E40_97DF0(arg0, spB2, (s16)(sp5C->unk0 + sp60->unk0), (s16)(sp5C->unk2 + sp60->unk2), sp5C->unk4 + sp60->unk4, (s32)sp78, 0xF, (s32)(f32)(((f64)(f32)coss(sp50) / 32768.0) * -15.0));
+                return;
+            }
+            if (caseVal == 5) {
+                AlienSpec *spec;
+                spec = &alienSpecs[alien->specIndex];
+                spec->unk2E = 0x64;
+                spec->unk30 = 0x8C;
+                func_80128428_1373D8(alien, sp64->unk0, (s16)(sp64->unk2 - 0xA), (s16)(sp64->unk4 + 0x28), &sp84, &sp80, &sp7C);
+                func_800865F4_955A4(arg0, 1, sp84, func_800B84D0_C7480((s16)sp84, (s16)sp7C) >> 8, sp7C);
+                spec = &alienSpecs[alien->specIndex];
+                spec->unk2E = 0x55;
+                spec->unk30 = 0xD2;
+                sp50 = (alien->unk6 + 0x4000) & 0xFFFF;
+                sp78 = (f32)(((f64)(f32)sins(sp50) / 32768.0) * 5.0);
+                func_80088E40_97DF0(arg0, spBE, sp64->unk0, sp64->unk2, sp64->unk4, (s32)sp78, 5, (s32)(f32)(((f64)(f32)coss(sp50) / 32768.0) * -5.0));
+                return;
+            }
+            if (caseVal == 6) {
+                alien->unk2C = 0x3C;
+                return;
+            }
+        } else {
+            D_8014DD50[spA0[10]].unkA = (u16)(D_8014DD50[spA0[10]].unkA + 0x78);
+            alien->unkA += 0x4B;
+            alien->unk12 = 0;
+            func_80137468_146418(arg0, 0x12);
+            if ((alien->unk2C >= 0xB) && ((alien->unk2C % 6) == 0) && (D_80031420_32020 & 3)) {
+                s32 temp_r;
+                func_80128428_1373D8(alien, sp64->unk0, (s16)(sp64->unk2 - 0x8000), sp64->unk4, &sp84, &sp80, &sp7C);
+                sp78 = (f32)((f64)(f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
+                sp74 = (f32)-((f64)(f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
+                temp_r = 0xB4 - (func_800038E0_44E0() % 80);
+                func_800CA5EC_D959C((s16)sp84, (s16)sp80, (s16)sp7C, (s8)(s32)(sp78 * 128.0f), 0, (s32)(sp74 * 128.0f), 0x28, 0xA, 0x14, 0x32, temp_r, 0, 0x32, 0xFF);
+            }
+            if (alien->unk2C == 1) {
+                func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, *(u16 *)((u8 *)&D_8025668C + alien->specIndex * 0x68), 6);
+            }
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D86D8_257E18.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D9038_258778.s")
 
