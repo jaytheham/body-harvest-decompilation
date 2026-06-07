@@ -4146,7 +4146,69 @@ void func_802DEF70_1F7C80(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0, -0x45, 0x2B3);
 }
 
+// CURRENT(8175)
+#ifdef NON_MATCHING
+void func_802DEFC0_1F7CD0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
+    void *sp10;
+    s32 sp14;
+    s32 sp18;
+    s16 sp1E;
+    s16 temp_s0;
+    s16 spec_val;
+    s16 sum;
+    s16 diff;
+    AlienInstance *temp_v0;
+    Unk8014DD50 *spec1;
+    Unk8014DD50 *spec2;
+
+    temp_v0 = &alienInstances[arg0 & 0xFF];
+    spec1 = &D_8014DD50[D_8014DD5C[temp_v0->unkC * 0x10]];
+    sp10 = (void *)spec1;
+    temp_v0->unk20 &= ~ALIEN_FLAG_UNKG;
+    spec2 = &D_8014DD50[spec1->unkC];
+    temp_s0 = spec1->unk6;
+    spec_val = D_802566C2[temp_v0->specIndex * 0x34];
+    sum = (s16)((s16)temp_s0 + (s16)spec2->unk6 + arg1);
+    sp1E = sum;
+    if (sum < -spec_val) {
+        if ((s16)temp_s0 < 0x1000) {
+            spec1->unk6 += spec_val;
+        }
+        if ((s16)spec2->unk6 < 0x2000) {
+            spec2->unk6 += spec_val;
+        }
+    } else if (spec_val < sp1E) {
+        if ((s16)temp_s0 >= -0xFFF) {
+            ((Unk8014DD50 *)sp10)->unk6 -= spec_val;
+        }
+        if ((s16)spec2->unk6 >= -0x1FFF) {
+            spec2->unk6 -= spec_val;
+        }
+    } else {
+        temp_v0->unk20 |= ALIEN_FLAG_UNKG;
+    }
+    diff = (s16)(spec2->unkA - arg2);
+    if (diff < -spec_val) {
+        spec2->unkA += spec_val;
+        temp_v0->unk20 &= ~ALIEN_FLAG_UNKG;
+    } else if (spec_val < diff) {
+        spec2->unkA -= spec_val;
+        temp_v0->unk20 &= ~ALIEN_FLAG_UNKG;
+    }
+    diff = temp_v0->unkA - arg3;
+    if (diff < -spec_val) {
+        temp_v0->unkA += spec_val;
+        temp_v0->unk20 &= ~ALIEN_FLAG_UNKG;
+        return;
+    }
+    if (spec_val < diff) {
+        temp_v0->unkA -= spec_val;
+        temp_v0->unk20 &= ~ALIEN_FLAG_UNKG;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DEFC0_1F7CD0.s")
+#endif
 
 #ifdef NON_MATCHING
 /* func_802DF1F8_1F7F08 - Process alien attack against vehicle */

@@ -1603,6 +1603,7 @@ void func_800E2720_F16D0(s32);
 void func_80135D08_144CB8(f32, s16, s16, s16);
 void func_80135D44(s32, s32, s32, f32);
 void func_80135D44_144CF4(s32, s32, s32, f32);
+void func_802DEFC0_1F7CD0(s32 arg0, s32 arg1, s16 arg2, s16 arg3);
 void leoInitUnit_atten(void);
 s32 func_80092A50_A1A00(s16, s16, s32);
 u8 func_800AD554_BC504(s32, s32, s32);
