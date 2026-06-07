@@ -984,7 +984,23 @@ void func_802D7598_2B99C8(void) {
     func_80007410_8010(func_802D7540_2B9970);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D75E4_2B9A14.s")
+void func_802D75E4_2B9A14(void) {
+    if (D_802E3100 == 0) {
+        func_800074BC_80BC(func_802D75E4_2B9A14);
+        func_802D7598_2B99C8();
+    } else {
+        if (D_8014D17C >= 0xDAC) {
+            func_800074BC_80BC(func_802D75E4_2B9A14);
+            func_802D7508_2B9938();
+        }
+    }
+
+    if (D_8014D17C == 3) {
+        func_800EFEB4_FEE64(0, 0x1D, 0);
+    }
+
+    D_8014D17C++;
+}
 
 void func_802D7680_2B9AB0(s32 arg0) {
 	D_802E3100 -= 1;
