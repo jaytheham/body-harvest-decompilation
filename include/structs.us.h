@@ -592,11 +592,11 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ u8 pad0[8];
-    /* 0x08 */ s16 unk8;
-    /* 0x0A */ u8 padA[8];
+	/* 0x08 */ s16 unk8;
+	/* 0x0A */ u8 padA[8];
 	/* 0x12 */ u8 unk12;
 	/* 0x13 */ u8 unk13;
-    /* 0x14 */ u8 unk14;
+	/* 0x14 */ u8 unk14;
 	///* 0x16 */ u8 pad15[2]; no???
 } Unk801601F0; /* size = 0x16 */
 
@@ -2150,8 +2150,8 @@ typedef struct {
 /* Gate entry in shield wall. Array: D_8003E0FC[5][8], access [currentLevel-1][idx] */
 typedef struct {
 	/* 0x00 */ s16 unk0; /* world X position */
-	/* 0x02 */ s16 unk2; /* world Z position */
-	/* 0x04 */ s16 unk4; /* world Y position or other coordinate */
+	/* 0x02 */ s16 unk2; /* world Y position */
+	/* 0x04 */ s16 unk4; /* world Z position */
 	/* 0x06 */ s8  unk6; /* gate open/close animation state (0=closed, 0x50=fully open) */
 	/* 0x07 */ u8  unk7;
 	/* 0x08 */ u8  unk8;
