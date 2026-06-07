@@ -96,7 +96,7 @@ An arg being `&& 0xFF` or `&& 0xFFFF` repeatedly suggests that the original code
 Think about how a person would have originally written the code in C to produce the assembly you see rather than writing the C to match the assembly exactly. Search for patterns in the target assembly and see how other functions were written to achieve similar assembly output.
 `ExampleFixes` folder contains md files with examples of fixes that have been applied previously to solve specific patterns, search in here for stubborn cases.
 
-**Every** time you make changes, rebuild the project and compare the current assembly to the target, if it doesn't match repeat this step, never give up, keep trying autonomously. Only once the build returns `build/bh.us.z64: OK` proceed to Finalize.
+**Every** time you make changes, rebuild the project and compare the current assembly to the target, if it doesn't match repeat this step. Only once the build returns `build/bh.us.z64: OK` proceed to Finalize, or if the function contains a switch statement and the only remaining differences are in the jump table addresses, you can proceed to Finalize without a perfect match, as we will fix jump tables in a later pass.
 
 ## Finalize
 

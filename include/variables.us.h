@@ -612,6 +612,7 @@ extern VehicleInstance vehicleInstances[]; // 8004DCD0
 extern VehicleInstance D_8004F374;
 extern Unk80050ADA D_80050ADA[]; // 0x80050ADA
 extern u8 D_80050ADE[];
+extern s8 D_80050AE7[]; /* overlaps D_80050AE0 + 7 */
 extern Unk80050AE0 D_80050AE0[0xFF];
 extern u8 D_802566D2[];
 extern u8 D_8008E0A8_176168[];
@@ -2833,6 +2834,9 @@ extern f32 D_80157F84;
 extern f32 D_80157F88;
 extern s16 D_80157F8C;
 extern s16 D_80157F8E;
+extern VehicleInstance D_8004DDE4;
+extern s16 D_8004DE00;
+extern char D_802E0E6C_2C329C;
 extern s16 D_80157F90;
 extern s16 D_80157F92;
 extern u8 D_80157F9E[3];
@@ -3748,6 +3752,8 @@ extern u8 D_802D48D0;
 extern u8 D_802D4AD0;
 extern VehicleInstance D_8004DFB0;
 extern s16 D_8004EE88;
+extern s16 D_8004E798;
+extern s16 D_8004F038;
 extern u8 D_802E04A0_1F91B0;
 extern s32 D_802E06E0[];
 extern s32 D_80256DEC;
@@ -3772,9 +3778,12 @@ extern char D_802E0D08_260448[];
 extern char D_802E0D28_260468[];
 extern s16 D_802E30F4;
 extern s32 D_802E3098;
+extern u8 D_802E30A0;
 extern s32 D_802E3094;
 extern s32 D_802E30EC;
+extern s32 D_802E30F0;
 extern char D_802E2EE8_2C5318;
+extern char D_802E2EDC_2C530C[];
 extern f32 D_802E0F88;
 extern f32 D_802E0F8C;
 extern char D_802E0E74[];
@@ -3802,6 +3811,11 @@ extern s8 D_802E0580;
 extern f64 D_802E0EB0;
 extern s32 D_80053C98;
 extern s32 D_802E3100;
+extern f32 D_802E2F84_2C53B4;
+extern f64 D_802E2F88_2C53B8;
+extern f64 D_802E2F90_2C53C0;
+extern f64 D_802E2F98_2C53C8;
+extern f64 D_802E2FA0_2C53D0;
 extern VehicleInstance *D_80158F8C;
 extern f64 D_80144AC0_153A70;
 extern f64 D_80144AC8_153A78;
@@ -4031,5 +4045,14 @@ extern s32 D_80159048;
 extern InputStruct_8012B150 D_80159000;
 extern InputStruct_8012B150 D_80159028;
 extern OutputStruct_8012B150 D_801591F8;
+
+/* overlay_level/siberia/2B7100 */
+extern void (*D_802E0DF0_2C3220[])(void);
+extern char D_802E2E90_2C52C0[];
+extern char D_802E2EB0_2C52E0[];
+extern char D_802E2EC8_2C52F8[];
+extern char D_802E2EF8_2C5328[];
+extern char D_802E2F04_2C5334[];
+extern s16 D_802E309C;
 
 #endif

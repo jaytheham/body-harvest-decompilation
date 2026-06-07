@@ -1098,9 +1098,10 @@ void func_800136CC_142CC(void);
 void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *arg3);
 void func_80070294_158354(Unk8007CAA8_6A40 *arg0);
 void func_80070F7C_15903C(s16 arg0, u8 arg1, u8 arg2);
+void func_802D5C24_2B8054(void);
 void func_802D5F28_2B8358(void);
 void func_802D6674_2B8AA4(void);
-void func_802D6768_2B8B98(void);
+s32 func_802D6768_2B8B98(void);
 void func_802D6CA0_2B90D0(void);
 void func_802D75E4_2B9A14(void);
 void func_802D769C_2B9ACC(void);
@@ -1284,7 +1285,10 @@ void func_800074BC_80BC(void *arg0);
 void func_800076D4_82D4(s32 arg0);
 void func_800AE190_BD140(s16);
 void func_800AE1C0_BD170(void);
+void func_800AE1EC_BD19C(void);
+void func_80102A0C_1119BC(void *arg0, s16 arg1, s16 arg2, f32 arg3);
 void func_8011C080_12B030(u8);
+void func_802D63E8_2B8818(s32 arg0, s16 *arg1);
 void func_802D6E70_1EFB80();
 void func_800A93A4_B8354(u8 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_800A92E0_B8290(u8 arg0, s32 arg1);
@@ -1624,5 +1628,12 @@ void func_800D9B14_E8AC4(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_8011592C_1248DC(s16 arg0, s16 arg1);
 void func_800F1004_FFFB4(void);
 void func_8012B150_13A100(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2, s32 arg3);
+
+/* overlay_level/siberia/2B7100 */
+void func_802D4CD0_2B7100(s32 arg0, s32 arg1);
+void func_802D4DCC_2B71FC(void);
+void func_802D4F1C_2B734C(void);
+void func_802D5754_2B7B84(void);
+void func_802D7398_2B97C8(void);
 
 #endif
