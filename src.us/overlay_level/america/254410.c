@@ -11,6 +11,7 @@ s32 func_802D7840_256F80(s32 arg0, s32 arg1);
 void func_802D7C00_257340(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7);
 void func_8008741C_963CC(u8 arg0, s16 arg1);
 extern Unk8014DD50 D_802DFF78_25F6B8[];
+extern Unk8014DD50 D_802DFFC4_25F704[];
 
 
 void func_802D4CD0_254410(s32 arg0, s32 arg1) {
@@ -1238,7 +1239,108 @@ void func_802D9038_258778(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D9038_258778.s")
 #endif
 
+// CURRENT(unknown)
+#ifdef NON_MATCHING
+void func_802D9510_258C50(u8 arg0) {
+    AlienInstance *alien = &alienInstances[arg0];
+    s16 specIndex;
+    s8 ret;
+    s32 flags;
+    s32 dx;
+    s32 dz;
+    s32 distSq;
+    s32 a3;
+
+    specIndex = alien->specIndex;
+    dx = alien->unk0 - alien->unk14;
+    dz = alien->unk4 - alien->unk18;
+    flags = alien->unk20;
+    a3 = 0x226;
+    if (!(flags & ALIEN_FLAG_UNKF)) {
+        distSq = dx * dx + dz * dz;
+        if (distSq >= 0xC5C11 && distSq < 0xCF850) {
+            if (func_80084FE8_93F98(arg0, 0x400)) {
+                if (alien->unk2 >= D_80052B34->unk2 &&
+                    (*(u16 *)&D_802566BA[specIndex * 0x68] / 4) < alien->hitPoints) {
+                    if (func_800038E0_44E0() & 1) {
+                        alien->unk3C = 0x78;
+                        alien->unk36 = 0;
+                        alien->unk20 |= ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE;
+                        alien->unk1E = 0;
+                    }
+                }
+                flags = alien->unk20;
+            }
+        }
+        if (distSq < 0x57E40) {
+            flags = alien->unk20;
+            if (!(flags & ALIEN_FLAG_UNK5) && alien->unk12 > 0) {
+                flags |= ALIEN_FLAG_UNK5;
+                alien->unk20 = flags;
+                flags |= ALIEN_FLAG_UNKE;
+                alien->unk20 = flags;
+                alien->unk26 = 0x64;
+                alien->unk1E = 0;
+            }
+        }
+    }
+    if (flags & ALIEN_FLAG_UNKE) {
+        if (func_80084FE8_93F98(arg0, 0x800)) {
+            if (flags & ALIEN_FLAG_UNKF) {
+                if (alien->unk3C < 0x78) {
+                    s16 sp30;
+
+                    sp30 = (s16)(u8)D_8014DD50[(u8)D_8014DD50[(u8)alien->unkC].unkC].unkD;
+                    ret = func_80081F18_90EC8(arg0, 1, 2, &sp30, &D_802DFFC4_25F704);
+                    if (func_80087188_96138(arg0, 0, 0x10)) {
+                        alien->unk1E = 0x3E8;
+                    }
+                    if (ret == 2) {
+                        alien->unk36 = 0;
+                        alien->unk1E = 0;
+                    }
+                }
+            } else {
+                if (D_80052B34->unk2 + 0x32 < alien->unk2) {
+                    func_80087188_96138(arg0, 1, 0x20);
+                }
+                alien->unk1E = 0x3E8;
+                alien->unk20 &= ~ALIEN_FLAG_UNKE;
+            }
+        }
+        a3 = 0x1C2;
+        flags = alien->unk20;
+    }
+    if (flags & ALIEN_FLAG_UNKF) {
+        func_80086164_95114(arg0, (u8)alien->unkC);
+        alien->unkA = D_8014DD50[(u8)alien->unkC].unkA;
+        alien->unk12 -= 0xA0;
+        if (alien->unk12 < 0) {
+            alien->unk12 = 0;
+        }
+        a3 = 0x12C;
+        if (alien->unk3C == 0 || dx * dx + dz * dz < 0x57E40 ||
+            alien->unk2 < D_80052B34->unk2 - 0x32 ||
+            (*(u16 *)&D_802566BA[specIndex * 0x68] / 4) >= alien->hitPoints) {
+            alien->unk20 &= ~0x6000;
+        }
+    }
+    func_800A5554_B4504(arg0, func_8008E524_9D4D4(arg0, a3, 4), 0x3D4CCCCD, (u8)D_8014DD50[(u8)alien->unkC].unkC);
+    if (alien->unk3C != 0) {
+        alien->unk3C--;
+    }
+    if (alien->unk26 != 0) {
+        alien->unk26--;
+    } else {
+        alien->unk20 &= ~ALIEN_FLAG_UNK5;
+    }
+    if (alien->unk1E != 0) {
+        alien->unk1E--;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D9510_258C50.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D998C_2590CC.s")
 
