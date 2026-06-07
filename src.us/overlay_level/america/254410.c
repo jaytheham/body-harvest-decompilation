@@ -11,6 +11,8 @@ s32 func_802D7840_256F80(s32 arg0, s32 arg1);
 void func_802D7C00_257340(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7);
 void func_8008741C_963CC(u8 arg0, s16 arg1);
 void func_802DA120_259860(s16 arg0, s32 arg1);
+void func_802D99E4_259124(u8 arg0);
+void func_802DA520_259C60(u8 arg0);
 extern Unk8014DD50 D_802DFF78_25F6B8[];
 extern Unk8014DD50 D_802DFFC4_25F704[];
 
@@ -1561,7 +1563,75 @@ void func_802DA520_259C60(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DA520_259C60.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DA878_259FB8.s")
+void func_802DA878_259FB8(u8 arg0) {
+    AlienInstance *alien = &alienInstances[arg0];
+
+    alien->unk20 |= 0x20000000;
+
+    switch (alien->unk26) {
+    case 0:
+        alien->unk20 |= 0x400000;
+        if (alien->specIndex == 9) {
+            func_80079DC0_88D70(alien->unkC);
+            alien->unkC = -1;
+            alien->specIndex = 8;
+        }
+        alien->unk48 += 10;
+        if (alien->unk48 >= 0) {
+            s8 val = (s8)alien->unk3C;
+            alien->unk48 = 0;
+            alien->unk26 = 1;
+            alien->unk2C = 0x3C;
+            if (val != 0) {
+                alien->unk3C = val - 1;
+            }
+        }
+        break;
+    case 1:
+        alien->unk20 |= 0x400000;
+        if (alien->specIndex == 9) {
+            func_80079DC0_88D70(alien->unkC);
+            alien->specIndex = 8;
+            func_80079C8C_88C3C(arg0);
+        }
+        alien->unk48 -= 10;
+        if (alien->unk48 < -0x1F3) {
+            alien->unk48 = -0x1F4;
+        }
+        if (alien->unk2C == 0) {
+            alien->unk26 = 0;
+        }
+        break;
+    case 2:
+        if (alien->specIndex == 8) {
+            func_80079DC0_88D70(alien->unkC);
+            alien->specIndex = 9;
+            func_80079C8C_88C3C(arg0);
+            alien->unk48 = -0x1F4;
+        }
+        break;
+    case 4:
+        alien->unk20 |= 0x400000;
+        alien->unk48 -= 15;
+        if (alien->unk48 < -0x1F3) {
+            alien->unk48 = -0x1F4;
+            alien->unk26 = 1;
+            alien->unk2C = 0x3C;
+        }
+        alien->unk3C = D_8013BD00_14ACB0[0];
+        break;
+    }
+
+    if (alien->unk26 < 2) {
+        func_802D99E4_259124(arg0);
+    } else {
+        func_802DA520_259C60(arg0);
+    }
+
+    if (alien->unk1E != 0) {
+        alien->unk1E--;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DAA98_25A1D8.s")
 
