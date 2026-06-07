@@ -1633,7 +1633,17 @@ void func_802DA878_259FB8(u8 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DAA98_25A1D8.s")
+void func_802DAA98_25A1D8(u8 arg0) {
+    AlienInstance *alien = &alienInstances[arg0];
+
+    alien->unk12 = 0;
+    alien->unk26 = 1;
+    alien->unk48 = -500;
+    alien->unk2C = 60;
+    if (alien->specIndex == 9) {
+        alien->specIndex = 8;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DAAF0_25A230.s")
 
