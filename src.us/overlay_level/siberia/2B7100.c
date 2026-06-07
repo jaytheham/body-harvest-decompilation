@@ -882,7 +882,22 @@ void func_802D72A0_2B96D0(func_80070420_7F3D0_UnkArg0 *arg0) {
 	func_800072CC_7ECC((u64)arg0->unk9);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D72C4_2B96F4.s")
+void func_802D72C4_2B96F4(s32 arg0, s32 arg1, s32 arg2) {
+    u8 alienId;
+    Unk80222A78 sp1C;
+
+    alienId = func_8007956C_8851C(0x24);
+    if (alienId != 0xFF) {
+        alienInstances[alienId].unk0 = arg0;
+        alienInstances[alienId].unk4 = arg1;
+
+        sp1C.unk0 = 3;
+        sp1C.unk8 = alienId;
+        sp1C.unk9 = arg2;
+        sp1C.unkC = func_802D72A0_2B96D0;
+        func_800AE454_BD404(&sp1C);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7350_2B9780.s")
 
