@@ -727,7 +727,83 @@ void func_802D6824_255F64(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D6890_255FD0.s")
 
+// CURRENT(12474)
+#ifdef NON_MATCHING
+void func_802D736C_256AAC(s32 arg0) {
+    s16 sp9E;
+    s16 sp9C;
+    s16 sp9A;
+    s16 sp98;
+    s16 sp96;
+    f32 fltVal;
+    s32 alienIdx;
+    AlienInstance *alien;
+    Unk8014DD50 *ptr1;
+    Unk8014DD50 *ptr2;
+    Unk8014DD50 *ptr3;
+    s16 val1;
+    s16 val2;
+    s16 val3;
+    s16 val4;
+    s16 val5;
+    s16 angle;
+    s32 sinVal;
+    s32 cosVal;
+
+    alienIdx = arg0 & 0xFF;
+
+    func_80089EB4_98E64(alienIdx, 0x46, 3, 6, 5);
+
+    alien = &alienInstances[alienIdx];
+
+    val1 = D_8014DD50[alien->unkC].unkC;
+    ptr1 = &D_8014DD50[val1];
+    val2 = ptr1->unkD;
+    ptr2 = &D_8014DD50[val2];
+    val3 = ptr2->unkD;
+    ptr3 = &D_8014DD50[val3];
+    val4 = ptr3->unkD;
+    val5 = D_8014DD50[val4].unkD;
+
+    sp9E = val1;
+    sp9C = val2;
+    sp9A = val3;
+    sp98 = val4;
+    sp96 = val5;
+
+    func_800893C8_98378(alienIdx, val1, 0xBB8, 0x3E8, 0, -0xFA0, 0x7D0, 0xA, 0xE);
+    func_800893C8_98378(alienIdx, val2, 0xBB8, 0x1388, 0x7D0, -0xFA0, 0xFA0, 6, 0xC);
+    func_800893C8_98378(alienIdx, val3, 0xBB8, 0x1388, -0x7D0, -0xFA0, 0xFA0, 6, 0xC);
+    func_800893C8_98378(alienIdx, val4, 0, 0xBB8, 0x2710, -0x7D0, 0x7D0, 4, 8);
+    func_800893C8_98378(alienIdx, val5, 0, 0xBB8, -0x2904, -0x7D0, 0x7D0, 4, 8);
+
+    if ((alien->unk2C % 25 == 0) && (alien->unk2C >= 25)) {
+        s16 posX = alien->unk0;
+        s16 posZ = alien->unk4;
+
+        fltVal = (f32)((f64)alienSpecs[alien->specIndex].unkC * 0.75);
+        func_800DF848_EE7F8(posX, (s16)(func_800B84D0_C7480(posX, posZ) >> 8), posZ, (u16)(s32)fltVal, 2);
+    }
+
+    if (alien->unk2C == 1) {
+        func_80088E40_97DF0(alienIdx, sp9E, ptr1->unk0, ptr1->unk2, ptr1->unk4, 0, 4, 0);
+
+        angle = (alien->unk6 + 0x2000) & 0xFFFF;
+        sinVal = sins(angle);
+        fltVal = (f32)(((f64)(f32)sinVal / 32768.0) * 15.0);
+        cosVal = coss(angle);
+        func_80088E40_97DF0(alienIdx, sp9C, ptr2->unk0, ptr2->unk2, ptr2->unk4, (s32)fltVal, 0, (s32)(f32)(((f64)(f32)cosVal / 32768.0) * -15.0));
+
+        angle = (alien->unk6 + 0x6000) & 0xFFFF;
+        sinVal = sins(angle);
+        fltVal = (f32)(((f64)(f32)sinVal / 32768.0) * 15.0);
+        cosVal = coss(angle);
+        func_80088E40_97DF0(alienIdx, sp9A, ptr3->unk0, ptr3->unk2, ptr3->unk4, (s32)fltVal, 0, (s32)(f32)(((f64)(f32)cosVal / 32768.0) * -15.0));
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D736C_256AAC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D7840_256F80.s")
 
