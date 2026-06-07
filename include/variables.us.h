@@ -2331,7 +2331,7 @@ extern s16 D_8016015C;
 extern s16 D_8015929C;
 extern s32 D_801493D0;
 extern s32 D_801600F0;
-extern s16 D_80257A0C[];
+extern s16 D_80257A0C[]; // Wrong. Use vehicleSpecs array unkC field instead.
 extern s16 D_80257A38[];
 extern Unk80160080 D_80160080;
 extern s32 D_80160160;

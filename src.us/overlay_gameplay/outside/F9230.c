@@ -14669,8 +14669,8 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8011049C_11F44C.s")
 #endif
 
-// CURRENT(12431)
-#ifdef TRUE
+// CURRENT(9426)
+#ifdef NON_MATCHING
 s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 	s16 sp76;
 	s16 sp74;
@@ -14683,16 +14683,18 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 	if (temp_s7--) {
 		do {
 			u8 *sp44 = &D_80158E80[temp_s7];
-			if (!((arg0 == D_80158E64) && (temp_s7 == D_80159316)) && *sp44 != sp76) {
+			if ((arg0 == D_80158E64) && (temp_s7 == D_80159316)) { continue; }
+			if (*sp44 == sp76) { continue; }
 				if ((currentLevel == 2) && (arg0->unk1A == 0) && (vehicleInstances[*sp44].unk1A == 5)) { }
 				else {
 					VehicleInstance *var_s2 = &vehicleInstances[*sp44];
 					if ((var_s2->unk1A != 0) || (arg0->unk1A != 5)) {
+						s32 specBound = vehicleSpecs[var_s2->unk1A].unkC;
+						s32 bound = specBound + arg1->unkC;
 						s32 deltaX = arg0->unk0 - var_s2->unk0;
-						s32 bound = D_80257A0C[(var_s2->unk1A * 0x70) / 2] + arg1->unkC;
-						if (deltaX < 0) { deltaX = -deltaX; }
-						if (deltaX < bound) {
-							s32 deltaZ = arg0->unk4 - var_s2->unk4;
+						s32 deltaZ = arg0->unk4 - var_s2->unk4;
+						s32 absX = deltaX < 0 ? -deltaX : deltaX;
+						if (absX < bound) {
 							if (deltaZ < 0) { deltaZ = -deltaZ; }
 							if (deltaZ < bound) {
 								s32 var_s4 = 0;
@@ -14733,7 +14735,7 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 								}
 								if (var_s4 != 0) {
 									if ((currentLevel == 4) && (arg0->unk1A == 0x10)) {
-										s32 tempVal = ((u8 *)D_80257A0C)[(var_s2->unk1A * 0x70) + 0x55] << 8;
+										s32 tempVal = vehicleSpecs[var_s2->unk1A].unk55 << 8;
 										if (var_s2->unk3C < tempVal) { var_s2->unk3C = tempVal; D_8014D17C++; }
 									}
 									if ((arg0->unk20 & 0x400) && (var_s2->unk1A == 0)) {
@@ -14780,7 +14782,6 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 							}
 						}
 					}
-				}
 			}
 		} while (temp_s7--);
 	}
