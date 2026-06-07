@@ -899,7 +899,10 @@ void func_802D72C4_2B96F4(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7350_2B9780.s")
+void func_802D7350_2B9780(void) {
+    func_802D72C4_2B96F4(buildingInstances[0x40].xCoord, buildingInstances[0x40].zCoord, 0xE);
+    func_802D72C4_2B96F4(buildingInstances[0x3D].xCoord, buildingInstances[0x3D].zCoord, 0xF);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7398_2B97C8.s")
 
