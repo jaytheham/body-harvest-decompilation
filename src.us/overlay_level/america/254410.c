@@ -1406,7 +1406,65 @@ void func_802DA054_259794(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
     }
 }
 
+// CURRENT(6500)
+#ifdef NON_MATCHING
+void func_802DA120_259860(s16 arg0, s32 arg1) {
+    AlienInstance *alien;
+    s32 sp78;
+    s32 sp70;
+    f32 vecX;
+    f32 vecY;
+    f32 vecZ;
+    s16 x;
+    s16 z;
+    s16 heading;
+    s16 randVal;
+    s16 rand2;
+    f32 sinVal;
+    f32 cosVal;
+    s16 angle;
+
+    alien = &alienInstances[arg0];
+    if (alien->unk2 < ((func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8) - 0xC8)) {
+        return;
+    }
+    if (alien->unk48 == 0) {
+        return;
+    }
+    func_80137468_146418(arg0, 0x12E);
+    sp78 = alien->unk0;
+    sp70 = alien->unk4;
+    vecY = 0.0f;
+    vecX = (f32)(sp78 / 4) - D_80047954;
+    vecZ = (f32)(sp70 / 4) - D_8004795C;
+    guNormalize(&vecX, &vecY, &vecZ);
+    vecX *= 200.0f;
+    vecZ *= 200.0f;
+    x = (s16)((f32)sp78 - vecX);
+    z = (s16)((f32)sp70 - vecZ);
+    heading = (func_800B84D0_C7480(x, z) >> 8) + 0x32;
+    if ((D_80052A8C % 6U) == 0) {
+        randVal = func_800038E0_44E0() % 30;
+        if (arg1 != 0) {
+            rand2 = func_800038E0_44E0();
+            func_800DEA08_ED9B8(x, heading, z, (s16)((rand2 % 100) + 0x12C), (rand2 % 20) + 0xA, 0, 0x32, 0xC8, randVal + 0x88, randVal + 0x67, randVal + 0x11);
+            func_80135D44_144CF4(sp78, alien->unk2, sp70, 3.0f);
+        } else {
+            rand2 = func_800038E0_44E0();
+            func_800DEA08_ED9B8(x, heading, z, (s16)((rand2 % 100) + 0x12C), (rand2 % 10) + 5, 0, 0x32, 0xB4, randVal + 0x88, randVal + 0x67, randVal + 0x11);
+            func_80135D44_144CF4(sp78, alien->unk2, sp70, 2.0f);
+        }
+    }
+    if (!(D_80052A8C & 1) && (arg1 != 0)) {
+        angle = (alien->unk6 + 0x4000) & 0xFFFF;
+        sinVal = (f32)((f64)(f32)sins(angle) / 32768.0);
+        cosVal = (f32)((f64)(f32)coss(angle) / 32768.0);
+        func_800C541C_D43CC(x, heading, z, (s8)(s32)(sinVal * 127.0f), 0x7F, (s8)(s32)(-cosVal * 127.0f), 0x64, 0xFF, 0x50, 0x14, 0x6A, 0x53, 0);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DA120_259860.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DA520_259C60.s")
 
