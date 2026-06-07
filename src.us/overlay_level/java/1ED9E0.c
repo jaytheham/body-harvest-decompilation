@@ -4252,7 +4252,77 @@ void func_802DF1F8_1F7F08(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DF1F8_1F7F08.s")
 #endif
 
+// CURRENT(100)
+#ifdef NON_MATCHING
+void func_802DF3C0_1F80D0(u8 arg0, s16 *arg1, s16 *arg2) {
+    AlienInstance *alien;
+    Unk8014DD50 *spec_entry;
+    Unk8014DD50 *spec2_entry;
+    s8 spec_idx;
+    s8 spec_idx2;
+    s32 sp64[3];
+    s32 sp58[3];
+    s32 v0;
+    AlienSpec *spec;
+
+    alien = &alienInstances[arg0];
+    spec_entry = &D_8014DD50[alien->unkC];
+    spec_idx = spec_entry->unkC;
+    spec2_entry = &D_8014DD50[spec_idx];
+    spec_idx2 = spec2_entry->unkC;
+
+    if (alien->unk20 & 0x2000) {
+        func_802DF1F8_1F7F08(arg0);
+
+        if (alien->unk1E != 0) {
+            alien->unk1E--;
+            return;
+        }
+
+        if (alien->unk20 & 0x8000) {
+            func_800A931C_B82CC(spec_idx2, arg1, sp64);
+            arg1[0] = (s16) sp64[0];
+            arg1[1] = (s16) sp64[1];
+            arg1[2] = (s16) sp64[2];
+
+            func_800A931C_B82CC(spec_idx, arg1, sp64);
+
+            func_800A931C_B82CC(spec_idx2, arg2, sp58);
+            arg2[0] = (s16) sp58[0];
+            arg2[1] = (s16) sp58[1];
+            arg2[2] = (s16) sp58[2];
+
+            func_800A931C_B82CC(spec_idx, arg2, sp58);
+
+            spec = &alienSpecs[alien->specIndex];
+            spec->unk20 = (s16) sp64[0];
+            spec->unk22 = (s16) sp64[1];
+            spec->unk24 = (s16) sp64[2];
+            spec->unk2C = (s16) sp58[0];
+            spec->unk2E = (s16) sp58[1];
+            spec->unk30 = (s16) sp58[2];
+
+            v0 = func_800870D8_96088(0x80, 0x10);
+            func_80086D70_95D20(arg0, 0, (s16)(v0 - spec2_entry->unk6 - spec_entry->unk6));
+            alien->unk1E = 0;
+            func_80086D70_95D20(arg0, 1, (s16)(func_800870D8_96088(0x80, 0x10) - spec2_entry->unk6 - spec_entry->unk6));
+            alien->unk20 &= ~0x2000;
+        }
+    } else {
+        if (alienInstances[alien->unk25].unk20 & 0x8000) {
+            alien->unk20 |= 0x2000;
+            alien->unk1E = 5;
+            spec2_entry->unkE = 0;
+            spec_entry->unkE = 0;
+        }
+
+        func_800893C8_98378(arg0, spec_idx2, 0x5DC, 0x9C4, 0, -0x3E8, 0x7D0, 0x14, 0x1E);
+        func_800893C8_98378(arg0, spec_idx, 0x3E8, 0x7D0, 0, -0x5DC, 0xBB8, 0x14, 0x1E);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DF3C0_1F80D0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DF69C_1F83AC.s")
 
