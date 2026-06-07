@@ -612,6 +612,7 @@ extern VehicleInstance vehicleInstances[]; // 8004DCD0
 extern VehicleInstance D_8004F374;
 extern Unk80050ADA D_80050ADA[]; // 0x80050ADA
 extern u8 D_80050ADE[];
+extern s8 D_80050AE7[]; /* overlaps D_80050AE0 + 7 */
 extern Unk80050AE0 D_80050AE0[0xFF];
 extern u8 D_802566D2[];
 extern u8 D_8008E0A8_176168[];
@@ -4047,6 +4048,8 @@ extern void (*D_802E0DF0_2C3220[])(void);
 extern char D_802E2E90_2C52C0[];
 extern char D_802E2EB0_2C52E0[];
 extern char D_802E2EC8_2C52F8[];
+extern char D_802E2EF8_2C5328[];
+extern char D_802E2F04_2C5334[];
 extern s16 D_802E309C;
 
 #endif

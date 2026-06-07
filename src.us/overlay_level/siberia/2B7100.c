@@ -558,7 +558,46 @@ void func_802D63E8_2B8818(s32 arg0, s16 *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D63E8_2B8818.s")
 #endif
 
+// CURRENT(24)
+#ifdef NON_MATCHING
+void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
+    s32 var_s0;
+    s32 var_s1;
+
+    if (arg1 >= arg2) {
+        if (D_80050AE7[arg0 * 24] > 0) {
+            func_8011C080_12B030(arg0);
+            goto end;
+        }
+    }
+
+    if (arg2 == arg1 + 24) {
+        osSyncPrintf(D_802E2EF8_2C5328);
+        var_s0 = 0;
+        var_s1 = arg4;
+        if (arg5 > 0) {
+            do {
+                func_802D63E8_2B8818(arg0, (s16 *)var_s1);
+                var_s0++;
+                var_s1 += 6;
+            } while (var_s0 != arg5);
+        }
+        goto end;
+    }
+
+    if (arg1 % arg3 == 0) {
+        osSyncPrintf(D_802E2F04_2C5334);
+        func_802D63E8_2B8818(arg0, (s16 *)(arg4 + (func_800038E0_44E0() % arg5) * 6));
+    }
+
+end:
+    if (arg6 < arg1) {
+        buildingInstances[arg0].yCoord -= arg7;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D64DC_2B890C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6674_2B8AA4.s")
 
