@@ -3794,6 +3794,7 @@ extern f64 D_802E2FE0_2C5410;
 extern f64 D_802E2FE8_2C5418;
 extern f64 D_802E2FF0_2C5420;
 extern char D_802E2F14_2C5344[];
+extern char D_802E2F34_2C5364[];
 extern f32 D_802E0F88;
 extern f32 D_802E0F8C;
 extern char D_802E0E74[];

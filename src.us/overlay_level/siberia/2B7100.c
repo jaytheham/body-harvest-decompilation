@@ -904,7 +904,63 @@ void func_802D7350_2B9780(void) {
     func_802D72C4_2B96F4(buildingInstances[0x3D].xCoord, buildingInstances[0x3D].zCoord, 0xF);
 }
 
+// CURRENT(955)
+#ifdef NON_MATCHING
+s32 func_802D7398_2B97C8(void) {
+    s32 temp;
+
+    func_80013468_14068(0xD);
+    osSyncPrintf(D_802E2F34_2C5364, D_80157F8C, D_80157F8E);
+
+    switch (D_80157F8C) {
+    case 0:
+        temp = D_80157F8E;
+        D_80157F8E = temp + 1;
+        if (temp >= 0x29) {
+            D_80157F8E = 0;
+            D_80157F8C++;
+        }
+        break;
+    case 1:
+        temp = D_80157F8E;
+        if (temp == 5) {
+            func_8011C080_12B030(0x96);
+            temp = D_80157F8E;
+        }
+        D_80157F8E = temp + 1;
+        if (temp >= 0x15) {
+            D_80157F8E = 0;
+            D_80157F8C++;
+        }
+        break;
+    case 2:
+        temp = D_80157F8E;
+        D_8013E344_14D2F4 = temp * 12;
+        D_80157F8E = temp + 1;
+        if (temp >= 0x15) {
+            D_80157F8E = 0;
+            D_80157F8C++;
+        }
+        break;
+    case 3:
+        temp = D_80157F8E;
+        D_8013E344_14D2F4 = 0xF0 - temp * 12;
+        D_80157F8E = temp + 1;
+        if (temp >= 0x15) {
+            D_80157F8E = 0;
+            D_80157F8C++;
+        }
+        break;
+    case 4:
+        return 1;
+    default:
+        break;
+    }
+    return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7398_2B97C8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7508_2B9938.s")
 
