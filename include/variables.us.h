@@ -3789,6 +3789,8 @@ extern f64 D_802E0EA8;
 extern s32 D_502D390;
 extern s16 D_802E0DC0;
 extern f32 D_802E0DC8_260508;
+extern f32 D_802E0DCC_26050C;
+extern f32 D_802E0DD0_260510;
 extern s16 D_802E0DE8;
 extern s16 D_802E0E04;
 extern char D_802E0E18_1F9B28[];
