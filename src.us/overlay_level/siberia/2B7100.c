@@ -2,6 +2,7 @@
 #include "common.h"
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
+void func_802D6A70_2B8EA0(void);
 
 #ifdef NON_MATCHING
 void func_802D4CD0_2B7100(s32 arg0, s32 arg1) {
@@ -732,7 +733,55 @@ void func_802D6A70_2B8EA0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6A70_2B8EA0.s")
 #endif
 
+#ifdef NON_MATCHING
+void func_802D6CA0_2B90D0(void) {
+    s16 temp;
+    s32 buildingType;
+    s32 dx, dz;
+    s32 angle;
+    s16 cosVal, sinVal;
+
+    temp = 0x69 - D_8004D1B2;
+    if (temp < 0xC8) {
+        func_8009BF64_AAF14((u16)temp);
+    }
+    if ((D_80052B34->unk1A == 5) && (D_80052B34->unk20 & 0x800)) {
+        if (D_802E309C == -1) {
+            D_802E309C = func_800FAE60_109E10(D_80052B34);
+        }
+        {
+            s32 t5 = D_80052B34->unk0 >> 8;
+            s32 t7 = D_80052B34->unk4 >> 8;
+            buildingType = func_8011D260_12C210((s8)t5, (s8)t7);
+        }
+        if (buildingType == 0x45 || buildingType == 0x50 || buildingType == 0x41 || buildingType == 0x56) {
+            if (buildingInstances[buildingType].unk7 != 0) {
+                dx = D_80052B34->unk0 - buildingInstances[buildingType].xCoord;
+                dz = D_80052B34->unk4 - buildingInstances[buildingType].zCoord;
+                angle = (buildingInstances[buildingType].unk8 << 14) & 0xFFFF;
+                cosVal = coss(angle);
+                sinVal = sins(angle);
+                temp = (s32)((f64)dx * ((f64)(f32)cosVal / 32768.0) - ((f64)(f32)sinVal / 32768.0) * (f64)dz);
+                sinVal = sins(angle);
+                cosVal = coss(angle);
+                if (temp < 0) {
+                    if ((s32)((f64)dz * ((f64)(f32)cosVal / 32768.0) + (f64)dx * ((f64)(f32)sinVal / 32768.0)) > 0) {
+                        D_802E30F8 = buildingType;
+                        D_802E30FC = D_80052B34 - vehicleInstances;
+                        func_80007410_8010(func_802D6A70_2B8EA0);
+                    }
+                }
+            }
+        }
+        if (D_801591C4 == 0x14) {
+            func_800072CC_7ECC(0x21);
+            func_800074BC_80BC(func_802D6CA0_2B90D0);
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6CA0_2B90D0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6F4C_2B937C.s")
 
