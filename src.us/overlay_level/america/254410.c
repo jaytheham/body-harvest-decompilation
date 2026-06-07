@@ -1165,7 +1165,78 @@ void func_802D86D8_257E18(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D86D8_257E18.s")
 #endif
 
+// CURRENT(4592)
+#ifdef NON_MATCHING
+void func_802D9038_258778(u8 arg0) {
+    AlienInstance *alien;
+    u8 idx;
+    s16 sp96;
+    s32 pad[6];
+    s16 sp92;
+    s16 sp90;
+    s16 sp8E;
+    s16 sp8C;
+    s32 sp68;
+    s32 sp64;
+    s32 sp60;
+    f32 sp5C;
+    Unk8014DD50 *sp44;
+    Unk8014DD50 *sp40;
+    s32 sp3C;
+
+    idx = arg0;
+    alien = &alienInstances[idx];
+    if (alien->unk20 & 0x600) {
+        if (!(alien->unk20 & 0x100000)) {
+            alien->unk36 = 0;
+            alien->unk4B = 0;
+            alien->unk2C = 0x50;
+            func_80087C50_96C00(idx);
+            alien->unk36 = 0;
+            alien->unk20 |= 0x1000;
+            func_80137468_146418(idx, 0x10);
+            return;
+        }
+        sp96 = D_8014DD50[alien->unkC].unkC;
+        sp92 = D_8014DD50[sp96].unkD;
+        sp44 = &D_8014DD50[sp92];
+        sp90 = sp44->unkD;
+        sp8E = sp44->unkC;
+        sp40 = &D_8014DD50[sp90];
+        sp8C = sp40->unkC;
+        func_80087C74_96C24(idx);
+        func_800893C8_98378(idx, sp96, 0xBB8, 0x3E8, 0, -0xFA0, 0x7D0, 4, 0xA);
+        func_80137468_146418(idx, 0x137);
+        if (func_802D7D08_257448(idx, func_80084E54_93E04(D_80052B34, alien), sp96, sp92, sp8E, sp90, sp8C) == 5) {
+            alien->unk36 = 0;
+            alien->unk20 |= 0x1000;
+        }
+        if (alien->unk2C == 0x28) {
+            sp3C = (alien->unk6 + 0x8000) & 0xFFFF;
+            sp5C = (f32)(((f64)(f32)sins(sp3C) / 32768.0) * 15.0);
+            func_80088E40_97DF0(idx, sp8C, (s16)(D_8014DD50[sp8C].unk0 + sp40->unk0), (s16)(D_8014DD50[sp8C].unk2 + sp40->unk2), D_8014DD50[sp8C].unk4 + sp40->unk4, (s32)sp5C, 0xF, (s32)(f32)(((f64)(f32)coss(sp3C) / 32768.0) * -15.0));
+        }
+        if (alien->unk2C == 0x14) {
+            sp3C = alien->unk6 & 0xFFFF;
+            sp5C = (f32)(((f64)(f32)sins(sp3C) / 32768.0) * 15.0);
+            func_80088E40_97DF0(idx, sp8E, (s16)(D_8014DD50[sp8E].unk0 + sp44->unk0), (s16)(D_8014DD50[sp8E].unk2 + sp44->unk2), D_8014DD50[sp8E].unk4 + sp44->unk4, (s32)sp5C, 0xF, (s32)(f32)(((f64)(f32)coss(sp3C) / 32768.0) * -15.0));
+        }
+        if ((alien->unk2C & 7) == 0) {
+            func_80128504_1374B4(alien, 1, &sp68, &sp64, &sp60);
+            func_800D05A8_DF558((s16)sp68, (s16)sp64, (s16)sp60, 0x3E8, 0xFF, 0xFF, 0xFF);
+            sp68 = ((func_800038E0_44E0() % 200) + alien->unk0) - 0x64;
+            sp64 = func_800B84D0_C7480((s16)sp68, (s16)sp60) >> 8;
+            sp60 = ((func_800038E0_44E0() % 200) + alien->unk4) - 0x64;
+            func_800865F4_955A4(idx, 0, sp68, sp64, sp60);
+        }
+        if (alien->unk2C == 1) {
+            func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, *(u16 *)((u8 *)&D_8025668C + alien->specIndex * 0x68), 6);
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D9038_258778.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D9510_258C50.s")
 
