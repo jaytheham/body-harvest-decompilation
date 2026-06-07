@@ -2305,7 +2305,12 @@ void func_802DB7B8_25AEF8(u8 arg0, s32 arg1, u8 arg2, s16 arg3, s16 arg4, s16 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DB7B8_25AEF8.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DBD08_25B448.s")
+void func_802DBD08_25B448(u8 arg0, s32 arg1, s32 arg2) {
+    f32 scale = D_802DF3A4_25EAE4;
+    
+    alienSpecs[D_800481B2[arg0 * 0x50]].unk34 = (s16)(s32)((f32)arg1 * scale);
+    alienSpecs[D_800481B2[arg0 * 0x50]].unk36 = (s16)(s32)((f32)arg2 * scale);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DBD84_25B4C4.s")
 

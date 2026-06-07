@@ -2156,6 +2156,7 @@ extern u32 D_8014D1B8[];
 extern Unk8014F618 D_8014F618;
 
 extern AlienSpec alienSpecs[0x30]; // 80256680
+extern f32 D_802DF3A4_25EAE4;
 extern u32 D_8014D1D4; // D_8014D1B8[7]
 extern Unk8025669C D_8025669C[];  // 8025669C
 extern Unk8014DD50 *D_802DDC88_196798;

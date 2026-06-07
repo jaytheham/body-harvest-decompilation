@@ -994,6 +994,7 @@ void func_802D7360_18FE70(void);
 s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2);
 void func_802DC2E4_194DF4(u8 arg0);
 void func_802D5190_2548D0(void);
+void func_802DBD08_25B448(u8, s32, s32);
 
 void osViExtendVStart(s32 arg0);
 void func_8000140C_200C(OSThread *arg0);
