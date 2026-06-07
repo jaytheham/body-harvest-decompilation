@@ -822,7 +822,27 @@ void func_802D6F4C_2B937C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6F4C_2B937C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6FFC_2B942C.s")
+void func_802D6FFC_2B942C(void) {
+    s32 i;
+    s32 acc;
+
+    if (D_8014D17C >= 0x15) {
+        for (i = 0, acc = 0; i < 4; i++, acc += 0xC) {
+            if (acc < D_8014D17C) {
+                func_802D64DC_2B890C(((s32 *)&D_802E0E8C_2C32BC)[i], D_8014D17C - acc - 0x14, 0x7D, 0xC, (s32)&D_802E0E9C_2C32CC, 5, 0x4B, 0x18);
+            }
+        }
+
+        if ((s8)buildingInstances[0x45].hitPoints <= 0 &&
+            (s8)buildingInstances[0x50].hitPoints <= 0 &&
+            (s8)buildingInstances[0x41].hitPoints <= 0 &&
+            (s8)buildingInstances[0x56].hitPoints <= 0) {
+            func_800074BC_80BC(func_802D6FFC_2B942C);
+        }
+    }
+
+    D_8014D17C += 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7114_2B9544.s")
 
