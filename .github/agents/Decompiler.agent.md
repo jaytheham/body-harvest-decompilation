@@ -88,7 +88,7 @@ If build completes with `build/bh.us.z64: OK` the function is matched and you ca
 
 ## Step 5+: Iterate Until Match
 
-Rewrite C code to reduce the number of differences in assembly. First target differences in instructions and their ordering, and only then target register allocation.
+Rewrite C code to reduce the number of differences in assembly. Ignore register allocation & stack size until all other differences are resolved, prioritize wrong and disordered instructions.
 **FIRST ALWAYS try removing intermediate variables and simplifying the code**, it is very common that the original code derefenced struct fields and arrays multiple times instead of storing them in a local variable.
 Make sure all pointer arithmetic is replaced with proper struct/array access, and that assembly-like if>do>while and goto control flow is replaced with more natural C control flow constructs.
 Double check all function call params are necessary and correctly typed.
