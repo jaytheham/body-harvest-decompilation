@@ -14669,7 +14669,7 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8011049C_11F44C.s")
 #endif
 
-// CURRENT(9159)
+// CURRENT(8334)
 #ifdef TRUE
 s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 	s16 sp76;
@@ -14683,12 +14683,12 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 	spCount = D_80158FD8;
 	temp_s7 = spCount;
 	while (temp_s7--) {
-			u8 *sp44 = &D_80158E80[temp_s7];
+			u8 *sp44; u8 sp44_val; sp44_val = (*(sp44 = &D_80158E80[temp_s7]));
 			if ((arg0 == D_80158E64) && (temp_s7 == D_80159316)) { continue; }
-			if (*sp44 == sp76) { continue; }
-			if ((currentLevel == 2) && (arg0->unk1A == 0) && (vehicleInstances[*sp44].unk1A == 5)) { }
+			if (sp44_val == sp76) { continue; }
+			if ((currentLevel == 2) && (arg0->unk1A == 0) && (vehicleInstances[sp44_val].unk1A == 5)) { }
 			else {
-				VehicleInstance *var_s2 = &vehicleInstances[*sp44];
+				VehicleInstance *var_s2 = &vehicleInstances[sp44_val];
 				if ((var_s2->unk1A != 0) || (arg0->unk1A != 5)) {
 					s32 specBound = vehicleSpecs[var_s2->unk1A].unkC;
 					s32 bound = specBound + arg1->unkC;
