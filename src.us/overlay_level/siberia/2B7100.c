@@ -844,7 +844,36 @@ void func_802D6FFC_2B942C(void) {
     D_8014D17C += 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7114_2B9544.s")
+void func_802D7114_2B9544(void) {
+    s32 i;
+    u8 alienId;
+    AlienInstance *alien;
+    s16 v1;
+
+    func_800074BC_80BC(func_802D6CA0_2B90D0);
+    func_80013468_14068(0xB);
+    D_8014D17C = 0;
+    func_80007410_8010(func_802D6FFC_2B942C);
+    func_800074BC_80BC(func_802D6A70_2B8EA0);
+    func_800EFEB4_FEE64(0, 0x19, 0);
+
+    for (i = 0; i < D_8014D507; i++) {
+        alienId = D_8014D408[i];
+        alien = (AlienInstance *)((u8 *)alienInstances + alienId * sizeof(AlienInstance));
+        if (alien->unk24 == 0x1B) {
+            func_80088760_97710(alien);
+            alien->unk2C = 1;
+        }
+    }
+
+    v1 = D_802E309C;
+    if ((v1 != -1) && (D_80052B34->unk20 & 0x800) && (D_80052B34->unk1A == 0)) {
+        func_80123AC4_132A74(&vehicleInstances[v1]);
+    } else {
+        D_80052B34->unk20 |= 2;
+        D_80052B34->unk34 = 5.0f;
+    }
+}
 
 void func_802D7298_2B96C8(void) {
 }
