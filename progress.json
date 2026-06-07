@@ -1,14 +1,14 @@
 {
-  "generated": "2026-06-07T11:04:03Z",
-  "commit": "71b99e2e",
-  "commit_timestamp": "2026-06-07T23:03:41+12:00",
+  "generated": "2026-06-07T20:50:28Z",
+  "commit": "3fc58317",
+  "commit_timestamp": "2026-06-08T08:50:06+12:00",
   "overall": {
     "total_functions": 2705,
-    "matched": 1422,
-    "non_matching": 1097,
-    "asm_stubs": 186,
-    "matched_pct": 52.57,
-    "decompiled_pct": 93.12
+    "matched": 1432,
+    "non_matching": 1113,
+    "asm_stubs": 160,
+    "matched_pct": 52.94,
+    "decompiled_pct": 94.09
   },
   "segments": {
     "core": {
@@ -67,12 +67,12 @@
     },
     "overlay_level/america": {
       "display_name": "Level / America",
-      "matched": 16,
-      "non_matching": 4,
-      "asm_stubs": 54,
+      "matched": 26,
+      "non_matching": 20,
+      "asm_stubs": 28,
       "total": 74,
-      "matched_pct": 21.6,
-      "decompiled_pct": 27.0
+      "matched_pct": 35.1,
+      "decompiled_pct": 62.2
     },
     "overlay_level/siberia": {
       "display_name": "Level / Siberia",
@@ -497,11 +497,11 @@
     {
       "path": "overlay_level/america/254410.c",
       "segment": "overlay_level/america",
-      "matched": 16,
-      "non_matching": 4,
-      "asm_stubs": 54,
+      "matched": 26,
+      "non_matching": 20,
+      "asm_stubs": 28,
       "total": 74,
-      "matched_pct": 21.6,
+      "matched_pct": 35.1,
       "contributor": "jaytheham"
     },
     {
@@ -549,9 +549,9 @@
     {
       "name": "jaytheham",
       "files": 44,
-      "matched": 1420,
-      "non_matching": 1097,
-      "asm_stubs": 186
+      "matched": 1430,
+      "non_matching": 1113,
+      "asm_stubs": 160
     },
     {
       "name": "Meridian Lex",
@@ -690,9 +690,9 @@
     },
     {
       "date": "2026-06-07",
-      "commit": "e5f8150",
-      "matched": 1422,
-      "non_matching": 1097,
+      "commit": "ca23f04",
+      "matched": 1432,
+      "non_matching": 1113,
       "total": 2705
     }
   ]
