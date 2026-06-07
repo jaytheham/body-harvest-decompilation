@@ -3,6 +3,8 @@
 #include "common.h"
 #undef func_8008EB20_5EFD0
 s16 func_8008EB20_5EFD0();
+void func_802D62A0_2559E0(u8 arg0);
+void func_802D65BC_255CFC(u8 arg0);
 
 
 void func_802D4CD0_254410(s32 arg0, s32 arg1) {
@@ -661,7 +663,57 @@ void func_802D65BC_255CFC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D65BC_255CFC.s")
 #endif
 
+// CURRENT(200)
+#ifdef NON_MATCHING
+void func_802D6684_255DC4(u8 arg0) {
+    u8 padByte;
+    u8 sp36;
+    s32 pad[3];
+    s32 sp24;
+    AlienInstance *alien;
+
+    sp24 = 0x1C2;
+    alien = &alienInstances[arg0];
+    sp36 = D_8014DD5C[alien->unkC * 16];
+    func_8008E478_9D428(arg0);
+
+    if (alien->unk25 != 0xFF) {
+        func_802D65BC_255CFC(arg0);
+    }
+
+    if ((s32)((alien->unk0 - alien->unk14) * (alien->unk0 - alien->unk14) + (alien->unk4 - alien->unk18) * (alien->unk4 - alien->unk18)) < 0x57E40) {
+        if (!(alien->unk20 & 0x10)) {
+            alien->unk20 = alien->unk20 | 0x10;
+            alien->unk20 = alien->unk20 | 0x2000;
+            alien->unk26 = 0x96;
+            alien->unk1E = 0;
+        }
+    }
+    if (alien->unk20 & 0x2000) {
+        if (alien->unk20 & 0x8000) {
+            func_802D62A0_2559E0(arg0);
+        } else if (func_800850DC_9408C(arg0, 0x1000) != 0) {
+            alien->unk36 = 0;
+            alien->unk20 |= 0x8000;
+        }
+        sp24 = 0x190;
+    }
+
+    func_800A5554_B4504(arg0, func_8008E524_9D4D4(arg0, sp24, 4), 0x3D4CCCCD, sp36);
+
+    if (alien->unk26 != 0) {
+        alien->unk26--;
+    } else {
+        alien->unk20 &= ~0x10;
+    }
+
+    if (alien->unk1E != 0) {
+        alien->unk1E--;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D6684_255DC4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D6824_255F64.s")
 
