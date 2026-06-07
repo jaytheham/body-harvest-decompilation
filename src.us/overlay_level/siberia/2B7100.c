@@ -783,7 +783,44 @@ void func_802D6CA0_2B90D0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6CA0_2B90D0.s")
 #endif
 
+// CURRENT(200)
+#ifdef NON_MATCHING
+void func_802D6F4C_2B937C(void) {
+    u32 v1;
+    u32 a2;
+    u32 t0;
+    u32 t2;
+    u32 t6;
+    u32 t8;
+    u32 t9;
+
+    v1 = buildingInstances[0x45].unk8;
+    a2 = buildingInstances[0x50].unk8;
+    t6 = (v1 >> 12) | 0x10000;
+    t8 = t6 ^ (v1 >> 12);
+    t0 = buildingInstances[0x41].unk8;
+    t9 = (t8 << 12) ^ v1;
+    t6 = (a2 >> 12) | 0x10000;
+    t8 = t6 ^ (a2 >> 12);
+    t2 = buildingInstances[0x56].unk8;
+    buildingInstances[0x45].unk8 = t9;
+    t6 = (t0 >> 12) | 0x10000;
+    t9 = t6 ^ (t0 >> 12);
+    t8 = (t8 << 12) ^ a2;
+    buildingInstances[0x50].unk8 = t8;
+    t8 = (t2 >> 12) | 0x10000;
+    t6 = t8 ^ (t2 >> 12);
+    t9 = (t9 << 12) ^ t0;
+    t6 = (t6 << 12) ^ t2;
+    buildingInstances[0x41].unk8 = t9;
+    buildingInstances[0x56].unk8 = t6;
+    D_8014D17E = 0;
+    D_801591C4 = 0;
+    func_80007410_8010(func_802D6CA0_2B90D0);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6F4C_2B937C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6FFC_2B942C.s")
 
