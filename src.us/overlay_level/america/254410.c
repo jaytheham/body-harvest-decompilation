@@ -1,5 +1,8 @@
 #include <ultra64.h>
+#define func_8008EB20_5EFD0 HIDDEN_func_8008EB20_5EFD0
 #include "common.h"
+#undef func_8008EB20_5EFD0
+s16 func_8008EB20_5EFD0();
 
 
 void func_802D4CD0_254410(s32 arg0, s32 arg1) {
@@ -426,7 +429,82 @@ void func_802D5CA8_2553E8(u8 arg0) {
     func_8008064C_8F5FC(arg0);
 }
 
+// CURRENT(1267)
+#ifdef NON_MATCHING
+void func_802D5D08_255448(u8 arg0) {
+    s32 sp38;
+    s32 temp;
+    s16 sp32;
+    AlienInstance *alien;
+
+    sp38 = 0x2BC;
+    func_80137468_146418(arg0, 0x130);
+
+    alien = &alienInstances[arg0];
+
+    if (alien->unk20 & 0x8000) {
+        func_8008064C_8F5FC(arg0);
+    } else {
+        func_8008076C_8F71C(arg0);
+        func_800A53C0_B4370(arg0, 0x200, 0x3000);
+    }
+
+    if (!(alien->unk20 & 0x10) && !(alien->unk20 & 0x8000)) {
+        alien->unk20 |= 0x08000000;
+        if (func_80084E54_93E04((VehicleInstance *)alien, (AlienInstance *)D_80052B34) < 0x640) {
+            alien->unk3C = 0x50;
+            alien->unk1E = 0;
+            alien->unk20 |= 0x2010;
+        }
+    } else if (alien->unk20 & 0x2000) {
+        if (func_80084FE8_93F98(arg0, 0x800) != 0) {
+            sp38 = 0x12C;
+            func_800868A4_95854(arg0, 0, 0, 0x2000);
+        } else {
+            alien->unk20 &= ~0x2000;
+        }
+    }
+
+    func_8011E6FC_12D6AC(alien->unk0, alien->unk4, &sp32);
+
+    if (sp32 >= (alien->unk2 - ((s16 *)&D_8025668C)[alien->specIndex * 0x34]) ||
+        ((alien->unk47 & 1) && (alien->unk20 & 0x1000))) {
+        func_80129354_138304(alien, 0, 0, 0, 0);
+        alien->unk20 |= 0x1000;
+        func_80088760_97710(alien);
+    } else {
+        if (alien->unk20 & 0x8000) {
+            if (!(alien->unk20 & 0x1000)) {
+                if (alien->unk20 & 0x800) {
+                    func_8008E978_9D928(arg0, 0x258);
+                } else {
+                    func_8008EDFC_9DDAC(arg0);
+                }
+                func_80092C40_A1BF0(arg0);
+            }
+        } else {
+            temp = func_8008E524_9D4D4(arg0, sp38, 0xA);
+            if (sp38 < temp) {
+                func_8008EB20_5EFD0(arg0, temp, 0x640);
+            } else {
+                func_8008EB20_5EFD0(arg0, temp, 0x320);
+            }
+        }
+    }
+
+    if (alien->unk3C != 0) {
+        alien->unk3C--;
+    } else {
+        alien->unk20 &= ~0x10;
+    }
+
+    if (alien->unk1E != 0) {
+        alien->unk1E--;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5D08_255448.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5F88_2556C8.s")
 
