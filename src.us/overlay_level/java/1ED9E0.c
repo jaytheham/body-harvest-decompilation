@@ -4352,7 +4352,30 @@ void func_802DF788_1F8498(u8 arg0) {
 	func_800A93A4_B8354(arg0, -0xAE, 0x7E, 0x183);
 }
 
+// CURRENT(2742)
+#ifdef NON_MATCHING
+void func_802DF7BC_1F84CC(u8 arg0) {
+	u8 sp1F;
+	s16 sp20[3];
+	s16 sp28[3];
+
+	if (1) { *(s32 *)&sp28[0] = D_802E0CD4_1F99E4.w; sp28[2] = D_802E0CD4_1F99E4.h; }
+	if (1) {
+		*(s32 *)&sp20[0] = D_802E0CDC_1F99EC.w;
+		sp20[2] = D_802E0CDC_1F99EC.h;
+		sp1F = *((u8 *)&D_800481BD + arg0 * 0x50);
+	}
+	func_800A93A4_B8354(arg0, 0xAE, 0x7E, 0x183);
+
+	if ((alienInstances[sp1F].unk24 != 0) && (alienInstances[sp1F].unk2C < 0xA0)) {
+		func_802DEFC0_1F7CD0(arg0, -0x2328, -0x2000, -0x1000);
+		return;
+	}
+	func_802DF3C0_1F80D0(arg0, sp28, sp20);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DF7BC_1F84CC.s")
+#endif
 
 void func_802DF8A8_1F85B8(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0xAE, 0x7E, 0x183);

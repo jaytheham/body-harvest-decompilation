@@ -3742,6 +3742,8 @@ extern u8 D_802E0CB4_1F99C4[];
 extern u8 D_802E0CBC_1F99CC[];
 extern struct { s32 w; u16 h; } D_802E0CC4_1F99D4;
 extern struct { s32 w; u16 h; } D_802E0CCC_1F99DC;
+extern struct { s32 w; u16 h; } D_802E0CD4_1F99E4;
+extern struct { s32 w; u16 h; } D_802E0CDC_1F99EC;
 extern f64 D_802E0F90_1F9CA0;
 extern f64 D_802E0F98_1F9CA8;
 extern f64 D_802E0FA0_1F9CB0;
