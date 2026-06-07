@@ -1101,7 +1101,7 @@ void func_80070F7C_15903C(s16 arg0, u8 arg1, u8 arg2);
 void func_802D5C24_2B8054(void);
 void func_802D5F28_2B8358(void);
 void func_802D6674_2B8AA4(void);
-void func_802D6768_2B8B98(void);
+s32 func_802D6768_2B8B98(void);
 void func_802D6CA0_2B90D0(void);
 void func_802D75E4_2B9A14(void);
 void func_802D769C_2B9ACC(void);
