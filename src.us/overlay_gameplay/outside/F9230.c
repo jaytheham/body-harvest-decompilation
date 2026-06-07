@@ -14463,11 +14463,6 @@ s32 func_8010FF84_11EF34(VehicleInstance *arg0, s32 arg1) {
 // CURRENT(1710)
 #ifdef NON_MATCHING
 s32 func_80110144_11F0F4(VehicleInstance *arg0, s32 arg1) {
-	extern u8 D_80158F80;
-	extern f32 D_80159D84;
-	extern f32 D_80159DA4;
-	s32 func_800BD688_CC638(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3);
-	void func_800C4938_D38E8(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4);
 	f32 *var_s2;
 	f32 *var_s3;
 	s16 temp_v0;

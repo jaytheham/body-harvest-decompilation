@@ -2071,10 +2071,10 @@ typedef struct {
 } Unk8003E290Entry; /* 0x10 bytes */
 
 typedef struct {
-	/* 0x00 */ s16 unk0;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
-	/* 0x06 */ s16 unk6;
+	/* 0x00 */ s16 unk0; // Bounding wall min X?
+	/* 0x02 */ s16 unk2; // Bounding wall min Z?
+	/* 0x04 */ s16 unk4; // Bounding wall max X?
+	/* 0x06 */ s16 unk6; // Bounding wall max Z?
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ s16 unkA;
 	/* 0x0C */ s16 unkC;
@@ -2083,7 +2083,7 @@ typedef struct {
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;
 	/* 0x16 */ s16 unk16;
-} Unk8014FD30Type; /* 0x18 bytes */
+} Unk8014FD30Type; /* 0x18 bytes Level Shield Wall Collision Data? */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;

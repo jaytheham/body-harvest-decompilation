@@ -180,28 +180,28 @@ void func_800B0C80_BFC30(void) {
 	D_8014FD30 = *(Unk8014FD30Type *)(D_80147C30_156BE0 + currentLevel * 0x90 + D_80047F94 * 0x18 - 0x90);
 }
 
-s32 func_800B0D10_BFCC0(s32 arg0, s32 arg1, s32 arg2) {
+s32 func_800B0D10_BFCC0(s32 xPosition, s32 zPosition, s32 bufferRadius) {
 	Unk8014FD30Type *a2;
-	s32 v0, v1, a0, a3;
-	s32 a1;
+	s32 minX, maxX, minZ, maxZ;
+	s32 index;
 
 	if (D_80052ACA == 2) {
 		return 0;
 	}
-	v0 = arg0 - arg2;
-	if (v0 < D_8014FD30.unk0
-		|| (v1 = arg0 + arg2, D_8014FD30.unk4 < v1)
-		|| (a0 = arg1 - arg2, a0 < D_8014FD30.unk2)
-		|| (a3 = arg1 + arg2, D_8014FD30.unk6 < a3)) {
+	
+	if (minX = xPosition - bufferRadius, minX < D_8014FD30.unk0
+		|| (maxX = xPosition + bufferRadius, D_8014FD30.unk4 < maxX)
+		|| (minZ = zPosition - bufferRadius, minZ < D_8014FD30.unk2)
+		|| (maxZ = zPosition + bufferRadius, D_8014FD30.unk6 < maxZ)) {
 		return 1;
 	}
-	for (a1 = 0; a1 != 2; a1++) {
-		a2 = (Unk8014FD30Type *)((u8 *)&D_8014FD30 + a1 * 8);
+	for (index = 0; index != 2; index++) {
+		a2 = (Unk8014FD30Type *)((u8 *)&D_8014FD30 + index * 8);
 		if (a2->unkC == a2->unk8) {
 			break;
 		}
-		if (a2->unk8 < v1 && v0 < a2->unkC && a2->unkA < a3 && a0 < a2->unkE) {
-			return a1 + 2;
+		if (a2->unk8 < maxX && minX < a2->unkC && a2->unkA < maxZ && minZ < a2->unkE) {
+			return index + 2;
 		}
 	}
 	return 0;
@@ -4994,7 +4994,6 @@ void func_800BD360_CC310(void)
 }
 
 // Is target outside all open gates
-// CURRENT(1785)
 s32 func_800BD688_CC638(s16 targetX, s16 targetY, s16 targetZ, VehicleInstance *vehicle)
 {
   s16 i;
