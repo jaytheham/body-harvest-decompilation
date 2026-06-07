@@ -1,6 +1,8 @@
 #include <ultra64.h>
 #include "common.h"
 
+void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
+
 #ifdef NON_MATCHING
 void func_802D4CD0_2B7100(s32 arg0, s32 arg1) {
     arg1 = arg0;
@@ -599,7 +601,16 @@ end:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D64DC_2B890C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6674_2B8AA4.s")
+void func_802D6674_2B8AA4(void) {
+    if (D_8014D17C >= 0x15) {
+        func_802D64DC_2B890C(0xA0, D_8014D17C - 0x14, 0xC8, 0x18, &D_802E0E48, 6, 0x28, 1);
+        if (D_800519E7 <= 0) {
+            func_800074BC_80BC(func_802D6674_2B8AA4);
+            func_802D6364_2B8794();
+        }
+    }
+    D_8014D17C += 1;
+}
 
 void func_802D670C_2B8B3C(void) {
 	func_80013468_14068(0xA);
