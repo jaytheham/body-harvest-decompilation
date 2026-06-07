@@ -4397,7 +4397,64 @@ void func_802DF8DC_1F85EC(u8 arg0, s32 arg1) {
 	alienInstances[inst->unk25].unk26++;
 }
 
+#ifdef NON_MATCHING
+void func_802DF99C_1F86AC(u8 arg0) {
+    AlienInstance *inst = &alienInstances[arg0];
+    s32 flags = inst->unk20;
+    u8 parentId = inst->unk25;
+    u8 specIndex = inst->specIndex;
+
+    if (flags & ALIEN_FLAG_FALL) {
+        inst->unk6 = inst->unk6 + (arg0 % 7) * 200 - 0x276;
+        inst->unkA = inst->unkA + (arg0 % 7) * 250 + 0x64;
+    } else {
+        AlienInstance *parent = &alienInstances[parentId];
+        AlienSpec *spec = &alienSpecs[specIndex];
+
+        spec->unk54 |= 4;
+
+        if (parent->unk24 != 0) {
+            if (parent->unk2C == 0xA0) {
+                inst->unk20 |= 0x8000040;
+            } else if (parent->unk2C == 0xA) {
+                inst->unk20 &= ~0x40;
+            }
+
+            if (parent->unk2C >= 0xA1) {
+                func_800A57E4_B4794(arg0);
+            } else {
+                func_8008064C_8F5FC(arg0);
+            }
+        } else {
+            func_800A57E4_B4794(arg0);
+        }
+
+        func_800A53C0_B4370(arg0, 0x190, 0x1F40);
+        func_8008E978_9D928(arg0, 0xFA);
+
+        {
+            s32 val = func_800B84D0_C7480(inst->unk0, inst->unk4);
+            s32 threshold = (val >> 8) + 0xC8;
+            if (inst->unk2 < threshold) {
+                inst->unk2 = threshold;
+            }
+        }
+
+        if (inst->unk1E != 0) {
+            inst->unk1E--;
+        } else {
+            if (func_80084FE8_93F98(arg0, 0x800)) {
+                func_80087188_96138(arg0, 0, 0x10);
+                inst->unk1E = 0;
+                func_80087188_96138(arg0, 1, 0x10);
+                inst->unk1E = 5;
+            }
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DF99C_1F86AC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DFB94_1F88A4.s")
 
