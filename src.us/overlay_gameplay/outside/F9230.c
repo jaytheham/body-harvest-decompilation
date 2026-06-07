@@ -14669,17 +14669,19 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_8011049C_11F44C.s")
 #endif
 
-// CURRENT(9426)
-#ifdef NON_MATCHING
+// CURRENT(9159)
+#ifdef TRUE
 s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 	s16 sp76;
 	s16 sp74;
+	s16 spCount;
 	s16 temp_s7;
 
 	sp76 = func_800FAE60_109E10(arg0);
 	sp74 = func_800FADF8_109DA8(sp76);
 
-	temp_s7 = D_80158FD8;
+	spCount = D_80158FD8;
+	temp_s7 = spCount;
 	while (temp_s7--) {
 			u8 *sp44 = &D_80158E80[temp_s7];
 			if ((arg0 == D_80158E64) && (temp_s7 == D_80159316)) { continue; }
