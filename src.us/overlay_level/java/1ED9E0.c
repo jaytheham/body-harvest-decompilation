@@ -4381,7 +4381,21 @@ void func_802DF8A8_1F85B8(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0xAE, 0x7E, 0x183);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DF8DC_1F85EC.s")
+/* Copies template spec data into an alien's spec entry and initializes its instance fields */
+void func_802DF8DC_1F85EC(u8 arg0, s32 arg1) {
+	u8 specIndex;
+	AlienInstance *inst;
+	AlienSpec *spec;
+
+	specIndex = alienInstances[arg0].specIndex;
+	inst = &alienInstances[arg0];
+	spec = &alienSpecs[specIndex];
+	*spec = D_802E0CE4_1F99F4;
+	inst->unk20 = 0x8004500;
+	inst->hitPoints = spec->unk3A;
+	spec->unk0 = arg1;
+	alienInstances[inst->unk25].unk26++;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DF99C_1F86AC.s")
 
