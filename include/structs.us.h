@@ -707,9 +707,9 @@ typedef struct {
 	/* 0x47 */ u8 unk47;
 	/* 0x48 */ u8 unk48;
 	/* 0x49 */ u8 pad49[3];
-	/* 0x4C */ f32 unk4C;
-	/* 0x50 */ f32 unk50;
-	/* 0x54 */ f32 unk54;
+	/* 0x4C */ f32 unk4C; // X postion as float
+	/* 0x50 */ f32 unk50; // Y position as float
+	/* 0x54 */ f32 unk54; // Z position as float
 	/* 0x58 */ f32 unk58;
 } VehicleInstance; /* size = 0x5C */
 
