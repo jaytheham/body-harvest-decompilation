@@ -634,7 +634,32 @@ void func_802D62A0_2559E0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D62A0_2559E0.s")
 #endif
 
+// CURRENT(163)
+#ifdef NON_MATCHING
+void func_802D65BC_255CFC(u8 arg0) {
+    s32 pad;
+    s32 flags;
+    AlienInstance *alien;
+
+    func_80091470_A0420(arg0);
+    alien = &alienInstances[arg0];
+
+    flags = alien->unk20;
+    if (!(flags & 0x4000)) {
+        func_8009170C_A06BC(arg0);
+    }
+
+    if (alien->unk20 & 0x100) {
+        if ((D_80052A8C & 0x3F) == (arg0 & 0x3F)) {
+            if (!((D_80050AE0[alien->unk38].unk0 >> 12) & 1) || ((D_80050AE0[alien->unk38].unk0 >> 12) & 0x10)) {
+                alien->unk20 &= ~0x100;
+            }
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D65BC_255CFC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D6684_255DC4.s")
 
