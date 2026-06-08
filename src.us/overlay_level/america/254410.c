@@ -2732,7 +2732,34 @@ void func_802DDB34_25D274(u8 arg0) {
     func_800A93A4_B8354(arg0, 0x7C, 0x12, 0x15);
 }
 
+// CURRENT(623)
+#ifdef NON_MATCHING
+void func_802DDB68_25D2A8(u8 arg0) {
+    s32 sp44[3];
+    s32 sp40;
+    s32 sp3C;
+    s32 sp38;
+    u8 id;
+
+    func_800A931C_B82CC((s8)alienInstances[arg0].unkC, (s16 *)&D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC], sp44);
+    func_80128428_1373D8(&alienInstances[arg0], (s16)sp44[0], (s16)sp44[1], (s16)sp44[2], &sp40, &sp3C, &sp38);
+    id = func_8007956C_8851C(0x1F);
+    if (id == 0xFF) {
+        return;
+    }
+    alienInstances[id].unk20 |= 0x40000000;
+    alienInstances[id].unk0 = (s16)sp40;
+    alienInstances[id].unk2 = (s16)sp3C;
+    alienInstances[id].unk4 = (s16)sp38;
+    alienInstances[id].unkE = alienInstances[arg0].unk6;
+    alienInstances[id].unk12 = 0x600;
+    alienInstances[id].unk2C = 0x14;
+    alienInstances[id].unk6 = alienInstances[arg0].unk6;
+    func_8007A2A0_89250(id);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DDB68_25D2A8.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DDC88_25D3C8.s")
 
