@@ -2879,6 +2879,13 @@ void func_802DED4C_25E48C(u8 arg0) {
     func_80089EB4_98E64(arg0, 0x14, 0, 3, 5);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DEE40_25E580.s")
+void func_802DEE40_25E580(u8 arg0) {
+    AlienInstance *alien = &alienInstances[arg0];
+
+    if (!(alien->unk20 & 0x100000)) {
+        func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16)(*(s16 *)((u8 *)&D_8025668C + alien->specIndex * 0x68) * 2), 2);
+    }
+    alien->unk2C = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DEED4_25E614.s")
