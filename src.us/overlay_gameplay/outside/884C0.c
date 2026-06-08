@@ -9016,9 +9016,9 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 
 	switch ((s16)(D_80052A8C % 3U)) {
 		case 0:
-			sp78 = (s16)(s32)((f64)(*(s16 *)&alienSpecs[specIndex].pad34[0]) *
+			sp78 = (s16)(s32)((f64)alienSpecs[specIndex].unk34 *
 				((f64)(f32)sins((u16)inst->unk6) / 32768.0) * 2.0 + (f64)inst->unk0);
-			sp76 = (s16)(s32)((f64)inst->unk4 - ((f64)(*(s16 *)&alienSpecs[specIndex].pad34[0]) *
+			sp76 = (s16)(s32)((f64)inst->unk4 - ((f64)alienSpecs[specIndex].unk34 *
 				((f64)(f32)coss((u16)inst->unk6) / 32768.0) * 2.0));
 			break;
 
@@ -9028,9 +9028,9 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 			break;
 
 		case 2:
-			sp78 = (s16)(s32)((f64)inst->unk0 - ((f64)(*(s16 *)&alienSpecs[specIndex].pad34[0]) *
+			sp78 = (s16)(s32)((f64)inst->unk0 - ((f64)alienSpecs[specIndex].unk34 *
 				((f64)(f32)sins((u16)inst->unk6) / 32768.0) * 2.0));
-			sp76 = (s16)(s32)((f64)(*(s16 *)&alienSpecs[specIndex].pad34[0]) *
+			sp76 = (s16)(s32)((f64)alienSpecs[specIndex].unk34 *
 				((f64)(f32)coss((u16)inst->unk6) / 32768.0) * 2.0 + (f64)inst->unk4);
 			break;
 	}
