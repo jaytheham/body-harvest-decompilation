@@ -707,7 +707,7 @@ void func_8008CF2C_174FEC(void) {
 	} else {
 		if (D_800A4344_18C404 != slotValue) {
 			D_800A4344_18C404 = slotValue;
-			switch (D_800313D0) {
+			switch (D_800313D0_31FD0) {
 			case 0:
 			default:
 				func_8001A54C_1B14C(D_800A428C_18C34C[slotValue], slotValue);
@@ -921,7 +921,7 @@ void func_8008D900_1759C0(void) {
 #endif
 
 void func_8008DC44_175D04(s32 arg0) {
-	switch (D_800313D0) {
+	switch (D_800313D0_31FD0) {
 	case 0:
 		func_8001A598_1B198(D_800A26B0_18A770 + D_800A2EB0_18AF70[arg0]);
 		break;
@@ -936,7 +936,7 @@ void func_8008DC44_175D04(s32 arg0) {
 
 void func_8008DCF4_175DB4(s32 arg0) {
 	s32 temp_v1 = (currentLevel * 0xB) + arg0 + 0xA;
-	switch (D_800313D0) {
+	switch (D_800313D0_31FD0) {
 	case 0:
 		func_8001A598_1B198(D_800A26B0_18A770 + D_800A2EB0_18AF70[temp_v1]);
 		break;

@@ -2215,7 +2215,7 @@ void func_80017490_18090(u8 *arg0) {
 	u8 *bufp;
 
 	s5 = 0;
-	if (D_800313D0 != 0) {
+	if (D_800313D0_31FD0 != 0) {
 		sp68 = 0;
 	}
 
@@ -2467,7 +2467,7 @@ s16 func_80017CA4_188A4(void) {
 		}
 	} else if (D_8003447C != 0) {
 		if (D_80034480 == 0xFFFF) {
-			switch (D_800313D0) {
+			switch (D_800313D0_31FD0) {
 			default:
 			case 0:
 				func_80017490_18090(&D_80033CC0);
@@ -2480,7 +2480,7 @@ s16 func_80017CA4_188A4(void) {
 				break;
 			}
 		} else {
-			switch (D_800313D0) {
+			switch (D_800313D0_31FD0) {
 			default:
 			case 0:
 				func_80017490_18090(&D_80033DBA);
@@ -3057,7 +3057,7 @@ void func_8001A160_1AD60(void) {
 	drawText(&D_80038534_39134, 0, 0);
 	drawText(&D_8003853C_3913C, 0, 8);
 	if (D_80034490_35090 != 0) {
-		switch (D_800313D0) {
+		switch (D_800313D0_31FD0) {
 		default:
 		case 0:
 			func_8000577C_637C();
@@ -3076,7 +3076,7 @@ void func_8001A160_1AD60(void) {
 			break;
 		}
 	} else {
-		switch (D_800313D0) {
+		switch (D_800313D0_31FD0) {
 		default:
 		case 0:
 			drawText(&D_80038590_39190, 0x32, 0x5A, 0x32);

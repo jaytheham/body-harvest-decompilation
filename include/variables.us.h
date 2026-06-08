@@ -113,7 +113,6 @@ extern s16 D_800313DC;
 extern s16 D_800313E0;
 extern f32 D_80036C88;
 extern s16 D_800313C8;
-extern s16 D_800313D0; // Language
 extern s16 D_800313E4_31FE4;
 extern u16 D_80031648_32248;
 extern f32 D_801451C8_154178;
@@ -1270,7 +1269,7 @@ extern Unk80080588Entry1C D_800D8530;
 extern FrontendStreamSlot D_800D8578[];
 extern FrontendStreamSlot* D_800D8550[];
 extern s32 D_800D88E8;
-extern s16 D_800313D0_31FD0;
+extern s16 D_800313D0_31FD0; // Language
 extern s32 D_80031548;
 extern u8 D_800AA640[];
 extern Mtx D_800AA648_7AAF8;

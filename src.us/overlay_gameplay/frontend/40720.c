@@ -197,7 +197,7 @@ void func_80070514_409C4(s16 arg0) {
 	temp_a0->unk26 = missionId;
 	temp_a0->unk28 = -1;
 
-	switch (D_800313D0) {
+	switch (D_800313D0_31FD0) {
 	case 0:
 	default:
 		temp_a0->unk1E = temp_a1->unk1E;
@@ -266,7 +266,7 @@ MissionData* func_800706E8_40B98(s32 arg0) {
 		entry->unk26 = (s16)arg0;
 		entry->unk28 = source->unk28;
 
-		switch (D_800313D0) {
+		switch (D_800313D0_31FD0) {
 		case 0:
 		default:
 			entry->unk1E = source->unk1E;
@@ -3610,7 +3610,7 @@ void func_800789E4_48E94(void) {
 		result = (*frontendFlags & 3) - 1;
 		if (result < 0) {
 		  result = 3;
-		  if (D_800313D0 == 2) {
+		  if (D_800313D0_31FD0 == 2) {
 			result = 1;
 		  }
 		}
@@ -3636,13 +3636,13 @@ void func_800789E4_48E94(void) {
 		optionArg = 0;
 		result = func_80076FD8_47488();
 		if (result == 2) {
-		  D_800313D0 = 2;
+		  D_800313D0_31FD0 = 2;
 		  currentFrontendState = FE_STATE_INTRO_MOVIE;
 		} else if (result == 4) {
-		  D_800313D0 = 1;
+		  D_800313D0_31FD0 = 1;
 		  currentFrontendState = FE_STATE_INTRO_MOVIE;
 		} else if ((result == 0) || (result == 3)) {
-		  D_800313D0 = 0;
+		  D_800313D0_31FD0 = 0;
 		  currentFrontendState = FE_STATE_INTRO_MOVIE;
 		}
 		D_800476A0 = 6;
@@ -4691,7 +4691,7 @@ void func_8007BFC4_4C474(void) {
 	lineOffsets[0] = 0;
 	lineCount = 1;
 
-	switch (D_800313D0) {
+	switch (D_800313D0_31FD0) {
 	case 0:
 	default:
 		for (currentLine = 0; (u16)currentLine < 0x400; currentLine = (s16)(currentLine + 1)) {
@@ -4781,7 +4781,7 @@ void func_8007BFC4_4C474(void) {
 			if (row < 9) {
 				u8* lineText;
 				u8 ch;
-				switch (D_800313D0) {
+				switch (D_800313D0_31FD0) {
 				case 0:
 				default:
 					lineText = &D_800933A0_63850[lineOffsets[currentLine - 1]];
@@ -7017,7 +7017,7 @@ void func_80081290_51740(void) {
 
 	sp84 = D_800949C8;
 
-	if (D_800313D0 == 2) {
+	if (D_800313D0_31FD0 == 2) {
 		return;
 	}
 

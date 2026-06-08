@@ -1057,7 +1057,7 @@ void guess_loadSavedGame(s32 arg0) {
 			shift += 8;
 			continue;
 		} while (shift < 0x20);
-		if (D_800313D0 == 2) {
+		if (D_800313D0_31FD0 == 2) {
 			D_80031420 &= ~2;
 		}
 		func_80016FD0_17BD0((s16)((D_80031420 & 0x60) >> 5));

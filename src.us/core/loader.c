@@ -213,7 +213,7 @@ s32 func_800105F0_111F0(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32 
 
 	var_v0 = func_800101F0_10DF0((s32)sp28, var_a1, 4);
 
-	switch (D_800313D0) {
+	switch (D_800313D0_31FD0) {
 	default:
 	case 0:
 		var_a1_2 = func_800101F0_10DF0((s32)arg5, func_800101F0_10DF0((s32)arg1, var_v0, 0x3800), 0x100) + 0x7200;
@@ -383,8 +383,8 @@ void loadLevelData(u8 arg0) {
 	if (var_s0 & 0xF) {
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
-	osSyncPrintf(&D_80037E24_38A24, D_800313D0);
-	switch (D_800313D0) {
+	osSyncPrintf(&D_80037E24_38A24, D_800313D0_31FD0);
+	switch (D_800313D0_31FD0) {
 	default:
 	case 0:
 		var_s0 = func_800101F0_10DF0(&D_80258390, var_s0, 0xC00);
@@ -398,7 +398,7 @@ void loadLevelData(u8 arg0) {
 	}
 	osSyncPrintf(&D_80037E64_38A64, 0xC00, (D_8006AA60 == 0xC00) ? (void *)&sp44 : (void *)&sp34);
 	osSyncPrintf(&D_80037E78_38A78);
-	switch (D_800313D0) {
+	switch (D_800313D0_31FD0) {
 	default:
 	case 0:
 		var_s0 = func_800101F0_10DF0(&D_80258F90, var_s0, 0x100) + 0x1A00;
@@ -415,7 +415,7 @@ void loadLevelData(u8 arg0) {
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
 	osSyncPrintf(&D_80037EAC_38AAC);
-	switch (D_800313D0) {
+	switch (D_800313D0_31FD0) {
 	default:
 	case 0:
 		var_s0 = func_800101F0_10DF0(&D_8006AC10, var_s0, 0x1800);
@@ -429,7 +429,7 @@ void loadLevelData(u8 arg0) {
 	}
 	osSyncPrintf(&D_80037EE0_38AE0, 0x1800, (D_8006AA60 == 0x1800) ? (void *)&sp44 : (void *)&sp34);
 	osSyncPrintf(&D_80037EF4_38AF4);
-	switch (D_800313D0) {
+	switch (D_800313D0_31FD0) {
 	default:
 	case 0:
 		var_s0 = func_800101F0_10DF0(&D_8006C450, var_s0, 0x100) + 0x3200;
