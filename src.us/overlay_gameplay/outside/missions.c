@@ -163,18 +163,16 @@ void func_80073DC0_82D70(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80073DC0_82D70.s")
 #endif
 
-// CURRENT(3870)
+// CURRENT(3595)
 // Resets a bunch of memory? For missions?
 #ifdef NON_MATCHING
 void func_80074204_831B4(void) {
-	u8 *var_v0;
-	s32 *var_v0_2;
-	s16 *var_v0_3;
 	s32 var_a0;
 	u8 var_a1;
 	u8 var_a2;
-	u8 temp_t6;
-	s16 temp_t9;
+	u8 *var_v0;
+	s32 *var_v0_2;
+	s16 *var_v0_3;
 
 	var_v0 = D_80149B60;
 	var_a0 = 0x257F;
@@ -197,9 +195,8 @@ void func_80074204_831B4(void) {
 	var_v0 = &D_8014CFEC;
 	var_a0 = 0x3F;
 	do {
-		temp_t6 = *var_v0;
 		var_v0 -= 4;
-		var_v0[4] = (temp_t6 & 0xFF80) | 0x7F;
+		var_v0[4] = (var_v0[4] & 0xFF80) | 0x7F;
 	} while (var_a0--);
 
 	var_v0 = &D_801497BA;
@@ -272,10 +269,10 @@ void func_80074204_831B4(void) {
 	var_v0_2 = &D_80149B44;
 	var_v0_2[0] = 0;
 	var_v0_2[-1] = 0;
-	var_v0_2[-2] = 0;
 	var_v0_2[-3] = 0;
 	var_v0_2[-4] = 0;
 	var_v0_2[-5] = 0;
+	var_v0_2[-6] = 0;
 	D_80149B28 = 0;
 	D_80149B3C = 0;
 
@@ -283,9 +280,8 @@ void func_80074204_831B4(void) {
 	D_8014D180 = D_80149B4A;
 	D_8014D17E = D_8014D180;
 	D_8014D17C = D_8014D17E;
-	temp_t9 = D_8014D17C;
-	D_8004D14C = temp_t9;
-	D_80149B48 = temp_t9;
+	D_8004D14C = D_8014D17C;
+	D_80149B48 = D_8014D17C;
 
 	D_80149474 = 0xFF;
 	D_8004DC40 = -1;
