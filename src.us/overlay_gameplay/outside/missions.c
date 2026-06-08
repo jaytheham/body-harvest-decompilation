@@ -525,36 +525,36 @@ void func_80074970_83920(void) {
 
 
 // readMissionInfo
-// CURRENT(1745)
+// CURRENT(80)
 #ifdef NON_MATCHING
 void func_80074B2C_83ADC(void) {
 	u8 *entry;
 	u8 cmd;
+	s16 b48;
 
-	if ((func_80074558_83508() == 0xAC) || (D_801494BC == 0xAE)) {
-		do {
-			if (D_801494BC == 0xAE) {
-				D_8014D188[D_80149B48] += 1;
-			}
+	cmd = func_80074558_83508();
+	while ((cmd == 0xAC) || (D_801494BC == 0xAE)) {
+		if (D_801494BC == 0xAE) {
+			D_8014D188[D_80149B48] += 1;
+		}
 
-			func_80074500_834B0();
-			if (D_80149B34 >= 0x3F) {
-				osSyncPrintf(D_80141288_150238);
-				D_80149B4A = 1;
-			}
+		func_80074500_834B0();
+		if (D_80149B34 >= 0x3F) {
+			osSyncPrintf(D_80141288_150238);
+			D_80149B4A = 1;
+		}
 
-			entry = &D_8014CEF0[D_80149B34 * 4];
-			D_80149B34 += 1;
-			if (D_801494BC == 0xAC) {
-				entry[0] &= 0xFF7F;
-			} else {
-				entry[0] |= 0x80;
-			}
+		entry = &D_8014CEF0[D_80149B34 * 4], D_80149B34 += 1;
+		if (D_801494BC == 0xAC) {
+			entry[0] &= 0xFF7F;
+		} else {
+			entry[0] |= 0x80;
+		}
 
-			entry[0] = (D_80149B48 & 0x7F) | (entry[0] & 0xFF80);
-			func_80074578_83528(&entry[1]);
-			cmd = func_80074558_83508();
-		} while ((cmd == 0xAC) || (D_801494BC == 0xAE));
+		b48 = D_80149B48;
+		entry[0] = (b48 & 0x7F) | (entry[0] & 0xFF80);
+		func_80074578_83528(&entry[1]);
+		cmd = func_80074558_83508();
 	}
 }
 #else
