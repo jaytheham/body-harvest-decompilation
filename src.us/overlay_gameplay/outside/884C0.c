@@ -825,12 +825,12 @@ s32 func_8007A198_89148(s32 arg0)
 
 // guess_addActiveObject Skipping seems to result in aliens with no physical presence
 // https://decomp.me/scratch/s8PwY
-// CURRENT(1018)
+// CURRENT(292)
 #ifdef NON_MATCHING
 s32 func_8007A2A0_89250(s32 arg0)
 {
-	AlienInstance *inst;
 	u8 sp34;
+	AlienInstance *inst;
 
 	inst = &alienInstances[arg0];
 	sp34 = inst->specIndex;
@@ -839,7 +839,7 @@ s32 func_8007A2A0_89250(s32 arg0)
 	osSyncPrintf(&D_801417DC_15078C);
 	return -1;
   }
-	if (inst->unk20 & 0x600)
+	if (alienInstances[arg0].unk20 & 0x600)
   {
 	osSyncPrintf(&D_801417F8_1507A8, arg0);
 	return -1;
@@ -850,7 +850,7 @@ s32 func_8007A2A0_89250(s32 arg0)
 	osSyncPrintf(&D_8014180C_1507BC);
 	return -1;
   }
-	if (D_802566D4[inst->specIndex * 0x1A] & 0x3E)
+	if (D_802566D4[alienInstances[arg0].specIndex * 0x1A] & 0x3E)
 	{
 		D_8014D304 = 0;
 
@@ -871,18 +871,19 @@ s32 func_8007A2A0_89250(s32 arg0)
 	if (slot == (-1))
 	{
 	  osSyncPrintf(&D_8014189C_15084C);
-	  func_80079DC0_88D70(inst->unkC);
+	  func_80079DC0_88D70(alienInstances[arg0].unkC);
 	  return -1;
 	}
-	inst->unk20 = (inst->unk20 & ~7) | (slot | 0x80000);
+	alienInstances[arg0].unk20 = alienInstances[arg0].unk20 & ~7;
+	alienInstances[arg0].unk20 = alienInstances[arg0].unk20 | 0x80000 | slot;
   }
   if ((alienSpecs[sp34].unk54 << 6) < 0)
   {
-	inst->unk3C = func_800CD1F8_DC1A8(0, 0, 0, 0, -0x3C, 0);
-	inst->unk3D = func_800CD1F8_DC1A8(0, 0, 0, 0, -0x3C, 0);
+	alienInstances[arg0].unk3C = func_800CD1F8_DC1A8(0, 0, 0, 0, -0x3C, 0);
+	alienInstances[arg0].unk3D = func_800CD1F8_DC1A8(0, 0, 0, 0, -0x3C, 0);
   }
 	func_80079E64_88E14(arg0);
-	inst->unk20 |= 0x600;
+	alienInstances[arg0].unk20 |= 0x600;
 	D_8014D510[D_8014ECCC] = arg0;
 	D_8014ECCC++;
 	return D_8014ECCC - 1;
