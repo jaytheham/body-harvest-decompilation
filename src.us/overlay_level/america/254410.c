@@ -2491,7 +2491,14 @@ void func_802DC244_25B984(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DC244_25B984.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DC7FC_25BF3C.s")
+void func_802DC7FC_25BF3C(u8 arg0) {
+    Unk80052B40 sp20;
+
+    sp20 = D_802E09A4_2600E4;
+    sp20.unk2 = (*(s16 *)((u8 *)D_800481C4 + arg0 * 0x50) * 3) + 0x80;
+
+    func_800039D0_45D0(0, 0, &sp20, func_80011F90_12B90(&D_E020FF0));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DC880_25BFC0.s")
 
