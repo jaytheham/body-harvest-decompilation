@@ -582,36 +582,28 @@ void func_800016D8_22D8(void) {
 	func_800015B4_21B4(4, 0x47);
 }
 
-// CURRENT(2085)
-#ifdef NON_MATCHING
 void func_80001830_2430(void) {
-	u16 i, writeIdx;
-	s32 val, val2;
+	u16 i;
+	u16 j, writeIdx;
 
 	D_800431C8 = (u8)-1;
 	writeIdx = 9;
-	for (i = 0; i < 5; i = (i + 1) & 0xFFFF) {
-		u16 j;
-
+	for (i = 0; i < 5; i++) {
 		for (j = 0; j < 6; j++) {
-			(&D_800431C0)[writeIdx++] = *((u8*)(D_80031310_31F10 + i) + j);
+			D_800431C0[writeIdx++] = D_80031310_31F10[i].name[j];
 		}
-		val = ((SaveSummary*)((u8*)D_80031310_31F10 + i * 0x14))->score;
-		(&D_800431C0)[writeIdx++] = val;
-		(&D_800431C0)[writeIdx++] = val >> 8;
-		(&D_800431C0)[writeIdx++] = val >> 16;
-		(&D_800431C0)[writeIdx++] = val >> 24;
-		(&D_800431C0)[writeIdx++] = ((SaveSummary*)((u8*)D_80031310_31F10 + i * 0x14))->humansKilled;
-		val2 = ((SaveSummary*)((u8*)D_80031310_31F10 + i * 0x14))->secondsTaken;
-		(&D_800431C0)[writeIdx++] = val2;
-		(&D_800431C0)[writeIdx++] = val2 >> 8;
-		(&D_800431C0)[writeIdx++] = val2 >> 16;
+
+		D_800431C0[writeIdx++] = (D_80031310_31F10[i].score) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80031310_31F10[i].score >> 8) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80031310_31F10[i].score >> 16) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80031310_31F10[i].score >> 24) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80031310_31F10[i].humansKilled) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80031310_31F10[i].secondsTaken) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80031310_31F10[i].secondsTaken >> 8) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80031310_31F10[i].secondsTaken >> 16) & 0xFF;
 	}
 	func_800015B4_21B4(4, 0x47);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001830_2430.s")
-#endif
 
 // CURRENT(5200)
 #ifdef NON_MATCHING
