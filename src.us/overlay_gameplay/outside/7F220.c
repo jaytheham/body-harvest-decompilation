@@ -1,6 +1,78 @@
 #include <ultra64.h>
 #include "common.h"
 
+// Data from ROM 0x14FD40-0x1501A0
+
+// Debug/log strings
+const char D_80140D90_14FD40[] = "WarpPointNumber = %d\n";
+const char D_80140DA8_14FD58[] = "Easy mode activated\n";
+const char D_80140DC0_14FD70[] = "Easy mode disactivated\n";
+const char D_80140DD8_14FD88[] = "DrawTileBuffer OK\n";
+const char D_80140DEC_14FD9C[] = "ClearDynamicLightBuffer OK\n";
+const char D_80140E08_14FDB8[] = "SetupForShadows OK\n";
+const char D_80140E1C_14FDCC[] = "DrawComplexObjectShadows OK\n";
+const char D_80140E3C_14FDEC[] = "DisplayVehicleShadows OK\n";
+const char D_80140E58_14FE08[] = "DrawLegsShadows OK\n";
+const char D_80140E6C_14FE1C[] = "DrawNonZBufferedEffects OK\n";
+const char D_80140E88_14FE38[] = "StopDrawingShadows OK\n";
+const char D_80140EA0_14FE50[] = "SHADOWS NOT DRAWN - overflow\n";
+const char D_80140EC0_14FE70[] = "DrawLegs OK\n";
+const char D_80140ED0_14FE80[] = "DisplayBullets OK\n";
+const char D_80140EE4_14FE94[] = "DisplayTrees OK\n";
+const char D_80140EF8_14FEA8[] = "DisplayVehicles(0) OK\n";
+const char D_80140F10_14FEC0[] = "DisplayDeadVehicles OK\n";
+const char D_80140F28_14FED8[] = "DisplayVehicles(1) OK\n";
+const char D_80140F40_14FEF0[] = "DisplayBuildings OK\n";
+const char D_80140F58_14FF08[] = "DrawComplexObjects OK\n";
+const char D_80140F70_14FF20[] = "DisplayForces OK\n";
+const char D_80140F84_14FF34[] = "DisplayBeacons OK\n";
+const char D_80140F98_14FF48[] = "DisplaySignposts OK\n";
+const char D_80140FB0_14FF60[] = "DoEndGameStuff OK\n";
+const char D_80140FC4_14FF74[] = "DisplayVehicles\t(1) OK\n";
+const char D_80140FDC_14FF8C[] = "DisplayFXUnderWater OK\n";
+const char D_80140FF4_14FFA4[] = "DrawVtxBufferWater OK\n";
+const char D_8014100C_14FFBC[] = "DisplayGates OK\n";
+const char D_80141020_14FFD0[] = "DrawShieldWalls OK\n";
+const char D_80141034_14FFE4[] = "SFX NOT DRAWN - overflow\n";
+const char D_80141050_150000[] = "DisplayFXOnWater OK\n";
+const char D_80141068_150018[] = "DisplayLasers OK\n";
+const char D_8014107C_15002C[] = "DrawGhostTarget OK\n";
+const char D_80141090_150040[] = "DisplayScanner OK\n";
+const char D_801410A4_150054[] = "Position %d, %d, %d\n";
+const char D_801410BC_15006C[] = "%Y";
+const char D_801410C0_150070[] = "%@Demo";
+const char D_801410C8_150078[] = "%C%@UNLUCKY ANDREW!";
+const char D_801410DC_15008C[] = "GfxList overflowed by %d\n";
+const char D_801410F8_1500A8[] = "GfxList about to overflow!\n";
+const char D_80141114_1500C4[] = "LineList overflowed by %d\n";
+const char D_80141130_1500E0[] = "VtxList overflowed by %d\n";
+const char D_8014114C_1500FC[] = "VtxList about to overflow!\n";
+const char D_80141168_150118[] = "MtxList overflowed by %d\n";
+const char D_80141184_150134[] = "MtxList about to overflow!\n";
+
+const f32 D_801411A0_150150[1] = {32767.0f};
+const f32 D_801411A4_150154[1] = {10000.0f};
+
+const u32 jtbl_801411A8_150158[] = {
+    0x80072554,
+    0x80072418,
+    0x80072390,
+    0x8007245C,
+    0x80072800,
+    0x80072800,
+    0x80072638,
+    0x80072800,
+    0x80072800,
+    0x80072390,
+    0x800724E0,
+    0x800723CC,
+    0x800726F4,
+    0x80072800,
+    0x80072800,
+    0x80072800,
+    0x800725EC,
+    0x00000000,
+};
 
 s32 func_80070270_7F220(s32 arg0) {
 	if (arg0 != 7) {
@@ -151,10 +223,10 @@ void func_80070440_7F3F0(void) {
 	D_8004DCA8 = 0;
 	D_801493E0 = 0;
 	D_801493E2 = 0;
-	D_801493F0 = D_801411A0;
+	D_801493F0 = (f32)(s32)&D_801411A0_150150;
 	D_801493EC = D_801493F0;
 	D_801493E8 = D_801493EC;
-	D_801493FC = D_801411A0;
+	D_801493FC = (f32)(s32)&D_801411A0_150150;
 	D_801493F8 = D_801493FC;
 	D_801493F4 = D_801493F8;
 	D_80149400 = 0.0f;

@@ -15,7 +15,7 @@ options:
   src_path: src.us
   extensions_path: tools/splat_ext
   lib_path: build/lib
-  # migrate_rodata_to_functions: yes
+  migrate_rodata_to_functions: no
   # workaround regex issue
   create_undefined_funcs_auto: no
   symbol_name_format: $VRAM_$ROM
@@ -284,7 +284,8 @@ segments:
       - [0x14FCA0, bin]
       - [0x14FCB0, .data, overlay_gameplay/outside/145D70]
       - [0x14FCF0, .data, overlay_gameplay/outside/148000]
-      - [0x14FD40, bin]
+      - [0x14FD40, .rodata, overlay_gameplay/outside/7F220]
+      - [0x1501A0, rodatabin]
 
   - name: overlay_gameplay_inside
     type: code
