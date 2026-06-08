@@ -2343,19 +2343,13 @@ typedef struct {
 } Unk801470C0Entry; /* size = 0x16 */
 
 typedef struct {
-	/* 0x00 */ u8 unk0;
-	/* 0x01 */ u8 unk1;
-	/* 0x02 */ u8 unk2;
-	/* 0x03 */ u8 unk3;
-	/* 0x04 */ u8 unk4;
-	/* 0x05 */ u8 unk5;
-	/* 0x06 */ u8 unk6;
-	/* 0x07 */ u8 unk7;
-	/* 0x08 */ s32 unk8;
-	/* 0x0C */ s16 unkC;
-	/* 0x0E */ s16 unkE;
-	/* 0x10 */ s32 unk10;
-} Unk80047FB8; /* size = 0x14 */
+	/* 0x00 */ u8 name[6];
+	/* 0x06 */ u8 pad[2];
+	/* 0x08 */ s32 score;
+	/* 0x0C */ s16 humansKilled;
+	/* 0x0E */ u8 padE[2];
+	/* 0x10 */ s32 secondsTaken;
+} SaveSummary; /* size = 0x14 */
 
 typedef struct BhGfxTask_s {
 	/* 0x00 */ struct BhGfxTask_s *next;

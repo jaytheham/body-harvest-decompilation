@@ -3719,7 +3719,7 @@ void func_8007949C_4994C(s32 arg0, s32 arg1) {
 	s32 tempA3;
 	s32 tempT0;
 	s32 v1;
-	Unk80047FB8* entry;
+	SaveSummary* entry;
 	u8* tempS5;
 	u8* tempS7;
 	u8* tempS8;
@@ -3728,7 +3728,7 @@ void func_8007949C_4994C(s32 arg0, s32 arg1) {
 	tempT0 = *(u16*)&D_80052A98[0].humansKilled;
 
 	for (i = 0; i < 5; i++) {
-		if (D_80047FB8[i].unk8 < arg0) {
+		if (D_80047FB8[i].score < arg0) {
 			entry = &D_80047FB8[i];
 			if (i < 4) {
 				tempS8 = (u8*)&D_80048008;
@@ -3824,7 +3824,7 @@ void func_800796D0_49B80(s32 arg0, s32 arg1) {
 	s32 minutes;
 	s32 seconds;
 	s32 centiseconds;
-	Unk80047FB8* entry;
+	SaveSummary* entry;
 
 	shouldExit = 0;
 	timer = 0;
