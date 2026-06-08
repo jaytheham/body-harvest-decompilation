@@ -558,36 +558,29 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 
 // https://decomp.me/scratch/vCY8e
 // write language and highscores
-// CURRENT(1160)
-#ifdef NON_MATCHING
 void func_800016D8_22D8(void) {
 	u16 i;
 	u16 j, writeIdx;
 
-	D_800431C8 = (u8)D_800313D0_31FD0;
+	D_800431C8 = D_800313D0_31FD0;
 	writeIdx = 9;
 	for (i = 0; i < 5; i++) {
 		for (j = 0; j < 6; j++) {
 			D_800431C0[writeIdx++] = D_80047FB8[i].name[j];
 		}
 
-		D_800431C0[writeIdx++] = D_80047FB8[i].score;
-		D_800431C0[writeIdx++] = D_80047FB8[i].score >> 8;
-		D_800431C0[writeIdx++] = D_80047FB8[i].score >> 16;
-		D_800431C0[writeIdx++] = D_80047FB8[i].score >> 24;
-		
-		D_800431C0[writeIdx++] = D_80047FB8[i].humansKilled;
-
-		D_800431C0[writeIdx++] = D_80047FB8[i].secondsTaken;
-		D_800431C0[writeIdx++] = D_80047FB8[i].secondsTaken >> 8;
-		D_800431C0[writeIdx++] = D_80047FB8[i].secondsTaken >> 16;
+		D_800431C0[writeIdx++] = (D_80047FB8[i].score) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80047FB8[i].score >> 8) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80047FB8[i].score >> 16) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80047FB8[i].score >> 24) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80047FB8[i].humansKilled) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80047FB8[i].secondsTaken) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80047FB8[i].secondsTaken >> 8) & 0xFF;
+		D_800431C0[writeIdx++] = (D_80047FB8[i].secondsTaken >> 16) & 0xFF;
 		
 	}
 	func_800015B4_21B4(4, 0x47);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800016D8_22D8.s")
-#endif
 
 // CURRENT(2085)
 #ifdef NON_MATCHING
@@ -632,6 +625,7 @@ void func_80001984_2584(void) {
 		u16 j, iOff;
 		for (j = 0; j < 6; j++) {
 			(&D_800431C0)[writeIdx++] = *((u8*)(D_80047FB8 + i) + j);
+		}
 		dstA3 = D_80047FB8;
 		iOff = i * 0x14;
 		val = ((SaveSummary*)((u8*)D_80047FB8 + iOff))->score;
