@@ -1301,6 +1301,7 @@ void func_8011C080_12B030(u8);
 void func_802D63E8_2B8818(s32 arg0, s16 *arg1);
 void func_802D6E70_1EFB80();
 void func_800A93A4_B8354(u8 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_802DDF04_25D644(u8 arg0);
 void func_800A92E0_B8290(u8 arg0, s32 arg1);
 void func_800A99B8_B8968(u8 arg0);
 void func_800A9738_B86E8(u8 arg0, s32 arg1, s32 arg2);

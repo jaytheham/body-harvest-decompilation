@@ -2843,7 +2843,10 @@ void func_802DDC88_25D3C8(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DDC88_25D3C8.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DDF04_25D644.s")
+void func_802DDF04_25D644(u8 arg0) {
+    func_800A93A4_B8354(arg0, -6, -115, 19);
+    *(s16 *)((u8 *)D_800481C4 + arg0 * 0x50) = 0x100;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DDF50_25D690.s")
 
