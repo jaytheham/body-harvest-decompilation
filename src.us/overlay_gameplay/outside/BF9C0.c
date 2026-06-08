@@ -597,7 +597,7 @@ void func_800B165C_C060C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B165C_C060C.s")
 #endif
 
-// CURRENT(6028)
+// CURRENT(6023)
 #ifdef NON_MATCHING
 void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
 	s32 x = arg0 & 0xFF;
