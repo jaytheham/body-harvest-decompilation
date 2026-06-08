@@ -45,7 +45,7 @@ D_8005BB2C->words.w1 = 0x00010001;
 Is converted by pwsh cmd `.\tools\gfxdis.ps1 -w B6000000 00010001` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
 If you don't know one of the values, you can use `12345678` as a placeholder for the cmd, and then fill it in after the fact.
 - Check for similar already matched Body Harvest functions using `.\tools\find-similar.ps1 <current func name>` e.g. `.\tools\find-similar.ps1 func_800AFA98_BEA48` and see how they were written in C to achieve similar assembly output.
-- Find matched C code from other decomp projects with specific assembly patterns using `.\tools\Search-AsmMatch.ps1 -Offset 0x16AF30 -Size 0x50 -Threshold 0.3` where Offset is the Body Havest baserom.us.z64 file offset, and Size is the number of bytes to search for. Always try to use this tool it's good! Best to use it for a smaller range of assembly that includes the differences you are trying to fix, rather than the whole function, to get more relevant results.
+- Find matched C code from other decomp projects with specific assembly patterns using `.\tools\Search-AsmMatch.ps1 -Offset 0x16AF30 -Size 0x50 -Threshold 0.5` where Offset is the Body Havest baserom.us.z64 file offset of the assembly, and Size is the number of bytes to search for. Best to use it for a smaller range of assembly that includes the differences you are trying to fix, rather than the whole function, to get more relevant results. You can see the ROM address of each instruction in the diff output.
 
 # Your Workflow
 1. Change the `#ifdef NON_MATCHING` line above the function to `#ifdef TRUE` so the C code will be included in the build.
@@ -57,11 +57,11 @@ If you don't know one of the values, you can use `12345678` as a placeholder for
 
 First target incorrect/missing/out-of-order instructions, ignore register allocation and stack placement until the instructions match.
 
-Don't rely on just the closeness value to tell if a change is an improvement, always check the actual diff. Sometimes a change can produce more accurate instructions, but change register/stack allocation in a way that causes more differences overall, so the closeness value can be worse even though the change is an improvement.
+Don't rely on just the closeness value to tell if a change is an improvement, always check the actual diff. Sometimes a change can produce more accurate instructions, but change register/stack allocation in a way that causes more differences overall, so the closeness value can be worse even though the change improves the logic.
 
 If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
-- Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
+- Declarations of data symbols used by the function must go in `include/variables.us.h`.
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
 - Add or update declarations for any called functions in `include/functions.us.h`.
 - Replace all pointer arithmetic with struct/array access.
@@ -76,7 +76,6 @@ If build returns `build/bh.us.z64: OK` the function is matched and you can stop 
 
 ## Finalize
 
-If you haven't matched the function after 12 attempts, revert the code to the version with the best closeness value you found. Add/update a comment above the function with that best closeness value: `// CURRENT(123)`.
+If you haven't matched the function after 12 attempts, revert the code to the version with the best closeness value or logic you found. Add/update a comment above the function with the closeness value for that version:`// CURRENT(123)`.
 
 Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated notes to help future decomp. Only for matched functions.
-Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.
