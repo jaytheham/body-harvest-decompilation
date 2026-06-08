@@ -424,21 +424,16 @@ void func_80079510_884C0(u8 arg0)
   *((u8*)&inst->unk1E) = 0xFF;
 }
 
-// CURRENT(2342)
+// CURRENT(1285)
 #ifdef NON_MATCHING
 s32 func_8007956C_8851C(u8 arg0)
 {
-	u32 activeCount;
 	s32 slotIndex;
-	AlienInstance *alien;
 	s32 specFlags;
+	u32 activeCount;
 
 	activeCount = D_8014ECC8;
-	if (activeCount == 0xFF)
-	{
-		return -1;
-	}
-	if ((activeCount >= 0xFE) && ((arg0 == 0x19) || (arg0 == 0x1B)))
+	if ((activeCount == 0xFF) || ((activeCount >= 0xFE) && ((arg0 == 0x19) || (arg0 == 0x1B))))
 	{
 		return -1;
 	}
@@ -452,8 +447,7 @@ s32 func_8007956C_8851C(u8 arg0)
 	}
 
 	slotIndex = D_8014D308[activeCount];
-	alien = &alienInstances[slotIndex];
-	if (alien->unk20 & 0x600)
+	if (alienInstances[slotIndex].unk20 & 0x600)
 	{
 		if (activeCount == 0xFE)
 		{
@@ -462,30 +456,29 @@ s32 func_8007956C_8851C(u8 arg0)
 
 		slotIndex = D_8014D308[activeCount + 1];
 		D_8014D308[activeCount + 1] = D_8014D308[activeCount];
-		alien = &alienInstances[slotIndex];
 	}
 
-	*alien = *(AlienInstance *)D_8013C1EC_14B19C;
-	alien->specIndex = arg0;
+	alienInstances[slotIndex] = *(AlienInstance *)D_8013C1EC_14B19C;
+	alienInstances[slotIndex].specIndex = arg0;
 	specFlags = alienSpecs[arg0].unk54;
-	alien->hitPoints = *(u16 *)((u8 *)&alienSpecs[arg0] + 0x3A);
+	alienInstances[slotIndex].hitPoints = alienSpecs[arg0].unk3A;
 	if (specFlags & 0x400)
 	{
-		alien->unk20 |= 0x8000100;
+		alienInstances[slotIndex].unk20 |= 0x8000100;
 	}
 	if (specFlags & 0x2000)
 	{
-		alien->unk20 |= 0x40000;
+		alienInstances[slotIndex].unk20 |= 0x40000;
 	}
 	if (specFlags & 0x800000)
 	{
-		alien->unk20 |= 0x400000;
+		alienInstances[slotIndex].unk20 |= 0x400000;
 	}
 
 	D_8014ECC8 = activeCount + 1;
 	if ((arg0 == 0x19) || (arg0 == 0x1B))
 	{
-		alien->unk25 = func_8007956C_8851C(0);
+		alienInstances[slotIndex].unk25 = func_8007956C_8851C(0);
 		func_80079510_884C0(slotIndex);
 	}
 	if (currentLevel == 3)
