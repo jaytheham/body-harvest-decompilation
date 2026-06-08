@@ -605,48 +605,47 @@ void func_80001830_2430(void) {
 	func_800015B4_21B4(4, 0x47);
 }
 
-// CURRENT(5200)
+// CURRENT(4990)
 #ifdef NON_MATCHING
 void func_80001984_2584(void) {
-	u16 i, writeIdx;
-	SaveSummary *dstA2;
-	SaveSummary *dstA1;
+	SaveSummary *dst, *end;
+	u8 *src;
 
+retry:
+	if (validateSaveVersionAndChecksum(4, 0x47) == 0) goto fail;
 
-	for (i = 0; i < 5; i++) {
-		u16 j, iOff;
-		for (j = 0; j < 6; j++) {
-			(&D_800431C0)[writeIdx++] = *((u8*)(D_80047FB8 + i) + j);
-		}
-		dstA3 = D_80047FB8;
-		iOff = i * 0x14;
-		val = ((SaveSummary*)((u8*)D_80047FB8 + iOff))->score;
-		dstA2 = dstA3;
-		dstA1 = dstA3;
-		do {
-			dstA3->unk0 = src[0];
-		(&D_800431C0)[writeIdx++] = ((SaveSummary*)((u8*)D_80047FB8 + iOff))->humansKilled;
-		val2 = ((SaveSummary*)((u8*)D_80047FB8 + iOff))->secondsTaken;
-			dstA2->unk4 = src[4];
-			dstA2->unk5 = src[5];
-			dstA2->unk2 = src[2];
-			dstA1->unk8 = src[6];
-			dstA1->unk8 += src[7] << 8;
-			dstA1->unk8 += src[8] << 16;
-			dstA1->unk8 += src[9] << 24;
-			dstA1->unkC = src[10];
-			dstA1->unk10 = src[11];
-			dstA1->unk10 += src[12] << 8;
-			dstA3++;
-			dstA2++;
-			dstA1++;
-			dstA1->unk6 = 0;
-			dstA1[-1].secondsTaken += src[13] << 16;
-		} while ((src += 14, dstA3 != &D_8004801C));
-		return;
-	}
+	D_800313D0_31FD0 = D_800431C8;
+	src = &D_800431C0[9];
+	dst = D_80047FB8;
+	end = &D_8004801C;
+	do {
+		dst->name[0] = *src++;
+		dst->name[1] = *src++;
+		dst->name[3] = *src++;
+		dst->name[4] = *src++;
+		dst->name[5] = *src++;
+		dst->name[2] = *src++;
+
+		dst->score = *src;
+		dst->score += src[1] << 8;
+		dst->score += src[2] << 16;
+		dst->score += src[3] << 24;
+		src += 4;
+
+		dst->humansKilled = *src++;
+
+		dst->secondsTaken = *src;
+		dst->secondsTaken += src[1] << 8;
+		dst->secondsTaken += src[2] << 16;
+		src += 3;
+
+		dst++;
+	} while (dst != end);
+	return;
+
+fail:
 	func_80001830_2430();
-	goto loop;
+	goto retry;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001984_2584.s")
