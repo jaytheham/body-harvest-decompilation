@@ -792,29 +792,30 @@ s32 func_80079F08_88EB8(s32 arg0) {
 #endif
 
 // https://decomp.me/scratch/PEXJ7
-// CURRENT(775)
+// CURRENT(8)
 #ifdef NON_MATCHING
 s32 func_8007A198_89148(s32 arg0)
 {
 	u8 sp24;
+	u8 _pad;
 	u8 sp2D;
-	int new_var;
+	s32 new_var;
   
-  sp2D = alienInstances[arg0].specIndex;
+	sp2D = alienInstances[arg0].specIndex;
 	func_80079F08_88EB8(arg0);
 	sp24 = arg0;
-  func_80080510_8F4C0(sp24);
-	if ((s8)alienSpecs[sp2D].unk50 != (-1))
-  {
-	new_var = ((s8) func_800F3990_102940(sp24, alienSpecs[sp2D].unk50 & 0xFF)) | 0x80000;
-	alienInstances[arg0].unk20 &= ~7;
-	alienInstances[arg0].unk20 |= new_var;
-  }
-  func_80079C8C_88C3C(arg0);
-  func_80079E64_88E14(arg0);
-  alienInstances[arg0].unk20 |= 0x600;
-  alienInstances[arg0].unk20 &= ~0x200;
-  D_8014D510[D_8014ECCC] = arg0;
+	func_80080510_8F4C0(sp24);
+	if ((s8)alienSpecs[sp2D].unk50 != -1)
+	{
+		new_var = (s8)func_800F3990_102940(sp24, (u8)alienSpecs[sp2D].unk50) | 0x80000;
+		alienInstances[arg0].unk20 &= ~7;
+		alienInstances[arg0].unk20 |= new_var;
+	}
+	func_80079C8C_88C3C(arg0);
+	func_80079E64_88E14(arg0);
+	alienInstances[arg0].unk20 |= 0x600;
+	alienInstances[arg0].unk20 &= ~0x200;
+	D_8014D510[D_8014ECCC] = arg0;
 	D_8014ECCC++;
 	return D_8014ECCC - 1;
 }
