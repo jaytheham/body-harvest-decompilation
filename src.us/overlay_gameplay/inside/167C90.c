@@ -24,75 +24,60 @@ void func_8007FBD0_167C90(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_8007FBD0_167C90.s")
 #endif
 
-// CURRENT (1963) 
+// https://decomp.me/scratch/2g3yf
+// CURRENT(1920) 
 #ifdef NON_MATCHING
 void func_8007FC74_167D34(void) {
+	u16 sp56;
 	f32 sp50;
 	f32 sp4C;
-	u16 sp56;
 	f32 temp_f0;
-	u8 mode;
 
 	D_80047F80 = 4;
 	if ((D_800E65A8 & 0x80) || (D_800E65A8 & 0x40)) {
 		if (func_800703EC_1584AC() != 4) {
 			D_800E73DF = 1;
 		}
-		mode = (u8)D_800E73DF;
-	} else {
-		if ((D_800E7398 != 0) && (D_80034484 == 0) && (func_8001A114_1AD14() != 0xFF)) {
-			D_800E73DF = 3;
-			mode = 3;
-		} else {
-			mode = (u8)D_800E73DF;
-			if ((mode != 2) && (mode != 5) && (mode != 6)) {
-				mode = D_80047F80;
-				D_800E73DF = mode;
-			}
-		}
+	} else if ((D_800E7398 != 0) && (D_80034484 == 0) && (func_8001A114_1AD14() != 0xFF)) {
+		D_800E73DF = 3;
+	} else if ((u8)D_800E73DF != 2 && (u8)D_800E73DF != 5 && (u8)D_800E73DF != 6) {
+		D_800E73DF = D_80047F80;
 	}
 
-	if (((u8)D_800E73DE == 1) && (mode == 4)) {
+	if (((u8)D_800E73DE == 1) && ((u8)D_800E73DF == 4)) {
 		func_800808D0_168990();
-		mode = (u8)D_800E73DF;
 	}
 
-	switch (mode - 1) {
-		case 0:
-			func_800804E0_1685A0();
-			mode = (u8)D_800E73DF;
-			break;
-
-		case 1:
-			func_800806F8_1687B8();
-			mode = (u8)D_800E73DF;
-			break;
-
+	switch ((u8)D_800E73DF - 1) {
 		case 2:
-			if (!(D_800E65A8 & 2)) {
-				func_80080A38_168AF8();
-				mode = (u8)D_800E73DF;
-			}
+			func_800804E0_1685A0();
+			break;
+
+		case 0:
+			func_800806F8_1687B8();
 			break;
 
 		case 3:
-			func_80080770_168830();
-			func_80081764_169824();
-			mode = (u8)D_800E73DF;
+			if (!(D_800E65A8 & 2)) {
+				func_80080A38_168AF8();
+			}
 			break;
 
+		case 1:
+			func_80080770_168830();
 		case 4:
-			func_80081B58_169C18();
-			mode = (u8)D_800E73DF;
+			func_80081764_169824();
 			break;
 
 		case 5:
+		func_80081B58_169C18();
+			break;
 		default:
 			break;
 	}
 
 	D_800A096C_188A2C = D_800A0968_188A28;
-	D_800E73DE = mode;
+	D_800E73DE = (u8)D_800E73DF;
 
 	if ((D_800E659C == D_8008DDF4_175EB4) && (D_800E65A4 == D_8008DDFC_175EBC)) {
 		D_8008DDF4_175EB4 -= 10.0f;
@@ -107,18 +92,18 @@ void func_8007FC74_167D34(void) {
 		D_800E65A0 = 50.0f - (temp_f0 / 6.0f);
 	}
 
-	D_8008DDF0_175EB0 = (f32)((((f64)(f32)func_80003824_4424(sp4C, sp50)) * D_800A4F20_18CFE0) / 32768.0);
+	D_8008DDF0_175EB0 = ((((f32)func_80003824_4424(sp4C, sp50)) * D_800A4F20_18CFE0) / 32768.0);
 	if (D_8008DDF0_175EB0 < 0.0f) {
 		D_8008DDF0_175EB0 += 360.0f;
 	}
 	if (D_8008DDF0_175EB0 > 360.0f) {
-		D_8008DDF0_175EB0 = (f32)((s32)D_8008DDF0_175EB0 % 360);
+		D_8008DDF0_175EB0 = ((s32)D_8008DDF0_175EB0 % 360);
 	}
 
 	D_800E6A74 = 0x4000 - D_800E73E0;
 	func_80073A50_15BB10();
 
-	guPerspective((Mtx *)D_8005BB38, &sp56, 40.0f, 1.3333334f, (f32)D_800A097C_188A3C, (f32)D_800A0978_188A38, 1.0f);
+	guPerspective((Mtx *)D_8005BB38, &sp56, 40.0f, 1.3333334f, D_800A097C_188A3C, D_800A0978_188A38, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, &sp56);
 	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	D_8005BB38 += 0x40;
