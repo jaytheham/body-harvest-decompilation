@@ -1697,6 +1697,8 @@ extern u8 D_80140D90[];
 extern u8 D_80140DA8[];
 extern u8 D_80140DC0[];
 extern f32 D_801411A0;
+extern f32 D_801411A4;
+extern u32 jtbl_801411A8[];
 extern s32 D_801416D0_150680[];
 extern s32 D_80141734_1506E4[];
 extern f64 D_801426C0;
