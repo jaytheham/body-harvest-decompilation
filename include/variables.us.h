@@ -2157,6 +2157,7 @@ extern Unk8014F618 D_8014F618;
 
 extern AlienSpec alienSpecs[0x30]; // 80256680
 extern f32 D_802DF3A4_25EAE4;
+extern f32 D_802DF3A8_25EAE8;
 extern u32 D_8014D1D4; // D_8014D1B8[7]
 extern Unk8025669C D_8025669C[];  // 8025669C
 extern Unk8014DD50 *D_802DDC88_196798;
@@ -3747,9 +3748,12 @@ extern char D_802E0D84_1F9A94[];
 extern const char D_802E0DA8_1F9AB8[];
 extern char D_802E0E10_1F9B20[];
 extern char D_802E0E30[];
+extern s16 D_802E0E32;
 extern s16 D_802E0E34;
 extern char D_802E0E3C_1F9B4C[];
 extern u8 D_802E0E44;
+extern char D_E020FB0[];
+extern char D_E021030[];
 extern char D_802E0E60_1F9B70[];
 extern Unk802E04F8Entry D_802E04F8_1F9208[];
 extern u8 D_802E0CB4_1F99C4[];
