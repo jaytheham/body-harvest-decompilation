@@ -49,15 +49,15 @@ void func_8007FC74_167D34(void) {
 	}
 
 	switch ((u8)D_800E73DF - 1) {
-		case 2:
+		case 2: // Talking to NPC view
 			func_800804E0_1685A0();
 			break;
 
-		case 0:
+		case 0: // Entering/Exiting view
 			func_800806F8_1687B8();
 			break;
 
-		case 3:
+		case 3: // Normal view
 			if (!(D_800E65A8 & 2)) {
 				func_80080A38_168AF8();
 			}
@@ -65,7 +65,7 @@ void func_8007FC74_167D34(void) {
 
 		case 1:
 			func_80080770_168830();
-		case 4:
+		case 4: // Debug camera
 			func_80081764_169824();
 			break;
 
