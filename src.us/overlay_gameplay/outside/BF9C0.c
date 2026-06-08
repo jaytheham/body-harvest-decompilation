@@ -1102,24 +1102,24 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(6329)
+// CURRENT(5633)
 void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
-	f32 sp24;
-	s32 pad0;
-	s32 pad1;
-	f32 sp20;
-	f32 sp1C;
+	f32 temp_f2;
 	f32 sp2C;
 	f32 sp28;
-	s8 sp1A;
-	s8 sp19;
-	s8 sp18;
-	f32 temp_f2;
-	f32 delta;
-	s32 levelOffset;
+	f32 sp1C;
+	f32 sp20;
+	f32 sp24;
 	s32 temp_v0;
-	f32 *temp_v0_2;
 	f32 *temp_v1;
+	s32 levelOffset;
+	f32 delta;
+	s8 sp18;
+	s8 sp19;
+	s8 sp1A;
+	s32 pad0;
+	s32 pad1;
+	f32 factor;
 
 	pad0 = 0;
 	pad1 = 0;
@@ -1138,27 +1138,23 @@ void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
 		temp_v0 = 0x7F;
 	}
 
-	temp_f2 = (f32)((f64)temp_v0 / D_80142E18_151DC8);
+	factor = (f32)((f64)temp_v0 / D_80142E18_151DC8);
 	if ((((u8 *)arg0)[2] << 5) < D_80222A70) {
 		levelOffset = currentLevel * 0xC;
-		temp_v1 = (f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset);
-		temp_v0_2 = (f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset);
-		delta = temp_v1[-3] - temp_v0_2[-3];
-		sp1C = temp_v0_2[-3] + (temp_f2 * delta);
-		delta = temp_v1[-2] - temp_v0_2[-2];
-		sp20 = temp_v0_2[-2] + (temp_f2 * delta);
-		delta = temp_v1[-1] - temp_v0_2[-1];
-		sp24 = temp_v0_2[-1] + (temp_f2 * delta);
+		delta = ((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-3] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3];
+		sp1C = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3] + (factor * delta);
+		delta = ((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-2] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-2];
+		sp20 = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-2] + (factor * delta);
+		delta = ((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-1] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-1];
+		sp24 = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-1] + (factor * delta);
 	} else {
 		levelOffset = currentLevel * 0xC;
-		temp_v1 = (f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset);
-		temp_v0_2 = (f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset);
-		delta = temp_v1[-3] - temp_v0_2[-3];
-		sp1C = temp_v0_2[-3] + (temp_f2 * delta);
-		delta = temp_v1[-2] - temp_v0_2[-2];
-		sp20 = temp_v0_2[-2] + (temp_f2 * delta);
-		delta = temp_v1[-1] - temp_v0_2[-1];
-		sp24 = temp_v0_2[-1] + (temp_f2 * delta);
+		delta = ((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-3] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-3];
+		sp1C = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-3] + (factor * delta);
+		delta = ((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-2] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-2];
+		sp20 = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-2] + (factor * delta);
+		delta = ((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-1] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-1];
+		sp24 = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-1] + (factor * delta);
 	}
 
 	arg2[0] = (s8)(u32)((f32)arg1[0] * sp1C);
