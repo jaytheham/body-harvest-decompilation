@@ -458,10 +458,10 @@ void func_800747A8_83758(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(4158) */
+/* CURRENT(4133) */
 void func_80074970_83920(void) {
-	s32 chunkIndex;
 	s32 i;
+	s32 chunkIndex;
 	volatile s32 savedIndex;
 
 	chunkIndex = -1;
@@ -476,15 +476,23 @@ void func_80074970_83920(void) {
 					func_80074500_834B0();
 				}
 
-				D_80149B60[(((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1)
-					+ (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1)
-					+ i] = func_80074500_834B0();
+				{
+				u8 val;
+				s32 baseIdx;
+				val = func_80074500_834B0();
+				baseIdx = (((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1);
+				if (savedIndex) { }
+				D_80149B60[baseIdx + (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1) + i] = val;
+				}
 				i += 1;
 
 				if ((D_801494BC == 0x80) || (D_801494BC == 0x81)) {
-					D_80149B60[(((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1)
-						+ (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1)
-						+ i] = func_80074500_834B0();
+					u8 val;
+					s32 baseIdx;
+					val = func_80074500_834B0();
+					baseIdx = (((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1);
+					if (savedIndex) { }
+					D_80149B60[baseIdx + (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1) + i] = val;
 					i += 1;
 				}
 
