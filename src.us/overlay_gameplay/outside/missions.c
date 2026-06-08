@@ -11,7 +11,7 @@ s32 D_8013BAC0_14AA70[5][4] = {
 	0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF
 };
 
-// CURRENT(1681)
+// CURRENT(1686)
 #ifdef NON_MATCHING
 void func_80073DC0_82D70(s32 arg0) {
 	u8 *next;
@@ -163,18 +163,16 @@ void func_80073DC0_82D70(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80073DC0_82D70.s")
 #endif
 
-// CURRENT(3870)
+// CURRENT(3595)
 // Resets a bunch of memory? For missions?
 #ifdef NON_MATCHING
 void func_80074204_831B4(void) {
-	u8 *var_v0;
-	s32 *var_v0_2;
-	s16 *var_v0_3;
 	s32 var_a0;
 	u8 var_a1;
 	u8 var_a2;
-	u8 temp_t6;
-	s16 temp_t9;
+	u8 *var_v0;
+	s32 *var_v0_2;
+	s16 *var_v0_3;
 
 	var_v0 = D_80149B60;
 	var_a0 = 0x257F;
@@ -197,9 +195,8 @@ void func_80074204_831B4(void) {
 	var_v0 = &D_8014CFEC;
 	var_a0 = 0x3F;
 	do {
-		temp_t6 = *var_v0;
 		var_v0 -= 4;
-		var_v0[4] = (temp_t6 & 0xFF80) | 0x7F;
+		var_v0[4] = (var_v0[4] & 0xFF80) | 0x7F;
 	} while (var_a0--);
 
 	var_v0 = &D_801497BA;
@@ -272,10 +269,10 @@ void func_80074204_831B4(void) {
 	var_v0_2 = &D_80149B44;
 	var_v0_2[0] = 0;
 	var_v0_2[-1] = 0;
-	var_v0_2[-2] = 0;
 	var_v0_2[-3] = 0;
 	var_v0_2[-4] = 0;
 	var_v0_2[-5] = 0;
+	var_v0_2[-6] = 0;
 	D_80149B28 = 0;
 	D_80149B3C = 0;
 
@@ -283,9 +280,8 @@ void func_80074204_831B4(void) {
 	D_8014D180 = D_80149B4A;
 	D_8014D17E = D_8014D180;
 	D_8014D17C = D_8014D17E;
-	temp_t9 = D_8014D17C;
-	D_8004D14C = temp_t9;
-	D_80149B48 = temp_t9;
+	D_8004D14C = D_8014D17C;
+	D_80149B48 = D_8014D17C;
 
 	D_80149474 = 0xFF;
 	D_8004DC40 = -1;
@@ -330,6 +326,7 @@ u8 func_80074558_83508(void) {
 	return D_801494BC;
 }
 
+// CURRENT(10)
 // readMissionObject
 // Needs jumptable data
 #ifdef NON_MATCHING
@@ -461,10 +458,10 @@ void func_800747A8_83758(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(4158) */
+/* CURRENT(4133) */
 void func_80074970_83920(void) {
-	s32 chunkIndex;
 	s32 i;
+	s32 chunkIndex;
 	volatile s32 savedIndex;
 
 	chunkIndex = -1;
@@ -479,15 +476,23 @@ void func_80074970_83920(void) {
 					func_80074500_834B0();
 				}
 
-				D_80149B60[(((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1)
-					+ (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1)
-					+ i] = func_80074500_834B0();
+				{
+				u8 val;
+				s32 baseIdx;
+				val = func_80074500_834B0();
+				baseIdx = (((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1);
+				if (savedIndex) { }
+				D_80149B60[baseIdx + (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1) + i] = val;
+				}
 				i += 1;
 
 				if ((D_801494BC == 0x80) || (D_801494BC == 0x81)) {
-					D_80149B60[(((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1)
-						+ (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1)
-						+ i] = func_80074500_834B0();
+					u8 val;
+					s32 baseIdx;
+					val = func_80074500_834B0();
+					baseIdx = (((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1);
+					if (savedIndex) { }
+					D_80149B60[baseIdx + (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1) + i] = val;
 					i += 1;
 				}
 
@@ -520,36 +525,36 @@ void func_80074970_83920(void) {
 
 
 // readMissionInfo
-// CURRENT(1745)
+// CURRENT(80)
 #ifdef NON_MATCHING
 void func_80074B2C_83ADC(void) {
 	u8 *entry;
 	u8 cmd;
+	s16 b48;
 
-	if ((func_80074558_83508() == 0xAC) || (D_801494BC == 0xAE)) {
-		do {
-			if (D_801494BC == 0xAE) {
-				D_8014D188[D_80149B48] += 1;
-			}
+	cmd = func_80074558_83508();
+	while ((cmd == 0xAC) || (D_801494BC == 0xAE)) {
+		if (D_801494BC == 0xAE) {
+			D_8014D188[D_80149B48] += 1;
+		}
 
-			func_80074500_834B0();
-			if (D_80149B34 >= 0x3F) {
-				osSyncPrintf(D_80141288_150238);
-				D_80149B4A = 1;
-			}
+		func_80074500_834B0();
+		if (D_80149B34 >= 0x3F) {
+			osSyncPrintf(D_80141288_150238);
+			D_80149B4A = 1;
+		}
 
-			entry = &D_8014CEF0[D_80149B34 * 4];
-			D_80149B34 += 1;
-			if (D_801494BC == 0xAC) {
-				entry[0] &= 0xFF7F;
-			} else {
-				entry[0] |= 0x80;
-			}
+		entry = &D_8014CEF0[D_80149B34 * 4], D_80149B34 += 1;
+		if (D_801494BC == 0xAC) {
+			entry[0] &= 0xFF7F;
+		} else {
+			entry[0] |= 0x80;
+		}
 
-			entry[0] = (D_80149B48 & 0x7F) | (entry[0] & 0xFF80);
-			func_80074578_83528(&entry[1]);
-			cmd = func_80074558_83508();
-		} while ((cmd == 0xAC) || (D_801494BC == 0xAE));
+		b48 = D_80149B48;
+		entry[0] = (b48 & 0x7F) | (entry[0] & 0xFF80);
+		func_80074578_83528(&entry[1]);
+		cmd = func_80074558_83508();
 	}
 }
 #else
@@ -962,7 +967,7 @@ doneParsing:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800756DC_8468C.s")
 #endif
 
-// CURRENT(716)
+// CURRENT(501)
 #ifdef NON_MATCHING
 void func_80075AA4_84A54(void) {
 	s32 condCount;
@@ -1008,7 +1013,6 @@ void func_80075AA4_84A54(void) {
 	condCount = D_80149B28;
 	if (condCount--) {
 		cond = &D_801494C0[condCount];
-
 		do {
 			D_801497C0 = cond;
 			D_80149B48 = D_801497C0->unk1;
@@ -1027,9 +1031,9 @@ void func_80075AA4_84A54(void) {
 				}
 
 				{
-					i = D_801497C0->unk3;
 					D_801497C4 = &D_8004D348[D_801497C0->unk2 * 9];
-					if (i != 0) {
+					i = D_801497C0->unk3;
+					if (i) {
 						i--;
 						do {
 							if (func_800081D4_8DD4(D_801497C4) == 0) {
