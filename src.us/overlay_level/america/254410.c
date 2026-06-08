@@ -2864,7 +2864,20 @@ void func_802DECAC_25E3EC(u8 arg0) {
     func_802DE990_25E0D0(arg0, 0x80, 0, 0, &D_802E0CD0_260410);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DED4C_25E48C.s")
+void func_802DED4C_25E48C(u8 arg0) {
+    AlienInstance *v0;
+    u8 v1;
+    AlienInstance *a2;
+
+    func_800A93A4_B8354(arg0, (s16)(s32)(-6.0f * D_802DF3A4_25EAE4), (s16)(s32)(-115.0f * D_802DF3A4_25EAE4), (s16)(s32)(19.0f * D_802DF3A4_25EAE4));
+    v0 = &alienInstances[arg0];
+    v1 = v0->unk25;
+    a2 = &alienInstances[alienInstances[v1].unk25];
+    if (!(v0->unk20 & 0x100000)) {
+        a2->unk20 |= 0x1000;
+    }
+    func_80089EB4_98E64(arg0, 0x14, 0, 3, 5);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DEE40_25E580.s")
 
