@@ -326,6 +326,7 @@ u8 func_80074558_83508(void) {
 	return D_801494BC;
 }
 
+// CURRENT(10)
 // readMissionObject
 // Needs jumptable data
 #ifdef NON_MATCHING
