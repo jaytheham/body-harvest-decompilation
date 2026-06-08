@@ -11,6 +11,7 @@ void func_802DA054_259794(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 void func_802DA120_259860(s16 arg0, s32 arg1);
 void func_802D99E4_259124(u8 arg0);
 void func_802DA520_259C60(u8 arg0);
+void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 extern Unk8014DD50 D_802DFF78_25F6B8[];
 extern Unk8014DD50 D_802DFFC4_25F704[];
 extern Unk8014DD50 *D_802E0640_25FD80;
@@ -2709,7 +2710,12 @@ s32 func_802DCCD8_25C418(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DD104_25C844.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DD9C8_25D108.s")
+void func_802DD9C8_25D108(u8 arg0) {
+    f32 scale = D_802DF3A4_25EAE4;
+
+    func_800A93A4_B8354(arg0, (s16)(s32)(-124.0f * scale), (s16)(s32)(18.0f * scale), (s16)(s32)(21.0f * scale));
+    func_802DD104_25C844(arg0, -0x25, 9, 0x4C, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DDA64_25D1A4.s")
 
