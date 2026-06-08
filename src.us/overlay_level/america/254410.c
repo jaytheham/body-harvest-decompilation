@@ -2400,7 +2400,96 @@ void func_802DBD84_25B4C4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DBD84_25B4C4.s")
 #endif
 
+extern s32 D_802E099C_2600DC;
+extern s32 D_802E09A0_2600E0;
+// CURRENT(7800)
+#ifdef NON_MATCHING
+void func_802DC244_25B984(u8 arg0) {
+    AlienInstance *alien;
+    s32 sp80;
+    AlienInstance *parent;
+    s32 sp50;
+
+    alien = &alienInstances[arg0];
+    parent = &alienInstances[alien->unk25];
+    sp80 = func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8;
+
+    if ((alien->unk20 & 0x7000) == 0x7000) {
+        if (parent->unk20 & 0x4000) {
+            ((s16 *)((u8 *)alienSpecs + 0xB38))[0] = 0x600;
+            ((s16 *)((u8 *)alienSpecs + 0xB38))[1] = 0x400;
+            func_8008064C_8F5FC(arg0);
+            if (((sp80 + 0x546) < alien->unk2) || (alien->unkA > 0)) {
+                if (alien->unkA < 0x7830) {
+                    alien->unkA = (s16)(alien->unkA + 0x7D0);
+                }
+            }
+            if (alien->unkA >= 0x7830) {
+                parent->unk20 &= ~0x4000;
+                parent->unk20 |= 0x8000;
+                alien->unk20 |= 0x40000000;
+            }
+        } else if (parent->unk20 & 0x8000) {
+            s32 sp54;
+            s32 sp7C;
+
+            func_80137468_146418(arg0, 0x13C);
+            sp54 = arg0;
+            if (!(alien->unk20 & 0x40000000) || (alien->unk47 & 1)) {
+                func_80135D44_144CF4(alien->unk0, sp80, alien->unk4, 5.0f);
+            }
+            func_80137468_146418(sp54, 0x259);
+            func_800DEA08_ED9B8(alien->unk0, (s16)sp80, alien->unk4, 0x5DC,
+                0xC, 0x10, 0x28, 0xFF, 0xA6, 0x85, 0x2F);
+            func_800C541C_D43CC(alien->unk0, (s16)(sp80 + 5), alien->unk4, 0,
+                0x7F, 0, 0xC8, 0xFF, 0x3C, 0x14, 0x6A, 0x53, 0);
+            func_800E35E0_F2590(0xFF);
+            D_802E099C_2600DC = alien->unk0;
+            D_802E09A0_2600E0 = alien->unk4;
+            sp50 = func_80084E54_93E04(D_80052B34, alien);
+            if (sp50 < (*(s16 *)((u8 *)&D_80257A0C + D_80052B34->unk1A * 0x70) + 0x64)) {
+                func_80123AC4_132A74(D_80052B34);
+            } else if ((sp50 < 0x3D0900) && !(D_80052B34->unk20 & 2)) {
+                sp7C = 0x3D0900 - sp50;
+                func_80102DDC_111D8C(D_80052B34,
+                    func_80003824_4424((f32)-(alien->unk0 - D_80052B34->unk0), (f32)-(alien->unk4 - D_80052B34->unk4)),
+                    (s16)(((f32)sp7C / D_802E0E00_260540) + 8192.0f),
+                    (f32)(sp7C * 0x32) / D_802E0E04_260544);
+                D_80052B34->unk22 = 0x3E8 - (func_800038E0_44E0() % 2000);
+                D_80052B34->unk24 = 0x3E8 - (func_800038E0_44E0() % 2000);
+                D_80052B34->unk26 = 0x3E8 - (func_800038E0_44E0() % 2000);
+            }
+            parent->unk20 &= ~0x8000;
+            alien->unk1E = 0x32;
+        } else {
+            s32 sp64;
+            s32 sp6C;
+            s32 sp70;
+            f64 sp48;
+
+            if (alien->unkA > 0) {
+                alien->unkA = (s16)(alien->unkA - 0x7D0);
+            }
+            if ((alien->unk1E < 0x28) && ((D_802E099C_2600DC != -1) || (D_802E09A0_2600E0 != -1))) {
+                sp64 = (alien->unk1E * -0x32) + 0x7D0;
+                sp50 = ((alien->unk1E % 5) * 0x3333) & 0xFFFF;
+                sp48 = (f64)sp64;
+                sp70 = (s32)(((f64)(f32)sins(sp50) / 32768.0) * sp48 + (f64)D_802E099C_2600DC);
+                sp6C = (s32)((f64)D_802E09A0_2600E0 - (((f64)(f32)coss(sp50) / 32768.0) * sp48));
+                func_800DFA34_EE9E4((s16)sp70, (s16)sp80, (s16)sp6C, 0x96, 0);
+                alien->unk20 |= 0x400000;
+                func_80124B5C_133B0C((s16)sp70, (s16)sp80, (s16)sp6C, 0xDAC, 0x190);
+                alien->unk20 &= ~0x400000;
+            }
+            if (alien->unk1E == 0) {
+                parent->unk20 |= 0x4000;
+            }
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DC244_25B984.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DC7FC_25BF3C.s")
 
