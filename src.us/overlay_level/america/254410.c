@@ -28,6 +28,13 @@ extern u8 D_E021070[];
 extern f64 D_802E0DC0_260500;
 extern Unk8014DD50 D_802E0CDC_26041C;
 extern f32 D_802E0E10_260550;
+extern s16 D_802E0CE4_260424;
+extern s16 D_802E0CE8_260428;
+extern f32 D_802E0E14_260554;
+extern f32 D_802E0E18_260558;
+extern f32 D_802E0E1C_26055C;
+extern f32 D_802E0E20_260560;
+extern Gfx D_504FD38[];
 
 
 void func_802D4CD0_254410(s32 arg0, s32 arg1) {
@@ -3442,4 +3449,121 @@ void func_802DEE40_25E580(u8 arg0) {
 	alien->unk2C = 0;
 }
 
+// CURRENT(9052)
+#ifdef NON_MATCHING
+void func_802DEED4_25E614(void) {
+    s16 temp_t0;
+    s16 var_v0;
+    s32 temp_a0;
+    s32 temp_a1;
+    s32 temp_a2;
+    s32 temp_v1;
+
+    temp_t0 = D_802E0CE8_260428;
+
+    if (temp_t0 >= 0xF0) {
+        if (D_802E0CE4_260424 == 1) {
+            D_802E0CE4_260424 = 0;
+            D_802E0CE8_260428 = 0xF0;
+            func_80135D44_144CF4(0x47FE, 0x320, 0x1644, 1.0f);
+            func_801371B8_146168(0, 0xE9, 0x47FE, 0x320, 0x1644, D_802E0E14_260554);
+            temp_t0 = D_802E0CE8_260428;
+        }
+    }
+
+    var_v0 = D_802E0CE4_260424;
+
+    if (temp_t0 <= 0 && var_v0 == 3) {
+        D_802E0CE4_260424 = 2;
+        D_802E0CE8_260428 = 0;
+        func_80135D44_144CF4(0x47FE, 0x320, 0x1644, 3.0f);
+        func_801371B8_146168(0, 0xE9, 0x47FE, 0x320, 0x1644, D_802E0E18_260558);
+        var_v0 = D_802E0CE4_260424;
+        temp_t0 = D_802E0CE8_260428;
+    }
+
+    temp_a0 = D_80052B34->unk0;
+    temp_a1 = temp_a0 - 0x47FE;
+    temp_a2 = 0x47FE - temp_a0;
+    if (temp_a1 >= 0) {
+        temp_a2 = temp_a1;
+    }
+
+    if (temp_a2 < 0x4B0) {
+        temp_a0 = D_80052B34->unk4;
+        temp_a1 = temp_a0 - 0x1644;
+        temp_v1 = 0x1644 - temp_a0;
+        if (temp_a1 >= 0) {
+            temp_v1 = temp_a1;
+        }
+
+        if (temp_v1 < 0x4B0) {
+            if (var_v0 != 2) {
+                D_802E0CE4_260424 = 3;
+            }
+        } else {
+            if (var_v0 != 0) {
+                D_802E0CE4_260424 = 1;
+            }
+        }
+    } else {
+        if (var_v0 != 0) {
+            D_802E0CE4_260424 = 1;
+        }
+    }
+
+    var_v0 = D_802E0CE4_260424;
+
+    if (var_v0 == 1) {
+        D_802E0CE8_260428 = temp_t0 + 4;
+        func_801371B8_146168(0x64, 0x138, 0x47FE, 0x320, 0x1644, D_802E0E1C_26055C);
+        temp_t0 = D_802E0CE8_260428;
+        var_v0 = D_802E0CE4_260424;
+    }
+
+    if (var_v0 == 3) {
+        D_802E0CE8_260428 = temp_t0 - 0xC;
+        func_801371B8_146168(0x64, 0x138, 0x47FE, 0x320, 0x1644, D_802E0E20_260560);
+    }
+
+    temp_a2 = 0x47FE - temp_t0;
+    if (temp_a2 >= 0) {
+        D_80052B40.unk0 = temp_a2 >> 2;
+    } else {
+        D_80052B40.unk0 = (temp_a2 + 3) >> 2;
+    }
+    D_80052B40.unk4 = 0x591;
+    D_80052B40.unk2 = 0xC8;
+    D_80052B50.unk0 = 0x200;
+    D_80052B50.unk2 = 0x100;
+    D_80052B50.unk4 = 0x100;
+    func_800039D0_45D0(&D_80052B40, NULL, &D_80052B50, D_8005BB38);
+
+    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+    D_8005BB38 += 0x40;
+    gSPDisplayList(D_8005BB2C++, D_504FD38);
+
+    D_80052B40.unk4 = 0x593;
+    D_80052B40.unk2 = 0xC8;
+    D_80052B48.unk0 = 0x8000;
+    D_80052B48.unk2 = 0;
+    D_80052B48.unk4 = 0;
+
+    temp_a2 = D_802E0CE8_260428 + 0x47FE;
+    if (temp_a2 >= 0) {
+        D_80052B40.unk0 = temp_a2 >> 2;
+    } else {
+        D_80052B40.unk0 = (temp_a2 + 3) >> 2;
+    }
+    func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
+
+    gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+    D_8005BB38 += 0x40;
+    gSPDisplayList(D_8005BB2C++, D_504FD38);
+
+    func_8012D700_13C6B0(1, 0x64, (s16)(0x4727 - D_802E0CE8_260428), 0x320, 0x1644, 0, 0, 0, 0xD8, 0x16, 0x16C, NULL, &func_8012E1F8_13D1A8);
+    func_8012D700_13C6B0(1, 0x65, (s16)(D_802E0CE8_260428 + 0x48D5), 0x320, 0x1644, 0, 0, 0, 0xD8, 0x16, 0x16C, NULL, &func_8012E1F8_13D1A8);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DEED4_25E614.s")
+#endif
