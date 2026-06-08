@@ -714,7 +714,7 @@ void func_80079E64_88E14(s32 arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(5412)
+// CURRENT(3500)
 s32 func_80079F08_88EB8(s32 arg0) {
 	u8 specIndex;
 	s16 floorY;
@@ -727,14 +727,11 @@ s32 func_80079F08_88EB8(s32 arg0) {
 	inst = &alienInstances[arg0];
 	specIndex = inst->specIndex;
 
-	if (((specIndex == 0xD) && (inst->unk48 > 0)) || ((specIndex == 0x12) && (inst->unk24 == 5))) {
+	if (((inst->specIndex == 0xD) && (inst->unk48 > 0)) || ((inst->specIndex == 0x12) && (inst->unk24 == 5))) {
 		return 0;
 	}
 
-	if (inst->unk20 & 0x01000000) {
-		inst->unk10 = 0;
-		return 0;
-	}
+	if (inst->unk20 & 0x01000000) { inst->unk10 = 0; return 0; }
 
 	floorY = (s16) (func_800B84D0_C7480(inst->unk0, inst->unk4) >> 8);
 	spec = &alienSpecs[specIndex];
