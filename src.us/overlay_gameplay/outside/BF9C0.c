@@ -1205,46 +1205,41 @@ s32 func_800B325C_C220C(s8 arg0, s8 arg1, u16 arg2)
 {
   return (D_8014F8A0[128 + arg1][128 + arg0] & arg2) & 0xFFFF;
 }
-// CURRENT(1800)
+// CURRENT(1180)
 #ifdef NON_MATCHING
 void func_800B32AC_C225C(u16 *arg0) {
+	u16 *ptr;
 	u8 x;
 	u8 y;
-	u32 end;
-	u32 i;
 	s32 level;
-	u16 *start;
+	u32 i;
 
 	x = 0;
 	y = 0;
 	level = D_80222A70 / 32;
-	start = arg0;
-	end = 0x1FE02;
+	ptr = arg0;
 	i = 0;
 
 	do {
 		i += 2;
 		if (currentLevel == 4) {
-			level = 6;
-			if ((x < 0x4C) && (y < 0x9C) && (y >= 0x59)) {
-				level = 0x20;
-			}
+			level = (x < 0x4C && y < 0x9C && y >= 0x59) ? 0x20 : 6;
 		}
-		if (((arg0[0] & 0x3F) < level) || ((arg0[1] & 0x3F) < level) || ((arg0[0x100] & 0x3F) < level) ||
-			((arg0[0x101] & 0x3F) < level)) {
-			arg0[0] |= 0x1000;
+		if (((ptr[0] & 0x3F) < level) || ((ptr[1] & 0x3F) < level) || ((ptr[0x100] & 0x3F) < level) ||
+			((ptr[0x101] & 0x3F) < level)) {
+			ptr[0] |= 0x1000;
 		} else {
-			arg0[0] &= ~0x1000;
+			ptr[0] &= ~0x1000;
 		}
 
 		x = (x + 1) & 0xFF;
 		if (x == 0) {
 			y = (y + 1) & 0xFF;
 		}
-		arg0++;
-	} while (i != end);
+		ptr++;
+	} while (i != 0x1FE02);
 
-	*start = 0;
+	*arg0 = 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B32AC_C225C.s")
