@@ -1494,7 +1494,7 @@ extern Ambient D_8013D958_14C908;
 extern Light D_8013D960_14C910;
 extern Ambient D_8013D970_14C920;
 extern Light D_8013D978_14C928;
-extern s8 D_8013D9AC_14C95C;
+extern u8 D_8013D9AC_14C95C;
 extern s8 D_8013D9B0_14C960;
 extern s32 D_8013D9B4_14C964;
 extern s8 D_8013DAB6_14CA66[];
