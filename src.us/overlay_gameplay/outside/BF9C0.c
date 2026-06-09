@@ -1451,48 +1451,39 @@ void func_800B41C8_C3178(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	}
 }
 
-// CURRENT(11440)
+// CURRENT(7186)
 #ifdef NON_MATCHING
 void func_800B42B0_C3260(s32 arg0) {
-	volatile u8 sp6F;
-	s8 sp6A;
-	s8 sp69;
-	s8 sp68;
+	u8 sp6F;
+	s8 sp68[3];
 	s8 sp60[5];
-	s16 *sp5C;
+	u16 *sp5C;
 	u8 sp59;
 	u8 sp54[3];
-	s32 temp_t9;
-	s32 temp_t9_2;
-	s32 temp_v1;
+	u16 *temp_s6;
+	u16 *temp_s7;
 	s32 var_s0;
-	s8 var_s1;
-	s16 *temp_s6;
-	s16 *temp_s7;
-	u8 temp_t6;
+	s32 temp_v1;
+	s32 temp_t9;
 	u8 *temp_v0;
 	u8 *temp_v0_4;
-	u8 *temp_v1_2;
-	u8 *temp_s4;
-	u8 *temp_s5;
 
 	(void)arg0;
 
+	sp5C = (u16 *)D_8014F8A0;
 	D_8014F89C = D_80151DD8[0x964]++;
 	D_8014F89D = D_80151DD8[0x965];
 	D_8014F899 = ((s8 *)D_80151DD8)[0x961];
 	D_8014F898 = ((s8 *)D_80151DD8)[0x960];
-	sp5C = &D_8014F8A0[0][0];
 	D_8014F89C++;
 
-	var_s1 = 0;
 	sp6F = 0;
 	sp59 = D_8014F898;
 
 	do {
-		temp_v1 = D_8014F89D + var_s1;
+		temp_v1 = D_8014F89D + sp6F;
 		temp_t9 = (D_8014F89C + (temp_v1 << 8) + 0x12) & 0xFFFF;
-		temp_s6 = sp5C + temp_t9;
+		temp_s6 = (u16 *)((u8 *)sp5C + temp_t9 * 2);
 		temp_s7 = sp5C + temp_t9;
 
 		sp60[0] = temp_s6[-0x100] & 0x3F;
@@ -1502,61 +1493,59 @@ void func_800B42B0_C3260(s32 arg0) {
 		sp60[4] = temp_s6[0x100] & 0x3F;
 
 		func_800B1814_C07C4(temp_v1 & 0xFF, (D_8014F89C + 0x12) & 0xFF, sp54);
-		func_800B2CF0_C1CA0(sp60, sp54, &sp68);
+		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 
 		var_s0 = 0;
 	loop_2:
 		temp_v0 = &D_8014FD48[var_s0 * 2];
-		if (((D_8014F89C + 0x12) == temp_v0[0]) && ((D_8014F89D + var_s1) == temp_v0[1])) {
+		if (((D_8014F89C + 0x12) == temp_v0[0]) && ((D_8014F89D + sp6F) == temp_v0[1])) {
 			s32 temp_t8;
+			s32 temp_v1_2;
 			s32 temp_v0_2;
 			s32 temp_v0_3;
-			s32 temp_v1_2;
 
 			temp_t8 = (func_800038E0_44E0() % 60) & 0xFF;
 			temp_v1_2 = temp_t8 + 0x14;
 			if (temp_v1_2 < 0) {
-				sp68 = 0;
+				sp68[0] = 0;
 			} else {
-				sp68 = temp_v1_2;
+				sp68[0] = temp_v1_2;
 			}
 
 			temp_v0_2 = temp_t8 - 5;
 			if (temp_v0_2 < 0) {
-				sp69 = 0;
+				sp68[1] = 0;
 			} else {
-				sp69 = temp_v0_2;
+				sp68[1] = temp_v0_2;
 			}
 
 			temp_v0_3 = temp_t8 - 0x19;
 			if (temp_v0_3 < 0) {
-				sp6A = 0;
+				sp68[2] = 0;
 			} else {
-				sp6A = temp_v0_3;
+				sp68[2] = temp_v0_3;
 			}
 		}
 		var_s0 = (var_s0 + 1) & 0xFF;
-		if (var_s0 < 0x40) {
+		if (!(var_s0 >= 0x40)) {
 			goto loop_2;
 		}
 
 		temp_v0_4 = &D_80151DD8[(u8)sp59 * 0x78 + D_8014F899 * 6];
 		*(u16 *)temp_v0_4 = *temp_s7;
-
 		if (temp_s6[-1] & 0x800) {
-			temp_v0_4[2] = (((u8)sp68 / 4) * 3);
-			temp_v0_4[4] = (((u8)sp6A / 4) * 3);
-			temp_v0_4[3] = (((u8)sp69 / 4) * 3);
+			temp_v0_4[2] = (((u8)sp68[0] / 4) * 3);
+			temp_v0_4[4] = (((u8)sp68[2] / 4) * 3);
+			temp_v0_4[3] = (((u8)sp68[1] / 4) * 3);
 		} else {
-			temp_v0_4[2] = (u8)sp68;
-			temp_v0_4[3] = (u8)sp69;
-			temp_v0_4[4] = (u8)sp6A;
+			temp_v0_4[2] = (u8)sp68[0];
+			temp_v0_4[3] = (u8)sp68[1];
+			temp_v0_4[4] = (u8)sp68[2];
 		}
 
 		sp59 = ((u8)sp59 + 1) % 19;
-		var_s1 = (sp6F + 1) & 0xFF;
-		sp6F = var_s1;
-	} while (var_s1 < 0x13);
+		sp6F = (sp6F + 1) & 0xFF;
+	} while (sp6F < 0x13);
 
 	D_8014F899 = (D_8014F899 + 1) % 19;
 	D_80151DD8[0x961] = D_8014F899;
@@ -1564,7 +1553,6 @@ void func_800B42B0_C3260(s32 arg0) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B42B0_C3260.s")
 #endif
-
 // CURRENT(8482)
 #ifdef NON_MATCHING
 void func_800B4660_C3610(s32 arg0) {
