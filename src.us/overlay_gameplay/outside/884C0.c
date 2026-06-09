@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "857E0.h"
 
 #define D_8013C1A7_14B157 (&D_8013C178_14B128[0x2F])
 
