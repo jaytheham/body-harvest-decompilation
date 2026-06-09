@@ -3017,6 +3017,7 @@ void func_800B879C_C774C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B879C_C774C.s")
 #endif
 
+// Boss fight arena creation?
 #ifdef NON_MATCHING
 void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 	D_8014F830 = 0;
@@ -3177,6 +3178,7 @@ void func_800B8F30_C7EE0(s16 arg0, s16 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8F30_C7EE0.s")
 #endif
 
+// Boss fight arena creation?
 void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2) {
 	func_800B8C2C_C7BDC(arg0, arg1, 0x1F);
 	D_8014F850 = 2.0f;

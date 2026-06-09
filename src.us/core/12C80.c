@@ -2736,6 +2736,7 @@ void func_80018D58_19958(void) {
 // https://decomp.me/scratch/q8jZh
 // CURRENT(2518)
 #ifdef NON_MATCHING
+// Play dialogue with index arg0
 void func_80018D7C_1997C(u16 arg0) {
 	s32 pad0;
 	s32 pad1;

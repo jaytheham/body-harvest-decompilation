@@ -3252,6 +3252,7 @@ s32 func_800F066C_FF61C(void) {
 #endif
 
 #ifdef NON_MATCHING
+// Spawn boss after delay and dialogue
 void func_800F1004_FFFB4(void) {
 	AlienInstance *alien;
 	s16 z;
@@ -3292,6 +3293,7 @@ void func_800F1004_FFFB4(void) {
 
 // CURRENT(29635)
 #ifdef NON_MATCHING
+// Boss fight cutscene & setup
 void func_800F1134_1000E4(void) {
 	s32 p3X;
 	s32 p3Z;
