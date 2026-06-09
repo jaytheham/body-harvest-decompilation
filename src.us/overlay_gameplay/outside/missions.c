@@ -11,6 +11,104 @@ s32 D_8013BAC0_14AA70[5][4] = {
 	0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF
 };
 
+const char D_801411F0_1501A0[] = "**** ERROR: MISSION COMMANDS OVERFLOW ****\n";
+const char D_8014121C_1501CC[] = "**** ERROR: MISSION COMMANDS OVERFLOW ****\n";
+const char D_80141248_1501F8[] = "ERROR: SCRATCH SPACE OVERFLOW\n";
+const char D_80141268_150218[] = "ERROR: RANDOM OBJECT OVERFLOW\n";
+const char D_80141288_150238[] = "**** ERROR: MISSION INFO OVERFLOW ****\n";
+const char D_801412B0_150260[] = "**** ERROR: GAME CONDITION OVERFLOW ****\n";
+const char D_801412DC_15028C[] = "**** ERROR: TILES_FROM EXPECTED ****\n";
+const char D_80141304_1502B4[] = "**** ERROR: TIMER COMPARATOR EXPECTED ****\n";
+const char D_80141330_1502E0[] = "**** ERROR: SECONDS EXPECTED ****\n";
+const char D_80141354_150304[] = "**** ERROR: MISSION CONDITION OVERFLOW ****\n";
+const char D_80141384_150334[] = "**** WARNING: UNKNOWN MESSAGE FORMAT IN MISSION %d\n";
+const char D_801413B8_150368[] = "**** ERROR: NOT A MISSION FILE ****\n";
+const char D_801413E0_150390[] = "**** ERROR: TOO MANY MISSIONS ****\n";
+const char D_80141404_1503B4[] = "\n";
+const char D_80141408_1503B8[] = "  Number of Missions: %4d out of %d\n";
+const char D_80141430_1503E0[] = "  Mission Conditions: %4d out of %d\n";
+const char D_80141458_150408[] = " Dialogue Conditions: %4d out of %d\n";
+const char D_80141480_150430[] = "     Game Conditions: %4d out of %d\n";
+const char D_801414A8_150458[] = "            Commands: %4d out of %d\n";
+const char D_801414D0_150480[] = "     Map information: %4d out of %d\n";
+const char D_801414F8_1504A8[] = "      Random objects: %4d out of %d\n";
+const char D_80141520_1504D0[] = "     Command objects: %4d out of %d\n";
+const char D_80141548_1504F8[] = "          Characters: %4d out of %d\n";
+const char D_80141570_150520[] = "Size of mission data: %4d out of %d\n";
+const f32 D_80141598_150548[1] = {511.0f};
+const u32 jtbl_8014159C_15054C[] = {
+	0x80073E5C,
+	0x80073E6C,
+	0x80073E7C,
+	0x80073F40,
+	0x80073F50,
+	0x800741C4,
+	0x8007400C,
+	0x8007412C,
+	0x80074194,
+	0x80074158,
+};
+const u32 jtbl_801415C4_150574[] = {
+	0x800745DC,
+	0x800745B8,
+	0x800745B8,
+	0x800745B8,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745DC,
+	0x800745C8,
+	0x800745DC,
+	0x800745B8,
+};
+const u32 jtbl_80141624_1505D4[] = {
+	0x800750DC,
+	0x800750F4,
+	0x8007510C,
+	0x8007510C,
+	0x8007510C,
+};
+const u32 jtbl_80141638_1505E8[] = {
+	0x80075A5C,
+	0x80075A70,
+	0x80075A84,
+	0x80075A84,
+	0x80075A84,
+};
+const u32 jtbl_8014164C_1505FC[] = {
+	0x800760B0,
+	0x800760B8,
+	0x800760CC,
+	0x800760D4,
+	0x800760E8,
+	0x800760FC,
+	0x80076110,
+	0x80076124,
+	0x80076138,
+	0x8007614C,
+	0x80076160,
+	0x80076174,
+	0x80076188,
+	0x8007619C,
+	0x800761B0,
+	0x800761C4,
+	0x800761D8,
+	0x800761EC,
+};
+
 // CURRENT(1686)
 #ifdef NON_MATCHING
 void func_80073DC0_82D70(s32 arg0) {

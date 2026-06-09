@@ -1560,16 +1560,6 @@ extern char D_801410C0[];
 extern char D_801410C8[];
 extern char D_801410DC[];
 extern char D_801410F8[];
-extern char D_80141114[];
-extern char D_80141130[];
-extern char D_8014114C[];
-extern char D_80141168[];
-extern char D_80141184[];
-extern char D_801411F0_1501A0[];
-extern char D_8014121C_1501CC[];
-extern char D_80141248_1501F8[];
-extern char D_80141268_150218[];
-extern char D_80141288_150238[];
 extern char D_80036FE4_37BE4; /* osSyncPrintf format string */
 extern char D_80036FF0_37BF0; /* osSyncPrintf format string */
 extern char D_80036FF4_37BF4; /* osSyncPrintf format string */
@@ -1862,7 +1852,6 @@ extern u8 D_80149459; // cheat input buffer end
 extern s32 D_8014945C;
 extern s32 isCheatingEnabled; // 80149460
 extern s16 D_80149474;
-extern f32 D_80141598_150548;
 extern s32 D_80149478[16];
 extern s32 D_801494B4;
 extern u8 D_80159DC0;
@@ -1880,28 +1869,11 @@ extern u8 D_80149AF8[];
 extern s32 D_80149B30; // Number of mission commands?
 extern s32 D_80149B34;
 extern s32 D_80149B38;
-extern char D_801412B0_150260[];
-extern char D_801412DC_15028C[];
-extern char D_80141304_1502B4[];
-extern char D_80141330_1502E0[];
-extern char D_801413B8_150368[];
-extern char D_801413E0_150390[];
-extern char D_80141404_1503B4[];
-extern char D_80141408_1503B8[];
-extern char D_80141430_1503E0[];
-extern char D_80141458_150408[];
-extern char D_80141480_150430[];
-extern char D_801414A8_150458[];
-extern char D_801414D0_150480[];
-extern char D_801414F8_1504A8[];
-extern char D_80141520_1504D0[];
 extern f64 D_80142E70_151E20;
 extern f64 D_80142E78_151E28;
 extern f64 D_80142E80_151E30;
 extern f64 D_80142E88_151E38;
 extern f32 D_80142E90_151E40;
-extern char D_80141548_1504F8[];
-extern char D_80141570_150520[];
 extern char D_80141DCC_150D7C[];
 extern char D_80141DE0_150D90[];
 extern char D_80141DF8_150DA8[];
@@ -4041,8 +4013,6 @@ extern f32 D_801591F0;
 extern char D_80144E84_153E34[];
 extern char D_80144EAC_153E5C[];
 extern char D_C0067F0;
-extern char D_80141354_150304[];
-extern char D_80141384_150334[];
 extern s8 D_8004D342;
 extern MissionCondEntry *D_801497C0;
 extern s32 D_80149B2C;
