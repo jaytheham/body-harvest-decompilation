@@ -1176,13 +1176,14 @@ void func_800B316C_C211C(s8 arg0, s8 arg1, u16 arg2, u8 arg3) {
 }
 
 // https://decomp.me/scratch/oc09b
+// CURRENT(80)
 #ifdef NON_MATCHING
 void func_800B31FC_C21AC(s8 arg0, s8 arg1)
 {
   volatile u8 *v0;
   u8 temp;
-  u8 temp2;
   u16 temp3;
+
   v0 = (volatile u8 *) ((((u8 *) D_80052A94) + (arg1 * 512)) + (arg0 * 2));
   temp = *v0;
   temp |= 0x80;
