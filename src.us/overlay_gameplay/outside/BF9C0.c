@@ -664,7 +664,7 @@ void func_800B19F8_C09A8(void) {
 }
 
 // CURRENT(24448)
-#ifdef NON_MATCHINGMATCHING
+#ifdef NON_MATCHING
 void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3) {
 	u8 sp6E;
 	u8 sp6D;
@@ -1259,7 +1259,7 @@ void func_800B33BC_C236C(s32 arg0) {
 }
 
 // CURRENT(23916)
-#ifdef NON_MATCHINGMATCHING
+#ifdef NON_MATCHING
 void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	u32 baseXWord;
 	s32 row;
