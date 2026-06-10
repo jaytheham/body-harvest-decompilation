@@ -653,12 +653,6 @@ extern u8 D_800481D0[];
 extern s16 D_800481DD[];
 extern AlienWaveEntry D_8003BCC0[][12];
 extern u8 D_8003BCC6;
-extern char D_80142B50_151B00;
-extern char D_80142B6C_151B1C;
-extern char D_80142B7C_151B2C;
-extern char D_80142BA0_151B50;
-extern char D_80142C14_151BC4;
-extern char D_80142C28_151BD8;
 extern s32 D_8004D148; // is Snared cheat disabled
 extern s32 D_8004D150;
 extern s32 D_8004D154;
@@ -1571,7 +1565,6 @@ extern u8 D_80140DC0[];
 extern f32 D_801411A0;
 extern f32 D_801411A4;
 extern u32 jtbl_801411A8[];
-extern char D_80142C40_151BF0;
 extern char D_80142D94; /* osSyncPrintf format string - particle pool full warning */
 extern char D_80142EA0_151E50;
 extern char D_80142ECC_151E7C;
@@ -3290,21 +3283,8 @@ extern u8 D_80047608;
 
 extern u8 D_80048030;
 extern u8 D_80048038[];
-extern char D_80142BDC_151B8C;
 extern u8 D_8014CFF0[];
-extern char D_80142BEC_151B9C;
 extern u8 D_8014CFF1[];
-extern char D_80142BB8_151B68;
-extern char D_80142C00_151BB0;
-extern char D_80142AB0_151A60;
-extern char D_80142AD0_151A80;
-extern char D_80142AE0_151A90;
-
-extern char D_80142B00_151AB0;
-extern char D_80142B10_151AC0;
-extern char D_80142B28_151AD8;
-extern char D_80142B38_151AE8;
-extern s32 D_802DD170[];
 extern Gfx D_9052C10[];
 extern Gfx D_9052C70[];
 extern u8 D_9052A00[];

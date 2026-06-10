@@ -1,6 +1,76 @@
 #include <ultra64.h>
 #include "common.h"
 
+const char D_80142AB0_151A60[] = "nextTrigger < MAX_GAME_TRIGGERS";
+const char D_80142AD0_151A80[] = "src/trigger.c";
+const char D_80142AE0_151A90[] = "nextTrigger < MAX_GAME_TRIGGERS";
+const char D_80142B00_151AB0[] = "src/trigger.c";
+const char D_80142B10_151AC0[] = "*********************\n";
+const char D_80142B28_151AD8[] = "proc states:%d\n";
+const char D_80142B38_151AE8[] = "********************\n";
+const char D_80142B50_151B00[] = "trigger: entered building\n";
+const char D_80142B6C_151B1C[] = "Wave type %d\n";
+const char D_80142B7C_151B2C[] = "Create positional %d in %d seconds\n";
+const char D_80142BA0_151B50[] = "Do not regenerate %d\n";
+const char D_80142BB8_151B68[] = "Wave regenerated %d in %d seconds\n";
+const char D_80142BDC_151B8C[] = "Wave failed %d\n";
+const char D_80142BEC_151B9C[] = "Wave successful %d\n";
+const char D_80142C00_151BB0[] = "\n\nWAVE %d KILLED\n\n";
+const char D_80142C14_151BC4[] = "Add boss %d, %d\n";
+const char D_80142C28_151BD8[] = "Add boss component %d\n";
+const char D_80142C40_151BF0[] = "deleting wave %d\n";
+
+const u32 jtbl_80142C54_151C04[] = {
+	0x800AEA8C,
+	0x800AE760,
+	0x800AE83C,
+	0x800AE954,
+	0x800AE9D4,
+	0x800AE9B8,
+	0x800AEA08,
+	0x800AE988,
+	0x800AEA3C,
+	0x800AE8A0,
+	0x800AEA68,
+};
+
+const u32 jtbl_80142C80_151C30[] = {
+	0x800AED70,
+	0x800AED80,
+	0x800AED90,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEDA0,
+	0x800AEDB0,
+	0x800AEDC0,
+	0x800AEDD0,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEDE0,
+	0x800AEDF0,
+	0x800AEE00,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE4C,
+	0x800AEE10,
+	0x800AEE20,
+	0x800AEE30,
+	0x800AEE40,
+};
+
 void func_800AE2C0_BD270(void) {
 	u8 i;
 	for (i = 0; i < 0xD0; i++) {
