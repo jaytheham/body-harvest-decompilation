@@ -1,12 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-const char D_80142740_1516F0[] = "Found parent %d\n";
-const char D_80142754_151704[] = "making alien type %d:\n";
-const char D_8014276C_15171C[] = "made at %d\n";
-const f64 D_80142778_151728[1] = {600.0};
-const f64 D_80142780_151730[2] = {600.0, 0.0};
-
 u8 D_8013D778_14C730[0x8] = {
 	0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00,
@@ -64,13 +58,16 @@ u8 func_800A3DC8_B2D78(void) {
 		if (alien->specIndex == 0x19) {
 			if (alien->unk3C != 0) {
 				alien->unk3C = (s8) (alien->unk3C - 1);
-				osSyncPrintf(D_80142740_1516F0, temp_a2); // Found parent %d
+				osSyncPrintf("Found parent %d\n", temp_a2);
 				return temp_a2;
 			}
 		}
 	}
 	return 0xFF;
 }
+
+const char D_80142754_151704[] = "making alien type %d:\n";
+const char D_8014276C_15171C[] = "made at %d\n";
 
 // CURRENT (132)
 #ifdef NON_MATCHING
@@ -693,6 +690,9 @@ void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A5554_B4504.s")
 #endif
+
+const f64 D_80142778_151728[1] = {600.0};
+const f64 D_80142780_151730[2] = {600.0, 0.0};
 
 #ifdef NON_MATCHING
 void func_800A57E4_B4794(u8 arg0) {
