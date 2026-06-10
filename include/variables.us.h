@@ -1573,9 +1573,6 @@ extern u8 D_80140DC0[];
 extern f32 D_801411A0;
 extern f32 D_801411A4;
 extern u32 jtbl_801411A8[];
-extern u8 D_80142790_151740[]; // Activate Beacon %d
-extern u8 D_801427D8_151788[]; // teleport to:%d
-extern u8 D_80142820_1517D0[]; // Giving delayed powerup %d
 extern char D_80142C40_151BF0;
 extern char D_80142D94; /* osSyncPrintf format string - particle pool full warning */
 extern char D_80142EA0_151E50;
@@ -3252,7 +3249,6 @@ extern s32 D_80158E74;
 extern u8 D_80158E80[];
 extern s16 D_80158FD8;
 extern u8 D_80047F9B;
-extern char D_8014280C;
 extern u8 D_8003154C;
 extern u8 D_80031534[];
 extern u8 D_80031535[];
@@ -3267,12 +3263,6 @@ extern u8 D_8014F808;
 extern s16 D_8014F69C;
 extern s16 D_8014F69E;
 extern s16 D_8014F6A0;
-extern char D_801427A4;
-extern char D_801427B0;
-extern char D_801427C4;
-extern char D_801427E8;
-extern char D_801427F4;
-extern char D_80142800;
 extern char D_80142910_1518C0;
 extern f64 D_80142E18_151DC8;
 extern f32 D_80142E20_151DD0;
@@ -3303,7 +3293,6 @@ extern u8 D_80047608;
 
 extern u8 D_80048030;
 extern u8 D_80048038[];
-extern f32 D_80142888_151838;
 extern char D_80142BDC_151B8C;
 extern u8 D_8014CFF0[];
 extern char D_80142BEC_151B9C;

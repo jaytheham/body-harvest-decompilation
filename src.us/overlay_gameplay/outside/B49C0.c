@@ -1,6 +1,37 @@
 #include <ultra64.h>
 #include "common.h"
 
+// Rodata
+const char D_80142790_151740[] = "Activate beacon %d\n";
+const char D_801427A4_151754[] = "Beacons:";
+const char D_801427B0_151760[] = "BEACONS %d-On,\n ";
+const char D_801427C4_151774[] = "BEACONS %d-Off,\n ";
+const char D_801427D8_151788[] = "teleport to:%d\n";
+const char D_801427E8_151798[] = "beacon: %d\n";
+const char D_801427F4_1517A4[] = "state:%d\n";
+const char D_80142800_1517B0[] = "state+1:%d\n";
+const char D_8014280C_1517BC[] = "Launch beacon %d\n";
+const char D_80142820_1517D0[] = "Giving delayed powerup %d\n";
+const u32 jtbl_8014283C_1517EC[] = {
+	0x800A6934, 0x800A693C, 0x800A695C, 0x800A6A48,
+	0x800A6ED8, 0x800A6F60, 0x800A6FA0,
+};
+const f64 D_80142858_151808[] = {1.2};
+const u32 jtbl_80142860_151810[] = {
+	0x800A7D58, 0x800A7E7C, 0x800A7F74, 0x800A7FD4,
+	0x800A829C, 0x800A8344, 0x800A838C, 0x800A83AC,
+	0x800A83CC, 0x800A84D4,
+};
+const f32 D_80142888_151838[] = {0.3f};
+const u32 jtbl_8014288C_15183C[] = {
+	0x800A8E48, 0x800A8E5C, 0x800A8F7C, 0x800A8F90,
+	0x800A8FA4, 0x800A8FEC, 0x800A9000, 0x800A9014,
+	0x800A9028, 0x800A920C, 0x800A903C, 0x800A909C,
+	0x800A90B0, 0x800A90C4, 0x800A90D8, 0x800A90EC,
+	0x800A8E5C, 0x800A9100, 0x800A9114, 0x800A9128,
+	0x800A916C, 0x800A9184, 0x800A9198, 0x800A91AC,
+	0x800A91C0, 0x800A91D4, 0x800A91E8, 0x800A91FC,
+};
 s8 D_8013D890_14C840 = 0;
 u8 D_8013D894_14C844 = 0;
 u8 D_8013D898_14C848[0x18] = {
@@ -99,7 +130,7 @@ void func_800A5D3C_B4CEC(void) {
 
 	D_8014F7F0 = 0;
 	D_8014F7F4 = 0;
-	osSyncPrintf(&D_801427A4);
+	osSyncPrintf(D_801427A4_151754);
 
 	k = 0;
 	i = 0;
@@ -108,11 +139,11 @@ void func_800A5D3C_B4CEC(void) {
 			((u8 *)&D_8003154C + currentLevel * 0x18 + k * 4)[-0x15] = 0;
 			((u8 *)&D_8003154C + currentLevel * 0x18 + k * 4)[-0x16] = 8;
 			func_800A5BD0_B4B80(i);
-			osSyncPrintf(&D_801427B0, i);
+			osSyncPrintf(D_801427B0_151760, i);
 		} else {
 			((u8 *)&D_8003154C + currentLevel * 0x18 + k * 4)[-0x15] = 0;
 			((u8 *)&D_8003154C + currentLevel * 0x18 + k * 4)[-0x16] = 0;
-			osSyncPrintf(&D_801427C4, i);
+			osSyncPrintf(D_801427C4_151774, i);
 		}
 		i = (k + 1) & 0xFF;
 		k = i;
@@ -144,10 +175,10 @@ void func_800A5F24_B4ED4(s32 arg0) {
 	u8 sp27;
 
 	if (D_8013D890_14C840 == 0) {
-		osSyncPrintf(&D_801427E8, (s32)arg0);
+		osSyncPrintf(D_801427E8_151798, (s32)arg0);
 		sp27 = arg0 * 4;
-		osSyncPrintf(&D_801427F4, (u32)D_80031536[currentLevel * 0x18 + sp27]);
-		osSyncPrintf(&D_80142800, (u32)D_8003153A[currentLevel * 0x18 + sp27]);
+		osSyncPrintf(D_801427F4_1517A4, (u32)D_80031536[currentLevel * 0x18 + sp27]);
+		osSyncPrintf(D_80142800_1517B0, (u32)D_8003153A[currentLevel * 0x18 + sp27]);
 		if (D_8003153A[currentLevel * 0x18 + sp27] >= 4) {
 			func_800A5EA8_B4E58((u8)(arg0 + 2));
 		} else {
@@ -548,7 +579,7 @@ void func_800A6FD4_B5F84(void) {
 	u8 sp1F;
 
 	sp1F = D_80047F9B;
-	osSyncPrintf(&D_8014280C, (s32)sp1F);
+	osSyncPrintf(D_8014280C_1517BC, (s32)sp1F);
 	if (currentLevel != LEVEL_SIBERIA || sp1F != 3) {
 		func_80013314_13F14();
 		D_80052AE0 = gameplayMode;
