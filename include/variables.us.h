@@ -3714,17 +3714,6 @@ extern WeaponSpecEntry D_80140768_14F718[];
 extern u8 D_801470C0_156070[];
 extern Unk801601F0 D_801601F0[];
 extern s32 D_80034574[];
-extern u8 D_801421A0[];
-extern u8 D_801421A8[];
-extern u8 D_801421AC[];
-extern u8 D_801421B0[];
-extern u8 D_801421B4[];
-extern u8 D_801421B8[];
-extern f64 D_80142328;
-extern f64 D_80142350;
-extern f64 D_80142358;
-extern f64 D_80142380_151330;
-extern f64 D_801423A8_151358;
 extern Unk_8003CEC0 D_8003CEC0[5];
 extern Unk_8013D91C D_8013D91C[6];
 
