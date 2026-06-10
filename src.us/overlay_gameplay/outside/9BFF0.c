@@ -2,6 +2,20 @@
 #include "common.h"
 #include "884C0.h"
 
+const char D_80141E80_150E30[] = "%s says I'm busy\n";
+const char D_80141E94_150E44[] = "nearest human %d @ %d,%d\n";
+const char D_80141EB0_150E60[] = "Drone Hunter stops targeting building %d\n";
+const f64 D_80141EE0_150E90[] = {0.9};
+const f64 D_80141EE8_150E98[] = {0.9};
+const f64 D_80141EF0_150EA0[] = {0.9};
+const f64 D_80141EF8_150EA8[] = {65.0};
+const f64 D_80141F00_150EB0[] = {65.0};
+const f32 D_80141F08_150EB8[] = {12000.0f};
+const f64 D_80141F10_150EC0[] = {1000.0};
+const f64 D_80141F18_150EC8[] = {1500.0};
+const f64 D_80141F20_150ED0[] = {9.424777962};
+const f64 D_80141F28_150ED8[] = {0.0};
+
 Unk8014DD50 *D_8013C610_14B5C0[] = {(Unk8014DD50 *)0x8013C5E0, (Unk8014DD50 *)0x8013C5B0};
 
 u8 D_8013C618_14B5C8[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
