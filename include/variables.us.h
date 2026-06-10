@@ -295,37 +295,7 @@ extern u8 D_8013D3CB_14C37B[];
 extern u8 D_8013D3D7_14C387[];
 extern s16 D_8013D52E_14C4DE;
 
-extern u8 D_801423E4_151394[];
-extern u8 D_801423E8_151398[];
-extern u8 D_801423EC_15139C[];
-extern u8 D_801423F4_1513A4[];
-extern u8 D_801423FC_1513AC[];
-extern u8 D_8014240C_1513BC[];
-extern u8 D_80142414_1513C4[];
-extern u8 D_80142424_1513D4[];
-extern u8 D_8014242C_1513DC[];
-extern u8 D_80142434_1513E4[];
-extern u8 D_8014243C_1513EC[];
-extern u8 D_80142444_1513F4[];
-extern u8 D_80142448_1513F8[];
-extern u8 D_8014244C_1513FC[];
-extern u8 D_80142450_151400[];
-extern u8 D_80142454_151404[];
-extern u8 D_80142458_151408[];
-extern u8 D_80142460_151410[];
-extern u8 D_80142464_151414[];
-extern u8 D_80142468_151418[];
-extern u8 D_8014246C_15141C[];
-extern u8 D_80142470_151420[];
-extern u8 D_80142478_151428[];
-extern u8 D_80142488_151438[];
-extern u8 D_80142498_151448[];
-extern u8 D_801424A0_151450[];
-extern f64 D_801424E8_151498;
-extern f64 D_801424F0_1514A0;
-extern f64 D_801424F8_1514A8;
-extern f64 D_80142500_1514B0;
-extern f64 D_80142508_1514B8;
+
 extern u8 D_8015F9AC[];
 extern u8 D_801450FC_1540AC[];
 extern u8 D_80147098_156048[];
@@ -795,7 +765,7 @@ extern VehicleInstance* D_80052B34; // Ptr to active vehicle instance
 extern s16 D_80257A34[];
 extern s16 D_80257A36[];
 extern s16 D_80257A3C[];
-extern f32 D_801424E0_151490;
+
 extern Unk80052B40 D_80052B40;
 extern s16 D_80052B44;
 extern Unk80052B40 D_80052B48;
@@ -856,8 +826,7 @@ extern TileCoord D_801475F0[];
 extern s8 D_8014667F_15562F[];
 extern Unk80146688 D_80146688_155638[][0x20];
 extern f32 D_801424E0;
-extern f64 D_801424D0_151480;
-extern f64 D_801424D8_151488;
+
 extern s32 D_8014ECD8;
 extern f32 D_8014ED0C;
 extern f32 D_8014ED10;
