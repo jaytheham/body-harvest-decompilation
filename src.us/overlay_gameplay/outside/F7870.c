@@ -1,6 +1,15 @@
 #include <ultra64.h>
 #include "common.h"
 
+const char D_80144260_153210[] = "ERROR: StripModelToBones array overflow, size %d, max %d\n";
+const char D_8014429C_15324C[] = "Generating shadow for (%d), %s";
+const char D_801442BC_15326C[] = ".";
+const char D_801442C0_153270[] = ".";
+const char D_801442C4_153274[] = ".OK\n";
+
+const f32 D_801442CC_15327C[1] = {10000.0f};
+const f64 D_801442D0_153280[2] = {0.55, 0.0};
+
 // StripModelToBones
 #ifdef NON_MATCHING
 // regalloc: arg1/count in a3 instead of s0 (callee-saved), causing register shift throughout
@@ -50,7 +59,7 @@ Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1) {
 
 	if (arg1 >= 0x145) {
 		D_801575B0 = arg1;
-		osSyncPrintf(&D_80144260_153210, arg1, 0x145);
+		osSyncPrintf(D_80144260_153210, arg1, 0x145);
 	}
 
 	return result;
