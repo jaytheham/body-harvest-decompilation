@@ -1434,6 +1434,7 @@ void func_80015388_15F88(s16 arg0) {
 	func_80014A3C_1563C((s32)sp24, arg0, 0, 0, -1.0f);
 }
 
+// Play sound effect
 void func_800153D8_15FD8(s16 arg0)
 {
 	Unk8006AA80Node sp60;

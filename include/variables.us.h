@@ -7,12 +7,12 @@ typedef enum GameplayMode {
 	GAMEPLAY_MODE_LEVEL_MAP = 0, // Actually something else?
 	GAMEPLAY_MODE_UNK1 = 1, // Normal gameplay
 	GAMEPLAY_MODE_UNK2 = 2, // pause menu
-	GAMEPLAY_MODE_UNK3 = 3, // Cutscene mode?
+	GAMEPLAY_MODE_UNK3 = 3, // Cutscene mode? Or Map?
 	GAMEPLAY_MODE_UNK4 = 4, // Beacon UI
 	GAMEPLAY_MODE_UNK5 = 5,
 	GAMEPLAY_MODE_UNK6 = 6, // entering building?
 	GAMEPLAY_MODE_UNK7 = 7, // loading level?
-	GAMEPLAY_MODE_UNK8 = 8,
+	GAMEPLAY_MODE_UNK8 = 8, // Clue screen? Does nothing?
 	GAMEPLAY_MODE_UNK9 = 9, // Talking to NPC/Signpost/Daisy
 	GAMEPLAY_MODE_END_OF_LEVEL = 0xA, // Show score screens
 	GAMEPLAY_MODE_UNKB = 0xB, // Beacon launch cutscene/Shield gen destroyed cutscene
@@ -1573,10 +1573,6 @@ extern u8 D_80140DC0[];
 extern f32 D_801411A0;
 extern f32 D_801411A4;
 extern u32 jtbl_801411A8[];
-extern f64 D_801426C0;
-extern f64 D_801426C8;
-extern f64 D_801426C0_151670;
-extern f64 D_801426C8_151678;
 extern u8 D_80142740_1516F0[]; // Found parent %d
 extern u8 D_80142754_151704[];
 extern u8 D_8014276C_15171C[];
@@ -2094,14 +2090,6 @@ extern s32 D_8013D5E0_14C590;
 extern s32 D_8013D76C_14C71C;
 extern s32 D_8013D770_14C720;
 extern s32 D_8013D774_14C724;
-extern f64 D_801426D0_151680;
-extern f64 D_801426D8_151688;
-extern f64 D_801426E0_151690;
-extern f64 D_801426E8_151698;
-extern f64 D_801426F0_1516A0;
-extern f64 D_801426F8_1516A8;
-extern f64 D_80142700_1516B0;
-extern f64 D_80142708_1516B8;
 extern s8 D_8014F67E;
 extern BuildingInstance *D_80158FE8;
 extern u32 D_8014D1B8[];
@@ -2605,7 +2593,6 @@ extern s32 D_80258F90; // English sign string offsets (actually u16/s16?)
 extern u8 D_80258330; // signposts
 extern s16 D_80047710;
 extern s16 D_80047712;
-extern u8 D_80142510_1514C0;
 extern u8 *D_800944E8_64998[];
 extern u8 D_800933A0_63850[];
 extern u8 D_800938A0_63D50[];
@@ -3059,19 +3046,16 @@ extern u8 D_408A8F0[];
 extern u16 D_409E8F0[];
 extern u8 D_40A9440[];
 extern u16 D_40AAC40[];
-extern f64 D_80142728_1516D8;
-extern f64 D_80142730_1516E0;
 extern char D_801450EC_15409C[];
 extern f32 D_8013D668_14C618;
 extern u8 D_8013D66C_14C61C[];
-extern u32 D_8013D67C_14C62C;
-extern u32 D_8013D6B8_14C668;
-extern u32 D_8013D6F4_14C6A4;
+extern u32 D_8013D67C_14C62C[];
+extern u32 D_8013D6B8_14C668[];
+extern u32 D_8013D6F4_14C6A4[];
 extern u32 D_8013D730_14C6E0;
 extern s8 D_8013D733_14C6E3;
 extern s32 D_8013D734_14C6E4;
 extern s16 D_8013D738_14C6E8[];
-extern u8 D_801426B8_151668[];
 extern u16 D_8014EDDE;
 extern s16 D_8014F1E0;
 extern f32 D_8014F6A4;

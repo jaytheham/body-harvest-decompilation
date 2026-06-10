@@ -1,6 +1,75 @@
 #include <ultra64.h>
 #include "common.h"
 
+// Menu strings (English)
+const char D_80142510_1514C0[] = "%Y%a";
+const char D_80142518_1514C8[] = "Change Weapon";
+const char D_80142528_1514D8[] = "Use Fuel";
+const char D_80142534_1514E4[] = "Unhitch";
+const char D_8014253C_1514EC[] = "Map";
+const char D_80142540_1514F0[] = "Auto";
+const char D_80142548_1514F8[] = "Unload";
+const char D_80142550_151500[] = "Load";
+const char D_80142558_151508[] = "Exit";
+const char D_80142560_151510[] = "Play";
+const char D_80142568_151518[] = "Print";
+const char D_80142570_151520[] = "Save";
+const char D_80142578_151528[] = "Nowt 2";
+const char D_80142580_151530[] = "Clue Screen";
+const char D_8014258C_15153C[] = "Inventory";
+const char D_80142598_151548[] = "Quit";
+
+// Menu strings (French)
+const char D_801425A0_151550[] = "Change Weapon";
+const char D_801425B0_151560[] = "Carburant";
+const char D_801425BC_15156C[] = "Unhitch";
+const char D_801425C4_151574[] = "Carte";
+const char D_801425CC_15157C[] = "Auto";
+const char D_801425D4_151584[] = "Unload";
+const char D_801425DC_15158C[] = "Load";
+const char D_801425E4_151594[] = "Exit";
+const char D_801425EC_15159C[] = "Jouer";
+const char D_801425F4_1515A4[] = "Print";
+const char D_801425FC_1515AC[] = "Save";
+const char D_80142604_1515B4[] = "Nowt 2";
+const char D_8014260C_1515BC[] = "Clue Screen";
+const char D_80142618_1515C8[] = "Inventaire";
+const char D_80142624_1515D4[] = "Quitter";
+
+// Menu strings (German)
+const char D_8014262C_1515DC[] = "Change Weapon";
+const char D_8014263C_1515EC[] = "Tanken";
+const char D_80142644_1515F4[] = "Unhitch";
+const char D_8014264C_1515FC[] = "Karte";
+const char D_80142654_151604[] = "Auto";
+const char D_8014265C_15160C[] = "Unload";
+const char D_80142664_151614[] = "Load";
+const char D_8014266C_15161C[] = "Exit";
+const char D_80142674_151624[] = "Spielen";
+const char D_8014267C_15162C[] = "Print";
+const char D_80142684_151634[] = "Save";
+const char D_8014268C_15163C[] = "Nowt 2";
+const char D_80142694_151644[] = "Clue Screen";
+const char D_801426A0_151650[] = "Inventar";
+const char D_801426AC_15165C[] = "Verlassen";
+const char D_801426B8_151668[] = " ";
+
+const f64 D_801426C0_151670[1] = {150.0};
+const f64 D_801426C8_151678[1] = {150.0};
+const f64 D_801426D0_151680[1] = {255.0};
+const f64 D_801426D8_151688[1] = {255.0};
+const f64 D_801426E0_151690[1] = {255.0};
+const f64 D_801426E8_151698[1] = {255.0};
+const f64 D_801426F0_1516A0[1] = {255.0};
+const f64 D_801426F8_1516A8[1] = {255.0};
+const f64 D_80142700_1516B0[1] = {255.0};
+const f64 D_80142708_1516B8[1] = {255.0};
+const f64 D_80142710_1516C0[1] = {500.0};
+const f64 D_80142718_1516C8[1] = {1000.0};
+const f64 D_80142720_1516D0[1] = {20224.0};
+const f64 D_80142728_1516D8[1] = {0.2};
+const f64 D_80142730_1516E0[1] = {0.2};
+
 u32 D_8013D540_14C4F0[16] = {
 	0xFFFFFFFF, 0xFFFFFF00, 0xFFFFFFFF, 0xFFFFFF00,
 	0xFFFFFFFF, 0xFFFFFF00, 0xFFFFFFFF, 0xFFFFFF00,
