@@ -1,7 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-// Rodata
 const char D_80142790_151740[] = "Activate beacon %d\n";
 const char D_801427A4_151754[] = "Beacons:";
 const char D_801427B0_151760[] = "BEACONS %d-On,\n ";
