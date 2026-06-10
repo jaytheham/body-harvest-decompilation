@@ -300,7 +300,8 @@ segments:
       - [0x151740, .rodata, overlay_gameplay/outside/B49C0]
       - [0x1518B0, .rodata, overlay_gameplay/outside/B8290]
       - [0x151A60, .rodata, overlay_gameplay/outside/trigger]
-      - [0x151CC0, rodatabin]
+      - [0x151CC0, .rodata, overlay_gameplay/outside/BF9C0]
+      - [0x151E50, rodatabin]
 
   - name: overlay_gameplay_inside
     type: code

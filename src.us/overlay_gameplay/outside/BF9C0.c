@@ -1,6 +1,40 @@
 #include <ultra64.h>
 #include "common.h"
 
+const char D_80142D10_151CC0[] = "ERROR in ClipLineToShieldWalls\n";
+const char D_80142D30_151CE0[] = "Road entry overflow : Contact John W.\n";
+const char D_80142D58_151D08[] = "Road entry overflow : Contact John W.\n";
+const char D_80142D80_151D30[] = "Create crater %d\n";
+const char D_80142D94_151D44[] = "WARNING : Cannot create new land ring effect - out of storage space - blame it on Westy.\n";
+const char D_80142DF0_151DA0[] = "%d,%d : %d\n";
+const char D_80142DFC_151DAC[] = "try to open gate: %d\n";
+const f64 D_80142E18_151DC8[1] = {127.5};
+const f32 D_80142E20_151DD0[1] = {0.5759139060974121f};
+const f32 D_80142E24_151DD4[1] = {0.5759139060974121f};
+const u32 jtbl_80142E28_151DD8[] = {
+    0x800B58D4,
+    0x800B59C0,
+    0x800B5AC8,
+    0x800B5BB4,
+    0x800B5CA0,
+};
+const f64 D_80142E40_151DF0[1] = {1.022};
+const f32 D_80142E48_151DF8[1] = {0.699999988079071f};
+const f32 D_80142E4C_151DFC[1] = {3.200000047683716f};
+const u32 jtbl_80142E50_151E00[] = {
+    0x800B9784,
+    0x800B97D4,
+    0x800B981C,
+    0x800B9864,
+    0x800B98AC,
+};
+const f64 D_80142E68_151E18[1] = {0.4};
+const f64 D_80142E70_151E20[1] = {0.2};
+const f64 D_80142E78_151E28[1] = {0.1};
+const f64 D_80142E80_151E30[1] = {0.2};
+const f64 D_80142E88_151E38[1] = {0.1};
+const f32 D_80142E90_151E40[1] = {0.10000000149011612f};
+
 s32 D_8013D940_14C8F0 = 0;
 s32 D_8013D944_14C8F4 = 0;
 s32 D_8013D948_14C8F8 = 0;
@@ -1126,7 +1160,7 @@ void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
 
 	sp2C = (f32)((((u8 *)arg0)[3] - ((u8 *)arg0)[1]) << 5);
 	sp28 = (f32)((((u8 *)arg0)[4] - ((u8 *)arg0)[0]) << 5);
-	temp_f2 = (f32)(D_80142E18_151DC8 / (f64)sqrtf((sp2C * sp2C) + 262144.0f + (sp28 * sp28)));
+	temp_f2 = (f32)(D_80142E18_151DC8[0] / (f64)sqrtf((sp2C * sp2C) + 262144.0f + (sp28 * sp28)));
 	sp18 = (s8)(s32)(temp_f2 * sp2C);
 	sp19 = (s8)(s32)(temp_f2 * 512.0f);
 	sp1A = (s8)(s32)(temp_f2 * sp28);
@@ -1138,7 +1172,7 @@ void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
 		temp_v0 = 0x7F;
 	}
 
-	factor = (f32)((f64)temp_v0 / D_80142E18_151DC8);
+	factor = (f32)((f64)temp_v0 / D_80142E18_151DC8[0]);
 	if ((((u8 *)arg0)[2] << 5) < D_80222A70) {
 		levelOffset = currentLevel * 0xC;
 		delta = ((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-3] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3];
@@ -1250,7 +1284,7 @@ void func_800B33BC_C236C(s32 arg0) {
 	f32 sp20;
 	f32 sp1C;
 
-	sp1C = cosf(D_80142E20_151DD0); sp20 = sinf(D_80142E24_151DD4);
+	sp1C = cosf(D_80142E20_151DD0[0]); sp20 = sinf(D_80142E24_151DD4[0]);
 	coss_val = coss(arg0);
 	D_8014FD2A = func_80003740_4340((f32)((f64)(sp20 / sp1C) / ((f64)(f32)coss_val / 32768.0))) * 2;
 	if ((s16)arg0 >= 0x2E39) {
@@ -2941,8 +2975,6 @@ void func_800B879C_C774C(void) {
 	VehicleInstance* temp_v0;
 	f32 two;
 
-	extern f64 D_80142E40_151DF0;
-
 	if (gameplayMode != 2) {
 		if (D_8014F838 == 1) {
 			D_80222A70 -= D_80222A70 >> 2;
@@ -2998,7 +3030,7 @@ void func_800B879C_C774C(void) {
 		}
 
 		D_8014F84C += D_8014F850;
-		D_8014F850 = (f32)((f64)D_8014F850 * D_80142E40_151DF0);
+		D_8014F850 = (f32)((f64)D_8014F850 * D_80142E40_151DF0[0]);
 		D_8014F830 += 1;
 
 		func_800B4050_C3000(D_8014F89C, D_8014F89D, D_801FEA30, 0);
@@ -3024,7 +3056,7 @@ void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 	D_8014F832 = 0x76;
 	D_8014F84C = 0.0f;
 	arg0++;
-	D_8014F850 = D_80142E48_151DF8;
+	D_8014F850 = D_80142E48_151DF8[0];
 	D_8014F834 = arg2;
 	D_8014F83C = arg0 - 0x30;
 	arg1++;
@@ -3135,7 +3167,7 @@ void func_800B8F30_C7EE0(s16 arg0, s16 arg1, s32 arg2) {
 	if (mode == 0) {
 		func_800B8C2C_C7BDC(arg0, arg1, 0x1F);
 		D_8014F832 = 0x12;
-		D_8014F850 = D_80142E4C_151DFC;
+		D_8014F850 = D_80142E4C_151DFC[0];
 		D_8014F838 = 3;
 		return;
 	}
@@ -3387,7 +3419,7 @@ void func_800B99A8_C8958(Unk80152B80 *arg0, s16 arg1, s16 arg2, s32 arg3, u8 *ar
 	Unk80152B80 *entry;
 
 	if (D_8013DAE0_14CA90 == 0xF) {
-		osSyncPrintf(&D_80142D94); // WARNING : Cannot create new land ring effect - out of storage space - blame it on Westy
+		osSyncPrintf(&D_80142D94_151D44); // WARNING : Cannot create new land ring effect - out of storage space - blame it on Westy
 		return;
 	}
 	entry = &D_80152B80[D_8013DAE4_14CA94];
@@ -4229,7 +4261,7 @@ void func_800BB5E0_CA590(void) {
 
 		pointTable = (ShieldWallPoint *)(D_801475F0_1565A0 - 0xC0);
 		linkTable = (ShieldWallLink *)(D_801479B0_156960 - 0x80);
-		texScale = D_80142E68_151E18;
+		texScale = D_80142E68_151E18[0];
 
 		for (i = 0; i < linkCount; i++) {
 			ShieldWallLink *link;
@@ -5591,13 +5623,13 @@ void func_800C0678_CF628(void) {
 		if (D_80047F94 == 3) {
 			if (D_8013D9CC_14C97C != 0) {
 				func_80014A3C_1563C(0, 0xE8, 0.0f, temp_t2,
-					(f32)((D_80142E70_151E20 - ((f64)var_f2 * D_80142E70_151E20)) + D_80142E78_151E28));
+					(f32)((D_80142E70_151E20[0] - ((f64)var_f2 * D_80142E70_151E20[0])) + D_80142E78_151E28[0]));
 			} else {
 				func_80014A3C_1563C(0, 0xE8, (f32)(D_8013D9C4_14C974[0] * 5), temp_t2,
-					(f32)((D_80142E80_151E30 - ((f64)var_f2 * D_80142E80_151E30)) + D_80142E88_151E38));
+					(f32)((D_80142E80_151E30[0] - ((f64)var_f2 * D_80142E80_151E30[0])) + D_80142E88_151E38[0]));
 			}
 		} else {
-			func_80014A3C_1563C(0, 0xE8, (f32)(D_8013D9C4_14C974[0] * 5), temp_t2, D_80142E90_151E40);
+			func_80014A3C_1563C(0, 0xE8, (f32)(D_8013D9C4_14C974[0] * 5), temp_t2, D_80142E90_151E40[0]);
 		}
 		var_t1 = D_8013D9C0_14C970;
 	}

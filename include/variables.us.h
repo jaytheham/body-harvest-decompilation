@@ -181,14 +181,12 @@ extern u8 D_50317A0[];
 extern u8 D_50318A0[];
 extern u8 D_5031990[];
 extern u8 D_5032130[];
-extern char D_80142D80_151D30;
 extern f64 D_801442D0_153280;
 extern char D_801453C0_154370;
 extern s32 D_8015FF88;
 extern s32 D_8015FF90[];
 extern u8 D_8025CC20[];
 extern u8 D_802C4080[];
-extern f32 D_80142E4C_151DFC;
 extern f32 D_80144000_152FB0;
 extern f32 D_80144004_152FB4;
 extern f32 D_80144010_152FC0;
@@ -859,9 +857,7 @@ extern u8 D_1009C70[];
 extern u8 D_1001B50[];
 extern u8 D_10031E0[];
 extern Gfx D_504B640[];
-extern char D_80142DF0_151DA0; /* osSyncPrintf format string */
-extern char D_80142DFC_151DAC; /* osSyncPrintf format string */
-extern char D_80142D10_151CC0; /* osSyncPrintf format string */
+
 extern u8* D_8005BB20;
 extern s32 D_8005BB24;
 extern s32 D_8005BB28;
@@ -1565,7 +1561,6 @@ extern u8 D_80140DC0[];
 extern f32 D_801411A0;
 extern f32 D_801411A4;
 extern u32 jtbl_801411A8[];
-extern char D_80142D94; /* osSyncPrintf format string - particle pool full warning */
 extern char D_80142EA0_151E50;
 extern char D_80142ECC_151E7C;
 extern char D_80142F10_151EC0;
@@ -1730,11 +1725,6 @@ extern u8 D_80149AF8[];
 extern s32 D_80149B30; // Number of mission commands?
 extern s32 D_80149B34;
 extern s32 D_80149B38;
-extern f64 D_80142E70_151E20;
-extern f64 D_80142E78_151E28;
-extern f64 D_80142E80_151E30;
-extern f64 D_80142E88_151E38;
-extern f32 D_80142E90_151E40;
 extern s32 D_80149B40; // numberOfCommandObjects
 extern s32 D_80149B44; // numberOfCharacters
 extern s16 D_80149B4A;
@@ -3254,10 +3244,6 @@ extern u8 D_8014F808;
 extern s16 D_8014F69C;
 extern s16 D_8014F69E;
 extern s16 D_8014F6A0;
-extern f64 D_80142E18_151DC8;
-extern f32 D_80142E20_151DD0;
-extern f32 D_80142E24_151DD4;
-extern f32 D_80142E48_151DF8;
 extern s32 D_8014F854;
 extern u8 D_8014F857;
 extern u16 D_8014FD2A;
@@ -3971,7 +3957,6 @@ extern u16 D_1013E80[];
 extern char D_80143F14_152EC4[];
 extern u8 D_801475F0_1565A0[];
 extern u8 D_801479B0_156960[];
-extern f64 D_80142E68_151E18;
 extern s32 D_80157FA8;
 extern f32 D_80144658_153608;
 extern s16 D_80157FD2;
