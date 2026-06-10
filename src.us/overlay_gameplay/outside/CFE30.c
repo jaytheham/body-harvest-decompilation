@@ -1,6 +1,226 @@
 #include <ultra64.h>
 #include "common.h"
 
+// CFE30 rodata
+// ROM 0x151E50-0x1531A0, VRAM 0x80142EA0-0x801441F0
+
+const char D_80142EA0_151E50[] = "ERROR: tried to create a new effect at %d\n";
+const char D_80142ECC_151E7C[] = "EFFECTS WARNING : Call to free up an effect which does not exist\n";
+const char D_80142F10_151EC0[] = "ERROR : freeing all effect units for unused effect\n";
+const char D_80142F44_151EF4[] = "Do not allocate because in pause\n";
+const char D_80142F68_151F18[] = "ERROR: tried to allocate a permanent effect\n";
+const char D_80142F98_151F48[] = "WARNING : Out of space to create a new dynamic effect of type %d.\n";
+const char D_80142FDC_151F8C[] = "ERROR: tried to create a unit at %d (firstEmpty = %d, used=%d)\n";
+const char D_8014301C_151FCC[] = "Do not allocate because in pause\n";
+const char D_80143040_151FF0[] = "WARNING - New permanent effect unit (type %d) cannot be allocated - out of space.\n";
+const char D_80143094_152044[] = "WARNING - New dynamic effect unit (type %d) cannot be allocated - out of space.\n";
+const char D_801430E8_152098[] = "*** Tried to allocate a unit that is already being used!! ***\n";
+const char D_80143128_1520D8[] = "ERROR - call to free invalid unit: index %d from permanent effect %d\n";
+const char D_80143170_152120[] = "ERROR - call to free invalid unit: index %d from effect %d\n";
+const char D_801431AC_15215C[] = "UNIT POOL CRITICAL ERROR - Call to free unused unit %d from permanent effect %d\n";
+const char D_80143200_1521B0[] = "UNIT POOL CRITICAL ERROR - Call to free unused unit %d from effect %d\n";
+const char D_80143248_1521F8[] = "ERROR : Tried to kill unit from effect which has no units.\n";
+const char D_80143284_152234[] = "ERROR : Unit list inconsistency occurred with 2 units left.\n";
+const char D_801432C4_152274[] = "EFFECTS WARNING : Call to free up invalid triple effect unit.\n";
+const char D_80143304_1522B4[] = "EFFECTS WARNING : Call to free up invalid double effect unit.\n";
+const char D_80143344_1522F4[] = "** WARNING: tried to update a smoke trail effect that doesn't exist! **\n";
+const char D_80143390_152340[] = "DYNAMIC EFFECTS : Tried to kill smoke puff unit which does not exist!\n";
+const char D_801433D8_152388[] = "DYNAMIC EFFECTS : Cancelled new photon effect - couldn't allocated any effect units\n";
+const char D_80143430_1523E0[] = "DYNAMIC EFFECTS : Tried to update photon effect which does not exist!\n";
+const char D_80143478_152428[] = "DYNAMIC EFFECTS : Tried to kill photon effect which does not exist!\n";
+const char D_801434C0_152470[] = "EFFECTS WARNING : Call to move a fire effect which doesn't exist\n";
+const char D_80143504_1524B4[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n";
+const char D_80143554_152504[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n";
+const char D_801435A4_152554[] = "EFFECTS WARNING : Trapped call to create chunk for explosion which does not exist.\n";
+const char D_801435F8_1525A8[] = "EFFECTS WARNING : Spurt effect not created - could not allocated any units\n";
+const char D_80143644_1525F4[] = "** WARNING: tried to update a bubble effect that doesn't exist! **\n";
+const char D_80143688_152638[] = "EFFECTS WARNING: Failed to create a jet stream - could not allocate any units\n";
+const char D_801436D8_152688[] = "** WARNING: tried to update a jet stream effect that doesn't exist! **\n";
+const char D_80143720_1526D0[] = "EFFECTS WARNING: Failed to create a water jet - could not allocate any units\n";
+const char D_80143770_152720[] = "EFFECTS WARNING: Failed to create lightning - could not allocate enough units\n";
+const char D_801437C0_152770[] = "EFFECTS WARNING : You have tried to kill a lightning effect which doesn't exist.\n";
+const char D_80143814_1527C4[] = "** WARNING: tried to update a ring weapon bullet that doesn't exist! **\n";
+const char D_80143860_152810[] = "** WARNING: tried to update a triple spinner that doesn't exist! **\n";
+const char D_801438A8_152858[] = "TRIPLESPINNER draw warning : trajection is zero.\n";
+const char D_801438DC_15288C[] = "Can't create a nuke - one already in progress\n";
+const char D_8014390C_1528BC[] = "DYNAMIC EFFECTS : Tried to kill minin photon effect which does not exist!\n";
+const char D_80143958_152908[] = "DYNAMIC EFFECTS : Tried to update mini photon effect which does not exist!\n";
+const char D_801439A4_152954[] = "DYNAMIC EFFECTS : Tried to kill fire ball effect which does not exist!\n";
+const char D_801439EC_15299C[] = "DYNAMIC EFFECTS : Tried to update fire ball effect which does not exist!\n";
+const char D_80143A38_1529E8[] = "Create group effect\n";
+const char D_80143A50_152A00[] = "ERROR : Tried to update a dynamic effect with permanent type %d!\n";
+const char D_80143A94_152A44[] = "ERROR : Tried to update a dynamic effect with invalid type!\n";
+const char D_80143AD4_152A84[] = "ERROR : Tried to update a permanent effect with a normal type %d!\n";
+const char D_80143B18_152AC8[] = "ERROR : Tried to update a permanent effect with invalid type!\n";
+const char D_80143B58_152B08[] = "EFFECTS WARNING : Trying to sort unsortable effect\n";
+const char D_80143B8C_152B3C[] = "AAARRRGH! EFFECTS HAVE REACHED MAX VERTICES - ABORT DRAWING THIS FRAME\n";
+const char D_80143BD4_152B84[] = "AAARRRGH! CAN'T DRAW EFFECTS - ABOUT TO OVERFLOW\n";
+const char D_80143C08_152BB8[] = "ERROR : Call to draw an effect of permanent type %d.\n";
+const char D_80143C40_152BF0[] = "ERROR : Call to draw an effect of unknown type %d.\n";
+const char D_80143C74_152C24[] = "AAARRRGH! EFFECTS HAVE REACHED MAX VERTICES - ABORT DRAWING THIS FRAME\n";
+const char D_80143CBC_152C6C[] = "AAARRRGH! CAN'T DRAW EFFECTS - ABOUT TO OVERFLOW\n";
+const char D_80143CF0_152CA0[] = "ERROR : Call to draw a permanent effect of normal type %d.\n";
+const char D_80143D2C_152CDC[] = "ERROR : Call to draw a permanent effect of unknown type %d.\n";
+const char D_80143D6C_152D1C[] = "CheckNum: %d\n";
+const char D_80143D7C_152D2C[] = "further info: %d,%d,%d,%d,%d,%d,%d,%d\n";
+const char D_80143DA4_152D54[] = "further info: %d,%d,%d,%d,%d,%d,%d,%d\n";
+const char D_80143DCC_152D7C[] = "further info: %d,%d,%d,%d,%d,%d,%d,%d\n";
+const char D_80143DF4_152DA4[] = "trans[X] = %d,%d,%d,%d : %f\n";
+const char D_80143E14_152DC4[] = "trans[Y] = %d,%d,%d,%d : %f\n";
+const char D_80143E34_152DE4[] = "trans[Z] = %d,%d,%d,%d : ";
+const char D_80143E50_152E00[] = " %f\n";
+const char D_80143E58_152E08[] = "---------------------------\n";
+const char D_80143E78_152E28[] = "Call to draw generic flat effect with unknown render type.\n";
+const char D_80143EB4_152E64[] = "Initialise special effects\n";
+const char D_80143ED0_152E80[] = "\n\nDUMP SPECIAL EFFECTS INFO\n\n";
+const char D_80143EF0_152EA0[] = "Effect %d :  Type %d  numUints %d\n";
+const char D_80143F14_152EC4[] = "EFFECTS WARNING : Call to CreateExplosion with an unknown type %d.\n";
+const char D_80143F58_152F08[] = "Error: too many shields allocated\n";
+const char D_80143F7C_152F2C[] = "removing shield : %d\n";
+const char D_80143F94_152F44[] = "shield remove\n";
+const char D_80143FA4_152F54[] = "removing shield : %d\n";
+
+const f64 D_80143FC0_152F70[1] = {255.0};
+const f64 D_80143FC8_152F78[1] = {255.0};
+const f64 D_80143FD0_152F80[1] = {255.0};
+const f64 D_80143FD8_152F88[1] = {255.0};
+const f64 D_80143FE0_152F90[1] = {255.0};
+const f64 D_80143FE8_152F98[1] = {255.0};
+const f64 D_80143FF0_152FA0[1] = {255.0};
+const f64 D_80143FF8_152FA8[1] = {0.6};
+const f32 D_80144000_152FB0[1] = {1.6666666f};
+const f32 D_80144004_152FB4[1] = {10000.0f};
+const f64 D_80144008_152FB8[1] = {0.33333};
+const f32 D_80144010_152FC0[1] = {20.833334f};
+const f32 D_80144014_152FC4[1] = {1.6666666f};
+const f32 D_80144018_152FC8[1] = {0.8f};
+const f32 D_8014401C_152FCC[1] = {0.4f};
+const f32 D_80144020_152FD0[1] = {0.4f};
+const f32 D_80144024_152FD4[1] = {0.8f};
+const f64 D_80144028_152FD8[1] = {300.0};
+const u32 jtbl_80144030_152FE0[] = {
+	0x800DAC34,
+	0x800DAC44,
+	0x800DAC24,
+	0x800DAC54,
+	0x800DAC64,
+	0x800DAC74,
+	0x800DACA4,
+	0x800DACB4,
+	0x800DAC94,
+	0x800DAC84,
+};
+const u32 jtbl_80144058_153008[] = {
+	0x800DAD7C,
+	0x800DAD8C,
+	0x800DAD9C,
+	0x800DADAC,
+	0x800DADBC,
+	0x800DADCC,
+	0x800DADDC,
+	0x800DAE1C,
+	0x800DADFC,
+	0x800DADEC,
+	0x800DAE0C,
+	0x800DAE2C,
+	0x800DAD6C,
+	0x800DAE3C,
+	0x800DAE4C,
+	0x800DAE5C,
+	0x800DAE6C,
+	0x800DAE7C,
+	0x800DAE8C,
+	0x800DAE9C,
+	0x800DAEAC,
+	0x800DAEBC,
+};
+const f64 D_801440B0_153060[1] = {180.0};
+const f64 D_801440B8_153068[1] = {180.0};
+const f64 D_801440C0_153070[1] = {180.0};
+const f64 D_801440C8_153078[1] = {180.0};
+const f64 D_801440D0_153080[1] = {102.0};
+const f32 D_801440D8_153088[1] = {3000.0f};
+const f64 D_801440E0_153090[1] = {
+	0.00035714285714285714,
+};
+const f32 D_801440E8_153098[1] = {3001.0f};
+const f32 D_801440EC_15309C[1] = {3000.0f};
+const f64 D_801440F0_1530A0[1] = {
+	3001.0,
+};
+const f32 D_801440F8_1530A8[1] = {0.003921569f};
+const f64 D_80144100_1530B0[1] = {
+	3001.0,
+};
+const f64 D_80144108_1530B8[1] = {
+	0.8,
+};
+const u32 jtbl_80144110_1530C0[] = {
+	0x800DD7C0,
+	0x800DD7B0,
+	0x800DD7D0,
+	0x800DD7E0,
+	0x800DD7F0,
+	0x800DD800,
+	0x800DD830,
+	0x800DD840,
+	0x800DD820,
+	0x800DD810,
+};
+const u32 jtbl_80144138_1530E8[] = {
+	0x800DD934,
+	0x800DDA20,
+	0x800DDA20,
+	0x800DDA20,
+	0x800DDA20,
+	0x800DD944,
+	0x800DD954,
+	0x800DDA20,
+	0x800DD964,
+	0x800DDA20,
+	0x800DDA20,
+	0x800DD974,
+	0x800DD924,
+	0x800DDA20,
+	0x800DD984,
+	0x800DD994,
+	0x800DD9A4,
+	0x800DD9B4,
+	0x800DD9C4,
+	0x800DD9D4,
+	0x800DD9E4,
+	0x800DDA20,
+};
+const f32 D_80144190_153140[1] = {0.6f};
+const u32 jtbl_80144194_153144[] = {
+	0x800E1F60,
+	0x800E1EA8,
+	0x800E1E40,
+	0x800E1E40,
+	0x800E1EA8,
+	0x800E1EA8,
+	0x800E1EA8,
+	0x800E1EA8,
+	0x800E1EA8,
+	0x800E1E40,
+	0x800E1EA8,
+	0x800E1E40,
+};
+const u32 jtbl_801441C4_153174[] = {
+	0x800E39F4,
+	0x800E3B00,
+	0x800E3C10,
+	0x800E3D70,
+	0x800E4488,
+	0x800E3DBC,
+	0x800E3F7C,
+};
+const f64 D_801441E0_153190[1] = {
+	1.7
+};
+const f64 D_801441E8_153198[1] = {
+	6000.0,
+};
 u8 D_8013DB10_14CAC0[0x170] = {
 	0x00, 0x00, 0x00, 0x00, 0x03, 0x0A, 0x00, 0x19, 0x18, 0x11, 0x00, 0x19, 0x18, 0x11, 0x00, 0x19,
 	0x13, 0x2B, 0x00, 0x19, 0x22, 0x1C, 0x00, 0x19, 0x23, 0x20, 0x00, 0x19, 0xDF, 0x1E, 0x00, 0x19,
@@ -1366,8 +1586,6 @@ s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 
 void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	Unk80154318Entry *entry;
-	extern char D_801434C0_152470;
-
 	if (arg3 != -3) {
 		entry = &D_80154318[arg3];
 		if ((entry->unk0 & 1) && (entry->unk1 == 0xC)) {
@@ -1820,8 +2038,6 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 	Vec3f *vec;
 	Unk801541F8Entry *sfx;
 	Unk80154318Entry *entry;
-	extern char D_80143504_1524B4;
-
 	spawnCount = arg8;
 	if (spawnCount >= 0x29) {
 		spawnCount = 0x28;
@@ -4705,7 +4921,7 @@ u8 func_800CE040_DCFF0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 	if (sp1F != 0xFB) {
 		temp_v0 = func_800C18D0_D0880(sp1F);
 		if (temp_v0 == -3) {
-			osSyncPrintf(&D_80143720, sp1F); // EFFECTS WARNING: Failed to create a water jet - could not allocate any units
+			osSyncPrintf(&D_80143720_1526D0, sp1F); // EFFECTS WARNING: Failed to create a water jet - could not allocate any units
 			func_800C1384_D0334(sp1F);
 			return 0xFBU;
 		}
@@ -7609,7 +7825,7 @@ void func_800D6ADC_E5A8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	func_800D6A84_E5A34(2);
 	func_800D6A84_E5A34(3);
 	func_800D6A84_E5A34(4);
-	func_80014A3C_1563C(0, 0xE8, 0.0f, 0, D_80144020_152FD0);
+	func_80014A3C_1563C(0, 0xE8, 0.0f, 0, D_80144020_152FD0[0]);
 	func_80135D08_144CB8(3.0f, 1, 0x3C, 1);
 }
 
@@ -7693,7 +7909,7 @@ void func_800D6EAC_E5E5C(u8 arg0) {
 	func_800D6C18_E5BC8(next, 4);
 	if (!(D_80052A8C & 1)) {
 		func_80135D08_144CB8(10.0f, 1, 1, 1);
-		func_80014A3C_1563C(0, 0xEB, 0.0f, 0, D_80144024_152FD4);
+		func_80014A3C_1563C(0, 0xEB, 0.0f, 0, D_80144024_152FD4[0]);
 	}
 }
 
@@ -8089,7 +8305,7 @@ void func_800D8000_E6FB0(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 *temp_v1;
 
 	if ((arg3 == -3) || (temp_a0 = (u8 *)&D_80154318[arg3], temp_v0 = (s16 *)(temp_a0 + 8), ((*temp_a0 & 1) == 0))) {
-		osSyncPrintf(&D_801439EC); // DYNAMIC EFFECTS : Tried to update fire ball effect which does not exist!
+		osSyncPrintf(&D_801439EC_15299C); // DYNAMIC EFFECTS : Tried to update fire ball effect which does not exist!
 		return;
 	}
 
@@ -8695,18 +8911,22 @@ void func_800D9C60_E8C10(s16 arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
 void func_800D9C98_E8C48(s16 arg0, s16 arg1) {
 	s32 sp2C;
 	s16 *entryData = (s16 *)&D_80154318[arg0].unk8;
 	if (entryData[2] & 1) {
 		s32 rnd;
-		sp2C = func_800DEE5C_EDE0C(entryData[3], (s16)(s32)(entryData[4] + ((f64)(f32)sins(0x4000 - (entryData[2] << 10)) / 32768.0) * D_80144028_152FD8), entryData[5], 0x46, 0x18 - entryData[2]);
+		sp2C = func_800DEE5C_EDE0C(entryData[3], (s16)(s32)(entryData[4] + ((f64)(f32)sins(0x4000 - (entryData[2] << 10)) / 32768.0) * D_80144028_152FD8[0]), entryData[5], 0x46, 0x18 - entryData[2]);
 		rnd = func_800038E0_44E0() % 128;
 		rnd += 0x40;
 		func_800DDD90_ECD40((u8)sp2C, 0xFF, rnd, 0);
 		func_80135D44_144CF4(entryData[3], entryData[4], entryData[5], (f32)(entryData[2] >> 1));
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9C98_E8C48.s")
+#endif
 
 void func_800D9DD8_E8D88(s16 arg0, s16 arg1, s16 arg2) {
 	if (func_800D99F4_E89A4(&func_800D9C98_E8C48, 0x10, arg0, arg1, (s32) arg2) != -3) {
@@ -13301,11 +13521,3 @@ void func_800E7894_F6844(s16 arg0, s16 arg1, s16 arg2) {
 	func_800DB350_EA300();
 	func_800E77B4_F6764();
 }
-
-
-
-
-
-
-
-
