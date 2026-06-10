@@ -1,6 +1,12 @@
 #include <ultra64.h>
 #include "common.h"
 
+const char D_80142740_1516F0[] = "Found parent %d\n";
+const char D_80142754_151704[] = "making alien type %d:\n";
+const char D_8014276C_15171C[] = "made at %d\n";
+const f64 D_80142778_151728[1] = {600.0};
+const f64 D_80142780_151730[2] = {600.0, 0.0};
+
 u8 D_8013D778_14C730[0x8] = {
 	0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00,
@@ -704,8 +710,8 @@ void func_800A57E4_B4794(u8 arg0) {
 			entry->unk20 = (s32)(entry->unk20 & 0xF7FF7FFF);
 			sp20 = (s16)(angle_diff > 0 ? D_80052B34->unk6 + 0x6000 : D_80052B34->unk6 - 0x6000) & 0xFFFF;
 			sp2E = angle_diff;
-			entry->unk14 = (s16)(s32)(((f64)(f32)coss(sp20) / 32768.0) * D_80142778 + (f64)D_80052B34->unk0);
-			entry->unk18 = (s16)(s32)(((f64)(f32)sins(sp20) / 32768.0) * D_80142780 + (f64)D_80052B34->unk4);
+			entry->unk14 = (s16)(s32)(((f64)(f32)coss(sp20) / 32768.0) * D_80142778_151728 + (f64)D_80052B34->unk0);
+			entry->unk18 = (s16)(s32)(((f64)(f32)sins(sp20) / 32768.0) * D_80142780_151730 + (f64)D_80052B34->unk4);
 			entry->unk16 = D_80052B34->unk2;
 		}
 	}

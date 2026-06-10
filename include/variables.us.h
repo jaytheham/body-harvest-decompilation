@@ -1573,11 +1573,6 @@ extern u8 D_80140DC0[];
 extern f32 D_801411A0;
 extern f32 D_801411A4;
 extern u32 jtbl_801411A8[];
-extern u8 D_80142740_1516F0[]; // Found parent %d
-extern u8 D_80142754_151704[];
-extern u8 D_8014276C_15171C[];
-extern f64 D_80142778;
-extern f64 D_80142780;
 extern u8 D_80142790_151740[]; // Activate Beacon %d
 extern u8 D_801427D8_151788[]; // teleport to:%d
 extern u8 D_80142820_1517D0[]; // Giving delayed powerup %d
