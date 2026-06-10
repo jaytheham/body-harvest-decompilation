@@ -432,6 +432,7 @@ extern Addr overlay_gameplay_outside_F6A50_c;
 extern Addr overlay_gameplay_outside_F7870_c;
 extern Addr overlay_gameplay_outside_F7870_empty_c;
 extern Addr overlay_gameplay_outside_F9230_c;
+extern Addr overlay_gameplay_outside_FEC70_c;
 extern Addr overlay_gameplay_outside_buildings_c;
 extern Addr overlay_gameplay_outside_cheats_c;
 extern Addr overlay_gameplay_outside_missions_c;
