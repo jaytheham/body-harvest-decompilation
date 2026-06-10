@@ -424,6 +424,7 @@ extern Addr overlay_gameplay_outside_A40B0_c;
 extern Addr overlay_gameplay_outside_A49A0_c;
 extern Addr overlay_gameplay_outside_AAA70_c;
 extern Addr overlay_gameplay_outside_B2CB0_c;
+extern Addr overlay_gameplay_outside_B49C0_c;
 extern Addr overlay_gameplay_outside_B8290_c;
 extern Addr overlay_gameplay_outside_BF9C0_c;
 extern Addr overlay_gameplay_outside_CFE30_c;
