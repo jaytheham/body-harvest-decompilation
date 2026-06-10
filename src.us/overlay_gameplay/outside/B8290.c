@@ -5,6 +5,8 @@ const f64 D_80142900_1518B0[1] = {0.9};
 
 const f32 D_80142908_1518B8[2] = {1.2f, 0.0f};
 
+// todo file split here
+
 const char D_80142910_1518C0[] = "Stop running to target\n";
 
 const u32 jtbl_80142928_1518D8[] = {

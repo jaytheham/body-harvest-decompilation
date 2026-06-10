@@ -1,9 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-// CFE30 rodata
-// ROM 0x151E50-0x1531A0, VRAM 0x80142EA0-0x801441F0
-
 const char D_80142EA0_151E50[] = "ERROR: tried to create a new effect at %d\n";
 const char D_80142ECC_151E7C[] = "EFFECTS WARNING : Call to free up an effect which does not exist\n";
 const char D_80142F10_151EC0[] = "ERROR : freeing all effect units for unused effect\n";
