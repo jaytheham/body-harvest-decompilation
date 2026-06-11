@@ -1,6 +1,49 @@
 #include <ultra64.h>
 #include "common.h"
 
+const char D_801442E0_153290[16] = "NO ANIM STORED";
+const char D_801442F0_1532A0[24] = "Player start swimming\n";
+const char D_80144308_1532B8[24] = "Player stops swimming\n";
+const char D_80144320_1532D0[16] = "START ANIM %d\n";
+const char D_80144330_1532E0[36] = "attempt to exit to point %d,%d,%d\n";
+const char D_80144354_153304[28] = "UNKNOWN DOOR YAW! = %3.2f\n";
+const char D_80144370_153320[32] = "Animate player stop swimming\n";
+const char D_80144390_153340[20] = "PLAYER IS DYING\n";
+const char D_801443A4_153354[24] = "Selecting weapon:%d\n";
+const char D_801443BC_15336C[20] = "play shot anim\n";
+const f64 D_801443D0_153380[1] = {180.0};
+const f64 D_801443D8_153388[1] = {180.0};
+const f64 D_801443E0_153390[1] = {180.0};
+const f64 D_801443E8_153398[1] = {3.141592654};
+const f64 D_801443F0_1533A0[1] = {3.141592654};
+const f64 D_801443F8_1533A8[1] = {3.141592654};
+const f64 D_80144400_1533B0[1] = {3.141592654};
+const f64 D_80144408_1533B8[1] = {180.0};
+const f32 D_80144410_1533C0[1] = {0.9f};
+const f32 D_80144414_1533C4[1] = {0.8f};
+const f32 D_80144418_1533C8[1] = {0.7f};
+const f32 D_8014441C_1533CC[1] = {0.6f};
+const u32 jtbl_80144420_1533D0[] = {
+	0x800EB5F0, 0x800EB5F0, 0x800EB624, 0x800EB624, 0x800EB5F8, 0x800EB600, 0x800EB608, 0x800EB610, 0x800EB618, 0x800EB620, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB5F0,
+};
+const f64 D_80144468_153418[1] = {3.141592654};
+const f64 D_80144470_153420[1] = {180.0};
+const f64 D_80144478_153428[1] = {70.0};
+const f64 D_80144480_153430[1] = {180.0};
+const f64 D_80144488_153438[1] = {180.0};
+const f64 D_80144490_153440[1] = {70.0};
+const f64 D_80144498_153448[1] = {0.8};
+const u32 jtbl_801444A0_153450[] = {
+	0x800EDB50, 0x800EDF40, 0x800ED938, 0x800ED908, 0x800ED850, 0x800ED834,
+};
+const f32 D_801444B8_153468[1] = {0.03f};
+const f64 D_801444C0_153470[1] = {70.0};
+const f64 D_801444C8_153478[1] = {0.1};
+const f64 D_801444D0_153480[1] = {0.01};
+const f64 D_801444D8_153488[1] = {0.1};
+const f32 D_801444E0_153490[1] = {0.01f};
+const f64 D_801444E8_153498[1] = {0.1};
+
 u8 D_8013E450_14D400[0x0C] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
 };
@@ -301,9 +344,6 @@ f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1) {
 	s32 yPart;
 	s32 zPart;
 	s32 angle;
-
-	extern f64 D_801443D0_153380;
-	extern f64 D_801443D8_153388;
 
 	if (arg0[0] < 0) {
 		xPart = (arg0[0] + 3) >> 2;
@@ -648,27 +688,18 @@ void func_800EADF8_F9DA8(VehicleInstance *arg0, s16 arg1) {
 #endif
 
 void func_800EB05C_FA00C(void) {
-	osSyncPrintf(&D_801442F0_1532A0); // Player start swimming
+	osSyncPrintf(D_801442F0_1532A0); // Player start swimming
 	D_80157A28 |= 4;
 }
 
 void func_800EB090_FA040(void) {
-	osSyncPrintf(&D_80144308_1532B8); // Player stops swimming
+	osSyncPrintf(D_80144308_1532B8); // Player stops swimming
 	D_80157A28 &= ~4;
 }
 
 // CURRENT(5740)
 #ifdef NON_MATCHING
 void func_800EB0C8_FA078(VehicleInstance *arg0) {
-	extern f64 D_801443E8_153398;
-	extern f64 D_801443F0_1533A0;
-	extern f64 D_801443F8_1533A8;
-	extern f64 D_80144400_1533B0;
-	extern f64 D_80144408_1533B8;
-	extern f32 D_80144410_1533C0;
-	extern f32 D_80144414_1533C4;
-	extern f32 D_80144418_1533C8;
-	extern f32 D_8014441C_1533CC;
 	f32 speedScale;
 	f32 xDiff;
 	f32 zDiff;
@@ -800,7 +831,7 @@ void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	s32 turnOffset = 0;
 
 	if (player == &D_80157A48) {
-		osSyncPrintf(&D_80144320_1532D0);
+		osSyncPrintf(D_80144320_1532D0);
 	}
 
 	state = player->unk40C;
@@ -1063,7 +1094,7 @@ void func_800EBD9C_FAD4C(s16 arg0, s16 arg1, s16 arg2) {
 		D_80157600.unk8 = 0.0f;
 		D_80157600.unk10 = 0.0f;
 		D_801575E0.unkA = arg1;
-		osSyncPrintf(&D_80144330_1532E0, arg0, arg1, arg2); // attempt to exit to point %d,%d,%d
+		osSyncPrintf(D_80144330_1532E0, arg0, arg1, arg2); // attempt to exit to point %d,%d,%d
 		D_8015760C = 145.0f;
 		if ((D_80222A70 - 0x24) >= arg1) {
 			func_800EB05C_FA00C();
@@ -2350,7 +2381,7 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 
 	{
 			if (((temp & 0x40000000) == 0) && (D_80157E70 == 0)) {
-				osSyncPrintf(&D_801443BC_15336C);
+				osSyncPrintf(D_801443BC_15336C);
 				func_800EB534_FA4E4(&D_80157A48, (D_80157E74 >> 0xE) + 0x14, 0, 0);
 			}
 			D_80157E78 = 0x1E;
