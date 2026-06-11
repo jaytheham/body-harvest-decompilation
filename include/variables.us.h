@@ -219,7 +219,6 @@ extern f32 D_80036C88;
 extern s16 D_800313C8;
 extern s16 D_800313E4_31FE4;
 extern u16 D_80031648_32248;
-extern f32 D_801451C8_154178;
 extern s16 D_80158F84;
 extern s16 *D_80158F90;
 extern f32 D_801575C4;
@@ -289,11 +288,9 @@ extern s16 D_8013D52E_14C4DE;
 
 
 extern u8 D_8015F9AC[];
-extern u8 D_801450FC_1540AC[];
 extern u8 D_80147098_156048[];
 extern u8 D_802566DA[];
-extern f64 D_80145200_1541B0;
-extern f64 D_80145208_1541B8;
+
 extern f64 D_80037620_38220;
 extern u8 D_1010A80[];
 extern u8 D_50323B0[];
@@ -909,11 +906,7 @@ extern u8 D_D010EB0[];
 extern u8 D_D011660[];
 extern u8 D_D012098[];
 extern u8 D_D015C38[];
-extern char D_80145070_154020[];
-extern char D_80145088_154038[];
-extern char D_801450A4_154054[];
-extern f64 D_80145160_154110;
-extern f64 D_801451B8_154168;
+extern BhAudioGlobals D_80033B54_34754;
 extern BhAudioGlobals D_80033B54_34754;
 extern s32 D_8006AB10;
 extern s16 D_8006AB14;
@@ -1817,8 +1810,7 @@ extern s32 D_80159320;
 extern UnkF9230Func80102FA4Point D_801593F0[];
 extern s16 D_80159318;
 extern s16 D_80159316;
-extern char D_80145020_153FD0[];
-extern char D_80145048_153FF8[];
+
 extern UnkF9230Func80102FA4Point D_80159420[];
 extern UnkF9230Func80102FA4Point D_801594E0[];
 extern VehicleInstance *D_80158E64;
@@ -2159,7 +2151,7 @@ extern f32 D_80145698_154648;
 extern f64 D_801456A0_154650;
 extern f32 D_801456A8_154658;
 extern f64 D_801456B0_154660;
-extern char D_801453B0_154360[];
+
 extern f64 D_801456B8_154668;
 extern f64 D_801456C0_154670;
 extern f64 D_801456C8_154678;
@@ -2862,7 +2854,7 @@ extern u8 D_408A8F0[];
 extern u16 D_409E8F0[];
 extern u8 D_40A9440[];
 extern u16 D_40AAC40[];
-extern char D_801450EC_15409C[];
+
 extern f32 D_8013D668_14C618;
 extern u8 D_8013D66C_14C61C[];
 extern u32 D_8013D67C_14C62C[];
@@ -3662,7 +3654,7 @@ extern s32 D_80159D6C;
 extern s32 D_80159D70;
 extern Unk8010ED84Pos *D_80159D60;
 extern Unk8010ED84Data *D_80159D68;
-extern char D_801450DC_15408C;
+
 extern u8 D_80147090_156040[];
 extern u8 D_80052A7C[];
 extern u8 D_800522A8[];
