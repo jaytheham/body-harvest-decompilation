@@ -1,6 +1,83 @@
 #include <ultra64.h>
 #include "common.h"
 
+const char D_80145A30_1549E0[] = "select ";
+const char D_80145A38_1549E8[] = "%d,";
+const char D_80145A3C_1549EC[] = "\n";
+const char D_80145A40_1549F0[] = "No space left in inventory for the new item.\n";
+const char D_80145A70_154A20[] = "Give vehicle its weapon %d\n";
+const char D_80145A8C_154A3C[] = "Initialise Ammunition\n";
+const char D_80145AA4_154A54[] = "Weapon %d not valid\n";
+const char D_80145ABC_154A6C[] = "Weapon %d not valid\n";
+const char D_80145AD4_154A84[] = "New weapon down\n";
+
+const u32 jtbl_80145AE8_154A98[] = {
+	0x8013B1D0, // case 0x63 -> 0xDD
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B1B4, // case 0x67 -> 0xDE
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B25C, // case 0x72 -> 0xE2
+	0x8013B240, // case 0x73 -> 0xE1
+	0x8013B278, // case 0x74 -> 0xE3
+	0x8013B290, // default
+	0x8013B224, // case 0x76 -> 0xE0
+};
+
+const u32 jtbl_80145B38_154AE8[] = {
+	0x8013B144, // case 0x19 -> 0xD8
+	0x8013B160, // case 0x1A -> 0xD9
+	0x8013B17C, // case 0x1B -> 0xDA
+	0x8013B1EC, // case 0x1C -> 0xDB
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B198, // case 0x2C -> 0xDF
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B290, // default
+	0x8013B208, // case 0x41 -> 0xDC
+};
+
 s16 D_80140D40_14FCF0[] = {
 	0x0000, 0x0000, -0x8000, 0x0064, 0x0032, 0x03E7, 0x0019, 0x0003,
 	-0x8000, 0x0014, 0x0064, -0x8000, -0x8000, -0x8000, 0x0064, 0x00C8,

@@ -1498,13 +1498,6 @@ extern u8 D_80140DC0[];
 extern f32 D_801411A0;
 extern f32 D_801411A4;
 extern u32 jtbl_801411A8[];
-extern char D_80145A30_1549E0; // select 
-extern char D_80145A38_1549E8; // %d,
-extern char D_80145A3C_1549EC; // .
-extern char D_80145A40_1549F0;
-extern char D_80145A70_154A20;
-extern char D_80145A8C_154A3C;
-extern char D_80145AA4_154A54;
 extern u8 D_80145BE0_154B90[];
 extern Unk80050ADA D_80145BE2_154B92[];
 extern BuildingInstance D_80145E98;
@@ -2871,8 +2864,6 @@ extern u8 D_50445A0[];
 extern u8 D_9043D50[];
 extern UnkFunc8013B5E4 D_80257A1C[];
 extern UnkFunc8013B5E4 D_80257A4C[];
-extern char D_80145ABC_154A6C[];
-extern char D_80145AD4_154A84[];
 extern u8 D_801592A0;
 extern u8 D_801592B0;
 extern VehicleInstance* D_80158E6C;
