@@ -1,6 +1,49 @@
 #include <ultra64.h>
 #include "common.h"
 
+const char D_801444F0_1534A0[] = "**** ERROR: Cutscenes: RaiseAtlantis: Building not present ****\n";
+const char D_80144534_1534E4[] = "**** ERROR: Cutscenes: BridgeBlowerUpper: Building not present ****\n";
+const char D_8014457C_15352C[] = "**** ERROR: Cutscenes: AlphaTransmute: Building not present ****\n";
+
+const u32 jtbl_801445C0_153570[] = {
+    0x800F0858, 0x800F0B3C, 0x800F08EC, 0x800F08D4, 0x800F0938, 0x0
+};
+
+const f64 D_801445D8_153588[1] = {6.283185307};
+const f64 D_801445E0_153590[1] = {360.0};
+const f64 D_801445E8_153598[1] = {6.283185307};
+const f64 D_801445F0_1535A0[1] = {360.0};
+const f64 D_801445F8_1535A8[1] = {6.283185307};
+const f64 D_80144600_1535B0[1] = {360.0};
+const f64 D_80144608_1535B8[1] = {6.283185307};
+const f64 D_80144610_1535C0[1] = {360.0};
+
+const u32 jtbl_80144618_1535C8[] = {
+    0x800F106C, 0x800F107C, 0x800F108C, 0x800F109C, 0x800F10AC
+};
+
+const f32 D_8014462C_1535DC[1] = {0.3f};
+
+const u32 jtbl_80144630_1535E0[] = {
+    0x800F12B0, 0x800F1394, 0x800F14C8, 0x800F1578, 0x800F16C8,
+    0x800F1798, 0x800F1988, 0x800F1B58, 0x800F1D18, 0x800F1D90
+};
+
+const f32 D_80144658_153608[1] = {0.8f};
+
+const u32 jtbl_8014465C_15360C[] = {
+    0x800F2120, 0x800F23EC, 0x800F2640, 0x800F26E0, 0x800F2720, 0x800F2848
+};
+
+const f32 D_80144674_153624[1] = {15.9f};
+const f32 D_80144678_153628[1] = {13.7f};
+const f32 D_8014467C_15362C[1] = {0.0f};
+
+const f64 D_80144680_153630[1] = {0.2};
+const f64 D_80144688_153638[1] = {0.04511};
+const f64 D_80144690_153640[1] = {0.022};
+const f64 D_80144698_153648[1] = {0.0};
+
 u32 D_8013FCC4_14EC70[1] = {0x8004F374};
 s32 D_8013FCC4_14EC74[3] = {-136, 2021168790, -1774437316};
 
