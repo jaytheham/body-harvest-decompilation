@@ -1,6 +1,62 @@
 #include <ultra64.h>
 #include "common.h"
 
+const char D_801453C0_154370[] = "*** DrawStretchyWord() needs a bigger stretch array!! (see John G) ***\n";
+const char D_80145408_1543B8[] = "%X%Y\n";
+const char D_80145410_1543C0[] = "%W";
+const char D_80145414_1543C4[] = "processor destroyed";
+const char D_80145428_1543D8[] = "prozessor zerst\x3Art";
+const char D_8014543C_1543EC[] = "processeur d\xe9truit";
+const char D_80145450_154400[] = " stage ";
+const char D_80145458_154408[] = " level ";
+const char D_80145460_154410[] = " niveau ";
+const char D_8014546C_15441C[] = "boss destroyed";
+const char D_8014547C_15442C[] = "bo\x26 zerst\x3Art";
+const char D_8014548C_15443C[] = "boss d\xe9truit";
+const char D_8014549C_15444C[] = " complete";
+const char D_801454A8_154458[] = " beendet";
+const char D_801454B4_154464[] = " termin\xe9";
+const char D_801454C0_154470[] = "score";
+const char D_801454C8_154478[] = "punkte";
+const char D_801454D0_154480[] = "score";
+const char D_801454D8_154488[] = "score";
+const char D_801454E0_154490[] = "punkte";
+const char D_801454E8_154498[] = "score";
+const char D_801454F0_1544A0[] = "%H%V";
+const char D_801454F8_1544A8[] = "%C%a";
+const char D_80145500_1544B0[] = "%a";
+const char D_80145504_1544B4[] = "%a";
+const char D_80145508_1544B8[] = "%@No people killed:\n";
+const char D_80145520_1544D0[] = "%@Keine toten:\n";
+const char D_80145530_1544E0[] = "%@Pas de mort:\n";
+const char D_80145540_1544F0[] = "%@%d\n";
+const char D_80145548_1544F8[] = "%@%d\n";
+const char D_80145550_154500[] = "%a";
+const char D_80145554_154504[] = "%a";
+const char D_80145558_154508[] = "%@No people harvested:\n";
+const char D_80145570_154520[] = "%@Keine gesammelten:\n";
+const char D_80145588_154538[] = "%@Pas de prisonnier:\n";
+const char D_801455A0_154550[] = "%@%d\n";
+const char D_801455A8_154558[] = "%@%d\n";
+const char D_801455B0_154560[] = "bonus";
+const char D_801455B8_154568[] = "bonus";
+const char D_801455C0_154570[] = "score";
+const char D_801455C8_154578[] = "punkte";
+const char D_801455D0_154580[] = "score";
+const char D_801455D8_154588[] = "total";
+const char D_801455E0_154590[] = "gesamtpunkte";
+const char D_801455F0_1545A0[] = "score";
+const char D_801455F8_1545A8[] = "score";
+const char D_80145600_1545B0[] = "total";
+const char D_80145608_1545B8[] = "score";
+const char D_80145610_1545C0[] = "gesamtpunkte";
+const char D_80145620_1545D0[] = "score";
+const char D_80145628_1545D8[] = "total";
+
+const f32 D_80145630_1545E0[1] = {65535.0f};
+
+const u32 jtbl_80145634_1545E4[] = {0x80130420, 0x80130430, 0x80130490, 0x801306B4, 0x801304A0, 0x801305A8, 0x80130608};
+
 u32 D_80140BA0_14FB50[] = {
 	0x05059CA0, 0x05058AA0, 0x05058CA0, 0x05058EA0, 0x050590A0,
 	0x050592A0, 0x050594A0, 0x050596A0, 0x050598A0, 0x05059AA0,

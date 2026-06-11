@@ -315,7 +315,8 @@ segments:
       - [0x153650, .rodata, overlay_gameplay/outside/101840]
       - [0x153D70, .rodata, overlay_gameplay/outside/buildings]
       - [0x153FD0, .rodata, overlay_gameplay/outside/1312D0]
-      - [0x154370, rodatabin]
+      - [0x154370, .rodata, overlay_gameplay/outside/13DA70]
+      - [0x154600, rodatabin]
 
   - name: overlay_gameplay_inside
     type: code
