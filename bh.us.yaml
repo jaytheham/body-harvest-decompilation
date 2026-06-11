@@ -261,7 +261,8 @@ segments:
       - [0xF7870, c, overlay_gameplay/outside/F7870_empty]
       - [0xF7870, c, overlay_gameplay/outside/F7870] # Shadows
       - [0xF9230, c, overlay_gameplay/outside/F9230] # Animation
-      - [0xFEC70, c, overlay_gameplay/outside/FEC70] # cutscenes, Adam/vehicle control
+      - [0xFEC70, c, overlay_gameplay/outside/FEC70] # cutscenes
+      - [0x101840, c, overlay_gameplay/outside/101840] # Adam/vehicle control
       - [0x124ED0, c, overlay_gameplay/outside/buildings] # & shooting
       - [0x13DA70, c, overlay_gameplay/outside/13DA70] # End of stage/level UI
       - [0x1416E0, c, overlay_gameplay/outside/1416E0] # Adam & vehicle Camera, signposts
@@ -285,6 +286,7 @@ segments:
       - [0x14D3E0, .data, overlay_gameplay/outside/F7870_empty]
       - [0x14D400, .data, overlay_gameplay/outside/F9230]
       - [0x14EC70, .data, overlay_gameplay/outside/FEC70]
+      - [0x14EC80, .data, overlay_gameplay/outside/101840]
       - [0x14F9B0, .data, overlay_gameplay/outside/buildings]
       - [0x14FB50, .data, overlay_gameplay/outside/13DA70]
       - [0x14FCA0, bin]
