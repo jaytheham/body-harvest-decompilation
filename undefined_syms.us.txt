@@ -2,7 +2,8 @@ D_80032EB8_33AB8 = 0x80032EB8;
 D_800344A0_350A0 = 0x800344A0;
 D_80144E20 = 0x80144E20;
 D_80144E2C = 0x80144E2C;
-/* Sub-symbols within overlay_gameplay/outside rodatabin sections */
+/* Symbols within overlay_gameplay/outside weapon_data section */
+D_80145BE0_154B90 = 0x80145BE0;
 D_80145BE8_154B98 = 0x80145BE8;
 D_80146680_155630 = 0x80146680;
 D_80147090_156040 = 0x80147090;
