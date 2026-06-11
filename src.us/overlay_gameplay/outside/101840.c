@@ -1,66 +1,36 @@
 #include <ultra64.h>
 #include "common.h"
 
-// Data from ROM 0x153650-0x153D70 (rodata for 101840.c)
-
 const char D_801446A0_153650[] = "Error in walker index";
-
 const char D_801446B8_153668[] = "Attempt to get info on unallocated walker ID";
-
 const char D_801446E8_153698[] = "Error in walker index";
-
 const char D_80144700_1536B0[] = "Attempt to force unallocated walker ID";
-
 const char D_80144728_1536D8[] = "Error in walker index";
-
 const char D_80144740_1536F0[] = "Attempt to move unallocated walker ID";
-
 const char D_80144768_153718[] = "Error in walker index";
-
 const char D_80144780_153730[] = "Attempt to move unallocated walker ID";
-
 const char D_801447A8_153758[] = "Error in walker index";
-
 const char D_801447C0_153770[] = "Attempt to move unallocated walker ID";
-
 const char D_801447E8_153798[] = "Error in walker index";
-
 const char D_80144800_1537B0[] = "Attempt to move unallocated walker ID";
-
 const char D_80144828_1537D8[] = "Error in walker index";
-
 const char D_80144840_1537F0[] = "Attempt to move unallocated walker ID";
-
 const char D_80144868_153818[] = "Error in walker index";
-
 const char D_80144880_153830[] = "Attempt to move unallocated walker ID";
-
 const char D_801448A8_153858[] = "FREE WALKER %d: %d walkers allocated\n";
-
 const char D_801448D0_153880[] = "Error in walker index";
-
 const char D_801448E8_153898[] = "Attempt to free unallocated walker ID %d\n";
-
 const char D_80144914_1538C4[] = "CANNOT ALLOCATE NEW WALKER!!!\n";
-
 const char D_80144934_1538E4[] = "ALLOCATE WALKER %d: %d walkers allocated\n";
-
 const char D_80144960_153910[] = "-----------------------------\n";
-
 const char D_80144980_153930[] = "\t%d,%d\n";
-
 const char D_80144988_153938[] = "\t%d\n";
-
 const char D_80144990_153940[] = "\t%f\n";
-
 const char D_80144998_153948[] = "\t%f\n";
-
 const char D_801449A0_153950[] = "\t%d\n";
-
 const char D_801449A8_153958[] = "AARRGGH!! Alien buggered off leaving it's legs behind!\n";
 
 const f64 D_801449E0_153990[1] = {0.99};
-
 const f32 D_801449E8_153998[1] = {0.99};
 
 const f64 D_801449F0_1539A0[1] = {180};

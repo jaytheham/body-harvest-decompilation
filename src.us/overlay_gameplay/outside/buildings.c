@@ -2,6 +2,90 @@
 #include <stdarg.h>
 #include "common.h"
 
+const char D_80144DC0_153D70[] = "**** SERIOUS WARNING: Room behind door %d on building %d, (%d,%d).This type hasn't got door %d\n";
+const char D_80144E20_153DD0[] = "Yaw != -1";
+const char D_80144E2C_153DDC[] = "src/buildings.c";
+const char D_80144E3C_153DEC[] = "********** ERROR: Unmapped door **********\n";
+const char D_80144E68_153E18[] = "This building needs key %d\n";
+const char D_80144E84_153E34[] = "WARNING: Too many hashing conflicts\n";
+const char D_80144EAC_153E5C[] = "This level data is kaput\n";
+const char D_80144EC8_153E78[] = "ERROR:Trying to generate heightmap for building type %d\n";
+
+const f64 D_80144F08_153EB8[1] = {3.141592654};
+
+const f32 D_80144F10_153EC0[1] = {0.949999988079071};
+
+const f64 D_80144F18_153EC8[1] = {300.0};
+
+const f64 D_80144F20_153ED0[1] = {157.0};
+
+const f64 D_80144F28_153ED8[1] = {157.0};
+
+const f32 D_80144F30_153EE0[1] = {-0.05000000074505806};
+const f32 D_80144F34_153EE4[1] = {0.949999988079071};
+
+const f64 D_80144F38_153EE8[1] = {20000.0};
+
+const u32 jtbl_80144F40_153EF0[] = {
+	0x801195E8,
+	0x8011965C,
+	0x80119714,
+	0x80119770,
+	0x80119630,
+	0x80119610,
+	0x801196B8,
+	0x00000000,
+};
+
+const f64 D_80144F60_153F10[1] = {0.95};
+
+const f64 D_80144F68_153F18[1] = {0.95};
+
+const f32 D_80144F70_153F20[1] = {9304.0};
+const f32 D_80144F74_153F24[1] = {13600.0};
+
+const f64 D_80144F78_153F28[1] = {20000.0};
+
+const f32 D_80144F80_153F30[1] = {-0.05000000074505806};
+
+const f64 D_80144F88_153F38[1] = {0.4};
+
+const f32 D_80144F90_153F40[1] = {0.20000000298023224};
+const f32 D_80144F94_153F44[1] = {0.20000000298023224};
+
+const f32 D_80144F98_153F48[1] = {0.6000000238418579};
+
+const f64 D_80144FA0_153F50[1] = {0.4};
+
+const f64 D_80144FA8_153F58[1] = {32767.0};
+
+const f64 D_80144FB0_153F60[1] = {63.0};
+
+const f64 D_80144FB8_153F68[1] = {1.93333};
+
+const f64 D_80144FC0_153F70[1] = {290.0};
+
+const f32 D_80144FC8_153F78[1] = {0.833329975605011};
+const f32 D_80144FCC_153F7C[1] = {0.3330000042915344};
+const f32 D_80144FD0_153F80[1] = {0.3330000042915344};
+const f32 D_80144FD4_153F84[1] = {0.3330000042915344};
+const f32 D_80144FD8_153F88[1] = {0.3330000042915344};
+const f32 D_80144FDC_153F8C[1] = {0.3330000042915344};
+const f32 D_80144FE0_153F90[1] = {0.3330000042915344};
+const f32 D_80144FE4_153F94[1] = {0.3330000042915344};
+const f32 D_80144FE8_153F98[1] = {0.3330000042915344};
+
+const f64 D_80144FF0_153FA0[1] = {2600.0};
+
+const f64 D_80144FF8_153FA8[1] = {362.0};
+
+const f64 D_80145000_153FB0[1] = {217.0};
+
+const f64 D_80145008_153FB8[1] = {362.0};
+
+const f64 D_80145010_153FC0[1] = {461.0};
+
+// .data
 u8 D_80140A00_14F9B0[0x14] = {
 	0x00, 0x00, 0x00, 0x00, 0x09, 0x01, 0xD4, 0x08, 0x0A, 0x00, 0x1B, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00,
@@ -126,7 +210,7 @@ s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
 	f32 sp24;
 	s16 var_v1;
 
-	sp20 = (f32)(((f64)(f32)arg0 * D_80144F08) / 32768.0);
+	sp20 = (f32)(((f64)(f32)arg0 * D_80144F08_153EB8[0]) / 32768.0);
 	sp24 = sinf(sp20) / cosf(sp20);
 	if (arg2 >= 0) {
 		var_v1 = (s16)(s32)(-sp24 * (f32)(arg1 - arg2));
@@ -935,7 +1019,7 @@ void func_80117A4C_1269FC(void *arg0) {
 	temp_s0->unk6 = 0x4000 - sp34;
 	func_800FD510_10C4C0(0, ((u8 *)sp40)[5]);
 	func_800FDD48_10CCF8(0);
-	D_8015EA2C = D_80144F10_153EC0;
+	D_8015EA2C = D_80144F10_153EC0[0];
 	D_8015EA30 = 0.0f;
 	D_80159260 = 0x3E;
 	D_8015930E = 1;
@@ -944,8 +1028,8 @@ void func_80117A4C_1269FC(void *arg0) {
 	D_80158BD0[((u8 *)sp40)[5]] = 0;
 	if (currentLevel == 3) {
 		sp30 = coss((-0x4000 - sp34) & 0xFFFF);
-		func_80112A98_121A48((s32)((((f64)(f32)sp30 / 32768.0) * D_80144F18_153EC8) + (f64)sp3A),
-							(s32)((((f64)(f32)sins((-0x4000 - sp34) & 0xFFFF) / 32768.0) * D_80144F18_153EC8) + (f64)sp36),
+		func_80112A98_121A48((s32)((((f64)(f32)sp30 / 32768.0) * D_80144F18_153EC8[0]) + (f64)sp3A),
+							(s32)((((f64)(f32)sins((-0x4000 - sp34) & 0xFFFF) / 32768.0) * D_80144F18_153EC8[0]) + (f64)sp36),
 							0x258);
 	} else {
 		sp30 = coss((-0x4000 - sp34) & 0xFFFF);
@@ -957,9 +1041,9 @@ void func_80117A4C_1269FC(void *arg0) {
 	if ((currentLevel == 1) && ((((s32)((u8 *)sp40 - (u8 *)D_80148620_1575D0) >> 3) == 3))) {
 		D_80159262 = 1;
 		func_800FB44C_10A3FC(temp_s0,
-						 (f32)((f64)sp3A - ((((f64)(f32)coss((-0x4000 - sp34) & 0xFFFF)) / 32768.0) * D_80144F20_153ED0)));
+						 (f32)((f64)sp3A - ((((f64)(f32)coss((-0x4000 - sp34) & 0xFFFF)) / 32768.0) * D_80144F20_153ED0[0])));
 		func_800FB484_10A434(temp_s0,
-						 (f32)((f64)sp36 - ((((f64)(f32)sins((-0x4000 - sp34) & 0xFFFF)) / 32768.0) * D_80144F28_153ED8)));
+						 (f32)((f64)sp36 - ((((f64)(f32)sins((-0x4000 - sp34) & 0xFFFF)) / 32768.0) * D_80144F28_153ED8[0])));
 	}
 	func_800EFEB4_FEE64(0, 3, 0);
 }
@@ -968,8 +1052,8 @@ void func_80117A4C_1269FC(void *arg0) {
 #endif
 
 void func_80117F10_126EC0(void) {
-	D_8015EA30 = D_80144F30_153EE0;
-	D_8015EA2C = D_80144F34_153EE4;
+	D_8015EA30 = D_80144F30_153EE0[0];
+	D_8015EA2C = D_80144F34_153EE4[0];
 }
 
 // CURRENT(196)
@@ -988,7 +1072,7 @@ void func_80117F34_126EE4(void) {
 	func_801165FC_1255AC(*((u8 *)&D_80052540 + 3), D_80052547, &sp46, &sp44, &sp42, &sp40);
 	func_80117F10_126EC0();
 	if (sp40 == -1) {
-		sourceTaggedPrintF(D_80144E20, D_80144E2C, 0x469);
+		sourceTaggedPrintF(D_80144E20_153DD0, D_80144E2C_153DDC, 0x469);
 	}
 
 	sp3A = *(s16 *)((u8 *)D_801483A4 + (((u8 *)sp34)[8] * 0x18)) + 0x32;
@@ -1346,7 +1430,7 @@ void func_80118774_127724(s32 arg0) {
 		goto end_scan;
 	}
 
-	scale = D_80144F38_153EE8;
+	scale = D_80144F38_153EE8[0];
 
 main_scan:
 	flags = (u32)building->unk8 >> 12;
@@ -1582,14 +1666,14 @@ process_current:
 							break;
 						case 2:
 							tempF = (f32)(u16)prop->unkC;
-							D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 - ((f64)(D_8015EA2C * tempF) * D_80144F60_153F10));
+							D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 - ((f64)(D_8015EA2C * tempF) * D_80144F60_153F10[0]));
 							break;
 						case 3:
 							D_80052B48.unk4 = (s16)(-(s32)(D_8015EA2C * 16384.0f));
 							D_80052B40.unk2 = (s16)(s32)((f32)(u16)prop->unk10 * D_8015EA2C);
 							break;
 						case 4:
-							D_80052B48.unk4 = (s16)(u32)(D_8015EA2C * D_80144F70_153F20);
+							D_80052B48.unk4 = (s16)(u32)(D_8015EA2C * D_80144F70_153F20[0]);
 							break;
 						case 5:
 							D_80052B48.unk0 = (s16)((s32)((f64)D_8015EA2C * scale) + 0x8000);
@@ -1599,7 +1683,7 @@ process_current:
 							break;
 						case 7:
 							tempF = (f32)(u16)prop->unkC;
-							D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 + ((f64)(D_8015EA2C * tempF) * D_80144F68_153F18));
+							D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 + ((f64)(D_8015EA2C * tempF) * D_80144F68_153F18[0]));
 							break;
 					}
 				} else if (prop->unk12 == 5) {
@@ -1661,7 +1745,7 @@ process_current:
 						D_80052B40.unk4 = -0xC;
 						D_80052B48.unk0 = 0;
 						D_80052B48.unk2 = 0;
-						D_80052B48.unk4 = (s16)(0x10000 - (s32)(D_8015EA2C * D_80144F74_153F24));
+						D_80052B48.unk4 = (s16)(0x10000 - (s32)(D_8015EA2C * D_80144F74_153F24[0]));
 						func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
 						gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 						D_8005BB38 += 0x40;
@@ -1748,7 +1832,7 @@ advance_building:
 	}
 
 end_scan:
-	scale = D_80144F78_153F28;
+	scale = D_80144F78_153F28[0];
 
 revisit_neighbors:
 	if (sp192 != -1) {
@@ -1996,7 +2080,7 @@ void func_8011A604_1295B4(void) {
 
 		if (tempF64 >= 1.0) {
 			D_8015EA2C = 1.0f;
-			D_8015EA30 = D_80144F80_153F30;
+			D_8015EA30 = D_80144F80_153F30[0];
 			found = (void *) func_801176B0_126660();
 			if ((currentLevel == 1) && (found == (void *) ((u8 *) D_80148620_1575D0 + 0x20))) {
 				if (D_80052544 == 0) {
@@ -2160,7 +2244,7 @@ void func_8011A604_1295B4(void) {
 						inst->unk8 ^= (((flags ^ (flags | 0x210)) << 12));
 						if ((currentLevel < 5) && ((currentLevel != 4) || (inst->buildingType != 4)) &&
 							((currentLevel != 3) || (inst->buildingType != 2))) {
-							func_800D249C_E144C(inst->xCoord, (s16) (s32) ((f64) inst->yCoord + ((f64) spec->unk14 * D_80144F88_153F38)),
+							func_800D249C_E144C(inst->xCoord, (s16) (s32) ((f64) inst->yCoord + ((f64) spec->unk14 * D_80144F88_153F38[0])),
 												 inst->zCoord, 0xC8, 0x55, 0x55, (s32) entryId, 0);
 						}
 					}
@@ -2210,7 +2294,7 @@ void func_8011A604_1295B4(void) {
 			temp = D_80052B34->unk0 - xPos;
 			y = D_80052B34->unk4 - zPos;
 			if ((temp * temp) + (y * y) < 0x3D0900) {
-				func_801371B8_146168(inst, 0x32, xPos, inst->yCoord, zPos, D_80144F90_153F40);
+				func_801371B8_146168(inst, 0x32, xPos, inst->yCoord, zPos, D_80144F90_153F40[0]);
 			}
 		} else if ((currentLevel == 1) && (model == D_90193F8) && (func_8000726C_7E6C((u64) 0x13) == 0)) {
 			xPos = inst->xCoord;
@@ -2218,7 +2302,7 @@ void func_8011A604_1295B4(void) {
 			temp = D_80052B34->unk0 - xPos;
 			y = D_80052B34->unk4 - zPos;
 			if ((temp * temp) + (y * y) < 0x3D0900) {
-				func_801371B8_146168(inst, 0x175, xPos, inst->yCoord, zPos, D_80144F94_153F44);
+				func_801371B8_146168(inst, 0x175, xPos, inst->yCoord, zPos, D_80144F94_153F44[0]);
 			}
 		} else if (((currentLevel == 2) && (model == D_A01E340)) || ((currentLevel == 4) && (model == D_C014920)) ||
 				   ((currentLevel == 5) && (model == D_D010EB0))) {
@@ -2227,7 +2311,7 @@ void func_8011A604_1295B4(void) {
 			temp = D_80052B34->unk0 - xPos;
 			y = D_80052B34->unk4 - zPos;
 			if ((temp * temp) + (y * y) < 0x3D0900) {
-				func_801371B8_146168(inst, 0x17F, xPos, inst->yCoord, zPos, D_80144F98_153F48);
+				func_801371B8_146168(inst, 0x17F, xPos, inst->yCoord, zPos, D_80144F98_153F48[0]);
 			}
 		}
 	}
@@ -2552,6 +2636,7 @@ s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BEA0_12AE50.s")
 #endif
 
+#ifdef NON_MATCHING
 void func_8011BF7C_12AF2C(u8 arg0) {
 	BuildingInstance *inst = &buildingInstances[arg0];
 	BuildingSpec *spec = &buildingSpecs[inst->buildingType];
@@ -2567,7 +2652,7 @@ void func_8011BF7C_12AF2C(u8 arg0) {
 	}
 	func_800D249C_E144C(
 		inst->xCoord,
-		(s16)(s32)((f64)inst->yCoord + (f64)spec->unk14 * D_80144FA0_153F50),
+		(s16)(s32)((f64)inst->yCoord + (f64)spec->unk14 * D_80144FA0_153F50[0]),
 		inst->zCoord,
 		0xC8,
 		0x55,
@@ -2578,6 +2663,9 @@ void func_8011BF7C_12AF2C(u8 arg0) {
 	inst->hitPoints = 1;
 	inst->unk8 = (((inst->unk8 >> 12 | 0x10) ^ (inst->unk8 >> 12)) << 12) ^ inst->unk8;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BF7C_12AF2C.s")
+#endif
 
 void func_8011C080_12B030(u8 arg0)
 {
@@ -3507,7 +3595,7 @@ void func_8011DBA0_12CB50(s32 arg3) {
 				value = *unkPtr;
 				entry = &unkTable[value >> 0xD];
 				temp = (entry->unk4 + ((((s32)value >> 2) & 0x7FF) << entry->unk0)) >> 3;
-				*unkPtr = (u16)((1.0 - ((f64)temp / D_80144FA8_153F58)) * (f64)spec->unk14);
+				*unkPtr = (u16)((1.0 - ((f64)temp / D_80144FA8_153F58[0])) * (f64)spec->unk14);
 				unkPtr++;
 			} while (counter-- != 0);
 
@@ -3683,10 +3771,10 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 		}
 	}
 
-	if (D_80144FB0_153F60 < (f64)localX) {
+	if (D_80144FB0_153F60[0] < (f64)localX) {
 		localX = 63.0f;
 	}
-	if (D_80144FB0_153F60 < (f64)localZ) {
+	if (D_80144FB0_153F60[0] < (f64)localZ) {
 		localZ = 63.0f;
 	}
 
@@ -3702,7 +3790,7 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 	*arg2 = (s16)*(u16 *)((u8 *)&D_802B2080 + (searchIndex << 0xD) + (((s16)(s32)localX) * 2) + (((s16)(s32)localZ) << 7));
 
 	if ((D_8015EA29 == inst->buildingType) && (gameplayMode == 3) && ((f64)localZ > 48.0)) {
-		*arg2 = (s16)(s32)(((64.0 - (f64)localZ) * D_80144FB8_153F68) + 16.0);
+		*arg2 = (s16)(s32)(((64.0 - (f64)localZ) * D_80144FB8_153F68[0]) + 16.0);
 	}
 
 	if (D_8015EB80 != 0) {
@@ -4000,7 +4088,7 @@ void func_8011EB40_12DAF0(BuildingInstance *arg0) {
 
 		if (state == 1) {
 			varS0 = 3;
-			tempF22 = D_80144FC0_153F70;
+			tempF22 = D_80144FC0_153F70[0];
 			do {
 				tempS1 = sins(D_8015EB84);
 				func_8012D700_13C6B0(
@@ -4055,7 +4143,7 @@ void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
 		}
 
 		if (func_8000726C_7E6C(0x12) == 0) {
-			func_801371B8_146168(0, 0x177, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, D_80144FC8);
+			func_801371B8_146168(0, 0x177, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, D_80144FC8_153F78[0]);
 		}
 
 		func_800072CC_7ECC(0x12);
@@ -4147,18 +4235,18 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 				if ((s32)arg0->padC[1] < 0x78) {
 					arg0->padC[1] = (u8)(arg0->padC[1] + 4);
 					sp84 = 0x40000;
-					func_801371B8_146168(0x64, 0x138, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FCC_153F7C);
+					func_801371B8_146168(0x64, 0x138, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FCC_153F7C[0]);
 					if (arg0->padC[1] == 0x78) {
-						func_801371B8_146168(0, 0xE9, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FD0_153F80);
+						func_801371B8_146168(0, 0xE9, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FD0_153F80[0]);
 					}
 				}
 			} else {
 				if ((s32)arg0->padC[1] > 0) {
 					arg0->padC[1] = (u8)(arg0->padC[1] - 4);
 					sp84 = -0x40000;
-					func_801371B8_146168(0x64, 0x138, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FD4_153F84);
+					func_801371B8_146168(0x64, 0x138, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FD4_153F84[0]);
 					if (arg0->padC[1] == 0) {
-						func_801371B8_146168(0, 0xE9, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FD8_153F88);
+						func_801371B8_146168(0, 0xE9, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FD8_153F88[0]);
 					}
 				}
 			}
@@ -4768,9 +4856,9 @@ void func_80121128_1300D8(BuildingInstance *arg0) {
 		if (arg0->zCoord >= 0x5300) {
 			if (arg0->pad15[0] < 0xBE) {
 				arg0->pad15[0] += 5;
-				func_801371B8_146168(0x64, 0x138, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FDC_153F8C);
+				func_801371B8_146168(0x64, 0x138, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FDC_153F8C[0]);
 				if (arg0->pad15[0] == 0xBE) {
-					func_801371B8_146168(0, 0xE9, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FE0_153F90);
+					func_801371B8_146168(0, 0xE9, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FE0_153F90[0]);
 				}
 			}
 		}
@@ -4780,9 +4868,9 @@ void func_80121128_1300D8(BuildingInstance *arg0) {
 		if (arg0->zCoord >= 0x5300) {
 			if (arg0->pad15[0] > 0) {
 				arg0->pad15[0] -= 5;
-				func_801371B8_146168(0x64, 0x138, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FE4_153F94);
+				func_801371B8_146168(0x64, 0x138, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FE4_153F94[0]);
 				if (arg0->pad15[0] == 0) {
-					func_801371B8_146168(0, 0xE9, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FE8_153F98);
+					func_801371B8_146168(0, 0xE9, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FE8_153F98[0]);
 				}
 			}
 		}
@@ -4926,8 +5014,8 @@ void func_80121EB4_130E64(s16 *arg0) {
 	s32 temp_f6;
 	Gfx *temp_s0;
 
-	temp_f6 = (s32) ((((f64) (f32) sins(((*arg0 + D_80052A8C) * 0x2EE) & 0xFFFF)) / 32768.0) * D_80144FF0_153FA0);
-	sp38 = (f32) (D_80145000_153FB0 - ((((f64) (f32) coss(temp_f6 & 0xFFFF)) / 32768.0) * D_80144FF8_153FA8));
+	temp_f6 = (s32) ((((f64) (f32) sins(((*arg0 + D_80052A8C) * 0x2EE) & 0xFFFF)) / 32768.0) * D_80144FF0_153FA0[0]);
+	sp38 = (f32) (D_80145000_153FB0[0] - ((((f64) (f32) coss(temp_f6 & 0xFFFF)) / 32768.0) * D_80144FF8_153FA8[0]));
 	temp_f16 = ((f64) (f32) sins((s16) temp_f6 & 0xFFFF)) / 32768.0;
 
 	D_80052B40.unk0 = 0xD9;
@@ -4937,7 +5025,7 @@ void func_80121EB4_130E64(s16 *arg0) {
 	D_80052B48.unk2 = (s16) temp_f6;
 	D_80052B48.unk4 = 0;
 
-	sp34 = (f32) (D_80145010_153FC0 - (temp_f16 * D_80145008_153FB8));
+	sp34 = (f32) (D_80145010_153FC0[0] - (temp_f16 * D_80145008_153FB8[0]));
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
 
 	temp_s0 = D_8005BB2C;
