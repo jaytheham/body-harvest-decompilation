@@ -61,6 +61,8 @@ Don't rely on just the closeness value to tell if a change is an improvement, al
 
 If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
+If a function has a switch statement and there is an associated jump table const defined at the start of the file you'll need to delete that const before you begin. The consts are there so that the rodata is built correctly while the functions are NON_MATCHING and the .s file is being used instead, when the c is being included in the build it will generate its own jump table replacing the need for the const version. 
+
 - Declarations of data symbols used by the function must go in `include/variables.us.h`.
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
 - Add or update declarations for any called functions in `include/functions.us.h`.

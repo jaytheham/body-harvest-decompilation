@@ -342,7 +342,7 @@ void func_800AEC34_BDBE4(void *arg0) {
 		sp20.sp28.unkC = func_800AEBC4_BDB74;
 
 		func_800AE454_BD404(&sp20.sp28);
-		func_800BDAF4_CCAA4();
+		func_800BDAF4_CCAA4(); // Open gate when processer dies
 		var_a3 = D_80047F94;
 	}
 
