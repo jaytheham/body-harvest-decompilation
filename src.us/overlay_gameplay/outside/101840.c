@@ -660,7 +660,7 @@ void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 	*(s16 *)&base[0x1C] = 0;
 	*(s32 *)&base[0x8] = (s16)arg1;
 
-	func_800F2980_101930(base);
+	func_800F2980_101930(base, 0);
 
 	count = ((u8 *)D_801601F0)[base[0x23] * 0x16 + 0xC];
 	if (count > 0) {
@@ -1000,63 +1000,54 @@ s16 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F384C_1027FC.s")
 #endif
 
-// CURRENT(17262)
+// CURRENT(17608) - improved from 18187 by removing ret/allocCount/specIdx fixes, alienY placement
 #ifdef NON_MATCHING
 s16 func_800F3990_102940(u8 arg0, u8 arg1) {
-	s16 spBA;
-	s16 ret;
-	s16 baseAngle;
-	s16 alienX;
-	s16 alienZ;
-	s16 alienY;
-	s16 i;
-	s16 halfCount;
 	s32 slot;
-	s32 temp;
-	u8 allocCount;
-	u8 specIdx;
 	u8 alienIdx;
-	u8 *walker;
-	u8 *anim;
-	AlienInstance *inst;
+	u8 specIdx;
 	f64 f22;
 	f64 f24;
 	f64 f26;
 	f64 f28;
+	s32 temp;
+	s16 spBA;
+	s16 baseAngle;
+	s16 alienX;
+	s16 alienZ;
+	s16 alienY;
+	s32 halfCount;
+	u8 *walker;
+	AlienInstance *inst;
 
 	alienIdx = arg0;
 	specIdx = arg1;
 	inst = &alienInstances[alienIdx];
 	alienX = inst->unk0;
 	alienZ = inst->unk4;
-	alienY = inst->unkE;
-
 	if (D_80157FF8 >= 8) {
-		osSyncPrintf((D_801448A8_153858 + 0x6C), D_80157FF8, specIdx);
+		osSyncPrintf(D_80144914_1538C4);
 		return -1;
 	}
+	alienY = inst->unkE;
 
 	slot = 0;
 	while (1) {
 		if (D_80157FF0[slot] != -1) {
 			D_80157FF0[slot] = -1;
-			ret = slot;
 			break;
 		}
 
 		slot = (slot + 1) & 0xFF;
 		if (slot >= 8) {
-			ret = slot;
 			break;
 		}
 	}
 
-	allocCount = D_80157FF8 + 1;
-	D_80157FF8 = allocCount;
-	osSyncPrintf((D_801448A8_153858 + 0x8C), ret, allocCount, specIdx);
+	D_80157FF8 = D_80157FF8 + 1;
+	osSyncPrintf(D_80144934_1538E4, slot, D_80157FF8);
 
 	walker = &D_80158000[slot * 0x170];
-	anim = &D_801601F0[specIdx * 0x16];
 
 	*(s32 *)&walker[0x00] = alienX;
 	*(s32 *)&walker[0x04] = alienZ;
@@ -1073,15 +1064,17 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	*(s16 *)&walker[0x1E] = 0;
 	walker[0x23] = specIdx;
 
-	baseAngle = *(s16 *)&anim[0xE];
-	spBA = *(s16 *)&anim[0x10];
-	halfCount = (s16)((u8)anim[0xC] / 2);
+	baseAngle = *(s16 *)&((u8*)D_801601F0 + specIdx * 0x16)[0xE];
+	spBA = *(s16 *)&((u8*)D_801601F0 + specIdx * 0x16)[0x10];
+	halfCount = (s16)((u8*)D_801601F0 + specIdx * 0x16)[0xC] / 2;
 
 	if (halfCount > 0) {
-		f22 = (f64)*(s16 *)&anim[0x4];
+		s32 i;
+		
+		f22 = (f64)*(s16 *)&((u8*)D_801601F0 + specIdx * 0x16)[0x4];
 		f24 = (f64)alienX;
 		f26 = (f64)alienZ;
-		f28 = (f64)*(s16 *)&anim[0x6];
+		f28 = (f64)*(s16 *)&((u8*)D_801601F0 + specIdx * 0x16)[0x6];
 
 		i = 0;
 		temp = halfCount * 0x24;
@@ -1128,9 +1121,9 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 		}
 	}
 
-	func_800F2980_101930(walker);
+	func_800F2980_101930(walker, 0);
 	func_800F49A4_103954(walker);
-	return ret;
+	return slot;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F3990_102940.s")
@@ -1538,7 +1531,7 @@ void func_800F4DB0_103D60(void) {
 						}
 					}
 
-					func_800F2980_101930(base);
+					func_800F2980_101930(base, 0);
 					if (*(s16 *)&base[0x18] == *(s16 *)&base[0x1A]) {
 						s16 d;
 
