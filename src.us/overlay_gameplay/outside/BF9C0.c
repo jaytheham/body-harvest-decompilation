@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "constData.h"
 
 const char D_80142D10_151CC0[] = "ERROR in ClipLineToShieldWalls\n";
 const char D_80142D30_151CE0[] = "Road entry overflow : Contact John W.\n";
@@ -4786,7 +4787,6 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 #endif
 
 // https://decomp.me/scratch/2g8BD
-#ifdef NON_MATCHING
 void func_800BD20C_CC1BC(void)
 {
 	u8 var_v0;
@@ -4794,22 +4794,19 @@ void func_800BD20C_CC1BC(void)
 
 	for (var_v0 = 0;var_v0 < D_80047F98; var_v0++)
 	{
-		for (var_a0 = 0;var_a0 < 0x10;var_a0++)
+		for (var_a0 = 0; var_a0 < 0x10; var_a0++)
 		{
-			if ((D_80147F00_156EB0[currentLevel][var_v0 - 6] & (1 << var_a0)) &&
-				D_8003E0FC[currentLevel - 1][var_a0].unk6 != 0x50)
+			if ((D_80147F00_156EB0[currentLevel - 1][var_v0] & (1 << var_a0)) &&
+				D_8003E0FC[currentLevel - 1][var_a0].openness != 0x50)
 			{
-				D_8003E0FC[currentLevel - 1][var_a0].unk6 =
-					((-D_8003E0FC[currentLevel - 1][var_a0].unk6 < D_8003E0FC[currentLevel - 1][var_a0].unk6
-					  ? D_8003E0FC[currentLevel - 1][var_a0].unk6
-					  : -D_8003E0FC[currentLevel - 1][var_a0].unk6) + 1);
+				D_8003E0FC[currentLevel - 1][var_a0].openness =
+					((-D_8003E0FC[currentLevel - 1][var_a0].openness < D_8003E0FC[currentLevel - 1][var_a0].openness
+					  ? D_8003E0FC[currentLevel - 1][var_a0].openness
+					  : -D_8003E0FC[currentLevel - 1][var_a0].openness) + 1);
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD20C_CC1BC.s")
-#endif
 
 // Reset gates for current level to closed
 void func_800BD2F4_CC2A4(void)
@@ -4817,7 +4814,7 @@ void func_800BD2F4_CC2A4(void)
   u8 i;
   for (i = 0;i < 8;i++)
   {
-	D_8003E0FC[currentLevel - 1][i].unk6 = 0;
+	D_8003E0FC[currentLevel - 1][i].openness = 0;
   }
   func_800BD20C_CC1BC();
 }
@@ -4844,15 +4841,15 @@ void func_800BD360_CC310(void)
 	{
 		if (D_8003E0FC[currentLevel - 1][i].unk9 == 2)
 		{
-			if (D_8003E0FC[currentLevel - 1][i].unk6 == 0)
+			if (D_8003E0FC[currentLevel - 1][i].openness == 0)
 			{
 				return;
 			}
 			return;
 		}
 
-		sp88[1] = D_8003E0FC[currentLevel - 1][i].unk0 << 8;
-		sp88[0] = D_8003E0FC[currentLevel - 1][i].unk4 << 8;
+		sp88[1] = D_8003E0FC[currentLevel - 1][i].xPosition << 8;
+		sp88[0] = D_8003E0FC[currentLevel - 1][i].zPosition << 8;
 		if (func_800BB3D0_CA380(
 			D_80149434 - 0x800,
 			D_80149436 - 0x900,
@@ -4864,8 +4861,8 @@ void func_800BD360_CC310(void)
 			&sp88[0]) != 0)
 		{
 			if (func_800B93AC_C835C(
-				D_8003E0FC[currentLevel - 1][i].unk0 << 8,
-				D_8003E0FC[currentLevel - 1][i].unk4 << 8,
+				D_8003E0FC[currentLevel - 1][i].xPosition << 8,
+				D_8003E0FC[currentLevel - 1][i].zPosition << 8,
 				0xA0,
 				(s16)(s32)D_80052B2C->unk0,
 				(s32)D_80052B2C->unk8,
@@ -4877,11 +4874,11 @@ void func_800BD360_CC310(void)
 				s16 gateY;
 
 				func_800B84D0_C7480(
-					D_8003E0FC[currentLevel - 1][i].unk0 << 8,
-					D_8003E0FC[currentLevel - 1][i].unk4 << 8);
+					D_8003E0FC[currentLevel - 1][i].xPosition << 8,
+					D_8003E0FC[currentLevel - 1][i].zPosition << 8);
 
-				gateY = D_8003E0FC[currentLevel - 1][i].unk2;
-				v1 = D_8003E0FC[currentLevel - 1][i].unk6;
+				gateY = D_8003E0FC[currentLevel - 1][i].yPosition;
+				v1 = D_8003E0FC[currentLevel - 1][i].openness;
 				a0 = -v1;
 				if (a0 < v1)
 				{
@@ -4893,9 +4890,9 @@ void func_800BD360_CC310(void)
 				}
 
 				func_800BC760_CB710(
-					D_8003E0FC[currentLevel - 1][i].unk0 << 8,
+					D_8003E0FC[currentLevel - 1][i].xPosition << 8,
 					gateY,
-					D_8003E0FC[currentLevel - 1][i].unk4 << 8,
+					D_8003E0FC[currentLevel - 1][i].zPosition << 8,
 					(u8)absAnim,
 					(D_8003E0FC[currentLevel - 1][i].unk9 << 14) + 0x4000);
 			}
@@ -4930,15 +4927,15 @@ s32 func_800BD688_CC638(s16 targetX, s16 targetY, s16 targetZ, VehicleInstance *
   }
   for (i = 0; i < 8; i++)
   {
-	if (D_8003E0FC[currentLevel - 1][i].unk6 != 0x50)
+	if (D_8003E0FC[currentLevel - 1][i].openness != 0x50)
 	{
 	  continue; // Gate is not fully open
 	}
-	x = (D_8003E0FC[currentLevel - 1][i].unk0 << 8) - targetX;
+	x = (D_8003E0FC[currentLevel - 1][i].xPosition << 8) - targetX;
 	absX = x >= 0 ? x : -x;
-	z = (D_8003E0FC[currentLevel - 1][i].unk4 << 8) - targetZ;
+	z = (D_8003E0FC[currentLevel - 1][i].zPosition << 8) - targetZ;
 	absZ = z >= 0 ? z : -z;
-	y = D_8003E0FC[currentLevel - 1][i].unk2 - targetY;
+	y = D_8003E0FC[currentLevel - 1][i].yPosition - targetY;
 	absY = y >= 0 ? y : -y;
 	distSq = ((absX * absX) + (absZ * absZ)) + (absY * absY);
 	  dist = sqrtf(distSq);
@@ -4947,7 +4944,7 @@ s32 func_800BD688_CC638(s16 targetX, s16 targetY, s16 targetZ, VehicleInstance *
 		{
 		  continue;
 		}
-		if ((height + 0xC8) >= D_8003E0FC[currentLevel - 1][i].unk2)
+		if ((height + 0xC8) >= D_8003E0FC[currentLevel - 1][i].yPosition)
 		{
 		  continue;
 		}
@@ -4958,11 +4955,10 @@ s32 func_800BD688_CC638(s16 targetX, s16 targetY, s16 targetZ, VehicleInstance *
   return 1;
 }
 
-// Change level bounds if player passes through a gate
-// CURRENT(45)
-#ifdef NON_MATCHING
+// Expand opening gates and
+// Change level bounds if player passes through
+#ifdef TRUE
 void func_800BD8B8_CC868(void) {
-	u8* gate;
 	u8 i;
 	s8 state;
 	s32 absX;
@@ -4982,21 +4978,20 @@ void func_800BD8B8_CC868(void) {
 	}
 
 	for (i = 0; i < 8; i++) {
-		gate = (u8*)&D_8003E0FC[currentLevel][i];
-		if (*(u8*)(gate - 0x47) == 2) {
+		if (D_8003E0FC[currentLevel - 1][i].unk9 == 2) {
 			return;
 		}
 
-		state = *(s8*)(gate - 0x4A);
+		state = D_8003E0FC[currentLevel - 1][i].openness;
 		if ((state != 0) && (state < 0x50)) {
-			*(s8*)(gate - 0x4A) = state + 4;
-			state = *(s8*)(gate - 0x4A);
-			*(s8*)(gate - 0x4A) = state - (state % 2);
-			state = *(s8*)(gate - 0x4A);
+			D_8003E0FC[currentLevel - 1][i].openness = state + 4;
+			state = D_8003E0FC[currentLevel - 1][i].openness;
+			D_8003E0FC[currentLevel - 1][i].openness = state - (state % 2);
+			state = D_8003E0FC[currentLevel - 1][i].openness;
 		}
 
 		if (state >= 0x50) {
-			gateX = (*(s16*)(gate - 0x50)) << 8;
+			gateX = D_8003E0FC[currentLevel - 1][i].xPosition << 8;
 			diff = D_80052B34->unk0 - gateX;
 			if (diff >= 0) {
 				absX = diff;
@@ -5004,7 +4999,7 @@ void func_800BD8B8_CC868(void) {
 				absX = -diff;
 			}
 			if (absX < 0xFA) {
-				gateZ = (*(s16*)(gate - 0x4C)) << 8;
+				gateZ = D_8003E0FC[currentLevel - 1][i].zPosition << 8;
 				diff = D_80052B34->unk4 - gateZ;
 				if (diff >= 0) {
 					absZ = diff;
@@ -5012,16 +5007,16 @@ void func_800BD8B8_CC868(void) {
 					absZ = -diff;
 				}
 				if (absZ < 0xFA) {
-					if (*(u8*)(gate - 0x47) == 1) {
+					if (D_8003E0FC[currentLevel - 1][i].unk9 == 1) {
 						if (gateZ < D_80052B34->unk4) {
-							D_80047F94 = *(u8*)(gate - 0x48);
+							D_80047F94 = D_8003E0FC[currentLevel - 1][i].unk8;
 						} else {
-							D_80047F94 = *(u8*)(gate - 0x49);
+							D_80047F94 = D_8003E0FC[currentLevel - 1][i].unk7;
 						}
 					} else if (gateX < D_80052B34->unk0) {
-						D_80047F94 = *(u8*)(gate - 0x48);
+						D_80047F94 = D_8003E0FC[currentLevel - 1][i].unk8;
 					} else {
-						D_80047F94 = *(u8*)(gate - 0x49);
+						D_80047F94 = D_8003E0FC[currentLevel - 1][i].unk7;
 					}
 					func_800B0C80_BFC30();
 					func_800FAC90_109C40();
@@ -5084,12 +5079,12 @@ void func_800BDAF4_CCAA4(void) {
 
 void func_800BDD24_CCCD4(u8 arg0)
 {
-  if ((D_8003E0FC[currentLevel - 1][arg0].unk6 > 0) && (D_80048188 == 0))
+  if ((D_8003E0FC[currentLevel - 1][arg0].openness > 0) && (D_80048188 == 0))
   {
-	D_8003E0FC[currentLevel - 1][arg0].unk6 = (s8) -(
-		-D_8003E0FC[currentLevel - 1][arg0].unk6 < D_8003E0FC[currentLevel - 1][arg0].unk6
-		? D_8003E0FC[currentLevel - 1][arg0].unk6
-		: -D_8003E0FC[currentLevel - 1][arg0].unk6);
+	D_8003E0FC[currentLevel - 1][arg0].openness = (s8) -(
+		-D_8003E0FC[currentLevel - 1][arg0].openness < D_8003E0FC[currentLevel - 1][arg0].openness
+		? D_8003E0FC[currentLevel - 1][arg0].openness
+		: -D_8003E0FC[currentLevel - 1][arg0].openness);
   }
 }
 

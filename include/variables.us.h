@@ -758,7 +758,6 @@ extern s32 D_8013D580;
 extern s16 D_801601F8[];
 extern TileEntry D_801479B0[];
 extern u8 D_80147C30_156BE0[];
-extern const u8 D_80147F00_156EB0[];
 extern TileCoord D_801475F0[];
 extern s8 D_8014667F_15562F[];
 extern Unk80146688 D_80146688_155638[][0x20];
