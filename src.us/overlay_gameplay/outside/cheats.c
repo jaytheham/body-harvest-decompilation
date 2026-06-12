@@ -46,7 +46,7 @@ void func_800731B0_82160(void)
 	i = temp;
 	do
 	{
-		if (((alien->specIndex >= 2) || ((alien->specIndex == 1) && (alien->unk24 == 1))) && (!(alien->unk20 & 0x100000)))
+		if (((alien->specIndex >= ALIEN_SPEC_HCU) || ((alien->specIndex == ALIEN_SPEC_HUMAN) && (alien->unk24 == 1))) && (!(alien->unk20 & 0x100000)))
 		{
 			temp = alien->unk0 - D_80052B34->unk0;
 			if (((temp >= 0) ? (temp) : (-temp)) < 0xA00)
@@ -216,7 +216,7 @@ void func_8007383C_827EC(void) {
 
 		index = D_8014D408[i];
 		alien = &alienInstances[index];
-		if (alien->specIndex == 0x19) {
+		if (alien->specIndex == ALIEN_SPEC_HARVESTER) {
 			alien->unk24 = 6;
 			func_80087AAC_96A5C(index);
 			func_800AFBA4_BEB54(alien->unk0, alien->unk4);

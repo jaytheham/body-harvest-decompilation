@@ -150,7 +150,13 @@ typedef enum {
 } AlienWaveType;
 
 typedef enum {
-	ALIEN_SPEC_HARVESTER = 0x19,
+	ALIEN_SPEC_NOTHING = 0,
+	ALIEN_SPEC_HUMAN = 1,
+	ALIEN_SPEC_HCU = 2, // Human Capture Unit
+	ALIEN_SPEC_BLACK_ADAM = 0x12,
+	ALIEN_SPEC_HARVESTER = 0x19, // "King Drone"
+	ALIEN_SPEC_PROCESSOR = 0x1A,
+	ALIEN_SPEC_BOSS = 0x1B,
 } AlienSpecType;
 
 extern u8 D_80047678;
