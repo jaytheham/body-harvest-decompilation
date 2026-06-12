@@ -18,8 +18,8 @@ You will be given a C file to target, follow this process:
   - Replace the `NON_MATCHING` before the target function with `TRUE` so the C code is included in the build instead of the assembly file.
   - Build the ROM so the diff tool can calculate the C implementation's CURRENT closeness value. It is normal that the build will return `FAILED` at this stage because the function does not yet match.
   - After building check the current closeness value with the diff tool, a lower value is better, `CURRENT(0)` is a match.
-  - Create a newfirst subagent, agentName `BH Function Cleanser`, and tell the subagent to clean up the function.
-  - Once the first finishes its work create a second subagent, agentName `BH Matcher`, and tell the subagent to target the function.
+  - Create a newfirst subagent, agentName `BH Function Cleanser`, and tell the subagent to clean up the function, this agent doesn't care about building, matching or closeness value.
+  - Once the first finishes its work create a second subagent, agentName `BH Matcher`, and tell the subagent to target the function, this agent does build, match, and check closeness.
 4. Only the following directory contents and files are allowed to be changed by subagents, after a subagent finishes, undo any changes outside of:
  - `/ExampleFixes`
  - `/include`

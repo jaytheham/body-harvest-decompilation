@@ -6,10 +6,6 @@ tools:
 model: DeepSeek V4 Flash (deepseek)
 ---
 
-## Overview
-
-This is a matching decompilation project for Body Harvest (N64). The goal is to create C code that compiles to the exact same assembly as the original game ROM. C89 code, compiler IDO 5.3 -O2 -mips2 -32.
-
 ## Project Structure
 
 - `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
@@ -20,7 +16,7 @@ This is a matching decompilation project for Body Harvest (N64). The goal is to 
 
 ## Powershell Tools
 
-- You must decompile Gfx macros. The "raw" `*->words.w0`/`*->words.w1` form will not match. Use `.\tools\gfxdis.ps1`:
+- `.\tools\gfxdis.ps1` can be used to convert Gfx macro instructions into C code.
 e.g.
 ```C
 dl = D_8005BB2C;
@@ -40,4 +36,6 @@ If you don't know one of the values, you can use `12345678` as a placeholder for
 # Your Job
 1. Identify any Gfx macro instructions in the target function and replace them with the appropriate C code using gfxdis.ps1
 2. Remove any unncessary casts.
-3. Replace *all* pointer arithmetic with struct/array access. You may need to search around the code base and look at other references to a memory address to determine the correct struct/array type and definition to use. If there are no other references to the address, or none typed with a struct/array yet, you will need to identify the correct struct/array type and definition based on the assembly of the function itself, and then update the relevant header files with your new struct/array definition.
+3. Replace *all* pointer arithmetic with struct/array access. If there is any pointer arithmetic remaining, you may need to search around the code base and look at other references to a memory address to determine the correct struct/array type and definition to use. If there are no other references to the address, or none typed with a struct/array yet, you will need to identify the correct struct/array type and definition based on the assembly of the function itself, and then update the relevant header files with your new struct/array definition.
+
+If the target function doesn't have any of these issues then your job is done and you can stop.
