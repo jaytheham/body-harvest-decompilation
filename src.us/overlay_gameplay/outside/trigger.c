@@ -306,12 +306,13 @@ void func_800AEBC4_BDB74(s32 arg0) {
 	func_800A6FD4_B5F84();
 }
 
-// CURRENT(145)
+// CURRENT(26)
 #ifdef NON_MATCHING
 void func_800AEC34_BDBE4(void *arg0) {
 	s16 i;
 	s32 var_a3;
 	s16 tmp;
+	s32 pad_before;
 	struct {
 		u8 pad[8];
 		Unk80222A78 sp28;
@@ -319,8 +320,7 @@ void func_800AEC34_BDBE4(void *arg0) {
 
 	(void)arg0;
 
-	var_a3 = D_80047F94;
-	for (i = 0; i < 0xD0; i++) {
+	for (i = 0, var_a3 = D_80047F94; i < 0xD0; i++) {
 		if (var_a3 == D_80223780[D_80222A78[i].unk9].unk12) {
 			D_80222A78[i].unk0 = 0;
 		}
