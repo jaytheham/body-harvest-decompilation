@@ -44,15 +44,13 @@ D_8005BB2C->words.w1 = 0x00010001;
 ```
 Is converted by pwsh cmd `.\tools\gfxdis.ps1 -w B6000000 00010001` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
 If you don't know one of the values, you can use `12345678` as a placeholder for the cmd, and then fill it in after the fact.
-- Check for similar already matched Body Harvest functions using `.\tools\find-similar.ps1 <current func name>` e.g. `.\tools\find-similar.ps1 func_800AFA98_BEA48` and see how they were written in C to achieve similar assembly output.
-- Find matched C code from other decomp projects with specific assembly patterns using `.\tools\Search-AsmMatch.ps1 -Offset 0x16AF30 -Size 0x50 -Threshold 0.5` where Offset is the Body Havest baserom.us.z64 file offset of the assembly, and Size is the number of bytes to search for. This returns results from other decomp projects, even though they're different projects you should look up any functions returned to see what the C code looks like and use that shape as reference. Best to use it for a smaller range of assembly that includes the differences you are trying to fix, rather than the whole function, to get more relevant results. You can see the ROM address of each instruction in the diff output.
+- Useful: Check for already matched functions with sub-sections of assembly that are the same as the target assembly using `.\tools\find-partial.ps1 <current func name>` e.g. `.\tools\find-partial.ps1 func_80120414_12F3C4` you can use that C code as reference for your own implementation.
 
 # Your Workflow
 1. Change the `#ifdef NON_MATCHING` line above the function to `#ifdef TRUE` so the C code will be included in the build.
 2. Always read the whole file `DecompHints.md` for general matching advice.
 3. Build, compare with target, identify differences.
-4. Before making any changes use `.\tools\Search-AsmMatch.ps1` to search for similar assembly patterns in matched functions in other decomp projects, and see how they were achieved in C. This is a very powerful tool, it can save you a lot of time.
-4. Make a single change to the C code to try to reduce the number of differences in assembly.
+4. Change to the C code in a way that will make the current assembly match the target assembly.
 5. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
 
 First target incorrect/missing/out-of-order instructions, ignore register allocation and stack placement until the instructions match.
@@ -61,12 +59,12 @@ Don't rely on just the closeness value to tell if a change is an improvement, al
 
 If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
-If a function has a switch statement and there is an associated jump table const defined at the start of the file you'll need to delete that const before you begin. The consts are there so that the rodata is built correctly while the functions are NON_MATCHING and the .s file is being used instead, when the c is being included in the build it will generate its own jump table replacing the need for the const version. 
+If a function has a switch statement and there is an associated jump table const defined at the start of the file you'll need to delete that const before you begin. The consts are there so that the rodata is built correctly while the functions are NON_MATCHING and the .s file is being used instead, when the C code is being included in the build it will generate its own jump table replacing the need for the const version. 
 
 - Declarations of data symbols used by the function must go in `include/variables.us.h`.
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
 - Add or update declarations for any called functions in `include/functions.us.h`.
-- Replace all pointer arithmetic with struct/array access.
+- Important: Replace all pointer arithmetic with struct/array access!
 - All struct field accesses should use `.` or `->` operators.
 - Update void\* parameters that should be typed.
 - Unusual constructions (e.g. `(arg0 < 0x9C) ^ 1`) should be converted into a more human readable form (e.g. `arg0 >= 0x9C`).

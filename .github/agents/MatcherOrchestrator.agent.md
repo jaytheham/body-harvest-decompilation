@@ -37,7 +37,7 @@ Subagents are not to commit any changes. After they finish you will check the cu
 
 If a function already has a closeness value of less than 100 then skip it. Don't tell the subagent this value threshold.
 
-If a function has any switch statements, skip it - unless it's the last NON_MATCHING function in the c file. Functions with switch statements have to be matched last-to-first so that their jump table rodata gets positioned correctly.
+If there are multiple NON_MATCHING functions with switch statements, only process the last one in the c file. Functions with switch statements have to be matched last-to-first so that their jump table rodata gets positioned correctly.
 
 Keep going automatically until all NON_MATCHING functions in the file have been processed by subagents.
 
