@@ -25,8 +25,8 @@ These powershell tools exist to assist you:
 
 - Build the ROM: `.\tools\make.ps1`
 - Compare target and your current assembly for a specific function after building:
- `.\tools\diff.ps1 <target function name> <ROM address of next function>"`.
- E.g. `.\tools\diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`.
+ `.\tools\diff.ps1 <target function name> <next function name>"`.
+ E.g. `.\tools\diff.ps1 func_80092ADC_A1A8C func_80092BBC_A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`.
  Diff output includes a score for your assembly e.g. `CURRENT (46)`, 0 is a perfect match.
  Diff output skips matching instructions except for 3 either side of differences.
 - You can get the full assembly of a function after building by adding param `--show=target` or `--show=current` to the above diff command.

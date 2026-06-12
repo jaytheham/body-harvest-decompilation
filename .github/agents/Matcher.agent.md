@@ -23,8 +23,8 @@ You will be tasked with an existing C function to modify iteratively until it pr
 
 - Build the ROM: `.\tools\make.ps1`. Important: This is the only correct way to build your C code, it ensures all symbols are correctly linked and produces a true comparison of the current vs the target.
 - Compare target and your current assembly for a specific function after building:
- `.\tools\diff.ps1 <target function name> <ROM address of next function>"`.
- E.g. `.\tools\diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`.
+ `.\tools\diff.ps1 <target function name> <next function name>"`.
+ E.g. `.\tools\diff.ps1 func_80092ADC_A1A8C func_80092BBC_A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`.
  Diff output includes a closeness value for the specified range of assembly e.g. `CURRENT (46)`, lower is better, 0 is a perfect match.
  Diff output skips matching instructions except for 3 either side of differences.
 - You can get the full assembly of a function after building by adding param `--show=target` or `--show=current` to the above diff command.

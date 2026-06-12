@@ -1,11 +1,13 @@
 #!/usr/bin/env pwsh
 # Helper script to run the asm-differ diff inside the bh-container.
 # Usage:
-#   .\diff.ps1 <function name> [<ROM address of next function>] [--show=target|current]
+#   .\diff.ps1 <function name> [<function name with offset>] [--show=target|current]
 #
-# When the second argument is supplied it is prefixed with "0x" before
-# being passed to diff.py.  If it is omitted the script will only pass the
-# function name.
+# The second argument is expected to be in the form "func_XXXXXXXX_XXXXXX"
+# (e.g. "func_8012EC3C_13DBEC").  The part after the last underscore is
+# automatically extracted and prefixed with "0x" before being passed to
+# diff.py as the ROM address of the next function.  If omitted, only the
+# function name is passed.
 #
 # When --show=target is provided, --diff_mode=single_base is passed to diff.py.
 # When --show=current is provided, --diff_mode=single is passed to diff.py.
@@ -34,8 +36,15 @@ foreach ($arg in $RemainingArgs) {
             }
         }
     } elseif (-not $NextAddr -and -not ($arg -like '--*')) {
-        # Treat the first non-flag argument as the optional next function address
-        $NextAddr = $arg
+        # Treat the first non-flag argument as the optional function+offset string.
+        # Extract the offset from after the last underscore.
+        $lastUnderscore = $arg.LastIndexOf('_')
+        if ($lastUnderscore -ge 0 -and $lastUnderscore -lt $arg.Length - 1) {
+            $NextAddr = $arg.Substring($lastUnderscore + 1)
+        } else {
+            Write-Error "Second argument '$arg' does not contain an underscore-separated offset."
+            exit 1
+        }
     } else {
         Write-Error "Unknown argument: $arg"
         exit 1
