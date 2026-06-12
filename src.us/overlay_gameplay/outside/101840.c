@@ -629,24 +629,25 @@ void func_800F2980_101930(void *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F2980_101930.s")
 #endif
 
-// CURRENT(2010)
+// CURRENT(837)
 #ifdef NON_MATCHING
 void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 	u8 *base;
-	u8 *entry;
+	u8 count;
 	s16 i;
 	s16 temp;
-	u8 count;
+	u32 idx;
 
-	if (arg0 >= 9) {
+	idx = arg0;
+	if ((s32)idx >= 9) {
 		osSyncPrintf(D_801446E8_153698);
 	}
 
-	if (D_80157FF0[arg0] != -1) {
+	if (D_80157FF0[idx] != -1) {
 		osSyncPrintf(D_80144700_1536B0);
 	}
 
-	base = &D_80158000[arg0 * 0x170];
+	base = &D_80158000[idx * 0x170];
 	if (base[0x22] == 2) {
 		return;
 	}
@@ -661,27 +662,26 @@ void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 
 	func_800F2980_101930(base);
 
-	count = D_801601F0[base[0x23] * 0x16 + 0xC];
+	count = ((u8 *)D_801601F0)[base[0x23] * 0x16 + 0xC];
 	if (count > 0) {
 		i = 0;
 		do {
-			entry = &base[i * 0x24];
-			if (entry[0x47] == 0) {
-				temp = *(s16 *)&entry[0x3E];
-				*(s16 *)&entry[0x42] = temp;
-				*(s16 *)&entry[0x38] = temp;
+			if (base[i * 0x24 + 0x47] == 0) {
+				temp = *(s16 *)&base[i * 0x24 + 0x3E];
+				*(s16 *)&base[i * 0x24 + 0x42] = temp;
+				*(s16 *)&base[i * 0x24 + 0x38] = temp;
 
-				temp = *(s16 *)&entry[0x40];
-				*(s16 *)&entry[0x44] = temp;
-				*(s16 *)&entry[0x3C] = temp;
+				temp = *(s16 *)&base[i * 0x24 + 0x40];
+				*(s16 *)&base[i * 0x24 + 0x44] = temp;
+				*(s16 *)&base[i * 0x24 + 0x3C] = temp;
 
-				temp = *(s16 *)&entry[0x2A];
-				*(s16 *)&entry[0x2E] = temp;
-				*(s16 *)&entry[0x24] = temp;
+				temp = *(s16 *)&base[i * 0x24 + 0x2A];
+				*(s16 *)&base[i * 0x24 + 0x2E] = temp;
+				*(s16 *)&base[i * 0x24 + 0x24] = temp;
 
-				temp = *(s16 *)&entry[0x2C];
-				*(s16 *)&entry[0x30] = temp;
-				*(s16 *)&entry[0x28] = temp;
+				temp = *(s16 *)&base[i * 0x24 + 0x2C];
+				*(s16 *)&base[i * 0x24 + 0x30] = temp;
+				*(s16 *)&base[i * 0x24 + 0x28] = temp;
 			}
 			i += 1;
 		} while (i < count);
