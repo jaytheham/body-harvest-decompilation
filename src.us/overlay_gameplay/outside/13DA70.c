@@ -857,66 +857,63 @@ void func_801306C4_13F674(u8 *arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_801306C4_13F674.s")
 #endif
 
+// CURRENT(12370)
 #ifdef NON_MATCHING
 void func_80130BA0_13FB50(void)
 {
 	u8 scoreText[0x14];
-	s32 temp;
-	u8 progress;
+	s32 baseScore;
 
 	if (D_80140CA4_14FC54 != 0) {
-		D_80140CA8_14FC58 = 0;
-		D_8016006C[0] = 0;
-		D_80160058 = 0;
-		D_80140CA4_14FC54 = 0;
-		temp = D_80052B2C->unk30;
-		D_80160070 = temp;
-		D_80140CAC_14FC5C = 0;
-		D_80140CB0_14FC60 = 0;
-		D_8016006C[1] = 0;
-
-		D_8016005C = temp;
-		if (D_80048170 == 0) {
-			temp += 0x1388;
-		}
-
-		D_80160060 = temp;
-		if (D_8004816E == 0) {
-			D_80160064 = temp + 0x1388;
+		if (1) { D_80140CA8_14FC58 = 0; }
+		if (1) { D_8016006C[0] = 0; }
+		if (1) { D_80160058 = 0; }
+		if (1) { D_80140CA4_14FC54 = 0; }
+		if (1) { baseScore = D_80052B2C->unk30; }
+		if (1) { D_80160070 = baseScore; }
+		if (1) { D_80140CAC_14FC5C = 0; }
+		if (1) { D_80140CB0_14FC60 = 0; }
+		if (1) { D_8016006C[1] = 0; }
+		if (1) { if (D_80048170 == 0) {
+			D_8016005C = baseScore;
+			baseScore += 0x1388;
 		} else {
-			D_80160064 = temp;
-		}
+			D_8016005C = baseScore;
+		} }
+		if (1) { if (D_8004816E == 0) {
+			D_80160060 = baseScore;
+			D_80160064 = baseScore + 0x1388;
+		} else {
+			D_80160060 = baseScore;
+			D_80160064 = baseScore;
+		} }
 	}
 
-	temp = D_80052B2C->unk30;
-	if ((D_80160070 == temp) && (D_8016006C[0] == 0x1E)) {
+	if ((D_80160070 == D_80052B2C->unk30) && (D_8016006C[0] == 0x1E)) {
 		D_8016006C[0] = 0;
 		D_8016006C[1] = 0;
-
-		progress = D_80160058 + 1;
-		if (progress < 4) {
-			D_80160058 = progress;
+		if (D_80160058 + 1 < 4) {
+			D_80160058 = D_80160058 + 1;
 		} else {
 			D_80160058 = 4;
 		}
 	}
 
-	if (D_80160070 == temp) {
-		progress = D_8016006C[0] + 1;
-		if (progress < 0x1E) {
-			D_8016006C[0] = progress;
+	baseScore = D_80052B2C->unk30;
+	if (D_80160070 == baseScore) {
+		baseScore = D_8016006C[0] + 1;
+		if (baseScore < 0x1E) {
+			D_8016006C[0] = baseScore;
 		} else {
 			D_8016006C[0] = 0x1E;
 		}
 	} else {
-		s32 score = temp + 0x64;
-
-		if (D_80160070 < score) {
+		s32 nextScore = baseScore + 0x64;
+		if (D_80160070 < nextScore) {
 			D_80052B2C->unk30 = D_80160070;
 		} else {
-			D_80052B2C->unk30 = score;
+			D_80052B2C->unk30 = nextScore;
 		}
-
 		func_800153D8_15FD8(0xCD);
 		D_8016006C[0] = 0;
 	}
@@ -924,12 +921,10 @@ void func_80130BA0_13FB50(void)
 	drawText(D_801454F0_1544A0, 0x400, 0x400);
 	drawText(D_801454F8_1544A8, 0x7F, 0xC8, 0xDC, 0xFF);
 
-	progress = D_80160058;
-	if (progress > 0) {
-		if (progress == 1) {
+	if (D_80160058 > 0) {
+		if (D_80160058 == 1) {
 			func_8000577C_637C();
 			D_80160070 = D_80160060;
-
 			if (D_8016006C[1] < 0x15) {
 				s32 x = D_8016006C[1] * 12;
 				D_8016006C[1] = (u8)(D_8016006C[1] + 1);
@@ -938,33 +933,28 @@ void func_80130BA0_13FB50(void)
 				drawText(D_80145504_1544B4, 0xFF, D_8016006C[1]);
 			}
 		}
-
 		switch (D_800313D0_31FD0) {
-			case 2:
-				drawText(D_80145520_1544D0, 2, 2);
-				break;
-			case 1:
-				drawText(D_80145530_1544E0, 2, 2);
-				break;
-			default:
-				drawText(D_80145508_1544B8, 2, 2);
-				break;
+		case 2:
+			drawText(D_80145520_1544D0, 2, 2);
+			break;
+		case 1:
+			drawText(D_80145530_1544E0, 2, 2);
+			break;
+		default:
+			drawText(D_80145508_1544B8, 2, 2);
+			break;
 		}
-
 		if (D_80048170 == 0) {
 			drawText(D_80145540_1544F0, 0x1D, 2, 0x1388);
 		} else {
 			drawText(D_80145548_1544F8, 0x1D, 2, 0);
 		}
-
-		progress = D_80160058;
 	}
 
-	if (progress >= 2) {
-		if (progress == 2) {
+	if (D_80160058 >= 2) {
+		if (D_80160058 == 2) {
 			func_8000577C_637C();
 			D_80160070 = D_80160064;
-
 			if (D_8016006C[1] < 0x15) {
 				s32 x = D_8016006C[1] * 12;
 				D_8016006C[1] = (u8)(D_8016006C[1] + 1);
@@ -973,19 +963,17 @@ void func_80130BA0_13FB50(void)
 				drawText(D_80145554_154504, 0xFF, D_8016006C[1]);
 			}
 		}
-
 		switch (D_800313D0_31FD0) {
-			case 2:
-				drawText(D_80145570_154520, 2, 3);
-				break;
-			case 1:
-				drawText(D_80145588_154538, 2, 3);
-				break;
-			default:
-				drawText(D_80145558_154508, 2, 3);
-				break;
+		case 2:
+			drawText(D_80145570_154520, 2, 3);
+			break;
+		case 1:
+			drawText(D_80145588_154538, 2, 3);
+			break;
+		default:
+			drawText(D_80145558_154508, 2, 3);
+			break;
 		}
-
 		if (D_8004816E == 0) {
 			drawText(D_801455A0_154550, 0x1D, 3, 0x1388);
 		} else {
@@ -1005,15 +993,15 @@ void func_80130BA0_13FB50(void)
 	func_8012EAC0_13DA70(func_8012FFB0_13EF60(), scoreText);
 
 	switch (D_800313D0_31FD0) {
-		case 2:
-			func_8012F4E0_13E490(D_801455C8_154578, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
-			break;
-		case 1:
-			func_8012F4E0_13E490(D_801455D0_154580, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
-			break;
-		default:
-			func_8012F4E0_13E490(D_801455C0_154570, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
-			break;
+	case 2:
+		func_8012F4E0_13E490(D_801455C8_154578, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
+		break;
+	case 1:
+		func_8012F4E0_13E490(D_801455D0_154580, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
+		break;
+	default:
+		func_8012F4E0_13E490(D_801455C0_154570, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
+		break;
 	}
 
 	func_8012F4E0_13E490(scoreText, 0x14, 0x1E, 0xA2, D_80140C74_14FC24, 0, 0, 0x20);
