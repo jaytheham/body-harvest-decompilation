@@ -928,8 +928,8 @@ void func_800F3670_102620(void) {
 	{
 		u8 j;
 		for (j = 0; j < 12; j++) {
-			*(Unk801470C0Entry *)((u8*)D_801601F0 + j * 0x16) =
-				*(Unk801470C0Entry *)(D_801470C0_156070 + currentLevel * 0x108 + j * 0x16 - 0x108);
+			*((u8*)D_801601F0 + j * 0x16) =
+				*(D_801470C0_156070 + currentLevel * 0x108 + j * 0x16 - 0x108);
 		}
 	}
 }
@@ -1121,10 +1121,7 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F3990_102940.s")
 #endif
 
-// CURRENT(1280) - Register allocation differences in else block:
-// - Delay slot sub.d uses $f4 instead of $f6
-// - 0.5 reused from $f2/$f3 instead of reloaded into $f16/$f17
-// - 1.0 loaded into $f6/$f7 before 0.5 instead of after in $f10/$f11
+// CURRENT(1280)
 #ifdef NON_MATCHING
 s16 func_800F3EE4_102E94(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, u8 arg5) {
 	f64 ratio;
@@ -1172,7 +1169,7 @@ s32 func_800F41E0_103190(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 // CURRENT(1510)
 #ifdef NON_MATCHING
 void func_800F4258_103208(UnkF9230Func800F4748Entry *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 *arg5, s16 *arg6) {
-	Unk801470C0Entry *entry;
+	? *entry;
 	f32 dist;
 	f32 distSq;
 	f32 baseXFloat;
@@ -1185,7 +1182,7 @@ void func_800F4258_103208(UnkF9230Func800F4748Entry *arg0, s16 arg1, s16 arg2, s
 
 	dx = arg3 - arg1;
 	dz = arg4 - arg2;
-	entry = &((Unk801470C0Entry *)D_801601F0)[arg0->unk23];
+	entry = &(D_801601F0)[arg0->unk23];
 	baseX = entry->unk0;
 	baseR = entry->unk2;
 
