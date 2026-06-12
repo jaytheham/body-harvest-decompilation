@@ -529,10 +529,10 @@ s32 D_801409F0_14F9A0 = 0;
 s32 D_801409F4_14F9A4 = 0;
 s32 D_801409F8_14F9A8 = 0;
 
-#ifdef NON_MATCHING
+#ifdef TRUE
 void func_800F2890_101840(u8 arg0, s32 *arg1, s32 *arg2, u8 *arg3) {
 	s32 sp1C;
-	s32 sp20;
+	UnkF9230ShadowWalker *walker;
 
 	if (arg0 >= 9) {
 		osSyncPrintf(D_801446A0_153650);
@@ -543,9 +543,10 @@ void func_800F2890_101840(u8 arg0, s32 *arg1, s32 *arg2, u8 *arg3) {
 	}
 
 	if (arg0 < 8 && D_80157FF0[arg0] == -1) {
-		*arg1 = *(s32*)&D_80158000[arg0 * 0x170 + 0x10];
-		*arg2 = *(s32*)&D_80158000[arg0 * 0x170 + 0x14];
-		*arg3 = D_80158000[arg0 * 0x170 + 0x22];
+		walker = &((UnkF9230ShadowWalker *)D_80158000)[arg0];
+		*arg1 = *(s32*)&walker->limbs[0].unk10;
+		*arg2 = *(s32*)&walker->limbs[0].unk14;
+		*arg3 = walker->limbs[0].unk22;
 	} else {
 		*arg3 = 0xFF;
 	}
