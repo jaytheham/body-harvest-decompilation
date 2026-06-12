@@ -2,6 +2,7 @@
 #include <stdarg.h>
 #include "common.h"
 
+// 80147F40_156EF0
 const char *enemyNameStrings[] = {
 	"NULL",
 	"Human",
