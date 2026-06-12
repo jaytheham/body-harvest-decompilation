@@ -443,6 +443,7 @@ const u32 buildingPropertyData[] ={
 		0x00000000,
 	};
 
+	// 80148920_1578A0
 const char *mapPlaceNames[] = {
 	"Parenthos Village",
 	"Trumptonas Town",
