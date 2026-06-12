@@ -555,22 +555,19 @@ void func_800F2890_101840(u8 arg0, s32 *arg1, s32 *arg2, u8 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F2890_101840.s")
 #endif
 
-// CURRENT(5555)
+// CURRENT(3053)
 #ifdef NON_MATCHING
 void func_800F2980_101930(void *arg0) {
 	s32 sp7C;
 	s32 sp78;
+	s32 pad1;
+	s32 pad2;
 	s16 sp6E;
 	s16 sp6C;
 	s16 sp6A;
 	volatile s16 sp68;
-	f64 var_f20;
-	f64 var_f22;
-	f64 var_f24;
-	f64 var_f26;
 	s16 var_s4;
 	s16 var_v0;
-	s16 temp_s7;
 	s32 var_s3;
 	u8 temp_a0idx;
 	u8 temp_s0;
@@ -601,36 +598,31 @@ void func_800F2980_101930(void *arg0) {
 	}
 	sp7C = (s32) ((((f64) (f32) coss(var_v0 & 0xFFFF) / 32768.0) * (f64) *(s16 *) &base[0x1C]) +
 				 (f64) *(s32 *) &base[0x00]);
-	var_s3 = 0;
-	var_s2 = arg0;
 	sp78 = (s32) ((((f64) (f32) sins(*(u16 *) &base[0x18]) / 32768.0) * (f64) *(s16 *) &base[0x1C]) +
 				 (f64) *(s32 *) &base[0x04]);
 	*(s32 *) &base[0x08] = sp7C;
 	*(s32 *) &base[0x0C] = sp78;
-	temp_s7 = (s32) temp_s0 / 2;
-	if (temp_s7 > 0) {
+	var_s3 = 0;
+	var_s2 = arg0;
+	if ((s32) temp_s0 / 2 > 0) {
 		do {
 			if (var_s2[0x47] == 0) {
-				var_f20 = (f64) sp6C;
-				var_f22 = (f64) sp7C;
-				var_f24 = (f64) sp78;
-				var_f26 = (f64) sp6A;
 				var_v0 = (s16) ((sp68 - var_s4) - 0x4000);
-				*(s16 *) &var_s2[0x2A] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * var_f20) + var_f22);
-				*(s16 *) &var_s2[0x2C] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * var_f20) + var_f24);
-				*(s16 *) &var_s2[0x3E] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * var_f26) + var_f22);
-				*(s16 *) &var_s2[0x40] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * var_f26) + var_f24);
+				*(s16 *) &var_s2[0x2A] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp7C);
+				*(s16 *) &var_s2[0x2C] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp78);
+				*(s16 *) &var_s2[0x3E] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp7C);
+				*(s16 *) &var_s2[0x40] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp78);
 				var_v0 = (s16) (sp68 + var_s4 + 0x4000);
-				temp_s1 = base + (var_s3 * 0x24) + (temp_s7 * 0x24);
-				*(s16 *) &temp_s1[0x2A] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * var_f20) + var_f22);
-				*(s16 *) &temp_s1[0x2C] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * var_f20) + var_f24);
-				*(s16 *) &temp_s1[0x3E] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * var_f26) + var_f22);
-				*(s16 *) &temp_s1[0x40] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * var_f26) + var_f24);
+				temp_s1 = base + (var_s3 * 0x24) + (((s32) temp_s0 / 2) * 0x24);
+				*(s16 *) &temp_s1[0x2A] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp7C);
+				*(s16 *) &temp_s1[0x2C] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp78);
+				*(s16 *) &temp_s1[0x3E] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp7C);
+				*(s16 *) &temp_s1[0x40] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp78);
 				var_s4 += sp6E;
 			}
 			var_s3 += 1;
 			var_s2 += 0x24;
-		} while (var_s3 != temp_s7);
+		} while (var_s3 != ((s32) temp_s0 / 2));
 	}
 }
 #else
