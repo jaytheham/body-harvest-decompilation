@@ -319,7 +319,7 @@ segments:
       - [0x154600, .rodata, overlay_gameplay/outside/1416E0]
       - [0x1546C0, .rodata, overlay_gameplay/outside/145D70]
       - [0x1549E0, .rodata, overlay_gameplay/outside/148000]
-      - [0x154B90, .rodata, overlay_gameplay/outside/weapon_data]
+      - [0x154B90, .rodata, overlay_gameplay/outside/constData]
 
   - name: overlay_gameplay_inside
     type: code

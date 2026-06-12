@@ -1,9 +1,6 @@
-/* weapon_data.c - All leftover .rodata from overlay_gameplay_outside */
-/* ROM: 0x154B90-0x158330, VRAM: 0x80145BE0-0x80149380, size: 0x37A0 */
 #include <ultra64.h>
 #include <stdarg.h>
 #include "common.h"
-
 
 typedef struct { s16 f0; s16 f1; u32 p; } WeaponRefEntry;
 
