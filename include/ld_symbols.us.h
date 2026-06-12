@@ -3,7 +3,6 @@
 
 #include "common.h"
 
-extern Addr _14FCA0_bin;
 extern Addr _175EB0_bin;
 extern Addr _196DE0_bin;
 extern Addr _1C8E0_s;
@@ -438,6 +437,7 @@ extern Addr overlay_gameplay_outside_FEC70_c;
 extern Addr overlay_gameplay_outside_buildings_c;
 extern Addr overlay_gameplay_outside_cheats_c;
 extern Addr overlay_gameplay_outside_missions_c;
+extern Addr overlay_gameplay_outside_mutableData_c;
 extern Addr overlay_gameplay_outside_trigger_c;
 extern Addr overlay_level_america_254410_c;
 extern Addr overlay_level_america_data_bin;

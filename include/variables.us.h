@@ -1412,8 +1412,6 @@ extern s32 D_80140C98;
 extern s32 D_80140C9C;
 extern s32 D_80140CA0;
 extern s32 D_80140C78;
-extern u8 D_80140CF8_14FCA8;
-extern s16 D_80140CFC_14FCAC;
 extern char D_80140DD8[];
 extern char D_80140DEC[];
 extern char D_80140E08[];
