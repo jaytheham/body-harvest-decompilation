@@ -822,7 +822,7 @@ void func_800F3190_102140(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F3190_102140.s")
 #endif
 
-// CURRENT(635)
+// CURRENT(625)
 #ifdef NON_MATCHING
 void func_800F32EC_10229C(u8 arg0, u8 arg1) {
 	u8 i;
@@ -840,18 +840,16 @@ void func_800F32EC_10229C(u8 arg0, u8 arg1) {
 	}
 
 	base = &D_80158000[arg0 * 0x170];
-	entry = &D_801601F0[base[0x23] * 0x16];
+	entry = (u8*)D_801601F0 + base[0x23] * 0x16;
 	count = entry[0xC];
 	base[0x22] = 4;
 
 	if (count > 0) {
 		i = 0;
 		do {
-			u8 *anim;
-			u8 *next;
-
-			anim = &base[i * 0x24];
-			next = &anim[0x24];
+			s32 offset = i * 0x24;
+			u8 *anim = &base[offset];
+			u8 *next = &anim[0x24];
 
 			if (anim[0x47] == 1) {
 				anim[0x47] = 2;
@@ -865,7 +863,7 @@ void func_800F32EC_10229C(u8 arg0, u8 arg1) {
 			i++;
 		} while (i < count);
 
-		entry = &D_801601F0[base[0x23] * 0x16];
+		entry = (u8*)D_801601F0 + base[0x23] * 0x16;
 	}
 
 	threshold = *(s16 *)&entry[0xA];
