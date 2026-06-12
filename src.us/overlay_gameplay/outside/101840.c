@@ -1129,9 +1129,11 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F3990_102940.s")
 #endif
 
+// CURRENT(1280) - Register allocation differences in else block:
+// - Delay slot sub.d uses $f4 instead of $f6
+// - 0.5 reused from $f2/$f3 instead of reloaded into $f16/$f17
+// - 1.0 loaded into $f6/$f7 before 0.5 instead of after in $f10/$f11
 #ifdef NON_MATCHING
-// Regalloc in else block: compiler reuses $f2 for 0.5 division instead of loading fresh.
-// Score 1270 - all matching except else block float constant loading order.
 s16 func_800F3EE4_102E94(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, u8 arg5) {
 	f64 ratio;
 
