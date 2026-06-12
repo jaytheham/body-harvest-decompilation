@@ -55,7 +55,7 @@ u8 func_800A3DC8_B2D78(void) {
 		temp_a2 = D_8014D408[var_v0];
 		alien = &alienInstances[temp_a2];
 		
-		if (alien->specIndex == 0x19) {
+		if (alien->specIndex == ALIEN_SPEC_HARVESTER) {
 			if (alien->unk3C != 0) {
 				alien->unk3C = (s8) (alien->unk3C - 1);
 				osSyncPrintf("Found parent %d\n", temp_a2);

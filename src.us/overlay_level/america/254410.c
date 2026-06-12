@@ -287,7 +287,7 @@ void func_802D546C_254BAC(void) {
 
 	id = D_802E0E44;
 	if (id != 0xFF) {
-		if (alienInstances[id].specIndex == 0x12) {
+		if (alienInstances[id].specIndex == ALIEN_SPEC_BLACK_ADAM) {
 			func_80087AAC_96A5C(id);
 		}
 	}
@@ -302,7 +302,7 @@ void func_802D5530_254C70(void) {
 
 	id = D_802E0E44;
 	if (id != 0xFF) {
-		if (alienInstances[id].specIndex == 0x12) {
+		if (alienInstances[id].specIndex == ALIEN_SPEC_BLACK_ADAM) {
 			func_80087AAC_96A5C(id);
 		}
 	}

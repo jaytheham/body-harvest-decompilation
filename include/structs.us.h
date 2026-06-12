@@ -14,8 +14,6 @@ typedef struct {
 	/* 0x00 */ u64 unk0;
 } BitFlags64; /* size = 0x08 */
 
-
-
 typedef struct {
 	/* 0x00 */ f32 unk0;
 	/* 0x04 */ f32 unk4;

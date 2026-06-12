@@ -5034,9 +5034,9 @@ void func_800BD8B8_CC868(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD8B8_CC868.s")
 #endif
 
-// openCurrentStageGate
 #ifdef NON_MATCHING
 // CURRENT(1115)
+// openCurrentStageGate
 void func_800BDAF4_CCAA4(void) {
 	u8 stage;
 	u8 *gate;
