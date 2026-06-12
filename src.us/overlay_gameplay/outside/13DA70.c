@@ -318,32 +318,27 @@ void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F24C_13E1FC.s")
 #endif
 
-// CURRENT(2200)
+// CURRENT(1100)
 #ifdef NON_MATCHING
-void func_8012F2DC_13E28C(s32 arg0, s32 arg1, s32 arg2)
+void func_8012F2DC_13E28C(s32 src, s32 dst, s32 increment)
 {
-	f32 temp_f10;
-	f32 var_f0;
-	s32 var_v1;
-	u8 temp_v0;
-	u32 temp_a0;
+	f32 cosVal;
+	u8 i;
+	u32 angle;
 
-	temp_a0 = (D_80140C78_14FC28 * 0x3E8) & 0xFFFF;
-	if (((f64) (f32) coss(temp_a0) / 32768.0) >= 0.0) {
-		temp_a0 = (D_80140C78_14FC28 * 0x3E8) & 0xFFFF;
-		var_f0 = (f32) ((f64) (f32) coss(temp_a0) / 32768.0);
+	if ((f32)coss(((D_80140C78_14FC28 * 1000) & 0xFFFF)) / 32768.0 >= 0.0) {
+		angle = (D_80140C78_14FC28 * 1000) & 0xFFFF;
+		cosVal = (f32)coss(angle) / 32768.0;
 	} else {
-		temp_a0 = (D_80140C78_14FC28 * 0x3E8) & 0xFFFF;
-		var_f0 = (f32) -((f64) (f32) coss(temp_a0) / 32768.0);
+		angle = (D_80140C78_14FC28 * 1000) & 0xFFFF;
+		cosVal = -((f32)coss(angle) / 32768.0);
 	}
 
-	for (var_v1 = 0; var_v1 < 3; var_v1 = (var_v1 + 1) & 0xFF) {
-		temp_v0 = *(u8 *) (arg0 + var_v1);
-		temp_f10 = (f32) (0xFF - temp_v0);
-		*(u8 *) (arg1 + var_v1) = (u32) (temp_f10 * var_f0) + temp_v0;
+	for (i = 0; i < 3; i++) {
+		((u8 *)dst)[i] = (u8)((u32)((0xFF - ((u8 *)src)[i]) * cosVal) + ((u8 *)src)[i]);
 	}
 
-	D_80140C78_14FC28 += arg2;
+	D_80140C78_14FC28 += increment;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F2DC_13E28C.s")
