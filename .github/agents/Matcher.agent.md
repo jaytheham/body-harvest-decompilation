@@ -50,7 +50,7 @@ If you don't know one of the values, you can use `12345678` as a placeholder for
 1. Change the `#ifdef NON_MATCHING` line above the function to `#ifdef TRUE` so the C code will be included in the build.
 2. Always read the whole file `DecompHints.md` for general matching advice.
 3. Build, compare with target, identify differences.
-4. Change to the C code in a way that will make the current assembly match the target assembly.
+4. Change the C code in a way that will make the current assembly match the target assembly.
 5. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
 
 First target incorrect/missing/out-of-order instructions, ignore register allocation and stack placement until the instructions match.
@@ -65,9 +65,10 @@ If a function has a switch statement and there is an associated jump table const
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
 - Add or update declarations for any called functions in `include/functions.us.h`.
 - Important: Replace all pointer arithmetic with struct/array access!
+- Remove unnecessary casts.
 - All struct field accesses should use `.` or `->` operators.
 - Update void\* parameters that should be typed.
-- Unusual constructions (e.g. `(arg0 < 0x9C) ^ 1`) should be converted into a more human readable form (e.g. `arg0 >= 0x9C`).
+- Unusual constructions (e.g. `(arg0 < 0x9C) ^ 1`) should be converted into simpler forms (e.g. `arg0 >= 0x9C`).
 - Replace goto-based control flow with structured control flow (if/else, for, while).
 - Replace if-do-while and do-while loops with for(;;) or while() loops.
 - Search in `/asm` for any `jal` references (e.g. `jal        func_80073DC0_82D70`) to the target function to determine correct parameter and return types.
