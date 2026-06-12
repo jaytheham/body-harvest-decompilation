@@ -557,7 +557,7 @@ void func_800F2890_101840(u8 arg0, s32 *arg1, s32 *arg2, u8 *arg3) {
 
 // CURRENT(3053)
 #ifdef NON_MATCHING
-void func_800F2980_101930(void *arg0) {
+void func_800F2980_101930(void *arg0, s32 arg1) {
 	s32 sp7C;
 	s32 sp78;
 	s32 pad1;
@@ -694,14 +694,9 @@ void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F2D48_101CF8.s")
 #endif
 
+// CURRENT(3169)
 #ifdef NON_MATCHING
 void func_800F2ED8_101E88(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
-	u8 *base;
-	s32 temp_a1;
-	s32 temp_v0;
-	u8 temp_t7;
-	u8 state;
-
 	if ((s32) arg0 >= 9) {
 		osSyncPrintf(D_80144728_1536D8);
 	}
@@ -710,30 +705,35 @@ void func_800F2ED8_101E88(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 		osSyncPrintf(D_80144740_1536F0);
 	}
 
-	base = &D_80158000[arg0 * 0x170];
-	state = base[0x22];
-	temp_a1 = -arg1;
-	if (state != 0x10) {
-		temp_v0 = temp_a1;
-		if (temp_a1 < arg1) {
-			temp_v0 = arg1;
-		}
-		if (((temp_v0 >= 0xD) || (arg2 != *(s16 *) &base[0x18])) && (state != 4)) {
-			temp_t7 = (arg4 & 0x80) | 1;
-			base[0x22] = temp_t7;
-			state = temp_t7 & 0xFF;
-		}
+	{
+		s32 temp_a1;
+		u8 state;
+		u8 *base;
 
-		*(s16 *) &base[0x1C] = (s16) ((D_801601F0[base[0x23] * 0x16 + 0x12] * arg1) / 8);
-		*(s16 *) &base[0x18] = arg2;
-		if (state & 0x80) {
-			*(s16 *) &base[0x1A] = arg3;
+		base = &D_80158000[arg0 * 0x170];
+		state = base[0x22];
+		temp_a1 = -arg1;
+		if (state != 0x10) {
+			s32 temp_v0;
+
+			temp_v0 = temp_a1;
+			if (temp_a1 < arg1) temp_v0 = arg1;
+			if (((temp_v0 >= 0xD) || (arg2 != *(s16 *) &base[0x18])) && (state != 4)) {
+				base[0x22] = (arg4 & 0x80) | 1;
+				state = base[0x22];
+			}
+
+			*(s16 *) &base[0x1C] = (s16) ((((u8*)D_801601F0)[base[0x23] * 0x16 + 0x12] * arg1) / 8);
+			*(s16 *) &base[0x18] = arg2;
+			if (state & 0x80) {
+				*(s16 *) &base[0x1A] = arg3;
+			}
+			if (temp_a1 == 0) {
+				*(s32 *) &base[0x0] = *(s32 *) &base[0x10];
+				*(s32 *) &base[0x4] = *(s32 *) &base[0x14];
+			}
+			func_800F2980_101930(base, temp_a1);
 		}
-		if (temp_a1 == 0) {
-			*(s32 *) &base[0x0] = *(s32 *) &base[0x10];
-			*(s32 *) &base[0x4] = *(s32 *) &base[0x14];
-		}
-		func_800F2980_101930(base, temp_a1);
 	}
 }
 #else
