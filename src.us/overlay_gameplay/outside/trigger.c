@@ -34,43 +34,6 @@ const u32 jtbl_80142C54_151C04[] = {
 	0x800AEA68,
 };
 
-const u32 jtbl_80142C80_151C30[] = {
-	0x800AED70,
-	0x800AED80,
-	0x800AED90,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEDA0,
-	0x800AEDB0,
-	0x800AEDC0,
-	0x800AEDD0,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEDE0,
-	0x800AEDF0,
-	0x800AEE00,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE4C,
-	0x800AEE10,
-	0x800AEE20,
-	0x800AEE30,
-	0x800AEE40,
-};
-
 void func_800AE2C0_BD270(void) {
 	u8 i;
 	for (i = 0; i < 0xD0; i++) {
@@ -306,120 +269,126 @@ void func_800AEBC4_BDB74(s32 arg0) {
 	func_800A6FD4_B5F84();
 }
 
-// CURRENT(26)
-#ifdef NON_MATCHING
-void func_800AEC34_BDBE4(void *arg0) {
+void func_800AEC34_BDBE4(void *arg0)
+{
+	Unk80222A78 sp28;
 	s16 i;
-	s32 var_a3;
 	s16 tmp;
-	s32 pad_before;
-	struct {
-		u8 pad[8];
-		Unk80222A78 sp28;
-	} sp20;
-
-	(void)arg0;
-
-	for (i = 0, var_a3 = D_80047F94; i < 0xD0; i++) {
-		if (var_a3 == D_80223780[D_80222A78[i].unk9].unk12) {
+	for (i = 0; i < 0xD0; i++)
+	{
+		if (D_80047F94 == D_80223780[D_80222A78[i].unk9].unk12)
+		{
 			D_80222A78[i].unk0 = 0;
 		}
 	}
 
-	if (D_80052AD0 != 0) {
-		if (D_8004816A < (u8)D_800314C4) {
+	if (D_80052AD0 != 0)
+	{
+		if (D_8004816A < ((u8)D_800314C4))
+		{
 			func_800136CC_142CC();
 		}
 		func_80087E30_96DE0();
 
-		sp20.sp28.unk0 = 2;
-		sp20.sp28.unk1 = 0;
-		sp20.sp28.unk2 = 0;
-		sp20.sp28.pad3 = 0;
-		sp20.sp28.unk4 = D_8014F820 + 0x12C;
-		sp20.sp28.unk8 = 0;
-		sp20.sp28.unk9 = 0;
-		sp20.sp28.unkC = func_800AEBC4_BDB74;
-
-		func_800AE454_BD404(&sp20.sp28);
-		func_800BDAF4_CCAA4(); // Open gate when processer dies
-		var_a3 = D_80047F94;
+		sp28.unk0 = 2;
+		sp28.unk1 = 0;
+		sp28.unk2 = 0;
+		sp28.pad3 = 0;
+		sp28.unk8 = 0;sp28.unk4 = D_8014F820 + 0x12C;
+		sp28.unk9 = 0;
+		sp28.unkC = func_800AEBC4_BDB74;
+		func_800AE454_BD404(&sp28);
+		func_800BDAF4_CCAA4();
 	}
+	tmp = ((currentLevel * 10) + D_80047F94) - 10;
+	switch (tmp)
+	{
+	case 0:
+		D_80048030 = 6;
+		break;
 
-	tmp = (currentLevel * 10) + var_a3 - 10;
-	switch (tmp) {
-		case 0:
-			D_80048030 = 6;
-			break;
-		case 1:
-			D_80048030 = 0xB;
-			break;
-		case 2:
-			D_80048030 = 0x10;
-			break;
-		case 3:
-		case 4:
-		case 5:
-		case 6:
-		case 7:
-		case 8:
-		case 9:
-			break;
-		case 10:
-			D_80048030 = 2;
-			break;
-		case 11:
-			D_80048030 = 6;
-			break;
-		case 12:
-			D_80048030 = 0xA;
-			break;
-		case 13:
-			D_80048030 = 0xD;
-			break;
-		case 14:
-		case 15:
-		case 16:
-		case 17:
-		case 18:
-		case 19:
-			break;
-		case 20:
-			D_80048030 = 2;
-			break;
-		case 21:
-			D_80048030 = 5;
-			break;
-		case 22:
-			D_80048030 = 7;
-			break;
-		case 23:
-		case 24:
-		case 25:
-		case 26:
-		case 27:
-		case 28:
-		case 29:
-			break;
-		case 30:
-			D_80048030 = 2;
-			break;
-		case 31:
-			D_80048030 = 4;
-			break;
-		case 32:
-			D_80048030 = 6;
-			break;
-		case 33:
-			D_80048030 = 9;
-			break;
-		default:
-			break;
+	case 1:
+		D_80048030 = 0xB;
+		break;
+
+	case 2:
+		D_80048030 = 0x10;
+		break;
+
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+	case 8:
+	case 9:
+		break;
+
+	case 10:
+		D_80048030 = 2;
+		break;
+
+	case 11:
+		D_80048030 = 6;
+		break;
+
+	case 12:
+		D_80048030 = 0xA;
+		break;
+
+	case 13:
+		D_80048030 = 0xD;
+		break;
+
+	case 14:
+	case 15:
+	case 16:
+	case 17:
+	case 18:
+	case 19:
+		break;
+
+	case 20:
+		D_80048030 = 2;
+		break;
+
+	case 21:
+		D_80048030 = 5;
+		break;
+
+	case 22:
+		D_80048030 = 7;
+		break;
+
+	case 23:
+	case 24:
+	case 25:
+	case 26:
+	case 27:
+	case 28:
+	case 29:
+		break;
+
+	case 30:
+		D_80048030 = 2;
+		break;
+
+	case 31:
+		D_80048030 = 4;
+		break;
+
+	case 32:
+		D_80048030 = 6;
+		break;
+
+	case 33:
+		D_80048030 = 9;
+		break;
+
+	default:
+		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AEC34_BDBE4.s")
-#endif
 
 // spawnAlienWave arg3 changes orientation?
 u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
@@ -450,13 +419,13 @@ u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
 				return 0;
 			}
 			leaderGroup = &alienInstances[alienInstances[leaderId].unk25];
-			if (waveType == 0x1F) {
+			if (waveType == ALIEN_WAVE_TYPE_UNK1F) {
 				sp68.unk0 = 3;
 				sp68.unk8 = leaderId;
 				sp68.unkC = func_800AEC34_BDBE4;
 				func_800AE454_BD404(&sp68);
 			}
-			if (alienInstances[leaderId].specIndex == 0x19) {
+			if (alienInstances[leaderId].specIndex == ALIEN_SPEC_HARVESTER) {
 				alienInstances[leaderId].unk26 = 4;
 			}
 			followerIdx = leaderId;
@@ -604,7 +573,7 @@ void func_800AF634_BE5E4(Unk80222A78 *arg0) {
 	s32 waveIndex;
 
 	osSyncPrintf(&D_80142C00_151BB0, alienInstances[alienIdx].unk3E);
-	if (alienInstances[alienIdx].specIndex == 0x19) {
+	if (alienInstances[alienIdx].specIndex == ALIEN_SPEC_HARVESTER) {
 		parent = alienInstances + alienInstances[alienIdx].unk25;
 		waveIndex = alienInstances[alienIdx].unk3E;
 
@@ -759,7 +728,7 @@ void func_800AFBF8_BEBA8(Unk80222A78 *arg0)
 	  func_800AE3AC_BD35C(&tmp);
 	}
   }
-  if (alienInstances[alienIdx].specIndex == 0x19)
+  if (alienInstances[alienIdx].specIndex == ALIEN_SPEC_HARVESTER)
   {
 	tmp.unk9 = waveIdx;
 	tmp.unk8 = alienIdx;
@@ -812,7 +781,7 @@ void func_800AFE68_BEE18(Unk80222A78 *arg0) {
 	s32 temp;
 	s16 sp22;
 
-	if (alienInstances[arg0->unk8].specIndex == 0x19) {
+	if (alienInstances[arg0->unk8].specIndex == ALIEN_SPEC_HARVESTER) {
 		sp24 = (s32) alienInstances[arg0->unk8].unk0;
 		sp20 = (s32) alienInstances[arg0->unk8].unk4;
 		temp = coss(alienInstances[arg0->unk8].unkE);
