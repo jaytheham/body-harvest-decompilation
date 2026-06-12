@@ -4789,20 +4789,20 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 // https://decomp.me/scratch/2g8BD
 void func_800BD20C_CC1BC(void)
 {
-	u8 var_v0;
-	u8 var_a0;
+	u8 beaconIndex;
+	u8 gateIndex;
 
-	for (var_v0 = 0;var_v0 < D_80047F98; var_v0++)
+	for (beaconIndex = 0; beaconIndex < D_80047F98; beaconIndex++)
 	{
-		for (var_a0 = 0; var_a0 < 0x10; var_a0++)
+		for (gateIndex = 0; gateIndex < 0x10; gateIndex++)
 		{
-			if ((D_80147F00_156EB0[currentLevel - 1][var_v0] & (1 << var_a0)) &&
-				D_8003E0FC[currentLevel - 1][var_a0].openness != 0x50)
+			if ((D_80147F00_156EB0[currentLevel - 1][beaconIndex] & (1 << gateIndex)) &&
+				D_8003E0FC[currentLevel - 1][gateIndex].openness != 0x50)
 			{
-				D_8003E0FC[currentLevel - 1][var_a0].openness =
-					((-D_8003E0FC[currentLevel - 1][var_a0].openness < D_8003E0FC[currentLevel - 1][var_a0].openness
-					  ? D_8003E0FC[currentLevel - 1][var_a0].openness
-					  : -D_8003E0FC[currentLevel - 1][var_a0].openness) + 1);
+				D_8003E0FC[currentLevel - 1][gateIndex].openness =
+					((-D_8003E0FC[currentLevel - 1][gateIndex].openness < D_8003E0FC[currentLevel - 1][gateIndex].openness
+					  ? D_8003E0FC[currentLevel - 1][gateIndex].openness
+					  : -D_8003E0FC[currentLevel - 1][gateIndex].openness) + 1);
 			}
 		}
 	}

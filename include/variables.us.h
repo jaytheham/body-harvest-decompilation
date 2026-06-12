@@ -293,7 +293,7 @@ extern s32 leomecha_bss_0004;
 extern s32 D_80031410;
 extern s32 D_80031414;
 extern f32 D_80031418;
-extern s32 D_80031420;
+extern s32 D_80031420; // "game state"
 extern u32 D_80031424[];
 extern s32 D_8003142C;
 extern s32 D_80031430[];
@@ -543,14 +543,14 @@ extern s32 D_80047F88;
 extern s32 D_80047F8C;
 extern s32 D_80047F94;
 extern u8 D_80047F97;
-extern s32 D_80047F98;
+extern s32 D_80047F98; // beacon states - how many save beacons have been deployed
 extern s32 currentSaveFileIndex;
 extern Level currentLevel; // 80047f90
 extern s32 D_80047F9C; // WarpPointNumber
-extern s32 D_80047FA0;
+extern s32 D_80047FA0; // stage of level
 extern u8 D_80047FA8[6]; /* save data bytes */
 extern u8 D_80047FAE;
-extern s16 D_80048026;
+extern s16 D_80048026; // alien artifacts
 extern Gfx D_A01FF98[];
 extern Gfx D_A01F868[];
 extern Gfx D_A002120[];
@@ -616,7 +616,7 @@ extern u8 D_8004D350[];
 extern MissionCondEntry D_8004D1C8[];
 extern u8 D_80047F93;
 extern AlienInstance D_8004D0F8[]; // alien array base
-extern BitFlags64 D_8004DC48;
+extern BitFlags64 D_8004DC48; // "keys"
 extern Flags2x32 D_8004DC50;
 extern u32 D_8004DC54; // same address as D_8004DC50.unk4
 extern s32 D_8004DC40;
@@ -2905,7 +2905,7 @@ extern u16 D_8004758E;
 extern s32 D_80047684;
 extern u8 D_80047608;
 
-extern u8 D_80048030;
+extern u8 D_80048030; // Current objective
 extern u8 D_80048038[];
 extern u8 D_8014CFF0[];
 extern u8 D_8014CFF1[];
