@@ -1038,9 +1038,6 @@ void func_800B06C4_BF674(Unk80222A78 *arg0) {
 	func_800B03CC_BF37C(arg0->unk8, (s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80));
 }
 
-// This is matching but there's something whacky going on with D_8013D91C
-// does it require the .data section to be split first?
-#ifdef NON_MATCHING
 // Spawn boss alien at position, kind of
 void func_800B0710_BF6C0(s16 arg0, s16 arg1)
 {
@@ -1063,9 +1060,6 @@ void func_800B0710_BF6C0(s16 arg0, s16 arg1)
 	tmp.unkC = func_800B06C4_BF674;
 	func_800AE454_BD404(&tmp);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800B0710_BF6C0.s")
-#endif
 
 void func_800B0830_BF7E0(s32 arg0)
 {
