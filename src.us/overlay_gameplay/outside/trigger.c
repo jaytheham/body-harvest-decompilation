@@ -800,6 +800,7 @@ void func_800AFD48_BECF8(Unk80222A78 *arg0) {
 	func_800AE454_BD404(&tmp);
 }
 
+// CURRENT(1255)
 #ifdef NON_MATCHING
 void func_800AFE68_BEE18(Unk80222A78 *arg0) {
 	s32 sp34;
@@ -939,42 +940,29 @@ void func_800B0390_BF340(Unk80222A78 *arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(4495)
+// CURRENT(1138)
 u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2) {
-	typedef struct {
-		s16 unk0;
-		s16 unk2;
-		s16 unk4;
-		u8 unk6;
-		u8 unk7;
-	} Unk8003CEC0Entry;
-
 	Unk80222A78 sp60;
-	u8 sp5F;
+	volatile u8 sp5F;
 	u8 sp5E;
 	AlienInstance *sp58;
 	s32 sp4C;
-	s16 i;
-	u8 temp_s0;
-	u8 temp_v0;
-	Unk8003CEC0Entry *entry;
 	AlienInstance *leader;
-	AlienInstance *parent;
-	AlienInstance *follower;
+	u8 temp_v0;
+	s16 i;
 
-	temp_s0 = arg0;
 	if (currentLevel != 5) {
 		func_80011A40_12640(6, D_8006AA70);
 	}
 
-	temp_v0 = func_8007956C_8851C(D_8003CEC6[temp_s0 * 0x28]);
+	temp_v0 = func_8007956C_8851C(D_8003CEC6[arg0 * 0x28]);
 	sp5E = temp_v0;
 	if ((temp_v0 & 0xFF) == 0xFF) {
 		return 0xFF;
 	}
 
+	leader = &alienInstances[temp_v0];
 	sp5F = temp_v0;
-	leader = &alienInstances[sp5F];
 	leader->unk0 = arg1;
 	leader->unk4 = arg2;
 	leader->unk1B = (u8)func_800B0F20_BFED0(arg1, arg2);
@@ -988,11 +976,10 @@ u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2) {
 		leader->unk6 = leader->unkE;
 	}
 
-	parent = &alienInstances[leader->unk25];
-	*(s16 *)&parent->unk24 = arg1;
-	*(s16 *)&parent->unk26 = arg2;
+	sp58 = &alienInstances[leader->unk25];
+	*(s16 *)&sp58->unk24 = arg1;
+	*(s16 *)&sp58->unk26 = arg2;
 	D_80140AC4_14FA74 = (s32)leader;
-	sp58 = parent;
 	sp4C = sp5F;
 
 	osSyncPrintf(&D_80142C14_151BC4, sp5F, leader->unk25);
@@ -1003,8 +990,7 @@ u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2) {
 		u8 slotSpec;
 		u8 followerId;
 
-		entry = (Unk8003CEC0Entry *)((u8 *)&D_8003CEC0[temp_s0] + (i * 8));
-		slotSpec = entry->unk6;
+		slotSpec = ((u8 *)&D_8003CEC0[arg0])[i * 8 + 6];
 		if (slotSpec == 0) {
 			break;
 		}
@@ -1013,11 +999,10 @@ u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2) {
 		if (followerId == 0xFF) {
 			leader->unk20 |= (1 << (i + 0xB));
 		} else {
-			follower = &alienInstances[followerId];
-			follower->unk0 = entry->unk4 + arg1;
-			follower->unk4 = arg2 - entry->unk0;
-			follower->unk25 = sp5F;
-			follower->unk1B = leader->unk1B;
+			alienInstances[followerId].unk0 = *(s16 *)&((u8 *)&D_8003CEC0[arg0])[i * 8 + 4] + arg1;
+			alienInstances[followerId].unk4 = arg2 - *(s16 *)&((u8 *)&D_8003CEC0[arg0])[i * 8];
+			alienInstances[followerId].unk25 = sp5F;
+			alienInstances[followerId].unk1B = leader->unk1B;
 
 			sp60.unk0 = 3;
 			sp60.unk1 = i;
@@ -1053,9 +1038,6 @@ void func_800B06C4_BF674(Unk80222A78 *arg0) {
 	func_800B03CC_BF37C(arg0->unk8, (s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80));
 }
 
-// This is matching but there's something whacky going on with D_8013D91C
-// does it require the .data section to be split first?
-#ifdef NON_MATCHING
 // Spawn boss alien at position, kind of
 void func_800B0710_BF6C0(s16 arg0, s16 arg1)
 {
@@ -1078,9 +1060,6 @@ void func_800B0710_BF6C0(s16 arg0, s16 arg1)
 	tmp.unkC = func_800B06C4_BF674;
 	func_800AE454_BD404(&tmp);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800B0710_BF6C0.s")
-#endif
 
 void func_800B0830_BF7E0(s32 arg0)
 {
