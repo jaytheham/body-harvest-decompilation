@@ -1479,7 +1479,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1);
 void func_800970C0_A6070(void);
 void func_80097444_A63F4(s16 arg0, s16 arg1);
 void func_80097994_A6944(void);
-void func_80097E1C_A6DCC(void *arg0);
+void func_80097E1C_A6DCC(OrbitCam *cam);
 void func_80018D58_19958(void);
 void setGameplayResolution(void);
 s32 func_80087188_96138(u8, s32, s32);

@@ -1110,38 +1110,30 @@ void func_80097CB4_A6C64(UnkA6C64Keyframe *arg0, UnkA6C64Keyframe *arg1, UnkA6C6
   arg2->unk10 = arg0->unk10 + ((arg1->unk10 - arg0->unk10) * arg3);
 }
 
-typedef struct {
-	s16 unk0;
-	s16 unk2;
-	s16 unk4;
-	s16 unk6;
-	f32 unk8;
-	f32 unkC;
-	f32 unk10;
-} Unk80097E1C;
-
-// CURRENT(6780)
+// CURRENT(1739)
 #ifdef NON_MATCHING
-void func_80097E1C_A6DCC(Unk80097E1C *arg0) {
+void func_80097E1C_A6DCC(OrbitCam *cam) {
 	u16 sp66;
 	s16 temp;
+	extern f32 D_8014ED0C;
+	extern f32 D_8014ED10;
+	extern f32 D_8014ED14;
 
-	temp = coss(arg0->unk2);
-	D_8014ED0C = (f32)(((((f64)(f32)sins(arg0->unk4) / 7.0f) * ((f64)temp / 7.0f)) * (f64)arg0->unk0) + (f64)arg0->unk8);
+	temp = coss(cam->yaw);
+	D_8014ED0C = (f32)(((((f64)(f32)sins(cam->pitch) / 32768.0) * ((f64)(f32)temp / 32768.0)) * (f64)cam->distance) + (f64)cam->targetX);
 
-	temp = sins(arg0->unk2);
-	D_8014ED10 = (f32)(((((f64)(f32)sins(arg0->unk4) / 7.0f) * ((f64)temp / 7.0f)) * (f64)arg0->unk0) + (f64)arg0->unkC);
+	temp = sins(cam->yaw);
+	D_8014ED10 = (f32)(((((f64)(f32)sins(cam->pitch) / 32768.0) * ((f64)(f32)temp / 32768.0)) * (f64)cam->distance) + (f64)cam->targetY);
 
-	temp = coss(arg0->unk4);
-	D_8014ED14 = (f32)((((f64)temp / 7.0f) * (f64)arg0->unk0) + (f64)arg0->unk10);
+	D_8014ED14 = (f32)((((f64)(f32)coss(cam->pitch) / 32768.0) * (f64)cam->distance));
 
 	guPerspective((Mtx *)D_8005BB38, &sp66, (f32)D_80149404, 1.0f, 25.0f, 2000.0f, 1.0f);
-	gSPPerspNormalize(D_8005BB2C++, sp66);
+	gSPPerspNormalize(D_8005BB2C++, &sp66);
 	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	gSPMatrix(D_8005BB30++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	D_8005BB38 += 0x40;
 
-	guLookAt((Mtx *)D_8005BB38, D_8014ED0C, D_8014ED10, D_8014ED14, arg0->unk8, arg0->unkC, arg0->unk10, 0.0f, 0.0f, 1.0f);
+	guLookAt((Mtx *)D_8005BB38, D_8014ED0C, D_8014ED10, D_8014ED14, cam->targetX, cam->targetY, cam->targetZ, 0.0f, 0.0f, 1.0f);
 	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPMatrix(D_8005BB30++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
@@ -1588,10 +1580,10 @@ void func_8009811C_A70CC(void) {
 	M2C_FIELD(temp_v0_3, f32 *, 0x44) = (f32) M2C_FIELD(temp_v1_3, s16 *, -0x14);
 	M2C_FIELD(temp_v0_3, f32 *, 0x4C) = 0.0f;
 	M2C_FIELD(temp_v0_3, f32 *, 0x48) = (f32) M2C_FIELD(temp_a3_7, s16 *, 2);
-	D_8014ED0C = 0.0f;
+	sCameraEyeX = 0.0f;
 	temp_f0 = (f32) sp3CC;
-	D_8014ED10 = sp3D8 - temp_f0;
-	D_8014ED14 = temp_f0 + 0.0f;
+	sCameraEyeY = sp3D8 - temp_f0;
+	sCameraEyeZ = temp_f0 + 0.0f;
 	D_8014ED2D = 1;
 	D_8014ED2C = 1;
 	D_8014ED28 = 0.0f;

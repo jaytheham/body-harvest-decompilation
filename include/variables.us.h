@@ -778,10 +778,10 @@ extern Unk80146688 D_80146688_155638[][0x20];
 extern f32 D_801424E0;
 
 extern s32 D_8014ECD8;
-extern f32 D_8014ED0C;
-extern f32 D_8014ED10;
+extern f32 sCameraEyeX;
+extern f32 sCameraEyeY;
 extern u16 D_1014880[];
-extern f32 D_8014ED14;
+extern f32 sCameraEyeZ;
 extern s32 D_8015EA14;
 extern s32 D_8015EA18;
 extern s32 D_8015EA1C;
