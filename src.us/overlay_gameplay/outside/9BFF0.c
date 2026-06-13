@@ -524,15 +524,16 @@ void func_8008DA24_9C9D4(s32 arg0) {
 #endif
 
 // https://decomp.me/scratch/BnGko
+// CURRENT(925)
 #ifdef NON_MATCHING
 void func_8008DEF4_9CEA4(u8 arg0)
 {
-  //AlienInstance *inst = &alienInstances[arg0];
+  s32 var_t0;
   s32 sp48;
   s32 sp44;
   s32 sp40;
-  s32 var_t0;
-  s32 temp_v0;
+  s32 pad1;
+  s32 pad2;
   var_t0 = 1;
   alienInstances[arg0].unk12 = alienInstances[arg0].unk48;
   if (!(alienInstances[arg0].unk20 & 0x600))
@@ -570,8 +571,8 @@ void func_8008DEF4_9CEA4(u8 arg0)
 	func_8008D71C_9C6CC(arg0);
 	if ((alienInstances[arg0].unk20 & 0x100) && (!(alienInstances[arg0].unk20 & 0x1000)))
 	{
-	  temp_v0 = func_8011D260_12C210((s8) (alienInstances[arg0].unk0 >> 8), (s8) (alienInstances[arg0].unk4 >> 8));
-	  if ((temp_v0 != 0xFF) && (!(((*((u32 *) (D_80050AE0 + (temp_v0 * 0x18)))) >> 12) & 1)))
+	  s32 temp_v0 = func_8011D260_12C210((s8) (alienInstances[arg0].unk0 >> 8), (s8) (alienInstances[arg0].unk4 >> 8));
+	  if ((temp_v0 != 0xFF) && (!((D_80050AE0[temp_v0].unk0 >> 12) & 1)))
 	  {
 		func_8008D3F4_9C3A4(arg0);
 	  }
