@@ -2263,22 +2263,14 @@ loop_5:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C5894_D4844.s")
 #endif
 
-// CURRENT(2644)
+// CURRENT(2690)
 #ifdef NON_MATCHING
 void func_800C5D14_D4CC4(s32 arg0) {
 	Unk801541F8Entry *sp3C;
-	s32 padStack0;
-	s32 padStack1;
 	s16 var_t1;
 	u8 var_t2;
 	u8 var_t3;
 	s32 var_t4;
-	u32 vtxCmd;
-	u32 addrMask;
-	u32 setOtherMode;
-	u32 pipeSyncCmd;
-	u8 constAlpha;
-	Gfx *dl;
 	Unk80154318Entry *colorEntry;
 	Unk80154318Entry *entry;
 
@@ -2298,16 +2290,11 @@ void func_800C5D14_D4CC4(s32 arg0) {
 		}
 
 		if (var_t1 != -5 && var_t1 != -6) {
-			vtxCmd = 0x0400081F;
-			addrMask = 0x1FFFFFFF;
-			setOtherMode = 0xB5000000;
-			pipeSyncCmd = 0xE7000000;
-			constAlpha = 0x14;
 			do {
 				entry = &D_80154318[var_t1];
-				D_8005BB34->n.ob[0] = (s16)(f32)entry->unk8;
-				D_8005BB34->n.ob[1] = (s16)(f32)entry->unkA;
-				D_8005BB34->n.ob[2] = (s16)(f32)entry->unkC;
+				D_8005BB34->n.ob[0] = entry->unk8;
+				D_8005BB34->n.ob[1] = entry->unkA;
+				D_8005BB34->n.ob[2] = entry->unkC;
 				D_8005BB34->n.flag = 0;
 				D_8005BB34->n.tc[0] = 0;
 				D_8005BB34->n.tc[1] = 0;
@@ -2316,31 +2303,20 @@ void func_800C5D14_D4CC4(s32 arg0) {
 					D_8005BB34->v.cn[2] = var_t4;
 					D_8005BB34->v.cn[3] = entry->unk11;
 				D_8005BB34++;
-				D_8005BB34->n.ob[0] = (s16)(f32)(entry->unk8 - (s8)entry->unkE);
-				D_8005BB34->n.ob[1] = (s16)(f32)(entry->unkA - (s8)entry->unkF);
-				D_8005BB34->n.ob[2] = (s16)(f32)(entry->unkC - (s8)entry->unk10);
+				D_8005BB34->n.ob[0] = (s16)(entry->unk8 - (s8)entry->unkE);
+				D_8005BB34->n.ob[1] = (s16)(entry->unkA - (s8)entry->unkF);
+				D_8005BB34->n.ob[2] = (s16)(entry->unkC - (s8)entry->unk10);
 				D_8005BB34->n.flag = 0;
 				D_8005BB34->n.tc[0] = 0;
 				D_8005BB34->n.tc[1] = 0;
 					D_8005BB34->v.cn[0] = var_t2;
 					D_8005BB34->v.cn[1] = var_t3;
 					D_8005BB34->v.cn[2] = var_t4;
-					D_8005BB34->v.cn[3] = constAlpha;
+					D_8005BB34->v.cn[3] = 0x14;
 				D_8005BB34++;
-					dl = D_8005BB30;
-					D_8005BB30 = dl + 1;
-					dl->words.w0 = vtxCmd;
-					dl->words.w1 = ((u32)(D_8005BB34 - 2) & addrMask);
-
-					dl = D_8005BB30;
-					D_8005BB30 = dl + 1;
-					dl->words.w0 = setOtherMode;
-					dl->words.w1 = ((u32)entry->unk2 & 0xFF) | 0x200;
-
-					dl = D_8005BB30;
-					D_8005BB30 = dl + 1;
-					dl->words.w0 = pipeSyncCmd;
-					dl->words.w1 = 0;
+				gSPVertex(D_8005BB30++, (Vtx *)((u32)(D_8005BB34 - 2) & 0x1FFFFFFF), 2, 0);
+			{ Gfx *_g = D_8005BB30; D_8005BB30 = _g + 1; _g->words.w0 = _SHIFTL(G_LINE3D,24,8); _g->words.w1 = _SHIFTL(0,16,8) | _SHIFTL(2,8,8) | _SHIFTL(entry->unk2 & 0xFF,0,8); }
+				gDPPipeSync(D_8005BB30++);
 				var_t1 = entry->unk4;
 			} while (var_t1 != -5 && var_t1 != -6);
 		}
