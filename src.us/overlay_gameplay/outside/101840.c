@@ -5629,24 +5629,12 @@ void func_8010065C_10F60C(s32 arg0) {
 				continue;
 			}
 
-			D_8005BB2C->words.w0 = 0x03840010;
-			D_8005BB2C->words.w1 = (u32)&D_801592A0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0x03820010;
-			D_8005BB2C->words.w1 = (u32)&D_801592B0;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xBC00000A;
-			D_8005BB2C->words.w1 = 0xFFFFFFFF;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xBC00040A;
-			D_8005BB2C->words.w1 = 0xFFFFFFFF;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xBC00200A;
-			D_8005BB2C->words.w1 = 0x808080FF;
-			D_8005BB2C++;
-			D_8005BB2C->words.w0 = 0xBC00240A;
-			D_8005BB2C->words.w1 = 0x808080FF;
-			D_8005BB2C++;
+			gSPLookAtX(D_8005BB2C++, (Light *)&D_801592A0);
+			gSPLookAtY(D_8005BB2C++, (Light *)&D_801592B0);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xFFFFFFFF);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xFFFFFFFF);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x808080FF);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, 0x808080FF);
 
 			if ((vehicle->unk20 & 0x2000) && !((index + D_80052A8C) & 3)) {
 				func_800710D4_80084(0xFF, 0xFF, 0xFF);
@@ -5930,34 +5918,18 @@ void func_80101C14_110BC4(void) {
 			D_80052B50.unk4 = 0x100;
 			func_800039D0_45D0(&D_80052B50, 0, 0, D_8005BB38);
 
-			dl = D_8005BB2C;
-			D_8005BB2C = dl + 1;
-			dl->words.w0 = 0x01040040;
-			dl->words.w1 = (u32)D_8005BB38 & 0x1FFFFFFF;
-
+			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			D_8005BB38 += 0x40;
 
-			dl = D_8005BB2C;
-			D_8005BB2C = dl + 1;
-			dl->words.w0 = 0x06000000;
-			dl->words.w1 = (u32)D_8005BB38;
+			gSPDisplayList(D_8005BB2C++, (u32)D_8005BB38);
 
-			dl = D_8005BB2C;
-			D_8005BB2C = dl + 1;
-			dl->words.w0 = 0xBD000000;
-			dl->words.w1 = 0;
+			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
-			dl = D_8005BB2C;
-			D_8005BB2C = dl + 1;
-			dl->words.w0 = 0xE7000000;
-			dl->words.w1 = 0;
+			gDPPipeSync(D_8005BB2C++);
 		}
 	}
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xB7000000;
-	dl->words.w1 = 0x00020000;
+	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80101C14_110BC4.s")
@@ -5966,7 +5938,6 @@ void func_80101C14_110BC4(void) {
 // CURRENT(6685)
 #ifdef NON_MATCHING
 void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
-	Gfx *dl;
 	Unk8013FDA8Entry *entry;
 	u8 *specBytes;
 	s16 temp;
