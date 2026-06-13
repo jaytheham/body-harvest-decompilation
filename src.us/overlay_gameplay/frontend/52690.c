@@ -3371,15 +3371,10 @@ void func_8008BC00_5C0B0(u8 arg0) {
 	f32 zero;
 	s32 rand;
 	Unk800DE840 *entry;
-	Gfx *dl;
-
 	idx = D_800DE130[arg0].unk6;
 
 	gDPPipeSync(D_8005BB2C++);
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xFC6218C4;
-	dl->words.w1 = 0xFF33FFFF;
+	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
 
 	rand = func_800038E0_44E0() % 6;
@@ -3455,37 +3450,19 @@ void func_8008BC00_5C0B0(u8 arg0) {
 					texFrame = rand4 & 0xFF;
 				}
 
-				dl = D_8005BB2C;
-				D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xFD900000;
-				dl->words.w1 = (u32)(&D_100B4F0[texFrame << 9]) & 0x1FFFFFFF;
-
-				dl = D_8005BB2C;
-				D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xF5900000;
-				dl->words.w1 = 0x07080200;
-
-				dl = D_8005BB2C;
-				D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xE6000000;
-				dl->words.w1 = 0;
-
-				dl = D_8005BB2C;
-				D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xF3000000;
-				dl->words.w1 = 0x070FF400;
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u8*)((u32)(&D_100B4F0[texFrame << 9]) & 0x1FFFFFFF));
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+				gDPLoadSync(D_8005BB2C++);
+				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
 
 				gDPPipeSync(D_8005BB2C++);
 
-				dl = D_8005BB2C;
-				D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xF5800400;
-				dl->words.w1 = 0x00080200;
-
-				dl = D_8005BB2C;
-				D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xF2000000;
-				dl->words.w1 = 0x0007C07C;
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+				gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << 2, 31 << 2);
 
 				gDPPipeSync(D_8005BB2C++);
 
@@ -3579,15 +3556,8 @@ void func_8008BC00_5C0B0(u8 arg0) {
 
 				D_8005BB34++;
 
-				dl = D_8005BB2C;
-				D_8005BB2C = dl + 1;
-				dl->words.w0 = 0x0400103F;
-				dl->words.w1 = (u32)(D_8005BB34 - 4) & 0x1FFFFFFF;
-
-				dl = D_8005BB2C;
-				D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xB1000206;
-				dl->words.w1 = 0x00040602;
+				gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+				gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 2, 3, 1, 0);
 
 				curX = nextX2;
 				curY = nextY2;
