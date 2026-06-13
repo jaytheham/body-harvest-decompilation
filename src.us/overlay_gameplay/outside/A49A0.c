@@ -143,33 +143,12 @@ const f64 D_801424F8_1514A8[1] = { 500 };
 const f64 D_80142500_1514B0[1] = { 4000 };
 const f64 D_80142508_1514B8[1] = { 0.02 };
 
-// https://decomp.me/scratch/efEMb
-/* CURRENT(1125) */
-#ifdef NON_MATCHING
-s32 func_800959F0_A49A0(s32 arg0, s32 arg1, s32 arg2) {
-	s32 temp_t8;
-	s32 temp_t7;
-	s32 temp_t6;
-	volatile s32 sp0;
-	volatile s32 sp4;
-	volatile s32 sp8;
-
-	temp_t6 = arg0 & 0xFFFF;
-	sp4 = arg1;
-	temp_t7 = arg1 & 0xFFFF;
-	sp0 = arg2;
-	temp_t8 = arg2 & 0xFFFF;
-	arg2 = temp_t8;
-	arg1 = temp_t7;
-	sp8 = arg0;
-	if (temp_t6 < 0x1F) {
-		arg0 = temp_t6 & 0xFFFF;
-	} else {
-		arg0 = 0x1F;
-	}
-	arg1 = (arg1 < 0x1F) ? (arg1 & 0xFFFF) : 0x1F;
-	arg2 = (arg2 < 0x3F) ? (arg2 & 0xFFFF) : 0x3F;
-	return ((arg0 << 0xB) + (arg1 << 6) + (arg2 & 0x3F)) & 0xFFFF;
+#ifdef TRUE
+s32 func_800959F0_A49A0(u16 red, u16 green, u16 blue) {
+	red = red < 0x1F ? red : 0x1F;
+	green = green < 0x1F ? green : 0x1F;
+	blue = blue < 0x3F ? blue : 0x3F;
+	return ((red << 0xB) + (green << 6) + (blue & 0x3F)) & 0xFFFF;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800959F0_A49A0.s")
