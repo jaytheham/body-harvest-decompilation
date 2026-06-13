@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-13T00:46:59Z",
-  "commit": "5cef37ae",
-  "commit_timestamp": "2026-06-13T12:46:31+12:00",
+  "generated": "2026-06-13T01:58:15Z",
+  "commit": "4fdceae5",
+  "commit_timestamp": "2026-06-13T13:57:50+12:00",
   "overall": {
     "total_functions": 2706,
     "matched": 1450,
@@ -91,6 +91,15 @@
       "total": 122,
       "matched_pct": 23.8,
       "decompiled_pct": 37.7
+    },
+    "data": {
+      "display_name": "data",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "decompiled_pct": 0
     }
   },
   "files": [
@@ -202,6 +211,16 @@
       "asm_stubs": 0,
       "total": 39,
       "matched_pct": 84.6,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "data/data_60E60.c",
+      "segment": "data",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
       "contributor": "jaytheham"
     },
     {
@@ -628,7 +647,7 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 52,
+      "files": 53,
       "matched": 1448,
       "non_matching": 1125,
       "asm_stubs": 131
@@ -770,7 +789,7 @@
     },
     {
       "date": "2026-06-07",
-      "commit": "0c4fa09",
+      "commit": "4fdceae",
       "matched": 1450,
       "non_matching": 1125,
       "total": 2706
