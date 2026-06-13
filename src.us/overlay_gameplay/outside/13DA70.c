@@ -87,7 +87,7 @@ u16 D_80140C68_14FC18[] = { 0x0033, 0x0033, 0x0033, 0x0000 };
 u8 D_80140C70_14FC20[] = { 0xD7, 0xD7, 0xFF, 0x00 };
 u8 D_80140C74_14FC24[] = { 0xFF, 0x00, 0x00, 0x00 };
 u32 D_80140C78_14FC28 = 0;
-u32 D_80140C7C_14FC2C = 0;
+s32 D_80140C7C_14FC2C = 0;
 u32 D_80140C80_14FC30 = 0;
 u32 D_80140C84_14FC34 = 1;
 u32 D_80140C88_14FC38 = 0;
@@ -582,30 +582,34 @@ s32 func_8012FFB0_13EF60(void)
 	return score;
 }
 
+extern u16 D_80140C7E_14FC2E;
+
 // End of level state manager
-// CURRENT(8735)
+// CURRENT(7370)
 #ifdef NON_MATCHING
 void func_8013001C_13EFCC(void)
 {
-	u8 levelText[0x18];
-	s16 x0;
-	s16 y0;
-	s16 x1;
-	s16 y1;
-	u16 phase;
-	s32 next;
-	s32 mode;
-	u8* levelName;
+	u8 levelText[0x18];     // Buffer for assembling stage/level name text
+	s16 rectLeft;           // Left edge of the fade rectangle
+	s16 rectTop;            // Top edge of the fade rectangle
+	s16 rectRight;          // Right edge of the fade rectangle
+	s16 rectBottom;         // Bottom edge of the fade rectangle
+	s32 fadeSum;            // Computed next fade phase
+	s32 fadeCopy;           // Saved copy of the fade phase
+	s32 language;           // Language index (0=English, 1=French, 2=German)
+	u8* levelName;          // Pointer to the localized stage/level name string
 
 	if (gameplayMode == 10) {
 		if (D_80140C80_14FC30 != 0) {
-			if ((s32)D_80140C7C_14FC2C > 0) {
+			// Fade-out in progress: once the fade finishes, move to the next state
+			if (D_80140C7C_14FC2C > 0) {
 				D_80160050 = -0x1000;
 			} else {
 				D_8013D580_14C530 = 1;
 				D_80140C80_14FC30 = 0;
 			}
 		} else if (D_80140C7C_14FC2C == 0) {
+			// Start fade-in and choose which end-of-level screen to show
 			if (D_80052ACA == 2) {
 				D_8015FF80 = 5;
 			} else {
@@ -616,9 +620,12 @@ void func_8013001C_13EFCC(void)
 		}
 	}
 
-	if ((s32)D_80140C7C_14FC2C > 0) {
+	// Animate the fade (either fading in or fading out)
+	if (D_80140C7C_14FC2C > 0) {
+		// Convert the fade phase to a brightness value (0–180) for the screen
 		func_8012FE6C_13EE1C((s16)(((f32)(s32)D_80140C7C_14FC2C / 65535.0f) * 180.0f));
 
+		// Configure RDP for simple 2D rendering (no lighting, culling, or fog)
 		gDPPipeSync(D_8005BB2C++);
 		gDPTileSync(D_8005BB2C++);
 		gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_FOG | G_LIGHTING);
@@ -627,42 +634,49 @@ void func_8013001C_13EFCC(void)
 		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_TEX_EDGE, G_RM_TEX_EDGE2);
 
-		phase = (u16)D_80140C7C_14FC2C;
-		x0 = func_80006520_7120((s16)(D_80068084 * 2), 0x70, phase);
-		y0 = x0 + func_80006520_7120(0, (s16)((D_80068084 * 4) - 0xE0), phase);
-		x1 = func_80006520_7120((s16)(D_80068088 * 2), 0x60, phase);
-		y1 = x1 + func_80006520_7120(0, (s16)((D_80068088 * 4) - 0xC0), phase);
+		// Draw a coloured rectangle that shrinks/grows with the fade
+		rectLeft   = func_80006520_7120((s16)(D_80068084 * 2), 0x70, D_80140C7E_14FC2E);
+		rectTop    = rectLeft + func_80006520_7120(0, (s16)((D_80068084 * 4) - 0xE0), D_80140C7E_14FC2E);
+		rectRight  = func_80006520_7120((s16)(D_80068088 * 2), 0x60, D_80140C7E_14FC2E);
+		rectBottom = rectRight + func_80006520_7120(0, (s16)((D_80068088 * 4) - 0xC0), D_80140C7E_14FC2E);
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
-		func_800092B8_9EB8(x0, x1, y0, y1, 0);
+		func_800092B8_9EB8(rectLeft, rectRight, rectTop, rectBottom, 0);
 
-		next = (s32)D_80140C7C_14FC2C + D_80160050;
-		if ((next >= 0x10000) && (D_80160050 > 0)) {
+		// Advance the fade phase by the current step direction
+		fadeSum = (s32)D_80140C7C_14FC2C + D_80160050;
+		fadeCopy = fadeSum;
+		if ((fadeSum >= 0x10000) && (D_80160050 > 0)) {
 			D_80160050 = 0;
 			D_80140C7C_14FC2C = 0xFFFF;
-		} else if ((next <= 0) && (D_80160050 < 0)) {
+		} else if ((fadeSum > 0) || (D_80160050 >= 0)) {
+			D_80140C7C_14FC2C = fadeCopy;
+		} else {
 			D_80160050 = 0;
 			D_80140C7C_14FC2C = 0;
-		} else {
-			D_80140C7C_14FC2C = next;
 		}
 	}
 
+	// If the fade hasn't reached its fully-lit target (0xFFFF), keep drawing
 	if (D_80140C7C_14FC2C != 0xFFFF) {
 		return;
 	}
 
+	// -- Fade complete: draw the end-of-level screen content --
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 	drawText(D_80145408_1543B8, 0, 0);
 	drawText(D_80145410_1543C0, (D_80068084 / 2) - 0x82, (D_80068088 / 2) - 0x64, (D_80068084 / 2) + 0x82, (D_80068088 / 2) + 0x64);
 
+	// Dispatch based on which end-of-level screen state is active
 	switch (D_8015FF80) {
 	case 0:
+		// Initial state — signal fade-out on the next frame
 		D_80140C80_14FC30 = 1;
 		break;
 
 	case 1:
-		mode = D_800313D0_31FD0;
-		switch (mode) {
+		// Show "processor destroyed" message (localised)
+		language = D_800313D0_31FD0;
+		switch (language) {
 		case 1:
 			func_801306C4_13F674(D_8014543C_1543EC);
 			break;
@@ -677,12 +691,18 @@ void func_8013001C_13EFCC(void)
 		return;
 
 	case 2:
+		// Show the bonus/score tally screen
 		func_80130BA0_13FB50();
 		return;
 
 	case 3:
-		mode = D_800313D0_31FD0;
-		switch (mode) {
+		// Unused state
+		break;
+
+	case 4:
+		// Show "Stage / Level / Niveau N" label (localised)
+		language = D_800313D0_31FD0;
+		switch (language) {
 		case 1:
 			levelName = D_80031508[currentLevel];
 			func_8012EBC0_13DB70(levelName, D_80145460_154410, levelText);
@@ -698,6 +718,7 @@ void func_8013001C_13EFCC(void)
 			break;
 		}
 
+		// Append the stage number digit
 		if ((currentLevel == 4) && (func_8000726C_7E6C(0x14) != 0)) {
 			levelText[0x14] = '4';
 		} else {
@@ -708,9 +729,10 @@ void func_8013001C_13EFCC(void)
 		func_80131280_140230(levelText);
 		return;
 
-	case 4:
-		mode = D_800313D0_31FD0;
-		switch (mode) {
+	case 5:
+		// Show "boss destroyed" message (localised)
+		language = D_800313D0_31FD0;
+		switch (language) {
 		case 1:
 			func_801306C4_13F674(D_8014548C_15443C);
 			break;
@@ -724,9 +746,10 @@ void func_8013001C_13EFCC(void)
 		}
 		return;
 
-	case 5:
-		mode = D_800313D0_31FD0;
-		switch (mode) {
+	case 6:
+		// Show "complete / beendet / terminé" message (localised)
+		language = D_800313D0_31FD0;
+		switch (language) {
 		case 1:
 			levelName = D_80031508[currentLevel];
 			func_8012EBC0_13DB70(levelName, D_801454B4_154464, levelText);
@@ -742,9 +765,6 @@ void func_8013001C_13EFCC(void)
 			break;
 		}
 		func_80131280_140230(levelText);
-		break;
-
-	case 6:
 		break;
 
 	default:
