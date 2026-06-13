@@ -2385,9 +2385,13 @@ extern u8 D_80258330; // signposts
 extern s16 D_80047710;
 extern s16 D_80047712;
 extern u8 *D_800944E8_64998[];
-extern u8 D_800933A0_63850[];
-extern u8 D_800938A0_63D50[];
-extern u8 D_80093DA0_64250[];
+extern u8 D_800933A0_63850[0x400];
+extern unsigned long D_800933A0_63850_u32[0x40];
+extern u8 D_800938A0_63D50[0x400];
+extern unsigned long D_800938A0_63D50_u32[0x40];
+extern u8 D_80093DA0_64250[0x400];
+extern unsigned long D_80093DA0_64250_u32[0x36];
+extern u8 D_80094278_64728[0x28];
 extern char D_800AE070_7E520;
 extern char D_800AE074_7E524;
 extern char D_800AE078_7E528;
