@@ -1115,9 +1115,6 @@ void func_80097CB4_A6C64(UnkA6C64Keyframe *arg0, UnkA6C64Keyframe *arg1, UnkA6C6
 void func_80097E1C_A6DCC(OrbitCam *cam) {
 	u16 sp66;
 	s16 temp;
-	extern f32 D_8014ED0C;
-	extern f32 D_8014ED10;
-	extern f32 D_8014ED14;
 
 	temp = coss(cam->yaw);
 	D_8014ED0C = (f32)(((((f64)(f32)sins(cam->pitch) / 32768.0) * ((f64)(f32)temp / 32768.0)) * (f64)cam->distance) + (f64)cam->targetX);
@@ -1580,10 +1577,10 @@ void func_8009811C_A70CC(void) {
 	M2C_FIELD(temp_v0_3, f32 *, 0x44) = (f32) M2C_FIELD(temp_v1_3, s16 *, -0x14);
 	M2C_FIELD(temp_v0_3, f32 *, 0x4C) = 0.0f;
 	M2C_FIELD(temp_v0_3, f32 *, 0x48) = (f32) M2C_FIELD(temp_a3_7, s16 *, 2);
-	sCameraEyeX = 0.0f;
+	D_8014ED0C = 0.0f;
 	temp_f0 = (f32) sp3CC;
-	sCameraEyeY = sp3D8 - temp_f0;
-	sCameraEyeZ = temp_f0 + 0.0f;
+	D_8014ED10 = sp3D8 - temp_f0;
+	D_8014ED14 = temp_f0 + 0.0f;
 	D_8014ED2D = 1;
 	D_8014ED2C = 1;
 	D_8014ED28 = 0.0f;
