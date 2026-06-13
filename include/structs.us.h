@@ -1101,7 +1101,10 @@ typedef struct {
 	/* 0x20 */ s32 unk20;
 	/* 0x24 */ s32 unk24;
 	/* 0x28 */ s16 unk28;
-	/* 0x2A */ u8 pad2A[0x6];
+	/* 0x2A */ u8 pad2A[0x2];
+	/* 0x2C */ s16 unk2C;
+	/* 0x2E */ u8 unk2E;
+	/* 0x2F */ u8 pad2F[0x1];
 } Unk8015F760; /* size = 0x30 */
 
 typedef struct {
