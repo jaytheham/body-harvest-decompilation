@@ -929,7 +929,6 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 	s32 *temp_v0_12;
 	s32 *temp_v0_13;
 	s32 *temp_v0_14;
-	s32 *temp_v0_15;
 	s32 *temp_v0_2;
 	s32 *temp_v0_3;
 	s32 *temp_v0_4;
@@ -1062,10 +1061,7 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 	if (temp_t2 & 0x2000) {
 		*(u16*)&((u8*)D_80052B34)[0x20] = (u16) (temp_t2 & 0xDFFF);
 	}
-	temp_v0_15 = D_8005BB2C;
-	D_8005BB2C = temp_v0_15 + 8;
-	temp_v0_15->unk4 = (s32) ((s32) &D_80031120 & 0x1FFFFFFF);
-	temp_v0_15->unk0 = 0x01020040;
+	gSPMatrix(D_8005BB2C++, (Mtx *)((s32)&D_80031120 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007EFD4_167094.s")
@@ -1168,12 +1164,6 @@ void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 sp3C;
 	void *sp20;
 	void *temp_t1;
-	void *temp_v0;
-	void *temp_v0_2;
-	void *temp_v0_3;
-	void *temp_v0_4;
-	void *temp_v0_5;
-	void *temp_v0_6;
 
 	sp5C = arg0 << 0x10;
 	sp4B = D_800E6AD8.unk426;
@@ -1187,10 +1177,7 @@ void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	sp58 = 0x40;
 	sp4A = D_800E6AD8.unk425;
 	func_8000C81C_D41C(&sp5C, &sp4C, &sp54, D_8005BB38);
-	temp_v0 = D_8005BB2C;
-	D_8005BB2C = temp_v0 + 8;
-	temp_v0->unk0 = 0x01040040;
-	temp_v0->unk4 = (s32) (D_8005BB38 & 0x1FFFFFFF);
+	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	D_8005BB38 += 0x40;
 	if ((D_800E6AD8.unk426 == 4) && (D_800E6AD8.unk425 == 0)) {
 		sp3C = (s32) (D_800E6AD8.unk8 * 65536.0f);

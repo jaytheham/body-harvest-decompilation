@@ -1348,7 +1348,6 @@ void func_800731A8_43658(void) {
 	s32 var_s0;
 	s32 var_t0;
 	s32 var_t0_2;
-	s32 var_t1;
 	s32 var_t1_2;
 	s32 var_t3_2;
 	s32 var_v0;
@@ -1364,28 +1363,13 @@ void func_800731A8_43658(void) {
 	u8 var_t5;
 	u8 var_t5_2;
 	u8 var_t5_3;
-	void *temp_t2;
-	void *temp_t2_2;
-	void *temp_v1;
-	void *temp_v1_10;
-	void *temp_v1_2;
-	void *temp_v1_3;
 
 	var_s4 = &D_800D6DC0;
 	func_800038E0_44E0();
-	temp_v1 = D_8005BB2C;
 	D_800946E0_64B90 += 0x320;
-	D_8005BB2C = temp_v1 + 8;
-	*(s32 *)((u8 *)(temp_v1) + (0)) = 0xBA001301;
-	*(s32 *)((u8 *)(temp_v1) + (4)) = 0;
-	temp_v1_2 = D_8005BB2C;
-	D_8005BB2C = temp_v1_2 + 8;
-	*(s32 *)((u8 *)(temp_v1_2) + (4)) = 0x80008000;
-	*(s32 *)((u8 *)(temp_v1_2) + (0)) = 0xBB000001;
-	temp_v1_3 = D_8005BB2C;
-	D_8005BB2C = temp_v1_3 + 8;
-	*(s32 *)((u8 *)(temp_v1_3) + (0)) = 0xB6000000;
-	*(s32 *)((u8 *)(temp_v1_3) + (4)) = 0x20001;
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
 	var_s0 = 0x29;
 	do {
 		if (*(u8 *)((u8 *)(var_s4) + (0x16)) != 0) {
@@ -1441,27 +1425,19 @@ void func_800731A8_43658(void) {
 				} else {
 					var_t4 = temp_v1_4 & 0xFF;
 				}
-				temp_t2 = D_8005BB2C;
 				temp_v0_6 = var_a0 + 0xE6;
-				D_8005BB2C = temp_t2 + 8;
-				*(s32 *)((u8 *)(temp_t2) + (0)) = 0xFA000000;
-				if (temp_v0_6 >= 0x100) {
-					var_t1 = 0xFF;
-				} else {
-					var_t1 = temp_v0_6;
-				}
-				temp_v1_5 = var_a1 + 0xAA;
 				if (temp_v0_6 >= 0x100) {
 					var_t0 = 0xFF;
 				} else {
 					var_t0 = temp_v0_6;
 				}
+				temp_v1_5 = var_a1 + 0xAA;
 				if (temp_v1_5 >= 0x100) {
 					var_v0 = 0xFF;
 				} else {
 					var_v0 = temp_v1_5;
 				}
-				*(s32 *)((u8 *)(temp_t2) + (4)) = (s32) ((var_v0 & 0xFF) | (var_t3 << 0x18) | ((var_t0 & 0xFF) << 0x10) | ((var_t1 & 0xFF) << 8));
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, var_t3, (u8)var_t0, (u8)var_t0, (u8)var_v0);
 				spE7 = var_ra;
 				D_80094858_64D08 = var_t3;
 				spE6 = var_t5;
@@ -1507,10 +1483,7 @@ void func_800731A8_43658(void) {
 				} else {
 					var_t4_3 = temp_v0_9 & 0xFF;
 				}
-				temp_t2_2 = D_8005BB2C;
 				temp_v0_10 = *(s16 *)((u8 *)(var_s4) + (0x28)) + 0xF0;
-				D_8005BB2C = temp_t2_2 + 8;
-				*(s32 *)((u8 *)(temp_t2_2) + (0)) = 0xFA000000;
 				if (temp_v0_10 >= 0x100) {
 					var_t3_2 = 0xFF;
 				} else {
@@ -1533,7 +1506,7 @@ void func_800731A8_43658(void) {
 				} else {
 					var_v0_2 = temp_v1_8;
 				}
-				*(s32 *)((u8 *)(temp_t2_2) + (4)) = (s32) ((var_v0_2 & 0xFF) | (var_t0_2 << 0x18) | ((var_t1_2 & 0xFF) << 0x10) | ((var_t3_2 & 0xFF) << 8));
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, (u8)var_t0_2, (u8)var_t1_2, (u8)var_t3_2, (u8)var_v0_2);
 				spE7 = var_ra_2;
 				spE6 = var_t5_3;
 				spE5 = var_t4_3;
@@ -1550,10 +1523,7 @@ void func_800731A8_43658(void) {
 					} else {
 						*(s16 *)((u8 *)(var_s4) + (0x28)) = 0;
 					}
-					temp_v1_10 = D_8005BB2C;
-					D_8005BB2C = temp_v1_10 + 8;
-					*(s32 *)((u8 *)(temp_v1_10) + (0)) = 0xFA000000;
-					*(s32 *)((u8 *)(temp_v1_10) + (4)) = (s32) ((*(s16 *)((u8 *)(var_s4) + (0x28)) & 0xFF) | 0xE6E600);
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x00, 0xE6, 0xE6, *(s16 *)((u8 *)(var_s4) + (0x28)) & 0xFF);
 					spE7 = 0x26;
 					spE6 = 0x94;
 					spE5 = 0x46;
