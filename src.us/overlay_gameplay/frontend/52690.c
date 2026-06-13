@@ -4251,13 +4251,6 @@ void func_8008E158_5E608(void) {
 					type = entry->unkC;
 					savedIndex = i;
 					if ((type != 0xFF) || ((u8)entry->unkE != 0xFF)) {
-						Gfx* dl;
-
-						dl = D_8005BB2C;
-						D_8005BB2C = dl + 1;
-						dl->words.w0 = 0xE7000000;
-						dl->words.w1 = 0;
-
 						typeCfg = (Unk800AA694Entry*)&D_800AA694[type * 8];
 						if (typeCfg->unk5 == 0) {
 							s32 lineWords;
@@ -4266,30 +4259,16 @@ void func_8008E158_5E608(void) {
 							s32 dxt;
 							u32 texAddr;
 
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xFC6218C4;
-							dl->words.w1 = 0xFF33FFFF;
+							gDPPipeSync(D_8005BB2C++);
+							gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
 
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xFD900000;
 							texAddr = (u32)(D_800AA76C[type] + (((typeCfg->unk7 * (u8)entry->unkE) * typeCfg->unk6) / 2));
-							dl->words.w1 = texAddr & 0x1FFFFFFF;
+							gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, texAddr & 0x1FFFFFFF);
 
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xF5900000;
-							dl->words.w1 = 0x07080200;
-
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xE6000000;
-							dl->words.w1 = 0;
-
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xF3000000;
+							gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
+									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+							gDPLoadSync(D_8005BB2C++);
 
 							lineWords = (((typeCfg->unk7 * typeCfg->unk6) + 3) >> 2) - 1;
 							lineWordsClamped = 0x7FF;
@@ -4303,22 +4282,13 @@ void func_8008E158_5E608(void) {
 							}
 
 							dxt = (lineSize + 0x7FF) / lineSize;
-							dl->words.w1 = ((lineWordsClamped & 0xFFF) << 12) | (dxt & 0xFFF) | 0x07000000;
+							gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, lineWordsClamped, dxt);
 
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xE7000000;
-							dl->words.w1 = 0;
-
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xF5800000 | ((((((s8)typeCfg->unk6 >> 1) + 7) >> 3) & 0x1FF) << 9);
-							dl->words.w1 = 0x00080200;
-
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xF2000000;
-							dl->words.w1 = ((((typeCfg->unk7 - 1) << 2) & 0xFFF) | ((((typeCfg->unk6 - 1) << 2) & 0xFFF) << 12));
+							gDPPipeSync(D_8005BB2C++);
+							gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, (((typeCfg->unk6 >> 1) + 7) >> 3), 0x0000, G_TX_RENDERTILE, 0,
+									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+							gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (typeCfg->unk6 - 1) << 2, (typeCfg->unk7 - 1) << 2);
 						} else if (typeCfg->unk5 == 1) {
 							s32 lineWords;
 							s32 lineWordsClamped;
@@ -4326,30 +4296,16 @@ void func_8008E158_5E608(void) {
 							s32 dxt;
 							u32 texAddr;
 
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xFC40C281;
-							dl->words.w1 = 0xFF87FFFF;
+							gDPPipeSync(D_8005BB2C++);
+							gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0);
 
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xFD700000;
 							texAddr = (u32)(D_800AA76C[type] + ((typeCfg->unk7 * (u8)entry->unkE) * typeCfg->unk6));
-							dl->words.w1 = texAddr & 0x1FFFFFFF;
+							gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, texAddr & 0x1FFFFFFF);
 
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xF5700000;
-							dl->words.w1 = 0x07080200;
-
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xE6000000;
-							dl->words.w1 = 0;
-
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xF3000000;
+							gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
+									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+							gDPLoadSync(D_8005BB2C++);
 
 							lineWords = (((typeCfg->unk7 * typeCfg->unk6) + 1) >> 1) - 1;
 							lineWordsClamped = 0x7FF;
@@ -4363,51 +4319,27 @@ void func_8008E158_5E608(void) {
 							}
 
 							dxt = (lineSize + 0x7FF) / lineSize;
-							dl->words.w1 = ((lineWordsClamped & 0xFFF) << 12) | (dxt & 0xFFF) | 0x07000000;
+							gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, lineWordsClamped, dxt);
 
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xE7000000;
-							dl->words.w1 = 0;
-
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xF5680000 | (((((typeCfg->unk6 + 7) >> 3) & 0x1FF) << 9));
-							dl->words.w1 = 0x00080200;
-
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xF2000000;
-							dl->words.w1 = ((((typeCfg->unk7 - 1) << 2) & 0xFFF) | ((((typeCfg->unk6 - 1) << 2) & 0xFFF) << 12));
+							gDPPipeSync(D_8005BB2C++);
+							gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, ((typeCfg->unk6 + 7) >> 3), 0x0000, G_TX_RENDERTILE, 0,
+									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+							gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (typeCfg->unk6 - 1) << 2, (typeCfg->unk7 - 1) << 2);
 						} else if (typeCfg->unk5 == 2) {
 							s32 lineWords;
 							s32 lineWordsClamped;
 							s32 lineSize;
 							s32 dxt;
 
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xFCFFFFFF;
-							dl->words.w1 = 0xFFFCF279;
+							gDPPipeSync(D_8005BB2C++);
+							gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+							gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, (u8*)((u32)D_800AA76C[type] & 0x1FFFFFFF));
 
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xFD100000;
-							dl->words.w1 = ((u32)D_800AA76C[type]) & 0x1FFFFFFF;
-
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xF5100000;
-							dl->words.w1 = 0x07080200;
-
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xE6000000;
-							dl->words.w1 = 0;
-
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xF3000000;
+							gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
+									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+							gDPLoadSync(D_8005BB2C++);
 
 							lineWords = (typeCfg->unk7 * typeCfg->unk6) - 1;
 							lineWordsClamped = 0x7FF;
@@ -4421,37 +4353,25 @@ void func_8008E158_5E608(void) {
 							}
 
 							dxt = (lineSize + 0x7FF) / lineSize;
-							dl->words.w1 = ((lineWordsClamped & 0xFFF) << 12) | (dxt & 0xFFF) | 0x07000000;
+							gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, lineWordsClamped, dxt);
 
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xE7000000;
-							dl->words.w1 = 0;
-
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xF5100000 | ((((((typeCfg->unk6 * 2) + 7) >> 3) & 0x1FF) << 9));
-							dl->words.w1 = 0x00080200;
-
-							dl = D_8005BB2C;
-							D_8005BB2C = dl + 1;
-							dl->words.w0 = 0xF2000000;
-							dl->words.w1 = ((((typeCfg->unk7 - 1) << 2) & 0xFFF) | ((((typeCfg->unk6 - 1) << 2) & 0xFFF) << 12));
+							gDPPipeSync(D_8005BB2C++);
+							gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, (((typeCfg->unk6 * 2) + 7) >> 3), 0x0000, G_TX_RENDERTILE, 0,
+									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+							gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (typeCfg->unk6 - 1) << 2, (typeCfg->unk7 - 1) << 2);
 						}
 
 						D_800DE12D = typeCfg->unk6;
 						D_800DE12E = typeCfg->unk7;
 
-						dl = D_8005BB2C;
-						D_8005BB2C = dl + 1;
-						dl->words.w0 = 0xE7000000;
-						dl->words.w1 = 0;
+						gDPPipeSync(D_8005BB2C++);
 					}
 
 					D_800DE118.x = (f32)entry->unk0;
 					D_800DE118.y = (f32)entry->unk2;
 					D_800DE118.z = (f32)entry->unk4;
-					D_800DE124 = (u8*)&entry->unk6;
+					D_800DE124 = &entry->unk6;
 
 					if (type == 0xA) {
 						D_800DE128 = (f32)((u8)entry->unkD * entry->unkA);
