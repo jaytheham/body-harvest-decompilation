@@ -2950,12 +2950,8 @@ s32 arg1;
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_RENDERTILE, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x5C, 0x5C);
-	D_8005BB2C->words.w0 = (s32)((((arg0 + 0x12) * 4 & 0xFFF) << 0xC) | 0xE4000000 | ((arg1 + 0x12) * 4 & 0xFFF));
-	D_8005BB2C->words.w1 = (s32)(((arg0 * 4 & 0xFFF) << 0xC) | (arg1 * 4 & 0xFFF));
-	D_8005BB2C++;
+	gSPTextureRectangle(D_8005BB2C++, arg0 * 4, arg1 * 4, (arg0 + 0x12) * 4, (arg1 + 0x12) * 4, G_TX_RENDERTILE, 0, 0, 0x0555, 0x0555);
 	D_800344A8 = cnt + 1;
-	gImmp1(D_8005BB2C++, G_RDPHALF_1, 0x00000000);
-	gImmp1(D_8005BB2C++, G_RDPHALF_2, 0x05550555);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 }
