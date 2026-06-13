@@ -1011,69 +1011,61 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 #endif
 
 // draw 3d adam on map
-// CURRENT(1872)
+// CURRENT(1388)
 #ifdef NON_MATCHING
 void func_80097994_A6944(void) {
 	Gfx *dl;
-	s32 sp5C;
 	volatile s32 sp60;
 	volatile s32 sp64;
-	Unk80052B40 sp54;
-	Unk80052B40 sp4C;
-	s32 tempA3;
+	s32 color;
+	Unk80052B40 mapPos;
+	Unk80052B40 scale;
+	s32 segAddr;
 
 	func_8000C790_D390(&D_80157600, (s16 *)D_8013D1B0_14C160, 0x10);
 
-	sp5C = 0;
+	color = 0;
 	sp64 = 0;
-	sp54.unk0 = D_80157600.unk2 << 3;
-	sp54.unk2 = D_80157600.unk4 << 3;
-	sp54.unk4 = D_80157600.unk0 << 3;
+	mapPos.unk0 = D_80157600.unk2 << 3;
+	mapPos.unk2 = D_80157600.unk4 << 3;
+	mapPos.unk4 = D_80157600.unk0 << 3;
 	sp60 = (s32)(D_80157600.unkC * 65536.0f);
 
-	func_8000C81C_D41C(&sp5C, &sp54.unk0, NULL, D_8005BB38);
+	func_8000C81C_D41C(&color, &mapPos.unk0, NULL, D_8005BB38);
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0x01000040;
-	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+	gSPMatrix(dl, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	D_8005BB38 += 0x40;
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xBC001806;
-	dl->words.w1 = func_80011FAC_12BAC(&D_1001B50);
+	gSPSegment(dl, 0x06, func_80011FAC_12BAC(&D_1001B50));
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xBC001C06;
-	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+	gSPSegment(dl, 0x07, D_8005BB38 & 0x1FFFFFFF);
 
 	func_8000CC3C_D83C(&D_80157600, 0x10);
 
-	sp4C.unk0 = 0x100;
-	sp4C.unk2 = 0x100;
-	sp4C.unk4 = 0x100;
-	tempA3 = D_8005BB38;
-	D_8005BB38 = tempA3 + 0x40;
+	scale.unk2 = scale.unk0 = scale.unk4 = 0x100;
+	segAddr = D_8005BB38;
+	D_8005BB38 = segAddr + 0x40;
 
-	func_800039D0_45D0(NULL, NULL, &sp4C, tempA3);
+	func_800039D0_45D0(NULL, NULL, &scale, segAddr);
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0x06000000;
-	dl->words.w1 = (u32)&D_10031E0 & 0x1FFFFFFF;
+	gSPDisplayList(dl, K0_TO_PHYS(&D_10031E0));
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xE7000000;
-	dl->words.w1 = 0;
+	gDPPipeSync(dl);
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xBA000E02;
-	dl->words.w1 = 0;
+	gDPSetTextureLUT(dl, G_TT_NONE);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097994_A6944.s")
