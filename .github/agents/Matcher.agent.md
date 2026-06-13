@@ -23,27 +23,11 @@ You will be tasked with an existing C function to modify iteratively until it pr
 
 - Build the ROM: `.\tools\make.ps1`. Important: This is the only correct way to build your C code, it ensures all symbols are correctly linked and produces a true comparison of the current vs the target.
 - Compare target and your current assembly for a specific function after building:
- `.\tools\diff.ps1 <target function name> <ROM address of next function>"`.
- E.g. `.\tools\diff.ps1 func_80092ADC_A1A8C A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`.
+ `.\tools\diff.ps1 <target function name> <next function name>"`.
+ E.g. `.\tools\diff.ps1 func_80092ADC_A1A8C func_80092BBC_A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`.
  Diff output includes a closeness value for the specified range of assembly e.g. `CURRENT (46)`, lower is better, 0 is a perfect match.
  Diff output skips matching instructions except for 3 either side of differences.
 - You can get the full assembly of a function after building by adding param `--show=target` or `--show=current` to the above diff command.
-- You must decompile Gfx macros. The "raw" `*->words.w0`/`*->words.w1` form will not match. Use `.\tools\gfxdis.ps1`:
-e.g.
-```C
-dl = D_8005BB2C;
-D_8005BB2C = dl + 1;
-dl->words.w0 = 0xB6000000;
-dl->words.w1 = 0x10001;
-```
-or
-```C
-D_8005BB2C++;
-D_8005BB2C->words.w0 = 0xB6000000;
-D_8005BB2C->words.w1 = 0x00010001;
-```
-Is converted by pwsh cmd `.\tools\gfxdis.ps1 -w B6000000 00010001` into: `gsSPClearGeometryMode(G_ZBUFFER | G_FOG),` which becomes `gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);` in C.
-If you don't know one of the values, you can use `12345678` as a placeholder for the cmd, and then fill it in after the fact.
 - Useful: Check for already matched functions with sub-sections of assembly that are the same as the target assembly using `.\tools\find-partial.ps1 <current func name>` e.g. `.\tools\find-partial.ps1 func_80120414_12F3C4` you can use that C code as reference for your own implementation.
 
 # Your Workflow
