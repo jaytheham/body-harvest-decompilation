@@ -87,6 +87,7 @@ s32 func_80070270_7F220(s32 arg0) {
 }
 
 // https://decomp.me/scratch/bBdJM
+// CURRENT(10)
 #ifdef NON_MATCHING
 void func_800702C0_7F270(s16 arg0) {
 	u32 currentTick;
@@ -113,8 +114,7 @@ void func_800702C0_7F270(s16 arg0) {
 	if (currentTick < referenceTick) {
 		referenceTick += 1;
 	}
-	D_80149444 = referenceTick; //reft = t0
-	// curt = t1
+	D_80149444 = referenceTick;
 
 	elapsedMicro = (u32)__ull_div(__ll_mul((u64)(currentTick - referenceTick), 0xF4240ULL), D_80035610);
 
