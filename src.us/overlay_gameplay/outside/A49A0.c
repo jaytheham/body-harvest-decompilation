@@ -143,33 +143,12 @@ const f64 D_801424F8_1514A8[1] = { 500 };
 const f64 D_80142500_1514B0[1] = { 4000 };
 const f64 D_80142508_1514B8[1] = { 0.02 };
 
-// https://decomp.me/scratch/efEMb
-/* CURRENT(1125) */
-#ifdef NON_MATCHING
-s32 func_800959F0_A49A0(s32 arg0, s32 arg1, s32 arg2) {
-	s32 temp_t8;
-	s32 temp_t7;
-	s32 temp_t6;
-	volatile s32 sp0;
-	volatile s32 sp4;
-	volatile s32 sp8;
-
-	temp_t6 = arg0 & 0xFFFF;
-	sp4 = arg1;
-	temp_t7 = arg1 & 0xFFFF;
-	sp0 = arg2;
-	temp_t8 = arg2 & 0xFFFF;
-	arg2 = temp_t8;
-	arg1 = temp_t7;
-	sp8 = arg0;
-	if (temp_t6 < 0x1F) {
-		arg0 = temp_t6 & 0xFFFF;
-	} else {
-		arg0 = 0x1F;
-	}
-	arg1 = (arg1 < 0x1F) ? (arg1 & 0xFFFF) : 0x1F;
-	arg2 = (arg2 < 0x3F) ? (arg2 & 0xFFFF) : 0x3F;
-	return ((arg0 << 0xB) + (arg1 << 6) + (arg2 & 0x3F)) & 0xFFFF;
+#ifdef TRUE
+s32 func_800959F0_A49A0(u16 red, u16 green, u16 blue) {
+	red = red < 0x1F ? red : 0x1F;
+	green = green < 0x1F ? green : 0x1F;
+	blue = blue < 0x3F ? blue : 0x3F;
+	return ((red << 0xB) + (green << 6) + (blue & 0x3F)) & 0xFFFF;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800959F0_A49A0.s")
@@ -1032,69 +1011,61 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 #endif
 
 // draw 3d adam on map
-// CURRENT(1872)
+// CURRENT(1388)
 #ifdef NON_MATCHING
 void func_80097994_A6944(void) {
 	Gfx *dl;
-	s32 sp5C;
 	volatile s32 sp60;
 	volatile s32 sp64;
-	Unk80052B40 sp54;
-	Unk80052B40 sp4C;
-	s32 tempA3;
+	s32 color;
+	Unk80052B40 mapPos;
+	Unk80052B40 scale;
+	s32 segAddr;
 
 	func_8000C790_D390(&D_80157600, (s16 *)D_8013D1B0_14C160, 0x10);
 
-	sp5C = 0;
+	color = 0;
 	sp64 = 0;
-	sp54.unk0 = D_80157600.unk2 << 3;
-	sp54.unk2 = D_80157600.unk4 << 3;
-	sp54.unk4 = D_80157600.unk0 << 3;
+	mapPos.unk0 = D_80157600.unk2 << 3;
+	mapPos.unk2 = D_80157600.unk4 << 3;
+	mapPos.unk4 = D_80157600.unk0 << 3;
 	sp60 = (s32)(D_80157600.unkC * 65536.0f);
 
-	func_8000C81C_D41C(&sp5C, &sp54.unk0, NULL, D_8005BB38);
+	func_8000C81C_D41C(&color, &mapPos.unk0, NULL, D_8005BB38);
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0x01000040;
-	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+	gSPMatrix(dl, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	D_8005BB38 += 0x40;
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xBC001806;
-	dl->words.w1 = func_80011FAC_12BAC(&D_1001B50);
+	gSPSegment(dl, 0x06, func_80011FAC_12BAC(&D_1001B50));
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xBC001C06;
-	dl->words.w1 = D_8005BB38 & 0x1FFFFFFF;
+	gSPSegment(dl, 0x07, D_8005BB38 & 0x1FFFFFFF);
 
 	func_8000CC3C_D83C(&D_80157600, 0x10);
 
-	sp4C.unk0 = 0x100;
-	sp4C.unk2 = 0x100;
-	sp4C.unk4 = 0x100;
-	tempA3 = D_8005BB38;
-	D_8005BB38 = tempA3 + 0x40;
+	scale.unk2 = scale.unk0 = scale.unk4 = 0x100;
+	segAddr = D_8005BB38;
+	D_8005BB38 = segAddr + 0x40;
 
-	func_800039D0_45D0(NULL, NULL, &sp4C, tempA3);
+	func_800039D0_45D0(NULL, NULL, &scale, segAddr);
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0x06000000;
-	dl->words.w1 = (u32)&D_10031E0 & 0x1FFFFFFF;
+	gSPDisplayList(dl, K0_TO_PHYS(&D_10031E0));
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xE7000000;
-	dl->words.w1 = 0;
+	gDPPipeSync(dl);
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xBA000E02;
-	dl->words.w1 = 0;
+	gDPSetTextureLUT(dl, G_TT_NONE);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097994_A6944.s")
@@ -1139,38 +1110,27 @@ void func_80097CB4_A6C64(UnkA6C64Keyframe *arg0, UnkA6C64Keyframe *arg1, UnkA6C6
   arg2->unk10 = arg0->unk10 + ((arg1->unk10 - arg0->unk10) * arg3);
 }
 
-typedef struct {
-	s16 unk0;
-	s16 unk2;
-	s16 unk4;
-	s16 unk6;
-	f32 unk8;
-	f32 unkC;
-	f32 unk10;
-} Unk80097E1C;
-
-// CURRENT(6780)
+// CURRENT(1739)
 #ifdef NON_MATCHING
-void func_80097E1C_A6DCC(Unk80097E1C *arg0) {
+void func_80097E1C_A6DCC(OrbitCam *cam) {
 	u16 sp66;
 	s16 temp;
 
-	temp = coss(arg0->unk2);
-	D_8014ED0C = (f32)(((((f64)(f32)sins(arg0->unk4) / 7.0f) * ((f64)temp / 7.0f)) * (f64)arg0->unk0) + (f64)arg0->unk8);
+	temp = coss(cam->yaw);
+	D_8014ED0C = (f32)(((((f64)(f32)sins(cam->pitch) / 32768.0) * ((f64)(f32)temp / 32768.0)) * (f64)cam->distance) + (f64)cam->targetX);
 
-	temp = sins(arg0->unk2);
-	D_8014ED10 = (f32)(((((f64)(f32)sins(arg0->unk4) / 7.0f) * ((f64)temp / 7.0f)) * (f64)arg0->unk0) + (f64)arg0->unkC);
+	temp = sins(cam->yaw);
+	D_8014ED10 = (f32)(((((f64)(f32)sins(cam->pitch) / 32768.0) * ((f64)(f32)temp / 32768.0)) * (f64)cam->distance) + (f64)cam->targetY);
 
-	temp = coss(arg0->unk4);
-	D_8014ED14 = (f32)((((f64)temp / 7.0f) * (f64)arg0->unk0) + (f64)arg0->unk10);
+	D_8014ED14 = (f32)((((f64)(f32)coss(cam->pitch) / 32768.0) * (f64)cam->distance));
 
 	guPerspective((Mtx *)D_8005BB38, &sp66, (f32)D_80149404, 1.0f, 25.0f, 2000.0f, 1.0f);
-	gSPPerspNormalize(D_8005BB2C++, sp66);
+	gSPPerspNormalize(D_8005BB2C++, &sp66);
 	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	gSPMatrix(D_8005BB30++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	D_8005BB38 += 0x40;
 
-	guLookAt((Mtx *)D_8005BB38, D_8014ED0C, D_8014ED10, D_8014ED14, arg0->unk8, arg0->unkC, arg0->unk10, 0.0f, 0.0f, 1.0f);
+	guLookAt((Mtx *)D_8005BB38, D_8014ED0C, D_8014ED10, D_8014ED14, cam->targetX, cam->targetY, cam->targetZ, 0.0f, 0.0f, 1.0f);
 	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPMatrix(D_8005BB30++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);

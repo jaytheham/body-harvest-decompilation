@@ -893,6 +893,7 @@ void func_80007690_8290(void) {
 	func_8001A650_1B250(1);
 }
 
+// Set objective
 void func_800076D4_82D4(s32 arg0) {
 	osSyncPrintf(&D_80036DBC_379BC, arg0);
 	// Set objective %d

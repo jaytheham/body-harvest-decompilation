@@ -2670,3 +2670,12 @@ typedef struct {
 	u32 words[8];
 } DListPtrsCopy;
 
+typedef struct {
+    /* 0x00 */ s16 distance; // orbit radius
+    /* 0x02 */ s16 yaw;      // horizontal angle
+    /* 0x04 */ s16 pitch;    // vertical angle
+    /* 0x06 */ s16 pad;      // unused
+    /* 0x08 */ f32 targetX;  // look-at target X
+    /* 0x0C */ f32 targetY;  // look-at target Y
+    /* 0x10 */ f32 targetZ;  // look-at target Z
+} OrbitCam; /* size = 0x14 */
