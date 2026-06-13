@@ -178,9 +178,8 @@ void func_802D522C_31937C(s16 arg0) {
 	D_80052B50.unk4 = 0x40;
 	func_800039D0_45D0(&D_80052B40, &D_80052B50, &D_80052B50, D_8005BB38);
 	temp_v1 = D_8005BB2C;
-	D_8005BB2C = temp_v1 + 8;
-	temp_v1->words.w0 = 0x01020040;
-	temp_v1->words.w1 = (s32)(D_8005BB38 & 0x1FFFFFFF);
+	D_8005BB2C = temp_v1 + 1;
+	gSPMatrix(temp_v1, D_8005BB38 & 0x1FFFFFFF, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
 	temp_a3 = temp_fp->unk8;
 	var_s4 = 0;
 	D_8005BB38 += 0x40;
@@ -188,10 +187,10 @@ void func_802D522C_31937C(s16 arg0) {
 	temp_a1 = temp_fp->unk4;
 	if (temp_a3 == 0) {
 		sp90 = -temp_a1 / 2;
-		var_s5 = *(s16*)(&D_80052B40.unk2);
+		var_s5 = D_80052B40.unk2;
 	} else {
 		sp90 = -temp_a1 / 2;
-		var_s4 = *(s16*)(&D_80052B40.unk2);
+		var_s4 = D_80052B40.unk2;
 	}
 	temp_hi = (u32)D_80052A8C % 10U;
 	var_s6 = ((D_80052A8C * 0x9C4) & 0xFFFF);
@@ -250,29 +249,26 @@ void func_802D522C_31937C(s16 arg0) {
 		} while (var_s1 < 5);
 		spB8 += 0x55;
 		if (spB0 == 0) {
-			var_s5 = *(s16*)(&D_80052B40.unk2);
+			var_s5 = D_80052B40.unk2;
 		} else {
-			var_s4 = *(s16*)(&D_80052B40.unk2);
+			var_s4 = D_80052B40.unk2;
 		}
 		temp_v1_3 = D_8005BB2C;
 		D_8005BB2C = temp_v1_3 + 1;
-		temp_v1_3->words.w0 = 0x0400289F;
 		var_s6 = (var_s6 + 0x1D4C) & 0xFFFF;
 		var_s1_2 = 0;
-		temp_v1_3->words.w1 = (s32)(D_8005BB34 - 0xA0);
+		gSPVertex(temp_v1_3, D_8005BB34 - 0xA0, 10, 0);
 		do {
 			temp_v1_4 = D_8005BB2C;
 			temp_v0 = var_s1_2 * 2;
 			temp_t3 = (temp_v0 + 2) & 0xFF;
 			D_8005BB2C = temp_v1_4 + 1;
 			temp_t4 = (temp_v0 + 4) & 0xFF;
-			temp_v1_4->words.w1 = (s32)(((temp_v0 & 0xFF) << 0x10) | (temp_t3 << 8) | temp_t4);
-			temp_v1_4->words.w0 = 0xBF000000;
+			gSP1Triangle(temp_v1_4, temp_v0 & 0xFF, temp_t3, temp_t4, 0);
 			temp_v1_5 = D_8005BB2C;
 			var_s1_2 += 2;
 			D_8005BB2C = temp_v1_5 + 1;
-			temp_v1_5->words.w1 = (s32)((temp_t3 << 0x10) | (temp_t4 << 8) | ((temp_v0 + 6) & 0xFF));
-			temp_v1_5->words.w0 = 0xBF000000;
+			gSP1Triangle(temp_v1_5, temp_t3, temp_t4, (temp_v0 + 6) & 0xFF, 0);
 		} while (var_s1_2 < 8);
 		spBE += 1;
 	} while (spBE < 3);
@@ -288,12 +284,10 @@ void func_802D58BC_319A0C(void) {
 
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xE7000000;
-	dl->words.w1 = 0;
+	gDPPipeSync(dl);
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xB6000000;
-	dl->words.w1 = 0x2000;
+	gSPClearGeometryMode(dl, G_CULL_BACK);
 	for (i = 0; i < 9; i++) {
 		if (D_802E4ED8[i].unkA == 1) {
 			if (func_800B960C_C85BC(D_802E4ED8[i].unk0, D_802E4ED8[i].unk4, 0x190, 0x190) != 0) {
@@ -303,8 +297,7 @@ void func_802D58BC_319A0C(void) {
 	}
 	dl = D_8005BB2C;
 	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xB7000000;
-	dl->words.w1 = 0x2000;
+	gSPSetGeometryMode(dl, G_CULL_BACK);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D58BC_319A0C.s")
