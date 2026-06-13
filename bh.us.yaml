@@ -234,7 +234,7 @@ segments:
       - [0x40720, c, overlay_gameplay/frontend/40720]
       - [0x52690, c, overlay_gameplay/frontend/52690]
       - [0x60E60, .data, data/data_60E60]
-      - [0x61840, bin]
+      - [0x61D50, bin]
 
   - name: overlay_gameplay_outside
     type: code
