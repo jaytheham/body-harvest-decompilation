@@ -3260,11 +3260,7 @@ void func_8008B53C_1735FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 
 #ifdef NON_MATCHING
 void func_8008B594_173654(void) {
-	Gfx *dl;
-	u32 const_e7000000;
-	s32 padA, padB, padC, padD, padE, padF, padG, padH, padI, padJ, padK, padL;
-	s32 padM, padN, padO, padP, padQ, padR, padS, padT, padU, padV, padW, padX;
-	s32 padY, padZ, pad2A, pad2B;
+	s32 pad;
 	s8 spA6;
 	s8 spA5;
 	s8 spA4;
@@ -3277,67 +3273,40 @@ void func_8008B594_173654(void) {
 		D_800FB6E6 = 0x20;
 
 		temp_t5 = D_800A26A4_18A764;
-		const_e7000000 = 0xE7000000;
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = const_e7000000;
-		dl->words.w1 = 0;
+		gDPPipeSync(D_8005BB2C++);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xFCFF99FF;
-		dl->words.w1 = 0xFF327F3F;
+		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xFD900000;
-		dl->words.w1 = (u32)(((temp_t5 << 9) + (u32)&D_100BF00) & 0x1FFFFFFF);
+		gDPPipeSync(D_8005BB2C++);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xF5900000;
-		dl->words.w1 = 0x07080200;
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)(((temp_t5 << 9) + (u32)&D_100BF00) & 0x1FFFFFFF));
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xE6000000;
-		dl->words.w1 = 0;
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+			G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xF3000000;
-		dl->words.w1 = 0x070FF400;
+		gDPLoadSync(D_8005BB2C++);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = const_e7000000;
-		dl->words.w1 = 0;
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 0xFF, 0x400);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xF5800400;
-		dl->words.w1 = 0x80200;
+		gDPPipeSync(D_8005BB2C++);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xF2000000;
-		dl->words.w1 = 0x7C07C;
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+			G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 
-		dl = D_8005BB2C;
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
+
+		gDPPipeSync(D_8005BB2C++);
+
 		temp_result = (temp_t5 + 1) & 0xFF;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = const_e7000000;
-		dl->words.w1 = 0;
 		D_800A26A4_18A764 = (u8)temp_result;
-
 		if (temp_result == 4) {
 			D_800A26A4_18A764 = 0;
 		}
 
-		D_800FB6D0.x = (f32)D_800FCA7A;
-		D_800FB6D0.y = (f32)D_800FCA7C;
-		D_800FB6D0.z = (f32)D_800FCA7E;
+		D_800FB6D0.x = D_800FCA7A;
+		D_800FB6D0.y = D_800FCA7C;
+		D_800FB6D0.z = D_800FCA7E;
 
 		temp_result = func_800038E0_44E0();
 		spA4 = (temp_result % 0x3C) + 0xC3;
@@ -3349,109 +3318,59 @@ void func_8008B594_173654(void) {
 		spA6 = (temp_result % 0x3C) + 0xC3;
 
 		D_800FB6DC = &spA4;
-		D_800FB6E0 = (f32)((f64)(f32)D_800FB6A0 * D_800A54D0_18D590);
+		D_800FB6E0 = (f32)D_800FB6A0 * D_800A54D0_18D590;
 		D_800FB6E4 = 0xFF;
 
 		func_8008A1D8_172298();
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = const_e7000000;
-		dl->words.w1 = 0;
+		gDPPipeSync(D_8005BB2C++);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xFCFFFFFF;
-		dl->words.w1 = 0xFFFCF279;
+		gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xBA000E02;
-		dl->words.w1 = 0x8000;
+		gDPPipeSync(D_8005BB2C++);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xFD100000;
-		dl->words.w1 = (u32)(u32)&D_1010880;
+		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xE8000000;
-		dl->words.w1 = 0;
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, (u32)&D_1010880);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xF5000100;
-		dl->words.w1 = 0x07000000;
+		gDPTileSync(D_8005BB2C++);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xE6000000;
-		dl->words.w1 = 0;
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 256, G_TX_LOADTILE, 0,
+			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xF0000000;
-		dl->words.w1 = 0x073FC000;
+		gDPLoadSync(D_8005BB2C++);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = const_e7000000;
-		dl->words.w1 = 0;
+		gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 0xFF);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xFD500000;
-		dl->words.w1 = (u32)(D_800A2620_18A6E0[D_800FB6A2] & 0x1FFFFFFF);
+		gDPPipeSync(D_8005BB2C++);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xF5500000;
-		dl->words.w1 = 0x07080200;
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, (void *)(D_800A2620_18A6E0[D_800FB6A2] & 0x1FFFFFFF));
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xE6000000;
-		dl->words.w1 = 0;
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+			G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xF3000000;
-		dl->words.w1 = 0x071FF200;
+		gDPLoadSync(D_8005BB2C++);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = const_e7000000;
-		dl->words.w1 = 0;
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 0x1FF, 0x200);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xF5480800;
-		dl->words.w1 = 0x80200;
+		gDPPipeSync(D_8005BB2C++);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xF2000000;
-		dl->words.w1 = 0x7C07C;
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, G_TX_RENDERTILE, 0,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = const_e7000000;
-		dl->words.w1 = 0;
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
 
-		D_800FB6E0 = (f32)D_800FB6A0;
+		gDPPipeSync(D_8005BB2C++);
+
+		D_800FB6E0 = D_800FB6A0;
 
 		func_8008A1D8_172298();
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = const_e7000000;
-		dl->words.w1 = 0;
+		gDPPipeSync(D_8005BB2C++);
 
-		dl = D_8005BB2C;
-		D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xBA000E02;
-		dl->words.w1 = 0;
+		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	}
 }
 #else
