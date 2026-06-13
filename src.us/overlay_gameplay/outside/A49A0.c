@@ -921,19 +921,11 @@ void func_80097994_A6944(void) {
 
 	func_8000C81C_D41C(&color, &mapPos.unk0, NULL, D_8005BB38);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gSPMatrix(dl, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	D_8005BB38 += 0x40;
-
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gSPSegment(dl, 0x06, func_80011FAC_12BAC(&D_1001B50));
-
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gSPSegment(dl, 0x07, D_8005BB38 & 0x1FFFFFFF);
+	gSPSegment(D_8005BB2C++, 0x06, func_80011FAC_12BAC(&D_1001B50));
+	gSPSegment(D_8005BB2C++, 0x07, D_8005BB38 & 0x1FFFFFFF);
 
 	func_8000CC3C_D83C(&D_80157600, 0x10);
 
@@ -943,17 +935,9 @@ void func_80097994_A6944(void) {
 
 	func_800039D0_45D0(NULL, NULL, &scale, segAddr);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gSPDisplayList(dl, K0_TO_PHYS(&D_10031E0));
-
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gDPPipeSync(dl);
-
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gDPSetTextureLUT(dl, G_TT_NONE);
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(&D_10031E0));
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097994_A6944.s")
@@ -2186,9 +2170,7 @@ block_356:
 				D_8005BB38 = temp_a3_10;
 				func_800039D0_45D0(NULL, (Unk80052B40 *) &sp2CC, (Unk80052B40 *) &sp2DC, temp_a3_10);
 				gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-				temp_v1_80 = D_8005BB2C;
 				D_8005BB38 += 0x40;
-				D_8005BB2C = temp_v1_80 + 1;
 				gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 				if ((var_f28 > 0.0f) && ((var_s3 == &sp3B8) || (var_s3 == &sp32C))) {
 					func_80097994_A6944();

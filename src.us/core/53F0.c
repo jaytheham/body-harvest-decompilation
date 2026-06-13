@@ -1439,16 +1439,14 @@ void debug_drawTimingGraphBars(void) {
 		} while (var_a1--);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetFillColor(D_8005BB2C++, 0x3E003E);
-		sp30 = D_8005BB2C++;
 		lrxVal = (s32)((u64)((s64)D_80052B38 * 1000000LL) / D_80035610 / 347);
 		lrxVal = (lrxVal + 32) & 0x3FF;
-		gDPFillRectangle(sp30, 32, 194, lrxVal, 199);
+		gDPFillRectangle(D_8005BB2C++, 32, 194, lrxVal, 199);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetFillColor(D_8005BB2C++, 0xF800F800);
-		sp24 = D_8005BB2C++;
 		lrxVal = (s32)((u64)((s64)D_80052B3C * 1000000LL) / D_80035610 / 347);
 		lrxVal = (lrxVal + 32) & 0x3FF;
-		gDPFillRectangle(sp24, 32, 200, lrxVal, 205);
+		gDPFillRectangle(D_8005BB2C++, 32, 200, lrxVal, 205);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);

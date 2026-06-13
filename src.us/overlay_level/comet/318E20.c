@@ -177,9 +177,7 @@ void func_802D522C_31937C(s16 arg0) {
 	D_80052B50.unk2 = 0x40;
 	D_80052B50.unk4 = 0x40;
 	func_800039D0_45D0(&D_80052B40, &D_80052B50, &D_80052B50, D_8005BB38);
-	temp_v1 = D_8005BB2C;
-	D_8005BB2C = temp_v1 + 1;
-	gSPMatrix(temp_v1, D_8005BB38 & 0x1FFFFFFF, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
 	temp_a3 = temp_fp->unk8;
 	var_s4 = 0;
 	D_8005BB38 += 0x40;
@@ -253,22 +251,16 @@ void func_802D522C_31937C(s16 arg0) {
 		} else {
 			var_s4 = D_80052B40.unk2;
 		}
-		temp_v1_3 = D_8005BB2C;
-		D_8005BB2C = temp_v1_3 + 1;
 		var_s6 = (var_s6 + 0x1D4C) & 0xFFFF;
 		var_s1_2 = 0;
-		gSPVertex(temp_v1_3, D_8005BB34 - 0xA0, 10, 0);
+		gSPVertex(D_8005BB2C++, D_8005BB34 - 0xA0, 10, 0);
 		do {
-			temp_v1_4 = D_8005BB2C;
 			temp_v0 = var_s1_2 * 2;
 			temp_t3 = (temp_v0 + 2) & 0xFF;
-			D_8005BB2C = temp_v1_4 + 1;
 			temp_t4 = (temp_v0 + 4) & 0xFF;
-			gSP1Triangle(temp_v1_4, temp_v0 & 0xFF, temp_t3, temp_t4, 0);
-			temp_v1_5 = D_8005BB2C;
+			gSP1Triangle(D_8005BB2C++, temp_v0 & 0xFF, temp_t3, temp_t4, 0);
 			var_s1_2 += 2;
-			D_8005BB2C = temp_v1_5 + 1;
-			gSP1Triangle(temp_v1_5, temp_t3, temp_t4, (temp_v0 + 6) & 0xFF, 0);
+			gSP1Triangle(D_8005BB2C++, temp_t3, temp_t4, (temp_v0 + 6) & 0xFF, 0);
 		} while (var_s1_2 < 8);
 		spBE += 1;
 	} while (spBE < 3);
@@ -280,14 +272,9 @@ void func_802D522C_31937C(s16 arg0) {
 #ifdef NON_MATCHING
 void func_802D58BC_319A0C(void) {
 	s16 i;
-	Gfx *dl;
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gDPPipeSync(dl);
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gSPClearGeometryMode(dl, G_CULL_BACK);
+	gDPPipeSync(D_8005BB2C++);
+	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK);
 	for (i = 0; i < 9; i++) {
 		if (D_802E4ED8[i].unkA == 1) {
 			if (func_800B960C_C85BC(D_802E4ED8[i].unk0, D_802E4ED8[i].unk4, 0x190, 0x190) != 0) {
@@ -295,9 +282,7 @@ void func_802D58BC_319A0C(void) {
 			}
 		}
 	}
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gSPSetGeometryMode(dl, G_CULL_BACK);
+	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D58BC_319A0C.s")

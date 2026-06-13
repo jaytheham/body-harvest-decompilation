@@ -2097,43 +2097,16 @@ void func_80088654_170714(void) {
 	f32 f2, f12, f18, f20;
 	s16 effectIdx;
 
-	// Initialize display list
-	dl = D_8005BB2C;
 	effectIdx = D_800FB78E;
-	D_8005BB2C = dl + 1;
-	gSPClearGeometryMode(dl, G_ZBUFFER | G_FOG);
-	
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gDPSetCombineLERP(dl, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-	
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gDPSetTextureImage(dl, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)&D_100DE00 & 0x1FFFFFFF));
-	
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gDPSetTile(dl, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gDPLoadSync(dl);
-	
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gDPLoadBlock(dl, G_TX_LOADTILE, 0, 0, 255, 1024);
-	
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gDPPipeSync(dl);
-	
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gDPSetTile(dl, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	gDPSetTileSize(dl, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)&D_100DE00 & 0x1FFFFFFF));
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
 
 	if ((effectIdx != -5) && (effectIdx != -6)) {
 		while ((effectIdx != -5) && (effectIdx != -6)) {
@@ -2219,21 +2192,10 @@ void func_80088654_170714(void) {
 			D_8005BB34 = vtx;
 			
 			// Add geometry to command list
-			dl = D_8005BB2C;
-			D_8005BB2C = dl + 1;
-			gSPVertex(dl, vtx - 4, 4, 0);
-			
-			dl = D_8005BB2C;
-			D_8005BB2C = dl + 1;
-			gDPLoadSync(dl);
-			
-			dl = D_8005BB2C;
-			D_8005BB2C = dl + 1;
-			gDPLoadTile(dl, G_TX_RENDERTILE, 0, 0, 31, 31);
-			
-			dl = D_8005BB2C;
-			D_8005BB2C = dl + 1;
-			gDPPipeSync(dl);
+			gSPVertex(D_8005BB2C++, vtx - 4, 4, 0);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadTile(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31, 31);
+			gDPPipeSync(D_8005BB2C++);
 			
 			// Get next effect
 			effectIdx = effect->unk4;

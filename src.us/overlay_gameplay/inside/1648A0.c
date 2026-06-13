@@ -796,7 +796,6 @@ void func_8007EB1C_166BDC(void *arg0) {
 	s16 sp2E;
 	s16 sp2C;
 	s16 sp2A;
-	void *sp18;
 	s16 *temp_t8;
 	s16 *temp_t8_2;
 	s16 *temp_t8_3;
@@ -885,7 +884,6 @@ void func_8007EB1C_166BDC(void *arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
-	sp18 = D_8005BB2C;
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
 	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
 	gSPTexture(D_8005BB2C++, qu016(0.5), qu016(0.5), 0, G_TX_RENDERTILE, G_ON);
@@ -925,7 +923,6 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 	s16 sp9C;
 	u8 sp84[24];
 	u8 sp6C[24];
-	s32 *sp48;
 	s32 *temp_v0;
 	s32 *temp_v0_10;
 	s32 *temp_v0_11;
@@ -994,7 +991,6 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 	func_8000C81C_D41C(&spB4, &sp9C, 0, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	D_8005BB38 += 0x40;
-	sp48 = D_8005BB2C;
 	gSPSegment(D_8005BB2C++, 0x07, (uintptr_t)(D_8005BB38 & 0x1FFFFFFF));
 	gSPSegment(D_8005BB2C++, 0x06, func_80012000_12C00(*(s32*)(&D_8009D260 + (D_800E6A70 * 4))));
 	func_8000CC3C_D83C(&D_800E6F00, 0x10);

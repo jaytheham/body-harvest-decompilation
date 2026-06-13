@@ -8329,7 +8329,6 @@ void func_800D8190_E7140(void) {
 	s16 tipX;
 	s16 tipY;
 	s16 tipZ;
-	Gfx *dl;
 
 	current = D_801542D6;
 
@@ -8551,12 +8550,10 @@ void func_800D8190_E7140(void) {
 		D_8005BB34++;
 
 		gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 5) & 0x1FFFFFFF), 5, 0);
-		dl = D_8005BB2C;
-		gSP1Triangle(dl++, 4, 0, 1, 0);
-		gSP1Triangle(dl++, 4, 0, 2, 0);
-		gSP1Triangle(dl++, 4, 2, 3, 0);
-		gSP1Triangle(dl++, 4, 3, 1, 0);
-		D_8005BB2C = dl;
+		gSP1Triangle(D_8005BB2C++, 4, 0, 1, 0);
+		gSP1Triangle(D_8005BB2C++, 4, 0, 2, 0);
+		gSP1Triangle(D_8005BB2C++, 4, 2, 3, 0);
+		gSP1Triangle(D_8005BB2C++, 4, 3, 1, 0);
 
 		D_80156EDA += 0xD;
 		current = entry->unk4;
