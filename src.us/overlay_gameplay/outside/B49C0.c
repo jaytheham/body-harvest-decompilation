@@ -194,8 +194,6 @@ void func_800A6020_B4FD0(s16 arg0) {
 	u8 sp56;
 	u8 sp55;
 	f64 var_f20;
-	s32 temp_a0;
-	s32 temp_a0_2;
 	s32 temp_lo;
 	s32 temp_t2;
 	s32 temp_t6;
@@ -216,15 +214,6 @@ void func_800A6020_B4FD0(s16 arg0) {
 	s32 var_v1;
 	s8 temp_fp;
 	u8 var_a2;
-	Gfx* temp_v0;
-	Gfx* temp_v0_2;
-	Gfx* temp_v0_3;
-	Gfx* temp_v0_4;
-	Gfx* temp_v0_5;
-	Gfx* temp_v0_6;
-	Gfx* temp_v0_7;
-	Gfx* temp_v0_8;
-	Gfx* temp_v0_9;
 
 	var_s4 = (D_80052A8C * 0x640) & 0xFFFF;
 	var_a2 = 0xFF;
@@ -256,9 +245,8 @@ void func_800A6020_B4FD0(s16 arg0) {
 		if (var_v0 < 0) {
 			var_f20 += 4294967296.0;
 		}
-		temp_lo = (s32)(var_v1 * 4) / 10;
-		temp_fp = ((s32)sp55 / 2) + 0x7F;
-		arg0 = arg0;
+		temp_lo = (var_v1 * 4) / 10;
+		temp_fp = (sp55 / 2) + 0x7F;
 		sp56 = var_a2;
 		do {
 			temp_t8 = ((var_s3 * var_v1) - 0x96) & 0xFFFF;
@@ -273,7 +261,7 @@ void func_800A6020_B4FD0(s16 arg0) {
 			D_8005BB34->v.cn[1] = 0x5A;
 			D_8005BB34->v.cn[2] = 0xA0;
 			D_8005BB34->v.cn[3] = 0;
-			D_8005BB34 += 1;
+			D_8005BB34++;
 			D_8005BB34->v.ob[0] = (s16)(s32)((((f64)(f32)coss(temp_t6 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
 			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + ((temp_t8 + temp_lo) & 0xFFFF));
 			var_s3 = (var_s5 + 1) & 0xFF;
@@ -287,7 +275,7 @@ void func_800A6020_B4FD0(s16 arg0) {
 			D_8005BB34->v.cn[1] = temp_fp;
 			D_8005BB34->v.cn[2] = 0xFF;
 			D_8005BB34->v.cn[3] = sp56;
-			D_8005BB34 += 1;
+			D_8005BB34++;
 		} while (var_s3 < 0x10);
 		var_s5_2 = 0;
 		var_s4_2 = ((D_80052A8C * 0x640) + 0x8000) & 0xFFFF;
@@ -305,7 +293,7 @@ void func_800A6020_B4FD0(s16 arg0) {
 			D_8005BB34->v.cn[1] = 0x5A;
 			D_8005BB34->v.cn[2] = 0xA0;
 			D_8005BB34->v.cn[3] = 0;
-			D_8005BB34 += 1;
+			D_8005BB34++;
 			D_8005BB34->v.ob[0] = (s16)(s32)((((f64)(f32)coss(temp_t9 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
 			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + ((temp_t2 + temp_lo) & 0xFFFF));
 			var_s3_2 = (var_s5_2 + 1) & 0xFF;
@@ -319,29 +307,14 @@ void func_800A6020_B4FD0(s16 arg0) {
 			D_8005BB34->v.cn[1] = temp_fp;
 			D_8005BB34->v.cn[2] = 0xFF;
 			D_8005BB34->v.cn[3] = sp56;
-			D_8005BB34 += 1;
+			D_8005BB34++;
 		} while (var_s3_2 < 0x10);
-		temp_v0 = D_8005BB30;
-		D_8005BB30 = temp_v0 + 1;
-		temp_v0->words.w1 = 0;
-		temp_v0->words.w0 = 0xBA001402;
-		temp_v0_2 = D_8005BB30;
-		D_8005BB30 = temp_v0_2 + 1;
-		temp_v0_2->words.w1 = 0x205;
-		temp_v0_2->words.w0 = 0xB7000000;
-		temp_v0_3 = D_8005BB30;
-		D_8005BB30 = temp_v0_3 + 1;
-		temp_v0_3->words.w0 = 0xB900031D;
-		temp_v0_3->words.w1 = 0x407858;
-		temp_v0_4 = D_8005BB30;
-		D_8005BB30 = temp_v0_4 + 1;
-		temp_v0_4->words.w1 = 0xFFFE793C;
-		temp_v0_4->words.w0 = 0xFCFFFFFF;
-		temp_v0_5 = D_8005BB30;
+		gDPSetCycleType(D_8005BB30++, G_CYC_1CYCLE);
+		gSPSetGeometryMode(D_8005BB30++, G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH);
+		gDPSetRenderMode(D_8005BB30++, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
+		gDPSetCombineMode(D_8005BB30++, G_CC_SHADE, G_CC_SHADE);
 		var_a3 = 6;
-		D_8005BB30 = temp_v0_5 + 1;
-		temp_v0_5->words.w1 = 0;
-		temp_v0_5->words.w0 = 0xE7000000;
+		gDPPipeSync(D_8005BB30++);
 		if ((arg0 >= 0xC) && (D_8013D890_14C840 != 5)) {
 			var_a3 = (0x10 - arg0) & 0xFF;
 		}
@@ -351,36 +324,22 @@ void func_800A6020_B4FD0(s16 arg0) {
 		if (arg0 < -4) {
 			var_a3 = (arg0 + 0xA) & 0xFF;
 		}
-		temp_v0_6 = D_8005BB30;
+		gSPVertex(D_8005BB30++, D_8005BB34 - 0x40, 32, 0);
 		var_s5_3 = 0;
-		D_8005BB30 = temp_v0_6 + 1;
-		temp_v0_6->words.w0 = 0x040081FF;
 		var_s3_3 = 0;
-		temp_v0_6->words.w1 = (u32)(D_8005BB34 - 0x40);
 		do {
 			if (!(var_s3_3 & 1)) {
-				temp_a0 = var_s3_3 * 2;
-				temp_v0_7 = D_8005BB30;
-				D_8005BB30 = temp_v0_7 + 1;
-				temp_v0_7->words.w1 = ((temp_a0 & 0xFF) << 0x10) | (((temp_a0 + 2) & 0xFF) << 8) | (var_a3 & 0xFF);
-				temp_v0_7->words.w0 = 0xB5000000;
+				gSPLineW3D(D_8005BB30++, var_s3_3, var_s3_3 + 1, var_a3, 0);
 			}
 			var_s3_3 = (var_s5_3 + 1) & 0xFF;
 			var_s5_3 = var_s3_3;
 		} while (var_s3_3 < 0x1F);
 		var_s5_4 = 0;
 		var_s3_4 = 0;
-		temp_v0_8 = D_8005BB30;
-		D_8005BB30 = temp_v0_8 + 1;
-		temp_v0_8->words.w0 = 0x040081FF;
-		temp_v0_8->words.w1 = (u32)(D_8005BB34 - 0x20);
+		gSPVertex(D_8005BB30++, D_8005BB34 - 0x20, 32, 0);
 		do {
 			if (!(var_s3_4 & 1)) {
-				temp_a0_2 = var_s3_4 * 2;
-				temp_v0_9 = D_8005BB30;
-				D_8005BB30 = temp_v0_9 + 1;
-				temp_v0_9->words.w1 = ((temp_a0_2 & 0xFF) << 0x10) | (((temp_a0_2 + 2) & 0xFF) << 8) | (var_a3 & 0xFF);
-				temp_v0_9->words.w0 = 0xB5000000;
+				gSPLineW3D(D_8005BB30++, var_s3_4, var_s3_4 + 1, var_a3, 0);
 			}
 			var_s3_4 = (var_s5_4 + 1) & 0xFF;
 			var_s5_4 = var_s3_4;
