@@ -683,7 +683,7 @@ s32 func_8008E478_9D428(u8 arg0)
   return 0;
 }
 
-// CURRENT(6298)
+// CURRENT(2352)
 #ifdef NON_MATCHING
 s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 {
@@ -691,10 +691,10 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 	s16 sp8E;
 	s16 sp8C;
 	s16 sp8A;
-	s16 sp78;
-	s16 sp76;
 	f32 f24;
 	f32 f26;
+	s16 sp78;
+	s16 sp76;
 	s16 i;
 	u8 specIndex;
 	s32 found;
@@ -707,8 +707,8 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 		return arg1;
 	}
 
-	f26 = (f32)(((f64)(f32)sins((inst->unk6 - 0x4000) & 0xFFFF) / 32768.0) * 256.0);
-	f24 = (f32)(((f64)(f32)coss((inst->unk6 - 0x4000) & 0xFFFF) / 32768.0) * -256.0);
+	f26 = (f32)(((f32)sins((u16)(inst->unk6 - 0x4000)) / 32768.0) * 256.0);
+	f24 = (f32)(((f32)coss((u16)(inst->unk6 - 0x4000)) / 32768.0) * -256.0);
 
 	if (inst->unk12 < 0) {
 		f26 = -f26;
@@ -717,10 +717,10 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 
 	switch ((s16)(D_80052A8C % 3U)) {
 		case 0:
-			sp78 = (s16)(s32)((f64)alienSpecs[specIndex].unk34 *
-				((f64)(f32)sins((u16)inst->unk6) / 32768.0) * 2.0 + (f64)inst->unk0);
-			sp76 = (s16)(s32)((f64)inst->unk4 - ((f64)alienSpecs[specIndex].unk34 *
-				((f64)(f32)coss((u16)inst->unk6) / 32768.0) * 2.0));
+			sp78 = (s16)(s32)(alienSpecs[specIndex].unk34 *
+				((f32)sins((u16)inst->unk6) / 32768.0) * 2 + inst->unk0);
+			sp76 = (s16)(s32)(inst->unk4 - (alienSpecs[specIndex].unk34 *
+				((f32)coss((u16)inst->unk6) / 32768.0) * 2));
 			break;
 
 		case 1:
@@ -729,16 +729,16 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 			break;
 
 		case 2:
-			sp78 = (s16)(s32)((f64)inst->unk0 - ((f64)alienSpecs[specIndex].unk34 *
-				((f64)(f32)sins((u16)inst->unk6) / 32768.0) * 2.0));
-			sp76 = (s16)(s32)((f64)alienSpecs[specIndex].unk34 *
-				((f64)(f32)coss((u16)inst->unk6) / 32768.0) * 2.0 + (f64)inst->unk4);
+			sp78 = (s16)(s32)(inst->unk0 - (alienSpecs[specIndex].unk34 *
+				((f32)sins((u16)inst->unk6) / 32768.0) * 2));
+			sp76 = (s16)(s32)(alienSpecs[specIndex].unk34 *
+				((f32)coss((u16)inst->unk6) / 32768.0) * 2 + inst->unk4);
 			break;
 	}
 
-	i = arg2;
+	i = (s16)arg2;
 	for (; i >= 0; i--) {
-		func_8011E6FC_12D6AC((s16)(s32)((f32)sp78 - (f26 * (f32)i)), (s16)(s32)((f32)sp76 - (f24 * (f32)i)), &sp8C);
+		func_8011E6FC_12D6AC((s16)(s32)(sp78 - (f26 * i)), (s16)(s32)(sp76 - (f24 * i)), &sp8C);
 		if (sp8C < D_80222A70) {
 			sp8C = (s16)D_80222A70;
 		}
