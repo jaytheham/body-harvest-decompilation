@@ -691,7 +691,7 @@ extern Unk80052A94 *D_80052A94; // This is a ptr to a [512][512] array of Height
 extern s8 D_8015273E;
 extern s16 D_802DE468;
 extern s16 D_802DE46A;
-extern char D_802DE2F0_196E00[];
+extern const char D_802DE2F0_196E00[];
 extern u8 D_8021F250[];
 extern Unk80052A98 D_80052A98[]; // LevelStats
 extern u16 D_80052A9C;
@@ -2941,16 +2941,16 @@ extern Unk8014DD50 *D_802DE268_196D78;
 extern Unk8014DD50 *D_802DE274_196D84;
 extern u8 D_802DE280_196D90[];
 extern u16 D_802DE2C0_196DD0[];
-extern char D_802DE2D0_196DE0; /* osSyncPrintf format string */
-extern f32 D_802DE438_196F48;
-extern f32 D_802DE43C_196F4C;
-extern f64 D_802DE400_196F10;
-extern f32 D_802DE408_196F18;
-extern f64 D_802DE410_196F20;
-extern f64 D_802DE418_196F28;
-extern f64 D_802DE420_196F30;
-extern f64 D_802DE428_196F38;
-extern f64 D_802DE430_196F40;
+extern const char D_802DE2D0_196DE0[]; /* osSyncPrintf format string */
+extern const f32 D_802DE438_196F48[];
+extern const f32 D_802DE43C_196F4C[];
+extern const f64 D_802DE400_196F10[];
+extern const f32 D_802DE408_196F18[];
+extern const f64 D_802DE410_196F20[];
+extern const f64 D_802DE418_196F28[];
+extern const f64 D_802DE420_196F30[];
+extern const f64 D_802DE428_196F38[];
+extern const f64 D_802DE430_196F40[];
 extern u16 D_802DE466;
 extern s16 D_8004DC58;
 extern f32 D_8004DCAC;

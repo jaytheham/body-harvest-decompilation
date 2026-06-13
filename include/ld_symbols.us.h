@@ -4,7 +4,6 @@
 #include "common.h"
 
 extern Addr _175EB0_bin;
-extern Addr _196DE0_bin;
 extern Addr _1C8E0_s;
 extern Addr _1D230_s;
 extern Addr _1E060_s;

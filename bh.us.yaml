@@ -355,7 +355,7 @@ segments:
     subsegments:
       - [0x18D7E0, c, overlay_level/greece/18D7E0]
       - [0x195C80, .data, overlay_level/greece/18D7E0]
-      - [0x196DE0, bin]
+      - [0x196DE0, .rodata, overlay_level/greece/18D7E0]
 
   - name: overlay_level_greece_data
     type: bin
