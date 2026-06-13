@@ -238,7 +238,9 @@ segments:
       - [0x62550, .data, data/data_62550]
       - [0x62650, .data, data/data_62650]
       - [0x62E50, .data, data/data_62650]
-      - [0x62F50, bin]
+      - [0x62F50, .data, data/data_62650]
+      - [0x63750, .data, data/data_62650]
+      - [0x63850, bin]
 
   - name: overlay_gameplay_outside
     type: code
