@@ -376,6 +376,7 @@ void func_8008D71C_9C6CC(u8 arg0) {
 
 // https://decomp.me/scratch/lrRls
 // This one is matching but when included it screws up later functions somehow??
+// CURRENT(0)
 #ifdef NON_MATCHING
 s32 func_8008D978_9C928(u8 arg0)
 {
