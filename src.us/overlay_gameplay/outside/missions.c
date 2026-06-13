@@ -491,7 +491,7 @@ void func_80074768_83718(void) {
 	D_80149B44 += 1;
 }
 
-// CURRENT(5068)
+// CURRENT(3929)
 #ifdef NON_MATCHING
 void func_800747A8_83758(void) {
 	s32 sum;
