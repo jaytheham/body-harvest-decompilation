@@ -908,7 +908,6 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	s32 sizeY;
 	s16 posX;
 	s16 posY;
-	Gfx* dl;
 
 	weaponType = weaponSlots[D_800D74AE];
 	if (weaponType == 0) {
@@ -932,7 +931,7 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	{
 		f32 scale;
 
-		scale = (f32)2;
+		scale = 2.0f;
 		arg2 = arg2 * scale;
 		arg3 = arg3 * scale;
 	}
@@ -946,13 +945,7 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-	{
-		Gfx* dl;
-
-		dl = D_8005BB2C++;
-		dl->words.w0 = 0xFD500000;
-		dl->words.w1 = ((u32)(D_8025CCC0 + ((s32)textureIndex * 0x240))) & 0x1FFFFFFF;
-	}
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, (u32)(D_8025CCC0 + (textureIndex * 0x240)) & 0x1FFFFFFF);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
 	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 287, 683);
@@ -961,21 +954,18 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (23 << 2), (23 << 2));
 
 	sizeX = (s32)(12.0f * arg2);
+	sizeY = (s32)(12.0f * arg3);
 
 	gDPPipeSync(D_8005BB2C++);
 
-	dl = D_8005BB2C++;
-	sizeY = (s32)(12.0f * arg3);
-	dl->words.w0 = 0xE4000000 | ((((posX + sizeX + 0xC) << 2) & 0xFFF) << 12) | (((posY + sizeY + 0xC) << 2) & 0xFFF);
-	dl->words.w1 = ((((posX - sizeX + 0xC) << 2) & 0xFFF) << 12) | (((posY - sizeY + 0xC) << 2) & 0xFFF);
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xB4000000;
-	dl->words.w1 = 0;
-
-	dl = D_8005BB2C++;
-	dl->words.w0 = 0xB3000000;
-	dl->words.w1 = ((s32)((1.0f / arg2) * 1024.0f) << 0x10) | (((s32)((1.0f / arg3) * 1024.0f)) & 0xFFFF);
+	gSPTextureRectangle(D_8005BB2C++,
+		((posX - sizeX) + 0xC) * 4,
+		((posY - sizeY) + 0xC) * 4,
+		((posX + sizeX) + 0xC) * 4,
+		((posY + sizeY) + 0xC) * 4,
+		G_TX_RENDERTILE, 0, 0,
+		(s32)((1.0f / arg2) * 1024.0f),
+		(s32)((1.0f / arg3) * 1024.0f));
 
 	gDPPipeSync(D_8005BB2C++);
 }
