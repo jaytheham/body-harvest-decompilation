@@ -582,8 +582,6 @@ s32 func_8012FFB0_13EF60(void)
 	return score;
 }
 
-extern u16 D_80140C7E_14FC2E;
-
 // End of level state manager
 // CURRENT(7370)
 #ifdef NON_MATCHING
@@ -635,10 +633,10 @@ void func_8013001C_13EFCC(void)
 		gDPSetRenderMode(D_8005BB2C++, G_RM_TEX_EDGE, G_RM_TEX_EDGE2);
 
 		// Draw a coloured rectangle that shrinks/grows with the fade
-		rectLeft   = func_80006520_7120((s16)(D_80068084 * 2), 0x70, D_80140C7E_14FC2E);
-		rectTop    = rectLeft + func_80006520_7120(0, (s16)((D_80068084 * 4) - 0xE0), D_80140C7E_14FC2E);
-		rectRight  = func_80006520_7120((s16)(D_80068088 * 2), 0x60, D_80140C7E_14FC2E);
-		rectBottom = rectRight + func_80006520_7120(0, (s16)((D_80068088 * 4) - 0xC0), D_80140C7E_14FC2E);
+		rectLeft   = func_80006520_7120((s16)(D_80068084 * 2), 0x70, (u16)D_80140C7C_14FC2C);
+		rectTop    = rectLeft + func_80006520_7120(0, (s16)((D_80068084 * 4) - 0xE0), (u16)D_80140C7C_14FC2C);
+		rectRight  = func_80006520_7120((s16)(D_80068088 * 2), 0x60, (u16)D_80140C7C_14FC2C);
+		rectBottom = rectRight + func_80006520_7120(0, (s16)((D_80068088 * 4) - 0xC0), (u16)D_80140C7C_14FC2C);
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
 		func_800092B8_9EB8(rectLeft, rectRight, rectTop, rectBottom, 0);
 
