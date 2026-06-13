@@ -2532,7 +2532,7 @@ s32 func_80077494_47944(void) {
 
   selectedSaveSlot = &D_800D74A4;
   func_8007166C_41B1C();
-  D_80090A7D = 0;
+  D_800909B0[4].pad22[3] = 0;
 
   while (state == 1) {
 	if (frameCounter >= 0x29U) {
@@ -2629,7 +2629,7 @@ s32 func_800776BC_47B6C(void) {
 
   selectedSaveSlot = &D_800D74A4;
   func_8007166C_41B1C();
-  D_80090A7D = 0;
+  D_800909B0[4].pad22[3] = 0;
   sourceFileIndexPtr = &D_80047F88;
   saveNameBase = D_800D6DA8;
   saveNameStride = 7;

@@ -946,7 +946,6 @@ extern f64 D_800A4AA0_18CB60;
 extern f64 D_800A4AA8_18CB68;
 
 extern MissionData D_800909B0[42];
-extern s8 D_80090A7D;
 extern Gfx *D_800942D0_64780;
 extern FrontendItemRenderData D_800942E0_64790[];
 extern s16 D_800946DC_64B8C;

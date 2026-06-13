@@ -3,7 +3,7 @@ name: BH Data Matcher
 description: Decompile code data from N64 game Body Harvest
 tools:
   [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, edit/createFile, edit/editFiles, search/changes, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]
-model: Auto (copilot)
+model: DeepSeek V4 Flash (deepseek)
 ---
 
 ## Overview
@@ -40,6 +40,8 @@ Not all functions in C are decompiled yet so you may need to search for variable
 7. Compare the built ROM against the original ROM and identify any differences in the output for the data section. You can also look at the linker script to see which order it is putting the sections into, but you cannot change the order of sections in the linker script as it is auto-generated, you must change the yaml and C code to match the original ROM.
 
 Then continue updating the C code to fix any differences in the output until the built ROM matches the original ROM, this may require changing the types of variables, their order, their initial values, or the layout of data sections. Note the linker script adds padding between sections in some circumstances.
+
+Update any `D_<RAM address>` style variables to `D_<RAM address>_<ROM address>` style as you work on them.
 
 There are some already decompiled data sections in the yaml for reference.
 
