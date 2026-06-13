@@ -582,7 +582,6 @@ void func_8000B044_BC44(void) {
 	s16 glyph_y_off;
 	s8 *glyph_data;
 	s16 glyph_advance;
-	Gfx *dl;
 	s32 xh_i, yh_i, xl_i, yl_i;
 	s32 dsdx, dtdy;
 
@@ -652,33 +651,27 @@ void func_8000B044_BC44(void) {
 			s16 b0, b1;
 			switch (char_raw) {
 			case 1: /* gray */
-				dl = D_8005BB2C; D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xFA000000; dl->words.w1 = 0x969696FF;
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x96, 0x96, 0x96, 0xFF);
 				r = 0x96; g = 0x96; b = 0x96;
 				break;
 			case 2: /* light gray */
-				dl = D_8005BB2C; D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xFA000000; dl->words.w1 = 0xE6E6E6FF;
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xE6, 0xE6, 0xE6, 0xFF);
 				r = 0xE6; g = 0xE6; b = 0xE6;
 				break;
 			case 3: /* green */
-				dl = D_8005BB2C; D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xFA000000; dl->words.w1 = 0x00E600FF;
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0xE6, 0, 0xFF);
 				r = 0; g = 0xE6; b = 0;
 				break;
 			case 4: /* red */
-				dl = D_8005BB2C; D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xFA000000; dl->words.w1 = 0xE60000FF;
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xE6, 0, 0, 0xFF);
 				r = 0xE6; g = 0; b = 0;
 				break;
 			case 5: /* yellow */
-				dl = D_8005BB2C; D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xFA000000; dl->words.w1 = 0xDCDC00FF;
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xDC, 0xDC, 0, 0xFF);
 				r = 0xDC; g = 0xDC; b = 0;
 				break;
 			case 6: /* blue */
-				dl = D_8005BB2C; D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xFA000000; dl->words.w1 = 0x0000DCFF;
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0, 0xDC, 0xFF);
 				r = 0; g = 0; b = 0xDC;
 				break;
 			case 7: case 8: case 9:
@@ -745,9 +738,7 @@ void func_8000B044_BC44(void) {
 					b = (s32)((b0 - (s16)D_80053BF2) * t + b0) & 0xFF;
 					alpha = (u8)a0_val;
 				}
-				dl = D_8005BB2C; D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xFA000000;
-				dl->words.w1 = ((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | alpha;
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
 				D_80053C88 = (s16)(D_80053C88 + 4);
 				break;
 			}
@@ -767,18 +758,14 @@ void func_8000B044_BC44(void) {
 				g = (u8)text_ptr[i + 2];
 				b = (u8)text_ptr[i + 3];
 				gDPPipeSync(D_8005BB2C++);
-				dl = D_8005BB2C; D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xFA000000;
-				dl->words.w1 = ((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | alpha;
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
 				i = (s16)(i + 3);
 				break;
 			}
 			case 22: { /* set alpha from next 1 byte */
 				alpha = (u8)text_ptr[i + 1];
 				gDPPipeSync(D_8005BB2C++);
-				dl = D_8005BB2C; D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xFA000000;
-				dl->words.w1 = ((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | alpha;
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
 				i = (s16)(i + 1);
 				break;
 			}
@@ -789,18 +776,11 @@ void func_8000B044_BC44(void) {
 			}
 			case 24: { /* set scissor rect from next 4 bytes */
 				s32 sx0, sy0, sx1, sy1;
-				s32 sxh_i, syh_i, sxl_i, syl_i;
 				sx0 = (u8)text_ptr[i + 1];
 				sy0 = (u8)text_ptr[i + 2];
 				sx1 = (u8)text_ptr[i + 3];
 				sy1 = (u8)text_ptr[i + 4];
-				sxh_i = sx0 << 2;
-				syh_i = sy0 << 2;
-				sxl_i = sx1 << 2;
-				syl_i = sy1 << 2;
-				dl = D_8005BB2C; D_8005BB2C = dl + 1;
-				dl->words.w0 = 0xED000000 | ((sxh_i & 0xFFF) << 12) | (syh_i & 0xFFF);
-				dl->words.w1 = ((sxl_i & 0xFFF) << 12) | (syl_i & 0xFFF);
+				gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, sx0 * 4, sy0 * 4, sx1 * 4, sy1 * 4);
 				clip_x_min = (s16)(sx0 * 4);
 				clip_y_min = (s16)(sy0 * 4);
 				clip_x_max = (s16)(sx1 * 4);
@@ -910,17 +890,7 @@ void func_8000B044_BC44(void) {
 		dsdx = (s32)(1024.0f / D_80053BE8);
 		dtdy = (s32)(1024.0f / D_80053BEC);
 
-		dl = D_8005BB2C; D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xE4000000 | ((xh_i & 0xFFF) << 12) | (yh_i & 0xFFF);
-		dl->words.w1 = (0 << 24) | ((xl_i & 0xFFF) << 12) | (yl_i & 0xFFF);
-
-		dl = D_8005BB2C; D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xB4000000; /* gsDPHalf1(s=0, t=0) */
-		dl->words.w1 = 0;
-
-		dl = D_8005BB2C; D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xB3000000; /* gsDPHalf2 */
-		dl->words.w1 = ((dsdx & 0xFFFF) << 16) | (dtdy & 0xFFFF);
+		gSPTextureRectangle(D_8005BB2C++, xl_i, yl_i, xh_i, yh_i, G_TX_RENDERTILE, 0, 0, dsdx, dtdy);
 
 		gDPPipeSync(D_8005BB2C++);
 		gDPTileSync(D_8005BB2C++);
@@ -928,9 +898,7 @@ void func_8000B044_BC44(void) {
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_IA16);
 		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 
-		dl = D_8005BB2C; D_8005BB2C = dl + 1;
-		dl->words.w0 = 0xFA000000;
-		dl->words.w1 = ((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | alpha;
+		gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
 
 		x_cursor = (s16)(x_cursor + glyph_advance);
 		i = (s16)(i + 1);
@@ -940,18 +908,11 @@ void func_8000B044_BC44(void) {
 epilogue:
 	/* Restore render state */
 	{
-		Gfx *v0;
-		v0 = D_8005BB2C; D_8005BB2C = v0 + 1;
-		v0->words.w0 = 0xBA000E02; v0->words.w1 = 0x0000C000; /* gDPSetTextureLUT(G_TT_IA16) */
-		v0 = D_8005BB2C; D_8005BB2C = v0 + 1;
-		v0->words.w0 = 0xBB000001; v0->words.w1 = 0x80008000; /* gSPTexture ON */
-		v0 = D_8005BB2C; D_8005BB2C = v0 + 1;
-		v0->words.w0 = 0xB9000031 + (0xD << 4); /* placeholder for othermode_l restore */
-		v0->words.w1 = 0x00552048; /* gDPSetRenderMode(G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2) */
-		v0 = D_8005BB2C; D_8005BB2C = v0 + 1;
-		v0->words.w0 = 0xFCFFFFFF; v0->words.w1 = 0xFFFE793C; /* gDPSetCombineMode(G_CC_SHADE) */
-		v0 = D_8005BB2C; D_8005BB2C = v0 + 1;
-		v0->words.w0 = 0xE7000000; v0->words.w1 = 0; /* gDPPipeSync */
+		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+		gDPPipeSync(D_8005BB2C++);
 	}
 
 	D_80053BE0 = 0;
