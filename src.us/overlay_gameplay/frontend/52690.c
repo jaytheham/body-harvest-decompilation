@@ -994,9 +994,7 @@ void func_800847E4_54C94(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gSPClearGeometryMode(D_8005BB2C++, 1);
 	gDPSetRenderMode(D_8005BB2C++, 0x504240, 0x504240);
-	D_8005BB2C->words.w0 = 0xFCFFFFFF;
-	D_8005BB2C->words.w1 = 0xFFFDF8FC;
-	D_8005BB2C++;
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, 0, 0, 0, SHADE, 0, 0, 0, PRIMITIVE, 0, 0, 0, SHADE);
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, color[0], color[1], color[2], 0);
 	gDPPipeSync(D_8005BB2C++);
 
@@ -1093,9 +1091,7 @@ void func_800847E4_54C94(u8 arg0) {
 			D_8005BB34++;
 
 			gDPPipeSync(D_8005BB2C++);
-			D_8005BB2C->words.w0 = 0x04000C2F;
-			D_8005BB2C->words.w1 = ((u32)(D_8005BB34 - 3)) & 0x1FFFFFFF;
-			D_8005BB2C++;
+			gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 3) & 0x1FFFFFFF), 3, 0);
 			gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 
 			triCount = (triCount - 1) & 0xFF;
@@ -1103,24 +1099,18 @@ void func_800847E4_54C94(u8 arg0) {
 	}
 
 	gDPPipeSync(D_8005BB2C++);
-	D_8005BB2C->words.w0 = 0xFC6218C4;
-	D_8005BB2C->words.w1 = 0xFF33FFFF;
-	D_8005BB2C++;
+	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_100DE80);
-	D_8005BB2C->words.w0 = 0xF5900000;
-	D_8005BB2C->words.w1 = 0x07080200;
-	D_8005BB2C++;
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
-	D_8005BB2C->words.w0 = 0xF3000000;
-	D_8005BB2C->words.w1 = 0x070FF400;
-	D_8005BB2C++;
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
 	gDPPipeSync(D_8005BB2C++);
-	D_8005BB2C->words.w0 = 0xF5800400;
-	D_8005BB2C->words.w1 = 0x00080200;
-	D_8005BB2C++;
-	D_8005BB2C->words.w0 = 0xF2000000;
-	D_8005BB2C->words.w1 = 0x0007C07C;
-	D_8005BB2C++;
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31, 31);
 
 	ringScale = *(u16 *)((u8 *)&D_800DE840[entry130->unkA] + 2);
 	func_800853A8_55858(&origin, color, D_800DE0E4, ringScale, D_800DE0BB);
