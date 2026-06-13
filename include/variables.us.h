@@ -2708,6 +2708,8 @@ extern u8 D_800A26A4_18A764;
 extern u32 D_800A2620_18A6E0[];
 extern char D_800A5410_18D4D0[];
 extern u8 D_800A5248_18D308[];
+extern s32 D_800A269C_18A75C[];
+extern char D_800A53D4_18D494[];
 extern u8 D_800A5298_18D358[];
 extern f64 D_800A54D0_18D590;
 extern s16 D_800FB6A0;

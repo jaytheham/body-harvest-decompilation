@@ -39,3 +39,5 @@ If you don't know one of the values, you can use `12345678` as a placeholder for
 3. Replace *all* pointer arithmetic with struct/array access. If there is any pointer arithmetic remaining, you may need to search around the code base and look at other references to a memory address to determine the correct struct/array type and definition to use. If there are no other references to the address, or none typed with a struct/array yet, you will need to identify the correct struct/array type and definition based on the assembly of the function itself, and then update the relevant header files with your new struct/array definition.
 
 If the target function doesn't have any of these issues then your job is done and you can stop.
+
+You can check the build with `.\tools\make.ps1`.

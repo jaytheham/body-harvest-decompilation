@@ -815,69 +815,45 @@ typedef struct {
 	/* 0x4F */ u8 pad4F;
 } AlienInstance; /* size = 0x50 */
 
-// 0x00 00000000 -- are these all offset a word too much? is body modifier at 0x0 ?
-// 0x04 xxxxxxxx Body modifier
-// 0x08 Changes shadow
-// 0x0C Collision model size? Maybe only be second h/word
-// 0x10 xxxxyyyy Variables xxxx (Drone King Shield size)(Spyder warp beam size) yyyy (Spyder Health goes up to this value from normal then begins to decrease)
-// 0x14 More Variables?
-// 0x18 xxxxyyyy xxxx Points given on death
-// 0x1C Pointer to alien's name
-// 0x20 First weapon
-// 0x24
-// 0x28
-// 0x2C Second weapon
-// 0x30
-// 0x34
-// 0x38 xxxxyyyy xxxx Width of main shadow yyyy Depth of main shadow
-// 0x3C xxxxyyyy yyyy Health meter size
-// 0x40
-// 0x44 xxxxyyyy xxxx Max speed? yyyy Turning speed
-// 0x48 Pointer to head model/arrangment
-// 0x4C ?Pointer to ASM?
-// 0x50 ?Pointer to ASM?
-// 0x54 xxxxyyyy xxxx Legs modifier yyyy Damage done by rush attack(Spyder)
-// 0x58 xxxxyyyy xxxx Material type etc(Flesh, metal) Can use to give other enemies shields(000C)
-// 0x5C xxxxyyyy xxxx Height of body off the ground
-// 0x60 Pointer to Death animation ASM?
-// 0x64 xxxxyyyy xxxx Drops modifier
+// 0x5C Pointer to Death animation ASM?
+// 0x60 xxxxyyyy xxxx Drops modifier
 // 0x68
 typedef struct {
-	/* 0x00 */ s32 unk0;
-	/* 0x04 */ u8 pad4[0x4];
-	/* 0x08 */ s32 unk8;
-	/* 0x0C */ s16 unkC;
+	/* 0x00 */ s32 unk0; // Body modifier
+	/* 0x04 */ u8 pad4[0x4]; // Changes shadow
+	/* 0x08 */ s32 unk8; // Collision model size? Maybe only be second h/word
+	/* 0x0C */ s16 unkC; // xxxxyyyy Variables xxxx (Drone King Shield size)(Spyder warp beam size) yyyy (Spyder Health goes up to this value from normal then begins to decrease)
 	/* 0x0E */ u8 padE[0x6];
-	/* 0x14 */ s16 unk14;
+	/* 0x14 */ s16 unk14; // Points given on death
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 pad17;
 	/* 0x18 */ s32 unk18; // Ptr to name
-	/* 0x1C */ u8 pad1C[0x4];
+	/* 0x1C */ u8 pad1C[0x4]; // First weapon?
 	/* 0x20 */ s16 unk20;
 	/* 0x22 */ s16 unk22;
 	/* 0x24 */ s16 unk24;
 	/* 0x26 */ s16 unk26;
-	/* 0x28 */ u8 pad28[0x4];
+	/* 0x28 */ u8 pad28[0x4]; // Second weapon?
 	/* 0x2C */ s16 unk2C;
 	/* 0x2E */ s16 unk2E;
 	/* 0x30 */ s16 unk30;
 	/* 0x32 */ u16 unk32;
-	/* 0x34 */ s16 unk34;
-	/* 0x36 */ s16 unk36;
+	/* 0x34 */ s16 unk34; // Width of main shadow
+	/* 0x36 */ s16 unk36; // Depth of main shadow
 	/* 0x38 */ s16 unk38;
-	/* 0x3A */ u16 unk3A;
+	/* 0x3A */ u16 unk3A; // Health meter size
 	/* 0x3C */ s16 unk3C;
 	/* 0x3E */ s16 unk3E;
-	/* 0x40 */ s16 unk40;
-	/* 0x42 */ s16 unk42;
-	/* 0x44 */ void *unk44;
+	/* 0x40 */ s16 unk40; // Max speed?
+	/* 0x42 */ s16 unk42; // Turning speed?
+	/* 0x44 */ void *unk44; // Pointer to head model/arrangment?
 	/* 0x48 */ void (*unk48)(u8);
 	/* 0x4C */ void *unk4C;
-	/* 0x50 */ s8 unk50;
+	/* 0x50 */ s8 unk50; // Legs modifier?
 	/* 0x51 */ u8 unk51;
-	/* 0x52 */ u8 pad52[0x2];
-	/* 0x54 */ s32 unk54;
-	/* 0x58 */ s16 unk58;
+	/* 0x52 */ u8 pad52[0x2]; // Damage done by rush attack(Spyder)
+	/* 0x54 */ s32 unk54; // xxxxyyyy xxxx Material type etc(Flesh, metal) Can use to give other enemies shields(000C)
+	/* 0x58 */ s16 unk58; // Height of body off the ground
 	/* 0x5A */ u8 pad5A[0xE];
 } AlienSpec; /* size = 0x68 */
 

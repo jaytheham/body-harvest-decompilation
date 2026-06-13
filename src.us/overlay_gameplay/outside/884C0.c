@@ -3729,10 +3729,10 @@ s32 func_80080A54_8FA04(u8 arg0, s16 arg1, s16 arg2)
 #endif
 
 // set building as target for alien?
-void func_80080B44_8FAF4(u8 arg0, u8 arg1) {
-	AlienInstance *alien = &alienInstances[arg0];
-	BuildingInstance *building = &buildingInstances[arg1];
-	alien->unk38 = arg1;
+void func_80080B44_8FAF4(u8 alienInstanceIndex, u8 buildingInstanceIndex) {
+	AlienInstance *alien = &alienInstances[alienInstanceIndex];
+	BuildingInstance *building = &buildingInstances[buildingInstanceIndex];
+	alien->unk38 = buildingInstanceIndex;
 	alien->unk3D = building->unk11;
 	alien->unk14 = building->xCoord + 0x80;
 	alien->unk16 = building->yCoord;
