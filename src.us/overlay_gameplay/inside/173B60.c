@@ -703,16 +703,6 @@ void func_8008D900_1759C0(void) {
 	u16 sp50_unk4;
 	s32 sp48_unk0;
 	u16 sp48_unk4;
-	Gfx *temp_v0;
-	Gfx *temp_v0_2;
-	Gfx *temp_v0_3;
-	Gfx *temp_v0_4;
-	Gfx *temp_v0_5;
-	Gfx *temp_v0_6;
-	Gfx *temp_v0_7;
-	Gfx *temp_v0_8;
-	Gfx *temp_v0_9;
-
 	sp58_unk0 = D_800A4354.unk0;
 	sp58_unk4 = D_800A4354.unk4;
 	sp50_unk0 = D_800A435C.unk0;
@@ -742,26 +732,11 @@ void func_8008D900_1759C0(void) {
 		D_800A4370 = 0;
 	}
 	osWritebackDCacheAll();
-	temp_v0 = D_8005BB2C;
-	D_8005BB2C = temp_v0 + 1;
-	temp_v0->words.w0 = 0xB6000000;
-	temp_v0->words.w1 = 0x23001;
-	temp_v0_2 = D_8005BB2C;
-	D_8005BB2C = temp_v0_2 + 1;
-	temp_v0_2->words.w1 = 0xFFFF;
-	temp_v0_2->words.w0 = 0xBC00000E;
-	temp_v0_3 = D_8005BB2C;
-	D_8005BB2C = temp_v0_3 + 1;
-	temp_v0_3->words.w1 = (s32)(&D_800FCAD8) & 0x1FFFFFFF;
-	temp_v0_3->words.w0 = 0x01030040;
-	temp_v0_4 = D_8005BB2C;
-	D_8005BB2C = temp_v0_4 + 1;
-	temp_v0_4->words.w1 = 0;
-	temp_v0_4->words.w0 = 0xE7000000;
-	temp_v0_5 = D_8005BB2C;
-	D_8005BB2C = temp_v0_5 + 1;
-	temp_v0_5->words.w0 = 0xB900031D;
-	temp_v0_5->words.w1 = 0x504240;
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
+	gSPPerspNormalize(D_8005BB2C++, 0xFFFF);
+	gSPMatrix(D_8005BB2C++, &D_800FCAD8, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 	func_8008C8A4_174964();
 	if (D_800FCA92 >= 0x21) {
 		func_8008CF2C_174FEC();
@@ -782,22 +757,10 @@ void func_8008D900_1759C0(void) {
 		}
 	}
 	func_8001A828_1B428();
-	temp_v0_6 = D_8005BB2C;
-	D_8005BB2C = temp_v0_6 + 1;
-	temp_v0_6->words.w1 = 0;
-	temp_v0_6->words.w0 = 0xE7000000;
-	temp_v0_7 = D_8005BB2C;
-	D_8005BB2C = temp_v0_7 + 1;
-	temp_v0_7->words.w1 = 0x80008000;
-	temp_v0_7->words.w0 = 0xBB000000;
-	temp_v0_8 = D_8005BB2C;
-	D_8005BB2C = temp_v0_8 + 1;
-	temp_v0_8->words.w0 = 0xFCFFFFFF;
-	temp_v0_8->words.w1 = 0xFFFE793C;
-	temp_v0_9 = D_8005BB2C;
-	D_8005BB2C = temp_v0_9 + 1;
-	temp_v0_9->words.w1 = 0;
-	temp_v0_9->words.w0 = 0xBA000E02;
+	gDPPipeSync(D_8005BB2C++);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008D900_1759C0.s")
