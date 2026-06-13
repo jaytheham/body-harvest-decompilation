@@ -491,7 +491,7 @@ void func_80074768_83718(void) {
 	D_80149B44 += 1;
 }
 
-// CURRENT(5068)
+// CURRENT(3929)
 #ifdef NON_MATCHING
 void func_800747A8_83758(void) {
 	s32 sum;
@@ -1188,7 +1188,7 @@ void func_80075AA4_84A54(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075AA4_84A54.s")
 #endif
 
-// CURRENT(6115)
+// CURRENT(4965)
 #ifdef NON_MATCHING
 s32 func_80075E50_84E00(void) {
 	u8 *stream;
@@ -1267,7 +1267,7 @@ s32 func_80075E50_84E00(void) {
 		stream++;
 	} while (count--);
 
-	return has83After82;
+	return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075E50_84E00.s")
@@ -1323,7 +1323,7 @@ s32 func_80076208_851B8(s32 arg0) {
   return func_800078B8_84B8(arg0, &D_8004D150);
 }
 
-// CURRENT(1920)
+// CURRENT(1690)
 #ifdef NON_MATCHING
 s32 func_8007622C_851DC(s32 arg0) {
 	s32 arg;
@@ -1331,37 +1331,19 @@ s32 func_8007622C_851DC(s32 arg0) {
 	s32 v1;
 
 	arg = arg0;
-	{
-		s32 *ptr;
-
-		ptr = &D_801494B4;
-		v1 = 0xF;
-		do {
-			v0 = v1;
-			if (arg == *ptr) {
-				return v0;
-			}
-			ptr--;
-		} while (v1--);
+	v1 = 0x10;
+	while (v1--) {
+		v0 = v1;
+		if (arg == D_80149478[v1 + 1]) {
+			return v0;
+		}
 	}
 
 	v1 = 0xF;
 	if (D_801494B4 != 0) {
-		s32 *ptr;
-
-		ptr = D_80149478;
 		v0 = v1;
-		while (1) {
-			if (v1 == 0) {
-				break;
-			}
-			v1--;
-			if (ptr[v1] != 0) {
-				v0 = v1;
-				continue;
-			} else {
-				break;
-			}
+		while (v1 != 0 && D_80149478[--v1] != 0) {
+			v0 = v1;
 		}
 	}
 	D_80149478[v1] = arg0;
@@ -1422,7 +1404,7 @@ void func_80076390_85340(void)
   func_80013460();
 }
 
-// CURRENT(3615)
+// CURRENT(2345)
 #ifdef NON_MATCHING
 s32 func_8007643C_853EC(s32 arg0) {
 	MissionCondEntry *condEntry;
@@ -1443,13 +1425,13 @@ s32 func_8007643C_853EC(s32 arg0) {
 		s32 condType;
 
 		i = temp - 1;
+		temp = i;
 		condType = 2;
 		condEntry = &D_801494C0[i];
 		foundEntry = condEntry;
 		if ((condEntry->unk0 == condType) && (arg0 == condEntry->unk1)) {
-			foundEntry = condEntry;
 		} else {
-			while (1) {
+			do {
 				temp = i;
 				i -= 1;
 				condEntry -= 1;
@@ -1457,11 +1439,7 @@ s32 func_8007643C_853EC(s32 arg0) {
 				if (temp == 0) {
 					break;
 				}
-				if ((condEntry->unk0 == condType) && (arg0 == foundEntry->unk1)) {
-					foundEntry = condEntry;
-					break;
-				}
-			}
+			} while (!((condEntry->unk0 == condType) && (arg0 == condEntry->unk1)));
 		}
 	}
 
@@ -1489,6 +1467,7 @@ s32 func_8007643C_853EC(s32 arg0) {
 	func_800078CC_84CC(arg0, &D_8004D154);
 	return 0;
 }
+// CURRENT(2345)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007643C_853EC.s")
 #endif
@@ -1574,21 +1553,21 @@ void func_80076754_85704(void)
   D_8004D154 = -1;
 }
 
-// CURRENT(830)
+// CURRENT(600)
 #ifdef NON_MATCHING
 void func_8007679C_8574C(s16 arg0) {
 	MissionCondEntry *entry;
 	s32 i;
 
 	entry = D_801494C0;
-	i = 0x7F;
-	do {
+	i = 0x80;
+	while (i--) {
 		if (entry->unk1 == arg0 && entry->unk0 == 1) {
 			func_80073DC0_82D70(entry->unk4);
 			break;
 		}
 		entry++;
-	} while (i--);
+	}
 	func_800078CC_84CC(arg0, &D_8004D150);
 }
 #else

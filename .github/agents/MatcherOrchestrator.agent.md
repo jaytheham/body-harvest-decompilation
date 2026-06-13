@@ -4,7 +4,7 @@ description: Manage matcher agents
 tools:
   [execute/getTerminalOutput, execute/killTerminal, execute/runInTerminal, read/problems, read/readFile, agent, edit/editFiles, search/codebase, search/fileSearch, search/textSearch, search/usages, todo]
 model: DeepSeek V4 Flash (deepseek)
-agents: ["BH Function Cleanser","BH Matcher"]
+agents: ["BH Matcher"]
 ---
 
 ## Overview
@@ -18,9 +18,8 @@ You will be given a C file to target, follow this process:
   - Replace the `NON_MATCHING` before the target function with `TRUE` so the C code is included in the build instead of the assembly file.
   - Build the ROM so the diff tool can calculate the C implementation's CURRENT closeness value. It is normal that the build will return `FAILED` at this stage because the function does not yet match.
   - After building check the current closeness value with the diff tool, a lower value is better, `CURRENT(0)` is a match.
-  - Create a newfirst subagent, agentName `BH Function Cleanser`, and tell the subagent to clean up the function, this agent doesn't care about building, matching or closeness value.
-  - Once the first finishes its work create a second subagent, agentName `BH Matcher`, and tell the subagent to target the function, this agent does build, match, and check closeness.
-4. Only the following directory contents and files are allowed to be changed by subagents, after a subagent finishes, undo any changes outside of:
+  - Create a subagent, agentName `BH Matcher`, and tell the subagent to target the function.
+4. After a subagent finishes, undo any changes outside of:
  - `/ExampleFixes`
  - `/include`
  - `/src.us`
@@ -35,8 +34,6 @@ Tell the subagents to reduce the closeness value as much as possible, they shoul
 Only ask each subagent to target one function.
 
 Subagents are not to commit any changes. After they finish you will check the current changes, then add  NON_MATCHING if needed, fix any errors, revert any unintended changes, and fix whatever else is necessary to return the build to `build/bh.us.z64: OK` before committing. Make sure the function has a comment with the current closeness value before committing. Only commit when the build is OK.
-
-If a function already has a closeness value of less than 100 then skip it. Don't tell the subagent this value threshold.
 
 If a function is more than 100 lines of code long, skip it. Don't tell the subagent this line count threshold.
 
