@@ -922,7 +922,7 @@ void func_80124C40_133BF0(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 // displayBullets
 void func_80124D60_133D10(void) {
 	Unk8015F760 *bullet;
-	u8 *weaponEntry;
+	const u8 *weaponEntry;
 	s32 i;
 	s32 objType;
 	u8 sparkType;
@@ -932,6 +932,7 @@ void func_80124D60_133D10(void) {
 	s8 color[4];
 	s16 *hudPos;
 	u8 *extraPtr;
+	u32 *sparkDLs;
 
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
@@ -951,6 +952,7 @@ void func_80124D60_133D10(void) {
 			objType = bullet->unk20;
 			weaponEntry = D_80145BE0_154B90 + (objType * 0x18);
 			sparkType = weaponEntry[0x16];
+			sparkDLs = (u32 *)&D_80140AD8_14FA88;
 
 			if ((gameplayMode == 1) || (gameplayMode == 0xC) || (gameplayMode == 3) || (gameplayMode == 0xB)) {
 				weaponFlags = *(s32 *)(weaponEntry + 8) >> 8;
@@ -1068,7 +1070,7 @@ void func_80124D60_133D10(void) {
 				gSPLine3D(D_8005BB30++, 2, 3, 0);
 				gSPLine3D(D_8005BB30++, 0, 1, 0);
 
-				gSPDisplayList(D_8005BB30++, ((u32 *)&D_80140AD8_14FA88)[sparkType] & 0x1FFFFFFF);
+				gSPDisplayList(D_8005BB30++, sparkDLs[sparkType] & 0x1FFFFFFF);
 			} else if (sparkType != 0) {
 				if ((*(s32 *)(weaponEntry + 8) & 0x01000000) == 0) {
 					D_80052B40.unk0 = (s16)(s32)bullet->unk0 >> 2;
@@ -1088,7 +1090,7 @@ void func_80124D60_133D10(void) {
 					func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_800311A0, D_8005BB38);
 					gSPVertex(D_8005BB2C++, D_8005BB38, 4, 0);
 					D_8005BB38 += 0x40;
-					gSPDisplayList(D_8005BB2C++, ((u32 *)&D_80140AD8_14FA88)[sparkType]);
+					gSPDisplayList(D_8005BB2C++, sparkDLs[sparkType]);
 				}
 			}
 
@@ -1130,9 +1132,7 @@ void func_80124D60_133D10(void) {
 		hudPos = &D_8015FA40[6];
 		for (i = 0x16; i >= 0; i--) {
 			if ((hudPos[0] != 0x7FFF) && (hudPos[-3] != 0x7FFF)) {
-				D_8005BB30->words.w0 = 0xB5000000;
-				D_8005BB30->words.w1 = ((((i * 2) & 0xFF) << 16) | ((((i * 2) + 2) & 0xFF) << 8) | 4);
-				D_8005BB30++;
+				gSPLineW3D(D_8005BB30++, i, i + 1, 4, 0);
 			}
 			hudPos += 3;
 		}
@@ -1157,7 +1157,7 @@ void func_80124D60_133D10(void) {
 				D_80052B40.unk2 = fadeData[1];
 				D_80052B40.unk4 = fadeData[2];
 
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, invFade, invFade, invFade);
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, invFade, invFade, invFade, 0xFF);
 
 				func_800039D0_45D0(&D_80052B40, NULL, &D_80052B48, D_8005BB38);
 				gSPVertex(D_8005BB2C++, D_8005BB38, 4, 0);
