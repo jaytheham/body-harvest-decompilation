@@ -42,67 +42,30 @@ void func_8008BB5C_173C1C(void) {
 
 #ifdef NON_MATCHING
 void func_8008BB6C_173C2C(s32 arg0, s32 arg1) {
-	Gfx *dl;
-	Gfx *spC;
 	s32 sp0;
 
 	sp0 = arg0 &= 0xFF;
 	arg1 &= 0xFF;
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xFD900000;
-	dl->words.w1 = (s32)(D_1009C70 + (arg1 << 7)) & 0x1FFFFFFF;
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((D_1009C70 + (arg1 << 7)) & 0x1FFFFFFF));
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xF5900000;
-	dl->words.w1 = 0x07014050;
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+		G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w1 = 0;
-	dl->words.w0 = 0xE6000000;
+	gDPLoadSync(D_8005BB2C++);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w1 = 0x0703F800;
-	dl->words.w0 = 0xF3000000;
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 2048);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w1 = 0;
-	dl->words.w0 = 0xE7000000;
+	gDPPipeSync(D_8005BB2C++);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xF5800200;
-	dl->words.w1 = 0x00014050;
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 1, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+		G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xF2000000;
-	dl->words.w1 = 0x0003C03C;
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 15 << G_TEXTURE_IMAGE_FRAC, 15 << G_TEXTURE_IMAGE_FRAC);
 
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w0 = (s32)((((arg0 + 0xB) * 4 & 0xFFF) << 0xC) | 0xE4000344);
-	dl->words.w1 = (s32)(((sp0 * 4 & 0xFFF) << 0xC) | 0x318);
+	gSPTextureRectangle(D_8005BB2C++, sp0 * 4, 0x318, (arg0 + 0xB) * 4, 0x344, G_TX_RENDERTILE, 0, 0, 0x0600, 0x0600);
 
-	spC = D_8005BB2C;
-	D_8005BB2C = spC + 1;
-	spC->words.w1 = 0;
-	spC->words.w0 = 0xB4000000;
-
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w0 = 0xB3000000;
-	dl->words.w1 = 0x06000600;
-
-	dl = D_8005BB2C;
-	D_8005BB2C = dl + 1;
-	dl->words.w1 = 0;
-	dl->words.w0 = 0xE7000000;
+	gDPPipeSync(D_8005BB2C++);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008BB6C_173C2C.s")
