@@ -9,7 +9,7 @@ model: DeepSeek V4 Flash (deepseek)
 ## Overview
 
 This is a matching decompilation project for Body Harvest (N64). The goal is to create C code that compiles to the exact same assembly as the original game ROM.
-You will be tasked with updating the yaml and C files so `.data`, `.rodata`, and `.bss` sections are defined in C code and compile to match the original ROM. C89 code, compiler IDO 5.3 -O2 -mips2 -32.
+You will be tasked with updating the yaml and C files so `.data` and `.rodata` sections are defined in C code and compile to match the original ROM. C89 code, compiler IDO 5.3 -O2 -mips2 -32.
 
 ## Project Structure
 
@@ -18,9 +18,9 @@ You will be tasked with updating the yaml and C files so `.data`, `.rodata`, and
 - `src.us/`: C source files.
 - `include/`: Header files for variables, functions, and structs.
 - `build/`: Readonly, git-ignored - compiled object files and the final ROM image.
-- `bh.ld`: Readonly, git-ignored - Linker script defining the layout of the ROM, including the .data, .rodata, and .bss sections.
+- `bh.ld`: Readonly, git-ignored - Linker script defining the layout of the ROM, including the .data and .rodata sections.
 - `baserom.us.z64` Readonly, git-ignored - original ROM image, used as a reference for the target assembly and data.
-- `bh.us.yaml` - Defines the layout of sections within the ROM, including the .data, .rodata, .bss etc sections.
+- `bh.us.yaml` - Defines the layout of sections within the ROM, including the .data and .rodata sections.
 
 ## Tools
 
@@ -44,6 +44,12 @@ Then continue updating the C code to fix any differences in the output until the
 Update any `D_<RAM address>` style variables to `D_<RAM address>_<ROM address>` style as you work on them.
 
 There are some already decompiled data sections in the yaml for reference.
+
+When working with .rodata sections:
+all rodata symbols need to be declared as const.
+single f32 & f64 values also need to be defined as an array or the compiler doesnt treat them as const.
+identify and name jump tables, see jtbl_801411A8_150158 as an example
+Once you start working on rodata, any remaining data that hasn't been extracted to a C file needs to be defined as `rodatabin` instead of `bin` in the yaml so that the linker will place it in the correct location.
 
 Do not cheat by adding all the remaining bin data as a variable in the last defined non-bin section's C file, you must add variables to the C files which reference them, and split the yaml sections so each data section corresponds to the correct C file as needed to match the original ROM layout.
 
