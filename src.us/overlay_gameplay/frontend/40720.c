@@ -458,7 +458,8 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
   }
 }
 
-#ifdef NON_MATCHING // CURRENT(9255)
+// CURRENT(9255)
+#ifdef NON_MATCHING
 void func_80070CC4_41174(void)
 {
 	s16 selectedFileIndex;
@@ -557,7 +558,8 @@ void func_80070CC4_41174(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070CC4_41174.s")
 #endif
 
-#ifdef NON_MATCHING // CURRENT(6340)
+// CURRENT(6340)
+#ifdef NON_MATCHING
 void func_800710D8_41588(s16 arg0, s16 arg1) {
 	s16 selectedMissionBefore;
 	s32 i;
@@ -760,51 +762,53 @@ void func_80071738_41BE8(void) {
 #ifdef NON_MATCHING
 s32 func_80071760_41C10(s32 arg0)
 {
-  s32 totalWidth;
-  s16 digitCount;
-  s16 i;
-  s16 j;
-  s32 value; 
+	s32 totalWidth;
+	s16 digitCount;
+	s16 i;
+	s16 j;
+	s32 value;
 	s32 divisor;
 	s32 pad;
-	s8 chpad;s8 chpad2;s8 chpad3;s8 ch;
+	s8 chpad;
+	s8 chpad2;
+	s8 ch;
+	s8 chpad3;
 	s32 textWidth;
-  digitCount = 0;
-  totalWidth = 0;
-  value = arg0;
-  textWidth = func_8000A2B8_AEB8(&D_800AD7E4_7DC94, 0) * 0x1C;
-  if (arg0 > 0)
-  {
-	do
+	digitCount = 0;
+	totalWidth = 0;
+	value = arg0;
+	textWidth = func_8000A2B8_AEB8(&D_800AD7E4_7DC94, 0) * 0x1C;
+	if (arg0 > 0)
 	{
-	  digitCount++;
-	  value = value / 10.0f;
+		do
+		{
+			value = value / 10.0f;
+			digitCount++;
+		} while (value > 0);
+		ch = 0;
 	}
-	while (value > 0);
-	  
-  }
-  if (digitCount > 0)
-  {
-	i = 0;
-	do
-	{
-	  divisor = 1;
-	  for (j = 0; j < i; j++)
-	  {
-		divisor *= 10;
-	  }
 
-	  value = ((f32) arg0) / divisor;
-	  ch = (value - (((s32) (value / 10.0f)) * 10)) + '0';
-	  totalWidth += func_8000A2B8_AEB8(&ch, 0) * 4;
+	if (digitCount > 0)
+	{
+		i = 0;
+		do
+		{
+			divisor = 1;
+			for (j = 0; j < i; j++)
+			{
+				divisor *= 10;
+			}
+
+			value = ((f32)arg0) / divisor;
+			ch = (value - (((s32)(value / 10.0f)) * 10)) + '0';
+			totalWidth += func_8000A2B8_AEB8(&ch, 0) * 4;
+		} while ((++i) < digitCount);
 	}
-	while ((++i) < digitCount);
-  }
-  if (arg0 == 0)
-  {
-	totalWidth = func_8000A2B8_AEB8(&D_800AD7E8_7DC98, 0) * 4;
-  }
-  return textWidth - totalWidth;
+	if (arg0 == 0)
+	{
+		totalWidth = func_8000A2B8_AEB8(&D_800AD7E8_7DC98, 0) * 4;
+	}
+	return textWidth - totalWidth;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071760_41C10.s")
@@ -3977,8 +3981,9 @@ void func_80079F30_4A3E0(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80079F30_4A3E0.s")
 #endif
 
+// CURRENT(3074)
+#ifdef NON_MATCHING
 // displayGameOver
-#ifdef NON_MATCHING // CURRENT(3074)
 void func_8007A038_4A4E8(void) {
 	s32 timer;
 	s32 fade;
@@ -4600,7 +4605,8 @@ void func_8007BEC0_4C370(void)
   }
 }
 
-#ifdef NON_MATCHING // CURRENT(6838)
+// CURRENT(6838)
+#ifdef NON_MATCHING
 void func_8007BFC4_4C474(void) {
 	s16 holdCounter;
 	s16 startIndex;
@@ -5327,7 +5333,8 @@ void func_8007D7E0_4DC90(void) {
 	D_800D7A8D = 0x0F;
 }
 
-#ifdef NON_MATCHING // CURRENT(3220)
+// CURRENT(3220)
+#ifdef NON_MATCHING
 s32 func_8007D91C_4DDCC(s32 arg0) {
 	s32 fadeState;
 	s32 flags;
@@ -5700,8 +5707,8 @@ s32 func_8007E12C_4E5DC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007E12C_4E5DC.s")
 #endif
 
-#ifdef NON_MATCHING
 // CURRENT(450)
+#ifdef NON_MATCHING
 void func_8007EA0C_4EEBC(s32* arg0) {
 	u8 sp1F;
 	s32 v1;

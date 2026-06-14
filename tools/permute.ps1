@@ -61,4 +61,4 @@ if ($PermuterArgs.Count -gt 0) {
 }
 Write-Host ""
 
-docker exec -it $Container python3 tools/decomp-permuter/permuter.py $funcDir @PermuterArgs
+docker exec -it $Container python3 tools/decomp-permuter/permuter.py $funcDir @PermuterArgs -j 16
