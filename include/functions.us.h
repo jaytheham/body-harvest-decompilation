@@ -1600,7 +1600,7 @@ void func_800702C0_7F270(s16);
 void func_800C9530_D84E0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
 void func_800DEADC_EDA8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_80103760_112710(VehicleInstance *, VehicleInstance *);
-s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s16 arg2);
+s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s32 arg2);
 void func_800F32EC_10229C(u8 arg0, u8 arg1);
 
 /* java/1ED9E0 — additional function declarations */
