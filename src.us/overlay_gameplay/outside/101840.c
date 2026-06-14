@@ -917,26 +917,19 @@ void func_800F35AC_10255C(u8 arg0, s16 arg1) {
 	}
 }
 
-// CURRENT(275)
-#ifdef NON_MATCHING
 void func_800F3670_102620(void) {
 	u8 i;
+	s32 j;
 
 	D_80157FF8 = 0;
 	for (i = 0; i < 8; i++) {
 		D_80157FF0[i] = i;
 	}
-	{
-		u8 j;
-		for (j = 0; j < 12; j++) {
-			*((u8*)D_801601F0 + j * 0x16) =
-				*(D_801470C0_156070 + currentLevel * 0x108 + j * 0x16 - 0x108);
-		}
+	for (j = 0; j < 12; j = (u8)(j + 1)) {
+		*(Unk801601F0 *)((u8 *)D_801601F0 + j * 0x16) =
+			*(Unk801601F0 *)(D_801470C0_156070 + currentLevel * 0x108 + j * 0x16 - 0x108);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F3670_102620.s")
-#endif
 
 void func_800F375C_10270C(s8 arg0) {
 	osSyncPrintf(D_801448A8_153858, arg0, D_80157FF8, &D_80157FF8); // FREE WALKER %d: %d walkers allocated
