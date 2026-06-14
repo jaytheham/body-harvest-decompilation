@@ -1179,7 +1179,7 @@ void func_80075AA4_84A54(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075AA4_84A54.s")
 #endif
 
-// CURRENT(0)
+// CURRENT(4965)
 #ifdef NON_MATCHING
 s32 func_80075E50_84E00(void) {
 	u8 *stream;
@@ -1321,7 +1321,7 @@ s32 func_80076208_851B8(s32 arg0) {
   return func_800078B8_84B8(arg0, &D_8004D150);
 }
 
-// CURRENT(0)
+// CURRENT(1690)
 #ifdef NON_MATCHING
 s32 func_8007622C_851DC(s32 arg0) {
 	s32 v1;

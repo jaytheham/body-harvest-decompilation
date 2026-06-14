@@ -31,7 +31,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
 - Useful: Check for already matched functions with sub-sections of assembly that are the same as the target assembly using `.\tools\find-partial.ps1 <current func name>` e.g. `.\tools\find-partial.ps1 func_80120414_12F3C4` use the C implementation of any functions it returns as reference for your own implementation.
 
 # Your Workflow
-1. Change the `#ifdef NON_MATCHING` line above the function to `#ifdef TRUE` so the C code will be included in the build.
+1. Remove the `#ifdef NON_MATCHING` wrapper around the function so the C code will be included in the build.
 2. Always read the whole file `DecompHints.md` for general matching advice.
 3. Build, compare with target, identify differences.
 4. Change the C code in a way that will make the current assembly match the target assembly.
