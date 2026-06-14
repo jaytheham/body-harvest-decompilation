@@ -620,25 +620,23 @@ void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F2980_101930.s")
 #endif
 
-// CURRENT(837)
+// CURRENT(120) - improved from 837
 #ifdef NON_MATCHING
 void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 	UnkF9230ShadowWalker *walker;
 	u8 count;
 	s16 i;
 	s16 temp;
-	u32 idx;
 
-	idx = arg0;
-	if ((s32)idx >= 9) {
+	if ((s32)arg0 >= 9) {
 		osSyncPrintf(D_801446E8_153698);
 	}
 
-	if (D_80157FF0[idx] != -1) {
+	if (D_80157FF0[arg0] != -1) {
 		osSyncPrintf(D_80144700_1536B0);
 	}
 
-	walker = &D_80158000[idx];
+	walker = &D_80158000[arg0];
 	if (walker->limbs[0].unk22 == 2) {
 		return;
 	}
@@ -646,10 +644,10 @@ void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 	*(s32 *)&walker->limbs[0].unk0 = (s16)arg1;
 	*(s32 *)&walker->limbs[0].unk4 = arg2;
 	*(s32 *)&walker->limbs[0].unk14 = arg2;
-	*(s32 *)&walker->limbs[0].unk10 = (s16)arg1;
-	*(s32 *)&walker->limbs[0].unkC = arg2;
-	walker->limbs[0].unk1C = 0;
-	*(s32 *)&walker->limbs[0].unk8 = (s16)arg1;
+	*(volatile s32 *)&walker->limbs[0].unk10 = (s16)arg1;
+	*(volatile s32 *)&walker->limbs[0].unkC = arg2;
+	*(volatile s16 *)&walker->limbs[0].unk1C = 0;
+	*(volatile s32 *)&walker->limbs[0].unk8 = (s16)arg1;
 
 	func_800F2980_101930(walker);
 
