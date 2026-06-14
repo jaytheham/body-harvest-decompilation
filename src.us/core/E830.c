@@ -58,53 +58,47 @@ void func_8000DC9C_E89C(s32 arg0, s32 arg1)
 // https://decomp.me/scratch/QRS82
 // CURRENT(121)
 #ifdef NON_MATCHING
-void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-	s32 sp54;
-	s32 sp50;
-	s32 pad4C;
-	s32 pad48;
-	s32 pad44;
-	s32 sp40;
-	s16 pad3E;
-	s16 pad3C;
-	s16 pad3A;
-	s16 pad38;
-	s16 sp36;
-	f64 sp28;
-	f64 sp20;
-	s32 temp_a1;
-	s32 temp_s0;
-	s32 temp_t1;
-	s32 var_s1;
-	f32 temp_f12;
-	f64 temp_f18;
-	s16 temp_v0;
-
-	sp54 = D_80059CD2;
-	sp50 = D_80059CD4;
-	temp_t1 = (s32) ((D_8005BAEC * D_8005BAEC) + (__osCurrentTime * __osCurrentTime)) / 4;
-	temp_a1 = (sp54 * sp54) + (sp50 * sp50);
-	var_s1 = ((D_80059CD0 * 2 * (temp_t1 - temp_a1)) + (D_80059CD0 * temp_a1)) / 1296;
-	temp_s0 = var_s1 & 0xFFFF;
-
-	sp36 = coss(temp_s0 & 0xFFFF);
-	temp_f18 = (f64) (f32) sins(temp_s0 & 0xFFFF);
-	sp28 = (f64) sp50;
-	sp20 = (f64) sp54;
-	sp40 = (s32) (((temp_f18 / 32768.0) * sp28) + (((f64) (f32) sp36 / 32768.0) * sp20));
-
-	sp36 = sins(temp_s0 & 0xFFFF);
-	temp_v0 = coss(temp_s0 & 0xFFFF);
-
-	if (var_s1 >= 0x8000) {
-		var_s1 = 0x7FFF;
-	}
-
-	temp_f12 = (f32) ((D_80037620_38220 - (f64) (f32) var_s1) / D_80037620_38220);
-
-	D_80059CD2 = (s16) (s32) ((f32) sp40 * temp_f12);
-
-	D_80059CD4 = (s16) (s32) ((f32) (s32) ((((f64) (f32) temp_v0 / 32768.0) * sp28) + (-((f64) (f32) sp36 / 32768.0) * sp20)) * temp_f12);
+void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+  s32 sp54;
+  s32 sp50;
+  s32 pad4C;
+  s32 pad48;
+  s32 pad44;
+  s32 sp40;
+  s16 pad3E;
+  s16 pad3C;
+  s16 pad3A;
+  s16 pad38;
+  s16 sp36;
+  f64 sp28;
+  f64 sp20;
+  s32 temp_a1;
+  s32 temp_t1;
+  s32 var_s1;
+  f32 temp_f12;
+  f64 temp_f18;
+  s16 temp_v0;
+  sp54 = D_80059CD2;
+  sp50 = D_80059CD4;
+  temp_t1 = ((D_8005BAEC * D_8005BAEC) + (__osCurrentTime * __osCurrentTime)) / 4;
+  temp_a1 = (sp54 * sp54) + (sp50 * sp50);
+  var_s1 = (((D_80059CD0 * 2) * (temp_t1 - temp_a1)) + (D_80059CD0 * temp_a1)) / 1296;
+  
+  sp36 = coss(var_s1);
+  temp_f18 = (f32) sins(var_s1);
+  sp28 = sp50;
+  sp20 = sp54;
+  sp40 = (((temp_f18 / 32768.0) * sp28) + ((((f32) sp36) / 32768.0) * sp20));
+  sp36 = sins(var_s1);
+  temp_v0 = coss(var_s1);
+  if (var_s1 >= 0x8000)
+  {
+	var_s1 = 0x7FFF;
+  }
+  temp_f12 = ((D_80037620_38220 - (((f32) var_s1))) / D_80037620_38220);
+  D_80059CD2 = ((((f32) sp40) * temp_f12));
+  D_80059CD4 = (((((s32) (((((f32) temp_v0) / 32768.0) * sp28) + (-(((f32) sp36) / 32768.0) * sp20)))) * temp_f12));
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000DCCC_E8CC.s")
