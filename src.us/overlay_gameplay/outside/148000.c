@@ -1041,17 +1041,14 @@ s32 func_8013B5E4_14A594(s32 arg0) {
 	return 0;
 }
 
-// CURRENT(110)
-#ifdef NON_MATCHING
 // guess_doWeaponChange
 void func_8013B688_14A638(void) {
 	VehicleInstance* temp_v0;
-	u16 flags;
 
 	temp_v0 = D_80052B34;
 	if ((temp_v0->unk1A == 0)
-		&& ((flags = temp_v0->unk20, (flags & 0x1000))
-			|| ((flags & 2) && ((D_80159320 << 8) >= 0)))) {
+		&& ((temp_v0->unk20 & 0x1000)
+			|| ((temp_v0->unk20 & 2) && ((D_80159320 << 8) >= 0)))) {
 		D_801601DC = 0;
 		D_801601E4 = 0;
 		func_8013B384_14A334();
@@ -1115,9 +1112,6 @@ void func_8013B688_14A638(void) {
 
 	func_8013B384_14A334();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B688_14A638.s")
-#endif
 
 s32 func_8013B8C8_14A878(void) {
 	if (D_801601DC == 0) {
