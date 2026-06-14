@@ -2736,8 +2736,6 @@ void func_800C6D80_D5D30(void) {
 
 // CURRENT(200)
 #ifdef NON_MATCHING
-u8 func_800C8C7C_D7C2C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
-
 s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linked;
@@ -3267,7 +3265,7 @@ void func_800C8F5C_D7F0C(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(81)
+// CURRENT(2700)
 void func_800C927C_D822C(u8 arg0) {
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
@@ -5056,7 +5054,7 @@ void func_800CE1C0_DD170(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(58)
+// CURRENT(26000)
 void func_800CE6E8_DD698(u8 arg0) {
 	s16 index;
 	s16 nextIndex;
