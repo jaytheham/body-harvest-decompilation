@@ -556,16 +556,18 @@ void func_800747A8_83758(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(4133) */
+/* CURRENT(3953) */
 void func_80074970_83920(void) {
+	s32 savedIndex;
 	s32 i;
 	s32 chunkIndex;
-	volatile s32 savedIndex;
+	u8 curBC;
 
 	chunkIndex = -1;
 	if (func_80074558_83508() != 0xB7) {
-		if (D_801494BC != 0xAC) {
-			if (D_801494BC != 0xAE) {
+		curBC = D_801494BC;
+		if (curBC != 0xAC) {
+			if (curBC != 0xAE) {
 			i = savedIndex;
 			while (1) {
 				if (D_801494BC == 0x90) {
@@ -574,23 +576,11 @@ void func_80074970_83920(void) {
 					func_80074500_834B0();
 				}
 
-				{
-				u8 val;
-				s32 baseIdx;
-				val = func_80074500_834B0();
-				baseIdx = (((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1);
-				if (savedIndex) { }
-				D_80149B60[baseIdx + (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1) + i] = val;
-				}
+				*(u8 *)((u8 *)D_80149B60 + (((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1) + (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1) + i) = func_80074500_834B0();
 				i += 1;
 
 				if ((D_801494BC == 0x80) || (D_801494BC == 0x81)) {
-					u8 val;
-					s32 baseIdx;
-					val = func_80074500_834B0();
-					baseIdx = (((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1);
-					if (savedIndex) { }
-					D_80149B60[baseIdx + (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1) + i] = val;
+					*(u8 *)((u8 *)D_80149B60 + (((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1) + (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1) + i) = func_80074500_834B0();
 					i += 1;
 				}
 
@@ -609,6 +599,7 @@ void func_80074970_83920(void) {
 				savedIndex = i;
 				break;
 			}
+			if (savedIndex) { }
 			}
 		}
 	}
@@ -1203,8 +1194,7 @@ s32 func_80075E50_84E00(void) {
 
 	count = D_80149B30;
 
-	if (count != 0) {
-		count--;
+	if (count--) {
 		do {
 			if (cmd[0] == 0x9C) {
 				u32 vehicleOffset;
@@ -1250,24 +1240,32 @@ s32 func_80075E50_84E00(void) {
 		stream++;
 	} while (count--);
 
-	count = 7;
-	do {
-		D_8014D1B8[count] &= bitmask[count];
-	} while (count--);
+	{
+		u32 *dst;
+		u32 *src;
+		s32 i;
+
+		dst = &D_8014D1B8[7];
+		src = &bitmask[7];
+		i = 7;
+		do {
+			*dst &= *src;
+			dst--;
+			src--;
+		} while (i--);
+	}
 
 	stream = &D_80224680;
 	count = 0x7FF;
 	do {
-		if (stream[0] == 0x82) {
+		u8 val = *stream++;
+		if (val == 0x82) {
 			has83After82 = 0;
 		}
-		if (stream[0] == 0x83 && has83After82 == 0) {
+		if (val == 0x83 && has83After82 == 0) {
 			has83After82 = 1;
 		}
-		stream++;
 	} while (count--);
-
-	return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075E50_84E00.s")
@@ -1326,24 +1324,26 @@ s32 func_80076208_851B8(s32 arg0) {
 // CURRENT(1690)
 #ifdef NON_MATCHING
 s32 func_8007622C_851DC(s32 arg0) {
-	s32 arg;
-	s32 v0;
 	s32 v1;
+	s32 v0;
 
-	arg = arg0;
 	v1 = 0x10;
 	while (v1--) {
-		v0 = v1;
-		if (arg == D_80149478[v1 + 1]) {
-			return v0;
+		if (arg0 == D_80149478[v1]) {
+			return v1;
 		}
 	}
 
 	v1 = 0xF;
+	v0 = 0;
 	if (D_801494B4 != 0) {
 		v0 = v1;
-		while (v1 != 0 && D_80149478[--v1] != 0) {
-			v0 = v1;
+		while (v1) {
+			if (D_80149478[--v1] != 0) {
+				v0 = v1;
+			} else {
+				break;
+			}
 		}
 	}
 	D_80149478[v1] = arg0;
