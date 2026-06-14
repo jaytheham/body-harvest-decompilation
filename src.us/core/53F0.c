@@ -1168,6 +1168,7 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007F60_8B60.s")
 #endif
 
+// https://decomp.me/scratch/fln37
 // CURRENT(785)
 #ifdef NON_MATCHING
 s32 func_8000807C_8C7C(u8 *arg0, u8 *arg1) {

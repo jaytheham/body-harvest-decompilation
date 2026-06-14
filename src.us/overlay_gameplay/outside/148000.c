@@ -247,9 +247,8 @@ void func_801394DC_14848C(void)
   }
 }
 
-// NON_MATCHING: regalloc - a0/a1/a2 cyclic rotation (offset/srcPtr/weapon2)
-// Compiler folds &D_80031424 base address, preventing a0 from being allocated to it first.
-// Score 780 - all instructions match, only register names differ.
+// https://decomp.me/scratch/cGhwK
+// CURRENT(780)
 #ifdef NON_MATCHING
 void func_8013958C_14853C(void) {
 	s32 val;

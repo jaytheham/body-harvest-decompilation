@@ -524,7 +524,7 @@ void func_8008DA24_9C9D4(s32 arg0) {
 #endif
 
 // https://decomp.me/scratch/BnGko
-// CURRENT(925)
+// CURRENT(830)
 #ifdef NON_MATCHING
 void func_8008DEF4_9CEA4(u8 arg0)
 {
