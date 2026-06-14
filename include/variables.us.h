@@ -1911,7 +1911,7 @@ extern s8 D_8014F67E;
 extern BuildingInstance *D_80158FE8;
 extern u32 D_8014D1B8[];
 extern Unk8014F618 D_8014F618;
-
+extern u8 D_800A4F70_18D030[];
 extern AlienSpec alienSpecs[0x30]; // 80256680
 extern f32 D_802DF3A4_25EAE4;
 extern f32 D_802DF3A8_25EAE8;

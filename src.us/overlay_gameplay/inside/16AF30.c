@@ -88,9 +88,7 @@ void func_8008311C_16B1DC(void) {
 }
 
 // https://decomp.me/scratch/qmTkk
-// CURRENT(115)
-#ifdef NON_MATCHING
-s32 func_80083224_16B2E4(u8 arg0)
+u8 func_80083224_16B2E4(u8 arg0)
 {
   u8 slot;
   u8 count;
@@ -125,9 +123,6 @@ s32 func_80083224_16B2E4(u8 arg0)
   }
   return slot;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083224_16B2E4.s")
-#endif
 
 void func_80083300_16B3C0(u8 arg0) {
 
@@ -757,17 +752,20 @@ void func_80084980_16CA40(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084980_16CA40.s")
 #endif
 
-s32 func_80084C18_16CCD8(u8 arg0) {
-	s32 temp_v0;
-	s32 result;
+#ifdef NON_MATCHING
+s32 func_80084C18_16CCD8(u8 arg0)
+{
+	u8 result = func_80083224_16B2E4(1);
 
-	temp_v0 = func_80083224_16B2E4(1);
-	result = temp_v0 & 0xFF;
-	if (temp_v0 != 0xFB) {
-		*(s16 *)(&D_800FB6FA + (temp_v0 * 0xC)) = arg0;
+	if (result != 0xFB)
+	{
+		*((s16 *)((&D_800FB6FA) + (result * 0xC))) = arg0;
 	}
 	return result;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084C18_16CCD8.s")
+#endif
 
 // CURRENT(8388)
 #ifdef NON_MATCHING
