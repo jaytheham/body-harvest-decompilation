@@ -967,9 +967,11 @@ void func_8013B384_14A334(void) {
 	}
 }
 
+// CURRENT(735)
 #ifdef NON_MATCHING
 s32 func_8013B480_14A430(s16 arg0) {
 	u8 temp_v0;
+	s32 var_v0;
 
 	if (arg0 == 1) {
 		return 0;
@@ -982,11 +984,7 @@ s32 func_8013B480_14A430(s16 arg0) {
 		if ((arg0 < 0xD) ^ 1) {
 			return arg0 < 0x14;
 		}
-		return 0;
-	}
-	{
-		s32 var_v0;
-
+	} else {
 		if (D_80257A4C[temp_v0].unk0 & 0x04000000) {
 			var_v0 = (arg0 < 6);
 			if (var_v0 == 0) {
@@ -1000,6 +998,7 @@ s32 func_8013B480_14A430(s16 arg0) {
 		}
 		return var_v0;
 	}
+	return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B480_14A430.s")
