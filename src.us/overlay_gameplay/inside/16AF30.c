@@ -2770,8 +2770,6 @@ void func_8008A59C_17265C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A59C_17265C.s")
 #endif
 
-#ifdef NON_MATCHING
-/* CURRENT(30) */
 void func_8008A5E4_1726A4(void) {
 	u8 activeCount;
 	u8 i;
@@ -2791,6 +2789,7 @@ void func_8008A5E4_1726A4(void) {
 							entry->unkE = 0;
 						}
 						entry->unkA += entry->unk10;
+						if (!entry->unk12){}
 						entry->unk2 += entry->unk11;
 					} else {
 						func_8008B058_173118(i);
@@ -2805,9 +2804,6 @@ void func_8008A5E4_1726A4(void) {
 		} while ((s32)activeCount > 0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A5E4_1726A4.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_8008A704_1727C4(void) {
