@@ -1285,12 +1285,9 @@ void func_800F4748_1036F8(UnkF9230Arg0 *arg0, u8 arg1, u8 arg2)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F4748_1036F8.s")
 #endif
 
-// CURRENT(3132)
+// CURRENT(327)
 #ifdef NON_MATCHING
 void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
-	UnkF9230Arg0 *base;
-	AlienInstance *alien;
-	u8 *anim;
 	UnkF9230ShadowLimb *entry;
 	s16 spB2;
 	s16 spA8;
@@ -1311,16 +1308,13 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 	u8 animLerp;
 	u8 parentAlien;
 	s32 i;
-	f32 yawRad;
 
-	base = (UnkF9230Arg0 *)walker;
-	parentAlien = base->unk144;
+	parentAlien = ((UnkF9230Arg0 *)walker)->unk144;
 	posX = (s16)*(s32 *)&walker->limbs[0].unk10;
 	posZ = (s16)*(s32 *)&walker->limbs[0].unk14;
 
-	anim = &D_801601F0[walker->limbs[0].unk23 * 0x16];
-	limbCount = anim[0x0C];
-	animLerp = anim[0x12];
+	limbCount = ((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16 + 0x0C];
+	animLerp = ((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16 + 0x12];
 
 	for (i = 0; i < limbCount; i = (i + 1) & 0xFF) {
 		entry = &walker->limbs[i + 1];
@@ -1329,16 +1323,15 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 		}
 
 		animFrame = (s16)(animLerp * 2);
-		footX = func_800F41E0_103190(entry->unk10, entry->unk1A, walker->limbs[0].unk1E, animFrame);
-		footZ = func_800F41E0_103190(entry->unk14, entry->unk1C, walker->limbs[0].unk1E, animFrame);
+		footX = func_800F41E0_103190(entry->unk14, entry->unk1A, walker->limbs[0].unk1E, animFrame);
+		footZ = func_800F41E0_103190(entry->unk18, entry->unk1C, walker->limbs[0].unk1E, animFrame);
 		entry->unk1E = footX;
 		entry->unk20 = footZ;
 
 		if (walker->limbs[0].unk22 == 0x10) {
 			entry->unk16 = walker->unk16A;
 		} else {
-			alien = &alienInstances[parentAlien];
-			entry->unk16 = *(s16 *)&D_8014DD52[alien->unkC * 0x10] + alien->unk2;
+			entry->unk16 = *(s16 *)&D_8014DD52[alienInstances[parentAlien].unkC * 0x10] + alienInstances[parentAlien].unk2;
 		}
 
 		spB2 = entry->unk16;
@@ -1346,14 +1339,14 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 
 		if (!(animLerp < animFrame)) {
 			if (!(i & 1)) {
-				func_800F4748_1036F8(base, animFrame & 0xFF, i & 0xFF);
+				func_800F4748_1036F8((UnkF9230Arg0 *)walker, (u8)animFrame, (u8)i);
 				animFrame = walker->limbs[0].unk1E;
 			}
 		}
 
 		if (!(animFrame < animLerp)) {
 			if ((i % 2) == 1) {
-				func_800F4748_1036F8(base, (animFrame - animLerp) & 0xFF, i & 0xFF);
+				func_800F4748_1036F8((UnkF9230Arg0 *)walker, (u8)(animFrame - animLerp), (u8)i);
 			}
 		}
 
@@ -1366,11 +1359,10 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 		distA = (s16)sqrtf((f32)(((currX - posX) * (currX - posX)) + ((currZ - posZ) * (currZ - posZ))));
 		distB = (s16)sqrtf((f32)(((footX - posX) * (footX - posX)) + ((footZ - posZ) * (footZ - posZ))));
 
-		func_800F4258_103208(base, distB, spB2, distA, rootY, &spA8, &spA6);
+		func_800F4258_103208((UnkF9230Func800F4748Entry *)walker, distB, spB2, distA, rootY, &spA8, &spA6);
 
-		yawRad = (f32)(((f64)yawDeg * 3.141592653589793) / 180.0);
-		legRadius = (s16)(sinf(yawRad) * (f32)spA8);
-		spA8 = (s16)(cosf(yawRad) * (f32)spA8);
+		legRadius = (s16)(sinf((f32)(((f64)yawDeg * 3.141592654) / 180.0f)) * (f32)spA8);
+		spA8 = (s16)(cosf((f32)(((f64)yawDeg * 3.141592654) / 180.0f)) * (f32)spA8);
 
 		entry->unkE = posX + spA8;
 		entry->unk10 = spA6;
