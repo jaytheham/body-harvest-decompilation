@@ -142,16 +142,12 @@ const f64 D_801424F8_1514A8[1] = { 500 };
 const f64 D_80142500_1514B0[1] = { 4000 };
 const f64 D_80142508_1514B8[1] = { 0.02 };
 
-#ifdef TRUE
 s32 func_800959F0_A49A0(u16 red, u16 green, u16 blue) {
 	red = red < 0x1F ? red : 0x1F;
 	green = green < 0x1F ? green : 0x1F;
 	blue = blue < 0x3F ? blue : 0x3F;
 	return ((red << 0xB) + (green << 6) + (blue & 0x3F)) & 0xFFFF;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800959F0_A49A0.s")
-#endif
 
 s16 func_80095A6C_A4A1C(s16 arg0, s16 arg1, u16 arg2)
 {

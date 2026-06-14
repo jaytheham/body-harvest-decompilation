@@ -904,6 +904,8 @@ void func_800076D4_82D4(s32 arg0) {
 	}
 }
 
+// https://decomp.me/scratch/E3Lvj
+// CURRENT(0)
 #ifdef NON_MATCHING
 void func_80007728_8328(u8 *arg0, s16 *arg1, s16 *arg2) {
 loop:
@@ -1142,6 +1144,8 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007DE0_89E0.s")
 #endif
 
+// https://decomp.me/scratch/LWEl5
+// CURRENT(0)
 #ifdef NON_MATCHING
 s32 func_80007F60_8B60(u8 *arg0) {
 loop:

@@ -1242,7 +1242,7 @@ void func_8007290C_15A9CC(void)
 #endif
 
 // https://decomp.me/scratch/hiUtd
-// Matching but: rodata
+// CURRENT(0)
 #ifdef NON_MATCHING
 s32 func_80072E88_15AF48(void)
 {
