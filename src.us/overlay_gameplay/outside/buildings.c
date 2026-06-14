@@ -384,8 +384,8 @@ s32 func_801165FC_1255AC(u8 arg0, u8 arg1, s16 *arg2, s16 *arg3, s16 *arg4, s16 
 #endif
 
 // https://decomp.me/scratch/SwQQl
-#ifdef NON_MATCHING
 // CURRENT(130)
+#ifdef NON_MATCHING
 void func_80116724_1256D4(void) {
 	s32 building_idx;
 	BuildingInstance *building;

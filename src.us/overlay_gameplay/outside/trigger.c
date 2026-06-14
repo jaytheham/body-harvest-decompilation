@@ -269,6 +269,7 @@ void func_800AEBC4_BDB74(s32 arg0) {
 	func_800A6FD4_B5F84();
 }
 
+// https://decomp.me/scratch/ycEOT
 void func_800AEC34_BDBE4(void *arg0)
 {
 	Unk80222A78 sp28;

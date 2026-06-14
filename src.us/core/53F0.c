@@ -307,6 +307,7 @@ s32 func_800056D0_62D0(s16 arg0, s16 arg1) {
 // this requires a function static (D_800315D4_W)
 // which means you may have to map all other .bss data
 // for the file where that func is in (in the best scenario you add this function last and just let splat auto map .bss) 
+// CURRENT(0)
 #ifdef NON_MATCHING
 void func_8000577C_637C(void)
 {
@@ -903,6 +904,8 @@ void func_800076D4_82D4(s32 arg0) {
 	}
 }
 
+// https://decomp.me/scratch/E3Lvj
+// CURRENT(0)
 #ifdef NON_MATCHING
 void func_80007728_8328(u8 *arg0, s16 *arg1, s16 *arg2) {
 loop:
@@ -1141,6 +1144,8 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007DE0_89E0.s")
 #endif
 
+// https://decomp.me/scratch/LWEl5
+// CURRENT(0)
 #ifdef NON_MATCHING
 s32 func_80007F60_8B60(u8 *arg0) {
 loop:
@@ -1167,6 +1172,7 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007F60_8B60.s")
 #endif
 
+// https://decomp.me/scratch/fln37
 // CURRENT(785)
 #ifdef NON_MATCHING
 s32 func_8000807C_8C7C(u8 *arg0, u8 *arg1) {

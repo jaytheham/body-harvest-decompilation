@@ -497,6 +497,7 @@ void func_80001424_2024(void) {
 	}
 }
 
+// https://decomp.me/scratch/zsK5T
 void func_800015B4_21B4(s32 arg0, s32 arg1) {
 	s32 temp_at;
 	s32 temp_t3;
@@ -1464,6 +1465,7 @@ void func_80003064_3C64(void) {
 #endif
 
 // https://decomp.me/scratch/66U7q
+// CURRENT(340)
 #ifdef NON_MATCHING
 void func_800033D4_3FD4(u16 arg0, s32 arg1) {
 	u16 *previousButtons;

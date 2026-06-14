@@ -598,7 +598,7 @@ typedef struct {
 	/* 0x06 */ u8 unk6;
 	/* 0x07 */ u8 unk7;
 	/* 0x08 */ s16 unk8;
-	/* 0x0A */ u8 padA[2];
+	/* 0x0A */ s16 unkA;
 	/* 0x0C */ u8 unkC;
 	/* 0x0D */ u8 padD[5];
 	/* 0x12 */ u8 unk12;
@@ -1993,7 +1993,8 @@ typedef struct {
 	/* 0x000 */ UnkF9230ShadowLimb limbs[9];
 	/* 0x144 */ u8 alienIdx;
 	/* 0x145 */ u8 pad145[0x23];
-	/* 0x168 */ s16 unk168;
+	/* 0x168 */ u8 unk168;
+	/* 0x169 */ u8 pad169;
 	/* 0x16A */ s16 unk16A;
 	/* 0x16C */ s16 unk16C;
 	/* 0x16E */ u8 pad16E[0x02];

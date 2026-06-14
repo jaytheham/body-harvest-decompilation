@@ -258,7 +258,6 @@ void func_8008D3F4_9C3A4(u8 arg0) {
 	func_8008D3B0_9C360(arg0);
 }
 
-// https://decomp.me/scratch/mZdi4
 // CURRENT(120)
 #ifdef NON_MATCHING
 void func_8008D4A0_9C450(unsigned int arg0)
@@ -524,7 +523,7 @@ void func_8008DA24_9C9D4(s32 arg0) {
 #endif
 
 // https://decomp.me/scratch/BnGko
-// CURRENT(925)
+// CURRENT(830)
 #ifdef NON_MATCHING
 void func_8008DEF4_9CEA4(u8 arg0)
 {
@@ -768,6 +767,7 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 #endif
 
 // https://decomp.me/scratch/V6LCq
+// CURRENT(200)
 #ifdef NON_MATCHING
 void func_8008E978_9D928(u8 arg0, s32 arg1)
 {
@@ -1184,6 +1184,7 @@ void func_8008F818_9E7C8(u8 arg0) {
 }
 
 // https://decomp.me/scratch/zzVqU
+// CURRENT(26)
 #ifdef NON_MATCHING
 void func_8008F8D4_9E884(u8 arg0, s16 arg1)
 {
@@ -1627,6 +1628,7 @@ void func_80090A6C_9FA1C(u8 arg0, s16 arg1, u16 arg2)
 }
 
 // https://decomp.me/scratch/qLxSW
+// CURRENT(51)
 #ifdef NON_MATCHING
 void func_80090C14_9FBC4(u8 arg0)
 {
@@ -2363,29 +2365,28 @@ s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 }
 
 // https://decomp.me/scratch/Eb0Us
-// CURRENT(201)
+// CURRENT(96)
 #ifdef NON_MATCHING
 void func_80092ADC_A1A8C(void)
 {
-	u8 result;
-	Unk8013CA *p;
-	Unk8013CA *end;
-
-	p = (Unk8013CA *)D_8013CA00_14B9B0;
-	end = (Unk8013CA *)&D_8013CA00_14B9B0[0xA];
-	do {
-		result = func_80092A50_A1A00(p->unk0 << 8, p->unk1 << 8, 0x10);
-		result &= 0xff;
-		if (result != 0xFF)
-		{
-			alienInstances[result].unk26 = 0;
-			alienInstances[result].unk38 = 0x2F;
-			alienInstances[result].unk20 |= 0x4000;
-			D_8004817C++;
-			func_80092BBC_A1B6C(result);
-		}
-		p++;
-	} while (p != end);
+  Unk8013CA *p;
+  u8 result;
+	AlienInstance *ptr;
+	p = &D_8013CA00; do {
+	result = func_80092A50_A1A00(p->unk0 << 8, p->unk1 << 8, 0x10);
+	result &= 0xff;
+	if (result != 0xFF)
+	{
+		ptr = &alienInstances[result];
+	  ptr->unk26 = 0;
+	  ptr->unk38 = 0x2F;
+	  ptr->unk20 |= 0x4000;
+	  D_8004817C++;
+	  func_80092BBC_A1B6C(result);
+	}
+	p++;
+  }
+  while (p != &D_8013CA0A);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80092ADC_A1A8C.s")
@@ -2763,6 +2764,7 @@ void func_8009377C_A272C(u8 arg0) {
 #endif
 
 // https://decomp.me/scratch/PJVa8
+// CURRENT(106)
 #ifdef NON_MATCHING
 s16 func_8009395C_A290C(u8 arg0, s16 arg1)
 {

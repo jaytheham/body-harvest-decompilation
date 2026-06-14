@@ -169,25 +169,29 @@ void func_800A5EE8_B4E98(u8 arg0) {
 }
 
 // https://decomp.me/scratch/xqKk4
+// CURRENT(1874)
 #ifdef NON_MATCHING
 void func_800A5F24_B4ED4(s32 arg0) {
-	u8 sp27;
+	s32 next;
+	s32 var_s0;
+	
+	if (D_8013D890 == 0) {
+		func_8001CC6C_1D86C(D_801427E8_151798, arg0);
+		func_8001CC6C_1D86C(D_801427F4_1517A4, D_8003154C[currentLevel][arg0].unk2);
+		func_8001CC6C_1D86C(D_80142800_1517B0, D_8003154C[currentLevel][arg0 + 1].unk2);
 
-	if (D_8013D890_14C840 == 0) {
-		osSyncPrintf(D_801427E8_151798, (s32)arg0);
-		sp27 = arg0 * 4;
-		osSyncPrintf(D_801427F4_1517A4, (u32)D_80031536[currentLevel * 0x18 + sp27]);
-		osSyncPrintf(D_80142800_1517B0, (u32)D_8003153A[currentLevel * 0x18 + sp27]);
-		if (D_8003153A[currentLevel * 0x18 + sp27] >= 4) {
-			func_800A5EA8_B4E58((u8)(arg0 + 2));
+		if (D_8003154C[currentLevel][arg0 + 1].unk2 >= 4) {
+			var_s0 = arg0 + 1;
 		} else {
-			func_800A5EA8_B4E58(0);
+			var_s0 = -1;
 		}
+		func_800A5EA8_B4E58((var_s0 + 1) & 0xFF);
 	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A5F24_B4ED4.s")
 #endif
+
 // CURRENT(18077)
 #ifdef NON_MATCHING
 void func_800A6020_B4FD0(s16 arg0) {

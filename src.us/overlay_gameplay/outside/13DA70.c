@@ -153,13 +153,11 @@ void func_8012EAC0_13DA70(s32 arg0, u8 *arg1)
 	arg1[numDigits] = 0;
 }
 
+// https://decomp.me/scratch/3FWe6
 /* Concatenates two strings (arg0 + arg1) into the output buffer arg2 */
-// CURRENT(215)
-#ifdef NON_MATCHING
 void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 	s16 i;
 	s16 j;
-	s32 ch;
 
 	i = 0;
 	if (*arg0 != 0) {
@@ -171,13 +169,8 @@ void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 	i = 0;
 	do {
 		arg2[j + i] = arg1[i];
-		ch = arg1[i];
-		i++;
-	} while (ch > 0U);
+	} while (arg1[i++] != 0U);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012EBC0_13DB70.s")
-#endif
 
 // Load letter textures for end of stage window
 // CURRENT(425)

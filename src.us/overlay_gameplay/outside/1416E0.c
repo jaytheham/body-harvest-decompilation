@@ -37,7 +37,6 @@ s16 func_80132730_1416E0(s32 arg0, s32 arg1) { return (s16)(arg1 - arg0); }
 s16 func_801361A4_145154(Unk80160080 *arg0);
 void func_80136214_1451C4(Unk80160080 *arg0);
 
-// https://decomp.me/scratch/5qXxW
 #ifdef NON_MATCHING
 void func_80132740_1416F0(Unk80160080 *arg0) {
 	VehicleInstance *sp1C;
@@ -1702,8 +1701,9 @@ void func_801365E0_145590(void) {
 #endif
 
 // https://decomp.me/scratch/NQ4OJ
-// Check if player is reading signpost
+// CURRENT(405)
 #ifdef NON_MATCHING
+// Check if player is reading signpost
 void func_80136B50_145B00(s32 arg0, s16 arg1)
 {
 	s16 sp32;
