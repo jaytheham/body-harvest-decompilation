@@ -10499,8 +10499,8 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010FAFC_11EAAC.s")
 #endif
 
-#ifdef NON_MATCHING
 // CURRENT(180)
+#ifdef NON_MATCHING
 s32 func_8010FF84_11EF34(VehicleInstance *arg0, s32 arg1) {
 	AlienInstance *alien;
 	AlienSpec *spec;
@@ -10559,10 +10559,10 @@ s32 func_8010FF84_11EF34(VehicleInstance *arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010FF84_11EF34.s")
 #endif
 
-// Push player away from shield wall
-// Skipping call lets player go through shield walls
 // CURRENT(1710)
 #ifdef NON_MATCHING
+// Push player away from shield wall
+// Skipping call lets player go through shield walls
 s32 func_80110144_11F0F4(VehicleInstance *arg0, s32 arg1) {
 	f32 *var_s2;
 	f32 *var_s3;
@@ -12305,10 +12305,8 @@ block_212:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80113CEC_122C9C.s")
 #endif
 
+// CURRENT(60)
 #ifdef NON_MATCHING
-// NON_MATCHING: li s1,3 scheduled 1 instruction too early by IDO scheduler
-// (between lui and addiu blocks instead of after addiu s4,v1,0xc).
-// All other instructions match perfectly; score 60.
 void func_80115604_1245B4(VehicleInstance *arg0) {
 	s32 *base;
 	s32 height;
@@ -12492,7 +12490,3 @@ void func_80115CC0_124C70(void)
   }
   while (var_s1--);
 }
-
-
-
-
