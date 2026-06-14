@@ -11,72 +11,7 @@ const char D_80145AA4_154A54[] = "Weapon %d not valid\n";
 const char D_80145ABC_154A6C[] = "Weapon %d not valid\n";
 const char D_80145AD4_154A84[] = "New weapon down\n";
 
-const u32 jtbl_80145AE8_154A98[] = {
-	0x8013B1D0, // case 0x63 -> 0xDD
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B1B4, // case 0x67 -> 0xDE
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B25C, // case 0x72 -> 0xE2
-	0x8013B240, // case 0x73 -> 0xE1
-	0x8013B278, // case 0x74 -> 0xE3
-	0x8013B290, // default
-	0x8013B224, // case 0x76 -> 0xE0
-};
 
-const u32 jtbl_80145B38_154AE8[] = {
-	0x8013B144, // case 0x19 -> 0xD8
-	0x8013B160, // case 0x1A -> 0xD9
-	0x8013B17C, // case 0x1B -> 0xDA
-	0x8013B1EC, // case 0x1C -> 0xDB
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B198, // case 0x2C -> 0xDF
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B208, // case 0x41 -> 0xDC
-};
 
 s16 D_80140D40_14FCF0[] = {
 	0x0000, 0x0000, -0x8000, 0x0064, 0x0032, 0x03E7, 0x0019, 0x0003,
@@ -248,50 +183,49 @@ void func_801394DC_14848C(void)
 }
 
 // https://decomp.me/scratch/cGhwK
-// CURRENT(780)
+// CURRENT(585)
 #ifdef NON_MATCHING
 void func_8013958C_14853C(void) {
-	s32 val;
 	s32 weapon1;
 	s32 *src;
 	s32 weapon2;
-	s32 offset;
-	Unk80031424 *srcStruct;
+	u8 *weaponOffset;
+	s32 val;
 
 	D_80031474.unk2C = 0;
 	D_80031474.unk30 = 1;
 	val = D_8003142C;
-	srcStruct = (Unk80031424 *)D_80031424;
-	weapon1 = srcStruct->unk2C;
+	weaponOffset = (u8 *)&D_80031424;
+	weapon1 = *(s32 *)(weaponOffset + 0x2C);
 	src = &D_80031430;
 	if (weapon1 == val) {
 		D_800314A0 = D_8003147C;
 	}
-	weapon2 = srcStruct->unk30;
-	offset = 0xC;
+	weapon2 = *(s32 *)(weaponOffset + 0x30);
+	weaponOffset = (u8 *)0xC;
 	if (weapon2 == val) {
 		D_800314A4 = D_8003147C;
 	}
 
 loop:
 	val = src[0];
-	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + offset);
-	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + offset);
+	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset);
+	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset);
 
 	val = src[1];
-	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + offset + 4);
-	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + offset + 4);
+	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 4);
+	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 4);
 
 	val = src[2];
-	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + offset + 8);
-	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + offset + 8);
+	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 8);
+	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 8);
 
 	val = src[3];
 	src += 4;
-	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + offset + 0xC);
-	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + offset + 0xC);
+	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 0xC);
+	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 0xC);
 
-	offset += 0x10;
+	weaponOffset += 0x10;
 	if (src != &D_80031450) goto loop;
 }
 #else
@@ -658,7 +592,7 @@ void func_8013A1CC_14917C(void) {
 	func_8013B004_149FB4();
 }
 
-// CURRENT (995)
+// CURRENT (16)
 #ifdef NON_MATCHING
 void func_8013A218_1491C8(s16 arg0, s16 arg1, u8 arg2) {
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, ((u32)&D_1009C70[arg2 << 7]) & 0x1FFFFFFF);
@@ -671,11 +605,13 @@ void func_8013A218_1491C8(s16 arg0, s16 arg1, u8 arg2) {
 			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
 	gDPPipeSync(D_8005BB2C++);
-	gSPTextureRectangle(D_8005BB2C++, MAX((s16)(arg0 << 2), 0), MAX((s16)(arg1 * 4), 0),
-					MAX((s16)(((arg0 + 8) << 1) << 1), 0), MAX((s16)(((arg1 + 8) << 1) << 1), 0), G_TX_RENDERTILE,
-					-(((s16)(arg0 << 2) < 0) ? MIN((((s16)(arg0 << 2) * (s16)0x0800) >> 7), 0) : 0),
-					-(((s16)(arg1 * 4) < 0) ? MIN((((s16)(arg1 * 4) * (s16)0x0800) >> 7), 0) : 0),
+	{ s32 _yl = arg1 * 4;
+	gSPTextureRectangle(D_8005BB2C++, MAX((s16)(arg0 << 2), 0), MAX((s16)_yl, 0),
+					MAX((s16)((arg0 + 8) << 2), 0), MAX((s16)((arg1 + 8) << 2), 0), G_TX_RENDERTILE,
+					-(((s16)(arg0 << 2) < 0) ? MIN((((s16)(arg0 << 2) << 11) >> 7), 0) : 0),
+					-((_yl < 0) ? MIN((((s16)_yl) << 11) >> 7, 0) : 0),
 					0x0800, 0x0800);
+	}
 	gDPPipeSync(D_8005BB2C++);
 }
 #else
@@ -861,13 +797,12 @@ void func_8013B004_149FB4(void) {
 }
 
 // CURRENT(13285)
-#ifdef NON_MATCHING
 void func_8013B054_14A004(void) {
 	if (D_80048188 != 0) {
 		return;
 	}
 
-	if (D_8013FD78_14ED28 == D_80052B34) {
+	if (D_80052B34 == D_8013FD78_14ED28) {
 		D_801601D8 = D_80140D17_14FCC7[D_80257A1C[D_80052B34->unk1A].unk0];
 	} else {
 		D_801601D8 = D_80257A1C[D_80052B34->unk1A].unk0 + 0x18;
@@ -878,29 +813,82 @@ void func_8013B054_14A004(void) {
 	}
 
 	switch (D_801601D8) {
-		case 0x19: D_801601D8 = 0xD8; break;
-		case 0x1A: D_801601D8 = 0xD9; break;
-		case 0x1B: D_801601D8 = 0xDA; break;
-		case 0x1C: D_801601D8 = 0xDF; break;
-		case 0x1D: D_801601D8 = 0xDE; break;
-		case 0x1E: D_801601D8 = 0xDD; break;
-		case 0x1F: D_801601D8 = 0xDB; break;
-		case 0x20: D_801601D8 = 0xDC; break;
-		case 0x21: D_801601D8 = 0xE0; break;
-		case 0x22: D_801601D8 = 0xE1; break;
-		case 0x23: D_801601D8 = 0xE2; break;
-		case 0x24: D_801601D8 = 0xE3; break;
+		case 0x19:
+			D_801601D8 = 0xD8;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x1A:
+			D_801601D8 = 0xD9;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x1B:
+			D_801601D8 = 0xDA;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x2C:
+			D_801601D8 = 0xDF;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x67:
+			D_801601D8 = 0xDE;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x63:
+			D_801601D8 = 0xDD;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x1C:
+			D_801601D8 = 0xDB;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x41:
+			D_801601D8 = 0xDC;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x76:
+			D_801601D8 = 0xE0;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x73:
+			D_801601D8 = 0xE1;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x72:
+			D_801601D8 = 0xE2;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x74:
+			D_801601D8 = 0xE3;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
 		default:
 			return;
 	}
-
-	if (D_800313D0_31FD0 == 2) {
-		D_801601D8 += 0xC;
-	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B054_14A004.s")
-#endif
 
 void func_8013B298_14A248(void) {
 	s32 old_value;
@@ -966,9 +954,11 @@ void func_8013B384_14A334(void) {
 	}
 }
 
+// CURRENT(735)
 #ifdef NON_MATCHING
 s32 func_8013B480_14A430(s16 arg0) {
 	u8 temp_v0;
+	s32 var_v0;
 
 	if (arg0 == 1) {
 		return 0;
@@ -981,11 +971,7 @@ s32 func_8013B480_14A430(s16 arg0) {
 		if ((arg0 < 0xD) ^ 1) {
 			return arg0 < 0x14;
 		}
-		return 0;
-	}
-	{
-		s32 var_v0;
-
+	} else {
 		if (D_80257A4C[temp_v0].unk0 & 0x04000000) {
 			var_v0 = (arg0 < 6);
 			if (var_v0 == 0) {
@@ -999,6 +985,7 @@ s32 func_8013B480_14A430(s16 arg0) {
 		}
 		return var_v0;
 	}
+	return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B480_14A430.s")
@@ -1041,17 +1028,14 @@ s32 func_8013B5E4_14A594(s32 arg0) {
 	return 0;
 }
 
-// CURRENT(110)
-#ifdef NON_MATCHING
 // guess_doWeaponChange
 void func_8013B688_14A638(void) {
 	VehicleInstance* temp_v0;
-	u16 flags;
 
 	temp_v0 = D_80052B34;
 	if ((temp_v0->unk1A == 0)
-		&& ((flags = temp_v0->unk20, (flags & 0x1000))
-			|| ((flags & 2) && ((D_80159320 << 8) >= 0)))) {
+		&& ((temp_v0->unk20 & 0x1000)
+			|| ((temp_v0->unk20 & 2) && ((D_80159320 << 8) >= 0)))) {
 		D_801601DC = 0;
 		D_801601E4 = 0;
 		func_8013B384_14A334();
@@ -1115,9 +1099,6 @@ void func_8013B688_14A638(void) {
 
 	func_8013B384_14A334();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B688_14A638.s")
-#endif
 
 s32 func_8013B8C8_14A878(void) {
 	if (D_801601DC == 0) {

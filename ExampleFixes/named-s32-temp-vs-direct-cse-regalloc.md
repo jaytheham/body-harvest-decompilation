@@ -26,3 +26,15 @@ if (arg0->unk22 >= 0x7D1) { arg0->unk22 = 0x7D0; }
 ```
 
 Also note: `s16` typed temps cause `sll/sra` sign-extension (score ~1170). Use `s32` if you need named temps to avoid that, but prefer direct access for correct v0/v1 allocation.
+
+#### Comma-operator variant
+
+A `u16 flags` variable combined with the comma operator in a condition (`(flags = ptr->field, (flags & MASK))`) produces the same register-allocation shift. The named temp (`flags`) occupies `v0`, forcing the base pointer into `v1` instead of the target's `v0`. Fix: inline the field access and remove the temp:
+
+```c
+// Wrong — flags temp in condition shifts pointer to v1 (score 110):
+if ((ptr->unk1A == 0) && ((flags = ptr->unk20, (flags & 0x1000)) || ...))
+
+// Correct — direct access puts pointer in v0, CSE puts field value in v1 (score 0):
+if ((ptr->unk1A == 0) && ((ptr->unk20 & 0x1000) || ...))
+```
