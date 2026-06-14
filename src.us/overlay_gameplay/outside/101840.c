@@ -2982,8 +2982,8 @@ s16 func_800F9D24_108CD4(s16 arg0, s16 arg1) {
 	return (s16)(func_800B84D0_C7480(arg0, arg1) >> 8);
 }
 
-#ifdef NON_MATCHING
 s16 func_800F9D60_108D10(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, s16 *arg4) {
+	s32 pad1;
 	s16 sp22;
 	s16 temp_v0;
 	s32 var_v1;
@@ -3000,9 +3000,6 @@ s16 func_800F9D60_108D10(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, s16 *arg4) {
 	}
 	return (s16)var_v1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F9D60_108D10.s")
-#endif
 
 #ifdef NON_MATCHING
 s16 func_800F9E0C_108DBC(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, s16 *arg4, s32 arg5, s32 arg6) {
