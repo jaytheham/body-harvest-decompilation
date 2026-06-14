@@ -556,16 +556,18 @@ void func_800747A8_83758(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(4133) */
+/* CURRENT(3953) */
 void func_80074970_83920(void) {
+	s32 savedIndex;
 	s32 i;
 	s32 chunkIndex;
-	volatile s32 savedIndex;
+	u8 curBC;
 
 	chunkIndex = -1;
 	if (func_80074558_83508() != 0xB7) {
-		if (D_801494BC != 0xAC) {
-			if (D_801494BC != 0xAE) {
+		curBC = D_801494BC;
+		if (curBC != 0xAC) {
+			if (curBC != 0xAE) {
 			i = savedIndex;
 			while (1) {
 				if (D_801494BC == 0x90) {
@@ -574,23 +576,11 @@ void func_80074970_83920(void) {
 					func_80074500_834B0();
 				}
 
-				{
-				u8 val;
-				s32 baseIdx;
-				val = func_80074500_834B0();
-				baseIdx = (((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1);
-				if (savedIndex) { }
-				D_80149B60[baseIdx + (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1) + i] = val;
-				}
+				*(u8 *)((u8 *)D_80149B60 + (((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1) + (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1) + i) = func_80074500_834B0();
 				i += 1;
 
 				if ((D_801494BC == 0x80) || (D_801494BC == 0x81)) {
-					u8 val;
-					s32 baseIdx;
-					val = func_80074500_834B0();
-					baseIdx = (((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1);
-					if (savedIndex) { }
-					D_80149B60[baseIdx + (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1) + i] = val;
+					*(u8 *)((u8 *)D_80149B60 + (((((((D_80149B48 << 4) + D_80149B48) << 2) + D_80149B48) << 2) - D_80149B48) << 1) + (((((chunkIndex << 2) - chunkIndex) << 3) + chunkIndex) << 1) + i) = func_80074500_834B0();
 					i += 1;
 				}
 
@@ -609,6 +599,7 @@ void func_80074970_83920(void) {
 				savedIndex = i;
 				break;
 			}
+			if (savedIndex) { }
 			}
 		}
 	}
