@@ -11,72 +11,7 @@ const char D_80145AA4_154A54[] = "Weapon %d not valid\n";
 const char D_80145ABC_154A6C[] = "Weapon %d not valid\n";
 const char D_80145AD4_154A84[] = "New weapon down\n";
 
-const u32 jtbl_80145AE8_154A98[] = {
-	0x8013B1D0, // case 0x63 -> 0xDD
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B1B4, // case 0x67 -> 0xDE
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B25C, // case 0x72 -> 0xE2
-	0x8013B240, // case 0x73 -> 0xE1
-	0x8013B278, // case 0x74 -> 0xE3
-	0x8013B290, // default
-	0x8013B224, // case 0x76 -> 0xE0
-};
 
-const u32 jtbl_80145B38_154AE8[] = {
-	0x8013B144, // case 0x19 -> 0xD8
-	0x8013B160, // case 0x1A -> 0xD9
-	0x8013B17C, // case 0x1B -> 0xDA
-	0x8013B1EC, // case 0x1C -> 0xDB
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B198, // case 0x2C -> 0xDF
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B290, // default
-	0x8013B208, // case 0x41 -> 0xDC
-};
 
 s16 D_80140D40_14FCF0[] = {
 	0x0000, 0x0000, -0x8000, 0x0064, 0x0032, 0x03E7, 0x0019, 0x0003,
@@ -862,13 +797,12 @@ void func_8013B004_149FB4(void) {
 }
 
 // CURRENT(13285)
-#ifdef NON_MATCHING
 void func_8013B054_14A004(void) {
 	if (D_80048188 != 0) {
 		return;
 	}
 
-	if (D_8013FD78_14ED28 == D_80052B34) {
+	if (D_80052B34 == D_8013FD78_14ED28) {
 		D_801601D8 = D_80140D17_14FCC7[D_80257A1C[D_80052B34->unk1A].unk0];
 	} else {
 		D_801601D8 = D_80257A1C[D_80052B34->unk1A].unk0 + 0x18;
@@ -879,29 +813,82 @@ void func_8013B054_14A004(void) {
 	}
 
 	switch (D_801601D8) {
-		case 0x19: D_801601D8 = 0xD8; break;
-		case 0x1A: D_801601D8 = 0xD9; break;
-		case 0x1B: D_801601D8 = 0xDA; break;
-		case 0x1C: D_801601D8 = 0xDF; break;
-		case 0x1D: D_801601D8 = 0xDE; break;
-		case 0x1E: D_801601D8 = 0xDD; break;
-		case 0x1F: D_801601D8 = 0xDB; break;
-		case 0x20: D_801601D8 = 0xDC; break;
-		case 0x21: D_801601D8 = 0xE0; break;
-		case 0x22: D_801601D8 = 0xE1; break;
-		case 0x23: D_801601D8 = 0xE2; break;
-		case 0x24: D_801601D8 = 0xE3; break;
+		case 0x19:
+			D_801601D8 = 0xD8;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x1A:
+			D_801601D8 = 0xD9;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x1B:
+			D_801601D8 = 0xDA;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x2C:
+			D_801601D8 = 0xDF;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x67:
+			D_801601D8 = 0xDE;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x63:
+			D_801601D8 = 0xDD;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x1C:
+			D_801601D8 = 0xDB;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x41:
+			D_801601D8 = 0xDC;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x76:
+			D_801601D8 = 0xE0;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x73:
+			D_801601D8 = 0xE1;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x72:
+			D_801601D8 = 0xE2;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
+		case 0x74:
+			D_801601D8 = 0xE3;
+			if (D_800313D0_31FD0 == 2) {
+				D_801601D8 += 0xC;
+			}
+			return;
 		default:
 			return;
 	}
-
-	if (D_800313D0_31FD0 == 2) {
-		D_801601D8 += 0xC;
-	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013B054_14A004.s")
-#endif
 
 void func_8013B298_14A248(void) {
 	s32 old_value;
