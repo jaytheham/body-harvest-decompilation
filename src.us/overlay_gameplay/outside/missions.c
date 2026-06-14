@@ -1179,7 +1179,7 @@ void func_80075AA4_84A54(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075AA4_84A54.s")
 #endif
 
-// CURRENT(4965)
+// CURRENT(0)
 #ifdef NON_MATCHING
 s32 func_80075E50_84E00(void) {
 	u8 *stream;
@@ -1194,8 +1194,7 @@ s32 func_80075E50_84E00(void) {
 
 	count = D_80149B30;
 
-	if (count != 0) {
-		count--;
+	if (count--) {
 		do {
 			if (cmd[0] == 0x9C) {
 				u32 vehicleOffset;
@@ -1241,24 +1240,32 @@ s32 func_80075E50_84E00(void) {
 		stream++;
 	} while (count--);
 
-	count = 7;
-	do {
-		D_8014D1B8[count] &= bitmask[count];
-	} while (count--);
+	{
+		u32 *dst;
+		u32 *src;
+		s32 i;
+
+		dst = &D_8014D1B8[7];
+		src = &bitmask[7];
+		i = 7;
+		do {
+			*dst &= *src;
+			dst--;
+			src--;
+		} while (i--);
+	}
 
 	stream = &D_80224680;
 	count = 0x7FF;
 	do {
-		if (stream[0] == 0x82) {
+		u8 val = *stream++;
+		if (val == 0x82) {
 			has83After82 = 0;
 		}
-		if (stream[0] == 0x83 && has83After82 == 0) {
+		if (val == 0x83 && has83After82 == 0) {
 			has83After82 = 1;
 		}
-		stream++;
 	} while (count--);
-
-	return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075E50_84E00.s")
