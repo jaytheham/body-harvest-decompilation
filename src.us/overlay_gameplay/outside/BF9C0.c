@@ -4022,8 +4022,6 @@ success:
 	return 1;
 }
 
-/* Draw invisible shield wall collision lines for debugging */
-/* Draw invisible shield wall collision lines for debugging */
 // DrawShieldWalls
 // CURRENT(37669)
 #ifdef NON_MATCHING
