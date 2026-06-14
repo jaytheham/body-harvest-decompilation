@@ -3127,7 +3127,8 @@ s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FA018_108FC8.s")
 #endif
 
-/* CURRENT(281) */
+// CURRENT(281)
+#ifdef NON_MATCHING
 s32 func_800FA40C_1093BC(VehicleInstance *vehicle, s16 angle, s16 distance) {
 	VehicleSpec *spec;
 	s16 height0;
@@ -3157,7 +3158,11 @@ s32 func_800FA40C_1093BC(VehicleInstance *vehicle, s16 angle, s16 distance) {
 	}
 	return func_80003824_4424((f32)distance, (f32)(height0 - height1));
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FA40C_1093BC.s")
+#endif
 
+#ifdef NON_MATCHING
 s16 func_800FA690_109640(s16 arg0, s16 arg1, s16 arg2) {
 	s16 h1;
 	f32 cos_val;
@@ -3168,6 +3173,9 @@ s16 func_800FA690_109640(s16 arg0, s16 arg1, s16 arg2) {
 	h1 = (s16)(func_800B85CC_C757C((s16)((f32)arg0 - cos_val), (s16)((f32)arg1 - sin_val)) >> 8);
 	return func_80003824_4424(100.0f, (f32)(h1 - (s16)(func_800B85CC_C757C((s16)((f32)arg0 + cos_val), (s16)((f32)arg1 + sin_val)) >> 8)));
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FA690_109640.s")
+#endif
 
 // CURRENT(3227)
 #ifdef NON_MATCHING
