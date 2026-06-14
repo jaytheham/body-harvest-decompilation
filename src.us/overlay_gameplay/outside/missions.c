@@ -1321,27 +1321,29 @@ s32 func_80076208_851B8(s32 arg0) {
   return func_800078B8_84B8(arg0, &D_8004D150);
 }
 
-// CURRENT(1690)
+// CURRENT(0)
 #ifdef NON_MATCHING
 s32 func_8007622C_851DC(s32 arg0) {
-	s32 arg;
-	s32 v0;
 	s32 v1;
+	s32 v0;
 
-	arg = arg0;
 	v1 = 0x10;
 	while (v1--) {
-		v0 = v1;
-		if (arg == D_80149478[v1 + 1]) {
-			return v0;
+		if (arg0 == D_80149478[v1]) {
+			return v1;
 		}
 	}
 
 	v1 = 0xF;
+	v0 = 0;
 	if (D_801494B4 != 0) {
 		v0 = v1;
-		while (v1 != 0 && D_80149478[--v1] != 0) {
-			v0 = v1;
+		while (v1) {
+			if (D_80149478[--v1] != 0) {
+				v0 = v1;
+			} else {
+				break;
+			}
 		}
 	}
 	D_80149478[v1] = arg0;
