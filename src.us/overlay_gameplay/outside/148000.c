@@ -248,50 +248,49 @@ void func_801394DC_14848C(void)
 }
 
 // https://decomp.me/scratch/cGhwK
-// CURRENT(780)
+// CURRENT(585)
 #ifdef NON_MATCHING
 void func_8013958C_14853C(void) {
-	s32 val;
 	s32 weapon1;
 	s32 *src;
 	s32 weapon2;
-	s32 offset;
-	Unk80031424 *srcStruct;
+	u8 *weaponOffset;
+	s32 val;
 
 	D_80031474.unk2C = 0;
 	D_80031474.unk30 = 1;
 	val = D_8003142C;
-	srcStruct = (Unk80031424 *)D_80031424;
-	weapon1 = srcStruct->unk2C;
+	weaponOffset = (u8 *)&D_80031424;
+	weapon1 = *(s32 *)(weaponOffset + 0x2C);
 	src = &D_80031430;
 	if (weapon1 == val) {
 		D_800314A0 = D_8003147C;
 	}
-	weapon2 = srcStruct->unk30;
-	offset = 0xC;
+	weapon2 = *(s32 *)(weaponOffset + 0x30);
+	weaponOffset = (u8 *)0xC;
 	if (weapon2 == val) {
 		D_800314A4 = D_8003147C;
 	}
 
 loop:
 	val = src[0];
-	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + offset);
-	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + offset);
+	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset);
+	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset);
 
 	val = src[1];
-	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + offset + 4);
-	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + offset + 4);
+	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 4);
+	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 4);
 
 	val = src[2];
-	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + offset + 8);
-	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + offset + 8);
+	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 8);
+	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 8);
 
 	val = src[3];
 	src += 4;
-	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + offset + 0xC);
-	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + offset + 0xC);
+	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 0xC);
+	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 0xC);
 
-	offset += 0x10;
+	weaponOffset += 0x10;
 	if (src != &D_80031450) goto loop;
 }
 #else
