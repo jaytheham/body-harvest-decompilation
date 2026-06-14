@@ -1239,18 +1239,20 @@ s32 func_800F450C_1034BC(u8 arg0, u8 arg1) {
 #endif
 
 // https://decomp.me/scratch/gNcUf
-// CURRENT(72)
+// CURRENT(8)
 #ifdef NON_MATCHING
 void func_800F4748_1036F8(UnkF9230Arg0 *arg0, u8 arg1, u8 arg2)
 {
   UnkF9230Func800F4748Entry *entry;
-  s32 pad0;
-  s32 pad1;
+  s32 tempA;
+  UnkF9230Func800F4748Entry *next;
+  u8 animLerp;
+  u8 pad_42;
   s16 sp40;
-  u8 animLerp;s32 tempA;UnkF9230Func800F4748Entry *next;
-  
-  s16 sp3A;
   s16 sp3E;
+  s16 sp3A_pad;
+  s16 sp3A;
+  s32 pad0;
   
   entry = &((UnkF9230Func800F4748Entry *) arg0)[arg2];
   animLerp = D_801601F0[arg0->unk0[0x23]].unk12;
