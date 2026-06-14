@@ -208,11 +208,11 @@ fail:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80115F20_124ED0.s")
 #endif
 
-// CURRENT(562)
+// CURRENT(149)
 #ifdef NON_MATCHING
 s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
-	f32 sp20;
 	f32 sp24;
+	f32 sp20;
 	s16 var_v1;
 
 	sp20 = (f32)(((f64)(f32)arg0 * D_80144F08_153EB8[0]) / 32768.0);
