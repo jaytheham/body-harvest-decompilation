@@ -96,30 +96,33 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A2B8_AEB8.s")
 #endif
 
-// CURRENT(335)
+// CURRENT(145)
 #ifdef NON_MATCHING
-void func_8000A3DC_AFDC(s16 arg0, s8 *arg1) {
-	s16 temp_v1;
-	s32 temp_a3;
-	s32 var_v0;
-	s32 temp_t0;
-	s8 var_a2;
-
-	temp_v1 = arg0 * 2;
-	temp_a3 = temp_v1 >> 8;
-	var_a2 = (s8)temp_a3;
-	temp_t0 = temp_v1 & 0xFF;
-	var_v0 = temp_v1;
-	var_v0 &= 0xFF;
-	if (temp_t0 >= 0) {
-		var_v0 = (temp_t0 + 1) & 0xFF;
-	}
-	if ((s8)temp_a3 >= 0) {
-		var_a2 = (s8)temp_a3 + 1;
-	}
-	*arg1 = var_a2;
-	arg1++;
-	*(u8 *)arg1 = var_v0;
+void func_8000A3DC_AFDC(s16 arg0, s8 *arg1)
+{
+  s16 temp_v1;
+  s32 temp_a3;
+  s32 var_v0;
+  s32 temp_t0;
+  s8 var_a2;
+  temp_v1 = arg0 * 2;
+  temp_a3 = temp_v1 >> 8;
+  var_a2 = (s8) temp_a3;
+  temp_t0 = (temp_v1 & 0xFFu) & 0xFF;
+  var_v0 = temp_v1;
+  var_v0 &= 0xFF;
+  var_a2 = (s8) temp_a3;
+  if (temp_t0 >= 0)
+  {
+	var_v0 = (temp_t0 + 1) & 0xFF;
+  }
+  if (var_a2 >= 0)
+  {
+	var_a2 = ((s8) temp_a3) + 1;
+  }
+  *arg1 = var_a2;
+  arg1++;
+  *((u8 *) arg1) = var_v0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A3DC_AFDC.s")
@@ -1150,44 +1153,38 @@ void func_8000CD54_D954(Unk8007F878_404 *arg0, AnimChannelState *arg1, u8 arg2) 
 }
 
 // https://decomp.me/scratch/6Zblw
-// CURRENT(70)
-#ifdef NON_MATCHING
 s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, s32 arg3, s32 arg4)
 {
-  AnimChannelState *ch;
-  s32 s1;
-  arg0->unkE50 = arg3;
-  func_800101F0_10DF0(((s32) arg0) + 8, (s32) (D_8F4960 + (arg3 & 0xFFFFFF)), 0x48);
-  func_800101F0_10DF0(((s32) arg0) + 0x50, ((s32) (D_8F4960 + (arg3 & 0xFFFFFF))) + 0x48, arg0->unk8 * 0xE);
-  s1 = 0;
-  if (arg2 != 0)
-  {
-	do
+	AnimChannelState *ch;
+	s32 s1;
+	arg0->unkE50 = arg3;
+	func_800101F0_10DF0(((s32)arg0) + 8, (s32)(D_8F4960 + (arg3 & 0xFFFFFF)), 0x48);
+	func_800101F0_10DF0(((s32)arg0) + 0x50, ((s32)(D_8F4960 + (arg3 & 0xFFFFFF))) + 0x48, arg0->unk8 * 0xE);
+	s1 = 0;
+	if (arg2 != 0)
 	{
-	  ch = &arg1[s1];
-	  ch->unk18 = 0;
-	  ch->unk14 = *((u16 *) ((((s32) arg0) + (s1 * 4)) + 0xE));
-	  func_8000CD54_D954(arg0, ch, s1 ^ 0);
-	  if (arg4 != 0)
-	  {
-		ch->unk8 = (f32) ch->unk24;
-		ch->unk18 = ch->unk18 + 1;
-		ch->unk0 = ch->unk2A;
-		ch->unkC = (f32) ch->unk26;
-		ch->unk2 = ch->unk2C;
-		ch->unk4 = ch->unk2E;
-		ch->unk10 = (f32) ch->unk28;
-		func_8000CD54_D954(arg0, ch, s1);
-	  }
-	  s1 = (s1 + 1) & 0xFF;
+		do
+		{
+			ch = &arg1[s1];
+			ch->unk18 = 0;
+			ch->unk14 = *((u16 *)((((s32)arg0) + (s1 * 4)) + 0xE));
+			func_8000CD54_D954(arg0, ch, s1 ^ 0);
+			if (arg4 != 0)
+			{
+				ch->unk0 = ch->unk2A;
+				ch->unk2 = ch->unk2C;
+				ch->unk4 = ch->unk2E;
+				ch->unk8 = ch->unk24;
+				ch->unkC = ch->unk26;
+				ch->unk10 = ch->unk28;
+				ch->unk18 = ch->unk18 + 1;
+				func_8000CD54_D954(arg0, ch, s1);
+			}
+			s1 = (s1 + 1) & 0xFF;
+		} while (arg2 != s1);
 	}
-	while (arg2 != s1);
-  }
-  return arg3;
+	return arg3;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CDFC_D9FC.s")
-#endif
 
 // CURRENT(7256)
 #ifdef NON_MATCHING

@@ -1413,7 +1413,7 @@ void guess_checkMissions(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_checkMissions.s")
 #endif
 
-// CURRENT(80)
+// CURRENT(1880)
 #ifdef NON_MATCHING
 void debug_drawTimingGraphBars(void) {
 	s32 pad1;
