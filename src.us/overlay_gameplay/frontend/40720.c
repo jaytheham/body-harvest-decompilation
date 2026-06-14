@@ -139,81 +139,71 @@ void func_800704DC_4098C(void)
 }
 
 // https://decomp.me/scratch/TczFE
-// CURRENT(5965)
+// CURRENT(545)
 #ifdef NON_MATCHING
-void func_80070514_409C4(s16 arg0) {
-	s32 var_v1;
-	s16 missionId;
-	MissionData* temp_a0;
-	MissionData* temp_a1;
-	MissionData* var_a0;
-	u8 temp_v0;
-
-	if (arg0 == D_800D74AA) {
-		return;
+void func_80070514_409C4(s16 arg0)
+{
+  s32 var_v1;
+  MissionData *temp_a0;
+  var_v1 = 42;
+  if (arg0 == D_800D74AA)
+  {
+	return;
+  }
+  temp_a0 = &D_800D6DC0[var_v1];
+	while (var_v1-- && D_800D6DC0[var_v1].unk16) {
 	}
-
-	missionId = arg0;
-
-	var_v1 = 0x29;
-	var_a0 = &D_800D6DC0[0x29];
-	if (var_a0->unk16 != 0) {
-		while (var_v1--) {
-			var_a0--;
-			if (var_a0->unk16 == 0) {
-				break;
-			}
-		}
-	}
-
-	if (var_v1 == -1) {
-		osSyncPrintf(D_800AD7B4_7DC64);
-		return;
-	}
-
+  if (var_v1 == (-1))
+  {
+	osSyncPrintf(D_800AD7B4_7DC64);
+	return;
+  }
 	temp_a0 = &D_800D6DC0[var_v1];
-	temp_a1 = &D_800909B0[missionId];
-
-	temp_a0->unk0 = temp_a1->unk0 * 4;
-	temp_a0->unk2 = temp_a1->unk2 * 4;
-	temp_a0->unk4 = temp_a1->unk4 * 4;
-	temp_a0->unk6 = temp_a1->unk6 * 4;
-	temp_a0->unk8 = temp_a1->unk8;
-	temp_a0->unkA = temp_a1->unkA * 4;
-	temp_a0->unkC = temp_a1->unkC * 4;
-	temp_a0->unkE = temp_a1->unkE * 4;
-	temp_a0->unk10 = temp_a1->unk10 * 4;
-	temp_a0->unk12 = temp_a1->unk12;
-	temp_a0->unk14 = temp_a1->unk14;
-	temp_a0->unk16 = temp_a1->unk16;
-
-	if ((temp_v0 = temp_a1->unk1C) != 3) {
-		temp_a0->unk1C = temp_v0;
-	} else {
-		temp_a1->unk1C = 0;
-		temp_a0->unk1C = 0;
-	}
-
-	temp_a0->unk26 = missionId;
-	temp_a0->unk28 = -1;
-
-	switch (D_800313D0_31FD0) {
+	// fake, forces * 4 correct
+	if (temp_a0);
+  temp_a0->unk0 = D_800909B0[arg0].unk0 * 4;
+  temp_a0->unk2 = D_800909B0[arg0].unk2 * 4;
+  temp_a0->unk4 = D_800909B0[arg0].unk4 * 4;
+  temp_a0->unk6 = D_800909B0[arg0].unk6 * 4;
+  temp_a0->unk8 = D_800909B0[arg0].unk8;
+  temp_a0->unkA = D_800909B0[arg0].unkA * 4;
+  temp_a0->unkC = D_800909B0[arg0].unkC * 4;
+  temp_a0->unkE = D_800909B0[arg0].unkE * 4;
+  temp_a0->unk10 = D_800909B0[arg0].unk10 * 4;
+  temp_a0->unk12 = D_800909B0[arg0].unk12;
+  temp_a0->unk14 = D_800909B0[arg0].unk14;
+  temp_a0->unk16 = D_800909B0[arg0].unk16;
+  if (D_800909B0[arg0].unk1C == 3)
+  {
+	temp_a0->unk1C = D_800909B0[arg0].unk1C = 0;
+  }
+  else
+  {
+	temp_a0->unk1C = D_800909B0[arg0].unk1C;
+  }
+  temp_a0->unk26 = arg0;
+  temp_a0->unk28 = -1;
+  switch (D_800313D0)
+  {
 	case 0:
 	default:
-		temp_a0->unk1E = temp_a1->unk1E;
-		break;
-	case 1:
-		temp_a0->unk1E = temp_a1->unk1A;
-		break;
-	case 2:
-		temp_a0->unk1E = temp_a1->unk18;
-		break;
-	}
+	  temp_a0->unk1E = D_800909B0[arg0].unk1E;
+	  break;
 
-	temp_a0->unk20 = temp_a1->unk20;
-	if (missionId == D_800D74A4) {
-		temp_a1->unk1C = 1;
-	}
+	case 2:
+	  temp_a0->unk1E = D_800909B0[arg0].unk18;
+	  break;
+
+	case 1:
+	  temp_a0->unk1E = D_800909B0[arg0].unk1A;
+	  break;
+  }
+
+  temp_a0->unk20 = D_800909B0[arg0].unk20;
+  if (arg0 == D_800D74A4)
+  {
+	D_800909B0[arg0].unk1C = 1;
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070514_409C4.s")

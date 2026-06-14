@@ -15,7 +15,7 @@
 - remove or introduce temporary variables for subexpressions, and move their assignments around
 - move statements between different basic blocks
 - duplicate expressions to use the compiler's deduplication
-- reuse variables
+- reuse variables - if the same register is reused multiple times in a function it may be because the same variable was reused, especially true for `s` registers.
 - fiddle with int promotion if relevant
 - try removing any casts and "un-natural" logic.
 - s32 vs int return type matters, especially when returning boolean operation results.
