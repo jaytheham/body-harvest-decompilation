@@ -125,7 +125,7 @@ u8 D_80140AA4_14FA54[0x0C] = {
 	0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-// CURRENT(3385)
+// CURRENT(940)
 #ifdef NON_MATCHING
 s16 func_80115F20_124ED0(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 	s16 instanceId;
@@ -136,17 +136,21 @@ s16 func_80115F20_124ED0(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 	s16 zStep;
 	u8 buildingType;
 
-	x = arg0 >> 8;
-	z = arg1 >> 8;
 	instanceId = func_8011D260_12C210((s8)(arg0 >> 8), (s8)(arg1 >> 8));
-	if (instanceId == -1) {
+	if (instanceId != -1) {
+		goto body;
+	}
+	*arg2 = -1;
+	*arg3 = -1;
+	return -1;
+body:
+	buildingType = buildingInstances[instanceId].buildingType;
+	if ((0x1F != buildingType) && (D_8015EA28 != buildingType)) {
 		goto fail;
 	}
 
-	buildingType = buildingInstances[instanceId].buildingType;
-	if ((buildingType != 0x1F) && (buildingType != D_8015EA28)) {
-		goto fail;
-	}
+	x = arg0 >> 8;
+	z = arg1 >> 8;
 
 	xStep = 1;
 	zStep = 0;
@@ -204,6 +208,7 @@ fail:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80115F20_124ED0.s")
 #endif
 
+// CURRENT(562)
 #ifdef NON_MATCHING
 s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
 	f32 sp20;
@@ -223,8 +228,8 @@ s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011619C_12514C.s")
 #endif
 
-#ifdef NON_MATCHING
 // CURRENT(3558)
+#ifdef NON_MATCHING
 s32 func_8011629C_12524C(BuildingInstance *arg0, s16 arg1, s16 arg2) {
 	BuildingInstance *temp;
 	BuildingInstance *prev;
