@@ -768,6 +768,7 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 #endif
 
 // https://decomp.me/scratch/V6LCq
+// CURRENT(200)
 #ifdef NON_MATCHING
 void func_8008E978_9D928(u8 arg0, s32 arg1)
 {

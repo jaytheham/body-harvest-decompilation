@@ -1701,8 +1701,9 @@ void func_801365E0_145590(void) {
 #endif
 
 // https://decomp.me/scratch/NQ4OJ
-// Check if player is reading signpost
+// CURRENT(405)
 #ifdef NON_MATCHING
+// Check if player is reading signpost
 void func_80136B50_145B00(s32 arg0, s16 arg1)
 {
 	s16 sp32;
