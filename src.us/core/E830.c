@@ -55,7 +55,8 @@ void func_8000DC9C_E89C(s32 arg0, s32 arg1)
 	while (new_var != (1 * 0));
 }
 
-// CURRENT(180) — Only Regalloc/Stack not matching
+// https://decomp.me/scratch/QRS82
+// CURRENT(121)
 #ifdef NON_MATCHING
 void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	s32 sp54;
