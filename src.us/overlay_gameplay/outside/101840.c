@@ -553,7 +553,7 @@ void func_800F2890_101840(u8 arg0, s32 *arg1, s32 *arg2, u8 *arg3) {
 
 // CURRENT(3053)
 #ifdef NON_MATCHING
-void func_800F2980_101930(void *arg0, s32 arg1) {
+void func_800F2980_101930(UnkF9230ShadowWalker *walker, s32 arg1) {
 	s32 sp7C;
 	s32 sp78;
 	s32 pad1;
@@ -568,56 +568,53 @@ void func_800F2980_101930(void *arg0, s32 arg1) {
 	u8 temp_a0idx;
 	u8 temp_s0;
 	u8 temp_v1;
-	u8 *base;
-	u8 *temp_s1;
 	u8 *temp_v0;
-	u8 *var_s2;
+	UnkF9230ShadowLimb *var_limb;
+	UnkF9230ShadowLimb *temp_limb;
 
-	base = arg0;
-	temp_a0idx = base[0x23];
+	temp_a0idx = walker->limbs[0].unk23;
 	temp_v0 = &((u8 *) D_801601F0)[((((temp_a0idx << 2) - temp_a0idx) << 2) - temp_a0idx) << 1];
 	sp6E = *(s16 *) &temp_v0[0x10];
 	sp6C = *(s16 *) &temp_v0[0x06];
 	sp6A = *(s16 *) &temp_v0[0x04];
-	temp_v1 = base[0x22];
+	temp_v1 = walker->limbs[0].unk22;
 	temp_s0 = temp_v0[0x0C];
 	var_s4 = *(s16 *) &temp_v0[0x0E];
 	if (temp_v1 & 0x80) {
-		sp68 = *(s16 *) &base[0x1A];
-		var_v0 = *(s16 *) &base[0x18];
+		sp68 = walker->limbs[0].unk1A;
+		var_v0 = walker->limbs[0].unk18;
 	} else {
-		var_v0 = *(s16 *) &base[0x18];
+		var_v0 = walker->limbs[0].unk18;
 		sp68 = var_v0;
 	}
 	if (temp_v1 == 0x10) {
 		sp68 = 0;
 	}
-	sp7C = (s32) ((((f64) (f32) coss(var_v0 & 0xFFFF) / 32768.0) * (f64) *(s16 *) &base[0x1C]) +
-				 (f64) *(s32 *) &base[0x00]);
-	sp78 = (s32) ((((f64) (f32) sins(*(u16 *) &base[0x18]) / 32768.0) * (f64) *(s16 *) &base[0x1C]) +
-				 (f64) *(s32 *) &base[0x04]);
-	*(s32 *) &base[0x08] = sp7C;
-	*(s32 *) &base[0x0C] = sp78;
+	sp7C = (s32) ((((f64) (f32) coss(var_v0 & 0xFFFF) / 32768.0) * (f64) walker->limbs[0].unk1C) +
+				 (f64) *(s32 *) &walker->limbs[0].unk0);
+	sp78 = (s32) ((((f64) (f32) sins((u16) walker->limbs[0].unk18) / 32768.0) * (f64) walker->limbs[0].unk1C) +
+				 (f64) *(s32 *) &walker->limbs[0].unk4);
+	*(s32 *) &walker->limbs[0].unk8 = sp7C;
+	*(s32 *) &walker->limbs[0].unkC = sp78;
 	var_s3 = 0;
-	var_s2 = arg0;
 	if ((s32) temp_s0 / 2 > 0) {
 		do {
-			if (var_s2[0x47] == 0) {
+			var_limb = &walker->limbs[var_s3 + 1];
+			if (var_limb->unk23 == 0) {
 				var_v0 = (s16) ((sp68 - var_s4) - 0x4000);
-				*(s16 *) &var_s2[0x2A] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp7C);
-				*(s16 *) &var_s2[0x2C] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp78);
-				*(s16 *) &var_s2[0x3E] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp7C);
-				*(s16 *) &var_s2[0x40] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp78);
+				var_limb->unk6 = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp7C);
+				var_limb->unk8 = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp78);
+				var_limb->unk1A = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp7C);
+				var_limb->unk1C = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp78);
 				var_v0 = (s16) (sp68 + var_s4 + 0x4000);
-				temp_s1 = base + (var_s3 * 0x24) + (((s32) temp_s0 / 2) * 0x24);
-				*(s16 *) &temp_s1[0x2A] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp7C);
-				*(s16 *) &temp_s1[0x2C] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp78);
-				*(s16 *) &temp_s1[0x3E] = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp7C);
-				*(s16 *) &temp_s1[0x40] = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp78);
+				temp_limb = &walker->limbs[var_s3 + ((s32) temp_s0 / 2) + 1];
+				temp_limb->unk6 = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp7C);
+				temp_limb->unk8 = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp78);
+				temp_limb->unk1A = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp7C);
+				temp_limb->unk1C = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp78);
 				var_s4 += sp6E;
 			}
 			var_s3 += 1;
-			var_s2 += 0x24;
 		} while (var_s3 != ((s32) temp_s0 / 2));
 	}
 }
@@ -628,7 +625,7 @@ void func_800F2980_101930(void *arg0, s32 arg1) {
 // CURRENT(837)
 #ifdef NON_MATCHING
 void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
-	u8 *base;
+	UnkF9230ShadowWalker *walker;
 	u8 count;
 	s16 i;
 	s16 temp;
@@ -643,48 +640,48 @@ void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 		osSyncPrintf(D_80144700_1536B0);
 	}
 
-	base = &D_80158000[idx];
-	if (base[0x22] == 2) {
+	walker = &D_80158000[idx];
+	if (walker->limbs[0].unk22 == 2) {
 		return;
 	}
 
-	*(s32 *)&base[0x0] = (s16)arg1;
-	*(s32 *)&base[0x4] = arg2;
-	*(s32 *)&base[0x14] = arg2;
-	*(s32 *)&base[0x10] = (s16)arg1;
-	*(s32 *)&base[0xC] = arg2;
-	*(s16 *)&base[0x1C] = 0;
-	*(s32 *)&base[0x8] = (s16)arg1;
+	*(s32 *)&walker->limbs[0].unk0 = (s16)arg1;
+	*(s32 *)&walker->limbs[0].unk4 = arg2;
+	*(s32 *)&walker->limbs[0].unk14 = arg2;
+	*(s32 *)&walker->limbs[0].unk10 = (s16)arg1;
+	*(s32 *)&walker->limbs[0].unkC = arg2;
+	walker->limbs[0].unk1C = 0;
+	*(s32 *)&walker->limbs[0].unk8 = (s16)arg1;
 
-	func_800F2980_101930(base, 0);
+	func_800F2980_101930(walker, 0);
 
-	count = ((u8 *)D_801601F0)[base[0x23] * 0x16 + 0xC];
+	count = ((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16 + 0xC];
 	if (count > 0) {
 		i = 0;
 		do {
-			if (base[i * 0x24 + 0x47] == 0) {
-				temp = *(s16 *)&base[i * 0x24 + 0x3E];
-				*(s16 *)&base[i * 0x24 + 0x42] = temp;
-				*(s16 *)&base[i * 0x24 + 0x38] = temp;
+			if (walker->limbs[i + 1].unk23 == 0) {
+				temp = walker->limbs[i + 1].unk1A;
+				walker->limbs[i + 1].unk1E = temp;
+				walker->limbs[i + 1].unk14 = temp;
 
-				temp = *(s16 *)&base[i * 0x24 + 0x40];
-				*(s16 *)&base[i * 0x24 + 0x44] = temp;
-				*(s16 *)&base[i * 0x24 + 0x3C] = temp;
+				temp = walker->limbs[i + 1].unk1C;
+				walker->limbs[i + 1].unk20 = temp;
+				walker->limbs[i + 1].unk18 = temp;
 
-				temp = *(s16 *)&base[i * 0x24 + 0x2A];
-				*(s16 *)&base[i * 0x24 + 0x2E] = temp;
-				*(s16 *)&base[i * 0x24 + 0x24] = temp;
+				temp = walker->limbs[i + 1].unk6;
+				walker->limbs[i + 1].unkA = temp;
+				walker->limbs[i + 1].unk0 = temp;
 
-				temp = *(s16 *)&base[i * 0x24 + 0x2C];
-				*(s16 *)&base[i * 0x24 + 0x30] = temp;
-				*(s16 *)&base[i * 0x24 + 0x28] = temp;
+				temp = walker->limbs[i + 1].unk8;
+				walker->limbs[i + 1].unkC = temp;
+				walker->limbs[i + 1].unk4 = temp;
 			}
 			i += 1;
 		} while (i < count);
 	}
 
-	*(s16 *)&base[0x1E] = 0;
-	func_800F49A4_103954(base);
+	walker->limbs[0].unk1E = 0;
+	func_800F49A4_103954(walker);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F2D48_101CF8.s")
@@ -704,31 +701,31 @@ void func_800F2ED8_101E88(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 	{
 		s32 temp_a1;
 		u8 state;
-		u8 *base;
+		UnkF9230ShadowWalker *walker;
 
-		base = &D_80158000[arg0];
-		state = base[0x22];
+		walker = &D_80158000[arg0];
+		state = walker->limbs[0].unk22;
 		temp_a1 = -arg1;
 		if (state != 0x10) {
 			s32 temp_v0;
 
 			temp_v0 = temp_a1;
 			if (temp_a1 < arg1) temp_v0 = arg1;
-			if (((temp_v0 >= 0xD) || (arg2 != *(s16 *) &base[0x18])) && (state != 4)) {
-				base[0x22] = (arg4 & 0x80) | 1;
-				state = base[0x22];
+			if (((temp_v0 >= 0xD) || (arg2 != walker->limbs[0].unk18)) && (state != 4)) {
+				walker->limbs[0].unk22 = (arg4 & 0x80) | 1;
+				state = walker->limbs[0].unk22;
 			}
 
-			*(s16 *) &base[0x1C] = (s16) ((((u8*)D_801601F0)[base[0x23] * 0x16 + 0x12] * arg1) / 8);
-			*(s16 *) &base[0x18] = arg2;
+			walker->limbs[0].unk1C = (s16) ((((u8*)D_801601F0)[walker->limbs[0].unk23 * 0x16 + 0x12] * arg1) / 8);
+			walker->limbs[0].unk18 = arg2;
 			if (state & 0x80) {
-				*(s16 *) &base[0x1A] = arg3;
+				walker->limbs[0].unk1A = arg3;
 			}
 			if (temp_a1 == 0) {
-				*(s32 *) &base[0x0] = *(s32 *) &base[0x10];
-				*(s32 *) &base[0x4] = *(s32 *) &base[0x14];
+				*(s32 *) &walker->limbs[0].unk0 = *(s32 *) &walker->limbs[0].unk10;
+				*(s32 *) &walker->limbs[0].unk4 = *(s32 *) &walker->limbs[0].unk14;
 			}
-			func_800F2980_101930(base, temp_a1);
+			func_800F2980_101930(walker, temp_a1);
 		}
 	}
 }
@@ -739,6 +736,7 @@ void func_800F2ED8_101E88(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 // CURRENT(2226)
 #ifdef NON_MATCHING
 void func_800F3038_101FE8(u8 arg0) {
+	UnkF9230ShadowWalker *walker;
 	u8 i;
 	u8 count;
 
@@ -749,28 +747,29 @@ void func_800F3038_101FE8(u8 arg0) {
 		osSyncPrintf(D_80144780_153730, (u8)arg0);
 	}
 
-	count = [D_80158000[arg0].limbs[0].unk23 * 0x16 + 0xC];
-	D_80158000[arg0].limbs[0].unk22 = 2;
+	walker = &D_80158000[arg0];
+	count = ((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16 + 0xC];
+	walker->limbs[0].unk22 = 2;
 
 	if (count > 0) {
 		i = 0;
 		do {
-			if (D_80158000[arg0].limbs[i].unk47 == 1) {
-				D_80158000[arg0].limbs[i].unk47 = 2;
+			if (walker->limbs[i + 1].unk23 == 1) {
+				walker->limbs[i + 1].unk23 = 2;
 			}
-			if (D_80158000[arg0].limbs[i + 1].unk23 == 0) {
-				D_80158000[arg0].limbs[i + 1].unk23 = 1;
+			if (walker->limbs[i + 1].unk23 == 0) {
+				walker->limbs[i + 1].unk23 = 1;
 			}
 			i++;
 		} while (i < count);
 	}
 
-	D_80158000[arg0].limbs[0].unk168 = 0;
-	*(s16 *)&D_80158000[arg0].limbs[0].unk16A = 0;
-	if (*(s16 *)((u8*)D_801601F0 + D_80158000[arg0].limbs[0].unk23 * 0x16 + 0xA) >= 0x64) {
-		*(s16 *)&D_80158000[arg0].limbs[0].unk16C = 0x1E;
+	walker->unk168 = 0;
+	walker->unk16A = 0;
+	if (*(s16 *)((u8*)D_801601F0 + walker->limbs[0].unk23 * 0x16 + 0xA) >= 0x64) {
+		walker->unk16C = 0x1E;
 	} else {
-		*(s16 *)&D_80158000[arg0].limbs[0].unk16C = 0x3C;
+		walker->unk16C = 0x3C;
 	}
 }
 #else
@@ -780,6 +779,7 @@ void func_800F3038_101FE8(u8 arg0) {
 // CURRENT(2131)
 #ifdef NON_MATCHING
 void func_800F3190_102140(u8 arg0) {
+	UnkF9230ShadowWalker *walker;
 	u8 i;
 	u8 count;
 
@@ -790,28 +790,29 @@ void func_800F3190_102140(u8 arg0) {
 		osSyncPrintf(D_801447C0_153770, arg0);
 	}
 
-	count = ((u8*)D_801601F0)[D_80158000[arg0].limbs[0].unk23 * 0x16 + 0xC];
-	D_80158000[arg0].limbs[0].unk22 = 8;
+	walker = &D_80158000[arg0];
+	count = ((u8*)D_801601F0)[walker->limbs[0].unk23 * 0x16 + 0xC];
+	walker->limbs[0].unk22 = 8;
 
 	if (count > 0) {
 		i = 0;
 		do {
-			if (D_80158000[arg0].limbs[i].unk47 == 1) {
-				D_80158000[arg0].limbs[i].unk47 = 2;
+			if (walker->limbs[i + 1].unk23 == 1) {
+				walker->limbs[i + 1].unk23 = 2;
 			}
-			if (D_80158000[arg0].limbs[i + 1].unk23 == 0) {
-				D_80158000[arg0].limbs[i + 1].unk23 = 1;
+			if (walker->limbs[i + 1].unk23 == 0) {
+				walker->limbs[i + 1].unk23 = 1;
 			}
 			i++;
 		} while (i < count);
 	}
 
-	D_80158000[arg0].limbs[0].unk168 = 0;
-	*(s16 *)&D_80158000[arg0].limbs[0].unk16A = 0;
-	if (*(s16 *)((u8*)D_801601F0 + D_80158000[arg0].limbs[0].unk23 * 0x16 + 0xA) >= 0x64) {
-		*(s16 *)&D_80158000[arg0].limbs[0].unk16C = 0x1E;
+	walker->unk168 = 0;
+	walker->unk16A = 0;
+	if (*(s16 *)((u8*)D_801601F0 + walker->limbs[0].unk23 * 0x16 + 0xA) >= 0x64) {
+		walker->unk16C = 0x1E;
 	} else {
-		*(s16 *)&D_80158000[arg0].limbs[0].unk16C = 0x3C;
+		walker->unk16C = 0x3C;
 	}
 }
 #else
@@ -821,9 +822,9 @@ void func_800F3190_102140(u8 arg0) {
 // CURRENT(625)
 #ifdef NON_MATCHING
 void func_800F32EC_10229C(u8 arg0, u8 arg1) {
+	UnkF9230ShadowWalker *walker;
 	u8 i;
 	s32 count;
-	u8 *base;
 	u8 *entry;
 	s16 threshold;
 
@@ -835,40 +836,36 @@ void func_800F32EC_10229C(u8 arg0, u8 arg1) {
 		osSyncPrintf(D_80144800_1537B0);
 	}
 
-	base = &D_80158000[arg0 * 0x170];
-	entry = (u8*)D_801601F0 + base[0x23] * 0x16;
+	walker = &D_80158000[arg0];
+	entry = (u8*)D_801601F0 + walker->limbs[0].unk23 * 0x16;
 	count = entry[0xC];
-	base[0x22] = 4;
+	walker->limbs[0].unk22 = 4;
 
 	if (count > 0) {
 		i = 0;
 		do {
-			s32 offset = i * 0x24;
-			u8 *anim = &base[offset];
-			u8 *next = &anim[0x24];
-
-			if (anim[0x47] == 1) {
-				anim[0x47] = 2;
+			if (walker->limbs[i + 1].unk23 == 1) {
+				walker->limbs[i + 1].unk23 = 2;
 			}
 
 			if (arg1 & (1 << i)) {
-				next[0x23] = 1;
-				next[0x22] = func_800C2274_D1224(*(s16 *)&anim[0x38], *(s16 *)&anim[0x3A], *(s16 *)&anim[0x3C], 0);
+				walker->limbs[i + 2].unk23 = 1;
+				walker->limbs[i + 2].unk22 = func_800C2274_D1224(walker->limbs[i + 1].unk14, walker->limbs[i + 1].unk16, walker->limbs[i + 1].unk18, 0);
 			}
 
 			i++;
 		} while (i < count);
 
-		entry = (u8*)D_801601F0 + base[0x23] * 0x16;
+		entry = (u8*)D_801601F0 + walker->limbs[0].unk23 * 0x16;
 	}
 
 	threshold = *(s16 *)&entry[0xA];
-	base[0x168] = 0;
-	*(s16 *)&base[0x16A] = 0;
+	walker->unk168 = 0;
+	walker->unk16A = 0;
 	if (threshold >= 0x64) {
-		*(s16 *)&base[0x16C] = 0x1E;
+		walker->unk16C = 0x1E;
 	} else {
-		*(s16 *)&base[0x16C] = 0x3C;
+		walker->unk16C = 0x3C;
 	}
 }
 #else
@@ -878,6 +875,7 @@ void func_800F32EC_10229C(u8 arg0, u8 arg1) {
 // CURRENT(1074)
 #ifdef NON_MATCHING
 void func_800F34AC_10245C(s32 arg0) {
+	UnkF9230ShadowWalker *walker;
 	s32 temp = arg0 & 0xFF;
 	if (temp >= 9) {
 		osSyncPrintf(D_80144828_1537D8, temp);
@@ -885,17 +883,19 @@ void func_800F34AC_10245C(s32 arg0) {
 	if (D_80157FF0[temp] != -1) {
 		osSyncPrintf(D_80144840_1537F0, temp);
 	}
-	D_80158000[temp].limbs[0].unk22 = 0x10;
-	*(s32*)&D_80158000[temp].limbs[0] = *(s32*)&D_80158000[temp].limbs[0 + 0x10];
-	*(s32*)&D_80158000[temp].limbs[0 + 4] = *(s32*)&D_80158000[temp].limbs[0 + 0x14];
-	*(s16*)&D_80158000[temp].limbs[0].unk16A = *(s16*)&D_8014DD52[alienInstances[D_80158000[temp].limbs[0].unk144].unkC * 0x10] + alienInstances[D_80158000[temp].limbs[0].unk144].unk2;
+	walker = &D_80158000[temp];
+	walker->limbs[0].unk22 = 0x10;
+	*(s32*)&walker->limbs[0].unk0 = *(s32*)&walker->limbs[0].unk10;
+	*(s32*)&walker->limbs[0].unk4 = *(s32*)&walker->limbs[0].unk14;
+	walker->unk16A = *(s16*)&D_8014DD52[alienInstances[walker->alienIdx].unkC * 0x10] + alienInstances[walker->alienIdx].unk2;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F34AC_10245C.s")
 #endif
 
 void func_800F3580_102530(u8 arg0) {
-	D_80158000[arg0].limbs[0].unk22 = 0;
+	UnkF9230ShadowWalker *walker = &D_80158000[arg0];
+	walker->limbs[0].unk22 = 0;
 }
 
 void func_800F35AC_10255C(u8 arg0, s16 arg1) {
@@ -912,7 +912,7 @@ void func_800F35AC_10255C(u8 arg0, s16 arg1) {
 	}
 	
 	if (temp_v1 < 8 && D_80157FF0[arg0] == -1) {
-		*(s16*)&D_80158000[arg0].limbs[0].unk20 = arg1;
+		D_80158000[arg0].limbs[0].unk20 = arg1;
 	}
 }
 
@@ -995,6 +995,7 @@ s16 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3) {
 // CURRENT(17608) - improved from 18187 by removing ret/allocCount/specIdx fixes, alienY placement
 #ifdef NON_MATCHING
 s16 func_800F3990_102940(u8 arg0, u8 arg1) {
+	UnkF9230ShadowWalker *walker;
 	s32 slot;
 	u8 alienIdx;
 	u8 specIdx;
@@ -1009,7 +1010,6 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	s16 alienZ;
 	s16 alienY;
 	s32 halfCount;
-	u8 *walker;
 	AlienInstance *inst;
 
 	alienIdx = arg0;
@@ -1041,20 +1041,20 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 
 	walker = &D_80158000[slot];
 
-	*(s32 *)&walker[0x00] = alienX;
-	*(s32 *)&walker[0x04] = alienZ;
-	*(s32 *)&walker[0x10] = alienX;
-	*(s32 *)&walker[0x14] = alienZ;
-	*(s16 *)&walker[0x18] = alienY;
-	*(s16 *)&walker[0x1A] = alienY;
-	*(s16 *)&walker[0x1C] = 0;
-	walker[0x22] = 0;
-	*(s16 *)&walker[0x20] = 0;
-	walker[0x144] = alienIdx;
-	*(s32 *)&walker[0x08] = alienX;
-	*(s32 *)&walker[0x0C] = alienZ;
-	*(s16 *)&walker[0x1E] = 0;
-	walker[0x23] = specIdx;
+	*(s32 *)&walker->limbs[0].unk0 = alienX;
+	*(s32 *)&walker->limbs[0].unk4 = alienZ;
+	*(s32 *)&walker->limbs[0].unk10 = alienX;
+	*(s32 *)&walker->limbs[0].unk14 = alienZ;
+	walker->limbs[0].unk18 = alienY;
+	walker->limbs[0].unk1A = alienY;
+	walker->limbs[0].unk1C = 0;
+	walker->limbs[0].unk22 = 0;
+	walker->limbs[0].unk20 = 0;
+	walker->alienIdx = alienIdx;
+	*(s32 *)&walker->limbs[0].unk8 = alienX;
+	*(s32 *)&walker->limbs[0].unkC = alienZ;
+	walker->limbs[0].unk1E = 0;
+	walker->limbs[0].unk23 = specIdx;
 
 	baseAngle = *(s16 *)&((u8*)D_801601F0 + specIdx * 0x16)[0xE];
 	spBA = *(s16 *)&((u8*)D_801601F0 + specIdx * 0x16)[0x10];
@@ -1071,42 +1071,42 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 		i = 0;
 		temp = halfCount * 0x24;
 		while (i < halfCount) {
-			u8 *a;
-			u8 *an;
-			u8 *b;
-			u8 *bn;
+			UnkF9230ShadowLimb *a;
+			UnkF9230ShadowLimb *an;
+			UnkF9230ShadowLimb *b;
+			UnkF9230ShadowLimb *bn;
 			s16 y;
 			s16 ang;
 
-			a = &walker[i * 0x24];
-			a[0x47] = 0;
-			an = &a[0x24];
+			a = &walker->limbs[i + 1];
+			a->unk23 = 0;
+			an = &walker->limbs[i + 2];
 
-			ang = (s16)(((*(s16 *)&walker[0x18] - baseAngle) - 0x4000) & 0xFFFF);
-			*(s16 *)&an[0x14] = (s16)(s32)((((f64)(f32)coss(ang) / 32768.0) * f22) + f24);
-			*(s16 *)&an[0x18] = (s16)(s32)((((f64)(f32)sins(ang) / 32768.0) * f22) + f26);
+			ang = (s16)(((walker->limbs[0].unk18 - baseAngle) - 0x4000) & 0xFFFF);
+			an->unk10 = (s16)(s32)((((f64)(f32)coss(ang) / 32768.0) * f22) + f24);
+			an->unk14 = (s16)(s32)((((f64)(f32)sins(ang) / 32768.0) * f22) + f26);
 			y = D_8014DD50[inst->unkC].unk2 + inst->unk2;
-			*(s16 *)&an[0x16] = y;
-			*(s16 *)&a[0x24] = (s16)(s32)((((f64)(f32)coss(ang) / 32768.0) * f28) + f24);
-			*(s16 *)&an[0x4] = (s16)(s32)((((f64)(f32)sins(ang) / 32768.0) * f28) + f26);
-			*(s16 *)&an[0x2] = func_800F384C_1027FC((UnkF9230Arg0 *)walker, *(s16 *)&an[0x16], *(s16 *)&a[0x24], *(s16 *)&an[0x4]);
-			*(s16 *)&an[0xA] = *(s16 *)&a[0x24];
-			*(s16 *)&an[0xC] = *(s16 *)&an[0x4];
+			an->unk12 = y;
+			an->unk0 = (s16)(s32)((((f64)(f32)coss(ang) / 32768.0) * f28) + f24);
+			an->unk4 = (s16)(s32)((((f64)(f32)sins(ang) / 32768.0) * f28) + f26);
+			an->unk2 = func_800F384C_1027FC((UnkF9230Arg0 *)walker, an->unk12, an->unk0, an->unk4);
+			an->unk6 = an->unk0;
+			an->unk8 = an->unk4;
 
-			b = &walker[(i * 0x24) + temp];
-			b[0x47] = 0;
-			bn = &b[0x24];
+			b = &walker->limbs[i + 1 + halfCount];
+			b->unk23 = 0;
+			bn = &walker->limbs[i + 2 + halfCount];
 
-			ang = (s16)(((*(s16 *)&walker[0x18] + baseAngle) + 0x4000) & 0xFFFF);
-			*(s16 *)&bn[0x14] = (s16)(s32)((((f64)(f32)coss(ang) / 32768.0) * f22) + f24);
-			*(s16 *)&bn[0x18] = (s16)(s32)((((f64)(f32)sins(ang) / 32768.0) * f22) + f26);
+			ang = (s16)(((walker->limbs[0].unk18 + baseAngle) + 0x4000) & 0xFFFF);
+			bn->unk10 = (s16)(s32)((((f64)(f32)coss(ang) / 32768.0) * f22) + f24);
+			bn->unk14 = (s16)(s32)((((f64)(f32)sins(ang) / 32768.0) * f22) + f26);
 			y = D_8014DD50[inst->unkC].unk2 + inst->unk2;
-			*(s16 *)&bn[0x16] = y;
-			*(s16 *)&b[0x24] = (s16)(s32)((((f64)(f32)coss(ang) / 32768.0) * f28) + f24);
-			*(s16 *)&bn[0x4] = (s16)(s32)((((f64)(f32)sins(ang) / 32768.0) * f28) + f26);
-			*(s16 *)&bn[0x2] = func_800F384C_1027FC((UnkF9230Arg0 *)walker, *(s16 *)&bn[0x16], *(s16 *)&b[0x24], *(s16 *)&bn[0x4]);
-			*(s16 *)&bn[0xA] = *(s16 *)&b[0x24];
-			*(s16 *)&bn[0xC] = *(s16 *)&bn[0x4];
+			bn->unk12 = y;
+			bn->unk0 = (s16)(s32)((((f64)(f32)coss(ang) / 32768.0) * f28) + f24);
+			bn->unk4 = (s16)(s32)((((f64)(f32)sins(ang) / 32768.0) * f28) + f26);
+			bn->unk2 = func_800F384C_1027FC((UnkF9230Arg0 *)walker, bn->unk12, bn->unk0, bn->unk4);
+			bn->unk6 = bn->unk0;
+			bn->unk8 = bn->unk4;
 
 			i = (i + 1) & 0xFF;
 			baseAngle += spBA;
@@ -1291,11 +1291,11 @@ void func_800F4748_1036F8(UnkF9230Arg0 *arg0, u8 arg1, u8 arg2)
 
 // CURRENT(3132)
 #ifdef NON_MATCHING
-void func_800F49A4_103954(void *arg0) {
+void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 	UnkF9230Arg0 *base;
 	AlienInstance *alien;
 	u8 *anim;
-	u8 *entry;
+	UnkF9230ShadowLimb *entry;
 	s16 spB2;
 	s16 spA8;
 	s16 spA6;
@@ -1317,41 +1317,41 @@ void func_800F49A4_103954(void *arg0) {
 	s32 i;
 	f32 yawRad;
 
-	base = arg0;
+	base = (UnkF9230Arg0 *)walker;
 	parentAlien = base->unk144;
-	posX = (s16)*(s32 *)&base->unk0[0x10];
-	posZ = (s16)*(s32 *)&base->unk0[0x14];
+	posX = (s16)*(s32 *)&walker->limbs[0].unk10;
+	posZ = (s16)*(s32 *)&walker->limbs[0].unk14;
 
-	anim = &D_801601F0[base->unk0[0x23] * 0x16];
+	anim = &D_801601F0[walker->limbs[0].unk23 * 0x16];
 	limbCount = anim[0x0C];
 	animLerp = anim[0x12];
 
 	for (i = 0; i < limbCount; i = (i + 1) & 0xFF) {
-		entry = &base->unk0[(i * 0x24) + 0x24];
-		if (entry[0x23] != 0) {
+		entry = &walker->limbs[i + 1];
+		if (entry->unk23 != 0) {
 			continue;
 		}
 
 		animFrame = (s16)(animLerp * 2);
-		footX = func_800F41E0_103190(*(s16 *)&entry[0x14], *(s16 *)&entry[0x1A], *(s16 *)&base->unk0[0x1E], animFrame);
-		footZ = func_800F41E0_103190(*(s16 *)&entry[0x18], *(s16 *)&entry[0x1C], *(s16 *)&base->unk0[0x1E], animFrame);
-		*(s16 *)&entry[0x1E] = footX;
-		*(s16 *)&entry[0x20] = footZ;
+		footX = func_800F41E0_103190(entry->unk10, entry->unk1A, walker->limbs[0].unk1E, animFrame);
+		footZ = func_800F41E0_103190(entry->unk14, entry->unk1C, walker->limbs[0].unk1E, animFrame);
+		entry->unk1E = footX;
+		entry->unk20 = footZ;
 
-		if (base->unk0[0x22] == 0x10) {
-			*(s16 *)&entry[0x16] = *(s16 *)&base->unk0[0x16A];
+		if (walker->limbs[0].unk22 == 0x10) {
+			entry->unk16 = walker->unk16A;
 		} else {
 			alien = &alienInstances[parentAlien];
-			*(s16 *)&entry[0x16] = *(s16 *)&D_8014DD52[alien->unkC * 0x10] + alien->unk2;
+			entry->unk16 = *(s16 *)&D_8014DD52[alien->unkC * 0x10] + alien->unk2;
 		}
 
-		spB2 = *(s16 *)&entry[0x16];
-		animFrame = *(s16 *)&base->unk0[0x1E];
+		spB2 = entry->unk16;
+		animFrame = walker->limbs[0].unk1E;
 
 		if (!(animLerp < animFrame)) {
 			if (!(i & 1)) {
 				func_800F4748_1036F8(base, animFrame & 0xFF, i & 0xFF);
-				animFrame = *(s16 *)&base->unk0[0x1E];
+				animFrame = walker->limbs[0].unk1E;
 			}
 		}
 
@@ -1361,9 +1361,9 @@ void func_800F49A4_103954(void *arg0) {
 			}
 		}
 
-		currX = *(s16 *)&entry[0x0A];
-		currZ = *(s16 *)&entry[0x0C];
-		rootY = *(s16 *)&entry[0x02];
+		currX = entry->unkA;
+		currZ = entry->unkC;
+		rootY = entry->unk2;
 
 		yawDeg = (s16)(((f64)(f32)func_80003824_4424((f32)(currX - footX), (f32)(currZ - footZ)) * 180.0) / 32768.0);
 
@@ -1376,9 +1376,9 @@ void func_800F49A4_103954(void *arg0) {
 		legRadius = (s16)(sinf(yawRad) * (f32)spA8);
 		spA8 = (s16)(cosf(yawRad) * (f32)spA8);
 
-		*(s16 *)&entry[0x0E] = posX + spA8;
-		*(s16 *)&entry[0x10] = spA6;
-		*(s16 *)&entry[0x12] = posZ + legRadius;
+		entry->unkE = posX + spA8;
+		entry->unk10 = spA6;
+		entry->unk12 = posZ + legRadius;
 	}
 }
 #else
@@ -1396,7 +1396,7 @@ void func_800F4DB0_103D60(void) {
 	i = 0;
 	while (i < 8) {
 		if (D_80157FF0[i] == -1) {
-			u8 *base;
+			UnkF9230ShadowWalker *walker;
 			u8 *anim;
 			u8 *alienBase;
 			u8 state;
@@ -1404,17 +1404,17 @@ void func_800F4DB0_103D60(void) {
 			s32 limbCount;
 			s32 limb;
 
-			base = &D_80158000[i];
+			walker = &D_80158000[i];
 			if (((i + D_80052A8C) & 0xF) == 0) {
-				state = base[0x22];
+				state = walker->limbs[0].unk22;
 				if ((state != 2) && (state != 4) && (state != 8) && (state != 0x10)) {
-					alienIdx = base[0x144];
+					alienIdx = walker->alienIdx;
 					alienBase = (u8 *)&alienInstances[alienIdx];
 					if ((alienBase[0x1A] == 0) || !(*(s32 *)&alienBase[0x20] & 0x80000) || ((*(s32 *)&alienBase[0x20] & 0x80000) && ((*(s32 *)&alienBase[0x20] & 7) != i))) {
 						if (alienBase[0x1A] != 0) {
 							if (*(s32 *)&alienBase[0x20] & 0x600) {
-								func_8007A4F8_894A8(alienIdx, base, alienIdx, i);
-								alienBase = (u8 *)&alienInstances[base[0x144]];
+								func_8007A4F8_894A8(alienIdx, (void *)walker, alienIdx, i);
+								alienBase = (u8 *)&alienInstances[walker->alienIdx];
 								func_800DF848_EE7F8(*(s16 *)&alienBase[0x0], *(s16 *)&alienBase[0x2], *(s16 *)&alienBase[0x4], *(u16 *)((u8 *)&D_8025668C + alienBase[0x1A] * 0x68), 0);
 								func_800F3038_101FE8(i);
 							} else {
@@ -1429,59 +1429,56 @@ void func_800F4DB0_103D60(void) {
 				}
 			}
 
-			alienBase = (u8 *)&alienInstances[base[0x144]];
+			alienBase = (u8 *)&alienInstances[walker->alienIdx];
 			if ((alienBase[0x1B] != 0xFF) && (D_80047F94 != alienBase[0x1B])) {
-				base[0x22] = 0;
+				walker->limbs[0].unk22 = 0;
 			}
 
-			state = base[0x22];
+			state = walker->limbs[0].unk22;
 			if ((state == 0) || (state == 4)) {
-				anim = &((u8 *)D_801601F0)[base[0x23] * 0x16];
+				anim = &((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16];
 				limbCount = anim[0xC];
 				for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
-					u8 *entry;
-
-					entry = &base[limb * 0x24];
-					if (entry[0x47] == 0) {
-						alienBase = (u8 *)&alienInstances[base[0x144]];
-						*(s16 *)&entry[0x3A] = *(s16 *)&D_8014DD52[(*(s16 *)&alienBase[0xC]) * 0x10] + *(s16 *)&alienBase[0x2];
+					if (walker->limbs[limb + 1].unk23 == 0) {
+						alienBase = (u8 *)&alienInstances[walker->alienIdx];
+						walker->limbs[limb + 1].unk16 = *(s16 *)&D_8014DD52[(*(s16 *)&alienBase[0xC]) * 0x10] + *(s16 *)&alienBase[0x2];
 					}
 				}
-				if (base[0x22] == 0) {
+				if (walker->limbs[0].unk22 == 0) {
 					i = (i + 1) & 0xFF;
 					continue;
 				}
-				state = base[0x22];
+				state = walker->limbs[0].unk22;
 			}
 
 			if ((state == 2) || (state == 4) || (state == 8)) {
 				s16 v;
 				s16 speed;
 
-				base[0x168] = base[0x168] + 1;
-				v = *(s16 *)&base[0x16C] >> 3;
+				walker->unk168 = walker->unk168 + 1;
+				v = walker->unk16C >> 3;
 				if (v < 0) {
 					v = -v;
 				}
-				speed = *(s16 *)&base[0x16C] - v - 2;
-				*(s16 *)&base[0x16C] = speed;
+				speed = walker->unk16C - v - 2;
+				walker->unk16C = speed;
 
 				if (state == 2) {
-					if (base[0x168] == 0x28) {
+					if (walker->unk168 == 0x28) {
 						func_800F375C_10270C((s8)i);
 					}
 				} else if (state == 8) {
 					if (speed < 0) {
-						*(s16 *)&base[0x16C] = speed / 2;
+						walker->unk16C = speed / 2;
 					}
-					if (base[0x168] == 0x78) {
+					if (walker->unk168 == 0x78) {
 						func_800F375C_10270C((s8)i);
 					}
 				} else if (state == 4) {
-					anim = &((u8 *)D_801601F0)[base[0x23] * 0x16];
+					anim = &((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16];
 					limbCount = anim[0xC];
 					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
-						if (base[limb * 0x24 + 0x47] != 2) {
+						if (walker->limbs[limb + 1].unk23 != 2) {
 							var_fp = 0;
 						}
 					}
@@ -1490,81 +1487,75 @@ void func_800F4DB0_103D60(void) {
 					}
 				}
 
-				*(s16 *)&base[0x16A] = *(s16 *)&base[0x16A] + *(s16 *)&base[0x16C];
+				walker->unk16A = walker->unk16A + walker->unk16C;
 			} else {
 				u8 *animData;
 				u8 lerp;
 				s16 frame;
 				s16 frame2x;
 
-				animData = &((u8 *)D_801601F0)[base[0x23] * 0x16];
+				animData = &((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16];
 				lerp = animData[0x12];
 
-				if (*(s16 *)&base[0x1E] == 0) {
+				if (walker->limbs[0].unk1E == 0) {
 					s32 x;
 					s32 z;
 
-					x = *(s32 *)&base[0x8];
-					z = *(s32 *)&base[0xC];
-					*(s32 *)&base[0x0] = x;
-					*(s32 *)&base[0x10] = x;
-					*(s32 *)&base[0x4] = z;
-					*(s32 *)&base[0x14] = z;
+					x = *(s32 *)&walker->limbs[0].unk8;
+					z = *(s32 *)&walker->limbs[0].unkC;
+					*(s32 *)&walker->limbs[0].unk0 = x;
+					*(s32 *)&walker->limbs[0].unk10 = x;
+					*(s32 *)&walker->limbs[0].unk4 = z;
+					*(s32 *)&walker->limbs[0].unk14 = z;
 
 					limbCount = animData[0xC];
 					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
-						u8 *entry;
-
-						entry = &base[limb * 0x24];
-						if (entry[0x47] == 0) {
-							*(s16 *)&entry[0x38] = *(s16 *)&entry[0x3E];
-							*(s16 *)&entry[0x3C] = *(s16 *)&entry[0x40];
+						if (walker->limbs[limb + 1].unk23 == 0) {
+							walker->limbs[limb + 1].unk14 = walker->limbs[limb + 1].unk1A;
+							walker->limbs[limb + 1].unk18 = walker->limbs[limb + 1].unk1C;
 						}
 					}
 
-					func_800F2980_101930(base, 0);
-					if (*(s16 *)&base[0x18] == *(s16 *)&base[0x1A]) {
+					func_800F2980_101930(walker, 0);
+					if (walker->limbs[0].unk18 == walker->limbs[0].unk1A) {
 						s16 d;
 
-						d = *(s16 *)&base[0x1C];
+						d = walker->limbs[0].unk1C;
 						if (d < 0) {
 							d = -d;
 						}
-						if ((d < 0xC) && (base[0x22] != 0x10)) {
-							base[0x22] = 0;
+						if ((d < 0xC) && (walker->limbs[0].unk22 != 0x10)) {
+							walker->limbs[0].unk22 = 0;
 						}
 					}
 				}
 
-				frame = *(s16 *)&base[0x1E];
+				frame = walker->limbs[0].unk1E;
 				frame2x = lerp * 2;
 				if ((frame2x == frame) || (lerp == frame)) {
-					animData = &((u8 *)D_801601F0)[base[0x23] * 0x16];
+					animData = &((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16];
 					limbCount = animData[0xC];
 					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
-						u8 *entry;
-
-						entry = &base[limb * 0x24];
-						if (entry[0x47] == 0) {
-							if ((frame2x == *(s16 *)&base[0x1E]) && ((limb % 2) == 1)) {
-								*(s16 *)&entry[0x24] = *(s16 *)&entry[0x2A];
-								*(s16 *)&entry[0x28] = *(s16 *)&entry[0x2C];
+						if (walker->limbs[limb + 1].unk23 == 0) {
+							if ((frame2x == walker->limbs[0].unk1E) && ((limb % 2) == 1)) {
+								walker->limbs[limb + 1].unk0 = walker->limbs[limb + 1].unk6;
+								walker->limbs[limb + 1].unk4 = walker->limbs[limb + 1].unk8;
 							}
-							if ((lerp == *(s16 *)&base[0x1E]) && !(limb & 1)) {
-								*(s16 *)&entry[0x24] = *(s16 *)&entry[0x2A];
-								*(s16 *)&entry[0x28] = *(s16 *)&entry[0x2C];
+							if ((lerp == walker->limbs[0].unk1E) && !(limb & 1)) {
+								walker->limbs[limb + 1].unk0 = walker->limbs[limb + 1].unk6;
+								walker->limbs[limb + 1].unk4 = walker->limbs[limb + 1].unk8;
 							}
 						}
 					}
 				}
 
-				*(s32 *)&base[0x10] = func_800F41E0_103190(*(s32 *)&base[0x0], *(s32 *)&base[0x8], *(s16 *)&base[0x1E], frame2x);
-				*(s32 *)&base[0x14] = func_800F41E0_103190(*(s32 *)&base[0x4], *(s32 *)&base[0xC], *(s16 *)&base[0x1E], frame2x);
-				func_800F49A4_103954(base);
+				*(s32 *)&walker->limbs[0].unk10 = func_800F41E0_103190(*(s32 *)&walker->limbs[0].unk0, *(s32 *)&walker->limbs[0].unk8, walker->limbs[0].unk1E, frame2x);
+				*(s32 *)&walker->limbs[0].unk14 = func_800F41E0_103190(*(s32 *)&walker->limbs[0].unk4, *(s32 *)&walker->limbs[0].unkC, walker->limbs[0].unk1E, frame2x);
+				func_800F49A4_103954(walker);
 
-				*(s16 *)&base[0x1E] = (*(s16 *)&base[0x1E] + 1) % (frame2x + 1);
-				if (!(base[0x22] & 0x80)) {
-					*(s16 *)&base[0x1A] = *(s16 *)&base[0x18];
+				walker->limbs[0].unk1E = (walker->limbs[0].unk1E + 1) % (frame2x + 1);
+				if (!(walker->limbs[0].unk22 & 0x80)) {
+					walker->limbs[0].unk1A = walker->limbs[0].unk18;
 				}
 			}
 		}
@@ -2479,7 +2470,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 // CURRENT(?)
 #ifdef NON_MATCHING
 void func_800F842C_1073DC(s32 arg0) {
-	u8 *base;
+	UnkF9230ShadowWalker *walker;
 	Unk801601F0 *anim;
 	Unk80052B40 sp84;
 	Unk80052B40 sp8C;
@@ -2495,18 +2486,17 @@ void func_800F842C_1073DC(s32 arg0) {
 	s32 spCC;
 	s32 frameGroup;
 	s32 i;
-	u8 *entry;
 
 	if (D_80157FF0[arg0] != -1) {
 		return;
 	}
 
-	base = &D_80158000[arg0];
-	anim = &D_801601F0[base[0x23]];
+	walker = &D_80158000[arg0];
+	anim = &D_801601F0[walker->limbs[0].unk23];
 
 	for (i = 0; i < 6; i++) {
-		entry = base + (i * 0x24);
-		if (entry[0x47] != 1) {
+		UnkF9230ShadowLimb *entry = &walker->limbs[i];
+		if (entry->unk23 != 1) {
 			continue;
 		}
 
@@ -2518,21 +2508,21 @@ void func_800F842C_1073DC(s32 arg0) {
 			sp80 = (s16)(((anim->unk10 * (i - 3)) + anim->unkE) - 0x4000);
 		}
 
-		sp84.unk0 = *(s16 *)&base[0x18] + 0x4000;
+		sp84.unk0 = walker->limbs[0].unk18 + 0x4000;
 		if ((i & 1) != 0) {
-			sp84.unk2 = (s16)(base[0x168] * 0x2BC);
+			sp84.unk2 = (s16)(walker->unk168 * 0x2BC);
 		} else {
-			sp84.unk2 = (s16)(-(s16)(base[0x168] * 0x190));
+			sp84.unk2 = (s16)(-(s16)(walker->unk168 * 0x190));
 		}
 		frameGroup = i % 3;
-		sp84.unk4 = (s16)(base[0x168] * (frameGroup * 0x12C));
+		sp84.unk4 = (s16)(walker->unk168 * (frameGroup * 0x12C));
 
-		sp8C.unk0 = (s16)(s32)((((f64)(f32)coss(sp80)) / 32768.0) * (f64)(base[0x168] * (frameGroup * sp82 + 0xA)));
-		func_8011E6FC_12D6AC(*(s16 *)&base[0x12], *(s16 *)&base[0x16], &sp80);
-		sp8C.unk2 = sp80 + *(s16 *)&base[0x16A];
-		sp8C.unk4 = (s16)(s32)((((f64)(f32)sins(sp80)) / 32768.0) * (f64)(base[0x168] * (frameGroup * sp82 + 0xA)));
+		sp8C.unk0 = (s16)(s32)((((f64)(f32)coss(sp80)) / 32768.0) * (f64)(walker->unk168 * (frameGroup * sp82 + 0xA)));
+		func_8011E6FC_12D6AC(walker->limbs[0].unk12, walker->limbs[0].unk16, &sp80);
+		sp8C.unk2 = sp80 + walker->unk16A;
+		sp8C.unk4 = (s16)(s32)((((f64)(f32)sins(sp80)) / 32768.0) * (f64)(walker->unk168 * (frameGroup * sp82 + 0xA)));
 
-		if (base[0x22] == 8) {
+		if (walker->limbs[0].unk22 == 8) {
 			s16 limit = (s16)(D_80222A70 - 0x64);
 
 			if (sp8C.unk2 > limit) {
@@ -2553,31 +2543,31 @@ void func_800F842C_1073DC(s32 arg0) {
 		spC8 = spD0;
 		spCC = (s32)((((f64)(f32)sins(sp80)) / 32768.0) * (f64)spD2);
 
-		func_800F4258_103208((UnkF9230Func800F4748Entry *)base, anim->unk4, sp8C.unk2, anim->unk6, 0, &spD2, &spD0);
+		func_800F4258_103208((UnkF9230Func800F4748Entry *)walker, anim->unk4, sp8C.unk2, anim->unk6, 0, &spD2, &spD0);
 
 		switch (anim->unk14) {
 			case 0:
-				func_800F7790_106740(&spB8, &spC4, &spAC, base[0x23]);
+				func_800F7790_106740(&spB8, &spC4, &spAC, walker->limbs[0].unk23);
 				break;
 			case 1:
-				func_800F554C_1044FC(&spB8, &spC4, &spAC, base[0x23]);
+				func_800F554C_1044FC(&spB8, &spC4, &spAC, walker->limbs[0].unk23);
 				break;
 			case 2:
-				func_800F63D0_105380(&spB8, &spC4, &spAC, base[0x23]);
+				func_800F63D0_105380(&spB8, &spC4, &spAC, walker->limbs[0].unk23);
 				break;
 		}
 
-		if (base[0x22] == 4) {
-			u8 *nextEntry = base + 0x24;
+		if (walker->limbs[0].unk22 == 4) {
+			UnkF9230ShadowLimb *nextEntry = &walker->limbs[1];
 
-			if (base[0x168] == 1) {
+			if (walker->unk168 == 1) {
 				func_800DF038_EDFE8((s16)(spAC + sp8C.unk0), (s16)(spB0 + sp8C.unk2), (s16)(spB4 + sp8C.unk4), 0x46, 0, 0);
 			}
 
-			func_800C1ECC_D0E7C((s16)(spAC + sp8C.unk0), (s16)(spB0 + sp8C.unk2), (s16)(spB4 + sp8C.unk4), nextEntry[0x22], 0);
+			func_800C1ECC_D0E7C((s16)(spAC + sp8C.unk0), (s16)(spB0 + sp8C.unk2), (s16)(spB4 + sp8C.unk4), nextEntry->unk22, 0);
 			func_8011E6FC_12D6AC((s16)(spAC + sp8C.unk0), (s16)(spB4 + sp8C.unk4), &sp80);
 			if (sp80 >= sp8C.unk2) {
-				nextEntry[0x23] = 2;
+				nextEntry->unk23 = 2;
 				func_800DF038_EDFE8((s16)(spAC + sp8C.unk0), sp80, (s16)(spB4 + sp8C.unk4), 0x46, 0, 0);
 			}
 		}
@@ -2592,12 +2582,12 @@ void func_800F842C_1073DC(s32 arg0) {
 // CURRENT(20852)
 #ifdef NON_MATCHING
 void func_800F8B24_107AD4(s32 arg0) {
+	UnkF9230ShadowWalker *walker;
 	Unk80052B40 sp140;
 	Unk80052B40 sp138;
 	s32 sp100[3];
 	s32 spF4[3];
 	s32 spE8[3];
-	u8 *base;
 	u8 *anim;
 	s32 i;
 	s32 updateState;
@@ -2608,18 +2598,18 @@ void func_800F8B24_107AD4(s32 arg0) {
 		return;
 	}
 
-	base = &D_80158000[arg0];
-	anim = &((u8 *)D_801601F0)[((u8 *)base)[0x23] * 0x16];
+	walker = &D_80158000[arg0];
+	anim = &((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16];
 
-	if ((func_800B93AC_C835C(*(s16 *)&base[0x12], *(s16 *)&base[0x16], *(u16 *)&anim[6], (s16)D_80052B2C->unk0,
+	if ((func_800B93AC_C835C(walker->limbs[0].unk12, walker->limbs[0].unk16, *(u16 *)&anim[6], (s16)D_80052B2C->unk0,
 						 (s32)D_80052B2C->unk8, 0x4000 - D_80047950)
 			!= 0)
-		|| (base[0x22] == 8)) {
+		|| (walker->limbs[0].unk22 == 8)) {
 		if (anim[0x14] != 0) {
 			gDPPipeSync(D_8005BB2C++);
-			guLookAtReflect(&spA8, (LookAt *)&base[0x148], 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f);
-			gSPLookAtX(D_8005BB2C++, (Light *)&base[0x148]);
-			gSPLookAtY(D_8005BB2C++, (Light *)&base[0x158]);
+			guLookAtReflect(&spA8, (LookAt *)&walker->pad145[0x148 - 0x145], 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f);
+			gSPLookAtX(D_8005BB2C++, (Light *)&walker->pad145[0x148 - 0x145]);
+			gSPLookAtY(D_8005BB2C++, (Light *)&walker->pad145[0x158 - 0x145]);
 			gDPPipeSync(D_8005BB2C++);
 		}
 
@@ -2628,7 +2618,7 @@ void func_800F8B24_107AD4(s32 arg0) {
 		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x808080FF);
 		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, 0x808080FF);
 
-		state = base[0x22];
+		state = walker->limbs[0].unk22;
 		updateState = 0;
 		if ((state == 2) || (state == 4) || (state == 8)) {
 			updateState = 1;
@@ -2636,13 +2626,13 @@ void func_800F8B24_107AD4(s32 arg0) {
 
 		if (updateState != 0) {
 			func_800F842C_1073DC(arg0);
-			state = base[0x22];
+			state = walker->limbs[0].unk22;
 		}
 
 		if (state == 0x10) {
 			AlienInstance *alien;
 
-			alien = &alienInstances[base[0x144]];
+			alien = &alienInstances[walker->alienIdx];
 			sp140.unk0 = alien->unk0;
 			sp140.unk2 = D_8014DD50[alien->unkC].unk2 + alien->unk2;
 			sp140.unk4 = alien->unk4;
@@ -2650,14 +2640,14 @@ void func_800F8B24_107AD4(s32 arg0) {
 			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			D_8005BB38 += 0x40;
 
-			sp138.unk0 = -*(s16 *)&base[0x18];
+			sp138.unk0 = -walker->limbs[0].unk18;
 			sp138.unk2 = -D_8014DD50[alien->unkC].unkA;
 			sp138.unk4 = 0;
 			func_800039D0_45D0(NULL, &sp138, NULL, D_8005BB38);
 			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			D_8005BB38 += 0x40;
 
-			sp140.unk2 = *(s16 *)&base[0x16A];
+			sp140.unk2 = walker->unk16A;
 			sp140.unk0 = -sp140.unk0;
 			sp140.unk2 = -sp140.unk2;
 			sp140.unk4 = -sp140.unk4;
@@ -2665,35 +2655,35 @@ void func_800F8B24_107AD4(s32 arg0) {
 			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			D_8005BB38 += 0x40;
 
-			state = base[0x22];
+			state = walker->limbs[0].unk22;
 		}
 
 		for (i = 0; i < anim[0xC]; i++) {
-			u8 *entry;
+			UnkF9230ShadowLimb *entry;
 			s16 arg7;
 
-			entry = &base[i * 0x24];
-			if (entry[0x47] != 0) {
+			entry = &walker->limbs[i + 1];
+			if (entry->unk23 != 0) {
 				continue;
 			}
 
 			if (state == 0x10) {
-				arg7 = *(s16 *)&base[0x16A];
+				arg7 = walker->unk16A;
 			} else {
-				arg7 = *(s16 *)&entry[0x3A];
+				arg7 = entry->unk16;
 			}
 
-			sp100[0] = *(s16 *)&entry[0x2E];
-			sp100[1] = *(s16 *)&entry[0x26];
-			sp100[2] = *(s16 *)&entry[0x30];
-			spF4[0] = *(s16 *)&entry[0x42];
+			sp100[0] = entry->unkA;
+			sp100[1] = entry->unk2;
+			sp100[2] = entry->unkC;
+			spF4[0] = entry->unk1E;
 			spF4[1] = arg7;
-			spF4[2] = *(s16 *)&entry[0x44];
-			spE8[0] = *(s16 *)&entry[0x36];
-			spE8[1] = *(s16 *)&entry[0x38];
-			spE8[2] = *(s16 *)&entry[0x3A];
+			spF4[2] = entry->unk20;
+			spE8[0] = entry->unk12;
+			spE8[1] = entry->unk14;
+			spE8[2] = entry->unk16;
 
-			if (base[0x22] == 4) {
+			if (walker->limbs[0].unk22 == 4) {
 				s32 rnd;
 				s32 mod;
 
@@ -2714,13 +2704,13 @@ void func_800F8B24_107AD4(s32 arg0) {
 
 			switch (anim[0x14]) {
 				case 0:
-					func_800F7790_106740(sp100, spE8, spF4, base[0x23]);
+					func_800F7790_106740(sp100, spE8, spF4, walker->limbs[0].unk23);
 					break;
 				case 1:
-					func_800F554C_1044FC(sp100, spE8, spF4, base[0x23]);
+					func_800F554C_1044FC(sp100, spE8, spF4, walker->limbs[0].unk23);
 					break;
 				case 2:
-					func_800F63D0_105380(sp100, spE8, spF4, base[0x23]);
+					func_800F63D0_105380(sp100, spE8, spF4, walker->limbs[0].unk23);
 					break;
 			}
 		}
@@ -2737,16 +2727,15 @@ void func_800F8B24_107AD4(s32 arg0) {
 #ifdef NON_MATCHING
 // CURRENT(11073)
 void func_800F9118_1080C8(s32 arg0) {
+	UnkF9230ShadowWalker *walker;
 	s32 spBC;
 	s16 spB8;
 	s16 spAC;
 	s16 sp96;
 	s16 sp92;
-	u8 *sp78;
 	s32 sp74;
 	s32 sp70;
 	s32 sp64;
-	u8 *sp58;
 	f64 temp_f20;
 	s16 temp_a3;
 	s16 temp_fp;
@@ -2771,46 +2760,42 @@ void func_800F9118_1080C8(s32 arg0) {
 	s32 temp_v1_2;
 	s32 var_a2;
 	u8 temp_s0;
-	u8 *temp_s6;
 	u8 *temp_v1;
-	u8 *var_a1;
 
 	if (D_80157FF0[arg0] == -1) {
-		sp78 = &D_80158000[arg0];
-		if ((func_8011E6FC_12D6AC(*(s16 *)&sp78[0x12], *(s16 *)&sp78[0x16], &sp92) == -1) && (sp78[0x22] != 0x10)) {
-			temp_v1 = (u8 *)&D_801601F0[sp78[0x23]];
+		walker = &D_80158000[arg0];
+		if ((func_8011E6FC_12D6AC(walker->limbs[0].unk12, walker->limbs[0].unk16, &sp92) == -1) && (walker->limbs[0].unk22 != 0x10)) {
+			temp_v1 = (u8 *)&D_801601F0[walker->limbs[0].unk23];
 			temp_s0 = temp_v1[0x0C];
 			var_t1 = *(s16 *)&temp_v1[0x08];
 			if (D_8013FCD0_14EC80 != 0) {
 				var_t1 *= 2;
 			}
 			sp96 = var_t1;
-			if (func_800B93AC_C835C(*(s16 *)&sp78[0x12], *(s16 *)&sp78[0x16], *(u16 *)&temp_v1[0x06], (s16)D_80052B2C->unk0,
+			if (func_800B93AC_C835C(walker->limbs[0].unk12, walker->limbs[0].unk16, *(u16 *)&temp_v1[0x06], (s16)D_80052B2C->unk0,
 					(s32)D_80052B2C->unk8, 0x4000 - D_80047950) != 0) {
 				var_a2 = 0;
-				if (func_800E95BC_F856C(*(s32 *)&sp78[0x10], func_800B84D0_C7480(*(s16 *)&sp78[0x12], *(s16 *)&sp78[0x16]) >> 8,
-						*(s32 *)&sp78[0x14]) == 0) {
+				if (func_800E95BC_F856C(*(s32 *)&walker->limbs[0].unk10, func_800B84D0_C7480(walker->limbs[0].unk12, walker->limbs[0].unk16) >> 8,
+						*(s32 *)&walker->limbs[0].unk14) == 0) {
 					sp74 = (s32)temp_s0;
 					if ((s32)temp_s0 > 0) {
-						var_a1 = sp78;
+						UnkF9230ShadowLimb *var_limb = &walker->limbs[1];
 						do {
-							sp58 = var_a1;
 							spBC = var_a2;
-							temp_s6 = var_a1 + 0x24;
-							if (var_a1[0x47] == 0) {
+							if (var_limb->unk23 == 0) {
 								temp_f20 = (f64)sp96;
-								if (sp78[0x22] & 0x80) {
-									var_s5 = *(s16 *)&sp78[0x1A];
+								if (walker->limbs[0].unk22 & 0x80) {
+									var_s5 = walker->limbs[0].unk1A;
 								} else {
-									var_s5 = *(s16 *)&sp78[0x18];
+									var_s5 = walker->limbs[0].unk18;
 								}
 								if (var_a2 >= (sp74 / 2)) {
 									var_s5 += 0x8000;
 								}
 								temp_s2 = var_s5 & 0xFFFF;
 								temp_s1 = (s16)(s32)((((f64)(f32)coss(temp_s2 & 0xFFFF)) / 32768.0) * temp_f20);
-								temp_s3 = *(s16 *)&temp_s6[0x0A];
-								temp_s4 = *(s16 *)&temp_s6[0x0C];
+								temp_s3 = var_limb->unk6;
+								temp_s4 = var_limb->unk8;
 								temp_s2_2 = (s16)(s32)((((f64)(f32)sins(temp_s2 & 0xFFFF)) / 32768.0) * temp_f20);
 								temp_v0_2 = func_800B84D0_C7480(temp_s3, temp_s4);
 								temp_lo = temp_s1 / 3;
@@ -2841,8 +2826,8 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34->v.cn[3] = 0;
 								D_8005BB34++;
 
-								temp_s7 = *(s16 *)&temp_s6[0x1E];
-								temp_fp = *(s16 *)&temp_s6[0x20];
+								temp_s7 = var_limb->unk1E;
+								temp_fp = var_limb->unk20;
 								func_8011E6FC_12D6AC(temp_s7, temp_fp, &spAC);
 								D_8005BB34->v.ob[0] = temp_s7;
 								D_8005BB34->v.ob[1] = spAC;
@@ -2856,8 +2841,8 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34->v.cn[3] = 0x80;
 								D_8005BB34++;
 
-								temp_s3_2 = *(s16 *)&temp_s6[0x0E];
-								temp_s4_2 = *(s16 *)&temp_s6[0x12];
+								temp_s3_2 = var_limb->unkE;
+								temp_s4_2 = var_limb->unk12;
 								temp_v1_3 = temp_s3_2 + temp_s1;
 								temp_a3 = temp_s4_2 + temp_s2_2;
 								sp64 = (s32)temp_a3;
@@ -2891,7 +2876,7 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34++;
 
 								temp_t5 = (var_s5 - 0x4000) & 0xFFFF;
-								if (spBC >= ((s32)((u8 *)&D_801601F0[sp78[0x23]])[0x0C] / 2)) {
+								if (spBC >= ((s32)((u8 *)&D_801601F0[walker->limbs[0].unk23])[0x0C] / 2)) {
 									temp_t3 = (var_s5 + 0x4000) & 0xFFFF;
 									coss(temp_t3 & 0xFFFF);
 									sins(temp_t3 & 0xFFFF);
@@ -2908,7 +2893,7 @@ void func_800F9118_1080C8(s32 arg0) {
 								}
 							}
 							var_a2 = spBC + 1;
-							var_a1 = sp58 + 0x24;
+							var_limb++;
 						} while (var_a2 != sp74);
 					}
 				}

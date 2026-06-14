@@ -1991,7 +1991,12 @@ typedef struct {
 
 typedef struct {
 	/* 0x000 */ UnkF9230ShadowLimb limbs[9];
-	/* 0x144 */ u8 pad144[0x2C];
+	/* 0x144 */ u8 alienIdx;
+	/* 0x145 */ u8 pad145[0x23];
+	/* 0x168 */ s16 unk168;
+	/* 0x16A */ s16 unk16A;
+	/* 0x16C */ s16 unk16C;
+	/* 0x16E */ u8 pad16E[0x02];
 } UnkF9230ShadowWalker; /* size = 0x170 */
 
 typedef struct {
