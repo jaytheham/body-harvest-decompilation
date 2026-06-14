@@ -307,6 +307,7 @@ s32 func_800056D0_62D0(s16 arg0, s16 arg1) {
 // this requires a function static (D_800315D4_W)
 // which means you may have to map all other .bss data
 // for the file where that func is in (in the best scenario you add this function last and just let splat auto map .bss) 
+// CURRENT(0)
 #ifdef NON_MATCHING
 void func_8000577C_637C(void)
 {

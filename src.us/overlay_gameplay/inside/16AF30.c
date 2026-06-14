@@ -294,34 +294,32 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 // https://decomp.me/scratch/6yUii
 /* CURRENT(1286) */
 #ifdef NON_MATCHING
-void func_80083814_16B8D4(s32 arg0, s32 arg1) {
+void func_80083814_16B8D4(s32 arg0, u8 arg1)
+{
 	s16 sp1E;
 	s16 sp22;
-	u8 temp_t7;
-	s16 temp_t6;
-
-	temp_t6 = arg0;
-	arg1 &= 0xFF;
-	temp_t7 = arg1;
-	if (temp_t6 < 0) {
+	if (arg0 < 0)
+	{
 		goto fail;
 	}
-	if (temp_t6 >= 0xC8) {
+	if (arg0 >= 0xC8)
+	{
 		goto fail;
 	}
-	if (temp_t7 >= 0xF) {
+	if (arg1 >= 0xF)
+	{
 		goto fail;
 	}
-	if (D_800FB6F8[temp_t7].pad0[0] != 0xB && D_800FB6F8[temp_t7].pad0[0] != 0xC) {
+	if ((D_800FB6F8[arg1].unk0 != 0xB) && (D_800FB6F8[arg1].unk0 != 0xC))
+	{
 		goto fail;
 	}
-	sp1E = *(s16 *)(&D_800FB7B4 + (s32) temp_t6 * 0x16);
-	func_800835F0_16B6B0(temp_t6, temp_t7);
-	sp22 = *(s16 *)(&D_800FB7B4 + (s32) sp1E * 0x16);
-	func_800835F0_16B6B0(sp1E, temp_t7);
-	func_800835F0_16B6B0(sp22, temp_t7);
+	sp1E = *((s16 *)((&D_800FB7B4) + (((s32)arg0) * 0x16)));
+	func_800835F0_16B6B0(arg0, arg1);
+	sp22 = *((s16 *)((&D_800FB7B4) + (((s32)sp1E) * 0x16)));
+	func_800835F0_16B6B0(sp1E, arg1);
+	func_800835F0_16B6B0(sp22, arg1);
 	return;
-
 fail:
 	osSyncPrintf(&D_800A5128_18D1E8);
 }

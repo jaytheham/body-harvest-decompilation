@@ -2,16 +2,26 @@
 #include "common.h"
 #include "constData.h"
 
+/* Error message for shield wall clipping failure */
 const char D_80142D10_151CC0[] = "ERROR in ClipLineToShieldWalls\n";
+/* Overflow message for road tile draw buffer (low index) */
 const char D_80142D30_151CE0[] = "Road entry overflow : Contact John W.\n";
+/* Overflow message for road tile draw buffer (high index) */
 const char D_80142D58_151D08[] = "Road entry overflow : Contact John W.\n";
+/* Debug: crater creation message */
 const char D_80142D80_151D30[] = "Create crater %d\n";
+/* Warning: land ring effect out of storage */
 const char D_80142D94_151D44[] = "WARNING : Cannot create new land ring effect - out of storage space - blame it on Westy.\n";
+/* Debug format for tile coordinates */
 const char D_80142DF0_151DA0[] = "%d,%d : %d\n";
+/* Debug: opening gate message */
 const char D_80142DFC_151DAC[] = "try to open gate: %d\n";
+/* Constant 127.5 used for normalizing light factor */
 const f64 D_80142E18_151DC8[1] = {127.5};
+/* Cosine/sine of ~35.15° used in frustum check */
 const f32 D_80142E20_151DD0[1] = {0.5759139060974121f};
 const f32 D_80142E24_151DD4[1] = {0.5759139060974121f};
+/* Jump table for func_800B5538 */
 const u32 jtbl_80142E28_151DD8[] = {
 	0x800B58D4,
 	0x800B59C0,
@@ -19,9 +29,13 @@ const u32 jtbl_80142E28_151DD8[] = {
 	0x800B5BB4,
 	0x800B5CA0,
 };
+/* Growth multiplier for crater radius per frame (~1.022x) */
 const f64 D_80142E40_151DF0[1] = {1.022};
+/* Initial crater radius */
 const f32 D_80142E48_151DF8[1] = {0.699999988079071f};
+/* Crater radius multiplier */
 const f32 D_80142E4C_151DFC[1] = {3.200000047683716f};
+/* Jump table for func_800B9784 branching on texture bucket */
 const u32 jtbl_80142E50_151E00[] = {
 	0x800B9784,
 	0x800B97D4,
@@ -29,55 +43,74 @@ const u32 jtbl_80142E50_151E00[] = {
 	0x800B9864,
 	0x800B98AC,
 };
+/* Crater radius decay thresholds */
 const f64 D_80142E68_151E18[1] = {0.4};
 const f64 D_80142E70_151E20[1] = {0.2};
 const f64 D_80142E78_151E28[1] = {0.1};
+/* Crater brightness reduction factors */
 const f64 D_80142E80_151E30[1] = {0.2};
 const f64 D_80142E88_151E38[1] = {0.1};
+/* Initial crater radius (legacy) */
 const f32 D_80142E90_151E40[1] = {0.10000000149011612f};
 
+/* Unused zero-initialized variables */
 s32 D_8013D940_14C8F0 = 0;
 s32 D_8013D944_14C8F4 = 0;
 s32 D_8013D948_14C8F8 = 0;
+/* RGBA black colors for ground tile blending */
 s32 D_8013D94C_14C8FC = 0xFF000000;
 s32 D_8013D950_14C900 = 0xFF000000;
 s32 D_8013D954_14C904 = 0xFF000000;
+/* Ambient and directional light for indoor/no-lighting mode */
 Ambient D_8013D958_14C908 = { { { 0x20, 0x20, 0x20 }, 0x00, { 0x20, 0x20, 0x20 }, 0x00 } };
 Light D_8013D960_14C910 = { { { 0xFF, 0xFF, 0xFF }, 0x00, { 0xFF, 0xFF, 0xFF }, 0x00, { 0x32, 0x66, 0xE7 }, 0x00 } };
+/* Ambient and directional light for outdoor/lighting mode */
 Ambient D_8013D970_14C920 = { { { 0x20, 0x20, 0x20 }, 0x00, { 0x20, 0x20, 0x20 }, 0x00 } };
 Light D_8013D978_14C928 = { { { 0x80, 0x80, 0xC0 }, 0x00, { 0x80, 0x80, 0xC0 }, 0x00, { 0x32, 0x66, 0xE7 }, 0x00 } };
+/* Lookup table for terrain color/tile mapping */
 u8 D_8013D988_14C938[0x20] = {
 	0x32, 0x64, 0xFF, 0x64, 0xFA, 0xFF, 0x63, 0x48,
 	0x2F, 0x78, 0x6F, 0x7A, 0xA5, 0xA5, 0xC0, 0x58,
 	0x2E, 0x65, 0x05, 0x50, 0xAC, 0x8E, 0xAD, 0xFC,
 	0xAF, 0x4A, 0x76, 0xD8, 0xD3, 0x00, 0x00, 0x00,
 };
+/* Unused */
 s32 D_8013D9A8_14C958 = 0;
+/* Dynamic lighting shade value */
 u8 D_8013D9AC_14C95C = 0;
 
+/* Screen flash timer for transitions */
 s8 D_8013D9B0_14C960 = 0;
+/* Screen flash brightness */
 s32 D_8013D9B4_14C964 = 0;
+/* Unused controller pad states */
 s32 D_pad14C968 = 0;
 s32 D_pad14C96C = 0;
+/* Previous frame pad state for detecting button presses */
 s16 D_8013D9C0_14C970[2] = { 0, 0 };
 s16 D_8013D9C4_14C974[2] = { 0, 0 };
+/* Screen flash control flags */
 s32 D_8013D9C8_14C978 = 0;
 s32 D_8013D9CC_14C97C = 0;
+/* Per-level terrain color multipliers (base tints, one per level) */
 f32 D_8013D9D0_14C980[15] = {
 	0.35f, 0.35f, 0.35f, 0.25f, 0.25f, 0.25f,
 	0.35f, 0.35f, 0.35f, 0.35f, 0.35f, 0.35f,
 	0.35f, 0.35f, 0.35f,
 };
+/* Per-level terrain color multipliers (bright, one per level) */
 f32 D_8013DA0C_14C9BC[15] = {
 	1.0f, 1.0f, 1.0f, 0.8f, 0.8f, 0.8f,
 	1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
 	1.0f, 1.0f, 1.0f,
 };
+/* Per-level water alpha/min light multipliers (one per level) */
 f32 D_8013DA48_14C9F8[15] = {
 	0.13f, 0.13f, 0.13f, 0.1f, 0.1f, 0.1f,
 	0.13f, 0.13f, 0.13f, 0.13f, 0.13f, 0.13f,
 	0.13f, 0.13f, 0.13f,
 };
+/* Per-level water alpha/max light multipliers (one per level) */
 f32 D_8013DA84_14CA34[15] = {
 	0.5f, 0.5f, 0.75f,
 	0.4f, 0.4f, 0.65f,
@@ -85,28 +118,39 @@ f32 D_8013DA84_14CA34[15] = {
 	0.5f, 0.5f, 0.75f,
 	0.5f, 0.5f, 0.75f,
 };
+/* Sunlight direction vector (normalized) */
 f32 D_8013DAC0_14CA70[3] = { 0.39f, 0.89f, -0.3f };
+/* Vertex color hue offsets per level (near/far, X/Z) */
 s16 D_8013DACC_14CA7C[2] = { 248, 0 };
 s16 D_8013DAD0_14CA80[2] = { 248, 0 };
 s16 D_8013DAD4_14CA84[2] = { 8, 0 };
 s16 D_8013DAD8_14CA88[2] = { 8, 0 };
+/* Per-level base hue offset */
 s16 D_8013DADC_14CA8C[2] = { 2048, 0 };
+/* Active particle/effect count */
 u8 D_8013DAE0_14CA90 = 0;
+/* Particle/effect slot allocator index */
 u8 D_8013DAE4_14CA94 = 0;
+/* Colors for 5 debug effect display rings */
 s32 D_8013DAE8_14CA98 = (s32)0xFF5AFF00U;
 s32 D_8013DAEC_14CA9C = (s32)0xFF5A5000U;
 s32 D_8013DAF0_14CAA0 = (s32)0x50FF5000U;
 s32 D_8013DAF4_14CAA4 = (s32)0xFF9BFF00U;
 s32 D_8013DAF8_14CAA8 = (s32)0xFFE6C800U;
+/* Unused sprite/pointer */
 s16 D_8013DAFC_14CAAC[2] = { -1, 0 };
+/* Water animation frame counter */
 u8 D_8013DB00_14CAB0 = 0;
+/* Unused */
 s32 D_8013DB04_14CAB4 = 0;
 s32 D_8013DB08_14CAB8 = 0;
 
+/* Linear interpolation helper: ((arg3-arg2)*arg0 + arg1*arg2) / arg3 */
 s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32)(((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
 }
 
+/* Check if any of the 4 corners of a tile have height difference >= 10 */
 s32 func_800B0A88_BFA38(s32 arg0, s32 arg1)
 {
   s32 a0;
@@ -144,6 +188,7 @@ s32 func_800B0A88_BFA38(s32 arg0, s32 arg1)
   return 0;
 }
 
+/* Build a 256x256 bitmask of tiles that have steep height changes (for wireframe overlay) */
 void func_800B0B94_BFB44(void) {
 	u8 *s2;
 	u8 *v0;
@@ -176,6 +221,7 @@ void func_800B0B94_BFB44(void) {
 	} while (s4 != s3);
 }
 
+/* Test if tile (arg0, arg1) is marked as steep (wireframe bitmask lookup) */
 s32 func_800B0C4C_BFBFC(s32 arg0, s32 arg1) {
 	arg0 += 0x80;
 	arg1 += 0x80;
@@ -322,7 +368,7 @@ s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0F20_BFED0.s")
 #endif
 
-// ClipLineToShieldWalls
+// ClipLineToShieldWalls — clips a 3D line segment to the shield wall bounds
 // CURRENT(4946)
 #ifdef NON_MATCHING
 s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, u8 *arg6) {
@@ -519,6 +565,7 @@ block_43:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1028_BFFD8.s")
 #endif
 
+/* Mark tiles covered by shield wall as destroyed (set brightness to 0xF0) */
 // CURRENT(2905)
 #ifdef NON_MATCHING
 void func_800B165C_C060C(s32 arg0) {
@@ -603,6 +650,7 @@ void func_800B165C_C060C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B165C_C060C.s")
 #endif
 
+/* Sample terrain color at tile coordinate, bilinear-interpolating the landscape palette */
 // CURRENT(6023)
 #ifdef NON_MATCHING
 void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
@@ -655,7 +703,8 @@ void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1814_C07C4.s")
 #endif
 
-// ClearDynamicLightBuffer?
+// ClearDynamicLightBuffer
+/* Clear the dynamic lighting buffer (19x19 grid of RGB values) */
 void func_800B19F8_C09A8(void) {
 	s32 i = 0;
 	s32 j;
@@ -669,6 +718,7 @@ void func_800B19F8_C09A8(void) {
 	} while (i < 0x13);
 }
 
+/* Add directional light contribution to the dynamic lighting buffer (Bresenham line fill) */
 // CURRENT(24448)
 #ifdef NON_MATCHING
 void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3) {
@@ -855,6 +905,7 @@ void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1A68_C0A18.s")
 #endif
 
+/* Add radial light contribution to the dynamic lighting buffer (from entity position) */
 // CURRENT(9868)
 #ifdef NON_MATCHING
 void func_800B2354_C1304(s16 *arg0, u8 *arg1, s32 arg2, s16 arg3) {
@@ -983,6 +1034,7 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s32 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
 #endif
 
+/* Apply a particle/effect light ring to the dynamic lighting buffer */
 // CURRENT(8135)
 #ifdef NON_MATCHING
 void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
@@ -1171,6 +1223,7 @@ void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2CF0_C1CA0.s")
 #endif
 
+/* Set or clear bits in the world tile map at (arg0, arg1) */
 void func_800B316C_C211C(s8 arg0, s8 arg1, u16 arg2, u8 arg3) {
 	s32 x = arg0 + 0x80;
 	s32 y = arg1 + 0x80;
@@ -1181,6 +1234,7 @@ void func_800B316C_C211C(s8 arg0, s8 arg1, u16 arg2, u8 arg3) {
 	}
 }
 
+/* Mark tile as having a terrain object (set flag bits in the heightmap) */
 // https://decomp.me/scratch/oc09b
 // CURRENT(80)
 #ifdef NON_MATCHING
@@ -1207,10 +1261,13 @@ void func_800B31FC_C21AC(s8 arg0, s8 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B31FC_C21AC.s")
 #endif
 
+/* Test bits in the world tile map at (arg0, arg1) */
 s32 func_800B325C_C220C(s8 arg0, s8 arg1, u16 arg2)
 {
   return (D_8014F8A0[128 + arg1][128 + arg0] & arg2) & 0xFFFF;
 }
+
+/* Set "underwater" flag (bit 12) on tiles below the water level */
 // CURRENT(1180)
 #ifdef NON_MATCHING
 void func_800B32AC_C225C(u16 *arg0) {
@@ -1251,6 +1308,7 @@ void func_800B32AC_C225C(u16 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B32AC_C225C.s")
 #endif
 
+/* Update fog distance based on camera pitch angle */
 void func_800B33BC_C236C(s32 arg0) {
 	s16 coss_val;
 	f32 sp20;
@@ -1264,6 +1322,7 @@ void func_800B33BC_C236C(s32 arg0) {
 	}
 }
 
+/* Compute terrain vertex colors with dynamic lighting and per-level tints into the 19x19 ring buffer */
 // CURRENT(23916)
 #ifdef NON_MATCHING
 void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
@@ -1392,6 +1451,7 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B345C_C240C.s")
 #endif
 
+/* Copy a 19x19 tile region from the world map into the ring buffer and compute vertex colors */
 // https://decomp.me/scratch/TODO
 #ifdef NON_MATCHING
 // CURRENT(2050)
@@ -1423,6 +1483,7 @@ void func_800B4050_C3000(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B4050_C3000.s")
 #endif
 
+/* Register a tile coordinate for special lighting treatment */
 void func_800B415C_C310C(s16 arg0, s16 arg1) {
 	s32 idx;
 	u8 *entry;
@@ -1434,6 +1495,7 @@ void func_800B415C_C310C(s16 arg0, s16 arg1) {
 	D_8014FDC8 = (idx + 1) % 64;
 }
 
+/* Full initialization of terrain rendering: shield walls, water flags, ring buffer, steep mask */
 void func_800B41C8_C3178(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s16 i;
 
@@ -1457,6 +1519,7 @@ void func_800B41C8_C3178(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	}
 }
 
+/* Scroll ring buffer right: shift 1 tile column to the right, compute new column */
 // CURRENT(7186)
 #ifdef NON_MATCHING
 void func_800B42B0_C3260(s32 arg0) {
@@ -1559,6 +1622,8 @@ void func_800B42B0_C3260(s32 arg0) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B42B0_C3260.s")
 #endif
+
+/* Scroll ring buffer left: shift 1 tile column to the left, compute new column */
 // CURRENT(7613)
 #ifdef NON_MATCHING
 void func_800B4660_C3610(s32 arg0) {
@@ -1639,6 +1704,7 @@ void func_800B4660_C3610(s32 arg0) {
 	#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B4660_C3610.s")
 	#endif
 
+/* Scroll ring buffer down: shift 1 tile row downward, compute new row */
 // CURRENT(7116)
 #ifdef NON_MATCHING
 void func_800B49A4_C3954(s32 arg0) {
@@ -1723,6 +1789,7 @@ void func_800B49A4_C3954(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B49A4_C3954.s")
 #endif
 
+/* Scroll ring buffer up: shift 1 tile row upward, compute new row */
 // CURRENT(7487)
 #ifdef NON_MATCHING
 void func_800B4D4C_C3CFC(s32 arg0) {
@@ -1812,6 +1879,7 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B4D4C_C3CFC.s")
 #endif
 
+/* Build vertex buffer for the 19x19 tile ring: compute positions, heights, colors, and texture coords */
 // CURRENT(13468)
 #ifdef NON_MATCHING
 void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
@@ -2148,6 +2216,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5090_C4040.s")
 #endif
 
+/* Record a road/angled tile into the rotated-tile draw buffer; returns 0 if recorded, 1 if standard quad */
 #ifdef NON_MATCHING
 s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	arg3 &= 0xFF;
@@ -2182,6 +2251,7 @@ s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5EE4_C4E94.s")
 #endif
 
+/* Emit ground quad geometry: vertices + sorted-by-texture-bucket triangles */
 // CURRENT(75264)
 #ifdef NON_MATCHING
 void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, u8 arg6) {
@@ -2504,7 +2574,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B604C_C4FFC.s")
 #endif
 
-// Draw rotated tiles e.g. roads
+/* Emit rotated/angled tile geometry from the road draw buffer (grouped by texture bucket) */
 // CURRENT(61465)
 #ifdef NON_MATCHING
 void func_800B753C_C64EC(void) {
@@ -2760,6 +2830,7 @@ s32 func_800B84D0_C7480(s16 xPosition, s16 zPosition)
   return (((var_t0 << 8) + (var_t1 * xPositionInTile)) + (var_t2 * zPositionInTile)) << 5;
 }
 
+/* Get terrain height with random variation (roughness) */
 s32 func_800B85CC_C757C(s16 arg0, s16 arg1) {
 	Unk8003E290Entry *sp1C;
 
@@ -2769,6 +2840,7 @@ s32 func_800B85CC_C757C(s16 arg0, s16 arg1) {
 		   sp1C->unkA;
 }
 
+/* Get minimum terrain height of the 4 corners of a tile */
 #ifdef NON_MATCHING
 s16 func_800B8688_C7638(s8 arg0, s8 arg1) {
 	s16 temp_a2;
@@ -2809,6 +2881,7 @@ s16 func_800B8688_C7638(s8 arg0, s8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8688_C7638.s")
 #endif
 
+/* Animate crater expansion (destroyed ground tiles with expanding bright ring) */
 // CURRENT(13990)
 #ifdef NON_MATCHING
 void func_800B879C_C774C(void) {
@@ -2914,7 +2987,7 @@ void func_800B879C_C774C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B879C_C774C.s")
 #endif
 
-// Boss fight arena creation?
+/* Initialize crater creation parameters at a world position */
 #ifdef NON_MATCHING
 void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 	D_8014F830 = 0;
@@ -2952,8 +3025,9 @@ void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8C2C_C7BDC.s")
 #endif
 
+/* Set shield wall bounds for the current stage variant, clamp to valid range */
 #ifdef NON_MATCHING
-/* CURRENT(1525) */
+// CURRENT(1525)
 void func_800B8D80_C7D30(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	s32 temp_v1;
 	s32 temp_v1_2;
@@ -3014,6 +3088,7 @@ void func_800B8D80_C7D30(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8D80_C7D30.s")
 #endif
 
+/* Initialize crater at nearest tile center to (arg0, arg1) with given brightness */
 // CURRENT
 #ifdef NON_MATCHING
 void func_800B8F30_C7EE0(s16 arg0, s16 arg1, s32 arg2) {
@@ -3075,7 +3150,7 @@ void func_800B8F30_C7EE0(s16 arg0, s16 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8F30_C7EE0.s")
 #endif
 
-// Boss fight arena creation?
+/* Start arena creation crater at (arg0, arg1) */
 void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2) {
 	func_800B8C2C_C7BDC(arg0, arg1, 0x1F);
 	D_8014F850 = 2.0f;
@@ -3193,6 +3268,7 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B93AC_C835C.s")
 #endif
 
+/* World-space bounding box frustum cull: checks tile against camera position + angle */
 // CURRENT(20615)
 #ifdef NON_MATCHING
 s32 func_800B960C_C85BC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
@@ -3270,6 +3346,7 @@ s32 func_800B960C_C85BC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B960C_C85BC.s")
 #endif
 
+/* Deactivate a particle/effect slot */
 void func_800B9954_C8904(u8 arg0) {
 	D_80152B80[arg0].unk8 = 0;
 	if (arg0 < D_8013DAE4_14CA94) {
@@ -3278,6 +3355,7 @@ void func_800B9954_C8904(u8 arg0) {
 	D_8013DAE0_14CA90--;
 }
 
+/* Spawn a particle/effect (light ring) at a position with color, radius, and duration */
 #ifdef NON_MATCHING
 void func_800B99A8_C8958(Unk80152B80 *arg0, s16 arg1, s16 arg2, s32 arg3, u8 *arg4, s16 arg5, s16 arg6, u16 arg7) {
 	u8 i;
@@ -3318,6 +3396,7 @@ void func_800B99A8_C8958(Unk80152B80 *arg0, s16 arg1, s16 arg2, s32 arg3, u8 *ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B99A8_C8958.s")
 #endif
 
+/* Update all active particle/effects: interpolate brightness and position */
 #ifdef NON_MATCHING
 void func_800B9AC8_C8A78(void) {
 	s32 brightness;
@@ -3355,6 +3434,7 @@ void func_800B9AC8_C8A78(void) {
 	#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9AC8_C8A78.s")
 	#endif
 
+/* Debug: render 5 colored effect rings at the camera position */
 #ifdef NON_MATCHING
 void func_800B9C28_C8BD8(void) {
 	s16 pos[2];
@@ -3404,58 +3484,60 @@ void func_800B9C28_C8BD8(void) {
 #endif
 
 // https://decomp.me/scratch/Ln5ro
-// drawTileBuffer i.e. the ground
+// CURRENT(7852)
 #ifdef NON_MATCHING
+// Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
 void func_800B9DB8_C8D68(u8 arg0)
 {
-  s16 sp10C;
-  s16 sp10A;
-  s32 spFC;
-  s32 spF8;
-  s16 spF4;
-  s16 spF2;
-  s16 sp50;
-  s32 sp54;
-  s32 sp68;
-  s32 sp6C;
-  u8 *sp60;
+  s16 sp10C;   // tile X scroll offset
+  s16 sp10A;   // tile Y scroll offset
+  s32 spFC;    // vertex pointer for current macro-tile row
+  s32 spF8;    // vertex pointer advancing through sub-tiles
+  s16 spF4;    // counter: sub-tiles drawn
+  s16 spF2;    // counter: sub-tiles culled/occluded
+  s16 sp50;    // macro-tile row center Z in world space
+  s32 sp54;    // current macro-tile row index
+  s32 sp68;    // macro-tile base column
+  s32 sp6C;    // macro-tile base row
+  u8 *sp60;    // pointer into D_8021EA30 row
   u8 sp117;
-  s16 var_s3;
-  s16 var_s4;
-  s16 var_s5;
-  s16 var_s6;
-  s32 ra;
+  s16 var_s3;  // height count for bottom edge partial tile
+  s16 var_s4;  // width left-edge skip for partial scroll
+  s16 var_s5;  // height top-edge skip for partial scroll
+  s16 var_s6;  // width count for right-edge partial tile
+  s32 ra;      // macro-tile row iterator
   s32 s7;
-  s32 var_t5;
+  s32 var_t5;  // macro-tile col iterator
   s32 col_idx;
-  s32 s2;
-  s32 s1;
-  s32 temp_s1;
-  u8 *t2;
+  s32 s2;      // adjusted macro-tile column index
+  s32 s1;      // tile byte: lo nibble = texture index, hi nibble = brightness
+  s32 temp_s1; // saved DL start pointer
+  u8 *t2;      // pointer into D_8021EA30 for current cell
   u8 t4;
   spF4 = 0;
   spF2 = 0;
-  func_800B9AC8_C8A78();
+  func_800B9AC8_C8A78();      // update particle/effect animations
   if (D_8014F838 != 0)
   {
-	func_800B879C_C774C();
+	func_800B879C_C774C();    // animate crater expansion if active
   }
   temp_s1 = D_8005BB34;
-  func_800B5090_C4040(&D_8005BB34, arg0);
+  func_800B5090_C4040(&D_8005BB34, arg0);  // build vertex buffer for the 19×19 tile ring
   gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
   
-  D_8014F89A = 0;
-  D_8014FD28 = 0x8F;
-  sp10C = (s16) D_80151DD8[0x964];
-  sp10A = (s16) D_80151DD8[0x965];
+  D_8014F89A = 0;             // reset road tile draw count
+  D_8014FD28 = 0x8F;          // reset road tile draw index (starts high, counts down)
+  sp10C = (s16) D_80151DD8[0x964];   // tile X scroll offset
+  sp10A = (s16) D_80151DD8[0x965];   // tile Y scroll offset
   spF8 = temp_s1;
   spFC = temp_s1;
+  // Set render mode: opaque surfaces, Z-buf update, coverage AA
   gDPSetRenderMode(D_8005BB2C++, (((3 << 30) | (2 << 26)) | (0 << 22)) | (0 << 18), (((((((0x10 | 0x20) | 0x200) | 0x2000) | 0) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (1 << 16));
-  gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
-  gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
-  gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
-  gSPSetGeometryMode(D_8005BB2C++, (0x00002000 | 0x00020000) | 0x00000200);
-  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, (u8 *) (((u32) (&D_80254E80)) & 0x1FFFFFFF));
+  gDPSetTexturePersp(D_8005BB2C++, 1 << 19);  // enable perspective correction
+  gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);  // enable texturing
+  gDPSetTextureLUT(D_8005BB2C++, 2 << 14);    // enable CI texture lookup
+  gSPSetGeometryMode(D_8005BB2C++, (0x00002000 | 0x00020000) | 0x00000200);  // enable Z-buf, lighting, culling
+  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, (u8 *) (((u32) (&D_80254E80)) & 0x1FFFFFFF));  // load TLUT palette
   gDPTileSync(D_8005BB2C++);
   gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_4b, 0, 0x0100, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
   gDPLoadSync(D_8005BB2C++);
@@ -3463,37 +3545,43 @@ void func_800B9DB8_C8D68(u8 arg0)
   gDPPipeSync(D_8005BB2C++);
   gDPLoadSync(D_8005BB2C++);
   
+  // Choose lighting based on outdoor/indoor mode
   if (D_801493CC != 0)
   {
 	gSPNumLights(D_8005BB2C++, 1);
-	gSPLight(D_8005BB2C++, &D_8013D978_14C928, 1);
+	gSPLight(D_8005BB2C++, &D_8013D978_14C928, 1);  // outdoor (blue-ish)
 	gSPLight(D_8005BB2C++, &D_8013D970_14C920, 2);
   }
   else
   {
 	gSPNumLights(D_8005BB2C++, 1);
-	gSPLight(D_8005BB2C++, &D_8013D960_14C910, 1);
+	gSPLight(D_8005BB2C++, &D_8013D960_14C910, 1);  // indoor/neutral
 	gSPLight(D_8005BB2C++, &D_8013D958_14C908, 2);
   }
   ra = 0;
   sp117 = 0;
-  sp6C = sp10A / 4;
-  sp68 = sp10C / 4;
-  do
+  sp6C = sp10A / 4;    // macro-tile base row
+  sp68 = sp10C / 4;    // macro-tile base column
+  do                    // iterate over 5 macro-tile rows
   {
-	sp50 = (s16) ((col_idx << 10) + 0x8000);
+	col_idx = (sp6C + ra) & 0xFF;
+	sp60 = &D_8021EA30[col_idx << 6];  // row in 64-entry tile map
+	sp54 = col_idx;
+	sp50 = (s16) ((col_idx << 10) + 0x8000);  // world Z center of this macro-tile row
 	s7 = 0;
 	var_t5 = 0;
-	do
+	do                  // iterate over 5 macro-tile columns
 	{
-	  var_s4 = (var_t5 == 0) ? (sp10C % 4) : 0;
-	  var_s6 = (var_t5 == 4) ? (sp10C % 4) + 1 : 4;
-	  var_s5 = (ra == 0) ? (sp10A % 4) : 0;
-	  var_s3 = (ra == 4) ? (sp10A % 4) + 1 : 4;
+	  // Handle sub-tile edges when scroll offset is not aligned to 4
+	  var_s4 = (var_t5 == 0) ? (sp10C % 4) : 0;       // left partial
+	  var_s6 = (var_t5 == 4) ? (sp10C % 4) + 1 : 4;   // right partial
+	  var_s5 = (ra == 0) ? (sp10A % 4) : 0;            // top partial
+	  var_s3 = (ra == 4) ? (sp10A % 4) + 1 : 4;        // bottom partial
 	  
-	  s2 = (sp68 + var_t5) & 0xFF;
-	  t2 = sp60 + s2;
-	  s1 = (*t2);
+	  s2 = (sp68 + var_t5) & 0xFF;       // macro-tile column index
+	  t2 = sp60 + s2;                     // pointer to tile map entry
+	  s1 = (*t2);                         // read tile byte
+	  // Load the texture palette for this tile (low nibble selects palette)
 	  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, ((u32) (&D_80254E80[(s1 & 0xF) * 512])) & 0x1FFFFFFF);
 	  gDPTileSync(D_8005BB2C++);
 	  gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_4b, 0, 0x0100, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
@@ -3503,35 +3591,37 @@ void func_800B9DB8_C8D68(u8 arg0)
 	  gDPLoadSync(D_8005BB2C++);
 		ra = 4;
 	  t4 = *t2;
-	  if ((t4 & 0xF0) != 0xF0)
+	  if ((t4 & 0xF0) != 0xF0)           // if not fully bright, increment brightness
 	  {
 		*t2 = t4 + 0x10;
 	  }
-	  gSPClearGeometryMode(D_8005BB2C++, 0x00020000);
+	  gSPClearGeometryMode(D_8005BB2C++, 0x00020000);  // disable lighting for ground tiles
+	  // Cull test: check if this sub-tile (world space 0x400×0x400) is in camera frustum
 	  if (func_800B960C_C85BC((s16) ((s2 << 10) + 0x8000), sp50, 0x400, 0x400) != 0)
 	  {
 		spF4 += 1;
+		// Emit the quad geometry for this visible sub-tile
 		func_800B604C_C4FFC(spF8, var_s4, var_s5, var_s6, var_s3, ((((s2 * 4) + (sp54 * 0x400)) + (var_s5 * 0x100)) & 0xFFFF) + var_s4, s1);
 	  }
 	  else
 	  {
-		spF2 += 1;
+		spF2 += 1;   // tile was culled
 	  }
 	  var_t5 = (s7 + 1) & 0xFF;
 	  s7 = var_t5;
-	  spF8 += (ra - var_s4) * 0x10;
+	  spF8 += (ra - var_s4) * 0x10;  // advance vertex pointer past this sub-tile
 	}
 	while (var_t5 < 5);
 	ra = (sp117 + 1) & 0xFF;
-	spFC += (4 - var_s5) * 0x120;
+	spFC += (4 - var_s5) * 0x120;   // advance past this macro-tile row
 	sp117 = (u8) ra;
 	spF8 = spFC;
   }
   while (ra < 5);
   gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEI, G_CC_PASS2);
   gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
-	func_800B753C_C64EC();
-  gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
+  func_800B753C_C64EC(spFC);         // emit rotated (road) tiles
+  gDPSetTextureLUT(D_8005BB2C++, 0 << 14);  // restore default LUT mode
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9DB8_C8D68.s")
@@ -3548,6 +3638,8 @@ s16 func_800BA4DC_C948C(s16 arg0, s16 arg1, s16 arg2) {
 	return arg0;
 }
 
+/* Compute water opacity based on distance from camera */
+// https://decomp.me/scratch/weDEu
 s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, u8 arg2, u8 arg3)
 {
 	s32 var_v1;
@@ -3563,6 +3655,7 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, u8 arg2, u8 arg3)
 	return var_v1;
 }
 
+/* Draw water surfaces: textured quads with scrolling UV animation */
 // CURRENT(33929)
 #ifdef NON_MATCHING
 // DrawVtxBufferWater
@@ -3835,6 +3928,7 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s")
 #endif
 
+/* Rectangle bounding overlap test with parameter extraction */
 s32 func_800BB3D0_CA380(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 *arg4, s16 *arg5, s16 *arg6, s16 *arg7) {
 	s16 temp;
 
@@ -3928,6 +4022,8 @@ success:
 	return 1;
 }
 
+/* Draw invisible shield wall collision lines for debugging */
+/* Draw invisible shield wall collision lines for debugging */
 // DrawShieldWalls
 // CURRENT(37669)
 #ifdef NON_MATCHING

@@ -80,6 +80,7 @@ This kinda does the opposite of the deduplication pass above, so to make sure a 
 ### Function declarations
 Calling a function with non-void return type consumes stack and can affect regalloc, even if the return value is ignored.
 Calling a function that isn't declared will automatically declare it as a varargs function: `int f()`. Following C varargs type promotion rules, floats passed to the function will be casted to doubles (and avoid the f12..f15 registers), s8/u8/s16/u16 to s32, the `int` return type may affect regalloc/stack.
+A function call parameter being loaded with `move` when the target loads it with `li` may mean the called function definition has the wrong param type, e.g. s32=`move`, f32=`li`.
 
 ### Variables
 Creating a temporary variable for an expression doesn't do anything, except possibly affect regalloc if the assignment is moved to another basic block.

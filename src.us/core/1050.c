@@ -497,6 +497,7 @@ void func_80001424_2024(void) {
 	}
 }
 
+// https://decomp.me/scratch/zsK5T
 void func_800015B4_21B4(s32 arg0, s32 arg1) {
 	s32 temp_at;
 	s32 temp_t3;
