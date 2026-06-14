@@ -792,7 +792,7 @@ void func_800EC3A0_FB350(s16 arg0);
 void func_800EC450_FB400(void);
 void func_800EC468_FB418(void);
 void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1);
-void func_800F2980_101930(UnkF9230ShadowWalker *arg0, s32 arg1);
+void func_800F2980_101930(UnkF9230ShadowWalker *arg0);
 void func_800F2D48_101CF8(u8, s16, s16);
 void func_800F3670_102620(void);
 s16 func_800F3990_102940(u8 arg0, u8 arg1);
