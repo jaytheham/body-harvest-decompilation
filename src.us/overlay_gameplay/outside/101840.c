@@ -3063,43 +3063,26 @@ s16 func_800F9FAC_108F5C(s16 arg0, s16 arg1) {
 	return (s16) var_v1;
 }
 
-// CURRENT(6141)
+// CURRENT(5674)
 #ifdef NON_MATCHING
-s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
+s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s32 arg2) {
 	VehicleSpec *spec;
-	s16 h0;
-	s16 h1;
-	s16 h2;
-	s16 h3;
-	s16 h4;
-	s16 h5;
-	s16 h6;
-	s16 h7;
-	s16 temp;
-	f32 xOffset;
-	f32 zOffset;
-	f64 halfDistance;
-	s32 trigValue;
+	s16 h0, h1, h2, h3, h4, h5, h6, h7, temp;
+	f32 xOff, zOff;
+	f64 halfDist;
 	u16 angle;
-	u16 flags;
 
 	angle = arg1;
 	spec = &vehicleSpecs[arg0->unk1A];
-	trigValue = coss(angle);
-	halfDistance = (f64)(arg2 >> 1);
-	xOffset = (f32)(((f64)(f32)trigValue / 32768.0) * halfDistance);
-	trigValue = sins(angle);
-	zOffset = (f32)(((f64)(f32)trigValue / 32768.0) * halfDistance);
-	func_800F9D60_108D10((s16)(s32)((f32)arg0->unk0 - xOffset), (s16)(s32)((f32)arg0->unk4 - zOffset), &h0, &temp, &h4);
-	func_800F9D60_108D10((s16)(s32)((f32)arg0->unk0 + xOffset), (s16)(s32)((f32)arg0->unk4 + zOffset), &h1, &temp, &h5);
+	xOff = (f32)(((f64)(f32)coss(angle) / 32768.0) * (halfDist = (f64)(arg2 >> 1)));
+	zOff = (f32)(((f64)(f32)sins(angle) / 32768.0) * halfDist);
+	func_800F9D60_108D10((s16)((f32)arg0->unk0 - xOff), (s16)((f32)arg0->unk4 - zOff), &h0, &temp, &h4);
+	func_800F9D60_108D10((s16)((f32)arg0->unk0 + xOff), (s16)((f32)arg0->unk4 + zOff), &h1, &temp, &h5);
 
-	trigValue = coss(angle);
-	halfDistance = (f64)(arg2 >> 2);
-	xOffset = (f32)(((f64)(f32)trigValue / 32768.0) * halfDistance);
-	trigValue = sins(angle);
-	zOffset = (f32)(((f64)(f32)trigValue / 32768.0) * halfDistance);
-	func_800F9D60_108D10((s16)(s32)((f32)arg0->unk0 - xOffset), (s16)(s32)((f32)arg0->unk4 - zOffset), &h2, &temp, &h6);
-	func_800F9D60_108D10((s16)(s32)((f32)arg0->unk0 + xOffset), (s16)(s32)((f32)arg0->unk4 + zOffset), &h3, &temp, &h7);
+	xOff = (f32)(((f64)(f32)coss(angle) / 32768.0) * (halfDist = (f64)(arg2 >> 2)));
+	zOff = (f32)(((f64)(f32)sins(angle) / 32768.0) * halfDist);
+	func_800F9D60_108D10((s16)((f32)arg0->unk0 - xOff), (s16)((f32)arg0->unk4 - zOff), &h2, &temp, &h6);
+	func_800F9D60_108D10((s16)((f32)arg0->unk0 + xOff), (s16)((f32)arg0->unk4 + zOff), &h3, &temp, &h7);
 
 	if (!(spec->unk4C & 0x100)) {
 		if (D_80222A70 >= h0) {
@@ -3116,8 +3099,7 @@ s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 		}
 	}
 
-	flags = arg0->unk20;
-	if ((flags & 0x800) || (flags & 4)) {
+	if ((arg0->unk20 & 0x800) || (arg0->unk20 & 4)) {
 		if (h4 >= h0) {
 			h0 = h4;
 		}
@@ -3145,9 +3127,8 @@ s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FA018_108FC8.s")
 #endif
 
-#ifdef NON_MATCHING
 /* CURRENT(281) */
-s32 func_800FA40C_1093BC(VehicleInstance *vehicle, s16 angle, s32 distance) {
+s32 func_800FA40C_1093BC(VehicleInstance *vehicle, s16 angle, s16 distance) {
 	VehicleSpec *spec;
 	s16 height0;
 	s16 height1;
@@ -3176,11 +3157,7 @@ s32 func_800FA40C_1093BC(VehicleInstance *vehicle, s16 angle, s32 distance) {
 	}
 	return func_80003824_4424((f32)distance, (f32)(height0 - height1));
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FA40C_1093BC.s")
-#endif
 
-#ifdef NON_MATCHING
 s16 func_800FA690_109640(s16 arg0, s16 arg1, s16 arg2) {
 	s16 h1;
 	f32 cos_val;
@@ -3191,9 +3168,6 @@ s16 func_800FA690_109640(s16 arg0, s16 arg1, s16 arg2) {
 	h1 = (s16)(func_800B85CC_C757C((s16)((f32)arg0 - cos_val), (s16)((f32)arg1 - sin_val)) >> 8);
 	return func_80003824_4424(100.0f, (f32)(h1 - (s16)(func_800B85CC_C757C((s16)((f32)arg0 + cos_val), (s16)((f32)arg1 + sin_val)) >> 8)));
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FA690_109640.s")
-#endif
 
 // CURRENT(3227)
 #ifdef NON_MATCHING
