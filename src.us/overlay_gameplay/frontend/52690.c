@@ -4157,9 +4157,11 @@ void func_8008DF40_5E3F0(u8 arg0) {
 	}
 }
 
+// https://decomp.me/scratch/PjKaT
+// CURRENT(285)
 #ifdef NON_MATCHING
-// CURRENT(410)
-void func_8008DFA0_5E450(void) {
+void func_8008DFA0_5E450(void)
+{
 	s16 life;
 	s32 var_s0;
 	s32 temp_a0;
@@ -4169,41 +4171,48 @@ void func_8008DFA0_5E450(void) {
 	s32 var_v1;
 	Unk800E1980 *entry;
 	u8 *entryBytes;
-
 	var_s2 = D_800E1D68;
 	var_s0 = 0;
 	var_v1 = var_s2;
-	if (var_s2 > 0) {
-		do {
+	if (var_s2 > 0)
+	{
+		do
+		{
 			entry = &D_800E1980[var_s0];
 			life = entry->unkA;
-			if (life != 0) {
+			if (life != 0)
+			{
 				entryBytes = (u8 *)entry;
 				temp_v1 = entry->unkF;
-				if (temp_v1 == 0) {
+				if (temp_v1 == 0)
+				{
 					temp_a0 = entry->unkC;
 					temp_v1 = temp_a0;
-					if (((temp_a0 == 0xD) && (entryBytes[0xE] < 7)) ||
-						((temp_v1 == 0xA) && (entryBytes[0xD] < (entry->unk12 * -4))) ||
-						((temp_v1 != 0xA) && (temp_v1 != 0xD) && (entry->unk12 < entryBytes[0xD]))) {
+					if (((0xD == temp_a0 && entryBytes[0xE] < 7) || ((temp_v1 == 0xA) && (entryBytes[0xD] < (entry->unk12 * (-4))))) || (((temp_v1 != 0xA) && (temp_v1 != 0xD)) && (entry->unk12 < entryBytes[0xD])))
+					{
 						temp_t9 = entryBytes[0xE] + 1;
 						entryBytes[0xD] = entryBytes[0xD] - entry->unk12;
 						entryBytes[0xE] = temp_t9;
-						if ((temp_t9 & 0xFF) >= D_800AA694[temp_a0 * 8]) {
+						if (((short)temp_t9 & 0xFF) >= D_800AA694[temp_a0 * 8])
+						{
 							entryBytes[0xE] = 0;
 						}
 						entry->unkA += entry->unk10;
 						entry->unk2 += entry->unk11;
-					} else {
-						if (temp_v1 == 0xA) {
+					}
+					else
+					{
+						if (temp_v1 == 0xA)
+						{
 							func_8008DC34_5E0E4(entry->unk0, entry->unk2, entry->unk4, 0xB, life);
 						}
 						func_8008DF40_5E3F0((u8)var_s0);
 					}
-				} else {
+				}
+				else
+				{
 					entry->unkF = temp_v1 - 1;
 				}
-
 				var_v1 = (var_s2 - 1) & 0xFF;
 				var_s2 = var_v1;
 			}
