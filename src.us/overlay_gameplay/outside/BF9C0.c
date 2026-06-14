@@ -2689,7 +2689,7 @@ void func_800B753C_C64EC(void) {
 	}
 
 	gDPPipeSync(D_8005BB2C++);
-
+	{
 		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_80254E80);
 		gDPTileSync(D_8005BB2C++);
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x100, G_TX_LOADTILE, 0,

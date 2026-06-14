@@ -10287,23 +10287,20 @@ void func_800DDF18_ECEC8(u8 arg0) {
 	}
 }
 
-// CURRENT(50)
-#ifdef NON_MATCHING
-void func_800DDF78_ECF28(s16 arg0) {
+void func_800DDF78_ECF28(s16 arg0)
+{
 	u8 *entry;
-
 	osSyncPrintf(&D_80143D6C_152D1C, arg0);
 	entry = &D_80157608;
 	D_80157560 = entry;
-	entry = D_80157560;
-
-	osSyncPrintf(&D_80143D7C_152D2C, entry[0xC], entry[0xD], entry[0xE], entry[0xF], entry[0x10], entry[0x11], entry[0x12], entry[0x13]);
-	entry = D_80157560;
-	osSyncPrintf(&D_80143DA4_152D54, entry[0x14], entry[0x15], entry[0x16], entry[0x17], entry[0x18], entry[0x19], entry[0x1A], entry[0x1B]);
+	;
+	osSyncPrintf(&D_80143D7C_152D2C, D_80157560[0xC], D_80157560[0xD], D_80157560[0xE], D_80157560[0xF], D_80157560[0x10], D_80157560[0x11], D_80157560[0x12], D_80157560[0x13]);
+	;
+	osSyncPrintf(&D_80143DA4_152D54, D_80157560[0x14], D_80157560[0x15], D_80157560[0x16], D_80157560[0x17], D_80157560[0x18], D_80157560[0x19], D_80157560[0x1A], D_80157560[0x1B]);
 	entry = D_80157560;
 	osSyncPrintf(&D_80143DCC_152D7C, entry[0x1C], entry[0x1D], entry[0x1E], entry[0x1F], entry[0x20], entry[0x21], entry[0x22], entry[0x23]);
 	entry = D_80157560;
-	osSyncPrintf(&D_80143DF4_152DA4, entry[0], entry[1], entry[2], entry[3], (f64)(*(f32*)&D_80157608));
+	osSyncPrintf(&D_80143DF4_152DA4, entry[0], entry[1], entry[2], entry[3], (f64)(*((f32 *)(&D_80157608))));
 	entry = D_80157560;
 	osSyncPrintf(&D_80143E14_152DC4, entry[4], entry[5], entry[6], entry[7], (f64)D_8015760C);
 	entry = D_80157560;
@@ -10311,9 +10308,6 @@ void func_800DDF78_ECF28(s16 arg0) {
 	osSyncPrintf(&D_80143E50_152E00, (f64)D_80157610);
 	osSyncPrintf(&D_80143E58_152E08);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DDF78_ECF28.s")
-#endif
 
 void func_800DE150_ED100(void) {
 	s32 i;
@@ -13083,7 +13077,7 @@ void func_800E72A0_F6250(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E72A0_F6250.s")
 #endif
 
-// CURRENT(249)
+// CURRENT(4)
 #ifdef NON_MATCHING
 void func_800E7338_F62E8(void) {
 	u16 sp2C;
@@ -13095,7 +13089,7 @@ void func_800E7338_F62E8(void) {
 			D_80157536 = D_80052B34->unk0;
 			D_80157538 = D_80052B34->unk4;
 		}
-		if (!(--D_80157534 & 0xFF)) {
+		if (!(--D_80157534)) {
 			sp28 = (sp26 = func_800038E0_44E0(), func_800B84D0_C7480(D_80157536, D_80157538));
 			sp2C = func_800038E0_44E0();
 			func_800DF038_EDFE8((s16)((sp26 % (D_8015753A * 2)) + D_80157536 - D_8015753A),
@@ -13106,6 +13100,9 @@ void func_800E7338_F62E8(void) {
 				0);
 			D_80157534 = *(u8 *)&D_80157533;
 			D_80157532--;
+		}
+	}
+}
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7338_F62E8.s")
 #endif

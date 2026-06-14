@@ -3041,11 +3041,11 @@ void func_8011C9D8_12B988(s32 arg0, s32 arg1, ...) {
 
 	i = 0;
 	if (arg1 > 0) {
-		va_start(args, arg1);
+		args = (va_list)(&arg1 + 1);
 		for (i = 0; i < arg1; i++) {
-			assignedTargets[i] = va_arg(args, s32);
+			assignedTargets[i] = *(s32 *)args;
+			args = (va_list)((u32)args + sizeof(s32));
 		}
-		va_end(args);
 		i = 0;
 	}
 
