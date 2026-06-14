@@ -447,6 +447,7 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 		dir.z = arg5;
 		func_80083014_16B0D4(&dir, &dir);
 		count = arg8;
+		arg8 += 0;
 		if (count >= 0x33) {
 			count = 0x32;
 		} else if (count == 0) {
@@ -492,6 +493,7 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 
 		entry->unk8 = arg0 * 4;
 		entry->unkA = arg1 * 4;
+		arg5 += 0;
 		entry->unkC = arg2 * 4;
 		entry->unkE = 0xFF;
 		entry->unkF = 0xFF;
@@ -1015,8 +1017,6 @@ void func_800852B8_16D378(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800852B8_16D378.s")
 #endif
 
-// CURRENT(20)
-#ifdef NON_MATCHING
 void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	s16 temp_arg0;
 	s16 effect;
@@ -1036,15 +1036,11 @@ void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg
 		entry->unkF = arg4;
 		entry->unk10 = arg5;
 		entry->unk13 = arg2 / 2;
-		if ((entry->unk13 & 0xFF) == 0) {
+		if ((entry->unk13) == 0) {
 			entry->unk13 = 1;
 		}
 	}
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008568C_16D74C.s")
-#endif
 
 // CURRENT(4135)
 #ifdef NON_MATCHING
