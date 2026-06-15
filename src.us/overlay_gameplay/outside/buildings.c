@@ -388,7 +388,7 @@ s32 func_801165FC_1255AC(u8 arg0, u8 arg1, s16 *arg2, s16 *arg3, s16 *arg4, s16 
 #endif
 
 // https://decomp.me/scratch/SwQQl
-// CURRENT(130)
+// CURRENT(110)
 #ifdef NON_MATCHING
 void func_80116724_1256D4(void) {
 	s32 building_idx;
@@ -401,15 +401,14 @@ void func_80116724_1256D4(void) {
 	building_idx = 1;
 
 	do {
-		door_idx = 2;
-
-		do {
+		door_idx = 3;
+		while (door_idx--) {
 			if ((&building->door1InteriorId)[door_idx] == interior_to_load) {
 				D_80052540 = building_idx;
 				D_80052544 = door_idx;
 				return;
 			}
-		} while (door_idx--);
+		}
 
 		building_idx += 1;
 		building++;
@@ -419,8 +418,8 @@ void func_80116724_1256D4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80116724_1256D4.s")
 #endif
 
-#ifdef NON_MATCHING
 // CURRENT(2672)
+#ifdef NON_MATCHING
 void func_80116784_125734(void) {
 	Unk80148620 *s4;
 	BuildingInstance *s1;
