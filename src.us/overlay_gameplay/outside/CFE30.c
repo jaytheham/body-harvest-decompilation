@@ -7049,8 +7049,6 @@ void func_800D45B4_E3564(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D45B4_E3564.s")
 #endif
 
-// CURRENT(15)
-#ifdef NON_MATCHING
 s16 func_800D49CC_E397C(s16 arg0, s16 arg1, s16 arg2) {
 	s32 padStack;
 	s16 slot;
@@ -7071,9 +7069,6 @@ s16 func_800D49CC_E397C(s16 arg0, s16 arg1, s16 arg2) {
 	}
 	return slot;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D49CC_E397C.s")
-#endif
 
 void func_800D4A78_E3A28(s16 arg0) {
 	if (arg0 != -3) {
