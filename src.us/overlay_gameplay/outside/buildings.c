@@ -4303,6 +4303,7 @@ void func_801202DC_12F28C(s32 arg0, s32 arg1) {
 	}
 }
 
+// CURRENT(136)
 #ifdef NON_MATCHING
 void func_80120334_12F2E4(BuildingInstance *arg0) {
 	s32 index;
@@ -4341,7 +4342,7 @@ void func_801205AC_12F55C(BuildingInstance *arg0) {
 	func_8011FA90_12EA40(arg0, 5, 0xD1, 0x3C, 0, 0x4B, 0x3C, 0x596, 0xE);
 }
 
-// NON_MATCHING: register allocation (v0=key vs a0=pointer) cannot be coerced to match IDO's choice
+// CURRENT(2310)
 #ifdef NON_MATCHING
 s32 func_80120634_12F5E4(void) {
 	s32 i = 0;
@@ -4882,6 +4883,7 @@ void func_80121EB4_130E64(s16 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80121EB4_130E64.s")
 #endif
 
+// CURRENT(3445)
 #ifdef NON_MATCHING
 void func_80122244_1311F4(Unk80152B80 *arg0) {
 	s16 sp30;
