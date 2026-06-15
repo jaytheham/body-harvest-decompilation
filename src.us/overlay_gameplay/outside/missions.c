@@ -612,10 +612,10 @@ void func_80074970_83920(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074970_83920.s")
 #endif
 
-
-// readMissionInfo
+// https://decomp.me/scratch/PR95Q
 // CURRENT(80)
 #ifdef NON_MATCHING
+// readMissionInfo
 void func_80074B2C_83ADC(void) {
 	u8 *entry;
 	u8 cmd;
@@ -1366,15 +1366,13 @@ void func_800762A8_85258(void (*callback))
   } 
 }
 
-#ifdef NON_MATCHING
-void func_800762E0_85290(void) {
+void func_800762E0_85290(void)
+{
 	s32 *ptr154 = &D_8004D154;
 	s32 *ptr150 = &D_8004D150;
-	{
-		u8 *entry = &D_801497BA;
-		s32 i = 0x7F;
-		do {
-			if ((entry[0] == 2) && (func_80076208_851B8(entry[1]) != 0)) {
+	{ u8 *entry = &D_801497BA; s32 i = 0x7F; do {
+			if ((entry[0] == 2) && (func_80076208_851B8(entry[1]) != 0))
+			{
 				func_800078E4_84E4(entry[1], ptr150);
 				func_800078CC_84CC(entry[1], ptr154);
 				func_80073DC0_82D70(entry[4]);
@@ -1384,9 +1382,6 @@ void func_800762E0_85290(void) {
 	}
 	D_80149474 = 0xFF;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800762E0_85290.s")
-#endif
 
 void func_80076390_85340(void)
 {
