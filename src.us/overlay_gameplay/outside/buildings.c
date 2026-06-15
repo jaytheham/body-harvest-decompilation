@@ -353,8 +353,7 @@ void func_80116554_125504(s16 arg0, s16 *arg1, s16 *arg2) {
 	*arg2 = sp4;
 }
 
-// CURRENT(555)
-// CURRENT(555)
+// CURRENT(700)
 #ifdef NON_MATCHING
 s32 func_801165FC_1255AC(u8 arg0, u8 arg1, s16 *arg2, s16 *arg3, s16 *arg4, s16 *arg5) {
 	BuildingInstance *sp18;
@@ -490,7 +489,7 @@ s32 func_801168E8_125898(s16 arg0, s16 arg1) {
 }
 
 // guess_initBuildingsDoors
-// CURRENT(?)
+// CURRENT(41814)
 #ifdef NON_MATCHING
 void func_8011694C_1258FC(void) {
 	Unk800522C0 *doorRef;
@@ -1302,8 +1301,7 @@ s32 func_80118670_127620(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118670_127620.s")
 #endif
 
-// displayBuildings
-
+// CURRENT(70000)
 // displayBuildings
 #ifdef NON_MATCHING
 void func_80118774_127724(s32 arg0) {
@@ -2452,6 +2450,7 @@ s32 func_8011B6C0_12A670(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011B6C0_12A670.s")
 #endif
 
+// CURRENT(4000)
 #ifdef NON_MATCHING
 void func_8011BA80_12AA30(u8 arg0, s16 arg1) {
 	BuildingInstance *building;
@@ -2565,6 +2564,7 @@ void func_8011BB94_12AB44(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BB94_12AB44.s")
 #endif
 
+// CURRENT(500)
 #ifdef NON_MATCHING
 s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 	s32 buildingId;
@@ -2610,6 +2610,7 @@ s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BEA0_12AE50.s")
 #endif
 
+// CURRENT(55)
 #ifdef NON_MATCHING
 void func_8011BF7C_12AF2C(u8 arg0) {
 	BuildingInstance *inst = &buildingInstances[arg0];
@@ -2727,6 +2728,7 @@ s32 func_8011C0CC_12B07C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C0CC_12B07C.s")
 #endif
 
+// CURRENT(40)
 #ifdef NON_MATCHING
 s32 func_8011C25C_12B20C(s8 *arg0, s32 arg1) {
 	s16 sp1E;
@@ -2977,6 +2979,7 @@ void func_8011C770_12B720(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C770_12B720.s")
 #endif
 
+// CURRENT(135)
 #ifdef NON_MATCHING
 void func_8011C8E8_12B898(s32 arg0, s32 arg1) {
 	s32 var_s2;
@@ -3205,6 +3208,7 @@ void func_8011D030_12BFE0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D030_12BFE0.s")
 #endif
 
+// CURRENT(930)
 #ifdef NON_MATCHING
 s32 func_8011D19C_12C14C(s8 arg0, s8 arg1) {
 	u16 sp2C;
@@ -3253,43 +3257,35 @@ s32 func_8011D260_12C210(s8 arg0, s8 arg1) {
 	return temp_v0;
 }
 
-#ifdef NON_MATCHING
-s32 func_8011D2DC_12C28C(s16 arg0, s16 arg1) {
+s32 func_8011D2DC_12C28C(s16 arg0, s16 arg1)
+{
 	s32 index;
 	BuildingInstance *inst;
 	BuildingSpec *spec;
-
 	index = func_8011D260_12C210((s8)(arg0 >> 8), (s8)(arg1 >> 8));
-	if (index == -1) {
+	if (index == (-1))
+	{
 		return -1;
 	}
-
 	inst = &buildingInstances[index];
-	if (inst->buildingType == 0x1F) {
+	if (inst->buildingType == 0x1F)
+	{
 		return index;
 	}
-
 	spec = &buildingSpecs[inst->buildingType];
-	if (inst->unk8 & 1) {
-		if (arg0 >= inst->xCoord - spec->unk12 &&
-			inst->xCoord + spec->unk12 >= arg0 &&
-			arg1 >= inst->zCoord - spec->unk10 &&
-			inst->zCoord + spec->unk10 >= arg1) {
+	if ((inst->unk8 & 0xFFFF) & 1)
+	{
+		if ((((arg0 >= (inst->xCoord - spec->unk12)) && ((inst->xCoord + spec->unk12) >= arg0)) && (arg1 >= (inst->zCoord - spec->unk10))) && ((inst->zCoord + spec->unk10) >= arg1))
+		{
 			return index;
 		}
-	} else {
-		if (arg0 >= inst->xCoord - spec->unk10 &&
-			inst->xCoord + spec->unk10 >= arg0 &&
-			arg1 >= inst->zCoord - spec->unk12 &&
-			inst->zCoord + spec->unk12 >= arg1) {
-			return index;
-		}
+	}
+	else if ((((arg0 >= (inst->xCoord - spec->unk10)) && ((inst->xCoord + spec->unk10) >= arg0)) && (arg1 >= (inst->zCoord - spec->unk12))) && ((inst->zCoord + spec->unk12) >= arg1))
+	{
+		return index;
 	}
 	return -1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D2DC_12C28C.s")
-#endif
 
 #ifdef NON_MATCHING
 // Score: 1725 (very close, mostly register allocation differences)
