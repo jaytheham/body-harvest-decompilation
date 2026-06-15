@@ -3287,8 +3287,8 @@ s32 func_8011D2DC_12C28C(s16 arg0, s16 arg1)
 	return -1;
 }
 
+// CURRENT(1725)
 #ifdef NON_MATCHING
-// Score: 1725 (very close, mostly register allocation differences)
 void func_8011D438_12C3E8(u8 arg0, s32 arg1) {
 	u8 value;
 	u8* ptr;
@@ -3981,6 +3981,7 @@ void func_8011EB40_12DAF0(BuildingInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EB40_12DAF0.s")
 #endif
 
+// CURRENT(170)
 #ifdef NON_MATCHING
 void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
 	u8 *temp_v0;
@@ -4167,6 +4168,7 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F244_12E1F4.s")
 #endif
 
+// CURRENT(290)
 #ifdef NON_MATCHING
 void func_8011F818_12E7C8(BuildingInstance *arg0) {
 	s32 result;
@@ -4206,23 +4208,17 @@ void func_8011F818_12E7C8(BuildingInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F818_12E7C8.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_8011F9A0_12E950(s32 arg0) {
+void func_8011F9A0_12E950(s32 arg0)
+{
 	D_80052B40.unk0 = D_80159DC8;
 	D_80052B40.unk2 = D_80159DCA;
 	D_80052B40.unk4 = D_80159DCC;
 	func_800039D0_45D0(&D_80052B40, 0, 0, D_8005BB38);
-
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, (D_8005BB38 & 0xFFFFFFFF) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_MODELVIEW);
 	D_8005BB38 += 0x40;
-
 	gSPDisplayList(D_8005BB2C++, D_80159DC4);
-
-	gSPMatrix(D_8005BB2C++, (u32)&D_80031160 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, ((u32)(&D_80031160)) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F9A0_12E950.s")
-#endif
 
 void func_8011FA90_12EA40(BuildingInstance *arg0, u8 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s32 arg8) {
 	func_80116554_125504((s16)(arg0->unk8 & 3), &arg2, &arg4);
