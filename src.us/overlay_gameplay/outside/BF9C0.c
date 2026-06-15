@@ -368,9 +368,9 @@ s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0F20_BFED0.s")
 #endif
 
-// ClipLineToShieldWalls — clips a 3D line segment to the shield wall bounds
 // CURRENT(4946)
 #ifdef NON_MATCHING
+// ClipLineToShieldWalls — clips a 3D line segment to the shield wall bounds
 s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, u8 *arg6) {
 	Unk8014FD30Type *var_v1;
 	f32 temp_f0;
@@ -565,7 +565,6 @@ block_43:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1028_BFFD8.s")
 #endif
 
-/* Mark tiles covered by shield wall as destroyed (set brightness to 0xF0) */
 // CURRENT(2905)
 #ifdef NON_MATCHING
 void func_800B165C_C060C(s32 arg0) {
@@ -650,9 +649,9 @@ void func_800B165C_C060C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B165C_C060C.s")
 #endif
 
-/* Sample terrain color at tile coordinate, bilinear-interpolating the landscape palette */
 // CURRENT(6023)
 #ifdef NON_MATCHING
+/* Sample terrain color at tile coordinate, bilinear-interpolating the landscape palette */
 void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
 	s32 x = arg0 & 0xFF;
 	s32 y = arg1 & 0xFF;
@@ -718,7 +717,6 @@ void func_800B19F8_C09A8(void) {
 	} while (i < 0x13);
 }
 
-/* Add directional light contribution to the dynamic lighting buffer (Bresenham line fill) */
 // CURRENT(24448)
 #ifdef NON_MATCHING
 void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3) {
@@ -905,7 +903,6 @@ void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1A68_C0A18.s")
 #endif
 
-/* Add radial light contribution to the dynamic lighting buffer (from entity position) */
 // CURRENT(9868)
 #ifdef NON_MATCHING
 void func_800B2354_C1304(s16 *arg0, u8 *arg1, s32 arg2, s16 arg3) {
@@ -1034,7 +1031,6 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s32 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
 #endif
 
-/* Apply a particle/effect light ring to the dynamic lighting buffer */
 // CURRENT(8135)
 #ifdef NON_MATCHING
 void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
@@ -3434,7 +3430,7 @@ void func_800B9AC8_C8A78(void) {
 	#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9AC8_C8A78.s")
 	#endif
 
-/* Debug: render 5 colored effect rings at the camera position */
+/* render 5 colored effect rings at the camera position? */
 #ifdef NON_MATCHING
 void func_800B9C28_C8BD8(void) {
 	s16 pos[2];
