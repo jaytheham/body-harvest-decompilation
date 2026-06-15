@@ -390,6 +390,7 @@ void func_80139B34_148AE4(void) {
 	}
 }
 
+// CURRENT(2300)
 #ifdef NON_MATCHING
 void func_80139BF8_148BA8(void) {
 	D_801601CC = 0;
@@ -618,6 +619,7 @@ void func_8013A218_1491C8(s16 arg0, s16 arg1, u8 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A218_1491C8.s")
 #endif
 
+// CURRENT(300)
 #ifdef NON_MATCHING
 void func_8013A4C8_149478(s16 arg0, s32 arg1) {
 	u8 sp1E;

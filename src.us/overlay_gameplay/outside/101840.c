@@ -551,7 +551,7 @@ void func_800F2890_101840(u8 arg0, s32 *arg1, s32 *arg2, u8 *arg3) {
 	}
 }
 
-// CURRENT(965) - improved from 3053
+// CURRENT(965)
 #ifdef NON_MATCHING
 void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 	s32 sp7C;
@@ -620,7 +620,7 @@ void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F2980_101930.s")
 #endif
 
-// CURRENT(120) - improved from 837
+// CURRENT(120)
 #ifdef NON_MATCHING
 void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 	UnkF9230ShadowWalker *walker;
@@ -647,6 +647,7 @@ void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 	*(volatile s32 *)&walker->limbs[0].unk10 = (s16)arg1;
 	*(volatile s32 *)&walker->limbs[0].unkC = arg2;
 	*(volatile s16 *)&walker->limbs[0].unk1C = 0;
+	*((s32 *) (&walker->limbs[0].unk14)) = arg2;
 	*(volatile s32 *)&walker->limbs[0].unk8 = (s16)arg1;
 
 	func_800F2980_101930(walker);
@@ -683,42 +684,46 @@ void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F2D48_101CF8.s")
 #endif
 
-// CURRENT(275) - improved from 3169
+// CURRENT(75)
 #ifdef NON_MATCHING
-void func_800F2ED8_101E88(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
-	if ((s32) arg0 >= 9) {
+void func_800F2ED8_101E88(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4)
+{
+	UnkF9230ShadowWalker *new_var;
+	if (((s32)arg0) >= 9)
+	{
 		osSyncPrintf(D_80144728_1536D8);
 	}
-
-	if (D_80157FF0[arg0] != -1) {
+	new_var = &D_80158000[arg0];
+	if (D_80157FF0[arg0] != (-1))
+	{
 		osSyncPrintf(D_80144740_1536F0);
 	}
-
 	{
 		s32 negArg1;
 		u8 state;
 		UnkF9230ShadowWalker *walker;
-
-		walker = &D_80158000[arg0];
+		walker = new_var;
 		state = walker->limbs[0].unk22;
 		negArg1 = -arg1;
-		if (state != 0x10) {
+		if (state != 0x10)
+		{
 			s32 temp_v0;
-
-			temp_v0 = (negArg1 < arg1) ? arg1 : negArg1;
-			if (((temp_v0 >= 0xD) || (arg2 != walker->limbs[0].unk18)) && (state != 4)) {
+			temp_v0 = (negArg1 < arg1) ? (arg1) : (negArg1);
+			if (((temp_v0 >= 0xD) || (arg2 != walker->limbs[0].unk18)) && (state != 4))
+			{
 				walker->limbs[0].unk22 = (arg4 & 0x80) | 1;
 				state = walker->limbs[0].unk22;
 			}
-
-			walker->limbs[0].unk1C = (s16) ((D_801601F0[walker->limbs[0].unk23].unk12 * arg1) / 8);
+			walker->limbs[0].unk1C = (s16)((D_801601F0[walker->limbs[0].unk23].unk12 * arg1) / 8);
 			walker->limbs[0].unk18 = arg2;
-			if (state & 0x80) {
+			if (state & 0x80)
+			{
 				walker->limbs[0].unk1A = arg3;
 			}
-			if (negArg1 == 0) {
-				*(s32 *) &walker->limbs[0].unk0 = *(s32 *) &walker->limbs[0].unk10;
-				*(s32 *) &walker->limbs[0].unk4 = *(s32 *) &walker->limbs[0].unk14;
+			if (negArg1 == 0)
+			{
+				*((s32 *)(&walker->limbs[0].unk0)) = *((s32 *)(&walker->limbs[0].unk10));
+				*((s32 *)(&walker->limbs[0].unk4)) = *((s32 *)(&walker->limbs[0].unk14));
 			}
 			func_800F2980_101930(walker);
 		}
@@ -728,7 +733,7 @@ void func_800F2ED8_101E88(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F2ED8_101E88.s")
 #endif
 
-// CURRENT(961) - improved from 2226
+// CURRENT(961)
 #ifdef NON_MATCHING
 void func_800F3038_101FE8(u8 arg0) {
 	UnkF9230ShadowWalker *walker;
@@ -986,7 +991,7 @@ s16 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F384C_1027FC.s")
 #endif
 
-// CURRENT(17608) - improved from 18187 by removing ret/allocCount/specIdx fixes, alienY placement
+// CURRENT(17608)
 #ifdef NON_MATCHING
 s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	UnkF9230ShadowWalker *walker;
@@ -1203,7 +1208,7 @@ void func_800F4258_103208(UnkF9230Func800F4748Entry *arg0, s16 arg1, s16 arg2, s
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F4258_103208.s")
 #endif
 
-// CURRENT(295)
+// CURRENT(3738)
 #ifdef NON_MATCHING
 s32 func_800F450C_1034BC(u8 arg0, u8 arg1) {
 	s32 angle;
@@ -1239,7 +1244,7 @@ s32 func_800F450C_1034BC(u8 arg0, u8 arg1) {
 #endif
 
 // https://decomp.me/scratch/gNcUf
-// CURRENT(8)
+// CURRENT(28)
 #ifdef NON_MATCHING
 void func_800F4748_1036F8(UnkF9230Arg0 *arg0, u8 arg1, u8 arg2)
 {
@@ -3127,7 +3132,7 @@ s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FA018_108FC8.s")
 #endif
 
-// CURRENT(281)
+// CURRENT(665)
 #ifdef NON_MATCHING
 s32 func_800FA40C_1093BC(VehicleInstance *vehicle, s16 angle, s16 distance) {
 	VehicleSpec *spec;
@@ -3162,6 +3167,7 @@ s32 func_800FA40C_1093BC(VehicleInstance *vehicle, s16 angle, s16 distance) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FA40C_1093BC.s")
 #endif
 
+// CURRENT(24)
 #ifdef NON_MATCHING
 s16 func_800FA690_109640(s16 arg0, s16 arg1, s16 arg2) {
 	s16 h1;
@@ -3294,6 +3300,7 @@ void func_800FAC90_109C40(void) {
 	} while (var_s0 != end);
 }
 
+// CURRENT(535)
 #ifdef NON_MATCHING
 void func_800FAD10_109CC0(void) {
 	VehicleInstance *var_v1;
@@ -3417,6 +3424,7 @@ f32 func_800FB11C_10A0CC(VehicleInstance *arg0) {
 	return sqrtf((sp1C * sp1C) + (temp_f0 * temp_f0));
 }
 
+// CURRENT(300)
 #ifdef NON_MATCHING
 s16 func_800FB160_10A110(VehicleInstance *arg0) {
 	f32 sp1C;
@@ -4374,9 +4382,9 @@ void func_800FD4D4_10C484(void *arg0) {
 	}
 }
 
-// Set new player vehicle
 // CURRENT(762)
 #ifdef NON_MATCHING
+// Set new player vehicle
 void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
 	Unk80052B2C *playerData;
 	VehicleSpec *spec;
