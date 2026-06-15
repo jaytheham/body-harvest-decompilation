@@ -992,24 +992,20 @@ f32 func_800EB9BC_FA96C(void *arg0) {
 	return ((f32 *)arg0)[0x7];
 }
 
-// CURRENT(10)
-#ifdef NON_MATCHING
-s32 func_800EB9C4_FA974(s32 arg0, Unk80157600 *arg1) {
+s32 func_800EB9C4_FA974(s32 arg0, Unk80157600 *arg1)
+{
+	int new_var;
 	Unk8013E45C *temp_v0;
 	s16 temp_v1;
-
 	temp_v0 = &((Unk8013E45C *)D_8013E45C_14D40C)[arg0];
 	temp_v1 = temp_v0->unkC;
-	if (((temp_v1 == arg1->unk298) && (temp_v0->unk10 == arg1->unk29C)) ||
-		((-1.0f == temp_v0->unk10) && (temp_v1 < *(volatile s32 *)&arg1->unk298)) ||
-		((-1.0f == temp_v0->unk10) && (temp_v1 == -1))) {
+	new_var = 0;
+	if ((((temp_v0->unkC == arg1->unk298) && (temp_v0->unk10 == arg1->unk29C)) || (((-1.0f) == temp_v0->unk10) && (temp_v0->unkC < (*((volatile s32 *)(&arg1->unk298)))))) || (((-1.0f) == temp_v0->unk10) && (temp_v0->unkC == (-1))))
+	{
 		return 1;
 	}
-	return 0;
+	return new_var;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB9C4_FA974.s")
-#endif
 
 // CURRENT(420)
 #ifdef NON_MATCHING
