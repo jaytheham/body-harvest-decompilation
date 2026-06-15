@@ -618,8 +618,6 @@ void func_800EABE0_F9B90(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EABE0_F9B90.s")
 #endif
 
-/* CURRENT(135) */
-#ifdef NON_MATCHING
 void func_800EADF8_F9DA8(VehicleInstance *arg0, s16 arg1) {
 	s32 flags;
 	s32 state;
@@ -683,9 +681,6 @@ void func_800EADF8_F9DA8(VehicleInstance *arg0, s16 arg1) {
 		arg0->unkE = arg1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EADF8_F9DA8.s")
-#endif
 
 void func_800EB05C_FA00C(void) {
 	osSyncPrintf(D_801442F0_1532A0); // Player start swimming
@@ -2385,7 +2380,6 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 				func_800EB534_FA4E4(&D_80157A48, (D_80157E74 >> 0xE) + 0x14, 0, 0);
 			}
 			D_80157E78 = 0x1E;
-		}
 	}
 
 	if (D_80157E78 != 0) {
