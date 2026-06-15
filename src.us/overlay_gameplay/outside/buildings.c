@@ -1919,7 +1919,7 @@ revisit_neighbors:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118774_127724.s")
 #endif
 
-// CURRENT(3586)
+// CURRENT(3140)
 #ifdef NON_MATCHING
 void func_8011A2A0_129250(void) {
 	VehicleInstance *var_s1;
@@ -1961,7 +1961,7 @@ void func_8011A2A0_129250(void) {
 					var_s1->unkE = -0x4000;
 					temp_t4 = var_s1->unk20 | 0x8000;
 					var_s1->unk20 = temp_t4;
-					var_s1->unk46 = (var_s1->unk46 & 0xC0) | 0x3F;
+					var_s1->unk46 = (var_s1->unk46 & 0xFFC0) | 0x3F;
 					var_s1->unk20 = temp_t4 & 0xFFFE;
 					var_s6[-0x73] = temp_v0 - 1;
 					var_s1->unk6 = var_s1->unkE;
