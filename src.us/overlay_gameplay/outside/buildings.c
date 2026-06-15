@@ -897,25 +897,24 @@ s32 func_801176B0_126660(void)
   return 0;
 }
 
-// CURRENT(16433)
+// CURRENT(7525)
 #ifdef NON_MATCHING
-void func_801176F4_1266A4(s16 arg0, s16 arg1, s32 arg2) {
+void func_801176F4_1266A4(u8 arg0, u8 arg1, s32 arg2) {
 	AlienInstance *alien;
 	s16 centerX;
 	s16 centerY;
 	s16 centerZ;
 	s16 orientation;
-	s16 halfX;
-	s16 halfZ;
-	s16 cornerX0;
-	s16 cornerX1;
-	s16 cornerZ0;
-	s16 cornerZ1;
+	s32 halfX;
+	s32 halfZ;
+	s32 cornerX0;
+	s32 cornerX1;
+	s32 cornerZ0;
+	s32 cornerZ1;
 	s32 minX;
 	s32 maxX;
 	s32 minZ;
 	s32 maxZ;
-	u16 angle;
 	f64 halfXf;
 	s32 specRadius;
 	s32 alienId;
@@ -923,23 +922,18 @@ void func_801176F4_1266A4(s16 arg0, s16 arg1, s32 arg2) {
 	s32 specIndex;
 
 	specIndex = ((u8 *)&D_8004DCEA)[arg2 * 0x5C];
-	centerX = 0;
-	centerY = 0;
-	centerZ = 0;
-	orientation = 0;
 
 	halfX = vehicleSpecs[specIndex].unk34 + 0xC8;
 	halfZ = vehicleSpecs[specIndex].unk36 + 0xC8;
 	halfX /= 2;
 
-	func_801165FC_1255AC((u8)arg0, (u8)arg1, &centerX, &centerY, &centerZ, &orientation);
-
-	angle = (u16)orientation;
+	func_801165FC_1255AC(arg0, arg1, &centerX, &centerY, &centerZ, &orientation);
 	halfXf = (f64)halfX;
-	cornerX0 = (s16)(s32)((f64)centerX - (((f64)(f32)coss(angle) / 32768.0) * halfXf));
-	cornerZ0 = (s16)(s32)((f64)centerZ - (((f64)(f32)sins(angle) / 32768.0) * halfXf));
-	cornerX1 = (s16)(s32)((f64)centerX + ((((f64)(f32)sins(angle) / 32768.0) * (f64)halfZ) + (((f64)(f32)coss(angle) / 32768.0) * halfXf)));
-	cornerZ1 = (s16)(s32)((f64)centerZ + ((((f64)(f32)coss(angle) / 32768.0) * (f64)halfZ) + (((f64)(f32)sins(angle) / 32768.0) * halfXf)));
+
+	cornerX0 = (s32)((f64)centerX - (((f64)(f32)coss((u16)orientation) / 32768.0) * halfXf));
+	cornerZ0 = (s32)((f64)centerZ - (((f64)(f32)sins((u16)orientation) / 32768.0) * halfXf));
+	cornerX1 = (s32)((f64)centerX + ((((f64)(f32)sins((u16)orientation) / 32768.0) * (f64)halfZ) + (((f64)(f32)coss((u16)orientation) / 32768.0) * halfXf)));
+	cornerZ1 = (s32)((f64)centerZ + ((((f64)(f32)coss((u16)orientation) / 32768.0) * (f64)halfZ) + (((f64)(f32)sins((u16)orientation) / 32768.0) * halfXf)));
 
 	if (cornerX1 < cornerX0) {
 		minX = cornerX1;
@@ -982,7 +976,6 @@ void func_801176F4_1266A4(s16 arg0, s16 arg1, s32 arg2) {
 		}
 	}
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801176F4_1266A4.s")
 #endif
