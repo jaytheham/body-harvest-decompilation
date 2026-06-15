@@ -1,13 +1,13 @@
 {
-  "generated": "2026-06-15T04:55:33Z",
-  "commit": "0cb7c129",
-  "commit_timestamp": "2026-06-15T16:55:07+12:00",
+  "generated": "2026-06-15T05:49:47Z",
+  "commit": "5132a1a6",
+  "commit_timestamp": "2026-06-15T17:49:22+12:00",
   "overall": {
     "total_functions": 2707,
-    "matched": 1475,
-    "non_matching": 1101,
+    "matched": 1479,
+    "non_matching": 1097,
     "asm_stubs": 131,
-    "matched_pct": 54.49,
+    "matched_pct": 54.64,
     "decompiled_pct": 95.16
   },
   "segments": {
@@ -31,11 +31,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 815,
-      "non_matching": 630,
+      "matched": 819,
+      "non_matching": 626,
       "asm_stubs": 0,
       "total": 1445,
-      "matched_pct": 56.4,
+      "matched_pct": 56.7,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -506,11 +506,11 @@
     {
       "path": "overlay_gameplay/outside/CFE30.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 153,
-      "non_matching": 129,
+      "matched": 156,
+      "non_matching": 126,
       "asm_stubs": 0,
       "total": 282,
-      "matched_pct": 54.3,
+      "matched_pct": 55.3,
       "contributor": "jaytheham"
     },
     {
@@ -526,11 +526,11 @@
     {
       "path": "overlay_gameplay/outside/F7870.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 3,
-      "non_matching": 5,
+      "matched": 4,
+      "non_matching": 4,
       "asm_stubs": 0,
       "total": 8,
-      "matched_pct": 37.5,
+      "matched_pct": 50.0,
       "contributor": "jaytheham"
     },
     {
@@ -688,8 +688,8 @@
     {
       "name": "jaytheham",
       "files": 57,
-      "matched": 1473,
-      "non_matching": 1101,
+      "matched": 1477,
+      "non_matching": 1097,
       "asm_stubs": 131
     },
     {
@@ -836,9 +836,9 @@
     },
     {
       "date": "2026-06-14",
-      "commit": "0cb7c12",
-      "matched": 1475,
-      "non_matching": 1101,
+      "commit": "5132a1a",
+      "matched": 1479,
+      "non_matching": 1097,
       "total": 2707
     }
   ]
