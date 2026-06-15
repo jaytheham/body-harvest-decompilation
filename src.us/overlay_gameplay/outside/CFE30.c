@@ -10531,6 +10531,7 @@ void func_800DEED0_EDE80(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	func_800DDE1C_ECDCC(func_800DDB60_ECB10(arg0, arg1, arg2, 5, (s32) arg3), arg4);
 }
 
+// CURRENT(80)
 #ifdef NON_MATCHING
 void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	u8 slot;
@@ -10716,6 +10717,7 @@ void func_800DFA34_EE9E4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 	D_80153B87 = 0;
 }
 
+// CURRENT(1165)
 #ifdef NON_MATCHING
 void func_800DFA98_EEA48(s8 *arg0) {
 	s32 i;
@@ -11059,15 +11061,14 @@ void func_800E0D28_EFCD8(s16 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E0D28_EFCD8.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_800E0E9C_EFE4C(s16 arg0, s16 arg1, u16 arg2) {
-	func_800DDB60_ECB10(arg0, (s16) (((s32) arg2 / 2) + D_80222A70), arg1, 0, (s32) arg2);
-	func_800DEF2C_EDEDC(arg0, (s16) (D_80222A70 + 4), arg1, 0x64, 2);
-	func_801372B4_146264(arg0, (s16) (D_80222A70 + 4), arg1, 1);
+void func_800E0E9C_EFE4C(s16 arg0, s16 arg1, u16 arg2)
+{
+	u16 *new_var;
+	new_var = &arg2;
+	func_800DDB60_ECB10(arg0, (s16)((((s32)arg2) / 2) + D_80222A70), arg1, 0, (s32)(*new_var));
+	func_800DEF2C_EDEDC(arg0, (s16)(D_80222A70 + 4), arg1, 0x64, 2);
+	func_801372B4_146264(arg0, (s16)(D_80222A70 + 4), arg1, 1);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E0E9C_EFE4C.s")
-#endif
 
 // CURRENT(26761)
 #ifdef NON_MATCHING
