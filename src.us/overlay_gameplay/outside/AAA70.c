@@ -2494,39 +2494,35 @@ s32 func_800A2A88_B1A38(void) {
 }
 
 // drawGhostTarget - R-trigger aiming reticle?
-// CURRENT(30)
-#ifdef NON_MATCHING
-void func_800A2B58_B1B08(void) {
+void func_800A2B58_B1B08(void)
+{
+	u8 *new_var;
 	Gfx *dl;
-
-	if (D_8014F618.unk66 != 1) {
+	if (D_8014F618.unk66 != 1)
+	{
 		return;
 	}
-
-	if (func_800A2A88_B1A38() == 0) {
+	if (func_800A2A88_B1A38() == 0)
+	{
 		return;
 	}
-
-	gSPMatrix(D_8005BB2C++, (u32)&D_80031160 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, ((u32)(&D_80031160)) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
 	gDPPipeSync(D_8005BB2C++);
-	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_FOG | G_LIGHTING);
+	gSPClearGeometryMode(D_8005BB2C++, ((0x00000001 | 0x00002000) | 0x00010000) | 0x00020000);
 	gDPPipeSync(D_8005BB2C++);
-	gSPSetGeometryMode(D_8005BB2C++, G_SHADE);
-	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
-	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
-	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
-	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
-	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
-	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gSPSetGeometryMode(D_8005BB2C++, 0x00000004);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
+	gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
+	gDPSetColorDither(D_8005BB2C++, 0 << 6);
+	gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
+	gDPSetRenderMode(D_8005BB2C++, ((((((0x40 | 0x200) | 0x4000) | 0) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (0 << 18), ((((((0x40 | 0x200) | 0x4000) | 0) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (0 << 16));
+	gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
-	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk77, D_8014F618.unk78, D_8014F618.unk79, D_8014F618.unk69 / 2);
+	new_var = &D_8014F618.unk79;
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk77, D_8014F618.unk78, *new_var, D_8014F618.unk69 / 2);
 	gDPPipeSync(D_8005BB2C++);
-
 	func_800A2260_B1210();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2B58_B1B08.s")
-#endif
 
 // CURRENT(11278)
 #ifdef NON_MATCHING
