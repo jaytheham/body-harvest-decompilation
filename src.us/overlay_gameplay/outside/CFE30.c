@@ -12042,7 +12042,7 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3928_F28D8.s")
 #endif
 
-/* CURRENT(560) */
+// CURRENT(1348)
 #ifdef NON_MATCHING
 void func_800E4CEC_F3C9C(s32 arg0, u8 arg1) {
 	s16 sp84, sp82, sp80;
@@ -12134,6 +12134,7 @@ void func_800E5044_F3FF4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5044_F3FF4.s")
 #endif
 
+// CURRENT(12125)
 #ifdef NON_MATCHING
 void func_800E520C_F41BC(void) {
 	Unk80152D00Pair *entry;
@@ -12413,9 +12414,9 @@ void func_800E5538_F44E8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5538_F44E8.s")
 #endif
 
-// Remove shield (wtf is a shield?)
-// CURRENT(1674) - Register allocation mismatch - significant differences in register assignment throughout
+// CURRENT(1674)
 #ifdef NON_MATCHING
+// Remove shield (wtf is a shield?)
 void func_800E5B78_F4B28(void) {
 	Unk80152CA0Entry *entry;
 	s16 i;
@@ -12495,9 +12496,9 @@ void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 	}
 }
 
-// Remove shield (wtf is a shield?)
 // CURRENT(4465)
 #ifdef NON_MATCHING
+// Remove shield (wtf is a shield?)
 void func_800E5E3C_F4DEC(u8 arg0, u8 arg1) {
 	s16 var_s2;
 	s16 var_v0;
@@ -13029,17 +13030,23 @@ void func_800E7234_F61E4(void) {
 }
 
 #ifdef NON_MATCHING
-void func_800E72A0_F6250(void) {
-	if (currentLevel == 2) {
-		if (func_8000726C_7E6C(0x1E) == 0) {
+void func_800E72A0_F6250(void)
+{
+	Level *new_var;
+	if ((*(new_var = &currentLevel)) == 2)
+	{
+		if (func_8000726C_7E6C(0x1E) == 0)
+		{
 			func_800E2830_F17E0();
 		}
-	} else if (currentLevel == 4) {
+	}
+	else if ((*new_var) == 4)
+	{
 		func_800E2830_F17E0();
 	}
-
 	func_800E1C10_F0BC0();
-	if (D_80052ACB == 0) {
+	if (D_80052ACB == 0)
+	{
 		func_800E64B4_F5464();
 	}
 	func_800E5B78_F4B28();
@@ -13049,35 +13056,29 @@ void func_800E72A0_F6250(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E72A0_F6250.s")
 #endif
 
-// CURRENT(4)
-#ifdef NON_MATCHING
-void func_800E7338_F62E8(void) {
+void func_800E7338_F62E8(void)
+{
+	s16 new_var;
 	u16 sp2C;
 	s32 sp28;
 	u16 sp26;
-
-	if ((s32)D_80157532 > 0) {
-		if (D_8015753C == 1) {
+	if (((s32)D_80157532) > 0)
+	{
+		if (D_8015753C == 1)
+		{
 			D_80157536 = D_80052B34->unk0;
 			D_80157538 = D_80052B34->unk4;
 		}
-		if (!(--D_80157534)) {
+		if (!(--D_80157534))
+		{
 			sp28 = (sp26 = func_800038E0_44E0(), func_800B84D0_C7480(D_80157536, D_80157538));
 			sp2C = func_800038E0_44E0();
-			func_800DF038_EDFE8((s16)((sp26 % (D_8015753A * 2)) + D_80157536 - D_8015753A),
-				(s16)((sp28 >> 8) + 0x28),
-				(s16)((sp2C % (D_8015753A * 2)) + D_80157538 - D_8015753A),
-				(u16)((func_800038E0_44E0() % 50) + 0x32),
-				0,
-				0);
-			D_80157534 = *(u8 *)&D_80157533;
+			func_800DF038_EDFE8((s16)((((sp26 % (D_8015753A * 2)) & 0xFFFFFFFF) + D_80157536) - D_8015753A), new_var = (s16)((sp28 >> 8) + 0x28), (s16)(((sp2C % (D_8015753A * 2)) + D_80157538) - D_8015753A), (u16)((func_800038E0_44E0() % 50) + 0x32), 0, 0);
+			D_80157534 = *((u8 *)(&D_80157533));
 			D_80157532--;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E7338_F62E8.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800E74DC_F648C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
