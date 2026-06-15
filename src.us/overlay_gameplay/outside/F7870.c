@@ -544,8 +544,6 @@ void func_800EA088_F9038(void) {
 }
 
 // DisplayVehicleShadows
-#ifdef NON_MATCHING
-// regalloc: s1/s2 swapped (counter i vs strength-reduced D_80158E80 pointer)
 void func_800EA12C_F90DC(void) {
 	s32 i;
 
@@ -555,11 +553,9 @@ void func_800EA12C_F90DC(void) {
 			VehicleInstance *v = &vehicleInstances[D_80158E80[i]];
 			if ((v->unk20 & 0x8000) && func_800703B0_7F360(v->unk0, v->unk4) != 0 &&
 				func_800B93AC_C835C(v->unk0, v->unk4, 0xA0, (s32)D_80052B2C->unk0, (s32)D_80052B2C->unk8, 0x4000 - D_80047950) != 0) {
+				do { } while (0);
 				func_800E988C_F883C((AlienInstance *)v, (AlienSpec *)&vehicleSpecs[v->unk1A]);
 			}
 		} while (i--);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800EA12C_F90DC.s")
-#endif
