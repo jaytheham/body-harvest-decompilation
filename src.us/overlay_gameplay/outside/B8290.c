@@ -1050,9 +1050,7 @@ s32 func_800ABCC8_BAC78(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ABCC8_BAC78.s")
 #endif
 
-// NON_MATCHING: regalloc only - all instructions and ordering match, persistent
-// +2 temp register offset (score 145). Target uses v1 for rnd variable but IDO
-// allocates t1 instead, shifting all subsequent temps by 2 positions.
+// CURRENT(145)
 #ifdef NON_MATCHING
 void func_800ABE7C_BAE2C(u8 arg0) {
 	s32 rnd;
