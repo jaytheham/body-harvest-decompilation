@@ -418,39 +418,39 @@ void func_80116724_1256D4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80116724_1256D4.s")
 #endif
 
-// CURRENT(2672)
+// CURRENT(205)
 #ifdef NON_MATCHING
 void func_80116784_125734(void) {
 	Unk80148620 *s4;
-	BuildingInstance *s1;
+	BuildingInstance *building;
 	s32 s5;
 	u32 s3;
-	s32 s2;
-	s32 s6;
-	s32 distX;
+	s32 loop;
 	u32 dist;
+	s32 s6;
 
-	s4 = D_80148620_1575D0;
 	D_8015EA58 = 0;
+	s4 = (Unk80148620 *)(u32)D_80148620_1575D0;
+	s6 = 0xE;
 
 	if (s4 != NULL) {
-		s6 = 0xE;
 		do {
+			u32 curLevel;
 			s3 = -1U;
-			s1 = (BuildingInstance *)D_800522C0;
 
-			if (currentLevel == s4->unk6) {
-				s2 = 0xFE;
+			curLevel = currentLevel;
+			building = (BuildingInstance *)D_800522C0;
+
+			if (curLevel == s4->unk6) {
+				loop = 0xFE;
 				do {
-					distX = func_800047FC_53FC((s16)(s4->unk0 - (s1[-1].xCoord >> 8)));
-					s1--;
-					dist = func_800047FC_53FC((s16)(s4->unk2 - (s1->zCoord >> 8)));
-					dist += distX;
+					building--;
+					dist = func_800047FC_53FC((s16)(s4->unk0 - (building->xCoord >> 8))) + func_800047FC_53FC((s16)(s4->unk2 - (building->zCoord >> 8)));
 					if (dist < s3) {
 						s3 = dist;
-						s5 = s2;
+						s5 = loop;
 					}
-				} while (s2-- != 0);
+				} while (loop--);
 				s4->unk0 = s5;
 				s4->unk2 = 0;
 			} else {
@@ -458,10 +458,7 @@ void func_80116784_125734(void) {
 			}
 
 			s4++;
-			if (s6-- == 0) {
-				goto end;
-			}
-		} while (s4 != NULL);
+		} while (s6-- && s4 != NULL);
 	}
 
 end:
