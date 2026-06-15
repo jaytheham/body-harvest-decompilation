@@ -2201,8 +2201,9 @@ block_211:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED78C_FC73C.s")
 #endif
 
-// Cont 2 button attempts to use weapon model 0 when changing weapon
+// CURRENT(200)
 #ifdef NON_MATCHING
+// Cont 2 button attempts to use weapon model 0 when changing weapon
 s32 func_800EF0B0_FE060(s32 arg0) {
 	s32 buf[2];
 	s32 *ptr;
@@ -2224,23 +2225,23 @@ s32 func_800EF0B0_FE060(s32 arg0) {
 	} while (byte != -0x48 || count >= 0x39);
 
 	if (currentControllerStates[CONTROLLER_TWO].button & BUTTON_Z) {
-		return 0;
+		return byte = 0;
 	}
 
 	if ((sum == -0x88E) && (count == 0x38)) {
 		return 1;
 	}
 
-	return 0;
+	return byte;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF0B0_FE060.s")
 #endif
 
-// This checks the player modifier and writes values that cause either
-// normal or evil adam to be rendered
 // CURRENT(6578)
 #ifdef NON_MATCHING
+// This checks the player modifier and writes values that cause either
+// normal or black adam to be rendered
 void func_800EF14C_FE0FC(VehicleInstance *arg0) {
 	struct {
 		s32 unk0;
@@ -2440,51 +2441,37 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 
 // CURRENT(252)
 #ifdef NON_MATCHING
-void func_800EF9F0_FE9A0(s16 arg0) {
+void func_800EF9F0_FE9A0(s16 arg0)
+{
 	s32 modelDisplayList;
 	AlienInstance *alien;
 	Unk80052B40 sp5C;
 	s32 spPad[2];
 	Unk80052B40 sp48;
-
 	alien = &alienInstances[arg0];
 	modelDisplayList = alienSpecs[alien->specIndex].unk0;
-
 	func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
-
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
 	D_8005BB38 += 0x40;
-
-	sp48.unk0 = 0x4000 - alien->unk6;
 	sp48.unk2 = 0;
 	sp48.unk4 = 0;
 	sp5C.unk0 = alien->unk0;
 	sp5C.unk2 = alien->unk2;
 	sp5C.unk4 = alien->unk4;
-
+	sp48.unk0 = 0x4000 - alien->unk6;
 	func_800039D0_45D0(&sp5C, &sp48, &D_800311A0, D_8005BB38);
-
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_MODELVIEW);
 	D_8005BB38 += 0x40;
-
-	sp5C.unk0 = 0;
-	sp5C.unk4 = 0;
+	sp5C.unk0 = (sp5C.unk4 = 0);
 	sp48.unk0 = D_80157A48.unk2 << 3;
 	sp48.unk2 = D_80157A48.unk4 << 3;
 	sp48.unk4 = D_80157A48.unk0 << 3;
 	sp5C.unk2 = (s16)D_80157A48.unkC;
-
 	func_800039D0_45D0(&sp5C, &sp48, NULL, D_8005BB38);
-
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-
+	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_MODELVIEW);
 	D_8005BB38 += 0x40;
 	gSPSegment(D_8005BB2C++, 0x07, D_8005BB38 & 0x1FFFFFFF);
-
-	func_8000CC3C_D83C((AnimChannelState *)&D_80157A48, 0x10);
-
+	func_8000CC3C_D83C((AnimChannelState *)(&D_80157A48), 0x10);
 	gSPDisplayList(D_8005BB2C++, modelDisplayList);
 }
 #else
