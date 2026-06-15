@@ -8852,6 +8852,7 @@ void func_800D9DD8_E8D88(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
+// CURRENT(1905)
 #ifdef NON_MATCHING
 void func_800D9E38_E8DE8(s16 arg0, s16 arg1) {
 	Unk80154318Entry *entry;
@@ -9340,6 +9341,7 @@ void func_800DABBC_E9B6C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DABBC_E9B6C.s")
 #endif
 
+// CURRENT(1262)
 #ifdef NON_MATCHING
 void func_800DAF24_E9ED4(u8 arg0) {
 	u8 i;
@@ -10464,9 +10466,9 @@ void func_800DEA08_ED9B8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg
 	}
 }
 
-#ifdef NON_MATCHING
+// https://decomp.me/scratch/BrqyY
 void func_800DEADC_EDA8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-	s32 slot;
+	u32 slot;
 	s16 val;
 
 	slot = func_800DDB60_ECB10(arg0, arg1, arg2, 2, (func_800038E0_44E0() % 15) + 0x19);
@@ -10478,9 +10480,6 @@ void func_800DEADC_EDA8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 		D_80156EF0[slot & 0xFF].unkD = val;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DEADC_EDA8C.s")
-#endif
 
 // CURRENT (3200)
 #ifdef NON_MATCHING
