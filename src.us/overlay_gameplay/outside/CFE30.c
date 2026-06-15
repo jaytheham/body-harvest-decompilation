@@ -5429,8 +5429,6 @@ void func_800CF2E0_DE290(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF2E0_DE290.s")
 #endif
 
-// CURRENT(25)
-#ifdef NON_MATCHING
 void func_800CF80C_DE7BC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	s16 idx;
 	Unk80154318Entry *entry;
@@ -5459,9 +5457,6 @@ void func_800CF80C_DE7BC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 		func_800CBDE0_DAD90(arg3, arg0, arg1, arg2, arg4, arg5, arg6, arg7);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF80C_DE7BC.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(2320)
