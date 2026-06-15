@@ -805,26 +805,24 @@ s32 func_80117464_126414(u8 arg0) {
 
 // Is the return value from this used to determine how close a building is?
 // And if it should be drawn?
+// CURRENT(1050)
 #ifdef NON_MATCHING
-/* CURRENT(2240) */
 s32 func_80117508_1264B8(s16 arg0) {
 	s32 halfStep;
 	s32 candidate;
-	s32 step;
+	s32 step = 0x40;
 	s32 distPrev;
 	s32 distThis;
 	s32 distNext;
 	s32 index;
 	u8 thisId;
 	s32 bestId;
-	BuildingInstance *building;
 
 	index = 0x7F;
 	thisId = D_8015EA60[0x7F];
-	step = 0x40;
 	do {
 		halfStep = step >> 1;
-		if ((buildingInstances[thisId].zCoord < arg0) && ((((u32)buildingInstances[thisId].unk8 >> 12) & 1) != 0)) {
+		if ((buildingInstances[thisId].zCoord < arg0) && (((u32)buildingInstances[thisId].unk8 >> 12) & 1)) {
 			candidate = step;
 		} else {
 			candidate = -step;
@@ -841,7 +839,7 @@ s32 func_80117508_1264B8(s16 arg0) {
 	}
 
 	distThis = arg0 - buildingInstances[thisId].zCoord;
-	if ((index < 0xFE) && (((u32)buildingInstances[D_8015EA60[index + 1]].unk8 >> 12) & 1)) {
+	if (((u32)index < 0xFEU) && (((u32)buildingInstances[D_8015EA60[index + 1]].unk8 >> 12) & 1)) {
 		distNext = arg0 - buildingInstances[D_8015EA60[index + 1]].zCoord;
 	} else {
 		distNext = 0xF423F;
@@ -870,12 +868,10 @@ s32 func_80117508_1264B8(s16 arg0) {
 	}
 
 	if ((s32)bestId > 0) {
-		building = &buildingInstances[bestId];
-		if ((building - 1)->zCoord == building->zCoord) {
+		if (buildingInstances[bestId - 1].zCoord == buildingInstances[bestId].zCoord) {
 			do {
-				bestId -= 1;
-				building -= 1;
-			} while ((s32)bestId > 0 && ((building - 1)->zCoord == building->zCoord));
+				bestId--;
+			} while ((s32)bestId > 0 && buildingInstances[bestId - 1].zCoord == buildingInstances[bestId].zCoord);
 		}
 	}
 
