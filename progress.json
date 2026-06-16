@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-16T06:32:36Z",
-  "commit": "1873ea11",
-  "commit_timestamp": "2026-06-16T18:32:02+12:00",
+  "generated": "2026-06-16T07:02:10Z",
+  "commit": "717e533b",
+  "commit_timestamp": "2026-06-16T19:01:37+12:00",
   "overall": {
     "total_functions": 2707,
     "matched": 1492,
@@ -91,15 +91,6 @@
       "total": 122,
       "matched_pct": 23.8,
       "decompiled_pct": 37.7
-    },
-    "data": {
-      "display_name": "data",
-      "matched": 0,
-      "non_matching": 0,
-      "asm_stubs": 0,
-      "total": 0,
-      "matched_pct": 0,
-      "decompiled_pct": 0
     }
   },
   "files": [
@@ -214,56 +205,6 @@
       "contributor": "jaytheham"
     },
     {
-      "path": "data/data_60E60.c",
-      "segment": "data",
-      "matched": 0,
-      "non_matching": 0,
-      "asm_stubs": 0,
-      "total": 0,
-      "matched_pct": 0,
-      "contributor": "jaytheham"
-    },
-    {
-      "path": "data/data_61D50.c",
-      "segment": "data",
-      "matched": 0,
-      "non_matching": 0,
-      "asm_stubs": 0,
-      "total": 0,
-      "matched_pct": 0,
-      "contributor": "jaytheham"
-    },
-    {
-      "path": "data/data_62550.c",
-      "segment": "data",
-      "matched": 0,
-      "non_matching": 0,
-      "asm_stubs": 0,
-      "total": 0,
-      "matched_pct": 0,
-      "contributor": "jaytheham"
-    },
-    {
-      "path": "data/data_62650.c",
-      "segment": "data",
-      "matched": 0,
-      "non_matching": 0,
-      "asm_stubs": 0,
-      "total": 0,
-      "matched_pct": 0,
-      "contributor": "jaytheham"
-    },
-    {
-      "path": "data/data_63850.c",
-      "segment": "data",
-      "matched": 0,
-      "non_matching": 0,
-      "asm_stubs": 0,
-      "total": 0,
-      "matched_pct": 0,
-      "contributor": "jaytheham"
-    },
-    {
       "path": "overlay_gameplay/frontend/40720.c",
       "segment": "overlay_gameplay/frontend",
       "matched": 53,
@@ -281,6 +222,56 @@
       "asm_stubs": 0,
       "total": 105,
       "matched_pct": 58.1,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_60E60.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_61D50.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_62550.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_62650.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_63850.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
       "contributor": "jaytheham"
     },
     {
@@ -836,7 +827,7 @@
     },
     {
       "date": "2026-06-14",
-      "commit": "1873ea1",
+      "commit": "717e533",
       "matched": 1492,
       "non_matching": 1084,
       "total": 2707
