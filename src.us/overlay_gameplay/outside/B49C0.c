@@ -430,9 +430,9 @@ void func_800A68CC_B587C(void) {
 		}
 
 		if (D_8014F808 == 0xA) {
-			sp2E = (*(s16*)(D_8003E000 + (currentLevel * 0x30) + (D_8013D894_14C844 * 8) - 0x30)) << 8;
-			sp2C = (*(s16*)(D_8003E000 + (currentLevel * 0x30) + (D_8013D894_14C844 * 8) - 0x2E) + 1) << 8;
-			sp28 = *(s16*)(D_8003E000 + (currentLevel * 0x30) + (D_8013D894_14C844 * 8) - 0x2A);
+			sp2E = D_8003E000[currentLevel-1][D_8013D894_14C844].unk0 << 8;
+			sp2C = (D_8003E000[currentLevel-1][D_8013D894_14C844].unk2 + 1) << 8;
+			sp28 = D_8003E000[currentLevel-1][D_8013D894_14C844].unk6;
 
 			if (D_8013D894_14C844 == 0) {
 				D_80047F94 = 0;
@@ -556,9 +556,9 @@ void func_800A6FD4_B5F84(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A6FD4_B5F84.s")
 #endif
 
-// displayBeacons
 // CURRENT(44622)
 #ifdef NON_MATCHING
+// displayBeacons
 void func_800A70B8_B6068(void) {
 	s16 i;
 	s32 beaconOffset;

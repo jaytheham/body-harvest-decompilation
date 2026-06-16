@@ -242,6 +242,7 @@ void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80132980_141930.s")
 #endif
 
+// Setup camera for drawing gameplay frame?
 void func_801330E4_142094(Unk80160080 *arg0) {
 	u16 sp46;
 
@@ -1597,9 +1598,9 @@ void func_80136570_145520(void) {
 	D_8006C550 = &D_80258F90;
 }
 
-// displaySignposts
 // CURRENT(4071)
 #ifdef NON_MATCHING
+// displaySignposts
 void func_801365E0_145590(void) {
 	typedef struct {
 		s8 unk0;

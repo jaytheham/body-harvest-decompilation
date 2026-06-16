@@ -3379,6 +3379,7 @@ void func_800C9668_D8618(void) {
 
 // CURRENT(17481)
 #ifdef NON_MATCHING
+// DrawNonZBufferedEffects?
 void func_800C978C_D873C(void) {
 	s16 unitId;
 	s32 pad[42];
@@ -9952,6 +9953,7 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s32 arg2, s32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DC5B8_EB568.s")
 #endif
 
+// DrawNonZBufferedEffects
 void func_800DD5E0_EC590(void) { D_80156EDA = 0; func_800C978C_D873C(); }
 
 // CURRENT(5435)
@@ -12093,6 +12095,7 @@ void func_800E4CEC_F3C9C(s32 arg0, u8 arg1) {
 
 // CURRENT(380)
 #ifdef NON_MATCHING
+// DisplayLasers
 void func_800E5044_F3FF4(void) {
 	Unk80152D00SubEntry *entry;
 	Unk80152D00SubEntry *end;

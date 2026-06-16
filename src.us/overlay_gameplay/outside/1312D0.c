@@ -3916,9 +3916,9 @@ void func_8012D84C_13C7FC()
   }
 }
 
-// debug_drawInteractionBoxes
 // CURRENT(5837)
 #ifdef NON_MATCHING
+// DisplayForces - Debug draw interaction boxes
 void func_8012D884_13C834(void) {
 	Unk8015FAD0 *var_s3;
 	s16 temp_a3;

@@ -1668,9 +1668,9 @@ void func_8009FB58_AEB08(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009FB58_AEB08.s")
 #endif
 
-// displayScanner
 // CURRENT(22016)
 #ifdef NON_MATCHING
+// DisplayScanner
 void func_800A03FC_AF3AC(void) {
 	Unk80052B40 sp170;
 	Unk80052B40 sp168;

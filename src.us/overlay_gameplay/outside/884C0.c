@@ -1524,8 +1524,8 @@ void func_8007BEC0_8AE70(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007BEC0_8AE70.s")
 #endif
 
-// drawComplexObjects eg: humans, alien torsos & heads
 #ifdef NON_MATCHING
+// drawComplexObjects eg: humans, alien torsos & heads
 void func_8007C044_8AFF4(void) {
 	Unk80052B40 smallScale;
 	Unk80052B40 fullScale;

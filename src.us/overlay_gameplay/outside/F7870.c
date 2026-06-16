@@ -255,7 +255,7 @@ void func_800E8A00_F79B0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E8A00_F79B0.s")
 #endif
 
-// SetupForShadows ?
+// SetupForShadows
 void func_800E94B8_F8468(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
@@ -534,7 +534,7 @@ void func_800E988C_F883C(AlienInstance *arg0, AlienSpec *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E988C_F883C.s")
 #endif
 
-// StopDrawingShadows ?
+// StopDrawingShadows
 void func_800EA088_F9038(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPTileSync(D_8005BB2C++);

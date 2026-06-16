@@ -269,6 +269,7 @@ void func_800E87C8_F7778(void) {
 	func_80071E88_80E38(D_80052B2C);
 }
 
+// Setup camera for drawing gameplay frame?
 void func_800E8890_F7840(void) {
 	func_801330E4_142094(&D_80160080);
 }

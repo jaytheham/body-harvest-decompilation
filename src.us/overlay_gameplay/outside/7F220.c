@@ -1,9 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-// Data from ROM 0x14FD40-0x1501A0
-
-// Debug/log strings
 const char D_80140D90_14FD40[] = "WarpPointNumber = %d\n";
 const char D_80140DA8_14FD58[] = "Easy mode activated\n";
 const char D_80140DC0_14FD70[] = "Easy mode disactivated\n";
@@ -54,24 +51,24 @@ const f32 D_801411A0_150150[1] = {32767.0f};
 const f32 D_801411A4_150154[1] = {10000.0f};
 
 const u32 jtbl_801411A8_150158[] = {
-    0x80072554,
-    0x80072418,
-    0x80072390,
-    0x8007245C,
-    0x80072800,
-    0x80072800,
-    0x80072638,
-    0x80072800,
-    0x80072800,
-    0x80072390,
-    0x800724E0,
-    0x800723CC,
-    0x800726F4,
-    0x80072800,
-    0x80072800,
-    0x80072800,
-    0x800725EC,
-    0x00000000,
+	0x80072554,
+	0x80072418,
+	0x80072390,
+	0x8007245C,
+	0x80072800,
+	0x80072800,
+	0x80072638,
+	0x80072800,
+	0x80072800,
+	0x80072390,
+	0x800724E0,
+	0x800723CC,
+	0x800726F4,
+	0x80072800,
+	0x80072800,
+	0x80072800,
+	0x800725EC,
+	0x00000000,
 };
 
 s32 func_80070270_7F220(s32 arg0) {
@@ -130,7 +127,6 @@ void func_800702C0_7F270(s16 arg0) {
 
 s32 func_800703B0_7F360(s16 arg0, s16 arg1) {
 	s32 var_v1;
-
 	var_v1 = 
 		arg0 >= (D_80149434 - 0x800) &&
 		arg1 >= (D_80149436 - 0x900) &&
@@ -143,8 +139,10 @@ void func_80070420_7F3D0(func_80070420_7F3D0_UnkArg0* arg0) {
 	func_8007679C_8574C(arg0->unk9);
 }
 
-/// Inits data after save file started
+// https://decomp.me/scratch/pdwjd
+// CURRENT(8414)
 #ifdef NON_MATCHING
+/// Inits data after save file started
 void func_80070440_7F3F0(void) {
 	s16 sp26;
 	s16 spawnX, spawnY;
@@ -156,7 +154,7 @@ void func_80070440_7F3F0(void) {
 	s16 c0;
 
 	func_8001599C_1659C();
-	osSyncPrintf(D_80140D90, D_80047F9C);
+	osSyncPrintf(D_80140D90_14FD40, D_80047F9C);
 	if (D_80047F98 == 0 || currentLevel == 5) {
 		var_a0 = D_80047F9C;
 		D_80047F94 = 0;
@@ -165,7 +163,7 @@ void func_80070440_7F3F0(void) {
 		D_80047F94 = var_a0 - 1;
 	}
 	if (var_a0 == 5) {
-		D_80047F94 = D_8003DFD4[currentLevel * 0x30 + var_a0 * 8];
+		D_80047F94 = D_8003DFD4_3EBD4[currentLevel * 0x30 + var_a0 * 8];
 		weaponSlots[0] = 2;
 		weaponSlots[1] = 0;
 		weaponSlots[2] = 0;
@@ -405,13 +403,15 @@ void func_80071178_80128(void) {
 	}
 }
 
+// CURRENT(6566)
 #ifdef NON_MATCHING
+// Draw world and objects
 void func_80071228_801D8(void) {
 	Gfx* dl;
 	Gfx* savedDl31200;
 	Gfx* savedDl311D0;
 	s32 savedX;
-		s32 savedY;
+	s32 savedY;
 	s32 savedZ;
 	s32 phase;
 	s32 offset;
@@ -424,11 +424,8 @@ void func_80071228_801D8(void) {
 	segAddr31160 = ((u32)&D_80031160) & 0x1FFFFFFF;
 	savedDl31200 = D_80031200;
 
-	/* set modelview matrix from segment 0x12 */
 	gSPMatrix(D_8005BB2C++, segAddr31160, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	/* enable lighting geometry mode */
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-	/* preserve previous display list */
 	gSPDisplayList(D_8005BB2C++, savedDl31200);
 
 	func_80070FB8_7FF68();
@@ -442,7 +439,7 @@ void func_80071228_801D8(void) {
 	}
 
 	if (D_80052ACB == 0) {
-		func_800E94B8_F8468(D_80140EA0);
+		func_800E94B8_F8468();
 		if (currentControllerStates[0].button == 0x30) {
 			osSyncPrintf(D_80140E08);
 		}

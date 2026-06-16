@@ -5440,6 +5440,7 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 
 // CURRENT(22935)
 #ifdef NON_MATCHING
+// DisplayVehicles
 void func_8010065C_10F60C(s32 arg0) {
 	s32 index;
 	s32 stackPad[54];
@@ -5830,9 +5831,9 @@ void func_8010065C_10F60C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010065C_10F60C.s")
 #endif
 
-// drawDeadVehicles
-#ifdef NON_MATCHING
 // CURRENT(5000)
+#ifdef NON_MATCHING
+// DisplayDeadVehicles
 void func_80101C14_110BC4(void) {
 	s16 i;
 

@@ -521,6 +521,14 @@ typedef struct {
 } Unk_8013D91C;
 
 typedef struct {
+	s16 unk0;
+	s16 unk2;
+	u8 unk4;
+	u8 unk5;
+	s16 unk6;
+} Unk8003E000;
+
+typedef struct {
 	/* 0x00 */ u32 pad0[7];   /* 0x00-0x1B */
 	/* 0x1C */ s32 unk1C;
 	/* 0x20 */ u32 pad20[3];  /* 0x20-0x2B */

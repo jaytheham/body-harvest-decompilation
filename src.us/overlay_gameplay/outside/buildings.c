@@ -1302,8 +1302,8 @@ s32 func_80118670_127620(s16 arg0, s16 arg1) {
 #endif
 
 // CURRENT(70000)
-// displayBuildings
 #ifdef NON_MATCHING
+// displayBuildings
 void func_80118774_127724(s32 arg0) {
 	BuildingInstance *building;
 	BuildingInstance *neighbor;
@@ -4363,6 +4363,9 @@ s32 func_80120634_12F5E4(void) {
 
 // CURRENT(4395)
 #ifdef NON_MATCHING
+// Debug? Find the nearest special building of type D_A01F868
+// in front of and behind the player along the Z-axis,
+// then render a three-segment 3D line connecting those buildings and the player
 void func_801206B0_12F660(void) {
 	BuildingInstance *instA;
 	BuildingInstance *instB;

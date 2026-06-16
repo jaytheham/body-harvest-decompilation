@@ -111,12 +111,13 @@ MissionData* func_80070494_40944(s16 arg0) {
 		s32 i;
 	s32 newv;
 	i = 0x29; do { do {
-		newv = i;
-	if (D_800D6DC0[newv].unk26 == arg0) {
-		return (MissionData *) (&D_800D6DC0[newv]);
-	}
-	} while (i--);
-	return 0;
+			newv = i;
+			if (D_800D6DC0[newv].unk26 == arg0)
+			{
+				return (MissionData *)(&D_800D6DC0[newv]);
+			}
+		} while (i--);
+		return 0;
 	} while (0);
 }
 

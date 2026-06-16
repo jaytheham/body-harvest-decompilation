@@ -703,7 +703,7 @@ void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
 #endif
 
 // ClearDynamicLightBuffer
-/* Clear the dynamic lighting buffer (19x19 grid of RGB values) */
+// Clear the dynamic lighting buffer (19x19 grid of RGB values)
 void func_800B19F8_C09A8(void) {
 	s32 i = 0;
 	s32 j;
@@ -3482,6 +3482,7 @@ void func_800B9C28_C8BD8(void) {
 // https://decomp.me/scratch/Ln5ro
 // CURRENT(7852)
 #ifdef NON_MATCHING
+// DrawTileBuffer
 // Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
 void func_800B9DB8_C8D68(u8 arg0)
 {
@@ -4018,9 +4019,9 @@ success:
 	return 1;
 }
 
-// DrawShieldWalls
 // CURRENT(37669)
 #ifdef NON_MATCHING
+// DrawShieldWalls
 void func_800BB5E0_CA590(void) {
 	Gfx *gfx;
 	s32 padStack[18];

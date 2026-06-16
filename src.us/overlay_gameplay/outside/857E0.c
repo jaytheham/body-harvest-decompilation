@@ -461,9 +461,9 @@ void func_800772EC_8629C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800772EC_8629C.s")
 #endif
 
-// displayTrees
-/* CURRENT(43791) */
+// CURRENT(43791)
 #ifdef NON_MATCHING
+// DisplayTrees
 void func_8007764C_865FC(void) {
 	s32 camX;
 	s32 camZ;
@@ -816,38 +816,38 @@ void func_80078720_876D0(AlienInstance *alien)
   }
   if (alien->unk10 == sp1C)
   {
-    u16 *v0;
-    s32 v1 = alien->unk10;
-    sp1C = alien->unk30;
-    v0 = func_800785B4_87564((s16) v1, (s16) sp1C, &sp20);
-    if (v0 != NULL)
-    {
-      func_800786EC_8769C(v0, 2);
-    }
-    v1 = sp1C;
-    v0 = func_800785B4_87564((s16) (v1 - 1), (s16) v1, &sp20);
-    if (v0 != NULL)
-    {
-      func_800786EC_8769C(v0, 1);
-    }
+	u16 *v0;
+	s32 v1 = alien->unk10;
+	sp1C = alien->unk30;
+	v0 = func_800785B4_87564((s16) v1, (s16) sp1C, &sp20);
+	if (v0 != NULL)
+	{
+	  func_800786EC_8769C(v0, 2);
+	}
+	v1 = sp1C;
+	v0 = func_800785B4_87564((s16) (v1 - 1), (s16) v1, &sp20);
+	if (v0 != NULL)
+	{
+	  func_800786EC_8769C(v0, 1);
+	}
   }
   else
   {
-    u16 *v0;
-    s32 a3 = new_var;
-    sp1C = alien->unk10;
-    v0 = func_800785B4_87564((s16) sp1C, (s16) a3, &sp20);
-    a3 = sp1C;
-    if (v0 != NULL)
-    {
-      func_800786EC_8769C(v0, 0);
-    }
-    v0 = func_800785B4_87564((s16) a3, (s16) (a3 - 1), &sp20);
-    if (v0 != NULL)
-    {
-      func_800786EC_8769C(v0, 3);
-    }
-    sp1C = alien->unk10;
+	u16 *v0;
+	s32 a3 = new_var;
+	sp1C = alien->unk10;
+	v0 = func_800785B4_87564((s16) sp1C, (s16) a3, &sp20);
+	a3 = sp1C;
+	if (v0 != NULL)
+	{
+	  func_800786EC_8769C(v0, 0);
+	}
+	v0 = func_800785B4_87564((s16) a3, (s16) (a3 - 1), &sp20);
+	if (v0 != NULL)
+	{
+	  func_800786EC_8769C(v0, 3);
+	}
+	sp1C = alien->unk10;
   }
 }
 #else

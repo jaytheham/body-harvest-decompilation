@@ -31,6 +31,17 @@ typedef enum Level {
 	LEVEL_COMET = 5
 } Level;
 
+typedef enum GameStateFlags {
+	GAME_STATE_FLAG_UNK1 = 1,
+	GAME_STATE_FLAG_BLACK_ADAM = 2,
+	GAME_STATE_FLAG_UNK3 = 4,
+	GAME_STATE_FLAG_UNK4 = 8,
+	GAME_STATE_FLAG_UNK5 = 0x10,
+	GAME_STATE_FLAG_UNK6 = 0x20,
+	GAME_STATE_FLAG_EASY_MODE = 0x40,
+	GAME_STATE_FLAG_UNK8 = 0x80
+} GameStateFlags;
+
 typedef enum
 {
 	ANIM_WALKING = 0,
@@ -478,9 +489,8 @@ extern u8 D_80036C74[];
 extern u8 D_8004337D;
 extern u16 D_8003D000_3DC00[];
 extern u16 D_8003D800_3E400[];
-extern u8 D_8003DFD4[];
 extern u8 D_8003DFD4_3EBD4[];
-extern u8 D_8003E000[];
+extern Unk8003E000 D_8003E000[5][6];
 extern s16 D_8003E0EE[];
 extern GateEntry D_8003E0FC[5][8]; // shield wall gates by level
 
@@ -701,7 +711,7 @@ extern s16 D_80052AC8;
 extern u8 D_80052ACA;
 extern u8 D_80052ACB; // Rendering Flags? 1=Shadows 2=Objects
 extern u8 D_80052ACC;
-extern u8 D_80052ACD; // bitfield? x02 = black adam model
+extern u8 D_80052ACD; // Game state bitflags
 extern s32 D_80052AD0;
 extern s32 D_80052AD4;
 extern s32 D_80052AD8;
@@ -1502,7 +1512,6 @@ extern u8 D_80140D2C_14FCDC[];
 extern s16 D_80140D40_14FCF0[];
 extern u8 D_80140D68_14FD18[];
 extern u8 D_80140D74_14FD24[];
-extern u8 D_80140D90[];
 extern u8 D_80140DA8[];
 extern u8 D_80140DC0[];
 extern f32 D_801411A0;
