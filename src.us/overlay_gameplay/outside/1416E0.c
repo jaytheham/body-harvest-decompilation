@@ -37,6 +37,7 @@ s16 func_80132730_1416E0(s32 arg0, s32 arg1) { return (s16)(arg1 - arg0); }
 s16 func_801361A4_145154(Unk80160080 *arg0);
 void func_80136214_1451C4(Unk80160080 *arg0);
 
+// CURRENT(890)
 #ifdef NON_MATCHING
 void func_80132740_1416F0(Unk80160080 *arg0) {
 	VehicleInstance *sp1C;
@@ -519,9 +520,7 @@ void func_80133A54_142A04(Unk80160080 *arg0) {
 #endif
 
 
-// CURRENT(400)
-#ifdef NON_MATCHING
-void func_80133C9C_142C4C(Vec3f *arg0, Vec3f *arg1, void *arg2, s16 arg3, u16 arg4, s32 arg5, s16 arg6) {
+void func_80133C9C_142C4C(Vec3f *arg0, Vec3f *arg1, void *arg2, s16 arg3, u32 arg4, s32 arg5, s16 arg6) {
 	Vec3f sp44;
 	f32 sp40;
 	f32 temp_f0;
@@ -560,9 +559,6 @@ void func_80133C9C_142C4C(Vec3f *arg0, Vec3f *arg1, void *arg2, s16 arg3, u16 ar
 	arg0->y = arg0->y + arg1->y;
 	arg0->z = arg0->z + arg1->z;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80133C9C_142C4C.s")
-#endif
 
 void func_80133E94_142E44(s32 arg0) {
 	if (arg0 >= 0x24) {

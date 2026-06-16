@@ -2740,7 +2740,7 @@ void func_802DA3EC_192EFC(u8 arg0) {
 	}
 
 	if ((parent->unk20 & 0x8000) && ((alien->unk2C % 3) == 0)) {
-		func_800A9738_B86E8(arg0, 0x80000000, 0);
+		func_800A9738_B86E8(arg0, 0x80000000);
 	}
 
 	func_800A92E0_B8290(arg0, 0xF000);
@@ -3224,7 +3224,7 @@ void func_802DC2E4_194DF4(u8 arg0) {
 	alienInstances[alien->unk25].unk2C = 0x3C;
 	alienInstances[alien->unk25].unk1E = 6;
 
-	func_800A9738_B86E8(alien->unk25, 0x400000, 0x50);
+	func_800A9738_B86E8(alien->unk25, 0x400000);
 
 	alien->unk2C = 0x32;
 	func_80137468_146418(arg0, 0x11);
