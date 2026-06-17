@@ -489,7 +489,6 @@ extern u8 D_80036C74[];
 extern u8 D_8004337D;
 extern u16 D_8003D000_3DC00[];
 extern u16 D_8003D800_3E400[];
-extern u8 D_8003DFD4_3EBD4[];
 extern Unk8003E000 D_8003E000[5][6];
 extern s16 D_8003E0EE[];
 extern GateEntry D_8003E0FC[5][8]; // shield wall gates by level

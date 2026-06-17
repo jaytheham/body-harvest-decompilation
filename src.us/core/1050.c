@@ -1108,7 +1108,7 @@ void guess_loadSavedGame(s32 arg0) {
 			D_80047F98 = D_80047F9C;
 		}
 		osSyncPrintf(&D_80036B94_37794, D_80047F98);
-		D_80047F94 = D_8003DFD4_3EBD4[currentLevel * 0x30 + D_80047F98 * 8];
+		D_80047F94 = D_8003E000[currentLevel-1][D_80047F98].unk0;
 		D_8004D154 = 0;
 		shift = 0;
 		do {
