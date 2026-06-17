@@ -3250,7 +3250,7 @@ s32 func_8011D260_12C210(s8 arg0, s8 arg1) {
 		return -1;
 	}
 
-	if (((D_80050AE0[temp_v0].unk0 >> 12) & 1) == 0) {
+	if (((buildingInstances[temp_v0].unk8 >> 12) & 1) == 0) {
 		return -1;
 	}
 

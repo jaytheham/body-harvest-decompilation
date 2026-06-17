@@ -575,7 +575,7 @@ void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	s32 *new_var2;
 	if (arg1 >= arg2)
 	{
-		if (D_80050AE7[arg0 * 24] > 0)
+		if (buildingInstances[arg0].hitPoints > 0)
 		{
 			func_8011C080_12B030(arg0);
 			goto end;

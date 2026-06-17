@@ -2838,7 +2838,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 				}
 
 				if (soundId != 0) {
-					func_8011BEA0_12AE50(soundId, (D_802566D2[inst->specIndex * 0x68] * (absSpeed + 1)) / 6400);
+					func_8011BEA0_12AE50(soundId, (alienSpecs[inst->specIndex].unk52 * (absSpeed + 1)) / 6400);
 				}
 			}
 		}

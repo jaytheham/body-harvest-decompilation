@@ -1195,7 +1195,7 @@ loop_1:
 	case 0x9B:
 		switch (arg1[0]) {
 		case 0x99:
-			return arg0[1] == (((D_80050AE0[arg1[1]].unk0) << 26) >> 28);
+			return arg0[1] == ((buildingInstances[arg1[1]].unk8 << 26) >> 28);
 		case 0xAF:
 			temp = arg1[1];
 			arg1 = D_8004D180 + temp * 3;
@@ -1227,11 +1227,11 @@ s32 func_800081D4_8DD4(u8 *arg0) {
 	case 0x8D:
 		return func_80007DE0_89E0(arg0) == 0;
 	case 0xB5: {
-		u32 v = D_80050AE0[arg0[1]].unk0;
+		u32 v = buildingInstances[arg0[1]].unk8;
 		return ((v >> 12) & 0x10) == 0x10;
 	}
 	case 0xB1: {
-		u32 v = D_80050AE0[arg0[1]].unk0;
+		u32 v = buildingInstances[arg0[1]].unk8;
 		return ((v >> 12) & 0x10) == 0 || ((v >> 12) & 1) == 0;
 	}
 	case 0x8E:

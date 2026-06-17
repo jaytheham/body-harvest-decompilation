@@ -565,7 +565,7 @@ void func_8008DEF4_9CEA4(u8 arg0)
 	if ((alienInstances[arg0].unk20 & 0x100) && (!(alienInstances[arg0].unk20 & 0x1000)))
 	{
 	  s32 temp_v0 = func_8011D260_12C210((s8) (alienInstances[arg0].unk0 >> 8), (s8) (alienInstances[arg0].unk4 >> 8));
-	  if ((temp_v0 != 0xFF) && (!((D_80050AE0[temp_v0].unk0 >> 12) & 1)))
+	  if ((temp_v0 != 0xFF) && (!((buildingInstances[temp_v0].unk8 >> 12) & 1)))
 	  {
 		func_8008D3F4_9C3A4(arg0);
 	  }
@@ -1554,12 +1554,12 @@ void func_8009012C_9F0DC(u8 arg0) {
 	}
 
 skip_parent_cleanup:
-	if ((parentFlags & 0x2000) && (((D_80050AE0[inst->unk38].unk0 >> 12) & 4) != 0)) {
+	if ((parentFlags & 0x2000) && (((buildingInstances[inst->unk38].unk8 >> 12) & 4) != 0)) {
 		inst->unk20 &= ~0x6000;
 		return;
 	}
 
-	i = (D_80050AE0[inst->unk38].unk0 >> 12) & 1;
+	i = (buildingInstances[inst->unk38].unk8 >> 12) & 1;
 	if (i == 0) {
 		inst->unk20 &= ~0x6000;
 	}
@@ -2035,7 +2035,7 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2) {
 
 	sp7B = temp_a2;
 	var_v1 = temp_s0->unk20;
-	var_a1 = (D_802566D2[temp_s0->specIndex * 0x68] * var_a0);
+	var_a1 = (alienSpecs[temp_s0->specIndex].unk52 * var_a0);
 	var_a1 = (var_a1 / 0xC8) >> 5;
 	if ((var_v1 << 4) >= 0) {
 		func_8011BEA0_12AE50(temp_a2 & 0xFF, var_a1);
@@ -2065,7 +2065,7 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2) {
 	temp_s0->unk20 = temp_t7;
 	var_v1 = temp_t7;
 	if ((temp_t7 << 4) >= 0) {
-		if (!(((*(u32 *)(D_80050AE0 + (sp7B * 0x18))) >> 12) & 0x100C)) {
+		if (!((buildingInstances[sp7B].unk8 >> 12) & 0x100C)) {
 			*(s16 *)(D_800481D0 + (temp_s0->unk25 * 0x50)) = (s16)sp7B;
 			var_v1 = temp_s0->unk20;
 		}

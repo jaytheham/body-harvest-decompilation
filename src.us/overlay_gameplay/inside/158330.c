@@ -277,7 +277,7 @@ void func_800705E0_1586A0(void *arg0) {
 				break;
 
 			case 31:
-				D_800E6630 = ((*(s32 *)&D_80050AE0[D_80052540 * 0x18]) << 0x1A) >> 0x1C;
+				D_800E6630 = (buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C;
 				entry->unk2 = (roomX * 8) + 0x60;
 				entry->unk4 = (s8)obj->pad1C[0];
 				entry->unk6 = (roomY * 8) + 0x60;
@@ -1254,7 +1254,7 @@ s32 func_80072E88_15AF48(void)
 	  break;
 	}
 		
-	  if ((D_80050AE0[D_80052540][0] << 0x1A) >> 0x1C != 5)
+	  if ((buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C != 5)
 	{
 	  break;
 	}
@@ -1265,7 +1265,7 @@ s32 func_80072E88_15AF48(void)
 	case 4:
 	  if (D_800E66A4 == 1)
 	{
-	  if ((D_80050AE0[D_80052540][0] << 0x1A) >> 0x1C == 8)
+	  if ((buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C == 8)
 	  {
 		return 1;
 	  }
@@ -1275,7 +1275,7 @@ s32 func_80072E88_15AF48(void)
 	  break;
 	}
 	  
-	  if (((D_80050AE0[D_80052540][0] << 0x1A) >> 0x1C != 0xA) && ((D_80050AE0[D_80052540][0] << 0x1A) >> 0x1C != 6))
+	  if (((buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C != 0xA) && ((buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C != 6))
 	{
 	  break;
 	}

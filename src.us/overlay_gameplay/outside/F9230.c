@@ -1802,7 +1802,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 			if (arg0->unk20 & 0x1000) {
 				D_80048188 = 0;
 			}
-			if (((u32) *(&D_80050AE0 + (D_80052540 * 0x18)) >> 0xC) & 4) {
+			if ((buildingInstances[D_80052540].unk8 >> 0xC) & 4) {
 				D_80048188 = 0;
 			}
 			if ((D_80048188 == 0) && (arg0->unk1C <= 0)) {

@@ -762,7 +762,7 @@ typedef enum AlienFlags {
 	ALIEN_FLAG_UNKC = 0x800,
 	ALIEN_FLAG_UNKD = 0x1000,
 	ALIEN_FLAG_UNKE = 0x2000,
-	ALIEN_FLAG_UNKF = 0x4000,
+	ALIEN_FLAG_UNKF = 0x4000, // Target building?
 	ALIEN_FLAG_UNKG = 0x8000,
 	ALIEN_FLAG_UNKH = 0x10000,
 	ALIEN_FLAG_UNKI = 0x20000,
@@ -866,7 +866,8 @@ typedef struct {
 	/* 0x4C */ void *unk4C;
 	/* 0x50 */ s8 unk50; // Legs modifier?
 	/* 0x51 */ u8 unk51;
-	/* 0x52 */ u8 pad52[0x2]; // Damage done by rush attack(Spyder)
+	/* 0x52 */ u8 unk52; // Damage done by rush attack(Spyder)
+	/* 0x53 */ u8 unk53;
 	/* 0x54 */ s32 unk54; // xxxxyyyy xxxx Material type etc(Flesh, metal) Can use to give other enemies shields(000C)
 	/* 0x58 */ s16 unk58; // Height of body off the ground
 	/* 0x5A */ u8 pad5A[0xE];
@@ -1074,7 +1075,7 @@ typedef struct {
 	/* 0x0C */ u8 unkC;
 	/* 0x0D */ u8 unkD;
 	/* 0x0E */ u8 unkE;
-	/* 0x0F */ u8 hitPoints;
+	/* 0x0F */ s8 hitPoints;
 	/* 0x10 */ u8 unk10;
 	/* 0x11 */ s8 unk11;
 	/* 0x12 */ u8 door1InteriorId;

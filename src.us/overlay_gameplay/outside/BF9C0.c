@@ -4945,7 +4945,7 @@ void func_800BDDCC_CCD7C(void) {
 				func_800755E0_84590();
 				sp5E = 0xFE;
 				do {
-					D_80050AE0[sp5E].pad4[3] = 0;
+					buildingInstances[sp5E].door1InteriorId = 0;
 					func_8011BB94_12AB44(sp5E, 1);
 				} while (sp5E-- != 0);
 				func_80087F08_96EB8();

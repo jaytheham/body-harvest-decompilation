@@ -1810,7 +1810,7 @@ void func_802D85F8_191108(u8 arg0)
 	  if (alienInstances[arg0].unk20 & 0x100)
 	  {
 		new_var = alienInstances[arg0].unk38;
-		if ((((D_80050AE0[new_var].unk0 >> 0xC) & 1) == 0) || ((D_80050AE0[new_var].unk0 >> 0xc )& 4))
+		if ((((buildingInstances[new_var].unk8 >> 0xC) & 1) == 0) || ((buildingInstances[new_var].unk8 >> 0xc )& 4))
 		{
 		  alienInstances[arg0].unk20 &= ~0x100;
 		}
@@ -1842,7 +1842,7 @@ void func_802D8724_191234(u8 arg0) {
 			u32 temp_t5;
 
 			temp_v0 = alienInstances[arg0].unk38;
-			temp_t5 = (u32)(*(u32 *)(D_80050AE0 + temp_v0 * 0x18)) >> 0xC;
+			temp_t5 = (buildingInstances[temp_v0].unk8 >> 0xC);
 			if (((temp_t5 & 1) == 0) || (temp_t5 & 0x10)) {
 				alienInstances[arg0].unk20 &= ~0x100;
 			}

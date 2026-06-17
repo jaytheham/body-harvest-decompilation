@@ -208,7 +208,7 @@ void func_800AE6CC_BD67C(void) {
 					break;
 
 				case 7:
-					if (((*(u32 *)(D_80050AE0 + (D_80222A78[i].unk8 * 0x18))) >> 0xC & 1) == 0) {
+					if (((buildingInstances[D_80222A78[i].unk8].unk8 >> 0xC) & 1) == 0) {
 						shouldRun = 1;
 					}
 					break;

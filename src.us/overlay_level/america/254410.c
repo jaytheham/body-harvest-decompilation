@@ -677,7 +677,7 @@ void func_802D65BC_255CFC(u8 arg0) {
 
 	if (alien->unk20 & 0x100) {
 		if ((D_80052A8C & 0x3F) == (arg0 & 0x3F)) {
-			if (!((D_80050AE0[alien->unk38].unk0 >> 12) & 1) || ((D_80050AE0[alien->unk38].unk0 >> 12) & 0x10)) {
+			if (!((buildingInstances[alien->unk38].unk8 >> 12) & 1) || ((buildingInstances[alien->unk38].unk8 >> 12) & 0x10)) {
 				alien->unk20 &= ~0x100;
 			}
 		}

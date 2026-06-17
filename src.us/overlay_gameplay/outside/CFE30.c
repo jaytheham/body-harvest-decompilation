@@ -4993,7 +4993,7 @@ void func_800CE1C0_DD170(u8 arg0) {
 				temp_s0_2 = temp_s1->unk4;
 				func_800C1A4C_D09FC(var_s3, temp_s7 & 0xFF, 0);
 				var_s3 = temp_s0_2;
-				if ((((u32)*(u32 *)&D_80050AE0[temp_s5 * 0x18] >> 0xC) & 0x10) && ((func_800038E0_44E0() % 3) == 0)) {
+				if (((buildingInstances[temp_s5].unk8 >> 0xC) & 0x10) && ((func_800038E0_44E0() % 3) == 0)) {
 					s32 div = 0x32;
 
 					temp_s0_3 = func_800038E0_44E0() & 0xFFFF;
