@@ -618,7 +618,6 @@ extern s32 D_80048194;
 extern AlienInstance alienInstances[]; // 0x80048198
 extern s16 D_8013D786_14C736[];
 extern s16 D_8014E4D6[];
-extern u8 D_800481D0[];
 extern s16 D_800481DD[];
 extern AlienWaveEntry D_8003BCC0[][12];
 extern u8 D_8003BCC6;
