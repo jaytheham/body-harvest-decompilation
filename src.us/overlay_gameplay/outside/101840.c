@@ -893,7 +893,7 @@ void func_800F34AC_10245C(s32 arg0) {
 	walker->limbs[0].unk22 = 0x10;
 	*(s32*)&walker->limbs[0].unk0 = *(s32*)&walker->limbs[0].unk10;
 	*(s32*)&walker->limbs[0].unk4 = *(s32*)&walker->limbs[0].unk14;
-	walker->unk16A = *(s16*)&D_8014DD52[alienInstances[walker->alienIdx].unkC * 0x10] + alienInstances[walker->alienIdx].unk2;
+	walker->unk16A = D_8014DD50[alienInstances[walker->alienIdx].unkC].unk2 + alienInstances[walker->alienIdx].unk2;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F34AC_10245C.s")
@@ -1336,7 +1336,7 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 		if (walker->limbs[0].unk22 == 0x10) {
 			entry->unk16 = walker->unk16A;
 		} else {
-			entry->unk16 = *(s16 *)&D_8014DD52[alienInstances[parentAlien].unkC * 0x10] + alienInstances[parentAlien].unk2;
+			entry->unk16 = D_8014DD50[alienInstances[parentAlien].unkC].unk2 + alienInstances[parentAlien].unk2;
 		}
 
 		spB2 = entry->unk16;
@@ -1434,7 +1434,7 @@ void func_800F4DB0_103D60(void) {
 				for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
 					if (walker->limbs[limb + 1].unk23 == 0) {
 						alienBase = (u8 *)&alienInstances[walker->alienIdx];
-						walker->limbs[limb + 1].unk16 = *(s16 *)&D_8014DD52[(*(s16 *)&alienBase[0xC]) * 0x10] + *(s16 *)&alienBase[0x2];
+						walker->limbs[limb + 1].unk16 = D_8014DD50[alienBase.unkC].unk2 + *(s16 *)&alienBase[0x2];
 					}
 				}
 				if (walker->limbs[0].unk22 == 0) {

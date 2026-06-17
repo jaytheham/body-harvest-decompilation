@@ -1880,9 +1880,9 @@ void func_802D91F8_1F1F08(u8 arg0) {
 			spAF = var_v0_2;
 
 			if ((var_v0_2 == 2) || (temp_s0->unk36 == 2)) {
-				sp9C = (s32) (((f64) (f32) sins(*(&D_8014DD56 + (spB2 * 0x10))) / 32768.0) * 120.0);
-				temp_f4 = (f64) (f32) coss(*(&D_8014DD56 + (spB2 * 0x10))) / 32768.0;
-				temp_v1 = *(&D_8014DD56 + (spB0 * 0x10));
+				sp9C = (s32) (((f64) (f32) sins(D_8014DD50[spB2].unk6)) / 32768.0) * 120.0);
+				temp_f4 = (f64) (f32) coss(D_8014DD50[spB2].unk6) / 32768.0;
+				temp_v1 = D_8014DD50[spB0].unk6;
 				temp_a0 = temp_v1 & 0xFFFF;
 				sp68 = temp_a0;
 				sp92 = temp_v1;
@@ -1893,7 +1893,7 @@ void func_802D91F8_1F1F08(u8 arg0) {
 				temp_v1_2 = (spB0 * 0x10) + &D_8014DD50;
 				sp54->unk30 = (s16) (s32) ((((f64) (f32) coss(sp6A) / 32768.0) * (f64) sp94) + ((f64) temp_v1_2->unk4 + ((f64) -sp9C * ((f64) (f32) sp72 / 32768.0))));
 				sp54->unk2E = (s16) temp_v1_2->unk2;
-				temp_a3 = sp92 + *(&D_8014DD56 + (spB2 * 0x10));
+				temp_a3 = sp92 + D_8014DD50[spB2].unk6;
 				if (temp_s0->unk20 & 0x4000) {
 					var_a3 = (temp_s0->unk6 - temp_a3) - 0x4000;
 				} else {

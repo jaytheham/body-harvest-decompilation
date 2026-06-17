@@ -878,7 +878,7 @@ void func_800AB8CC_BA87C(u8 arg0) {
 	inst->unk4 = (s16)helper2;
 
 	if (spec->unk20 & 0x600) {
-		inst->unk2 += *(s16 *)&D_8014DD52[spec->unkC * 0x10];
+		inst->unk2 += D_8014DD50[spec->unkC].unk2;
 	}
 
 	inst->unk2C++;
