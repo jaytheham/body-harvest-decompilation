@@ -787,7 +787,7 @@ typedef struct {
 	/* 0x0A */ s16 unkA; // Z orientation
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ s16 unkE; // "Direction"
-	/* 0x10 */ s16 unk10; // Y Velocity
+	/* 0x10 */ s16 unk10; // Y Velocity, are this and Speed actually a single s32?
 	/* 0x12 */ s16 unk12; // Speed
 	/* 0x14 */ s16 unk14; // target x coord
 	/* 0x16 */ s16 unk16; // target y coord

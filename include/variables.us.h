@@ -795,7 +795,6 @@ extern s32 D_8015EA18;
 extern s32 D_8015EA1C;
 extern s32 D_8015EA20;
 extern s32 D_8015EA24;
-extern u8 D_80050AE9;
 extern u8 D_3058A40[];
 extern u8 D_3059BA0[];
 extern u8 D_305AFA0[];

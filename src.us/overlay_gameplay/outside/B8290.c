@@ -1698,7 +1698,7 @@ u8 func_800AD554_BC504(s32 arg0, s32 arg1, s32 arg2) {
 		ptr->unk48 = 0x40;
 		ptr->unk20 |= 0x1000;
 		ptr->unk1B = func_800B0F20_BFED0(arg0, arg1);
-		v3 = (&D_80050AE9)[arg2 * 24];
+		v3 = buildingInstances[arg2].unk11;
 		if (v3 != -1) {
 			D_80146688_155638[currentLevel - 1][v3].unk0A += 1;
 		} else {
