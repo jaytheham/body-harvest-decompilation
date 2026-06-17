@@ -546,7 +546,7 @@ void func_802D5F88_2556C8(u8 arg0) {
 	alien->unk47 &= 0xFFFE;
 	alien->unk20 |= 0x40000000;
 	alien->unk2C = 0x7FFF;
-	sp3A = D_8014DD5C[alien->unkC * 16];
+	sp3A = D_8014DD50[alien->unkC].unkC;
 	cosVal = (s16)(((f64)(f32)coss(alien->unk6) / 32768.0) * 6.0);
 	sinVal = (s16)(((f64)(f32)sins(alien->unk6) / 32768.0) * 6.0);
 	func_80088E40_97DF0(arg0, sp3A, D_8014DD50[sp3A].unk0, D_8014DD50[sp3A].unk2, D_8014DD50[sp3A].unk4, -sinVal, 8, cosVal);
@@ -696,7 +696,7 @@ void func_802D6684_255DC4(u8 arg0)
 	AlienInstance *alien;
 	sp24 = 0x1C2;
 	alien = &alienInstances[arg0];
-	sp36 = D_8014DD5C[alien->unkC * 16];
+	sp36 = D_8014DD50[alien->unkC].unkC;
 	func_8008E478_9D428(arg0);
 	if (alien->unk25 != 0xFF)
 	{
@@ -2274,7 +2274,7 @@ void func_802DB6B0_25ADF0(u8 arg0) {
 	s16 sp24;
 
 	specIndex = alienInstances[arg0].specIndex;
-	sp24 = D_8014DD5C[alienInstances[arg0].unkC * 16];
+	sp24 = D_8014DD50[alienInstances[arg0].unkC].unkC;
 
 	if (!(alienInstances[arg0].unk20 & 0x100000)) {
 		if (alienInstances[arg0].unk20 & 0x600) {
@@ -3073,7 +3073,7 @@ void func_802DDC88_25D3C8(u8 arg0) {
 
 	alien = &alienInstances[arg0];
 	sp40 = alien->unkC;
-	sp42 = D_8014DD5C[alien->unkC * 16];
+	sp42 = D_8014DD50[alien->unkC].unkC;
 
 	if (alien->unk20 & 0x2000) {
 		if (alien->unk24 < 20) {

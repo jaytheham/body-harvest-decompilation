@@ -2058,7 +2058,7 @@ void func_802DA210_1F2F20(u8 arg0, s16 arg1, s16 arg2) {
 		}
 		sp77 = temp_v0;
 		func_80081E5C_90E0C((s16) temp_v0);
-		if (D_8014DD5E[temp_v0][0] == 0) {
+		if (D_8014DD50[temp_v0].unkE == 0) {
 			temp_v0_2 = s0->unk36;
 			if (temp_v0_2 == 3) {
 				s0->unk20 = (s32) (s0->unk20 & ~0x1000);
@@ -2399,7 +2399,7 @@ void func_802DAFD0_1F3CE0(u8 arg0, s16 arg1) {
 	AlienSpec *temp_v0_3;
 
 	sp48[0] = arg1;
-	sp48[1] = D_8014DD5C[arg1 * 0x10];
+	sp48[1] = D_8014DD50[arg1].unkC;
 	sp47 = func_80082084_91034(arg0, 2, 0xA, sp48, &D_802E0870_1F9580);
 
 	if (sp47 == 2 || sp47 == 5 || sp47 == 8) {
@@ -2529,7 +2529,7 @@ void func_802DB14C_1F3E5C(u8 arg0) {
 		}
 	}
 	if (var_a3->unk20 & 0x8000) {
-		func_802DAFD0_1F3CE0(arg0, *(&D_8014DD5D + (sp5C * 0x10)));
+		func_802DAFD0_1F3CE0(arg0, *(&D_8014DD50[sp5C].unkD));
 	}
 }
 #else
@@ -3121,7 +3121,7 @@ void func_802DCA54_1F5764(u8 arg0) {
 	temp_v0 = temp_s1->x - temp_s1->unk14;
 	temp_v1 = temp_s1->y - temp_s1->unk18;
 	var_s7 = 0;
-	sp7E = D_8014DD5C[temp_s1->unkC * 0x10];
+	sp7E = D_8014DD50[temp_s1->unkC].unkC;
 	if (((temp_v0 * temp_v0) + (temp_v1 * temp_v1)) < 0x57E40) {
 		temp_v0_2 = temp_s1->flags;
 		temp_t1 = temp_v0_2 | 0x10;
@@ -4162,7 +4162,7 @@ void func_802DEFC0_1F7CD0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	Unk8014DD50 *spec2;
 
 	temp_v0 = &alienInstances[arg0 & 0xFF];
-	spec1 = &D_8014DD50[D_8014DD5C[temp_v0->unkC * 0x10]];
+	spec1 = &D_8014DD50[D_8014DD50[temp_v0->unkC].unkC];
 	sp10 = (void *)spec1;
 	temp_v0->unk20 &= ~ALIEN_FLAG_UNKG;
 	spec2 = &D_8014DD50[spec1->unkC];

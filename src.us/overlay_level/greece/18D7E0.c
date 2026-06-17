@@ -2212,7 +2212,7 @@ void func_802D962C_19213C(u8 arg0, s16 arg1, s16 arg2, AlienInstance *alien) {
 
 		func_80081E5C_90E0C((s16) currentNode);
 
-		if (D_8014DD5E[currentNode][0] == 0) {
+		if (D_8014DD50[currentNode].unkE == 0) {
 			state = alienInst->unk36;
 			if (state == 3) {
 				alienInst->unk20 &= ~0x1000;
@@ -2575,9 +2575,9 @@ void func_802DA3EC_192EFC(u8 arg0) {
 		}
 	}
 
-	pathA = D_8014DD5C[alien->unkC << 4];
+	pathA = D_8014DD50[alien->unkC].unkC;
 	func_80090948_9F8F8(pathA, 0x7D0);
-	pathB = D_8014DD5D[pathA << 4];
+	pathB = D_8014DD50[pathA].unkD;
 	func_80090948_9F8F8(pathB, 0x7D0);
 
 	path1 = &D_8014DD50[D_8014DD50[pathB].unkD];
@@ -2780,7 +2780,7 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 			alien->unk20 &= ~0x4000;
 		}
 
-		if ((alien->unk36 == 2) && (D_8014DD5E[nodes[0]][0] == 0)) {
+		if ((alien->unk36 == 2) && (D_8014DD50[nodes[0]].unkE == 0)) {
 			func_80128504_1374B4(alien, 1, &posX, &posY, &posZ);
 			func_800DEE5C_EDE0C((s16)posX, (s16)(posY + 5), (s16)posZ, 0x50, 0xA);
 			func_800DEA08_ED9B8((s16)posX, (s16)posY, (s16)posZ, 0x1C2, 8, 6, 0x28, 0xDC, 0xA6, 0x85, 0x2F);
@@ -2881,7 +2881,7 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 				alien->unk20 &= ~0x1000;
 				alien->unk36 = 0;
 				alien->unk20 |= 0x2000;
-				D_8014DD5E[nodes[0]][0] = 0;
+				D_8014DD50[nodes[0]].unkE = 0;
 			}
 		}
 		return 1;

@@ -1618,8 +1618,6 @@ extern u8 D_8014D510[];
 extern u8 D_8014D550[];
 extern Unk8014DD50 D_8014DD50[];
 extern s16 D_8014DD54[];
-extern s8 D_8014DD5C[];
-extern s8 D_8014DD5D[];
 extern Unk802E71B8 D_802E71B8;
 extern Unk802E71B8 D_802E71C0;
 extern s16 D_8014DD5E[][8];

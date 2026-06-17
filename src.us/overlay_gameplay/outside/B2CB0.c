@@ -35,7 +35,7 @@ void func_800A3D00_B2CB0(u8 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	}
 
 	func_80081E5C_90E0C(arg1);
-	if (D_8014DD5E[arg1][0] == 0) {
+	if (D_8014DD50[arg1].unkE == 0) {
 		if (arg2 == alienInstances[arg0].unk4B) {
 			alienInstances[arg0].unk20 &= ~0x8000;
 			return;

@@ -3890,7 +3890,7 @@ void func_80081C24_90BD4(u8 arg0) {
 void func_80081C84_90C34(u8 arg0, Unk8014DD50 *src) {
 	Unk8014DD50 *dest = &D_8014E4D0[arg0];
 	*dest = *src;
-	D_8014DD5E[arg0][0] = src->unkE;
+	D_8014DD50[arg0].unkE = src->unkE;
 }
 
 void func_80081CF0_90CA0(Unk8014DD50 *arg0, Unk8014DD50 *arg1, s16 arg2) {
@@ -3935,7 +3935,7 @@ s8 func_80081F18_90EC8(u8 arg0, u8 arg1, u8 arg2, s16 *arg3, Unk8014DD50 **arg4)
 	s8 result;
 
 	result = -1;
-	if (D_8014DD5E[*arg3][0] == 0) {
+	if (D_8014DD50[*arg3].unkE == 0) {
 		if (alienInstances[arg0].unk36 == arg2) {
 			return (s8)arg2;
 		}
@@ -3960,7 +3960,7 @@ s8 func_80082084_91034(u8 arg0, u8 arg1, u8 arg2, s16 *arg3, Unk8014DD50 **arg4)
 	s8 result;
 
 	result = -1;
-	if (D_8014DD5E[*arg3][0] == 0) {
+	if (D_8014DD50[*arg3].unkE == 0) {
 		if (alienInstances[arg0].unk4B == arg2) {
 			return (s8)arg2;
 		}
@@ -3983,7 +3983,7 @@ s8 func_80082084_91034(u8 arg0, u8 arg1, u8 arg2, s16 *arg3, Unk8014DD50 **arg4)
 void func_800821F0_911A0(s32 arg0, s32 arg1, s32 arg2, u8 *arg3) {
 	s32 hi;
 	func_80081E5C_90E0C((s16)arg1);
-	if (D_8014DD5E[arg1][0] == 0) {
+	if (D_8014DD50[arg1].unkE == 0) {
 		do {
 			hi = func_800038E0_44E0() % arg2;
 		} while (hi == alienInstances[arg0].unk36);
@@ -3997,7 +3997,7 @@ void func_800822BC_9126C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	s32 sp18;
 
 	func_80081E5C_90E0C(arg1);
-	if (D_8014DD5E[arg1][0] == 0) {
+	if (D_8014DD50[arg1].unkE == 0) {
 		sp18 = arg4;
 		if (alienInstances[arg0].unk36 != 0) {
 			sp18 = arg3;
@@ -7308,7 +7308,7 @@ void func_8008A3EC_9939C(u8 arg0) {
 	f64 tempD;
 
 	alien = &alienInstances[arg0];
-	specEntry = D_8014DD5C[alien->unkC << 4];
+	specEntry = D_8014DD50[alien->unkC].unkC;
 
 	if (!(alien->unk20 & 0x100000)) {
 		func_8008A32C_992DC(arg0);
@@ -7468,7 +7468,7 @@ void func_8008AC5C_99C0C(u8 arg0)
 	{
 		func_80137468_146418(idx, 0xF);
 		sp68 = 0xF;
-		var_s3 = D_8014DD5C[sp60->unkC << 4];
+		var_s3 = D_8014DD50[sp60->unkC].unkC;
 		var_s5 = (s16) ((s32) ((((f64) ((f32) coss(sp60->unk6))) / 32768.0) * 6.0));
 		var_s2 = 0;
 		var_s6 = (s16) ((s32) ((((f64) ((f32) sins(sp60->unk6))) / 32768.0) * 6.0));
@@ -7879,7 +7879,7 @@ void func_8008C0F8_9B0A8(u8 arg0) {
 	s32 threshold;
 
 	inst = &alienInstances[arg0];
-	specEntry = (u8)D_8014DD5C[inst->unkC * 0x10];
+	specEntry = (u8)D_8014DD50[inst->unkC].unkC;
 
 	if (!(inst->unk20 & 0x600)) {
 		return;

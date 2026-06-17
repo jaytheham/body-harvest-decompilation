@@ -853,7 +853,7 @@ s32 func_802E1EFC_32604C(u8 arg0, u8 arg1) {
 	s32 result;
 
 	temp_s8 = (s8)func_802DFFC8_324118(arg0);
-	temp_s16 = D_8014DD5C[temp_s8];
+	temp_s16 = D_8014DD50[temp_s8].unkC;
 
 	result = func_80082084_91034(arg0, 3, 4, &temp_s8);
 
@@ -885,7 +885,7 @@ void func_802E21C4_326314(s32 arg0) {
 	void *temp_v1;
 
 	temp_s0 = arg0 & 0xFF;
-	sp2C = (s16)*(&D_8014DD5C[func_802DFF04_324054(temp_s0 & 0xFF) << 4]);
+	sp2C = D_8014DD50[func_802DFF04_324054(temp_s0 & 0xFF)].unkC;
 	func_802E205C_3261AC(temp_s0 & 0xFF);
 	temp_v0 = func_800870D8_96088(0x80, 0x20);
 	temp_v1 = &D_8014DD50[sp2C];
