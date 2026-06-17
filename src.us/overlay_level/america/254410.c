@@ -162,7 +162,7 @@ void func_802D5044_254784(void) {
 		osSyncPrintf(D_802E0D08_260448);
 	}
 
-	((u8*)buildingInstances)[0x5DF] = ((s8*)D_802590A9)[((u8*)buildingInstances)[0x5D6] * 32];
+	buildingInstances[0x3E].hitPoints = buildingSpecs[buildingInstances[0x3E].buildingType].unk19;
 }
 
 void func_802D5110_254850(void) {

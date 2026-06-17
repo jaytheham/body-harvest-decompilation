@@ -673,11 +673,8 @@ extern u32 D_80051008;
 extern u32 D_80051038;
 extern u32 D_800510B0;
 extern u32 D_800510C8;
-
-extern BuildingInstance buildingInstances[0xFF]; // 0x80050AD8
 extern u32 buildingInteriorToLoadId;
 extern Unk800522C0 D_800522C0[0x20];
-
 extern s32 D_8015EB7C;
 extern s8 D_8015EB86;
 extern s8 D_8015EB87;
@@ -1836,13 +1833,12 @@ extern u16 D_80256E0A;
 extern f64 D_802E0D78_2604B8;
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
 extern u8 D_80257A3A[];
-
+extern BuildingInstance buildingInstances[0xFF]; // 0x80050AD8
 extern BuildingSpec buildingSpecs[0x20]; // 0x80259090
 extern u32 D_80259094[];
 extern u8 D_802590AB[];
 extern u8 D_80259470[];
 extern u8 D_802590A8[];
-extern u8 D_802590A9[];
 extern Unk80259490 D_80259490; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
 extern Unk80259D90 D_80259D90[];
 extern Unk80259D90 D_8025CC70[];

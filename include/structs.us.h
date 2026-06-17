@@ -1071,14 +1071,18 @@ typedef struct {
 		};
 		/* 0x08 */ u32 unk8;
 	};
-	/* 0x0C */ u8 padC[3];
+	/* 0x0C */ u8 unkC;
+	/* 0x0D */ u8 unkD;
+	/* 0x0E */ u8 unkE;
 	/* 0x0F */ u8 hitPoints;
 	/* 0x10 */ u8 unk10;
 	/* 0x11 */ s8 unk11;
 	/* 0x12 */ u8 door1InteriorId;
 	/* 0x13 */ u8 door2InteriorId;
 	/* 0x14 */ u8 door3InteriorId;
-	/* 0x15 */ u8 pad15[0x3];
+	/* 0x15 */ u8 unk15;
+	/* 0x16 */ u8 unk16;
+	/* 0x17 */ u8 unk17;
 } BuildingInstance; /* size = 0x18 */
 
 // 0x00 xxyyyyyy yyyyyy = Model
@@ -1090,7 +1094,9 @@ typedef struct {
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;
-	/* 0x16 */ u8 pad16[0xA];
+	/* 0x16 */ u8 pad16[0x3];
+	/* 0x19 */ s8 unk19;
+	/* 0x1A */ u8 unk1A[0x6];
 } BuildingSpec; /* size = 0x20 */
 
 typedef struct {

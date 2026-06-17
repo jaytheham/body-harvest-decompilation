@@ -278,7 +278,7 @@ s32 func_8011629C_12524C(BuildingInstance *arg0, s16 arg1, s16 arg2) {
 		temp->yCoord = prev->yCoord;
 		arg0->yCoord = prev->yCoord;
 
-		hitPoints = D_802590A9[*buildingType << 5];
+		hitPoints = buildingSpecs[*buildingType].unk19;
 		prev->hitPoints = hitPoints;
 		temp->hitPoints = hitPoints;
 		arg0->hitPoints = hitPoints;
@@ -4006,11 +4006,11 @@ void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
 #endif
 
 void func_8011F094_12E044(BuildingInstance *arg0) {
-	if ((arg0 == &buildingInstances[func_8011D260_12C210(-0x21, 0x38)]) && (arg0->padC[1] != 2)) {
-		arg0->padC[1] = 1;
+	if ((arg0 == &buildingInstances[func_8011D260_12C210(-0x21, 0x38)]) && (arg0->unkD != 2)) {
+		arg0->unkD = 1;
 	}
 
-	switch (arg0->padC[1]) {
+	switch (arg0->unkD) {
 	case 0:
 		func_8012D700_13C6B0(
 			0xD,
@@ -4037,7 +4037,7 @@ void func_8011F094_12E044(BuildingInstance *arg0) {
 			0xF0,
 			0xD9,
 			0x39);
-		arg0->padC[1] = 2;
+		arg0->unkD = 2;
 		break;
 	}
 }
@@ -4573,7 +4573,7 @@ void func_8012101C_12FFCC(BuildingInstance *arg0, s16 arg1) {
 	building = &buildingInstances[D_8015FAD0[arg1].unk1E >> 4];
 
 	if ((arg0 - (BuildingInstance *)D_80145BE0_154B90) == 0xA) {
-		building->padC[1] |= (D_8015FAD0[arg1].unk1E & 0xF);
+		building->unkD |= (D_8015FAD0[arg1].unk1E & 0xF);
 		func_800DF038_EDFE8(
 			(s16)(D_8015FAD0[arg1].unk0 >> 0x10),
 			(s16)(D_8015FAD0[arg1].unk4 >> 0x10),
@@ -4581,7 +4581,7 @@ void func_8012101C_12FFCC(BuildingInstance *arg0, s16 arg1) {
 			0x64, 6, 0);
 		func_8012D808_13C7B8(arg1);
 		if (building->zCoord < 0x5301) {
-			if ((building->padC[1] & 3) && (building->padC[1] & 0xC)) {
+			if ((building->unkD & 3) && (building->unkD & 0xC)) {
 				func_800072CC_7ECC(0xE);
 			}
 		}

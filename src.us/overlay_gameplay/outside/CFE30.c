@@ -9112,7 +9112,7 @@ void func_800DAA1C_E99CC(s32 arg0) {
 
 	buildingId = arg0 & 0xFF;
 	building = &buildingInstances[buildingId];
-	hpLimit = ((s8) D_802590A9[building->buildingType << 5]) >> 2;
+	hpLimit = buildingSpecs[building->buildingType].unk19 >> 2;
 	buildingFlags = building->unk8;
 	effectId = D_80154282;
 

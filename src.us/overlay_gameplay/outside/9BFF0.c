@@ -1846,7 +1846,7 @@ void func_80091470_A0420(u8 arg0) {
 
 			buildingIdx = ((u8 *) &alienInstances[parentIdx].unk38)[1];
 			building = &buildingInstances[buildingIdx];
-			healthLimit = ((s8 *) D_802590A9)[building->buildingType << 5] / 2;
+			healthLimit = buildingSpecs[building->buildingType].unk19 / 2;
 
 			if ((s8) building->hitPoints < healthLimit) {
 				u8 found;
