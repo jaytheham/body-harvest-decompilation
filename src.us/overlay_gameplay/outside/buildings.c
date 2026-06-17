@@ -395,7 +395,7 @@ void func_80116724_1256D4(void) {
 	u32 door_idx;
 	u32 interior_to_load;
 
-	building = D_80050AF0;
+	building = buildingInstances[1];
 	interior_to_load = buildingInteriorToLoadId;
 	building_idx = 1;
 

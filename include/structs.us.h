@@ -764,9 +764,18 @@ typedef enum AlienFlags {
 	ALIEN_FLAG_UNKE = 0x2000,
 	ALIEN_FLAG_UNKF = 0x4000,
 	ALIEN_FLAG_UNKG = 0x8000,
+	ALIEN_FLAG_UNKH = 0x10000,
+	ALIEN_FLAG_UNKI = 0x20000,
+	ALIEN_FLAG_UNKJ = 0x40000,
+	ALIEN_FLAG_UNKK = 0x80000,
+	ALIEN_FLAG_UNKL = 0x100000,
+	ALIEN_FLAG_UNKM = 0x200000,
 	ALIEN_FLAG_INVINCIBLE = 0x400000,
 	ALIEN_FLAG_PLAYER = 0x8000000,
-	ALIEN_FLAG_FALL = 0x40000000
+	ALIEN_FLAG_UNKN = 0x10000000,
+	ALIEN_FLAG_UNKO = 0x20000000,
+	ALIEN_FLAG_FALL = 0x40000000,
+	ALIEN_FLAG_UNKP = 0x80000000
 } AlienFlags;
 
 typedef struct {
@@ -2662,11 +2671,11 @@ typedef struct {
 } DListPtrsCopy;
 
 typedef struct {
-    /* 0x00 */ s16 distance; // orbit radius
-    /* 0x02 */ s16 yaw;      // horizontal angle
-    /* 0x04 */ s16 pitch;    // vertical angle
-    /* 0x06 */ s16 pad;      // unused
-    /* 0x08 */ f32 targetX;  // look-at target X
-    /* 0x0C */ f32 targetY;  // look-at target Y
-    /* 0x10 */ f32 targetZ;  // look-at target Z
+	/* 0x00 */ s16 distance; // orbit radius
+	/* 0x02 */ s16 yaw;      // horizontal angle
+	/* 0x04 */ s16 pitch;    // vertical angle
+	/* 0x06 */ s16 pad;      // unused
+	/* 0x08 */ f32 targetX;  // look-at target X
+	/* 0x0C */ f32 targetY;  // look-at target Y
+	/* 0x10 */ f32 targetZ;  // look-at target Z
 } OrbitCam; /* size = 0x14 */

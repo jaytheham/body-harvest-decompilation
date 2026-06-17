@@ -12345,7 +12345,7 @@ void func_800E5538_F44E8(void) {
 					var_t0 = building->xCoord;
 					var_t1 = building->yCoord;
 					var_t2 = building->zCoord;
-					var_a2 = D_802590A4[building->buildingType] * 15;
+					var_a2 = buildingSpecs[building->buildingType].unk14 * 15;
 				}
 
 				temp_v0_7 = entry->unk2;
