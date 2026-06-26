@@ -127,8 +127,10 @@ u8 D_8013BC30_14ABE0[0x9C] = {
 	0x00, 0x10, 0x00, 0x10, 0x00, 0x10, 0x00, 0x10, 0x00, 0x10, 0x00, 0x10,
 };
 
-u8 D_8013BCCC_14AC7C[8] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-u8 D_8013BCD4_14AC84[8] = {0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00};
+u32 D_8013BCCC_14AC7C = 0;
+u16 D_8013BCD0_14AC80 = 0;
+u32 D_8013BCD4_14AC84 = 0x01000100;
+u16 D_8013BCD8_14AC88 = 0x0100;
 
 u8 D_8013BCDC_14AC8C[0x24] = {
 	0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -5326,19 +5328,19 @@ s32 func_800850DC_9408C(u8 arg0, u16 arg1)
   s32 sp20;
   s32 var_v1;
   AlienInstance *s0;
-    s16 sp30;
-    
-    s0= &alienInstances[arg0];
-    sp24 = s0->unk14 - s0->unk0;
-    sp20 = s0->unk18 - s0->unk4;
-    sp30 = func_80003824_4424(sp24, sp20);
-    var_v1  =(-(func_80003824_4424(sp24, sp20) - s0->unk6)) < (sp30 - s0->unk6)
-      ? func_80003824_4424(sp24, sp20) - s0->unk6
-      : -(func_80003824_4424(sp24, sp20) - s0->unk6);
+	s16 sp30;
+	
+	s0= &alienInstances[arg0];
+	sp24 = s0->unk14 - s0->unk0;
+	sp20 = s0->unk18 - s0->unk4;
+	sp30 = func_80003824_4424(sp24, sp20);
+	var_v1  =(-(func_80003824_4424(sp24, sp20) - s0->unk6)) < (sp30 - s0->unk6)
+	  ? func_80003824_4424(sp24, sp20) - s0->unk6
+	  : -(func_80003824_4424(sp24, sp20) - s0->unk6);
   
   if (var_v1 < arg1)
   {
-    return 1;
+	return 1;
   }
 
   return 0;
@@ -5607,13 +5609,13 @@ s32 func_80085B14_94AC4(u8 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4)
   temp_t1 = func_80003824_4424((f32) temp_dx, (f32) temp_dy) - temp_ptr->unk6;
 
   D_8014DD50[arg1].unk6 = 
-      func_80085A9C_94A4C(D_8014DD50[arg1].unk6, -temp_t1, arg2, -arg2, alienSpecs[sp47].unk42);
+	  func_80085A9C_94A4C(D_8014DD50[arg1].unk6, -temp_t1, arg2, -arg2, alienSpecs[sp47].unk42);
   temp_v1 = D_8014DD50[arg1].unk6 + temp_t1;
 
   var_v0 = -temp_v1 < temp_v1 ? temp_v1 : -temp_v1;
   if ((alienSpecs[sp47].unk42 * 2) < var_v0)
   {
-    return 1;
+	return 1;
   }
   return 0;
 }

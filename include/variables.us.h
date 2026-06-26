@@ -564,7 +564,7 @@ extern u8 D_800431C8;
 extern u8 D_800431C9;
 extern s32 D_80047F88;
 extern s32 D_80047F8C;
-extern s32 D_80047F94;
+extern s32 D_80047F94; // Current stage of level?
 extern u8 D_80047F97;
 extern s32 D_80047F98; // beacon states - how many save beacons have been deployed
 extern s32 currentSaveFileIndex;
@@ -1601,8 +1601,10 @@ extern s32 D_8014D2F0;
 extern s32 D_8014D2F4;
 extern s32 D_8014D300;
 extern u8 D_8014D308[];
-extern u8 D_8013BCCC_14AC7C[8];
-extern u8 D_8013BCD4_14AC84[8];
+extern u32 D_8013BCCC_14AC7C;
+extern u16 D_8013BCD0_14AC80;
+extern u32 D_8013BCD4_14AC84;
+extern u16 D_8013BCD8_14AC88;
 extern u8 D_8014D408[]; // unknown size, maybe 0x101
 extern u8 D_8014D507;
 extern u8 D_8014D508;

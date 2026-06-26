@@ -742,6 +742,57 @@ typedef struct {
 } Unk8007CAA8_6A40; /* size = 0x20 */
 
 typedef struct {
+	/* 0x00 */ s8 unk0;
+	/* 0x01 */ s8 unk1;
+	/* 0x02 */ s8 unk2;
+	/* 0x03 */ s8 unk3;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ u32 unk8;
+	/* 0x0C */ u8 padC[4];
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ s16 unk14;
+	/* 0x16 */ s16 unk16;
+	/* 0x18 */ s16 unk18;
+	/* 0x1A */ s16 unk1A;
+	/* 0x1C */ u8 unk1C;
+	/* 0x1D */ u8 unk1D;
+	/* 0x1E */ u8 unk1E;
+	/* 0x1F */ u8 unk1F;
+	/* 0x20 */ s16 unk20;
+	/* 0x22 */ s16 unk22;
+	/* 0x24 */ s16 unk24;
+	/* 0x26 */ s16 unk26;
+	/* 0x28 */ s16 unk28;
+	/* 0x2A */ s16 unk2A;
+	/* 0x2C */ u8 unk2C;
+	/* 0x2D */ u8 unk2D;
+	/* 0x2E */ u8 unk2E;
+	/* 0x2F */ u8 unk2F;
+	/* 0x30 */ s16 unk30;
+	/* 0x32 */ s16 unk32;
+	/* 0x34 */ s16 unk34;
+	/* 0x36 */ s16 unk36;
+	/* 0x38 */ s16 unk38;
+	/* 0x3A */ s16 unk3A;
+	/* 0x3C */ u8 unk3C;
+	/* 0x3D */ u8 unk3D;
+	/* 0x3E */ u8 unk3E;
+	/* 0x3F */ u8 unk3F;
+	/* 0x40 */ s16 unk40;
+	/* 0x42 */ s16 unk42;
+	/* 0x44 */ s16 unk44;
+	/* 0x46 */ s16 unk46;
+	/* 0x48 */ s16 unk48;
+	/* 0x4A */ s16 unk4A;
+	/* 0x4C */ u8 unk4C;
+	/* 0x4D */ u8 unk4D;
+	/* 0x4E */ u8 unk4E;
+	/* 0x4F */ u8 unk4F;
+} Unk857E0Obj; /* size = 0x50 */
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 pad1[3];
 	/* 0x04 */ s32 unk4;

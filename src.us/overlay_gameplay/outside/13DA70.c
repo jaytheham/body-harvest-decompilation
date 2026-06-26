@@ -172,9 +172,9 @@ void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 	} while (arg1[i++] != 0U);
 }
 
-// Load letter textures for end of stage window
 // CURRENT(425)
 #ifdef NON_MATCHING
+// Load letter textures for end of stage window
 s32 func_8012EC3C_13DBEC(s32 arg0)
 {
 	u16 ch;
@@ -575,9 +575,9 @@ s32 func_8012FFB0_13EF60(void)
 	return score;
 }
 
-// End of level state manager
 // CURRENT(7370)
 #ifdef NON_MATCHING
+// End of level state manager
 void func_8013001C_13EFCC(void)
 {
 	u8 levelText[0x18];     // Buffer for assembling stage/level name text

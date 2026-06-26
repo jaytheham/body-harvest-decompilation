@@ -277,7 +277,7 @@ segments:
       - [0x1312D0, c, overlay_gameplay/outside/1312D0] #  shooting
       - [0x13DA70, c, overlay_gameplay/outside/13DA70] # End of stage/level UI
       - [0x1416E0, c, overlay_gameplay/outside/1416E0] # Adam & vehicle Camera, signposts
-      - [0x145D70, c, overlay_gameplay/outside/145D70]
+      - [0x145D70, c, overlay_gameplay/outside/145D70] # Alien sound effects
       - [0x148000, c, overlay_gameplay/outside/148000] # Weapons / HUD / Vehicle weapons
       - [0x14A8A0, .data, overlay_gameplay/outside/F6A50]
       - [0x14A8F0, .data, overlay_gameplay/outside/cheats]
