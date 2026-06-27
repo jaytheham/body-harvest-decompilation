@@ -1183,31 +1183,27 @@ void func_8008F818_9E7C8(u8 arg0) {
 	}
 }
 
-// https://decomp.me/scratch/zzVqU
-// CURRENT(26)
-#ifdef NON_MATCHING
 void func_8008F8D4_9E884(u8 arg0, s16 arg1)
 {
   s16 sp2C[2];
   s8 var_a3;
-	s32 temp_v0;
   if (alienInstances[arg0].unk20 & 0x8000)
   {
 	sp2C[0] = arg1;
 	sp2C[1] = D_8014DD50[arg1].unkC;
-	temp_v0 = func_80081F18_90EC8(arg0, 2, 3, sp2C, &D_8013C738_14B6E8); var_a3 = (s8) temp_v0;
-	if (temp_v0 == 2)
+	var_a3 = func_80081F18_90EC8(arg0, 2, 3, sp2C, &D_8013C738_14B6E8);
+	if ((u32) var_a3 == 2)
 	{
-	  *((s16 *) (&alienInstances[arg0].unk1E)) = 0;
+	  alienInstances[arg0].unk1E = 0;
 	  if (func_80087188_96138(arg0, 0, 0x22) != 0)
 	  {
 		if (currentLevel == 1)
 		{
-		  *((s16 *) (&alienInstances[arg0].unk1E)) = 0xF;
+		  alienInstances[arg0].unk1E = 0xF;
 		}
 		else
 		{
-		  *((s16 *) (&alienInstances[arg0].unk1E)) = 5;
+		  alienInstances[arg0].unk1E = 5;
 		}
 	  }
 	}
@@ -1217,9 +1213,6 @@ void func_8008F8D4_9E884(u8 arg0, s16 arg1)
 	}
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008F8D4_9E884.s")
-#endif
 
 // CURRENT(2306)
 #ifdef NON_MATCHING
