@@ -2339,28 +2339,29 @@ s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 }
 
 // https://decomp.me/scratch/Eb0Us
-// CURRENT(96)
+/* CURRENT(171) */
 #ifdef NON_MATCHING
 void func_80092ADC_A1A8C(void)
 {
   Unk8013CA *p;
   u8 result;
 	AlienInstance *ptr;
-	p = &D_8013CA00; do {
+	Unk8013CA *end = (Unk8013CA *)(D_8013CA00_14B9B0 + 0xA);
+	p = (Unk8013CA *)D_8013CA00_14B9B0; do {
 	result = func_80092A50_A1A00(p->unk0 << 8, p->unk1 << 8, 0x10);
 	result &= 0xff;
 	if (result != 0xFF)
 	{
+		D_8004817C++;
 		ptr = &alienInstances[result];
 	  ptr->unk26 = 0;
 	  ptr->unk38 = 0x2F;
 	  ptr->unk20 |= 0x4000;
-	  D_8004817C++;
 	  func_80092BBC_A1B6C(result);
 	}
 	p++;
   }
-  while (p != &D_8013CA0A);
+  while (p != end);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80092ADC_A1A8C.s")
