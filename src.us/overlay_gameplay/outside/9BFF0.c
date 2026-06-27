@@ -2057,15 +2057,20 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091AC0_A0A70.s")
 #endif
 
-// CURRENT(5522)
+/* CURRENT(128) */
 #ifdef NON_MATCHING
 void func_80091E70_A0E20(u8 arg0) {
+	u8 specIndex = alienInstances[arg0].specIndex;
 	AlienInstance *alien = &alienInstances[arg0];
-	AlienSpec *spec = &alienSpecs[alien->specIndex];
-	s32 targetSpeed = spec->unk40;
-	s32 x = alien->unk0 >> 8;
-	s32 z = alien->unk4 >> 8;
+	AlienSpec *spec = &alienSpecs[specIndex];
+	s32 z;
+	s32 x;
+	s16 targetSpeed;
 	u8 useAttack = 0;
+
+	targetSpeed = spec->unk40;
+	x = alien->unk0 >> 8;
+	z = alien->unk4 >> 8;
 
 	if ((x != (alien->unk2E >> 8)) || (z != (alien->unk32 >> 8))) {
 		useAttack = 1;
@@ -2080,17 +2085,14 @@ void func_80091E70_A0E20(u8 arg0) {
 	}
 
 	if ((alien->unk20 & 0x8000000) == 0) {
-		if ((alien->unk20 & 0x1000) != 0) {
-			if ((alien->unk20 & 0x2000) == 0) {
-				if ((D_80052A8C & 0x1C) == (arg0 & 0x1C)) {
-					if (func_800B325C_C220C((s8)(alien->unk14 >> 8), (s8)(alien->unk18 >> 8), 0x800) == 0) {
-						alien->unk20 &= ~0x1100;
-					}
+		if ((alien->unk20 & 0x1000) != 0 && (alien->unk20 & 0x2000) == 0) {
+			targetSpeed = 0x1000;
+			if ((D_80052A8C & 0x1C) == (arg0 & 0x1C)) {
+				if (func_800B325C_C220C((s8)(alien->unk14 >> 8), (s8)(alien->unk18 >> 8), 0x800) == 0) {
+					alien->unk20 &= ~0x1100;
 				}
 			}
-		}
-
-		if ((alien->unk20 & 0x2000) != 0) {
+		} else if ((alien->unk20 & 0x2000) != 0) {
 			targetSpeed = -0x80;
 			alien->unk2C -= 4;
 			if (alien->unk2C <= 0) {
