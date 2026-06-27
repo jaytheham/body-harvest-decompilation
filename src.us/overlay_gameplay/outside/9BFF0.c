@@ -1610,23 +1610,21 @@ void func_80090A6C_9FA1C(u8 arg0, s16 arg1, u16 arg2)
   }
 }
 
-// https://decomp.me/scratch/qLxSW
-// CURRENT(39)
+// CURRENT(19)
 #ifdef NON_MATCHING
 void func_80090C14_9FBC4(u8 arg0)
 {
   s32 diffX;
-  s32 diffZ;
   s16 sp2C;
-  s32 var;
+  s32 diffZ;
 
   diffX = alienInstances[arg0].unk14 - alienInstances[arg0].unk0;
   diffZ = alienInstances[arg0].unk18 - alienInstances[arg0].unk4;
   sp2C = func_80003824_4424((f32)-diffZ, (f32) diffX);
   diffX = D_80052B34->unk0 - alienInstances[arg0].unk0;
   diffZ = D_80052B34->unk4 - alienInstances[arg0].unk4;
-  var = sp2C - func_80003824_4424((f32) diffX, (f32) diffZ);
-  if (((-var < var) ? var : -var) < 0x4000) {
+  diffX = sp2C - func_80003824_4424((f32) diffX, (f32) diffZ);
+  if (((-diffX < diffX) ? diffX : -diffX) < 0x4000) {
 	sp2C += 0x8000;
   }
   alienInstances[arg0].unk34 = 0x78;
