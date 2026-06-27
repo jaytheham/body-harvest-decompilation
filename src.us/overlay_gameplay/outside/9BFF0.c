@@ -512,8 +512,7 @@ void func_8008DA24_9C9D4(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008DA24_9C9D4.s")
 #endif
 
-// https://decomp.me/scratch/BnGko
-// CURRENT(830)
+// CURRENT(5)
 #ifdef NON_MATCHING
 void func_8008DEF4_9CEA4(u8 arg0)
 {
@@ -521,15 +520,14 @@ void func_8008DEF4_9CEA4(u8 arg0)
   s32 sp48;
   s32 sp44;
   s32 sp40;
-  s32 pad1;
-  s32 pad2;
+  s32 pad;
   var_t0 = 1;
   alienInstances[arg0].unk12 = alienInstances[arg0].unk48;
   if (!(alienInstances[arg0].unk20 & 0x600))
   {
 	var_t0 = 4;
   }
-  if ((alienInstances[arg0].unk25 == 0xFF) || (alienInstances[alienInstances[arg0].unk25].unk20 & 0x300000))
+  if (alienInstances[arg0].unk25 == 0xFF || alienInstances[arg0].unk25 == 0xFF || alienInstances[alienInstances[arg0].unk25].unk20 & 0x300000)
   {
 	func_80088760_97710(&alienInstances[arg0]);
   }
