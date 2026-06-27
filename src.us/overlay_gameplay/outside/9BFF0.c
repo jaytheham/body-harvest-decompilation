@@ -1363,13 +1363,12 @@ s32 func_8008FE18_9EDC8(u8 arg0)
 	return 0;
 }
 
-// CURRENT(2778)
+/* CURRENT(2667) */
 #ifdef NON_MATCHING
-void func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
+s32 func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 {
 	AlienInstance *inst;
 	Unk8014DD50 *nodeA;
-	Unk8014DD50 *nodeB;
 	s32 x;
 	s32 y;
 	s32 z;
@@ -1378,19 +1377,18 @@ void func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 
 	inst = &alienInstances[arg0];
 	nodeA = &D_8014DD50[inst->unkC];
-	nodeB = &D_8014DD50[nodeA->unkC];
 
-	x = nodeB->unk0 + nodeA->unk0;
-	y = nodeB->unk2 + nodeA->unk2;
-	z = nodeB->unk4 + nodeA->unk4;
+	x = D_8014DD50[nodeA->unkC].unk0 + nodeA->unk0;
+	y = D_8014DD50[nodeA->unkC].unk2 + nodeA->unk2;
+	z = D_8014DD50[nodeA->unkC].unk4 + nodeA->unk4;
 
-	angle = (u16)nodeB->unkA;
+	angle = (u16)D_8014DD50[nodeA->unkC].unkA;
 
-	trig = sins((u16)angle);
-	y = (s32)((f64)y + ((-50.0 * ((f64)(f32)coss((u16)angle) / 32768.0)) - (D_80141EF8_150EA8 * ((f64)(f32)trig / 32768.0))));
+	trig = sins(angle);
+	y = (s32)((f64)y + ((-50.0 * ((f64)(f32)coss(angle) / 32768.0)) - (D_80141EF8_150EA8[0] * ((f64)(f32)trig / 32768.0))));
 
-	trig = coss((u16)angle);
-	z = (s32)((f64)z + ((-50.0 * ((f64)(f32)sins((u16)angle) / 32768.0)) + (D_80141F00_150EB0 * ((f64)(f32)trig / 32768.0))));
+	trig = coss(angle);
+	z = (s32)((f64)z + ((-50.0 * ((f64)(f32)sins(angle) / 32768.0)) + (D_80141F00_150EB0[0] * ((f64)(f32)trig / 32768.0))));
 
 	func_80128428_1373D8(inst, (s16)x, (s16)y, (s16)z, arg1, arg2, arg3);
 }
