@@ -268,30 +268,30 @@ void func_8008D4A0_9C450(unsigned int arg0)
   if (alienInstances[arg0].unk20 & 0x4000) return;
   target = func_80082394_91344(alienInstances[arg0].unk0, alienInstances[arg0].unk4, ((s32) alienSpecs[alienInstances[arg0].specIndex].unk51) / 20);
   if ((target == 0x100) || 
-      ((target != 0xFF) && ((!(alienInstances[target].unk20 & 0x40000000))
-                            || (!(alienInstances[target].unk20 & 0x600)))))
+	  ((target != 0xFF) && ((!(alienInstances[target].unk20 & 0x40000000))
+							|| (!(alienInstances[target].unk20 & 0x600)))))
   {
-    alienInstances[arg0].unk20 |= 0x20;
-    alienInstances[arg0].unk38 = target;
-    alienInstances[arg0].unk20 &= ~0x1000;
-    alienInstances[arg0].unk48 = 0xE0;
-    return;
+	alienInstances[arg0].unk20 |= 0x20;
+	alienInstances[arg0].unk38 = target;
+	alienInstances[arg0].unk20 &= ~0x1000;
+	alienInstances[arg0].unk48 = 0xE0;
+	return;
   }
   target = alienInstances[arg0].unk25;
   if (alienInstances[target].unk20 & 0x4000)
   {
-    func_80080B44_8FAF4(arg0, alienInstances[target].unk38);
-    alienInstances[arg0].unk16 = alienInstances[arg0].unk16 + 0x64;
-    alienInstances[arg0].unk20 = alienInstances[arg0].unk20 & ~0x1020;
-    alienInstances[arg0].unk48 = 0xE0;
-    return;
+	func_80080B44_8FAF4(arg0, alienInstances[target].unk38);
+	alienInstances[arg0].unk16 = alienInstances[arg0].unk16 + 0x64;
+	alienInstances[arg0].unk20 = alienInstances[arg0].unk20 & ~0x1020;
+	alienInstances[arg0].unk48 = 0xE0;
+	return;
   }
   {
-    s8 unk3D = alienInstances[arg0].unk3D;
-    if ((unk3D == -1) || (*(s16 *)((u8 *)D_80146492_155442 + (currentLevel << 9) + (unk3D << 4)) == 0))
-    {
-      func_8008D3B0_9C360(arg0);
-    }
+	s8 unk3D = alienInstances[arg0].unk3D;
+	if ((unk3D == -1) || (*(s16 *)((u8 *)D_80146492_155442 + (currentLevel << 9) + (unk3D << 4)) == 0))
+	{
+	  func_8008D3B0_9C360(arg0);
+	}
   }
 }
 
@@ -512,6 +512,7 @@ void func_8008DA24_9C9D4(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008DA24_9C9D4.s")
 #endif
 
+// https://decomp.me/scratch/BnGko
 // CURRENT(5)
 #ifdef NON_MATCHING
 void func_8008DEF4_9CEA4(u8 arg0)
@@ -1610,6 +1611,7 @@ void func_80090A6C_9FA1C(u8 arg0, s16 arg1, u16 arg2)
   }
 }
 
+// https://decomp.me/scratch/qLxSW
 // CURRENT(19)
 #ifdef NON_MATCHING
 void func_80090C14_9FBC4(u8 arg0)
