@@ -317,7 +317,7 @@ void func_8008D634_9C5E4(u8 arg0) {
 	}
 }
 
-// CURRENT(2460)
+/* CURRENT(1131) */
 #ifdef NON_MATCHING
 void func_8008D71C_9C6CC(u8 arg0) {
 	s16 target;
@@ -335,19 +335,21 @@ void func_8008D71C_9C6CC(u8 arg0) {
 	if (parent->specIndex == 1) {
 		if (!(parent->unk20 & 0x40000000)) {
 			if ((parent->unk24 != 3) && (parent->unk24 != 0x1D) && (parent->unk24 != 4)) {
-				if (!(parent->unk20 & 0x100000) && parent->unk24 >= 5 && parent->unk24 < 0xF) {
+				s32 has100000;
+				has100000 = parent->unk20 & 0x100000;
+				if (!has100000 && parent->unk24 >= 5 && parent->unk24 < 0xF) {
 					D_80048190 -= 1;
 				}
 				if (parent->unk24 == 1) {
 					func_80137468_146418(target, 0x194);
 					parent->unk24 = 0x1D;
 				} else if ((parent->unk24 == 0x14) || (parent->unk24 == 0xC) || (parent->unk24 == 0xB)) {
-					if (!(parent->unk20 & 0x100000)) {
+					if (!has100000) {
 						func_80137468_146418(target, 0x274);
 					}
 					parent->unk24 = 4;
 				} else {
-					if (!(parent->unk20 & 0x100000)) {
+					if (!has100000) {
 						func_80137468_146418(target, 0x263);
 					}
 					parent->unk24 = 3;
@@ -366,7 +368,7 @@ void func_8008D71C_9C6CC(u8 arg0) {
 		parent->unk20 |= 0x8000;
 		inst->unk48 = 0;
 		inst->unk2C = 0;
-		alienInstances[parent->unk25].unk1E = arg0;
+		*(s8*)&alienInstances[parent->unk25].unk1E = arg0;
 	}
 }
 #else
