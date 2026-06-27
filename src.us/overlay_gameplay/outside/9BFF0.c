@@ -813,17 +813,18 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008E978_9D928.s")
 #endif
 
-// CURRENT(6246)
+// CURRENT(1824)
 #ifdef NON_MATCHING
-void func_8008EB20_9DAD0(u8 arg0, u8 arg1, s32 arg2)
+void func_8008EB20_9DAD0(u8 arg0, s32 arg1, s32 arg2)
 {
 	AlienInstance *inst = &alienInstances[arg0];
 	s16 sp46;
+	s32 sp24;
 	s16 specIndex;
-	s32 sp24 = 0;
 	s32 sp2C;
-	s16 temp;
+	s32 temp;
 
+	sp24 = 0;
 	specIndex = inst->specIndex;
 	func_8011E6FC_12D6AC(inst->unk0, inst->unk4, &sp46);
 
@@ -848,19 +849,22 @@ void func_8008EB20_9DAD0(u8 arg0, u8 arg1, s32 arg2)
 		sp46 = D_80222A70;
 	}
 
-	sp2C = (s32)sp46 + arg1;
 	if (sp24)
 	{
 		sp2C = D_80052B34->unk2 + 0xC8;
 	}
+	else
+	{
+		sp2C = (s32)sp46 + arg1;
+	}
 
 	if (inst->unk2 < sp2C)
 	{
-		inst->unkA -= (s16)((s32)((f64)arg2 * MAX((f64)((sp2C - inst->unk2) / 160), 0.0)));
+		inst->unkA = (s16)((s32)((f64)inst->unkA - (f64)arg2 * ((f64)((sp2C - inst->unk2) / 160) > 1.0 ? 1.0 : (f64)((sp2C - inst->unk2) / 160))));
 	}
 	if (sp2C < inst->unk2)
 	{
-		inst->unkA += (s16)((s32)((f64)arg2 * MAX((f64)((inst->unk2 - sp2C) / 160), 0.0)));
+		inst->unkA = (s16)((s32)((f64)inst->unkA + (f64)arg2 * ((f64)((inst->unk2 - sp2C) / 160) > 1.0 ? 1.0 : (f64)((inst->unk2 - sp2C) / 160))));
 	}
 
 	inst->unkA = (s16)((s32)((f64)inst->unkA * D_80141EE8_150E98[0]));
