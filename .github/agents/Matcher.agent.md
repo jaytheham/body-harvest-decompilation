@@ -34,8 +34,9 @@ You will be tasked with an existing C function to modify iteratively until it pr
 1. Remove the `#ifdef NON_MATCHING` wrapper around the function so the C code will be included in the build.
 2. Always read the whole file `DecompHints.md` for general matching advice.
 3. Build, compare with target, identify differences.
-4. Change the C code in a way that will make the current assembly match the target assembly.
-5. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
+4. Find and read an already matched function with similar logic to the target function for reference.
+5. Change the C code in a way that will make the current assembly match the target assembly.
+6. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
 
 First target incorrect/missing/out-of-order instructions, ignore register allocation and stack placement until all the logic is correct.
 
