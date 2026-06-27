@@ -84,6 +84,7 @@ def t_error(t):
     return t
 
 import re
+import ast
 import copy
 import time
 import os.path
@@ -153,6 +154,39 @@ class Macro(object):
 # Object representing a preprocessor.  Contains macro definitions,
 # include directories, and other information
 # ------------------------------------------------------------------
+
+def _safe_eval_cpp_expr(expr):
+    """Safely evaluate a C preprocessor integer expression using ast, avoiding eval()."""
+    def _visit(node):
+        if isinstance(node, ast.Constant) and isinstance(node.value, int):
+            return node.value
+        if isinstance(node, ast.Num):  # Python < 3.8 compatibility
+            return node.n
+        if isinstance(node, ast.BoolOp):
+            vals = [_visit(v) for v in node.values]
+            return int(all(vals) if isinstance(node.op, ast.And) else any(vals))
+        if isinstance(node, ast.BinOp):
+            l, r = _visit(node.left), _visit(node.right)
+            return {ast.Add: l+r, ast.Sub: l-r, ast.Mult: l*r,
+                    ast.Div: l//r, ast.FloorDiv: l//r, ast.Mod: l%r,
+                    ast.BitAnd: l&r, ast.BitOr: l|r, ast.BitXor: l^r,
+                    ast.LShift: l<<r, ast.RShift: l>>r}[type(node.op)]
+        if isinstance(node, ast.UnaryOp):
+            v = _visit(node.operand)
+            return {ast.USub: -v, ast.UAdd: +v, ast.Invert: ~v,
+                    ast.Not: int(not v)}[type(node.op)]
+        if isinstance(node, ast.Compare):
+            l = _visit(node.left)
+            for op, rn in zip(node.ops, node.comparators):
+                r = _visit(rn)
+                if not {ast.Eq: l==r, ast.NotEq: l!=r, ast.Lt: l<r,
+                        ast.LtE: l<=r, ast.Gt: l>r, ast.GtE: l>=r}[type(op)]:
+                    return 0
+                l = r
+            return 1
+        raise ValueError("Unsupported node type: %s" % type(node).__name__)
+    return _visit(ast.parse(expr, mode='eval').body)
+
 
 class Preprocessor(object):
     def __init__(self,lexer=None):
@@ -597,7 +631,7 @@ class Preprocessor(object):
         expr = expr.replace("||"," or ")
         expr = expr.replace("!"," not ")
         try:
-            result = eval(expr)
+            result = _safe_eval_cpp_expr(expr)
         except Exception:
             self.error(self.source,tokens[0].lineno,"Couldn't evaluate expression")
             result = 0
