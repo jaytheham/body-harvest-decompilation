@@ -763,7 +763,7 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 #endif
 
 // https://decomp.me/scratch/V6LCq
-// CURRENT(200)
+/* CURRENT(165) */
 #ifdef NON_MATCHING
 void func_8008E978_9D928(u8 arg0, s32 arg1)
 {
@@ -773,7 +773,7 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
   sp2C = arg1;
   sp24 = 0;
   func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &sp2A);
-	if ((!sp2C) && (!sp2C))
+  if (((!sp2C) && (!sp2C)))
   {
   }
   if (sp2A < D_80222A70)
@@ -801,13 +801,17 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
   {
 	alienInstances[arg0].unkA += 0x1F4;
   }
-  alienInstances[arg0].unkA = (s16) ((s32) (((f64) alienInstances[arg0].unkA) * D_80141EE0));
-  sp2C = -((s16) alienInstances[arg0].unk12);
-  if (sp2C < alienInstances[arg0].unk12)
+  alienInstances[arg0].unkA = (s16) ((s32) (((f64) alienInstances[arg0].unkA) * D_80141EE0_150E90[0]));
+  sp24 = -((s16) alienInstances[arg0].unk12);
+  if (sp24 < alienInstances[arg0].unk12)
   {
 	sp2C = alienInstances[arg0].unk12;
   }
-  else if (sp2C < 0x301)
+  else
+  {
+	sp2C = sp24;
+  }
+  if (sp2C < 0x301)
   {
 	sp2C = 0x300;
   }
