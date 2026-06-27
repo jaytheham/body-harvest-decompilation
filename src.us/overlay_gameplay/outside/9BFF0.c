@@ -197,11 +197,13 @@ void func_8008D040_9BFF0(u8 arg0)
 	}
 }
 
-// CURRENT(1689)
+// CURRENT(18)
 #ifdef NON_MATCHING
 s32 func_8008D0E0_9C090(u8 arg0) {
 	AlienInstance *inst;
+	s8 tempVar;
 	u16 randVal;
+	const s8 *tempPtr;
 
 	inst = &alienInstances[arg0];
 	func_800FB44C_10A3FC(D_80052B34, inst->unk0);
@@ -209,7 +211,8 @@ s32 func_8008D0E0_9C090(u8 arg0) {
 	func_800FB484_10A434(D_80052B34, inst->unk4);
 	func_800FB430_10A3E0(D_80052B34, 0.0f);
 
-	if (((D_8014ECE4 < 0) && (D_8004758A > 0)) || ((D_8014ECE4 > 0) && (D_8004758A < 0))) {
+	tempPtr = &D_8014ECE4;
+	if (((*tempPtr < 0) && (D_8004758A > 0)) || ((*tempPtr > 0) && (D_8004758A < 0))) {
 		D_8014ECE0++;
 		if (D_80031420 & 3) {
 			randVal = func_800038E0_44E0();
@@ -231,10 +234,10 @@ s32 func_8008D0E0_9C090(u8 arg0) {
 		}
 	}
 
-	if (D_8004758A != D_8014ECE4) {
-		inst->unkE += D_8004758A << 6;
+	if (D_8014ECE4 != (tempVar = D_8004758A)) {
+		inst->unkE += tempVar << 6;
 	}
-	D_8014ECE4 = D_8004758A;
+	D_8014ECE4 = tempVar;
 	return 0;
 }
 #else
