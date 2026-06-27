@@ -195,13 +195,15 @@ void write_dword_be(uint8 *buf, size_t *offset, uint32 val)
 
 void read_buf(uint8 *dest, uint8 *source, size_t *offset, int size)
 {
-    memmove(dest, &source[*offset], size);
+    if (size <= 0) return;
+    memmove(dest, &source[*offset], (size_t)size);
     *offset += size;
 }
 
 void write_buf(uint8 *dest, size_t *offset, uint8 *source, int size)
 {
-    memmove(&dest[*offset], source, size);
+    if (size <= 0) return;
+    memmove(&dest[*offset], source, (size_t)size);
     *offset += size;
 }
 
