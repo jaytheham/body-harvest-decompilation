@@ -1757,7 +1757,7 @@ void func_80090D0C_9FCBC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80090D0C_9FCBC.s")
 #endif
 
-// CURRENT(1176)
+/* CURRENT(956) */
 #ifdef NON_MATCHING
 void func_80091220_A01D0(u8 arg0) {
 	AlienInstance *instance = &alienInstances[arg0];
@@ -1774,7 +1774,7 @@ void func_80091220_A01D0(u8 arg0) {
 		func_80090D0C_9FCBC(arg0);
 	} else {
 		func_8009012C_9F0DC(arg0);
-		if (instance->unk20 < 0) {
+		if (instance->unk20 & 0x80000000) {
 			if ((instance->unk20 & 0x8000) == 0) {
 				s8 nodeIdx;
 
