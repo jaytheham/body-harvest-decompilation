@@ -1619,24 +1619,23 @@ void func_80090A6C_9FA1C(u8 arg0, s16 arg1, u16 arg2)
 }
 
 // https://decomp.me/scratch/qLxSW
-// CURRENT(51)
+/* CURRENT(39) */
 #ifdef NON_MATCHING
 void func_80090C14_9FBC4(u8 arg0)
 {
-  s32 new_var;
-	s16 sp2C;
-  s32 var_a0;
-  s32 new_var2;
-  new_var2 = alienInstances[arg0].unk14 - alienInstances[arg0].unk0;
-  new_var = alienInstances[arg0].unk18 - alienInstances[arg0].unk4;
-  sp2C = func_80003824_4424((f32)-new_var, (f32) new_var2);
-  new_var = D_80052B34->unk0 - alienInstances[arg0].unk0;
-  new_var2 = D_80052B34->unk4 - alienInstances[arg0].unk4;
-  var_a0 = sp2C - func_80003824_4424((f32) new_var, (f32) new_var2);
-  
-  if (((-var_a0 < var_a0) ? var_a0 : -var_a0) < 0x4000)
-  {
-	sp2C += 0x8000;
+  s32 diffX;
+  s32 diffZ;
+  s16 sp2C;
+  s32 var;
+
+  diffX = alienInstances[arg0].unk14 - alienInstances[arg0].unk0;
+  diffZ = alienInstances[arg0].unk18 - alienInstances[arg0].unk4;
+  sp2C = func_80003824_4424((f32)-diffZ, (f32) diffX);
+  diffX = D_80052B34->unk0 - alienInstances[arg0].unk0;
+  diffZ = D_80052B34->unk4 - alienInstances[arg0].unk4;
+  var = sp2C - func_80003824_4424((f32) diffX, (f32) diffZ);
+  if (((-var < var) ? var : -var) < 0x4000) {
+    sp2C += 0x8000;
   }
   alienInstances[arg0].unk34 = 0x78;
   alienInstances[arg0].unk47 |= 1;
