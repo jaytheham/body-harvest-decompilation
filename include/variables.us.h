@@ -603,10 +603,6 @@ extern s16 D_8004816E;
 extern s16 D_80048170;
 extern s16 D_80048176;
 extern s16 D_800481A4[];
-extern u8 D_800481B2[];
-extern s16 D_800481B6;
-extern s16 D_800481C4[];
-extern u8 D_800481BD;
 extern s16 D_80048174;
 extern s32 D_80048178;
 extern s32 D_8004817C;
@@ -618,7 +614,7 @@ extern s32 D_80048194;
 extern AlienInstance alienInstances[]; // 0x80048198
 extern s16 D_8013D786_14C736[];
 extern s16 D_8014E4D6[];
-extern s16 D_800481DD[];
+
 extern AlienWaveEntry D_8003BCC0[][12];
 extern u8 D_8003BCC6;
 extern s32 D_8004D148; // is Snared cheat disabled
@@ -3299,8 +3295,6 @@ extern s16 D_8015921C;
 extern s16 D_80159220[];
 extern s16 D_80159226;
 extern s16 D_800481AA[];
-extern s32 D_800481B8[];
-extern s16 D_800481D2[];
 extern s16 D_802E0FB0;
 /* java/1ED9E0 — additional externs for NON_MATCHING C bodies */
 extern u8 D_802D48D0;

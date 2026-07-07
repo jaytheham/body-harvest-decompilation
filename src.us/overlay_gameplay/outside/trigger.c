@@ -183,13 +183,13 @@ void func_800AE6CC_BD67C(void) {
 					break;
 
 				case 3:
-					if ((D_800481B8[D_80222A78[i].unk8 * 0x14] & 0x00300000) != 0) {
+					if ((alienInstances[D_80222A78[i].unk8].unk20 & 0x00300000) != 0) {
 						shouldRun = 1;
 					}
 					break;
 
 				case 4:
-					if ((s32)D_800481B8[D_80222A78[i].unk8 * 0x14] < 0) {
+					if ((s32)alienInstances[D_80222A78[i].unk8].unk20 < 0) {
 						shouldRun = 1;
 					}
 					break;

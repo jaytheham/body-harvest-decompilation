@@ -891,7 +891,7 @@ void func_802E21C4_326314(s32 arg0) {
 	temp_v1 = &D_8014DD50[sp2C];
 	sp24 = temp_v1;
 	if (func_80086D70_95D20(temp_s0 & 0xFF, 0, (s16)(temp_v0 - ((Unk8014DD50 *)temp_v1)->unk6)) != 0) {
-		*(s16 *)((u8 *)&D_800481B6 + temp_s0 * 0x50) = 0;
+		alienInstances[temp_s0].unk1E = 0;
 		func_80086D70_95D20(temp_s0 & 0xFF, 1, (s16)(func_800870D8_96088(0x80, 0x20) - ((Unk8014DD50 *)sp24)->unk6));
 		func_80137468_146418(temp_s0, 0x262);
 	}

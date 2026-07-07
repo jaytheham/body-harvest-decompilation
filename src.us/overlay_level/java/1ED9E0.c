@@ -4363,7 +4363,7 @@ void func_802DF7BC_1F84CC(u8 arg0) {
 	if (1) {
 		*(s32 *)&sp20[0] = D_802E0CDC_1F99EC.w;
 		sp20[2] = D_802E0CDC_1F99EC.h;
-		sp1F = *((u8 *)&D_800481BD + arg0 * 0x50);
+		sp1F = alienInstances[arg0].unk25;
 	}
 	func_800A93A4_B8354(arg0, 0xAE, 0x7E, 0x183);
 

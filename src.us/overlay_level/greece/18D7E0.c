@@ -2945,7 +2945,7 @@ void func_802DBA00_194510(u8 arg0) {
 				}
 				var_v0 = var_a0;
 			}
-			if (var_v0 < 0x320 && !(*(s32 *)((u8 *)&D_800481DD + (sp43 * 0x50)) & 0x8000)) {
+			if (var_v0 < 0x320 && !(alienInstances[sp43].unk47 & 0x80)) {
 				alienInstances[arg0].unk36 = 0;
 				alienInstances[arg0].unk20 |= 0x1000;
 			}

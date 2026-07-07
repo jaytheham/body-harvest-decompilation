@@ -418,7 +418,7 @@ void func_802D5F28_2B8358(void) {
 	s32 alienId;
 
 	if (D_80157F94 != 0xFF) {
-		if (D_800481B2[D_80157F94 * 0x50] == 0) {
+		if (alienInstances[D_80157F94].specIndex == 0) {
 			D_80157F94 = 0xFF;
 			goto afterFirstBlock;
 		}
