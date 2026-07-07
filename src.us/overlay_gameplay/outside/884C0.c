@@ -890,20 +890,22 @@ s32 func_8007A4F8_894A8(s32 arg0)
   return 1;
 }
 
+// CURRENT(1037)
 #ifdef NON_MATCHING
-// CURRENT(2968)
 void func_8007A6B4_89664(u8 arg0)
 {
 	AlienInstance* alien;
-	s32 startX;
-	s32 startZ;
+	s16 startX;
+	s16 startZ;
 	s32 x;
 	s32 z;
+	s32 diffX;
+	s32 diffZ;
 	s32 absX;
 	s32 absZ;
 	s32 stepX;
-	s32 i;
 	s32 stepZ;
+	s32 i;
 	u8 stage;
 
 	i = 0;
@@ -917,14 +919,14 @@ void func_8007A6B4_89664(u8 arg0)
 	alien = &alienInstances[arg0];
 	startX = alien->unk0;
 	startZ = alien->unk4;
-	x = startX - D_80149434;
-	z = startZ - D_80149436;
-	if ((-x) < x) { absX = x; } else { absX = -x; }
-	if ((-z) < z) { absZ = z; } else { absZ = -z; }
+	diffX = startX - D_80149434;
+	diffZ = startZ - D_80149436;
+	if ((-diffX) < diffX) { absX = diffX; } else { absX = -diffX; }
+	if ((-diffZ) < diffZ) { absZ = diffZ; } else { absZ = -diffZ; }
 
 	stepX = 0;
 	if (absZ < absX) {
-		if (-x > 0) {
+		if (-diffX > 0) {
 			stepX = -0x100;
 			stepZ = 0;
 		} else {
@@ -932,7 +934,7 @@ void func_8007A6B4_89664(u8 arg0)
 			stepZ = 0;
 		}
 	} else {
-		if (-z > 0) {
+		if (-diffZ > 0) {
 			stepZ = -0x100;
 		} else {
 			stepZ = 0x100;
