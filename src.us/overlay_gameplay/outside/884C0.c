@@ -230,17 +230,56 @@ u8 D_8013C1B8_14B168[0x34] = {
 	0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_8013C1EC_14B19C[0x50] = {
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00,
-	0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00,
-	0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00,
+AlienInstance D_8013C1EC_14B19C = {
+	0,      /* unk0 */
+	0,      /* unk2 */
+	0,      /* unk4 */
+	0,      /* unk6 */
+	0,      /* unk8 */
+	0,      /* unkA */
+	-1,     /* unkC */
+	0,      /* unkE */
+	0,      /* unk10 */
+	0,      /* unk12 */
+	0,      /* unk14 */
+	0,      /* unk16 */
+	0,      /* unk18 */
+	0x0,   /* specIndex */
+	0xFF,      /* unk1B */
+	0,      /* hitPoints */
+	0,      /* unk1E */
+	0,      /* unk20 */
+	0,      /* unk24 */
+	0xFF,   /* unk25 */
+	0,      /* unk26 */
+	0,      /* unk27 */
+	-1,     /* unk28 */
+	-1,     /* unk29 */
+	0,      /* unk2A */
+	0,      /* unk2C */
+	0,      /* unk2E */
+	0,      /* unk30 */
+	0,      /* unk32 */
+	0,      /* unk34 */
+	0,      /* unk36 */
+	0,      /* unk37 */
+	0x00FF, /* unk38 */
+	0,      /* unk3A */
+	0,      /* unk3C */
+	-1,     /* unk3D */
+	0xFF,   /* unk3E */
+	0xFF,   /* unk3F */
+	0,      /* unk40 */
+	0,      /* unk42 */
+	0,      /* unk44 */
+	0xFF,   /* pad46 */
+	0,      /* unk47 */
+	0,      /* unk48 */
+	0xFF,   /* pad4A */
+	0,      /* unk4B */
+	0,      /* unk4C */
+	0,      /* unk4E */
+	0,      /* pad4F */
 };
 
 u8 D_8013C23C_14B1EC[8] = {0x00, 0x40, 0x00, 0x40, 0x00, 0x40, 0x00, 0x00};
@@ -384,7 +423,7 @@ s32 func_8007956C_8851C(u8 arg0)
 		D_8014D308[activeCount + 1] = D_8014D308[activeCount];
 	}
 
-	alienInstances[slotIndex] = *(AlienInstance *)D_8013C1EC_14B19C;
+	alienInstances[slotIndex] = D_8013C1EC_14B19C;
 	alienInstances[slotIndex].specIndex = arg0;
 	specFlags = alienSpecs[arg0].unk54;
 	alienInstances[slotIndex].hitPoints = alienSpecs[arg0].unk3A;
