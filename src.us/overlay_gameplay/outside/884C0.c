@@ -673,49 +673,41 @@ void func_80079E64_88E14(s32 arg0) {
 	}
 }
 
+// CURRENT(1515)
 #ifdef NON_MATCHING
-// CURRENT(3500)
 s32 func_80079F08_88EB8(s32 arg0) {
 	u8 specIndex;
 	s16 floorY;
 	s16 hitY;
 	u8 hitType;
-	s32 specFlags;
-	AlienInstance *inst;
-	AlienSpec *spec;
 
-	inst = &alienInstances[arg0];
-	specIndex = inst->specIndex;
+	specIndex = alienInstances[arg0].specIndex;
 
-	if (((inst->specIndex == 0xD) && (inst->unk48 > 0)) || ((inst->specIndex == 0x12) && (inst->unk24 == 5))) {
+	if (((alienInstances[arg0].specIndex == 0xD) && (alienInstances[arg0].unk48 > 0)) || ((alienInstances[arg0].specIndex == 0x12) && (alienInstances[arg0].unk24 == 5))) {
 		return 0;
 	}
 
-	if (inst->unk20 & 0x01000000) { inst->unk10 = 0; return 0; }
+	if (alienInstances[arg0].unk20 & 0x01000000) { alienInstances[arg0].unk10 = 0; return 0; }
 
-	floorY = (s16) (func_800B84D0_C7480(inst->unk0, inst->unk4) >> 8);
-	spec = &alienSpecs[specIndex];
-	specFlags = spec->unk54;
+	floorY = (s16) (func_800B84D0_C7480(alienInstances[arg0].unk0, alienInstances[arg0].unk4) >> 8);
 
-	if (specFlags & 0x80000001) {
+	if (alienSpecs[specIndex].unk54 & 0x80000001) {
 		func_8011DE60_12CE10(1);
 	}
 
-	hitType = (u8) func_8011E6FC_12D6AC(inst->unk0, inst->unk4, &hitY);
-	specFlags = spec->unk54;
+	hitType = (u8) func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &hitY);
 
-	if (specFlags & 0x80000001) {
+	if (alienSpecs[specIndex].unk54 & 0x80000001) {
 		func_8011DE60_12CE10(0);
-		specFlags = spec->unk54;
 	}
 
-	if ((specFlags < 0) && (hitType != 0xFF)) {
-		if (inst->unk2 >= hitY) {
+	if ((alienSpecs[specIndex].unk54 < 0) && (hitType != 0xFF)) {
+		if (alienInstances[arg0].unk2 >= hitY) {
 			floorY = hitY;
 		}
 	}
 
-	if (specFlags & 0x81) {
+	if (alienSpecs[specIndex].unk54 & 0x81) {
 		if ((currentLevel != 4) || (specIndex != 7)) {
 			if (floorY < D_80222A70) {
 				floorY = (s16) D_80222A70;
@@ -723,20 +715,20 @@ s32 func_80079F08_88EB8(s32 arg0) {
 		}
 	}
 
-	floorY = floorY + spec->unk58;
-	if (!(specFlags & 0x40)) {
-		if (inst->unk2 < floorY) {
-			inst->unk2 = floorY;
+	floorY = floorY + alienSpecs[specIndex].unk58;
+	if (!(alienSpecs[specIndex].unk54 & 0x40)) {
+		if (alienInstances[arg0].unk2 < floorY) {
+			alienInstances[arg0].unk2 = floorY;
 		}
 	}
 
-	if (!(specFlags & 0x841)) {
-		inst->unk2 = floorY;
+	if (!(alienSpecs[specIndex].unk54 & 0x841)) {
+		alienInstances[arg0].unk2 = floorY;
 	}
 
 	if (hitType != 0xFF) {
-		if (specFlags & 0x10) {
-			if ((inst->unk2 < (hitY - 0x32)) || !(specFlags & 0x80000001)) {
+		if (alienSpecs[specIndex].unk54 & 0x10) {
+			if ((alienInstances[arg0].unk2 < (hitY - 0x32)) || !(alienSpecs[specIndex].unk54 & 0x80000001)) {
 				if ((currentLevel != 3) || ((specIndex != 9) && (specIndex != 8))) {
 					return 1;
 				}
@@ -744,7 +736,7 @@ s32 func_80079F08_88EB8(s32 arg0) {
 		}
 	}
 
-	inst->unk10 = 0;
+	alienInstances[arg0].unk10 = 0;
 	return 0;
 }
 #else
