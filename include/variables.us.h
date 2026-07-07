@@ -1609,6 +1609,7 @@ extern Unk802E71B8 D_802E71B8;
 extern Unk802E71B8 D_802E71C0;
 extern s8 D_8014EC50[];
 extern s32 D_8014ECC8;
+extern s32 D_8014ECC8_W;
 extern u32 D_8014ECCC;
 extern s32 D_8014ECD0;
 extern s32 D_8014ECD4;
