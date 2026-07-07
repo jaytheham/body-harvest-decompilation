@@ -389,8 +389,6 @@ void func_80079510_884C0(u8 arg0)
   *((u8*)&inst->unk1E) = 0xFF;
 }
 
-// CURRENT(1285)
-#ifdef NON_MATCHING
 s32 func_8007956C_8851C(u8 arg0)
 {
 	s32 slotIndex;
@@ -407,10 +405,10 @@ s32 func_8007956C_8851C(u8 arg0)
 		if (arg0 == 0x14)
 		{
 			func_80088000_96FB0(-1);
-			activeCount = D_8014ECC8;
 		}
 	}
 
+	activeCount = D_8014ECC8;
 	slotIndex = D_8014D308[activeCount];
 	if (alienInstances[slotIndex].unk20 & 0x600)
 	{
@@ -440,7 +438,7 @@ s32 func_8007956C_8851C(u8 arg0)
 		alienInstances[slotIndex].unk20 |= 0x400000;
 	}
 
-	D_8014ECC8 = activeCount + 1;
+	D_8014ECC8_W = activeCount + 1;
 	if ((arg0 == 0x19) || (arg0 == 0x1B))
 	{
 		alienInstances[slotIndex].unk25 = func_8007956C_8851C(0);
@@ -456,10 +454,6 @@ s32 func_8007956C_8851C(u8 arg0)
 
 	return slotIndex;
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007956C_8851C.s")
-#endif
 
 // https://decomp.me/scratch/tmc2b
 // CURRENT(140)
