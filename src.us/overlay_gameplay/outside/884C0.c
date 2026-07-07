@@ -776,7 +776,6 @@ s32 func_8007A198_89148(s32 arg0)
 #endif
 
 // https://decomp.me/scratch/s8PwY
-// CURRENT(30)
 // guess_addActiveObject Skipping seems to result in aliens with no physical presence
 s32 func_8007A2A0_89250(s32 arg0)
 {
