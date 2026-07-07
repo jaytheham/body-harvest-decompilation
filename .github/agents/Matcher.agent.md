@@ -14,7 +14,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
 ## Project Structure
 
 - `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
-- `asm/matchings`: Readonly - target assembly of matched functions, search here for specific assembly patterns.
+- `asm/matchings`: Readonly - target assembly of matched functions.
 - `src.us/`: C source files.
 - `include/`: Headers for variables, functions, structs, library types, and macros.
 - `build/`: Readonly - compiled object files and the built ROM image.
@@ -28,7 +28,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
  Diff output includes a closeness value for the specified range of assembly e.g. `CURRENT (46)`, lower is better, 0 is a perfect match.
  Diff output skips matching instructions except for 3 either side of differences.
 - You can get the full assembly of a function after building by adding param `--show=target` or `--show=current` to the above diff command.
-- Useful: Check for already matched functions with sub-sections of assembly that are the same as the target assembly using `.\tools\find-partial.ps1 <current func name>` e.g. `.\tools\find-partial.ps1 func_80120414_12F3C4` use the C implementation of any functions it returns as reference for your own implementation.
+- Important: Rather than blindly making changes when dealing with incorrect or out-of-order instructions, first check for other functions with sections of assembly that are the same as the target assembly section using `.\tools\Search-AsmPattern.ps1 -Offset <ROM offset> -Count <number of instructions to match>` e.g. `.\tools\Search-AsmPattern.ps1 -Offset 0x884C0 -Count 8` look up the C implementation of any functions it returns as reference for your own implementation - if they're not wrapped in NON_MATCHING then they are already matched and can be used as a reference for how to implement the same logic in your function.
 
 # Your Workflow
 1. Remove the `#ifdef NON_MATCHING` wrapper around the function so the C code will be included in the build.

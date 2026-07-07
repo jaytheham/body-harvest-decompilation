@@ -1,0 +1,5 @@
+# Build the index (run after any ASM changes)
+.\tools\Build-AsmPatternIndex.ps1
+
+# Search: find functions with the same 5-instruction pattern at ROM offset 0x884C0
+.\tools\Search-AsmPattern.ps1 -Offset 0x884C0 -Count 5
