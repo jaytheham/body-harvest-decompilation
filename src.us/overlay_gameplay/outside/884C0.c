@@ -510,12 +510,13 @@ void func_800797A4_88754(s32 arg0, u8 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800797A4_88754.s")
 #endif
 
+// CURRENT(60)
 #ifdef NON_MATCHING
-/* CURRENT(1395) */
 void func_80079910_888C0(s32 arg0) {
-	AlienInstance *alien;
+	u8 pad;
 	u8 specIndex;
 	u8 waveIndex;
+	AlienInstance *alien;
 
 	alien = &alienInstances[arg0];
 	specIndex = alien->specIndex;
