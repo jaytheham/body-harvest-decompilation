@@ -5549,7 +5549,7 @@ void func_800CF948_DE8F8(void) {
 				s32 dz = *(s16 *)&data[4] - alien->unk4;
 				s16 radius = *(s16 *)&entry[2];
 
-				if ((dx * dx) + (dy * dy) + (dz * dz) < (s32)(D_80256688[alien->specIndex][0] + (radius * radius))) {
+				if ((dx * dx) + (dy * dy) + (dz * dz) < (s32)(alienSpecs[alien->specIndex].unk8 + (radius * radius))) {
 					func_80088760_97710(alien);
 				}
 			}

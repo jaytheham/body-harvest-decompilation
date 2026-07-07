@@ -278,7 +278,6 @@ extern s16 D_8013D52E_14C4DE;
 
 extern u8 D_8015F9AC[];
 extern u8 D_80147098_156048[];
-extern u8 D_802566DA[];
 
 extern f64 D_80037620_38220;
 extern u8 D_1010A80[];
@@ -1483,12 +1482,7 @@ extern char D_80037728_38328; /* osSyncPrintf format string */
 extern char D_8003773C_3833C; /* osSyncPrintf format string */
 extern char D_80037750_38350; /* osSyncPrintf format string */
 extern char D_80037764_38364; /* osSyncPrintf format string */
-extern s16 D_8025668C;
 extern s32 D_8014D304;
-extern u32 D_80256688[][26];
-extern s16 D_802566C0[];
-extern s16 D_802566C2[];
-extern s32 D_802566D4[];
 
 extern u8 D_80140AA4_14FA54[];
 extern Struct_80140D00 D_80140D00_14FCB0;
@@ -1819,7 +1813,6 @@ extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 // 80224680 missions
 
 extern u8 D_80254E80[]; // Tile palette data
-extern u16 D_80256E0A;
 extern f64 D_802E0D78_2604B8;
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
 extern u8 D_80257A3A[];
@@ -1853,7 +1846,6 @@ extern u8 D_5040A80[];
 extern u8 D_5041480[];
 extern u8 D_5041680[];
 extern u8 D_5041880[];
-extern u32 D_80256750;
 
 extern f32 D_8014F1E4;
 extern f32 D_8014F1E8;
@@ -1907,7 +1899,6 @@ extern AlienSpec alienSpecs[0x30]; // 80256680
 extern f32 D_802DF3A4_25EAE4;
 extern f32 D_802DF3A8_25EAE8;
 extern u32 D_8014D1D4; // D_8014D1B8[7]
-extern Unk8025669C D_8025669C[];  // 8025669C
 extern Unk8014DD50 *D_802DDC88_196798;
 extern Unk8014DD50 *D_802DDCD0_1967E0;
 extern AlienSpec D_802E0CE4_1F99F4; // 0x802E0CE4
@@ -3245,11 +3236,6 @@ extern u8 D_8013CBA4;
 extern u8 D_8013CBBC;
 extern Unk8014DD50 *D_8013CB8C;
 extern DebugPropEntry D_8013CBC0[];
-extern u8 D_802566D0[];
-extern u8 D_802566BA[];
-extern void (*D_802566C8[])(u8);
-extern Unk802566D8 D_802566D8[];
-extern u8 D_802567A1;
 extern s8 D_80257A55[];
 extern u8 D_80140768[];
 extern WeaponSpecEntry D_80140768_14F718[];
@@ -3305,7 +3291,6 @@ extern s16 D_8004E798;
 extern s16 D_8004F038;
 extern u8 D_802E04A0_1F91B0;
 extern s32 D_802E06E0[];
-extern s32 D_80256DEC;
 extern s32 D_802E099C_2600DC;
 extern s32 D_802E09A0_2600E0;
 extern Unk80052B40 D_802E09A4_2600E4;

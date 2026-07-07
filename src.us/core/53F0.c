@@ -1133,7 +1133,7 @@ loop:
 		if (alien->unk20 & 0x100000) {
 			return 1;
 		}
-		return alien->hitPoints < *(u16 *)&D_802566BA[alien->specIndex * 104];
+		return alien->hitPoints < alienSpecs[alien->specIndex].unk3A;
 	}
 	case 0xAF:
 		arg0 = &D_8004D180[arg0[1] * 3];

@@ -990,7 +990,7 @@ s32 func_802D64D0_18EFE0(void) {
 		func_800800E4_8F094((u8)D_80157F94);
 		func_80080510_8F4C0(D_80157F95);
 		alienInstances[D_80157F94].unk6 = alienInstances[D_80157F94].unkE;
-		D_802566C8[specIndex * 0x1A]((u8)D_80157F94);
+		alienSpecs[specIndex].unk48((u8)D_80157F94);
 	}
 
 	switch (D_80157F8C) {

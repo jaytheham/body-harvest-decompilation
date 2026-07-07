@@ -3472,7 +3472,7 @@ void func_8012B26C_13A21C(void) {
 
 							if (sideDist < threshold2) {
 								alien->unk20 |= 0x800000;
-								impactDamage = (impactDamage * D_80147098_156048[D_802566DA[spec] * 0xC]) >> 8;
+								impactDamage = (impactDamage * D_80147098_156048[(s8)alienSpec->pad5A[0] * 0xC]) >> 8;
 							}
 						}
 					}

@@ -965,7 +965,7 @@ s16 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 sp36_s32;
 
 	func_8011E6FC_12D6AC(arg2, arg3, &sp36);
-	sp36_s32 = *(s16 *)((u8 *)D_802566D8 + alienInstances[arg0->unk144].specIndex * 0x68);
+	sp36_s32 = alienSpecs[alienInstances[arg0->unk144].specIndex].unk58;
 
 	if (sp36_s32 < 0x33) {
 		var_f2 = 3.0f;
@@ -974,10 +974,10 @@ s16 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3) {
 	}
 
 	sp36_s32 = sp36;
-	if ((f32)sp36_s32 < (f32)arg1 - (f32)*(s16 *)((u8 *)D_802566D8 + alienInstances[arg0->unk144].specIndex * 0x68) * var_f2) {
-		sp36_s32 = (s16)((f32)arg1 - (f32)*(s16 *)((u8 *)D_802566D8 + alienInstances[arg0->unk144].specIndex * 0x68) * var_f2);
-	} else if ((f32)arg1 - (f32)*(s16 *)((u8 *)D_802566D8 + alienInstances[arg0->unk144].specIndex * 0x68) * var_f2 < (f32)sp36_s32) {
-		sp36_s32 = (s16)((f32)arg1 + (f32)*(s16 *)((u8 *)D_802566D8 + alienInstances[arg0->unk144].specIndex * 0x68) * var_f2);
+	if ((f32)sp36_s32 < (f32)arg1 - (f32)alienSpecs[alienInstances[arg0->unk144].specIndex].unk58 * var_f2) {
+		sp36_s32 = (s16)((f32)arg1 - (f32)alienSpecs[alienInstances[arg0->unk144].specIndex].unk58 * var_f2);
+	} else if ((f32)arg1 - (f32)alienSpecs[alienInstances[arg0->unk144].specIndex].unk58 * var_f2 < (f32)sp36_s32) {
+		sp36_s32 = (s16)((f32)arg1 + (f32)alienSpecs[alienInstances[arg0->unk144].specIndex].unk58 * var_f2);
 	}
 
 	if (arg1 < sp36_s32) {
@@ -1408,7 +1408,7 @@ void func_800F4DB0_103D60(void) {
 							if (*(s32 *)&alienBase[0x20] & 0x600) {
 								func_8007A4F8_894A8(alienIdx, (void *)walker, alienIdx, i);
 								alienBase = (u8 *)&alienInstances[walker->alienIdx];
-								func_800DF848_EE7F8(*(s16 *)&alienBase[0x0], *(s16 *)&alienBase[0x2], *(s16 *)&alienBase[0x4], *(u16 *)((u8 *)&D_8025668C + alienBase[0x1A] * 0x68), 0);
+								func_800DF848_EE7F8(*(s16 *)&alienBase[0x0], *(s16 *)&alienBase[0x2], *(s16 *)&alienBase[0x4], (u16)alienSpecs[alienBase[0x1A]].unkC, 0);
 								func_800F3038_101FE8(i);
 							} else {
 								func_80079910_888C0(alienIdx);

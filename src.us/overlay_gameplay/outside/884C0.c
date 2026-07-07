@@ -816,7 +816,7 @@ s32 func_8007A2A0_89250(s32 arg0)
 	osSyncPrintf(&D_8014180C_1507BC);
 	return -1;
   }
-	if (D_802566D4[alienInstances[arg0].specIndex * 0x1A] & 0x3E)
+	if (alienSpecs[alienInstances[arg0].specIndex].unk54 & 0x3E)
 	{
 		D_8014D304 = 0;
 
@@ -970,7 +970,7 @@ void func_8007A6B4_89664(u8 arg0)
 	alien->unk4 = z;
 	alien->unk32 = z;
 	if (D_80047F94 == stage) {
-		if ((func_800B0D10_BFCC0(alien->unk0, alien->unk4, ((s16*)&D_8025668C)[alien->specIndex * 0x34]) == 0) &&
+		if ((func_800B0D10_BFCC0(alien->unk0, alien->unk4, alienSpecs[alien->specIndex].unkC) == 0) &&
 			(func_8007F9C8_8E978(arg0, alien->specIndex) == 0)) {
 			return;
 		}
@@ -983,7 +983,7 @@ void func_8007A6B4_89664(u8 arg0)
 			if (i >= 10) {
 				return;
 			}
-			if (func_800B0D10_BFCC0(alien->unk0, alien->unk4, ((s16*)&D_8025668C)[alien->specIndex * 0x34]) == 0) {
+			if (func_800B0D10_BFCC0(alien->unk0, alien->unk4, alienSpecs[alien->specIndex].unkC) == 0) {
 				if (func_8007F9C8_8E978(arg0, alien->specIndex) == 0) {
 					return;
 				}
@@ -1364,7 +1364,7 @@ void func_8007B370_8A320(s32 arg0) {
 	}
 
 	specIndex = alien->specIndex;
-	scale = ((s16 *)&D_8025668C)[specIndex * 0x34];
+	scale = alienSpecs[specIndex].unkC;
 	if (specIndex == 0x1A) {
 		scale = (s16)(s32)((f64)scale * 1.5);
 	}
@@ -1911,8 +1911,6 @@ void func_8007D424_8C3D4(void) {
 	s32 idx;
 	AlienSpec *spec;
 	void (*tickCallback)(u8);
-	AlienSpec *specBase;
-	s32 specStride;
 	AlienInstance *inst;
 
 	idx = D_80052A8C & 3;
@@ -1920,8 +1918,6 @@ void func_8007D424_8C3D4(void) {
 		return;
 	}
 
-	specBase = alienSpecs;
-	specStride = sizeof(AlienSpec);
 	inst = &alienInstances[idx];
 
 	do {
@@ -1974,7 +1970,7 @@ void func_8007D424_8C3D4(void) {
 					inst->unk2A = func_80081390_90340((u8)idxU8);
 				}
 
-				spec = (AlienSpec *)((u8 *)specBase + (specIndex * specStride));
+				spec = &alienSpecs[specIndex];
 				tickCallback = (void (*)(u8))spec->unk4C;
 				if (tickCallback == NULL) {
 					osSyncPrintf(&D_80141C58_150C08, specIndex);
@@ -1991,7 +1987,7 @@ void func_8007D424_8C3D4(void) {
 					dz = inst->unk4 - D_80149436;
 					if ((dx < -0x8FF) || (dx >= 0x900) || (dz < -0x8FF) || (dz >= 0x900)) {
 						if ((D_80052ACA != 2) || (specIndex < 0x1B)) {
-							spec = (AlienSpec *)((u8 *)specBase + (specIndex * specStride));
+							spec = &alienSpecs[specIndex];
 							if (!(spec->unk54 & 0x08000000)) {
 								idx += 4;
 								inst = (AlienInstance *)((u8 *)inst + 0x140);
@@ -2435,7 +2431,6 @@ s32 func_8007E500_8D4B0(AlienInstance *arg0, AlienSpec *arg1, AlienInstance *arg
 	return 0;
 }
 
-// v0/v1 register swap (type↔specIdx1) + level 2 body eliminated by compiler
 // CURRENT(10)
 #ifdef NON_MATCHING
 s32 func_8007E608_8D5B8(AlienInstance *arg0, AlienInstance *arg1) {
@@ -2671,7 +2666,7 @@ s32 func_8007EB74_8DB24(AlienInstance *arg0, AlienInstance *arg1) {
 				}
 			}
 
-			if (*(s32 *)((u8 *)D_802566D4 + (specIndex * 0x68)) & 1) {
+			if (alienSpecs[specIndex].unk54 & 1) {
 				signB = 1;
 				signA = 1;
 				if ((arg1->unk2 - arg0->unk2) < 0) {
@@ -2700,7 +2695,7 @@ s32 func_8007EB74_8DB24(AlienInstance *arg0, AlienInstance *arg1) {
 				return 1;
 			}
 
-			if (*(s32 *)((u8 *)D_802566D4 + (specIndex * 0x68)) & 1) {
+			if (alienSpecs[specIndex].unk54 & 1) {
 				signB = 1;
 				signA = 1;
 				if ((arg0->unk2 - arg1->unk2) < 0) {
@@ -3181,7 +3176,7 @@ void func_8007FDD8_8ED88(void)
 		i = 0;
 		do
 		{
-			inst = (AlienInstance *)((u8 *)&alienInstances + (((*activeList << 2) + *activeList) << 4));
+			inst = &alienInstances[*activeList];
 			specIdx = inst->specIndex;
 			next = i + 1;
 			if (alienSpecs[specIdx].unk54 & 0x3E)
@@ -3225,7 +3220,7 @@ void func_8007FDD8_8ED88(void)
 		do
 		{
 			specIdx = *activeList;
-			inst = (AlienInstance *)((u8 *)&alienInstances + (((specIdx << 2) + specIdx) << 4));
+			inst = &alienInstances[specIdx];
 			if (inst->unk47 & 0x80)
 			{
 				func_8007A6B4_89664(specIdx & 0xFF);
@@ -3283,10 +3278,10 @@ void func_800800E4_8F094(u8 arg0)
 		if (temp_v0 & 0x80000) {
 			func_800F375C_10270C((s8) (temp_v0 & 7));
 			inst->unk20 = (s32) (inst->unk20 & ~7);
-			inst->unk20 = (s32) (inst->unk20 | func_800F3990_102940(arg0, D_802566D0[inst->specIndex * 0x68]));
+			inst->unk20 = (s32) (inst->unk20 | func_800F3990_102940(arg0, (u8)alienSpecs[inst->specIndex].unk50));
 		}
 	}
-	if ((D_802566D4[inst->specIndex * 0x1A] & 0x841) || (inst->unk20 & 0x60000000)) {
+	if ((alienSpecs[inst->specIndex].unk54 & 0x841) || (inst->unk20 & 0x60000000)) {
 		inst->unk2 = (s16) (inst->unk2 + ((s16) inst->unk10 >> 5));
 	}
 }
@@ -4205,7 +4200,7 @@ s32 func_800826E4_91694(s32 arg0, u16 arg1, u16 arg2) {
 	s32 result;
 
 	inst = &alienInstances[arg0 & 0xFF];
-	threshold = D_80256688[inst->specIndex][0];
+	threshold = alienSpecs[inst->specIndex].unk8;
 
 	distSq[0][0] = ((inst->unk0 & 0xFF) * (inst->unk0 & 0xFF)) + ((inst->unk4 & 0xFF) * (inst->unk4 & 0xFF));
 	distSq[0][1] = (inst->unk4 & 0xFF) * (inst->unk4 & 0xFF);
@@ -4538,7 +4533,7 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 	specIndex = alien->specIndex;
 	facingDir = alien->unk12;
 	baseAngle = alien->unkE;
-	radius = (f64)((s16 *)&D_8025668C)[specIndex * 0x34];
+	radius = (f64)alienSpecs[specIndex].unkC;
 	chosenBuilding = 0xFF;
 	blockedBuilding = 0xFF;
 	hitBuilding = 0xFF;
@@ -5524,15 +5519,15 @@ void func_80085690_94640(u8 arg0, u16 arg1)
   if (func_80084FE8_93F98(arg0, (s32)arg1) != 0)
   {
 	alien = &alienInstances[arg0];
-	if ((*((s16 *) (&alien->unk1E))) == 0)
+	if (alien->unk1E == 0)
 	{
 	  //specIdx = alien->specIndex;
 	  func_80122524_1314D4(
 		  D_80052B34,
-		  D_80145BE0[D_80256698[alien->specIndex].unk0].unk2,
+		  D_80145BE0[alienSpecs[alien->specIndex].unk0].unk2,
 		  alien->unk0,
 		  alien->unk4);
-	  *((s16 *) (&alien->unk1E)) = 0x1C;
+	  alien->unk1E = 0x1C;
 	}
   }
 }
@@ -6256,7 +6251,7 @@ s32 func_8008751C_964CC(u8 arg0, s32 arg1, s32 arg2)
 	tempA3 = -tempV0;
 	tempV1 = inst->unk4 - inst->unk18;
 	tempV1 = (s16)tempV1;
-	specVal = D_802566C0[specIndex * 0x34];
+	specVal = alienSpecs[specIndex].unk40;
 
 	if (tempA3 < tempV0) {
 		varA2 = tempV0;
@@ -7281,7 +7276,7 @@ void func_80089FAC_98F5C(u8 arg0) {
 			if (alien->unk2C == 1) {
 				alien->unk38 = -1;
 				if (alien->unk20 & 0x600) {
-					func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, ((u16 *)&D_8025668C)[specIndex * 0x34], 2);
+					func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16)alienSpecs[specIndex].unkC, 2);
 				}
 			}
 		}
@@ -7432,7 +7427,7 @@ void func_8008A3EC_9939C(u8 arg0) {
 
 	if (alien->unk2C == 0x10) {
 		if (alien->unk20 & 0x600) {
-			baseRadius = ((s16 *)&D_8025668C)[alien->specIndex * 0x34];
+			baseRadius = alienSpecs[alien->specIndex].unkC;
 			radius = (baseRadius < 0) ? ((baseRadius + 1) >> 1) : (baseRadius >> 1);
 			effectId = func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16)radius, 0);
 			for (i = 0; i < alien->unk24; i++) {
@@ -7442,14 +7437,14 @@ void func_8008A3EC_9939C(u8 arg0) {
 					alien->unk4,
 					0x10,
 					effectId,
-					(u32)((f64)((s16 *)&D_8025668C)[alien->specIndex * 0x34] * 1.5),
+					(u32)((f64)alienSpecs[alien->specIndex].unkC * 1.5),
 					&D_502D390,
 					1);
 			}
 		}
 	} else if (alien->unk2C == 1) {
 		if (alien->unk20 & 0x600) {
-			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, ((u16 *)&D_8025668C)[alien->specIndex * 0x34], 6);
+			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16)alienSpecs[alien->specIndex].unkC, 6);
 			if (alien->unk20 & 0x80000) {
 				func_800F3038_101FE8(alien->unk20 & 7);
 				alien->unk20 &= ~0x80000;

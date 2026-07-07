@@ -335,7 +335,7 @@ s32 func_800A9A90_B8A40(u8 arg0, s32 arg1, f32 arg2) {
 		}
 	}
 
-	if (((f32) * (u16 *)&D_802566BA[specIndex * 0x68] * arg2) < (f32) hpDelta) {
+	if (((f32)alienSpecs[specIndex].unk3A * arg2) < (f32) hpDelta) {
 		return 1;
 	}
 
@@ -1964,7 +1964,7 @@ void func_800ADB4C_BCAFC(u8 arg0) {
 				}
 				alien->unk12 = 0;
 				alien->unk20 |= 0x08000100;
-				if (alien->hitPoints < ((s16) D_80256E0A / 4)) {
+				if (alien->hitPoints < ((s16)alienSpecs[0x12].unk3A / 4)) {
 					func_80087AAC_96A5C(arg0);
 				}
 			}

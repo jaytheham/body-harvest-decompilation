@@ -113,7 +113,7 @@ s32 func_800A3E74_B2E24(u8 arg0) {
 	child->unk18 = (s16) (s32) ((((f64) (f32) sins((u16) dir) / 32768.0) * 400.0) + (f64) parent->unk4);
 	child->unk2C = 0x1E;
 
-	if (D_802566D4[(child->specIndex * 0x1A)] & 1) {
+	if (alienSpecs[child->specIndex].unk54 & 1) {
 		groundY = func_800B84D0_C7480(child->unk0, child->unk4) >> 8;
 		func_8011E6FC_12D6AC(child->unk0, child->unk4, &groundY);
 		child->unk2 = groundY + 0x19;
@@ -225,7 +225,7 @@ void func_800A41B0_B3160(u8 arg0) {
 				levelStep = 0xF;
 			}
 
-			if ((timer >= 0x10) && (((u16 *) &D_802566BA[alien->specIndex * 0x68])[0] / 10 < alien->hitPoints) && ((timer % levelStep) == 0) && (alien->unk3D != 0)) {
+			if ((timer >= 0x10) && (alienSpecs[alien->specIndex].unk3A / 10 < alien->hitPoints) && ((timer % levelStep) == 0) && (alien->unk3D != 0)) {
 				s16 randA;
 				s16 randB;
 				s8 velX;
@@ -314,7 +314,7 @@ void func_800A41B0_B3160(u8 arg0) {
 		flags = alien->unk20;
 	}
 
-	if ((flags < 0) && (((u16 *) &D_802566BA[alien->specIndex * 0x68])[0] / 10 < alien->hitPoints)) {
+	if ((flags < 0) && (alienSpecs[alien->specIndex].unk3A / 10 < alien->hitPoints)) {
 		if (!((currentLevel == 4) && (alien->unk1B == 2))) {
 			u8 attackCap;
 

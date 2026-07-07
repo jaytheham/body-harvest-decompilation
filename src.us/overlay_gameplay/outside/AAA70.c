@@ -863,11 +863,11 @@ void func_8009D96C_AC91C(void) {
 					sp98 = (f32) ((f64) (f32) alien->hitPoints / 100.0);
 				}
 
-				tempU16 = *(u16 *) &D_802566BA[alien->specIndex * 0x68];
+				tempU16 = alienSpecs[alien->specIndex].unk3A;
 				sp8A = (s16) (((f64) tempU16 / 100.0) * 50.0);
 				func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
 
-				tempU16 = *(u16 *) &D_802566BA[alien->specIndex * 0x68];
+				tempU16 = alienSpecs[alien->specIndex].unk3A;
 				D_8014F202 = 3;
 				sp8C = (s32) &D_8025EC40;
 				sp7C = (s32) alien;
