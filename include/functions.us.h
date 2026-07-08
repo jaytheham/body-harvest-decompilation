@@ -1225,7 +1225,7 @@ s16 func_800D7624_E65D4(s16 arg0, s16 arg1, s16 arg2);
 s16 func_800D7EF8_E6EA8(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s16 func_800DA260_E9210(s16 arg0, s16 arg1, s16 arg2);
 s16 func_800DA450_E9400(s16 arg0, s16 arg1, s16 arg2, u8 arg3);
-s16 func_801225C4_131574(Unk8015F760 *arg0);
+s16 func_801225C4_131574(Projectile *arg0);
 void func_800D4AB0_E3A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_800D55C0_E4570(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_800D76F4_E66A4(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
@@ -1508,7 +1508,7 @@ void func_800E5450_F4400(s32 arg0, s32 arg1);
 s16 func_800D3C88_E2C38(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5);
 s32 func_800794F8_884A8(s32 arg0, s32 arg1);
 void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
-void func_80128650_137600(Unk8015F760 *arg0, s32 arg1);
+void func_80128650_137600(Projectile *arg0, s32 arg1);
 s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4);
 void func_800D9DD8_E8D88(s16 arg0, s16 arg1, s16 arg2);
 /* core/loader */

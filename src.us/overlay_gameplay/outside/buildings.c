@@ -3987,7 +3987,7 @@ void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
 	u8 *temp_v0;
 	s32 objIndex;
 
-	objIndex = (((u8 *) arg0 - D_80145BE0_154B90) / 0x18);
+	objIndex = (const WeaponEntry_80129864 *)arg0 - D_80145BE0_154B90;
 	if ((temp_v0 = (u8 *) buildingInstances + (((((*(s16 *)((u8 *) &D_8015FAEE + (arg1 * 0x30))) >> 4) << 2) - ((*(s16 *)((u8 *) &D_8015FAEE + (arg1 * 0x30))) >> 4)) << 3),
 		 objIndex == 0x4F)) {
 		if (temp_v0[0xD] != 2) {
@@ -4572,7 +4572,7 @@ void func_8012101C_12FFCC(BuildingInstance *arg0, s16 arg1) {
 
 	building = &buildingInstances[D_8015FAD0[arg1].unk1E >> 4];
 
-	if ((arg0 - (BuildingInstance *)D_80145BE0_154B90) == 0xA) {
+	if ((const WeaponEntry_80129864 *)arg0 - D_80145BE0_154B90 == 0xA) {
 		building->unkD |= (D_8015FAD0[arg1].unk1E & 0xF);
 		func_800DF038_EDFE8(
 			(s16)(D_8015FAD0[arg1].unk0 >> 0x10),
@@ -4734,7 +4734,7 @@ void func_801219A4_130954(VehicleInstance *arg0, s16 arg1) {
 
 void func_801219F4_1309A4(void* arg0, s16 arg1) {
 	func_8011D260_12C210(0x45, 0x12);
-	if (arg0 == (D_80145BE0_154B90 + 0x1E0)) {
+	if (arg0 == &D_80145BE0_154B90[20]) {
 		D_80048178 = 0x14;
 		func_8012D84C_13C7FC();
 		func_800072CC_7ECC(0xF);

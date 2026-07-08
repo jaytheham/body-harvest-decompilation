@@ -3830,11 +3830,10 @@ void func_800FB504_10A4B4(void) {
 		selectedInput = spec->weapon1;
 	}
 
-	animBase = (u16 *) &D_80145BE0_154B90[selectedInput * 0x18];
-	animFrame = animBase[0];
+	animFrame = D_80145BE0_154B90[selectedInput].unk0;
 	if (animFrame >= 0x1195) {
 		animFrame = 0x1194;
-		animBase[0] = animFrame;
+		D_80145BE0_154B90[selectedInput].unk0 = animFrame;
 	}
 
 	D_801591A8 = 1;

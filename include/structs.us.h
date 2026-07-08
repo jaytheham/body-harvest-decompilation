@@ -1156,23 +1156,30 @@ typedef struct {
 	/* 0x00 */ f32 unk0;
 	/* 0x04 */ f32 unk4;
 	/* 0x08 */ f32 unk8;
-	/* 0x0C */ u8 padC[0x4];
+	/* 0x0C */ f32 unkC;
 	/* 0x10 */ f32 unk10;
 	/* 0x14 */ f32 unk14;
 	/* 0x18 */ f32 unk18;
-	/* 0x1C */ u8 pad1C[0x4];
+	/* 0x1C */ s8 unk1C;
+	/* 0x1D */ s8 unk1D;
+	/* 0x1E */ u8 pad1E[0x2];
 	/* 0x20 */ s32 unk20;
 	/* 0x24 */ s32 unk24;
 	/* 0x28 */ s16 unk28;
-	/* 0x2A */ u8 pad2A[0x2];
+	/* 0x2A */ s16 unk2A;
 	/* 0x2C */ s16 unk2C;
 	/* 0x2E */ u8 unk2E;
 	/* 0x2F */ u8 pad2F[0x1];
-} Unk8015F760; /* size = 0x30 */
+} Projectile; /* size = 0x30 */
 
 typedef struct {
-	/* 0x00 */ u8 pad00[0x1C];
-	/* 0x1C */ s32 unk1C;
+	/* 0x00 */ u8 pad00[0x02];
+	/* 0x02 */ s16 posX[4];
+	/* 0x0A */ u8 pad0A[0x02];
+	/* 0x0C */ s16 posY[4];
+	/* 0x14 */ u8 pad14[0x02];
+	/* 0x16 */ s16 posZ[4];
+	/* 0x1E */ u16 unk1E; /* bitfield: bit 0 = ?, bit 1 = in-use */
 	/* 0x20 */ void *unk20;
 } Unk8015F790; /* size = 0x24 */
 

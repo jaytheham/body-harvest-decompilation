@@ -5508,7 +5508,7 @@ void func_80085690_94640(u8 arg0, u16 arg1)
 	  //specIdx = alien->specIndex;
 	  func_80122524_1314D4(
 		  D_80052B34,
-		  D_80145BE0[alienSpecs[alien->specIndex].unk0].unk2,
+		  D_80145BE0_154B90[alienSpecs[alien->specIndex].unk0].unk2,
 		  alien->unk0,
 		  alien->unk4);
 	  alien->unk1E = 0x1C;
@@ -5762,7 +5762,7 @@ void func_80086270_95220(OutputStruct_8012B150 *arg0) {
 	if (arg0 == NULL) {
 		return;
 	}
-	entry = (Unk80152B80 *)(D_80145BE0_154B90 + arg0->unk20 * 0x18);
+	entry = (Unk80152B80 *)&D_80145BE0_154B90[arg0->unk20];
 	if (entry->unkE == 0) {
 		return;
 	}

@@ -5,7 +5,7 @@
 typedef struct { s16 f0; s16 f1; u32 p; } WeaponRefEntry;
 
 /* weaponEntries? building related?? */
-const WeaponEntry_80129864 D_80145BE0_154B90data[] =	{
+const WeaponEntry_80129864 D_80145BE0_154B90[] =	{
 		{ 0 },
 		{  1200,    15,     0,    10, 0x02004200,    93,     0,     0,   0,   0,   7,   3,   0,   0 },
 		{  1200,    35,     0,    15, 0x02004200,    95,     0,     0,   0,   0,  35,  10,   0,   0 },

@@ -2159,7 +2159,7 @@ void func_800920C0_A1070(u8 arg0) {
 				}
 
 				scale = (f32) (1.0 - ((f64) (f32) capped / 10000.0)) * ((f32) alien->unk12 / 512.0f);
-				fx = (s16) (s32) ((f32) D_80145BE2_154B92[*(s32 *)alienSpecs[id].pad1C].unk0 * scale);
+				fx = (s16) (s32) ((f32) D_80145BE0_154B90[*(s32 *)alienSpecs[id].pad1C].unk2 * scale);
 				func_80122524_1314D4(D_80052B34, fx, alien->unk0, alien->unk4);
 
 				func_80128288_137238(D_80052B34, alien->unk6, (s16) (s32) ((f64) scale * 120.0), (s16) (s32) ((f64) scale * 180.0));
