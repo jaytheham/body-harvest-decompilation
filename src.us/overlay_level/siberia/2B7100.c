@@ -1268,7 +1268,67 @@ void func_802D8120_2BA550(u8 arg0, s16 arg1, s16 arg2) {
     }
 }
 
+// CURRENT(926)
+#ifdef NON_MATCHING
+void func_802D81C0_2BA5F0(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5) {
+    s16 sp80[4];
+    u8 sp7F;
+    s32 pad1;
+    s32 pad2;
+    s32 pad3;
+    s32 pad4;
+    s32 pad5;
+    f32 sp5C;
+    s32 temp_v0;
+    s32 var_v1;
+    AlienInstance *alien;
+
+    alien = &alienInstances[arg0];
+    if (alien->unk20 & 0x1000) {
+        sp80[0] = arg2;
+        sp80[1] = arg3;
+        sp80[2] = arg4;
+        sp80[3] = arg5;
+        sp7F = func_80081F18_90EC8(arg0, 4, 3, sp80, &D_802E1540_2C3970);
+        if (func_80084FE8_93F98(arg0, 0x800) != 0) {
+            temp_v0 = -arg1;
+            if (temp_v0 < arg1) {
+                var_v1 = arg1;
+            } else {
+                var_v1 = temp_v0;
+            }
+            if (var_v1 < 0x15F90) {
+                temp_v0 = -arg1;
+                if (temp_v0 < arg1) {
+                    var_v1 = arg1;
+                } else {
+                    var_v1 = temp_v0;
+                }
+                if (var_v1 >= 0x9C5 && alien->unk36 == 2 && D_8014DD50[arg5].unkE < 2) {
+                    if (D_80052B34->unk1A != 0) {
+                        func_80137468_146418(arg0, 0x258);
+                        sp5C = (f32)((f64)(f32)sins((alien->unk6 - 0x6000) & 0xFFFF) / 32768.0);
+                        func_800C541C_D43CC(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4,
+                            (s8)(s32)(sp5C * 127.0f), -0x50,
+                            (s32)((f32)-((f64)(f32)coss((alien->unk6 - 0x6000) & 0xFFFF) / 32768.0) * 127.0f),
+                            0xB4, 0xFF, 0x28, 0x14, 0xFF, 0xFF, 0xC8);
+                    }
+                    func_80122524_1314D4(D_80052B34, (s16)(D_8014619A * 2), alien->unk0, alien->unk4);
+                    func_80102DDC_111D8C(D_80052B34, (s16)(alien->unk6 - 0x6000), 0, 200.0f);
+                }
+            }
+        }
+        if (alien->unk36 == 2 && D_8014DD50[arg5].unkE == 1) {
+            func_80137468_146418(arg0, 0x134);
+        }
+        if (sp7F == 3) {
+            alien->unk20 &= ~0x1000;
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D81C0_2BA5F0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D84B0_2BA8E0.s")
 
