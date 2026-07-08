@@ -1059,7 +1059,41 @@ void func_802D77BC_2B9BEC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D77BC_2B9BEC.s")
 #endif
 
+// CURRENT(40)
+#ifdef NON_MATCHING
+s32 func_802D7818_2B9C48(u8 arg0, s16 arg1) {
+    s16 sp40[4];
+    s32 pad1;
+    s32 pad2;
+    AlienInstance *alien;
+    s32 temp_v0;
+
+    alien = &alienInstances[arg0];
+    if (alien->unk20 & 0x2000) {
+        sp40[0] = arg1;
+        temp_v0 = D_8014DD50[sp40[0]].unkC;
+        sp40[1] = temp_v0;
+        sp40[3] = alien->unkC;
+        sp40[2] = D_8014DD50[temp_v0].unkC;
+        temp_v0 = func_80081F18_90EC8(arg0, 4, 3, sp40, &D_802E13E0_2C3810);
+        if (temp_v0 == 2) {
+            if (func_80084FE8_93F98(arg0, 0x800)) {
+                func_800871CC_9617C(arg0, 1, 0xF);
+            } else {
+                func_80087188_96138(arg0, 1, 0xF);
+            }
+            alien->unk1E = 0xF;
+            return 1;
+        }
+        if (temp_v0 == 3) {
+            alien->unk20 &= ~0x2000;
+        }
+    }
+    return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7818_2B9C48.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7934_2B9D64.s")
 

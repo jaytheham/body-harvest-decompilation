@@ -1120,6 +1120,7 @@ s32 func_802D6768_2B8B98(void);
 void func_802D6CA0_2B90D0(void);
 void func_802D75E4_2B9A14(void);
 void func_802D769C_2B9ACC(void);
+s32 func_802D7818_2B9C48(u8 arg0, s16 arg1);
 void func_8007290C_15A9CC(void);
 void func_8007279C_15A85C(void);
 void func_80078D68_160E28(void);
