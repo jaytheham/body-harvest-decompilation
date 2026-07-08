@@ -1,5 +1,9 @@
 #include <ultra64.h>
+
+#define func_8008EB20_5EFD0 HIDDEN_func_8008EB20_5EFD0
 #include "common.h"
+#undef func_8008EB20_5EFD0
+s16 func_8008EB20_5EFD0(s32, s32, s32);
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 void func_802D6A70_2B8EA0(void);
@@ -2129,7 +2133,78 @@ void func_802DA910_2BCD40(u8 arg0) {
     }
 }
 
+// CURRENT(2907)
+#ifdef NON_MATCHING
+void func_802DAA20_2BCE50(u8 arg0) {
+    AlienInstance *alien;
+    s16 a1;
+    s8 a2;
+    s8 a3;
+    s32 pad0;
+    s32 pad1;
+    s32 dx;
+    s32 dz;
+    s32 ret;
+
+    alien = &alienInstances[arg0];
+    a1 = alien->unkC;
+    a2 = D_8014DD50[a1].unkC;
+    a3 = D_8014DD50[a2].unkC;
+
+    if (D_80222A70 - 0x28 < alien->unk2) {
+        alien->unk2 = D_80222A70 - 0x28;
+    }
+
+    func_802DA854_2BCC84(arg0, a1, a2, a3);
+    func_802DA910_2BCD40(arg0);
+
+    if (D_80222A70 < D_80052B34->unk2) {
+        alien->unk20 &= 0xF7FFFFFF;
+    } else {
+        alien->unk20 |= 0x08000100;
+        dx = alien->unk0 - alien->unk14;
+        dz = alien->unk4 - alien->unk18;
+
+        if (!(alien->unk47 & 1)) {
+            alien->unk20 &= ~0x2000;
+            if (SQ(dx) + SQ(dz) < 0x57E40) {
+                alien->unk20 |= 0x2000;
+                alien->unk34 = 100;
+                alien->unk47 |= 1;
+                alien->unk1E = 0;
+            }
+        } else if (alien->unk20 & 0x2000) {
+            if (func_80084FE8_93F98(arg0, 0x400)) {
+                func_80087188_96138(arg0, 0, 0x20);
+                func_80137468_146418(arg0, 0x25B);
+            }
+        }
+    }
+
+    if (alien->unk34 > 0 && alien->unk34 < 70) {
+        if (alien->unk36 == 0 || alien->unk4B == 1) {
+            alien->unk4B = 1;
+        } else {
+            alien->unk4B = 0;
+        }
+    } else if (alien->unk36 == 0) {
+        alien->unk4B = 0;
+    }
+
+    ret = func_8008E524_9D4D4(arg0, 200, 4);
+    if (ret >= 201) {
+        func_8008EB20_5EFD0(arg0, ret, 0x640);
+    } else {
+        func_8008EB20_5EFD0(arg0, ret, 0x320);
+    }
+
+    if (alien->unk1E != 0) {
+        alien->unk1E--;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DAA20_2BCE50.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DACA0_2BD0D0.s")
 
