@@ -1254,7 +1254,19 @@ void func_802D806C_2BA49C(u8 arg0, s16 arg1, s16 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D8120_2BA550.s")
+void func_802D8120_2BA550(u8 arg0, s16 arg1, s16 arg2) {
+    s16 sp2C[2];
+    AlienInstance *alien;
+
+    alien = &alienInstances[arg0];
+    if (alien->unk20 & 0x4000) {
+        sp2C[0] = arg1;
+        sp2C[1] = arg2;
+        if ((u8)func_80081F18_90EC8(arg0, 2, 2, sp2C, &D_802E1478_2C38A8) == 2) {
+            alien->unk20 &= ~0x4000;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D81C0_2BA5F0.s")
 
