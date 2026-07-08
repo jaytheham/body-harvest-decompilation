@@ -2215,7 +2215,51 @@ void func_802DACA0_2BD0D0(u8 arg0) {
     func_800873A8_96358(arg0);
 }
 
+// CURRENT(674)
+#ifdef NON_MATCHING
+void func_802DAD00_2BD130(u8 arg0) {
+    AlienInstance *alien;
+    s32 sp3C, sp40, sp44;
+    s16 sp4A;
+    s16 sp3A;
+
+    alien = &alienInstances[arg0];
+    sp3A = alien->unk25;
+    sp4A = D_8014DD50[alien->unkC].unkC;
+
+    if (!(alien->unk20 & 0x100000)) {
+        alien->unk2C = 0x3C;
+
+        func_80128428_1373D8(alien, D_8014DD50[sp4A].unk0, D_8014DD50[sp4A].unk2,
+                             D_8014DD50[sp4A].unk4, &sp44, &sp40, &sp3C);
+
+        func_800DF848_EE7F8(((s16 *)&sp44)[1], ((s16 *)&sp40)[1], ((s16 *)&sp3C)[1],
+                            *(u16 *)((u8 *)D_8025668C + alien->specIndex * 0x68), 0);
+        func_80088E10_97DC0(sp4A);
+        alien->unk12 >>= 3;
+    } else {
+        s16 sp4E;
+
+        func_8011E6FC_12D6AC(alien->unk0, alien->unk4, &sp4E);
+        alien->unk2 -= 2;
+        alien->unkA += 0xDC;
+        alien->unk8 += 0x8C;
+
+        if (alien->unk2C == 1) {
+            func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4,
+                                *(u16 *)((u8 *)D_8025668C + alien->specIndex * 0x68), 0);
+
+            if (sp3A != 0xFF) {
+                if (alienInstances[sp3A].specIndex == 0x1A) {
+                    alienInstances[sp3A].unk24 -= 1;
+                }
+            }
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DAD00_2BD130.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DAEBC_2BD2EC.s")
 
