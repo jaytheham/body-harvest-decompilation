@@ -1814,6 +1814,8 @@ extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 
 extern u8 D_80254E80[]; // Tile palette data
 extern f64 D_802E0D78_2604B8;
+extern f64 D_802E3040_2C5470;
+extern s32 D_802E1EE0_2C4310[];
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
 extern u8 D_80257A3A[];
 extern BuildingInstance buildingInstances[0xFF]; // 0x80050AD8

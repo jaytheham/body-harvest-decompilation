@@ -2003,7 +2003,81 @@ void func_802D9FE4_2BC414(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D9FE4_2BC414.s")
 #endif
 
+// CURRENT(385)
+#ifdef NON_MATCHING
+void func_802DA4CC_2BC8FC(u8 arg0) {
+    AlienInstance *alien;
+    s32 squaredDist;
+    s32 dx, dz;
+    s32 pad1;
+    s32 pad2;
+    s16 sp26;
+    s16 temp_a1;
+    s16 sp22;
+    s8 index1;
+
+    alien = &alienInstances[arg0];
+
+    index1 = D_8014DD50[alien->unkC].unkC;
+    sp26 = D_8014DD50[D_8014DD50[index1].unkD].unkC;
+    sp22 = D_8014DD50[D_8014DD50[D_8014DD50[index1].unkD].unkD].unkC;
+
+    func_8008064C_8F5FC(arg0);
+    func_80080A54_8FA04(arg0, D_80052B34->unk0, D_80052B34->unk4);
+
+    dx = alien->unk0 - alien->unk14;
+    dz = alien->unk4 - alien->unk18;
+
+    if (alien->unk20 & ALIEN_FLAG_UNKD) {
+        alien->unk2C--;
+        squaredDist = dx * dx + dz * dz;
+        if (((f64)squaredDist > D_802E3040_2C5470) || !func_80084FE8_93F98(arg0, 0x1000)) {
+            alien->unk20 &= ~ALIEN_FLAG_UNKD;
+        } else if (alien->unk2C == 0) {
+            alien->unk20 ^= ALIEN_FLAG_UNKH;
+            alien->unk2C = 0x32;
+        }
+    } else {
+        squaredDist = dx * dx + dz * dz;
+        if ((squaredDist >= 0x57E41) || (alien->unk47 & 1)) {
+            alien->unk20 |= ALIEN_FLAG_TARGET_PT;
+            alien->unk20 &= ~0x1840;
+        } else if ((squaredDist >= 0x31705) && func_80084FE8_93F98(arg0, 0x1000)) {
+            alien->unk20 |= 0x41800;
+            alien->unk20 &= ~0x140;
+            alien->unk2C = 0x32;
+        } else {
+            alien->unk20 |= 0x140;
+            alien->unk20 &= ~0x1800;
+        }
+    }
+
+    if (!(alien->unk20 & ALIEN_FLAG_UNKG)) {
+        if (func_80084FE8_93F98(arg0, 0x1000) && (squaredDist < 0xAFC80)) {
+            if (func_800871CC_9617C(arg0, 0, 0x14)) {
+                alien->unk4B = 0;
+                alien->unk20 |= ALIEN_FLAG_UNKG;
+                alien->unk1E = 0x14;
+            }
+        }
+    }
+
+    if (alien->unk20 & ALIEN_FLAG_UNKG) {
+        if (alien->unk20 & 0x04000000) {
+            temp_a1 = sp22;
+        } else {
+            temp_a1 = sp26;
+        }
+        func_800A3D00_B2CB0(arg0, temp_a1, 2, &D_802E1EE0_2C4310);
+    }
+
+    if (alien->unk1E != 0) {
+        alien->unk1E--;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DA4CC_2BC8FC.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DA7CC_2BCBFC.s")
 
