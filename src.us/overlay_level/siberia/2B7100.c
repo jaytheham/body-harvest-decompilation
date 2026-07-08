@@ -1638,7 +1638,36 @@ void func_802D8930_2BAD60(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D923C_2BB66C.s")
 
+// CURRENT(5)
+#ifdef NON_MATCHING
+void func_802D9B08_2BBF38(u8 arg0, s16 arg1, s16 arg2) {
+    s16 sp2C[2];
+    u8 temp;
+
+    if (alienInstances[arg0].unk20 & 0x1000) {
+        sp2C[0] = arg1;
+        sp2C[1] = arg2;
+
+        temp = func_80081F18_90EC8(arg0, 2, 0xD, sp2C, &D_802E1ED4_2C4304);
+        switch (temp) {
+        case 1:
+            func_80137468_146418(arg0, 0x192);
+            break;
+        case 4:
+        case 7:
+        case 10:
+            alienInstances[arg0].unk1E = 0;
+            func_80087188_96138(arg0, 0, 0x10);
+            break;
+        case 13:
+            alienInstances[arg0].unk20 &= ~0x1000;
+            break;
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D9B08_2BBF38.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D9BFC_2BC02C.s")
 
