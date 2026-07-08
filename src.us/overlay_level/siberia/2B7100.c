@@ -2106,7 +2106,28 @@ void func_802DA854_2BCC84(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DA910_2BCD40.s")
+void func_802DA910_2BCD40(u8 arg0) {
+    u8 specIndex;
+    s32 mult;
+    s16 speedLimit;
+
+    specIndex = alienInstances[arg0].specIndex;
+    mult = 1;
+    if (!(alienInstances[arg0].unk20 & 0x600)) {
+        mult = 4;
+    }
+    func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
+    if (alienInstances[arg0].unk4B == 0) {
+        speedLimit = alienSpecs[specIndex].unk40 >> 1;
+    } else {
+        speedLimit = alienSpecs[specIndex].unk40;
+    }
+    if (alienInstances[arg0].unk12 < speedLimit) {
+        alienInstances[arg0].unk12 += alienSpecs[specIndex].unk3E * mult;
+    } else {
+        alienInstances[arg0].unk12 -= alienSpecs[specIndex].unk3E * mult;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DAA20_2BCE50.s")
 
