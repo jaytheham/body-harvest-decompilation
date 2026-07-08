@@ -2950,6 +2950,7 @@ extern s16 D_80052554;
 extern Unk80146212 D_80146212_1551C2[];
 extern s16 D_80146492_155442[];
 extern s32 D_802E4E84[];
+extern u8 D_802E1550_2C3980;
 extern char D_802E7AE4[];
 extern char D_802E7A30[];
 extern char D_802E7A40[];

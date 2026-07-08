@@ -1330,7 +1330,139 @@ void func_802D81C0_2BA5F0(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D81C0_2BA5F0.s")
 #endif
 
+// CURRENT(8165)
+#ifdef NON_MATCHING
+void func_802D84B0_2BA8E0(s32 arg0) {
+    s16 sp76;
+    s16 sp74;
+    s16 sp72;
+    s16 sp70;
+    s16 sp6E;
+    s16 sp6C;
+    s16 sp6A;
+    s16 sp68;
+    s16 sp66;
+    s32 dx;
+    s32 dz;
+    s32 temp_t0;
+    s32 v0;
+    s32 distSq;
+    AlienInstance *alien;
+    Unk8014DD50 *sp30;
+    Unk8014DD50 *node;
+    s32 temp_s1 = arg0 & 0xFF;
+    alien = &alienInstances[temp_s1];
+    node = &D_8014DD50[alien->unkC];
+    sp76 = node->unkC;
+    node = &D_8014DD50[sp76];
+    sp74 = node->unkC;
+    sp72 = node->unkD;
+    sp30 = node;
+    node = &D_8014DD50[sp72];
+    sp70 = node->unkC;
+    sp6E = node->unkD;
+    node = &D_8014DD50[sp6E];
+    sp6C = node->unkC;
+    sp68 = node->unkD;
+    node = &D_8014DD50[sp6C];
+    sp6A = node->unkC;
+    node = &D_8014DD50[sp68];
+    sp66 = node->unkC;
+
+    if ((func_800038E0_44E0() % 120) == 0) {
+        func_80137468_146418(temp_s1, 0x10);
+    }
+
+    v0 = alien->unk20;
+    if (!(v0 & 0x4000)) {
+        func_80090A6C_9FA1C(temp_s1, sp68, 0x7D0);
+        v0 = alien->unk20;
+    }
+
+    if (!(v0 & 0x1000)) {
+        func_80090A6C_9FA1C(temp_s1, sp6E, 0x7D0);
+        func_80090A6C_9FA1C(temp_s1, sp6C, 0x7D0);
+    }
+
+    if (alien->unk12 > 0) {
+        func_80090A6C_9FA1C(temp_s1, sp76, 0x3E8);
+    } else {
+        func_80086230_951E0(temp_s1, sp76, 0x2000);
+    }
+
+    if (D_80052B34->unk1A == 0) {
+        func_800877E8_96798(temp_s1, 0xFA, 0x12C);
+    } else {
+        func_800877E8_96798(temp_s1, 0x1F4, 0x320);
+    }
+
+    v0 = alien->unk20;
+    dx = alien->unk0 - alien->unk14;
+    dz = alien->unk4 - alien->unk18;
+
+    if (!(v0 & 0x7000)) {
+        distSq = dx * dx + dz * dz;
+        if ((distSq >= 0xF4241) || (D_80052B34->unk20 & 2)) {
+            if (func_80084FE8_93F98(temp_s1, 0x800) != 0) {
+                if (alien->unk1E == 0) {
+                    func_800871CC_9617C(temp_s1, 0, 0x3C);
+                    alien->unk1E = 0x1E;
+                    alien->unk20 |= 0x4000;
+                    alien->unk36 = 0;
+                }
+            }
+            v0 = alien->unk20;
+        } else if (distSq >= 0x27101) {
+            if (func_80084FE8_93F98(temp_s1, 0x808) != 0) {
+                if (alien->unk1E == 0) {
+                    alien->unk20 |= 0x2000;
+                    if (sp30->unkA == 0) {
+                        if (func_800871CC_9617C(temp_s1, 1, 0x50) != 0) {
+                            alien->unk1E = 3;
+                            alien->unk36 = 0;
+                        }
+                    }
+                }
+            }
+            v0 = alien->unk20;
+        } else {
+            if (D_80052AD0 != 0) {
+                v0 = alien->unk20 | 0x1000;
+                alien->unk20 = v0;
+                alien->unk36 = 0;
+            }
+        }
+    }
+
+    temp_t0 = dx * dx + dz * dz;
+
+    if (v0 & 0x2000) {
+        if (sp30->unkA != 0) {
+            sp30->unkA += 0x808;
+            if ((sp30->unkA & 0xFFFF) < (0xEC77 - (D_802E1550_2C3980 * 0x1388))) {
+                sp30->unkA = 0;
+                alien->unk20 = v0 & ~0x2000;
+                D_802E1550_2C3980 = func_800038E0_44E0() % 3;
+            }
+        }
+    } else {
+        sp30->unkA -= 0x404;
+        if ((sp30->unkA & 0xFFFF) < (0xEC77 - (D_802E1550_2C3980 * 0x1388))) {
+            sp30->unkA = (0xEC77 - (D_802E1550_2C3980 * 0x1388));
+        }
+    }
+
+    func_802D806C_2BA49C(temp_s1, sp72, sp70);
+    func_802D8120_2BA550(temp_s1, sp68, sp66);
+    func_802D81C0_2BA5F0(temp_s1, (s16)temp_t0, sp74, sp6E, sp6C, sp6A);
+
+    if (alien->unk1E != 0) {
+        alien->unk1E--;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D84B0_2BA8E0.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D8930_2BAD60.s")
 
