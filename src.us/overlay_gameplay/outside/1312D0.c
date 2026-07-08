@@ -229,7 +229,7 @@ s16 func_801225C4_131574(Projectile *arg0) {
 
 // CURRENT(20678)
 #ifdef NON_MATCHING
-OutputStruct_8012B150 *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s16 arg3, s16 arg4, f32 arg5, f32 arg6, f32 arg7) {
+Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s16 arg3, s16 arg4, f32 arg5, f32 arg6, f32 arg7) {
 	VehicleInstance *vehicle = (VehicleInstance *)arg0;
 	Projectile *entry;
 	s16 sp7A;
@@ -421,7 +421,7 @@ OutputStruct_8012B150 *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s
 		return NULL;
 	}
 
-	return (OutputStruct_8012B150 *)entry;
+	return entry;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801226F8_1316A8.s")
@@ -436,7 +436,7 @@ void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	s16 halfSpan;
 	s32 height;
 	s32 count;
-	BuildingInstance *building;
+	const WeaponEntry_80129864 *building;
 
 	sp64[0] = arg0;
 	sp64[2] = arg2;
@@ -450,11 +450,11 @@ void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	if (arg4 != 0) {
 		count = arg4 - 1;
 		halfSpan = arg3 >> 1;
-		building = (BuildingInstance *)&D_80145BE0_154B90[arg5];
+		building = &D_80145BE0_154B90[arg5];
 		do {
 			randX = func_800038E0_44E0();
 			randZ = func_800038E0_44E0();
-			func_801226F8_1316A8(sp64, building, 0, 0, 0,
+			func_801226F8_1316A8(sp64, (BuildingInstance *)building, 0, 0, 0,
 				(f32) ((randX % arg3) - halfSpan),
 				(f32) (((randZ % arg3) + arg3) >> 2),
 				(f32) ((func_800038E0_44E0() % arg3) - halfSpan));
@@ -469,7 +469,7 @@ void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 #ifdef NON_MATCHING
 void func_801238DC_13288C(s16 arg0) {
 	Projectile *entry;
-	BuildingInstance *building;
+	const WeaponEntry_80129864 *building;
 	s16 linkIndex;
 	s32 buildingIndex;
 
@@ -485,7 +485,7 @@ void func_801238DC_13288C(s16 arg0) {
 
 	buildingIndex = entry->unk20;
 	if (D_801591A8 == 0) {
-		building = (BuildingInstance *)&D_80145BE0_154B90[buildingIndex];
+		building = &D_80145BE0_154B90[buildingIndex];
 
 		if ((((s32)building->unk8 >> 8) & 0x1000) || (buildingIndex == 0x5D)) {
 			func_800C3288_D2238(entry->unk2E);
@@ -806,7 +806,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 			}
 		}
 
-		alien = (AlienInstance *)((u8 *)alien - 0x50);
+		alien--;
 	}
 
 	building = (BuildingInstance *)((u8 *)D_800522C0 - 0x18);
@@ -1613,14 +1613,6 @@ u32 func_801269BC_13596C(s32 arg0, u32 arg1, s32 arg2, u32 arg3, s32 arg4, u32 a
 // CURRENT(63423)
 #ifdef NON_MATCHING
 void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s32 *arg5, s32 *arg6) {
-	typedef struct {
-		s16 x;
-		s16 y;
-		s16 z;
-		s16 radius;
-		u8 pad8[4];
-	} Unk80147090Entry;
-
 	s32 distSqBest;
 	s32 objDist;
 	s32 objThreshold;
@@ -1867,8 +1859,8 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 							D_8015F9DC = (s32)alien;
 							D_8015F9D0.unk8 = 7;
 
-							if (*(s8 *)((u8 *)alienSpec + 0x5A) != -1) {
-								Unk80147090Entry *entry = (Unk80147090Entry *)(D_80147090_156040 + ((*(s8 *)((u8 *)alienSpec + 0x5A)) * 0xC));
+							if (alienSpec->unk5A != -1) {
+								Unk80147090Entry_8012B26C *entry = &D_80147090_156040[alienSpec->unk5A];
 								lineThresholdBest = entry->radius * entry->radius;
 
 								func_80128428_1373D8(alien, entry->x, entry->y, entry->z, &shadowX, &shadowY, &shadowZ);
@@ -2215,7 +2207,7 @@ void func_80128504_1374B4(AlienInstance *arg0, s32 arg1, s32 *arg2, s32 *arg3, s
 // CURRENT(13117)
 #ifdef NON_MATCHING
 void func_80128650_137600(Projectile *arg0, s32 arg1) {
-	BuildingInstance *building;
+	const WeaponEntry_80129864 *building;
 	f32 *motion;
 	VehicleInstance *vehicle;
 	AlienInstance *alien;
@@ -2227,7 +2219,7 @@ void func_80128650_137600(Projectile *arg0, s32 arg1) {
 	s32 absX;
 	s32 y;
 
-building = (BuildingInstance *)&D_80145BE0_154B90[arg0->unk20];
+building = &D_80145BE0_154B90[arg0->unk20];
 
 	for (i = 0x17; i >= 0; i--) {
 		D_8015FA40[(i * 3) + 2] = 0x7FFF;
@@ -2470,9 +2462,9 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 
 // CURRENT(8502)
 #ifdef NON_MATCHING
-OutputStruct_8012B150 *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+Projectile *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	AlienInstance *alien;
-	OutputStruct_8012B150 *result;
+	Projectile *result;
 	const WeaponEntry_80129864 *entry;
 	s16 *ammo;
 	s16 weaponType;
@@ -2589,8 +2581,8 @@ OutputStruct_8012B150 *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 ar
 #endif
 
 #ifdef NON_MATCHING
-OutputStruct_8012B150 *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-	typedef OutputStruct_8012B150 *(*SpawnFunc_801226F8)(void *, void *, s16, s16, s16, f32, f32, f32);
+Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+	typedef Projectile *(*SpawnFunc_801226F8)(void *, void *, s16, s16, s16, f32, f32, f32);
 	SpawnFunc_801226F8 spawnFunc;
 
 	AlienInstance *alien;
@@ -2598,7 +2590,7 @@ OutputStruct_8012B150 *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 ar
 	u8 *weaponData;
 	WeaponEntry_80129864 *entry;
 	WeaponEntry_80129864 *entryD;
-	OutputStruct_8012B150 *spawned;
+	Projectile *spawned;
 	s32 x;
 	s32 y;
 	s32 z;
@@ -3053,7 +3045,7 @@ OutputStruct_8012B150 *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 ar
 #endif
 
 void func_8012B110_13A0C0(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2) {
-	OutputStruct_8012B150 *result;
+	Projectile *result;
 
 	result = func_80129354_138304(arg0, arg1, arg2->unk0, arg2->unk2, arg2->unk4);
 	if (result != NULL) {
@@ -3062,7 +3054,7 @@ void func_8012B110_13A0C0(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2) {
 }
 
 void func_8012B150_13A100(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2, s32 arg3) {
-	OutputStruct_8012B150 *result;
+	Projectile *result;
 
 	result = func_80129354_138304(arg0, arg1, arg2->unk0, arg2->unk2, arg2->unk4);
 	if (result != NULL) {
@@ -3073,7 +3065,7 @@ void func_8012B150_13A100(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2, s32 ar
 void func_8012B194_13A144(s32 arg0, s32 arg1, u8 arg2) {
 	s16 index;
 	InputStruct_8012B150 *input;
-	OutputStruct_8012B150 *result;
+	Projectile *result;
 
 	index = D_8015904C - arg2;
 	if (index < 0) {
@@ -3101,7 +3093,7 @@ void func_8012B26C_13A21C(void) {
 	s32 i;
 	Projectile *projectile;
 	WeaponEntry_80129864 *entry;
-	u8 *queueEntry;
+	Unk8015F790 *queueEntry;
 	s16 (*fadeData)[4];
 
 	if (D_8015F9EC != 0) {
@@ -3128,7 +3120,7 @@ void func_8012B26C_13A21C(void) {
 
 		projectile = &D_8015EB90[i];
 		entry = &D_80145BE0_154B90[projectile->unk20];
-		ctrl = (ProjectileCtrl_8012B26C *)((u8 *)projectile + 0xC);
+		ctrl = (ProjectileCtrl_8012B26C *)&projectile->unkC;
 
 		if (projectile->unk28 == 0) {
 			continue;
@@ -3392,7 +3384,7 @@ void func_8012B26C_13A21C(void) {
 						continue;
 					}
 
-					if (*(s8 *)((u8 *)alienSpec + 0x5A) != -1) {
+					if (alienSpec->unk5A != -1) {
 						Unk80147090Entry_8012B26C *hitEntry;
 						s32 hitX;
 						s32 hitY;
@@ -3403,7 +3395,7 @@ void func_8012B26C_13A21C(void) {
 						s32 ax;
 						s32 az;
 
-						hitEntry = (Unk80147090Entry_8012B26C *)(D_80147090_156040 + (*(s8 *)((u8 *)alienSpec + 0x5A) * 0xC));
+						hitEntry = &D_80147090_156040[alienSpec->unk5A];
 						threshold2 = hitEntry->radius * hitEntry->radius;
 						func_80128428_1373D8((VehicleInstance *)alien, hitEntry->x, hitEntry->y, hitEntry->z, &hitX, &hitY, &hitZ);
 
@@ -3668,7 +3660,7 @@ void func_8012B26C_13A21C(void) {
 				case 0x67: {
 					extern u8 D_801464C8_155478[];
 
-					OutputStruct_8012B150 *spawned;
+					Projectile *spawned;
 					s16 spawnPos[3];
 					s16 spawnY;
 					s32 k;
@@ -3692,7 +3684,7 @@ void func_8012B26C_13A21C(void) {
 						velZ = (f32)(((f64)(f32)sins((u16)angle) / 32768.0) * 100.0);
 						spawned = func_801226F8_1316A8(spawnPos, (BuildingInstance *)D_801464C8_155478, 0, 0, 0, velX, 0.0f, velZ);
 						if (spawned != NULL) {
-							*(s32 *)((u8 *)spawned + 0x24) = projectile->unk24;
+							spawned->unk24 = projectile->unk24;
 						}
 					}
 					break;
@@ -3753,36 +3745,36 @@ void func_8012B26C_13A21C(void) {
 		func_801238DC_13288C((s16)i);
 	}
 
-	queueEntry = D_8015F9AC;
+	queueEntry = &D_8015F790[15];
 	i = 0xF;
 	do {
-		if (*(s32 *)(queueEntry + 0x1C) & 2) {
+		if (queueEntry->unk1E & 2) {
 			s32 j;
 
 			for (j = 3; j >= 0; j--) {
-				*(s16 *)(queueEntry + 2 + (j * 2)) = *(s16 *)(queueEntry + (j * 2));
-				*(s16 *)(queueEntry + 0xC + (j * 2)) = *(s16 *)(queueEntry + 0xA + (j * 2));
-				*(s16 *)(queueEntry + 0x16 + (j * 2)) = *(s16 *)(queueEntry + 0x14 + (j * 2));
+				queueEntry->posX[j] = (j != 0) ? queueEntry->posX[j - 1] : queueEntry->curX;
+				queueEntry->posY[j] = (j != 0) ? queueEntry->posY[j - 1] : queueEntry->curY;
+				queueEntry->posZ[j] = (j != 0) ? queueEntry->posZ[j - 1] : queueEntry->curZ;
 			}
 
-			if (*(s32 *)(queueEntry + 0x1C) & 1) {
-				u16 count = *(u16 *)(queueEntry + 0x1E);
+			if (queueEntry->unk1E & 1) {
+				u16 count = queueEntry->unk1E;
 				s32 burstCount = count >> 2;
 
-				*(u16 *)(queueEntry + 0x1E) = (u16)((((burstCount - 1) << 2) & 0xFFFC) | (count & 3));
+				queueEntry->unk1E = (u16)((((burstCount - 1) << 2) & 0xFFFC) | (count & 3));
 				if (burstCount == 0) {
-					queueEntry[0x1F] &= 0xFD;
-					queueEntry[0x1F] &= 0xFE;
+					((u8 *)&queueEntry->unk1E)[1] &= 0xFD;
+					((u8 *)&queueEntry->unk1E)[1] &= 0xFE;
 					D_8015F9E8--;
 				}
 			} else {
-				projectile = *(Projectile **)(queueEntry + 0x20);
-				*(s16 *)(queueEntry + 0x00) = (s16)projectile->unk0;
-				*(s16 *)(queueEntry + 0x0A) = (s16)projectile->unk4;
-				*(s16 *)(queueEntry + 0x14) = (s16)projectile->unk8;
+				projectile = (Projectile *)queueEntry->unk20;
+				queueEntry->curX = (s16)projectile->unk0;
+				queueEntry->curY = (s16)projectile->unk4;
+				queueEntry->curZ = (s16)projectile->unk8;
 			}
 		}
-		queueEntry -= 0x24;
+		queueEntry--;
 		i--;
 	} while (i != 0);
 

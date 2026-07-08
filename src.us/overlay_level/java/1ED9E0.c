@@ -212,14 +212,14 @@ s32 func_802D51F8_1EDF08(void) {
 		if (temp == 0) {
 			s16 sp46;
 			s16 sp3C[3];
-			OutputStruct_8012B150 *result;
+			Projectile *result;
 
 			sp3C[0] = 0x4500;
 			sp3C[1] = sp46 * 400 + 400;
 			sp3C[2] = 0x2800;
 			result = func_801226F8_1316A8(sp3C, &D_80145E98, 0, 0, 0, 0.0f, 0.0f, 0.0f);
 			if (result != NULL) {
-				((s16 *)result)[20] = 100;
+				result->unk28 = 100;
 			}
 			for (temp = 0; temp < 0xFF; temp++) {
 				if (alienInstances[temp].specIndex == 7 &&

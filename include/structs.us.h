@@ -911,7 +911,8 @@ typedef struct {
 	/* 0x53 */ u8 unk53;
 	/* 0x54 */ s32 unk54; // xxxxyyyy xxxx Material type etc(Flesh, metal) Can use to give other enemies shields(000C)
 	/* 0x58 */ s16 unk58; // Height of body off the ground
-	/* 0x5A */ u8 pad5A[0xE];
+	/* 0x5A */ s8 unk5A;
+	/* 0x5B */ u8 pad5B[0xD];
 } AlienSpec; /* size = 0x68 */
 
 typedef struct {
@@ -1159,7 +1160,7 @@ typedef struct {
 	/* 0x0C */ f32 unkC;
 	/* 0x10 */ f32 unk10;
 	/* 0x14 */ f32 unk14;
-	/* 0x18 */ f32 unk18;
+	/* 0x18 */ s32 unk18;
 	/* 0x1C */ s8 unk1C;
 	/* 0x1D */ s8 unk1D;
 	/* 0x1E */ u8 pad1E[0x2];
@@ -1173,14 +1174,14 @@ typedef struct {
 } Projectile; /* size = 0x30 */
 
 typedef struct {
-	/* 0x00 */ u8 pad00[0x02];
+	/* 0x00 */ s16 curX;
 	/* 0x02 */ s16 posX[4];
-	/* 0x0A */ u8 pad0A[0x02];
+	/* 0x0A */ s16 curY;
 	/* 0x0C */ s16 posY[4];
-	/* 0x14 */ u8 pad14[0x02];
+	/* 0x14 */ s16 curZ;
 	/* 0x16 */ s16 posZ[4];
 	/* 0x1E */ u16 unk1E; /* bitfield: bit 0 = ?, bit 1 = in-use */
-	/* 0x20 */ void *unk20;
+	/* 0x20 */ void *unk20; // Owning Projectile pointer
 } Unk8015F790; /* size = 0x24 */
 
 typedef struct {

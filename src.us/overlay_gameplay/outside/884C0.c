@@ -5757,7 +5757,7 @@ s32 func_80086230_951E0(u8 arg0, s16 arg1, s32 arg2) {
 	return func_80085E2C_94DDC(arg0, arg1, arg2);
 }
 
-void func_80086270_95220(OutputStruct_8012B150 *arg0) {
+void func_80086270_95220(Projectile *arg0) {
 	Unk80152B80 *entry;
 	if (arg0 == NULL) {
 		return;

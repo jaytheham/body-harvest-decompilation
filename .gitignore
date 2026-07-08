@@ -31,5 +31,6 @@ ctx.c.m2c
 
 # generated
 reference_index.json
+asm_pattern_index.json
 pah.conf
 .vscode/

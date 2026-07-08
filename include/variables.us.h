@@ -276,7 +276,6 @@ extern u8 D_8013D3D7_14C387[];
 extern s16 D_8013D52E_14C4DE;
 
 
-extern u8 D_8015F9AC[];
 extern u8 D_80147098_156048[];
 
 extern f64 D_80037620_38220;
@@ -1767,7 +1766,7 @@ extern u8 D_8015EB77;
 extern s32 D_8015EB80;
 extern u16 D_8015EB84;
 extern Projectile D_8015EB90[64];
-extern Unk8015F790 D_8015F790[16];
+extern Unk8015F790 D_8015F790[16]; // Projectile trails?
 extern Unk8015F9D0 D_8015F9D0;
 extern s32 D_8015F9D8;
 extern s32 D_8015F9DC;
@@ -3525,7 +3524,7 @@ extern s32 D_80159D70;
 extern Unk8010ED84Pos *D_80159D60;
 extern Unk8010ED84Data *D_80159D68;
 
-extern const u8 D_80147090_156040[];
+extern Unk80147090Entry_8012B26C D_80147090_156040[];
 extern u8 D_80052A7C[];
 extern u8 D_800522A8[];
 extern s32 D_801486A0_157650[];
