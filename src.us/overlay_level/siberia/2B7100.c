@@ -2206,7 +2206,14 @@ void func_802DAA20_2BCE50(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DAA20_2BCE50.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DACA0_2BD0D0.s")
+void func_802DACA0_2BD0D0(u8 arg0) {
+    s32 limit;
+
+    if (alienInstances[arg0].unk2 > (D_80222A70 - 0x28)) {
+        alienInstances[arg0].unk2 = D_80222A70 - 0x28;
+    }
+    func_800873A8_96358(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DAD00_2BD130.s")
 
