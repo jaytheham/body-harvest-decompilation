@@ -1836,7 +1836,96 @@ void func_802D9B08_2BBF38(u8 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D9B08_2BBF38.s")
 #endif
 
+// CURRENT(1957)
+#ifdef NON_MATCHING
+void func_802D9BFC_2BC02C(u8 arg0) {
+    s16 sp44;
+    s16 sp42;
+    s32 sp3C;
+    s32 sp24;
+    s32 var_a2;
+    s32 temp_v1;
+    s32 var_a0;
+    AlienInstance *alien;
+
+    func_80137468_146418(arg0, 0x26A);
+    alien = &alienInstances[arg0];
+    sp44 = D_8014DD50[D_8014DD50[alien->unkC].unkC].unkD;
+    sp42 = (s16)D_8014DD50[(s16)sp44].unkC;
+    if (alien->unk20 & 0x08000000) {
+        temp_v1 = alien->unk0 - D_80052B34->unk0;
+        var_a0 = alien->unk4 - D_80052B34->unk4;
+    } else {
+        temp_v1 = alien->unk0 - alien->unk14;
+        var_a0 = alien->unk4 - alien->unk18;
+    }
+    alien->unk6 = func_80003824_4424((f32)temp_v1, (f32)var_a0) + 0x8000;
+    if (alien->unk47 & 1) {
+        func_8008064C_8F5FC(arg0);
+    } else {
+        func_8008076C_8F71C(arg0);
+    }
+    var_a2 = func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8;
+    if (var_a2 < D_80222A70) {
+        sp24 = var_a2;
+        func_800E24B8_F1468(arg0);
+        var_a2 = sp24;
+    }
+    if (var_a2 <= D_80222A70) {
+        var_a2 = D_80222A70;
+    }
+    sp24 = var_a2;
+    alien->unk2 = (s16)(((f64)(f32)sins((D_80052A8C * 1500) & 0xFFFF) / 32768.0) * 20.0 + (f64)(var_a2 + alienSpecs[alien->specIndex].unk58));
+    temp_v1 = func_80084E54_93E04(D_80052B34, alien);
+    if (temp_v1 < 0x7D0) {
+        sp3C = temp_v1;
+        func_8008554C_944FC(arg0);
+        var_a2 = sp3C;
+    } else {
+        alien->unk4E = 1;
+        var_a2 = temp_v1;
+    }
+    if ((var_a2 >= 0x321) && (alien->unk4E != 0)) {
+        alien->unk20 |= 0x100;
+        alien->unk20 &= ~0x840;
+        if (alien->unk20 & 0x08000000) {
+            sp3C = var_a2;
+            if ((func_80084FE8_93F98(arg0, 0x400) != 0) && (var_a2 < 0xBB8) && (func_800871CC_9617C(arg0, 1, 0x28) != 0)) {
+                if (D_80052B34->unk1A == 0) {
+                    alien->unk1E = 0x14;
+                } else {
+                    alien->unk1E = 0xA;
+                }
+            }
+        } else {
+            sp3C = var_a2;
+            if ((func_800850DC_9408C(arg0, 0x400) != 0) && (var_a2 < 0xBB8)) {
+                func_80087188_96138(arg0, 1, 0x14);
+            }
+        }
+    } else if ((var_a2 >= 0x191) || (alien->unk4E == 0)) {
+        alien->unk20 |= 0x800;
+        alien->unk20 &= ~0x140;
+        if (!(alien->unk20 & 0x1000) && (var_a2 < 0x3E8) && (alien->unk4E != 0)) {
+            alien->unk20 |= 0x1000;
+            alien->unk36 = 0;
+        }
+    } else {
+        alien->unk20 |= 0x140;
+        alien->unk20 &= ~0x800;
+        if (!(alien->unk20 & 0x1000)) {
+            alien->unk20 |= 0x1000;
+            alien->unk36 = 0;
+        }
+    }
+    func_802D9B08_2BBF38(arg0, sp44, sp42);
+    if (alien->unk1E != 0) {
+        alien->unk1E--;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D9BFC_2BC02C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D9FB4_2BC3E4.s")
 
