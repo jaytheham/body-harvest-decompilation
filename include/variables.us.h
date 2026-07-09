@@ -1814,6 +1814,8 @@ extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 
 extern u8 D_80254E80[]; // Tile palette data
 extern f64 D_802E0D78_2604B8;
+extern f64 D_802E3040_2C5470;
+extern s32 D_802E1EE0_2C4310[];
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
 extern u8 D_80257A3A[];
 extern BuildingInstance buildingInstances[0xFF]; // 0x80050AD8
@@ -3569,7 +3571,12 @@ extern Unk8014DD50 *D_802E1974_2C3DA4;
 extern Unk8014DD50 *D_802E1D00_2C4130;
 extern Unk8014DD50 *D_802E1D24_2C4154;
 extern Unk8014DD50 *D_802E1ED4_2C4304;
+extern Unk8014DD50 *D_802E2040_2C4470;
+extern Unk8014DD50 *D_802E2190_2C45C0;
 extern u16 D_8025668C[];
+extern u16 D_802566BA[];
+extern Unk8014DD50 *D_802E21E0_2C4610;
+extern Unk8014DD50 *D_802E2228_2C4658;
 extern char D_802E2E90_2C52C0[];
 extern char D_802E2EB0_2C52E0[];
 extern char D_802E2EC8_2C52F8[];
