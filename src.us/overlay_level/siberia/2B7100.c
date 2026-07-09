@@ -3120,7 +3120,38 @@ s32 func_802DD408_2BF838(u8 arg0, u32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD408_2BF838.s")
 #endif
 
+// CURRENT(277)
+#ifdef NON_MATCHING
+void func_802DD514_2BF944(s32 arg0) {
+    u8 newAlienIdx;
+    s32 specIndex;
+    AlienInstance *alien;
+
+    alien = &alienInstances[*((u8 *)&arg0 + 3)];
+    specIndex = alien->specIndex;
+    newAlienIdx = func_8007956C_8851C(specIndex);
+
+    alienInstances[newAlienIdx].unk2E = -0xC8;
+    alienInstances[newAlienIdx].unk32 = 0x4A03;
+    alienInstances[newAlienIdx].unk20 |= 0x8000;
+    alienInstances[newAlienIdx].unk14 = -0xC8;
+    alienInstances[newAlienIdx].unk18 = 0x4A03;
+    alienInstances[newAlienIdx].unk0 = alienInstances[newAlienIdx].unk2E;
+    alienInstances[newAlienIdx].unk4 = alienInstances[newAlienIdx].unk32;
+    alienInstances[newAlienIdx].hitPoints = alien->hitPoints;
+    alienInstances[newAlienIdx].unk48 = -0x20;
+
+    alienInstances[newAlienIdx].unk2 = func_800B84D0_C7480(-0xC8, 0x4A03) >> (alienSpecs[specIndex].unk58 + 8);
+    alienInstances[newAlienIdx].unk26 = 0;
+    alienInstances[newAlienIdx].unk20 &= ~0x08000000;
+    alienSpecs[specIndex].unk54 |= 0xC;
+
+    func_80079910_888C0(*((u8 *)&arg0 + 3));
+    func_8007A2A0_89250(newAlienIdx);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD514_2BF944.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD668_2BFA98.s")
 
