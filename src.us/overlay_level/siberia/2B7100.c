@@ -3033,7 +3033,55 @@ void func_802DD1D0_2BF600(u8 arg0, s16 arg1) {
 	}
 }
 
+// CURRENT(908)
+#ifdef NON_MATCHING
+void func_802DD240_2BF670(s32 arg0) {
+    f32 vecX;
+    f32 vecY;
+    f32 vecZ;
+    s32 x;
+    s32 heading;
+    s32 z;
+    s16 diffX;
+    s16 diffZ;
+    u16 rand1;
+
+    func_80137468_146418(((u8 *)&arg0)[3], 0x19B);
+
+    x = alienInstances[((u8 *)&arg0)[3]].unk0;
+    z = alienInstances[((u8 *)&arg0)[3]].unk4;
+
+    vecX = (f32)(x / 4) - D_80047954;
+    vecY = 0.0f;
+    vecZ = (f32)(z / 4) - D_8004795C;
+
+    guNormalize(&vecX, &vecY, &vecZ);
+
+    vecX *= 250.0f;
+    vecZ *= 250.0f;
+
+    diffX = (s16)((f32)x - vecX);
+    diffZ = (s16)((f32)z - vecZ);
+
+    heading = (func_800B84D0_C7480(diffX, diffZ) >> 8) + 0x32;
+
+    if (!(D_80052A8C & 7)) {
+        rand1 = func_800038E0_44E0();
+        func_800DEA08_ED9B8(
+            diffX,
+            (s16)heading,
+            diffZ,
+            (s16)((rand1 % 200) + 0x12C),
+            (func_800038E0_44E0() % 20) + 0xA,
+            0,
+            0x32,
+            0xDC, 0xE1, 0xE1, 0xE1
+        );
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD240_2BF670.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD408_2BF838.s")
 
