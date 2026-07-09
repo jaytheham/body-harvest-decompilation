@@ -3083,7 +3083,42 @@ void func_802DD240_2BF670(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD240_2BF670.s")
 #endif
 
+// CURRENT(133)
+#ifdef NON_MATCHING
+s32 func_802DD408_2BF838(u8 arg0, u32 arg1) {
+    s16 sp30;
+    s32 diff_x;
+    s32 diff_z;
+    s32 result_heading;
+    s32 sp30_heading;
+
+    diff_x = D_80052B34->unk0 - alienInstances[arg0].unk0;
+    diff_z = D_80052B34->unk4 - alienInstances[arg0].unk4;
+
+    sp30 = func_80003824_4424((f32)diff_x, (f32)diff_z);
+    result_heading = func_80003824_4424((f32)diff_x, (f32)diff_z);
+
+    sp30_heading = sp30 - alienInstances[arg0].unk6;
+    result_heading = result_heading - alienInstances[arg0].unk6;
+
+    if ((-0x8000 - result_heading) < (sp30_heading + 0x8000)) {
+        result_heading = func_80003824_4424((f32)diff_x, (f32)diff_z);
+        result_heading = result_heading - alienInstances[arg0].unk6;
+        result_heading = result_heading + 0x8000;
+    } else {
+        result_heading = func_80003824_4424((f32)diff_x, (f32)diff_z);
+        result_heading = result_heading - alienInstances[arg0].unk6;
+        result_heading = -0x8000 - result_heading;
+    }
+
+    if (result_heading < (s32)(u16)arg1) {
+        return 1;
+    }
+    return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD408_2BF838.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD514_2BF944.s")
 
