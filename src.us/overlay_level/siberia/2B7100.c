@@ -2620,7 +2620,10 @@ void func_802DBE28_2BE258(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DBF54_2BE384.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DC4A0_2BE8D0.s")
+void func_802DC4A0_2BE8D0(u8 arg0) {
+    func_80137468_146418(arg0, 0x1E);
+    func_8008735C_9630C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DC4D0_2BE900.s")
 

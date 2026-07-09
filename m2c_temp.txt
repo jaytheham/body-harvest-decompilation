@@ -1,0 +1,174 @@
+s32 func_80084FE8_93F98(u8, ?);                     /* extern */
+? func_8008554C_944FC(u8);                          /* extern */
+s16 func_80085A9C_94A4C(s16, s16, ?, ?, s32);       /* extern */
+s16 func_800860CC_9507C(s16, s16, s16, s16);        /* extern */
+? func_80086164_95114(u8, s16);                     /* extern */
+s32 func_800871CC_9617C(u8, ?, ?);                  /* extern */
+? func_800A931C_B82CC(s8, s16 *, s32 *);            /* extern */
+? func_800A99B8_B8968(u8);                          /* extern */
+s32 func_800B84D0_C7480(s16, s16);                  /* extern */
+? func_800CD2E8_DC298(s16, s16, s16, u8);           /* extern */
+? func_80128428_1373D8(void *, s16, s16, s16, ? *, s32 *, ? *); /* extern */
+? func_802DB8D8_2BDD08(u8, ?, s8, s16, s32, s32, s32, s32, f32); /* extern */
+? func_802DBE28_2BE258(u8, s16, s16, s16);          /* extern */
+f32 sqrtf(f32, s32);                                /* extern */
+extern s32 D_80052A8C;
+extern void *D_80052B34;
+extern ? D_8014DD50;
+extern s32 D_80222A70;
+extern f32 D_802E3050_2C5480;
+extern ? alienInstances;
+extern ? alienSpecs;
+
+void func_802DBF54_2BE384(u8 arg0) {
+    s16 sp94;
+    s16 sp92;
+    s16 sp90;
+    s16 sp8E;
+    s16 sp8C;
+    s16 sp8A;
+    s16 sp88;
+    s32 sp78;
+    ? sp6C;
+    s32 sp68;
+    ? sp64;
+    s16 sp60;
+    s16 sp5E;
+    s16 sp5C;
+    s16 sp5A;
+    s16 sp58;
+    s32 sp4C;
+    void *sp44;
+    void *sp40;
+    void *sp3C;
+    s16 temp_a3;
+    s16 temp_v0_2;
+    s16 temp_v0_7;
+    s32 temp_a0;
+    s32 temp_v0_3;
+    s32 var_t0;
+    s32 var_t0_2;
+    s8 temp_ra;
+    s8 temp_t1;
+    s8 temp_t2;
+    s8 temp_t5;
+    s8 var_a2;
+    void *temp_s0;
+    void *temp_t0;
+    void *temp_t4;
+    void *temp_v0;
+    void *temp_v0_4;
+    void *temp_v0_5;
+    void *temp_v0_6;
+    void *temp_v1;
+
+    temp_s0 = (arg0 * 0x50) + &alienInstances;
+    temp_a3 = temp_s0->unkC;
+    temp_t5 = (&D_8014DD50 + (temp_a3 * 0x10))->unkC;
+    temp_v0 = &D_8014DD50 + (temp_t5 * 0x10);
+    temp_t1 = temp_v0->unkD;
+    sp5E = (s16) temp_s0->unk1A;
+    temp_v1 = &D_8014DD50 + (temp_t1 * 0x10);
+    temp_t2 = temp_v1->unkD;
+    sp44 = temp_v1;
+    temp_t0 = &D_8014DD50 + (temp_t2 * 0x10);
+    temp_ra = temp_t0->unkD;
+    sp90 = (s16) temp_t0->unkC;
+    temp_t4 = &D_8014DD50 + (temp_ra * 0x10);
+    sp8C = (s16) temp_v1->unkC;
+    sp88 = (s16) temp_ra;
+    sp3C = temp_t4;
+    sp40 = temp_t0;
+    sp94 = (s16) temp_t5;
+    sp8E = (s16) temp_t1;
+    sp92 = (s16) temp_t2;
+    sp8A = (s16) temp_t4->unkD;
+    temp_v0_2 = func_800860CC_9507C(temp_s0->unk0, (s16) (temp_v0->unk2 + temp_s0->unk2), temp_s0->unk4, temp_a3);
+    sp60 = temp_v0_2;
+    temp_v1->unkA = func_80085A9C_94A4C(temp_v1->unkA, temp_v0_2, 0x2000, -0x2000, 0x400);
+    sp40->unkA = func_80085A9C_94A4C(sp40->unkA, sp60, 0x2000, -0x2000, 0x400);
+    func_800A99B8_B8968(arg0);
+    func_80086164_95114(arg0, sp92);
+    func_80086164_95114(arg0, sp8E);
+    temp_v0_3 = temp_s0->unk0 - D_80052B34->unk0;
+    temp_a0 = temp_s0->unk4 - D_80052B34->unk4;
+    sp78 = (s32) sqrtf((f32) ((temp_v0_3 * temp_v0_3) + (temp_a0 * temp_a0)), temp_a0);
+    if ((func_80084FE8_93F98(arg0, 0x1000) != 0) && (sp78 < 0x7D0) && !(temp_s0->unk20 & 0x3000)) {
+        if (sp78 < 0x258) {
+            if (func_800871CC_9617C(arg0, 1, 0x32) != 0) {
+                temp_s0->unk1E = 0xA;
+                temp_s0->unk36 = 0;
+                temp_s0->unk20 = (s32) (temp_s0->unk20 | 0x2000);
+            }
+        } else {
+            sp58 = 0x64;
+            sp5A = -0x2B;
+            sp5C = 0xB9;
+            func_800A931C_B82CC(unksp93, &sp58, &sp4C);
+            if (temp_s0->unk20 & 0x04000000) {
+                temp_v0_4 = (sp5E * 0x68) + &alienSpecs;
+                temp_v0_4->unk20 = (s16) (sp4C + 0xD);
+                temp_v0_4->unk22 = (s16) (sp50 + 0x37);
+                temp_v0_4->unk24 = (s16) (sp54 + 1);
+            } else {
+                temp_v0_5 = (sp5E * 0x68) + &alienSpecs;
+                temp_v0_5->unk20 = (s16) (sp4C - 0xD);
+                temp_v0_5->unk22 = (s16) (sp50 + 0x35);
+                temp_v0_5->unk24 = (s16) (sp54 + 1);
+            }
+            if (func_800871CC_9617C(arg0, 0, 0x64) != 0) {
+                temp_s0->unk36 = 0;
+                temp_s0->unk20 = (s32) (temp_s0->unk20 | 0x1000);
+                if (D_80052B34->unk20 & 2) {
+                    temp_s0->unk1E = 5;
+                } else {
+                    temp_s0->unk1E = 0xF;
+                }
+            }
+        }
+    }
+    func_802DBE28_2BE258(arg0, sp94, sp8C, sp90);
+    if (!(D_80052A8C & 3)) {
+        if (temp_s0->unk3C != -5) {
+            temp_v0_6 = (sp8A * 0x10) + &D_8014DD50;
+            func_80128428_1373D8(temp_s0, temp_v0_6->unk0, temp_v0_6->unk2, temp_v0_6->unk4, &sp6C, &sp68, &sp64);
+            if ((func_800B84D0_C7480(sp6E, sp66) >> 8) < D_80222A70) {
+                var_t0 = D_80222A70;
+            } else {
+                var_t0 = func_800B84D0_C7480(sp6E, sp66) >> 8;
+            }
+            sp68 = var_t0;
+            func_800CD2E8_DC298(sp6E, (s16) var_t0, sp66, (u8) temp_s0->unk3C);
+        }
+        if (temp_s0->unk3D != -5) {
+            func_80128428_1373D8(temp_s0, sp3C->unk0, sp3C->unk2, sp3C->unk4, &sp6C, &sp68, &sp64);
+            if ((func_800B84D0_C7480(sp6E, sp66) >> 8) < D_80222A70) {
+                var_t0_2 = D_80222A70;
+            } else {
+                var_t0_2 = func_800B84D0_C7480(sp6E, sp66) >> 8;
+            }
+            sp68 = var_t0_2;
+            func_800CD2E8_DC298(sp6E, (s16) var_t0_2, sp66, (u8) temp_s0->unk3D);
+        }
+    }
+    func_8008554C_944FC(arg0);
+    if (func_80084FE8_93F98(arg0, 0x2000) != 0) {
+        if (temp_s0->unk4E == 0) {
+            var_a2 = 3;
+        } else if (sp78 < 0x320) {
+            var_a2 = 2;
+        } else if (sp78 >= 0x3E9) {
+            var_a2 = 1;
+        } else {
+            var_a2 = 3;
+        }
+    } else {
+        var_a2 = 0;
+    }
+    temp_s0->unk26 = var_a2;
+    func_802DB8D8_2BDD08(arg0, 0x12C, var_a2, sp88, (s32) sp8A, 0x1F40, -0x1388, 0x9C4, D_802E3050_2C5480);
+    temp_v0_7 = temp_s0->unk1E;
+    if (temp_v0_7 != 0) {
+        temp_s0->unk1E = (s16) (temp_v0_7 - 1);
+    }
+}
