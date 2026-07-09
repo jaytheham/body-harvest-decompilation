@@ -1602,12 +1602,6 @@ void func_80136570_145520(void) {
 #ifdef NON_MATCHING
 // displaySignposts
 void func_801365E0_145590(void) {
-	typedef struct {
-		s8 unk0;
-		s8 unk1;
-		u8 unk2;
-	} SignpostData;
-
 	Unk80052B40 spE0;
 	Unk80052B40 spD8;
 	Unk80052B40 spD0;
@@ -1636,10 +1630,10 @@ void func_801365E0_145590(void) {
 
 	var_fp = 0;
 	while (var_fp < 0x20) {
-		var_s0 = ((SignpostData *)((var_fp * 3) + (u8 *)&D_80258330))->unk0;
-		if ((var_s0 != 0) || (((SignpostData *)((var_fp * 3) + (u8 *)&D_80258330))->unk1 != 0)) {
+		var_s0 = D_80258330[var_fp].unk0;
+		if ((var_s0 != 0) || (D_80258330[var_fp].unk1 != 0)) {
 			var_s0 = ((s16)var_s0 << 8) + 0x80;
-			var_s1 = ((s16)((SignpostData *)((var_fp * 3) + (u8 *)&D_80258330))->unk1 << 8) + 0x80;
+			var_s1 = ((s16)D_80258330[var_fp].unk1 << 8) + 0x80;
 			func_8011E6FC_12D6AC(var_s0, var_s1, &spCC);
 			if ((var_s0 >= D_801493B0) && (D_801493AC >= var_s0) && (var_s1 >= D_801493B8) &&
 				(D_801493B4 >= var_s1) &&
@@ -1648,7 +1642,7 @@ void func_801365E0_145590(void) {
 				spE0.unk0 = var_s0 >> 2;
 				spE0.unk2 = spCC >> 2;
 				spE0.unk4 = var_s1 >> 2;
-				spD8.unk0 = (((u32)(((SignpostData *)((var_fp * 3) + (u8 *)&D_80258330))->unk2 << 0x1D)) >> 0x1E) << 0xE;
+				spD8.unk0 = (((u32)D_80258330[var_fp].unk2 << 0x1D) >> 0x1E) << 0xE;
 				spD8.unk2 = 0;
 				spD8.unk4 = 0;
 				spD0.unk0 = 0x20;
@@ -1660,7 +1654,7 @@ void func_801365E0_145590(void) {
 				D_8005BB38 += 0x40;
 				gDPPipeSync(D_8005BB2C++);
 				gSPDisplayList(D_8005BB2C++, D_504D1D0);
-				if ((((u32)(((SignpostData *)((var_fp * 3) + (u8 *)&D_80258330))->unk2 << 0x1D)) >> 0x1E) & 1) {
+				if ((((u32)D_80258330[var_fp].unk2 << 0x1D) >> 0x1E) & 1) {
 					width = 0x10;
 					height = 0x13;
 				} else {
@@ -1669,7 +1663,7 @@ void func_801365E0_145590(void) {
 				}
 				func_8012D700_13C6B0(5, (var_fp + 0x2000) & 0xFFFF, var_s0, spCC, var_s1, 0, 0, 0, width, height, 0x35, NULL,
 					func_8012E1F8_13D1A8);
-				switch (((u32)(((SignpostData *)((var_fp * 3) + (u8 *)&D_80258330))->unk2 << 0x1D)) >> 0x1E) {
+				switch (((u32)D_80258330[var_fp].unk2 << 0x1D) >> 0x1E) {
 					case 0:
 						var_s1 += 0x18;
 						break;
@@ -1706,13 +1700,13 @@ void func_80136B50_145B00(s32 arg0, s16 arg1)
 	s16 sp32;
 	s16 sp30;
 	s16 sp28;
-	void *sp1C;
+	SignpostData *sp1C;
 	s16 temp_v0;
 	s32 temp_t6;
-	temp_v0 = (*((s16 *) (((u8 *) (&D_8015FAEE)) + (arg1 * 0x30)))) - 0x2000;
-	sp1C = ((u8 *) (&D_80258330)) + (temp_v0 * 3);
-	sp32 = (((s8) ((u8 *) sp1C)[0]) << 8) + 0x80;
-	sp30 = (((s8) ((u8 *) sp1C)[1]) << 8) + 0x80;
+	temp_v0 = D_8015FAD0[arg1].unk1E - 0x2000;
+	sp1C = &D_80258330[temp_v0];
+	sp32 = ((s16)sp1C->unk0 << 8) + 0x80;
+	sp30 = ((s16)sp1C->unk1 << 8) + 0x80;
 	sp28 = temp_v0;
 	if (!isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A))
 	{
@@ -1722,7 +1716,7 @@ void func_80136B50_145B00(s32 arg0, s16 arg1)
 	{
 		return;
 	}
-	temp_t6 = ((u32) (((u8 *) sp1C)[2] << 29)) >> 30;
+	temp_t6 = ((u32)(sp1C->unk2 << 29)) >> 30;
 	switch (temp_t6)
 	{
 		case 0:

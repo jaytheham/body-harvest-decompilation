@@ -1775,7 +1775,7 @@ extern s32 D_8015F9E4;
 extern s32 D_8015F9E8;
 extern s16 D_8015F9F8[8][4];
 extern s16 D_8015FA38;
-extern s16 D_8015FA40[];
+extern Unk8015FA40Entry D_8015FA40[];
 extern s16 D_8015FAEE;
 extern Unk8015FAD0 D_8015FAD0[0x19];
 extern u8 D_8015FF80;
@@ -2368,7 +2368,7 @@ extern f64 D_80037610_38210;
 extern Gfx D_504D1D0[];
 extern s32 D_80258390; // English sign strings
 extern s32 D_80258F90; // English sign string offsets (actually u16/s16?)
-extern u8 D_80258330; // signposts
+extern SignpostData D_80258330[0x20]; // signposts
 extern s16 D_80047710;
 extern s16 D_80047712;
 extern u8 *D_800944E8_64998[];

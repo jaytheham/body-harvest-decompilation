@@ -929,7 +929,7 @@ void func_80124D60_133D10(void) {
 	u8 *trailColor;
 	s16 pos[2];
 	s8 color[4];
-	s16 *hudPos;
+	Unk8015FA40Entry *hudPos;
 	u8 *extraPtr;
 	u32 *sparkDLs;
 
@@ -1109,11 +1109,11 @@ void func_80124D60_133D10(void) {
 	if (((D_80159320 & 0x40) != 0) && (gameplayMode == 1) && (currentLevel == 2) && func_800A2A88_B1A38()) {
 		s32 alpha;
 
-		hudPos = &D_8015FA40[0x45];
+		hudPos = &D_8015FA40[23];
 		for (i = 0x17; i >= 0; i--) {
-			D_8005BB34->v.ob[0] = hudPos[0];
-			D_8005BB34->v.ob[1] = hudPos[1];
-			D_8005BB34->v.ob[2] = hudPos[2];
+			D_8005BB34->v.ob[0] = hudPos->unk0;
+			D_8005BB34->v.ob[1] = hudPos->unk2;
+			D_8005BB34->v.ob[2] = hudPos->unk4;
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
@@ -1124,16 +1124,16 @@ void func_80124D60_133D10(void) {
 			D_8005BB34->v.cn[2] = alpha;
 			D_8005BB34->v.cn[3] = 0x40;
 			D_8005BB34++;
-			hudPos -= 3;
+			hudPos--;
 		}
 
 		gSPVertex(D_8005BB30++, D_8005BB34 - 24, 24, 0);
-		hudPos = &D_8015FA40[6];
+		hudPos = &D_8015FA40[2];
 		for (i = 0x16; i >= 0; i--) {
-			if ((hudPos[0] != 0x7FFF) && (hudPos[-3] != 0x7FFF)) {
+			if ((hudPos->unk0 != 0x7FFF) && ((hudPos - 1)->unk0 != 0x7FFF)) {
 				gSPLineW3D(D_8005BB30++, i, i + 1, 4, 0);
 			}
-			hudPos += 3;
+			hudPos++;
 		}
 	}
 
@@ -2222,7 +2222,7 @@ void func_80128650_137600(Projectile *arg0, s32 arg1) {
 building = &D_80145BE0_154B90[arg0->unk20];
 
 	for (i = 0x17; i >= 0; i--) {
-		D_8015FA40[(i * 3) + 2] = 0x7FFF;
+		D_8015FA40[i].unk4 = 0x7FFF;
 	}
 
 	D_80159320 |= 0x40;
@@ -2237,9 +2237,9 @@ building = &D_80145BE0_154B90[arg0->unk20];
 		}
 
 		if ((i >> 1) < 0x18) {
-			D_8015FA40[(i >> 1) * 3 + 0] = (s16)(s32)arg0->unk0;
-			D_8015FA40[(i >> 1) * 3 + 1] = (s16)(s32)arg0->unk4;
-			D_8015FA40[(i >> 1) * 3 + 2] = (s16)(s32)arg0->unk8;
+			D_8015FA40[i >> 1].unk0 = (s16)(s32)arg0->unk0;
+			D_8015FA40[i >> 1].unk2 = (s16)(s32)arg0->unk4;
+			D_8015FA40[i >> 1].unk4 = (s16)(s32)arg0->unk8;
 		}
 
 		arg0->unk0 += motion[1] * motion[0];
@@ -3302,11 +3302,11 @@ void func_8012B26C_13A21C(void) {
 
 			hitSlot = func_8012E114_13D0C4((s16)projectile->unk0, (s16)projectile->unk4, (s16)projectile->unk8);
 			if (hitSlot != -1) {
-				if (*(&D_8015FAFC + hitSlot * 0x30) != 0xA) {
+				if (D_8015FAD0[hitSlot].unk2C != 0xA) {
 					osSyncPrintf(&D_801450FC_1540AC);
 					func_8012E204_13D1B4(hitSlot, (void *)entry);
 				}
-				if (*(&D_8015FAFC + hitSlot * 0x30) != 0xD) {
+				if (D_8015FAD0[hitSlot].unk2C != 0xD) {
 					alive = 0;
 				}
 			}
@@ -3880,7 +3880,7 @@ s32 func_8012D700_13C6B0(u8 arg0, u16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012D700_13C6B0.s")
 #endif
 
-void func_8012D808_13C7B8(s32 arg0) { *(&D_8015FAFC + arg0 * 0x30) = 0; }
+void func_8012D808_13C7B8(s32 arg0) { D_8015FAD0[arg0].unk2C = 0; }
 
 void func_8012D824_13C7D4(void) {
 	s32 i;

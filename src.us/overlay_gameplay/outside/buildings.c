@@ -1096,7 +1096,7 @@ void func_8011815C_12710C(void *arg0, s16 arg1, s32 arg2) {
 	s16 doorId;
 	s32 canEnter;
 
-	doorData = *(s16 *) ((u8 *) &D_8015FAEE + (arg1 * 0x30));
+	doorData = D_8015FAD0[arg1].unk1E;
 	if (((u8 *) arg0)[0x1A] != 0) {
 		return;
 	}
@@ -3988,7 +3988,7 @@ void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
 	s32 objIndex;
 
 	objIndex = (const WeaponEntry_80129864 *)arg0 - D_80145BE0_154B90;
-	if ((temp_v0 = (u8 *) buildingInstances + (((((*(s16 *)((u8 *) &D_8015FAEE + (arg1 * 0x30))) >> 4) << 2) - ((*(s16 *)((u8 *) &D_8015FAEE + (arg1 * 0x30))) >> 4)) << 3),
+	if ((temp_v0 = (u8 *) buildingInstances + ((D_8015FAD0[arg1].unk1E >> 4) * 24),
 		 objIndex == 0x4F)) {
 		if (temp_v0[0xD] != 2) {
 			temp_v0[0xD] = 1;
