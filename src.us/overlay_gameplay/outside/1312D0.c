@@ -269,8 +269,8 @@ Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s1
 		}
 	}
 
-	if ((vehicle->unkC == -2) && (vehicleSpecs[vehicle->unk1A].pad50[0] != 0xFF)) {
-		sp72 = (u16)(vehicleSpecs[vehicle->unk1A].pad50[0] << 8);
+	if ((vehicle->unkC == -2) && (vehicleSpecs[vehicle->unk1A].launchAngle != 0xFF)) {
+		sp72 = (u16)(vehicleSpecs[vehicle->unk1A].launchAngle << 8);
 		negArg7 = sqrtf((arg5 * arg5) + (arg7 * arg7));
 		arg6 = (f32)((((f64)(f32)sins(sp72) / 32768.0) * (f64)negArg7) / ((f64)(f32)sins((0x4000 - (s16)sp72) & 0xFFFF) / 32768.0));
 	} else {

@@ -567,18 +567,18 @@ void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 	s32 var_s3;
 	u8 temp_s0;
 	u8 temp_v1;
-	u8 *temp_v0;
+	Unk801601F0 *temp_v0;
 	u8 temp_a0idx;
 	u8 *temp_limb_raw;
 
 	temp_a0idx = walker->limbs[0].unk23;
-	temp_v0 = &((u8 *) D_801601F0)[(temp_a0idx * 22)];
-	sp6E = *(s16 *) &temp_v0[0x10];
-	sp6C = *(s16 *) &temp_v0[0x06];
-	sp6A = *(s16 *) &temp_v0[0x04];
+	temp_v0 = &D_801601F0[temp_a0idx];
+	sp6E = temp_v0->unk10;
+	sp6C = temp_v0->unk6;
+	sp6A = temp_v0->unk4;
 	temp_v1 = walker->limbs[0].unk22;
-	temp_s0 = temp_v0[0x0C];
-	var_s4 = *(s16 *) &temp_v0[0x0E];
+	temp_s0 = temp_v0->unkC;
+	var_s4 = temp_v0->unkE;
 	if (temp_v1 & 0x80) {
 		sp68 = walker->limbs[0].unk1A;
 		var_v0 = walker->limbs[0].unk18;
@@ -652,7 +652,7 @@ void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 
 	func_800F2980_101930(walker);
 
-	count = ((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16 + 0xC];
+	count = D_801601F0[walker->limbs[0].unk23].unkC;
 	if (count > 0) {
 		i = 0;
 		do {
@@ -931,7 +931,7 @@ void func_800F3670_102620(void) {
 		D_80157FF0[i] = i;
 	}
 	for (j = 0; j < 12; j = (u8)(j + 1)) {
-		*(Unk801601F0 *)((u8 *)D_801601F0 + j * 0x16) =
+		D_801601F0[j] =
 			*(Unk801601F0 *)(D_801470C0_156070 + currentLevel * 0x108 + j * 0x16 - 0x108);
 	}
 }
@@ -1055,17 +1055,17 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	walker->limbs[0].unk1E = 0;
 	walker->limbs[0].unk23 = specIdx;
 
-	baseAngle = *(s16 *)&((u8*)D_801601F0 + specIdx * 0x16)[0xE];
-	spBA = *(s16 *)&((u8*)D_801601F0 + specIdx * 0x16)[0x10];
-	halfCount = (s16)((u8*)D_801601F0 + specIdx * 0x16)[0xC] / 2;
+	baseAngle = D_801601F0[specIdx].unkE;
+	spBA = D_801601F0[specIdx].unk10;
+	halfCount = D_801601F0[specIdx].unkC / 2;
 
 	if (halfCount > 0) {
 		s32 i;
 		
-		f22 = (f64)*(s16 *)&((u8*)D_801601F0 + specIdx * 0x16)[0x4];
+		f22 = (f64)D_801601F0[specIdx].unk4;
 		f24 = (f64)alienX;
 		f26 = (f64)alienZ;
-		f28 = (f64)*(s16 *)&((u8*)D_801601F0 + specIdx * 0x16)[0x6];
+		f28 = (f64)D_801601F0[specIdx].unk6;
 
 		i = 0;
 		temp = halfCount * 0x24;
@@ -1318,8 +1318,8 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 	posX = (s16)*(s32 *)&walker->limbs[0].unk10;
 	posZ = (s16)*(s32 *)&walker->limbs[0].unk14;
 
-	limbCount = ((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16 + 0x0C];
-	animLerp = ((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16 + 0x12];
+	limbCount = D_801601F0[walker->limbs[0].unk23].unkC;
+	animLerp = D_801601F0[walker->limbs[0].unk23].unk12;
 
 	for (i = 0; i < limbCount; i = (i + 1) & 0xFF) {
 		entry = &walker->limbs[i + 1];
@@ -1390,7 +1390,7 @@ void func_800F4DB0_103D60(void) {
 	while (i < 8) {
 		if (D_80157FF0[i] == -1) {
 			UnkF9230ShadowWalker *walker;
-			u8 *anim;
+			Unk801601F0 *anim;
 			u8 *alienBase;
 			u8 state;
 			u8 alienIdx;
@@ -1429,8 +1429,8 @@ void func_800F4DB0_103D60(void) {
 
 			state = walker->limbs[0].unk22;
 			if ((state == 0) || (state == 4)) {
-				anim = &((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16];
-				limbCount = anim[0xC];
+				anim = &D_801601F0[walker->limbs[0].unk23];
+				limbCount = anim->unkC;
 				for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
 					if (walker->limbs[limb + 1].unk23 == 0) {
 						alienBase = (u8 *)&alienInstances[walker->alienIdx];
@@ -1468,8 +1468,8 @@ void func_800F4DB0_103D60(void) {
 						func_800F375C_10270C((s8)i);
 					}
 				} else if (state == 4) {
-					anim = &((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16];
-					limbCount = anim[0xC];
+					anim = &D_801601F0[walker->limbs[0].unk23];
+					limbCount = anim->unkC;
 					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
 						if (walker->limbs[limb + 1].unk23 != 2) {
 							var_fp = 0;
@@ -1482,13 +1482,13 @@ void func_800F4DB0_103D60(void) {
 
 				walker->unk16A = walker->unk16A + walker->unk16C;
 			} else {
-				u8 *animData;
+				Unk801601F0 *animData;
 				u8 lerp;
 				s16 frame;
 				s16 frame2x;
 
-				animData = &((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16];
-				lerp = animData[0x12];
+				animData = &D_801601F0[walker->limbs[0].unk23];
+				lerp = animData->unk12;
 
 				if (walker->limbs[0].unk1E == 0) {
 					s32 x;
@@ -1501,7 +1501,7 @@ void func_800F4DB0_103D60(void) {
 					*(s32 *)&walker->limbs[0].unk4 = z;
 					*(s32 *)&walker->limbs[0].unk14 = z;
 
-					limbCount = animData[0xC];
+					limbCount = animData->unkC;
 					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
 						if (walker->limbs[limb + 1].unk23 == 0) {
 							walker->limbs[limb + 1].unk14 = walker->limbs[limb + 1].unk1A;
@@ -1526,8 +1526,8 @@ void func_800F4DB0_103D60(void) {
 				frame = walker->limbs[0].unk1E;
 				frame2x = lerp * 2;
 				if ((frame2x == frame) || (lerp == frame)) {
-					animData = &((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16];
-					limbCount = animData[0xC];
+					animData = &D_801601F0[walker->limbs[0].unk23];
+					limbCount = animData->unkC;
 					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
 						if (walker->limbs[limb + 1].unk23 == 0) {
 							if ((frame2x == walker->limbs[0].unk1E) && ((limb % 2) == 1)) {
@@ -2581,7 +2581,7 @@ void func_800F8B24_107AD4(s32 arg0) {
 	s32 sp100[3];
 	s32 spF4[3];
 	s32 spE8[3];
-	u8 *anim;
+	Unk801601F0 *anim;
 	s32 i;
 	s32 updateState;
 	u8 state;
@@ -2592,13 +2592,13 @@ void func_800F8B24_107AD4(s32 arg0) {
 	}
 
 	walker = &D_80158000[arg0];
-	anim = &((u8 *)D_801601F0)[walker->limbs[0].unk23 * 0x16];
+	anim = &D_801601F0[walker->limbs[0].unk23];
 
-	if ((func_800B93AC_C835C(walker->limbs[0].unk12, walker->limbs[0].unk16, *(u16 *)&anim[6], (s16)D_80052B2C->unk0,
+	if ((func_800B93AC_C835C(walker->limbs[0].unk12, walker->limbs[0].unk16, (u16)anim->unk6, (s16)D_80052B2C->unk0,
 						 (s32)D_80052B2C->unk8, 0x4000 - D_80047950)
 			!= 0)
 		|| (walker->limbs[0].unk22 == 8)) {
-		if (anim[0x14] != 0) {
+		if (anim->unk14 != 0) {
 			gDPPipeSync(D_8005BB2C++);
 			guLookAtReflect(&spA8, (LookAt *)&walker->pad145[0x148 - 0x145], 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f);
 			gSPLookAtX(D_8005BB2C++, (Light *)&walker->pad145[0x148 - 0x145]);
@@ -2651,7 +2651,7 @@ void func_800F8B24_107AD4(s32 arg0) {
 			state = walker->limbs[0].unk22;
 		}
 
-		for (i = 0; i < anim[0xC]; i++) {
+		for (i = 0; i < anim->unkC; i++) {
 			UnkF9230ShadowLimb *entry;
 			s16 arg7;
 
@@ -2695,7 +2695,7 @@ void func_800F8B24_107AD4(s32 arg0) {
 				spE8[2] = spE8[2] + mod - 8;
 			}
 
-			switch (anim[0x14]) {
+			switch (anim->unk14) {
 				case 0:
 					func_800F7790_106740(sp100, spE8, spF4, walker->limbs[0].unk23);
 					break;
@@ -2753,19 +2753,19 @@ void func_800F9118_1080C8(s32 arg0) {
 	s32 temp_v1_2;
 	s32 var_a2;
 	u8 temp_s0;
-	u8 *temp_v1;
+	Unk801601F0 *temp_v1;
 
 	if (D_80157FF0[arg0] == -1) {
 		walker = &D_80158000[arg0];
 		if ((func_8011E6FC_12D6AC(walker->limbs[0].unk12, walker->limbs[0].unk16, &sp92) == -1) && (walker->limbs[0].unk22 != 0x10)) {
-			temp_v1 = (u8 *)&D_801601F0[walker->limbs[0].unk23];
-			temp_s0 = temp_v1[0x0C];
-			var_t1 = *(s16 *)&temp_v1[0x08];
+			temp_v1 = &D_801601F0[walker->limbs[0].unk23];
+			temp_s0 = temp_v1->unkC;
+			var_t1 = temp_v1->unk8;
 			if (D_8013FCD0_14EC80 != 0) {
 				var_t1 *= 2;
 			}
 			sp96 = var_t1;
-			if (func_800B93AC_C835C(walker->limbs[0].unk12, walker->limbs[0].unk16, *(u16 *)&temp_v1[0x06], (s16)D_80052B2C->unk0,
+			if (func_800B93AC_C835C(walker->limbs[0].unk12, walker->limbs[0].unk16, (u16)temp_v1->unk6, (s16)D_80052B2C->unk0,
 					(s32)D_80052B2C->unk8, 0x4000 - D_80047950) != 0) {
 				var_a2 = 0;
 				if (func_800E95BC_F856C(*(s32 *)&walker->limbs[0].unk10, func_800B84D0_C7480(walker->limbs[0].unk12, walker->limbs[0].unk16) >> 8,
@@ -2869,7 +2869,7 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34++;
 
 								temp_t5 = (var_s5 - 0x4000) & 0xFFFF;
-								if (spBC >= ((s32)((u8 *)&D_801601F0[walker->limbs[0].unk23])[0x0C] / 2)) {
+								if (spBC >= ((s32)D_801601F0[walker->limbs[0].unk23].unkC / 2)) {
 									temp_t3 = (var_s5 + 0x4000) & 0xFFFF;
 									coss(temp_t3 & 0xFFFF);
 									sins(temp_t3 & 0xFFFF);
@@ -3569,7 +3569,7 @@ void func_800FB504_10A4B4(void) {
 	}
 
 	spec = &vehicleSpecs[vehicle->unk1A];
-	steerClamp = *(s16 *) ((u8 *) spec + 0x3C);
+	steerClamp = spec->arcOfFire;
 	if (steerClamp < 0) {
 		steerClamp = -steerClamp;
 	}
@@ -3577,27 +3577,27 @@ void func_800FB504_10A4B4(void) {
 	pitchClamp = D_80052B2C->unk36;
 
 	if (D_80050AD4 == 1) {
-		if (*(u32 *) ((u8 *) spec + 0x4C) & 0x08000000) {
-			restoreSpeed = *(s16 *) ((u8 *) spec + 0x2C);
+		if (spec->unk4C & 0x08000000) {
+			restoreSpeed = spec->gun2X;
 			if (restoreSpeed < 0) {
-				*(s16 *) ((u8 *) spec + 0x2C) = -restoreSpeed;
+				spec->gun2X = -restoreSpeed;
 			}
 		}
 		func_80128504_1374B4((AlienInstance *) vehicle, 1, &worldX, &worldY, &worldZ);
 	} else {
-		if (*(u32 *) ((u8 *) spec + 0x4C) & 0x08000000) {
-			restoreSpeed = *(s16 *) ((u8 *) spec + 0x20);
+		if (spec->unk4C & 0x08000000) {
+			restoreSpeed = spec->gun1X;
 			if (restoreSpeed < 0) {
-				*(s16 *) ((u8 *) spec + 0x20) = -restoreSpeed;
+				spec->gun1X = -restoreSpeed;
 			}
 		}
 		func_80128504_1374B4((AlienInstance *) vehicle, 0, &worldX, &worldY, &worldZ);
 	}
 
-	if (!(*(u32 *) ((u8 *) spec + 0x4C) & 0x00800000)) {
-		s32 hasPitch = *(u32 *) ((u8 *) spec + 0x4C) & 0x00010000;
+	if (!(spec->unk4C & 0x00800000)) {
+		s32 hasPitch = spec->unk4C & 0x00010000;
 		inputButtons = currentControllerStates[0].button;
-		if ((hasPitch || (*(u32 *) ((u8 *) spec + 0x4C) & 0x00080000)) && ((inputButtons & 0x10) || ((currentLevel == 2) && (D_80052B34->unk1A == 1)))) {
+		if ((hasPitch || (spec->unk4C & 0x00080000)) && ((inputButtons & 0x10) || ((currentLevel == 2) && (D_80052B34->unk1A == 1)))) {
 			if (hasPitch) {
 				pitchClamp -= (D_8004758A * D_8004758A * D_8004758A) >> 8;
 			} else {
@@ -3773,7 +3773,7 @@ void func_800FB504_10A4B4(void) {
 		}
 	}
 
-	if (*(s16 *) ((u8 *) spec + 0x3C) < 0) {
+	if (spec->arcOfFire < 0) {
 		D_80052B2C->unk36 += 0x8000;
 	}
 
@@ -3857,12 +3857,12 @@ void func_800FB504_10A4B4(void) {
 	D_80159028.unk4 = D_801591F8.unk20;
 	D_801591A8 = 0;
 
-	if (*(u32 *) ((u8 *) spec + 0x4C) & 0x08000000) {
+	if (spec->unk4C & 0x08000000) {
 		restoreSigned = (s16) restoreSpeed;
 		if (D_80050AD4 == 1) {
-			*(s16 *) ((u8 *) spec + 0x2C) = restoreSigned;
+			spec->gun2X = restoreSigned;
 		} else {
-			*(s16 *) ((u8 *) spec + 0x20) = restoreSigned;
+			spec->gun1X = restoreSigned;
 		}
 	}
 }
@@ -3919,14 +3919,14 @@ s32 func_800FC1CC_10B17C(void) {
 
 	i = 0xB;
 	do {
-		f32 *pos = (f32 *)((u8 *)D_801593F0 + (i * 0x18));
+		UnkF9230Func80102FA4Point *point = &D_801593F0[i];
 
-		pos[0] = playerVehicle->unk0;
-		pos[1] = playerVehicle->unk2;
-		pos[2] = playerVehicle->unk4;
-		pos[3] = 0.0f;
-		pos[4] = 0.0f;
-		pos[5] = 0.0f;
+		point->pos.x = playerVehicle->unk0;
+		point->pos.y = playerVehicle->unk2;
+		point->pos.z = playerVehicle->unk4;
+		point->vel.x = 0.0f;
+		point->vel.y = 0.0f;
+		point->vel.z = 0.0f;
 	} while (i-- != 0);
 
 	func_8001A650_1B250(9);
@@ -4216,7 +4216,7 @@ void func_800FCA5C_10BA0C(void) {
 	var_s2_2 = 0x7F;
 	while (var_s2_2 != 0) {
 		temp_t4 = ((Unk80259D7EEntry *)var_s1)->unk6;
-		temp_s4 = &vehicleSpecs[(((u8)temp_t4 & 0xFF) * 0x70)];
+		temp_s4 = &vehicleSpecs[((u8)temp_t4 & 0xFF)];
 		var_s0_2->unk1A = (u8)temp_t4;
 		func_800FAE84_109E34(var_s0_2);
 		func_800FB44C_10A3FC(var_s0_2, (f32)(((s16)((Unk80259D7EEntry *)var_s1)->unk0 << 8) + 0x80));
@@ -4654,7 +4654,7 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1) {
 	stepCount = 0;
 
 	if (vehicle->unk1A != 0) {
-		if ((*((u8 *)spec + 0x59) == 4) || (*((u8 *)spec + 0x59) == 8)) {
+		if ((spec->unk59 == 4) || (spec->unk59 == 8)) {
 			D_80158E74 = (s32)D_80052B34;
 			D_80159234 = D_8015930C;
 			D_80159232 = D_8015930A;
@@ -4664,8 +4664,8 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1) {
 			D_80158E74 = 0;
 		}
 
-		if (func_800E60CC_F507C(2, *((u8 *)arg0 + 0x35)) != 0) {
-			func_800E5E3C_F4DEC(2, *((u8 *)arg0 + 0x35));
+		if (func_800E60CC_F507C(2, (u8)arg0->unk34) != 0) {
+			func_800E5E3C_F4DEC(2, (u8)arg0->unk34);
 			changedAudio = 1;
 		}
 
@@ -4864,7 +4864,7 @@ next_try:
 		}
 
 		func_800FD4D4_10C484(spec);
-		func_801371B8_146168((s32)D_80052B34, *((s16 *)((u8 *)spec + 0x6A)), D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
+		func_801371B8_146168((s32)D_80052B34, spec->unk6A, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
 		if (D_8004816A >= D_800314C4) {
 			func_80123AC4_132A74(D_80052B34);
 		}
@@ -5899,17 +5899,16 @@ void func_80101C14_110BC4(void) {
 #ifdef NON_MATCHING
 void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
 	Unk8013FDA8Entry *entry;
-	u8 *specBytes;
 	s16 temp;
 	s32 sp40;
 	s32 count;
 	s32 var_v0;
 	s32 i;
 	s32 loops;
+	VehicleSpec *spec = &vehicleSpecs[arg0];
 
-	specBytes = (u8 *)&vehicleSpecs[arg0];
-	i = specBytes[0x53];
-	loops = specBytes[0x54];
+	i = spec->detailProp;
+	loops = spec->unk54;
 	count = 0;
 	sp40 = D_8005BB38;
 	D_8005BB38 = sp40 + 0x40;
@@ -5922,14 +5921,14 @@ void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	D_80052B48.unk2 = (s16)arg6;
 	D_80052B48.unk4 = (s16)arg5;
 
-	temp = (s16)(256.0 / ((f64)(f32)*(s16 *)&specBytes[0xC] * 0.125));
+	temp = (s16)(256.0 / ((f64)(f32)spec->unkC * 0.125));
 	D_80052B50.unk0 = temp;
 	D_80052B50.unk2 = temp;
 	D_80052B50.unk4 = temp;
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, sp40);
 
 	gSPMatrix(D_8005BB2C++, sp40 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	gSPDisplayList(D_8005BB2C++, *(u32 *)&specBytes[0x0]);
+	gSPDisplayList(D_8005BB2C++, spec->modelDL);
 
 	if (loops != 0) {
 		entry = &D_8013FDA8_14ED58[(s32)i];
@@ -6407,11 +6406,6 @@ void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
 	s16 z1;
 	s16 i;
 	u32 mass0;
-
-	/* Not present in shared headers yet. */
-	extern Vec3f D_80159188;
-	extern f32 D_80158E60;
-	void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1);
 
 	spec0 = &vehicleSpecs[arg0->unk1A];
 	spec1 = func_800FAFB8_109F68(arg1);
@@ -10874,8 +10868,31 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	VehicleSpec *vehicleSpec;
 	BuildingInstance *building;
 	BuildingSpec *buildingSpec;
-	u8 *entry;
-	u8 *spawn;
+	typedef struct {
+		s8 unk0;
+		u8 pad1[3];
+		s16 unk4;
+		s16 unk6;
+		u8 pad8[0x0A];
+		s16 unk12;
+		u8 pad14[0x0C];
+		s16 unk20;
+		s16 unk22;
+		s16 unk24;
+		u8 pad26[0x1A];
+		s16 unk40;
+		u8 pad42[2];
+		s16 unk44;
+	} Unk8025CC20Entry;
+	typedef struct {
+		u8 pad0[4];
+		s16 unk4;
+		s16 unk6;
+		s16 unk8;
+		s16 unkA;
+	} Unk80052560Entry;
+	Unk8025CC20Entry *entry;
+	Unk80052560Entry *spawn;
 	s16 spDA;
 	s16 spD8;
 	s16 spD6;
@@ -10905,9 +10922,6 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	s32 bestX;
 	s32 zForBest;
 	f64 var_f0;
-
-#define S16_AT(base, off) (*(s16 *) ((u8 *) (base) + (off)))
-#define U8_AT(base, off) (*(u8 *) ((u8 *) (base) + (off)))
 
 	func_800FAE60_109E10(arg0);
 	D_80159320 &= 0xDFFFFFFF;
@@ -11012,16 +11026,16 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	}
 
 	if ((currentLevel != 3) || (arg0->unk1A != 0xD)) {
-		entry = &D_8025CC20[(0x95 - 1) * 0x50];
-		for (i = 0x95; i != 0; i--, entry -= 0x50) {
-			if ((S16_AT(entry, 0x00) >= 0xE) && (func_80078B58_87B08(S16_AT(entry, 0x04), S16_AT(entry, 0x06)) != 0) &&
-				(func_8010EA54_11DA04(S16_AT(entry, 0x20), S16_AT(entry, 0x24), S16_AT(entry, 0x40), S16_AT(entry, 0x44), &spD6) != 0) &&
-				(((spD6 + S16_AT(entry, 0x12)) - S16_AT(entry, 0x22)) >= spD2)) {
-				if (func_8010B970_11A920(entry, arg0) != 0) {
+		entry = &((Unk8025CC20Entry *) D_8025CC20)[0x95 - 1];
+		for (i = 0x95; i != 0; i--, entry--) {
+			if ((entry->unk0 >= 0xE) && (func_80078B58_87B08(entry->unk4, entry->unk6) != 0) &&
+				(func_8010EA54_11DA04(entry->unk20, entry->unk24, entry->unk40, entry->unk44, &spD6) != 0) &&
+				(((spD6 + entry->unk12) - entry->unk22) >= spD2)) {
+				if (func_8010B970_11A920((u8 *) entry, arg0) != 0) {
 					return 8;
 				}
 				if (arg1 == 0) {
-					func_8010FAC8_11EA78(0xC, func_80078BC8_87B78(S16_AT(entry, 0x04), S16_AT(entry, 0x06)));
+					func_8010FAC8_11EA78(0xC, func_80078BC8_87B78(entry->unk4, entry->unk6));
 				}
 				return 6;
 			}
@@ -11051,13 +11065,13 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 		j = (u32) building->unk8 >> 0xC;
 		if ((j & 1) && !(j & 0x20000)) {
 			buildingSpec = &buildingSpecs[building->buildingType];
-			spawn = &D_80052560[U8_AT(buildingSpec, 0x1C) * 0xC];
+			spawn = &((Unk80052560Entry *) D_80052560)[buildingSpec->unk1A[2]];
 
-			for (j = U8_AT(buildingSpec, 0x1D); j != 0; j--, spawn -= 0xC) {
-				spD8 = building->yCoord + S16_AT(spawn, 0x08);
-				spD6 = building->yCoord + S16_AT(spawn, 0x0A);
-				spCA = S16_AT(spawn, 0x04);
-				spC8 = S16_AT(spawn, 0x06);
+			for (j = buildingSpec->unk1A[3]; j != 0; j--, spawn--) {
+				spD8 = building->yCoord + spawn->unk8;
+				spD6 = building->yCoord + spawn->unkA;
+				spCA = spawn->unk4;
+				spC8 = spawn->unk6;
 				func_80116554_125504((s16) (building->unk8 & 3), &spCA, &spC8);
 				spCA += building->xCoord;
 				spC8 += building->zCoord;
@@ -11340,8 +11354,6 @@ block_273:
 	}
 
 block_301:
-#undef S16_AT
-#undef U8_AT
 	return 0;
 }
 #else
@@ -11420,7 +11432,7 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 				vehicle->unk3C = (s16)((f64)(vehicleSpecs[spawnData->unk6].unk61 << 8) * ((f64)spawnData->unkA / 100.0));
 
 				temp = vehicleSpecs[vehicle->unk1A].hitPoints;
-				vehicle->unk1C = (s16)((f64)(f32)temp * ((f64)*(s16 *)((u8 *)spawnData + 0x10) / 100.0));
+				vehicle->unk1C = (s16)((f64)(f32)temp * ((f64)spawnData->unk10 / 100.0));
 			}
 
 			spawnData--;
@@ -11466,7 +11478,7 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 							vehicle->unk3C = (s16)((f64)(vehicleSpecs[spawnData->unk6].unk61 << 8) * ((f64)spawnData->unkA / 100.0));
 
 							temp = vehicleSpecs[vehicleByI->unk1A].hitPoints;
-							vehicle->unk1C = (s16)((f64)(f32)temp * ((f64)*(s16 *)((u8 *)spawnData + 0x10) / 100.0));
+							vehicle->unk1C = (s16)((f64)(f32)temp * ((f64)spawnData->unk10 / 100.0));
 						}
 					}
 				}

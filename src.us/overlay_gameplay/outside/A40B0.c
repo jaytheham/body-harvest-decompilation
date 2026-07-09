@@ -198,7 +198,7 @@ void func_80095100_A40B0(s16 arg0, s16 arg1)
   else if (arg0 < 0x40)
   {
 	v0 = &D_8013CBC0[arg0];
-	v1 = ((((u8 *) D_801601F0) + (((((alienSpecs[D_8013CBA4].unk50 * 4) - alienSpecs[D_8013CBA4].unk50) * 4) - alienSpecs[D_8013CBA4].unk50) * 2)) + v0->unk8) - v0->unk4;
+	v1 = (u8 *)&D_801601F0[alienSpecs[D_8013CBA4].unk50] + v0->unk8 - v0->unk4;
   }
   else if (arg0 < 0x51)
   {
@@ -325,7 +325,7 @@ void func_80095530_A44E0(s16 arg0) {
 	} else if (arg0 < 0x40) {
 		entry = &D_8013CBC0_14BB70[arg0];
 		alienIndex = alienSpecs[D_8013CBA4_14BB54].unk50;
-		propPtr = (u8 *) D_801601F0 + (((alienIndex * 4 - alienIndex) * 4 - alienIndex) * 2) + (entry->unk8 - entry->unk4);
+		propPtr = (u8 *)&D_801601F0[alienIndex] + (entry->unk8 - entry->unk4);
 	} else if (arg0 < 0x51) {
 		entry = &D_8013CBC0_14BB70[arg0];
 		propPtr = (u8 *) alienSpecs + (((D_8013CBA4_14BB54 * 3 * 4) + D_8013CBA4_14BB54) * 8) + (entry->unk8 - entry->unk4);

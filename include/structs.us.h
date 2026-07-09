@@ -595,14 +595,14 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
-	/* 0x04 */ u8 unk4;
-	/* 0x05 */ u8 unk5;
-	/* 0x06 */ u8 unk6;
-	/* 0x07 */ u8 unk7;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ s16 unkA;
 	/* 0x0C */ u8 unkC;
-	/* 0x0D */ u8 padD[5];
+	/* 0x0D */ u8 unkD;
+	/* 0x0E */ s16 unkE;
+	/* 0x10 */ s16 unk10;
 	/* 0x12 */ u8 unk12;
 	/* 0x13 */ u8 unk13;
 	/* 0x14 */ u8 unk14;
@@ -1046,22 +1046,28 @@ typedef struct {
 // 0x6C Shadow X
 // 0x6D Shadow Z
 typedef struct {
-	/* 0x00 */ u8 pad0[0xC];
+	/* 0x00 */ u32 modelDL; // Model display list pointer
+	/* 0x04 */ u8 pad4[0x8];
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ u8 pad0E[0x8];
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 pad17;
 	/* 0x18 */ s32 unk18; // string table index for vehicle name
 	/* 0x1C */ s32 weapon1;
-	/* 0x20 */ u8 pad20[0x8];
+	/* 0x20 */ s16 gun1X;
+	/* 0x22 */ s16 gun1Y;
+	/* 0x24 */ s16 gun1Z;
+	/* 0x26 */ u8 pad26[0x2];
 	/* 0x28 */ s32 weapon2;
-	/* 0x2C */ u8 pad2C[0x6];
+	/* 0x2C */ s16 gun2X;
+	/* 0x2E */ s16 gun2Y;
+	/* 0x30 */ s16 gun2Z;
 	/* 0x32 */ u16 unk32;
 	/* 0x34 */ s16 unk34;
 	/* 0x36 */ s16 unk36;
 	/* 0x38 */ s16 unk38;
 	/* 0x3A */ u16 hitPoints;
-	/* 0x3C */ u8 pad3C[0x2];
+	/* 0x3C */ s16 arcOfFire;
 	/* 0x3E */ u8 unk3E;
 	/* 0x3F */ u8 pad3F;
 	/* 0x40 */ s16 unk40;
@@ -1073,11 +1079,16 @@ typedef struct {
 	/* 0x48 */ s16 unk48;
 	/* 0x4A */ u8 pad4A[0x2];
 	/* 0x4C */ u32 unk4C;
-	/* 0x50 */ u8 pad50[5];
+	/* 0x50 */ u8 launchAngle;
+	/* 0x51 */ u8 unk51;
+	/* 0x52 */ u8 pivotPoint;
+	/* 0x53 */ u8 detailProp;
+	/* 0x54 */ u8 unk54;
 	/* 0x55 */ u8 unk55;
 	/* 0x56 */ u8 pad56[2];
 	/* 0x58 */ u8 unk58;
-	/* 0x59 */ u8 pad59[0x3];
+	/* 0x59 */ u8 unk59;
+	/* 0x5A */ u8 pad5A[0x2];
 	/* 0x5C */ u8 unk5C;
 	/* 0x5D */ u8 unk5D;
 	/* 0x5E */ u8 unk5E;
@@ -1085,7 +1096,9 @@ typedef struct {
 	/* 0x60 */ u8 unk60;
 	/* 0x61 */ u8 unk61; // Max fuel (/ 0x100) ?
 	/* 0x62 */ u8 unk62;
-	/* 0x63 */ u8 pad63[0xD];
+	/* 0x63 */ u8 pad63[0x7];
+	/* 0x6A */ s16 unk6A;
+	/* 0x6C */ u8 pad6C[0x4];
 } VehicleSpec; /* size = 0x70 */
 
 typedef struct {
@@ -1232,7 +1245,8 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ s16 unkA;
-	/* 0x0C */ u8 padC[0x6];
+	/* 0x0C */ u8 padC[0x4];
+	/* 0x10 */ s16 unk10;
 } Unk80259490; /* size = 0x12 */
 
 typedef struct {
