@@ -2393,7 +2393,49 @@ void func_802DB390_2BD7C0(u8 arg0) {
     alien->unk6 = (s16)alien->unkE;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DB3F0_2BD820.s")
+void func_802DB3F0_2BD820(u8 arg0) {
+    AlienInstance *alien;
+
+    alien = &alienInstances[arg0];
+    if (!(alien->unk20 & 0x2000)) {
+        if (func_8011D2DC_12C28C(alien->unk0, alien->unk4) != -1) {
+            alien->unk20 |= 0x1000;
+        }
+    }
+    if (func_80084E54_93E04(D_80052B34, alien) < 0x5DC) {
+        func_800871CC_9617C(arg0, 0, 0);
+    }
+    if (alien->unk1E != 0) {
+        alien->unk1E--;
+    }
+    if (alien->unk2C != 0) {
+        alien->unk2C--;
+    } else {
+        s32 temp;
+
+        alien->unk2C = func_800038E0_44E0() % 8;
+        temp = func_800038E0_44E0();
+        func_800CC7B0_DB760(0x50,
+            *(s16 *)((u8 *)&D_8025668C + alien->specIndex * 0x68),
+            (u8)((temp % 6) + 6),
+            alien->unk0,
+            alien->unk2 + 0x28,
+            alien->unk4);
+        if (func_800038E0_44E0() % 10 != 0) {
+            func_801371B8_146168((s32)alien, 0x13F, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+        }
+    }
+    if (alien->unk20 & 0x80000000) {
+        s32 colorIdx;
+        u8 *colorTable;
+
+        colorIdx = func_800038E0_44E0() % 4;
+        colorTable = (u8 *)&D_802E2230_2C4660 + colorIdx * 3;
+        func_800CA5EC_D959C(alien->unk0, (s16)(alien->unk2 + 0x80), alien->unk4,
+            0, 0x7F, 0, 0x5A, 0xC, 0xA, 0xFF,
+            colorTable[0], colorTable[1], colorTable[2], 0x96);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DB620_2BDA50.s")
 

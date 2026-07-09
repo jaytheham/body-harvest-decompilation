@@ -3577,6 +3577,7 @@ extern u16 D_8025668C[];
 extern u16 D_802566BA[];
 extern Unk8014DD50 *D_802E21E0_2C4610;
 extern Unk8014DD50 *D_802E2228_2C4658;
+extern u8 D_802E2230_2C4660[];
 extern char D_802E2E90_2C52C0[];
 extern char D_802E2EB0_2C52E0[];
 extern char D_802E2EC8_2C52F8[];
