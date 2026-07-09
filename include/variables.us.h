@@ -1817,6 +1817,7 @@ extern u8 D_80254E80[]; // Tile palette data
 extern f64 D_802E0D78_2604B8;
 extern f64 D_802E3040_2C5470;
 extern f64 D_802E3048_2C5478;
+extern f32 D_802E3050_2C5480;
 extern f32 D_802E3054_2C5484;
 extern s32 D_802E1EE0_2C4310[];
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
