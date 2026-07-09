@@ -2594,7 +2594,29 @@ void func_802DB8D8_2BDD08(u8 arg0, s32 arg1, u8 arg2, s16 arg3, s16 arg4, s16 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DB8D8_2BDD08.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DBE28_2BE258.s")
+void func_802DBE28_2BE258(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
+    s16 sp2C[1];
+
+    if (alienInstances[arg0].unk20 & 0x1000) {
+        s32 var_v0;
+
+        if (alienInstances[arg0].unk20 & 0x04000000) {
+            sp2C[0] = arg2;
+            var_v0 = func_80081F18_90EC8(arg0, 1, 2, sp2C, &D_802E225C_2C468C);
+        } else {
+            sp2C[0] = arg3;
+            var_v0 = func_80081F18_90EC8(arg0, 1, 2, sp2C, &D_802E2280_2C46B0);
+        }
+        if ((var_v0 & 0xFF) == 2) {
+            alienInstances[arg0].unk20 &= ~0x1000;
+        }
+    } else if (alienInstances[arg0].unk20 & 0x2000) {
+        sp2C[0] = arg1;
+        if ((func_80081F18_90EC8(arg0, 1, 2, sp2C, &D_802E22A4_2C46D4) & 0xFF) == 2) {
+            alienInstances[arg0].unk20 &= ~0x2000;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DBF54_2BE384.s")
 
