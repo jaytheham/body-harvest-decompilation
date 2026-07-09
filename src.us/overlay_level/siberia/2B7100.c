@@ -2899,7 +2899,14 @@ s32 func_802DCC50_2BF080(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DCC50_2BF080.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD1D0_2BF600.s")
+void func_802DD1D0_2BF600(u8 arg0, s16 arg1) {
+    s32 temp;
+
+    *(s16 *)&temp = arg1;
+    if ((u8)func_80081F18_90EC8(arg0, 1, 2, (s16 *)&temp, &D_802E2788_2C4BB8) == 1) {
+        D_800481CE[arg0 * 0x50] = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD240_2BF670.s")
 
