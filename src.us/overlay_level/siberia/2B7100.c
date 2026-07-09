@@ -2788,7 +2788,116 @@ void func_802DCA14_2BEE44(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DCA14_2BEE44.s")
 #endif
 
+// CURRENT(10095)
+#ifdef NON_MATCHING
+s32 func_802DCC50_2BF080(u8 arg0) {
+    s16 sp96;
+    s16 sp8E;
+    s16 sp8C;
+    s16 sp8A;
+    s16 sp88;
+    s16 sp86;
+    s16 sp84;
+    s16 sp82;
+    s16 sp80;
+    s16 sp7E;
+    s16 sp7C;
+    s16 sp7A;
+    s16 sp78;
+    u8 sp77;
+    s32 sp70;
+    s32 sp6C;
+    s32 sp68;
+    f32 sp64;
+    f32 sp60;
+    s32 sp5C;
+    Unk8014DD50 *sp50;
+    Unk8014DD50 *sp4C;
+    AlienInstance *temp_s1;
+    Unk8014DD50 *temp_s0;
+    s16 temp_v0;
+    s8 temp_v1;
+    s8 temp_a0;
+    s8 temp_a2;
+    s8 temp_t0;
+    s8 temp_t1;
+    s8 temp_t4;
+    s8 temp_t5;
+    s8 temp_t2;
+    s8 temp_t3;
+
+    temp_s1 = &alienInstances[arg0];
+    sp5C = 0;
+    if (temp_s1->unk20 & 0x2000) {
+        temp_v0 = temp_s1->unkC;
+        temp_s0 = &D_8014DD50[temp_v0];
+        temp_v1 = temp_s0->unkC;
+        temp_a0 = D_8014DD50[temp_v1].unkC;
+        temp_a2 = D_8014DD50[temp_v1].unkD;
+        temp_t0 = D_8014DD50[temp_a2].unkD;
+        temp_t2 = D_8014DD50[temp_a0].unkC;
+        temp_t3 = D_8014DD50[temp_a2].unkC;
+        sp50 = &D_8014DD50[temp_t0];
+        temp_t1 = sp50->unkC;
+        sp4C = &D_8014DD50[temp_t1];
+        temp_t4 = sp50->unkD;
+        temp_t5 = D_8014DD50[temp_t4].unkC;
+        sp78 = temp_v0;
+        sp7A = temp_v1;
+        sp7C = temp_a0;
+        sp7E = temp_t2;
+        sp80 = temp_a2;
+        sp82 = temp_t3;
+        sp84 = temp_t0;
+        sp86 = temp_t1;
+        sp96 = D_8014DD50[temp_t1].unkC;
+        sp88 = sp96;
+        sp8A = temp_t4;
+        sp8C = temp_t5;
+        sp8E = D_8014DD50[temp_t5].unkC;
+        sp77 = func_80081F18_90EC8(arg0, 12, 4, &sp78, &D_802E2734_2C4B64);
+        if ((temp_s1->unk36 == 2) && (temp_s0->unkE == 2)) {
+            D_8014ED42 = func_800879A4_96954(arg0, 100, 0);
+            if (D_8014ED42 != 0) {
+                func_80122524_1314D4(D_80052B34, (s16)(D_8014619A * 4), temp_s1->unk0, temp_s1->unk4);
+                sp64 = (f32)((double)(f32)sins((temp_s1->unk6 + 0x4000) & 0xFFFF) / 32768.0);
+                sp60 = (f32)(-((double)(f32)coss((temp_s1->unk6 + 0x4000) & 0xFFFF) / 32768.0));
+                if (D_80052B34->unk1A == 0) {
+                    func_80102DDC_111D8C(D_80052B34, temp_s1->unk6, 0, 100.0f);
+                    func_80137468_146418(arg0, 0x134);
+                    func_80137468_146418(arg0, 2);
+                    if ((D_80031420_32020 & 3) == 3) {
+                        func_800CA5EC_D959C(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, (s8)(s32)(sp64 * 127.0f), -0x50, (s32)(sp60 * 127.0f), 0xB4, 5, 0x10, 0x80, 0xFF, 0, 0, 0xFF);
+                    }
+                } else {
+                    func_80102DDC_111D8C(D_80052B34, temp_s1->unk6, 0, 60.0f);
+                    func_80137468_146418(arg0, 0x135);
+                    func_800C541C_D43CC(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, (s8)(s32)(sp64 * 127.0f), -0x50, (s32)(sp60 * 127.0f), 0xB4, 0xFF, 0x28, 0x14, 0xFF, 0xFF, 0xC8);
+                }
+                sp5C = 1;
+            } else {
+                func_80137468_146418(arg0, 0x134);
+            }
+        }
+        if (sp77 == 1) {
+            func_80128428_1373D8(temp_s1, 0x3C, -0x32, 0x8A, &sp70, &sp6C, &sp68);
+            func_800DEA08_ED9B8((s16)(sp70 >> 16), (s16)sp6C, (s16)(sp68 >> 16), 0xC8, 5, 0, 0x28, 0xC8, 0xE1, 0xE1, 0xE1);
+        }
+        func_80128428_1373D8(temp_s1, (s16)(D_8014DD50[sp96].unk0 + sp50->unk0 + sp4C->unk0), (s16)(D_8014DD50[sp96].unk2 + sp50->unk2 + sp4C->unk2), (s16)(D_8014DD50[sp96].unk4 + sp50->unk4 + sp4C->unk4), &sp70, &sp6C, &sp68);
+        if ((D_802E2764_2C4B94 == 0) && (sp6C < (func_800B84D0_C7480((s16)(sp70 >> 16), (s16)(sp68 >> 16)) >> 8))) {
+            D_802E2764_2C4B94 = 1;
+            func_800DEA08_ED9B8((s16)(sp70 >> 16), (s16)sp6C, (s16)(sp68 >> 16), 0xC8, 5, 0, 0x28, 0xC8, 0xE1, 0xE1, 0xE1);
+        }
+        if (sp77 == 4) {
+            temp_s1->unk20 &= ~0x2000;
+            D_802E2764_2C4B94 = 0;
+        }
+    }
+    return sp5C;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DCC50_2BF080.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD1D0_2BF600.s")
 

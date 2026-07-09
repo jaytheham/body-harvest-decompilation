@@ -3592,5 +3592,7 @@ extern char D_802E2EF8_2C5328[];
 extern char D_802E2F04_2C5334[];
 extern char D_802E2F3C_2C536C[];
 extern s16 D_802E309C;
+extern Unk8014DD50 *D_802E2734_2C4B64;
+extern s32 D_802E2764_2C4B94;
 
 #endif
