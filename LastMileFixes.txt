@@ -1,0 +1,2 @@
+Removing temporary variables, even when that means replacing them with repeated array/struct accesses.
+Rearranging variable declartion order.
