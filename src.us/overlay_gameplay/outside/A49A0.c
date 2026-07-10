@@ -1911,7 +1911,7 @@ block_100:
 	}
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-	var_s0_4 = D_8004D0F8;
+	var_s0_4 = &alienInstances[0xFE];
 	spA0 = sp2E8 & 0x20;
 	var_s1 = 0xFE;
 	do {

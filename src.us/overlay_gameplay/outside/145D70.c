@@ -580,7 +580,7 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 					temp_s0_21->unk4);
 				return;
 			case 0x21:
-				func_80014A3C_1563C(&D_80048BE8, 0xB7, 0, 0, -1.0f);
+				func_80014A3C_1563C((s32)&alienInstances[33], 0xB7, 0, 0, -1.0f);
 				return;
 			case 0x22:
 				temp_s0_22 = &alienInstances[arg0];

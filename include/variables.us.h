@@ -820,12 +820,7 @@ extern s32 D_80048188;
 extern s32 D_8004818C;
 extern s32 D_80048190;
 extern s32 D_80048194;
-extern AlienInstance alienInstances[]; // 0x80048198
-extern s16 D_800481A4[];
-extern s16 D_800481AA[];
-extern u8 D_800481CE[];
-extern s32 D_80048BE8;
-extern AlienInstance D_8004D0F8[]; // alien array base
+extern AlienInstance alienInstances[0xFE]; // 0x80048198
 extern s32 D_8004D148; // is Snared cheat disabled
 extern s32 D_8004D14C;
 extern s32 D_8004D150;

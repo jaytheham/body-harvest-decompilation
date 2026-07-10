@@ -6754,9 +6754,9 @@ void func_80088760_97710(AlienInstance* alien) {
 				flags = target->unk20;
 				if (!(flags & 0x100000)) {
 					target->unk20 = flags | 0x40004000;
-					D_800481A6[alien->unk24 * 0x28] = func_800038E0_44E0();
-					D_800481AA[alien->unk24 * 0x28] = func_800038E0_44E0() >> 6;
-					D_800481A8[alien->unk24 * 0x28] = (func_800038E0_44E0() >> 8) + 0x200;
+					alienInstances[alien->unk24].unkE = (s16)func_800038E0_44E0();
+					alienInstances[alien->unk24].unk12 = (s16)(func_800038E0_44E0() >> 6);
+					alienInstances[alien->unk24].unk10 = (s16)((func_800038E0_44E0() >> 8) + 0x200);
 					alienInstances[alien->unk24].unk2C = 0x64;
 				}
 			}

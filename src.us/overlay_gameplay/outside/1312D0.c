@@ -767,7 +767,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 		}
 	}
 
-	alien = (AlienInstance *)&D_8004D0F8;
+	alien = &alienInstances[0xFE];
 	for (count = 0xFE; count != 0; count--) {
 		s32 dx;
 		s32 dy;
@@ -1800,7 +1800,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 		}
 	}
 
-	alien = &D_8004D0F8[0];
+	alien = &alienInstances[0xFE];
 	vehicleCount = 0xFE;
 	while (vehicleCount != 0) {
 		if ((arg0 != alien) && (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0)
@@ -2088,7 +2088,7 @@ void func_80127F9C_136F4C(s16 arg0, s16 arg1, s16 arg2) {
 		}
 	}
 	
-	alien = (AlienInstance *)&D_8004D0F8;
+	alien = &alienInstances[0xFE];
 	offset = arg2 * 0x18;
 	count = 0xFE;
 	
@@ -2322,7 +2322,7 @@ building = &D_80145BE0_154B90[arg0->unk20];
 			}
 		}
 
-		alien = (AlienInstance *)&D_8004D0F8;
+		alien = &alienInstances[0xFE];
 		for (instId = 0xFE; instId != 0; instId--) {
 			if (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0) {
 				alienSpec = &alienSpecs[alien->specIndex];
@@ -3351,7 +3351,7 @@ void func_8012B26C_13A21C(void) {
 			s16 alienIdx;
 			AlienInstance *alien;
 
-			alien = &D_8004D0F8[0];
+			alien = &alienInstances[0xFE];
 			for (alienIdx = 0xFE; (alienIdx != 0) && (alive != 0); alienIdx--, alien++) {
 				AlienSpec *alienSpec;
 				s16 testY;
@@ -3471,7 +3471,7 @@ void func_8012B26C_13A21C(void) {
 
 		if (deferredAlien != -1) {
 			alive = 0;
-			func_80124C40_133BF0((VehicleInstance *)&D_8004D0F8[deferredAlien], 0, (s16)projectile->unk0, (s16)projectile->unk8);
+			func_80124C40_133BF0((VehicleInstance *)&alienInstances[0xFE + deferredAlien], 0, (s16)projectile->unk0, (s16)projectile->unk8);
 		}
 
 		if (alive == 0) {

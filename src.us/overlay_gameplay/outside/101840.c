@@ -3631,7 +3631,7 @@ void func_800FB504_10A4B4(void) {
 	if (D_80159048 == 0) {
 		bestScore = 0x17E8;
 		for (i = 0xFE; i != 0; i--) {
-			scanAlien = (CameraAlienRef *) &D_8004D0F8[i];
+			scanAlien = (CameraAlienRef *) &alienInstances[0xFE + i];
 
 			if (scanAlien->unk1A >= 2) {
 				u16 angleDiff;

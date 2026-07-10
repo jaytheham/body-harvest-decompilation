@@ -1645,7 +1645,7 @@ void func_8009FB58_AEB08(void) {
 	gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 15);
 	gDPPipeSync(D_8005BB2C++);
 
-	alien = (AlienInstance *)D_8004D0F8;
+	alien = &alienInstances[0xFE];
 	{
 		s32 i;
 		for (i = 0xFE; i != 0; i--) {

@@ -787,7 +787,7 @@ void func_800AFE68_BEE18(Unk80222A78 *arg0) {
 		sp20 = (s32) alienInstances[arg0->unk8].unk4;
 		temp = coss(alienInstances[arg0->unk8].unkE);
 		sp24 = (s32) ((f64) sp24 - (400.0 * ((f64) (f32) temp / 32768.0)));
-		temp = sins(*(&D_800481A6 + arg0->unk8 * 0x28));
+		temp = sins(alienInstances[arg0->unk8].unkE);
 		sp22 = (s16) (s32) ((f64) sp20 - (400.0 * ((f64) (f32) temp / 32768.0)));
 		func_800AFB38_BEAE8((s16) sp24, sp22, arg0->unk9, arg0->unk8, 0);
 	}

@@ -3032,7 +3032,7 @@ void func_802DD1D0_2BF600(u8 arg0, s16 arg1) {
 
 	*(s16 *)&temp = arg1;
 	if ((u8)func_80081F18_90EC8(arg0, 1, 2, (s16 *)&temp, &D_802E2788_2C4BB8) == 1) {
-		D_800481CE[arg0 * 0x50] = 0;
+		alienInstances[arg0].unk36 = 0;
 	}
 }
 
