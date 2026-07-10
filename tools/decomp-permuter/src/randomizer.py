@@ -80,6 +80,10 @@ PROB_KEEP_REPLACED_VAR = 0.2
 # Change the return type of an external function to void with this probability.
 PROB_RET_VOID = 0.2
 
+# When wrapping a range of statements in an `if (variable)` statement, probability
+# of generating `if (variable1 || variable2)`.
+PROB_VAR_COND_BLOCK_OR = 0.25
+
 # Number larger than any node index. (If you're trying to compile a 1 GB large
 # C file to matching asm, you have bigger problems than this limit.)
 MAX_INDEX = 10**9
@@ -2401,6 +2405,89 @@ def perm_inline(
     ast.ext.insert(ast.ext.index(fn), fn_def)
 
 
+def perm_var_cond_block(
+    fn: ca.FuncDef, ast: ca.FileAST, indices: Indices, region: Region, random: Random
+) -> None:
+    """Wrap a random range of statements within `if (variable) { ... }` or
+    `if (struct.member)` and duplicate them in the else block. This can force
+    the compiler to emit a useless move.
+    Control flow can have remote effects, so this mostly ignores the region
+    restriction."""
+    cands: List[Block] = []
+
+    def rec(block: Block) -> None:
+        cands.append(block)
+        for stmt in ast_util.get_block_stmts(block, False):
+            ast_util.for_nested_blocks(stmt, rec)
+
+    rec(fn.body)
+    block = random.choice(cands)
+    stmts = ast_util.get_block_stmts(block, True)
+
+    # Split the statements into streaks of simple statements that can be duplicated.
+    streaks: List[Tuple[int, int]] = []
+    streak_start = 0
+    for i, stmt in enumerate(stmts):
+        if isinstance(
+            stmt,
+            (
+                ca.If,
+                ca.For,
+                ca.While,
+                ca.DoWhile,
+                ca.Switch,
+                ca.Label,
+                ca.Case,
+                ca.Default,
+                ca.Compound,
+                ca.Decl,
+                ca.Typedef,
+                ca.Pragma,
+            ),
+        ):
+            streaks.append((streak_start, i))
+            streak_start = i + 1
+    streaks.append((streak_start, len(stmts)))
+    streaks = [(i, j) for i, j in streaks if i != j]
+
+    ensure(streaks)
+    lo, hi = random.choice(streaks)
+
+    new_block = ca.Compound(block_items=stmts[lo:hi])
+
+    cand_exprs: List[Expression] = [
+        expr
+        for expr in get_block_expressions(fn.body, region)
+        if isinstance(expr, (ca.StructRef, ca.ID))
+    ]
+    ensure(cand_exprs)
+    expr = random.choice(cand_exprs)
+    ensure(not ast_util.is_effectful(expr))
+    typemap = build_typemap(ast, fn)
+
+    def make_cond(expr: Expression) -> Expression:
+        type: Type = resolve_typedefs(decayed_expr_type(expr, typemap), typemap)
+        if isinstance(type, ca.TypeDecl) and isinstance(
+            type.type, (ca.Struct, ca.Union)
+        ):
+            expr = ca.UnaryOp("&", expr)
+        return copy.deepcopy(expr)
+
+    cond = make_cond(expr)
+
+    # `if (variable1 || variable2)` seems to help sometimes.
+    if random_bool(random, PROB_VAR_COND_BLOCK_OR):
+        cand_exprs = [e for e in cand_exprs if not ast_util.equal_ast(e, expr)]
+        ensure(cand_exprs)
+        expr2 = random.choice(cand_exprs)
+        if not ast_util.is_effectful(expr2):
+            cond = ca.BinaryOp("||", cond, make_cond(expr2))
+
+    stmts[lo:hi] = [
+        ca.If(cond=cond, iftrue=new_block, iffalse=copy.deepcopy(new_block))
+    ]
+
+
 RandomizationPass = Callable[[ca.FuncDef, ca.FileAST, Indices, Region, Random], None]
 
 RANDOMIZATION_PASSES: List[RandomizationPass] = [
@@ -2437,6 +2524,7 @@ RANDOMIZATION_PASSES: List[RandomizationPass] = [
     perm_long_chain_assignment,
     perm_pad_var_decl,
     perm_inline,
+    perm_var_cond_block,
 ]
 
 
