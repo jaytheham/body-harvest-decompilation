@@ -212,7 +212,7 @@ s32 func_8008D0E0_9C090(u8 arg0) {
 	func_800FB430_10A3E0(D_80052B34, 0.0f);
 
 	tempPtr = &D_8014ECE4;
-	if (((*tempPtr < 0) && (D_8004758A > 0)) || ((*tempPtr > 0) && (D_8004758A < 0))) {
+	if (((*tempPtr < 0) && (currentControllerStates[0].stick_x > 0)) || ((*tempPtr > 0) && (currentControllerStates[0].stick_x < 0))) {
 		D_8014ECE0++;
 		if (D_80031420 & 3) {
 			randVal = func_800038E0_44E0();
@@ -234,7 +234,7 @@ s32 func_8008D0E0_9C090(u8 arg0) {
 		}
 	}
 
-	if (D_8014ECE4 != (tempVar = D_8004758A)) {
+	if (D_8014ECE4 != (tempVar = currentControllerStates[0].stick_x)) {
 		inst->unkE += tempVar << 6;
 	}
 	D_8014ECE4 = tempVar;

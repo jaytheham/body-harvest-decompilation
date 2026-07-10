@@ -1448,7 +1448,7 @@ loop_29:
 				if (D_8014ED2C == 0) {
 					*((f32 *)((u8 *)(var_s3) + (8))) = temp_f16;
 					*((f32 *)((u8 *)(var_s3) + (0xC))) = sp28C;
-					if ((sp284 == 1) && ((D_8004758A < -1) || (D_8004758A >= 2) || (D_8004758B < -1) || (D_8004758B >= 2))) {
+					if ((sp284 == 1) && ((currentControllerStates[0].stick_x < -1) || (currentControllerStates[0].stick_x >= 2) || (currentControllerStates[0].stick_y < -1) || (currentControllerStates[0].stick_y >= 2))) {
 						sp284 = 0;
 					}
 				} else {

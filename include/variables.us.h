@@ -697,10 +697,6 @@ extern OSThread D_800433C8;
 extern Unk80047578 D_80047578;
 extern s32 D_80047584;
 extern OSContPad currentControllerStates[4]; // 0x80047588
-extern s8 D_8004758A;
-extern s8 D_8004758B;
-extern u16 D_8004758E;
-extern s8 D_80047590;
 extern OSContPad D_800475A0[4]; // When button is held these values sometimes reset to 0 next frame?
 extern OSContPad D_800475B8[4];
 extern OSContPad D_800475D0;

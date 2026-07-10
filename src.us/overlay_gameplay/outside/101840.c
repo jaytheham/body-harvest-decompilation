@@ -3596,12 +3596,12 @@ void func_800FB504_10A4B4(void) {
 		inputButtons = currentControllerStates[0].button;
 		if ((hasPitch || (spec->unk4C & 0x00080000)) && ((inputButtons & 0x10) || ((currentLevel == 2) && (D_80052B34->unk1A == 1)))) {
 			if (hasPitch) {
-				pitchClamp -= (D_8004758A * D_8004758A * D_8004758A) >> 8;
+				pitchClamp -= (currentControllerStates[0].stick_x * currentControllerStates[0].stick_x * currentControllerStates[0].stick_x) >> 8;
 			} else {
 				pitchClamp = 0;
 			}
 
-			tmp = (D_8004758B * D_8004758B * D_8004758B) >> 9;
+			tmp = (currentControllerStates[0].stick_y * currentControllerStates[0].stick_y * currentControllerStates[0].stick_y) >> 9;
 			if (D_80031420_32020 & 4) {
 				yaw += tmp;
 			} else {
@@ -4697,10 +4697,10 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1) {
 		yaw = vehicle->unk6 + 0x4000;
 		halfSpecUnk36 += 0x24;
 		halfSpecUnk34 += 0x24;
-		if (D_8004758A < 0) {
+		if (currentControllerStates[0].stick_x < 0) {
 			halfSpecUnk34 = -halfSpecUnk34;
 		}
-		if ((D_8004758A >= 0) && (halfSpecUnk34 < 0)) {
+		if ((currentControllerStates[0].stick_x >= 0) && (halfSpecUnk34 < 0)) {
 			halfSpecUnk34 = -halfSpecUnk34;
 		}
 
@@ -6756,15 +6756,15 @@ void func_801047C8_113778(VehicleInstance *arg0, OSContPad *arg1) {
 				absStickX = stickX;
 			}
 
-			tempS8 = -D_80047590;
+			tempS8 = -currentControllerStates[1].stick_x;
 			D_80158E5C = (f32)(((f64)(f32)(absStickX * stickX) / D_80144B30_153AE0[0]) * (f64)maxSteer);
 
-			if (D_80047590 >= 0) {
-				tempS8 = D_80047590;
+			if (currentControllerStates[1].stick_x >= 0) {
+				tempS8 = currentControllerStates[1].stick_x;
 			}
 
 			if (tempS8 >= 0xB) {
-				negInput = -D_80047590;
+				negInput = -currentControllerStates[1].stick_x;
 				arg0->unk28 += (s16)((((negInput << 4) - negInput) << 2) - negInput);
 			}
 
@@ -7667,7 +7667,7 @@ void func_801081F0_1171A0(VehicleInstance *arg0, VehicleSpec *arg1) {
 					if ((currentLevel == 4) && (arg0->unk1A == 0xE)) {
 						absTurnLimit = 0x10;
 					}
-					D_80159230 = (s16) (absTurnLimit * D_8004758B);
+					D_80159230 = (s16) (absTurnLimit * currentControllerStates[0].stick_y);
 				}
 
 				coss((u16) (-arg0->unkA - D_80159230));
