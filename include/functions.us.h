@@ -1670,5 +1670,6 @@ void func_802D4F1C_2B734C(void);
 void func_802D5754_2B7B84(void);
 s32 func_802D7398_2B97C8(void);
 void func_802D9FB4_2BC3E4(u8 arg0);
+void func_802E0298_2C26C8(u8 arg0);
 
 #endif
