@@ -1,9 +1,5 @@
 #include <ultra64.h>
-
-#define func_8008EB20_5EFD0 HIDDEN_func_8008EB20_5EFD0
 #include "common.h"
-#undef func_8008EB20_5EFD0
-s16 func_8008EB20_5EFD0(s32, s32, s32);
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 void func_802D6A70_2B8EA0(void);
