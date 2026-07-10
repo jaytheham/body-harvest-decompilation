@@ -11451,57 +11451,46 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80112A98_121A48.s")
 #endif
 
-// CURRENT(40)
-#ifdef NON_MATCHING
-void func_80112F98_121F48(void) {
+void func_80112F98_121F48(void)
+{
 	VehicleInstance *vehicle;
 	s32 i;
 	f64 scale;
 	u16 angle;
 	s16 yawCos;
-
-	scale = D_80144D68_153D18;
-	vehicle = &D_80050A74;
-
+	scale = D_80144D68_153D18[0];
+	vehicle = &D_80050A74; // Surely this should be = &vehicles[i] inside the loop
 	i = 0x7F;
-	do {
-		if ((vehicle->unk1A == 0x11) && !(vehicle->unk20 & 0x8000)) {
-			if (vehicle->unk1E >= 0x100) {
+	do
+	{
+		if ((vehicle->unk1A == 0x11) && (!(vehicle->unk20 & 0x8000)))
+		{
+			if (vehicle->unk1E >= 0x100)
+			{
 				goto loop_update_end;
 			}
-
 			vehicle->unk1E++;
 			vehicle->unkE += 0x3AF;
-			func_800FB430_10A3E0(vehicle, (f32)((f64)vehicle->unk1E * scale));
-
+			func_800FB430_10A3E0(vehicle, (f32)((vehicle->unk1E) * scale));
 			vehicle->unk10 += 0x66;
-			vehicle->unk8 += 0x51E;
 			vehicle->unk6 = vehicle->unkE;
 			vehicle->unkA = vehicle->unk10 * 5;
-
+			vehicle->unk8 += 0x51E;
 			angle = (u16)(vehicle->unkE + 0x4000);
 			yawCos = coss(angle);
-			func_800FB3C4_10A374(vehicle,
-				(f32)((((f64)(f32)coss((u16)vehicle->unk10) / 32768.0) * ((f64)(f32)yawCos / 32768.0)) * (f64)vehicle->unk58));
-			func_800FB3E8_10A398(vehicle, (f32)(((f64)(f32)sins((u16)vehicle->unk10) / 32768.0) * (f64)vehicle->unk58));
-
+			func_800FB3C4_10A374(vehicle, (f32)((((((f32)coss((u16)vehicle->unk10))) / 32768.0) * ((((f32)yawCos)) / 32768.0)) * ((f64)vehicle->unk58)));
+			func_800FB3E8_10A398(vehicle, (f32)(((((f32)sins((u16)vehicle->unk10))) / 32768.0) * (vehicle->unk58)));
 			angle = (u16)(vehicle->unkE + 0x4000);
 			yawCos = sins(angle);
-			func_800FB40C_10A3BC(vehicle,
-				(f32)((((f64)(f32)coss((u16)vehicle->unk10) / 32768.0) * ((f64)(f32)yawCos / 32768.0)) * (f64)vehicle->unk58));
+			func_800FB40C_10A3BC(vehicle, (f32)((((((f32)coss((u16)vehicle->unk10))) / 32768.0) * ((((f32)yawCos)) / 32768.0)) * ((f64)vehicle->unk58)));
 		}
-
 		func_801098E8_118898(vehicle);
 		func_80109B74_118B24(vehicle);
-
 	loop_update_end:
-
 		vehicle--;
+
 	} while (i--);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80112F98_121F48.s")
-#endif
 
 void func_801131D4_122184(VehicleInstance *arg0) {
 	func_800FB44C_10A3FC(arg0, D_80159194);
