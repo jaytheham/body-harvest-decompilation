@@ -756,14 +756,14 @@ void func_800AFD48_BECF8(Unk80222A78 *arg0) {
 	tmp.unk0 = 2;
 	tmp.unkC = func_800AFBF8_BEBA8;
 	tmp.unk9 = waveIdx;
-	if (arg0->unk0 == 1 && *(&D_8003BCC6 + (s8)D_80223780[waveIdx].waveSpecId * 0x60) != 0x19) {
+	if (arg0->unk0 == 1 && D_8003BCC0[(s8)D_80223780[waveIdx].waveSpecId][0].alienSpecId != 0x19) {
 		tmp.unk1 = arg0->unk1;
 		tmp.unk2 = arg0->unk2;
 		tmp.pad3 = arg0->pad3;
 	} else {
 		tmp.pad3 = 0;
 	}
-	if (*(&D_8003BCC6 + (s8)D_80223780[waveIdx].waveSpecId * 0x60) == 0x19) {
+	if (D_8003BCC0[(s8)D_80223780[waveIdx].waveSpecId][0].alienSpecId == 0x19) {
 		func_8001A650_1B250(0x17);
 		func_800BECE0_CDC90();
 	}

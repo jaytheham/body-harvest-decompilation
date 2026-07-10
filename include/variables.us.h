@@ -3,8 +3,6 @@
 
 #include "PR/sched.h"
 
-
-
 extern u8 D_040A6650[];
 extern u8 D_040A8F70[];
 extern u8 D_040AAE40[];
@@ -284,7 +282,6 @@ extern f32 D_80032430_33030[];
 extern f32 D_80032A78_33678[];
 extern f32 D_80032D88_33988;
 extern WeaponLevelSpec D_80032EB8_33AB8[][21];
-extern s16 D_80032EBA_33ABA[];
 extern WeaponLevelSpec D_800330B0_33CB0[][21];
 extern s16 D_80033A68_34668[][16];
 extern s16 D_80033A74_34674[];
@@ -656,7 +653,6 @@ extern char D_80038614_39214; /* osSyncPrintf format string */
 extern char D_80038618_39218; /* osSyncPrintf format string */
 extern char D_8003BAE0;
 extern AlienWaveEntry D_8003BCC0[][12];
-extern u8 D_8003BCC6;
 extern Unk_8003CEC0 D_8003CEC0[5];
 extern u8 D_8003CEC6[];
 extern u16 D_8003D000_3DC00[];
@@ -3072,6 +3068,7 @@ extern u8 D_80265880[];
 extern u8 D_80265A80[];
 extern u8 D_80266E80[];
 extern s16 D_80267080[];
+extern s16 FrameBufferB[]; // 0x8028C880
 extern s32 D_802B2080;
 extern u8 D_802C2080[];
 extern u8 D_802C4080[];
@@ -3356,27 +3353,18 @@ extern u8 D_D03E780[];
 extern char D_E020FB0[];
 extern char D_E020FF0[];
 extern char D_E021030[];
-extern s16 FrameBufferB[];
 extern s32 __additional_scanline;
 extern s32 __osActiveQueue2;
 extern s32 __osCurrentTime;
 extern OSMesgQueue __osSiAccessQueue;
 extern s32 __osSiAccessQueueEnabled;
-
 extern s32 gzip_data_0000;
-
-
 extern u32 jtbl_801411A8[];
 extern s32 leomecha_bss_0004;
-
-
 extern OSMesg siacs_bss_0000;
-
-
 extern struct { s32 w; u16 h; } D_802E0CC4_1F99D4;
 extern struct { s32 w; u16 h; } D_802E0CCC_1F99DC;
 extern struct { s32 w; u16 h; } D_802E0CD4_1F99E4;
 extern struct { s32 w; u16 h; } D_802E0CDC_1F99EC;
-
 
 #endif
