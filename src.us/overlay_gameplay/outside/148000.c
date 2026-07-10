@@ -398,11 +398,11 @@ void func_80139BF8_148BA8(void) {
 		hudWeaponItems[D_801601CC].weaponSlot = 0;
 		D_801601CC = 1;
 	}
-	if (D_80048139 >= 2) {
+	if (weaponSlots[1] >= 2) {
 		hudWeaponItems[D_801601CC].weaponSlot = 1;
 		D_801601CC += 1;
 	}
-	if (D_8004813A >= 2) {
+	if (weaponSlots[2] >= 2) {
 		hudWeaponItems[D_801601CC].weaponSlot = 2;
 		D_801601CC += 1;
 	}
@@ -451,12 +451,12 @@ void func_80139D58_148D08(void) {
 			D_801601CC = 1;
 		}
 
-		if (D_80048139 >= 0xD) {
+		if (weaponSlots[1] >= 0xD) {
 			hudWeaponItems[D_801601CC].weaponSlot = 1;
 			D_801601CC++;
 		}
 
-		if (D_8004813A >= 0xD) {
+		if (weaponSlots[2] >= 0xD) {
 			hudWeaponItems[D_801601CC].weaponSlot = 2;
 			D_801601CC++;
 		}
@@ -490,8 +490,8 @@ void func_80139D58_148D08(void) {
 
 	if ((D_80257A4C[mode].unk0 << 5) < 0) {
 		slot0 = weaponSlots[0];
-		slot1 = D_80048139;
-		slot2 = D_8004813A;
+		slot1 = weaponSlots[1];
+		slot2 = weaponSlots[2];
 		mode = 3;
 
 		if ((slot0 >= 2) && (slot0 < 6)) {
@@ -535,8 +535,8 @@ void func_80139D58_148D08(void) {
 		}
 	} else {
 		slot0 = weaponSlots[0];
-		slot1 = D_80048139;
-		slot2 = D_8004813A;
+		slot1 = weaponSlots[1];
+		slot2 = weaponSlots[2];
 		mode = 3;
 
 		if ((slot0 == 0xB) || (slot0 == 0xC)) {

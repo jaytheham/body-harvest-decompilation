@@ -797,8 +797,6 @@ extern u8 D_80048030; // Current objective
 extern s32 showDemoText; // 0x80048034
 extern u8 D_80048038[];
 extern u8 weaponSlots[7]; // 80048138
-extern u8 D_80048139;
-extern u8 D_8004813A;
 extern u8 D_8004813F;
 extern s16 D_80048140[];
 extern s16 D_80048156;
