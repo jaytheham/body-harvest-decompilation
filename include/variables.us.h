@@ -299,6 +299,7 @@ extern u8 D_80154238;
 extern u16 D_802571B2;
 extern s16 D_802571B6;
 extern s16 D_802571B8;
+extern s16 D_802571BA;
 extern s16 D_802571D0;
 extern s16 D_800313FC; // World fog far distance
 extern s32 D_800949D0_64E80;
@@ -3600,6 +3601,7 @@ extern char D_802E2EC8_2C52F8[];
 extern char D_802E2EF8_2C5328[];
 extern char D_802E2F04_2C5334[];
 extern char D_802E2F3C_2C536C[];
+extern f64 D_802E3068_2C5498;
 extern s16 D_802E309C;
 extern Unk8014DD50 *D_802E2734_2C4B64;
 extern s32 D_802E2764_2C4B94;
