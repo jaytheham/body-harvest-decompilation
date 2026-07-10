@@ -10443,65 +10443,54 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010FAFC_11EAAC.s")
 #endif
 
-// CURRENT(180)
-#ifdef NON_MATCHING
-s32 func_8010FF84_11EF34(VehicleInstance *arg0, s32 arg1) {
+s32 func_8010FF84_11EF34(VehicleInstance *arg0, s32 arg1)
+{
 	AlienInstance *alien;
-	AlienSpec *spec;
 	s32 i;
-	s32 mask;
-	s32 specMin;
-	s32 specMax;
-	s32 stride;
-	s32 special;
 	s32 *noLog;
-
-	spec = alienSpecs;
-	alien = D_8004D0F8;
+	AlienSpec *spec;
 	i = 0xFF;
-	mask = 0x100000;
-	specMin = 0x1A;
-	specMax = 0x1B;
-	stride = 0x68;
-	special = 0x20;
 	noLog = &arg1;
-	while (i--) {
-		if (alien->unk20 & 0x600) {
-			if (!(alien->unk20 & mask) || alien->specIndex == specMin || alien->specIndex == specMax) {
-				if (spec[alien->specIndex].unk54 & 8) {
-					if (func_8007E608_8D5B8(alien, arg0)) {
-						if (func_8010E684_11D634(arg0, alien)) {
-							if (alien->specIndex < 3 || alien->specIndex == special) {
-								if (!*noLog) {
-									func_80080D98_8FD48(
-										(alien - alienInstances) & 0xFF,
-										(arg0 - vehicleInstances) & 0xFF
-									);
-								}
-							} else {
-								if (!*noLog) {
-									func_8010FAC8_11EA78(7, (s32)alien);
-								}
-								if (!(arg0->unk20 & 2)) {
-									return 6;
-								}
-								if (!*noLog) {
-									func_8010FAC8_11EA78(1, (s32)alien);
-								}
-								return 4;
-							}
-						}
+	while (i--)
+	{
+		alien = &alienInstances[i];
+		if (alien->unk20 & 0x600 &&
+			(((!(alien->unk20 & 0x100000)) || (alien->specIndex == 0x1A)) || (alien->specIndex == 0x1B)))
+		{
+			spec = &alienSpecs[alien->specIndex];
+			if ((spec->unk54 & 8) &&
+				(func_8007E608_8D5B8(alien, arg0)) &&
+				(func_8010E684_11D634(arg0, alien)))
+			{
+				if ((alien->specIndex < 3) || (alien->specIndex == 0x20))
+				{
+					if (!arg1)
+					{
+						func_80080D98_8FD48((alien - alienInstances), (u8)(arg0 - vehicleInstances));
 					}
+				}
+				else
+				{
+					if (!arg1)
+					{
+						func_8010FAC8_11EA78(7, (s32)alien);
+					}
+					if (!(arg0->unk20 & 2))
+					{
+						return 6;
+					}
+					if (!arg1)
+					{
+						func_8010FAC8_11EA78(1, (s32)alien);
+					}
+					return 4;
 				}
 			}
 		}
-		alien--;
 	}
+
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010FF84_11EF34.s")
-#endif
 
 // CURRENT(1710)
 #ifdef NON_MATCHING
