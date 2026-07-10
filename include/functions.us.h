@@ -112,6 +112,7 @@ void func_8007C7E0_1648A0(void);
 void func_8007FBD0_167C90(void);
 void func_80082AA0_16AB60(void);
 void func_8008B0AC_17316C(void);
+void func_8008B108_9A0B8(u8 arg0);
 void func_800074F4_80F4(void);
 void func_80007548_8148(void);
 void func_80007728_8328(u8 *, s16 *, s16 *);
@@ -1458,6 +1459,7 @@ void func_800A92B0_B8260(void);
 void func_800AA340_B92F0(u8 arg0);
 void func_80128288_137238(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_80128428_1373D8(AlienInstance *arg0, s16 arg1, s16 arg2, s16 arg3, s32 *arg4, s32 *arg5, s32 *arg6);
+void func_802DEDE4_2C1214(u8 arg0);
 void func_8012B21C_13A1CC(void);
 s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 void func_800C7E18_D6DC8(void);
@@ -1669,5 +1671,6 @@ void func_802D4F1C_2B734C(void);
 void func_802D5754_2B7B84(void);
 s32 func_802D7398_2B97C8(void);
 void func_802D9FB4_2BC3E4(u8 arg0);
+void func_802E0298_2C26C8(u8 arg0);
 
 #endif
