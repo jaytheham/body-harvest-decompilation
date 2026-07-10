@@ -210,7 +210,6 @@ extern s32 D_8015FF88;
 extern s32 D_8015FF90[];
 extern u8 D_8025CC20[];
 extern u8 D_802C4080[];
-
 extern s16 D_8013BB6C_14AB1C[];
 extern s16 D_8013BB8C_14AB3C[];
 extern s16 D_8013BC0C_14ABBC[16];
@@ -251,7 +250,6 @@ extern s16 D_801575E4;
 extern s32 D_801575D8;
 extern s32 D_801575F8;
 extern s32 D_80048BE8;
-
 extern s16 D_8014ED00;
 extern s32 D_8014ED04;
 extern s16 D_8014ED06;
@@ -269,15 +267,11 @@ extern s16 D_8014ED30;
 extern s16 D_8014ED32;
 extern s32 D_8014ED34;
 extern s16 D_8014ED38;
-
 extern s16 D_8013D2A6_14C256[];
 extern u8 D_8013D3CB_14C37B[];
 extern u8 D_8013D3D7_14C387[];
 extern s16 D_8013D52E_14C4DE;
-
-
 extern u8 D_80147098_156048[];
-
 extern f64 D_80037620_38220;
 extern u8 D_1010A80[];
 extern u8 D_50323B0[];
@@ -491,7 +485,6 @@ extern u16 D_8003D800_3E400[];
 extern Unk8003E000 D_8003E000[5][6];
 extern s16 D_8003E0EE[];
 extern GateEntry D_8003E0FC[5][8]; // shield wall gates by level
-
 extern Unk80042DA8 D_80042DA8;
 extern Unk80042DB8 D_80042DB8;
 extern Unk80042DB8 D_80042DCC;
@@ -504,7 +497,6 @@ extern u8 D_80043243;
 extern OSMesgQueue D_80043388;
 extern OSPfs D_80047610;
 extern OSContPad currentControllerStates[4]; // 0x80047588
-
 extern u16 D_800475D8[4]; // Controller button states
 extern u16 previousControllerButtonStates[4]; // 0x800475E0
 extern OSContPad D_800475A0[4]; // When button is held these values sometimes reset to 0 next frame?
@@ -614,7 +606,6 @@ extern u8 D_800481CE[];
 extern AlienInstance alienInstances[]; // 0x80048198
 extern s16 D_8013D786_14C736[];
 extern s16 D_8014E4D6[];
-
 extern AlienWaveEntry D_8003BCC0[][12];
 extern u8 D_8003BCC6;
 extern s32 D_8004D148; // is Snared cheat disabled
@@ -714,7 +705,6 @@ extern VehicleInstance* D_80052B34; // Ptr to active vehicle instance
 extern s16 D_80257A34[];
 extern s16 D_80257A36[];
 extern s16 D_80257A3C[];
-
 extern Unk80052B40 D_80052B40;
 extern s16 D_80052B44;
 extern Unk80052B40 D_80052B48;
@@ -773,7 +763,6 @@ extern TileCoord D_801475F0[];
 extern s8 D_8014667F_15562F[];
 extern Unk80146688 D_80146688_155638[][0x20];
 extern f32 D_801424E0;
-
 extern s32 D_8014ECD8;
 extern f32 D_8014ED0C;
 extern f32 D_8014ED10;
@@ -813,7 +802,6 @@ extern u8 D_1009C70[];
 extern u8 D_1001B50[];
 extern u8 D_10031E0[];
 extern Gfx D_504B640[];
-
 extern u8* D_8005BB20;
 extern s32 D_8005BB24;
 extern s32 D_8005BB28;
@@ -931,7 +919,6 @@ extern s32 D_80068088;
 extern f32 D_80068090;
 extern f32 D_8006808C;
 extern s32 D_8006809C;
-
 extern f32 D_8008DDF0;
 extern f32 D_8008DDF0_175EB0;
 extern f32 D_8008DDF4_175EB4;
@@ -940,7 +927,6 @@ extern f32 D_8008DDFC_175EBC;
 extern char D_800A443C_18C4FC[];
 extern f64 D_800A4AA0_18CB60;
 extern f64 D_800A4AA8_18CB68;
-
 extern MissionData D_800909B0[42];
 extern Gfx *D_800942D0_64780;
 extern FrontendItemRenderData D_800942E0_64790[];
@@ -989,7 +975,6 @@ extern u8 D_800949D4;
 extern FrontendAnimState D_8009499C;
 extern s32 D_80098FF0[];
 extern s32 D_8009E8D8;
-
 extern f32 D_800A08F8;
 extern f64 D_800A4D08;
 extern f64 D_800A4D10;
@@ -1190,7 +1175,6 @@ extern f32 D_800AE780_7EC30;
 extern f32 D_800AED68_7F218;
 extern u8 D_800AED78[];
 extern s32 D_800AED88[];
-
 extern MissionData D_800D6DC0[42];
 extern s8 D_800D6460;
 extern u8 D_800D6D88;
@@ -1338,7 +1322,6 @@ extern u8 D_800DE12C;
 extern u8 D_800DE12D;
 extern u8 D_800DE12E;
 extern u8 D_100DE80[];
-
 extern u8 D_800E198D;
 extern u8 D_800E198F;
 extern s8 D_800E1992;
@@ -1360,7 +1343,6 @@ extern f32 D_800E7314;
 extern f32 D_800E7318;
 extern s16 D_800E733C;
 extern Vec3f D_800E7340;
-
 extern s32 D_8013BD04_14ACB4;
 extern s32 D_8013C16C_14B11C;
 extern u8 D_8013C1A7[];
@@ -1404,7 +1386,6 @@ extern u8 D_8013DF84_14CF34[];
 extern s32 D_8013FCD0_14EC80;
 extern VehicleInstance *D_8013FD78_14ED28;
 extern u8 D_801407F4_14F7A4[];
-
 extern AlienInstance *D_80140AB0_14FA60[];
 extern Unk8013FDA8Entry D_8013FDA8_14ED58[];
 extern s32 D_80140AC4_14FA74;
@@ -1484,7 +1465,6 @@ extern char D_8003773C_3833C; /* osSyncPrintf format string */
 extern char D_80037750_38350; /* osSyncPrintf format string */
 extern char D_80037764_38364; /* osSyncPrintf format string */
 extern s32 D_8014D304;
-
 extern u8 D_80140AA4_14FA54[];
 extern Struct_80140D00 D_80140D00_14FCB0;
 extern Struct_80140D10 D_80140D10_14FCC0;
@@ -1650,13 +1630,10 @@ extern u8 D_8014F89D;
 extern s16 (*D_8014F8A0)[256]; /* pointer to world tile data (256x256 s16 array) */
 extern Unk800B753CEntry D_8014F8A8[];
 extern u16 D_8014FD28;
-// I think this is actually an array of 3, and Unk8014FD30Type should be 8 bytes?
-// Either that or the later 8 s16s should be 2 arrays of 4 s16s
-extern Unk8014FD30Type D_8014FD30; // Current stage shield wall bounds
+extern Unk8014FD30Type D_8014FD30; // Current stage shield wall bounds. actually an array of 3, and Unk8014FD30Type should be 8 bytes? Either that or the later 8 s16s should be 2 arrays of 4 s16s
 extern u8 D_8014FD48[];
 extern u16 D_8014FDC8;
 extern u8 D_8014FDD0[];
-
 extern u8 D_80151DD0;
 extern u8 D_80151DD8[];
 extern s16 D_80152B7C;
@@ -1718,7 +1695,6 @@ extern s32 D_80159320;
 extern UnkF9230Func80102FA4Point D_801593F0[];
 extern s16 D_80159318;
 extern s16 D_80159316;
-
 extern UnkF9230Func80102FA4Point D_80159420[];
 extern UnkF9230Func80102FA4Point D_801594E0[];
 extern VehicleInstance *D_80158E64;
@@ -1781,7 +1757,6 @@ extern s16 D_8015FAEE;
 extern Unk8015FAD0 D_8015FAD0[0x19];
 extern u8 D_8015FF80;
 extern s32 D_8015FF84;
-
 extern HudWeaponItem hudWeaponItems[7];
 extern s32 D_801601CC;
 extern s32 D_801601D0; // Current weapon index?
@@ -1793,9 +1768,7 @@ extern s32 D_801601DC;
 extern s32 D_801601E0;
 extern s32 D_801601E4;
 extern s32 D_801601E8;
-
 extern u8 D_801FEA30[];
-
 extern u8 D_8021EA30[0x1000]; // Texture map
 extern u16 D_8021FA30[][0x10]; // Terrain objects 0x1f20 total size
 extern u8 D_80221A30[][0x40]; // Terrain object groups 0x1000 total size
@@ -1803,17 +1776,12 @@ extern u8 D_80260700[0x4000]; // Landscape colors
 extern s32 D_80264700[0x100]; // Landscape palettes
 extern u8 D_80265A80[];
 extern u8 D_80266E80[];
-
 extern u32 D_80222A30[]; // terrain object model pointers
 extern s32 D_80222A70;
 extern s16 D_80222A72;
 extern Unk80222A78 D_80222A78[0xD0]; // trigger array (does this actually start at 70 or 74?)
-
 extern s32 D_80223778;
 extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
-
-// 80224680 missions
-
 extern u8 D_80254E80[]; // Tile palette data
 extern f64 D_802E0D78_2604B8;
 extern f64 D_802E3040_2C5470;
@@ -1842,7 +1810,6 @@ extern s16 D_80259DE4;
 extern s16 D_80259DE6;
 extern u8 D_80259E30[];
 extern Unk80259D98 D_80259D98[];
-
 extern u8 D_D03E780[];
 extern u8 D_502E110[];
 extern u8 D_5032190[];
@@ -1853,7 +1820,6 @@ extern u8 D_5040A80[];
 extern u8 D_5041480[];
 extern u8 D_5041680[];
 extern u8 D_5041880[];
-
 extern f32 D_8014F1E4;
 extern f32 D_8014F1E8;
 extern s16 D_8014F1F6;
@@ -1915,7 +1881,6 @@ extern s8 D_802E0878_1F9588[];
 extern u8 D_802E0884_1F9594[];
 extern s32 D_802DDCD8_1967E8;
 extern Unk8014DD50 D_802DDCF8_196808[];
-
 extern s32 D_80145BE8_154B98[][6];
 extern s16 D_8014EDD8;
 extern s32 D_8014ED04;
@@ -2311,7 +2276,6 @@ extern u8 D_80153BCC;
 extern s8 D_80153BCD;
 extern s8 D_80153BCE;
 extern u8 D_100C700;
-
 extern OSContPad D_800475B8[4];
 extern OSContPad D_800475D0;
 extern u8 D_8015FAFC;
@@ -2462,7 +2426,6 @@ extern u8 D_8016006C[];
 extern s32 D_80160070;
 extern s32 D_8013E450;
 extern Unk8013E45C D_8013E45C[];
-
 extern s32 D_80157A04;
 extern s32 D_80157A08;
 extern s32 D_80157E4C;
@@ -2600,7 +2563,6 @@ extern Unk8007D62C_Entry D_800A08AC_18896C[];
 extern Unk8007D62C_Entry D_800A08C4_188984[];
 extern Unk8007D62C_Entry D_800A08D8_188998[];
 extern Unk8007D62C_Entry D_800A08F0_1889B0[];
-
 extern s32 D_800A08FC_1889BC;
 extern s32 D_800A0900_1889C0;
 extern s32 D_800A0904_1889C4;
@@ -2613,7 +2575,6 @@ extern s32 D_800A0918_1889D8;
 extern s32 D_800A091C_1889DC;
 extern s32 D_800A0920_1889E0;
 extern s32 D_800A0924_1889E4;
-
 extern char D_800A4C14_18CCD4[];
 extern char D_800A4C30_18CCF0[];
 extern char D_800A4C48_18CD08[];
@@ -2625,7 +2586,6 @@ extern f64 D_800A4D98_18CE58;
 extern f64 D_800A4DA0_18CE60;
 extern f64 D_800A4DA8_18CE68;
 extern f64 D_800A4DB0_18CE70;
-
 extern s32 D_800E6A34;
 extern f32 D_800E6A38;
 extern s32 D_800E6A6C;
@@ -2670,14 +2630,9 @@ extern u16 D_800A37B0_18B870[];
 extern u8 D_800A2FB0_18B070[];
 extern u16 D_800A40B0_18C170[];
 extern u8 D_800A38B0_18B970[];
-typedef struct {
-	s32 unk0;
-	u16 unk4;
-} Unk800A4354; /* stride 0x6 or 0x8 */
 extern Unk800A4354 D_800A4354;
 extern Unk800A4354 D_800A435C;
 extern Unk800A4354 D_800A4364;
-
 extern u8 D_8004DCEA;
 extern s16 D_8004DCEC;
 extern u8 D_8003CEC6[];
@@ -2740,7 +2695,6 @@ extern u8 D_408A8F0[];
 extern u16 D_409E8F0[];
 extern u8 D_40A9440[];
 extern u16 D_40AAC40[];
-
 extern f32 D_8013D668_14C618;
 extern u8 D_8013D66C_14C61C[];
 extern u32 D_8013D67C_14C62C[];
@@ -2762,7 +2716,6 @@ extern f32 D_8014F6C4;
 extern s32 D_8014F6C8;
 extern s16 D_801541FE;
 extern u16 D_100E280[];
-
 extern u8 D_80153B84;
 extern s16 D_80158C52;
 extern VehicleInstance *D_80158E7C;
@@ -2775,7 +2728,6 @@ extern UnkFB6F8Entry D_800FB6F8[0xF];
 extern u8 D_100AD70[];
 extern u8 D_100ADF0[];
 extern u8 D_100B0F0[];
-
 extern Unk80154082 D_80154082;
 extern Unk80154082 D_801541F0;
 extern Unk800311A0 D_80153BD0[];
@@ -2823,7 +2775,6 @@ extern u8 D_8013DFA8_14CF58[][3];
 extern u8 D_80157530;
 extern u8 D_80157531;
 extern u8 D_A003F40;
-
 extern u8 D_80157532;
 extern s8 D_80157533;
 extern u8 D_80157534;
@@ -2843,8 +2794,6 @@ extern u8 D_8013E2EC_14D29C[8];
 extern s32 D_8013E2F4_14D2A4[5];
 extern s32 D_8013E308_14D2B8[5];
 extern Unk80152CA0Entry D_80152CA0[];
-
-
 extern Gfx D_13E440[];
 extern Gfx D_5038A00[];
 extern Gfx D_5038D48[];
@@ -2909,7 +2858,6 @@ extern u8 D_800431C0[]; // Save file data. 0x89 (actually 0x4F?) bytes, then 0x7
 extern u16 D_8004758E;
 extern s32 D_80047684;
 extern u8 D_80047608;
-
 extern u8 D_80048030; // Current objective
 extern u8 D_80048038[];
 extern u8 D_8014CFF0[];
@@ -2989,8 +2937,6 @@ extern Unk8014DD50 D_802DF69C_25EDDC[];
 extern Unk8014DD50 D_802DF8DC_25F01C[];
 extern f64 D_802E0DB0_2604F0;
 extern f64 D_802E0DB8_2604F8;
-
-/* core/loader */
 extern s16 D_80068078;
 extern OSIoMesg D_8006A330[];
 extern OSMesgQueue D_80067F58;
@@ -3035,9 +2981,6 @@ extern s32 D_80031BAC_327AC[];
 extern s32 D_80031BC4_327C4[];
 extern s32 D_37F840;
 extern s32 D_803DA800;
-#ifndef OVERLAY_ENTRY_AS_FUNC
-extern u8 func_80070270[];
-#endif
 extern u8 D_40720[];
 extern u8 D_7F220[];
 extern u8 D_158330[];
@@ -3129,8 +3072,6 @@ extern char D_800385E0_391E0; /* osSyncPrintf format string */
 extern char D_800385E4_391E4; /* osSyncPrintf format string */
 extern char D_80038614_39214; /* osSyncPrintf format string */
 extern char D_80038618_39218; /* osSyncPrintf format string */
-
-/* core/FB00 */
 extern Acmd *D_8003FB20[];
 extern BhAudioTask *D_8003FB28[];
 extern Acmd *D_8003FB2C;
@@ -3142,8 +3083,6 @@ extern OSMesg D_8003FD38[8];
 extern ALGlobals D_8003FD58;
 extern OSThread D_80067388;
 extern void *D_8005C760;
-
-/* core/E830 */
 extern f64 D_80037628;
 extern f64 D_80037630;
 extern f64 D_80037638;
@@ -3165,7 +3104,6 @@ extern UnkE830ModeEntry D_80031A90[];
 extern UnkE830ModeEntry *D_80059CDC;
 extern s16 D_80267080[];
 extern s16 FrameBufferB[];
-/* core/FB00 — thread structs, stacks, OS mode tables */
 extern OSThread D_80067388;
 extern OSThread D_80067538;
 extern OSThread D_800676E8;
@@ -3227,16 +3165,7 @@ extern OSViMode D_80035F90;
 extern OSViMode D_800356D0_362D0;
 extern OSViMode D_80035B30_36730;
 extern OSViMode D_80035F90_36B90;
-typedef struct {
-	f32 unk0;
-	f32 unk4;
-	u8 unk8[4];
-	f32 unkC;
-	f32 unk10;
-} Unk8005BAE8;
 extern Unk8005BAE8 *D_8005BAE8;
-
-/* overlay_gameplay/outside/A40B0 */
 extern s32 D_8014ECF4;
 extern s16 D_8014ECF0;
 extern s16 D_8013CBB4;
@@ -3252,8 +3181,6 @@ extern Unk801601F0 D_801601F0[];
 extern s32 D_80034574[];
 extern Unk_8003CEC0 D_8003CEC0[5];
 extern Unk_8013D91C D_8013D91C[6];
-
-/* overlay_level/java/1ED9E0 */
 extern char D_802E0D84_1F9A94[];
 extern const char D_802E0DA8_1F9AB8[];
 extern char D_802E0E10_1F9B20[];
@@ -3290,7 +3217,6 @@ extern s16 D_80159220[];
 extern s16 D_80159226;
 extern s16 D_800481AA[];
 extern s16 D_802E0FB0;
-/* java/1ED9E0 — additional externs for NON_MATCHING C bodies */
 extern u8 D_802D48D0;
 extern u8 D_802D4AD0;
 extern VehicleInstance D_8004DFB0;
@@ -3435,8 +3361,6 @@ extern u64 D_80160300[];
 extern u64 D_80161700[];
 extern u64 D_80165700[];
 extern u64 D_80160B00[];
-
-/* loadLevelData */
 extern Unk8031C88 D_80031C88_32888;
 extern s32 D_800378CC_384CC;
 extern Unk80378D0 D_800378D0_384D0;
@@ -3502,7 +3426,7 @@ extern char D_80037F70_38B70;
 extern char D_80037FA4_38BA4;
 extern char D_80037FB8_38BB8;
 extern char D_80037FEC_38BEC;
-extern u8 D_80224680;
+extern u8 D_80224680; // missions?
 extern u8 D_80224E80[];
 extern u8 D_80052560[];
 extern u16 D_80257A14;
@@ -3568,7 +3492,6 @@ extern InputStruct_8012B150 D_80159000;
 extern InputStruct_8012B150 D_80159028;
 extern OutputStruct_8012B150 D_801591F8;
 
-/* overlay_level/siberia/2B7100 */
 extern void (*D_802E0DF0_2C3220[])(void);
 extern Unk8014DD50 *D_802E0FD4_2C3404;
 extern Unk8014DD50 *D_802E10A4_2C34D4;

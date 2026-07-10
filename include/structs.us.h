@@ -56,12 +56,25 @@ typedef struct {
 } Flags2x32; /* size = 0x08 */
 
 typedef struct {
+	s32 unk0;
+	u16 unk4;
+} Unk800A4354; /* stride 0x6 or 0x8 */
+
+typedef struct {
 	/* 0x06 */ u8 unk6;
 	/* 0x07 */ u8 unk7;
 	s32 unk4;
 	void* unk8;
 	void* unkC;
 } Frontend52690Entry;
+
+typedef struct {
+	f32 unk0;
+	f32 unk4;
+	u8 unk8[4];
+	f32 unkC;
+	f32 unk10;
+} Unk8005BAE8;
 
 typedef struct {
 	/* 0x00 */ s16 unk0;

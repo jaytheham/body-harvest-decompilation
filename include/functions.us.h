@@ -190,9 +190,7 @@ void func_8000F190_FD90(void (*arg0)(void *));
 void loadLevelData(u8 arg0);
 void loadLevelCode(u8 arg0);
 void func_80011E14_12A14(u8 arg0);
-#ifdef OVERLAY_ENTRY_AS_FUNC
 s32 func_80070270(s32 arg0);
-#endif
 void func_800791A0_49650(s32 arg0);
 void func_8000F618_10218(void);
 void func_8000F478_10078(BhGfxTask *arg0);

@@ -489,18 +489,26 @@ void loadLevelData(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelData.s")
 #endif
 
+#ifdef NON_MATCHING
 void loadFrontendData(void) {
-	osInvalICache(func_80070270, (u8 *)&D_800909B0 - func_80070270);
+	osInvalICache(func_80070270, (u8 *)&D_800909B0 - (u8*)&func_80070270);
 	osInvalDCache(&D_800909B0, (u8 *)&D_800AED70 - (u8 *)&D_800909B0);
 	func_800101F0_10DF0(func_80070270, D_40720, D_7F220 - D_40720);
 	bzero(&D_800AED70, (u8 *)&D_800E1D70 - (u8 *)&D_800AED70);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadFrontendData.s")
+#endif
 
+#ifdef NON_MATCHING
 void func_80011674_12274(void) {
-	osInvalICache(func_80070270, (u8 *)&D_8013B8F0 - func_80070270);
+	osInvalICache(func_80070270, (u8 *)&D_8013B8F0 - (u8*)&func_80070270);
 	osInvalDCache(&D_8013B8F0, (u8 *)&D_80149380 - (u8 *)&D_8013B8F0);
 	func_800101F0_10DF0(func_80070270, D_7F220, D_158330 - D_7F220);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_80011674_12274.s")
+#endif
 
 // https://decomp.me/scratch/ktq8M
 // CURRENT(38)
@@ -530,12 +538,16 @@ void loadLevelCode(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelCode.s")
 #endif
 
+#ifdef NON_MATCHING
 void func_800117D8_123D8(void) {
-	osInvalICache(func_80070270, (u8 *)&D_8008DDF0 - func_80070270);
+	osInvalICache(func_80070270, (u8 *)&D_8008DDF0 - (u8*)&func_80070270);
 	osInvalDCache(&D_8008DDF0, D_800A5720 - (u8 *)&D_8008DDF0);
 	func_800101F0_10DF0(func_80070270, D_158330, D_18D7E0 - D_158330);
 	bzero(D_800A5720, D_800FCF50 - D_800A5720);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800117D8_123D8.s")
+#endif
 
 void func_80011858_12458(u8 arg0, s32 arg1) {
 	if ((u32)(func_8001032C_10F2C(arg1, D_80031C04_32804[arg0 - 1], D_8006AA6C) - D_80031C04_32804[arg0 - 1]) >= 0x30D41U) {
