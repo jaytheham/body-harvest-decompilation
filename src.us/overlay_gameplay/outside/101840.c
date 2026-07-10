@@ -12245,31 +12245,22 @@ block_212:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80113CEC_122C9C.s")
 #endif
 
-// CURRENT(60)
-#ifdef NON_MATCHING
-void func_80115604_1245B4(VehicleInstance *arg0) {
+void func_80115604_1245B4(VehicleInstance *arg0)
+{
 	s32 *base;
 	s32 height;
 	s32 i;
-
-	base = (s32 *)(func_800FAE60_109E10(arg0) * 0x10 + (s32)D_80159510);
-
-	i = 3;
-	do {
-		height = func_800B84D0_C7480(
-			(s16)(s32)(D_80159D78[i] + arg0->unk4C),
-			(s16)(s32)(D_80159D98[i] + arg0->unk54)) >> 8;
-
-		if (!(vehicleSpecs[arg0->unk1A].unk4C & 0x100) && (height < D_80222A70)) {
+	base = (s32 *)((func_800FAE60_109E10(arg0) * 0x10) + ((s32)D_80159510));
+	i = 3; do
+	{
+		height = func_800B84D0_C7480((s16)((s32)(D_80159D78[i] + arg0->unk4C)), (s16)((s32)(D_80159D98[i] + arg0->unk54))) >> 8;
+		if ((!(vehicleSpecs[arg0->unk1A].unk4C & 0x100)) && (height < D_80222A70))
+		{
 			height = D_80222A70;
 		}
-
 		base[i] = height;
 	} while (i--);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80115604_1245B4.s")
-#endif
 
 // CURRENT(92)
 #ifdef NON_MATCHING
