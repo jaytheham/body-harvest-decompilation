@@ -1,2 +1,3 @@
 Removing temporary variables, even when that means replacing them with repeated array/struct accesses.
 Rearranging variable declartion order.
+Replace (x = x + y) with (x += y), any operation (+ - *)
