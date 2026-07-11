@@ -1065,7 +1065,9 @@ typedef struct {
 	/* 0x04 */ u8 pad4[0x4]; // Changes shadow
 	/* 0x08 */ s32 unk8; // Collision model size? Maybe only be second h/word
 	/* 0x0C */ s16 unkC; // xxxxyyyy Variables xxxx (Drone King Shield size)(Spyder warp beam size) yyyy (Spyder Health goes up to this value from normal then begins to decrease)
-	/* 0x0E */ u8 padE[0x6];
+	/* 0x0E */ u8 padE[0x2];
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14; // Points given on death
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 pad17;

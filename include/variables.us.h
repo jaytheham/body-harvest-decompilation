@@ -864,9 +864,6 @@ extern VehicleInstance vehicleInstances[0x80]; // 8004DCD0
 extern s32 D_80050AD0;
 extern s32 D_80050AD4;
 extern BuildingInstance buildingInstances[0xFF]; // 0x80050AD8
-
-// de-dupped up to here
-
 extern Unk800522C0 D_800522C0[0x20];
 extern Unk800522C0 D_8005252C;
 extern s32 D_80052540;
@@ -888,9 +885,6 @@ extern s16 D_80052A8E;
 extern u32 D_80052A90; // millseconds played in current level
 extern Unk80052A94 *D_80052A94; // This is a ptr to a [512][512] array of Heightmap data? Is 256x256 s16?
 extern Unk80052A98 D_80052A98[]; // LevelStats
-extern u16 D_80052A9C;
-extern s32 D_80052AA0;
-extern u16 D_80052AA4;
 extern s16 D_80052AC8;
 extern u8 D_80052ACA;
 extern u8 D_80052ACB; // Rendering Flags? 1=Shadows 2=Objects
@@ -917,7 +911,6 @@ extern s32 D_80052B58;
 extern Mtx D_80052B60;
 extern Mtx D_80052BA0;
 extern s8 D_80052BE0[0x1000];
-extern s8 D_80053BDF;
 extern s16 D_80053BE0;
 extern s16 D_80053BE2;
 extern s16 D_80053BE4;
@@ -1016,7 +1009,6 @@ extern f32 D_80068090;
 extern f32 D_80068094;
 extern f32 D_80068098;
 extern s32 D_8006809C;
-
 extern OSSched D_800680A0;
 extern s32 D_80068328;
 extern s32 D_8006832C;
@@ -2234,8 +2226,6 @@ extern u8 D_80149449;
 extern u8 D_8014944A;
 extern u8 D_8014944B;
 extern u8 cheatInputBuffer[0xA]; // 0x80149450
-extern u8 D_80149452; // cheat input buffer boundary
-extern u8 D_80149459; // cheat input buffer end
 extern s32 D_8014945C;
 extern s32 isCheatingEnabled; // 80149460
 extern s32 D_80149470;
@@ -2266,7 +2256,6 @@ extern u8 D_80149B50[];
 extern u8 D_80149B60[];
 extern u8 D_8014CCCA;
 extern u8 D_8014CEF0[];
-extern u8 D_8014CFEC; // last entry of D_8014CEF0 array (offset 0x3F*4)
 extern u8 D_8014CFF0[];
 extern u8 D_8014CFF1[];
 extern u8 D_8014D16E;
@@ -2277,7 +2266,6 @@ extern s16 D_8014D182;
 extern s16 D_8014D188[];
 extern s16 D_8014D1B6;
 extern u32 D_8014D1B8[];
-extern u32 D_8014D1D4; // D_8014D1B8[7]
 extern u8 D_8014D200[];
 extern u8 D_8014D298[][10];
 extern s32 D_8014D2E8;
@@ -2287,7 +2275,7 @@ extern s32 D_8014D2F4;
 extern s32 D_8014D300;
 extern s32 D_8014D304;
 extern u8 D_8014D308[];
-extern u8 D_8014D408[]; // unknown size, maybe 0x101
+extern u8 D_8014D408[];
 extern u8 D_8014D507;
 extern u8 D_8014D508;
 extern u8 D_8014D509;
@@ -2429,7 +2417,6 @@ extern s8 D_8015273E;
 extern u8 D_80152740[];
 extern s16 D_80152B7C;
 extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
-extern u8 D_80152B88; /* unk8 field of first particle/effect entry */
 extern s16 D_80152C90;
 extern s16 D_80152C96;
 extern Unk80152CA0Entry D_80152CA0[];
@@ -2460,7 +2447,6 @@ extern s8 D_80153BCE;
 extern Unk800311A0 D_80153BD0[];
 extern Unk80154082 D_80154082;
 extern Unk801541F8Entry D_80154088[]; // Special effects
-extern Unk8015408EEntry D_8015408E[];
 extern Unk80154082 D_801541F0;
 extern Unk801541F8Entry D_801541F8[];
 extern s16 D_801541FE;
@@ -2968,18 +2954,6 @@ extern u8 D_80224680; // missions?
 extern u8 D_80224E80[];
 extern u8 D_80254E80[]; // Tile palette data
 extern AlienSpec alienSpecs[0x30]; // 80256680
-extern u16 D_8025668C[];
-extern u16 D_802566BA[];
-extern s32 D_802566D4[];
-extern s16 D_80256AD0;
-extern u16 D_80257184;
-extern s16 D_80257188;
-extern s16 D_8025718A;
-extern u16 D_802571B2;
-extern s16 D_802571B6;
-extern s16 D_802571B8;
-extern s16 D_802571BA;
-extern s16 D_802571D0;
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
 extern s16 D_80257A0C[]; // Wrong. Use vehicleSpecs array unkC field instead.
 extern u16 D_80257A14;

@@ -4469,7 +4469,7 @@ void func_802DFB94_1F88A4(u8 arg0) {
 		func_8012B21C_13A1CC();
 		func_800A92B0_B8260();
 		temp_v0->unk2C = 0xAA;
-		func_800DF848_EE7F8(temp_v0->unk0, temp_v0->unk2, temp_v0->unk4, D_80257184, 8);
+		func_800DF848_EE7F8(temp_v0->unk0, temp_v0->unk2, temp_v0->unk4, alienSpecs[27].unkC, 8);
 	} else {
 		func_800AA340_B92F0(arg0);
 	}

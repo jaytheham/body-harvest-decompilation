@@ -3822,10 +3822,7 @@ void func_800CABC8_D9B78(s32 arg0) {
 	Unk80154318Entry *temp_a1;
 	Unk80154318Entry *temp_a1_2;
 	Unk80154318Entry *temp_s3;
-	Unk8015408EEntry *temp_v1;
-
-	temp_v1 = &D_8015408E[(u8)arg0];
-	temp_s3 = &D_80154318[temp_v1->unk0];
+	temp_s3 = &D_80154318[D_80154088[(u8)arg0].unk6];
 	temp_a1 = &D_80154318[temp_s3->unk4];
 	var_t4 = temp_a1->unk4;
 	if (*(u16 *)&temp_a1->unkE == 0 && D_80156EDA < 0x28B && D_80156ED9 != 2) {
@@ -5062,7 +5059,7 @@ void func_800CE6E8_DD698(u8 arg0) {
 	Unk80154318Entry *nextEntry;
 	Vtx *vtx;
 
-	index = D_8015408E[arg0].unk0;
+	index = D_80154088[arg0].unk6;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
@@ -7580,7 +7577,7 @@ void func_800D6290_E5240(u8 arg0) {
 	Unk80154318Entry *nextEntry;
 	Vtx *vtx;
 
-	index = D_8015408E[arg0 & 0xFF].unk0;
+	index = D_80154088[arg0 & 0xFF].unk6;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);

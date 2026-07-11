@@ -290,7 +290,7 @@ void func_80074204_831B4(void) {
 		var_v0 -= 0x226;
 	} while (var_a0--);
 
-	var_v0 = &D_8014CFEC;
+	var_v0 = &D_8014CEF0[0xFC];
 	var_a0 = 0x3F;
 	do {
 		var_v0 -= 4;
@@ -1223,7 +1223,7 @@ s32 func_80075E50_84E00(void) {
 		D_8014D1B8[count] = 0;
 	} while (count--);
 
-	cmd = &D_8014CFEC;
+	cmd = &D_8014CEF0[0xFC];
 	count = 0x3F;
 	do {
 		if (cmd[1] == 0x99) {

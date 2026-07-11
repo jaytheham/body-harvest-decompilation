@@ -25,7 +25,6 @@ You will be tasked with an existing C function to modify iteratively until it pr
 - Compare target and your current assembly for a specific function after building:
  `.\tools\diff.ps1 <target function name> <next function name>"`.
  E.g. `.\tools\diff.ps1 func_80092ADC_A1A8C func_80092BBC_A1B6C`. Functions are named like `func_<RAM address>_<ROM address>`.
- Diff output includes a closeness value for the specified range of assembly e.g. `CURRENT (46)`, lower is better, 0 is a perfect match.
  Diff output skips matching instructions except for 3 either side of differences.
 - You can get the full assembly of a function after building by adding param `--show=target` or `--show=current` to the above diff command.
 - Important: Rather than blindly making changes when dealing with incorrect or out-of-order instructions, first check for other functions with sections of assembly that are the same as the target assembly section using `.\tools\Search-AsmPattern.ps1 -Offset <ROM offset> -Count <number of instructions to match>` e.g. `.\tools\Search-AsmPattern.ps1 -Offset 0x884C0 -Count 8` look up the C implementation of any functions it returns as reference for your own implementation - if they're not wrapped in NON_MATCHING then they are already matched and can be used as a reference for how to implement the same logic in your function.
@@ -39,12 +38,11 @@ You will be tasked with an existing C function to modify iteratively until it pr
 6. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
 
 First target incorrect/missing/out-of-order instructions, ignore register allocation and stack placement until all the logic is correct.
-
-Don't rely on just the closeness value to tell if a change is an improvement, always check the actual diff. Sometimes a change can produce more accurate instructions, but change register/stack allocation in a way that causes more differences overall, so the closeness value can be worse even though the change improves the logic.
+Sometimes a change can produce more accurate instructions, but change register/stack allocation in a way that causes more differences overall, this is OK, the goal is to get the logic correct first, then optimize the register/stack allocation to match the target assembly.
 
 If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
-If a function has a switch statement and there is an associated jump table const defined at the start of the file, delete that const before you begin. The consts are there so that the rodata is built correctly while the functions are NON_MATCHING and the .s file is being used instead, when the C code is being included in the build it will generate its own jump table replacing the need for the const version. 
+If a function has a switch statement and there is an associated jump table const defined at the start of the C file, delete that const before you begin. The consts are there so that the rodata is built correctly while the functions are NON_MATCHING and the .s file is being used instead, when the C code is being included in the build it will generate its own jump table replacing the need for the const version. 
 
 - Declarations of data symbols used by the function must go in `include/variables.us.h`.
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
@@ -62,6 +60,6 @@ If a function has a switch statement and there is an associated jump table const
 
 ## Finalize
 
-If you haven't matched the function after 12 attempts, revert the code to the version with the best closeness value or logic you found. Add/update a comment above the function with the closeness value for that version:`// CURRENT(123)`.
+If you haven't matched the function after 12 attempts, revert the code to the version with the best  logic you found. Add/update a comment above the function with the closeness value for that version:`// CURRENT(123)`.
 
 Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated notes to help future decomp. Only for matched functions.

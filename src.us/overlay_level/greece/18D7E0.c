@@ -2624,7 +2624,7 @@ void func_802DA3EC_192EFC(u8 arg0) {
 	}
 
 	if (alien->unk26 != 0) {
-		alien->unk12 -= D_802571B6;
+		alien->unk12 -= alienSpecs[27].unk3E;
 		if (alien->unk12 < 0) {
 			alien->unk12 = 0;
 		}
@@ -2676,7 +2676,7 @@ void func_802DA3EC_192EFC(u8 arg0) {
 		}
 
 		if (alien->unk3C != 0) {
-			alien->unk12 -= D_802571B6;
+			alien->unk12 -= alienSpecs[27].unk3E;
 			if (alien->unk12 < 0) {
 				alien->unk12 = 0;
 			}
@@ -2716,17 +2716,17 @@ void func_802DA3EC_192EFC(u8 arg0) {
 		}
 
 		if (parent->unk20 & 0x8000) {
-			alien->unk12 -= D_802571B6;
+			alien->unk12 -= alienSpecs[27].unk3E;
 			if (alien->unk12 < 0) {
 				alien->unk12 = 0;
 			}
 		} else {
-			D_802571B8 = 0x280;
-			D_80257188 = 0;
-			D_8025718A = 0;
+			alienSpecs[27].unk40 = 0x280;
+			alienSpecs[27].unk10 = 0;
+			alienSpecs[27].unk12 = 0;
 		}
 
-		if ((highAlert != 0) && (alien->hitPoints < ((s32)D_802571B2 >> 1)) && !(D_80052A8C & 1) && (D_80031420 & 3)) {
+		if ((highAlert != 0) && (alien->hitPoints < ((s32)alienSpecs[27].unk3A >> 1)) && !(D_80052A8C & 1) && (D_80031420 & 3)) {
 			levelColor = &D_8013E3C0[currentLevel * 3];
 			func_800CA5EC_D959C(alien->unk0, alien->unk2, alien->unk4, 0, -0x7F, 0, 0x14, 0xC, 8, 0xFF,
 				levelColor[-3], levelColor[-2], levelColor[-1], 0xFF);
@@ -3386,7 +3386,7 @@ void func_802DCADC_1955EC(u8 arg0) {
 		func_8012B21C_13A1CC();
 		func_800A92B0_B8260();
 		alien->unk2C = 0x10E;
-		func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, D_80257184, 8);
+		func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, alienSpecs[27].unkC, 8);
 		func_80137468_146418(arg0, 0x11);
 		return;
 	}
