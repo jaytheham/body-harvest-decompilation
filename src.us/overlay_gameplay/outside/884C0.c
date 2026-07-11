@@ -4433,7 +4433,7 @@ s32 func_80082EB4_91E64(u8 arg0, s16 arg1)
 	temp = func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &sp34);
 	if (temp != 0xFF)
 	{
-	  if (func_80082E38_91DE8(arg0, D_80050ADA[temp].unk0) == 0)
+	  if (func_80082E38_91DE8(arg0, buildingInstances[temp].yCoord) == 0)
 	  {
 		if (1)
 		{

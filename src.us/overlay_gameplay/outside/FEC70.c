@@ -956,7 +956,7 @@ s32 func_800F1DDC_100D8C(void) {
 
 	D_80157F96 = 1;
 	if ((currentControllerStates[0].button & 0x9000) && (D_80157F8C > 0) && (D_80031B50 == 1)) {
-		D_80050ADA[D_80159DDF].unk0 =
+		buildingInstances[D_80159DDF].yCoord =
 			func_800B84D0_C7480(buildingInstances[D_80159DDF].xCoord, buildingInstances[D_80159DDF].zCoord) >> 8;
 		D_80159DE2 = 0;
 
@@ -1034,7 +1034,7 @@ s32 func_800F1DDC_100D8C(void) {
 
 		func_800FB44C_10A3FC(D_80052B34, (f32)buildingInstances[D_80159DDF].xCoord);
 		func_800FB468_10A418(D_80052B34, f12);
-		func_800FB484_10A434(D_80052B34, (f32)(*((s16 *)&D_80050ADA[D_80159DDF] + 1)));
+		func_800FB484_10A434(D_80052B34, (f32)buildingInstances[D_80159DDF].zCoord);
 
 		D_80157F8E = 0;
 		D_80157F9E[0] = 0xFF;
@@ -1050,9 +1050,9 @@ s32 func_800F1DDC_100D8C(void) {
 			D_80159DE2 = 0x1F4;
 		}
 
-		D_80157F9E[0] = func_800CD1F8_DC1A8(p3X, D_80050ADA[D_80159DDF].unk0, p3Z, 0, -35, 0);
-		D_80157F9E[1] = func_800CD1F8_DC1A8(maxX, D_80050ADA[D_80159DDF].unk0, maxZ, 0, -35, 0);
-		D_80157F9E[2] = func_800CD1F8_DC1A8(minX, D_80050ADA[D_80159DDF].unk0, minZ, 0, -35, 0);
+		D_80157F9E[0] = func_800CD1F8_DC1A8(p3X, buildingInstances[D_80159DDF].yCoord, p3Z, 0, -35, 0);
+		D_80157F9E[1] = func_800CD1F8_DC1A8(maxX, buildingInstances[D_80159DDF].yCoord, maxZ, 0, -35, 0);
+		D_80157F9E[2] = func_800CD1F8_DC1A8(minX, buildingInstances[D_80159DDF].yCoord, minZ, 0, -35, 0);
 
 		if (D_80157F8E < 2) {
 			D_80157F8E++;
@@ -1076,8 +1076,8 @@ s32 func_800F1DDC_100D8C(void) {
 		}
 
 		func_800CD2E8_DC298(p3X, (s16)(buildingInstances[D_80159DDF].yCoord + (D_80159DE2 * 4)), p3Z, D_80157F9E[0]);
-		func_800CD2E8_DC298(maxX, (s16)(D_80050ADA[D_80159DDF].unk0 + (D_80159DE2 * 4)), maxZ, D_80157F9E[1]);
-		func_800CD2E8_DC298(minX, (s16)(D_80050ADA[D_80159DDF].unk0 + (D_80159DE2 * 4)), minZ, D_80157F9E[2]);
+		func_800CD2E8_DC298(maxX, (s16)(buildingInstances[D_80159DDF].yCoord + (D_80159DE2 * 4)), maxZ, D_80157F9E[1]);
+		func_800CD2E8_DC298(minX, (s16)(buildingInstances[D_80159DDF].yCoord + (D_80159DE2 * 4)), minZ, D_80157F9E[2]);
 
 		if (D_80157F8E < 0x79) {
 			D_80157F8E++;

@@ -2996,7 +2996,7 @@ s16 func_800F9D60_108D10(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, s16 *arg4) {
 	*arg2 = (s16)(func_800B85CC_C757C(arg0, arg1) >> 8);
 	var_v1 = func_8011E6FC_12D6AC(arg0, arg1, &sp22);
 	if (var_v1 != -1) {
-		*arg3 = D_80050ADA[var_v1].unk0;
+		*arg3 = buildingInstances[var_v1].yCoord;
 		*arg4 = sp22;
 	} else {
 		temp_v0 = *arg2;
@@ -3016,7 +3016,7 @@ s16 func_800F9E0C_108DBC(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, s16 *arg4, s3
 	*arg2 = (s16)(func_800B85CC_C757C(arg0, arg1) >> 8);
 	temp_v0 = func_8011E788_12D738(arg0, arg1, &sp2A, arg5, arg6);
 	if (temp_v0 != -1) {
-		*arg3 = D_80050ADA[temp_v0].unk0;
+		*arg3 = buildingInstances[temp_v0].yCoord;
 		*arg4 = sp2A;
 	} else {
 		temp_v1 = *arg2;

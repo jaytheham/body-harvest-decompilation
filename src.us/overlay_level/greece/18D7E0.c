@@ -573,7 +573,7 @@ void func_802D4E28_18D938(void) {
 		func_800073B8_7FB8(0x1A);
 	}
 	if (func_8000726C_7E6C(0xF) != 0) {
-		D_80050C0B = 0x77;
+		buildingInstances[12].door2InteriorId = 0x77;
 	}
 	if (func_8000726C_7E6C(0xB) == 0) {
 		func_80007410_8010(func_802D4ECC_18D9DC);
@@ -622,7 +622,7 @@ void func_802D4F74_18DA84(void) {
 		}
 		if (D_802DE460 == 0x48) {
 			func_80018D7C_1997C(0xE8);
-			D_80050C0B = 0x77;
+			buildingInstances[12].door2InteriorId = 0x77;
 		}
 		if (D_80052B34->unk20 & 2) {
 			D_8004DC58 = 1;
@@ -755,19 +755,19 @@ void func_802D5460_18DF70(void) {
 }
 
 void func_802D54AC_18DFBC(void) {
-	if ((D_80051008 >> 0xC) & 0x10) {
+	if ((buildingInstances[55].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x37);
 		func_800AE190_BD140(3);
 	}
-	if ((D_800510C8 >> 0xC) & 0x10) {
+	if ((buildingInstances[63].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x3F);
 		func_800AE190_BD140(3);
 	}
-	if ((D_80051038 >> 0xC) & 0x10) {
+	if ((buildingInstances[57].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x39);
 		func_800AE190_BD140(3);
 	}
-	if ((D_800510B0 >> 0xC) & 0x10) {
+	if ((buildingInstances[62].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x3E);
 		func_800AE190_BD140(3);
 	}

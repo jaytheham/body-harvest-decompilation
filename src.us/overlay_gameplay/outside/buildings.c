@@ -612,7 +612,7 @@ void func_8011694C_1258FC(void) {
 		}
 	}
 
-	gridCell = (UnkBuildGridCell *) D_800522A8;
+	gridCell = (UnkBuildGridCell *) &buildingInstances[254];
 	targetType = D_8015EA28;
 	for (i = 0xFE; i >= 0; i--) {
 		if (gridCell->unk6 == targetType) {
@@ -629,7 +629,7 @@ void func_8011694C_1258FC(void) {
 			bestDelta = -0x10000;
 			bestGrid = 0xFF;
 			if ((inst->unk8 & 3) == 0) {
-				gridCell = (UnkBuildGridCell *) D_800522A8;
+				gridCell = (UnkBuildGridCell *) &buildingInstances[254];
 				for (j = 0xFE; j >= 0; j--) {
 					if ((inst->zCoord >> 8) == (gridCell->unk4 >> 8)) {
 						idx = inst->xCoord - gridCell->unk0;
@@ -646,7 +646,7 @@ void func_8011694C_1258FC(void) {
 			} else if ((inst->unk8 & 3) == 3) {
 				bestDelta = -0x10000;
 				bestGrid = 0xFF;
-				gridCell = (UnkBuildGridCell *) D_800522A8;
+				gridCell = (UnkBuildGridCell *) &buildingInstances[254];
 				for (j = 0xFE; j >= 0; j--) {
 					if ((inst->xCoord >> 8) == (gridCell->unk0 >> 8)) {
 						idx = inst->zCoord - gridCell->unk4;
