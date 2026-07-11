@@ -864,15 +864,9 @@ extern VehicleInstance vehicleInstances[0x80]; // 8004DCD0
 extern s32 D_80050AD0;
 extern s32 D_80050AD4;
 extern BuildingInstance buildingInstances[0xFF]; // 0x80050AD8
-// D_80050ADA overlaps with buildingInstances[n].yCoord (at +2)
-// D_80050ADE overlaps with buildingInstances[n].buildingType (at +6)
-// D_80050C0B overlaps with buildingInstances[12].door2InteriorId
-// D_80051008 overlaps with buildingInstances[55].unk8
-// D_80051038 overlaps with buildingInstances[57].unk8
-// D_800510B0 overlaps with buildingInstances[62].unk8
-// D_800510C8 overlaps with buildingInstances[63].unk8
-// D_800519E7 overlaps with buildingInstances[160].unk15
-// D_800522A8 overlaps with buildingInstances[254]
+
+// de-dupped up to here
+
 extern Unk800522C0 D_800522C0[0x20];
 extern Unk800522C0 D_8005252C;
 extern s32 D_80052540;
