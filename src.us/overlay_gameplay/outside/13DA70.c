@@ -172,114 +172,102 @@ void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 	} while (arg1[i++] != 0U);
 }
 
-// CURRENT(425)
-#ifdef NON_MATCHING
 // Load letter textures for end of stage window
-s32 func_8012EC3C_13DBEC(s32 arg0)
+s32 func_8012EC3C_13DBEC(u8 ch)
 {
-	u16 ch;
 	s32 index;
-
-	ch = arg0 & 0xFF;
-	if (ch == 0x20) {
+	if (ch == 0x20)
+	{
 		return 0;
 	}
-
-	if (ch == 0xE9) {
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, ((u32) D_505A0A0 & 0x1FFFFFFF));
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	if (ch == 0xE9)
+	{
+		gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, ((u32)D_505A0A0) & 0x1FFFFFFF);
+		gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
 		gDPLoadSync(D_8005BB2C++);
-		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+		gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
 		gDPPipeSync(D_8005BB2C++);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
-		return 1;
-	} else if (ch == 0xE8) {
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, ((u32) D_505A2A0 & 0x1FFFFFFF));
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPLoadSync(D_8005BB2C++);
-		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
-		return 1;
-	} else if (ch == 0x26) {
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, ((u32) D_5059EA0 & 0x1FFFFFFF));
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPLoadSync(D_8005BB2C++);
-		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
-		return 1;
-	} else if (ch == 0x3A) {
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, ((u32) D_505A4A0 & 0x1FFFFFFF));
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPLoadSync(D_8005BB2C++);
-		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+		gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_4b, 2, 0, 0, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
+		gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 31 << 2, 31 << 2);
 		return 1;
 	}
-
-	if ((ch >= 0x41) && (ch < 0x5B)) {
+	else if (ch == 0xE8)
+	{
+		gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, ((u32)D_505A2A0) & 0x1FFFFFFF);
+		gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_4b, 2, 0, 0, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
+		gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 31 << 2, 31 << 2);
+		return 1;
+	}
+	else if (ch == 0x26)
+	{
+		gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, ((u32)D_5059EA0) & 0x1FFFFFFF);
+		gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_4b, 2, 0, 0, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
+		gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 31 << 2, 31 << 2);
+		return 1;
+	}
+	else if (ch == 0x3A)
+	{
+		gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, ((u32)D_505A4A0) & 0x1FFFFFFF);
+		gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_4b, 2, 0, 0, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
+		gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 31 << 2, 31 << 2);
+		return 1;
+	}
+	if ((ch >= 0x41) && (ch < 0x5B))
+	{
 		index = ch - 0x41;
-	} else {
+	}
+	else
+	{
 		index = ch - 0x61;
 	}
-
-	if ((index >= 0) && (index < 0x1A)) {
+	if ((index >= 0) && (index < 0x1A))
+	{
 		u32 *texture;
-
 		texture = &D_80140BC8_14FB78[index];
-		if (*texture != 0) {
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (*texture & 0x1FFFFFFF));
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		if ((*texture) != 0)
+		{
+			gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, (*texture) & 0x1FFFFFFF);
+			gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
 			gDPLoadSync(D_8005BB2C++);
-			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+			gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
 			gDPPipeSync(D_8005BB2C++);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+			gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_4b, 2, 0, 0, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
+			gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 31 << 2, 31 << 2);
 			return 1;
 		}
 		return 0;
 	}
-
 	index = ch - 0x30;
-	if ((index >= 0) && (index < 0xA)) {
+	if ((index >= 0) && (index < 0xA))
+	{
 		u32 *texture;
-
 		texture = &D_80140BA0_14FB50[index];
-		if (*texture != 0) {
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (*texture & 0x1FFFFFFF));
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		if ((*texture) != 0)
+		{
+			gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, (*texture) & 0x1FFFFFFF);
+			gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
 			gDPLoadSync(D_8005BB2C++);
-			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+			gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
 			gDPPipeSync(D_8005BB2C++);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+			gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_4b, 2, 0, 0, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
+			gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 31 << 2, 31 << 2);
 			return 1;
 		}
 	}
-
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012EC3C_13DBEC.s")
-#endif
 
 // https://decomp.me/scratch/RaB1d
 // This does match but doesn't compile right at the moment:

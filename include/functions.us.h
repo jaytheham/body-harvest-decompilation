@@ -1348,7 +1348,6 @@ void func_8007EBB0_4F060(void);
 void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4);
 s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007C1DC *arg4);
 void func_8012F2DC_13E28C(s32 arg0, s32 arg1, s32 arg2);
-s32 func_8012EC3C_13DBEC(s32 arg0);
 void func_8012F24C_13E1FC(u8 *arg0, s32 arg1);
 s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, u8 arg7);
 void func_80078720_876D0(AlienInstance *alien);
