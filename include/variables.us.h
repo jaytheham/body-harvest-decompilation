@@ -180,12 +180,7 @@ extern f32 D_80031418;
 extern f32 D_8003141C;
 extern s32 D_80031420; // "game state"
 extern s32 D_80031420_32020;
-extern u32 D_80031424[];
-extern s32 D_8003142C;
-extern s32 D_80031430[];
-extern s32 D_8003144C;
-extern s32 D_80031450;
-extern s32 D_80031454;
+extern s32 D_80031424[];
 extern Unk80031424 D_80031474;
 extern s32 D_8003147C;
 extern s32 D_800314A0;

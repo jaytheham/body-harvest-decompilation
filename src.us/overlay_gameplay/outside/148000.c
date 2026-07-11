@@ -194,17 +194,16 @@ void func_8013958C_14853C(void) {
 
 	D_80031474.unk2C = 0;
 	D_80031474.unk30 = 1;
-	val = D_8003142C;
-	weaponOffset = (u8 *)&D_80031424;
-	weapon1 = *(s32 *)(weaponOffset + 0x2C);
-	src = &D_80031430;
+	val = D_80031424[2];
+	weapon1 = D_80031424[11];
+	src = &D_80031424[3];
 	if (weapon1 == val) {
-		D_800314A0 = D_8003147C;
+		D_80031474.unk2C = D_80031474.pad0[2];
 	}
-	weapon2 = *(s32 *)(weaponOffset + 0x30);
+	weapon2 = D_80031424[12];
 	weaponOffset = (u8 *)0xC;
 	if (weapon2 == val) {
-		D_800314A4 = D_8003147C;
+		D_80031474.unk30 = D_80031474.pad0[2];
 	}
 
 loop:
@@ -226,7 +225,7 @@ loop:
 	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 0xC);
 
 	weaponOffset += 0x10;
-	if (src != &D_80031450) goto loop;
+	if (src != &D_80031424[11]) goto loop;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013958C_14853C.s")
@@ -248,7 +247,7 @@ void func_801396A8_148658(s32 arg0) {
 	}
 	func_8013B004_149FB4();
 	func_800EA2B0_F9260(D_80047948);
-	vehicleSpecs[arg0].weapon1 = D_80031450;
+	vehicleSpecs[arg0].weapon1 = D_80031424[11];
 	D_801601DC = 0;
 	D_801601E4 = 0;
 }
@@ -258,8 +257,8 @@ void func_80139778_148728(void) {
 	VehicleSpec *temp_v0;
 	
 	D_801601D4 = D_801601D0;
-	((Unk80031424*)D_80031424)->unk2C = (s32) vehicleSpecs[D_80052B34->unk1A].weapon1;
-	((Unk80031424*)D_80031424)->unk30 = (s32) vehicleSpecs[D_80052B34->unk1A].weapon2;
+	D_80031424[11] = (s32) vehicleSpecs[D_80052B34->unk1A].weapon1;
+	D_80031424[12] = (s32) vehicleSpecs[D_80052B34->unk1A].weapon2;
 	temp_v1 = D_80052B34->unk1A;
 	if (temp_v1 == 0x13) {
 		func_80139460_148410();
@@ -274,9 +273,9 @@ void func_80139778_148728(void) {
 		if (!(temp_v0->unk4C & 0x04000000)) {
 			osSyncPrintf(&D_80145A70_154A20, temp_v0->weapon1, &D_80031424); // Give vehicle its weapon %d
 			func_80139460_148410();
-			if (D_80031450) {
+			if (D_80031424[11]) {
 				func_801391DC_14818C(0xB, -0x8000);
-				if (D_80031454 && ((currentLevel != LEVEL_GREECE) || (D_80052B34->unk1A != 8))) {
+				if (D_80031424[12] && ((currentLevel != LEVEL_GREECE) || (D_80052B34->unk1A != 8))) {
 					func_801391DC_14818C(0xC, -0x8000);
 				}
 
@@ -373,19 +372,19 @@ void func_80139B34_148AE4(void) {
 	D_801601E8 = 0;
 	switch (currentLevel) {
 	default:
-		D_8003144C = 0;
+		D_80031424[10] = 0;
 		return;
 	case 1:
-		D_8003144C = 0x5E;
+		D_80031424[10] = 0x5E;
 		return;
 	case 2:
-		D_8003144C = 0x5B;
+		D_80031424[10] = 0x5B;
 		return;
 	case 3:
-		D_8003144C = 0x5A;
+		D_80031424[10] = 0x5A;
 		return;
 	case 4:
-		D_8003144C = 0x5C;
+		D_80031424[10] = 0x5C;
 		return;
 	}
 }
