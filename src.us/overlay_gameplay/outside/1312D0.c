@@ -1193,7 +1193,6 @@ void func_80125C48_134BF8(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-// CURRENT(56)
 #ifdef NON_MATCHING
 void func_80125CA0_134C50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 	s32 unused0;
@@ -1218,7 +1217,6 @@ void func_80125CA0_134C50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80125CA0_134C50.s")
 #endif
 
-// CURRENT(200)
 #ifdef NON_MATCHING
 Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, f32 *arg6) {
 	extern Cheat cheatData[];
@@ -1990,7 +1988,6 @@ s32 func_80127C08_136BB8(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80127C08_136BB8.s")
 #endif
 
-// CURRENT(120)
 #ifdef NON_MATCHING
 void func_80127D88_136D38(BuildingInstance *arg0, VehicleInstance *arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7) {
 	u8 sp3B[5];
