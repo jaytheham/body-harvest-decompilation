@@ -175,7 +175,7 @@ DebugPropEntry D_8013CBC0_14BB70[] = {
 };
 
 // https://decomp.me/scratch/tIoTN
-// CURRENT(7557)
+// CURRENT(8220)
 #ifdef NON_MATCHING
 // Debug - display property
 void func_80095100_A40B0(s16 arg0, s16 arg1)
@@ -188,7 +188,7 @@ void func_80095100_A40B0(s16 arg0, s16 arg1)
   if (arg0 < 0x20)
   {
 	v0 = &D_8013CBC0[arg0];
-	v1 = (((u8 *) vehicleSpecs) + ((D_80052B34->unk1A * 7) << 4)) + ((v0->unk8 - v0->unk4) & 0xFFFFFFFFu);
+	v1 = (u8 *)&vehicleSpecs[D_80052B34->unk1A] + ((v0->unk8 - v0->unk4) & 0xFFFFFFFFu);
   }
   else if (arg0 < 0x35)
   {
@@ -203,7 +203,7 @@ void func_80095100_A40B0(s16 arg0, s16 arg1)
   else if (arg0 < 0x51)
   {
 	v0 = &D_8013CBC0[arg0];
-	v1 = (((u8 *) alienSpecs) + (((((D_8013CBA4 * 4) - D_8013CBA4) * 4) + D_8013CBA4) * 8)) + (v0->unk8 - v0->unk4);
+	v1 = (u8 *)&alienSpecs[D_8013CBA4] + (v0->unk8 - v0->unk4);
   }
   else if (arg0 < 0x60)
   {
@@ -213,42 +213,42 @@ void func_80095100_A40B0(s16 arg0, s16 arg1)
   else if (arg0 < 0x64)
   {
 	v0 = &D_8013CBC0[arg0];
-	v1 = (((u8 *) D_8003E290) + (D_8013CBBC << 4)) + (v0->unk8 - v0->unk4);
+	v1 = (u8 *)&D_8003E290[D_8013CBBC] + (v0->unk8 - v0->unk4);
   }
   else
   {
 	v0 = &D_8013CBC0[arg0];
-	v1 = ((((u8 *) D_80140768) + (((vehicleSpecs[D_80052B34->unk1A].unk55 * 4) + vehicleSpecs[D_80052B34->unk1A].unk55) * 2)) + v0->unk8) - v0->unk4;
+	v1 = (u8 *)&D_80140768_14F718[vehicleSpecs[D_80052B34->unk1A].unk55] + v0->unk8 - v0->unk4;
   }
   drawText(D_801421A0, 3, arg1, v0->unk0, 0x1C, arg1);
   switch (v0->type)
   {
 	case 0:
-	  s0 = *((u8 *) v1);
+	  s0 = *(u8 *)v1;
 	  break;
 	case 1:
-	  s0 = *((s8 *) v1);
+	  s0 = *(s8 *)v1;
 	  break;
 	case 2:
 	case 5:
-	  s0 = *((s16 *) v1);
+	  s0 = *(s16 *)v1;
 	  break;
 	case 3:
-	  s0 = *((s32 *) v1);
+	  s0 = *(s32 *)v1;
 	  break;
 	case 4:
-	  s0 = (s32) ((f32) (((f64) ((f32) (*((f32 *) v1)))) * D_80142328));
+	  s0 = (s32)(f32)((f64)(f32)(*(f32 *)v1) * D_80142328);
 	  break;
 	case 6:
-	  sp38 = *((s8 *) v1);
-	  s0 = *((s8 *) (v1 + 1));
+	  sp38 = *(s8 *)v1;
+	  s0 = *(s8 *)(v1 + 1);
 	  break;
 	case 7:
-	  sp38 = *((s16 *) v1);
-	  s0 = *((s16 *) (v1 + 4));
+	  sp38 = *(s16 *)v1;
+	  s0 = *(s16 *)(v1 + 4);
 	  break;
 	default:
-	  s0 = *((s32 *) v1);
+	  s0 = *(s32 *)v1;
 	  break;
   }
 
