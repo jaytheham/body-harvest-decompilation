@@ -846,7 +846,7 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 		posX = (s16)(baseX + ((slotCol * 32.0) * arg2));
 		i = (i + 1) & 0xFF;
 		posY = (s16)(baseY + ((slotRow * 32.0) * arg3));
-		texIndex = ((s32*)&D_80031474)[weapon];
+		texIndex = D_80031474[weapon];
 		sizeX = (s16)(12.0f * arg2);
 		sizeY = (s16)(12.0f * arg3);
 
@@ -912,7 +912,7 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	posX = arg0;
 	posY = arg1;
 
-	textureIndex = ((s32*)&D_80031474)[weaponType];
+	textureIndex = D_80031474[weaponType];
 
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);

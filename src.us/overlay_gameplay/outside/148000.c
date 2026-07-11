@@ -183,48 +183,48 @@ void func_801394DC_14848C(void)
 }
 
 // https://decomp.me/scratch/cGhwK
-// CURRENT(585)
+// CURRENT(5000)
 #ifdef NON_MATCHING
 void func_8013958C_14853C(void) {
 	s32 weapon1;
 	s32 *src;
 	s32 weapon2;
-	u8 *weaponOffset;
+	s32 idx;
 	s32 val;
 
-	D_80031474.unk2C = 0;
-	D_80031474.unk30 = 1;
+	D_80031474[11] = 0;
+	D_80031474[12] = 1;
 	val = D_80031424[2];
 	weapon1 = D_80031424[11];
 	src = &D_80031424[3];
 	if (weapon1 == val) {
-		D_80031474.unk2C = D_80031474.pad0[2];
+		D_80031474[11] = D_80031474[2];
 	}
 	weapon2 = D_80031424[12];
-	weaponOffset = (u8 *)0xC;
+	idx = 3;
 	if (weapon2 == val) {
-		D_80031474.unk30 = D_80031474.pad0[2];
+		D_80031474[12] = D_80031474[2];
 	}
 
 loop:
 	val = src[0];
-	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset);
-	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset);
+	if (weapon1 == val) D_80031474[11] = D_80031474[idx + 0];
+	if (weapon2 == val) D_80031474[12] = D_80031474[idx + 0];
 
 	val = src[1];
-	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 4);
-	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 4);
+	if (weapon1 == val) D_80031474[11] = D_80031474[idx + 1];
+	if (weapon2 == val) D_80031474[12] = D_80031474[idx + 1];
 
 	val = src[2];
-	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 8);
-	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 8);
+	if (weapon1 == val) D_80031474[11] = D_80031474[idx + 2];
+	if (weapon2 == val) D_80031474[12] = D_80031474[idx + 2];
 
 	val = src[3];
 	src += 4;
-	if (weapon1 == val) D_80031474.unk2C = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 0xC);
-	if (weapon2 == val) D_80031474.unk30 = *(s32 *)((u8 *)&D_80031474 + (s32)weaponOffset + 0xC);
+	if (weapon1 == val) D_80031474[11] = D_80031474[idx + 3];
+	if (weapon2 == val) D_80031474[12] = D_80031474[idx + 3];
 
-	weaponOffset += 0x10;
+	idx += 4;
 	if (src != &D_80031424[11]) goto loop;
 }
 #else
@@ -712,7 +712,7 @@ void func_8013A764_149714(u8 arg0) {
 				 PRIMITIVE, K4, TEXEL0, 0, 0, 0, PRIM_LOD_FRAC, PRIMITIVE);
 
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1,
-				  D_8025CCC0 + (((s32*) &D_80031474)[weaponSlots[item->weaponSlot]] * 0x240));
+				  D_8025CCC0 + (D_80031474[weaponSlots[item->weaponSlot]] * 0x240));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 			   G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);

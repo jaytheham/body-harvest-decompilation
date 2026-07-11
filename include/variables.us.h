@@ -181,10 +181,7 @@ extern f32 D_8003141C;
 extern s32 D_80031420; // "game state"
 extern s32 D_80031420_32020;
 extern s32 D_80031424[];
-extern Unk80031424 D_80031474;
-extern s32 D_8003147C;
-extern s32 D_800314A0;
-extern s32 D_800314A4;
+extern s32 D_80031474[];
 extern s8 D_800314C4;
 extern s32 D_800314C8_320C8;
 extern OSMesg D_800314CC;
