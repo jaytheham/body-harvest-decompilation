@@ -318,7 +318,7 @@ void func_80095530_A44E0(s16 arg0) {
 	propIndex = arg0;
 	if (propIndex < 0x20) {
 		entry = &D_8013CBC0_14BB70[propIndex];
-		propPtr = (u8 *) vehicleSpecs + ((D_80052B20->unk1A * 7) << 4) + (entry->unk8 - entry->unk4);
+		propPtr = (u8 *)&vehicleSpecs[D_80052B20->unk1A] + (entry->unk8 - entry->unk4);
 	} else if (arg0 < 0x35) {
 		entry = &D_8013CBC0_14BB70[arg0];
 		propPtr = (u8 *) entry->unk4;
@@ -328,16 +328,16 @@ void func_80095530_A44E0(s16 arg0) {
 		propPtr = (u8 *)&D_801601F0[alienIndex] + (entry->unk8 - entry->unk4);
 	} else if (arg0 < 0x51) {
 		entry = &D_8013CBC0_14BB70[arg0];
-		propPtr = (u8 *) alienSpecs + (((D_8013CBA4_14BB54 * 3 * 4) + D_8013CBA4_14BB54) * 8) + (entry->unk8 - entry->unk4);
+		propPtr = (u8 *)&alienSpecs[D_8013CBA4_14BB54] + (entry->unk8 - entry->unk4);
 	} else if (arg0 < 0x60) {
 		entry = &D_8013CBC0_14BB70[arg0];
 		propPtr = (u8 *) entry->unk4;
 	} else if (arg0 < 0x64) {
 		entry = &D_8013CBC0_14BB70[arg0];
-		propPtr = (u8 *) D_8003E290 + (D_8013CBBC_14BB6C << 4) + (entry->unk8 - entry->unk4);
+		propPtr = (u8 *)&D_8003E290[D_8013CBBC_14BB6C] + (entry->unk8 - entry->unk4);
 	} else {
 		entry = &D_8013CBC0_14BB70[arg0];
-		propPtr = (u8 *) D_80140768_14F718 + ((vehicleSpecs[D_80052B34->unk1A].unk55 * 4 + vehicleSpecs[D_80052B34->unk1A].unk55) * 2) + (entry->unk8 - entry->unk4);
+		propPtr = (u8 *)&D_80140768_14F718[vehicleSpecs[D_80052B34->unk1A].unk55] + (entry->unk8 - entry->unk4);
 	}
 
 	entryNav = (DebugPropEntryNav *) entry;
