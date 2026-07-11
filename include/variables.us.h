@@ -2159,7 +2159,7 @@ extern TileCoord D_801475F0[];
 extern u8 D_801475F0_1565A0[];
 extern TileEntry D_801479B0[];
 extern u8 D_801479B0_156960[];
-extern u8 D_80147C30_156BE0[];
+extern Unk8014FD30Type D_80147C30_156BE0[][6];
 extern const u8 D_80148390_157340[];
 extern s16 D_801483A4[];
 extern Unk80148620 D_80148620_1575D0[];
@@ -2399,7 +2399,7 @@ extern s16 (*D_8014F8A0)[256]; /* pointer to world tile data (256x256 s16 array)
 extern Unk800B753CEntry D_8014F8A8[];
 extern u16 D_8014FD28;
 extern u16 D_8014FD2A;
-extern Unk8014FD30Type D_8014FD30; // Current stage shield wall bounds. actually an array of 3, and Unk8014FD30Type should be 8 bytes? Either that or the later 8 s16s should be 2 arrays of 4 s16s
+extern Unk8014FD30Type D_8014FD30; // Current stage shield wall bounds (3 bounding boxes: 1 main + 2 sub-regions)
 extern u8 D_8014FD48[];
 extern u16 D_8014FDC8;
 extern u8 D_8014FDD0[];

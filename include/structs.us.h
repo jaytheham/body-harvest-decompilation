@@ -2338,18 +2338,15 @@ typedef struct {
 } Unk8003E290Entry; /* 0x10 bytes */
 
 typedef struct {
-	/* 0x00 */ s16 unk0; // Bounding wall min X?
-	/* 0x02 */ s16 unk2; // Bounding wall min Z?
-	/* 0x04 */ s16 unk4; // Bounding wall max X?
-	/* 0x06 */ s16 unk6; // Bounding wall max Z?
-	/* 0x08 */ s16 unk8;
-	/* 0x0A */ s16 unkA;
-	/* 0x0C */ s16 unkC;
-	/* 0x0E */ s16 unkE;
-	/* 0x10 */ s16 unk10;
-	/* 0x12 */ s16 unk12;
-	/* 0x14 */ s16 unk14;
-	/* 0x16 */ s16 unk16;
+	/* 0x00 */ s16 minX;
+	/* 0x02 */ s16 minZ;
+	/* 0x04 */ s16 maxX;
+	/* 0x06 */ s16 maxZ;
+} BoundingBox; /* 0x08 bytes - Shield wall bounding box */
+
+typedef struct {
+	/* 0x00 */ BoundingBox main;   /* Main shield wall bounds */
+	/* 0x08 */ BoundingBox sub[2]; /* Overlapping sub-regions (0 = empty if minX == maxX) */
 } Unk8014FD30Type; /* 0x18 bytes Stage Shield Wall bounds */
 
 typedef struct {

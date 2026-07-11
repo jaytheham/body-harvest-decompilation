@@ -230,36 +230,39 @@ s32 func_800B0C4C_BFBFC(s32 arg0, s32 arg1) {
 
 // Set current shield wall bounds
 void func_800B0C80_BFC30(void) {
-	D_8014FD30 = *(Unk8014FD30Type *)(D_80147C30_156BE0 + currentLevel * 0x90 + D_80047F94 * 0x18 - 0x90);
+	D_8014FD30 = D_80147C30_156BE0[(currentLevel - 1)][D_80047F94];
 }
 
 // Is target position outside the current stage shield wall bounds, or overlapping one of the 2 sub-regions?
 // Each stage has 1 main shield wall, and 0-2 overlapping sub-regions
-s32 func_800B0D10_BFCC0(s32 xPosition, s32 zPosition, s32 bufferRadius) {
-	Unk8014FD30Type *a2;
-	s32 minX, maxX, minZ, maxZ;
+s32 func_800B0D10_BFCC0(s32 xPosition, s32 zPosition, s32 bufferRadius)
+{
+	s32 minX;
+	s32 maxX;
+	s32 minZ;
+	s32 maxZ;
 	s32 index;
-
-	if (D_80052ACA == 2) {
+	if (D_80052ACA == 2)
+	{
 		return 0;
 	}
-	
-	if (minX = xPosition - bufferRadius, minX < D_8014FD30.unk0
-		|| (maxX = xPosition + bufferRadius, D_8014FD30.unk4 < maxX)
-		|| (minZ = zPosition - bufferRadius, minZ < D_8014FD30.unk2)
-		|| (maxZ = zPosition + bufferRadius, D_8014FD30.unk6 < maxZ)) {
-		return 1; // Outside the main shield wall zone entirely
+	if (minX = xPosition - bufferRadius, (((minX < D_8014FD30.main.minX) || ((maxX = xPosition + bufferRadius, D_8014FD30.main.maxX < maxX))) || ((minZ = zPosition - bufferRadius, minZ < D_8014FD30.main.minZ))) || ((maxZ = zPosition + bufferRadius, D_8014FD30.main.maxZ < maxZ)))
+	{
+		return 1;
 	}
-	for (index = 0; index != 2; index++) {
-		a2 = (Unk8014FD30Type *)((u8 *)&D_8014FD30 + index * 8);
-		if (a2->unkC == a2->unk8) {
+	for (index = 0; index != 2; index++)
+	{
+		if (D_8014FD30.sub[index].minX == D_8014FD30.sub[index].maxX)
+		{
 			break;
 		}
-		if (a2->unk8 < maxX && minX < a2->unkC && a2->unkA < maxZ && minZ < a2->unkE) {
-			return index + 2; // Overlapping sub-region
+		if ((((D_8014FD30.sub[index].minX < maxX) && (minX < D_8014FD30.sub[index].maxX)) && (D_8014FD30.sub[index].minZ < maxZ)) && (minZ < D_8014FD30.sub[index].maxZ))
+		{
+			return index + 2;
 		}
 	}
-	return 0; // Inside the main shield wall zone, not overlapping any sub-region
+
+	return 0;
 }
 
 // Get direction to bounce from shield wall if outside bounds or overlapping sub-region
@@ -269,28 +272,31 @@ s32 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 leve
 	s32 overlapX;
 
 	if (levelBoundsCheckResult == 1) {
-		if (xPosition - bufferRadius < D_8014FD30.unk0) {
+		if (xPosition - bufferRadius < D_8014FD30.main.minX) {
 			return 0x4000;
 		}
-		if (D_8014FD30.unk4 < xPosition + bufferRadius) {
+		if (D_8014FD30.main.maxX < xPosition + bufferRadius) {
 			return -0x4000;
 		}
-		if (zPosition - bufferRadius < D_8014FD30.unk2) {
+		if (zPosition - bufferRadius < D_8014FD30.main.minZ) {
 			return -0x8000;
 		}
-		if (D_8014FD30.unk6 < zPosition + bufferRadius) {
+		if (D_8014FD30.main.maxZ < zPosition + bufferRadius) {
 			return 0;
 		}
 	}
 
-	extW = *((s16 *)((u8 *)&D_8014FD30 + levelBoundsCheckResult * 8) - 2) - *((s16 *)((u8 *)&D_8014FD30 + levelBoundsCheckResult * 8) - 4);
-	extH = *((s16 *)((u8 *)&D_8014FD30 + levelBoundsCheckResult * 8) - 1) - *((s16 *)((u8 *)&D_8014FD30 + levelBoundsCheckResult * 8) - 3);
-	extW >>= 1;
-	extH >>= 1;
-	extW += bufferRadius;
-	extH += bufferRadius;
-	dx = (xPosition + bufferRadius) - *((s16 *)((u8 *)&D_8014FD30 + levelBoundsCheckResult * 8) - 4) - extW;
-	dz = (zPosition + bufferRadius) - *((s16 *)((u8 *)&D_8014FD30 + levelBoundsCheckResult * 8) - 3) - extH;
+	{
+		s32 subIdx = levelBoundsCheckResult - 2;
+		extW = D_8014FD30.sub[subIdx].maxX - D_8014FD30.sub[subIdx].minX;
+		extH = D_8014FD30.sub[subIdx].maxZ - D_8014FD30.sub[subIdx].minZ;
+		extW >>= 1;
+		extH >>= 1;
+		extW += bufferRadius;
+		extH += bufferRadius;
+		dx = (xPosition + bufferRadius) - D_8014FD30.sub[subIdx].minX - extW;
+		dz = (zPosition + bufferRadius) - D_8014FD30.sub[subIdx].minZ - extH;
+	}
 
 	if (dx < 0) {
 		overlapX = dx + extW;
@@ -321,40 +327,38 @@ s32 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 leve
 s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 	Unk8014FD30Type *a2;
 	Unk8014FD30Type *a3;
-	Unk8014FD30Type *t1;
+	BoundingBox *sub;
 	s32 cl;
 	s32 v1;
-	s32 t8;
 	s32 t0;
 	s16 v0;
 	s16 t2;
 
 	v1 = 0;
 	cl = currentLevel - 1;
-	a2 = (Unk8014FD30Type *)((u8 *)&D_80147C30_156BE0 + cl * 0x90);
-	for (a3 = a2; v1 != 6; v1++, a3 = (Unk8014FD30Type *)((u8 *)a3 + 0x18)) {
-		if (arg0 < a3->unk0 || a3->unk4 < arg0 || a3->unk2 >= arg1) {
+	a2 = D_80147C30_156BE0[cl];
+	for (a3 = a2; v1 != 6; v1++, a3++) {
+		if (arg0 < a3->main.minX || a3->main.maxX < arg0 || a3->main.minZ >= arg1) {
 			continue;
 		}
 
-		t8 = (v1 << 2) - v1;
-		t0 = t8 * 0;
-		if (arg1 >= a3->unk6) {
+		t0 = 0;
+		if (arg1 >= a3->main.maxZ) {
 			continue;
 		}
-		t1 = (Unk8014FD30Type *)((u8 *)a2 + (t8 << 3));
+		sub = &a3->sub[0];
 		for (;;) {
-			v0 = t1->unk8;
-			t2 = t1->unkC;
+			v0 = sub->minX;
+			t2 = sub->maxX;
 			if (v0 == t2) {
 				return (u8)v1;
 			}
-			if ((arg0 < v0) || (t2 < arg0) || (t1->unkA >= arg1) || (arg1 >= t1->unkE)) {
+			if ((arg0 < v0) || (t2 < arg0) || (sub->minZ >= arg1) || (arg1 >= sub->maxZ)) {
 				if (t0 == 8) {
 					return (u8)v1;
 				}
 				t0 += 8;
-				t1 = (Unk8014FD30Type *)((u8 *)t1 + 8);
+				sub++;
 				if (t0 != 0x10) {
 					continue;
 				}
@@ -398,14 +402,14 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 	*arg6 = 0;
 	temp_v0 = *arg3;
 	var_t3 = 0;
-	if (D_8014FD30.unk4 < temp_v0) {
+	if (D_8014FD30.main.maxX < temp_v0) {
 		if (var_t0 == 0) {
 			goto block_43;
 		}
 		temp_f14 = var_t0;
-		*arg3 = D_8014FD30.unk4;
+		*arg3 = D_8014FD30.main.maxX;
 		var_t3 = 1;
-		temp_f2 = (D_8014FD30.unk4 - arg0) / temp_f14;
+		temp_f2 = (D_8014FD30.main.maxX - arg0) / temp_f14;
 		temp_f0 = var_t2 * temp_f2;
 		temp_f12 = var_t1 * temp_f2;
 		*arg4 = temp_t7 + temp_f0;
@@ -416,14 +420,14 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 		var_t1 = temp_f12;
 		goto block_6;
 	}
-	if (temp_v0 < D_8014FD30.unk0) {
+	if (temp_v0 < D_8014FD30.main.minX) {
 		if (var_t0 == 0) {
 			goto block_43;
 		}
 		temp_f14 = var_t0;
-		*arg3 = D_8014FD30.unk0;
+		*arg3 = D_8014FD30.main.minX;
 		var_t3 = 1;
-		temp_f2 = (D_8014FD30.unk0 - arg0) / temp_f14;
+		temp_f2 = (D_8014FD30.main.minX - arg0) / temp_f14;
 		temp_f0 = var_t2 * temp_f2;
 		temp_f12 = var_t1 * temp_f2;
 		*arg4 = temp_t7 + temp_f0;
@@ -436,13 +440,13 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 
 block_6:
 	temp_v0_2 = *arg5;
-	if (D_8014FD30.unk6 < temp_v0_2) {
+	if (D_8014FD30.main.maxZ < temp_v0_2) {
 		if (var_t1 == 0) {
 			goto block_43;
 		}
 		temp_f14 = var_t1;
 		var_t3 = 1;
-		temp_f2 = (D_8014FD30.unk6 - arg2) / temp_f14;
+		temp_f2 = (D_8014FD30.main.maxZ - arg2) / temp_f14;
 		temp_f12 = var_t0 * temp_f2;
 		temp_f0 = var_t2 * temp_f2;
 		*arg3 = arg0 + temp_f12;
@@ -450,39 +454,39 @@ block_6:
 		*arg4 = temp_t7 + temp_f0;
 		var_t2 = temp_f0;
 		var_t1 = temp_f14 * temp_f2;
-		*arg5 = D_8014FD30.unk6;
+		*arg5 = D_8014FD30.main.maxZ;
 		goto block_12;
 	}
-	if (temp_v0_2 < D_8014FD30.unk2) {
+	if (temp_v0_2 < D_8014FD30.main.minZ) {
 		if (var_t1 == 0) {
 			goto block_43;
 		}
 		temp_f14 = var_t1;
 		var_t3 = 1;
-		temp_f2 = (D_8014FD30.unk2 - arg2) / temp_f14;
+		temp_f2 = (D_8014FD30.main.minZ - arg2) / temp_f14;
 		temp_f12 = var_t0 * temp_f2;
 		temp_f0 = var_t2 * temp_f2;
 		*arg3 = arg0 + temp_f12;
 		var_t0 = temp_f12;
 		*arg4 = temp_t7 + temp_f0;
 		var_t2 = temp_f0;
-		*arg5 = D_8014FD30.unk2;
+		*arg5 = D_8014FD30.main.minZ;
 		var_t1 = temp_f14 * temp_f2;
 
 block_12:
 		*arg6 = 0;
 	}
 
-	var_v1 = &D_8014FD30;
+	var_v1 = &D_8014FD30.sub[0];
 	var_a3 = 0;
 	var_a2 = 0;
 loop_14:
-	temp_a0 = var_v1->unk8;
-	temp_a1 = var_v1->unkC;
+	temp_a0 = var_v1->minX;
+	temp_a1 = var_v1->maxX;
 	if (temp_a0 == temp_a1) {
 		goto block_42;
 	}
-	if ((temp_a0 < arg0) && (arg0 < temp_a1) && (var_v1->unkA < arg2) && (arg2 < var_v1->unkE)) {
+	if ((temp_a0 < arg0) && (arg0 < temp_a1) && (var_v1->minZ < arg2) && (arg2 < var_v1->maxZ)) {
 		*arg3 = arg0;
 		*arg4 = temp_t7;
 		*arg5 = arg2;
@@ -504,7 +508,7 @@ loop_14:
 			temp_f12 = var_t1 * temp_f0;
 			temp_v0_4 = arg2 + temp_f12;
 			var_a3 = temp_v0_4;
-			if ((var_v1->unkA < temp_v0_4) && (temp_v0_4 < var_v1->unkE)) {
+			if ((var_v1->minZ < temp_v0_4) && (temp_v0_4 < var_v1->maxZ)) {
 				*arg3 = var_a2;
 				var_t3 = 1;
 				temp_f0 = var_t2 * temp_f0;
@@ -522,9 +526,9 @@ loop_14:
 		temp_v0_3 = *arg5;
 		temp_f14 = var_t1;
 		if (arg2 < temp_v0_3) {
-			var_a3 = var_v1->unkA;
+			var_a3 = var_v1->minZ;
 		} else if (temp_v0_3 < arg2) {
-			var_a3 = var_v1->unkE;
+			var_a3 = var_v1->maxZ;
 		}
 		temp_f0 = (var_a3 - arg2) / temp_f14;
 		if ((temp_f0 > 0.0f) && (temp_f0 < 1.0f)) {
@@ -532,7 +536,7 @@ loop_14:
 			temp_f12 = var_t0 * temp_f0;
 			temp_v0_4 = arg0 + temp_f12;
 			var_a2 = temp_v0_4;
-			if ((var_v1->unk8 < temp_v0_4) && (temp_v0_4 < var_v1->unkC)) {
+			if ((var_v1->minX < temp_v0_4) && (temp_v0_4 < var_v1->maxX)) {
 				*arg3 = temp_v0_4;
 				var_t3 = 1;
 				temp_f0 = var_t2 * temp_f0;
@@ -546,8 +550,8 @@ loop_14:
 		}
 	}
 
-	var_v1 = (Unk8014FD30Type *) ((u8 *) var_v1 + 8);
-	if ((u8 *) var_v1 != ((u8 *) &D_8014FD30 + 0x10)) {
+	var_v1++;
+	if (var_v1 != &D_8014FD30.sub[2]) {
 		goto loop_14;
 	}
 block_42:
@@ -572,9 +576,9 @@ void func_800B165C_C060C(s32 arg0) {
 	s32 z;
 	s32 maxZ;
 
-	wall = (Unk8014FD30Type *)(D_80147C30_156BE0 + (currentLevel * 0x90) + (arg0 * 0x18) - 0x90);
-	z = wall->unk2 >> 10;
-	maxZ = wall->unk6 >> 10;
+	wall = &D_80147C30_156BE0[currentLevel - 1][arg0];
+	z = wall->main.minZ >> 10;
+	maxZ = wall->main.maxZ >> 10;
 
 	if (z < maxZ) {
 		do {
@@ -585,27 +589,27 @@ void func_800B165C_C060C(s32 arg0) {
 			s32 curX;
 			u8 *row;
 
-			minX = wall->unk0;
-			maxX = wall->unk4;
+			minX = wall->main.minX;
+			maxX = wall->main.maxX;
 
-			if (!(z < (wall->unkA >> 10))) {
-				if (z < (wall->unkE >> 10)) {
-					if (minX >= wall->unk8) {
-						minX = wall->unkC;
-					} else if (wall->unkC >= maxX) {
-						maxX = wall->unk8;
+			if (!(z < (wall->sub[0].minZ >> 10))) {
+				if (z < (wall->sub[0].maxZ >> 10)) {
+					if (minX >= wall->sub[0].minX) {
+						minX = wall->sub[0].maxX;
+					} else if (wall->sub[0].maxX >= maxX) {
+						maxX = wall->sub[0].minX;
 					}
 				}
 			}
 			{
-				s32 zUnk12 = wall->unk12 >> 10;
-				if (!(z < zUnk12)) {
-					s32 zUnk16 = wall->unk16 >> 10;
-					if (z < zUnk16) {
-						if (minX >= wall->unk10) {
-							minX = wall->unk14;
-						} else if (wall->unk14 >= maxX) {
-							maxX = wall->unk10;
+				s32 zSub1MinZ = wall->sub[1].minZ >> 10;
+				if (!(z < zSub1MinZ)) {
+					s32 zSub1MaxZ = wall->sub[1].maxZ >> 10;
+					if (z < zSub1MaxZ) {
+						if (minX >= wall->sub[1].minX) {
+							minX = wall->sub[1].maxX;
+						} else if (wall->sub[1].maxX >= maxX) {
+							maxX = wall->sub[1].minX;
 						}
 					}
 				}
@@ -640,7 +644,7 @@ void func_800B165C_C060C(s32 arg0) {
 			done_row:
 				;
 			}
-			maxZ = wall->unk6 >> 10;
+			maxZ = wall->main.maxZ >> 10;
 			z++;
 		} while (z < maxZ);
 	}

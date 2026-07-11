@@ -305,10 +305,10 @@ s32 func_80095F08_A4EB8(void) {
 	levelLimit = (D_80222A70 >> 5) & 0xFFFF;
 
 	if (currentLevel == 4) {
-		level4XMin = *((s16*) (D_80147C30_156BE0 + 0x1E0)) >> 8;
-		level4XMax = *((s16*) (D_80147C30_156BE0 + 0x1E4)) >> 8;
-		level4YMin = *((s16*) (D_80147C30_156BE0 + 0x1E2)) >> 8;
-		level4YMax = *((s16*) (D_80147C30_156BE0 + 0x1E6)) >> 8;
+		level4XMin = D_80147C30_156BE0[3][2].main.minX >> 8;
+		level4XMax = D_80147C30_156BE0[3][2].main.maxX >> 8;
+		level4YMin = D_80147C30_156BE0[3][2].main.minZ >> 8;
+		level4YMax = D_80147C30_156BE0[3][2].main.maxZ >> 8;
 	}
 
 	loopGuard = 0x10000;

@@ -1325,7 +1325,7 @@ const u8 D_801479B0_156960data[] = {
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	};
 	/* Level shield wall bounds coordinates D_80147C30_156BE0 */
-const s16 D_80147C30_156BE0data[] = {
+const Unk8014FD30Type D_80147C30_156BE0data[] = {
 		-28416,
 		-28416,
 		  -512,
