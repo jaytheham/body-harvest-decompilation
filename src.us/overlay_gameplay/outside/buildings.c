@@ -2333,7 +2333,7 @@ s32 func_8011B584_12A534(s32 arg0, s32 arg1) {
 		func_80079910_888C0(arg1);
 		return 0;
 	}
-	if (buildingInstances[arg0].unk7 < D_802590A8[buildingInstances[arg0].buildingType << 5]) {
+	if (buildingInstances[arg0].unk7 < buildingSpecs[buildingInstances[arg0].buildingType].pad16[2]) {
 		func_80079910_888C0(arg1);
 		buildingInstances[arg0].unk7++;
 		if (buildingInstances[arg0].unk11 == -1) {
