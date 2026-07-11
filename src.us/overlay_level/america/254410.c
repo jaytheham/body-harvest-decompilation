@@ -2552,7 +2552,7 @@ void func_802DC244_25B984(u8 arg0) {
 			D_802E099C_2600DC = alien->unk0;
 			D_802E09A0_2600E0 = alien->unk4;
 			sp50 = func_80084E54_93E04(D_80052B34, alien);
-			if (sp50 < (*(s16 *)((u8 *)&D_80257A0C + D_80052B34->unk1A * 0x70) + 0x64)) {
+			if (sp50 < (vehicleSpecs[D_80052B34->unk1A].unkC + 0x64)) {
 				func_80123AC4_132A74(D_80052B34);
 			} else if ((sp50 < 0x3D0900) && !(D_80052B34->unk20 & 2)) {
 				sp7C = 0x3D0900 - sp50;

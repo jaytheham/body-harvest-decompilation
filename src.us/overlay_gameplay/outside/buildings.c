@@ -997,11 +997,11 @@ void func_80117A4C_1269FC(void *arg0) {
 	temp_s0->unk20 |= 0x8049;
 	func_801165FC_1255AC(D_80052543, 0, &sp3A, &sp38, &sp36, &sp34);
 	func_800FB44C_10A3FC(temp_s0,
-						 (f32)(((f64)D_80257A36[temp_s0->unk1A * 0x38] * ((f64)(f32)coss((u16)(-0x4000 - sp34)) / 32768.0)) +
+						 (f32)(((f64)vehicleSpecs[temp_s0->unk1A].unk36 * ((f64)(f32)coss((u16)(-0x4000 - sp34)) / 32768.0)) +
 							   (f64)sp3A));
 	func_800FB468_10A418(temp_s0, (f32)sp38);
 	func_800FB484_10A434(temp_s0,
-						 (f32)(((f64)D_80257A36[temp_s0->unk1A * 0x38] * ((f64)(f32)sins((u16)(-0x4000 - sp34)) / 32768.0)) +
+						 (f32)(((f64)vehicleSpecs[temp_s0->unk1A].unk36 * ((f64)(f32)sins((u16)(-0x4000 - sp34)) / 32768.0)) +
 							   (f64)sp36));
 	temp_s0->unk6 = 0x4000 - sp34;
 	func_800FD510_10C4C0(0, sp40[5]);

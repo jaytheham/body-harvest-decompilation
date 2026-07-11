@@ -896,7 +896,7 @@ void func_800A7C6C_B6C1C(void) {
 					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
 					beacon = levelData + (i * 4);
 
-					range = D_80257A0C[vehicle->unk1A * 0x2E] + 0x50;
+					range = *(s16 *)((u8 *)vehicleSpecs + 0x0C + vehicle->unk1A * 0x5C) + 0x50;
 					deltaX = (((s8) beacon[-0x18]) << 8) - vehicle->unk0;
 					deltaZ = (((s8) beacon[-0x17]) << 8) - vehicle->unk4;
 					absX = deltaX;
@@ -1088,12 +1088,12 @@ void func_800A854C_B74FC(void) {
 				sp78 = 0x96;
 			}
 
-			if ((dist < (f32)(D_80257A0C[(D_80052B34->unk1A * 0x70) >> 1] + sp78)) && (0.0f < dist) && (yLimit == entry->unk2)) {
+			if ((dist < (f32)(vehicleSpecs[D_80052B34->unk1A].unkC + sp78)) && (0.0f < dist) && (yLimit == entry->unk2)) {
 				s16 accel;
 
 				sp7C = distCopy;
 				if (D_80052B34->unk2 == (func_800B84D0_C7480(D_80052B34->unk0, D_80052B34->unk4) >> 8)) {
-					accel = (s16)((D_80257A0C[(D_80052B34->unk1A * 0x70) >> 1] + sp78 - (s16)sp7C) >> 2);
+					accel = (s16)((vehicleSpecs[D_80052B34->unk1A].unkC + sp78 - (s16)sp7C) >> 2);
 					entry->unk6 = (s16)(((f32)accel * deltaX) / sp7C);
 					entry->unkA = (s16)(((f32)accel * deltaZ) / sp7C);
 				}

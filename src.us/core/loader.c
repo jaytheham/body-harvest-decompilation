@@ -369,7 +369,7 @@ void loadLevelData(u8 arg0) {
 	osSyncPrintf(&D_80037D70_38970);
 	var_s0 = func_800101F0_10DF0(&vehicleSpecs, var_s0, 0x930);
 	osSyncPrintf(&D_80037DA4_389A4, 0x930, (D_8006AA60 == 0x930) ? (void *)&sp44 : (void *)&sp34);
-	if (D_80257A14 == 0x3039) {
+	if (vehicleSpecs[0].unk14 == 0x3039) {
 		osSyncPrintf(&D_80037DB8_389B8);
 	} else {
 		osSyncPrintf(&D_80037DC8_389C8);

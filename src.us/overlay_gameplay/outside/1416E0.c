@@ -509,9 +509,9 @@ void func_80133A54_142A04(Unk80160080 *arg0) {
 	}
 
 	arg0->unk56 = 0x73;
-	sp40 = (f32)(D_80257A0C[D_80052B34->unk1A * 0x38] * 2);
+	sp40 = (f32)(vehicleSpecs[D_80052B34->unk1A].unkC * 2);
 	sp44.x = (f32)((f64)D_80052B34->unk0 - (((f64)(f32)coss((u16)arg0->unk58) / 32768.0) * (f64)sp40));
-	sp44.y = (f32)(D_80257A38[D_80052B34->unk1A * 0x38] + D_80052B34->unk2 + 0x32);
+	sp44.y = (f32)(vehicleSpecs[D_80052B34->unk1A].unk38 + D_80052B34->unk2 + 0x32);
 	sp44.z = (f32)((f64)D_80052B34->unk4 - (((f64)(f32)sins((u16)arg0->unk58) / 32768.0) * (f64)sp40));
 
 	func_801336CC_14267C(arg0, &sp44);
@@ -756,7 +756,7 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 	sp4C = (s32)arg0->unk38;
 	func_80133C9C_142C4C(&sp6C, (Vec3f *)&arg0->unkC, &sp60, arg0->unk48, var_s1, arg0->unk4C, arg0->unk4E);
 	temp_s0 = func_800B84D0_C7480((s16)(s32)sp6C.x, (s16)(s32)sp6C.z);
-	temp_v1 = D_80257A38[D_80052B34->unk1A * 0x38];
+	temp_v1 = vehicleSpecs[D_80052B34->unk1A].unk38;
 	temp_s0 = (temp_v1 - (temp_v1 >> 2)) + (temp_s0 >> 8);
 	if (((func_80126268_135218((s16)(s32)sp6C.x, (s16)(s32)sp6C.y, (s16)(s32)sp6C.z, &sp54, &sp50, &sp4C, 0, 6) == 1) ||
 		 ((sp6C.y - (f32)temp_s0) < 50.0f)) &&
@@ -773,7 +773,7 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 			sp4C = (s32)arg0->unk38;
 			func_80133C9C_142C4C(&sp6C, (Vec3f *)&arg0->unkC, &sp60, arg0->unk48, var_s1, arg0->unk4C, arg0->unk4E);
 			temp_s0 = func_800B84D0_C7480((s16)(s32)sp6C.x, (s16)(s32)sp6C.z);
-			temp_v1 = D_80257A38[D_80052B34->unk1A * 0x38];
+			temp_v1 = vehicleSpecs[D_80052B34->unk1A].unk38;
 			temp_s0 = (temp_v1 - (temp_v1 >> 2)) + (temp_s0 >> 8);
 			if (!(((func_80126268_135218((s16)(s32)sp6C.x, (s16)(s32)sp6C.y, (s16)(s32)sp6C.z, &sp54, &sp50, &sp4C, 0, 6) == 1) ||
 				   ((sp6C.y - (f32)temp_s0) < 50.0f)) &&
@@ -808,7 +808,7 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 		sp50 = (s32)arg0->unk34;
 		sp4C = (s32)arg0->unk38;
 		temp_s0 = func_800B84D0_C7480((s16)(s32)sp6C.x, (s16)(s32)sp6C.z);
-		temp_v1 = D_80257A38[D_80052B34->unk1A * 0x38];
+		temp_v1 = vehicleSpecs[D_80052B34->unk1A].unk38;
 		temp_s0 = (temp_v1 - (temp_v1 >> 2)) + (temp_s0 >> 8);
 		if ((func_80126268_135218((s16)(s32)sp6C.x, (s16)(s32)sp6C.y, (s16)(s32)sp6C.z, &sp54, &sp50, &sp4C, 0, 6) == 1) ||
 			((sp6C.y - (f32)temp_s0) < 50.0f)) {

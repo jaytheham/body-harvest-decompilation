@@ -1133,7 +1133,7 @@ void func_8007290C_15A9CC(void)
 
 		if ((D_800E65A8 == 1) && (D_800E66A4 == 5)) {
 			D_80052B34->unk1C += 2;
-			maxHitPoints = *(u16 *)&D_80257A3A[D_80052B34->unk1A * 0x70];
+			maxHitPoints = vehicleSpecs[D_80052B34->unk1A].hitPoints;
 			if (maxHitPoints < D_80052B34->unk1C) {
 				D_80052B34->unk1C = maxHitPoints;
 			}
@@ -3598,7 +3598,7 @@ void func_800784B8_160578(void) {
 						vehicle = D_80052B34;
 						vehicle->unk1C += 2;
 						vehicle = D_80052B34;
-						maxHp = *(u16 *)(&D_80257A3A[vehicle->unk1A * 0x70]);
+						maxHp = vehicleSpecs[vehicle->unk1A].hitPoints;
 						if (maxHp < vehicle->unk1C) {
 							vehicle->unk1C = maxHp;
 						}

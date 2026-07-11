@@ -3583,7 +3583,7 @@ void func_802DE584_2C09B4(u8 arg0) {
 	func_8008076C_8F71C(arg0);
 
 	if (spec->unk58 < 0xDC &&
-		func_80084E54_93E04(D_80052B34, alien) < D_80257A0C[D_80052B34->unk1A * 56] + 500 &&
+		func_80084E54_93E04(D_80052B34, alien) < vehicleSpecs[D_80052B34->unk1A].unkC + 500 &&
 		func_80084FE8_93F98(arg0, 0x7D0) != 0) {
 		if (D_80052B34->unk1A == 0x13) {
 			func_80102DDC_111D8C(D_80052B34, alien->unk2A, 0, 7.0f);

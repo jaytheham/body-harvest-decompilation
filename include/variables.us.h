@@ -2954,22 +2954,7 @@ extern u8 D_80224680; // missions?
 extern u8 D_80224E80[];
 extern u8 D_80254E80[]; // Tile palette data
 extern AlienSpec alienSpecs[0x30]; // 80256680
-extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00 (actually 0x15 in size?)
-extern s16 D_80257A0C[]; // Wrong. Use vehicleSpecs array unkC field instead.
-extern u16 D_80257A14;
-extern s16 D_80257A1A;
-extern UnkFunc8013B5E4 D_80257A1C[];
-extern s16 D_80257A34[];
-extern s16 D_80257A36[];
-extern s16 D_80257A38[];
-extern u8 D_80257A3A[];
-extern s16 D_80257A3C[];
-extern UnkFunc8013B5E4 D_80257A4C[];
-extern s8 D_80257A55[];
-extern u8 D_80257A70[];
-extern s16 D_80257DB4;
-extern s16 D_80258062;
-extern u8 D_80258250[];
+extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
 extern SignpostData D_80258330[0x20]; // signposts
 extern s32 D_80258390; // English sign strings
 extern s32 D_80258F90; // English sign string offsets (actually u16/s16?)

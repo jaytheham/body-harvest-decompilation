@@ -5505,7 +5505,7 @@ void func_800CF948_DE8F8(void) {
 					absRadius = radius;
 				}
 
-				maxDist = *(s16 *)((u8 *)D_80257A0C + (vehicle->unk1A * 0x70));
+				maxDist = vehicleSpecs[vehicle->unk1A].unkC;
 				maxDist = maxDist + absRadius + 0x64;
 
 				dx = *(s16 *)&data[0] - vehicle->unk0;
@@ -11297,7 +11297,7 @@ void func_800E1F70_F0F20(VehicleInstance *arg0) {
 				(func_800038E0_44E0() % 10) + temp + 45);
 		}
 	} else if ((func_800038E0_44E0() % 40) < (temp + 10)) {
-		if (D_80257A4C[arg0->unk1A].unk0 & 0x20000) {
+		if (vehicleSpecs[arg0->unk1A].unk4C & 0x20000) {
 			randA = func_800038E0_44E0();
 			randB = func_800038E0_44E0();
 			randC = func_800038E0_44E0();
@@ -11305,7 +11305,7 @@ void func_800E1F70_F0F20(VehicleInstance *arg0) {
 				(((u16)randA % 40) + arg0->unk0) - 20,
 				D_80222A70 + 3,
 				(((u16)randB % 40) + arg0->unk4) - 20,
-				(((u16)randC % 40) + D_80257A0C[arg0->unk1A * 0x38]) & 0xFF,
+				(((u16)randC % 40) + vehicleSpecs[arg0->unk1A].unkC) & 0xFF,
 				(func_800038E0_44E0() % 10) + ((s32)temp / 2) + 60);
 		} else {
 			randA = func_800038E0_44E0();
@@ -11315,7 +11315,7 @@ void func_800E1F70_F0F20(VehicleInstance *arg0) {
 				(((u16)randA % 40) + arg0->unk0) - 20,
 				D_80222A70 + 3,
 				(((u16)randB % 40) + arg0->unk4) - 20,
-				(((u16)randC % 20) + (D_80257A0C[arg0->unk1A * 0x38] / 2)) & 0xFF,
+				(((u16)randC % 20) + (vehicleSpecs[arg0->unk1A].unkC / 2)) & 0xFF,
 				(func_800038E0_44E0() % 10) + ((s32)temp / 2) + 60);
 		}
 	}
@@ -12336,7 +12336,7 @@ void func_800E5538_F44E8(void) {
 					var_t0 = vehicle->unk0;
 					var_t1 = vehicle->unk2;
 					var_t2 = vehicle->unk4;
-					var_a2 = D_80257A0C[vehicle->unk1A] * 28;
+					var_a2 = *(s16 *)((u8 *)vehicleSpecs + 0x0C + vehicle->unk1A * 2) * 28;
 				} else {
 					building = &buildingInstances[entry->unk0];
 					var_t0 = building->xCoord;

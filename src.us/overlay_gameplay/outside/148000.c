@@ -488,7 +488,7 @@ void func_80139D58_148D08(void) {
 		mode = vehicle->unk1A;
 	}
 
-	if ((D_80257A4C[mode].unk0 << 5) < 0) {
+	if ((vehicleSpecs[mode].unk4C << 5) < 0) {
 		slot0 = weaponSlots[0];
 		slot1 = weaponSlots[1];
 		slot2 = weaponSlots[2];
@@ -805,9 +805,9 @@ void func_8013B054_14A004(void) {
 	}
 
 	if (D_80052B34 == D_8013FD78_14ED28) {
-		D_801601D8 = D_80140D17_14FCC7[D_80257A1C[D_80052B34->unk1A].unk0];
+		D_801601D8 = D_80140D17_14FCC7[vehicleSpecs[D_80052B34->unk1A].weapon1];
 	} else {
-		D_801601D8 = D_80257A1C[D_80052B34->unk1A].unk0 + 0x18;
+		D_801601D8 = vehicleSpecs[D_80052B34->unk1A].weapon1 + 0x18;
 	}
 
 	if (D_800313D0_31FD0 == 0) {
@@ -974,7 +974,7 @@ s32 func_8013B480_14A430(s16 arg0) {
 			return arg0 < 0x14;
 		}
 	} else {
-		if (D_80257A4C[temp_v0].unk0 & 0x04000000) {
+		if (vehicleSpecs[temp_v0].unk4C & 0x04000000) {
 			var_v0 = (arg0 < 6);
 			if (var_v0 == 0) {
 				return (arg0 == 0xB);
@@ -1015,7 +1015,7 @@ s32 func_8013B5E4_14A594(s32 arg0) {
 	}
 
 	if (D_801601D0 == 0) {
-		D_80257A1C[D_80052B34->unk1A].unk0 = 0;
+		vehicleSpecs[D_80052B34->unk1A].weapon1 = 0;
 		return 1;
 	}
 

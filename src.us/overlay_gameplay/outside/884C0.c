@@ -2226,7 +2226,7 @@ block_11:
 									var_v0_4 = (s16) (s32) ((f64) var_v0_4 * 1.5);
 								}
 
-								if (temp_v1_5 < (D_80257A0C[D_80052B34->unk1A * 0x38] + var_v0_4)) {
+								if (temp_v1_5 < (vehicleSpecs[D_80052B34->unk1A].unkC + var_v0_4)) {
 									if (temp_t5 > 0) {
 										var_t1 = 1;
 									} else if (temp_t5 < 0) {
@@ -3683,7 +3683,7 @@ s32 func_80080D98_8FD48(u8 arg0, s32 arg1) {
 		return 1;
 	}
 
-	if (!(D_80257A4C[target->unk1A].unk0 & 0x20)) {
+	if (!(vehicleSpecs[target->unk1A].unk4C & 0x20)) {
 		return 0;
 	}
 

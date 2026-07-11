@@ -885,11 +885,11 @@ void func_8009D96C_AC91C(void) {
 				vehicle = D_80158FE4;
 				if ((currentLevel != 1) || (vehicle->unk1A != 0x12)) {
 					sp98 = (f32) ((f64) (f32) vehicle->unk1C / 100.0);
-					tempU16 = *(u16 *) &D_80257A3A[vehicle->unk1A * 0x70];
+					tempU16 = vehicleSpecs[vehicle->unk1A].hitPoints;
 					sp8A = (s16) (((f64) tempU16 / 100.0) * 50.0);
 					func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
 
-					tempU16 = *(u16 *) &D_80257A3A[vehicle->unk1A * 0x70];
+					tempU16 = vehicleSpecs[vehicle->unk1A].hitPoints;
 					sp8C = (s32) &D_8025EE80;
 					D_8014F202 = 2;
 					sp7C = (s32) vehicle;
@@ -960,7 +960,7 @@ void func_8009D96C_AC91C(void) {
 			} else {
 				u16 tempU16;
 
-				tempU16 = *(u16 *) &D_80257A3A[vehicleInstances[0].unk1A * 0x70];
+				tempU16 = vehicleSpecs[vehicleInstances[0].unk1A].hitPoints;
 				if (vehicleInstances[0].unk1C >= ((s32) tempU16 >> 2)) {
 					D_8014ED4C = D_8014ED42;
 				}
@@ -1009,7 +1009,7 @@ void func_8009D96C_AC91C(void) {
 			sp76 = vehicle->unk3C;
 			D_8014F69C = sp76;
 			sp74 = vehicle->unk1C;
-			tempU16 = *(u16 *) &D_80257A3A[varV1_2 * 0x70];
+			tempU16 = vehicleSpecs[varV1_2].hitPoints;
 			sp72 = (s16) tempU16;
 
 			D_8014F69E = sp74;
@@ -1069,7 +1069,7 @@ void func_8009D96C_AC91C(void) {
 	{
 		u16 tempU16;
 
-		tempU16 = *(u16 *) &D_80257A3A[vehicleInstances[0].unk1A * 0x70];
+		tempU16 = vehicleSpecs[vehicleInstances[0].unk1A].hitPoints;
 		if (vehicleInstances[0].unk1C < ((s32) tempU16 >> 2)) {
 			D_8014ED4C = 8 - (D_80052A8C & 7);
 		} else {
@@ -1241,7 +1241,7 @@ void func_8009EE30_ADDE0(void)
 	s32 var_v1;
 	s16 var_s4;
 
-	var_s4 = *(s16 *)&D_80257A3A[(D_80052B34->unk1A * 0x70) + 2];
+	var_s4 = vehicleSpecs[D_80052B34->unk1A].arcOfFire;
 	if (var_s4 == 0) {
 		return;
 	}

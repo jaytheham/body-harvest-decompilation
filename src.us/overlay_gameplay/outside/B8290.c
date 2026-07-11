@@ -1259,7 +1259,7 @@ void func_800AC5BC_BB56C(u8 arg0) {
 		}
 
 		alien = &alienInstances[arg0];
-		limit = (s32)(speedAbs * 30.0f + (f32)(D_80257A36[(s32)specIdx * 0x38] >> 1));
+		limit = (s32)(speedAbs * 30.0f + (f32)(vehicleSpecs[(s32)specIdx].unk36 >> 1));
 		dx = alien->unk0 - D_80052B34->unk0;
 		dz = alien->unk4 - D_80052B34->unk4;
 		neg = -dx;
@@ -1288,7 +1288,7 @@ void func_800AC5BC_BB56C(u8 arg0) {
 						temp = -temp;
 					}
 
-					if (temp < (D_80257A34[(s32)D_80052B34->unk1A * 0x38] >> 1)) {
+					if (temp < (vehicleSpecs[(s32)D_80052B34->unk1A].unk34 >> 1)) {
 						triggered = 1;
 					}
 				}

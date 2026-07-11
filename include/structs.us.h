@@ -1231,7 +1231,8 @@ typedef struct {
 	/* 0x00 */ u32 modelDL; // Model display list pointer
 	/* 0x04 */ u8 pad4[0x8];
 	/* 0x0C */ s16 unkC;
-	/* 0x0E */ u8 pad0E[0x8];
+	/* 0x0E */ u8 pad0E[0x6];
+	/* 0x14 */ u16 unk14;
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 pad17;
 	/* 0x18 */ s32 unk18; // string table index for vehicle name
@@ -1253,7 +1254,7 @@ typedef struct {
 	/* 0x3E */ u8 unk3E;
 	/* 0x3F */ u8 pad3F;
 	/* 0x40 */ s16 unk40;
-	/* 0x42 */ u8 pad42[0x2];
+	/* 0x42 */ s16 unk42;
 	/* 0x44 */ u8 unk44;
 	/* 0x45 */ u8 unk45;
 	/* 0x46 */ u8 unk46;

@@ -218,7 +218,7 @@ void func_80095100_A40B0(s16 arg0, s16 arg1)
   else
   {
 	v0 = &D_8013CBC0[arg0];
-	v1 = ((((u8 *) D_80140768) + (((D_80257A55[(D_80052B34->unk1A * 7) << 4] * 4) + D_80257A55[(D_80052B34->unk1A * 7) << 4]) * 2)) + v0->unk8) - v0->unk4;
+	v1 = ((((u8 *) D_80140768) + (((vehicleSpecs[D_80052B34->unk1A].unk55 * 4) + vehicleSpecs[D_80052B34->unk1A].unk55) * 2)) + v0->unk8) - v0->unk4;
   }
   drawText(D_801421A0, 3, arg1, v0->unk0, 0x1C, arg1);
   switch (v0->type)
@@ -337,7 +337,7 @@ void func_80095530_A44E0(s16 arg0) {
 		propPtr = (u8 *) D_8003E290 + (D_8013CBBC_14BB6C << 4) + (entry->unk8 - entry->unk4);
 	} else {
 		entry = &D_8013CBC0_14BB70[arg0];
-		propPtr = (u8 *) D_80140768_14F718 + ((D_80257A55[(D_80052B34->unk1A * 7) << 4] * 4 + D_80257A55[(D_80052B34->unk1A * 7) << 4]) * 2) + (entry->unk8 - entry->unk4);
+		propPtr = (u8 *) D_80140768_14F718 + ((vehicleSpecs[D_80052B34->unk1A].unk55 * 4 + vehicleSpecs[D_80052B34->unk1A].unk55) * 2) + (entry->unk8 - entry->unk4);
 	}
 
 	entryNav = (DebugPropEntryNav *) entry;

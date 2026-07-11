@@ -417,7 +417,7 @@ void func_800E988C_F883C(AlienInstance *arg0, AlienSpec *arg1) {
 		}
 	}
 
-	if ((var_t5 == var_v0) && ((void*)arg0 == (void*)D_80052B34) && (D_80257A4C[arg0->specIndex].unk0 & 0x20000000)) {
+	if ((var_t5 == var_v0) && ((void*)arg0 == (void*)D_80052B34) && (vehicleSpecs[arg0->specIndex].unk4C & 0x20000000)) {
 		var_t5 = func_800F9F00_108EB0;
 	}
 

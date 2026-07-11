@@ -1317,7 +1317,7 @@ void func_802D6F7C_18FA8C(void) {
 	Unk8013FDA8Entry *sp30;
 	Unk8013FDA8Entry *sp2C;
 
-	sp5C = (f32) (D_80257DB4 >> 1);
+	sp5C = (f32)(vehicleSpecs[8].unk34 >> 1);
 	sp30 = (Unk8013FDA8Entry *) func_80011F90_12B90(D_9052A00);
 	sp2C = (Unk8013FDA8Entry *) func_80011F90_12B90(D_9052AC0);
 
