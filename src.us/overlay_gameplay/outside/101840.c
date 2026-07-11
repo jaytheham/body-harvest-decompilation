@@ -4209,7 +4209,7 @@ void func_800FCA5C_10BA0C(void) {
 	temp_f20 = D_80144A78_153A28[0];
 	var_s5 = &D_80158C4F;
 	var_s1 = D_80259D7E;
-	var_s0_2 = &D_80050A74;
+	var_s0_2 = &vehicleInstances[127];
 	var_s2_2 = 0x7F;
 	while (var_s2_2 != 0) {
 		temp_t4 = ((Unk80259D7EEntry *)var_s1)->unk6;
@@ -4542,7 +4542,7 @@ void func_800FDC30_10CBE0(s16 arg0) {
 		if (type != 0xC) {
 			if (type == 0x11) {
 				s32 i = 0x7F;
-				VehicleInstance *v2 = &D_80050A74;
+				VehicleInstance *v2 = &vehicleInstances[127];
 				do {
 					type = i;
 					if (v2->unk1A == 0x11) {
@@ -4581,7 +4581,7 @@ void func_800FDD48_10CCF8(s16 arg0) {
 #ifdef NON_MATCHING
 void func_800FDD8C_10CD3C(VehicleInstance *arg0) {
 	s16 i = 0x7F;
-	if (arg0 != &D_80050A74) {
+	if (arg0 != &vehicleInstances[127]) {
 		while (i--) {
 			if (arg0 == &vehicleInstances[i]) {
 				break;
@@ -9010,8 +9010,8 @@ void func_8010C14C_11B0FC(void) {
 		case 4:
 			vehicle = &vehicleInstances[D_80159316];
 			vehicle->unk20 |= 0x10;
-			D_80158E64 = &D_8004F374;
-			D_8004F374.unk1A = 0xE;
+			D_80158E64 = &vehicleInstances[63];
+			vehicleInstances[63].unk1A = 0xE;
 			func_800FAE84_109E34(D_80158E64);
 			func_800FB44C_10A3FC(D_80158E64, D_80159284);
 			func_800FB468_10A418(D_80158E64, D_80159288);
@@ -11362,7 +11362,7 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 
 	if (arg2 == 0) {
 		Unk80259490 *spawnData = &((Unk80259490 *)&D_80259490)[127];
-		VehicleInstance *vehicle = &D_80050A74;
+		VehicleInstance *vehicle = &vehicleInstances[127];
 
 		do {
 			s16 x = (s16)((spawnData->unk0 << 8) + 0x80);
@@ -11459,7 +11459,7 @@ void func_80112F98_121F48(void)
 	u16 angle;
 	s16 yawCos;
 	scale = D_80144D68_153D18[0];
-	vehicle = &D_80050A74; // Surely this should be = &vehicles[i] inside the loop
+	vehicle = &vehicleInstances[127]; // Surely this should be = &vehicles[i] inside the loop
 	i = 0x7F;
 	do
 	{
@@ -12327,7 +12327,7 @@ void func_80115A74_124A24(void) {
 		D_80159320 |= 0x400000;
 		func_802D4CD0_18D7E0(7, 0);
 		setRandomSeed(0xFEEDABED);
-		var_s0 = &D_80050624;
+		var_s0 = &vehicleInstances[115];
 		var_s4 = &D_80158C43;
 		twelve = 12;
 		ten = 10;

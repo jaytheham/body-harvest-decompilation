@@ -375,15 +375,15 @@ void func_802D5C24_2B8054(void) {
 	s32 doFinal;
 
 	if (vehicleInstances[30].unk1C <= 0) {
-		func_80124118_1330C8((VehicleInstance *)&D_8004F038, (s16)(vehicleInstances[54].unk1C * 2));
+		func_80124118_1330C8(&vehicleInstances[54], (s16)(vehicleInstances[54].unk1C * 2));
 		func_800074BC_80BC(func_802D5C24_2B8054);
 		func_800076D4_82D4(2);
 	}
-	func_80014508_15108((VehicleInstance *)&D_8004E798, 1, 2);
+	func_80014508_15108(&vehicleInstances[30], 1, 2);
 	if (((u32)D_80052A8C % 12U) == 0 && D_8014D17C < 5) {
 		D_8014D17C++;
 	}
-	func_80102A0C_1119BC(&D_8004E798, vehicleInstances[30].unk6, 0, 2.5f);
+	func_80102A0C_1119BC(&vehicleInstances[30], vehicleInstances[30].unk6, 0, 2.5f);
 	rand1 = func_800038E0_44E0();
 	if (((u32)D_80052A8C % ((rand1 & 7) + 4)) == 0 && vehicleInstances[54].unk1C > 0) {
 		rand2 = func_800038E0_44E0();
@@ -398,7 +398,7 @@ void func_802D5C24_2B8054(void) {
 	temp = vehicleInstances[30].unk0;
 	doFinal = temp < 0x1C60;
 	if (temp < 0x1940) {
-		func_80124118_1330C8((VehicleInstance *)&D_8004E798, (s16)(vehicleInstances[30].unk1C * 2));
+		func_80124118_1330C8(&vehicleInstances[30], (s16)(vehicleInstances[30].unk1C * 2));
 		func_800072CC_7ECC(0xC);
 		func_800AE1EC_BD19C();
 		func_800DEA08_ED9B8(
@@ -407,7 +407,7 @@ void func_802D5C24_2B8054(void) {
 			vehicleInstances[54].unk4,
 			0x190, 8, 1, 0xC8, 0xFF, 0x2F, 0x7B, 0x2E
 		);
-		doFinal = D_8004E798 < 0x1C60;
+		doFinal = vehicleInstances[30].unk0 < 0x1C60;
 	}
 	if (doFinal) {
 		if (D_802E30EC == 0) {
@@ -650,7 +650,7 @@ s32 func_802D6768_2B8B98(void) {
 		return 0;
 	case 1:
 		if (D_80157F8E == 0x3C) {
-			func_80124118_1330C8(&D_8004DDE4, D_8004DE00 * 2);
+			func_80124118_1330C8(&vehicleInstances[3], vehicleInstances[3].unk1C * 2);
 		}
 		func_802D64DC_2B890C(0x71, D_8014D17C, 0xC8, 0x18, &D_802E0E6C_2C329C, 5, 0x28, 1);
 		D_8014D17C++;

@@ -920,7 +920,7 @@ void func_801176F4_1266A4(u8 arg0, u8 arg1, s32 arg2) {
 	s32 alienSpecIndex;
 	s32 specIndex;
 
-	specIndex = ((u8 *)&D_8004DCEA)[arg2 * 0x5C];
+	specIndex = vehicleInstances[arg2].unk1A;
 
 	halfX = vehicleSpecs[specIndex].unk34 + 0xC8;
 	halfZ = vehicleSpecs[specIndex].unk36 + 0xC8;
@@ -1943,7 +1943,7 @@ void func_8011A2A0_129250(void) {
 				D_80158E78 = NULL;
 				var_s3 = &D_8015EB86;
 				var_s6 = &D_80140B03_14FAB3;
-				var_s1 = &D_80050624;
+				var_s1 = &vehicleInstances[115];
 				var_s4 = 0;
 				do {
 					var_s1->unk1A = 0x12;

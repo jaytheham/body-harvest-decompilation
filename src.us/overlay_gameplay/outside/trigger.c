@@ -201,7 +201,7 @@ void func_800AE6CC_BD67C(void) {
 					break;
 
 				case 6:
-					vehicle = (VehicleInstance *)&D_8004DCEC + D_80222A78[i].unk8;
+					vehicle = (VehicleInstance *)((u8 *)&vehicleInstances[D_80222A78[i].unk8] + 0x1C);
 					if (vehicle->unk1C <= 0) {
 						shouldRun = 1;
 					}

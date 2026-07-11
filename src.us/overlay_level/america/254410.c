@@ -66,9 +66,9 @@ void func_802D4CD0_254410(s32 arg0, s32 arg1) {
 }
 
 void func_802D4DD4_254514(void) {
-	func_800FB468_10A418(&D_8004F990, 1970.0f);
-	func_800FB468_10A418(&D_8004F9EC, 1970.0f);
-	func_800FB468_10A418(&D_8004FA48, 1970.0f);
+	func_800FB468_10A418(&vehicleInstances[80], 1970.0f);
+	func_800FB468_10A418(&vehicleInstances[81], 1970.0f);
+	func_800FB468_10A418(&vehicleInstances[82], 1970.0f);
 	vehicleInstances[80].unk20 = (u16)(vehicleInstances[80].unk20 | 3);
 	vehicleInstances[81].unk20 = (u16)(vehicleInstances[81].unk20 | 3);
 	vehicleInstances[82].unk20 = (u16)(vehicleInstances[82].unk20 | 3);

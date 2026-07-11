@@ -803,7 +803,7 @@ void func_802D5660_18E170(void) {
 		func_800073B8_7FB8(0x2A);
 		func_800074BC_80BC(func_802D5660_18E170);
 		func_800076D4_82D4(0x10);
-		func_80123AC4_132A74(&D_8004FB00);
+		func_80123AC4_132A74(&vehicleInstances[84]);
 	}
 }
 

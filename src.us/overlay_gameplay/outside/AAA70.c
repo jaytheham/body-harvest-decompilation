@@ -960,11 +960,11 @@ void func_8009D96C_AC91C(void) {
 			} else {
 				u16 tempU16;
 
-				tempU16 = *(u16 *) &D_80257A3A[D_8004DCEA * 0x70];
-				if (D_8004DCEC >= ((s32) tempU16 >> 2)) {
+				tempU16 = *(u16 *) &D_80257A3A[vehicleInstances[0].unk1A * 0x70];
+				if (vehicleInstances[0].unk1C >= ((s32) tempU16 >> 2)) {
 					D_8014ED4C = D_8014ED42;
 				}
-				func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), (f32) D_8004DCEC / (f32) tempU16, 0,
+				func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), (f32) vehicleInstances[0].unk1C / (f32) tempU16, 0,
 					(s32) &D_8025F540, 1, varV0, D_8014ED4C, 0x30);
 			}
 		} else {
@@ -1069,8 +1069,8 @@ void func_8009D96C_AC91C(void) {
 	{
 		u16 tempU16;
 
-		tempU16 = *(u16 *) &D_80257A3A[D_8004DCEA * 0x70];
-		if (D_8004DCEC < ((s32) tempU16 >> 2)) {
+		tempU16 = *(u16 *) &D_80257A3A[vehicleInstances[0].unk1A * 0x70];
+		if (vehicleInstances[0].unk1C < ((s32) tempU16 >> 2)) {
 			D_8014ED4C = 8 - (D_80052A8C & 7);
 		} else {
 			D_8014ED4C = 0;

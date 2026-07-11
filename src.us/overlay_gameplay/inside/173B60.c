@@ -472,7 +472,7 @@ void func_8008C8A4_174964(void) {
 		D_800FCF46 = 0;
 	}
 
-	if ((*(u16 *)&D_80257A3A[D_8004DCEA * 0x70] >> 2) >= D_8004DCEC) {
+	if ((*(u16 *)&D_80257A3A[vehicleInstances[0].unk1A * 0x70] >> 2) >= vehicleInstances[0].unk1C) {
 		D_800FCF44 = 8 - (D_800E65AC % 8);
 	} else {
 		D_800FCF44 = 0;

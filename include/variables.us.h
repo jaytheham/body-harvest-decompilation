@@ -860,24 +860,7 @@ extern f32 D_8004DCB4;
 extern f32 D_8004DCB8;
 extern s16 D_8004DCBC;
 extern f32 D_8004DCC0;
-extern VehicleInstance vehicleInstances[]; // 8004DCD0
-extern s16 D_8004DCD4;
-extern u8 D_8004DCEA;
-extern s16 D_8004DCEC;
-extern VehicleInstance D_8004DDE4;
-extern s16 D_8004DE00;
-extern VehicleInstance D_8004DFB0;
-extern s16 D_8004E798;
-extern s16 D_8004EE88;
-extern s16 D_8004F038;
-extern VehicleInstance D_8004F374;
-extern VehicleInstance D_8004F990;
-extern VehicleInstance D_8004F9EC;
-extern VehicleInstance D_8004FA48;
-extern VehicleInstance D_8004FB00;
-extern VehicleInstance D_80050624;
-extern VehicleInstance D_80050A18;
-extern VehicleInstance D_80050A74;
+extern VehicleInstance vehicleInstances[0x80]; // 8004DCD0
 extern s32 D_80050AD0;
 extern s32 D_80050AD4;
 extern BuildingInstance buildingInstances[0xFF]; // 0x80050AD8

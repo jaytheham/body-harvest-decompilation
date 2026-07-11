@@ -59,7 +59,7 @@ void func_802D4E6C_1EDB7C(void) {
 	u16 temp_t9;
 	u32 temp_v1;
 
-	func_800FB468_10A418(&D_8004DFB0, 675.0f);
+	func_800FB468_10A418(&vehicleInstances[8], 675.0f);
 	vehicleInstances[8].unk20 = (u16) (vehicleInstances[8].unk20 | 3);
 	if (func_8000726C_7E6C((u64) 0x1E) != 0) {
 		func_800E2720_F16D0(0);
@@ -289,7 +289,7 @@ void func_802D5590_1EE2A0(void) {
 	}
 	D_802E0FB0 = temp_v0 + 1;
 	if (D_802E0FB0 == 0xA) {
-		func_80123E90_132E40(&D_8004F990, 2);
+		func_80123E90_132E40(&vehicleInstances[80], 2);
 		D_802E0FB0 = 0;
 	}
 	if (vehicleInstances[80].unk1C <= 0) {
@@ -528,7 +528,7 @@ block_12:
 block_13:
 		func_800073B8_7FB8(0xDu);
 	}
-	if (D_8004EE88 > 0) {
+	if (vehicleInstances[49].unk1C > 0) {
 		func_800074BC_80BC(func_802D5E98_1EEBA8);
 	}
 }

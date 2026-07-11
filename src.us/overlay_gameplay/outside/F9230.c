@@ -1810,7 +1810,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 			}
 			break;
 		case 3:
-			if (*((s16 *)((u8 *) &D_8004DCEC + (D_80157E82 * 0x5C))) <= 0) {
+			if (vehicleInstances[D_80157E82].unk1C <= 0) {
 				D_80048188 = 0;
 			}
 			temp_a1_3 = *((s16 *) &D_801575E0 + D_801575E0.unk4 + 9);
@@ -1900,7 +1900,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 				sp92 = temp_v1_4;
 				sp90 = (s32) D_80157600.unkC + arg0->unk2;
 				func_800FB44C_10A3FC(arg0, (f32) temp_v0_5->unk0);
-				func_800FB484_10A434(arg0, (f32) *((s16 *) ((u8 *) &D_8004DCD4 + (D_80052B1C * 0x5C))));
+				func_800FB484_10A434(arg0, (f32) vehicleInstances[D_80052B1C].unk4);
 				if (((temp_v1_4 - 0x64) < sp90) && (sp90 < (temp_v1_4 + 0x5A))) {
 					func_800E35E0_F2590(0xAA);
 					func_80001144_1D44(0x32, 0xF, 5);
