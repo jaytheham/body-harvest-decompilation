@@ -1264,7 +1264,16 @@ void func_802D7F10_31C060(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D7F10_31C060.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D897C_31CACC.s")
+void func_802D897C_31CACC(u8 arg0) {
+    AlienInstance *inst = &alienInstances[arg0];
+
+    inst->unk20 &= ~(ALIEN_FLAG_UNK5 | ALIEN_FLAG_AWAY | ALIEN_FLAG_UNKC);
+    inst->unk20 |= ALIEN_FLAG_TARGET_PT;
+    inst->unk47 &= ~1;
+
+    func_8008735C_9630C(arg0);
+    func_80137468_146418(arg0, 0x266);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D89F0_31CB40.s")
 
