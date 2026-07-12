@@ -31,13 +31,26 @@ const u32 jtbl_8014288C_15183C[] = {
 	0x800A916C, 0x800A9184, 0x800A9198, 0x800A91AC,
 	0x800A91C0, 0x800A91D4, 0x800A91E8, 0x800A91FC,
 };
+typedef struct {
+	/* 0x00 */ s16 x;
+	/* 0x02 */ s16 z;
+} BeaconLevelCoord; /* 4 bytes */
+
+typedef struct {
+	/* 0x00 */ BeaconLevelCoord levels[5]; /* 20 bytes - per-level beacon coords */
+	/* 0x14 */ u8 ids[4];                  /* 4 bytes - per-level sound IDs */
+} LevelBeaconData; /* 0x18 = 24 bytes */
+
 s8 D_8013D890_14C840 = 0;
 u8 D_8013D894_14C844 = 0;
-u8 D_8013D898_14C848[0x18] = {
-	0xEC, 0xDF, 0xE1, 0x04, 0x00, 0x7C, 0x68, 0x50,
-	0xB2, 0x80, 0x32, 0x88, 0x39, 0xC4, 0x60, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x02, 0x0A, 0x11, 0x16,
-};
+LevelBeaconData D_8013D898_14C848 = {{
+	{ 0xECDF, 0xE104 }, /* Greece */
+	{ 0x007C, 0x6850 }, /* Java */
+	{ 0xB280, 0x3288 }, /* America */
+	{ 0x39C4, 0x6000 }, /* Siberia */
+	{ 0x0000, 0x0000 }, /* Comet */
+},
+{ 0x02, 0x0A, 0x11, 0x16 }};
 u8 D_8013D8B0_14C860[0x10] = {
 	0x32, 0x64, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -589,8 +602,8 @@ void func_800A70B8_B6068(void) {
 		beaconType = D_8003154C[currentLevel - 1][i].state;
 
 		if (beaconType == 3) {
-			D_8014F80A = ((s16 *)D_8013D898_14C848)[currentLevel * 2 - 2];
-			D_8014F80C = ((s16 *)D_8013D898_14C848)[currentLevel * 2 - 1];
+			D_8014F80A = D_8013D898_14C848.levels[currentLevel - 1].x;
+			D_8014F80C = D_8013D898_14C848.levels[currentLevel - 1].z;
 			beaconBaseDl = (Gfx*)0x05046250;
 			beaconRingDl = (Gfx*)0x05046470;
 			groundY = func_800B84D0_C7480(D_8014F80A, D_8014F80C);
@@ -841,7 +854,7 @@ void func_800A7C6C_B6C1C(void) {
 				}
 
 				if (beacon->timer == 0xA) {
-					func_800EFEB4_FEE64(NULL, D_8013D898_14C848[currentLevel + 0x13], 0);
+					func_800EFEB4_FEE64(NULL, D_8013D898_14C848.ids[currentLevel - 1], 0);
 					beacon = &D_8003154C[currentLevel - 1][i];
 				}
 				break;
@@ -856,8 +869,8 @@ void func_800A7C6C_B6C1C(void) {
 				beacon->state = 3;
 				beacon->timer = 0x64;
 
-				levelX = *(s16*) (D_8013D898_14C848 + (currentLevel * 4));
-				levelZ = *(s16*) (D_8013D898_14C848 + (currentLevel * 4) + 2);
+				levelX = D_8013D898_14C848.levels[currentLevel].x;
+				levelZ = D_8013D898_14C848.levels[currentLevel].z;
 				terrainY = (func_800B84D0_C7480(levelX, levelZ) >> 8) + 0x8C;
 
 				func_800DF038_EDFE8(levelX, terrainY, levelZ, 0x46, 0, NULL);
