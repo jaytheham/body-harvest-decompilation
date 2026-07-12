@@ -96,8 +96,8 @@ void func_800A5BD0_B4B80(s32 arg0) {
 	s32 sp44;
 	s32 sp40;
 
-	sp4C = D_8003154C[currentLevel * 6 + arg0 - 6].x << 8;
-	sp48 = D_8003154C[currentLevel * 6 + arg0 - 6].z << 8;
+	sp4C = D_8003154C[currentLevel - 1][arg0].x << 8;
+	sp48 = D_8003154C[currentLevel - 1][arg0].z << 8;
 	sp40 = func_800B84D0_C7480((s16)sp4C, (s16)sp48) >> 8;
 	if (currentLevel == LEVEL_AMERICA && arg0 == 0) {
 		sp40 = 0x7D0;
@@ -135,13 +135,13 @@ void func_800A5D3C_B4CEC(void) {
 	i = 0;
 	do {
 		if (i < D_80047F98) {
-			D_8003154C[currentLevel * 6 + k - 6].timer = 0;
-			D_8003154C[currentLevel * 6 + k - 6].state = 8;
+			D_8003154C[currentLevel - 1][k].timer = 0;
+			D_8003154C[currentLevel - 1][k].state = 8;
 			func_800A5BD0_B4B80(i);
 			osSyncPrintf(D_801427B0_151760, i);
 		} else {
-			D_8003154C[currentLevel * 6 + k - 6].timer = 0;
-			D_8003154C[currentLevel * 6 + k - 6].state = 0;
+			D_8003154C[currentLevel - 1][k].timer = 0;
+			D_8003154C[currentLevel - 1][k].state = 0;
 			osSyncPrintf(D_801427C4_151774, i);
 		}
 		i = (k + 1) & 0xFF;
@@ -154,7 +154,7 @@ void func_800A5D3C_B4CEC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A5D3C_B4CEC.s")
 #endif
 
-// warpFromSaveBeacon
+// warpToSaveBeacon
 void func_800A5EA8_B4E58(u8 arg0) {
 	osSyncPrintf(D_801427D8_151788, arg0); // teleport to:%d
 	D_8013D890_14C840 = 1;
@@ -177,10 +177,10 @@ void func_800A5F24_B4ED4(s32 arg0) {
 	
 	if (D_8013D890 == 0) {
 		func_8001CC6C_1D86C(D_801427E8_151798, arg0);
-		func_8001CC6C_1D86C(D_801427F4_1517A4, D_8003154C[currentLevel * 6 + arg0 - 6].state);
-		func_8001CC6C_1D86C(D_80142800_1517B0, D_8003154C[currentLevel * 6 + arg0 + 1 - 6].state);
+		func_8001CC6C_1D86C(D_801427F4_1517A4, D_8003154C[currentLevel - 1][arg0].state);
+		func_8001CC6C_1D86C(D_80142800_1517B0, D_8003154C[currentLevel - 1][arg0 + 1].state);
 
-		if (D_8003154C[currentLevel * 6 + arg0 + 1 - 6].state >= 4) {
+		if (D_8003154C[currentLevel - 1][arg0 + 1].state >= 4) {
 			var_s0 = arg0 + 1;
 		} else {
 			var_s0 = -1;
@@ -547,8 +547,8 @@ void func_800A6FD4_B5F84(void) {
 		D_80052AE0 = gameplayMode;
 		gameplayMode = GAMEPLAY_MODE_END_OF_LEVEL;
 	}
-	D_8003154C[currentLevel * 6 + sp1F - 6].state = 1;
-	D_8003154C[currentLevel * 6 + sp1F - 6].timer = 0x1E;
+	D_8003154C[currentLevel - 1][sp1F].state = 1;
+	D_8003154C[currentLevel - 1][sp1F].timer = 0x1E;
 	D_80048025 |= 1 << sp1F;
 	D_80047F98++;
 }
@@ -586,7 +586,7 @@ void func_800A70B8_B6068(void) {
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
 	for (i = 0; i < 6; i++) {
-		beaconType = D_8003154C[currentLevel * 6 + i - 6].state;
+		beaconType = D_8003154C[currentLevel - 1][i].state;
 
 		if (beaconType == 3) {
 			D_8014F80A = ((s16 *)D_8013D898_14C848)[currentLevel * 2 - 2];
@@ -598,7 +598,7 @@ void func_800A70B8_B6068(void) {
 			D_80052B40.unk0 = D_8014F80A >> 2;
 			D_80052B40.unk4 = D_8014F80C >> 2;
 
-			v = 0x5E - D_8003154C[currentLevel * 6 + i - 6].timer;
+			v = 0x5E - D_8003154C[currentLevel - 1][i].timer;
 			D_8014F810 = v * v;
 			v = (D_8014F810 * 6) / 10;
 			D_8014F810 = v;
@@ -641,8 +641,8 @@ void func_800A70B8_B6068(void) {
 				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 			}
 		} else if (beaconType >= 4) {
-			D_8014F80A = D_8003154C[currentLevel * 6 + i - 6].x << 8;
-			D_8014F80C = D_8003154C[currentLevel * 6 + i - 6].z << 8;
+			D_8014F80A = D_8003154C[currentLevel - 1][i].x << 8;
+			D_8014F80C = D_8003154C[currentLevel - 1][i].z << 8;
 
 			D_80052B40.unk0 = D_8014F80A >> 2;
 			D_80052B40.unk4 = D_8014F80C >> 2;
@@ -662,7 +662,7 @@ void func_800A70B8_B6068(void) {
 				}
 
 				if (beaconType == 4) {
-					D_8014F810 += D_8003154C[currentLevel * 6 + i - 6].timer * 0x50;
+					D_8014F810 += D_8003154C[currentLevel - 1][i].timer * 0x50;
 				}
 
 				D_80052B50.unk4 = 0x18;
@@ -678,11 +678,11 @@ void func_800A70B8_B6068(void) {
 				D_80052B40.unk0 = 0;
 				switch (beaconType) {
 				case 9:
-					D_80052B40.unk2 = D_8003154C[currentLevel * 6 + i - 6].timer * 0x14 + 0xE;
+					D_80052B40.unk2 = D_8003154C[currentLevel - 1][i].timer * 0x14 + 0xE;
 					break;
 
 				case 8:
-					D_80052B40.unk2 = 0x78 - (D_8003154C[currentLevel * 6 + i - 6].timer * 4);
+					D_80052B40.unk2 = 0x78 - (D_8003154C[currentLevel - 1][i].timer * 4);
 					break;
 
 				case 10:
@@ -702,10 +702,10 @@ void func_800A70B8_B6068(void) {
 
 				gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
 				if (beaconType == 8) {
-					brightness = (0xFF - (D_8003154C[currentLevel * 6 + i - 6].timer * 10)) & 0xFF;
+					brightness = (0xFF - (D_8003154C[currentLevel - 1][i].timer * 10)) & 0xFF;
 					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, brightness, brightness, brightness, 0xFF);
 				} else if (beaconType == 10) {
-					brightness = (D_8003154C[currentLevel * 6 + i - 6].timer * 0x32) & 0xFF;
+					brightness = (D_8003154C[currentLevel - 1][i].timer * 0x32) & 0xFF;
 					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, brightness, brightness, brightness, 0xFF);
 				} else {
 					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -725,7 +725,7 @@ void func_800A70B8_B6068(void) {
 					D_80052B40.unk2 = 0xC9;
 					D_80052B40.unk4 = 0;
 
-					beaconAge = D_8003154C[currentLevel * 6 + i - 6].timer;
+					beaconAge = D_8003154C[currentLevel - 1][i].timer;
 					if (beaconType == 6) {
 						rot = (s16) (s32) (((((f64) (0x32 - beaconAge) * 0.017453292519943295) / 50.0) * 16384.0));
 					} else if ((beaconType == 4) || (beaconType == 5)) {
@@ -818,7 +818,7 @@ void func_800A7C6C_B6C1C(void) {
 	}
 
 	for (i = 0; i < 6; i++) {
-		beacon = &D_8003154C[currentLevel * 6 + i - 6];
+		beacon = &D_8003154C[currentLevel - 1][i];
 
 		switch (beacon->state) {
 			case 1:
@@ -833,7 +833,7 @@ void func_800A7C6C_B6C1C(void) {
 						func_80013324_13F24();
 					}
 
-					beacon = &D_8003154C[currentLevel * 6 + i - 6];
+					beacon = &D_8003154C[currentLevel - 1][i];
 				}
 
 				if (beacon->timer == 0) {
@@ -842,7 +842,7 @@ void func_800A7C6C_B6C1C(void) {
 
 				if (beacon->timer == 0xA) {
 					func_800EFEB4_FEE64(NULL, D_8013D898_14C848[currentLevel + 0x13], 0);
-					beacon = &D_8003154C[currentLevel * 6 + i - 6];
+					beacon = &D_8003154C[currentLevel - 1][i];
 				}
 				break;
 
@@ -851,7 +851,7 @@ void func_800A7C6C_B6C1C(void) {
 				tempZ = beacon->z << 8;
 				D_8014F7FA = func_800B84D0_C7480(tempX, tempZ) >> 8;
 
-				beacon = &D_8003154C[currentLevel * 6 + i - 6];
+				beacon = &D_8003154C[currentLevel - 1][i];
 
 				beacon->state = 3;
 				beacon->timer = 0x64;
@@ -863,13 +863,13 @@ void func_800A7C6C_B6C1C(void) {
 				func_800DF038_EDFE8(levelX, terrainY, levelZ, 0x46, 0, NULL);
 				D_8014F7FE = func_800C21F0_D11A0(D_8014F80A, 0x2710, D_8014F80C, 0);
 
-				beacon = &D_8003154C[currentLevel * 6 + i - 6];
+				beacon = &D_8003154C[currentLevel - 1][i];
 				break;
 
 			case 3:
 				func_800C1ECC_D0E7C(D_8014F80A, D_8014F812, D_8014F80C, D_8014F7FE, 0);
 
-				beacon = &D_8003154C[currentLevel * 6 + i - 6];
+				beacon = &D_8003154C[currentLevel - 1][i];
 				if (beacon->timer == 0) {
 					beacon->state = 4;
 					beacon->timer = 0x3C;
@@ -884,7 +884,7 @@ void func_800A7C6C_B6C1C(void) {
 					vehicleIndex = D_80158E80[j];
 					vehicle = &vehicleInstances[vehicleIndex];
 
-					beacon = &D_8003154C[currentLevel * 6 + i - 6];
+					beacon = &D_8003154C[currentLevel - 1][i];
 
 					range = *(s16 *)((u8 *)vehicleSpecs + 0x0C + vehicle->unk1A * 0x5C) + 0x50;
 					deltaX = (beacon->x << 8) - vehicle->unk0;
@@ -906,14 +906,14 @@ void func_800A7C6C_B6C1C(void) {
 					}
 				}
 
-				beacon = &D_8003154C[currentLevel * 6 + i - 6];
+				beacon = &D_8003154C[currentLevel - 1][i];
 				if (beacon->timer == 0) {
 					beacon->state = 5;
 					beacon->timer = 0x28;
 					D_8014F800 = 0;
 					func_800A5BD0_B4B80(i);
 
-					beacon = &D_8003154C[currentLevel * 6 + i - 6];
+					beacon = &D_8003154C[currentLevel - 1][i];
 
 					tempX = beacon->x << 8;
 					tempZ = beacon->z << 8;
@@ -936,7 +936,7 @@ void func_800A7C6C_B6C1C(void) {
 					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
 					func_801371B8_146168(0, 0x17C, tempX, terrainY, tempZ, 0.25f);
 
-					beacon = &D_8003154C[currentLevel * 6 + i - 6];
+					beacon = &D_8003154C[currentLevel - 1][i];
 				}
 				break;
 
@@ -971,13 +971,13 @@ void func_800A7C6C_B6C1C(void) {
 					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
 					func_801371B8_146168(0, 0x17D, tempX, terrainY, tempZ, D_80142888_151838);
 
-					beacon = &D_8003154C[currentLevel * 6 + i - 6];
+					beacon = &D_8003154C[currentLevel - 1][i];
 
 					spA8 = beacon->x << 8;
 					spAA = beacon->z << 8;
 					func_800B99A8_C8958((Unk80152B80*) &spA8, 0x1E, 0x1F4, 0xFF, (u8*) &spA4, 0x50, 0xA, 0);
 
-					beacon = &D_8003154C[currentLevel * 6 + i - 6];
+					beacon = &D_8003154C[currentLevel - 1][i];
 					beacon->state = 0xA;
 					beacon->timer = 5;
 				}
