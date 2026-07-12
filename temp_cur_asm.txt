@@ -1,0 +1,296 @@
+CURRENT                                           
+31b800:    andi    t6,a0,0xff                     
+31b804:    sll     t7,t6,0x2                      
+31b808:    addiu   sp,sp,-0x80                    
+31b80c:    addu    t7,t7,t6                       
+31b810:    lui     t8,0x8005                      
+31b814:    sw      s0,0x28(sp)                    
+31b818:    addiu   t8,t8,-0x7e68                  
+31b81c:    sll     t7,t7,0x4                      
+31b820:    addu    s0,t7,t8                       
+31b824:    lh      t9,0xc(s0)                     
+31b828:    lui     a1,0x8015                      
+31b82c:    sw      ra,0x2c(sp)                    
+31b830:    sll     t0,t9,0x4                      
+31b834:    addu    a1,a1,t0                       
+31b838:    lb      a1,-0x22a4(a1)                 
+31b83c:    sw      a0,0x80(sp)                    
+31b840:    move    a0,t6                          
+31b844:    sw      zero,0x64(sp)                  
+31b848:    sb      t6,0x83(sp)                    
+31b84c:    li      a2,0x4000                      
+31b850:    jal     86230                          
+31b854:    sh      a1,0x4e(sp)                    
+31b858:    lui     a0,0x8005                      
+31b85c:    lw      a0,0x2a8c(a0)                  
+31b860:    sll     t1,a0,0x5                      
+31b864:    subu    t1,t1,a0                       
+31b868:    sll     t1,t1,0x2                      
+31b86c:    addu    t1,t1,a0                       
+31b870:    sll     t2,t1,0x3                      
+31b874:    jal     1d980                          
+31b878:    andi    a0,t2,0xffff                   
+31b87c:    mtc1    v0,$f4                         
+31b880:    lui     at,0x40e0                      
+31b884:    mtc1    at,$f11                        
+31b888:    cvt.s.w $f6,$f4                        
+31b88c:    mtc1    zero,$f10                      
+31b890:    lui     at,0x4024                      
+31b894:    mtc1    at,$f19                        
+31b898:    mtc1    zero,$f18                      
+31b89c:    lh      t4,0x4e(sp)                    
+31b8a0:    cvt.d.s $f8,$f6                        
+31b8a4:    lui     t6,0x8015                      
+31b8a8:    div.d   $f16,$f8,$f10                  
+31b8ac:    addiu   t6,t6,-0x22b0                  
+31b8b0:    sll     t5,t4,0x4                      
+31b8b4:    addu    v1,t5,t6                       
+31b8b8:    lui     a0,0x8005                      
+31b8bc:    mul.d   $f4,$f16,$f18                  
+31b8c0:    trunc.w.d $f6,$f4                      
+31b8c4:    mfc1    t8,$f6                         
+31b8c8:    nop                                    
+31b8cc:    sh      t8,2(v1)                       
+31b8d0:    lw      a0,0x2a8c(a0)                  
+31b8d4:    sw      v1,0x34(sp)                    
+31b8d8:    sll     t9,a0,0x2                      
+31b8dc:    subu    t9,t9,a0                       
+31b8e0:    sll     t9,t9,0x4                      
+31b8e4:    subu    t9,t9,a0                       
+31b8e8:    sll     t9,t9,0x3                      
+31b8ec:    subu    t9,t9,a0                       
+31b8f0:    sll     t0,t9,0x2                      
+31b8f4:    jal     1d980                          
+31b8f8:    andi    a0,t0,0xffff                   
+31b8fc:    mtc1    v0,$f8                         
+31b900:    lui     at,0x40e0                      
+31b904:    mtc1    at,$f19                        
+31b908:    cvt.s.w $f10,$f8                       
+31b90c:    mtc1    zero,$f18                      
+31b910:    lui     at,0x802e                      
+31b914:    ldc1    $f6,0x7c60(at)                 
+31b918:    lw      v1,0x34(sp)                    
+31b91c:    addiu   t6,sp,0x7c                     
+31b920:    cvt.d.s $f16,$f10                      
+31b924:    lh      a1,0(v1)                       
+31b928:    div.d   $f4,$f16,$f18                  
+31b92c:    lh      a2,2(v1)                       
+31b930:    lh      a3,4(v1)                       
+31b934:    addiu   t7,sp,0x78                     
+31b938:    addiu   t8,sp,0x74                     
+31b93c:    move    a0,s0                          
+31b940:    mul.d   $f8,$f4,$f6                    
+31b944:    trunc.w.d $f10,$f8                     
+31b948:    mfc1    t3,$f10                        
+31b94c:    nop                                    
+31b950:    sh      t3,8(v1)                       
+31b954:    lh      t4,0x2c(s0)                    
+31b958:    negu    t5,t4                          
+31b95c:    sh      t5,0xa(v1)                     
+31b960:    sw      t8,0x18(sp)                    
+31b964:    sw      t7,0x14(sp)                    
+31b968:    jal     128428                         
+31b96c:    sw      t6,0x10(sp)                    
+31b970:    lui     a0,0x8005                      
+31b974:    lw      a0,0x2b34(a0)                  
+31b978:    jal     84e54                          
+31b97c:    move    a1,s0                          
+31b980:    lw      v1,0x34(sp)                    
+31b984:    sw      v0,0x70(sp)                    
+31b988:    lh      t9,6(s0)                       
+31b98c:    lh      t0,6(v1)                       
+31b990:    lui     a0,0x8005                      
+31b994:    lw      a0,0x2b34(a0)                  
+31b998:    subu    t1,t9,t0                       
+31b99c:    addiu   t2,t1,-0x4000                  
+31b9a0:    sh      t2,0x6a(sp)                    
+31b9a4:    lw      t4,0x7c(sp)                    
+31b9a8:    lw      t7,0x74(sp)                    
+31b9ac:    lh      t3,0(a0)                       
+31b9b0:    lh      t6,4(a0)                       
+31b9b4:    subu    t5,t3,t4                       
+31b9b8:    subu    t8,t6,t7                       
+31b9bc:    mtc1    t5,$f16                        
+31b9c0:    mtc1    t8,$f18                        
+31b9c4:    cvt.s.w $f12,$f16                      
+31b9c8:    cvt.s.w $f14,$f18                      
+31b9cc:    swc1    $f12,0x54(sp)                  
+31b9d0:    jal     3824                           
+31b9d4:    swc1    $f14,0x50(sp)                  
+31b9d8:    lwc1    $f12,0x54(sp)                  
+31b9dc:    lwc1    $f14,0x50(sp)                  
+31b9e0:    jal     3824                           
+31b9e4:    sh      v0,0x62(sp)                    
+31b9e8:    lh      v1,0x6a(sp)                    
+31b9ec:    lh      t1,0x62(sp)                    
+31b9f0:    lwc1    $f12,0x54(sp)                  
+31b9f4:    subu    t9,v1,v0                       
+31b9f8:    subu    t2,t1,v1                       
+31b9fc:    addiu   t3,t2,-0x4000                  
+31ba00:    addiu   t0,t9,0x4000                   
+31ba04:    slt     at,t0,t3                       
+31ba08:    beqz    at,31ba30 [35m~>[39m                   
+31ba0c:    lwc1    $f14,0x50(sp)                  
+31ba10:    jal     3824                           
+31ba14:    nop                                    
+31ba18:    lh      t4,0x6a(sp)                    
+31ba1c:    subu    v1,v0,t4                       
+31ba20:    addiu   v1,v1,-0x4000                  
+31ba24:    sll     t5,v1,0x10                     
+31ba28:    b       31ba4c [36m~>[39m                      
+31ba2c:    sra     v1,t5,0x10                     
+31ba30: [35m~>[39m jal     3824                           
+31ba34:    nop                                    
+31ba38:    lh      t7,0x6a(sp)                    
+31ba3c:    subu    v1,t7,v0                       
+31ba40:    addiu   v1,v1,0x4000                   
+31ba44:    sll     t8,v1,0x10                     
+31ba48:    sra     v1,t8,0x10                     
+31ba4c: [36m~>[39m slti    at,v1,0x2000                   
+31ba50:    beqz    at,31ba5c [32m~>[39m                   
+31ba54:    li      t1,1                           
+31ba58:    sw      t1,0x64(sp)                    
+31ba5c: [32m~>[39m lw      t2,0x70(sp)                    
+31ba60:    lw      t0,0x64(sp)                    
+31ba64:    slti    at,t2,0xa8c                    
+31ba68:    beqzl   at,31bbc0 [31m~>[39m                   
+31ba6c:    li      t0,0x1f                        
+31ba70:    beqz    t0,31bbbc [93m~>[39m                   
+31ba74:    lbu     a0,0x83(sp)                    
+31ba78:    move    a1,zero                        
+31ba7c:    jal     871cc                          
+31ba80:    li      a2,0x14                        
+31ba84:    beqz    v0,31bbc8 [95m~>[39m                   
+31ba88:    li      t8,0x3000                      
+31ba8c:    lb      t3,0x3d(s0)                    
+31ba90:    li      at,3                           
+31ba94:    li      t6,0x46                        
+31ba98:    addiu   t4,t3,1                        
+31ba9c:    sb      t4,0x3d(s0)                    
+31baa0:    lb      t5,0x3d(s0)                    
+31baa4:    li      t7,0xc                         
+31baa8:    bnel    t5,at,31bac0 [96m~>[39m                
+31baac:    sh      t7,0x1e(s0)                    
+31bab0:    sh      t6,0x1e(s0)                    
+31bab4:    b       31bac0 [96m~>[39m                      
+31bab8:    sb      zero,0x3d(s0)                  
+31babc:    sh      t7,0x1e(s0)                    
+31bac0: [96m~>[39m lhu     a0,0x6a(sp)                    
+31bac4:    sh      t8,0x2c(s0)                    
+31bac8:    jal     1d980                          
+31bacc:    sw      a0,0x34(sp)                    
+31bad0:    mtc1    v0,$f4                         
+31bad4:    lui     at,0x40e0                      
+31bad8:    mtc1    at,$f11                        
+31badc:    cvt.s.w $f6,$f4                        
+31bae0:    mtc1    zero,$f10                      
+31bae4:    lw      a0,0x34(sp)                    
+31bae8:    cvt.d.s $f8,$f6                        
+31baec:    div.d   $f16,$f8,$f10                  
+31baf0:    neg.d   $f18,$f16                      
+31baf4:    cvt.s.d $f4,$f18                       
+31baf8:    jal     1d950                          
+31bafc:    swc1    $f4,0x6c(sp)                   
+31bb00:    lw      t9,0x7c(sp)                    
+31bb04:    lui     at,0x42a0                      
+31bb08:    mtc1    at,$f0                         
+31bb0c:    lwc1    $f10,0x6c(sp)                  
+31bb10:    mtc1    t9,$f6                         
+31bb14:    lui     at,0x40e0                      
+31bb18:    mul.s   $f16,$f10,$f0                  
+31bb1c:    mtc1    at,$f17                        
+31bb20:    lw      t6,0x74(sp)                    
+31bb24:    lw      a1,0x78(sp)                    
+31bb28:    li      a3,0xc8                        
+31bb2c:    cvt.s.w $f8,$f6                        
+31bb30:    mtc1    v0,$f6                         
+31bb34:    sra     t3,a1,0x10                     
+31bb38:    sll     t4,t3,0x10                     
+31bb3c:    sra     a1,t4,0x10                     
+31bb40:    cvt.s.w $f10,$f6                       
+31bb44:    add.s   $f18,$f8,$f16                  
+31bb48:    mtc1    zero,$f16                      
+31bb4c:    cvt.d.s $f8,$f10                       
+31bb50:    trunc.w.s $f4,$f18                     
+31bb54:    mtc1    t6,$f10                        
+31bb58:    div.d   $f18,$f8,$f16                  
+31bb5c:    mfc1    a0,$f4                         
+31bb60:    cvt.s.w $f8,$f10                       
+31bb64:    sll     t2,a0,0x10                     
+31bb68:    sra     a0,t2,0x10                     
+31bb6c:    cvt.s.d $f4,$f18                       
+31bb70:    mul.s   $f6,$f4,$f0                    
+31bb74:    add.s   $f16,$f6,$f8                   
+31bb78:    trunc.w.s $f18,$f16                    
+31bb7c:    mfc1    a2,$f18                        
+31bb80:    nop                                    
+31bb84:    sll     t8,a2,0x10                     
+31bb88:    jal     de9b8                          
+31bb8c:    sra     a2,t8,0x10                     
+31bb90:    lh      t2,0(s0)                       
+31bb94:    li      t1,0xff                        
+31bb98:    sb      t1,0x5b(sp)                    
+31bb9c:    addiu   a0,sp,0x60                     
+31bba0:    addiu   a1,sp,0x5b                     
+31bba4:    li      a2,0xc8                        
+31bba8:    li      a3,5                           
+31bbac:    jal     b2354                          
+31bbb0:    sh      t2,0x60(sp)                    
+31bbb4:    b       31bbcc [92m~>[39m                      
+31bbb8:    lw      t3,0x20(s0)                    
+31bbbc: [93m~>[39m li      t0,0x1f                        
+31bbc0: [31m~>[39m sh      t0,0x1e(s0)                    
+31bbc4:    sb      zero,0x3d(s0)                  
+31bbc8: [95m~>[39m lw      t3,0x20(s0)                    
+31bbcc: [92m~>[39m li      a3,0xb4                        
+31bbd0:    sll     t4,t3,0x0                      
+31bbd4:    bgez    t4,31bc08 [90m~>[39m                   
+31bbd8:    li      t3,0x1e                        
+31bbdc:    lh      v0,0x2c(s0)                    
+31bbe0:    li      t7,0x3000                      
+31bbe4:    addiu   v0,v0,0x1000                   
+31bbe8:    sll     t5,v0,0x10                     
+31bbec:    sra     v0,t5,0x10                     
+31bbf0:    slti    at,v0,0x3001                   
+31bbf4:    bnezl   at,31bc08 [90m~>[39m                   
+31bbf8:    sh      v0,0x2c(s0)                    
+31bbfc:    b       31bc08 [90m~>[39m                      
+31bc00:    sh      t7,0x2c(s0)                    
+31bc04:    sh      v0,0x2c(s0)                    
+31bc08: [90m~>[39m lh      t8,0x1e(s0)                    
+31bc0c:    lw      v0,0x78(sp)                    
+31bc10:    li      at,0x1e                        
+31bc14:    bne     t8,at,31bc8c [35m~>[39m                
+31bc18:    sra     a0,v0,0x10                     
+31bc1c:    addiu   a1,v0,-0xa                     
+31bc20:    sll     t2,a1,0x10                     
+31bc24:    sll     t9,a0,0x10                     
+31bc28:    li      t4,0x32                        
+31bc2c:    li      t5,0x28                        
+31bc30:    sw      t5,0x18(sp)                    
+31bc34:    sw      t4,0x14(sp)                    
+31bc38:    sra     a0,t9,0x10                     
+31bc3c:    sra     a1,t2,0x10                     
+31bc40:    lh      a2,0x76(sp)                    
+31bc44:    jal     c56a4                          
+31bc48:    sw      t3,0x10(sp)                    
+31bc4c:    lw      a0,0x78(sp)                    
+31bc50:    lh      a2,0x76(sp)                    
+31bc54:    li      t2,0x1e                        
+31bc58:    sra     t6,a0,0x10                     
+31bc5c:    sll     t7,t6,0x10                     
+31bc60:    sra     a0,t7,0x10                     
+31bc64:    sll     a1,a0,0x10                     
+31bc68:    sll     a3,a0,0x10                     
+31bc6c:    sra     t1,a3,0x10                     
+31bc70:    sra     t9,a1,0x10                     
+31bc74:    move    a1,t9                          
+31bc78:    move    a3,t1                          
+31bc7c:    sw      a0,0x10(sp)                    
+31bc80:    sw      t2,0x18(sp)                    
+31bc84:    jal     d16bc                          
+31bc88:    sw      a2,0x14(sp)                    
+31bc8c: [35m~>[39m lh      v0,0x2c(s0)                    
+31bc90:    beqz    v0,31bc9c [36m~>[39m                   
+31bc94:    addiu   t0,v0,-0x100                   
+31bc98:    sh      t0,0x2c(s0)                    
