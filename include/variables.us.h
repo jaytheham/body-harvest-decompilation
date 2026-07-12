@@ -3210,6 +3210,8 @@ extern Unk802E4ED8_entry D_802E4ED8[9];
 extern s32 D_802E4F44[9];
 extern s32 D_802E4F68_3290B8;
 extern s32 D_802E4F6C_3290BC;
+extern volatile s32 D_802E4F70_3290C0;
+extern volatile s32 D_802E4F74_3290C4;
 extern s16 D_802E4FB4[];
 extern Unk8014DD50 *D_802E566C;
 extern Unk802E71B8 D_802E71B8;
