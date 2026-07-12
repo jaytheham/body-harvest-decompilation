@@ -2981,7 +2981,7 @@ extern u8 D_80265A80[];
 extern u8 D_80266E80[];
 extern s16 D_80267080[];
 extern s16 FrameBufferB[]; // 0x8028C880
-extern s32 D_802B2080;
+extern u16 D_802B2080[];
 extern u8 D_802C2080[];
 extern u8 D_802C4080[];
 extern Gfx D_802C9480[];

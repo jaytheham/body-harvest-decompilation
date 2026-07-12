@@ -3978,14 +3978,14 @@ void func_8011EB40_12DAF0(BuildingInstance *arg0) {
 // CURRENT(170)
 #ifdef NON_MATCHING
 void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
-	u8 *temp_v0;
+	BuildingInstance *temp_v0;
 	s32 objIndex;
 
 	objIndex = (const WeaponEntry_80129864 *)arg0 - D_80145BE0_154B90;
-	if ((temp_v0 = (u8 *) buildingInstances + ((D_8015FAD0[arg1].unk1E >> 4) * 24),
+	if ((temp_v0 = &buildingInstances[D_8015FAD0[arg1].unk1E >> 4],
 		 objIndex == 0x4F)) {
-		if (temp_v0[0xD] != 2) {
-			temp_v0[0xD] = 1;
+		if (temp_v0->unkD != 2) {
+			temp_v0->unkD = 1;
 		}
 
 		if (func_8000726C_7E6C(0x12) == 0) {
