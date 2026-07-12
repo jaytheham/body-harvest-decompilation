@@ -12336,7 +12336,7 @@ void func_800E5538_F44E8(void) {
 					var_t0 = vehicle->unk0;
 					var_t1 = vehicle->unk2;
 					var_t2 = vehicle->unk4;
-					var_a2 = *(s16 *)((u8 *)vehicleSpecs + 0x0C + vehicle->unk1A * 2) * 28;
+					var_a2 = vehicleSpecs[vehicle->unk1A].unkC * 28;
 				} else {
 					building = &buildingInstances[entry->unk0];
 					var_t0 = building->xCoord;
