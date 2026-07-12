@@ -511,7 +511,7 @@ void func_8011694C_1258FC(void) {
 
 	D_8015EB80 = 0;
 	spec = buildingSpecs;
-	doorRef = &D_8005252C;
+	doorRef = &D_800522C0[0x1F];
 	for (i = 0x1F; i >= 0; i--) {
 		if (doorRef->unk13 != 0) {
 			for (j = 0x1F; j >= 0; j--) {
@@ -1540,7 +1540,7 @@ process_current:
 		}
 	}
 
-	doorRef = &D_8005252C;
+	doorRef = &D_800522C0[0x1F];
 	flags = (u32)building->unk8 >> 12;
 	propMode = flags & 4;
 	searchCount = 0x1F;

@@ -857,7 +857,6 @@ extern s32 D_80050AD0;
 extern s32 D_80050AD4;
 extern BuildingInstance buildingInstances[0xFF]; // 0x80050AD8
 extern Unk800522C0 D_800522C0[0x20];
-extern Unk800522C0 D_8005252C;
 extern s32 D_80052540;
 extern s16 D_80052542;
 extern u8 D_80052543;
