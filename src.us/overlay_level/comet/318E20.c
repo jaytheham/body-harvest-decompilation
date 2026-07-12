@@ -561,7 +561,31 @@ void func_802D6428_31A578(void) {
 	func_800073B8_7FB8(0xB);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D6458_31A5A8.s")
+void func_802D6458_31A5A8(void) {
+    if (D_8013FD78_14ED28->unk20 & 0x8000) {
+        func_800FB44C_10A3FC(D_8013FD78_14ED28, -17050.0f);
+        func_800FB468_10A418(D_8013FD78_14ED28, 1248.0f);
+        func_800FB484_10A434(D_8013FD78_14ED28, 14.0f);
+        func_800FD510_10C4C0(0, 0x72);
+        func_800FDC30_10CBE0(0);
+    }
+
+    func_800073B8_7FB8(0x0E);
+    func_800073B8_7FB8(0x0F);
+    func_800073B8_7FB8(0x10);
+    func_800073B8_7FB8(0x28);
+    func_80018D7C_1997C(0xD3);
+    func_800072CC_7ECC(0x29);
+    func_800072CC_7ECC(0x2A);
+
+    if ((D_800521F0 >> 12) & 1) {
+        func_8011C080_12B030(0xF6);
+    }
+
+    if ((D_80051458 >> 12) & 1) {
+        func_8011C080_12B030(0x65);
+    }
+}
 
 void func_802D6558_31A6A8(void) {
 	func_800073B8_7FB8(0xD);

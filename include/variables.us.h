@@ -857,6 +857,8 @@ extern VehicleInstance vehicleInstances[0x80]; // 8004DCD0
 extern s32 D_80050AD0;
 extern s32 D_80050AD4;
 extern BuildingInstance buildingInstances[0xFF]; // 0x80050AD8
+extern u32 D_80051458;
+extern u32 D_800521F0;
 extern Unk800522C0 D_800522C0[0x20];
 extern s32 D_80052540;
 extern s16 D_80052542;
