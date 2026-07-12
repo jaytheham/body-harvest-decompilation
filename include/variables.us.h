@@ -2948,6 +2948,7 @@ extern u8 D_80224680; // missions?
 extern u8 D_80224E80[];
 extern u8 D_80254E80[]; // Tile palette data
 extern AlienSpec alienSpecs[0x30]; // 80256680
+extern u16 D_8025668C[]; // 8025668C (aliases alienSpecs[0].unkC)
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
 extern SignpostData D_80258330[0x20]; // signposts
 extern s32 D_80258390; // English sign strings

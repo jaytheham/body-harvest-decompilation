@@ -1009,7 +1009,44 @@ void func_802D7B4C_31BC9C(u8 arg0) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(2403)
+void func_802D7C1C_31BD6C(u8 arg0) {
+    AlienInstance *inst = &alienInstances[arg0];
+
+    if (!(inst->unk20 & 0x100000)) {
+        u16 val;
+        inst->unk2C = 0x2D;
+        val = (s32)(*(s16 *)((u8 *)&D_8025668C + inst->specIndex * 0x68) * 5) & 0xFFFF;
+        func_800D05A8_DF558(inst->unk0, (s16)(inst->unk2 + 100), inst->unk4, val, 0xFF, 0xFF, 0xFF);
+        return;
+    }
+
+    {
+        s16 entryIndex = D_8014DD50[inst->unkC].unkC;
+        Unk8014DD50 *entry = &D_8014DD50[entryIndex];
+        s16 temp_v0 = entry->unk2;
+        if (temp_v0 >= -54) {
+            entry->unk2 = (s16)((temp_v0 + (inst->unk2C * 2)) - 90);
+        }
+
+        if (inst->unk2C == 0x28 && (D_80031420_32020 & 3)) {
+            s32 r = func_800038E0_44E0() % 80;
+            func_800CA5EC_D959C(inst->unk0, (s16)(inst->unk2 + 70), inst->unk4,
+                0, 1, 0, 0x46, 0xA, 0xC, 0x80, 0, 0xB4 - r, 0x32, 0xFF);
+        }
+
+        if (inst->unk2C == 1) {
+            u16 val;
+            val = (s32)(*(s16 *)((u8 *)&D_8025668C + inst->specIndex * 0x68) * 10) & 0xFFFF;
+            func_800D05A8_DF558(inst->unk0, (s16)(inst->unk2 + 100), inst->unk4, val, 0xFF, 0xFF, 0xFF);
+            func_80088E40_97DF0(arg0, entryIndex, entry->unk0, entry->unk2, entry->unk4, 0, 0x1E, 0);
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D7C1C_31BD6C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D7E7C_31BFCC.s")
 
