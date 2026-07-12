@@ -1334,7 +1334,7 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	u16 mapIndex;
 	f32 f0;
 	u8 baseY;
-	u8 *entry;
+	RingEntry *entry;
 	u8 spA0[3];
 	u8 spA8[3];
 	s8 spAC[5];
@@ -1407,11 +1407,12 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 
 			func_800B2CF0_C1CA0(spAC, spA0, (s8 *)spA8);
 
-			entry = &D_80151DD8[((((s32)((s8)D_80151DD8[0x960] + row) % 19) & 0xFFFF) * 0x78) +
-				((((s32)((s8)D_80151DD8[0x961] + col) % 19) & 0xFFFF) * 6)];
-			entry[2] = spA8[0];
-			entry[4] = spA8[2];
-			entry[3] = spA8[1];
+			entry = &D_80151DD8.tiles
+				[((((s32)(D_80151DD8.ringY + row) % 19) & 0xFFFF)]
+				[((((s32)(D_80151DD8.ringX + col) % 19) & 0xFFFF)];
+			entry->r = spA8[0];
+			entry->b = spA8[2];
+			entry->g = spA8[1];
 		}
 	}
 
@@ -1419,25 +1420,25 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 		for (col = 0; col < 0x13; col = (col + 1) & 0xFF) {
 			for (i = 0; i < 0x40; i = (i + 1) & 0xFF) {
 				if (((sp94 + col) == D_8014FD48[i * 2]) && ((baseY + row) == D_8014FD48[(i * 2) + 1])) {
-					entry = &D_80151DD8[(row * 0x78) + (col * 6)];
+					entry = &D_80151DD8.tiles[row][col];
 					mapIndex = ((D_8014FD48[(i * 2) + 1] * D_8014FD48[i * 2]) % 60) & 0xFF;
 
 					if ((mapIndex + 0x14) < 0) {
-						entry[2] = 0;
+						entry->r = 0;
 					} else {
-						entry[2] = mapIndex + 0x14;
+						entry->r = mapIndex + 0x14;
 					}
 
 					if ((mapIndex - 5) < 0) {
-						entry[3] = 0;
+						entry->g = 0;
 					} else {
-						entry[3] = mapIndex - 5;
+						entry->g = mapIndex - 5;
 					}
 
 					if ((mapIndex - 0x19) < 0) {
-						entry[4] = 0;
+						entry->b = 0;
 					} else {
-						entry[4] = mapIndex - 0x19;
+						entry->b = mapIndex - 0x19;
 					}
 				}
 			}
@@ -1456,7 +1457,6 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 #ifdef NON_MATCHING
 // CURRENT(2050)
 void func_800B4050_C3000(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
-	u8 *a2;
 	s32 t1;
 	s32 v0;
 	s32 v1;
@@ -1464,19 +1464,18 @@ void func_800B4050_C3000(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s32 a1;
 
 	D_8014F8A0 = (s16(*)[256])arg2;
-	D_80151DD8[0x964] = arg0;
-	D_80151DD8[0x965] = arg1;
+	D_80151DD8.mapPosX = arg0;
+	D_80151DD8.mapPosY = arg1;
 	D_8014F89C = arg0;
 	D_8014F89D = arg1;
 	for (t1 = 0, v0 = 0; v0 < 0x13; t1 = (t1 + 1) & 0xFF, v0 = t1) {
 		a1 = (arg1 + v0) << 8;
-		a2 = D_80151DD8 + (((t1 << 4) - t1) << 3);
 		for (v1 = 0, a0 = 0; a0 < 0x13; a0 = (v1 + 1) & 0xFF, v1 = a0) {
-			*(u16 *)(a2 + (v1 * 6)) = ((u16 *)arg2)[(u16)((arg0 + a0) + a1)];
+			D_80151DD8.tiles[t1][v1].tileType = ((u16 *)arg2)[(u16)((arg0 + a0) + a1)];
 		}
 	}
-	D_80151DD8[0x960] = 0;
-	D_80151DD8[0x961] = 0;
+	D_80151DD8.ringY = 0;
+	D_80151DD8.ringX = 0;
 	func_800B345C_C240C(arg0, arg1, arg2, arg3);
 }
 #else
@@ -1535,15 +1534,15 @@ void func_800B42B0_C3260(s32 arg0) {
 	s32 temp_v1;
 	s32 temp_t9;
 	u8 *temp_v0;
-	u8 *temp_v0_4;
+	RingEntry *temp_v0_4;
 
 	(void)arg0;
 
 	sp5C = (u16 *)D_8014F8A0;
-	D_8014F89C = D_80151DD8[0x964]++;
-	D_8014F89D = D_80151DD8[0x965];
-	D_8014F899 = ((s8 *)D_80151DD8)[0x961];
-	D_8014F898 = ((s8 *)D_80151DD8)[0x960];
+	D_8014F89C = D_80151DD8.mapPosX++;
+	D_8014F89D = D_80151DD8.mapPosY;
+	D_8014F899 = D_80151DD8.ringX;
+	D_8014F898 = D_80151DD8.ringY;
 	D_8014F89C++;
 
 	sp6F = 0;
@@ -1600,16 +1599,16 @@ void func_800B42B0_C3260(s32 arg0) {
 			goto loop_2;
 		}
 
-		temp_v0_4 = &D_80151DD8[(u8)sp59 * 0x78 + D_8014F899 * 6];
-		*(u16 *)temp_v0_4 = *temp_s7;
+		temp_v0_4 = &D_80151DD8.tiles[(u8)sp59][D_8014F899];
+		temp_v0_4->tileType = *temp_s7;
 		if (temp_s6[-1] & 0x800) {
-			temp_v0_4[2] = (((u8)sp68[0] / 4) * 3);
-			temp_v0_4[4] = (((u8)sp68[2] / 4) * 3);
-			temp_v0_4[3] = (((u8)sp68[1] / 4) * 3);
+			temp_v0_4->r = (((u8)sp68[0] / 4) * 3);
+			temp_v0_4->b = (((u8)sp68[2] / 4) * 3);
+			temp_v0_4->g = (((u8)sp68[1] / 4) * 3);
 		} else {
-			temp_v0_4[2] = (u8)sp68[0];
-			temp_v0_4[3] = (u8)sp68[1];
-			temp_v0_4[4] = (u8)sp68[2];
+			temp_v0_4->r = (u8)sp68[0];
+			temp_v0_4->g = (u8)sp68[1];
+			temp_v0_4->b = (u8)sp68[2];
 		}
 
 		sp59 = ((u8)sp59 + 1) % 19;
@@ -1617,7 +1616,7 @@ void func_800B42B0_C3260(s32 arg0) {
 	} while (sp6F < 0x13);
 
 	D_8014F899 = (D_8014F899 + 1) % 19;
-	D_80151DD8[0x961] = D_8014F899;
+	D_80151DD8.ringX = D_8014F899;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B42B0_C3260.s")
@@ -1637,13 +1636,13 @@ void func_800B4660_C3610(s32 arg0) {
 	s32 var_s1;
 
 	sp5C = &D_8014F8A0[0][0];
-	D_8014F899 = ((s8 *)D_80151DD8)[0x961];
+	D_8014F899 = D_80151DD8.ringX;
 	D_8014F899 = (D_8014F899 + 0x12) % 19;
-	D_8014F898 = ((s8 *)D_80151DD8)[0x960];
-	D_8014F89C = D_80151DD8[0x964];
-	D_80151DD8[0x964] = D_80151DD8[0x964] - 1;
-	D_8014F89C = D_80151DD8[0x964];
-	D_8014F89D = D_80151DD8[0x965];
+	D_8014F898 = D_80151DD8.ringY;
+	D_8014F89C = D_80151DD8.mapPosX;
+	D_80151DD8.mapPosX = D_80151DD8.mapPosX - 1;
+	D_8014F89C = D_80151DD8.mapPosX;
+	D_8014F89D = D_80151DD8.mapPosY;
 	sp59 = D_8014F898;
 	var_s1 = 0;
 	sp6F = 0;
@@ -1682,23 +1681,23 @@ void func_800B4660_C3610(s32 arg0) {
 			var_s0 = (var_s0 + 1) & 0xFF;
 		} while (var_s0 < 0x40);
 		{
-			u8 *vp = &D_80151DD8[(u8)sp59 * 0x78 + D_8014F899 * 6];
-			*(u16 *)vp = *ts6;
+			RingEntry *vp = &D_80151DD8.tiles[(u8)sp59][D_8014F899];
+			vp->tileType = *ts6;
 			if (*(ts6 - 1) & 0x800) {
-				vp[2] = (u8)(((u8)sp68[0] / 4) * 3);
-				vp[4] = (u8)(((u8)sp68[2] / 4) * 3);
-				vp[3] = (u8)(((u8)sp68[1] / 4) * 3);
+				vp->r = (u8)(((u8)sp68[0] / 4) * 3);
+				vp->b = (u8)(((u8)sp68[2] / 4) * 3);
+				vp->g = (u8)(((u8)sp68[1] / 4) * 3);
 			} else {
-				vp[2] = (u8)sp68[0];
-				vp[3] = (u8)sp68[1];
-				vp[4] = (u8)sp68[2];
+				vp->r = (u8)sp68[0];
+				vp->g = (u8)sp68[1];
+				vp->b = (u8)sp68[2];
 			}
 		}
 		sp59 = ((u8)sp59 + 1) % 19;
 		var_s1 = (sp6F + 1) & 0xFF;
 		sp6F = var_s1;
 	} while (var_s1 < 0x13);
-	D_80151DD8[0x961] = D_8014F899;
+	D_80151DD8.ringX = D_8014F899;
 }
 	#else
 	#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B4660_C3610.s")
@@ -1718,11 +1717,11 @@ void func_800B49A4_C3954(s32 arg0) {
 	s32 var_s1;
 
 	sp5C = &D_8014F8A0[0][0];
-	D_8014F89D = D_80151DD8[0x965];
-	D_80151DD8[0x965] = D_8014F89D + 1;
-	D_8014F89C = D_80151DD8[0x964];
-	D_8014F899 = ((s8 *)D_80151DD8)[0x961];
-	D_8014F898 = ((s8 *)D_80151DD8)[0x960];
+	D_8014F89D = D_80151DD8.mapPosY;
+	D_80151DD8.mapPosY = D_8014F89D + 1;
+	D_8014F89C = D_80151DD8.mapPosX;
+	D_8014F899 = D_80151DD8.ringX;
+	D_8014F898 = D_80151DD8.ringY;
 	D_8014F89D = D_8014F89D + 1;
 
 	var_s1 = 0;
@@ -1766,15 +1765,15 @@ void func_800B49A4_C3954(s32 arg0) {
 			goto loop_2;
 		}
 
-		*(u16 *)&D_80151DD8[(u8)sp59 * 6 + D_8014F898 * 0x78] = sp5C[temp_t9];
+		D_80151DD8.tiles[D_8014F898][(u8)sp59].tileType = sp5C[temp_t9];
 		if (sp5C[temp_t9 - 1] & 0x800) {
-			*(u8 *)&D_80151DD8[(u8)sp59 * 6 + D_8014F898 * 0x78 + 2] = ((u8)sp68[0] / 4) * 3;
-			*(u8 *)&D_80151DD8[(u8)sp59 * 6 + D_8014F898 * 0x78 + 4] = ((u8)sp68[2] / 4) * 3;
-			*(u8 *)&D_80151DD8[(u8)sp59 * 6 + D_8014F898 * 0x78 + 3] = ((u8)sp68[1] / 4) * 3;
+			D_80151DD8.tiles[D_8014F898][(u8)sp59].r = ((u8)sp68[0] / 4) * 3;
+			D_80151DD8.tiles[D_8014F898][(u8)sp59].b = ((u8)sp68[2] / 4) * 3;
+			D_80151DD8.tiles[D_8014F898][(u8)sp59].g = ((u8)sp68[1] / 4) * 3;
 		} else {
-			*(u8 *)&D_80151DD8[(u8)sp59 * 6 + D_8014F898 * 0x78 + 2] = (u8)sp68[0];
-			*(u8 *)&D_80151DD8[(u8)sp59 * 6 + D_8014F898 * 0x78 + 3] = (u8)sp68[1];
-			*(u8 *)&D_80151DD8[(u8)sp59 * 6 + D_8014F898 * 0x78 + 4] = (u8)sp68[2];
+			D_80151DD8.tiles[D_8014F898][(u8)sp59].r = (u8)sp68[0];
+			D_80151DD8.tiles[D_8014F898][(u8)sp59].g = (u8)sp68[1];
+			D_80151DD8.tiles[D_8014F898][(u8)sp59].b = (u8)sp68[2];
 		}
 
 		sp59 = ((u8)sp59 + 1) % 19;
@@ -1783,7 +1782,7 @@ void func_800B49A4_C3954(s32 arg0) {
 	} while (var_s1 < 0x13);
 
 	D_8014F898 = (s8)((D_8014F898 + 1) % 19);
-	D_80151DD8[0x960] = D_8014F898;
+	D_80151DD8.ringY = D_8014F898;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B49A4_C3954.s")
@@ -1807,12 +1806,12 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 	u16 *temp_s6;
 
 	sp5C = (u16 *)D_8014F8A0;
-	D_8014F898 = ((s8 *)D_80151DD8)[0x960];
+	D_8014F898 = D_80151DD8.ringY;
 	D_8014F898 = (D_8014F898 + 0x12) % 19;
-	D_8014F899 = ((s8 *)D_80151DD8)[0x961];
-	D_8014F89C = D_80151DD8[0x964];
-	D_8014F89D = D_80151DD8[0x965];
-	D_80151DD8[0x965] = D_8014F89D - 1;
+	D_8014F899 = D_80151DD8.ringX;
+	D_8014F89C = D_80151DD8.mapPosX;
+	D_8014F89D = D_80151DD8.mapPosY;
+	D_80151DD8.mapPosY = D_8014F89D - 1;
 	sp59 = D_8014F899;
 	D_8014F89D = D_8014F89D - 1;
 	var_s1 = 0;
@@ -1856,16 +1855,16 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 			goto loop_2;
 		}
 
-		*(u16 *)&D_80151DD8[(s32)D_8014F898 * 0x78 + sp59 * 6] = (u16)*temp_s6;
+		D_80151DD8.tiles[D_8014F898][sp59].tileType = (u16)*temp_s6;
 		temp_v1 = sp59 + 1;
 		if (temp_s6[-1] & 0x800) {
-			*(u8 *)&D_80151DD8[(s32)D_8014F898 * 0x78 + sp59 * 6 + 2] = ((u8)sp68[0] / 4) * 3;
-			*(u8 *)&D_80151DD8[(s32)D_8014F898 * 0x78 + sp59 * 6 + 4] = ((u8)sp68[2] / 4) * 3;
-			*(u8 *)&D_80151DD8[(s32)D_8014F898 * 0x78 + sp59 * 6 + 3] = ((u8)sp68[1] / 4) * 3;
+			D_80151DD8.tiles[D_8014F898][sp59].r = ((u8)sp68[0] / 4) * 3;
+			D_80151DD8.tiles[D_8014F898][sp59].b = ((u8)sp68[2] / 4) * 3;
+			D_80151DD8.tiles[D_8014F898][sp59].g = ((u8)sp68[1] / 4) * 3;
 		} else {
-			*(u8 *)&D_80151DD8[(s32)D_8014F898 * 0x78 + sp59 * 6 + 2] = (u8)sp68[0];
-			*(u8 *)&D_80151DD8[(s32)D_8014F898 * 0x78 + sp59 * 6 + 3] = (u8)sp68[1];
-			*(u8 *)&D_80151DD8[(s32)D_8014F898 * 0x78 + sp59 * 6 + 4] = (u8)sp68[2];
+			D_80151DD8.tiles[D_8014F898][sp59].r = (u8)sp68[0];
+			D_80151DD8.tiles[D_8014F898][sp59].g = (u8)sp68[1];
+			D_80151DD8.tiles[D_8014F898][sp59].b = (u8)sp68[2];
 		}
 
 		sp59 = (u8)(temp_v1 % 19);
@@ -1873,7 +1872,7 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 		sp6F = var_s1;
 	} while (var_s1 < 0x13);
 
-	D_80151DD8[0x960] = D_8014F898;
+	D_80151DD8.ringY = D_8014F898;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B4D4C_C3CFC.s")
@@ -1884,7 +1883,6 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 #ifdef NON_MATCHING
 void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	Vtx **vtxPtr;
-	u8 *base;
 	s16 tilesMinX;
 	s16 tilesMinY;
 	s8 ringX;
@@ -1913,13 +1911,12 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 
 	D_8014F89A = 0;
 	arg1Spill = arg1;
-	base = D_80151DD8;
-	ringX = ((s8 *)base)[0x961];
+	ringX = D_80151DD8.ringX;
 	D_8014F899 = (s8)ringX;
-	ringY = ((s8 *)base)[0x960];
+	ringY = D_80151DD8.ringY;
 	D_8014F898 = (s8)ringY;
-	D_8014F89C = base[0x964];
-	D_8014F89D = base[0x965];
+	D_8014F89C = D_80151DD8.mapPosX;
+	D_8014F89D = D_80151DD8.mapPosY;
 
 	vtxPtr = arg0;
 	scrollX = D_80149434;
@@ -1928,14 +1925,14 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	tilesMinY = scrollY + 0x701;
 
 	rowWrap = 0;
-	color0 = base[0x960];
-	color1 = base[0x964];
-	color2 = base[0x965];
+	color0 = D_80151DD8.ringY;
+	color1 = D_80151DD8.mapPosX;
+	color2 = D_80151DD8.mapPosY;
 
 	do {
 		u8 ringCol;
 
-		ringRow = &D_80151DD8[color0 * 0x78];
+		ringRow = (u8 *)&D_80151DD8.tiles[color0][0];
 		shade = &D_80152740[(color0 * 0x39) + (ringX * 3)];
 		worldBaseY = ((s8)color2 - 0x80) << 8;
 		edgeParityY = color2 & 1;
@@ -1987,15 +1984,15 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 			}
 
 			if (color0 != 0x12) {
-				tileSouth = (s16 *)(D_80151DD8 + color0 * 0x78 + colWrap + 0x78);
+				tileSouth = &D_80151DD8.tiles[color0 + 1][col].tileType;
 			} else {
-				tileSouth = (s16 *)(D_80151DD8 + colWrap);
+				tileSouth = &D_80151DD8.tiles[0][col].tileType;
 			}
 
 			if (color0 != 0) {
-				tileNorth = (s16 *)(D_80151DD8 + color0 * 0x78 + colWrap - 0x78);
+				tileNorth = &D_80151DD8.tiles[color0 - 1][col].tileType;
 			} else {
-				tileNorth = (s16 *)(D_80151DD8 + colWrap + 0x870);
+				tileNorth = &D_80151DD8.tiles[18][col].tileType;
 			}
 
 			shadeMix = &shade[(col * 3) - (ringX * 3)];
@@ -3528,8 +3525,8 @@ void func_800B9DB8_C8D68(u8 arg0)
   
   D_8014F89A = 0;             // reset road tile draw count
   D_8014FD28 = 0x8F;          // reset road tile draw index (starts high, counts down)
-  sp10C = (s16) D_80151DD8[0x964];   // tile X scroll offset
-  sp10A = (s16) D_80151DD8[0x965];   // tile Y scroll offset
+  sp10C = (s16) D_80151DD8.mapPosX;   // tile X scroll offset
+  sp10A = (s16) D_80151DD8.mapPosY;   // tile Y scroll offset
   spF8 = temp_s1;
   spFC = temp_s1;
   // Set render mode: opaque surfaces, Z-buf update, coverage AA

@@ -2928,7 +2928,34 @@ typedef struct {
 	/* 0x03 */ u8 timer; // Beacon timer/countdown
 } BeaconEntry; /* size = 0x04 */
 
-#endif
+/* 6-byte ring buffer tile entry for the 19x19 world map ring buffer.
+   The ring buffer is stored as RingEntry[20][20] (400 entries, 2400 bytes),
+   with only 19x19 tiles actively used (modulo 19 wrapping).
+   Fields:
+     tileType: tile type/index from the world map heightmap
+     r:        red vertex color component
+     g:        green vertex color component
+     b:        blue vertex color component
+     pad:      unused padding byte */
+typedef struct {
+	/* 0x00 */ u16 tileType;
+	/* 0x02 */ u8 r;
+	/* 0x03 */ u8 g;
+	/* 0x04 */ u8 b;
+	/* 0x05 */ u8 pad;
+} RingEntry; /* size = 0x06 */
+
+/* Wrapper struct for the 19x19 tile ring buffer plus management fields.
+   The tiles grid is RingEntry[20][20] (2400 bytes, 0x960), with management
+   bytes stored contiguously after it at offsets 0x960-0x965. */
+typedef struct {
+	/* 0x000 */ RingEntry tiles[20][20];
+	/* 0x960 */ s8 ringY;
+	/* 0x961 */ s8 ringX;
+	/* 0x962 */ u8 pad_962[2];
+	/* 0x964 */ u8 mapPosX;
+	/* 0x965 */ u8 mapPosY;
+} TileRing; /* size = 0x966 */
 
 typedef struct {
 	/* 0x00 */ s8 unk0;
@@ -2948,3 +2975,5 @@ typedef struct {
 	/* 0x0C */ f32 targetY;  // look-at target Y
 	/* 0x10 */ f32 targetZ;  // look-at target Z
 } OrbitCam; /* size = 0x14 */
+
+#endif
