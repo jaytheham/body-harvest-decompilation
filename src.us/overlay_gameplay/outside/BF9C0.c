@@ -4846,7 +4846,7 @@ void func_800BD8B8_CC868(void) {
 // openCurrentStageGate
 void func_800BDAF4_CCAA4(void) {
 	u8 stage;
-	u8 *gate;
+	GateEntry *gate;
 	s32 gateState;
 	s32 absGateState;
 	s16 x;
@@ -4860,8 +4860,8 @@ void func_800BDAF4_CCAA4(void) {
 		}
 
 		osSyncPrintf(&D_80142DFC_151DAC, stage);
-		gate = (u8 *) &D_8003E0FC[currentLevel][stage];
-		gateState = *(s8 *) (gate - 0x4A);
+		gate = &D_8003E0FC[currentLevel - 1][stage];
+		gateState = gate->openness;
 		if (gateState == 0x50) {
 			continue;
 		}
@@ -4871,10 +4871,10 @@ void func_800BDAF4_CCAA4(void) {
 			absGateState = gateState;
 		}
 
-		x = *(s16 *) (gate - 0x50) << 8;
-		z = *(s16 *) (gate - 0x4C) << 8;
-		y = *(s16 *) (gate - 0x4E);
-		*(s8 *) (gate - 0x4A) = absGateState + 1;
+		x = gate->xPosition << 8;
+		z = gate->zPosition << 8;
+		y = gate->yPosition;
+		gate->openness = absGateState + 1;
 		func_800DEE5C_EDE0C(x, y, z, 0x64, 3);
 		func_800DEE5C_EDE0C(x, y, z, 0x32, 3);
 		func_800D05A8_DF558(x, y, z, 0x1F4, 0xC8, 0xC8, 0xFA);
