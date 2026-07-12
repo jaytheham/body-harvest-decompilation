@@ -266,7 +266,7 @@ s32 func_800B0D10_BFCC0(s32 xPosition, s32 zPosition, s32 bufferRadius)
 }
 
 // Get direction to bounce from shield wall if outside bounds or overlapping sub-region
-s32 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 levelBoundsCheckResult) {
+s16 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 levelBoundsCheckResult) {
 	s32 extW, extH;
 	s32 dx, dz;
 	s32 overlapX;

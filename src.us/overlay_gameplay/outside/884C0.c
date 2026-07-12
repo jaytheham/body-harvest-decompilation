@@ -3287,38 +3287,33 @@ void func_8008030C_8F2BC(u8 arg0)
 }
 
 // https://decomp.me/scratch/LBDX5
-// CURRENT(45)
-#ifdef NON_MATCHING
 s32 func_80080418_8F3C8(s32 arg0, s32 arg1, s32 arg2)
 {
-  s32 bounceResult;
+	s32 bounceResult;
 	s16 angle;
 	u8 new_var;
 
-  new_var = alienSpecs[alienInstances[arg0].specIndex].unkD;
-  bounceResult = func_800B0D10_BFCC0(arg1, arg2, new_var);
-  if (bounceResult != 0)
-  {
-	 angle = func_800B0DF4_BFDA4(alienInstances[arg0].unk0, alienInstances[arg0].unk4, new_var, bounceResult);
-	if ((angle == 0x4000) || (angle == (-0x4000)))
+	new_var = alienSpecs[alienInstances[arg0].specIndex].unkC;
+	bounceResult = func_800B0D10_BFCC0(arg1, arg2, new_var);
+	if (bounceResult != 0)
 	{
-	  arg1 = (s32) alienInstances[arg0].unk0;
-	  alienInstances[arg0].unkE = 0x8000 - alienInstances[arg0].unkE;
+		angle = func_800B0DF4_BFDA4(alienInstances[arg0].unk0, alienInstances[arg0].unk4, new_var, bounceResult);
+		if ((angle == 0x4000) || (angle == (-0x4000)))
+		{
+			arg1 = (s32)alienInstances[arg0].unk0;
+			alienInstances[arg0].unkE = 0x8000 - alienInstances[arg0].unkE;
+		}
+		else
+		{
+			arg2 = (s32)alienInstances[arg0].unk4;
+			alienInstances[arg0].unkE = -alienInstances[arg0].unkE;
+		}
+		bounceResult = 1;
 	}
-	else
-	{
-	  alienInstances[arg0].unkE = -alienInstances[arg0].unkE;
-	  arg2 = (s32) alienInstances[arg0].unk4;
-	}
-	bounceResult = 1;
-  }
-  alienInstances[arg0].unk0 = (s16) arg1;
-  alienInstances[arg0].unk4 = (s16) arg2;
-  return bounceResult;
+	alienInstances[arg0].unk0 = (s16)arg1;
+	alienInstances[arg0].unk4 = (s16)arg2;
+	return bounceResult;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080418_8F3C8.s")
-#endif
 
 void func_80080510_8F4C0(u8 arg0) {
 	u8 type = alienInstances[arg0].specIndex;
