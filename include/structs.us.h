@@ -2579,11 +2579,17 @@ typedef struct {
 } FrontendItemRenderData; /* size = 0x08 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0xC];
+	/* 0x00 */ s32 unk00;
+	/* 0x04 */ s32 unk04;
+	/* 0x08 */ s32 unk08;
 	/* 0x0C */ s16 unkC;
-	/* 0x0E */ u8 padE[2];
+	/* 0x0E */ u8 pad0E[2];
 	/* 0x10 */ f32 unk10;
-	/* 0x14 */ u8 pad14[0xC];
+	/* 0x14 */ u8 pad14[4];
+	/* 0x18 */ s16 unk18;
+	/* 0x1A */ s16 unk1A;
+	/* 0x1C */ s16 unk1C;
+	/* 0x1E */ s16 unk1E;
 } Unk8013E45C; /* size = 0x20 */
 
 typedef struct {

@@ -12,6 +12,7 @@ vehicleInstances = 0x8004DCD0; // size:0x2E00
 buildingInstances = 0x80050AD8; // size:0x23DC
 buildingInteriorToLoadId = 0x80052548;
 gameplayMode = 0x80052ADC;
+D_8013E45C_14D40C = 0x8013E45C; // rom:0x14D40C size:0x140
 
 cheatInputBuffer = 0x80149450;
 isCheatingEnabled = 0x80149460;
