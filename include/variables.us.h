@@ -2949,6 +2949,8 @@ extern u8 D_80224E80[];
 extern u8 D_80254E80[]; // Tile palette data
 extern AlienSpec alienSpecs[0x30]; // 80256680
 extern u16 D_8025668C[]; // 8025668C (aliases alienSpecs[0].unkC)
+extern u16 D_802566BA[]; // 802566BA
+extern s16 D_802566D8[]; // 802566D8
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
 extern SignpostData D_80258330[0x20]; // signposts
 extern s32 D_80258390; // English sign strings
@@ -3222,6 +3224,8 @@ extern s32 D_802E4F7C_3290CC;
 extern s32 D_802E4F80_3290D0;
 extern s32 D_802E4F84_3290D4;
 extern s16 D_802E4FB4_329104[];
+extern s16 D_802E5058_3291A8[];
+extern s16 D_802E510C_32925C[];
 extern Unk8014DD50 *D_802E566C;
 extern Unk802E71B8 D_802E71B8;
 extern Unk802E71B8 D_802E71C0;
