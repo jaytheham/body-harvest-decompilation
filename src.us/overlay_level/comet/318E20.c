@@ -511,7 +511,43 @@ void func_802D624C_31A39C(void) {
 	func_800072CC_7ECC(0x2D);
 }
 
+// CURRENT(2000)
+#ifdef NON_MATCHING
+s32 func_802D6294_31A3E4(void) {
+    volatile s32 sp20;
+    s32 levelIdx;
+    volatile s16 sp24;
+
+    sp24 = *(volatile s16 *)((u8 *)&D_802E4F80_3290D0 + 2);
+    sp20 = D_802E4F84_3290D4;
+    switch (D_80157F8C) {
+    case 0:
+        D_800313FC = 1000;
+        if (D_80157F8E++ >= 71) {
+            D_80157F8E = 0;
+            D_80157F8C = 1;
+        }
+        return 0;
+    case 1:
+        if (D_80157F8E == 1) {
+            func_800D6ADC_E5A8C(-0x3BF6, (s16)(func_800B84D0_C7480(-0x3BF6, -0x3BC4) >> 8), -0x3BC4, 0xC);
+            func_802D4EE4_319034(D_802E7C34);
+        }
+        if (D_80157F8E++ >= 121) {
+            D_80157F8E = 0;
+            D_80157F8C++;
+        }
+        return 0;
+    case 2:
+        levelIdx = currentLevel - 1;
+        D_800313FC = *(s16 *)((u8 *)D_80031636 + levelIdx * 4);
+        return 1;
+    }
+    return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D6294_31A3E4.s")
+#endif
 
 void func_802D63E0_31A530(void) {
 	if (func_8000726C_7E6C(0x2F) == 0) {
