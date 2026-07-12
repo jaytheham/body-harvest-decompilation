@@ -1494,7 +1494,28 @@ void func_802D9128_31D278(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D9128_31D278.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D92A8_31D3F8.s")
+void func_802D92A8_31D3F8(u8 arg0) {
+    u8 specIndex;
+    s32 mult;
+    s16 speedLimit;
+
+    specIndex = alienInstances[arg0].specIndex;
+    mult = 1;
+    if (!(alienInstances[arg0].unk20 & 0x600)) {
+        mult = 4;
+    }
+    func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
+    if (alienInstances[arg0].unk4B == 0) {
+        speedLimit = (s16)((f64)alienSpecs[specIndex].unk40 * 0.75);
+    } else {
+        speedLimit = alienSpecs[specIndex].unk40;
+    }
+    if (alienInstances[arg0].unk12 < speedLimit) {
+        alienInstances[arg0].unk12 += alienSpecs[specIndex].unk3E * mult;
+    } else {
+        alienInstances[arg0].unk12 -= alienSpecs[specIndex].unk3E * mult;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D93D8_31D528.s")
 
