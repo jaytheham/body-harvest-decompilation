@@ -5337,35 +5337,30 @@ s32 func_80084FE8_93F98(u8 arg0, u16 arg1)
 #endif
 
 // https://decomp.me/scratch/UfGTS
-// CURRENT(4)
-#ifdef NON_MATCHING
 s32 func_800850DC_9408C(u8 arg0, u16 arg1)
 {
-  
-  s32 sp24;
-  s32 sp20;
-  s32 var_v1;
-  AlienInstance *s0;
+	s32 sp24;
+	s32 sp20;
+	s32 var_v1;
+	s16 xx;
 	s16 sp30;
-	
-	s0= &alienInstances[arg0];
+	AlienInstance *s0;
+
+	s0 = &alienInstances[arg0];
 	sp24 = s0->unk14 - s0->unk0;
 	sp20 = s0->unk18 - s0->unk4;
 	sp30 = func_80003824_4424(sp24, sp20);
-	var_v1  =(-(func_80003824_4424(sp24, sp20) - s0->unk6)) < (sp30 - s0->unk6)
-	  ? func_80003824_4424(sp24, sp20) - s0->unk6
-	  : -(func_80003824_4424(sp24, sp20) - s0->unk6);
-  
-  if (var_v1 < arg1)
-  {
-	return 1;
-  }
+	var_v1 = (-(func_80003824_4424(sp24, sp20) - s0->unk6)) < (sp30 - s0->unk6)
+				 ? func_80003824_4424(sp24, sp20) - s0->unk6
+				 : -(func_80003824_4424(sp24, sp20) - s0->unk6);
 
-  return 0;
+	if (var_v1 < arg1)
+	{
+		return 1;
+	}
+
+	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800850DC_9408C.s")
-#endif
 
 // https://decomp.me/scratch/iDb3d
 // CURRENT(356)

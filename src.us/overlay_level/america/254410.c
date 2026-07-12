@@ -726,7 +726,7 @@ void func_802D6684_255DC4(u8 arg0)
 		{
 			func_802D62A0_2559E0(arg0);
 		}
-		else if (func_800850DC_9408C(arg0 & 0xFFu, 0x1000) != 0)
+		else if (func_800850DC_9408C(arg0, 0x1000) != 0)
 		{
 			alien->unk36 = 0;
 			alien->unk20 |= 0x8000;

@@ -573,7 +573,7 @@ void func_8008F0BC_9E06C(u8, s32);
 void func_8008F6C0_9E670(u8);
 void func_80092C40_A1BF0(u8);
 void func_8008F8D4_9E884(u8, s16);
-s32 func_800850DC_9408C(s32, u16);
+s32 func_800850DC_9408C(u8, u16);
 void func_800816B0_90660(u8, void *);
 
 void func_80081AD4_90A84(u8, u8);

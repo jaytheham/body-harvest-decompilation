@@ -715,16 +715,18 @@ u16 *func_800785B4_87564(s16 arg0, s16 arg1, s32 *arg2) {
 }
 
 // https://decomp.me/scratch/AHGPz
-// CURRENT(60)
+// CURRENT(5)
 #ifdef NON_MATCHING
 s16 func_80078678_87628(u16 *arg0, s32 arg1, s32 arg2)
 {
+  s32 new_var;
   s16 temp_t7;
-  temp_t7 = (((s32) (*arg0)) >> (arg1 * 4)) & 0xF;
+  new_var = arg1;
+  temp_t7 = (((s32) (*arg0)) >> (new_var * 4)) & 0xF;
   if (((temp_t7 - 1) % 3) == 0)
   {
-	*arg0 = (*arg0) + (arg2 << (arg1 * 4));
-	return (temp_t7 + arg2);
+	*arg0 = (*arg0) + (arg2 << new_var);
+	return temp_t7 + arg2;
   }
   return -1;
 }
