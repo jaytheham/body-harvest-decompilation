@@ -427,7 +427,7 @@ void func_80116784_125734(void) {
 	s32 s6;
 
 	D_8015EA58 = 0;
-	s4 = (Unk80148620 *)(u32)D_80148620_1575D0;
+	s4 = D_80148620_1575D0;
 	s6 = 0xE;
 
 	if (s4 != NULL) {
@@ -879,19 +879,17 @@ s32 func_80117508_1264B8(s16 arg0) {
 #endif
 
 // https://decomp.me/scratch/UNJJQ
-s32 func_801176B0_126660(void)
+Unk80148620 *func_801176B0_126660(void)
 {
   s32 i;
-  Unk80148620 *ptr;
   for (i = 0xF; i--;)
   {
 	if (D_80148620_1575D0[i].unk0 == D_80052540)
 	{
-	  ptr = &D_80148620_1575D0[i];
-	  return (s32)ptr;
+	  return &D_80148620_1575D0[i];
 	}
   }
-  return 0;
+  return NULL;
 }
 
 // CURRENT(7525)
@@ -979,18 +977,16 @@ void func_801176F4_1266A4(u8 arg0, u8 arg1, s32 arg2) {
 
 // CURRENT(1562)
 #ifdef NON_MATCHING
-void func_80117A4C_1269FC(void *arg0) {
-	u8 *sp40;
+void func_80117A4C_1269FC(Unk80148620 *arg0) {
 	s16 sp3A;
 	s16 sp38;
 	s16 sp36;
 	s16 sp34;
 	VehicleInstance *temp_s0;
 
-	temp_s0 = &vehicleInstances[((u8 *)arg0)[5]];
-	temp_s0->unk1A = ((u8 *)arg0)[4];
-	sp40 = (u8 *)arg0;
-	func_800FDD48_10CCF8(((u8 *)arg0)[5]);
+	temp_s0 = &vehicleInstances[(u8)(arg0->unk4 >> 8)];
+	temp_s0->unk1A = (u8)(arg0->unk4 & 0xFF);
+	func_800FDD48_10CCF8((u8)(arg0->unk4 >> 8));
 	func_800FAE84_109E34(temp_s0);
 	temp_s0->unk20 |= 0x8049;
 	func_801165FC_1255AC(D_80052543, 0, &sp3A, &sp38, &sp36, &sp34);
@@ -1002,7 +998,7 @@ void func_80117A4C_1269FC(void *arg0) {
 						 (f32)(((f64)vehicleSpecs[temp_s0->unk1A].unk36 * ((f64)(f32)sins((u16)(-0x4000 - sp34)) / 32768.0)) +
 							   (f64)sp36));
 	temp_s0->unk6 = 0x4000 - sp34;
-	func_800FD510_10C4C0(0, sp40[5]);
+	func_800FD510_10C4C0(0, (u8)(arg0->unk4 >> 8));
 	func_800FDD48_10CCF8(0);
 	D_8015EA2C = D_80144F10_153EC0[0];
 	D_8015EA30 = 0.0f;
@@ -1010,7 +1006,7 @@ void func_80117A4C_1269FC(void *arg0) {
 	D_8015930E = 1;
 	D_80159262 = 0;
 	D_8005254C &= ~7;
-	D_80158BD0[sp40[5]] = 0;
+	D_80158BD0[(u8)(arg0->unk4 >> 8)] = 0;
 	if (currentLevel == 3) {
 		s16 cosA = coss((u16)(-0x4000 - sp34));
 		func_80112A98_121A48((s32)((((f64)(f32)cosA / 32768.0) * D_80144F18_153EC8[0]) + (f64)sp3A),
@@ -1022,8 +1018,8 @@ void func_80117A4C_1269FC(void *arg0) {
 							(s32)((((f64)(f32)sins((u16)(-0x4000 - sp34)) / 32768.0) * 200.0) + (f64)sp36),
 							0x190);
 	}
-	func_801176F4_1266A4(D_80052543, 0, sp40[5]);
-	if ((currentLevel == 1) && ((((s32)(sp40 - (u8 *)D_80148620_1575D0) >> 3) == 3))) {
+	func_801176F4_1266A4(D_80052543, 0, (u8)(arg0->unk4 >> 8));
+	if ((currentLevel == 1) && ((arg0 - D_80148620_1575D0) == 3)) {
 		D_80159262 = 1;
 		func_800FB44C_10A3FC(temp_s0,
 						 (f32)((f64)sp3A - (((f64)(f32)coss((u16)(-0x4000 - sp34)) / 32768.0) * D_80144F20_153ED0[0])));
@@ -1047,7 +1043,7 @@ void func_80117F34_126EE4(void) {
 	s16 sp44;
 	s16 sp42;
 	s16 sp40;
-	s32 sp38;
+	Unk80148620 *sp38;
 	s16 sp3A;
 	void *sp34;
 
@@ -1066,7 +1062,7 @@ void func_80117F34_126EE4(void) {
 
 	if (D_80052544 == 0) {
 		sp38 = func_801176B0_126660();
-		if (sp38 != 0) {
+		if (sp38 != NULL) {
 			func_80117A4C_1269FC(sp38);
 		}
 	}
@@ -1089,7 +1085,7 @@ s32 func_80118114_1270C4(s16 arg0) {
 void func_8011815C_12710C(void *arg0, s16 arg1, s32 arg2) {
 	BuildingInstance *building;
 	s32 buildingId;
-	s32 found;
+	Unk80148620 *found;
 	s16 doorData;
 	s16 doorId;
 	s32 canEnter;
@@ -1117,7 +1113,7 @@ void func_8011815C_12710C(void *arg0, s16 arg1, s32 arg2) {
 	found = func_801176B0_126660();
 	D_80052540 = 0xFF;
 
-	if (found != 0) {
+	if (found != NULL) {
 		doorId = doorData & 0xF;
 		if (doorId != 0) {
 			goto open_door;
@@ -2036,7 +2032,7 @@ void func_8011A604_1295B4(void) {
 	u8 entryId;
 	BuildingInstance *inst;
 	BuildingSpec *spec;
-	void *found;
+	Unk80148620 *foundEntry;
 	u8 *model;
 
 	func_8011A2A0_129250();
@@ -2051,17 +2047,17 @@ void func_8011A604_1295B4(void) {
 		if (tempF64 >= 1.0) {
 			D_8015EA2C = 1.0f;
 			D_8015EA30 = D_80144F80_153F30[0];
-			found = (void *) func_801176B0_126660();
-			if ((currentLevel == 1) && (found == (void *) ((u8 *) D_80148620_1575D0 + 0x20))) {
+			foundEntry = func_801176B0_126660();
+			if ((currentLevel == 1) && (foundEntry == &D_80148620_1575D0[4])) {
 				if (D_80052544 == 0) {
-					((u8 *) found)[4] = 2;
+					foundEntry->unk4 = (foundEntry->unk4 & 0xFF00) | 2;
 				} else {
-					((u8 *) found)[4] = 3;
+					foundEntry->unk4 = (foundEntry->unk4 & 0xFF00) | 3;
 				}
 			}
-			if (found != NULL) {
+			if (foundEntry != NULL) {
 				if (D_80052544 == 0) {
-					func_80117A4C_1269FC(found);
+					func_80117A4C_1269FC(foundEntry);
 				}
 				tempF64 = (f64) D_8015EA2C;
 			} else {
