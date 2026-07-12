@@ -207,6 +207,7 @@ extern f32 D_80031618_32218;
 extern s32 D_8003161C_3221C;
 extern Unk80031620 D_80031620[];
 extern s16 D_80031634[];
+extern s32 D_80031636[];
 extern u16 D_80031648_32248;
 extern s16 D_80031650_32250[];
 extern s8 D_80031720_32320[]; // maxHumanDeathsAllowed?
@@ -3207,6 +3208,8 @@ extern s32 D_802E4E80;
 extern s32 D_802E4E84[];
 extern Unk802E4ED8_entry D_802E4ED8[9];
 extern s32 D_802E4F44[9];
+extern s32 D_802E4F68_3290B8;
+extern s32 D_802E4F6C_3290BC;
 extern s16 D_802E4FB4[];
 extern Unk8014DD50 *D_802E566C;
 extern Unk802E71B8 D_802E71B8;
