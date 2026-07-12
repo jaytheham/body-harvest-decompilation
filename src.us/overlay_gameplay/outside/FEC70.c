@@ -57,9 +57,11 @@ s32 func_800EFCC0_FEC70(s32 *arg0) {
 	s32 *src3;
 	s32 *src4;
 	s32 *srcEnd;
+	CutsceneEntry *cutsceneData;
 
 	i = 0;
-	src = (s32 *)&D_80157E90;
+	src = (s32 *)D_80157E90;
+	cutsceneData = D_80157E90;
 
 	do {
 		arg0[0] = src[0];
@@ -74,11 +76,11 @@ s32 func_800EFCC0_FEC70(s32 *arg0) {
 	} while (i != 1);
 
 	if (i != 5) {
-		src1 = (s32 *)&D_80157E90 + (i * 6);
-		src2 = src1 + 6;
-		src3 = src1 + 12;
-		src4 = src1 + 18;
-		srcEnd = (s32 *)&D_80157ED8 + (5 * 6);
+		src1 = (s32 *)&cutsceneData[i];
+		src2 = (s32 *)&cutsceneData[i + 1];
+		src3 = (s32 *)&cutsceneData[i + 2];
+		src4 = (s32 *)&cutsceneData[i + 3];
+		srcEnd = (s32 *)&cutsceneData[i + 7];
 
 		do {
 			src4 += 24;
@@ -124,7 +126,7 @@ s32 func_800EFCC0_FEC70(s32 *arg0) {
 #endif
 
 void func_800EFE50_FEE00(u8 arg0) {
-	func_800101F0_10DF0(&D_80157E90,
+	func_800101F0_10DF0((s32)D_80157E90,
 		(void *)(((s32)&D_3058A40 & 0xFFFFFF) + ((arg0 * 0x78) & 0xFFFF) + (s32)&D_8F4960),
 		0x78);
 }
@@ -185,7 +187,7 @@ void func_800EFEB4_FEE64(void *arg0, s16 arg1, s32 arg2) {
 		if (arg0 != NULL) {
 			((void (*)(void))arg0)();
 		}
-		func_800F0340_FF2F0(&D_80157E90, 0, 5);
+		func_800F0340_FF2F0((u8 *)D_80157E90, 0, 5);
 	}
 }
 #else

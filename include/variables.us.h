@@ -2548,8 +2548,7 @@ extern s32 D_80157E7C;
 extern s16 D_80157E80;
 extern s16 D_80157E82;
 extern s16 D_80157E84;
-extern u8 D_80157E90[];
-extern u8 D_80157ED8[];
+extern CutsceneEntry D_80157E90[5]; // cutscene data buffer (5 entries * 24 bytes = 120 bytes)
 extern Unk80052B2C D_80157F08;
 extern s16 D_80157F44;
 extern s16 D_80157F46;
