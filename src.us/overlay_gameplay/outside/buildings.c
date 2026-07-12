@@ -233,7 +233,6 @@ s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
 s32 func_8011629C_12524C(BuildingInstance *arg0, s16 arg1, s16 arg2) {
 	BuildingInstance *temp;
 	BuildingInstance *prev;
-	BuildingInstance *instances;
 	u8 *buildingType;
 	s16 x;
 	s16 z;
@@ -251,7 +250,6 @@ s32 func_8011629C_12524C(BuildingInstance *arg0, s16 arg1, s16 arg2) {
 	count = -1;
 	minusOne = -1;
 	stride = 0x18;
-	instances = buildingInstances;
 	buildingType = &D_8015EA28;
 
 	while (TRUE) {
@@ -263,7 +261,7 @@ s32 func_8011629C_12524C(BuildingInstance *arg0, s16 arg1, s16 arg2) {
 			continue;
 		}
 
-		temp = (BuildingInstance *)((u8 *)instances + (idx * stride));
+		temp = buildingInstances[idx];
 		if (*buildingType != temp->buildingType) {
 			prev = temp;
 			continue;
@@ -438,7 +436,7 @@ void func_80116784_125734(void) {
 			s3 = -1U;
 
 			curLevel = currentLevel;
-			building = (BuildingInstance *)D_800522C0;
+			building = &buildingInstances[ARRAY_COUNT(buildingInstances)];
 
 			if (curLevel == s4->unk6) {
 				loop = 0xFE;
@@ -2461,7 +2459,7 @@ void func_8011BA80_12AA30(u8 arg0, s16 arg1) {
 	s16 maxZ;
 
 	building = &buildingInstances[func_80117508_1264B8((s16)(buildingInstances[arg0].zCoord - arg1))];
-	end = (BuildingInstance *) D_800522C0;
+	end = &buildingInstances[ARRAY_COUNT(buildingInstances)];
 	minX = buildingInstances[arg0].xCoord - arg1;
 	minZ = buildingInstances[arg0].zCoord - arg1;
 	maxX = minX + (arg1 << 1);

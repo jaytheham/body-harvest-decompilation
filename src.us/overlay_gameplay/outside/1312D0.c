@@ -809,7 +809,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 		alien--;
 	}
 
-	building = (BuildingInstance *)((u8 *)D_800522C0 - 0x18);
+	building = &buildingInstances[0xFE];
 	for (count = 0xFE; count != 0; count--) {
 		s32 dx;
 		s32 dy;
@@ -837,7 +837,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 			}
 		}
 
-		building = (BuildingInstance *)((u8 *)building - 0x18);
+		building--;
 	}
 }
 #else
