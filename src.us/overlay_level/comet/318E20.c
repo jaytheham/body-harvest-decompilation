@@ -1048,7 +1048,18 @@ void func_802D7C1C_31BD6C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D7C1C_31BD6C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D7E7C_31BFCC.s")
+void func_802D7E7C_31BFCC(u8 arg0, s16 arg1) {
+    s16 sp2C[2];
+    AlienInstance *inst;
+
+    inst = &alienInstances[arg0];
+    if (inst->unk20 & ALIEN_FLAG_UNKE) {
+        sp2C[0] = arg1;
+        if ((u8)func_80081F18_90EC8(arg0, 1, 2, sp2C, (Unk8014DD50 **)D_802E4FB4_329104) == 2) {
+            inst->unk20 &= ~ALIEN_FLAG_UNKE;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D7F10_31C060.s")
 
