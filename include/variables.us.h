@@ -2158,7 +2158,7 @@ extern TileCoord D_801475F0[];
 extern u8 D_801475F0_1565A0[];
 extern u8 D_801479B0_156960[];
 extern Unk8014FD30Type D_80147C30_156BE0[][6];
-extern const u8 D_80148390_157340[];
+extern UnkBuildingProp_80118774 D_80148390_157340[];
 extern s16 D_801483A4[];
 extern Unk80148620 D_80148620_1575D0[];
 extern s16 D_80148690;

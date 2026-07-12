@@ -1545,7 +1545,7 @@ process_current:
 	propMode = flags & 4;
 	searchCount = 0x1F;
 	while (searchCount != 0) {
-		prop = (UnkBuildingProp_80118774 *)((u8 *)D_80148390_157340 + (((u8 *)doorRef)[8] * sizeof(UnkBuildingProp_80118774)));
+		prop = &D_80148390_157340[((u8 *)doorRef)[8]];
 		if (building->buildingType == doorRef->unkC) {
 			sp14C = 0xA;
 			sp1A4++;
