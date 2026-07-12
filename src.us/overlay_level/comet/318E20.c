@@ -859,7 +859,32 @@ s32 func_802D67A8_31A8F8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D67A8_31A8F8.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D7548_31B698.s")
+void func_802D7548_31B698(void) {
+    if (D_80052ACA != 2) {
+        if ((func_80004818_5418(0x5C, 0x1F, 0x0E) != 0) && (D_80048030 < 1)) {
+            func_800076D4_82D4(1);
+        }
+        if ((func_80004818_5418(-0x14, 0x52, 4) != 0) && (D_80048030 < 2)) {
+            func_800076D4_82D4(2);
+        }
+        if ((func_80004818_5418(0x2B, 0, 6) != 0) && (D_80048030 < 3)) {
+            func_800076D4_82D4(3);
+        }
+        if ((func_8000726C_7E6C(0x1E) != 0) && (D_80048030 < 4)) {
+            func_800076D4_82D4(4);
+        }
+        if ((func_8000726C_7E6C(0x2D) != 0) &&
+            (func_8000726C_7E6C(0x2E) != 0) &&
+            (func_8000726C_7E6C(0x2F) != 0) &&
+            (func_8000726C_7E6C(0x30) != 0) &&
+            (D_80048030 < 5)) {
+            func_800076D4_82D4(5);
+        }
+        if ((func_8000726C_7E6C(0x1F) != 0) && (D_80048030 < 6)) {
+            func_800076D4_82D4(6);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D76B0_31B800.s")
 
