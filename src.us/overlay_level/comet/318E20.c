@@ -1275,7 +1275,17 @@ void func_802D897C_31CACC(u8 arg0) {
     func_80137468_146418(arg0, 0x266);
 }
 
+#ifdef NON_MATCHING
+// CURRENT(8230)
+void func_802D89F0_31CB40(u8 arg0) {
+    AlienInstance *inst = &alienInstances[arg0];
+
+    func_800DF038_EDFE8(inst->unk0, inst->unk2, inst->unk4, (s32)((f64)*(s16 *)((u8 *)&D_8025668C + inst->specIndex * 0x68) * 1.5) & 0xFFFF, 6, 0);
+    inst->unk2C = 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D89F0_31CB40.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D8B18_31CC68.s")
 
