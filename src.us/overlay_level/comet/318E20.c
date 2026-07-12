@@ -414,7 +414,12 @@ s32 func_802D5DD8_319F28(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D5DD8_319F28.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D5F24_31A074.s")
+void func_802D5F24_31A074(void) {
+    if (func_8000726C_7E6C(0x30) == 0) {
+        func_800EFEB4_FEE64((void *)&func_802D5DD8_319F28, 0x1F, 1);
+    }
+    func_800072CC_7ECC(0x30);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D5F6C_31A0BC.s")
 
