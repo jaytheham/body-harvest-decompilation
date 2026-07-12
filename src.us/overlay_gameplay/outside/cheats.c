@@ -339,90 +339,90 @@ void func_80073B78_82B28(void)
   u8 *curCheatPatternChar;
   if ((currentControllerStates[0].button == 0) || (D_8014945C != 1))
   {
-    if ((currentControllerStates[0].button != 0) && (D_8014945C == 0))
-    {
-      switch ((s32) currentControllerStates[0].button)
-      {
-        case BUTTON_A:
-          func_80073A20_829D0('a');
-          break;
+	if ((currentControllerStates[0].button != 0) && (D_8014945C == 0))
+	{
+	  switch ((s32) currentControllerStates[0].button)
+	  {
+		case BUTTON_A:
+		  func_80073A20_829D0('a');
+		  break;
 
-        case BUTTON_B:
-          func_80073A20_829D0('b');
-          break;
+		case BUTTON_B:
+		  func_80073A20_829D0('b');
+		  break;
 
-        case BUTTON_C_LEFT:
-          func_80073A20_829D0('w');
-          break;
+		case BUTTON_C_LEFT:
+		  func_80073A20_829D0('w');
+		  break;
 
-        case BUTTON_C_DOWN:
-          func_80073A20_829D0('s');
-          break;
+		case BUTTON_C_DOWN:
+		  func_80073A20_829D0('s');
+		  break;
 
-        case BUTTON_C_UP:
-          func_80073A20_829D0('n');
-          break;
+		case BUTTON_C_UP:
+		  func_80073A20_829D0('n');
+		  break;
 
-        case BUTTON_C_RIGHT:
-          func_80073A20_829D0('e');
-          break;
+		case BUTTON_C_RIGHT:
+		  func_80073A20_829D0('e');
+		  break;
 
-        case BUTTON_Z:
-          func_80073A20_829D0('f');
-          break;
+		case BUTTON_Z:
+		  func_80073A20_829D0('f');
+		  break;
 
-        case BUTTON_D_UP:
-          func_80073A20_829D0('u');
-          break;
+		case BUTTON_D_UP:
+		  func_80073A20_829D0('u');
+		  break;
 
-        case BUTTON_D_DOWN:
-          func_80073A20_829D0('d');
-          break;
+		case BUTTON_D_DOWN:
+		  func_80073A20_829D0('d');
+		  break;
 
-        case BUTTON_D_LEFT:
-          func_80073A20_829D0('l');
-          break;
+		case BUTTON_D_LEFT:
+		  func_80073A20_829D0('l');
+		  break;
 
-        case BUTTON_D_RIGHT:
-          func_80073A20_829D0('r');
-          break;
+		case BUTTON_D_RIGHT:
+		  func_80073A20_829D0('r');
+		  break;
 
-      }
+	  }
 
-      D_8014945C = 1;
-    }
-    else
-    {
-      D_8014945C = 0;
-    }
-    for (var_s0 = 0x14; var_s0 != 0; var_s0--)
-    {
-      firstNullCharIndex = 3;
-      while (cheatData[var_s0].cheatPattern[++firstNullCharIndex] != 0)
-      {
-        ;
-      }
+	  D_8014945C = 1;
+	}
+	else
+	{
+	  D_8014945C = 0;
+	}
+	for (var_s0 = 0x14; var_s0 != 0; var_s0--)
+	{
+	  firstNullCharIndex = 3;
+	  while (cheatData[var_s0].cheatPattern[++firstNullCharIndex] != 0)
+	  {
+		;
+	  }
 
-      bufferIndex = firstNullCharIndex;
-      if (firstNullCharIndex != 0)
-      {
-        bufferIndex--;
-        do
-        {
-          curCheatPatternChar = &cheatData[var_s0].cheatPattern[firstNullCharIndex - bufferIndex], curBufferChar = &cheatInputBuffer[bufferIndex];
-          if ((*(curBufferChar--)) != (curCheatPatternChar++)[-1])
-          {
-            break;
-          }
-        }
-        while (bufferIndex--);
-      }
-      if (bufferIndex == (-1))
-      {
-        func_80073B30_82AE0(var_s0);
-        func_80073A74_82A24();
-      }
-    }
+	  bufferIndex = firstNullCharIndex;
+	  if (firstNullCharIndex != 0)
+	  {
+		bufferIndex--;
+		do
+		{
+		  curCheatPatternChar = &cheatData[var_s0].cheatPattern[firstNullCharIndex - bufferIndex], curBufferChar = &cheatInputBuffer[bufferIndex];
+		  if ((*(curBufferChar--)) != (curCheatPatternChar++)[-1])
+		  {
+			break;
+		  }
+		}
+		while (bufferIndex--);
+	  }
+	  if (bufferIndex == (-1))
+	  {
+		func_80073B30_82AE0(var_s0);
+		func_80073A74_82A24();
+	  }
+	}
 
   }
 }
