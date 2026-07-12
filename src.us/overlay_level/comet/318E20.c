@@ -613,7 +613,27 @@ void func_802D659C_31A6EC(void) {
 	func_800072CC_7ECC(0x11);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D6670_31A7C0.s")
+void func_802D6670_31A7C0(void) {
+    D_802E7C40 += 1;
+    osSyncPrintf(D_802E7A78_32BBC8, D_802E7C40);
+
+    if ((D_802E7C40 > 0) && (D_802E7C40 < 6)) {
+        func_800E35E0_F2590((u8)(0xFF - (D_802E7C40 * 50)));
+    }
+
+    if (D_802E7C40 == 1) {
+        func_8011592C_1248DC(D_80052B34->unk0, D_80052B34->unk4);
+        D_8013FD78_14ED28->unk6 = D_80052B34->unk6;
+        func_800FD510_10C4C0(0, 0x72);
+        func_800FDC30_10CBE0(0);
+        D_801493E0 = 1;
+        func_800153D8_15FD8(0xD7);
+    }
+
+    if (D_802E7C40 == 0xA) {
+        func_800074BC_80BC(func_802D6670_31A7C0);
+    }
+}
 
 void func_802D6770_31A8C0(void) {
 	D_802E7C40 = 0;
