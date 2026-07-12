@@ -288,7 +288,42 @@ void func_802D58BC_319A0C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D58BC_319A0C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D59BC_319B0C.s")
+void func_802D59BC_319B0C(void) {
+	s16 i;
+	s16 temp_s1;
+	s16 temp_s2;
+	s32 dx;
+	s32 dy;
+
+	for (i = 0; i < 9; i++) {
+		if (func_8000726C_7E6C(i + 10) != 0) {
+			D_802E4ED8[i].unkA = 1;
+		} else {
+			D_802E4ED8[i].unkA = 0;
+		}
+
+		if (D_802E4ED8[i].unkA == 1) {
+			temp_s1 = D_802E4ED8[i].unk0;
+			temp_s2 = D_802E4ED8[i].unk4;
+			dx = D_80052B34->unk0 - temp_s1;
+			dy = D_80052B34->unk4 - temp_s2;
+
+			if ((dx * dx + dy * dy) < (s32)0x1E8480) {
+				func_801371B8_146168((s32)&D_802E4ED8[i], 0x17F, temp_s1, D_802E4ED8[i].unk2, temp_s2, 1.0f);
+				temp_s1 = D_802E4ED8[i].unk0;
+				temp_s2 = D_802E4ED8[i].unk4;
+			}
+
+			if (D_802E4ED8[i].unk8 == 0) {
+				D_802E4F44[i] = func_8012D700_13C6B0(1 & 0xFF, (i + 100) & 0xFFFF, temp_s1, D_802E4ED8[i].unk2, temp_s2, 0, 0, 0, 0x28, 0xAA, 0x148, 0, 0);
+			} else {
+				D_802E4F44[i] = func_8012D700_13C6B0(1 & 0xFF, (i + 100) & 0xFFFF, temp_s1, D_802E4ED8[i].unk2, temp_s2, 0, 0, 0, 0xAA, 0x28, 0x148, 0, 0);
+			}
+		} else {
+			func_8012D808_13C7B8(D_802E4F44[i]);
+		}
+	}
+}
 
 void func_802D5BFC_319D4C(void) {
 	if ((D_802E7C3C = D_802E7C3C - 1) >= 0) {

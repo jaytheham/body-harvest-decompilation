@@ -3206,6 +3206,7 @@ extern s32 D_802E3100;
 extern s32 D_802E4E80;
 extern s32 D_802E4E84[];
 extern Unk802E4ED8_entry D_802E4ED8[9];
+extern s32 D_802E4F44[9];
 extern s16 D_802E4FB4[];
 extern Unk8014DD50 *D_802E566C;
 extern Unk802E71B8 D_802E71B8;

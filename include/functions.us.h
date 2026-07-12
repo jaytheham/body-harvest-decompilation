@@ -1277,7 +1277,7 @@ s32 func_8010CF7C_11BF2C(s16 arg0, s16 arg1);
 s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstance *arg4);
 void func_80123AC4_132A74(VehicleInstance *arg0);
 void func_80013314_13F14(void);
-s32 func_8012D700_13C6B0(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10, void *arg11, void *arg12);
+s32 func_8012D700_13C6B0(u8 arg0, s32 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9, s32 arg10, void *arg11, void *arg12);
 void func_8012D684_13C634(s32 arg0);
 void func_8012E1F8_13D1A8(s32 arg0, s32 arg1);
 void func_8011D438_12C3E8(u8 arg0, s32 arg1);
