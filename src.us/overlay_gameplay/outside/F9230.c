@@ -255,7 +255,7 @@ void func_800EA2FC_F92AC(s16 arg0) {
 		return;
 	}
 
-	anim = &((Unk8009E8DC *)D_8013E5AC_14D55C)[arg0];
+	anim = &D_8013E5AC_14D55C[arg0];
 	D_80157600.unk40C = arg0;
 	func_8000CDFC_D9FC(D_80157600.unk404, &D_80157600, 0x10, anim->unk0, 1);
 	if (anim->unk4 & 1) {
@@ -270,7 +270,7 @@ void *func_800EA3E8_F9398(s16 arg0) {
 	if (arg0 >= 0x6E) {
 		return &D_801442E0_153290;
 	}
-	return (char *)&D_8013E5AC_14D55C + (arg0 * 0x34) + 0x20;
+	return D_8013E5AC_14D55C[arg0].pad20;
 }
 
 // guess_initAnimations
@@ -469,21 +469,21 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 			offset = level * 0x34;
 
 			// Access state entry
-			entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
+			entry_flags = D_8013E5AC_14D55C[level].unk4;
 
 			// Modify state at 0x2DC
 			if (entry_flags & 0x20) {
-				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2DC)) |= 0x20;
+				D_8013E5AC_14D55C[14].unk4 |= 0x20;
 			} else {
-				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2DC)) &= ~0x20;
+				D_8013E5AC_14D55C[14].unk4 &= ~0x20;
 			}
 
 			// Modify state at 0x2E0
 			if (!(entry_flags & 0x100)) {
-				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2E0)) = level;
+				D_8013E5AC_14D55C[14].unk8 = level;
 			} else {
-				entry_val = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 8));
-				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x2E0)) = entry_val;
+				entry_val = D_8013E5AC_14D55C[level].unk8;
+				D_8013E5AC_14D55C[14].unk8 = entry_val;
 			}
 
 			func_800EB534_FA4E4(&D_80157600, ANIM_TURN_RIGHT, 0, 0);
@@ -506,21 +506,21 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 			offset = level * 0x34;
 
 			// Access state entry
-			entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
+			entry_flags = D_8013E5AC_14D55C[level].unk4;
 
 			// Modify state at 0x310
 			if (entry_flags & 0x20) {
-				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x310)) |= 0x20;
+				D_8013E5AC_14D55C[15].unk4 |= 0x20;
 			} else {
-				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x310)) &= ~0x20;
+				D_8013E5AC_14D55C[15].unk4 &= ~0x20;
 			}
 
 			// Modify state at 0x314
 			if (!(entry_flags & 0x100)) {
-				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x314)) = level;
+				D_8013E5AC_14D55C[15].unk8 = level;
 			} else {
-				entry_val = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 8));
-				*((s32 *)((char *)&D_8013E5AC_14D55C + 0x314)) = entry_val;
+				entry_val = D_8013E5AC_14D55C[level].unk8;
+				D_8013E5AC_14D55C[15].unk8 = entry_val;
 			}
 
 			func_800EB534_FA4E4(&D_80157600, ANIM_TURN_LEFT, 0, 0);
@@ -538,7 +538,7 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	level = D_80157A0C;
 	offset = level * 0x34;
 
-	entry_flags = *((s32 *)((char *)&D_8013E5AC_14D55C + offset + 4));
+	entry_flags = D_8013E5AC_14D55C[level].unk4;
 
 	if (!(entry_flags & 0x100)) {
 		D_801575D4 = 0x5DC;
@@ -881,7 +881,7 @@ void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 		D_80052B34->unkE += 0x8000;
 		D_80157600.unk2 = 0;
 	} else if (player->unk40C == 0x10) {
-		D_80052B34->unkE = ((Unk8009E8DC *) D_8013E5AC_14D55C)[player->unk40C].unk10;
+		D_80052B34->unkE = D_8013E5AC_14D55C[player->unk40C].unk10;
 		D_80157600.unk2 = 0;
 	}
 
@@ -891,13 +891,13 @@ void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 		}
 
 		player->unk40C = arg1;
-		if (((Unk8009E8DC *) D_8013E5AC_14D55C)[arg1].unk4 & 4) {
+		if (D_8013E5AC_14D55C[arg1].unk4 & 4) {
 			func_8000D71C_E31C(player->unk404, player->unk408, (AnimChannelState *)player, 0x10,
-				((Unk8009E8DC *) D_8013E5AC_14D55C)[arg1].unk0,
-				((Unk8009E8DC *) D_8013E5AC_14D55C)[((Unk8009E8DC *) D_8013E5AC_14D55C)[arg1].unkC].unk0, arg3, shouldAnimate);
+				D_8013E5AC_14D55C[arg1].unk0,
+				D_8013E5AC_14D55C[D_8013E5AC_14D55C[arg1].unkC].unk0, arg3, shouldAnimate);
 		} else {
 			func_8000CDFC_D9FC(player->unk404, (AnimChannelState *)player, 0x10,
-				((Unk8009E8DC *) D_8013E5AC_14D55C)[arg1].unk0, shouldAnimate);
+				D_8013E5AC_14D55C[arg1].unk0, shouldAnimate);
 		}
 
 		player->unk414 = 0.0f;
@@ -917,7 +917,7 @@ void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3) {
 
 	animIdx = arg0->unk40C;
 	animCheck = animIdx;
-	anim = &((Unk8009E8DC*)D_8013E5AC_14D55C)[animIdx];
+	anim = &D_8013E5AC_14D55C[animIdx];
 	if (anim->unk4 & 8) {
 		return;
 	}
@@ -931,7 +931,7 @@ void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3) {
 		}
 
 		if (((Unk8007F878_404*)arg0->unk404)->unkE50 == 0) {
-			func_800EB534_FA4E4(arg0, arg2, ((Unk8009E8DC*)D_8013E5AC_14D55C)[arg2].unk8, arg3);
+			func_800EB534_FA4E4(arg0, arg2, D_8013E5AC_14D55C[arg2].unk8, arg3);
 		}
 	} else {
 		if ((animCheck < 0x24) || (animCheck == 0x3B)) {
@@ -951,7 +951,7 @@ void func_800EB8A4_FA854(Unk80157600 *arg0, f32 arg1) {
 	}
 
 	animIdx = arg0->unk40C;
-	anim = &((Unk8009E8DC*)D_8013E5AC_14D55C)[animIdx];
+	anim = &D_8013E5AC_14D55C[animIdx];
 
 	if (anim->unk14 != 0) {
 		if (anim->unk4 & 1) {
