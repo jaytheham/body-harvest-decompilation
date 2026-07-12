@@ -891,7 +891,7 @@ void func_802D6E70_1EFB80(void) {
 	Unk80154318Entry *temp_s0;
 
 	temp_v0 = *(&D_80031634 + ((currentLevel - 1) * 4));
-	if ((D_80047F94 == 2) && (*(&D_8003153E + (currentLevel * 0x18)) == 0)) {
+	if ((D_80047F94 == 2) && (D_8003154C[currentLevel * 6 - 4].state == 0)) {
 		var_v1 = (s16) (s32) ((f32) temp_v0 - ((f32) (D_80052B34->unk2 - D_80222A70) / 15.0f));
 	} else {
 		var_v1 = temp_v0;

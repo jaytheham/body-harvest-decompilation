@@ -96,8 +96,8 @@ void func_800A5BD0_B4B80(s32 arg0) {
 	s32 sp44;
 	s32 sp40;
 
-	sp4C = ((s8*)&D_8003154C)[currentLevel * 0x18 + arg0 * 4 - 0x18] << 8;
-	sp48 = ((s8*)&D_8003154C)[currentLevel * 0x18 + arg0 * 4 - 0x17] << 8;
+	sp4C = D_8003154C[currentLevel * 6 + arg0 - 6].x << 8;
+	sp48 = D_8003154C[currentLevel * 6 + arg0 - 6].z << 8;
 	sp40 = func_800B84D0_C7480((s16)sp4C, (s16)sp48) >> 8;
 	if (currentLevel == LEVEL_AMERICA && arg0 == 0) {
 		sp40 = 0x7D0;
@@ -135,13 +135,13 @@ void func_800A5D3C_B4CEC(void) {
 	i = 0;
 	do {
 		if (i < D_80047F98) {
-			((u8 *)&D_8003154C + currentLevel * 0x18 + k * 4)[-0x15] = 0;
-			((u8 *)&D_8003154C + currentLevel * 0x18 + k * 4)[-0x16] = 8;
+			D_8003154C[currentLevel * 6 + k - 6].timer = 0;
+			D_8003154C[currentLevel * 6 + k - 6].state = 8;
 			func_800A5BD0_B4B80(i);
 			osSyncPrintf(D_801427B0_151760, i);
 		} else {
-			((u8 *)&D_8003154C + currentLevel * 0x18 + k * 4)[-0x15] = 0;
-			((u8 *)&D_8003154C + currentLevel * 0x18 + k * 4)[-0x16] = 0;
+			D_8003154C[currentLevel * 6 + k - 6].timer = 0;
+			D_8003154C[currentLevel * 6 + k - 6].state = 0;
 			osSyncPrintf(D_801427C4_151774, i);
 		}
 		i = (k + 1) & 0xFF;
@@ -177,10 +177,10 @@ void func_800A5F24_B4ED4(s32 arg0) {
 	
 	if (D_8013D890 == 0) {
 		func_8001CC6C_1D86C(D_801427E8_151798, arg0);
-		func_8001CC6C_1D86C(D_801427F4_1517A4, D_8003154C[currentLevel][arg0].unk2);
-		func_8001CC6C_1D86C(D_80142800_1517B0, D_8003154C[currentLevel][arg0 + 1].unk2);
+		func_8001CC6C_1D86C(D_801427F4_1517A4, D_8003154C[currentLevel * 6 + arg0 - 6].state);
+		func_8001CC6C_1D86C(D_80142800_1517B0, D_8003154C[currentLevel * 6 + arg0 + 1 - 6].state);
 
-		if (D_8003154C[currentLevel][arg0 + 1].unk2 >= 4) {
+		if (D_8003154C[currentLevel * 6 + arg0 + 1 - 6].state >= 4) {
 			var_s0 = arg0 + 1;
 		} else {
 			var_s0 = -1;
@@ -547,8 +547,8 @@ void func_800A6FD4_B5F84(void) {
 		D_80052AE0 = gameplayMode;
 		gameplayMode = GAMEPLAY_MODE_END_OF_LEVEL;
 	}
-	*((u8*)&D_8003154C + currentLevel * 0x18 + sp1F * 4 - 0x16) = 1;
-	*((u8*)&D_8003154C + currentLevel * 0x18 + sp1F * 4 - 0x15) = 0x1E;
+	D_8003154C[currentLevel * 6 + sp1F - 6].state = 1;
+	D_8003154C[currentLevel * 6 + sp1F - 6].timer = 0x1E;
 	D_80048025 |= 1 << sp1F;
 	D_80047F98++;
 }
@@ -561,7 +561,6 @@ void func_800A6FD4_B5F84(void) {
 // displayBeacons
 void func_800A70B8_B6068(void) {
 	s16 i;
-	s32 beaconOffset;
 	s32 groundY;
 	s16 mapX;
 	s16 mapZ;
@@ -587,8 +586,7 @@ void func_800A70B8_B6068(void) {
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
 	for (i = 0; i < 6; i++) {
-		beaconOffset = currentLevel * 0x18 + i * 4;
-		beaconType = D_80031536[beaconOffset];
+		beaconType = D_8003154C[currentLevel * 6 + i - 6].state;
 
 		if (beaconType == 3) {
 			D_8014F80A = ((s16 *)D_8013D898_14C848)[currentLevel * 2 - 2];
@@ -600,7 +598,7 @@ void func_800A70B8_B6068(void) {
 			D_80052B40.unk0 = D_8014F80A >> 2;
 			D_80052B40.unk4 = D_8014F80C >> 2;
 
-			v = 0x5E - D_80031537[beaconOffset];
+			v = 0x5E - D_8003154C[currentLevel * 6 + i - 6].timer;
 			D_8014F810 = v * v;
 			v = (D_8014F810 * 6) / 10;
 			D_8014F810 = v;
@@ -643,8 +641,8 @@ void func_800A70B8_B6068(void) {
 				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 			}
 		} else if (beaconType >= 4) {
-			D_8014F80A = ((s8)*(((u8*)&D_8003154C) + beaconOffset - 0x18)) << 8;
-			D_8014F80C = ((s8)*(((u8*)&D_8003154C) + beaconOffset - 0x17)) << 8;
+			D_8014F80A = D_8003154C[currentLevel * 6 + i - 6].x << 8;
+			D_8014F80C = D_8003154C[currentLevel * 6 + i - 6].z << 8;
 
 			D_80052B40.unk0 = D_8014F80A >> 2;
 			D_80052B40.unk4 = D_8014F80C >> 2;
@@ -664,7 +662,7 @@ void func_800A70B8_B6068(void) {
 				}
 
 				if (beaconType == 4) {
-					D_8014F810 += D_80031537[beaconOffset] * 0x50;
+					D_8014F810 += D_8003154C[currentLevel * 6 + i - 6].timer * 0x50;
 				}
 
 				D_80052B50.unk4 = 0x18;
@@ -680,11 +678,11 @@ void func_800A70B8_B6068(void) {
 				D_80052B40.unk0 = 0;
 				switch (beaconType) {
 				case 9:
-					D_80052B40.unk2 = D_80031537[beaconOffset] * 0x14 + 0xE;
+					D_80052B40.unk2 = D_8003154C[currentLevel * 6 + i - 6].timer * 0x14 + 0xE;
 					break;
 
 				case 8:
-					D_80052B40.unk2 = 0x78 - (D_80031537[beaconOffset] * 4);
+					D_80052B40.unk2 = 0x78 - (D_8003154C[currentLevel * 6 + i - 6].timer * 4);
 					break;
 
 				case 10:
@@ -704,10 +702,10 @@ void func_800A70B8_B6068(void) {
 
 				gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
 				if (beaconType == 8) {
-					brightness = (0xFF - (D_80031537[beaconOffset] * 10)) & 0xFF;
+					brightness = (0xFF - (D_8003154C[currentLevel * 6 + i - 6].timer * 10)) & 0xFF;
 					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, brightness, brightness, brightness, 0xFF);
 				} else if (beaconType == 10) {
-					brightness = (D_80031537[beaconOffset] * 0x32) & 0xFF;
+					brightness = (D_8003154C[currentLevel * 6 + i - 6].timer * 0x32) & 0xFF;
 					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, brightness, brightness, brightness, 0xFF);
 				} else {
 					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -727,7 +725,7 @@ void func_800A70B8_B6068(void) {
 					D_80052B40.unk2 = 0xC9;
 					D_80052B40.unk4 = 0;
 
-					beaconAge = D_80031537[beaconOffset];
+					beaconAge = D_8003154C[currentLevel * 6 + i - 6].timer;
 					if (beaconType == 6) {
 						rot = (s16) (s32) (((((f64) (0x32 - beaconAge) * 0.017453292519943295) / 50.0) * 16384.0));
 					} else if ((beaconType == 4) || (beaconType == 5)) {
@@ -791,8 +789,7 @@ void func_800A7C6C_B6C1C(void) {
 	s16 spAA;
 	s16 spA8;
 	s16 i;
-	u8* levelData;
-	u8* beacon;
+	BeaconEntry *beacon;
 	s16 tempX;
 	s16 tempZ;
 	s16 levelX;
@@ -821,12 +818,11 @@ void func_800A7C6C_B6C1C(void) {
 	}
 
 	for (i = 0; i < 6; i++) {
-		levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
-		beacon = levelData + (i * 4);
+		beacon = &D_8003154C[currentLevel * 6 + i - 6];
 
-		switch (beacon[-0x16]) {
+		switch (beacon->state) {
 			case 1:
-				if (beacon[-0x15] == 0x19) {
+				if (beacon->timer == 0x19) {
 					if ((func_8000726C_7E6C(0x14) != 0) && (currentLevel == 4)) {
 						func_80018D7C_1997C(0xDE);
 					} else if ((currentLevel == 4) && (D_80047F94 == 2)) {
@@ -837,31 +833,28 @@ void func_800A7C6C_B6C1C(void) {
 						func_80013324_13F24();
 					}
 
-					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
-					beacon = levelData + (i * 4);
+					beacon = &D_8003154C[currentLevel * 6 + i - 6];
 				}
 
-				if (beacon[-0x15] == 0) {
-					beacon[-0x16] = 2;
+				if (beacon->timer == 0) {
+					beacon->state = 2;
 				}
 
-				if (beacon[-0x15] == 0xA) {
+				if (beacon->timer == 0xA) {
 					func_800EFEB4_FEE64(NULL, D_8013D898_14C848[currentLevel + 0x13], 0);
-					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
-					beacon = levelData + (i * 4);
+					beacon = &D_8003154C[currentLevel * 6 + i - 6];
 				}
 				break;
 
 			case 2:
-				tempX = ((s8) beacon[-0x18]) << 8;
-				tempZ = ((s8) beacon[-0x17]) << 8;
+				tempX = beacon->x << 8;
+				tempZ = beacon->z << 8;
 				D_8014F7FA = func_800B84D0_C7480(tempX, tempZ) >> 8;
 
-				levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
-				beacon = levelData + (i * 4);
+				beacon = &D_8003154C[currentLevel * 6 + i - 6];
 
-				beacon[-0x16] = 3;
-				beacon[-0x15] = 0x64;
+				beacon->state = 3;
+				beacon->timer = 0x64;
 
 				levelX = *(s16*) (D_8013D898_14C848 + (currentLevel * 4));
 				levelZ = *(s16*) (D_8013D898_14C848 + (currentLevel * 4) + 2);
@@ -870,18 +863,16 @@ void func_800A7C6C_B6C1C(void) {
 				func_800DF038_EDFE8(levelX, terrainY, levelZ, 0x46, 0, NULL);
 				D_8014F7FE = func_800C21F0_D11A0(D_8014F80A, 0x2710, D_8014F80C, 0);
 
-				levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
-				beacon = levelData + (i * 4);
+				beacon = &D_8003154C[currentLevel * 6 + i - 6];
 				break;
 
 			case 3:
 				func_800C1ECC_D0E7C(D_8014F80A, D_8014F812, D_8014F80C, D_8014F7FE, 0);
 
-				levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
-				beacon = levelData + (i * 4);
-				if (beacon[-0x15] == 0) {
-					beacon[-0x16] = 4;
-					beacon[-0x15] = 0x3C;
+				beacon = &D_8003154C[currentLevel * 6 + i - 6];
+				if (beacon->timer == 0) {
+					beacon->state = 4;
+					beacon->timer = 0x3C;
 				}
 				break;
 
@@ -893,12 +884,11 @@ void func_800A7C6C_B6C1C(void) {
 					vehicleIndex = D_80158E80[j];
 					vehicle = &vehicleInstances[vehicleIndex];
 
-					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
-					beacon = levelData + (i * 4);
+					beacon = &D_8003154C[currentLevel * 6 + i - 6];
 
 					range = *(s16 *)((u8 *)vehicleSpecs + 0x0C + vehicle->unk1A * 0x5C) + 0x50;
-					deltaX = (((s8) beacon[-0x18]) << 8) - vehicle->unk0;
-					deltaZ = (((s8) beacon[-0x17]) << 8) - vehicle->unk4;
+					deltaX = (beacon->x << 8) - vehicle->unk0;
+					deltaZ = (beacon->z << 8) - vehicle->unk4;
 					absX = deltaX;
 					absZ = deltaZ;
 					if (absX < 0) {
@@ -916,19 +906,17 @@ void func_800A7C6C_B6C1C(void) {
 					}
 				}
 
-				levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
-				beacon = levelData + (i * 4);
-				if (beacon[-0x15] == 0) {
-					beacon[-0x16] = 5;
-					beacon[-0x15] = 0x28;
+				beacon = &D_8003154C[currentLevel * 6 + i - 6];
+				if (beacon->timer == 0) {
+					beacon->state = 5;
+					beacon->timer = 0x28;
 					D_8014F800 = 0;
 					func_800A5BD0_B4B80(i);
 
-					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
-					beacon = levelData + (i * 4);
+					beacon = &D_8003154C[currentLevel * 6 + i - 6];
 
-					tempX = ((s8) beacon[-0x18]) << 8;
-					tempZ = ((s8) beacon[-0x17]) << 8;
+					tempX = beacon->x << 8;
+					tempZ = beacon->z << 8;
 					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
 					func_801371B8_146168(0, 0x181, tempX, terrainY, tempZ, 0.5f);
 					func_800A7B84_B6B34(tempX, tempZ);
@@ -939,24 +927,23 @@ void func_800A7C6C_B6C1C(void) {
 				break;
 
 			case 5:
-				if (beacon[-0x15] == 0) {
-					beacon[-0x16] = 6;
-					beacon[-0x15] = 0x32;
+				if (beacon->timer == 0) {
+					beacon->state = 6;
+					beacon->timer = 0x32;
 
-					tempX = ((s8) beacon[-0x18]) << 8;
-					tempZ = ((s8) beacon[-0x17]) << 8;
+					tempX = beacon->x << 8;
+					tempZ = beacon->z << 8;
 					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
 					func_801371B8_146168(0, 0x17C, tempX, terrainY, tempZ, 0.25f);
 
-					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
-					beacon = levelData + (i * 4);
+					beacon = &D_8003154C[currentLevel * 6 + i - 6];
 				}
 				break;
 
 			case 6:
-				if (beacon[-0x15] == 0) {
-					beacon[-0x16] = 7;
-					beacon[-0x15] = 0x14;
+				if (beacon->timer == 0) {
+					beacon->state = 7;
+					beacon->timer = 0x14;
 					if ((D_8014F800 == 0) && (D_8014F804 == -1)) {
 						D_8014F804 = i;
 					}
@@ -964,49 +951,47 @@ void func_800A7C6C_B6C1C(void) {
 				break;
 
 			case 7:
-				if (beacon[-0x15] == 0) {
-					beacon[-0x16] = 9;
-					beacon[-0x15] = 5;
+				if (beacon->timer == 0) {
+					beacon->state = 9;
+					beacon->timer = 5;
 				}
 				break;
 
 			case 8:
-				if (beacon[-0x15] == 0) {
-					beacon[-0x16] = 9;
-					beacon[-0x15] = 5;
+				if (beacon->timer == 0) {
+					beacon->state = 9;
+					beacon->timer = 5;
 				}
 				break;
 
 			case 9:
-				if (beacon[-0x15] == 0) {
-					tempX = ((s8) beacon[-0x18]) << 8;
-					tempZ = ((s8) beacon[-0x17]) << 8;
+				if (beacon->timer == 0) {
+					tempX = beacon->x << 8;
+					tempZ = beacon->z << 8;
 					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
 					func_801371B8_146168(0, 0x17D, tempX, terrainY, tempZ, D_80142888_151838);
 
-					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
-					beacon = levelData + (i * 4);
+					beacon = &D_8003154C[currentLevel * 6 + i - 6];
 
-					spA8 = ((s8) beacon[-0x18]) << 8;
-					spAA = ((s8) beacon[-0x17]) << 8;
+					spA8 = beacon->x << 8;
+					spAA = beacon->z << 8;
 					func_800B99A8_C8958((Unk80152B80*) &spA8, 0x1E, 0x1F4, 0xFF, (u8*) &spA4, 0x50, 0xA, 0);
 
-					levelData = (u8*) &D_8003154C + (currentLevel * 0x18);
-					beacon = levelData + (i * 4);
-					beacon[-0x16] = 0xA;
-					beacon[-0x15] = 5;
+					beacon = &D_8003154C[currentLevel * 6 + i - 6];
+					beacon->state = 0xA;
+					beacon->timer = 5;
 				}
 				break;
 
 			case 10:
-				if (beacon[-0x15] == 0) {
-					beacon[-0x16] = 8;
-					beacon[-0x15] = 0x19;
+				if (beacon->timer == 0) {
+					beacon->state = 8;
+					beacon->timer = 0x19;
 				}
 				break;
 		}
 
-		beacon[-0x15] = beacon[-0x15] - 1;
+		beacon->timer--;
 	}
 }
 #else

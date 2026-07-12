@@ -2921,6 +2921,13 @@ typedef struct {
 	/* 0x02 */ u8 unk2;
 } SignpostData; /* size = 0x03 */
 
+typedef struct {
+	/* 0x00 */ s8 x;     // X map coordinate (<< 8 for actual value)
+	/* 0x01 */ s8 z;     // Z map coordinate (<< 8 for actual value)
+	/* 0x02 */ u8 state; // Beacon state/type
+	/* 0x03 */ u8 timer; // Beacon timer/countdown
+} BeaconEntry; /* size = 0x04 */
+
 #endif
 
 typedef struct {

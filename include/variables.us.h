@@ -197,7 +197,7 @@ extern u8 D_80031537[];
 extern u8 D_8003153A[];
 extern u8 D_8003153E[];
 extern s32 D_80031548;
-extern u8 D_8003154C;
+extern BeaconEntry D_8003154C[]; // beacon data array (level 1 onwards, level 0 starts at D_80031534)
 extern Unk80052B40 D_800315C4_321C4;
 extern Unk80052B40 D_800315CC_321CC;
 extern s32 D_800315D4_321D4;
@@ -2157,7 +2157,6 @@ extern u8 D_80147098_156048[];
 extern u8 D_801470C0_156070[];
 extern TileCoord D_801475F0[];
 extern u8 D_801475F0_1565A0[];
-extern TileEntry D_801479B0[];
 extern u8 D_801479B0_156960[];
 extern Unk8014FD30Type D_80147C30_156BE0[][6];
 extern const u8 D_80148390_157340[];
