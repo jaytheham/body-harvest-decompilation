@@ -1917,7 +1917,55 @@ void func_802DA6A4_31E7F4(u8 arg0) {
 	func_8008735C_9630C(arg0);
 }
 
+// CURRENT(3568)
+#ifdef NON_MATCHING
+void func_802DA6D4_31E824(s32 arg0) {
+    AlienInstance *inst;
+    s32 pad[16];
+    s16 sp8C;
+    s8 temp_t0;
+    u16 sp3E;
+    u16 sp40;
+    u16 sp42;
+
+    inst = &alienInstances[arg0 & 0xFF];
+    sp8C = D_8014DD50[D_8014DD50[inst->unkC].unkC].unkD;
+    temp_t0 = D_8014DD50[sp8C].unkD;
+
+    if (!(inst->unk20 & 0x100000)) {
+        func_80088E40_97DF0(arg0 & 0xFF, sp8C, D_8014DD50[sp8C].unk0, D_8014DD50[sp8C].unk2, D_8014DD50[sp8C].unk4, 0, 0x19, 0);
+        inst->unk2C = 0x3C;
+        func_80137468_146418(arg0 & 0xFF, 0x10);
+        return;
+    }
+
+    func_802D997C_31DACC(arg0 & 0xFF, 0x96, 0, D_8014DD50[temp_t0].unkD, (s32)temp_t0, 0x1F40, -0x1388, 0x9C4, D_802E7B50_32BCA0);
+
+    if (!(inst->unk2C & 3)) {
+        sp3E = func_800038E0_44E0();
+        sp40 = func_800038E0_44E0();
+        sp42 = func_800038E0_44E0();
+        func_800DF038_EDFE8((s16)((sp3E % 400) + inst->unk0 - 0xC8),
+                           (s16)((sp40 % 400) + inst->unk2 - 0xC8),
+                           (s16)((sp42 % 400) + inst->unk4 - 0xC8),
+                           (u16)(func_800038E0_44E0() % 50 + 0x1E), 0, 0);
+    }
+
+    if (inst->unk2C == 1) {
+        if (alienSpecs[inst->specIndex].unk54 & 0x02000000) {
+            if (inst->unk3C != 0xFB) {
+                func_800CD390_DC340((u8)inst->unk3C);
+            }
+            if (inst->unk3D != 0xFB) {
+                func_800CD390_DC340((u8)inst->unk3D);
+            }
+        }
+        func_800DF038_EDFE8(inst->unk0, inst->unk2, inst->unk4, (u16)alienSpecs[inst->specIndex].unkC, 6, 0);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DA6D4_31E824.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DA9C0_31EB10.s")
 
