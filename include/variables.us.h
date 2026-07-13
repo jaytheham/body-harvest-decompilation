@@ -812,6 +812,8 @@ extern s32 D_80048188;
 extern s32 D_8004818C;
 extern s32 D_80048190;
 extern s32 D_80048194;
+extern u8 D_800481BD[];
+extern s16 D_800481A4; // 0x800481A4 = alienInstances[0].unk0C
 extern AlienInstance alienInstances[0xFE]; // 0x80048198
 extern s32 D_8004D148; // is Snared cheat disabled
 extern s32 D_8004D14C;
@@ -2946,6 +2948,8 @@ extern AlienSpec alienSpecs[0x30]; // 80256680
 extern u16 D_8025668C[]; // 8025668C (aliases alienSpecs[0].unkC)
 extern u16 D_802566BA[]; // 802566BA
 extern s16 D_802566D8[]; // 802566D8
+extern u16 D_802571B2; // 0x802571B2
+extern s16 D_802571B8; // 0x802571B8
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
 extern SignpostData D_80258330[0x20]; // signposts
 extern s32 D_80258390; // English sign strings
@@ -3222,13 +3226,21 @@ extern s16 D_802E4FB4_329104[];
 extern s16 D_802E5058_3291A8[];
 extern s16 D_802E510C_32925C[];
 extern Unk8014DD50 *D_802E5140_329290;
+extern Unk8014DD50 *D_802E7180_32B2D0;
+extern Unk802E71B8 D_802E71B0_32B300;
+extern s32 D_802E6810; // 0x802E6810
+extern f32 D_802E6814_32A964;
+extern Unk8014DD50 *D_802E6C18_32AD68;
 extern Unk8014DD50 *D_802E5234_329384;
 extern Unk8014DD50 *D_802E52C8_329418;
 extern Unk8014DD50 *D_802E52D0_329420;
 extern Unk8014DD50 *D_802E54B8_329608;
 extern Unk8014DD50 *D_802E566C;
 extern Unk802E71B8 D_802E71B8;
-extern Unk802E71B8 D_802E71C0;
+extern Unk802E71B8 D_802E71B8_32B308;
+extern Unk802E71B8 D_802E71C0_32B310;
+extern Unk802E71B8 D_802E71C8_32B318;
+extern Unk802E71B8 D_802E71D0_32B320;
 extern char D_802E7A30[];
 extern char D_802E7A40[];
 extern char D_802E7A60[];
@@ -3236,6 +3248,7 @@ extern char D_802E7A78_32BBC8[];
 extern char D_802E7A7C_32BBCC[];
 extern char D_802E7AE4[];
 extern f64 D_802E7B00;
+extern f64 D_802E7C28_32BD78;
 extern s16 D_802E7C30;
 extern s16 D_802E7C32;
 extern s16 D_802E7C34;
@@ -3246,6 +3259,10 @@ extern s32 D_802E4F88_3290D8[];
 extern f32 D_802E7C44;
 extern f32 D_802E7B24_32BC74;
 extern u8 D_802E7C48[];
+extern s32 D_802E7C50;
+extern s16 D_802E7C52;
+extern s32 D_802E7C54;
+extern s16 D_802E7C58; // 0x802E7C58
 extern char D_802E7AA4_32BBF4[];
 extern f64 D_802E7B28_32BC78;
 extern f64 D_802E7B30_32BC80;
@@ -3292,6 +3309,8 @@ extern u8 D_D011660[];
 extern u8 D_D012098[];
 extern u8 D_D015C38[];
 extern u8 D_D03E780[];
+extern u8 D_D040F10[];
+extern u8 D_D040F50[];
 extern char D_E020FB0[];
 extern char D_E020FF0[];
 extern char D_E021030[];
