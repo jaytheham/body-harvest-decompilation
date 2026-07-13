@@ -812,6 +812,7 @@ extern s32 D_80048188;
 extern s32 D_8004818C;
 extern s32 D_80048190;
 extern s32 D_80048194;
+extern s16 D_800481A4; // 0x800481A4 = alienInstances[0].unk0C
 extern AlienInstance alienInstances[0xFE]; // 0x80048198
 extern s32 D_8004D148; // is Snared cheat disabled
 extern s32 D_8004D14C;
@@ -3222,6 +3223,7 @@ extern s16 D_802E4FB4_329104[];
 extern s16 D_802E5058_3291A8[];
 extern s16 D_802E510C_32925C[];
 extern Unk8014DD50 *D_802E5140_329290;
+extern Unk8014DD50 *D_802E7180_32B2D0;
 extern Unk8014DD50 *D_802E5234_329384;
 extern Unk8014DD50 *D_802E52C8_329418;
 extern Unk8014DD50 *D_802E52D0_329420;
