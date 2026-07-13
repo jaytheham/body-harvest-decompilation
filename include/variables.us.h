@@ -1650,7 +1650,7 @@ extern LookAt D_800D7978[];
 extern s32* D_800D7A18;
 extern Unk80080530_Dst* D_800D7A1C;
 extern u8* D_800D7A20;
-extern u8* D_800D7A24;
+extern Unk80080530_Src* D_800D7A24;
 extern Unk80080588Entry5* D_800D7A28;
 extern u8* D_800D7A2C;
 extern u8* D_800D7A30;

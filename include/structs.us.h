@@ -1620,7 +1620,8 @@ typedef struct {
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ s16 unkA;
 	/* 0x0C */ u8 unkC;
-} Unk80080530_Src; /* size = 0x0D */
+	/* 0x0D */ u8 padD;
+} Unk80080530_Src; /* size = 0x0E */
 
 typedef struct {
 	/* 0x00 */ u8 unk0;
