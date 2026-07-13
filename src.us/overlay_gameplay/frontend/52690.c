@@ -4837,43 +4837,43 @@ void func_8008FDF0_602A0(void) {
 #ifdef NON_MATCHING
 // CURRENT(13651)
 void func_8008FE98_60348(s32 arg0) {
-	u8 *entry;
+	Unk800AA998Entry *entry;
 
-	entry = (u8 *)D_800AA998 + ((arg0 & 0xFF) << 4);
+	entry = &D_800AA998[arg0 & 0xFF];
 
-	switch (entry[0]) {
+	switch (entry->type) {
 		case 0:
-			entry[1] = func_8008B08C_5B53C(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6),
-									  (s8)entry[9], *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE));
+			entry->unk1 = func_8008B08C_5B53C(entry->unk2, entry->unk4, entry->unk6,
+									  (s8)(entry->unk8 & 0xFF), entry->unkA, entry->unkC, entry->unkE);
 			break;
 
 		case 1:
-			func_8008B19C_5B64C(*((u8 *)D_800AA998 + ((*(s16 *)(entry + 8) << 4) + 1)), entry[0xB]);
+			func_8008B19C_5B64C(D_800AA998[entry->unk8].unk1, (u8)(entry->unkA & 0xFF));
 			break;
 
 		case 2:
-			func_80085CEC_5619C(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), (s8)entry[9],
-								*(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), 0xA0, 0xF, 0x32, 0xFF, 0xFF, 0xFF, 1,
-								*(s16 *)(entry + 0xE));
+			func_80085CEC_5619C(entry->unk2, entry->unk4, entry->unk6, (s8)(entry->unk8 & 0xFF),
+								entry->unkA, entry->unkC, 0xA0, 0xF, 0x32, 0xFF, 0xFF, 0xFF, 1,
+								entry->unkE);
 			break;
 
 		case 3:
-			D_800DE0BE = *(s16 *)(entry + 8);
-			D_800DE0BF = *(s16 *)(entry + 0xA);
+			D_800DE0BE = entry->unk8;
+			D_800DE0BF = entry->unkA;
 			break;
 
 		case 4:
 			if (D_800313D0_31FD0 != 2) {
-				func_8008A460_5A910(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), (s8)entry[9],
-								   *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE), 0x1E,
+				func_8008A460_5A910(entry->unk2, entry->unk4, entry->unk6, (s8)(entry->unk8 & 0xFF),
+								   entry->unkA, entry->unkC, entry->unkE, 0x1E,
 								   9, 0xFA, 0x55, 1, 0, 0xDC, 1);
 			}
 			break;
 
 		case 5:
 			if (D_800313D0_31FD0 != 2) {
-				func_8008A460_5A910(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), (s8)entry[9],
-								   *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE), 0x1E,
+				func_8008A460_5A910(entry->unk2, entry->unk4, entry->unk6, (s8)(entry->unk8 & 0xFF),
+								   entry->unkA, entry->unkC, entry->unkE, 0x1E,
 								   7, 0x8C, 0x73, 0xA, 0, 0xDC, 0);
 			}
 			break;
@@ -4884,49 +4884,49 @@ void func_8008FE98_60348(s32 arg0) {
 
 		case 7:
 			if (D_800DE0B6 == 1) {
-				func_8008C73C_5CBEC(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0xFF, 0x78,
-							  0x5A, *(s16 *)(entry + 8), *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC),
-							  *(s16 *)(entry + 0xE));
+				func_8008C73C_5CBEC(entry->unk2, entry->unk4, entry->unk6, 0xFF, 0x78,
+							  0x5A, entry->unk8, entry->unkA, entry->unkC,
+							  entry->unkE);
 			} else {
-				func_8008C73C_5CBEC(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0xFF, 0xE6,
-							  0x32, *(s16 *)(entry + 8), *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC),
-							  *(s16 *)(entry + 0xE));
+				func_8008C73C_5CBEC(entry->unk2, entry->unk4, entry->unk6, 0xFF, 0xE6,
+							  0x32, entry->unk8, entry->unkA, entry->unkC,
+							  entry->unkE);
 			}
 			break;
 
 		case 8:
-			switch (*(s16 *)(entry + 0xA)) {
+			switch (entry->unkA) {
 				case 0:
-					func_8008EB20_5EFD0(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6),
-								   *(u16 *)(entry + 8), 0, 0, 0);
+					func_8008EB20_5EFD0(entry->unk2, entry->unk4, entry->unk6,
+								   (u16)entry->unk8, 0, 0, 0);
 					break;
 
 				case 1:
-					func_8008EB20_5EFD0(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6),
-								   *(u16 *)(entry + 8), 0, (s32)D_800AB448, 0);
+					func_8008EB20_5EFD0(entry->unk2, entry->unk4, entry->unk6,
+								   (u16)entry->unk8, 0, (s32)D_800AB448, 0);
 					break;
 
 				case 2:
-					func_8008EB20_5EFD0(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6),
-								   *(u16 *)(entry + 8), 0, 0, 1);
+					func_8008EB20_5EFD0(entry->unk2, entry->unk4, entry->unk6,
+								   (u16)entry->unk8, 0, 0, 1);
 					break;
 
 				case 3:
-					func_8008EB20_5EFD0(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6),
-								   *(u16 *)(entry + 8), 0, (s32)D_800AB454, 0);
+					func_8008EB20_5EFD0(entry->unk2, entry->unk4, entry->unk6,
+								   (u16)entry->unk8, 0, (s32)D_800AB454, 0);
 					break;
 			}
 			break;
 
 		case 9:
 			func_8008DDF0_5E2A0(
-				func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0, *(s16 *)(entry + 8)),
-				entry[0xB], entry[0xD], entry[0xF]);
+				func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0, entry->unk8),
+				(u8)(entry->unkA & 0xFF), (u8)(entry->unkC & 0xFF), (u8)(entry->unkE & 0xFF));
 			break;
 
 		case 10:
-			func_80084324_547D4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), *(s16 *)(entry + 8),
-							 *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE), 0xB4);
+			func_80084324_547D4(entry->unk2, entry->unk4, entry->unk6, entry->unk8,
+							 entry->unkA, entry->unkC, entry->unkE, 0xB4);
 			break;
 
 		case 11:
@@ -4935,19 +4935,19 @@ void func_8008FE98_60348(s32 arg0) {
 			break;
 
 		case 12:
-			func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0xA,
-								 *(s16 *)(entry + 8));
+			func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0xA,
+								 entry->unk8);
 			break;
 
 		case 13:
-			func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0xC,
-								 *(s16 *)(entry + 8));
+			func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0xC,
+								 entry->unk8);
 			break;
 
 		case 14:
-			func_80085CEC_5619C(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), (s8)entry[9],
-								*(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), 0xF0, 0xF, 0x32, 0xC8, 0xA0, 0xA, 1,
-								*(s16 *)(entry + 0xE));
+			func_80085CEC_5619C(entry->unk2, entry->unk4, entry->unk6, (s8)(entry->unk8 & 0xFF),
+								entry->unkA, entry->unkC, 0xF0, 0xF, 0x32, 0xC8, 0xA0, 0xA, 1,
+								entry->unkE);
 			break;
 
 		case 15:
@@ -4959,28 +4959,28 @@ void func_8008FE98_60348(s32 arg0) {
 			break;
 
 		case 17:
-			func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0xE, 0x46);
+			func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0xE, 0x46);
 			break;
 
 		case 18:
-			func_8008B7BC_5BC6C(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), *(s16 *)(entry + 8),
-						   *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE));
+			func_8008B7BC_5BC6C(entry->unk2, entry->unk4, entry->unk6, entry->unk8,
+						   entry->unkA, entry->unkC, entry->unkE);
 			break;
 
 		case 19:
-			func_8008A460_5A910(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), (s8)entry[9],
-							   *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE), 0xFA,
+			func_8008A460_5A910(entry->unk2, entry->unk4, entry->unk6, (s8)(entry->unk8 & 0xFF),
+							   entry->unkA, entry->unkC, entry->unkE, 0xFA,
 							   0x1D, 0x1E, 0xFF, 0xFF, 0xFF, 0xFF, 0);
 			break;
 
 		case 20:
-			func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0xF,
-								 *(s16 *)(entry + 8));
+			func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0xF,
+								 entry->unk8);
 			break;
 
 		case 21:
-			func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0x10,
-								 *(s16 *)(entry + 8));
+			func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0x10,
+								 entry->unk8);
 			break;
 
 		case 22:
@@ -4993,8 +4993,8 @@ void func_8008FE98_60348(s32 arg0) {
 			break;
 
 		case 24:
-			func_8008DC34_5E0E4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), 0x11,
-								 *(s16 *)(entry + 8));
+			func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0x11,
+								 entry->unk8);
 			break;
 
 		case 25:
@@ -5003,8 +5003,8 @@ void func_8008FE98_60348(s32 arg0) {
 
 		case 26:
 			D_800DE0B8 = 1;
-			func_80084324_547D4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), *(s16 *)(entry + 8),
-							 *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE), 0xD48);
+			func_80084324_547D4(entry->unk2, entry->unk4, entry->unk6, entry->unk8,
+							 entry->unkA, entry->unkC, entry->unkE, 0xD48);
 			break;
 
 		case 27:
@@ -5015,16 +5015,16 @@ void func_8008FE98_60348(s32 arg0) {
 		case 28:
 			D_800DE0B9 = 1;
 			D_800DE0BB = 0;
-			func_80084324_547D4(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), *(s16 *)(entry + 8),
-							 *(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), *(s16 *)(entry + 0xE), 0x190);
+			func_80084324_547D4(entry->unk2, entry->unk4, entry->unk6, entry->unk8,
+							 entry->unkA, entry->unkC, entry->unkE, 0x190);
 			D_800DE0BC = 1;
 			break;
 
 		case 29:
 			D_800DE0BD = 1;
-			func_80085CEC_5619C(*(s16 *)(entry + 2), *(s16 *)(entry + 4), *(s16 *)(entry + 6), (s8)entry[9],
-								*(s16 *)(entry + 0xA), *(s16 *)(entry + 0xC), 0x8C, 0x28, 0x64, 0xFF, 0xFF, 0xFF, 1,
-								*(s16 *)(entry + 0xE));
+			func_80085CEC_5619C(entry->unk2, entry->unk4, entry->unk6, (s8)(entry->unk8 & 0xFF),
+								entry->unkA, entry->unkC, 0x8C, 0x28, 0x64, 0xFF, 0xFF, 0xFF, 1,
+								entry->unkE);
 			break;
 	}
 }
