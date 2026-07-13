@@ -1905,7 +1905,7 @@ extern s16 D_800FB79A;
 extern s16 D_800FB7A6;
 extern u8 D_800FB7AC;
 extern u8 D_800FB7AD;
-extern s8 D_800FB7B0;
+extern Unk84EECEffect D_800FB7B0[0xC8];
 extern s8 D_800FB7B4;
 extern s8 D_800FB7BE;
 extern s8 D_800FB7C1;

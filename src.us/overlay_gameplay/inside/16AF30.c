@@ -146,16 +146,16 @@ s16 func_80083390_16B450(u8 arg0) {
 		effect = -3;
 	} else {
 		effect = D_800FC8E2;
-		((Unk835F0Effect *)&D_800FB7B0)[effect].unk0 = 1;
-		((Unk835F0Effect *)&D_800FB7B0)[effect].unk2 = 1;
-		((Unk835F0Effect *)&D_800FB7B0)[effect].unk4 = -5;
+		((Unk84EECEffect *)&D_800FB7B0)[effect].unk0 = 1;
+		((Unk84EECEffect *)&D_800FB7B0)[effect].unk2 = 1;
+		((Unk84EECEffect *)&D_800FB7B0)[effect].unk4 = -5;
 
 		if (D_800FB6F8[arg0].unk4 == 0) {
 			D_800FB6F8[arg0].unk6 = effect;
-			((Unk835F0Effect *)&D_800FB7B0)[effect].unk6 = -4;
+			((Unk84EECEffect *)&D_800FB7B0)[effect].unk6 = -4;
 		} else {
-			((Unk835F0Effect *)&D_800FB7B0)[effect].unk6 = D_800FB6F8[arg0].unk8;
-			((Unk835F0Effect *)&D_800FB7B0)[D_800FB6F8[arg0].unk8].unk4 = effect;
+			((Unk84EECEffect *)&D_800FB7B0)[effect].unk6 = D_800FB6F8[arg0].unk8;
+			((Unk84EECEffect *)&D_800FB7B0)[D_800FB6F8[arg0].unk8].unk4 = effect;
 		}
 
 		D_800FB6F8[arg0].unk8 = effect;
@@ -166,7 +166,7 @@ s16 func_80083390_16B450(u8 arg0) {
 		i = effect;
 		if (effect < 0xC8) {
 			do {
-				if (((Unk835F0Effect *)&D_800FB7B0)[i].unk0 == 0) {
+				if (((Unk84EECEffect *)&D_800FB7B0)[i].unk0 == 0) {
 					D_800FC8E2 = i;
 					i = 0xC8;
 				}
@@ -213,12 +213,12 @@ s16 func_80083584_16B644(u8 arg0) {
 // CURRENT(3281)
 #ifdef NON_MATCHING
 void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
-	Unk835F0Effect *effect;
+	Unk84EECEffect *effect;
 	UnkFB6F8Entry *slot;
 	s16 temp;
-	Unk835F0Effect *baseEffect;
+	Unk84EECEffect *baseEffect;
 
-	effect = &((Unk835F0Effect *)&D_800FB7B0)[arg0];
+	effect = &((Unk84EECEffect *)D_800FB7B0)[arg0];
 	baseEffect = effect;
 	slot = &D_800FB6F8[arg1];
 
@@ -243,12 +243,12 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 			temp = effect->unk6;
 			if (temp == -4) {
 				slot->unk6 = effect->unk4;
-				effect = &((Unk835F0Effect *)&D_800FB7B0)[slot->unk6];
+				effect = &((Unk84EECEffect *)D_800FB7B0)[slot->unk6];
 				effect->unk6 = -4;
 				effect->unk4 = -5;
 			} else if (effect->unk4 == -5) {
 				slot->unk8 = temp;
-				effect = &((Unk835F0Effect *)&D_800FB7B0)[slot->unk6];
+				effect = &((Unk84EECEffect *)D_800FB7B0)[slot->unk6];
 				effect->unk6 = -4;
 				effect->unk4 = -5;
 			} else {
@@ -260,16 +260,16 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 			temp = effect->unk6;
 			if (temp == -4) {
 				slot->unk6 = effect->unk4;
-				effect = &((Unk835F0Effect *)&D_800FB7B0)[effect->unk4];
+				effect = &((Unk84EECEffect *)D_800FB7B0)[effect->unk4];
 				effect->unk6 = -4;
 			} else if (effect->unk4 == -5) {
 				slot->unk8 = temp;
-				effect = &((Unk835F0Effect *)&D_800FB7B0)[temp];
+				effect = &((Unk84EECEffect *)D_800FB7B0)[temp];
 				effect->unk4 = -5;
 			} else {
-				effect = &((Unk835F0Effect *)&D_800FB7B0)[effect->unk4];
+				effect = &((Unk84EECEffect *)D_800FB7B0)[effect->unk4];
 				effect->unk6 = temp;
-				effect = &((Unk835F0Effect *)&D_800FB7B0)[slot->unk6];
+				effect = &((Unk84EECEffect *)D_800FB7B0)[slot->unk6];
 				effect->unk4 = slot->unk8;
 			}
 			break;
@@ -309,9 +309,9 @@ void func_80083814_16B8D4(s32 arg0, u8 arg1)
 	{
 		goto fail;
 	}
-	sp1E = *((s16 *)((&D_800FB7B4) + (((s32)arg0) * 0x16)));
+	sp1E = ((Unk84EECEffect *)&D_800FB7B0)[arg0].unk4;
 	func_800835F0_16B6B0(arg0, arg1);
-	sp22 = *((s16 *)((&D_800FB7B4) + (((s32)sp1E) * 0x16)));
+	sp22 = ((Unk84EECEffect *)&D_800FB7B0)[sp1E].unk4;
 	func_800835F0_16B6B0(sp1E, arg1);
 	func_800835F0_16B6B0(sp22, arg1);
 	return;
@@ -358,11 +358,11 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	u8 *effectUnit;
 	u8 *newUnit;
 
-	effectUnit = (u8 *)&D_800FB7B0 + D_800FB6F8[arg0].unk6 * 22 + 8;
+	effectUnit = (u8 *)D_800FB7B0 + D_800FB6F8[arg0].unk6 * 22 + 8;
 	idx = func_80083390_16B450(arg0);
 	if (idx != -3) {
 		if (effectUnit[0xA] == 1) {
-			newUnit = (u8 *)&D_800FB7B0 + idx * 22 + 8;
+			newUnit = (u8 *)D_800FB7B0 + idx * 22 + 8;
 			*(s16 *)&newUnit[0] = *(s16 *)&effectUnit[0];
 			*(s16 *)&newUnit[2] = *(s16 *)&effectUnit[2];
 			*(s16 *)&newUnit[4] = *(s16 *)&effectUnit[4];
@@ -432,7 +432,7 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 			return;
 		}
 
-		entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+		entry = &D_800FB7B0[effect];
 		*(&D_800FB702 + (slot * 6)) = effect;
 		entry->unk2 = arg9;
 		entry->unkE = arg10;
@@ -473,7 +473,7 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	u8 slot;
 	s32 effect;
-	Unk840F0Effect *entry;
+	Unk84EECEffect *entry;
 	s32 count;
 	s32 i;
 
@@ -488,7 +488,7 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 		}
 
 		*(&D_800FB702 + (slot * 6)) = effect;
-		entry = &((Unk840F0Effect *)&D_800FB7B0)[effect];
+		entry = &((Unk84EECEffect *)D_800FB7B0)[effect];
 		count = arg5;
 
 		entry->unk8 = arg0 * 4;
@@ -546,7 +546,7 @@ void func_80084258_16C318(s32 arg0) {
 	slot = arg0;
 	owner = &D_800FB6F8[slot];
 	effect = owner->unk6;
-	a3 = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+	a3 = &D_800FB7B0[effect];
 	effect = a3->unk4;
 	s2 = (Unk84258Pos *)&a3->unk8;
 
@@ -569,7 +569,7 @@ loop_5:
 				s16 pos2;
 				s16 pos4;
 
-				entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+				entry = &D_800FB7B0[effect];
 				dstPos = (Unk84258Pos *)&entry->unk8;
 				pos0 = dstPos->unk0;
 				pos2 = dstPos->unk2;
@@ -589,7 +589,7 @@ loop_5:
 			Unk84EECEffect *entry;
 			s16 nextEffect;
 
-			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+			entry = &D_800FB7B0[effect];
 			dstPos = (Unk84258Pos *)&entry->unk8;
 
 			if (dstPos->unk9 < 0xF) {
@@ -658,7 +658,7 @@ void func_80084628_16C6E8(s32 arg0) {
 
 	slot = arg0 & 0xFF;
 	index = D_800FB6F8[slot].unk6;
-	base = &((Unk84EECEffect *)&D_800FB7B0)[index];
+	base = &D_800FB7B0[index];
 	spread = base->unk2;
 	effect = func_80083390_16B450(slot);
 	if (effect == -3) {
@@ -667,7 +667,7 @@ void func_80084628_16C6E8(s32 arg0) {
 
 	rnd = func_800038E0_44E0();
 	index = effect;
-	entry = &((Unk84EECEffect *)&D_800FB7B0)[index];
+	entry = &D_800FB7B0[index];
 	quarter = spread / 4;
 	entry->unk2 = (rnd % quarter) + quarter;
 	entry->unkE = (base->unk11 + base->unkE) / 2;
@@ -713,7 +713,7 @@ void func_80084980_16CA40(s32 arg0, s32 arg1) {
 	s32 rnd;
 
 	baseIdx = D_800FB6F8[arg0 & 0xFF].unk6;
-	baseFields = &((Unk84EECEffect *)&D_800FB7B0)[baseIdx].unk8;
+	baseFields = &D_800FB7B0[baseIdx].unk8;
 	spread = baseFields[-3];
 
 	if ((arg1 & 0xFF) == 0xFB) {
@@ -727,10 +727,10 @@ void func_80084980_16CA40(s32 arg0, s32 arg1) {
 
 	rnd = func_800038E0_44E0();
 	quarter = spread / 4;
-	((Unk84EECEffect *)&D_800FB7B0)[effect].unk2 = (rnd % 5) + quarter;
+	D_800FB7B0[effect].unk2 = (rnd % 5) + quarter;
 
 	rnd = func_800038E0_44E0();
-	entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+	entry = &D_800FB7B0[effect];
 	entry->unk8 = baseFields[0] + ((rnd % spread) / 2) - quarter;
 
 	rnd = func_800038E0_44E0();
@@ -791,12 +791,12 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 	}
 
 	owner = &D_800FB6F8[slot];
-	entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+	entry = &D_800FB7B0[effect];
 
 	entry->unk8 = arg0 * 4;
 	*(s16 *)((u8 *)owner + 0xA) = effect;
 	entry->unkC = arg2 * 4;
-	linked = &((Unk84EECEffect *)&D_800FB7B0)[entry->unk4];
+	linked = &D_800FB7B0[entry->unk4];
 	entry->unkA = arg1 * 4;
 	linked->unkC = 0;
 
@@ -869,7 +869,7 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 		ofs = (effect << 2) - effect;
 		ofs = (ofs << 2) - effect;
 		ofs <<= 1;
-		entry = (Unk84EECEffect *)((u8 *)&D_800FB7B0 + ofs);
+		entry = (Unk84EECEffect *)((u8 *)D_800FB7B0 + ofs);
 		x = arg0 * 4;
 		y = arg1 * 4;
 		z = arg2 * 4;
@@ -895,7 +895,7 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 		ofs = (entry->unk4 << 2) - entry->unk4;
 		ofs = (ofs << 2) - entry->unk4;
 		ofs <<= 1;
-		other = (Unk84EECEffect *)((u8 *)&D_800FB7B0 + ofs);
+		other = (Unk84EECEffect *)((u8 *)D_800FB7B0 + ofs);
 		other->unk8 = x;
 		other->unkA = y;
 		other->unkC = z;
@@ -927,7 +927,7 @@ s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
   effect = func_80083390_16B450(0xC);
   if (effect != (-3))
   {
-		temp_s0 = (u8 *)&D_800FB7B0 + effect * 0x16;
+		temp_s0 = (u8 *)D_800FB7B0 + effect * 0x16;
 		*(s16 *)(temp_s0 + 2) = arg3;
 		*(s16 *)(temp_s0 + 8) = arg0 * 4;
 		*(s16 *)(temp_s0 + 0xA) = arg1 * 4;
@@ -969,15 +969,15 @@ void func_800852B8_16D378(s32 arg0) {
 	u8 *baseBytes;
 
 	slot = arg0 & 0xFF;
-	base = &((Unk84EECEffect *)&D_800FB7B0)[*(s16 *)(&D_800FB6FE + (slot * 0xC))];
+	base = &D_800FB7B0[*(s16 *)(&D_800FB6FE + (slot * 0xC))];
 	child = func_80083390_16B450(slot);
 	if (child != -3) {
-		entry = &((Unk84EECEffect *)&D_800FB7B0)[child];
+		entry = &D_800FB7B0[child];
 		entry->unk8 = base->unk8;
 		entry->unkA = base->unkA;
 		entry->unkC = base->unkC;
 
-		baseBytes = ((u8 *)&D_800FB7B0) + base->unk4 * 0x16;
+		baseBytes = (u8 *)D_800FB7B0 + base->unk4 * 0x16;
 		entry->unk11 = ((Unk84EECEffect *)baseBytes)->unk10;
 		baseBytes += 8;
 
@@ -1067,13 +1067,13 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 			return 0xFB;
 		}
 
-		entry = (u8 *)&D_800FB7B0 + (effect * 0x16);
+		entry = (u8 *)D_800FB7B0 + (effect * 0x16);
 		*(u16 *)(entry + 2) = arg7;
 		*(s16 *)(entry + 8) = arg0 << 2;
 		*(s16 *)(entry + 0xA) = arg1 << 2;
 		*(s16 *)(entry + 0xC) = arg2 << 2;
 
-		other = (u8 *)&D_800FB7B0 + (*(s16 *)(entry + 4) * 0x16);
+		other = (u8 *)D_800FB7B0 + (*(s16 *)(entry + 4) * 0x16);
 		other[8] = arg3;
 		other[9] = arg4;
 		other[0xA] = arg5;
@@ -1139,7 +1139,7 @@ s32 func_80085984_16DA44(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 a
 
 	ret = func_80083390_16B450(0xE);
 	if (ret != -3) {
-		effect = &((Unk84EECEffect *)&D_800FB7B0)[ret];
+		effect = &D_800FB7B0[ret];
 		effect->unk2 = arg0;
 		entry = (u8 *)effect + 8;
 		half = (u8)arg1 / 2;
@@ -1200,7 +1200,7 @@ void func_80085D40_16DE00(u8 arg0) {
 	}
 
 	for (;;) {
-		temp_s2 = &((Unk84EECEffect *)&D_800FB7B0)[var_s3];
+		temp_s2 = &D_800FB7B0[var_s3];
 		temp_s0 = (u8 *)temp_s2 + 8;
 		if (temp_s2->unk11 < 0x1E) {
 			if ((temp_s4->unk2 == 0xF1) && (temp_s4->unk4 == 1)) {
@@ -1253,8 +1253,8 @@ void func_80085F28_16DFE8(u8 arg0) {
 	s32 s4;
 
 	sp38 = (UnkFB6F8Entry *)((arg0 * 0xC) + (u8 *)D_800FB6F8);
-	s2 = (Unk84EECEffect *)((sp38->unk6 * 0x16) + (u8 *)&D_800FB7B0);
-	sp30 = (Unk84EECEffect *)((s2->unk4 * 0x16) + (u8 *)&D_800FB7B0);
+	s2 = (Unk84EECEffect *)((sp38->unk6 * 0x16) + (u8 *)D_800FB7B0);
+	sp30 = (Unk84EECEffect *)((s2->unk4 * 0x16) + (u8 *)D_800FB7B0);
 	s1 = (u8 *)sp30 + 8;
 	sp30->unk12++;
 	if ((sp30->unk12 & 0xFF) == 0x10) {
@@ -1397,10 +1397,10 @@ void func_80086728_16E7E8(void) {
 	if ((effect != -5) && (effect != -6)) {
 		do {
 			s16 value;
-			Unk86728Effect *entry;
+			Unk84EECEffect *entry;
 			s8 *entry8;
 
-			entry = &((Unk86728Effect *)&D_800FB7B0)[effect];
+			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
 			entry8 = (s8 *) entry + 8;
 			if ((u8)entry8[0xC] == 0) {
 				value = (func_800038E0_44E0() % 2) + 2 + entry8[0xA];
@@ -1436,9 +1436,9 @@ void func_8008688C_16E94C(void) {
 		do {
 			s16 value;
 			s16 spread;
-			Unk8688CEffect *entry;
+			Unk84EECEffect *entry;
 
-			entry = &((Unk8688CEffect *)&D_800FB7B0)[effect];
+			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
 			value = entry->unk2;
 			if (value < 0) {
 				spread = (value + 3) >> 2;
@@ -1467,7 +1467,7 @@ void func_80086A34_16EAF4(void) {
 	effect = D_800FB782;
 	if ((effect != -5) && (effect != -6)) {
 		do {
-			Unk86A34Effect *entry = &((Unk86A34Effect *)&D_800FB7B0)[effect];
+			Unk84EECEffect *entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
 			u8 *entry8 = (u8 *) entry + 8;
 			if (entry->unk12 < 9) {
 				nextEffect = entry->unk4;
@@ -1491,8 +1491,8 @@ void func_80086A34_16EAF4(void) {
 #ifdef NON_MATCHING
 void func_80086B34_16EBF4(s32 arg0) {
 	UnkFB6F8Entry *slot;
-	Unk86B34Effect *head;
-	Unk86B34Effect *effectEntry;
+	Unk84EECEffect *head;
+	Unk84EECEffect *Unk84EECEffect;
 	s16 effect;
 	s16 next;
 	u8 slotIdx;
@@ -1502,25 +1502,25 @@ void func_80086B34_16EBF4(s32 arg0) {
 
 	slotIdx = arg0 & 0xFF;
 	slot = &D_800FB6F8[slotIdx];
-	head = &((Unk86B34Effect *)&D_800FB7B0)[slot->unk6];
+	head = &((Unk84EECEffect *)&D_800FB7B0)[slot->unk6];
 	effect = head->unk4;
 
 	if ((effect != -5) && (effect != -6)) {
 		do {
-			effectEntry = &((Unk86B34Effect *)&D_800FB7B0)[effect];
+			Unk84EECEffect = &((Unk84EECEffect *)&D_800FB7B0)[effect];
 
-			effectEntry->unk8 += effectEntry->unk12;
-			effectEntry->unkC += effectEntry->unk14;
-			effectEntry->unkA += effectEntry->unk13;
+			Unk84EECEffect->unk8 += Unk84EECEffect->unk12;
+			Unk84EECEffect->unkC += Unk84EECEffect->unk14;
+			Unk84EECEffect->unkA += Unk84EECEffect->unk13;
 
-			if (effectEntry->unk13 >= -0x13) {
-				effectEntry->unk11--;
+			if (Unk84EECEffect->unk13 >= -0x13) {
+				Unk84EECEffect->unk11--;
 			} else {
-				effectEntry->unk11 = -0x14;
+				Unk84EECEffect->unk11 = -0x14;
 			}
 
-			if (effectEntry->unk2 < 2) {
-				func_8008568C_16D74C(effectEntry->unk8, effectEntry->unkC, effectEntry->unk2, head->unkE, head->unkF, head->unk10, effectEntry->unk9);
+			if (Unk84EECEffect->unk2 < 2) {
+				func_8008568C_16D74C(Unk84EECEffect->unk8, Unk84EECEffect->unkC, Unk84EECEffect->unk2, head->unkE, head->unkF, head->unk10, Unk84EECEffect->unk9);
 
 				if ((slot->unk4 < 4) && (head->unkD == 0)) {
 					func_800839B8_16BA78(slotIdx);
@@ -1528,11 +1528,11 @@ void func_80086B34_16EBF4(s32 arg0) {
 					return;
 				}
 
-				next = effectEntry->unk4;
+				next = Unk84EECEffect->unk4;
 				func_800835F0_16B6B0(effect, slotIdx);
 				effect = next;
 			} else {
-				effect = effectEntry->unk4;
+				effect = Unk84EECEffect->unk4;
 			}
 		} while ((effect != -5) && (effect != -6));
 	}
@@ -1893,13 +1893,13 @@ void func_80087A40_16FB00(s32 arg0) {
 void func_80087CB8_16FD78(s32 arg0) {
 	f32 sp58[3];
 	UnkFB6F8Entry *entry;
-	Unk87CB8Effect *effectBase;
-	Unk87CB8Effect *effect;
+	Unk84EECEffect *effectBase;
+	Unk84EECEffect *effect;
 	s8 *color;
 	s16 next;
 
 	entry = &D_800FB6F8[arg0 & 0xFF];
-	effectBase = (Unk87CB8Effect *) &D_800FB7B0;
+	effectBase = (Unk84EECEffect *) &D_800FB7B0;
 	next = effectBase[entry->unk6].unk4;
 	color = &effectBase[entry->unk6].unkE;
 
@@ -1909,7 +1909,7 @@ void func_80087CB8_16FD78(s32 arg0) {
 
 	if ((next != -5) && (next != -6)) {
 		do {
-		effect = &((Unk87CB8Effect *) &D_800FB7B0)[next];
+		effect = &((Unk84EECEffect *) &D_800FB7B0)[next];
 		sp58[0] = effect->unk8;
 		sp58[1] = effect->unkA;
 		sp58[2] = effect->unkC;
@@ -1928,7 +1928,7 @@ void func_80087E3C_16FEFC(void) {
 	s16 effect;
 	s32 pad;
 	Vec3f dir;
-	Unk87E3CEffect *entry;
+	Unk84EECEffect *entry;
 
 	D_800FB6E5 = 0x10;
 	D_800FB6E6 = 0x10;
@@ -1943,7 +1943,7 @@ void func_80087E3C_16FEFC(void) {
 		do {
 			s16 *pos;
 
-			entry = &((Unk87E3CEffect *)&D_800FB7B0)[effect];
+			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
 
 			gDPPipeSync(D_8005BB2C++);
 			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
@@ -2081,11 +2081,11 @@ void func_80088654_170714(void) {
 		u8 unk12;
 		u8 unk13;
 		u8 unk14;
-	} EffectEntry;
+	} Unk84EECEffect;
 
 	Gfx *dl;
 	Vtx *vtx;
-	EffectEntry *effect;
+	Unk84EECEffect *effect;
 	f32 f2, f12, f18, f20;
 	s16 effectIdx;
 
@@ -2102,7 +2102,7 @@ void func_80088654_170714(void) {
 
 	if ((effectIdx != -5) && (effectIdx != -6)) {
 		while ((effectIdx != -5) && (effectIdx != -6)) {
-			effect = &((EffectEntry *)&D_800FB7B0)[effectIdx];
+			effect = &((Unk84EECEffect *)&D_800FB7B0)[effectIdx];
 			
 			// Read color components
 			f2 = (f32)(u8)effect->unk11;
@@ -2214,13 +2214,13 @@ void func_80088B9C_170C5C(void) {
 		u8 unk11;
 		u8 unk12;
 		u8 pad13[3];
-	} Unk88B9CEffect;
+	} Unk84EECEffect;
 
 	s16 effect;
 	Vec3f *pos;
 	s8 **color;
 	f32 *scale;
-	Unk88B9CEffect *effectBase;
+	Unk84EECEffect *effectBase;
 
 	D_800FB6E5 = 0x20;
 	D_800FB6E6 = 0x20;
@@ -2228,7 +2228,7 @@ void func_80088B9C_170C5C(void) {
 	pos = &D_800FB6D0;
 	color = &D_800FB6DC;
 	scale = &D_800FB6E0;
-	effectBase = (Unk88B9CEffect *)&D_800FB7B0;
+	effectBase = (Unk84EECEffect *)&D_800FB7B0;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
@@ -2244,7 +2244,7 @@ void func_80088B9C_170C5C(void) {
 
 	if ((effect != -6) && (effect != -5)) {
 		do {
-			Unk88B9CEffect *entry;
+			Unk84EECEffect *entry;
 
 			gDPPipeSync(D_8005BB2C++);
 			entry = &effectBase[effect];
@@ -2381,7 +2381,7 @@ void func_80089148_171208(f32 *arg0, s8 *arg1, u16 arg2, u8 arg3) {
 #ifdef NON_MATCHING
 void func_80089408_1714C8(s32 arg0) {
 
-	Unk89408Effect *srcEffect;
+	Unk84EECEffect *srcEffect;
 	Unk89408Pos *srcPos;
 	Unk89408Pos *dstPos;
 	s16 srcIndex;
@@ -2394,30 +2394,30 @@ void func_80089408_1714C8(s32 arg0) {
 	srcIndex = D_800FB6F8[index].unk6;
 	dstIndex = func_80083390_16B450(index);
 	if (dstIndex != -3) {
-		srcEffect = &((Unk89408Effect *) &D_800FB7B0)[srcIndex];
+		srcEffect = &((Unk84EECEffect *) &D_800FB7B0)[srcIndex];
 		srcPos = &srcEffect->pos;
 
 		if (srcPos->unkA == 1) {
-			((Unk89408Effect *) &D_800FB7B0)[dstIndex].unk2 = (func_800038E0_44E0() % 0x23) + 0x23;
+			((Unk84EECEffect *) &D_800FB7B0)[dstIndex].unk2 = (func_800038E0_44E0() % 0x23) + 0x23;
 			color = 0xAA;
-			((Unk89408Effect *) &D_800FB7B0)[dstIndex].pos.unk9 = 0x82;
-			dstPos = &((Unk89408Effect *) &D_800FB7B0)[dstIndex].pos;
+			((Unk84EECEffect *) &D_800FB7B0)[dstIndex].pos.unk9 = 0x82;
+			dstPos = &((Unk84EECEffect *) &D_800FB7B0)[dstIndex].pos;
 			dstPos->unk6 = color;
 			dstPos->unk7 = color;
 			dstPos->unk8 = color;
 		} else if (srcPos->unkA == 0) {
-			((Unk89408Effect *) &D_800FB7B0)[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
+			((Unk84EECEffect *) &D_800FB7B0)[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
 			color = 0xFF;
-			((Unk89408Effect *) &D_800FB7B0)[dstIndex].pos.unk9 = color;
-			dstPos = &((Unk89408Effect *) &D_800FB7B0)[dstIndex].pos;
+			((Unk84EECEffect *) &D_800FB7B0)[dstIndex].pos.unk9 = color;
+			dstPos = &((Unk84EECEffect *) &D_800FB7B0)[dstIndex].pos;
 			dstPos->unk6 = color;
 			dstPos->unk7 = color;
 			dstPos->unk8 = color;
 		} else {
-			((Unk89408Effect *) &D_800FB7B0)[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
+			((Unk84EECEffect *) &D_800FB7B0)[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
 			color = 0xFF;
-			((Unk89408Effect *) &D_800FB7B0)[dstIndex].pos.unk9 = color;
-			dstPos = &((Unk89408Effect *) &D_800FB7B0)[dstIndex].pos;
+			((Unk84EECEffect *) &D_800FB7B0)[dstIndex].pos.unk9 = color;
+			dstPos = &((Unk84EECEffect *) &D_800FB7B0)[dstIndex].pos;
 			dstPos->unk6 = 0x32;
 			dstPos->unk7 = color;
 			dstPos->unk8 = 0x82;
@@ -2450,12 +2450,12 @@ u8 func_80089648_171708(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 		s8 unk10;
 		u8 unk11;
 		u8 unk12;
-	} Unk89648Entry;
+	} Unk84EECEffect;
 
 	s32 temp_v0;
 	u8 slot;
 	s32 effect;
-	Unk89648Entry *entry;
+	Unk84EECEffect *entry;
 
 	temp_v0 = func_80083224_16B2E4(8);
 	slot = temp_v0;
@@ -2467,7 +2467,7 @@ u8 func_80089648_171708(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 			return 0xFB;
 		}
 
-		entry = &((Unk89648Entry *)&D_800FB7B0)[effect];
+		entry = &((Unk84EECEffect *)D_800FB7B0)[effect];
 		entry->unk8 = arg0 * 4;
 		entry->unkA = arg1 * 4;
 		entry->unkC = arg2 * 4;
@@ -2507,7 +2507,7 @@ void func_80089794_171854(s32 arg0) {
 			func_80083300_16B3C0(temp_t6);
 			return;
 		}
-		*(&D_800FB7C1 + temp_v0->unk6 * 0x16) = 0;
+		((Unk84EECEffect *)&D_800FB7B0)[temp_v0->unk6].unk11 = 0;
 	}
 }
 #else
@@ -3326,3 +3326,5 @@ void func_8008B594_173654(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B594_173654.s")
 #endif
+
+
