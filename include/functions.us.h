@@ -1480,6 +1480,8 @@ void func_800C4F48_D3EF8(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3);
 void func_800C4938_D38E8(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4);
 void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12);
 s32 func_802DFF04_324054(u8 arg0);
+s8 func_802DFF84_3240D4(s32 arg0);
+void func_802E19EC_325B3C(u8 arg0);
 void func_802E21C4_326314(u8 arg0);
 s32 func_802E22A4_3263F4(u8 arg0);
 void func_802E3584_3276D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -1675,5 +1677,8 @@ void func_802D5754_2B7B84(void);
 s32 func_802D7398_2B97C8(void);
 void func_802D9FB4_2BC3E4(u8 arg0);
 void func_802E0298_2C26C8(u8 arg0);
+
+/* overlay_level/comet */
+s32 func_802E1FE0_326130(u8 arg0);
 
 #endif

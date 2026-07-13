@@ -814,6 +814,7 @@ extern s32 D_80048190;
 extern s32 D_80048194;
 extern u8 D_800481BD[];
 extern s16 D_800481A4; // 0x800481A4 = alienInstances[0].unk0C
+extern u8 D_800481CE; // 0x800481CE = alienInstances[0].unk36
 extern AlienInstance alienInstances[0xFE]; // 0x80048198
 extern s32 D_8004D148; // is Snared cheat disabled
 extern s32 D_8004D14C;
@@ -3227,6 +3228,15 @@ extern s16 D_802E5058_3291A8[];
 extern s16 D_802E510C_32925C[];
 extern Unk8014DD50 *D_802E5140_329290;
 extern Unk8014DD50 *D_802E7180_32B2D0;
+extern Unk802E71B8 D_802E7188_32B2D8;
+extern Unk802E71B8 D_802E7190_32B2E0;
+extern Unk802E71B8 D_802E7198_32B2E8;
+extern s16 D_802E703C_32B18C[];
+extern s16 D_802E7044_32B194[];
+extern Unk802E70C8 D_802E70C8_32B218;
+extern Unk8014DD50 *D_802E7148_32B298;
+extern Unk802E71B8 D_802E71A0_32B2F0;
+extern Unk802E71B8 D_802E71A8_32B2F8;
 extern Unk802E71B8 D_802E71B0_32B300;
 extern s32 D_802E6810; // 0x802E6810
 extern f32 D_802E6814_32A964;
@@ -3263,6 +3273,7 @@ extern s32 D_802E7C50;
 extern s16 D_802E7C52;
 extern s32 D_802E7C54;
 extern s16 D_802E7C58; // 0x802E7C58
+extern char D_802E7AD0_32BC20[];
 extern char D_802E7AA4_32BBF4[];
 extern f64 D_802E7B28_32BC78;
 extern f64 D_802E7B30_32BC80;
