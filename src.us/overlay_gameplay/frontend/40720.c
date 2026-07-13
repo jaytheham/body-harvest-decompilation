@@ -5325,7 +5325,7 @@ void func_8007D7E0_4DC90(void) {
 	D_800D7A34 = D_80096384_66834;
 	D_800D7A38 = D_80096528_669D8;
 	D_800D7A3C = D_80096370_66820;
-	D_800D7A40 = D_80096548_669F8;
+	D_800D7A40 = (Unk8007E12CEntry8*)D_80096548_669F8;
 	D_800D7A48 = D_800965E8_66A98;
 	D_800D7A44 = D_800965D8_66A88;
 	D_800D7A4C = D_800965F0_66AA0;
@@ -5416,7 +5416,7 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 	while (i < D_800D7A58) {
 		if (D_800D7A1C[i].unk1C != 0) {
 			if (D_800D7A1C[i].unk28 != 0xFF) {
-				gSPDisplayList(D_8005BB2C++, ((Gfx**)D_800D7A40)[D_800D7A1C[i].unk28 * 2]);
+				gSPDisplayList(D_8005BB2C++, (Gfx*)D_800D7A40[D_800D7A1C[i].unk28].unk0);
 			}
 
 			if ((D_800D7A1C[i].unk20 & 1) != 0) {
@@ -5626,7 +5626,7 @@ s32 func_8007E12C_4E5DC(void) {
 				D_80094908_64DB8 = arg;
 				break;
 			case 18:
-				argEntry = &((Unk8007E12CEntry8*)D_800D7A40)[arg];
+				argEntry = &D_800D7A40[arg];
 				dst = &D_800D7A1C[argEntry->unk4];
 				dst->unk28 = arg;
 				break;
