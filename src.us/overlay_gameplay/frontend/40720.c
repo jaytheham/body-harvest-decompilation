@@ -5327,7 +5327,7 @@ void func_8007D7E0_4DC90(void) {
 	D_800D7A3C = D_80096370_66820;
 	D_800D7A40 = (Unk8007E12CEntry8*)D_80096548_669F8;
 	D_800D7A48 = D_800965E8_66A98;
-	D_800D7A44 = D_800965D8_66A88;
+	D_800D7A44 = D_800965D8_66A88; /* legacy - kept for asm */
 	D_800D7A4C = D_800965F0_66AA0;
 
 	D_800D7A58 = 0x22;
@@ -5453,7 +5453,7 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 			}
 
 			if (D_800D7A1C[i].unk2A != 0xFF) {
-				D_800D8514 = ((s32**)D_800D7A44)[D_800D7A1C[i].unk2A * 2];
+				D_800D8514 = (s32*)D_800D7A40[D_800D7A1C[i].unk2A].unk0;
 			} else {
 				D_800D8514 = 0;
 			}
@@ -5638,7 +5638,7 @@ s32 func_8007E12C_4E5DC(void) {
 				D_800D8510 = arg;
 				break;
 			case 21:
-				argEntry = &((Unk8007E12CEntry8*)D_800D7A44)[arg];
+				argEntry = &D_800D7A40[arg];
 				dst = &D_800D7A1C[argEntry->unk4];
 				dst->unk2A = arg;
 				break;
