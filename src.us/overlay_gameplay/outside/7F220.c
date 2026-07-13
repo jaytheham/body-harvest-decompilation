@@ -226,7 +226,7 @@ void func_80070440_7F3F0(void)
   }
   D_80052AD8 = 0;
   D_801493D4 = 0;
-  D_80052A94 = D_801FEA30 + 0x10100;
+  D_80052A94 = (Unk80052A94 *)((u8 *)D_801FEA30 + 0x10100);
   D_80152C90 = 0;
   D_801493DC = 0;
   D_801493CC = 0;
@@ -261,7 +261,7 @@ void func_80070440_7F3F0(void)
   D_80047B70 = 0;
   D_80047F80 = 0;
   func_800A17EC_B079C();
-  func_800B41C8_C3178(((spawnX >> 8) + 0x77) & 0xFF, ((spawnY >> 8) + 0x77) & 0xFF, D_801FEA30, 0);
+  func_800B41C8_C3178(((spawnX >> 8) + 0x77) & 0xFF, ((spawnY >> 8) + 0x77) & 0xFF, (u8 *)D_801FEA30, 0);
   func_80076FCC_85F7C(spawnX, spawnY);
   func_8007AA0C_899BC();
   func_8011694C_1258FC();

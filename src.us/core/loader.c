@@ -459,30 +459,29 @@ void loadLevelData(u8 arg0) {
 	osSyncPrintf(&D_80037FEC_38BEC, 0x528, (D_8006AA60 == 0x528) ? (void *)&sp44 : (void *)&sp34);
 
 	{
-		u8 *var_a3 = D_801FEA30;
-		s32 var_t0 = 0;
-		do {
-			s32 temp_t7;
-			u16 *var_v1;
-			s32 var_a0;
+		MapTexRow *rows = D_801FEA30;
+		s32 row;
+		for (row = 0; row < 0xFF; row++) {
+			u16 *cells = rows[row].data;
+			s32 j;
+			u16 *vp;
+			u16 tempKey;
 
-			temp_t7 = (var_t0 % 2) << 13;
-			*(u16 *)(var_a3 + 4) = (u16)(*(u16 *)(var_a3 + 4) ^ temp_t7);
-			*(u16 *)(var_a3 + 2) = (u16)(*(u16 *)(var_a3 + 2) ^ 0x4000 ^ temp_t7);
-			*(u16 *)(var_a3 + 0) = (u16)(*(u16 *)(var_a3 + 0) ^ temp_t7);
-			var_v1 = (u16 *)(var_a3 + 6);
-			var_a0 = 3;
+			tempKey = (row & 1) << 13;
+			cells[2] ^= tempKey;
+			cells[1] ^= 0x4000 ^ tempKey;
+			cells[0] ^= tempKey;
+			vp = &cells[3];
+			j = 3;
 			do {
-				*(var_v1 + 0) = (u16)(*(var_v1 + 0) ^ ((var_a0 % 2) << 14) ^ temp_t7);
-				*(var_v1 + 1) = (u16)(*(var_v1 + 1) ^ (((var_a0 + 1) % 2) << 14) ^ temp_t7);
-				*(var_v1 + 2) = (u16)(*(var_v1 + 2) ^ (((var_a0 + 2) % 2) << 14) ^ temp_t7);
-				*(var_v1 + 3) = (u16)(*(var_v1 + 3) ^ (((var_a0 + 3) % 2) << 14) ^ temp_t7);
-				var_a0 += 4;
-				var_v1 += 4;
-			} while (var_a0 != 0xFF);
-			var_t0 += 1;
-			var_a3 += 0x200;
-		} while (var_t0 != 0xFF);
+				vp[0] ^= ((j & 1) << 14) ^ tempKey;
+				vp[1] ^= (((j + 1) & 1) << 14) ^ tempKey;
+				vp[2] ^= (((j + 2) & 1) << 14) ^ tempKey;
+				vp[3] ^= (((j + 3) & 1) << 14) ^ tempKey;
+				j += 4;
+				vp += 4;
+			} while (j != 0xFF);
+		}
 	}
 }
 #else

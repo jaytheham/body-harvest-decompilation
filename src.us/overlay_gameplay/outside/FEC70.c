@@ -268,7 +268,7 @@ void func_800F0094_FF044(void) {
 		temp_a1 = D_80052B2C->unk3E;
 		temp_v1_2 = (temp_a0 >> 8) + 0x77;
 		temp_t0 = (temp_a1 >> 8) + 0x77;
-		func_800B4050_C3000((u8)temp_v1_2, (u8)temp_t0, &D_801FEA30, 0);
+		func_800B4050_C3000((u8)temp_v1_2, (u8)temp_t0, (u8 *)D_801FEA30, 0);
 	}
 	D_800476A2 = 1;
 	return;
@@ -563,7 +563,7 @@ s32 func_800F066C_FF61C(void) {
 		D_80157FCC = D_80157586;
 	}
 
-	func_800B4050_C3000((u8)((s0 >> 6) + 0x77), (u8)((s1 >> 6) + 0x77), &D_801FEA30, 0);
+	func_800B4050_C3000((u8)((s0 >> 6) + 0x77), (u8)((s1 >> 6) + 0x77), (u8 *)D_801FEA30, 0);
 	return finished;
 }
 #else

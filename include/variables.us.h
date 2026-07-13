@@ -2932,7 +2932,7 @@ extern u8 D_801CE710;
 extern u8 D_801F1210[];
 extern u8 D_801FE810[];
 extern u8 D_801FEA10[];
-extern u8 D_801FEA30[];
+extern MapTexRow D_801FEA30[0x100]; // 256 rows of 512 bytes each (heightmap + texture data)
 extern u8 D_8021EA30[0x1000]; // Texture map
 extern u8 D_8021F250[];
 extern u16 D_8021FA30[][0x10]; // Terrain objects 0x1f20 total size
