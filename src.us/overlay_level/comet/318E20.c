@@ -2009,7 +2009,39 @@ s32 func_802DA9C0_31EB10(u8 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DA9C0_31EB10.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DAC0C_31ED5C.s")
+void func_802DAC0C_31ED5C(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
+    s16 buf[2];
+    u8 sp3B;
+    s32 sp34;
+
+    sp34 = 0;
+    if (alienInstances[arg0].unk20 & 0x1000) {
+        if (alienInstances[arg0].unk20 & 0x04000000) {
+            buf[0] = arg3;
+            buf[1] = arg4;
+            sp3B = func_80081F18_90EC8(arg0, 2, 2, buf, &D_802E52D0_329420);
+        } else {
+            buf[0] = arg1;
+            buf[1] = arg2;
+            sp3B = func_80081F18_90EC8(arg0, 2, 2, buf, &D_802E52C8_329418);
+        }
+        if (sp3B == 0) {
+            alienInstances[arg0].unk1E = 0;
+            if (func_80084FE8_93F98(arg0, 0x400) && arg5 >= 0x12D) {
+                func_800871CC_9617C(arg0, 0, func_800038E0_44E0() % 300);
+            } else {
+                sp34 = 1;
+            }
+        }
+        if (sp3B == 2) {
+            alienInstances[arg0].unk36 = 0;
+        }
+    }
+    if (sp34) {
+        alienInstances[arg0].unk2C = 0;
+        alienInstances[arg0].unk20 &= ~0x1000;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DAD78_31EEC8.s")
 
