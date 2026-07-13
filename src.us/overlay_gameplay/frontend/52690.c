@@ -766,7 +766,6 @@ void func_800840C4_54574(u8 arg0) {
 	}
 }
 
-// CURRENT(1458)
 void func_8008412C_545DC(u8 arg0, u8 arg1) {
 	s32 pad0;
 	s16 index;
@@ -2097,7 +2096,6 @@ s16 func_800885A0_58A50(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800885A0_58A50.s")
 #endif
 
-/* Stores high bytes of 3 u16 args at triple-indirect D_800DE840 chain offset +8 */
 void func_80088A38_58EE8(u16 arg0, u16 arg1, u16 arg2, s16 arg3) {
 	u8 *ptr;
 
@@ -2109,7 +2107,6 @@ void func_80088A38_58EE8(u16 arg0, u16 arg1, u16 arg2, s16 arg3) {
 	}
 }
 
-/* Sets 3 bytes at struct offset 8 via triple-indirect D_800DE840 chain */
 void func_80088ACC_58F7C(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 	s8 *dst;
 
@@ -2121,7 +2118,6 @@ void func_80088ACC_58F7C(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 	}
 }
 
-/* Sets 3 bytes at struct offset 14 via triple-indirect D_800DE840 chain */
 void func_80088B54_59004(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 	s8 *dst;
 
@@ -2535,7 +2531,6 @@ void func_800899F0_59EA0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5
 	}
 }
 
-/* Traverses D_800DE840 linked list, incrementing unk11 and updating unk2 */
 void func_80089AB4_59F64(void) {
 	s16 idx;
 	u8 *ptr;
@@ -3308,7 +3303,6 @@ u8 func_8008B7BC_5BC6C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B7BC_5BC6C.s")
 #endif
 
-/* Calls func_800840C4 and func_80083B14 if D_800DE130[arg0].unk0 == 9 */
 void func_8008BAD8_5BF88(u8 arg0) {
 	if (arg0 != 0xFB && D_800DE130[arg0].unk0 == 9) {
 		func_800840C4_54574(arg0);
@@ -3574,7 +3568,6 @@ void func_8008BC00_5C0B0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008BC00_5C0B0.s")
 #endif
 
-/* Allocate D_800DE840 entry and fill all fields from params */
 void func_8008C73C_5CBEC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5, s16 arg6, s16 arg7, s16 arg8, u8 arg9) {
 	s32 idx;
 
@@ -4108,7 +4101,6 @@ u8 func_8008DC34_5E0E4(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008DC34_5E0E4.s")
 #endif
 
-/* Sets three byte fields (offsets 6,7,8) in a D_800E1980 entry */
 void func_8008DDF0_5E2A0(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	if (arg0 != 0xFF) {
 		D_800E1980[arg0].unk6 = arg1;
@@ -4117,21 +4109,18 @@ void func_8008DDF0_5E2A0(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	}
 }
 
-/* Sets a byte field at offset 0xD in a 20-byte struct array entry */
 void func_8008DE44_5E2F4(u8 arg0, u8 arg1) {
 	if (arg0 != 0xFF) {
 		(&D_800E198D)[(s32)arg0 * 20] = arg1;
 	}
 }
 
-/* Sets a signed byte field at offset 0x12 in a 20-byte struct array entry */
 void func_8008DE7C_5E32C(u8 arg0, s8 arg1) {
 	if (arg0 != 0xFF) {
 		(&D_800E1992)[(s32)arg0 * 20] = arg1;
 	}
 }
 
-/* Sets two signed byte fields (unk10, unk11) in a D_800E1980 struct entry */
 void func_8008DEB8_5E368(u8 arg0, s8 arg1, s8 arg2) {
 	if (arg0 != 0xFF) {
 		D_800E1980[arg0].unk10 = arg1;
@@ -4139,14 +4128,12 @@ void func_8008DEB8_5E368(u8 arg0, s8 arg1, s8 arg2) {
 	}
 }
 
-/* Sets a byte field at offset 0xF in a 20-byte struct array entry */
 void func_8008DF08_5E3B8(u8 arg0, u8 arg1) {
 	if (arg0 != 0xFF) {
 		(&D_800E198F)[(s32)arg0 * 20] = arg1;
 	}
 }
 
-/* Clears unkA for a slot, updates min index D_800E1D69, decrements D_800E1D68 */
 void func_8008DF40_5E3F0(u8 arg0) {
 	if (arg0 != 0xFF) {
 		D_800E1980[arg0].unkA = 0;
@@ -4419,7 +4406,6 @@ void func_8008E158_5E608(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008E158_5E608.s")
 #endif
 
-/* Allocates an entry and fills color/lifetime and velocity-related byte fields */
 void func_8008E9DC_5EE8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10) {
 	u8 slot;
 
@@ -4435,7 +4421,6 @@ void func_8008E9DC_5EE8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg
 	}
 }
 
-/* Allocates an entry and sets DE7C/DEB8 fields */
 void func_8008EAB0_5EF60(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s8 arg4) {
 	u8 slot;
 
@@ -4497,7 +4482,6 @@ s16 func_8008EB20_5EFD0(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg
   return ret;
 }
 
-/* Sets D_800DE0EB flag around a call to func_8008EB20 */
 void func_8008ED44_5F1F4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5) {
 	D_800DE0EB = 1;
 	func_8008EB20_5EFD0(arg0, arg1, arg2, arg3, arg4, arg5, 0);
@@ -4638,7 +4622,6 @@ void func_8008F1E0_5F690(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008F1E0_5F690.s")
 #endif
 
-/* Initializes a 12-byte struct entry at D_800DE130[arg1] */
 void func_8008F534_5F9E4(u8 arg0, u8 arg1) {
 	D_800DE130[arg1].unk0 = arg0;
 	D_800DE130[arg1].unk1 = 0;
@@ -4761,7 +4744,6 @@ void func_8008F704_5FBB4(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-/* Calls func_8008F704 for each active slot in D_800DE0BE/BF */
 void func_8008FA60_5FF10(void) {
 	if (D_800DE0BE != 0xFF) {
 		func_8008F704_5FBB4(D_800DE0BE);
@@ -4836,13 +4818,11 @@ void func_8008FBD4_60084(void) {
 	func_8008D14C_5D5FC();
 }
 
-/* Appends a display list command and calls func_8008D98C */
 s32 func_8008FD9C_6024C(void) {
 	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)&D_80031160 & 0x1FFFFFFF), G_MTX_LOAD | G_MTX_MODELVIEW);
 	return func_8008D98C_5DE3C(&D_8005BB2C);
 }
 
-/* Compute delta positions and call update chain */
 void func_8008FDF0_602A0(void) {
 	D_800DE0F0[0] = (f32)D_800DE10C - D_800DE100[0];
 	D_800DE0F0[1] = (f32)D_800DE10E - D_800DE100[1];
