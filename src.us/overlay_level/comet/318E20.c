@@ -3788,4 +3788,41 @@ void func_802E4ACC_328C1C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E4ACC_328C1C.s")
 #endif
 
+// CURRENT(7172)
+#ifdef NON_MATCHING
+void func_802E4CB4_328E04(u8 arg0) {
+    u8 sp47;
+    s32 temp_v0;
+    s16 sp34;
+
+    sp47 = alienInstances[arg0].unk25;
+
+    if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL)) {
+        ((u8 *)&alienInstances[alienInstances[sp47].unk25].unk0)[1] = 0xFF;
+        alienInstances[alienInstances[sp47].unk25].unk20 &= ~ALIEN_FLAG_UNKG;
+        alienInstances[arg0].unk38 = func_800C3BD8_D2B88(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0xC8, 0xFFFF, 0x4C, 0xA9, 0xF5);
+        if (alienInstances[alienInstances[sp47].unk25].unk20 & ALIEN_FLAG_UNKI) {
+            alienInstances[((u8 *)&alienInstances[alienInstances[sp47].unk25].unk0)[0]].unk20 &= ~ALIEN_FLAG_INVINCIBLE;
+        }
+        alienInstances[alienInstances[sp47].unk25].unk20 |= ALIEN_FLAG_UNKI;
+    }
+
+    temp_v0 = func_802DFF04_324054(sp47);
+    sp34 = D_8014DD50[D_8014DD50[D_8014DD50[temp_v0].unkC].unkD].unkD;
+
+    if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKE) && alienInstances[arg0].unk2C >= 3) {
+        s32 sp38_0;
+        s16 sp3C;
+
+        sp38_0 = D_802E7A20_32BB70.unk0;
+        sp3C = sp34;
+        func_802E3584_3276D4(arg0, temp_v0, sp34, (s32)&sp38_0);
+        sp34 = sp3C;
+    }
+
+    func_802E43FC_32854C(arg0, sp34);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E4CB4_328E04.s")
+#endif
+
