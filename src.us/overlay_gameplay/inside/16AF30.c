@@ -326,7 +326,7 @@ void func_80083924_16B9E4(s16 arg0, u8 arg1) {
 	s16 sp1E;
 
 	if (arg0 >= 0 && arg0 < 0xC8 && arg1 < 0xF) {
-		sp1E = *(s16 *)(&D_800FB7B4 + arg0 * 0x16);
+		sp1E = ((Unk84EECEffect *)D_800FB7B0)[arg0].unk4;
 		func_800835F0_16B6B0(arg0, arg1);
 		func_800835F0_16B6B0(sp1E, arg1);
 		return;
@@ -1179,7 +1179,7 @@ void func_80085CB4_16DD74(s16 arg0, s16 arg1, s16 arg2) {
 
 	temp_v0 = func_80085984_16DA44(0x28, 0x50, ((func_800038E0_44E0() % 5) + 5) & 0xFF, arg0, arg1, arg2);
 	if (temp_v0 != -3) {
-		*((s8 *)&D_800FB7C4 + temp_v0 * 0x16) = 1;
+		((Unk84EECEffect *)D_800FB7B0)[temp_v0].unk14 = 1;
 	}
 }
 
@@ -1629,7 +1629,7 @@ void func_80086F24_16EFE4(s16 arg0) {
 
 void func_80086F58_16F018(s16 arg0) {
 	if (arg0 != -3) {
-		func_80086F24_16EFE4(*(s16 *)(&D_800FB7BE + arg0 * 0x16));
+		func_80086F24_16EFE4(*(s16 *)&((Unk84EECEffect *)D_800FB7B0)[arg0].unkE);
 		func_800835F0_16B6B0(arg0, 0xC);
 	}
 }
