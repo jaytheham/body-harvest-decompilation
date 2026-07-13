@@ -2276,6 +2276,7 @@ extern u8 D_8014D50A;
 extern u8 D_8014D510[];
 extern u8 D_8014D550[];
 extern Unk8014DD50 D_8014DD50[];
+extern u8 D_8014DD5C[];
 extern Unk8014DD50 D_8014E4D0[];
 extern s16 D_8014E4D6[];
 extern s8 D_8014EC50[];
@@ -2582,6 +2583,7 @@ extern s16 D_80157F96;
 extern s16 D_80157F98;
 extern s16 D_80157F9A;
 extern u8 D_80157F9E[3];
+extern u8 D_80157FA0;
 extern BuildingInstance *D_80157FA4;
 extern s32 D_80157FA8;
 extern s16 D_80157FAC;
@@ -2946,6 +2948,9 @@ extern u8 D_80224680; // missions?
 extern u8 D_80224E80[];
 extern u8 D_80254E80[]; // Tile palette data
 extern AlienSpec alienSpecs[0x30]; // 80256680
+extern u16 D_8025668C[]; // 8025668C (aliases alienSpecs[0].unkC)
+extern u16 D_802566BA[]; // 802566BA
+extern s16 D_802566D8[]; // 802566D8
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
 extern SignpostData D_80258330[0x20]; // signposts
 extern s32 D_80258390; // English sign strings
@@ -3218,7 +3223,9 @@ extern s32 D_802E4F78_3290C8;
 extern s32 D_802E4F7C_3290CC;
 extern s32 D_802E4F80_3290D0;
 extern s32 D_802E4F84_3290D4;
-extern s16 D_802E4FB4[];
+extern s16 D_802E4FB4_329104[];
+extern s16 D_802E5058_3291A8[];
+extern s16 D_802E510C_32925C[];
 extern Unk8014DD50 *D_802E566C;
 extern Unk802E71B8 D_802E71B8;
 extern Unk802E71B8 D_802E71C0;
@@ -3235,6 +3242,14 @@ extern s16 D_802E7C34;
 extern s16 D_802E7C36;
 extern s32 D_802E7C3C;
 extern s16 D_802E7C40;
+extern s32 D_802E4F88_3290D8[];
+extern f32 D_802E7C44;
+extern f32 D_802E7B24_32BC74;
+extern u8 D_802E7C48[];
+extern char D_802E7AA4_32BBF4[];
+extern f64 D_802E7B28_32BC78;
+extern f64 D_802E7B30_32BC80;
+extern f32 D_802E7B38_32BC88;
 extern s32 D_803DA800;
 extern u8 D_8F4960[];
 extern Gfx D_900AD50[];
