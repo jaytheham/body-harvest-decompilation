@@ -3250,6 +3250,7 @@ extern char D_802E7AA4_32BBF4[];
 extern f64 D_802E7B28_32BC78;
 extern f64 D_802E7B30_32BC80;
 extern f32 D_802E7B38_32BC88;
+extern f64 D_802E7B40_32BC90;
 extern s32 D_803DA800;
 extern u8 D_8F4960[];
 extern Gfx D_900AD50[];
