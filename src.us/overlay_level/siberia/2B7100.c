@@ -3160,7 +3160,6 @@ void func_802DD514_2BF944(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD514_2BF944.s")
 #endif
 
-// CURRENT(high) - needs further work to match target assembly
 #ifdef NON_MATCHING
 void func_802DD668_2BFA98(s32 arg0) {
 	s32 sp74;
@@ -3500,6 +3499,7 @@ void func_802DDFF0_2C0420(s32 arg0) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DDFF0_2C0420.s")
 #endif
+
 // CURRENT(10600)
 #ifdef NON_MATCHING
 void func_802DE584_2C09B4(u8 arg0) {
