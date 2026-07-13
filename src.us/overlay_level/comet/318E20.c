@@ -2717,7 +2717,27 @@ s32 func_802E1AE4_325C34(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1AE4_325C34.s")
 #endif
 
+// CURRENT(500)
+#ifdef NON_MATCHING
+s32 func_802E1C34_325D84(u8 arg0) {
+    AlienInstance *inst;
+    u8 parentIdx;
+    u8 grandparentIdx;
+
+    inst = &alienInstances[arg0];
+    parentIdx = inst->unk25;
+    grandparentIdx = alienInstances[parentIdx].unk25;
+    inst->unk2C++;
+
+    if (inst->unk2C >= 0x51 || ((u8 *)&alienInstances[grandparentIdx])[2] == (u8)0xFF && inst->unk2C >= 0x33) {
+        inst->unk2C = 0;
+        return 1;
+    }
+    return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1C34_325D84.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1CC0_325E10.s")
 
