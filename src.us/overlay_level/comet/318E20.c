@@ -3086,7 +3086,46 @@ void func_802E3550_3276A0(u8 arg0) {
 	func_800A93A4_B8354(arg0, -0x3B, 0x117, 0xA9);
 }
 
+// CURRENT(983)
+#ifdef NON_MATCHING
+void func_802E3584_3276D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s16 pad;
+    s16 sp34;
+    s32 sp2C[3];
+    s16 sp20[3];
+    Unk8014DD50 *temp_ptr;
+
+    temp_ptr = &D_8014DD50[*((s16 *)&arg2 + 1)];
+    sp34 = temp_ptr->unkC;
+
+    func_800A931C_B82CC((s8)(s32)temp_ptr->unkC, (s16 *)arg3, sp2C);
+
+    sp20[0] = (s16)sp2C[0];
+    sp20[1] = (s16)sp2C[1];
+    sp20[2] = (s16)sp2C[2];
+    func_800A931C_B82CC(*((s8 *)&arg2 + 3), sp20, sp2C);
+
+    sp20[0] = (s16)sp2C[0];
+    sp20[1] = (s16)sp2C[1];
+    sp20[2] = (s16)sp2C[2];
+    func_800A931C_B82CC(*((s8 *)&arg1 + 3), sp20, sp2C);
+
+    sp20[0] = (s16)sp2C[0];
+    sp20[1] = (s16)sp2C[1];
+    sp20[2] = (s16)sp2C[2];
+
+    sp2C[0] = (s32)((f32)sp2C[0] * D_802E6814_32A964);
+    sp2C[1] = (s32)((f32)sp2C[1] * D_802E6814_32A964);
+    sp2C[2] = (s32)((f32)sp2C[2] * D_802E6814_32A964);
+
+    func_800A93A4_B8354(*((u8 *)&arg0 + 3), (s16)sp2C[0], (s16)sp2C[1], (s16)sp2C[2]);
+
+    alienInstances[*((u8 *)&arg0 + 3)].unkA += *(u16 *)&D_8014DD50[*((s16 *)&arg1 + 1)].unkA + *(u16 *)&temp_ptr->unkA + *(u16 *)&D_8014DD50[sp34].unkA;
+    alienInstances[*((u8 *)&arg0 + 3)].unk6 -= *(u16 *)&D_8014DD50[*((s16 *)&arg1 + 1)].unk6 + *(u16 *)&temp_ptr->unk6 + *(u16 *)&D_8014DD50[sp34].unk6;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E3584_3276D4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E3744_327894.s")
 

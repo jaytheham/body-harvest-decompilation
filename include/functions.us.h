@@ -1482,7 +1482,7 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 s32 func_802DFF04_324054(u8 arg0);
 void func_802E21C4_326314(u8 arg0);
 s32 func_802E22A4_3263F4(u8 arg0);
-void func_802E3584_3276D4(u8, s16, s8, Unk802E71B8 *);
+void func_802E3584_3276D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_802DF290_3233E0(void);
 void func_802D6670_31A7C0(void);
 void func_802D5BFC_319D4C(void);
