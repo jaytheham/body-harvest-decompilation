@@ -1047,9 +1047,9 @@ extern s32 D_8006ABA8;
 extern s32 D_8006ABB8[];
 extern u8 D_8006AC10; // english comms strings
 extern u8 D_8006C410;
-extern u8 D_8006C450; // english comms strings offsets
-extern void *D_8006C550;
-extern void *D_8006C554;
+extern u8 D_8006C450; // english comms strings offsets (accessed as u16[] via D_8006C550)
+extern u16 *D_8006C550;
+extern u16 *D_8006C554;
 extern s16 D_8006C558;
 extern u16 D_8006C55A;
 extern u16 D_8006C55C;
@@ -2953,7 +2953,7 @@ extern s16 D_802566D8[]; // 802566D8
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
 extern SignpostData D_80258330[0x20]; // signposts
 extern s32 D_80258390; // English sign strings
-extern s32 D_80258F90; // English sign string offsets (actually u16/s16?)
+extern s32 D_80258F90; // English sign string offsets (accessed as u16[] via D_8006C550)
 extern BuildingSpec buildingSpecs[0x20]; // 0x80259090
 extern u8 D_80259470[];
 extern Unk80259490 D_80259490; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
