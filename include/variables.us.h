@@ -2246,7 +2246,7 @@ extern s32 D_80149B44; // numberOfCharacters
 extern s16 D_80149B48; // numberOfMissions
 extern s16 D_80149B4A;
 extern u8 D_80149B50[];
-extern u8 D_80149B60[];
+extern u8 D_80149B60[][11][50];
 extern u8 D_8014CCCA;
 extern u8 D_8014CEF0[];
 extern u8 D_8014CFF0[];
