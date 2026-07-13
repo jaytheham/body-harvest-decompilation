@@ -692,10 +692,16 @@ typedef struct {
 } FrontendInterpState; /* size = 0x1C */
 
 typedef struct {
-	u8 pad0[0x6];
-	u8 unk6;
-	u8 pad7[0x21];
-} Unk_8003CEC0;
+	/* 0x00 */ s16 relZ;
+	/* 0x02 */ s16 unk02;
+	/* 0x04 */ s16 relX;
+	/* 0x06 */ u8 spec;
+	/* 0x07 */ u8 pad;
+} AlienSpawnSlot; /* size = 0x08 */
+
+typedef struct {
+	/* 0x00 */ AlienSpawnSlot slots[5];
+} AlienSpawnEntry; /* size = 0x28 */
 
 typedef struct {
 	u16 unk0;

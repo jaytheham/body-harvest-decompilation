@@ -925,7 +925,7 @@ u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2) {
 		func_80011A40_12640(6, D_8006AA70);
 	}
 
-	temp_v0 = func_8007956C_8851C(D_8003CEC6[arg0 * 0x28]);
+	temp_v0 = func_8007956C_8851C(D_8003CEC0[arg0].slots[0].spec);
 	sp5E = temp_v0;
 	if ((temp_v0 & 0xFF) == 0xFF) {
 		return 0xFF;
@@ -960,7 +960,7 @@ u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2) {
 		u8 slotSpec;
 		u8 followerId;
 
-		slotSpec = ((u8 *)&D_8003CEC0[arg0])[i * 8 + 6];
+		slotSpec = D_8003CEC0[arg0].slots[i].spec;
 		if (slotSpec == 0) {
 			break;
 		}
@@ -969,8 +969,8 @@ u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2) {
 		if (followerId == 0xFF) {
 			leader->unk20 |= (1 << (i + 0xB));
 		} else {
-			alienInstances[followerId].unk0 = *(s16 *)&((u8 *)&D_8003CEC0[arg0])[i * 8 + 4] + arg1;
-			alienInstances[followerId].unk4 = arg2 - *(s16 *)&((u8 *)&D_8003CEC0[arg0])[i * 8];
+			alienInstances[followerId].unk0 = D_8003CEC0[arg0].slots[i].relX + arg1;
+			alienInstances[followerId].unk4 = arg2 - D_8003CEC0[arg0].slots[i].relZ;
 			alienInstances[followerId].unk25 = sp5F;
 			alienInstances[followerId].unk1B = leader->unk1B;
 
@@ -1018,7 +1018,7 @@ void func_800B0710_BF6C0(s16 arg0, s16 arg1)
 	s32 g2, g3, g4, g5;
 
 	levelIdx = (currentLevel - 1);
-	alienSpecId = D_8003CEC0[levelIdx].unk6;
+	alienSpecId = D_8003CEC0[levelIdx].slots[0].spec;
 	y = (func_800B84D0_C7480(arg0, arg1) >> 8) + alienSpecs[alienSpecId].unk58;
 	func_800CF80C_DE7BC(arg0, y, arg1, D_8013D91C[currentLevel].unk2, 0xA0, 0xFF, 0, 0);
 	func_800BECF0_CDCA0();

@@ -646,8 +646,7 @@ extern char D_80038614_39214; /* osSyncPrintf format string */
 extern char D_80038618_39218; /* osSyncPrintf format string */
 extern char D_8003BAE0;
 extern AlienWaveEntry D_8003BCC0[][12];
-extern Unk_8003CEC0 D_8003CEC0[5];
-extern u8 D_8003CEC6[];
+extern AlienSpawnEntry D_8003CEC0[5]; // Boss alien parts spawn points?
 extern u16 D_8003D000_3DC00[];
 extern u16 D_8003D800_3E400[];
 extern Unk8003E000 D_8003E000[5][6];
