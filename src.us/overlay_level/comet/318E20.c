@@ -1759,7 +1759,18 @@ void func_802D997C_31DACC(s32 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D997C_31DACC.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D9ECC_31E01C.s")
+void func_802D9ECC_31E01C(u8 arg0, s16 arg1) {
+    s16 sp2C[2];
+    AlienInstance *inst;
+
+    inst = &alienInstances[arg0];
+    if (inst->unk20 & 0x1000) {
+        sp2C[0] = arg1;
+        if ((u8)func_80081F18_90EC8(arg0, 1, 2, sp2C, &D_802E5140_329290) == 2) {
+            inst->unk20 &= ~0x1000;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D9F60_31E0B0.s")
 
