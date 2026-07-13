@@ -2705,7 +2705,16 @@ s32 func_802E1EFC_32604C(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1EFC_32604C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1FE0_326130.s")
+s32 func_802E1FE0_326130(u8 arg0) {
+    AlienInstance *alien = &alienInstances[arg0];
+    AlienInstance *parent = &alienInstances[alien->unk25];
+
+    if (((u32)D_80052A8C % 60U) == 0 || ((u8 *)parent)[0] == 0xFF) {
+        alien->unk1E = 20;
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E205C_3261AC.s")
 

@@ -1676,4 +1676,7 @@ s32 func_802D7398_2B97C8(void);
 void func_802D9FB4_2BC3E4(u8 arg0);
 void func_802E0298_2C26C8(u8 arg0);
 
+/* overlay_level/comet */
+s32 func_802E1FE0_326130(u8 arg0);
+
 #endif
