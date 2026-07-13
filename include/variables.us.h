@@ -3273,6 +3273,7 @@ extern s32 D_802E7C50;
 extern s16 D_802E7C52;
 extern s32 D_802E7C54;
 extern s16 D_802E7C58; // 0x802E7C58
+extern char D_802E7AD0_32BC20[];
 extern char D_802E7AA4_32BBF4[];
 extern f64 D_802E7B28_32BC78;
 extern f64 D_802E7B30_32BC80;

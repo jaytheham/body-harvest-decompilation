@@ -2637,7 +2637,38 @@ void func_802E1324_325474(u8 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E13D4_325524.s")
 
+#ifdef NON_MATCHING
+s32 func_802E14F4_325644(u8 arg0) {
+    AlienInstance *inst;
+    AlienInstance *parentInst;
+    u8 parentIdx;
+    u8 grandparentIdx;
+
+    inst = &alienInstances[arg0];
+    parentIdx = inst->unk25;
+    parentInst = &alienInstances[parentIdx];
+    grandparentIdx = parentInst->unk25;
+    inst->unk2C++;
+
+    if (inst->unk2C >= 0x51 || ((u8 *)&alienInstances[grandparentIdx])[1] == (u8)0xFF && inst->unk2C >= 0x33) {
+        if (func_80084FE8_93F98(parentIdx, 0x800) != 0) {
+            inst->unk26 = 4;
+            inst->unk2C = 0;
+        }
+    }
+
+    if (inst->unk26 > 0) {
+        if (func_80084FE8_93F98(parentIdx, 0x800) != 0 && !(parentInst->unk47 & 1) && (D_80052A8C & 1)) {
+            osSyncPrintf(&D_802E7AD0_32BC20);
+            inst->unk26--;
+            return 1;
+        }
+    }
+    return 0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E14F4_325644.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1630_325780.s")
 
