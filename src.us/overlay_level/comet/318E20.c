@@ -2245,7 +2245,82 @@ void func_802DB1D4_31F324(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DB1D4_31F324.s")
 #endif
 
+// CURRENT(7490)
+#ifdef NON_MATCHING
+void func_802DB9FC_31FB4C(u8 arg0) {
+    s32 sp48[3];
+    s16 sp58;
+    s16 sp56;
+    s16 sp54;
+    s32 sp44;
+    s32 sp70;
+    s16 sp5E;
+    s16 sp3E;
+    s16 sp8E;
+    u8 sp8D;
+    AlienInstance *inst;
+    Unk8014DD50 *unkPtr;
+    s16 var_v1;
+    s32 dx;
+    s32 dz;
+
+    inst = &alienInstances[arg0];
+    sp8E = D_8014DD50[inst->unkC].unkC;
+    sp44 = 0;
+    sp8D = inst->specIndex;
+    func_80085E2C_94DDC(arg0, sp8E, 0x4000);
+    unkPtr = &D_8014DD50[sp8E];
+    inst->unk3A = func_80085C50_94C00(inst->unk0, (s16)(unkPtr->unk2 + inst->unk2), inst->unk4, D_80052B34->unk0, D_80052B34->unk2 + 0x32, D_80052B34->unk4);
+    func_80085A9C_94A4C(inst->unk3A, inst->unk3A, 0x1000, -0x2000, 0x100);
+    unkPtr->unkA = inst->unk3A - inst->unk2C;
+    sp70 = func_80084E54_93E04(D_80052B34, inst);
+    sp5E = -0x4000 - ((s16)((u16)unkPtr->unk6 - inst->unk6));
+    dx = D_80052B34->unk0 - inst->unk0;
+    dz = D_80052B34->unk4 - inst->unk4;
+    sp3E = func_80003824_4424((f32)dx, (f32)dz);
+    if ((s16)(0x4000 - (s16)(func_80003824_4424((f32)dx, (f32)dz) - sp5E)) < (s16)((sp3E - sp5E) - 0x4000)) {
+        var_v1 = (s16)(func_80003824_4424((f32)dx, (f32)dz) - sp5E) - 0x4000;
+    } else {
+        var_v1 = 0x4000 - (s16)(func_80003824_4424((f32)dx, (f32)dz) - sp5E);
+    }
+    if (var_v1 < 0x2000) {
+        sp44 = 1;
+    }
+    func_8008554C_944FC(arg0);
+    if ((sp70 >= 0x12D) && (sp44 != 0) && (inst->unk4E != 0)) {
+        sp54 = -0x50;
+        sp56 = 0x1E;
+        sp58 = 0xCC;
+        func_800A931C_B82CC((s8)sp8E, &sp54, sp48);
+        alienSpecs[inst->specIndex].unk20 = (s16)sp48[0];
+        alienSpecs[inst->specIndex].unk22 = (s16)sp48[1];
+        alienSpecs[inst->specIndex].unk24 = (s16)sp48[2];
+        if (func_800871CC_9617C(arg0, 0, 0) != 0) {
+            inst->unk1E = (func_800038E0_44E0() % 15) + 0xF;
+            inst->unk2C = 0x2000;
+        }
+    } else {
+        inst->unk1E = 0x14;
+    }
+    if ((s32)inst->unk20 < 0) {
+        s16 inc;
+        inc = inst->unk2C + 0x1000;
+        if (inc > 0x2000) {
+            inst->unk2C = 0x2000;
+        } else {
+            inst->unk2C = inc;
+        }
+    }
+    if (inst->unk2C != 0) {
+        inst->unk2C -= 0x400;
+    }
+    if (inst->unk1E != 0) {
+        inst->unk1E--;
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DB9FC_31FB4C.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_802DBD18_31FE68(u8 arg0) {
