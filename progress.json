@@ -1,14 +1,14 @@
 {
-  "generated": "2026-07-13T10:16:58Z",
-  "commit": "d50f3362",
-  "commit_timestamp": "2026-07-13T22:16:27+12:00",
+  "generated": "2026-07-13T20:02:05Z",
+  "commit": "edf170bd",
+  "commit_timestamp": "2026-07-14T08:01:41+12:00",
   "overall": {
     "total_functions": 2678,
-    "matched": 1508,
-    "non_matching": 1135,
-    "asm_stubs": 35,
-    "matched_pct": 56.31,
-    "decompiled_pct": 98.69
+    "matched": 1509,
+    "non_matching": 1140,
+    "asm_stubs": 29,
+    "matched_pct": 56.35,
+    "decompiled_pct": 98.92
   },
   "segments": {
     "core": {
@@ -85,12 +85,12 @@
     },
     "overlay_level/comet": {
       "display_name": "Level / Comet",
-      "matched": 41,
-      "non_matching": 46,
-      "asm_stubs": 35,
+      "matched": 42,
+      "non_matching": 51,
+      "asm_stubs": 29,
       "total": 122,
-      "matched_pct": 33.6,
-      "decompiled_pct": 71.3
+      "matched_pct": 34.4,
+      "decompiled_pct": 76.2
     }
   },
   "files": [
@@ -637,11 +637,11 @@
     {
       "path": "overlay_level/comet/318E20.c",
       "segment": "overlay_level/comet",
-      "matched": 41,
-      "non_matching": 46,
-      "asm_stubs": 35,
+      "matched": 42,
+      "non_matching": 51,
+      "asm_stubs": 29,
       "total": 122,
-      "matched_pct": 33.6,
+      "matched_pct": 34.4,
       "contributor": "jaytheham"
     },
     {
@@ -679,9 +679,9 @@
     {
       "name": "jaytheham",
       "files": 57,
-      "matched": 1506,
-      "non_matching": 1135,
-      "asm_stubs": 35
+      "matched": 1507,
+      "non_matching": 1140,
+      "asm_stubs": 29
     },
     {
       "name": "Meridian Lex",
@@ -855,9 +855,9 @@
     },
     {
       "date": "2026-07-12",
-      "commit": "fd1e2d9",
-      "matched": 1508,
-      "non_matching": 1135,
+      "commit": "7c8170e",
+      "matched": 1509,
+      "non_matching": 1140,
       "total": 2678
     }
   ]
