@@ -3301,7 +3301,14 @@ extern u8 D_802E7C48[];
 extern s32 D_802E7C50;
 extern s16 D_802E7C52;
 extern s32 D_802E7C54;
+extern u8 D_800481BC; // alienInstances[0].unk24
 extern s16 D_802E7C58; // 0x802E7C58
+extern s16 D_802E7C5A; // 0x802E7C5A
+extern u8 D_802E7C5C; // 0x802E7C5C
+extern s32 D_802E7C60; // 0x802E7C60
+extern s32 D_802E7C64; // 0x802E7C64
+extern s32 D_802E7C68; // 0x802E7C68
+extern f64 D_802E7B90_32BCE0;
 extern char D_802E7AD0_32BC20[];
 extern char D_802E7AA4_32BBF4[];
 extern f64 D_802E7B28_32BC78;
