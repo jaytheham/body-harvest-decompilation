@@ -2856,7 +2856,39 @@ void func_802DD750_3218A0(u8 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DD750_3218A0.s")
 #endif
 
+#ifdef NON_MATCHING
+// CURRENT(???)
+void func_802DDB08_321C58(u8 arg0, u8 arg1, s16 arg2, s32 *arg3) {
+    s16 sp44;
+    s16 sp42;
+    s16 sp40;
+    s32 sp3C;
+    s32 sp38;
+    s32 sp34;
+    s16 sp32;
+    s16 temp_t0;
+    s32 temp_v1;
+
+    temp_t0 = D_8014DD50[arg2].unkC;
+    sp32 = temp_t0;
+    temp_v1 = (s32)D_8014DD50[temp_t0].unkC;
+    sp40 = ((s16 *)&D_802E5DF0_329F40)[arg1 * 3 + 0];
+    sp42 = ((s16 *)&D_802E5DF0_329F40)[arg1 * 3 + 1];
+    sp44 = ((s16 *)&D_802E5DF0_329F40)[arg1 * 3 + 2];
+    func_800A931C_B82CC((s8)temp_v1, &sp40, &sp34);
+    sp40 = (s16)sp34;
+    sp42 = (s16)sp38;
+    sp44 = (s16)sp3C;
+    func_800A931C_B82CC(sp32, &sp40, &sp34);
+    sp40 = (s16)sp34;
+    sp42 = (s16)sp38;
+    sp44 = (s16)sp3C;
+    func_800A931C_B82CC(arg2, &sp40, &sp34);
+    func_80128428_1373D8(&alienInstances[arg0], (s16)sp34, (s16)sp38, (s16)sp3C, arg3, &arg3[1], &arg3[2]);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DDB08_321C58.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DDC44_321D94.s")
 
