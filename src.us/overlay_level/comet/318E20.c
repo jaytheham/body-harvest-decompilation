@@ -3126,7 +3126,14 @@ s16 func_802DFF84_3240D4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFF84_3240D4.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFFC8_324118.s")
+s16 func_802DFFC8_324118(u8 arg0) {
+    s32 chain;
+
+    chain = func_802DFF04_324054(arg0);
+    chain = D_8014DD50[chain].unkC;
+    chain = D_8014DD50[chain].unkD;
+    return D_8014DD50[chain].unkD;
+}
 
 s32 func_802E0018_324168(u8 arg0) {
 	AlienInstance *inst;
