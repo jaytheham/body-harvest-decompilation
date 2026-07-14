@@ -1,24 +1,24 @@
 {
-  "generated": "2026-07-14T04:48:02Z",
-  "commit": "d4c13a22",
-  "commit_timestamp": "2026-07-14T16:47:34+12:00",
+  "generated": "2026-07-14T10:30:16Z",
+  "commit": "7d235764",
+  "commit_timestamp": "2026-07-14T22:29:37+12:00",
   "overall": {
-    "total_functions": 2678,
-    "matched": 1509,
+    "total_functions": 3016,
+    "matched": 1514,
     "non_matching": 1154,
-    "asm_stubs": 15,
-    "matched_pct": 56.35,
-    "decompiled_pct": 99.44
+    "asm_stubs": 348,
+    "matched_pct": 50.2,
+    "decompiled_pct": 88.46
   },
   "segments": {
     "core": {
       "display_name": "Core",
       "matched": 271,
       "non_matching": 79,
-      "asm_stubs": 0,
-      "total": 350,
-      "matched_pct": 77.4,
-      "decompiled_pct": 100.0
+      "asm_stubs": 6,
+      "total": 356,
+      "matched_pct": 76.1,
+      "decompiled_pct": 98.3
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
@@ -91,9 +91,247 @@
       "total": 122,
       "matched_pct": 34.4,
       "decompiled_pct": 87.7
+    },
+    "libultra": {
+      "display_name": "libultra",
+      "matched": 5,
+      "non_matching": 0,
+      "asm_stubs": 287,
+      "total": 292,
+      "matched_pct": 1.7,
+      "decompiled_pct": 1.7
+    },
+    "unknown": {
+      "display_name": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 40,
+      "total": 40,
+      "matched_pct": 0.0,
+      "decompiled_pct": 0.0
     }
   },
   "files": [
+    {
+      "path": "1C8E0.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "1D230.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 4,
+      "total": 4,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "1E060.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "1E1A0.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "1F920.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "202E0.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "22030.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "22B30.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "22B70.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "22BB0.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "22EA0.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "22F70.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "23B90.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "23CA0.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 7,
+      "total": 7,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "24710.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "27740.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 3,
+      "total": 3,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "27A30.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 4,
+      "total": 4,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "28DC0.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "29870.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "29960.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "29A60.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 3,
+      "total": 3,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "2E120.c",
+      "segment": "unknown",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
     {
       "path": "core/1050.c",
       "segment": "core",
@@ -131,6 +369,16 @@
       "non_matching": 1,
       "asm_stubs": 0,
       "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/1B100.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 6,
+      "total": 6,
       "matched_pct": 0.0,
       "contributor": "jaytheham"
     },
@@ -202,6 +450,1466 @@
       "asm_stubs": 0,
       "total": 39,
       "matched_pct": 79.5,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/ai.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/aisetfreq.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/aisetnextbuf.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/align.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/auxbus.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/bcopy.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/bnkf.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 4,
+      "total": 4,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/bzero.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/cents2ratio.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/conteepprobe.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/conteepread.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/conteepwrite.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 3,
+      "total": 3,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/contreaddata.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 3,
+      "total": 3,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/controller.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 3,
+      "total": 3,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/contsetch.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/copy.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/cosf.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/coss.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/crc.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/createmesgqueue.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/createthread.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/cseq.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 11,
+      "total": 11,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/csplayer.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 6,
+      "total": 6,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/destroythread.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/devmgr.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/dp.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/dpsetnextbuf.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/drvrNew.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 8,
+      "total": 8,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/env.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 7,
+      "total": 7,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/epirawdma.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/epirawread.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/epirawwrite.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/event.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 5,
+      "total": 5,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/filter.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/getcount.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/getsr.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/getthreadpri.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/gettime.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/heapalloc.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/heapinit.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/initialize.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/interrupt.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/invaldcache.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/invalicache.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/jammesg.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/leointerrupt.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 3,
+      "total": 3,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/ll.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 10,
+      "total": 10,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/load.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 4,
+      "total": 4,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/lookat.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/lookatref.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/mainbus.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/maptlbrdb.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/mtxcatf.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/mtxcatl.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/mtxutil.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 4,
+      "total": 4,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/normalize.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/ortho.o.c",
+      "segment": "libultra",
+      "matched": 1,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 2,
+      "matched_pct": 50.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/perspective.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/pfsisplug.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 3,
+      "total": 3,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/pidma.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/pigetcmdq.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/pimgr.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/pirawdma.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/pirawread.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/probetlb.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/recvmesg.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/resample.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/resetglobalintmask.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/reverb.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 8,
+      "total": 8,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/rotate.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/rotateRPY.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/save.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/scale.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sched.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 10,
+      "total": 10,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sendmesg.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/seq.o.c",
+      "segment": "libultra",
+      "matched": 1,
+      "non_matching": 0,
+      "asm_stubs": 12,
+      "total": 13,
+      "matched_pct": 7.7,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/seqplayer.o.c",
+      "segment": "libultra",
+      "matched": 1,
+      "non_matching": 0,
+      "asm_stubs": 19,
+      "total": 20,
+      "matched_pct": 5.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/setcompare.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/seteventmesg.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/setfpccsr.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/setglobalintmask.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/setintmask.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/setsr.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/setthreadpri.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/settimer.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/si.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sinf.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sins.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sirawdma.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sl.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 4,
+      "total": 4,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sndpallocate.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sndpdeallocate.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sndpgetstate.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sndplayer.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 3,
+      "total": 3,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sndpplay.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sndpsetfxmix.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sndpsetpan.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sndpsetpitch.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sndpsetpriority.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sndpsetsound.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sndpsetvol.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sndpstop.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sp.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/spgetstat.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sprawdma.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/spsetpc.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/spsetstat.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sptask.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 3,
+      "total": 3,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sptaskyield.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sptaskyielded.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sqrtf.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/startthread.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/stopthread.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synaddplayer.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synallocfx.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synallocvoice.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/syncprintf.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/syndelete.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synfreevoice.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synsetfxmix.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synsetpan.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synsetpitch.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synsetpriority.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synsetvol.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synstartvoice.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synstartvoiceparam.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synstopvoice.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synthesizer.o.c",
+      "segment": "libultra",
+      "matched": 2,
+      "non_matching": 0,
+      "asm_stubs": 7,
+      "total": 9,
+      "matched_pct": 22.2,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/thread.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/timerintr.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 4,
+      "total": 4,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/translate.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/vi.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/viblack.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/vigetcurrcontext.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/vimgr.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 2,
+      "total": 2,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/virtualtophysical.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/visetevent.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/visetmode.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/visetspecial.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/visetxscale.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/visetyscale.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/viswapbuf.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/viswapcontext.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/writebackdcache.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/writebackdcacheall.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/yieldthread.o.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 1,
+      "total": 1,
+      "matched_pct": 0.0,
       "contributor": "jaytheham"
     },
     {
@@ -678,10 +2386,10 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 57,
-      "matched": 1507,
+      "files": 226,
+      "matched": 1512,
       "non_matching": 1154,
-      "asm_stubs": 15
+      "asm_stubs": 348
     },
     {
       "name": "Meridian Lex",
@@ -855,10 +2563,10 @@
     },
     {
       "date": "2026-07-12",
-      "commit": "0cf7dfd",
-      "matched": 1509,
+      "commit": "7d23576",
+      "matched": 1514,
       "non_matching": 1154,
-      "total": 2678
+      "total": 3016
     }
   ]
 }
