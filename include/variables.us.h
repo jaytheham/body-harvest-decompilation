@@ -2949,6 +2949,7 @@ extern AlienSpec alienSpecs[0x30]; // 80256680
 extern u16 D_8025668C[]; // 8025668C (aliases alienSpecs[0].unkC)
 extern u16 D_802566BA[]; // 802566BA
 extern s16 D_802566D8[]; // 802566D8
+extern s16 D_80256EE2; // 0x80256EE2
 extern u16 D_802571B2; // 0x802571B2
 extern s16 D_802571B8; // 0x802571B8
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
@@ -3249,6 +3250,7 @@ extern Unk8014DD50 *D_802E52C8_329418;
 extern Unk8014DD50 *D_802E52D0_329420;
 extern Unk8014DD50 *D_802E54B8_329608;
 extern Unk8014DD50 *D_802E566C;
+extern Unk8014DD50 *D_802E5DB8_329F08;
 extern Unk802E71B8 D_802E71B8;
 extern Unk802E71B8 D_802E71B8_32B308;
 extern Unk802E71B8 D_802E71C0_32B310;
@@ -3299,7 +3301,17 @@ extern u8 D_802E7C48[];
 extern s32 D_802E7C50;
 extern s16 D_802E7C52;
 extern s32 D_802E7C54;
+extern u8 D_800481BC; // alienInstances[0].unk24
 extern s16 D_802E7C58; // 0x802E7C58
+extern s16 D_802E7C5A; // 0x802E7C5A
+extern u8 D_802E7C5C; // 0x802E7C5C
+extern s32 D_802E7C60; // 0x802E7C60
+extern s32 D_802E7C64; // 0x802E7C64
+extern s32 D_802E7C68; // 0x802E7C68
+extern s16 D_802E7C6C; // 0x802E7C6C
+extern f64 D_802E7B90_32BCE0;
+extern f64 D_802E7B98_32BCE8;
+extern char D_802E7AB0_32BC00[];
 extern char D_802E7AD0_32BC20[];
 extern char D_802E7AA4_32BBF4[];
 extern f64 D_802E7B28_32BC78;
@@ -3326,6 +3338,10 @@ extern u8 D_955300[];
 extern u8 D_963A70[];
 extern Gfx D_A002120[];
 extern u8 D_A003F40;
+extern Unk8014DD50 *D_802E67D0_32A920[];
+extern f32 D_802E7B78_32BCC8;
+extern f64 D_802E7B80_32BCD0;
+extern f32 D_802E7B88_32BCD8;
 extern Gfx D_A014AD8[];
 extern u8 D_A01E340[];
 extern Gfx D_A01EC58[];
@@ -3350,6 +3366,7 @@ extern u8 D_D011660[];
 extern u8 D_D012098[];
 extern u8 D_D015C38[];
 extern u8 D_D03E780[];
+extern u8 D_D040ED0[];
 extern u8 D_D040F10[];
 extern u8 D_D040F50[];
 extern char D_E020FB0[];
