@@ -3161,9 +3161,16 @@ s32 func_802E00D0_324220(s32 arg0, s32 arg1) {
 	return 1;
 }
 
-void func_802E0104_324254(VehicleInstance *vehicle);
+void func_802E0104_324254(VehicleInstance *vehicle) {
+	s32 idx = *(u8 *)&vehicle->unk8;
+	AlienInstance *parent = &alienInstances[alienInstances[idx].unk25];
+	AlienInstance *alien = &alienInstances[idx];
+
+	parent->unk20 &= ~0x1000;
+	alien->unk20 &= ~(0x20000000 | 0x400000);
+}
+
 void func_802E015C_3242AC(VehicleInstance *vehicle);
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0104_324254.s")
 
 #ifdef NON_MATCHING
 void func_802E015C_3242AC(VehicleInstance *vehicle) {
