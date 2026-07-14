@@ -1,3 +1,0 @@
-build/bh.us.z64: FAILED
-sha1sum: WARNING: 1 computed checksum did NOT match
-make: *** [Makefile:246: verify] Error 1
