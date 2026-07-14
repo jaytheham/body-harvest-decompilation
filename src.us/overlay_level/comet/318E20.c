@@ -3345,7 +3345,112 @@ void func_802E0588_3246D8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0588_3246D8.s")
 #endif
 
+// CURRENT(5000)
+#ifdef NON_MATCHING
+void func_802E0B64_324CB4(u8 arg0) {
+	AlienInstance *inst;
+	s16 temp_s0;
+	s32 sp2C;
+	s32 sp3C;
+	s32 sp40;
+	s32 sp44;
+	s32 sp4C;
+	s32 sp4C_2;
+	s32 sp50;
+	s32 sp54;
+	f32 sp58;
+	f32 sp5C;
+	f32 sp60;
+	f32 sp64;
+	s16 sp68;
+	s16 sp6A;
+	s16 sp6C;
+	u8 sp6F;
+
+	inst = &alienInstances[arg0];
+	sp6C = inst->unk6;
+	sp6F = inst->specIndex;
+	sp6A = inst->unkA;
+	sp68 = inst->unk8;
+	sp2C = inst->unk6 & 0xFFFF;
+
+	temp_s0 = coss(sp2C);
+	sp64 = (f32)(((f64)(f32)coss(inst->unkA & 0xFFFF) / 32768.0) * (((f64)(f32)temp_s0 / 32768.0) * D_802E7BD8_32BD28));
+	temp_s0 = sins(0);
+	sp60 = (f32)(((f64)(f32)coss(0) / 32768.0) * (((f64)(f32)temp_s0 / 32768.0) * D_802E7BE0_32BD30));
+	temp_s0 = coss(0);
+	sp5C = (f32)(((f64)(f32)coss(0) / 32768.0) * (((f64)(f32)temp_s0 / 32768.0) * D_802E7BE8_32BD38));
+	temp_s0 = sins(0);
+	sp58 = (f32)(((f64)(f32)coss(0) / 32768.0) * (((f64)(f32)temp_s0 / 32768.0) * D_802E7BF0_32BD40));
+	inst->unk20 |= 0x20000000;
+
+	sp44 = func_800B84D0_C7480(inst->unk0, inst->unk4) >> 8;
+	sp50 = func_800B84D0_C7480((s16)(s32)((f32)inst->unk0 + sp64), (s16)(s32)((f32)inst->unk4 + sp60)) >> 8;
+
+	sp54 = func_800B84D0_C7480((s16)(s32)((f32)inst->unk0 + sp5C), (s16)(s32)((f32)inst->unk4 + sp58)) >> 8;
+	sp40 = (sp54 * 172 + sp50 * 1367) / 533;
+	if (sp40 < sp44) {
+		if (sp54 < sp44) {
+			sp54 = sp44;
+		}
+		if (sp50 < sp44) {
+			sp50 = sp44;
+		}
+		sp40 = sp44;
+	}
+	D_802E7C38 = func_80003824_4424((f32)(((f64)(f32)coss(0) / 32768.0) * D_802E7BF8_32BD48), (f32)(sp54 - sp50));
+
+	sp2C = (sp6C + 0x4000) & 0xFFFF;
+
+	temp_s0 = coss(sp2C);
+	sp64 = (f32)(((f64)(f32)coss(sp68 & 0xFFFF) / 32768.0) * (((f64)(f32)temp_s0 / 32768.0) * D_802E7C00_32BD50));
+	temp_s0 = sins(0);
+	sp60 = (f32)(((f64)(f32)coss(0) / 32768.0) * (((f64)(f32)temp_s0 / 32768.0) * D_802E7C08_32BD58));
+	temp_s0 = coss(0);
+	sp5C = (f32)(((f64)(f32)coss(0) / 32768.0) * (((f64)(f32)temp_s0 / 32768.0) * D_802E7C10_32BD60));
+	temp_s0 = sins(0);
+	sp58 = (f32)(((f64)(f32)coss(0) / 32768.0) * (((f64)(f32)temp_s0 / 32768.0) * D_802E7C18_32BD68));
+	sp4C = func_800B84D0_C7480((s16)(s32)((f32)inst->unk0 + sp64), (s16)(s32)((f32)inst->unk4 + sp60)) >> 8;
+
+	sp4C_2 = func_800B84D0_C7480((s16)(s32)((f32)inst->unk0 + sp5C), (s16)(s32)((f32)inst->unk4 + sp58)) >> 8;
+	sp3C = (sp4C_2 * 197 + sp4C * 197) / 394;
+	if (sp3C < sp44) {
+		sp3C = sp44;
+		if (sp54 < sp44) {
+			sp4C = sp44;
+		} else {
+			sp4C = sp54;
+		}
+		sp4C_2 = sp50;
+		if (sp50 < sp44) {
+			sp4C_2 = sp44;
+		}
+	}
+	D_802E7C3A = func_80003824_4424((f32)(((f64)(f32)coss(0) / 32768.0) * D_802E7C20_32BD70), (f32)(sp4C_2 - sp4C));
+	if (sp3C < sp40) {
+		inst->unk2 = (s16)(D_802566D8[sp6F * 0x34] + sp40);
+	} else {
+		inst->unk2 = (s16)(D_802566D8[sp6F * 0x34] + sp3C);
+	}
+
+	if (D_802E7C38 - inst->unkA < -0x1FF) {
+		inst->unkA -= 0x200;
+	} else if (D_802E7C38 - inst->unkA >= 0x200) {
+		inst->unkA += 0x200;
+	} else {
+		inst->unkA = D_802E7C38;
+	}
+	if (D_802E7C3A - inst->unk8 < -0x1FF) {
+		inst->unk8 -= 0x200;
+	} else if (D_802E7C3A - inst->unk8 >= 0x200) {
+		inst->unk8 += 0x200;
+	} else {
+		inst->unk8 = D_802E7C3A;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0B64_324CB4.s")
+#endif
 
 #ifdef NON_MATCHING
 s32 func_802E1274_3253C4(s32 arg0) {
