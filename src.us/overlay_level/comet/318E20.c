@@ -2944,7 +2944,93 @@ void func_802DDB08_321C58(u8 arg0, u8 arg1, s16 arg2, s32 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DDB08_321C58.s")
 #endif
 
+#ifdef NON_MATCHING
+// Score: CURRENT(16383)
+void func_802DDC44_321D94(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
+	s16 sp96;
+	s16 sp94;
+	s16 sp92;
+	s16 sp90;
+	s16 sp8E;
+	s16 sp8C;
+	s16 sp8A;
+	s16 sp88;
+	s16 sp86;
+	s16 sp84;
+	s16 sp82;
+	s16 sp80;
+	s16 sp7E;
+	s16 sp7C;
+	u8 sp7B;
+	s32 sp54;
+	s32 sp58;
+	s32 sp5C;
+	s32 sp50;
+	s32 sp4C;
+	s32 sp48;
+	s32 sp44;
+	s32 sp40;
+	s32 sp3C;
+	s32 sp38;
+	AlienInstance *temp_s3;
+	s32 var_s0;
+
+	temp_s3 = &alienInstances[arg0];
+	if (!(temp_s3->unk20 & 0x4000)) {
+		return;
+	}
+
+	sp86 = D_8014DD50[arg3].unkD;
+	sp84 = D_8014DD50[D_8014DD50[arg3].unkC].unkC;
+	sp82 = D_8014DD50[arg3].unkC;
+	sp7C = arg1;
+	sp88 = D_8014DD50[sp86].unkC;
+	sp8C = D_8014DD50[sp86].unkD;
+	sp8A = D_8014DD50[sp88].unkC;
+	sp7E = arg2;
+	sp8E = D_8014DD50[sp8C].unkC;
+	sp92 = D_8014DD50[sp8C].unkD;
+	sp90 = D_8014DD50[sp8E].unkC;
+	sp80 = arg3;
+	sp94 = D_8014DD50[sp92].unkC;
+	sp96 = D_8014DD50[sp94].unkC;
+
+	sp7B = func_80081F18_90EC8(arg0, 0xE, 5, &sp7C, &D_802E5DB8_329F08);
+
+	if (temp_s3->unk36 == 3) {
+		func_802DDB08_321C58(arg0, 0, sp80, &sp54);
+		func_800D16BC_E066C(arg4, arg5, arg6, (s16)sp54, sp58, sp5C, 1);
+		func_802DDB08_321C58(arg0, 1, sp86, &sp54);
+		func_800D16BC_E066C(arg4, arg5, arg6, (s16)sp54, sp58, sp5C, 1);
+		func_802DDB08_321C58(arg0, 2, sp8C, &sp54);
+		func_800D16BC_E066C(arg4, arg5, arg6, (s16)sp54, sp58, sp5C, 1);
+		func_802DDB08_321C58(arg0, 3, sp92, &sp54);
+		func_800D16BC_E066C(arg4, arg5, arg6, (s16)sp54, sp58, sp5C, 1);
+		func_80137468_146418(arg0, 0x261);
+		D_80256EE2 = 0x15E;
+	} else {
+		D_80256EE2 = 0x200;
+	}
+
+	sp3C = sp7B;
+	if (sp7B == 3) {
+		sp40 = arg0;
+		func_800D05A8_DF558(arg4, arg5, arg6, 0x3E8, 0xFF, 0xFF, 0xFF);
+		for (var_s0 = 0; (u8)var_s0 < 3; var_s0 = (u8)(var_s0 + 1)) {
+			temp_s3->unk1E = 0;
+			func_80087188_96138(arg0, 0, func_800038E0_44E0() % 40);
+		}
+		func_80137468_146418(sp40, 0x25C);
+	}
+
+	if (sp3C == 5) {
+		temp_s3->unk1E = 0x28;
+		temp_s3->unk20 &= ~0x4000;
+	}
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DDC44_321D94.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_802DDFFC_32214C(u8 arg0, s16 arg1, s16 arg2) {

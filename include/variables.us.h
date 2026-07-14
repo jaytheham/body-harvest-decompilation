@@ -2949,6 +2949,7 @@ extern AlienSpec alienSpecs[0x30]; // 80256680
 extern u16 D_8025668C[]; // 8025668C (aliases alienSpecs[0].unkC)
 extern u16 D_802566BA[]; // 802566BA
 extern s16 D_802566D8[]; // 802566D8
+extern s16 D_80256EE2; // 0x80256EE2
 extern u16 D_802571B2; // 0x802571B2
 extern s16 D_802571B8; // 0x802571B8
 extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
@@ -3249,6 +3250,7 @@ extern Unk8014DD50 *D_802E52C8_329418;
 extern Unk8014DD50 *D_802E52D0_329420;
 extern Unk8014DD50 *D_802E54B8_329608;
 extern Unk8014DD50 *D_802E566C;
+extern Unk8014DD50 *D_802E5DB8_329F08;
 extern Unk802E71B8 D_802E71B8;
 extern Unk802E71B8 D_802E71B8_32B308;
 extern Unk802E71B8 D_802E71C0_32B310;
