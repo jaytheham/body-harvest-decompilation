@@ -2460,7 +2460,6 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F7790_106740.s")
 #endif
 
-// CURRENT(?)
 #ifdef NON_MATCHING
 void func_800F842C_1073DC(s32 arg0) {
 	UnkF9230ShadowWalker *walker;

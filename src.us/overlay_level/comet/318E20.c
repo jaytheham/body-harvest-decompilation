@@ -2415,7 +2415,6 @@ void func_802DBEA4_31FFF4(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(???)
 void func_802DBF88_3200D8(u8 arg0) {
 	s16 sp44;
 	s16 sp42;
@@ -2490,7 +2489,6 @@ void func_802DC2A4_3203F4(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(???)
 void func_802DC2D4_320424(u8 arg0) {
 	s32 pad0;
 	s32 pad1;
@@ -2598,7 +2596,6 @@ s32 func_802DC874_3209C4(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(???)
 void func_802DC8F4_320A44(u8 arg0) {
 	f64 sp48;
 	s32 pad50;
@@ -2774,7 +2771,6 @@ extern Unk8014DD50 *D_802E5920_329A70;
 extern f64 D_802E7B68_32BCB8;
 
 #ifdef NON_MATCHING
-// CURRENT(???)
 void func_802DD750_3218A0(u8 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 sp6C;
 	s16 sp6E;
@@ -2857,7 +2853,6 @@ void func_802DD750_3218A0(u8 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(???)
 void func_802DDB08_321C58(u8 arg0, u8 arg1, s16 arg2, s32 *arg3) {
 	s16 sp44;
 	s16 sp42;
@@ -2893,7 +2888,6 @@ void func_802DDB08_321C58(u8 arg0, u8 arg1, s16 arg2, s32 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DDC44_321D94.s")
 
 #ifdef NON_MATCHING
-// CURRENT(???)
 void func_802DDFFC_32214C(u8 arg0, s16 arg1, s16 arg2) {
 	s16 sp2C[2];
 	u8 sp33;
@@ -2922,7 +2916,6 @@ void func_802DDFFC_32214C(u8 arg0, s16 arg1, s16 arg2) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(???)
 void func_802DE0F4_322244(u8 arg0) {
 	s16 spA4;
 	s16 spA2;
