@@ -3280,7 +3280,10 @@ s32 func_802E14F4_325644(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E14F4_325644.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E1630_325780.s")
+void func_802E1630_325780(u8 arg0) {
+	alienInstances[arg0].unk1E = 0;
+	func_800868A4_95854(arg0, 0, 0, alienInstances[arg0].unkA + func_80003824_4424(110.0f, 80.0f));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E16A8_3257F8.s")
 
