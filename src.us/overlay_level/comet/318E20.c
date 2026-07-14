@@ -3312,7 +3312,20 @@ s32 func_802E193C_325A8C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E193C_325A8C.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E19EC_325B3C.s")
+void func_802E19EC_325B3C(u8 arg0) {
+    u8 specIndex;
+    Unk802E71B8 sp28;
+    s32 sp1C[3];
+
+    specIndex = alienInstances[arg0].specIndex;
+    sp28 = D_802E7188_32B2D8;
+    alienInstances[arg0].unk1E = 0;
+    func_800A931C_B82CC(((s8 *)&alienInstances[arg0])[0x0D], (s16 *)&sp28, sp1C);
+    alienSpecs[specIndex].unk20 = (s16)sp1C[0];
+    alienSpecs[specIndex].unk22 = (s16)sp1C[1];
+    alienSpecs[specIndex].unk24 = (s16)sp1C[2];
+    func_800868A4_95854(arg0, 0, (s16)(-(s32)(u16)D_8014DD50[alienInstances[arg0].unkC].unk6), (s16)(alienInstances[arg0].unkA + (u16)D_8014DD50[alienInstances[arg0].unkC].unkA + 0xFA0));
+}
 
 // CURRENT(5000)
 #ifdef NON_MATCHING
