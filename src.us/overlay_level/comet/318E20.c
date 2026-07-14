@@ -3162,6 +3162,7 @@ s32 func_802E00D0_324220(s32 arg0, s32 arg1) {
 }
 
 void func_802E0104_324254(VehicleInstance *vehicle);
+void func_802E015C_3242AC(VehicleInstance *vehicle);
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0104_324254.s")
 
 #ifdef NON_MATCHING
@@ -3198,7 +3199,56 @@ void func_802E015C_3242AC(VehicleInstance *vehicle) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E015C_3242AC.s")
 #endif
 
+// CURRENT(5588)
+#ifdef NON_MATCHING
+s32 func_802E0234_324384(u8 arg0) {
+    s32 pad1;
+    s32 pad2;
+    AlienInstance *alien;
+    AlienInstance *parent;
+    u8 specIndex;
+    s32 dx;
+    s32 range;
+    s16 angle;
+    s32 targetX, targetZ;
+    s32 trigger[4];
+
+    alien = &alienInstances[arg0];
+    specIndex = alien->specIndex;
+    parent = &alienInstances[alien->unk25];
+    if (parent->unk20 & 0x5E000) {
+        return 0;
+    }
+    dx = alien->unk0 - D_80052B34->unk0;
+    range = alien->unk4 - D_80052B34->unk4;
+    angle = func_80003824_4424((f32)dx, (f32)range) + 0x8000;
+    range = (func_800038E0_44E0() % 500) + 0x3E8;
+    targetX = (s32)(((f64)(f32)coss(angle & 0xFFFF) / 32768.0) * range + D_80052B34->unk0);
+    targetZ = (s32)(((f64)(f32)sins(angle & 0xFFFF) / 32768.0) * range + D_80052B34->unk4);
+    targetX = ((targetX >> 8) << 8) + 0x80;
+    targetZ = ((targetZ >> 8) << 8) + 0x80;
+    if (func_802E00D0_324220(targetX, targetZ) == 0) {
+        return 0;
+    }
+    parent->unk20 |= 0x1000;
+    alien->unk12 = 0;
+    alien->unk20 |= 0x400000;
+    dx = func_800B84D0_C7480((s16)targetX, (s16)targetZ);
+    dx = (dx >> 8) + alienSpecs[specIndex].unk58;
+    *(u8 *)((u8 *)trigger + 0) = 2;
+    *(s8 *)((u8 *)trigger + 1) = targetX >> 8;
+    *(s8 *)((u8 *)trigger + 2) = targetZ >> 8;
+    *(s32 *)((u8 *)trigger + 4) = D_8014F820 + 8;
+    *(u8 *)((u8 *)trigger + 8) = arg0;
+    *(void **)((u8 *)trigger + 12) = (void *)func_802E015C_3242AC;
+    func_800AE454_BD404((Unk80222A78 *)trigger);
+    func_800CF80C_DE7BC(alien->unk0, alien->unk2, alien->unk4, (s16)(alienSpecs[specIndex].unkC * 1.5), 0xC8, 0xC8, 0xDC, 3);
+    func_800CF80C_DE7BC((s16)targetX, (s16)dx, (s16)targetZ, (s16)(alienSpecs[specIndex].unkC * 1.5), 0xC8, 0xC8, 0xDC, 2);
+    return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0234_324384.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0588_3246D8.s")
 
