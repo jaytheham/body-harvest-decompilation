@@ -1484,6 +1484,9 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 void func_802DF940_323A90(void);
 s32 func_802DFF04_324054(u8 arg0);
 s8 func_802DFF84_3240D4(s32 arg0);
+s16 func_802DFFC8_324118(u8 arg0);
+void func_802E1630_325780(u8 arg0);
+s32 func_802E16A8_3257F8(u8 arg0, u8 arg1);
 void func_802E19EC_325B3C(u8 arg0);
 void func_802E205C_3261AC(u8 arg0);
 void func_802E21C4_326314(u8 arg0);
