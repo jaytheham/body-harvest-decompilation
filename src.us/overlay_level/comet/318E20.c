@@ -3379,7 +3379,17 @@ void func_802DE7C4_322914(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DE7C4_322914.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DF188_3232D8.s")
+void func_802DF188_3232D8(void) {
+    D_802E6814_32A964 = (f32)((f64)D_802E7C58 / 256.0);
+    alienSpecs[27].unkC = (s16)(250.0f * D_802E6814_32A964);
+    alienSpecs[27].unk8 = (s32)(D_802E7B88_32BCD8 * D_802E6814_32A964 * D_802E6814_32A964);
+    alienSpecs[27].unk34 = (s16)(320.0f * D_802E6814_32A964);
+    alienSpecs[27].unk36 = (s16)(500.0f * D_802E6814_32A964);
+    alienSpecs[27].unk38 = (s16)(300.0f * D_802E6814_32A964);
+    alienSpecs[27].unk58 = (s16)(190.0f * D_802E6814_32A964);
+    func_80004214_4E14(D_802E7C58, func_80012000_12C00((s32)D_D040ED0));
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DF290_3233E0.s")
 
