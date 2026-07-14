@@ -2761,7 +2761,66 @@ void func_802DC8F4_320A44(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DC8F4_320A44.s")
 #endif
 
+#ifdef NON_MATCHING
+// Score: 4950 — register allocation, scheduling, and stack frame differences remain
+void func_802DD554_3216A4(s32 arg0) {
+    AlienInstance *alien = &alienInstances[arg0];
+    Unk8014DD50 *spec = &D_8014DD50[alien->unkC];
+    Unk8014DD50 *subSpec1 = &D_8014DD50[spec->unkC];
+    s32 flags = alien->unk20;
+
+    if (flags & 0x400000) {
+        func_80079910_888C0(arg0);
+        return;
+    }
+    if (flags & 0x1000) {
+        alien->unk12 -= alienSpecs[alien->specIndex].unk3E / 2;
+        if (alien->unk12 < 0) {
+            alien->unk12 = 0;
+        }
+        if (alien->unk26 >= 0x6E) {
+            Unk8014DD50 *subSpec2 = &D_8014DD50[subSpec1->unkD];
+            s32 temp;
+
+            temp = (s16)((u16)subSpec2->unk8 - 100);
+            if (temp < -0x1194) {
+                subSpec2->unk8 = -0x1194;
+            } else {
+                subSpec2->unk8 = temp;
+            }
+            temp = (s16)((u16)subSpec1->unk8 + 100);
+            if (temp > 0x1194) {
+                subSpec1->unk8 = 0x1194;
+            } else {
+                subSpec1->unk8 = temp;
+            }
+        } else {
+            alien->unk48 += 0x2EE0;
+            if (func_80086D70_95D20(arg0, 1, alien->unk48)) {
+                alien->unk1E = 0;
+            }
+        }
+        if (alien->unk26 == 0) {
+            alien->unk3C = 0;
+            alien->unk20 &= ~0x1000;
+            alien->unkE += 0x8000;
+            alien->unk26 = (func_800038E0_44E0() % 80) + 0x3C;
+            alien->unk1E = 0x14;
+            alien->unk48 = 0;
+        }
+        if (alien->unk1E != 0) {
+            alien->unk1E--;
+        }
+        if (alien->unk26 != 0) {
+            alien->unk26--;
+        }
+    } else {
+        func_8008735C_9630C(arg0);
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DD554_3216A4.s")
+#endif
 
 void func_802DD748_321898(s32 arg0) {
 
