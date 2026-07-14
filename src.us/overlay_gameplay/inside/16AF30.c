@@ -287,7 +287,7 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 #endif
 
 // https://decomp.me/scratch/6yUii
-/* CURRENT(1286) */
+// CURRENT(1286)
 #ifdef NON_MATCHING
 void func_80083814_16B8D4(s32 arg0, u8 arg1)
 {
@@ -701,7 +701,7 @@ void func_80084628_16C6E8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084628_16C6E8.s")
 #endif
 
-/* CURRENT(2601) */
+// CURRENT(2601)
 #ifdef NON_MATCHING
 void func_80084980_16CA40(s32 arg0, s32 arg1) {
 	Unk84EECEffect *entry;
@@ -1389,7 +1389,7 @@ void func_80086550_16E610(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(2019) */
+// CURRENT(2019)
 void func_80086728_16E7E8(void) {
 	s16 effect;
 
@@ -1427,7 +1427,7 @@ void func_80086728_16E7E8(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(1398) */
+// CURRENT(1398)
 void func_8008688C_16E94C(void) {
 	s16 effect;
 
@@ -1459,7 +1459,7 @@ void func_8008688C_16E94C(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(535) */
+// CURRENT(535)
 void func_80086A34_16EAF4(void) {
 	s16 effect;
 	s16 nextEffect;
@@ -1556,7 +1556,7 @@ void func_80086B34_16EBF4(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(5) */
+// CURRENT(5)
 void func_80086D88_16EE48() {
 	s32 i;
 
@@ -1889,7 +1889,7 @@ void func_80087A40_16FB00(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(3405) */
+// CURRENT(3405)
 void func_80087CB8_16FD78(s32 arg0) {
 	f32 sp58[3];
 	UnkFB6F8Entry *entry;
@@ -3071,7 +3071,7 @@ void func_8008B058_173118(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(285) */
+// CURRENT(285)
 void func_8008B0AC_17316C(void) {
 	s32 i;
 	s32 j;

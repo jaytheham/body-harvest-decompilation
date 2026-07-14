@@ -1892,7 +1892,6 @@ void func_800C4AA0_D3A50(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4AA0_D3A50.s")
 #endif
 
-// CURRENT(?)
 #ifdef NON_MATCHING
 void func_800C4CB8_D3C68(void) {
 	Unk80154318Entry *entry;
@@ -7864,7 +7863,6 @@ void func_800D6EAC_E5E5C(u8 arg0) {
 	}
 }
 
-// CURRENT(?)
 #ifdef NON_MATCHING
 void func_800D702C_E5FDC(s16 arg0, s32 arg1) {
 	s16 sp54;

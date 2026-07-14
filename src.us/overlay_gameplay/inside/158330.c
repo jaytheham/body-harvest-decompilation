@@ -5165,7 +5165,6 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(?) */
 void func_8007BC18_163CD8(s32 arg0, f32 *arg1, f32 *arg2, s32 *arg3, s32 *arg4) {
 	Unk80076678Obj *obj;
 	u8 objId;
