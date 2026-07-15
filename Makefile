@@ -171,7 +171,7 @@ LOOP_UNROLL    =
 
 MIPSISET       = -mips2 -32
 
-INCLUDE_CFLAGS = -I . -I include -I include/2.0I -I include/libc -I assets \
+INCLUDE_CFLAGS = -I . -I include -I include/2.0I -I include/2.0I/PR -I include/libc -I assets \
 				 -I src.$(VERSION) -I src.$(VERSION)/libultra/audio
 
 ASFLAGS        = -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I include
