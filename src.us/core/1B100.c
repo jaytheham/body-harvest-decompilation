@@ -127,7 +127,8 @@ s32 func_8001A7A0_1B3A0(s16 arg0) {
 	}
 }
 
-// CURRENT(5)
+// https://decomp.me/scratch/kLkCO
+// CURRENT(2385)
 #ifdef NON_MATCHING
 void func_8001A828_1B428(void) {
 	if (currentLevel == 1) {
