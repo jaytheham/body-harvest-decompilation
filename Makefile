@@ -32,6 +32,11 @@ SRC_DIR   = src.$(VERSION)
 SRC_DIRS  = $(SRC_DIR) \
 			$(SRC_DIR)/core \
 			$(SRC_DIR)/libultra \
+			$(SRC_DIR)/libultra/audio \
+			$(SRC_DIR)/libultra/gu \
+			$(SRC_DIR)/libultra/io \
+			$(SRC_DIR)/libultra/libc \
+			$(SRC_DIR)/libultra/os \
 			$(SRC_DIR)/overlay_gameplay/frontend \
 			$(SRC_DIR)/overlay_gameplay/outside \
 			$(SRC_DIR)/overlay_gameplay/inside \
