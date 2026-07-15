@@ -291,6 +291,7 @@ void func_80017AE0_186E0(void);
 void func_8001A024_1AC24(void);
 void func_8001A500_1B100(s32);
 void func_8001A650_1B250(s16);
+s32 func_8001A7A0_1B3A0(s16);
 void func_80013810_14410(s8 arg0);
 s16 func_80013B48_14748(Unk8006AA80Node *arg0, s16 arg1);
 s16 func_80013F64_14B64(void);
