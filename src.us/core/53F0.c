@@ -1413,7 +1413,7 @@ void guess_checkMissions(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_checkMissions.s")
 #endif
 
-// CURRENT(1880)
+// CURRENT(80)
 #ifdef NON_MATCHING
 void debug_drawTimingGraphBars(void) {
 	s32 pad1;
@@ -1427,8 +1427,10 @@ void debug_drawTimingGraphBars(void) {
 	s32 pad9;
 	Gfx *sp30;
 	s32 pad10;
-	s32 lrxVal;
+	s32 pad11;
 	Gfx *sp24;
+	s32 pad12;
+	s32 lrxVal;
 	s32 var_a1;
 	s32 var_a2;
 
@@ -1445,14 +1447,16 @@ void debug_drawTimingGraphBars(void) {
 		} while (var_a1--);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetFillColor(D_8005BB2C++, 0x3E003E);
+		sp30 = D_8005BB2C++;
 		lrxVal = (s32)((u64)((s64)D_80052B38 * 1000000LL) / D_80035610 / 347);
 		lrxVal = (lrxVal + 32) & 0x3FF;
-		gDPFillRectangle(D_8005BB2C++, 32, 194, lrxVal, 199);
+		gDPFillRectangle(sp30, 32, 194, lrxVal, 199);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetFillColor(D_8005BB2C++, 0xF800F800);
+		sp24 = D_8005BB2C++;
 		lrxVal = (s32)((u64)((s64)D_80052B3C * 1000000LL) / D_80035610 / 347);
 		lrxVal = (lrxVal + 32) & 0x3FF;
-		gDPFillRectangle(D_8005BB2C++, 32, 200, lrxVal, 205);
+		gDPFillRectangle(sp24, 32, 200, lrxVal, 205);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
