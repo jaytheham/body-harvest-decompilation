@@ -1490,7 +1490,7 @@ s32 func_80008C44_9844(s32 arg0) {
 	}
 }
 
-// CURRENT(2755)
+// CURRENT(1885)
 #ifdef NON_MATCHING
 void func_80008CA8_98A8(s32 arg0) {
 	Unk80052B40 sp;
@@ -1510,13 +1510,12 @@ void func_80008CA8_98A8(s32 arg0) {
 	gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-
 	frame = D_80031648_32248;
 	gDPSetEnvColor(D_8005BB2C++, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x1E, ((0x1E - ((frame / 4) % 60)) >= 0 ? (0x1E - ((frame / 4) % 60)) : -(0x1E - ((frame / 4) % 60))) + 0x19, (0x14 - ((frame / 10) % 20) >= 0 ? 0x14 - ((frame / 10) % 20) : -(0x14 - ((frame / 10) % 20))) + 0x14, 0xFF);
-	if (arg0 == 0) {
+	if (!arg0) {
 		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, ((0x1E - ((frame / 4) % 60)) >= 0 ? (0x1E - ((frame / 4) % 60)) : -(0x1E - ((frame / 4) % 60))) + 0x23, (0x14 - ((frame / 4) % 40) >= 0 ? 0x14 - ((frame / 4) % 40) : -(0x14 - ((frame / 4) % 40))) + 0x1E, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x28, 0xFF);
 	} else {
-		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x8C, ((0x1E - ((frame / 4) % 60)) >= 0 ? (0x1E - ((frame / 4) % 60)) : -(0x1E - ((frame / 4) % 60))) + 0x23, (0x14 - ((frame / 4) % 40) >= 0 ? 0x14 - ((frame / 4) % 40) : -(0x14 - ((frame / 4) % 40))) + 0x1E, 0xFF);
+		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x8C, (0x1E - ((frame / 4) % 60) >= 0 ? 0x1E - ((frame / 4) % 60) : -(0x1E - ((frame / 4) % 60))) + 0x23, (0x14 - ((frame / 4) % 40) >= 0 ? 0x14 - ((frame / 4) % 40) : -(0x14 - ((frame / 4) % 40))) + 0x1E, 0xFF);
 	}
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPPipeSync(D_8005BB2C++);
@@ -1536,9 +1535,8 @@ void func_80008CA8_98A8(s32 arg0) {
 		D_800313E4_31FE4 = 0;
 	}
 	func_80005110_5D10(0x140, 0xF0, 0xFF, 0xFF, 0xFF);
-	frame = (frame + 1) & 0xFFFF;
-	D_80031648_32248 = frame;
-	if (frame >= 0xFA1) {
+	D_80031648_32248 = (D_80031648_32248 + 1) & 0xFFFF;
+	if (D_80031648_32248 >= 0xFA1) {
 		D_80031648_32248 = 0;
 	}
 }
