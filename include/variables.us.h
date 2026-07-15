@@ -1069,10 +1069,11 @@ extern s32 D_8006C570;
 extern u16 D_8006C574;
 extern u16 D_8006C576;
 extern u32 D_8006C578;
+extern u8 D_8006C580[]; // comms ring buffer (8 entries x 0x28 bytes)
 extern u16 D_8006C6C4;
 extern u16 D_8006C6C6;
 extern s16 D_8006C6C0;
-extern s16 D_8006C6C2;
+extern u16 D_8006C6C2;
 extern s16 D_8006C6CC;
 extern s16 D_8006C6CE;
 extern s32 D_8006C6D0;
