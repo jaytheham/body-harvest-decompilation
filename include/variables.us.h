@@ -973,8 +973,8 @@ extern Vtx *D_8005BB34;
 extern s32 D_8005BB38;
 extern s32 D_8005BB3C;
 extern s32 D_8005BB40;
-extern s32 D_8005BB48[];
-extern s32 D_8005BB4C[];
+extern s32 D_8005BB48[]; // ptr to framebuffer A
+extern s32 D_8005BB4C[]; // ptr to framebuffer B
 extern s32 D_8005BB50;
 extern s32 D_8005BB54;
 extern s32 D_8005BF58;
