@@ -324,6 +324,8 @@ extern s32 D_800344A4;
 extern u8 D_800344A8;
 extern s32 D_800344B4[]; // pointers to strings for names of many things, each entry is actually 2x s32 in size, first is pointer to string
 extern s32 D_800344B4_350B4[];
+extern s32 D_80034C44_35844[];
+extern s32 D_80034D0C_3590C[];
 extern s32 D_80034574[];
 extern u64 D_80035610;
 extern OSViMode D_800356D0;
@@ -644,6 +646,8 @@ extern char D_800385E0_391E0; /* osSyncPrintf format string */
 extern char D_800385E4_391E4; /* osSyncPrintf format string */
 extern char D_80038614_39214; /* osSyncPrintf format string */
 extern char D_80038618_39218; /* osSyncPrintf format string */
+extern char D_800397DC_3A3DC[]; /* osSyncPrintf format string "broken index!\n" */
+extern f32 D_80039830_3A430;
 extern char D_8003BAE0;
 extern AlienWaveEntry D_8003BCC0[][12];
 extern AlienSpawnEntry D_8003CEC0[5]; // Boss alien parts spawn points?

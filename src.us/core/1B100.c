@@ -77,7 +77,39 @@ void func_8001A598_1B198(u8 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1B100/func_8001A598_1B198.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1B100/func_8001A650_1B250.s")
+void func_8001A650_1B250(s16 arg0) {
+    if ((arg0 != D_8006C6D4) || (D_8006C6C6 == 0)) {
+        if ((arg0 == 1) || (arg0 == 0x17) || (arg0 == 0x18)) {
+            func_80014A3C_1563C(0, 0x17B, 0, 0, D_80039830_3A430);
+        }
+        D_8006C6D4 = arg0;
+        if (arg0 < 0x19) {
+            switch (D_800313D0_31FD0) {
+            case 0:
+            default:
+                func_8001A598_1B198(*(u8 **)((u8 *)D_800344B4_350B4 + arg0 * 8));
+                return;
+            case 1:
+                func_8001A598_1B198(*(u8 **)((u8 *)D_80034C44_35844 + arg0 * 8));
+                return;
+            case 2:
+                func_8001A598_1B198(*(u8 **)((u8 *)D_80034D0C_3590C + arg0 * 8));
+                return;
+            }
+        } else {
+            if (arg0 == 0xD6) {
+                osSyncPrintf(D_800397DC_3A3DC);
+                if (D_800313D0_31FD0 == 1) {
+                    arg0 = 0xF0;
+                }
+                if (D_800313D0_31FD0 == 2) {
+                    arg0 = 0xF1;
+                }
+            }
+            func_8001A598_1B198(*(u8 **)((u8 *)D_800344B4_350B4 + arg0 * 8));
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1B100/func_8001A7A0_1B3A0.s")
 
