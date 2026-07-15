@@ -647,6 +647,17 @@ extern char D_800385E4_391E4; /* osSyncPrintf format string */
 extern char D_80038614_39214; /* osSyncPrintf format string */
 extern char D_80038618_39218; /* osSyncPrintf format string */
 extern char D_800397DC_3A3DC[]; /* osSyncPrintf format string "broken index!\n" */
+extern char D_800397EC_3A3EC[];
+extern char D_800397F8_3A3F8[];
+extern char D_800397FC_3A3FC[];
+extern char D_80039804_3A404[];
+extern char D_80039808_3A408[];
+extern char D_8003980C_3A40C[];
+extern char D_80039814_3A414[];
+extern char D_80039818_3A418[];
+extern char D_80039820_3A420[];
+extern char D_80039828_3A428[];
+extern char D_8003982C_3A42C[];
 extern f32 D_80039830_3A430;
 extern char D_8003BAE0;
 extern AlienWaveEntry D_8003BCC0[][12];
@@ -1076,8 +1087,10 @@ extern u32 D_8006C578;
 extern u8 D_8006C580[]; // comms ring buffer (8 entries x 0x28 bytes)
 extern u16 D_8006C6C4;
 extern u16 D_8006C6C6;
-extern s16 D_8006C6C0;
+extern u16 D_8006C6C0;
 extern u16 D_8006C6C2;
+extern u16 D_8006C6C8;
+extern u16 D_8006C6CA;
 extern s16 D_8006C6CC;
 extern s16 D_8006C6CE;
 extern s32 D_8006C6D0;
