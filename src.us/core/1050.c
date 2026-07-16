@@ -1611,33 +1611,17 @@ s32 func_800038E0_44E0(void)
 }
 
 // https://decomp.me/scratch/7UqC0
-#ifdef NON_MATCHING
 f32 func_80003910_4510(f32 arg0, s32 arg1)
 {
-  s32 new_var;
-  f32 result;
+	f32 result;
 	
-  result = 1.0f;
-	new_var = arg1;
-	  
-  if (arg1 != 0)
-  {
-	 
-	arg1--;
-	do
-	{
-	  result *= arg0;
-	  new_var = arg1;
-	  arg1--;
-	  
-	}while (new_var != 0);
+	result = 1.0f;
+	while (arg1--) {
+		result *= arg0;
+	}
 
-  }
-  return result;
+	return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003910_4510.s")
-#endif
 
 // https://decomp.me/scratch/UjwLi
 f32 func_8000393C_453C(f32 arg0, s32 arg1)
