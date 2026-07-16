@@ -2,20 +2,13 @@
 #include "common.h"
 
 // https://decomp.me/scratch/AA2W0
-// CURRENT(740)
-#ifdef NON_MATCHING
-void func_8001A500_1B100(s32 arg0) {
-	D_8006C6C6 = 0;
-	D_8006C6C0 = 0;
-	D_8006C6C2 = 0;
-	D_8006C6CC = 0;
-	D_8006C6CE = 0;
+void func_8001A500_1B100(s32 arg0)
+{
+	D_8006C6C2 = D_8006C6C0 = D_8006C6C6 = 0;
+	D_8006C6CE = D_8006C6CC = 0;
 	D_8006C6D0 = arg0;
 	D_8006C6D4 = -1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1B100/func_8001A500_1B100.s")
-#endif
 
 void func_8001A54C_1B14C(u8 *arg0) {
 	u8 *dst;
