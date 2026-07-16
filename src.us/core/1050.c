@@ -1632,38 +1632,38 @@ f32 func_80003910_4510(f32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003910_4510.s")
 #endif
 
-#ifdef NON_MATCHING
-s32 func_8000393C_453C(f32 arg0, s32 arg1) {
+// https://decomp.me/scratch/UjwLi
+f32 func_8000393C_453C(f32 arg0, s32 arg1)
+{
 	f32 var_f20;
-	f32 var_f22;
 	s32 var_s2;
 	s32 var_s1;
 	s32 var_s0;
 	s32 var_v0;
-
 	var_s2 = arg1;
-	var_f22 = arg0;
 	var_s0 = 0x8000;
 	var_f20 = func_80003910_4510(arg0, arg1 >> 16);
-	var_v0 = 0x10;
-	var_s1 = 0xF;
-	if (var_v0 != 0) {
-		do {
-			var_f22 = sqrtf(var_f22);
-			if (var_s2 & var_s0) {
-				var_f20 *= var_f22;
+	var_s1 = 0x10;
+	if (var_s1 != 0)
+	{
+		while (var_s1--)
+		{
+			arg0 = sqrtf(arg0);
+			if (1)
+			{
+				if (var_s2 & var_s0)
+				{
+					var_f20 *= arg0;
+				}
+				var_v0 = var_s1;
+				var_s0 >>= 1;
 			}
-			var_v0 = var_s1;
-			var_s0 >>= 1;
-			var_s1--;
-		} while (var_s1 != 0);
+		}
 	}
-	return var_v0;
+	return var_f20;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_8000393C_453C.s")
-#endif
 
+// CURRENT(8365)
 #ifdef NON_MATCHING
 void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2, s32 arg3) {
 	s32 sp3C;
@@ -1757,6 +1757,7 @@ void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2,
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800039D0_45D0.s")
 #endif
 
+// CURRENT(9223)
 #ifdef NON_MATCHING
 void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	s32 sp3C, sp38, sp34, sp30, sp2C;
@@ -1849,6 +1850,7 @@ void func_80004214_4E14(s16 arg0, s32 arg1) {
 	func_800039D0_45D0(0, 0, &v, arg1);
 }
 
+// CURRENT(28530)
 #ifdef NON_MATCHING
 s32 func_80004254_4E54(f32 arg0, s32 arg1, s32 *arg2, s32 *arg3) {
 	s32 exponent;
