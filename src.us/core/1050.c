@@ -1610,23 +1610,30 @@ s32 func_800038E0_44E0(void)
 	return (((u32) D_800476C0) >> 16) & new_var;
 }
 
+// https://decomp.me/scratch/7UqC0
 #ifdef NON_MATCHING
-/* possible: powf_i */
-f32 func_80003910_4510(f32 arg0, s32 arg1) {
-	f32 result;
+f32 func_80003910_4510(f32 arg0, s32 arg1)
+{
+  s32 new_var;
+  f32 result;
+	
+  result = 1.0f;
+	new_var = arg1;
+	  
+  if (arg1 != 0)
+  {
+	 
+	arg1--;
+	do
+	{
+	  result *= arg0;
+	  new_var = arg1;
+	  arg1--;
+	  
+	}while (new_var != 0);
 
-	result = 1.0f;
-	if (arg1 != 0) {
-		while (1) {
-			result *= arg0;
-			arg1--;
-			if (arg1 != 0) {
-				continue;
-			}
-			break;
-		}
-	}
-	return result;
+  }
+  return result;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003910_4510.s")
