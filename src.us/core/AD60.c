@@ -602,7 +602,6 @@ void func_8000B044_BC44(void) {
 		clip_x_max = 0x140; clip_y_max = 0xF0;
 	}
 
-	/* Setup display list */
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
@@ -613,7 +612,6 @@ void func_8000B044_BC44(void) {
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_IA16);
 
-	/* Load shared TLUT palette */
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_801FEA10);
 	gDPTileSync(D_8005BB2C++);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x100, G_TX_LOADTILE, 0,
@@ -677,7 +675,7 @@ void func_8000B044_BC44(void) {
 			case 7: case 8: case 9:
 			case 11: case 12: case 13: case 14: case 15:
 			case 16: case 17:
-				break; /* no-op */
+				break;
 			case 10: { /* newline + alignment */
 				s16 width;
 				s16 a1_idx;
@@ -938,7 +936,6 @@ s32 func_8000C6C4_D2C4(void) {
 	return D_80053C98;
 }
 
-/* busy-wait loop: counts 0..0x10 with 8-bit masking */
 void func_8000C6D0_D2D0(s32 arg0) {
 	s32 var_v0 = 0;
 	s32 temp_t6;

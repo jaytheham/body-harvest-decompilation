@@ -388,26 +388,29 @@ void func_80001144_1D44(u8 arg0, u8 arg1, u8 arg2) {
 }
 
 // https://decomp.me/scratch/ffueu
-// CURRENT(930)
+// CURRENT(155)
 #ifdef NON_MATCHING
 void func_80001190_1D90(void) {
 	f32 temp_f0;
+	int new_var;
 	s32 temp_f8;
 	s32 temp_t1;
 	s32 temp_t6;
 	s32 temp_t8;
-
-	if (gameplayMode != D_80047698) {
+temp_f8 = gameplayMode != D_80047698;
+	if (temp_f8) {
 		func_800010C4_1CC4(0);
 		D_80047698 = gameplayMode;
 	}
+
 	if ((gameplayMode == 1) || (gameplayMode == 3) || (gameplayMode == 0xB)) {
 		if (D_80047678 == 1) {
-			D_800313CC_31FCC = D_8004767C;
+			D_800313CC_31FCC = (s64)D_8004767C;
 			if (D_8004768C >= 0x2711) {
 				temp_f0 = D_80036C88_37888 / (f32) D_8004768C;
 				temp_f8 = ((f32) D_8004767C * (temp_f0 * temp_f0 * temp_f0));
-				D_800313CC_31FCC = temp_f8 / 2;
+				D_800313CC_31FCC = temp_f8;
+					D_800313CC_31FCC =(D_800313CC_31FCC/ 2);
 			}
 			if (D_800313CC_31FCC >= 0x100) {
 				func_80001050_1C50(0);
@@ -425,17 +428,15 @@ void func_80001190_1D90(void) {
 			} else if (D_80047684 < D_80047680) {
 				D_80047680 -= D_80047684;
 			} else {
+				D_80047680 = 
 				D_80047684 = 0;
-				D_80047680 = 0;
 			}
 			D_8004768C += 1;
 			if (D_8004767C >= 0x100) {
 				D_80047690 = 0;
 				return;
 			}
-			temp_t8 = D_80047690 + 1;
-			D_80047690 = temp_t8;
-			if (temp_t8 >= 0x321) {
+			if ((D_80047690 = D_80047690 + 1) >= 0x321) {
 				D_8004768C = 0;
 			}
 		} else {

@@ -160,6 +160,7 @@ extern s32 D_800313C4_31FC4;
 extern s16 D_800313C8;
 extern s16 D_800313C8_31FC8;
 extern s32 D_800313CC;
+extern s32 D_800313CC_31FCC;
 extern s16 D_800313D0_31FD0; // Language
 extern s32 D_800313D4_31FD4;
 extern s16 D_800313D8;
@@ -394,6 +395,7 @@ extern char D_80036C50_37850; /* osSyncPrintf format string - load failed */
 extern u8 D_80036C64[];
 extern u8 D_80036C74[];
 extern f32 D_80036C88;
+extern f32 D_80036C88_37888;
 extern char D_80036D68_37968;
 extern char D_80036D6C_3796C;
 extern char D_80036D70_37970;
