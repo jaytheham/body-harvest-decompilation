@@ -33,7 +33,7 @@ f32 func_80082FC4_16B084(Vec3f *arg0) {
 	return var_f12;
 }
 
-// CURRENT(502)
+// CURRENT(380)
 #ifdef NON_MATCHING
 void func_80083014_16B0D4(Vec3f *arg0, Vec3f *arg1) {
 	f32 temp_f0;
