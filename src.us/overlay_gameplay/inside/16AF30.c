@@ -344,7 +344,6 @@ void func_800839B8_16BA78(u8 arg0) {
 
 // CURRENT(5876)
 #ifdef NON_MATCHING
-
 void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	f32 sp3C;
 	volatile f32 sp38;
@@ -358,6 +357,9 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	u8 *effectUnit;
 	u8 *newUnit;
 
+	// D_800FB7B0 references need to be converted to array & struct access
+	// The struct itself might need updating to be correct
+	// Then all this pointer arithmetic & casting can be replaced with struct access
 	effectUnit = (u8 *)D_800FB7B0 + D_800FB6F8[arg0].unk6 * 22 + 8;
 	idx = func_80083390_16B450(arg0);
 	if (idx != -3) {
@@ -433,6 +435,7 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 		}
 
 		entry = &D_800FB7B0[effect];
+		// Surely this should actually reference some property of entry or D_800FB7B0
 		*(&D_800FB702 + (slot * 6)) = effect;
 		entry->unk2 = arg9;
 		entry->unkE = arg10;
@@ -487,6 +490,8 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 			return;
 		}
 
+		// Surely this should actually reference some property of entry or D_800FB7B0
+		// D_800FB702 is a fake symbol, it should be a property of D_800FB7B0 or entry
 		*(&D_800FB702 + (slot * 6)) = effect;
 		entry = &((Unk84EECEffect *)D_800FB7B0)[effect];
 		count = arg5;
@@ -553,7 +558,7 @@ void func_80084258_16C318(s32 arg0) {
 	if ((effect != -5) && (effect != -6)) {
 		u8 life;
 		Unk84258Pos *dstPos;
-
+// need to replace this with a for/while/do loop
 loop_5:
 		if (s2->unkA == 2) {
 			life = s2->unk9;
@@ -712,10 +717,12 @@ void func_80084980_16CA40(s32 arg0, s32 arg1) {
 	u16 quarter;
 	s32 rnd;
 
+	// is arg0 actually u8? It is masked with 0xFF in the first line, so it might be
 	baseIdx = D_800FB6F8[arg0 & 0xFF].unk6;
 	baseFields = &D_800FB7B0[baseIdx].unk8;
 	spread = baseFields[-3];
 
+	// is arg1 actually u8 too?
 	if ((arg1 & 0xFF) == 0xFB) {
 		return;
 	}
@@ -761,6 +768,7 @@ s32 func_80084C18_16CCD8(u8 arg0)
 
 	if (result != 0xFB)
 	{
+		// Need to figure out which array/struct this is actually referencing, and then replace the pointer arithmetic with proper struct access
 		*((s16 *)((&D_800FB6FA) + (result * 0xC))) = arg0;
 	}
 	return result;
@@ -794,6 +802,7 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 	entry = &D_800FB7B0[effect];
 
 	entry->unk8 = arg0 * 4;
+	// This should probably be a struct access instead of pointer arithmetic:
 	*(s16 *)((u8 *)owner + 0xA) = effect;
 	entry->unkC = arg2 * 4;
 	linked = &D_800FB7B0[entry->unk4];
@@ -866,6 +875,7 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 	if (effect != -3) {
 		temp = (s16)(s32)((f64)(f32)arg3 * D_800A5468_18D528);
 
+		// This ptr arithmetic is probably wrong, it should be an array access instead:
 		ofs = (effect << 2) - effect;
 		ofs = (ofs << 2) - effect;
 		ofs <<= 1;
@@ -888,10 +898,12 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 			scale = 0xFF - arg10;
 		}
 
+		// Does the entry struct need to be updated to include these fields so we don't have to do pointer arithmetic?
 		((u8 *)entry + 8)[0xB] = scale;
 		((u8 *)entry + 8)[0xA] = 0;
 		((u8 *)entry + 8)[0xC] = 0;
 
+		// Again shoud be an array access instead of pointer arithmetic:
 		ofs = (entry->unk4 << 2) - entry->unk4;
 		ofs = (ofs << 2) - entry->unk4;
 		ofs <<= 1;
@@ -927,6 +939,7 @@ s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
   effect = func_80083390_16B450(0xC);
   if (effect != (-3))
   {
+	// need to replace all this pointer arithmetic with proper array/struct access
 		temp_s0 = (u8 *)D_800FB7B0 + effect * 0x16;
 		*(s16 *)(temp_s0 + 2) = arg3;
 		*(s16 *)(temp_s0 + 8) = arg0 * 4;
@@ -968,7 +981,9 @@ void func_800852B8_16D378(s32 arg0) {
 	Unk84EECEffect *entry;
 	u8 *baseBytes;
 
+	// is arg0 actually u8?
 	slot = arg0 & 0xFF;
+	// Need to replace this pointer arithmetic with proper array/struct access:
 	base = &D_800FB7B0[*(s16 *)(&D_800FB6FE + (slot * 0xC))];
 	child = func_80083390_16B450(slot);
 	if (child != -3) {
@@ -1067,6 +1082,7 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 			return 0xFB;
 		}
 
+		// This pointer arithmetic is probably wrong, it should be an array/struct access instead:
 		entry = (u8 *)D_800FB7B0 + (effect * 0x16);
 		*(u16 *)(entry + 2) = arg7;
 		*(s16 *)(entry + 8) = arg0 << 2;
@@ -1143,6 +1159,7 @@ s32 func_80085984_16DA44(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 a
 		effect->unk2 = arg0;
 		entry = (u8 *)effect + 8;
 		half = (u8)arg1 / 2;
+		// This pointer casting is probably wrong, it should be struct access instead:
 		*(s16 *)&entry[0] = (func_800038E0_44E0() % (u8)arg1) + arg3 * 4 - half;
 		*(s16 *)&entry[2] = (func_800038E0_44E0() % (u8)arg1) + arg4 * 4 - half;
 		*(s16 *)&entry[4] = (func_800038E0_44E0() % (u8)arg1) + arg5 * 4 - half;
@@ -1252,6 +1269,7 @@ void func_80085F28_16DFE8(u8 arg0) {
 	s32 s3;
 	s32 s4;
 
+	// These pointer arithmetic operations are probably wrong, they should be struct/array accesses instead
 	sp38 = (UnkFB6F8Entry *)((arg0 * 0xC) + (u8 *)D_800FB6F8);
 	s2 = (Unk84EECEffect *)((sp38->unk6 * 0x16) + (u8 *)D_800FB7B0);
 	sp30 = (Unk84EECEffect *)((s2->unk4 * 0x16) + (u8 *)D_800FB7B0);
@@ -1291,6 +1309,7 @@ void func_80085F28_16DFE8(u8 arg0) {
 		func_80084628_16C6E8(arg0);
 	}
 
+	// This ptr casting should probably be replaced with a struct access instead:
 	if (*(u16 *)(s1 + 0) != 0xFFFF) {
 		if (*(u16 *)(s1 + 0) > 0) {
 			*(u16 *)(s1 + 0) = *(u16 *)(s1 + 0) - 1;
