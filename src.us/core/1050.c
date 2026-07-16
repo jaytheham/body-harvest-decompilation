@@ -21,62 +21,63 @@ s32 D_80031374_31F74[20] = {0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 s32 D_800313C4_31FC4 = 0;
 s32 D_800313CC = 0;
 
-// CURRENT(595)
-#ifdef NON_MATCHING
-void func_80000450_1050(ALSynConfig *arg0, s32 arg1) {
+// https://decomp.me/scratch/cHVpz
+void func_80000450_1050(ALSynConfig *arg0, s32 arg1)
+{
 	s32 s2;
 	f32 var_f0;
 	f32 one;
-	Unk80042DB8 *s1;
-	Unk80042DB8 *s0;
-
+	ALLink *temp;
 	D_80042DA8.unk0 = 0;
 	arg0->dmaproc = (void *)func_80000CD4_18D4;
-	s2 = osAiSetFrequency(0x7D00);
-	arg0->outputRate = s2;
+	arg0->outputRate = osAiSetFrequency(0x7D00);
 	one = 1.0f;
-	if (D_80031B58_32758 == 0) {
-		var_f0 = ((f32)s2 * one) / 60.0f;
-	} else {
-		var_f0 = ((f32)arg0->outputRate * one) / 50.0f;
-	}
-	D_800431A8 = (s32)var_f0;
-	if ((f32)(u32)D_800431A8 < var_f0) {
+	var_f0 = D_80031B58_32758 == 0
+		? (arg0->outputRate * one) / 60.0f
+		: (arg0->outputRate * one) / 50.0f;
+
+	D_800431A8 = var_f0;
+	if (((u32)D_800431A8) < var_f0)
+	{
 		D_800431A8++;
 	}
-	if (D_800431A8 & 0xF) {
-		D_800431A8 = (D_800431A8 & ~0xF) + 0x10;
+	if (D_800431A8 & 0xF)
+	{
+		D_800431A8 = (D_800431A8 & (~0xF)) + 0x10;
 	}
 	D_800431A4 = D_800431A8 - 0x10;
 	D_800431AC = D_800431A8 + 0xB0;
 	alInit(&D_8003FD58, arg0);
-	D_80042DB8.unk4 = 0;
-	D_80042DB8.unk0 = 0;
-	s0 = &D_80042DCC;
-	s1 = &D_80042DB8;
-	for (s2 = 0; s2 < 0x31; s2++, s1++, s0++) {
-		alLink((ALLink *)s0, (ALLink *)s1);
-		s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
+	D_80042DB8[0].unk4 = 0;
+	D_80042DB8[0].unk0 = 0;
+
+	for (s2 = 0; s2 < 0x31; s2++)
+	{
+		temp = (ALLink *)&D_80042DB8[s2]; // needed to get lui/addiu order correct
+		alLink((ALLink *)&D_80042DCC[s2], temp);
+		D_80042DB8[s2].unk10 = alHeapDBAlloc(0, 0, arg0->heap, 1, 0x400);
 	}
-	s1->unk10 = alHeapAlloc(arg0->heap, 1, 0x400);
-	s2 = 0;
-	for (; s2 < 2; s2++) {
-		D_8003FB20[s2] = alHeapAlloc(arg0->heap, 1, 0x8000);
+
+	D_80042DB8[s2].unk10 = alHeapDBAlloc(0, 0, arg0->heap, 1, 0x400);
+
+	for (s2 = 0; s2 < 2; s2++)
+	{
+		D_8003FB20[s2] = alHeapDBAlloc(0, 0, arg0->heap, 1, 0x8000);
 	}
-	for (s2 = 0; s2 < 3; s2++) {
-		D_8003FB20[s2 + 2] = (Acmd *)alHeapAlloc(arg0->heap, 1, 0x90);
+
+	for (s2 = 0; s2 < 3; s2++)
+	{
+		D_8003FB20[s2 + 2] = (Acmd *)alHeapDBAlloc(0, 0, arg0->heap, 1, 0x90);
 		((BhAudioTask *)D_8003FB20[s2 + 2])->unk70 = 2;
 		((BhAudioTask *)D_8003FB20[s2 + 2])->unk74 = (BhAudioTask *)D_8003FB20[s2 + 2];
-		((BhAudioTask *)D_8003FB20[s2 + 2])->outBuf = alHeapAlloc(arg0->heap, 1, D_800431AC * 4);
+		((BhAudioTask *)D_8003FB20[s2 + 2])->outBuf = alHeapDBAlloc(0, 0, arg0->heap, 1, D_800431AC * 4);
 	}
+
 	osCreateMesgQueue(&D_8003FD20, D_8003FD38, 8);
 	osCreateMesgQueue(&D_8003FCE8, D_8003FD00, 8);
 	osCreateThread(&D_8003FB38, 5, (void (*)(void *))func_80000730_1330, NULL, &D_80042DA8, arg1);
 	osStartThread(&D_8003FB38);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000450_1050.s")
-#endif
 
 // CURRENT(1172)
 #ifdef NON_MATCHING
