@@ -690,7 +690,36 @@ extern s32 D_800431A4;
 extern s32 D_800431A8;
 extern s32 D_800431AC;
 extern f32 D_800431B4;
-extern u8 D_800431C0[]; // Save file data. 0x4F bytes, then 0x7A per save slot
+// typedef struct {
+//     u8 version;
+//     u8 unk1;
+//     u8 checksum[2];
+//     u8 unk4[0x76];
+// } SaveSlot;
+
+// typedef struct {
+// 	u8 name[0x6];
+// 	s32 score;
+// 	u8 humansKilled;
+// 	u8 secondsElapsed[3];
+// } HighScore;
+
+// typedef struct {
+//     u8 version;
+//     u8 unk1;
+//     u8 checksum[2];
+//     u8 unk4;
+// 	HighScore highScores[5];
+// } HighScores;
+
+// typedef struct {
+//     u8 version;
+//     u8 unk1;
+//     u8 checksum[2]; // Whole save file checksum
+// 	HighScores highScores;
+//     SaveSlot slots[3];
+// } SaveData;
+extern u8 D_800431C0[0x1BD]; // Save file data. 0x4F bytes, then 0x7A per save slot
 extern u8 D_800431C8;
 extern u8 D_800431C9;
 extern u8 D_80043243;

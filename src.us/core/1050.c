@@ -530,7 +530,6 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
   u16 computed_checksum;
   u16 i;
   ptr = D_800431C0 + arg0;
-  //version = ptr[0];
   if (ptr[0] != 0x1C)
   {
 	  // Version %d failed
@@ -559,7 +558,6 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 #endif
 
 // https://decomp.me/scratch/vCY8e
-// write language and highscores
 void func_800016D8_22D8(void) {
 	u16 i;
 	u16 j, writeIdx;
@@ -904,92 +902,98 @@ void func_800020E0_2CE0(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800020E0_2CE0.s")
 #endif
 
+// https://decomp.me/scratch/o6clA
+// CURRENT(110)
 #ifdef NON_MATCHING
-void func_800021CC_2DCC(s32 arg0) {
-	u8 *ptr;
-	s32 i;
-
-	ptr = (u8 *)&D_800431C0 + arg0 * 0x7A + 0x53;
-
-	for (i = 0; i < 6; i++) {
-		ptr[0] = 0;
-		ptr[1] = 0;
-		ptr[2] = 0;
-		ptr[3] = 0;
-		ptr[4] = 0;
-		ptr[5] = 0;
-		ptr[6] = 0;
-		ptr[7] = 0;
-		ptr += 8;
-	}
-	ptr[0] = 1;
-	ptr[1] = 0;
-	ptr[2] = 0x7B;
-	ptr[3] = 0;
-	ptr[4] = 0;
-	ptr[5] = 0;
-	ptr[6] = 0x45;
-	ptr[7] = 0x6D;
-	ptr[8] = 0x70;
-	ptr[9] = 0x74;
-	ptr[10] = 0x79;
-	ptr[11] = 0;
-	ptr[12] = 2;
-	ptr += 0xD;
-
-	for (i = 1; i < 7; i++) {
-		*ptr = 0;
-		ptr++;
-	}
-	*ptr = 1;
-	ptr++;
-
-	for (i = 1; i < 8; i++) {
-		*ptr = 0;
-		ptr++;
-	}
+void func_800021CC_2DCC(s32 arg0)
+{
+  u8 *ptr;
+  s32 i;
+  ptr = &D_800431C0[0x53 + (arg0 * 0x7A)];
+  for (i = 0; i < 6; i++)
+  {
 	ptr[0] = 0;
 	ptr[1] = 0;
 	ptr[2] = 0;
 	ptr[3] = 0;
-	ptr[4] = 0;
-	ptr += 5;
-
-	for (i = 0; i < 8; i++) {
-		*ptr = 0;
-		ptr++;
-	}
-
-	for (i = 0; i < 4; i++) {
-		*ptr = 0;
-		ptr++;
-	}
-
-	*ptr = 0;
-	ptr++;
-
-	for (i = 0; i < 8; i++) {
-		*ptr = 0;
-		ptr++;
-		continue;
-	}
-
-	ptr[0] = 0;
-	ptr[1] = 0;
-	ptr[2] = 0;
 	ptr[4] = 0;
 	ptr[5] = 0;
 	ptr[6] = 0;
-	ptr[3] = 0;
 	ptr[7] = 0;
-	ptr[8] = 0;
-	ptr[9] = 0;
-	ptr[10] = 0;
-	ptr[11] = 0;
-	ptr += 0xC;
-	*ptr = 0;
+	ptr += 8;
+  }
 
-	func_800015B4_21B4(arg0 * 0x7A + 0x4F, 0x76);
+  ptr[0] = 1;
+  ptr[1] = 0;
+  ptr[2] = 0x7B;
+  ptr[3] = 0;
+  ptr[4] = 0;
+  ptr[5] = 0;
+  ptr[6] = 0x45;
+  ptr[7] = 0x6D;
+  ptr[8] = 0x70;
+  ptr[9] = 0x74;
+  ptr[10] = 0x79;
+  ptr[11] = 0;
+  ptr[12] = 2;
+  ptr += 0xD;
+  for (i = 1; i < 7; i++)
+  {
+	*ptr = 0;
+	ptr++;
+  }
+
+  *ptr = 1;
+  ptr++;
+  for (i = 1; i < 8; i++)
+  {
+	*ptr = 0;
+	ptr++;
+  }
+
+  ptr[0] = 0;
+  ptr[1] = 0;
+  ptr[2] = 0;
+  ptr[3] = 0;
+  ptr[4] = 0;
+  ptr += 5;
+  for (i = 0; i < 8; i++)
+  {
+	*ptr = 0;
+	ptr++;
+  }
+
+  for (i = 0; i < 4; i++)
+  {
+	*ptr = 0;
+	ptr++;
+  }
+
+  *ptr = 0;
+  ptr++;
+  for (i = 0; i < 8; i++)
+  {
+	*ptr = 0;
+	ptr++;
+	continue;
+  }
+
+  ptr[0] = 0;
+  ptr[1] = 0;
+  ptr[2] = 0;
+  ptr[4] = 0;
+  ptr[5] = 0;
+  ptr[6] = 0;
+  ptr[3] = 0;
+  ptr[7] = 0;
+  ptr[8] = 0;
+  ptr[9] = 0;
+  ptr[10] = 0;
+  ptr[11] = 0;
+  ptr += 0xC;
+  *ptr = 0;
+	i = arg0;
+  func_800015B4_21B4((i * 0x7A) + 0x4F, 0x76);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800021CC_2DCC.s")
