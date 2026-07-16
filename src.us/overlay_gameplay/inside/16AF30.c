@@ -287,7 +287,7 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 #endif
 
 // https://decomp.me/scratch/6yUii
-// CURRENT(1286)
+// CURRENT(1746)
 #ifdef NON_MATCHING
 void func_80083814_16B8D4(s32 arg0, u8 arg1)
 {
