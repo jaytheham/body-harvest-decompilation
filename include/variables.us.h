@@ -683,8 +683,8 @@ extern OSMesgQueue D_8003FD20;
 extern OSMesg D_8003FD38[8];
 extern ALGlobals D_8003FD58;
 extern Unk80042DA8 D_80042DA8;
-extern Unk80042DB8 D_80042DB8[];
-extern Unk80042DB8 D_80042DCC[];
+extern Unk80042DB8 D_80042DB8[]; // actually ALLink[] ?
+extern Unk80042DB8 D_80042DCC[]; // actually ALLink[] ?
 extern u32 D_800431A0;
 extern s32 D_800431A4;
 extern s32 D_800431A8;
