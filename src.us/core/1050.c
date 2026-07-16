@@ -1466,47 +1466,57 @@ void func_80003064_3C64(void) {
 #endif
 
 // https://decomp.me/scratch/66U7q
-// CURRENT(365)
-#ifdef NON_MATCHING
-void func_800033D4_3FD4(u16 arg0, s32 arg1) {
-	u16 *previousButtons;
 
-	if (D_800475D8[arg1] & arg0) {
+void func_800033D4_3FD4(u16 arg0, s32 arg1)
+{
+	int new_var2;
+	int new_var;
+	u16 *previousButtons;
+	if (arg0 & D_800475D8[arg1])
+	{
 		previousButtons = &previousControllerButtonStates[arg1];
-		if (*previousButtons & arg0) {
-			currentControllerStates[arg1].button &= ~arg0;
-			if (previousButtons != previousControllerButtonStates) {
+		new_var = previousButtons != previousControllerButtonStates;
+		if ((*previousButtons) & arg0)
+		{
+			new_var = arg1;
+			currentControllerStates[new_var].button &= ~arg0;
+			new_var2 = new_var;
+			if (new_var2)
+			{
 				return;
 			}
 			D_800475F8 &= ~arg0;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800033D4_3FD4.s")
-#endif
 
-// https://decomp.me/scratch/
+// CURRENT(2250)
 #ifdef NON_MATCHING
-void func_8000345C_405C(u16 arg0) {
-	s32 temp_v1;
-
-	if (!(D_800313C8 & 8)) {
-		if ((D_800475D8[CONTROLLER_ONE] & arg0) && (previousControllerButtonStates[CONTROLLER_ONE] & arg0)) {
-			currentControllerStates[CONTROLLER_ONE].button &= ~arg0;
-		}
-		temp_v1 = ~arg0;
-		if ((D_800475D8[CONTROLLER_TWO] & arg0) && (previousControllerButtonStates[CONTROLLER_TWO] & arg0)) {
-			currentControllerStates[CONTROLLER_TWO].button &= temp_v1;
-		}
-		if ((D_800475D8[CONTROLLER_THREE] & arg0) && (previousControllerButtonStates[CONTROLLER_THREE] & arg0)) {
-			currentControllerStates[CONTROLLER_THREE].button &= temp_v1;
-		}
-		if ((D_800475D8[CONTROLLER_FOUR] & arg0) && (previousControllerButtonStates[CONTROLLER_FOUR] & arg0)) {
-			currentControllerStates[CONTROLLER_FOUR].button &= temp_v1;
-		}
-		D_800475F8 &= temp_v1;
+void func_8000345C_405C(u16 arg0)
+{
+  u16 *new_var;
+  s32 temp_v1;
+  new_var = D_800475D8;
+  if (!(D_800313C8 & 8))
+  {
+	if ((new_var[0] & arg0) && (previousControllerButtonStates[0] & arg0))
+	{
+	  currentControllerStates[0].button &= ~arg0;
 	}
+	D_800475F8 = (temp_v1 = ~arg0);
+	if ((new_var[1] & arg0) && (previousControllerButtonStates[1] & arg0))
+	{
+	  currentControllerStates[1].button &= temp_v1;
+	}
+	if ((D_800475D8[2] & arg0) && (previousControllerButtonStates[2] & arg0))
+	{
+	  currentControllerStates[2].button &= temp_v1;
+	}
+	if ((new_var[3] & arg0) && (previousControllerButtonStates[3] & arg0))
+	{
+	  currentControllerStates[3].button &= temp_v1;
+	}
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_8000345C_405C.s")
