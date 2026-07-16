@@ -342,64 +342,57 @@ void func_800839B8_16BA78(u8 arg0) {
 	}
 }
 
-// CURRENT(5876)
+// CURRENT(2243)
 #ifdef NON_MATCHING
 void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	f32 sp3C;
 	volatile f32 sp38;
 	f32 sp34;
-	f32 temp_f0;
-	s16 idx;
-	s16 scale;
+	s16 temp;
 	s16 sp30;
 	s16 sp2E;
-	s16 temp;
+	s16 idx;
 	u8 *effectUnit;
 	u8 *newUnit;
 
-	// D_800FB7B0 references need to be converted to array & struct access
-	// The struct itself might need updating to be correct
-	// Then all this pointer arithmetic & casting can be replaced with struct access
 	effectUnit = (u8 *)D_800FB7B0 + D_800FB6F8[arg0].unk6 * 22 + 8;
 	idx = func_80083390_16B450(arg0);
 	if (idx != -3) {
 		if (effectUnit[0xA] == 1) {
-			newUnit = (u8 *)D_800FB7B0 + idx * 22 + 8;
+			newUnit = (u8 *)D_800FB7B0 + idx * 22;
+			newUnit += 8;
 			*(s16 *)&newUnit[0] = *(s16 *)&effectUnit[0];
 			*(s16 *)&newUnit[2] = *(s16 *)&effectUnit[2];
 			*(s16 *)&newUnit[4] = *(s16 *)&effectUnit[4];
 			sp34 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5450_18D510);
 			if ((func_800038E0_44E0() % 21) < 10) {
-				temp_f0 = sp34;
-				sp34 = 0.0f - temp_f0;
+				sp34 = 0.0f - sp34;
 			}
 			sp34 += arg1->x;
 			sp38 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5458_18D518);
 			if ((func_800038E0_44E0() % 21) < 10) {
-				temp_f0 = sp38;
-				sp38 = 0.0f - temp_f0;
+				sp38 = 0.0f - sp38;
 			}
 			sp38 += arg1->y;
 			sp3C = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5460_18D520);
 			if ((func_800038E0_44E0() % 21) < 10) {
-				temp_f0 = sp3C;
-				sp3C = 0.0f - temp_f0;
+				sp3C = 0.0f - sp3C;
 			}
 			sp3C += arg1->z;
 			func_80083014_16B0D4((Vec3f *)&sp34, (Vec3f *)&sp34);
-			scale = arg2;
-			scale /= 4;
-			((s8 *)newUnit)[6] = (s8) (s32) ((f32) scale * sp34);
-			((s8 *)newUnit)[7] = (s8) (s32) ((f32) scale * sp38);
+			((s8 *)newUnit)[6] = (s8) (s32) ((f32) (arg2 / 4) * sp34);
+			sp34 = sp3C;
+			((s8 *)newUnit)[7] = (s8) (s32) ((f32) (arg2 / 4) * sp38);
 			newUnit[9] = 0xFF;
 			newUnit[0xA] = 0;
-			((s8 *)newUnit)[8] = (s8) (s32) ((f32) scale * sp3C);
+			((s8 *)newUnit)[8] = (s8) (s32) ((f32) (arg2 / 4) * sp34);
 			return;
 		}
 		sp30 = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
 		sp2E = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
 		temp = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
-		newUnit = (u8 *)&D_800FB7B0 + idx * 22 + 8;
+		newUnit = (u8 *)D_800FB7B0 + idx * 22;
+		newUnit += 8;
 		*(s16 *)&newUnit[0] = *(s16 *)&effectUnit[0] + sp30;
 		*(s16 *)&newUnit[2] = *(s16 *)&effectUnit[2] + sp2E;
 		*(s16 *)&newUnit[4] = *(s16 *)&effectUnit[4] + temp;
