@@ -1926,19 +1926,20 @@ s32 func_80004254_4E54(f32 arg0, s32 arg1, s32 *arg2, s32 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80004254_4E54.s")
 #endif
 
-#ifdef NON_MATCHING
-s32 func_80004498_5098(f32 arg0) {
-	if (((s32)((u32)(*(s32 *)&arg0 << 1) >> 0x18)) - 0x7F != 0x80) {
-		return 1;
+// https://decomp.me/scratch/X3gxG
+s32 func_80004498_5098(f32 arg0)
+{
+	int new_var;
+	new_var = (((*((u32 *)(&arg0))) << 1) >> 0x18) - 0x7F;
+	if (new_var == 0x80)
+	{
+		if (((*((u32 *)(&arg0))) << 9) == 0)
+		{
+			return 0;
+		}
 	}
-	if (*(s32 *)&arg0 << 9) {
-		return 1;
-	}
-	return 0;
+	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80004498_5098.s")
-#endif
 
 // https://decomp.me/scratch/KebvT
 // CURRENT(130)
