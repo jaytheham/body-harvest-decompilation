@@ -683,8 +683,8 @@ extern OSMesgQueue D_8003FD20;
 extern OSMesg D_8003FD38[8];
 extern ALGlobals D_8003FD58;
 extern Unk80042DA8 D_80042DA8;
-extern Unk80042DB8 D_80042DB8;
-extern Unk80042DB8 D_80042DCC;
+extern Unk80042DB8 D_80042DB8[]; // actually ALLink[] ?
+extern Unk80042DB8 D_80042DCC[]; // actually ALLink[] ?
 extern u32 D_800431A0;
 extern s32 D_800431A4;
 extern s32 D_800431A8;
@@ -973,8 +973,8 @@ extern Vtx *D_8005BB34;
 extern s32 D_8005BB38;
 extern s32 D_8005BB3C;
 extern s32 D_8005BB40;
-extern s32 D_8005BB48[];
-extern s32 D_8005BB4C[];
+extern s32 D_8005BB48[]; // ptr to framebuffer A
+extern s32 D_8005BB4C[]; // ptr to framebuffer B
 extern s32 D_8005BB50;
 extern s32 D_8005BB54;
 extern s32 D_8005BF58;
@@ -1091,8 +1091,8 @@ extern u16 D_8006C6C0;
 extern u16 D_8006C6C2;
 extern u16 D_8006C6C8;
 extern u16 D_8006C6CA;
-extern s16 D_8006C6CC;
-extern s16 D_8006C6CE;
+extern u16 D_8006C6CC;
+extern u16 D_8006C6CE;
 extern s32 D_8006C6D0;
 extern s16 D_8006C6D4;
 extern u8 D_8006C6D8;

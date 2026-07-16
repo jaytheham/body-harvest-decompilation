@@ -1413,7 +1413,7 @@ void guess_checkMissions(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_checkMissions.s")
 #endif
 
-// CURRENT(1880)
+// CURRENT(80)
 #ifdef NON_MATCHING
 void debug_drawTimingGraphBars(void) {
 	s32 pad1;
@@ -1427,8 +1427,10 @@ void debug_drawTimingGraphBars(void) {
 	s32 pad9;
 	Gfx *sp30;
 	s32 pad10;
-	s32 lrxVal;
+	s32 pad11;
 	Gfx *sp24;
+	s32 pad12;
+	s32 lrxVal;
 	s32 var_a1;
 	s32 var_a2;
 
@@ -1445,14 +1447,16 @@ void debug_drawTimingGraphBars(void) {
 		} while (var_a1--);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetFillColor(D_8005BB2C++, 0x3E003E);
+		sp30 = D_8005BB2C++;
 		lrxVal = (s32)((u64)((s64)D_80052B38 * 1000000LL) / D_80035610 / 347);
 		lrxVal = (lrxVal + 32) & 0x3FF;
-		gDPFillRectangle(D_8005BB2C++, 32, 194, lrxVal, 199);
+		gDPFillRectangle(sp30, 32, 194, lrxVal, 199);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetFillColor(D_8005BB2C++, 0xF800F800);
+		sp24 = D_8005BB2C++;
 		lrxVal = (s32)((u64)((s64)D_80052B3C * 1000000LL) / D_80035610 / 347);
 		lrxVal = (lrxVal + 32) & 0x3FF;
-		gDPFillRectangle(D_8005BB2C++, 32, 200, lrxVal, 205);
+		gDPFillRectangle(sp24, 32, 200, lrxVal, 205);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
@@ -1486,7 +1490,7 @@ s32 func_80008C44_9844(s32 arg0) {
 	}
 }
 
-// CURRENT(2755)
+// CURRENT(1885)
 #ifdef NON_MATCHING
 void func_80008CA8_98A8(s32 arg0) {
 	Unk80052B40 sp;
@@ -1506,13 +1510,12 @@ void func_80008CA8_98A8(s32 arg0) {
 	gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-
 	frame = D_80031648_32248;
 	gDPSetEnvColor(D_8005BB2C++, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x1E, ((0x1E - ((frame / 4) % 60)) >= 0 ? (0x1E - ((frame / 4) % 60)) : -(0x1E - ((frame / 4) % 60))) + 0x19, (0x14 - ((frame / 10) % 20) >= 0 ? 0x14 - ((frame / 10) % 20) : -(0x14 - ((frame / 10) % 20))) + 0x14, 0xFF);
-	if (arg0 == 0) {
+	if (!arg0) {
 		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, ((0x1E - ((frame / 4) % 60)) >= 0 ? (0x1E - ((frame / 4) % 60)) : -(0x1E - ((frame / 4) % 60))) + 0x23, (0x14 - ((frame / 4) % 40) >= 0 ? 0x14 - ((frame / 4) % 40) : -(0x14 - ((frame / 4) % 40))) + 0x1E, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x28, 0xFF);
 	} else {
-		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x8C, ((0x1E - ((frame / 4) % 60)) >= 0 ? (0x1E - ((frame / 4) % 60)) : -(0x1E - ((frame / 4) % 60))) + 0x23, (0x14 - ((frame / 4) % 40) >= 0 ? 0x14 - ((frame / 4) % 40) : -(0x14 - ((frame / 4) % 40))) + 0x1E, 0xFF);
+		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x8C, (0x1E - ((frame / 4) % 60) >= 0 ? 0x1E - ((frame / 4) % 60) : -(0x1E - ((frame / 4) % 60))) + 0x23, (0x14 - ((frame / 4) % 40) >= 0 ? 0x14 - ((frame / 4) % 40) : -(0x14 - ((frame / 4) % 40))) + 0x1E, 0xFF);
 	}
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPPipeSync(D_8005BB2C++);
@@ -1532,9 +1535,8 @@ void func_80008CA8_98A8(s32 arg0) {
 		D_800313E4_31FE4 = 0;
 	}
 	func_80005110_5D10(0x140, 0xF0, 0xFF, 0xFF, 0xFF);
-	frame = (frame + 1) & 0xFFFF;
-	D_80031648_32248 = frame;
-	if (frame >= 0xFA1) {
+	D_80031648_32248 = (D_80031648_32248 + 1) & 0xFFFF;
+	if (D_80031648_32248 >= 0xFA1) {
 		D_80031648_32248 = 0;
 	}
 }
@@ -1542,7 +1544,7 @@ void func_80008CA8_98A8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008CA8_98A8.s")
 #endif
 
-// CURRENT(10319)
+// CURRENT(10134)
 #ifdef NON_MATCHING
 void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	u8 *texture;
@@ -1592,7 +1594,6 @@ void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	default:
 		texture = D_1011C80;
 		spanY = arg3 - arg1;
-		break;
 	}
 
 	if (spanY >= 0x24U) {
@@ -1688,7 +1689,6 @@ void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800092B8_9EB8.s")
 #endif
-
 s32 func_80009F18_AB18(s32 arg0) {
 	s32 sp1C;
 
