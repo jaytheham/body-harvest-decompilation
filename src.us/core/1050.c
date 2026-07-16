@@ -995,7 +995,7 @@ void func_800021CC_2DCC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800021CC_2DCC.s")
 #endif
 
-// CURRENT(18868)
+// CURRENT(17871)
 #ifdef NON_MATCHING
 void guess_loadSavedGame(s32 arg0) {
 	u32 sp34;
@@ -1008,7 +1008,7 @@ void guess_loadSavedGame(s32 arg0) {
 
 	saveSlot = arg0 * 0x7A + 0x4F;
 	if (validateSaveVersionAndChecksum(saveSlot, 0x76) != 0) {
-		src = &D_800431C0 + saveSlot + 4;
+		src = D_800431C0 + saveSlot + 4;
 		stat = D_80052A98;
 		do {
 			stat->score = *src;
@@ -1097,6 +1097,19 @@ void guess_loadSavedGame(s32 arg0) {
 		D_80048028 = src[0];
 		D_80048028 += src[1] << 8;
 		src += 2;
+		D_8004DC50.unk0 = 0;
+		D_8004DC54 = 0;
+		osSyncPrintf(&D_80036B60_37760);
+		shift = 0;
+		do {
+			s64 shifted = __ll_lshift(*src, shift);
+			u32 newLo = D_8004DC54 + (u32)shifted;
+			D_8004DC50.unk0 = (newLo < D_8004DC54 ? 1 : 0) + (u32)(shifted >> 32) + D_8004DC50.unk0;
+			D_8004DC54 = newLo;
+			src++;
+			shift += 8;
+		} while (shift < 0x40);
+		osSyncPrintf(&D_80036B78_37778, D_8004DC50.unk0, D_8004DC54);
 		D_80052A90 = 0;
 		shift = 0;
 		do {
@@ -1296,54 +1309,61 @@ void func_80002EB0_3AB0(void) { osContStartReadData(&D_80043388); }
 
 void func_80002ED4_3AD4(void) { osContGetReadData(&D_800475B8); }
 
+// https://decomp.me/scratch/VRB5q
+// CURRENT(1200)
 #ifdef NON_MATCHING
-void func_80002EF8_3AF8(void *arg0) {
-	OSMesg sp34;
+void func_80002EF8_3AF8(void *arg0)
+{
+  OSMesg sp34;
+  func_80001424_2024();
+  func_8000FF40_10B40();
+  osContStartReadData(&D_80043388);
+  while (1)
+  {
+	osRecvMesg(&D_80043388, &sp34, 1);
+	func_80002ED4_3AD4();
+	func_8000FF88_10B88();
+	func_80001190_1D90();
+	func_800035D8_41D8(0xA);
+	switch (D_800476A0)
+	{
+	  case 1:
+		if (__osActiveQueue2)
+		  {
+			func_80002CA4_38A4();
+		  }
+		D_800476A0 = 0;
+		break;
 
-	func_80001424_2024(arg0);
+	  case 6:
+		if (__osActiveQueue2)
+		  {
+			guess_saveHighScores();
+		  }
+		D_800476A0 = 0;
+		break;
+
+	  case 3:
+		func_80002D58_3958();
+		D_800476A0 = 0;
+		break;
+
+	  case 4:
+		guess_deleteSavedData();
+		func_80001984_2584();
+		D_800476A0 = 0;
+		break;
+
+	  case 5:
+		func_800020E0_2CE0(D_80047F88, D_80047F8C);
+		D_800476A0 = 0;
+		break;
+	}
+
 	func_8000FF40_10B40();
 	osContStartReadData(&D_80043388);
+  }
 
-	for (;;) {
-		osRecvMesg(&D_80043388, &sp34, OS_MESG_BLOCK);
-		func_80002ED4_3AD4();
-		func_8000FF88_10B88();
-		func_80001190_1D90();
-		func_800035D8_41D8(0xA);
-
-		switch (D_800476A0) {
-		case 1:
-			if (__osActiveQueue2) {
-				func_80002CA4_38A4();
-			}
-			D_800476A0 = 0;
-			break;
-		case 2:
-			break;
-		case 6:
-			if (__osActiveQueue2) {
-				guess_saveHighScores();
-			}
-			D_800476A0 = 0;
-			break;
-		case 3:
-			func_80002D58_3958();
-			D_800476A0 = 0;
-			break;
-		case 4:
-			guess_deleteSavedData();
-			func_80001984_2584();
-			D_800476A0 = 0;
-			break;
-		case 5:
-			func_800020E0_2CE0(D_80047F88, D_80047F8C);
-			D_800476A0 = 0;
-			break;
-		}
-
-		func_8000FF40_10B40();
-		osContStartReadData(&D_80043388);
-	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80002EF8_3AF8.s")

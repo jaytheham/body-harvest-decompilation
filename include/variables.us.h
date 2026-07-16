@@ -690,7 +690,7 @@ extern s32 D_800431A4;
 extern s32 D_800431A8;
 extern s32 D_800431AC;
 extern f32 D_800431B4;
-extern u8 D_800431C0[]; // Save file data. 0x89 (actually 0x4F?) bytes, then 0x7A per save slot
+extern u8 D_800431C0[]; // Save file data. 0x4F bytes, then 0x7A per save slot
 extern u8 D_800431C8;
 extern u8 D_800431C9;
 extern u8 D_80043243;

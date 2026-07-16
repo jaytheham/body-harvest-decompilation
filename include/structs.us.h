@@ -2891,4 +2891,47 @@ typedef struct {
 	/* 0x10 */ f32 targetZ;  // look-at target Z
 } OrbitCam; /* size = 0x14 */
 
+/* Save slot per-area stats in compressed save format (8 bytes each).
+   score: 4 bytes LE (s32)
+   humansKilled: 1 byte
+   secondsElapsed: 3 bytes LE (24-bit) */
+typedef struct {
+	/* 0x00 */ u8 score[4];
+	/* 0x04 */ u8 humansKilled;
+	/* 0x05 */ u8 secondsElapsed[3];
+} SaveAreaStat; /* size = 0x08 */
+
+/* Save slot data section (0x76 bytes), starting at offset +4 within a slot.
+   The slot itself is 0x7A bytes: 4-byte checksum header + 0x76 byte data. */
+typedef struct {
+	/* 0x00 */ SaveAreaStat areaStats[6]; // 48 bytes (6 areas)
+	/* 0x30 */ u8 levelAndArea;          // low nibble=level, high nibble=area stage
+	/* 0x31 */ u8 warpPoint;             // warp point number
+	/* 0x32 */ u8 gameStateFlags[4];     // D_80031420
+	/* 0x36 */ u8 saveData[6];           // D_80047FA8[0..5]
+	/* 0x3C */ u8 weaponSlots[7];        // weaponSlots[0..6]
+	/* 0x43 */ u8 keys[8];              // D_8004DC48 (64-bit flags)
+	/* 0x4B */ u8 dcPacked;              // (D_8004DC5C << 4) | D_8004DC5E
+	/* 0x4C */ u8 artifacts[2];          // D_80048026 (16-bit LE)
+	/* 0x4E */ u8 unk48028[2];          // D_80048028 (16-bit LE)
+	/* 0x50 */ u8 flags2[8];            // D_8004DC50 (64-bit flags)
+	/* 0x58 */ u8 playTime[4];           // D_80052A90 (32-bit LE)
+	/* 0x5C */ u8 beacons;               // D_80047F98
+	/* 0x5D */ u8 d4d154[4];            // D_8004D154 (32-bit LE)
+	/* 0x61 */ u8 d4d158[4];            // D_8004D158 (32-bit LE)
+	/* 0x65 */ u8 weaponDamages[7];      // shifted weapon damage values
+	/* 0x6C */ u8 objective;             // D_80048030
+	/* 0x6D */ u8 gamestateBitflags;     // D_80052ACD
+	/* 0x6E */ u8 unkValues[4];          // D_8004815C/E/60/62
+	/* 0x72 */ u8 pad[4];                // padding to 0x76 bytes
+} SaveSlotData; /* size = 0x76 */
+
+/* Wrapper struct to access save slot data from base + arg0 * 0x7A pointer.
+   The 0x53-byte pad puts SaveSlotData at the correct offset within the slot.
+   Slot layout: base + 0x4F = slot start, data at +4 within slot = base + 0x53. */
+typedef struct {
+	/* 0x00 */ u8 pad[0x53];
+	/* 0x53 */ SaveSlotData data;
+} SaveSlotAccess; /* size = 0x53 + 0x76 = 0xC9 */
+
 #endif
