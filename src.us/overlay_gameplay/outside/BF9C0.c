@@ -145,63 +145,50 @@ u8 D_8013DB00_14CAB0 = 0;
 s32 D_8013DB04_14CAB4 = 0;
 s32 D_8013DB08_14CAB8 = 0;
 
-/* Linear interpolation helper: ((arg3-arg2)*arg0 + arg1*arg2) / arg3 */
+// AI- Linear interpolation helper: ((arg3-arg2)*arg0 + arg1*arg2) / arg3
 s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32)(((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
 }
 
-/* Check if any of the 4 corners of a tile have height difference >= 10 */
-// CURRENT(165)
-#ifdef NON_MATCHING
+// AI - Check if any of the 4 corners of a tile have height difference >= 10
 s32 func_800B0A88_BFA38(s32 arg0, s32 arg1)
 {
-  s32 v0;
-  s32 a0;
-  s32 val0;
-  s32 val1;
-  s32 val2;
+	s32 a0;
+	s32 v0;
+	v0 = (D_80052A94[arg1].col[arg0] & 0x3F) - (D_80052A94[arg1].col[arg0 + 1] & 0x3F);
+	a0 = (-v0 < v0) ? v0 : -v0;
 
-  val0 = *(u16 *)((u8 *)D_80052A94 + (arg1 << 9) + (arg0 << 1)) & 0x3F;
-  val1 = *(u16 *)((u8 *)D_80052A94 + (arg1 << 9) + (arg0 << 1) + 2) & 0x3F;
-  v0 = val0 - val1;
-  a0 = (-v0 < v0) ? v0 : -v0;
-  
-  if (a0 >= 0xA)
-  {
-	return 1;
-  }
+	if (a0 >= 0xA)
+	{
+		return 1;
+	}
 
-  val2 = *(u16 *)((u8 *)D_80052A94 + (arg1 << 9) + (arg0 << 1) + 0x202) & 0x3F;
-  v0 = val1 - val2;
-  a0 = (-v0 < v0) ? v0 : -v0;
-  
-  if (a0 >= 0xA)
-  {
-	return 1;
-  }
+	v0 = (D_80052A94[arg1].col[arg0 + 1] & 0x3F) - (D_80052A94[arg1].col[arg0 + 0x101] & 0x3F);
+	a0 = (-v0 < v0) ? v0 : -v0;
 
-  val1 = *(u16 *)((u8 *)D_80052A94 + (arg1 << 9) + (arg0 << 1) + 0x200) & 0x3F;
-  v0 = val2 - val1;
-  a0 = (-v0 < v0) ? v0 : -v0;
-  
-  if (a0 >= 0xA)
-  {
-	return 1;
-  }
-  v0 = val1 - val0;
-  a0 = (-v0 < v0) ? v0 : -v0;
-  
-  if (a0 >= 0xA)
-  {
-	return 1;
-  }
-  return 0;
+	if (a0 >= 0xA)
+	{
+		return 1;
+	}
+
+	v0 = (D_80052A94[arg1].col[arg0 + 0x101] & 0x3F) - (D_80052A94[arg1].col[arg0 + 0x100] & 0x3F);
+	a0 = (-v0 < v0) ? v0 : -v0;
+
+	if (a0 >= 0xA)
+	{
+		return 1;
+	}
+	v0 = (D_80052A94[arg1].col[arg0 + 0x100] & 0x3F) - (D_80052A94[arg1].col[arg0] & 0x3F);
+	a0 = (-v0 < v0) ? v0 : -v0;
+
+	if (a0 >= 0xA)
+	{
+		return 1;
+	}
+	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0A88_BFA38.s")
-#endif
 
-/* Build a 256x256 bitmask of tiles that have steep height changes (for wireframe overlay) */
+// AI- Build a 256x256 bitmask of tiles that have steep height changes (for wireframe overlay)
 void func_800B0B94_BFB44(void) {
 	u8 *s2;
 	u8 *v0;
@@ -1244,22 +1231,15 @@ void func_800B316C_C211C(s8 arg0, s8 arg1, u16 arg2, u8 arg3) {
 #ifdef NON_MATCHING
 void func_800B31FC_C21AC(s8 arg0, s8 arg1)
 {
-  volatile u8 *v0;
-  u8 temp;
-  u16 temp3;
+  u16 *v0;
+  
+	// D_80052A94 is a ptr to the middle of a [256][256] u16 array
+  v0 = (u8 *)&D_80052A94[arg1].unk0[arg0];
 
-  v0 = (volatile u8 *) ((((u8 *) D_80052A94) + (arg1 * 512)) + (arg0 * 2));
-  temp = *v0;
-  temp |= 0x80;
-  *v0 = temp;
-  temp &= 0xF7;
-  *v0 = temp;
-  temp |= 4;
-  *v0 = temp;
-  temp3 = *((volatile u16 *) v0);
-  temp3 &= 0xFC3F;
-  temp3 |= 0x300;
-  *((volatile u16 *) v0) = temp3;
+	*(u8*)v0 |= 0x80;
+	*(u8*)v0 &= 0xf7;
+	*(u8*)v0 |= 0x4;
+	*v0 = *v0 & 0xFC3F | 0x300;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B31FC_C21AC.s")
@@ -1412,8 +1392,8 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			func_800B2CF0_C1CA0(spAC, spA0, (s8 *)spA8);
 
 			entry = &D_80151DD8.tiles
-				[((((s32)(D_80151DD8.ringY + row) % 19) & 0xFFFF)]
-				[((((s32)(D_80151DD8.ringX + col) % 19) & 0xFFFF)];
+				[(((s32)(D_80151DD8.ringY + row) % 19) & 0xFFFF)]
+				[(((s32)(D_80151DD8.ringX + col) % 19) & 0xFFFF)];
 			entry->r = spA8[0];
 			entry->b = spA8[2];
 			entry->g = spA8[1];
@@ -2814,17 +2794,17 @@ s32 func_800B84D0_C7480(s16 xPosition, s16 zPosition)
   var_t2 = 0;
   if ((xPosInTile + zPosInTile) < 0x100U)
   {
-    var_t0 = *(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x0) & 0x3F;
-    var_t1 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x2) & 0x3F) - var_t0;
-    var_t2 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x200) & 0x3F) - var_t0;
+	var_t0 = *(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x0) & 0x3F;
+	var_t1 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x2) & 0x3F) - var_t0;
+	var_t2 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x200) & 0x3F) - var_t0;
   }
   else
   {
-    xPosInTile = 0x100 - xPosInTile;
-    zPosInTile = 0x100 - zPosInTile;
-    var_t0 = *(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x202) & 0x3F;
-    var_t1 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x200) & 0x3F) - var_t0;
-    var_t2 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x2) & 0x3F) - var_t0;
+	xPosInTile = 0x100 - xPosInTile;
+	zPosInTile = 0x100 - zPosInTile;
+	var_t0 = *(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x202) & 0x3F;
+	var_t1 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x200) & 0x3F) - var_t0;
+	var_t2 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x2) & 0x3F) - var_t0;
   }
   return (((var_t0 << 8) + (var_t1 * xPosInTile)) + (var_t2 * zPosInTile)) << 5;
 }

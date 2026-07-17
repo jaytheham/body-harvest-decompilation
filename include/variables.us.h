@@ -925,7 +925,10 @@ extern s32 D_80052A88;
 extern s32 D_80052A8C;
 extern s16 D_80052A8E;
 extern u32 D_80052A90; // millseconds played in current level
-extern u16 *D_80052A94; // This is a ptr to the middle of D_801FEA30
+typedef struct {
+	u16 col[256];
+} D_801FEA30_Row;
+extern D_801FEA30_Row *D_80052A94;
 extern Unk80052A98 D_80052A98[]; // LevelStats
 extern s16 D_80052AC8;
 extern u8 D_80052ACA;
