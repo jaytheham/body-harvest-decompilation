@@ -287,36 +287,28 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 #endif
 
 // https://decomp.me/scratch/6yUii
-// CURRENT(1746)
+// CURRENT(621)
 #ifdef NON_MATCHING
-void func_80083814_16B8D4(s32 arg0, u8 arg1)
+void func_80083814_16B8D4(s16 arg0, u8 arg1)
 {
-	s16 sp1E;
-	s16 sp22;
-	if (arg0 < 0)
-	{
-		goto fail;
-	}
-	if (arg0 >= 0xC8)
-	{
-		goto fail;
-	}
-	if (arg1 >= 0xF)
-	{
-		goto fail;
-	}
-	if ((D_800FB6F8[arg1].unk0 != 0xB) && (D_800FB6F8[arg1].unk0 != 0xC))
-	{
-		goto fail;
-	}
-	sp1E = ((Unk84EECEffect *)&D_800FB7B0)[arg0].unk4;
-	func_800835F0_16B6B0(arg0, arg1);
-	sp22 = ((Unk84EECEffect *)&D_800FB7B0)[sp1E].unk4;
-	func_800835F0_16B6B0(sp1E, arg1);
-	func_800835F0_16B6B0(sp22, arg1);
-	return;
-fail:
-	osSyncPrintf(&D_800A5128_18D1E8);
+  s16 sp1E;
+  s16 sp22;
+  if (arg0 < 0 ||
+	  arg0 >= 0xC8 ||
+	  arg1 >= 0xF ||
+	  ((D_800FB6F8[arg1].unk0 != 0xB) && (D_800FB6F8[arg1].unk0 != 0xC)))
+  {
+	
+  } else {
+	  sp1E = D_800FB7B0[arg0].unk4;
+	  func_800835F0_16B6B0((s32)arg0, arg1);
+	  sp22 = D_800FB7B0[sp1E].unk4;
+	
+	  func_800835F0_16B6B0((s32)sp1E, arg1);
+	  func_800835F0_16B6B0(sp22, arg1);
+	  return;
+  }
+  osSyncPrintf(&D_800A5128_18D1E8);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083814_16B8D4.s")
@@ -692,56 +684,42 @@ void func_80084628_16C6E8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084628_16C6E8.s")
 #endif
 
-// CURRENT(3598)
+// CURRENT(3725)
 #ifdef NON_MATCHING
-void func_80084980_16CA40(s32 arg0, s32 arg1) {
-	Unk84EECEffect *entry;
-	s16 *baseFields;
-	s16 baseIdx;
-	s16 effect;
-	s16 spread;
-	u16 quarter;
-	s32 rnd;
+void func_80084980_16CA40(u8 arg0, u8 arg1)
+{
+  s16 baseIdx;
+  s16 effect;
+  s16 spread;
+  u16 quarter;
+  baseIdx = D_800FB6F8[arg0].unk6;
+  spread = D_800FB7B0[baseIdx].unk2;
+  if (arg1 == 0xFB)
+  {
+	return;
+  }
+  effect = func_80083390_16B450(arg1);
+  if (effect == -3)
+  {
+	return;
+  }
 
-	// is arg0 actually u8? It is masked with 0xFF in the first line, so it might be
-	baseIdx = D_800FB6F8[arg0 & 0xFF].unk6;
-	baseFields = &D_800FB7B0[baseIdx].unk8;
-	spread = baseFields[-3];
+  quarter = spread / 4;
+  D_800FB7B0[effect].unk2 = (func_800038E0_44E0() % 5) + quarter;
 
-	// is arg1 actually u8 too?
-	if ((arg1 & 0xFF) == 0xFB) {
-		return;
-	}
+  D_800FB7B0[effect].unk8 = (D_800FB7B0[baseIdx].unk8 + ((func_800038E0_44E0() % spread) / 2)) - quarter;
+	
+  D_800FB7B0[effect].unkA = ((func_800038E0_44E0() % 0xa) + D_800FB7B0[baseIdx].unkA) + quarter;
 
-	effect = func_80083390_16B450(arg1 & 0xFF);
-	if (effect == -3) {
-		return;
-	}
+  D_800FB7B0[effect].unkC = (D_800FB7B0[baseIdx].unkC + ((func_800038E0_44E0() % spread) / 2)) - quarter;
+  D_800FB7B0[effect].unk11 = 0x3C;
+  D_800FB7B0[effect].unk12 = 0;
 
-	rnd = func_800038E0_44E0();
-	quarter = spread / 4;
-	D_800FB7B0[effect].unk2 = (rnd % 5) + quarter;
+  D_800FB7B0[effect].unkE = (func_800038E0_44E0() % 0x1E) + 0xB4;
 
-	rnd = func_800038E0_44E0();
-	entry = &D_800FB7B0[effect];
-	entry->unk8 = baseFields[0] + ((rnd % spread) / 2) - quarter;
+  D_800FB7B0[effect].unkF = (func_800038E0_44E0() % 0x1E) + 0xA0;
 
-	rnd = func_800038E0_44E0();
-	entry->unkA = (rnd % 0xA) + baseFields[1] + quarter;
-
-	rnd = func_800038E0_44E0();
-	entry->unkC = baseFields[2] + ((rnd % spread) / 2) - quarter;
-	entry->unk11 = 0x3C;
-	entry->unk12 = 0;
-
-	rnd = func_800038E0_44E0();
-	entry->unkE = (rnd % 0x1E) + 0xB4;
-
-	rnd = func_800038E0_44E0();
-	entry->unkF = (rnd % 0x1E) + 0xA0;
-
-	rnd = func_800038E0_44E0();
-	entry->unk10 = (rnd % 0x1E) + 0xA0;
+  D_800FB7B0[effect].unk10 = (func_800038E0_44E0() % 0x1E) + 0xA0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084980_16CA40.s")
@@ -1498,12 +1476,12 @@ void func_80086B34_16EBF4(s32 arg0) {
 
 	slotIdx = arg0 & 0xFF;
 	slot = &D_800FB6F8[slotIdx];
-	head = &((Unk84EECEffect *)&D_800FB7B0)[slot->unk6];
+	head = &D_800FB7B0[slot->unk6];
 	effect = head->unk4;
 
 	if ((effect != -5) && (effect != -6)) {
 		do {
-			Unk84EECEffect = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+			Unk84EECEffect = &D_800FB7B0[effect];
 
 			Unk84EECEffect->unk8 += Unk84EECEffect->unk12;
 			Unk84EECEffect->unkC += Unk84EECEffect->unk14;
