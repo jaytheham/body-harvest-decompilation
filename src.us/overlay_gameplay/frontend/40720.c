@@ -4125,9 +4125,6 @@ void func_8007A038_4A4E8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A038_4A4E8.s")
 #endif
 
-/**
- * @brief Simple wrapper calling func_8007C7F4_4CCA4.
- */
 void func_8007A754_4AC04(void) {
 	func_8007C7F4_4CCA4();
 }
