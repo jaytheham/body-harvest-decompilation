@@ -460,18 +460,18 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 	}
 }
 
-// CURRENT(375)
+// CURRENT(80)
 #ifdef NON_MATCHING
 void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	u8 slot;
 	s32 effect;
 	Unk84EECEffect *entry;
-	s32 count;
 	s32 i;
+	s32 count;
 
-	effect = func_80083224_16B2E4(2);
+	slot = func_80083224_16B2E4(2);
+	effect = slot;
 	if (effect != 0xFB) {
-		slot = effect;
 		effect = func_80083390_16B450(slot);
 		if (effect == -3) {
 			osSyncPrintf(&D_800A5248_18D308);
@@ -479,22 +479,20 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 			return;
 		}
 
-		// Surely this should actually reference some property of entry or D_800FB7B0
-		// D_800FB702 is a fake symbol, it should be a property of D_800FB7B0 or entry
-		*(&D_800FB702 + (slot * 6)) = effect;
-		entry = &((Unk84EECEffect *)D_800FB7B0)[effect];
+		*(s16 *)((u8 *)&D_800FB702 + slot * 12) = effect;
+		entry = &D_800FB7B0[effect];
 		count = arg5;
+		arg5 += 0;
 
 		entry->unk8 = arg0 * 4;
 		entry->unkA = arg1 * 4;
-		arg5 += 0;
 		entry->unkC = arg2 * 4;
 		entry->unkE = 0xFF;
 		entry->unkF = 0xFF;
 		entry->unk10 = 0xFF;
 		entry->unk12 = 2;
 		entry->unk2 = arg6;
-		entry->unk14 = arg3;
+		*(s16 *)&entry->unk14 = arg3;
 		entry->unk11 = arg4;
 
 		if (count >= 0x33) {
