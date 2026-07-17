@@ -141,12 +141,14 @@ Unk_8013D91C D_8013D91C[6] = {
 };
 
 
+// AI - Clear global if flag match
 void func_800A92E0_B8290(u8 arg0, s32 arg1) {
 	if ((alienInstances[arg0].unk20 & arg1) == arg1) {
 		D_80140AC4_14FA74 = 0;
 	}
 }
 
+// AI - Add spec position offsets
 void func_800A931C_B82CC(s8 arg0, s16 *arg1, s32 *arg2) {
 	func_800044D4_50D4(arg1, arg2, &D_8014DD50[(s32)arg0].unk6);
 	arg2[0] += D_8014DD50[(s32)arg0].unk0;
@@ -156,6 +158,7 @@ void func_800A931C_B82CC(s8 arg0, s16 *arg1, s32 *arg2) {
 
 /* CURRENT(2517) */
 #ifdef NON_MATCHING
+// AI - Position child relative to parent with rotation
 void func_800A93A4_B8354(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	AlienInstance *inst;
 	AlienInstance *parent;
@@ -221,6 +224,7 @@ void func_800A93A4_B8354(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
 // https://decomp.me/scratch/7WPiF
 // CURRENT(450)
 #ifdef NON_MATCHING
+// AI - Propagate flag set to squad
 void func_800A9738_B86E8(u8 arg0, s32 arg1) {
 	AlienInstance *parent;
 
@@ -244,6 +248,7 @@ void func_800A9738_B86E8(u8 arg0, s32 arg1) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Propagate flag clear to squad
 void func_800A9820_B87D0(u8 arg0, s32 arg1) {
 	AlienInstance *parent;
 
@@ -266,6 +271,7 @@ void func_800A9820_B87D0(u8 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9820_B87D0.s")
 #endif
 
+// AI - Navigate zone hierarchy
 void func_800A9908_B88B8(u8 arg0, s32 arg1) {
 	s16 sp38[4];
 	s32 sp30;
@@ -281,6 +287,7 @@ void func_800A9908_B88B8(u8 arg0, s32 arg1) {
 	}
 }
 
+// AI - Rotate to face player
 void func_800A99B8_B8968(u8 arg0)
 {
   int new_var;
@@ -345,6 +352,7 @@ s32 func_800A9A90_B8A40(u8 arg0, s32 arg1, f32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9A90_B8A40.s")
 #endif
 
+// AI - Clear teleport flags callback
 void func_800A9DC0_B8D70(func_800A9DC0_B8D70_arg *arg0) {
 	s32 idx = arg0->unk8;
 	AlienInstance *temp2 = &alienInstances[alienInstances[idx].unk25];
@@ -354,6 +362,7 @@ void func_800A9DC0_B8D70(func_800A9DC0_B8D70_arg *arg0) {
 	temp->unk20 &= ~(0x20000000 | 0x400000);
 }
 
+// AI - Teleport alien to position
 void func_800A9E1C_B8DCC(Unk80222A78 *arg0)
 {
   u8 alienIdx;
@@ -385,6 +394,7 @@ void func_800A9E1C_B8DCC(Unk80222A78 *arg0)
 
 // CURRENT(11373)
 #ifdef NON_MATCHING
+// AI - Detect stuck and teleport
 s32 func_800A9F34_B8EE4(u8 arg0) {
 	AlienInstance *alien;
 	AlienInstance *parent;
@@ -465,6 +475,7 @@ s32 func_800A9F34_B8EE4(u8 arg0) {
 
 // CURRENT(27211)
 #ifdef NON_MATCHING
+// AI - Death explosion effects
 void func_800AA340_B92F0(u8 arg0) {
 	s16 spD6;
 	u16 spBC;
@@ -666,6 +677,7 @@ void func_800AA340_B92F0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AA340_B92F0.s")
 #endif
 
+// AI - Check player proximity
 s32 func_800AB250_BA200(u8 arg0, s32 arg1) {
 	AlienInstance *ptr;
 	s32 dx;
@@ -686,6 +698,7 @@ s32 func_800AB250_BA200(u8 arg0, s32 arg1) {
 	return 0;
 }
 
+// AI - Reset on fall
 void func_800AB32C_BA2DC(u8 arg0) {
 	if (D_80222A70 >= alienInstances[arg0].unk2) {
 		func_80088760_97710(&alienInstances[arg0]);
@@ -693,6 +706,7 @@ void func_800AB32C_BA2DC(u8 arg0) {
 	}
 }
 
+// AI - Trigger behavior state
 void func_800AB390_BA340(u8 arg0) {
 	if (func_80080840_8F7F0(arg0, 0x19)) {
 		alienInstances[arg0].unk20 |= 0x80;
@@ -702,6 +716,7 @@ void func_800AB390_BA340(u8 arg0) {
 	func_800AB32C_BA2DC(arg0);
 }
 
+// AI - Check escape vehicle proximity
 void func_800AB408_BA3B8(u8 arg0) {
 	s32 temp_a0;
 	s32 temp_v1;
@@ -718,6 +733,7 @@ void func_800AB408_BA3B8(u8 arg0) {
 	}
 }
 
+// AI - Check vehicle follow range
 void func_800AB4B4_BA464(u8 arg0) {
 	VehicleInstance *spec;
 	s32 dx, dz, ndx, ndz;
@@ -743,6 +759,7 @@ void func_800AB4B4_BA464(u8 arg0) {
 // https://decomp.me/scratch/xQVGn
 // CURRENT(195)
 #ifdef NON_MATCHING
+// AI - Acquire target position
 void func_800AB570_BA520(u8 arg0)
 {
   s16 targetX;
@@ -786,14 +803,17 @@ void func_800AB570_BA520(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB570_BA520.s")
 #endif
 
+// AI - Gradual yaw rotation
 void func_800AB6D0_BA680(u8 arg0) {
 	alienInstances[arg0].unkE += 0x100;
 }
 
+// AI - Fast yaw rotation
 void func_800AB700_BA6B0(u8 arg0) {
 	alienInstances[arg0].unkE += 0x400;
 }
 
+// AI - Evade player proximity
 void func_800AB730_BA6E0(u8 arg0) {
 	s32 dx;
 	s32 dz;
@@ -828,6 +848,7 @@ void func_800AB730_BA6E0(u8 arg0) {
 	alienInstances[arg0].unk48 = 0xC0;
 }
 
+// AI - Process state input
 void func_800AB80C_BA7BC(u8 arg0) {
 	s32 dummy1, dummy2, dummy3, dummy4;
 	alienInstances[arg0].unk48 = 0xC0;
@@ -846,6 +867,7 @@ void func_800AB80C_BA7BC(u8 arg0) {
 
 // CURRENT(5564)
 #ifdef NON_MATCHING
+// AI - Follow squad leader
 void func_800AB8CC_BA87C(u8 arg0) {
 	AlienInstance *inst = &alienInstances[arg0];
 	AlienInstance *spec = &alienInstances[inst->unk25];
@@ -908,6 +930,7 @@ void func_800AB8CC_BA87C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB8CC_BA87C.s")
 #endif
 
+// AI - Stun knockback timer
 void func_800ABC2C_BABDC(u8 arg0) {
 	AlienInstance *ptr = &alienInstances[arg0];
 
@@ -926,6 +949,7 @@ void func_800ABC2C_BABDC(u8 arg0) {
 
 // CURRENT(20)
 #ifdef NON_MATCHING
+// AI - Dispatch behavior states
 s32 func_800ABCC8_BAC78(u8 arg0) {
 	if (alienInstances[arg0].unk20 & 0x600) {
 		switch (alienInstances[arg0].unk24) {
@@ -1032,6 +1056,7 @@ s32 func_800ABCC8_BAC78(u8 arg0) {
 
 // CURRENT(145)
 #ifdef NON_MATCHING
+// AI - Pick random wander point
 void func_800ABE7C_BAE2C(u8 arg0) {
 	s32 rnd;
 	s32 x = alienInstances[arg0].unk0 >> 8;
@@ -1067,6 +1092,7 @@ void func_800ABE7C_BAE2C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ABE7C_BAE2C.s")
 #endif
 
+// AI - Wander patrol behavior
 void func_800ABFC0_BAF70(u8 arg0)
 {
 	s32 pad;
@@ -1082,6 +1108,7 @@ void func_800ABFC0_BAF70(u8 arg0)
   func_800AC198_BB148(arg0);
 }
 
+// AI - Alternate sub-states
 void func_800AC064_BB014(u8 arg0) {
 
 	if (alienInstances[arg0].unk3A != 0) {
@@ -1094,6 +1121,7 @@ void func_800AC064_BB014(u8 arg0) {
 	}
 }
 
+// AI - Vehicle passenger AI
 void func_800AC0E4_BB094(u8 arg0)
 {
   AlienInstance *alien;
@@ -1113,6 +1141,7 @@ void func_800AC0E4_BB094(u8 arg0)
 }
 
 #ifdef NON_MATCHING
+// AI - Enforce zone boundary
 void func_800AC198_BB148(u8 arg0) {
 	AlienInstance *alien;
 	s8 zoneIdx;
@@ -1157,6 +1186,7 @@ void func_800AC198_BB148(u8 arg0) {
 
 // CURRENT (4284)
 #ifdef NON_MATCHING
+// AI - Select target
 s32 func_800AC2FC_BB2AC(u8 arg0) {
 	AlienInstance *s0;
 	AlienInstance *v1;
@@ -1235,6 +1265,7 @@ s32 func_800AC2FC_BB2AC(u8 arg0) {
 
 // CURRENT(8459)
 #ifdef NON_MATCHING
+// AI - Avoid vehicle collision
 void func_800AC5BC_BB56C(u8 arg0) {
 	AlienInstance *alien;
 	s32 triggered;
@@ -1325,6 +1356,7 @@ void func_800AC5BC_BB56C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC5BC_BB56C.s")
 #endif
 
+// AI - Manage stamina timer
 s32 func_800ACA3C_BB9EC(u8 arg0) {
 	AlienInstance *ptr = &alienInstances[arg0];
 	s32 flags = ptr->unk20;
@@ -1359,6 +1391,7 @@ s32 func_800ACA3C_BB9EC(u8 arg0) {
 	return 1;
 }
 
+// AI - Validate current target
 void func_800ACB3C_BBAEC(u8 arg0) {
 
 	if ((alienInstances[arg0].unk20 & 0x80) &&
@@ -1384,6 +1417,7 @@ void func_800ACB3C_BBAEC(u8 arg0) {
 
 // CURRENT(4106)
 #ifdef NON_MATCHING
+// AI - Update building-spawned AI
 void func_800ACC5C_BBC0C(s32 arg0) {
 	BuildingInstance *building;
 	AlienInstance *inst;
@@ -1447,6 +1481,7 @@ block_12:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ACC5C_BBC0C.s")
 #endif
 
+// AI - Update free-roam AI
 void func_800ACE40_BBDF0(u8 arg0) {
 	AlienInstance *inst;
 	s32 flags;
@@ -1488,6 +1523,7 @@ void func_800ACE40_BBDF0(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
+// AI - Alert nearby aliens
 void func_800ACF9C_BBF4C(u8 arg0) {
 	u8 *ptr;
 	u8 *end;
@@ -1561,6 +1597,7 @@ void func_800ACF9C_BBF4C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ACF9C_BBF4C.s")
 #endif
 
+// AI - Snap to grid target
 void func_800AD0F0_BC0A0(u8 arg0) {
 	s16 xPos, zPos;
 	s16 xOff, zOff;
@@ -1600,6 +1637,7 @@ void func_800AD0F0_BC0A0(u8 arg0) {
 	}
 }
 
+// AI - Spawn at building
 u8 func_800AD240_BC1F0(u8 arg0)
 {
 	s16 sp2E;
@@ -1635,6 +1673,7 @@ u8 func_800AD240_BC1F0(u8 arg0)
 
 // CURRENT(973)
 #ifdef NON_MATCHING
+// AI - Spawn building defender
 s32 func_800AD3BC_BC36C(u8 arg0) {
 	s16 xPos;
 	s16 yPos;
@@ -1683,6 +1722,7 @@ s32 func_800AD3BC_BC36C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD3BC_BC36C.s")
 #endif
 
+// AI - Spawn at coordinates
 u8 func_800AD554_BC504(s32 arg0, s32 arg1, s32 arg2) {
 	u8 idx;
 	AlienInstance *ptr;
@@ -1713,6 +1753,7 @@ u8 func_800AD554_BC504(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 #ifdef NON_MATCHING
+// AI - Compute vehicle offset
 void func_800AD698_BC648(VehicleInstance *arg0, s32 *arg1, s32 *arg2) {
 	s16 sp3E;
 	s16 sp3C;
@@ -1736,6 +1777,7 @@ void func_800AD698_BC648(VehicleInstance *arg0, s32 *arg1, s32 *arg2) {
 
 // CURRENT(280)
 #ifdef NON_MATCHING
+// AI - Set behavior state
 void func_800AD814_BC7C4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	AlienInstance *ptr;
 	s32 temp;
@@ -1853,6 +1895,7 @@ void func_800AD814_BC7C4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AD814_BC7C4.s")
 #endif
 
+// AI - Spawn and transition state
 u8 func_800ADA70_BCA20(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	u8 idx;
 	AlienInstance *ptr;
@@ -1867,6 +1910,7 @@ u8 func_800ADA70_BCA20(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	return idx;
 }
 
+// AI - Cleanup alien
 void func_800ADAF8_BCAA8(u8 arg0) {
 	func_800873A8_96358(arg0);
 	if (alienInstances[arg0].unk24 == 4) {
@@ -1876,6 +1920,7 @@ void func_800ADAF8_BCAA8(u8 arg0) {
 
 // CURRENT(5204)
 #ifdef NON_MATCHING
+// AI - Combat AI state machine
 void func_800ADB4C_BCAFC(u8 arg0) {
 	AlienInstance *alien;
 	s32 state;
@@ -2046,16 +2091,19 @@ void func_800ADB4C_BCAFC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ADB4C_BCAFC.s")
 #endif
 
+// AI - Cleanup wrapper
 void func_800ADFC0_BCF70(u8 arg0) {
 	func_800873A8_96358(arg0);
 }
 
+// AI - Cleanup wrapper
 void func_800ADFE8_BCF98(u8 arg0) {
 	func_800873A8_96358(arg0);
 }
 
 // CURRENT(3424)
 #ifdef NON_MATCHING
+// AI - Escalate player proximity
 void func_800AE010_BCFC0(u8 arg0) {
 	s32 dx;
 	s32 dz;
@@ -2100,16 +2148,19 @@ void func_800AE010_BCFC0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AE010_BCFC0.s")
 #endif
 
+// AI - Add to globals
 void func_800AE190_BD140(s16 arg0) {
 	D_8004816A += arg0;
 	D_80048170 += arg0;
 }
 
+// AI - Increment globals
 void func_800AE1C0_BD170(void) {
 	D_8004816A += 1;
 	D_8004816E += 1;
 }
 
+// AI - Switch all idle aliens
 void func_800AE1EC_BD19C(void) {
 	s16 i;
 
