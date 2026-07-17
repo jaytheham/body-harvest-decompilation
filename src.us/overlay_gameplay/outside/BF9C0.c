@@ -1446,11 +1446,11 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 /* Copy a 19x19 tile region from the world map into the ring buffer and compute vertex colors */
 // https://decomp.me/scratch/TODO
 #ifdef NON_MATCHING
-// CURRENT(2050)
+// CURRENT(2065)
 void func_800B4050_C3000(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s32 t1;
-	s32 v0;
 	s32 v1;
+	s32 v0;
 	s32 a0;
 	s32 a1;
 
@@ -1459,10 +1459,10 @@ void func_800B4050_C3000(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	D_80151DD8.mapPosY = arg1;
 	D_8014F89C = arg0;
 	D_8014F89D = arg1;
-	for (t1 = 0, v0 = 0; v0 < 0x13; t1 = (t1 + 1) & 0xFF, v0 = t1) {
-		a1 = (arg1 + v0) << 8;
-		for (v1 = 0, a0 = 0; a0 < 0x13; a0 = (v1 + 1) & 0xFF, v1 = a0) {
-			D_80151DD8.tiles[t1][v1].tileType = ((u16 *)arg2)[(u16)((arg0 + a0) + a1)];
+	for (t1 = 0, v1 = 0; v1 < 0x13; t1 = (t1 + 1) & 0xFF, v1 = t1) {
+		a1 = (arg1 + v1) << 8;
+		for (v0 = 0, a0 = 0; a0 < 0x13; a0 = (v0 + 1) & 0xFF, v0 = a0) {
+			D_80151DD8.tiles[t1][v0].tileType = ((u16 *)arg2)[(u16)((arg0 + a0) + a1)];
 		}
 	}
 	D_80151DD8.ringY = 0;
@@ -2204,8 +2204,8 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5090_C4040.s")
 #endif
 
-/* Record a road/angled tile into the rotated-tile draw buffer; returns 0 if recorded, 1 if standard quad */
 #ifdef NON_MATCHING
+// CURRENT(1202)
 s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	arg3 &= 0xFF;
 
@@ -2830,6 +2830,7 @@ s32 func_800B85CC_C757C(s16 arg0, s16 arg1) {
 
 /* Get minimum terrain height of the 4 corners of a tile */
 #ifdef NON_MATCHING
+// CURRENT(294)
 s16 func_800B8688_C7638(s8 arg0, s8 arg1) {
 	s16 temp_a2;
 	s16 temp_t0;
