@@ -758,7 +758,7 @@ s32 func_80084C18_16CCD8(u8 arg0)
 	return result;
 }
 
-// CURRENT(8388)
+// CURRENT(6485)
 #ifdef NON_MATCHING
 u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	UnkFB6F8Entry *owner;
@@ -767,69 +767,65 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 	u8 slot;
 	s16 effect;
 
-	slot = func_80083224_16B2E4(0);
-	if (slot == 0xFB) {
-		return slot;
+	if ((slot = func_80083224_16B2E4(0)) != 0xFB) {
+		effect = func_80083584_16B644(slot);
+		if (effect == -3) {
+			osSyncPrintf(D_800A52E8_18D3A8);
+			func_80083300_16B3C0(slot);
+			return 0xFB;
+		}
+
+		entry = &D_800FB7B0[effect];
+		owner = &D_800FB6F8[slot];
+
+		entry->unk8 = arg0 * 4;
+		owner->unkA = effect;
+		entry->unkC = arg2 * 4;
+		linked = &D_800FB7B0[entry->unk4];
+		entry->unkA = arg1 * 4;
+		linked->unkC = 0;
+
+		entry->unkE = arg5;
+		entry->unkF = arg6;
+		entry->unk10 = arg7;
+
+		if (arg4 == 0xFFFF) {
+			entry->unk2 = arg3;
+		} else {
+			entry->unk2 = arg3 / 16;
+		}
+
+		if (entry->unk2 < 0x10) {
+			entry->unk2 = 0x10;
+		}
+
+		linked->unkA = arg3;
+		if (linked->unkA < 0x18) {
+			linked->unkA = 0x18;
+		}
+
+		linked->unk8 = arg4;
+
+		if ((u16)(arg5 + ((arg5 / 3) & 0xFF)) >= 0x100) {
+			entry->unk11 = 0xFF;
+		} else {
+			entry->unk11 = (u16)(arg5 + ((arg5 / 3) & 0xFF));
+		}
+
+		if ((u16)(arg6 + ((arg6 / 3) & 0xFF)) >= 0x100) {
+			entry->unk12 = 0xFF;
+		} else {
+			entry->unk12 = (u16)(arg6 + ((arg6 / 3) & 0xFF));
+		}
+
+		if ((u16)(arg7 + ((arg7 / 3) & 0xFF)) >= 0x100) {
+			entry->unk13 = 0xFF;
+		} else {
+			entry->unk13 = (u16)(arg7 + ((arg7 / 3) & 0xFF));
+		}
+
+		owner->unk2 = func_80084C18_16CCD8(slot);
 	}
-
-	effect = func_80083584_16B644(slot);
-	if (effect == -3) {
-		osSyncPrintf(D_800A52E8_18D3A8);
-		func_80083300_16B3C0(slot);
-		return 0xFB;
-	}
-
-	owner = &D_800FB6F8[slot];
-	entry = &D_800FB7B0[effect];
-
-	entry->unk8 = arg0 * 4;
-	// This should probably be a struct access instead of pointer arithmetic:
-	*(s16 *)((u8 *)owner + 0xA) = effect;
-	entry->unkC = arg2 * 4;
-	linked = &D_800FB7B0[entry->unk4];
-	entry->unkA = arg1 * 4;
-	linked->unkC = 0;
-
-	entry->unkE = arg5;
-	entry->unkF = arg6;
-	entry->unk10 = arg7;
-
-	if (arg4 == 0xFFFF) {
-		entry->unk2 = arg3;
-	} else {
-		entry->unk2 = arg3 / 16;
-	}
-
-	if (entry->unk2 < 0x10) {
-		entry->unk2 = 0x10;
-	}
-
-	linked->unkA = arg3;
-	if (linked->unkA < 0x18) {
-		linked->unkA = 0x18;
-	}
-
-	linked->unk8 = arg4;
-
-	if ((u16)(arg5 + ((arg5 / 3) & 0xFF)) >= 0x100) {
-		entry->unk11 = 0xFF;
-	} else {
-		entry->unk11 = (u16)(arg5 + ((arg5 / 3) & 0xFF));
-	}
-
-	if ((u16)(arg6 + ((arg6 / 3) & 0xFF)) >= 0x100) {
-		entry->unk12 = 0xFF;
-	} else {
-		entry->unk12 = (u16)(arg6 + ((arg6 / 3) & 0xFF));
-	}
-
-	if ((u16)(arg7 + ((arg7 / 3) & 0xFF)) >= 0x100) {
-		entry->unk13 = 0xFF;
-	} else {
-		entry->unk13 = (u16)(arg7 + ((arg7 / 3) & 0xFF));
-	}
-
-	owner->unk2 = func_80084C18_16CCD8(slot);
 
 	return slot;
 }
