@@ -1895,7 +1895,7 @@ void func_80087CB8_16FD78(s32 arg0) {
 		sp58[0] = effect->unk8;
 		sp58[1] = effect->unkA;
 		sp58[2] = effect->unkC;
-		func_80089148_171208(sp58, color, effectBase[entry->unk6].unk2, effect->unk11);
+		func_80089148_171208(sp58, (u8 *)color, effectBase[entry->unk6].unk2, effect->unk11);
 		next = effect->unk4;
 		} while ((next != -5) && (next != -6));
 	}
@@ -2298,23 +2298,22 @@ void func_80088DFC_170EBC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088DFC_170EBC.s")
 #endif
 
+// CURRENT(60)
 #ifdef NON_MATCHING
-void func_80089148_171208(f32 *arg0, s8 *arg1, u16 arg2, u8 arg3) {
+void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
+	f32 sp4;
 	f32 temp_f0;
-	f32 temp_f2;
 	f32 temp_f12;
 	f32 temp_f14;
 	f32 temp_f16;
 	f32 temp_f18;
-	f32 temp_f4;
 
-	temp_f2 = (f32)arg2;
-	temp_f0 = D_800FB6A8.x * temp_f2;
-	temp_f12 = D_800FB6A8.y * temp_f2;
-	temp_f14 = D_800FB6A8.z * temp_f2;
-	temp_f16 = D_800FB6B4.x * temp_f2;
-	temp_f18 = D_800FB6B4.y * temp_f2;
-	temp_f4 = D_800FB6B4.z * temp_f2;
+	temp_f0 = D_800FB6A8[0] * (f32)arg2;
+	temp_f12 = D_800FB6A8[1] * (f32)arg2;
+	temp_f14 = D_800FB6A8[2] * (f32)arg2;
+	temp_f16 = D_800FB6A8[3] * (f32)arg2;
+	temp_f18 = D_800FB6A8[4] * (f32)arg2;
+	sp4 = D_800FB6A8[5] * (f32)arg2;
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(arg0[0] + temp_f0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(arg0[1] + temp_f12);
@@ -2330,7 +2329,7 @@ void func_80089148_171208(f32 *arg0, s8 *arg1, u16 arg2, u8 arg3) {
 	D_8005BB34++;
 	D_8005BB34->v.ob[0] = (s16)(s32)(arg0[0] + temp_f16);
 	D_8005BB34->v.ob[1] = (s16)(s32)(arg0[1] + temp_f18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(arg0[2] + temp_f4);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0[2] + sp4);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;

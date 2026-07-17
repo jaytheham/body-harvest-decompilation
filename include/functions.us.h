@@ -529,7 +529,7 @@ s32 func_80127C08_136BB8(void *, s16, s16, s16, s16, s16, s16, s32 *);
 s32 func_80080840_8F7F0(u8, s32);
 s32 func_800808F0_8F8A0(u8, s16 *);
 s16 func_80081390_90340(u8);
-void func_80089148_171208(f32 *arg0, s8 *arg1, u16 arg2, u8 arg3);
+void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3);
 void func_80089408_1714C8(s32 arg0);
 void func_80089E54_171F14(void);
 void func_8008A1D8_172298(void);
