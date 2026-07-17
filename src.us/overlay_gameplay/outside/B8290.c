@@ -1918,19 +1918,15 @@ void func_800ADAF8_BCAA8(u8 arg0) {
 	}
 }
 
-// CURRENT(5204)
+// CURRENT(3367)
 #ifdef NON_MATCHING
 // AI - Combat AI state machine
 void func_800ADB4C_BCAFC(u8 arg0) {
 	AlienInstance *alien;
 	s32 state;
 	s32 temp;
-	s32 v0;
-	s32 v1;
-	s32 a0;
-	s32 a1;
-	s32 a2;
-	s32 a3;
+	s32 dx;
+	s32 dz;
 	u8 mode;
 
 	alien = &alienInstances[arg0];
@@ -1948,47 +1944,25 @@ void func_800ADB4C_BCAFC(u8 arg0) {
 	mode = alien->unk24;
 	switch (mode - 1) {
 		case 0:
-			v1 = alien->unk0 - D_80052B34->unk0;
-			a1 = -v1;
-			if (a1 < v1) {
-				a3 = v1;
+			dx = alien->unk0 - D_80052B34->unk0;
+			dz = alien->unk4 - D_80052B34->unk4;
+
+			if ((-dx < dx ? dx : -dx) < (-dz < dz ? dz : -dz)) {
+				temp = -dx < dx ? dx : -dx;
 			} else {
-				a3 = a1;
+				temp = -dz < dz ? dz : -dz;
 			}
 
-			a0 = alien->unk4 - D_80052B34->unk4;
-			v0 = -a0;
-			if (v0 < a0) {
-				a2 = a0;
-			} else {
-				a2 = v0;
-			}
-
-			if (a2 < a3) {
-				if (a1 < v1) {
-					a2 = v1;
-				} else {
-					a2 = v0;
-				}
-			} else {
-				if (v0 < a0) {
-					a2 = v0;
-				} else {
-					a2 = a0;
-				}
-			}
-
-			temp = func_80084FE8_93F98(arg0, 0x1000);
-			if (a2 < 0x320) {
-				if (temp != 0) {
+			state = func_80084FE8_93F98(arg0, 0x1000);
+			if (temp < 0x320) {
+				if (state != 0) {
 					alien->unk20 |= 0x1000;
 				} else {
 					alien->unk20 &= ~0x1000;
 				}
-			} else if ((a2 >= 0x3E9) || (temp == 0)) {
+			} else if ((temp >= 0x3E9) || (state == 0)) {
 				alien->unk20 &= ~0x1000;
 			}
-
 			alien->unk20 |= 0x08000100;
 			break;
 
@@ -2002,6 +1976,9 @@ void func_800ADB4C_BCAFC(u8 arg0) {
 			break;
 
 		case 2:
+			break;
+
+		case 3:
 			if ((alien->unk20 << 0xA) >= 0) {
 				func_8008554C_944FC(arg0);
 				if ((func_80084FE8_93F98(arg0, 0x1000) != 0) && (alien->unk4E != 0)) {
@@ -2009,13 +1986,13 @@ void func_800ADB4C_BCAFC(u8 arg0) {
 				}
 				alien->unk12 = 0;
 				alien->unk20 |= 0x08000100;
-				if (alien->hitPoints < ((s16)alienSpecs[0x12].unk3A / 4)) {
+				if (alien->hitPoints < ((s32)alienSpecs[0x12].unk3A / 4)) {
 					func_80087AAC_96A5C(arg0);
 				}
 			}
 			break;
 
-		case 3:
+		case 7:
 			if ((alien->unk20 << 0xA) >= 0) {
 				func_800808F0_8F8A0(arg0, &alien->unkE);
 				alien->unk12 = 0;
@@ -2076,7 +2053,6 @@ void func_800ADB4C_BCAFC(u8 arg0) {
 			break;
 
 		case 6:
-		case 7:
 			break;
 
 		default:
