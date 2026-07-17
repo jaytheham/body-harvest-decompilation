@@ -33,7 +33,7 @@ f32 func_80082FC4_16B084(Vec3f *arg0) {
 	return var_f12;
 }
 
-// CURRENT(502)
+// CURRENT(380)
 #ifdef NON_MATCHING
 void func_80083014_16B0D4(Vec3f *arg0, Vec3f *arg1) {
 	f32 temp_f0;
@@ -287,36 +287,28 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 #endif
 
 // https://decomp.me/scratch/6yUii
-// CURRENT(1286)
+// CURRENT(621)
 #ifdef NON_MATCHING
-void func_80083814_16B8D4(s32 arg0, u8 arg1)
+void func_80083814_16B8D4(s16 arg0, u8 arg1)
 {
-	s16 sp1E;
-	s16 sp22;
-	if (arg0 < 0)
-	{
-		goto fail;
-	}
-	if (arg0 >= 0xC8)
-	{
-		goto fail;
-	}
-	if (arg1 >= 0xF)
-	{
-		goto fail;
-	}
-	if ((D_800FB6F8[arg1].unk0 != 0xB) && (D_800FB6F8[arg1].unk0 != 0xC))
-	{
-		goto fail;
-	}
-	sp1E = ((Unk84EECEffect *)&D_800FB7B0)[arg0].unk4;
-	func_800835F0_16B6B0(arg0, arg1);
-	sp22 = ((Unk84EECEffect *)&D_800FB7B0)[sp1E].unk4;
-	func_800835F0_16B6B0(sp1E, arg1);
-	func_800835F0_16B6B0(sp22, arg1);
-	return;
-fail:
-	osSyncPrintf(&D_800A5128_18D1E8);
+  s16 sp1E;
+  s16 sp22;
+  if (arg0 < 0 ||
+	  arg0 >= 0xC8 ||
+	  arg1 >= 0xF ||
+	  ((D_800FB6F8[arg1].unk0 != 0xB) && (D_800FB6F8[arg1].unk0 != 0xC)))
+  {
+	
+  } else {
+	  sp1E = D_800FB7B0[arg0].unk4;
+	  func_800835F0_16B6B0((s32)arg0, arg1);
+	  sp22 = D_800FB7B0[sp1E].unk4;
+	
+	  func_800835F0_16B6B0((s32)sp1E, arg1);
+	  func_800835F0_16B6B0(sp22, arg1);
+	  return;
+  }
+  osSyncPrintf(&D_800A5128_18D1E8);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083814_16B8D4.s")
@@ -342,21 +334,20 @@ void func_800839B8_16BA78(u8 arg0) {
 	}
 }
 
-// CURRENT(5876)
+// CURRENT(2243)
 #ifdef NON_MATCHING
 void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	f32 sp3C;
 	volatile f32 sp38;
 	f32 sp34;
-	f32 temp_f0;
-	s16 idx;
-	s16 scale;
+	s16 temp;
 	s16 sp30;
 	s16 sp2E;
-	s16 temp;
+	s16 idx;
 	u8 *effectUnit;
 	u8 *newUnit;
 
+	// Agent: fix this before beginning:
 	// D_800FB7B0 references need to be converted to array & struct access
 	// The struct itself might need updating to be correct
 	// Then all this pointer arithmetic & casting can be replaced with struct access
@@ -364,42 +355,40 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	idx = func_80083390_16B450(arg0);
 	if (idx != -3) {
 		if (effectUnit[0xA] == 1) {
-			newUnit = (u8 *)D_800FB7B0 + idx * 22 + 8;
+			newUnit = (u8 *)D_800FB7B0 + idx * 22;
+			newUnit += 8;
 			*(s16 *)&newUnit[0] = *(s16 *)&effectUnit[0];
 			*(s16 *)&newUnit[2] = *(s16 *)&effectUnit[2];
 			*(s16 *)&newUnit[4] = *(s16 *)&effectUnit[4];
 			sp34 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5450_18D510);
 			if ((func_800038E0_44E0() % 21) < 10) {
-				temp_f0 = sp34;
-				sp34 = 0.0f - temp_f0;
+				sp34 = 0.0f - sp34;
 			}
 			sp34 += arg1->x;
 			sp38 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5458_18D518);
 			if ((func_800038E0_44E0() % 21) < 10) {
-				temp_f0 = sp38;
-				sp38 = 0.0f - temp_f0;
+				sp38 = 0.0f - sp38;
 			}
 			sp38 += arg1->y;
 			sp3C = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5460_18D520);
 			if ((func_800038E0_44E0() % 21) < 10) {
-				temp_f0 = sp3C;
-				sp3C = 0.0f - temp_f0;
+				sp3C = 0.0f - sp3C;
 			}
 			sp3C += arg1->z;
 			func_80083014_16B0D4((Vec3f *)&sp34, (Vec3f *)&sp34);
-			scale = arg2;
-			scale /= 4;
-			((s8 *)newUnit)[6] = (s8) (s32) ((f32) scale * sp34);
-			((s8 *)newUnit)[7] = (s8) (s32) ((f32) scale * sp38);
+			((s8 *)newUnit)[6] = (s8) (s32) ((f32) (arg2 / 4) * sp34);
+			sp34 = sp3C;
+			((s8 *)newUnit)[7] = (s8) (s32) ((f32) (arg2 / 4) * sp38);
 			newUnit[9] = 0xFF;
 			newUnit[0xA] = 0;
-			((s8 *)newUnit)[8] = (s8) (s32) ((f32) scale * sp3C);
+			((s8 *)newUnit)[8] = (s8) (s32) ((f32) (arg2 / 4) * sp34);
 			return;
 		}
 		sp30 = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
 		sp2E = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
 		temp = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
-		newUnit = (u8 *)&D_800FB7B0 + idx * 22 + 8;
+		newUnit = (u8 *)D_800FB7B0 + idx * 22;
+		newUnit += 8;
 		*(s16 *)&newUnit[0] = *(s16 *)&effectUnit[0] + sp30;
 		*(s16 *)&newUnit[2] = *(s16 *)&effectUnit[2] + sp2E;
 		*(s16 *)&newUnit[4] = *(s16 *)&effectUnit[4] + temp;
@@ -414,8 +403,6 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083A20_16BAE0.s")
 #endif
 
-// CURRENT(450)
-#ifdef NON_MATCHING
 void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12) {
 	s16 effect;
 	u8 slot;
@@ -435,15 +422,14 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 		}
 
 		entry = &D_800FB7B0[effect];
-		// Surely this should actually reference some property of entry or D_800FB7B0
-		*(&D_800FB702 + (slot * 6)) = effect;
+		*(s16 *)((u8 *)&D_800FB702 + slot * 12) = effect;
 		entry->unk2 = arg9;
+		entry->unk8 = arg0 << 2;
+		entry->unkA = arg1 << 2;
+		entry->unkC = arg2 << 2;
 		entry->unkE = arg10;
 		entry->unkF = arg11;
 		entry->unk10 = arg12;
-		entry->unk8 = arg0 * 4;
-		entry->unkA = arg1 * 4;
-		entry->unkC = arg2 * 4;
 		entry->unk12 = 1;
 		dir.x = arg3;
 		dir.y = arg4;
@@ -467,22 +453,19 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083F08_16BFC8.s")
-#endif
 
-// CURRENT(375)
+// CURRENT(80)
 #ifdef NON_MATCHING
 void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	u8 slot;
 	s32 effect;
 	Unk84EECEffect *entry;
-	s32 count;
 	s32 i;
+	s32 count;
 
-	effect = func_80083224_16B2E4(2);
+	slot = func_80083224_16B2E4(2);
+	effect = slot;
 	if (effect != 0xFB) {
-		slot = effect;
 		effect = func_80083390_16B450(slot);
 		if (effect == -3) {
 			osSyncPrintf(&D_800A5248_18D308);
@@ -490,22 +473,21 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 			return;
 		}
 
-		// Surely this should actually reference some property of entry or D_800FB7B0
-		// D_800FB702 is a fake symbol, it should be a property of D_800FB7B0 or entry
-		*(&D_800FB702 + (slot * 6)) = effect;
-		entry = &((Unk84EECEffect *)D_800FB7B0)[effect];
+		// Agent, fix this: Surely this should actually reference some property of entry or D_800FB7B0
+		*(s16 *)((u8 *)&D_800FB702 + slot * 12) = effect;
+		entry = &D_800FB7B0[effect];
 		count = arg5;
+		arg5 += 0;
 
 		entry->unk8 = arg0 * 4;
 		entry->unkA = arg1 * 4;
-		arg5 += 0;
 		entry->unkC = arg2 * 4;
 		entry->unkE = 0xFF;
 		entry->unkF = 0xFF;
 		entry->unk10 = 0xFF;
 		entry->unk12 = 2;
 		entry->unk2 = arg6;
-		entry->unk14 = arg3;
+		*(s16 *)&entry->unk14 = arg3;
 		entry->unk11 = arg4;
 
 		if (count >= 0x33) {
@@ -647,7 +629,7 @@ block_26:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084258_16C318.s")
 #endif
 
-// CURRENT(1833)
+// CURRENT(1828)
 #ifdef NON_MATCHING
 void func_80084628_16C6E8(s32 arg0) {
 	Unk84EECEffect *base;
@@ -701,83 +683,68 @@ void func_80084628_16C6E8(s32 arg0) {
 	entry->unkC = ((rnd % spread) / 2) + base->unkC - quarter;
 
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084628_16C6E8.s")
 #endif
 
-// CURRENT(2601)
+// https://decomp.me/scratch/Hj9r3
+// CURRENT(1715)
 #ifdef NON_MATCHING
-void func_80084980_16CA40(s32 arg0, s32 arg1) {
-	Unk84EECEffect *entry;
-	s16 *baseFields;
-	s16 baseIdx;
-	s16 effect;
-	s16 spread;
-	u16 quarter;
-	s32 rnd;
+void func_80084980_16CA40(u8 arg0, u8 arg1)
+{
+  s16 baseIdx;
+  s16 effect;
+  s16 spread;
+  u16 quarter;
+  s16 *basePos;
 
-	// is arg0 actually u8? It is masked with 0xFF in the first line, so it might be
-	baseIdx = D_800FB6F8[arg0 & 0xFF].unk6;
-	baseFields = &D_800FB7B0[baseIdx].unk8;
-	spread = baseFields[-3];
+  baseIdx = D_800FB6F8[arg0].unk6;
+  basePos = &D_800FB7B0[D_800FB6F8[arg0].unk6].unk8;
+  spread = D_800FB7B0[baseIdx].unk2;
+  if (arg1 == 0xFB)
+  {
+	return;
+  }
+  effect = func_80083390_16B450(arg1);
+  if (effect == -3)
+  {
+	return;
+  }
 
-	// is arg1 actually u8 too?
-	if ((arg1 & 0xFF) == 0xFB) {
-		return;
-	}
+  quarter = spread / 4;
 
-	effect = func_80083390_16B450(arg1 & 0xFF);
-	if (effect == -3) {
-		return;
-	}
+  D_800FB7B0[effect].unk2 = (func_800038E0_44E0() % 5) + quarter;
 
-	rnd = func_800038E0_44E0();
-	quarter = spread / 4;
-	D_800FB7B0[effect].unk2 = (rnd % 5) + quarter;
+  D_800FB7B0[effect].unk8 = (basePos[0] + ((func_800038E0_44E0() % spread) / 2)) - quarter;
 
-	rnd = func_800038E0_44E0();
-	entry = &D_800FB7B0[effect];
-	entry->unk8 = baseFields[0] + ((rnd % spread) / 2) - quarter;
+  D_800FB7B0[effect].unkA = ((func_800038E0_44E0() % 10) + basePos[1]) + quarter;
 
-	rnd = func_800038E0_44E0();
-	entry->unkA = (rnd % 0xA) + baseFields[1] + quarter;
+  D_800FB7B0[effect].unkC = (basePos[2] + ((func_800038E0_44E0() % spread) / 2)) - quarter;
+  D_800FB7B0[effect].unk11 = 0x3C;
+  D_800FB7B0[effect].unk12 = 0;
 
-	rnd = func_800038E0_44E0();
-	entry->unkC = baseFields[2] + ((rnd % spread) / 2) - quarter;
-	entry->unk11 = 0x3C;
-	entry->unk12 = 0;
+  D_800FB7B0[effect].unkE = (func_800038E0_44E0() % 30) + 0xB4;
 
-	rnd = func_800038E0_44E0();
-	entry->unkE = (rnd % 0x1E) + 0xB4;
+  D_800FB7B0[effect].unkF = (func_800038E0_44E0() % 30) + 0xA0;
 
-	rnd = func_800038E0_44E0();
-	entry->unkF = (rnd % 0x1E) + 0xA0;
-
-	rnd = func_800038E0_44E0();
-	entry->unk10 = (rnd % 0x1E) + 0xA0;
+  D_800FB7B0[effect].unk10 = (func_800038E0_44E0() % 30) + 0xA0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084980_16CA40.s")
 #endif
 
-#ifdef NON_MATCHING
 s32 func_80084C18_16CCD8(u8 arg0)
 {
 	u8 result = func_80083224_16B2E4(1);
 
 	if (result != 0xFB)
 	{
-		// Need to figure out which array/struct this is actually referencing, and then replace the pointer arithmetic with proper struct access
-		*((s16 *)((&D_800FB6FA) + (result * 0xC))) = arg0;
+		D_800FB6F8[result].unk2 = arg0;
 	}
 	return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084C18_16CCD8.s")
-#endif
 
-// CURRENT(8388)
+// CURRENT(6485)
 #ifdef NON_MATCHING
 u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	UnkFB6F8Entry *owner;
@@ -786,69 +753,65 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 	u8 slot;
 	s16 effect;
 
-	slot = func_80083224_16B2E4(0);
-	if (slot == 0xFB) {
-		return slot;
+	if ((slot = func_80083224_16B2E4(0)) != 0xFB) {
+		effect = func_80083584_16B644(slot);
+		if (effect == -3) {
+			osSyncPrintf(D_800A52E8_18D3A8);
+			func_80083300_16B3C0(slot);
+			return 0xFB;
+		}
+
+		entry = &D_800FB7B0[effect];
+		owner = &D_800FB6F8[slot];
+
+		entry->unk8 = arg0 * 4;
+		owner->unkA = effect;
+		entry->unkC = arg2 * 4;
+		linked = &D_800FB7B0[entry->unk4];
+		entry->unkA = arg1 * 4;
+		linked->unkC = 0;
+
+		entry->unkE = arg5;
+		entry->unkF = arg6;
+		entry->unk10 = arg7;
+
+		if (arg4 == 0xFFFF) {
+			entry->unk2 = arg3;
+		} else {
+			entry->unk2 = arg3 / 16;
+		}
+
+		if (entry->unk2 < 0x10) {
+			entry->unk2 = 0x10;
+		}
+
+		linked->unkA = arg3;
+		if (linked->unkA < 0x18) {
+			linked->unkA = 0x18;
+		}
+
+		linked->unk8 = arg4;
+
+		if ((u16)(arg5 + ((arg5 / 3) & 0xFF)) >= 0x100) {
+			entry->unk11 = 0xFF;
+		} else {
+			entry->unk11 = (u16)(arg5 + ((arg5 / 3) & 0xFF));
+		}
+
+		if ((u16)(arg6 + ((arg6 / 3) & 0xFF)) >= 0x100) {
+			entry->unk12 = 0xFF;
+		} else {
+			entry->unk12 = (u16)(arg6 + ((arg6 / 3) & 0xFF));
+		}
+
+		if ((u16)(arg7 + ((arg7 / 3) & 0xFF)) >= 0x100) {
+			entry->unk13 = 0xFF;
+		} else {
+			entry->unk13 = (u16)(arg7 + ((arg7 / 3) & 0xFF));
+		}
+
+		owner->unk2 = func_80084C18_16CCD8(slot);
 	}
-
-	effect = func_80083584_16B644(slot);
-	if (effect == -3) {
-		osSyncPrintf(D_800A52E8_18D3A8);
-		func_80083300_16B3C0(slot);
-		return 0xFB;
-	}
-
-	owner = &D_800FB6F8[slot];
-	entry = &D_800FB7B0[effect];
-
-	entry->unk8 = arg0 * 4;
-	// This should probably be a struct access instead of pointer arithmetic:
-	*(s16 *)((u8 *)owner + 0xA) = effect;
-	entry->unkC = arg2 * 4;
-	linked = &D_800FB7B0[entry->unk4];
-	entry->unkA = arg1 * 4;
-	linked->unkC = 0;
-
-	entry->unkE = arg5;
-	entry->unkF = arg6;
-	entry->unk10 = arg7;
-
-	if (arg4 == 0xFFFF) {
-		entry->unk2 = arg3;
-	} else {
-		entry->unk2 = arg3 / 16;
-	}
-
-	if (entry->unk2 < 0x10) {
-		entry->unk2 = 0x10;
-	}
-
-	linked->unkA = arg3;
-	if (linked->unkA < 0x18) {
-		linked->unkA = 0x18;
-	}
-
-	linked->unk8 = arg4;
-
-	if ((u16)(arg5 + ((arg5 / 3) & 0xFF)) >= 0x100) {
-		entry->unk11 = 0xFF;
-	} else {
-		entry->unk11 = (u16)(arg5 + ((arg5 / 3) & 0xFF));
-	}
-
-	if ((u16)(arg6 + ((arg6 / 3) & 0xFF)) >= 0x100) {
-		entry->unk12 = 0xFF;
-	} else {
-		entry->unk12 = (u16)(arg6 + ((arg6 / 3) & 0xFF));
-	}
-
-	if ((u16)(arg7 + ((arg7 / 3) & 0xFF)) >= 0x100) {
-		entry->unk13 = 0xFF;
-	} else {
-		entry->unk13 = (u16)(arg7 + ((arg7 / 3) & 0xFF));
-	}
-
-	owner->unk2 = func_80084C18_16CCD8(slot);
 
 	return slot;
 }
@@ -1521,12 +1484,12 @@ void func_80086B34_16EBF4(s32 arg0) {
 
 	slotIdx = arg0 & 0xFF;
 	slot = &D_800FB6F8[slotIdx];
-	head = &((Unk84EECEffect *)&D_800FB7B0)[slot->unk6];
+	head = &D_800FB7B0[slot->unk6];
 	effect = head->unk4;
 
 	if ((effect != -5) && (effect != -6)) {
 		do {
-			Unk84EECEffect = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+			Unk84EECEffect = &D_800FB7B0[effect];
 
 			Unk84EECEffect->unk8 += Unk84EECEffect->unk12;
 			Unk84EECEffect->unkC += Unk84EECEffect->unk14;

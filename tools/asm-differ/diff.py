@@ -252,6 +252,14 @@ if __name__ == "__main__":
         help="Ignore address differences. Currently only affects AArch64 and ARM32.",
     )
     parser.add_argument(
+        "--structural",
+        dest="structural",
+        action="store_true",
+        help="Only report structural/logical differences (different instructions, "
+        "different offsets, different control flow), ignoring register allocation "
+        "differences (e.g. \$t9 vs \$v0, \$t1 vs \$t0).",
+    )
+    parser.add_argument(
         "-B",
         "--no-show-branches",
         dest="show_branches",
@@ -488,6 +496,7 @@ class Config:
     stop_at_ret: Optional[int]
     ignore_large_imms: bool
     ignore_addr_diffs: bool
+    structural: bool
     algorithm: str
     reg_categories: Dict[str, int]
     diff_function_symbols: bool
@@ -583,6 +592,7 @@ def create_config(args: argparse.Namespace, project: ProjectSettings) -> Config:
         stop_at_ret=args.stop_at_ret,
         ignore_large_imms=args.ignore_large_imms,
         ignore_addr_diffs=args.ignore_addr_diffs,
+        structural=args.structural,
         algorithm=args.algorithm,
         reg_categories=project.reg_categories,
         diff_function_symbols=args.diff_function_symbols,
@@ -3154,6 +3164,11 @@ def do_diff(lines1: List[Line], lines2: List[Line], config: Config) -> Diff:
                 # in this case because we need to check that their targets line up in
                 # the diff, and don't just happen to have the are the same address
                 # by accident.
+                pass
+            elif config.structural and line2.branch_target is None:
+                # Structural mode: when diff_row matches (same instruction structure,
+                # same immediates after normalization), ignore register allocation
+                # differences and treat the lines as identical.
                 pass
             else:
                 mnemonic = line1.original.split()[0]
