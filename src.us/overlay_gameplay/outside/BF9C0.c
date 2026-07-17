@@ -35,7 +35,7 @@ const f64 D_80142E40_151DF0[1] = {1.022};
 const f32 D_80142E48_151DF8[1] = {0.699999988079071f};
 /* Crater radius multiplier */
 const f32 D_80142E4C_151DFC[1] = {3.200000047683716f};
-/* Jump table for func_800B9784 branching on texture bucket */
+/* Jump table for func_800B960C_C85BC */
 const u32 jtbl_80142E50_151E00[] = {
 	0x800B9784,
 	0x800B97D4,
@@ -3258,71 +3258,69 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 #endif
 
 /* World-space bounding box frustum cull: checks tile against camera position + angle */
-// CURRENT(20615)
+// CURRENT(9867)
 #ifdef NON_MATCHING
 s32 func_800B960C_C85BC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-	s32 halfArg2;
-	s32 halfArg3;
+	s16 centerX;
+	s16 centerZ;
+	s16 objX;
+	s16 objZ;
+	u16 rangeX;
+	u16 rangeZ;
 	s32 angleOffset;
-	s32 objX;
-	s32 objZ;
-	s32 diffX;
-	s32 diffZ;
-	s32 i;
-	s32 hit;
-	s32 centerX;
-	s32 centerZ;
-	s32 rangeX;
-	s32 rangeZ;
+	s16 i;
+	s16 hit;
 
-	if (D_80157590 != 0 || D_8014FD2A == (u16)-0x8000) {
+	if (D_80157590 != 0 || D_8014FD2A == -0x8000U) {
 		return 1;
 	}
 
 	D_8014F854 = 1;
 	angleOffset = 0x4000 - D_80047950;
-	centerX = (s16) arg0;
-	centerZ = (s16) arg1;
-	objX = (s16) D_80052B2C->unk0;
-	objZ = (s16) D_80052B2C->unk8;
-	rangeX = arg2 & 0xFFFF;
-	rangeZ = arg3 & 0xFFFF;
-	halfArg2 = (rangeX < 0) ? ((rangeX + 1) >> 1) : (rangeX >> 1);
-	halfArg3 = (rangeZ < 0) ? ((rangeZ + 1) >> 1) : (rangeZ >> 1);
-	diffX = objX - centerX;
-	if (diffX < 0) {
-		diffX = -diffX;
-	}
-	if (diffX < rangeX) {
-		diffZ = objZ - centerZ;
-		if (diffZ < 0) {
-			diffZ = -diffZ;
+	centerX = (s16)arg0;
+	centerZ = (s16)arg1;
+	objX = (s16)(s32)D_80052B2C->unk0;
+	objZ = (s16)(s32)D_80052B2C->unk8;
+	rangeX = (u16)arg2;
+	rangeZ = (u16)arg3;
+
+	{
+		s32 diffX;
+		s32 diffZ;
+		diffX = objX - centerX - (rangeX >> 1);
+		if (diffX < 0) {
+			diffX = -diffX;
 		}
-		if (diffZ < rangeZ) {
-			return 1;
+		if (diffX < rangeX) {
+			diffZ = objZ - centerZ - (rangeZ >> 1);
+			if (diffZ < 0) {
+				diffZ = -diffZ;
+			}
+			if (diffZ < rangeZ) {
+				return 1;
+			}
 		}
 	}
 
 	D_8014F854 = 0;
 	for (i = 0; i < 5; i++) {
 		switch (i) {
-			case 0:
-				hit = func_800B9228_C81D8((s32)(centerX + halfArg2), centerZ + halfArg3, objX, objZ, angleOffset);
-				break;
-			case 1:
-				hit = func_800B9228_C81D8(centerX, centerZ, objX, objZ, angleOffset);
-				break;
-			case 2:
-				hit = func_800B9228_C81D8((s32)(centerX + rangeX), centerZ, objX, objZ, angleOffset);
-				break;
-			case 3:
-				hit = func_800B9228_C81D8(centerX, (s32)(centerZ + rangeZ), objX, objZ, angleOffset);
-				break;
-			default:
-				hit = func_800B9228_C81D8((s32)(centerX + rangeX), (s32)(centerZ + rangeZ), objX, objZ, angleOffset);
-				break;
+		case 0:
+			hit = func_800B9228_C81D8((s16)(centerX + (rangeX >> 1)), (s16)(centerZ + (rangeZ >> 1)), objX, objZ, angleOffset);
+			break;
+		case 1:
+			hit = func_800B9228_C81D8(centerX, centerZ, objX, objZ, angleOffset);
+			break;
+		case 2:
+			hit = func_800B9228_C81D8((s16)(centerX + rangeX), centerZ, objX, objZ, angleOffset);
+			break;
+		case 3:
+			hit = func_800B9228_C81D8(centerX, (s16)(centerZ + rangeZ), objX, objZ, angleOffset);
+			break;
+		case 4:
+			hit = func_800B9228_C81D8((s16)(centerX + rangeX), (s16)(centerZ + rangeZ), objX, objZ, angleOffset);
+			break;
 		}
-
 		if (hit != 0) {
 			D_8014F854 = 1;
 			return D_8014F854;
