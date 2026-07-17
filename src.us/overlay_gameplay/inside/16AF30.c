@@ -747,21 +747,16 @@ void func_80084980_16CA40(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084980_16CA40.s")
 #endif
 
-#ifdef NON_MATCHING
 s32 func_80084C18_16CCD8(u8 arg0)
 {
 	u8 result = func_80083224_16B2E4(1);
 
 	if (result != 0xFB)
 	{
-		// Need to figure out which array/struct this is actually referencing, and then replace the pointer arithmetic with proper struct access
-		*((s16 *)((&D_800FB6FA) + (result * 0xC))) = arg0;
+		D_800FB6F8[result].unk2 = arg0;
 	}
 	return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084C18_16CCD8.s")
-#endif
 
 // CURRENT(8388)
 #ifdef NON_MATCHING
