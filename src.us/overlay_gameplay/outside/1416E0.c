@@ -32,6 +32,7 @@ s16 D_8013E410_14D3C0[] = {
 	0x0190, 0x0000, 0x0DAC, 0x0000,
 };
 
+// AI - Angle difference utility
 s16 func_80132730_1416E0(s32 arg0, s32 arg1) { return (s16)(arg1 - arg0); }
 
 s16 func_801361A4_145154(Unk80160080 *arg0);
@@ -39,6 +40,7 @@ void func_80136214_1451C4(Unk80160080 *arg0);
 
 // CURRENT(890)
 #ifdef NON_MATCHING
+// AI - Camera initialization
 void func_80132740_1416F0(Unk80160080 *arg0) {
 	VehicleInstance *sp1C;
 
@@ -114,6 +116,7 @@ void func_80132740_1416F0(Unk80160080 *arg0) {
 
 // CURRENT(2335)
 #ifdef NON_MATCHING
+// AI - Main camera update
 void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	f32 sp3C;
 	f32 sp38;
@@ -243,6 +246,7 @@ void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1) {
 #endif
 
 // Setup camera for drawing gameplay frame?
+// AI - Setup projection and view matrices
 void func_801330E4_142094(Unk80160080 *arg0) {
 	u16 sp46;
 
@@ -263,6 +267,7 @@ void func_801330E4_142094(Unk80160080 *arg0) {
 	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)(D_8005BB20 + 0x200) & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 }
 
+// AI - Reset camera to default state
 void func_80133260_142210(Unk80160080 *arg0) {
 	D_801493D0 = 0;
 	D_801600F0 = 0;
@@ -271,6 +276,7 @@ void func_80133260_142210(Unk80160080 *arg0) {
 	arg0->unk56 = 0x96;
 }
 
+// AI - On-foot camera update
 void func_80133288_142238(Unk80160080 *arg0) {
 	if ((D_801493D0 != 0) && (D_8016017C == 0)) {
 		func_801333D0_142380(arg0);
@@ -306,6 +312,7 @@ void func_80133288_142238(Unk80160080 *arg0) {
 
 // CURRENT(2155)
 #ifdef NON_MATCHING
+// AI - On-foot camera orbit/recenter
 void func_801333D0_142380(Unk80160080 *arg0) {
 	Vec3f sp3C;
 	s32 temp_v0;
@@ -382,6 +389,7 @@ void func_801333D0_142380(Unk80160080 *arg0) {
 
 // CURRENT(3158)
 #ifdef NON_MATCHING
+// AI - Compute camera position from target
 void func_801336CC_14267C(Unk80160080 *arg0, Vec3f *arg1) {
 	f32 sp44;
 	f32 sp20;
@@ -449,6 +457,7 @@ void func_801336CC_14267C(Unk80160080 *arg0, Vec3f *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801336CC_14267C.s")
 #endif
 
+// AI - Vehicle camera update
 void func_80133934_1428E4(Unk80160080 *arg0) {
 	if (D_801493D0 != 0) {
 		func_80133A54_142A04(arg0);
@@ -479,6 +488,7 @@ void func_80133934_1428E4(Unk80160080 *arg0) {
 
 // CURRENT(2152)
 #ifdef NON_MATCHING
+// AI - Vehicle camera orbit/recenter
 void func_80133A54_142A04(Unk80160080 *arg0) {
 	f32 sp40;
 	Vec3f sp44;
@@ -521,6 +531,7 @@ void func_80133A54_142A04(Unk80160080 *arg0) {
 #endif
 
 
+// AI - Apply yaw/pitch rotation to look-at vector
 void func_80133C9C_142C4C(Vec3f *arg0, Vec3f *arg1, void *arg2, s16 arg3, u32 arg4, s32 arg5, s16 arg6) {
 	Vec3f sp44;
 	f32 sp40;
@@ -561,6 +572,7 @@ void func_80133C9C_142C4C(Vec3f *arg0, Vec3f *arg1, void *arg2, s16 arg3, u32 ar
 	arg0->z = arg0->z + arg1->z;
 }
 
+// AI - Set camera height offset with minimum clamp
 void func_80133E94_142E44(s32 arg0) {
 	if (arg0 >= 0x24) {
 		D_80160188 = arg0;
@@ -569,6 +581,7 @@ void func_80133E94_142E44(s32 arg0) {
 	D_80160188 = 0x24;
 }
 
+// AI - Update camera target to vehicle position
 void func_80133EBC_142E6C(Unk80160080 *arg0) {
 	VehicleInstance *veh = D_80052B34;
 	arg0->unk30 = (f32) veh->unk0;
@@ -579,6 +592,7 @@ void func_80133EBC_142E6C(Unk80160080 *arg0) {
 
 // CURRENT(3503)
 #ifdef NON_MATCHING
+// AI - Camera yaw rotation control
 void func_80133F28_142ED8(Unk80160080 *arg0) {
 	s16 sp1E;
 	s16 temp_a0;
@@ -735,6 +749,7 @@ void func_80133F28_142ED8(Unk80160080 *arg0) {
 
 // CURRENT(2077)
 #ifdef NON_MATCHING
+// AI - Camera pitch/zoom and terrain collision avoidance
 void func_801343D8_143388(Unk80160080 *arg0) {
 	s16 currentPitch;
 	s16 var_s1;
@@ -835,6 +850,7 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 
 // CURRENT(2820)
 #ifdef NON_MATCHING
+// AI - Clipping/frustum setup for visible region culling
 void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	s16 var_s0;
 	s16 var_s1;
@@ -923,6 +939,7 @@ void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_8013493C_1438EC.s")
 #endif
 
+// AI - Copy camera state to shared structure
 void func_80134CCC_143C7C(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	arg1->unk0 = arg0->unk0;
 	arg1->unk4 = arg0->unk4;
@@ -939,6 +956,7 @@ void func_80134CCC_143C7C(Unk80160080 *arg0, Unk80052B2C *arg1) {
 
 // CURRENT(3145)
 #ifdef NON_MATCHING
+// AI - Smooth camera position/angle interpolation
 void func_80134D44_143CF4(Unk80160080 *arg0) {
 	f64 temp_f2;
 	f64 temp_f12;
@@ -1058,6 +1076,7 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 #endif
 
 // adamCameraControls ?
+// AI - On-foot camera rotation input handler
 void func_801351DC_14418C(Unk80160080 *arg0)
 {
   s32 temp_t5;
@@ -1122,6 +1141,7 @@ void func_801351DC_14418C(Unk80160080 *arg0)
   }
 }
 
+// AI - Decay camera offset values toward zero
 void func_80135380_144330(Unk80160080 *arg0)
 {
   f32 var_f0;
@@ -1178,6 +1198,7 @@ void func_80135380_144330(Unk80160080 *arg0)
   arg0->unk44 = (f32) (((f64) temp_f2) + (((f64) var_f12) / 12.0));
 }
 
+// AI - Vehicle camera target update
 void func_801354C0_144470(Unk80160080 *arg0) {
 	f32 var_f2;
 	register VehicleInstance *v1 = D_80052B34;
@@ -1191,6 +1212,7 @@ void func_801354C0_144470(Unk80160080 *arg0) {
 	arg0->unk2C = (f32)(((f64)(f32)sins((u16)v1->unk6) / 32768.0) * (f64)var_f2 + (f64)arg0->unk38);
 }
 
+// AI - Vehicle camera yaw interpolation
 void func_80135630_1445E0(Unk80160080 *arg0) {
 	s16 sp1E;
 	s32 temp_v0;
@@ -1212,6 +1234,7 @@ void func_80135630_1445E0(Unk80160080 *arg0) {
 }
 
 // vehicleCameraControls?
+// AI - Vehicle camera view cycling
 void func_801356F4_1446A4(Unk80160080 *arg0) {
 	VehicleSpec *temp = &vehicleSpecs[D_80052B34->unk1A];
 	func_801358E8_144898(arg0, (s16)(temp->unk5C * 0x10), (s16)(temp->unk5D * 0x10));
@@ -1231,6 +1254,7 @@ void func_801356F4_1446A4(Unk80160080 *arg0) {
 	D_80160148 = (s16)((D_8016014A * 0x2D0000) / 360);
 }
 
+// AI - Enter/exit vehicle camera transition
 void func_801357EC_14479C(Unk80160080 *arg0) {
 	if (D_80160154 == 0 && D_801591BC != 0) {
 		D_80160124 = 0.0f;
@@ -1253,6 +1277,7 @@ void func_801357EC_14479C(Unk80160080 *arg0) {
 // toggleCameraNearFarMode?
 // CURRENT(680)
 #ifdef NON_MATCHING
+// AI - Toggle near/far camera mode
 void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 	f32 var_f14;
 	u8 temp_v0;
@@ -1360,6 +1385,7 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 #endif
 
 
+// AI - Initialize camera shake parameters
 void func_80135CB8_144C68(void) {
 	D_80160160 = 0;
 	D_80160170 = 0.0f;
@@ -1371,6 +1397,7 @@ void func_80135CB8_144C68(void) {
 	D_8016016C = 0.0f;
 }
 
+// AI - Set camera shake offset parameters
 void func_80135D08_144CB8(f32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	D_80160160 = 1;
 	D_80160170 = arg0;
@@ -1381,6 +1408,7 @@ void func_80135D08_144CB8(f32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 // https://decomp.me/scratch/AXqIF
 #ifdef NON_MATCHING
+// AI - Calculate camera shake from impact distance
 void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
 {
 	f32 var_f14;
@@ -1430,6 +1458,7 @@ void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
 
 // CURRENT(1630)
 #ifdef NON_MATCHING
+// AI - Update and decay camera shake effects
 void func_80135F0C_144EBC(void) {
 	f32 temp_f14;
 	f32 temp_f0;
@@ -1491,10 +1520,12 @@ void func_80135F0C_144EBC(void) {
 #endif
 
 
+// AI - Set cutscene camera flag
 void func_80136198_145148(s32 arg0) {
 	D_8016017C = arg0;
 }
 
+// AI - Get camera yaw target (cutscene or vehicle angle)
 s16 func_801361A4_145154(Unk80160080 *arg0)
 {
 	s16 ret;
@@ -1515,6 +1546,7 @@ s16 func_801361A4_145154(Unk80160080 *arg0)
 
 // CURRENT(1599)
 #ifdef NON_MATCHING
+// AI - Camera collision avoidance against terrain
 void func_80136214_1451C4(Unk80160080 *arg0) {
 	s16 sp66;
 	s16 sp62;
@@ -1588,6 +1620,7 @@ void func_80136214_1451C4(Unk80160080 *arg0) {
 #endif
 
 
+// AI - Switch to billboard rendering mode
 void func_80136570_145520(void) {
 	D_80034488 = 1;
 	D_80034464 = D_80034460;
@@ -1601,6 +1634,7 @@ void func_80136570_145520(void) {
 // CURRENT(4071)
 #ifdef NON_MATCHING
 // displaySignposts
+// AI - Render signpost sprites in 3D world
 void func_801365E0_145590(void) {
 	Unk80052B40 spE0;
 	Unk80052B40 spD8;
@@ -1695,6 +1729,7 @@ void func_801365E0_145590(void) {
 // CURRENT(405)
 #ifdef NON_MATCHING
 // Check if player is reading signpost
+// AI - Handle signpost interaction on button press
 void func_80136B50_145B00(s32 arg0, s16 arg1)
 {
 	s16 sp32;
