@@ -684,7 +684,8 @@ void func_80084628_16C6E8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084628_16C6E8.s")
 #endif
 
-// CURRENT(3725)
+// https://decomp.me/scratch/Hj9r3
+// CURRENT(1715)
 #ifdef NON_MATCHING
 void func_80084980_16CA40(u8 arg0, u8 arg1)
 {
@@ -692,7 +693,10 @@ void func_80084980_16CA40(u8 arg0, u8 arg1)
   s16 effect;
   s16 spread;
   u16 quarter;
+  s16 *basePos;
+
   baseIdx = D_800FB6F8[arg0].unk6;
+  basePos = &D_800FB7B0[D_800FB6F8[arg0].unk6].unk8;
   spread = D_800FB7B0[baseIdx].unk2;
   if (arg1 == 0xFB)
   {
@@ -705,21 +709,22 @@ void func_80084980_16CA40(u8 arg0, u8 arg1)
   }
 
   quarter = spread / 4;
+
   D_800FB7B0[effect].unk2 = (func_800038E0_44E0() % 5) + quarter;
 
-  D_800FB7B0[effect].unk8 = (D_800FB7B0[baseIdx].unk8 + ((func_800038E0_44E0() % spread) / 2)) - quarter;
-	
-  D_800FB7B0[effect].unkA = ((func_800038E0_44E0() % 0xa) + D_800FB7B0[baseIdx].unkA) + quarter;
+  D_800FB7B0[effect].unk8 = (basePos[0] + ((func_800038E0_44E0() % spread) / 2)) - quarter;
 
-  D_800FB7B0[effect].unkC = (D_800FB7B0[baseIdx].unkC + ((func_800038E0_44E0() % spread) / 2)) - quarter;
+  D_800FB7B0[effect].unkA = ((func_800038E0_44E0() % 10) + basePos[1]) + quarter;
+
+  D_800FB7B0[effect].unkC = (basePos[2] + ((func_800038E0_44E0() % spread) / 2)) - quarter;
   D_800FB7B0[effect].unk11 = 0x3C;
   D_800FB7B0[effect].unk12 = 0;
 
-  D_800FB7B0[effect].unkE = (func_800038E0_44E0() % 0x1E) + 0xB4;
+  D_800FB7B0[effect].unkE = (func_800038E0_44E0() % 30) + 0xB4;
 
-  D_800FB7B0[effect].unkF = (func_800038E0_44E0() % 0x1E) + 0xA0;
+  D_800FB7B0[effect].unkF = (func_800038E0_44E0() % 30) + 0xA0;
 
-  D_800FB7B0[effect].unk10 = (func_800038E0_44E0() % 0x1E) + 0xA0;
+  D_800FB7B0[effect].unk10 = (func_800038E0_44E0() % 30) + 0xA0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084980_16CA40.s")
