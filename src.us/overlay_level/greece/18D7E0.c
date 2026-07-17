@@ -520,6 +520,7 @@ const f64 D_802DE450_196F60[] = { 2000.0 };
 
 #ifdef NON_MATCHING
 /* CURRENT(5) */
+// AI - Mission dispatcher routing commands to handlers
 void func_802D4CD0_18D7E0(s32 arg0, s32 arg1) {
 	arg1 = arg0;
 
@@ -562,6 +563,7 @@ void func_802D4CD0_18D7E0(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D4CD0_18D7E0.s")
 #endif
 
+// AI - Mission flag cleanup and callback setup
 void func_802D4E28_18D938(void) {
 	if (func_8000726C_7E6C(0x17) != 0) {
 		func_800073B8_7FB8(0x17);
@@ -580,6 +582,7 @@ void func_802D4E28_18D938(void) {
 	}
 }
 
+// AI - Polling callback checking mission conditions
 void func_802D4ECC_18D9DC(void) {
 	if (func_8000726C_7E6C(0xB) != 0) {
 		func_800074BC_80BC(func_802D4ECC_18D9DC);
@@ -593,12 +596,14 @@ void func_802D4ECC_18D9DC(void) {
 	}
 }
 
+// AI - Video start extension
 void func_802D4F50_18DA60(void) {
 	osViExtendVStart((s32) &D_802DD170);
 }
 
 #ifdef NON_MATCHING
 /* CURRENT(5) */
+// AI - Main suburbs sequence state machine
 void func_802D4F74_18DA84(void) {
 	if (D_802DE460 < 0x3E8) {
 		D_802DE460 += 1;
@@ -697,12 +702,14 @@ void func_802D4F74_18DA84(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D4F74_18DA84.s")
 #endif
 
+// AI - Reset and start suburbs sequence
 void func_802D5290_18DDA0(void) {
 	D_8004DC58 = 0;
 	D_802DE460 = 0;
 	func_80007410_8010(func_802D4F74_18DA84);
 }
 
+// AI - Decrease shield health each tick
 s32 func_802D52C4_18DDD4(void) {
 	D_80052554 -= 0x55;
 	if (D_80052554 < 0x401) {
@@ -713,6 +720,7 @@ s32 func_802D52C4_18DDD4(void) {
 	return 0;
 }
 
+// AI - Start shield drain sequence
 void func_802D531C_18DE2C(void) {
 	func_800072CC_7ECC(0x2A);
 	D_80052554 = 0x38A4;
@@ -740,11 +748,13 @@ void func_802D536C_18DE7C(void) {
 	}
 }
 
+// AI - Setup building fire callback and start timer
 void func_802D5434_18DF44(void) {
 	func_800074BC_80BC(func_802D536C_18DE7C);
 	func_800076D4_82D4(5);
 }
 
+// AI - Enable building destruction and start fire
 void func_802D5460_18DF70(void) {
 	func_8011BF7C_12AF2C(0x37);
 	func_8011BF7C_12AF2C(0x3F);
@@ -754,6 +764,7 @@ void func_802D5460_18DF70(void) {
 	func_80007410_8010(func_802D536C_18DE7C);
 }
 
+// AI - Check building destruction status
 void func_802D54AC_18DFBC(void) {
 	if ((buildingInstances[55].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x37);
@@ -775,6 +786,7 @@ void func_802D54AC_18DFBC(void) {
 	func_800076D4_82D4(5);
 }
 
+// AI - Vehicle crash sequence callback
 void func_802D5578_18E088(void) {
 	if (!(vehicleInstances[84].unk20 & 0x8000)) {
 		func_800074BC_80BC(func_802D5578_18E088);
@@ -789,12 +801,14 @@ void func_802D5578_18E088(void) {
 	}
 }
 
+// AI - Start vehicle crash sequence
 void func_802D562C_18E13C(void) {
 	func_80092ADC_A1A8C();
 	D_802DE466 = 0;
 	func_80007410_8010(func_802D5578_18E088);
 }
 
+// AI - Vehicle damage and destruction
 void func_802D5660_18E170(void) {
 	D_8014D182 += 1;
 	D_80052554 -= D_8014D182 * 8;
@@ -807,18 +821,21 @@ void func_802D5660_18E170(void) {
 	}
 }
 
+// AI - Initialize vehicle destruction timer
 void func_802D56E8_18E1F8(void) {
 	D_8014D182 = 0;
 	func_800072CC_7ECC(0x2A);
 	func_80007410_8010(func_802D5660_18E170);
 }
 
+// AI - Start refinery boss battle
 void func_802D5720_18E230(void) {
 	D_80157F94 = 0xFF;
 	func_800EFEB4_FEE64(func_802D64D0_18EFE0, 6, 1);
 	func_80013468_14068(2);
 }
 
+// AI - Start boss alien battle
 void func_802D5760_18E270(void) {
 	extern s32 func_802D6904_18F414(void);
 	D_80157F94 = 0xFF;
@@ -828,6 +845,7 @@ void func_802D5760_18E270(void) {
 
 #ifdef NON_MATCHING
 /* CURRENT(2962) */
+// AI - Suburbs building placement and tile manipulation
 s32 func_802D57A0_18E2B0(void) {
 	s16 i;
 	u16 x;
@@ -979,6 +997,7 @@ s32 func_802D57A0_18E2B0(void) {
 
 #ifdef NON_MATCHING
 /* CURRENT(3063) */
+// AI - Refinery boss multi-phase sequence
 s32 func_802D64D0_18EFE0(void) {
 	u8 specIndex;
 	s32 alienId;
@@ -1089,6 +1108,7 @@ s32 func_802D64D0_18EFE0(void) {
 
 #ifdef NON_MATCHING
 /* CURRENT(2910) */
+// AI - Boss alien multi-phase sequence
 s32 func_802D6904_18F414(void) {
 	s32 alienId;
 	AlienInstance *alien;
@@ -1203,6 +1223,7 @@ s32 func_802D6904_18F414(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Mission progression state machine
 void func_802D6D20_18F830(void) {
 	switch (D_80048030) {
 	case 0:
@@ -1302,6 +1323,7 @@ void func_802D6D20_18F830(void) {
 
 #ifdef NON_MATCHING
 /* CURRENT(4247) */
+// AI - Screen shake rotation effects
 void func_802D6F7C_18FA8C(void) {
 	f32 sp5C;
 	s32 pad0;
@@ -1388,16 +1410,19 @@ void func_802D6F7C_18FA8C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D6F7C_18FA8C.s")
 #endif
 
+// AI - Render display list
 void func_802D7334_18FE44(void) {
 	gSPDisplayList(D_8005BB2C++, D_9052C10);
 }
 
+// AI - Render display list
 void func_802D7360_18FE70(void) {
 	gSPDisplayList(D_8005BB2C++, D_9052C70);
 }
 
 #ifdef NON_MATCHING
 /* CURRENT(1177) */
+// AI - Primary alien AI skeleton setup and attack cooldown
 void func_802D738C_18FE9C(u8 arg0) {
 	s16 sp5E;
 	s16 sp5C;
@@ -1481,6 +1506,7 @@ void func_802D738C_18FE9C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D738C_18FE9C.s")
 #endif
 
+// AI - Alien weapon projectile spawning
 void func_802D763C_19014C(u8 arg0) {
 	if (alienInstances[arg0].unk20 & 0x600) {
 		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2 + 0x14, alienInstances[arg0].unk4, alienSpecs[alienInstances[arg0].specIndex].unkC, 0);
@@ -1493,6 +1519,7 @@ void func_802D763C_19014C(u8 arg0) {
 
 #ifdef NON_MATCHING
 /* CURRENT(16009) */
+// AI - Alien damage death reaction and sub-alien spawning
 void func_802D775C_19026C(s32 arg0) {
 	AlienInstance *s0;
 	u8 sp73;
@@ -1597,6 +1624,7 @@ void func_802D775C_19026C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D775C_19026C.s")
 #endif
 
+// AI - Alien jump movement logic
 s32 func_802D7D08_190818(u8 arg0, s32 arg1, s32 arg2) {
 	s32 sp24;
 	AlienInstance *alien;
@@ -1646,6 +1674,7 @@ s32 func_802D7D08_190818(u8 arg0, s32 arg1, s32 arg2) {
 	return sp24;
 }
 
+// AI - Alien proximity alert check
 void func_802D7EBC_1909CC(u8 arg0) {
 	s32 sp24;
 	AlienInstance *alien;
@@ -1661,6 +1690,7 @@ void func_802D7EBC_1909CC(u8 arg0) {
 	}
 }
 
+// AI - Alien ground combat AI with loot drops
 void func_802D7FC0_190AD0(u8 arg0) {
 	s16 sp3C[2];
 	AlienInstance *alien;
@@ -1703,6 +1733,7 @@ void func_802D7FC0_190AD0(u8 arg0) {
 
 #ifdef NON_MATCHING
 /* CURRENT(1991) */
+// AI - Alien death knockback behavior
 void func_802D8150_190C60(u8 arg0) {
 	AlienInstance *alien;
 	u8 spec_index;
@@ -1768,6 +1799,7 @@ block_9:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D8150_190C60.s")
 #endif
 
+// AI - Alien ranged attack AI
 void func_802D84A0_190FB0(u8 arg0) {
 	s32 sp18;
 	AlienInstance *alien;
@@ -1781,6 +1813,7 @@ void func_802D84A0_190FB0(u8 arg0) {
 	}
 }
 
+// AI - Alien patrol wander AI
 void func_802D852C_19103C(u8 arg0) {
 	AlienInstance *alien;
 	func_80091470_A0420(arg0);
@@ -1794,6 +1827,7 @@ void func_802D852C_19103C(u8 arg0) {
 	}
 }
 
+// AI - Alien behavior dispatcher choosing attack or patrol
 void func_802D85F8_191108(u8 arg0)
 {
   u8 new_var;
@@ -1831,6 +1865,7 @@ void func_802D85F8_191108(u8 arg0)
 
 #ifdef NON_MATCHING
 /* CURRENT(218) */
+// AI - Alien AI with projectile attacks
 void func_802D8724_191234(u8 arg0) {
 	if (!(alienInstances[arg0].unk20 & 0x4000) && (func_8008E478_9D428(arg0) != 0 || func_8008E30C_9D2BC(arg0, 0x80000000) != 0)) {
 		func_80085900_948B0(arg0, 0x3E8);
@@ -1863,6 +1898,7 @@ void func_802D8724_191234(u8 arg0) {
 
 #ifdef NON_MATCHING
 /* CURRENT(1584) */
+// AI - Flying alien AI with vertical movement
 void func_802D8898_1913A8(u8 arg0) {
 	AlienInstance *alien;
 	s32 flags;
@@ -1934,6 +1970,7 @@ void func_802D8898_1913A8(u8 arg0) {
 
 #ifdef NON_MATCHING
 /* CURRENT(995) */
+// AI - Alien chase attack AI
 void func_802D8BAC_1916BC(u8 arg0) {
 	AlienInstance *alien;
 	u8 sp43;
@@ -2007,6 +2044,7 @@ void func_802D8BAC_1916BC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D8BAC_1916BC.s")
 #endif
 
+// AI - Alien combat ranged attack behavior
 void func_802D8D84_191894(u8 arg0)
 {
   s16 nodeId;
@@ -2056,6 +2094,7 @@ void func_802D8D84_191894(u8 arg0)
   }
 }
 
+// AI - Alien state reset
 void func_802D90C8_191BD8(u8 arg0) {
 	alienInstances[arg0].unk20 &= 0xBFFFEFFF;
 	func_800873A8_96358(arg0);
@@ -2063,6 +2102,7 @@ void func_802D90C8_191BD8(u8 arg0) {
 
 #ifdef NON_MATCHING
 /* CURRENT(2031) */
+// AI - Alien idle wander AI
 void func_802D911C_191C2C(u8 arg0) {
 	AlienInstance *alien;
 	Unk8014DD50 *pathB;
@@ -2172,6 +2212,7 @@ void func_802D911C_191C2C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D911C_191C2C.s")
 #endif
 
+// AI - Alien target selection
 void func_802D95A8_1920B8(u8 arg0, s16 arg1, s16 arg2) {
 	alienInstances[arg0].unk20 |= 0x1000;
 	if ((func_800038E0_44E0() & 1) && arg2 != -1) {
@@ -2184,6 +2225,7 @@ void func_802D95A8_1920B8(u8 arg0, s16 arg1, s16 arg2) {
 
 #ifdef NON_MATCHING
 /* CURRENT(1719) */
+// AI - Alien charged special attack with explosions
 void func_802D962C_19213C(u8 arg0, s16 arg1, s16 arg2, AlienInstance *alien) {
 	u8 currentNode;
 	s32 pad0;
@@ -2268,6 +2310,7 @@ void func_802D962C_19213C(u8 arg0, s16 arg1, s16 arg2, AlienInstance *alien) {
 
 #ifdef NON_MATCHING
 /* CURRENT(717) */
+// AI - Alien combat distance evaluation AI
 void func_802D9964_192474(u8 arg0) {
 	AlienInstance *alien;
 	s16 sp4E;
@@ -2408,6 +2451,7 @@ void func_802D9964_192474(u8 arg0) {
 
 #ifdef NON_MATCHING
 /* CURRENT(9139) */
+// AI - Alien skeleton joint animation system
 void func_802D9C60_192770(u8 arg0) {
 	u8 sp73;
 	s32 sp6C;
@@ -2507,6 +2551,7 @@ void func_802D9C60_192770(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D9C60_192770.s")
 #endif
 
+// AI - Alien animation handler
 void func_802DA378_192E88(u8 arg0) {
 	if (!(alienInstances[arg0].unk20 & 0x100000)) {
 		func_80137468_146418(arg0, 0xF);
@@ -2517,6 +2562,7 @@ void func_802DA378_192E88(u8 arg0) {
 
 #ifdef NON_MATCHING
 /* CURRENT(33017) */
+// AI - Alien swarm formation flying AI
 void func_802DA3EC_192EFC(u8 arg0) {
 	AlienInstance *alien;
 	AlienInstance *parent;
@@ -2751,6 +2797,7 @@ void func_802DA3EC_192EFC(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Alien attack retreat decision AI
 s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 	AlienInstance *alien;
 	VehicleInstance *vehicle;
@@ -2902,6 +2949,7 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 #endif
 #ifdef NON_MATCHING
 /* CURRENT(2295) */
+// AI - Alien type 1 behavior with patrol and pursuit
 void func_802DBA00_194510(u8 arg0) {
 	s32 pad0;
 	u8 sp43;
@@ -2956,12 +3004,14 @@ void func_802DBA00_194510(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DBA00_194510.s")
 #endif
 
+// AI - Alien type 1 setup
 void func_802DBB88_194698(u8 arg0) {
 	func_800A93A4_B8354(arg0, -0xBB, 0x22, 0x147);
 }
 
 #ifdef NON_MATCHING
 /* CURRENT(2423) */
+// AI - Alien type 2 behavior with formation logic
 void func_802DBBBC_1946CC(u8 arg0) {
 	u8 otherIndex;
 	s32 var_v0;
@@ -3024,12 +3074,14 @@ void func_802DBBBC_1946CC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DBBBC_1946CC.s")
 #endif
 
+// AI - Alien type 2 setup
 void func_802DBDA8_1948B8(u8 arg0) {
 	func_800A93A4_B8354(arg0, -0x88, 0x32, 0xD4);
 }
 
 #ifdef NON_MATCHING
 /* CURRENT(1690) */
+// AI - Alien type 3 behavior
 void func_802DBDDC_1948EC(u8 arg0) {
 	u8 otherIndex;
 
@@ -3081,6 +3133,7 @@ void func_802DBDDC_1948EC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DBDDC_1948EC.s")
 #endif
 
+// AI - Alien type 3 setup
 void func_802DBF64_194A74(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0xBB, 0x24, 0x145);
 }
@@ -3088,6 +3141,7 @@ void func_802DBF64_194A74(u8 arg0) {
 
 #ifdef NON_MATCHING
 /* CURRENT(2418) */
+// AI - Alien type 4 behavior
 void func_802DBF98_194AA8(u8 arg0) {
 	u8 otherIndex;
 	s32 var_v0;
@@ -3153,10 +3207,12 @@ void func_802DBF98_194AA8(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DBF98_194AA8.s")
 #endif
 
+// AI - Alien type 4 setup
 void func_802DC184_194C94(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0x99, 0x32, 0xD4);
 }
 
+// AI - Alien death explosion effect
 void func_802DC1B8_194CC8(u8 arg0, s32 arg1) {
 	s32 nodeId;
 	s32 sp40;
@@ -3177,6 +3233,7 @@ void func_802DC1B8_194CC8(u8 arg0, s32 arg1) {
 
 #ifdef NON_MATCHING
 /* CURRENT(6581) */
+// AI - Alien death sequence with particles
 void func_802DC2E4_194DF4(u8 arg0) {
 	AlienInstance *alien;
 	Unk8014DD50 *temp_v1;
@@ -3234,6 +3291,7 @@ void func_802DC2E4_194DF4(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Alien death spawn visual effects
 void func_802DC500_195010(u8 arg0) {
 	s16 sp9E;
 	s32 sp8C[3];
@@ -3301,6 +3359,7 @@ void func_802DC500_195010(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC500_195010.s")
 #endif
 
+// AI - Alien type 1 setup with offsets
 void func_802DC91C_19542C(u8 arg0) {
 	alienInstances[arg0].unk14 = -0x8D;
 	alienInstances[arg0].unk16 = -0x7;
@@ -3309,6 +3368,7 @@ void func_802DC91C_19542C(u8 arg0) {
 	func_800A93A4_B8354(arg0, -0xBB, 0x22, 0x147);
 }
 
+// AI - Alien type 2 setup with offsets
 void func_802DC98C_19549C(u8 arg0) {
 	alienInstances[arg0].unk14 = -0xA8;
 	alienInstances[arg0].unk16 = 0xB6;
@@ -3317,6 +3377,7 @@ void func_802DC98C_19549C(u8 arg0) {
 	func_800A93A4_B8354(arg0, -0x88, 0x32, 0xD4);
 }
 
+// AI - Alien type 3 setup with offsets
 void func_802DC9FC_19550C(u8 arg0) {
 	alienInstances[arg0].unk14 = 0x9B;
 	alienInstances[arg0].unk16 = -0x11;
@@ -3325,6 +3386,7 @@ void func_802DC9FC_19550C(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0xBB, 0x24, 0x145);
 }
 
+// AI - Alien type 4 setup with offsets
 void func_802DCA6C_19557C(u8 arg0) {
 	alienInstances[arg0].unk14 = 0x9C;
 	alienInstances[arg0].unk16 = 0xCA;
@@ -3335,6 +3397,7 @@ void func_802DCA6C_19557C(u8 arg0) {
 
 #ifdef NON_MATCHING
 /* CURRENT(9677) */
+// AI - Boss alien death sequence
 void func_802DCADC_1955EC(u8 arg0) {
 	AlienInstance *alien;
 	Unk8014DD50 *obj0;
