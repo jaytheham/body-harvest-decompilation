@@ -28,6 +28,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
  Diff output skips matching instructions except for 3 either side of differences.
 - You can get the full assembly of a function after building by adding param `--show=target` or `--show=current` to the above diff command.
 - You can see structural-only differences (skip register & stack only differences) in the diff output by adding param `--structural` to the above diff command.
+- After building you can use `.\tools\Show-StackLayout.ps1 func_80084628_16C6E8` (or any function name) to see the stack layout for that function.
 - Important: Rather than blindly making changes when dealing with incorrect or out-of-order instructions, first check for other functions with sections of assembly that are the same as the target assembly section you are focussed on using `.\tools\Search-AsmPattern.ps1 -Offset <ROM offset> -Count <number of instructions to match>` e.g. `.\tools\Search-AsmPattern.ps1 -Offset 0x884C0 -Count 8` look up the C implementation of any functions it returns as reference for your own implementation - if they're not wrapped in NON_MATCHING then they are already matched and can be used as a reference for how to implement the same logic in your function.
 
 # Your Workflow
