@@ -111,6 +111,7 @@ const u32 jtbl_8014164C_1505FC[] = {
 
 // CURRENT(1686)
 #ifdef NON_MATCHING
+// AI - Execute mission command opcodes (spawning, flags, etc.)
 void func_80073DC0_82D70(s32 arg0) {
 	u8 *next;
 	u8 *entry;
@@ -264,6 +265,7 @@ void func_80073DC0_82D70(s32 arg0) {
 // CURRENT(3595)
 // Resets a bunch of memory? For missions?
 #ifdef NON_MATCHING
+// AI - Reset all mission data structures
 void func_80074204_831B4(void) {
 	s32 var_a0;
 	u8 var_a1;
@@ -388,6 +390,7 @@ void func_80074204_831B4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074204_831B4.s")
 #endif
 
+// AI - Check if byte is a mission object type
 int func_8007447C_8342C(u8 temp_t6) {
 
 	return temp_t6 == 0x98 ||
@@ -398,11 +401,13 @@ int func_8007447C_8342C(u8 temp_t6) {
 		temp_t6 == 0xAF;
 }
 
+// AI - Check if byte is a command opcode (0x9C-0xA5)
 int func_800744E0_83490(u8 arg0) {
 	return arg0 >= 0x9C && arg0 < 0xA6;
 }
 
 // readMissionByteWithIncrement
+// AI - Read next byte from mission data stream
 u8 func_80074500_834B0(void) {
 	
 	D_801494BC = *D_801494B8;
@@ -411,6 +416,7 @@ u8 func_80074500_834B0(void) {
 }
 
 // readMissionByteWithIncrementCopy
+// AI - Read next byte from mission data stream (returns s32)
 s32 func_8007452C_834DC(void) {
 	
 	D_801494BC = *D_801494B8;
@@ -419,6 +425,7 @@ s32 func_8007452C_834DC(void) {
 }
 
 // readMissionByteWithoutIncrement
+// AI - Peek at current byte in mission data stream
 u8 func_80074558_83508(void) {
 	D_801494BC = *D_801494B8;
 	return D_801494BC;
@@ -428,6 +435,7 @@ u8 func_80074558_83508(void) {
 // readMissionObject
 // Needs jumptable data
 #ifdef NON_MATCHING
+// AI - Read a mission object entry from stream
 void func_80074578_83528(u8 *arg0) {
 	arg0[0] = func_80074500_834B0();
 
@@ -449,11 +457,13 @@ void func_80074578_83528(u8 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074578_83528.s")
 #endif
 
+// AI - Read random object entry, return its index
 s32 func_800745F0_835A0(void) {
 	func_80074578_83528(&D_80149AF8[D_80149B40 * 3]);
 	return D_80149B40++ & 0xFF;
 }
 
+// AI - Write a parsed mission command to command buffer
 void func_8007463C_835EC(void) {
 	u8 *entry;
 
@@ -474,6 +484,7 @@ void func_8007463C_835EC(void) {
 	}
 }
 
+// AI - Write terminator command (0xA9) to command buffer
 void func_800746F8_836A8(void) {
 	u8 *temp_a1;
 
@@ -486,6 +497,7 @@ void func_800746F8_836A8(void) {
 }
 
 // readMissionByteWithIncrementCopyWrapper
+// AI - Read character/actor ID from mission stream
 void func_80074768_83718(void) {
 	D_8004D160[D_80149B44 * 2] = func_8007452C_834DC();
 	D_80149B44 += 1;
@@ -493,6 +505,7 @@ void func_80074768_83718(void) {
 
 // CURRENT(3929)
 #ifdef NON_MATCHING
+// AI - Read weighted random object table and select entry
 void func_800747A8_83758(void) {
 	s32 sum;
 	s32 selectedIndex;
@@ -557,6 +570,7 @@ void func_800747A8_83758(void) {
 
 #ifdef NON_MATCHING
 /* CURRENT(3953) */
+// AI - Read map/tile data chunks from mission stream
 void func_80074970_83920(void) {
 	s32 savedIndex;
 	s32 i;
@@ -616,6 +630,7 @@ void func_80074970_83920(void) {
 // CURRENT(80)
 #ifdef NON_MATCHING
 // readMissionInfo
+// AI - Read mission info entries with type flags
 void func_80074B2C_83ADC(void) {
 	u8 *entry;
 	u8 cmd;
@@ -652,6 +667,7 @@ void func_80074B2C_83ADC(void) {
 
 // guess_readMissionCondition
 // CURRENT(1145)
+// AI - Read game conditions for a mission
 void func_80074CA0_83C50(void) {
 	if ((func_80074558_83508() == 0xB7) || (D_801494BC == 0x82) || (D_801494BC == 0x83) || (D_801494BC == 0x85) ||
 		(D_801494BC == 0x86) || (D_801494BC == 0x87) || (D_801494BC == 0x90) || (D_801494BC == 0xAC) ||
@@ -721,6 +737,7 @@ void func_80074CA0_83C50(void) {
 // readMissionConditions
 // CURRENT(30)
 #ifdef NON_MATCHING
+// AI - Read mission conditions and link to mission IDs
 void func_80074FA8_83F58(void) {
 	s32 count;
 	u8 cmd;
@@ -768,6 +785,7 @@ void func_80074FA8_83F58(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074FA8_83F58.s")
 #endif
 
+// AI - Link success conditions to command sequences
 void func_80075148_840F8(void)
 {
   MissionCondEntry *entry;
@@ -796,6 +814,7 @@ void func_80075148_840F8(void)
   func_800746F8_836A8();
 }
 
+// AI - Link failure conditions to command sequences
 void func_80075210_841C0(void)
 {
   MissionCondEntry *entry;
@@ -822,6 +841,7 @@ void func_80075210_841C0(void)
   func_800746F8_836A8();
 }
 
+// AI - Link special conditions to command sequences
 void func_800752D8_84288(void)
 {
   MissionCondEntry *entry;
@@ -845,6 +865,7 @@ void func_800752D8_84288(void)
   func_800746F8_836A8();
 }
 
+// AI - Read dialogue condition entries from stream
 void func_800753A0_84350(void)
 {
   u8 *temp;
@@ -906,6 +927,7 @@ void func_800753A0_84350(void)
   }
 }
 
+// AI - Read random object weight table from stream
 void func_80075574_84524(void) {
 	s32 sp24[1];
 	u8 *var_s0;
@@ -921,6 +943,7 @@ void func_80075574_84524(void) {
 	}
 }
 
+// AI - Clear all mission/dialogue conditions
 void func_800755E0_84590(void)
 {
   s32 i;
@@ -933,6 +956,7 @@ void func_800755E0_84590(void)
   D_8004D150 = 0;
 }
 
+// AI - Check and mark completed missions for current level
 void func_8007562C_845DC(void) {
   s32 i;
 
@@ -945,6 +969,7 @@ void func_8007562C_845DC(void) {
 
 // CURRENT(10)
 #ifdef NON_MATCHING
+// AI - Parse entire mission data blob
 void func_800756DC_8468C(void) {
 	u8 *missionStart;
 
@@ -1058,6 +1083,7 @@ doneParsing:
 
 // CURRENT(501)
 #ifdef NON_MATCHING
+// AI - Evaluate mission conditions and trigger callbacks
 void func_80075AA4_84A54(void) {
 	s32 condCount;
 	s32 i;
@@ -1181,6 +1207,7 @@ void func_80075AA4_84A54(void) {
 
 // CURRENT(4965)
 #ifdef NON_MATCHING
+// AI - Post-process mission cleanup and bitmask building
 s32 func_80075E50_84E00(void) {
 	u8 *stream;
 	s32 has83After82;
@@ -1273,6 +1300,7 @@ s32 func_80075E50_84E00(void) {
 
 // CURRENT(10)
 #ifdef NON_MATCHING
+// AI - Check if mission category is unlocked
 s32 func_80076088_85038(s32 arg0) {
 	switch (arg0) {
 		case 0:
@@ -1317,12 +1345,14 @@ s32 func_80076088_85038(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076088_85038.s")
 #endif
 
+// AI - Check if mission ID is in active list
 s32 func_80076208_851B8(s32 arg0) {
   return func_800078B8_84B8(arg0, &D_8004D150);
 }
 
 // CURRENT(1690)
 #ifdef NON_MATCHING
+// AI - Register a mission callback function
 s32 func_8007622C_851DC(s32 arg0) {
 	s32 v1;
 	s32 v0;
@@ -1354,6 +1384,7 @@ s32 func_8007622C_851DC(s32 arg0) {
 #endif
 
 // Remove the current callback from the list of callbacks
+// AI - Remove a mission callback from list
 void func_800762A8_85258(void (*callback))
 {
 	s32 i;
@@ -1366,6 +1397,7 @@ void func_800762A8_85258(void (*callback))
   } 
 }
 
+// AI - Activate all secondary mission entries
 void func_800762E0_85290(void)
 {
 	s32 *ptr154 = &D_8004D154;
@@ -1383,6 +1415,7 @@ void func_800762E0_85290(void)
 	D_80149474 = 0xFF;
 }
 
+// AI - Activate all special mission entries
 void func_80076390_85340(void)
 {
   s32 *ptr158 = &D_8004D158;
@@ -1401,6 +1434,7 @@ void func_80076390_85340(void)
 
 // CURRENT(2345)
 #ifdef NON_MATCHING
+// AI - Handle mission failure with effects
 s32 func_8007643C_853EC(s32 arg0) {
 	MissionCondEntry *condEntry;
 	MissionCondEntry *foundEntry;
@@ -1469,6 +1503,7 @@ s32 func_8007643C_853EC(s32 arg0) {
 
 // CURRENT(2420)
 #ifdef NON_MATCHING
+// AI - Handle mission success with effects
 s32 func_800765C4_85574(s32 arg0) {
 	MissionCondEntry *condEntry;
 	MissionCondEntry *foundEntry;
@@ -1535,6 +1570,7 @@ s32 func_800765C4_85574(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800765C4_85574.s")
 #endif
 
+// AI - Fail all active missions
 void func_80076754_85704(void)
 {
   s32 var_s0;
@@ -1550,6 +1586,7 @@ void func_80076754_85704(void)
 
 // CURRENT(600)
 #ifdef NON_MATCHING
+// AI - Mark a specific mission as completed
 void func_8007679C_8574C(s16 arg0) {
 	MissionCondEntry *entry;
 	s32 i;
