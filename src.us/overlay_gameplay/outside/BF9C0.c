@@ -151,11 +151,12 @@ s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 }
 
 /* Check if any of the 4 corners of a tile have height difference >= 10 */
+#ifdef NON_MATCHING
 s32 func_800B0A88_BFA38(s32 arg0, s32 arg1)
 {
   s32 a0;
   s32 v0;
-  v0 = (D_80052A94[arg1].unk0[arg0] & 0x3F) - (D_80052A94[arg1].unk0[arg0 + 1] & 0x3F);
+  v0 = (*D_80052A94[arg1][arg0] & 0x3F) - (*D_80052A94[arg1][arg0 + 1] & 0x3F);
   a0 = (-v0 < v0) ? v0 : -v0;
   
   if (a0 >= 0xA)
@@ -163,7 +164,7 @@ s32 func_800B0A88_BFA38(s32 arg0, s32 arg1)
 	return 1;
   }
 
-  v0 = (D_80052A94[arg1].unk0[arg0 + 1] & 0x3F) - (D_80052A94[arg1].unk0[arg0 + 0x101] & 0x3F);
+  v0 = (*D_80052A94[arg1][arg0 + 1] & 0x3F) - (*D_80052A94[arg1][arg0 + 0x101] & 0x3F);
   a0 = (-v0 < v0) ? v0 : -v0;
   
   if (a0 >= 0xA)
@@ -171,14 +172,14 @@ s32 func_800B0A88_BFA38(s32 arg0, s32 arg1)
 	return 1;
   }
 
-  v0 = (D_80052A94[arg1].unk0[arg0 + 0x101] & 0x3F) - (D_80052A94[arg1].unk0[arg0 + 0x100] & 0x3F);
+  v0 = (*D_80052A94[arg1][arg0 + 0x101] & 0x3F) - (*D_80052A94[arg1][arg0 + 0x100] & 0x3F);
   a0 = (-v0 < v0) ? v0 : -v0;
   
   if (a0 >= 0xA)
   {
 	return 1;
   }
-  v0 = (D_80052A94[arg1].unk0[arg0 + 0x100] & 0x3F) - (D_80052A94[arg1].unk0[arg0] & 0x3F);
+  v0 = (*D_80052A94[arg1][arg0 + 0x100] & 0x3F) - (*D_80052A94[arg1][arg0] & 0x3F);
   a0 = (-v0 < v0) ? v0 : -v0;
   
   if (a0 >= 0xA)
@@ -187,6 +188,9 @@ s32 func_800B0A88_BFA38(s32 arg0, s32 arg1)
   }
   return 0;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0A88_BFA38.s")
+#endif
 
 /* Build a 256x256 bitmask of tiles that have steep height changes (for wireframe overlay) */
 void func_800B0B94_BFB44(void) {
@@ -2786,6 +2790,7 @@ void func_800B753C_C64EC(void) {
 #endif
 
 // Get height of terrain at given position
+#ifdef NON_MATCHING
 s32 func_800B84D0_C7480(s16 xPosition, s16 zPosition)
 {
   u32 temp_v0;
@@ -2802,21 +2807,24 @@ s32 func_800B84D0_C7480(s16 xPosition, s16 zPosition)
   // Pick the bottom-left vs top-right triangle.
   if ((xPositionInTile + zPositionInTile) < 0x100U)
   {
-	var_t0 = D_80052A94[tileRowIndex].unk0[xPosition >> 8] & 0x3F;
-	var_t1 = (D_80052A94[tileRowIndex].unk0[(xPosition >> 8) + 1] & 0x3F) - var_t0;
-	var_t2 = (D_80052A94[tileRowIndex + 1].unk0[xPosition >> 8] & 0x3F) - var_t0;
+	var_t0 = *D_80052A94[tileRowIndex][xPosition >> 8] & 0x3F;
+	var_t1 = (*D_80052A94[tileRowIndex][(xPosition >> 8) + 1] & 0x3F) - var_t0;
+	var_t2 = (*D_80052A94[tileRowIndex + 1][xPosition >> 8] & 0x3F) - var_t0;
   }
   else
   {
 	xPositionInTile = 0x100 - xPositionInTile;
 	zPositionInTile = 0x100 - zPositionInTile;
-	var_t0 = D_80052A94[tileRowIndex + 1].unk0[(xPosition >> 8) + 1] & 0x3F;
-	var_t1 = (D_80052A94[tileRowIndex + 1].unk0[xPosition >> 8] & 0x3F) - var_t0;
-	var_t2 = (D_80052A94[tileRowIndex].unk0[(xPosition >> 8) + 1] & 0x3F) - var_t0;
+	var_t0 = *D_80052A94[tileRowIndex + 1][(xPosition >> 8) + 1] & 0x3F;
+	var_t1 = (*D_80052A94[tileRowIndex + 1][xPosition >> 8] & 0x3F) - var_t0;
+	var_t2 = (*D_80052A94[tileRowIndex][(xPosition >> 8) + 1] & 0x3F) - var_t0;
   }
   //Barycentric interpolation
   return (((var_t0 << 8) + (var_t1 * xPositionInTile)) + (var_t2 * zPositionInTile)) << 5;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B84D0_C7480.s")
+#endif
 
 /* Get terrain height with random variation (roughness) */
 s32 func_800B85CC_C757C(s16 arg0, s16 arg1) {

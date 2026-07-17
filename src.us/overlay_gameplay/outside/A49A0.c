@@ -170,9 +170,10 @@ s32 func_800959F0_A49A0(u16 red, u16 green, u16 blue) {
 	return ((red << 0xB) + (green << 6) + (blue & 0x3F)) & 0xFFFF;
 }
 
+#ifdef NON_MATCHING
 s16 func_80095A6C_A4A1C(s16 arg0, s16 arg1, u16 arg2)
 {
-  Unk80052A94 **new_var;
+  u16 **new_var;
   s32 r;
   s16 nx;
   s16 ny;
@@ -204,6 +205,9 @@ s16 func_80095A6C_A4A1C(s16 arg0, s16 arg1, u16 arg2)
   }
   return r * 0;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095A6C_A4A1C.s")
+#endif
 
 void func_80095BD4_A4B84(int arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3)
 {

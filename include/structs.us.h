@@ -1656,18 +1656,6 @@ typedef struct {
 	/* 0x0A */ s16 unkA;
 } Unk800DE130; /* size = 0x0C */
 
-/* Map texture row: 256 u16 values = 512 bytes per row.
-   The heightmap (256x256) is stored across these rows; every second byte
-   is non-height data.  The lower 6 bits encode four overlapping ranges:
-   00-3f, 40-7f, 80-Bf, C0-FF. */
-typedef struct {
-	u16 data[0x100]; // 256 u16 values = 512 bytes
-} MapTexRow; // size 0x200
-
-typedef struct {
-	u16 unk0[256];
-} Unk80052A94;
-
 typedef struct {
 	/* 0x00 */ u8 type;
 	/* 0x01 */ u8 unk1;

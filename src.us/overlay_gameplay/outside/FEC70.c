@@ -227,6 +227,7 @@ void func_800EFFB4_FEF64(void) {
 	D_80157F96 = 0;
 }
 
+#ifdef NON_MATCHING
 void func_800F0094_FF044(void) {
 	if (-1 == D_80157F68) {
 		D_8004DC60 = 0;
@@ -281,6 +282,9 @@ block_22:
 		D_80157F70 = 0;
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800F0094_FF044.s")
+#endif
 
 void func_800F0234_FF1E4(void) {
 	D_80157F68 = 0;

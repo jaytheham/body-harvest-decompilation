@@ -459,7 +459,7 @@ void loadLevelData(u8 arg0) {
 	osSyncPrintf(&D_80037FEC_38BEC, 0x528, (D_8006AA60 == 0x528) ? (void *)&sp44 : (void *)&sp34);
 
 	{
-		MapTexRow *rows = D_801FEA30;
+		void *rows = D_801FEA30;
 		s32 row;
 		for (row = 0; row < 0xFF; row++) {
 			u16 *cells = rows[row].data;
