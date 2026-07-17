@@ -634,7 +634,7 @@ block_26:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084258_16C318.s")
 #endif
 
-// CURRENT(1833)
+// CURRENT(1828)
 #ifdef NON_MATCHING
 void func_80084628_16C6E8(s32 arg0) {
 	Unk84EECEffect *base;
@@ -688,7 +688,6 @@ void func_80084628_16C6E8(s32 arg0) {
 	entry->unkC = ((rnd % spread) / 2) + base->unkC - quarter;
 
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084628_16C6E8.s")
 #endif
