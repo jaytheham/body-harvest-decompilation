@@ -1,28 +1,33 @@
 #include <ultra64.h>
 #include "common.h"
 
+// AI - 3x3 matrix-by-vector multiplication
 void func_80082E70_16AF30(f32 *arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->x = arg1->x * arg0[0] + arg1->y * arg0[3] + arg0[6] * arg1->z;
 	arg2->y = arg1->x * arg0[1] + arg1->y * arg0[4] + arg0[7] * arg1->z;
 	arg2->z = arg1->x * arg0[2] + arg1->y * arg0[5] + arg0[8] * arg1->z;
 }
 
+// AI - 3D vector cross product
 void func_80082F04_16AFC4(Vec3f *arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->x = arg0->y * arg1->z - arg0->z * arg1->y;
 	arg2->y = arg0->z * arg1->x - arg0->x * arg1->z;
 	arg2->z = arg0->x * arg1->y - arg0->y * arg1->x;
 }
 
+// AI - Divide vector by scalar
 void func_80082F74_16B034(f32 arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->x = arg1->x / arg0;
 	arg2->y = arg1->y / arg0;
 	arg2->z = arg1->z / arg0;
 }
 
+// AI - Squared magnitude of a 3D vector
 f32 func_80082F9C_16B05C(Vec3f *arg0) {
 	return (arg0->x * arg0->x) + (arg0->y * arg0->y) + (arg0->z * arg0->z);
 }
 
+// AI - Magnitude (length) of a 3D vector
 f32 func_80082FC4_16B084(Vec3f *arg0) {
 	f32 var_f12;
 
@@ -35,6 +40,7 @@ f32 func_80082FC4_16B084(Vec3f *arg0) {
 
 // CURRENT(380)
 #ifdef NON_MATCHING
+// AI - Normalize a 3D vector (divide by its magnitude)
 void func_80083014_16B0D4(Vec3f *arg0, Vec3f *arg1) {
 	f32 temp_f0;
 	temp_f0 = func_80082FC4_16B084(arg0);
@@ -49,22 +55,26 @@ void func_80083014_16B0D4(Vec3f *arg0, Vec3f *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083014_16B0D4.s")
 #endif
 
+// AI - Dot product of two 3D vectors
 f32 func_80083090_16B150(Vec3f *arg0, Vec3f *arg1) {
 	return (arg0->x * arg1->x) + (arg0->y * arg1->y) + (arg0->z * arg1->z);
 }
 
+// AI - Subtract two 3D vectors (arg0 - arg1)
 void func_800830C0_16B180(Vec3f *arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->x = arg0->x - arg1->x;
 	arg2->y = arg0->y - arg1->y;
 	arg2->z = arg0->z - arg1->z;
 }
 
+// AI - Multiply vector by scalar
 void func_800830F4_16B1B4(f32 arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->x = arg1->x * arg0;
 	arg2->y = arg1->y * arg0;
 	arg2->z = arg1->z * arg0;
 }
 
+// AI - Initialize effect billboard orientation matrix
 void func_8008311C_16B1DC(void) {
 	f32 sp34[3][3];
 	s16 i;
@@ -88,6 +98,7 @@ void func_8008311C_16B1DC(void) {
 }
 
 // https://decomp.me/scratch/qmTkk
+// AI - Allocate an effect slot from the pool of 15
 u8 func_80083224_16B2E4(u8 arg0)
 {
   u8 slot;
@@ -124,6 +135,7 @@ u8 func_80083224_16B2E4(u8 arg0)
   return slot;
 }
 
+// AI - Free/return an effect slot to the pool
 void func_80083300_16B3C0(u8 arg0) {
 
 	if (D_800FB6F8[arg0].unk0 == 0xFA) {
@@ -137,6 +149,7 @@ void func_80083300_16B3C0(u8 arg0) {
 	}
 }
 
+// AI - Allocate a new visual effect instance (up to 200 max)
 s16 func_80083390_16B450(u8 arg0) {
 	s16 i;
 	s16 effect;
@@ -178,6 +191,7 @@ s16 func_80083390_16B450(u8 arg0) {
 	return effect;
 }
 
+// AI - Allocate two visual effects for a slot
 s16 func_800834CC_16B58C(u8 arg0) {
 	s16 var_a2;
 	s16 sp24;
@@ -197,6 +211,7 @@ s16 func_800834CC_16B58C(u8 arg0) {
 	return var_a2;
 }
 
+// AI - Allocate a single visual effect for a slot
 s16 func_80083584_16B644(u8 arg0) {
 	s16 sp1E;
 
@@ -212,6 +227,7 @@ s16 func_80083584_16B644(u8 arg0) {
 
 // CURRENT(3281)
 #ifdef NON_MATCHING
+// AI - Remove/free a visual effect instance from the linked list
 void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 	Unk84EECEffect *effect;
 	UnkFB6F8Entry *slot;
@@ -289,6 +305,7 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 // https://decomp.me/scratch/6yUii
 // CURRENT(621)
 #ifdef NON_MATCHING
+// AI - Remove three specific effects from a slot
 void func_80083814_16B8D4(s16 arg0, u8 arg1)
 {
   s16 sp1E;
@@ -314,6 +331,7 @@ void func_80083814_16B8D4(s16 arg0, u8 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083814_16B8D4.s")
 #endif
 
+// AI - Remove two specific effects from a slot
 void func_80083924_16B9E4(s16 arg0, u8 arg1) {
 	s16 sp1E;
 
@@ -326,6 +344,7 @@ void func_80083924_16B9E4(s16 arg0, u8 arg1) {
 	osSyncPrintf(&D_800A5168_18D228);
 }
 
+// AI - Remove all effects from a slot
 void func_800839B8_16BA78(u8 arg0) {
 	if (D_800FB6F8[arg0].unk4 > 0) {
 		do {
@@ -336,6 +355,7 @@ void func_800839B8_16BA78(u8 arg0) {
 
 // CURRENT(2243)
 #ifdef NON_MATCHING
+// AI - Spawn a new visual particle effect (copy from template with randomization)
 void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	f32 sp3C;
 	volatile f32 sp38;
@@ -403,6 +423,7 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083A20_16BAE0.s")
 #endif
 
+// AI - Create a burst effect (explosion) with randomized particle positions
 void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12) {
 	s16 effect;
 	u8 slot;
@@ -456,6 +477,7 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 
 // CURRENT(80)
 #ifdef NON_MATCHING
+// AI - Create a particle burst with specified parameters
 void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	u8 slot;
 	s32 effect;
@@ -512,6 +534,7 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 
 // CURRENT(2581)
 #ifdef NON_MATCHING
+// AI - Update effect state: movement, aging, and spawning sub-effects
 void func_80084258_16C318(s32 arg0) {
 	typedef struct {
 		s16 unk0;
@@ -631,6 +654,7 @@ block_26:
 
 // CURRENT(1828)
 #ifdef NON_MATCHING
+// AI - Create a child particle effect with randomized spread and colors (debris/sparks)
 void func_80084628_16C6E8(s32 arg0) {
 	Unk84EECEffect *base;
 	Unk84EECEffect *entry;
@@ -690,6 +714,7 @@ void func_80084628_16C6E8(s32 arg0) {
 // https://decomp.me/scratch/Hj9r3
 // CURRENT(1715)
 #ifdef NON_MATCHING
+// AI - Create a child effect based on a parent effect's position
 void func_80084980_16CA40(u8 arg0, u8 arg1)
 {
   s16 baseIdx;
@@ -733,6 +758,7 @@ void func_80084980_16CA40(u8 arg0, u8 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084980_16CA40.s")
 #endif
 
+// AI - Allocate an effect slot and store a value
 s32 func_80084C18_16CCD8(u8 arg0)
 {
 	u8 result = func_80083224_16B2E4(1);
@@ -746,6 +772,7 @@ s32 func_80084C18_16CCD8(u8 arg0)
 
 // CURRENT(6485)
 #ifdef NON_MATCHING
+// Create a fire effect
 u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	UnkFB6F8Entry *owner;
 	Unk84EECEffect *entry;
@@ -821,6 +848,7 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 
 // CURRENT(2085)
 #ifdef NON_MATCHING
+// AI - Create a linked paired effect (two entries linked together)
 s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11) {
 	extern f64 D_800A5468_18D528;
 
@@ -894,6 +922,7 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 // https://decomp.me/scratch/8LzOB
 // CURRENT(8)
 #ifdef NON_MATCHING
+// Create a candle flame effect
 s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
   u8 *temp_s0;
@@ -930,6 +959,7 @@ s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 
 // CURRENT(3129)
 #ifdef NON_MATCHING
+// AI - Spawn a child particle effect with randomized offset from parent
 void func_800852B8_16D378(s32 arg0) {
 	extern f64 D_800A5470_18D530;
 	extern f64 D_800A5478_18D538;
@@ -995,6 +1025,7 @@ void func_800852B8_16D378(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800852B8_16D378.s")
 #endif
 
+// AI - Create a simple effect instance with position and color data
 void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	s16 temp_arg0;
 	s16 effect;
@@ -1022,6 +1053,7 @@ void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg
 
 // CURRENT(4135)
 #ifdef NON_MATCHING
+// AI - Create a multi-part debris/shatter effect with two linked entries
 u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
 	s32 pad0;
 	s32 pad1;
@@ -1100,12 +1132,14 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008574C_16D80C.s")
 #endif
 
+// AI - Wrapper to create a debris effect with preset parameters
 void func_800858F4_16D9B4(s16 arg0, s16 arg1, s16 arg2) {
 	func_8008574C_16D80C(arg0, arg1, arg2, 0, 0x78, 0, 0x28, 8, 0x1E, 0x96, 0xAA, 0xB4, 0xFF, 0x78);
 }
 
 // CURRENT(566)
 #ifdef NON_MATCHING
+// AI - Create a random scatter effect with sub-particle burst
 s32 func_80085984_16DA44(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 arg5) {
 	Unk84EECEffect *effect;
 	u8 *entry;
@@ -1154,6 +1188,7 @@ s32 func_80085984_16DA44(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 a
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085984_16DA44.s")
 #endif
 
+// AI - Create a scatter effect with a specific flag set
 void func_80085CB4_16DD74(s16 arg0, s16 arg1, s16 arg2) {
 	s32 temp_v0;
 
@@ -1165,6 +1200,7 @@ void func_80085CB4_16DD74(s16 arg0, s16 arg1, s16 arg2) {
 
 #ifdef NON_MATCHING
 // CURRENT(2960)
+// AI - Update effect slot type 1: animation and aging
 void func_80085D40_16DE00(u8 arg0) {
 	UnkFB6F8Entry *temp_s4;
 	Unk84EECEffect *temp_s2;
@@ -1223,6 +1259,7 @@ void func_80085D40_16DE00(u8 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(6668)
+// AI - Update effect slot type 0: random jitter, color, and lifecycle
 void func_80085F28_16DFE8(u8 arg0) {
 	Unk84EECEffect *s2;
 	u8 *s1;
@@ -1329,6 +1366,7 @@ void func_80085F28_16DFE8(u8 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(378)
+// AI - Update effect slot type 3: movement, color cycling, and expiration
 void func_80086550_16E610(void) {
 	s16 effect;
 	u8 alpha;
@@ -1372,6 +1410,7 @@ void func_80086550_16E610(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(2019)
+// AI - Update effect slot type 4: oscillating ping-pong animation
 void func_80086728_16E7E8(void) {
 	s16 effect;
 
@@ -1410,6 +1449,7 @@ void func_80086728_16E7E8(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(1398)
+// AI - Update effect slot type 5: randomize spread values
 void func_8008688C_16E94C(void) {
 	s16 effect;
 
@@ -1442,6 +1482,7 @@ void func_8008688C_16E94C(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(535)
+// AI - Update effect slot type 6: manage shrinking/lifetime
 void func_80086A34_16EAF4(void) {
 	s16 effect;
 	s16 nextEffect;
@@ -1471,6 +1512,7 @@ void func_80086A34_16EAF4(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Update effect slot type 7: physics (gravity, movement) and spawn child effects
 void func_80086B34_16EBF4(s32 arg0) {
 	UnkFB6F8Entry *slot;
 	Unk84EECEffect *head;
@@ -1539,6 +1581,7 @@ void func_80086B34_16EBF4(s32 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(5)
+// AI - Main update dispatcher: iterate all 15 slots and call type-specific update
 void func_80086D88_16EE48() {
 	s32 i;
 
@@ -1579,6 +1622,7 @@ void func_80086D88_16EE48() {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Remove a slot and clean up all its associated effects
 void func_80086E90_16EF50(s32 arg0) {
 	UnkFB6F8Entry *sp1C;
 	s16 temp_v1;
@@ -1603,12 +1647,14 @@ void func_80086E90_16EF50(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086E90_16EF50.s")
 #endif
 
+// AI - Remove effects linked to slot 0xD
 void func_80086F24_16EFE4(s16 arg0) {
 	if (arg0 != -3) {
 		func_80083924_16B9E4(arg0, 0xD);
 	}
 }
 
+// AI - Remove a specific effect and its linked sub-effect
 void func_80086F58_16F018(s16 arg0) {
 	if (arg0 != -3) {
 		func_80086F24_16EFE4(*(s16 *)&((Unk84EECEffect *)D_800FB7B0)[arg0].unkE);
@@ -1617,6 +1663,7 @@ void func_80086F58_16F018(s16 arg0) {
 }
 
 #ifdef NON_MATCHING
+// AI - Render slot type 0 effects: textured billboard quads with color
 void func_80086FC4_16F084(s32 arg0) {
 	Unk84EECEffect *sp30;
 	Unk84EECEffect *sp28;
@@ -1812,6 +1859,7 @@ void func_80086FC4_16F084(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Render slot type 1 effects: textured billboard quads
 void func_80087A40_16FB00(s32 arg0) {
 	u8 slot;
 	Vec3f *pos;
@@ -1872,6 +1920,7 @@ void func_80087A40_16FB00(s32 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(3405)
+// AI - Render slot type 2 effects: simple shaded triangles
 void func_80087CB8_16FD78(s32 arg0) {
 	f32 sp58[3];
 	UnkFB6F8Entry *entry;
@@ -1906,6 +1955,7 @@ void func_80087CB8_16FD78(s32 arg0) {
 
 // CURRENT(2501)
 #ifdef NON_MATCHING
+// AI - Render slot type 3 effects: camera-facing sprites with texture
 void func_80087E3C_16FEFC(void) {
 	s16 effect;
 	s32 pad;
@@ -1965,6 +2015,7 @@ void func_80087E3C_16FEFC(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Render slot type 4 effects: animated billboards with dual textures
 void func_800881C0_170280(void) {
 	Unk89834Pos *spAC;
 	Vec3f sp9C;
@@ -2047,6 +2098,7 @@ void func_800881C0_170280(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Render slot type 5 effects: fire/magma-like particles
 void func_80088654_170714(void) {
 	typedef struct {
 		s16 unk0;
@@ -2181,6 +2233,7 @@ void func_80088654_170714(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Render slot type 6 effects: shrinking sprites
 void func_80088B9C_170C5C(void) {
 	typedef struct {
 		s16 unk0;
@@ -2246,6 +2299,7 @@ void func_80088B9C_170C5C(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Render slot type 6 effects with prim/env colors (glow effects)
 void func_80088DFC_170EBC(s32 arg0) {
 	s16 effect;
 	Unk84EECEffect *base;
@@ -2300,6 +2354,7 @@ void func_80088DFC_170EBC(s32 arg0) {
 
 // CURRENT(60)
 #ifdef NON_MATCHING
+// AI - Render a single textured triangle
 void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
 	f32 sp4;
 	f32 temp_f0;
@@ -2360,6 +2415,7 @@ void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
 
 // CURRENT(4710)
 #ifdef NON_MATCHING
+// AI - Spawn a child particle effect for rendering
 void func_80089408_1714C8(s32 arg0) {
 
 	Unk84EECEffect *srcEffect;
@@ -2420,6 +2476,7 @@ void func_80089408_1714C8(s32 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(1192)
+// Create a large candle(?) flame effect
 u8 func_80089648_171708(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6) {
 	typedef struct {
 		u8 pad0[0x08];
@@ -2465,6 +2522,7 @@ u8 func_80089648_171708(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089648_171708.s")
 #endif
 
+// AI - Update an effect's position data
 void func_8008972C_1717EC(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	s16 temp_v0;
 	s8 *temp_v1;
@@ -2477,6 +2535,7 @@ void func_8008972C_1717EC(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 }
 
 #ifdef NON_MATCHING
+// AI - Handle cleanup for slot type 8 effects
 void func_80089794_171854(s32 arg0) {
 	u8 temp_t6;
 	UnkFB6F8Entry *temp_v0;
@@ -2497,6 +2556,7 @@ void func_80089794_171854(s32 arg0) {
 
 // CURRENT(5906)
 #ifdef NON_MATCHING
+// AI - Update slot type 8 effects: gravity, bounce, and lifecycle
 void func_80089834_1718F4(s32 arg0) {
 	u8 *sp40;
 	u8 temp_fp;
@@ -2570,6 +2630,7 @@ void func_80089834_1718F4(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Render slot type 7 effects: smoke/cloud sprites
 void func_80089BCC_171C8C(s32 arg0) {
 	s16 effect;
 	Unk84EECEffect *entry;
@@ -2611,6 +2672,7 @@ void func_80089BCC_171C8C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089BCC_171C8C.s")
 #endif
 
+// AI - Render an axis-aligned textured quad/billboard
 void func_80089E54_171F14(void) {
 	D_8005BB34->v.ob[0] = (s16)(s32)(D_800FB6D0.x + D_800FB6E0);
 	D_8005BB34->v.ob[1] = (s16)(s32)D_800FB6D0.y;
@@ -2665,6 +2727,7 @@ void func_80089E54_171F14(void) {
 }
 
 #ifdef NON_MATCHING
+// AI - Render an oriented textured quad (camera-facing billboard with rotation)
 void func_8008A1D8_172298(void) {
 	f32 sp4;
 	f32 temp_f0;
@@ -2736,6 +2799,7 @@ void func_8008A1D8_172298(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Initialize/clear the UnkFC8E8Entry sprite table
 void func_8008A59C_17265C(void) {
 	UnkFC8E8Entry *ptr = &D_800FC8E8;
 	s32 var_v0 = 0;
@@ -2751,6 +2815,7 @@ void func_8008A59C_17265C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A59C_17265C.s")
 #endif
 
+// AI - Update UnkFC8E8Entry animated sprite entries (advance animation frames)
 void func_8008A5E4_1726A4(void) {
 	u8 activeCount;
 	u8 i;
@@ -2787,6 +2852,7 @@ void func_8008A5E4_1726A4(void) {
 }
 
 #ifdef NON_MATCHING
+// AI - Render animated sprite entries from UnkFC8E8Entry table
 void func_8008A704_1727C4(void) {
 	u8 count;
 	u8 i;
@@ -2935,6 +3001,7 @@ void func_8008A704_1727C4(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Allocate a new animated sprite slot in UnkFC8E8Entry table
 s32 func_8008AD40_172E00(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u16 arg4) {
 	UnkFC8E8Entry *entry;
 	s8 *tableA;
@@ -2986,6 +3053,7 @@ s32 func_8008AD40_172E00(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008AD40_172E00.s")
 #endif
 
+// AI - Set sprite entry color values
 void func_8008AF08_172FC8(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	if (arg0 != 0xFF) {
 		(&D_800FC8E8)[arg0].unk6 = arg1;
@@ -2995,6 +3063,7 @@ void func_8008AF08_172FC8(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 }
 
 #ifdef NON_MATCHING
+// AI - Set sprite entry unkF field
 void func_8008AF5C_17301C(s32 arg0, s32 arg1) {
 	s32 temp_t6;
 	s32 temp_t7;
@@ -3010,6 +3079,7 @@ void func_8008AF5C_17301C(s32 arg0, s32 arg1) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Set sprite entry unk10 field
 void func_8008AF94_173054(s32 arg0, s8 arg1) {
 	s32 temp_t6 = arg0 & 0xFF;
 
@@ -3021,6 +3091,7 @@ void func_8008AF94_173054(s32 arg0, s8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008AF94_173054.s")
 #endif
 
+// AI - Set sprite entry velocity values
 void func_8008AFD0_173090(u8 arg0, s8 arg1, s8 arg2) {
 	if (arg0 != 0xFF) {
 		(&D_800FC8E8)[arg0].unk10 = arg1;
@@ -3029,6 +3100,7 @@ void func_8008AFD0_173090(u8 arg0, s8 arg1, s8 arg2) {
 }
 
 #if NON_MATCHING
+// AI - Set sprite entry unkD field
 void func_8008B020_1730E0(s32 arg0, s32 arg1) {
 	s32 temp_t6;
 	s32 temp_t7;
@@ -3043,6 +3115,7 @@ void func_8008B020_1730E0(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B020_1730E0.s")
 #endif
 
+// AI - Free a sprite entry in the UnkFC8E8Entry table
 void func_8008B058_173118(u8 arg0) {
 	(&D_800FC8E8)[arg0].unkA = 0;
 	if (arg0 < D_800FCA79) {
@@ -3053,6 +3126,7 @@ void func_8008B058_173118(u8 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(285)
+// AI - Initialize the entire effect system (clear all slots and effects)
 void func_8008B0AC_17316C(void) {
 	s32 i;
 	s32 j;
@@ -3100,6 +3174,7 @@ void func_8008B0AC_17316C(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Main render dispatcher: set up RDP state and render all active slots
 void func_8008B1A8_173268(void) {
 	s32 i;
 	u8 mode;
@@ -3165,6 +3240,7 @@ void func_8008B1A8_173268(void) {
 
 #if NON_MATCHING
 // CURRENT(1605)
+// AI - Main update and render entry point: update effects, then render
 void func_8008B474_173534(void) {
 	func_8008311C_16B1DC();
 	(&D_800FB6F0)[0] = (s16) ((s32) D_800E6A78.unk4C - (&D_800FB6E8)[0]);
@@ -3180,6 +3256,7 @@ void func_8008B474_173534(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B474_173534.s")
 #endif
 
+// AI - Set lens flare position and size parameters
 void func_8008B53C_1735FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 	D_800A26A0_18A760 = 1;
 	D_800FCA7A = arg0 * 4;
@@ -3190,6 +3267,7 @@ void func_8008B53C_1735FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 }
 
 #ifdef NON_MATCHING
+// AI - Render lens flare effect (animated billboard with glow texture)
 void func_8008B594_173654(void) {
 	s32 pad;
 	s8 spA6;
