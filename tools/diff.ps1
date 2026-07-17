@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 # Helper script to run the asm-differ diff inside the bh-container.
 # Usage:
-#   .\diff.ps1 <function name> [<function name with offset>] [--show=target|current]
+#   .\diff.ps1 <function name> [<function name with offset>] [--show=target|current] [--structural]
 #
 # The second argument is expected to be in the form "func_XXXXXXXX_XXXXXX"
 # (e.g. "func_8012EC3C_13DBEC").  The part after the last underscore is
@@ -11,6 +11,9 @@
 #
 # When --show=target is provided, --diff_mode=single_base is passed to diff.py.
 # When --show=current is provided, --diff_mode=single is passed to diff.py.
+# When --structural is provided, --structural is passed to diff.py, which
+# reports only structural/logical differences (different instructions, offsets,
+# or control flow) while ignoring register allocation differences.
 
 param(
     [Parameter(Mandatory = $true, Position = 0)]
@@ -24,6 +27,7 @@ $Container = 'bh-container'
 
 $NextAddr = ''
 $diffModeArg = ''
+$structuralArg = ''
 foreach ($arg in $RemainingArgs) {
     if ($arg -like '--show=*') {
         $showValue = $arg -replace '^--show=', ''
@@ -35,6 +39,8 @@ foreach ($arg in $RemainingArgs) {
                 exit 1
             }
         }
+    } elseif ($arg -eq '--structural') {
+        $structuralArg = '--structural'
     } elseif (-not $NextAddr -and -not ($arg -like '--*')) {
         # Treat the first non-flag argument as the optional function+offset string.
         # Extract the offset from after the last underscore.
@@ -61,6 +67,10 @@ if (-not $diffModeArg) {
 
 if ($diffModeArg) {
     $bashCmd += " $diffModeArg"
+}
+
+if ($structuralArg) {
+    $bashCmd += " $structuralArg"
 }
 
 $bashCmd += " '$FuncName'"
