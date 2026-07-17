@@ -3,6 +3,7 @@
 
 
 #ifdef NON_MATCHING
+// AI - Reset all camera/view state variables to default values
 void func_8007FBD0_167C90(void) {
 	D_800E747C = 0;
 	D_800E73AC = 1;
@@ -27,6 +28,7 @@ void func_8007FBD0_167C90(void) {
 // https://decomp.me/scratch/2g3yf
 // CURRENT(1920) 
 #ifdef NON_MATCHING
+// AI - Main camera update dispatch: select view mode, set up projection and look-at matrices
 void func_8007FC74_167D34(void) {
 	u16 sp56;
 	f32 sp50;
@@ -118,6 +120,7 @@ void func_8007FC74_167D34(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_8007FC74_167D34.s")
 #endif
 
+// AI - Store three view-related values (NPC target coordinates)
 void func_80080168_168228(u16 arg0, u16 arg1, u16 arg2) {
 	D_800E73D8 = arg0;
 	D_800E73DA = arg1;
@@ -126,6 +129,7 @@ void func_80080168_168228(u16 arg0, u16 arg1, u16 arg2) {
 
 // CURRENT(8197)
 #ifdef NON_MATCHING
+// AI - Compute camera position from spherical coords (yaw/pitch/distance) with collision smoothing
 void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4) {
 	volatile f32 sp74;
 	s32 pad0;
@@ -235,6 +239,7 @@ void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4
 
 // CURRENT(9407)
 #ifdef NON_MATCHING
+// AI - Talking-to-NPC camera: smoothly interpolate view toward the NPC's position
 void func_800804E0_1685A0(void) {
 	f32 sp0;
 	f32 temp_f12;
@@ -292,6 +297,7 @@ void func_800804E0_1685A0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800804E0_1685A0.s")
 #endif
 
+// AI - Entering/exiting view: set a fixed camera position relative to the player
 void func_800806F8_1687B8(void) {
 	f32 temp_f0;
 
@@ -304,6 +310,7 @@ void func_800806F8_1687B8(void) {
 	D_800E65A4 = D_800E6A78.unk54 - 96.0f;
 }
 
+// AI - Normal chase-cam: position camera behind the player based on yaw
 void func_80080770_168830(void) {
 	D_800E659C = D_800E6A78.unk4C - 96.0f;
 	D_800E65A0 = 50.0f;
@@ -313,10 +320,13 @@ void func_80080770_168830(void) {
 	D_8008DDFC_175EBC = (f32) (((f64) D_800E6A78.unk54 - (((f64) (f32) sins((u16) (D_800E6A78.unkE + 0x2000)) / 32768.0) * D_800A4F30_18CFF0)) - 96.0);
 }
 
+// AI - Set view mode to talking-to-NPC
 void func_800808AC_16896C(void) { D_800E73DF = 2; }
 
+// AI - Reset view mode to default
 void func_800808BC_16897C(void) { D_800E73DF = D_80047F80; }
 
+// AI - Initialize camera orbit parameters (yaw, pitch, distance) and position
 void func_800808D0_168990(void) {
 	D_800E73E0 = 0xC000 - D_800E6A86;
 	D_800E73E8 = 144.0f;
@@ -340,6 +350,7 @@ void func_800808D0_168990(void) {
 }
 
 #ifdef NON_MATCHING
+// AI - Normal view loop: handle first-person/third-person toggle and smooth camera tracking
 void func_80080A38_168AF8(void) {
 	f32 temp_f0;
 	s32 pad0;
@@ -440,6 +451,7 @@ void func_80080A38_168AF8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080A38_168AF8.s")
 #endif
 
+// AI - Compute shortest signed angle difference between two 16-bit angles with wrapping
 s32 func_80080DA8_168E68(s32 arg0, s32 arg1) {
 	s32 v1;
 
@@ -454,6 +466,7 @@ s32 func_80080DA8_168E68(s32 arg0, s32 arg1) {
 }
 
 #ifdef NON_MATCHING
+// AI - Auto-center camera yaw toward player's facing direction when idle
 void func_80080E28_168EE8(void) {
 	s16 sp1E;
 	s32 delta;
@@ -496,6 +509,7 @@ void func_80080E28_168EE8(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Camera-wall collision check: prevent camera from clipping through walls
 s16 func_80080FD8_169098(void) {
 	f32 sp84;
 	f32 sp80;
@@ -545,6 +559,7 @@ s16 func_80080FD8_169098(void) {
 
 // CURRENT(1620)
 #ifdef NON_MATCHING
+// AI - Map yaw angle to a compass-direction marker index for the debug map
 s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
 	f32 temp_f2;
 	s32 var_v1;
@@ -573,6 +588,7 @@ s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Check if camera yaw direction is clear by scanning collision-map markers
 s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 	s32 var_s0;
 	s32 var_s1;
@@ -690,6 +706,7 @@ s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 
 // CURRENT(2495)
 #ifdef NON_MATCHING
+// AI - Debug/free camera: controller 2 manually controls camera position and rotation
 void func_80081764_169824(void) {
 	u16 buttons;
 	f32 one;
@@ -764,10 +781,12 @@ void func_80081764_169824(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80081764_169824.s")
 #endif
 
+// AI - Store pointer to camera waypoint table
 void func_80081A18_169AD8(s32 arg0) {
 	D_800E7488 = (Unk169EC8Entry *) arg0;
 }
 
+// AI - Save current camera state for cutscene/transition
 void func_80081A24_169AE4(void) {
 	D_800E73DF = 6;
 	D_800E7430 = D_800E73F0;
@@ -777,6 +796,7 @@ void func_80081A24_169AE4(void) {
 	D_800E7474 = 1.0f;
 }
 
+// AI - Restore saved camera state after cutscene/transition
 void func_80081AA8_169B68(void) {
 	D_800E73DF = D_80047F80;
 	D_800E73F0 = D_800E7430;
@@ -787,6 +807,7 @@ void func_80081AA8_169B68(void) {
 }
 
 #ifdef NON_MATCHING
+// AI - Smoothly interpolate camera between two saved states (cutscene transition)
 void func_80081B58_169C18(void) {
 	s32 temp;
 
@@ -827,6 +848,7 @@ void func_80081B58_169C18(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80081B58_169C18.s")
 #endif
 
+// AI - Load a camera waypoint entry from the waypoint table
 void func_80081E08_169EC8(s16 arg0) {
 	Unk169EC8Entry *entry = &D_800E7488[arg0];
 
@@ -839,6 +861,7 @@ void func_80081E08_169EC8(s16 arg0) {
 	D_800E7474 = 1.0f;
 }
 
+// AI - Set up smooth camera interpolation between two waypoints over a given duration
 void func_80081E90_169F50(s16 arg0, s16 arg1, s16 arg2) {
 	Unk169EC8Entry *v0;
 	Unk169EC8Entry *a3;
@@ -862,6 +885,7 @@ void func_80081E90_169F50(s16 arg0, s16 arg1, s16 arg2) {
 }
 
 #ifdef NON_MATCHING
+// AI - Render an ASCII debug map showing collision grid, player position, and camera markers
 void func_80081F98_16A058(void) {
 	u8 sp58[0x9C50];
 	u8 temp;
@@ -968,6 +992,7 @@ void func_80081F98_16A058(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Camera wall avoidance: detect collisions and rotate camera to prevent clipping
 void func_8008247C_16A53C(void) {
 	s32 delta;
 	s32 pad0;
@@ -1101,6 +1126,7 @@ void func_8008247C_16A53C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_8008247C_16A53C.s")
 #endif
 
+// AI - Set up interior gameplay pointer tables (initialisation)
 void func_80082AA0_16AB60(void) {
 	func_80017AAC_186AC();
 	D_80034460 = &D_800E7490;
@@ -1110,6 +1136,7 @@ void func_80082AA0_16AB60(void) {
 	D_80052AD8 = 0;
 }
 
+// AI - Set up interior gameplay pointer tables (re-entry)
 void func_80082B04_16ABC4(void) {
 	D_80034460 = &D_800E7490;
 	D_80034468 = (s32) &D_800EAD90;
@@ -1120,6 +1147,7 @@ void func_80082B04_16ABC4(void) {
 
 // CURRENT(3045)
 #ifdef NON_MATCHING
+// AI - Handle interior gameplay: screen fade colors and entering/exiting state transitions
 void func_80082B50_16AC10(void) {
 	s32 temp_v0;
 
