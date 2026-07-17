@@ -56,6 +56,7 @@ u8 D_8013D8B0_14C860[0x10] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
+// AI - Find free beacon display entry
 Unk8014F6D0* func_800A5A10_B49C0() {
 	s32 i;
 
@@ -70,6 +71,7 @@ Unk8014F6D0* func_800A5A10_B49C0() {
 }
 
 // activateSaveBeacon?
+// AI - Activate save beacon, save level stats
 void func_800A5A50_B4A00(s32 arg0, s32 arg1) {
 	s32 sp1C;
 
@@ -93,6 +95,7 @@ void func_800A5A50_B4A00(s32 arg0, s32 arg1) {
 }
 
 // checkIfActivatingSaveBeacon?
+// AI - Check A-button press to activate beacon
 void func_800A5B30_B4AE0(s32 arg0, s16 arg1) {
 	if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A) != 0) &&
 		(D_80052B34->unk1A == 0) &&
@@ -103,6 +106,7 @@ void func_800A5B30_B4AE0(s32 arg0, s16 arg1) {
 }
 
 #ifdef NON_MATCHING
+// AI - Spawn beacon model and collision trigger
 void func_800A5BD0_B4B80(s32 arg0) {
 	s32 sp4C;
 	s32 sp48;
@@ -125,6 +129,7 @@ void func_800A5BD0_B4B80(s32 arg0) {
 
 // guess_initBeacons
 #ifdef NON_MATCHING
+// AI - Initialize all beacons for current level
 void func_800A5D3C_B4CEC(void) {
 	s32 sentinel;
 	s32 i;
@@ -168,12 +173,14 @@ void func_800A5D3C_B4CEC(void) {
 #endif
 
 // warpToSaveBeacon
+// AI - Initiate warp/teleport to beacon
 void func_800A5EA8_B4E58(u8 arg0) {
 	osSyncPrintf(D_801427D8_151788, arg0); // teleport to:%d
 	D_8013D890_14C840 = 1;
 	D_8013D894_14C844 = arg0;
 }
 
+// AI - Handle beacon destroyed state
 void func_800A5EE8_B4E98(u8 arg0) {
 	D_8013D890_14C840 = 4;
 	D_80157A3C = 0;
@@ -184,6 +191,7 @@ void func_800A5EE8_B4E98(u8 arg0) {
 // https://decomp.me/scratch/xqKk4
 // CURRENT(1874)
 #ifdef NON_MATCHING
+// AI - Find next beacon to warp to
 void func_800A5F24_B4ED4(s32 arg0) {
 	s32 next;
 	s32 var_s0;
@@ -207,6 +215,7 @@ void func_800A5F24_B4ED4(s32 arg0) {
 
 // CURRENT(18077)
 #ifdef NON_MATCHING
+// AI - Render warp ring visual effect
 void func_800A6020_B4FD0(s16 arg0) {
 	u8 sp56;
 	u8 sp55;
@@ -369,6 +378,7 @@ void func_800A6020_B4FD0(s16 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(14213)
+// AI - Warp teleport state machine
 void func_800A68CC_B587C(void) {
 	s16 sp2E;
 	s16 sp2C;
@@ -550,6 +560,7 @@ void func_800A68CC_B587C(void) {
 
 // Launch beacon?
 #ifdef NON_MATCHING
+// AI - Launch beacon, set active state
 void func_800A6FD4_B5F84(void) {
 	u8 sp1F;
 
@@ -572,6 +583,7 @@ void func_800A6FD4_B5F84(void) {
 // CURRENT(44622)
 #ifdef NON_MATCHING
 // displayBeacons
+// AI - Render all beacons in 3D world
 void func_800A70B8_B6068(void) {
 	s16 i;
 	s32 groundY;
@@ -765,6 +777,7 @@ void func_800A70B8_B6068(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Find nearest vehicle to beacon
 s16 func_800A7B84_B6B34(s16 arg0, s16 arg1) {
 	s32 i;
 	u8 *ptr;
@@ -792,6 +805,7 @@ s16 func_800A7B84_B6B34(s16 arg0, s16 arg1) {
 
 // CURRENT(28813)
 #ifdef NON_MATCHING
+// AI - Update beacon state machine lifecycle
 void func_800A7C6C_B6C1C(void) {
 	struct BeaconColor {
 		u8 r;
@@ -1013,6 +1027,7 @@ void func_800A7C6C_B6C1C(void) {
 
 // CURRENT(8051)
 #ifdef NON_MATCHING
+// AI - Update beacon particle effects
 void func_800A854C_B74FC(void) {
 	s16 sp8C;
 	s16 sp8A;
@@ -1143,6 +1158,7 @@ void func_800A854C_B74FC(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Spawn visual particle entry
 void func_800A8A68_B7A18(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	Unk8014F6D0 *entry;
 
@@ -1179,6 +1195,7 @@ void func_800A8A68_B7A18(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Spawn random weapon pickup visual
 void func_800A8C44_B7BF4(s16 arg0, s16 arg1, s16 arg2) {
 	s16 sp1C;
 	s32 rand2;
@@ -1242,6 +1259,7 @@ void func_800A8C44_B7BF4(s16 arg0, s16 arg1, s16 arg2) {
 
 #ifdef NON_MATCHING
 // CURRENT(4305)
+// AI - Give power-up to player
 s32 func_800A8E18_B7DC8(s32 arg0) {
 	s32 result;
 	VehicleInstance* temp_v0;
@@ -1421,6 +1439,7 @@ s32 func_800A8E18_B7DC8(s32 arg0) {
 #endif
 
 // guess_givePowerUp
+// AI - Process delayed power-up queue
 void func_800A9238_B81E8() {
 	s16* powerupTypePtr = &D_80047F7E + 1;
 	s16 powerupType;
@@ -1436,6 +1455,7 @@ void func_800A9238_B81E8() {
 	}
 }
 
+// AI - Reset all beacon display entries
 void func_800A92B0_B8260(void) {
 	s32 i;
 	
