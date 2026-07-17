@@ -322,44 +322,39 @@ s16 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 leve
 	return -0x8000;
 }
 
-// CURRENT(80)
+// CURRENT(210)
 #ifdef NON_MATCHING
 s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
-	Unk8014FD30Type *a2;
-	Unk8014FD30Type *a3;
+	Unk8014FD30Type *base;
+	Unk8014FD30Type *cur;
 	BoundingBox *sub;
-	s32 cl;
-	s32 v1;
-	s32 t0;
-	s16 v0;
-	s16 t2;
+	s32 cnt;
+	s32 idx;
 
-	v1 = 0;
-	cl = currentLevel - 1;
-	a2 = D_80147C30_156BE0[cl];
-	for (a3 = a2; v1 != 6; v1++, a3++) {
-		if (arg0 < a3->main.minX || a3->main.maxX < arg0 || a3->main.minZ >= arg1) {
+	idx = currentLevel - 1;
+	base = D_80147C30_156BE0[idx];
+	idx = 0;
+	cur = base;
+	idx = 0;
+	for (; idx != 6; idx++, cur++) {
+		if (arg0 < cur->main.minX || cur->main.maxX < arg0 || cur->main.minZ >= arg1) {
 			continue;
 		}
-
-		t0 = 0;
-		if (arg1 >= a3->main.maxZ) {
+		if (arg1 >= cur->main.maxZ) {
 			continue;
 		}
-		sub = &a3->sub[0];
+		cnt = 0, sub = (BoundingBox *)base + (idx * 4 - idx);
 		for (;;) {
-			v0 = sub->minX;
-			t2 = sub->maxX;
-			if (v0 == t2) {
-				return (u8)v1;
+			if (sub[1].minX == sub[1].maxX) {
+				return (u8)idx;
 			}
-			if ((arg0 < v0) || (t2 < arg0) || (sub->minZ >= arg1) || (arg1 >= sub->maxZ)) {
-				if (t0 == 8) {
-					return (u8)v1;
+			if ((arg0 < sub[1].minX) || (sub[1].maxX < arg0) || (sub[1].minZ >= arg1) || (arg1 >= sub[1].maxZ)) {
+				if (cnt == 8) {
+					return (u8)idx;
 				}
-				t0 += 8;
+				cnt += 8;
 				sub++;
-				if (t0 != 0x10) {
+				if (cnt != 0x10) {
 					continue;
 				}
 			}
