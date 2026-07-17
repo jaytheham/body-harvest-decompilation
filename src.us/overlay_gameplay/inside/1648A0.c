@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include "common.h"
 
+// AI - Initialize player character state and animation
 void func_8007C7E0_1648A0(void) {
 	VehicleInstance *v0 = &D_800E6A78;
 
@@ -22,6 +23,7 @@ void func_8007C7E0_1648A0(void) {
 }
 
 #ifdef NON_MATCHING
+// AI - Free player animation memory and cleanup
 void func_8007C8BC_16497C(void) {
 	volatile Unk80157600 *ptr;
 
@@ -36,17 +38,20 @@ void func_8007C8BC_16497C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007C8BC_16497C.s")
 #endif
 
+// AI - Dispatch main player update each frame
 void func_8007C8FC_1649BC(void) {
 	func_8007DDA0_165E60(&D_800E6A78, currentControllerStates);
 	func_8007CAA8_164B68(&D_800E6A78, currentControllerStates);
 }
 
+// AI - Dispatch player rendering (shadow + model)
 void func_8007C93C_1649FC(void) {
 	func_8007EB1C_166BDC(&D_800E6A78);
 	func_8007EFD4_167094(&D_800E6A78);
 }
 
 #ifdef NON_MATCHING
+// AI - Normalize analog stick input to speed scalar (0.0-1.0)
 f32 func_8007C96C_164A2C(OSContPad *arg0) {
 	f32 temp_f0;
 	f32 var_f12;
@@ -83,6 +88,7 @@ f32 func_8007C96C_164A2C(OSContPad *arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Handle player input, movement, and collision
 void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1) {
 	s16 sp4E;
 	s16 sp4C;
@@ -210,6 +216,7 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Smoothly rotate player toward target yaw angle
 void func_8007D37C_16543C(VehicleInstance *arg0, s16 arg1, s32 arg2) {
 	s32 var_v0;
 	s32 var_v1;
@@ -256,11 +263,13 @@ void func_8007D37C_16543C(VehicleInstance *arg0, s16 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007D37C_16543C.s")
 #endif
 
+// AI - Clear movement-in-progress flag
 void func_8007D52C_1655EC(void) {
 	D_800E6A68 &= ~0x200;
 }
 
 #ifdef NON_MATCHING
+// AI - Set up search mode with target coordinates and yaw
 void func_8007D548_165608(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	func_8007DAA8_165B68(D_800E6F00, 0x11, NULL, 0.0f, 0x10);
 	D_800E6A1C = arg0;
@@ -275,6 +284,7 @@ void func_8007D548_165608(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007D548_165608.s")
 #endif
 
+// AI - Look up search animation ID for a given object
 s32 func_8007D62C_1656EC(Unk8007D62C_Entry *arg0, s32 arg1) {
 	s32 result;
 	s32 found;
@@ -300,6 +310,7 @@ s32 func_8007D62C_1656EC(Unk8007D62C_Entry *arg0, s32 arg1) {
 
 // CURRENT (4604)
 #ifdef NON_MATCHING
+// AI - Handle search behavior: turn, animate, and detect found state
 void func_8007D69C_16575C(VehicleInstance *arg0) {
 	typedef struct {
 		u8 pad0[0xE];
@@ -452,6 +463,7 @@ void func_8007D69C_16575C(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007D69C_16575C.s")
 #endif
 
+// AI - Switch to a new animation (blended or direct)
 void func_8007DAA8_165B68(void *arg0, s32 arg1, void *arg2, f32 arg3, s32 arg4) {
 	s32 temp_v0;
 	s32 var_v1;
@@ -476,6 +488,7 @@ void func_8007DAA8_165B68(void *arg0, s32 arg1, void *arg2, f32 arg3, s32 arg4) 
 	((Unk80157600 *)arg0)->unk10 = 0.0f;
 }
 
+// AI - Conditionally transition to a new animation (idle/walk/run)
 void func_8007DB98_165C58(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	if (!(D_8009E8E0_1869A0[((Unk80157600 *)arg0)->unk40C].unk0 & 8)) {
 		if (arg3 > 0.0f) {
@@ -492,6 +505,7 @@ void func_8007DB98_165C58(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 }
 
 #ifdef NON_MATCHING
+// AI - Handle animation-end callback with yaw and chained anims
 void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, s32 arg2) {
 	if (((Unk8007F878_404 *)arg1->unk404)->unkE50 == 0) {
 		arg0->unkE += (s32)((f32)D_8009E8DC_18699C[arg1->unk40C].unk10 * 32768.0f / D_800A4D90);
@@ -509,6 +523,7 @@ void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, s32 arg2) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Main player update FSM: search, cutscene, enter/exit, free control
 void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 	f32 speedScale;
 	s32 anim;
@@ -792,6 +807,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Draw shadow/floor marker quad beneath the player
 void func_8007EB1C_166BDC(void *arg0) {
 	s16 sp2E;
 	s16 sp2C;
@@ -908,6 +924,7 @@ void func_8007EB1C_166BDC(void *arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Render player character model with full matrix setup and damage flash
 void func_8007EFD4_167094(VehicleInstance *arg0) {
 	s32 spBC;
 	s32 spB8;
@@ -1068,6 +1085,7 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Initialize companion NPC entity and its animation
 void func_8007F668_167728(u8 arg0, u8 arg1) {
 	s32 sp24;
 
@@ -1088,6 +1106,7 @@ void func_8007F668_167728(u8 arg0, u8 arg1) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Free companion NPC animation memory
 void func_8007F724_1677E4(void) {
 	Unk80157600 *ptr;
 
@@ -1105,6 +1124,7 @@ void func_8007F724_1677E4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007F724_1677E4.s")
 #endif
 
+// AI - Update companion NPC animation state each frame
 void func_8007F778_167838(void) {
 	u8 temp_v1;
 	u8 temp_t0;
@@ -1126,6 +1146,7 @@ void func_8007F778_167838(void) {
 }
 
 #ifdef NON_MATCHING
+// AI - Render companion NPC while animation is still playing
 void func_8007F878_167938(void) {
 	Unk8007F878_D6AD8 *ptr;
 	Unk8007F878_404 *temp;
@@ -1147,6 +1168,7 @@ void func_8007F878_167938(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Render companion NPC model with full matrix transforms
 void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 sp64;
 	s32 sp60;
