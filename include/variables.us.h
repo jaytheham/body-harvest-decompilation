@@ -863,28 +863,28 @@ extern s16 D_800481A4; // 0x800481A4 = alienInstances[0].unk0C
 extern u8 D_800481CE; // 0x800481CE = alienInstances[0].unk36
 extern AlienInstance alienInstances[0xFE]; // 0x80048198
 extern s32 D_8004D148; // is Snared cheat disabled
-extern s32 D_8004D14C;
-extern s32 D_8004D150;
-extern s32 D_8004D154;
-extern s32 D_8004D158;
-extern s32 D_8004D15C;
-extern u8 D_8004D160[];
-extern u8 D_8004D161[];
-extern u8 D_8004D17E;
-extern u8 D_8004D180[];
-extern u8 D_8004D1AD;
-extern u8 D_8004D1B0[];
-extern u8 D_8004D1B1;
-extern u8 D_8004D1B2;
-extern u8 D_8004D1B9;
-extern u8 D_8004D1BE;
-extern u8 D_8004D1BF;
-extern s16 D_8004D1C0;
-extern MissionCondEntry D_8004D1C8[];
-extern s8 D_8004D342;
-extern u8 D_8004D348[];
-extern u8 D_8004D350[];
-extern s32 D_8004DC40;
+extern s32 D_8004D14C; // AI - Mission active/completion flag (set to 0x73 on complete)
+extern s32 D_8004D150; // AI - Mission completed set bitmask/pointer
+extern s32 D_8004D154; // AI - Mission failure set bitmask/pointer
+extern s32 D_8004D158; // AI - Mission success set bitmask/pointer
+extern s32 D_8004D15C; // AI - Mission tile-data-complete set bitmask/pointer
+extern u8 D_8004D160[]; // AI - Mission character/actor ID pairs [id, spawnedInstance]
+extern u8 D_8004D161[]; // AI - Overlaps D_8004D160, character spawned instance indices
+extern u8 D_8004D17E; // AI - Mission random object count
+extern u8 D_8004D180[]; // AI - Selected random object entries (3-byte each, max 16)
+extern u8 D_8004D1AD; // AI - Mission init flag (initialized to 0xFF)
+extern u8 D_8004D1B0[]; // AI - Mission flag array (cleared by command opcode 0xA3)
+extern u8 D_8004D1B1; // AI - Part of mission flag array D_8004D1B0
+extern u8 D_8004D1B2; // AI - Part of mission flag array D_8004D1B0
+extern u8 D_8004D1B9; // AI - Mission byte (initialized separately from D_8004D1B0)
+extern u8 D_8004D1BE; // AI - Mission slot age counter (incremented periodically)
+extern u8 D_8004D1BF; // AI - Mission init marker (initialized to 0xFF)
+extern s16 D_8004D1C0; // AI - Mission state flag (reset on flag-clear command)
+extern MissionCondEntry D_8004D1C8[]; // AI - Dialogue condition entries (max 64, 6 bytes each)
+extern s8 D_8004D342; // AI - Dialogue condition counter (initialized to 0)
+extern u8 D_8004D348[]; // AI - Game condition entries (9 bytes each, max 255)
+extern u8 D_8004D350[]; // AI - Overlaps D_8004D348, game condition data
+extern s32 D_8004DC40; // AI - Mission state (-1 = uninitialized)
 extern BitFlags64 D_8004DC48; // "keys"
 extern Flags2x32 D_8004DC50;
 extern u32 D_8004DC54; // same address as D_8004DC50.unk4
@@ -2008,8 +2008,8 @@ extern s16 D_8013B910_14A8C0[6];
 extern s16 D_8013B91C_14A8CC[6];
 extern s16 D_8013B928_14A8D8[6];
 extern s16 D_8013B934_14A8E4;
-extern char D_8013BA80_14AA30[];
-extern s32 D_8013BAC0_14AA70[][4];
+extern char D_8013BA80_14AA30[]; // AI - Mission-related format string buffer
+extern s32 D_8013BAC0_14AA70[][4]; // AI - Level-to-mission-ID mapping table (5 levels, 4 IDs each)
 extern s16 D_8013BB6C_14AB1C[];
 extern s16 D_8013BB8C_14AB3C[];
 extern s16 D_8013BC0C_14ABBC[16];
@@ -2279,44 +2279,44 @@ extern u8 D_8014944B;
 extern u8 cheatInputBuffer[0xA]; // 0x80149450
 extern s32 D_8014945C;
 extern s32 isCheatingEnabled; // 80149460
-extern s32 D_80149470;
-extern s16 D_80149474;
-extern s32 D_80149478[16];
-extern s32 D_801494B4;
-extern u8* D_801494B8;
-extern u8 D_801494BC;
-extern MissionCondEntry D_801494C0[];
-extern u8 D_801497BA;
-extern MissionCondEntry *D_801497C0;
-extern u8 *D_801497C4;
-extern u8 D_801497C8[];
-extern u8 D_80149AC8[];
-extern u8 D_80149AF8[];
-extern u8 D_80149B25;
-extern s32 D_80149B28; // numberOfMissionConditions
-extern s32 D_80149B2C;
-extern s32 D_80149B30; // Number of mission commands?
-extern s32 D_80149B34;
-extern s32 D_80149B38;
-extern s32 D_80149B3C;
-extern s32 D_80149B40; // numberOfCommandObjects
-extern s32 D_80149B44; // numberOfCharacters
-extern s16 D_80149B48; // numberOfMissions
-extern s16 D_80149B4A;
-extern u8 D_80149B50[];
-extern u8 D_80149B60[][11][50];
-extern u8 D_8014CCCA;
-extern u8 D_8014CEF0[];
-extern u8 D_8014CFF0[];
-extern u8 D_8014CFF1[];
-extern u8 D_8014D16E;
-extern s16 D_8014D17C;
-extern s16 D_8014D17E;
-extern s16 D_8014D180;
-extern s16 D_8014D182;
-extern s16 D_8014D188[];
-extern s16 D_8014D1B6;
-extern u32 D_8014D1B8[];
+extern s32 D_80149470; // AI - Mission counter (incremented per mission parsed)
+extern s16 D_80149474; // AI - Current mission ID (set by flag-clear command, 0xFF = none)
+extern s32 D_80149478[16]; // AI - Mission callback function pointers (max 16)
+extern s32 D_801494B4; // AI - Mission callback active flag / callback count
+extern u8* D_801494B8; // AI - Mission data stream pointer
+extern u8 D_801494BC; // AI - Current byte from mission data stream
+extern MissionCondEntry D_801494C0[]; // AI - Mission condition entries (max 128, 6 bytes each)
+extern u8 D_801497BA; // AI - Secondary/special mission entry buffer (6-byte entries, max 128)
+extern MissionCondEntry *D_801497C0; // AI - Pointer to current mission condition entry
+extern u8 *D_801497C4; // AI - Pointer to current game condition entry
+extern u8 D_801497C8[]; // AI - Mission command buffer (3-byte entries, max 254)
+extern u8 D_80149AC8[]; // AI - Random object scratch space (3-byte entries)
+extern u8 D_80149AF8[]; // AI - Wave entry / random object definitions (3-byte entries)
+extern u8 D_80149B25; // AI - Mission flag init byte (initialized to 0xFF)
+extern s32 D_80149B28; // AI - Number of mission conditions (max 128)
+extern s32 D_80149B2C; // AI - Number of game conditions (max 255)
+extern s32 D_80149B30; // AI - Number of mission commands (max 254)
+extern s32 D_80149B34; // AI - Number of mission info entries (max 64)
+extern s32 D_80149B38; // AI - Number of random objects (max 16)
+extern s32 D_80149B3C; // AI - Number of dialogue conditions (max 64)
+extern s32 D_80149B40; // AI - Number of command objects (max 16)
+extern s32 D_80149B44; // AI - Number of characters (max 16)
+extern s16 D_80149B48; // AI - Number of missions / current mission ID (max 24)
+extern s16 D_80149B4A; // AI - Error flag (set to 1 on any buffer overflow)
+extern u8 D_80149B50[]; // AI - Random object weight scratch buffer
+extern u8 D_80149B60[][11][50]; // AI - Mission tile/map data per mission per chunk
+extern u8 D_8014CCCA; // AI - Mission info initialization source data
+extern u8 D_8014CEF0[]; // AI - Mission info entries (4 bytes each, max 64)
+extern u8 D_8014CFF0[]; // AI - Random object weight pair buffer
+extern u8 D_8014CFF1[]; // AI - Overlaps D_8014CFF0, weight pair data
+extern u8 D_8014D16E; // AI - Mission condition data byte
+extern s16 D_8014D17C; // AI - Mission completed set pointer
+extern s16 D_8014D17E; // AI - Mission random object count
+extern s16 D_8014D180; // AI - Selected random object entries pointer
+extern s16 D_8014D182; // AI - Alias/overlap with random object data
+extern s16 D_8014D188[]; // AI - Mission info continuation counts per mission
+extern s16 D_8014D1B6; // AI - Mission counter (initialized to 0)
+extern u32 D_8014D1B8[]; // AI - Mission object/alien used bitmask (7 entries)
 extern u8 D_8014D200[];
 extern u8 D_8014D298[][10];
 extern s32 D_8014D2E8;
