@@ -1642,6 +1642,7 @@ void func_80086528_569D8(s32 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(13583)
+// AI - Creates a particle effect with 3 linked entries; sets position, randomized colors/velocity, and animation flags based on strength
 s16 func_80086C58_57108(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 arg5) {
 	s16 ret;
 	s16 linkIdx;
@@ -1768,6 +1769,7 @@ s16 func_80086C58_57108(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 ar
 
 #ifdef NON_MATCHING
 // CURRENT(13418)
+// AI - Updates type-2 particles: animates growth, interpolates colors toward target, cycles animation frames, frees expired entries
 void func_800870AC_5755C(void) {
 	s16 current;
 
@@ -1865,6 +1867,7 @@ void func_800870AC_5755C(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(40278)
+// AI - Renders type-2 particles with 2-cycle blending, camera-facing billboard matrices, and animated glow/star textures
 void func_800878A4_57D54(void) {
 	Unk80052B40 pos;
 	Unk80052B40 rot;
@@ -2028,6 +2031,7 @@ void func_800878A4_57D54(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(5554)
+// AI - Creates a type-3 particle effect with position, randomized colors, motion velocities, and optional child particle spawning
 s16 func_800885A0_58A50(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, s32 arg6, u8 arg7) {
 	f32 sp40;
 	f32 sp44;
@@ -2136,6 +2140,7 @@ s16 func_800885A0_58A50(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800885A0_58A50.s")
 #endif
 
+// AI - Sets color values (from u16 args) into a particle's third linked entry
 void func_80088A38_58EE8(u16 arg0, u16 arg1, u16 arg2, s16 arg3) {
 	u8 *ptr;
 
@@ -2147,6 +2152,7 @@ void func_80088A38_58EE8(u16 arg0, u16 arg1, u16 arg2, s16 arg3) {
 	}
 }
 
+// AI - Sets velocity offsets (s8 x,y,z) into a particle's third linked entry
 void func_80088ACC_58F7C(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 	s8 *dst;
 
@@ -2158,6 +2164,7 @@ void func_80088ACC_58F7C(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 	}
 }
 
+// AI - Sets alternate velocity values (s8) into a particle's third linked entry
 void func_80088B54_59004(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 	s8 *dst;
 
@@ -2171,6 +2178,7 @@ void func_80088B54_59004(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 
 #ifdef NON_MATCHING
 // CURRENT(1125)
+// AI - Updates type-3 particles: applies gravity, ages particles, spawns child effects, frees expired entries
 void func_80088BDC_5908C(void) {
 	s16 temp_a1;
 	s16 temp_s0;
@@ -2249,6 +2257,7 @@ void func_80088BDC_5908C(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(8258)
+// AI - Renders type-3/solid particles with matrix transforms, scale/rotation, and configurable geometry modes
 void func_80088E18_592C8(void) {
 	s16 cur;
 	Unk800DE840 *entry;
@@ -2336,6 +2345,7 @@ void func_80088E18_592C8(void) {
 #endif
 
 // https://decomp.me/scratch/7xbIK
+// AI - Allocates a child particle (type 4) linked to a parent; copies template data and returns allocation ID
 u8 func_800891F8_596A8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4)
 {
 	s16 idx;
@@ -2388,6 +2398,7 @@ u8 func_800891F8_596A8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4)
 	return allocId;
 }
 
+// AI - Spawns a single child particle from a type-4 parent with randomized size and inherited colors
 void func_80089388_59838(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	s16 idx;
 
@@ -2417,6 +2428,7 @@ void func_80089388_59838(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 
 #ifdef NON_MATCHING
 // CURRENT(1680)
+// AI - Updates type-4 child particles: interpolates colors toward head values, ages, frees expired entries
 void func_800894A0_59950(u8 arg0) {
 	Unk800DE130 *entry130;
 	Unk800DE840 *cur;
@@ -2490,6 +2502,7 @@ void func_800894A0_59950(u8 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(3538)
+// AI - Renders type-1 particles: loads particle texture and renders each entry as a billboarded sprite
 void func_80089764_59C14(s32 arg0) {
 	s16 idx;
 	s16 neg6;
@@ -2544,6 +2557,7 @@ void func_80089764_59C14(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80089764_59C14.s")
 #endif
 
+// AI - Creates a type-5 particle entry with position, color, size, and alpha
 void func_800899F0_59EA0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	s16 idx;
 	u8* ptr;
@@ -2571,6 +2585,7 @@ void func_800899F0_59EA0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5
 	}
 }
 
+// AI - Updates type-5 particles: grows size over time and increments frame counter
 void func_80089AB4_59F64(void) {
 	s16 idx;
 	u8 *ptr;
@@ -2588,6 +2603,7 @@ void func_80089AB4_59F64(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(16169)
+// AI - Renders type-2 particles as screen-aligned colored quads with per-vertex color and alpha
 void func_80089B38_59FE8(void) {
 	s16 idx;
 	Unk800DE840 *entry;
@@ -2691,6 +2707,7 @@ void func_80089B38_59FE8(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Spawns a type-6 child particle with velocity derived from template parameters and randomization
 void func_8008A094_5A544(u8 arg0) {
 	extern f64 D_800AEC70_7F120;
 	extern f64 D_800AEC78_7F128;
@@ -2764,6 +2781,7 @@ void func_8008A094_5A544(u8 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(3439)
+// AI - Creates a type-6 particle effect with position, velocity, color, size, and lifespan parameters
 u8 func_8008A460_5A910(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13, u8 arg14) {
 	u8 slot;
 	s32 pad0;
@@ -2853,6 +2871,7 @@ u8 func_8008A460_5A910(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, 
 
 #ifdef NON_MATCHING
 // CURRENT(5167)
+// AI - Updates type-6 particles: applies velocity/gravity, checks boundaries, spawns children at intervals, frees expired
 void func_8008A5F8_5AAA8(u8 arg0) {
 	Unk800DE130 *temp_s4;
 	Unk800DE840 *sp40;
@@ -2947,6 +2966,7 @@ void func_8008A5F8_5AAA8(u8 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(7952)
+// AI - Renders type-3 particles as billboarded quads with primitive and environment colors
 void func_8008A928_5ADD8(s32 arg0) {
 	Unk800DE840 *entry;
 	Unk800DE840 *cur;
@@ -3075,6 +3095,7 @@ void func_8008A928_5ADD8(s32 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(2027)
+// AI - Spawns a type-7 child particle, copying position from parent with random velocity offsets
 void func_8008AEC8_5B378(s32 arg0) {
 	s16 srcIdx;
 	s16 dstIdx;
@@ -3116,6 +3137,7 @@ void func_8008AEC8_5B378(s32 arg0) {
 #endif
 
 /* Allocate entry with given params; returns allocId or 0xFB on failure */
+// AI - Allocates a type-7 particle entry with position, color, and size
 u8 func_8008B08C_5B53C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6)
 {
   s16 idx;s32 new_var;
@@ -3142,6 +3164,7 @@ u8 func_8008B08C_5B53C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, 
 }
 
 /* Sets 3D position (s16 x,y,z) in D_800DE840 entry indexed via D_800DE130 */
+// AI - Sets the 3D position of a type-7 particle
 void func_8008B148_5B5F8(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	s16 idx = D_800DE130[arg3].unk6;
 	D_800DE840[idx].unk8 = arg0;
@@ -3149,6 +3172,7 @@ void func_8008B148_5B5F8(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	D_800DE840[idx].unkC = arg2;
 }
 
+// AI - Controls type-7 particle lifecycle: stop updates or free entirely
 void func_8008B19C_5B64C(u8 arg0, u8 arg1) {
 	Unk800DE130 *entry;
 
@@ -3172,6 +3196,7 @@ void func_8008B19C_5B64C(u8 arg0, u8 arg1) {
 
 #ifdef NON_MATCHING
 // CURRENT(2739)
+// AI - Updates type-7 particles: ages children, updates velocity/size, spawns new particles periodically
 void func_8008B264_5B714(u8 arg0) {
 	s16 idx;
 	s16 nextIdx;
@@ -3225,6 +3250,7 @@ void func_8008B264_5B714(u8 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(3981)
+// AI - Renders type-4 particles as billboarded sprites with loaded texture
 void func_8008B534_5B9E4(s32 arg0) {
 	s16 idx;
 	s16 neg6;
@@ -3280,6 +3306,7 @@ void func_8008B534_5B9E4(s32 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(1910)
+// AI - Creates a line particle effect, spawning particles evenly between two 3D points
 u8 func_8008B7BC_5BC6C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
 	u8 effectId;
 	u32 stepCountU32;
@@ -3343,6 +3370,7 @@ u8 func_8008B7BC_5BC6C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B7BC_5BC6C.s")
 #endif
 
+// AI - Frees a type-9 particle effect
 void func_8008BAD8_5BF88(u8 arg0) {
 	if (arg0 != 0xFB && D_800DE130[arg0].unk0 == 9) {
 		func_800840C4_54574(arg0);
@@ -3350,6 +3378,7 @@ void func_8008BAD8_5BF88(u8 arg0) {
 	}
 }
 
+// AI - Updates type-8 particles: decrements lifespan timer, frees when expired
 void func_8008BB38_5BFE8(u8 arg0) {
 	s16 idx;
 	s16 *ptrA1;
@@ -3380,6 +3409,7 @@ void func_8008BB38_5BFE8(u8 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(28873)
+// AI - Renders type-5 ribbon/line segments between sequential particles with fading alpha
 void func_8008BC00_5C0B0(u8 arg0) {
 	s16 idx;
 	s16 nextIdx;
@@ -3608,6 +3638,7 @@ void func_8008BC00_5C0B0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008BC00_5C0B0.s")
 #endif
 
+// AI - Creates a type-9 trail entry with position, color, and velocity
 void func_8008C73C_5CBEC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5, s16 arg6, s16 arg7, s16 arg8, u8 arg9) {
 	s32 idx;
 
@@ -3627,6 +3658,7 @@ void func_8008C73C_5CBEC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5
 	}
 }
 
+// AI - Updates type-9 particles: applies velocity, frees when timer expires
 void func_8008C7E4_5CC94(void) {
 	s16 var_s0;
 	s16 var_s1;
@@ -3654,6 +3686,7 @@ void func_8008C7E4_5CC94(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(6709)
+// AI - Renders type-9 particles as 3D line segments with gradient alpha
 void func_8008C8E0_5CD90(void) {
 	s16 index;
 	s16 x;
@@ -3725,6 +3758,7 @@ void func_8008C8E0_5CD90(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Main particle update dispatcher: iterates all slots and calls per-type update function
 void func_8008CC3C_5D0EC(void) {
 	u8 i;
 
@@ -3794,6 +3828,7 @@ void func_8008CC3C_5D0EC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008CC3C_5D0EC.s")
 #endif
 
+// AI - Renders a camera-aligned billboard quad for a single particle
 void func_8008CDC8_5D278(void) {
 	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + D_800DE128);
 	D_8005BB34->v.ob[1] = (s16)(s32)D_800DE118.y;
@@ -3849,6 +3884,7 @@ void func_8008CDC8_5D278(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(60)
+// AI - Renders a camera-facing billboard quad using orientation basis vectors
 void func_8008D14C_5D5FC(void) {
 	f32 temp_f8;
 	f32 temp_f0 = D_800DE128 * D_800DE0C0[0];
@@ -3916,6 +3952,7 @@ void func_8008D14C_5D5FC(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(3245)
+// AI - Renders a pulsing/oscillating billboard quad with animated scale
 void func_8008D510_5D9C0(void) {
 	f32 temp_f0;
 	f32 temp_f14;
@@ -4006,6 +4043,7 @@ void func_8008D510_5D9C0(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(2095)
+// AI - Main render dispatcher: sets RDP state, iterates all slots, calls per-type render function
 s32 func_8008D98C_5DE3C(Gfx **arg0) {
 	s32 i;
 
@@ -4078,6 +4116,7 @@ s32 func_8008D98C_5DE3C(Gfx **arg0) {
 #endif
 
 /* Clears unkA field in all 50 D_800E1980 entries and resets globals */
+// AI - Clears sprite slot tracking state and resets globals
 void func_8008DBEC_5E09C(void) {
 	u8 i;
 
@@ -4090,6 +4129,7 @@ void func_8008DBEC_5E09C(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(7230)
+// AI - Allocates a sprite/texture slot in the 2D sprite system
 u8 func_8008DC34_5E0E4(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4) {
 	u8 var_v1;
 	u8 temp_t3;
@@ -4141,6 +4181,7 @@ u8 func_8008DC34_5E0E4(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008DC34_5E0E4.s")
 #endif
 
+// AI - Sets color values for a sprite slot
 void func_8008DDF0_5E2A0(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	if (arg0 != 0xFF) {
 		D_800E1980[arg0].unk6 = arg1;
@@ -4149,18 +4190,21 @@ void func_8008DDF0_5E2A0(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	}
 }
 
+// AI - Sets a field value in a sprite slot
 void func_8008DE44_5E2F4(u8 arg0, u8 arg1) {
 	if (arg0 != 0xFF) {
 		(&D_800E198D)[(s32)arg0 * 20] = arg1;
 	}
 }
 
+// AI - Sets a signed byte value in a sprite slot
 void func_8008DE7C_5E32C(u8 arg0, s8 arg1) {
 	if (arg0 != 0xFF) {
 		(&D_800E1992)[(s32)arg0 * 20] = arg1;
 	}
 }
 
+// AI - Sets velocity values for a sprite slot
 void func_8008DEB8_5E368(u8 arg0, s8 arg1, s8 arg2) {
 	if (arg0 != 0xFF) {
 		D_800E1980[arg0].unk10 = arg1;
@@ -4168,12 +4212,14 @@ void func_8008DEB8_5E368(u8 arg0, s8 arg1, s8 arg2) {
 	}
 }
 
+// AI - Sets a flag in a sprite slot
 void func_8008DF08_5E3B8(u8 arg0, u8 arg1) {
 	if (arg0 != 0xFF) {
 		(&D_800E198F)[(s32)arg0 * 20] = arg1;
 	}
 }
 
+// AI - Frees a sprite slot and updates the free index
 void func_8008DF40_5E3F0(u8 arg0) {
 	if (arg0 != 0xFF) {
 		D_800E1980[arg0].unkA = 0;
@@ -4187,6 +4233,7 @@ void func_8008DF40_5E3F0(u8 arg0) {
 // https://decomp.me/scratch/PjKaT
 // CURRENT(285)
 #ifdef NON_MATCHING
+// AI - Updates sprite slots: handles animation frame timing, advances frames, and frees finished sprites
 void func_8008DFA0_5E450(void)
 {
 	s16 life;
@@ -4253,6 +4300,7 @@ void func_8008DFA0_5E450(void)
 
 #ifdef NON_MATCHING
 // CURRENT(31147)
+// AI - Renders 2D sprites with various texture formats (I4, IA8, RGBA16) and render types (generic quad, simple quad, pulsing)
 void func_8008E158_5E608(void) {
 	typedef struct {
 		s8 unk0;
@@ -4446,6 +4494,7 @@ void func_8008E158_5E608(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008E158_5E608.s")
 #endif
 
+// AI - Creates a 2D sprite with color, velocity, and animation parameters
 void func_8008E9DC_5EE8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10) {
 	u8 slot;
 
@@ -4461,6 +4510,7 @@ void func_8008E9DC_5EE8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg
 	}
 }
 
+// AI - Creates a type-5 sprite with velocity
 void func_8008EAB0_5EF60(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s8 arg4) {
 	u8 slot;
 
@@ -4469,6 +4519,7 @@ void func_8008EAB0_5EF60(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s8 arg4) {
 	func_8008DEB8_5E368(slot, arg3, 0);
 }
 
+// AI - Creates a full explosion effect: particle + sprites + child effects based on strength
 s16 func_8008EB20_5EFD0(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5, u8 arg6)
 {
   s16 pad1;
@@ -4522,6 +4573,7 @@ s16 func_8008EB20_5EFD0(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg
   return ret;
 }
 
+// AI - Wrapper for explosion effect that temporarily sets a global flag
 void func_8008ED44_5F1F4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5) {
 	D_800DE0EB = 1;
 	func_8008EB20_5EFD0(arg0, arg1, arg2, arg3, arg4, arg5, 0);
@@ -4530,6 +4582,7 @@ void func_8008ED44_5F1F4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 ar
 
 #ifdef NON_MATCHING
 // CURRENT(1385)
+// AI - Generates randomized color sets from a base color lookup table
 void func_8008EDB4_5F264(s32 arg0) {
 	s16 temp;
 	s32 value;
@@ -4563,6 +4616,7 @@ void func_8008EDB4_5F264(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008EDB4_5F264.s")
 #endif
 
+// AI - Spawns initial ambient particle effects with random positions
 void func_8008EEC4_5F374(void) {
 	s32 var_s1;
 	f32 sp60[3];
@@ -4593,6 +4647,7 @@ void func_8008EEC4_5F374(void) {
 // https://decomp.me/scratch/fAy3j
 // CURRENT(0)
 #ifdef NON_MATCHING
+// AI - Creates orbiting particle effects for cinematic lighting mode
 void func_8008F1E0_5F690(void)
 {
   s16 temp_a0;
@@ -4662,6 +4717,7 @@ void func_8008F1E0_5F690(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008F1E0_5F690.s")
 #endif
 
+// AI - Initializes a particle slot entry to default values
 void func_8008F534_5F9E4(u8 arg0, u8 arg1) {
 	D_800DE130[arg1].unk0 = arg0;
 	D_800DE130[arg1].unk1 = 0;
@@ -4672,6 +4728,7 @@ void func_8008F534_5F9E4(u8 arg0, u8 arg1) {
 
 #ifdef NON_MATCHING
 // CURRENT(726)
+// AI - Resets the entire particle system: clears all slots, sets default global state
 void func_8008F574_5FA24(void) {
 	u8 var_s0;
 	s32 i;
@@ -4726,6 +4783,7 @@ void func_8008F574_5FA24(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008F574_5FA24.s")
 #endif
 
+// AI - Renders a colored 3D quad from pre-computed vertex/color lookup tables
 void func_8008F704_5FBB4(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
@@ -4784,6 +4842,7 @@ void func_8008F704_5FBB4(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
+// AI - Renders two background quads from D_800DE0BE/D_800DE0BF
 void func_8008FA60_5FF10(void) {
 	if (D_800DE0BE != 0xFF) {
 		func_8008F704_5FBB4(D_800DE0BE);
@@ -4793,6 +4852,7 @@ void func_8008FA60_5FF10(void) {
 	}
 }
 
+// AI - Handles debug controller input for camera position manipulation
 void func_8008FAAC_5FF5C(void) {
 	func_800033D4_3FD4(0x800, 0);
 	if (currentControllerStates[CONTROLLER_ONE].button & BUTTON_D_UP) {
@@ -4825,6 +4885,7 @@ void func_8008FAAC_5FF5C(void) {
 	}
 }
 
+// AI - Renders a debug position marker quad at the current camera location
 void func_8008FBD4_60084(void) {
 	u8 pad;
 	struct { u8 unk0; u8 unk1; u8 unk2; } sp44;
@@ -4858,11 +4919,13 @@ void func_8008FBD4_60084(void) {
 	func_8008D14C_5D5FC();
 }
 
+// AI - Main particle render entry point: loads identity matrix and calls render dispatcher
 s32 func_8008FD9C_6024C(void) {
 	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)&D_80031160 & 0x1FFFFFFF), G_MTX_LOAD | G_MTX_MODELVIEW);
 	return func_8008D98C_5DE3C(&D_8005BB2C);
 }
 
+// AI - Main per-frame particle update: computes camera delta, dispatches updates, ambient spawns, debug input
 void func_8008FDF0_602A0(void) {
 	D_800DE0F0[0] = (f32)D_800DE10C - D_800DE100[0];
 	D_800DE0F0[1] = (f32)D_800DE10E - D_800DE100[1];
@@ -4876,6 +4939,7 @@ void func_8008FDF0_602A0(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(13651)
+// AI - Effect command dispatcher: creates particle effects from a structured command table (30 effect types)
 void func_8008FE98_60348(s32 arg0) {
 	Unk800AA998Entry *entry;
 
@@ -5072,6 +5136,7 @@ void func_8008FE98_60348(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008FE98_60348.s")
 #endif
 
+// AI - Sets up the 3D rendering pipeline: projection, camera look-at, and viewport
 void func_80090648_60AF8(void) {
 	s16 i;
 	u16 perspNorm;
