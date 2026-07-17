@@ -151,12 +151,19 @@ s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 }
 
 /* Check if any of the 4 corners of a tile have height difference >= 10 */
+// CURRENT(165)
 #ifdef NON_MATCHING
 s32 func_800B0A88_BFA38(s32 arg0, s32 arg1)
 {
-  s32 a0;
   s32 v0;
-  v0 = (*D_80052A94[arg1][arg0] & 0x3F) - (*D_80052A94[arg1][arg0 + 1] & 0x3F);
+  s32 a0;
+  s32 val0;
+  s32 val1;
+  s32 val2;
+
+  val0 = *(u16 *)((u8 *)D_80052A94 + (arg1 << 9) + (arg0 << 1)) & 0x3F;
+  val1 = *(u16 *)((u8 *)D_80052A94 + (arg1 << 9) + (arg0 << 1) + 2) & 0x3F;
+  v0 = val0 - val1;
   a0 = (-v0 < v0) ? v0 : -v0;
   
   if (a0 >= 0xA)
@@ -164,7 +171,8 @@ s32 func_800B0A88_BFA38(s32 arg0, s32 arg1)
 	return 1;
   }
 
-  v0 = (*D_80052A94[arg1][arg0 + 1] & 0x3F) - (*D_80052A94[arg1][arg0 + 0x101] & 0x3F);
+  val2 = *(u16 *)((u8 *)D_80052A94 + (arg1 << 9) + (arg0 << 1) + 0x202) & 0x3F;
+  v0 = val1 - val2;
   a0 = (-v0 < v0) ? v0 : -v0;
   
   if (a0 >= 0xA)
@@ -172,14 +180,15 @@ s32 func_800B0A88_BFA38(s32 arg0, s32 arg1)
 	return 1;
   }
 
-  v0 = (*D_80052A94[arg1][arg0 + 0x101] & 0x3F) - (*D_80052A94[arg1][arg0 + 0x100] & 0x3F);
+  val1 = *(u16 *)((u8 *)D_80052A94 + (arg1 << 9) + (arg0 << 1) + 0x200) & 0x3F;
+  v0 = val2 - val1;
   a0 = (-v0 < v0) ? v0 : -v0;
   
   if (a0 >= 0xA)
   {
 	return 1;
   }
-  v0 = (*D_80052A94[arg1][arg0 + 0x100] & 0x3F) - (*D_80052A94[arg1][arg0] & 0x3F);
+  v0 = val1 - val0;
   a0 = (-v0 < v0) ? v0 : -v0;
   
   if (a0 >= 0xA)
