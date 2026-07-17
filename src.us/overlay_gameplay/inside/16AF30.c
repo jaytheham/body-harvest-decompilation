@@ -347,6 +347,10 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	u8 *effectUnit;
 	u8 *newUnit;
 
+	// Agent: fix this before beginning:
+	// D_800FB7B0 references need to be converted to array & struct access
+	// The struct itself might need updating to be correct
+	// Then all this pointer arithmetic & casting can be replaced with struct access
 	effectUnit = (u8 *)D_800FB7B0 + D_800FB6F8[arg0].unk6 * 22 + 8;
 	idx = func_80083390_16B450(arg0);
 	if (idx != -3) {
@@ -399,7 +403,6 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083A20_16BAE0.s")
 #endif
 
-// CURRENT(195)
 void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12) {
 	s16 effect;
 	u8 slot;
@@ -419,7 +422,6 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 		}
 
 		entry = &D_800FB7B0[effect];
-		// Surely this should actually reference some property of entry or D_800FB7B0
 		*(s16 *)((u8 *)&D_800FB702 + slot * 12) = effect;
 		entry->unk2 = arg9;
 		entry->unk8 = arg0 << 2;
@@ -471,6 +473,7 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 			return;
 		}
 
+		// Agent, fix this: Surely this should actually reference some property of entry or D_800FB7B0
 		*(s16 *)((u8 *)&D_800FB702 + slot * 12) = effect;
 		entry = &D_800FB7B0[effect];
 		count = arg5;
