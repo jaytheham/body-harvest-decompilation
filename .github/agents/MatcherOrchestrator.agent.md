@@ -58,4 +58,4 @@ Retain any existing comments.
 These powershell tools exist to assist you:
 
 - Build the ROM: `.\tools\make.ps1`
-- Get the diff closeness value for a function: `.\tools\diff.ps1 <target function name> <next function name> | Select-Object -First 1`.
+- Get the diff closeness value for a function: `.\tools\diff.ps1 <target function name> <next function name> --show-score | Select-Object -First 1`.

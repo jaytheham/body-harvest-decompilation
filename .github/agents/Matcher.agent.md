@@ -62,6 +62,6 @@ If a function has a switch statement and there is an associated jump table const
 
 ## Finalize
 
-If you haven't matched the function after 12 attempts, revert the code to the version with the best  logic you found. Add/update a comment above the function with the closeness value for that version:`// CURRENT(123)`.
+If you haven't matched the function after 12 attempts, revert the code to the version with the best  logic you found.
 
 Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated notes to help future decomp. Only for matched functions.

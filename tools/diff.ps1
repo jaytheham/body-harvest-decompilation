@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 # Helper script to run the asm-differ diff inside the bh-container.
 # Usage:
-#   .\diff.ps1 <function name> [<function name with offset>] [--show=target|current] [--structural]
+#   .\diff.ps1 <function name> [<function name with offset>] [--show=target|current] [--structural] [--show-score]
 #
 # The second argument is expected to be in the form "func_XXXXXXXX_XXXXXX"
 # (e.g. "func_8012EC3C_13DBEC").  The part after the last underscore is
@@ -28,6 +28,7 @@ $Container = 'bh-container'
 $NextAddr = ''
 $diffModeArg = ''
 $structuralArg = ''
+$showScore = $false
 foreach ($arg in $RemainingArgs) {
     if ($arg -like '--show=*') {
         $showValue = $arg -replace '^--show=', ''
@@ -41,6 +42,8 @@ foreach ($arg in $RemainingArgs) {
         }
     } elseif ($arg -eq '--structural') {
         $structuralArg = '--structural'
+    } elseif ($arg -eq '--show-score') {
+        $showScore = $true
     } elseif (-not $NextAddr -and -not ($arg -like '--*')) {
         # Treat the first non-flag argument as the optional function+offset string.
         # Extract the offset from after the last underscore.
@@ -81,4 +84,10 @@ if ($NextAddr) {
 }
 
 # execute the command in the container
-docker exec -it $Container bash -c "$bashCmd"
+if ($showScore) {
+    docker exec -it $Container bash -c "$bashCmd"
+} else {
+    # Pipe through sed inside the container to strip the score from the header line.
+    # Using -u (unbuffered) so sed doesn't interfere with interactive output.
+    docker exec -it $Container bash -c "$bashCmd | sed -uE 's/^(TARGET[[:space:]]+)CURRENT \([0-9]+\)/\1CURRENT/'"
+}
