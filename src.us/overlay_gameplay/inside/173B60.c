@@ -2,6 +2,7 @@
 #include "common.h"
 
 
+// AI - Initialize HUD state variables to default values
 void func_8008BAA0_173B60(void) {
 	D_8004794A = 0;
 	D_800FCF22 = 0x80;
@@ -14,33 +15,40 @@ void func_8008BAA0_173B60(void) {
 	D_800FCF40 = -1;
 }
 
+// AI - Set HUD scroll deltas to +8 (scroll right/down)
 void func_8008BAFC_173BBC(void) {
 	D_800FCF24 = 8;
 	D_800FCF28 = 8;
 }
 
+// AI - Set HUD scroll deltas to -8 (scroll left/up)
 void func_8008BB14_173BD4(void) {
 	D_800FCF24 = -8;
 	D_800FCF28 = -8;
 }
 
+// AI - Set horizontal scroll delta to +8
 void func_8008BB2C_173BEC(void) {
 	D_800FCF24 = 8;
 }
 
+// AI - Set horizontal scroll delta to -8
 void func_8008BB3C_173BFC(void) {
 	D_800FCF24 = -8;
 }
 
+// AI - Set vertical scroll delta to +8
 void func_8008BB4C_173C0C(void) {
 	D_800FCF28 = 8;
 }
 
+// AI - Set vertical scroll delta to -8
 void func_8008BB5C_173C1C(void) {
 	D_800FCF28 = -8;
 }
 
 #ifdef NON_MATCHING
+// AI - Load and draw a 16x16 grayscale texture tile from the font/icon atlas
 void func_8008BB6C_173C2C(s32 arg0, s32 arg1) {
 	s32 sp0;
 
@@ -72,6 +80,7 @@ void func_8008BB6C_173C2C(s32 arg0, s32 arg1) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Render a HUD bar element (health/ammo fill bar) with optional icon overlay
 void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
 	f32 var_f14;
 	s16 temp_t1;
@@ -172,7 +181,7 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 		temp_a3->unk4 = temp_a0->unk4;
 		temp_a1->unk4 = temp_a0->unk4;
 		temp_t1_2->unk4 = temp_a0->unk4;
-
+		// Gradient bar fill?
 		if (arg5 == 2) {
 			temp_a1->unkC = 0xFF;
 			temp_a0->unkC = 0xFF;
@@ -212,6 +221,7 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 			temp_a1->unk8 = (s16) ((f32) (arg8 * D_80047712) * var_f14);
 			temp_a0->unk8 = temp_a1->unk8;
 		} else {
+			// solid bar fill?
 			temp_a3->unkC = 0xFF;
 			temp_t1_2->unkC = 0xFF;
 
@@ -300,7 +310,7 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 
 		gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
 	}
-
+	// Draw an icon overlay on top of the bar if a texture pointer is provided
 	if (arg4 != 0) {
 		temp_a3_2 = D_8005BB34;
 		temp_a0_2 = temp_a3_2 + 1;
@@ -393,6 +403,7 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 #endif
 
 #ifdef NON_MATCHING
+// AI - Main HUD renderer: ortho projection, scroll animation, health bars, ammo, text
 void func_8008C8A4_174964(void) {
 	f32 temp_f16;
 	f32 temp_f8;
@@ -505,6 +516,7 @@ void func_8008C8A4_174964(void) {
 
 // doPauseMenu ?
 #ifdef NON_MATCHING
+// AI - Render and handle the pause menu: 3x3 icon grid, analog stick navigation
 void func_8008CF2C_174FEC(void) {
 	u8 slots[9];
 	u8 slotValue;
@@ -696,6 +708,7 @@ void func_8008CF2C_174FEC(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Main update/tick: drive HUD scrolling, call HUD/pause renderers, handle Start
 void func_8008D900_1759C0(void) {
 	s32 sp58_unk0;
 	u16 sp58_unk4;
@@ -766,6 +779,7 @@ void func_8008D900_1759C0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008D900_1759C0.s")
 #endif
 
+// AI - Play a sound effect for a given slot index (language-dependent lookup)
 void func_8008DC44_175D04(s32 arg0) {
 	switch (D_800313D0_31FD0) {
 	case 0:
@@ -780,6 +794,7 @@ void func_8008DC44_175D04(s32 arg0) {
 	}
 }
 
+// AI - Play a level-indexed sound effect for menu selections (language-dependent)
 void func_8008DCF4_175DB4(s32 arg0) {
 	s32 temp_v1 = (currentLevel * 0xB) + arg0 + 0xA;
 	switch (D_800313D0_31FD0) {
@@ -795,6 +810,7 @@ void func_8008DCF4_175DB4(s32 arg0) {
 	}
 }
 
+// AI - Return 1 if HUD is fully scrolled off-screen, 0 otherwise
 s32 func_8008DDC0_175E80(void) {
 	if (D_800FCF26 == 0) {
 		return 1;
