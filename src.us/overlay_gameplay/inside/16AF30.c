@@ -407,8 +407,7 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083A20_16BAE0.s")
 #endif
 
-// CURRENT(450)
-#ifdef NON_MATCHING
+// CURRENT(195)
 void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12) {
 	s16 effect;
 	u8 slot;
@@ -429,14 +428,14 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 
 		entry = &D_800FB7B0[effect];
 		// Surely this should actually reference some property of entry or D_800FB7B0
-		*(&D_800FB702 + (slot * 6)) = effect;
+		*(s16 *)((u8 *)&D_800FB702 + slot * 12) = effect;
 		entry->unk2 = arg9;
+		entry->unk8 = arg0 << 2;
+		entry->unkA = arg1 << 2;
+		entry->unkC = arg2 << 2;
 		entry->unkE = arg10;
 		entry->unkF = arg11;
 		entry->unk10 = arg12;
-		entry->unk8 = arg0 * 4;
-		entry->unkA = arg1 * 4;
-		entry->unkC = arg2 * 4;
 		entry->unk12 = 1;
 		dir.x = arg3;
 		dir.y = arg4;
@@ -460,9 +459,6 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083F08_16BFC8.s")
-#endif
 
 // CURRENT(375)
 #ifdef NON_MATCHING
