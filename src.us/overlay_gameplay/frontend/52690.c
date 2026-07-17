@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include "common.h"
 
+// AI - Sets up colored background viewport with geometry modes for frontend screen
 void func_800821E0_52690(u8 arg0, u8 arg1, u8 arg2) {
 	((Frontend52690Viewport *)D_8005BB24)->unk2 = 0x140;
 
@@ -20,15 +21,18 @@ void func_800821E0_52690(u8 arg0, u8 arg1, u8 arg2) {
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 }
 
+// AI - Empty stub function
 void func_800823C0_52870(void) {
 }
 
 /* Empty stub - stores three arguments and returns */
+// AI - Empty stub that stores three arguments and returns
 void func_800823C8_52878(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 // CURRENT(356)
 #ifdef NON_MATCHING
+// AI - Renders a frontend menu entry with two textures and fade-in/out animation
 void func_800823D8_52888(s32 arg0, s32 arg1) {
 	Unk80052B40 spA8 = D_80094A6C_64F1C;
 	Unk80052B40 spA0 = D_80094A74_64F24;
@@ -103,6 +107,7 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800823D8_52888.s")
 #endif
 
+// AI - Loads a 16x16 texture tile from atlas into TMEM for digit rendering
 void func_80082868_52D18(s32 arg0) {
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, 255, 255, 255, 255);
 	gDPTileSync(D_8005BB2C++);
@@ -124,6 +129,7 @@ void func_80082868_52D18(s32 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(4374)
+// AI - Decomposes a number into digits and loads 4 digit textures from atlas into TMEM
 void func_800829E4_52E94(s32 arg0) {
 	s32 pad0;
 	s32 pad1;
@@ -188,6 +194,7 @@ void func_800829E4_52E94(s32 arg0) {
 // transitionToNextLevel
 #ifdef NON_MATCHING
 // CURRENT(14240)
+// AI - Main level completion/transition animation loop with 3D rotation and text
 s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 	s32 pad0;
 	s32 pad1;
@@ -424,6 +431,7 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 #endif
 
 /* 3x3 matrix-vector multiply: out = mat^T * vec */
+// AI - 3x3 matrix-vector multiply: out = mat^T * vec
 void func_80083610_53AC0(f32 *mat, f32 *vec, f32 *out) {
 	out[0] = vec[0] * mat[0] + vec[1] * mat[3] + vec[2] * mat[6];
 	out[1] = vec[0] * mat[1] + vec[1] * mat[4] + vec[2] * mat[7];
@@ -431,6 +439,7 @@ void func_80083610_53AC0(f32 *mat, f32 *vec, f32 *out) {
 }
 
 /* 3D vector cross product: arg2 = arg0 x arg1 */
+// AI - 3D vector cross product: arg2 = arg0 x arg1
 void func_800836A4_53B54(f32 *arg0, f32 *arg1, f32 *arg2) {
 	arg2[0] = arg0[1] * arg1[2] - arg1[1] * arg0[2];
 	arg2[1] = arg0[2] * arg1[0] - arg1[2] * arg0[0];
@@ -438,6 +447,7 @@ void func_800836A4_53B54(f32 *arg0, f32 *arg1, f32 *arg2) {
 }
 
 /* Divides a 3D vector by a scalar: arg2 = arg1 / arg0 */
+// AI - Divides a 3D vector by a scalar: arg2 = arg1 / arg0
 void func_80083714_53BC4(f32 arg0, f32 *arg1, f32 *arg2) {
 	arg2[0] = arg1[0] / arg0;
 	arg2[1] = arg1[1] / arg0;
@@ -445,6 +455,7 @@ void func_80083714_53BC4(f32 arg0, f32 *arg1, f32 *arg2) {
 }
 
 /* Returns the squared magnitude of a 3D vector */
+// AI - Returns the squared magnitude of a 3D vector
 f32 func_8008373C_53BEC(f32 *arg0) {
 	f32 x = arg0[0];
 	f32 y = arg0[1];
@@ -453,6 +464,7 @@ f32 func_8008373C_53BEC(f32 *arg0) {
 }
 
 /* Computes the magnitude (length) of a 3D vector */
+// AI - Computes the magnitude (length) of a 3D vector
 f32 func_80083764_53C14(f32 *arg0) {
 	f32 sqMag = func_8008373C_53BEC(arg0);
 	if (sqMag != 0.0) {
@@ -462,6 +474,7 @@ f32 func_80083764_53C14(f32 *arg0) {
 }
 
 /* Normalizes vector arg0 into arg1; if magnitude is 0, copies arg0 to arg1 */
+// AI - Normalizes a 3D vector; copies if magnitude is zero
 void func_800837B4_53C64(f32 *arg0, f32 *arg1) {
 	f32 mag;
 
@@ -475,6 +488,7 @@ void func_800837B4_53C64(f32 *arg0, f32 *arg1) {
 
 /* Computes the dot product of two 3D vectors */
 #ifdef NON_MATCHING
+// AI - Computes the dot product of two 3D vectors
 f32 func_80083820_53CD0(f32 *arg0, f32 *arg1) {
 	return (arg0[0] * arg1[0]) + (arg0[1] * arg1[1]) + (arg1[2] * arg0[2]);
 }
@@ -483,6 +497,7 @@ f32 func_80083820_53CD0(f32 *arg0, f32 *arg1) {
 #endif
 
 /* Subtracts two 3D vectors: arg2 = arg0 - arg1 */
+// AI - Subtracts two 3D vectors: arg2 = arg0 - arg1
 void func_80083850_53D00(f32 *arg0, f32 *arg1, f32 *arg2) {
 	arg2[0] = arg0[0] - arg1[0];
 	arg2[1] = arg0[1] - arg1[1];
@@ -490,6 +505,7 @@ void func_80083850_53D00(f32 *arg0, f32 *arg1, f32 *arg2) {
 }
 
 /* Adds two 3D vectors: arg2 = arg0 + arg1 */
+// AI - Adds two 3D vectors: arg2 = arg0 + arg1
 void func_80083884_53D34(f32 *arg0, f32 *arg1, f32 *arg2) {
 	arg2[0] = arg1[0] + arg0[0];
 	arg2[1] = arg1[1] + arg0[1];
@@ -497,12 +513,14 @@ void func_80083884_53D34(f32 *arg0, f32 *arg1, f32 *arg2) {
 }
 
 /* Multiplies a 3D vector by a scalar: arg2 = arg1 * arg0 */
+// AI - Multiplies a 3D vector by a scalar: arg2 = arg1 * arg0
 void func_800838B8_53D68(f32 arg0, f32 *arg1, f32 *arg2) {
 	arg2[0] = arg1[0] * arg0;
 	arg2[1] = arg1[1] * arg0;
 	arg2[2] = arg1[2] * arg0;
 }
 
+// AI - Extracts 3D basis vectors from a matrix for particle orientation
 void func_800838E0_53D90(Mtx *arg0) {
 	f32 sp58[4][4];
 	f32 sp34[3][3];
@@ -528,6 +546,7 @@ void func_800838E0_53D90(Mtx *arg0) {
 }
 
 /* Copies a 3D float vector to D_800DE100 and truncates another to s16 shorts */
+// AI - Copies a 3D float vector to global state and truncates another to s16 shorts
 void func_800839F0_53EA0(f32 *arg0, f32 *arg1) {
 	D_800DE100[0] = arg0[0];
 	D_800DE100[1] = arg0[1];
@@ -538,6 +557,7 @@ void func_800839F0_53EA0(f32 *arg0, f32 *arg1) {
 }
 
 #ifdef NON_MATCHING
+// AI - Allocates an entry in the D_800DE130 pool; returns index or 0xFB if full
 u8 func_80083A58_53F08(u8 arg0) {
 	u8 orig;
 	u8 j;
@@ -570,6 +590,7 @@ u8 func_80083A58_53F08(u8 arg0) {
 #endif
 
 /* Marks a D_800DE130 entry as freed (0xFA), decrements count, updates min index */
+// AI - Marks a D_800DE130 entry as freed (0xFA), decrements count, updates min index
 void func_80083B14_53FC4(u8 arg0) {
 	if (D_800DE130[arg0].unk0 != 0xFA) {
 		D_800DE130[arg0].unk0 = 0xFA;
@@ -583,6 +604,7 @@ void func_80083B14_53FC4(u8 arg0) {
 // https://decomp.me/scratch/cmxeP
 // CURRENT(165)
 #ifdef NON_MATCHING
+// AI - Allocates an entry in the D_800DE840 linked list pool; returns index or -3 if full
 s16 func_80083B7C_5402C(u8 arg0) {
 	s16 idx;
 	s16 i;
@@ -627,6 +649,7 @@ s16 func_80083B7C_5402C(u8 arg0) {
 #endif
 
 /* Allocate 3 linked entries for arg0; free on failure, return first idx or -3 */
+// AI - Allocates three linked entries; rolls back all on any allocation failure
 s16 func_80083C98_54148(u8 arg0) {
 	s16 result, idx2;
 
@@ -646,6 +669,7 @@ s16 func_80083C98_54148(u8 arg0) {
 }
 
 /* Calls func_80083B7C twice; if second call returns -3, calls func_80083DBC */
+// AI - Allocates two linked entries; rolls back both on allocation failure
 s16 func_80083D50_54200(u8 arg0) {
 	s16 result;
 
@@ -661,6 +685,7 @@ s16 func_80083D50_54200(u8 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(1785)
+// AI - Frees a D_800DE840 linked-list entry from its parent chain, updating neighbor links
 void func_80083DBC_5426C(s16 arg0, u8 arg1) {
 	Unk800DE840 *temp_v0;
 	s32 temp_a3;
@@ -734,6 +759,7 @@ void func_80083DBC_5426C(s16 arg0, u8 arg1) {
 #endif
 
 /* Free 3 linked entries from D_800DE840 chain starting at arg0 */
+// AI - Frees three linked entries from the D_800DE840 pool chain
 void func_80083F8C_5443C(s16 arg0, u8 arg1) {
 	s16 sp1E;
 	u8 sp27;
@@ -749,6 +775,7 @@ void func_80083F8C_5443C(s16 arg0, u8 arg1) {
 }
 
 /* Calls func_80083DBC twice if arg0 and arg1 are in range */
+// AI - Frees two linked entries from the D_800DE840 pool
 void func_8008404C_544FC(s16 arg0, u8 arg1) {
 	if (arg0 >= 0 && arg0 < 0x1C2 && arg1 < 0x96) {
 		s16 val = D_800DE840[arg0].unk4;
@@ -758,6 +785,7 @@ void func_8008404C_544FC(s16 arg0, u8 arg1) {
 }
 
 /* Calls func_80083DBC for each active unk4 iteration of a D_800DE130 entry */
+// AI - Frees all active linked entries for a given D_800DE130 parent
 void func_800840C4_54574(u8 arg0) {
 	if (D_800DE130[arg0].unk4 > 0) {
 		do {
@@ -766,6 +794,7 @@ void func_800840C4_54574(u8 arg0) {
 	}
 }
 
+// AI - Initializes a particle node with randomized parameters (type, frame, velocity, lifespan)
 void func_8008412C_545DC(u8 arg0, u8 arg1) {
 	s32 pad0;
 	s16 index;
@@ -800,6 +829,7 @@ void func_8008412C_545DC(u8 arg0, u8 arg1) {
 
 #ifdef NON_MATCHING
 // CURRENT(2707)
+// AI - Sets up an interpolated motion effect with start/end positions, duration, and child particles
 u8 func_80084324_547D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7) {
 	s16 pad0;
 	s16 pad1;
@@ -844,6 +874,7 @@ u8 func_80084324_547D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80084324_547D4.s")
 #endif
 
+// AI - Updates particle state each frame: animates frames, handles velocity, updates alpha
 void func_80084508_549B8(u8 arg0) {
 	s16 cur;
 	s8 *view;
@@ -917,6 +948,7 @@ void func_80084508_549B8(u8 arg0) {
 }
 
 /* Decrement timer and update positions or free entry */
+// AI - Decrements timer on an effect; frees it if expired, otherwise updates position
 void func_8008472C_54BDC(u8 arg0) {
 	s16 *ptr;
 
@@ -934,6 +966,7 @@ void func_8008472C_54BDC(u8 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(59773)
+// AI - Renders a 3D particle ring/aura effect using alpha-blended triangles
 void func_800847E4_54C94(u8 arg0) {
 	u8 color[3];
 	Unk800DE130 *entry130;
@@ -1125,6 +1158,7 @@ void func_800847E4_54C94(u8 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(2122)
+// AI - Renders a colored ring quad texture around a point in 3D space
 void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 	f32 temp_f0;
 	f32 temp_f2;
@@ -1218,6 +1252,7 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 
 #ifdef NON_MATCHING
 // CURRENT(11541)
+// AI - Spawns a child particle with random position offset and velocity from a template
 void func_800857D4_55C84(u8 arg0, f32 *arg1, s32 arg2, s32 arg3) {
 	extern f64 D_800AEC40_7F0F0;
 	extern f64 D_800AEC48_7F0F8;
@@ -1295,6 +1330,7 @@ void func_800857D4_55C84(u8 arg0, f32 *arg1, s32 arg2, s32 arg3) {
 #endif
 
 /* Clamps a value to the range [1, 80] */
+// AI - Clamps a value to the range [1, 80]
 s32 func_80085CB8_56168(s16 arg0) {
 	if (arg0 >= 0x51) {
 		arg0 = 0x50;
@@ -1306,6 +1342,7 @@ s32 func_80085CB8_56168(s16 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(4055)
+// AI - Creates a particle system: allocates a parent entry and spawns multiple child particles
 void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, s16 arg8,
 					 u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
 	f32 sp34;
@@ -1353,6 +1390,7 @@ void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80085CEC_5619C.s")
 #endif
 
+// AI - Creates a simpler particle effect: allocates parent entry and spawns child particles
 void func_80085EA8_56358(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	u8 temp_s2;
 	s16 temp_v0;
@@ -1396,6 +1434,7 @@ void func_80085EA8_56358(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 
 #ifdef NON_MATCHING
 // CURRENT(11871)
+// AI - Updates particle motion per frame: interpolation, velocity+gravity, or rotation modes
 void func_80085FF0_564A0(u8 arg0) {
 	Unk800DE130 *entry130;
 	Unk800DE840 *start;
@@ -1518,6 +1557,7 @@ void func_80085FF0_564A0(u8 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(26836)
+// AI - Renders particle trail/line segments with fading alpha between linked positions
 void func_80086528_569D8(s32 arg0) {
 	Unk800DE840 *base;
 	Unk800DE840 *node;
