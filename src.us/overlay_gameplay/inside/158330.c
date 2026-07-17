@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include "common.h"
 
+// AI - Trivial wrapper that calls the main interior update loop
 s32 func_80070270_158330(s32 arg0) {
 	func_8007290C_15A9CC();
 	return 0;
@@ -9,6 +10,7 @@ s32 func_80070270_158330(s32 arg0) {
 // https://decomp.me/scratch/WpN6t
 #ifdef NON_MATCHING
 /* CURRENT(1170) */
+// AI - Handles player interaction inside a building
 void func_80070294_158354(Unk8007CAA8_6A40 *arg0)
 {
   s32 center;
@@ -47,23 +49,28 @@ void func_80070294_158354(Unk8007CAA8_6A40 *arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80070294_158354.s")
 #endif
 
+// AI - Returns the center position offset of the current interior
 s32 func_800703D0_158490(void) {
 	return D_800E65C8->unk28 + D_800E65CC;
 }
 
+// AI - Returns the room type ID of the current interior
 u8 func_800703EC_1584AC(void) {
 	return D_800E65C8->unk0;
 }
 
+// AI - Gets the spawn coordinates from the interior config
 void func_800703FC_1584BC(s32 *arg0, s32 *arg1) {
 	*arg0 = D_800E65C8->unk4 + D_800E65CC;
 	*arg1 = D_800E65C8->unk8;
 }
 
+// AI - Returns fade/scroll animation progress ratio
 f32 func_8007042C_1584EC(void) {
 	return D_800E65E0 / D_800E65C8->unk10;
 }
 
+// AI - Returns secondary fade/scroll animation progress
 f32 func_80070448_158508(void) {
 	return D_800E65E0 / D_800E65C8->unk14;
 }
@@ -71,6 +78,7 @@ f32 func_80070448_158508(void) {
 // https://decomp.me/scratch/49h7b
 #ifdef NON_MATCHING
 /* CURRENT(1690) */
+// AI - Adjusts room coordinates based on orientation direction
 void func_80070464_158524(s32 *arg0, s32 *arg1, s32 arg2)
 {
   s32 temp_v1;
@@ -121,6 +129,7 @@ void func_80070464_158524(s32 *arg0, s32 *arg1, s32 arg2)
 #endif
 
 #ifdef NON_MATCHING
+// AI - Main interior initialization: sets up rooms, positions, and mission flags
 void func_800705E0_1586A0(void *arg0) {
 	s16 tempS16;
 	s32 i;
@@ -365,6 +374,7 @@ void func_800705E0_1586A0(void *arg0) {
 // https://decomp.me/scratch/1UBsS
 // CURRENT(40)
 #ifdef NON_MATCHING
+// AI - Initializes a room entry's animated offset/scale values
 void func_80070F7C_15903C(s16 arg0, u8 arg1, u8 arg2)
 {
   f32 var_f0;
@@ -482,6 +492,7 @@ void func_80070F7C_15903C(s16 arg0, u8 arg1, u8 arg2)
 // https://decomp.me/scratch/qw9Qd
 /* CURRENT(40) */
 #ifdef NON_MATCHING
+// AI - Updates interior lighting/brightness values with flicker animation
 void func_80071304_1593C4(void) {
 	s16 var_a0_2;
 	s32 var_a0;
@@ -562,6 +573,7 @@ block_33:
 // https://decomp.me/scratch/WSdX9
 // CURRENT(220)
 #ifdef NON_MATCHING
+// AI - Handles special lighting modes for specific level interiors
 void func_80071510_1595D0(void)
 {
   s32 temp;
@@ -648,11 +660,13 @@ void func_80071510_1595D0(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80071510_1595D0.s")
 #endif
 
+// AI - Returns a lighting/color byte
 u8 func_800717A8_159868(void) {
 	return D_8008DE58_175F18;
 }
 
 #ifdef NON_MATCHING
+// AI - Initializes cumulative offset arrays for display list data
 void func_800717B4_159874(void) {
 	s32 *a0;
 	s32 a1;
@@ -688,6 +702,7 @@ void func_800717B4_159874(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Sets up RDP state for interior rendering
 void func_80071854_159914(void) {
 	osRecvMesg(&D_8006A8D0, &D_80068038, 1);
 	func_80011E14_12A14(D_80047F93);
@@ -753,6 +768,7 @@ void func_80071854_159914(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80071854_159914.s")
 #endif
 
+// AI - Fills the screen with a solid color via RDP
 void func_80071D94_159E54(int arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3)
 {
 	gDPPipeSync(D_8005BB2C++);
@@ -766,6 +782,7 @@ void func_80071D94_159E54(int arg0, unsigned char arg1, unsigned char arg2, unsi
 }
 
 #ifdef NON_MATCHING
+// AI - Interior entry point: resets state, loads building, sets player spawn
 void func_80071F08_159FC8(void) {
 	s32 i;
 	s32 musicId;
@@ -874,6 +891,7 @@ void func_80071F08_159FC8(void) {
 
 // CURRENT (12772)
 #ifdef NON_MATCHING
+// AI - Processes tile map to set up wall/collision boundaries
 void func_80072300_15A3C0(void)
 {
 	s32 x;
@@ -1034,6 +1052,7 @@ void func_80072300_15A3C0(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80072300_15A3C0.s")
 #endif
 
+// AI - Handles fade-in/fade-out transitions when entering/exiting buildings
 void func_8007279C_15A85C(void)
 {
 	if (D_800E65A8 & 0x40)
@@ -1072,6 +1091,7 @@ void func_8007279C_15A85C(void)
 }
 
 #ifdef NON_MATCHING
+// AI - Main interior game loop: rendering, room selection, building exit
 void func_8007290C_15A9CC(void)
 {
 	s32 selectionActive;
@@ -1244,6 +1264,7 @@ void func_8007290C_15A9CC(void)
 // https://decomp.me/scratch/hiUtd
 // CURRENT(0)
 #ifdef NON_MATCHING
+// AI - Checks if current interior has special vehicle-spawn rooms
 s32 func_80072E88_15AF48(void)
 {
   switch (currentLevel)
@@ -1291,6 +1312,7 @@ s32 func_80072E88_15AF48(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80072E88_15AF48.s")
 #endif
 
+// AI - Per-frame secondary update: missions, fades, room rendering, lighting
 void func_80072FB4_15B074(void) {
 	guess_checkMissions();
 	func_8007279C_15A85C();
@@ -1309,6 +1331,7 @@ void func_80072FB4_15B074(void) {
 	func_8008B474_173534();
 }
 
+// AI - Clears visited flags on rooms that should be re-hidden
 void func_80073058_15B118(void)
 {
 	s32 i;
@@ -1326,6 +1349,7 @@ void func_80073058_15B118(void)
 }
 
 #ifdef NON_MATCHING
+// AI - Persists the visited-room bitmask to global state
 void func_8007313C_15B1FC(void) {
 	Unk800E66A8 *entry;
 	s32 count;
@@ -1354,6 +1378,7 @@ void func_8007313C_15B1FC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007313C_15B1FC.s")
 #endif
 
+// AI - Handles special building exit teleports to different map locations
 void func_80073200_15B2C0(void) {
 	if ((D_800E65D8 != 0) && !(D_800E65A8 & 8) && !(D_800E65A8 & 0x10)) {
 		D_800E65D8 = 0;
@@ -1389,10 +1414,12 @@ void func_80073200_15B2C0(void) {
 	}
 }
 
+// AI - Empty stub function
 void func_80073434_stub(void) {}
 
 #ifdef NON_MATCHING
 /* CURRENT(1240) */
+// AI - Restores saved room state (animation offsets, positions)
 void func_8007343C_15B4FC(void) {
 	Unk158330SrcState *src;
 	Unk158330SrcState *srcEnd;
@@ -1489,6 +1516,7 @@ void func_8007343C_15B4FC(void) {
 
 #ifdef NON_MATCHING
 /* CURRENT(6460) */
+// AI - Saves current room state for later restoration
 void func_8007356C_15B62C(void) {
 	u8 *a0;
 	u8 *a1;
@@ -1576,6 +1604,7 @@ void func_8007356C_15B62C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007356C_15B62C.s")
 #endif
 
+// AI - Resets temporary room entry state
 void func_800736C4_15B784(void) {
 	s32 i;
 	for (i = 0; i < D_800E668C; i++) {
@@ -1587,6 +1616,7 @@ void func_800736C4_15B784(void) {
 
 // CURRENT(722)
 #ifdef NON_MATCHING
+// AI - Renders a colored 2D rectangle (floor tile) via RDP
 void func_80073714_15B7D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
 	s32 halfWidth;
 	s32 halfHeight;
@@ -1670,10 +1700,12 @@ void func_80073714_15B7D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80073714_15B7D4.s")
 #endif
 
+// AI - Empty stub function
 void func_80073A48_15BB08(void) {
 }
 
 #ifdef NON_MATCHING
+// AI - Renders the top-of-screen HUD gradient bar with level-specific colors
 void func_80073A50_15BB10(void) {
 	s16 baseY;
 	s16 y1;
@@ -1957,6 +1989,7 @@ void func_80073A50_15BB10(void) {
 
 // CURRENT (7311)
 #ifdef NON_MATCHING
+// AI - Renders an individual floor tile from the interior grid
 void func_8007453C_15C5FC(s32 arg0, s32 arg1) {
 	u8 cellType;
 	s32 pad0;
@@ -2092,6 +2125,7 @@ void func_8007453C_15C5FC(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007453C_15C5FC.s")
 #endif
 
+// AI - Renders floor tiles scanning from bottom-right upward
 void func_80074998_15CA58(void) {
 	s32 var_s0;
 	s32 var_s1;
@@ -2111,6 +2145,7 @@ void func_80074998_15CA58(void) {
 	}
 }
 
+// AI - Renders floor tiles scanning from bottom row left-to-right
 void func_80074A0C_15CACC(void) {
 	s32 var_s0;
 	s32 var_s1;
@@ -2130,6 +2165,7 @@ void func_80074A0C_15CACC(void) {
 	}
 }
 
+// AI - Renders floor tiles scanning from top-left downward
 void func_80074A8C_15CB4C(void) {
 	s32 var_s0;
 	s32 var_s1;
@@ -2149,6 +2185,7 @@ void func_80074A8C_15CB4C(void) {
 	}
 }
 
+// AI - Renders floor tiles scanning from top row left-to-right
 void func_80074B0C_15CBCC(void) {
 	s32 var_s0;
 	s32 var_s1;
@@ -2168,6 +2205,7 @@ void func_80074B0C_15CBCC(void) {
 	}
 }
 
+// AI - Renders floor tiles scanning from right column top-to-bottom
 void func_80074B98_15CC58(void) {
 	s32 var_s0;
 	s32 var_s1;
@@ -2187,6 +2225,7 @@ void func_80074B98_15CC58(void) {
 	}
 }
 
+// AI - Renders floor tiles scanning from bottom-right upward (col first)
 void func_80074C18_15CCD8(void) {
 	s32 var_s0;
 	s32 var_s1;
@@ -2206,6 +2245,7 @@ void func_80074C18_15CCD8(void) {
 	}
 }
 
+// AI - Renders floor tiles scanning from top-left row-by-row
 void func_80074C8C_15CD4C(void) {
 	s32 var_s0;
 	s32 var_s1;
@@ -2225,6 +2265,7 @@ void func_80074C8C_15CD4C(void) {
 	}
 }
 
+// AI - Renders floor tiles scanning from top-right downward (col first)
 void func_80074D18_15CDD8(void) {
 	s32 var_s0;
 	s32 var_s1;
@@ -2246,6 +2287,7 @@ void func_80074D18_15CDD8(void) {
 
 // CURRENT(218)
 #ifdef NON_MATCHING
+// AI - Spawns torches for a specific building interior (Level 4, building 0x20)
 void func_80074D98_15CE58(s32 arg0) {
 	Unk800E66A8 *entry;
 	s16 xPlus;
@@ -2287,6 +2329,7 @@ void func_80074D98_15CE58(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Renders 3D room objects with visibility culling and texture offsets
 void func_80074FF0_15D0B0(void) {
 	s16 spDE;
 	s16 spDC;
@@ -2418,6 +2461,7 @@ void func_80074FF0_15D0B0(void) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Main room renderer: floor scan direction + object rendering
 void func_8007568C_15D74C(void) {
 	s16 sp102;
 	s16 sp100;
@@ -2649,6 +2693,7 @@ void func_8007568C_15D74C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007568C_15D74C.s")
 #endif
 
+// AI - Renders highlighted rectangle at a room entry position
 void func_80076538_15E5F8(s32 arg0) {
 	Unk800E66A8 *temp_v0;
 	Unk80076538Obj *temp_v0_2;
@@ -2695,6 +2740,7 @@ void func_80076538_15E5F8(s32 arg0) {
 
 // CURRENT(1438)
 #ifdef NON_MATCHING
+// AI - Renders door/room transition rectangles
 void func_80076678_15E738(s32 arg0) {
 	s16 temp_t0;
 	s16 temp_t1;
@@ -2769,6 +2815,7 @@ void func_80076678_15E738(s32 arg0) {
 
 #ifdef NON_MATCHING
 /* CURRENT(2112) */
+// AI - Renders selection highlight for interactive room objects
 void func_800768B8_15E978(s32 arg0) {
 	s32 sp34;
 	s32 sp30;
@@ -2824,6 +2871,7 @@ void func_800768B8_15E978(s32 arg0) {
 
 // CURRENT(1928)
 #ifdef NON_MATCHING
+// AI - Sets up matrix, renders transformed geometry with display list
 void func_80076A58_15EB18(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	s32 sp3C;
 	s32 temp_s2;
@@ -2873,6 +2921,7 @@ void func_80076A58_15EB18(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
 // CURRENT (5013)
 #ifdef NON_MATCHING
+// AI - Builds transformation matrix from position, rotation, and scale
 void func_80076C08_15ECC8(s32 *arg0, u16 *arg1, s16 *arg2, s32 arg3) {
 	Unk800476C8 sp48[2];
 	s32 sp44;
@@ -2971,6 +3020,7 @@ void func_80076C08_15ECC8(s32 *arg0, u16 *arg1, s16 *arg2, s32 arg3) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Builds child transformation matrix for multi-part objects
 void func_80077010_15F0D0(s32 *arg0, u16 *arg1, s16 *arg2, s32 *arg3) {
 	Unk800476C8 sp50[2];
 	s32 sp4C;
@@ -3070,6 +3120,7 @@ void func_80077010_15F0D0(s32 *arg0, u16 *arg1, s16 *arg2, s32 *arg3) {
 
 #ifdef NON_MATCHING
 // CURRENT(30)
+// AI - Applies transformation and draws a display list
 void func_800773F4_15F4B4(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6, s32 arg7, s32 arg8, s16 arg9) {
 	u16 sp38[3];
 	s16 sp30[3];
@@ -3096,6 +3147,7 @@ void func_800773F4_15F4B4(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800773F4_15F4B4.s")
 #endif
 
+// AI - Returns dimensions of a room entry based on orientation
 void func_800774E0_15F5A0(s32 arg0, f32 *arg1, f32 *arg2) {
 	s32 objIndex;
 
@@ -3112,6 +3164,7 @@ void func_800774E0_15F5A0(s32 arg0, f32 *arg1, f32 *arg2) {
 
 #ifdef NON_MATCHING
 /* CURRENT(649) */
+// AI - Spawns an NPC or object in a room based on type
 void func_800775F0_15F6B0(s32 arg0, s32 arg1) {
 	Unk800E66A8 *entry;
 	Unk80076538Obj *obj;
@@ -3161,6 +3214,7 @@ void func_800775F0_15F6B0(s32 arg0, s32 arg1) {
 
 // CURRENT(5892)
 #ifdef NON_MATCHING
+// AI - Spawns objects/enemies in a room based on type
 void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 	Unk800E66A8 *entry;
 	Unk80076538Obj *obj;
@@ -3244,6 +3298,7 @@ void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Removes/despawns objects from a room based on type
 void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
 	switch (*(s16 *) ((u8 *) &D_800E65BC[arg1] + 0xC)) {
 		case 1:
@@ -3264,6 +3319,7 @@ void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80077A5C_15FB1C.s")
 #endif
 
+// AI - Spawns or despawns room objects based on visit flag
 void func_80077B40_15FC00(s32 arg0, s32 arg1) {
 	if (D_800E66A8[arg0].unk2E & 1) {
 		func_8007774C_15F80C(arg0, arg1);
@@ -3273,6 +3329,7 @@ void func_80077B40_15FC00(s32 arg0, s32 arg1) {
 }
 
 #ifdef NON_MATCHING
+// AI - Updates room visibility, object animation, and mission triggers
 void func_80077B94_15FC54(void) {
 	f32 sp4C;
 	Unk800E66A8 *var_s0;
@@ -3556,6 +3613,7 @@ void func_80077B94_15FC54(void) {
 
 // CURRENT(3740)
 #ifdef NON_MATCHING
+// AI - Handles level-specific interior events and missions
 void func_800784B8_160578(void) {
 	s32 interiorId;
 	VehicleInstance *vehicle;
@@ -3666,6 +3724,7 @@ void func_800784B8_160578(void) {
 
 // CURRENT(1663)
 #ifdef NON_MATCHING
+// AI - Handles room selection confirmation and building exit logic
 void func_800787E8_1608A8(s32 arg0, s32 arg1) {
 	u8 playerIndex;
 	s32 type;
@@ -3703,6 +3762,7 @@ void func_800787E8_1608A8(s32 arg0, s32 arg1) {
 
 #ifdef NON_MATCHING
 /* CURRENT(145) */
+// AI - Remaps button directions based on room orientation
 u8 func_8007899C_160A5C(s32 arg0, s32 arg1) {
 	u8 ret;
 
@@ -3762,6 +3822,7 @@ u8 func_8007899C_160A5C(s32 arg0, s32 arg1) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Sets room visitability flags based on level and building variant
 void func_80078AD4_160B94(s32 arg0) {
 	s32 shouldSet;
 	s32 phase;
@@ -3832,6 +3893,7 @@ void func_80078AD4_160B94(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Handles player room selection and interaction detection
 void func_80078D68_160E28(void) {
 	Unk80070F7CObj* temp_v1;
 	f64 temp_f20;
@@ -3992,16 +4054,19 @@ block_54:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80078D68_160E28.s")
 #endif
 
+// AI - Returns the current building exit target ID
 s32 func_80079304_1613C4(void) {
 	return D_800E65B4;
 }
 
+// AI - Clears the building exit flag
 void func_80079310_1613D0(void) {
 	D_800E65A8 &= ~0x8000;
 }
 
 #ifdef NON_MATCHING
 /* CURRENT(5) */
+// AI - Debug room selection tool (controller 2 input)
 void func_80079330_1613F0(void) {
 	func_8000345C_405C(0x20);
 	if (currentControllerStates[CONTROLLER_TWO].button & 0x20) {
@@ -4061,6 +4126,7 @@ void func_80079330_1613F0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80079330_1613F0.s")
 #endif
 
+// AI - Debug tool: adjusts room object offset values
 void func_800794BC_16157C(void) {
 	s32 temp_v0;
 	u8 temp_s1;
@@ -4110,6 +4176,7 @@ void func_800794BC_16157C(void) {
 	}
 }
 
+// AI - Debug tool: adjusts interior spawn/exit coordinates
 void func_80079658_161718(void) {
 	s32 temp_v0;
 
@@ -4142,6 +4209,7 @@ void func_80079658_161718(void) {
 	}
 }
 
+// AI - Debug tool: adjusts room object dimensions
 void func_8007978C_16184C(void) {
 	s32 temp_v0;
 	u8 temp_s1;
@@ -4191,6 +4259,7 @@ void func_8007978C_16184C(void) {
 	}
 }
 
+// AI - Debug tool: adjusts door offset values
 void func_80079954_161A14(void) {
 	s32 temp_v0;
 	u8 temp_s1;
@@ -4278,6 +4347,7 @@ void func_80079954_161A14(void) {
 
 // CURRENT(230)
 #ifdef NON_MATCHING
+// AI - Debug tool: adjusts door selection highlight
 void func_80079C4C_161D0C(void) {
 	u8 temp_s1;
 	s32 temp_v1;
@@ -4345,6 +4415,7 @@ void func_80079C4C_161D0C(void) {
 
 // CURRENT(758)
 #ifdef NON_MATCHING
+// AI - Debug tool: adjusts room visit state values
 void func_80079E50_161F10(void) {
 	s32 var_s2;
 	s32 temp_v1;
@@ -4419,6 +4490,7 @@ void func_80079E50_161F10(void) {
 
 // CURRENT(45040)
 #ifdef NON_MATCHING
+// AI - Checks if player is near a room interaction zone
 s32 func_8007A168_162228(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	f32 sp3C;
 	f32 sp38;
@@ -4476,6 +4548,7 @@ s32 func_8007A168_162228(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Checks if player facing direction matches room threshold
 s32 func_8007A370_162430(s32 arg0, s32 arg1) {
 	if (arg0 == 0) {
 		if (arg1 < 0xD3) { return 0; }
@@ -4500,6 +4573,7 @@ s32 func_8007A370_162430(s32 arg0, s32 arg1) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Checks if player position is within room hotspot bounds
 s32 func_8007A414_1624D4(s32 arg0, s32 arg1, s32 arg2) {
 	Unk800E66A8 *entry;
 	Unk800768B8Obj *obj;
@@ -4597,11 +4671,13 @@ s32 func_8007A414_1624D4(s32 arg0, s32 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A414_1624D4.s")
 #endif
 
+// AI - Clears the room selection active flag
 void func_8007A618_1626D8(void) {
 	D_800E65A8 &= ~4;
 }
 
 #ifdef NON_MATCHING
+// AI - Checks if a specific event building has been visited
 s32 func_8007A634_1626F4(s32 arg0) {
 	s16 var_v0;
 	s32 three;
@@ -4624,6 +4700,7 @@ s32 func_8007A634_1626F4(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Checks if a second event building has been visited
 s32 func_8007A6DC_16279C(s32 arg0) {
 	s16 var_v0;
 	s32 three;
@@ -4646,6 +4723,7 @@ s32 func_8007A6DC_16279C(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Marks an event building as visited
 void func_8007A784_162844(s32 arg0) {
 	s16 var_v0;
 
@@ -4665,6 +4743,7 @@ void func_8007A784_162844(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Marks a second event building as visited
 void func_8007A818_1628D8(s32 arg0) {
 	s16 var_v0;
 
@@ -4684,6 +4763,7 @@ void func_8007A818_1628D8(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// AI - Handles room interaction events and mission triggers
 void func_8007A8AC_16296C(s32 arg0) {
 	Unk800E66A8* entry;
 	Unk80070F7CObj* room;
@@ -4817,6 +4897,7 @@ void func_8007A8AC_16296C(s32 arg0) {
 
 // CURRENT(7458)
 #ifdef NON_MATCHING
+// AI - Handles building exit/transition logic
 void func_8007AE40_162F00(void) {
 	s32 roomId;
 	s16 x;
@@ -4877,6 +4958,7 @@ void func_8007AE40_162F00(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007AE40_162F00.s")
 #endif
 
+// AI - Handles room exit or triggers building exit logic
 void func_8007B124_1631E4(s32 arg0) {
 	if (D_800E66A8[D_800E662C].unk0 == 0x1F && !(D_800E65A8 & 0x10000)) {
 		D_800E65A8 |= 8;
@@ -4891,6 +4973,7 @@ void func_8007B124_1631E4(s32 arg0) {
 
 #ifdef NON_MATCHING
 /* CURRENT(3195) */
+// AI - Initializes camera pan to selected room
 void func_8007B1E0_1632A0(s32 arg0) {
 	Unk800E66A8* entry;
 	s16 temp_a1;
@@ -4921,6 +5004,7 @@ void func_8007B1E0_1632A0(s32 arg0) {
 
 // CURRENT(626)
 #ifdef NON_MATCHING
+// AI - Handles mission-related room events
 s32 func_8007B2F0_1633B0(s32 arg0) {
 	s32 roomId;
 	s16 *interiorFlagsPtr;
@@ -4988,6 +5072,7 @@ s32 func_8007B2F0_1633B0(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B2F0_1633B0.s")
 #endif
 
+// AI - Handles special mission logic for Level 4 building 0x20
 s32 func_8007B51C_1635DC(s32 arg0) {
 	s32 idx;
 
@@ -5017,6 +5102,7 @@ s32 func_8007B51C_1635DC(s32 arg0) {
 }
 
 #ifdef NON_MATCHING
+// AI - Detects collision with walls and room objects
 void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *arg3) {
 	s32 spA4;
 	s32 spA0;
@@ -5165,6 +5251,7 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 #endif
 
 #ifdef NON_MATCHING
+// AI - Returns door sub-object offset and dimensions by orientation
 void func_8007BC18_163CD8(s32 arg0, f32 *arg1, f32 *arg2, s32 *arg3, s32 *arg4) {
 	Unk80076678Obj *obj;
 	u8 objId;
@@ -5210,6 +5297,7 @@ void func_8007BC18_163CD8(s32 arg0, f32 *arg1, f32 *arg2, s32 *arg3, s32 *arg4) 
 
 // CURRENT(1820)
 #ifdef NON_MATCHING
+// AI - Detects collision with a rectangular area
 s32 func_8007BEC8_163F88(Vec3f *arg0, Vec3f *arg1, f32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, Unk8007C1DC *arg7) {
 	if (arg1->x < 0.0f) {
 		D_800E6660.x = arg0->z;
@@ -5271,6 +5359,7 @@ s32 func_8007BEC8_163F88(Vec3f *arg0, Vec3f *arg1, f32 arg2, s32 arg3, s32 arg4,
 
 #ifdef NON_MATCHING
 /* CURRENT(215) */
+// AI - Checks line-segment intersection with collision boundary
 s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007C1DC *arg4) {
 	f32 temp_f0;
 	f32 temp_f14;
@@ -5303,6 +5392,7 @@ s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007C1DC *ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C1DC_16429C.s")
 #endif
 
+// AI - Checks if a direction angle is within a range threshold
 s32 func_8007C2D0_164390(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5) {
 	s32 temp_v0_2;
 	s32 temp_v1;
@@ -5336,6 +5426,7 @@ s32 func_8007C2D0_164390(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 a
 	return 0;
 }
 
+// AI - Checks if a point is within an axis-aligned rectangle
 s32 func_8007C3C0_164480(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
 	if ((arg0 <= arg3) && (arg2 <= arg0) && (arg1 <= arg5) && (arg4 <= arg1)) {
 		return 1;
@@ -5349,6 +5440,7 @@ void func_8007C420_1644E0(void) {
 
 // CURRENT(1447)
 #ifdef NON_MATCHING
+// AI - Frustum culling check for room objects
 s32 func_8007C428_1644E8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s16 arg4) {
 	s32 xProj;
 	s32 pad0;
@@ -5398,6 +5490,7 @@ s32 func_8007C428_1644E8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s16 arg4) {
 
 #ifdef NON_MATCHING
 /* CURRENT(755) */
+// AI - Checks if a grid cell is passable (not occupied)
 s32 func_8007C698_164758(s32 arg0, s32 arg1) {
 	Unk8007C698Npc *npc;
 	u8 *cellObj;
