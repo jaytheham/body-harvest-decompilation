@@ -35,7 +35,7 @@ const f64 D_80142E40_151DF0[1] = {1.022};
 const f32 D_80142E48_151DF8[1] = {0.699999988079071f};
 /* Crater radius multiplier */
 const f32 D_80142E4C_151DFC[1] = {3.200000047683716f};
-/* Jump table for func_800B9784 branching on texture bucket */
+/* Jump table for func_800B960C_C85BC */
 const u32 jtbl_80142E50_151E00[] = {
 	0x800B9784,
 	0x800B97D4,
@@ -145,50 +145,50 @@ u8 D_8013DB00_14CAB0 = 0;
 s32 D_8013DB04_14CAB4 = 0;
 s32 D_8013DB08_14CAB8 = 0;
 
-/* Linear interpolation helper: ((arg3-arg2)*arg0 + arg1*arg2) / arg3 */
+// AI- Linear interpolation helper: ((arg3-arg2)*arg0 + arg1*arg2) / arg3
 s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32)(((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
 }
 
-/* Check if any of the 4 corners of a tile have height difference >= 10 */
+// AI - Check if any of the 4 corners of a tile have height difference >= 10
 s32 func_800B0A88_BFA38(s32 arg0, s32 arg1)
 {
-  s32 a0;
-  s32 v0;
-  v0 = (D_80052A94[arg1].unk0[arg0] & 0x3F) - (D_80052A94[arg1].unk0[arg0 + 1] & 0x3F);
-  a0 = (-v0 < v0) ? v0 : -v0;
-  
-  if (a0 >= 0xA)
-  {
-	return 1;
-  }
+	s32 a0;
+	s32 v0;
+	v0 = (D_80052A94[arg1].col[arg0] & 0x3F) - (D_80052A94[arg1].col[arg0 + 1] & 0x3F);
+	a0 = (-v0 < v0) ? v0 : -v0;
 
-  v0 = (D_80052A94[arg1].unk0[arg0 + 1] & 0x3F) - (D_80052A94[arg1].unk0[arg0 + 0x101] & 0x3F);
-  a0 = (-v0 < v0) ? v0 : -v0;
-  
-  if (a0 >= 0xA)
-  {
-	return 1;
-  }
+	if (a0 >= 0xA)
+	{
+		return 1;
+	}
 
-  v0 = (D_80052A94[arg1].unk0[arg0 + 0x101] & 0x3F) - (D_80052A94[arg1].unk0[arg0 + 0x100] & 0x3F);
-  a0 = (-v0 < v0) ? v0 : -v0;
-  
-  if (a0 >= 0xA)
-  {
-	return 1;
-  }
-  v0 = (D_80052A94[arg1].unk0[arg0 + 0x100] & 0x3F) - (D_80052A94[arg1].unk0[arg0] & 0x3F);
-  a0 = (-v0 < v0) ? v0 : -v0;
-  
-  if (a0 >= 0xA)
-  {
-	return 1;
-  }
-  return 0;
+	v0 = (D_80052A94[arg1].col[arg0 + 1] & 0x3F) - (D_80052A94[arg1].col[arg0 + 0x101] & 0x3F);
+	a0 = (-v0 < v0) ? v0 : -v0;
+
+	if (a0 >= 0xA)
+	{
+		return 1;
+	}
+
+	v0 = (D_80052A94[arg1].col[arg0 + 0x101] & 0x3F) - (D_80052A94[arg1].col[arg0 + 0x100] & 0x3F);
+	a0 = (-v0 < v0) ? v0 : -v0;
+
+	if (a0 >= 0xA)
+	{
+		return 1;
+	}
+	v0 = (D_80052A94[arg1].col[arg0 + 0x100] & 0x3F) - (D_80052A94[arg1].col[arg0] & 0x3F);
+	a0 = (-v0 < v0) ? v0 : -v0;
+
+	if (a0 >= 0xA)
+	{
+		return 1;
+	}
+	return 0;
 }
 
-/* Build a 256x256 bitmask of tiles that have steep height changes (for wireframe overlay) */
+// AI- Build a 256x256 bitmask of tiles that have steep height changes (for wireframe overlay)
 void func_800B0B94_BFB44(void) {
 	u8 *s2;
 	u8 *v0;
@@ -322,44 +322,39 @@ s16 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 leve
 	return -0x8000;
 }
 
-// CURRENT(80)
+// CURRENT(210)
 #ifdef NON_MATCHING
 s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
-	Unk8014FD30Type *a2;
-	Unk8014FD30Type *a3;
+	Unk8014FD30Type *base;
+	Unk8014FD30Type *cur;
 	BoundingBox *sub;
-	s32 cl;
-	s32 v1;
-	s32 t0;
-	s16 v0;
-	s16 t2;
+	s32 cnt;
+	s32 idx;
 
-	v1 = 0;
-	cl = currentLevel - 1;
-	a2 = D_80147C30_156BE0[cl];
-	for (a3 = a2; v1 != 6; v1++, a3++) {
-		if (arg0 < a3->main.minX || a3->main.maxX < arg0 || a3->main.minZ >= arg1) {
+	idx = currentLevel - 1;
+	base = D_80147C30_156BE0[idx];
+	idx = 0;
+	cur = base;
+	idx = 0;
+	for (; idx != 6; idx++, cur++) {
+		if (arg0 < cur->main.minX || cur->main.maxX < arg0 || cur->main.minZ >= arg1) {
 			continue;
 		}
-
-		t0 = 0;
-		if (arg1 >= a3->main.maxZ) {
+		if (arg1 >= cur->main.maxZ) {
 			continue;
 		}
-		sub = &a3->sub[0];
+		cnt = 0, sub = (BoundingBox *)base + (idx * 4 - idx);
 		for (;;) {
-			v0 = sub->minX;
-			t2 = sub->maxX;
-			if (v0 == t2) {
-				return (u8)v1;
+			if (sub[1].minX == sub[1].maxX) {
+				return (u8)idx;
 			}
-			if ((arg0 < v0) || (t2 < arg0) || (sub->minZ >= arg1) || (arg1 >= sub->maxZ)) {
-				if (t0 == 8) {
-					return (u8)v1;
+			if ((arg0 < sub[1].minX) || (sub[1].maxX < arg0) || (sub[1].minZ >= arg1) || (arg1 >= sub[1].maxZ)) {
+				if (cnt == 8) {
+					return (u8)idx;
 				}
-				t0 += 8;
+				cnt += 8;
 				sub++;
-				if (t0 != 0x10) {
+				if (cnt != 0x10) {
 					continue;
 				}
 			}
@@ -653,7 +648,7 @@ void func_800B165C_C060C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B165C_C060C.s")
 #endif
 
-// CURRENT(6023)
+// CURRENT(4684)
 #ifdef NON_MATCHING
 /* Sample terrain color at tile coordinate, bilinear-interpolating the landscape palette */
 void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
@@ -663,15 +658,13 @@ void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
 	s32 tileY = (y >> 1) & 0xFF;
 	u16 top[3];
 	u16 bot[3];
-	u16 top0;
 	u8 c00 = D_80260700[(tileX << 7) + tileY];
 	u8 c10 = D_80260700[(tileX << 7) + tileY + 0x80];
-	u8 c11 = D_80260700[(tileX << 7) + tileY + 0x81];
+	u8 c11 = D_80260700[((tileX + 1) << 7) + tileY + 0x01];
 	u8 c01 = D_80260700[(tileX << 7) + tileY + 1];
 
 	if (!(x & 1)) {
 		u8 *palette = (u8 *)D_80264700;
-
 		top[0] = palette[c00 * 4 + 0];
 		top[1] = palette[c00 * 4 + 1];
 		top[2] = palette[c00 * 4 + 2];
@@ -681,7 +674,6 @@ void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
 		bot[2] = palette[c01 * 4 + 2];
 	} else {
 		u8 *palette = (u8 *)D_80264700;
-
 		top[0] = (palette[c00 * 4 + 0] + palette[c10 * 4 + 0]) >> 1;
 		top[1] = (palette[c00 * 4 + 1] + palette[c10 * 4 + 1]) >> 1;
 		top[2] = (palette[c00 * 4 + 2] + palette[c10 * 4 + 2]) >> 1;
@@ -691,13 +683,12 @@ void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
 		bot[2] = (palette[c01 * 4 + 2] + palette[c11 * 4 + 2]) >> 1;
 	}
 
-	top0 = top[0];
 	if (!(y & 1)) {
-		arg2[0] = top0;
+		arg2[0] = top[0];
 		arg2[1] = top[1];
 		arg2[2] = top[2];
 	} else {
-		arg2[0] = (top0 + bot[0]) >> 1;
+		arg2[0] = (top[0] + bot[0]) >> 1;
 		arg2[1] = (top[1] + bot[1]) >> 1;
 		arg2[2] = (top[2] + bot[2]) >> 1;
 	}
@@ -1240,22 +1231,15 @@ void func_800B316C_C211C(s8 arg0, s8 arg1, u16 arg2, u8 arg3) {
 #ifdef NON_MATCHING
 void func_800B31FC_C21AC(s8 arg0, s8 arg1)
 {
-  volatile u8 *v0;
-  u8 temp;
-  u16 temp3;
+  u16 *v0;
+  
+	// D_80052A94 is a ptr to the middle of a [256][256] u16 array
+  v0 = (u8 *)&D_80052A94[arg1].unk0[arg0];
 
-  v0 = (volatile u8 *) ((((u8 *) D_80052A94) + (arg1 * 512)) + (arg0 * 2));
-  temp = *v0;
-  temp |= 0x80;
-  *v0 = temp;
-  temp &= 0xF7;
-  *v0 = temp;
-  temp |= 4;
-  *v0 = temp;
-  temp3 = *((volatile u16 *) v0);
-  temp3 &= 0xFC3F;
-  temp3 |= 0x300;
-  *((volatile u16 *) v0) = temp3;
+	*(u8*)v0 |= 0x80;
+	*(u8*)v0 &= 0xf7;
+	*(u8*)v0 |= 0x4;
+	*v0 = *v0 & 0xFC3F | 0x300;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B31FC_C21AC.s")
@@ -1408,8 +1392,8 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			func_800B2CF0_C1CA0(spAC, spA0, (s8 *)spA8);
 
 			entry = &D_80151DD8.tiles
-				[((((s32)(D_80151DD8.ringY + row) % 19) & 0xFFFF)]
-				[((((s32)(D_80151DD8.ringX + col) % 19) & 0xFFFF)];
+				[(((s32)(D_80151DD8.ringY + row) % 19) & 0xFFFF)]
+				[(((s32)(D_80151DD8.ringX + col) % 19) & 0xFFFF)];
 			entry->r = spA8[0];
 			entry->b = spA8[2];
 			entry->g = spA8[1];
@@ -1455,11 +1439,11 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 /* Copy a 19x19 tile region from the world map into the ring buffer and compute vertex colors */
 // https://decomp.me/scratch/TODO
 #ifdef NON_MATCHING
-// CURRENT(2050)
+// CURRENT(2065)
 void func_800B4050_C3000(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s32 t1;
-	s32 v0;
 	s32 v1;
+	s32 v0;
 	s32 a0;
 	s32 a1;
 
@@ -1468,10 +1452,10 @@ void func_800B4050_C3000(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	D_80151DD8.mapPosY = arg1;
 	D_8014F89C = arg0;
 	D_8014F89D = arg1;
-	for (t1 = 0, v0 = 0; v0 < 0x13; t1 = (t1 + 1) & 0xFF, v0 = t1) {
-		a1 = (arg1 + v0) << 8;
-		for (v1 = 0, a0 = 0; a0 < 0x13; a0 = (v1 + 1) & 0xFF, v1 = a0) {
-			D_80151DD8.tiles[t1][v1].tileType = ((u16 *)arg2)[(u16)((arg0 + a0) + a1)];
+	for (t1 = 0, v1 = 0; v1 < 0x13; t1 = (t1 + 1) & 0xFF, v1 = t1) {
+		a1 = (arg1 + v1) << 8;
+		for (v0 = 0, a0 = 0; a0 < 0x13; a0 = (v0 + 1) & 0xFF, v0 = a0) {
+			D_80151DD8.tiles[t1][v0].tileType = ((u16 *)arg2)[(u16)((arg0 + a0) + a1)];
 		}
 	}
 	D_80151DD8.ringY = 0;
@@ -2213,8 +2197,8 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5090_C4040.s")
 #endif
 
-/* Record a road/angled tile into the rotated-tile draw buffer; returns 0 if recorded, 1 if standard quad */
 #ifdef NON_MATCHING
+// CURRENT(1202)
 s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	arg3 &= 0xFF;
 
@@ -2797,34 +2781,32 @@ void func_800B753C_C64EC(void) {
 // Get height of terrain at given position
 s32 func_800B84D0_C7480(s16 xPosition, s16 zPosition)
 {
-  u32 temp_v0;
-  u32 temp_a3;
-  u32 xPositionInTile;
-  u32 zPositionInTile;
-  u32 tileRowIndex;
+  u32 xPosInTile;
+  u32 zPosInTile;
   s32 var_t0;
   s32 var_t1;
   s32 var_t2;
-  xPositionInTile = xPosition & 0xFF;
-  zPositionInTile = zPosition & 0xFF;
-  tileRowIndex = zPosition >> 8;
-  // Pick the bottom-left vs top-right triangle.
-  if ((xPositionInTile + zPositionInTile) < 0x100U)
+
+  xPosInTile = xPosition & 0xFF;
+  zPosInTile = zPosition & 0xFF;
+  var_t0 = 0;
+  var_t1 = 0;
+  var_t2 = 0;
+  if ((xPosInTile + zPosInTile) < 0x100U)
   {
-	var_t0 = D_80052A94[tileRowIndex].unk0[xPosition >> 8] & 0x3F;
-	var_t1 = (D_80052A94[tileRowIndex].unk0[(xPosition >> 8) + 1] & 0x3F) - var_t0;
-	var_t2 = (D_80052A94[tileRowIndex + 1].unk0[xPosition >> 8] & 0x3F) - var_t0;
+	var_t0 = *(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x0) & 0x3F;
+	var_t1 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x2) & 0x3F) - var_t0;
+	var_t2 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x200) & 0x3F) - var_t0;
   }
   else
   {
-	xPositionInTile = 0x100 - xPositionInTile;
-	zPositionInTile = 0x100 - zPositionInTile;
-	var_t0 = D_80052A94[tileRowIndex + 1].unk0[(xPosition >> 8) + 1] & 0x3F;
-	var_t1 = (D_80052A94[tileRowIndex + 1].unk0[xPosition >> 8] & 0x3F) - var_t0;
-	var_t2 = (D_80052A94[tileRowIndex].unk0[(xPosition >> 8) + 1] & 0x3F) - var_t0;
+	xPosInTile = 0x100 - xPosInTile;
+	zPosInTile = 0x100 - zPosInTile;
+	var_t0 = *(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x202) & 0x3F;
+	var_t1 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x200) & 0x3F) - var_t0;
+	var_t2 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x2) & 0x3F) - var_t0;
   }
-  //Barycentric interpolation
-  return (((var_t0 << 8) + (var_t1 * xPositionInTile)) + (var_t2 * zPositionInTile)) << 5;
+  return (((var_t0 << 8) + (var_t1 * xPosInTile)) + (var_t2 * zPosInTile)) << 5;
 }
 
 /* Get terrain height with random variation (roughness) */
@@ -2839,6 +2821,7 @@ s32 func_800B85CC_C757C(s16 arg0, s16 arg1) {
 
 /* Get minimum terrain height of the 4 corners of a tile */
 #ifdef NON_MATCHING
+// CURRENT(294)
 s16 func_800B8688_C7638(s8 arg0, s8 arg1) {
 	s16 temp_a2;
 	s16 temp_t0;
@@ -3266,71 +3249,69 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 #endif
 
 /* World-space bounding box frustum cull: checks tile against camera position + angle */
-// CURRENT(20615)
+// CURRENT(9867)
 #ifdef NON_MATCHING
 s32 func_800B960C_C85BC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-	s32 halfArg2;
-	s32 halfArg3;
+	s16 centerX;
+	s16 centerZ;
+	s16 objX;
+	s16 objZ;
+	u16 rangeX;
+	u16 rangeZ;
 	s32 angleOffset;
-	s32 objX;
-	s32 objZ;
-	s32 diffX;
-	s32 diffZ;
-	s32 i;
-	s32 hit;
-	s32 centerX;
-	s32 centerZ;
-	s32 rangeX;
-	s32 rangeZ;
+	s16 i;
+	s16 hit;
 
-	if (D_80157590 != 0 || D_8014FD2A == (u16)-0x8000) {
+	if (D_80157590 != 0 || D_8014FD2A == -0x8000U) {
 		return 1;
 	}
 
 	D_8014F854 = 1;
 	angleOffset = 0x4000 - D_80047950;
-	centerX = (s16) arg0;
-	centerZ = (s16) arg1;
-	objX = (s16) D_80052B2C->unk0;
-	objZ = (s16) D_80052B2C->unk8;
-	rangeX = arg2 & 0xFFFF;
-	rangeZ = arg3 & 0xFFFF;
-	halfArg2 = (rangeX < 0) ? ((rangeX + 1) >> 1) : (rangeX >> 1);
-	halfArg3 = (rangeZ < 0) ? ((rangeZ + 1) >> 1) : (rangeZ >> 1);
-	diffX = objX - centerX;
-	if (diffX < 0) {
-		diffX = -diffX;
-	}
-	if (diffX < rangeX) {
-		diffZ = objZ - centerZ;
-		if (diffZ < 0) {
-			diffZ = -diffZ;
+	centerX = (s16)arg0;
+	centerZ = (s16)arg1;
+	objX = (s16)(s32)D_80052B2C->unk0;
+	objZ = (s16)(s32)D_80052B2C->unk8;
+	rangeX = (u16)arg2;
+	rangeZ = (u16)arg3;
+
+	{
+		s32 diffX;
+		s32 diffZ;
+		diffX = objX - centerX - (rangeX >> 1);
+		if (diffX < 0) {
+			diffX = -diffX;
 		}
-		if (diffZ < rangeZ) {
-			return 1;
+		if (diffX < rangeX) {
+			diffZ = objZ - centerZ - (rangeZ >> 1);
+			if (diffZ < 0) {
+				diffZ = -diffZ;
+			}
+			if (diffZ < rangeZ) {
+				return 1;
+			}
 		}
 	}
 
 	D_8014F854 = 0;
 	for (i = 0; i < 5; i++) {
 		switch (i) {
-			case 0:
-				hit = func_800B9228_C81D8((s32)(centerX + halfArg2), centerZ + halfArg3, objX, objZ, angleOffset);
-				break;
-			case 1:
-				hit = func_800B9228_C81D8(centerX, centerZ, objX, objZ, angleOffset);
-				break;
-			case 2:
-				hit = func_800B9228_C81D8((s32)(centerX + rangeX), centerZ, objX, objZ, angleOffset);
-				break;
-			case 3:
-				hit = func_800B9228_C81D8(centerX, (s32)(centerZ + rangeZ), objX, objZ, angleOffset);
-				break;
-			default:
-				hit = func_800B9228_C81D8((s32)(centerX + rangeX), (s32)(centerZ + rangeZ), objX, objZ, angleOffset);
-				break;
+		case 0:
+			hit = func_800B9228_C81D8((s16)(centerX + (rangeX >> 1)), (s16)(centerZ + (rangeZ >> 1)), objX, objZ, angleOffset);
+			break;
+		case 1:
+			hit = func_800B9228_C81D8(centerX, centerZ, objX, objZ, angleOffset);
+			break;
+		case 2:
+			hit = func_800B9228_C81D8((s16)(centerX + rangeX), centerZ, objX, objZ, angleOffset);
+			break;
+		case 3:
+			hit = func_800B9228_C81D8(centerX, (s16)(centerZ + rangeZ), objX, objZ, angleOffset);
+			break;
+		case 4:
+			hit = func_800B9228_C81D8((s16)(centerX + rangeX), (s16)(centerZ + rangeZ), objX, objZ, angleOffset);
+			break;
 		}
-
 		if (hit != 0) {
 			D_8014F854 = 1;
 			return D_8014F854;

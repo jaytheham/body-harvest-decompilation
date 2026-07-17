@@ -170,39 +170,40 @@ s32 func_800959F0_A49A0(u16 red, u16 green, u16 blue) {
 	return ((red << 0xB) + (green << 6) + (blue & 0x3F)) & 0xFFFF;
 }
 
+// https://decomp.me/scratch/u6wU5
 s16 func_80095A6C_A4A1C(s16 arg0, s16 arg1, u16 arg2)
 {
-  Unk80052A94 **new_var;
-  s32 r;
-  s16 nx;
-  s16 ny;
+	D_801FEA30_Row **new_var;
+	s32 r;
+	s16 nx;
+	s16 ny;
 	s16 temp;
-  r = sqrtf((arg0 * arg0) + (arg1 * arg1));
-  if (r >= 2)
-  {
-	nx = arg0 + (arg0 * ((f32) (3.0 / r)));
-	ny = arg1 + (arg1 * ((f32) (3.0 / r)));
-	new_var = &D_80052A94;
-	if (nx < (-0x80))
+	r = sqrtf((arg0 * arg0) + (arg1 * arg1));
+	if (r >= 2)
 	{
-	  nx = -0x80;
+		nx = arg0 + (arg0 * ((f32)(3.0 / r)));
+		ny = arg1 + (arg1 * ((f32)(3.0 / r)));
+		new_var = &D_80052A94;
+		if (nx < -0x80)
+		{
+			nx = -0x80;
+		}
+		if (ny < -0x80)
+		{
+			ny = -0x80;
+		}
+		if (nx >= 0x80)
+		{
+			nx = 0x7F;
+		}
+		if (ny >= 0x80)
+		{
+			ny = 0x7F;
+		}
+		temp = ((*((u16 *)(*new_var + ny) + nx)) & 0x3F) - arg2;
+		return temp;
 	}
-	if (ny < (-0x80))
-	{
-	  ny = -0x80;
-	}
-	if (nx >= 0x80)
-	{
-	  nx = 0x7F;
-	}
-	if (ny >= 0x80)
-	{
-	  ny = 0x7F;
-	}
-	  temp = ((*((u16 *)(*new_var + ny) + nx)) & 0x3F) - arg2;
-	return temp;
-  }
-  return r * 0;
+	return 0;
 }
 
 void func_80095BD4_A4B84(int arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3)

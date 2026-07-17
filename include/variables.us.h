@@ -925,7 +925,10 @@ extern s32 D_80052A88;
 extern s32 D_80052A8C;
 extern s16 D_80052A8E;
 extern u32 D_80052A90; // millseconds played in current level
-extern Unk80052A94 *D_80052A94; // This is a ptr to a [512][512] array of Heightmap data? Is 256x256 s16?
+typedef struct {
+	u16 col[256];
+} D_801FEA30_Row;
+extern D_801FEA30_Row *D_80052A94;
 extern Unk80052A98 D_80052A98[]; // LevelStats
 extern s16 D_80052AC8;
 extern u8 D_80052ACA;
@@ -2988,7 +2991,11 @@ extern u8 D_801CE710;
 extern u8 D_801F1210[];
 extern u8 D_801FE810[];
 extern u8 D_801FEA10[];
-extern MapTexRow D_801FEA30[0x100]; // 256 rows of 512 bytes each (heightmap + texture data)
+/* Map texture row: 256 u16 values = 512 bytes per row.
+   The heightmap (256x256) is stored across these rows; every second byte
+   is non-height data.  The lower 6 bits encode four overlapping ranges:
+   00-3f, 40-7f, 80-Bf, C0-FF. */
+extern u16 D_801FEA30[0x100][0x100]; // 256 rows of 512 bytes each (heightmap + texture data)
 extern u8 D_8021EA30[0x1000]; // Texture map
 extern u8 D_8021F250[];
 extern u16 D_8021FA30[][0x10]; // Terrain objects 0x1f20 total size
