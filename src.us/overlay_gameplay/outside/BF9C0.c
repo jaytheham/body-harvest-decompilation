@@ -2790,41 +2790,35 @@ void func_800B753C_C64EC(void) {
 #endif
 
 // Get height of terrain at given position
-#ifdef NON_MATCHING
 s32 func_800B84D0_C7480(s16 xPosition, s16 zPosition)
 {
-  u32 temp_v0;
-  u32 temp_a3;
-  u32 xPositionInTile;
-  u32 zPositionInTile;
-  u32 tileRowIndex;
+  u32 xPosInTile;
+  u32 zPosInTile;
   s32 var_t0;
   s32 var_t1;
   s32 var_t2;
-  xPositionInTile = xPosition & 0xFF;
-  zPositionInTile = zPosition & 0xFF;
-  tileRowIndex = zPosition >> 8;
-  // Pick the bottom-left vs top-right triangle.
-  if ((xPositionInTile + zPositionInTile) < 0x100U)
+
+  xPosInTile = xPosition & 0xFF;
+  zPosInTile = zPosition & 0xFF;
+  var_t0 = 0;
+  var_t1 = 0;
+  var_t2 = 0;
+  if ((xPosInTile + zPosInTile) < 0x100U)
   {
-	var_t0 = *D_80052A94[tileRowIndex][xPosition >> 8] & 0x3F;
-	var_t1 = (*D_80052A94[tileRowIndex][(xPosition >> 8) + 1] & 0x3F) - var_t0;
-	var_t2 = (*D_80052A94[tileRowIndex + 1][xPosition >> 8] & 0x3F) - var_t0;
+    var_t0 = *(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x0) & 0x3F;
+    var_t1 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x2) & 0x3F) - var_t0;
+    var_t2 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x200) & 0x3F) - var_t0;
   }
   else
   {
-	xPositionInTile = 0x100 - xPositionInTile;
-	zPositionInTile = 0x100 - zPositionInTile;
-	var_t0 = *D_80052A94[tileRowIndex + 1][(xPosition >> 8) + 1] & 0x3F;
-	var_t1 = (*D_80052A94[tileRowIndex + 1][xPosition >> 8] & 0x3F) - var_t0;
-	var_t2 = (*D_80052A94[tileRowIndex][(xPosition >> 8) + 1] & 0x3F) - var_t0;
+    xPosInTile = 0x100 - xPosInTile;
+    zPosInTile = 0x100 - zPosInTile;
+    var_t0 = *(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x202) & 0x3F;
+    var_t1 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x200) & 0x3F) - var_t0;
+    var_t2 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x2) & 0x3F) - var_t0;
   }
-  //Barycentric interpolation
-  return (((var_t0 << 8) + (var_t1 * xPositionInTile)) + (var_t2 * zPositionInTile)) << 5;
+  return (((var_t0 << 8) + (var_t1 * xPosInTile)) + (var_t2 * zPosInTile)) << 5;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B84D0_C7480.s")
-#endif
 
 /* Get terrain height with random variation (roughness) */
 s32 func_800B85CC_C757C(s16 arg0, s16 arg1) {
