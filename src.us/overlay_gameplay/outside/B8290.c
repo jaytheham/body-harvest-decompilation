@@ -1263,12 +1263,16 @@ s32 func_800AC2FC_BB2AC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC2FC_BB2AC.s")
 #endif
 
-// CURRENT(8459)
+// Possibly somewhere around here is a file split? Below is Human logic, above is Alien logic?
+
+// CURRENT(8538)
 #ifdef NON_MATCHING
 // AI - Avoid vehicle collision
 void func_800AC5BC_BB56C(u8 arg0) {
 	AlienInstance *alien;
 	s32 triggered;
+	s32 pad;
+	s32 pad2;
 	u8 specIdx;
 	f32 speedAbs;
 	s32 limit;
@@ -1285,9 +1289,7 @@ void func_800AC5BC_BB56C(u8 arg0) {
 	specIdx = D_80052B34->unk1A;
 	if ((specIdx != 0) && ((D_80052B34->unk20 & 2) == 0) && (D_80052B34->unk12 != 0)) {
 		speedAbs = D_80052B34->unk58;
-		if (-speedAbs >= speedAbs) {
-			speedAbs = -speedAbs;
-		}
+		speedAbs = (-speedAbs < speedAbs) ? speedAbs : -speedAbs;
 
 		alien = &alienInstances[arg0];
 		limit = (s32)(speedAbs * 30.0f + (f32)(vehicleSpecs[(s32)specIdx].unk36 >> 1));
@@ -1301,9 +1303,10 @@ void func_800AC5BC_BB56C(u8 arg0) {
 
 		if (temp < limit) {
 			neg = -dz;
-			temp = neg;
 			if (neg < dz) {
 				temp = dz;
+			} else {
+				temp = neg;
 			}
 
 			if (temp < limit) {
@@ -1342,11 +1345,11 @@ void func_800AC5BC_BB56C(u8 arg0) {
 		yaw = (s16)(yaw + 0x8000);
 	}
 
-	alien->unk14 = (s16)(s32)((((f64)(f32)coss((u16)yaw)) / 32768.0) * D_80142A10_1519C0 + (f64)alien->unk0);
+	alien->unk14 = (s16)(s32)((((f64)(f32)coss((u16)yaw)) / 32768.0) * D_80142A10_1519C0[0] + (f64)alien->unk0);
 	sn = sins((u16)yaw);
 	alien->unk20 &= ~0x1E0;
 	alien->unk20 |= 0x1100;
-	alien->unk18 = (s16)(s32)((((f64)(f32)sn) / 32768.0) * D_80142A18_1519C8 + (f64)alien->unk4);
+	alien->unk18 = (s16)(s32)((((f64)(f32)sn) / 32768.0) * D_80142A18_1519C8[0] + (f64)alien->unk4);
 	alien->unk16 = (s16)((func_800B84D0_C7480(alien->unk14, alien->unk18) >> 8) + 0x64);
 	alien->unk2C = 0x32;
 	alien->unk38 = 0xFF;
