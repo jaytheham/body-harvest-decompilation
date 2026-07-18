@@ -865,7 +865,7 @@ void func_800AB80C_BA7BC(u8 arg0) {
 	}
 }
 
-// CURRENT(5564)
+// CURRENT(7007)
 #ifdef NON_MATCHING
 // AI - Follow squad leader
 void func_800AB8CC_BA87C(u8 arg0) {
@@ -874,57 +874,58 @@ void func_800AB8CC_BA87C(u8 arg0) {
 	s32 helper0;
 	s32 helper1;
 	s32 helper2;
-	s32 result;
 
 	if (spec->specIndex == 2) {
+		inst->unk0 = spec->unk0;
+		inst->unk4 = spec->unk4;
 		if (spec->unk20 & 0x4000) {
-			result = func_8008FF54_9EF04(spec->unk25, &helper0, &helper1, &helper2);
-			inst->unk2 = (s16)(((spec->unk2C * (helper1 - result)) / 0xF) + result);
+			func_8008FF54_9EF04(spec->unk25, &helper0, &helper1, &helper2);
+			inst->unk2 = (s16)(((spec->unk2C * (helper1 - spec->unk2)) / 0xF) + spec->unk2);
 			return;
 		}
 
-		inst->unk2 = (s16)(((f32)sins((u16)((D_80052A8C + spec->unk25) * 0x1388)) * 4.0f / 7.0f) + spec->unk2);
+		inst->unk2 = (s16)((s32)(((f64)(f32)sins((u16)((D_80052A8C + arg0) * 0x1388)) / 32768.0) * 4.0 + (f64)(spec->unk2) - 4.0));
 		return;
 	}
 
-	if (spec->specIndex != 0x19) {
-		inst->unk24 = 0;
-		inst->unk2C = 0xC;
-		inst->unk20 |= 0x4000;
+	if (spec->specIndex == 0x19) {
+		func_8008FF54_9EF04(inst->unk25, &helper0, &helper1, &helper2);
+		inst->unk0 = (s16)helper0;
+		inst->unk2 = (s16)helper1;
+		inst->unk4 = (s16)helper2;
+
+		if (spec->unk20 & 0x600) {
+			inst->unk2 += D_8014DD50[spec->unkC].unk2;
+		}
+
+		inst->unk2C++;
+		if ((inst->unk2C % 0xC) != 0) {
+			return;
+		}
+
+		if ((inst->unk24 == 1) || (inst->unk24 == 0x1D)) {
+			s32 rand0;
+			s32 rand1;
+			s32 rand2;
+			s32 rand3;
+
+			rand0 = func_800038E0_44E0();
+			rand1 = func_800038E0_44E0();
+			rand2 = func_800038E0_44E0();
+			rand3 = func_800038E0_44E0();
+			func_800CA5EC_D959C(inst->unk0, inst->unk2, inst->unk4,
+				(s8)((rand0 % 50) - 0x19), 0x50, (s8)((rand1 % 50) - 0x19), 0x19, 5,
+				(u8)((rand2 % 8) + 0xC), (u8)((rand3 % 0x23) + 0x69), 0, 0xFF, 0, 0xFF);
+			return;
+		}
+
+		func_800E05B4_EF564(inst->unk0, inst->unk2, inst->unk4, 0xC8);
 		return;
 	}
 
-	result = func_8008FF54_9EF04(spec->unk25, &helper0, &helper1, &helper2);
-	inst->unk0 = (s16)helper0;
-	inst->unk2 = (s16)helper1;
-	inst->unk4 = (s16)helper2;
-
-	if (spec->unk20 & 0x600) {
-		inst->unk2 += D_8014DD50[spec->unkC].unk2;
-	}
-
-	inst->unk2C++;
-	if ((inst->unk2C % 0xC) != 0) {
-		return;
-	}
-
-	if ((inst->unk24 == 1) || (inst->unk24 == 0x1D)) {
-		s32 rand0;
-		s32 rand1;
-		s32 rand2;
-		s32 rand3;
-
-		rand0 = func_800038E0_44E0();
-		rand1 = func_800038E0_44E0();
-		rand2 = func_800038E0_44E0();
-		rand3 = func_800038E0_44E0();
-		func_800CA5EC_D959C(inst->unk0, inst->unk2, inst->unk4,
-			(s8)((rand0 % 50) - 0x19), 0x50, (s8)((rand1 % 50) - 0x19), 0x19, 5,
-			(u8)((rand2 % 8) + 0xC), (u8)((rand3 % 0x23) + 0x69), 0, 0xFF, 0, 0xFF);
-		return;
-	}
-
-	func_800E05B4_EF564(inst->unk0, inst->unk2, inst->unk4, 0x64);
+	inst->unk24 = 0;
+	inst->unk2C = 0x64;
+	inst->unk20 |= 0x4000;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB8CC_BA87C.s")
@@ -1054,6 +1055,7 @@ s32 func_800ABCC8_BAC78(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ABCC8_BAC78.s")
 #endif
 
+// https://decomp.me/scratch/8eJR6
 // CURRENT(145)
 #ifdef NON_MATCHING
 // AI - Pick random wander point
