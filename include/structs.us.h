@@ -903,6 +903,8 @@ typedef struct {
 	/* 0x04 */ s32 unk4;
 } Unk80158F98; /* size = 0x08 */
 
+typedef struct {s16 x; s16 z;} Vec2_S16;
+
 typedef enum AlienFlags {
 	ALIEN_FLAG_UNK1 = 1,
 	ALIEN_FLAG_UNK2 = 2,

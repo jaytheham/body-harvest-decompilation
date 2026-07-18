@@ -122,9 +122,9 @@ const u32 jtbl_80142A8C_151A3C[] = {
 s32 D_8013D8C0_14C870[6] = { 0x00000000, 0x00000258, 0x00000258, 0x00000320, 0x00000320, 0x00000258 };
 u32 D_8013D8D8_14C888[6] = { 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
 
-s16 D_8013D8F0_14C8A0[] = {
-	-0x0100, -0x0100, 0x0000, -0x0100, 0x0100, -0x0100, 0x0100, 0x0000,
-	0x0100, 0x0100, 0x0000, 0x0100, -0x0100, 0x0100, -0x0100, 0x0000,
+Vec2_S16 D_8013D8F0_14C8A0[] = {
+	{-0x0100, -0x0100}, {0x0000, -0x0100}, {0x0100, -0x0100}, {0x0100, 0x0000},
+	{0x0100, 0x0100}, {0x0000, 0x0100}, {-0x0100, 0x0100}, {-0x0100, 0x0000},
 };
 
 s32 D_8013D910_14C8C0[3] = { 0, 0, 0 };
@@ -1041,43 +1041,35 @@ s32 func_800ABCC8_BAC78(u8 arg0) {
 #endif
 
 // https://decomp.me/scratch/8eJR6
-// CURRENT(145)
-#ifdef NON_MATCHING
 // AI - Pick random wander point
-void func_800ABE7C_BAE2C(u8 arg0) {
-	s32 rnd;
+void func_800ABE7C_BAE2C(u8 arg0)
+{
+	u16 rnd;
 	s32 x = alienInstances[arg0].unk0 >> 8;
 	s32 z = alienInstances[arg0].unk4 >> 8;
 	s32 i;
-	s16 *offsets;
+	Vec2_S16 *offsets;
 	s32 baseX;
 	s32 baseZ;
-
-	rnd = func_800038E0_44E0() >> 13;
+	rnd = func_800038E0_44E0() >> 0xD;
 	i = 0;
-	offsets = &D_8013D8F0_14C8A0[(rnd & 0xFFFF) * 2];
-	baseX = x << 8;
-	baseZ = z << 8;
-
-	do {
+	baseX = x * 256; baseZ = z * 256; do {
 		i++;
-		x = offsets[0] + baseX + 0x80;
-		z = offsets[1] + baseZ + 0x80;
-		if (func_800B325C_C220C((s8)(x >> 8), (s8)(z >> 8), 0x1800) == 0) {
+		x = (D_8013D8F0_14C8A0[rnd].x + baseX) + 0x80;
+		z = (D_8013D8F0_14C8A0[rnd].z + baseZ) + 0x80;
+		if (func_800B325C_C220C((x >> 8), (z >> 8), 0x1800) == 0)
+		{
 			break;
 		}
 	} while (i != 8);
-
-	if (i < 8) {
+	if (i < 8)
+	{
 		alienInstances[arg0].unk14 = x;
 		alienInstances[arg0].unk18 = z;
-		alienInstances[arg0].unk16 = func_800B84D0_C7480((s16)x, (s16)z) >> 8;
+		alienInstances[arg0].unk16 = func_800B84D0_C7480(x, z) >> 8;
 		alienInstances[arg0].unk20 |= 0x100;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ABE7C_BAE2C.s")
-#endif
 
 // AI - Wander patrol behavior
 void func_800ABFC0_BAF70(u8 arg0)
