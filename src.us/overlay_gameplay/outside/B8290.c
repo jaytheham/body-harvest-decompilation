@@ -247,25 +247,30 @@ void func_800A9738_B86E8(u8 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9738_B86E8.s")
 #endif
 
+// https://decomp.me/scratch/I9lkq
 #ifdef NON_MATCHING
 // AI - Propagate flag clear to squad
-void func_800A9820_B87D0(u8 arg0, s32 arg1) {
-	AlienInstance *parent;
-
-	alienInstances[arg0].unk20 &= ~arg1;
-	parent = &alienInstances[alienInstances[arg0].unk25];
-	if (alienInstances[((u8 *)parent)[0]].specIndex != 0) {
-		alienInstances[((u8 *)parent)[0]].unk20 &= ~arg1;
-	}
-	if (alienInstances[((u8 *)parent)[1]].specIndex != 0) {
-		alienInstances[((u8 *)parent)[1]].unk20 &= ~arg1;
-	}
-	if (alienInstances[((u8 *)parent)[2]].specIndex != 0) {
-		alienInstances[((u8 *)parent)[2]].unk20 &= ~arg1;
-	}
-	if (alienInstances[((u8 *)parent)[3]].specIndex != 0) {
-		alienInstances[((u8 *)parent)[3]].unk20 &= ~arg1;
-	}
+void func_800A9820_B87D0(u8 arg0, s32 arg1)
+{
+  u8 *parent;
+  alienInstances[arg0].unk20 &= ~arg1;
+  parent = &alienInstances[alienInstances[arg0].unk25];
+  if (alienInstances[parent[0]].specIndex != 0)
+  {
+	alienInstances[parent[0]].unk20 &= ~arg1;
+  }
+  if (alienInstances[parent[1]].specIndex != 0)
+  {
+	alienInstances[parent[1]].unk20 &= ~arg1;
+  }
+  if (alienInstances[parent[2]].specIndex != 0)
+  {
+	alienInstances[parent[2]].unk20 &= ~arg1;
+  }
+  if (alienInstances[parent[3]].specIndex != 0)
+  {
+	alienInstances[parent[3]].unk20 &= ~arg1;
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9820_B87D0.s")
