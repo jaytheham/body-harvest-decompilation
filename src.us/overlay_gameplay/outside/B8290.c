@@ -219,46 +219,39 @@ void func_800A93A4_B8354(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
 #endif
 
 // https://decomp.me/scratch/7WPiF
-// CURRENT(450)
-#ifdef NON_MATCHING
 // AI - Propagate flag set to squad
-void func_800A9738_B86E8(u8 arg0, s32 arg1) {
-	AlienInstance *parent;
-
+void func_800A9738_B86E8(u8 arg0, s32 arg1)
+{
+	AlienInstance *a;
+	s32 i, idx;
 	alienInstances[arg0].unk20 |= arg1;
-	parent = &alienInstances[alienInstances[arg0].unk25];
-	if (alienInstances[((u8 *)parent)[0]].specIndex != 0) {
-		alienInstances[((u8 *)parent)[0]].unk20 |= arg1;
-	}
-	if (alienInstances[((u8 *)parent)[1]].specIndex != 0) {
-		alienInstances[((u8 *)parent)[1]].unk20 |= arg1;
-	}
-	if (alienInstances[((u8 *)parent)[2]].specIndex != 0) {
-		alienInstances[((u8 *)parent)[2]].unk20 |= arg1;
-	}
-	if (alienInstances[((u8 *)parent)[3]].specIndex != 0) {
-		alienInstances[((u8 *)parent)[3]].unk20 |= arg1;
+	a = &alienInstances[alienInstances[arg0].unk25];
+	for (i = 0; i < 4; i++)
+	{
+		idx = a->alienIds[i];
+		if (alienInstances[idx].specIndex != 0)
+		{
+			alienInstances[idx].unk20 |= arg1;
+		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9738_B86E8.s")
-#endif
 
 // https://decomp.me/scratch/I9lkq
 // AI - Propagate flag clear to squad
 void func_800A9820_B87D0(u8 arg0, s32 arg1)
 {
-  AlienInstance *a;
-  s32 i, idx;
-  alienInstances[arg0].unk20 &= ~arg1;
-  a = &alienInstances[alienInstances[arg0].unk25];
-  for (i = 0; i < 4; i++) {
-      idx = a->alienIds[i];
-      if (alienInstances[idx].specIndex != 0)
-      {
-        alienInstances[idx].unk20 &= ~arg1;
-      }
-  }
+	AlienInstance *a;
+	s32 i, idx;
+	alienInstances[arg0].unk20 &= ~arg1;
+	a = &alienInstances[alienInstances[arg0].unk25];
+	for (i = 0; i < 4; i++)
+	{
+		idx = a->alienIds[i];
+		if (alienInstances[idx].specIndex != 0)
+		{
+			alienInstances[idx].unk20 &= ~arg1;
+		}
+	}
 }
 
 // AI - Navigate zone hierarchy
