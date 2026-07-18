@@ -1140,36 +1140,33 @@ void func_800AC0E4_BB094(u8 arg0)
   func_8012B110_13A0C0((s32) alien, 0, (InputStruct_8012B150 *) &alienInstances[alien->unk38]);
 }
 
-#ifdef NON_MATCHING
 // AI - Enforce zone boundary
-void func_800AC198_BB148(u8 arg0) {
+void func_800AC198_BB148(u8 arg0)
+{
 	AlienInstance *alien;
 	s8 zoneIdx;
 	Unk80146688 *zone;
-	s32 dx, neg_dx, abs_dx;
-	s32 dz, neg_dz, abs_dz;
-
+	s32 dx;
+	s32 abs_dx;
+	s32 dz;
+	s32 abs_dz;
 	alien = &alienInstances[arg0];
 	zoneIdx = alien->unk3D;
-
-	if (zoneIdx != -1) {
+	if (zoneIdx != (-1))
+	{
 		zone = &D_80146688_155638[currentLevel - 1][zoneIdx];
 		dx = zone->unk0 - (alien->unk0 >> 8);
-		neg_dx = -dx;
 		dz = zone->unk1 - (alien->unk4 >> 8);
-		if (neg_dx < dx) { abs_dx = dx; } else { abs_dx = neg_dx; }
-		neg_dz = -dz;
-		if (neg_dz < dz) { abs_dz = dz; } else { abs_dz = neg_dz; }
 
-		if (abs_dz < abs_dx) {
-			if (neg_dx < dx) { abs_dx = dx; } else { abs_dx = neg_dx; }
-			dx = abs_dx;
-		} else {
-			if (neg_dz < dz) { neg_dx = dz; } else { neg_dx = neg_dz; }
-			dx = neg_dx;
-		}
+		abs_dx = (-dx < dx) ? dx : -dx;
+		abs_dz = (-dz < dz) ? dz : -dz;
 
-		if (zone->unk2 < dx) {
+		dx = (abs_dz < abs_dx)
+			? (-dx < dx) ? dx : -dx
+			: (-dz < dz) ? dz : -dz;
+
+		if (zone->unk2 < dx)
+		{
 			alien->unk20 |= 0x1100;
 			alien->unk20 &= ~0x40;
 			alien->unk14 = (s16)(zone->unk0 << 8);
@@ -1180,9 +1177,6 @@ void func_800AC198_BB148(u8 arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC198_BB148.s")
-#endif
 
 // CURRENT (4284)
 #ifdef NON_MATCHING
