@@ -1415,71 +1415,65 @@ void func_800ACB3C_BBAEC(u8 arg0) {
 	}
 }
 
-// CURRENT(4106)
-#ifdef NON_MATCHING
 // AI - Update building-spawned AI
-void func_800ACC5C_BBC0C(s32 arg0) {
-	BuildingInstance *building;
-	AlienInstance *inst;
-	u32 maskValue;
-	u32 buildingFlags;
-	s32 sp24;
-	s32 temp_s0;
-	s32 flags;
-
-	temp_s0 = arg0 & 0xFF;
-	inst = &alienInstances[temp_s0];
-	inst->unk12 = inst->unk48;
-	if (((inst->unk0 >> 8) != (inst->unk2E >> 8)) || ((inst->unk4 >> 8) != (inst->unk32 >> 8))) {
+void func_800ACC5C_BBC0C(u8 arg0)
+{
+	u32 sp24;
+	alienInstances[arg0].unk12 = alienInstances[arg0].unk48;
+	if (((alienInstances[arg0].unk0 >> 8) != (alienInstances[arg0].unk2E >> 8)) || ((alienInstances[arg0].unk4 >> 8) != (alienInstances[arg0].unk32 >> 8)))
+	{
 		sp24 = 1;
 	}
-
-	if (inst->unk24 != 0) {
-		if (func_800ABCC8_BAC78(temp_s0 & 0xFF) != 0) {
+	if (alienInstances[arg0].unk24 != 0)
+	{
+		if (func_800ABCC8_BAC78(arg0) != 0)
+		{
 			return;
 		}
 		goto block_12;
 	}
-
-	flags = inst->unk20;
-	if (!(flags & 0x1000)) {
-		if (flags & 0x2000) {
-			if (func_80117464_126414(inst->pad46) == 0) {
-				inst->unk38 = inst->pad46;
-				func_8011B584_12A534(inst->pad46, temp_s0);
-				building = &buildingInstances[inst->pad46];
-				buildingFlags = building->unk8;
-				maskValue = buildingFlags >> 0xC;
-				building->unk8 = ((((maskValue | 0x8000) ^ maskValue) << 0xC) ^ buildingFlags);
-			}
-		}
-
-		inst->unk12 = 0;
-		if (sp24 != 0) {
-			func_800AC198_BB148(temp_s0 & 0xFF);
-		}
-		return;
-	}
-
-block_12:
-	if (func_800ACA3C_BB9EC(temp_s0 & 0xFF) != 0) {
-		if (inst->unk20 & 0x100) {
-			if ((func_80080840_8F7F0(temp_s0 & 0xFF, 0x50) != 0) && !(inst->unk20 & 0x080000A0)) {
-				if (func_8011B584_12A534(inst->unk38, temp_s0) == 0) {
-					inst->unk20 &= ~0x1A0;
+	if (!(alienInstances[arg0].unk20 & 0x1000))
+	{
+		if (alienInstances[arg0].unk20 & 0x2000)
+		{
+			if (func_80117464_126414(alienInstances[arg0].pad46) == 0)
+			{
+				alienInstances[arg0].unk38 = alienInstances[arg0].pad46;
+				func_8011B584_12A534(alienInstances[arg0].pad46, arg0);
+				{
+					buildingInstances[alienInstances[arg0].pad46].unk8 =
+						buildingInstances[alienInstances[arg0].pad46].unk8 ^
+						(((buildingInstances[alienInstances[arg0].pad46].unk8 >> 12) ^ ((buildingInstances[alienInstances[arg0].pad46].unk8 >> 12) | 0x8000)) << 12);
 				}
 			}
 		}
-
-		func_800808F0_8F8A0(temp_s0 & 0xFF, &inst->unkE);
-		if ((sp24 != 0) && (func_800AC2FC_BB2AC(temp_s0 & 0xFF) != 0)) {
-			func_800ACB3C_BBAEC(temp_s0 & 0xFF);
+		alienInstances[arg0].unk12 = 0;
+		if (sp24 != 0)
+		{
+			func_800AC198_BB148(arg0);
+		}
+		return;
+	}
+block_12:
+	if (func_800ACA3C_BB9EC(arg0) != 0)
+	{
+		if (alienInstances[arg0].unk20 & 0x100)
+		{
+			if ((func_80080840_8F7F0(arg0, 0x50) != 0) && (!(alienInstances[arg0].unk20 & 0x080000A0)))
+			{
+				if (func_8011B584_12A534(alienInstances[arg0].unk38, arg0) == 0)
+				{
+					alienInstances[arg0].unk20 &= ~0x1A0;
+				}
+			}
+		}
+		func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
+		if ((sp24 != 0) && (func_800AC2FC_BB2AC(arg0) != 0))
+		{
+			func_800ACB3C_BBAEC(arg0);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ACC5C_BBC0C.s")
-#endif
 
 // AI - Update free-roam AI
 void func_800ACE40_BBDF0(u8 arg0) {
