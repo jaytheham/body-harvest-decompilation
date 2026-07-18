@@ -909,100 +909,86 @@ void func_800B0390_BF340(Unk80222A78 *arg0) {
 	func_802D4CD0_18D7E0(0x14, 0);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(1138)
-u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2) {
+// https://decomp.me/scratch/67lnk
+u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2)
+{
 	Unk80222A78 sp60;
-	volatile u8 sp5F;
-	u8 sp5E;
-	AlienInstance *sp58;
-	s32 sp4C;
-	AlienInstance *leader;
 	u8 temp_v0;
+	u8 temp_v1;
 	s16 i;
+	AlienInstance *parentAlien;
 
-	if (currentLevel != 5) {
+	u8 followerId;
+	if (currentLevel != 5)
+	{
 		func_80011A40_12640(6, D_8006AA70);
 	}
-
 	temp_v0 = func_8007956C_8851C(D_8003CEC0[arg0].slots[0].spec);
-	sp5E = temp_v0;
-	if ((temp_v0 & 0xFF) == 0xFF) {
+	temp_v1 = temp_v0;
+	if (temp_v0 == 0xFF)
+	{
 		return 0xFF;
 	}
 
-	leader = &alienInstances[temp_v0];
-	sp5F = temp_v0;
-	leader->unk0 = arg1;
-	leader->unk4 = arg2;
-	leader->unk1B = (u8)func_800B0F20_BFED0(arg1, arg2);
-	leader->unk2C = 0;
-
-	if (currentLevel == 5) {
-		leader->unkE = 0;
-		leader->unk6 = leader->unkE;
-	} else {
-		leader->unkE = 0x4000;
-		leader->unk6 = leader->unkE;
+	alienInstances[temp_v0].unk0 = arg1;
+	alienInstances[temp_v0].unk4 = arg2;
+	alienInstances[temp_v0].unk1B = (u8)func_800B0F20_BFED0(arg1, arg2);
+	alienInstances[temp_v0].unk2C = 0;
+	if (currentLevel == 5)
+	{
+		alienInstances[temp_v0].unkE = 0;
+		alienInstances[temp_v0].unk6 = alienInstances[temp_v0].unkE;
 	}
+	else
+	{
+		alienInstances[temp_v0].unkE = 0x4000;
+		alienInstances[temp_v0].unk6 = alienInstances[temp_v0].unkE;
+	}
+	parentAlien = &alienInstances[alienInstances[temp_v0].unk25];
+	*((s16 *)&parentAlien->unk24) = arg1;
+	*((s16 *)&parentAlien->unk26) = arg2;
+	D_80140AC4_14FA74 = (s32)&alienInstances[temp_v0];
+	osSyncPrintf(&D_80142C14_151BC4, temp_v0, alienInstances[temp_v0].unk25);
+	D_80140AB0_14FA60[0] = &alienInstances[temp_v0];
 
-	sp58 = &alienInstances[leader->unk25];
-	*(s16 *)&sp58->unk24 = arg1;
-	*(s16 *)&sp58->unk26 = arg2;
-	D_80140AC4_14FA74 = (s32)leader;
-	sp4C = sp5F;
-
-	osSyncPrintf(&D_80142C14_151BC4, sp5F, leader->unk25);
-	D_80140AB0_14FA60[0] = &alienInstances[sp5F];
-
-	i = 1;
-	while (i < 5) {
-		u8 slotSpec;
-		u8 followerId;
-
-		slotSpec = D_8003CEC0[arg0].slots[i].spec;
-		if (slotSpec == 0) {
+	for (i = 1; i < 5; i++)
+	{
+		if (D_8003CEC0[arg0].slots[i].spec == 0)
+		{
 			break;
 		}
-
-		followerId = func_8007956C_8851C(slotSpec);
-		if (followerId == 0xFF) {
-			leader->unk20 |= (1 << (i + 0xB));
-		} else {
+		followerId = func_8007956C_8851C(D_8003CEC0[arg0].slots[i].spec);
+		if (followerId == 0xFF)
+		{
+			alienInstances[temp_v0].unk20 |= 1 << (i + 0xB);
+		}
+		else
+		{
 			alienInstances[followerId].unk0 = D_8003CEC0[arg0].slots[i].relX + arg1;
 			alienInstances[followerId].unk4 = arg2 - D_8003CEC0[arg0].slots[i].relZ;
-			alienInstances[followerId].unk25 = sp5F;
-			alienInstances[followerId].unk1B = leader->unk1B;
-
-			sp60.unk0 = 3;
+			alienInstances[followerId].unk25 = temp_v0;
+			alienInstances[followerId].unk1B = alienInstances[temp_v0].unk1B;
+			sp60.unk2 = (s8)temp_v0;
 			sp60.unk1 = i;
-			sp60.unk2 = (s8)sp4C;
+			sp60.unk0 = 3;
 			sp60.unk8 = followerId;
 			sp60.unkC = func_800B02FC_BF2AC;
 			func_800AE454_BD404(&sp60);
-
 			osSyncPrintf(&D_80142C28_151BD8, followerId);
-			((u8 *)sp58)[i - 1] = followerId;
+			((u8 *)parentAlien)[i - 1] = followerId;
 			D_80140AB0_14FA60[i] = &alienInstances[followerId];
 		}
-
-		i++;
 	}
 
 	sp60.unk0 = 3;
-	sp60.unk8 = sp5E;
+	sp60.unk8 = temp_v1;
 	sp60.unkC = func_800B0288_BF238;
 	func_800AE454_BD404(&sp60);
-
-	((s32 *)D_8013D8C0_14C870)[0] = 0;
+	D_8013D8C0_14C870[0] = 0;
 	D_8014F828 = 0;
 	D_801493E2 = 1;
-
-	return sp5F;
+	return temp_v0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800B03CC_BF37C.s")
-#endif
 
 void func_800B06C4_BF674(Unk80222A78 *arg0) {
 	func_800B03CC_BF37C(arg0->unk8, (s16)((arg0->unk1 << 8) + 0x80), (s16)((arg0->unk2 << 8) + 0x80));
