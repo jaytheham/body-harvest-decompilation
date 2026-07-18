@@ -769,6 +769,9 @@ void func_800AB570_BA520(u8 arg0)
   s32 absDx;
   s32 dz;
   s32 absDz;
+	
+	s32 pad;
+	
   alienInstances[arg0].unk48 = 0xC0;
   if (func_80080840_8F7F0(arg0, 0x23) != 0)
   {
@@ -783,20 +786,19 @@ void func_800AB570_BA520(u8 arg0)
   
   absDx = -dx < dx ? dx : -dx;
   absDz = -dz < dz ? dz : -dz;
-  dz = (0, absDz < absDx
+  dx = absDz < absDx
 		? -dx < dx ? dx : -dx
-		: -dz < dz ? dz : -dz);
-  if (dz < 0x4B0)
+		: -dz < dz ? dz : -dz;
+  if (dx < 0x4B0)
   {
-  alienInstances[arg0].unk24 = 0x14;
-  alienInstances[arg0].unk20 &= 0xFFFDFE5F;
-  
-  alienInstances[arg0].unk38 = 0x64;
-  alienInstances[arg0].unk14 = targetX;
-  alienInstances[arg0].unk18 = targetZ;
-  alienInstances[arg0].unk20 |= 0x100;
-  alienInstances[arg0].unk48 = 0xA0;
-  alienInstances[arg0].unk16 = targetY;
+	  alienInstances[arg0].unk24 = 0x14;
+	  alienInstances[arg0].unk20 &= 0xFFFDFE5F;
+	  alienInstances[arg0].unk38 = 0x64;
+	  alienInstances[arg0].unk14 = targetX;
+	  alienInstances[arg0].unk16 = targetY;
+	  alienInstances[arg0].unk18 = targetZ;
+	  alienInstances[arg0].unk20 |= 0x100;
+	  alienInstances[arg0].unk48 = 0xA0;
   }
 }
 #else
