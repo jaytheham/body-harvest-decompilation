@@ -1158,7 +1158,6 @@ void func_800A854C_B74FC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A854C_B74FC.s")
 #endif
 
-#ifdef NON_MATCHING
 /* Spawn powerup
 	arg3:
 	1	Small Heart
@@ -1171,7 +1170,7 @@ void func_800A854C_B74FC(void) {
 	x1A Alpha1 Missile ammo
 	x1B Small shotgun ammo
 */
-void func_800A8A68_B7A18(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
+void func_800A8A68_B7A18(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	Unk8014F6D0 *entry;
 
 	entry = func_800A5A10_B49C0();
@@ -1202,9 +1201,6 @@ void func_800A8A68_B7A18(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	entry->unkC = (s16)arg3;
 	entry->unkE = (s16)((func_800038E0_44E0() & 0x7F) + 0x1F4);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A8A68_B7A18.s")
-#endif
 
 // AI - Spawn random powerup
 void func_800A8C44_B7BF4(s16 arg0, s16 arg1, s16 arg2)
@@ -1233,17 +1229,17 @@ void func_800A8C44_B7BF4(s16 arg0, s16 arg1, s16 arg2)
 
 			if (weaponSlots[weaponIndex] == 3)
 			{
-				func_800A8A68_B7A18(arg0, arg1, arg2, 0xB); // Invalid
+				func_800A8A68_B7A18(arg0, arg1, arg2, 0xB); // Invalid?
 				return;
 			}
 			if (weaponSlots[weaponIndex] == 6)
 			{
-				func_800A8A68_B7A18(arg0, arg1, arg2, 0xD); // Invalid
+				func_800A8A68_B7A18(arg0, arg1, arg2, 0xD); // Invalid?
 				return;
 			}
 			if (weaponSlots[weaponIndex] == 5)
 			{
-				func_800A8A68_B7A18(arg0, arg1, arg2, 0x11); // Invalid
+				func_800A8A68_B7A18(arg0, arg1, arg2, 0x11); // Invalid?
 				return;
 			}
 			if (weaponSlots[weaponIndex] == 4)
@@ -1253,7 +1249,7 @@ void func_800A8C44_B7BF4(s16 arg0, s16 arg1, s16 arg2)
 			}
 			if (weaponSlots[weaponIndex] == 0xA)
 			{
-				func_800A8A68_B7A18(arg0, arg1, arg2, 0xF); // Invalid
+				func_800A8A68_B7A18(arg0, arg1, arg2, 0xF); // Invalid?
 				return;
 			}
 			slot++;
@@ -1271,7 +1267,7 @@ void func_800A8C44_B7BF4(s16 arg0, s16 arg1, s16 arg2)
 	}
 	if (rand1 < 0x61)
 	{
-		func_800A8A68_B7A18(arg0, arg1, arg2, 0xA); // Invalid
+		func_800A8A68_B7A18(arg0, arg1, arg2, 0xA); // Invalid?
 	}
 }
 
