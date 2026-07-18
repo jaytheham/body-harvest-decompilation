@@ -22,15 +22,7 @@ const u32 jtbl_80142860_151810[] = {
 	0x800A83CC, 0x800A84D4,
 };
 const f32 D_80142888_151838[] = {0.3f};
-const u32 jtbl_8014288C_15183C[] = {
-	0x800A8E48, 0x800A8E5C, 0x800A8F7C, 0x800A8F90,
-	0x800A8FA4, 0x800A8FEC, 0x800A9000, 0x800A9014,
-	0x800A9028, 0x800A920C, 0x800A903C, 0x800A909C,
-	0x800A90B0, 0x800A90C4, 0x800A90D8, 0x800A90EC,
-	0x800A8E5C, 0x800A9100, 0x800A9114, 0x800A9128,
-	0x800A916C, 0x800A9184, 0x800A9198, 0x800A91AC,
-	0x800A91C0, 0x800A91D4, 0x800A91E8, 0x800A91FC,
-};
+
 typedef struct {
 	/* 0x00 */ s16 x;
 	/* 0x02 */ s16 z;
@@ -1271,186 +1263,190 @@ void func_800A8C44_B7BF4(s16 arg0, s16 arg1, s16 arg2)
 	}
 }
 
-#ifdef NON_MATCHING
 // CURRENT(6570)
 // AI - Give power-up to player
-s32 func_800A8E18_B7DC8(s32 arg0) {
-	s32 result;
-	VehicleInstance* temp_v0;
-	VehicleInstance* temp_a2;
-	u16 temp_v1;
+s32 func_800A8E18_B7DC8(u32 arg0)
+{
+  s32 result = 0;
 
-	result = 0;
-	if ((u32)arg0 < 0x1C) {
-		switch (arg0) {
-			case 0:
-				result = func_801391DC_14818C(9, -0x8000);
-				break;
-			case 1:
-				temp_a2 = &vehicleInstances[0];
-				if (temp_a2->unk1C != 0) {
-					temp_v0 = D_80052B34;
-					temp_v1 = vehicleSpecs[temp_v0->unk1A].hitPoints;
-					if (temp_v0->unk1C < temp_v1) {
-						if (arg0 == 1) {
-							temp_v0->unk1C += temp_v1 / 4;
-							result = 1;
-							temp_v1 = vehicleSpecs[temp_v0->unk1A].hitPoints;
-							if (temp_v1 < temp_v0->unk1C) {
-								temp_v0->unk1C = temp_v1;
-							}
-						} else {
-							temp_v0->unk1C = temp_v1;
-							result = 1;
-						}
-					} else {
-						temp_v1 = vehicleSpecs[temp_a2->unk1A].hitPoints;
-						if (temp_a2->unk1C < temp_v1) {
-							if (arg0 == 1) {
-								temp_a2->unk1C += temp_v1 / 4;
-								result = 1;
-								if (temp_v1 < temp_a2->unk1C) {
-									temp_a2->unk1C = temp_v1;
-								}
-							} else {
-								temp_a2->unk1C = temp_v1;
-								result = 1;
-							}
-						}
-					}
-				}
-				break;
+	switch (arg0)
+	{
+	  case 0:
+		result = func_801391DC_14818C(9, -0x8000);
+		break;
 
-			case 2:
-				result = func_801391DC_14818C(1, -0x8000);
-				break;
-
-			case 3:
-				result = func_801391DC_14818C(2, -0x8000);
-				break;
-
-			case 4:
-				if ((currentLevel == 4) && (D_80047F94 == 0)) {
-					result = func_801391DC_14818C(3, 0);
-				} else {
-					result = func_801391DC_14818C(3, 0xA);
-				}
-				break;
-
-			case 5:
-				result = func_801391DC_14818C(4, 0xA);
-				break;
-
-			case 6:
-				result = func_801391DC_14818C(5, 0x64);
-				break;
-
-			case 7:
-				result = func_801391DC_14818C(6, 5);
-				break;
-
-			case 8:
-				result = func_801391DC_14818C(7, 3);
-				break;
-
-			case 9:
-				if (func_800E60CC_F507C(2, *((u8*) D_80052B2C + 0x35)) != 0) {
-					D_8014F7F4 += 0x258;
-					result = 1;
-				} else {
-					D_8014F7F4 = 0x258;
-					func_800E5CF4_F4CA4(2, *((u8*) D_80052B2C + 0x35));
-					result = 1;
-				}
-				break;
-
-			case 10:
-				result = func_80139150_148100(3, 5);
-				break;
-
-			case 11:
-				result = func_80139150_148100(3, 0x14);
-				break;
-
-			case 12:
-				result = func_80139150_148100(6, 3);
-				break;
-
-			case 13:
-				result = func_80139150_148100(6, 0xA);
-				break;
-
-			case 14:
-				result = func_80139150_148100(0xA, 0x19);
-				break;
-
-			case 15:
-				result = func_80139150_148100(5, 0x32);
-				break;
-
-			case 16:
-				result = func_80139150_148100(4, 0x14);
-				break;
-
-			case 17:
-				D_8004DC5C++;
-				if (D_8004DC5C == 3) {
-					result = func_801391DC_14818C(0xA, 0x32);
-					func_800DA994_E9944();
-					func_8001A650_1B250(0x15);
-				}
-				break;
-
-			case 18:
-				D_8004DC5E++;
-				break;
-
-			case 19:
-				result = func_80139150_148100(0xE, 0x14);
-				break;
-
-			case 20:
-				result = func_80139150_148100(0xE, 0xA);
-				break;
-
-			case 21:
-				result = func_80139150_148100(0x10, 3);
-				break;
-
-			case 22:
-				result = func_80139150_148100(0x11, 5);
-				break;
-
-			case 23:
-				result = func_80139150_148100(0xF, 0x1E);
-				break;
-
-			case 24:
-				result = func_80139150_148100(0xF, 0xF);
-				break;
-
-			case 25:
-				result = func_80139150_148100(3, 2);
-				break;
-
-			case 26:
-				break;
-
-			case 27:
-				break;
-
+	  case 1:
+	  case 16:
+		if (vehicleInstances[0].unk1C != 0)
+	  {
+		if (D_80052B34->unk1C < vehicleSpecs[D_80052B34->unk1A].hitPoints)
+		{
+		  if (arg0 == 1)
+		  {
+			D_80052B34->unk1C += vehicleSpecs[D_80052B34->unk1A].hitPoints / 4;
+			
+			if (vehicleSpecs[D_80052B34->unk1A].hitPoints < D_80052B34->unk1C)
+			{
+			  D_80052B34->unk1C = vehicleSpecs[D_80052B34->unk1A].hitPoints;
+			}
+		  }
+		  else
+		  {
+			D_80052B34->unk1C = vehicleSpecs[D_80052B34->unk1A].hitPoints;
+		  }
+			result = 1;
 		}
-	}
+		else
+		{
+		  if (vehicleInstances[0].unk1C < vehicleSpecs[vehicleInstances[0].unk1A].hitPoints)
+		  {
+			if (arg0 == 1)
+			{
+			  vehicleInstances[0].unk1C += vehicleSpecs[vehicleInstances[0].unk1A].hitPoints / 4;
+			  
+			  if (vehicleSpecs[vehicleInstances[0].unk1A].hitPoints < vehicleInstances[0].unk1C)
+			  {
+				vehicleInstances[0].unk1C = vehicleSpecs[vehicleInstances[0].unk1A].hitPoints;
+			  }
+			}
+			else
+			{
+			  vehicleInstances[0].unk1C = vehicleSpecs[vehicleInstances[0].unk1A].hitPoints;
+			}
+			result = 1;  
+		  }
+		}
+	  }
+		  
+		break;
 
-	if (result != 0) {
-		func_80139020_147FD0(arg0);
-	}
+	  case 2:
+		result = func_801391DC_14818C(1, -0x8000);
+		break;
 
-	return result;
+	  case 3:
+		result = func_801391DC_14818C(2, -0x8000);
+		break;
+
+	  case 4:
+		if ((currentLevel == 4) && (D_80047F94 == 0))
+	  {
+		result = func_801391DC_14818C(3, 0);
+	  }
+	  else
+	  {
+		result = func_801391DC_14818C(3, 0xA);
+	  }
+		break;
+
+	  case 5:
+		result = func_801391DC_14818C(4, 0xA);
+		break;
+
+	  case 6:
+		result = func_801391DC_14818C(5, 0x64);
+	  case 9:
+		break;
+
+	  case 7:
+		result = func_801391DC_14818C(6, 5);
+		break;
+
+	  case 8:
+		result = func_801391DC_14818C(7, 3);
+		break;
+
+	  case 10:
+		if (func_800E60CC_F507C(2, *(((u8 *) D_80052B2C) + 0x35)) != 0)
+	  {
+		D_8014F7F4 += 0x258;
+		result = 1;
+	  }
+	  else
+	  {
+		D_8014F7F4 = 0x258;
+		func_800E5CF4_F4CA4(2, *(((u8 *) D_80052B2C) + 0x35));
+		result = 1;
+	  }
+		break;
+
+	  case 11:
+		result = func_80139150_148100(3, 5);
+		break;
+
+	  case 12:
+		result = func_80139150_148100(3, 0x14);
+		break;
+
+	  case 13:
+		result = func_80139150_148100(6, 3);
+		break;
+
+	  case 14:
+		result = func_80139150_148100(6, 0xA);
+		break;
+
+	  case 15:
+		result = func_80139150_148100(0xA, 0x19);
+		break;
+
+	  case 17:
+		result = func_80139150_148100(5, 0x32);
+		break;
+
+	  case 18:
+		result = func_80139150_148100(4, 0x14);
+		break;
+
+	  case 19:
+		D_8004DC5C++;
+		if (D_8004DC5C == 3)
+	  {
+		result = func_801391DC_14818C(0xA, 0x32);
+		func_800DA994_E9944();
+		func_8001A650_1B250(0x15);
+	  }
+		break;
+
+	  case 20:
+		D_8004DC5E++;
+		break;
+
+	  case 21:
+		result = func_80139150_148100(0xE, 0x14);
+		break;
+
+	  case 22:
+		result = func_80139150_148100(0xE, 0xA);
+		break;
+
+	  case 23:
+		result = func_80139150_148100(0x10, 3);
+		break;
+
+	  case 24:
+		result = func_80139150_148100(0x11, 5);
+		break;
+
+	  case 25:
+		result = func_80139150_148100(0xF, 0x1E);
+		break;
+
+	  case 26:
+		result = func_80139150_148100(0xF, 0xF);
+		break;
+
+	  case 27:
+		result = func_80139150_148100(3, 2);
+		break;
+
+	}
+  if (result != 0)
+  {
+	func_80139020_147FD0(arg0);
+  }
+  return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A8E18_B7DC8.s")
-#endif
 
 // guess_givePowerUp
 void func_800A9238_B81E8() {

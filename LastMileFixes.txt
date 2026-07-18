@@ -2,3 +2,4 @@ Removing temporary variables, even when that means replacing them with repeated 
 Rearranging variable declartion order.
 Replace (x = x + y) with (x += y), any operation (+ - *)
 Put `do` on the same line as the previous statement: x = y; do
+Maybe no need to have an if around a switch - the switch itself will generate an if to check the switch value is in bounds

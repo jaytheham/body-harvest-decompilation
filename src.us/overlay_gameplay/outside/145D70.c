@@ -806,7 +806,7 @@ void func_80139018_147FC8(s32 arg0) {
 
 }
 
-void func_80139020_147FD0(s32 arg0) {
+void func_80139020_147FD0(s16 arg0) {
 
 }
 
