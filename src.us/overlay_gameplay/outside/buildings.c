@@ -2297,6 +2297,7 @@ void func_8011B3F0_12A3A0(s16 arg0, s16 *arg1, s16 *arg2, s16 *arg3) {
 	func_801165FC_1255AC((u8) arg0, (u8) flag, arg1, arg2, arg3, &sp26);
 }
 
+// Spawn alien at position?
 s32 func_8011B454_12A404(s32 arg0, s16 *arg1, s16 *arg2, s16 *arg3) {
 	s16 sp2E;
 	s32 var_v1;

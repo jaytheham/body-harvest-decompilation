@@ -1699,5 +1699,6 @@ void func_802DBEA4_31FFF4(u8 arg0, s16 arg1, s16 arg2);
 s32 func_802E1FE0_326130(u8 arg0);
 void func_802DDB08_321C58(u8 arg0, u8 arg1, s16 arg2, s32 *arg3);
 s8 func_80081F18_90EC8(u8 arg0, u8 arg1, u8 arg2, s16 *arg3, Unk8014DD50 **arg4);
+void func_8011BA80_12AA30(u8 arg0, s16 arg1);
 
 #endif
