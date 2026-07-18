@@ -1027,6 +1027,7 @@ void func_800A7C6C_B6C1C(void) {
 
 // CURRENT(8051)
 #ifdef NON_MATCHING
+// Actually powerups not beacons?
 // AI - Update beacon particle effects
 void func_800A854C_B74FC(void) {
 	s16 sp8C;
@@ -1158,8 +1159,19 @@ void func_800A854C_B74FC(void) {
 #endif
 
 #ifdef NON_MATCHING
-// AI - Spawn visual particle entry
-void func_800A8A68_B7A18(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
+/* Spawn powerup
+	arg3:
+	1	Small Heart
+	x10	Large Heart
+	x15 Alpha1 Fragcannon ammo
+	x16 Alpha1 Fragcannon ammo
+	x17 Alpha1 ? (Purple with white star) ammo
+	x18 Alpha1 Plasmabomb(?) ammo
+	x19 Alpha1 Missile ammo
+	x1A Alpha1 Missile ammo
+	x1B Small shotgun ammo
+*/
+void func_800A8A68_B7A18(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	Unk8014F6D0 *entry;
 
 	entry = func_800A5A10_B49C0();
@@ -1194,71 +1206,77 @@ void func_800A8A68_B7A18(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A8A68_B7A18.s")
 #endif
 
-#ifdef NON_MATCHING
-// AI - Spawn random weapon pickup visual
-void func_800A8C44_B7BF4(s16 arg0, s16 arg1, s16 arg2) {
-	s16 sp1C;
+// AI - Spawn random powerup
+void func_800A8C44_B7BF4(s16 arg0, s16 arg1, s16 arg2)
+{
+	u8 weaponIndex;
+	s16 rand1;
 	s32 rand2;
-	s32 i;
-	s32 slot;
+	u8 slot;
 
-	sp1C = (s16)(func_800038E0_44E0() % 100);
+	u8 offset;
+	rand1 = func_800038E0_44E0() % 100;
 	rand2 = func_800038E0_44E0();
-	i = 0;
+
 	slot = 0;
-	if (sp1C < 0x1E) {
-		s32 offset = rand2 % 7;
-		do {
-			s32 idx;
-			u8 wtype;
-			idx = (slot + offset) & 0xFF;
-			if (idx >= 7) {
-				idx = (idx - 7) & 0xFF;
+	offset = rand2 % 7;
+	if (rand1 < 0x1E)
+	{
+		do
+		{
+			weaponIndex = (slot + offset);
+
+			if (weaponIndex >= 7)
+			{
+				weaponIndex -= 7;
 			}
-			wtype = weaponSlots[idx];
-			i = i + 1;
-			slot = i & 0xFF;
-			if (wtype == 3) {
-				func_800A8A68_B7A18(arg0, arg1, arg2, 0xB);
+
+			if (weaponSlots[weaponIndex] == 3)
+			{
+				func_800A8A68_B7A18(arg0, arg1, arg2, 0xB); // Invalid
 				return;
 			}
-			if (wtype == 6) {
-				func_800A8A68_B7A18(arg0, arg1, arg2, 0xD);
+			if (weaponSlots[weaponIndex] == 6)
+			{
+				func_800A8A68_B7A18(arg0, arg1, arg2, 0xD); // Invalid
 				return;
 			}
-			if (wtype == 5) {
-				func_800A8A68_B7A18(arg0, arg1, arg2, 0x11);
+			if (weaponSlots[weaponIndex] == 5)
+			{
+				func_800A8A68_B7A18(arg0, arg1, arg2, 0x11); // Invalid
 				return;
 			}
-			if (wtype == 4) {
+			if (weaponSlots[weaponIndex] == 4)
+			{
 				func_800A8A68_B7A18(arg0, arg1, arg2, 0x1);
 				return;
 			}
-			if (wtype == 0xA) {
-				func_800A8A68_B7A18(arg0, arg1, arg2, 0xF);
+			if (weaponSlots[weaponIndex] == 0xA)
+			{
+				func_800A8A68_B7A18(arg0, arg1, arg2, 0xF); // Invalid
 				return;
 			}
-			i = slot;
+			slot++;
 		} while (slot < 7);
 	}
-	if (sp1C < 0x4B) {
-		func_800A8A68_B7A18(arg0, arg1, arg2, 0x1);
+	if (rand1 < 0x4B)
+	{
+		func_800A8A68_B7A18(arg0, arg1, arg2, 0x1); // Small heart
 		return;
 	}
-	if (sp1C < 0x61) {
-		func_800A8A68_B7A18(arg0, arg1, arg2, 0x10);
+	if (rand1 < 0x61)
+	{
+		func_800A8A68_B7A18(arg0, arg1, arg2, 0x10); // Large heart
 		return;
 	}
-	if (sp1C < 0x61) {
-		func_800A8A68_B7A18(arg0, arg1, arg2, 0xA);
+	if (rand1 < 0x61)
+	{
+		func_800A8A68_B7A18(arg0, arg1, arg2, 0xA); // Invalid
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A8C44_B7BF4.s")
-#endif
 
 #ifdef NON_MATCHING
-// CURRENT(4305)
+// CURRENT(6570)
 // AI - Give power-up to player
 s32 func_800A8E18_B7DC8(s32 arg0) {
 	s32 result;
@@ -1439,7 +1457,6 @@ s32 func_800A8E18_B7DC8(s32 arg0) {
 #endif
 
 // guess_givePowerUp
-// AI - Process delayed power-up queue
 void func_800A9238_B81E8() {
 	s16* powerupTypePtr = &D_80047F7E + 1;
 	s16 powerupType;
