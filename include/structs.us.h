@@ -1047,7 +1047,9 @@ typedef struct {
 	/* 0x04 */ s16 yPosition;
 	/* 0x06 */ u8 pad6[2];
 	/* 0x08 */ s32 unk8; // Seconds before wave spawns after triggered
-	/* 0x0C */ u8 padC[3]; // 0xE = If != 0 wave respawns when destroyed
+	/* 0x0C */ u8 unkC;
+	/* 0x0D */ u8 unkD;
+	/* 0x0E */ u8 unkE; // 0xE = If != 0 wave respawns when destroyed
 	/* 0x0F */ s8 unkF; // Y axis rotation applied to aliens (0 = facing North, 63 = East)
 	/* 0x10 */ u8 unk10; // Count of aliens intially spawned still alive
 	/* 0x11 */ u8 unk11;
@@ -2835,11 +2837,11 @@ typedef struct {
    The ring buffer is stored as RingEntry[20][20] (400 entries, 2400 bytes),
    with only 19x19 tiles actively used (modulo 19 wrapping).
    Fields:
-     tileType: tile type/index from the world map heightmap
-     r:        red vertex color component
-     g:        green vertex color component
-     b:        blue vertex color component
-     pad:      unused padding byte */
+	 tileType: tile type/index from the world map heightmap
+	 r:        red vertex color component
+	 g:        green vertex color component
+	 b:        blue vertex color component
+	 pad:      unused padding byte */
 typedef struct {
 	/* 0x00 */ u16 tileType;
 	/* 0x02 */ u8 r;

@@ -515,7 +515,7 @@ void func_800AF390_BE340(Unk80222A78 *arg0) {
 void func_800AF3B8_BE368(Unk80222A78 *arg0) {
 	s32 sp1C;
 
-	sp1C = D_80223780[arg0->unk9].padC[2] * 200;
+	sp1C = D_80223780[arg0->unk9].unkE * 200;
 	if (sp1C != 0) {
 		osSyncPrintf(&D_80142B7C_151B2C, arg0->unk9, sp1C / 20, arg0); // Create positional %d in %d seconds
 		arg0->unk0 = 2;
@@ -579,8 +579,8 @@ void func_800AF634_BE5E4(Unk80222A78 *arg0) {
 		waveIndex = alienInstances[alienIdx].unk3E;
 
 		if ((parent->unk20 & 0x4000) != 0) {
-			if (D_80223780[waveIndex].padC[2] != 0) {
-				func_800AF4A4_BE454(waveIndex, D_80223780[waveIndex].padC[2] * 0xC8, alienInstances[alienIdx].unk3D);
+			if (D_80223780[waveIndex].unkE != 0) {
+				func_800AF4A4_BE454(waveIndex, D_80223780[waveIndex].unkE * 0xC8, alienInstances[alienIdx].unk3D);
 			}
 		}
 		if ((parent->unk20 & 0x8000) != 0) {
