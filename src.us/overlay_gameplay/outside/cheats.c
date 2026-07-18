@@ -328,104 +328,87 @@ void func_80073B30_82AE0(s32 arg0)
 }
 
 // https://decomp.me/scratch/Xo6Wf
-// CURRENT(650)
-#ifdef NON_MATCHING
 void func_80073B78_82B28(void)
 {
-  s32 bufferIndex;
-  s32 firstNullCharIndex;
-  s32 var_s0;
-  u8 *curBufferChar;
-  u8 *curCheatPatternChar;
-  if ((currentControllerStates[0].button == 0) || (D_8014945C != 1))
-  {
-	if ((currentControllerStates[0].button != 0) && (D_8014945C == 0))
+	s32 bufferIndex;
+	s32 charIndex;
+	s32 var_s0;
+	if ((currentControllerStates[0].button == 0) || (D_8014945C != 1))
 	{
-	  switch ((s32) currentControllerStates[0].button)
-	  {
-		case BUTTON_A:
-		  func_80073A20_829D0('a');
-		  break;
-
-		case BUTTON_B:
-		  func_80073A20_829D0('b');
-		  break;
-
-		case BUTTON_C_LEFT:
-		  func_80073A20_829D0('w');
-		  break;
-
-		case BUTTON_C_DOWN:
-		  func_80073A20_829D0('s');
-		  break;
-
-		case BUTTON_C_UP:
-		  func_80073A20_829D0('n');
-		  break;
-
-		case BUTTON_C_RIGHT:
-		  func_80073A20_829D0('e');
-		  break;
-
-		case BUTTON_Z:
-		  func_80073A20_829D0('f');
-		  break;
-
-		case BUTTON_D_UP:
-		  func_80073A20_829D0('u');
-		  break;
-
-		case BUTTON_D_DOWN:
-		  func_80073A20_829D0('d');
-		  break;
-
-		case BUTTON_D_LEFT:
-		  func_80073A20_829D0('l');
-		  break;
-
-		case BUTTON_D_RIGHT:
-		  func_80073A20_829D0('r');
-		  break;
-
-	  }
-
-	  D_8014945C = 1;
-	}
-	else
-	{
-	  D_8014945C = 0;
-	}
-	for (var_s0 = 0x14; var_s0 != 0; var_s0--)
-	{
-	  firstNullCharIndex = 3;
-	  while (cheatData[var_s0].cheatPattern[++firstNullCharIndex] != 0)
-	  {
-		;
-	  }
-
-	  bufferIndex = firstNullCharIndex;
-	  if (firstNullCharIndex != 0)
-	  {
-		bufferIndex--;
-		do
+		if ((currentControllerStates[0].button != 0) && (D_8014945C == 0))
 		{
-		  curCheatPatternChar = &cheatData[var_s0].cheatPattern[firstNullCharIndex - bufferIndex], curBufferChar = &cheatInputBuffer[bufferIndex];
-		  if ((*(curBufferChar--)) != (curCheatPatternChar++)[-1])
-		  {
-			break;
-		  }
-		}
-		while (bufferIndex--);
-	  }
-	  if (bufferIndex == (-1))
-	  {
-		func_80073B30_82AE0(var_s0);
-		func_80073A74_82A24();
-	  }
-	}
+			switch ((s32)currentControllerStates[0].button)
+			{
+			case BUTTON_A:
+				func_80073A20_829D0('a');
+				break;
 
-  }
+			case BUTTON_B:
+				func_80073A20_829D0('b');
+				break;
+
+			case BUTTON_C_LEFT:
+				func_80073A20_829D0('w');
+				break;
+
+			case BUTTON_C_DOWN:
+				func_80073A20_829D0('s');
+				break;
+
+			case BUTTON_C_UP:
+				func_80073A20_829D0('n');
+				break;
+
+			case BUTTON_C_RIGHT:
+				func_80073A20_829D0('e');
+				break;
+
+			case BUTTON_Z:
+				func_80073A20_829D0('f');
+				break;
+
+			case BUTTON_D_UP:
+				func_80073A20_829D0('u');
+				break;
+
+			case BUTTON_D_DOWN:
+				func_80073A20_829D0('d');
+				break;
+
+			case BUTTON_D_LEFT:
+				func_80073A20_829D0('l');
+				break;
+
+			case BUTTON_D_RIGHT:
+				func_80073A20_829D0('r');
+				break;
+			}
+
+			D_8014945C = 1;
+		}
+		else
+		{
+			D_8014945C = 0;
+		}
+		for (var_s0 = 0x15; var_s0--;)
+		{
+			for (bufferIndex = 3; cheatData[var_s0].cheatPattern[++bufferIndex] != 0;) {}
+			charIndex = bufferIndex - 1;
+			if (bufferIndex != 0)
+			{
+				do
+				{
+					if (cheatData[var_s0].cheatPattern[bufferIndex - charIndex - 1] !=
+						cheatInputBuffer[charIndex])
+						break;
+
+				} while (charIndex--);
+			}
+			if (charIndex == -1)
+			{
+				func_80073B30_82AE0(var_s0);
+				func_80073A74_82A24();
+			}
+		}
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/cheats/func_80073B78_82B28.s")
-#endif
