@@ -752,8 +752,9 @@ void func_800071D8_7DD8(void) {
 	func_800050C4_5CC4();
 }
 
-s32 func_8000726C_7E6C(u64 arg0) {
-	return ((1LL << arg0) & D_8004DC48.unk0) != 0;
+// Test if "key" is set in the bitfield
+s32 func_8000726C_7E6C(u64 key) {
+	return ((1LL << key) & D_8004DC48.unk0) != 0;
 }
 
 void func_800072CC_7ECC(u64 arg0) {

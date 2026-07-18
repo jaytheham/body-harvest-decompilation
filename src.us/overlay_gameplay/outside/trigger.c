@@ -113,147 +113,165 @@ void func_800AE588_BD538(void) {
 	}
 }
 
+// https://decomp.me/scratch/AnFgt
 // guess_checkTriggers
 #ifdef NON_MATCHING
-// CURRENT(3339)
-void func_800AE6CC_BD67C(void) {
-	Unk80222A78 tmp;
-	s32 unusedPad0;
-	s32 unusedPad1;
-	AlienWaveInstance *wave;
-	VehicleInstance *vehicle;
-	u8 i;
-	u8 shouldRun;
-	u8 waveId0;
-	u8 waveId1;
+// CURRENT(2533)
+void func_800AE6CC_BD67C(void)
+{
+  Unk80222A78 tmp;  
+  u8 i;
+  u8 shouldRun;
+  u8 waveId0;
+  u8 waveId1;
 
-	unusedPad0 = 0;
-	unusedPad1 = 0;
+    int pad;
 
-	if (D_80223778 > 0) {
-		i = 0;
-		while (i < D_80223778) {
-			shouldRun = 0;
+    for (i = 0; i < D_80223778; i++)
+    {
+      shouldRun = 0;
+      switch (D_80222A78[i].unk0)
+      {
+        case 0:
+          
+          if (D_80047F94 == D_80223780[D_80222A78[i].unk9].unk12)
+        {
+          if (BH_ABS((D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8))) < D_80222A78[i].pad3)
+          {
+            if (BH_ABS((D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8))) < D_80222A78[i].pad3)
+            {
+              waveId0 = D_80223780[D_80222A78[i].unk9].unkD;
+              waveId1 = D_80223780[D_80222A78[i].unk9].unkC;
+              if ((waveId0 == 0xFF) || (func_8000726C_7E6C(waveId0) != 0))
+              {
+                if ((waveId1 == 0xFF) || (func_8000726C_7E6C(waveId1) == 0))
+                {
+                  shouldRun = 1;
+                }
+              }
+            }
+          }
+        }
+          break;
 
-			switch (D_80222A78[i].unk0) {
-				case 0:
-					wave = &D_80223780[D_80222A78[i].unk9];
-					if (D_80047F94 == wave->unk12) {
-						if (((D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8)) < 0 ? -(D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8)) : (D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8))) < D_80222A78[i].pad3) {
-							if (((D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8)) < 0 ? -(D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8)) : (D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8))) < D_80222A78[i].pad3) {
-								waveId0 = wave->padC[1];
-								waveId1 = wave->padC[0];
-								if (waveId0 == 0xFF || func_8000726C_7E6C(waveId0) != 0) {
-									if (waveId1 == 0xFF || func_8000726C_7E6C(waveId1) == 0) {
-										shouldRun = 1;
-									}
-								}
-							}
-						}
-					}
-					break;
+        case 1:
+          if ((D_80222A78[i].unkC == ((void (*)(void *)) func_800AFD48_BECF8)) || (D_80222A78[i].unkC == NULL))
+        {
+          if (D_80047F94 != D_80223780[D_80222A78[i].unk9].unk12)
+          {
+            D_80222A78[i].unk4++;
+          }
+        }
+          if (D_8014F820 >= D_80222A78[i].unk4)
+        {
+          shouldRun = 1;
+        }
+          break;
 
-				case 1:
-					if (D_80222A78[i].unkC == (void (*)(void *))func_800AFD48_BECF8 || D_80222A78[i].unkC == NULL) {
-						if (D_80047F94 != D_80223780[D_80222A78[i].unk9].unk12) {
-							D_80222A78[i].unk4++;
-						}
-					}
-					if (D_8014F820 >= D_80222A78[i].unk4) {
-						shouldRun = 1;
-					}
-					break;
+        case 2:
+          if ((D_80222A78[i].unkC == ((void (*)(void *)) func_800AFD48_BECF8)) || (D_80222A78[i].unkC == NULL))
+        {
+          if (D_80047F94 != D_80223780[D_80222A78[i].unk9].unk12)
+          {
+            D_80222A78[i].unk4++;
+          }
+        }
+          if (D_8014F820 >= D_80222A78[i].unk4)
+        {
+          waveId0 = D_80223780[D_80222A78[i].unk9].unkD;
+          waveId1 = D_80223780[D_80222A78[i].unk9].unkC;
+          if ((waveId0 == 0xFF) || (func_8000726C_7E6C(waveId0) != 0))
+          {
+            if ((waveId1 == 0xFF) || (func_8000726C_7E6C(waveId1) == 0))
+            {
+              shouldRun = 1;
+            }
+          }
+        }
+          break;
 
-				case 2:
-					if (D_80222A78[i].unkC == (void (*)(void *))func_800AFD48_BECF8 || D_80222A78[i].unkC == NULL) {
-						if (D_80047F94 != D_80223780[D_80222A78[i].unk9].unk12) {
-							D_80222A78[i].unk4++;
-						}
-					}
-					if (D_8014F820 >= D_80222A78[i].unk4) {
-						wave = &D_80223780[D_80222A78[i].unk9];
-						waveId0 = wave->padC[1];
-						waveId1 = wave->padC[0];
-						if (waveId0 == 0xFF || func_8000726C_7E6C(waveId0) != 0) {
-							if (waveId1 == 0xFF || func_8000726C_7E6C(waveId1) == 0) {
-								shouldRun = 1;
-							}
-						}
-					}
-					break;
+        case 3:
+          if ((alienInstances[D_80222A78[i].unk8].unk20 & 0x00300000) != 0)
+        {
+          shouldRun = 1;
+        }
+          break;
 
-				case 3:
-					if ((alienInstances[D_80222A78[i].unk8].unk20 & 0x00300000) != 0) {
-						shouldRun = 1;
-					}
-					break;
+        case 4:
+          if (alienInstances[D_80222A78[i].unk8].unk20 < 0)
+        {
+          shouldRun = 1;
+        }
+          break;
 
-				case 4:
-					if ((s32)alienInstances[D_80222A78[i].unk8].unk20 < 0) {
-						shouldRun = 1;
-					}
-					break;
+        case 5:
+          if (D_80149440 == D_80222A78[i].unk8)
+        {
+          shouldRun = 1;
+        }
+          break;
 
-				case 5:
-					if (D_80149440 == D_80222A78[i].unk8) {
-						shouldRun = 1;
-					}
-					break;
+        case 6:
+          if (vehicleInstances[D_80222A78[i].unk8].unk1C <= 0)
+        {
+          shouldRun = 1;
+        }
+          break;
 
-				case 6:
-					vehicle = (VehicleInstance *)((u8 *)&vehicleInstances[D_80222A78[i].unk8] + 0x1C);
-					if (vehicle->unk1C <= 0) {
-						shouldRun = 1;
-					}
-					break;
+        case 7:
+          if (((buildingInstances[D_80222A78[i].unk8].unk8 >> 0xC) & 1) == 0)
+        {
+          shouldRun = 1;
+        }
+          break;
 
-				case 7:
-					if (((buildingInstances[D_80222A78[i].unk8].unk8 >> 0xC) & 1) == 0) {
-						shouldRun = 1;
-					}
-					break;
+        case 8:
+          if (D_80052540 == D_80222A78[i].unk8)
+        {
+          osSyncPrintf(&D_80142B50_151B00);
+          shouldRun = 1;
+        }
+          break;
 
-				case 8:
-					if (D_80052540 == D_80222A78[i].unk8) {
-						osSyncPrintf(&D_80142B50_151B00);
-						shouldRun = 1;
-					}
-					break;
+        case 9:
+          if (D_80223780[D_80222A78[i].unk9].unk10 == 0)
+        {
+          shouldRun = 1;
+        }
+          break;
 
-				case 9:
-					if (D_80223780[D_80222A78[i].unk9].unk10 == 0) {
-						shouldRun = 1;
-					}
-					break;
+        case 10:
+          D_80223778--;
+          if (i < D_80223778)
+        {
+          D_80222A78[i] = D_80222A78[D_80223778];
+          i--;
+        }
+          break;
 
-				case 10:
-					D_80223778--;
-					if (i < D_80223778) {
-						D_80222A78[i] = D_80222A78[D_80223778];
-						i--;
-					}
-					break;
-			}
+      }
 
-			if (shouldRun != 0) {
-				tmp = D_80222A78[i];
-				D_80223778--;
-				if (i < D_80223778) {
-					D_80222A78[i] = D_80222A78[D_80223778];
-					i--;
-				}
-				if (tmp.unkC != NULL) {
-					tmp.unkC(&tmp);
-				} else {
-					func_800AFD48_BECF8(&tmp);
-				}
-			}
-
-			i++;
-		}
-	}
-
-	D_8014F820++;
+      if (shouldRun != 0)
+      {
+        tmp = D_80222A78[i];
+        D_80223778--;
+        if (i < D_80223778)
+        {
+          D_80222A78[i] = D_80222A78[D_80223778];
+          i--;
+        }
+        if (tmp.unkC != NULL)
+        {
+          tmp.unkC(&tmp);
+        }
+        else
+        {
+          func_800AFD48_BECF8(&tmp);
+        }
+      }
+    }
+  
+  D_8014F820++;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AE6CC_BD67C.s")
