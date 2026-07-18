@@ -770,9 +770,8 @@ void func_800AFD48_BECF8(Unk80222A78 *arg0) {
 	func_800AE454_BD404(&tmp);
 }
 
-// CURRENT(1255)
-#ifdef NON_MATCHING
-void func_800AFE68_BEE18(Unk80222A78 *arg0) {
+void func_800AFE68_BEE18(Unk80222A78 *arg0)
+{
 	s32 sp34;
 	s32 sp30;
 	s32 sp2C;
@@ -781,20 +780,16 @@ void func_800AFE68_BEE18(Unk80222A78 *arg0) {
 	s32 sp20;
 	s32 temp;
 	s16 sp22;
+	if (alienInstances[arg0->unk8].specIndex == ALIEN_SPEC_HARVESTER)
+	{
+		sp24 = alienInstances[arg0->unk8].unk0;
+		sp20 = alienInstances[arg0->unk8].unk4;
+		sp24 -= (400.0 * ((((f32)coss(alienInstances[arg0->unk8].unkE))) / 32768.0));
+		sp20 -= (400.0 * ((((f32)sins(alienInstances[arg0->unk8].unkE))) / 32768.0));
 
-	if (alienInstances[arg0->unk8].specIndex == ALIEN_SPEC_HARVESTER) {
-		sp24 = (s32) alienInstances[arg0->unk8].unk0;
-		sp20 = (s32) alienInstances[arg0->unk8].unk4;
-		temp = coss(alienInstances[arg0->unk8].unkE);
-		sp24 = (s32) ((f64) sp24 - (400.0 * ((f64) (f32) temp / 32768.0)));
-		temp = sins(alienInstances[arg0->unk8].unkE);
-		sp22 = (s16) (s32) ((f64) sp20 - (400.0 * ((f64) (f32) temp / 32768.0)));
-		func_800AFB38_BEAE8((s16) sp24, sp22, arg0->unk9, arg0->unk8, 0);
+		func_800AFB38_BEAE8((s16)sp24, sp20, arg0->unk9, arg0->unk8, 0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AFE68_BEE18.s")
-#endif
 
 void func_800AFF9C_BEF4C(s32 arg0, s32 arg1, s32 arg2) {
 	Unk80222A78 tmp;
