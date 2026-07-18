@@ -245,33 +245,21 @@ void func_800A9738_B86E8(u8 arg0, s32 arg1) {
 #endif
 
 // https://decomp.me/scratch/I9lkq
-#ifdef NON_MATCHING
 // AI - Propagate flag clear to squad
 void func_800A9820_B87D0(u8 arg0, s32 arg1)
 {
-  u8 *parent;
+  AlienInstance *a;
+  s32 i, idx;
   alienInstances[arg0].unk20 &= ~arg1;
-  parent = &alienInstances[alienInstances[arg0].unk25];
-  if (alienInstances[parent[0]].specIndex != 0)
-  {
-	alienInstances[parent[0]].unk20 &= ~arg1;
-  }
-  if (alienInstances[parent[1]].specIndex != 0)
-  {
-	alienInstances[parent[1]].unk20 &= ~arg1;
-  }
-  if (alienInstances[parent[2]].specIndex != 0)
-  {
-	alienInstances[parent[2]].unk20 &= ~arg1;
-  }
-  if (alienInstances[parent[3]].specIndex != 0)
-  {
-	alienInstances[parent[3]].unk20 &= ~arg1;
+  a = &alienInstances[alienInstances[arg0].unk25];
+  for (i = 0; i < 4; i++) {
+      idx = a->alienIds[i];
+      if (alienInstances[idx].specIndex != 0)
+      {
+        alienInstances[idx].unk20 &= ~arg1;
+      }
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9820_B87D0.s")
-#endif
 
 // AI - Navigate zone hierarchy
 void func_800A9908_B88B8(u8 arg0, s32 arg1) {

@@ -935,10 +935,15 @@ typedef enum AlienFlags {
 } AlienFlags;
 
 typedef struct {
+	  union {
+	struct {
 	/* 0x00 */ s16 unk0; // X position
 	/* 0x02 */ s16 unk2; // Y position
 	/* 0x04 */ s16 unk4; // Z position
 	/* 0x06 */ s16 unk6; // X orientation
+		};
+	u8 alienIds[8];
+  };
 	/* 0x08 */ s16 unk8; // Y orientation
 	/* 0x0A */ s16 unkA; // Z orientation
 	/* 0x0C */ s16 unkC;
