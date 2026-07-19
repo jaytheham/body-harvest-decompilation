@@ -1467,7 +1467,7 @@ s32 func_8007643C_853EC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007643C_853EC.s")
 #endif
 
-// CURRENT(2420)
+// CURRENT(2345)
 #ifdef NON_MATCHING
 // AI - Handle mission success with effects
 s32 func_800765C4_85574(s32 arg0) {
@@ -1479,21 +1479,23 @@ s32 func_800765C4_85574(s32 arg0) {
 
 	if (func_800078B8_84B8(arg0, &D_8004D150) != 0) {
 		i = 0x80;
+		temp = i;
 	} else {
 		return -1;
 	}
 
-	if (i != 0) {
+	i = -1;
+	if (temp != 0) {
 		s32 condType;
 
-		i -= 1;
+		i = temp - 1;
+		temp = i;
 		condType = 3;
 		condEntry = &D_801494C0[i];
 		foundEntry = condEntry;
 		if ((condEntry->unk0 == condType) && (arg0 == condEntry->unk1)) {
-			foundEntry = condEntry;
 		} else {
-			while (1) {
+			do {
 				temp = i;
 				i -= 1;
 				condEntry -= 1;
@@ -1501,11 +1503,7 @@ s32 func_800765C4_85574(s32 arg0) {
 				if (temp == 0) {
 					break;
 				}
-				if ((condEntry->unk0 == condType) && (arg0 == foundEntry->unk1)) {
-					foundEntry = condEntry;
-					break;
-				}
-			}
+			} while (!((condEntry->unk0 == condType) && (arg0 == condEntry->unk1)));
 		}
 	}
 
@@ -1530,7 +1528,7 @@ s32 func_800765C4_85574(s32 arg0) {
 
 	func_800078E4_84E4(arg0, &D_8004D150);
 	func_800078CC_84CC(arg0, &D_8004D158);
-	return (func_80013460(), 0);
+	return func_80013460(), 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800765C4_85574.s")
