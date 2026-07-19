@@ -6547,7 +6547,7 @@ s32 func_800880B8_97068(void)
 // 800885C8 halves alien death points in easy
 // CURRENT(3783)
 #ifdef NON_MATCHING
-s32 func_80088154_97104(AlienInstance *arg0, s16 arg1, s16 arg2) {
+s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 	u8 sp3B;
 	AlienSpec *sp30;
 	s32 sp2C;

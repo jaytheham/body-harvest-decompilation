@@ -993,6 +993,25 @@ typedef struct {
 	/* 0x4F */ u8 pad4F;
 } AlienInstance; /* size = 0x50 */
 
+typedef struct {
+	/* 0x00 */ s16 unk0; // X position
+	/* 0x02 */ s16 unk2; // Y position
+	/* 0x04 */ s16 unk4; // Z position
+	/* 0x06 */ s16 unk6; // X rotation
+	/* 0x08 */ s16 unk8; // Y rotation
+	/* 0x0A */ s16 unkA; // Z rotation
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE; // "Direction"
+	/* 0x10 */ s16 unk10; // Elevation
+	/* 0x12 */ s16 unk12; // Speed
+	/* 0x14 */ s16 unk14;
+	/* 0x16 */ s16 unk16;
+	/* 0x18 */ s16 unk18;
+	/* 0x1A */ u8 unk1A; // specIndex
+	/* 0x1B */ u8 unk1B;
+} EntityInstance; // Properties shared by vehicle & alien instances
+
+
 // 0x5C Pointer to Death animation ASM?
 // 0x60 xxxxyyyy xxxx Drops modifier
 // 0x68

@@ -135,7 +135,7 @@ int func_8012235C_13130C(Unk8004D0F8 *arg0)
 
 // CURRENT(210)
 #ifdef NON_MATCHING
-s32 func_801223B0_131360(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
+s32 func_801223B0_131360(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 	u8 *spec;
 	s16 damageDir;
 	s16 ret;
@@ -176,7 +176,7 @@ s32 func_801223B0_131360(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 // CURRENT(429)
 #ifdef NON_MATCHING
-void func_80122524_1314D4(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
+void func_80122524_1314D4(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 pct = func_801223B0_131360(arg0, arg2, arg3, arg1);
 	s32 temp = (s32)((f64)arg1 * (1.0 - (f64)pct / 100.0));
 	if ((s16)temp > 0) {
@@ -892,30 +892,25 @@ void func_80124BA8_133B58(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80124BA8_133B58.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_80124C40_133BF0(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
-	s32 pct;
-	s16 dmg;
-
-	dmg = arg1;
-	pct = func_801223B0_131360(arg0, arg2, arg3, dmg);
-
-	if (arg0->unkC == -2) {
-		func_80122524_1314D4(arg0, dmg, arg2, arg3);
-		return;
+// https://decomp.me/scratch/syCCW
+void func_80124C40_133BF0(EntityInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
+{
+  s32 pct;
+  pct = func_801223B0_131360(arg0, arg2, arg3, arg1);
+  if (arg0->unkC == -2)
+  {
+	func_80122524_1314D4(arg0, arg1, arg2, arg3);
+	return;
+  }
+  if (arg0->unk1A != 0)
+  {
+	arg1 *= (1.0 - (pct / 100.0));
+	if (arg1 != 0)
+	{
+	  pct = func_80003824_4424(arg0->unk0 - arg2, arg0->unk4 - arg3); do { func_80088154_97104(arg0, arg1, pct); D_8014ED44 = 8; } while (0);
 	}
-
-	if (arg0->unk1A != 0) {
-		dmg = (s32)((f64)dmg * (1.0 - ((f64)pct / 100.0)));
-		if (dmg != 0) {
-			func_80088154_97104(arg0, dmg, func_80003824_4424((f32)(arg0->unk0 - arg2), (f32)(arg0->unk4 - arg3)));
-			D_8014ED44 = 8;
-		}
-	}
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80124C40_133BF0.s")
-#endif
 
 // CURRENT(49074)
 #ifdef NON_MATCHING
