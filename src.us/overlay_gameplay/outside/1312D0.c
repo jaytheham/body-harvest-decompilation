@@ -4046,65 +4046,66 @@ void func_8012D884_13C834(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012D884_13C834.s")
 #endif
 
-// CURRENT(20)
-#ifdef NON_MATCHING
-s32 func_8012DDA8_13CD58(s16 arg0, s16 arg1, s16 arg2, s16 arg3, void *arg4, s32 arg5, s32 *arg6) {
+// https://decomp.me/scratch/vix2w
+s32 func_8012DDA8_13CD58(s16 arg0, s16 arg1, s16 arg2, s16 arg3, void *arg4, s32 arg5, s32 *arg6)
+{
 	Unk8015FAD0 *entry;
 	s32 i;
 	s16 x;
 	s16 y;
 	s16 z;
 	s16 yWithOffset;
-	s32 tempFlags;
 	s32 flags;
-
 	x = arg0;
 	y = arg1;
 	z = arg2;
 	flags = 0;
 	entry = &D_8015FAD0[0x18];
 	i = 0x18;
-	do {
-		if (entry->unk2C != 0) {
-			if (x >= ((entry->unk0 >> 0x10) - entry->unk18) && ((entry->unk0 >> 0x10) + entry->unk18) >= x) {
+	do
+	{
+		if (entry->unk2C != 0)
+		{
+			if ((x >= ((entry->unk0 >> 0x10) - entry->unk18)) && (((entry->unk0 >> 0x10) + entry->unk18) >= x))
+			{
 				yWithOffset = y + arg3;
-				if (yWithOffset >= ((entry->unk4 >> 0x10) - entry->unk1C) && ((entry->unk4 >> 0x10) + entry->unk1C) >= y) {
-					if (z >= ((entry->unk8 >> 0x10) - entry->unk1A) && ((entry->unk8 >> 0x10) + entry->unk1A) >= z) {
-						if (arg5 == 0 && entry->unk20 != NULL) {
+				if ((yWithOffset >= ((entry->unk4 >> 0x10) - entry->unk1C)) && (((entry->unk4 >> 0x10) + entry->unk1C) >= y))
+				{
+					if ((z >= ((entry->unk8 >> 0x10) - entry->unk1A)) && (((entry->unk8 >> 0x10) + entry->unk1A) >= z))
+					{
+						if ((arg5 == 0) && (entry->unk20 != NULL))
+						{
 							entry->unk20(arg4, (s16)i);
 						}
-
-						if ((entry->unk2C == 5) || (entry->unk2C == 7) || (entry->unk2C == 0xB)) {
+						if (((entry->unk2C == 5) || (entry->unk2C == 7)) || (entry->unk2C == 0xB))
+						{
 							flags |= 1;
 						}
-
-						if (entry->unk2C == 6) {
+						if (entry->unk2C == 6)
+						{
 							s32 topY;
-
-							if ((tempFlags = (flags | 2), topY = (entry->unk4 >> 0x10) + entry->unk1C, yWithOffset >= topY)) {
-								flags = tempFlags;
-								if (*arg6 < topY) {
+							topY = (entry->unk4 >> 0x10) + entry->unk1C;
+							if (yWithOffset >= topY)
+							{
+								if ((*arg6) < topY)
+								{
 									*arg6 = topY;
 								}
+								flags |= 2;
 							}
 						}
-
-						if (entry->unk2C == 7) {
+						if (entry->unk2C == 7)
+						{
 							flags |= 0xC;
 						}
 					}
 				}
 			}
 		}
-
 		entry--;
 	} while (i--);
-
 	return flags;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012DDA8_13CD58.s")
-#endif
 
 s32 func_8012DF90_13CF40(Unk8015FAD0 *arg0, void *arg1, s32 arg2) {
 
