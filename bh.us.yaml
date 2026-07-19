@@ -261,7 +261,7 @@ segments:
       - [0xA40B0, c, overlay_gameplay/outside/A40B0] # Debug
       - [0xA49A0, c, overlay_gameplay/outside/A49A0] # Map
       - [0xAAA70, c, overlay_gameplay/outside/AAA70] # HUD
-      - [0xB2CB0, c, overlay_gameplay/outside/B2CB0] # Beacons
+      - [0xB2CB0, c, overlay_gameplay/outside/B2CB0] # Beacons, Powerups
       - [0xB49C0, c, overlay_gameplay/outside/B49C0] # Aliens
       - [0xB8290, c, overlay_gameplay/outside/B8290] # Aliens
       - [0xBD270, c, overlay_gameplay/outside/trigger]
