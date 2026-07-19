@@ -1176,7 +1176,7 @@ void func_80075AA4_84A54(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075AA4_84A54.s")
 #endif
 
-// CURRENT(4965)
+// CURRENT(3846)
 #ifdef NON_MATCHING
 // AI - Post-process mission cleanup and bitmask building
 s32 func_80075E50_84E00(void) {
@@ -1186,11 +1186,10 @@ s32 func_80075E50_84E00(void) {
 	u8 *cmd;
 	s32 count;
 
-	cmd = D_801497C8;
 	stream = &D_80224680;
-	has83After82 = 0;
-
+	cmd = D_801497C8;
 	count = D_80149B30;
+	has83After82 = 0;
 
 	if (count--) {
 		do {
