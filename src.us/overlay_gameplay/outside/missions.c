@@ -74,13 +74,6 @@ const u32 jtbl_801415C4_150574[] = {
 	0x800745DC,
 	0x800745B8,
 };
-const u32 jtbl_80141624_1505D4[] = {
-	0x800750DC,
-	0x800750F4,
-	0x8007510C,
-	0x8007510C,
-	0x8007510C,
-};
 // CURRENT(1686)
 #ifdef NON_MATCHING
 // AI - Execute mission command opcodes (spawning, flags, etc.)
@@ -679,7 +672,8 @@ void func_80074CA0_83C50(void) {
 
 // readMissionConditions
 // CURRENT(30)
-#ifdef NON_MATCHING
+// readMissionConditions
+// CURRENT(0)
 // AI - Read mission conditions and link to mission IDs
 void func_80074FA8_83F58(void) {
 	s32 count;
@@ -693,8 +687,7 @@ void func_80074FA8_83F58(void) {
 			count = D_80149B28;
 		}
 
-		D_801497C0 = &D_801494C0[count];
-		D_80149B28 = count + 1;
+		D_801497C0 = &D_801494C0[count]; D_80149B28 = count + 1;
 		D_801497C0->unk1 = D_80149B48;
 		D_801497C0->unk2 = D_80149B2C;
 		D_801497C0->unk3 = 0;
@@ -724,9 +717,6 @@ void func_80074FA8_83F58(void) {
 		func_80074CA0_83C50();
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074FA8_83F58.s")
-#endif
 
 // AI - Link success conditions to command sequences
 void func_80075148_840F8(void)
