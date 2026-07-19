@@ -81,15 +81,6 @@ const u32 jtbl_80141624_1505D4[] = {
 	0x8007510C,
 	0x8007510C,
 };
-const u32 jtbl_80141638_1505E8[] = {
-	0x80075A5C,
-	0x80075A70,
-	0x80075A84,
-	0x80075A84,
-	0x80075A84,
-};
-
-
 // CURRENT(1686)
 #ifdef NON_MATCHING
 // AI - Execute mission command opcodes (spawning, flags, etc.)
@@ -919,8 +910,7 @@ void func_8007562C_845DC(void) {
   }
 }
 
-// CURRENT(10)
-#ifdef NON_MATCHING
+// CURRENT(0)
 // AI - Parse entire mission data blob
 void func_800756DC_8468C(void) {
 	u8 *missionStart;
@@ -1029,9 +1019,6 @@ doneParsing:
 			break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800756DC_8468C.s")
-#endif
 
 // CURRENT(231)
 #ifdef NON_MATCHING
