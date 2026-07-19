@@ -48,32 +48,6 @@ const u32 jtbl_8014159C_15054C[] = {
 	0x80074194,
 	0x80074158,
 };
-const u32 jtbl_801415C4_150574[] = {
-	0x800745DC,
-	0x800745B8,
-	0x800745B8,
-	0x800745B8,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745DC,
-	0x800745C8,
-	0x800745DC,
-	0x800745B8,
-};
 // CURRENT(1686)
 #ifdef NON_MATCHING
 // AI - Execute mission command opcodes (spawning, flags, etc.)
@@ -387,10 +361,8 @@ u8 func_80074558_83508(void) {
 	return D_801494BC;
 }
 
-// CURRENT(10)
+// CURRENT(0)
 // readMissionObject
-// Needs jumptable data
-#ifdef NON_MATCHING
 // AI - Read a mission object entry from stream
 void func_80074578_83528(u8 *arg0) {
 	arg0[0] = func_80074500_834B0();
@@ -409,9 +381,6 @@ void func_80074578_83528(u8 *arg0) {
 			break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074578_83528.s")
-#endif
 
 // AI - Read random object entry, return its index
 s32 func_800745F0_835A0(void) {
