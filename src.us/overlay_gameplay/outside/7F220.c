@@ -856,27 +856,28 @@ void func_800720B8_81068(void) {
 	func_80071228_801D8();
 }
 
-// doGameplayLoop
+// https://decomp.me/scratch/HsbXE
+// CURRENT(1149)
 #ifdef NON_MATCHING
-// CURRENT(4404)
+// doGameplayLoop
 void func_800720F4_810A4(void)
 {
-  s32 gfxUsed;
-  s32 exitFlag;
+s32 exitFlag;
+  s32 gfxUsed;  
   s32 dx;
   s32 dz;
-  s16 angle;
-  s32 brightness;
+	s32 xxx;
+	s16 angle;
   s32 maxGfxDl;
   s32 maxGfxDlAux;
   s32 maxVtx;
   s32 maxMtx;
 	
   exitFlag = 0;
-  maxVtx = 0;
-	maxMtx = 0;
-	maxGfxDl = 0;
+  maxGfxDl = 0;
 	maxGfxDlAux = 0;
+	maxVtx = 0;
+	maxMtx = 0;    
   
   D_80052AC8 = -1;
   func_80070440_7F3F0();
@@ -1077,8 +1078,6 @@ void func_800720F4_810A4(void)
 		func_8000B044_BC44();
 		func_800E8A00_F79B0();
 		D_80052A8C++;
-		  //brightness = D_80052AD4--;
-		 //if (brightness <= 0)
 		if (D_80052AD4-- <= 0)
 	  {
 		exitFlag = 1;
@@ -1091,10 +1090,8 @@ void func_800720F4_810A4(void)
 	  {
 		if (D_80052AD4 < 20)
 		{
-		  s32 xxx = ((-D_80052AD4) * 13) + 260;
-		   brightness = (xxx >= 256) ? 0xFF : xxx;
-		  
-		  func_800E35E0_F2590((u8) brightness);
+		  xxx = ((-D_80052AD4) * 13) + 260;
+		  func_800E35E0_F2590((u8) ((xxx >= 256) ? 0xFF : xxx));
 		}
 	  }
 		if ((D_80159320 << 4) < 0)
@@ -1145,12 +1142,12 @@ void func_800720F4_810A4(void)
 	func_80070FB8_7FF68();
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
 	gDPSetRenderMode(D_8005BB2C++, (((3 << 30) | (2 << 26)) | (0 << 22)) | (0 << 18), ((((((((((0x8 | 0x10) | 0x40) | 0) | 0x1000) | 0x2000) | 0x4000) | 0x800) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (0 << 16));
-	guPerspective((Mtx *) (D_8005BB20 + 0x180), &D_801493D6, (f32) D_80149404, 1.3333334f, (f32) D_80157574, (f32) D_80157576, 1.0f);
+	guPerspective((Mtx *)(D_8005BB20 + 0x180), &D_801493D6, D_80149404, 1.3333334f, D_80157574, D_80157576, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, D_801493D6);
-	gSPMatrix(D_8005BB2C++, (((u32) D_8005BB20) + 0x180) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_PROJECTION);
-	gSPMatrix(D_8005BB2C++, (((u32) D_8005BB20) + 0x200) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_PROJECTION);
-	gSPMatrix(D_8005BB2C++, ((u32) (&D_80031160)) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
-	gSPBranchList(D_8005BB2C++, (((u32) D_8005BB20) + 0xE380) & 0x1FFFFFFF);
+	gSPMatrix(D_8005BB2C++, ((u32) D_8005BB20 + 0x180) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_PROJECTION);
+	gSPMatrix(D_8005BB2C++, ((u32) D_8005BB20 + 0x200) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_PROJECTION);
+	gSPMatrix(D_8005BB2C++, (u32)&D_80031160 & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
+	gSPBranchList(D_8005BB2C++, ((u32) D_8005BB20 + 0xE380) & 0x1FFFFFFF);
 	gDPFullSync(D_8005BB30++);
 	gSPEndDisplayList(D_8005BB30++);
 	D_80052ACB = 0;
@@ -1160,8 +1157,7 @@ void func_800720F4_810A4(void)
 	  osSyncPrintf(D_801410DC_15008C, gfxUsed - 0x1C20);
 	  D_80052ACB = 2;
 	}
-	else
-	  if (gfxUsed >= 0x1AB9)
+	else if (gfxUsed >= 0x1AB9)
 	{
 	  osSyncPrintf(D_801410F8_1500A8);
 	  D_80052ACB = 1;
@@ -1256,9 +1252,7 @@ void func_800720F4_810A4(void)
 	  }
 	  if (gameplayMode == 1)
 	  {
-		if ((D_80159320 << 13) < 0)
-		{
-		  if (D_80158FF4 != 0)
+		if (((D_80159320 << 13) < 0) && D_80158FF4 != 0)
 		  {
 			dx = ((D_80052B2C->unk0 - D_80052B2C->unkC) / 4);
 			dz = ((D_80052B2C->unk8 - D_80052B2C->unk14) / 4);
@@ -1266,9 +1260,9 @@ void func_800720F4_810A4(void)
 			dx = ((D_80052B2C->unk0 - D_80158FF4[0]) / 4);
 			dz = ((D_80052B2C->unk8 - D_80158FF4[2]) / 4);
 			angle = func_80003824_4424(((s32) sqrtf((f32) ((dx * dx) + (dz * dz)))), D_80052B2C->unk4 - ((f32) D_80158FF4[1]));
-			D_801493DA = -((((f64)(f32)sins((u16) angle) / 32768) * gfxUsed) / ((f64)(f32)sins((u16)(0x4000 - angle)) / 32768));
+			D_801493DA = -((gfxUsed * ((f64)(f32)sins((u16) angle) / 32768)) / ((f64)(f32)sins((u16)(0x4000 - angle)) / 32768));
 			D_801493D0 = 1;
-		  }
+		  
 		}
 		else
 		{
