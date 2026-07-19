@@ -263,7 +263,6 @@ void func_80073DC0_82D70(s32 arg0) {
 #endif
 
 // CURRENT(3595)
-// Resets a bunch of memory? For missions?
 #ifdef NON_MATCHING
 // AI - Reset all mission data structures
 void func_80074204_831B4(void) {
@@ -521,8 +520,7 @@ void func_800747A8_83758(void) {
 	if (func_80074558_83508() != 0x87) {
 		commandIndex = (loopIndex[0] * 4) - loopIndex[0];
 		weight = &D_80149B50[loopIndex[0]];
-		cmdEntry = &D_80149AC8[commandIndex];
-		do {
+		cmdEntry = &D_80149AC8[commandIndex]; do {
 			randomValue = func_80074500_834B0();
 			sum += randomValue;
 			if (cmdEntry >= D_80149AF8) {
@@ -543,8 +541,7 @@ void func_800747A8_83758(void) {
 	randomValue = func_800038E0_44E0() % sum;
 	selectedIndex = -1;
 	if (randomValue >= 0) {
-		commandIndex = selectedIndex + 1;
-		do {
+		commandIndex = selectedIndex + 1; do {
 			selectedIndex = commandIndex;
 			randomValue -= D_80149B50[commandIndex];
 		} while ((commandIndex = selectedIndex + 1, randomValue >= 0));
@@ -568,59 +565,58 @@ void func_800747A8_83758(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800747A8_83758.s")
 #endif
 
+// https://decomp.me/scratch/EU7dP
+// CURRENT(1155)
 #ifdef NON_MATCHING
-/* CURRENT(3953) */
 // AI - Read map/tile data chunks from mission stream
-void func_80074970_83920(void) {
-	s32 savedIndex;
-	s32 i;
-	s32 chunkIndex;
-	u8 curBC;
-
-	chunkIndex = -1;
-	if (func_80074558_83508() != 0xB7) {
-		curBC = D_801494BC;
-		if (curBC != 0xAC) {
-			if (curBC != 0xAE) {
-			i = savedIndex;
-			while (1) {
-				if (D_801494BC == 0x90) {
-					chunkIndex += 1;
-					i = 0;
-					func_80074500_834B0();
-				}
-
-				D_80149B60[D_80149B48][chunkIndex][i] = func_80074500_834B0();
-				i += 1;
-
-				if ((D_801494BC == 0x80) || (D_801494BC == 0x81)) {
-					D_80149B60[D_80149B48][chunkIndex][i] = func_80074500_834B0();
-					i += 1;
-				}
-
-				if (func_80074558_83508() == 0xB7) {
-					break;
-				}
-
-				if (D_801494BC == 0xAC) {
-					break;
-				}
-
-				if (D_801494BC != 0xAE) {
-					continue;
-				}
-
-				savedIndex = i;
-				break;
-			}
-			if (savedIndex) { }
-			}
+void func_80074970_83920(void)
+{
+  s32 i;
+  s32 chunkIndex;
+  u8 curBC;
+  chunkIndex = -1;
+  if (func_80074558_83508() != 0xB7)
+  {
+	if (D_801494BC != 0xAC)
+	{
+	  if (D_801494BC != 0xAE)
+	  {
+		while (1)
+		{
+		  if (D_801494BC == 0x90)
+		  {
+			chunkIndex += 1;
+			i = 0;
+			func_80074500_834B0();
+		  }
+		  D_80149B60[D_80149B48][chunkIndex][i] = func_80074500_834B0();
+		  i += 1;
+		  if ((D_801494BC == 0x80) || (D_801494BC == 0x81))
+		  {
+			D_80149B60[D_80149B48][chunkIndex][i] = func_80074500_834B0();
+			i++;
+		  }
+		  if (func_80074558_83508() == 0xB7)
+		  {
+			break;
+		  }
+		  if (D_801494BC == 0xAC)
+		  {
+			break;
+		  }
+		  if (D_801494BC != 0xAE)
+		  {
+			continue;
+		  }
+		  break;
 		}
+	  }
 	}
-
-	if (chunkIndex >= 4) {
-		func_800078E4_84E4(D_80149B48, &D_8004D15C);
-	}
+  }
+  if (chunkIndex >= 4)
+  {
+	func_800078E4_84E4(D_80149B48, &D_8004D15C);
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074970_83920.s")
@@ -666,7 +662,6 @@ void func_80074B2C_83ADC(void) {
 #endif
 
 // guess_readMissionCondition
-// CURRENT(1145)
 // AI - Read game conditions for a mission
 void func_80074CA0_83C50(void) {
 	if ((func_80074558_83508() == 0xB7) || (D_801494BC == 0x82) || (D_801494BC == 0x83) || (D_801494BC == 0x85) ||
@@ -1350,34 +1345,31 @@ s32 func_80076208_851B8(s32 arg0) {
   return func_800078B8_84B8(arg0, &D_8004D150);
 }
 
-// CURRENT(1690)
+// https://decomp.me/scratch/iNhL3
+// CURRENT(975)
 #ifdef NON_MATCHING
 // AI - Register a mission callback function
-s32 func_8007622C_851DC(s32 arg0) {
+void func_8007622C_851DC(s32 arg0) {
 	s32 v1;
-	s32 v0;
 
 	v1 = 0x10;
 	while (v1--) {
 		if (arg0 == D_80149478[v1]) {
-			return v1;
+			return;
 		}
 	}
 
 	v1 = 0xF;
-	v0 = 0;
 	if (D_801494B4 != 0) {
-		v0 = v1;
 		while (v1) {
 			if (D_80149478[--v1] != 0) {
-				v0 = v1;
+
 			} else {
 				break;
 			}
 		}
 	}
 	D_80149478[v1] = arg0;
-	return v0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007622C_851DC.s")
@@ -1496,7 +1488,6 @@ s32 func_8007643C_853EC(s32 arg0) {
 	func_800078CC_84CC(arg0, &D_8004D154);
 	return 0;
 }
-// CURRENT(2345)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007643C_853EC.s")
 #endif
@@ -1584,7 +1575,8 @@ void func_80076754_85704(void)
   D_8004D154 = -1;
 }
 
-// CURRENT(600)
+// https://decomp.me/scratch/uwSSA
+// CURRENT(200)
 #ifdef NON_MATCHING
 // AI - Mark a specific mission as completed
 void func_8007679C_8574C(s16 arg0) {
