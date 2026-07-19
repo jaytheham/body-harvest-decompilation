@@ -96,20 +96,20 @@ void func_800A5B30_B4AE0(s32 arg0, s16 arg1) {
 }
 
 // AI - Spawn beacon model and collision trigger
-void func_800A5BD0_B4B80(s32 arg0)
+void func_800A5BD0_B4B80(s32 beaconIndex)
 {
-	s32 sp4C;
-	s32 sp48;
-	s32 sp40;
-	sp4C = D_8003154C[currentLevel - 1][arg0].x << 8;
-	sp48 = D_8003154C[currentLevel - 1][arg0].z << 8;
-	sp40 = func_800B84D0_C7480((s16)sp4C, (s16)sp48) >> 8;
-	if (currentLevel == LEVEL_AMERICA && arg0 == 0)
+	s32 xPosition;
+	s32 zPosition;
+	s32 yPosition;
+	xPosition = D_8003154C[currentLevel - 1][beaconIndex].x << 8;
+	zPosition = D_8003154C[currentLevel - 1][beaconIndex].z << 8;
+	yPosition = func_800B84D0_C7480((s16)xPosition, (s16)zPosition) >> 8;
+	if (currentLevel == LEVEL_AMERICA && beaconIndex == 0)
 	{
-		sp40 = 0x7D0;
+		yPosition = 0x7D0; // This beacon appears on top of a building
 	}
-	func_8012D684_13C634(func_8012D700_13C6B0(4, (u16)(arg0 * 2 + 0x1000), (s16)sp4C, (s16)sp40, (s16)sp48, 0, 0, 0, 0x19, 0x19, 0x50, func_800A5B30_B4AE0, NULL));
-	func_8012D684_13C634(func_8012D700_13C6B0(5, (u16)(arg0 * 2 + 0x1001), (s16)sp4C, (s16)sp40, (s16)sp48, 0, 0, 0, 0xF, 0xF, 0x50, NULL, func_8012E1F8_13D1A8));
+	func_8012D684_13C634(func_8012D700_13C6B0(4, (u16)(beaconIndex * 2 + 0x1000), (s16)xPosition, (s16)yPosition, (s16)zPosition, 0, 0, 0, 0x19, 0x19, 0x50, func_800A5B30_B4AE0, NULL));
+	func_8012D684_13C634(func_8012D700_13C6B0(5, (u16)(beaconIndex * 2 + 0x1001), (s16)xPosition, (s16)yPosition, (s16)zPosition, 0, 0, 0, 0xF, 0xF, 0x50, NULL, func_8012E1F8_13D1A8));
 }
 
 // Initialize all beacons for current level
