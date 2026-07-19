@@ -1033,7 +1033,7 @@ doneParsing:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800756DC_8468C.s")
 #endif
 
-// CURRENT(501)
+// CURRENT(231)
 #ifdef NON_MATCHING
 // AI - Evaluate mission conditions and trigger callbacks
 void func_80075AA4_84A54(void) {
@@ -1086,9 +1086,13 @@ void func_80075AA4_84A54(void) {
 
 			if (D_801497C0->unk0 != 0) {
 				if (D_801497C0->unk0 == 1) {
-					if ((func_800078B8_84B8(D_801497C0->unk1, &D_8004D150) != 0) ||
-						(func_800078B8_84B8(D_801497C0->unk1, &D_8004D154) != 0) ||
-						(func_800078B8_84B8(D_801497C0->unk1, &D_8004D158) != 0)) {
+					if (func_800078B8_84B8(D_801497C0->unk1, &D_8004D150) != 0) {
+						goto next_cond;
+					}
+					if (func_800078B8_84B8(D_801497C0->unk1, &D_8004D154) != 0) {
+						goto next_cond;
+					}
+					if (func_800078B8_84B8(D_801497C0->unk1, &D_8004D158) != 0) {
 						goto next_cond;
 					}
 				} else {
@@ -1098,10 +1102,9 @@ void func_80075AA4_84A54(void) {
 				}
 
 				{
-					D_801497C4 = &D_8004D348[D_801497C0->unk2 * 9];
 					i = D_801497C0->unk3;
-					if (i) {
-						i--;
+					D_801497C4 = &D_8004D348[D_801497C0->unk2 * 9];
+					if (i--) {
 						do {
 							if (func_800081D4_8DD4(D_801497C4) == 0) {
 								goto next_cond;
