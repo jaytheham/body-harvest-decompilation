@@ -88,26 +88,7 @@ const u32 jtbl_80141638_1505E8[] = {
 	0x80075A84,
 	0x80075A84,
 };
-const u32 jtbl_8014164C_1505FC[] = {
-	0x800760B0,
-	0x800760B8,
-	0x800760CC,
-	0x800760D4,
-	0x800760E8,
-	0x800760FC,
-	0x80076110,
-	0x80076124,
-	0x80076138,
-	0x8007614C,
-	0x80076160,
-	0x80076174,
-	0x80076188,
-	0x8007619C,
-	0x800761B0,
-	0x800761C4,
-	0x800761D8,
-	0x800761EC,
-};
+
 
 // CURRENT(1686)
 #ifdef NON_MATCHING
@@ -1269,7 +1250,7 @@ s32 func_80075E50_84E00(void) {
 #endif
 
 // CURRENT(10)
-#ifdef NON_MATCHING
+// CURRENT(0)
 // AI - Check if mission category is unlocked
 s32 func_80076088_85038(s32 arg0) {
 	switch (arg0) {
@@ -1311,9 +1292,6 @@ s32 func_80076088_85038(s32 arg0) {
 			return func_8000726C_7E6C(0x21);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80076088_85038.s")
-#endif
 
 // AI - Check if mission ID is in active list
 s32 func_80076208_851B8(s32 arg0) {
