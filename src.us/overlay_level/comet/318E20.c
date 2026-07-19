@@ -315,9 +315,9 @@ void func_802D59BC_319B0C(void) {
 			}
 
 			if (D_802E4ED8[i].unk8 == 0) {
-				D_802E4F44[i] = func_8012D700_13C6B0(1 & 0xFF, (i + 100) & 0xFFFF, temp_s1, D_802E4ED8[i].unk2, temp_s2, 0, 0, 0, 0x28, 0xAA, 0x148, 0, 0);
+				D_802E4F44[i] = func_8012D700_13C6B0(1 & 0xFF, (i + 100), temp_s1, D_802E4ED8[i].unk2, temp_s2, 0, 0, 0, 0x28, 0xAA, 0x148, 0, 0);
 			} else {
-				D_802E4F44[i] = func_8012D700_13C6B0(1 & 0xFF, (i + 100) & 0xFFFF, temp_s1, D_802E4ED8[i].unk2, temp_s2, 0, 0, 0, 0xAA, 0x28, 0x148, 0, 0);
+				D_802E4F44[i] = func_8012D700_13C6B0(1 & 0xFF, (i + 100), temp_s1, D_802E4ED8[i].unk2, temp_s2, 0, 0, 0, 0xAA, 0x28, 0x148, 0, 0);
 			}
 		} else {
 			func_8012D808_13C7B8(D_802E4F44[i]);

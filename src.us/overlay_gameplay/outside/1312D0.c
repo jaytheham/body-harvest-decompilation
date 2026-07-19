@@ -3789,6 +3789,8 @@ void func_8012B26C_13A21C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012B26C_13A21C.s")
 #endif
 
+s32 func_8012D600_13C5B0(void);
+
 // CURRENT(305)
 #ifdef NON_MATCHING
 s32 func_8012D600_13C5B0(void) {
@@ -3840,43 +3842,38 @@ s32 func_8012D6A4_13C654(u8 arg0, u16 arg1)
   return -1;
 }
 
-#ifdef NON_MATCHING
-s32 func_8012D700_13C6B0(u8 arg0, u16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7, s16 arg8, s16 arg9, s16 arg10, void *arg11, void *arg12) {
-	Unk8015FAD0 *v1;
-	s32 i;
-
-	i = func_8012D6A4_13C654(arg0, arg1);
-	if (i == -1) {
-		i = func_8012D600_13C5B0();
-	}
-	if (arg8 < 0) {
-		arg8 = -arg8;
-	}
-	if (arg9 < 0) {
-		arg9 = -arg9;
-	}
-	if (arg10 < 0) {
-		arg10 = -arg10;
-	}
-	v1 = &D_8015FAD0[i];
-	v1->unk0 = arg2 << 16;
-	v1->unk4 = arg3 << 16;
-	v1->unk8 = arg4 << 16;
-	v1->unk18 = arg8;
-	v1->unk1A = arg9;
-	v1->unk1C = arg10;
-	v1->unkC = arg5;
-	v1->unk10 = arg6;
-	v1->unk14 = arg7;
-	v1->unk20 = (s32 (*)())arg11;
-	v1->unk24 = (void (*)(s32, s16))arg12;
-	v1->unk2C = arg0;
-	v1->unk1E = arg1;
-	return i;
+// https://decomp.me/scratch/krXCn
+s32 func_8012D700_13C6B0(u8 arg0, u16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7, s16 arg8, s16 arg9, s16 arg10, void *arg11, void *arg12)
+{
+  Unk8015FAD0 *v1;
+  s32 i;
+  i = func_8012D6A4_13C654(arg0, arg1);
+  if (i == -1)
+  {
+	i = func_8012D600_13C5B0();
+  }
+	arg8 = (arg8 < 0) ? -arg8 : arg8;
+  
+  arg9 = (arg9 < 0) ? -arg9 : arg9;
+  
+  arg10 = (arg10 < 0)? -arg10 : arg10;
+  
+  v1 = &D_8015FAD0[i];
+  v1->unk0 = arg2 << 16;
+  v1->unk4 = arg3 << 16;
+  v1->unk8 = arg4 << 16;
+  v1->unk18 = arg8;
+  v1->unk1A = arg9;
+  v1->unk1C = arg10;
+  v1->unkC = arg5;
+  v1->unk10 = arg6;
+  v1->unk14 = arg7;
+  v1->unk20 = (s32 (*)()) arg11;
+  v1->unk24 = (void (*)(s32, s16)) arg12;
+  v1->unk2C = arg0;
+  v1->unk1E = arg1;
+  return i;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012D700_13C6B0.s")
-#endif
 
 void func_8012D808_13C7B8(s32 arg0) { D_8015FAD0[arg0].unk2C = 0; }
 
@@ -3900,7 +3897,7 @@ void func_8012D84C_13C7FC()
   }
 }
 
-// CURRENT(5837)
+// CURRENT(35000)
 #ifdef NON_MATCHING
 // DisplayForces - Debug draw interaction boxes
 void func_8012D884_13C834(void) {

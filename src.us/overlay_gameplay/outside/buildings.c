@@ -4008,7 +4008,7 @@ void func_8011F094_12E044(BuildingInstance *arg0) {
 	case 0:
 		func_8012D700_13C6B0(
 			0xD,
-			((arg0 - buildingInstances) * 0x10) & 0xFFFF,
+			((arg0 - buildingInstances) * 0x10),
 			(s16)(arg0->xCoord + D_80159DC8),
 			(s16)(arg0->yCoord + D_80159DCA - 0x32),
 			arg0->zCoord + D_80159DCC,
@@ -4217,7 +4217,7 @@ void func_8011F9A0_12E950(s32 arg0)
 void func_8011FA90_12EA40(BuildingInstance *arg0, u8 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s32 arg8) {
 	func_80116554_125504((s16)(arg0->unk8 & 3), &arg2, &arg4);
 	func_80116554_125504((s16)(arg0->unk8 & 3), &arg5, &arg7);
-	func_8012D700_13C6B0(arg1, ((arg0 - buildingInstances) * 0x10 + arg8) & 0xFFFF, (s16)(arg0->xCoord + arg2), (s16)(arg0->yCoord + arg3), arg0->zCoord + arg4, 0, 0, 0, (s32)arg5, (s32)arg7, (s32)arg6, func_8011E9F4_12D9A4, 0);
+	func_8012D700_13C6B0(arg1, ((arg0 - buildingInstances) * 0x10 + arg8), (s16)(arg0->xCoord + arg2), (s16)(arg0->yCoord + arg3), arg0->zCoord + arg4, 0, 0, 0, (s32)arg5, (s32)arg7, (s32)arg6, func_8011E9F4_12D9A4, 0);
 }
 
 void func_8011FB98_12EB48(BuildingInstance *arg0) {
@@ -4312,7 +4312,7 @@ void func_80120334_12F2E4(BuildingInstance *arg0) {
 	yShifted = (arg0->yCoord + 0x15) << 16;
 	zAdjusted = arg0->zCoord - 0xC0;
 	callback = func_801202DC_12F28C;
-	func_8012D700_13C6B0(4, indexParam & 0xFFFF, arg0->xCoord, yShifted >> 16, zAdjusted,
+	func_8012D700_13C6B0(4, indexParam, arg0->xCoord, yShifted >> 16, zAdjusted,
 		0, 0, 0, 0x64, 0x64, 0x64, callback, 0);
 }
 #else

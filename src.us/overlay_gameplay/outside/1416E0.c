@@ -1695,7 +1695,7 @@ void func_801365E0_145590(void) {
 					width = 0x13;
 					height = 0x10;
 				}
-				func_8012D700_13C6B0(5, (var_fp + 0x2000) & 0xFFFF, var_s0, spCC, var_s1, 0, 0, 0, width, height, 0x35, NULL,
+				func_8012D700_13C6B0(5, (var_fp + 0x2000), var_s0, spCC, var_s1, 0, 0, 0, width, height, 0x35, NULL,
 					func_8012E1F8_13D1A8);
 				switch (((u32)D_80258330[var_fp].unk2 << 0x1D) >> 0x1E) {
 					case 0:
@@ -1714,7 +1714,7 @@ void func_801365E0_145590(void) {
 						var_s0 = (s16) (var_s0 - 0x18);
 						break;
 				}
-				func_8012D700_13C6B0(4, (var_fp + 0x2000) & 0xFFFF, var_s0, spCC, var_s1, 0, 0, 0, width, height, 0x35, sp68,
+				func_8012D700_13C6B0(4, (var_fp + 0x2000), var_s0, spCC, var_s1, 0, 0, 0, width, height, 0x35, sp68,
 					NULL);
 			}
 		}

@@ -108,8 +108,8 @@ void func_800A5BD0_B4B80(s32 beaconIndex)
 	{
 		yPosition = 0x7D0; // This beacon appears on top of a building
 	}
-	func_8012D684_13C634(func_8012D700_13C6B0(4, (u16)(beaconIndex * 2 + 0x1000), (s16)xPosition, (s16)yPosition, (s16)zPosition, 0, 0, 0, 0x19, 0x19, 0x50, func_800A5B30_B4AE0, NULL));
-	func_8012D684_13C634(func_8012D700_13C6B0(5, (u16)(beaconIndex * 2 + 0x1001), (s16)xPosition, (s16)yPosition, (s16)zPosition, 0, 0, 0, 0xF, 0xF, 0x50, NULL, func_8012E1F8_13D1A8));
+	func_8012D684_13C634(func_8012D700_13C6B0(4, (beaconIndex * 2 + 0x1000), (s16)xPosition, (s16)yPosition, (s16)zPosition, 0, 0, 0, 0x19, 0x19, 0x50, func_800A5B30_B4AE0, NULL));
+	func_8012D684_13C634(func_8012D700_13C6B0(5, (beaconIndex * 2 + 0x1001), (s16)xPosition, (s16)yPosition, (s16)zPosition, 0, 0, 0, 0xF, 0xF, 0x50, NULL, func_8012E1F8_13D1A8));
 }
 
 // Initialize all beacons for current level
