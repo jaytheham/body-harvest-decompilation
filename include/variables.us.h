@@ -2417,8 +2417,8 @@ extern s32 D_8014F6B4;
 extern s16 D_8014F6C0;
 extern f32 D_8014F6C4;
 extern s32 D_8014F6C8;
-extern Unk8014F6D0 D_8014F6D0[0x10];
-extern BeaconDisplayEntry D_8014F7DE;
+extern BeaconDisplayEntry D_8014F6D0[0x10];
+extern BeaconDisplayEntry D_8014F7DE; // False symbol - end of D_8014F6D0. Replace with D_8014F6D0
 extern s32 D_8014F7F0;
 extern s32 D_8014F7F4;
 extern s16 D_8014F7FA;

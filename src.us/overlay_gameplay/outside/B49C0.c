@@ -49,7 +49,7 @@ u8 D_8013D8B0_14C860[0x10] = {
 };
 
 // AI - Find free beacon display entry
-Unk8014F6D0* func_800A5A10_B49C0() {
+BeaconDisplayEntry* func_800A5A10_B49C0() {
 	s32 i;
 
 	i = 16;
@@ -119,50 +119,38 @@ void func_800A5BD0_B4B80(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A5BD0_B4B80.s")
 #endif
 
-// guess_initBeacons
-#ifdef NON_MATCHING
-// AI - Initialize all beacons for current level
-void func_800A5D3C_B4CEC(void) {
-	s32 sentinel;
-	s32 i;
+// Initialize all beacons for current level
+void func_800A5D3C_B4CEC(void)
+{
+	u8 i;
 	s32 j;
-	s32 k;
 	BeaconDisplayEntry *entry;
-
-	sentinel = -1;
 	entry = &D_8014F7DE;
-	j = 0xF;
-	do {
-		entry->unkC = sentinel;
-		entry--;
-	} while (j-- != 0);
+	j = 0xF; do {
+		D_8014F6D0[j].unkC = -1;
+	} while (j--);
 
 	D_8014F7F0 = 0;
 	D_8014F7F4 = 0;
 	osSyncPrintf(D_801427A4_151754);
-
-	k = 0;
-	i = 0;
-	do {
-		if (i < D_80047F98) {
-			D_8003154C[currentLevel - 1][k].timer = 0;
-			D_8003154C[currentLevel - 1][k].state = 8;
+	for (i = 0; i < 6; i++)
+	{
+		if (i < D_80047F98)
+		{
+			D_8003154C[currentLevel - 1][i].timer = 0;
+			D_8003154C[currentLevel - 1][i].state = 8;
 			func_800A5BD0_B4B80(i);
 			osSyncPrintf(D_801427B0_151760, i);
-		} else {
-			D_8003154C[currentLevel - 1][k].timer = 0;
-			D_8003154C[currentLevel - 1][k].state = 0;
+		}
+		else
+		{
+			D_8003154C[currentLevel - 1][i].timer = 0;
+			D_8003154C[currentLevel - 1][i].state = 0;
 			osSyncPrintf(D_801427C4_151774, i);
 		}
-		i = (k + 1) & 0xFF;
-		k = i;
-	} while (i < 6);
-
-	D_8014F804 = sentinel;
+	}
+	D_8014F804 = -1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A5D3C_B4CEC.s")
-#endif
 
 // warpToSaveBeacon
 // AI - Initiate warp/teleport to beacon
@@ -1146,7 +1134,7 @@ void func_800A854C_B74FC(void)
 	x1B Small shotgun ammo
 */
 void func_800A8A68_B7A18(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
-	Unk8014F6D0 *entry;
+	BeaconDisplayEntry *entry;
 
 	entry = func_800A5A10_B49C0();
 	if (entry == NULL) {

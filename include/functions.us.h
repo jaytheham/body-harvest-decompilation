@@ -645,7 +645,7 @@ s16 func_800A7B84_B6B34(s16 arg0, s16 arg1);
 void func_800A7C6C_B6C1C(void);
 void func_800A854C_B74FC(void);
 void func_800A8A68_B7A18(s16, s16, s16, s32);
-Unk8014F6D0 *func_800A5A10_B49C0(void);
+BeaconDisplayEntry *func_800A5A10_B49C0(void);
 s16 func_800CB19C_DA14C(s16, s16, s16, u8);
 void func_800CB23C_DA1EC(s16, s16, s16, u8, s16, s32);
 void func_800CCAD4_DBA84(s16 arg0, s16 arg1, s16 arg2);
