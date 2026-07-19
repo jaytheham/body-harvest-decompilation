@@ -3789,34 +3789,31 @@ void func_8012B26C_13A21C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012B26C_13A21C.s")
 #endif
 
-s32 func_8012D600_13C5B0(void);
-
-// CURRENT(305)
-#ifdef NON_MATCHING
-s32 func_8012D600_13C5B0(void) {
+// https://decomp.me/scratch/NbuM2
+s32 func_8012D600_13C5B0(void)
+{
 	u32 minTime;
 	s32 minIdx;
 	s32 i;
-
 	minIdx = -1;
-	minTime = (u32)-1;
-	i = 0x18;
-	do {
-		if ((u32)D_8015FAD0[i].unk28 < minTime) {
-			minTime = (u32)D_8015FAD0[i].unk28;
+	minTime = -1;
+	for (i = 0x19; i--;)
+	{
+		if (D_8015FAD0[i].unk28 < minTime)
+		{
+			minTime = D_8015FAD0[i].unk28;
 			minIdx = i;
 		}
-		if (D_8015FAD0[i].unk2C == 0) {
-			D_8015FAD0[i].unk28 = (u32)D_80052A8C;
+		if (D_8015FAD0[i].unk2C == 0)
+		{
+			D_8015FAD0[i].unk28 = D_80052A8C;
 			return i;
 		}
-	} while (i--);
-	D_8015FAD0[minIdx].unk28 = (u32)D_80052A8C;
+	}
+
+	D_8015FAD0[minIdx].unk28 = D_80052A8C;
 	return minIdx;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012D600_13C5B0.s")
-#endif
 
 void func_8012D684_13C634(s32 arg0) { *(s32 *)(&D_8015FAF8 + arg0 * 0x30) = -1; }
 
