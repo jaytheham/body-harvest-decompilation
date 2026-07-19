@@ -1321,11 +1321,12 @@ s32 func_80076208_851B8(s32 arg0) {
 }
 
 // https://decomp.me/scratch/iNhL3
-// CURRENT(975)
+// CURRENT(720)
 #ifdef NON_MATCHING
 // AI - Register a mission callback function
 void func_8007622C_851DC(s32 arg0) {
 	s32 v1;
+	s32 temp_v0;
 
 	v1 = 0x10;
 	while (v1--) {
@@ -1336,13 +1337,12 @@ void func_8007622C_851DC(s32 arg0) {
 
 	v1 = 0xF;
 	if (D_801494B4 != 0) {
-		while (v1) {
-			if (D_80149478[--v1] != 0) {
-
-			} else {
+		temp_v0 = v1;
+		do {
+			if (v1-- == 0) {
 				break;
 			}
-		}
+		} while (D_80149478[v1] != 0);
 	}
 	D_80149478[v1] = arg0;
 }
