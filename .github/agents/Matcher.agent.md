@@ -35,7 +35,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
 1. Remove the `#ifdef NON_MATCHING` wrapper around the function so the C code will be included in the build.
 2. Always read the whole file `DecompHints.md` for general matching advice.
 3. Build, compare with target, identify differences.
-4. Find and read an already matched function with similar logic to the target function for reference.
+4. Find and read an already matched function with similar logic to the target function for code style reference.
 5. Change the C code in a way that will make the current assembly match the target assembly.
 6. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
 
@@ -44,7 +44,7 @@ Sometimes a change can produce more accurate instructions, but change register/s
 
 If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
-If a function has a switch statement and there is an associated jump table const defined at the start of the C file, delete that const before you begin. The consts are there so that the rodata is built correctly while the functions are NON_MATCHING and the .s file is being used instead, when the C code is being included in the build it will generate its own jump table replacing the need for the const version. 
+If a function has a switch statement and there is an associated jump table const defined at the start of the C file, delete that const before you begin. The consts are placeholders that make the rodata  build correctly while the functions are NON_MATCHING and the .s file is being used instead, when the C code is being included in the build it will generate its own jump table replacing the need for the const version. 
 
 - Declarations of data symbols used by the function must go in `include/variables.us.h`.
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.

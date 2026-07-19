@@ -29,13 +29,11 @@ You will be given a C file to target, follow this process:
 6. Make sure the function is not wrapped with `NON_MATCHING`, then build, if build returns `build/bh.us.z64: OK` then the decompilation is matching, commit the remaining changes with a message like `Matched func_80092ADC_A1A8C` and then return to step 3 and process the next function.
 7. If the build returns `FAILED`, check the function's CURRENT closeness value with `diff.ps1`. If it is lower than the original value, restore the `NON_MATCHING` wrapper, update the comment above the wrapper with the new value `CURRENT(X)`, and commit the changes. If the value is the same or higher, undo all changes - including the removal of `NON_MATCHING` and check the build is OK before moving on to the next function.
 
-Tell the subagents to reduce the closeness value as much as possible, they should keep going after they make a positive improvement, and only stop when they can no longer find any changes that reduce the value.
+Tell the subagents to resolve the differences in assembly as much as possible, they should keep going after they make a positive improvement, and only stop when they can no longer find any changes that reduce the number of assembly differences.
 
 Ask each subagent to target a single function.
 
-Subagents are not to commit any changes. After they finish you will check the current changes, then add  NON_MATCHING if needed, fix any errors, revert any unintended changes, and fix whatever else is necessary to return the build to `build/bh.us.z64: OK` before committing. Make sure the function has a comment with the current closeness value before committing. Only commit when the build is OK.
-
-If a function is more than 100 lines of code long, skip it. Don't tell the subagent this line count threshold.
+Subagents are not to commit any changes. After they finish you will check the current changes, then add NON_MATCHING if needed, fix any errors, revert any unintended changes, and fix whatever else is necessary to return the build to `build/bh.us.z64: OK` before committing. Make sure the function has a comment with the current closeness value before committing. Only commit when the build is OK.
 
 If there are multiple NON_MATCHING functions with switch statements, only process the last one in the C file. Functions with switch statements have to be matched last-to-first so that their jump table rodata gets positioned correctly.
 
