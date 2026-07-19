@@ -523,27 +523,23 @@ void func_800A68CC_B587C(void) {
 #endif
 
 // https://decomp.me/scratch/j8WAR
-#ifdef NON_MATCHING
 // Launch beacon
 void func_800A6FD4_B5F84(void)
 {
-  u8 sp1F;
-  sp1F = D_80047F9B;
-  osSyncPrintf(D_8014280C_1517BC, sp1F);
-  if (currentLevel != LEVEL_SIBERIA || sp1F != 3)
-  {
-	func_80013314_13F14();
-	D_80052AE0 = gameplayMode;
-	gameplayMode = GAMEPLAY_MODE_END_OF_LEVEL;
-  }
-  D_8003154C[currentLevel - 1][sp1F].state = 1;
-  D_8003154C[currentLevel - 1][sp1F].timer = 0x1E;
-  D_80047F98++;
-  D_80048025 |= 1 << sp1F;
+	u8 sp1F;
+	sp1F = D_80047F98;
+	osSyncPrintf(D_8014280C_1517BC, sp1F);
+	if (currentLevel != LEVEL_SIBERIA || sp1F != 3)
+	{
+		func_80013314_13F14();
+		D_80052AE0 = gameplayMode;
+		gameplayMode = GAMEPLAY_MODE_END_OF_LEVEL;
+	}
+	D_8003154C[currentLevel - 1][sp1F].state = 1;
+	D_8003154C[currentLevel - 1][sp1F].timer = 0x1E;
+	D_80047F98++;
+	D_80048025 |= 1 << sp1F;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A6FD4_B5F84.s")
-#endif
 
 // CURRENT(44622)
 #ifdef NON_MATCHING

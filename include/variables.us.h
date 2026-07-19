@@ -817,7 +817,6 @@ extern u8 D_80047F93;
 extern s32 D_80047F94; // Current stage of level?
 extern u8 D_80047F97;
 extern s32 D_80047F98; // beacon states - how many save beacons have been deployed
-extern u8 D_80047F9B;
 extern s32 D_80047F9C; // WarpPointNumber
 extern s32 D_80047FA0; // stage of level
 extern u8 D_80047FA8[6]; /* save data bytes */
