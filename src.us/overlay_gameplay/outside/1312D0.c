@@ -528,6 +528,7 @@ void func_801238DC_13288C(s16 arg0) {
 
 // CURRENT(2610)
 #ifdef NON_MATCHING
+// Destroy vehicle?
 void func_80123AC4_132A74(VehicleInstance *arg0) {
 	s16 i;
 	s16 sp44;

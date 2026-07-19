@@ -742,7 +742,7 @@ void func_800A70B8_B6068(void) {
 #endif
 
 // https://decomp.me/scratch/nzLpq
-// AI - Find nearest vehicle to beacon
+// ?? and destroy vehicle hit by beacon
 void func_800A7B84_B6B34(s32 beaconX, s32 beaconZ)
 {
 	s32 i;
