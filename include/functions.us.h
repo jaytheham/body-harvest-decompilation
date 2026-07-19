@@ -641,7 +641,6 @@ void func_800A5F24_B4ED4(s32 arg0);
 void func_800A6020_B4FD0(s16 arg0);
 void func_800A68CC_B587C(void);
 void func_800A70B8_B6068(void);
-s16 func_800A7B84_B6B34(s16 arg0, s16 arg1);
 void func_800A7C6C_B6C1C(void);
 void func_800A854C_B74FC(void);
 void func_800A8A68_B7A18(s16, s16, s16, s32);

@@ -741,32 +741,27 @@ void func_800A70B8_B6068(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A70B8_B6068.s")
 #endif
 
-#ifdef NON_MATCHING
+// https://decomp.me/scratch/nzLpq
 // AI - Find nearest vehicle to beacon
-s16 func_800A7B84_B6B34(s16 arg0, s16 arg1) {
+void func_800A7B84_B6B34(s32 beaconX, s32 beaconZ)
+{
 	s32 i;
-	u8 *ptr;
-	VehicleInstance *item;
-
+	u8 vehicleIndex;
 	i = D_80158FD8;
-	if (i == 0) {
-		return i;
-	}
-	i--;
-	ptr = D_80158E80 + i;
-	do {
-		item = vehicleInstances + *ptr;
-		func_8010C4EC_11B49C(item);
-		ptr--;
-		if (func_8010CF7C_11BF2C(arg0, arg1) != 0) {
-			return func_80123AC4_132A74(item);
+	while (i--)
+	{
+		vehicleIndex = D_80158E80[i];
+		func_8010C4EC_11B49C(&vehicleInstances[vehicleIndex]);
+
+		if (func_8010CF7C_11BF2C(beaconX, beaconZ) != 0)
+		{
+			func_80123AC4_132A74(&vehicleInstances[vehicleIndex]);
+			return;
 		}
-	} while (i--);
-	return 0;
+	}
+
+	return;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A7B84_B6B34.s")
-#endif
 
 // CURRENT(28813)
 #ifdef NON_MATCHING
