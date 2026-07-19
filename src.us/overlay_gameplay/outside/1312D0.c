@@ -2120,39 +2120,25 @@ void func_80127F9C_136F4C(s16 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80127F9C_136F4C.s")
 #endif
 
-// CURRENT(115)
-#ifdef NON_MATCHING
-void func_80128288_137238(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
+// https://decomp.me/scratch/TrRk0
+void func_80128288_137238(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3)
+{
 	s16 value;
-	f64 scale;
-
 	value = arg3 / ((vehicleSpecs[arg0->unk1A].unk32 >> 6) + 1);
-	if (arg0->unk1A == 0) {
+	if (arg0->unk1A == 0)
+	{
 		value = value >> 2;
 	}
-
-	if (value >= 0x41) {
+	if (value >= 0x41)
+	{
 		value = 0x40;
 	}
+	func_80102DDC_111D8C(arg0, arg1, arg2, value);
 
-	func_80102DDC_111D8C(arg0, arg1, arg2, (f32)value);
-
-	{
-		s32 trig = coss((arg0->unk6 - arg1 + 0x7FFF) & 0xFFFF);
-
-		scale = (f64)(value << 8);
-		arg0->unk26 = (s16)(s32)(-((f64)(f32)trig / 32768.0) * scale);
-	}
-	{
-		s32 trig = sins((arg0->unk6 - arg1 + 0x7FFF) & 0xFFFF);
-
+	arg0->unk26 = -(((f32)coss((s16)((arg0->unk6 - arg1) + 0x7FFF))) / 32768.0) * (value << 8);
+	arg0->unk24 = -(((f32)sins((s16)((arg0->unk6 - arg1) + 0x7FFF))) / 32768.0) * (value << 8);
 	arg0->unk20 |= 1;
-		arg0->unk24 = (s16)(s32)(-((f64)(f32)trig / 32768.0) * scale);
-	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80128288_137238.s")
-#endif
 
 void func_80128428_1373D8(AlienInstance *arg0, s16 arg1, s16 arg2, s16 arg3, s32 *arg4, s32 *arg5, s32 *arg6) {
 	s16 sp38[3];
