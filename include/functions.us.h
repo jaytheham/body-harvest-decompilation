@@ -1613,7 +1613,7 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4);
 void func_800F0094_FF044(void);
 void func_800EC330_FB2E0(void);
 void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1, s16 arg2, s32 arg3);
-void func_8011DBA0_12CB50(s32 arg0);
+void func_8011DBA0_12CB50(void);
 void func_80073B78_82B28(void);
 void func_80116724_1256D4(void);
 void func_80117F34_126EE4(void);
