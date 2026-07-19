@@ -557,9 +557,7 @@ void func_800747A8_83758(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800747A8_83758.s")
 #endif
 
-// https://decomp.me/scratch/EU7dP
-// CURRENT(1155)
-#ifdef NON_MATCHING
+// CURRENT(0)
 // AI - Read map/tile data chunks from mission stream
 void func_80074970_83920(void)
 {
@@ -573,7 +571,7 @@ void func_80074970_83920(void)
 	{
 	  if (D_801494BC != 0xAE)
 	  {
-		while (1)
+		do
 		{
 		  if (D_801494BC == 0x90)
 		  {
@@ -588,20 +586,9 @@ void func_80074970_83920(void)
 			D_80149B60[D_80149B48][chunkIndex][i] = func_80074500_834B0();
 			i++;
 		  }
-		  if (func_80074558_83508() == 0xB7)
-		  {
-			break;
-		  }
-		  if (D_801494BC == 0xAC)
-		  {
-			break;
-		  }
-		  if (D_801494BC != 0xAE)
-		  {
-			continue;
-		  }
-		  break;
-		}
+		  if (func_80074558_83508() == 0xB7) break;
+		  if (D_801494BC == 0xAC) break;
+		} while (D_801494BC != 0xAE);
 	  }
 	}
   }
@@ -610,9 +597,6 @@ void func_80074970_83920(void)
 	func_800078E4_84E4(D_80149B48, &D_8004D15C);
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074970_83920.s")
-#endif
 
 // https://decomp.me/scratch/PR95Q
 // CURRENT(80)
