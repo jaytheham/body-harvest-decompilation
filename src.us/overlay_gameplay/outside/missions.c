@@ -262,116 +262,108 @@ void func_80073DC0_82D70(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80073DC0_82D70.s")
 #endif
 
-// CURRENT(3595)
+// CURRENT(2215)
 #ifdef NON_MATCHING
 // AI - Reset all mission data structures
 void func_80074204_831B4(void) {
-	s32 var_a0;
-	u8 var_a1;
-	u8 var_a2;
-	u8 *var_v0;
-	s32 *var_v0_2;
-	s16 *var_v0_3;
+	s32 i;
+	u8 a1;
+	u8 a2;
+	u8 *v0;
 
-	var_v0 = &D_80149B60[0][0][0];
-	var_a0 = 0x257F;
+	v0 = &D_80149B60[0][0][0];
+	i = 0x257F;
 	do {
-		*var_v0 = 0;
-		var_v0 += 1;
-	} while (var_a0--);
+		*v0 = 0;
+		v0 += 1;
+	} while (i--);
 
-	var_v0 = &D_8014CCCA;
-	var_a0 = 0x17;
-	var_a2 = 0x64;
-	var_a1 = 0x6E;
+	v0 = &D_8014CCCA;
+	i = 0x17;
+	a2 = 0x64;
+	a1 = 0x6E;
 	do {
-		var_v0[0] = var_a1;
-		var_v0[0x32] = var_a2;
-		var_v0[0x64] = var_a2;
-		var_v0 -= 0x226;
-	} while (var_a0--);
+		v0[0] = a1;
+		v0[0x32] = a2;
+		v0[0x64] = a2;
+		v0 -= 0x226;
+	} while (i--);
 
-	var_v0 = &D_8014CEF0[0xFC];
-	var_a0 = 0x3F;
+	v0 = &D_8014CEF0[0xFC];
+	i = 0x3F;
 	do {
-		var_v0 -= 4;
-		var_v0[4] = (var_v0[4] & 0xFF80) | 0x7F;
-	} while (var_a0--);
+		v0 -= 4;
+		v0[4] = (v0[4] & 0xFF80) | 0x7F;
+	} while (i--);
 
-	var_v0 = &D_801497BA;
-	var_a0 = 0x7F;
-	var_a1 = 0xFF;
+	v0 = &D_801497BA;
+	i = 0x7F;
+	a1 = 0xFF;
 	do {
-		var_v0[0] = 0;
-		var_v0[1] = var_a1;
-		var_v0[2] = 0;
-		var_v0[3] = 0;
-		var_v0[4] = var_a1;
-		var_v0 -= 6;
-	} while (var_a0--);
+		v0[0] = 0;
+		v0[1] = a1;
+		v0[2] = 0;
+		v0[3] = 0;
+		v0[4] = a1;
+		v0 -= 6;
+	} while (i--);
 
-	var_v0 = &D_8004D1BF;
-	var_a0 = 0xF;
+	v0 = &D_8004D1BF;
+	i = 0xF;
 	do {
-		var_v0[0] = var_a1;
-		var_v0 -= 1;
-	} while (var_a0--);
+		v0[0] = a1;
+		v0 -= 1;
+	} while (i--);
 
-	var_v0 = &D_8014D16E;
-	var_a0 = 0xBF;
-	var_a2 = 0xC1;
+	v0 = &D_8014D16E;
+	i = 0xBF;
+	a2 = 0xC1;
 	do {
-		var_v0[0] = var_a2;
-		var_v0[1] = var_a2;
-		var_v0 -= 2;
-	} while (var_a0--);
+		v0[0] = a2;
+		v0[1] = a2;
+		v0 -= 2;
+	} while (i--);
 
-	var_v0 = &D_8004D1AD;
-	var_a0 = 0xF;
+	v0 = &D_8004D1AD;
+	i = 0xF;
 	do {
-		var_v0[0] = var_a1;
-		var_v0 -= 3;
-	} while (var_a0--);
+		v0[0] = a1;
+		v0 -= 3;
+	} while (i--);
 
-	var_v0_2 = &D_801494B4;
-	var_a0 = 0xF;
+	v0 = (u8 *)&D_801494B4;
+	i = 0xF;
 	do {
-		var_v0_2[0] = 0;
-		var_v0_2 -= 1;
-	} while (var_a0--);
+		*(s32 *)v0 = 0;
+		v0 -= 4;
+	} while (i--);
 
-	var_v0 = &D_80149B25;
-	var_a0 = 0xF;
+	v0 = &D_80149B25;
+	i = 0xF;
 	do {
-		var_v0[0] = var_a1;
-		var_v0 -= 3;
-	} while (var_a0--);
+		v0[0] = a1;
+		v0 -= 3;
+	} while (i--);
 
-	var_v0 = &D_8004D17E;
-	var_a0 = 0xF;
+	v0 = &D_8004D17E;
+	i = 0xF;
 	do {
-		var_v0[0] = 0;
-		var_v0[1] = 0;
-		var_v0 -= 2;
-	} while (var_a0--);
+		v0[0] = 0;
+		v0[1] = 0;
+		v0 -= 2;
+	} while (i--);
 
-	var_v0_3 = &D_8014D1B6;
-	var_a0 = 0x17;
+	v0 = (u8 *)&D_8014D1B6;
+	i = 0x17;
 	do {
-		var_v0_3[0] = 0;
-		var_v0_3 -= 1;
-	} while (var_a0--);
+		*(s16 *)v0 = 0;
+		v0 -= 2;
+	} while (i--);
 
 	D_80149470 = 0;
 	D_8004D15C = -1;
 
-	var_v0_2 = &D_80149B44;
-	var_v0_2[0] = 0;
-	var_v0_2[-1] = 0;
-	var_v0_2[-3] = 0;
-	var_v0_2[-4] = 0;
-	var_v0_2[-5] = 0;
-	var_v0_2[-6] = 0;
+	D_80149B44 = D_80149B40 = D_80149B38 = D_80149B34 = D_80149B30 = D_80149B2C = 0;
 	D_80149B28 = 0;
 	D_80149B3C = 0;
 
