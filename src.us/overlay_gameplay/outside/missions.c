@@ -361,7 +361,6 @@ u8 func_80074558_83508(void) {
 	return D_801494BC;
 }
 
-// CURRENT(0)
 // readMissionObject
 // AI - Read a mission object entry from stream
 void func_80074578_83528(u8 *arg0) {
@@ -491,7 +490,6 @@ void func_800747A8_83758(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800747A8_83758.s")
 #endif
 
-// CURRENT(0)
 // AI - Read map/tile data chunks from mission stream
 void func_80074970_83920(void)
 {
@@ -640,9 +638,6 @@ void func_80074CA0_83C50(void) {
 }
 
 // readMissionConditions
-// CURRENT(30)
-// readMissionConditions
-// CURRENT(0)
 // AI - Read mission conditions and link to mission IDs
 void func_80074FA8_83F58(void) {
 	s32 count;
@@ -869,7 +864,6 @@ void func_8007562C_845DC(void) {
   }
 }
 
-// CURRENT(0)
 // AI - Parse entire mission data blob
 void func_800756DC_8468C(void) {
 	u8 *missionStart;
@@ -1198,8 +1192,6 @@ s32 func_80075E50_84E00(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075E50_84E00.s")
 #endif
 
-// CURRENT(10)
-// CURRENT(0)
 // AI - Check if mission category is unlocked
 s32 func_80076088_85038(s32 arg0) {
 	switch (arg0) {
