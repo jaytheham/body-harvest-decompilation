@@ -10982,7 +10982,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	}
 
 	if ((currentLevel != 3) || (arg0->unk1A != 0xD)) {
-		entry = &((Unk8025CC20Entry *) D_8025CC20)[0x95 - 1];
+		entry = &((Unk8025CC20Entry *) &D_80259D90[0x95])[0x95 - 1];
 		for (i = 0x95; i != 0; i--, entry--) {
 			if ((entry->unk0 >= 0xE) && (func_80078B58_87B08(entry->unk4, entry->unk6) != 0) &&
 				(func_8010EA54_11DA04(entry->unk20, entry->unk24, entry->unk40, entry->unk44, &spD6) != 0) &&

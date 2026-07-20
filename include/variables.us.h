@@ -3021,19 +3021,7 @@ extern BuildingSpec buildingSpecs[0x20]; // 0x80259090
 extern u8 D_80259470[];
 extern Unk80259490 D_80259490; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
 extern u8 D_80259D7E[];
-extern Unk80259D90 D_80259D90[];
-extern u8 D_80259D92[][0x50];
-extern s8 D_80259D93;
-extern s16 D_80259D94;
-extern s16 D_80259D96;
-extern Unk80259D98 D_80259D98[];
-extern s8 D_80259DE2;
-extern s8 D_80259DE3;
-extern s16 D_80259DE4;
-extern s16 D_80259DE6;
-extern u8 D_80259E30[];
-extern u8 D_8025CC20[];
-extern Unk80259D90 D_8025CC70[];
+extern Unk80259D90 D_80259D90[0x97];
 extern u8 D_8025CCC0[];
 extern u8 D_8025D800;
 extern u8 D_8025EC40;
