@@ -711,40 +711,54 @@ void func_800786EC_8769C(u16* arg0, s32 arg1) {
 }
 
 // https://decomp.me/scratch/S6kQ4
-// CURRENT(4000)
+// CURRENT(800)
 #ifdef NON_MATCHING
 void func_80078720_876D0(AlienInstance *alien)
 {
-  s32 sp20;
+  s32 sp44;
+  s32 sp40;
   u16 *v0;
+  s32 gap1;
+  s32 gap2;
+  s32 gap3;
+  s32 gap4;
+  s32 gap5;
+  s32 gap6;
+  s32 sp20;
+  s32 sp1C;
+  s32 sp18;
 
-  if (alien->unk10 == alien->unk30)
+  sp44 = (s16)alien->unk10;
+  sp40 = (s16)alien->unk14;
+  sp1C = (s16)alien->unk30;
+
+  if (sp44 == sp1C)
   {
-	v0 = func_800785B4_87564((s16) alien->unk10, (s16) alien->unk30, &sp20);
-	if (v0 != NULL)
-	{
-	  func_800786EC_8769C(v0, 2);
-	}
-	
-	v0 = func_800785B4_87564((s16) (alien->unk30 - 1), (s16) alien->unk30, &sp20);
-	if (v0 != NULL)
-	{
-	  func_800786EC_8769C(v0, 1);
-	}
+    v0 = func_800785B4_87564((s16)sp44, (s16)sp40, &sp20);
+    if (v0 != NULL)
+    {
+      func_800786EC_8769C(v0, 2);
+    }
+    
+    v0 = func_800785B4_87564((s16)(sp44 - 1), (s16)(sp40 - sp40), &sp20);
+    if (v0 != NULL)
+    {
+      func_800786EC_8769C(v0, 1);
+    }
   }
   else
   {
-	v0 = func_800785B4_87564((s16) alien->unk10, (s16) alien->unk14, &sp20);
-	
-	if (v0 != NULL)
-	{
-	  func_800786EC_8769C(v0, 0);
-	}
-	v0 = func_800785B4_87564((s16) alien->unk10, (s16) (alien->unk10 - 1), &sp20);
-	if (v0 != NULL)
-	{
-	  func_800786EC_8769C(v0, 3);
-	}
+    v0 = func_800785B4_87564((s16)sp44, (s16)sp40, &sp20);
+    
+    if (v0 != NULL)
+    {
+      func_800786EC_8769C(v0, 0);
+    }
+    v0 = func_800785B4_87564((s16)(sp44 - sp44), (s16)(sp40 - 1), &sp20);
+    if (v0 != NULL)
+    {
+      func_800786EC_8769C(v0, 3);
+    }
   }
 }
 #else
