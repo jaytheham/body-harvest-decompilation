@@ -368,6 +368,7 @@ void func_80074578_83528(u8 *arg0) {
 
 	switch (arg0[0]) {
 		case 0x98:
+			break;
 		case 0x99:
 		case 0x9A:
 		case 0x9B:
