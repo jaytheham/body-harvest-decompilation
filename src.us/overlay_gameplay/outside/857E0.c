@@ -297,42 +297,35 @@ void func_80076FCC_85F7C(s32 arg0, s32 arg1) {
 
 // fell tree
 #ifdef NON_MATCHING
-// CURRENT(3072)
+// CURRENT(2883)
 void func_800770D8_86088(s32 arg0) {
 	Unk_8014D298* entry;
 	s32 temp_s1;
 	u16 treeIndex;
 	u32 sp8C;
 	u32 sp88;
-	s16 temp_t7;
-	f32 temp_f0;
-	f32 temp_f14;
+	s32 pad0;
+	s32 pad1;
 
-	entry = (Unk_8014D298*)D_8014D298[arg0];
+	entry = (Unk_8014D298*)&D_8014D298[arg0];
 	temp_s1 = (entry->unk2 * 6) & 0xFFFF;
-	if (temp_s1 < entry->unk6) {
+	if (temp_s1 < (s32)entry->unk6) {
 		Mtx* mtx;
-		s32 sp24;
-		s16 sinVal;
+		s16 temp_hi;
+		f32 temp_f0;
+		Mtx sp30;
 
-		sp24 = temp_s1;
 		treeIndex = entry->unk0;
 		sp8C = *(u32*)&((Unk857E0Obj*)D_80259D90)[treeIndex].unk28;
 		sp88 = *(u32*)&((Unk857E0Obj*)D_80259D90)[treeIndex].unk2C;
 
-		sinVal = sins(entry->unk4);
 		mtx = (Mtx*)&((Unk857E0Obj*)D_80259D90)[treeIndex].unk10;
-		guRotate(mtx, (f32)(u32)sp24, (f32)((f64)(f32)sinVal / 32768.0), 0.0f, (f32)-((f64)(f32)coss(entry->unk4) / 32768.0));
+		guRotate(mtx, (f32)(u32)temp_s1, (f32)((f64)(f32)sins(entry->unk4) / 32768.0), 0.0f, (f32)-((f64)(f32)coss(entry->unk4) / 32768.0));
 
-		temp_t7 = (s16)(sp88 >> 0x10);
-		temp_f0 = (f32)((s32)((((s32)((s32)((((s16)(sp8C >> 0x10) * temp_t7 * 0x41C64E6D) + 0x3039) >> 0x10) % 0x40)) + 0xE0) / 0x100));
-		temp_f14 = (f32)((s32)((((s32)((s32)(((temp_t7 * 0x41C64E6D) + 0x3039) >> 0x10) % 0x40)) + 0xE0) / 0x100));
+		temp_hi = (s16)(sp88 >> 0x10);
+		temp_f0 = (f32)(s32)((((s32)((((s16)(sp8C >> 0x10) * temp_hi) * 0x41C64E6D + 0x3039) >> 0x10) % 0x40) + 0xE0) / 0x100);
 
-		{
-			Mtx sp30;
-
-			guScale(&sp30, temp_f0, temp_f14, temp_f0);
-		}
+		guScale(&sp30, temp_f0, (f32)(s32)((((s32)((temp_hi * 0x41C64E6D + 0x3039) >> 0x10) % 0x40) + 0xE0) / 0x100), temp_f0);
 
 		mtx->m[1][2] = sp8C;
 		mtx->m[1][3] = sp88;
