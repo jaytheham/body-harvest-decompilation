@@ -1241,12 +1241,9 @@ s32 func_80076208_851B8(s32 arg0) {
 }
 
 // https://decomp.me/scratch/iNhL3
-// CURRENT(720)
-#ifdef NON_MATCHING
 // AI - Register a mission callback function
 void func_8007622C_851DC(s32 arg0) {
 	s32 v1;
-	s32 temp_v0;
 
 	v1 = 0x10;
 	while (v1--) {
@@ -1255,20 +1252,10 @@ void func_8007622C_851DC(s32 arg0) {
 		}
 	}
 
-	v1 = 0xF;
-	if (D_801494B4 != 0) {
-		temp_v0 = v1;
-		do {
-			if (v1-- == 0) {
-				break;
-			}
-		} while (D_80149478[v1] != 0);
-	}
+	v1 = 0x10;
+    while (v1-- && D_80149478[v1] != 0) { }
 	D_80149478[v1] = arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007622C_851DC.s")
-#endif
 
 // Remove the current callback from the list of callbacks
 // AI - Remove a mission callback from list
