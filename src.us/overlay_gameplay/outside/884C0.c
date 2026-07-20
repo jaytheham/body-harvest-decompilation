@@ -1226,12 +1226,12 @@ void func_8007AF8C_89F3C(void)
 	baseTypeC = D_8014D509;
 	inst = alienInstances;
 	idx = 0;
-	do
+	do {
 		{
 			D_8014D408[baseTypeA - countTypeA] = idx;
 			countTypeA--;
 		}
-		else if ((type == 2) || (type == 0x20))
+		if ((type == 2) || (type == 0x20))
 		{
 			D_8014D408[baseTypeB - countTypeB] = idx;
 			countTypeB--;
@@ -1630,10 +1630,10 @@ void func_8007C044_8AFF4(void) {
 
 			gSPLookAtX(D_8005BB2C++, lookAt);
 			gSPLookAtY(D_8005BB2C++, (u8 *)lookAt + 0x10);
-			gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xFFFFFFFF);
-			gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xFFFFFFFF);
-			gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x808080FF);
-			gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, 0x808080FF);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xFFFFFFFF);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xFFFFFFFF);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x808080FF);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, 0x808080FF);
 		}
 
 		if (spec->unk54 & 0x10000) {
@@ -1846,26 +1846,26 @@ void func_8007C044_8AFF4(void) {
 			D_800311A0.unk4 -= colorOffset >> 1;
 
 			if (inst->unk20 & 0x80000000) {
-				gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xFFFFFFFF);
-				gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xFFFFFFFF);
-				gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x7F7F7FFF);
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xFFFFFFFF);
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xFFFFFFFF);
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x7F7F7FFF);
 
 				color = 0x7F7F7FFF;
 			} else if (inst->specIndex == 0x20) {
-				gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xE50020FF);
-				gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xE50020FF);
-				gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x7F0010FF);
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xE50020FF);
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xE50020FF);
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x7F0010FF);
 
 				color = 0x7F0010FF;
 			} else {
-				gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0x80E580FF);
-				gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0x80E580FF);
-				gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x407F40FF);
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0x80E580FF);
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0x80E580FF);
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x407F40FF);
 
 				color = 0x407F40FF;
 			}
 
-			gsMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, color);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, color);
 
 			D_800311A0.unk0 = (s16)((f32)D_800311A0.unk0 * dx);
 			D_800311A0.unk2 = (s16)((f32)D_800311A0.unk2 * dx);
@@ -3221,6 +3221,7 @@ void func_8007FDD8_8ED88(void)
 					count = D_8014ECCC;
 			i++;
 			activeList++;
+				}}
 		} while ((u32)i < count);
 	}
 }
@@ -8025,7 +8026,7 @@ void func_8008C428_9B3D8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008C428_9B3D8.s")
 #endif
 
-void func_8008C7B0_9B760(u8 arg0) {
+s8 func_8008C7B0_9B760(u8 arg0) {
 	s16 sp28[12];
 
 	sp28[0] = D_8014DD50[alienInstances[arg0].unkC].unkC;
@@ -8040,7 +8041,7 @@ void func_8008C7B0_9B760(u8 arg0) {
 	sp28[9] = D_8014DD50[sp28[8]].unkC;
 	sp28[10] = D_8014DD50[sp28[8]].unkD;
 	sp28[11] = D_8014DD50[sp28[10]].unkC;
-	func_80081F18_90EC8(arg0, 0xC, 1, sp28, &D_8013C514_14B4C4);
+	return func_80081F18_90EC8(arg0, 0xC, 1, sp28, &D_8013C514_14B4C4);
 }
 
 // CURRENT(6775)
