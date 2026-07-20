@@ -868,23 +868,26 @@ s32 func_80078B58_87B08(s16 arg0, s16 arg1) {
 	return value;
 }
 
-// CURRENT(480)
 #ifdef NON_MATCHING
+// CURRENT(2375)
 s32 func_80078BC8_87B78(s16 arg0, s16 arg1) {
 	s32 idx;
 	Unk80259D90* entry;
 	s32 x;
 	s32 z;
+	s32 unk2_1;
 
 	arg0 >>= 7;
 	arg1 >>= 7;
+
+	unk2_1 = (s8) D_80259D90[1].unk2;
 
 	if (((s8) D_80259D90[0].unk2 != -1) && (arg0 == (D_80259D90[0].unk4 >> 7)) && (arg1 == (D_80259D90[0].unk6 >> 7))) {
 		return 0;
 	}
 
 	idx = 2;
-	if ((s8) D_80259D90[1].unk2 != -1) {
+	if (unk2_1 != -1) {
 		x = D_80259D90[1].unk4;
 		z = D_80259D90[1].unk6;
 		if ((arg0 == (x >> 7)) && (arg1 == (z >> 7))) {
