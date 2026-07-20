@@ -765,72 +765,86 @@ void func_80078720_876D0(AlienInstance *alien)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078720_876D0.s")
 #endif
 
-// CURRENT(4058)
+// CURRENT(2443)
 #ifdef NON_MATCHING
 s32 func_80078828_877D8(s16 arg0, s16 arg1, u16 arg2, s32 arg3) {
-	s32 sp3C;
-	u16* sp38;
-	s32 sp30;
-	s16 sp2E;
-	s16 sp2A;
-	s16 sp20;
-	s32 sp1C;
-	s16 temp_a0;
+    s32 sp3C;
+    u16* sp38;
+    s32 sp30;
+    s16 sp2E;
+    s16 sp2A;
+    s16 sp20;
+    s32 sp1C;
+    s16 temp_a0;
 
-	sp38 = func_800785B4_87564(arg0, arg1, &sp3C);
-	if (sp38 == NULL) {
-		return 0;
-	}
+    sp38 = func_800785B4_87564(arg0, arg1, &sp3C);
+    if (sp38 == NULL) {
+        return 0;
+    }
 
-	sp30 = func_80078BC8_87B78(arg0, arg1);
-	if (sp30 == -1) {
-		func_800786CC_8767C(sp38, sp3C);
-		return 1;
-	}
+    sp30 = func_80078BC8_87B78(arg0, arg1);
+    if (sp30 == -1) {
+        func_800786CC_8767C(sp38, sp3C);
+        return 1;
+    }
 
-	if ((arg3 != 0) && (D_8013BC0C_14ABBC[(currentLevel << 4) + D_80259D90[sp30].unk0] >= 0x11)) {
-		return 0;
-	}
+    if (arg3 != 0) {
+        if (D_8013BC0C_14ABBC[(currentLevel << 4) + D_80259D90[sp30].unk0] >= 0x11) {
+            goto return_0_early;
+        }
+    }
 
-	temp_a0 = D_8013BC0C_14ABBC[(currentLevel << 4) + D_80259D90[sp30].unk0];
+    temp_a0 = D_8013BC0C_14ABBC[(currentLevel << 4) + D_80259D90[sp30].unk0];
 
-	if ((arg3 == 0) && (temp_a0 >= 0x15)) {
-		return 0;
-	}
+    if (arg3 == 0) {
+        if (temp_a0 >= 0x15) {
+            goto return_0_early;
+        }
+    }
 
-	if (temp_a0 == 2) {
-		return 0;
-	}
+    if (temp_a0 == 2) {
+        return 0;
+    }
 
-	if (D_80259D90[sp30].unk0 >= 0xE) {
-		if ((sp3C == 0) || (sp3C == 3)) {
-			if ((((arg2 + 0x2000) >> 0xE) == 0) || (((arg2 + 0x2000) >> 0xE) == 2)) {
-				return 0;
-			}
-		}
-		if ((sp3C == 1) || (sp3C == 2)) {
-			if ((((arg2 + 0x2000) >> 0xE) == 1) || (((arg2 + 0x2000) >> 0xE) == 3)) {
-				return 0;
-			}
-		}
-	}
+    if (D_80259D90[sp30].unk0 >= 0xE) {
+        if (sp3C == 0 || sp3C == 3) {
+            if (((arg2 + 0x2000) >> 0xE) == 0) {
+                goto return_0_dir;
+            }
+            if (((arg2 + 0x2000) >> 0xE) == 2) {
+                goto return_0_dir;
+            }
+        }
+        if (sp3C == 1 || sp3C == 2) {
+            if (((arg2 + 0x2000) >> 0xE) == 1) {
+                goto return_0_dir;
+            }
+            if (((arg2 + 0x2000) >> 0xE) == 3) {
+                goto return_0_dir;
+            }
+        }
+    }
 
-	sp1C = arg2;
-	sp2E = (s16) (func_800B84D0_C7480(arg0, arg1) >> 8);
-	sp20 = coss(arg2);
-	sp20 = (s16) (func_800B84D0_C7480(
-						(s16) ((((f64) (f32) sp20 / 32768.0) * 100.0) + (f64) arg0),
-						(s16) ((((f64) (f32) sins(arg2) / 32768.0) * 100.0) + (f64) arg1)) >> 8);
-	sp2A = (s16) (D_801417A0_150750 - ((((f64) (f32) func_80003824_4424(100.0f, (f32) (sp20 - sp2E))) * D_80141798_150748) / 32768.0));
+    sp1C = arg2;
+    sp2E = (s16) (func_800B84D0_C7480(arg0, arg1) >> 8);
+    sp20 = coss(arg2);
+    sp20 = (s16) (func_800B84D0_C7480(
+                        (s16) ((((f64) (f32) sp20 / 32768.0) * 100.0) + (f64) arg0),
+                        (s16) ((((f64) (f32) sins(arg2) / 32768.0) * 100.0) + (f64) arg1)) >> 8);
+    sp2A = (s16) (D_801417A0_150750[0] - ((((f64) (f32) func_80003824_4424(100.0f, (f32) (sp20 - sp2E))) * D_80141798_150748[0]) / 32768.0));
 
-	if (D_80259D90[sp30].unk0 < 0xE) {
-		func_80076918_858C8(sp30, sp1C, sp2A, 2);
-	} else {
-		func_80076918_858C8(sp30, sp1C, (s16) ((f64) ((f32) sp2A * 32768.0f) / D_80141798_150748), 3);
-	}
+    if (D_80259D90[sp30].unk0 < 0xE) {
+        func_80076918_858C8(sp30, sp1C, sp2A, 2);
+    } else {
+        func_80076918_858C8(sp30, sp1C, (s16) ((f64) ((f32) sp2A * 32768.0f) / D_80141798_150748[0]), 3);
+    }
 
-	func_800786CC_8767C(sp38, sp3C);
-	return 1;
+    func_800786CC_8767C(sp38, sp3C);
+    return 1;
+
+return_0_early:
+return_0_dir:
+    return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078828_877D8.s")

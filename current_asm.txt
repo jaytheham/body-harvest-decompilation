@@ -1,368 +1,205 @@
 CURRENT                                           
-859c0:    addiu   sp,sp,-0xb8                     
-859c4:    lui     t4,0x8015                       
-859c8:    lw      t4,-0x2d18(t4)                  
-859cc:    lui     t6,0x8014                       
-859d0:    lui     t7,0x8014                       
-859d4:    lui     t8,0x8014                       
-859d8:    lui     t9,0x8014                       
-859dc:    lw      t6,-0x42f4(t6)                  
-859e0:    lhu     t7,-0x42f0(t7)                  
-859e4:    lw      t8,-0x42ec(t8)                  
-859e8:    lhu     t9,-0x42e8(t9)                  
-859ec:    li      at,0x96                         
-859f0:    sw      ra,0x3c(sp)                     
-859f4:    sw      s8,0x38(sp)                     
-859f8:    sw      s7,0x34(sp)                     
-859fc:    sw      s6,0x30(sp)                     
-85a00:    sw      s5,0x2c(sp)                     
-85a04:    sw      s4,0x28(sp)                     
-85a08:    sw      s3,0x24(sp)                     
-85a0c:    sw      s2,0x20(sp)                     
-85a10:    sw      s1,0x1c(sp)                     
-85a14:    sw      s0,0x18(sp)                     
-85a18:    sw      a0,0xb8(sp)                     
-85a1c:    sw      a1,0xbc(sp)                     
-85a20:    sw      a2,0xc0(sp)                     
-85a24:    sw      t6,0xa8(sp)                     
-85a28:    sh      t7,0xac(sp)                     
-85a2c:    sw      t8,0xa0(sp)                     
-85a30:    beq     t4,at,85f8c [35m~>[39m                  
-85a34:    sh      t9,0xa4(sp)                     
-85a38:    lh      t5,0xbe(sp)                     
-85a3c:    lh      t7,0xc2(sp)                     
-85a40:    addiu   t6,t5,0x20                      
-85a44:    sll     t9,t6,0x10                      
-85a48:    sra     t4,t9,0x10                      
-85a4c:    addiu   t8,t7,0x20                      
-85a50:    sh      t6,0xbe(sp)                     
-85a54:    bltz    t4,85f8c [35m~>[39m                     
-85a58:    sh      t8,0xc2(sp)                     
-85a5c:    sll     t5,t6,0x10                      
-85a60:    sra     t7,t5,0x10                      
-85a64:    slti    at,t7,0x40                      
-85a68:    beqz    at,85f8c [35m~>[39m                     
-85a6c:    sll     t9,t8,0x10                      
-85a70:    sra     t4,t9,0x10                      
-85a74:    bltz    t4,85f8c [35m~>[39m                     
-85a78:    sll     t6,t8,0x10                      
-85a7c:    sra     t5,t6,0x10                      
-85a80:    slti    at,t5,0x40                      
-85a84:    beqz    at,85f8c [35m~>[39m                     
-85a88:    lh      t7,0xc2(sp)                     
-85a8c:    lh      t4,0xbe(sp)                     
-85a90:    sll     t9,t7,0x6                       
-85a94:    lui     v0,0x8022                       
-85a98:    addu    t8,t9,t4                        
-85a9c:    addu    v0,v0,t8                        
-85aa0:    lbu     v0,0x1a30(v0)                   
-85aa4:    li      at,0xff                         
-85aa8:    lui     t5,0x8022                       
-85aac:    beq     v0,at,85f8c [35m~>[39m                  
-85ab0:    sll     t6,v0,0x5                       
-85ab4:    addiu   t5,t5,-0x5d0                    
-85ab8:    addu    t7,t6,t5                        
-85abc:    sw      t7,0x9c(sp)                     
-85ac0:    sw      zero,0x88(sp)                   
-85ac4:    lw      t9,0x9c(sp)                     
-85ac8:    move    t2,zero                         
-85acc:    lhu     v1,0(t9)                        
-85ad0:    beqz    v1,85f6c [36m~>[39m                     
-85ad4: [96m~>[39m andi    s7,v1,0xf                       
-85ad8:    beqzl   s7,85f60 [32m~>[39m                     
-85adc:    srl     v0,v1,0x4                       
-85ae0:    sw      v1,0x64(sp)                     
-85ae4:    jal     76830                           
-85ae8:    sw      t2,0x84(sp)                     
-85aec:    li      at,-1                           
-85af0:    lw      t2,0x84(sp)                     
-85af4:    beq     v0,at,85f8c [35m~>[39m                  
-85af8:    move    t3,v0                           
-85afc:    sll     t4,v0,0x2                       
-85b00:    addu    t4,t4,v0                        
-85b04:    lui     t8,0x8026                       
-85b08:    addiu   t8,t8,-0x6270                   
-85b0c:    sll     t4,t4,0x4                       
-85b10:    addu    v1,t4,t8                        
-85b14:    lw      a3,0x88(sp)                     
-85b18:    lh      t6,0xba(sp)                     
-85b1c:    lh      t5,0xbe(sp)                     
-85b20:    lui     t8,0x8014                       
-85b24:    sll     a0,t2,0x1                       
-85b28:    sb      s7,0(v1)                        
-85b2c:    sb      t2,3(v1)                        
-85b30:    addu    t8,t8,a0                        
-85b34:    sb      a3,1(v1)                        
-85b38:    sb      t6,2(v1)                        
-85b3c:    lh      t8,0x16e0(t8)                   
-85b40:    andi    t9,a3,0x3                       
-85b44:    sll     t7,t5,0x2                       
-85b48:    addu    a1,t7,t9                        
-85b4c:    sll     t4,a1,0x8                       
-85b50:    li      at,-0x8000                      
-85b54:    addu    s3,t8,t4                        
-85b58:    addu    s3,s3,at                        
-85b5c:    sll     t6,s3,0x10                      
-85b60:    lh      t7,0xc2(sp)                     
-85b64:    sra     s3,t6,0x10                      
-85b68:    lui     t6,0x8014                       
-85b6c:    move    a1,t4                           
-85b70:    addu    t6,t6,a0                        
-85b74:    lh      t6,0x16e8(t6)                   
-85b78:    sra     t4,a3,0x2                       
-85b7c:    sll     t9,t7,0x2                       
-85b80:    addu    a2,t9,t4                        
-85b84:    sll     t8,a2,0x8                       
-85b88:    addu    s1,t6,t8                        
-85b8c:    addu    s1,s1,at                        
-85b90:    sll     t5,s1,0x10                      
-85b94:    sra     t7,t5,0x10                      
-85b98:    slti    at,s7,0xe                       
-85b9c:    move    s1,t7                           
-85ba0:    move    a2,t8                           
-85ba4:    sh      s3,4(v1)                        
-85ba8:    beqz    at,85d28 [31m~>[39m                     
-85bac:    sh      t7,6(v1)                        
-85bb0:    sll     a0,s3,0x10                      
-85bb4:    sll     a1,t7,0x10                      
-85bb8:    sra     t4,a1,0x10                      
-85bbc:    sra     t9,a0,0x10                      
-85bc0:    sh      s3,0xb0(sp)                     
-85bc4:    move    a0,t9                           
-85bc8:    move    a1,t4                           
-85bcc:    sw      t2,0x84(sp)                     
-85bd0:    jal     b8510                           
-85bd4:    sw      v0,0x80(sp)                     
-85bd8:    multu   s3,s1                           
-85bdc:    lui     at,0x41c6                       
-85be0:    ori     at,at,0x4e6d                    
-85be4:    lw      t3,0x80(sp)                     
-85be8:    sra     t8,v0,0x8                       
-85bec:    lui     t5,0x8026                       
-85bf0:    sll     t6,t3,0x2                       
-85bf4:    addu    t6,t6,t3                        
-85bf8:    sh      t8,0xb2(sp)                     
-85bfc:    sll     t6,t6,0x4                       
-85c00:    mflo    v1                              
-85c04:    addiu   t5,t5,-0x6270                   
-85c08:    sll     t7,s7,0x2                       
-85c0c:    multu   v1,at                           
-85c10:    lui     t9,0x8022                       
-85c14:    addu    t9,t9,t7                        
-85c18:    addu    s0,t6,t5                        
-85c1c:    lw      t9,0x2a30(t9)                   
-85c20:    lw      t2,0x84(sp)                     
-85c24:    sh      s1,0xb4(sp)                     
-85c28:    lui     at,0x41c6                       
-85c2c:    ori     at,at,0x4e6d                    
-85c30:    sw      t9,8(s0)                        
-85c34:    mflo    t4                              
-85c38:    addiu   v1,t4,0x3039                    
-85c3c:    srl     t8,v1,0x10                      
-85c40:    sll     t6,t8,0x10                      
-85c44:    sra     t5,t6,0x10                      
-85c48:    bgez    t5,85c60 [93m~>[39m                     
-85c4c:    move    v1,t5                           
-85c50:    addiu   v0,t5,0xff                      
-85c54:    sra     t7,v0,0x8                       
-85c58:    b       85c64 [95m~>[39m                        
-85c5c:    move    v0,t7                           
-85c60: [93m~>[39m sra     v0,v1,0x8                       
-85c64: [95m~>[39m bgez    v0,85c7c [96m~>[39m                     
-85c68:    addiu   a1,sp,0xa8                      
-85c6c:    andi    t9,v0,0x1f                      
-85c70:    beqz    t9,85c7c [96m~>[39m                     
-85c74:    move    v0,t9                           
-85c78:    addiu   v0,t9,-0x20                     
-85c7c: [96m~>[39m multu   s3,at                           
-85c80:    addiu   v1,v0,0xf0                      
-85c84:    sh      v1,0xa0(sp)                     
-85c88:    sh      v1,0xa2(sp)                     
-85c8c:    addiu   a2,sp,0xa0                      
-85c90:    addiu   a3,s0,0x10                      
-85c94:    mflo    a0                              
-85c98:    addiu   a0,a0,0x3039                    
-85c9c:    srl     t4,a0,0x10                      
-85ca0:    sll     t8,t4,0x10                      
-85ca4:    sra     t6,t8,0x10                      
-85ca8:    bgez    t6,85cc0 [92m~>[39m                     
-85cac:    move    a0,t6                           
-85cb0:    addiu   v0,t6,0xff                      
-85cb4:    sra     t5,v0,0x8                       
-85cb8:    b       85cc4 [90m~>[39m                        
-85cbc:    move    v0,t5                           
-85cc0: [92m~>[39m sra     v0,a0,0x8                       
-85cc4: [90m~>[39m bgez    v0,85cdc [35m~>[39m                     
-85cc8:    lui     t4,0x8004                       
-85ccc:    andi    t7,v0,0x1f                      
-85cd0:    beqz    t7,85cdc [35m~>[39m                     
-85cd4:    move    v0,t7                           
-85cd8:    addiu   v0,t7,-0x20                     
-85cdc: [35m~>[39m lw      t8,0x7f90(t4)                   
-85ce0:    addiu   t9,v0,0xf0                      
-85ce4:    sh      t9,0xa4(sp)                     
-85ce8:    sll     t5,s7,0x1                       
-85cec:    sll     t6,t8,0x5                       
-85cf0:    addu    t7,t6,t5                        
-85cf4:    lui     t9,0x8014                       
-85cf8:    addu    t9,t9,t7                        
-85cfc:    lh      t9,-0x43b4(t9)                  
-85d00:    li      at,2                            
-85d04:    sll     t4,t2,0xe                       
-85d08:    bne     t9,at,85d14 [36m~>[39m                  
-85d0c:    addiu   a0,sp,0xb0                      
-85d10:    sh      t4,0xa8(sp)                     
-85d14: [36m~>[39m jal     39d0                            
-85d18:    sw      t2,0x84(sp)                     
-85d1c:    lw      t2,0x84(sp)                     
-85d20:    b       85f5c [32m~>[39m                        
-85d24:    lw      v1,0x64(sp)                     
-85d28: [31m~>[39m lui     t8,0x8014                       
-85d2c:    lui     t6,0x8014                       
-85d30:    addiu   t6,t6,0x1700                    
-85d34:    addiu   t8,t8,0x16f0                    
-85d38:    li      at,-0x8000                      
-85d3c:    sll     v0,a0,0x1                       
-85d40:    addu    t0,v0,t8                        
-85d44:    addu    t1,v0,t6                        
-85d48:    addu    s8,a1,at                        
-85d4c:    beqz    t2,85d60 [31m~>[39m                     
-85d50:    addu    a3,a2,at                        
-85d54:    li      at,3                            
-85d58:    bne     t2,at,85d70 [93m~>[39m                  
-85d5c:    li      s4,0xc8                         
-85d60: [31m~>[39m li      s4,0xff                         
-85d64:    li      s5,0xff                         
-85d68:    b       85d78 [95m~>[39m                        
-85d6c:    li      s6,0xff                         
-85d70: [93m~>[39m li      s5,0xc8                         
-85d74:    li      s6,0xc8                         
-85d78: [95m~>[39m lui     t5,0x8004                       
-85d7c:    lw      t5,0x7f90(t5)                   
-85d80:    sll     t9,s7,0x2                       
-85d84:    subu    t9,t9,s7                        
-85d88:    sll     t7,t5,0x2                       
-85d8c:    subu    t7,t7,t5                        
-85d90:    sll     t7,t7,0x3                       
-85d94:    sll     t9,t9,0x2                       
-85d98:    addu    t4,t7,t9                        
-85d9c:    lui     t6,0x8014                       
-85da0:    addiu   t6,t6,-0x44ac                   
-85da4:    addiu   t8,t4,-0xc0                     
-85da8:    addu    s2,t8,t6                        
-85dac:    sll     t5,t3,0x2                       
-85db0:    lw      t9,0(s2)                        
-85db4:    addu    t5,t5,t3                        
-85db8:    lui     t7,0x8026                       
-85dbc:    addiu   t7,t7,-0x6270                   
-85dc0:    sll     t5,t5,0x4                       
-85dc4:    addu    s0,t5,t7                        
-85dc8:    sw      t9,8(s0)                        
-85dcc:    lh      t4,0(t0)                        
-85dd0:    lh      t5,0(t1)                        
-85dd4:    sw      t2,0x84(sp)                     
-85dd8:    addu    s3,t4,s8                        
-85ddc:    addu    s1,t5,a3                        
-85de0:    sll     t8,s3,0x10                      
-85de4:    sll     t7,s1,0x10                      
-85de8:    sra     s3,t8,0x10                      
-85dec:    sra     s1,t7,0x10                      
-85df0:    sll     a1,s1,0x10                      
-85df4:    sll     a0,s3,0x10                      
-85df8:    sra     t4,a0,0x10                      
-85dfc:    sra     t8,a1,0x10                      
-85e00:    move    a1,t8                           
-85e04:    move    a0,t4                           
-85e08:    sw      t1,0x40(sp)                     
-85e0c:    sw      t0,0x44(sp)                     
-85e10:    jal     b8510                           
-85e14:    sw      a3,0x50(sp)                     
-85e18:    lw      a3,0x50(sp)                     
-85e1c:    lw      t0,0x44(sp)                     
-85e20:    lw      t1,0x40(sp)                     
-85e24:    lw      t2,0x84(sp)                     
-85e28:    sh      s3,0x10(s0)                     
-85e2c:    lh      t6,4(s2)                        
-85e30:    sra     v1,v0,0x8                       
-85e34:    li      t7,0xff                         
-85e38:    addu    t5,t6,v1                        
-85e3c:    sh      t5,0x12(s0)                     
-85e40:    sh      s1,0x14(s0)                     
-85e44:    sh      zero,0x16(s0)                   
-85e48:    sh      zero,0x18(s0)                   
-85e4c:    sh      zero,0x1a(s0)                   
-85e50:    sb      s4,0x1c(s0)                     
-85e54:    sb      s5,0x1d(s0)                     
-85e58:    sb      s6,0x1e(s0)                     
-85e5c:    sb      t7,0x1f(s0)                     
-85e60:    sh      s3,0x20(s0)                     
-85e64:    sh      v1,0x22(s0)                     
-85e68:    sh      s1,0x24(s0)                     
-85e6c:    sh      zero,0x26(s0)                   
-85e70:    sh      zero,0x28(s0)                   
-85e74:    lh      t9,8(s2)                        
-85e78:    li      t6,0xff                         
-85e7c:    sb      s4,0x2c(s0)                     
-85e80:    sll     t4,t9,0xb                       
-85e84:    addiu   t8,t4,-0x20                     
-85e88:    sh      t8,0x2a(s0)                     
-85e8c:    sb      s5,0x2d(s0)                     
-85e90:    sb      s6,0x2e(s0)                     
-85e94:    sb      t6,0x2f(s0)                     
-85e98:    lh      t5,2(t0)                        
-85e9c:    lh      t4,2(t1)                        
-85ea0:    sw      t2,0x84(sp)                     
-85ea4:    addu    s3,t5,s8                        
-85ea8:    addu    s1,t4,a3                        
-85eac:    sll     t7,s3,0x10                      
-85eb0:    sll     t8,s1,0x10                      
-85eb4:    sra     s3,t7,0x10                      
-85eb8:    sra     s1,t8,0x10                      
-85ebc:    sll     a1,s1,0x10                      
-85ec0:    sll     a0,s3,0x10                      
-85ec4:    sra     t5,a0,0x10                      
-85ec8:    sra     t7,a1,0x10                      
-85ecc:    move    a1,t7                           
-85ed0:    jal     b8510                           
-85ed4:    move    a0,t5                           
-85ed8:    lw      t2,0x84(sp)                     
-85edc:    sh      s3,0x30(s0)                     
-85ee0:    lh      t9,0xc(s2)                      
-85ee4:    sra     v1,v0,0x8                       
-85ee8:    sh      s1,0x34(s0)                     
-85eec:    addu    t4,t9,v1                        
-85ef0:    sh      t4,0x32(s0)                     
-85ef4:    sh      zero,0x36(s0)                   
-85ef8:    lh      t8,0xc(s2)                      
-85efc:    li      t5,0xff                         
-85f00:    sh      zero,0x3a(s0)                   
-85f04:    sll     t6,t8,0xb                       
-85f08:    sh      t6,0x38(s0)                     
-85f0c:    sb      s4,0x3c(s0)                     
-85f10:    sb      s5,0x3d(s0)                     
-85f14:    sb      s6,0x3e(s0)                     
-85f18:    sb      t5,0x3f(s0)                     
-85f1c:    sh      s3,0x40(s0)                     
-85f20:    sh      v1,0x42(s0)                     
-85f24:    sh      s1,0x44(s0)                     
-85f28:    sh      zero,0x46(s0)                   
-85f2c:    lh      t7,0xc(s2)                      
-85f30:    sll     t9,t7,0xb                       
-85f34:    sh      t9,0x48(s0)                     
-85f38:    lh      t4,0x10(s2)                     
-85f3c:    sb      s4,0x4c(s0)                     
-85f40:    sb      s5,0x4d(s0)                     
-85f44:    sll     t8,t4,0xb                       
-85f48:    addiu   t6,t8,-0x20                     
-85f4c:    sh      t6,0x4a(s0)                     
-85f50:    sb      s6,0x4e(s0)                     
-85f54:    sb      t5,0x4f(s0)                     
-85f58:    lw      v1,0x64(sp)                     
-85f5c: [32m~>[39m srl     v0,v1,0x4                       
-85f60: [32m~>[39m andi    v1,v0,0xffff                    
-85f64:    bnez    v1,85ad4 [96m~>[39m                     
-85f68:    addiu   t2,t2,1                         
-85f6c: [36m~>[39m lw      t9,0x88(sp)                     
-85f70:    lw      t8,0x9c(sp)                     
-85f74:    li      at,0x10                         
-85f78:    addiu   t4,t9,1                         
+877d8:    addiu   sp,sp,-0x40                     
+877dc:    sw      ra,0x14(sp)                     
+877e0:    sw      a0,0x40(sp)                     
+877e4:    sw      a1,0x44(sp)                     
+877e8:    sw      a2,0x48(sp)                     
+877ec:    sw      a3,0x4c(sp)                     
+877f0:    addiu   a2,sp,0x3c                      
+877f4:    lh      a1,0x46(sp)                     
+877f8:    jal     785b4                           
+877fc:    lh      a0,0x42(sp)                     
+87800:    bnez    v0,87810 [35m~>[39m                     
+87804:    sw      v0,0x38(sp)                     
+87808:    b       87b1c [36m~>[39m                        
+8780c:    move    v0,zero                         
+87810: [35m~>[39m lh      a0,0x42(sp)                     
+87814:    jal     78bec                           
+87818:    lh      a1,0x46(sp)                     
+8781c:    li      at,-1                           
+87820:    bne     v0,at,8783c [32m~>[39m                  
+87824:    sw      v0,0x34(sp)                     
+87828:    lw      a1,0x3c(sp)                     
+8782c:    jal     786cc                           
+87830:    lw      a0,0x38(sp)                     
+87834:    b       87b1c [36m~>[39m                        
+87838:    li      v0,1                            
+8783c: [32m~>[39m lw      a1,0x4c(sp)                     
+87840:    sll     t6,v0,0x2                       
+87844:    addu    t6,t6,v0                        
+87848:    beqz    a1,87890 [31m~>[39m                     
+8784c:    sll     t6,t6,0x4                       
+87850:    lui     t7,0x8026                       
+87854:    addu    t7,t7,t6                        
+87858:    lui     t9,0x8004                       
+8785c:    lw      t0,0x7f90(t9)                   
+87860:    lb      t7,-0x6270(t7)                  
+87864:    lui     t3,0x8014                       
+87868:    sll     t1,t0,0x5                       
+8786c:    sll     t8,t7,0x1                       
+87870:    addu    t2,t8,t1                        
+87874:    addu    t3,t3,t2                        
+87878:    lh      t3,-0x43d4(t3)                  
+8787c:    slti    at,t3,0x11                      
+87880:    bnezl   at,87894 [93m~>[39m                     
+87884:    sll     t4,v0,0x2                       
+87888:    b       87b1c [36m~>[39m                        
+8788c:    move    v0,zero                         
+87890: [31m~>[39m sll     t4,v0,0x2                       
+87894: [93m~>[39m addu    t4,t4,v0                        
+87898:    sll     t4,t4,0x4                       
+8789c:    lui     a0,0x8026                       
+878a0:    addu    a0,a0,t4                        
+878a4:    lui     t6,0x8004                       
+878a8:    lw      t7,0x7f90(t6)                   
+878ac:    lb      a0,-0x6270(a0)                  
+878b0:    lui     v1,0x8014                       
+878b4:    sll     t9,t7,0x5                       
+878b8:    sll     t5,a0,0x1                       
+878bc:    addu    t0,t5,t9                        
+878c0:    addu    v1,v1,t0                        
+878c4:    bnez    a1,878e0 [95m~>[39m                     
+878c8:    lh      v1,-0x43d4(v1)                  
+878cc:    slti    at,v1,0x15                      
+878d0:    bnezl   at,878e4 [96m~>[39m                     
+878d4:    li      a2,2                            
+878d8:    b       87b1c [36m~>[39m                        
+878dc:    move    v0,zero                         
+878e0: [95m~>[39m li      a2,2                            
+878e4: [96m~>[39m bne     v1,a2,878f4 [92m~>[39m                  
+878e8:    slti    at,a0,0xe                       
+878ec:    b       87b1c [36m~>[39m                        
+878f0:    move    v0,zero                         
+878f4: [92m~>[39m bnez    at,87960 [90m~>[39m                     
+878f8:    lw      a1,0x3c(sp)                     
+878fc:    beqz    a1,8790c [35m~>[39m                     
+87900:    li      at,3                            
+87904:    bnel    a1,at,87934 [36m~>[39m                  
+87908:    li      v1,1                            
+8790c: [35m~>[39m lhu     v0,0x4a(sp)                     
+87910:    addiu   v0,v0,0x2000                    
+87914:    sra     t8,v0,0xe                       
+87918:    beqz    t8,87928 [32m~>[39m                     
+8791c:    nop                                     
+87920:    bnel    a2,t8,87934 [36m~>[39m                  
+87924:    li      v1,1                            
+87928: [32m~>[39m b       87b1c [36m~>[39m                        
+8792c:    move    v0,zero                         
+87930:    li      v1,1                            
+87934: [36m~>[39m beq     a1,v1,87940 [31m~>[39m                  
+87938:    lhu     v0,0x4a(sp)                     
+8793c:    bne     a1,a2,87960 [90m~>[39m                  
+87940: [31m~>[39m addiu   v0,v0,0x2000                    
+87944:    sra     t1,v0,0xe                       
+87948:    beq     v1,t1,87958 [93m~>[39m                  
+8794c:    li      at,3                            
+87950:    bnel    t1,at,87964 [95m~>[39m                  
+87954:    lhu     t2,0x4a(sp)                     
+87958: [93m~>[39m b       87b1c [36m~>[39m                        
+8795c:    move    v0,zero                         
+87960: [90m~>[39m lhu     t2,0x4a(sp)                     
+87964: [95m~>[39m lh      a0,0x42(sp)                     
+87968:    lh      a1,0x46(sp)                     
+8796c:    jal     b84f0                           
+87970:    sw      t2,0x20(sp)                     
+87974:    sra     t3,v0,0x8                       
+87978:    sh      t3,0x32(sp)                     
+8797c:    jal     1d950                           
+87980:    lhu     a0,0x4a(sp)                     
+87984:    sh      v0,0x2e(sp)                     
+87988:    jal     1d980                           
+8798c:    lhu     a0,0x4a(sp)                     
+87990:    lh      t4,0x2e(sp)                     
+87994:    lui     at,0x4059                       
+87998:    mtc1    at,$f1                          
+8799c:    mtc1    t4,$f4                          
+879a0:    lui     at,0x40e0                       
+879a4:    mtc1    at,$f3                          
+879a8:    cvt.s.w $f6,$f4                         
+879ac:    mtc1    zero,$f2                        
+879b0:    mtc1    zero,$f0                        
+879b4:    lh      t6,0x42(sp)                     
+879b8:    lh      t0,0x46(sp)                     
+879bc:    cvt.d.s $f8,$f6                         
+879c0:    mtc1    t6,$f18                         
+879c4:    div.d   $f10,$f8,$f2                    
+879c8:    cvt.d.w $f4,$f18                        
+879cc:    mul.d   $f16,$f10,$f0                   
+879d0:    mtc1    v0,$f10                         
+879d4:    nop                                     
+879d8:    cvt.s.w $f18,$f10                       
+879dc:    add.d   $f6,$f16,$f4                    
+879e0:    cvt.d.s $f16,$f18                       
+879e4:    trunc.w.d $f8,$f6                       
+879e8:    div.d   $f4,$f16,$f2                    
+879ec:    mfc1    a0,$f8                          
+879f0:    mtc1    t0,$f8                          
+879f4:    sll     t5,a0,0x10                      
+879f8:    cvt.d.w $f10,$f8                        
+879fc:    sra     a0,t5,0x10                      
+87a00:    mul.d   $f6,$f4,$f0                     
+87a04:    add.d   $f18,$f6,$f10                   
+87a08:    trunc.w.d $f16,$f18                     
+87a0c:    mfc1    a1,$f16                         
+87a10:    nop                                     
+87a14:    sll     t1,a1,0x10                      
+87a18:    jal     b84f0                           
+87a1c:    sra     a1,t1,0x10                      
+87a20:    lh      t7,0x32(sp)                     
+87a24:    sra     t3,v0,0x8                       
+87a28:    sll     t4,t3,0x10                      
+87a2c:    sra     t6,t4,0x10                      
+87a30:    subu    t5,t6,t7                        
+87a34:    mtc1    t5,$f4                          
+87a38:    lui     at,0x42c8                       
+87a3c:    mtc1    at,$f12                         
+87a40:    jal     3824                            
+87a44:    cvt.s.w $f14,$f4                        
+87a48:    mtc1    v0,$f6                          
+87a4c:    lui     at,0x40e0                       
+87a50:    mtc1    at,$f3                          
+87a54:    cvt.s.w $f10,$f6                        
+87a58:    lui     at,0x8014                       
+87a5c:    ldc1    $f0,0x17b8(at)                  
+87a60:    mtc1    zero,$f2                        
+87a64:    lui     at,0x8014                       
+87a68:    ldc1    $f8,0x17c0(at)                  
+87a6c:    cvt.d.s $f18,$f10                       
+87a70:    lw      a0,0x34(sp)                     
+87a74:    mul.d   $f16,$f0,$f18                   
+87a78:    lui     t1,0x8026                       
+87a7c:    sll     t8,a0,0x2                       
+87a80:    addu    t8,t8,a0                        
+87a84:    sll     t8,t8,0x4                       
+87a88:    addu    t1,t1,t8                        
+87a8c:    lb      t1,-0x6270(t1)                  
+87a90:    lw      a1,0x20(sp)                     
+87a94:    div.d   $f4,$f16,$f2                    
+87a98:    slti    at,t1,0xe                       
+87a9c:    li      a3,2                            
+87aa0:    sub.d   $f6,$f8,$f4                     
+87aa4:    trunc.w.d $f10,$f6                      
+87aa8:    mfc1    t0,$f10                         
+87aac:    beqz    at,87acc [96m~>[39m                     
+87ab0:    sh      t0,0x30(sp)                     
+87ab4:    sll     a2,t0,0x10                      
+87ab8:    sra     t2,a2,0x10                      
+87abc:    jal     76918                           
+87ac0:    move    a2,t2                           
+87ac4:    b       87b10 [92m~>[39m                        
+87ac8:    lw      a1,0x3c(sp)                     
+87acc: [96m~>[39m lh      t3,0x30(sp)                     
+87ad0:    lui     at,0x4700                       
+87ad4:    mtc1    at,$f8                          
+87ad8:    mtc1    t3,$f18                         
+87adc:    lw      a1,0x20(sp)                     
+87ae0:    li      a3,3                            
+87ae4:    cvt.s.w $f16,$f18                       
+87ae8:    mul.s   $f4,$f16,$f8                    
+87aec:    cvt.d.s $f6,$f4                         
+87af0:    div.d   $f10,$f6,$f0                    
+87af4:    trunc.w.d $f18,$f10                     
+87af8:    mfc1    a2,$f18                         
+87afc:    nop                                     
+87b00:    sll     t6,a2,0x10                      
+87b04:    jal     76918                           
