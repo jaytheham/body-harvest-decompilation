@@ -3422,7 +3422,7 @@ void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1, s16 startIndex, s32 arg3) {
 #endif
 // CURRENT(9775)
 #ifdef NON_MATCHING
-void func_8011DBA0_12CB50(s32 arg3) {
+void func_8011DBA0_12CB50() {
 	typedef struct {
 		s32 unk0;
 		s32 unk4;
