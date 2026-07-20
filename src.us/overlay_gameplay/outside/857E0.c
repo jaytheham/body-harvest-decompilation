@@ -87,7 +87,7 @@ void func_800769A8_85958(s32 arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(22088)
+// CURRENT(19364)
 void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 	Unk80052B40 spA8;
 	Unk80052B40 spA0;
@@ -96,7 +96,6 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 	Unk857E0Obj* entry;
 	s16 x;
 	s16 z;
-	s16 yBase;
 	s32 pattern;
 	u16 packed;
 	s32 outer;
@@ -107,14 +106,12 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 	s16* tempTable;
 	s32 xOff;
 	s32 zOff;
-	s32 c0;
-	s32 c1;
-	s32 c2;
+	u8 c0;
+	u8 c1;
+	u8 c2;
 
-	*(u32*) &spA0 = D_8013BCCC_14AC7C;
-	spA0.unk4 = D_8013BCD0_14AC80;
-	*(u32*) &sp98 = D_8013BCD4_14AC84;
-	sp98.unk4 = D_8013BCD8_14AC88;
+	spA0 = *(Unk80052B40*)&D_8013BCCC_14AC7C;
+	sp98 = *(Unk80052B40*)&D_8013BCD4_14AC84;
 
 	if (D_8014D2E8 == 0x96) {
 		return;
@@ -139,8 +136,8 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 		}
 
 		inner = 0;
-		type = packed & 0xF;
 		do {
+			type = packed & 0xF;
 			if (type != 0) {
 				obj = func_80076830_857E0();
 				if (obj == -1) {
@@ -155,8 +152,8 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 
 				xOff = (((arg1 << 2) + (outer & 3)) << 8) - 0x8000;
 				zOff = (((arg2 << 2) + (outer >> 2)) << 8) - 0x8000;
-				x = D_801416A0_150650[inner * 2] + xOff;
-				z = D_801416A8_150658[inner * 2] + zOff;
+				x = D_801416A0_150650[inner] + xOff;
+				z = D_801416A8_150658[inner] + zOff;
 				entry->unk4 = x;
 				entry->unk6 = z;
 
@@ -216,10 +213,9 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 					x = D_801416B0_150660[inner * 2] + xOff;
 					z = D_801416C0_150670[inner * 2] + zOff;
 					temp = func_800B84D0_C7480(x, z) >> 8;
-					yBase = tempTable[2];
 
 					entry->unk10 = x;
-					entry->unk12 = yBase + temp;
+					entry->unk12 = tempTable[2] + temp;
 					entry->unk14 = z;
 					entry->unk16 = 0;
 					entry->unk18 = 0;
@@ -243,13 +239,12 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 					x = D_801416B0_150660[inner * 2 + 1] + xOff;
 					z = D_801416C0_150670[inner * 2 + 1] + zOff;
 					temp = func_800B84D0_C7480(x, z) >> 8;
-					yBase = tempTable[6];
 
 					entry->unk30 = x;
-					entry->unk32 = yBase + temp;
+					entry->unk32 = tempTable[6] + temp;
 					entry->unk34 = z;
 					entry->unk36 = 0;
-					entry->unk38 = yBase << 0xB;
+					entry->unk38 = tempTable[6] << 0xB;
 					entry->unk3A = 0;
 					entry->unk3C = c0;
 					entry->unk3D = c1;
@@ -260,7 +255,7 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 					entry->unk42 = temp;
 					entry->unk44 = z;
 					entry->unk46 = 0;
-					entry->unk48 = yBase << 0xB;
+					entry->unk48 = tempTable[6] << 0xB;
 					entry->unk4A = (tempTable[8] << 0xB) - 0x20;
 					entry->unk4C = c0;
 					entry->unk4D = c1;
@@ -270,12 +265,10 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 			}
 
 			inner++;
-			packed = packed >> 4;
-			type = packed & 0xF;
+			packed >>= 4;
 		} while (packed != 0);
 	}
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80076A10_859C0.s")
 #endif
