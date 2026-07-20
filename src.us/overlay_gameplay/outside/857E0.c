@@ -388,7 +388,7 @@ void func_800772EC_8629C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800772EC_8629C.s")
 #endif
 
-// CURRENT(43791)
+// CURRENT(9878)
 #ifdef NON_MATCHING
 // DisplayTrees
 void func_8007764C_865FC(void) {
@@ -396,8 +396,6 @@ void func_8007764C_865FC(void) {
 	s32 camZ;
 	s32 cellX;
 	s32 cellZ;
-	s32 startCellX;
-	s32 startCellZ;
 	s32 i;
 	s32 type;
 	s32 prevType;
@@ -409,8 +407,6 @@ void func_8007764C_865FC(void) {
 	camZ = (D_80149436 - 0x880) >> 8;
 	cellX = camX >> 2;
 	cellZ = camZ >> 2;
-	startCellX = cellX;
-	startCellZ = cellZ;
 
 	for (i = 0; i < D_8014D2EC; i++) {
 		entry = (Unk_8014D298*) D_8014D298[i];
@@ -448,7 +444,7 @@ void func_8007764C_865FC(void) {
 		func_80076A10_859C0(0x14, (s16) D_8014D2F0, (s16) (D_8014D2F4 + 4));
 	}
 
-	while (D_8014D2F0 < startCellX) {
+	while (D_8014D2F0 < cellX) {
 		obj = (Unk857E0Obj*) D_80259D90;
 		for (i = 0; i < 0x96; i++, obj++) {
 			type = obj->unk2;
@@ -490,7 +486,7 @@ void func_8007764C_865FC(void) {
 		func_80076A10_859C0(4, (s16) (D_8014D2F0 + 4), (s16) D_8014D2F4);
 	}
 
-	while (D_8014D2F4 < startCellZ) {
+	while (D_8014D2F4 < cellZ) {
 		obj = (Unk857E0Obj*) D_80259D90;
 		for (i = 0; i < 0x96; i++, obj++) {
 			type = obj->unk2;
@@ -521,39 +517,35 @@ void func_8007764C_865FC(void) {
 
 	obj = (Unk857E0Obj*) D_80259D90;
 	for (; obj < (Unk857E0Obj*) &D_80259D90[0x96]; obj++) {
-		type = obj->unk2;
-		if ((obj->unk0 < 0xE) && (type != -1)) {
-			s32 row;
-			s32 col;
-
-			row = obj->unk1 >> 2;
-			col = obj->unk1 & 3;
-
-			if (type < 5) {
-				if (row < (camZ - (cellZ * 4))) {
-					continue;
+		if (obj->unk0 < 0xE) {
+			type = obj->unk2;
+			if (type == -1) {
+			} else {
+				if (type < 5) {
+					if ((obj->unk1 >> 2) < (camZ - (cellZ * 4))) {
+						continue;
+					}
+				} else if (type >= 0x14) {
+					if ((obj->unk1 >> 2) >= ((camZ - ((cellZ + 4) * 4)) + 0x10)) {
+						continue;
+					}
 				}
-			} else if (type >= 0x14) {
-				if (row >= ((camZ - ((cellZ + 4) * 4)) + 0x10)) {
-					continue;
+
+				if ((type == 0) || (type == 5) || (type == 0xA) || (type == 0xF) || (type == 0x14)) {
+					if ((obj->unk1 & 3) < (camX - (cellX * 4))) {
+						continue;
+					}
+				} else if ((type == 4) || (type == 9) || (type == 0xE) || (type == 0x13) || (type == 0x18)) {
+					if ((obj->unk1 & 3) >= ((camX - ((cellX + 4) * 4)) + 0x10)) {
+						continue;
+					}
 				}
+
+				gSPMatrix(D_8005BB2C++, (u32)&D_80031160 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+				gSPMatrix(D_8005BB2C++, (u32)&obj->unk10 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				gSPDisplayList(D_8005BB2C++, obj->unk8);
 			}
-
-			if ((type == 0) || (type == 5) || (type == 0xA) || (type == 0xF) || (type == 0x14)) {
-				if (col < (camX - (cellX * 4))) {
-					continue;
-				}
-			} else if ((type == 4) || (type == 9) || (type == 0xE) || (type == 0x13) || (type == 0x18)) {
-				if (col >= ((camX - ((cellX + 4) * 4)) + 0x10)) {
-					continue;
-				}
-			}
-
-			gSPMatrix(D_8005BB2C++, (u32)&D_80031160 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-			gSPMatrix(D_8005BB2C++, (u32)&obj->unk10 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			gSPDisplayList(D_8005BB2C++, obj->unk8);
 		}
-
 	}
 
 	gDPPipeSync(D_8005BB2C++);
@@ -589,62 +581,58 @@ void func_8007764C_865FC(void) {
 	prevType = -1;
 	obj = (Unk857E0Obj*) D_80259D90;
 	for (; obj < (Unk857E0Obj*) &D_80259D90[0x96]; obj++) {
-		type = obj->unk2;
-		if ((obj->unk0 >= 0xE) && (type != -1)) {
-			s32 row;
-			s32 col;
-
-			row = obj->unk1 >> 2;
-			col = obj->unk1 & 3;
-
-			if (type < 5) {
-				if (row < (camZ - (cellZ * 4))) {
-					continue;
+		if (obj->unk0 >= 0xE) {
+			type = obj->unk2;
+			if (type == -1) {
+			} else {
+				if (type < 5) {
+					if ((obj->unk1 >> 2) < (camZ - (cellZ * 4))) {
+						continue;
+					}
+				} else if (type >= 0x14) {
+					if ((obj->unk1 >> 2) >= ((camZ - ((cellZ + 4) * 4)) + 0x10)) {
+						continue;
+					}
 				}
-			} else if (type >= 0x14) {
-				if (row >= ((camZ - ((cellZ + 4) * 4)) + 0x10)) {
-					continue;
+
+				if ((type == 0) || (type == 5) || (type == 0xA) || (type == 0xF) || (type == 0x14)) {
+					if ((obj->unk1 & 3) < (camX - (cellX * 4))) {
+						continue;
+					}
+				} else if ((type == 4) || (type == 9) || (type == 0xE) || (type == 0x13) || (type == 0x18)) {
+					if ((obj->unk1 & 3) >= ((camX - ((cellX + 4) * 4)) + 0x10)) {
+						continue;
+					}
 				}
+
+				if (prevType != obj->unk0) {
+					gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, obj->unk8);
+
+					gDPLoadSync(D_8005BB2C++);
+
+					table = (s16*) ((u8*) D_8013BB14_14AAC4 + ((currentLevel * 0x18) + (obj->unk0 * 0xC) - 0xC0));
+					if (table[5] != 0) {
+						gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1372, 0);
+
+						gDPSetTextureLOD(D_8005BB2C++, G_TL_LOD);
+
+						gDPSetCombineMode(D_8005BB2C++, G_CC_TRILERP, G_CC_MODULATEIDECALA);
+					} else {
+						gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 0);
+
+						gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
+
+						gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIDECALA, G_CC_PASS2);
+					}
+
+					prevType = obj->unk0;
+				}
+
+				gSPVertex(D_8005BB2C++, (u32)&obj->unk10 & 0x1FFFFFFF, 4, 0);
+
+				gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 2, 3, 0);
 			}
-
-			if ((type == 0) || (type == 5) || (type == 0xA) || (type == 0xF) || (type == 0x14)) {
-				if (col < (camX - (cellX * 4))) {
-					continue;
-				}
-			} else if ((type == 4) || (type == 9) || (type == 0xE) || (type == 0x13) || (type == 0x18)) {
-				if (col >= ((camX - ((cellX + 4) * 4)) + 0x10)) {
-					continue;
-				}
-			}
-
-			if (prevType != obj->unk0) {
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, obj->unk8);
-
-				gDPLoadSync(D_8005BB2C++);
-
-				table = (s16*) ((u8*) D_8013BB14_14AAC4 + ((currentLevel * 0x18) + (obj->unk0 * 0xC) - 0xC0));
-				if (table[5] != 0) {
-					gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1372, 0);
-
-					gDPSetTextureLOD(D_8005BB2C++, G_TL_LOD);
-
-					gDPSetCombineMode(D_8005BB2C++, G_CC_TRILERP, G_CC_MODULATEIDECALA);
-				} else {
-					gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 0);
-
-					gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
-
-					gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIDECALA, G_CC_PASS2);
-				}
-
-				prevType = obj->unk0;
-			}
-
-			gSPVertex(D_8005BB2C++, (u32)&obj->unk10 & 0x1FFFFFFF, 4, 0);
-
-			gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 2, 3, 0);
 		}
-
 	}
 
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING);
