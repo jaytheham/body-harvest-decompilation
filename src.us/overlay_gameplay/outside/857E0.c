@@ -938,32 +938,34 @@ s32 func_80078BC8_87B78(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078BC8_87B78.s")
 #endif
 
-// CURRENT(4193)
 #ifdef NON_MATCHING
+// CURRENT(4943)
 s32 func_80078D64_87D14(s16 arg0, s16 arg1, s32 arg2) {
-	typedef struct {
-		s8 unk0;
-		u8 pad1;
-		s8 unk2;
-		s8 unk3;
-		s16 unk4;
-		s16 unk6;
-		u8 pad8[0x48];
-	} Unk80259D90Search;
-	Unk80259D90Search *entry;
+	Unk80259D90 *entry;
 	s16 x;
 	s16 z;
 	s32 i;
+	s32 unk2_1;
 
 	arg0 >>= 8;
 	arg1 >>= 8;
 
-	if (((s8) D_80259D90[0].unk2 != -1) && (arg0 == (D_80259D90[0].unk4 >> 8)) && (arg1 == (D_80259D90[0].unk6 >> 8)) && (arg2 == (s8) D_80259D90[0].pad3)) {
-		return 0;
+	unk2_1 = (s8) D_80259D90[1].unk2;
+
+	if ((s8) D_80259D90[0].unk2 != -1) {
+		x = D_80259D90[0].unk4;
+		if (arg0 == (x >> 8)) {
+			z = D_80259D90[0].unk6;
+			if (arg1 == (z >> 8)) {
+				if (arg2 == (s8) D_80259D90[0].pad3) {
+					return 0;
+				}
+			}
+		}
 	}
 
 	i = 2;
-	if ((s8) D_80259D90[1].unk2 != -1) {
+	if (unk2_1 != -1) {
 		x = D_80259D90[1].unk4;
 		z = D_80259D90[1].unk6;
 		if ((arg0 == (x >> 8)) && (arg1 == (z >> 8)) && (arg2 == (s8) D_80259D90[1].pad3)) {
@@ -971,13 +973,13 @@ s32 func_80078D64_87D14(s16 arg0, s16 arg1, s32 arg2) {
 		}
 	}
 
-	entry = (Unk80259D90Search *) &D_80259D90[2];
+	entry = &D_80259D90[2];
 	for (; i != 0x96; i += 4, entry += 4) {
 		if ((s8) entry[0].unk2 != -1) {
 			x = entry[0].unk4;
 			if (arg0 == (x >> 8)) {
 				z = entry[0].unk6;
-				if ((arg1 == (z >> 8)) && (arg2 == (s8) entry[0].unk3)) {
+				if ((arg1 == (z >> 8)) && (arg2 == (s8) entry[0].pad3)) {
 					return i;
 				}
 			}
@@ -986,7 +988,7 @@ s32 func_80078D64_87D14(s16 arg0, s16 arg1, s32 arg2) {
 		if ((s8) entry[1].unk2 != -1) {
 			x = entry[1].unk4;
 			z = entry[1].unk6;
-			if ((arg0 == (x >> 8)) && (arg1 == (z >> 8)) && (arg2 == (s8) entry[1].unk3)) {
+			if ((arg0 == (x >> 8)) && (arg1 == (z >> 8)) && (arg2 == (s8) entry[1].pad3)) {
 				return i + 1;
 			}
 		}
@@ -994,7 +996,7 @@ s32 func_80078D64_87D14(s16 arg0, s16 arg1, s32 arg2) {
 		if ((s8) entry[2].unk2 != -1) {
 			x = entry[2].unk4;
 			z = entry[2].unk6;
-			if ((arg0 == (x >> 8)) && (arg1 == (z >> 8)) && (arg2 == (s8) entry[2].unk3)) {
+			if ((arg0 == (x >> 8)) && (arg1 == (z >> 8)) && (arg2 == (s8) entry[2].pad3)) {
 				return i + 2;
 			}
 		}
@@ -1002,7 +1004,7 @@ s32 func_80078D64_87D14(s16 arg0, s16 arg1, s32 arg2) {
 		if ((s8) entry[3].unk2 != -1) {
 			x = entry[3].unk4;
 			z = entry[3].unk6;
-			if ((arg0 == (x >> 8)) && (arg1 == (z >> 8)) && (arg2 == (s8) entry[3].unk3)) {
+			if ((arg0 == (x >> 8)) && (arg1 == (z >> 8)) && (arg2 == (s8) entry[3].pad3)) {
 				return i + 3;
 			}
 		}
