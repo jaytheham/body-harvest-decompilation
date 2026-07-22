@@ -6624,11 +6624,13 @@ s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088154_97104.s")
 #endif
 
-// CURRENT(6335)
-#ifdef NON_MATCHING
 // maybe kill alien?
+#ifdef NON_MATCHING
+// CURRENT(2247)
 void func_80088760_97710(AlienInstance* alien) {
 	u8 specIndex;
+	s32 alienIndex;
+	AlienInstance* target;
 
 	if (alien->unk20 & 0x300000) {
 		return;
@@ -6649,13 +6651,8 @@ void func_80088760_97710(AlienInstance* alien) {
 	}
 
 	if (specIndex == 2) {
-		s32 alienIndex;
-		AlienInstance* target;
-		s32 flags;
-
-		flags = alien->unk20;
-		if (flags & 0x2000) {
-			if (flags & 0x4000) {
+		if (alien->unk20 & 0x2000) {
+			if (alien->unk20 & 0x4000) {
 				target = &alienInstances[alien->unk25];
 				if (!(target->unk20 & 0x300000) && (target->specIndex == 0x19)) {
 					alien->hitPoints = 0xA;
@@ -6692,9 +6689,8 @@ void func_80088760_97710(AlienInstance* alien) {
 				}
 
 				target = &alienInstances[alien->unk24];
-				flags = target->unk20;
-				if (!(flags & 0x100000)) {
-					target->unk20 = flags | 0x40004000;
+				if (!(target->unk20 & 0x100000)) {
+					target->unk20 = target->unk20 | 0x40004000;
 					alienInstances[alien->unk24].unkE = (s16)func_800038E0_44E0();
 					alienInstances[alien->unk24].unk12 = (s16)(func_800038E0_44E0() >> 6);
 					alienInstances[alien->unk24].unk10 = (s16)((func_800038E0_44E0() >> 8) + 0x200);
@@ -6755,13 +6751,9 @@ void func_80088760_97710(AlienInstance* alien) {
 		func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, alienSpecs[specIndex].unkC, 0);
 		alien->unk2C = 1;
 	} else {
-		s32 alienIndex;
-		void (*deathCallback)(u8);
-
 		alienIndex = alien - alienInstances;
-		deathCallback = alienSpecs[specIndex].unk5C;
-		if (deathCallback != NULL) {
-			deathCallback(alienIndex & 0xFF);
+		if (alienSpecs[specIndex].unk5C) {
+			((void(*)(u8))alienSpecs[specIndex].unk5C)(alienIndex & 0xFF);
 		} else {
 			func_80089EB4_98E64(alienIndex & 0xFF, 0x28, 0, 2, 0);
 		}
