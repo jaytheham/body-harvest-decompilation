@@ -115,17 +115,16 @@ void func_800AE588_BD538(void) {
 
 // https://decomp.me/scratch/AnFgt
 // guess_checkTriggers
+// CURRENT(1303)
 #ifdef NON_MATCHING
-// CURRENT(1523)
 void func_800AE6CC_BD67C(void)
 {
-  Unk80222A78 tmp;  
+  Unk80222A78 tmp;
   u8 i;
   u8 shouldRun;
   u8 waveId0;
   u8 waveId1;
-
-	int pad;
+  s32 dummy;
 
 	for (i = 0; i < D_80223778; i++)
 	{
@@ -135,8 +134,8 @@ void func_800AE6CC_BD67C(void)
 		case 0:
 		  
 		  if (D_80047F94 == D_80223780[D_80222A78[i].unk9].unk12
-			  && BH_ABS_ALT((D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8))) < D_80222A78[i].pad3
-			  && BH_ABS_ALT((D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8))) < D_80222A78[i].pad3)
+			  && ((-(D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8))) < (D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8)) ? (D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8)) : (-(D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8)))) < D_80222A78[i].pad3
+			  && ((-(D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8))) < (D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8)) ? (D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8)) : (-(D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8)))) < D_80222A78[i].pad3)
 			{
 			  waveId0 = D_80223780[D_80222A78[i].unk9].unkD;
 			  waveId1 = D_80223780[D_80222A78[i].unk9].unkC;
@@ -147,8 +146,6 @@ void func_800AE6CC_BD67C(void)
 				  shouldRun = 1;
 				}
 			  }
-			
-		  
 		}
 		  break;
 
@@ -189,14 +186,14 @@ void func_800AE6CC_BD67C(void)
 		  break;
 
 		case 3:
-		  if ((alienInstances[D_80222A78[i].unk8].unk20 & 0x00300000) != 0)
+		  if ((alienInstances[D_80222A78[i].unk8].unk20 & 0x00300000))
 		{
 		  shouldRun = 1;
 		}
 		  break;
 
 		case 4:
-		   if ((alienInstances[D_80222A78[i].unk8].unk20 & 0x1) < 0)
+		  if (alienInstances[D_80222A78[i].unk8].unk20 & 0x80000000)
 		{
 		  shouldRun = 1;
 		}
