@@ -1009,7 +1009,12 @@ typedef struct {
 	/* 0x18 */ s16 unk18;
 	/* 0x1A */ u8 unk1A; // specIndex
 	/* 0x1B */ u8 unk1B;
-} EntityInstance; // Properties shared by vehicle & alien instances
+	/* 0x1C */ s16 hitPoints;
+	/* 0x1E */ s16 unk1E;
+	/* 0x20 */ s32 unk20;
+	/* 0x24 */ u8 unk24;
+	/* 0x25 */ u8 unk25;
+} EntityInstance; // Properties shared by VehicleInstance & AlienInstance
 
 
 // 0x5C Pointer to Death animation ASM?

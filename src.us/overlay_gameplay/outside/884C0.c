@@ -6383,51 +6383,45 @@ void func_80087AAC_96A5C(u8 arg0) {
 }
 
 // https://decomp.me/scratch/Ue9P8
-// CURRENT(16)
-#ifdef NON_MATCHING
 void func_80087AFC_96AAC(u8 arg0)
 {
-  s32 flags;
-  s32 step;
-  s32 spec_idx = alienInstances[arg0].specIndex;
-  step = 4;
-	flags = alienInstances[arg0].unk20 & 0x600;
-  if (flags)
-  {
-	step = 1;
-  }
-  if (alienInstances[arg0].unk2C > 0)
-  {
-	if ((alienInstances[arg0].unk2C == 8) ||
-		((flags == 0) && ((alienInstances[arg0].unk2C & (~3)) == 0x20)))
+	u8 spec_idx;
+	s32 step;
+	spec_idx = alienInstances[arg0].specIndex;
+	step = 4;
+	if (alienInstances[arg0].unk20 & 0x600)
 	{
-	  if ((alienSpecs[spec_idx].unk16 & 0xF) == 1)
-	  {
-		func_800CF80C_DE7BC(
-			alienInstances[arg0].unk0,
-			alienInstances[arg0].unk2,
-			alienInstances[arg0].unk4,
-			alienSpecs[spec_idx].unk38, 0xC8, 0xC8, 0xDC, 1);
-	  }
-	  else
-	  {
-		func_800CF80C_DE7BC(
-			alienInstances[arg0].unk0,
-			alienInstances[arg0].unk2,
-			alienInstances[arg0].unk4,
-			alienSpecs[spec_idx].unkC, 0xC8, 0xC8, 0xDC, 1);
-	  }
+		step = 1;
 	}
-	alienInstances[arg0].unk2C -= step;
-  }
-  else
-  {
-	func_80079910_888C0(arg0);
-  }
+	if (alienInstances[arg0].unk2C > 0)
+	{
+		if ((alienInstances[arg0].unk2C == 8) ||
+			(((alienInstances[arg0].unk20 & 0x600) == 0) && ((alienInstances[arg0].unk2C & (~3)) == 0x20)))
+		{
+			if ((alienSpecs[spec_idx].unk16 & 0xF) == 1)
+			{
+				func_800CF80C_DE7BC(
+					alienInstances[arg0].unk0,
+					alienInstances[arg0].unk2,
+					alienInstances[arg0].unk4,
+					alienSpecs[spec_idx].unk38, 0xC8, 0xC8, 0xDC, 1);
+			}
+			else
+			{
+				func_800CF80C_DE7BC(
+					alienInstances[arg0].unk0,
+					alienInstances[arg0].unk2,
+					alienInstances[arg0].unk4,
+					alienSpecs[spec_idx].unkC, 0xC8, 0xC8, 0xDC, 1);
+			}
+		}
+		alienInstances[arg0].unk2C -= step;
+	}
+	else
+	{
+		func_80079910_888C0(arg0);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80087AFC_96AAC.s")
-#endif
 
 void func_80087C50_96C00(u8 arg0) {
 	alienInstances[arg0].unk3A = 0;
@@ -6544,10 +6538,10 @@ s32 func_800880B8_97068(void)
   return 0;
 }
 
-// 000881d4 Multiplies Adam's weapon damage by 1.8 in easy mode
-// 800885C8 halves alien death points in easy
 // CURRENT(3783)
 #ifdef NON_MATCHING
+// 000881d4 Multiplies Adam's weapon damage by 1.8 in easy mode
+// 800885C8 halves alien death points in easy
 s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 	u8 sp3B;
 	AlienSpec *sp30;
