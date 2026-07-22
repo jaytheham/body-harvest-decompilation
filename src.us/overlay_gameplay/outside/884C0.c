@@ -5964,67 +5964,57 @@ void func_800868A4_95854(u8 arg0, s32 arg1, s16 arg2, s16 arg3)
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(9674)
+// CURRENT(4523)
 s32 func_80086A34_959E4(u8 arg0, s32 arg1, s16 arg2)
 {
-	s16 sp54;
-	s16 sp4E;
-	f32 sp48;
-	s16 sp46;
-	s16 sp44;
+	f64 sp28;
+	AlienSpec* spec;
 	f32 sp3C;
-	f32 temp_f0_2;
-	f32 temp_f12;
-	f32 var_f2;
-	s16 temp_v0_2;
-	s16 temp_v0_4;
-	s16 temp_v1;
+	s16 sp44;
+	s16 sp46;
+	f32 sp48;
+	s16 sp4E;
+	s16 sp54;
 	s16 var_a3;
-	s32 temp_v0;
+	s16 temp_v1;
 	AlienInstance* temp_s0;
-	AlienSpec* temp_v0_3;
 	AlienInstance* var_s1;
 
 	temp_s0 = &alienInstances[arg0];
-	var_s1 = (AlienInstance*)D_80052B34;
 	temp_v1 = temp_s0->specIndex;
+	var_s1 = (AlienInstance*)D_80052B34;
 	if (temp_s0->unk1E != 0) {
 		return 0;
 	}
 
-	temp_v0 = temp_s0->unk20;
-	if (!(temp_v0 & 0x08000000) && (temp_v0 & 0x20)) {
-		temp_v0_2 = temp_s0->unk38;
-		if (temp_v0_2 != 0x100) {
-			var_s1 = &alienInstances[temp_v0_2];
+	if (!(temp_s0->unk20 & 0x08000000) && (temp_s0->unk20 & 0x20)) {
+		s16 temp = temp_s0->unk38;
+		if (temp != 0x100) {
+			var_s1 = &alienInstances[temp];
 		}
 	}
 
-	temp_v0_3 = &alienSpecs[temp_v1];
-	sp46 = (s16)((temp_s0->unk0 - var_s1->unk0) >> 2);
-	sp44 = (s16)((temp_s0->unk4 - var_s1->unk4) >> 2);
-	sp3C = sinf((f32)(((f64)(f32)temp_v0_3->unk3C * D_80141E60_150E10) / (32768.0 * 1.0)));
-	sp48 = sp3C / cosf((f32)(((f64)(f32)temp_v0_3->unk3C * D_80141E68_150E18) / (32768.0 * 1.0)));
-	sp4E = (s16)((s32)sqrtf((f32)((sp46 * sp46) + (sp44 * sp44))) * 4);
+	spec = &alienSpecs[temp_v1];
+	sp46 = (temp_s0->unk0 - var_s1->unk0) >> 2;
+	sp44 = (temp_s0->unk4 - var_s1->unk4) >> 2;
+	sp3C = sinf((f32)(((f64)(f32)spec->unk3C * D_80141E60_150E10[0]) / 32768.0));
+	sp48 = sp3C / cosf((f32)(((f64)(f32)spec->unk3C * D_80141E68_150E18[0]) / (32768.0 * 1.0)));
+	sp4E = (s32)sqrtf(sp46 * sp46 + sp44 * sp44) * 4;
 
-	sp54 = (s16)(s32)((f64)temp_s0->unk0 + ((f64)sp4E * ((f64)(f32)coss((temp_s0->unk6 + arg2) & 0xFFFF) / (32768.0 * 1.0))));
+	sp28 = (f64)sp4E;
+	sp54 = (s16)(s32)((f64)temp_s0->unk0 + sp28 * ((f64)(f32)coss((temp_s0->unk6 + arg2) & 0xFFFF) / 32768.0));
+	temp_v1 = (s16)(s32)((f64)temp_s0->unk4 + sp28 * ((f64)(f32)sins((temp_s0->unk6 + arg2) & 0xFFFF) / 32768.0));
 	var_a3 = var_s1->unk2 + 0x14;
-	temp_v1 = (s16)(s32)((f64)temp_s0->unk4 + ((f64)sp4E * ((f64)(f32)sins((temp_s0->unk6 + arg2) & 0xFFFF) / (32768.0 * 1.0))));
 	if (sp4E == 0) {
 		return 0;
 	}
 
-	temp_v0_4 = temp_s0->unk2;
-	temp_f12 = (f32)sp4E;
-	var_f2 = (f32)(temp_v0_4 - var_a3);
-	temp_f0_2 = sp48 * temp_f12;
-	if (temp_f0_2 < var_f2) {
-		var_a3 = (s16)(s32)((f32)temp_v0_4 - temp_f0_2);
-		var_f2 = (f32)(temp_v0_4 - var_a3);
+	if (sp48 * (f32)sp4E < (f32)(temp_s0->unk2 - var_a3)) {
+		var_a3 = (s16)(s32)((f32)temp_s0->unk2 - sp48 * (f32)sp4E);
 	}
 
-	if (var_f2 < (-sp48 * temp_f12)) {
-		var_a3 = (s16)(s32)((f32)temp_v0_4 + temp_f0_2);
+	if ((f32)(temp_s0->unk2 - var_a3) < -sp48 * (f32)sp4E) {
+		var_a3 = (s16)(s32)((f32)temp_s0->unk2 + sp48 * (f32)sp4E);
 	}
 
 	return func_800865F4_955A4(arg0, arg1, sp54, var_a3, temp_v1);
