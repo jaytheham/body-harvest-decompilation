@@ -1055,7 +1055,9 @@ typedef struct {
 	/* 0x54 */ s32 unk54; // xxxxyyyy xxxx Material type etc(Flesh, metal) Can use to give other enemies shields(000C)
 	/* 0x58 */ s16 unk58; // Height of body off the ground
 	/* 0x5A */ s8 unk5A;
-	/* 0x5B */ u8 pad5B[0xD];
+	/* 0x5B */ u8 pad5B;
+	/* 0x5C */ void *unk5C;
+	/* 0x60 */ u8 pad60[0x8];
 } AlienSpec; /* size = 0x68 */
 
 typedef struct {
