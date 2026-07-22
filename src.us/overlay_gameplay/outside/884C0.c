@@ -6174,8 +6174,8 @@ void func_8008741C_963CC(u8 arg0, s16 arg1) {
 	}
 }
 
-// CURRENT(3190)
 #ifdef NON_MATCHING
+// CURRENT(1215)
 s32 func_8008751C_964CC(u8 arg0, s32 arg1, s32 arg2)
 {
 	AlienInstance *inst;
@@ -6192,37 +6192,22 @@ s32 func_8008751C_964CC(u8 arg0, s32 arg1, s32 arg2)
 
 	inst = &alienInstances[arg0];
 	specIndex = inst->specIndex;
+	specVal = *(s16 *)((u8 *)alienSpecs + specIndex * 0x68 + 0x40);
 	tempV0 = inst->unk0 - inst->unk14;
 	tempV0 = (s16)tempV0;
 	tempA3 = -tempV0;
 	tempV1 = inst->unk4 - inst->unk18;
 	tempV1 = (s16)tempV1;
-	specVal = alienSpecs[specIndex].unk40;
 
-	if (tempA3 < tempV0) {
-		varA2 = tempV0;
-	} else {
-		varA2 = tempA3;
-	}
+	varA2 = (tempA3 < tempV0) ? tempV0 : tempA3;
 
 	tempA0 = -tempV1;
-	if (tempA0 < tempV1) {
-		varA1 = tempV1;
-	} else {
-		varA1 = tempA0;
-	}
+	varA1 = (tempA0 < tempV1) ? tempV1 : tempA0;
 
 	if (varA1 < varA2) {
-		if (tempA3 < tempV0) {
-			varV0 = (s16)tempV0;
-		} else {
-			varV0 = (s16)tempA3;
-		}
+		varV0 = (s16)((tempA3 < tempV0) ? tempV0 : tempA3);
 	} else {
-		varA1 = tempA0;
-		if (tempA0 < tempV1) {
-			varA1 = tempV1;
-		}
+		varA1 = (tempA0 < tempV1) ? tempV1 : tempA0;
 		varV0 = (s16)varA1;
 	}
 
