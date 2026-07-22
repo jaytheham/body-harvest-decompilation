@@ -6861,72 +6861,42 @@ s32 func_80088F78_97F28(u8 arg0) {
 	return *(s32 *)(unk0 + 4);
 }
 
-// https://decomp.me/scratch/Zpten
-// CURRENT(30)
-#ifdef NON_MATCHING
 s32 func_80088FFC_97FAC(s8 **arg0, s16 arg1, s16 arg2)
 {
-  int new_var3;
-  s32 var_s0;
-  s32 var_a3;
-  s8 *var_t8;
-  var_a3 = 0;
-  var_s0 = 0;
-  while (arg2 != (-1))
-  {
-	do{
-	var_t8 = (*arg0) + 8;
+	s32 a3;
+	s32 depth;
 
-	if ((*(*arg0)) == 1)
-	{
-	  var_s0 += 1;
+	a3 = 0;
+	depth = 0;
+	while (arg2 != -1) {
+		do {
+			if (**arg0 == 1) {
+				depth += 1;
+			} else if (**arg0 == -0x43) {
+				depth -= 1;
+			}
+			*arg0 += 8;
+		} while (depth != 1 || **arg0 != 6);
+		if (arg2 == arg1) {
+			a3 = *(s32 *)(*arg0 + 4);
+		} else if (D_8014DD50[arg2].unkC != -1) {
+			a3 = func_80088FFC_97FAC(arg0, arg1, D_8014DD50[arg2].unkC);
+		}
+		if (a3 != 0) {
+			return a3;
+		}
+		arg2 = D_8014DD50[arg2].unkD;
 	}
-	else if ((*(*arg0)) == (-0x43))
-	{
-	  var_s0 -= (0, 1);
-	}
-	new_var3 = arg2 == arg1;
-	*arg0 = var_t8;
-	} while (var_s0 != 1 || var_t8[0] != 6);
-	
-	if (new_var3)
-	{
-	  var_a3 = *((s32 *) (var_t8 + 4));
-	}
-	else if (D_8014DD50[arg2].unkC != (-1))
-	{
-	  var_a3 = func_80088FFC_97FAC(arg0, arg1, D_8014DD50[arg2].unkC);
-	}
-	if (var_a3 != 0)
-	{
-	  return var_a3;
-	}
-	arg2 = D_8014DD50[arg2].unkD;
-  }
-
-  do
-  {
-	  if (1){}
-	
-	if ((*(*arg0)) == 1)
-	{
-	  var_s0 += 1;
-	}
-	else if ((*(*arg0)) == (-0x43))
-	{
-	  var_s0 -= 1;
-	}
-	*arg0 += 8;
-  }
-  while (var_s0 != 0);
-  if (!D_8014DD50[arg2].unkC)
-  {
-  }
-  return 0;
+	do {
+		if (**arg0 == 1) {
+			depth += 1;
+		} else if (**arg0 == -0x43) {
+			depth -= 1;
+		}
+		*arg0 += 8;
+	} while (depth != 0);
+	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088FFC_97FAC.s")
-#endif
 
 s32 func_8008916C_9811C(u8 arg0, s16 arg1) {
 	s16 padX;
