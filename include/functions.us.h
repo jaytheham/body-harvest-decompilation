@@ -1376,7 +1376,6 @@ s32 func_802D6294_31A3E4(void);
 void func_800CCB60_DBB10(void);
 void func_800CF948_DE8F8(void);
 void func_800D0C00_DFBB0(void);
-void func_8008C428_9B3D8(s32 arg0);
 void func_80089200_981B0(u8 arg0, u32 arg1, s32 arg2);
 void func_800D25D0_E1580(void);
 void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, u8 arg6, u8 arg7);
