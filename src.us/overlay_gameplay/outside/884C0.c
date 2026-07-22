@@ -6103,6 +6103,7 @@ s32 func_80087188_96138(u8 arg0, s32 arg1, s32 arg2) {
 	func_80086A34_959E4(arg0, arg1, func_800870D8_96088(0x80, arg2));
 }
 
+// https://decomp.me/scratch/1Apcc
 #ifdef NON_MATCHING
 // CURRENT(104)
 s32 func_800871CC_9617C(u8 arg0, s32 arg1, s32 arg2)
@@ -6124,9 +6125,9 @@ s32 func_800871CC_9617C(u8 arg0, s32 arg1, s32 arg2)
   if (func_800865F4_955A4(
 	  arg0,
 	  arg1,
-	  ((alienInstances[arg0].unk0 + (((f32) cos1 / 32768.0) * dx)) + (dz * ((f32) sin1 / 32768.0))),
+	  ((alienInstances[arg0].unk0 + (dz * ((f32) cos1 / 32768.0))) + (((f32) sin1 / 32768.0) * dx)),
 	  D_80052B34->unk2,
-	  ((alienInstances[arg0].unk4 - (dx * ((f32) sin2 / 32768.0))) + (dz * ((f32) cos2 / 32768.0)))) != 0)
+	  ((alienInstances[arg0].unk4 - (dx * ((f32) sin2 / 32768.0))) + (((f32) cos2 / 32768.0) * dz))) != 0)
   {
 	return 1;
   }
