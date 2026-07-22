@@ -6947,6 +6947,7 @@ void func_80089200_981B0(u8 arg0, u32 arg1, s32 arg2)
   u16 sp3C;
   u16 sp3A;
   u16 sp38;s32 *new_var;
+  // Agent - it seems likely this assignment to a ptr is wrong
   new_var = &arg2;
   if (((D_80052A8C + arg0) % arg1) == (func_800038E0_44E0() % ((s32) arg1)))
   {
@@ -6982,7 +6983,7 @@ void func_800893C8_98378(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	func_80081E5C_90E0C(arg1);
 }
 
-// CURRENT(200)
+// CURRENT(9151)
 #ifdef NON_MATCHING
 void func_80089574_98524(u8 arg0) {
 	u16 sp48;

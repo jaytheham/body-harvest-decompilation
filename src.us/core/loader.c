@@ -719,6 +719,7 @@ s32 func_80011FE4_12BE4(void *arg0) {
 	return ((s32)arg0 & 0xFFFFFF) + D_8006AA74;
 }
 
+// Convert model-bank id+offset into RAM address?
 s32 func_80012000_12C00(s32 arg0) {
 	switch ((u32)arg0 >> 24) {
 	case 1:
