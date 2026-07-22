@@ -7778,15 +7778,14 @@ void func_8008BF8C_9AF3C(u8 arg0)
 }
 
 // https://decomp.me/scratch/ngB77
-// CURRENT(38)
 #ifdef NON_MATCHING
+// CURRENT(8)
 void func_8008C0F8_9B0A8(u8 arg0)
 {
   u8 specEntry;
   s16 randA;
   s16 randB;
-  s32 threshold;
-  specEntry = (u8) D_8014DD50[alienInstances[arg0].unkC].unkC;
+  specEntry = D_8014DD50[alienInstances[arg0].unkC].unkC;
   if (!(alienInstances[arg0].unk20 & 0x600))
   {
 	return;
@@ -7821,8 +7820,7 @@ void func_8008C0F8_9B0A8(u8 arg0)
 	randB = func_800038E0_44E0();
 	func_800DF038_EDFE8((s16) ((alienInstances[arg0].unk0 - (((s32) ((u16) randA)) % 128)) + 0x40), (s16) ((alienInstances[arg0].unk2 - (((s32) ((u16) randB)) % 64)) + 0x20), (alienInstances[arg0].unk4 - (func_800038E0_44E0() % 128)) + 0x40, 0x32, 0, (s32) (&D_8013C178_14B128));
   }
-  threshold = D_80222A70;
-  if (alienInstances[arg0].unk2 < threshold)
+  if (alienInstances[arg0].unk2 < D_80222A70)
   {
 	alienInstances[arg0].unk3A++;
   }
@@ -7838,7 +7836,7 @@ void func_8008C0F8_9B0A8(u8 arg0)
   }
   ;
   alienInstances[arg0].unk2C = 2;
-  if (alienInstances[arg0].unk2 < threshold)
+  if (alienInstances[arg0].unk2 < D_80222A70)
   {
 	func_800DF038_EDFE8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (alienSpecs[alienInstances[arg0].specIndex].unkC * 3), 4, (s32) (&D_8013C16C_14B11C));
 	func_800DEF2C_EDEDC(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0xFF, 2);
