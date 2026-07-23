@@ -3437,17 +3437,16 @@ s32 func_800808F0_8F8A0(u8 arg0, s16 *arg1)
 }
 
 // https://decomp.me/scratch/n1AaG
-// CURRENT(38)
-#ifdef NON_MATCHING
+// CURRENT(0)
 s32 func_80080A54_8FA04(u8 arg0, s16 arg1, s16 arg2)
 {
   s32 dx;
   s32 dz;
   s16 angle;
-	u8 new_var;
+  u8 new_var;
   s16 maxTurn;
   s16 diff;
-  s32 result;
+  
   new_var = alienInstances[arg0].specIndex;
   maxTurn = alienSpecs[new_var].unk42;
   dx = arg1 - alienInstances[arg0].unk0;
@@ -3456,23 +3455,21 @@ s32 func_80080A54_8FA04(u8 arg0, s16 arg1, s16 arg2)
   diff = angle - alienInstances[arg0].unk6;
   if (-maxTurn >= diff)
   {
-	alienInstances[arg0].unk6 -= maxTurn;
-	result = 1;
-  }
-  else if (maxTurn < diff)
-  {
-	alienInstances[arg0].unk6 += maxTurn;
-	result = 1;
+    alienInstances[arg0].unk6 -= maxTurn;
   }
   else
   {
-	return 0;
+    if (maxTurn < diff)
+    {
+      alienInstances[arg0].unk6 += maxTurn;
+    }
+    else
+    {
+      return 0;
+    }
   }
-  return result;
+  return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080A54_8FA04.s")
-#endif
 
 // set building as target for alien?
 void func_80080B44_8FAF4(u8 alienInstanceIndex, u8 buildingInstanceIndex) {
