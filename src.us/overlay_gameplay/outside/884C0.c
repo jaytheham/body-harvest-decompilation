@@ -3576,7 +3576,7 @@ void func_80080BC0_8FB70(u8 arg0, s16 arg1, s16 arg2, u8 arg3)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080BC0_8FB70.s")
 #endif
 
-// CURRENT(5404)
+// CURRENT(4825)
 #ifdef NON_MATCHING
 s32 func_80080D98_8FD48(u8 arg0, s32 arg1) {
 	AlienInstance *alien = &alienInstances[arg0];
@@ -3587,7 +3587,6 @@ s32 func_80080D98_8FD48(u8 arg0, s32 arg1) {
 	u8 humanType;
 	u8 targetIdx = arg1;
 	u16 randVal;
-	u32 flags;
 	u32 tempFlags;
 
 	if (alienSpec == 1) {
@@ -3601,8 +3600,7 @@ s32 func_80080D98_8FD48(u8 arg0, s32 arg1) {
 		}
 
 		if (targetIdx == alien->unk38) {
-			flags = alien->unk20;
-			if (((flags & 0x80) && !(flags & 0x20000)) || (humanType == 0x1B)) {
+			if (((alien->unk20 & 0x80) && !(alien->unk20 & 0x20000)) || (humanType == 0x1B)) {
 				osSyncPrintf(&D_80141D88_150D38);
 				if ((currentLevel == 4) && (D_80047F94 == 2)) {
 					func_800153D8_15FD8(0xC5);
@@ -3625,7 +3623,7 @@ s32 func_80080D98_8FD48(u8 arg0, s32 arg1) {
 
 	target = &vehicleInstances[targetIdx];
 	speedSq = (target->unk30 * target->unk30) + (target->unk38 * target->unk38);
-	minSpeedSq = (f32)(((u16)target->unk12) * ((u16)target->unk12));
+	minSpeedSq = (f32)(((s16)target->unk12) * ((s16)target->unk12));
 	if (speedSq < minSpeedSq) {
 		speedSq = minSpeedSq;
 	}
@@ -3687,8 +3685,8 @@ s32 func_80080D98_8FD48(u8 arg0, s32 arg1) {
 			alien->unk20 |= 0x100000;
 			humanType = alien->unk24;
 			if ((humanType == 1) || (humanType == 0x1D)) {
-				sins((target->unkE + 0x4000) & 0xFFFF);
-				coss((target->unkE + 0x4000) & 0xFFFF);
+				sins((u16)(target->unkE + 0x4000));
+				coss((u16)(target->unkE + 0x4000));
 				D_80159320 |= 0x02000000;
 				func_800A8A68_B7A18(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 0x1B);
 			}
