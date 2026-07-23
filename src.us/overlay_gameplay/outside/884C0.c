@@ -4168,7 +4168,7 @@ s32 func_800825E8_91598(s16 arg0, s16 arg1, s32 *arg2)
 
 // CURRENT(7713)
 #ifdef NON_MATCHING
-s32 func_800826E4_91694(s32 arg0, u16 arg1, u16 arg2) {
+s32 func_800826E4_91694(u8 arg0, u16 arg1, u16 arg2) {
 	AlienInstance *inst;
 	s32 distSq[3][3];
 	s16 baseX;
@@ -4179,7 +4179,7 @@ s32 func_800826E4_91694(s32 arg0, u16 arg1, u16 arg2) {
 	s32 mask;
 	s32 result;
 
-	inst = &alienInstances[arg0 & 0xFF];
+	inst = &alienInstances[arg0];
 	threshold = alienSpecs[inst->specIndex].unk8;
 
 	distSq[0][0] = ((inst->unk0 & 0xFF) * (inst->unk0 & 0xFF)) + ((inst->unk4 & 0xFF) * (inst->unk4 & 0xFF));
@@ -4347,7 +4347,7 @@ s32 func_80082CA0_91C50(u8 arg0)
   s32 zOffset;
   s32 curXPos;
   s32 curZPos;
-  if (alienInstances[arg0].unk0){}
+
   startXPos = (alienInstances[arg0].unk0 >> 8) - 1;
   startZPos = (alienInstances[arg0].unk4 >> 8) - 1;
 	
@@ -4526,8 +4526,8 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 
 	for (i = 0; i < 8; i++) {
 		angle = (s16)(i << 13);
-		x = (s32)((((f64)(f32)coss((u16)angle) / 32768.0) * radius) + (f64)alien->unk0);
-		z = (s32)((((f64)(f32)sins((u16)angle) / 32768.0) * radius) + (f64)alien->unk4);
+		x = (s32)((((f32)coss((u16)angle) / 32768.0) * radius) + alien->unk0);
+		z = (s32)((((f32)sins((u16)angle) / 32768.0) * radius) + alien->unk4);
 
 		if (func_80083060_92010(x, z, arg0, &hitBuilding) != 0) {
 			if ((hitBuilding != 0xFF) && (func_80082E38_91DE8(arg0, buildingInstances[hitBuilding].yCoord) == 0) &&
@@ -4579,16 +4579,16 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 
 		offset = (s16)(i << 10);
 		angle = (s16)(lowAngle - offset);
-		x = (s32)((((f64)(f32)coss((u16)angle) / 32768.0) * radius) + (f64)alien->unk0);
-		z = (s32)((((f64)(f32)sins((u16)angle) / 32768.0) * radius) + (f64)alien->unk4);
+		x = (s32)((((f32)coss((u16)angle) / 32768.0) * radius) + alien->unk0);
+		z = (s32)((((f32)sins((u16)angle) / 32768.0) * radius) + alien->unk4);
 		if ((func_80083060_92010(x, z, arg0, &hitBuilding) != 0) &&
 			((hitBuilding == 0xFF) || (func_80082E38_91DE8(arg0, buildingInstances[hitBuilding].yCoord) != 0))) {
 			leftAngle = angle;
 		}
 
 		angle = (s16)(highAngle + offset);
-		x = (s32)((((f64)(f32)coss((u16)angle) / 32768.0) * radius) + (f64)alien->unk0);
-		z = (s32)((((f64)(f32)sins((u16)angle) / 32768.0) * radius) + (f64)alien->unk4);
+		x = (s32)((((f32)coss((u16)angle) / 32768.0) * radius) + alien->unk0);
+		z = (s32)((((f32)sins((u16)angle) / 32768.0) * radius) + alien->unk4);
 		if ((func_80083060_92010(x, z, arg0, &hitBuilding) != 0) &&
 			((hitBuilding == 0xFF) || (func_80082E38_91DE8(arg0, buildingInstances[hitBuilding].yCoord) != 0))) {
 			rightAngle = angle;
@@ -5094,13 +5094,13 @@ void func_800847D0_93780(u8 arg0)
 #endif
 
 // https://decomp.me/scratch/g8Awf
-// CURRENT(8)
+// CURRENT(155)
 #ifdef NON_MATCHING
 void func_80084904_938B4(u8 arg0)
 {
-  s16 sp2A;
-  u8 new_var;
+u8 new_var;
   s16 temp_a1;
+	s16 sp2A;
   s16 var_a3;
   temp_a1 = (var_a3 = (func_800038E0_44E0() >> 1) - 0x4000);
   new_var = alienInstances[arg0].specIndex;
@@ -5112,8 +5112,8 @@ void func_80084904_938B4(u8 arg0)
 	}
   }
   sp2A = alienInstances[arg0].unk2A + var_a3;
-  alienInstances[arg0].unk14 = alienInstances[arg0].unk0 + ((((f32) coss(sp2A)) / 32768.0) * D_80141E30);
-  alienInstances[arg0].unk18 = alienInstances[arg0].unk4 + ((((f32) sins(sp2A)) / 32768.0) * D_80141E38);
+  alienInstances[arg0].unk14 = alienInstances[arg0].unk0 + ((((f32) coss(sp2A)) / 32768.0) * D_80141E30_150DE0[0]);
+  alienInstances[arg0].unk18 = alienInstances[arg0].unk4 + ((((f32) sins(sp2A)) / 32768.0) * D_80141E38_150DE8[0]);
   if (alienSpecs[new_var].unk40 > 0)
   {
 	alienInstances[arg0].unk34 = 0x5DC / (alienSpecs[new_var].unk40 >> 5);
