@@ -3,12 +3,13 @@
 
 #define ABS(x) ((x)<0 ? -(x) : (x))
 #define BH_ABS(x) ((x)<(-x) ? -(x) : (x))
-#define BH_ABS_ALT(x) ((x)<(-x) ? (x) : -(x))
+#define BH_ABS_ALT(x) (-(x)<(x) ? (x) : -(x))
 #define ABSF(x) ((x)<0.0f ? -(x) : (x))
 #define ABSD(x) ((x)<0.0 ? -(x) : (x))
 
 // opposite of ABS
 #define NABS(x) ((x)>0 ? -(x) : (x))
+#define BH_NABS(x) ((x)<(-x) ? (x) : -(x))
 
 #define SIGNUM(x) ((x)<0 ? -1 : 1)
 #define SIGNUMF(x) ((x)<0.0f ? -1 : 1)
