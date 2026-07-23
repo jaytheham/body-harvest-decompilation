@@ -5130,12 +5130,12 @@ void func_80084904_938B4(u8 arg0)
 #ifdef NON_MATCHING
 void func_80084AE4_93A94(AlienInstance *arg0, AlienInstance *arg1)
 {
-  f32 new_var;
-  f32 sp24;
-  
-  f32 sp1C;
-  s32 sp18;AlienSpec *spec;
-  if (((s8 *) arg1)[13] == (-2))
+  f32 yDif;
+  f32 xDif;
+  f32 zDif;
+  s32 sp18;
+	AlienSpec *spec;
+  if ((s8 ) arg1->unkC == (-2))
   {
 	spec = (AlienSpec *) (&vehicleSpecs[arg1->specIndex]);
   }
@@ -5144,12 +5144,12 @@ void func_80084AE4_93A94(AlienInstance *arg0, AlienInstance *arg1)
 	spec = &alienSpecs[arg1->specIndex];
   }
   sp18 = alienSpecs[arg0->specIndex].unkC + spec->unkC;
-  sp24 = (f32) (arg0->unk0 - arg1->unk0);
-  new_var = (f32) (arg0->unk2 - arg1->unk2);
-  sp1C = (f32) (arg0->unk4 - arg1->unk4);
-  arg0->unk10 = (s16) ((s32) (((f32) arg0->unk10) + (new_var * 4.0f)));
-  arg0->unkE = func_80003824_4424(sp24, sp1C);
-  arg0->unk12 = (s16) ((s32) ((((f32) sp18) - sqrtf((sp24 * sp24) + (sp1C * sp1C))) * 4.0f));
+  xDif = (arg0->unk0 - arg1->unk0);
+  yDif = (arg0->unk2 - arg1->unk2);
+  zDif = (arg0->unk4 - arg1->unk4);
+  arg0->unk10 = ((f32) arg0->unk10) + (yDif * 4.0f);
+  arg0->unkE = func_80003824_4424(xDif, zDif);
+  arg0->unk12 = ((((f32) sp18) - sqrtf((xDif * xDif) + (zDif * zDif))) * 4.0f);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084AE4_93A94.s")
@@ -5483,15 +5483,14 @@ void func_8008554C_944FC(u8 arg0)
 }
 
 // https://decomp.me/scratch/NQqt9
-// CURRENT(250)
+// CURRENT(375)
 #ifdef NON_MATCHING
 void func_80085690_94640(u8 arg0, u16 arg1)
 {
   AlienInstance *alien;
   s32 x;
 
-	// why is arg1 going to a2 instead of a temp reg?
-  if (func_80084FE8_93F98(arg0, (s32)arg1) != 0)
+  if (func_80084FE8_93F98(arg0, arg1) != 0)
   {
 	alien = &alienInstances[arg0];
 	if (alien->unk1E == 0)
@@ -5576,7 +5575,7 @@ s32 func_80085900_948B0(u8 arg0, s32 arg1)
 
 s32 func_800859F4_949A4(u8 arg0) {
 	AlienInstance *inst = &alienInstances[arg0];
-	if (func_80084FE8_93F98(arg0, (alienSpecs[inst->specIndex].unk51 * 0xC8) & 0xFFFF) != 0) {
+	if (func_80084FE8_93F98(arg0, (alienSpecs[inst->specIndex].unk51 * 0xC8)) != 0) {
 		inst->unk20 |= 0x08000100;
 		return 1;
 	}

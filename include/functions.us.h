@@ -929,7 +929,7 @@ s32 func_8007E500_8D4B0(AlienInstance *, AlienSpec *, AlienInstance *, AlienSpec
 s32 func_8007E734_8D6E4(AlienInstance *, s16);
 s32 func_8008199C_9094C(u8 arg0);
 s32 func_8007F9C8_8E978(u8, u8);
-s32 func_80084FE8_93F98(u8, s32);
+s32 func_80084FE8_93F98(u8, u16);
 void func_800F3190_102140(u8 arg0);
 s32 func_800BC5DC_CB58C(s16 arg0);
 void func_80085690_94640(u8, s16);
