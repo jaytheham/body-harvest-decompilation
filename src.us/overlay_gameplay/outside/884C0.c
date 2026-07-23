@@ -4479,7 +4479,7 @@ s32 func_80083060_92010(s16 arg0, s16 arg1, s32 arg2, u8 *arg3)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80083060_92010.s")
 #endif
 
-// CURRENT(4881)
+// CURRENT(3293)
 #ifdef NON_MATCHING
 s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 	AlienInstance *alien;
@@ -4537,7 +4537,7 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 			alien->unk28 = (s8)(x >> 8);
 			alien->unk29 = (s8)(z >> 8);
 			blockedBuilding = hitBuilding;
-			if (ABS(delta) < 0x4000) {
+			if (BH_ABS_ALT(delta) < 0x4000) {
 				nearCount++;
 			}
 			if (spanCount == 0) {
@@ -4572,10 +4572,7 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 	}
 
 	for (i = 1; i != 8; i++) {
-		s16 offset;
-
-		offset = (s16)(i << 10);
-		angle = (s16)(lowAngle - offset);
+		angle = (s16)(lowAngle - (i << 10));
 		x = (s32)((((f32)coss((u16)angle) / 32768.0) * radius) + alien->unk0);
 		z = (s32)((((f32)sins((u16)angle) / 32768.0) * radius) + alien->unk4);
 		if ((func_80083060_92010(x, z, arg0, &hitBuilding) != 0) &&
@@ -4583,7 +4580,7 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 			leftAngle = angle;
 		}
 
-		angle = (s16)(highAngle + offset);
+		angle = (s16)(highAngle + (i << 10));
 		x = (s32)((((f32)coss((u16)angle) / 32768.0) * radius) + alien->unk0);
 		z = (s32)((((f32)sins((u16)angle) / 32768.0) * radius) + alien->unk4);
 		if ((func_80083060_92010(x, z, arg0, &hitBuilding) != 0) &&
