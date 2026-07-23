@@ -3441,11 +3441,11 @@ s32 func_800808F0_8F8A0(u8 arg0, s16 *arg1)
 #ifdef NON_MATCHING
 s32 func_80080A54_8FA04(u8 arg0, s16 arg1, s16 arg2)
 {
-  u8 new_var;
-  s16 maxTurn;
   s32 dx;
   s32 dz;
   s16 angle;
+	u8 new_var;
+  s16 maxTurn;
   s16 diff;
   s32 result;
   new_var = alienInstances[arg0].specIndex;
@@ -3804,14 +3804,14 @@ void func_800816B0_90660(u8 arg0, void *arg1) {
 
 	if (alien->specIndex != 1) {
 		trig = sins((u16)target->unkE);
-		alien->unk14 = (s16)(s32)((f64)alien->unk14 + (((f64)D_8013C270_14B220[idx] * ((f64)(f32)coss((u16)target->unkE) / 32768.0)) - ((f64)D_8013C280_14B230[idx] * ((f64)(f32)trig / 32768.0))));
+		alien->unk14 = (s16)(s32)(alien->unk14 + ((D_8013C270_14B220[idx] * ((f32)coss((u16)target->unkE) / 32768.0)) - (D_8013C280_14B230[idx] * ((f32)trig / 32768.0))));
 		trig = coss((u16)target->unkE);
-		alien->unk18 = (s16)(s32)((f64)alien->unk18 + (((f64)D_8013C270_14B220[idx] * ((f64)(f32)sins((u16)target->unkE) / 32768.0)) + ((f64)D_8013C280_14B230[idx] * ((f64)(f32)trig / 32768.0))));
+		alien->unk18 = (s16)(s32)(alien->unk18 + ((D_8013C270_14B220[idx] * ((f32)sins((u16)target->unkE) / 32768.0)) + (D_8013C280_14B230[idx] * ((f32)trig / 32768.0))));
 	} else {
 		trig = sins((u16)target->unkE);
-		alien->unk14 = (s16)(s32)((f64)alien->unk14 + (((f64)D_8013C290_14B240[idx] * ((f64)(f32)coss((u16)target->unkE) / 32768.0)) - ((f64)D_8013C2A0_14B250[idx] * ((f64)(f32)trig / 32768.0))));
+		alien->unk14 = (s16)(s32)(alien->unk14 + ((D_8013C290_14B240[idx] * ((f32)coss((u16)target->unkE) / 32768.0)) - (D_8013C2A0_14B250[idx] * ((f32)trig / 32768.0))));
 		trig = coss((u16)target->unkE);
-		alien->unk18 = (s16)(s32)((f64)alien->unk18 + (((f64)D_8013C290_14B240[idx] * ((f64)(f32)sins((u16)target->unkE) / 32768.0)) + ((f64)D_8013C2A0_14B250[idx] * ((f64)(f32)trig / 32768.0))));
+		alien->unk18 = (s16)(s32)(alien->unk18 + ((D_8013C290_14B240[idx] * ((f32)sins((u16)target->unkE) / 32768.0)) + (D_8013C2A0_14B250[idx] * ((f32)trig / 32768.0))));
 	}
 }
 #else
@@ -4067,6 +4067,8 @@ s16 func_80082394_91344(s32 arg0, s32 arg1, s32 arg2) {
 				continue;
 			}
 
+			// Agent - try this: these should probably use ternary expressions
+			// there are similar matched functions, find them and observe their structure
 			dx = arg0 - alien->unk0;
 			negDx = -dx;
 			if (negDx < dx) {
