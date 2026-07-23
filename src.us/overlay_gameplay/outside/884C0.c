@@ -4443,18 +4443,18 @@ s32 func_80082EB4_91E64(u8 arg0, s16 arg1)
 #endif
 
 // https://decomp.me/scratch/fQx5r
-// CURRENT(131)
+// CURRENT(90)
 #ifdef NON_MATCHING
 s32 func_80083060_92010(s16 arg0, s16 arg1, s32 arg2, u8 *arg3)
 {
   s32 sp18;
   s32 sp1C;
   s32 sp24;
-  s16 var_v1;
   s16 sp22;
+  s16 var_v1;
   sp24 = alienInstances[arg2].specIndex;
-  sp18 = arg1;
   sp1C = arg0;
+  sp18 = arg1;
   *arg3 = func_8011E6FC_12D6AC(sp1C, sp18, &sp22);
   
 	var_v1 = (*arg3) != 0xFF
