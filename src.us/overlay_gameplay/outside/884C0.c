@@ -4842,10 +4842,9 @@ void func_80083EF4_92EA4(AlienInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80083EF4_92EA4.s")
 #endif
 
-// CURRENT(4565)
+// CURRENT(3522)
 #ifdef NON_MATCHING
 void func_800840B0_93060(s8 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
-	s16 temp_v0;
 	s16 var_s3;
 	s8 var_s0;
 	s32 minus4;
@@ -4853,32 +4852,28 @@ void func_800840B0_93060(s8 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 	s32 minus1;
 	s32 minus2;
 	s32 rand_half;
+	s32 neg_s3;
 
-	var_s0 = arg0;
-	var_s3 = arg1;
 	minus4 = -5;
 	minus8 = -9;
 	minus1 = -2;
 	minus2 = -3;
 	rand_half = 0x8000;
+	var_s0 = arg0, var_s3 = arg1;
 
 loop:
 	if (func_800038E0_44E0() >= 0xFBF5) {
 		var_s3 = (s16)-var_s3;
 	}
 
-	temp_v0 = (s16)-var_s3;
 	if (var_s3 < 0) {
+		neg_s3 = -var_s3;
 		var_s0 = (s8)(var_s0 & minus4);
 	} else {
+		neg_s3 = var_s3;
 		var_s0 = (s8)(var_s0 & minus1);
 	}
-
-	if (temp_v0 < var_s3) {
-		temp_v0 = var_s3;
-	}
-
-	if (temp_v0 < 0x4000) {
+	if ((neg_s3 < var_s3 ? var_s3 : neg_s3) < 0x4000) {
 		var_s0 = (s8)(var_s0 & minus8);
 	} else {
 		var_s0 = (s8)(var_s0 & minus2);
@@ -4973,7 +4968,6 @@ loop:
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800840B0_93060.s")
 #endif
-
 
 // CURRENT(13111)
 #ifdef NON_MATCHING
