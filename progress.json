@@ -1,13 +1,13 @@
 {
-  "generated": "2026-07-23T05:05:20Z",
-  "commit": "e0df15c5",
-  "commit_timestamp": "2026-07-23T17:04:48+12:00",
+  "generated": "2026-07-23T19:16:22Z",
+  "commit": "79eec055",
+  "commit_timestamp": "2026-07-24T07:15:47+12:00",
   "overall": {
     "total_functions": 2714,
-    "matched": 1594,
-    "non_matching": 1120,
+    "matched": 1596,
+    "non_matching": 1118,
     "asm_stubs": 0,
-    "matched_pct": 58.73,
+    "matched_pct": 58.81,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -31,11 +31,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 890,
-      "non_matching": 556,
+      "matched": 892,
+      "non_matching": 554,
       "asm_stubs": 0,
       "total": 1446,
-      "matched_pct": 61.5,
+      "matched_pct": 61.7,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -417,11 +417,11 @@
     {
       "path": "overlay_gameplay/outside/884C0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 111,
-      "non_matching": 63,
+      "matched": 113,
+      "non_matching": 61,
       "asm_stubs": 0,
       "total": 174,
-      "matched_pct": 63.8,
+      "matched_pct": 64.9,
       "contributor": "jaytheham"
     },
     {
@@ -689,8 +689,8 @@
     {
       "name": "jaytheham",
       "files": 58,
-      "matched": 1592,
-      "non_matching": 1120,
+      "matched": 1594,
+      "non_matching": 1118,
       "asm_stubs": 0
     },
     {
@@ -872,9 +872,9 @@
     },
     {
       "date": "2026-07-19",
-      "commit": "e0df15c",
-      "matched": 1594,
-      "non_matching": 1120,
+      "commit": "79eec05",
+      "matched": 1596,
+      "non_matching": 1118,
       "total": 2714
     }
   ]
