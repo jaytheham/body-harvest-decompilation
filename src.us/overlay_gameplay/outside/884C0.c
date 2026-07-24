@@ -2467,84 +2467,104 @@ end:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E608_8D5B8.s")
 #endif
 
-// CURRENT(1525)
+// https://decomp.me/scratch/0eKzs
+// CURRENT(185)
 #ifdef NON_MATCHING
-s32 func_8007E734_8D6E4(AlienInstance *arg0, s16 arg1) {
-	s16 var_a3;
-	s16 temp_v0;
-	s32 absDiff;
-	s32 magnitude;
-	s32 divisor;
-
-	temp_v0 = arg1 - arg0->unkE;
-	arg1 = (s16) arg1;
-	if ((arg0->specIndex < 3) || (arg0->specIndex == 0x20)) {
-		if (temp_v0 <= 0) {
-			arg0->unkE = arg1 - 0x4000;
-			arg0->unk6 = arg0->unkE;
-			return 1;
-		}
-		return 0;
+s32 func_8007E734_8D6E4(AlienInstance *arg0, s16 arg1)
+{
+  s16 var_a3;
+  s16 temp_v0;
+  s32 absDiff;
+  s32 magnitude;
+  s32 divisor;
+  temp_v0 = arg1 - arg0->unkE;
+  arg1 = (s16) arg1;
+  if ((arg0->specIndex < 3) || (arg0->specIndex == 0x20))
+  {
+	if (temp_v0 <= 0)
+	{
+	  arg0->unkE = arg1 - 0x4000;
+	  arg0->unk6 = arg0->unkE;
+	  return 1;
 	}
-
-	if (arg0->unk20 & 0x1A0) {
-		var_a3 = arg0->unk2A;
-	} else {
-		var_a3 = arg0->unkE;
-	}
-
-	if (arg0->unk20 & 0x40100000) {
-		arg0->unk47 |= 2;
-	}
-
-	if (((temp_v0 < 0) && (arg0->unk12 > 0)) || ((temp_v0 > 0) && (arg0->unk12 < 0))) {
-		arg0->unk12 = 0;
-	}
-
-	temp_v0 = arg1 - var_a3;
-	if (((temp_v0 > 0) && (arg0->unk12 >= 0)) || ((temp_v0 < 0) && (arg0->unk12 < 0))) {
-		return 1;
-	}
-
+	return 0;
+  }
+  if (arg0->unk20 & 0x1A0)
+  {
+	var_a3 = arg0->unk2A;
+  }
+  else
+  {
+	var_a3 = arg0->unkE;
+  }
+  if (arg0->unk20 & 0x40100000)
+  {
 	arg0->unk47 |= 2;
-	temp_v0 = var_a3 - arg1;
-	magnitude = -temp_v0;
-	if (magnitude < temp_v0) {
-		magnitude = temp_v0;
-	} else {
-		magnitude = -temp_v0;
-	}
-
-	if (magnitude < 0x4000) {
-		if ((s16)(arg0->unkE - arg1) < 0) {
-			arg0->unk2A = arg1 + 0x800;
-		} else {
-			arg0->unk2A = arg1 - 0x800;
-		}
-	} else {
-		arg1 += 0x8000;
-		if ((s16)(arg0->unkE - arg1) < 0) {
-			arg0->unk2A = arg1 + 0x800;
-		} else {
-			arg0->unk2A = arg1 - 0x800;
-		}
-	}
-
-	divisor = alienSpecs[arg0->specIndex].unk42;
-	if (divisor != 0) {
-		temp_v0 = arg0->unk2A - arg0->unkE;
-		magnitude = -temp_v0;
-		if (magnitude < temp_v0) {
-			magnitude = temp_v0;
-		} else {
-			magnitude = -temp_v0;
-		}
-		arg0->unk34 = (magnitude / divisor) + 0x1E;
-	} else {
-		arg0->unk34 = 1;
-	}
-
+  }
+  if (((temp_v0 < 0) && (arg0->unk12 > 0)) || ((temp_v0 > 0) && (arg0->unk12 < 0)))
+  {
+	arg0->unk12 = 0;
+  }
+  temp_v0 = arg1 - var_a3;
+  divisor = temp_v0;
+  if (((temp_v0 > 0) && (arg0->unk12 >= 0)) || ((temp_v0 < 0) && (arg0->unk12 < 0)))
+  {
 	return 1;
+  }
+  arg0->unk47 |= 2;
+  magnitude = -temp_v0;
+  if (magnitude < temp_v0)
+  {
+	magnitude = temp_v0;
+  }
+  else
+  {
+	magnitude = -divisor;
+	temp_v0 = var_a3 - arg1;
+  }
+  if (magnitude < 0x4000)
+  {
+	if (((s16) (arg0->unkE - arg1)) < 0)
+	{
+	  arg0->unk2A = arg1 + 0x800;
+	}
+	else
+	{
+	  arg0->unk2A = arg1 - 0x800;
+	}
+  }
+  else
+  {
+	arg1 += 0x8000;
+	if (((s16) (arg0->unkE - arg1)) < 0)
+	{
+	  arg0->unk2A = arg1 + 0x800;
+	}
+	else
+	{
+	  arg0->unk2A = arg1 - 0x800;
+	}
+  }
+  divisor = alienSpecs[arg0->specIndex].unk42;
+  if (divisor != 0)
+  {
+	temp_v0 = arg0->unk2A - arg0->unkE;
+	magnitude = -temp_v0;
+	if (magnitude < temp_v0)
+	{
+	  magnitude = temp_v0;
+	}
+	else
+	{
+	  magnitude = -temp_v0;
+	}
+	arg0->unk34 = (magnitude / divisor) + 0x1E;
+  }
+  else
+  {
+	arg0->unk34 = 1;
+  }
+  return 1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E734_8D6E4.s")
@@ -2571,6 +2591,8 @@ void func_8007E980_8D930(AlienInstance *arg0, s16 arg1, s16 arg2) {
 		return;
 	}
 
+	// Agent - in body harvest code it's common for abs values to be calculated with ternary ops
+	// or one of the ABS macros
 	diffA = arg0->unkE - arg1;
 	absA = -diffA;
 	if (absA < diffA) {
@@ -3121,47 +3143,41 @@ void func_8007FDD8_8ED88(void)
 	u32 count;
 	u8 *activeList;
 	u8 specIdx;
-
-	inst = alienInstances;
-	i = 0;
-	while (i < 0xFF)
+	
+	for (i = 0;i < 0xFF;i++)
 	{
-		specIdx = inst->specIndex;
+		specIdx = alienInstances[i].specIndex;
 		if (specIdx != 0)
 		{
-			inst->unk47 &= ~0xE;
-			if (inst->unk47 & 1)
+			alienInstances[i].unk47 &= ~0xE;
+			if (alienInstances[i].unk47 & 1)
 			{
-				inst->unk34--;
-				if (inst->unk34 < 0)
+				alienInstances[i].unk34--;
+				if (alienInstances[i].unk34 < 0)
 				{
-					inst->unk34 = 0;
-					inst->unk47 &= ~1;
+					alienInstances[i].unk34 = 0;
+					alienInstances[i].unk47 &= ~1;
 					if (!(alienSpecs[specIdx].unk54 & 0x2000))
 					{
-						inst->unk20 &= 0xFFFBFFFF;
-						inst->unkE = inst->unk6;
+						alienInstances[i].unk20 &= 0xFFFBFFFF;
+						alienInstances[i].unkE = alienInstances[i].unk6;
 					}
 				}
 			}
 
-			if (inst->unk40 == 0)
+			if (alienInstances[i].unk40 == 0)
 			{
-				if ((inst->unk0 >> 8) == (inst->unk2E >> 8))
+				if ((alienInstances[i].unk0 >> 8) == (alienInstances[i].unk2E >> 8))
 				{
-					if ((inst->unk4 >> 8) == (inst->unk32 >> 8))
+					if ((alienInstances[i].unk4 >> 8) == (alienInstances[i].unk32 >> 8))
 					{
-						goto next_inst;
+						continue;
 					}
 				}
 			}
 
 			func_8007FB08_8EAB8(i & 0xFF, specIdx);
 		}
-
-	next_inst:
-		i++;
-		inst++;
 	}
 
 	count = D_8014ECCC;
