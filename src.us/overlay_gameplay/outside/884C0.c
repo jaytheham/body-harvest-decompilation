@@ -5485,21 +5485,21 @@ void func_8008554C_944FC(u8 arg0)
 }
 
 // https://decomp.me/scratch/NQqt9
-// CURRENT(375)
+// CURRENT(230)
 #ifdef NON_MATCHING
 void func_80085690_94640(u8 arg0, u16 arg1)
 {
   AlienInstance *alien;
-  s32 x;
+  s32 x = arg1;
 
-  if (func_80084FE8_93F98(arg0, arg1) != 0)
+  if (func_80084FE8_93F98(arg0, (u16)x) != 0)
   {
 	alien = &alienInstances[arg0];
 	if (alien->unk1E == 0)
 	{
 	  func_80122524_1314D4(
 		  D_80052B34,
-		  D_80145BE0_154B90[alienSpecs[alien->specIndex].unk0].unk2,
+		  D_80145BE0_154B90[*(s32 *)&alienSpecs[alien->specIndex].pad1C].unk2,
 		  alien->unk0,
 		  alien->unk4);
 	  alien->unk1E = 0x1C;
