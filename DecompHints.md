@@ -1,13 +1,13 @@
 
 - O2 ignores `register` eg, `register s32 a;` becomes `s32 a;`
-- If a parameter is `arg0 && 0xFF` or `arg0 && 0xFFFF` it should probably be defined as a u8 or u16 - especially if it is `&&` every time it is used.
-- If v0 is being used for a variable and should not be, the function may need to return a value - which should use v0.
+- If a variable is `arg0 && 0xFF` or `arg0 && 0xFFFF` it likely should be defined as a u8 or u16 (or the parameter of the function it's passed to should be) - especially if it is `&&` every time it is used.
+- If v0 is being used for a variable and should not be, the function may need to return a value - which will use v0.
 - If a branch instruction's registers are reversed, reversing the order in C may help. If not, and one is a literal value, try putting the literal into a var.
 - If you see `+ 1` happening to a var in a loop consider it may be a `for(var=x;var<y;var++)` loop.
 - If you see missing `b` after another type of branch you may have `if` that needs its `else` added.
 - A variable being decremented and being checked for != 0 is also usually a `while (var--)`
 - An if wrapping a do/while loop - both of which have the same condition - probably should be just a while loop.
-- If the stack size is too large, evaluate are there any temp variables that can be removed. Especially if they are storing a pointer to an array or struct that can be directly dereferenced.
+- If the stack size is too large, evaluate are there any temp variables that can be removed. Especially if they are storing a pointer to an array or struct that can be directly dereferenced multiple times instead - this is very idiomatic BH code.
 - temp registers (t0, t1, etc) are generally used to hold values that were not assigned to a variable in c, while a, s, & v registers are often used for values that were assigned to variables.
 
 ### Register allocation differences

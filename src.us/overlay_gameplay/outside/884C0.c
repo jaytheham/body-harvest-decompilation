@@ -2807,8 +2807,8 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	s32 recurseFlag;
 	s32 ret;
 
-	selfIndex = arg0 & 0xFF;
-	start = arg1 & 0xFF;
+	selfIndex = arg0;
+	start = arg1;
 	inst = &alienInstances[selfIndex];
 	specIndex = inst->specIndex;
 	soundId = 0xFF;
@@ -2883,7 +2883,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 			if (arg2 == 0) {
 				if ((currentLevel != 3) || ((specIndex != 9) && (specIndex != 8))) {
 					ret = 1;
-					goto done;
+					break;
 				}
 			} else {
 				func_8007ED9C_8DD4C(selfIndex);
@@ -2892,10 +2892,8 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 
 			inst->unk47 |= 4;
 		}
-	}
-
-	if ((spec->unk54 & 8) && ((inst->unk0 != inst->unk2E) || (inst->unk2 != inst->unk30) || (inst->unk4 != inst->unk32) || (arg2 == 0)) && (D_80158FD8 > 0)) {
-		for (i = 0; i < D_80158FD8; i = (i + 1) & 0xFF) {
+	} else if ((spec->unk54 & 8) && ((inst->unk0 != inst->unk2E) || (inst->unk2 != inst->unk30) || (inst->unk4 != inst->unk32) || (arg2 == 0)) && (D_80158FD8 > 0)) {
+		for (i = 0; i < D_80158FD8; i++) {
 			u8 vehIndex;
 			s32 hitType;
 
@@ -2977,7 +2975,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 			func_8007EB74_8DB24(inst, other);
 			if (arg2 == 0) {
 				ret = 1;
-				goto done;
+				break;
 			}
 
 			recurseFlag = 1;
@@ -3006,7 +3004,6 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 		}
 	}
 
-done:
 	if (recurseFlag != 0) {
 		func_8007F0E8_8E098(selfIndex, 0, arg2);
 	}
