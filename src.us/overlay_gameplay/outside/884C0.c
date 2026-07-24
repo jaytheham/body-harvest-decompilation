@@ -3255,8 +3255,8 @@ void func_800800E4_8F094(u8 arg0)
 		func_800F2890_101840((u8) (inst->unk20 & 7), &sp3C, &sp38, &sp37);
 	} else {
 		sp37 = 0;
-		sp3C += (s32) ((f64) inst->unk12 * ((f64) (f32) coss((u16) inst->unkE) / 32768.0)) >> 5;
-		sp38 += (s32) ((f64) inst->unk12 * ((f64) (f32) sins((u16) inst->unkE) / 32768.0)) >> 5;
+		sp3C += (s32) (inst->unk12 * ((f32) coss((u16) inst->unkE) / 32768.0)) >> 5;
+		sp38 += (s32) (inst->unk12 * ((f32) sins((u16) inst->unkE) / 32768.0)) >> 5;
 	}
 	if (func_80080418_8F3C8(arg0, sp3C, sp38) != 0) {
 		temp_v0 = inst->unk20;
@@ -3437,7 +3437,6 @@ s32 func_800808F0_8F8A0(u8 arg0, s16 *arg1)
 }
 
 // https://decomp.me/scratch/n1AaG
-// CURRENT(0)
 s32 func_80080A54_8FA04(u8 arg0, s16 arg1, s16 arg2)
 {
   s32 dx;
