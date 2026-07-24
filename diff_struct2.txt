@@ -1,0 +1,271 @@
+TARGET                                                   CURRENT                             
+9b868:    addiu   sp,sp,-0x88                            9b868:    addiu   sp,sp,-0x88              
+9b86c:    sw      a0,0x88(sp)                            9b86c:    sw      a0,0x88(sp)              
+9b870:    lbu     t6,0x8b(sp)                            9b870:    lbu     t6,0x8b(sp)              
+[2m<35 lines>[22m                                                                                          
+9b900:    b       9bef0 [31m~>[39m                               9b900:    b       9bef4 [31m~>[39m                 
+9b904:    lw      ra,0x44(sp)                            9b904:    lw      ra,0x44(sp)              
+9b908: [36m~>[39m and     t5,v0,at                               9b908: [36m~>[39m and     t4,v0,at                 
+[33m9b90c:[39m    beqz    [35mt5[39m,9b9d0 [93m~>[39m                     [33mr[39m      [33m9b90c:[39m    beqz    [35mt4[39m,9b9d4 [93m~>[39m              
+9b910:    lui     t2,0x8022                              9b910:    lui     t9,0x8022                
+9b914:    beqzl   v1,9bea0 [95m~>[39m                            9b914:    beqzl   v1,9bea4 [95m~>[39m              
+9b918:    lh      t9,0x2c(s0)                            9b918:    lh      t4,0x2c(s0)              
+[2m<3 lines>[22m                                                                                           
+9b928:    sll     t6,a0,0x4                              9b928:    sll     t6,t5,0x4                
+9b92c:    addu    v0,v1,t6                               9b92c:    addu    v0,v1,t6                 
+9b930:    lh      t7,2(v0)                               9b930:    lh      t7,2(v0)                 
+[31m9b934:[39m    [31mlh      t9,0x2c(s0)[39m                     [31m<[39m                                                 
+9b938:    li      v1,0xc                                 9b934:    li      v1,0xc                   
+9b93c:    addiu   t8,t7,2                                9b938:    addiu   t8,t7,2                  
+                                                  [32m>[39m      [32m9b93c:[39m    [32msh      t8,2(v0)[39m                 
+                                                  [32m>[39m      [32m9b940:[39m    [32mlh      t9,0x2c(s0)[39m              
+9b940:    slti    at,t9,0x58                             9b944:    slti    at,t9,0x58               
+[94m9b944:[39m    [94mbnez    at,9be9c[39m [96m~>[39m                     [94m|[39m      [94m9b948:[39m    [94mbnezl   at,9bea4[39m [95m~>[39m              
+[94m9b948:[39m    [94msh      t8,2(v0)[39m                        [94m|[39m      [94m9b94c:[39m    [94mlh      t4,0x2c(s0)[39m              
+9b94c:    lh      t2,0x14(s0)                            9b950:    lh      t1,0x14(s0)              
+9b950:    lh      t7,0x16(s0)                            9b954:    lh      t0,0xa(v0)               
+[94m9b954:[39m    [94mlhu     t1,0xa(v0)[39m                      [94m|[39m      [94m9b958:[39m    [94mlh      t5,8(v0)[39m                 
+9b958:    addiu   t3,t2,0x4000                           9b95c:    addiu   t2,t1,0x4000             
+9b95c:    div     zero,t3,v1                             9b960:    div     zero,t2,v1               
+9b960:    mflo    t4                                     9b964:    mflo    t3                       
+                                                  [32m>[39m      [32m9b968:[39m    [32msubu    t4,t0,t3[39m                 
+                                                  [32m>[39m      [32m9b96c:[39m    [32msh      t4,0xa(v0)[39m               
+[94m9b964:[39m    [94mlhu     t6,8(v0)[39m                        [94m|[39m      [94m9b970:[39m    [94mlh      t6,0x16(s0)[39m              
+9b968:    bnez    v1,9b974 [92m~>[39m                            9b974:    bnez    v1,9b980 [96m~>[39m              
+9b96c:    nop                                            9b978:    nop                              
+9b970:    break   0x7                                    9b97c:    break   0x7                      
+9b974: [92m~>[39m li      at,-1                                  9b980: [96m~>[39m li      at,-1                    
+9b978:    bne     v1,at,9b98c [90m~>[39m                         9b984:    bne     v1,at,9b998 [92m~>[39m           
+9b97c:    lui     at,0x8000                              9b988:    lui     at,0x8000                
+[33m9b980:[39m    bne     [36mt3[39m,at,9b98c [90m~>[39m                  [33mr[39m      [33m9b98c:[39m    bne     [36mt2[39m,at,9b998 [92m~>[39m           
+9b984:    nop                                            9b990:    nop                              
+9b988:    break   0x6                                    9b994:    break   0x6                      
+9b98c: [90m~>[39m div     zero,t7,v1                             9b998: [92m~>[39m div     zero,t6,v1               
+9b990:    mflo    t8                                     9b99c:    mflo    t7                       
+9b994:    subu    t5,t1,t4                               9b9a0:    subu    t8,t5,t7                 
+[31m9b998:[39m    [31msubu    t9,t6,t8[39m                        [31m<[39m                                                 
+[31m9b99c:[39m    [31msh      t5,0xa(v0)[39m                      [31m<[39m                                                 
+9b9a0:    bnez    v1,9b9ac [35m~>[39m                            9b9a4:    bnez    v1,9b9b0 [90m~>[39m              
+9b9a4:    nop                                            9b9a8:    nop                              
+9b9a8:    break   0x7                                    9b9ac:    break   0x7                      
+9b9ac: [35m~>[39m li      at,-1                                  9b9b0: [90m~>[39m li      at,-1                    
+9b9b0:    bne     v1,at,9b9c4 [36m~>[39m                         9b9b4:    bne     v1,at,9b9c8 [35m~>[39m           
+9b9b4:    lui     at,0x8000                              9b9b8:    lui     at,0x8000                
+[33m9b9b8:[39m    bne     [32mt7[39m,at,9b9c4 [36m~>[39m                  [33mr[39m      [33m9b9bc:[39m    bne     [32mt6[39m,at,9b9c8 [35m~>[39m           
+9b9bc:    nop                                            9b9c0:    nop                              
+9b9c0:    break   0x6                                    9b9c4:    break   0x6                      
+9b9c4: [36m~>[39m sh      t9,8(v0)                               9b9c8: [35m~>[39m sh      t8,8(v0)                 
+[2m<15 lines>[22m                                                                                          
+9ba04:    li      at,1                                   9ba08:    li      at,1                     
+9ba08:    lh      t1,0x2c(s0)                            9ba0c:    lh      t2,0x2c(s0)              
+9ba0c:    andi    t4,t1,0x7                              9ba10:    andi    t0,t2,0x7                
+[33m9ba10:[39m    beqz    [31mt4[39m,9ba34 [93m~>[39m                     [33mr[39m      [33m9ba14:[39m    beqz    [31mt0[39m,9ba38 [31m~>[39m              
+9ba14:    li      at,1                                   9ba18:    li      at,1                     
+9ba18: [31m~>[39m beq     v0,at,9bbb0 [95m~>[39m                         9ba1c: [32m~>[39m beq     v0,at,9bbb4 [93m~>[39m           
+9ba1c:    lh      v1,0x2c(s0)                            9ba20:    lh      v1,0x2c(s0)              
+9ba20:    li      at,0x14                                9ba24:    li      at,0x14                  
+9ba24:    div     zero,v1,at                             9ba28:    div     zero,v1,at               
+9ba28:    mfhi    t5                                     9ba2c:    mfhi    t3                       
+[33m9ba2c:[39m    bnezl   [35mt5[39m,9bbb4 [96m~>[39m                     [33mr[39m      [33m9ba30:[39m    bnezl   [93mt3[39m,9bbb8 [95m~>[39m              
+9ba30:    li      at,0x14                                9ba34:    li      at,0x14                  
+9ba34: [93m~>[39m jal     38e0                                   9ba38: [31m~>[39m jal     38e0                     
+9ba38:    nop                                            9ba3c:    nop                              
+9ba3c:    andi    t7,v0,0x3                              9ba40:    andi    t4,v0,0x3                
+[33m9ba40:[39m    bnez    [32mt7[39m,9baf8 [92m~>[39m                     [33mr[39m      [33m9ba44:[39m    bnez    [35mt4[39m,9bafc [96m~>[39m              
+9ba44:    nop                                            9ba48:    nop                              
+9ba48:    jal     38e0                                   9ba4c:    jal     38e0                     
+9ba4c:    nop                                            9ba50:    nop                              
+[2m<4 lines>[22m                                                                                           
+9ba60:    lhu     t8,0x5a(sp)                            9ba64:    lhu     t5,0x5c(sp)              
+9ba64:    lh      t6,0(s0)                               9ba68:    lh      t6,0(s0)                 
+9ba68:    lhu     t1,0x5c(sp)                            9ba6c:    lhu     t1,0x5e(sp)              
+[33m9ba6c:[39m    bgez    [93mt8[39m,9ba80 [90m~>[39m                     [33mr[39m      [33m9ba70:[39m    bgez    [95mt5[39m,9ba84 [92m~>[39m              
+9ba70:    andi    t9,t8,0x7f                             9ba74:    andi    t7,t5,0x7f               
+[33m9ba74:[39m    beqz    [95mt9[39m,9ba80 [90m~>[39m                     [33mr[39m      [33m9ba78:[39m    beqz    [96mt7[39m,9ba84 [92m~>[39m              
+9ba78:    nop                                            9ba7c:    nop                              
+9ba7c:    addiu   t9,t9,-0x80                            9ba80:    addiu   t7,t7,-0x80              
+9ba80: [90m~>[39m subu    a0,t6,t9                               9ba84: [92m~>[39m subu    a0,t6,t7                 
+[2m<5 lines>[22m                                                                                           
+9ba98:    move    a0,t3                                  9ba9c:    move    a0,t9                    
+9ba9c:    bgez    t1,9bab0 [35m~>[39m                            9baa0:    bgez    t1,9bab4 [90m~>[39m              
+9baa0:    andi    t4,t1,0x3f                             9baa4:    andi    t2,t1,0x3f               
+[33m9baa4:[39m    beqz    [31mt4[39m,9bab0 [35m~>[39m                     [33mr[39m      [33m9baa8:[39m    beqz    [36mt2[39m,9bab4 [90m~>[39m              
+9baa8:    nop                                            9baac:    nop                              
+9baac:    addiu   t4,t4,-0x40                            9bab0:    addiu   t2,t2,-0x40              
+9bab0: [35m~>[39m addu    a1,t4,t5                               9bab4: [90m~>[39m addu    a1,t2,t0                 
+[2m<2 lines>[22m                                                                                           
+9babc:    move    a1,t8                                  9bac0:    move    a1,t4                    
+9bac0:    bgez    v0,9bad4 [36m~>[39m                            9bac4:    bgez    v0,9bad8 [35m~>[39m              
+9bac4:    andi    t9,v0,0x7f                             9bac8:    andi    t6,v0,0x7f               
+[33m9bac8:[39m    beqz    [95mt9[39m,9bad4 [36m~>[39m                     [33mr[39m      [33m9bacc:[39m    beqz    [32mt6[39m,9bad8 [35m~>[39m              
+9bacc:    nop                                            9bad0:    nop                              
+9bad0:    addiu   t9,t9,-0x80                            9bad4:    addiu   t6,t6,-0x80              
+9bad4: [36m~>[39m subu    a2,t6,t9                               9bad8: [35m~>[39m subu    a2,t5,t6                 
+9bad8:    addiu   a2,a2,0x40                             9badc:    addiu   a2,a2,0x40               
+9badc:    sll     t2,a2,0x10                             9bae0:    sll     t7,a2,0x10               
+9bae0:    sra     a2,t2,0x10                             9bae4:    sra     a2,t7,0x10               
+[94m9bae4:[39m    [94mli      a3,0x32[39m                         [94m|[39m      [94m9bae8:[39m    [94msw      zero,0x10(sp)[39m            
+9bae8:    jal     df848                                  9baec:    jal     df858                    
+[94m9baec:[39m    [94msw      zero,0x10(sp)[39m                   [94m|[39m      [94m9baf0:[39m    [94mli      a3,0x32[39m                  
+9baf0:    b       9bbb0 [95m~>[39m                               9baf4:    b       9bbb4 [93m~>[39m                 
+9baf4:    lh      v1,0x2c(s0)                            9baf8:    lh      v1,0x2c(s0)              
+9baf8: [92m~>[39m jal     38e0                                   9bafc: [96m~>[39m jal     38e0                     
+[2m<5 lines>[22m                                                                                           
+9bb10:    lhu     t4,0x5a(sp)                            9bb14:    lhu     t1,0x5c(sp)              
+9bb14:    lh      t1,0(s0)                               9bb18:    lh      t9,0(s0)                 
+9bb18:    lhu     t6,0x5c(sp)                            9bb1c:    lhu     t4,0x5e(sp)              
+[33m9bb1c:[39m    bgez    [31mt4[39m,9bb30 [32m~>[39m                     [33mr[39m      [33m9bb20:[39m    bgez    [92mt1[39m,9bb34 [36m~>[39m              
+9bb20:    andi    t5,t4,0x7f                             9bb24:    andi    t2,t1,0x7f               
+[33m9bb24:[39m    beqz    [35mt5[39m,9bb30 [32m~>[39m                     [33mr[39m      [33m9bb28:[39m    beqz    [36mt2[39m,9bb34 [36m~>[39m              
+9bb28:    nop                                            9bb2c:    nop                              
+9bb2c:    addiu   t5,t5,-0x80                            9bb30:    addiu   t2,t2,-0x80              
+9bb30: [32m~>[39m subu    a0,t1,t5                               9bb34: [36m~>[39m subu    a0,t9,t2                 
+[2m<3 lines>[22m                                                                                           
+9bb40:    sll     t7,a0,0x10                             9bb44:    sll     t0,a0,0x10               
+9bb44:    sra     t8,t7,0x10                             9bb48:    sra     t3,t0,0x10               
+9bb48:    move    a0,t8                                  9bb4c:    move    a0,t3                    
+[33m9bb4c:[39m    bgez    [96mt6[39m,9bb60 [31m~>[39m                     [33mr[39m      [33m9bb50:[39m    bgez    [35mt4[39m,9bb64 [32m~>[39m              
+9bb50:    andi    t9,t6,0x3f                             9bb54:    andi    t5,t4,0x3f               
+[33m9bb54:[39m    beqz    [95mt9[39m,9bb60 [31m~>[39m                     [33mr[39m      [33m9bb58:[39m    beqz    [95mt5[39m,9bb64 [32m~>[39m              
+9bb58:    nop                                            9bb5c:    nop                              
+9bb5c:    addiu   t9,t9,-0x40                            9bb60:    addiu   t5,t5,-0x40              
+9bb60: [31m~>[39m addu    a1,t9,t2                               9bb64: [32m~>[39m addu    a1,t5,t6                 
+[2m<4 lines>[22m                                                                                           
+9bb74:    move    a1,t4                                  9bb78:    move    a1,t8                    
+9bb78:    bgez    v0,9bb8c [93m~>[39m                            9bb7c:    bgez    v0,9bb90 [31m~>[39m              
+9bb7c:    andi    t5,v0,0x7f                             9bb80:    andi    t9,v0,0x7f               
+[33m9bb80:[39m    beqz    [35mt5[39m,9bb8c [93m~>[39m                     [33mr[39m      [33m9bb84:[39m    beqz    [90mt9[39m,9bb90 [31m~>[39m              
+9bb84:    nop                                            9bb88:    nop                              
+9bb88:    addiu   t5,t5,-0x80                            9bb8c:    addiu   t9,t9,-0x80              
+9bb8c: [93m~>[39m subu    a2,t1,t5                               9bb90: [31m~>[39m subu    a2,t1,t9                 
+9bb90:    addiu   a2,a2,0x40                             9bb94:    addiu   a2,a2,0x40               
+9bb94:    sll     t7,a2,0x10                             9bb98:    sll     t2,a2,0x10               
+9bb98:    sra     a2,t7,0x10                             9bb9c:    sra     a2,t2,0x10               
+9bb9c:    sw      t6,0x14(sp)                            9bba0:    sw      t3,0x14(sp)              
+[94m9bba0:[39m    [94mli      a3,0x32[39m                         [94m|[39m      [94m9bba4:[39m    [94msw      zero,0x10(sp)[39m            
+9bba4:    jal     df038                                  9bba8:    jal     df048                    
+[94m9bba8:[39m    [94msw      zero,0x10(sp)[39m                   [94m|[39m      [94m9bbac:[39m    [94mli      a3,0x32[39m                  
+9bbac:    lh      v1,0x2c(s0)                            9bbb0:    lh      v1,0x2c(s0)              
+9bbb0: [95m~>[39m li      at,0x14                                9bbb4: [93m~>[39m li      at,0x14                  
+9bbb4: [96m~>[39m div     zero,v1,at                             9bbb8: [95m~>[39m div     zero,v1,at               
+9bbb8:    mfhi    t9                                     9bbbc:    mfhi    t4                       
+9bbbc:    lui     t2,0x8022                              9bbc0:    lui     t5,0x8022                
+[33m9bbc0:[39m    bnezl   [95mt9[39m,9bc2c [95m~>[39m                     [33mr[39m      [33m9bbc4:[39m    bnezl   [35mt4[39m,9bc30 [93m~>[39m              
+9bbc4:    lw      t6,0x20(s0)                            9bbc8:    lw      t0,0x20(s0)              
+9bbc8:    lh      a1,2(s0)                               9bbcc:    lh      a1,2(s0)                 
+9bbcc:    lw      t2,0x2a70(t2)                          9bbd0:    lw      t5,0x2a70(t5)            
+[2m<2 lines>[22m                                                                                           
+9bbd8:    slt     at,t2,a1                               9bbdc:    slt     at,t5,a1                 
+9bbdc:    beqz    at,9bc28 [96m~>[39m                            9bbe0:    beqz    at,9bc2c [95m~>[39m              
+9bbe0:    li      t4,0x46                                9bbe4:    li      t7,0x46                  
+                                                  [32m>[39m      [32m9bbe8:[39m    [32mlh      a0,0(s0)[39m                 
+                                                  [32m>[39m      [32m9bbec:[39m    [32mlh      a2,4(s0)[39m                 
+9bbe4:    li      t1,4                                   9bbf0:    li      t8,4                     
+9bbe8:    li      t5,0xc                                 9bbf4:    li      t1,0xc                   
+9bbec:    li      t7,0x80                                9bbf8:    li      t9,0x80                  
+[2m<2 lines>[22m                                                                                           
+9bbf8:    sw      t7,0x24(sp)                            9bc04:    sw      t9,0x24(sp)              
+9bbfc:    sw      t5,0x20(sp)                            9bc08:    sw      t1,0x20(sp)              
+9bc00:    sw      t1,0x1c(sp)                            9bc0c:    sw      t8,0x1c(sp)              
+[31m9bc04:[39m    [31mlh      a0,0(s0)[39m                        [31m<[39m                                                 
+[31m9bc08:[39m    [31mlh      a2,4(s0)[39m                        [31m<[39m                                                 
+9bc0c:    sw      t3,0x10(sp)                            9bc10:    sw      zero,0x30(sp)            
+9bc10:    sw      zero,0x14(sp)                          9bc14:    sw      zero,0x2c(sp)            
+9bc14:    sw      t4,0x18(sp)                            9bc18:    sw      zero,0x28(sp)            
+[2m<3 lines>[22m                                                                                           
+9bc24:    sw      zero,0x30(sp)                          9bc28:    sw      t6,0x10(sp)              
+9bc28: [96m~>[39m lw      t6,0x20(s0)                            9bc2c: [95m~>[39m lw      t0,0x20(s0)              
+9bc2c: [95m~>[39m andi    t9,t6,0x1000                           9bc30: [93m~>[39m andi    t3,t0,0x1000             
+[33m9bc30:[39m    beqzl   [95mt9[39m,9bc64 [92m~>[39m                     [33mr[39m      [33m9bc34:[39m    beqzl   [93mt3[39m,9bc68 [96m~>[39m              
+9bc34:    lh      a0,0xc(s0)                             9bc38:    lh      t6,0xc(s0)               
+9bc38:    jal     8c7b0                                  9bc3c:    jal     8c7b0                    
+9bc3c:    lbu     a0,0x8b(sp)                            9bc40:    lbu     a0,0x8b(sp)              
+[2m<22 lines>[22m                                                                                          
+9bc98:    addu    t6,v1,t8                               9bc9c:    addu    t4,v1,t3                 
+9bc9c:    lb      t9,0xd(t6)                             9bca0:    lb      t5,0xd(t4)               
+9bca0:    li      a2,6                                   9bca4:    li      a2,6                     
+[33m9bca4:[39m    bne     [92mt2[39m,at,9bcc8 [36m~>[39m                  [33mr[39m      [33m9bca8:[39m    bne     [32mt6[39m,at,9bccc [35m~>[39m           
+9bca8:    sh      t9,0x80(sp)                            9bcac:    sh      t5,0x76(sp)              
+9bcac:    lui     a3,0x8014                              9bcb0:    lui     a3,0x8014                
+9bcb0:    addiu   a3,a3,-0x3abc                          9bcb4:    addiu   a3,a3,-0x3aac            
+[2m<23 lines>[22m                                                                                          
+9bd10:    li      a1,0x14                                9bd14:    li      a1,0x14                  
+9bd14: [35m~>[39m lb      t9,0x3c(s0)                            9bd18: [90m~>[39m lb      t6,0x3c(s0)              
+9bd18: [90m~>[39m lui     t2,0x8022                              9bd1c: [92m~>[39m lui     t7,0x8022                
+[33m9bd1c:[39m    beqzl   [95mt9[39m,9bea0 [95m~>[39m                     [33mr[39m      [33m9bd20:[39m    beqzl   [32mt6[39m,9bea4 [95m~>[39m              
+9bd20:    lh      t9,0x2c(s0)                            9bd24:    lh      t4,0x2c(s0)              
+9bd24:    lw      t2,0x2a70(t2)                          9bd28:    lw      t7,0x2a70(t7)            
+9bd28:    lh      t3,2(s0)                               9bd2c:    lh      t8,2(s0)                 
+[2m<3 lines>[22m                                                                                           
+9bd38:    lh      v0,0(s0)                               9bd3c:    lh      v0,0(s0)                 
+9bd3c:    lh      v1,4(s0)                               9bd40:    lh      v1,4(s0)                 
+9bd40:    mtc1    zero,$f10                              9bd44:    mtc1    zero,$f4                 
+                                                  [32m>[39m      [32m9bd48:[39m    [32maddiu   a0,sp,0x68[39m               
+                                                  [32m>[39m      [32m9bd4c:[39m    [32maddiu   a1,sp,0x64[39m               
+                                                  [32m>[39m      [32m9bd50:[39m    [32mswc1    $f4,0x64(sp)[39m             
+9bd44:    bgez    v0,9bd54 [31m~>[39m                            9bd54:    bgez    v0,9bd64 [32m~>[39m              
+9bd48:    sra     t4,v0,0x2                              9bd58:    sra     t1,v0,0x2                
+9bd4c:    addiu   at,v0,3                                9bd5c:    addiu   at,v0,3                  
+[2m<2 lines>[22m                                                                                           
+9bd58:    lwc1    $f8,0x7954(at)                         9bd68:    lwc1    $f10,0x7954(at)          
+9bd5c:    mtc1    t4,$f4                                 9bd6c:    mtc1    t1,$f6                   
+9bd60:    addiu   a0,sp,0x68                             9bd70:    addiu   a2,sp,0x60               
+[94m9bd64:[39m    [94maddiu   a1,sp,0x64[39m                      [94m|[39m      [94m9bd74:[39m    [94msw      v0,0x70(sp)[39m              
+9bd68:    cvt.s.w $f6,$f4                                9bd78:    cvt.s.w $f8,$f6                  
+[31m9bd6c:[39m    [31maddiu   a2,sp,0x60[39m                      [31m<[39m                                                 
+9bd70:    sw      v0,0x74(sp)                            9bd7c:    sw      v1,0x6c(sp)              
+[94m9bd74:[39m    [94msw      v1,0x6c(sp)[39m                     [94m|[39m      [94m9bd80:[39m    [94msub.s   $f16,$f8,$f10[39m            
+9bd78:    swc1    $f10,0x64(sp)                          9bd84:    swc1    $f16,0x68(sp)            
+[31m9bd7c:[39m    [31msub.s   $f2,$f6,$f8[39m                     [31m<[39m                                                 
+9bd80:    bgez    v1,9bd90 [93m~>[39m                            9bd88:    bgez    v1,9bd98 [31m~>[39m              
+9bd84:    sra     t1,v1,0x2                              9bd8c:    sra     t9,v1,0x2                
+9bd88:    addiu   at,v1,3                                9bd90:    addiu   at,v1,3                  
+[2m<2 lines>[22m                                                                                           
+9bd94:    lui     at,0x8004                              9bd9c:    lui     at,0x8004                
+9bd98:    lwc1    $f4,0x795c(at)                         9bda0:    lwc1    $f6,0x795c(at)           
+9bd9c:    cvt.s.w $f18,$f16                              9bda4:    cvt.s.w $f4,$f18                 
+[31m9bda0:[39m    [31mswc1    $f2,0x68(sp)[39m                    [31m<[39m                                                 
+9bda4:    sub.s   $f12,$f18,$f4                          9bda8:    sub.s   $f8,$f4,$f6              
+9bda8:    jal     28100                                  9bdac:    jal     28100                    
+9bdac:    swc1    $f12,0x60(sp)                          9bdb0:    swc1    $f8,0x60(sp)             
+[2m<38 lines>[22m                                                                                          
+9be48:    li      t7,0x88                                9be4c:    li      t2,0x88                  
+9be4c:    li      t8,0x67                                9be50:    li      t0,0x67                  
+9be50:    li      t6,0x11                                9be54:    li      t3,0x11                  
+[31m9be54:[39m    [31mlw      a0,0x50(sp)[39m                     [31m<[39m                                                 
+[31m9be58:[39m    [31mlw      a2,0x4c(sp)[39m                     [31m<[39m                                                 
+9be5c:    sw      t6,0x28(sp)                            9be58:    sw      t3,0x28(sp)              
+9be60:    sw      t8,0x24(sp)                            9be5c:    sw      t0,0x24(sp)              
+9be64:    sw      t7,0x20(sp)                            9be60:    sw      t2,0x20(sp)              
+9be68:    sw      t5,0x1c(sp)                            9be64:    sw      t9,0x1c(sp)              
+9be6c:    sw      t1,0x18(sp)                            9be68:    sw      t1,0x18(sp)              
+9be70:    sw      t4,0x10(sp)                            9be6c:    sw      t8,0x10(sp)              
+9be74:    sra     a1,t2,0x10                             9be70:    sra     a1,t6,0x10               
+                                                  [32m>[39m      [32m9be74:[39m    [32mlw      a0,0x50(sp)[39m              
+                                                  [32m>[39m      [32m9be78:[39m    [32mlw      a2,0x4c(sp)[39m              
+9be78:    li      a3,0x12c                               9be7c:    li      a3,0x12c                 
+9be7c:    jal     dea08                                  9be80:    jal     dea18                    
+9be80:    sw      zero,0x14(sp)                          9be84:    sw      zero,0x14(sp)            
+[2m<6 lines>[22m                                                                                           
+9be9c: [96m~>[39m lh      t9,0x2c(s0)                            9bea0:    lh      t4,0x2c(s0)              
+9bea0: [95m~>[39m li      at,1                                   9bea4: [95m~>[39m li      at,1                     
+9bea4:    lui     a3,0x8025                              9bea8:    lui     a3,0x8025                
+[33m9bea8:[39m    bne     [95mt9[39m,at,9beec [35m~>[39m                  [33mr[39m      [33m9beac:[39m    bne     [35mt4[39m,at,9bef0 [35m~>[39m           
+9beac:    li      t4,6                                   9beb0:    li      t7,6                     
+9beb0:    lbu     t2,0x1a(s0)                            9beb4:    lbu     t5,0x1a(s0)              
+9beb4:    lh      a0,0(s0)                               9beb8:    lh      a0,0(s0)                 
+[2m<4 lines>[22m                                                                                           
+9bec8:    addu    t3,t3,t2                               9becc:    addu    t6,t6,t5                 
+9becc:    sll     t3,t3,0x3                              9bed0:    sll     t6,t6,0x3                
+9bed0:    addu    a3,a3,t3                               9bed4:    addu    a3,a3,t6                 
+[94m9bed4:[39m    [94mlhu     a3,0x668c(a3)[39m                   [94m|[39m      [94m9bed8:[39m    [94mlh      a2,4(s0)[39m                 
+[94m9bed8:[39m    [94mlh      a2,4(s0)[39m                        [94m|[39m      [94m9bedc:[39m    [94msw      t7,0x10(sp)[39m              
+9bedc:    jal     df848                                  9bee0:    jal     df858                    
+[94m9bee0:[39m    [94msw      t4,0x10(sp)[39m                     [94m|[39m      [94m9bee4:[39m    [94mlhu     a3,0x668c(a3)[39m            
+9bee4:    lui     at,0x8003                              9bee8:    lui     at,0x8003                
+9bee8:    sw      zero,0x1410(at)                        9beec:    sw      zero,0x1410(at)          
+9beec: [35m~>[39m lw      ra,0x44(sp)                            9bef0: [35m~>[39m lw      ra,0x44(sp)              
+9bef0: [31m~>[39m lw      s0,0x40(sp)                            9bef4: [31m~>[39m lw      s0,0x40(sp)              
+9bef4:    addiu   sp,sp,0x88                             9bef8:    addiu   sp,sp,0x88               
+9bef8:    jr      ra                                     9befc:    jr      ra                       
+[31m9befc:[39m    [31mnop     [39m                                [31m<[39m                                                 
