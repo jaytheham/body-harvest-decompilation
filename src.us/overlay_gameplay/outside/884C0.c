@@ -6623,8 +6623,8 @@ s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 #endif
 
 // maybe kill alien?
+// CURRENT(92)
 #ifdef NON_MATCHING
-// CURRENT(2247)
 void func_80088760_97710(AlienInstance* alien) {
 	u8 specIndex;
 	s32 alienIndex;
@@ -6659,7 +6659,7 @@ void func_80088760_97710(AlienInstance* alien) {
 			}
 
 			alienIndex = alien - alienInstances;
-			if (D_80048184 == alienIndex) {
+			if (alienIndex == D_80048184) {
 				D_80052B34->unk20 &= 0xEFFF;
 				alien->unk20 &= ~0x400;
 				if (func_80110FB4_11FF64(D_80052B34, 1) != 0) {
@@ -6749,11 +6749,10 @@ void func_80088760_97710(AlienInstance* alien) {
 		func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, alienSpecs[specIndex].unkC, 0);
 		alien->unk2C = 1;
 	} else {
-		alienIndex = alien - alienInstances;
 		if (alienSpecs[specIndex].unk5C) {
-			((void(*)(u8))alienSpecs[specIndex].unk5C)(alienIndex & 0xFF);
+			((void(*)(u8))alienSpecs[specIndex].unk5C)((u8)(alien - alienInstances));
 		} else {
-			func_80089EB4_98E64(alienIndex & 0xFF, 0x28, 0, 2, 0);
+			func_80089EB4_98E64((u8)(alien - alienInstances), 0x28, 0, 2, 0);
 		}
 	}
 
