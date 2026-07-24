@@ -5108,30 +5108,29 @@ void func_800847D0_93780(u8 arg0)
 #endif
 
 // https://decomp.me/scratch/g8Awf
-// CURRENT(155)
+// CURRENT(18)
 #ifdef NON_MATCHING
 void func_80084904_938B4(u8 arg0)
 {
-u8 new_var;
-  s16 temp_a1;
-	s16 sp2A;
+  s16 sp2A;
   s16 var_a3;
-  temp_a1 = (var_a3 = (func_800038E0_44E0() >> 1) - 0x4000);
-  new_var = alienInstances[arg0].specIndex;
-  if (!(alienSpecs[new_var].unk54 & 1))
+  u8 specIdx;
+  var_a3 = (func_800038E0_44E0() >> 1) - 0x4000;
+  specIdx = alienInstances[arg0].specIndex;
+  if (!(alienSpecs[specIdx].unk54 & 1))
   {
-	if (((-temp_a1 < temp_a1) ? temp_a1 : -temp_a1) < 0x2000)
-	{
-	  var_a3 = (temp_a1 + ((temp_a1 < 0 ? -1 : 1) << 13)) & (0, 0xFFFFFFFFu);
-	}
+    if (((-var_a3 < var_a3) ? var_a3 : -var_a3) < 0x2000)
+    {
+      var_a3 = (s16)(((var_a3 < 0 ? -1 : 1) << 13) + var_a3);
+    }
   }
   sp2A = alienInstances[arg0].unk2A + var_a3;
-  alienInstances[arg0].unk14 = alienInstances[arg0].unk0 + ((((f32) coss(sp2A)) / 32768.0) * D_80141E30_150DE0[0]);
-  alienInstances[arg0].unk18 = alienInstances[arg0].unk4 + ((((f32) sins(sp2A)) / 32768.0) * D_80141E38_150DE8[0]);
-  if (alienSpecs[new_var].unk40 > 0)
+  alienInstances[arg0].unk14 = alienInstances[arg0].unk0 + (D_80141E30_150DE0[0] * ((f32) coss(sp2A) / 32768.0));
+  alienInstances[arg0].unk18 = alienInstances[arg0].unk4 + (D_80141E38_150DE8[0] * ((f32) sins(sp2A) / 32768.0));
+  if (alienSpecs[specIdx].unk40 > 0)
   {
-	alienInstances[arg0].unk34 = 0x5DC / (alienSpecs[new_var].unk40 >> 5);
-	alienInstances[arg0].unk47 |= 1;
+    alienInstances[arg0].unk34 = 0x5DC / (alienSpecs[specIdx].unk40 >> 5);
+    alienInstances[arg0].unk47 |= 1;
   }
   alienInstances[arg0].unk2A = sp2A;
 }
