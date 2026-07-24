@@ -2415,7 +2415,7 @@ s32 func_8007E500_8D4B0(AlienInstance *arg0, AlienSpec *arg1, AlienInstance *arg
 	return 0;
 }
 
-// CURRENT(10)
+// CURRENT(895)
 #ifdef NON_MATCHING
 s32 func_8007E608_8D5B8(AlienInstance *arg0, AlienInstance *arg1) {
 	AlienSpec *spec0;
@@ -2424,7 +2424,7 @@ s32 func_8007E608_8D5B8(AlienInstance *arg0, AlienInstance *arg1) {
 
 	spec0 = &alienSpecs[arg0->specIndex];
 
-	if (((s8 *)arg1)[0xD] == -2) {
+	if ((s8)arg1->unkC == -2) {
 		spec1 = (AlienSpec *)&vehicleSpecs[arg1->specIndex];
 	} else {
 		spec1 = &alienSpecs[arg1->specIndex];
@@ -2432,8 +2432,8 @@ s32 func_8007E608_8D5B8(AlienInstance *arg0, AlienInstance *arg1) {
 
 	saved0 = spec0->unk8;
 	saved1 = spec1->unk8;
-
-	if (((s8 *)arg1)[0xD] != -2) {
+	// Agent - you must replace these gotos
+	if ((s8)arg1->unkC != -2) {
 		if (currentLevel == 1) {
 			if (arg0->specIndex == 0xD) {
 				if (arg1->specIndex != 9) {
