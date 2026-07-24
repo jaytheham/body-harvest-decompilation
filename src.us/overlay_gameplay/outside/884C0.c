@@ -1399,7 +1399,7 @@ void func_8007B370_8A320(s32 arg0) {
 
 // CURRENT(3823)
 #ifdef NON_MATCHING
-void func_8007B9CC_8A97C(s32 arg0) {
+void func_8007B9CC_8A97C(u8 arg0) {
 	AlienInstance *alien;
 	AlienSpec *spec;
 	Unk80052B40 sp70;
@@ -1418,7 +1418,7 @@ void func_8007B9CC_8A97C(s32 arg0) {
 
 	extern Gfx D_50509D8[];
 
-	alien = &alienInstances[arg0 & 0xFF];
+	alien = &alienInstances[arg0];
 	specIndex = alien->specIndex;
 	sp60 = *(Unk80052B40 *)&D_8013C23C_14B1EC[0];
 	sp5C = alien->unkC;
@@ -1449,8 +1449,8 @@ void func_8007B9CC_8A97C(s32 arg0) {
 
 	flags = alien->unk20;
 	if (!(flags & 0x40000000) && (alienSpecs[specIndex].unk54 & 0x80)) {
-		sp68.unk2 += (s32)(((f64)(f32)sins((D_80052A8C << 11) & 0xFFFF) / 32768.0) * 512.0);
-		sp68.unk4 += (s32)(((f64)(f32)coss(((D_80052A8C + 0xC) << 11) & 0xFFFF) / 32768.0) * 512.0);
+		sp68.unk2 += (s32)(((f32)sins((D_80052A8C << 11) & 0xFFFF) / 32768.0) * 512.0);
+		sp68.unk4 += (s32)(((f32)coss(((D_80052A8C + 0xC) << 11) & 0xFFFF) / 32768.0) * 512.0);
 	}
 
 	spec = &alienSpecs[specIndex];
@@ -1490,7 +1490,7 @@ void func_8007B9CC_8A97C(s32 arg0) {
 
 	func_8007B170_8A120(sp5C);
 
-	model = (void *)spec->unk0;
+	model = spec->unk0;
 	if ((specIndex == 0x1A) && (alien->unk20 & 0x100000) && (alien->unk20 & 0x8000)) {
 		model = D_50509D8;
 	}
@@ -1502,21 +1502,22 @@ void func_8007B9CC_8A97C(s32 arg0) {
 #endif
 
 // https://decomp.me/scratch/mrFc0
-// CURRENT(10)
+// CURRENT(5)
 #ifdef NON_MATCHING
 // drawComplexObjectShadows e.g. humans
 void func_8007BEC0_8AE70(void) {
 	s32 i;
 	AlienInstance *inst;
-	u8 *ptr;
-
+	u8 new_var;
+	u8 specIndex;
+	s16 sp58Buf;
+	
 	if (!D_8014ECD0) {
 		return;
 	}
-	ptr = D_8014D510;
-	for (i = 0; i < D_8014ECCC; i++, ptr++) {
-		u8 new_var;
-		new_var = *ptr;
+	for (i = 0; i < D_8014ECCC; i++) {
+		
+		new_var = D_8014D510[i];
 		inst = &alienInstances[new_var];
 		if (!(inst->unk20 & 0x200) || (inst->unk20 & 0x80000)) {
 			if (currentLevel == 1 && inst->specIndex == 0x22) {
@@ -1532,14 +1533,11 @@ void func_8007BEC0_8AE70(void) {
 					continue;
 				}
 			}
-			{
-				u8 sp58Buf[0xC];
-				if (func_8011E6FC_12D6AC(inst->unk0, inst->unk4, (s16 *)(sp58Buf + 4)) != -1) {
-					continue;
-				}
+			if (func_8011E6FC_12D6AC(inst->unk0, inst->unk4, &sp58Buf) != -1) {
+				continue;
 			}
 			if (inst->unk20 & 0x10000000) {
-				u8 specIndex = inst->specIndex;
+				specIndex = inst->specIndex;
 				func_800E988C_F883C(inst, &alienSpecs[specIndex]);
 			}
 		}
@@ -1988,6 +1986,7 @@ void func_8007D424_8C3D4(void) {
 		}
 
 		idx += 4;
+		// Agent - you must replace this ptr math with array access
 		inst = (AlienInstance *)((u8 *)inst + 0x140);
 	} while (idx < 0xFF);
 }
