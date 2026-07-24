@@ -7660,7 +7660,7 @@ void func_8008B8E4_9A894(u8 arg0)
 	}
 }
 
-// CURRENT(1928)
+// CURRENT(1895)
 #ifdef NON_MATCHING
 void func_8008BC58_9AC08(u8 arg0)
 {
@@ -7716,14 +7716,11 @@ void func_8008BC58_9AC08(u8 arg0)
 		func_80128504_1374B4(inst, 0, &sp70, &sp6C, &sp68);
 
 		idx = inst->unk2C - 0x10;
+		if ((D_80052B34 != &vehicleInstances[idx]) && (vehicleInstances[idx].unk1A != 0))
 		{
-			VehicleInstance *vehicle = &vehicleInstances[idx];
-			if ((D_80052B34 != vehicle) && (vehicle->unk1A != 0))
+			if (func_80084E54_93E04(inst, &vehicleInstances[idx]) < 0x2000)
 			{
-				if (func_80084E54_93E04(inst, vehicle) < 0x2000)
-				{
-					func_80123E90_132E40(vehicle, 0x7FFF);
-				}
+				func_80123E90_132E40(&vehicleInstances[idx], 0x7FFF);
 			}
 		}
 		for (iter = 0; iter != 0x100; iter += 0x40, idx += 0x40)
