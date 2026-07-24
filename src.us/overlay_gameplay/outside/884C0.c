@@ -7456,17 +7456,17 @@ void func_8008B108_9A0B8(u8 arg0) {
 	func_8008B02C_99FDC(arg0);
 }
 
-// CURRENT(2897)
+// CURRENT(2818)
 #ifdef NON_MATCHING
 void func_8008B190_9A140(u8 arg0) {
 	AlienInstance *inst;
+	Unk8014DD50 *route;
 	s16 cosValue;
 	s16 xPos;
 	s16 zPos;
 	s32 forwardAngle;
 	u16 randomA;
 	u16 randomB;
-	u16 randomC;
 	s16 specIndex;
 
 	inst = &alienInstances[arg0];
@@ -7504,9 +7504,10 @@ void func_8008B190_9A140(u8 arg0) {
 			func_800C1ECC_D0E7C(inst->unk0, inst->unk2, inst->unk4, inst->unk3C, 2);
 
 			if (inst->unk20 & 0x600) {
-				D_8014DD50[inst->unkC].unk2 += 2;
+				route = &D_8014DD50[inst->unkC];
+				route->unk2 += 2;
 				if (inst->unk2C >= 0x30) {
-					D_8014DD50[inst->unkC].unkA -= (u16) ((inst->unk38 + 0x8000) / 12);
+					route->unkA -= (u16) ((inst->unk38 + 0x8000) / 12);
 				}
 			}
 
@@ -7529,11 +7530,11 @@ void func_8008B190_9A140(u8 arg0) {
 				if ((inst->unk2C % 5) == 0) {
 					randomA = func_800038E0_44E0();
 					randomB = func_800038E0_44E0();
-					randomC = func_800038E0_44E0();
+					cosValue = func_800038E0_44E0();
 					func_800DFA34_EE9E4(
 						(s16) (((randomA % 100) + inst->unk0) - 0x32),
 						(s16) ((randomB % 40) + inst->unk2),
-						(s16) (((randomC % 100) + inst->unk4) - 0x32),
+						(s16) (((cosValue % 100) + inst->unk4) - 0x32),
 						(u16) ((func_800038E0_44E0() % 20) + 0x14),
 						0);
 				}
