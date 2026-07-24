@@ -5141,11 +5141,10 @@ u8 new_var;
 
 // https://decomp.me/scratch/JTTha
 // CURRENT(18)
-#ifdef NON_MATCHING
 void func_80084AE4_93A94(AlienInstance *arg0, AlienInstance *arg1)
 {
-  f32 yDif;
   f32 xDif;
+  f32 yDif;
   f32 zDif;
   s32 sp18;
 	AlienSpec *spec;
@@ -5165,9 +5164,6 @@ void func_80084AE4_93A94(AlienInstance *arg0, AlienInstance *arg1)
   arg0->unkE = func_80003824_4424(xDif, zDif);
   arg0->unk12 = ((((f32) sp18) - sqrtf((xDif * xDif) + (zDif * zDif))) * 4.0f);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084AE4_93A94.s")
-#endif
 
 void func_80084C48_93BF8(VehicleInstance *arg0)
 {
