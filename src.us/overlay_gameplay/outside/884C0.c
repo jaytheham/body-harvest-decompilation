@@ -4,74 +4,74 @@
 
 #define D_8013C1A7_14B157 (&D_8013C178_14B128[0x2F])
 
-const char D_801417B0_150760[] = "explode walker\n";
-const char D_801417C0_150770[] = "No mode active components\n";
-const char D_801417DC_15078C[] = "Too many objects onscreen\n";
-const char D_801417F8_1507A8[] = "%d already active\n";
-const char D_8014180C_1507BC[] = "Can't add active obj: SetActiveObjectYPos set\n";
-const char D_8014183C_1507EC[] = "Can't add active obj: CheckWithOthers set\n";
-const char D_80141868_150818[] = "Can't add active obj: AddActiveObjectComponent set\n";
-const char D_8014189C_15084C[] = "Too many walkers on screen\n";
-const char D_801418B8_150868[] = "Object %d is not active %d\n";
-const char D_801418D4_150884[] = "Trying to free already freed obj %d active %d\n";
-const char D_80141904_1508B4[] = "Is %d,%d in shield wall/on invalid tile, Screen centre %d,%d, offset %d,%d\n";
-const char D_80141950_150900[] = "Is %d,%d on invalid tile, Screen centre %d,%d, offset %d,%d\n";
-const char D_80141990_150940[] = "Object %d\n";
-const char D_8014199C_15094C[] = "Type %s\n";
-const char D_801419A8_150958[] = "Posn %d,%d,%d\n";
-const char D_801419B8_150968[] = "Orien %d,%d,%d\n";
-const char D_801419C8_150978[] = "Direction %d\n";
-const char D_801419D8_150988[] = "Elevation %d\n";
-const char D_801419E8_150998[] = "Speed %d\n";
-const char D_801419F4_1509A4[] = "Inc %f,%f,%f\n";
-const char D_80141A04_1509B4[] = "Flags 0x%x:";
-const char D_80141A10_1509C0[] = "AIRBORNE ";
-const char D_80141A1C_1509CC[] = "ON BRIDGE ";
-const char D_80141A28_1509D8[] = "HALF ON BRIDGE ";
-const char D_80141A38_1509E8[] = "UNDER BRIDGE ";
-const char D_80141A48_1509F8[] = "\n";
-const char D_80141A4C_1509FC[] = "Object %d\n";
-const char D_80141A58_150A08[] = "Type %s\n";
-const char D_80141A64_150A14[] = "Human type %d\n";
-const char D_80141A74_150A24[] = "Posn %d,%d,%d\n";
-const char D_80141A84_150A34[] = "Orien %d,%d,%d\n";
-const char D_80141A94_150A44[] = "Direction %d\n";
-const char D_80141AA4_150A54[] = "Desired Direction %d\n";
-const char D_80141ABC_150A6C[] = "Speed %d\n";
-const char D_80141AC8_150A78[] = "Y Velocity %d\n";
-const char D_80141AD8_150A88[] = "Flags 0x%x: ";
-const char D_80141AE8_150A98[] = " TARGET OBJ";
-const char D_80141AF4_150AA4[] = " TARGET VEHICLE";
-const char D_80141B04_150AB4[] = " TARGET PT";
-const char D_80141B10_150AC0[] = " PLAYER";
-const char D_80141B18_150AC8[] = " AWAY";
-const char D_80141B20_150AD0[] = " FALL";
-const char D_80141B28_150AD8[] = " INVINCIBLE";
-const char D_80141B34_150AE4[] = "\n";
-const char D_80141B38_150AE8[] = "Hit points %d\n";
-const char D_80141B48_150AF8[] = "Collision flags 0x%x\n";
-const char D_80141B60_150B10[] = "Target %d @ %d,%d,%d\n";
-const char D_80141B78_150B28[] = "Last collision tile %d,%d\n";
-const char D_80141B94_150B44[] = "Counters: %d coll %d anim %d hit %d wait %d water %d weapons %d\n";
-const char D_80141BD8_150B88[] = "Stage: %d\n";
-const char D_80141BE4_150B94[] = "King Drone/Boss extra parameters\n";
-const char D_80141C08_150BB8[] = "Counter1 %d, Counter2 %d\n";
-const char D_80141C24_150BD4[] = "Extra flags 0x%x\n";
-const char D_80141C38_150BE8[] = "Human %d, HCU %d\n";
-const char D_80141C4C_150BFC[] = "Draw a gun\n";
-const char D_80141C58_150C08[] = "ERROR: trying to process alien type %d\n";
-const char D_80141C80_150C30[] = "Problems deleting active object because it is dead\n";
-const char D_80141CB4_150C64[] = "Problems deleting active object in off screen\n";
-const char D_80141CE4_150C94[] = "%s deleted because of function recursion\n";
-const char D_80141D10_150CC0[] = "Vehicle %s force offscreen %s\n";
-const char D_80141D30_150CE0[] = "Alien %s force offscreen %s\n";
-const char D_80141D50_150D00[] = "Problems deleting active object to force off screen\n";
-const char D_80141D88_150D38[] = "Human enters\n";
-const char D_80141D98_150D48[] = "Force player off in direction %d\n";
-const char D_80141DBC_150D6C[] = "Rioter %d Dead\n";
-const char D_80141DCC_150D7C[] = "PROCESSOR DYING:\n";
-const char D_80141DE0_150D90[] = "doing processor death\n";
-const char D_80141DF8_150DA8[] = "**change to skeleton model**\n";
+const char D_801417B0_150760[] = "explode walker\n"; // "explode walker\n"
+const char D_801417C0_150770[] = "No mode active components\n"; // "No mode active components\n"
+const char D_801417DC_15078C[] = "Too many objects onscreen\n"; // "Too many objects onscreen\n"
+const char D_801417F8_1507A8[] = "%d already active\n"; // "%d already active\n"
+const char D_8014180C_1507BC[] = "Can't add active obj: SetActiveObjectYPos set\n"; // "Can't add active obj: SetActiveObjectYPos set\n"
+const char D_8014183C_1507EC[] = "Can't add active obj: CheckWithOthers set\n"; // "Can't add active obj: CheckWithOthers set\n"
+const char D_80141868_150818[] = "Can't add active obj: AddActiveObjectComponent set\n"; // "Can't add active obj: AddActiveObjectComponent set\n"
+const char D_8014189C_15084C[] = "Too many walkers on screen\n"; // "Too many walkers on screen\n"
+const char D_801418B8_150868[] = "Object %d is not active %d\n"; // "Object %d is not active %d\n"
+const char D_801418D4_150884[] = "Trying to free already freed obj %d active %d\n"; // "Trying to free already freed obj %d active %d\n"
+const char D_80141904_1508B4[] = "Is %d,%d in shield wall/on invalid tile, Screen centre %d,%d, offset %d,%d\n"; // "Is %d,%d in shield wall/on invalid tile, Screen centre %d,%d, offset %d,%d\n"
+const char D_80141950_150900[] = "Is %d,%d on invalid tile, Screen centre %d,%d, offset %d,%d\n"; // "Is %d,%d on invalid tile, Screen centre %d,%d, offset %d,%d\n"
+const char D_80141990_150940[] = "Object %d\n"; // "Object %d\n"
+const char D_8014199C_15094C[] = "Type %s\n"; // "Type %s\n"
+const char D_801419A8_150958[] = "Posn %d,%d,%d\n"; // "Posn %d,%d,%d\n"
+const char D_801419B8_150968[] = "Orien %d,%d,%d\n"; // "Orien %d,%d,%d\n"
+const char D_801419C8_150978[] = "Direction %d\n"; // "Direction %d\n"
+const char D_801419D8_150988[] = "Elevation %d\n"; // "Elevation %d\n"
+const char D_801419E8_150998[] = "Speed %d\n"; // "Speed %d\n"
+const char D_801419F4_1509A4[] = "Inc %f,%f,%f\n"; // "Inc %f,%f,%f\n"
+const char D_80141A04_1509B4[] = "Flags 0x%x:"; // "Flags 0x%x:"
+const char D_80141A10_1509C0[] = "AIRBORNE "; // "AIRBORNE "
+const char D_80141A1C_1509CC[] = "ON BRIDGE "; // "ON BRIDGE "
+const char D_80141A28_1509D8[] = "HALF ON BRIDGE "; // "HALF ON BRIDGE "
+const char D_80141A38_1509E8[] = "UNDER BRIDGE "; // "UNDER BRIDGE "
+const char D_80141A48_1509F8[] = "\n"; // "\n"
+const char D_80141A4C_1509FC[] = "Object %d\n"; // "Object %d\n"
+const char D_80141A58_150A08[] = "Type %s\n"; // "Type %s\n"
+const char D_80141A64_150A14[] = "Human type %d\n"; // "Human type %d\n"
+const char D_80141A74_150A24[] = "Posn %d,%d,%d\n"; // "Posn %d,%d,%d\n"
+const char D_80141A84_150A34[] = "Orien %d,%d,%d\n"; // "Orien %d,%d,%d\n"
+const char D_80141A94_150A44[] = "Direction %d\n"; // "Direction %d\n"
+const char D_80141AA4_150A54[] = "Desired Direction %d\n"; // "Desired Direction %d\n"
+const char D_80141ABC_150A6C[] = "Speed %d\n"; // "Speed %d\n"
+const char D_80141AC8_150A78[] = "Y Velocity %d\n"; // "Y Velocity %d\n"
+const char D_80141AD8_150A88[] = "Flags 0x%x: "; // "Flags 0x%x: "
+const char D_80141AE8_150A98[] = " TARGET OBJ"; // " TARGET OBJ"
+const char D_80141AF4_150AA4[] = " TARGET VEHICLE"; // " TARGET VEHICLE"
+const char D_80141B04_150AB4[] = " TARGET PT"; // " TARGET PT"
+const char D_80141B10_150AC0[] = " PLAYER"; // " PLAYER"
+const char D_80141B18_150AC8[] = " AWAY"; // " AWAY"
+const char D_80141B20_150AD0[] = " FALL"; // " FALL"
+const char D_80141B28_150AD8[] = " INVINCIBLE"; // " INVINCIBLE"
+const char D_80141B34_150AE4[] = "\n"; // "\n"
+const char D_80141B38_150AE8[] = "Hit points %d\n"; // "Hit points %d\n"
+const char D_80141B48_150AF8[] = "Collision flags 0x%x\n"; // "Collision flags 0x%x\n"
+const char D_80141B60_150B10[] = "Target %d @ %d,%d,%d\n"; // "Target %d @ %d,%d,%d\n"
+const char D_80141B78_150B28[] = "Last collision tile %d,%d\n"; // "Last collision tile %d,%d\n"
+const char D_80141B94_150B44[] = "Counters: %d coll %d anim %d hit %d wait %d water %d weapons %d\n"; // "Counters: %d coll %d anim %d hit %d wait %d water %d weapons %d\n"
+const char D_80141BD8_150B88[] = "Stage: %d\n"; // "Stage: %d\n"
+const char D_80141BE4_150B94[] = "King Drone/Boss extra parameters\n"; // "King Drone/Boss extra parameters\n"
+const char D_80141C08_150BB8[] = "Counter1 %d, Counter2 %d\n"; // "Counter1 %d, Counter2 %d\n"
+const char D_80141C24_150BD4[] = "Extra flags 0x%x\n"; // "Extra flags 0x%x\n"
+const char D_80141C38_150BE8[] = "Human %d, HCU %d\n"; // "Human %d, HCU %d\n"
+const char D_80141C4C_150BFC[] = "Draw a gun\n"; // "Draw a gun\n"
+const char D_80141C58_150C08[] = "ERROR: trying to process alien type %d\n"; // "ERROR: trying to process alien type %d\n"
+const char D_80141C80_150C30[] = "Problems deleting active object because it is dead\n"; // "Problems deleting active object because it is dead\n"
+const char D_80141CB4_150C64[] = "Problems deleting active object in off screen\n"; // "Problems deleting active object in off screen\n"
+const char D_80141CE4_150C94[] = "%s deleted because of function recursion\n"; // "%s deleted because of function recursion\n"
+const char D_80141D10_150CC0[] = "Vehicle %s force offscreen %s\n"; // "Vehicle %s force offscreen %s\n"
+const char D_80141D30_150CE0[] = "Alien %s force offscreen %s\n"; // "Alien %s force offscreen %s\n"
+const char D_80141D50_150D00[] = "Problems deleting active object to force off screen\n"; // "Problems deleting active object to force off screen\n"
+const char D_80141D88_150D38[] = "Human enters\n"; // "Human enters\n"
+const char D_80141D98_150D48[] = "Force player off in direction %d\n"; // "Force player off in direction %d\n"
+const char D_80141DBC_150D6C[] = "Rioter %d Dead\n"; // "Rioter %d Dead\n"
+const char D_80141DCC_150D7C[] = "PROCESSOR DYING:\n"; // "PROCESSOR DYING:\n"
+const char D_80141DE0_150D90[] = "doing processor death\n"; // "doing processor death\n"
+const char D_80141DF8_150DA8[] = "**change to skeleton model**\n"; // "**change to skeleton model**\n"
 const f32 D_80141E18_150DC8[1] = { 550.0f };
 const f32 D_80141E1C_150DCC[1] = { 1300.0f };
 const f64 D_80141E20_150DD0[1] = { 0.95 };
@@ -1063,19 +1063,19 @@ void func_8007AAEC_89A9C(void)
 	  osSyncPrintf(&D_801419E8_150998, (s32) vehicle->unk12);
 	  osSyncPrintf(&D_801419F4_1509A4, (double) vehicle->unk30, (double) vehicle->unk34, (double) vehicle->unk38);
 	  osSyncPrintf(&D_80141A04_1509B4, (s32) vehicle->unk20);
-	  if (vehicle->unk20 & 2)
+	  if (vehicle->unk20 & VEHICLE_FLAG_AIRBORNE)
 	  {
 		osSyncPrintf(&D_80141A10_1509C0);
 	  }
-	  if (vehicle->unk20 & 0x800)
+	  if (vehicle->unk20 & VEHICLE_FLAG_ON_BRIDGE)
 	  {
 		osSyncPrintf(&D_80141A1C_1509CC);
 	  }
-	  if (vehicle->unk20 & 4)
+	  if (vehicle->unk20 & VEHICLE_FLAG_HALF_ON_BRIDGE)
 	  {
 		osSyncPrintf(&D_80141A28_1509D8);
 	  }
-	  if (vehicle->unk20 & 8)
+	  if (vehicle->unk20 & VEHICLE_FLAG_UNDER_BRIDGE)
 	  {
 		osSyncPrintf(&D_80141A38_1509E8);
 	  }
@@ -1096,31 +1096,31 @@ void func_8007AAEC_89A9C(void)
 	  osSyncPrintf(&D_80141ABC_150A6C, (s32) alien->unk12);
 	  osSyncPrintf(&D_80141AC8_150A78, (s32) alien->unk10);
 	  osSyncPrintf(&D_80141AD8_150A88, alien->unk20);
-	  if (alien->unk20 & 0x20)
+	  if (alien->unk20 & ALIEN_FLAG_TARGET_OBJ)
 	  {
 		osSyncPrintf(&D_80141AE8_150A98);
 	  }
-	  if (alien->unk20 & 0x80)
+	  if (alien->unk20 & ALIEN_FLAG_TARGET_VEHICLE)
 	  {
 		osSyncPrintf(&D_80141AF4_150AA4);
 	  }
-	  if (alien->unk20 & 0x100)
+	  if (alien->unk20 & ALIEN_FLAG_TARGET_PT)
 	  {
 		osSyncPrintf(&D_80141B04_150AB4);
 	  }
-	  if (alien->unk20 & 0x08000000)
+	  if (alien->unk20 & ALIEN_FLAG_PLAYER)
 	  {
 		osSyncPrintf(&D_80141B10_150AC0);
 	  }
-	  if (alien->unk20 & 0x40)
+	  if (alien->unk20 & ALIEN_FLAG_AWAY)
 	  {
 		osSyncPrintf(&D_80141B18_150AC8);
 	  }
-	  if (alien->unk20 & 0x40000000)
+	  if (alien->unk20 & ALIEN_FLAG_FALL)
 	  {
 		osSyncPrintf(&D_80141B20_150AD0);
 	  }
-	  if (alien->unk20 & 0x400000)
+	  if (alien->unk20 & ALIEN_FLAG_INVINCIBLE)
 	  {
 		osSyncPrintf(&D_80141B28_150AD8);
 	  }
