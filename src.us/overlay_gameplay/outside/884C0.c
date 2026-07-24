@@ -6170,42 +6170,35 @@ void func_8008741C_963CC(u8 arg0, s16 arg1) {
 	}
 }
 
+// CURRENT(55)
 #ifdef NON_MATCHING
-// CURRENT(1215)
 s32 func_8008751C_964CC(u8 arg0, s32 arg1, s32 arg2)
 {
 	AlienInstance *inst;
-	s32 tempA0;
+	s32 varA2;
 	s32 tempA3;
+	s32 varA1;
 	s32 tempV0;
 	s32 tempV1;
-	s32 varA1;
-	s32 varA2;
-	s16 specVal;
 	s32 varV0;
+	s16 specVal;
 	s32 flags;
-	u8 specIndex;
 
 	inst = &alienInstances[arg0];
-	specIndex = inst->specIndex;
-	specVal = alienSpecs[specIndex].unk40;
+	specVal = alienSpecs[inst->specIndex].unk40;
 	tempV0 = inst->unk0 - inst->unk14;
 	tempV0 = (s16)tempV0;
 	tempA3 = -tempV0;
 	tempV1 = inst->unk4 - inst->unk18;
 	tempV1 = (s16)tempV1;
-	// Agent: There are a number of other matched functions that compute
-	// absoute values using ?: ABS or ABS_BH
-	// use them as reference to figure out the correct code here:
 	varA2 = (tempA3 < tempV0) ? tempV0 : tempA3;
 
-	tempA0 = -tempV1;
-	varA1 = (tempA0 < tempV1) ? tempV1 : tempA0;
+	varA1 = (-tempV1 < tempV1) ? tempV1 : -tempV1;
 
 	if (varA1 < varA2) {
 		varV0 = (s16)((tempA3 < tempV0) ? tempV0 : tempA3);
 	} else {
-		varA1 = (tempA0 < tempV1) ? tempV1 : tempA0;
+		varA1 = (-tempV1 < tempV1) ? tempV1 : -tempV1;
 		varV0 = (s16)varA1;
 	}
 
@@ -6213,12 +6206,12 @@ s32 func_8008751C_964CC(u8 arg0, s32 arg1, s32 arg2)
 	if (flags & 0x100) {
 		if (flags & 0x40) {
 			if ((s16)arg2 < varV0) {
-				specVal = -specVal;
+				specVal *= -1;
 			} else if ((s16)arg1 < varV0) {
 				specVal = 0;
 			}
 		} else if (varV0 < (s16)arg1) {
-			specVal = -specVal;
+			specVal *= -1;
 		} else if (varV0 < (s16)arg2) {
 			specVal = 0;
 		}
