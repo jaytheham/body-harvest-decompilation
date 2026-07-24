@@ -2621,91 +2621,105 @@ void func_8007E980_8D930(AlienInstance *arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E980_8D930.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(659)
-s32 func_8007EB74_8DB24(AlienInstance *arg0, AlienInstance *arg1) {
+// https://decomp.me/scratch/4d7WQ
+s32 func_8007EB74_8DB24(AlienInstance *arg0, AlienInstance *arg1)
+{
 	s32 pad0;
 	s32 pad1;
 	s32 pad2;
+	s16 angle;
 	s32 pad3;
 	s32 pad4;
-	s32 pad5;
-	s16 angle;
 	s32 ret;
+	s32 pad5;
 	s32 flags;
 	s32 signA;
 	s32 signB;
 	u8 specIndex;
-
 	ret = 1;
-	angle = func_80003824_4424((f32)-(arg0->unk4 - arg1->unk4), (f32)(arg0->unk0 - arg1->unk0));
-
-	if (((s8 *)arg0)[0xD] != -2) {
+	pad4 = (arg0->unk0 - arg1->unk0);
+	pad5 = (arg0->unk4 - arg1->unk4);
+	angle = func_80003824_4424(-pad5, pad4);
+	if ((s8)arg0->unkC != (-2))
+	{
 		specIndex = arg0->specIndex;
-		if (specIndex != 0x1B) {
-			if (arg1 == (AlienInstance *)D_80052B34) {
+		if (specIndex != 0x1B)
+		{
+			if (arg1 == ((AlienInstance *)D_80052B34))
+			{
 				flags = arg0->unk20;
-				if ((flags & 0x08000000) && !(flags & 0x20000)) {
+				if ((flags & 0x08000000) && (!(flags & 0x20000)))
+				{
 					return 1;
 				}
 			}
-
-			if (alienSpecs[specIndex].unk54 & 1) {
+			if (alienSpecs[specIndex].unk54 & 1)
+			{
 				signB = 1;
 				signA = 1;
-				if ((arg1->unk2 - arg0->unk2) < 0) {
+				if ((arg1->unk2 - arg0->unk2) < 0)
+				{
 					signB = -1;
-				} else {
+				}
+				else
+				{
 					signB = 1;
 				}
-				if (arg0->unk10 < 0) {
+				if (arg0->unk10 < 0)
+				{
 					signA = -1;
-				} else {
+				}
+				else
+				{
 					signA = 1;
 				}
-				if (signB == signA) {
+				if (signA == signB)
+				{
 					arg0->unk10 = 0;
 				}
 			}
-
 			ret = func_8007E734_8D6E4(arg0, angle);
 		}
 	}
-
-	if (((s8 *)arg1)[0xD] != -2) {
+	if ((s8)arg1->unkC != (-2))
+	{
 		specIndex = arg1->specIndex;
-		if (specIndex != 0x1B) {
-			if ((arg0 == (AlienInstance *)D_80052B34) && (arg1->unk20 & 0x08000000) && !(arg0->unk20 & 0x20000)) {
+		if (specIndex != 0x1B)
+		{
+			if (((arg0 == ((AlienInstance *)D_80052B34)) && (arg1->unk20 & 0x08000000)) && (!(arg0->unk20 & 0x20000)))
+			{
 				return 1;
 			}
-
-			if (alienSpecs[specIndex].unk54 & 1) {
+			if (alienSpecs[specIndex].unk54 & 1)
+			{
 				signB = 1;
 				signA = 1;
-				if ((arg0->unk2 - arg1->unk2) < 0) {
+				if ((arg0->unk2 - arg1->unk2) < 0)
+				{
 					signB = -1;
-				} else {
+				}
+				else
+				{
 					signB = 1;
 				}
-				if (arg1->unk10 < 0) {
+				if (arg1->unk10 < 0)
+				{
 					signA = -1;
-				} else {
+				}
+				else
+				{
 					signA = 1;
 				}
-				if (signB == signA) {
+				if (signA == signB)
+				{
 					arg1->unk10 = 0;
 				}
 			}
-
 			func_8007E734_8D6E4(arg1, angle + 0x8000);
 		}
 	}
-
 	return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007EB74_8DB24.s")
-#endif
 
 void func_8007ED9C_8DD4C(u8 arg0)
 {
