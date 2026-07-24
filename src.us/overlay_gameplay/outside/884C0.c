@@ -5316,35 +5316,28 @@ s32 func_80084F00_93EB0(VehicleInstance *vehicle, AlienInstance *alien)
 }
 
 // https://decomp.me/scratch/iDb3d
-// CURRENT(24)
-#ifdef NON_MATCHING
 s32 func_80084FE8_93F98(u8 arg0, u16 arg1)
 {
-  s32 new_var;
-  s32 new_var3;
-  s32 var_v1;
-	
-  new_var3 = D_80052B34->unk0 - alienInstances[arg0].unk0;
-  new_var = D_80052B34->unk4 - alienInstances[arg0].unk4;
+	s32 diff_x;
+	s32 diff_y;
+	s32 var_v1;
+	s16 xx;
+	s16 sp30;
+	AlienInstance *s0;
 
-  if ((func_80003824_4424((f32) new_var3, (f32) new_var) - alienInstances[arg0].unk6) > 
-	  (-(func_80003824_4424((f32) new_var3, (f32) new_var) - alienInstances[arg0].unk6)))
-  {
-	var_v1 = func_80003824_4424((f32) new_var3, (f32) new_var) - alienInstances[arg0].unk6;
-  }
-  else
-  {
-	var_v1 = -(func_80003824_4424((f32) new_var3, (f32) new_var) - alienInstances[arg0].unk6);
-  }
-  if (var_v1 < arg1)
-  {
-	return 1;
-  }
-  return 0;
+	s0 = &alienInstances[arg0];
+	diff_x = D_80052B34->unk0 - s0->unk0;
+	diff_y = D_80052B34->unk4 - s0->unk4;
+	sp30 = func_80003824_4424((f32) diff_x, (f32) diff_y);
+	var_v1 = (-(func_80003824_4424((f32) diff_x, (f32) diff_y) - s0->unk6)) < (sp30 - s0->unk6)
+				 ? func_80003824_4424((f32) diff_x, (f32) diff_y) - s0->unk6
+				 : -(func_80003824_4424((f32) diff_x, (f32) diff_y) - s0->unk6);
+	if (var_v1 < arg1)
+	{
+		return 1;
+	}
+	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80084FE8_93F98.s")
-#endif
 
 // https://decomp.me/scratch/UfGTS
 s32 func_800850DC_9408C(u8 arg0, u16 arg1)
