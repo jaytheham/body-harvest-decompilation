@@ -1003,7 +1003,7 @@ extern s32 D_8005BB28;
 extern Gfx *D_8005BB2C;
 extern Gfx *D_8005BB30;
 extern Vtx *D_8005BB34;
-extern s32 D_8005BB38;
+extern s32 D_8005BB38; // Actually Mtx*
 extern s32 D_8005BB3C;
 extern s32 D_8005BB40;
 extern s32 D_8005BB48[]; // ptr to framebuffer A

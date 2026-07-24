@@ -1502,50 +1502,55 @@ void func_8007B9CC_8A97C(u8 arg0) {
 #endif
 
 // https://decomp.me/scratch/mrFc0
-// CURRENT(5)
-#ifdef NON_MATCHING
 // drawComplexObjectShadows e.g. humans
-void func_8007BEC0_8AE70(void) {
+void func_8007BEC0_8AE70(void)
+{
 	s32 i;
-	AlienInstance *inst;
 	u8 new_var;
 	u8 specIndex;
 	s16 sp58Buf;
-	
-	if (!D_8014ECD0) {
+	AlienInstance *inst;
+	if (!D_8014ECD0)
+	{
 		return;
 	}
-	for (i = 0; i < D_8014ECCC; i++) {
-		
+	for (i = 0; i < D_8014ECCC; i++)
+	{
+
 		new_var = D_8014D510[i];
 		inst = &alienInstances[new_var];
-		if (!(inst->unk20 & 0x200) || (inst->unk20 & 0x80000)) {
-			if (currentLevel == 1 && inst->specIndex == 0x22) {
-				if (!(inst->unk20 & 0x4000)) {
+		if (!(inst->unk20 & 0x200) || (inst->unk20 & 0x80000))
+		{
+			if (currentLevel == 1 && inst->specIndex == 0x22)
+			{
+				if (!(inst->unk20 & 0x4000))
+				{
 					continue;
 				}
 			}
-			if (currentLevel == 3) {
-				if (inst->specIndex == 9) {
+			if (currentLevel == 3)
+			{
+				if (inst->specIndex == 9)
+				{
 					continue;
 				}
-				if (inst->specIndex == 8) {
+				if (inst->specIndex == 8)
+				{
 					continue;
 				}
 			}
-			if (func_8011E6FC_12D6AC(inst->unk0, inst->unk4, &sp58Buf) != -1) {
+			if (func_8011E6FC_12D6AC(inst->unk0, inst->unk4, &sp58Buf) != -1)
+			{
 				continue;
 			}
-			if (inst->unk20 & 0x10000000) {
+			if (inst->unk20 & 0x10000000)
+			{
 				specIndex = inst->specIndex;
 				func_800E988C_F883C(inst, &alienSpecs[specIndex]);
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007BEC0_8AE70.s")
-#endif
 
 #ifdef NON_MATCHING
 // drawComplexObjects eg: humans, alien torsos & heads
