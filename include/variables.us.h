@@ -323,10 +323,9 @@ extern s32 D_800344A0;
 extern u16 D_800344A2;
 extern s32 D_800344A4;
 extern u8 D_800344A8;
-extern s32 D_800344B4[]; // pointers to strings for names of many things, each entry is actually 2x s32 in size, first is pointer to string
-extern s32 D_800344B4_350B4[];
-extern s32 D_80034C44_35844[];
-extern s32 D_80034D0C_3590C[];
+extern NameRef D_800344B4_350B4[]; // English
+extern NameRef D_80034C44_35844[]; // French
+extern NameRef D_80034D0C_3590C[]; // German
 extern s32 D_80034574[];
 extern u64 D_80035610;
 extern OSViMode D_800356D0;

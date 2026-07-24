@@ -80,13 +80,13 @@ void func_8001A650_1B250(s16 arg0) {
 			switch (D_800313D0_31FD0) {
 			case 0:
 			default:
-				func_8001A598_1B198(*(u8 **)((u8 *)D_800344B4_350B4 + arg0 * 8));
+				func_8001A598_1B198(D_800344B4_350B4[arg0].name);
 				return;
 			case 1:
-				func_8001A598_1B198(*(u8 **)((u8 *)D_80034C44_35844 + arg0 * 8));
+				func_8001A598_1B198(D_80034C44_35844[arg0].name);
 				return;
 			case 2:
-				func_8001A598_1B198(*(u8 **)((u8 *)D_80034D0C_3590C + arg0 * 8));
+				func_8001A598_1B198(D_80034D0C_3590C[arg0].name);
 				return;
 			}
 		} else {
@@ -99,7 +99,7 @@ void func_8001A650_1B250(s16 arg0) {
 					arg0 = 0xF1;
 				}
 			}
-			func_8001A598_1B198(*(u8 **)((u8 *)D_800344B4_350B4 + arg0 * 8));
+			func_8001A598_1B198(D_800344B4_350B4[arg0].name);
 		}
 	}
 }
@@ -109,14 +109,14 @@ s32 func_8001A7A0_1B3A0(s16 arg0) {
 		switch (D_800313D0_31FD0) {
 		case 0:
 		default:
-			return *(s32 *)((u8 *)D_800344B4_350B4 + arg0 * 8);
+			return D_800344B4_350B4[arg0].name;
 		case 1:
-			return *(s32 *)((u8 *)D_80034C44_35844 + arg0 * 8);
+			return D_80034C44_35844[arg0].name;
 		case 2:
-			return *(s32 *)((u8 *)D_80034D0C_3590C + arg0 * 8);
+			return D_80034D0C_3590C[arg0].name;
 		}
 	} else {
-		return *(s32 *)((u8 *)D_800344B4_350B4 + arg0 * 8);
+		return D_800344B4_350B4[arg0].name;
 	}
 }
 

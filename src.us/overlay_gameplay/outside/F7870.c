@@ -96,7 +96,7 @@ void func_800E8A00_F79B0(void) {
 			D_80052B34->unkA = 0;
 			D_80052B34->unk6 = 0;
 			D_80052B34->unk1A = (u8) vehicleIndex;
-			osSyncPrintf(D_8014429C_15324C, vehicleSpec->unk18, D_800344B4_350B4[vehicleSpec->unk18 * 2]);
+			osSyncPrintf(D_8014429C_15324C, vehicleSpec->unk18, D_800344B4_350B4[vehicleSpec->unk18].name);
 		} else {
 			D_801575A4 = D_802C4080;
 		}

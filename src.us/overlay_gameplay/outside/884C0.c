@@ -1037,19 +1037,12 @@ void func_8007AA0C_899BC(void)
 }
 
 // https://decomp.me/scratch/Jhhfz
-// CURRENT(20)
-#ifdef NON_MATCHING
 // R on controller 2 debug prints current vehicle info + target info (if any)
 // Skipping this stops aliens/humans moving
-void func_8007AF8C_89F3C(void);
-void func_8007D690_8C640(void);
-void func_8007D424_8C3D4(void);
-void func_8007FDD8_8ED88(void);
-
 void func_8007AAEC_89A9C(void)
 {
-  s32 vehIdx;
   VehicleInstance *vehicle;
+  s32 new_var;
   AlienInstance *alien;
   alien = D_80158FEC;
   vehicle = D_80052B34;
@@ -1062,15 +1055,14 @@ void func_8007AAEC_89A9C(void)
 	if (vehicle != NULL)
 	{
 	  osSyncPrintf(&D_80141990_150940, vehicle - vehicleInstances);
-	  vehIdx = vehicleSpecs[vehicle->unk1A].unk18 * 2;
-	  osSyncPrintf(&D_8014199C_15094C, D_800344B4_350B4[vehIdx]);
-	  osSyncPrintf(&D_801419A8_150958, vehicle->unk0, vehicle->unk2, vehicle->unk4);
-	  osSyncPrintf(&D_801419B8_150968, vehicle->unk6, vehicle->unkA, vehicle->unk8);
-	  osSyncPrintf(&D_801419C8_150978, vehicle->unkE);
-	  osSyncPrintf(&D_801419D8_150988, vehicle->unk10);
-	  osSyncPrintf(&D_801419E8_150998, vehicle->unk12);
-	  osSyncPrintf(&D_801419F4_1509A4, vehicle->unk30, vehicle->unk34, vehicle->unk38);
-	  osSyncPrintf(&D_80141A04_1509B4, vehicle->unk20);
+	  osSyncPrintf(&D_8014199C_15094C, D_800344B4_350B4[vehicleSpecs[vehicle->unk1A].unk18].name);
+	  osSyncPrintf(&D_801419A8_150958, (s32) vehicle->unk0, vehicle->unk2, vehicle->unk4);
+	  osSyncPrintf(&D_801419B8_150968, (s32) vehicle->unk6, vehicle->unkA, vehicle->unk8);
+	  osSyncPrintf(&D_801419C8_150978, (s32) vehicle->unkE);
+	  osSyncPrintf(&D_801419D8_150988, (s32) vehicle->unk10);
+	  osSyncPrintf(&D_801419E8_150998, (s32) vehicle->unk12);
+	  osSyncPrintf(&D_801419F4_1509A4, (double) vehicle->unk30, (double) vehicle->unk34, (double) vehicle->unk38);
+	  osSyncPrintf(&D_80141A04_1509B4, (s32) vehicle->unk20);
 	  if (vehicle->unk20 & 2)
 	  {
 		osSyncPrintf(&D_80141A10_1509C0);
@@ -1095,14 +1087,14 @@ void func_8007AAEC_89A9C(void)
 	  osSyncPrintf(&D_80141A58_150A08, alienSpecs[alien->specIndex].unk18);
 	  if (alien->specIndex == 1)
 	  {
-		osSyncPrintf(&D_80141A64_150A14, alien->unk24);
+		osSyncPrintf(&D_80141A64_150A14, (s32) alien->unk24);
 	  }
-	  osSyncPrintf(&D_80141A74_150A24, alien->unk0, alien->unk2, alien->unk4);
-	  osSyncPrintf(&D_80141A84_150A34, alien->unk6, alien->unkA, alien->unk8);
-	  osSyncPrintf(&D_80141A94_150A44, alien->unkE);
-	  osSyncPrintf(&D_80141AA4_150A54, alien->unk2A);
-	  osSyncPrintf(&D_80141ABC_150A6C, alien->unk12);
-	  osSyncPrintf(&D_80141AC8_150A78, alien->unk10);
+	  osSyncPrintf(&D_80141A74_150A24, (s32) alien->unk0, alien->unk2, alien->unk4);
+	  osSyncPrintf(&D_80141A84_150A34, (s32) alien->unk6, alien->unkA, alien->unk8);
+	  osSyncPrintf(&D_80141A94_150A44, (s32) alien->unkE);
+	  osSyncPrintf(&D_80141AA4_150A54, (s32) alien->unk2A);
+	  osSyncPrintf(&D_80141ABC_150A6C, (s32) alien->unk12);
+	  osSyncPrintf(&D_80141AC8_150A78, (s32) alien->unk10);
 	  osSyncPrintf(&D_80141AD8_150A88, alien->unk20);
 	  if (alien->unk20 & 0x20)
 	  {
@@ -1133,31 +1125,27 @@ void func_8007AAEC_89A9C(void)
 		osSyncPrintf(&D_80141B28_150AD8);
 	  }
 	  osSyncPrintf(&D_80141B34_150AE4);
-	  osSyncPrintf(&D_80141B38_150AE8, alien->hitPoints);
-	  osSyncPrintf(&D_80141B48_150AF8, alien->unk47);
-	  osSyncPrintf(&D_80141B60_150B10, alien->unk38, alien->unk14, alien->unk16, alien->unk18);
-	  osSyncPrintf(&D_80141B78_150B28, alien->unk28, alien->unk29);
-	  osSyncPrintf(&D_80141B94_150B44, alien->unk2C, alien->unk34, alien->unk36, alien->unk37, alien->unk3A, alien->unk40, alien->unk1E);
-	  osSyncPrintf(&D_80141BD8_150B88, alien->unk1B);
+	  osSyncPrintf(&D_80141B38_150AE8, (s32) alien->hitPoints);
+	  osSyncPrintf(&D_80141B48_150AF8, (s32) alien->unk47);
+	  osSyncPrintf(&D_80141B60_150B10, (s32) alien->unk38, alien->unk14, alien->unk16, (s32) alien->unk18);
+	  osSyncPrintf(&D_80141B78_150B28, (s32) alien->unk28, (s32) alien->unk29);
+	  osSyncPrintf(&D_80141B94_150B44, (s32) alien->unk2C, alien->unk34, (s32) alien->unk36, alien->unk37, alien->unk3A, alien->unk40, (s32) alien->unk1E);
+	  osSyncPrintf(&D_80141BD8_150B88, (s32) alien->unk1B);
 	  if ((alien->specIndex == 0x19) || (alien->specIndex == 0x1B))
 	  {
 		AlienInstance *parent;
-		  parent = &alienInstances[alien->unk25];
+		parent = &alienInstances[alien->unk25];
 		osSyncPrintf(&D_80141BE4_150B94);
-		
 		osSyncPrintf(&D_80141C08_150BB8, *((s32 *) (&parent->unk10)), *((s32 *) (&parent->unk14)));
 		osSyncPrintf(&D_80141C24_150BD4, parent->unk20);
 		if (alien->specIndex == 0x19)
 		{
-		  osSyncPrintf(&D_80141C38_150BE8, parent->unk1B, ((u8 *) parent)[0x1E]);
+		  osSyncPrintf(&D_80141C38_150BE8, (s32) parent->unk1B, ((u8 *) parent)[0x1E]);
 		}
 	  }
 	}
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007AAEC_89A9C.s")
-#endif
 
 // CURRENT(5401)
 #ifdef NON_MATCHING
@@ -2964,7 +2952,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 					goto done;
 				}
 			} else if (D_8014ECD8 == vehIndex) {
-				osSyncPrintf(&D_80141D10_150CC0, D_800344B4_350B4[vehicleSpecs[vehicle->unk1A].unk18 * 2], spec->unk18, arg2);
+				osSyncPrintf(&D_80141D10_150CC0, D_800344B4_350B4[vehicleSpecs[vehicle->unk1A].unk18].name, spec->unk18, arg2);
 				inst->unk47 |= 0x80;
 			} else {
 				D_8014ECD8 = vehIndex;
