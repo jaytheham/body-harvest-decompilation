@@ -456,13 +456,14 @@ s32 func_8007956C_8851C(u8 arg0)
 }
 
 // https://decomp.me/scratch/tmc2b
-// CURRENT(140)
+// CURRENT(40)
 #ifdef NON_MATCHING
 // Skip this and aliens freeze when they die, never disappear
 void func_800797A4_88754(s32 arg0, u8 arg1)
 {
 	s16 i;
 	s16 nibble;
+	u8 val;
 	if ((arg1) == 0)
 	{
 		return;
@@ -474,7 +475,6 @@ void func_800797A4_88754(s32 arg0, u8 arg1)
 	}
 	for (i = 0; i < 4; i++)
 	{
-		u8 val;
 		switch (i)
 		{
 		  case 0:
@@ -487,8 +487,7 @@ void func_800797A4_88754(s32 arg0, u8 arg1)
 			break;
 
 		  case 2:
-			val = D_8013C1B8_14B168[(arg1 * 2) + 1];
-			nibble = ((u32) val) >> 4;
+			nibble = ((u32) D_8013C1B8_14B168[(arg1 * 2) + 1]) >> 4;
 			break;
 
 		  case 3:
