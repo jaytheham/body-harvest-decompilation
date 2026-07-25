@@ -749,18 +749,20 @@ s32 func_80079F08_88EB8(s32 arg0) {
 #endif
 
 // https://decomp.me/scratch/PEXJ7
-// CURRENT(620)
+// CURRENT(8)
 #ifdef NON_MATCHING
 s32 func_8007A198_89148(s32 arg0)
 {
-	s32 new_var;
+	u8 sp2C;
+	u8 sp2E;
 	u8 sp2D;
 	sp2D = alienInstances[arg0].specIndex;
 	func_80079F08_88EB8(arg0);
 	func_80080510_8F4C0(arg0);
-	if (alienSpecs[sp2D].unk0 != -1)
+	if (alienSpecs[sp2D].unk50 != -1)
 	{
-		new_var = (s8)func_800F3990_102940(arg0, alienSpecs[sp2D].unk0) | 0x80000;
+		s32 new_var;
+		new_var = (s8)func_800F3990_102940(arg0, alienSpecs[sp2D].unk50) | 0x80000;
 		alienInstances[arg0].unk20 &= ~7;
 		alienInstances[arg0].unk20 |= new_var;
 	}
