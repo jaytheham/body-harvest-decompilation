@@ -2,8 +2,6 @@
 #include "common.h"
 #include "857E0.h"
 
-#define D_8013C1A7_14B157 (&D_8013C178_14B128[0x2F])
-
 const char D_801417B0_150760[] = "explode walker\n"; // "explode walker\n"
 const char D_801417C0_150770[] = "No mode active components\n"; // "No mode active components\n"
 const char D_801417DC_15078C[] = "Too many objects onscreen\n"; // "Too many objects onscreen\n"
@@ -456,58 +454,48 @@ s32 func_8007956C_8851C(u8 arg0)
 }
 
 // https://decomp.me/scratch/tmc2b
-// CURRENT(40)
-#ifdef NON_MATCHING
 // Skip this and aliens freeze when they die, never disappear
 void func_800797A4_88754(s32 arg0, u8 arg1)
 {
-	s16 i;
-	s16 nibble;
-	u8 val;
-	if ((arg1) == 0)
+  s16 i;
+  s16 nibble;unsigned int new_var;
+  if (arg1 == 0)
+  {
+	return;
+  }
+  if (arg1 >= 0x19)
+  {
+	return;
+  }
+  for (i = 0; i < 4; i++)
+  {
+	new_var = arg1;
+	switch (i)
 	{
-		return;
+	  case 0:
+		nibble = ((u32) D_8013C1B8_14B168[new_var * 2]) >> 4;
+		break;
+
+	  case 1:
+		nibble = D_8013C1B8_14B168[new_var * 2] & 0xF;
+		break;
+
+	  case 2:
+		nibble = ((u32) D_8013C1B8_14B168[(new_var * 2) + 1]) >> 4;
+		break;
+
+	  case 3:
+		nibble = D_8013C1B8_14B168[(new_var * 2) + 1] & 0xF;
+		break;
+
 	}
-	if ((i && i) && i)   {  }
-	if ((arg1) >= 0x19)
+
+	if (nibble != 0)
 	{
-		return;
+	  func_800A8A68_B7A18(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, D_8013C178_14B128[0x2F + nibble]);
 	}
-	for (i = 0; i < 4; i++)
-	{
-		switch (i)
-		{
-		  case 0:
-			val = D_8013C1B8_14B168[arg1 * 2];
-			nibble = ((u32) val) >> 4;
-			break;
-
-		  case 1:
-			nibble = D_8013C1B8_14B168[arg1 * 2] & 0xF;
-			break;
-
-		  case 2:
-			nibble = ((u32) D_8013C1B8_14B168[(arg1 * 2) + 1]) >> 4;
-			break;
-
-		  case 3:
-			nibble = D_8013C1B8_14B168[(arg1 * 2) + 1] & 0xF;
-			break;
-		}
-
-		if (nibble != 0)
-		{
-			func_800A8A68_B7A18(
-					alienInstances[arg0].unk0,
-					alienInstances[arg0].unk2,
-					alienInstances[arg0].unk4,
-					D_8013C1A7_14B157[nibble]);
-		}
-	}
+  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800797A4_88754.s")
-#endif
 
 // https://decomp.me/scratch/Q33n1
 void func_80079910_888C0(s32 arg0)
