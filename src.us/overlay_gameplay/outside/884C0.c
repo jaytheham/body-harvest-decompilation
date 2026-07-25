@@ -736,7 +736,7 @@ s32 func_80079F08_88EB8(s32 arg0) {
 #endif
 
 // https://decomp.me/scratch/PEXJ7
-// CURRENT(8)
+// CURRENT(18)
 #ifdef NON_MATCHING
 s32 func_8007A198_89148(s32 arg0)
 {
@@ -5473,7 +5473,7 @@ void func_8008554C_944FC(u8 arg0)
 }
 
 // https://decomp.me/scratch/NQqt9
-// CURRENT(230)
+// CURRENT(250)
 #ifdef NON_MATCHING
 void func_80085690_94640(u8 arg0, u16 arg1)
 {
@@ -5906,7 +5906,7 @@ s32 func_800865F4_955A4(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 #endif
 
 // https://decomp.me/scratch/16XTy
-// CURRENT(680)
+// CURRENT(915)
 #ifdef NON_MATCHING
 s32 func_800868A4_95854(u8 arg0, s32 arg1, s16 arg2, s16 arg3)
 {
