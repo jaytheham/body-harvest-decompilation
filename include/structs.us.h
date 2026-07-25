@@ -1037,12 +1037,12 @@ typedef struct {
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 pad17;
 	/* 0x18 */ s32 unk18; // Ptr to name
-	/* 0x1C */ u8 pad1C[0x4]; // First weapon?
+	/* 0x1C */ s32 unk1C; // First weapon?
 	/* 0x20 */ s16 unk20;
 	/* 0x22 */ s16 unk22;
 	/* 0x24 */ s16 unk24;
 	/* 0x26 */ s16 unk26;
-	/* 0x28 */ u8 pad28[0x4]; // Second weapon?
+	/* 0x28 */ s32 unk28; // Second weapon?
 	/* 0x2C */ s16 unk2C;
 	/* 0x2E */ s16 unk2E;
 	/* 0x30 */ s16 unk30;
