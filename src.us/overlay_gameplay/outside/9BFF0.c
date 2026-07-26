@@ -431,19 +431,18 @@ Unk8014DD50 D_8013C9DC_14B98C = {0, 0, 0, 0, 0, 0, 0, 1, 7};
 Unk8014DD50 D_8013C9EC_14B99C = {0, 0, 0, 0, 0, 0, 0, 1, 6};
 u32 D_8013C9FC_14B9AC = 0;
 
-u8 D_8013CA00_14B9B0[0xC] = {
-	0x69,
-	0x09,
-	0x68,
-	0x08,
-	0x67,
-	0x07,
-	0x66,
-	0x06,
-	0x65,
-	0x07,
-	0x00,
-	0x00,
+typedef struct {
+	s8 unk0;
+	s8 unk1;
+} UnkD_8013CA00_14B9B0;
+
+UnkD_8013CA00_14B9B0 D_8013CA00_14B9B0[0x6] = {
+	{0x69, 0x09},
+	{0x68, 0x08},
+	{0x67, 0x07},
+	{0x66, 0x06},
+	{0x65, 0x07},
+	{0x00, 0x00},
 };
 
 s8 D_8013CA0C_14B9BC[] = {
@@ -3042,26 +3041,20 @@ s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 #ifdef NON_MATCHING
 void func_80092ADC_A1A8C(void)
 {
-	Unk8013CA *p;
-	u8 result;
-	AlienInstance *ptr;
-	Unk8013CA *end = (Unk8013CA *)(D_8013CA00_14B9B0 + 0xA);
-	p = (Unk8013CA *)D_8013CA00_14B9B0;
-	do
+   u8 result;
+	s32 i;
+	for (i = 0; i < 6; i++) {
+	result = func_80092A50_A1A00(D_8013CA00_14B9B0[i].unk0 << 8, D_8013CA00_14B9B0[i].unk1 << 8, 0x10);
+	result &= 0xff;
+	if (result != 0xFF)
 	{
-		result = func_80092A50_A1A00(p->unk0 << 8, p->unk1 << 8, 0x10);
-		result &= 0xff;
-		if (result != 0xFF)
-		{
-			D_8004817C++;
-			ptr = &alienInstances[result];
-			ptr->unk26 = 0;
-			ptr->unk38 = 0x2F;
-			ptr->unk20 |= 0x4000;
-			func_80092BBC_A1B6C(result);
-		}
-		p++;
-	} while (p != end);
+	  alienInstances[result].unk26 = 0;
+	  alienInstances[result].unk38 = 0x2F;
+	  alienInstances[result].unk20 |= 0x4000;
+	  D_8004817C++;
+	  func_80092BBC_A1B6C(result);
+	}
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80092ADC_A1A8C.s")
