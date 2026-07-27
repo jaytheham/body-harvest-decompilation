@@ -920,6 +920,7 @@ s32 func_80084FE8_93F98(u8, u16);
 void func_800F3190_102140(u8 arg0);
 s32 func_800BC5DC_CB58C(s16 arg0);
 void func_80085690_94640(u8, u16);
+void func_80087720_966D0(u8 arg0, s32 arg1);
 s32 func_800877E8_96798(u8, s16, s16);
 s32 func_80004818_5418(s8, s8, u8);
 void func_80015674_16274(s16 arg0);
