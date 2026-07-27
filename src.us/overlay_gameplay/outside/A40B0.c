@@ -434,24 +434,19 @@ void func_80095530_A44E0(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A40B0/func_80095530_A44E0.s")
 #endif
 
-// CURRENT(354)
-#ifdef NON_MATCHING
+// https://decomp.me/scratch/hG8iA
 // Debug - display menu items
 void func_8009594C_A48FC(s16 arg0, s16 arg1)
 {
-  s32 var_s0;
-  s32 var_s1;
-  s32 temp_s2;
-  
-  for (var_s0 = 0, var_s1 = arg0; arg1 > var_s0; var_s0++, var_s1++)
-  {
-      func_80095100_A40B0(var_s1, var_s0 + 1);
-  }
-  D_8014ECF4 = arg1;
-}
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A40B0/func_8009594C_A48FC.s")
-#endif
+	s32 var_s0;
 
+	for (var_s0 = 0; var_s0 < arg1; var_s0++)
+	{
+		func_80095100_A40B0(arg0 + var_s0, var_s0 + 1);
+	}
+	D_8014ECF4 = arg1;
+}
+
+// Debug - main method (stubbed)
 void func_800959DC_A498C(void) {
 }
