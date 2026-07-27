@@ -2262,25 +2262,25 @@ void func_80090C14_9FBC4(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80090C14_9FBC4.s")
 #endif
 
-// CURRENT(3478)
+// CURRENT(2109)
 #ifdef NON_MATCHING
 // AI - Boss/Drone King AI state machine
 void func_80090D0C_9FCBC(u8 arg0)
 {
 	AlienInstance *inst;
+	u8 specIdx;
+	s16 pathNodes[2];
+	s16 specSlot;
+	s8 pathResult;
+	s32 pos2;
+	s32 pos1;
+	s32 pos0;
 	s32 pad0;
 	s32 pad1;
 	AlienInstance *parent;
 	Unk8014DD50 *route;
 	s32 parentFlags;
 	s32 parentTimer;
-	s16 specSlot;
-	s16 pathNodes[2];
-	s8 pathResult;
-	u8 specIdx;
-	s32 pos2;
-	s32 pos1;
-	s32 pos0;
 	s32 tmp;
 
 	inst = &alienInstances[arg0];
@@ -2301,8 +2301,9 @@ void func_80090D0C_9FCBC(u8 arg0)
 		{
 			*(s32 *)&parent->unk10 = 1;
 		}
-		pathNodes[0] = inst->unkC;
-		pathNodes[1] = D_8014DD50[pathNodes[0]].unkC;
+		tmp = inst->unkC;
+		pathNodes[1] = D_8014DD50[tmp].unkC;
+		pathNodes[0] = tmp;
 		pathResult = func_80081F18_90EC8(arg0, 2, 5, pathNodes, &D_8013C848_14B7F8);
 		if ((inst->unk36 == 2) || (pathResult == 1))
 		{
@@ -2375,9 +2376,13 @@ void func_80090D0C_9FCBC(u8 arg0)
 		tmp = (s16)(inst->unkE - inst->unk2A);
 		if (tmp < 0)
 		{
-			tmp = -tmp;
+			pad0 = -tmp;
 		}
-		if (tmp < alienSpecs[specIdx].unk42)
+		else
+		{
+			pad0 = tmp;
+		}
+		if (pad0 < alienSpecs[specIdx].unk42)
 		{
 			if (inst->unk20 & 0x40)
 			{
