@@ -561,6 +561,7 @@ u32 D_8013CB50_14BB00[] = {
 };
 u32 D_8013CB68_14BB18[2] = {0x01000003, 0x00000034};
 
+// AI - Busy-state handler for parent-child flag handshake
 void func_8008D040_9BFF0(u8 arg0)
 {
 	u8 new_var;
@@ -585,6 +586,7 @@ void func_8008D040_9BFF0(u8 arg0)
 	}
 }
 
+// Free Adam from HCU if stick is wiggled
 s32 func_8008D0E0_9C090(u8 arg0)
 {
 	s8 tempVar;
@@ -633,6 +635,7 @@ s32 func_8008D0E0_9C090(u8 arg0)
 	return 0;
 }
 
+// AI - Set targeting mode to parent
 void func_8008D3B0_9C360(u8 arg0)
 {
 	alienInstances[arg0].unk20 &= ~ALIEN_FLAG_TARGET_OBJ;
@@ -640,6 +643,7 @@ void func_8008D3B0_9C360(u8 arg0)
 	alienInstances[arg0].unk38 = alienInstances[arg0].unk25;
 }
 
+// AI - Re-acquire target after cooldown
 void func_8008D3F4_9C3A4(u8 arg0)
 {
 	AlienInstance *inst = &alienInstances[arg0];
@@ -653,6 +657,7 @@ void func_8008D3F4_9C3A4(u8 arg0)
 	func_8008D3B0_9C360(arg0);
 }
 
+// AI - Target selection logic (buildings, aliens, zones)
 void func_8008D4A0_9C450(unsigned int arg0)
 {
 	s32 dummy;
@@ -687,6 +692,7 @@ void func_8008D4A0_9C450(unsigned int arg0)
 	}
 }
 
+// AI - Start interaction sequence with player
 void func_8008D634_9C5E4(u8 arg0)
 {
 	if (!(D_8004DCA8 & 2) && !(D_80052B34->unk20 & 0x80) && (D_80052B34->unk1A == 0) && (D_80159300 == 0))
@@ -707,6 +713,7 @@ void func_8008D634_9C5E4(u8 arg0)
 }
 
 // https://decomp.me/scratch/HCQa2
+// AI - Human capture/processing logic
 void func_8008D71C_9C6CC(u32 arg0)
 {
 	s16 target;
@@ -779,6 +786,7 @@ void func_8008D71C_9C6CC(u32 arg0)
 }
 
 // https://decomp.me/scratch/lrRls
+// AI - Detach alien from parent
 s32 func_8008D978_9C928(u8 arg0)
 {
 	AlienInstance *inst = &alienInstances[arg0];
@@ -800,6 +808,7 @@ s32 func_8008D978_9C928(u8 arg0)
 
 // CURRENT(3738)
 #ifdef NON_MATCHING
+// AI - Companion/following logic for carried humans
 void func_8008DA24_9C9D4(u8 arg0)
 {
 	AlienInstance *inst;
@@ -949,6 +958,7 @@ void func_8008DA24_9C9D4(u8 arg0)
 // https://decomp.me/scratch/BnGko
 // CURRENT(90)
 #ifdef NON_MATCHING
+// AI - General update tick with cooldown and collision
 void func_8008DEF4_9CEA4(u8 arg0)
 {
 	s32 var_t0;
@@ -1007,6 +1017,7 @@ void func_8008DEF4_9CEA4(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008DEF4_9CEA4.s")
 #endif
 
+// AI - Wrapper update with target selection
 void func_8008E0D8_9D088(u8 arg0)
 {
 	func_8008DEF4_9CEA4(arg0);
@@ -1017,6 +1028,7 @@ void func_8008E0D8_9D088(u8 arg0)
 	func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
 }
 
+// AI - Update with player interaction check
 void func_8008E16C_9D11C(u8 arg0)
 {
 	s32 result;
@@ -1040,6 +1052,7 @@ void func_8008E16C_9D11C(u8 arg0)
 	}
 }
 
+// AI - Fall/dying update
 void func_8008E23C_9D1EC(u8 arg0)
 {
 	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_FALL))
@@ -1053,6 +1066,7 @@ void func_8008E23C_9D1EC(u8 arg0)
 	}
 }
 
+// AI - Pathfinding movement via 2 nodes
 void func_8008E2B4_9D264(u8 arg0, s16 arg1, s16 arg2)
 {
 	s16 arr[2];
@@ -1061,6 +1075,7 @@ void func_8008E2B4_9D264(u8 arg0, s16 arg1, s16 arg2)
 	func_80081F18_90EC8(arg0, 2, 3, arr, &D_8013C610_14B5C0);
 }
 
+// AI - Check parent flag for player targeting
 s32 func_8008E30C_9D2BC(u8 arg0, s32 arg1)
 {
 	u8 unk25 = alienInstances[arg0].unk25;
@@ -1084,6 +1099,7 @@ s32 func_8008E30C_9D2BC(u8 arg0, s32 arg1)
 	return 0;
 }
 
+// AI - Check own UNKP flag for player targeting
 s32 func_8008E3E8_9D398(u8 arg0)
 {
 	AlienInstance *inst = &alienInstances[arg0];
@@ -1106,6 +1122,7 @@ s32 func_8008E3E8_9D398(u8 arg0)
 	return 0;
 }
 
+// AI - Detach from non-harvester parent and re-target
 s32 func_8008E478_9D428(u8 arg0)
 {
 	u8 new_var;
@@ -1123,6 +1140,7 @@ s32 func_8008E478_9D428(u8 arg0)
 
 // CURRENT(2352)
 #ifdef NON_MATCHING
+// AI - Height-adjustment calculation for slopes
 s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 {
 	AlienInstance *inst;
@@ -1218,6 +1236,7 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 // https://decomp.me/scratch/V6LCq
 // CURRENT(821)
 #ifdef NON_MATCHING
+// AI - Vertical velocity/gravity update
 void func_8008E978_9D928(u8 arg0, s32 arg1)
 {
   s32 sp2C;
@@ -1270,6 +1289,7 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 
 // CURRENT(1824)
 #ifdef NON_MATCHING
+// AI - Gravity with spec-driven height offset
 void func_8008EB20_9DAD0(u8 arg0, s32 arg1, s32 arg2)
 {
 	AlienInstance *inst = &alienInstances[arg0];
@@ -1338,11 +1358,13 @@ void func_8008EB20_9DAD0(u8 arg0, s32 arg1, s32 arg2)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008EB20_9DAD0.s")
 #endif
 
+// AI - Apply gravity using spec height offset
 void func_8008EDFC_9DDAC(u8 arg0)
 {
 	func_8008E978_9D928(arg0, alienSpecs[alienInstances[arg0].specIndex].unk58);
 }
 
+// AI - Attach decals to alien path nodes
 void func_8008EE5C_9DE0C(u8 arg0, s16 arg1, s16 arg2)
 {
 	func_80081E5C_90E0C(arg1);
@@ -1356,12 +1378,14 @@ void func_8008EE5C_9DE0C(u8 arg0, s16 arg1, s16 arg2)
 	}
 }
 
+// AI - Create single decal at first path node
 void func_8008EF1C_9DECC(u8 arg0)
 {
 	s8 tmp = D_8014DD50[alienInstances[arg0].unkC].unkC;
 	func_8008EE5C_9DE0C(arg0, tmp, D_8014DD50[tmp].unkD);
 }
 
+// AI - Create chain of 4 decals on path nodes
 void func_8008EF7C_9DF2C(u8 arg0)
 {
 	s16 sp2E;
@@ -1390,6 +1414,7 @@ void func_8008EF7C_9DF2C(u8 arg0)
 
 // CURRENT(10727)
 #ifdef NON_MATCHING
+// AI - Complex AI movement/state machine
 void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 {
 	u8 sp5F;
@@ -1653,6 +1678,7 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008F0BC_9E06C.s")
 #endif
 
+// AI - Set follow-target for companion aliens
 void func_8008F6C0_9E670(u8 arg0)
 {
 	u8 temp_a0;
@@ -1682,6 +1708,7 @@ void func_8008F6C0_9E670(u8 arg0)
 	alienInstances[arg0].unk16 = buildingSpecs[buildingInstances[temp_a1].buildingType].unk14 + alienInstances[arg0].unk16 + 0x64;
 }
 
+// AI - Movement update with follow-target refresh
 void func_8008F818_9E7C8(u8 arg0)
 {
 	AlienInstance *ai = &alienInstances[arg0];
@@ -1699,6 +1726,7 @@ void func_8008F818_9E7C8(u8 arg0)
 }
 
 // https://decomp.me/scratch/zzVqU
+// AI - Pathfinding to parent/owner
 void func_8008F8D4_9E884(u8 arg0, s16 arg1)
 {
 	s16 sp2C[2];
@@ -1732,6 +1760,7 @@ void func_8008F8D4_9E884(u8 arg0, s16 arg1)
 
 // CURRENT(2218)
 #ifdef NON_MATCHING
+// AI - Harvester/drone AI update
 void func_8008F9E4_9E994(u8 arg0)
 {
 	s16 sp36;
@@ -1812,6 +1841,7 @@ void func_8008F9E4_9E994(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008F9E4_9E994.s")
 #endif
 
+// AI - Spawn a new alien instance from pool
 u8 func_8008FC78_9EC28(u8 arg0)
 {
 	u8 result = func_8007956C_8851C(0x20) & 0xFF;
@@ -1830,6 +1860,7 @@ u8 func_8008FC78_9EC28(u8 arg0)
 	return result;
 }
 
+// AI - Spawn two aliens in opposite directions
 void func_8008FD0C_9ECBC(u8 arg0)
 {
 	u8 sp1F;
@@ -1861,6 +1892,7 @@ void func_8008FD0C_9ECBC(u8 arg0)
 	}
 }
 
+// AI - Spawn projectile/child alien
 s32 func_8008FE18_9EDC8(u8 arg0)
 {
 	u8 sp4F;
@@ -1898,6 +1930,7 @@ s32 func_8008FE18_9EDC8(u8 arg0)
 
 // CURRENT(1530)
 #ifdef NON_MATCHING
+// AI - Calculate spawn offset from path node
 s32 func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 {
 	AlienInstance *inst;
@@ -1931,6 +1964,7 @@ s32 func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 
 // CURRENT(11639)
 #ifdef NON_MATCHING
+// AI - AI state machine for carried humans/companions
 void func_8009012C_9F0DC(u8 arg0)
 {
 	AlienInstance *inst;
@@ -2145,6 +2179,7 @@ skip_parent_cleanup:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8009012C_9F0DC.s")
 #endif
 
+// AI - Decrement parent death timer or run standard AI
 void func_800908C4_9F874(u8 arg0)
 {
 	AlienInstance *inst = &alienInstances[alienInstances[arg0].unk25];
@@ -2158,6 +2193,7 @@ void func_800908C4_9F874(u8 arg0)
 	*(s32 *)&inst->unk10 = unk10 - 1;
 }
 
+// AI - Spawn spark/particle at a path node
 void func_80090948_9F8F8(s16 arg0, u16 arg1)
 {
 	Unk8014DD50 sp20 = D_8013C9DC_14B98C;
@@ -2171,6 +2207,7 @@ void func_80090948_9F8F8(s16 arg0, u16 arg1)
 	}
 }
 
+// AI - Conditional spark effect based on speed
 void func_80090A6C_9FA1C(u8 arg0, s16 arg1, u16 arg2)
 {
 	Unk8014DD50 sp28;
@@ -2203,6 +2240,7 @@ void func_80090A6C_9FA1C(u8 arg0, s16 arg1, u16 arg2)
 // https://decomp.me/scratch/qLxSW
 // CURRENT(15)
 #ifdef NON_MATCHING
+// AI - Face toward the player
 void func_80090C14_9FBC4(u8 arg0)
 {
 	s16 sp2C2;
@@ -2230,6 +2268,7 @@ void func_80090C14_9FBC4(u8 arg0)
 
 // CURRENT(3478)
 #ifdef NON_MATCHING
+// AI - Boss/Drone King AI state machine
 void func_80090D0C_9FCBC(u8 arg0)
 {
 	AlienInstance *inst;
@@ -2364,6 +2403,7 @@ void func_80090D0C_9FCBC(u8 arg0)
 
 // CURRENT(956)
 #ifdef NON_MATCHING
+// AI - Hybrid boss/companion AI update
 void func_80091220_A01D0(u8 arg0)
 {
 	AlienInstance *instance = &alienInstances[arg0];
@@ -2432,6 +2472,7 @@ void func_80091220_A01D0(u8 arg0)
 
 // CURRENT(5477)
 #ifdef NON_MATCHING
+// AI - Building targeting / Drone Hunter AI
 void func_80091470_A0420(u8 arg0)
 {
 	AlienInstance *inst = &alienInstances[arg0];
@@ -2488,6 +2529,7 @@ void func_80091470_A0420(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091470_A0420.s")
 #endif
 
+// AI - Parent targeting helper
 void func_8009170C_A06BC(u8 arg0)
 {
 	u8 unk25;
@@ -2503,6 +2545,7 @@ void func_8009170C_A06BC(u8 arg0)
 	}
 }
 
+// AI - Player proximity check
 s32 func_8009179C_A074C(u8 arg0, s32 arg1)
 {
 	if (((-(alienInstances[arg0].unk0 - D_80052B34->unk0) <
@@ -2536,6 +2579,7 @@ s32 func_8009179C_A074C(u8 arg0, s32 arg1)
 	return 0;
 }
 
+// AI - Set target-distance flag
 void func_800918E0_A0890(u8 arg0)
 {
 	AlienInstance *alien;
@@ -2600,6 +2644,7 @@ void func_800918E0_A0890(u8 arg0)
 	alien->unk20 = flags & ~ALIEN_FLAG_UNKD;
 }
 
+// AI - General AI step (detach, player check, target update)
 s32 func_800919C0_A0970(u8 arg0, u8 arg1)
 {
 	AlienInstance *alien;
@@ -2631,6 +2676,7 @@ s32 func_800919C0_A0970(u8 arg0, u8 arg1)
 	return 0;
 }
 
+// AI - Stun/reset alien
 void func_80091A78_A0A28(u8 arg0)
 {
 	alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD;
@@ -2641,6 +2687,7 @@ void func_80091A78_A0A28(u8 arg0)
 
 // CURRENT(2930)
 #ifdef NON_MATCHING
+// AI - Building attack/destruction
 s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2)
 {
 	AlienInstance *temp_s0;
@@ -2709,6 +2756,7 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2)
 // https://decomp.me/scratch/TAjH8
 // CURRENT(38)
 #ifdef NON_MATCHING
+// AI - Movement AI with building attack
 void func_80091E70_A0E20(u8 arg0)
 {
   
@@ -2772,6 +2820,7 @@ void func_80091E70_A0E20(u8 arg0)
 
 // CURRENT(18369)
 #ifdef NON_MATCHING
+// AI - Drone/Boss attack AI with melee patterns
 void func_800920C0_A1070(u8 arg0)
 {
 	u8 useAttack;
@@ -3011,6 +3060,7 @@ void func_800920C0_A1070(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_800920C0_A1070.s")
 #endif
 
+// AI - Spawn a decoy/statue alien
 s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 {
 	u8 result;
@@ -3031,6 +3081,7 @@ s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 // https://decomp.me/scratch/Eb0Us
 // CURRENT(171)
 #ifdef NON_MATCHING
+// AI - Spawn 6 statue/decoration aliens
 void func_80092ADC_A1A8C(void)
 {
    u8 result;
@@ -3052,6 +3103,7 @@ void func_80092ADC_A1A8C(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80092ADC_A1A8C.s")
 #endif
 
+// AI - Advance patrol waypoint
 void func_80092BBC_A1B6C(u8 arg0)
 {
 	s8 x = 0;
@@ -3068,6 +3120,7 @@ void func_80092BBC_A1B6C(u8 arg0)
 	alienInstances[arg0].unk26++;
 }
 
+// AI - Patrol distance check and state transitions
 void func_80092C40_A1BF0(u8 arg0)
 {
 	s32 dz;
@@ -3127,6 +3180,7 @@ void func_80092C40_A1BF0(u8 arg0)
 	}
 }
 
+// AI - Explosion/kill handling
 void func_80092DFC_A1DAC(u8 arg0)
 {
 	AlienInstance *alien = &alienInstances[arg0];
@@ -3165,6 +3219,7 @@ void func_80092DFC_A1DAC(u8 arg0)
 // https://decomp.me/scratch/NgKhQ
 // CURRENT(146)
 #ifdef NON_MATCHING
+// AI - Patrol alien update with rotation sync
 void func_80092EF4_A1EA4(u8 arg0)
 {
   u8 sp3F;
@@ -3239,6 +3294,7 @@ void func_80092EF4_A1EA4(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80092EF4_A1EA4.s")
 #endif
 
+// AI - Support alien update
 void func_80093164_A2114(u8 arg0)
 {
 	func_8008076C_8F71C(arg0);
@@ -3260,6 +3316,7 @@ void func_80093164_A2114(u8 arg0)
 	}
 }
 
+// AI - Support + patrol hybrid update
 void func_800932A8_A2258(u8 arg0)
 {
 	func_8008EDFC_9DDAC(arg0);
@@ -3281,6 +3338,7 @@ void func_800932A8_A2258(u8 arg0)
 	}
 }
 
+// AI - Stop alien speed near player
 void func_8009335C_A230C(u8 arg0)
 {
 	s32 dz;
@@ -3305,6 +3363,7 @@ void func_8009335C_A230C(u8 arg0)
 
 #ifdef NON_MATCHING
 // CURRENT(2444)
+// AI - Guard/aggressive alien AI
 void func_80093438_A23E8(u8 arg0)
 {
 	AlienInstance *inst;
@@ -3421,6 +3480,7 @@ void func_80093438_A23E8(u8 arg0)
 
 // CURRENT(2155)
 #ifdef NON_MATCHING
+// AI - Turret/sentry AI
 void func_8009377C_A272C(u8 arg0)
 {
 	AlienInstance *inst;
@@ -3479,6 +3539,7 @@ void func_8009377C_A272C(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8009377C_A272C.s")
 #endif
 
+// AI - Calculate heading from terrain samples
 s16 func_8009395C_A290C(u8 arg0, s16 arg1)
 {
 	f32 sp24;
@@ -3497,6 +3558,7 @@ s16 func_8009395C_A290C(u8 arg0, s16 arg1)
 	return func_80003824_4424(100.0f, (sp1E - sp1F));
 }
 
+// AI - Speed control from distance parameter
 void func_80093AE4_A2A94(u8 arg0, s32 arg1)
 {
 	u8 specIdx;
@@ -3558,6 +3620,7 @@ void func_80093AE4_A2A94(u8 arg0, s32 arg1)
 
 // CURRENT(28849)
 #ifdef NON_MATCHING
+// AI - Major pathfinding/movement AI
 void func_80093C7C_A2C2C(u8 arg0)
 {
 	AlienInstance *alien;
@@ -3882,11 +3945,13 @@ void func_80093C7C_A2C2C(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80093C7C_A2C2C.s")
 #endif
 
+// AI - Simple collision update
 void func_800946A4_A3654(u8 arg0)
 {
 	func_8008735C_9630C(arg0);
 }
 
+// AI - Fall/jump state control
 s32 func_800946CC_A367C(u8 arg0, s32 arg1, s32 arg2)
 {
 	s32 result;
@@ -3929,6 +3994,7 @@ s32 func_800946CC_A367C(u8 arg0, s32 arg1, s32 arg2)
 	return result;
 }
 
+// AI - Vehicle collision check
 void func_80094808_A37B8(u8 arg0)
 {
 	s32 sp24;
@@ -3949,6 +4015,7 @@ void func_80094808_A37B8(u8 arg0)
 	}
 }
 
+// AI - Fall/vehicle eject handling
 void func_8009490C_A38BC(u8 arg0)
 {
 	s16 sp3C[2];
@@ -3995,6 +4062,7 @@ void func_8009490C_A38BC(u8 arg0)
 	}
 }
 
+// AI - Cooldown/phase management
 void func_80094AA0_A3A50(u8 arg0, s32 arg1)
 {
 	s32 pad1;
@@ -4017,12 +4085,14 @@ void func_80094AA0_A3A50(u8 arg0, s32 arg1)
 	}
 }
 
+// AI - Phase transition wrapper
 void func_80094B4C_A3AFC(u8 arg0)
 {
 	func_80137468_146418(arg0, 0x1B);
 	func_80094AA0_A3A50(arg0, 1);
 }
 
+// AI - Parent check for despawn
 void func_80094B80_A3B30(u8 arg0)
 {
 	AlienInstance *inst = &alienInstances[arg0];
@@ -4033,6 +4103,7 @@ void func_80094B80_A3B30(u8 arg0)
 }
 
 // https://decomp.me/scratch/psru3
+// AI - Rotation/position sync with parent
 void func_80094BE0_A3B90(u8 arg0)
 {
 	u8 sp37;
@@ -4065,6 +4136,7 @@ void func_80094BE0_A3B90(u8 arg0)
 
 // CURRENT(1533)
 #ifdef NON_MATCHING
+// AI - Boss/mech animation sync
 void func_80094DE0_A3D90(u8 arg0)
 {
 	s16 sp5E;
@@ -4166,11 +4238,13 @@ void func_80094DE0_A3D90(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80094DE0_A3D90.s")
 #endif
 
+// AI - Standard update wrapper
 void func_800950A8_A4058(u8 arg0)
 {
 	func_8008E0D8_9D088(arg0);
 }
 
+// AI - Interaction update wrapper
 void func_800950D0_A4080(u8 arg0)
 {
 	func_8008E16C_9D11C(arg0);

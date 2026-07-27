@@ -6589,9 +6589,9 @@ s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088154_97104.s")
 #endif
 
-// maybe kill alien?
 // CURRENT(92)
 #ifdef NON_MATCHING
+// kill alien?
 void func_80088760_97710(AlienInstance* alien) {
 	u8 specIndex;
 	s32 alienIndex;
