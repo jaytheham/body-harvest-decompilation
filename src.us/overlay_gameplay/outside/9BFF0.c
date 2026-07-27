@@ -706,47 +706,44 @@ void func_8008D634_9C5E4(u8 arg0)
 	}
 }
 
-// CURRENT(1131)
-#ifdef NON_MATCHING
-void func_8008D71C_9C6CC(u8 arg0)
+// https://decomp.me/scratch/HCQa2
+void func_8008D71C_9C6CC(u32 arg0)
 {
 	s16 target;
-	AlienInstance *inst;
 	AlienInstance *parent;
+	s32 has100000;
 
-	inst = &alienInstances[arg0];
-	target = inst->unk38;
-	inst->unk2C = 0x4B0 - alienSpecs[inst->specIndex].unk51 * 5;
+	target = alienInstances[arg0].unk38;
+	alienInstances[arg0].unk2C = 0x4B0 - (alienSpecs[alienInstances[arg0].specIndex].unk51 * 5);
 	if (target == 0x100)
 	{
 		func_8008D634_9C5E4(arg0);
 		return;
 	}
-	parent = &alienInstances[target];
-	if (parent->specIndex == 1)
+
+	if (alienInstances[target].specIndex == 1)
 	{
-		if (!(parent->unk20 & 0x40000000))
+		if (!(alienInstances[target].unk20 & 0x40000000))
 		{
-			if ((parent->unk24 != 3) && (parent->unk24 != 0x1D) && (parent->unk24 != 4))
+			if (alienInstances[target].unk24 != 3 && alienInstances[target].unk24 != 0x1D && alienInstances[target].unk24 != 4)
 			{
-				s32 has100000;
-				has100000 = parent->unk20 & 0x100000;
-				if (!has100000 && parent->unk24 >= 5 && parent->unk24 < 0xF)
+				has100000 = alienInstances[target].unk20 & 0x100000;
+				if (!has100000 && alienInstances[target].unk24 >= 5 && alienInstances[target].unk24 < 0xF)
 				{
 					D_80048190 -= 1;
 				}
-				if (parent->unk24 == 1)
+				if (alienInstances[target].unk24 == 1)
 				{
 					func_80137468_146418(target, 0x194);
-					parent->unk24 = 0x1D;
+					alienInstances[target].unk24 = 0x1D;
 				}
-				else if ((parent->unk24 == 0x14) || (parent->unk24 == 0xC) || (parent->unk24 == 0xB))
+				else if (((alienInstances[target].unk24 == 0x14) || (alienInstances[target].unk24 == 0xC)) || (alienInstances[target].unk24 == 0xB))
 				{
 					if (!has100000)
 					{
 						func_80137468_146418(target, 0x274);
 					}
-					parent->unk24 = 4;
+					alienInstances[target].unk24 = 4;
 				}
 				else
 				{
@@ -754,30 +751,32 @@ void func_8008D71C_9C6CC(u8 arg0)
 					{
 						func_80137468_146418(target, 0x263);
 					}
-					parent->unk24 = 3;
+					alienInstances[target].unk24 = 3;
 				}
-				parent->unk48 = 0;
-				parent->unk20 &= ~0x4000;
-				parent->unk25 = arg0;
-				inst->unk24 = target;
+				alienInstances[target].unk25 = arg0;
+				alienInstances[target].unk48 = 0;
+				alienInstances[target].unk20 &= ~0x4000;
+				alienInstances[arg0].unk24 = target;
+				if (0)
+				{
+				}
 				func_8008D3B0_9C360(arg0);
-				inst->unk48 = 0x60;
-				inst->unk20 |= 0x2000;
+
+				alienInstances[arg0].unk20 |= 0x2000;
+				alienInstances[arg0].unk48 = 0x60;
 			}
 		}
 	}
-	else if (parent->specIndex == 0x19 && !(parent->unk20 & 0x308000))
+	else if ((alienInstances[target].specIndex == 0x19) && (!(alienInstances[target].unk20 & 0x308000)))
 	{
-		inst->unk20 |= 0x4000;
-		parent->unk20 |= 0x8000;
-		inst->unk48 = 0;
-		inst->unk2C = 0;
-		*(s8 *)&alienInstances[parent->unk25].unk1E = arg0;
+		alienInstances[arg0].unk20 |= 0x4000;
+		alienInstances[target].unk20 |= 0x8000;
+		alienInstances[arg0].unk48 = 0;
+		alienInstances[arg0].unk2C = 0;
+		parent = &alienInstances[alienInstances[target].unk25];
+		*((s8 *)&parent->unk1E) = arg0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008D71C_9C6CC.s")
-#endif
 
 // https://decomp.me/scratch/lrRls
 s32 func_8008D978_9C928(u8 arg0)
