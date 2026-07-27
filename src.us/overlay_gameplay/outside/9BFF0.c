@@ -1924,7 +1924,7 @@ s32 func_8008FE18_9EDC8(u8 arg0)
 	return 0;
 }
 
-// CURRENT(1530)
+// CURRENT(1442)
 #ifdef NON_MATCHING
 // AI - Calculate spawn offset from path node
 s32 func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
