@@ -956,8 +956,7 @@ void func_8008DA24_9C9D4(u8 arg0)
 #endif
 
 // https://decomp.me/scratch/BnGko
-// CURRENT(90)
-#ifdef NON_MATCHING
+// CURRENT(0)
 // AI - General update tick with cooldown and collision
 void func_8008DEF4_9CEA4(u8 arg0)
 {
@@ -1013,9 +1012,6 @@ void func_8008DEF4_9CEA4(u8 arg0)
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008DEF4_9CEA4.s")
-#endif
 
 // AI - Wrapper update with target selection
 void func_8008E0D8_9D088(u8 arg0)
