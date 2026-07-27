@@ -1408,7 +1408,7 @@ void func_8008EF7C_9DF2C(u8 arg0)
 	}
 }
 
-// CURRENT(10727)
+// CURRENT(9972)
 #ifdef NON_MATCHING
 // AI - Complex AI movement/state machine
 void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
@@ -1467,7 +1467,7 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 					}
 
 					func_80080B44_8FAF4(arg0, sp5F);
-					sp30->unk16 += buildingSpecs[buildingInstances[temp_a1].buildingType].unk14 + 0x64;
+					sp30->unk16 += buildingSpecs[buildingInstances[sp5F].buildingType].unk14 + 0x64;
 					sp30->unk20 &= 0xFFFEF7FF;
 
 					func_80080B44_8FAF4(sp5E, sp5F);
