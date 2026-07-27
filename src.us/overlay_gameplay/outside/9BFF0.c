@@ -3075,29 +3075,22 @@ s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 }
 
 // https://decomp.me/scratch/Eb0Us
-// CURRENT(171)
-#ifdef NON_MATCHING
+// CURRENT(0)
 // AI - Spawn 6 statue/decoration aliens
 void func_80092ADC_A1A8C(void)
 {
-   u8 result;
 	s32 i;
-	for (i = 0; i < 6; i++) {
+	u8 result;
+	for (i = 0; i < 5; i++) {
 	result = func_80092A50_A1A00(D_8013CA00_14B9B0[i].unk0 << 8, D_8013CA00_14B9B0[i].unk1 << 8, 0x10);
-	result &= 0xff;
-	if (result != 0xFF)
-	{
-	  alienInstances[result].unk26 = 0;
-	  alienInstances[result].unk38 = 0x2F;
-	  alienInstances[result].unk20 |= 0x4000;
-	  D_8004817C++;
-	  func_80092BBC_A1B6C(result);
-	}
+	if (result == 0xFF) continue;
+	alienInstances[result].unk26 = 0;
+	alienInstances[result].unk38 = 0x2F;
+	alienInstances[result].unk20 |= 0x4000;
+	D_8004817C++;
+	func_80092BBC_A1B6C(result);
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80092ADC_A1A8C.s")
-#endif
 
 // AI - Advance patrol waypoint
 void func_80092BBC_A1B6C(u8 arg0)
