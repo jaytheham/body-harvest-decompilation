@@ -590,7 +590,7 @@ void func_800ACF9C_BBF4C(u8 arg0);
 void func_8008A59C_17265C(void);
 void func_8008DEF4_9CEA4(u8);
 void func_8008D71C_9C6CC(u32);
-void func_8008DA24_9C9D4(s32);
+void func_8008DA24_9C9D4(u8);
 void func_8009012C_9F0DC(u8);
 void func_80090A6C_9FA1C(u8, s16, u16);
 void func_800E24B8_F1468(u8);
