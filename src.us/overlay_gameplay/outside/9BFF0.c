@@ -1754,7 +1754,7 @@ void func_8008F8D4_9E884(u8 arg0, s16 arg1)
 	}
 }
 
-// CURRENT(2218)
+// CURRENT(2158)
 #ifdef NON_MATCHING
 // AI - Harvester/drone AI update
 void func_8008F9E4_9E994(u8 arg0)
