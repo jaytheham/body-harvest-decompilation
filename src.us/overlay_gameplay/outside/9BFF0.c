@@ -3206,17 +3206,17 @@ void func_80092DFC_A1DAC(u8 arg0)
 }
 
 // https://decomp.me/scratch/NgKhQ
-// CURRENT(146)
+// CURRENT(136)
 #ifdef NON_MATCHING
 // AI - Patrol alien update with rotation sync
 void func_80092EF4_A1EA4(u8 arg0)
 {
   u8 sp3F;
-	u8 new_var;
+  u8 new_var;
   s16 sp38;
-	Unk8014DD50 *temp_v1;
-	  u16 temp_a0;
-	  s8 temp_a1;
+  Unk8014DD50 *temp_v1;
+  u16 temp_a0;
+  s8 temp_a1;
   sp3F = alienInstances[arg0].specIndex;
   if (alienInstances[arg0].unk20 & 0x800)
   {
@@ -3229,15 +3229,15 @@ void func_80092EF4_A1EA4(u8 arg0)
   if (alienInstances[arg0].unk20 & 0x1000)
   {
 	func_80137468_146418(arg0, 0x25);
-	  temp_v1 = &D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC];
-	  temp_a0 = temp_v1->unk8;
-	  temp_a1 = temp_v1->unkD;
-	  alienInstances[arg0].unk6 = alienInstances[arg0].unkE;
-	  if (temp_a0 >= 0x7D1)
-	  {
-		temp_v1->unk8 = temp_a0 - 0x7D0;
-		D_8014DD50[temp_a1].unk8 = (s16) (((u16) D_8014DD50[temp_a1].unk8) + 0x7D0);
-	  }
+	temp_v1 = &D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC];
+	temp_a0 = temp_v1->unk8;
+	temp_a1 = temp_v1->unkD;
+	alienInstances[arg0].unk6 = alienInstances[arg0].unkE;
+	if ((s32)temp_a0 >= 0x7D1)
+	{
+	  temp_v1->unk8 = temp_a0 - 0x7D0;
+	  D_8014DD50[temp_a1].unk8 = (s16) (((u16) D_8014DD50[temp_a1].unk8) + 0x7D0);
+	}
 	
 	func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &sp38);
 	  new_var = alienInstances[arg0].unk47;
