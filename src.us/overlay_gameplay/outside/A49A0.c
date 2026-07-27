@@ -372,13 +372,13 @@ s32 func_80095F08_A4EB8(void) {
 				rnd = func_800038E0_44E0();
 				r0 = rnd & 0xFF;
 				r1 = (rnd & 0xFF00) >> 8;
-				ratio = (f32) (((f64) r0 + f22) / ((f64) r1 + f22));
+				ratio = (f32) ((r0 + f22) / (r1 + f22));
 				dist = (u32) ((f32) (x * x) * ratio) + (u32) ((f32) (y * y) * ratio);
 
 				if (dist < 0x14) {
 					intensity = (s16) f26;
 				} else {
-					intensity = (s16) (f28 / (f64) dist);
+					intensity = (s16) (f28 / dist);
 				}
 
 				if (intensity >= 0x12D) {
@@ -406,12 +406,12 @@ s32 func_80095F08_A4EB8(void) {
 				rnd = func_800038E0_44E0();
 				r0 = rnd & 0xFF;
 				r1 = (rnd & 0xFF00) >> 8;
-				ratio = (f32) (((f64) r0 + f24) / ((f64) r1 + f24));
+				ratio = (f32) ((r0 + f24) / (r1 + f24));
 
 				ax = (u32) (((f32) (x * x) * ratio) + f30);
 				ay = (u32) (((f32) (y * y) * ratio) + f30);
 				if ((ax | ay) != 0) {
-					intensity = (s16) (D_801424D0_151480 / (f64) (ax + ay));
+					intensity = (s16) (D_801424D0_151480 / (ax + ay));
 				} else {
 					intensity = (s16) D_801424D8_151488;
 				}
@@ -501,14 +501,14 @@ void func_800966EC_A569C(s16 *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
 	vtx0->unk4 = value;
 
 	if (arg4 == 4) {
-		wave = (s16) (((((f64) sins(D_8013D50C_14C4BC) / 32768.0) * ((f32) arg0[0] / D_801424E0_151490)) * 200.0));
+		wave = (s16) ((((sins(D_8013D50C_14C4BC) / 32768.0) * ((f32) arg0[0] / D_801424E0_151490)) * 200.0));
 		trig = coss((u16) -D_80052B34->unk6);
 		if (wave >= 0) {
 			absWave = wave;
 		} else {
 			absWave = -wave;
 		}
-		D_80052B40.unk0 = (s16) ((f64) arg1 - ((f64) ((f32) absWave + arg3) * ((f64) trig / 32768.0)));
+		D_80052B40.unk0 = (s16) (arg1 - (((f32) absWave + arg3) * (trig / 32768.0)));
 
 		trig = sins((u16) -D_80052B34->unk6);
 		if (wave >= 0) {
@@ -519,7 +519,7 @@ void func_800966EC_A569C(s16 *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
 
 		D_80052B40.unk4 = 0;
 		D_80052B48.unk0 = 0;
-		D_80052B40.unk2 = (s16) ((f64) -arg2 - ((f64) ((f32) absWave + arg3) * ((f64) trig / 32768.0)));
+		D_80052B40.unk2 = (s16) (-arg2 - (((f32) absWave + arg3) * (trig / 32768.0)));
 		D_80052B48.unk4 = 0;
 		D_80052B48.unk2 = (s16) (-0x4000 - D_80052B34->unk6);
 		func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
@@ -578,7 +578,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	s16 modBase;
 	s32 tileGroup;
 
-	tile = (TileEntry *) ((u8 *) D_801479B0_156960 + ((currentLevel << 7) - 0x80));
+	tile = D_801479B0_156960[currentLevel - 1];
 	selectedGroup = func_800B0F20_BFED0(arg0, -arg1);
 
 	gDPPipeSync(D_8005BB2C++);
@@ -638,6 +638,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			v1->unk4 = v3->unk4;
 			color0 = 0x8C;
 
+			// Agent: fix this reference to D_801479B0_156960 to use correct array acces
 			tileGroup = ((s32) ((u8 *) tile - (u8 *) D_801479B0_156960) + (-(currentLevel << 7)) + 0x80) >> 1;
 			tileGroup >>= 3;
 
