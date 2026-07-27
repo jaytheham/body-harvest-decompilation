@@ -2210,7 +2210,7 @@ extern Unk80147090Entry_8012B26C D_80147090_156040[];
 extern u8 D_80147098_156048[];
 extern u8 D_801470C0_156070[];
 extern TileCoord D_801475F0[];
-extern u8 D_801475F0_1565A0[];
+extern ShieldWallPoint D_801475F0_1565A0[][48];
 extern u8 D_801479B0_156960[];
 extern Unk8014FD30Type D_80147C30_156BE0[][6];
 extern UnkBuildingProp_80118774 D_80148390_157340[];

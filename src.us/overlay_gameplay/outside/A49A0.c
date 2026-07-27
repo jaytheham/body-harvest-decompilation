@@ -107,7 +107,7 @@ u8 D_8013D4E8_14C498[] = {
 };
 
 u16 D_8013D50C_14C4BC = 0;
-u32 D_8013D510_14C4C0 = 0x00000000;
+s16 D_8013D510_14C4C0 = 0x0000;
 u32 D_8013D514_14C4C4[2] = { 0x00000000, 0x40000000 };
 u32 D_8013D51C_14C4CC[2] = { 0x00080008, 0x00080000 };
 u32 D_8013D524_14C4D4 = 0x00000000;
@@ -561,7 +561,7 @@ void func_800966EC_A569C(s16 *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
 #ifdef NON_MATCHING
 void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	TileEntry *tile;
-	TileCoord *levelCoords;
+	ShieldWallPoint *levelCoords;
 	UnkHudVtx *v0;
 	UnkHudVtx *v1;
 	UnkHudVtx *v2;
@@ -598,13 +598,13 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	do {
 		s8 leftIdx = tile->unk0;
 		s8 rightIdx;
-		TileCoord *left;
-		TileCoord *right;
+		ShieldWallPoint *left;
+		ShieldWallPoint *right;
 		s16 selected;
 
 		if (leftIdx != -1) {
 			selected = selectedGroup;
-			levelCoords = (TileCoord *) ((u8 *) D_801475F0_1565A0 + (((currentLevel << 2) - currentLevel) << 6));
+			levelCoords = D_801475F0_1565A0[currentLevel - 1];
 			rightIdx = tile->unk1;
 			left = &levelCoords[leftIdx - 48];
 			right = &levelCoords[rightIdx - 48];
@@ -642,7 +642,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			tileGroup >>= 3;
 
 			if (selected == tileGroup) {
-				phase = (s16) D_8013D510_14C4C0;
+				phase = D_8013D510_14C4C0;
 				bright = (phase << 4) % modBase;
 				alpha0 = bright;
 				if (alpha0 >= 0x100) {
@@ -702,7 +702,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
-	(*(s16 *) &D_8013D510_14C4C0)++;
+	D_8013D510_14C4C0++;
 	gDPPipeSync(D_8005BB2C++);
 }
 #else
@@ -921,8 +921,8 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 #ifdef NON_MATCHING
 void func_80097994_A6944(void) {
 	Gfx *dl;
-	volatile s32 sp60;
-	volatile s32 sp64;
+	s32 sp60;
+	s32 sp64;
 	s32 color;
 	Unk80052B40 mapPos;
 	Unk80052B40 scale;
@@ -975,29 +975,29 @@ void func_80097B74_A6B24(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 
 void func_80097CB4_A6C64(UnkA6C64Keyframe *arg0, UnkA6C64Keyframe *arg1, UnkA6C64Keyframe *arg2, f32 arg3)
 {
-  s32 absDiff;
-  arg2->unk0 = arg0->unk0 + ((s16) ((arg1->unk0 - arg0->unk0) * arg3));
-  absDiff = (((arg1->unk2 - arg0->unk2) >= 0) ? (arg1->unk2 - arg0->unk2) : -(arg1->unk2 - arg0->unk2));
-  
-  if (absDiff > 0x8000)
-  {
-	if (arg0->unk2 < arg1->unk2)
+	s32 absDiff;
+	arg2->unk0 = arg0->unk0 + ((s16)((arg1->unk0 - arg0->unk0) * arg3));
+	absDiff = (((arg1->unk2 - arg0->unk2) >= 0) ? (arg1->unk2 - arg0->unk2) : -(arg1->unk2 - arg0->unk2));
+
+	if (absDiff > 0x8000)
 	{
-	  arg2->unk2 = arg0->unk2 - ((s16) (((arg0->unk2 - arg1->unk2) + 0xFFFF) * arg3));
+		if (arg0->unk2 < arg1->unk2)
+		{
+			arg2->unk2 = arg0->unk2 - ((s16)(((arg0->unk2 - arg1->unk2) + 0xFFFF) * arg3));
+		}
+		else
+		{
+			arg2->unk2 = arg0->unk2 + ((s16)(((arg1->unk2 - arg0->unk2) + 0xFFFF) * arg3));
+		}
 	}
 	else
 	{
-	  arg2->unk2 = arg0->unk2 + ((s16) (((arg1->unk2 - arg0->unk2) + 0xFFFF) * arg3));
+		arg2->unk2 = arg0->unk2 + ((s16)((arg1->unk2 - arg0->unk2) * arg3));
 	}
-  }
-  else
-  {
-	arg2->unk2 = arg0->unk2 + ((s16) ((arg1->unk2 - arg0->unk2) * arg3));
-  }
-  arg2->unk4 = arg0->unk4 + ((s16) ((arg1->unk4 - arg0->unk4) * arg3));
-  arg2->unk8 = arg0->unk8 + ((arg1->unk8 - arg0->unk8) * arg3);
-  arg2->unkC = arg0->unkC + ((arg1->unkC - arg0->unkC) * arg3);
-  arg2->unk10 = arg0->unk10 + ((arg1->unk10 - arg0->unk10) * arg3);
+	arg2->unk4 = arg0->unk4 + ((s16)((arg1->unk4 - arg0->unk4) * arg3));
+	arg2->unk8 = arg0->unk8 + ((arg1->unk8 - arg0->unk8) * arg3);
+	arg2->unkC = arg0->unkC + ((arg1->unkC - arg0->unkC) * arg3);
+	arg2->unk10 = arg0->unk10 + ((arg1->unk10 - arg0->unk10) * arg3);
 }
 
 // CURRENT(1739)
@@ -1007,12 +1007,12 @@ void func_80097E1C_A6DCC(OrbitCam *cam) {
 	s16 temp;
 
 	temp = coss(cam->yaw);
-	D_8014ED0C = (f32)(((((f64)(f32)sins(cam->pitch) / 32768.0) * ((f64)(f32)temp / 32768.0)) * (f64)cam->distance) + (f64)cam->targetX);
+	D_8014ED0C = (f32)(((((f32)sins(cam->pitch) / 32768.0) * ((f32)temp / 32768.0)) * cam->distance) + cam->targetX);
 
 	temp = sins(cam->yaw);
-	D_8014ED10 = (f32)(((((f64)(f32)sins(cam->pitch) / 32768.0) * ((f64)(f32)temp / 32768.0)) * (f64)cam->distance) + (f64)cam->targetY);
+	D_8014ED10 = (f32)(((((f32)sins(cam->pitch) / 32768.0) * ((f32)temp / 32768.0)) * cam->distance) + cam->targetY);
 
-	D_8014ED14 = (f32)((((f64)(f32)coss(cam->pitch) / 32768.0) * (f64)cam->distance));
+	D_8014ED14 = (f32)((((f32)coss(cam->pitch) / 32768.0) * cam->distance));
 
 	guPerspective((Mtx *)D_8005BB38, &sp66, (f32)D_80149404, 1.0f, 25.0f, 2000.0f, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, &sp66);
@@ -2293,7 +2293,7 @@ block_356:
 			}
 			if ((D_8014ED1C > 0.0f) || (D_8014ED2C == 1)) {
 				if ((var_s0_8 < var_t0_9) || (var_t0_9 == 0)) {
-					var_s0_8 += (s32) ((1.0 - (f64) D_8014ED1C) * (f64) (f32) (var_t0_9 - var_s0_8));
+					var_s0_8 += (s32) ((1.0 - D_8014ED1C) * (f32) (var_t0_9 - var_s0_8));
 				}
 				if ((D_8013D528_14C4D8 != 0) && (var_s0_8 > 0)) {
 					temp_v1_113 = var_s0_8 >> 1;
@@ -2302,7 +2302,7 @@ block_356:
 				}
 			} else {
 				if (var_t0_9 < var_s0_8) {
-					var_t0_9 += (s32) ((1.0 - (f64) D_8014ED18) * (f64) (f32) (var_s0_8 - var_t0_9));
+					var_t0_9 += (s32) ((1.0 - D_8014ED18) * (f32) (var_s0_8 - var_t0_9));
 				}
 				if ((sp30C != NULL) && (var_t0_9 > 0)) {
 					temp_v1_114 = var_t0_9 >> 1;

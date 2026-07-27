@@ -4007,7 +4007,6 @@ success:
 void func_800BB5E0_CA590(void) {
 	Gfx *gfx;
 	s32 padStack[18];
-	ShieldWallPoint *pointTable;
 	ShieldWallLink *linkTable;
 	s16 linkIndex;
 	s16 linkCount;
@@ -4044,7 +4043,7 @@ void func_800BB5E0_CA590(void) {
 		s16 i;
 		f64 texScale;
 
-		pointTable = (ShieldWallPoint *)(D_801475F0_1565A0 - 0xC0);
+
 		linkTable = (ShieldWallLink *)(D_801479B0_156960 - 0x80);
 		texScale = D_80142E68_151E18[0];
 
@@ -4062,8 +4061,8 @@ void func_800BB5E0_CA590(void) {
 				s16 endX;
 				s16 endZ;
 
-				p0 = &pointTable[level * 48 + p0Index];
-				p1 = &pointTable[level * 48 + link->endIdx];
+				p0 = &D_801475F0_1565A0[level - 1][p0Index];
+				p1 = &D_801475F0_1565A0[level - 1][link->endIdx];
 				startX = p0->x << 8;
 				startZ = p0->z << 8;
 				endX = p1->x << 8;
