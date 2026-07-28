@@ -1684,8 +1684,7 @@ void func_801365E0_145590(void) {
 				spD0.unk4 = 0x20;
 				sp68 = func_80136B50_145B00;
 				func_800039D0_45D0(&spE0, &spD8, &spD0, D_8005BB38);
-				gSPMatrix(D_8005BB2C++, (Mtx *) (D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-				D_8005BB38 += 0x40;
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 				gDPPipeSync(D_8005BB2C++);
 				gSPDisplayList(D_8005BB2C++, D_504D1D0);
 				if ((((u32)D_80258330[var_fp].unk2 << 0x1D) >> 0x1E) & 1) {

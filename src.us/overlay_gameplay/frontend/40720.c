@@ -1024,13 +1024,11 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	s32 unused2;
 	s32 count;
 	s32 remaining;
-	s32 mask;
 	Gfx* displayList;
 
 	D_80094844_64CF4 += 0x2D8;
 	count = D_8004DC5C;
 	remaining = count;
-	mask = 0x1FFFFFFF;
 	sp9C = arg0;
 	spD4 = 0;
 
@@ -1064,8 +1062,7 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 				gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 
 				func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
-				gSPMatrix(D_8005BB2C++, D_8005BB38 & mask, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-				D_8005BB38 += 0x40;
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 				scaleInt = (s32)(256.0f * scale);
 				spBC.unk0 = xPos;
@@ -1082,8 +1079,7 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 
 				func_800039D0_45D0(&spBC, &spAC, &spB4, D_8005BB38);
 
-				gSPMatrix(D_8005BB2C++, D_8005BB38 & mask, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-				D_8005BB38 += 0x40;
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)displayList & mask));
 				gDPPipeSync(D_8005BB2C++);
 
@@ -1118,7 +1114,6 @@ void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 	varS3 = 0;
 	varS4 = D_8004DC5E;
 	varS5 = 0;
-	mask = 0x1FFFFFFF;
 	spA4.unk0 = arg0;
 	spA4.unk2 = arg1;
 	spA4.unk4 = arg2;
@@ -1139,16 +1134,14 @@ void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 
 		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 		func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
-		gSPMatrix(D_8005BB2C++, D_8005BB38 & mask, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 		sp94.unk0 = 0;
 		sp94.unk4 = 0x2000;
-		D_8005BB38 += 0x40;
 		sp94.unk2 = D_80094848_64CF8 + varS3;
 		func_800039D0_45D0(&spA4, &sp94, &sp9C, D_8005BB38);
 
-		gSPMatrix(D_8005BB2C++, D_8005BB38 & mask, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-		D_8005BB38 += 0x40;
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 		gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)tempS6 & mask));
 		varS5++;
 		varS3 += 0x1555;
@@ -1209,11 +1202,9 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
-	matrixAddr = D_8005BB38;
-	func_800039D0_45D0(NULL, NULL, &D_800311A0, matrixAddr);
+	func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
 
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	sp60.unk0 = arg0;
 	sp60.unk2 = arg1;
@@ -1228,11 +1219,9 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	sp58.unk2 = scaleInt;
 	sp58.unk4 = scaleInt;
 
-	matrixAddr = D_8005BB38;
-	func_800039D0_45D0(&sp60, &sp50, &sp58, matrixAddr);
+	func_800039D0_45D0(&sp60, &sp50, &sp58, D_8005BB38);
 
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, displayListAddr & 0x1FFFFFFF);
 	gDPPipeSync(D_8005BB2C++);
 }
@@ -1272,8 +1261,7 @@ void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 			gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 
 			func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-			D_8005BB38 += 0x40;
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 			spC4.unk0 = (s16) (s32) ((f32) arg0 + ((f32) xOffset * arg3));
 			spC4.unk2 = (s16) (s32) ((f32) arg1 + ((f32) yOffset * arg3));
@@ -1289,8 +1277,7 @@ void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 			spBC.unk4 = scaleInt;
 
 			func_800039D0_45D0(&spC4, &spB4, &spBC, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38 += 0x40;
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)displayList & 0x1FFFFFFF));
 			gDPPipeSync(D_8005BB2C++);
 		}
@@ -1712,13 +1699,11 @@ void func_80075710_45BC0(void) {
 	u32 textureBase;
 	u32 textureImage;
 
-	guOrtho((Mtx *)D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, D_800AE77C_7EC2C, D_800AE780_7EC30, 1.0f);
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	guOrtho(D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, D_800AE77C_7EC2C, D_800AE780_7EC30, 1.0f);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-	matrixPtr = D_8005BB38 + 0x40;
-	D_8005BB38 = matrixPtr;
-	guRotate((Mtx *)matrixPtr, 0.0f, 1.0f, 0.0f, 0.0f);
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 + 0x80000000), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	guRotate(D_8005BB38, 0.0f, 1.0f, 0.0f, 0.0f);
+	gSPMatrix(D_8005BB2C++, (D_8005BB38 + 0x80000000), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	D_8005BB38 += 0x40;
 
 	gDPPipeSync(D_8005BB2C++);
@@ -1814,14 +1799,12 @@ void func_80075D58_46208(s32 arg0) {
 	}
 
 	func_800791A0_49650(2);
-	guPerspective((Mtx *)D_8005BB38, &perspectiveNormal, 73.0f, 1.25f, 150.0f, D_800AE784_7EC34, 1.0f);
+	guPerspective(D_8005BB38, &perspectiveNormal, 73.0f, 1.25f, 150.0f, D_800AE784_7EC34, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, perspectiveNormal);
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-	guLookAt((Mtx *)D_8005BB38, 0.0f, 300.0f, 370.0f, 0.0f, 0.0f, 0.0f, D_800AE788_7EC38, 1.0f, 0.0f);
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-	D_8005BB38 += 0x40;
+	guLookAt(D_8005BB38, 0.0f, 300.0f, 370.0f, 0.0f, 0.0f, 0.0f, D_800AE788_7EC38, 1.0f, 0.0f);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
@@ -1856,14 +1839,13 @@ void func_80075D58_46208(s32 arg0) {
 	D_80052B50.unk2 = 200;
 	D_80052B50.unk4 = 200;
 
-	guLookAtReflect((Mtx *)D_8005BB38, &D_800D78E0[D_80031B84_32784], 0.0f, 300.0f, 370.0f,
+	guLookAtReflect(D_8005BB38, &D_800D78E0[D_80031B84_32784], 0.0f, 300.0f, 370.0f,
 								(float)D_80052B40.unk0, (float)D_80052B40.unk2, (float)D_80052B40.unk4,
 								0.0f, 1.0f, 0.0f);
 	gSPLookAtX(D_8005BB2C++, &D_800D78E0[D_80031B84_32784].l[0]);
 	gSPLookAtY(D_8005BB2C++, &D_800D78E0[D_80031B84_32784].l[1]);
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, D_4050010);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
@@ -1882,8 +1864,7 @@ void func_80075D58_46208(s32 arg0) {
 	gSPLookAtX(D_8005BB2C++, &D_800D7920[D_80031B84_32784].l[0]);
 	gSPLookAtY(D_8005BB2C++, &D_800D7920[D_80031B84_32784].l[1]);
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, D_40519B0);
 
 	func_80075C84_46134();
@@ -4049,15 +4030,13 @@ void func_8007A038_4A4E8(void) {
 		gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING);
 
 		guOrtho((Mtx *)D_8005BB38, -320.0f, 320.0f, -240.0f, 240.0f, -1.0f, 1000.0f, 1.0f);
-		gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-		D_8005BB38 += 0x40;
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 		gSPPerspNormalize(D_8005BB2C++, 0xFFFF);
 
 		guLookAtReflect((Mtx *)D_8005BB38, &lookAt, 0.0f, 0.0f, 100.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 		gSPLookAtX(D_8005BB2C++, lookAtLights[0]);
 		gSPLookAtY(D_8005BB2C++, lookAtLights[1]);
-		gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-		D_8005BB38 += 0x40;
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 		gSPMatrix(D_8005BB2C++, (Mtx *)((u32)&D_80031120_31D20 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 		for (i = 0, step = fade; i < 8; i++, step -= 0x10) {
@@ -4079,15 +4058,13 @@ void func_8007A038_4A4E8(void) {
 			scale.unk2 = intensity;
 			scale.unk4 = intensity;
 			func_800039D0_45D0(0, 0, &scale, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38 += 0x40;
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 			rot.unk0 = ((i & 3) * 0x6C) - 0xA2;
 			rot.unk2 = 0x36 - ((i >> 2) * 0x6C);
 			rot.unk4 = 0x32;
 			func_800039D0_45D0(&rot, 0, 0, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38 += 0x40;
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 			blend = (alphaStep << 10) & 0xFFFF;
 			if (intensity == 0x100) {
@@ -4098,8 +4075,7 @@ void func_8007A038_4A4E8(void) {
 			trans.unk2 = 0;
 			trans.unk4 = 0;
 			func_800039D0_45D0(0, &trans, 0, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38 += 0x40;
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 			gSPDisplayList(D_8005BB2C++, (Gfx *)dlistPtrs[i]);
 			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
@@ -4245,12 +4221,11 @@ void func_8007A774_4AC24(s32 arg0) {
 	guPerspective(D_8005BB38, &perspNorm, 73.0f, 1.25f, 150.0f, D_800AE898_7ED48, 1.0f);
 
 	gSPPerspNormalize(D_8005BB2C++, perspNorm);
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-	guLookAt(D_8005BB38 + 0x40, 0.0f, 0.0f, 120.0f, 0.0f, 85.0f, 300.0f, 0.0f, 1.0f, 0.0f);
+	guLookAt(D_8005BB38, 0.0f, 0.0f, 120.0f, 0.0f, 85.0f, 300.0f, 0.0f, 1.0f, 0.0f);
 
-	gSPMatrix(D_8005BB2C++, (Mtx *)((D_8005BB38 + 0x40) & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-	D_8005BB38 += 0x80;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
@@ -4292,8 +4267,7 @@ void func_8007A774_4AC24(s32 arg0) {
 	D_80052B50.unk4 = rotY;
 
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	if (isAnimated == 1) {
 		D_80052B48.unk0 = (s16)((s32)(((f64)(f32)coss((u16)(D_80052A8C * 1000)) / 32768.0) * D_800AE8A0_7ED50));
@@ -4308,8 +4282,7 @@ void func_8007A774_4AC24(s32 arg0) {
 	D_80052B40.unk4 = 0;
 
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	gSPDisplayList(D_8005BB2C++, D_040A6650);
 
@@ -4326,8 +4299,7 @@ void func_8007A774_4AC24(s32 arg0) {
 	D_80052B48.unk4 = tilt;
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
 
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
@@ -4344,8 +4316,7 @@ void func_8007A774_4AC24(s32 arg0) {
 	}
 
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	D_80052B40.unk0 = rotZ;
 	D_80052B40.unk2 = rotX;
@@ -4362,8 +4333,7 @@ void func_8007A774_4AC24(s32 arg0) {
 	}
 
 	func_800039D0_45D0(&D_80052B40, 0, &D_80052B50, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	gSPDisplayList(D_8005BB2C++, D_040A8F70);
 
@@ -6237,9 +6207,7 @@ void func_8007FE8C_5033C(Unk8007FE8CArg* arg0) {
 	entry = &D_800D7B10[arg0->unk18];
 	func_800039D0_45D0(&sp5C, &sp54, &sp4C, D_8005BB38);
 
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	sp54.unk0 = entry->unk2 << 3;
 	sp54.unk2 = entry->unk4 << 3;
@@ -6254,11 +6222,9 @@ void func_8007FE8C_5033C(Unk8007FE8CArg* arg0) {
 		func_80080B80_51030(sp64, &sp54.unk0, 0, D_8005BB38);
 	}
 
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-	D_8005BB38 += 0x40;
-
-	gSPSegment(D_8005BB2C++, 0x07, D_8005BB38 & 0x1FFFFFFF);
+	gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
 
 	if (D_800D8518 != 0) {
 		gSPSegment(D_8005BB2C++, (u8)D_800D851C * 4, (D_800D8518 & 0xFFFFFF) + D_8006AA70);
@@ -6959,8 +6925,7 @@ void func_80081290_51740(void) {
 	sp84.unk4 = (s16) ((f64) sp84.unk4 * D_800AEA60_7EF10);
 
 	func_800039D0_45D0(NULL, NULL, &sp84, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	for (i = 0; i < D_800AC0CC.unk14; i++) {
 		s32 j;

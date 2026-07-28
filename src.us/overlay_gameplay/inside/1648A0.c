@@ -996,8 +996,7 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 	spA6 = 0x40;
 	spA8 = 0x40;
 	func_800039D0_45D0(&spAC, &sp9C, &spA4, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	spB4 = 0;
 	spBC = 0;
 	sp9C = *(s16*)&D_800E6F00[0x0] * 8;
@@ -1005,9 +1004,8 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 	spA0 = *(s16*)&D_800E6F00[0x2] * 8;
 	spB8 = (s32) (*(f32*)&D_800E6F00[0xC] * 65536.0f);
 	func_8000C81C_D41C(&spB4, &sp9C, 0, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
-	gSPSegment(D_8005BB2C++, 0x07, (uintptr_t)(D_8005BB38 & 0x1FFFFFFF));
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
 	gSPSegment(D_8005BB2C++, 0x06, func_80012000_12C00(*(s32*)(&D_8009D260 + (D_800E6A70 * 4))));
 	func_8000CC3C_D83C(&D_800E6F00, 0x10);
 	switch (*(s32*)&D_800E6F00[0x40C]) {
@@ -1199,8 +1197,7 @@ void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	sp58 = 0x40;
 	sp4A = D_800E6AD8.unk425;
 	func_8000C81C_D41C(&sp5C, &sp4C, &sp54, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	if ((D_800E6AD8.unk426 == 4) && (D_800E6AD8.unk425 == 0)) {
 		sp3C = (s32) (D_800E6AD8.unk8 * 65536.0f);
 		sp40 = (s32) (D_800E6AD8.unkC * 65536.0f);
@@ -1214,9 +1211,8 @@ void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	sp4E = D_800E6AD8.unk4 * 8;
 	sp50 = D_800E6AD8.unk0 * 8;
 	func_8000C81C_D41C(&sp3C, &sp4C, NULL, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
-	gSPSegment(D_8005BB2C++, 0x07, (uintptr_t)(D_8005BB38 & 0x1FFFFFFF));
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
 	temp_t1 = (sp4B * 0xD0) + (sp4A * 0x10) + &D_8009E4C8_186588;
 	sp20 = temp_t1;
 	func_8000CC3C_D83C(&D_800E6AD8, temp_t1->unkC);

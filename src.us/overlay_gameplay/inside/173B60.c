@@ -153,10 +153,9 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 
 	func_800039D0_45D0(&D_80052B40, 0, &D_80052B50, D_8005BB38);
 
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	temp_t3 = arg0 + 7;
-	D_8005BB38 += 0x40;
 	func_800092B8_9EB8(((temp_t3 - arg8) - 0xF) * 4, (temp_t1 - 8) * 4, (temp_t3 + 4) * 4, (temp_t1 + 6) * 4, 3);
 
 	if (arg5 != 0) {
@@ -421,8 +420,7 @@ void func_8008C8A4_174964(void) {
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	func_800039D0_45D0(0, 0, 0, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	if (D_800FCF24 != 0) {
 		D_800FCF22 += D_800FCF24;

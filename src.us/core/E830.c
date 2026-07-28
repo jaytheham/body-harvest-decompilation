@@ -245,14 +245,12 @@ s32 func_8000E53C_F13C(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_POINT);
-	guPerspective((Mtx *) D_8005BB38, &sp136, 30.0f, (f32) D_8005BAEC / (f32) __osCurrentTime, 10.0f, D_80037650_38250, 1.0f);
+	guPerspective(D_8005BB38, &sp136, 30.0f, (f32) D_8005BAEC / (f32) __osCurrentTime, 10.0f, D_80037650_38250, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, (u32) &sp136);
-	gSPMatrix(D_8005BB2C++, (Mtx *) (D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	spA0 = sinf(D_80037654_38254);
-	guLookAt((Mtx *) D_8005BB38, 0.0f, 0.0f, (f32) __osCurrentTime / ((spA0 / cosf(D_80037658_38258)) * 2.0f), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-	gSPMatrix(D_8005BB2C++, (Mtx *) (D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-	D_8005BB38 += 0x40;
+	guLookAt(D_8005BB38, 0.0f, 0.0f, (f32) __osCurrentTime / ((spA0 / cosf(D_80037658_38258)) * 2.0f), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 	gSPMatrix(D_8005BB2C++, (Mtx *) ((u32) &D_80031120_31D20 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	spFC.unk0 = 0;
@@ -263,8 +261,7 @@ s32 func_8000E53C_F13C(void) {
 	spFC.unk2 = -var_t0;
 	spFC.unk4 = 0;
 	func_800039D0_45D0(&spFC, 0, 0, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, (Mtx *) (D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	sp84 = 1;
 	sp74 = (u8 *) &D_803DA800;

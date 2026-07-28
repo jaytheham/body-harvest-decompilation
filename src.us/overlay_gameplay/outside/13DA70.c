@@ -1233,10 +1233,9 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 			resultZ = 0;
 			func_800039D0_45D0((Unk80052B40 *) &posX, (Unk80052B40 *) &resultX, (Unk80052B40 *) D_80140C68_14FC18, D_8005BB38);
 
-			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-			guRotateRPY((Mtx *) (D_8005BB38 + 0x40), 0.0f, 90.0f, 180.0f);
-			D_8005BB38 += 0x40;
-			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+			guRotateRPY((Mtx *) D_8005BB38, 0.0f, 90.0f, 180.0f);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			gSPDisplayList(D_8005BB2C++, D_80140C48_14FBF8[charScreenX]);
 		}
 	}
@@ -1294,10 +1293,9 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 
 				func_800039D0_45D0((Unk80052B40 *) &posX, (Unk80052B40 *) &resultX, (Unk80052B40 *) &D_800311A0, D_8005BB38);
 
-				gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-				guRotate((Mtx *) (D_8005BB38 + 0x40), 90.0f, 0.0f, 1.0f, 0.0f);
-				D_8005BB38 += 0x40;
-				gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+				guRotate(D_8005BB38, 90.0f, 0.0f, 1.0f, 0.0f);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				gDPPipeSync(D_8005BB2C++);
 				gSPDisplayList(D_8005BB2C++, alienSpecs[2].unk0);
 

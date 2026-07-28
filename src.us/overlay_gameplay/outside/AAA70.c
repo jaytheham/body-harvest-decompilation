@@ -462,8 +462,7 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	func_800039D0_45D0(&D_80052B40, 0, &D_80052B50, D_8005BB38);
 
-	gSPMatrix(D_8005BB2C++, (u32)D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	if (arg3 != 0) {
 		arg0 = arg0 - 7;

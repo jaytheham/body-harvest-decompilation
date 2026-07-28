@@ -2524,8 +2524,7 @@ void func_800F842C_1073DC(s32 arg0) {
 
 		D_8005BB38 += 0x40;
 		func_800039D0_45D0(&sp8C, &sp84, NULL, D_8005BB38);
-		gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-		D_8005BB38 += 0x40;
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 		spAC = (s32)((((f64)(f32)coss(sp80)) / 32768.0) * (f64)anim->unk4);
 		spB0 = anim->unkA;
@@ -2629,23 +2628,20 @@ void func_800F8B24_107AD4(s32 arg0) {
 			sp140.unk2 = D_8014DD50[alien->unkC].unk2 + alien->unk2;
 			sp140.unk4 = alien->unk4;
 			func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38 += 0x40;
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 			sp138.unk0 = -walker->limbs[0].unk18;
 			sp138.unk2 = -D_8014DD50[alien->unkC].unkA;
 			sp138.unk4 = 0;
 			func_800039D0_45D0(NULL, &sp138, NULL, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38 += 0x40;
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 			sp140.unk2 = walker->unk16A;
 			sp140.unk0 = -sp140.unk0;
 			sp140.unk2 = -sp140.unk2;
 			sp140.unk4 = -sp140.unk4;
 			func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38 += 0x40;
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 			state = walker->limbs[0].unk22;
 		}
@@ -5230,8 +5226,7 @@ void func_800FFD28_10ECD8(VehicleInstance *arg0) {
 
 	func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
 
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	D_80052B40.unk0 = arg0->unk0;
 	D_80052B40.unk2 = arg0->unk2;
@@ -5276,8 +5271,7 @@ void func_800FFD28_10ECD8(VehicleInstance *arg0) {
 
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
 
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	if (((arg0 == D_80052B34) || (arg0 == (VehicleInstance *)D_80158E74)) && (currentLevel == 3) && (arg0->unk1A == 0x11)) {
 		if (arg0 == D_80052B34) {
@@ -5291,8 +5285,7 @@ void func_800FFD28_10ECD8(VehicleInstance *arg0) {
 
 		func_800039D0_45D0(NULL, &D_80052B48, NULL, D_8005BB38);
 
-		gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-		D_8005BB38 += 0x40;
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	}
 }
 #else
@@ -5631,9 +5624,8 @@ void func_8010065C_10F60C(s32 arg0) {
 					D_80052B50.unk4 = 0x37;
 					func_800039D0_45D0(&D_80052B40, 0, &D_80052B50, D_8005BB38);
 
-					gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF,
+					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++),
 							  G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-					D_8005BB38 += 0x40;
 					gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
 					gSPDisplayList(D_8005BB2C++, D_50445A0);
 					gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
@@ -5727,14 +5719,13 @@ void func_8010065C_10F60C(s32 arg0) {
 					}
 
 					if (shadowPart->flags & 1) {
-						gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF,
+						gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++),
 								  G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 						matrixCount++;
 					} else {
-						gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF,
+						gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++),
 								  G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 					}
-					D_8005BB38 += 0x40;
 
 					if (((model != D_50312E8) || (vehicle == D_80158E78) ||
 						((model == D_50312E8) &&
@@ -5760,9 +5751,8 @@ void func_8010065C_10F60C(s32 arg0) {
 									D_80052B50.unk2 = 0x100;
 									D_80052B50.unk4 = 0x100;
 									func_800039D0_45D0(NULL, 0, &D_80052B50, D_8005BB38);
-									gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF,
+									gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++),
 											  G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-									D_8005BB38 += 0x40;
 								} else {
 									gSPSetGeometryMode(D_8005BB2C++, G_FOG);
 									gDPSetTextureLOD(D_8005BB2C++, G_TL_LOD);
@@ -5782,9 +5772,8 @@ void func_8010065C_10F60C(s32 arg0) {
 							gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 							shadowPart->offset.unk0 = -shadowPart->offset.unk0;
 							func_800FF258_10E208(listIndex);
-							gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF,
+							gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++),
 									  G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-							D_8005BB38 += 0x40;
 							gSPDisplayList(D_8005BB2C++, model);
 							shadowPart->offset.unk0 = -shadowPart->offset.unk0;
 						}
@@ -5874,8 +5863,7 @@ void func_80101C14_110BC4(void) {
 			D_80052B50.unk4 = 0x100;
 			func_800039D0_45D0(&D_80052B50, 0, 0, D_8005BB38);
 
-			gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38 += 0x40;
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 			gSPDisplayList(D_8005BB2C++, (u32)D_8005BB38);
 
@@ -5932,12 +5920,10 @@ void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 			func_800FE910_10D8C0(i);
 
 			if (entry->pad0[0] & 1) {
-				gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				count++;
-				D_8005BB38 += 0x40;
 			} else {
-				gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-				D_8005BB38 += 0x40;
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			}
 
 			if (*(u32 *)&entry->unk0[0] != 0x050312E8) {
@@ -5954,8 +5940,7 @@ void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 						D_80052B50.unk4 = 0x100;
 						func_800039D0_45D0(0, 0, &D_80052B50, D_8005BB38);
 
-						gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-						D_8005BB38 += 0x40;
+						gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 					} else {
 						gSPClearGeometryMode(D_8005BB2C++, G_CULL_FRONT);
 						gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
