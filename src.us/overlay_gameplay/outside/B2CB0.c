@@ -571,54 +571,45 @@ s32 func_800A52F8_B42A8(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	return var_v1;
 }
 
-#ifdef NON_MATCHING
-void func_800A53C0_B4370(s32 arg0, s16 arg1, s16 arg2) {
-	s16 abs_arg1;
-	AlienInstance *entry;
+// CURRENT (0)
+void func_800A53C0_B4370(u8 arg0, s16 arg1, s16 arg2) {
+	s32 sp_idx;
+	s32 abs_arg1;
 	s32 sign;
-	entry = &alienInstances[arg0 & 0xFF];
-	if (entry->unk20 & 0x10) {
-		abs_arg1 = (-arg1 < arg1) ? arg1 : -arg1;
-		if (entry->unk8 > 0) {
-			sign = 1;
+	sp_idx = alienInstances[arg0].specIndex;
+	if (alienInstances[arg0].unk20 & 0x10) {
+		if (-arg1 < arg1) {
+			abs_arg1 = arg1;
 		} else {
-			sign = 0;
-			if (entry->unk8 < 0) {
-				sign = -1;
-			}
+			abs_arg1 = -arg1;
 		}
-		entry->unk8 = entry->unk8 - sign * abs_arg1;
+		sign = (alienInstances[arg0].unk8 > 0) ? 1 : (alienInstances[arg0].unk8 < 0) ? -1 : 0;
+		alienInstances[arg0].unk8 = alienInstances[arg0].unk8 - sign * abs_arg1;
 	} else {
-		s16 lookup = alienSpecs[entry->specIndex].unk42;
-		s16 diff = entry->unk2A - entry->unkE;
+		s16 lookup = alienSpecs[sp_idx].unk42;
+		s16 diff = alienInstances[arg0].unk2A - alienInstances[arg0].unkE;
 		if (-lookup >= diff) {
-			entry->unk8 = entry->unk8 - arg1;
+			alienInstances[arg0].unk8 = alienInstances[arg0].unk8 - arg1;
 		} else if (lookup < diff) {
-			entry->unk8 = entry->unk8 + arg1;
+			alienInstances[arg0].unk8 = alienInstances[arg0].unk8 + arg1;
 		} else {
-			abs_arg1 = (-arg1 < arg1) ? arg1 : -arg1;
-			if (entry->unk8 > 0) {
-				sign = 1;
+			if (-arg1 < arg1) {
+				abs_arg1 = arg1;
 			} else {
-				sign = 0;
-				if (entry->unk8 < 0) {
-					sign = -1;
-				}
+				abs_arg1 = -arg1;
 			}
-			entry->unk8 = entry->unk8 - sign * abs_arg1;
+			sign = (alienInstances[arg0].unk8 > 0) ? 1 : (alienInstances[arg0].unk8 < 0) ? -1 : 0;
+			alienInstances[arg0].unk8 = alienInstances[arg0].unk8 - sign * abs_arg1;
 		}
 	}
-	if (arg2 < entry->unk8) {
-		entry->unk8 = arg2;
+	if (arg2 < alienInstances[arg0].unk8) {
+		alienInstances[arg0].unk8 = arg2;
 		return;
 	}
-	if (entry->unk8 < -arg2) {
-		entry->unk8 = -arg2;
+	if (alienInstances[arg0].unk8 < -arg2) {
+		alienInstances[arg0].unk8 = -arg2;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A53C0_B4370.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3) {
