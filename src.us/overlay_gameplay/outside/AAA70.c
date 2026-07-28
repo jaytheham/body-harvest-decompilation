@@ -285,59 +285,47 @@ void func_8009BF64_AAF14(u16 arg0) {
 #endif
 
 // https://decomp.me/scratch/pjZZY
-// CURRENT(2067)
-#ifdef NON_MATCHING
 // drawWaypointMarker ?
-void func_8009C1D8_AB188(s16 arg0, s16 arg1, s32 arg2) {
+void func_8009C1D8_AB188(s16 arg0, s16 arg1, s32 arg2)
+{
 	s16 sp36;
 	s16 sp34;
-	s32 sp18;
-	s32 pad0;
-	s32 pad1;
-	Unk80052B40 *var_a1_2;
-	s16 temp_t8;
 	s16 var_v1;
-	Gfx *dl;
 
-	temp_t8 = func_80003824_4424((f32)(D_80052B34->unk4 - arg1), (f32)(D_80052B34->unk0 - arg0)) - D_80047950;
-	sp18 = temp_t8 & 0xFFFF;
-	sp36 = temp_t8;
-	sp34 = ((((f32)sins(sp18) / 32768.0) * D_801426C0_151670[0]) + (D_80068084 >> 1));
-	var_v1 = ((((f32)coss(sp18) / 32768.0) * D_801426C8_151678[0]) + (D_80068088 >> 1));
-	if (sp34 >= 0x118) {
+	sp36 = func_80003824_4424((f32)(D_80052B34->unk4 - arg1), (f32)(D_80052B34->unk0 - arg0)) - D_80047950;
+	sp34 = ((D_801426C0_151670[0] * ((f32)sins(sp36) / 32768.0)) + (D_80068084 >> 1));
+	var_v1 = ((D_801426C8_151678[0] * ((f32)coss(sp36) / 32768.0)) + (D_80068088 >> 1));
+	if (sp34 > 0x117)
+	{
 		sp34 = 0x117;
 	}
-	if (sp34 < 0x1C) {
+	if (sp34 < 0x1C)
+	{
 		sp34 = 0x1C;
 	}
-	if (var_v1 < 0x1A) {
+	if (var_v1 < 0x1A)
+	{
 		var_v1 = 0x1A;
 	}
-	if (var_v1 >= 0xCF) {
+	if (var_v1 > 0xCE)
+	{
 		var_v1 = 0xCE;
 	}
 	D_80052B40.unk0 = sp34;
 	D_80052B40.unk2 = var_v1;
 	D_80052B40.unk4 = -1;
-	if (arg2 != 0) {
+	if (arg2 != 0)
+	{
 		D_80052B48.unk0 = 0;
-		D_80052B48.unk4 = 0;
 		D_80052B48.unk2 = (s16)(0x8000 - sp36);
+		D_80052B48.unk4 = 0;
 	}
-	if (arg2 != 0) {
-		var_a1_2 = &D_80052B48;
-	} else {
-		var_a1_2 = NULL;
-	}
-	func_800039D0_45D0(&D_80052B40, var_a1_2, &D_8013D588_14C538, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, (s32)(D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	gSPVertex(D_8005BB2C++, (s32)((s32)&D_8013D5E8_14C598 & 0x1FFFFFFF), 4, 0);
+	func_800039D0_45D0(&D_80052B40, (arg2 != 0) ? &D_80052B48 : NULL, &D_8013D588_14C538, D_8005BB38);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8013D5E8_14C598), 4, 0);
 	gSP1Quadrangle(D_8005BB2C++, 1, 0, 2, 3, 0);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009C1D8_AB188.s")
-#endif
 
 void func_8009C458_AB408(void) {
 	D_8014F1F6 = 0x10;

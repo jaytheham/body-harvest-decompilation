@@ -599,7 +599,6 @@ s32 func_8009BC48_AABF8(s32 arg0, s32 arg1, s32 arg2);
 void func_8009BDB8_AAD68(u8, u8);
 void func_8009BF64_AAF14(u16);
 s16 func_800FAE60_109E10(VehicleInstance *);
-void func_8009C1D8_AB188(s16, s16, s32);
 void func_8009D96C_AC91C(void);
 void func_8009F130_AE0E0(void);
 void func_8009FB58_AEB08(void);
