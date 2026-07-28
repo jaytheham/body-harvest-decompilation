@@ -690,37 +690,33 @@ void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3) {
 const f64 D_80142778_151728[1] = {600.0};
 const f64 D_80142780_151730[2] = {600.0, 0.0};
 
+// CURRENT (403)
 #ifdef NON_MATCHING
 void func_800A57E4_B4794(u8 arg0) {
+	s16 sp20;
 	s16 sp2E;
-	s32 sp20;
-	AlienInstance *entry;
-	s32 angle_diff;
-	s32 neg_angle;
+	s16 a1;
 
-	entry = &alienInstances[arg0];
-	angle_diff = (s16)(func_80003824_4424((f32)(entry->unk0 - D_80052B34->unk0), (f32)(entry->unk4 - D_80052B34->unk4)) - D_80052B34->unk6);
-	if (!(entry->unk47 & 1)) {
-		neg_angle = -angle_diff;
-		if ((neg_angle < angle_diff ? angle_diff : neg_angle) < 0x4000) {
-			entry->unk20 = (s32)(entry->unk20 & 0xF7FF7FFF);
-			sp20 = (s16)(angle_diff > 0 ? D_80052B34->unk6 + 0x6000 : D_80052B34->unk6 - 0x6000) & 0xFFFF;
-			sp2E = angle_diff;
-			entry->unk14 = (s16)(s32)(((f32)coss(sp20) / 32768.0) * D_80142778_151728 + D_80052B34->unk0);
-			entry->unk18 = (s16)(s32)(((f32)sins(sp20) / 32768.0) * D_80142780_151730 + D_80052B34->unk4);
-			entry->unk16 = D_80052B34->unk2;
+	a1 = (s16)(func_80003824_4424((f32)(alienInstances[arg0].unk0 - D_80052B34->unk0), (f32)(alienInstances[arg0].unk4 - D_80052B34->unk4)) - D_80052B34->unk6);
+	if (!(alienInstances[arg0].unk47 & 1)) {
+		if ((-a1 < a1 ? a1 : -a1) < 0x4000) {
+			alienInstances[arg0].unk20 &= 0xF7FF7FFF;
+			sp2E = a1;
+			sp20 = (s16)(a1 > 0 ? D_80052B34->unk6 + 0x6000 : D_80052B34->unk6 - 0x6000);
+			alienInstances[arg0].unk14 = (s16)(s32)(((f32)coss(sp20) / 32768.0) * D_80142778_151728[0] + D_80052B34->unk0);
+			alienInstances[arg0].unk18 = (s16)(s32)(((f32)sins(sp20) / 32768.0) * D_80142780_151730[0] + D_80052B34->unk4);
+			alienInstances[arg0].unk16 = D_80052B34->unk2;
 		}
 	}
-	neg_angle = -angle_diff;
-	if ((neg_angle < angle_diff ? angle_diff : neg_angle) >= 0x6001) {
-		entry->unk20 = (s32)(entry->unk20 | 0x8000);
+	if ((-a1 < a1 ? a1 : -a1) >= 0x6001) {
+		alienInstances[arg0].unk20 |= 0x8000;
 	}
-	if (entry->unk20 & 0x8000) {
+	if (alienInstances[arg0].unk20 & 0x8000) {
 		func_8008751C_964CC(arg0, 0x258, 0x28A);
-		entry->unk20 = (s32)(entry->unk20 | 0x08000000);
-		return;
+		alienInstances[arg0].unk20 |= 0x08000000;
+	} else {
+		func_8008064C_8F5FC(arg0);
 	}
-	func_8008064C_8F5FC(arg0);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A57E4_B4794.s")
