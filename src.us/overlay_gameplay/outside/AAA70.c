@@ -245,26 +245,15 @@ void func_8009BDB8_AAD68(u8 arg0, u8 arg1) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-// CURRENT(920)
+// CURRENT(2713)
 #ifdef NON_MATCHING
 void func_8009BF64_AAF14(u16 arg0) {
 	u8 sp47;
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	s32 pad3;
-	s32 pad4;
-	s32 pad5;
-	s32 pad6;
-	s32 pad7;
 	s32 sp1C;
-	s32 sp18;
-	s32 temp_t6;
 	s32 var_a3;
-	Gfx *dl;
 
-	sp47 = (arg0 / 60);
-	arg0 = (arg0 % 60);
+	sp47 = arg0 / 60;
+	arg0 = arg0 % 60;
 
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
@@ -277,19 +266,18 @@ void func_8009BF64_AAF14(u16 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 
 	func_8009BDB8_AAD68(0x1E, sp47);
-	if ((u32) ((u32) D_80052A8C % 20U) < 0xAU) {
+	if ((u32)D_80052A8C % 20U < 0xAU) {
 		func_8009BDB8_AAD68(0x29, 0xAU);
 	}
 
-	if ((s32) arg0 < 0xA) {
-		sp1C = (s32) arg0;
-		func_8009BDB8_AAD68(0x32, 0U);
-		var_a3 = ((s32) sp1C % 10) & 0xFF;
+	if ((s32)arg0 < 0xA) {
+		sp1C = arg0;
+		func_8009BDB8_AAD68(0x32, 0);
+		var_a3 = (sp1C % 10) & 0xFF;
 	} else {
-		temp_t6 = ((s32) arg0 % 10) & 0xFF;
-		sp18 = temp_t6;
-		func_8009BDB8_AAD68(0x32, ((s32) (arg0 - temp_t6) / 10) & 0xFF);
-		var_a3 = sp18;
+		var_a3 = (arg0 % 10) & 0xFF;
+		sp1C = (arg0 - var_a3) / 10;
+		func_8009BDB8_AAD68(0x32, sp1C);
 	}
 
 	func_8009BDB8_AAD68(0x41, var_a3 & 0xFF);
