@@ -87,14 +87,14 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 	s16 temp_t3;
 	s16 temp_v0;
 	s32 sp20;
-	UnkHudVtx *temp_a0;
-	UnkHudVtx *temp_a1;
-	UnkHudVtx *temp_a3;
-	UnkHudVtx *temp_t1_2;
-	UnkHudVtx *temp_a0_2;
-	UnkHudVtx *temp_a1_2;
-	UnkHudVtx *temp_a3_2;
-	UnkHudVtx *temp_t1_3;
+	Vtx_t *temp_a0;
+	Vtx_t *temp_a1;
+	Vtx_t *temp_a3;
+	Vtx_t *temp_t1_2;
+	Vtx_t *temp_a0_2;
+	Vtx_t *temp_a1_2;
+	Vtx_t *temp_a3_2;
+	Vtx_t *temp_t1_3;
 	u32 temp_v0_8;
 	u32 temp_v0_9;
 	f64 temp_f2;
@@ -107,9 +107,9 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 	s8 var_v0_3;
 	s8 var_v0_4;
 	s8 var_v0_5;
-	UnkHudVtx *temp_t7;
-	UnkHudVtx *temp_t9;
-	UnkHudVtx *temp_t7_2;
+	Vtx_t *temp_t7;
+	Vtx_t *temp_t9;
+	Vtx_t *temp_t7_2;
 
 	temp_t7 = D_8005BB34 + 1;
 	D_8005BB34 = temp_t7;
