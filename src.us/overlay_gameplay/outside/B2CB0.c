@@ -611,15 +611,13 @@ void func_800A53C0_B4370(u8 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
+// CURRENT (5097)
 #ifdef NON_MATCHING
 void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3) {
-	u8 sp23;
-	s32 sp1C;
 	AlienInstance *entry;
+	s32 sp1C;
+	u8 sp23;
 	AlienSpec *spec;
-	s32 temp_f10;
-	s32 var_a0;
-	s16 var_a3;
 
 	entry = &alienInstances[arg0];
 	sp1C = 0;
@@ -627,20 +625,22 @@ void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3) {
 	func_80137468_146418(arg0, 0x1C);
 	func_8008076C_8F71C(arg0);
 	func_800A53C0_B4370(arg0, 0x1F4, 0x1388);
-	if (entry->unk20 & 0x08000000) {
+	if ((s32)(entry->unk20 << 4) < 0) {
 		sp1C = D_80052B34->unk20 & 2;
 		if (sp1C != 0 && D_80222A70 >= D_80052B34->unk2) {
 			sp1C = 0;
 		}
 	}
 	spec = &alienSpecs[sp23];
-	temp_f10 = (s32)(((f32)(entry->unk12 - entry->unk2C) / (f32)spec->unk40) * 8000.0f * 2.0f);
-	if (temp_f10 == 0 || entry->unk12 >= (spec->unk40 - spec->unk3E * 2)) {
-		if (entry->unkA >= 0xFA1) {
-			entry->unkA = (s16)(entry->unkA - 0xC8);
+	{
+		s32 temp_f10 = (s32)(((f32)(entry->unk12 - entry->unk2C) / (f32)spec->unk40) * 8000.0f * 2.0f);
+		if (temp_f10 == 0 || entry->unk12 >= (spec->unk40 - spec->unk3E * 2)) {
+			if (entry->unkA >= 0xFA1) {
+				entry->unkA = (s16)(entry->unkA - 0xC8);
+			}
+		} else {
+			entry->unkA = (s16)(entry->unkA + temp_f10);
 		}
-	} else {
-		entry->unkA = (s16)(entry->unkA + temp_f10);
 	}
 	if (entry->unkA >= 0xFA1) {
 		entry->unkA = entry->unkA;
@@ -652,28 +652,32 @@ void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3) {
 	} else {
 		entry->unkA = 0x1F40;
 	}
-	var_a0 = func_800B84D0_C7480(entry->unk0, entry->unk4) >> 8;
-	if (var_a0 < D_80222A70) {
-		var_a0 = D_80222A70;
-	}
-	if (entry->unk16 >= var_a0) {
-		var_a0 = entry->unk16;
-	}
-	var_a3 = (s16)(arg1 + var_a0);
-	if (sp1C != 0) {
-		var_a3 = (s16)(D_80052B34->unk2 + 0x12C);
-	}
-	if (var_a3 < entry->unk2) {
-		if (var_a3 > (s16)(entry->unk2 - 7)) {
-			entry->unk2 = var_a3;
-		} else {
-			entry->unk2 = (s16)(entry->unk2 - 7);
+	{
+		s32 var_a0 = func_800B84D0_C7480(entry->unk0, entry->unk4) >> 8;
+		if (var_a0 < D_80222A70) {
+			var_a0 = D_80222A70;
 		}
-	} else if (var_a3 > entry->unk2) {
-		if (var_a3 < (s16)(entry->unk2 + 7)) {
-			entry->unk2 = var_a3;
-		} else {
-			entry->unk2 = (s16)(entry->unk2 + 7);
+		if (entry->unk16 >= var_a0) {
+			var_a0 = entry->unk16;
+		}
+		{
+			s32 temp_var = (s16)(arg1 + var_a0);
+			if (sp1C != 0) {
+				temp_var = (s16)(D_80052B34->unk2 + 0x12C);
+			}
+			if (temp_var < entry->unk2) {
+				if (temp_var > (s16)(entry->unk2 - 7)) {
+					entry->unk2 = temp_var;
+				} else {
+					entry->unk2 = (s16)(entry->unk2 - 7);
+				}
+			} else if (temp_var > entry->unk2) {
+				if (temp_var < (s16)(entry->unk2 + 7)) {
+					entry->unk2 = temp_var;
+				} else {
+					entry->unk2 = (s16)(entry->unk2 + 7);
+				}
+			}
 		}
 	}
 	entry->unk2C = entry->unk12;
