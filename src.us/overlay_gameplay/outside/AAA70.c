@@ -230,20 +230,8 @@ s32 func_8009BCC0_AAC70(s32 arg0, s32 arg1, u8 arg2) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
-/* CURRENT(4249) */
+// Draw letter ?
 void func_8009BDB8_AAD68(u8 arg0, u8 arg1) {
-	Gfx *dl;
-	Gfx *spC;
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	s32 pad3;
-	s32 pad4;
-	s32 pad5;
-	s32 pad6;
-	s32 pad7;
-
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u32)(D_1009C70 + (arg1 << 7)) & 0x1FFFFFFF);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -252,13 +240,10 @@ void func_8009BDB8_AAD68(u8 arg0, u8 arg1) {
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 1, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
 
-	gSPTextureRectangle(D_8005BB2C++, (s32)arg0 * 4, 0xA0, (arg0 + 0x15) * 4, 0xF4, G_TX_RENDERTILE, 0, 0, 0x0300, 0x0300);
+	gSPTextureRectangle(D_8005BB2C++, (s32)arg0 * 4, 0xA0, (arg0 + 0x15) << 2, 0xF4, G_TX_RENDERTILE, 0, 0, 0x0300, 0x0300);
 
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009BDB8_AAD68.s")
-#endif
 
 // CURRENT(920)
 #ifdef NON_MATCHING
