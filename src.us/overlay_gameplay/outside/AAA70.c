@@ -243,10 +243,6 @@ void func_8009BDB8_AAD68(s32 arg0, s32 arg1) {
 	s32 pad5;
 	s32 pad6;
 	s32 pad7;
-	volatile s32 sp0;
-
-	sp0 = arg0 &= 0xFF;
-	arg1 &= 0xFF;
 
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u32)(D_1009C70 + (arg1 << 7)) & 0x1FFFFFFF);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
@@ -256,7 +252,7 @@ void func_8009BDB8_AAD68(s32 arg0, s32 arg1) {
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 1, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
 
-	gSPTextureRectangle(D_8005BB2C++, (s32)sp0 * 4, 0xA0, (arg0 + 0x15) * 4, 0xF4, G_TX_RENDERTILE, 0, 0, 0x0300, 0x0300);
+	gSPTextureRectangle(D_8005BB2C++, (s32)arg0 * 4, 0xA0, (arg0 + 0x15) * 4, 0xF4, G_TX_RENDERTILE, 0, 0, 0x0300, 0x0300);
 
 	gDPPipeSync(D_8005BB2C++);
 }
@@ -280,12 +276,10 @@ void func_8009BF64_AAF14(u16 arg0) {
 	s32 sp18;
 	s32 temp_t6;
 	s32 var_a3;
-	u16 *arg0Ptr;
 	Gfx *dl;
 
-	arg0Ptr = &arg0;
-	sp47 = (u8) ((s32) *arg0Ptr / 60);
-	arg0 = (u16) ((s32) *arg0Ptr % 60);
+	sp47 = (arg0 / 60);
+	arg0 = (arg0 % 60);
 
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
@@ -336,8 +330,8 @@ void func_8009C1D8_AB188(s16 arg0, s16 arg1, s32 arg2) {
 	temp_t8 = func_80003824_4424((f32)(D_80052B34->unk4 - arg1), (f32)(D_80052B34->unk0 - arg0)) - D_80047950;
 	sp18 = temp_t8 & 0xFFFF;
 	sp36 = temp_t8;
-	sp34 = (s16)(s32)((((f64)(f32)sins(sp18) / 32768.0) * D_801426C0_151670) + (f64)(D_80068084 >> 1));
-	var_v1 = (s16)(s32)((((f64)(f32)coss(sp18) / 32768.0) * D_801426C8_151678) + (f64)(D_80068088 >> 1));
+	sp34 = (s16)(s32)((((f32)sins(sp18) / 32768.0) * D_801426C0_151670) + (D_80068084 >> 1));
+	var_v1 = (s16)(s32)((((f32)coss(sp18) / 32768.0) * D_801426C8_151678) + (D_80068088 >> 1));
 	if (sp34 >= 0x118) {
 		sp34 = 0x117;
 	}
@@ -417,11 +411,6 @@ void func_8009C4F8_AB4A8(s32 arg0, s32 arg1) {
 	s32 pad7;
 	s32 pad8;
 	s32 pad9;
-	volatile s32 x0;
-
-	arg0 &= 0xFF;
-	x0 = arg0;
-	arg1 &= 0xFF;
 
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u32)(D_1009C70 + (arg1 << 7)) & 0x1FFFFFFF);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
@@ -431,7 +420,7 @@ void func_8009C4F8_AB4A8(s32 arg0, s32 arg1) {
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 1, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
 	gSPTextureRectangle(D_8005BB2C++,
-		x0 * 4,
+		arg0 * 4,
 		(D_80068088 - 0x24) * 4,
 		(arg0 + 0xB) * 4,
 		(D_80068088 - 0x19) * 4,
@@ -456,24 +445,24 @@ void func_8009C4F8_AB4A8(s32 arg0, s32 arg1) {
 #ifdef NON_MATCHING
 // CURRENT(32816)
 void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, s32 arg7, s16 arg8) {
-	UnkHudVtx *vtx0;
-	UnkHudVtx *vtx1;
-	UnkHudVtx *vtx2;
-	UnkHudVtx *vtx3;
-	UnkHudVtx *iconVtx0;
-	UnkHudVtx *iconVtx1;
-	UnkHudVtx *iconVtx2;
-	UnkHudVtx *iconVtx3;
+	Vtx_t *vtx0;
+	Vtx_t *vtx1;
+	Vtx_t *vtx2;
+	Vtx_t *vtx3;
+	Vtx_t *iconVtx0;
+	Vtx_t *iconVtx1;
+	Vtx_t *iconVtx2;
+	Vtx_t *iconVtx3;
 	s32 tempT2;
 	s32 iconSwap;
 
-	vtx0 = (UnkHudVtx *)D_8005BB34;
+	vtx0 = D_8005BB34;
 	D_8005BB34 = D_8005BB34 + 1;
-	vtx1 = (UnkHudVtx *)D_8005BB34;
+	vtx1 = D_8005BB34;
 	D_8005BB34 = D_8005BB34 + 1;
-	vtx2 = (UnkHudVtx *)D_8005BB34;
+	vtx2 = D_8005BB34;
 	D_8005BB34 = D_8005BB34 + 1;
-	vtx3 = (UnkHudVtx *)D_8005BB34;
+	vtx3 = D_8005BB34;
 	D_8005BB34 = D_8005BB34 + 1;
 
 	iconSwap = 0;
@@ -531,13 +520,13 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 	}
 
 	if (arg5 != 0) {
-		vtx0 = (UnkHudVtx *)D_8005BB34;
+		vtx0 = D_8005BB34;
 		D_8005BB34 = D_8005BB34 + 1;
-		vtx1 = (UnkHudVtx *)D_8005BB34;
+		vtx1 = D_8005BB34;
 		D_8005BB34 = D_8005BB34 + 1;
-		vtx2 = (UnkHudVtx *)D_8005BB34;
+		vtx2 = D_8005BB34;
 		D_8005BB34 = D_8005BB34 + 1;
-		vtx3 = (UnkHudVtx *)D_8005BB34;
+		vtx3 = D_8005BB34;
 		D_8005BB34 = D_8005BB34 + 1;
 
 		if (arg5 == 2) {
@@ -682,13 +671,13 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 	}
 
 	if (arg4 != NULL) {
-		iconVtx0 = (UnkHudVtx *)D_8005BB34;
+		iconVtx0 = D_8005BB34;
 		D_8005BB34 = D_8005BB34 + 1;
-		iconVtx1 = (UnkHudVtx *)D_8005BB34;
+		iconVtx1 = D_8005BB34;
 		D_8005BB34 = D_8005BB34 + 1;
-		iconVtx2 = (UnkHudVtx *)D_8005BB34;
+		iconVtx2 = D_8005BB34;
 		D_8005BB34 = D_8005BB34 + 1;
-		iconVtx3 = (UnkHudVtx *)D_8005BB34;
+		iconVtx3 = D_8005BB34;
 		D_8005BB34 = D_8005BB34 + 1;
 
 		if (arg5 == 2) {

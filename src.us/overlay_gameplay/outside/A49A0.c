@@ -225,9 +225,9 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	s32 mapIndex;
 	u32 vtx0Addr;
 	s32 alpha;
-	UnkHudVtx *vtx0;
-	UnkHudVtx *vtx1;
-	UnkHudVtx *vtx2;
+	Vtx_t *vtx0;
+	Vtx_t *vtx1;
+	Vtx_t *vtx2;
 
 	arg3 &= 0xFF;
 	arg2 &= 0xFF;
@@ -239,7 +239,7 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, s32 arg2, s32 arg3, u8 arg4) {
 		}
 	}
 
-	vtx0 = (UnkHudVtx *)D_8005BB34;
+	vtx0 = D_8005BB34;
 	arg0 >>= 5;
 	arg1 = 0xFF - arg1;
 	vtx0->unk0 = arg0 - 7;
@@ -250,7 +250,7 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	vtx0->unk8 = 0x400;
 	vtx0->unkA = 0x400;
 
-	vtx1 = (UnkHudVtx *)D_8005BB34;
+	vtx1 = D_8005BB34;
 	vtx1->unk0 = arg0 + 7;
 	D_8005BB34++;
 	vtx1->unk2 = arg1 - 0xE;
@@ -258,7 +258,7 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	vtx1->unk8 = 0x400;
 	vtx1->unkA = 0;
 
-	vtx2 = (UnkHudVtx *)D_8005BB34;
+	vtx2 = D_8005BB34;
 	vtx0Addr = (u32)vtx0 & 0x1FFFFFFF;
 	vtx2->unk0 = arg0;
 	D_8005BB34++;
@@ -456,10 +456,10 @@ s32 func_80095F08_A4EB8(void) {
 // CURRENT(12294)
 #ifdef NON_MATCHING
 void func_800966EC_A569C(s16 *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
-	UnkHudVtx *vtx0;
-	UnkHudVtx *vtx1;
-	UnkHudVtx *vtx2;
-	UnkHudVtx *vtx3;
+	Vtx_t *vtx0;
+	Vtx_t *vtx1;
+	Vtx_t *vtx2;
+	Vtx_t *vtx3;
 	s16 wave;
 	s16 absWave;
 	s16 trig;
@@ -467,13 +467,13 @@ void func_800966EC_A569C(s16 *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
 	s32 temp_f16;
 	s32 temp_f10;
 
-	vtx0 = (UnkHudVtx *) D_8005BB34;
+	vtx0 = D_8005BB34;
 	D_8005BB34 = (Vtx *) (vtx0 + 1);
-	vtx1 = (UnkHudVtx *) D_8005BB34;
+	vtx1 = D_8005BB34;
 	D_8005BB34 = (Vtx *) (vtx1 + 1);
-	vtx2 = (UnkHudVtx *) D_8005BB34;
+	vtx2 = D_8005BB34;
 	D_8005BB34 = (Vtx *) (vtx2 + 1);
-	vtx3 = (UnkHudVtx *) D_8005BB34;
+	vtx3 = D_8005BB34;
 	D_8005BB34 = (Vtx *) (vtx3 + 1);
 
 	if (arg3 == 0.0f) {
@@ -562,10 +562,10 @@ void func_800966EC_A569C(s16 *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
 void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	TileEntry *tile;
 	ShieldWallPoint *levelCoords;
-	UnkHudVtx *v0;
-	UnkHudVtx *v1;
-	UnkHudVtx *v2;
-	UnkHudVtx *v3;
+	Vtx_t *v0;
+	Vtx_t *v1;
+	Vtx_t *v2;
+	Vtx_t *v3;
 	Vtx **vtxHead;
 	s16 selectedGroup;
 	s32 loop;
@@ -609,13 +609,13 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			left = &levelCoords[leftIdx - 48];
 			right = &levelCoords[rightIdx - 48];
 
-			v0 = (UnkHudVtx *) *vtxHead;
+			v0 = *vtxHead;
 			*vtxHead = (Vtx *) (v0 + 1);
-			v1 = (UnkHudVtx *) *vtxHead;
+			v1 = *vtxHead;
 			*vtxHead = (Vtx *) (v1 + 1);
-			v2 = (UnkHudVtx *) *vtxHead;
+			v2 = *vtxHead;
 			*vtxHead = (Vtx *) (v2 + 1);
-			v3 = (UnkHudVtx *) *vtxHead;
+			v3 = *vtxHead;
 			*vtxHead = (Vtx *) (v3 + 1);
 
 			color0 = left->x * 8;
@@ -794,10 +794,10 @@ void func_800970C0_A6070(void)
 // CURRENT(11232)
 #ifdef NON_MATCHING
 void func_80097444_A63F4(s16 arg0, s16 arg1) {
-	UnkHudVtx *vtx0;
-	UnkHudVtx *vtx1;
-	UnkHudVtx *vtx2;
-	UnkHudVtx *vtx3;
+	Vtx_t *vtx0;
+	Vtx_t *vtx1;
+	Vtx_t *vtx2;
+	Vtx_t *vtx3;
 	u32 addrMask;
 	Unk80052B40 base;
 	Unk80052B40 pos;
@@ -843,13 +843,13 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 
 			gSPMatrix(D_8005BB2C++, D_8005BB38 & addrMask, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-			vtx0 = (UnkHudVtx *) D_8005BB34;
+			vtx0 = D_8005BB34;
 			D_8005BB34 = (Vtx *) (vtx0 + 1);
-			vtx1 = (UnkHudVtx *) D_8005BB34;
+			vtx1 = D_8005BB34;
 			D_8005BB34 = (Vtx *) (vtx1 + 1);
-			vtx2 = (UnkHudVtx *) D_8005BB34;
+			vtx2 = D_8005BB34;
 			D_8005BB34 = (Vtx *) (vtx2 + 1);
-			vtx3 = (UnkHudVtx *) D_8005BB34;
+			vtx3 = D_8005BB34;
 			D_8005BB34 = (Vtx *) (vtx3 + 1);
 			D_8005BB38 += 0x40;
 
