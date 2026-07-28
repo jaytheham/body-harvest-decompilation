@@ -288,7 +288,7 @@ void func_8009BF64_AAF14(u16 arg0) {
 
 // drawWaypointMarker ?
 #ifdef NON_MATCHING
-// CURRENT(1310)
+// CURRENT(1905)
 void func_8009C1D8_AB188(s16 arg0, s16 arg1, s32 arg2) {
 	s16 sp36;
 	s16 sp34;
@@ -303,8 +303,8 @@ void func_8009C1D8_AB188(s16 arg0, s16 arg1, s32 arg2) {
 	temp_t8 = func_80003824_4424((f32)(D_80052B34->unk4 - arg1), (f32)(D_80052B34->unk0 - arg0)) - D_80047950;
 	sp18 = temp_t8 & 0xFFFF;
 	sp36 = temp_t8;
-	sp34 = (s16)(s32)((((f32)sins(sp18) / 32768.0) * D_801426C0_151670) + (D_80068084 >> 1));
-	var_v1 = (s16)(s32)((((f32)coss(sp18) / 32768.0) * D_801426C8_151678) + (D_80068088 >> 1));
+	sp34 = ((((f32)sins(sp18) / 32768.0) * D_801426C0_151670[0]) + (D_80068084 >> 1));
+	var_v1 = ((((f32)coss(sp18) / 32768.0) * D_801426C8_151678[0]) + (D_80068088 >> 1));
 	if (sp34 >= 0x118) {
 		sp34 = 0x117;
 	}
