@@ -286,9 +286,10 @@ void func_8009BF64_AAF14(u16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009BF64_AAF14.s")
 #endif
 
-// drawWaypointMarker ?
+// https://decomp.me/scratch/pjZZY
+// CURRENT(2067)
 #ifdef NON_MATCHING
-// CURRENT(1905)
+// drawWaypointMarker ?
 void func_8009C1D8_AB188(s16 arg0, s16 arg1, s32 arg2) {
 	s16 sp36;
 	s16 sp34;

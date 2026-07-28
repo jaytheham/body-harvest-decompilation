@@ -103,14 +103,14 @@ s32 func_800A3E74_B2E24(u8 arg0) {
 
 	child->unkE = dir;
 	child->unk6 = dir;
-	child->unk0 = (s16) (s32) ((((f64) (f32) coss((u16) parent->unk6) / 32768.0) * 100.0) + (f64) parent->unk0);
-	child->unk4 = (s16) (s32) ((((f64) (f32) sins((u16) parent->unk6) / 32768.0) * 100.0) + (f64) parent->unk4);
+	child->unk0 = (s16) (s32) ((((f32) coss((u16) parent->unk6) / 32768.0) * 100.0) + parent->unk0);
+	child->unk4 = (s16) (s32) ((((f32) sins((u16) parent->unk6) / 32768.0) * 100.0) + parent->unk4);
 	child->unk25 = arg0;
 	child->unk26 = func_800A3DC8_B2D78();
 	child->unk12 = 0x460;
-	child->unk14 = (s16) (s32) ((((f64) (f32) coss((u16) dir) / 32768.0) * 400.0) + (f64) parent->unk0);
+	child->unk14 = (s16) (s32) ((((f32) coss((u16) dir) / 32768.0) * 400.0) + parent->unk0);
 	child->unk16 = parent->unk2;
-	child->unk18 = (s16) (s32) ((((f64) (f32) sins((u16) dir) / 32768.0) * 400.0) + (f64) parent->unk4);
+	child->unk18 = (s16) (s32) ((((f32) sins((u16) dir) / 32768.0) * 400.0) + parent->unk4);
 	child->unk2C = 0x1E;
 
 	if (alienSpecs[child->specIndex].unk54 & 1) {
@@ -236,8 +236,8 @@ void func_800A41B0_B3160(u8 arg0) {
 				f32 sinDir;
 
 				func_80137468_146418(arg0, 0x19);
-				cosDir = (f32) ((f64) (f32) coss((u16) alien->unk6) / 32768.0);
-				sinDir = (f32) ((f64) (f32) sins((u16) alien->unk6) / 32768.0);
+				cosDir = (f32) ((f32) coss((u16) alien->unk6) / 32768.0);
+				sinDir = (f32) ((f32) sins((u16) alien->unk6) / 32768.0);
 				fx = 180.0f * cosDir;
 				fz = 180.0f * sinDir;
 				randA = (s16) func_800038E0_44E0();
@@ -367,8 +367,8 @@ void func_800A41B0_B3160(u8 arg0) {
 					f32 side;
 					f32 forward;
 
-					side = (f32) ((f64) (f32) sins((u16) (alien->unk6 + 0x4000)) / 32768.0);
-					forward = (f32) -((f64) (f32) coss((u16) (alien->unk6 + 0x4000)) / 32768.0);
+					side = (f32) ((f32) sins((u16) (alien->unk6 + 0x4000)) / 32768.0);
+					forward = (f32) -((f32) coss((u16) (alien->unk6 + 0x4000)) / 32768.0);
 
 					if (currentLevel == 1) {
 						dist = 0x140;
@@ -710,8 +710,8 @@ void func_800A57E4_B4794(u8 arg0) {
 			entry->unk20 = (s32)(entry->unk20 & 0xF7FF7FFF);
 			sp20 = (s16)(angle_diff > 0 ? D_80052B34->unk6 + 0x6000 : D_80052B34->unk6 - 0x6000) & 0xFFFF;
 			sp2E = angle_diff;
-			entry->unk14 = (s16)(s32)(((f64)(f32)coss(sp20) / 32768.0) * D_80142778_151728 + (f64)D_80052B34->unk0);
-			entry->unk18 = (s16)(s32)(((f64)(f32)sins(sp20) / 32768.0) * D_80142780_151730 + (f64)D_80052B34->unk4);
+			entry->unk14 = (s16)(s32)(((f32)coss(sp20) / 32768.0) * D_80142778_151728 + D_80052B34->unk0);
+			entry->unk18 = (s16)(s32)(((f32)sins(sp20) / 32768.0) * D_80142780_151730 + D_80052B34->unk4);
 			entry->unk16 = D_80052B34->unk2;
 		}
 	}
