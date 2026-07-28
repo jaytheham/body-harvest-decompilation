@@ -620,6 +620,8 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3);
 void func_800A3490_B2440(VehicleInstance *arg0);
 s32 func_800A3E74_B2E24(u8 arg0);
 void func_800A4150_B3100(u8 arg0);
+void func_800A41B0_B3160(u8 arg0);
+void func_800A4C28_B3BD8(u8 arg0);
 void func_800A53C0_B4370(s32, s16, s16);
 void func_800A57E4_B4794(u8);
 void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3);
