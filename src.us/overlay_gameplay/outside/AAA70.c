@@ -232,7 +232,7 @@ s32 func_8009BCC0_AAC70(s32 arg0, s32 arg1, u8 arg2) {
 
 #ifdef NON_MATCHING
 /* CURRENT(4249) */
-void func_8009BDB8_AAD68(s32 arg0, s32 arg1) {
+void func_8009BDB8_AAD68(u8 arg0, u8 arg1) {
 	Gfx *dl;
 	Gfx *spC;
 	s32 pad0;
