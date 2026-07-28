@@ -572,7 +572,6 @@ s32 func_800A52F8_B42A8(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	return var_v1;
 }
 
-// CURRENT (0)
 void func_800A53C0_B4370(u8 arg0, s16 arg1, s16 arg2) {
 	s32 sp_idx;
 	s32 abs_arg1;
