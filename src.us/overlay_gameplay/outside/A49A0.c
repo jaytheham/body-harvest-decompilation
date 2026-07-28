@@ -710,90 +710,82 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80096BC4_A5B74.s")
 #endif
 
-/* CURRENT(435) */
+// https://decomp.me/scratch/z0WpV
+// CURRENT(175)
 #ifdef NON_MATCHING
-void func_800970C0_A6070(void) {
-	UnkHudVtx *vtx0;
-	UnkHudVtx *vtx1;
-	UnkHudVtx *vtx2;
-	UnkHudVtx *vtx3;
-	u32 col;
-	u32 row;
-	s32 x0;
-	s32 x1;
-	s32 y0;
-	s32 y1;
-	s32 tileRow;
-
-	gDPPipeSync(D_8005BB2C++);
-	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
-	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
-	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
-	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
-	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
-	gDPSetColorDither(D_8005BB2C++, G_CD_NOISE);
-	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
-
-	for (row = 0; row < 8; row++) {
-		y1 = -((row - 4) << 8);
-		y0 = y1 - 0x100;
-		tileRow = row << 3;
-
-		for (col = 0; col < 8; col++) {
-			x0 = (col - 4) << 8;
-			x1 = x0 + 0x100;
-
-			vtx0 = (UnkHudVtx *) D_8005BB34;
-			D_8005BB34 = (Vtx *) (vtx0 + 1);
-			vtx1 = (UnkHudVtx *) D_8005BB34;
-			D_8005BB34 = (Vtx *) (vtx1 + 1);
-			vtx2 = (UnkHudVtx *) D_8005BB34;
-			D_8005BB34 = (Vtx *) (vtx2 + 1);
-			vtx3 = (UnkHudVtx *) D_8005BB34;
-			D_8005BB34 = (Vtx *) (vtx3 + 1);
-
-			vtx0->unk0 = x0;
-			vtx0->unk2 = y0;
-			vtx0->unk4 = 0;
-			vtx1->unk0 = x1;
-			vtx1->unk2 = y0;
-			vtx1->unk4 = 0;
-			vtx2->unk0 = x0;
-			vtx2->unk2 = y1;
-			vtx2->unk4 = 0;
-			vtx3->unk0 = x1;
-			vtx3->unk2 = y1;
-			vtx3->unk4 = 0;
-
-			vtx0->unk8 = -0x20;
-			vtx0->unkA = 0x7E0;
-			vtx2->unk8 = -0x20;
-			vtx2->unkA = -0x20;
-			vtx3->unk8 = 0x7E0;
-			vtx3->unkA = -0x20;
-			vtx1->unk8 = 0x7E0;
-			vtx1->unkA = 0x7E0;
-
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1,
-							   D_8006AA6C + ((tileRow + col) << 11));
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPLoadSync(D_8005BB2C++);
-			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
-			gDPPipeSync(D_8005BB2C++);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, G_TX_RENDERTILE, 0,
-					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
-
-			gSPVertex(D_8005BB2C++, (Vtx *) ((u32) vtx0 & 0x1FFFFFFF), 4, 0);
-			gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
-			gSP1Triangle(D_8005BB2C++, 2, 1, 3, 0);
-		}
+void func_800970C0_A6070(void)
+{
+  Vtx_t *vtx0;
+  Vtx_t *vtx1;
+  Vtx_t *vtx2;
+  Vtx_t *vtx3;
+  u32 col;
+  u32 row;
+  s32 x0;
+  s32 x1;
+  s32 y0;
+  s32 y1;
+  s32 tileRow;
+  gDPPipeSync(D_8005BB2C++);
+  gSPClearGeometryMode(D_8005BB2C++, (0x00000001 | 0x00003000) | 0x00020000);
+  gDPSetRenderMode(D_8005BB2C++, (((((((0x8 | 0x40) | 0) | 0) | 0x2000) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (1 << 18), (((((((0x8 | 0x40) | 0) | 0) | 0x2000) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (1 << 16));
+  gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+  gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
+  gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
+  gDPSetColorDither(D_8005BB2C++, 2 << 6);
+  gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
+  for (row = 0; row < 8; row++)
+  {
+	y1 = -((row - 4) << 8);
+	y0 = y1 - 0x100;
+	tileRow = row << 3;
+	for (col = 0; col < 8; col++)
+	{
+	  x0 = (col - 4) << 8;
+	  x1 = x0 + 0x100;
+	  vtx0 = &D_8005BB34[0].v;
+	  D_8005BB34 = vtx0 + 1;
+	  vtx1 = &D_8005BB34[0].v;
+	  D_8005BB34 = vtx1 + 1;
+	  vtx2 = &D_8005BB34[0].v;
+	  D_8005BB34 = vtx2 + 1;
+	  vtx3 = &D_8005BB34[0].v;
+	  D_8005BB34 = vtx3 + 1;
+	  vtx0->ob[0] = x0;
+	  vtx0->ob[1] = y0;
+	  vtx0->ob[2] = 0;
+	  vtx1->ob[0] = x1;
+	  vtx1->ob[1] = y0;
+	  vtx1->ob[2] = 0;
+	  vtx2->ob[0] = x0;
+	  vtx2->ob[1] = y1;
+	  vtx2->ob[2] = 0;
+	  vtx3->ob[0] = x1;
+	  vtx3->ob[1] = y1;
+	  vtx3->ob[2] = 0;
+	  vtx0->tc[0] = -0x20;
+	  vtx0->tc[1] = 0x7E0;
+	  vtx2->tc[0] = -0x20;
+	  vtx2->tc[1] = -0x20;
+	  vtx3->tc[0] = 0x7E0;
+	  vtx3->tc[1] = -0x20;
+	  vtx1->tc[0] = 0x7E0;
+	  vtx1->tc[1] = 0x7E0;
+	  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, D_8006AA6C + (((tileRow + col) << 7) << 4));
+	  gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
+	  gDPLoadSync(D_8005BB2C++);
+	  gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 1023, 256);
+	  gDPPipeSync(D_8005BB2C++);
+	  gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_16b, 8, 0, 0, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
+	  gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 0x7C, 0x7C);
+	  gSPVertex(D_8005BB2C++, (Vtx *) (((u32) vtx0) & 0x1FFFFFFF), 4, 0);
+	  gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
+	  gSP1Triangle(D_8005BB2C++, 2, 1, 3, 0);
 	}
 
-	gDPPipeSync(D_8005BB2C++);
+  }
+
+  gDPPipeSync(D_8005BB2C++);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800970C0_A6070.s")
