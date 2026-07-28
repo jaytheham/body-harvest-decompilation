@@ -143,7 +143,7 @@ void func_800A4150_B3100(u8 arg0) {
 	}
 }
 
-// CURRENT(36663)
+// CURRENT(36203)
 #ifdef NON_MATCHING
 void func_800A41B0_B3160(u8 arg0) {
 	AlienInstance *alien;
@@ -220,9 +220,10 @@ void func_800A41B0_B3160(u8 arg0) {
 				D_8014DD50[armB].unk6 = (s16) 0xE000;
 			}
 
-			levelStep = 0xA;
 			if ((currentLevel == 1) || (currentLevel == 3)) {
 				levelStep = 0xF;
+			} else {
+				levelStep = 0xA;
 			}
 
 			if ((timer >= 0x10) && (alienSpecs[alien->specIndex].unk3A / 10 < alien->hitPoints) && ((timer % levelStep) == 0) && (alien->unk3D != 0)) {
