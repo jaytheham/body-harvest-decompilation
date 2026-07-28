@@ -69,7 +69,7 @@ u8 func_800A3DC8_B2D78(void) {
 const char D_80142754_151704[] = "making alien type %d:\n";
 const char D_8014276C_15171C[] = "made at %d\n";
 
-// CURRENT (132)
+// CURRENT (52)
 #ifdef NON_MATCHING
 s32 func_800A3E74_B2E24(u8 arg0) {
 	AlienInstance *parent;
