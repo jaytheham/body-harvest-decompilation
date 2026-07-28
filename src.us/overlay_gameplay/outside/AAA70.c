@@ -1125,10 +1125,10 @@ void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4) {
 
 	interp = D_8013D668_14C618;
 	if (interp > 0.0f) {
-		if ((f64)interp < D_80142728_1516D8) {
+		if (interp < D_80142728_1516D8) {
 			interp = 0.0f;
 		} else {
-			interp = (f32)((f64)interp - D_80142728_1516D8);
+			interp = (f32)(interp - D_80142728_1516D8);
 		}
 	}
 
@@ -1161,9 +1161,9 @@ block_5c:
 	}
 
 	interp = D_8013D668_14C618;
-	if ((f64)interp < 1.0) {
+	if (interp < 1.0) {
 		D_8014F6B0 = ((alpha - D_8014F6A4) * interp) + D_8014F6A4;
-		interp = (f32)((f64)interp + D_80142730_1516E0);
+		interp = (f32)(interp + D_80142730_1516E0);
 		D_8014F6AC = D_8014F6A8 + (s16)(interp * (width - D_8014F6A8));
 	} else {
 		interp = 1.0f;
@@ -1177,7 +1177,7 @@ store_results:
 	D_8013D668_14C618 = interp;
 
 	if (interp >= 0.0f) {
-		if (((u8)D_8014F202 != 0) || ((f64)interp < 1.0)) {
+		if (((u8)D_8014F202 != 0) || (interp < 1.0)) {
 			func_8009C6CC_AB67C((s16)((interp * 64.0f) - 32.0f), 0x8B, alpha, 0, arg1, 2, 0, (s16)arg2, width);
 		}
 	}
@@ -1596,8 +1596,8 @@ void func_8009FB58_AEB08(void) {
 		}
 	}
 
-	D_8014F1E4 = (f32)((f64)D_8014F1E4 + ((f64)(D_8014F1EC - D_8014F1E4) / 5.0));
-	D_8014F1E8 = (f32)((f64)D_8014F1E8 + ((f64)(D_8014F1F0 - D_8014F1E8) / 5.0));
+	D_8014F1E4 = (f32)(D_8014F1E4 + ((D_8014F1EC - D_8014F1E4) / 5.0));
+	D_8014F1E8 = (f32)(D_8014F1E8 + ((D_8014F1F0 - D_8014F1E8) / 5.0));
 
 	D_80052B40.unk0 = (s16)D_8014F1E4;
 	D_80052B40.unk2 = (s16)D_8014F1E8;
@@ -2233,7 +2233,7 @@ void func_800A1DD8_B0D88(s32 arg0) {
 
 	arg0 &= 0xFF;
 
-	tempF0 = (f32)((f64)(*(u16*)(((u8*)&D_8014F618) + 0x60)) * 0.03125);
+	tempF0 = (f32)((*(u16*)(((u8*)&D_8014F618) + 0x60)) * 0.03125);
 	tempF2 = tempF0 * D_80153AB8.x;
 	tempF12 = tempF0 * D_80153AB8.y;
 	tempF14 = tempF0 * D_80153AB8.z;
@@ -2308,7 +2308,7 @@ void func_800A1DD8_B0D88(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1DD8_B0D88.s")
 #endif
 
-// CURRENT(9730)
+// CURRENT(13000)
 #ifdef NON_MATCHING
 void func_800A2260_B1210() {
 	AAA70Unk8014F618Head *ghostPos;
