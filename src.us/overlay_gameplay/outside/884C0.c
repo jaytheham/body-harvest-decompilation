@@ -1265,7 +1265,7 @@ void func_8007B170_8A120(s32 arg0) {
 	}
 	do {
 		func_800039D0_45D0((Unk80052B40 *)&D_8014DD50[arg0], (Unk80052B40 *)&D_8014DD50[arg0].unk6, NULL, D_8005BB38);
-		D_8005BB38 += 0x40;
+		D_8005BB38 += 1;
 		if (D_8014DD50[arg0].unkC != -1) {
 			func_8007B170_8A120(D_8014DD50[arg0].unkC);
 		}
@@ -1279,7 +1279,7 @@ void func_8007B20C_8A1BC(Unk8014DD50 *arg0) {
 	}
 	do {
 		func_800039D0_45D0((Unk80052B40 *)arg0, (Unk80052B40 *)&arg0->unk6, NULL, D_8005BB38);
-		D_8005BB38 += 0x40;
+		D_8005BB38 += 1;
 		if (arg0->unkC != -1) {
 			func_8007B20C_8A1BC(arg0 + arg0->unkC);
 		}

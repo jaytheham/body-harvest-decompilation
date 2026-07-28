@@ -5151,9 +5151,7 @@ void func_80090648_60AF8(void) {
 	guPerspective((Mtx*)D_8005BB38, &perspNorm, (f32)((FrontendCamState*)D_800D7A18)->unk3A, D_800D7974, D_800D8510,
 				  D_800AED68_7F218, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, perspNorm);
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
 	guLookAt((Mtx*)D_8005BB38,
 			 ((FrontendCamState*)D_800D7A18)->unk10.x,
@@ -5166,8 +5164,7 @@ void func_80090648_60AF8(void) {
 			 ((FrontendCamState*)D_800D7A18)->unk28.y,
 			 ((FrontendCamState*)D_800D7A18)->unk28.z);
 
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 	gSPMatrix(D_8005BB2C++, (u32)&D_800AA648_7AAF8, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	gDPPipeSync(D_8005BB2C++);

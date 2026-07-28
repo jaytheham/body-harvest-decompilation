@@ -5796,12 +5796,11 @@ void func_8007EBB8_4F068(void) {
 		osSyncPrintf(D_800AE8FC_7EDAC);
 	}
 
-	guPerspective((Mtx*)D_8005BB38, &perspNorm, (f32)((FrontendCamState*)D_800D7A18)->unk3A, D_800D7974, D_800D8510, 4000.0f, 1.0f);
+	guPerspective(D_8005BB38, &perspNorm, (f32)((FrontendCamState*)D_800D7A18)->unk3A, D_800D7974, D_800D8510, 4000.0f, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, perspNorm);
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-	guLookAt((Mtx*)D_8005BB38,
+	guLookAt(D_8005BB38,
 		((FrontendCamState*)D_800D7A18)->unk10.x,
 		((FrontendCamState*)D_800D7A18)->unk10.y,
 		((FrontendCamState*)D_800D7A18)->unk10.z,
@@ -5811,11 +5810,10 @@ void func_8007EBB8_4F068(void) {
 		((FrontendCamState*)D_800D7A18)->unk28.x,
 		((FrontendCamState*)D_800D7A18)->unk28.y,
 		((FrontendCamState*)D_800D7A18)->unk28.z);
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 	gSPMatrix(D_8005BB2C++, &D_80094958_64E08, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-	func_800838E0_53D90((Mtx*)(D_8005BB38 - 0x40));
+	func_800838E0_53D90(D_8005BB38 - 1);
 	func_800839F0_53EA0(&((FrontendCamState*)D_800D7A18)->unk10.x, &((FrontendCamState*)D_800D7A18)->unk1C.x);
 }
 

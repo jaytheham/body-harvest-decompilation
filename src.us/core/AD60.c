@@ -1127,7 +1127,7 @@ void func_8000CC3C_D83C(AnimChannelState *arg0, s32 arg1)
 	  sp48[1] = (arg0 + var_s0)->unk4 * 8;
 	  sp48[2] = (arg0 + var_s0)->unk0 * 8;
 		val = D_8005BB38;
-		D_8005BB38 += 0x40;
+		D_8005BB38 += 1;
 	  func_8000C81C_D41C(sp3C, sp48, 0, val);
   }
 }
