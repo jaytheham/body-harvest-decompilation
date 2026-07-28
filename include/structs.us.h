@@ -1777,7 +1777,7 @@ typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
-} Unk80052B40; /* size = 0x06 */
+} Unk80052B40; /* size = 0x06 - Often seems to actually be Vtx */
 
 typedef struct {
 	/* 0x00 */ u8 unk0[8];
