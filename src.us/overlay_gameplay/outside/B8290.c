@@ -153,10 +153,10 @@ void func_800A931C_B82CC(s8 arg0, s16 *arg1, s32 *arg2) {
 	arg2[2] += D_8014DD50[(s32)arg0].unk4;
 }
 
-/* CURRENT(2517) */
+/* CURRENT(1050) */
 #ifdef NON_MATCHING
 // AI - Position child relative to parent with rotation
-void func_800A93A4_B8354(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_800A93A4_B8354(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	AlienInstance *inst;
 	AlienInstance *parent;
 	s32 pad0;
@@ -184,12 +184,13 @@ void func_800A93A4_B8354(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	inst->unk0 = parent->unk0;
 	inst->unk2 = parent->unk2;
 	inst->unk4 = parent->unk4;
-	inst->unk6 = parent->unk6;
-	inst->unk8 = parent->unk8;
-	inst->unkA = parent->unkA;
+	inst->unk6 = rotX;
+	inst->unk8 = rotY;
+	inst->unkA = rotZ;
 	inst->unkE = parent->unkE;
 
 	cosVal = coss((u16)rotZ);
+
 	sinVal = sins((u16)rotZ);
 	offA = (s16)(s32)((arg2 * ((f32)cosVal / 32768.0)) - (((f32)sinVal / 32768.0) * arg3));
 
@@ -290,45 +291,36 @@ void func_800A99B8_B8968(u8 arg0)
 	} 
 }
 
-// CURRENT(2825)
+/* CURRENT(755) */
 #ifdef NON_MATCHING
 s32 func_800A9A90_B8A40(u8 arg0, s32 arg1, f32 arg2) {
-	AlienInstance *alien;
-	AlienInstance *leader;
-	u8 *members;
 	u8 specIndex;
 	s32 hpDelta;
 	s32 i;
+	u8 *members;
 
-	alien = &alienInstances[arg0];
-	leader = &alienInstances[alien->unk25];
-	members = (u8 *)leader;
-	specIndex = alien->specIndex;
+	specIndex = alienInstances[arg0].specIndex;
+	members = (u8 *)&alienInstances[alienInstances[arg0].unk25];
 
-	if (((u32)D_80052A8C % 100) != 0) {
-		return 0;
-	}
+	if ((u32)D_80052A8C % 100 == 0) {
+		hpDelta = D_8013D8D8_14C888[0] - alienInstances[arg0].hitPoints;
 
-	hpDelta = D_8013D8D8_14C888[0] - alien->hitPoints;
-
-	for (i = 1; i < arg1; i++) {
-		if (members[i - 1] != 0xFF) {
-			hpDelta += D_8013D8D8_14C888[i] - alienInstances[members[i - 1]].hitPoints;
+		for (i = 1; i < arg1; i++) {
+			if (members[i - 1] != 0xFF) {
+				hpDelta += D_8013D8D8_14C888[i] - alienInstances[members[i - 1]].hitPoints;
+			}
 		}
-	}
 
-	D_8013D8D8_14C888[0] = alien->hitPoints;
+		D_8013D8D8_14C888[0] = alienInstances[arg0].hitPoints;
 
-	for (i = 1; i < arg1; i++) {
-		if (members[i - 1] != 0xFF) {
-			D_8013D8D8_14C888[i] = alienInstances[members[i - 1]].hitPoints;
+		for (i = 1; i < arg1; i++) {
+			if (members[i - 1] != 0xFF) {
+				D_8013D8D8_14C888[i] = alienInstances[members[i - 1]].hitPoints;
+			}
 		}
-	}
 
-	if (((f32)alienSpecs[specIndex].unk3A * arg2) < (f32) hpDelta) {
-		return 1;
+		return ((f32)alienSpecs[specIndex].unk3A * arg2) < (f32) hpDelta;
 	}
-
 	return 0;
 }
 #else
@@ -740,7 +732,7 @@ void func_800AB4B4_BA464(u8 arg0) {
 }
 
 // https://decomp.me/scratch/xQVGn
-// CURRENT(195)
+/* CURRENT(35) */
 #ifdef NON_MATCHING
 // AI - Acquire target position
 void func_800AB570_BA520(u8 arg0)
@@ -775,8 +767,9 @@ void func_800AB570_BA520(u8 arg0)
   if (dx < 0x4B0)
   {
 	  alienInstances[arg0].unk24 = 0x14;
+	  pad = 0x64;
+	  alienInstances[arg0].unk38 = pad;
 	  alienInstances[arg0].unk20 &= 0xFFFDFE5F;
-	  alienInstances[arg0].unk38 = 0x64;
 	  alienInstances[arg0].unk14 = targetX;
 	  alienInstances[arg0].unk16 = targetY;
 	  alienInstances[arg0].unk18 = targetZ;
