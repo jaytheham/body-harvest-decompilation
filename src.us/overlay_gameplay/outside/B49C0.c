@@ -1088,7 +1088,7 @@ void func_800A854C_B74FC(void)
 	D_8014F7F4--;
 	if (D_8014F7F4 == 0)
 	{
-	  func_800E5E3C_F4DEC(2, *(((u8 *) D_80052B2C) + 0x35));
+	  func_800E5E3C_F4DEC(2, (u8) D_80052B2C->unk34);
 	}
   }
 }
@@ -1302,7 +1302,7 @@ s32 func_800A8E18_B7DC8(u32 arg0)
 		break;
 
 	  case 10:
-		if (func_800E60CC_F507C(2, *(((u8 *) D_80052B2C) + 0x35)) != 0)
+		if (func_800E60CC_F507C(2, (u8) D_80052B2C->unk34) != 0)
 	  {
 		D_8014F7F4 += 0x258;
 		result = 1;
@@ -1310,7 +1310,7 @@ s32 func_800A8E18_B7DC8(u32 arg0)
 	  else
 	  {
 		D_8014F7F4 = 0x258;
-		func_800E5CF4_F4CA4(2, *(((u8 *) D_80052B2C) + 0x35));
+		func_800E5CF4_F4CA4(2, (u8) D_80052B2C->unk34);
 		result = 1;
 	  }
 		break;
