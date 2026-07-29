@@ -316,18 +316,17 @@ s16 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 leve
 	return -0x8000;
 }
 
-// CURRENT(210)
+// CURRENT(175)
 #ifdef NON_MATCHING
 s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 	Unk8014FD30Type *base;
 	Unk8014FD30Type *cur;
 	BoundingBox *sub;
-	s32 cnt;
+	s32 cnt = 0;
 	s32 idx;
 
 	idx = currentLevel - 1;
 	base = D_80147C30_156BE0[idx];
-	idx = 0;
 	cur = base;
 	idx = 0;
 	for (; idx != 6; idx++, cur++) {
