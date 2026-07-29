@@ -1461,7 +1461,7 @@ void func_800C3300_D22B0(s32 arg0) {
 				D_8005BB34++;
 
 				gDPPipeSync(D_8005BB2C++);
-				gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 3) & 0x1FFFFFFF), 3, 0);
+				gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 3), 3, 0);
 				gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 
 				D_80156EDA += 3;
@@ -1715,7 +1715,7 @@ void func_800C4274_D3224(void) {
 			if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)entry->unk2, (s16)(f32)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
 				gDPPipeSync(D_8005BB2C++);
 				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
-					(void *)((u32)(&D_1007A70[((u8 *)&D_80154318[nextUnit].unkC)[0] << 9]) & 0x1FFFFFFF));
+					K0_TO_PHYS(&D_1007A70[((u8 *)&D_80154318[nextUnit].unkC)[0] << 9]));
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 					G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 					G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -1777,7 +1777,7 @@ void func_800C4274_D3224(void) {
 				D_8005BB34->v.cn[3] = 0xFF;
 				D_8005BB34++;
 
-				gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+				gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 				gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 				D_80156EDA += 4;
 			}
@@ -1904,7 +1904,7 @@ void func_800C4CB8_D3C68(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, ((u32) D_100E280 & 0x1FFFFFFF));
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100E280));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -2313,7 +2313,7 @@ void func_800C5D14_D4CC4(s32 arg0) {
 					D_8005BB34->v.cn[2] = var_t4;
 					D_8005BB34->v.cn[3] = 0x14;
 				D_8005BB34++;
-				gSPVertex(D_8005BB30++, (Vtx *)((u32)(D_8005BB34 - 2) & 0x1FFFFFFF), 2, 0);
+				gSPVertex(D_8005BB30++, K0_TO_PHYS(D_8005BB34 - 2), 2, 0);
 				gSPLineW3D(D_8005BB30++, 0, 1, entry->unk2 & 0xFF, 0);
 				gDPPipeSync(D_8005BB30++);
 				var_t1 = entry->unk4;
@@ -2660,7 +2660,7 @@ void func_800C6D80_D5D30(void) {
 			}
 
 			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
-						  ((u32)&D_50474F0[((u8)linkedSub->unk6) << 9]) & 0x1FFFFFFF);
+						  K0_TO_PHYS(&D_50474F0[((u8)linkedSub->unk6) << 9]));
 			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, 4, 0,
 					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -2673,7 +2673,7 @@ void func_800C6D80_D5D30(void) {
 			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << 2), (31 << 2));
 
 			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
-						  ((u32)&D_50494F0[((u8)linkedSub->unk6) << 9]) & 0x1FFFFFFF);
+						  K0_TO_PHYS(&D_50494F0[((u8)linkedSub->unk6) << 9]));
 			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0040, 5, 0,
 					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -3273,7 +3273,7 @@ void func_800C927C_D822C(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100E080 & 0x1FFFFFFF));
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100E080));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -3517,7 +3517,7 @@ void func_800C978C_D873C(void) {
 					D_8005BB34->v.cn[3] = sub[0xA];
 					D_8005BB34++;
 
-					gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 5) & 0x1FFFFFFF), 5, 0);
+					gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
 					gSP1Quadrangle(D_8005BB2C++, 0, 1, 4, 3, 0);
 					gSP2Triangles(D_8005BB2C++, 2, 4, 1, 0, 4, 2, 3, 0);
 
@@ -3823,7 +3823,7 @@ void func_800CABC8_D9B78(s32 arg0) {
 	var_t4 = temp_a1->unk4;
 	if (*(u16 *)&temp_a1->unkE == 0 && D_80156EDA < 0x28B && D_80156ED9 != 2) {
 		gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, 0, TEXEL0, 0);
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (void *)((u32)D_100D700 & 0x1FFFFFFF));
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100D700));
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 		gDPLoadSync(D_8005BB2C++);
 		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
@@ -3900,7 +3900,7 @@ void func_800CABC8_D9B78(s32 arg0) {
 				D_8005BB34->v.cn[3] = 0;
 				D_8005BB34++;
 
-				gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+				gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 				gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 				D_80156EDA += 4;
 				var_t4 = temp_a1_2->unk4;
@@ -4032,7 +4032,7 @@ void func_800CB4F8_DA4A8(void) {
 				gDPPipeSync(D_8005BB2C++);
 				gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 				gDPPipeSync(D_8005BB2C++);
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u8 *)((u32)D_100DA00 & 0x1FFFFFFF));
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100DA00));
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -4054,7 +4054,7 @@ void func_800CB4F8_DA4A8(void) {
 				func_800DAFCC_E9F7C();
 
 				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
-							   (u8 *)((u32)&D_100BF00[entryBytes[0xA] << 9] & 0x1FFFFFFF));
+							   K0_TO_PHYS(&D_100BF00[entryBytes[0xA] << 9]));
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -4089,7 +4089,7 @@ void func_800CB4F8_DA4A8(void) {
 				gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
 				gDPPipeSync(D_8005BB2C++);
 				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1,
-							   (u8 *)(((u32 *)D_8013DC80_14CC30)[entryBytes[0xB]] & 0x1FFFFFFF));
+							   K0_TO_PHYS(D_8013DC80_14CC30[entryBytes[0xB]]));
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -4248,7 +4248,7 @@ void func_800CC090_DB040(void) {
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100BCF0 & 0x1FFFFFFF));
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100BCF0));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK,
 		G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -4339,7 +4339,7 @@ void func_800CC090_DB040(void) {
 			D_8005BB34->v.cn[3] = var_v0->unkA;
 			D_8005BB34++;
 
-			gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+			gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 			gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 
 			spC4[0] = var_v0->unk0;
@@ -4485,7 +4485,7 @@ void func_800CCD54_DBD04(void) {
 			entry = &D_80154318[index];
 
 			gDPPipeSync(D_8005BB2C++);
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)(D_100E880 + (entry->unk14 << 7)) & 0x1FFFFFFF));
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100E880 + (entry->unk14 << 7)));
 			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 			gDPLoadSync(D_8005BB2C++);
@@ -4698,7 +4698,7 @@ void func_800CD7FC_DC7AC(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100E080 & 0x1FFFFFFF));
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100E080));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -5059,7 +5059,7 @@ void func_800CE6E8_DD698(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100BD00 & 0x1FFFFFFF));
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100BD00));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -5197,7 +5197,7 @@ void func_800CE6E8_DD698(u8 arg0) {
 				vtx->v.cn[3] = 0xB4;
 
 				D_8005BB34++;
-				gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 8) & 0x1FFFFFFF), 8, 0);
+				gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 8), 8, 0);
 				gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 				gSP2Triangles(D_8005BB2C++, 4, 5, 7, 0, 7, 5, 6, 0);
 				D_80156EDA += 8;
@@ -5299,7 +5299,7 @@ void func_800CF070_DE020(void) {
 void func_800CF174_DE124(Vec3f *arg0, s32 arg1) {
 	arg1 = (u8)arg1;
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (D_8013DCF0_14CCA0[arg1] & 0x1FFFFFFF));
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_8013DCF0_14CCA0[arg1]));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -5972,7 +5972,7 @@ void func_800D10D0_E0080(void) {
 				spE8.unk4 = 0x4000 - func_80003824_4424((D_80153BA0.y * 4.0f) - (f32)((Unk80052B40 *)var_s1)->unk2, temp_f0);
 
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, var_s1[6], var_s1[7], var_s1[8], var_s1[9]);
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, ((u32)D_100B2F0 & 0x1FFFFFFF));
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100B2F0));
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -6262,7 +6262,7 @@ void func_800D1C24_E0BD4(s32 arg0) {
 					if (temp_s4 != -5) {
 						gDPPipeSync(D_8005BB2C++);
 						gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
-							(void *)((u32)(&D_100B4F0[(func_800038E0_44E0() % 4) << 9]) & 0x1FFFFFFF));
+							K0_TO_PHYS(&D_100B4F0[(func_800038E0_44E0() % 4) << 9]));
 						gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 							G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 							G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -6352,7 +6352,7 @@ void func_800D1C24_E0BD4(s32 arg0) {
 						D_8005BB34->v.cn[3] = 0xFF;
 						D_8005BB34++;
 
-						gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+						gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 						gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 2, 3, 1, 0);
 
 						D_80156EDA += 4;
@@ -6553,7 +6553,7 @@ void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	u8 *color;
 
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)(D_1007A70 + (arg6 << 9)) & 0x1FFFFFFF));
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_1007A70 + (arg6 << 9)));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK,
 			   G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -6619,7 +6619,7 @@ void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.cn[3] = color[7];
 
 	D_8005BB34++;
-	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 #else
@@ -6876,7 +6876,7 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	gDPPipeSync(D_8005BB2C++);
 
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
-		((((func_800038E0_44E0() % 4) << 9) + (s32)&D_100B4F0) & 0x1FFFFFFF));
+		K0_TO_PHYS((((func_800038E0_44E0() % 4) << 9) + (s32)&D_100B4F0)));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -7147,7 +7147,7 @@ void func_800D4C10_E3BC0(void) {
 			continue;
 		}
 
-		texAddr = ((u32)D_100DC00) & 0x1FFFFFFF;
+		texAddr = K0_TO_PHYS(D_100DC00);
 		cosVal = coss(0x4000);
 		spE4[0] = (f32)((((f64)(f32)sins(0x4000) / 32768.0) * (f64)spFC[2]) +
 			(((f64)spFC[0]) * ((f64)(f32)cosVal / 32768.0)));
@@ -7415,7 +7415,7 @@ void func_800D5AF4_E4AA4(void) {
 	curr = D_801542BE;
 
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
-		((((func_800038E0_44E0() % 8) << 9) + (u32) &D_100C700) & 0x1FFFFFFF));
+		K0_TO_PHYS((((func_800038E0_44E0() % 8) << 9) + (u32) &D_100C700)));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -7575,7 +7575,7 @@ void func_800D6290_E5240(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100BD00 & 0x1FFFFFFF));
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100BD00));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -7713,7 +7713,7 @@ void func_800D6290_E5240(u8 arg0) {
 				vtx->v.cn[3] = nextEntry->unk11;
 
 				D_8005BB34++;
-				gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 8) & 0x1FFFFFFF), 8, 0);
+				gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 8), 8, 0);
 				gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 				gSP2Triangles(D_8005BB2C++, 4, 5, 7, 0, 7, 5, 6, 0);
 				D_80156EDA += 8;
@@ -7951,7 +7951,7 @@ void func_800D7284_E6234(u8 arg0) {
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
 		gDPPipeSync(D_8005BB2C++);
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)D_100B0F0 & 0x1FFFFFFF));
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100B0F0));
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 		gDPLoadSync(D_8005BB2C++);
 		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
@@ -8087,7 +8087,7 @@ void func_800D7870_E6820(void) {
 		gDPPipeSync(D_8005BB2C++);
 		entry = &D_80154318[idx];
 
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((u32)(D_100AEF0 + (entry->unkE << 7)) & 0x1FFFFFFF));
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100AEF0 + (entry->unkE << 7)));
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -8169,7 +8169,7 @@ void func_800D7870_E6820(void) {
 		D_8005BB34->v.cn[3] = 0xFF;
 
 		D_8005BB34++;
-		gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 5) & 0x1FFFFFFF), 5, 0);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
 		gSP2Triangles(D_8005BB2C++, 0, 1, 4, 0, 4, 1, 2, 0);
 		gSP2Triangles(D_8005BB2C++, 4, 2, 3, 0, 0, 3, 4, 0);
 
@@ -8304,7 +8304,7 @@ void func_800D8190_E7140(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
-		(void *)((u32)(&D_1007A70[(func_800038E0_44E0() % 16) << 9]) & 0x1FFFFFFF));
+		K0_TO_PHYS(&D_1007A70[(func_800038E0_44E0() % 16) << 9]));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -8394,7 +8394,7 @@ void func_800D8190_E7140(void) {
 		D_8005BB34->v.cn[3] = 0xFF;
 		D_8005BB34++;
 
-		gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 3, 1, 0);
 		gDPPipeSync(D_8005BB2C++);
 
@@ -8446,7 +8446,7 @@ void func_800D8190_E7140(void) {
 		D_8005BB34->v.cn[3] = 0xFF;
 		D_8005BB34++;
 
-		gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 3, 1, 0);
 
 		x2 = entry->unk8 + (s16)(direction.x * 2.5);
@@ -8516,7 +8516,7 @@ void func_800D8190_E7140(void) {
 		D_8005BB34->v.cn[3] = 0xFF;
 		D_8005BB34++;
 
-		gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 5) & 0x1FFFFFFF), 5, 0);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
 		gSP1Triangle(D_8005BB2C++, 4, 0, 1, 0);
 		gSP1Triangle(D_8005BB2C++, 4, 0, 2, 0);
 		gSP1Triangle(D_8005BB2C++, 4, 2, 3, 0);
@@ -8588,7 +8588,7 @@ void func_800D9294_E8244(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xF0, 0xF5, 0xFF, 0xFF);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, ((u32)D_100ACF0 & 0x1FFFFFFF));
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100ACF0));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
 	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 2048);
@@ -9396,7 +9396,7 @@ void func_800DAFCC_E9F7C(void) {
 	D_8005BB34->v.cn[3] = D_80153BCC;
 
 	D_8005BB34++;
-	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
@@ -9466,7 +9466,7 @@ void func_800DB350_EA300(void) {
 	D_8005BB34->v.cn[3] = D_80153BCC;
 
 	D_8005BB34++;
-	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
@@ -9519,7 +9519,7 @@ void func_800DB714_EA6C4(void) {
 	D_8005BB34->v.cn[3] = D_80153BCC;
 
 	D_8005BB34++;
-	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
@@ -9574,7 +9574,7 @@ void func_800DBA9C_EAA4C(void) {
 	D_8005BB34->v.cn[3] = D_80153BCC;
 
 	D_8005BB34++;
-	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 #else
@@ -9761,7 +9761,7 @@ void func_800DC18C_EB13C(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 	D_8005BB34->v.cn[3] = arg4;
 
 	D_8005BB34++;
-	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 5) & 0x1FFFFFFF), 5, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 4, 0, 4, 1, 2, 0);
 	gSP2Triangles(D_8005BB2C++, 4, 2, 3, 0, 0, 3, 4, 0);
 }
@@ -10346,7 +10346,7 @@ void func_800DE2E8_ED298(void) {
 					gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
 					gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
 					gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
-						(void *)((((u32 *)D_8013E0C0_14D070)[type] + (texOffset / 2)) & 0x1FFFFFFF));
+						K0_TO_PHYS(D_8013E0C0_14D070[type] + (texOffset / 2)));
 					gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 						G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 						G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -10376,7 +10376,7 @@ void func_800DE2E8_ED298(void) {
 					texOffset = (cfg[7] * entry->unkE) * cfg[6];
 					gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0);
 					gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1,
-						(void *)((((u32 *)D_8013E0C0_14D070)[type] + texOffset) & 0x1FFFFFFF));
+						K0_TO_PHYS(D_8013E0C0_14D070[type] + texOffset));
 					gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 						G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 						G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -11549,7 +11549,7 @@ void func_800E2ED4_F1E84(void) {
 		func_800E2DB4_F1D64();
 
 		if (D_80154080 < 0) {
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u32)(&D_100E480[(-D_80154080) * 0x80]) & 0x1FFFFFFF);
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_100E480[(-D_80154080) * 0x80]));
 			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_MIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 			gDPLoadSync(D_8005BB2C++);
 			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 2048);
@@ -11558,7 +11558,7 @@ void func_800E2ED4_F1E84(void) {
 			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
 			scroll = 0x200;
 		} else {
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u32)(&D_100E480[D_80154080 * 0x80]) & 0x1FFFFFFF);
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_100E480[D_80154080 * 0x80]));
 			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_MIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 			gDPLoadSync(D_8005BB2C++);
 			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 2048);
@@ -11607,7 +11607,7 @@ void func_800E32C4_F2274(void) {
 	if (D_801493CC == 0) {
 		func_800E2DB4_F1D64();
 
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u32) D_100AD70 & 0x1FFFFFFF);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100AD70));
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_MIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 		gDPLoadSync(D_8005BB2C++);
 		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 2048);
@@ -12016,7 +12016,7 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADING_SMOOTH);
 	gDPPipeSync(D_8005BB2C++);
-	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 6) & 0x1FFFFFFF), 6, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 6), 6, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 4, 2, 0, 0, 1, 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 3, 1, 0, 3, 5, 1, 0);
 
@@ -13005,12 +13005,12 @@ void func_800E6A38_F59E8(void) {
 
 // displayFXUnderWater
 void func_800E71F8_F61A8(void) {
-	gSPMatrix(D_8005BB2C++, (Mtx *)((u32) &D_80031160 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 }
 
 // displayFXOnWater - Ripples, splashes etc
 void func_800E7234_F61E4(void) {
-	gSPMatrix(D_8005BB2C++, (Mtx *)((u32) &D_80031160 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	func_800DD604_EC5B4(&D_8005BB2C);
 	func_800E6A38_F59E8();
 	func_800CFD84_DED34();
@@ -13125,7 +13125,7 @@ void func_800E77B4_F6764(void) {
 void func_800E7894_F6844(s16 arg0, s16 arg1, s16 arg2) {
 	func_800E7660_F6610();
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (((func_800038E0_44E0() % 8) << 9) + (s32)&D_100C700) & 0x1FFFFFFF);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(((func_800038E0_44E0() % 8) << 9) + (s32)&D_100C700));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
 	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);

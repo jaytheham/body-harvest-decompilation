@@ -3516,7 +3516,7 @@ void func_800B9DB8_C8D68(u8 arg0)
   gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);  // enable texturing
   gDPSetTextureLUT(D_8005BB2C++, 2 << 14);    // enable CI texture lookup
   gSPSetGeometryMode(D_8005BB2C++, (0x00002000 | 0x00020000) | 0x00000200);  // enable Z-buf, lighting, culling
-  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, (u8 *) (((u32) (&D_80254E80)) & 0x1FFFFFFF));  // load TLUT palette
+  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_80254E80));  // load TLUT palette
   gDPTileSync(D_8005BB2C++);
   gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_4b, 0, 0x0100, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
   gDPLoadSync(D_8005BB2C++);
@@ -3561,7 +3561,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 	  t2 = sp60 + s2;                     // pointer to tile map entry
 	  s1 = (*t2);                         // read tile byte
 	  // Load the texture palette for this tile (low nibble selects palette)
-	  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, ((u32) (&D_80254E80[(s1 & 0xF) * 512])) & 0x1FFFFFFF);
+	  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_80254E80[(s1 & 0xF) * 512]));
 	  gDPTileSync(D_8005BB2C++);
 	  gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_4b, 0, 0x0100, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
 	  gDPLoadSync(D_8005BB2C++);
@@ -4534,7 +4534,7 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 		D_8005BB34++;
 	}
 
-	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 0x15) & 0x1FFFFFFF), 21, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 0x15), 21, 0);
 	for (i = 1; i < 10; i++) {
 		gSP1Triangle(D_8005BB2C++, i, i + 1, 0, 0);
 	}
@@ -4551,7 +4551,7 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	func_800039D0_45D0(NULL, (Unk80052B40 *)&spD8, NULL, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-	gSPVertex(D_8005BB2C++, (Vtx *)((u32)(D_8005BB34 - 0x15) & 0x1FFFFFFF), 21, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 0x15), 21, 0);
 	for (i = 1; i < 10; i++) {
 		gSP1Triangle(D_8005BB2C++, i, i + 1, 0, 0);
 	}

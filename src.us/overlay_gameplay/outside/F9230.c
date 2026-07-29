@@ -2312,11 +2312,11 @@ void func_800EF14C_FE0FC(VehicleInstance *arg0) {
 		}
 
 		if (D_80052ACD & 2) {
-			gSPDisplayList(D_8005BB2C++, (Gfx *)((s32)&D_50408F0 & 0x1FFFFFFF));
+			gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(&D_50408F0));
 			return;
 		}
 
-		gSPDisplayList(D_8005BB2C++, (Gfx *)((s32)&D_10031E0 & 0x1FFFFFFF));
+		gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(&D_10031E0));
 	}
 }
 #else
