@@ -251,7 +251,7 @@ s32 func_8000E53C_F13C(void) {
 	spA0 = sinf(D_80037654_38254);
 	guLookAt(D_8005BB38, 0.0f, 0.0f, (f32) __osCurrentTime / ((spA0 / cosf(D_80037658_38258)) * 2.0f), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-	gSPMatrix(D_8005BB2C++, (Mtx *) ((u32) &D_80031120_31D20 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_80031120_31D20), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	spFC.unk0 = 0;
 	var_t0 = 0x14 - (__osCurrentTime % 0x14);
@@ -378,7 +378,7 @@ s32 func_8000E53C_F13C(void) {
 			gDPPipeSync(D_8005BB2C++);
 			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, ((((var_t3 - sp114) + 1) * 2) + 7) >> 3, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, sp114 << 2, sp6C >> 2, var_t3 << 2, sp108 << 2);
-			gSPVertex(D_8005BB2C++, (Vtx *) ((u32) temp_s4 & 0x1FFFFFFF), 4, 0);
+			gSPVertex(D_8005BB2C++, K0_TO_PHYS(temp_s4), 4, 0);
 			gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 2, 3, 0);
 
 			sp68 += sp98;
