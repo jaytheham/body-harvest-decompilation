@@ -969,7 +969,7 @@ void func_800A7C6C_B6C1C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A7C6C_B6C1C.s")
 #endif
 
-// CURRENT(2436)
+// CURRENT(2696)
 #ifdef NON_MATCHING
 // Actually powerups not beacons?
 // AI - Update beacon particle effects
@@ -984,8 +984,9 @@ void func_800A854C_B74FC(void)
   s16 sp88;f32 distCopy;s16 sp78;f32 dist;
   s16 yLimit;
   s32 i;
-		s32 lod;
-	
+  s32 lod;
+  s32 *groundLevel = &D_80222A70;
+  
   for (i = 0x10; i--;)
   {
 	if (D_8014F6D0[i].unkC != -1)
@@ -994,18 +995,18 @@ void func_800A854C_B74FC(void)
 	  D_8014F6D0[i].unk4 += D_8014F6D0[i].unkA;
 	  D_8014F6D0[i].unk2 += D_8014F6D0[i].unk8;
 	  func_800F9D60_108D10(D_8014F6D0[i].unk0, D_8014F6D0[i].unk4, &sp8C, &sp8A, &sp88);
-	  yLimit =(sp88 < sp8C)? sp8C: sp88;
+	  yLimit = (sp88 < sp8C) ? sp8C : sp88;
 	  
-	  if ((currentLevel != 4 || D_80047F94 != 2) && yLimit < D_80222A70)
+	  if ((currentLevel != 4 || D_80047F94 != 2) && yLimit < *groundLevel)
 	  {
-		yLimit = D_80222A70;
+		yLimit = *groundLevel;
 	  }
 	  if (D_8014F6D0[i].unk2 < yLimit)
 	  {
 		D_8014F6D0[i].unk8 = 0;
-		  D_8014F6D0[i].unk2 = yLimit;
+		D_8014F6D0[i].unk2 = yLimit;
 		
-		if (D_80222A70 < D_8014F6D0[i].unk2)
+		if (*groundLevel < D_8014F6D0[i].unk2)
 		{
 		  if (sp8C < sp88)
 		  {
@@ -1038,7 +1039,7 @@ void func_800A854C_B74FC(void)
 	  else
 	  {
 		D_8014F6D0[i].unk6 -= (D_8014F6D0[i].unk6 >> 2);
-		if (D_80222A70 < D_8014F6D0[i].unk2)
+		if (*groundLevel < D_8014F6D0[i].unk2)
 		{
 		  D_8014F6D0[i].unk8 -= 3;
 		}
@@ -1048,31 +1049,30 @@ void func_800A854C_B74FC(void)
 	  deltaZ = (D_80052B34->unk4 - D_8014F6D0[i].unk4);
 	  dist = sqrtf((deltaX * deltaX) + (deltaZ * deltaZ));
 	  distCopy = dist;
-	  sp78 =(D_80052B34->unk1A == 0)? 0x12C:0x96;
+	  sp78 = (D_80052B34->unk1A == 0) ? 0x96 : 0x12C;
 	  
-	  if (((dist < ((f32) (vehicleSpecs[D_80052B34->unk1A].unkC + sp78))) && (0.0f < dist)) && (yLimit == D_8014F6D0[i].unk2))
+	  if (((dist < (f32)(vehicleSpecs[D_80052B34->unk1A].unkC + sp78)) && (0.0f < dist)) && (yLimit == D_8014F6D0[i].unk2))
 	  {
 		
 		if (D_80052B34->unk2 == (func_800B84D0_C7480(D_80052B34->unk0, D_80052B34->unk4) >> 8))
 		{
-		  accel = (((vehicleSpecs[D_80052B34->unk1A].unkC + sp78) - ((s16) distCopy)) >> 2);
-		  D_8014F6D0[i].unk6 = ((((f32) accel) * deltaX) / distCopy);
-		  D_8014F6D0[i].unkA = ((((f32) accel) * deltaZ) / distCopy);
+		  accel = (((vehicleSpecs[D_80052B34->unk1A].unkC + sp78) - (s16)distCopy) >> 2);
+		  D_8014F6D0[i].unk6 = (((f32)accel) * deltaX) / distCopy;
+		  D_8014F6D0[i].unkA = (((f32)accel) * deltaZ) / distCopy;
 		}
 	  }
 	  
 		
-		alpha =(D_8014F6D0[i].unkE < 0x10)? (D_8014F6D0[i].unkE * 4) : 0x40;
-		  
-		lod =(D_8014F6D0[i].unkE < 0x64)? (D_8014F6D0[i].unkE / 0x32) + 1:0;
-		
-		func_800CB23C_DA1EC((s16) (D_8014F6D0[i].unk0 >> 2), (s16) (D_8014F6D0[i].unk2 >> 2), (s16) (D_8014F6D0[i].unk4 >> 2), alpha, D_8014F6D0[i].unk10, lod);
+	  alpha = (D_8014F6D0[i].unkE < 0x10) ? (D_8014F6D0[i].unkE * 4) : 0x40;
+	  lod = (D_8014F6D0[i].unkE < 0x64) ? (D_8014F6D0[i].unkE / 0x32) + 1 : 0;
 	  
-	  if ((D_8014F6D0[i].unkC != 9) && ((u32)D_8014F6D0[i].unkE-- <=0))
-		{
-		  func_800CBD1C_DACCC(D_8014F6D0[i].unk10);
-		  D_8014F6D0[i].unkC = -1;
-		}
+	  func_800CB23C_DA1EC((s16)(D_8014F6D0[i].unk0 >> 2), (s16)(D_8014F6D0[i].unk2 >> 2), (s16)(D_8014F6D0[i].unk4 >> 2), alpha, D_8014F6D0[i].unk10, lod);
+	  
+	  if ((D_8014F6D0[i].unkC != 9) && ((u32)D_8014F6D0[i].unkE-- <= 0))
+	  {
+		func_800CBD1C_DACCC(D_8014F6D0[i].unk10);
+		D_8014F6D0[i].unkC = -1;
+	  }
 	}
   }
   
