@@ -153,10 +153,10 @@ void func_800A931C_B82CC(s8 arg0, s16 *arg1, s32 *arg2) {
 	arg2[2] += D_8014DD50[(s32)arg0].unk4;
 }
 
-/* CURRENT(2517) */
+/* CURRENT(1050) */
 #ifdef NON_MATCHING
 // AI - Position child relative to parent with rotation
-void func_800A93A4_B8354(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_800A93A4_B8354(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	AlienInstance *inst;
 	AlienInstance *parent;
 	s32 pad0;
@@ -184,12 +184,13 @@ void func_800A93A4_B8354(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	inst->unk0 = parent->unk0;
 	inst->unk2 = parent->unk2;
 	inst->unk4 = parent->unk4;
-	inst->unk6 = parent->unk6;
-	inst->unk8 = parent->unk8;
-	inst->unkA = parent->unkA;
+	inst->unk6 = rotX;
+	inst->unk8 = rotY;
+	inst->unkA = rotZ;
 	inst->unkE = parent->unkE;
 
 	cosVal = coss((u16)rotZ);
+
 	sinVal = sins((u16)rotZ);
 	offA = (s16)(s32)((arg2 * ((f32)cosVal / 32768.0)) - (((f32)sinVal / 32768.0) * arg3));
 
