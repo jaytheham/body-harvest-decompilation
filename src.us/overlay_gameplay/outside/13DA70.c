@@ -182,7 +182,7 @@ s32 func_8012EC3C_13DBEC(u8 ch)
 	}
 	if (ch == 0xE9)
 	{
-		gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, ((u32)D_505A0A0) & 0x1FFFFFFF);
+		gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_505A0A0));
 		gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
 		gDPLoadSync(D_8005BB2C++);
 		gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
@@ -193,7 +193,7 @@ s32 func_8012EC3C_13DBEC(u8 ch)
 	}
 	else if (ch == 0xE8)
 	{
-		gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, ((u32)D_505A2A0) & 0x1FFFFFFF);
+		gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_505A2A0));
 		gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
 		gDPLoadSync(D_8005BB2C++);
 		gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
@@ -204,7 +204,7 @@ s32 func_8012EC3C_13DBEC(u8 ch)
 	}
 	else if (ch == 0x26)
 	{
-		gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, ((u32)D_5059EA0) & 0x1FFFFFFF);
+		gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_5059EA0));
 		gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
 		gDPLoadSync(D_8005BB2C++);
 		gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
@@ -215,7 +215,7 @@ s32 func_8012EC3C_13DBEC(u8 ch)
 	}
 	else if (ch == 0x3A)
 	{
-		gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, ((u32)D_505A4A0) & 0x1FFFFFFF);
+		gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_505A4A0));
 		gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
 		gDPLoadSync(D_8005BB2C++);
 		gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
@@ -238,7 +238,7 @@ s32 func_8012EC3C_13DBEC(u8 ch)
 		texture = &D_80140BC8_14FB78[index];
 		if ((*texture) != 0)
 		{
-			gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, (*texture) & 0x1FFFFFFF);
+			gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, K0_TO_PHYS(*texture));
 			gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
 			gDPLoadSync(D_8005BB2C++);
 			gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
@@ -256,7 +256,7 @@ s32 func_8012EC3C_13DBEC(u8 ch)
 		texture = &D_80140BA0_14FB50[index];
 		if ((*texture) != 0)
 		{
-			gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, (*texture) & 0x1FFFFFFF);
+			gDPSetTextureImage(D_8005BB2C++, 3, G_IM_SIZ_16b, 1, K0_TO_PHYS(*texture));
 			gDPSetTile(D_8005BB2C++, 3, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
 			gDPLoadSync(D_8005BB2C++);
 			gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
@@ -1289,7 +1289,7 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 				D_800311A0.unk0 = (s16) ((f64) D_800311A0.unk0 * 2.5);
 				D_800311A0.unk2 = (s16) ((f64) D_800311A0.unk2 * -2.5);
 				D_800311A0.unk4 = (s16) ((f64) D_800311A0.unk4 * 2.5);
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 16, (((D_80052A8C % 7U) << 9) + (u32) D_503CF60) & 0x1FFFFFFF);
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 16, K0_TO_PHYS(((D_80052A8C % 7U) << 9) + (u32) D_503CF60));
 
 				func_800039D0_45D0((Unk80052B40 *) &posX, (Unk80052B40 *) &resultX, (Unk80052B40 *) &D_800311A0, D_8005BB38);
 

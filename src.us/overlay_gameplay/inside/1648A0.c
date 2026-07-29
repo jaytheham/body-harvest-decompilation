@@ -912,7 +912,7 @@ void func_8007EB1C_166BDC(void *arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 2, 0x050, 0, 0, G_TX_WRAP, 5, G_TX_NOLOD, G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, 0, 0, 0, qu102(31), qu102(31));
-	gSPVertex(D_8005BB2C++, (Vtx *)((s32)(D_8005BB34 - 0x40) & 0x1FFFFFFF), 4, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 0x40), 4, 0);
 	gSP1Quadrangle(D_8005BB2C++, 0, 1, 2, 3, 0);
 	gDPPipeSync(D_8005BB2C++);
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
@@ -977,7 +977,7 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 	*(u32*)&sp6C[0xC] = *(u32*)&D_800A0944[0xC];
 	*(u32*)&sp6C[0x14] = *(u32*)&D_800A0944[0x14];
 	*(u32*)&sp6C[0x10] = *(u32*)&D_800A0944[0x10];
-	gSPMatrix(D_8005BB2C++, (Mtx *)((s32)&D_80031160 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, &D_80031200);
 	if (((u8*)D_80052B34)[0x20] & 0x2000) {
 		gDPSetFogColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -1067,7 +1067,7 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 		}
 		break;
 	}
-	gSPDisplayList(D_8005BB2C++, (Gfx *)((s32)&D_10031E0 & 0x1FFFFFFF));
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(&D_10031E0));
 	gSPDisplayList(D_8005BB2C++, &D_80031230);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
@@ -1076,7 +1076,7 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 	if (temp_t2 & 0x2000) {
 		*(u16*)&((u8*)D_80052B34)[0x20] = (u16) (temp_t2 & 0xDFFF);
 	}
-	gSPMatrix(D_8005BB2C++, (Mtx *)((s32)&D_80031120 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031120), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007EFD4_167094.s")
@@ -1216,7 +1216,7 @@ void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	temp_t1 = (sp4B * 0xD0) + (sp4A * 0x10) + &D_8009E4C8_186588;
 	sp20 = temp_t1;
 	func_8000CC3C_D83C(&D_800E6AD8, temp_t1->unkC);
-	gSPDisplayList(D_8005BB2C++, (Gfx *)(temp_t1->unk0 & 0x1FFFFFFF));
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(temp_t1->unk0));
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }

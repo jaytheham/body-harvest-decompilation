@@ -1832,7 +1832,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_PASS2);
 	gDPPipeSync(D_8005BB2C++);
-	gSPVertex(D_8005BB2C++, (u32)(D_8005BB34 - 14) & 0x1FFFFFFF, 14, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 14), 14, 0);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_1014080);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -2184,7 +2184,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_PASS2);
 	gDPPipeSync(D_8005BB2C++);
-	gSPVertex(D_8005BB2C++, (u32)((s32)(D_8005BB34 - 0x13) & 0x1FFFFFFF), 19, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 0x13), 19, 0);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_1014880);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -2436,7 +2436,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 4, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 15, 15);
-	gSPVertex(D_8005BB2C++, (u32)(D_8005BB34 - 10) & 0x1FFFFFFF, 10, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 10), 10, 0);
 	gSP1Triangle(D_8005BB2C++, 1, 3, 0, 0);
 	gSP1Triangle(D_8005BB2C++, 3, 2, 0, 0);
 	gSP1Triangle(D_8005BB2C++, 2, 1, 0, 0);
@@ -2928,7 +2928,7 @@ void func_800F98C0_108870(void) {
 	gDPSetCombineLERP(D_8005BB2C++, TEXEL0, 0, SHADE, 0, 0, TEXEL0, SHADE, TEXEL0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C0, 0x7C0);
 	gSPTexture(D_8005BB2C++, 0x07C0, 0, 0, G_TX_RENDERTILE, G_ON);
-	textureAddr = (u32)D_5047470 & 0x1FFFFFFF;
+	textureAddr = K0_TO_PHYS(D_5047470);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, textureAddr);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 		   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
@@ -3959,7 +3959,7 @@ void func_800FC434_10B3E4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	vtx2->v.ob[1] = arg4;
 	vtx2->v.ob[2] = arg5;
 
-	gSPVertex(D_8005BB2C++, (u32)(D_8005BB34 - 3) & 0x1FFFFFFF, 3, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 3), 3, 0);
 	gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 }
 
@@ -4000,7 +4000,7 @@ void func_800FC568_10B518(void) {
 	} while (j);
 
 	gDPPipeSync(D_8005BB30++);
-	gSPVertex(D_8005BB30++, (u32)startVtx & 0x1FFFFFFF, 12, 0);
+	gSPVertex(D_8005BB30++, K0_TO_PHYS(startVtx), 12, 0);
 	gSPLine3D(D_8005BB30++, 0, 1, 0);
 	gSPLine3D(D_8005BB30++, 1, 2, 0);
 	gSPLine3D(D_8005BB30++, 2, 3, 0);
@@ -5319,7 +5319,7 @@ void func_801001B4_10F164(void) {
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
-	gSPMatrix(D_8005BB2C++, (u32)&D_80031160 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	xPtr = &D_80159328[31];
 	yPtr = &D_80159368[31];
@@ -5376,7 +5376,7 @@ void func_801001B4_10F164(void) {
 			D_8005BB34->v.cn[3] = 0xFF;
 			D_8005BB34++;
 
-			gSPVertex(D_8005BB2C++, (u32)(D_8005BB34 - 5) & 0x1FFFFFFF, 5, 0);
+			gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
 			gDPPipeSync(D_8005BB2C++);
 			gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 0, 3, 4, 0);
 			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
@@ -5555,7 +5555,7 @@ void func_8010065C_10F60C(s32 arg0) {
 				D_8005BB34++;
 
 				gDPPipeSync(D_8005BB30++);
-				gSPVertex(D_8005BB30++, (u32)(D_8005BB34 - 2) & 0x1FFFFFFF, 2, 0);
+				gSPVertex(D_8005BB30++, K0_TO_PHYS(D_8005BB34 - 2), 2, 0);
 				gDPSetTextureLUT(D_8005BB30++, G_TT_NONE);
 				gDPPipeSync(D_8005BB30++);
 
@@ -5911,7 +5911,7 @@ void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	D_80052B50.unk4 = temp;
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, sp40);
 
-	gSPMatrix(D_8005BB2C++, sp40 & 0x1FFFFFFF, G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(sp40), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, spec->modelDL);
 
 	if (loops != 0) {

@@ -1660,7 +1660,7 @@ void func_8007C044_8AFF4(void) {
 		}
 	}
 
-	gSPMatrix(D_8005BB2C++, (Mtx *)((u32)&D_80031160 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	if (drewType1 != 0) {
 		gDPPipeSync(D_8005BB2C++);

@@ -55,7 +55,7 @@ void func_8008BB6C_173C2C(s32 arg0, s32 arg1) {
 	sp0 = arg0 &= 0xFF;
 	arg1 &= 0xFF;
 
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (void *)((D_1009C70 + (arg1 << 7)) & 0x1FFFFFFF));
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_1009C70 + (arg1 << 7)));
 
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
 		G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
@@ -299,7 +299,7 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 
 		gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK);
 
-		gSPVertex(D_8005BB2C++, (Vtx *)((D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 
 		gDPPipeSync(D_8005BB2C++);
 
@@ -384,7 +384,7 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 
 		gDPSetCombineLERP(D_8005BB2C++, TEXEL0, 0, SHADE, 1, 0, PRIMITIVE, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0);
 
-		gSPVertex(D_8005BB2C++, (Vtx *)((D_8005BB34 - 4) & 0x1FFFFFFF), 4, 0);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 3, 1, 2, 0);
 

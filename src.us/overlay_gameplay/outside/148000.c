@@ -595,7 +595,7 @@ void func_8013A1CC_14917C(void) {
 // CURRENT (16)
 #ifdef NON_MATCHING
 void func_8013A218_1491C8(s16 arg0, s16 arg1, u8 arg2) {
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, ((u32)&D_1009C70[arg2 << 7]) & 0x1FFFFFFF);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_1009C70[arg2 << 7]));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);

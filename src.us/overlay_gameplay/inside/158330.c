@@ -3134,7 +3134,7 @@ void func_800773F4_15F4B4(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16
 	sp30[2] = arg9;
 	func_80076C08_15ECC8(sp24, sp38, sp30, arg7);
 
-	gSPMatrix(D_8005BB2C++, (Mtx *)(arg7 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(arg7), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, arg0);
 	if (arg8 != 0) {
 		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);

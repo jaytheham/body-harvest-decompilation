@@ -1065,7 +1065,7 @@ void func_80124D60_133D10(void) {
 				gSPLine3D(D_8005BB30++, 2, 3, 0);
 				gSPLine3D(D_8005BB30++, 0, 1, 0);
 
-				gSPDisplayList(D_8005BB30++, sparkDLs[sparkType] & 0x1FFFFFFF);
+				gSPDisplayList(D_8005BB30++, K0_TO_PHYS(sparkDLs[sparkType]));
 			} else if (sparkType != 0) {
 				if ((*(s32 *)(weaponEntry + 8) & 0x01000000) == 0) {
 					D_80052B40.unk0 = (s16)(s32)bullet->unk0 >> 2;

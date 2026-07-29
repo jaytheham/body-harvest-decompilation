@@ -259,7 +259,7 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	vtx1->unkA = 0;
 
 	vtx2 = D_8005BB34;
-	vtx0Addr = (u32)vtx0 & 0x1FFFFFFF;
+	vtx0Addr = K0_TO_PHYS(vtx0);
 	vtx2->unk0 = arg0;
 	D_8005BB34++;
 	vtx2->unk2 = arg1;
@@ -546,7 +546,7 @@ void func_800966EC_A569C(s16 *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
-	gSPVertex(D_8005BB2C++, (Vtx *) ((u32) vtx0 & 0x1FFFFFFF), 4, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(vtx0), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 1, 3, 0);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
@@ -694,7 +694,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			v3->padF = 0;
 			v1->padF = 0;
 
-			gSPVertex(D_8005BB2C++, (Vtx *) ((u32) v0 & 0x1FFFFFFF), 4, 0);
+			gSPVertex(D_8005BB2C++, K0_TO_PHYS(v0), 4, 0);
 			gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 3, 1, 2, 0);
 		}
 		tile++;
@@ -777,7 +777,7 @@ void func_800970C0_A6070(void)
 	  gDPPipeSync(D_8005BB2C++);
 	  gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_16b, 8, 0, 0, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
 	  gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 0x7C, 0x7C);
-	  gSPVertex(D_8005BB2C++, (Vtx *) (((u32) vtx0) & 0x1FFFFFFF), 4, 0);
+	  gSPVertex(D_8005BB2C++, K0_TO_PHYS(vtx0), 4, 0);
 	  gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 	  gSP1Triangle(D_8005BB2C++, 2, 1, 3, 0);
 	}
@@ -820,7 +820,6 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 	base.unk0 = 0;
 	base.unk2 = arg0 + 0x4000;
 	base.unk4 = arg1;
-	addrMask = 0x1FFFFFFF;
 
 	for (row = 0; row < 9; row++) {
 		if (row == 0) {
@@ -840,7 +839,7 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 
 			func_800039D0_45D0(&pos, &base, NULL, D_8005BB38);
 
-			gSPMatrix(D_8005BB2C++, D_8005BB38 & addrMask, G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 			vtx0 = D_8005BB34;
 			D_8005BB34 = (Vtx *) (vtx0 + 1);
@@ -876,10 +875,10 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 
 			if (row == 0) {
 				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1,
-								   ((u32 *) D_8013D4CC_14C47C)[col] & addrMask);
+								   K0_TO_PHYS(((u32 *) D_8013D4CC_14C47C)[col]));
 			} else {
 				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1,
-								   ((u32 *) D_8013D4E8_14C498)[row] & addrMask);
+								   K0_TO_PHYS(((u32 *) D_8013D4E8_14C498)[row]));
 			}
 
 			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
@@ -893,7 +892,7 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
 
-			gSPVertex(D_8005BB2C++, (Vtx *) ((u32) vtx0 & addrMask), 4, 0);
+			gSPVertex(D_8005BB2C++, K0_TO_PHYS(vtx0), 4, 0);
 			gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 			gSP1Triangle(D_8005BB2C++, 2, 1, 3, 0);
 			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
@@ -1683,7 +1682,7 @@ block_100:
 	}
 	func_800050C4_5CC4();
 	if (sp31C < 0x32) {
-		gSPDisplayList(D_8005BB2C++, (s32) D_800311A8 & 0x1FFFFFFF);
+		gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_800311A8));
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 		gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, (u32) &D_3DA800);

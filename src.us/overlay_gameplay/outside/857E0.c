@@ -507,7 +507,7 @@ void func_8007764C_865FC(void) {
 		func_80076A10_859C0(0x18, (s16) (D_8014D2F0 + 4), (s16) (D_8014D2F4 + 4));
 	}
 
-	gSPMatrix(D_8005BB2C++, (u32)&D_80031160 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 	gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
@@ -541,8 +541,8 @@ void func_8007764C_865FC(void) {
 					}
 				}
 
-				gSPMatrix(D_8005BB2C++, (u32)&D_80031160 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-				gSPMatrix(D_8005BB2C++, (u32)&obj->unk10 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&obj->unk10), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				gSPDisplayList(D_8005BB2C++, obj->unk8);
 			}
 		}
@@ -576,7 +576,7 @@ void func_8007764C_865FC(void) {
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 5, G_TX_RENDERTILE, G_ON);
 
-	gSPMatrix(D_8005BB2C++, (u32)&D_80031160 & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	prevType = -1;
 	obj = (Unk857E0Obj*) D_80259D90;
@@ -628,7 +628,7 @@ void func_8007764C_865FC(void) {
 					prevType = obj->unk0;
 				}
 
-				gSPVertex(D_8005BB2C++, (u32)&obj->unk10 & 0x1FFFFFFF, 4, 0);
+				gSPVertex(D_8005BB2C++, K0_TO_PHYS(&obj->unk10), 4, 0);
 
 				gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 2, 3, 0);
 			}

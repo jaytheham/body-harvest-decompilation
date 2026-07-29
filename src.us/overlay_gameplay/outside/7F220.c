@@ -362,7 +362,7 @@ void func_80070BFC_7FBAC(void) {
 
 // drawSky?
 void func_80070CC0_7FC70(void) {
-	gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)D_800311A8 & 0x1FFFFFFF));
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_800311A8));
 	func_80004F64_5B64();
 	func_800069FC_75FC();
 
@@ -383,7 +383,7 @@ void func_80070CC0_7FC70(void) {
 		gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 0, 0, D_80068084, D_80068088);
 	}
 
-	gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)D_800311D0 & 0x1FFFFFFF));
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_800311D0));
 }
 
 // Set world fog
@@ -443,10 +443,9 @@ void func_80071228_801D8(void) {
 	u32 matrixBase;
 	func_800E8890_F7840();
 
-	segAddr31160 = ((u32)&D_80031160) & 0x1FFFFFFF;
 	savedDl31200 = D_80031200;
 
-	gSPMatrix(D_8005BB2C++, segAddr31160, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 	gSPDisplayList(D_8005BB2C++, savedDl31200);
 
@@ -768,7 +767,7 @@ void func_80071228_801D8(void) {
 	}
 
 /* load viewport */
-		gSPViewport(D_8005BB2C++, ((u32) D_8005BB24) & 0x1FFFFFFF);
+		gSPViewport(D_8005BB2C++, K0_TO_PHYS(D_8005BB24));
 
 	guPerspective((void*) (D_8005BB20 + 0x140), &D_801493D6, (f32) D_80149404, 1.3333334f, 10.0f, D_801411A4, 1.0f);
 
@@ -781,10 +780,10 @@ void func_80071228_801D8(void) {
 	matrixBase = (u32) D_8005BB20;
 
 /* load projection matrix */
-		gSPMatrix(D_8005BB2C++, (matrixBase + 0x140) & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(matrixBase + 0x140), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
 /* multiply projection matrix */
-		gSPMatrix(D_8005BB2C++, (matrixBase + 0x200) & 0x1FFFFFFF, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(matrixBase + 0x200), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 
 	func_800A03FC_AF3AC();
 
@@ -1136,7 +1135,7 @@ s32 exitFlag;
 	{
 	  gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 0, 0, D_80068084, D_80068088);
 	}
-	gDPSetColorImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 320, D_8005BB48[D_80031B84_32784] & 0x1FFFFFFF);
+	gDPSetColorImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 320, K0_TO_PHYS(D_8005BB48[D_80031B84_32784]));
 	gSPDisplayList(D_8005BB2C++, D_800311D0);
 	gSPDisplayList(D_8005BB2C++, D_80031200);
 	func_80070FB8_7FF68();
@@ -1144,10 +1143,10 @@ s32 exitFlag;
 	gDPSetRenderMode(D_8005BB2C++, (((3 << 30) | (2 << 26)) | (0 << 22)) | (0 << 18), ((((((((((0x8 | 0x10) | 0x40) | 0) | 0x1000) | 0x2000) | 0x4000) | 0x800) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (0 << 16));
 	guPerspective((Mtx *)(D_8005BB20 + 0x180), &D_801493D6, D_80149404, 1.3333334f, D_80157574, D_80157576, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, D_801493D6);
-	gSPMatrix(D_8005BB2C++, ((u32) D_8005BB20 + 0x180) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_PROJECTION);
-	gSPMatrix(D_8005BB2C++, ((u32) D_8005BB20 + 0x200) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_PROJECTION);
-	gSPMatrix(D_8005BB2C++, (u32)&D_80031160 & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
-	gSPBranchList(D_8005BB2C++, ((u32) D_8005BB20 + 0xE380) & 0x1FFFFFFF);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB20 + 0x180), (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_PROJECTION);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB20 + 0x200), (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_PROJECTION);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
+	gSPBranchList(D_8005BB2C++, K0_TO_PHYS(D_8005BB20 + 0xE380));
 	gDPFullSync(D_8005BB30++);
 	gSPEndDisplayList(D_8005BB30++);
 	D_80052ACB = 0;
