@@ -2,20 +2,14 @@
 #include "common.h"
 #include "constData.h"
 
-/* Error message for shield wall clipping failure */
-const char D_80142D10_151CC0[] = "ERROR in ClipLineToShieldWalls\n";
-/* Overflow message for road tile draw buffer (low index) */
-const char D_80142D30_151CE0[] = "Road entry overflow : Contact John W.\n";
-/* Overflow message for road tile draw buffer (high index) */
-const char D_80142D58_151D08[] = "Road entry overflow : Contact John W.\n";
-/* Debug: crater creation message */
-const char D_80142D80_151D30[] = "Create crater %d\n";
-/* Warning: land ring effect out of storage */
-const char D_80142D94_151D44[] = "WARNING : Cannot create new land ring effect - out of storage space - blame it on Westy.\n";
-/* Debug format for tile coordinates */
-const char D_80142DF0_151DA0[] = "%d,%d : %d\n";
-/* Debug: opening gate message */
-const char D_80142DFC_151DAC[] = "try to open gate: %d\n";
+const char D_80142D10_151CC0[] = "ERROR in ClipLineToShieldWalls\n"; // "ERROR in ClipLineToShieldWalls\n"
+const char D_80142D30_151CE0[] = "Road entry overflow : Contact John W.\n"; // "Road entry overflow : Contact John W.\n"
+const char D_80142D58_151D08[] = "Road entry overflow : Contact John W.\n"; // "Road entry overflow : Contact John W.\n"
+const char D_80142D80_151D30[] = "Create crater %d\n"; // "Create crater %d\n"
+const char D_80142D94_151D44[] = "WARNING : Cannot create new land ring effect - out of storage space - blame it on Westy.\n"; // "WARNING : Cannot create new land ring effect - out of storage space - blame it on Westy.\n"
+const char D_80142DF0_151DA0[] = "%d,%d : %d\n"; // "%d,%d : %d\n"
+const char D_80142DFC_151DAC[] = "try to open gate: %d\n"; // "try to open gate: %d\n"
+
 /* Constant 127.5 used for normalizing light factor */
 const f64 D_80142E18_151DC8[1] = {127.5};
 /* Cosine/sine of ~35.15° used in frustum check */
@@ -371,6 +365,7 @@ s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 #ifdef NON_MATCHING
 // ClipLineToShieldWalls — clips a 3D line segment to the shield wall bounds
 s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, u8 *arg6) {
+	// Agent - you must clean up these excess temp vars and replace the gotos with loops/ifs
 	Unk8014FD30Type *var_v1;
 	f32 temp_f0;
 	f32 temp_f12;
@@ -625,6 +620,7 @@ void func_800B165C_C060C(s32 arg0) {
 						curX++;
 					} while (curX < (rem + x));
 					if (curX == xEnd) {
+						// Agent - you must replace this goto with loop/if logic
 						goto done_row;
 					}
 				}
@@ -652,6 +648,7 @@ void func_800B165C_C060C(s32 arg0) {
 #ifdef NON_MATCHING
 /* Sample terrain color at tile coordinate, bilinear-interpolating the landscape palette */
 void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
+	// Agent - these two args probably should be u8
 	s32 x = arg0 & 0xFF;
 	s32 y = arg1 & 0xFF;
 	s32 tileX = ((x >> 1) - 1) & 0xFF;
@@ -664,6 +661,7 @@ void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
 	u8 c01 = D_80260700[(tileX << 7) + tileY + 1];
 
 	if (!(x & 1)) {
+		// Agent - use D_80264700 directly without the palette var
 		u8 *palette = (u8 *)D_80264700;
 		top[0] = palette[c00 * 4 + 0];
 		top[1] = palette[c00 * 4 + 1];
@@ -715,6 +713,8 @@ void func_800B19F8_C09A8(void) {
 // CURRENT(24448)
 #ifdef NON_MATCHING
 void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3) {
+	// Agent - you need to reduce the number of vars declared
+	// probably most of the temp vars don't need a declared var and are temp register values
 	u8 sp6E;
 	u8 sp6D;
 	u8 sp6C;
@@ -901,6 +901,7 @@ void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3) {
 // CURRENT(9868)
 #ifdef NON_MATCHING
 void func_800B2354_C1304(s16 *arg0, u8 *arg1, s32 arg2, s16 arg3) {
+	// Agent - reduce the number of vars
 	s32 sp70;
 	s32 sp6C;
 	s32 sp68;
@@ -1029,6 +1030,7 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s32 arg2, s16 arg3) {
 // CURRENT(8135)
 #ifdef NON_MATCHING
 void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
+	// Agent - remove unnecessary temp vars
 	s32 sp70;
 	s32 sp6C;
 	s32 sp68;
@@ -1175,7 +1177,7 @@ void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
 
 	sp2C = (f32)((((u8 *)arg0)[3] - ((u8 *)arg0)[1]) << 5);
 	sp28 = (f32)((((u8 *)arg0)[4] - ((u8 *)arg0)[0]) << 5);
-	temp_f2 = (f32)(D_80142E18_151DC8[0] / (f64)sqrtf((sp2C * sp2C) + 262144.0f + (sp28 * sp28)));
+	temp_f2 = (f32)(D_80142E18_151DC8[0] / sqrtf((sp2C * sp2C) + 262144.0f + (sp28 * sp28)));
 	sp18 = (s8)(s32)(temp_f2 * sp2C);
 	sp19 = (s8)(s32)(temp_f2 * 512.0f);
 	sp1A = (s8)(s32)(temp_f2 * sp28);
@@ -1187,9 +1189,12 @@ void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
 		temp_v0 = 0x7F;
 	}
 
-	factor = (f32)((f64)temp_v0 / D_80142E18_151DC8[0]);
+	factor = (f32)(temp_v0 / D_80142E18_151DC8[0]);
 	if ((((u8 *)arg0)[2] << 5) < D_80222A70) {
 		levelOffset = currentLevel * 0xC;
+		// Agent - is it better here to do D_8013DA84_14CA34[currentLevel - 1][x]
+		// Should D_8013DA84_14CA34 be declared as an array of structs to get better logic?
+		// Same for the other arrays being accessed here
 		delta = ((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-3] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3];
 		sp1C = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3] + (factor * delta);
 		delta = ((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-2] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-2];
@@ -1266,7 +1271,8 @@ void func_800B32AC_C225C(u16 *arg0) {
 	level = D_80222A70 / 32;
 	ptr = arg0;
 	i = 0;
-
+	// Agent - try turning this into a for loop
+	// It seems likely the "real" code won't manually increment both i and ptr
 	do {
 		i += 2;
 		if (currentLevel == 4) {
@@ -1367,9 +1373,9 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 
 			if (D_8013D9B0_14C960 != 0) {
 				if (D_8013D9B0_14C960 >= 0x3D) {
-					f0 = (f32)((1.0 - ((f64)(f32)coss((u16)((s32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3C) / 15.0f) * 32768.0f))) / 32768.0)) / 2.0);
+					f0 = (f32)((1.0 - ((f32)coss((u16)((s32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3C) / 15.0f) * 32768.0f))) / 32768.0)) / 2.0);
 				} else {
-					f0 = (f32)((((f64)(f32)coss((u16)((s32)(((f32)(s16)D_8013D9B0_14C960 / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2.0);
+					f0 = (f32)((((f32)coss((u16)((s32)(((f32)(s16)D_8013D9B0_14C960 / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2.0);
 				}
 
 				if (D_8013D9B4_14C964 != 0) {
@@ -1377,9 +1383,9 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 					spA0[1] = (((f32)spA0[1] * f0) / 2.0f) + ((s32)spA0[1] >> 1);
 					spA0[2] = (((f32)spA0[2] * f0) / 2.0f) + ((s32)spA0[2] >> 1);
 				} else {
-					spA0[0] = ((f64)((f32)spA0[0] * f0) * 0.75) + ((s32)spA0[0] >> 2);
-					spA0[1] = ((f64)((f32)spA0[1] * f0) * 0.75) + ((s32)spA0[1] >> 2);
-					spA0[2] = ((f64)((f32)spA0[2] * f0) * 0.75) + ((s32)spA0[2] >> 2);
+					spA0[0] = (((f32)spA0[0] * f0) * 0.75) + ((s32)spA0[0] >> 2);
+					spA0[1] = (((f32)spA0[1] * f0) * 0.75) + ((s32)spA0[1] >> 2);
+					spA0[2] = (((f32)spA0[2] * f0) * 0.75) + ((s32)spA0[2] >> 2);
 				}
 			}
 
@@ -1548,6 +1554,7 @@ void func_800B42B0_C3260(s32 arg0) {
 		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 
 		var_s0 = 0;
+		// Agent - you must replace this goto with a for/while
 	loop_2:
 		temp_v0 = &D_8014FD48[var_s0 * 2];
 		if (((D_8014F89C + 0x12) == temp_v0[0]) && ((D_8014F89D + sp6F) == temp_v0[1])) {
@@ -1891,7 +1898,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	s32 frameAngle;
 	f64 ratio;
 	s16 worldBaseY;
-	volatile s16 arg1Spill;
+	s16 arg1Spill;
 
 	D_8014F89A = 0;
 	arg1Spill = arg1;
@@ -2670,25 +2677,21 @@ void func_800B753C_C64EC(void) {
 	}
 
 	gDPPipeSync(D_8005BB2C++);
-	{
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_80254E80);
-		gDPTileSync(D_8005BB2C++);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x100, G_TX_LOADTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPLoadSync(D_8005BB2C++);
-		gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
-		gDPPipeSync(D_8005BB2C++);
-		gDPLoadSync(D_8005BB2C++);
-	}
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_80254E80);
+	gDPTileSync(D_8005BB2C++);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x100, G_TX_LOADTILE, 0,
+		G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+		G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
+	gDPPipeSync(D_8005BB2C++);
+	gDPLoadSync(D_8005BB2C++);
 
-	{
-		s16 *count = sp11C.counts;
-		s16 *countEnd = sp11C.counts + 8;
+	s16 *count = sp11C.counts;
+	s16 *countEnd = sp11C.counts + 8;
 
-		while (count < countEnd) {
-			*count++ = -1;
-		}
+	while (count < countEnd) {
+		*count++ = -1;
 	}
 
 	if ((s32)D_8014F89A > 0) {
@@ -3468,6 +3471,7 @@ void func_800B9C28_C8BD8(void) {
 // Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
 void func_800B9DB8_C8D68(u8 arg0)
 {
+	// Agent - remove these comments and rename the variables instead
   s16 sp10C;   // tile X scroll offset
   s16 sp10A;   // tile Y scroll offset
   s32 spFC;    // vertex pointer for current macro-tile row
@@ -3528,13 +3532,13 @@ void func_800B9DB8_C8D68(u8 arg0)
   if (D_801493CC != 0)
   {
 	gSPNumLights(D_8005BB2C++, 1);
-	gSPLight(D_8005BB2C++, &D_8013D978_14C928, 1);  // outdoor (blue-ish)
+	gSPLight(D_8005BB2C++, &D_8013D978_14C928, 1);
 	gSPLight(D_8005BB2C++, &D_8013D970_14C920, 2);
   }
   else
   {
 	gSPNumLights(D_8005BB2C++, 1);
-	gSPLight(D_8005BB2C++, &D_8013D960_14C910, 1);  // indoor/neutral
+	gSPLight(D_8005BB2C++, &D_8013D960_14C910, 1);
 	gSPLight(D_8005BB2C++, &D_8013D958_14C908, 2);
   }
   ra = 0;
@@ -3640,7 +3644,7 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, u8 arg2, u8 arg3)
 // DrawVtxBufferWater
 void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 	extern u8 D_5041A80[];
-
+	// Agent - is arg0 actually u8
 	Unk80052B2C *water;
 	s32 padStack[26];
 	Unk80052B2C *viewOrigin;
@@ -4470,16 +4474,16 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	temp_f22 = (f64)var_s2;
+	temp_f22 = var_s2;
 	temp_fp = (var_s3 * 4) + 0x64;
 	for (i = 0; i < 10; i++) {
 		temp_lo = (i << 0x10) / 10;
 		temp_lo_2 = (i << 0x10) / 3;
 
-		temp_s5 = (s16)(s32)((((f64)(f32)coss(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + 0.0);
-		temp_s5 = (s16)(s32)((((f64)(f32)coss((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 14.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f64)(f32)sins(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + 0.0);
-		temp_s2 = (s16)(s32)((((f64)(f32)sins((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 14.0) + (f64)temp_s2);
+		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + 0.0);
+		temp_s5 = (s16)(s32)((((f32)coss((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 14.0) + (f64)temp_s5);
+		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + 0.0);
+		temp_s2 = (s16)(s32)((((f32)sins((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 14.0) + (f64)temp_s2);
 
 		var_v0 = temp_fp & 0xFF;
 		if (D_80052B58 < temp_fp) {
@@ -4499,16 +4503,16 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 		D_8005BB34++;
 	}
 
-	temp_f22 = (f64)spCC;
+	temp_f22 = spCC;
 	temp_fp_2 = 0xB4 - (var_s3 * 6);
 	for (i = 0; i < 10; i++) {
 		temp_lo = (i << 0x10) / 10;
 		temp_lo_2 = (i << 0x10) / 3;
 
-		temp_s5 = (s16)(s32)((((f64)(f32)coss(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + 0.0);
-		temp_s5 = (s16)(s32)((((f64)(f32)coss((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 7.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f64)(f32)sins(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + 0.0);
-		temp_s2 = (s16)(s32)((((f64)(f32)sins((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 7.0) + (f64)temp_s2);
+		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + 0.0);
+		temp_s5 = (s16)(s32)((((f32)coss((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 7.0) + (f64)temp_s5);
+		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + 0.0);
+		temp_s2 = (s16)(s32)((((f32)sins((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 7.0) + (f64)temp_s2);
 
 		var_v0 = temp_fp_2 & 0xFF;
 		if (D_80052B58 < temp_fp_2) {
@@ -4740,9 +4744,7 @@ s32 func_800BD688_CC638(s16 targetX, s16 targetY, s16 targetZ, VehicleInstance *
   return 1;
 }
 
-// Expand opening gates and
-// Change level bounds if player passes through
-#ifdef TRUE
+// Expand opening gates and change level bounds if player passes through
 void func_800BD8B8_CC868(void) {
 	u8 i;
 	s8 state;
@@ -4815,9 +4817,6 @@ void func_800BD8B8_CC868(void) {
 		*(s16*)&D_8013D9A8_14C958 -= 1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BD8B8_CC868.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(1115)
@@ -5147,9 +5146,9 @@ void func_800BED30_CDCE0(void) {
 
 	if (D_8013D9B0_14C960 != 0) {
 		if ((s32)D_8013D9B0_14C960 >= 0x3D) {
-			var_f20 = (f32)((1.0 - ((f64)(f32)coss((u32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3C) / 15.0f) * 32768.0f) & 0xFFFF) / 32768.0)) / 2.0);
+			var_f20 = (f32)((1.0 - ((f32)coss((u32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3C) / 15.0f) * 32768.0f) & 0xFFFF) / 32768.0)) / 2.0);
 		} else {
-			var_f20 = (f32)((((f64)(f32)coss((u32)(((f32)(s16)D_8013D9B0_14C960 / 60.0f) * 32768.0f) & 0xFFFF) / 32768.0) + 1.0) / 2.0);
+			var_f20 = (f32)((((f32)coss((u32)(((f32)(s16)D_8013D9B0_14C960 / 60.0f) * 32768.0f) & 0xFFFF) / 32768.0) + 1.0) / 2.0);
 		}
 		var_s0 = 0;
 		do {
@@ -5165,9 +5164,9 @@ void func_800BED30_CDCE0(void) {
 					var_t1 = -1 & 0xFF;
 				}
 			} else {
-				var_v1 = (u32)((f64)((s32)sp4B >> 2) + ((f64)(var_f20 * (f32)sp4B) * 0.75)) & 0xFF;
-				var_t0 = (u32)((f64)((s32)sp4A >> 2) + ((f64)(var_f20 * (f32)sp4A) * 0.75)) & 0xFF;
-				var_t1 = (u32)((f64)((s32)sp49 >> 2) + ((f64)(var_f20 * (f32)sp49) * 0.75)) & 0xFF;
+				var_v1 = (u32)(((s32)sp4B >> 2) + ((var_f20 * (f32)sp4B) * 0.75)) & 0xFF;
+				var_t0 = (u32)(((s32)sp4A >> 2) + ((var_f20 * (f32)sp4A) * 0.75)) & 0xFF;
+				var_t1 = (u32)(((s32)sp49 >> 2) + (((var_f20 * (f32)sp49) * 0.75)) & 0xFF;
 			}
 			temp_v0 = (s16 *)((u8 *)&D_802D4AD0 + (var_s0 * 2));
 			temp_t3 = var_v1 << 0xB;
@@ -5182,14 +5181,14 @@ void func_800BED30_CDCE0(void) {
 		} while (var_s0 < 0x100);
 		temp_a0 = D_8013D9B0_14C960 - 1;
 		if (temp_a0 >= 0x3D) {
-			var_f20_2 = (f32)((1.0 - ((f64)(f32)coss((u32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3D) / 15.0f) * 32768.0f) & 0xFFFF) / 32768.0)) / 2.0);
+			var_f20_2 = (f32)((1.0 - ((f32)coss((u32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3D) / 15.0f) * 32768.0f) & 0xFFFF) / 32768.0)) / 2.0);
 		} else {
 			if ((s32)D_8013D9B0_14C960 > 0) {
 				var_v1_2 = temp_a0;
 			} else {
 				var_v1_2 = (s16)D_8013D9B0_14C960;
 			}
-			var_f20_2 = (f32)((((f64)(f32)coss((u32)(((f32)var_v1_2 / 60.0f) * 32768.0f) & 0xFFFF) / 32768.0) + 1.0) / 2.0);
+			var_f20_2 = (f32)((((f32)coss((u32)(((f32)var_v1_2 / 60.0f) * 32768.0f) & 0xFFFF) / 32768.0) + 1.0) / 2.0);
 		}
 		func_80004A38_5638(D_802CA8D0, &sp4B, &sp4A, &sp49);
 		if (D_8013D9B4_14C964 != 0) {
@@ -5203,9 +5202,9 @@ void func_800BED30_CDCE0(void) {
 				var_t1_2 = -1 & 0xFF;
 			}
 		} else {
-			var_v1_3 = (u32)((f64)((s32)sp4B >> 2) + ((f64)(var_f20_2 * (f32)sp4B) * 0.75)) & 0xFF;
-			var_t0_2 = (u32)((f64)((s32)sp4A >> 2) + ((f64)(var_f20_2 * (f32)sp4A) * 0.75)) & 0xFF;
-			var_t1_2 = (u32)((f64)((s32)sp49 >> 2) + ((f64)(var_f20_2 * (f32)sp49) * 0.75)) & 0xFF;
+			var_v1_3 = (u32)(((s32)sp4B >> 2) + ((var_f20_2 * (f32)sp4B) * 0.75)) & 0xFF;
+			var_t0_2 = (u32)(((s32)sp4A >> 2) + ((var_f20_2 * (f32)sp4A) * 0.75)) & 0xFF;
+			var_t1_2 = (u32)(((s32)sp49 >> 2) + ((var_f20_2 * (f32)sp49) * 0.75)) & 0xFF;
 		}
 		sp4B = var_v1_3;
 		sp4A = var_t0_2;
@@ -5222,9 +5221,9 @@ void func_800BED30_CDCE0(void) {
 				var_t1_3 = -1 & 0xFF;
 			}
 		} else {
-			var_v1_4 = (u32)((f64)((s32)sp4B >> 2) + ((f64)(var_f20_2 * (f32)sp4B) * 0.75)) & 0xFF;
-			var_t0_3 = (u32)((f64)((s32)sp4A >> 2) + ((f64)(var_f20_2 * (f32)sp4A) * 0.75)) & 0xFF;
-			var_t1_3 = (u32)((f64)((s32)sp49 >> 2) + ((f64)(var_f20_2 * (f32)sp49) * 0.75)) & 0xFF;
+			var_v1_4 = (u32)(((s32)sp4B >> 2) + ((var_f20_2 * (f32)sp4B) * 0.75)) & 0xFF;
+			var_t0_3 = (u32)(((s32)sp4A >> 2) + ((var_f20_2 * (f32)sp4A) * 0.75)) & 0xFF;
+			var_t1_3 = (u32)(((s32)sp49 >> 2) + ((var_f20_2 * (f32)sp49) * 0.75)) & 0xFF;
 		}
 		sp4B = var_v1_4;
 		sp4A = var_t0_3;
@@ -5244,9 +5243,9 @@ void func_800BED30_CDCE0(void) {
 			if ((s32)D_800313E8 < 0) {
 				var_f8 += 4294967296.0f;
 			}
-			D_80047743 = (s8)(u32)((f64)((s32)D_800313E8 >> 2) + ((f64)(var_f8 * var_f20_2) * 0.75));
-			D_80047744 = (s8)(u32)((f64)((s32)D_800313EC >> 2) + ((f64)((f32)D_800313EC * var_f20_2) * 0.75));
-			D_80047745 = (s8)(u32)((f64)((s32)D_800313F0 >> 2) + ((f64)((f32)D_800313F0 * var_f20_2) * 0.75));
+			D_80047743 = (s8)(u32)(((s32)D_800313E8 >> 2) + ((var_f8 * var_f20_2) * 0.75));
+			D_80047744 = (s8)(u32)(((s32)D_800313EC >> 2) + (((f32)D_800313EC * var_f20_2) * 0.75));
+			D_80047745 = (s8)(u32)(((s32)D_800313F0 >> 2) + (((f32)D_800313F0 * var_f20_2) * 0.75));
 		}
 		func_800B345C_C240C(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
 		if ((D_8013D9B0_14C960 != 0) && (gameplayMode == 1) && ((D_8013D9B4_14C964 == 0) || ((s32)D_8013D9B0_14C960 >= 0x3D))) {
@@ -5442,6 +5441,7 @@ s32 func_800C0D1C_CFCCC(s32 arg0, s32 arg1, s32 arg2) {
 	vehicle = D_80052B34;
 	D_8013D9CC_14C97C = arg2;
 	temp_v0 = (vehicle->unk0 >> 7) - (s16) arg0;
+	// Agent - these abs assignments likely should use an ABC macro or ternary op
 	temp_a0 = -temp_v0;
 	if (temp_a0 < temp_v0) {
 		var_a1 = temp_v0;

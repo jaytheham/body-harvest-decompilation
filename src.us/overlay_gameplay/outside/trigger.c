@@ -1,24 +1,24 @@
 #include <ultra64.h>
 #include "common.h"
 
-const char D_80142AB0_151A60[] = "nextTrigger < MAX_GAME_TRIGGERS";
-const char D_80142AD0_151A80[] = "src/trigger.c";
-const char D_80142AE0_151A90[] = "nextTrigger < MAX_GAME_TRIGGERS";
-const char D_80142B00_151AB0[] = "src/trigger.c";
-const char D_80142B10_151AC0[] = "*********************\n";
-const char D_80142B28_151AD8[] = "proc states:%d\n";
-const char D_80142B38_151AE8[] = "********************\n";
-const char D_80142B50_151B00[] = "trigger: entered building\n";
-const char D_80142B6C_151B1C[] = "Wave type %d\n";
-const char D_80142B7C_151B2C[] = "Create positional %d in %d seconds\n";
-const char D_80142BA0_151B50[] = "Do not regenerate %d\n";
-const char D_80142BB8_151B68[] = "Wave regenerated %d in %d seconds\n";
-const char D_80142BDC_151B8C[] = "Wave failed %d\n";
-const char D_80142BEC_151B9C[] = "Wave successful %d\n";
-const char D_80142C00_151BB0[] = "\n\nWAVE %d KILLED\n\n";
-const char D_80142C14_151BC4[] = "Add boss %d, %d\n";
-const char D_80142C28_151BD8[] = "Add boss component %d\n";
-const char D_80142C40_151BF0[] = "deleting wave %d\n";
+const char D_80142AB0_151A60[] = "nextTrigger < MAX_GAME_TRIGGERS"; // "nextTrigger < MAX_GAME_TRIGGERS"
+const char D_80142AD0_151A80[] = "src/trigger.c"; // "src/trigger.c"
+const char D_80142AE0_151A90[] = "nextTrigger < MAX_GAME_TRIGGERS"; // "nextTrigger < MAX_GAME_TRIGGERS"
+const char D_80142B00_151AB0[] = "src/trigger.c"; // "src/trigger.c"
+const char D_80142B10_151AC0[] = "*********************\n"; // "*********************\n"
+const char D_80142B28_151AD8[] = "proc states:%d\n"; // "proc states:%d\n"
+const char D_80142B38_151AE8[] = "********************\n"; // "********************\n"
+const char D_80142B50_151B00[] = "trigger: entered building\n"; // "trigger: entered building\n"
+const char D_80142B6C_151B1C[] = "Wave type %d\n"; // "Wave type %d\n"
+const char D_80142B7C_151B2C[] = "Create positional %d in %d seconds\n"; // "Create positional %d in %d seconds\n"
+const char D_80142BA0_151B50[] = "Do not regenerate %d\n"; // "Do not regenerate %d\n"
+const char D_80142BB8_151B68[] = "Wave regenerated %d in %d seconds\n"; // "Wave regenerated %d in %d seconds\n"
+const char D_80142BDC_151B8C[] = "Wave failed %d\n"; // "Wave failed %d\n"
+const char D_80142BEC_151B9C[] = "Wave successful %d\n"; // "Wave successful %d\n"
+const char D_80142C00_151BB0[] = "\n\nWAVE %d KILLED\n\n"; // "\n\nWAVE %d KILLED\n\n"
+const char D_80142C14_151BC4[] = "Add boss %d, %d\n"; // "Add boss %d, %d\n"
+const char D_80142C28_151BD8[] = "Add boss component %d\n"; // "Add boss component %d\n"
+const char D_80142C40_151BF0[] = "deleting wave %d\n"; // "deleting wave %d\n"
 
 const u32 jtbl_80142C54_151C04[] = {
 	0x800AEA8C,
