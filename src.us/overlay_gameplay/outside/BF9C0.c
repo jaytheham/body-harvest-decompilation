@@ -648,10 +648,10 @@ void func_800B165C_C060C(s32 arg0) {
 /* Sample terrain color at tile coordinate, bilinear-interpolating the landscape palette */
 void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
 	// Agent - these two args probably should be u8
-	s32 x = arg0 & 0xFF;
-	s32 y = arg1 & 0xFF;
-	s32 tileX = ((x >> 1) - 1) & 0xFF;
-	s32 tileY = (y >> 1) & 0xFF;
+	u8 x = arg0 & 0xFF;
+	u8 y = arg1 & 0xFF;
+	u8 tileX = ((x >> 1) - 1) & 0xFF;
+	u8 tileY = (y >> 1) & 0xFF;
 	u16 top[3];
 	u16 bot[3];
 	u8 c00 = D_80260700[(tileX << 7) + tileY];
