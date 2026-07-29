@@ -1,16 +1,16 @@
 #include <ultra64.h>
 #include "common.h"
 
-const char D_80142790_151740[] = "Activate beacon %d\n";
-const char D_801427A4_151754[] = "Beacons:";
-const char D_801427B0_151760[] = "BEACONS %d-On,\n ";
-const char D_801427C4_151774[] = "BEACONS %d-Off,\n ";
-const char D_801427D8_151788[] = "teleport to:%d\n";
-const char D_801427E8_151798[] = "beacon: %d\n";
-const char D_801427F4_1517A4[] = "state:%d\n";
-const char D_80142800_1517B0[] = "state+1:%d\n";
-const char D_8014280C_1517BC[] = "Launch beacon %d\n";
-const char D_80142820_1517D0[] = "Giving delayed powerup %d\n";
+const char D_80142790_151740[] = "Activate beacon %d\n"; // "Activate beacon %d\n"
+const char D_801427A4_151754[] = "Beacons:"; // "Beacons:"
+const char D_801427B0_151760[] = "BEACONS %d-On,\n "; // "BEACONS %d-On,\n "
+const char D_801427C4_151774[] = "BEACONS %d-Off,\n "; // "BEACONS %d-Off,\n "
+const char D_801427D8_151788[] = "teleport to:%d\n"; // "teleport to:%d\n"
+const char D_801427E8_151798[] = "beacon: %d\n"; // "beacon: %d\n"
+const char D_801427F4_1517A4[] = "state:%d\n"; // "state:%d\n"
+const char D_80142800_1517B0[] = "state+1:%d\n"; // "state+1:%d\n"
+const char D_8014280C_1517BC[] = "Launch beacon %d\n"; // "Launch beacon %d\n"
+const char D_80142820_1517D0[] = "Giving delayed powerup %d\n"; // "Giving delayed powerup %d\n"
 const u32 jtbl_8014283C_1517EC[] = {
 	0x800A6934, 0x800A693C, 0x800A695C, 0x800A6A48,
 	0x800A6ED8, 0x800A6F60, 0x800A6FA0,
@@ -67,7 +67,7 @@ void func_800A5A50_B4A00(s32 arg0, s32 arg1) {
 	s32 sp1C;
 
 	D_8014F800 = 1;
-	osSyncPrintf(D_80142790_151740, arg0); // Activate beacon %d
+	osSyncPrintf(D_80142790_151740, arg0);
 	if (D_80151DD0 == 0) {
 		D_80047F9C = arg0 + 1;
 		sp1C = func_80009F18_AB18(arg1);
@@ -240,7 +240,7 @@ void func_800A6020_B4FD0(s16 arg0) {
 		sp56 = var_a2;
 		do {
 			temp_t8 = ((var_s3 * var_v1) - 0x96) & 0xFFFF;
-			D_8005BB34->v.ob[0] = (s16)(s32)((((f64)(f32)coss(var_s4 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
+			D_8005BB34->v.ob[0] = (s16)(s32)((((f32)coss(var_s4 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
 			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + temp_t8);
 			D_8005BB34->v.ob[2] = (s16)(s32)((((f64)(f32)sins(var_s4 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
 			D_8005BB34->v.flag = 0;
@@ -252,11 +252,11 @@ void func_800A6020_B4FD0(s16 arg0) {
 			D_8005BB34->v.cn[2] = 0xA0;
 			D_8005BB34->v.cn[3] = 0;
 			D_8005BB34++;
-			D_8005BB34->v.ob[0] = (s16)(s32)((((f64)(f32)coss(temp_t6 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
+			D_8005BB34->v.ob[0] = (s16)(s32)((((f32)coss(temp_t6 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
 			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + ((temp_t8 + temp_lo) & 0xFFFF));
 			var_s3 = (var_s5 + 1) & 0xFF;
 			var_s5 = var_s3;
-			D_8005BB34->v.ob[2] = (s16)(s32)((((f64)(f32)sins(temp_t6 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
+			D_8005BB34->v.ob[2] = (s16)(s32)((((f32)sins(temp_t6 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
@@ -272,9 +272,9 @@ void func_800A6020_B4FD0(s16 arg0) {
 		var_s3_2 = 0;
 		do {
 			temp_t2 = ((var_s3_2 * var_v1) - 0x96) & 0xFFFF;
-			D_8005BB34->v.ob[0] = (s16)(s32)((((f64)(f32)coss(var_s4_2 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
+			D_8005BB34->v.ob[0] = (s16)(s32)((((f32)coss(var_s4_2 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
 			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + temp_t2);
-			D_8005BB34->v.ob[2] = (s16)(s32)((((f64)(f32)sins(var_s4_2 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
+			D_8005BB34->v.ob[2] = (s16)(s32)((((f32)sins(var_s4_2 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
@@ -284,11 +284,11 @@ void func_800A6020_B4FD0(s16 arg0) {
 			D_8005BB34->v.cn[2] = 0xA0;
 			D_8005BB34->v.cn[3] = 0;
 			D_8005BB34++;
-			D_8005BB34->v.ob[0] = (s16)(s32)((((f64)(f32)coss(temp_t9 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
+			D_8005BB34->v.ob[0] = (s16)(s32)((((f32)coss(temp_t9 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
 			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + ((temp_t2 + temp_lo) & 0xFFFF));
 			var_s3_2 = (var_s5_2 + 1) & 0xFF;
 			var_s5_2 = var_s3_2;
-			D_8005BB34->v.ob[2] = (s16)(s32)((((f64)(f32)sins(temp_t9 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
+			D_8005BB34->v.ob[2] = (s16)(s32)((((f32)sins(temp_t9 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
@@ -460,9 +460,9 @@ void func_800A68CC_B587C(void) {
 			D_80052B34->unk6 = sp28;
 
 			sp26 = coss(D_80052B2C->unk1E);
-			D_80052B2C->unk0 = (((f64)(f32)coss(0xFA0) / 32768.0) * (f64)D_80052B2C->unk1C * ((f64)(f32)sp26 / 32768.0)) + D_80052B2C->unkC;
-			D_80052B2C->unk4 = (((f64)(f32)sins(D_80052B2C->unk1E) / 32768.0) * (f64)D_80052B2C->unk1C) + D_80052B34->unk2;
-			D_80052B2C->unk8 = (((f64)(f32)sins(0xFA0) / 32768.0) * (f64)D_80052B2C->unk1C * ((f64)(f32)sp26 / 32768.0)) + D_80052B2C->unk14;
+			D_80052B2C->unk0 = (((f64)(f32)coss(0xFA0) / 32768.0) * D_80052B2C->unk1C * ((f32)sp26 / 32768.0)) + D_80052B2C->unkC;
+			D_80052B2C->unk4 = (((f64)(f32)sins(D_80052B2C->unk1E) / 32768.0) * ()D_80052B2C->unk1C) + D_80052B34->unk2;
+			D_80052B2C->unk8 = (((f64)(f32)sins(0xFA0) / 32768.0) * D_80052B2C->unk1C * ((f32)sp26 / 32768.0)) + D_80052B2C->unk14;
 			func_800153D8_15FD8(0xD7);
 		}
 
@@ -707,7 +707,7 @@ void func_800A70B8_B6068(void) {
 
 					beaconAge = D_8003154C[currentLevel - 1][i].timer;
 					if (beaconType == 6) {
-						rot = (s16) (s32) (((((f64) (0x32 - beaconAge) * 0.017453292519943295) / 50.0) * 16384.0));
+						rot = (s16) (s32) (((((0x32 - beaconAge) * 0.017453292519943295) / 50.0) * 16384.0));
 					} else if ((beaconType == 4) || (beaconType == 5)) {
 						rot = 0;
 					} else {
