@@ -291,45 +291,36 @@ void func_800A99B8_B8968(u8 arg0)
 	} 
 }
 
-// CURRENT(2825)
+/* CURRENT(755) */
 #ifdef NON_MATCHING
 s32 func_800A9A90_B8A40(u8 arg0, s32 arg1, f32 arg2) {
-	AlienInstance *alien;
-	AlienInstance *leader;
-	u8 *members;
 	u8 specIndex;
 	s32 hpDelta;
 	s32 i;
+	u8 *members;
 
-	alien = &alienInstances[arg0];
-	leader = &alienInstances[alien->unk25];
-	members = (u8 *)leader;
-	specIndex = alien->specIndex;
+	specIndex = alienInstances[arg0].specIndex;
+	members = (u8 *)&alienInstances[alienInstances[arg0].unk25];
 
-	if (((u32)D_80052A8C % 100) != 0) {
-		return 0;
-	}
+	if ((u32)D_80052A8C % 100 == 0) {
+		hpDelta = D_8013D8D8_14C888[0] - alienInstances[arg0].hitPoints;
 
-	hpDelta = D_8013D8D8_14C888[0] - alien->hitPoints;
-
-	for (i = 1; i < arg1; i++) {
-		if (members[i - 1] != 0xFF) {
-			hpDelta += D_8013D8D8_14C888[i] - alienInstances[members[i - 1]].hitPoints;
+		for (i = 1; i < arg1; i++) {
+			if (members[i - 1] != 0xFF) {
+				hpDelta += D_8013D8D8_14C888[i] - alienInstances[members[i - 1]].hitPoints;
+			}
 		}
-	}
 
-	D_8013D8D8_14C888[0] = alien->hitPoints;
+		D_8013D8D8_14C888[0] = alienInstances[arg0].hitPoints;
 
-	for (i = 1; i < arg1; i++) {
-		if (members[i - 1] != 0xFF) {
-			D_8013D8D8_14C888[i] = alienInstances[members[i - 1]].hitPoints;
+		for (i = 1; i < arg1; i++) {
+			if (members[i - 1] != 0xFF) {
+				D_8013D8D8_14C888[i] = alienInstances[members[i - 1]].hitPoints;
+			}
 		}
-	}
 
-	if (((f32)alienSpecs[specIndex].unk3A * arg2) < (f32) hpDelta) {
-		return 1;
+		return ((f32)alienSpecs[specIndex].unk3A * arg2) < (f32) hpDelta;
 	}
-
 	return 0;
 }
 #else
