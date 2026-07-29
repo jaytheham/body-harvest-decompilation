@@ -34,6 +34,12 @@ typedef struct {
 	/* 0x14 */ u8 ids[4];                  /* 4 bytes - per-level sound IDs */
 } LevelBeaconData; /* 0x18 = 24 bytes */
 
+typedef struct {
+	/* 0x00 */ u8 r;
+	/* 0x01 */ u8 g;
+	/* 0x02 */ u8 b;
+} BeaconColor; /* 3 bytes */
+
 u8 D_8013D890_14C840 = 0; // Triggers beacon warp
 u8 D_8013D894_14C844 = 0;
 LevelBeaconData D_8013D898_14C848 = {{
@@ -44,10 +50,7 @@ LevelBeaconData D_8013D898_14C848 = {{
 	{ 0x0000, 0x0000 }, /* Comet */
 },
 { 0x02, 0x0A, 0x11, 0x16 }};
-u8 D_8013D8B0_14C860[0x10] = {
-	0x32, 0x64, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-};
+BeaconColor D_8013D8B0_14C860 = { 0x32, 0x64, 0xFF };
 
 // AI - Find free beacon display entry
 BeaconDisplayEntry* func_800A5A10_B49C0() {
@@ -755,11 +758,7 @@ void func_800A7B84_B6B34(s32 beaconX, s32 beaconZ)
 #ifdef NON_MATCHING
 // AI - Update beacon state machine lifecycle
 void func_800A7C6C_B6C1C(void) {
-	struct BeaconColor {
-		u8 r;
-		u8 g;
-		u8 b;
-	} spA4;
+	BeaconColor spA4;
 	s32 pad[4];
 	s16 spAA;
 	s16 spA8;
@@ -781,7 +780,7 @@ void func_800A7C6C_B6C1C(void) {
 	s16 absZ;
 	s32 distSq;
 
-	spA4 = *(struct BeaconColor*) D_8013D8B0_14C860;
+	spA4 = D_8013D8B0_14C860;
 
 	if (currentLevel == 5) {
 		return;
