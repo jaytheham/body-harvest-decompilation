@@ -2823,40 +2823,34 @@ s32 func_800B85CC_C757C(s16 arg0, s16 arg1) {
 
 /* Get minimum terrain height of the 4 corners of a tile */
 #ifdef NON_MATCHING
-// CURRENT(294)
+// CURRENT(1460)
 s16 func_800B8688_C7638(s8 arg0, s8 arg1) {
-	s16 temp_a2;
-	s16 temp_t0;
-	s16 temp_t4;
-	s16 temp_t5;
-	s16 temp_t7;
 	s16 var_v1;
-	s16 var_a0;
-	s16 var_t1;
-	s16 *temp_a1;
-	s16 *temp_t2;
+	s16 temp_t0;
+	s16 temp_t7;
+	s16 temp_t5;
+	s16 temp_t4;
+	s16 temp_a0;
+	s16 temp_t1;
 
-	temp_a2 = arg0 + 0x80;
-	var_v1 = temp_a2;
+	var_v1 = arg0 + 0x80;
 	temp_t0 = arg1 + 0x80;
-	temp_t2 = &D_8014F8A0[temp_t0][temp_a2];
-	temp_t7 = (u16)temp_t2[0] & 0x3F;
-	temp_t5 = (u16)temp_t2[1] & 0x3F;
+	temp_t7 = (u16)D_8014F8A0[temp_t0][var_v1] & 0x3F;
+	temp_t5 = (u16)D_8014F8A0[temp_t0][var_v1 + 1] & 0x3F;
 	if (temp_t7 < temp_t5) {
-		var_a0 = temp_t7;
+		temp_a0 = temp_t7;
 	} else {
-		var_a0 = temp_t5;
+		temp_a0 = temp_t5;
 	}
-	temp_a1 = &D_8014F8A0[temp_t0][temp_a2];
-	var_t1 = (u16)temp_a1[0x100] & 0x3F;
-	temp_t4 = (u16)temp_a1[0x101] & 0x3F;
-	if (var_t1 >= temp_t4) {
-		var_t1 = temp_t4;
+	temp_t1 = (u16)D_8014F8A0[temp_t0][var_v1 + 0x100] & 0x3F;
+	temp_t4 = (u16)D_8014F8A0[temp_t0][var_v1 + 0x101] & 0x3F;
+	if (temp_t1 >= temp_t4) {
+		temp_t1 = temp_t4;
 	}
-	if (var_a0 < var_t1) {
-		return var_a0;
+	var_v1 = temp_t1;
+	if (temp_a0 < temp_t1) {
+		var_v1 = temp_a0;
 	}
-	var_v1 = var_t1;
 	return var_v1;
 }
 #else
