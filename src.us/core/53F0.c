@@ -160,7 +160,7 @@ void func_80004C8C_588C(void) {
 }
 
 void func_80004CC8_58C8(void) {
-	gSPViewport(D_8005BB2C++, D_8005BB24 + 0x80000000);
+	gSPViewport(D_8005BB2C++, OS_PHYSICAL_TO_K0(D_8005BB24));
 	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADE | G_SHADING_SMOOTH);
 }
@@ -253,7 +253,7 @@ void func_80005110_5D10(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4) {
 	D_8005BB34[3].v.cn[1] = arg3;
 	D_8005BB34[3].v.cn[2] = arg4;
 	D_8005BB34[3].v.cn[3] = alpha;
-	gSPVertex(D_8005BB2C++, (Vtx *)((s32)D_8005BB34 + 0x80000000), 4, 0);
+	gSPVertex(D_8005BB2C++, OS_PHYSICAL_TO_K0(D_8005BB34), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 3, 2, 0);
 	D_8005BB34 += 4;
 }
@@ -420,7 +420,7 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 	guOrtho(D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, D_80037128_37D28, D_8003712C_37D2C, 1.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	guRotate(D_8005BB38, 0.0f, 1.0f, 0.0f, 0.0f);
-	gSPMatrix(D_8005BB2C++, (Mtx *)(D_8005BB38 + 0x80000000), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, OS_PHYSICAL_TO_K0(D_8005BB38), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	D_8005BB38 += 0x40;
 	gDPPipeSync(D_8005BB2C++);
 

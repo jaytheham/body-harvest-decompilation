@@ -5,7 +5,7 @@
 void func_800821E0_52690(u8 arg0, u8 arg1, u8 arg2) {
 	((Frontend52690Viewport *)D_8005BB24)->unk2 = 0x140;
 
-	gSPViewport(D_8005BB2C++, D_8005BB24 + 0x80000000);
+	gSPViewport(D_8005BB2C++, OS_PHYSICAL_TO_K0(D_8005BB24));
 	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADE | G_SHADING_SMOOTH);
 	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_800311A8));
@@ -385,7 +385,7 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 				varS4++;
 			}
 
-			gSPViewport(D_8005BB2C++, D_8005BB24 + 0x80000000);
+			gSPViewport(D_8005BB2C++, OS_PHYSICAL_TO_K0(D_8005BB24));
 			func_8000B044_BC44();
 		} else if ((varS4 == tempS6) && !(currentControllerStates[0].button & 0x9000)) {
 			spD0 = 1;

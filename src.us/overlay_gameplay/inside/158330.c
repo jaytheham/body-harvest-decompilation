@@ -1688,7 +1688,7 @@ void func_80073714_15B7D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	b = arg7;
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, 0xFF);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
-	gSPVertex(D_8005BB2C++, (Vtx *)((u32)D_8005BB34 + 0x80000000), 4, 0);
+	gSPVertex(D_8005BB2C++, OS_PHYSICAL_TO_K0(D_8005BB34), 4, 0);
 	gSP1Triangle(D_8005BB2C++, 0, 1, 3, 0);
 	gSP1Triangle(D_8005BB2C++, 0, 3, 2, 0);
 	gDPPipeSync(D_8005BB2C++);
@@ -1969,7 +1969,7 @@ void func_80073A50_15BB10(void) {
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	if ((D_800A0964_188A24 == 0) || ((u8)D_800E73DF != 4)) {
-		gSPVertex(D_8005BB2C++, (Vtx *)((u32)D_8005BB34 + 0x80000000), 10, 0);
+		gSPVertex(D_8005BB2C++, OS_PHYSICAL_TO_K0(D_8005BB34), 10, 0);
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 2, 3, 0);
 		gSP2Triangles(D_8005BB2C++, 2, 3, 4, 0, 3, 4, 5, 0);
 		gSP2Triangles(D_8005BB2C++, 4, 5, 6, 0, 5, 6, 7, 0);
