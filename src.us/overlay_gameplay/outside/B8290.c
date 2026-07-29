@@ -732,7 +732,7 @@ void func_800AB4B4_BA464(u8 arg0) {
 }
 
 // https://decomp.me/scratch/xQVGn
-// CURRENT(195)
+/* CURRENT(35) */
 #ifdef NON_MATCHING
 // AI - Acquire target position
 void func_800AB570_BA520(u8 arg0)
@@ -767,8 +767,9 @@ void func_800AB570_BA520(u8 arg0)
   if (dx < 0x4B0)
   {
 	  alienInstances[arg0].unk24 = 0x14;
+	  pad = 0x64;
+	  alienInstances[arg0].unk38 = pad;
 	  alienInstances[arg0].unk20 &= 0xFFFDFE5F;
-	  alienInstances[arg0].unk38 = 0x64;
 	  alienInstances[arg0].unk14 = targetX;
 	  alienInstances[arg0].unk16 = targetY;
 	  alienInstances[arg0].unk18 = targetZ;
