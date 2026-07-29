@@ -177,10 +177,9 @@ void func_802D522C_31937C(s16 arg0) {
 	D_80052B50.unk2 = 0x40;
 	D_80052B50.unk4 = 0x40;
 	func_800039D0_45D0(&D_80052B40, &D_80052B50, &D_80052B50, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, D_8005BB38 & 0x1FFFFFFF, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
 	temp_a3 = temp_fp->unk8;
 	var_s4 = 0;
-	D_8005BB38 += 0x40;
 	var_s5 = 0;
 	temp_a1 = temp_fp->unk4;
 	if (temp_a3 == 0) {

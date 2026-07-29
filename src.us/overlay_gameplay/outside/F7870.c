@@ -150,16 +150,13 @@ void func_800E8A00_F79B0(void) {
 
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
 
-	gSPMatrix(D_8005BB2C++, (Mtx *) ((u32) D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-	D_8005BB38 += 0x40;
 	guPerspective(D_8005BB38, &perspNorm, 20.0f, 1.0f, 50.0f, D_801442CC_15327C, 1.0f);
 
 	gSPPerspNormalize(D_8005BB2C++, perspNorm);
 
-	gSPMatrix(D_8005BB2C++, (Mtx *) ((u32) D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-
-	D_8005BB38 += 0x40;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
 	if ((vehicleIndex < 0x15) && (vehicleIndex > 0) && (*(s32 *) (&vehicleSpecs[vehicleIndex]) != 0)) {
 		osSyncPrintf(D_801442BC_15326C);
@@ -191,12 +188,11 @@ void func_800E8A00_F79B0(void) {
 			partFlags = part->flags;
 
 			if (partFlags & 1) {
-				gSPMatrix(D_8005BB2C++, (Mtx *) ((u32) D_8005BB38 & 0x1FFFFFFF), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				stackDepth++;
 			} else {
-				gSPMatrix(D_8005BB2C++, (Mtx *) ((u32) D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			}
-			D_8005BB38 += 0x40;
 
 			if ((partStart != ((u8 *) vehicleSpec)[0x63]) && (partStart != ((u8 *) vehicleSpec)[0x64])) {
 				if (partFlags & 0x20) {
@@ -207,8 +203,7 @@ void func_800E8A00_F79B0(void) {
 					D_80052B50.unk4 = 0x100;
 					func_800039D0_45D0(NULL, NULL, &D_80052B50, D_8005BB38);
 
-					gSPMatrix(D_8005BB2C++, (Mtx *) ((u32) D_8005BB38 & 0x1FFFFFFF), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-					D_8005BB38 += 0x40;
+					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				} else {
 					gSPClearGeometryMode(D_8005BB2C++, G_CULL_FRONT);
 
