@@ -1,3 +1,4 @@
+#define _SHIFT _SHIFTL
 #include <ultra64.h>
 #include "common.h"
 
@@ -177,9 +178,8 @@ void func_800A5F24_B4ED4(s32 arg0)
 	}
 }
 
-// CURRENT(18077)
-#ifdef NON_MATCHING
 // AI - Render warp ring visual effect
+#ifdef NON_MATCHING
 void func_800A6020_B4FD0(s16 arg0) {
 	u8 sp56;
 	u8 sp55;
@@ -240,9 +240,9 @@ void func_800A6020_B4FD0(s16 arg0) {
 		sp56 = var_a2;
 		do {
 			temp_t8 = ((var_s3 * var_v1) - 0x96) & 0xFFFF;
-			D_8005BB34->v.ob[0] = (s16)(s32)((((f32)coss(var_s4 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
+			D_8005BB34->v.ob[0] = (s16)((((f32)coss(var_s4 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk0);
 			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + temp_t8);
-			D_8005BB34->v.ob[2] = (s16)(s32)((((f64)(f32)sins(var_s4 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
+			D_8005BB34->v.ob[2] = (s16)((((f32)sins(var_s4 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk4);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
@@ -252,11 +252,11 @@ void func_800A6020_B4FD0(s16 arg0) {
 			D_8005BB34->v.cn[2] = 0xA0;
 			D_8005BB34->v.cn[3] = 0;
 			D_8005BB34++;
-			D_8005BB34->v.ob[0] = (s16)(s32)((((f32)coss(temp_t6 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
+			D_8005BB34->v.ob[0] = (s16)((((f32)coss(temp_t6 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk0);
 			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + ((temp_t8 + temp_lo) & 0xFFFF));
 			var_s3 = (var_s5 + 1) & 0xFF;
 			var_s5 = var_s3;
-			D_8005BB34->v.ob[2] = (s16)(s32)((((f32)sins(temp_t6 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
+			D_8005BB34->v.ob[2] = (s16)((((f32)sins(temp_t6 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk4);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
@@ -272,9 +272,9 @@ void func_800A6020_B4FD0(s16 arg0) {
 		var_s3_2 = 0;
 		do {
 			temp_t2 = ((var_s3_2 * var_v1) - 0x96) & 0xFFFF;
-			D_8005BB34->v.ob[0] = (s16)(s32)((((f32)coss(var_s4_2 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
+			D_8005BB34->v.ob[0] = (s16)((((f32)coss(var_s4_2 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk0);
 			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + temp_t2);
-			D_8005BB34->v.ob[2] = (s16)(s32)((((f32)sins(var_s4_2 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
+			D_8005BB34->v.ob[2] = (s16)((((f32)sins(var_s4_2 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk4);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
@@ -284,11 +284,11 @@ void func_800A6020_B4FD0(s16 arg0) {
 			D_8005BB34->v.cn[2] = 0xA0;
 			D_8005BB34->v.cn[3] = 0;
 			D_8005BB34++;
-			D_8005BB34->v.ob[0] = (s16)(s32)((((f32)coss(temp_t9 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk0);
+			D_8005BB34->v.ob[0] = (s16)((((f32)coss(temp_t9 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk0);
 			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + ((temp_t2 + temp_lo) & 0xFFFF));
 			var_s3_2 = (var_s5_2 + 1) & 0xFF;
 			var_s5_2 = var_s3_2;
-			D_8005BB34->v.ob[2] = (s16)(s32)((((f32)sins(temp_t9 & 0xFFFF) / 32768.0) * var_f20) + (f64)D_80052B34->unk4);
+			D_8005BB34->v.ob[2] = (s16)((((f32)sins(temp_t9 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk4);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
@@ -340,8 +340,8 @@ void func_800A6020_B4FD0(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A6020_B4FD0.s")
 #endif
 
-#ifdef NON_MATCHING
 // CURRENT(14213)
+#ifdef NON_MATCHING
 // AI - Warp teleport state machine
 void func_800A68CC_B587C(void) {
 	s16 sp2E;
