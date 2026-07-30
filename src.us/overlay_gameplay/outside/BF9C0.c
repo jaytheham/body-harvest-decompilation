@@ -316,18 +316,17 @@ s16 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 leve
 	return -0x8000;
 }
 
-// CURRENT(210)
+// CURRENT(175)
 #ifdef NON_MATCHING
 s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 	Unk8014FD30Type *base;
 	Unk8014FD30Type *cur;
 	BoundingBox *sub;
-	s32 cnt;
+	s32 cnt = 0;
 	s32 idx;
 
 	idx = currentLevel - 1;
 	base = D_80147C30_156BE0[idx];
-	idx = 0;
 	cur = base;
 	idx = 0;
 	for (; idx != 6; idx++, cur++) {
@@ -649,10 +648,10 @@ void func_800B165C_C060C(s32 arg0) {
 /* Sample terrain color at tile coordinate, bilinear-interpolating the landscape palette */
 void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
 	// Agent - these two args probably should be u8
-	s32 x = arg0 & 0xFF;
-	s32 y = arg1 & 0xFF;
-	s32 tileX = ((x >> 1) - 1) & 0xFF;
-	s32 tileY = (y >> 1) & 0xFF;
+	u8 x = arg0 & 0xFF;
+	u8 y = arg1 & 0xFF;
+	u8 tileX = ((x >> 1) - 1) & 0xFF;
+	u8 tileY = (y >> 1) & 0xFF;
 	u16 top[3];
 	u16 bot[3];
 	u8 c00 = D_80260700[(tileX << 7) + tileY];
@@ -1027,7 +1026,7 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s32 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
 #endif
 
-// CURRENT(8135)
+// CURRENT(8140)
 #ifdef NON_MATCHING
 void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	// Agent - remove unnecessary temp vars
@@ -1092,7 +1091,7 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		do {
 			var_s0 = (s16) ((u32) sp58 >> 16);
 			if (var_s2 <= 0) {
-					var_v0 = 0 + (var_s2 * -0x100);
+					var_v0 = (var_s2 * -0x100);
 			} else {
 				var_v0 = ((0x100 - sp68) + (var_s2 << 8)) - 0x100;
 			}
@@ -1152,28 +1151,18 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2854_C1804.s")
 #endif
 
+// CURRENT(5858)
 #ifdef NON_MATCHING
-// CURRENT(5633)
 void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
-	f32 temp_f2;
 	f32 sp2C;
 	f32 sp28;
-	f32 sp1C;
-	f32 sp20;
-	f32 sp24;
+	f32 sp[5];
 	s32 temp_v0;
-	f32 *temp_v1;
-	s32 levelOffset;
-	f32 delta;
+	f32 temp_f2;
+	f32 factor;
 	s8 sp18;
 	s8 sp19;
 	s8 sp1A;
-	s32 pad0;
-	s32 pad1;
-	f32 factor;
-
-	pad0 = 0;
-	pad1 = 0;
 
 	sp2C = (f32)((((u8 *)arg0)[3] - ((u8 *)arg0)[1]) << 5);
 	sp28 = (f32)((((u8 *)arg0)[4] - ((u8 *)arg0)[0]) << 5);
@@ -1191,29 +1180,20 @@ void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
 
 	factor = (f32)(temp_v0 / D_80142E18_151DC8[0]);
 	if ((((u8 *)arg0)[2] << 5) < D_80222A70) {
-		levelOffset = currentLevel * 0xC;
-		// Agent - is it better here to do D_8013DA84_14CA34[currentLevel - 1][x]
-		// Should D_8013DA84_14CA34 be declared as an array of structs to get better logic?
-		// Same for the other arrays being accessed here
-		delta = ((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-3] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3];
-		sp1C = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3] + (factor * delta);
-		delta = ((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-2] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-2];
-		sp20 = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-2] + (factor * delta);
-		delta = ((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-1] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-1];
-		sp24 = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-1] + (factor * delta);
+		s32 levelOffset = currentLevel * 12;
+		sp[2] = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3] + factor * (((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-3] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3]);
+		sp[1] = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-2] + factor * (((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-2] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-2]);
+		sp[0] = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-1] + factor * (((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-1] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-1]);
 	} else {
-		levelOffset = currentLevel * 0xC;
-		delta = ((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-3] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-3];
-		sp1C = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-3] + (factor * delta);
-		delta = ((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-2] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-2];
-		sp20 = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-2] + (factor * delta);
-		delta = ((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-1] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-1];
-		sp24 = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-1] + (factor * delta);
+		s32 levelOffset = currentLevel * 12;
+		sp[2] = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-3] + factor * (((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-3] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-3]);
+		sp[1] = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-2] + factor * (((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-2] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-2]);
+		sp[0] = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-1] + factor * (((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-1] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-1]);
 	}
 
-	arg2[0] = (s8)(u32)((f32)arg1[0] * sp1C);
-	arg2[1] = (s8)(u32)((f32)arg1[1] * sp20);
-	arg2[2] = (s8)(u32)((f32)arg1[2] * sp24);
+	arg2[0] = (s8)(u32)((f32)arg1[0] * sp[2]);
+	arg2[1] = (s8)(u32)((f32)arg1[1] * sp[1]);
+	arg2[2] = (s8)(u32)((f32)arg1[2] * sp[0]);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2CF0_C1CA0.s")
@@ -1257,7 +1237,7 @@ s32 func_800B325C_C220C(s8 arg0, s8 arg1, u16 arg2)
 }
 
 /* Set "underwater" flag (bit 12) on tiles below the water level */
-// CURRENT(1180)
+// CURRENT(960)
 #ifdef NON_MATCHING
 void func_800B32AC_C225C(u16 *arg0) {
 	u16 *ptr;
@@ -1271,8 +1251,6 @@ void func_800B32AC_C225C(u16 *arg0) {
 	level = D_80222A70 / 32;
 	ptr = arg0;
 	i = 0;
-	// Agent - try turning this into a for loop
-	// It seems likely the "real" code won't manually increment both i and ptr
 	do {
 		i += 2;
 		if (currentLevel == 4) {
@@ -1285,9 +1263,9 @@ void func_800B32AC_C225C(u16 *arg0) {
 			ptr[0] &= ~0x1000;
 		}
 
-		x = (x + 1) & 0xFF;
+		x = x + 1;
 		if (x == 0) {
-			y = (y + 1) & 0xFF;
+			y = y + 1;
 		}
 		ptr++;
 	} while (i != 0x1FE02);
@@ -1509,11 +1487,11 @@ void func_800B41C8_C3178(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 }
 
 /* Scroll ring buffer right: shift 1 tile column to the right, compute new column */
-// CURRENT(7186)
+// CURRENT(1148)
 #ifdef NON_MATCHING
 void func_800B42B0_C3260(s32 arg0) {
 	u8 sp6F;
-	s8 sp68[3];
+	u8 sp68[3];
 	s8 sp60[5];
 	u16 *sp5C;
 	u8 sp59;
@@ -1521,10 +1499,8 @@ void func_800B42B0_C3260(s32 arg0) {
 	u16 *temp_s6;
 	u16 *temp_s7;
 	s32 var_s0;
-	s32 temp_v1;
+	s32 temp_t8;
 	s32 temp_t9;
-	u8 *temp_v0;
-	RingEntry *temp_v0_4;
 
 	(void)arg0;
 
@@ -1539,8 +1515,7 @@ void func_800B42B0_C3260(s32 arg0) {
 	sp59 = D_8014F898;
 
 	do {
-		temp_v1 = D_8014F89D + sp6F;
-		temp_t9 = (D_8014F89C + (temp_v1 << 8) + 0x12) & 0xFFFF;
+		temp_t9 = (D_8014F89C + ((D_8014F89D + sp6F) << 8) + 0x12) & 0xFFFF;
 		temp_s6 = (u16 *)((u8 *)sp5C + temp_t9 * 2);
 		temp_s7 = sp5C + temp_t9;
 
@@ -1550,60 +1525,45 @@ void func_800B42B0_C3260(s32 arg0) {
 		sp60[3] = temp_s6[1] & 0x3F;
 		sp60[4] = temp_s6[0x100] & 0x3F;
 
-		func_800B1814_C07C4(temp_v1 & 0xFF, (D_8014F89C + 0x12) & 0xFF, sp54);
-		func_800B2CF0_C1CA0(sp60, sp54, sp68);
+		func_800B1814_C07C4((D_8014F89D + sp6F) & 0xFF, (D_8014F89C + 0x12) & 0xFF, sp54);
+		func_800B2CF0_C1CA0(sp60, sp54, (s8 *)sp68);
 
 		var_s0 = 0;
-		// Agent - you must replace this goto with a for/while
-	loop_2:
-		temp_v0 = &D_8014FD48[var_s0 * 2];
-		if (((D_8014F89C + 0x12) == temp_v0[0]) && ((D_8014F89D + sp6F) == temp_v0[1])) {
-			s32 temp_t8;
-			s32 temp_v1_2;
-			s32 temp_v0_2;
-			s32 temp_v0_3;
-
-			temp_t8 = (func_800038E0_44E0() % 60) & 0xFF;
-			temp_v1_2 = temp_t8 + 0x14;
-			if (temp_v1_2 < 0) {
-				sp68[0] = 0;
-			} else {
-				sp68[0] = temp_v1_2;
+		while (var_s0 < 0x40) {
+			if (((D_8014F89C + 0x12) == D_8014FD48[var_s0 * 2]) && ((D_8014F89D + sp6F) == D_8014FD48[var_s0 * 2 + 1])) {
+				temp_t8 = (func_800038E0_44E0() % 60) & 0xFF;
+				if ((temp_t8 + 0x14) < 0) {
+					sp68[0] = 0;
+				} else {
+					sp68[0] = temp_t8 + 0x14;
+				}
+				if ((temp_t8 - 5) < 0) {
+					sp68[1] = 0;
+				} else {
+					sp68[1] = temp_t8 - 5;
+				}
+				if ((temp_t8 - 0x19) < 0) {
+					sp68[2] = 0;
+				} else {
+					sp68[2] = temp_t8 - 0x19;
+				}
 			}
-
-			temp_v0_2 = temp_t8 - 5;
-			if (temp_v0_2 < 0) {
-				sp68[1] = 0;
-			} else {
-				sp68[1] = temp_v0_2;
-			}
-
-			temp_v0_3 = temp_t8 - 0x19;
-			if (temp_v0_3 < 0) {
-				sp68[2] = 0;
-			} else {
-				sp68[2] = temp_v0_3;
-			}
-		}
-		var_s0 = (var_s0 + 1) & 0xFF;
-		if (!(var_s0 >= 0x40)) {
-			goto loop_2;
+			var_s0 = (var_s0 + 1) & 0xFF;
 		}
 
-		temp_v0_4 = &D_80151DD8.tiles[(u8)sp59][D_8014F899];
-		temp_v0_4->tileType = *temp_s7;
+		D_80151DD8.tiles[(u8)sp59][D_8014F899].tileType = *temp_s7;
 		if (temp_s6[-1] & 0x800) {
-			temp_v0_4->r = (((u8)sp68[0] / 4) * 3);
-			temp_v0_4->b = (((u8)sp68[2] / 4) * 3);
-			temp_v0_4->g = (((u8)sp68[1] / 4) * 3);
+			D_80151DD8.tiles[(u8)sp59][D_8014F899].r = (sp68[0] / 4) * 3;
+			D_80151DD8.tiles[(u8)sp59][D_8014F899].b = (sp68[2] / 4) * 3;
+			D_80151DD8.tiles[(u8)sp59][D_8014F899].g = (sp68[1] / 4) * 3;
 		} else {
-			temp_v0_4->r = (u8)sp68[0];
-			temp_v0_4->g = (u8)sp68[1];
-			temp_v0_4->b = (u8)sp68[2];
+			D_80151DD8.tiles[(u8)sp59][D_8014F899].r = sp68[0];
+			D_80151DD8.tiles[(u8)sp59][D_8014F899].g = sp68[1];
+			D_80151DD8.tiles[(u8)sp59][D_8014F899].b = sp68[2];
 		}
 
-		sp59 = ((u8)sp59 + 1) % 19;
-		sp6F = (sp6F + 1) & 0xFF;
+		sp59 = (sp59 + 1) % 19;
+		sp6F++;
 	} while (sp6F < 0x13);
 
 	D_8014F899 = (D_8014F899 + 1) % 19;
@@ -1614,7 +1574,7 @@ void func_800B42B0_C3260(s32 arg0) {
 #endif
 
 /* Scroll ring buffer left: shift 1 tile column to the left, compute new column */
-// CURRENT(7613)
+// CURRENT(6983)
 #ifdef NON_MATCHING
 void func_800B4660_C3610(s32 arg0) {
 	u8 sp6F;
@@ -1628,10 +1588,10 @@ void func_800B4660_C3610(s32 arg0) {
 
 	sp5C = &D_8014F8A0[0][0];
 	D_8014F899 = D_80151DD8.ringX;
-	D_8014F899 = (D_8014F899 + 0x12) % 19;
 	D_8014F898 = D_80151DD8.ringY;
 	D_8014F89C = D_80151DD8.mapPosX;
 	D_80151DD8.mapPosX = D_80151DD8.mapPosX - 1;
+	D_8014F899 = (D_8014F899 + 0x12) % 19;
 	D_8014F89C = D_80151DD8.mapPosX;
 	D_8014F89D = D_80151DD8.mapPosY;
 	sp59 = D_8014F898;
@@ -1690,22 +1650,22 @@ void func_800B4660_C3610(s32 arg0) {
 	} while (var_s1 < 0x13);
 	D_80151DD8.ringX = D_8014F899;
 }
-	#else
-	#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B4660_C3610.s")
-	#endif
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B4660_C3610.s")
+#endif
 
 /* Scroll ring buffer down: shift 1 tile row downward, compute new row */
-// CURRENT(7116)
+// CURRENT(5612)
 #ifdef NON_MATCHING
 void func_800B49A4_C3954(s32 arg0) {
 	u8 sp6F;
-	s8 sp68[3];
-	s8 sp60[5];
+	u8 sp68[3];
+	u8 sp60[5];
 	u16 *sp5C;
 	u8 sp59;
 	u8 sp54[3];
-	s32 var_s0;
 	s32 var_s1;
+	s32 var_s0;
 
 	sp5C = &D_8014F8A0[0][0];
 	D_8014F89D = D_80151DD8.mapPosY;
@@ -1727,59 +1687,53 @@ void func_800B49A4_C3954(s32 arg0) {
 		sp60[2] = sp5C[temp_t9] & 0x3F;
 		sp60[3] = sp5C[temp_t9 + 1] & 0x3F;
 		sp60[4] = sp5C[temp_t9 + 0x100] & 0x3F;
-
 		func_800B1814_C07C4((D_8014F89D + 0x12) & 0xFF, (D_8014F89C + var_s1) & 0xFF, sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 		var_s0 = 0;
-	loop_2:
-		if ((D_8014FD48[var_s0 * 2] == D_8014F89C + var_s1) && (D_8014FD48[var_s0 * 2 + 1] == D_8014F89D + 0x12)) {
-			s32 temp_t8 = (func_800038E0_44E0() % 60) & 0xFF;
-			if ((temp_t8 + 0x14) < 0) {
-				sp68[0] = 0;
-			} else {
-				sp68[0] = temp_t8 + 0x14;
-			}
-			if ((temp_t8 - 5) < 0) {
-				sp68[1] = 0;
-			} else {
-				sp68[1] = temp_t8 - 5;
-			}
-			if ((temp_t8 - 0x19) < 0) {
-				sp68[2] = 0;
-			} else {
-				sp68[2] = temp_t8 - 0x19;
-			}
-		}
+		do {
+			if ((D_8014F89C + var_s1 == D_8014FD48[var_s0 * 2]) && (D_8014F89D + 0x12 == D_8014FD48[var_s0 * 2 + 1])) {
+				s32 rnd = func_800038E0_44E0() % 60;
+				s32 _t8 = rnd & 0xFF;
 
-		var_s0 = (var_s0 + 1) & 0xFF;
-		if (var_s0 < 0x40) {
-			goto loop_2;
-		}
-
-		D_80151DD8.tiles[D_8014F898][(u8)sp59].tileType = sp5C[temp_t9];
+				if (_t8 + 0x14 < 0) {
+					sp68[0] = 0;
+				} else {
+					sp68[0] = _t8 + 0x14;
+				}
+				if (_t8 - 5 < 0) {
+					sp68[1] = 0;
+				} else {
+					sp68[1] = _t8 - 5;
+				}
+				if (_t8 - 0x19 < 0) {
+					sp68[2] = 0;
+				} else {
+					sp68[2] = _t8 - 0x19;
+				}
+			}
+			var_s0 = (var_s0 + 1) & 0xFF;
+		} while (var_s0 < 0x40);
+		D_80151DD8.tiles[D_8014F898][sp59].tileType = sp5C[temp_t9];
 		if (sp5C[temp_t9 - 1] & 0x800) {
-			D_80151DD8.tiles[D_8014F898][(u8)sp59].r = ((u8)sp68[0] / 4) * 3;
-			D_80151DD8.tiles[D_8014F898][(u8)sp59].b = ((u8)sp68[2] / 4) * 3;
-			D_80151DD8.tiles[D_8014F898][(u8)sp59].g = ((u8)sp68[1] / 4) * 3;
+			D_80151DD8.tiles[D_8014F898][sp59].r = ((u8)sp68[0] / 4) * 3;
+			D_80151DD8.tiles[D_8014F898][sp59].b = ((u8)sp68[2] / 4) * 3;
+			D_80151DD8.tiles[D_8014F898][sp59].g = ((u8)sp68[1] / 4) * 3;
 		} else {
-			D_80151DD8.tiles[D_8014F898][(u8)sp59].r = (u8)sp68[0];
-			D_80151DD8.tiles[D_8014F898][(u8)sp59].g = (u8)sp68[1];
-			D_80151DD8.tiles[D_8014F898][(u8)sp59].b = (u8)sp68[2];
+			D_80151DD8.tiles[D_8014F898][sp59].r = (u8)sp68[0];
+			D_80151DD8.tiles[D_8014F898][sp59].g = (u8)sp68[1];
+			D_80151DD8.tiles[D_8014F898][sp59].b = (u8)sp68[2];
 		}
-
 		sp59 = ((u8)sp59 + 1) % 19;
 		var_s1 = (sp6F + 1) & 0xFF;
 		sp6F = var_s1;
 	} while (var_s1 < 0x13);
-
-	D_8014F898 = (s8)((D_8014F898 + 1) % 19);
+	D_8014F898 = (D_8014F898 + 1) % 19;
 	D_80151DD8.ringY = D_8014F898;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B49A4_C3954.s")
 #endif
 
-/* Scroll ring buffer up: shift 1 tile row upward, compute new row */
 // CURRENT(7487)
 #ifdef NON_MATCHING
 void func_800B4D4C_C3CFC(s32 arg0) {
@@ -2204,8 +2158,8 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5090_C4040.s")
 #endif
 
-#ifdef NON_MATCHING
 // CURRENT(1202)
+#ifdef NON_MATCHING
 s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	arg3 &= 0xFF;
 
@@ -2824,40 +2778,34 @@ s32 func_800B85CC_C757C(s16 arg0, s16 arg1) {
 
 /* Get minimum terrain height of the 4 corners of a tile */
 #ifdef NON_MATCHING
-// CURRENT(294)
+// CURRENT(1460)
 s16 func_800B8688_C7638(s8 arg0, s8 arg1) {
-	s16 temp_a2;
-	s16 temp_t0;
-	s16 temp_t4;
-	s16 temp_t5;
-	s16 temp_t7;
 	s16 var_v1;
-	s16 var_a0;
-	s16 var_t1;
-	s16 *temp_a1;
-	s16 *temp_t2;
+	s16 temp_t0;
+	s16 temp_t7;
+	s16 temp_t5;
+	s16 temp_t4;
+	s16 temp_a0;
+	s16 temp_t1;
 
-	temp_a2 = arg0 + 0x80;
-	var_v1 = temp_a2;
+	var_v1 = arg0 + 0x80;
 	temp_t0 = arg1 + 0x80;
-	temp_t2 = &D_8014F8A0[temp_t0][temp_a2];
-	temp_t7 = (u16)temp_t2[0] & 0x3F;
-	temp_t5 = (u16)temp_t2[1] & 0x3F;
+	temp_t7 = (u16)D_8014F8A0[temp_t0][var_v1] & 0x3F;
+	temp_t5 = (u16)D_8014F8A0[temp_t0][var_v1 + 1] & 0x3F;
 	if (temp_t7 < temp_t5) {
-		var_a0 = temp_t7;
+		temp_a0 = temp_t7;
 	} else {
-		var_a0 = temp_t5;
+		temp_a0 = temp_t5;
 	}
-	temp_a1 = &D_8014F8A0[temp_t0][temp_a2];
-	var_t1 = (u16)temp_a1[0x100] & 0x3F;
-	temp_t4 = (u16)temp_a1[0x101] & 0x3F;
-	if (var_t1 >= temp_t4) {
-		var_t1 = temp_t4;
+	temp_t1 = (u16)D_8014F8A0[temp_t0][var_v1 + 0x100] & 0x3F;
+	temp_t4 = (u16)D_8014F8A0[temp_t0][var_v1 + 0x101] & 0x3F;
+	if (temp_t1 >= temp_t4) {
+		temp_t1 = temp_t4;
 	}
-	if (var_a0 < var_t1) {
-		return var_a0;
+	var_v1 = temp_t1;
+	if (temp_a0 < temp_t1) {
+		var_v1 = temp_a0;
 	}
-	var_v1 = var_t1;
 	return var_v1;
 }
 #else
@@ -3141,50 +3089,51 @@ void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2) {
 	D_8014F838 = 1;
 }
 
-// CURRENT(3309)
+// CURRENT(20)
 #ifdef NON_MATCHING
-s32 func_800B9228_C81D8(s32 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4) {
+s32 func_800B9228_C81D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 tempT0;
 	s16 tempV1;
-	s16 tempA1;
-	s32 tempA0;
-	s32 tempA2;
-	s32 tempV0;
-	s32 tempV1_2;
+	s32 n0;
+	s32 n2;
+	s32 dx;
+	s32 dz;
+	s32 abs0;
 
 	tempT0 = D_8014FD2A >> 1;
 	if ((D_80157590 != 0) || (D_8014FD2A == -0x8000U)) {
 		return 1;
 	}
 
-	tempA2 = arg1 - arg3;
-	tempA0 = (s16)arg0 - (s16)arg2;
-	tempV1 = func_80003824_4424((f32) tempA0, (f32) tempA2);
-	tempA1 = arg4;
+	dz = arg1 - arg3;
+	dx = arg0 - arg2;
+	tempV1 = func_80003824_4424((f32) dx, (f32) dz);
 
-	if ((tempA1 < -0x4000) || (tempA1 >= 0x4001)) {
+	if ((arg4 < -0x4000) || (arg4 >= 0x4001)) {
 		tempV1 += 0x8000;
-		tempA1 += 0x8000;
+		arg4 += 0x8000;
 	}
 
-	if ((tempA1 - tempT0) < tempV1) {
-		tempV0 = -tempA0;
-		if (tempV1 < (tempA1 + tempT0)) {
-			tempV1_2 = -tempA2;
-			if (tempV0 < tempA0) {
-				tempV0 = tempA0;
+	if ((arg4 - tempT0) < tempV1) {
+		if (tempV1 < (arg4 + tempT0)) {
+			n0 = -dx;
+			if (n0 < dx)
+				abs0 = dx;
+			else
+				abs0 = n0;
+			n2 = -dz;
+			if (n2 < dz)
+				n0 = dz;
+			else
+				n0 = n2;
+			n2 = (abs0 * abs0) + (n0 * n0);
+			if (!(n2 <= 0)) {
+				n0 = sqrtf((f32) n2);
+			} else {
+				n0 = 0;
 			}
-			if (tempV1_2 < tempA2) {
-				tempV1_2 = tempA2;
-			}
-			tempA0 = 0;
-			tempA2 = (tempV0 * tempV0) + (tempV1_2 * tempV1_2);
-			if (tempA2 > 0) {
-				tempA0 = sqrtf((f32) tempA2);
-			}
-			if (tempA0 < 0x1194) {
+			if (n0 < 0x1194)
 				return 1;
-			}
 		}
 	}
 
@@ -3194,14 +3143,13 @@ s32 func_800B9228_C81D8(s32 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9228_C81D8.s")
 #endif
 
-// CURRENT(10987)
+// CURRENT(5612)
 #ifdef NON_MATCHING
 s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
 	s32 diffX;
 	s32 diffZ;
 	s32 dist;
 	s32 angle;
-	s32 halfAngle;
 	s32 edge;
 	s32 absX;
 	s32 absZ;
@@ -3210,49 +3158,47 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 		return 1;
 	}
 
-	diffX = arg0 - arg3;
-	diffZ = arg1 - (s16)arg4;
+	diffX = (s16)(arg0 - arg3);
+	diffZ = (s16)(arg1 - (s16)arg4);
 	dist = sqrtf((f32)((diffX * diffX) + (diffZ * diffZ)));
 	angle = func_80003824_4424((f32)diffX, (f32)diffZ) - arg5;
-	halfAngle = D_8014FD2A >> 1;
-	edge = angle + halfAngle;
+	edge = angle + (D_8014FD2A >> 1);
 
-	if ((s16)(((sins(edge & 0xFFFF) / 32768.0f) * dist)) < -(u16)arg2) {
+	if ((s16)((((f32)sins(edge & 0xFFFF) / 32768.0) * dist)) < -(u16)arg2) {
 		return 0;
 	}
 
-	if ((s16)(((sins((edge - D_8014FD2A) & 0xFFFF) / 32768.0f) * dist)) > (u16)arg2) {
+	if ((s16)((((f32)sins((edge - D_8014FD2A) & 0xFFFF) / 32768.0) * dist)) > (u16)arg2) {
 		return 0;
 	}
 
-	absX = -diffX;
-	if (absX < diffX) {
+	if (-diffX < diffX) {
 		absX = diffX;
+	} else {
+		absX = -diffX;
 	}
 
-	absZ = -diffZ;
-	if (absZ < diffZ) {
+	if (-diffZ < diffZ) {
 		absZ = diffZ;
+	} else {
+		absZ = -diffZ;
 	}
 
+	edge = absX * absX;
 	dist = 0;
-	edge = (absX * absX) + (absZ * absZ);
+	edge += absZ * absZ;
 	if (edge > 0) {
 		dist = sqrtf((f32)edge);
 	}
 
-	if (dist < 0xFA0) {
-		return 1;
-	}
-
-	return 0;
+	return (dist < 0xFA0) ? 1 : 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B93AC_C835C.s")
 #endif
 
 /* World-space bounding box frustum cull: checks tile against camera position + angle */
-// CURRENT(9867)
+// CURRENT(7540)
 #ifdef NON_MATCHING
 s32 func_800B960C_C85BC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	s16 centerX;
@@ -3271,26 +3217,22 @@ s32 func_800B960C_C85BC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 	D_8014F854 = 1;
 	angleOffset = 0x4000 - D_80047950;
-	centerX = (s16)arg0;
-	centerZ = (s16)arg1;
+	arg0 = (s16)arg0;
+	arg1 = (s16)arg1;
+	centerX = arg0;
+	centerZ = arg1;
+	arg2 = (u16)arg2;
+	arg3 = (u16)arg3;
 	objX = (s16)(s32)D_80052B2C->unk0;
 	objZ = (s16)(s32)D_80052B2C->unk8;
-	rangeX = (u16)arg2;
-	rangeZ = (u16)arg3;
+	rangeX = arg2;
+	rangeZ = arg3;
 
 	{
-		s32 diffX;
-		s32 diffZ;
-		diffX = objX - centerX - (rangeX >> 1);
-		if (diffX < 0) {
-			diffX = -diffX;
-		}
-		if (diffX < rangeX) {
-			diffZ = objZ - centerZ - (rangeZ >> 1);
-			if (diffZ < 0) {
-				diffZ = -diffZ;
-			}
-			if (diffZ < rangeZ) {
+		s32 diffX = objX - centerX - (rangeX / 2);
+		if ((diffX >= 0 ? diffX : -diffX) < rangeX) {
+			s32 diffZ = objZ - centerZ - (rangeZ / 2);
+			if ((diffZ >= 0 ? diffZ : -diffZ) < rangeZ) {
 				return 1;
 			}
 		}
@@ -4289,7 +4231,7 @@ void func_800BB5E0_CA590(void) {
 
 // (short playerX, short playerZ)
 #ifdef NON_MATCHING
-// CURRENT(1464)
+// CURRENT(25)
 void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 	s16 tileZ;
 	s16 tileX;
@@ -4298,6 +4240,7 @@ void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 	u16 *tilePtr;
 	s32 stickX;
 	s32 stickY;
+	s16 pad20;
 	u16 randVal;
 	u32 tileBits;
 	s32 tileType;
@@ -4323,16 +4266,22 @@ void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 		return;
 	}
 
-	stickX = currentControllerStates[0].stick_x;
-	if (stickX < 0) {
-		stickX = -stickX;
+	{
+		s32 sx = currentControllerStates[0].stick_x;
+		if (sx >= 0) {
+			stickX = sx;
+		} else {
+			stickX = -sx;
+		}
 	}
-
-	stickY = currentControllerStates[0].stick_y;
-	if (stickY < 0) {
-		stickY = -stickY;
+	{
+		s32 sy = currentControllerStates[0].stick_y;
+		if (sy >= 0) {
+			stickY = sy;
+		} else {
+			stickY = -sy;
+		}
 	}
-
 	if ((stickY + stickX) < 0x11) {
 		return;
 	}
@@ -4371,32 +4320,32 @@ void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BC2F8_CB2A8.s")
 #endif
 
-// CURRENT(506)
+// CURRENT(98)
 #ifdef NON_MATCHING
 s32 func_800BC5DC_CB58C(s16 arg0) {
-	AlienInstance *temp_v1;
-	s16 sp34;
 	s16 sp36;
-	u16 *temp_t0;
-	u16 temp_a2;
-	s32 temp_t4;
+	s16 sp34;
 	s16 a1;
 	s16 a3;
+	u16 *tilePtr;
+	u16 tile;
+	s32 tileType;
+	s16 (*tiles)[256];
 
-	temp_v1 = &alienInstances[arg0];
-	sp34 = temp_v1->unk4;
-	sp36 = temp_v1->unk0;
+	sp36 = alienInstances[arg0].unk0;
+	sp34 = alienInstances[arg0].unk4;
+	tiles = D_8014F8A0;
 	a1 = (sp34 >> 8) + 0x80;
 	a3 = (sp36 >> 8) + 0x80;
-	temp_t0 = &D_8014F8A0[a1][a3];
-	temp_a2 = *temp_t0;
-	temp_t4 = ((u32)temp_a2 << 0x16) >> 0x1C;
+	tilePtr = (u16 *)&tiles[a1][a3];
+	tile = *tilePtr;
+	tileType = (s32)(((u32)tile << 0x16) >> 0x1C);
 
-	if ((temp_t4 >= 8) && (temp_t4 < 0xD) &&
-		((D_8021EA30[(a1 / 4) * 0x40 + (a3 / 4)] & 0xF) == 7) && (((u32)temp_a2 >> 0xF) != 1)) {
-		*temp_t0 = (temp_a2 & 0xFC3F) | 0x380;
+	if ((tileType >= 8) && (tileType < 0xD) &&
+		((D_8021EA30[(a1 / 4) * 0x40 + (a3 / 4)] & 0xF) == 7) && (((u32)tile >> 0xF) != 1)) {
+		*tilePtr = (tile & 0xFC3F) | 0x380;
 		func_800DF038_EDFE8(sp36, (func_800B84D0_C7480(sp36, sp34) >> 8) + 0xA, sp34, 0x78, 0, 0);
-		func_800DF848_EE7F8(temp_v1->unk0, temp_v1->unk2, temp_v1->unk4, (u16)alienSpecs[temp_v1->specIndex].unkC, 0);
+		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)alienSpecs[alienInstances[arg0].specIndex].unkC, 0);
 		func_80079910_888C0(arg0);
 		return 1;
 	}
@@ -4818,8 +4767,7 @@ void func_800BD8B8_CC868(void) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(1115)
+// CURRENT(1320)
 // openCurrentStageGate
 void func_800BDAF4_CCAA4(void) {
 	u8 stage;
@@ -4827,8 +4775,8 @@ void func_800BDAF4_CCAA4(void) {
 	s32 gateState;
 	s32 absGateState;
 	s16 x;
-	s16 y;
 	s16 z;
+	s16 y;
 
 	for (stage = 0; stage < 0x10; stage++) {
 		osSyncPrintf(&D_80142DF0_151DA0, currentLevel, D_80047F94, D_80147F00_156EB0[currentLevel][D_80047F94 - 6]);
@@ -4837,29 +4785,27 @@ void func_800BDAF4_CCAA4(void) {
 		}
 
 		osSyncPrintf(&D_80142DFC_151DAC, stage);
-		gate = &D_8003E0FC[currentLevel - 1][stage];
-		gateState = gate->openness;
+		gate = &D_8003E0FC[currentLevel][stage];
+		gateState = gate[-8].openness;
 		if (gateState == 0x50) {
 			continue;
 		}
 
-		absGateState = -gateState;
-		if (absGateState < gateState) {
+		if ((-gateState) < gateState) {
 			absGateState = gateState;
+		} else {
+			absGateState = -gateState;
 		}
 
-		x = gate->xPosition << 8;
-		z = gate->zPosition << 8;
-		y = gate->yPosition;
-		gate->openness = absGateState + 1;
+		gate[-8].openness = absGateState + 1;
+		x = gate[-8].xPosition << 8;
+		y = gate[-8].yPosition;
+		z = gate[-8].zPosition << 8;
 		func_800DEE5C_EDE0C(x, y, z, 0x64, 3);
 		func_800DEE5C_EDE0C(x, y, z, 0x32, 3);
 		func_800D05A8_DF558(x, y, z, 0x1F4, 0xC8, 0xC8, 0xFA);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BDAF4_CCAA4.s")
-#endif
 
 void func_800BDD24_CCCD4(u8 arg0)
 {

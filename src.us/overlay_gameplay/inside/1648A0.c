@@ -137,10 +137,10 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1) {
 			}
 			temp_f12 = (f32) (((f64) ((arg0->unk6 - D_800E6A74) + 0x4000) * D_800A4D08) / 32768.0);
 			sp20 = temp_f12;
-			sp24 = __cosf(temp_f12);
+			sp24 = cosf(temp_f12);
 			sp2C = (s32) (((f32) arg1->stick_x * sp24) - (sinf(temp_f12) * (f32) arg1->stick_y));
 			sp24 = sinf(temp_f12);
-			D_800E6A64 = func_80003824_4424((f32) -sp2C, (f32) (s32) ((__cosf(temp_f12) * (f32) arg1->stick_y) + ((f32) arg1->stick_x * sp24)));
+			D_800E6A64 = func_80003824_4424((f32) -sp2C, (f32) (s32) ((cosf(temp_f12) * (f32) arg1->stick_y) + ((f32) arg1->stick_x * sp24)));
 			if (D_800A08F8 > 0.0f) {
 				func_8007D37C_16543C(arg0, D_800E6A66, 0);
 			}
@@ -156,24 +156,24 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1) {
 				temp_t8 = ((s32) (((Unk80157600 *)D_800E6F00)->unk8 - ((Unk80157600 *)D_800E6F00)->unk414)) / 4;
 				sp34 = ((s32) (((Unk80157600 *)D_800E6F00)->unk10 - ((Unk80157600 *)D_800E6F00)->unk418)) / 4;
 				sp38 = temp_t8;
-				sp24 = __cosf((f32) (((f64) (f32) arg0->unkE * D_800A4D10) / 32768.0));
+				sp24 = cosf((f32) (((f64) (f32) arg0->unkE * D_800A4D10) / 32768.0));
 				temp_f14 = (f32) sp34;
 				temp_f16 = (f32) temp_t8;
 				D_800E7340.x = (f32) ((sp24 * temp_f14) - (sinf((f32) (((f64) (f32) arg0->unkE * D_800A4D18) / 32768.0)) * temp_f16));
 				sp1C = temp_f16;
 				sp20 = temp_f14;
 				sp24 = sinf((f32) (((f64) (f32) arg0->unkE * D_800A4D20) / 32768.0));
-				D_800E7340.z = (f32) ((__cosf((f32) (((f64) (f32) arg0->unkE * D_800A4D28) / 32768.0)) * sp1C) + (sp24 * sp20));
+				D_800E7340.z = (f32) ((cosf((f32) (((f64) (f32) arg0->unkE * D_800A4D28) / 32768.0)) * sp1C) + (sp24 * sp20));
 			} else if (D_8009E8D8 != 0) {
 				sp30 = (s32) (s16) (s32) ((f64) (D_8008DDF0 * 32768.0f) / D_800A4D30);
 				D_800A08F8 = sqrtf((f32) ((sp4E * sp4E) + (sp4C * sp4C)));
 				temp_f12_2 = (f32) (((f64) (f32) sp30 * D_800A4D38) / 32768.0);
 				sp20 = temp_f12_2;
 				D_800E7340.z = (f32) (sinf(temp_f12_2) * D_800A08F8);
-				D_800E7340.x = (f32) (__cosf(temp_f12_2) * D_800A08F8);
+				D_800E7340.x = (f32) (cosf(temp_f12_2) * D_800A08F8);
 			} else {
 				D_800E7340.z = (f32) (sinf((f32) (((f64) (f32) D_800E6A78.unkE * D_800A4D40) / 32768.0)) * D_800A08F8);
-				D_800E7340.x = (f32) (__cosf((f32) (((f64) (f32) D_800E6A78.unkE * D_800A4D48) / 32768.0)) * D_800A08F8);
+				D_800E7340.x = (f32) (cosf((f32) (((f64) (f32) D_800E6A78.unkE * D_800A4D48) / 32768.0)) * D_800A08F8);
 			}
 			D_800E7314 = ((Unk80157600 *)D_800E6F00)->unk8;
 			D_800E7318 = ((Unk80157600 *)D_800E6F00)->unk10;
