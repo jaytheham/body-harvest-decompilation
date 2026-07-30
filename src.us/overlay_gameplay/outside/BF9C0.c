@@ -4807,8 +4807,7 @@ void func_800BD8B8_CC868(void) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(1115)
+// CURRENT(1320)
 // openCurrentStageGate
 void func_800BDAF4_CCAA4(void) {
 	u8 stage;
@@ -4816,8 +4815,8 @@ void func_800BDAF4_CCAA4(void) {
 	s32 gateState;
 	s32 absGateState;
 	s16 x;
-	s16 y;
 	s16 z;
+	s16 y;
 
 	for (stage = 0; stage < 0x10; stage++) {
 		osSyncPrintf(&D_80142DF0_151DA0, currentLevel, D_80047F94, D_80147F00_156EB0[currentLevel][D_80047F94 - 6]);
@@ -4826,29 +4825,27 @@ void func_800BDAF4_CCAA4(void) {
 		}
 
 		osSyncPrintf(&D_80142DFC_151DAC, stage);
-		gate = &D_8003E0FC[currentLevel - 1][stage];
-		gateState = gate->openness;
+		gate = &D_8003E0FC[currentLevel][stage];
+		gateState = gate[-8].openness;
 		if (gateState == 0x50) {
 			continue;
 		}
 
-		absGateState = -gateState;
-		if (absGateState < gateState) {
+		if ((-gateState) < gateState) {
 			absGateState = gateState;
+		} else {
+			absGateState = -gateState;
 		}
 
-		x = gate->xPosition << 8;
-		z = gate->zPosition << 8;
-		y = gate->yPosition;
-		gate->openness = absGateState + 1;
+		gate[-8].openness = absGateState + 1;
+		x = gate[-8].xPosition << 8;
+		y = gate[-8].yPosition;
+		z = gate[-8].zPosition << 8;
 		func_800DEE5C_EDE0C(x, y, z, 0x64, 3);
 		func_800DEE5C_EDE0C(x, y, z, 0x32, 3);
 		func_800D05A8_DF558(x, y, z, 0x1F4, 0xC8, 0xC8, 0xFA);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BDAF4_CCAA4.s")
-#endif
 
 void func_800BDD24_CCCD4(u8 arg0)
 {
