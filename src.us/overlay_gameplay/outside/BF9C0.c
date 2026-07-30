@@ -1506,11 +1506,11 @@ void func_800B41C8_C3178(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 }
 
 /* Scroll ring buffer right: shift 1 tile column to the right, compute new column */
-// CURRENT(7186)
+// CURRENT(1148)
 #ifdef NON_MATCHING
 void func_800B42B0_C3260(s32 arg0) {
 	u8 sp6F;
-	s8 sp68[3];
+	u8 sp68[3];
 	s8 sp60[5];
 	u16 *sp5C;
 	u8 sp59;
@@ -1518,10 +1518,8 @@ void func_800B42B0_C3260(s32 arg0) {
 	u16 *temp_s6;
 	u16 *temp_s7;
 	s32 var_s0;
-	s32 temp_v1;
+	s32 temp_t8;
 	s32 temp_t9;
-	u8 *temp_v0;
-	RingEntry *temp_v0_4;
 
 	(void)arg0;
 
@@ -1536,8 +1534,7 @@ void func_800B42B0_C3260(s32 arg0) {
 	sp59 = D_8014F898;
 
 	do {
-		temp_v1 = D_8014F89D + sp6F;
-		temp_t9 = (D_8014F89C + (temp_v1 << 8) + 0x12) & 0xFFFF;
+		temp_t9 = (D_8014F89C + ((D_8014F89D + sp6F) << 8) + 0x12) & 0xFFFF;
 		temp_s6 = (u16 *)((u8 *)sp5C + temp_t9 * 2);
 		temp_s7 = sp5C + temp_t9;
 
@@ -1547,60 +1544,45 @@ void func_800B42B0_C3260(s32 arg0) {
 		sp60[3] = temp_s6[1] & 0x3F;
 		sp60[4] = temp_s6[0x100] & 0x3F;
 
-		func_800B1814_C07C4(temp_v1 & 0xFF, (D_8014F89C + 0x12) & 0xFF, sp54);
-		func_800B2CF0_C1CA0(sp60, sp54, sp68);
+		func_800B1814_C07C4((D_8014F89D + sp6F) & 0xFF, (D_8014F89C + 0x12) & 0xFF, sp54);
+		func_800B2CF0_C1CA0(sp60, sp54, (s8 *)sp68);
 
 		var_s0 = 0;
-		// Agent - you must replace this goto with a for/while
-	loop_2:
-		temp_v0 = &D_8014FD48[var_s0 * 2];
-		if (((D_8014F89C + 0x12) == temp_v0[0]) && ((D_8014F89D + sp6F) == temp_v0[1])) {
-			s32 temp_t8;
-			s32 temp_v1_2;
-			s32 temp_v0_2;
-			s32 temp_v0_3;
-
-			temp_t8 = (func_800038E0_44E0() % 60) & 0xFF;
-			temp_v1_2 = temp_t8 + 0x14;
-			if (temp_v1_2 < 0) {
-				sp68[0] = 0;
-			} else {
-				sp68[0] = temp_v1_2;
+		while (var_s0 < 0x40) {
+			if (((D_8014F89C + 0x12) == D_8014FD48[var_s0 * 2]) && ((D_8014F89D + sp6F) == D_8014FD48[var_s0 * 2 + 1])) {
+				temp_t8 = (func_800038E0_44E0() % 60) & 0xFF;
+				if ((temp_t8 + 0x14) < 0) {
+					sp68[0] = 0;
+				} else {
+					sp68[0] = temp_t8 + 0x14;
+				}
+				if ((temp_t8 - 5) < 0) {
+					sp68[1] = 0;
+				} else {
+					sp68[1] = temp_t8 - 5;
+				}
+				if ((temp_t8 - 0x19) < 0) {
+					sp68[2] = 0;
+				} else {
+					sp68[2] = temp_t8 - 0x19;
+				}
 			}
-
-			temp_v0_2 = temp_t8 - 5;
-			if (temp_v0_2 < 0) {
-				sp68[1] = 0;
-			} else {
-				sp68[1] = temp_v0_2;
-			}
-
-			temp_v0_3 = temp_t8 - 0x19;
-			if (temp_v0_3 < 0) {
-				sp68[2] = 0;
-			} else {
-				sp68[2] = temp_v0_3;
-			}
-		}
-		var_s0 = (var_s0 + 1) & 0xFF;
-		if (!(var_s0 >= 0x40)) {
-			goto loop_2;
+			var_s0 = (var_s0 + 1) & 0xFF;
 		}
 
-		temp_v0_4 = &D_80151DD8.tiles[(u8)sp59][D_8014F899];
-		temp_v0_4->tileType = *temp_s7;
+		D_80151DD8.tiles[(u8)sp59][D_8014F899].tileType = *temp_s7;
 		if (temp_s6[-1] & 0x800) {
-			temp_v0_4->r = (((u8)sp68[0] / 4) * 3);
-			temp_v0_4->b = (((u8)sp68[2] / 4) * 3);
-			temp_v0_4->g = (((u8)sp68[1] / 4) * 3);
+			D_80151DD8.tiles[(u8)sp59][D_8014F899].r = (sp68[0] / 4) * 3;
+			D_80151DD8.tiles[(u8)sp59][D_8014F899].b = (sp68[2] / 4) * 3;
+			D_80151DD8.tiles[(u8)sp59][D_8014F899].g = (sp68[1] / 4) * 3;
 		} else {
-			temp_v0_4->r = (u8)sp68[0];
-			temp_v0_4->g = (u8)sp68[1];
-			temp_v0_4->b = (u8)sp68[2];
+			D_80151DD8.tiles[(u8)sp59][D_8014F899].r = sp68[0];
+			D_80151DD8.tiles[(u8)sp59][D_8014F899].g = sp68[1];
+			D_80151DD8.tiles[(u8)sp59][D_8014F899].b = sp68[2];
 		}
 
-		sp59 = ((u8)sp59 + 1) % 19;
-		sp6F = (sp6F + 1) & 0xFF;
+		sp59 = (sp59 + 1) % 19;
+		sp6F++;
 	} while (sp6F < 0x13);
 
 	D_8014F899 = (D_8014F899 + 1) % 19;

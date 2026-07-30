@@ -1,0 +1,80 @@
+TARGET                                                   CURRENT                             
+                                                  [32m>[39m      [32mc3260:[39m    [32maddiu   sp,sp,-0x80[39m              
+                                                  [32m>[39m      [32mc3264:[39m    [32msw      a0,0x80(sp)[39m              
+c3260:    lui     v1,0x8015                              c3268:    lui     a0,0x8015                
+c3264:    addiu   v1,v1,0x1dd8                           c326c:    addiu   a0,a0,0x1dd8             
+[31mc3268:[39m    [31maddiu   sp,sp,-0x70[39m                     [31m<[39m                                                 
+c326c:    lbu     v0,0x964(v1)                           c3270:    lbu     v1,0x964(a0)             
+c3270:    lui     t6,0x8015                              c3274:    lui     t6,0x8015                
+c3274:    lw      t6,-0x760(t6)                          c3278:    lw      t6,-0x760(t6)            
+[2m<12 lines>[22m                                                                                          
+c32a8:    sb      t8,0(s5)                               c32ac:    sb      t8,0(s5)                 
+c32ac:    sb      t9,-0x767(at)                          c32b0:    sb      t9,-0x767(at)            
+c32b0:    lb      t1,0x960(v1)                           c32b4:    lb      t1,0x960(a0)             
+[31mc32b4:[39m    [31msw      a0,0x70(sp)[39m                     [31m<[39m                                                 
+c32b8:    lui     a0,0x8015                              c32b8:    lui     a1,0x8015                
+c32bc:    addiu   a0,a0,-0x768                           c32bc:    addiu   a1,a1,-0x768             
+c32c0:    lbu     t3,0(s4)                               c32c0:    lbu     t2,0(s4)                 
+[2m<14 lines>[22m                                                                                          
+c32fc:    move    s1,zero                                c32fc:    move    s1,zero                  
+c3300:    li      s3,0x3c                                c3300:    li      s3,0x3c                  
+c3304:    li      s8,3                                   c3304:    li      s8,3                     
+[31mc3308:[39m    [31msb      zero,0x6f(sp)[39m                   [31m<[39m                                                 
+c330c:    sw      t6,0x5c(sp)                            c3308:    sw      t6,0x70(sp)              
+c3310:    sb      t2,0x59(sp)                            c330c:    sb      t4,0x6f(sp)              
+c3314: [95m~>[39m lbu     t5,0(s5)                               c3310: [95m~>[39m lbu     t5,0(s5)                 
+[2m<101 lines>[22m                                                                                         
+c34ac:    addu    v0,t4,t5                               c34a8:    addu    v0,t4,t5                 
+c34b0:    sh      t6,0(v0)                               c34ac:    sh      t6,0(v0)                 
+c34b4:    lhu     t7,-2(s6)                              c34b0:    lhu     t7,-2(s6)                
+[94mc34b8:[39m    [94mlbu     t9,0x68(sp)[39m                     [94m|[39m      [94mc34b4:[39m    [94mlb      t9,0x7c(sp)[39m              
+c34bc:    li      a2,0x13                                c34b8:    li      a2,0x13                  
+c34c0:    andi    t8,t7,0x800                            c34bc:    andi    t8,t7,0x800              
+c34c4:    beqzl   t8,c3538 [92m~>[39m                            c34c0:    beqzl   t8,c3534 [92m~>[39m              
+[94mc34c8:[39m    [94mlbu     t1,0x69(sp)[39m                     [94m|[39m      [94mc34c4:[39m    [94mlb      t1,0x7d(sp)[39m              
+c34cc:    lbu     t9,0x68(sp)                            c34c8:    lbu     t9,0x7c(sp)              
+c34d0:    lbu     t3,0x6a(sp)                            c34cc:    lbu     t3,0x7e(sp)              
+c34d4:    lbu     t6,0x69(sp)                            c34d0:    lbu     t6,0x7d(sp)              
+[2m<20 lines>[22m                                                                                          
+c3528:    sb      t8,3(v0)                               c3524:    sb      t8,3(v0)                 
+c352c:    b       c354c [32m~>[39m                               c3528:    b       c3548 [32m~>[39m                 
+c3530:    addiu   t3,a0,1                                c352c:    addiu   t3,a0,1                  
+[94mc3534:[39m    [94mlbu     t1,0x69(sp)[39m                     [94m|[39m      [94mc3530:[39m    [94mlb      t1,0x7d(sp)[39m              
+[94mc3538:[39m [92m~>[39m [94mlbu     t2,0x6a(sp)[39m                     [94m|[39m      [94mc3534:[39m [92m~>[39m [94mlb      t2,0x7e(sp)[39m              
+c353c:    sb      t9,2(v0)                               c3538:    sb      t9,2(v0)                 
+c3540:    sb      t1,3(v0)                               c353c:    sb      t1,3(v0)                 
+c3544:    sb      t2,4(v0)                               c3540:    sb      t2,4(v0)                 
+c3548:    addiu   t3,a0,1                                c3544:    addiu   t3,a0,1                  
+c354c: [32m~>[39m div     zero,t3,a2                             c3548: [32m~>[39m div     zero,t3,a2               
+[31mc3550:[39m    [31mlbu     v0,0x6f(sp)[39m                     [31m<[39m                                                 
+c3554:    bnez    a2,c3560 [31m~>[39m                            c354c:    bnez    a2,c3558 [31m~>[39m              
+c3558:    nop                                            c3550:    nop                              
+c355c:    break   0x7                                    c3554:    break   0x7                      
+[2m<6 lines>[22m                                                                                           
+c3578: [93m~>[39m addiu   v0,v0,1                                c3570: [93m~>[39m addiu   v0,s1,1                  
+c357c:    andi    t5,v0,0xff                             c3574:    andi    t5,v0,0xff               
+c3580:    mfhi    a0                                     c3578:    mfhi    a0                       
+[94mc3584:[39m    [94mslti    at,t5,0x13[39m                      [94m|[39m      [94mc357c:[39m    [94mandi    t6,t5,0xff[39m               
+c3588:    andi    t4,a0,0xff                             c3580:    andi    t4,a0,0xff               
+[94mc358c:[39m    [94msb      t4,0x59(sp)[39m                     [94m|[39m      [94mc3584:[39m    [94mslti    at,t6,0x13[39m               
+c3590:    move    v0,t5                                  c3588:    move    a0,t4                    
+                                                  [32m>[39m      [32mc358c:[39m    [32msb      t4,0x6f(sp)[39m              
+c3594:    move    s1,t5                                  c3590:    move    v0,t6                    
+[31mc3598:[39m    [31msb      t5,0x6f(sp)[39m                     [31m<[39m                                                 
+c359c:    bnez    at,c3314 [95m~>[39m                            c3594:    bnez    at,c3310 [95m~>[39m              
+c35a0:    move    a0,t4                                  c3598:    move    s1,t6                    
+c35a4:    addiu   t6,v1,1                                c359c:    addiu   t7,v1,1                  
+[2m<8 lines>[22m                                                                                           
+c35c8: [96m~>[39m li      at,-1                                  c35c0: [96m~>[39m li      at,-1                    
+c35cc:    bne     a2,at,c35e0 [92m~>[39m                         c35c4:    bne     a2,at,c35d8 [92m~>[39m           
+c35d0:    lui     at,0x8000                              c35c8:    lui     at,0x8000                
+[33mc35d4:[39m    bne     [35mt6[39m,at,c35e0 [92m~>[39m                  [33mr[39m      [33mc35cc:[39m    bne     [35mt7[39m,at,c35d8 [92m~>[39m           
+c35d8:    nop                                            c35d0:    nop                              
+c35dc:    break   0x6                                    c35d4:    break   0x6                      
+c35e0: [92m~>[39m lw      s0,0x18(sp)                            c35d8: [92m~>[39m lw      s0,0x18(sp)              
+[2m<8 lines>[22m                                                                                           
+c3604:    addiu   sp,sp,0x70                             c35fc:    addiu   sp,sp,0x80               
+c3608:    jr      ra                                     c3600:    jr      ra                       
+c360c:    sb      t8,0x961(a3)                           c3604:    sb      t9,0x961(a3)             
+                                                  [32m>[39m      [32mc3608:[39m    [32mlui     v1,0x8015[39m                
+                                                  [32m>[39m      [32mc360c:[39m    [32maddiu   v1,v1,0x1dd8[39m             
