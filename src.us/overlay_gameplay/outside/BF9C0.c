@@ -1151,28 +1151,18 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2854_C1804.s")
 #endif
 
+// CURRENT(5858)
 #ifdef NON_MATCHING
-// CURRENT(5633)
 void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
-	f32 temp_f2;
 	f32 sp2C;
 	f32 sp28;
-	f32 sp1C;
-	f32 sp20;
-	f32 sp24;
+	f32 sp[5];
 	s32 temp_v0;
-	f32 *temp_v1;
-	s32 levelOffset;
-	f32 delta;
+	f32 temp_f2;
+	f32 factor;
 	s8 sp18;
 	s8 sp19;
 	s8 sp1A;
-	s32 pad0;
-	s32 pad1;
-	f32 factor;
-
-	pad0 = 0;
-	pad1 = 0;
 
 	sp2C = (f32)((((u8 *)arg0)[3] - ((u8 *)arg0)[1]) << 5);
 	sp28 = (f32)((((u8 *)arg0)[4] - ((u8 *)arg0)[0]) << 5);
@@ -1190,29 +1180,20 @@ void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
 
 	factor = (f32)(temp_v0 / D_80142E18_151DC8[0]);
 	if ((((u8 *)arg0)[2] << 5) < D_80222A70) {
-		levelOffset = currentLevel * 0xC;
-		// Agent - is it better here to do D_8013DA84_14CA34[currentLevel - 1][x]
-		// Should D_8013DA84_14CA34 be declared as an array of structs to get better logic?
-		// Same for the other arrays being accessed here
-		delta = ((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-3] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3];
-		sp1C = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3] + (factor * delta);
-		delta = ((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-2] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-2];
-		sp20 = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-2] + (factor * delta);
-		delta = ((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-1] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-1];
-		sp24 = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-1] + (factor * delta);
+		s32 levelOffset = currentLevel * 12;
+		sp[2] = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3] + factor * (((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-3] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3]);
+		sp[1] = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-2] + factor * (((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-2] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-2]);
+		sp[0] = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-1] + factor * (((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-1] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-1]);
 	} else {
-		levelOffset = currentLevel * 0xC;
-		delta = ((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-3] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-3];
-		sp1C = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-3] + (factor * delta);
-		delta = ((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-2] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-2];
-		sp20 = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-2] + (factor * delta);
-		delta = ((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-1] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-1];
-		sp24 = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-1] + (factor * delta);
+		s32 levelOffset = currentLevel * 12;
+		sp[2] = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-3] + factor * (((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-3] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-3]);
+		sp[1] = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-2] + factor * (((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-2] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-2]);
+		sp[0] = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-1] + factor * (((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-1] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-1]);
 	}
 
-	arg2[0] = (s8)(u32)((f32)arg1[0] * sp1C);
-	arg2[1] = (s8)(u32)((f32)arg1[1] * sp20);
-	arg2[2] = (s8)(u32)((f32)arg1[2] * sp24);
+	arg2[0] = (s8)(u32)((f32)arg1[0] * sp[2]);
+	arg2[1] = (s8)(u32)((f32)arg1[1] * sp[1]);
+	arg2[2] = (s8)(u32)((f32)arg1[2] * sp[0]);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2CF0_C1CA0.s")
