@@ -1256,7 +1256,7 @@ s32 func_800B325C_C220C(s8 arg0, s8 arg1, u16 arg2)
 }
 
 /* Set "underwater" flag (bit 12) on tiles below the water level */
-// CURRENT(1180)
+// CURRENT(960)
 #ifdef NON_MATCHING
 void func_800B32AC_C225C(u16 *arg0) {
 	u16 *ptr;
@@ -1270,8 +1270,6 @@ void func_800B32AC_C225C(u16 *arg0) {
 	level = D_80222A70 / 32;
 	ptr = arg0;
 	i = 0;
-	// Agent - try turning this into a for loop
-	// It seems likely the "real" code won't manually increment both i and ptr
 	do {
 		i += 2;
 		if (currentLevel == 4) {
@@ -1284,9 +1282,9 @@ void func_800B32AC_C225C(u16 *arg0) {
 			ptr[0] &= ~0x1000;
 		}
 
-		x = (x + 1) & 0xFF;
+		x = x + 1;
 		if (x == 0) {
-			y = (y + 1) & 0xFF;
+			y = y + 1;
 		}
 		ptr++;
 	} while (i != 0x1FE02);
