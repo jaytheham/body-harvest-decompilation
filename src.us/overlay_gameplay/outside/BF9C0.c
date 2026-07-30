@@ -1026,7 +1026,7 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s32 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
 #endif
 
-// CURRENT(8135)
+// CURRENT(8140)
 #ifdef NON_MATCHING
 void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	// Agent - remove unnecessary temp vars
@@ -1091,7 +1091,7 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		do {
 			var_s0 = (s16) ((u32) sp58 >> 16);
 			if (var_s2 <= 0) {
-					var_v0 = 0 + (var_s2 * -0x100);
+					var_v0 = (var_s2 * -0x100);
 			} else {
 				var_v0 = ((0x100 - sp68) + (var_s2 << 8)) - 0x100;
 			}
