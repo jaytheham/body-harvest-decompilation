@@ -1737,7 +1737,87 @@ void func_800B49A4_C3954(s32 arg0) {
 // CURRENT(7487)
 #ifdef NON_MATCHING
 void func_800B4D4C_C3CFC(s32 arg0) {
-	(void)arg0;
+	u8 sp54[3];
+	u8 sp59;
+	u16 *sp5C;
+	s8 sp60[5];
+	u8 sp68[3];
+	u8 sp6F;
+	s32 temp_t8;
+	s32 temp_v0;
+	s32 temp_v1;
+	s32 var_s0;
+	s32 var_s1;
+	u16 *temp_s6;
+
+	sp5C = (u16 *)D_8014F8A0;
+	D_8014F898 = D_80151DD8.ringY;
+	D_8014F898 = (D_8014F898 + 0x12) % 19;
+	D_8014F899 = D_80151DD8.ringX;
+	D_8014F89C = D_80151DD8.mapPosX;
+	D_8014F89D = D_80151DD8.mapPosY;
+	D_80151DD8.mapPosY = D_8014F89D - 1;
+	sp59 = D_8014F899;
+	D_8014F89D = D_8014F89D - 1;
+	var_s1 = 0;
+	sp6F = 0;
+	do {
+		temp_v1 = D_8014F89C + var_s1;
+		temp_s6 = sp5C + (((D_8014F89D << 8) + temp_v1) & 0xFFFF);
+		sp60[0] = temp_s6[-0x100] & 0x3F;
+		sp60[1] = temp_s6[-1] & 0x3F;
+		sp60[2] = temp_s6[0] & 0x3F;
+		sp60[3] = temp_s6[1] & 0x3F;
+		sp60[4] = temp_s6[0x100] & 0x3F;
+		func_800B1814_C07C4(D_8014F89D, temp_v1 & 0xFF, sp54);
+		func_800B2CF0_C1CA0(sp60, sp54, sp68);
+		var_s0 = 0;
+	loop_2:
+		if ((D_8014FD48[var_s0 * 2] == D_8014F89C + var_s1) && (D_8014FD48[var_s0 * 2 + 1] == D_8014F89D)) {
+			temp_t8 = (func_800038E0_44E0() % 60) & 0xFF;
+			temp_v1 = temp_t8 + 0x14;
+			if (temp_v1 < 0) {
+				sp68[0] = 0;
+			} else {
+				sp68[0] = temp_v1;
+			}
+			temp_v0 = temp_t8 - 5;
+			if (temp_v0 < 0) {
+				sp68[1] = 0;
+			} else {
+				sp68[1] = temp_v0;
+			}
+			temp_v0 = temp_t8 - 0x19;
+			if (temp_v0 < 0) {
+				sp68[2] = 0;
+			} else {
+				sp68[2] = temp_v0;
+			}
+		}
+
+		var_s0 = (var_s0 + 1) & 0xFF;
+		if (var_s0 < 0x40) {
+			goto loop_2;
+		}
+
+		D_80151DD8.tiles[D_8014F898][sp59].tileType = (u16)*temp_s6;
+		temp_v1 = sp59 + 1;
+		if (temp_s6[-1] & 0x800) {
+			D_80151DD8.tiles[D_8014F898][sp59].r = ((u8)sp68[0] / 4) * 3;
+			D_80151DD8.tiles[D_8014F898][sp59].b = ((u8)sp68[2] / 4) * 3;
+			D_80151DD8.tiles[D_8014F898][sp59].g = ((u8)sp68[1] / 4) * 3;
+		} else {
+			D_80151DD8.tiles[D_8014F898][sp59].r = (u8)sp68[0];
+			D_80151DD8.tiles[D_8014F898][sp59].g = (u8)sp68[1];
+			D_80151DD8.tiles[D_8014F898][sp59].b = (u8)sp68[2];
+		}
+
+		sp59 = (u8)(temp_v1 % 19);
+		var_s1 = (sp6F + 1) & 0xFF;
+		sp6F = var_s1;
+	} while (var_s1 < 0x13);
+
+	D_80151DD8.ringY = D_8014F898;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B4D4C_C3CFC.s")
