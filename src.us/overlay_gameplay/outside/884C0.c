@@ -4347,7 +4347,7 @@ s32 func_80082C04_91BB4(u8 arg0)
 }
 
  // https://decomp.me/scratch/bCNBv
- // CURRNET(183)
+ // CURRNET(283)
 #ifdef NON_MATCHING
 /*  3×3 grid scan — searches a 3×3 area of grid cells around an alien's position
  for cells where func_800B325C_C220C returns 0, preferring orthogonal cells.*/
