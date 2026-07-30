@@ -3186,14 +3186,13 @@ s32 func_800B9228_C81D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9228_C81D8.s")
 #endif
 
-// CURRENT(10987)
+// CURRENT(5612)
 #ifdef NON_MATCHING
 s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
 	s32 diffX;
 	s32 diffZ;
 	s32 dist;
 	s32 angle;
-	s32 halfAngle;
 	s32 edge;
 	s32 absX;
 	s32 absZ;
@@ -3202,42 +3201,40 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 		return 1;
 	}
 
-	diffX = arg0 - arg3;
-	diffZ = arg1 - (s16)arg4;
+	diffX = (s16)(arg0 - arg3);
+	diffZ = (s16)(arg1 - (s16)arg4);
 	dist = sqrtf((f32)((diffX * diffX) + (diffZ * diffZ)));
 	angle = func_80003824_4424((f32)diffX, (f32)diffZ) - arg5;
-	halfAngle = D_8014FD2A >> 1;
-	edge = angle + halfAngle;
+	edge = angle + (D_8014FD2A >> 1);
 
-	if ((s16)(((sins(edge & 0xFFFF) / 32768.0f) * dist)) < -(u16)arg2) {
+	if ((s16)((((f32)sins(edge & 0xFFFF) / 32768.0) * dist)) < -(u16)arg2) {
 		return 0;
 	}
 
-	if ((s16)(((sins((edge - D_8014FD2A) & 0xFFFF) / 32768.0f) * dist)) > (u16)arg2) {
+	if ((s16)((((f32)sins((edge - D_8014FD2A) & 0xFFFF) / 32768.0) * dist)) > (u16)arg2) {
 		return 0;
 	}
 
-	absX = -diffX;
-	if (absX < diffX) {
+	if (-diffX < diffX) {
 		absX = diffX;
+	} else {
+		absX = -diffX;
 	}
 
-	absZ = -diffZ;
-	if (absZ < diffZ) {
+	if (-diffZ < diffZ) {
 		absZ = diffZ;
+	} else {
+		absZ = -diffZ;
 	}
 
+	edge = absX * absX;
 	dist = 0;
-	edge = (absX * absX) + (absZ * absZ);
+	edge += absZ * absZ;
 	if (edge > 0) {
 		dist = sqrtf((f32)edge);
 	}
 
-	if (dist < 0xFA0) {
-		return 1;
-	}
-
-	return 0;
+	return (dist < 0xFA0) ? 1 : 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B93AC_C835C.s")
