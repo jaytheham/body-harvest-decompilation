@@ -4414,46 +4414,47 @@ s32 func_80082E38_91DE8(u8 arg0, s16 arg1) {
 }
 
 // https://decomp.me/scratch/lTDM9
-// CURRENT(556)
+// CURRENT(691)
 #ifdef NON_MATCHING
 s32 func_80082EB4_91E64(u8 arg0, s16 arg1)
 {
-  s16 var_v1;
-  s16 var_v0;
-  s16 sp34;
-  u8 specIndex;
-  s16 var_t1;
-  u8 temp;
-  specIndex = alienInstances[arg0].specIndex;
-  if ((alienSpecs[specIndex].unk58 + alienSpecs[specIndex].unk38) < alienSpecs[specIndex].unkC)
-  {
-	var_t1 = alienSpecs[specIndex].unkC;
-  }
-  else
-  {
-	var_t1 = alienSpecs[specIndex].unk58 + alienSpecs[specIndex].unk38;
-  }
-  if (((alienInstances[arg0].unk20 & 0x60100000) || (alienSpecs[specIndex].unk54 & 0xC1)) && (((var_v0 = -1, currentLevel != 3)) || ((specIndex != 9) && (specIndex != 8))))
-  {
-	var_v1 = alienInstances[arg0].unk2;
-	var_v0 = -1;
-  }
-  else
-  {
-	temp = func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &sp34);
-	if (temp != 0xFF)
+	s16 var_v1;
+	s16 var_v0;
+	s16 sp34;
+	u8 specIndex;
+	s16 var_t1;
+	u8 temp;
+	specIndex = alienInstances[arg0].specIndex;
+	if ((alienSpecs[specIndex].unk58 + alienSpecs[specIndex].unk38) < alienSpecs[specIndex].unkC)
 	{
-	  if (func_80082E38_91DE8(arg0, buildingInstances[temp].yCoord) == 0)
-	  {
-		if (1)
-		{
-		}
-		sp34 = func_800B84D0_C7480(alienInstances[arg0].unk0, alienInstances[arg0].unk4) >> 8;
-	  }
+		var_t1 = alienSpecs[specIndex].unkC;
 	}
- var_v1 = sp34 + var_t1; var_v0 = sp34 - (var_t1 * 2); } if ((var_v1 < arg1) || (!(var_v0 < arg1))) { return 1;
-  }
-  return 0;
+	else
+	{
+		var_t1 = alienSpecs[specIndex].unk58 + alienSpecs[specIndex].unk38;
+	}
+	if (((alienInstances[arg0].unk20 & 0x60100000) || (alienSpecs[specIndex].unk54 & 0xC1)) && (((var_v0 = -1, currentLevel != 3)) || ((specIndex != 9) && (specIndex != 8))))
+	{
+		var_v1 = alienInstances[arg0].unk2;
+		var_v0 = -1;
+	}
+	else
+	{
+		temp = func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &sp34);
+		if (temp != 0xFF)
+		{
+			if (func_80082E38_91DE8(arg0, buildingInstances[temp].yCoord) == 0)
+			{
+				sp34 = func_800B84D0_C7480(alienInstances[arg0].unk0, alienInstances[arg0].unk4) >> 8;
+			}
+		}
+		var_v1 = sp34 + var_t1;var_v0 = sp34 - (var_t1 * 2);
+	}
+	if ((var_v1 < arg1) || (!(var_v0 < arg1)))
+	{
+		return 1;
+	}
+	return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082EB4_91E64.s")
