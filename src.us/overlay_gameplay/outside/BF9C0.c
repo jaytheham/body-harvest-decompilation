@@ -4276,7 +4276,7 @@ void func_800BB5E0_CA590(void) {
 
 // (short playerX, short playerZ)
 #ifdef NON_MATCHING
-// CURRENT(1464)
+// CURRENT(25)
 void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 	s16 tileZ;
 	s16 tileX;
@@ -4285,6 +4285,7 @@ void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 	u16 *tilePtr;
 	s32 stickX;
 	s32 stickY;
+	s16 pad20;
 	u16 randVal;
 	u32 tileBits;
 	s32 tileType;
@@ -4310,16 +4311,22 @@ void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 		return;
 	}
 
-	stickX = currentControllerStates[0].stick_x;
-	if (stickX < 0) {
-		stickX = -stickX;
+	{
+		s32 sx = currentControllerStates[0].stick_x;
+		if (sx >= 0) {
+			stickX = sx;
+		} else {
+			stickX = -sx;
+		}
 	}
-
-	stickY = currentControllerStates[0].stick_y;
-	if (stickY < 0) {
-		stickY = -stickY;
+	{
+		s32 sy = currentControllerStates[0].stick_y;
+		if (sy >= 0) {
+			stickY = sy;
+		} else {
+			stickY = -sy;
+		}
 	}
-
 	if ((stickY + stickX) < 0x11) {
 		return;
 	}
