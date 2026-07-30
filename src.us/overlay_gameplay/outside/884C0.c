@@ -6814,21 +6814,24 @@ s32 func_8008916C_9811C(u8 arg0, s16 arg1) {
 }
 
 // https://decomp.me/scratch/6va5T
-// CURRENT(272)
+// CURRENT(712)
 #ifdef NON_MATCHING
 void func_80089200_981B0(u8 arg0, u32 arg1, s32 arg2)
 {
-  u16 sp3C;
-  u16 sp3A;
-  u16 sp38;s32 *new_var;
-  // Agent - it seems likely this assignment to a ptr is wrong
-  new_var = &arg2;
+  u16 sp38;
+    u16 sp3C;
+  u16 sp3A;    
+  
   if (((D_80052A8C + arg0) % arg1) == (func_800038E0_44E0() % ((s32) arg1)))
   {
-	sp38 = func_800038E0_44E0();
-	sp3A = func_800038E0_44E0();
-	sp3C = func_800038E0_44E0();
-	func_800DEA08_ED9B8((s16) (((sp38 % (*new_var)) + alienInstances[arg0].unk0) - ((*new_var) / 2)), (s16) ((sp3A >> 10) + alienInstances[arg0].unk2), (s16) (((sp3C % (*new_var)) + alienInstances[arg0].unk4) - ((*new_var) / 2)), (s16) ((func_800038E0_44E0() + 0x12C) >> 11), 8, 8, 0x32, 0xC8, 0x64, 0x64, 0x64);
+    sp38 = func_800038E0_44E0();
+    sp3A = func_800038E0_44E0();
+    sp3C = func_800038E0_44E0();
+    func_800DEA08_ED9B8((s16) (((sp38 % arg2) + alienInstances[arg0].unk0) - (arg2 / 2)),
+                        ((sp3A >> 10) + alienInstances[arg0].unk2),
+                        (((sp3C % arg2) + alienInstances[arg0].unk4) - (arg2 / 2)),
+                        (s16) ((func_800038E0_44E0() + 0x12C) >> 11),
+                        8, 8, 0x32, 0xC8, 0x64, 0x64, 0x64);
   }
 }
 #else
