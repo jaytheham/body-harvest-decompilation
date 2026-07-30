@@ -1674,17 +1674,17 @@ void func_800B4660_C3610(s32 arg0) {
 #endif
 
 /* Scroll ring buffer down: shift 1 tile row downward, compute new row */
-// CURRENT(7116)
+// CURRENT(5612)
 #ifdef NON_MATCHING
 void func_800B49A4_C3954(s32 arg0) {
 	u8 sp6F;
-	s8 sp68[3];
-	s8 sp60[5];
+	u8 sp68[3];
+	u8 sp60[5];
 	u16 *sp5C;
 	u8 sp59;
 	u8 sp54[3];
-	s32 var_s0;
 	s32 var_s1;
+	s32 var_s0;
 
 	sp5C = &D_8014F8A0[0][0];
 	D_8014F89D = D_80151DD8.mapPosY;
@@ -1706,28 +1706,28 @@ void func_800B49A4_C3954(s32 arg0) {
 		sp60[2] = sp5C[temp_t9] & 0x3F;
 		sp60[3] = sp5C[temp_t9 + 1] & 0x3F;
 		sp60[4] = sp5C[temp_t9 + 0x100] & 0x3F;
-		func_800B1814_C07C4(D_8014F89D, (D_8014F89C + var_s1) & 0xFF, sp54);
+		func_800B1814_C07C4((D_8014F89D + 0x12) & 0xFF, (D_8014F89C + var_s1) & 0xFF, sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 		var_s0 = 0;
 		do {
-			if ((D_8014F89C + var_s1 == D_8014FD48[var_s0 * 2]) && (D_8014F89D == D_8014FD48[var_s0 * 2 + 1])) {
+			if ((D_8014F89C + var_s1 == D_8014FD48[var_s0 * 2]) && (D_8014F89D + 0x12 == D_8014FD48[var_s0 * 2 + 1])) {
 				s32 rnd = func_800038E0_44E0() % 60;
 				s32 _t8 = rnd & 0xFF;
 
-				if (_t8 + 0x14 >= 0) {
-					sp68[0] = _t8 + 0x14;
-				} else {
+				if (_t8 + 0x14 < 0) {
 					sp68[0] = 0;
-				}
-				if (_t8 - 5 >= 0) {
-					sp68[1] = _t8 - 5;
 				} else {
+					sp68[0] = _t8 + 0x14;
+				}
+				if (_t8 - 5 < 0) {
 					sp68[1] = 0;
-				}
-				if (_t8 - 0x19 >= 0) {
-					sp68[2] = _t8 - 0x19;
 				} else {
+					sp68[1] = _t8 - 5;
+				}
+				if (_t8 - 0x19 < 0) {
 					sp68[2] = 0;
+				} else {
+					sp68[2] = _t8 - 0x19;
 				}
 			}
 			var_s0 = (var_s0 + 1) & 0xFF;
@@ -1746,13 +1746,21 @@ void func_800B49A4_C3954(s32 arg0) {
 		var_s1 = (sp6F + 1) & 0xFF;
 		sp6F = var_s1;
 	} while (var_s1 < 0x13);
+	D_8014F898 = (D_8014F898 + 1) % 19;
 	D_80151DD8.ringY = D_8014F898;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B49A4_C3954.s")
 #endif
 
+// CURRENT(7487)
+#ifdef NON_MATCHING
+void func_800B4D4C_C3CFC(s32 arg0) {
+	(void)arg0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B4D4C_C3CFC.s")
+#endif
 
 /* Build vertex buffer for the 19x19 tile ring: compute positions, heights, colors, and texture coords */
 // CURRENT(13468)
