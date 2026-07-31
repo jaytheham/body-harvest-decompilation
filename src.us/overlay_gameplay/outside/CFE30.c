@@ -1779,13 +1779,11 @@ void func_800C3E2C_D2DDC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3E2C_D2DDC.s")
 #endif
 
-// CURRENT(58)
-#ifdef NON_MATCHING
 void func_800C4274_D3224(void) {
-	s16 unitId;
-	s16 nextUnit;
 	Vec3f spAC;
 	Vec3f spA0;
+	s16 unitId;
+	s16 nextUnit;
 	Unk80154318Sub *sub;
 	Unk80154318Entry *entry;
 
@@ -1874,9 +1872,6 @@ void func_800C4274_D3224(void) {
 		} while ((unitId != -5) && (unitId != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4274_D3224.s")
-#endif
 
 void func_800C4900_D38B0(s16 arg0) {
 	if (arg0 != -3) {
