@@ -6242,7 +6242,7 @@ void func_800D1A94_E0A44(u8 arg0) {
 	temp_v0 = &D_80154318[temp_t3->unk8];
 	sp3C = temp_v0->unk8;
 	sp3E = temp_v0->unkC;
-	func_800B1A68_C0A18(&sp40, &sp3C, (s8 *)sp38, (Unk80152D00 *)D_80154318);
+	func_800B1A68_C0A18(&sp40, &sp3C, (s8 *)sp38, (LaserEntry *)D_80154318);
 	func_80137368_146318(sp34->unk0, sp34->unk2, sp34->unk4, 7, arg0);
 }
 #else
@@ -10921,7 +10921,7 @@ void func_800E0134_EF0E4(void) {
 	u8 i;
 	u16 j;
 	u16 k;
-	Unk80152D00SubEntry *entry;
+	LaserEntry *entry;
 	u8 tempA3;
 	u8 tempA0;
 
@@ -10958,9 +10958,9 @@ void func_800E0134_EF0E4(void) {
 		D_80154318[k].unk1 = 0xFF;
 	}
 
-	entry = (Unk80152D00SubEntry *) D_80152D00;
+	entry = D_80152D00;
 	for (j = 0; j < 0x40; j++) {
-		entry[j].unk0 = 0;
+		entry[j].type = 0;
 	}
 
 	D_80154310 = 0;
@@ -12182,8 +12182,8 @@ void func_800E4CEC_F3C9C(s32 arg0, u8 arg1) {
 #ifdef NON_MATCHING
 // DisplayLasers
 void func_800E5044_F3FF4(void) {
-	Unk80152D00SubEntry *entry;
-	Unk80152D00SubEntry *end;
+	LaserEntry *entry;
+	LaserEntry *end;
 	s16 type1;
 
 	gDPPipeSync(D_8005BB2C++);
@@ -12193,24 +12193,24 @@ void func_800E5044_F3FF4(void) {
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG | G_LIGHTING);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 
-	entry = (Unk80152D00SubEntry *) D_80152D00;
-	end = (Unk80152D00SubEntry *) &D_80153300;
+	entry = D_80152D00;
+	end = (LaserEntry *)&D_80153300;
 	type1 = 1;
 	do {
-		if (entry->unk0 == type1) {
-			s16 arg4 = entry->unkC;
-			s16 arg5 = entry->unkE;
-			s32 arg6 = entry->unk10;
-			s16 arg7 = entry->unk2;
-			u8 arg8 = entry->unk14;
-			s16 arg0 = entry->unk4;
-			s16 arg1 = entry->unk6;
-			s16 arg2 = entry->unk8;
-			s16 arg3 = entry->unkA;
+		if (entry->type == type1) {
+			s16 arg0 = entry->x1;
+			s16 arg1 = entry->y1;
+			s16 arg2 = entry->z1;
+			s16 arg3 = entry->x2;
+			s16 arg4 = entry->y2;
+			s16 arg5 = entry->z2;
+			s32 arg6 = entry->extra;
+			s16 arg7 = entry->timer;
+			u8 arg8 = entry->colorIdx;
 
 			func_800E3928_F28D8(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
-		} else if (entry->unk0 == 2) {
-			func_800E4CEC_F3C9C(*(s32 *) &entry->unk8, ((u8 *) &entry->unk2)[1]);
+		} else if (entry->type == 2) {
+			func_800E4CEC_F3C9C(*(s32 *) &entry->z1, ((u8 *) &entry->timer)[1]);
 		}
 		entry++;
 	} while (entry != end);
@@ -12225,35 +12225,35 @@ void func_800E5044_F3FF4(void) {
 // CURRENT(12125)
 #ifdef NON_MATCHING
 void func_800E520C_F41BC(void) {
-	Unk80152D00Pair *entry;
+	LaserEntryPair *entry;
 
-	entry = D_80152D00;
+	entry = (LaserEntryPair *)D_80152D00;
 	do {
-		if (entry->unk0 != 0) {
-			if (entry->unk0 == 1) {
-				entry->unk2--;
-				if (entry->unk2 <= 0) {
-					entry->unk0 = 0;
+		if (entry->lasers[0].type != 0) {
+			if (entry->lasers[0].type == 1) {
+				entry->lasers[0].timer--;
+				if (entry->lasers[0].timer <= 0) {
+					entry->lasers[0].type = 0;
 				}
 			}
-			if (entry->unk0 == 2) {
-				entry->unk2--;
-				if (entry->unk2 <= 0) {
-					entry->unk0 = 0;
+			if (entry->lasers[0].type == 2) {
+				entry->lasers[0].timer--;
+				if (entry->lasers[0].timer <= 0) {
+					entry->lasers[0].type = 0;
 				}
 			}
 		}
-		if (entry->unk18 != 0) {
-			if (entry->unk18 == 1) {
-				entry->unk1A--;
-				if (entry->unk1A <= 0) {
-					entry->unk18 = 0;
+		if (entry->lasers[1].type != 0) {
+			if (entry->lasers[1].type == 1) {
+				entry->lasers[1].timer--;
+				if (entry->lasers[1].timer <= 0) {
+					entry->lasers[1].type = 0;
 				}
 			}
-			if (entry->unk18 == 2) {
-				entry->unk1A--;
-				if (entry->unk1A <= 0) {
-					entry->unk18 = 0;
+			if (entry->lasers[1].type == 2) {
+				entry->lasers[1].timer--;
+				if (entry->lasers[1].timer <= 0) {
+					entry->lasers[1].type = 0;
 				}
 			}
 		}
@@ -12285,7 +12285,7 @@ void func_800E52E8_F4298(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 
 	slot = 0x40;
 	for (i = 0; i < 0x40; i++) {
-		if (((Unk80152D00SubEntry *) D_80152D00)[i].unk0 == 0) {
+		if (D_80152D00[i].type == 0) {
 			slot = i;
 			break;
 		}
@@ -12294,24 +12294,24 @@ void func_800E52E8_F4298(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	if (slot == 0x40) {
 		minValue = D_8013DD18_14CCC8[2];
 		for (i = 0; i < 0x40; i++) {
-			if (minValue >= ((Unk80152D00SubEntry *) D_80152D00)[i].unk2) {
+			if (minValue >= D_80152D00[i].timer) {
 				minSlot = i;
-				minValue = ((Unk80152D00SubEntry *) D_80152D00)[i].unk2;
+				minValue = D_80152D00[i].timer;
 			}
 		}
 		slot = minSlot;
 	}
 
-	((Unk80152D00SubEntry *) D_80152D00)[slot].unk10 = 0;
-	((Unk80152D00SubEntry *) D_80152D00)[slot].unk14 = arg6;
-	((Unk80152D00SubEntry *) D_80152D00)[slot].unk0 = 1;
-	((Unk80152D00SubEntry *) D_80152D00)[slot].unk2 = D_8013DD18_14CCC8[arg6];
-	((Unk80152D00SubEntry *) D_80152D00)[slot].unk4 = arg0;
-	((Unk80152D00SubEntry *) D_80152D00)[slot].unk6 = arg1;
-	((Unk80152D00SubEntry *) D_80152D00)[slot].unk8 = arg2;
-	((Unk80152D00SubEntry *) D_80152D00)[slot].unkA = arg3;
-	((Unk80152D00SubEntry *) D_80152D00)[slot].unkC = (s16) arg4;
-	((Unk80152D00SubEntry *) D_80152D00)[slot].unkE = (s16) arg5;
+	D_80152D00[slot].extra = 0;
+	D_80152D00[slot].colorIdx = arg6;
+	D_80152D00[slot].type = 1;
+	D_80152D00[slot].timer = D_8013DD18_14CCC8[arg6];
+	D_80152D00[slot].x1 = arg0;
+	D_80152D00[slot].y1 = arg1;
+	D_80152D00[slot].z1 = arg2;
+	D_80152D00[slot].x2 = arg3;
+	D_80152D00[slot].y2 = (s16) arg4;
+	D_80152D00[slot].z2 = (s16) arg5;
 
 	func_800B1A68_C0A18(start, end, color, D_80152D00);
 }
@@ -12326,11 +12326,11 @@ void func_800E5450_F4400(s32 arg0, s32 arg1) {
 	u8 minValue;
 	u8 minSlot;
 	s16 temp;
-	Unk80152B80 *entry;
+	LaserEntry *entry;
 	
 	slot = 0x40;
 	for (i = 0; i < 0x40; i++) {
-		if (D_80152D00[i].unk0 == 0) {
+		if (D_80152D00[i].type == 0) {
 			slot = i;
 			break;
 		}
@@ -12339,7 +12339,7 @@ void func_800E5450_F4400(s32 arg0, s32 arg1) {
 	if (slot == 0x40) {
 		minValue = D_8013DD1A;
 		for (i = 0; i < 0x40; i++) {
-			temp = D_80152D00[i].unk2;
+			temp = D_80152D00[i].timer;
 			if (minValue >= temp) {
 				minSlot = i;
 				minValue = temp;
@@ -12349,9 +12349,9 @@ void func_800E5450_F4400(s32 arg0, s32 arg1) {
 	}
 	
 	entry = &D_80152D00[slot];
-	entry->unk2 = 10;
-	*(s32 *)&entry->unk8 = arg0;
-	entry->unk0 = 2;
+	entry->timer = 10;
+	*(s32 *)&entry->z1 = arg0; /* type 2: coordinate area reused as an alien-instance ptr */
+	entry->type = 2;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5450_F4400.s")

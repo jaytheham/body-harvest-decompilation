@@ -2463,8 +2463,8 @@ extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
 extern s16 D_80152C90;
 extern s16 D_80152C96;
 extern Unk80152CA0Entry D_80152CA0[];
-extern Unk80152D00 D_80152D00[];
-extern Unk80152D00Pair D_80153300; /* one past end of D_80152D00 */
+extern LaserEntry D_80152D00[64]; /* laser/beam effect pool (0x600 bytes) */
+extern LaserEntryPair D_80153300; /* one past end of D_80152D00 */
 extern Unk800E614CFxSlot D_801538C4;
 extern u8 D_80153AB0; // Nuke in progress?
 extern Vec3f D_80153AB8;

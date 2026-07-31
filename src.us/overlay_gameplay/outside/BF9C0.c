@@ -711,7 +711,7 @@ void func_800B19F8_C09A8(void) {
 
 // CURRENT(24448)
 #ifdef NON_MATCHING
-void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, Unk80152D00 *arg3) {
+void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, LaserEntry *arg3) {
 	// Agent - you need to reduce the number of vars declared
 	// probably most of the temp vars don't need a declared var and are temp register values
 	u8 sp6E;
