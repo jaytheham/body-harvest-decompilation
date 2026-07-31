@@ -965,7 +965,7 @@ void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2)
 }
 
 #ifdef NON_MATCHING
-// CURRENT(1969)
+// CURRENT(1929)
 void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	Unk80154318Sub *temp_s0_2;
 	s32 sp3C;
