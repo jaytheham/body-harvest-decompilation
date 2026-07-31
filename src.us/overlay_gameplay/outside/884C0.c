@@ -5897,7 +5897,7 @@ s32 func_800865F4_955A4(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 #endif
 
 // https://decomp.me/scratch/16XTy
-// CURRENT(915)
+// CURRENT(995)
 #ifdef NON_MATCHING
 s32 func_800868A4_95854(u8 arg0, s32 arg1, s16 arg2, s16 arg3)
 {
@@ -5912,12 +5912,12 @@ s32 func_800868A4_95854(u8 arg0, s32 arg1, s16 arg2, s16 arg3)
   f32 sp2C;
   f32 temp_f12;
   sp38 = (f32) coss(alienInstances[arg0].unk6 + arg2) / 32768.0;
-  sp50 = alienInstances[arg0].unk0 + (D_80141E40_150DF0[0] * sp38);
+  sp50 = (D_80141E40_150DF0[0] * sp38) + alienInstances[arg0].unk0;
 	
-  sp40 = D_80141E48_150DF8[0] * ((f32) sins(alienInstances[arg0].unk6 + arg2) / 32768.0);
-  sp48 = alienInstances[arg0].unk4 + sp40;
-  temp_f12 = ((f32) arg3 * D_80141E50_150E00[0]) / (32768.0 * 1.0);
-  sp30 = cosf(temp_f12);
+  sp40 =  (f32) sins(alienInstances[arg0].unk6 + arg2) / 32768.0;
+  sp48 = (D_80141E48_150DF8[0] * sp40) + alienInstances[arg0].unk4;
+  temp_f12 = (D_80141E50_150E00[0] * (f32)arg3) / (f64)32768;
+  sp30 = __cosf(temp_f12);
   sp2C = sinf(temp_f12) / sp30;
   sp4C = alienInstances[arg0].unk2 + (D_80141E58_150E08[0] * sp2C);
   return func_800865F4_955A4(arg0, arg1, sp50, sp4C, sp48);
@@ -6815,19 +6815,19 @@ s32 func_8008916C_9811C(u8 arg0, s16 arg1) {
 void func_80089200_981B0(u8 arg0, u32 arg1, s32 arg2)
 {
   u16 sp38;
-    u16 sp3C;
+	u16 sp3C;
   u16 sp3A;    
   
   if (((D_80052A8C + arg0) % arg1) == (func_800038E0_44E0() % ((s32) arg1)))
   {
-    sp38 = func_800038E0_44E0();
-    sp3A = func_800038E0_44E0();
-    sp3C = func_800038E0_44E0();
-    func_800DEA08_ED9B8((s16) (((sp38 % arg2) + alienInstances[arg0].unk0) - (arg2 / 2)),
-                        ((sp3A >> 10) + alienInstances[arg0].unk2),
-                        (((sp3C % arg2) + alienInstances[arg0].unk4) - (arg2 / 2)),
-                        (s16) ((func_800038E0_44E0() + 0x12C) >> 11),
-                        8, 8, 0x32, 0xC8, 0x64, 0x64, 0x64);
+	sp38 = func_800038E0_44E0();
+	sp3A = func_800038E0_44E0();
+	sp3C = func_800038E0_44E0();
+	func_800DEA08_ED9B8((s16) (((sp38 % arg2) + alienInstances[arg0].unk0) - (arg2 / 2)),
+						((sp3A >> 10) + alienInstances[arg0].unk2),
+						(((sp3C % arg2) + alienInstances[arg0].unk4) - (arg2 / 2)),
+						(s16) ((func_800038E0_44E0() + 0x12C) >> 11),
+						8, 8, 0x32, 0xC8, 0x64, 0x64, 0x64);
   }
 }
 #else
