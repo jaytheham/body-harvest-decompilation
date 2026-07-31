@@ -5897,7 +5897,6 @@ s32 func_800865F4_955A4(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 #endif
 
 // https://decomp.me/scratch/16XTy
-// CURRENT(995)
 #ifdef NON_MATCHING
 s32 func_800868A4_95854(u8 arg0, s32 arg1, s16 arg2, s16 arg3)
 {
@@ -5911,13 +5910,12 @@ s32 func_800868A4_95854(u8 arg0, s32 arg1, s16 arg2, s16 arg3)
   f32 sp30;
   f32 sp2C;
   f32 temp_f12;
-  sp38 = (f32) coss(alienInstances[arg0].unk6 + arg2) / 32768.0;
-  sp50 = (D_80141E40_150DF0[0] * sp38) + alienInstances[arg0].unk0;
-	
-  sp40 =  (f32) sins(alienInstances[arg0].unk6 + arg2) / 32768.0;
-  sp48 = (D_80141E48_150DF8[0] * sp40) + alienInstances[arg0].unk4;
+  f64 mulResult;
+  sp50 = (D_80141E40_150DF0[0] * ((f32) coss(alienInstances[arg0].unk6 + arg2) / 32768.0)) + alienInstances[arg0].unk0;
+  mulResult = D_80141E48_150DF8[0] * ((f32) sins(alienInstances[arg0].unk6 + arg2) / 32768.0);
+  sp48 = (s32)(mulResult + (f64)alienInstances[arg0].unk4);
   temp_f12 = (D_80141E50_150E00[0] * (f32)arg3) / (f64)32768;
-  sp30 = __cosf(temp_f12);
+  sp30 = cosf(temp_f12);
   sp2C = sinf(temp_f12) / sp30;
   sp4C = alienInstances[arg0].unk2 + (D_80141E58_150E08[0] * sp2C);
   return func_800865F4_955A4(arg0, arg1, sp50, sp4C, sp48);
