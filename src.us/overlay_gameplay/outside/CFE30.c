@@ -12516,25 +12516,19 @@ void func_800E5B78_F4B28(void) {
 	for (i = 0; i < count; i++) {
 		entry = &D_80152CA0[i];
 
-		// Decrement the counter if not 0
 		if (entry->unk2 != 0) {
 			entry->unk2--;
 		}
 
-		// If counter reaches 1, remove the shield
 		if (entry->unk2 == 1) {
-			// Clear the flag from the target
 			if (entry->unk1 == 2) {
-				// Vehicle shield
 				vehicleInstances[entry->unk0].unk20 &= ~0x80;
 			} else if (entry->unk1 == 1) {
-				// Building shield
 				val = buildingInstances[entry->unk0].unk8;
 				shifted = val >> 12;
 				buildingInstances[entry->unk0].unk8 = ((((shifted & ~0x1000) ^ shifted) << 12) ^ val);
 			}
 
-			// Remove this entry by copying remaining entries down
 			count--;
 			for (j = i; j < count; j++) {
 				D_80152CA0[j] = D_80152CA0[j + 1];
@@ -12552,7 +12546,7 @@ void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 	Unk80152CA0Entry *entry;
 	s16 count;
 
-	if (arg0 == 2 && (vehicleInstances[arg1].unk20 & 0x80)) {
+	if (arg0 == 2 && (vehicleInstances[arg1].unk20 & VEHICLE_FLAG_UNK8)) {
 		return;
 	}
 	if (arg0 == 1 && ((buildingInstances[arg1].unk8 >> 12) & 0x1000)) {
@@ -12566,7 +12560,7 @@ void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 	entry->unk2 = 0;
 
 	if (count >= 0x20) {
-		osSyncPrintf(&D_80143F58_152F08); // Error: too many shields allocated
+		osSyncPrintf(&D_80143F58_152F08);
 		return;
 	}
 
@@ -12651,7 +12645,7 @@ void func_800E5E3C_F4DEC(u8 arg0, u8 arg1) {
 void func_800E6028_F4FD8(u8 arg0, u8 arg1) {
 	s16 i;
 
-	osSyncPrintf(&D_80143FA4_152F54, (s32) arg1); // removing shield : %d
+	osSyncPrintf(&D_80143FA4_152F54, (s32) arg1);
 	for (i = 0; i < D_80152C96; i++) {
 		if ((arg0 == D_80152CA0[i].unk1) && (arg1 == D_80152CA0[i].unk0)) {
 			D_80152CA0[i].unk2 = 0x64;
@@ -12741,9 +12735,9 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 			angle = func_800038E0_44E0();
 			scale = D_800313F4 * 100;
-			slot->unk1CC = (s32) ((((f64) coss((u16) angle)) / 32768.0) * (f64) scale);
+			slot->unk1CC = (s32) (((coss((u16) angle)) / 32768.0) * scale);
 			slot->unk1D0 = 0;
-			slot->unk1D4 = (s32) ((((f64) sins((u16) angle)) / 32768.0) * (f64) scale);
+			slot->unk1D4 = (s32) (((sins((u16) angle)) / 32768.0) * scale);
 		}
 
 		slot->unk1DC = 0;
@@ -12824,8 +12818,8 @@ void func_800E64B4_F5464(void) {
 				slot->unk1E0 = 0;
 				angle = (slot->unk1E4 + (func_800038E0_44E0() & 0x1FFF)) - 0xFFF;
 				slot->unk1E4 = angle;
-				slot->unk1CC = (s32) (((f64) (f32) coss((u16) angle) / 32768.0) * scale);
-				slot->unk1D4 = (s32) (((f64) (f32) sins((u16) slot->unk1E4) / 32768.0) * scale);
+				slot->unk1CC = (s32) (((f32) coss((u16) angle) / 32768.0) * scale);
+				slot->unk1D4 = (s32) (((f32) sins((u16) slot->unk1E4) / 32768.0) * scale);
 			}
 
 			distance = func_800047FC_53FC((s16) ((((slot->unk1C0 >> 8) - D_80052B34->unk0) >> 8)));
@@ -12903,9 +12897,9 @@ void func_800E64B4_F5464(void) {
 		cosVal = coss((u16) random);
 		sinVal = sins((u16) func_800038E0_44E0());
 		func_800E614C_F50FC(
-			(s16) (s32) (((((f64) (f32) cosVal / 32768.0) * 256.0) * 12.0) + (f64) D_80052B34->unk0),
+			(s16) (s32) (((((f32) cosVal / 32768.0) * 256.0) * 12.0) + D_80052B34->unk0),
 			0,
-			(s16) (s32) (((((f64) (f32) sinVal / 32768.0) * 256.0) * 12.0) + (f64) D_80052B34->unk4),
+			(s16) (s32) (((((f32) sinVal / 32768.0) * 256.0) * 12.0) + D_80052B34->unk4),
 			(s16) ((func_800038E0_44E0() % 16) + 1));
 	}
 }
@@ -13000,8 +12994,8 @@ void func_800E6A38_F59E8(void) {
 				}
 
 				radius = (radius * 20) + 20;
-				xOff = (s16)((((f64)(f32)coss((u16)-angle) / 32768.0) * (f64)radius));
-				zOff = (s16)((((f64)(f32)sins((u16)-angle) / 32768.0) * (f64)radius));
+				xOff = (s16)(((f32)coss((u16)-angle) / 32768.0) * radius));
+				zOff = (s16)((((f32)sins((u16)-angle) / 32768.0) * radius));
 				yTop = baseY + 0x14;
 
 				vtx0 = D_8005BB34;
@@ -13119,15 +13113,14 @@ void func_800E7234_F61E4(void) {
 #ifdef NON_MATCHING
 void func_800E72A0_F6250(void)
 {
-	Level *new_var;
-	if ((*(new_var = &currentLevel)) == 2)
+	if (currentLevel == 2)
 	{
 		if (func_8000726C_7E6C(0x1E) == 0)
 		{
 			func_800E2830_F17E0();
 		}
 	}
-	else if ((*new_var) == 4)
+	else if (currentLevel == 4)
 	{
 		func_800E2830_F17E0();
 	}
