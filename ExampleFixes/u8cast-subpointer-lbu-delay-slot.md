@@ -61,3 +61,38 @@ if (((u8 *)entryData)[6] == 0x37) {
 ```
 
 This matched `func_800D6EAC_E5E5C`: IDO emitted `addiu v0, v1, 8` once, then used `lbu 6(v0)` / `sb 6(v0)` instead of direct `0xe(v1)` accesses. This is a useful middle ground when a named `entry` pointer is already present and the stricter `(u8 *)((u8 *)&array[i] + 8)` form is not required.
+
+### Variant: named struct pointer + named sub-pointer → spurious `move` copy; use DIRECT array access to remove it
+
+When a loop keeps a named struct pointer (`Unk80154318Entry *unit = &D_80154318[unitId]`) AND a named sub-pointer (`Unk80154318Sub *motion = (Unk80154318Sub *)&unit->unk8`), IDO may insert a spurious `move s2,s1` (copy of the unit pointer) right after computing `unit`, and then route the final `unit->unk4` load through the copy register (`lh s0,4(s2)`) instead of the base register (`lh s0,4(s1)`). That one extra instruction shifts the whole function by 4 bytes (branch targets + jal targets all mismatch) and bloats the diff score massively.
+
+**Fix: drop the named `unit` pointer entirely and use direct array access `D_80154318[unitId].field` for every struct access**, keeping only the named sub-pointer `motion` (its offsets still fold into the `unit + 8` base register, `s0`):
+
+```c
+// WRONG: extra `move s2,s1` + final load via s2
+unit = &D_80154318[unitId];
+motion = (Unk80154318Sub *)&unit->unk8;
+if (unit->unk11 < 0x14) {
+    nextUnit = unit->unk4;
+    func_800C2554_D1504(unitId, arg0);
+    unitId = nextUnit;
+} else {
+    ...
+    unitId = unit->unk4;   // lh s0,4(s2) in asm
+}
+```
+
+```c
+// RIGHT: score 0, base register s1 used for the final load
+motion = (Unk80154318Sub *)&D_80154318[unitId].unk8;
+if (D_80154318[unitId].unk11 < 0x14) {
+    nextUnit = D_80154318[unitId].unk4;
+    func_800C2554_D1504(unitId, arg0);
+    unitId = nextUnit;
+} else {
+    ...
+    unitId = D_80154318[unitId].unk4;   // lh s0,4(s1) in asm
+}
+```
+
+Matched `func_800C22EC_D129C` in `src.us/overlay_gameplay/outside/CFE30.c` (score 0, `build/bh.us.z64: OK`). The compiler CSEs `&D_80154318[unitId]` into the base register itself, so no named `unit` pointer is needed; the sub-pointer `motion` still becomes `addiu s0,s1,8` (hoisted into the `beql` delay slot, with a dead duplicate before the else label), and all byte accesses (`motion->unk6/7/8` via `(u8)` casts) emit `lbu`/`sb` as required. Removing the extra 4 bytes also realigns the next function's address so `jal` targets match again.

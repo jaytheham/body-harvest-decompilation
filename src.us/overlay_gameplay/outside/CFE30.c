@@ -1048,11 +1048,11 @@ s32 func_800C2274_D1224(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	return temp_v1;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(230)
+// CURRENT(0)
 void func_800C22EC_D129C(u8 arg0) {
-	s16 nextUnit;
 	s16 unitId;
+	s16 nextUnit;
+	Unk80154318Sub* motion;
 
 	unitId = D_80154088[arg0].unk6;
 
@@ -1070,30 +1070,26 @@ void func_800C22EC_D129C(u8 arg0) {
 	if (unitId != -5) {
 		if (D_80154088[arg0].unk4 > 0) {
 		do {
-			Unk80154318Entry* unit;
-			Unk80154318Sub* motion;
-
-			unit = &D_80154318[unitId];
-			motion = (Unk80154318Sub*)&unit->unk8;
-			if (unit->unk11 < 0x14) {
-				nextUnit = unit->unk4;
+			motion = (Unk80154318Sub*)&D_80154318[unitId].unk8;
+			if (D_80154318[unitId].unk11 < 0x14) {
+				nextUnit = D_80154318[unitId].unk4;
 				func_800C2554_D1504(unitId, arg0);
 				unitId = nextUnit;
 			} else {
 				if (motion->unkA == 1) {
 					motion->unk2 -= (func_800038E0_44E0() % 3) + 3;
 					motion->unk9 -= 15;
-					unit->unk2 -= (func_800038E0_44E0() % 2) + 2;
+					D_80154318[unitId].unk2 -= (func_800038E0_44E0() % 2) + 2;
 				} else {
 					motion->unk2 += 1;
 					motion->unk6 = ((u8)motion->unk6) - 6;
 					motion->unk7 = ((u8)motion->unk7) - 6;
 					motion->unk8 = ((u8)motion->unk8) - 6;
 					motion->unk9 -= 25;
-					unit->unk2 += (func_800038E0_44E0() % 5) + 5;
+					D_80154318[unitId].unk2 += (func_800038E0_44E0() % 5) + 5;
 				}
 
-				unitId = unit->unk4;
+				unitId = D_80154318[unitId].unk4;
 			}
 
 			if (unitId == -5) {
@@ -1103,9 +1099,6 @@ void func_800C22EC_D129C(u8 arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C22EC_D129C.s")
-#endif
 
 // Kill smoke puff unit?
 void func_800C2554_D1504(s16 arg0, u8 arg1) {
