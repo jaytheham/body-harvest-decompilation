@@ -1589,24 +1589,25 @@ void func_800C3300_D22B0(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(1025) */
+/* CURRENT(975) */
 s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	s16 slot;
 	u16 color;
 	u16 height;
 	u16 temp_u16;
+	Unk80154318Entry *base = D_80154318;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linkedEntry;
 	Unk80154318Sub *entrySub;
 
 	slot = func_800C19D4_D0984(0xC, 1);
 	if (slot != -3) {
-		entry = &D_80154318[slot];
+		entry = &base[slot];
 		entry->unk8 = arg0;
 		entry->unkA = arg1;
 		entry->unkC = arg2;
 
-		linkedEntry = &D_80154318[entry->unk4];
+		linkedEntry = &base[entry->unk4];
 		((u8 *)linkedEntry)[0xC] = 0;
 
 		entry->unkE = arg5;
@@ -1633,7 +1634,7 @@ s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 		entrySub = (Unk80154318Sub *)&linkedEntry->unk8;
 		entrySub->unk2 = arg3;
 		entrySub->unk0 = height;
-		entrySub->unk7 = 8;
+		((u8 *)entrySub)[5] = 8;
 
 		entrySub = (Unk80154318Sub *)&entry->unk8;
 
