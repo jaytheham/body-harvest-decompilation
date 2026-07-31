@@ -1880,10 +1880,12 @@ void func_800C4900_D38B0(s16 arg0) {
 }
 
 // Draws ripples on shield wall when hit?
+// CURRENT(8)
 #ifdef NON_MATCHING
 void func_800C4938_D38E8(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
-	s32 val;
+	s16 val;
 	s16 idx;
+	u8 *sub;
 	s32 mod;
 
 	val = D_80156ED8;
@@ -1906,11 +1908,12 @@ void func_800C4938_D38E8(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	D_80154318[idx].unkC = arg2;
 	((u8 *)&D_80154318[idx])[0x12] = arg4;
 	((u8 *)&D_80154318[idx])[0x13] = arg3;
+	sub = (u8 *)&D_80154318[idx].unk8;
 	mod = func_800038E0_44E0() % 3;
-	D_80154318[idx].unkE = D_8013DFA8_14CF58[(u32)(mod & 0xFF)][0];
-	D_80154318[idx].unkF = D_8013DFA8_14CF58[(u32)(mod & 0xFF)][1];
-	D_80154318[idx].unk10 = D_8013DFA8_14CF58[(u32)(mod & 0xFF)][2];
-	D_80154318[idx].unk11 = mod;
+	sub[6] = D_8013DFA8_14CF58[(u32)(mod & 0xFF)][0];
+	sub[7] = D_8013DFA8_14CF58[(u32)(mod & 0xFF)][1];
+	sub[8] = D_8013DFA8_14CF58[(u32)(mod & 0xFF)][2];
+	sub[9] = mod;
 	func_801372B4_146264(arg0, arg1, arg2, 2);
 }
 #else
