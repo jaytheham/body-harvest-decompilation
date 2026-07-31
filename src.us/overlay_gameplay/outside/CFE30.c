@@ -1930,14 +1930,10 @@ s32 func_800C4A64_D3A14(u8 arg0, u8 arg1) {
 	return 0;
 }
 
-// CURRENT(1023)
-#ifdef NON_MATCHING
 void func_800C4AA0_D3A50(void) {
 	s16 idx;
 	s16 nextIdx;
-	Unk80154318Entry *entry;
 	u8 *sub;
-	s32 blue;
 
 	idx = D_801541F8[0].unk6;
 	if ((idx == -5) || (idx == -6)) {
@@ -1946,37 +1942,26 @@ void func_800C4AA0_D3A50(void) {
 	}
 
 	if ((idx != -5) && (idx != -6)) {
-		while (1) {
-			entry = &D_80154318[idx];
-			sub = (u8 *)&entry->unk8;
-			if (((u8 *)&entry->unk12)[0] < 4) {
+		do {
+			sub = (u8 *)&D_80154318[idx].unk8;
+			if (((u8 *)&D_80154318[idx].unk12)[0] < 4) {
+				nextIdx = D_80154318[idx].unk4;
 				func_800C1A4C_D09FC(idx, 0, 1);
-				nextIdx = entry->unk4;
 				idx = nextIdx;
 			} else {
 				sub[0xA] -= 3;
-				entry->unk2 += 8;
+				D_80154318[idx].unk2 += 8;
 				sub[6] += func_800C4A64_D3A14(sub[6], D_8013DFA8_14CF58[sub[9]][0]);
 				sub[7] += func_800C4A64_D3A14(sub[7], D_8013DFA8_14CF58[sub[9]][1]);
-				blue = sub[8] + func_800C4A64_D3A14(sub[8], D_8013DFA8_14CF58[sub[9]][2]);
-				sub[8] = blue;
-				if ((sub[6] == D_8013DFA8_14CF58[sub[9]][0]) && (sub[7] == D_8013DFA8_14CF58[sub[9]][1]) && ((blue & 0xFF) == D_8013DFA8_14CF58[sub[9]][2])) {
+				sub[8] = func_800C4A64_D3A14(sub[8], D_8013DFA8_14CF58[sub[9]][2]) + sub[8];
+				if ((sub[6] == D_8013DFA8_14CF58[sub[9]][0]) && (sub[7] == D_8013DFA8_14CF58[sub[9]][1]) && ((0, sub[8] & 0xFF) == D_8013DFA8_14CF58[sub[9]][2])) {
 					sub[9] = func_800038E0_44E0() % 3;
 				}
-				idx = entry->unk4;
+				idx = D_80154318[idx].unk4;
 			}
-			if (idx == -5) {
-				break;
-			}
-			if (idx == -6) {
-				break;
-			}
-		}
+		} while ((idx != -5) && (idx != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4AA0_D3A50.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800C4CB8_D3C68(void) {
