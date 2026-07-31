@@ -218,30 +218,111 @@ const f64 D_801441E0_153190[1] = {
 const f64 D_801441E8_153198[1] = {
 	6000.0,
 };
-u8 D_8013DB10_14CAC0[0x170] = {
-	0x00, 0x00, 0x00, 0x00, 0x03, 0x0A, 0x00, 0x19, 0x18, 0x11, 0x00, 0x19, 0x18, 0x11, 0x00, 0x19,
-	0x13, 0x2B, 0x00, 0x19, 0x22, 0x1C, 0x00, 0x19, 0x23, 0x20, 0x00, 0x19, 0xDF, 0x1E, 0x00, 0x19,
-	0xE3, 0x19, 0x00, 0x19, 0x1C, 0x1E, 0x00, 0x19, 0x16, 0x1A, 0x00, 0x19, 0x17, 0x15, 0x00, 0x19,
-	0x23, 0x1E, 0x00, 0x19, 0x1B, 0x19, 0x00, 0x19, 0x0F, 0x17, 0x00, 0x19, 0x18, 0x22, 0x00, 0x19,
-	0x01, 0x41, 0x00, 0x19, 0x00, 0x28, 0x00, 0x19, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x5D, 0x00, 0x28, 0xE8, 0x1D, 0x00, 0x19, 0xE2, 0x23, 0x00, 0x19, 0x44, 0x28, 0x58, 0x23,
-	0x0F, 0x00, 0x00, 0x19, 0x24, 0x23, 0x00, 0x19, 0xD8, 0x22, 0x23, 0x19, 0xDA, 0x21, 0x21, 0x19,
-	0x15, 0x17, 0x00, 0x19, 0x9D, 0x62, 0x00, 0x2D, 0x12, 0x1C, 0x00, 0x19, 0x99, 0x3C, 0x2A, 0x23,
-	0x31, 0x21, 0x53, 0x1F, 0xDA, 0x1F, 0x1E, 0x19, 0x2D, 0x2D, 0x00, 0x19, 0xB6, 0x7D, 0x00, 0x28,
-	0x3F, 0x27, 0x00, 0x1E, 0x00, 0x00, 0x00, 0x19, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xDA, 0x17, 0x00, 0x14,
-	0xE2, 0x24, 0x06, 0x0F, 0x28, 0x18, 0x00, 0x14, 0x18, 0x18, 0x00, 0x14, 0x24, 0x18, 0x00, 0x14,
-	0x35, 0x13, 0x00, 0x19, 0xF6, 0x34, 0x00, 0x19, 0xFC, 0x18, 0x00, 0x19, 0x9E, 0x00, 0x00, 0x32,
-	0xD3, 0x00, 0x00, 0x19, 0xC4, 0x00, 0x00, 0x19, 0xC9, 0x19, 0x19, 0x14, 0x00, 0x00, 0x00, 0x00,
-	0xC9, 0x1E, 0x19, 0x19, 0x32, 0x13, 0x00, 0x19, 0x3A, 0x2E, 0x1F, 0x19, 0x00, 0x00, 0x00, 0x00,
-	0x1E, 0x00, 0x00, 0x00, 0x1E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xBE, 0x19, 0x15, 0x14, 0x09, 0x32, 0x14, 0x14,
-	0x00, 0x00, 0x00, 0x00, 0xC6, 0x25, 0x00, 0x32, 0xB2, 0x3C, 0x2F, 0x00, 0xD3, 0x44, 0x1A, 0x19,
-	0x83, 0x19, 0x18, 0x19, 0x00, 0x18, 0x1E, 0x19, 0x00, 0x3C, 0x00, 0x19, 0x0B, 0x2D, 0x10, 0x19,
-	0x25, 0x14, 0x00, 0x19, 0x2F, 0x1B, 0x00, 0x19, 0xCB, 0x2E, 0x3A, 0x19, 0x1E, 0x00, 0x00, 0x00,
-	0x1E, 0x00, 0x00, 0x00, 0x16, 0x37, 0x38, 0x19, 0x44, 0x5B, 0x01, 0x28, 0x1E, 0x00, 0x00, 0x00,
-	0x1E, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
+	/* Greece */
+	{
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x03, 0x0A, 0x00, 0x19 },
+		{ 0x18, 0x11, 0x00, 0x19 },
+		{ 0x18, 0x11, 0x00, 0x19 },
+		{ 0x13, 0x2B, 0x00, 0x19 },
+		{ 0x22, 0x1C, 0x00, 0x19 },
+		{ 0x23, 0x20, 0x00, 0x19 },
+		{ 0xDF, 0x1E, 0x00, 0x19 },
+		{ 0xE3, 0x19, 0x00, 0x19 },
+		{ 0x1C, 0x1E, 0x00, 0x19 },
+		{ 0x16, 0x1A, 0x00, 0x19 },
+		{ 0x17, 0x15, 0x00, 0x19 },
+		{ 0x23, 0x1E, 0x00, 0x19 },
+		{ 0x1B, 0x19, 0x00, 0x19 },
+		{ 0x0F, 0x17, 0x00, 0x19 },
+		{ 0x18, 0x22, 0x00, 0x19 },
+		{ 0x01, 0x41, 0x00, 0x19 },
+		{ 0x00, 0x28, 0x00, 0x19 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+	},
+	/* Java */
+	{
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x5D, 0x00, 0x28 },
+		{ 0xE8, 0x1D, 0x00, 0x19 },
+		{ 0xE2, 0x23, 0x00, 0x19 },
+		{ 0x44, 0x28, 0x58, 0x23 },
+		{ 0x0F, 0x00, 0x00, 0x19 },
+		{ 0x24, 0x23, 0x00, 0x19 },
+		{ 0xD8, 0x22, 0x23, 0x19 },
+		{ 0xDA, 0x21, 0x21, 0x19 },
+		{ 0x15, 0x17, 0x00, 0x19 },
+		{ 0x9D, 0x62, 0x00, 0x2D },
+		{ 0x12, 0x1C, 0x00, 0x19 },
+		{ 0x99, 0x3C, 0x2A, 0x23 },
+		{ 0x31, 0x21, 0x53, 0x1F },
+		{ 0xDA, 0x1F, 0x1E, 0x19 },
+		{ 0x2D, 0x2D, 0x00, 0x19 },
+		{ 0xB6, 0x7D, 0x00, 0x28 },
+		{ 0x3F, 0x27, 0x00, 0x1E },
+		{ 0x00, 0x00, 0x00, 0x19 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+	},
+	/* America */
+	{
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0xDA, 0x17, 0x00, 0x14 },
+		{ 0xE2, 0x24, 0x06, 0x0F },
+		{ 0x28, 0x18, 0x00, 0x14 },
+		{ 0x18, 0x18, 0x00, 0x14 },
+		{ 0x24, 0x18, 0x00, 0x14 },
+		{ 0x35, 0x13, 0x00, 0x19 },
+		{ 0xF6, 0x34, 0x00, 0x19 },
+		{ 0xFC, 0x18, 0x00, 0x19 },
+		{ 0x9E, 0x00, 0x00, 0x32 },
+		{ 0xD3, 0x00, 0x00, 0x19 },
+		{ 0xC4, 0x00, 0x00, 0x19 },
+		{ 0xC9, 0x19, 0x19, 0x14 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0xC9, 0x1E, 0x19, 0x19 },
+		{ 0x32, 0x13, 0x00, 0x19 },
+		{ 0x3A, 0x2E, 0x1F, 0x19 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x1E, 0x00, 0x00, 0x00 },
+		{ 0x1E, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+	},
+	/* Siberia */
+	{
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0xBE, 0x19, 0x15, 0x14 },
+		{ 0x09, 0x32, 0x14, 0x14 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0xC6, 0x25, 0x00, 0x32 },
+		{ 0xB2, 0x3C, 0x2F, 0x00 },
+		{ 0xD3, 0x44, 0x1A, 0x19 },
+		{ 0x83, 0x19, 0x18, 0x19 },
+		{ 0x00, 0x18, 0x1E, 0x19 },
+		{ 0x00, 0x3C, 0x00, 0x19 },
+		{ 0x0B, 0x2D, 0x10, 0x19 },
+		{ 0x25, 0x14, 0x00, 0x19 },
+		{ 0x2F, 0x1B, 0x00, 0x19 },
+		{ 0xCB, 0x2E, 0x3A, 0x19 },
+		{ 0x1E, 0x00, 0x00, 0x00 },
+		{ 0x1E, 0x00, 0x00, 0x00 },
+		{ 0x16, 0x37, 0x38, 0x19 },
+		{ 0x44, 0x5B, 0x01, 0x28 },
+		{ 0x1E, 0x00, 0x00, 0x00 },
+		{ 0x1E, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+		{ 0x00, 0x00, 0x00, 0x00 },
+	},
 };
 u8 D_8013DC80_14CC30[0x70] = {
 	0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0xF0, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -580,7 +661,7 @@ void func_800C1288_D0238(u8 arg0, u8 arg1, s32 arg2) {
 
 void func_800C1384_D0334(u8 arg0) {
 	if (D_80154088[arg0].unk0 == 0xFA) {
-		osSyncPrintf(&D_80142ECC_151E7C); // EFFECTS WARNING : Call to free up an effect which does not exist
+		osSyncPrintf(&D_80142ECC_151E7C);
 		return;
 	}
 	D_80154088[arg0].unk0 = 0xFA;
@@ -604,7 +685,7 @@ void func_800C1418_D03C8(u8 arg0, s32 arg1)
 	}
 	if (entry->unk0 == 0xFA)
 	{
-		osSyncPrintf(&D_80142F10_151EC0); // ERROR : freeing all effect units for unused effect
+		osSyncPrintf(&D_80142F10_151EC0);
 		return;
 	}
 	while (entry->unk4 > 0)
@@ -619,7 +700,7 @@ u8 func_800C14D4_D0484(u8 arg0) {
 	s32 temp;
 
 	if ((gameplayMode == GAMEPLAY_MODE_UNK2) || (gameplayMode == GAMEPLAY_MODE_UNK9)) {
-		osSyncPrintf(&D_80142F44_151EF4); // Do not allocate because in pause
+		osSyncPrintf(&D_80142F44_151EF4);
 	}
 
 	if (arg0 >= 0xA) {
@@ -629,12 +710,12 @@ u8 func_800C14D4_D0484(u8 arg0) {
 	}
 
 	if (temp != 0) {
-		osSyncPrintf(&D_80142F68_151F18, arg0); // ERROR: tried to allocate a permanent effect
+		osSyncPrintf(&D_80142F68_151F18, arg0);
 		return 0xFB;
 	}
 
 	if (D_80154304 >= 0x1E) {
-		osSyncPrintf(&D_80142F98_151F48, arg0); // WARNING : Out of space to create a new dynamic effect of type %d
+		osSyncPrintf(&D_80142F98_151F48, arg0);
 		temp_slot = 0xFB;
 	} else {
 		temp_slot = D_8015430C;
@@ -706,20 +787,20 @@ s16 func_800C17B4_D0764(u8 arg0, s32 arg1) {
 	s16 var_a2;
 
 	if (gameplayMode == 2 || gameplayMode == 9) {
-		osSyncPrintf(&D_8014301C_151FCC); // Do not allocate because in pause
+		osSyncPrintf(&D_8014301C_151FCC);
 	}
 	if (D_8015430E >= 0x190) {
 		if (arg1 != 0) {
-			osSyncPrintf(&D_80143040_151FF0, D_801541F8[arg0].unk0); // WARNING - New permanent effect unit (type %d) cannot be allocated - out of space
+			osSyncPrintf(&D_80143040_151FF0, D_801541F8[arg0].unk0);
 			var_a2 = -3;
 		} else {
-			osSyncPrintf(&D_80143094_152044, D_80154088[arg0].unk0); // WARNING - New dynamic effect unit (type %d) cannot be allocated - out of space
+			osSyncPrintf(&D_80143094_152044, D_80154088[arg0].unk0);
 			var_a2 = -3;
 		}
 	} else {
 		var_a2 = D_80154310;
 		if (D_80154318[var_a2].unk0 & 1) {
-			osSyncPrintf(&D_801430E8_152098); // *** Tried to allocate a unit that is already being used!! ***
+			osSyncPrintf(&D_801430E8_152098);
 		}
 		func_800C15C0_D0570(arg0, arg1, var_a2, 0);
 	}
@@ -864,7 +945,7 @@ void func_800C1D40_D0CF0(s16 arg0, u8 arg1, s32 arg2)
 	  func_800C1A4C_D09FC(arg0, arg1, arg2); 
 	return;
   }
-  osSyncPrintf(&D_801432C4_152274); // EFFECTS WARNING : Call to free up invalid triple effect unit
+  osSyncPrintf(&D_801432C4_152274);
 }
 
 void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2)
@@ -880,7 +961,7 @@ void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2)
 		func_800C1A4C_D09FC(sp1E, sp27, arg2);
 		return;
 	  }
-	osSyncPrintf(&D_80143304_1522B4); // EFFECTS WARNING : Call to free up invalid double effect unit
+	osSyncPrintf(&D_80143304_1522B4);
 }
 
 #ifdef NON_MATCHING
@@ -898,7 +979,7 @@ void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 			temp_v0 = D_80156ED8;
 			if (temp_v0 == 1) {
 				if ((func_800038E0_44E0() % 9) < 6) {
-					goto block_5;
+					goto block_5; // Agent - Refactor this to remove the goto and use if/else instead
 				}
 			} else {
 block_5:
@@ -1026,9 +1107,10 @@ void func_800C22EC_D129C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C22EC_D129C.s")
 #endif
 
+// Kill smoke puff unit?
 void func_800C2554_D1504(s16 arg0, u8 arg1) {
 	if (arg1 >= 0x1E || D_80154088[arg1].unk0 != 0) {
-		osSyncPrintf(&D_80143390_152340); // DYNAMIC EFFECTS : Tried to kill smoke puff unit which does not exist!
+		osSyncPrintf(&D_80143390_152340);
 		return;
 	}
 	if (arg0 == D_80154088[arg1].unkA) {
@@ -1041,7 +1123,7 @@ void func_800C2554_D1504(s16 arg0, u8 arg1) {
 
 // CURRENT(8646)
 #ifdef NON_MATCHING
-void func_800C25F8_D15A8(s32 arg0) {
+void func_800C25F8_D15A8(u8 arg0) {
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linkedEntry;
@@ -1053,7 +1135,7 @@ void func_800C25F8_D15A8(s32 arg0) {
 
 	D_80153BCD = 0x20;
 	D_80153BCE = 0x20;
-	effect = &D_80154088[arg0 & 0xFF];
+	effect = &D_80154088[arg0];
 
 	gDPPipeSync(D_8005BB2C++);
 
@@ -1185,6 +1267,7 @@ void func_800C2B90_D1B40(u8 arg0, u8 arg1) {
 	}
 }
 
+// Create new photon effect?
 s32 func_800C2D50_D1D00(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
 	s16 unitId;
 	u8 effectId;
@@ -1307,6 +1390,7 @@ void func_800C2EE4_D1E94(u8 arg0) {
 	}
 }
 
+// Update photon effect?
 void func_800C31AC_D215C(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	Unk80154318Sub *sub;
 
@@ -1322,9 +1406,10 @@ void func_800C31AC_D215C(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	func_80137368_146318(arg0, arg1, arg2, 0, D_80154088[arg3].unkA);
 }
 
+// Kill photon effect?
 void func_800C3288_D2238(u8 arg0) {
 	if (arg0 >= 0x1E || D_80154088[arg0].unk0 != 1) {
-		osSyncPrintf(&D_80143478_152428); // DYNAMIC EFFECTS : Tried to kill photon effect which does not exist!
+		osSyncPrintf(&D_80143478_152428);
 		return;
 	}
 	func_800C1418_D03C8(arg0, 0);
@@ -1581,6 +1666,7 @@ s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3BD8_D2B88.s")
 #endif
 
+// Move fire effect?
 void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	Unk80154318Entry *entry;
 	if (arg3 != -3) {
@@ -1592,7 +1678,7 @@ void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_801434C0_152470); // EFFECTS WARNING : Call to move a fire effect which doesn't exist
+	osSyncPrintf(&D_801434C0_152470);
 }
 
 #ifdef NON_MATCHING
@@ -1620,7 +1706,7 @@ void func_800C3E2C_D2DDC(void) {
 		entry = &D_80154318[idx];
 		entrySub = (Unk80154318Sub *)&entry->unk8;
 		linkedEntry = &D_80154318[entry->unk4];
-
+		// Agent - fix all the following pointer casts/math to use correct struct/array access
 		((u8 *)linkedEntry)[0xC]++;
 		if (((u8 *)linkedEntry)[0xC] == 0x10) {
 			((u8 *)linkedEntry)[0xC] = 0;
@@ -1966,26 +2052,27 @@ void func_800C4F48_D3EF8(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	}
 
 	if (effectUnit[0xA] == 1) {
+		// Agent - replace all the following pointer casts/math with correct array/struct access
 		newUnit = (u8 *)&D_80154318[idx] + 8;
 		*(s16 *)&newUnit[0] = *(s16 *)&effectUnit[0];
 		*(s16 *)&newUnit[2] = *(s16 *)&effectUnit[2];
 		*(s16 *)&newUnit[4] = *(s16 *)&effectUnit[4];
 
-		sp34 = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / D_80143FC0_152F70);
+		sp34 = (f32)((f32)(func_800038E0_44E0() % arg3) / D_80143FC0_152F70);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
 			temp_f0 = sp34;
 			sp34 = 0.0f - temp_f0;
 		}
 		sp34 += arg1->x;
 
-		sp38 = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / D_80143FC8_152F78);
+		sp38 = (f32)((f32)(func_800038E0_44E0() % arg3) / D_80143FC8_152F78);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
 			temp_f0 = sp38;
 			sp38 = 0.0f - temp_f0;
 		}
 		sp38 += arg1->y;
 
-		sp3C = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / D_80143FD0_152F80);
+		sp3C = (f32)((f32)(func_800038E0_44E0() % arg3) / D_80143FD0_152F80);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
 			temp_f0 = sp3C;
 			sp3C = 0.0f - temp_f0;
@@ -2061,7 +2148,7 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 
 	sfx = &D_80154088[effect];
 	entry = &D_80154318[idx];
-
+	// Agent - replace these pointer casts/math with correct struct/array access
 	((u8 *)sfx)[1] = ((u8 *)sfx)[1];
 	*(s16 *)((u8 *)sfx + 0xA) = idx;
 
@@ -2615,7 +2702,7 @@ void func_800C6D80_D5D30(void) {
 		next = &D_80154318[linked->unk4];
 
 		temp_u16 = (u16)next->unk8;
-		temp_f16 = (s32)((f64)(f32)entry->unk2 * ((f64)(f32)temp_u16 * 0.03125) * 6.0);
+		temp_f16 = (s32)((f32)entry->unk2 * ((f32)temp_u16 * 0.03125) * 6.0);
 		sp15C = temp_f16;
 		sp15A = temp_f16;
 		sp158 = temp_f16;
@@ -2627,9 +2714,9 @@ void func_800C6D80_D5D30(void) {
 			Unk80154318Sub *linkedSub;
 
 			linkedBytes = (u8 *)&next->unk8;
-			sp158 = (s16)(s32)((f32)(((f64)linkedBytes[2] / D_80143FD8_152F88) + 1.0) * (f32)sp158);
-			sp15A = (s16)(s32)((f32)(((f64)linkedBytes[3] / D_80143FD8_152F88) + 1.0) * (f32)sp15A);
-			sp15C = (s16)(s32)((f32)(((f64)linkedBytes[4] / D_80143FD8_152F88) + 1.0) * (f32)sp15C);
+			sp158 = (s16)(s32)((f32)((linkedBytes[2] / D_80143FD8_152F88) + 1.0) * (f32)sp158);
+			sp15A = (s16)(s32)((f32)((linkedBytes[3] / D_80143FD8_152F88) + 1.0) * (f32)sp15A);
+			sp15C = (s16)(s32)((f32)((linkedBytes[4] / D_80143FD8_152F88) + 1.0) * (f32)sp15C);
 
 			entrySub = (Unk80154318Sub *)&entry->unk8;
 			linkedSub = (Unk80154318Sub *)&linked->unk8;
@@ -3165,28 +3252,28 @@ void func_800C8E10_D7DC0(s16 arg0, s16 arg1, s16 arg2, u8 arg3)
 	s16 idx;
 	if (D_80156ED8 == 2)
 	{
-	if ((func_800038E0_44E0() % 10) < 5)
-	{
-	return;
-	}
+		if ((func_800038E0_44E0() % 10) < 5)
+		{
+			return;
+		}
 	}
 	if (arg3 >= 0x1E)
 	{
-	return;
+		return;
 	}
 	if (arg3 == 0xFB)
 	{
-	return;
+		return;
 	}
 
 	if (D_80154088[arg3].unk0 != 3)
 	{
-	return;
+		return;
 	}
 	idx = func_800C17B4_D0764(arg3, 0);
 	if (idx == (-3))
 	{
-	return;
+		return;
 	}
 	D_80154318[idx].unk8 = arg0;
 	D_80154318[idx].unkA = arg1;
@@ -3934,6 +4021,7 @@ s16 func_800CB19C_DA14C(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	return temp_v0;
 }
 
+// Update bubble effect?
 void func_800CB23C_DA1EC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4, s32 arg5) {
 	u8 *base;
 
@@ -3961,7 +4049,7 @@ void func_800CB23C_DA1EC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4, s32 ar
 			return;
 		}
 	}
-	osSyncPrintf(&D_80143644_1525F4); // ** WARNING: tried to update a bubble effect that doesn't exist! **
+	osSyncPrintf(&D_80143644_1525F4);
 }
 
 void func_800CB394_DA344(void) {
@@ -4556,6 +4644,7 @@ void func_800CD0B0_DC060(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD0B0_DC060.s")
 #endif
 
+// Create jet stream effect?
 u8 func_800CD1F8_DC1A8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5) {
 	Unk80154318Entry *entry;
 	s32 temp_v0;
@@ -4566,7 +4655,7 @@ u8 func_800CD1F8_DC1A8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5) 
 		D_80154088[sp1F].unk1 |= 1;
 		temp_v0 = func_800C17B4_D0764(sp1F, 0);
 		if (temp_v0 == -3) {
-			osSyncPrintf(&D_80143688_152638); // EFFECTS WARNING: Failed to create a jet stream - could not allocate any units
+			osSyncPrintf(&D_80143688_152638);
 			func_800C1384_D0334(sp1F);
 			return 0xFB;
 		}
@@ -4582,6 +4671,7 @@ u8 func_800CD1F8_DC1A8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5) 
 	return sp1F;
 }
 
+// Update jet stream effect?
 void func_800CD2E8_DC298(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	Unk80154318Entry *temp_v0;
 	s16 temp_v1;
@@ -4596,7 +4686,7 @@ void func_800CD2E8_DC298(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_801436D8_152688); // ** WARNING: tried to update a jet stream effect that doesn't exist! **
+	osSyncPrintf(&D_801436D8_152688);
 }
 
 void func_800CD390_DC340(u8 arg0) {
@@ -5365,23 +5455,23 @@ void func_800CF2E0_DE290(void) {
 			gDPSetEnvColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, sub->unkC);
 
 			D_80153BC8 = (f32)entry->unk2;
-			temp_f20 = (f32)((f64)entry->unk2 * 3.0);
+			temp_f20 = (f32)(entry->unk2 * 3.0);
 			D_80153BCC = sub->unkC;
 			D_80153BC4 = (void *)&sub->unk6;
 			func_800C1128_D00D8(temp_f20, &D_80153AB8, &spF0);
 			func_800C1128_D00D8(temp_f20, &D_80153AC4, &spFC);
 
-			spE0.x = (f32)(((f64)(spF0.x - spFC.x) * 0.5) + (f64)sub->unk0);
-			spE0.y = (f32)(((f64)(spF0.y - spFC.y) * 0.5) + (f64)sub->unk2);
-			spE0.z = (f32)(((f64)(spF0.z - spFC.z) * 0.5) + (f64)sub->unk4);
+			spE0.x = (f32)(((spF0.x - spFC.x) * 0.5) + sub->unk0);
+			spE0.y = (f32)(((spF0.y - spFC.y) * 0.5) + sub->unk2);
+			spE0.z = (f32)(((spF0.z - spFC.z) * 0.5) + sub->unk4);
 
-			spD4.x = (f32)(((f64)(spFC.x - spF0.x) * 0.5) + (f64)sub->unk0);
-			spD4.y = (f32)(((f64)(spFC.y - spF0.y) * 0.5) + (f64)sub->unk2);
-			spD4.z = (f32)(((f64)(spFC.z - spF0.z) * 0.5) + (f64)sub->unk4);
+			spD4.x = (f32)(((spFC.x - spF0.x) * 0.5) + sub->unk0);
+			spD4.y = (f32)(((spFC.y - spF0.y) * 0.5) + sub->unk2);
+			spD4.z = (f32)(((spFC.z - spF0.z) * 0.5) + sub->unk4);
 
-			spBC.x = (f32)((f64)(spD4.x - spE0.x) * scale);
-			spBC.y = (f32)((f64)(spD4.y - spE0.y) * scale);
-			spBC.z = (f32)((f64)(spD4.z - spE0.z) * scale);
+			spBC.x = (f32)((spD4.x - spE0.x) * scale);
+			spBC.y = (f32)((spD4.y - spE0.y) * scale);
+			spBC.z = (f32)((spD4.z - spE0.z) * scale);
 
 			func_800C10F4_D00A4(&spE0, &spBC, &spC8);
 			func_800C10C0_D0070(&spD4, &spBC, &spBC);
@@ -6088,6 +6178,7 @@ void func_800D19DC_E098C(u8 arg0, u8 arg1) {
 	*(&D_80154327 + (temp_v0 * 0x1C)) = arg1;
 }
 
+// Kill lightning effect?
 void func_800D1A1C_E09CC(u8 arg0) {
 	if (arg0 != 0xFB) {
 		if (D_80154088[arg0].unk0 == 8) {
@@ -6096,7 +6187,7 @@ void func_800D1A1C_E09CC(u8 arg0) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_801437C0_152770); // EFFECTS WARNING : You have tried to kill a lightning effect which doesn't exist
+	osSyncPrintf(&D_801437C0_152770);
 }
 
 // CURRENT(3721)
@@ -7005,14 +7096,14 @@ void func_800D45B4_E3564(void) {
 		sinVal = sins(0x888);
 
 		quarterZ = (s16)(dz / 4);
-		stepZ = (f64)quarterZ;
+		stepZ = quarterZ;
 		quarterX = (s16)(dx / 4);
-		stepX = (f64)quarterX;
+		stepX = quarterX;
 
-		scaleX = (s16)((((f64)(f32)sinVal / 32768.0) * stepZ) + (((f64)(f32)cosVal / 32768.0) * stepX));
+		scaleX = (s16)((((f32)sinVal / 32768.0) * stepZ) + (((f32)cosVal / 32768.0) * stepX));
 		cosVal = coss(0x888);
 		sinVal = sins(0x888);
-		scaleZ = (s16)((((f64)(f32)cosVal / 32768.0) * stepZ) - (((f64)(f32)sinVal / 32768.0) * stepX));
+		scaleZ = (s16)((((f32)cosVal / 32768.0) * stepZ) - (((f32)sinVal / 32768.0) * stepX));
 
 		func_800D3E3C_E2DEC(points[0], points[1], points[2], points[3], points[4], points[5], alpha);
 
@@ -7022,10 +7113,10 @@ void func_800D45B4_E3564(void) {
 
 		cosVal = coss(0xF778);
 		sinVal = sins(0xF778);
-		scaleX = (s16)((((f64)(f32)sinVal / 32768.0) * stepZ) + (((f64)(f32)cosVal / 32768.0) * stepX));
+		scaleX = (s16)((((f32)sinVal / 32768.0) * stepZ) + (((f32)cosVal / 32768.0) * stepX));
 		cosVal = coss(0xF778);
 		sinVal = sins(0xF778);
-		scaleZ = (s16)((((f64)(f32)cosVal / 32768.0) * stepZ) - (((f64)(f32)sinVal / 32768.0) * stepX));
+		scaleZ = (s16)((((f32)cosVal / 32768.0) * stepZ) - (((f32)sinVal / 32768.0) * stepX));
 
 		func_800D3E3C_E2DEC(points[0], points[1], points[2], (s16)(points[0] + scaleX), (s16)(points[1] + quarterY), (s16)(points[2] + scaleZ), alpha);
 		func_800D3E3C_E2DEC(points[3], points[4], points[5], (s16)(points[0] + scaleX), (s16)(points[1] + quarterY), (s16)(points[2] + scaleZ), alpha);
@@ -7067,6 +7158,7 @@ void func_800D4A78_E3A28(s16 arg0) {
 	}
 }
 
+// Update ring weapon bullet?
 void func_800D4AB0_E3A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	if (arg0 != -3) {
 		Unk80154318Entry *entry = &D_80154318[arg0];
@@ -7077,7 +7169,7 @@ void func_800D4AB0_E3A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_80143814_1527C4); // ** WARNING: tried to update a ring weapon bullet that doesn't exist! **
+	osSyncPrintf(&D_80143814_1527C4);
 }
 
 void func_800D4B44_E3AF4(void) {
@@ -7149,12 +7241,12 @@ void func_800D4C10_E3BC0(void) {
 
 		texAddr = K0_TO_PHYS(D_100DC00);
 		cosVal = coss(0x4000);
-		spE4[0] = (f32)((((f64)(f32)sins(0x4000) / 32768.0) * (f64)spFC[2]) +
-			(((f64)spFC[0]) * ((f64)(f32)cosVal / 32768.0)));
+		spE4[0] = (f32)((((f32)sins(0x4000) / 32768.0) * spFC[2]) +
+			((spFC[0]) * ((f32)cosVal / 32768.0)));
 		spE4[1] = zeroF;
 		cosVal = coss(0x4000);
-		spE4[2] = (f32)((((f64)spFC[2]) * ((f64)(f32)cosVal / 32768.0)) -
-			(((f64)(f32)sins(0x4000) / 32768.0) * (f64)spFC[0]));
+		spE4[2] = (f32)(((spFC[2]) * ((f32)cosVal / 32768.0)) -
+			(((f32)sins(0x4000) / 32768.0) * spFC[0]));
 
 		func_800C1024_CFFD4((Vec3f *)spE4, (Vec3f *)spE4);
 		func_800C1024_CFFD4((Vec3f *)spFC, (Vec3f *)spF0);
@@ -7309,6 +7401,7 @@ void func_800D5588_E4538(s16 arg0) {
 	}
 }
 
+// Update triple spinner?
 void func_800D55C0_E4570(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	Unk80154318Entry *entry;
 
@@ -7324,7 +7417,7 @@ void func_800D55C0_E4570(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_80143860_152810, arg1, arg2, arg3); // ** WARNING: tried to update a triple spinner that doesn't exist! **
+	osSyncPrintf(&D_80143860_152810, arg1, arg2, arg3);
 }
 
 void func_800D5684_E4634(void) {
@@ -7363,11 +7456,11 @@ void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 	sub = (Unk80154318Sub *)&entry->unk8;
 	parent = entry->unk4;
 	dist = arg1 & 0xFFFF;
-	scaleSin = (f32)(((f64)(f32)sins((u16)angle) / 32768.0) * dist);
-	scaleCos = (f32)(((f64)(f32)coss((u16)angle) / 32768.0) * dist);
-	x = (s16)((s32)(((f64)(f32)coss(arg3) / 32768.0) * (f64)scaleSin) + entry->unk8);
+	scaleSin = (f32)(((f32)sins((u16)angle) / 32768.0) * dist);
+	scaleCos = (f32)(((f32)coss((u16)angle) / 32768.0) * dist);
+	x = (s16)((s32)(((f32)coss(arg3) / 32768.0) * scaleSin) + entry->unk8);
 	y = (s16)((s32)scaleCos + entry->unkA);
-	z = (s16)((s32)((((f64)(f32)sins(arg3) / 32768.0) * (f64)-scaleSin)) + entry->unkC);
+	z = (s16)((s32)((((f32)sins(arg3) / 32768.0) * -scaleSin)) + entry->unkC);
 
 	parentBytes = (u8 *)&D_80154318[parent].unk8;
 	if (arg4 == 0) {
@@ -7739,13 +7832,14 @@ void func_800D6A84_E5A34(u8 arg0)
   D_80153AE0[arg0].unk1C = ((s32 *) (&D_8013E308_14D2B8))[arg0];
 }
 
+// Create nuke?
 void func_800D6ADC_E5A8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	u8 temp_a0;
 	s16 temp_v0_2;
 	Unk80154318Entry *entry;
 
 	if (D_80153AB0 == 1) {
-		osSyncPrintf(&D_801438DC_15288C); // Can't create a nuke - one already in progress
+		osSyncPrintf(&D_801438DC_15288C);
 		return;
 	}
 	temp_a0 = func_800C14D4_D0484(7);
@@ -8019,20 +8113,22 @@ s16 func_800D7624_E65D4(s16 arg0, s16 arg1, s16 arg2) {
 	return temp_v0;
 }
 
+// Kill mini photon effect?
 void func_800D76A8_E6658(s16 arg0) {
 	if (arg0 == -3) {
-		osSyncPrintf(&D_8014390C_1528BC); // DYNAMIC EFFECTS : Tried to kill minin photon effect which does not exist!
+		osSyncPrintf(&D_8014390C_1528BC);
 		return;
 	}
 	func_800C1A4C_D09FC(arg0, 0x11, 1);
 }
 
+// Update mini photon effect?
 void func_800D76F4_E66A4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	u8 *temp_v1;
 	s16 *temp_v0;
 
 	if ((arg3 == -3) || (temp_v1 = (u8 *)&D_80154318[arg3], temp_v0 = (s16 *)(temp_v1 + 8), ((*temp_v1 & 1) == 0))) {
-		osSyncPrintf(&D_80143958_152908, arg1, arg2); // DYNAMIC EFFECTS : Tried to update mini photon effect which does not exist!
+		osSyncPrintf(&D_80143958_152908, arg1, arg2);
 		return;
 	}
 	temp_v0[0] = arg0;
@@ -8204,9 +8300,10 @@ s16 func_800D7EF8_E6EA8(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
   return temp_v0;
 }
 
+// Kill fireball effect?
 void func_800D7FB4_E6F64(s16 arg0) {
 	if (arg0 == -3) {
-		osSyncPrintf(&D_801439A4_152954); // DYNAMIC EFFECTS : Tried to kill fire ball effect which does not exist!
+		osSyncPrintf(&D_801439A4_152954);
 		return;
 	}
 	func_800C1A4C_D09FC(arg0, 0x12, 1);
@@ -8740,11 +8837,12 @@ void func_800D978C_E873C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D978C_E873C.s")
 #endif
 
+// Create group effect?
 s32 func_800D99F4_E89A4(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 temp_v0;
 	Unk80154318Entry *temp_v1;
 
-	osSyncPrintf(&D_80143A38_1529E8); // Create group effect
+	osSyncPrintf(&D_80143A38_1529E8);
 	temp_v0 = func_800C19D4_D0984(0x15, 1);
 	if (temp_v0 != -3) {
 		temp_v1 = &D_80154318[temp_v0];
@@ -9932,7 +10030,7 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s32 arg2, s32 arg3) {
 		D_80153BB8.x = arg0->x + ((beamDir.x / 3.0f) * 2.0f);
 		D_80153BB8.y = arg0->y + ((beamDir.y / 3.0f) * 2.0f);
 		D_80153BB8.z = arg0->z + ((beamDir.z / 3.0f) * 2.0f);
-		D_80153BC8 = (f32)(u16)((f64)phase * 3.0);
+		D_80153BC8 = (f32)(u16)(phase * 3.0);
 		func_800DB350_EA300();
 	}
 }
@@ -10482,17 +10580,19 @@ void func_800DEB7C_EDB2C(u16 arg0, u8 arg1, s16 arg2) {
 	s16 sp36;
 	u8 slot;
 	UnkFC8E8Entry *entry;
+	VehicleSpawnOffset *spawn;
 
-	sp3E = *((s8*)D_8013DB10_14CAC0 + currentLevel * 0x5C + D_80052B34->unk1A * 4 - 0x5C) * 2;
-	sp3C = *((s8*)D_8013DB10_14CAC0 + currentLevel * 0x5C + D_80052B34->unk1A * 4 - 0x5B) * 2;
-	sp3B = (u8)(*((s8*)D_8013DB10_14CAC0 + currentLevel * 0x5C + D_80052B34->unk1A * 4 - 0x59) + arg0 / 4);
+	spawn = &D_8013DB10_14CAC0[currentLevel - 1][D_80052B34->unk1A];
+	sp3E = spawn->xOffset * 2;
+	sp3C = spawn->yOffset * 2;
+	sp3B = (u8)(spawn->type + arg0 / 4);
 	sp36 = sins(D_80052B34->unk6);
 	sp38 = coss(D_80052B34->unk6);
-	sp46 = (s16)(s32)((f64)D_80052B34->unk0 + ((f64)(f32)sp38 / 32768.0) * (f64)sp3E + ((f64)(f32)sp36 / 32768.0) * (f64)arg2 + (f64)(func_800038E0_44E0() % 8) - 4.0);
+	sp46 = (s16)(s32)(D_80052B34->unk0 + ((f32)sp38 / 32768.0) * sp3E + ((f32)sp36 / 32768.0) * (f64)arg2 + (f64)(func_800038E0_44E0() % 8) - 4.0);
 	sp44 = D_80052B34->unk2 + sp3C;
 	sp36 = coss(D_80052B34->unk6);
 	sp38 = sins(D_80052B34->unk6);
-	slot = func_800DDB60_ECB10(sp46, sp44, (s16)(s32)((f64)D_80052B34->unk4 + ((f64)(f32)sp38 / 32768.0) * (f64)sp3E - ((f64)(f32)sp36 / 32768.0) * (f64)arg2 + (f64)(func_800038E0_44E0() % 8) - 4.0), 3, sp3B);
+	slot = func_800DDB60_ECB10(sp46, sp44, (s16)(s32)(D_80052B34->unk4 + ((f32)sp38 / 32768.0) * (f64)sp3E - ((f64)(f32)sp36 / 32768.0) * (f64)arg2 + (f64)(func_800038E0_44E0() % 8) - 4.0), 3, sp3B);
 	if (slot != 0xFF) {
 		entry = &D_80156EF0[slot];
 		entry->unkD = (s8)(0xDC - arg1 / 2);
@@ -11249,7 +11349,7 @@ void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 			return;
 		}
 
-		tempA2 = D_8013DAB6_14CA66[(level * 0x5C) + (D_80052B34->unk1A * 4)];
+		tempA2 = D_8013DB10_14CAC0[level - 1][D_80052B34->unk1A].zOffset;
 		func_800DEB7C_EDB2C(arg0, arg1, tempA2);
 		if ((tempA2 != 0) && (skipSecondCall == 0)) {
 			func_800DEB7C_EDB2C(arg0, arg1, -tempA2);

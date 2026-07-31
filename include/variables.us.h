@@ -2100,7 +2100,6 @@ extern Light D_8013D978_14C928;
 extern u8 D_8013D9AC_14C95C;
 extern s8 D_8013D9B0_14C960;
 extern s32 D_8013D9B4_14C964;
-extern s8 D_8013DAB6_14CA66[];
 extern u8 D_8013DAE0_14CA90; /* particle/effect count */
 extern u8 D_8013DAE4_14CA94; /* particle/effect free index */
 extern Unk80154082 D_8013DF80_14CF30;
@@ -2467,7 +2466,7 @@ extern Unk80152CA0Entry D_80152CA0[];
 extern Unk80152D00 D_80152D00[];
 extern Unk80152D00Pair D_80153300; /* one past end of D_80152D00 */
 extern Unk800E614CFxSlot D_801538C4;
-extern u8 D_80153AB0;
+extern u8 D_80153AB0; // Nuke in progress?
 extern Vec3f D_80153AB8;
 extern Vec3f D_80153AC4;
 extern Vec3f D_80153AD0;

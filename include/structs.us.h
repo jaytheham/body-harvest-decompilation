@@ -759,6 +759,16 @@ typedef struct {
 	/* 0x06 */ u16 unk6;
 } Unk800190D4; /* size = 0x08 */
 
+/* Spawn offset/type for entities spawned relative to the player's vehicle.
+   Table is indexed [level - 1][vehicle specIndex]; x/y offsets are scaled by 2
+   into world units, byte 2 (zOffset) is the forward offset. */
+typedef struct {
+	/* 0x00 */ s8 xOffset; // lateral offset from vehicle
+	/* 0x01 */ s8 yOffset; // vertical offset from vehicle
+	/* 0x02 */ s8 zOffset; // forward offset from vehicle
+	/* 0x03 */ u8 type;    // spawn param
+} VehicleSpawnOffset; /* size = 0x04 */
+
 typedef enum VehicleFlags {
 	VEHICLE_FLAG_UNK1 = 1,
 	VEHICLE_FLAG_AIRBORNE = 2,
