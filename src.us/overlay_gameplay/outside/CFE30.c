@@ -10916,7 +10916,7 @@ void func_800E00F4_EF0A4(u8 arg0, u8 arg1) {
 	entry->unk8 = -6;
 }
 
-// guess_initSpecialEffects
+// Init Special Effects?
 void func_800E0134_EF0E4(void) {
 	u8 i;
 	u16 j;
@@ -11000,14 +11000,13 @@ void func_800E0134_EF0E4(void) {
 	func_800E552C_F44DC();
 }
 
-// debug_printSpecialEffectsInfo
+// Debug - Print Special Effects Info
 void func_800E03FC_EF3AC(void) {
 	u8 i;
 
-	osSyncPrintf(&D_80143ED0_152E80); // DUMP SPECIAL EFFECTS INFO
+	osSyncPrintf(&D_80143ED0_152E80);
 	for (i = 0; i < 0x1E; i++) {
 		if (D_80154088[i].unk0 != 0xFA) {
-			// Effect %d :  Type %d  numUints %d
 			osSyncPrintf(&D_80143EF0_152EA0, i, D_80154088[i].unk0, D_80154088[i].unk4);
 		}
 	}
@@ -11527,9 +11526,9 @@ void func_800E2830_F17E0(void) {
 	s16 didShrink;
 	didShrink = 0;
 	if (D_8013E408_14D3B8 == 5) {
-		if ((*(volatile s32 *)&D_80154300) < D_80154308) {
-			func_800E2750_F1700((*(volatile s32 *)&D_80154300) & 0xFF);
-			(*(volatile s32 *)&D_80154300) += 1;
+		if ((D_80154300) < D_80154308) {
+			func_800E2750_F1700((D_80154300) & 0xFF);
+			(D_80154300) += 1;
 		}
 		D_8013E408_14D3B8 = 0;
 	} else {
@@ -11563,7 +11562,7 @@ void func_800E2830_F17E0(void) {
 		D_801541F0.unk2 += 3;
 	}
 
-	count = (*(volatile s32 *)&D_80154300);
+	count = (D_80154300);
 	i = (u8)(count - count);
 	if (count > 0) {
 		do {
@@ -11572,8 +11571,8 @@ void func_800E2830_F17E0(void) {
 			speed = entry->unk4;
 
 			if (currentLevel == LEVEL_SIBERIA) {
-				xOffset = (s16)(s32)((((f64)(f32)sins((u16)(((i + D_80052A8C) << 11) & 0xFFFF)) / 32768.0) *
-									(f64)(((s32)D_80154300 / 5) + 0x10)) + (f64)((D_80154080 * speed * 2) >> 4));
+				xOffset = (s16)(s32)((((f32)sins((u16)(((i + D_80052A8C) << 11) & 0xFFFF)) / 32768.0) *
+									(((s32)D_80154300 / 5) + 0x10)) + ((D_80154080 * speed * 2) >> 4));
 			} else {
 				xOffset = (s16)((s32)(speed * D_80154080 * 2) >> 4);
 			}
@@ -11583,8 +11582,8 @@ void func_800E2830_F17E0(void) {
 
 			if (yLimit < entry->unk2) {
 				if ((D_80154308 < count) && (didShrink == 0)) {
-					(*(volatile s32 *)&D_80154300) = count - 1;
-					count = (*(volatile s32 *)&D_80154300);
+					(D_80154300) = count - 1;
+					count = (D_80154300);
 					didShrink = 1;
 					if (count != i) {
 						replace = &D_80153BD0[count];
@@ -11594,7 +11593,7 @@ void func_800E2830_F17E0(void) {
 					}
 				} else {
 					func_800E2750_F1700(i & 0xFF);
-					count = (*(volatile s32 *)&D_80154300);
+					count = (D_80154300);
 				}
 			} else {
 				if ((D_80068084 * 0x10) < entry->unk0) {
@@ -11604,7 +11603,7 @@ void func_800E2830_F17E0(void) {
 					} else if (currentLevel == LEVEL_SIBERIA) {
 						entry->unk4 = (func_800038E0_44E0() % 75) + 0x19;
 					}
-					count = (*(volatile s32 *)&D_80154300);
+					count = (D_80154300);
 				} else if (entry->unk0 < 0) {
 					entry->unk0 = D_80068084 * 0x10;
 					if (currentLevel == LEVEL_JAVA) {
@@ -11612,7 +11611,7 @@ void func_800E2830_F17E0(void) {
 					} else if (currentLevel == LEVEL_SIBERIA) {
 						entry->unk4 = (func_800038E0_44E0() % 75) + 0x19;
 					}
-					count = (*(volatile s32 *)&D_80154300);
+					count = (D_80154300);
 				}
 			}
 
@@ -12029,12 +12028,12 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 
 		angle = (u16)rot;
 		n = (s16)(D_8013DD18_14CCC8[arg8] + size - arg7);
-		scale = (f64)n;
+		scale = n;
 
-		x1 = (s16)(((f64)coss(angle) / 32768.0) * scale);
-		z1 = (s16)(((f64)sins(angle) / 32768.0) * scale);
-		x2 = (s16)(((f64)coss(angle) / 32768.0) * scale);
-		z2 = (s16)(((f64)sins(angle) / 32768.0) * scale);
+		x1 = (s16)((coss(angle) / 32768.0) * scale);
+		z1 = (s16)((sins(angle) / 32768.0) * scale);
+		x2 = (s16)((coss(angle) / 32768.0) * scale);
+		z2 = (s16)((sins(angle) / 32768.0) * scale);
 	}
 
 	D_8005BB34->v.ob[0] = arg0;
