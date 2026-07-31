@@ -1114,17 +1114,23 @@ void func_800C2554_D1504(s16 arg0, u8 arg1) {
 	func_800C1A4C_D09FC(arg0, arg1, 0);
 }
 
-// CURRENT(8646)
 #ifdef NON_MATCHING
+// CURRENT(6462)
 void func_800C25F8_D15A8(u8 arg0) {
+	s32 dx;
+	s32 dy;
+	s32 dz;
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linkedEntry;
+	Unk80154318Entry *deltaEntry;
+	Unk80154318Entry *deltaLinked;
 	Vec3f delta;
 	f32 dot;
 	s16 unitId;
 	s16 nextId;
 	s16 i;
+	u8 texType;
 
 	D_80153BCD = 0x20;
 	D_80153BCE = 0x20;
@@ -1132,9 +1138,10 @@ void func_800C25F8_D15A8(u8 arg0) {
 
 	gDPPipeSync(D_8005BB2C++);
 
-	if ((D_80154318[effect->unk6].unk12 == 0) || (D_80154318[effect->unk6].unk12 == 2)) {
+	texType = *(u8 *)&D_80154318[effect->unk6].unk12;
+	if ((texType == 0) || (texType == 2)) {
 		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_MODULATEIA);
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, D_100E080);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100E080));
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -1145,9 +1152,9 @@ void func_800C25F8_D15A8(u8 arg0) {
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << 2), (31 << 2));
-	} else if (D_80154318[effect->unk6].unk12 == 1) {
+	} else if (texType == 1) {
 		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, D_100D800);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100D800));
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -1163,11 +1170,14 @@ void func_800C25F8_D15A8(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 
 	if (effect->unk4 >= 2) {
-		entry = &D_80154318[effect->unk8];
-		linkedEntry = &D_80154318[entry->unk6];
-		delta.x = (f32)(entry->unk8 - linkedEntry->unk8);
-		delta.y = (f32)(entry->unkA - linkedEntry->unkA);
-		delta.z = (f32)(entry->unkC - linkedEntry->unkC);
+		deltaEntry = &D_80154318[effect->unk8];
+		deltaLinked = &D_80154318[deltaEntry->unk6];
+		dx = deltaEntry->unk8 - deltaLinked->unk8;
+		dy = deltaEntry->unkA - deltaLinked->unkA;
+		dz = deltaEntry->unkC - deltaLinked->unkC;
+		delta.x = (f32)dx;
+		delta.y = (f32)dy;
+		delta.z = (f32)dz;
 		dot = func_800C1090_D0040(&D_80153AD0, &delta);
 	} else {
 		dot = 1.0f;
@@ -1179,15 +1189,15 @@ void func_800C25F8_D15A8(u8 arg0) {
 		unitId = effect->unk8;
 	}
 
+	i = 0;
 	if (effect->unk4 > 0) {
-		i = 0;
 		do {
 			entry = &D_80154318[unitId];
 			D_80153BB8.x = (f32)entry->unk8;
-			D_80153BB8.y = (f32)entry->unkA;
-			D_80153BB8.z = (f32)entry->unkC;
 			D_80153BC4 = &entry->unkE;
 			D_80153BCC = entry->unk11;
+			D_80153BB8.y = (f32)entry->unkA;
+			D_80153BB8.z = (f32)entry->unkC;
 			D_80153BC8 = (f32)entry->unk2;
 			func_800DB350_EA300();
 			D_80156EDA += 4;
