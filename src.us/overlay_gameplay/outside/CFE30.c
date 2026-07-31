@@ -965,7 +965,7 @@ void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2)
 }
 
 #ifdef NON_MATCHING
-// CURRENT(1969)
+// CURRENT(1929)
 void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	Unk80154318Sub *temp_s0_2;
 	s32 sp3C;
@@ -1048,11 +1048,11 @@ s32 func_800C2274_D1224(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	return temp_v1;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(230)
+// CURRENT(0)
 void func_800C22EC_D129C(u8 arg0) {
-	s16 nextUnit;
 	s16 unitId;
+	s16 nextUnit;
+	Unk80154318Sub* motion;
 
 	unitId = D_80154088[arg0].unk6;
 
@@ -1070,30 +1070,26 @@ void func_800C22EC_D129C(u8 arg0) {
 	if (unitId != -5) {
 		if (D_80154088[arg0].unk4 > 0) {
 		do {
-			Unk80154318Entry* unit;
-			Unk80154318Sub* motion;
-
-			unit = &D_80154318[unitId];
-			motion = (Unk80154318Sub*)&unit->unk8;
-			if (unit->unk11 < 0x14) {
-				nextUnit = unit->unk4;
+			motion = (Unk80154318Sub*)&D_80154318[unitId].unk8;
+			if (D_80154318[unitId].unk11 < 0x14) {
+				nextUnit = D_80154318[unitId].unk4;
 				func_800C2554_D1504(unitId, arg0);
 				unitId = nextUnit;
 			} else {
 				if (motion->unkA == 1) {
 					motion->unk2 -= (func_800038E0_44E0() % 3) + 3;
 					motion->unk9 -= 15;
-					unit->unk2 -= (func_800038E0_44E0() % 2) + 2;
+					D_80154318[unitId].unk2 -= (func_800038E0_44E0() % 2) + 2;
 				} else {
 					motion->unk2 += 1;
 					motion->unk6 = ((u8)motion->unk6) - 6;
 					motion->unk7 = ((u8)motion->unk7) - 6;
 					motion->unk8 = ((u8)motion->unk8) - 6;
 					motion->unk9 -= 25;
-					unit->unk2 += (func_800038E0_44E0() % 5) + 5;
+					D_80154318[unitId].unk2 += (func_800038E0_44E0() % 5) + 5;
 				}
 
-				unitId = unit->unk4;
+				unitId = D_80154318[unitId].unk4;
 			}
 
 			if (unitId == -5) {
@@ -1103,9 +1099,6 @@ void func_800C22EC_D129C(u8 arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C22EC_D129C.s")
-#endif
 
 // Kill smoke puff unit?
 void func_800C2554_D1504(s16 arg0, u8 arg1) {
@@ -1121,17 +1114,23 @@ void func_800C2554_D1504(s16 arg0, u8 arg1) {
 	func_800C1A4C_D09FC(arg0, arg1, 0);
 }
 
-// CURRENT(8646)
 #ifdef NON_MATCHING
+// CURRENT(6462)
 void func_800C25F8_D15A8(u8 arg0) {
+	s32 dx;
+	s32 dy;
+	s32 dz;
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linkedEntry;
+	Unk80154318Entry *deltaEntry;
+	Unk80154318Entry *deltaLinked;
 	Vec3f delta;
 	f32 dot;
 	s16 unitId;
 	s16 nextId;
 	s16 i;
+	u8 texType;
 
 	D_80153BCD = 0x20;
 	D_80153BCE = 0x20;
@@ -1139,9 +1138,10 @@ void func_800C25F8_D15A8(u8 arg0) {
 
 	gDPPipeSync(D_8005BB2C++);
 
-	if ((D_80154318[effect->unk6].unk12 == 0) || (D_80154318[effect->unk6].unk12 == 2)) {
+	texType = *(u8 *)&D_80154318[effect->unk6].unk12;
+	if ((texType == 0) || (texType == 2)) {
 		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_MODULATEIA);
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, D_100E080);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100E080));
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -1152,9 +1152,9 @@ void func_800C25F8_D15A8(u8 arg0) {
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << 2), (31 << 2));
-	} else if (D_80154318[effect->unk6].unk12 == 1) {
+	} else if (texType == 1) {
 		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, D_100D800);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100D800));
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -1170,11 +1170,14 @@ void func_800C25F8_D15A8(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 
 	if (effect->unk4 >= 2) {
-		entry = &D_80154318[effect->unk8];
-		linkedEntry = &D_80154318[entry->unk6];
-		delta.x = (f32)(entry->unk8 - linkedEntry->unk8);
-		delta.y = (f32)(entry->unkA - linkedEntry->unkA);
-		delta.z = (f32)(entry->unkC - linkedEntry->unkC);
+		deltaEntry = &D_80154318[effect->unk8];
+		deltaLinked = &D_80154318[deltaEntry->unk6];
+		dx = deltaEntry->unk8 - deltaLinked->unk8;
+		dy = deltaEntry->unkA - deltaLinked->unkA;
+		dz = deltaEntry->unkC - deltaLinked->unkC;
+		delta.x = (f32)dx;
+		delta.y = (f32)dy;
+		delta.z = (f32)dz;
 		dot = func_800C1090_D0040(&D_80153AD0, &delta);
 	} else {
 		dot = 1.0f;
@@ -1186,15 +1189,15 @@ void func_800C25F8_D15A8(u8 arg0) {
 		unitId = effect->unk8;
 	}
 
+	i = 0;
 	if (effect->unk4 > 0) {
-		i = 0;
 		do {
 			entry = &D_80154318[unitId];
 			D_80153BB8.x = (f32)entry->unk8;
-			D_80153BB8.y = (f32)entry->unkA;
-			D_80153BB8.z = (f32)entry->unkC;
 			D_80153BC4 = &entry->unkE;
 			D_80153BCC = entry->unk11;
+			D_80153BB8.y = (f32)entry->unkA;
+			D_80153BB8.z = (f32)entry->unkC;
 			D_80153BC8 = (f32)entry->unk2;
 			func_800DB350_EA300();
 			D_80156EDA += 4;
@@ -1586,24 +1589,25 @@ void func_800C3300_D22B0(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(1025) */
+/* CURRENT(975) */
 s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	s16 slot;
 	u16 color;
 	u16 height;
 	u16 temp_u16;
+	Unk80154318Entry *base = D_80154318;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linkedEntry;
 	Unk80154318Sub *entrySub;
 
 	slot = func_800C19D4_D0984(0xC, 1);
 	if (slot != -3) {
-		entry = &D_80154318[slot];
+		entry = &base[slot];
 		entry->unk8 = arg0;
 		entry->unkA = arg1;
 		entry->unkC = arg2;
 
-		linkedEntry = &D_80154318[entry->unk4];
+		linkedEntry = &base[entry->unk4];
 		((u8 *)linkedEntry)[0xC] = 0;
 
 		entry->unkE = arg5;
@@ -1630,7 +1634,7 @@ s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 		entrySub = (Unk80154318Sub *)&linkedEntry->unk8;
 		entrySub->unk2 = arg3;
 		entrySub->unk0 = height;
-		entrySub->unk7 = 8;
+		((u8 *)entrySub)[5] = 8;
 
 		entrySub = (Unk80154318Sub *)&entry->unk8;
 
