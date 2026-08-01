@@ -496,21 +496,6 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA8F8_F98A8.s")
 #endif
 
-typedef struct {
-	/* 0x00 */ u8 pad0[0x18];
-	/* 0x18 */ s16 unk18;
-	/* 0x1A */ s16 unk1A;
-	/* 0x1C */ s16 unk1C;
-	/* 0x1E */ s16 unk1E;
-} UnkF9230AnimEntry; /* size = 0x20 */
-
-typedef struct {
-	/* 0x00 */ u8 pad0[0x20];
-	/* 0x20 */ s16 unk20;
-	/* 0x22 */ s16 unk22;
-	/* 0x24 */ s16 unk24;
-} UnkF9230SpecView;
-
 // CURRENT(5156)
 #ifdef NON_MATCHING
 void func_800EABE0_F9B90(VehicleInstance *arg0) {

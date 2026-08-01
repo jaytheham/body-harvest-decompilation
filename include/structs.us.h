@@ -1075,6 +1075,13 @@ typedef struct {
 } AlienSpec; /* size = 0x68 */
 
 typedef struct {
+	/* 0x00 */ u8 pad0[0x20];
+	/* 0x20 */ s16 unk20;
+	/* 0x22 */ s16 unk22;
+	/* 0x24 */ s16 unk24;
+} UnkF9230SpecView;
+
+typedef struct {
 	/* 0x00 */ s16 xOffset;
 	/* 0x02 */ s16 zOffset;
 	/* 0x04 */ s16 unk4;
