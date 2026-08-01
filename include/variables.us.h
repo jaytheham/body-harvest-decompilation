@@ -2583,8 +2583,7 @@ extern s32 D_80157A04;
 extern s32 D_80157A08;
 extern s32 D_80157A0C;
 extern f32 D_80157A10;
-extern s32 D_80157A28;
-extern s32 D_80157A28;
+extern s32 D_80157A28; // Player state bitflags (see PlayerStateFlags in structs.us.h)
 extern s16 D_80157A2C;
 extern s16 D_80157A2C;
 extern s32 D_80157A34;

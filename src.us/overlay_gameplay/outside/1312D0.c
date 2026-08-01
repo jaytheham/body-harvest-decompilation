@@ -150,7 +150,7 @@ s32 func_801223B0_131360(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 	if ((arg0 == D_80052B34) && (D_80052B34->unk1A == 0)) {
 		D_80157A2C = func_80003824_4424((f32)(arg0->unk0 - arg1), (f32)(arg0->unk4 - arg2));
-		D_80157A28 |= 2;
+		D_80157A28 |= PLAYER_STATE_FLAG_HURT;
 		func_800E0764_EF714(arg3);
 		D_8014ED42 = 8;
 	}
@@ -646,7 +646,7 @@ void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
 		D_8014ED4A = 8;
 	}
 
-	if ((arg0 == D_80052B34) && (D_80052B34->unk1A == 0) && (D_80157A28 & 4) && (D_8015931A < 0xC8)) {
+	if ((arg0 == D_80052B34) && (D_80052B34->unk1A == 0) && (D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) && (D_8015931A < 0xC8)) {
 		D_8015931A = (s16) (s32) ((f32) D_8015931A + (((f32) arg1 / (f32) arg0->unk1C) * 200.0f));
 		if (D_8015931A >= 0x190) {
 			arg0->unk1C = 0;

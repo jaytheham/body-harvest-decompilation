@@ -42,6 +42,20 @@ typedef enum GameStateFlags {
 	GAME_STATE_FLAG_UNK8 = 0x80
 } GameStateFlags;
 
+typedef enum PlayerStateFlags {
+	PLAYER_STATE_FLAG_MOVING = 0x1, // Player is walking/moving (set at init and while moving, cleared while attacking)
+	PLAYER_STATE_FLAG_HURT = 0x2, // Player was just damaged by an enemy (cleared after playing hit reaction)
+	PLAYER_STATE_FLAG_SWIMMING = 0x4, // Player is in water/swimming
+	PLAYER_STATE_FLAG_AIMING = 0x8, // Player is aiming a weapon (R held, cleared when firing with Z)
+	PLAYER_STATE_FLAG_DYING = 0x10, // Player is dying (health <= 0)
+	PLAYER_STATE_FLAG_STRUGGLING = 0x20, // Player is struggling to escape an alien's hold (wiggling stick)
+	PLAYER_STATE_FLAG_WARPING = 0x200, // Player is warping/teleporting (beacon warp in progress)
+	PLAYER_STATE_FLAG_LOW_HEALTH = 0x400, // Player health below 25% (plays tired animation)
+	PLAYER_STATE_FLAG_WALL_COLLISION = 0x1000, // Player bumped into an obstacle/wall (pushback)
+	PLAYER_STATE_FLAG_COMM_LINK = 0x2000, // Player is using the comm link (L pressed)
+	PLAYER_STATE_FLAG_JUST_LANDED = 0x4000 // Player has just landed on the ground
+} PlayerStateFlags;
+
 typedef enum
 {
 	ANIM_WALKING = 0,

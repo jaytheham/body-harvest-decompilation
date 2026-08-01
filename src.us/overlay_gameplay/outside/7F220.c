@@ -1014,7 +1014,7 @@ s32 exitFlag;
 	  {
 		if (D_80052B34->unk1A == 0)
 		{
-		  if ((D_80157A28 & 4) == 0)
+		  if ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) == 0)
 		  {
 			if (D_80159300 == 0)
 			{

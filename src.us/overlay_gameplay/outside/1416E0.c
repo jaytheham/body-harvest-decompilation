@@ -613,7 +613,7 @@ void func_80133F28_142ED8(Unk80160080 *arg0) {
 	sp1E = func_801361A4_145154(arg0);
 	temp_v0 = func_80132730_1416E0(sp1E, arg0->unk5E);
 	if (arg0->unk68 == 0) {
-		if ((currentControllerStates[0].button & 0x2000) && !(D_80157A28 & 4)) {
+		if ((currentControllerStates[0].button & 0x2000) && !(D_80157A28 & PLAYER_STATE_FLAG_SWIMMING)) {
 			if (D_8016014C == 0) {
 				D_80160146 = sp1E;
 				arg0->unk68 = 1;
@@ -1135,7 +1135,7 @@ void func_801351DC_14418C(Unk80160080 *arg0)
   }
   D_8016018C = 0;
   skip_clear:
-  if (((zButtonState != 0) || (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_DOWN)) && (!(D_80157A28 & 4)))
+  if (((zButtonState != 0) || (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_DOWN)) && (!(D_80157A28 & PLAYER_STATE_FLAG_SWIMMING)))
   {
 	D_80160190 = 1;
   }

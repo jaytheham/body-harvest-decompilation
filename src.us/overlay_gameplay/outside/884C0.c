@@ -2252,7 +2252,7 @@ block_11:
 										temp_s0->unk48 = 0x14;
 									}
 									if (D_80052B34->unk1A == 0) {
-										D_80157A28 |= 0x1000;
+										D_80157A28 |= PLAYER_STATE_FLAG_WALL_COLLISION;
 									}
 								}
 
@@ -3661,7 +3661,7 @@ s32 func_80080D98_8FD48(u8 arg0, s32 arg1) {
 
 		if ((alienSpec == 1) && (alien->unk24 == 1) && !(alien->unk20 & 0x4000) && (target->unk1A == 0) && (D_80052AD0 != 0) && !(D_80052A8C & 0xF)) {
 			func_80124118_1330C8(D_80052B34, 0x50);
-			D_80157A28 |= 2;
+			D_80157A28 |= PLAYER_STATE_FLAG_HURT;
 			if ((D_80031420 & 3) == 3) {
 				randVal = func_800038E0_44E0();
 				func_800CA5EC_D959C(

@@ -4805,7 +4805,7 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1) {
 								func_800EA434_F93E4();
 								func_800EBD9C_FAD4C(s0, s1, s2);
 							} else {
-								D_80157A28 &= ~4;
+								D_80157A28 &= ~PLAYER_STATE_FLAG_SWIMMING;
 							}
 						} else {
 							goto next_try;
@@ -7429,7 +7429,7 @@ void func_80107970_116920(VehicleInstance *arg0, s32 arg1) {
 		arg0->unk20 &= ~2;
 		arg0->unk34 = 0.0f;
 		if (arg0->unk1A == 0) {
-			D_80157A28 |= 0x4000;
+			D_80157A28 |= PLAYER_STATE_FLAG_JUST_LANDED;
 		}
 	}
 
@@ -11859,7 +11859,7 @@ void func_80113CEC_122C9C(void) {
 		if ((temp_v0_2 == 0) && (D_80159300 == 0)) {
 			if ((D_80159320 & 0x1000) || ((temp_s1->unk2 < D_80222A70) && (currentLevel == 5))) {
 				func_8010F218_11E1C8();
-			} else if (!(D_80157A28 & 4)) {
+			} else if (!(D_80157A28 & PLAYER_STATE_FLAG_SWIMMING)) {
 				D_8015931A = 0;
 				if (D_8013FD84_14ED34 != 0) {
 					if (D_8013FD84_14ED34 == 0x1E) {
@@ -12029,7 +12029,7 @@ void func_80113CEC_122C9C(void) {
 					}
 					if ((gameplayMode != 2) && ((temp_a0_2 = temp_s0_2->unk1A, (currentLevel != 4)) || (temp_a0_2 != 0xF))) {
 						if (temp_a0_2 == 0) {
-							if ((D_80157A28 & 4) && ((u32) ((u32) D_80052A8C % 60U) < 0x1EU)) {
+							if ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) && ((u32) ((u32) D_80052A8C % 60U) < 0x1EU)) {
 								temp_v0_7 = temp_s0_2->unk2;
 								if (temp_v0_7 < (D_80222A70 - 0xA)) {
 									func_800D8FA0_E7F50(temp_s0_2->unk0, (s16) (temp_v0_7 + 0xA), temp_s0_2->unk4);

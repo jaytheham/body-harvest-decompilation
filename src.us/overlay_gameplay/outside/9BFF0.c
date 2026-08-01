@@ -614,11 +614,11 @@ s32 func_8008D0E0_9C090(u8 arg0)
 			func_80088760_97710(inst);
 			return 1;
 		}
-		D_80157A28 |= 0x20;
+		D_80157A28 |= PLAYER_STATE_FLAG_STRUGGLING;
 	}
 	else
 	{
-		D_80157A28 &= ~0x20;
+		D_80157A28 &= ~PLAYER_STATE_FLAG_STRUGGLING;
 	}
 	if (D_80052A8C & 1)
 	{
