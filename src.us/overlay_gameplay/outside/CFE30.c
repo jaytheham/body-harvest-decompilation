@@ -1,6 +1,12 @@
 #include <ultra64.h>
 #include "common.h"
 
+// The 2.0I SDK's gbi.h uses _SHIFT in the F3DEX gSPLine3D macros; it was
+// disabled in mbi.h (decomp-permuter compatibility), so restore it here.
+#ifndef _SHIFT
+#define _SHIFT _SHIFTL
+#endif
+
 const char D_80142EA0_151E50[] = "ERROR: tried to create a new effect at %d\n"; // "ERROR: tried to create a new effect at %d\n"
 const char D_80142ECC_151E7C[] = "EFFECTS WARNING : Call to free up an effect which does not exist\n"; // "EFFECTS WARNING : Call to free up an effect which does not exist\n"
 const char D_80142F10_151EC0[] = "ERROR : freeing all effect units for unused effect\n"; // "ERROR : freeing all effect units for unused effect\n"
@@ -2325,56 +2331,58 @@ loop_5:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C5894_D4844.s")
 #endif
 
-// CURRENT(2690)
+// CURRENT(649)
 #ifdef NON_MATCHING
-void func_800C5D14_D4CC4(s32 arg0) {
-	Unk801541F8Entry *sp3C;
+void func_800C5D14_D4CC4(u8 arg0) {
 	s16 var_t1;
+	Unk80154318Entry *entry;
+	Unk80154318Sub *sub;
+	s32 var_t4;
+	s32 dummyA;
+	s32 dummyB;
 	u8 var_t2;
 	u8 var_t3;
-	s32 var_t4;
-	Unk80154318Entry *colorEntry;
-	Unk80154318Entry *entry;
+	Unk801541F8Entry *sp3C;
 
-	sp3C = &D_80154088[arg0 & 0xFF];
-	colorEntry = &D_80154318[sp3C->unk6];
-	var_t1 = colorEntry->unk4;
+	sp3C = &D_80154088[arg0];
+	var_t1 = D_80154318[sp3C->unk6].unk4;
+	sub = (Unk80154318Sub *)&D_80154318[sp3C->unk6].unk8;
 
 	if ((D_80156EDA < 0x1F5) && (D_80156ED9 != 2) && (D_80153B88 < 0x79)) {
-		var_t2 = colorEntry->unkE;
-		if (colorEntry->unkE == 0 && colorEntry->unkF == 0 && colorEntry->unk10 == 0) {
+		var_t2 = ((u8 *)sub)[6];
+		if (var_t2 == 0 && ((u8 *)sub)[7] == 0 && ((u8 *)sub)[8] == 0) {
 			var_t2 = (func_800038E0_44E0() % 55) + 0xC8;
 			var_t3 = (func_800038E0_44E0() % 55) + 0xC8;
 			var_t4 = ((func_800038E0_44E0() % 55) + 0xC8) & 0xFF;
 		} else {
-			var_t3 = colorEntry->unkF;
-			var_t4 = colorEntry->unk10;
+			var_t3 = ((u8 *)sub)[7];
+			var_t4 = ((u8 *)sub)[8];
 		}
 
 		if (var_t1 != -5 && var_t1 != -6) {
 			do {
 				entry = &D_80154318[var_t1];
-				D_8005BB34->n.ob[0] = entry->unk8;
-				D_8005BB34->n.ob[1] = entry->unkA;
-				D_8005BB34->n.ob[2] = entry->unkC;
-				D_8005BB34->n.flag = 0;
-				D_8005BB34->n.tc[0] = 0;
-				D_8005BB34->n.tc[1] = 0;
-					D_8005BB34->v.cn[0] = var_t2;
-					D_8005BB34->v.cn[1] = var_t3;
-					D_8005BB34->v.cn[2] = var_t4;
-					D_8005BB34->v.cn[3] = entry->unk11;
+				D_8005BB34->v.ob[0] = (s16)((f32)entry->unk8);
+				D_8005BB34->v.ob[1] = (s16)((f32)entry->unkA);
+				D_8005BB34->v.ob[2] = (s16)((f32)entry->unkC);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = var_t2;
+				D_8005BB34->v.cn[1] = var_t3;
+				D_8005BB34->v.cn[2] = var_t4;
+				D_8005BB34->v.cn[3] = entry->unk11;
 				D_8005BB34++;
-				D_8005BB34->n.ob[0] = (s16)(entry->unk8 - (s8)entry->unkE);
-				D_8005BB34->n.ob[1] = (s16)(entry->unkA - (s8)entry->unkF);
-				D_8005BB34->n.ob[2] = (s16)(entry->unkC - (s8)entry->unk10);
-				D_8005BB34->n.flag = 0;
-				D_8005BB34->n.tc[0] = 0;
-				D_8005BB34->n.tc[1] = 0;
-					D_8005BB34->v.cn[0] = var_t2;
-					D_8005BB34->v.cn[1] = var_t3;
-					D_8005BB34->v.cn[2] = var_t4;
-					D_8005BB34->v.cn[3] = 0x14;
+				D_8005BB34->v.ob[0] = (s16)((f32)(entry->unk8 - (s8)entry->unkE));
+				D_8005BB34->v.ob[1] = (s16)((f32)(entry->unkA - (s8)entry->unkF));
+				D_8005BB34->v.ob[2] = (s16)((f32)(entry->unkC - (s8)entry->unk10));
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = var_t2;
+				D_8005BB34->v.cn[1] = var_t3;
+				D_8005BB34->v.cn[2] = var_t4;
+				D_8005BB34->v.cn[3] = 0x14;
 				D_8005BB34++;
 				gSPVertex(D_8005BB30++, K0_TO_PHYS(D_8005BB34 - 2), 2, 0);
 				gSPLineW3D(D_8005BB30++, 0, 1, entry->unk2 & 0xFF, 0);
@@ -2383,8 +2391,8 @@ void func_800C5D14_D4CC4(s32 arg0) {
 			} while (var_t1 != -5 && var_t1 != -6);
 		}
 
-		D_80156EDA += sp3C->unk4 * 2;
-		D_80153B88 += sp3C->unk4;
+		D_80156EDA += D_80154088[arg0].unk4 * 2;
+		D_80153B88 += D_80154088[arg0].unk4;
 	}
 }
 #else
