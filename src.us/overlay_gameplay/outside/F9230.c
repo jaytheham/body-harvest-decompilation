@@ -599,13 +599,15 @@ void func_800EADF8_F9DA8(VehicleInstance *arg0, s16 arg1) {
 	}
 }
 
+// Set player swimming flag
 void func_800EB05C_FA00C(void) {
-	osSyncPrintf(D_801442F0_1532A0); // Player start swimming
+	osSyncPrintf(D_801442F0_1532A0);
 	D_80157A28 |= PLAYER_STATE_FLAG_SWIMMING;
 }
 
+// Clear player swimming flag
 void func_800EB090_FA040(void) {
-	osSyncPrintf(D_80144308_1532B8); // Player stops swimming
+	osSyncPrintf(D_80144308_1532B8);
 	D_80157A28 &= ~PLAYER_STATE_FLAG_SWIMMING;
 }
 
@@ -857,49 +859,44 @@ void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	}
 }
 
-// CURRENT(125)
-#ifdef NON_MATCHING
-void func_800EB8A4_FA854(Unk80157600 *arg0, f32 arg1) {
-	Unk8009E8DC *anim;
+// https://decomp.me/scratch/OlHYp
+void func_800EB8A4_FA854(Unk80157600 *arg0, f32 arg1)
+{
 	s32 animIdx;
-
-	if (((Unk8007F878_404*)arg0->unk404)->unkE50 != 0) {
+	if (((Unk8007F878_404 *)arg0->unk404)->unkE50 != 0)
+	{
 		return;
 	}
-
 	animIdx = arg0->unk40C;
-	anim = &D_8013E5AC_14D55C[animIdx];
-
-	if (anim->unk14 != 0) {
-		if (anim->unk4 & 1) {
-			s32 animArg2;
-
-			animArg2 = anim->unk8;
-			if (anim->unk18 == arg0->unk41C) {
-				func_800EB534_FA4E4(arg0, anim->unk1C, 0, arg1);
+	if (D_8013E5AC_14D55C[animIdx].unk14 != 0)
+	{
+		if (D_8013E5AC_14D55C[animIdx].unk4 & 1)
+		{
+			if (D_8013E5AC_14D55C[animIdx].unk18 == arg0->unk41C)
+			{
+				func_800EB534_FA4E4(arg0, D_8013E5AC_14D55C[animIdx].unk1C, 0, arg1);
 				arg0->unk41C = 0;
-				return;
 			}
-
-			func_800EB534_FA4E4(arg0, animIdx, animArg2, arg1);
-			arg0->unk41C++;
-			return;
+			else
+			{
+				func_800EB534_FA4E4(arg0, animIdx, D_8013E5AC_14D55C[animIdx].unk8, arg1);
+				arg0->unk41C++;
+			}
 		}
-		func_800EB534_FA4E4(arg0, anim->unk1C, 0, arg1);
-		return;
+		else
+		{
+			func_800EB534_FA4E4(arg0, D_8013E5AC_14D55C[animIdx].unk1C, 0, arg1);
+		}
 	}
-
-	if (anim->unk4 & 1) {
-		func_800EB534_FA4E4(arg0, animIdx, anim->unk8, arg1);
-		return;
+	else if (D_8013E5AC_14D55C[animIdx].unk4 & 1)
+	{
+		func_800EB534_FA4E4(arg0, animIdx, D_8013E5AC_14D55C[animIdx].unk8, arg1);
 	}
-	if (anim->unk4 & 2) {
-		func_800EB534_FA4E4(arg0, anim->unk8, 0, arg1);
+	else if (D_8013E5AC_14D55C[animIdx].unk4 & 2)
+	{
+		func_800EB534_FA4E4(arg0, D_8013E5AC_14D55C[animIdx].unk8, 0, arg1);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB8A4_FA854.s")
-#endif
 
 s16 func_800EB9B4_FA964(void *arg0) {
 	return ((s16 *)arg0)[0xD];
