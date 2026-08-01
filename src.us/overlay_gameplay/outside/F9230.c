@@ -335,11 +335,11 @@ f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1) {
 	angle = func_80003824_4424(sqrtf((diffX * diffX) + (diffZ * diffZ)), (diffY >= 0.0f) ? diffY : -diffY);
 
 	if (diffY < 0.0f) {
-		absDiffY = (f32)(((f64)(f32) (angle & 0xFFFF) * D_801443D0_153380) / 32768.0);
-		absDiffY = (f32)((f64) absDiffY / 40.0);
-		result = (f32)(((f64) absDiffY * 0.5) + 0.5);
+		absDiffY = (f32)(((f32) (angle & 0xFFFF) * D_801443D0_153380) / 32768.0);
+		absDiffY = (f32)( absDiffY / 40.0);
+		result = (f32)(( absDiffY * 0.5) + 0.5);
 	} else {
-		result = (f32)(0.5 - ((((f64)(f32) (angle & 0xFFFF) * D_801443D8_153388) / 32768.0 / 40.0) * 0.5));
+		result = (f32)(0.5 - ((((f32) (angle & 0xFFFF) * D_801443D8_153388) / 32768.0 / 40.0) * 0.5));
 	}
 
 	if (result < 0.0f) {
@@ -411,41 +411,32 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 
 	D_8015757C = 0;
 
-	// Load current angle and calculate difference
 	v1 = (s16)(arg0->unkE - arg1);
 
-	// Calculate absolute value
 	if (v1 >= 0) {
 		abs_diff = v1;
 	} else {
 		abs_diff = -v1;
 	}
 
-	// Check if difference is too large
 	if (abs_diff >= 0xA001) {
 		D_8015757C = 1;
 		v1 = (s16)(arg0->unkE - arg1);
 	}
 
-	// First condition: v1 < -0x4000
 	if (v1 < -0x4000) {
 		level = D_80157A0C;
 		if (level != 0xE) {
 			if (!(D_80157A28 & 4)) {
-				// Calculate offset into state array
 			offset = level * 0x34;
-
-			// Access state entry
 			entry_flags = D_8013E5AC_14D55C[level].unk4;
 
-			// Modify state at 0x2DC
 			if (entry_flags & 0x20) {
 				D_8013E5AC_14D55C[14].unk4 |= 0x20;
 			} else {
 				D_8013E5AC_14D55C[14].unk4 &= ~0x20;
 			}
 
-			// Modify state at 0x2E0
 			if (!(entry_flags & 0x100)) {
 				D_8013E5AC_14D55C[14].unk8 = level;
 			} else {
@@ -455,7 +446,6 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 
 			func_800EB534_FA4E4(&D_80157600, ANIM_TURN_RIGHT, 0, 0);
 
-			// Calculate step
 			step = (s16)(arg1 - arg0->unkE) / 7;
 			D_801575D4 = step;
 				v1 = (s16)(arg0->unkE - arg1);
@@ -465,24 +455,18 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	}
 
 	if (v1 >= 0x4001) {
-		// Second condition: v1 >= 0x4001
 		level = D_80157A0C;
 		if (level != 0xF) {
 			if (!(D_80157A28 & 4)) {
-				// Calculate offset into state array
 			offset = level * 0x34;
-
-			// Access state entry
 			entry_flags = D_8013E5AC_14D55C[level].unk4;
 
-			// Modify state at 0x310
 			if (entry_flags & 0x20) {
 				D_8013E5AC_14D55C[15].unk4 |= 0x20;
 			} else {
 				D_8013E5AC_14D55C[15].unk4 &= ~0x20;
 			}
 
-			// Modify state at 0x314
 			if (!(entry_flags & 0x100)) {
 				D_8013E5AC_14D55C[15].unk8 = level;
 			} else {
@@ -492,7 +476,6 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 
 			func_800EB534_FA4E4(&D_80157600, ANIM_TURN_LEFT, 0, 0);
 
-			// Calculate step
 			step = (s16)(arg0->unkE - arg1) / 7;
 			D_801575D4 = step;
 				v1 = (s16)(arg0->unkE - arg1);
@@ -501,7 +484,6 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 		}
 	}
 
-	// Default case
 	level = D_80157A0C;
 	offset = level * 0x34;
 
@@ -513,7 +495,6 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	}
 
 clamp_angle:
-	// Clamp angle
 	step = D_801575D4;
 	neg_step = -step;
 
