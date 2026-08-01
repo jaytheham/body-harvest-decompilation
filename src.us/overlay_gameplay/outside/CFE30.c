@@ -2152,13 +2152,13 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C541C_D43CC.s")
 #endif
 
-// CURRENT(690)
+// CURRENT(477)
 #ifdef NON_MATCHING
 void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
-	s32 count;
-	u8 effect;
-	s16 idx;
 	s32 i;
+	u8 effect;
+	u8 count;
+	s16 idx;
 
 	if (D_80156ED9 == 2) {
 		return;
