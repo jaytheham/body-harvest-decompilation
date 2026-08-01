@@ -1,18 +1,17 @@
 #include <ultra64.h>
 #include "common.h"
 
-const char D_80144260_153210[] = "ERROR: StripModelToBones array overflow, size %d, max %d\n";
-const char D_8014429C_15324C[] = "Generating shadow for (%d), %s";
-const char D_801442BC_15326C[] = ".";
-const char D_801442C0_153270[] = ".";
-const char D_801442C4_153274[] = ".OK\n";
+const char D_80144260_153210[] = "ERROR: StripModelToBones array overflow, size %d, max %d\n"; // "ERROR: StripModelToBones array overflow, size %d, max %d\n"
+const char D_8014429C_15324C[] = "Generating shadow for (%d), %s"; // "Generating shadow for (%d), %s"
+const char D_801442BC_15326C[] = "."; // "."
+const char D_801442C0_153270[] = "."; // "."
+const char D_801442C4_153274[] = ".OK\n"; // ".OK\n"
 
 const f32 D_801442CC_15327C[1] = {10000.0f};
 const f64 D_801442D0_153280[2] = {0.55, 0.0};
 
-// StripModelToBones
 #ifdef NON_MATCHING
-// regalloc: arg1/count in a3 instead of s0 (callee-saved), causing register shift throughout
+// StripModelToBones
 Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1) {
 	Gfx* src;
 	Gfx* dst;
@@ -68,9 +67,9 @@ Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E88C0_F7870.s")
 #endif
 
-// castVehicleShadows?
 // CURRENT(16124)
 #ifdef NON_MATCHING
+// castVehicleShadows?
 void func_800E8A00_F79B0(void) {
 	VehicleSpec *vehicleSpec;
 	ShadowPartEntry *part;
@@ -144,8 +143,8 @@ void func_800E8A00_F79B0(void) {
 	D_80052B48.unk4 = (s16) (D_80052B34->unkA + 0x4000);
 
 	size = (f32) ((u8 *) vehicleSpec)[0x65];
-	D_80052B50.unk0 = (s16) (s32) (32768.0 / (f64) ((f32) (((u8 *) vehicleSpec)[0x6C] * 2) + size));
-	D_80052B50.unk4 = (s16) (s32) (32768.0 / (f64) ((f32) (((u8 *) vehicleSpec)[0x6D] * 2) + size));
+	D_80052B50.unk0 = (s16) (s32) (32768.0 / ((f32) (((u8 *) vehicleSpec)[0x6C] * 2) + size));
+	D_80052B50.unk4 = (s16) (s32) (32768.0 / ((f32) (((u8 *) vehicleSpec)[0x6D] * 2) + size));
 	D_80052B50.unk2 = (s16) -((D_80052B50.unk0 + D_80052B50.unk4) >> 1);
 
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
@@ -263,12 +262,12 @@ void func_800E94B8_F8468(void) {
 	D_801575A0 = 0;
 }
 
+// CURRENT(3664)
 #ifdef NON_MATCHING
-// CURRENT(2664)
 s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
-	volatile s32 sp34;
-	volatile s32 sp30;
-	volatile s32 sp2C;
+	s32 sp34;
+	s32 sp30;
+	s32 sp2C;
 	s32 pad0;
 	s32 pad1;
 	s32 pad2;
@@ -374,8 +373,8 @@ void func_800E988C_F883C(AlienInstance *arg0, AlienSpec *arg1) {
 	s32 temp_t1;
 	s32 temp_t2;
 
-	sp8C = (f32)((f64)(f32)sins((u16)arg0->unk6) / 32768.0);
-	sp88 = (f32)((f64)(f32)coss((u16)arg0->unk6) / 32768.0);
+	sp8C = (f32)((f32)sins((u16)arg0->unk6) / 32768.0);
+	sp88 = (f32)((f32)coss((u16)arg0->unk6) / 32768.0);
 	if (((void*)arg0 == (void*)D_80052B34) && (D_801493E0 == 0)) {
 		return;
 	}
@@ -424,8 +423,8 @@ void func_800E988C_F883C(AlienInstance *arg0, AlienSpec *arg1) {
 		if ((temp_v0_3 == 0) || (temp_v0_3 == 0x13)) {
 			var_t4 = D_5000000;
 			if (temp_v0_3 == 0) {
-				var_s7 = (s16)(s32)((f64)(*(s16*)((u8*)arg1 + 0x34)) * D_801442D0_153280);
-				sp84 = (s16)(s32)((f64)(*(s16*)((u8*)arg1 + 0x36)) * D_801442D0_153280);
+				var_s7 = (s16)(s32)((*(s16*)((u8*)arg1 + 0x34)) * D_801442D0_153280);
+				sp84 = (s16)(s32)((*(s16*)((u8*)arg1 + 0x36)) * D_801442D0_153280);
 			}
 		} else {
 			var_t4 = D_802C4080;

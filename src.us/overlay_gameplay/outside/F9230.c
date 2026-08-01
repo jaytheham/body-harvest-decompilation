@@ -1,16 +1,16 @@
 #include <ultra64.h>
 #include "common.h"
 
-const char D_801442E0_153290[16] = "NO ANIM STORED";
-const char D_801442F0_1532A0[24] = "Player start swimming\n";
-const char D_80144308_1532B8[24] = "Player stops swimming\n";
-const char D_80144320_1532D0[16] = "START ANIM %d\n";
-const char D_80144330_1532E0[36] = "attempt to exit to point %d,%d,%d\n";
-const char D_80144354_153304[28] = "UNKNOWN DOOR YAW! = %3.2f\n";
-const char D_80144370_153320[32] = "Animate player stop swimming\n";
-const char D_80144390_153340[20] = "PLAYER IS DYING\n";
-const char D_801443A4_153354[24] = "Selecting weapon:%d\n";
-const char D_801443BC_15336C[20] = "play shot anim\n";
+const char D_801442E0_153290[16] = "NO ANIM STORED"; // "NO ANIM STORED"
+const char D_801442F0_1532A0[24] = "Player start swimming\n"; // "Player start swimming\n"
+const char D_80144308_1532B8[24] = "Player stops swimming\n"; // "Player stops swimming\n"
+const char D_80144320_1532D0[16] = "START ANIM %d\n"; // "START ANIM %d\n"
+const char D_80144330_1532E0[36] = "attempt to exit to point %d,%d,%d\n"; // "attempt to exit to point %d,%d,%d\n"
+const char D_80144354_153304[28] = "UNKNOWN DOOR YAW! = %3.2f\n"; // "UNKNOWN DOOR YAW! = %3.2f\n"
+const char D_80144370_153320[32] = "Animate player stop swimming\n"; // "Animate player stop swimming\n"
+const char D_80144390_153340[20] = "PLAYER IS DYING\n"; // "PLAYER IS DYING\n"
+const char D_801443A4_153354[24] = "Selecting weapon:%d\n"; // "Selecting weapon:%d\n"
+const char D_801443BC_15336C[20] = "play shot anim\n"; // "play shot anim\n"
 const f64 D_801443D0_153380[1] = {180.0};
 const f64 D_801443D8_153388[1] = {180.0};
 const f64 D_801443E0_153390[1] = {180.0};
@@ -244,12 +244,11 @@ void *func_800EA3E8_F9398(s16 arg0) {
 	return D_8013E5AC_14D55C[arg0].pad20;
 }
 
+// https://decomp.me/scratch/0jDeb
 // guess_initAnimations
-// CURRENT(1205)
-#ifdef NON_MATCHING
-void func_800EA434_F93E4(void) {
+void func_800EA434_F93E4(void)
+{
 	f32 temp_zero;
-
 	D_8004818C = 0;
 	D_80157600.unk404 = func_8000C6F4_D2F4();
 	D_80157600.unk408 = func_8000C6F4_D2F4();
@@ -260,11 +259,11 @@ void func_800EA434_F93E4(void) {
 	D_80157600.unk40C = 0x27;
 	func_800EB534_FA4E4(&D_80157600, ANIM_DEFAULT, 7, temp_zero);
 	D_80157600.unkC = 145.0f;
-	D_80157600.unk10 = temp_zero;
-	D_80157600.unk8 = temp_zero;
+	D_80157600.unk8 = 0.0f;
+	D_80157600.unk10 = 0.0f;
 	D_801575D0 = 0;
 	D_80157A28 = 1;
-	D_801575DC = (s32) D_80047948;
+	D_801575DC = (s32)D_80047948;
 	D_80157A38 = 2;
 	D_80157A3C = 0x40;
 	D_80157A48.unk404 = func_8000C6F4_D2F4();
@@ -273,10 +272,10 @@ void func_800EA434_F93E4(void) {
 	func_8000C790_D390(&D_80157A48, &D_8003BAE0, 0x10);
 	D_80157E70 = 0;
 	D_80157A48.unkC = 145.0f;
-	D_80157A48.unk8 = temp_zero;
-	D_80157A48.unk10 = temp_zero;
+	D_80157A48.unk8 = 0.0f;
+	D_80157A48.unk10 = 0.0f;
 	D_80157A48.unk40C = 0x27;
-	func_800EB534_FA4E4(&D_80157A48, ANIM_DEFAULT, 7, temp_zero);
+	func_800EB534_FA4E4(&D_80157A48, ANIM_DEFAULT, 7, 0.0f);
 	D_801575E0.unk0 = 0;
 	D_801575E0.unk2 = 0;
 	D_801575E0.unk4 = 0;
@@ -290,9 +289,6 @@ void func_800EA434_F93E4(void) {
 	D_801575E0.unk14 = 0;
 	D_801575E0.unk16 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA434_F93E4.s")
-#endif
 
 void func_800EA5B8_F9568(void) {
 	func_8000C764_D364(D_80157A04);
