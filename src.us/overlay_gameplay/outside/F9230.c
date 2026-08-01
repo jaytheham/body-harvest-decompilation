@@ -397,7 +397,7 @@ s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA7DC_F978C.s")
 #endif
 
-// CURRENT(2310)
+// CURRENT(2645)
 #ifdef NON_MATCHING
 void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	s32 abs_diff;
@@ -424,77 +424,63 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 		v1 = (s16)(arg0->unkE - arg1);
 	}
 
-	if (v1 < -0x4000) {
+	if ((v1 < -0x4000) && (D_80157A0C != 0xE) && !(D_80157A28 & 4)) {
 		level = D_80157A0C;
-		if (level != 0xE) {
-			if (!(D_80157A28 & 4)) {
-			offset = level * 0x34;
-			entry_flags = D_8013E5AC_14D55C[level].unk4;
+		offset = level * 0x34;
+		entry_flags = D_8013E5AC_14D55C[level].unk4;
 
-			if (entry_flags & 0x20) {
-				D_8013E5AC_14D55C[14].unk4 |= 0x20;
-			} else {
-				D_8013E5AC_14D55C[14].unk4 &= ~0x20;
-			}
-
-			if (!(entry_flags & 0x100)) {
-				D_8013E5AC_14D55C[14].unk8 = level;
-			} else {
-				entry_val = D_8013E5AC_14D55C[level].unk8;
-				D_8013E5AC_14D55C[14].unk8 = entry_val;
-			}
-
-			func_800EB534_FA4E4(&D_80157600, ANIM_TURN_RIGHT, 0, 0);
-
-			step = (s16)(arg1 - arg0->unkE) / 7;
-			D_801575D4 = step;
-				v1 = (s16)(arg0->unkE - arg1);
-				goto clamp_angle;
-			}
+		if (entry_flags & 0x20) {
+			D_8013E5AC_14D55C[14].unk4 |= 0x20;
+		} else {
+			D_8013E5AC_14D55C[14].unk4 &= ~0x20;
 		}
-	}
 
-	if (v1 >= 0x4001) {
-		level = D_80157A0C;
-		if (level != 0xF) {
-			if (!(D_80157A28 & 4)) {
-			offset = level * 0x34;
-			entry_flags = D_8013E5AC_14D55C[level].unk4;
-
-			if (entry_flags & 0x20) {
-				D_8013E5AC_14D55C[15].unk4 |= 0x20;
-			} else {
-				D_8013E5AC_14D55C[15].unk4 &= ~0x20;
-			}
-
-			if (!(entry_flags & 0x100)) {
-				D_8013E5AC_14D55C[15].unk8 = level;
-			} else {
-				entry_val = D_8013E5AC_14D55C[level].unk8;
-				D_8013E5AC_14D55C[15].unk8 = entry_val;
-			}
-
-			func_800EB534_FA4E4(&D_80157600, ANIM_TURN_LEFT, 0, 0);
-
-			step = (s16)(arg0->unkE - arg1) / 7;
-			D_801575D4 = step;
-				v1 = (s16)(arg0->unkE - arg1);
-				goto clamp_angle;
-			}
+		if (!(entry_flags & 0x100)) {
+			D_8013E5AC_14D55C[14].unk8 = level;
+		} else {
+			entry_val = D_8013E5AC_14D55C[level].unk8;
+			D_8013E5AC_14D55C[14].unk8 = entry_val;
 		}
-	}
 
-	level = D_80157A0C;
-	offset = level * 0x34;
+		func_800EB534_FA4E4(&D_80157600, ANIM_TURN_RIGHT, 0, 0);
 
-	entry_flags = D_8013E5AC_14D55C[level].unk4;
-
-	if (!(entry_flags & 0x100)) {
-		D_801575D4 = 0x5DC;
+		step = (s16)(arg1 - arg0->unkE) / 7;
+		D_801575D4 = step;
 		v1 = (s16)(arg0->unkE - arg1);
+	} else if ((v1 >= 0x4001) && (D_80157A0C != 0xF) && !(D_80157A28 & 4)) {
+		level = D_80157A0C;
+		offset = level * 0x34;
+		entry_flags = D_8013E5AC_14D55C[level].unk4;
+
+		if (entry_flags & 0x20) {
+			D_8013E5AC_14D55C[15].unk4 |= 0x20;
+		} else {
+			D_8013E5AC_14D55C[15].unk4 &= ~0x20;
+		}
+
+		if (!(entry_flags & 0x100)) {
+			D_8013E5AC_14D55C[15].unk8 = level;
+		} else {
+			entry_val = D_8013E5AC_14D55C[level].unk8;
+			D_8013E5AC_14D55C[15].unk8 = entry_val;
+		}
+
+		func_800EB534_FA4E4(&D_80157600, ANIM_TURN_LEFT, 0, 0);
+
+		step = (s16)(arg0->unkE - arg1) / 7;
+		D_801575D4 = step;
+		v1 = (s16)(arg0->unkE - arg1);
+	} else {
+		level = D_80157A0C;
+		offset = level * 0x34;
+		entry_flags = D_8013E5AC_14D55C[level].unk4;
+
+		if (!(entry_flags & 0x100)) {
+			D_801575D4 = 0x5DC;
+			v1 = (s16)(arg0->unkE - arg1);
+		}
 	}
 
-clamp_angle:
 	step = D_801575D4;
 	neg_step = -step;
 
