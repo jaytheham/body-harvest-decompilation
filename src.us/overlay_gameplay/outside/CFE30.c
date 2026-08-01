@@ -2399,31 +2399,30 @@ void func_800C5D14_D4CC4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C5D14_D4CC4.s")
 #endif
 
-// CURRENT(3264)
+// CURRENT(1919)
 #ifdef NON_MATCHING
 s16 func_800C613C_D50EC(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4) {
-	s16 sp3E;
 	s16 sp40;
-	Unk80154318Entry *tempA3;
+	s16 sp3E;
+	u8 sp30[0xC];
 	Unk80154318Entry *tempA2;
+	Unk80154318Entry *sp2C;
 	u8 *varV0;
 	u8 *varA1;
-	u8 sp30[0xC];
 	u8 *tempS0;
 
 	sp3E = func_800C18FC_D08AC(1, 1);
 	if (sp3E != -3) {
-		tempA3 = &D_80154318[sp3E];
-		tempA2 = &D_80154318[tempA3->unk4];
-		tempA3->unk2 = arg3;
+		tempA2 = &D_80154318[D_80154318[sp3E].unk4];
 		sp40 = tempA2->unk4;
+		D_80154318[sp3E].unk2 = arg3;
+		sp2C = tempA2;
 
 		if (arg4 == NULL) {
 			func_800DFA98_EEA48(sp30);
 			varV0 = (u8 *) &D_80154318[sp3E];
 			varV0 += 8;
-			varA1 = (u8 *) tempA2;
-			varA1 += 8;
+			varA1 = (u8 *) &tempA2->unk8;
 			varV0[6] = sp30[0];
 			varV0[7] = sp30[1];
 			varV0[8] = sp30[2];
@@ -2437,8 +2436,9 @@ s16 func_800C613C_D50EC(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4) {
 			varA1[4] = sp30[10];
 			varA1[5] = sp30[11];
 		} else {
-			varV0 = (u8 *) &tempA3->unk8;
-			varA1 = (u8 *) &tempA2->unk8;
+			varV0 = (u8 *) &D_80154318[sp3E];
+			varV0 += 8;
+			varA1 = (u8 *) sp2C + 8;
 			varV0[6] = arg4[0];
 			varV0[7] = arg4[1];
 			varV0[8] = arg4[2];
@@ -2453,7 +2453,8 @@ s16 func_800C613C_D50EC(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4) {
 			varA1[5] = arg4[11];
 		}
 
-		varV0 = (u8 *) &tempA3->unk8;
+		varV0 = (u8 *) &D_80154318[sp3E];
+		varV0 += 8;
 		*(s16 *) &varV0[0] = arg0;
 		*(s16 *) &varV0[2] = arg1;
 		*(s16 *) &varV0[4] = arg2;
@@ -2519,22 +2520,18 @@ s16 func_800C613C_D50EC(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C613C_D50EC.s")
 #endif
 
-// CURRENT(10655)
+// CURRENT(255)
 #ifdef NON_MATCHING
 void func_800C6558_D5508(void) {
-	Unk80154318Entry *entry;
-	Unk80154318Entry *linked;
-	Unk80154318Entry *next;
+	s16 idx;
 	u8 *entryBytes;
 	u8 *linkedBytes;
 	u8 *nextBytes;
-	s16 idx;
+	s16 entryUnk4;
 	s16 linkedIdx;
 	s16 nextIdx;
-	u8 age;
-	u8 scale;
-	u8 steps;
-	s32 randVal;
+	s32 age;
+	s32 steps;
 
 	idx = D_8015420A;
 	if ((idx == -5) || (idx == -6)) {
@@ -2543,13 +2540,12 @@ void func_800C6558_D5508(void) {
 	}
 
 	while ((idx != -5) && (idx != -6)) {
-		entry = &D_80154318[idx];
-		entryBytes = (u8*) &entry->unk8;
-		linked = &D_80154318[entry->unk4];
-		linkedBytes = (u8*) &linked->unk8;
-		linkedIdx = linked->unk4;
+		entryBytes = (u8*) &D_80154318[idx].unk8;
+		entryUnk4 = D_80154318[idx].unk4;
+		linkedBytes = (u8*) &D_80154318[entryUnk4].unk8;
+		linkedIdx = D_80154318[entryUnk4].unk4;
 
-		if (entry->unk14 >= (0x23 / ((u8*) linked)[0x13])) {
+		if (D_80154318[idx].unk14 >= (0x23 / ((u8*) &D_80154318[entryUnk4])[0x13])) {
 			nextIdx = D_80154318[linkedIdx].unk4;
 			func_800C1D40_D0CF0(idx, 1, 1);
 			idx = nextIdx;
@@ -2557,36 +2553,31 @@ void func_800C6558_D5508(void) {
 		}
 
 		age = entryBytes[0xC];
-		scale = linkedBytes[0xB];
-		next = &D_80154318[linkedIdx];
-		nextBytes = (u8*) &next->unk8;
+		nextBytes = (u8*) &D_80154318[linkedIdx].unk8;
 
 		if (age == 0) {
-			next->unk8 = (func_800038E0_44E0() % 11) + 0x3C;
+			*(u16*) nextBytes = (func_800038E0_44E0() % 11) + 0x3C;
 		} else if (age == 1) {
-			next->unk8 += (func_800038E0_44E0() % 11) + 0xF;
-		} else if (age < (7 / scale)) {
-			next->unk8 += ((func_800038E0_44E0() % 5) + 5) * scale;
-		} else if (age < (0xF / scale)) {
-			randVal = func_800038E0_44E0();
-			next->unk8 += ((randVal % 4) + 4) * scale;
-			linkedBytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * scale;
-		} else if (age < (0x18 / scale)) {
-			randVal = func_800038E0_44E0();
-			next->unk8 += ((randVal % 4) + 3) * scale;
-			linkedBytes[9] -= ((func_800038E0_44E0() % 5) + 3) * scale;
+			*(u16*) nextBytes += (func_800038E0_44E0() % 11) + 0xF;
+		} else if (age < (7 / linkedBytes[0xB])) {
+			*(u16*) nextBytes += ((func_800038E0_44E0() % 5) + 5) * linkedBytes[0xB];
+		} else if (age < (0xF / linkedBytes[0xB])) {
+			*(u16*) nextBytes += ((func_800038E0_44E0() % 4) + 4) * linkedBytes[0xB];
+			linkedBytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * linkedBytes[0xB];
+		} else if (age < (0x18 / linkedBytes[0xB])) {
+			*(u16*) nextBytes += ((func_800038E0_44E0() % 4) + 3) * linkedBytes[0xB];
+			linkedBytes[9] -= ((func_800038E0_44E0() % 5) + 3) * linkedBytes[0xB];
 			if ((linkedBytes[0xB] * 0xF) < linkedBytes[0xA]) {
 				linkedBytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * linkedBytes[0xB];
 			}
-		} else if (age < (0x1C / scale)) {
-			next->unk8 += ((func_800038E0_44E0() % 3) + 2) * scale;
-			linkedBytes[9] -= ((func_800038E0_44E0() % 5) + 3) * scale;
+		} else if (age < (0x1C / linkedBytes[0xB])) {
+			*(u16*) nextBytes += ((func_800038E0_44E0() % 3) + 2) * linkedBytes[0xB];
+			linkedBytes[9] -= ((func_800038E0_44E0() % 5) + 3) * linkedBytes[0xB];
 			if ((linkedBytes[0xB] * 0x19) < linkedBytes[0xA]) {
 				linkedBytes[0xA] -= ((func_800038E0_44E0() % 14) + 0xC) * linkedBytes[0xB];
 			}
 		} else {
-			randVal = func_800038E0_44E0();
-			next->unk8 += ((randVal % 2) + 2) * scale;
+			*(u16*) nextBytes += ((func_800038E0_44E0() % 2) + 2) * linkedBytes[0xB];
 			if ((linkedBytes[0xB] * 0x19) < linkedBytes[0xA]) {
 				linkedBytes[0xA] -= ((func_800038E0_44E0() % 14) + 0xC) * linkedBytes[0xB];
 			}
@@ -2617,28 +2608,20 @@ void func_800C6558_D5508(void) {
 		}
 
 		entryBytes[0xC]++;
-		idx = next->unk4;
+		idx = D_80154318[linkedIdx].unk4;
 	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C6558_D5508.s")
 #endif
 
-// CURRENT(37116)
+// CURRENT(26417)
 #ifdef NON_MATCHING
 void func_800C6D80_D5D30(void) {
-	s16 sp15C;
-	s16 sp15A;
-	s16 sp158;
-	s16 sp154;
-	s16 sp152;
-	s16 sp150;
-	s16 sp14C;
-	s16 sp14A;
-	s16 sp148;
-	s16 sp144;
-	s16 sp142;
-	s16 sp140;
+	Unk80052B40 sp158;
+	Unk80052B40 sp150;
+	Unk80052B40 sp148;
+	Unk80052B40 sp140;
 	s8 sp13E;
 	s8 sp13D;
 	s8 sp13C;
@@ -2654,6 +2637,8 @@ void func_800C6D80_D5D30(void) {
 	s16 var_t1;
 	s32 temp_f16;
 	u16 temp_u16;
+	f64 temp_double;
+	u8 *linkedBytes;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linked;
 	Unk80154318Entry *next;
@@ -2680,45 +2665,47 @@ void func_800C6D80_D5D30(void) {
 		return;
 	}
 
+	temp_double = D_80143FD8_152F88[0];
+
 	do {
 		entry = &D_80154318[var_t1];
 		linked = &D_80154318[entry->unk4];
 		next = &D_80154318[linked->unk4];
+		linkedBytes = (u8 *)&next->unk8;
 
 		temp_u16 = (u16)next->unk8;
 		temp_f16 = (s32)((f32)entry->unk2 * ((f32)temp_u16 * 0.03125) * 6.0);
-		sp15C = temp_f16;
-		sp15A = temp_f16;
-		sp158 = temp_f16;
+		sp158.unk4 = temp_f16;
+		sp158.unk2 = temp_f16;
+		sp158.unk0 = temp_f16;
 
 		if (func_800B93AC_C835C(entry->unk8, entry->unkC, temp_f16 & 0xFFFF, (s16)(s32)(D_80047954 * 4.0f),
 								(s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
-			u8 *linkedBytes;
 			Unk80154318Sub *entrySub;
 			Unk80154318Sub *linkedSub;
 
-			linkedBytes = (u8 *)&next->unk8;
-			sp158 = (s16)(s32)((f32)((linkedBytes[2] / D_80143FD8_152F88) + 1.0) * (f32)sp158);
-			sp15A = (s16)(s32)((f32)((linkedBytes[3] / D_80143FD8_152F88) + 1.0) * (f32)sp15A);
-			sp15C = (s16)(s32)((f32)((linkedBytes[4] / D_80143FD8_152F88) + 1.0) * (f32)sp15C);
+			sp158.unk0 = (s16)(s32)((f32)(((f64)(f32)linkedBytes[2] / temp_double) + 1.0) * (f32)sp158.unk0);
+			sp158.unk2 = (s16)(s32)((f32)(((f64)(f32)linkedBytes[3] / temp_double) + 1.0) * (f32)sp158.unk2);
 
 			entrySub = (Unk80154318Sub *)&entry->unk8;
 			linkedSub = (Unk80154318Sub *)&linked->unk8;
 
-			sp140 = entry->unk8;
-			sp142 = entrySub->unk2;
-			sp144 = entrySub->unk4;
+			sp158.unk4 = (s16)(s32)((f32)(((f64)(f32)linkedBytes[4] / temp_double) + 1.0) * (f32)sp158.unk4);
+
+			sp140.unk0 = entry->unk8;
+			sp140.unk2 = entrySub->unk2;
+			sp140.unk4 = entrySub->unk4;
 
 			temp_f0 = (D_80153BA0.x * 4.0f) - (f32)entry->unk8;
 			temp_f2 = (D_80153BA0.z * 4.0f) - (f32)entrySub->unk4;
 			temp_f0_2 = sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
 
-			sp150 = 0;
-			sp152 = ((u8)linkedSub->unk8) << 8;
-			sp154 = 0;
-			sp148 = func_80003824_4424(D_80153B90.z, D_80153B90.x) + 0x8000;
-			sp14A = 0x8000;
-			sp14C = 0x4000 - func_80003824_4424((D_80153BA4 * 4.0f) - (f32)entrySub->unk2, temp_f0_2);
+			sp150.unk0 = 0;
+			sp150.unk2 = ((u8)linkedSub->unk8) << 8;
+			sp150.unk4 = 0;
+			sp148.unk0 = func_80003824_4424(D_80153B90.z, D_80153B90.x) + 0x8000;
+			sp148.unk2 = 0x8000;
+			sp148.unk4 = 0x4000 - func_80003824_4424((D_80153BA4 * 4.0f) - (f32)entrySub->unk2, temp_f0_2);
 
 			if (entrySub->unkC < 3) {
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -2756,11 +2743,11 @@ void func_800C6D80_D5D30(void) {
 					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 			gDPSetTileSize(D_8005BB2C++, 1, 0, 0, (31 << 2), (31 << 2));
 
-			D_8005BB38 += 0x40;
+			D_8005BB38++;
 			func_800039D0_45D0((Unk80052B40 *)&sp140, (Unk80052B40 *)&sp148, (Unk80052B40 *)&sp158, D_8005BB38);
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-			func_800039D0_45D0(NULL, (Unk80052B40 *)&sp150, NULL, D_8005BB38 + 0x40);
+			func_800039D0_45D0(NULL, (Unk80052B40 *)&sp150, NULL, D_8005BB38 + 1);
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 			gSPDisplayList(D_8005BB2C++, D_504B640);
@@ -2802,7 +2789,7 @@ void func_800C6D80_D5D30(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C6D80_D5D30.s")
 #endif
 
-// CURRENT(200)
+// CURRENT(5215)
 #ifdef NON_MATCHING
 s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
 	Unk80154318Entry *entry;
@@ -2810,13 +2797,12 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 ar
 	u8 *entryBytes;
 	u8 *linkedBytes;
 	Vec3f sp40;
+	f32 f0;
 	s16 idx;
-	s16 temp;
-	s16 arg4S16;
+	s32 temp;
 	u16 arg5U16;
 	u8 arg7U8;
 
-	arg4S16 = arg4;
 	arg5U16 = arg5;
 	arg7U8 = arg7;
 
@@ -2824,7 +2810,7 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 ar
 		return -3;
 	}
 
-	if (arg4S16 == -3) {
+	if (arg4 == -3) {
 		osSyncPrintf("EFFECTS WARNING : invalid source effect\n");
 		return -3;
 	}
@@ -2843,7 +2829,6 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 ar
 	entry->unkC = arg2;
 
 	entryBytes = (u8 *)&entry->unk8;
-	linkedBytes = (u8 *)&linked->unk8;
 
 	entryBytes[6] = (func_800038E0_44E0() % 80) + 0x14;
 	entryBytes[7] = (func_800038E0_44E0() % 80) + 0x14;
@@ -2862,32 +2847,23 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 ar
 	sp40.z = (f32)((func_800038E0_44E0() % 20) - 10);
 
 	if (arg6 == (s32)&D_502D390) {
-		sp40.x /= 2.0f;
-		sp40.y /= 2.0f;
-		sp40.z /= 2.0f;
+		sp40.x = sp40.x / 2;
+		sp40.y = sp40.y / 2;
+		sp40.z = sp40.z / 2;
 	}
 
 	func_800C1024_CFFD4(&sp40, &sp40);
 
-	if ((s16)arg5U16 >= 0) {
-		linkedBytes[0] = (s8)(s32)((f32)arg5U16 * sp40.x);
-		temp = (s16)(s32)((f32)arg5U16 * sp40.y);
-		if (temp >= 0) {
-			linkedBytes[1] = (s8)temp;
-		} else {
-			linkedBytes[1] = (s8)-temp;
-		}
-		linkedBytes[2] = (s8)(s32)((f32)arg5U16 * sp40.z);
+	linkedBytes = (u8 *)&D_80154318[linked->unk4].unk8;
+	f0 = (f32)arg5U16;
+	linkedBytes[0] = (s8)(s32)(f0 * sp40.x);
+	temp = (s16)(s32)(f0 * sp40.y);
+	if (temp >= 0) {
+		linkedBytes[1] = (s8)temp;
 	} else {
-		linkedBytes[0] = (s8)(s32)(((f32)arg5U16 + 4294967296.0f) * sp40.x);
-		temp = (s16)(s32)(((f32)arg5U16 + 4294967296.0f) * sp40.y);
-		if (temp >= 0) {
-			linkedBytes[1] = (s8)temp;
-		} else {
-			linkedBytes[1] = (s8)-temp;
-		}
-		linkedBytes[2] = (s8)(s32)(((f32)arg5U16 + 4294967296.0f) * sp40.z);
+		linkedBytes[1] = (s8)-temp;
 	}
+	linkedBytes[2] = (s8)(s32)(f0 * sp40.z);
 
 	linkedBytes[3] = func_800038E0_44E0() % 0xFF;
 	linkedBytes[4] = func_800038E0_44E0() % 0xFF;
@@ -2904,20 +2880,20 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 ar
 		entryBytes[0xB] = 8;
 	}
 
-	if ((func_800038E0_44E0() % 100) < 0x28 || arg7U8 != 0) {
+	if ((u8)(func_800038E0_44E0() % 100) < 0x28 || arg7U8 != 0) {
 		entryBytes[0xB] |= 1;
 	}
 
 	if (arg7U8 != 0) {
-		if (arg4S16 != -9) {
-			entryBytes[9] = func_800C8C7C_D7C2C(arg0, arg1, arg2, idx, arg4S16);
+		if ((s16)arg4 != -9) {
+			entryBytes[9] = func_800C8C7C_D7C2C(arg0, arg1, arg2, idx, (s16)arg4);
 			if (entryBytes[9] != 0xFB) {
 				entryBytes[0xB] |= 4;
 			}
 		}
 		entryBytes[0xA] = 0;
 	} else if ((func_800038E0_44E0() % 100) >= 0x29) {
-		entryBytes[9] = func_800C8C7C_D7C2C(arg0, arg1, arg2, idx, arg4S16);
+		entryBytes[9] = func_800C8C7C_D7C2C(arg0, arg1, arg2, idx, (s16)arg4);
 		if (entryBytes[9] != 0xFC) {
 			entryBytes[0xB] |= 4;
 		}
@@ -2986,26 +2962,22 @@ void func_800C820C_D71BC(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 	}
 }
 
-// CURRENT(7757)
+// CURRENT(4817)
 #ifdef NON_MATCHING
 void func_800C8294_D7244(void) {
-	s16 effectIdx;
-	s16 targetY;
-	s16 hitY;
-	Unk80052B40_fp sp84;
-	s32 *groundPtr;
-	Unk80154318Entry *entry;
 	Unk80154318Entry *linked;
+	Unk80154318Entry *entry;
 	Unk80154318Entry *next;
-	s16 *entrySub;
-	u8 *entrySubBytes;
+	Unk80154318Sub *entrySub;
+	s16 hitY;
+	s16 effectIdx;
+	Unk80052B40_fp sp84;
 	u8 *nextBytes;
 
-	effectIdx = D_80154216;
 	sp84.unk0 = *(s32 *)&D_8013E0FC_14D0AC[0];
+	effectIdx = D_80154216;
 	sp84.unk8 = *(s32 *)&D_8013E0FC_14D0AC[8];
 	sp84.unk4 = *(s32 *)&D_8013E0FC_14D0AC[4];
-	groundPtr = &D_80222A70;
 
 	if ((effectIdx == -5) || (effectIdx == -6)) {
 		func_800C1418_D03C8(2, 1);
@@ -3017,16 +2989,16 @@ void func_800C8294_D7244(void) {
 		linked = &D_80154318[entry->unk4];
 		next = &D_80154318[linked->unk4];
 
+		entrySub = (Unk80154318Sub *)&entry->unk8;
+		nextBytes = (u8 *)&next->unk8;
+
 		entry->unk8 += ((s8 *)&next->unk8)[0];
 		entry->unkC += ((s8 *)&next->unk8)[2];
 		entry->unkA += ((s8 *)&next->unk8)[1];
 
 		func_80137368_146318(entry->unk8, entry->unkA, entry->unkC, 0xD, effectIdx);
 
-		entrySub = &entry->unk8;
-		entrySubBytes = (u8 *)entrySub;
-		nextBytes = (u8 *)&next->unk8;
-		hitY = (s16)(func_800B84D0_C7480(entrySub[0], entrySub[2]) >> 8);
+		hitY = (s16)(func_800B84D0_C7480(entrySub->unk0, entrySub->unk4) >> 8);
 
 		if ((s8)nextBytes[1] >= -0x13) {
 			nextBytes[1] = (u8)((s8)nextBytes[1] - 1);
@@ -3038,52 +3010,51 @@ void func_800C8294_D7244(void) {
 		nextBytes[4] = (u8)(nextBytes[4] + (s8)nextBytes[7]);
 		nextBytes[5] = (u8)(nextBytes[5] + (s8)nextBytes[8]);
 
-		if ((entrySubBytes[0xB] & 4) && (entrySubBytes[0xA] == 0)) {
-			func_800C8E10_D7DC0(entrySub[0], entrySub[1], entrySub[2], entrySubBytes[9]);
+		if ((entrySub->unkB & 4) && (entrySub->unkA == 0)) {
+			func_800C8E10_D7DC0(entrySub->unk0, entrySub->unk2, entrySub->unk4, entrySub->unk9);
 		}
 
-		entrySubBytes[0xA]++;
-		if (entrySubBytes[0xA] == 3) {
-			entrySubBytes[0xA] = 0;
+		entrySub->unkA++;
+		if (entrySub->unkA == 3U) {
+			entrySub->unkA = 0;
 		}
 
-		targetY = entrySub[1];
-		if (*groundPtr >= targetY) {
-			if (entrySubBytes[0xB] & 0x10) {
-				func_800DEA08_ED9B8(entrySub[0], (s16)*groundPtr, entrySub[2], 0xC8, 0xA, 8, 0x28, 0xDC, 0x96, 0x96,
+		if (D_80222A70 >= entrySub->unk2) {
+			if (entrySub->unkB & 0x10) {
+				func_800DEA08_ED9B8(entrySub->unk0, (s16)D_80222A70, entrySub->unk4, 0xC8, 0xA, 8, 0x28, 0xDC, 0x96, 0x96,
 					0x96);
-				func_801371B8_146168(0, 0x16D, entrySub[0], ((s16 *)groundPtr)[1], entrySub[2], -1.0f);
+				func_801371B8_146168(0, 0x16D, entrySub->unk0, ((s16 *)&D_80222A70)[1], entrySub->unk4, -1.0f);
 			}
 
-			func_800E0E9C_EFE4C(entrySub[0], entrySub[2], (u16)(entry->unk2 >> 2));
+			func_800E0E9C_EFE4C(entrySub->unk0, entrySub->unk4, (u16)(entry->unk2 >> 2));
 			func_800C1D40_D0CF0(effectIdx, 2, 1);
 			effectIdx = next->unk4;
 			continue;
 		}
 
-		if (hitY >= targetY) {
-			if (entrySubBytes[0xB] & 1) {
-				if (entrySubBytes[0xB] & 0x18) {
+		if (hitY >= entrySub->unk2) {
+			if (entrySub->unkB & 1) {
+				if (entrySub->unkB & 0x18) {
 					if (*(s32 *)&linked->unk8 == (s32)&D_502D390) {
 						if ((D_80031420 & 3) == 3) {
 							if ((currentLevel == 4) &&
 								((func_8000726C_7E6C((u64)0xB) == 0) || (func_8000726C_7E6C((u64)0xC) != 0))) {
-								func_800CA5EC_D959C(entrySub[0], (s16)(func_800B84D0_C7480(entrySub[0], entrySub[2]) >> 8),
-									entrySub[2], 0, 0x7F, 0, 0x28, 5, 0x19, 0xFF, 0, 0xFF, 0, 0xFF);
+								func_800CA5EC_D959C(entrySub->unk0, (s16)(func_800B84D0_C7480(entrySub->unk0, entrySub->unk4) >> 8),
+									entrySub->unk4, 0, 0x7F, 0, 0x28, 5, 0x19, 0xFF, 0, 0xFF, 0, 0xFF);
 							} else if ((D_80031420 & 3) == 3) {
-								func_800DF9C8_EE978(entrySub[0], targetY, entrySub[2], 0x32, 0, (s32)&sp84);
-								func_800CA5EC_D959C(entrySub[0], (s16)(func_800B84D0_C7480(entrySub[0], entrySub[2]) >> 8),
-									entrySub[2], 0, 0x7F, 0, 0x28, 5, 0x19, 0xFF, 0xFF, 0, 0, 0xFF);
+								func_800DF9C8_EE978(entrySub->unk0, entrySub->unk2, entrySub->unk4, 0x32, 0, (s32)&sp84);
+								func_800CA5EC_D959C(entrySub->unk0, (s16)(func_800B84D0_C7480(entrySub->unk0, entrySub->unk4) >> 8),
+									entrySub->unk4, 0, 0x7F, 0, 0x28, 5, 0x19, 0xFF, 0xFF, 0, 0, 0xFF);
 							}
 
-							func_80137130_1460E0((s32)entrySub, 0xF4, entrySub[0], targetY, entrySub[2]);
-							func_80137130_1460E0((s32)entrySub, 0xAD, entrySub[0], targetY, entrySub[2]);
+							func_80137130_1460E0((s32)entrySub, 0xF4, entrySub->unk0, entrySub->unk2, entrySub->unk4);
+							func_80137130_1460E0((s32)entrySub, 0xAD, entrySub->unk0, entrySub->unk2, entrySub->unk4);
 						}
 					} else {
-						func_800DF038_EDFE8(entrySub[0], targetY, entrySub[2], (u16)(entry->unk2 / 2), 0, 0);
+						func_800DF038_EDFE8(entrySub->unk0, entrySub->unk2, entrySub->unk4, (u16)(entry->unk2 / 2), 0, 0);
 					}
 				} else {
-					func_800DF038_EDFE8(entrySub[0], targetY, entrySub[2], (u16)(entry->unk2 / 6), 0, 0);
+					func_800DF038_EDFE8(entrySub->unk0, entrySub->unk2, entrySub->unk4, (u16)(entry->unk2 / 6), 0, 0);
 				}
 			}
 
@@ -3098,7 +3069,7 @@ void func_800C8294_D7244(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8294_D7244.s")
 #endif
 
-// CURRENT(3860)
+// CURRENT(3374)
 #ifdef NON_MATCHING
 void func_800C8814_D77C4(void) {
 	s16 effectIdx;
@@ -3107,9 +3078,10 @@ void func_800C8814_D77C4(void) {
 	Unk80154318Entry *linked;
 	u8 *entrySubBytes;
 	u8 *nextSubBytes;
-	Unk80052B40 spDC;
-	Unk80052B40 spE4;
 	Unk80052B40 spEC;
+	Unk80052B40 spE4;
+	Unk80052B40 spDC;
+	s32 pad2[4];
 	s32 pad[6];
 
 	effectIdx = D_80154216;
@@ -3118,10 +3090,10 @@ void func_800C8814_D77C4(void) {
 			entry = &D_80154318[effectIdx];
 			spEC.unk4 = entry->unk2;
 			spEC.unk2 = entry->unk2;
-			spEC.unk0 = entry->unk2;
 
 			linked = &D_80154318[entry->unk4];
 			nextIdx = linked->unk4;
+			spEC.unk0 = entry->unk2;
 			entrySubBytes = (u8 *)&entry->unk8;
 
 			if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)entry->unk2, (s16)(D_80047954 * 4.0f),
@@ -3217,10 +3189,10 @@ u8 func_800C8C7C_D7C2C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 				entryBytes[0x13] = ((u8 *)&D_80154318[D_80154318[arg4].unk4])[0xA];
 			}
 
-			sfx = &D_80154088[effect];
 			entry->unk8 = arg0;
 			entry->unkA = arg1;
 			entry->unkC = arg2;
+			sfx = &D_80154088[effect];
 			sfx->unk2 = arg3;
 		}
 	}
