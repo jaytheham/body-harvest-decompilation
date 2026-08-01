@@ -3069,7 +3069,7 @@ void func_800C8294_D7244(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8294_D7244.s")
 #endif
 
-// CURRENT(3860)
+// CURRENT(3374)
 #ifdef NON_MATCHING
 void func_800C8814_D77C4(void) {
 	s16 effectIdx;
@@ -3078,9 +3078,10 @@ void func_800C8814_D77C4(void) {
 	Unk80154318Entry *linked;
 	u8 *entrySubBytes;
 	u8 *nextSubBytes;
-	Unk80052B40 spDC;
-	Unk80052B40 spE4;
 	Unk80052B40 spEC;
+	Unk80052B40 spE4;
+	Unk80052B40 spDC;
+	s32 pad2[4];
 	s32 pad[6];
 
 	effectIdx = D_80154216;
@@ -3089,10 +3090,10 @@ void func_800C8814_D77C4(void) {
 			entry = &D_80154318[effectIdx];
 			spEC.unk4 = entry->unk2;
 			spEC.unk2 = entry->unk2;
-			spEC.unk0 = entry->unk2;
 
 			linked = &D_80154318[entry->unk4];
 			nextIdx = linked->unk4;
+			spEC.unk0 = entry->unk2;
 			entrySubBytes = (u8 *)&entry->unk8;
 
 			if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)entry->unk2, (s16)(D_80047954 * 4.0f),
