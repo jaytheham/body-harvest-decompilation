@@ -1000,7 +1000,7 @@ void func_800EBD9C_FAD4C(s16 arg0, s16 arg1, s16 arg2) {
 		D_80157600.unk8 = 0.0f;
 		D_80157600.unk10 = 0.0f;
 		D_801575E0.unkA = arg1;
-		osSyncPrintf(D_80144330_1532E0, arg0, arg1, arg2); // attempt to exit to point %d,%d,%d
+		osSyncPrintf(D_80144330_1532E0, arg0, arg1, arg2);
 		D_8015760C = 145.0f;
 		if ((D_80222A70 - 0x24) >= arg1) {
 			func_800EB05C_FA00C();
@@ -1037,14 +1037,14 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	yOff = (s8)vehicleSpecs[vehicle->unk1A].unk5F;
 	zOff = (s8)vehicleSpecs[vehicle->unk1A].unk60;
 
-	temp_f0 = cosf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / 32768.0));
+	temp_f0 = cosf((f32) (( (f32) vehicle->unk6 * temp_f20) / 32768.0));
 
 	xOffF = (f32) xOff;
 	zOffF = (f32) zOff;
-	x = vehicle->unk0 + (s16) (s32) ((xOffF * temp_f0) - (sinf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / 32768.0)) * zOffF));
+	x = vehicle->unk0 + (s16) (s32) ((xOffF * temp_f0) - (sinf((f32) (( (f32) vehicle->unk6 * temp_f20) / 32768.0)) * zOffF));
 
-	temp_f0 = sinf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / 32768.0));
-	z = vehicle->unk4 + (s16) (s32) ((cosf((f32) (((f64) (f32) vehicle->unk6 * temp_f20) / 32768.0)) * zOffF) + (xOffF * temp_f0));
+	temp_f0 = sinf((f32) (( (f32) vehicle->unk6 * temp_f20) / 32768.0));
+	z = vehicle->unk4 + (s16) (s32) ((cosf((f32) (( (f32) vehicle->unk6 * temp_f20) / 32768.0)) * zOffF) + (xOffF * temp_f0));
 
 	D_801575E0.unk6 = x;
 	D_801575E0.unkA = vehicle->unk2 + yOff;
@@ -2116,38 +2116,39 @@ block_211:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED78C_FC73C.s")
 #endif
 
-// CURRENT(200)
+// https://decomp.me/scratch/ShNcq
+// CURRENT(315)
 #ifdef NON_MATCHING
 // Cont 2 button attempts to use weapon model 0 when changing weapon
-s32 func_800EF0B0_FE060(s32 arg0) {
-	s32 buf[2];
-	s32 *ptr;
-	s32 count;
-	s32 sum;
-	s8 byte;
-
-	ptr = (s32 *)func_80012000_12C00(arg0);
-	count = 0;
-	sum = 0;
-
-	do {
-		buf[0] = ptr[0];
-		ptr += 2;
-		count++;
-		buf[1] = ptr[-1];
-		byte = *(s8 *)buf;
-		sum += byte;
-	} while (byte != -0x48 || count >= 0x39);
-
-	if (currentControllerStates[CONTROLLER_TWO].button & BUTTON_Z) {
-		return byte = 0;
-	}
-
-	if ((sum == -0x88E) && (count == 0x38)) {
-		return 1;
-	}
-
-	return byte;
+s32 func_800EF0B0_FE060(s32 arg0)
+{
+  s32 buf[2];
+  s32 *ptr;
+  s32 count;
+  s32 sum;
+  ptr = (s32 *) func_80012000_12C00(arg0);
+  count = 0;
+  sum = 0;
+  do
+  {
+    buf[0] = *ptr;
+    ptr++;
+    buf[1] = *ptr;
+      ptr++;
+    count++;
+    
+    sum += buf[1];
+  }
+  while ((buf[1] != (-0x48)) || (count >= 0x39));
+  if (currentControllerStates[1].button & 0x2000)
+  {
+    return 0;
+  }
+  if ((sum == (-0x88E)) && (count == 0x38))
+  {
+    return 1;
+  }
+  return 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF0B0_FE060.s")
@@ -2179,9 +2180,9 @@ void func_800EF14C_FE0FC(VehicleInstance *arg0) {
 		((s32 *)sp6C)[i] = ((s32 *)D_8013FC80_14EC30)[i];
 	}
 
-	*(volatile s32 *)&sp60.unk0 = D_8013FCA8_14EC58[0];
-	*(volatile s32 *)&sp60.unk4 = D_8013FCA8_14EC58[1];
-	*(volatile u16 *)&sp60.unk8 = ((u16 *)D_8013FCA8_14EC58)[4];
+	sp60.unk0 = D_8013FCA8_14EC58[0];
+	sp60.unk4 = D_8013FCA8_14EC58[1];
+	sp60.unk8 = ((u16 *)D_8013FCA8_14EC58)[4];
 
 	if (D_80157A3C != 0) {
 		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
@@ -2351,7 +2352,7 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF650_FE600.s")
 #endif
 
-// CURRENT(252)
+// CURRENT(1550)
 #ifdef NON_MATCHING
 void func_800EF9F0_FE9A0(s16 arg0)
 {
