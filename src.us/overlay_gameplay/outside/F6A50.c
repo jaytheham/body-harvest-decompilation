@@ -80,24 +80,27 @@ void func_800E7C28_F6BD8(void)
 	{
 	  D_8015758E -= currentControllerStates[1].stick_x * 0x10;
 	  D_8015758C += currentControllerStates[1].stick_y * 8;
+		sp32 = 5;
 	  if (currentControllerStates[1].button & 4)
 	  {
-		D_8013E438_14D3E8 += 5;
+		D_8013E438_14D3E8 += sp32;
 	  }
 	  if (currentControllerStates[1].button & 8)
 	  {
-		D_8013E438_14D3E8 -= 5;
+		D_8013E438_14D3E8 -= sp32;
 	  }
 	  D_80157586 = sp3C;
 	  D_80157588 = sp38;
 	  D_8015758A = sp34;
-	  sp32 = coss((u16) D_8015758C);
-	  D_80157580 = (((((((f32) coss(D_8015758E))) / 32768.0) * (((((f32) sp32)) / 32768.0) * (D_8013E438_14D3E8))) + (D_80157586)));
-	  D_80157582 = (((((((f32) sins(D_8015758C))) / 32768.0) * (D_8013E438_14D3E8)) + (D_80157588)));
-	  if (currentControllerStates)
-	  {
-	  }
-	  sp32 = coss((u16) D_8015758C);
+	  sp32 = coss(D_8015758C);
+	  D_80157580 = ((((f32) coss(D_8015758E)) / 32768.0) * ((((f32) sp32) / 32768.0) * D_8013E438_14D3E8)) + D_80157586;
+	  D_80157582 = ((((f32) sins(D_8015758C)) / 32768.0) * D_8013E438_14D3E8) + D_80157588;
+
+		// Hmmmmmmm
+	  if (currentControllerStates){}
+
+		
+	  sp32 = coss(D_8015758C);
 	  D_80157584 = ((((f32) sins(D_8015758E)) / 32768.0) * ((((f32) sp32) / 32768.0) * D_8013E438_14D3E8)) + D_8015758A;
 	  return;
 	}
@@ -108,10 +111,10 @@ void func_800E7C28_F6BD8(void)
 	}
 	else
 	{
-	  sp30 = sins((u16) D_8015758E);
-	  D_80157580 = ((D_80157580 + (((-(currentControllerStates[1].stick_y >> 2)) * (((f32) coss(D_8015758E)) / 32768.0)) + ((currentControllerStates[1].stick_x >> 2) * (((f32) sp30) / 32768.0)))));
-	  sp30 = coss((u16) D_8015758E);
-	  D_80157584 = ((D_80157584 + (((-(currentControllerStates[1].stick_y >> 2)) * (((f32) sins(D_8015758E)) / 32768.0)) - ((currentControllerStates[1].stick_x >> 2) * (((f32) sp30) / 32768.0)))));
+	  sp30 = sins(D_8015758E);
+	  D_80157580 += (((-(currentControllerStates[1].stick_y >> 2)) * (((f32) coss(D_8015758E)) / 32768.0)) + ((currentControllerStates[1].stick_x >> 2) * (((f32) sp30) / 32768.0)));
+	  sp30 = coss(D_8015758E);
+	  D_80157584 += (((-(currentControllerStates[1].stick_y >> 2)) * (((f32) sins(D_8015758E)) / 32768.0)) - ((currentControllerStates[1].stick_x >> 2) * (((f32) sp30) / 32768.0)));
 	}
 	if (currentControllerStates[1].button & 8)
 	{
@@ -121,11 +124,11 @@ void func_800E7C28_F6BD8(void)
 	{
 	  D_80157582 -= 1;
 	}
-	sp32 = coss((u16) D_8015758C);
-	D_80157586 = (D_80157580 - ((((f32) coss(D_8015758E)) / 32768.0) * ((((f32) sp32) / 32768.0) * D_80144240_1531F0)));
-	D_80157588 = (((D_80157582) - ((((f32) sins(D_8015758C)) / 32768.0) * D_80144248_1531F8)));
 	sp32 = coss(D_8015758C);
-	D_8015758A = (D_80157584) - ((((f32) sins(D_8015758E)) / 32768.0) * ((((f32) sp32) / 32768.0) * D_80144250_153200));
+	D_80157586 = D_80157580 - ((((f32) coss(D_8015758E)) / 32768.0) * ((((f32) sp32) / 32768.0) * D_80144240_1531F0[0]));
+	D_80157588 = D_80157582 - ((((f32) sins(D_8015758C)) / 32768.0) * D_80144248_1531F8[0]);
+	sp32 = coss(D_8015758C);
+	D_8015758A = D_80157584 - ((((f32) sins(D_8015758E)) / 32768.0) * ((((f32) sp32) / 32768.0) * D_80144250_153200[0]));
 	if (currentControllerStates[1].button & 1)
 	{
 	  osSyncPrintf(&D_801441F0_1531A0, D_80157580, D_80157582, D_80157584, (s32) D_8015758C, (s32) D_8015758E);
