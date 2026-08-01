@@ -2216,11 +2216,10 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C56A4_D4654.s")
 #endif
 
-// CURRENT(6828)
+// CURRENT(4947)
 #ifdef NON_MATCHING
 void func_800C5894_D4844(u8 arg0) {
 	Unk801541F8Entry *sp3C;
-	Unk80154318Entry *var_a3;
 	Unk80154318Sub *temp_s0;
 	Unk80154318Sub *temp_s2;
 	s16 temp_s0_3;
@@ -2230,6 +2229,7 @@ void func_800C5894_D4844(u8 arg0) {
 	s32 temp_v0_4;
 	s32 temp_v1_3;
 	u8 temp_a1;
+	Unk80154318Entry *var_a3;
 
 	temp_s6 = arg0;
 	sp3C = &D_80154088[temp_s6];
@@ -2262,7 +2262,8 @@ loop_5:
 			if ((s32)temp_s0->unk9 < 0xEB) {
 				temp_s0->unk9 = (u8)(temp_s0->unk9 + 0x14);
 			}
-			goto block_25;
+			var_s1 = var_a3->unk4;
+			goto block_26;
 		} else {
 			var_a3 = &D_80154318[var_s1];
 			temp_s0 = (Unk80154318Sub *)&var_a3->unk8;
@@ -2284,11 +2285,11 @@ loop_5:
 				temp_v0_4 = func_800B84D0_C7480(temp_s0->unk0, temp_s0->unk4);
 				temp_s0->unkA++;
 				if ((temp_s0->unkA & 0xFF) >= 0xB) {
-					temp_v0_4 = temp_s0->unk9 - 0x14;
-					if (temp_v0_4 < 0) {
+					temp_v1_3 = temp_s0->unk9 - 0x14;
+					if (temp_v1_3 < 0) {
 						temp_s0->unk9 = 0;
 					} else {
-						temp_s0->unk9 = (u8)temp_v0_4;
+						temp_s0->unk9 = (u8)temp_v1_3;
 					}
 				}
 				temp_v1_3 = temp_v0_4 >> 8;
