@@ -2084,19 +2084,17 @@ void func_800C4F48_D3EF8(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4F48_D3EF8.s")
 #endif
 
-// CURRENT(3535)
+// CURRENT(3437)
 #ifdef NON_MATCHING
 void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10,
 						 u8 arg11, u8 arg12) {
-	f32 sp44;
-	f32 sp48;
-	f32 sp4C;
 	s32 i;
-	u8 spawnCount;
+	s32 effect;
+	s32 spawnCount;
 	s16 idx;
-	Vec3f *vec;
 	Unk801541F8Entry *sfx;
 	Unk80154318Entry *entry;
+	Vec3f sp44;
 	spawnCount = arg8;
 	if (spawnCount >= 0x29) {
 		spawnCount = 0x28;
@@ -2122,30 +2120,31 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 		return;
 	}
 
-	sfx = &D_80154088[effect];
+	sfx = &D_80154088[effect & 0xFF];
 	entry = &D_80154318[idx];
-	// Agent - replace these pointer casts/math with correct struct/array access
-	((u8 *)sfx)[1] = ((u8 *)sfx)[1];
-	*(s16 *)((u8 *)sfx + 0xA) = idx;
 
-	*(s16 *)((u8 *)entry + 8) = arg0;
-	*(s16 *)((u8 *)entry + 0xA) = arg1;
-	*(s16 *)((u8 *)entry + 0xC) = arg2;
+	sfx->unk1 = sfx->unk1;
+	sfx->unkA = idx;
+
+	entry->unk8 = arg0;
+	entry->unkC = arg2;
 	((u8 *)entry)[0x12] = 1;
-	*(s16 *)((u8 *)entry + 2) = arg9;
-	((u8 *)entry)[0xE] = arg10;
-	((u8 *)entry)[0xF] = arg11;
-	((u8 *)entry)[0x10] = arg12;
 
-	sp44 = arg3;
-	sp48 = arg4;
-	sp4C = arg5;
-	vec = (Vec3f *)&sp44;
-	func_800C1024_CFFD4(vec, vec);
+	sp44.x = arg3;
+	sp44.y = arg4;
+	sp44.z = arg5;
+
+	entry->unk2 = arg9;
+	entry->unkA = arg1;
+	entry->unkE = arg10;
+	entry->unkF = arg11;
+	entry->unk10 = arg12;
+
+	func_800C1024_CFFD4(&sp44, &sp44);
 
 	i = 0;
 	while (i < spawnCount) {
-		func_800C4F48_D3EF8(effect & 0xFF, (s32)vec, arg6 & 0xFF, arg7 & 0xFF);
+		func_800C4F48_D3EF8(effect & 0xFF, &sp44, arg6 & 0xFF, arg7 & 0xFF);
 		i = (i + 1) & 0xFF;
 	}
 }
