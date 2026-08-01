@@ -2520,22 +2520,18 @@ s16 func_800C613C_D50EC(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C613C_D50EC.s")
 #endif
 
-// CURRENT(10655)
+// CURRENT(255)
 #ifdef NON_MATCHING
 void func_800C6558_D5508(void) {
-	Unk80154318Entry *entry;
-	Unk80154318Entry *linked;
-	Unk80154318Entry *next;
+	s16 idx;
 	u8 *entryBytes;
 	u8 *linkedBytes;
 	u8 *nextBytes;
-	s16 idx;
+	s16 entryUnk4;
 	s16 linkedIdx;
 	s16 nextIdx;
-	u8 age;
-	u8 scale;
-	u8 steps;
-	s32 randVal;
+	s32 age;
+	s32 steps;
 
 	idx = D_8015420A;
 	if ((idx == -5) || (idx == -6)) {
@@ -2544,13 +2540,12 @@ void func_800C6558_D5508(void) {
 	}
 
 	while ((idx != -5) && (idx != -6)) {
-		entry = &D_80154318[idx];
-		entryBytes = (u8*) &entry->unk8;
-		linked = &D_80154318[entry->unk4];
-		linkedBytes = (u8*) &linked->unk8;
-		linkedIdx = linked->unk4;
+		entryBytes = (u8*) &D_80154318[idx].unk8;
+		entryUnk4 = D_80154318[idx].unk4;
+		linkedBytes = (u8*) &D_80154318[entryUnk4].unk8;
+		linkedIdx = D_80154318[entryUnk4].unk4;
 
-		if (entry->unk14 >= (0x23 / ((u8*) linked)[0x13])) {
+		if (D_80154318[idx].unk14 >= (0x23 / ((u8*) &D_80154318[entryUnk4])[0x13])) {
 			nextIdx = D_80154318[linkedIdx].unk4;
 			func_800C1D40_D0CF0(idx, 1, 1);
 			idx = nextIdx;
@@ -2558,36 +2553,31 @@ void func_800C6558_D5508(void) {
 		}
 
 		age = entryBytes[0xC];
-		scale = linkedBytes[0xB];
-		next = &D_80154318[linkedIdx];
-		nextBytes = (u8*) &next->unk8;
+		nextBytes = (u8*) &D_80154318[linkedIdx].unk8;
 
 		if (age == 0) {
-			next->unk8 = (func_800038E0_44E0() % 11) + 0x3C;
+			*(u16*) nextBytes = (func_800038E0_44E0() % 11) + 0x3C;
 		} else if (age == 1) {
-			next->unk8 += (func_800038E0_44E0() % 11) + 0xF;
-		} else if (age < (7 / scale)) {
-			next->unk8 += ((func_800038E0_44E0() % 5) + 5) * scale;
-		} else if (age < (0xF / scale)) {
-			randVal = func_800038E0_44E0();
-			next->unk8 += ((randVal % 4) + 4) * scale;
-			linkedBytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * scale;
-		} else if (age < (0x18 / scale)) {
-			randVal = func_800038E0_44E0();
-			next->unk8 += ((randVal % 4) + 3) * scale;
-			linkedBytes[9] -= ((func_800038E0_44E0() % 5) + 3) * scale;
+			*(u16*) nextBytes += (func_800038E0_44E0() % 11) + 0xF;
+		} else if (age < (7 / linkedBytes[0xB])) {
+			*(u16*) nextBytes += ((func_800038E0_44E0() % 5) + 5) * linkedBytes[0xB];
+		} else if (age < (0xF / linkedBytes[0xB])) {
+			*(u16*) nextBytes += ((func_800038E0_44E0() % 4) + 4) * linkedBytes[0xB];
+			linkedBytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * linkedBytes[0xB];
+		} else if (age < (0x18 / linkedBytes[0xB])) {
+			*(u16*) nextBytes += ((func_800038E0_44E0() % 4) + 3) * linkedBytes[0xB];
+			linkedBytes[9] -= ((func_800038E0_44E0() % 5) + 3) * linkedBytes[0xB];
 			if ((linkedBytes[0xB] * 0xF) < linkedBytes[0xA]) {
 				linkedBytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * linkedBytes[0xB];
 			}
-		} else if (age < (0x1C / scale)) {
-			next->unk8 += ((func_800038E0_44E0() % 3) + 2) * scale;
-			linkedBytes[9] -= ((func_800038E0_44E0() % 5) + 3) * scale;
+		} else if (age < (0x1C / linkedBytes[0xB])) {
+			*(u16*) nextBytes += ((func_800038E0_44E0() % 3) + 2) * linkedBytes[0xB];
+			linkedBytes[9] -= ((func_800038E0_44E0() % 5) + 3) * linkedBytes[0xB];
 			if ((linkedBytes[0xB] * 0x19) < linkedBytes[0xA]) {
 				linkedBytes[0xA] -= ((func_800038E0_44E0() % 14) + 0xC) * linkedBytes[0xB];
 			}
 		} else {
-			randVal = func_800038E0_44E0();
-			next->unk8 += ((randVal % 2) + 2) * scale;
+			*(u16*) nextBytes += ((func_800038E0_44E0() % 2) + 2) * linkedBytes[0xB];
 			if ((linkedBytes[0xB] * 0x19) < linkedBytes[0xA]) {
 				linkedBytes[0xA] -= ((func_800038E0_44E0() % 14) + 0xC) * linkedBytes[0xB];
 			}
@@ -2618,7 +2608,7 @@ void func_800C6558_D5508(void) {
 		}
 
 		entryBytes[0xC]++;
-		idx = next->unk4;
+		idx = D_80154318[linkedIdx].unk4;
 	}
 }
 #else
