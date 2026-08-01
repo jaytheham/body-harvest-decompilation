@@ -3189,10 +3189,10 @@ u8 func_800C8C7C_D7C2C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 				entryBytes[0x13] = ((u8 *)&D_80154318[D_80154318[arg4].unk4])[0xA];
 			}
 
-			sfx = &D_80154088[effect];
 			entry->unk8 = arg0;
 			entry->unkA = arg1;
 			entry->unkC = arg2;
+			sfx = &D_80154088[effect];
 			sfx->unk2 = arg3;
 		}
 	}
