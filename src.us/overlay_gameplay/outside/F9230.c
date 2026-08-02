@@ -2119,34 +2119,29 @@ block_211:
 // https://decomp.me/scratch/ShNcq
 // CURRENT(315)
 #ifdef NON_MATCHING
-// Cont 2 button attempts to use weapon model 0 when changing weapon
+// Is first weapon model valid
 s32 func_800EF0B0_FE060(s32 arg0)
 {
-  s32 buf[2];
-  s32 *ptr;
+  Gwords buf;
+  Gwords *ptr;
   s32 count;
   s32 sum;
   ptr = (s32 *) func_80012000_12C00(arg0);
   count = 0;
   sum = 0;
-  do
-  {
-    buf[0] = *ptr;
-    ptr++;
-    buf[1] = *ptr;
-      ptr++;
-    count++;
-    
-    sum += buf[1];
-  }
-  while ((buf[1] != (-0x48)) || (count >= 0x39));
+ do {
+	buf = *ptr++;
+	count++;
+	sum += (s8)buf.w0;
+} while ((s8)buf.w0 != -0x48 || count >= 0x39);
+	
   if (currentControllerStates[1].button & 0x2000)
   {
-    return 0;
+	return 0;
   }
-  if ((sum == (-0x88E)) && (count == 0x38))
+  if (sum == -0x88E && count == 0x38)
   {
-    return 1;
+	return 1;
   }
   return 0;
 }

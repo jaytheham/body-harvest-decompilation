@@ -789,7 +789,7 @@ extern u8 D_80047743; // World fog red value
 extern u8 D_80047744; // World fog green value
 extern u8 D_80047745; // World fog blue value
 extern u16 D_80047748;
-extern s16 D_80047948;
+extern s16 D_80047948; // Current selected weapon slot?
 extern s16 D_8004794A;
 extern u8 D_8004794C;
 extern s16 D_8004794E;
