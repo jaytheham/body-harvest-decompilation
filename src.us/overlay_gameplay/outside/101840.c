@@ -1,34 +1,34 @@
 #include <ultra64.h>
 #include "common.h"
 
-const char D_801446A0_153650[] = "Error in walker index";
-const char D_801446B8_153668[] = "Attempt to get info on unallocated walker ID";
-const char D_801446E8_153698[] = "Error in walker index";
-const char D_80144700_1536B0[] = "Attempt to force unallocated walker ID";
-const char D_80144728_1536D8[] = "Error in walker index";
-const char D_80144740_1536F0[] = "Attempt to move unallocated walker ID";
-const char D_80144768_153718[] = "Error in walker index";
-const char D_80144780_153730[] = "Attempt to move unallocated walker ID";
-const char D_801447A8_153758[] = "Error in walker index";
-const char D_801447C0_153770[] = "Attempt to move unallocated walker ID";
-const char D_801447E8_153798[] = "Error in walker index";
-const char D_80144800_1537B0[] = "Attempt to move unallocated walker ID";
-const char D_80144828_1537D8[] = "Error in walker index";
-const char D_80144840_1537F0[] = "Attempt to move unallocated walker ID";
-const char D_80144868_153818[] = "Error in walker index";
-const char D_80144880_153830[] = "Attempt to move unallocated walker ID";
-const char D_801448A8_153858[] = "FREE WALKER %d: %d walkers allocated\n";
-const char D_801448D0_153880[] = "Error in walker index";
-const char D_801448E8_153898[] = "Attempt to free unallocated walker ID %d\n";
-const char D_80144914_1538C4[] = "CANNOT ALLOCATE NEW WALKER!!!\n";
-const char D_80144934_1538E4[] = "ALLOCATE WALKER %d: %d walkers allocated\n";
-const char D_80144960_153910[] = "-----------------------------\n";
-const char D_80144980_153930[] = "\t%d,%d\n";
-const char D_80144988_153938[] = "\t%d\n";
-const char D_80144990_153940[] = "\t%f\n";
-const char D_80144998_153948[] = "\t%f\n";
-const char D_801449A0_153950[] = "\t%d\n";
-const char D_801449A8_153958[] = "AARRGGH!! Alien buggered off leaving it's legs behind!\n";
+const char D_801446A0_153650[] = "Error in walker index"; // "Error in walker index"
+const char D_801446B8_153668[] = "Attempt to get info on unallocated walker ID"; // "Attempt to get info on unallocated walker ID"
+const char D_801446E8_153698[] = "Error in walker index"; // "Error in walker index"
+const char D_80144700_1536B0[] = "Attempt to force unallocated walker ID"; // "Attempt to force unallocated walker ID"
+const char D_80144728_1536D8[] = "Error in walker index"; // "Error in walker index"
+const char D_80144740_1536F0[] = "Attempt to move unallocated walker ID"; // "Attempt to move unallocated walker ID"
+const char D_80144768_153718[] = "Error in walker index"; // "Error in walker index"
+const char D_80144780_153730[] = "Attempt to move unallocated walker ID"; // "Attempt to move unallocated walker ID"
+const char D_801447A8_153758[] = "Error in walker index"; // "Error in walker index"
+const char D_801447C0_153770[] = "Attempt to move unallocated walker ID"; // "Attempt to move unallocated walker ID"
+const char D_801447E8_153798[] = "Error in walker index"; // "Error in walker index"
+const char D_80144800_1537B0[] = "Attempt to move unallocated walker ID"; // "Attempt to move unallocated walker ID"
+const char D_80144828_1537D8[] = "Error in walker index"; // "Error in walker index"
+const char D_80144840_1537F0[] = "Attempt to move unallocated walker ID"; // "Attempt to move unallocated walker ID"
+const char D_80144868_153818[] = "Error in walker index"; // "Error in walker index"
+const char D_80144880_153830[] = "Attempt to move unallocated walker ID"; // "Attempt to move unallocated walker ID"
+const char D_801448A8_153858[] = "FREE WALKER %d: %d walkers allocated\n"; // "FREE WALKER %d: %d walkers allocated\n"
+const char D_801448D0_153880[] = "Error in walker index"; // "Error in walker index"
+const char D_801448E8_153898[] = "Attempt to free unallocated walker ID %d\n"; // "Attempt to free unallocated walker ID %d\n"
+const char D_80144914_1538C4[] = "CANNOT ALLOCATE NEW WALKER!!!\n"; // "CANNOT ALLOCATE NEW WALKER!!!\n"
+const char D_80144934_1538E4[] = "ALLOCATE WALKER %d: %d walkers allocated\n"; // "ALLOCATE WALKER %d: %d walkers allocated\n"
+const char D_80144960_153910[] = "-----------------------------\n"; // "-----------------------------\n"
+const char D_80144980_153930[] = "\t%d,%d\n"; // "\t%d,%d\n"
+const char D_80144988_153938[] = "\t%d\n"; // "\t%d\n"
+const char D_80144990_153940[] = "\t%f\n"; // "\t%f\n"
+const char D_80144998_153948[] = "\t%f\n"; // "\t%f\n"
+const char D_801449A0_153950[] = "\t%d\n"; // "\t%d\n"
+const char D_801449A8_153958[] = "AARRGGH!! Alien buggered off leaving it's legs behind!\n"; // "AARRGGH!! Alien buggered off leaving it's legs behind!\n"
 
 const f64 D_801449E0_153990[1] = {0.99};
 const f32 D_801449E8_153998[1] = {0.99};
@@ -53,7 +53,7 @@ const f64 D_80144A30_1539E0[1] = {180};
 
 const f64 D_80144A38_1539E8[1] = {1.2};
 
-const char D_80144A40_1539F0[] = "Max static count %d\n";
+const char D_80144A40_1539F0[] = "Max static count %d\n"; // "Max static count %d\n"
 
 const f64 D_80144A58_153A08[1] = {2608};
 
@@ -589,10 +589,10 @@ void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 	if (temp_v1 == 0x10) {
 		sp68 = 0;
 	}
-	sp7C = (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) walker->limbs[0].unk1C) +
-				 (f64) *(s32 *) &walker->limbs[0].unk0);
-	sp78 = (s32) ((((f64) (f32) sins((u16) walker->limbs[0].unk18) / 32768.0) * (f64) walker->limbs[0].unk1C) +
-				 (f64) *(s32 *) &walker->limbs[0].unk4);
+	sp7C = (s32) ((((f32) coss((u16) var_v0) / 32768.0) * walker->limbs[0].unk1C) +
+				 *(s32 *) &walker->limbs[0].unk0);
+	sp78 = (s32) ((((f32) sins((u16) walker->limbs[0].unk18) / 32768.0) * walker->limbs[0].unk1C) +
+				 *(s32 *) &walker->limbs[0].unk4);
 	*(s32 *) &walker->limbs[0].unk8 = sp7C;
 	*(s32 *) &walker->limbs[0].unkC = sp78;
 	var_s3 = 0;
@@ -601,15 +601,15 @@ void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 			s32 pre_angle = sp68 - var_s4;
 			if (walker->limbs[var_s3 + 1].unk23 == 0) {
 				var_v0 = (s16) (pre_angle - 0x4000);
-				walker->limbs[var_s3 + 1].unk6 = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp7C);
-				walker->limbs[var_s3 + 1].unk8 = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp78);
-				walker->limbs[var_s3 + 1].unk1A = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp7C);
-				walker->limbs[var_s3 + 1].unk1C = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp78);
+				walker->limbs[var_s3 + 1].unk6 = (s16) (s32) ((((f32) coss((u16) var_v0) / 32768.0) * sp6C) + sp7C);
+				walker->limbs[var_s3 + 1].unk8 = (s16) (s32) ((((f32) sins((u16) var_v0) / 32768.0) * sp6C) + sp78);
+				walker->limbs[var_s3 + 1].unk1A = (s16) (s32) ((((f32) coss((u16) var_v0) / 32768.0) * sp6A) + sp7C);
+				walker->limbs[var_s3 + 1].unk1C = (s16) (s32) ((((f32) sins((u16) var_v0) / 32768.0) * sp6A) + sp78);
 				var_v0 = (s16) (sp68 + var_s4 + 0x4000);
-				walker->limbs[var_s3 + ((s32) temp_s0 / 2) + 1].unk6 = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp7C);
-				walker->limbs[var_s3 + ((s32) temp_s0 / 2) + 1].unk8 = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6C) + (f64) sp78);
-				walker->limbs[var_s3 + ((s32) temp_s0 / 2) + 1].unk1A = (s16) (s32) ((((f64) (f32) coss((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp7C);
-				walker->limbs[var_s3 + ((s32) temp_s0 / 2) + 1].unk1C = (s16) (s32) ((((f64) (f32) sins((u16) var_v0) / 32768.0) * (f64) sp6A) + (f64) sp78);
+				walker->limbs[var_s3 + ((s32) temp_s0 / 2) + 1].unk6 = (s16) (s32) ((((f32) coss((u16) var_v0) / 32768.0) * sp6C) + sp7C);
+				walker->limbs[var_s3 + ((s32) temp_s0 / 2) + 1].unk8 = (s16) (s32) ((((f32) sins((u16) var_v0) / 32768.0) * sp6C) + sp78);
+				walker->limbs[var_s3 + ((s32) temp_s0 / 2) + 1].unk1A = (s16) (s32) ((((f32) coss((u16) var_v0) / 32768.0) * sp6A) + sp7C);
+				walker->limbs[var_s3 + ((s32) temp_s0 / 2) + 1].unk1C = (s16) (s32) ((((f32) sins((u16) var_v0) / 32768.0) * sp6A) + sp78);
 				var_s4 += sp6E;
 			}
 			var_s3 += 1;
@@ -644,11 +644,11 @@ void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 	*(s32 *)&walker->limbs[0].unk0 = (s16)arg1;
 	*(s32 *)&walker->limbs[0].unk4 = arg2;
 	*(s32 *)&walker->limbs[0].unk14 = arg2;
-	*(volatile s32 *)&walker->limbs[0].unk10 = (s16)arg1;
-	*(volatile s32 *)&walker->limbs[0].unkC = arg2;
-	*(volatile s16 *)&walker->limbs[0].unk1C = 0;
+	*(s32 *)&walker->limbs[0].unk10 = (s16)arg1;
+	*(s32 *)&walker->limbs[0].unkC = arg2;
+	*(s16 *)&walker->limbs[0].unk1C = 0;
 	*((s32 *) (&walker->limbs[0].unk14)) = arg2;
-	*(volatile s32 *)&walker->limbs[0].unk8 = (s16)arg1;
+	*(s32 *)&walker->limbs[0].unk8 = (s16)arg1;
 
 	func_800F2980_101930(walker);
 
@@ -684,8 +684,6 @@ void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F2D48_101CF8.s")
 #endif
 
-// CURRENT(75)
-#ifdef NON_MATCHING
 void func_800F2ED8_101E88(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4)
 {
 	UnkF9230ShadowWalker *new_var;
@@ -729,9 +727,6 @@ void func_800F2ED8_101E88(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4)
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F2ED8_101E88.s")
-#endif
 
 // CURRENT(961)
 #ifdef NON_MATCHING
