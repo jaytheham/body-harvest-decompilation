@@ -733,14 +733,13 @@ void func_800F3038_101FE8(u8 arg0)
 	UnkF9230ShadowWalker *walker;
 	u8 count;
 	u8 i;
-	u32 x = arg0;
 	if (arg0 >= 9)
 	{
-		osSyncPrintf(D_80144768_153718, x);
+		osSyncPrintf(D_80144768_153718);
 	}
 	if (D_80157FF0[arg0] != (-1))
 	{
-		osSyncPrintf(D_80144780_153730, x);
+		osSyncPrintf(D_80144780_153730);
 	}
 	walker = &D_80158000[arg0];
 	count = D_801601F0[walker->limbs[0].unk23].unkC;
@@ -775,50 +774,47 @@ void func_800F3038_101FE8(u8 arg0)
 	}
 }
 
-// CURRENT(1061)
-#ifdef NON_MATCHING
-void func_800F3190_102140(u8 arg0) {
+void func_800F3190_102140(u8 arg0)
+{
 	UnkF9230ShadowWalker *walker;
 	u8 count;
 	u8 i;
-
-	if (arg0 >= 9) {
-		osSyncPrintf(D_801447A8_153758, arg0);
+	if (arg0 >= 9)
+	{
+		osSyncPrintf(D_801447A8_153758);
 	}
-	if (D_80157FF0[arg0] != -1) {
-		osSyncPrintf(D_801447C0_153770, arg0);
+	if (D_80157FF0[arg0] != (-1))
+	{
+		osSyncPrintf(D_801447C0_153770);
 	}
-
 	walker = &D_80158000[arg0];
-	count = D_801601F0[walker->limbs[0].unk23].unkC;
 	walker->limbs[0].unk22 = 8;
+	count = D_801601F0[walker->limbs[0].unk23].unkC;
 
-	if (count > 0) {
-		i = 0;
-		do {
-			UnkF9230ShadowLimb *limb = &walker->limbs[i];
-			UnkF9230ShadowLimb *next = limb + 1;
-			if (next->unk23 == 1) {
-				next->unk23 = 2;
-			}
-			if (next->unk23 == 0) {
-				next->unk23 = 1;
-			}
-			i++;
-		} while (i < count);
+	for (i = 0; i < count; i++)
+	{
+		UnkF9230ShadowLimb *limb = &walker->limbs[i];
+		UnkF9230ShadowLimb *next = limb + 1;
+		if (next->unk23 == 1)
+		{
+			next->unk23 = 2;
+		}
+		if (next->unk23 == 0)
+		{
+			next->unk23 = 1;
+		}
 	}
-
 	walker->unk168 = 0;
 	walker->unk16A = 0;
-	if (D_801601F0[walker->limbs[0].unk23].unkA >= 0x64) {
+	if (D_801601F0[walker->limbs[0].unk23].unkA >= 0x64)
+	{
 		walker->unk16C = 0x1E;
-	} else {
+	}
+	else
+	{
 		walker->unk16C = 0x3C;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F3190_102140.s")
-#endif
 
 // https://decomp.me/scratch/RcNAk
 // CURRENT(25)
