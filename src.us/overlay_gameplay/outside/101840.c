@@ -822,27 +822,25 @@ void func_800F3190_102140(u8 arg0)
 void func_800F32EC_10229C(u8 arg0, u8 arg1)
 {
   UnkF9230ShadowWalker *walker;
-	UnkF9230ShadowLimb *limb;
+	
   u8 i;
-  s32 count;
+  u8 count;
   if (arg0 >= 9)
   {
 	osSyncPrintf(D_801447E8_153798);
   }
-  if (D_80157FF0[arg0] != (-1))
+  if (D_80157FF0[arg0] != -1)
   {
 	osSyncPrintf(D_80144800_1537B0);
   }
   walker = &D_80158000[arg0];
 	walker->limbs[0].unk22 = 4;
   count = D_801601F0[walker->limbs[0].unk23].unkC;
-  
-  if (count > 0)
-  {
-	i = 0;
-	do
+ 
+	for (i = 0;i < count; i++)
 	{
-	  limb = &walker->limbs[i + 1];
+	  UnkF9230ShadowLimb *limb = &walker->limbs[i + 1];
+		
 	  if (limb->unk23 == 1)
 	  {
 		limb->unk23 = 2;
@@ -852,9 +850,6 @@ void func_800F32EC_10229C(u8 arg0, u8 arg1)
 		limb->unk23 = 1;
 		limb->unk22 = func_800C2274_D1224(walker->limbs[i + 1].unk14, walker->limbs[i + 1].unk16, walker->limbs[i + 1].unk18, 0);
 	  }
-	  i++;
-	}
-	while (i < count);
   }
   walker->unk168 = 0;
   walker->unk16A = 0;
@@ -929,14 +924,15 @@ void func_800F3670_102620(void) {
 	}
 }
 
+// Free walker
 void func_800F375C_10270C(s8 arg0) {
-	osSyncPrintf(D_801448A8_153858, arg0, D_80157FF8, &D_80157FF8); // FREE WALKER %d: %d walkers allocated
+	osSyncPrintf(D_801448A8_153858, arg0, D_80157FF8);
 	if (arg0 >= 8 || arg0 < -1) {
-		osSyncPrintf(D_801448D0_153880, arg0); // Error in walker index
+		osSyncPrintf(D_801448D0_153880, arg0);
 		return;
 	}
 	if (D_80157FF0[arg0] != -1 && arg0 != -1) {
-		osSyncPrintf(D_801448E8_153898, arg0); // Attempt to free unallocated walker ID %d
+		osSyncPrintf(D_801448E8_153898, arg0);
 		return;
 	}
 	if (arg0 == -1) {
