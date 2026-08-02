@@ -4558,19 +4558,19 @@ void func_800FDD48_10CCF8(s16 arg0) {
 	}
 }
 
+// https://decomp.me/scratch/BaeVc
 #ifdef NON_MATCHING
-void func_800FDD8C_10CD3C(VehicleInstance *arg0) {
-	s16 i = 0x7F;
-	if (arg0 != &vehicleInstances[127]) {
-		while (i--) {
-			if (arg0 == &vehicleInstances[i]) {
-				break;
-			}
-		}
-	}
-	if (i >= 0) {
-		func_800FDD48_10CCF8(i);
-	}
+void func_800FDD8C_10CD3C(VehicleInstance *arg0)
+{
+  s16 i = 0x7F;
+  while ( arg0 != &vehicleInstances[i])
+  {
+	if (!--i) {break;}
+  }
+  if (i >= 0)
+  {
+	func_800FDD48_10CCF8(i);
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FDD8C_10CD3C.s")
@@ -4950,8 +4950,8 @@ void func_800FEDBC_10DD6C(s32 arg0) {
 		if (gameplayMode == 1) {
 			func_800CA5EC_D959C((s16)(s32)pos[2], (s16)(s32)pos[1], (s16)(s32)pos[0], 0, -0xA, 0, 0x1E, 5, 2, 5, red, green, blue, 0xFF);
 
-			tempSin = (f32)((f64)(f32)sins((D_80052B34->unkE + 0x4000) & 0xFFFF) / 32768.0);
-			tempCos = (f32)-((f64)(f32)coss((D_80052B34->unkE + 0x4000) & 0xFFFF) / 32768.0);
+			tempSin = (f32)((f32)sins((D_80052B34->unkE + 0x4000) & 0xFFFF) / 32768.0);
+			tempCos = (f32)-((f32)coss((D_80052B34->unkE + 0x4000) & 0xFFFF) / 32768.0);
 			dirX = (s32)(tempSin * 127.0f);
 
 			func_800CA5EC_D959C(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, (s8)dirX, 0x50,
@@ -6025,10 +6025,10 @@ void func_80102600_1115B0(VehicleInstance *arg0, s16 arg1, f32 arg2) {
 	f32 temp_f22;
 
 	temp = coss((u16)arg0->unkE);
-	temp_f0 = (f64)arg2;
-	temp_f22 = (f32)((((f64)(f32)coss((u16)arg1) / 32768.0) * temp_f0) + (((f64)(f32)temp / 32768.0) * (f64)arg0->unk58));
+	temp_f0 = arg2;
+	temp_f22 = (f32)((((f32)coss((u16)arg1) / 32768.0) * temp_f0) + (((f32)temp / 32768.0) * (f64)arg0->unk58));
 	temp = sins((u16)arg0->unkE);
-	temp_f20 = (f32)((((f64)(f32)sins((u16)arg1) / 32768.0) * temp_f0) + (((f64)(f32)temp / 32768.0) * (f64)arg0->unk58));
+	temp_f20 = (f32)((((f32)sins((u16)arg1) / 32768.0) * temp_f0) + (((f32)temp / 32768.0) * (f64)arg0->unk58));
 
 	func_800FB430_10A3E0(arg0, sqrtf((temp_f22 * temp_f22) + (temp_f20 * temp_f20)));
 	arg0->unkE = func_80003824_4424(temp_f22, temp_f20);
@@ -6194,9 +6194,9 @@ s32 func_80102FA4_111F54(void) {
 	damping = D_80144A90_153A40[0];
 	spring = D_80144A98_153A48[0];
 
-	points[11].vel.x = (f32)((f64)points[11].vel.x * damping);
-	points[11].vel.y = (f32)(((f64)points[11].vel.y * damping) - 4.0);
-	points[11].vel.z = (f32)((f64)points[11].vel.z * damping);
+	points[11].vel.x = (f32)(points[11].vel.x * damping);
+	points[11].vel.y = (f32)((points[11].vel.y * damping) - 4.0);
+	points[11].vel.z = (f32)(points[11].vel.z * damping);
 	points[11].pos.x += points[11].vel.x;
 	points[11].pos.y += points[11].vel.y;
 	points[11].pos.z += points[11].vel.z;
@@ -6209,26 +6209,26 @@ s32 func_80102FA4_111F54(void) {
 		cur = &points[i];
 		prev = &points[i - 1];
 
-		midX = (f32)((f64)chainX - (((f64)(chainX - prev->pos.x)) * 0.5));
-		midY = (f32)((f64)chainY - (((f64)(chainY - prev->pos.y)) * 0.5));
-		midZ = (f32)((f64)chainZ - (((f64)(chainZ - prev->pos.z)) * 0.5));
+		midX = (f32)(chainX - (((chainX - prev->pos.x)) * 0.5));
+		midY = (f32)(chainY - (((chainY - prev->pos.y)) * 0.5));
+		midZ = (f32)(chainZ - (((chainZ - prev->pos.z)) * 0.5));
 
-		prev->vel.x = (f32)(((f64)prev->vel.x * damping) + (f64)(midX - cur->pos.x));
-		prev->vel.y = (f32)((((f64)prev->vel.y * damping) + (f64)(midY - cur->pos.y)) - 4.0);
-		prev->vel.z = (f32)(((f64)prev->vel.z * damping) + (f64)(midZ - cur->pos.z));
+		prev->vel.x = (f32)((prev->vel.x * damping) + (midX - cur->pos.x));
+		prev->vel.y = (f32)(((prev->vel.y * damping) + (midY - cur->pos.y)) - 4.0);
+		prev->vel.z = (f32)((prev->vel.z * damping) + (midZ - cur->pos.z));
 
-		chainX = (f32)((f64)cur->pos.x + ((f64)prev->vel.x * spring));
-		chainY = (f32)((f64)cur->pos.y + ((f64)prev->vel.y * spring));
-		chainZ = (f32)((f64)cur->pos.z + ((f64)prev->vel.z * spring));
+		chainX = (f32)(cur->pos.x + (prev->vel.x * spring));
+		chainY = (f32)(cur->pos.y + (prev->vel.y * spring));
+		chainZ = (f32)(cur->pos.z + (prev->vel.z * spring));
 
 		prev->pos.x = chainX;
 		prev->pos.y = chainY;
 		prev->pos.z = chainZ;
 	}
 
-	points[0].vel.x = (f32)((f64)points[0].vel.x * damping);
-	points[0].vel.y = (f32)(((f64)points[0].vel.y * damping) - 4.0);
-	points[0].vel.z = (f32)((f64)points[0].vel.z * damping);
+	points[0].vel.x = (f32)(points[0].vel.x * damping);
+	points[0].vel.y = (f32)((points[0].vel.y * damping) - 4.0);
+	points[0].vel.z = (f32)(points[0].vel.z * damping);
 	points[0].pos.x += points[0].vel.x;
 	points[0].pos.y += points[0].vel.y;
 	points[0].pos.z += points[0].vel.z;
@@ -6267,13 +6267,13 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1) {
 	f64 spring;
 
 	damping = D_80144AA0_153A50[0];
-	midX = (f32)((f64)arg0->unk0 - ((f64)((f32)arg0->unk0 - D_801593F0[10].pos.x) * 0.5));
-	midY = (f32)((f64)arg0->unk2 - ((f64)((f32)arg0->unk2 - D_801593F0[10].pos.y) * 0.5));
-	midZ = (f32)((f64)arg0->unk4 - ((f64)((f32)arg0->unk4 - D_801593F0[10].pos.z) * 0.5));
+	midX = (f32)(arg0->unk0 - (((f32)arg0->unk0 - D_801593F0[10].pos.x) * 0.5));
+	midY = (f32)(arg0->unk2 - (((f32)arg0->unk2 - D_801593F0[10].pos.y) * 0.5));
+	midZ = (f32)(arg0->unk4 - (((f32)arg0->unk4 - D_801593F0[10].pos.z) * 0.5));
 
-	D_801593F0[11].vel.x = (f32)(((f64)D_801593F0[11].vel.x * damping) + (f64)(midX - D_801593F0[11].pos.x));
-	D_801593F0[11].vel.y = (f32)((((f64)D_801593F0[11].vel.y * damping) + (f64)(midY - D_801593F0[11].pos.y)) - 4.0);
-	D_801593F0[11].vel.z = (f32)(((f64)D_801593F0[11].vel.z * damping) + (f64)(midZ - D_801593F0[11].pos.z));
+	D_801593F0[11].vel.x = (f32)((D_801593F0[11].vel.x * damping) + (midX - D_801593F0[11].pos.x));
+	D_801593F0[11].vel.y = (f32)(((D_801593F0[11].vel.y * damping) + (midY - D_801593F0[11].pos.y)) - 4.0);
+	D_801593F0[11].vel.z = (f32)((D_801593F0[11].vel.z * damping) + (midZ - D_801593F0[11].pos.z));
 
 	D_801593F0[11].pos.x = (f32)arg0->unk0;
 	D_801593F0[11].pos.y = (f32)(arg0->unk2 + 0x26);
@@ -6292,29 +6292,29 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1) {
 
 		point--;
 
-		midX = (f32)((f64)chainX - ((f64)(chainX - point->pos.x) * 0.5));
-		midY = (f32)((f64)chainY - ((f64)(chainY - point->pos.y) * 0.5));
-		midZ = (f32)((f64)chainZ - ((f64)(chainZ - point->pos.z) * 0.5));
+		midX = (f32)(chainX - ((chainX - point->pos.x) * 0.5));
+		midY = (f32)(chainY - ((chainY - point->pos.y) * 0.5));
+		midZ = (f32)(chainZ - ((chainZ - point->pos.z) * 0.5));
 
-		point->vel.x = (f32)(((f64)point->vel.x * damping) + (f64)(midX - posX));
-		point->vel.y = (f32)((((f64)point->vel.y * damping) + (f64)(midY - posY)) - 4.0);
-		point->vel.z = (f32)(((f64)point->vel.z * damping) + (f64)(midZ - posZ));
+		point->vel.x = (f32)((point->vel.x * damping) + (midX - posX));
+		point->vel.y = (f32)(((point->vel.y * damping) + (midY - posY)) - 4.0);
+		point->vel.z = (f32)((point->vel.z * damping) + (midZ - posZ));
 
-		chainX = (f32)((f64)posX + ((f64)point->vel.x * spring));
+		chainX = (f32)(posX + (point->vel.x * spring));
 		point->pos.x = chainX;
-		chainY = (f32)((f64)posY + ((f64)point->vel.y * spring));
+		chainY = (f32)(posY + (point->vel.y * spring));
 		point->pos.y = chainY;
-		chainZ = (f32)((f64)posZ + ((f64)point->vel.z * spring));
+		chainZ = (f32)(posZ + (point->vel.z * spring));
 		point->pos.z = chainZ;
 	}
 
-	midX = (f32)((f64)D_801593F0[1].pos.x - ((f64)(D_801593F0[1].pos.x - (f32)arg1->unk0) * 0.5));
-	midY = (f32)((f64)D_801593F0[1].pos.y - ((f64)(D_801593F0[1].pos.y - (f32)arg1->unk2) * 0.5));
-	midZ = (f32)((f64)D_801593F0[1].pos.z - ((f64)(D_801593F0[1].pos.z - (f32)arg1->unk4) * 0.5));
+	midX = (f32)(D_801593F0[1].pos.x - ((D_801593F0[1].pos.x - (f32)arg1->unk0) * 0.5));
+	midY = (f32)(D_801593F0[1].pos.y - ((D_801593F0[1].pos.y - (f32)arg1->unk2) * 0.5));
+	midZ = (f32)(D_801593F0[1].pos.z - ((D_801593F0[1].pos.z - (f32)arg1->unk4) * 0.5));
 
-	D_801593F0[0].vel.x = (f32)(((f64)D_801593F0[0].vel.x * damping) + (f64)(midX - D_801593F0[0].pos.x));
-	D_801593F0[0].vel.y = (f32)((((f64)D_801593F0[0].vel.y * damping) + (f64)(midY - D_801593F0[0].pos.y)) - 4.0);
-	D_801593F0[0].vel.z = (f32)(((f64)D_801593F0[0].vel.z * damping) + (f64)(midZ - D_801593F0[0].pos.z));
+	D_801593F0[0].vel.x = (f32)((D_801593F0[0].vel.x * damping) + (midX - D_801593F0[0].pos.x));
+	D_801593F0[0].vel.y = (f32)(((D_801593F0[0].vel.y * damping) + (midY - D_801593F0[0].pos.y)) - 4.0);
+	D_801593F0[0].vel.z = (f32)((D_801593F0[0].vel.z * damping) + (midZ - D_801593F0[0].pos.z));
 
 	D_801593F0[0].pos.x = (f32)arg1->unk0;
 	D_801593F0[0].pos.y = (f32)(vehicleSpecs[arg1->unk1A].unk38 + arg1->unk2);
@@ -6399,9 +6399,9 @@ void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
 
 		func_80102D00_111CB0(
 			arg0,
-			(f32)((f64)((x0 + x1) - arg0->unk0) * D_80144AB0_153A60[0]),
-			(f32)((f64)((y0 + y1) - arg0->unk2) * D_80144AB0_153A60[0]),
-			(f32)((f64)((z0 + z1) - arg0->unk4) * D_80144AB0_153A60[0]));
+			(f32)(((x0 + x1) - arg0->unk0) * D_80144AB0_153A60[0]),
+			(f32)(((y0 + y1) - arg0->unk2) * D_80144AB0_153A60[0]),
+			(f32)(((z0 + z1) - arg0->unk4) * D_80144AB0_153A60[0]));
 
 		dx = arg1->unk0 - x0;
 		dy = arg1->unk2 - y0;
@@ -6488,9 +6488,9 @@ void func_80103DD0_112D80(void) {
 	}
 }
 
-// Do vehicle acceleration?
-#ifdef NON_MATCHING
 // CURRENT(10354)
+#ifdef NON_MATCHING
+// Do vehicle acceleration?
 void func_80103E54_112E04(VehicleInstance *arg0, OSContPad *arg1) {
 	VehicleSpec *spec;
 	f32 specSteer;
@@ -6876,7 +6876,7 @@ void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 #endif
 
 // The button press check is Z to shoot the gun.
-// Skiiping this call stops adam responding to input
+// Skiping this call stops adam responding to input
 #ifdef NON_MATCHING
 // CURRENT(198379)
 void func_801052E8_114298(Unk80052B2C *arg0, OSContPad *arg1) {
@@ -8130,29 +8130,33 @@ VehicleInstance *func_80109960_118910(void)
   }
 }
 
-// CURRENT(657)
-#ifdef NON_MATCHING
-void func_8010999C_11894C(VehicleInstance *vehicle) {
-	s16 floorHeight;
-	s16 ceilingHeight;
-	s16 hitHeight;
+// https://decomp.me/scratch/vVocw
+void func_8010999C_11894C(VehicleInstance *vehicle)
+{
+	s32 xIndex;
 	s16 xAdjust;
+	s32 zIndex;
+	s16 hitHeight;
+	s16 ceilingHeight;
+	s16 floorHeight;
 	s16 zAdjust;
 	s32 xOffset;
-	s32 xIndex;
 	s32 zOffset;
-	s32 zIndex;
 
 	xAdjust = 0;
-	if (vehicle->unk20 & 2) {
-		zAdjust = 0;
-		if (!(vehicleSpecs[vehicle->unk1A].unk4C & 0x20000)) {
-			if (!(D_80159320 & 0x1800000)) {
-				xOffset = -0x1E;
-				for (xIndex = -1; xIndex != 2; xIndex++, xOffset += 0x1E) {
-					for (zIndex = -1, zOffset = -0x1E; zIndex != 2; zIndex++, zOffset += 0x1E) {
-						if ((func_800F9D60_108D10(vehicle->unk0 + xOffset, vehicle->unk4 + zOffset, &hitHeight, &ceilingHeight, &floorHeight) != -1) &&
-							(vehicle->unk2 < floorHeight) && (ceilingHeight < vehicle->unk2)) {
+	zAdjust = 0;
+	if (vehicle->unk20 & 2)
+	{
+		if (!(vehicleSpecs[vehicle->unk1A].unk4C & 0x20000))
+		{
+			if (!(D_80159320 & 0x1800000))
+			{
+				for (xIndex = -1, xOffset = -0x1E; xIndex != 2; xIndex++, xOffset += 0x1E)
+				{
+					for (zIndex = -1, zOffset = -0x1E; zIndex != 2; zIndex++, zOffset += 0x1E)
+					{
+						if (((func_800F9D60_108D10(vehicle->unk0 + xOffset, vehicle->unk4 + zOffset, &hitHeight, &ceilingHeight, &floorHeight) != (-1)) && (vehicle->unk2 < floorHeight)) && (ceilingHeight < vehicle->unk2))
+						{
 							xAdjust = (s16)(xAdjust + xIndex);
 							zAdjust = (s16)(zAdjust + zIndex);
 						}
@@ -8165,9 +8169,6 @@ void func_8010999C_11894C(VehicleInstance *vehicle) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010999C_11894C.s")
-#endif
 
 void func_80109B34_118AE4(VehicleInstance *arg0, f32 arg1, f32 arg2) {
 	func_800FB430_10A3E0(arg0, 0.0f);
