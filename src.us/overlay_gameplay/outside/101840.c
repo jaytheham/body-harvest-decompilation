@@ -4559,22 +4559,16 @@ void func_800FDD48_10CCF8(s16 arg0) {
 }
 
 // https://decomp.me/scratch/BaeVc
-#ifdef NON_MATCHING
 void func_800FDD8C_10CD3C(VehicleInstance *arg0)
 {
-  s16 i = 0x7F;
-  while ( arg0 != &vehicleInstances[i])
-  {
-	if (!--i) {break;}
-  }
-  if (i >= 0)
-  {
-	func_800FDD48_10CCF8(i);
-  }
+	s16 i = 0x80;
+	while (i-- && arg0 != &vehicleInstances[i]);
+
+	if (i >= 0)
+	{
+		func_800FDD48_10CCF8(i);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FDD8C_10CD3C.s")
-#endif
 
 void func_800FDE00_10CDB0(void) {
 	extern VehicleInstance *D_80158F8C;
