@@ -1109,22 +1109,19 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F3990_102940.s")
 #endif
 
-// CURRENT(1280)
-#ifdef NON_MATCHING
-s16 func_800F3EE4_102E94(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, u8 arg5) {
+// https://decomp.me/scratch/tnWWg
+s16 func_800F3EE4_102E94(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, u8 arg5)
+{
+	float new_var;
 	f64 ratio;
-
-	ratio = (f64)((f32)(u32)arg0 / (f32)(u32)arg5);
-
-	if (ratio < 0.5) {
-		return (s16)(s32)((f32)arg1 + (f32)(s16)(arg3 - arg1) * (f32)(ratio / 0.5));
+	ratio = arg0 / (f32)arg5;
+	if (ratio < 0.5)
+	{
+		return arg1 + ((s16)(arg3 - arg1) * (f32)(ratio / 0.5));
 	}
-
-	return (s16)(s32)((f32)(s16)(arg3 - arg2) * (f32)(1.0 - (f64)(f32)(ratio - 0.5) / 0.5) + (f32)arg2);
+	new_var = (s16)(arg3 - arg2) * ((f32)(1.0 - ((f32)(ratio - 0.5) / (0.5 * 1.0))));
+	return (s32)(new_var + arg2) ^ 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F3EE4_102E94.s")
-#endif
 
 s16 func_800F4028_102FD8(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u8 arg5) {
 	f32 temp_f0;
