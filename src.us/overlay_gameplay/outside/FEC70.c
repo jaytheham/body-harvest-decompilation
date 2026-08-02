@@ -1,9 +1,9 @@
 #include <ultra64.h>
 #include "common.h"
 
-const char D_801444F0_1534A0[] = "**** ERROR: Cutscenes: RaiseAtlantis: Building not present ****\n";
-const char D_80144534_1534E4[] = "**** ERROR: Cutscenes: BridgeBlowerUpper: Building not present ****\n";
-const char D_8014457C_15352C[] = "**** ERROR: Cutscenes: AlphaTransmute: Building not present ****\n";
+const char D_801444F0_1534A0[] = "**** ERROR: Cutscenes: RaiseAtlantis: Building not present ****\n"; // "**** ERROR: Cutscenes: RaiseAtlantis: Building not present ****\n"
+const char D_80144534_1534E4[] = "**** ERROR: Cutscenes: BridgeBlowerUpper: Building not present ****\n"; // "**** ERROR: Cutscenes: BridgeBlowerUpper: Building not present ****\n"
+const char D_8014457C_15352C[] = "**** ERROR: Cutscenes: AlphaTransmute: Building not present ****\n"; // "**** ERROR: Cutscenes: AlphaTransmute: Building not present ****\n"
 
 const u32 jtbl_801445C0_153570[] = {
 	0x800F0858, 0x800F0B3C, 0x800F08EC, 0x800F08D4, 0x800F0938, 0x0
@@ -153,42 +153,49 @@ void func_800EFE50_FEE00(u8 arg0) {
 /// 7 = Dark Adam blowing up planes
 /// 	
 /// a2 = bool, pause gameplay while cutscene active?
-// CURRENT(330)
+// https://decomp.me/scratch/YMT57
+// CURRENT(623)
 #ifdef NON_MATCHING
-void func_800EFEB4_FEE64(void *arg0, s16 arg1, s32 arg2) {
-	s32 pad1C;
-	s32 sp18;
-	s16 sp26 = arg1;
+void func_800EFE50_FEE00(u8 arg0);
 
-	if (D_80052AD0 != 0) {
-		if (sp26 == 1) {
-			D_8015EA2C = 0.0f;
-		}
-		D_800476A2 = 0;
-		D_80047968 = 0;
-		sp18 = sp26;
-		func_800EFE50_FEE00((u8)sp18);
-		{
-			s32 *sp1C = &sp18;
-			D_80157F6A = (s8)(*sp1C);
-		}
-		if (arg2 != 0) {
-			gameplayMode = 3;
-		} else {
-			gameplayMode = 0xB;
-		}
-		if (sp26 != 3) {
-			D_801493E2 = 0;
-		}
-		D_80157F8C = 0;
-		D_80157F8E = 0;
-		D_80157F90 = 0;
-		D_80157F70 = (s32)arg0;
-		if (arg0 != NULL) {
-			((void (*)(void))arg0)();
-		}
-		func_800F0340_FF2F0((u8 *)D_80157E90, 0, 5);
+void func_800EFEB4_FEE64(void *arg0, s16 arg1, s32 arg2)
+{
+  s32 pad1C;
+  s32 sp18;
+  if (D_80052AD0 != 0)
+  {
+	if (arg1 == 1)
+	{
+	  D_8015EA2C = 0.0f;
 	}
+	D_800476A2 = 0;
+	D_80047968 = 0;
+	func_800EFE50_FEE00(arg1);
+	
+	  D_80157F6A = arg1;
+	
+	if (arg2 != 0)
+	{
+	  gameplayMode = 3;
+	}
+	else
+	{
+	  gameplayMode = 0xB;
+	}
+	if (arg1 != 3)
+	{
+	  D_801493E2 = 0;
+	}
+	D_80157F8C = 0;
+	D_80157F8E = 0;
+	D_80157F90 = 0;
+	D_80157F70 = (s32) arg0;
+	if (arg0 != NULL)
+	{
+	  ((void (*)(void)) arg0)();
+	}
+	func_800F0340_FF2F0((u8 *) D_80157E90, 0, 5);
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800EFEB4_FEE64.s")
