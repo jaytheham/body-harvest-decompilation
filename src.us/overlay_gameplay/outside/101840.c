@@ -10517,10 +10517,7 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 	VehicleInstance *var_s7;
 	VehicleSpec *var_s2;
 	s32 var_fp;
-	f32 *var_s0;
-	f32 *var_s1;
 	s32 var_s6;
-	Unk8015FAD0 *entry;
 	s16 minY;
 	s16 maxY;
 	s32 outY;
@@ -10543,13 +10540,10 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 	var_s2 = arg1;
 	var_s7 = arg0;
 	var_fp = arg2;
-	var_s1 = &D_80159D98[3];
-	var_s0 = &D_80159D78[3];
-	var_s6 = 3;
 
-	while (1) {
-		checkFlags = func_8012DDA8_13CD58((s16) (s32) (*var_s1 + var_s7->unk4C), (s16) (s32) var_s7->unk50,
-			(s16) (s32) (*var_s0 + var_s7->unk54), var_s2->unk38, var_s7, var_fp, &outY);
+	for (var_s6 = 3; var_s6 >= 0; var_s6--) {
+		checkFlags = func_8012DDA8_13CD58((s16) (s32) (D_80159D98[var_s6] + var_s7->unk4C), (s16) (s32) var_s7->unk50,
+			(s16) (s32) (D_80159D78[var_s6] + var_s7->unk54), var_s2->unk38, var_s7, var_fp, &outY);
 		if (checkFlags & 1) {
 			if ((var_s7->unk20 & 2) != 0) {
 				if (var_fp == 0) {
@@ -10570,38 +10564,29 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 				func_8010FAC8_11EA78(6, outY);
 			}
 		}
-
-		var_s0--;
-		var_s1--;
-		if (var_s6-- != 0) {
-			continue;
-		}
-		break;
 	}
 
-	entry = &D_8015FAD0[0x18];
-	var_s6 = 0x18;
-	while (1) {
-		if (entry->unk2C >= 4) {
-			yCenter = entry->unk4 >> 0x10;
-			yExtent = entry->unk1C;
+	for (var_s6 = 0x18; var_s6 >= 0; var_s6--) {
+		if (D_8015FAD0[var_s6].unk2C >= 4) {
+			yCenter = D_8015FAD0[var_s6].unk4 >> 0x10;
+			yExtent = D_8015FAD0[var_s6].unk1C;
 			if ((yCenter + yExtent) >= minY) {
 				if (maxY >= (yCenter - yExtent)) {
-					xPos = entry->unk0 >> 0x10;
-					zPos = entry->unk8 >> 0x10;
-					xMax = xPos + entry->unk18;
-					zMax = zPos + entry->unk1A;
-					xMin = xPos - entry->unk18;
-					zMin = zPos - entry->unk1A;
+					xPos = D_8015FAD0[var_s6].unk0 >> 0x10;
+					zPos = D_8015FAD0[var_s6].unk8 >> 0x10;
+					xMax = xPos + D_8015FAD0[var_s6].unk18;
+					zMax = zPos + D_8015FAD0[var_s6].unk1A;
+					xMin = xPos - D_8015FAD0[var_s6].unk18;
+					zMin = zPos - D_8015FAD0[var_s6].unk1A;
 
 					if (func_8010CF7C_11BF2C((s16) xMax, (s16) zMax) || func_8010CF7C_11BF2C((s16) xMax, (s16) zMin) ||
 						func_8010CF7C_11BF2C((s16) xMin, (s16) zMax) || func_8010CF7C_11BF2C((s16) xMin, (s16) zMin)) {
-						checkFlags = func_8012DF90_13CF40(entry, var_s7, var_fp);
+						checkFlags = func_8012DF90_13CF40(&D_8015FAD0[var_s6], var_s7, var_fp);
 						if (checkFlags & 1) {
 							if ((var_s7->unk20 & 2) != 0) {
 								if (var_fp == 0) {
 									if (!(checkFlags & 4)) {
-										func_8010FAC8_11EA78(0xB, (s32) entry);
+										func_8010FAC8_11EA78(0xB, (s32) &D_8015FAD0[var_s6]);
 									}
 								}
 							}
@@ -10615,12 +10600,6 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 				}
 			}
 		}
-
-		entry--;
-		if (var_s6-- != 0) {
-			continue;
-		}
-		break;
 	}
 
 	if (flagsAccum & 1) {
