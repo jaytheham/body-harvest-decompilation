@@ -675,7 +675,6 @@ void func_8013001C_13EFCC(void)
 		return;
 
 	case 3:
-		// Unused state
 		break;
 
 	case 4:
@@ -1262,7 +1261,7 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 
 			if ((animTimer < D_80140CE0_14FC90[0]) && (charScreenX >= 0) && (D_80068084 >= charScreenX)) {
 				sinVal = (f32) sins((u16) ((((D_80140CE0_14FC90[0] + charIndex) % 8) << 13) & 0xFFFF));
-				swayOffset = (s32) ((f32) (((f64) sinVal / 32768.0) * 32.0) / 2.0f);
+				swayOffset = (s32) ((f32) ((sinVal / 32768.0) * 32.0) / 2.0f);
 				halfSway = swayOffset;
 				gDPPipeSync(D_8005BB2C++);
 				gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
@@ -1286,9 +1285,9 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 				resultZ = D_800311A0.unk4;
 				D_800311A0.unk0 -= swayOffset / 2;
 				D_800311A0.unk4 -= swayOffset / 2;
-				D_800311A0.unk0 = (s16) ((f64) D_800311A0.unk0 * 2.5);
-				D_800311A0.unk2 = (s16) ((f64) D_800311A0.unk2 * -2.5);
-				D_800311A0.unk4 = (s16) ((f64) D_800311A0.unk4 * 2.5);
+				D_800311A0.unk0 = (s16) (D_800311A0.unk0 * 2.5);
+				D_800311A0.unk2 = (s16) (D_800311A0.unk2 * -2.5);
+				D_800311A0.unk4 = (s16) (D_800311A0.unk4 * 2.5);
 				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 16, K0_TO_PHYS(((D_80052A8C % 7U) << 9) + (u32) D_503CF60));
 
 				func_800039D0_45D0((Unk80052B40 *) &posX, (Unk80052B40 *) &resultX, (Unk80052B40 *) &D_800311A0, D_8005BB38);
