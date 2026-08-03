@@ -2,14 +2,14 @@
 #include <stdarg.h>
 #include "common.h"
 
-const char D_80144DC0_153D70[] = "**** SERIOUS WARNING: Room behind door %d on building %d, (%d,%d).This type hasn't got door %d\n";
-const char D_80144E20_153DD0[] = "Yaw != -1";
-const char D_80144E2C_153DDC[] = "src/buildings.c";
-const char D_80144E3C_153DEC[] = "********** ERROR: Unmapped door **********\n";
-const char D_80144E68_153E18[] = "This building needs key %d\n";
-const char D_80144E84_153E34[] = "WARNING: Too many hashing conflicts\n";
-const char D_80144EAC_153E5C[] = "This level data is kaput\n";
-const char D_80144EC8_153E78[] = "ERROR:Trying to generate heightmap for building type %d\n";
+const char D_80144DC0_153D70[] = "**** SERIOUS WARNING: Room behind door %d on building %d, (%d,%d).This type hasn't got door %d\n"; // "**** SERIOUS WARNING: Room behind door %d on building %d, (%d,%d).This type hasn't got door %d\n"
+const char D_80144E20_153DD0[] = "Yaw != -1"; // "Yaw != -1"
+const char D_80144E2C_153DDC[] = "src/buildings.c"; // "src/buildings.c"
+const char D_80144E3C_153DEC[] = "********** ERROR: Unmapped door **********\n"; // "********** ERROR: Unmapped door **********\n"
+const char D_80144E68_153E18[] = "This building needs key %d\n"; // "This building needs key %d\n"
+const char D_80144E84_153E34[] = "WARNING: Too many hashing conflicts\n"; // "WARNING: Too many hashing conflicts\n"
+const char D_80144EAC_153E5C[] = "This level data is kaput\n"; // "This level data is kaput\n"
+const char D_80144EC8_153E78[] = "ERROR:Trying to generate heightmap for building type %d\n"; // "ERROR:Trying to generate heightmap for building type %d\n"
 
 const f64 D_80144F08_153EB8[1] = {3.141592654};
 
@@ -137,16 +137,17 @@ s16 func_80115F20_124ED0(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 	u8 buildingType;
 
 	instanceId = func_8011D260_12C210((s8)(arg0 >> 8), (s8)(arg1 >> 8));
-	if (instanceId != -1) {
-		goto body;
+	if (instanceId == -1) {
+		*arg2 = -1;
+		*arg3 = -1;
+		return -1;
 	}
-	*arg2 = -1;
-	*arg3 = -1;
-	return -1;
-body:
+
 	buildingType = buildingInstances[instanceId].buildingType;
 	if ((0x1F != buildingType) && (D_8015EA28 != buildingType)) {
-		goto fail;
+		*arg2 = -1;
+		*arg3 = -1;
+		return -1;
 	}
 
 	x = arg0 >> 8;
@@ -198,11 +199,6 @@ body:
 	}
 
 	return instanceId;
-
-fail:
-	*arg2 = -1;
-	*arg3 = -1;
-	return -1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80115F20_124ED0.s")
@@ -215,12 +211,12 @@ s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
 	f32 sp20;
 	s16 var_v1;
 
-	sp20 = (f32)(((f64)(f32)arg0 * D_80144F08_153EB8[0]) / 32768.0);
+	sp20 = (f32)(((f32)arg0 * D_80144F08_153EB8[0]) / 32768.0);
 	sp24 = sinf(sp20) / cosf(sp20);
 	if (arg2 >= 0) {
 		var_v1 = (s16)(s32)(-sp24 * (f32)(arg1 - arg2));
 	} else {
-		var_v1 = (s16)(s32)((f64)((f32)(arg1 - arg2) * sp24) - 2.0 * (f64)(sp24 * (f32)arg1));
+		var_v1 = (s16)(s32)(((f32)(arg1 - arg2) * sp24) - 2.0 * (sp24 * (f32)arg1));
 	}
 	return (s16)(var_v1 - (var_v1 >> 2));
 }
@@ -458,7 +454,6 @@ void func_80116784_125734(void) {
 		} while (s6-- && s4 != NULL);
 	}
 
-end:
 	D_80159DDA = 0x23F6;
 	D_80159DDC = 0x1E;
 	D_8015EA52 = 0;
@@ -800,10 +795,10 @@ s32 func_80117464_126414(u8 arg0) {
 	return 0;
 }
 
-// Is the return value from this used to determine how close a building is?
-// And if it should be drawn?
 // CURRENT(1050)
 #ifdef NON_MATCHING
+// Is the return value from this used to determine how close a building is?
+// And if it should be drawn?
 s32 func_80117508_1264B8(s16 arg0) {
 	s32 halfStep;
 	s32 candidate;
@@ -1037,7 +1032,6 @@ void func_80117F10_126EC0(void) {
 	D_8015EA2C = D_80144F34_153EE4[0];
 }
 
-// CURRENT(196)
 void func_80117F34_126EE4(void) {
 	s16 sp46;
 	s16 sp44;
@@ -1113,16 +1107,36 @@ void func_8011815C_12710C(void *arg0, s16 arg1, s32 arg2) {
 	found = func_801176B0_126660();
 	D_80052540 = 0xFF;
 
-	if (found != NULL) {
-		doorId = doorData & 0xF;
-		if (doorId != 0) {
-			goto open_door;
+	doorId = doorData & 0xF;
+	if ((found != NULL && doorId != 0) ||
+		func_8000726C_7E6C(0, (building->unk8 << 0x14) >> 0x1A, buildingId, building) != 0) {
+		D_80052540 = buildingId;
+		D_80052544 = doorId;
+		buildingInteriorToLoadId = (&building->door1InteriorId)[doorId];
+		if (buildingInteriorToLoadId == 0xF0) {
+			return;
 		}
-	}
 
-	if (func_8000726C_7E6C(0, (building->unk8 << 0x14) >> 0x1A, buildingId, building) != 0) {
-		doorId = doorData & 0xF;
-		goto open_door;
+		D_8005254C = (D_80052540 * 0x10) + D_80052544;
+		if ((found != 0) && (doorId == 0)) {
+			D_8015EB7C = 1;
+		}
+
+		if ((buildingInteriorToLoadId == 0xFF) && (found == 0)) {
+			osSyncPrintf(D_80144E3C_153DEC);
+			return;
+		}
+
+		if (arg2 != 0) {
+			canEnter = D_8004D148 == 0;
+			if (canEnter == 0) {
+				canEnter = func_8000726C_7E6C(0, (building->unk8 << 0x14) >> 0x1A, buildingId, building) != 0;
+			}
+			func_800EC0D0_FB080(canEnter);
+		} else {
+			gameplayMode = 6;
+		}
+		return;
 	}
 
 	if (D_8015EB78 != 0) {
@@ -1132,45 +1146,17 @@ void func_8011815C_12710C(void *arg0, s16 arg1, s32 arg2) {
 	if (currentLevel == 1) {
 		if (((building->unk8 << 0x14) >> 0x1A) == 0x2E) {
 			if (func_8000726C_7E6C(0, 0xA, buildingId, building) != 0) {
-				goto finish_alarm;
+				D_8015EB78 = 0xC8;
+				osSyncPrintf(D_80144E68_153E18, (building->unk8 << 0x14) >> 0x1A);
+				return;
 			}
 		}
 	}
 
 	func_8001A650_1B250(0);
-
-finish_alarm:
 	D_8015EB78 = 0xC8;
 	osSyncPrintf(D_80144E68_153E18, (building->unk8 << 0x14) >> 0x1A);
 	return;
-
-open_door:
-	D_80052540 = buildingId;
-	D_80052544 = doorId;
-	buildingInteriorToLoadId = (&building->door1InteriorId)[doorId];
-	if (buildingInteriorToLoadId == 0xF0) {
-		return;
-	}
-
-	D_8005254C = (D_80052540 * 0x10) + D_80052544;
-	if ((found != 0) && (doorId == 0)) {
-		D_8015EB7C = 1;
-	}
-
-	if ((buildingInteriorToLoadId == 0xFF) && (found == 0)) {
-		osSyncPrintf(D_80144E3C_153DEC);
-		return;
-	}
-
-	if (arg2 != 0) {
-		canEnter = D_8004D148 == 0;
-		if (canEnter == 0) {
-			canEnter = func_8000726C_7E6C(0, (building->unk8 << 0x14) >> 0x1A, buildingId, building) != 0;
-		}
-		func_800EC0D0_FB080(canEnter);
-	} else {
-		gameplayMode = 6;
-	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011815C_12710C.s")
