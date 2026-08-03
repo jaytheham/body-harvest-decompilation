@@ -9386,8 +9386,8 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 	interceptMain = zArg - (slopeMain * xArg);
 
 	for (i = 3; i >= 0; i--) {
-		z0 = D_80159D5C->unk54 + (&D_80159DA4)[i];
-		x0 = D_80159D5C->unk4C + (&D_80159D84)[i];
+		z0 = D_80159D5C->unk54 + D_80159D98[3 + i];
+		x0 = D_80159D5C->unk4C + D_80159D78[3 + i];
 		sideFlags[i] = interceptMain < (z0 - (x0 * slopeMain));
 	}
 
@@ -9405,8 +9405,8 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 		z0 = arg4->unk54;
 
 		for (i = 3; i >= 0; i--) {
-			dx = ((&D_80159D84)[i] + x0) - xArg;
-			dz = ((&D_80159DA4)[i] + z0) - zArg;
+			dx = (D_80159D78[3 + i] + x0) - xArg;
+			dz = (D_80159D98[3 + i] + z0) - zArg;
 			distSq = ((s32)dx * (s32)dx) + ((s32)dz * (s32)dz);
 
 			if (distSq < bestDist) {
@@ -9540,8 +9540,8 @@ s32 func_8010DC00_11CBB0(s32 arg0, s32 arg1, s32 arg2) {
 		return 0;
 	}
 
-	xOffsets = &D_80159D84;
-	zOffsets = &D_80159DA4;
+	xOffsets = &D_80159D78[3];
+	zOffsets = &D_80159D98[3];
 	for (i = 4; i-- != 0;) {
 		xDelta = ((s32)*xOffsets + D_80159D5C->unk0) - arg0;
 		zDelta = ((s32)*zOffsets + D_80159D5C->unk4) - arg1;
@@ -9617,8 +9617,8 @@ s32 func_8010E040_11CFF0(s32 arg0, s32 arg1, s32 arg2) {
 		return sqrtf((dx * dx) + (dz * dz)) <= (f32)(D_80159D68->unkC + radius);
 	}
 
-	xOffsets = &D_80159D94;
-	zOffsets = &D_80159DB4;
+	xOffsets = &D_80159D78[7];
+	zOffsets = &D_80159D98[7];
 	for (;;) {
 		xDelta = ((s32)*xOffsets + D_80159D60->unk0) - arg0;
 		zDelta = ((s32)*zOffsets + D_80159D60->unk4) - arg1;
@@ -9635,7 +9635,7 @@ s32 func_8010E040_11CFF0(s32 arg0, s32 arg1, s32 arg2) {
 			}
 		}
 
-		if ((u32)zOffsets < (u32)&D_80159DAC) {
+		if ((u32)zOffsets < (u32)&D_80159D98[5]) {
 			break;
 		}
  	}
@@ -10547,8 +10547,8 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleSpec *arg1, s32 arg2) {
 	var_s2 = arg1;
 	var_s7 = arg0;
 	var_fp = arg2;
-	var_s1 = &D_80159DA4;
-	var_s0 = &D_80159D84;
+	var_s1 = &D_80159D98[3];
+	var_s0 = &D_80159D78[3];
 	var_s6 = 3;
 
 	while (1) {
@@ -10939,8 +10939,8 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	if (!(vehicleSpecs[arg0->unk1A].unk4C & 0x20000000)) {
 		if (currentLevel == 1) {
 			for (i = 2; i >= 0; i--) {
-				if (func_8010F72C_11E6DC((s16) (s32) ((&D_80159D84)[i] + arg0->unk4C), (s16) (s32) arg0->unk50,
-										(s16) (s32) ((&D_80159DA4)[i] + arg0->unk54), vehicleSpec->unk38) != 0) {
+				if (func_8010F72C_11E6DC((s16) (s32) (D_80159D78[3 + i] + arg0->unk4C), (s16) (s32) arg0->unk50,
+										(s16) (s32) (D_80159D98[3 + i] + arg0->unk54), vehicleSpec->unk38) != 0) {
 					return 6;
 				}
 			}
@@ -11002,8 +11002,8 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	}
 
 	for (i = 2; i >= 0; i--) {
-		bestX = (s32) ((&D_80159D84)[i] + (f32) arg0->unk0);
-		sp7C = (s32) ((&D_80159DA4)[i] + (f32) arg0->unk4);
+		bestX = (s32) (D_80159D78[3 + i] + (f32) arg0->unk0);
+		sp7C = (s32) (D_80159D98[3 + i] + (f32) arg0->unk4);
 		if ((func_800F9D60_108D10((s16) bestX, (s16) sp7C, &spDA, &spD8, &spD6) != -1) && (spDA < spD6) && (spD6 >= bestY)) {
 			bestY = spD6;
 			spCC = spDA;
@@ -11225,7 +11225,7 @@ block_273:
 	if (((D_80222A70 >= arg0->unk2) && !(vehicleSpecs[arg0->unk1A].unk4C & 0x20)) ||
 		(!(vehicleSpecs[arg0->unk1A].unk4C & 0x20) && !(vehicleSpecs[arg0->unk1A].unk4C & 0x20000000) && (vehicleSpecs[arg0->unk1A].unk4C & 0x10000000))) {
 		for (i = 2; i >= 0; i--) {
-			s32 water = func_800F9D24_108CD4((s16) (s32) ((&D_80159D84)[i] + (f32) arg0->unk0), (s16) (s32) ((&D_80159DA4)[i] + (f32) arg0->unk4));
+			s32 water = func_800F9D24_108CD4((s16) (s32) (D_80159D78[3 + i] + (f32) arg0->unk0), (s16) (s32) (D_80159D98[3 + i] + (f32) arg0->unk4));
 			if ((D_80222A70 < water) && (water >= spD2)) {
 				return 6;
 			}
@@ -11234,8 +11234,8 @@ block_273:
 
 	if ((!(arg0->unk20 & 2) || ((arg0->unk1A == 0) && (D_80222A70 >= arg0->unk2))) && !(arg0->unk20 & 0x800) && !(arg0->unk20 & 4)) {
 		for (i = 3; i > 0; i--) {
-			if ((func_800FAA08_1099B8((s16) (s32) ((&D_80159D84)[i - 1] + arg0->unk4C), (s16) (s32) ((&D_80159DA4)[i - 1] + arg0->unk54)) >= 0xA) &&
-				((func_800B84D0_C7480((s16) (s32) ((&D_80159D84)[i - 1] + arg0->unk4C), (s16) (s32) ((&D_80159DA4)[i - 1] + arg0->unk54)) >> 8) >= D_80222A70) &&
+			if ((func_800FAA08_1099B8((s16) (s32) (D_80159D78[i + 2] + arg0->unk4C), (s16) (s32) (D_80159D98[i + 2] + arg0->unk54)) >= 0xA) &&
+				((func_800B84D0_C7480((s16) (s32) (D_80159D78[i + 2] + arg0->unk4C), (s16) (s32) (D_80159D98[i + 2] + arg0->unk54)) >> 8) >= D_80222A70) &&
 				(func_80115824_1247D4(arg0, i) != 0)) {
 				return 6;
 			}

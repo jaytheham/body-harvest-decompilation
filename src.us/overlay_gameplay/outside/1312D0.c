@@ -4274,8 +4274,8 @@ void func_8012E258_13D208(void) {
 					f32 *xCorners;
 					f32 *zCorners;
 
-					xCorners = &D_80159D84;
-					zCorners = &D_80159DA4;
+					xCorners = &D_80159D78[3];
+					zCorners = &D_80159D98[3];
 					for (j = 3; j >= 0; j--) {
 						f32 fx;
 						f32 fz;

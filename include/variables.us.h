@@ -2818,13 +2818,8 @@ extern VehicleSpec *D_80159D64;
 extern Unk8010ED84Data *D_80159D68;
 extern s32 D_80159D6C;
 extern s32 D_80159D70;
-extern f32 D_80159D78[8]; // X corner offsets?
-extern f32 D_80159D84;
-extern f32 D_80159D94;
-extern f32 D_80159D98[8]; // Z corner offsets?
-extern f32 D_80159DA4;
-extern u32 D_80159DAC;
-extern f32 D_80159DB4;
+extern f32 D_80159D78[8]; // X corner offsets (vehicle 1: 0-3, vehicle 2: 4-7)
+extern f32 D_80159D98[8]; // Z corner offsets (vehicle 1: 0-3, vehicle 2: 4-7)
 extern u8 D_80159DC0;
 extern s32 D_80159DC4;
 extern s16 D_80159DC8;
