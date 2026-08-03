@@ -3167,12 +3167,12 @@ void func_8012B26C_13A21C(void) {
 				}
 			}
 
-			dx = (s32)((((f64)(f32)coss((u16)ctrl->unk4) / 32768.0) * (f64)ctrl->unk8) * (f64)ctrl->unk0);
+			dx = (s32)((((f32)coss((u16)ctrl->unk4) / 32768.0) * ctrl->unk8) * ctrl->unk0);
 			dy = (s32)((f32)ctrl->unk6 * ctrl->unk0);
-			dz = (s32)((((f64)(f32)sins((u16)ctrl->unk4) / 32768.0) * (f64)ctrl->unk8) * (f64)ctrl->unk0);
+			dz = (s32)((((f32)sins((u16)ctrl->unk4) / 32768.0) * ctrl->unk8) * ctrl->unk0);
 		} else {
 			if (ctrl->unk0 < 1.0f) {
-				ctrl->unk0 = (f32)((f64)ctrl->unk0 + D_80145208_1541B8);
+				ctrl->unk0 = (f32)(ctrl->unk0 + D_80145208_1541B8);
 			}
 
 			dx = (s32)((f32)ctrl->unk4 * ctrl->unk0);
@@ -3823,34 +3823,34 @@ s32 func_8012D6A4_13C654(u8 arg0, u16 arg1)
 // https://decomp.me/scratch/krXCn
 s32 func_8012D700_13C6B0(u8 arg0, u16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7, s16 arg8, s16 arg9, s16 arg10, void *arg11, void *arg12)
 {
-  Unk8015FAD0 *v1;
-  s32 i;
-  i = func_8012D6A4_13C654(arg0, arg1);
-  if (i == -1)
-  {
-	i = func_8012D600_13C5B0();
-  }
+	Unk8015FAD0 *v1;
+	s32 i;
+	i = func_8012D6A4_13C654(arg0, arg1);
+	if (i == -1)
+	{
+		i = func_8012D600_13C5B0();
+	}
 	arg8 = (arg8 < 0) ? -arg8 : arg8;
-  
-  arg9 = (arg9 < 0) ? -arg9 : arg9;
-  
-  arg10 = (arg10 < 0)? -arg10 : arg10;
-  
-  v1 = &D_8015FAD0[i];
-  v1->unk0 = arg2 << 16;
-  v1->unk4 = arg3 << 16;
-  v1->unk8 = arg4 << 16;
-  v1->unk18 = arg8;
-  v1->unk1A = arg9;
-  v1->unk1C = arg10;
-  v1->unkC = arg5;
-  v1->unk10 = arg6;
-  v1->unk14 = arg7;
-  v1->unk20 = (s32 (*)()) arg11;
-  v1->unk24 = (void (*)(s32, s16)) arg12;
-  v1->unk2C = arg0;
-  v1->unk1E = arg1;
-  return i;
+
+	arg9 = (arg9 < 0) ? -arg9 : arg9;
+
+	arg10 = (arg10 < 0) ? -arg10 : arg10;
+
+	v1 = &D_8015FAD0[i];
+	v1->unk0 = arg2 << 16;
+	v1->unk4 = arg3 << 16;
+	v1->unk8 = arg4 << 16;
+	v1->unk18 = arg8;
+	v1->unk1A = arg9;
+	v1->unk1C = arg10;
+	v1->unkC = arg5;
+	v1->unk10 = arg6;
+	v1->unk14 = arg7;
+	v1->unk20 = (s32 (*)())arg11;
+	v1->unk24 = (void (*)(s32, s16))arg12;
+	v1->unk2C = arg0;
+	v1->unk1E = arg1;
+	return i;
 }
 
 void func_8012D808_13C7B8(s32 arg0) { D_8015FAD0[arg0].unk2C = 0; }
