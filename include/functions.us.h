@@ -686,6 +686,7 @@ void func_800D6084_E5034(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5
 void func_800D6140_E50F0(u8 arg0);
 void func_800B0C80_BFC30(void);
 s32 func_800B0D10_BFCC0(s32, s32, s32);
+s32 func_800BD688_CC638(s16 targetX, s16 targetY, s16 targetZ, VehicleInstance *vehicle);
 s16 func_800B0DF4_BFDA4(s32, s32, s32, s32);
 void func_80005654_6254(u8, u8, u8);
 void func_80005844_6444(u8, u8, u8, u8);
@@ -773,6 +774,7 @@ Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1);
 void func_800EA088_F9038(void);
 void func_800EA12C_F90DC(void);
 void func_800EA280_F9230(void);
+void func_800EBD5C_FAD0C(s32 arg0);
 s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4);
 void func_800EA2B0_F9260(s32 arg0);
 void func_800EA2BC_F926C(void);
