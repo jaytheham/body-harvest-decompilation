@@ -10157,7 +10157,7 @@ s32 func_8010F72C_11E6DC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 // CURRENT(2210)
 #ifdef NON_MATCHING
-void func_8010F834_11E7E4(Unk80052B40 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+void func_8010F834_11E7E4(VehicleInstance *arg0, s32 arg1, s32 arg2, s32 arg3) {
 	float fx = (float)(arg0->unk0 - arg1);
 	float fy = (float)(arg0->unk2 - arg2);
 	float fz = (float)(arg0->unk4 - arg3);
@@ -10175,8 +10175,7 @@ void func_8010F834_11E7E4(Unk80052B40 *arg0, s32 arg1, s32 arg2, s32 arg3) {
 	ny = fy / len;
 	nz = fz / len;
 
-	/* read halfword at offset 0x20 from the base pointer (outer struct flag) */
-	flags = *(u16 *)((char *)arg0 + 0x20);
+	flags = arg0->unk20;
 
 	if (!(flags & 2)) {
 		ny = 0.0f;
@@ -10184,29 +10183,27 @@ void func_8010F834_11E7E4(Unk80052B40 *arg0, s32 arg1, s32 arg2, s32 arg3) {
 		ny *= 2.0f;
 	}
 
-	/* store length into offsets 0x30,0x34,0x38 relative to base */
-	*(float *)((char *)arg0 + 0x30) = len;
-	*(float *)((char *)arg0 + 0x34) = len;
-	*(float *)((char *)arg0 + 0x38) = len;
+	arg0->unk30 = len;
+	arg0->unk34 = len;
+	arg0->unk38 = len;
 
-	/* scale normalized vector by 10 and call handler */
-	func_80102D00_111CB0((VehicleInstance *)arg0, nx * 10.0f, ny * 10.0f, nz * 10.0f);
+	func_80102D00_111CB0(arg0, nx * 10.0f, ny * 10.0f, nz * 10.0f);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010F834_11E7E4.s")
 #endif
 
-void func_8010F93C_11E8EC(Unk80052B40 *arg0, Unk80052B40 *arg1) {
+void func_8010F93C_11E8EC(VehicleInstance *arg0, Unk80052B40 *arg1) {
 	func_8010F834_11E7E4(arg0, arg1->unk0, arg1->unk2, arg1->unk4);
 }
 
-void func_8010F96C_11E91C(Unk80052B40 *arg0, Unk80052B40_fp *arg1)
+void func_8010F96C_11E91C(VehicleInstance *arg0, Unk80052B40_fp *arg1)
 {
   Unk80052B40_fp *temp = arg1;
   func_8010F834_11E7E4(arg0, arg1->unk0 >> 16, temp->unk4 >> 16, temp->unk8 >> 16);
 }
 
-void func_8010F9B4_11E964(Unk80052B40 *arg0, s32 arg1) {
+void func_8010F9B4_11E964(VehicleInstance *arg0, s32 arg1) {
 	s32 var_s0;
 	s32 var_a2;
 	s32 var_a3;
@@ -10270,7 +10267,7 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 
 					other = (VehicleInstance *)entry->unk4;
 					if (other != NULL) {
-						func_8010F93C_11E8EC((Unk80052B40 *)arg0, (Unk80052B40 *)other);
+						func_8010F93C_11E8EC(arg0, (Unk80052B40 *)other);
 					}
 					continue;
 				}
@@ -10280,7 +10277,7 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 
 					other = (VehicleInstance *)entry->unk4;
 					if (other != NULL) {
-						func_8010F834_11E7E4((Unk80052B40 *)arg0, other->unk0, other->unk2, other->unk4);
+						func_8010F834_11E7E4(arg0, other->unk0, other->unk2, other->unk4);
 					}
 					continue;
 				}
@@ -10290,7 +10287,7 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 
 					other = (VehicleInstance *)entry->unk4;
 					if (other != NULL) {
-						func_8010F96C_11E91C((Unk80052B40 *)arg0, (Unk80052B40_fp *)other);
+						func_8010F96C_11E91C(arg0, (Unk80052B40_fp *)other);
 					}
 					continue;
 				}
@@ -10300,7 +10297,7 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 
 					other = (VehicleInstance *)entry->unk4;
 					if (other != NULL) {
-						func_8010F9B4_11E964((Unk80052B40 *)arg0, (s32)other);
+						func_8010F9B4_11E964(arg0, (s32)other);
 					}
 					continue;
 				}
