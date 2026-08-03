@@ -2602,7 +2602,7 @@ void func_8011BF7C_12AF2C(u8 arg0) {
 	}
 	func_800D249C_E144C(
 		inst->xCoord,
-		(s16)(s32)((f64)inst->yCoord + (f64)spec->unk14 * D_80144FA0_153F50[0]),
+		(s16)(s32)(inst->yCoord + spec->unk14 * D_80144FA0_153F50[0]),
 		inst->zCoord,
 		0xC8,
 		0x55,
@@ -2842,24 +2842,22 @@ s32 func_8011C594_12B544(u8 arg0) {
 	var_v1 = 0;
 	if (count > 0) {
 		var_a0 = &D_80146688_155638[currentLevel][0];
-loop:
-		if (var_a0[-0x20].unk3 == 0) {
-			temp_v0 = var_a0[-0x20].unk0 << 8;
-			temp_a2 = var_a0[-0x20].unk1 << 8;
-			temp_t1 = buildingInstances[arg0].xCoord;
-			temp_t5 = var_a0[-0x20].unk2 << 8;
-			if (temp_t1 >= (temp_v0 - temp_t5) && temp_t1 < (temp_v0 + temp_t5)) {
-				temp_v0_2 = buildingInstances[arg0].zCoord;
-				if (temp_v0_2 >= (temp_a2 - temp_t5) && temp_v0_2 < (temp_a2 + temp_t5)) {
-					return var_v1;
+		do {
+			if (var_a0[-0x20].unk3 == 0) {
+				temp_v0 = var_a0[-0x20].unk0 << 8;
+				temp_a2 = var_a0[-0x20].unk1 << 8;
+				temp_t1 = buildingInstances[arg0].xCoord;
+				temp_t5 = var_a0[-0x20].unk2 << 8;
+				if (temp_t1 >= (temp_v0 - temp_t5) && temp_t1 < (temp_v0 + temp_t5)) {
+					temp_v0_2 = buildingInstances[arg0].zCoord;
+					if (temp_v0_2 >= (temp_a2 - temp_t5) && temp_v0_2 < (temp_a2 + temp_t5)) {
+						return var_v1;
+					}
 				}
 			}
-		}
-		var_v1++;
-		var_a0++;
-		if (var_v1 < count) {
-			goto loop;
-		}
+			var_v1++;
+			var_a0++;
+		} while (var_v1 < count);
 	}
 	return -1;
 }
@@ -3592,8 +3590,8 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 			return -1;
 		}
 
-		localX = (f32)(((f64)localX * (32.0 / (f64)spec->unk10)) + 32.0);
-		localZ = (f32)(((f64)localZ * (32.0 / (f64)spec->unk12)) + 32.0);
+		localX = (f32)((localX * (32.0 / spec->unk10)) + 32.0);
+		localZ = (f32)((localZ * (32.0 / spec->unk12)) + 32.0);
 		needSeamFix = 0;
 		if (D_8015EA28 == inst->buildingType) {
 			if ((rot & 1) != 0) {
@@ -3606,10 +3604,10 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 		}
 	}
 
-	if (D_80144FB0_153F60[0] < (f64)localX) {
+	if (D_80144FB0_153F60[0] < localX) {
 		localX = 63.0f;
 	}
-	if (D_80144FB0_153F60[0] < (f64)localZ) {
+	if (D_80144FB0_153F60[0] < localZ) {
 		localZ = 63.0f;
 	}
 
@@ -3624,8 +3622,8 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 
 	*arg2 = (s16)*(u16 *)((u8 *)&D_802B2080 + (searchIndex << 0xD) + (((s16)(s32)localX) * 2) + (((s16)(s32)localZ) << 7));
 
-	if ((D_8015EA29 == inst->buildingType) && (gameplayMode == 3) && ((f64)localZ > 48.0)) {
-		*arg2 = (s16)(s32)(((64.0 - (f64)localZ) * D_80144FB8_153F68[0]) + 16.0);
+	if ((D_8015EA29 == inst->buildingType) && (gameplayMode == 3) && (localZ > 48.0)) {
+		*arg2 = (s16)(s32)(((64.0 - localZ) * D_80144FB8_153F68[0]) + 16.0);
 	}
 
 	if (D_8015EB80 != 0) {
@@ -3761,17 +3759,8 @@ s16 func_8011E788_12D738(s16 arg0, s16 arg1, s16 *arg2, s32 arg3, s32 arg4) {
 		xMin = inst->xCoord - spec->unk10;
 	}
 
-	if (arg0 < xMin) {
-		goto fail;
-	}
-	if (xMax < arg0) {
-		goto fail;
-	}
-	if (arg1 < zMin) {
-		goto fail;
-	}
-	if (zMax < arg1) {
-		goto fail;
+	if (arg0 < xMin || xMax < arg0 || arg1 < zMin || zMax < arg1) {
+		return -1;
 	}
 
 	temp_v0 = arg0 - xMax;
@@ -3823,9 +3812,6 @@ s16 func_8011E788_12D738(s16 arg0, s16 arg1, s16 *arg2, s32 arg3, s32 arg4) {
 
 	temp = index;
 	return index;
-
-fail:
-	return -1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011E788_12D738.s")
@@ -4141,8 +4127,7 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 void func_8011F818_12E7C8(BuildingInstance *arg0) {
 	s32 result;
 
-	// Check if index is non-zero
-	result = func_8000726C_7E6C((s64)(((s32)arg0 - (s32)&buildingInstances[0]) / 0x18 - D_8015EA54 + 0x18));
+	result = func_8000726C_7E6C((((s32)arg0 - (s32)&buildingInstances[0]) / 0x18 - D_8015EA54 + 0x18));
 	if (result != 0) {
 		if ((s32)arg0->padC[1] < 0x20) {
 			arg0->padC[1] = (u8)(arg0->padC[1] + 1);
@@ -4153,7 +4138,6 @@ void func_8011F818_12E7C8(BuildingInstance *arg0) {
 		}
 	}
 
-	// Set up transformation matrices
 	D_80052B40.unk0 = D_80159DC8;
 	D_80052B40.unk2 = D_80159DCA;
 	D_80052B40.unk4 = D_80159DCC;
@@ -4161,7 +4145,6 @@ void func_8011F818_12E7C8(BuildingInstance *arg0) {
 	D_80052B48.unk2 = 0;
 	D_80052B48.unk4 = (s16)((s32)arg0->padC[1] * -0x154);
 
-	// Apply transformations
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
