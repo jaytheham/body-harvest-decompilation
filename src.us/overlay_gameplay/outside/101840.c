@@ -11365,21 +11365,21 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 
 void func_80112F98_121F48(void)
 {
-	VehicleInstance *vehicle;
 	s32 i;
 	f64 scale;
 	u16 angle;
 	s16 yawCos;
 	scale = D_80144D68_153D18[0];
-	vehicle = &vehicleInstances[127]; // Surely this should be = &vehicles[i] inside the loop
-	i = 0x7F;
-	do
+	i = 0x80;
+	while (i--)
 	{
+		VehicleInstance *vehicle = &vehicleInstances[i];
+
 		if ((vehicle->unk1A == 0x11) && (!(vehicle->unk20 & 0x8000)))
 		{
 			if (vehicle->unk1E >= 0x100)
 			{
-				goto loop_update_end;
+				continue;
 			}
 			vehicle->unk1E++;
 			vehicle->unkE += 0x3AF;
@@ -11398,10 +11398,7 @@ void func_80112F98_121F48(void)
 		}
 		func_801098E8_118898(vehicle);
 		func_80109B74_118B24(vehicle);
-	loop_update_end:
-		vehicle--;
-
-	} while (i--);
+	}
 }
 
 void func_801131D4_122184(VehicleInstance *arg0) {

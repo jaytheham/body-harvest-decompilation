@@ -23,3 +23,30 @@ s16 func_800FADF8_109DA8(s16 arg0) {
     return -1;
 }
 ```
+
+### Constant-init offset: `i = N; while (i--)` → compiled init `N-1`
+
+When the post-decrement loop is initialized with a **known nonzero constant** `N` (e.g. `i = 0x80; while (i--) { ... &arr[i] ... }`), IDO peels the first decrement into the init:
+- Emits `addiu counter, $zero, N-1` (e.g. `0x7F`), NOT `N`.
+- Strength-reduces `&arr[i]` to a decrementing pointer initialized at `&arr[N-1]` (e.g. `addiu ptr, %lo(arr+N-1*stride)`).
+- Bottom of loop: `or v0, counter, zero` (dead `move` artifact) + `addiu ptr, ptr, -stride` + `bnez counter, loop` + `addiu counter, counter, -1` (delay slot).
+
+So a `while (i--)` from `N` and a `do { } while (i--)` from `N-1` compile identically. Prefer the `while` form.
+
+Also: `continue` in place of a `goto <loop_end>` label (skipping trailing calls but still doing the pointer update) compiles identically, because in the optimized do-while form `continue` jumps to the bottom test/update. This lets you remove the goto/label entirely:
+
+```c
+i = 0x80;
+while (i--) {
+    VehicleInstance *v = &vehicleInstances[i];
+    if ((v->unk1A == 0x11) && !(v->unk20 & 0x8000)) {
+        if (v->unk1E >= 0x100) {
+            continue;              // skips func1/func2, still decrements ptr
+        }
+        /* ... updates ... */
+    }
+    func1(v);
+    func2(v);
+}
+```
+(Match verified for `func_80112F98_121F48` in `101840.c`.)
