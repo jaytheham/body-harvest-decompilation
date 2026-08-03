@@ -2211,8 +2211,8 @@ building = &D_80145BE0_154B90[arg0->unk20];
 
 	motion = (f32 *)((u8 *)arg0 + 0xC);
 	for (i = 0;; i++) {
-		if ((f64)motion[0] < 0.0) {
-			motion[0] = (f32)((f64)motion[0] + D_801451B8_154168);
+		if (motion[0] < 0.0) {
+			motion[0] = (f32)(motion[0] + D_801451B8_154168);
 		}
 
 		if ((i >> 1) < 0x18) {
@@ -2458,18 +2458,18 @@ Projectile *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 	s32 halfDistance;
 	s32 quarterDistance;
 	s32 val;
-	void *temp;
+	EntitySpec *temp;
 
 	alien = (AlienInstance *)arg0;
-	temp = func_800FAFB8_109F68((VehicleInstance *)alien);
+	temp = (EntitySpec *)func_800FAFB8_109F68((VehicleInstance *)alien);
 	if ((alien->unk1E > 0) && (D_801591A8 == 0)) {
 		return NULL;
 	}
 
 	if (arg1 == 0) {
-		weaponType = *(s16 *)((u8 *)temp + 0x1E);
+		weaponType = temp->weapon1B;
 	} else {
-		weaponType = *(s16 *)((u8 *)temp + 0x2A);
+		weaponType = temp->weapon2B;
 	}
 
 	if ((arg0 == (s32)D_80052B34) && (D_801591A8 == 0)) {

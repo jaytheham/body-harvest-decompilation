@@ -1039,6 +1039,54 @@ typedef struct {
 	/* 0x25 */ u8 unk25;
 } EntityInstance; // Properties shared by VehicleInstance & AlienInstance
 
+/* Common prefix shared by VehicleSpec & AlienSpec, mirroring how EntityInstance is
+   the common prefix of VehicleInstance & AlienInstance. Cast a VehicleSpec* or
+   AlienSpec* to EntitySpec* to access the properties common to both at the same
+   byte offsets (e.g. func_80129354_138304). */
+typedef struct {
+	/* 0x00 */ u32 modelDL; // Model display list pointer
+	/* 0x04 */ u8 pad04[0x8];
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ u8 pad0E[0x6];
+	/* 0x14 */ s16 unk14;
+	/* 0x16 */ u8 unk16;
+	/* 0x17 */ u8 pad17;
+	/* 0x18 */ s32 unk18; // string table index for name
+	union {
+		/* 0x1C */ s32 weapon1; // First weapon (packed s32; both halfwords index D_80145BE0_154B90)
+		struct {
+			/* 0x1C */ s16 weapon1A;
+			/* 0x1E */ s16 weapon1B;
+		};
+	};
+	/* 0x20 */ s16 unk20;
+	/* 0x22 */ s16 unk22;
+	/* 0x24 */ s16 unk24;
+	/* 0x26 */ s16 unk26;
+	union {
+		/* 0x28 */ s32 weapon2; // Second weapon (packed s32; both halfwords index D_80145BE0_154B90)
+		struct {
+			/* 0x28 */ s16 weapon2A;
+			/* 0x2A */ s16 weapon2B;
+		};
+	};
+	/* 0x2C */ s16 unk2C;
+	/* 0x2E */ s16 unk2E;
+	/* 0x30 */ s16 unk30;
+	/* 0x32 */ u16 unk32;
+	/* 0x34 */ s16 unk34;
+	/* 0x36 */ s16 unk36;
+	/* 0x38 */ s16 unk38;
+	/* 0x3A */ u16 hitPoints;
+	/* 0x3C */ s16 unk3C;
+	/* 0x3E */ s16 unk3E;
+	/* 0x40 */ s16 unk40;
+	/* 0x42 */ s16 unk42;
+	/* 0x44 */ u32 unk44;
+	/* 0x48 */ u32 unk48;
+	/* 0x4C */ u32 unk4C;
+} EntitySpec; /* size = 0x50 */
+
 
 // 0x5C Pointer to Death animation ASM?
 // 0x60 xxxxyyyy xxxx Drops modifier
