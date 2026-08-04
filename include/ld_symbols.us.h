@@ -255,7 +255,6 @@ extern Addr core_FD80_c;
 extern Addr core_loader_c;
 extern Addr header_s;
 extern Addr libultra_ai_s;
-extern Addr libultra_aisetfreq_s;
 extern Addr libultra_aisetnextbuf_s;
 extern Addr libultra_align_s;
 extern Addr libultra_auxbus_s;

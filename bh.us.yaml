@@ -50,7 +50,7 @@ segments:
       - [0x12C80, c, core/12C80] # Sounds, Dialogue
       - [0x1B060, c, core/1B060]
       - [0x1B100, c, core/1B100]
-      - [0x1B7E0, asm, libultra/aisetfreq] # libultra 2.0E 2.0F 2.0G 2.0I
+      - [0x1B7E0, lib, libultra_rom, aisetfreq]
       - [0x1B940, asm, libultra/sl] # libultra 2.0E 2.0F 2.0G 2.0I
       - [0x1BA00, asm, libultra/heapalloc] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
       - [0x1BA60, asm, libultra/createmesgqueue] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
