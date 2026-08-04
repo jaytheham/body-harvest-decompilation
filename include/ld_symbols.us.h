@@ -25,7 +25,6 @@ extern Addr _28DC0_s;
 extern Addr _29870_s;
 extern Addr _29960_s;
 extern Addr _29A60_s;
-extern Addr _2C3220_bin;
 extern Addr _2E120_s;
 extern Addr _2EA10_s;
 extern Addr _32250_bin;

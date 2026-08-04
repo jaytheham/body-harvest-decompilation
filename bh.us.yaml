@@ -450,7 +450,8 @@ segments:
     overlay: true
     subsegments:
       - [0x2B7100, c, overlay_level/siberia/2B7100]
-      - [0x2C3220, bin]
+      - [0x2C3220, .data, overlay_level/siberia/2B7100]
+      - [0x2C52C0, .rodata, overlay_level/siberia/2B7100]
 
   - name: overlay_level_siberia_data
     type: bin
