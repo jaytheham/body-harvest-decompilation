@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-04T05:46:50Z",
-  "commit": "a1b500a7",
-  "commit_timestamp": "2026-08-04T17:46:14+12:00",
+  "generated": "2026-08-04T06:45:46Z",
+  "commit": "a67553ba",
+  "commit_timestamp": "2026-08-04T18:45:11+12:00",
   "overall": {
     "total_functions": 2714,
     "matched": 1631,
@@ -142,6 +142,16 @@
       "asm_stubs": 0,
       "total": 6,
       "matched_pct": 66.7,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/320D0.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
       "contributor": "jaytheham"
     },
     {
@@ -688,7 +698,7 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 58,
+      "files": 59,
       "matched": 1629,
       "non_matching": 1083,
       "asm_stubs": 0
@@ -886,7 +896,7 @@
     },
     {
       "date": "2026-08-02",
-      "commit": "a1b500a",
+      "commit": "a67553b",
       "matched": 1631,
       "non_matching": 1083,
       "total": 2714
