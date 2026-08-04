@@ -19,7 +19,6 @@ extern Addr _22F70_s;
 extern Addr _23B90_s;
 extern Addr _23CA0_s;
 extern Addr _24710_s;
-extern Addr _25EA90_bin;
 extern Addr _27740_s;
 extern Addr _27A30_s;
 extern Addr _28DC0_s;
