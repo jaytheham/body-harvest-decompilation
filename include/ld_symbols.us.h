@@ -28,7 +28,6 @@ extern Addr _29A60_s;
 extern Addr _2E120_s;
 extern Addr _2EA10_s;
 extern Addr _32250_bin;
-extern Addr _328FD0_bin;
 extern Addr _64750_bin;
 extern Addr _bootSegmentDataEnd;
 extern Addr _bootSegmentDataSize;

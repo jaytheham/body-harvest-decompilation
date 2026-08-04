@@ -465,7 +465,8 @@ segments:
     overlay: true
     subsegments:
       - [0x318E20, c, overlay_level/comet/318E20]
-      - [0x328FD0, bin]
+      - [0x328FD0, .data, overlay_level/comet/318E20]
+      - [0x32BB80, .rodata, overlay_level/comet/318E20]
 
   - name: overlay_level_comet_data
     type: bin
