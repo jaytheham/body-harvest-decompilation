@@ -2207,6 +2207,12 @@ typedef struct {
 } Unk802E04F8Entry; /* stride = 8 */
 
 typedef struct {
+	/* 0x00 */ s32 w;
+	/* 0x04 */ u16 h;
+	/* 0x06 */ u16 pad6;
+} Unk802E0CC4Entry; /* size = 0x8 */
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ u8 unk2;

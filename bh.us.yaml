@@ -407,7 +407,8 @@ segments:
     overlay: true
     subsegments:
       - [0x1ED9E0, c, overlay_level/java/1ED9E0]
-      - [0x1F91B0, bin]
+      - [0x1F91B0, .data, overlay_level/java/1ED9E0]
+      - [0x1F9A60, .rodata, overlay_level/java/1ED9E0]
 
   - name: overlay_level_java_data
     type: bin

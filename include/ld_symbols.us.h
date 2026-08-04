@@ -8,7 +8,6 @@ extern Addr _1C8E0_s;
 extern Addr _1D230_s;
 extern Addr _1E060_s;
 extern Addr _1E1A0_s;
-extern Addr _1F91B0_bin;
 extern Addr _1F920_s;
 extern Addr _202E0_s;
 extern Addr _22030_s;
