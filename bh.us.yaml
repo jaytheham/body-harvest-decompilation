@@ -397,7 +397,10 @@ segments:
       - [0x1EB7F0, bin, overlay_level/greece/french_comms_strings_offsets]
       - [0x1EB8F0, bin, overlay_level/greece/german_comms_strings]
       - [0x1ED0F0, bin, overlay_level/greece/german_comms_strings_offsets]
-      - [0x1ED1F0, bin, overlay_level/greece/unknown_commsSentenceInfo_Doors_BCPoints] # Haven't figured out the boundaries between these
+      - [0x1ED1F0, bin, overlay_level/greece/comms_sentence_info] # 0x40 bytes -> D_8006C410, per-sentence portrait index table (see func_80017CA4_188A4/func_800190D4_19CD4)
+      - [0x1ED230, bin, overlay_level/greece/doors] # 0x280 bytes -> D_800522C0, 32 x Unk800522C0 (0x14 bytes). Building type id at +0xC (see func_8011694C_1258FC)
+      - [0x1ED4B0, bin, overlay_level/greece/bc_points] # Building Collision? 0x528 bytes -> D_80052560, 110 x Unk80052560Entry (12 bytes), grouped by building type id (see 101840.c)
+      - [0x1ED9D8, bin, Padding_0x1ED9D8]
 
   - name: overlay_level_java
     type: code
