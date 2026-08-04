@@ -2908,8 +2908,8 @@ void func_800B879C_C774C(void) {
 		if (D_8014F830 >= D_8014F832) {
 			func_800B32AC_C225C((u16 *)D_801FEA30);
 			temp_t2 = currentLevel - 1;
-			D_800313F8 = D_80031634[temp_t2 * 2];
-			D_800313E8 = D_80031620[temp_t2].unk0;
+			D_800313F8 = D_80031634_32234[temp_t2 * 2];
+			D_800313E8 = D_80031620_32220[temp_t2].unk0;
 			D_8014F838 = 0;
 		}
 	}
@@ -5408,7 +5408,7 @@ s32 func_800C0D1C_CFCCC(s32 arg0, s32 arg1, s32 arg2) {
 		D_8013D9C0_14C970[0] = (s16) (D_8013D9C4_14C974[0] / 2);
 	}
 	level = currentLevel - 1;
-	D_800313F8 = D_80031634[level * 2];
+	D_800313F8 = D_80031634_32234[level * 2];
 	func_80007410_8010(func_800C0678_CF628);
 	return 1;
 }

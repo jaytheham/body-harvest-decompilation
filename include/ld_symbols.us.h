@@ -30,7 +30,7 @@ extern Addr _29A60_s;
 extern Addr _2C3220_bin;
 extern Addr _2E120_s;
 extern Addr _2EA10_s;
-extern Addr _32220_bin;
+extern Addr _32250_bin;
 extern Addr _328FD0_bin;
 extern Addr _64750_bin;
 extern Addr _bootSegmentDataEnd;

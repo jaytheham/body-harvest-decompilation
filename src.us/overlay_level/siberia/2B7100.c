@@ -186,7 +186,7 @@ void func_802D5058_2B7488(void) {
 		temp_s16 = (s16)temp_f10;
 		D_800313F8 = (s16)((f32)temp_s16 + ((f32)(0x3B6 - temp_s16)) * var_f12);
 
-		levelColors = (u8 *)&D_80031620[0].unk0;
+		levelColors = (u8 *)&D_80031620_32220[0].unk0;
 		levelColors += (currentLevel - 1) * 4;
 		color0 = levelColors[0];
 		color1 = levelColors[1];
