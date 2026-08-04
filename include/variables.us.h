@@ -3557,7 +3557,7 @@ extern char D_E020FF0[];
 extern char D_E021030[];
 extern s32 __additional_scanline;
 extern s32 __osActiveQueue2;
-extern s32 __osCurrentTime;
+extern s32 D_8005BAF0; /* game "current time" (distinct from libultra __osCurrentTime) */
 extern OSMesgQueue __osSiAccessQueue;
 extern s32 __osSiAccessQueueEnabled;
 extern s32 gzip_data_0000;

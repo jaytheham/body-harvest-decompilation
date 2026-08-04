@@ -6977,3 +6977,18 @@ D_80256EE2 = 0x80256EE2;
 D_802E5920_329A70 = 0x802E5920;
 D_802E5EC8_32A018 = 0x802E5EC8;
 D_802E6E20_32AF70 = 0x802E6E20;
+
+/* libultra globals referenced by libultra_rom lib objects (data lives in the core databin) */
+osClockRate = 0x80035610;
+osViClock = 0x80035618;
+__osThreadTail = 0x800363A0;
+__osCurrentHandle = 0x80036390;
+__osTimerList = 0x800366C0;
+__osFinalrom = 0x8006CA60;
+__osDiskHandle = 0x8006F094;
+__osCurrentTime = 0x8006EF80; /* libultra OSTime, referenced by gettime.o/timerintr.o lib objects */
+__osViIntrCount = 0x8006EF8C;
+__osTimerCounter = 0x8006EF90;
+/* libultra function aliases used by C code (provided by libultra_rom objects) */
+func_8001BCE0_1C8E0 = 0x8001BCE0; /* osAiGetLength */
+func_8001F6E0_202E0 = 0x8001F6E0; /* osPiGetStatus */

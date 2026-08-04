@@ -89,7 +89,7 @@ void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
   s16 temp_v0;
   sp54 = D_80059CD2;
   sp50 = D_80059CD4;
-  temp_t1 = ((D_8005BAEC * D_8005BAEC) + (__osCurrentTime * __osCurrentTime)) / 4;
+  temp_t1 = ((D_8005BAEC * D_8005BAEC) + (D_8005BAF0 * D_8005BAF0)) / 4;
   temp_a1 = (sp54 * sp54) + (sp50 * sp50);
   var_s1 = (((D_80059CD0 * 2) * (temp_t1 - temp_a1)) + (D_80059CD0 * temp_a1)) / 1296;
   
@@ -186,7 +186,7 @@ void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3) {
 // Redefining osSetTime to take two s32 arguments to matches? (the .h definition takes u64)
 void osSetTime(s32 arg0, s32 arg1) {
 	D_8005BAEC = arg0;
-	__osCurrentTime = arg1;
+	D_8005BAF0 = arg1;
 }
 
 /* Initialise projection state from entry arg0 in D_80031A90 table, then copy framebuffer region. */
@@ -253,16 +253,16 @@ s32 func_8000E53C_F13C(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_POINT);
-	guPerspective(D_8005BB38, &sp136, 30.0f, (f32) D_8005BAEC / (f32) __osCurrentTime, 10.0f, D_80037650_38250, 1.0f);
+	guPerspective(D_8005BB38, &sp136, 30.0f, (f32) D_8005BAEC / (f32) D_8005BAF0, 10.0f, D_80037650_38250, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, (u32) &sp136);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	spA0 = sinf(D_80037654_38254);
-	guLookAt(D_8005BB38, 0.0f, 0.0f, (f32) __osCurrentTime / ((spA0 / cosf(D_80037658_38258)) * 2.0f), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	guLookAt(D_8005BB38, 0.0f, 0.0f, (f32) D_8005BAF0 / ((spA0 / cosf(D_80037658_38258)) * 2.0f), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_80031120_31D20), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	spFC.unk0 = 0;
-	var_t0 = 0x14 - (__osCurrentTime % 0x14);
+	var_t0 = 0x14 - (D_8005BAF0 % 0x14);
 	if (var_t0 == 0x14) {
 		var_t0 = 0;
 	}
@@ -305,8 +305,8 @@ s32 func_8000E53C_F13C(void) {
 			}
 
 			sp108 = sp58;
-			if (__osCurrentTime < sp108) {
-				sp108 = __osCurrentTime;
+			if (D_8005BAF0 < sp108) {
+				sp108 = D_8005BAF0;
 			}
 
 			D_80059CD2 = sp5C;

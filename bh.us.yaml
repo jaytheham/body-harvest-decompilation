@@ -51,173 +51,174 @@ segments:
       - [0x1B060, c, core/1B060]
       - [0x1B100, c, core/1B100]
       - [0x1B7E0, lib, libultra_rom, aisetfreq]
-      - [0x1B940, asm, libultra/sl] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x1BA00, asm, libultra/heapalloc] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1BA60, asm, libultra/createmesgqueue] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1BA90, asm, libultra/createthread] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1BBE0, asm, libultra/startthread] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1BD30, asm, libultra/sched] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x1C670, asm, libultra/recvmesg] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1C7B0, asm, libultra/virtualtophysical] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1C830, asm, libultra/aisetnextbuf] # libultra 2.0E 2.0F 2.0G
-      - [0x1C8E0, asm] # aigetlen?
-      - [0x1C8F0, asm, libultra/synthesizer] # libultra 2.0F 2.0G 2.0I
-      - [0x1CFD0, asm, libultra/sendmesg] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1D120, asm, libultra/pidma] # libultra 2.0F 2.0G 2.0I
-      - [0x1D230, asm]
-      - [0x1D850, asm, libultra/syncprintf] # libultra 2.0I 2.0J
-      - [0x1D890, asm, libultra/seteventmesg] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x1D900, asm, libultra/controller] # libultra 2.0F 2.0G
-      - [0x1DCC0, asm, libultra/conteepprobe] # libultra 2.0E 2.0F 2.0G
-      - [0x1DD30, asm, libultra/contsetch] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x1DDA0, asm, libultra/ll] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1E060, asm] # conteeplongwrite ?
-      - [0x1E1A0, asm] # conteeplongread?
-      - [0x1E2E0, asm, libultra/contreaddata] # libultra 2.0E 2.0F 2.0G
-      - [0x1E540, asm, libultra/sqrtf] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
-      - [0x1E550, asm, libultra/coss] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1E580, asm, libultra/sins] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1E5F0, asm, libultra/ortho] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x1E7B0, asm, libultra/lookat] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x1EAE0, asm, libultra/rotate] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x1ECD0, asm, libultra/initialize] # libultra 2.0I
-      - [0x1EF60, asm, libultra/perspective] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1F1F0, asm, libultra/sinf] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1F3B0, asm, libultra/cosf] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1F520, asm, libultra/bzero] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1F5C0, asm, libultra/vimgr] # libultra 2.0F 2.0G 2.0I
-      - [0x1F920, asm]
-      - [0x1F980, asm, libultra/visetmode] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x1F9F0, asm, libultra/viswapbuf] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x1FA40, asm, libultra/pimgr] # libultra 2.0F 2.0G 2.0I
-      - [0x1FBD0, asm, libultra/setthreadpri] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1FCB0, asm, libultra/stopthread] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x1FD70, asm, libultra/destroythread] # libultra 2.0E 2.0F 2.0G
-      - [0x1FE70, asm, libultra/visetevent] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x1FEE0, asm, libultra/writebackdcacheall] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
-      - [0x1FF10, asm, libultra/visetspecial] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x200D0, asm, libultra/viblack] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x20140, asm, libultra/getcount] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L
-      - [0x20150, asm, libultra/visetyscale] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x201B0, asm, libultra/visetxscale] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x202E0, asm] # pigetstat?
-      - [0x202F0, asm, libultra/invalicache] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x20370, asm, libultra/invaldcache] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x20420, asm, libultra/sndpsetsound] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x20440, asm, libultra/sndpgetstate] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x20460, asm, libultra/heapinit] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x204A0, asm, libultra/bnkf] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x206F0, asm, libultra/csplayer] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x21920, asm, libultra/sndplayer] # libultra 2.0F 2.0G 2.0I
-      - [0x22030, asm] # seqpsetbank, cspsetbank?
-      - [0x22070, asm, libultra/cseq] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x22B30, asm] # seqpsetseq, cspsetseq, seqpsetvol, cspsetvol, seqpplay, cspplay?
-      - [0x22B70, asm]
-      - [0x22BB0, asm]
-      - [0x22BE0, asm, libultra/sndpallocate] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x22C80, asm, libultra/sndpsetpriority] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x22CB0, asm, libultra/sndpsetfxmix] # libultra 2.0F 2.0G 2.0I
-      - [0x22D10, asm, libultra/sndpsetpitch] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x22D70, asm, libultra/sndpsetvol] # libultra 2.0F 2.0G 2.0I
-      - [0x22DD0, asm, libultra/sndpsetpan] # libultra 2.0F 2.0G 2.0I
-      - [0x22E30, asm, libultra/sndpplay] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x22EA0, asm] # seqpstop, cspstop?
-      - [0x22ED0, asm, libultra/sndpdeallocate] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x22F20, asm, libultra/sndpstop] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x22F70, asm] # seqpsetchlvol, cspsetchlvol?
-      - [0x22FD0, asm, libultra/lookatref] # libultra 2.0E 2.0F 2.0G
-      - [0x23490, asm, libultra/align] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x236A0, asm, libultra/translate] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x23740, asm, libultra/scale] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x237E0, asm, libultra/rotateRPY] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x23980, asm, libultra/mtxcatf] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x23B90, asm] # mtxcatl, mtxxfml?
-      - [0x23BF0, asm, libultra/mtxcatl] # libultra 2.0K 2.0L
-      - [0x23C50, asm, libultra/syndelete] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
-      - [0x23C60, asm, libultra/thread] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x23CA0, asm]
-      - [0x245B0, asm, libultra/interrupt] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I
-      - [0x245F0, asm, libultra/setintmask] # libultra 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L
-      - [0x24690, asm, libultra/sptaskyielded] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x24710, asm] # vigetcurrframebuf, vigetnextframebuf?
-      - [0x24790, asm, libultra/sptask] # libultra 2.0I
-      - [0x24A80, asm, libultra/dpsetnextbuf] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x24B30, asm, libultra/sptaskyield] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x24B50, asm, libultra/probetlb] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L
-      - [0x24C10, asm, libultra/ai] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x24C40, asm, libultra/drvrNew] # libultra 2.0F 2.0G 2.0I
-      - [0x253E0, asm, libultra/synallocfx] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x25480, asm, libultra/mainbus] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x255D0, asm, libultra/load] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x26120, asm, libultra/resample] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x26420, asm, libultra/env] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x27080, asm, libultra/auxbus] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x27190, asm, libultra/save] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x27250, asm, libultra/jammesg] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x273A0, asm, libultra/pigetcmdq] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x273D0, asm, libultra/pfsisplug] # libultra 2.0F 2.0G
-      - [0x27740, asm] # siacs, piacs?
-      - [0x27800, asm, libultra/sirawdma] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x278B0, asm, libultra/crc] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x27A30, asm]
-      - [0x28140, asm, libultra/gettime] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x281D0, asm, libultra/settimer] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J
-      - [0x282B0, asm, libultra/conteepwrite] # libultra 2.0E 2.0F 2.0G
-      - [0x28790, asm, libultra/conteepread] # libultra 2.0E 2.0F 2.0G
-      - [0x28A90, asm, libultra/mtxutil] # libultra 2.0E 2.0F 2.0G
-      - [0x28D00, asm, libultra/normalize] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J
-      - [0x28D90, asm, libultra/setsr] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
-      - [0x28DA0, asm, libultra/getsr] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
-      - [0x28DB0, asm, libultra/setfpccsr] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
-      - [0x28DC0, asm] # sprawread, sirawread, sprawwrite, sirawwrite?
-      - [0x28E60, asm, libultra/writebackdcache] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x28EE0, asm, libultra/maptlbrdb] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
-      - [0x28F40, asm, libultra/pirawread] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x28FA0, asm, libultra/timerintr] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J
-      - [0x293A0, asm, libultra/getthreadpri] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
-      - [0x293C0, asm, libultra/vi] # libultra 2.0I
-      - [0x29500, asm, libultra/vigetcurrcontext] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L
-      - [0x29510, asm, libultra/viswapcontext] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x29870, asm]
-      - [0x29960, asm]
-      - [0x29A60, asm]
-      - [0x29B20, asm, libultra/pirawdma] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x29C00, asm, libultra/epirawdma] # libultra 2.0I
-      - [0x29E30, asm, libultra/devmgr] # libultra 2.0I
-      - [0x2A2C0, asm, libultra/seqplayer] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x2BC00, asm, libultra/event] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x2BF40, asm, libultra/synaddplayer] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2BF90, asm, libultra/synstopvoice] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2C010, asm, libultra/synfreevoice] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x2C0C0, asm, libultra/synsetvol] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2C160, asm, libultra/synsetpitch] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2C1F0, asm, libultra/synallocvoice] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x2C420, asm, libultra/cents2ratio] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2C470, asm, libultra/synstartvoiceparam] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x2C560, asm, libultra/synsetpan] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2C5F0, asm, libultra/synsetfxmix] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x2C690, asm, libultra/synstartvoice] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2C720, asm, libultra/leointerrupt] # libultra 2.0I
-      - [0x2CFA0, asm, libultra/spgetstat] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2CFB0, asm, libultra/bcopy] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2D2C0, asm, libultra/spsetstat] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2D2D0, asm, libultra/spsetpc] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x2D310, asm, libultra/sprawdma] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x2D3A0, asm, libultra/sp] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x2D3D0, asm, libultra/dp] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x2D400, asm, libultra/filter] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L ique_v1.5
-      - [0x2D420, asm, libultra/reverb] # libultra 2.0F 2.0G 2.0I
-      - [0x2E070, asm, libultra/copy] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2E0F0, asm, libultra/si] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x2E120, asm]
-      - [0x2E230, asm, libultra/setcompare] # libultra 2.0E 2.0F 2.0G 2.0H 2.0I 2.0J 2.0K 2.0L
-      - [0x2E240, asm, libultra/resetglobalintmask] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2E2A0, asm, libultra/epirawwrite] # libultra 2.0F 2.0G
-      - [0x2E2F0, asm, libultra/epirawread] # libultra 2.0F 2.0G
-      - [0x2E340, asm, libultra/setglobalintmask] # libultra 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2E390, asm, libultra/yieldthread] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
-      - [0x2E3E0, asm, libultra/seq] # libultra 2.0E 2.0F 2.0G 2.0I
-      - [0x2EA00, asm, libultra/synsetpriority] # libultra 2.0E 2.0F 2.0G 2.0I 2.0J 2.0K 2.0L
+      - [0x1B940, lib, libultra_rom, sl]
+      - [0x1BA00, lib, libultra_rom, heapalloc]
+      - [0x1BA60, lib, libultra_rom, createmesgqueue]
+      - [0x1BA90, lib, libultra_rom, createthread]
+      - [0x1BBE0, lib, libultra_rom, startthread]
+      - [0x1BD30, asm, libultra/sched] # osCreateScheduler (has own .data/.rodata - not convertible)
+      - [0x1C670, lib, libultra_rom, recvmesg]
+      - [0x1C7B0, lib, libultra_rom, virtualtophysical]
+      - [0x1C830, asm, libultra/aisetnextbuf] # osAiSetNextBuffer, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
+      - [0x1C8E0, lib, libultra_rom, aigetlen]
+      - [0x1C8F0, asm, libultra/synthesizer] # alSynNew (has own .rodata - not convertible)
+      - [0x1CFD0, lib, libultra_rom, sendmesg]
+      - [0x1D120, lib, libultra_rom, pidma]
+      - [0x1D230, asm, libultra/motor] # osMotorStop, osMotorStart, osMotorInit (differs from 2.0I)
+      - [0x1D850, lib, libultra_rom, syncprintf]
+      - [0x1D890, lib, libultra_rom, seteventmesg]
+      - [0x1D900, asm, libultra/controller] # osContInit, libultra 2.0F 2.0G (differs from 2.0I)
+      - [0x1DCC0, asm, libultra/conteepprobe] # osEepromProbe, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
+      - [0x1DD30, lib, libultra_rom, contsetch]
+      - [0x1DDA0, lib, libultra_rom, ll]
+      - [0x1E060, asm, libultra/conteeplongwrite] # osEepromLongWrite (differs from 2.0I)
+      - [0x1E1A0, asm, libultra/conteeplongread] # osEepromLongRead (differs from 2.0I)
+      - [0x1E2E0, asm, libultra/contreaddata] # osContStartReadData, osContGetReadData, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
+      - [0x1E540, lib, libultra_rom, sqrtf]
+      - [0x1E550, lib, libultra_rom, coss]
+      - [0x1E580, asm, libultra/sins] # sins (references own .data sine table - not convertible)
+      - [0x1E5F0, lib, libultra_rom, ortho]
+      - [0x1E7B0, lib, libultra_rom, lookat]
+      - [0x1EAE0, asm, libultra/rotate] # guRotate (has own .rodata/.bss - not convertible)
+      - [0x1ECD0, lib, libultra_rom, initialize]
+      - [0x1EF60, asm, libultra/perspective] # guPerspective (has own .rodata - not convertible)
+      - [0x1F1F0, asm, libultra/sinf] # sinf (has own .rodata - not convertible)
+      - [0x1F3B0, asm, libultra/cosf] # cosf (has own .rodata - not convertible)
+      - [0x1F520, lib, libultra_rom, bzero]
+      - [0x1F5C0, asm, libultra/vimgr] # osCreateViManager (has own .bss - not convertible)
+      - [0x1F920, lib, libultra_rom, parameters] # osSetParameters
+      - [0x1F980, lib, libultra_rom, visetmode]
+      - [0x1F9F0, lib, libultra_rom, viswapbuf]
+      - [0x1FA40, asm, libultra/pimgr] # osCreatePiManager (has own .bss - not convertible)
+      - [0x1FBD0, lib, libultra_rom, setthreadpri]
+      - [0x1FCB0, lib, libultra_rom, stopthread]
+      - [0x1FD70, asm, libultra/destroythread] # osDestroyThread, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
+      - [0x1FE70, lib, libultra_rom, visetevent]
+      - [0x1FEE0, lib, libultra_rom, writebackdcacheall]
+      - [0x1FF10, lib, libultra_rom, visetspecial]
+      - [0x200D0, lib, libultra_rom, viblack]
+      - [0x20140, lib, libultra_rom, getcount]
+      - [0x20150, lib, libultra_rom, visetyscale]
+      - [0x201B0, lib, libultra_rom, visetxscale]
+      - [0x202E0, lib, libultra_rom, pigetstat]
+      - [0x202F0, lib, libultra_rom, invalicache]
+      - [0x20370, lib, libultra_rom, invaldcache]
+      - [0x20420, lib, libultra_rom, sndpsetsound]
+      - [0x20440, lib, libultra_rom, sndpgetstate]
+      - [0x20460, lib, libultra_rom, heapinit]
+      - [0x204A0, lib, libultra_rom, bnkf]
+      - [0x206F0, asm, libultra/csplayer] # alCSPNew (has own .rodata - not convertible)
+      - [0x21920, asm, libultra/sndplayer] # alSndpNew (has own .rodata - not convertible)
+      - [0x22030, lib, libultra_rom, seqpsetbank]
+      - [0x22070, asm, libultra/cseq] # alCSeqNew (has own .rodata - not convertible)
+      - [0x22B30, lib, libultra_rom, seqpsetseq]
+      - [0x22B70, lib, libultra_rom, seqpsetvol]
+      - [0x22BB0, lib, libultra_rom, seqpplay]
+      - [0x22BE0, lib, libultra_rom, sndpallocate]
+      - [0x22C80, lib, libultra_rom, sndpsetpriority]
+      - [0x22CB0, lib, libultra_rom, sndpsetfxmix]
+      - [0x22D10, lib, libultra_rom, sndpsetpitch]
+      - [0x22D70, lib, libultra_rom, sndpsetvol]
+      - [0x22DD0, lib, libultra_rom, sndpsetpan]
+      - [0x22E30, lib, libultra_rom, sndpplay]
+      - [0x22EA0, lib, libultra_rom, seqpstop]
+      - [0x22ED0, lib, libultra_rom, sndpdeallocate]
+      - [0x22F20, lib, libultra_rom, sndpstop]
+      - [0x22F70, lib, libultra_rom, seqpsetchlvol]
+      - [0x22FD0, asm, libultra/lookatref] # guLookAtReflect, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
+      - [0x23490, asm, libultra/align] # guAlign (has own .rodata/.bss - not convertible)
+      - [0x236A0, lib, libultra_rom, translate]
+      - [0x23740, lib, libultra_rom, scale]
+      - [0x237E0, asm, libultra/rotateRPY] # guRotateRPY (has own .rodata/.bss - not convertible)
+      - [0x23980, lib, libultra_rom, mtxcatf]
+      - [0x23B90, lib, libultra_rom, mtxcatl] # guMtxXFML + guMtxCatL
+      - [0x23C50, lib, libultra_rom, syndelete]
+      - [0x23C60, lib, libultra_rom, thread]
+      - [0x23CA0, asm, libultra/exceptasm] # __osExceptionPreamble, __osException (hand-written, differs from 2.0I)
+      - [0x245B0, lib, libultra_rom, interrupt]
+      - [0x245F0, lib, libultra_rom, setintmask]
+      - [0x24690, lib, libultra_rom, sptaskyielded]
+      - [0x24710, lib, libultra_rom, vigetcurrframebuf]
+      - [0x24750, lib, libultra_rom, vigetnextframebuf]
+      - [0x24790, asm, libultra/sptask] # osSpTaskLoad (has own .bss - not convertible)
+      - [0x24A80, lib, libultra_rom, dpsetnextbuf]
+      - [0x24B30, lib, libultra_rom, sptaskyield]
+      - [0x24B50, lib, libultra_rom, probetlb]
+      - [0x24C10, lib, libultra_rom, ai]
+      - [0x24C40, asm, libultra/drvrNew] # alSaveNew etc. (has own .data/.rodata - not convertible)
+      - [0x253E0, lib, libultra_rom, synallocfx]
+      - [0x25480, lib, libultra_rom, mainbus]
+      - [0x255D0, lib, libultra_rom, load]
+      - [0x26120, asm, libultra/resample] # alResampleNew (has own .rodata - not convertible)
+      - [0x26420, asm, libultra/env] # alEnvmixerNew (has own .data/.rodata - not convertible)
+      - [0x27080, lib, libultra_rom, auxbus]
+      - [0x27190, lib, libultra_rom, save]
+      - [0x27250, lib, libultra_rom, jammesg]
+      - [0x273A0, lib, libultra_rom, pigetcmdq]
+      - [0x273D0, asm, libultra/pfsisplug] # osPfsIsPlug, libultra 2.0F 2.0G (differs from 2.0I)
+      - [0x27740, asm, libultra/siacs] # __osSiCreateAccessQueue (has own .bss - not convertible)
+      - [0x27800, lib, libultra_rom, sirawdma]
+      - [0x278B0, lib, libultra_rom, crc]
+      - [0x27A30, asm, libultra/contram] # __osContRamWrite, __osContRamRead (differs from 2.0I)
+      - [0x28140, lib, libultra_rom, gettime]
+      - [0x281D0, lib, libultra_rom, settimer]
+      - [0x282B0, asm, libultra/conteepwrite] # osEepromWrite, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
+      - [0x28790, asm, libultra/conteepread] # osEepromRead, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
+      - [0x28A90, asm, libultra/mtxutil] # guMtxF2L, guMtxL2F, guMtxIdent (differs from 2.0I)
+      - [0x28D00, lib, libultra_rom, normalize]
+      - [0x28D90, lib, libultra_rom, setsr]
+      - [0x28DA0, lib, libultra_rom, getsr]
+      - [0x28DB0, lib, libultra_rom, setfpccsr]
+      - [0x28DC0, lib, libultra_rom, sirawread]
+      - [0x28E10, lib, libultra_rom, sirawwrite]
+      - [0x28E60, lib, libultra_rom, writebackdcache]
+      - [0x28EE0, lib, libultra_rom, maptlbrdb]
+      - [0x28F40, lib, libultra_rom, pirawread]
+      - [0x28FA0, lib, libultra_rom, timerintr]
+      - [0x293A0, lib, libultra_rom, getthreadpri]
+      - [0x293C0, asm, libultra/vi] # __osViInit (has own .data - not convertible)
+      - [0x29500, lib, libultra_rom, vigetcurrcontext]
+      - [0x29510, lib, libultra_rom, viswapcontext]
+      - [0x29870, asm] # custom SP task DMA func
+      - [0x29960, asm] # custom SP task DMA func
+      - [0x29A60, asm, libultra/piacs] # __osPiCreateAccessQueue (has own .bss - not convertible)
+      - [0x29B20, lib, libultra_rom, pirawdma]
+      - [0x29C00, lib, libultra_rom, epirawdma]
+      - [0x29E30, asm, libultra/devmgr] # __osDevMgrMain (has own .rodata - not convertible)
+      - [0x2A2C0, asm, libultra/seqplayer] # alSeqpNew (has own .rodata - not convertible)
+      - [0x2BC00, lib, libultra_rom, event]
+      - [0x2BF40, lib, libultra_rom, synaddplayer]
+      - [0x2BF90, lib, libultra_rom, synstopvoice]
+      - [0x2C010, lib, libultra_rom, synfreevoice]
+      - [0x2C0C0, lib, libultra_rom, synsetvol]
+      - [0x2C160, lib, libultra_rom, synsetpitch]
+      - [0x2C1F0, lib, libultra_rom, synallocvoice]
+      - [0x2C420, asm, libultra/cents2ratio] # alCents2Ratio (has own .rodata - not convertible)
+      - [0x2C470, lib, libultra_rom, synstartvoiceparam]
+      - [0x2C560, lib, libultra_rom, synsetpan]
+      - [0x2C5F0, lib, libultra_rom, synsetfxmix]
+      - [0x2C690, lib, libultra_rom, synstartvoice]
+      - [0x2C720, lib, libultra_rom, leointerrupt]
+      - [0x2CFA0, lib, libultra_rom, spgetstat]
+      - [0x2CFB0, lib, libultra_rom, bcopy]
+      - [0x2D2C0, lib, libultra_rom, spsetstat]
+      - [0x2D2D0, lib, libultra_rom, spsetpc]
+      - [0x2D310, lib, libultra_rom, sprawdma]
+      - [0x2D3A0, lib, libultra_rom, sp]
+      - [0x2D3D0, lib, libultra_rom, dp]
+      - [0x2D400, lib, libultra_rom, filter]
+      - [0x2D420, asm, libultra/reverb] # alFxNew (has own .rodata - not convertible)
+      - [0x2E070, lib, libultra_rom, copy]
+      - [0x2E0F0, lib, libultra_rom, si]
+      - [0x2E120, asm] # __osPfsGetStatus (differs from 2.0I)
+      - [0x2E230, lib, libultra_rom, setcompare]
+      - [0x2E240, lib, libultra_rom, resetglobalintmask]
+      - [0x2E2A0, asm, libultra/epirawwrite] # osEPiRawWriteIo, libultra 2.0F 2.0G (differs from 2.0I)
+      - [0x2E2F0, asm, libultra/epirawread] # osEPiRawReadIo, libultra 2.0F 2.0G (differs from 2.0I)
+      - [0x2E340, lib, libultra_rom, setglobalintmask]
+      - [0x2E390, lib, libultra_rom, yieldthread]
+      - [0x2E3E0, asm, libultra/seq] # alSeqNew (has own .rodata - not convertible)
+      - [0x2EA00, lib, libultra_rom, synsetpriority]
       - [0x2EA10, databin]
       - [0x31EF0, .data, core/1050]
       - [0x31FD0, .data, core/53F0]

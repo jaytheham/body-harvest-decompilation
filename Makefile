@@ -101,7 +101,9 @@ RNC_O_FILES     := $(foreach file,$(RNC_FILES),$(BUILD_DIR)/$(file:.rnc=.rnc.o))
 
 
 # function is not included unless explicitly undefined
-UNDEFINED_SYMS  := osViGetCurrentLine
+# these are pulled from libultra_rom as lib subsegments but nothing else
+# references their symbols, so force extraction from the archive
+UNDEFINED_SYMS  := osViGetCurrentLine osAiGetLength osPiGetStatus __osLeoInterrupt guTranslate
 
 # Tools
 find-command = $(shell which $(1) 2>/dev/null)
