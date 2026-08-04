@@ -682,16 +682,16 @@ void func_8013001C_13EFCC(void)
 		language = D_800313D0_31FD0;
 		switch (language) {
 		case 1:
-			levelName = D_80031508[currentLevel];
+			levelName = D_80031508_32108[currentLevel];
 			func_8012EBC0_13DB70(levelName, D_80145460_154410, levelText);
 			break;
 		case 2:
-			levelName = D_80031520[currentLevel];
+			levelName = D_80031520_32120[currentLevel];
 			func_8012EBC0_13DB70(levelName, D_80145458_154408, levelText);
 			break;
 		case 0:
 		default:
-			levelName = D_800314F0[currentLevel];
+			levelName = D_800314F0_320F0[currentLevel];
 			func_8012EBC0_13DB70(levelName, D_80145450_154400, levelText);
 			break;
 		}
@@ -729,16 +729,16 @@ void func_8013001C_13EFCC(void)
 		language = D_800313D0_31FD0;
 		switch (language) {
 		case 1:
-			levelName = D_80031508[currentLevel];
+			levelName = D_80031508_32108[currentLevel];
 			func_8012EBC0_13DB70(levelName, D_801454B4_154464, levelText);
 			break;
 		case 2:
-			levelName = D_80031520[currentLevel];
+			levelName = D_80031520_32120[currentLevel];
 			func_8012EBC0_13DB70(levelName, D_801454A8_154458, levelText);
 			break;
 		case 0:
 		default:
-			levelName = D_800314F0[currentLevel];
+			levelName = D_800314F0_320F0[currentLevel];
 			func_8012EBC0_13DB70(levelName, D_8014549C_15444C, levelText);
 			break;
 		}

@@ -191,9 +191,10 @@ extern s32 D_800314C8_320C8;
 extern OSMesg D_800314CC;
 extern OSMesg D_800314CC_320CC;
 extern s16 D_800314D0_320D0[];
-extern u8 *D_800314F0[];
-extern u8 *D_80031508[];
-extern u8 *D_80031520[];
+extern u8 *D_800314F0_320F0[];
+extern u8 *D_80031508_32108[];
+extern u8 *D_80031520_32120[];
+extern u8 *D_80031538_32138[]; // level number strings "-1-".."-5-"
 extern u8 D_80031534[];
 extern u8 D_80031535[];
 extern u8 D_80031536[]; // is actually an array of beacon data
