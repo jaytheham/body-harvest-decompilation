@@ -504,7 +504,7 @@ extern char D_80037850[];
 extern char D_80037870[];
 extern char D_8003788C[];
 extern char D_800378A8[];
-extern s32 D_800378CC_384CC;
+extern Unk80154082 D_800378CC_384CC;
 extern Unk80378D0 D_800378D0_384D0;
 extern char D_800378E0_384E0;
 extern char D_800378F4_384F4;
