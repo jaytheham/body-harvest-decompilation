@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-05T06:47:15Z",
-  "commit": "e8ca17a4",
-  "commit_timestamp": "2026-08-05T18:46:39+12:00",
+  "generated": "2026-08-05T07:45:06Z",
+  "commit": "a4e79935",
+  "commit_timestamp": "2026-08-05T19:44:29+12:00",
   "overall": {
     "total_functions": 2714,
     "matched": 1631,
@@ -342,6 +342,16 @@
       "asm_stubs": 0,
       "total": 15,
       "matched_pct": 66.7,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/inside/data_176060.c",
+      "segment": "overlay_gameplay/inside",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
       "contributor": "jaytheham"
     },
     {
@@ -698,7 +708,7 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 59,
+      "files": 60,
       "matched": 1629,
       "non_matching": 1083,
       "asm_stubs": 0
@@ -896,7 +906,7 @@
     },
     {
       "date": "2026-08-02",
-      "commit": "e8ca17a",
+      "commit": "a4e7993",
       "matched": 1631,
       "non_matching": 1083,
       "total": 2714
