@@ -350,7 +350,8 @@ segments:
       - [0x175EB0, .data, overlay_gameplay/inside/167C90] # Camera
       - [0x175EC0, .data, overlay_gameplay/inside/158330] # Lighting & room data
       - [0x176060, .data, overlay_gameplay/inside/data_176060] # Room data & level tables
-      - [0x184F20, bin]
+      - [0x184F20, .data, overlay_gameplay/inside/data_184F20] # 32x32 intensity texture (player rendering)
+      - [0x185320, bin]
 
   - name: overlay_level_greece
     type: code

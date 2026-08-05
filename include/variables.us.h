@@ -1264,6 +1264,8 @@ extern u8 D_8009CD7C_184E3C[];
 extern s16 D_8009CE14_184ED4[];
 // AI - Second event building interior IDs that count as visited for missions
 extern s16 D_8009CE34_184EF4[];
+// AI - 32x32 8-bit intensity texture (radial gradient), used by player rendering
+extern u8 D_8009CE60_184F20[];
 extern u8 D_8009E4C8_186588[];
 extern u8 D_8009E4D4_186594[];
 extern s32 D_8009E8D8;
