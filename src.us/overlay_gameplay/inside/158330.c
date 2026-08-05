@@ -2743,10 +2743,10 @@ void func_8007568C_15D74C(void) {
 // AI - Renders highlighted rectangle at a room entry position
 void func_80076538_15E5F8(s32 arg0) {
 	Unk800E66A8 *temp_v0;
-	Unk80076538Obj *temp_v0_2;
-	Unk80076538Obj *temp_v0_3;
-	Unk80076538Obj *temp_v0_4;
-	Unk80076538Obj *temp_v0_5;
+	Unk80070F7CObj *temp_v0_2;
+	Unk80070F7CObj *temp_v0_3;
+	Unk80070F7CObj *temp_v0_4;
+	Unk80070F7CObj *temp_v0_5;
 	s32 var_t0;
 	s32 var_v1;
 	u8 temp_a2;
@@ -2758,25 +2758,25 @@ void func_80076538_15E5F8(s32 arg0) {
 
 	switch (temp_v0->unk8) {
 		case 0:
-			temp_v0_2 = &((Unk80076538Obj *) D_800E65BC)[temp_a2];
+			temp_v0_2 = &((Unk80070F7CObj *) D_800E65BC)[temp_a2];
 			var_v1 += temp_v0_2->unk8;
 			var_t0 += temp_v0_2->unkA;
 			break;
 
 		case 1:
-			temp_v0_3 = &((Unk80076538Obj *) D_800E65BC)[temp_a2];
+			temp_v0_3 = &((Unk80070F7CObj *) D_800E65BC)[temp_a2];
 			var_v1 += temp_v0_3->unkA;
 			var_t0 -= temp_v0_3->unk8;
 			break;
 
 		case 2:
-			temp_v0_4 = &((Unk80076538Obj *) D_800E65BC)[temp_a2];
+			temp_v0_4 = &((Unk80070F7CObj *) D_800E65BC)[temp_a2];
 			var_v1 -= temp_v0_4->unk8;
 			var_t0 -= temp_v0_4->unkA;
 			break;
 
 		case 3:
-			temp_v0_5 = &((Unk80076538Obj *) D_800E65BC)[temp_a2];
+			temp_v0_5 = &((Unk80070F7CObj *) D_800E65BC)[temp_a2];
 			var_v1 -= temp_v0_5->unkA;
 			var_t0 += temp_v0_5->unk8;
 			break;
@@ -2803,10 +2803,10 @@ void func_80076678_15E738(s32 arg0) {
 	temp_t1 = D_800E66A8[arg0].unk6;
 
 	if (D_800E66A8[arg0].unk8 == 0) {
-		Unk80076678Obj *temp_v1;
+		Unk80070F7CObj *temp_v1;
 
 		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
-		temp_v1 = (Unk80076678Obj *)((u8 *)D_800E65BC + var_v1);
+		temp_v1 = (Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1);
 		sp4C = temp_v1->unk18;
 		sp48 = temp_v1->unk1A;
 		sp44 = temp_v1->unk36;
@@ -2814,10 +2814,10 @@ void func_80076678_15E738(s32 arg0) {
 		sp3C = temp_v1->unk3A;
 		sp38 = temp_v1->unk3B;
 	} else if (D_800E66A8[arg0].unk8 == 1) {
-		Unk80076678Obj *temp_v1;
+		Unk80070F7CObj *temp_v1;
 
 		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
-		temp_v1 = (Unk80076678Obj *)((u8 *)D_800E65BC + var_v1);
+		temp_v1 = (Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1);
 		sp4C = temp_v1->unk1A;
 		sp48 = temp_v1->unk18;
 		sp44 = temp_v1->unk38;
@@ -2825,10 +2825,10 @@ void func_80076678_15E738(s32 arg0) {
 		sp3C = temp_v1->unk3B;
 		sp38 = temp_v1->unk3A;
 	} else if (D_800E66A8[arg0].unk8 == 2) {
-		Unk80076678Obj *temp_v1;
+		Unk80070F7CObj *temp_v1;
 
 		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
-		temp_v1 = (Unk80076678Obj *)((u8 *)D_800E65BC + var_v1);
+		temp_v1 = (Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1);
 		sp4C = temp_v1->unk18;
 		sp48 = temp_v1->unk1A;
 		sp44 = -temp_v1->unk36;
@@ -2836,10 +2836,10 @@ void func_80076678_15E738(s32 arg0) {
 		sp3C = temp_v1->unk3A;
 		sp38 = temp_v1->unk3B;
 	} else if (D_800E66A8[arg0].unk8 == 3) {
-		Unk80076678Obj *temp_v1;
+		Unk80070F7CObj *temp_v1;
 
 		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
-		temp_v1 = (Unk80076678Obj *)((u8 *)D_800E65BC + var_v1);
+		temp_v1 = (Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1);
 		sp4C = temp_v1->unk1A;
 		sp48 = temp_v1->unk18;
 		sp44 = -temp_v1->unk38;
@@ -2852,7 +2852,7 @@ void func_80076678_15E738(s32 arg0) {
 
 	func_80073714_15B7D4(sp4C, sp48, temp_t0 - 0x60, 7, temp_t1 - 0x60, 0, 0xFA, 0);
 
-	if (((Unk80076678Obj *)((u8 *)D_800E65BC + var_v1))->unk40 & 0x400000) {
+	if (((Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1))->unk40 & 0x400000) {
 		func_80073714_15B7D4(sp3C, sp38, (temp_t0 + sp44) - 0x60, 0xA, (temp_t1 + sp40) - 0x60, 0, 0, 0xFA);
 	}
 }
@@ -2871,11 +2871,11 @@ void func_800768B8_15E978(s32 arg0) {
 	s16 temp_t0;
 	s16 temp_t1;
 	u16 temp_a3;
-	Unk800768B8Obj *temp_v0;
+	Unk80070F7CObj *temp_v0;
 	Unk800E66A8 *temp_v1;
 
 	temp_v1 = &D_800E66A8[arg0];
-	temp_v0 = &((Unk800768B8Obj *) D_800E65BC)[temp_v1->unk0];
+	temp_v0 = &((Unk80070F7CObj *) D_800E65BC)[temp_v1->unk0];
 	temp_a3 = temp_v0->unk1A;
 	temp_t0 = temp_v0->unk32;
 	temp_t1 = temp_v0->unk34;
@@ -3213,14 +3213,14 @@ void func_800774E0_15F5A0(s32 arg0, f32 *arg1, f32 *arg2) {
 // AI - Spawns an NPC or object in a room based on type
 void func_800775F0_15F6B0(s32 arg0, s32 arg1) {
 	Unk800E66A8 *entry;
-	Unk80076538Obj *obj;
+	Unk80070F7CObj *obj;
 	s32 objType;
 	s32 var_t0;
 	s32 var_t1;
 	s32 var_t2;
 
 	entry = &D_800E66A8[arg0];
-	obj = &((Unk80076538Obj *) D_800E65BC)[arg1];
+	obj = &((Unk80070F7CObj *) D_800E65BC)[arg1];
 	objType = obj->unkC;
 	var_t2 = obj->unk10 + entry->unk4;
 
@@ -3263,7 +3263,7 @@ void func_800775F0_15F6B0(s32 arg0, s32 arg1) {
 // AI - Spawns objects/enemies in a room based on type
 void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 	Unk800E66A8 *entry;
-	Unk80076538Obj *obj;
+	Unk80070F7CObj *obj;
 	s32 objType;
 	s32 x;
 	s32 z;
@@ -3272,7 +3272,7 @@ void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 	s32 var_t3;
 
 	entry = &D_800E66A8[arg0];
-	obj = &((Unk80076538Obj *) D_800E65BC)[arg1];
+	obj = &((Unk80070F7CObj *) D_800E65BC)[arg1];
 	objType = obj->unkC;
 	y = obj->unk10 + entry->unk4;
 	var_t2 = 0;
@@ -4260,7 +4260,7 @@ void func_8007978C_16184C(void) {
 	s32 temp_v0;
 	u8 temp_s1;
 	s32 temp_v1;
-	Unk800E65BC *temp_v0_2;
+	Unk80070F7CObj *temp_v0_2;
 
 	if (D_800E65F4 != 0) {
 		osSyncPrintf(&D_800A4624_18C6E4);
@@ -4271,36 +4271,36 @@ void func_8007978C_16184C(void) {
 
 	if (temp_v0 & 0x200) {
 		temp_v1 = temp_s1 * 0x48;
-		temp_v0_2 = (Unk800E65BC *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		temp_v0_2->unk18 -= 1;
-		temp_v0_2 = (Unk800E65BC *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A464C_18C70C, D_800E65F8, temp_v0_2->unk18, temp_v0_2->unk1A);
 		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x100) {
 		temp_v1 = temp_s1 * 0x48;
-		temp_v0_2 = (Unk800E65BC *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		temp_v0_2->unk18 += 1;
-		temp_v0_2 = (Unk800E65BC *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4668_18C728, D_800E65F8, temp_v0_2->unk18, temp_v0_2->unk1A);
 		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x800) {
 		temp_v1 = temp_s1 * 0x48;
-		temp_v0_2 = (Unk800E65BC *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		temp_v0_2->unk1A += 1;
-		temp_v0_2 = (Unk800E65BC *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4684_18C744, D_800E65F8, temp_v0_2->unk18, temp_v0_2->unk1A);
 		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x400) {
 		temp_v1 = temp_s1 * 0x48;
-		temp_v0_2 = (Unk800E65BC *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		temp_v0_2->unk1A -= 1;
-		temp_v0_2 = (Unk800E65BC *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A46A0_18C760, D_800E65F8, temp_v0_2->unk18, temp_v0_2->unk1A);
 	}
 }
@@ -4310,7 +4310,7 @@ void func_80079954_161A14(void) {
 	s32 temp_v0;
 	u8 temp_s1;
 	s32 temp_v1;
-	Unk80076678Obj *temp_v0_2;
+	Unk80070F7CObj *temp_v0_2;
 
 	if (D_800E65F4 != 0) {
 		osSyncPrintf(&D_800A46BC_18C77C);
@@ -4321,72 +4321,72 @@ void func_80079954_161A14(void) {
 
 	if (temp_v0 & 0x200) {
 		temp_v1 = temp_s1 * 0x48;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		temp_v0_2->unk3A -= 1;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A46E4_18C7A4, D_800E65F8, temp_v0_2->unk3A, temp_v0_2->unk3B);
 		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x100) {
 		temp_v1 = temp_s1 * 0x48;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		temp_v0_2->unk3A += 1;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4704_18C7C4, D_800E65F8, temp_v0_2->unk3A, temp_v0_2->unk3B);
 		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x800) {
 		temp_v1 = temp_s1 * 0x48;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		temp_v0_2->unk3B += 1;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4724_18C7E4, D_800E65F8, temp_v0_2->unk3A, temp_v0_2->unk3B);
 		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 0x400) {
 		temp_v1 = temp_s1 * 0x48;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		temp_v0_2->unk3B -= 1;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4744_18C804, D_800E65F8, temp_v0_2->unk3A, temp_v0_2->unk3B);
 		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 2) {
 		temp_v1 = temp_s1 * 0x48;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		temp_v0_2->unk36 -= 1;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4764_18C824, D_800E65F8, temp_v0_2->unk36, temp_v0_2->unk38);
 		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 1) {
 		temp_v1 = temp_s1 * 0x48;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		temp_v0_2->unk36 += 1;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A4784_18C844, D_800E65F8, temp_v0_2->unk36, temp_v0_2->unk38);
 		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 8) {
 		temp_v1 = temp_s1 * 0x48;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		temp_v0_2->unk38 += 1;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A47A4_18C864, D_800E65F8, temp_v0_2->unk36, temp_v0_2->unk38);
 		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 	}
 
 	if (temp_v0 & 4) {
 		temp_v1 = temp_s1 * 0x48;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		temp_v0_2->unk38 -= 1;
-		temp_v0_2 = (Unk80076678Obj *) ((u8 *) D_800E65BC + temp_v1);
+		temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 		osSyncPrintf(&D_800A47C4_18C884, D_800E65F8, temp_v0_2->unk36, temp_v0_2->unk38);
 	}
 }
@@ -4405,51 +4405,51 @@ void func_80079C4C_161D0C(void) {
 	temp_s1 = D_800E66A8[D_800E65F8].unk0;
 	temp_v1 = temp_s1 * 0x48;
 
-	if (((Unk800E65BC *) ((u8 *) D_800E65BC + temp_v1))->unk40 & 4) {
+	if (((Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1))->unk40 & 4) {
 		s32 temp_v0;
-		Unk800768B8Obj *temp_v0_2;
-		Unk800768B8Obj *temp_v0_3;
+		Unk80070F7CObj *temp_v0_2;
+		Unk80070F7CObj *temp_v0_3;
 
 		func_8000345C_405C(0x1000);
 		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 
 		if (temp_v0 & 0x1000) {
-			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
-			temp_v0_2->unk34 = ((Unk800E65BC *) temp_v0_2)->unk18;
-			temp_v0_3 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2->unk34 = ((Unk80070F7CObj *) temp_v0_2)->unk18;
+			temp_v0_3 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 			temp_v0_3->unk32 = 0;
 			osSyncPrintf(&D_800A4800_18C8C0, D_800E65F8);
 			temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
 		if (temp_v0 & 0x200) {
-			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 			temp_v0_2->unk34 -= 1;
-			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 			osSyncPrintf(&D_800A4814_18C8D4, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
 			temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
 		if (temp_v0 & 0x100) {
-			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 			temp_v0_2->unk34 += 1;
-			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 			osSyncPrintf(&D_800A4830_18C8F0, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
 			temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
 		if (temp_v0 & 0x800) {
-			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 			temp_v0_2->unk32 += 1;
-			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 			osSyncPrintf(&D_800A484C_18C90C, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
 			temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
 		if (temp_v0 & 0x400) {
-			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 			temp_v0_2->unk32 -= 1;
-			temp_v0_2 = (Unk800768B8Obj *) ((u8 *) D_800E65BC + temp_v1);
+			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
 			osSyncPrintf(&D_800A4868_18C928, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
 		}
 	}
@@ -4555,7 +4555,7 @@ s32 func_8007A168_162228(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	temp_t0 = &D_800E66A8[arg0];
 	temp_t1 = ((temp_t0->unk0 << 3) + temp_t0->unk0) << 3;
 	var_v0 = 0xF;
-	if (((Unk800E65BC *) ((u8 *) D_800E65BC + temp_t1))->unk40 & 0x10) {
+	if (((Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_t1))->unk40 & 0x10) {
 		var_v0 = 0x14;
 	}
 	sp30 = var_v0;
@@ -4622,7 +4622,7 @@ s32 func_8007A370_162430(s32 arg0, s32 arg1) {
 // AI - Checks if player position is within room hotspot bounds
 s32 func_8007A414_1624D4(s32 arg0, s32 arg1, s32 arg2) {
 	Unk800E66A8 *entry;
-	Unk800768B8Obj *obj;
+	Unk80070F7CObj *obj;
 	s32 centerX;
 	s32 centerY;
 	s32 width;
@@ -5299,7 +5299,7 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 #ifdef NON_MATCHING
 // AI - Returns door sub-object offset and dimensions by orientation
 void func_8007BC18_163CD8(s32 arg0, f32 *arg1, f32 *arg2, s32 *arg3, s32 *arg4) {
-	Unk80076678Obj *obj;
+	Unk80070F7CObj *obj;
 	u8 objId;
 	u8 orient;
 
