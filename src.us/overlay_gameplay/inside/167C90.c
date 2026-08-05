@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include "common.h"
 
+// AI - Interior camera constants (room render distance / view thresholds)
 f32 D_8008DDF0_175EB0 = 180.0f;
 f32 D_8008DDF4_175EB4 = 100.0f;
 f32 D_8008DDF8_175EB8 = 75.0f;

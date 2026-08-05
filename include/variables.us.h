@@ -1134,19 +1134,30 @@ extern s16 D_8006C6D4;
 extern u8 D_8006C6D8;
 extern u8 D_8006C6D9;
 extern f32 D_8008DDF0;
+// AI - Interior camera render distance threshold
 extern f32 D_8008DDF0_175EB0;
+// AI - Interior camera constants (room render distance / view thresholds)
 extern f32 D_8008DDF4_175EB4;
 extern f32 D_8008DDF8_175EB8;
 extern f32 D_8008DDFC_175EBC;
+// AI - Interior lighting constants
 extern f32 D_8008DE00_175EC0;
 extern f32 D_8008DE04_175EC4;
+// AI - Interior lighting/room transition table
 extern s32 D_8008DE08_175EC8[];
+// AI - Interior lighting data block (contains ambient/light entries D_8008DE58, D_8008DE68, D_8008DE78)
 extern u8 D_8008DE50_175F10[];
+// AI - Ambient light color (overlaps D_8008DE50_175F10)
 extern u8 D_8008DE58_175F18;
+// AI - Light list (overlaps D_8008DE50_175F10)
 extern u8 D_8008DE68_175F28[];
+// AI - Lighting/color data (overlaps D_8008DE50_175F10)
 extern Unk8008DE78 D_8008DE78_175F38;
+// AI - Interior special-effect entries (effect display list + enabled flag)
 extern Unk8008DED0Entry D_8008DED0_175F90[];
+// AI - Per-room effect/overlay display lists (indexed by currentLevel*0xB + variant)
 extern Gfx *D_8008DFA0_176060[];
+// AI - Room object catalog: 25 rooms x 32 room-object types (geometry, dimensions, spawns, flags)
 extern Unk80070F7CObj D_8008E0A8_176168[25][32];
 extern MissionData D_800909B0[42];
 extern u8 D_800933A0_63850[0x400];
@@ -1237,13 +1248,21 @@ extern u8 D_800965D8_66A88[];
 extern u8 D_800965E8_66A98[];
 extern u8 D_800965F0_66AA0[];
 extern s32 D_80098FF0[];
+// AI - Per-room display lists (8 Gfx per room, 32 bytes each; indexed by levelIndex << 5)
 extern u8 D_8009C1A8_184268[];
+// AI - Per-world base offsets into the room object catalog (D_8008E0A8_176168) / room ranges
 extern s32 D_8009C4C4_184584[];
+// AI - Alias into D_8009C4C4 (used as cumulative per-room display-list offsets; D_8009C4C8 = &D_8009C4C4[1])
 extern s32 D_8009C4C8;
+// AI - Per-room misc data (8 s32 per room, 32 bytes each; indexed by levelIndex << 5)
 extern u8 D_8009C4E4_1845A4[];
+// AI - Per-room configuration table (25 rooms; runtime pointer D_800E65C8)
 extern Unk9C804 D_8009C804_1848C4[];
+// AI - Room map/layout data (per-room tile map, 0x1E bytes per currentLevel)
 extern u8 D_8009CD7C_184E3C[];
+// AI - Event building interior IDs (first set) that count as visited for missions
 extern s16 D_8009CE14_184ED4[];
+// AI - Second event building interior IDs that count as visited for missions
 extern s16 D_8009CE34_184EF4[];
 extern u8 D_8009E4C8_186588[];
 extern u8 D_8009E4D4_186594[];
@@ -1807,21 +1826,28 @@ extern u8 D_800E6468[];
 extern f32 D_800E659C;
 extern f32 D_800E65A0;
 extern f32 D_800E65A4;
+// AI - Interior state flags / mode bits (building entered, loading, etc.)
 extern s32 D_800E65A8;
 extern s32 D_800E65AC;
 extern s32 D_800E65B0;
 extern s32 D_800E65B4;
 extern s32 D_800E65B8;
+// AI - Pointer to the current room's object catalog (D_8008E0A8_176168[levelIndex][0])
 extern Unk80070F7CObj *D_800E65BC;
+// AI - Pointer to the current room's display lists (D_8009C1A8 + levelIndex*32)
 extern Gfx **D_800E65C0;
+// AI - Pointer to the current room's misc data (D_8009C4E4 + levelIndex*32)
 extern s32 *D_800E65C4;
+// AI - Pointer to the current room's configuration record (D_8009C804[levelIndex])
 extern Unk9C804 *D_800E65C8;
+// AI - Camera/interaction center X offset for the current room
 extern s32 D_800E65CC;
 extern s32 D_800E65D0;
 extern s32 D_800E65D4;
 extern s32 D_800E65D8;
 extern s32 D_800E65DC;
 extern f32 D_800E65E0;
+// AI - Current building data block pointer (D_800D6460 + buildingInteriorToLoadId*0x100)
 extern u8 *D_800E65E8;
 extern u8 D_800E65EC;
 extern u8 D_800E65ED;
@@ -1853,6 +1879,7 @@ extern Vec3f D_800E6650;
 extern Vec3f D_800E6660;
 extern Vec3f D_800E6670;
 extern Vec3f D_800E6680;
+// AI - Number of placed room object instances in the current room (D_800E66A8 entries)
 extern s32 D_800E668C;
 extern s32 D_800E6690;
 extern s32 D_800E6694;
@@ -1860,12 +1887,15 @@ extern s32 D_800E6698;
 extern s32 D_800E669C;
 extern s8 D_800E66A0;
 extern s8 D_800E66A1;
+// AI - Room sub-selector (from building data byte 0xE7); added to the world base to form levelIndex
 extern s32 D_800E66A4;
+// AI - Placed room object instances for the current room (built from the building data block)
 extern Unk800E66A8 D_800E66A8[];
 extern u8 D_800E66B0[];
 extern s16 D_800E66B2[];
 extern u8 D_800E66B3[];
 extern u8 D_800E69A7;
+// AI - Per-room byte data copied from the building block (D_800E65E8[0x80 + i])
 extern u8 D_800E69A8[];
 extern Vec3f D_800E6A10;
 extern s32 D_800E6A1C;

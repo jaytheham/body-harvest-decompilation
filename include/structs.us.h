@@ -337,44 +337,48 @@ typedef struct {
 	/* 0x0A */ s16 unkA;
 } Unk80070464Obj; /* size = 0x0C */
 
+// AI - Animated state for a placed room object instance (per room entry, mirrors Unk800E66A8 offsets 0x14+)
 typedef struct {
 	/* 0x00 */ u8 pad00[0x8];
-	/* 0x08 */ u8 unk8;
+	/* 0x08 */ u8 unk8; // AI - orientation (0-3) of the animated element
 	/* 0x09 */ u8 pad09[0x07];
-	/* 0x10 */ s16 unk10;
+	/* 0x10 */ s16 unk10; // AI - animation axis selection value (from room object unk1E)
 	/* 0x12 */ u8 pad12[0x02];
-	/* 0x14 */ f32 unk14;
-	/* 0x18 */ f32 unk18;
-	/* 0x1C */ f32 unk1C;
-	/* 0x20 */ f32 unk20;
-	/* 0x24 */ f32 unk24;
-	/* 0x28 */ f32 unk28;
+	/* 0x14 */ f32 unk14; // AI - animated base offset (X / U)
+	/* 0x18 */ f32 unk18; // AI - animated base offset (Y / V)
+	/* 0x1C */ f32 unk1C; // AI - animated base offset (Z / W)
+	/* 0x20 */ f32 unk20; // AI - animated position/scroll (X)
+	/* 0x24 */ f32 unk24; // AI - animated position/scroll (Y)
+	/* 0x28 */ f32 unk28; // AI - animated position/scroll (Z)
 } Unk80070F7CState; /* size = 0x2C */
 
+// AI - Room object type definition: one entry in a room's 32-entry object catalog (D_8008E0A8_176168[room][type])
+// AI - A room object provides the geometry, dimensions, embedded spawns and behavior flags referenced by placed instances (Unk800E66A8)
 typedef struct {
-	/* 0x00 */ u8 pad0[0xE];
-	/* 0x0E */ s16 unkE;
-	/* 0x10 */ s16 unk10;
-	/* 0x12 */ s16 unk12;
-	/* 0x14 */ s16 unk14;
-	/* 0x16 */ s16 unk16;
-	/* 0x18 */ u16 unk18;
-	/* 0x1A */ u16 unk1A;
-	/* 0x1C */ u8 pad1C[0x2];
-	/* 0x1E */ u16 unk1E;
-	/* 0x20 */ f32 unk20;
+	/* 0x00 */ u8 pad0[0xE]; // AI - bytes 0x00-0x03 = main Gfx display list, 0x04-0x07 = alternate (visited) display list, 0x08-0x0D = object type + spawn data
+	/* 0x0E */ s16 unkE; // AI - object-local X position (spawn/entity placement)
+	/* 0x10 */ s16 unk10; // AI - object-local Y position (height)
+	/* 0x12 */ s16 unk12; // AI - object-local Z position
+	/* 0x14 */ s16 unk14; // AI - object type in some reinterpretations (Unk80076538Obj.unkC)
+	/* 0x16 */ s16 unk16; // AI - room-visit related value (copied to the instance's unkC)
+	/* 0x18 */ u16 unk18; // AI - object/room width (dimension, halved for positioning & culling)
+	/* 0x1A */ u16 unk1A; // AI - object/room depth (dimension, halved for positioning & culling)
+	/* 0x1C */ u8 pad1C[0x2]; // AI - pad1C[0] = signed height offset written to the instance's unk4
+	/* 0x1E */ u16 unk1E; // AI - animation offset/scale parameter for the room entry
+	/* 0x20 */ f32 unk20; // AI - animation speed/magnitude (float, e.g. 0.1 / 2.0 / 5.0 / 25.0)
 	/* 0x24 */ u8 pad24[0x02];
-	/* 0x26 */ s16 unk26;
-	/* 0x28 */ s16 unk28;
-	/* 0x2A */ s16 unk2A;
-	/* 0x2C */ s16 unk2C;
-	/* 0x2E */ s16 unk2E;
-	/* 0x30 */ s16 unk30;
+	/* 0x26 */ s16 unk26; // AI - base offset for animated geometry (X)
+	/* 0x28 */ s16 unk28; // AI - base offset for animated geometry (Y)
+	/* 0x2A */ s16 unk2A; // AI - base offset for animated geometry (Z)
+	/* 0x2C */ s16 unk2C; // AI - base offset for animated geometry
+	/* 0x2E */ s16 unk2E; // AI - base offset for animated geometry
+	/* 0x30 */ s16 unk30; // AI - base offset for animated geometry
 	/* 0x32 */ u8 pad32[0x0E];
-	/* 0x40 */ s32 unk40;
-	/* 0x44 */ s32 unk44;
+	/* 0x40 */ s32 unk40; // AI - flag bitfield: rendering variant, animation axis (0x200-0x4000), visit-rehide (0x20000000/0x40000000), etc.
+	/* 0x44 */ s32 unk44; // AI - flag bitfield: 1 = skip render, 2 = no visit persist, 4 = no interaction
 } Unk80070F7CObj; /* size = 0x48 */
 
+// AI - Alias view of Unk80070F7CObj used by the room setup code (D_800E65BC points at the current room's object catalog)
 typedef struct {
 	/* 0x00 */ u8 pad0[0xE];
 	/* 0x0E */ s16 unkE;
@@ -382,13 +386,13 @@ typedef struct {
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;
 	/* 0x16 */ s16 unk16;
-	/* 0x18 */ u16 unk18;
-	/* 0x1A */ u16 unk1A;
+	/* 0x18 */ u16 unk18; // AI - width
+	/* 0x1A */ u16 unk1A; // AI - depth
 	/* 0x1C */ u8 pad1C[0x2];
 	/* 0x1E */ u16 unk1E;
 	/* 0x20 */ u8 pad20[0x20];
-	/* 0x40 */ s32 unk40;
-	/* 0x44 */ s32 unk44;
+	/* 0x40 */ s32 unk40; // AI - flags
+	/* 0x44 */ s32 unk44; // AI - flags
 } Unk800E65BC; /* stride 0x48 - bad copy of Unk80070F7CObj*/
 
 typedef struct {
@@ -470,10 +474,11 @@ typedef struct {
 	/* 0x16 */ u8 pad[2];
 } CutsceneEntry; /* size = 0x18 */
 
+// AI - Special-effect entry: effect display list + state for interior rendering (D_8008DED0_175F90)
 typedef struct {
-	/* 0x00 */ Gfx *unk0;
-	/* 0x04 */ s32 unk4;
-	/* 0x08 */ s32 unk8;
+	/* 0x00 */ Gfx *unk0; // AI - effect display list (NULL = disabled)
+	/* 0x04 */ s32 unk4; // AI - effect flags/count
+	/* 0x08 */ s32 unk8; // AI - enabled flag (0/1)
 } Unk8008DED0Entry; /* stride 0xC */
 
 typedef struct {
@@ -504,12 +509,14 @@ typedef struct {
 	/* 0x0D */ u8 unkD;
 } Unk89834Pos; /* size = 0x0E */
 
+// AI - View of a room object (Unk80070F7CObj) used to render the interactive selection highlight
+// AI - unk1A is the object depth; unk32/unk34 are the highlight rectangle offsets
 typedef struct {
 	/* 0x00 */ u8 pad0[0x1A];
-	/* 0x1A */ u16 unk1A;
+	/* 0x1A */ u16 unk1A; // AI - object/room depth
 	/* 0x1C */ u8 pad1C[0x16];
-	/* 0x32 */ s16 unk32;
-	/* 0x34 */ s16 unk34;
+	/* 0x32 */ s16 unk32; // AI - highlight offset X
+	/* 0x34 */ s16 unk34; // AI - highlight offset Z
 	/* 0x36 */ u8 pad36[0x12];
 } Unk800768B8Obj; /* size = 0x48 */
 
@@ -518,17 +525,19 @@ typedef struct {
 	/* 0x24 */ s16 unk24;
 } Unk8007A168Obj; /* size = 0x26 */
 
+// AI - View of a room object (Unk80070F7CObj) used to render door/transition rectangles
+// AI - unk18/unk1A are the object width/depth; unk36-unk3B are door geometry offsets
 typedef struct {
 	/* 0x00 */ u8 pad0[0x18];
-	/* 0x18 */ u16 unk18;
-	/* 0x1A */ u16 unk1A;
+	/* 0x18 */ u16 unk18; // AI - object/room width
+	/* 0x1A */ u16 unk1A; // AI - object/room depth
 	/* 0x1C */ u8 pad1C[0x1A];
-	/* 0x36 */ s16 unk36;
-	/* 0x38 */ s16 unk38;
-	/* 0x3A */ u8 unk3A;
-	/* 0x3B */ u8 unk3B;
+	/* 0x36 */ s16 unk36; // AI - door offset X
+	/* 0x38 */ s16 unk38; // AI - door offset Z
+	/* 0x3A */ u8 unk3A; // AI - door sub-type / flags
+	/* 0x3B */ u8 unk3B; // AI - door direction flags
 	/* 0x3C */ u8 pad3C[0x4];
-	/* 0x40 */ s32 unk40;
+	/* 0x40 */ s32 unk40; // AI - flags
 	/* 0x44 */ u8 pad44[0x4];
 } Unk80076678Obj; /* size = 0x48 */
 
@@ -2029,47 +2038,50 @@ typedef struct {
 	/* 0x04 */ u8 pad4[0x30];
 } Unk8009E8E0; /* size = 0x34 */
 
+// AI - Placed room object instance (one entry in the current room's layout, built from the building data block)
+// AI - Each instance references an object type from the room's 32-entry catalog (Unk80070F7CObj) via unk0
 typedef struct {
-	/* 0x00 */ u8 unk0;
+	/* 0x00 */ u8 unk0; // AI - room object type index (0-31) into D_800E65BC catalog
 	/* 0x01 */ u8 pad1[0x1];
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
-	/* 0x06 */ s16 unk6;
-	/* 0x08 */ u8 unk8;
+	/* 0x02 */ s16 unk2; // AI - room-space X position
+	/* 0x04 */ s16 unk4; // AI - height (Y) offset (from the object's pad1C[0])
+	/* 0x06 */ s16 unk6; // AI - room-space Z position
+	/* 0x08 */ u8 unk8; // AI - orientation (0-3)
 	/* 0x09 */ u8 pad9[0x1];
-	/* 0x0A */ s16 unkA;
-	/* 0x0C */ s16 unkC;
-	/* 0x0E */ s16 unkE;
-	/* 0x10 */ s16 unk10;
+	/* 0x0A */ s16 unkA; // AI - spawned entity/object handle (0 if none)
+	/* 0x0C */ s16 unkC; // AI - room-visit related value (from the object's unk16)
+	/* 0x0E */ s16 unkE; // AI - state/sentinel (-1 = unused)
+	/* 0x10 */ s16 unk10; // AI - additional state value
 	/* 0x12 */ u8 pad12[0x2];
-	/* 0x14 */ f32 unk14;
-	/* 0x18 */ f32 unk18;
-	/* 0x1C */ f32 unk1C;
-	/* 0x20 */ f32 unk20;
-	/* 0x24 */ f32 unk24;
-	/* 0x28 */ f32 unk28;
-	/* 0x2C */ u8 unk2C;
-	/* 0x2D */ u8 unk2D;
-	/* 0x2E */ u8 unk2E;
+	/* 0x14 */ f32 unk14; // AI - animated offset (X)
+	/* 0x18 */ f32 unk18; // AI - animated offset (Y)
+	/* 0x1C */ f32 unk1C; // AI - animated offset (Z)
+	/* 0x20 */ f32 unk20; // AI - animated position/scroll (X)
+	/* 0x24 */ f32 unk24; // AI - animated position/scroll (Y)
+	/* 0x28 */ f32 unk28; // AI - animated position/scroll (Z)
+	/* 0x2C */ u8 unk2C; // AI - room property byte
+	/* 0x2D */ u8 unk2D; // AI - room/doorway ID (low 6 bits = loading-zone target room)
+	/* 0x2E */ u8 unk2E; // AI - visited flags (bit 0 = visited, bit 1 = special state)
 	/* 0x2F */ u8 pad2F[0x1];
 } Unk800E66A8; /* stride 0x30 */
 
+// AI - Per-room configuration record (D_8009C804_1848C4, indexed by room/levelIndex; runtime pointer D_800E65C8)
 typedef struct {
-	/* 0x00 */ u8 unk0;
+	/* 0x00 */ u8 unk0; // AI - interaction/room mode
 	/* 0x01 */ u8 pad1[0x3];
-	/* 0x04 */ s32 unk4;
-	/* 0x08 */ s32 unk8;
+	/* 0x04 */ s32 unk4; // AI - spawn coordinate X
+	/* 0x08 */ s32 unk8; // AI - spawn coordinate Z
 	/* 0x0C */ s32 unkC;
-	/* 0x10 */ f32 unk10;
-	/* 0x14 */ f32 unk14;
+	/* 0x10 */ f32 unk10; // AI - used as a divisor for animation/scroll progress
+	/* 0x14 */ f32 unk14; // AI - used as a divisor for animation/scroll progress
 	/* 0x18 */ s32 unk18;
 	/* 0x1C */ s32 unk1C;
 	/* 0x20 */ s32 unk20;
 	/* 0x24 */ s32 unk24;
-	/* 0x28 */ s16 unk28;
-	/* 0x2A */ s16 unk2A;
+	/* 0x28 */ s16 unk28; // AI - interaction center X (plus D_800E65CC)
+	/* 0x2A */ s16 unk2A; // AI - interaction half width
 	/* 0x2C */ s32 unk2C;
-	/* 0x30 */ s16 unk30;
+	/* 0x30 */ s16 unk30; // AI - music/ambient id
 	/* 0x32 */ s16 unk32;
 	/* 0x34 */ s16 unk34;
 	/* 0x36 */ s16 unk36;
@@ -2156,14 +2168,15 @@ typedef struct {
 	u16 unk2;
 } Frontend52690Viewport;
 
+// AI - View of a room object (Unk80070F7CObj) for rooms that hold a spawn/entity: type + local placement
 typedef struct {
-	/* 0x00 */ u8 pad0[0x8];
-	/* 0x08 */ s16 unk8;
-	/* 0x0A */ s16 unkA;
-	/* 0x0C */ s16 unkC;
-	/* 0x0E */ s16 unkE;
-	/* 0x10 */ s16 unk10;
-	/* 0x12 */ s16 unk12;
+	/* 0x00 */ u8 pad0[0x8]; // AI - bytes 0x00-0x03 = main Gfx display list, 0x04-0x07 = alternate display list
+	/* 0x08 */ s16 unk8; // AI - local offset X (positioning within the room)
+	/* 0x0A */ s16 unkA; // AI - local offset Z (positioning within the room)
+	/* 0x0C */ s16 unkC; // AI - spawned entity/object type
+	/* 0x0E */ s16 unkE; // AI - local X position of the spawn
+	/* 0x10 */ s16 unk10; // AI - local Y position (height) of the spawn
+	/* 0x12 */ s16 unk12; // AI - local Z position of the spawn
 	/* 0x14 */ u8 pad14[0x34];
 } Unk80076538Obj; /* size = 0x48 */
 
@@ -2825,6 +2838,7 @@ typedef struct {
 	/* 0x50 */ u8 unk50;
 } Unk8007C698CellObj;
 
+// AI - Interior lighting/color data (D_8008DE78_175F38): 8 s16 color/brightness components
 typedef struct {
 	s16 unk0;
 	s16 unk2;

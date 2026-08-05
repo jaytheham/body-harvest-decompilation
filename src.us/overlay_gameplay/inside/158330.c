@@ -1,12 +1,14 @@
 #include <ultra64.h>
 #include "common.h"
 
+// AI - Interior lighting constants
 f32 D_8008DE00_175EC0 = 180.0f;
 f32 D_8008DE04_175EC4 = -200.0f;
+// AI - Interior lighting/room transition table
 s32 D_8008DE08_175EC8[] = {
 	2, 2, 10, 80, 7, 40, 3, 70, 7, 30, 10, 90, 2, 2, 3, 50, -1, 0
 };
-// Lighting data block (contains D_8008DE58_175F18, D_8008DE68_175F28, D_8008DE78_175F38)
+// AI - Interior lighting data block (contains ambient/light entries D_8008DE58, D_8008DE68, D_8008DE78)
 // plus trailing unnamed data up to 0x175F90
 u8 D_8008DE50_175F10[] = {
 	0x1E, 0x1E, 0x1E, 0x00, 0x1E, 0x1E, 0x1E, 0x00,
@@ -27,6 +29,7 @@ u8 D_8008DE50_175F10[] = {
 	0x08, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0xFF,
 };
 
+// AI - Interior special-effect entries (effect display list + enabled flag)
 Unk8008DED0Entry D_8008DED0_175F90[] = {
 	{ (Gfx *)0x0F00F070, 0x01000000, 0x00000001 },
 	{ NULL, 0x01000000, 0x00000000 },
@@ -5478,6 +5481,7 @@ s32 func_8007C3C0_164480(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
 	return 0;
 }
 
+// AI - Empty stub function (no-op placeholder)
 void func_8007C420_1644E0(void) {
 }
 
