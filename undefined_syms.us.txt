@@ -39,7 +39,7 @@ D_8008DE7C_175F3C = 0x8008DE7C;
 D_8008DE80_175F40 = 0x8008DE80;
 D_8008DE84_175F44 = 0x8008DE84;
 
-/* Symbols within overlay_gameplay/inside data_176060.c data section (overlap with D_8009C4C4_184584) */
+/* Symbols within overlay_gameplay/inside 158330.c data section (overlap with D_8009C4C4_184584) */
 D_8009C4C8_184588 = 0x8009C4C8;
 
 D_00030130 = 0x00030130;
@@ -5902,11 +5902,12 @@ D_800965D8 = 0x800965D8;
 D_800965E8 = 0x800965E8;
 D_800965F0 = 0x800965F0;
 D_80098FF0 = 0x80098FF0;
+/* Symbols within overlay_gameplay/inside 1648A0.c data section (overlap with D_8009E4D4_186594) */
 D_8009E8D8_186998 = 0x8009E8D8;
 D_8009E8DC_18699C = 0x8009E8DC;
-/* Symbols within overlay_gameplay/inside data_184F20.c data section (offset into D_800A05FC_1886BC route array) */
+/* Symbols within overlay_gameplay/inside 1648A0.c data section (offset into D_800A05FC_1886BC route array) */
 D_800A0614_1886D4 = 0x800A0614;
-/* Symbols within overlay_gameplay/inside data_184F20.c data section (offset into D_800A0908_1889C8) */
+/* Symbols within overlay_gameplay/inside 1648A0.c data section (offset into D_800A0908_1889C8) */
 D_800A090A_1889CA = 0x800A090A;
 func_8009BF64 = 0x8009BF64;
 func_800A3D00 = 0x800A3D00;
