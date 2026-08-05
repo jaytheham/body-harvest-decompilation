@@ -281,12 +281,14 @@ void loadLevel(s32 arg0) {
 #ifdef NON_MATCHING
 void loadLevelData(u8 arg0)
 {
-	Unk8031C88 sp48;
+	s32 j;
+	s32 tempKey;
+	s32 row;
+	u16 *cells;
+	u16 *rows;	u16 new_var;	Unk8031C88 sp48;
 	Unk80154082 sp44;
 	Unk80378D0 sp34;
 	s32 var_s0;
-	s32 j;
-	s32 row;
 	sp48 = D_80031C88_32888;
 	sp44 = D_800378CC_384CC;
 	sp34 = D_800378D0_384D0;
@@ -496,19 +498,23 @@ void loadLevelData(u8 arg0)
 	func_800101F0_10DF0(&D_80052560, var_s0, 0x528);
 	osSyncPrintf(&D_80037FEC_38BEC, 0x528, (D_8006AA60 == 0x528) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 
+	cells = rows = &D_801FEA30[0][0];
 	for (row = 0; row != 0xFF; row++)
 	{
 		j = 3;
-
-		D_801FEA30[row][2] ^= (row % 2) << 13;
-		D_801FEA30[row][1] ^= 0x4000 ^ (row % 2) << 13;
-		D_801FEA30[row][0] ^= (row % 2) << 13;
-		x = (row % 2) << 13;
+		tempKey = (row % 2) << 13;
+		cells[2] ^= tempKey;
+		cells[1] = (cells[1] ^ 0x4000) ^ tempKey;
+		cells[0] ^= tempKey;
 		do
 		{
-			D_801FEA30[row][j] = (D_801FEA30[row][j] ^ (((j) % 2) << 14)) ^ x;
-
+			s32 cellVal;
+			new_var = rows[j];
+			cellVal = new_var ^ ((j % 2) << 14);
+			rows[j] = cellVal ^ tempKey;
 		} while (++j != 0xFF);
+		cells += 0x100;
+		rows += 0x100;
 	}
 }
 #else
