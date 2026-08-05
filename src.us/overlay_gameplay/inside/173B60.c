@@ -1,6 +1,384 @@
 #include <ultra64.h>
 #include "common.h"
 
+// ============================================================
+// UI & pause menu data (ROM 0x18A770 - 0x18C440)
+// ============================================================
+
+char D_800A26B0_18A770[0x800] =
+	"Grenades\0"
+	"Health\0"
+	"Fuel\0"
+	"Pistol\0"
+	"Shotgun\0"
+	"Rifle \0"
+	"Machine Gun \0"
+	"Rocket Launcher \0"
+	"Dynamite \0"
+	"Power Core  \0"
+	"Shield \0"
+	"Shotgun Ammo \0"
+	"Shotgun Ammo \0"
+	"Rocket Launcher Ammo \0"
+	"Rocket Launcher Ammo \0"
+	"Special Weapon Ammo \0"
+	"Special Weapon Ammo \0"
+	"Machine Gun Ammo \0"
+	"Rifle Ammo \0"
+	"Weapon Crystal \0"
+	"Alien Artifact \0"
+	"-not definedg0- \0"
+	"Howitzer Shells \0"
+	"-not definedg2- \0"
+	"-not definedg3- \0"
+	"Access Card \0"
+	"-not definedg5- \0"
+	"Crank \0"
+	"Windmill Cog \0"
+	"Hieroglyph Map Piece \0"
+	"-not defined greece 9-\0"
+	"Hangar Key \0"
+	"-not definedj0- \0"
+	"Airboat Engine Parts  \0"
+	"Tank Factory Unlocked \0"
+	"Rua-Rua Idol \0"
+	"Swamp Fever Medicine \0"
+	"Kris Knife Handle \0"
+	"Kris Knife Hilt \0"
+	"Kris Knife Blade \0"
+	"-not definedj8- \0"
+	"Aircraft Factory Unlocked \0"
+	"-not definedj10- \0"
+	"-not definedu0- \0"
+	"Red Access Card \0"
+	"Green Access Card \0"
+	"-not definedu3- \0"
+	"Nitro Fuel \0"
+	"Totem Pole Section \0"
+	"Totem Pole Section \0"
+	"Totem Pole Section \0"
+	"Translator \0"
+	"-not definedu9- \0"
+	"-not definedu10- \0"
+	"-not defineds0- \0"
+	"-not defineds1- \0"
+	"-not defineds2- \0"
+	"Train Starting Handle \0"
+	"Access Card \0"
+	"Missile Launch Code \0"
+	"Reactor Key \0"
+	"-not defineds7- \0"
+	"-not defineds8- \0"
+	"-not defineds9- \0"
+	"-not defineds10- \0"
+	"-not definedc0- \0"
+	"-not definedc1- \0"
+	"-not definedc2- \0"
+	"-not definedc3- \0"
+	"-not definedc4- \0"
+	"-not definedc5- \0"
+	"-not definedc6- \0"
+	"-not definedc7- \0"
+	"-not definedc8- \0"
+	"-not definedc9- \0"
+	"-not definedc10- @;\0"
+	"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+;
+// English UI weapon/item name table (indexed by D_800A2EB0_18AF70)
+
+u16 D_800A2EB0_18AF70[0x80] = {
+	0x0000,0x0009,0x0010,0x0015,0x001C,0x0024,0x002B,0x0038,
+	0x0049,0x0053,0x0060,0x0068,0x0076,0x0084,0x009A,0x00B0,
+	0x00C5,0x00DA,0x00EC,0x00F8,0x0108,0x0118,0x0129,0x013A,
+	0x014B,0x015C,0x0169,0x017A,0x0181,0x018F,0x01A5,0x01BC,
+	0x01C8,0x01D9,0x01F0,0x0207,0x0215,0x022B,0x023E,0x024F,
+	0x0261,0x0272,0x028D,0x029F,0x02B0,0x02C1,0x02D4,0x02E5,
+	0x02F1,0x0305,0x0319,0x032D,0x0339,0x034A,0x035C,0x036D,
+	0x037E,0x038F,0x03A6,0x03B3,0x03C8,0x03D5,0x03E6,0x03F7,
+	0x0408,0x041A,0x042B,0x043C,0x044D,0x045E,0x046F,0x0480,
+	0x0491,0x04A2,0x04B3,0x04C4,0x048C,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+};
+// English string offsets into D_800A26B0_18A770
+
+char D_800A2FB0_18B070[0x800] =
+	"Grenades\0"
+	"Sant\351\0"
+	"Carburant\0"
+	"Pistolet\0"
+	"Fusil\0"
+	"Carabine \0"
+	"Mitraillette \0"
+	"Lance-roquettes \0"
+	"Dynamite \0"
+	"Centre Energie  \0"
+	"Bouclier \0"
+	"Balles fusil \0"
+	"Balles fusil \0"
+	"Roquettes \0"
+	"Roquettes \0"
+	"Munitions sp\351ciales \0"
+	"Munitions sp\351ciales \0"
+	"Balles mitraillette \0"
+	"Balles carabine \0"
+	"Cristaux \0"
+	"Relique Alien \0"
+	"-pas d\351finig0- \0"
+	"Obus Howitzer \0"
+	"-pas d\351finig2- \0"
+	"-pas d\351finig3- \0"
+	"Carte d'acc\350s \0"
+	"-pas d\351finig5- \0"
+	"Manivelle \0"
+	"Engrenage \0"
+	"Carte hi\351roglyphe \0"
+	"-pas d\351fini Gr\350ce 9-\0"
+	"Clef Hangar \0"
+	"-pas d\351finij0- \0"
+	"Pi\350ce a\351roglisseur  \0"
+	"Usine Tanks ouverte \0"
+	"Idole Rua-Rua\0"
+	"Potion anti-fi\350vre \0"
+	"Pommeau du sabre \0"
+	"Garde du sabre \0"
+	"Lame du sabre \0"
+	"-pas d\351finij8- \0"
+	"Usine d'avions ouverte \0"
+	"-pas d\351finij10- \0"
+	"-pas d\351finiu0- \0"
+	"Carte d'acc\350s rouge \0"
+	"Carte d'acc\350s verte \0"
+	"-pas d\351finiu3- \0"
+	"Nitro-carburant \0"
+	"Morceau du totem \0"
+	"Morceau du totem \0"
+	"Morceau du totem \0"
+	"D\351codeur\0"
+	"-pas d\351finiu9- \0"
+	"-pas d\351finiu10- \0"
+	"-pas d\351finis0- \0"
+	"-pas d\351finis1- \0"
+	"-pas d\351finis2- \0"
+	"Manivelle Train \0"
+	"Carte d'acc\350s\0"
+	"Code Missile \0"
+	"Clef r\351acteur \0"
+	"-pas d\351finis7- \0"
+	"-pas d\351finis8- \0"
+	"-pas d\351finis9- \0"
+	"-pas d\351finis10- \0"
+	"-pas d\351finic0- \0"
+	"-pas d\351finic1- \0"
+	"-pas d\351finic2- \0"
+	"-pas d\351finic3- \0"
+	"-pas d\351finic4- \0"
+	"-pas d\351finic5- \0"
+	"-pas d\351finic6- \0"
+	"-pas d\351finic7- \0"
+	"-pas d\351finic8- \0"
+	"-pas d\351finic9- \0"
+	"-pas d\351finic10- @;\0"
+	"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+;
+// French UI weapon/item name table (indexed by D_800A37B0_18B870)
+
+u16 D_800A37B0_18B870[0x80] = {
+	0x0000,0x0009,0x000F,0x0019,0x0022,0x0028,0x0032,0x0040,
+	0x0051,0x005B,0x006C,0x0076,0x0084,0x0092,0x009D,0x00A8,
+	0x00BD,0x00D2,0x00E7,0x00F8,0x0102,0x0111,0x0121,0x0130,
+	0x0140,0x0150,0x015F,0x016F,0x017A,0x0185,0x0198,0x01AD,
+	0x01BA,0x01CA,0x01DF,0x01F4,0x0202,0x0216,0x0228,0x0238,
+	0x0247,0x0257,0x026F,0x0280,0x0290,0x02A5,0x02BA,0x02CA,
+	0x02DB,0x02ED,0x02FF,0x0311,0x031A,0x032A,0x033B,0x034B,
+	0x035B,0x036B,0x037C,0x038A,0x0398,0x03A7,0x03B7,0x03C7,
+	0x03D7,0x03E8,0x03F8,0x0408,0x0418,0x0428,0x0438,0x0448,
+	0x0458,0x0468,0x0478,0x0488,0x044F,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+};
+// French string offsets into D_800A2FB0_18B070
+
+char D_800A38B0_18B970[0x800] =
+	"Granaten\0"
+	"Gesundheit\0"
+	"Sprit\0"
+	"Pistole\0"
+	"Schrotflinte\0"
+	"Gewehr\0"
+	"Maschinengewehr\0"
+	"Raketenwerfer\0"
+	"Dynamit \0"
+	"Energiezelle\0"
+	"Schilde\0"
+	"Schrotflinten-Muni. \0"
+	"Schrotflinten-Muni.\0"
+	"Raketenwerfer-Muni.\0"
+	"Raketenwerfer-Muni.\0"
+	"Spezialwaffen-Muni.\0"
+	"Spezialwaffen-Muni.\0"
+	"Maschinengewehr-Muni. \0"
+	"Gewehr-Muni.\0"
+	"Waffenkristall\0"
+	"Alien-Artefakt \0"
+	"-not definedg0- \0"
+	"Haubitzen-Muni.\0"
+	"-not definedg2- \0"
+	"-not definedg3- \0"
+	"Zugangskarte\0"
+	"-not definedg5- \0"
+	"Kurbel\0"
+	"Zahnrad\0"
+	"Hieroglyphen-Kartenteil\0"
+	"-not defined greece 9-\0"
+	"Hangarschl\374ssel\0"
+	"-not definedj0- \0"
+	"Airboat-Antriebsteil\0"
+	"Panzerfabrik aufgeschlossen\0"
+	"Rua-Rua-G\366tze\0"
+	"Sumpffieber-Munition\0"
+	"Kris'-Messer-Griff \0"
+	"Kris'-Messer-Heft\0"
+	"Kris'-Messer-Klinge \0"
+	"-not definedj8- \0"
+	"Flugzeugfabrik aufgeschlossen\0"
+	"-not definedj10- \0"
+	"-not definedu0- \0"
+	"Rote Zugangskarte\0"
+	"Gr\374ne Zugangskarte\0"
+	"-not definedu3- \0"
+	"Nitro-Sprit\0"
+	"Totempfahl-Teil\0"
+	"Totempfahl-Teil\0"
+	"Totempfahl-Teil\0"
+	"\334bersetzer \0"
+	"-not definedu9- \0"
+	"-not definedu10- \0"
+	"-not defineds0- \0"
+	"-not defineds1- \0"
+	"-not defineds2- \0"
+	"Zug-Startkurbel\0"
+	"Zugangskarte\0"
+	"Raketenabschu\337code\0"
+	"Reaktorschl\374ssel\0"
+	"-not defineds7- \0"
+	"-not defineds8- \0"
+	"-not defineds9- \0"
+	"-not defineds10- \0"
+	"-not definedc0- \0"
+	"-not definedc1- \0"
+	"-not definedc2- \0"
+	"-not definedc3- \0"
+	"-not definedc4- \0"
+	"-not definedc5- \0"
+	"-not definedc6- \0"
+	"-not definedc7- \0"
+	"-not definedc8- \0"
+	"-not definedc9- \0"
+	"-not definedc10- @;\0"
+	"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+;
+// German UI weapon/item name table (indexed by D_800A40B0_18C170)
+
+u16 D_800A40B0_18C170[0x80] = {
+	0x0000,0x0009,0x0014,0x001A,0x0022,0x002F,0x0036,0x0046,
+	0x0054,0x005D,0x006A,0x0072,0x0087,0x009B,0x00AF,0x00C3,
+	0x00D7,0x00EB,0x0102,0x010F,0x011E,0x012E,0x013F,0x014F,
+	0x0160,0x0171,0x017E,0x018F,0x0196,0x019E,0x01B6,0x01CD,
+	0x01DD,0x01EE,0x0203,0x021F,0x022D,0x0242,0x0256,0x0268,
+	0x027D,0x028E,0x02AC,0x02BE,0x02CF,0x02E1,0x02F4,0x0305,
+	0x0311,0x0321,0x0331,0x0341,0x034D,0x035E,0x0370,0x0381,
+	0x0392,0x03A3,0x03B3,0x03C0,0x03D3,0x03E4,0x03F5,0x0406,
+	0x0417,0x0429,0x043A,0x044B,0x045C,0x046D,0x047E,0x048F,
+	0x04A0,0x04B1,0x04C2,0x04D3,0x049B,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
+};
+// German string offsets into D_800A38B0_18B970
+
+u8 D_800A41B0_18C270[0xCC] = {
+	0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,
+	0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,
+	0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,
+	0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,
+	0x00,0x00,0x00,0x00,0x03,0x02,0x03,0x03,0x00,0x80,0x00,0x80,0x00,0x80,0x00,0x00,
+	0x00,0x00,0x67,0xC1,0xFB,0x01,0x34,0x01,0x81,0x81,0xFF,0xFF,0x66,0x66,0x77,0x77,
+	0x88,0x88,0x99,0x99,0xAA,0xAA,0xBB,0xBB,0xCC,0xCC,0xDD,0xDD,0xEE,0xEE,0xFF,0xFF,
+	0x00,0x01,0x00,0x00,0x80,0x0A,0x54,0xE0,0x80,0x0A,0x54,0xE8,0x80,0x0A,0x54,0xF0,
+	0x80,0x0A,0x54,0xF4,0x80,0x0A,0x54,0xFC,0x80,0x0A,0x55,0x00,0x80,0x0A,0x55,0x04,
+	0x80,0x0A,0x55,0x0C,0x80,0x0A,0x55,0x18,0x80,0x0A,0x55,0x1C,0x80,0x0A,0x55,0x28,
+	0x80,0x0A,0x55,0x34,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01,0x00,0x00,0x13,0x88,0xFF,0xFF,0xFF,0x9C,
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+};
+// HUD icon/sprite texture blob (IA texture + frame pointers)
+
+u8 D_800A427C_18C33C[0x10] = {
+	0x00,0x00,0x00,0x02,0x00,0x00,0x02,0x00,0x03,0x00,0x00,0x00,0x0F,0x11,0x04,0x00,
+};
+// Pause menu texture indices
+
+char *D_800A428C_18C34C[15] = {
+	(char *)0x800A5540,(char *)0x800A5550,(char *)0x800A5558,(char *)0x800A5560,
+	(char *)0x800A5564,(char *)0x800A556C,(char *)0x800A5574,(char *)0x800A5584,
+	(char *)0x800A558C,(char *)0x800A5594,(char *)0x800A559C,(char *)0x800A55A4,
+	(char *)0x800A55AC,(char *)0x800A55B8,(char *)0x800A55C4,
+};
+// Pause menu label pointers (English)
+
+char *D_800A42C8_18C388[15] = {
+	(char *)0x800A55CC,(char *)0x800A55DC,(char *)0x800A55E8,(char *)0x800A55F0,
+	(char *)0x800A55F8,(char *)0x800A5600,(char *)0x800A5608,(char *)0x800A5618,
+	(char *)0x800A5620,(char *)0x800A5628,(char *)0x800A5630,(char *)0x800A5638,
+	(char *)0x800A5640,(char *)0x800A564C,(char *)0x800A5658,
+};
+// Pause menu label pointers (French)
+
+char *D_800A4304_18C3C4[15] = {
+	(char *)0x800A5660,(char *)0x800A5670,(char *)0x800A5678,(char *)0x800A5680,
+	(char *)0x800A5688,(char *)0x800A5690,(char *)0x800A5698,(char *)0x800A56A0,
+	(char *)0x800A56A8,(char *)0x800A56B0,(char *)0x800A56B8,(char *)0x800A56C0,
+	(char *)0x800A56C8,(char *)0x800A56D4,(char *)0x800A56E0,
+};
+// Pause menu label pointers (German)
+
+s32 D_800A4340_18C400 = 4;
+
+s32 D_800A4344_18C404 = 0;
+
+s16 D_800A4348_18C408 = 0;
+
+u8 pad_18C49C[0x8] = {
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+};
+// padding before D_800A4354 (2 bytes auto-aligned)
+
+Unk800A4354 D_800A4354_18C414 = { 0x01100028, 0xFFFF };
+
+Unk800A4354 D_800A435C_18C41C = { 0x00000000, 0x0000 };
+
+Unk800A4354 D_800A4364_18C424 = { 0x00000000, 0x0000 };
+
+u16 D_800A436C_18C42C = 0x0000;
+
+s16 D_800A4370_18C430 = 0x0000;
+
+u8 pad_18C4C4[0xC] = {
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+};
+// trailing padding (2 bytes auto-aligned)
 
 // AI - Initialize HUD state variables to default values
 void func_8008BAA0_173B60(void) {
@@ -714,13 +1092,13 @@ void func_8008D900_1759C0(void) {
 	u16 sp50_unk4;
 	s32 sp48_unk0;
 	u16 sp48_unk4;
-	sp58_unk0 = D_800A4354.unk0;
-	sp58_unk4 = D_800A4354.unk4;
-	sp50_unk0 = D_800A435C.unk0;
-	sp50_unk4 = D_800A435C.unk4;
-	sp48_unk0 = D_800A4364.unk0;
-	sp48_unk4 = D_800A4364.unk4;
-	D_800A436C += 1;
+	sp58_unk0 = D_800A4354_18C414.unk0;
+	sp58_unk4 = D_800A4354_18C414.unk4;
+	sp50_unk0 = D_800A435C_18C41C.unk0;
+	sp50_unk4 = D_800A435C_18C41C.unk4;
+	sp48_unk0 = D_800A4364_18C424.unk0;
+	sp48_unk4 = D_800A4364_18C424.unk4;
+	D_800A436C_18C42C += 1;
 	func_8001A130_1AD30(0x4A - D_800FCF26, D_80068088 - 0x50);
 	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_START) == 0) {
 		D_800FCA80 = 0;
@@ -740,7 +1118,7 @@ void func_8008D900_1759C0(void) {
 		} else {
 			func_8008BB14_173BD4();
 		}
-		D_800A4370 = 0;
+		D_800A4370_18C430 = 0;
 	}
 	osWritebackDCacheAll();
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);

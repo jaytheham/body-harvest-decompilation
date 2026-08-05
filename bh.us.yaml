@@ -352,7 +352,8 @@ segments:
       - [0x176060, .data, overlay_gameplay/inside/data_176060] # Room data & level tables
       - [0x184F20, .data, overlay_gameplay/inside/data_184F20] # Player rendering data (texture, char tables, NPC data, routes, camera)
       - [0x18A6E0, .data, overlay_gameplay/inside/16AF30] # Effects - sprite & lens flare data
-      - [0x18A770, bin]
+      - [0x18A770, .data, overlay_gameplay/inside/173B60] # UI & pause menu - sound/text tables
+      - [0x18C440, bin]
 
   - name: overlay_level_greece
     type: code
