@@ -202,7 +202,7 @@ void func_800705E0_1586A0(void *arg0) {
 	D_800E66A4 = D_800E65E8[0xE7];
 
 	levelIndex = D_8009C4C4_184584[currentLevel] + D_800E66A4;
-	D_800E65BC = (Unk80070F7CObj *)&D_8008E0A8_176168[levelIndex * 0x900];
+	D_800E65BC = (Unk80070F7CObj *)&D_8008E0A8_176168[levelIndex][0];
 	D_800E65C0 = (Gfx **)&D_8009C1A8_184268[levelIndex << 5];
 	D_800E65C4 = (s32 *)&D_8009C4E4_1845A4[levelIndex << 5];
 	D_800E65C8 = &D_8009C804_1848C4[levelIndex];
@@ -734,8 +734,8 @@ void func_800717B4_159874(void) {
 		v0 = 0;
 	}
 	if ((&D_8009C4C8)[currentLevel - 1] * 8 < (&D_8009C4C8)[currentLevel] * 8) {
-		ptr = D_8009C4E4 + (&D_8009C4C8)[currentLevel - 1] * 8;
-		endptr = D_8009C4E4 + (&D_8009C4C8)[currentLevel] * 8;
+		ptr = D_8009C4E4_1845A4 + (&D_8009C4C8)[currentLevel - 1] * 8;
+		endptr = D_8009C4E4_1845A4 + (&D_8009C4C8)[currentLevel] * 8;
 		do {
 			val = *ptr;
 			*ptr++ = v0;
@@ -4729,7 +4729,7 @@ s32 func_8007A634_1626F4(s32 arg0) {
 	if (arg0 == 0x14) {
 		var_v0 = 0;
 		do {
-			if ((buildingInteriorToLoadId == D_8009CE14[currentLevel * 3 + var_v0 - 3]) &&
+			if ((buildingInteriorToLoadId == D_8009CE14_184ED4[currentLevel * 3 + var_v0 - 3]) &&
 				(D_80048026 & (1 << (currentLevel * three + var_v0 + 0x1D)))) {
 				return 1;
 			}
@@ -4752,7 +4752,7 @@ s32 func_8007A6DC_16279C(s32 arg0) {
 	if (arg0 == 0x13) {
 		var_v0 = 0;
 		do {
-			if ((buildingInteriorToLoadId == D_8009CE34[currentLevel * 3 + var_v0 - 3]) &&
+			if ((buildingInteriorToLoadId == D_8009CE34_184EF4[currentLevel * 3 + var_v0 - 3]) &&
 				(D_80048028 & (1 << (currentLevel * three + var_v0 + 0x1D)))) {
 				return 1;
 			}
@@ -4773,7 +4773,7 @@ void func_8007A784_162844(s32 arg0) {
 	if (arg0 == 0x14) {
 		var_v0 = 0;
 		do {
-			if (buildingInteriorToLoadId == D_8009CE14[currentLevel * 3 + var_v0 - 3]) {
+			if (buildingInteriorToLoadId == D_8009CE14_184ED4[currentLevel * 3 + var_v0 - 3]) {
 				D_80048026 |= 1 << (currentLevel + currentLevel + currentLevel + var_v0 + 0x1D);
 				return;
 			}
@@ -4793,7 +4793,7 @@ void func_8007A818_1628D8(s32 arg0) {
 	if (arg0 == 0x13) {
 		var_v0 = 0;
 		do {
-			if (buildingInteriorToLoadId == D_8009CE34[currentLevel * 3 + var_v0 - 3]) {
+			if (buildingInteriorToLoadId == D_8009CE34_184EF4[currentLevel * 3 + var_v0 - 3]) {
 				D_80048028 |= 1 << (currentLevel + currentLevel + currentLevel + var_v0 + 0x1D);
 				return;
 			}
