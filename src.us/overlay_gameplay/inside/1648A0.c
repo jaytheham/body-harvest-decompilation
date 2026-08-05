@@ -1,6 +1,72 @@
 #include <ultra64.h>
 #include "common.h"
 
+// ============================================================
+// 1648A0 rodata
+// ============================================================
+
+const char D_800A4BB0_18CC70[] = "ALLOCATE 2 PLAYER BUFFERS:\n";
+
+const char D_800A4BCC_18CC8C[] = "ERROR: could not find search animation for object %d. Using SEARCH_MED\n";
+
+const char D_800A4C14_18CCD4[] = "Ussr Search Table Parse\n";
+
+const char D_800A4C30_18CCF0[] = "Usa Search Table Parse\n";
+
+const char D_800A4C48_18CD08[] = "Java Search Table Parse\n";
+
+const char D_800A4C64_18CD24[] = "Greec Search Table Parse\n";
+
+const char D_800A4C80_18CD40[] = "For obj=%d style = %d,  search anim is %s\n";
+
+const char D_800A4CAC_18CD6C[] = "Call Doug - inSearchObject() NOW!\n";
+
+const char D_800A4CD0_18CD90[] = "Turn to door\n";
+
+const char D_800A4CE0_18CDA0[] = "ouch\n";
+
+const char D_800A4CE8_18CDA8[] = "ALLOCATE 2 CHARACTER BUFFERS\n";
+
+const f64 D_800A4D08_18CDC8[1] = {3.141592654};
+
+const f64 D_800A4D10_18CDD0[1] = {3.141592654};
+
+const f64 D_800A4D18_18CDD8[1] = {3.141592654};
+
+const f64 D_800A4D20_18CDE0[1] = {3.141592654};
+
+const f64 D_800A4D28_18CDE8[1] = {3.141592654};
+
+const f64 D_800A4D30_18CDF0[1] = {180.0};
+
+const f64 D_800A4D38_18CDF8[1] = {3.141592654};
+
+const f64 D_800A4D40_18CE00[1] = {3.141592654};
+
+const f64 D_800A4D48_18CE08[1] = {3.141592654};
+
+const u32 jtbl_800A4D50_18CE10[] = {
+	0x8007D7D0, 0x8007D7DC, 0x8007D7E8, 0x8007D7F4, 0x8007D800,
+};
+
+const u32 jtbl_800A4D64_18CE24[] = {
+	0x8007D848, 0x8007D854, 0x8007D860, 0x8007D86C, 0x8007D878,
+};
+
+const u32 jtbl_800A4D78_18CE38[] = {
+	0x8007D930, 0x8007D93C, 0x8007D948, 0x8007D954, 0x8007D960, 0x00000000,
+};
+
+const f64 D_800A4D90_18CE50[1] = {180.0};
+
+const f64 D_800A4D98_18CE58[1] = {180.0};
+
+const f64 D_800A4DA0_18CE60[1] = {180.0};
+
+const f64 D_800A4DA8_18CE68[1] = {0.1};
+
+const f64 D_800A4DB0_18CE70[1] = {0.2};
+
 // AI - Initialize player character state and animation
 void func_8007C7E0_1648A0(void) {
 	VehicleInstance *v0 = &D_800E6A78;
@@ -587,7 +653,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 
 				route = &D_800A05FC_1886BC[D_800E6A34];
 				path = route->unk14;
-				arg0->unkE = (s16)((f64)((f32)path[D_800A0904_1889C4].unk14 * 32768.0f) / D_800A4D98_18CE58);
+				arg0->unkE = (s16)((f64)((f32)path[D_800A0904_1889C4].unk14 * 32768.0f) / D_800A4D98_18CE58[0]);
 
 				D_800E6A78.unk4C = (f32)path[D_800A0904_1889C4].unk0;
 				D_800E6A78.unk50 = (f32)path[D_800A0904_1889C4].unk2;
@@ -614,7 +680,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 			}
 
 			if (path[D_800A0904_1889C4].unk14 != 0x7D0) {
-				arg0->unkE = (s16)((f64)((f32)path[D_800A0904_1889C4].unk14 * 32768.0f) / D_800A4DA0_18CE60);
+				arg0->unkE = (s16)((f64)((f32)path[D_800A0904_1889C4].unk14 * 32768.0f) / D_800A4DA0_18CE60[0]);
 				route = &D_800A05FC_1886BC[D_800E6A34];
 			}
 
@@ -797,7 +863,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 
 	if ((((Unk165E60AnimState *)D_800E6F00)->unk40C == 0) && ((((Unk165E60AnimState *)D_800E6F00)->unk18 == 3) || (((Unk165E60AnimState *)D_800E6F00)->unk18 == 8)) && (((Unk165E60AnimState *)D_800E6F00)->unk1C == 1.0f)) {
 		func_800153D8_15FD8(0x96);
-		func_80014A3C_1563C(D_800E6F00, 0x97, 0, 0, (f32)(((f64)(func_800038E0_44E0() & 1) * D_800A4DA8_18CE68) + D_800A4DB0_18CE70));
+		func_80014A3C_1563C(D_800E6F00, 0x97, 0, 0, (f32)(((f64)(func_800038E0_44E0() & 1) * D_800A4DA8_18CE68[0]) + D_800A4DB0_18CE70[0]));
 	}
 
 	D_800A08FC_1889BC = D_800E65A8;

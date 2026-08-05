@@ -7,6 +7,61 @@ f32 D_8008DDF4_175EB4 = 100.0f;
 f32 D_8008DDF8_175EB8 = 75.0f;
 f32 D_8008DDFC_175EBC = 700.0f;
 
+// ============================================================
+// 167C90 rodata
+// ============================================================
+
+const char D_800A4DC0_18CE80[] = "PlayerInside.RealXpos=%f\n";
+
+const char D_800A4DDC_18CE9C[] = "\n\n";
+
+const char D_800A4DE0_18CEA0[] = "lookAt, cameraYaw, cameraPitch, cameraViewDistance\n";
+
+const char D_800A4E14_18CED4[] = "%f, %f, %f, %d, %d, %f,\n";
+
+const char D_800A4E30_18CEF0[] = "\n\n";
+
+const char D_800A4E34_18CEF4[] = "--MAP\n";
+
+const char D_800A4E3C_18CEFC[] = "%d ";
+
+const char D_800A4E40_18CF00[] = "\n";
+
+const char D_800A4E44_18CF04[] = "Camera Collision Occured x: %d z: %d\n";
+
+const char D_800A4E6C_18CF2C[] = "Left Face Hit\n";
+
+const char D_800A4E7C_18CF3C[] = "Right Face Hit\n";
+
+const char D_800A4E8C_18CF4C[] = "Front Face Hit\n";
+
+const char D_800A4E9C_18CF5C[] = "Back Face Hit\n";
+
+const char D_800A4EAC_18CF6C[] = "ERROR: NO FACES HIT\n";
+
+const char D_800A4EC4_18CF84[] = "CAMERA IS OUTSIDE ROOM,  RESETTING YAW inWallYaw=%d, cameraYaw=%d\n";
+
+const u32 jtbl_800A4F08_18CFC8[] = {
+	0x8007FDB4, 0x8007FDF0, 0x8007FDA0, 0x8007FDC8, 0x8007FDF8, 0x8007FE0C,
+};
+
+const f64 D_800A4F20_18CFE0[1] = {180.0};
+
+// These two constants are referenced as scalar externs (see variables.us.h) so the
+// matched codegen in func_80080770_168830 is preserved; the bytes live here.
+const u8 D_800A4F28_18CFE8_bytes[8] = { 0x40, 0x60, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00 };
+const u8 D_800A4F30_18CFF0_bytes[8] = { 0x40, 0x60, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
+const f64 D_800A4F38_18CFF8[1] = {91.02222222222223};
+
+const f64 D_800A4F40_18D000[1] = {182.04444444444445};
+
+const f64 D_800A4F48_18D008[1] = {22.5};
+
+const u32 jtbl_800A4F50_18D010[] = {
+	0x800829E8, 0x80082618, 0x80082704, 0x800827F0, 0x800828EC, 0x00000000, 0x00000000, 0x00000000, 
+};
+
 #ifdef NON_MATCHING
 // AI - Reset all camera/view state variables to default values
 void func_8007FBD0_167C90(void) {
@@ -99,7 +154,7 @@ void func_8007FC74_167D34(void) {
 		D_800E65A0 = 50.0f - (temp_f0 / 6.0f);
 	}
 
-	D_8008DDF0_175EB0 = ((((f32)func_80003824_4424(sp4C, sp50)) * D_800A4F20_18CFE0) / 32768.0);
+	D_8008DDF0_175EB0 = ((((f32)func_80003824_4424(sp4C, sp50)) * D_800A4F20_18CFE0[0]) / 32768.0);
 	if (D_8008DDF0_175EB0 < 0.0f) {
 		D_8008DDF0_175EB0 += 360.0f;
 	}
@@ -567,7 +622,7 @@ s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
 	f32 temp_f2;
 	s32 var_v1;
 
-	temp_f2 = (f32) ((f64) arg0 / D_800A4F40_18D000);
+	temp_f2 = (f32) ((f64) arg0 / D_800A4F40_18D000[0]);
 	if (arg1 != 0) {
 		temp_f2 += 15.0f;
 		if (temp_f2 < 0.0f) {
@@ -578,7 +633,7 @@ s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
 		return var_v1;
 	}
 
-	temp_f2 = (f32) ((f64) temp_f2 + D_800A4F48_18D008);
+	temp_f2 = (f32) ((f64) temp_f2 + D_800A4F48_18D008[0]);
 	if (temp_f2 < 0.0f) {
 		temp_f2 += 360.0f;
 	}

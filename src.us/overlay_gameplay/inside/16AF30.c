@@ -36,6 +36,72 @@ u8 D_800A26A4_18A764 = 0;
 // AI - Unnamed padding before the UI sound tables
 u8 pad_18A768[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 
+// ============================================================
+// 16AF30 rodata
+// ============================================================
+
+const char D_800A4F70_18D030[] = "ieNormVecF3()  {0,0,0} -> {0,0,0}\n";
+
+const char D_800A4F94_18D054[] = "WARNING : Out of space to create a new special effect of type %d.\n";
+
+const char D_800A4FD8_18D098[] = "EFFECTS WARNING : Call to free up an effect which does not exist\n";
+
+const char D_800A501C_18D0DC[] = "WARNING - New special effect unit cannot be allocated - out of space.\n";
+
+const char D_800A5064_18D124[] = "UNIT POOL CRITICAL ERROR - Call to free unused unit %d from effect %d\n";
+
+const char D_800A50AC_18D16C[] = "ERROR : Tried to kill unit from effect which has no units.\n";
+
+const char D_800A50E8_18D1A8[] = "ERROR : Unit list inconsistency occurred with 2 units left.\n";
+
+const char D_800A5128_18D1E8[] = "EFFECTS WARNING : Call to free up invalid triple effect unit.\n";
+
+const char D_800A5168_18D228[] = "EFFECTS WARNING : Call to free up invalid double effect unit.\n";
+
+const char D_800A51A8_18D268[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n";
+
+const char D_800A51F8_18D2B8[] = "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n";
+
+const char D_800A5248_18D308[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n";
+
+const char D_800A5298_18D358[] = "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n";
+
+const char D_800A52E8_18D3A8[] = "EFFECTS WARNING : Cannot start fire effect - there are no units left\n";
+
+const char D_800A5330_18D3F0[] = "INSIDE EFFECTS WARNING : Spurt effect not created - could not allocated any units\n";
+
+const char D_800A5384_18D444[] = "EFFECTS WARNING: Failed to create a jet stream - could not allocate any units\n";
+
+const char D_800A53D4_18D494[] = "Call to draw generic flat effect with unknown render type.\n";
+
+const char D_800A5410_18D4D0[] = "INSIDE FX WARNING : Call to draw an effect of unknown type %d.\n";
+
+const f64 D_800A5450_18D510[1] = {255.0};
+
+const f64 D_800A5458_18D518[1] = {255.0};
+
+const f64 D_800A5460_18D520[1] = {255.0};
+
+const f64 D_800A5468_18D528[1] = {0.9};
+
+const f64 D_800A5470_18D530[1] = {255.0};
+
+const f64 D_800A5478_18D538[1] = {255.0};
+
+const f64 D_800A5480_18D540[1] = {255.0};
+
+const u32 jtbl_800A5488_18D548[] = {
+	0x80086DDC, 0x80086DEC, 0x80086DFC, 0x80086E0C, 0x80086E1C, 0x80086E2C, 0x80086E3C, 0x80086E4C, 
+	0x80086E5C,
+};
+
+const u32 jtbl_800A54AC_18D56C[] = {
+	0x8008B3B0, 0x8008B3C0, 0x8008B3D0, 0x8008B3E0, 0x8008B3F0, 0x8008B400, 0x8008B438, 0x8008B410, 
+	0x8008B420,
+};
+
+const f64 D_800A54D0_18D590[1] = {1.2};
+
 // AI - 3x3 matrix-by-vector multiplication
 void func_80082E70_16AF30(f32 *arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->x = arg1->x * arg0[0] + arg1->y * arg0[3] + arg0[6] * arg1->z;
@@ -415,17 +481,17 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 			*(s16 *)&newUnit[0] = *(s16 *)&effectUnit[0];
 			*(s16 *)&newUnit[2] = *(s16 *)&effectUnit[2];
 			*(s16 *)&newUnit[4] = *(s16 *)&effectUnit[4];
-			sp34 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5450_18D510);
+			sp34 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5450_18D510[0]);
 			if ((func_800038E0_44E0() % 21) < 10) {
 				sp34 = 0.0f - sp34;
 			}
 			sp34 += arg1->x;
-			sp38 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5458_18D518);
+			sp38 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5458_18D518[0]);
 			if ((func_800038E0_44E0() % 21) < 10) {
 				sp38 = 0.0f - sp38;
 			}
 			sp38 += arg1->y;
-			sp3C = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5460_18D520);
+			sp3C = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5460_18D520[0]);
 			if ((func_800038E0_44E0() % 21) < 10) {
 				sp3C = 0.0f - sp3C;
 			}
@@ -899,7 +965,7 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 
 	effect = func_80083584_16B644(0xD);
 	if (effect != -3) {
-		temp = (s16)(s32)((f64)(f32)arg3 * D_800A5468_18D528);
+		temp = (s16)(s32)((f64)(f32)arg3 * D_800A5468_18D528[0]);
 
 		// This ptr arithmetic is probably wrong, it should be an array access instead:
 		ofs = (effect << 2) - effect;
@@ -1031,19 +1097,19 @@ void func_800852B8_16D378(s32 arg0) {
 		sp44.z = (f32)(s8)baseBytes[2];
 		func_80083014_16B0D4(&sp44, &sp44);
 
-		sp38.x = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[4]) / D_800A5470_18D530);
+		sp38.x = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[4]) / D_800A5470_18D530[0]);
 		if ((func_800038E0_44E0() % 21) < 10) {
 			sp38.x = 0.0f - sp38.x;
 		}
 		sp38.x += sp44.x;
 
-		sp38.y = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[4]) / D_800A5478_18D538);
+		sp38.y = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[4]) / D_800A5478_18D538[0]);
 		if ((func_800038E0_44E0() % 21) < 10) {
 			sp38.y = 0.0f - sp38.y;
 		}
 		sp38.y += sp44.y;
 
-		sp38.z = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[4]) / D_800A5480_18D540);
+		sp38.z = (f32)((f64)(f32)(func_800038E0_44E0() % baseBytes[4]) / D_800A5480_18D540[0]);
 		if ((func_800038E0_44E0() % 21) < 10) {
 			sp38.z = 0.0f - sp38.z;
 		}
@@ -3362,7 +3428,7 @@ void func_8008B594_173654(void) {
 		spA6 = (temp_result % 0x3C) + 0xC3;
 
 		D_800FB6DC = &spA4;
-		D_800FB6E0 = (f32)D_800FB6A0 * D_800A54D0_18D590;
+		D_800FB6E0 = (f32)D_800FB6A0 * D_800A54D0_18D590[0];
 		D_800FB6E4 = 0xFF;
 
 		func_8008A1D8_172298();

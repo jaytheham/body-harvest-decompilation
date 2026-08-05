@@ -50,6 +50,183 @@ Unk8008DED0Entry D_8008DED0_175F90[] = {
 	{ NULL, 0x01000000, 0x00000000 },
 };
 
+// ============================================================
+// 158330 rodata
+// ============================================================
+
+const char D_800A4380_18C440[] = "Char in the house:%d, x = %d, z = %d\n";
+
+const char D_800A43A8_18C468[] = "Object in the house:%d, x = %d, z = %d\n";
+
+const char D_800A43D0_18C490[] = "RED FLASH Light Activated\n";
+
+const char D_800A43EC_18C4AC[] = "ERROR: inSetUpCollMap(): Invalid MapEntry %d\n";
+
+const char D_800A441C_18C4DC[] = "Enter Finished\n";
+
+const char D_800A442C_18C4EC[] = "Exit Finished\n";
+
+const char D_800A443C_18C4FC[] = "Invalid Door Animation Type\n";
+
+const char D_800A445C_18C51C[] = "Give Obj Contents\n";
+
+const char D_800A4470_18C530[] = "startBookIndex = %d\n";
+
+const char D_800A4488_18C548[] = "NO SEARCH\n";
+
+const char D_800A4494_18C554[] = "Active Debug Object:%d\n";
+
+const char D_800A44AC_18C56C[] = "Active Debug Object:%d\n";
+
+const char D_800A44C4_18C584[] = "Changed Debug State To CHANGE OBJ WALKTO POS\n";
+
+const char D_800A44F4_18C5B4[] = "WalkToXOff:%d WalkToZOff:%d\n";
+
+const char D_800A4514_18C5D4[] = "WalkToXOff:%d WalkToZOff:%d\n";
+
+const char D_800A4534_18C5F4[] = "WalkToXOff:%d WalkToZOff:%d\n";
+
+const char D_800A4554_18C614[] = "WalkToXOff:%d WalkToZOff:%d\n";
+
+const char D_800A4574_18C634[] = "Changed Debug State To CHANGE DOOR WALKTO POS\n";
+
+const char D_800A45A4_18C664[] = "WalkToXPos:%d WalkToZPos:%d\n";
+
+const char D_800A45C4_18C684[] = "WalkToXPos:%d WalkToZPos:%d\n";
+
+const char D_800A45E4_18C6A4[] = "WalkToXPos:%d WalkToZPos:%d\n";
+
+const char D_800A4604_18C6C4[] = "WalkToXPos:%d WalkToZPos:%d\n";
+
+const char D_800A4624_18C6E4[] = "Changed Debug State To MAIN BOX COLL\n";
+
+const char D_800A464C_18C70C[] = "Obj:%d Width:%d Depth:%d\n";
+
+const char D_800A4668_18C728[] = "Obj:%d Width:%d Depth:%d\n";
+
+const char D_800A4684_18C744[] = "Obj:%d Width:%d Depth:%d\n";
+
+const char D_800A46A0_18C760[] = "Obj:%d Width:%d Depth:%d\n";
+
+const char D_800A46BC_18C77C[] = "Changed Debug State To SUB BOX COLL\n";
+
+const char D_800A46E4_18C7A4[] = "Obj:%d SubWidth:%d SubDepth:%d\n";
+
+const char D_800A4704_18C7C4[] = "Obj:%d SubWidth:%d SubDepth:%d\n";
+
+const char D_800A4724_18C7E4[] = "Obj:%d SubWidth:%d SubDepth:%d\n";
+
+const char D_800A4744_18C804[] = "Obj:%d SubWidth:%d SubDepth:%d\n";
+
+const char D_800A4764_18C824[] = "Obj:%d SubXOff:%d SubZOff:%d\n";
+
+const char D_800A4784_18C844[] = "Obj:%d SubXOff:%d SubZOff:%d\n";
+
+const char D_800A47A4_18C864[] = "Obj:%d SubXOff:%d SubZOff:%d\n";
+
+const char D_800A47C4_18C884[] = "Obj:%d SubXOff:%d SubZOff:%d\n";
+
+const char D_800A47E4_18C8A4[] = "Changed Debug State To PAD\n";
+
+const char D_800A4800_18C8C0[] = "Obj:%d PAD RESET\n";
+
+const char D_800A4814_18C8D4[] = "Obj:%d Offset:%d Width:%d\n";
+
+const char D_800A4830_18C8F0[] = "Obj:%d Offset:%d Width:%d\n";
+
+const char D_800A484C_18C90C[] = "Obj:%d Offset:%d Width:%d\n";
+
+const char D_800A4868_18C928[] = "Obj:%d Offset:%d Width:%d\n";
+
+const char D_800A4884_18C944[] = "Changed Debug State To GFX Off Change\n";
+
+const char D_800A48AC_18C96C[] = "Obj:%d ID:%d YOff:%d\n";
+
+const char D_800A48C4_18C984[] = "Obj:%d ID:%d YOff:%d\n";
+
+const char D_800A48DC_18C99C[] = "Obj:%d ID:%d XOff:%d\n";
+
+const char D_800A48F4_18C9B4[] = "Obj:%d ID:%d XOff:%d\n";
+
+const char D_800A490C_18C9CC[] = "Obj:%d ID:%d ZOff:%d\n";
+
+const char D_800A4924_18C9E4[] = "Obj:%d ID:%d ZOff:%d\n";
+
+const char D_800A493C_18C9FC[] = "ERROR: Invalid Base Rot\n";
+
+const char D_800A4958_18CA18[] = "PowerUp:%d, ObjSearchIndex=%d \n";
+
+const char D_800A4978_18CA38[] = "AlienArtefacts=%d \n";
+
+const char D_800A498C_18CA4C[] = "EnteredRoom=%d \n";
+
+const char D_800A49A0_18CA60[] = "\n\n\n GIVING DELAYED POWERUP TYPE=%d\n";
+
+const char D_800A49C4_18CA84[] = "Get Contents\n";
+
+const char D_800A49D4_18CA94[] = "Going Into Cutscene\n";
+
+const char D_800A49EC_18CAAC[] = "Invalid Switch ID\n";
+
+const f64 D_800A4A00_18CAC0[1] = {180.0};
+
+const u32 jtbl_800A4A08_18CAC8[] = {
+	0x80072458, 0x8007248C, 0x800724C4, 0x800724FC, 0x8007260C, 0x80072628, 0x80072648, 0x80072668, 
+	0x8007260C, 0x80072628, 0x80072648, 0x80072668, 0x80072698, 0x80072698, 0x80072698, 0x80072698, 
+	0x800725B0, 0x80072688, 0x80072688, 0x80072688, 0x80072400, 0x80072434, 0x80072400, 0x80072434, 
+	0x80072530, 0x80072550, 0x80072570, 0x80072590, 0x8007260C, 0x80072628, 0x80072648, 0x80072668, 
+};
+
+const u32 jtbl_800A4A88_18CB48[] = {
+	0x80072FA8, 0x80072EB4, 0x80072FA8, 0x80072F04, 0x80072FA0, 0x00000000,
+};
+
+const f64 D_800A4AA0_18CB60[1] = {180.0};
+
+const f64 D_800A4AA8_18CB68[1] = {180.0};
+
+const f64 D_800A4AB0_18CB70[1] = {180.0};
+
+const f32 D_800A4AB8_18CB78[1] = {315.0f};
+
+const f64 D_800A4AC0_18CB80[1] = {180.0};
+
+const u32 jtbl_800A4AC8_18CB88[] = {
+	0x80077874, 0x800778C8, 0x80077930, 0x80077A48, 0x80077A48, 0x800778FC, 0x800779A4, 0x80077A04, 
+};
+
+const u32 jtbl_800A4AE8_18CBA8[] = {
+	0x80077AA8, 0x80077ACC, 0x80077AF0, 0x80077B30, 0x80077B30, 0x80077ACC, 0x80077B14, 0x80077B14, 
+};
+
+const u32 jtbl_800A4B08_18CBC8[] = {
+	0x800785C4, 0x8007862C, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786A8, 0x800786A8, 0x800786FC, 
+	0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 
+	0x800786A8, 0x800786A8, 0x800786A8,
+};
+
+const f32 D_800A4B54_18CC14[1] = {0.10000000149011612f};
+
+const f32 D_800A4B58_18CC18[1] = {0.20000000298023224f};
+
+const u32 jtbl_800A4B5C_18CC1C[] = {
+	0x80078B04, 0x80078B20, 0x80078BCC, 0x80078BE8, 0x80078CD4,
+};
+
+const f64 D_800A4B70_18CC30[1] = {180.0};
+
+const u32 jtbl_800A4B78_18CC38[] = {
+	0x80079448, 0x80079458, 0x80079468, 0x80079478, 0x80079488, 0x80079498,
+};
+
+const f64 D_800A4B90_18CC50[1] = {180.0};
+
+const f32 D_800A4B98_18CC58[1] = {0.4000000059604645f};
+
+const u32 jtbl_800A4B9C_18CC5C[] = {
+	0x8007B3A8, 0x8007B3E4, 0x8007B350, 0x8007B410, 0x8007B470,
+};
+
 // AI - Trivial wrapper that calls the main interior update loop
 s32 func_80070270_158330(s32 arg0) {
 	func_8007290C_15A9CC();
@@ -88,7 +265,7 @@ void func_80070294_158354(Unk8007CAA8_6A40 *arg0)
   
   if (func_8007C3C0_164480(x, xx, center - halfWidth, center + halfWidth, 0.0f, 30.0f) != 0)
   {
-	if (func_8007A370_162430(0, (((f32) (D_800E6A86 & 0xFFFF)) * D_800A4A00_18CAC0) / 32768.0) != 0)
+	if (func_8007A370_162430(0, (((f32) (D_800E6A86 & 0xFFFF)) * D_800A4A00_18CAC0[0]) / 32768.0) != 0)
 	{
 	  D_800E65A8 |= 0x800;
 	}
@@ -2071,7 +2248,7 @@ void func_8007453C_15C5FC(s32 arg0, s32 arg1) {
 			(s32)D_8008DDF4_175EB4,
 			(s32)D_8008DDF8_175EB8,
 			(s32)D_8008DDFC_175EBC,
-			(s16)(s32)(((f64)(D_8008DDF0_175EB0 * 32768.0f)) / D_800A4AA0_18CB60),
+			(s16)(s32)(((f64)(D_8008DDF0_175EB0 * 32768.0f)) / D_800A4AA0_18CB60[0]),
 			0x238E)) {
 		return;
 	}
@@ -2094,7 +2271,7 @@ void func_8007453C_15C5FC(s32 arg0, s32 arg1) {
 
 		switch (D_800E65C8->unkC) {
 			case 0x400:
-				sp94[3] = (s16)(s32)(((f64)((f32)D_800E65DC * 32768.0f)) / D_800A4AA8_18CB68);
+				sp94[3] = (s16)(s32)(((f64)((f32)D_800E65DC * 32768.0f)) / D_800A4AA8_18CB68[0]);
 				sp94[4] = 0;
 				sp94[5] = 0;
 				sp70[3] = D_800E65C8->unk18 << 0x10;
@@ -2413,7 +2590,7 @@ void func_80074FF0_15D0B0(void) {
 	entry = D_800E66A8;
 	i = 0;
 	if (D_800E668C > 0) {
-		temp_f20 = D_800A4AB0_18CB70;
+		temp_f20 = D_800A4AB0_18CB70[0];
 		do {
 			objIdx = entry->unk0;
 			obj = &D_800E65BC[objIdx];
@@ -2561,7 +2738,7 @@ void func_8007568C_15D74C(void) {
 		} else {
 			func_80074998_15CA58();
 		}
-	} else if (D_8008DDF0_175EB0 < D_800A4AB8_18CB78) {
+	} else if (D_8008DDF0_175EB0 < D_800A4AB8_18CB78[0]) {
 		func_80074A0C_15CACC();
 	} else {
 		func_80074D18_15CDD8();
@@ -2572,7 +2749,7 @@ void func_8007568C_15D74C(void) {
 	i = 0;
 	entry = D_800E66A8;
 	if (D_800E668C > 0) {
-		temp_f20 = D_800A4AC0_18CB80;
+		temp_f20 = D_800A4AC0_18CB80[0];
 		while (i < D_800E668C) {
 			objIdx = entry->unk0;
 			obj = &D_800E65BC[objIdx];
@@ -3962,7 +4139,7 @@ void func_80078D68_160E28(void) {
 		Unk800E66A8* var_s2 = &D_800E66A8[0];
 
 		temp_f22 = 32768.0;
-		temp_f20 = D_800A4B70_18CC30;
+		temp_f20 = D_800A4B70_18CC30[0];
 loop_2:
 		temp_s6 = var_s2->unk0;
 		temp_s4 = temp_s6 * 0x48;
@@ -4583,7 +4760,7 @@ s32 func_8007A168_162228(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 							  sp2C->unk8 << 0xE,
 							  (s32) (s16) (s32) ((f64) ((f32) ((Unk8007A168Obj *) ((u8 *) D_800E65BC + sp28))->unk24 *
 															  32768.0f) /
-										 D_800A4B90_18CC50) != 0))) {
+										 D_800A4B90_18CC50[0]) != 0))) {
 		return 1;
 	}
 
@@ -4997,7 +5174,7 @@ void func_8007AE40_162F00(void) {
 
 		D_800E65A8 |= 0x20;
 	} else if (roomId != 0x1F) {
-		func_80014A3C_1563C(0, 0xD1, 0, 0, D_800A4B98_18CC58);
+		func_80014A3C_1563C(0, 0xD1, 0, 0, D_800A4B98_18CC58[0]);
 	}
 }
 #else

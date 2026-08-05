@@ -380,6 +380,148 @@ u8 pad_18C4C4[0xC] = {
 };
 // trailing padding (2 bytes auto-aligned)
 
+// ============================================================
+// 173B60 rodata
+// ============================================================
+
+const char D_800A54E0_18D5A0[] = "Wave";
+
+const char D_800A54E8_18D5A8[] = "landed";
+
+const char D_800A54F0_18D5B0[] = "";
+
+const char D_800A54F4_18D5B4[] = "Mutant";
+
+const char D_800A54FC_18D5BC[] = "";
+
+const char D_800A5500_18D5C0[] = "";
+
+const char D_800A5504_18D5C4[] = "New";
+
+const char D_800A5508_18D5C8[] = "";
+
+const char D_800A550C_18D5CC[] = "mission";
+
+const char D_800A5514_18D5D4[] = "";
+
+const char D_800A5518_18D5D8[] = "";
+
+const char D_800A551C_18D5DC[] = "Destroy";
+
+const char D_800A5524_18D5E4[] = "";
+
+const char D_800A5528_18D5E8[] = "Harvester";
+
+const char D_800A5534_18D5F4[] = "";
+
+const char D_800A5538_18D5F8[] = "%Y%a";
+
+const char D_800A5540_18D600[] = "Change Weapon";
+
+const char D_800A5550_18D610[] = "Refuel";
+
+const char D_800A5558_18D618[] = "Unhitch";
+
+const char D_800A5560_18D620[] = "Map";
+
+const char D_800A5564_18D624[] = "Auto";
+
+const char D_800A556C_18D62C[] = "Unload";
+
+const char D_800A5574_18D634[] = "Leave Building";
+
+const char D_800A5584_18D644[] = "Exit";
+
+const char D_800A558C_18D64C[] = "Play";
+
+const char D_800A5594_18D654[] = "Print";
+
+const char D_800A559C_18D65C[] = "Save";
+
+const char D_800A55A4_18D664[] = "Nowt 2";
+
+const char D_800A55AC_18D66C[] = "Clue Screen";
+
+const char D_800A55B8_18D678[] = "Inventory";
+
+const char D_800A55C4_18D684[] = "Quit";
+
+const char D_800A55CC_18D68C[] = "Change Weapon";
+
+const char D_800A55DC_18D69C[] = "Carburant";
+
+const char D_800A55E8_18D6A8[] = "Unhitch";
+
+const char D_800A55F0_18D6B0[] = "Carte";
+
+const char D_800A55F8_18D6B8[] = "Auto";
+
+const char D_800A5600_18D6C0[] = "Unload";
+
+const char D_800A5608_18D6C8[] = "Leave Building";
+
+const char D_800A5618_18D6D8[] = "Exit";
+
+const char D_800A5620_18D6E0[] = "Jouer";
+
+const char D_800A5628_18D6E8[] = "Print";
+
+const char D_800A5630_18D6F0[] = "Save";
+
+const char D_800A5638_18D6F8[] = "Nowt 2";
+
+const char D_800A5640_18D700[] = "Clue Screen";
+
+const char D_800A564C_18D70C[] = "Inventaire";
+
+const char D_800A5658_18D718[] = "Quitter";
+
+const char D_800A5660_18D720[] = "Change Weapon";
+
+const char D_800A5670_18D730[] = "Tanken";
+
+const char D_800A5678_18D738[] = "Unhitch";
+
+const char D_800A5680_18D740[] = "Karte";
+
+const char D_800A5688_18D748[] = "Auto";
+
+const char D_800A5690_18D750[] = "Unload";
+
+const char D_800A5698_18D758[] = "Load";
+
+const char D_800A56A0_18D760[] = "Exit";
+
+const char D_800A56A8_18D768[] = "Spielen";
+
+const char D_800A56B0_18D770[] = "Print";
+
+const char D_800A56B8_18D778[] = "Save";
+
+const char D_800A56C0_18D780[] = "Nowt 2";
+
+const char D_800A56C8_18D788[] = "Clue Screen";
+
+const char D_800A56D4_18D794[] = "Inventar";
+
+const char D_800A56E0_18D7A0[] = "Verlassen";
+
+const u8 D_800A56EC_18D7AC[] = {
+	0x20, 0x00, 0x00, 0x00,
+};
+
+const u8 D_800A56F0_18D7B0[] = {
+	0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+};
+
+const f64 D_800A56F8_18D7B8[1] = {255.0};
+
+const f64 D_800A5700_18D7C0[1] = {255.0};
+
+const f64 D_800A5708_18D7C8[1] = {255.0};
+
+const f64 D_800A5710_18D7D0[1] = {255.0};
+
 // AI - Initialize HUD state variables to default values
 void func_8008BAA0_173B60(void) {
 	D_8004794A = 0;
@@ -566,9 +708,9 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 			temp_t1_2->unkC = 0xFF;
 
 			temp_t7_3 = arg7 << 5;
-			temp_f2 = ((f64) (1.0f - var_f14) * D_800A5700_18D7C0) + (f64) temp_t7_3;
-			if (D_800A56F8_18D7B8 < temp_f2) {
-				var_f0 = D_800A56F8_18D7B8;
+			temp_f2 = ((f64) (1.0f - var_f14) * D_800A5700_18D7C0[0]) + (f64) temp_t7_3;
+			if (D_800A56F8_18D7B8[0] < temp_f2) {
+				var_f0 = D_800A56F8_18D7B8[0];
 			} else {
 				var_f0 = temp_f2;
 			}
@@ -622,9 +764,9 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 			temp_a1->unkC = 0xFF;
 			temp_a0->unkC = 0xFF;
 
-			temp_f2_2 = ((f64) var_f14 * D_800A5710_18D7D0) + (f64) temp_t6;
-			if (D_800A5708_18D7C8 < temp_f2_2) {
-				var_f0_2 = D_800A5708_18D7C8;
+			temp_f2_2 = ((f64) var_f14 * D_800A5710_18D7D0[0]) + (f64) temp_t6;
+			if (D_800A5708_18D7C8[0] < temp_f2_2) {
+				var_f0_2 = D_800A5708_18D7C8[0];
 			} else {
 				var_f0_2 = temp_f2_2;
 			}
