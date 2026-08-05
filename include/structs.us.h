@@ -388,31 +388,46 @@ typedef struct {
 } Unk80070F7CObj; /* size = 0x48 */
 
 typedef struct {
-	/* 0x00 */ s16 unk0;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 pad6[0xE];
-	/* 0x14 */ s32 unk14;
-	/* 0x18 */ u8 pad18[0x8];
-	/* 0x20 */ s32 unk20;
-	/* 0x24 */ u8 pad24[0x8];
-	/* 0x2C */ s32 unk2C;
-	/* 0x30 */ s16 unk30;
-	/* 0x32 */ s16 unk32;
-	/* 0x34 */ f32 unk34;
-	/* 0x38 */ s16 unk38;
-	/* 0x3A */ u8 pad3A[0x2];
-	/* 0x3C */ f32 *unk3C;
-} Unk165E60Path;
+	/* 0x00 */ f32 unk0;
+	/* 0x04 */ f32 unk4;
+	/* 0x08 */ f32 unk8;
+	/* 0x0C */ s32 unkC;
+	/* 0x10 */ s32 unk10;
+} Unk165E60Keyframe; /* size = 0x14 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x3C];
+	/* 0x00 */ s16 unk0; // start X
+	/* 0x02 */ s16 unk2; // start Y
+	/* 0x04 */ s16 unk4; // start Z
+	/* 0x06 */ s16 unk6[7]; // waypoint coords (X, Y, Z triples)
+	/* 0x14 */ s32 unk14; // timing
+	/* 0x18 */ s32 unk18;
+	/* 0x1C */ s32 unk1C;
+	/* 0x20 */ s32 unk20; // step frame id
+	/* 0x24 */ s32 unk24;
+	/* 0x28 */ s32 unk28;
+	/* 0x2C */ s32 unk2C; // character / vehicle id
+	/* 0x30 */ s16 unk30; // min frame
+	/* 0x32 */ s16 unk32; // max frame
+	/* 0x34 */ f32 unk34; // base speed
+	/* 0x38 */ s16 unk38; // speed-curve start frame
+	/* 0x3A */ s16 unk3A;
+	/* 0x3C */ f32 *unk3C; // speed curve pointer (2000.0f sentinel-terminated)
+} Unk165E60Path; /* size = 0x40 */
+
+typedef struct {
+	/* 0x00 */ Unk165E60Keyframe keyframes[3]; // movement keyframes
 	/* 0x3C */ s32 unk3C;
-	/* 0x40 */ u8 pad40[0xA];
+	/* 0x40 */ s32 unk40;
+	/* 0x44 */ s32 unk44;
+	/* 0x48 */ s16 unk48;
 	/* 0x4A */ s16 unk4A;
-	/* 0x4C */ u8 pad4C[0x8];
+	/* 0x4C */ s32 unk4C;
+	/* 0x50 */ s32 unk50;
 	/* 0x54 */ s32 unk54;
-} Unk165E60Timeline;
+	/* 0x58 */ s32 unk58;
+	/* 0x5C */ s32 unk5C;
+} Unk165E60Timeline; /* size = 0x60 */
 
 
 typedef struct {
