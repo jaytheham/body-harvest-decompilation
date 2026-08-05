@@ -1998,9 +1998,18 @@ typedef struct {
 	/* 0x01 */ u8 unk1;
 } Unk8007D62C_Entry; /* size = 0x02 */
 
+// AI - Character animation table entry (stride 0x34). unk0 is a flag set, unk30 is a segmented pointer to animation data.
 typedef struct {
 	/* 0x00 */ s32 unk0;
-	/* 0x04 */ u8 pad4[0x30];
+	/* 0x04 */ s32 unk4;
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ s32 unkC;
+	/* 0x10 */ s32 unk10;
+	/* 0x14 */ s32 unk14;
+	/* 0x18 */ s32 unk18;
+	/* 0x1C */ char name[0x10];
+	/* 0x2C */ s32 unk2C;
+	/* 0x30 */ s32 unk30;
 } Unk8009E8E0; /* size = 0x34 */
 
 // AI - Placed room object instance (one entry in the current room's layout, built from the building data block)
