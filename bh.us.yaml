@@ -246,7 +246,17 @@ segments:
       - [0x63850, .data, overlay_gameplay/frontend/data_63850]
       - [0x63D50, .data, overlay_gameplay/frontend/data_63850]
       - [0x64250, .data, overlay_gameplay/frontend/data_63850]
-      - [0x64750, bin]
+      - [0x64750, .data, overlay_gameplay/frontend/data_64750]
+      - [0x64B90, .data, overlay_gameplay/frontend/data_64B90]
+      - [0x64D10, .data, overlay_gameplay/frontend/data_64D10]
+      - [0x64E00, .data, overlay_gameplay/frontend/data_64E00]
+      - [0x64F70, .data, overlay_gameplay/frontend/data_64F70]
+      - [0x650C0, .data, overlay_gameplay/frontend/data_650C0]
+      - [0x65350, .data, overlay_gameplay/frontend/data_65350]
+      - [0x65530, .data, overlay_gameplay/frontend/data_65530]
+      - [0x65570, .data, overlay_gameplay/frontend/data_65570]
+      - [0x65DC0, .data, overlay_gameplay/frontend/data_65DC0]
+      - [0x66260, bin]
 
   - name: overlay_gameplay_outside
     type: code
