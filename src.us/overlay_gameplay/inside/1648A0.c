@@ -1006,7 +1006,7 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 	func_8000C81C_D41C(&spB4, &sp9C, 0, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
-	gSPSegment(D_8005BB2C++, 0x06, func_80012000_12C00(*(s32*)(&D_8009D260 + (D_800E6A70 * 4))));
+	gSPSegment(D_8005BB2C++, 0x06, func_80012000_12C00(*(s32*)(&D_8009D260_185320 + (D_800E6A70 * 4))));
 	func_8000CC3C_D83C(&D_800E6F00, 0x10);
 	switch (*(s32*)&D_800E6F00[0x40C]) {
 	case 4:
@@ -1083,7 +1083,7 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// AI - Initialize companion NPC entity and its animation
+// AI - Initialize NPC entity and its animation
 void func_8007F668_167728(u8 arg0, u8 arg1) {
 	s32 sp24;
 
@@ -1104,7 +1104,7 @@ void func_8007F668_167728(u8 arg0, u8 arg1) {
 #endif
 
 #ifdef NON_MATCHING
-// AI - Free companion NPC animation memory
+// AI - Free NPC animation memory
 void func_8007F724_1677E4(void) {
 	Unk80157600 *ptr;
 
@@ -1122,7 +1122,7 @@ void func_8007F724_1677E4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007F724_1677E4.s")
 #endif
 
-// AI - Update companion NPC animation state each frame
+// AI - Update NPC animation state each frame
 void func_8007F778_167838(void) {
 	u8 temp_v1;
 	u8 temp_t0;
@@ -1144,7 +1144,7 @@ void func_8007F778_167838(void) {
 }
 
 #ifdef NON_MATCHING
-// AI - Render companion NPC while animation is still playing
+// AI - Render NPC while animation is still playing
 void func_8007F878_167938(void) {
 	Unk8007F878_D6AD8 *ptr;
 	Unk8007F878_404 *temp;
@@ -1166,7 +1166,7 @@ void func_8007F878_167938(void) {
 #endif
 
 #ifdef NON_MATCHING
-// AI - Render companion NPC model with full matrix transforms
+// AI - Render NPC model with full matrix transforms
 void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 sp64;
 	s32 sp60;

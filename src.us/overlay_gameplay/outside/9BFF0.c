@@ -809,7 +809,7 @@ s32 func_8008D978_9C928(u8 arg0)
 
 // CURRENT(3738)
 #ifdef NON_MATCHING
-// AI - Companion/following logic for carried humans
+// AI - following logic for carried humans
 void func_8008DA24_9C9D4(u8 arg0)
 {
 	AlienInstance *inst;
