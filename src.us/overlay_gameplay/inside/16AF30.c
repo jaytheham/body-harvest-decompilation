@@ -1,6 +1,41 @@
 #include <ultra64.h>
 #include "common.h"
 
+// AI - Lens flare glow texture pointers indexed by flare type (D_800FB6A2)
+u32 D_800A2620_18A6E0[28] = {
+	0x00000000, 0x0100F080, 0x800A1A20, 0x00000000,
+	0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	0x00000000, 0x00000000, 0x00000000, 0x01010480,
+	0x800A1E20, 0x800A2220, 0x800A1220, 0x800A1620,
+	0x0100EC80, 0x800A0A20, 0x800A0E20, 0x00000000,
+	0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	0x00000000, 0x00000000, 0x00000000, 0x00000000,
+};
+
+// AI - Animated sprite type table (8 bytes per type)
+s8 D_800A2690_18A750[8] = {
+	0x01, 0x03, 0x02, 0x0A, 0x00, 0x00, 0x20, 0x20,
+};
+
+// AI - Animated sprite entry data table (4 bytes per type)
+u8 D_800A2698_18A758[4] = {
+	0xC8, 0x96, 0x64, 0xFF,
+};
+
+// AI - Animated sprite texture base pointers
+s32 D_800A269C_18A75C[1] = {
+	0x0100E080,
+};
+
+// AI - Lens flare active flag
+u8 D_800A26A0_18A760 = 0;
+
+// AI - Lens flare animation frame counter
+u8 D_800A26A4_18A764 = 0;
+
+// AI - Unnamed padding before the UI sound tables
+u8 pad_18A768[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+
 // AI - 3x3 matrix-by-vector multiplication
 void func_80082E70_16AF30(f32 *arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->x = arg1->x * arg0[0] + arg1->y * arg0[3] + arg0[6] * arg1->z;
