@@ -2539,6 +2539,19 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ f32 unk0;
+	/* 0x04 */ f32 unk4;
+	/* 0x08 */ f32 unk8;
+	/* 0x0C */ f32 unkC;
+	/* 0x10 */ f32 unk10;
+	/* 0x14 */ f32 unk14;
+	/* 0x18 */ s16 unk18;
+	/* 0x1A */ s16 unk1A;
+	/* 0x1C */ s16 unk1C;
+	/* 0x1E */ s16 unk1E;
+} FrontendCamEntry; /* size = 0x20 */
+
+typedef struct {
+	/* 0x00 */ f32 unk0;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s16 unk8;
