@@ -736,6 +736,31 @@ void func_80011E14_12A14(u8 arg0) {
 	func_80004C8C_588C();
 }
 
+// ---------------------------------------------------------------------------
+// Segmented (banked) addressing for model/texture data.
+//
+// The game references its model/texture data with "segmented" addresses whose
+// top byte is a segment id and whose low 24 bits are an offset within that
+// segment, e.g. 0x01010880 = segment 0x01, offset 0x10880.  These are NOT ROM
+// offsets (the ROM is only 0xC00000) and NOT absolute RAM addresses - the real
+// location is derived at runtime by adding the segment's base address, which is
+// chosen when the segment is DMA'd from ROM into RDRAM (see func_800119A8_125A8,
+// func_80011E14_12A14 and loadLevelCode).
+//
+// The segment bases are:
+//   0x01 (models/textures) : __printfunc  (per-level, KSEG0 ~0x802D4CD0)
+//   0x05                   : D_8006AA6C
+//   0x0F                   : D_8006AA74
+//   default (per level)    : D_8006AA70
+//
+// Example - the shared palette used by func_8008B594_173654:
+//   D_1010880 (0x01010880) is segment 0x01, offset 0x10880.
+//   func_80011FAC_12BAC resolves it to __printfunc + 0x10880; with
+//   __printfunc = 0x802D4CD0 that lands at RDRAM 0x802E5550 (KSEG0) / physical
+//   0x002E5550, where the palette actually lives.  At render time the raw
+//   0x01010880 written into gDPSetTextureImage is segment-translated by the RSP
+//   to that RDRAM address.
+// ---------------------------------------------------------------------------
 s32 func_80011F90_12B90(void *arg0) {
 	return ((s32)arg0 & 0xFFFFFF) + D_8006AA70;
 }
