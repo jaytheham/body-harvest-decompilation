@@ -3368,7 +3368,7 @@ void func_8008B53C_1735FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 }
 
 #ifdef NON_MATCHING
-// AI - Render lens flare effect (animated billboard with glow texture)
+// AI - Render (animated billboard with texture)
 void func_8008B594_173654(void) {
 	s32 pad;
 	s8 spA6;
