@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-06T05:21:45Z",
-  "commit": "eae21478",
-  "commit_timestamp": "2026-08-06T16:09:10+12:00",
+  "generated": "2026-08-06T05:23:09Z",
+  "commit": "6f221a2b",
+  "commit_timestamp": "2026-08-06T17:22:26+12:00",
   "overall": {
     "total_functions": 2714,
     "matched": 1631,
@@ -425,6 +425,16 @@
       "contributor": "jaytheham"
     },
     {
+      "path": "overlay_gameplay/frontend/data_68FA0.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
       "path": "overlay_gameplay/inside/158330.c",
       "segment": "overlay_gameplay/inside",
       "matched": 38,
@@ -828,7 +838,7 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 72,
+      "files": 73,
       "matched": 1629,
       "non_matching": 1083,
       "asm_stubs": 0
@@ -1026,7 +1036,7 @@
     },
     {
       "date": "2026-08-02",
-      "commit": "eae2147",
+      "commit": "6f221a2",
       "matched": 1631,
       "non_matching": 1083,
       "total": 2714
