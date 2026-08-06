@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-05T19:49:24Z",
-  "commit": "7eb3e9c8",
-  "commit_timestamp": "2026-08-06T07:48:48+12:00",
+  "generated": "2026-08-06T00:24:03Z",
+  "commit": "5e106ed0",
+  "commit_timestamp": "2026-08-06T12:23:22+12:00",
   "overall": {
     "total_functions": 2714,
     "matched": 1631,
@@ -286,6 +286,126 @@
     },
     {
       "path": "overlay_gameplay/frontend/data_63850.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_64750.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_64B90.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_64D10.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_64E00.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_64F70.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_650C0.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_65350.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_65530.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_65570.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_65DC0.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_66260.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_66820.c",
       "segment": "overlay_gameplay/frontend",
       "matched": 0,
       "non_matching": 0,
@@ -698,7 +818,7 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 59,
+      "files": 71,
       "matched": 1629,
       "non_matching": 1083,
       "asm_stubs": 0
@@ -896,7 +1016,7 @@
     },
     {
       "date": "2026-08-02",
-      "commit": "7eb3e9c",
+      "commit": "5e106ed",
       "matched": 1631,
       "non_matching": 1083,
       "total": 2714
