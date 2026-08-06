@@ -1110,7 +1110,7 @@ void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 	u32 mask;
 	Gfx* tempS6;
 
-	temp = (s32) ((f32) ((f64) arg3 * D_800AE518_7E9C8) * 256.0f);
+	temp = (s32) ((f32) ((f64) arg3 * D_800AE518_7E9C8[0]) * 256.0f);
 	varS3 = 0;
 	varS4 = D_8004DC5E;
 	varS5 = 0;
@@ -1388,7 +1388,7 @@ void func_800731A8_43658(void) {
 				} else {
 					var_t3 = D_80094858_64D08;
 					var_a0 = var_t3;
-					var_a1 = (s32) (((f64) (f32) sins((u16) D_800946E0_64B90, temp_a1) / 32768.0) * D_800AE520_7E9D0) + var_t3;
+					var_a1 = (s32) (((f64) (f32) sins((u16) D_800946E0_64B90, temp_a1) / 32768.0) * D_800AE520_7E9D0[0]) + var_t3;
 				}
 				temp_v0_5 = var_a1 + 0xFF;
 				if (var_a1 < 0) {
@@ -1699,7 +1699,7 @@ void func_80075710_45BC0(void) {
 	u32 textureBase;
 	u32 textureImage;
 
-	guOrtho(D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, D_800AE77C_7EC2C, D_800AE780_7EC30, 1.0f);
+	guOrtho(D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, D_800AE77C_7EC2C[0], D_800AE780_7EC30[0], 1.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
 	guRotate(D_8005BB38, 0.0f, 1.0f, 0.0f, 0.0f);
@@ -1799,11 +1799,11 @@ void func_80075D58_46208(s32 arg0) {
 	}
 
 	func_800791A0_49650(2);
-	guPerspective(D_8005BB38, &perspectiveNormal, 73.0f, 1.25f, 150.0f, D_800AE784_7EC34, 1.0f);
+	guPerspective(D_8005BB38, &perspectiveNormal, 73.0f, 1.25f, 150.0f, D_800AE784_7EC34[0], 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, perspectiveNormal);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-	guLookAt(D_8005BB38, 0.0f, 300.0f, 370.0f, 0.0f, 0.0f, 0.0f, D_800AE788_7EC38, 1.0f, 0.0f);
+	guLookAt(D_8005BB38, 0.0f, 300.0f, 370.0f, 0.0f, 0.0f, 0.0f, D_800AE788_7EC38[0], 1.0f, 0.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 
 	gDPPipeSync(D_8005BB2C++);
@@ -4171,9 +4171,9 @@ void func_8007A774_4AC24(s32 arg0) {
 
 	case 3:
 		timer = D_800D7960;
-		rotX = (s16)(D_800AE868_7ED18 - ((f64)timer * D_800AE870_7ED20));
+		rotX = (s16)(D_800AE868_7ED18[0] - ((f64)timer * D_800AE870_7ED20[0]));
 		posX = (s16)(((f64)timer * 8.5) + 80.0);
-		posY = (s16)(D_800AE878_7ED28 - ((f64)timer * D_800AE880_7ED30));
+		posY = (s16)(D_800AE878_7ED28[0] - ((f64)timer * D_800AE880_7ED30[0]));
 		blend = (s16)(((timer * 125) * 4) - 10000);
 		D_800D7960 = timer + 1;
 		if (timer >= 21) {
@@ -4187,7 +4187,7 @@ void func_8007A774_4AC24(s32 arg0) {
 		posZ = (s16)(-332 * timer);
 		posX = (s16)(250 - timer);
 		rotX = -0x2D;
-		posY = (s16)(D_800AE888_7ED38 + ((f64)timer * D_800AE890_7ED40));
+		posY = (s16)(D_800AE888_7ED38[0] + ((f64)timer * D_800AE890_7ED40[0]));
 		D_800D7960 = timer + 1;
 		if (timer >= 51) {
 			D_800D7960 = 0;
@@ -4218,7 +4218,7 @@ void func_8007A774_4AC24(s32 arg0) {
 		posZ = -15000;
 	}
 
-	guPerspective(D_8005BB38, &perspNorm, 73.0f, 1.25f, 150.0f, D_800AE898_7ED48, 1.0f);
+	guPerspective(D_8005BB38, &perspNorm, 73.0f, 1.25f, 150.0f, D_800AE898_7ED48[0], 1.0f);
 
 	gSPPerspNormalize(D_8005BB2C++, perspNorm);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
@@ -4270,7 +4270,7 @@ void func_8007A774_4AC24(s32 arg0) {
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	if (isAnimated == 1) {
-		D_80052B48.unk0 = (s16)((s32)(((f64)(f32)coss((u16)(D_80052A8C * 1000)) / 32768.0) * D_800AE8A0_7ED50));
+		D_80052B48.unk0 = (s16)((s32)(((f64)(f32)coss((u16)(D_80052A8C * 1000)) / 32768.0) * D_800AE8A0_7ED50[0]));
 	} else {
 		D_80052B48.unk0 = 0;
 	}
@@ -4290,8 +4290,8 @@ void func_8007A774_4AC24(s32 arg0) {
 	D_80052B40.unk2 = 0x30;
 	D_80052B40.unk4 = 0;
 	if (isAnimated == 1) {
-		cameraPulse = (s16)((s32)(((f64)(f32)coss((u16)(D_80052A8C * 2000)) / 32768.0) * D_800AE8A8_7ED58));
-		tilt = (s16)(((f64)(f32)sins((u16)(D_80052A8C * 1000)) / 32768.0) * D_800AE8B0_7ED60);
+		cameraPulse = (s16)((s32)(((f64)(f32)coss((u16)(D_80052A8C * 2000)) / 32768.0) * D_800AE8A8_7ED58[0]));
+		tilt = (s16)(((f64)(f32)sins((u16)(D_80052A8C * 1000)) / 32768.0) * D_800AE8B0_7ED60[0]);
 	}
 
 	D_80052B48.unk0 = cameraPulse;
@@ -4310,7 +4310,7 @@ void func_8007A774_4AC24(s32 arg0) {
 	D_80052B48.unk4 = 0;
 
 	if (isAnimated == 1) {
-		D_80052B48.unk0 = (s16)(((f64)(f32)coss((u16)(D_80052A8C * 2000)) / 32768.0) * D_800AE8B8_7ED68);
+		D_80052B48.unk0 = (s16)(((f64)(f32)coss((u16)(D_80052A8C * 2000)) / 32768.0) * D_800AE8B8_7ED68[0]);
 	} else {
 		D_80052B48.unk0 = 0;
 	}
@@ -5539,7 +5539,7 @@ s32 func_8007E12C_4E5DC(void) {
 				for (i = 0; i < D_800D7A8D; i++) {
 					D_800D7A34[i].unk18 = 0;
 				}
-				D_800D7974 = D_800AEA38_7EEE8;
+				D_800D7974 = D_800AEA38_7EEE8[0];
 				D_800AC0E4_7C594 = 0.0f;
 				break;
 			case 7:
@@ -5622,7 +5622,7 @@ s32 func_8007E12C_4E5DC(void) {
 				D_8009490C_64DBC = arg;
 				break;
 			case 26:
-				D_800AC0E4_7C594 = D_800AEA3C_7EEEC;
+				D_800AC0E4_7C594 = D_800AEA3C_7EEEC[0];
 				break;
 			case 27:
 				D_800949BC_64E6C = 1;
@@ -5949,8 +5949,8 @@ void func_8007F3F8_4F8A8(FrontendStruct* arg0, u8* arg1) {
 	f64 temp_f20;
 	f64 temp_f22;
 
-	temp_f20 = D_800AEA40_7EEF0;
-	temp_f22 = D_800AEA48_7EEF8;
+	temp_f20 = D_800AEA40_7EEF0[0];
+	temp_f22 = D_800AEA48_7EEF8[0];
 	sp34 = sinf((f32)(((f64)(f32)arg0->unk12 * temp_f20) / temp_f22));
 	sp38 = cosf((f32)(((f64)(f32)arg0->unk12 * temp_f20) / temp_f22));
 	sp2C = sinf((f32)(((f64)(f32)arg0->unk10 * temp_f20) / temp_f22));
@@ -6455,7 +6455,7 @@ void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 a
 	var_s0 = 0;
 	if (count != 0) {
 		temp_f22 = 4096.0;
-		temp_f20 = D_800AEA50_7EF00;
+		temp_f20 = D_800AEA50_7EF00[0];
 		do {
 			temp_a1 = &arg1[var_s0];
 			if (temp_a1->unk14 != 0) {
@@ -6897,7 +6897,7 @@ void func_80081290_51740(void) {
 	}
 
 	if (D_800AC0CC.unk18 != 0.0f) {
-		f64 temp = (f64) D_800AC0CC.unk18 + D_800AEA58_7EF08;
+		f64 temp = (f64) D_800AC0CC.unk18 + D_800AEA58_7EF08[0];
 		if (temp > 1.0) {
 			D_800AC0CC.unk18 = 1.0f;
 		} else {
@@ -6920,9 +6920,9 @@ void func_80081290_51740(void) {
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 
-	sp84.unk0 = (s16) ((f64) sp84.unk0 * D_800AEA60_7EF10);
-	sp84.unk2 = (s16) ((f64) sp84.unk2 * D_800AEA60_7EF10);
-	sp84.unk4 = (s16) ((f64) sp84.unk4 * D_800AEA60_7EF10);
+	sp84.unk0 = (s16) ((f64) sp84.unk0 * D_800AEA60_7EF10[0]);
+	sp84.unk2 = (s16) ((f64) sp84.unk2 * D_800AEA60_7EF10[0]);
+	sp84.unk4 = (s16) ((f64) sp84.unk4 * D_800AEA60_7EF10[0]);
 
 	func_800039D0_45D0(NULL, NULL, &sp84, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
@@ -7127,7 +7127,7 @@ void func_80081FF0_524A0(void) {
 	} else {
 		absVal = -D_800D8528;
 	}
-	if ((f64)absVal < D_800AEA68_7EF18) {
+	if ((f64)absVal < D_800AEA68_7EF18[0]) {
 		D_800D8528 = 0.0f;
 		return;
 	}
@@ -7153,11 +7153,11 @@ void func_80082074_52524(void) {
 	if (D_8009494C_64DFC == 1) {
 		var_v0 = 0;
 		var_v1 = 0xFF;
-		var_f0 = D_800AEA70_7EF20;
+		var_f0 = D_800AEA70_7EF20[0];
 	} else {
 		var_v0 = 0xFF;
 		var_v1 = 0;
-		var_f0 = D_800AEA74_7EF24;
+		var_f0 = D_800AEA74_7EF24[0];
 	}
 
 	temp_f2 = *ptr;
@@ -7184,3 +7184,559 @@ void func_80082074_52524(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80082074_52524.s")
 #endif
+
+
+
+
+
+
+/* ===== Frontend .rodata (ROM 0x7D5A0 - 0x7F0F0) ===== */
+const char D_800AD0F0_7D5A0[] = "";
+const char D_800AD0F4_7D5A4[] = "Credits";
+const char D_800AD0FC_7D5AC[] = "";
+const char D_800AD100_7D5B0[] = "";
+const char D_800AD104_7D5B4[] = "Project Leader";
+const char D_800AD114_7D5C4[] = "John Whyte";
+const char D_800AD120_7D5D0[] = "";
+const char D_800AD124_7D5D4[] = "Game Programmers";
+const char D_800AD138_7D5E8[] = "Adam Fowler";
+const char D_800AD144_7D5F4[] = "Alan Campbell";
+const char D_800AD154_7D604[] = "Frank Arnot";
+const char D_800AD160_7D610[] = "Grant Clarke";
+const char D_800AD170_7D620[] = "Doug Smith";
+const char D_800AD17C_7D62C[] = "Andrew West";
+const char D_800AD188_7D638[] = "Andy J S Innes";
+const char D_800AD198_7D648[] = "";
+const char D_800AD19C_7D64C[] = "Game and Editor Programmer";
+const char D_800AD1B8_7D668[] = "John Gurney";
+const char D_800AD1C4_7D674[] = "";
+const char D_800AD1C8_7D678[] = "Lead Artist";
+const char D_800AD1D4_7D684[] = "Stacey Jamieson";
+const char D_800AD1E4_7D694[] = "";
+const char D_800AD1E8_7D698[] = "Alien Artist";
+const char D_800AD1F8_7D6A8[] = "Alan Davidson";
+const char D_800AD208_7D6B8[] = "";
+const char D_800AD20C_7D6BC[] = "Artwork";
+const char D_800AD214_7D6C4[] = "Craig Moore";
+const char D_800AD220_7D6D0[] = "Ian McQue";
+const char D_800AD22C_7D6DC[] = "Pat McGovern";
+const char D_800AD23C_7D6EC[] = "Paul Reeves";
+const char D_800AD248_7D6F8[] = "";
+const char D_800AD24C_7D6FC[] = "Audio Programmers";
+const char D_800AD260_7D710[] = "Ciaran Rooney";
+const char D_800AD270_7D720[] = "Raymond Usher";
+const char D_800AD280_7D730[] = "";
+const char D_800AD284_7D734[] = "Music and Sound effects";
+const char D_800AD29C_7D74C[] = "Stuart Ross";
+const char D_800AD2A8_7D758[] = "Allan Walker";
+const char D_800AD2B8_7D768[] = "";
+const char D_800AD2BC_7D76C[] = "Editor Programming";
+const char D_800AD2D0_7D780[] = "Graeme Anderson";
+const char D_800AD2E0_7D790[] = "";
+const char D_800AD2E4_7D794[] = "Level Design";
+const char D_800AD2F4_7D7A4[] = "Richard Ralfe";
+const char D_800AD304_7D7B4[] = "Lorne Campbell";
+const char D_800AD314_7D7C4[] = "Mike Stirling";
+const char D_800AD324_7D7D4[] = "";
+const char D_800AD328_7D7D8[] = "Game Design";
+const char D_800AD334_7D7E4[] = "John Whyte";
+const char D_800AD340_7D7F0[] = "Alan Davidson";
+const char D_800AD350_7D800[] = "Richard Ralfe";
+const char D_800AD360_7D810[] = "Lorne Campbell";
+const char D_800AD370_7D820[] = "Stacey Jamieson";
+const char D_800AD380_7D830[] = "Adam Fowler";
+const char D_800AD38C_7D83C[] = "EAD Japan";
+const char D_800AD398_7D848[] = "";
+const char D_800AD39C_7D84C[] = "DMA Quality Assurance";
+const char D_800AD3B4_7D864[] = "Craig Arbuthnott";
+const char D_800AD3C8_7D878[] = "Steve Taylor";
+const char D_800AD3D8_7D888[] = "Allen Shiels";
+const char D_800AD3E8_7D898[] = "Sean Taylor";
+const char D_800AD3F4_7D8A4[] = "Alan Dobson";
+const char D_800AD400_7D8B0[] = "William Mills";
+const char D_800AD410_7D8C0[] = "Sean Brown";
+const char D_800AD41C_7D8CC[] = "";
+const char D_800AD420_7D8D0[] = "Gremlin Quality Assurance";
+const char D_800AD43C_7D8EC[] = "Carl Cavers";
+const char D_800AD448_7D8F8[] = "Jon Watson";
+const char D_800AD454_7D904[] = "Julia Sturman";
+const char D_800AD464_7D914[] = "Travis Ryan";
+const char D_800AD470_7D920[] = "Les Dungate";
+const char D_800AD47C_7D92C[] = "Daniel Webster";
+const char D_800AD48C_7D93C[] = "Matthew Tucket";
+const char D_800AD49C_7D94C[] = "Andrew Wilson";
+const char D_800AD4AC_7D95C[] = "Stephen Woodward";
+const char D_800AD4C0_7D970[] = "Martin Berridge";
+const char D_800AD4D0_7D980[] = "Matthew Fu";
+const char D_800AD4DC_7D98C[] = "";
+const char D_800AD4E0_7D990[] = "Public Relations";
+const char D_800AD4F4_7D9A4[] = "Brian Baglow";
+const char D_800AD504_7D9B4[] = "";
+const char D_800AD508_7D9B8[] = "Localisation";
+const char D_800AD518_7D9C8[] = "Sarah Bennett";
+const char D_800AD528_7D9D8[] = "";
+const char D_800AD52C_7D9DC[] = "Development Manager";
+const char D_800AD540_7D9F0[] = "Jim Woods";
+const char D_800AD54C_7D9FC[] = "";
+const char D_800AD550_7DA00[] = "Boss and General Nuisance";
+const char D_800AD56C_7DA1C[] = "Dave Jones";
+const char D_800AD578_7DA28[] = "";
+const char D_800AD57C_7DA2C[] = "Thanks to:";
+const char D_800AD588_7DA38[] = "John Harrison";
+const char D_800AD598_7DA48[] = "Martin Good";
+const char D_800AD5A4_7DA54[] = "Robert Jeffrey";
+const char D_800AD5B4_7DA64[] = "Darren Baines";
+const char D_800AD5C4_7DA74[] = "Jeff Cairns";
+const char D_800AD5D0_7DA80[] = "Aaron Garbut";
+const char D_800AD5E0_7DA90[] = "Gary Thomson";
+const char D_800AD5F0_7DAA0[] = "Kenneth Fee";
+const char D_800AD5FC_7DAAC[] = "Craig Conner";
+const char D_800AD60C_7DABC[] = "Andy Strachan";
+const char D_800AD61C_7DACC[] = "Andy Hay";
+const char D_800AD628_7DAD8[] = "Liam O'Neill";
+const char D_800AD638_7DAE8[] = "Shoya Tanaka";
+const char D_800AD648_7DAF8[] = "EAD Nintendo Japan";
+const char D_800AD65C_7DB0C[] = "Gary Penn";
+const char D_800AD668_7DB18[] = "Mark Ettle";
+const char D_800AD674_7DB24[] = "Julian Glendinning";
+const char D_800AD688_7DB38[] = "Kevin Kelly";
+const char D_800AD694_7DB44[] = "Ian Thomson";
+const char D_800AD6A0_7DB50[] = "Corinne Cervetti";
+const char D_800AD6B4_7DB64[] = "";
+const char D_800AD6B8_7DB68[] = "";
+const char D_800AD6BC_7DB6C[] = "";
+const char D_800AD6C0_7DB70[] = "";
+const char D_800AD6C4_7DB74[] = "";
+const char D_800AD6C8_7DB78[] = "THE END";
+const char D_800AD6D0_7DB80[] = "";
+const char D_800AD6D4_7DB84[] = "";
+const char D_800AD6D8_7DB88[] = "";
+const char D_800AD6DC_7DB8C[] = "[ DMA Design 1998";
+const char D_800AD6F0_7DBA0[] = "";
+const char D_800AD6F4_7DBA4[] = "";
+const char D_800AD6F8_7DBA8[] = "";
+const char D_800AD6FC_7DBAC[] = "#";
+const char D_800AD700_7DBB0[] = "";
+const char D_800AD704_7DBB4[] = "Fuel";
+const char D_800AD70C_7DBBC[] = "Carburant";
+const char D_800AD718_7DBC8[] = "Sprit";
+const char D_800AD720_7DBD0[] = "Vehicle Weapon 1";
+const char D_800AD734_7DBE4[] = "Arme 1";
+const char D_800AD73C_7DBEC[] = "Waffe 1";
+const char D_800AD744_7DBF4[] = "Vehicle Weapon 2";
+const char D_800AD758_7DC08[] = "Arme 2";
+const char D_800AD760_7DC10[] = "Waffe 2";
+const char D_800AD768_7DC18[] = "Chaingun";
+const char D_800AD774_7DC24[] = "Fragcannon";
+const char D_800AD780_7DC30[] = "Lazer Missiles";
+const char D_800AD790_7DC40[] = "Resonator";
+const char D_800AD79C_7DC4C[] = "Plasma Bombs";
+const char D_800AD7AC_7DC5C[] = "";
+const char D_800AD7B0_7DC60[] = "";
+const char D_800AD7B4_7DC64[] = "ERROR: No free windows\012";
+const char D_800AD7CC_7DC7C[] = "ERROR: No free windows\012";
+const char D_800AD7E4_7DC94[] = "7";
+const char D_800AD7E8_7DC98[] = "0";
+const char D_800AD7EC_7DC9C[] = "%C%a";
+const char D_800AD7F4_7DCA4[] = "%H%V%X%Y";
+const char D_800AD800_7DCB0[] = "%@%s";
+const char D_800AD808_7DCB8[] = "%@%s";
+const char D_800AD810_7DCC0[] = "%@%s";
+const char D_800AD818_7DCC8[] = "%@%s";
+const char D_800AD820_7DCD0[] = "%@%s";
+const char D_800AD828_7DCD8[] = "%@%s";
+const char D_800AD830_7DCE0[] = "%@%s%@%s";
+const char D_800AD83C_7DCEC[] = "%@%s%@%s";
+const char D_800AD848_7DCF8[] = "%@%s%@%s";
+const char D_800AD854_7DD04[] = "%@%X%d";
+const char D_800AD85C_7DD0C[] = "%@%s%@%s";
+const char D_800AD868_7DD18[] = "%@%s%@%s";
+const char D_800AD874_7DD24[] = "%@%s%@%s";
+const char D_800AD880_7DD30[] = "%@%X%d";
+const char D_800AD888_7DD38[] = "%@%s%@%s";
+const char D_800AD894_7DD44[] = "%@%s%@%s";
+const char D_800AD8A0_7DD50[] = "%@%s%@%s";
+const char D_800AD8AC_7DD5C[] = "%@%X%d";
+const char D_800AD8B4_7DD64[] = "%@%s";
+const char D_800AD8BC_7DD6C[] = "%@%s";
+const char D_800AD8C4_7DD74[] = "%@%s";
+const char D_800AD8CC_7DD7C[] = "%@%s";
+const char D_800AD8D4_7DD84[] = "%@%s";
+const char D_800AD8DC_7DD8C[] = "%@%s";
+const char D_800AD8E4_7DD94[] = "%@%s";
+const char D_800AD8EC_7DD9C[] = "%@%s";
+const char D_800AD8F4_7DDA4[] = "%@%s";
+const char D_800AD8FC_7DDAC[] = "%@%s";
+const char D_800AD904_7DDB4[] = "%@%s";
+const char D_800AD90C_7DDBC[] = "%@%s";
+const char D_800AD914_7DDC4[] = "%@%s";
+const char D_800AD91C_7DDCC[] = "%@%s";
+const char D_800AD924_7DDD4[] = "%@%s";
+const char D_800AD92C_7DDDC[] = "%@%s";
+const char D_800AD934_7DDE4[] = "%@%s";
+const char D_800AD93C_7DDEC[] = "%@%s";
+const char D_800AD944_7DDF4[] = "%@%s";
+const char D_800AD94C_7DDFC[] = "%@%s";
+const char D_800AD954_7DE04[] = "%@%s";
+const char D_800AD95C_7DE0C[] = "%@%s";
+const char D_800AD964_7DE14[] = "%@%s";
+const char D_800AD96C_7DE1C[] = "%@%s";
+const char D_800AD974_7DE24[] = "%@%s";
+const char D_800AD97C_7DE2C[] = "%@%s";
+const char D_800AD984_7DE34[] = "%@%s";
+const char D_800AD98C_7DE3C[] = "%@%s";
+const char D_800AD994_7DE44[] = "%@%s";
+const char D_800AD99C_7DE4C[] = "%@%c";
+const char D_800AD9A4_7DE54[] = "%@%c";
+const char D_800AD9AC_7DE5C[] = "%@%c";
+const char D_800AD9B4_7DE64[] = "%@%s";
+const char D_800AD9BC_7DE6C[] = "%@%s";
+const char D_800AD9C4_7DE74[] = "%@%s";
+const char D_800AD9CC_7DE7C[] = "%@%s";
+const char D_800AD9D4_7DE84[] = "%@%s";
+const char D_800AD9DC_7DE8C[] = "%@%s";
+const char D_800AD9E4_7DE94[] = "%@%s";
+const char D_800AD9EC_7DE9C[] = "%@%s";
+const char D_800AD9F4_7DEA4[] = "%@%s";
+const char D_800AD9FC_7DEAC[] = "%@%s";
+const char D_800ADA04_7DEB4[] = "%@%s 0%d:0%d:0%d";
+const char D_800ADA18_7DEC8[] = "%@%s %d:0%d:0%d";
+const char D_800ADA28_7DED8[] = "%@%s 0%d:0%d:%d";
+const char D_800ADA38_7DEE8[] = "%@%s 0%d:%d:0%d";
+const char D_800ADA48_7DEF8[] = "%@%s 0%d:%d:%d";
+const char D_800ADA58_7DF08[] = "%@%s %d:0%d:%d";
+const char D_800ADA68_7DF18[] = "%@%s %d:%d:0%d";
+const char D_800ADA78_7DF28[] = "%@%s %d:%d:%d";
+const char D_800ADA88_7DF38[] = "%@%s %d%%";
+const char D_800ADA94_7DF44[] = "%@%s %d%%";
+const char D_800ADAA0_7DF50[] = "%@%s%@%s";
+const char D_800ADAAC_7DF5C[] = "%@%s%@%s";
+const char D_800ADAB8_7DF68[] = "%@%s%@%s";
+const char D_800ADAC4_7DF74[] = "%@%X%d";
+const char D_800ADACC_7DF7C[] = "%@%s";
+const char D_800ADAD4_7DF84[] = "%@%s";
+const char D_800ADADC_7DF8C[] = "%@%s";
+const char D_800ADAE4_7DF94[] = "%@%s";
+const char D_800ADAEC_7DF9C[] = "%@%s";
+const char D_800ADAF4_7DFA4[] = "%@%s";
+const char D_800ADAFC_7DFAC[] = "%@%s";
+const char D_800ADB04_7DFB4[] = "%@%s";
+const char D_800ADB0C_7DFBC[] = "%C%a";
+const char D_800ADB14_7DFC4[] = "%@%X%YGriechen.: %d:3";
+const char D_800ADB2C_7DFDC[] = "%@%X%Y%s: %d:3";
+const char D_800ADB3C_7DFEC[] = "%@%X%Y%s: %d:3";
+const char D_800ADB4C_7DFFC[] = "%@%X%Y%s: %d:3";
+const char D_800ADB5C_7E00C[] = "%@%X%Y%s: %d:3";
+const char D_800ADB6C_7E01C[] = "%@";
+const char D_800ADB70_7E020[] = "%X";
+const char D_800ADB74_7E024[] = "%@%s";
+const char D_800ADB7C_7E02C[] = "%X";
+const char D_800ADB80_7E030[] = "%@%s";
+const char D_800ADB88_7E038[] = "%@%s";
+const char D_800ADB90_7E040[] = "%@Leviathan";
+const char D_800ADB9C_7E04C[] = "%@Cerberus";
+const char D_800ADBA8_7E058[] = "%@Moloch";
+const char D_800ADBB4_7E064[] = "%@Beelzebub";
+const char D_800ADBC0_7E070[] = "%@Tomegatherion";
+const char D_800ADBD0_7E080[] = "%@Deutsch";
+const char D_800ADBDC_7E08C[] = "%@English";
+const char D_800ADBE8_7E098[] = "%@Fran\347ais";
+const char D_800ADBF4_7E0A4[] = "%@%s";
+const char D_800ADBFC_7E0AC[] = "%@%s";
+const char D_800ADC04_7E0B4[] = "%@%s";
+const char D_800ADC0C_7E0BC[] = "%H%V%X%Y";
+const char D_800ADC18_7E0C8[] = "%W";
+const char D_800ADC1C_7E0CC[] = "%@Made: %s on %s\012";
+const char D_800ADC30_7E0E0[] = "19:43:03";
+const char D_800ADC3C_7E0EC[] = "Aug 27 1998";
+const char D_800ADC48_7E0F8[] = "%@version B6.5 Midway";
+const char D_800ADC60_7E110[] = "%C%a";
+const char D_800ADC68_7E118[] = "startup\012";
+const char D_800ADC74_7E124[] = "kiss sequence\012";
+const char D_800ADC84_7E134[] = "%C%a";
+const char D_800ADC8C_7E13C[] = "slot name: %s\012";
+const char D_800ADC9C_7E14C[] = "empty slot!!!!!!!!!!!!!!!!!!!!!!!!!\012";
+const char D_800ADCC4_7E174[] = "locking windows %d to %d\012";
+const char D_800ADCE0_7E190[] = "%C";
+const char D_800ADCE4_7E194[] = "%a";
+const char D_800ADCE8_7E198[] = "%@TOP SCORES";
+const char D_800ADCF8_7E1A8[] = "%@HIGH SCORES";
+const char D_800ADD08_7E1B8[] = "%@TOP SCORES";
+const char D_800ADD18_7E1C8[] = "%W";
+const char D_800ADD1C_7E1CC[] = "%Y";
+const char D_800ADD20_7E1D0[] = "%a";
+const char D_800ADD24_7E1D4[] = "%@%s";
+const char D_800ADD2C_7E1DC[] = "%C";
+const char D_800ADD30_7E1E0[] = "%H";
+const char D_800ADD34_7E1E4[] = "%@%s";
+const char D_800ADD3C_7E1EC[] = "%H";
+const char D_800ADD40_7E1F0[] = "%X";
+const char D_800ADD44_7E1F4[] = "%@Score:";
+const char D_800ADD50_7E200[] = "%@Punkte:";
+const char D_800ADD5C_7E20C[] = "%@Score:";
+const char D_800ADD68_7E218[] = "%X";
+const char D_800ADD6C_7E21C[] = "%@%d";
+const char D_800ADD74_7E224[] = "%X";
+const char D_800ADD78_7E228[] = "%@Humans killed:";
+const char D_800ADD8C_7E23C[] = "%@Opfer:";
+const char D_800ADD98_7E248[] = "%@Humains tu\351s:";
+const char D_800ADDA8_7E258[] = "%X";
+const char D_800ADDAC_7E25C[] = "%@%d";
+const char D_800ADDB4_7E264[] = "%X";
+const char D_800ADDB8_7E268[] = "%@Time:";
+const char D_800ADDC0_7E270[] = "%@Zeit:";
+const char D_800ADDC8_7E278[] = "%@Dur\351e:";
+const char D_800ADDD4_7E284[] = "%X";
+const char D_800ADDD8_7E288[] = "%@0%d:0%d:0%d";
+const char D_800ADDE8_7E298[] = "%@0%d:0%d:%d";
+const char D_800ADDF8_7E2A8[] = "%@0%d:%d:0%d";
+const char D_800ADE08_7E2B8[] = "%@%d:0%d:0%d";
+const char D_800ADE18_7E2C8[] = "%@0%d:%d:%d";
+const char D_800ADE24_7E2D4[] = "%@%d:0%d:%d";
+const char D_800ADE30_7E2E0[] = "%@%d:%d:0%d";
+const char D_800ADE3C_7E2EC[] = "%@%d:%d:%d";
+const char D_800ADE48_7E2F8[] = "%C";
+const char D_800ADE4C_7E2FC[] = "%C";
+const char D_800ADE50_7E300[] = "%@Clear Save Data";
+const char D_800ADE64_7E314[] = "%C";
+const char D_800ADE68_7E318[] = "%@Are you sure you want";
+const char D_800ADE80_7E330[] = "%@to clear ALL of the save data?";
+const char D_800ADEA4_7E354[] = "%C";
+const char D_800ADEA8_7E358[] = "%C";
+const char D_800ADEAC_7E35C[] = "%@Yes";
+const char D_800ADEB4_7E364[] = "%C";
+const char D_800ADEB8_7E368[] = "%C";
+const char D_800ADEBC_7E36C[] = "%@No";
+const char D_800ADEC4_7E374[] = "%C";
+const char D_800ADEC8_7E378[] = "%@Body Harvest %c and %c 1998";
+const char D_800ADEE8_7E398[] = "%@Gremlin Interactive Ltd.";
+const char D_800ADF04_7E3B4[] = "%@All rights reserved.";
+const char D_800ADF1C_7E3CC[] = "%@Developed by DMA Design Ltd.";
+const char D_800ADF3C_7E3EC[] = "%Y%@MIDWAY is a registered";
+const char D_800ADF58_7E408[] = "%@trademark of Midway Games Inc.";
+const char D_800ADF7C_7E42C[] = "%@Distributed by Midway Home";
+const char D_800ADF9C_7E44C[] = "%@Entertainment Inc. under license.";
+const char D_800ADFC0_7E470[] = "%Y%@LICENSED BY NINTENDO";
+const char D_800ADFDC_7E48C[] = "%C";
+const char D_800ADFE0_7E490[] = "%@Controller is not connected.";
+const char D_800AE000_7E4B0[] = "%C";
+const char D_800AE004_7E4B4[] = "%@This game pak is only available";
+const char D_800AE028_7E4D8[] = "%@for the NTSC and MPAL markets.";
+const char D_800AE04C_7E4FC[] = "%Y";
+const char D_800AE050_7E500[] = "%Y";
+const char D_800AE054_7E504[] = "%C";
+const char D_800AE058_7E508[] = "%C";
+const char D_800AE05C_7E50C[] = "%a";
+const char D_800AE060_7E510[] = "%a";
+const char D_800AE064_7E514[] = "%a";
+const char D_800AE068_7E518[] = "%@%s";
+const char D_800AE070_7E520[] = "%Y";
+const char D_800AE074_7E524[] = "%Y";
+const char D_800AE078_7E528[] = "%C";
+const char D_800AE07C_7E52C[] = "%C";
+const char D_800AE080_7E530[] = "%a";
+const char D_800AE084_7E534[] = "%a";
+const char D_800AE088_7E538[] = "%a";
+const char D_800AE08C_7E53C[] = "%@%s";
+const char D_800AE094_7E544[] = "%a";
+const char D_800AE098_7E548[] = "%a";
+const char D_800AE09C_7E54C[] = "%a";
+const char D_800AE0A0_7E550[] = "%@Good work, soldier!";
+const char D_800AE0B8_7E568[] = "%C";
+const char D_800AE0BC_7E56C[] = "%@The mission was successful. You";
+const char D_800AE0E0_7E590[] = "%@have saved mankind from the aliens.";
+const char D_800AE108_7E5B8[] = "%@Come on home.";
+const char D_800AE118_7E5C8[] = "%@Score:   %d";
+const char D_800AE128_7E5D8[] = "%@Total Time:    %d:0%d:0%d";
+const char D_800AE144_7E5F4[] = "%@Total Time:    %d:0%d:%d";
+const char D_800AE160_7E610[] = "%@Total Time:    %d:%d:0%d";
+const char D_800AE17C_7E62C[] = "%@Total Time:    %d:%d:%d";
+const char D_800AE198_7E648[] = "%C";
+const char D_800AE19C_7E64C[] = "%@Humans lost: %d\012";
+const char D_800AE1B0_7E660[] = "%@Artifacts: %d of 12";
+const char D_800AE1C8_7E678[] = "%@Beau travail, soldat!";
+const char D_800AE1E0_7E690[] = "%C";
+const char D_800AE1E4_7E694[] = "%@Cette mission est un triomphe.";
+const char D_800AE208_7E6B8[] = "%@L'humanit\351 est sauv\351e.";
+const char D_800AE224_7E6D4[] = "%@Rentre chez toi, en paix.";
+const char D_800AE240_7E6F0[] = "%@Score:   %d";
+const char D_800AE250_7E700[] = "%@Dur\351e totale:    %d:0%d:0%d";
+const char D_800AE270_7E720[] = "%@Dur\351e totale:    %d:0%d:%d";
+const char D_800AE290_7E740[] = "%@Dur\351e totale:    %d:%d:0%d";
+const char D_800AE2B0_7E760[] = "%@Dur\351e totale:    %d:%d:%d";
+const char D_800AE2CC_7E77C[] = "%C";
+const char D_800AE2D0_7E780[] = "%@Pertes humaines: %d\012";
+const char D_800AE2E8_7E798[] = "%@Reliques: %d de 12";
+const char D_800AE300_7E7B0[] = "%@Gute Arbeit, Soldat!";
+const char D_800AE318_7E7C8[] = "%C";
+const char D_800AE31C_7E7CC[] = "%@Der Einsatz war erfolgreich. Du";
+const char D_800AE340_7E7F0[] = "%@hast die Menschheit vor den Aliens";
+const char D_800AE368_7E818[] = "%@gerettet. Zeit, nach Hause zu gehen.";
+const char D_800AE390_7E840[] = "%@Punkte:   %d";
+const char D_800AE3A0_7E850[] = "%@Gesamtzeit:    %d:0%d:0%d";
+const char D_800AE3BC_7E86C[] = "%@Gesamtzeit:    %d:0%d:%d";
+const char D_800AE3D8_7E888[] = "%@Gesamtzeit:    %d:%d:0%d";
+const char D_800AE3F4_7E8A4[] = "%@Gesamtzeit:    %d:%d:%d";
+const char D_800AE410_7E8C0[] = "%C";
+const char D_800AE414_7E8C4[] = "%@Menschl. Verluste: %d\012";
+const char D_800AE430_7E8E0[] = "%@Artefakte: %d of 12";
+const char D_800AE448_7E8F8[] = "Tesking key %d,  result = %d \012";
+const char D_800AE468_7E918[] = "WindowSelection=%d,  INVENTORY_WINDOW=%d, Done=%d\012";
+const char D_800AE49C_7E94C[] = "*******************InventorySelect=%d, \012";
+const char D_800AE4C8_7E978[] = "INV>>>>WeaponSelect=%d\012";
+const u32 jtbl_800AE4E0_7E990[14] = {
+    0x8007029C, 0x800702AC, 0x800702DC, 0x800702EC,
+    0x80070300, 0x8007031C, 0x8007037C, 0x8007037C,
+    0x8007033C, 0x8007037C, 0x8007035C, 0x8007036C,
+    0x8007032C, 0x8007034C,
+};
+const f64 D_800AE518_7E9C8[1] = { 0.69999999999999996 };
+const f64 D_800AE520_7E9D0[1] = { 35 };
+const u32 jtbl_800AE528_7E9D8[91] = {
+    0x800739B4, 0x800739D8, 0x800739FC, 0x80073A20,
+    0x80073A44, 0x80073A68, 0x80073A94, 0x80073BDC,
+    0x80073D24, 0x80073E6C, 0x80073E98, 0x80073EC4,
+    0x80073EF0, 0x80073F1C, 0x80073F48, 0x80073F74,
+    0x80073FA0, 0x80073FCC, 0x800740B0, 0x80074194,
+    0x800741FC, 0x800742A8, 0x800742D4, 0x80074300,
+    0x8007432C, 0x80074358, 0x80074384, 0x800743B0,
+    0x800743DC, 0x80074408, 0x80074408, 0x80074408,
+    0x80074408, 0x80074408, 0x80074408, 0x80074408,
+    0x80074408, 0x80074408, 0x80074408, 0x80074408,
+    0x80074408, 0x80074408, 0x80074408, 0x80074408,
+    0x80074408, 0x80074408, 0x80074408, 0x80074408,
+    0x80074408, 0x80074408, 0x80074408, 0x80074408,
+    0x80074408, 0x80074408, 0x80074408, 0x80074428,
+    0x80074448, 0x80074468, 0x8007448C, 0x800744B8,
+    0x800744E4, 0x80074510, 0x8007453C, 0x80074568,
+    0x80074594, 0x800745D4, 0x80074614, 0x80074640,
+    0x80074B64, 0x80074BA4, 0x80074BE4, 0x80074C10,
+    0x80074C3C, 0x80074C68, 0x80074C94, 0x80074CD4,
+    0x80074F78, 0x8007515C, 0x800754B8, 0x800754E4,
+    0x80075500, 0x8007551C, 0x80075538, 0x80075554,
+    0x80075640, 0x80075570, 0x8007558C, 0x800755A8,
+    0x800755C4, 0x800755F0, 0x8007561C,
+};
+const u32 jtbl_800AE694_7EB44[12] = {
+    0x80074FB8, 0x80074FCC, 0x80074FE0, 0x80074FF4,
+    0x80075008, 0x8007501C, 0x80075030, 0x80075044,
+    0x80075058, 0x8007506C, 0x800750F4, 0x80075108,
+};
+const u32 jtbl_800AE6C4_7EB74[12] = {
+    0x8007519C, 0x80075488, 0x80075488, 0x80075488,
+    0x80075488, 0x800751B0, 0x800751C4, 0x800751D8,
+    0x80075488, 0x800751EC, 0x80075200, 0x80075214,
+};
+const u32 jtbl_800AE6F4_7EBA4[12] = {
+    0x80075254, 0x80075488, 0x80075268, 0x8007527C,
+    0x80075290, 0x800752A4, 0x800752B8, 0x80075488,
+    0x80075488, 0x80075488, 0x800752CC, 0x800752E0,
+};
+const u32 jtbl_800AE724_7EBD4[12] = {
+    0x80075320, 0x80075334, 0x80075488, 0x80075348,
+    0x8007535C, 0x80075370, 0x80075384, 0x80075398,
+    0x80075488, 0x80075488, 0x800753AC, 0x800753C0,
+};
+const u32 jtbl_800AE754_7EC04[10] = {
+    0x80075400, 0x80075414, 0x80075428, 0x8007543C,
+    0x80075488, 0x80075488, 0x80075488, 0x80075488,
+    0x80075450, 0x80075464,
+};
+const f32 D_800AE77C_7EC2C[1] = { -10000.0f };
+const f32 D_800AE780_7EC30[1] = { 10000.0f };
+const f32 D_800AE784_7EC34[1] = { 1500.0f };
+const f32 D_800AE788_7EC38[1] = { 0.200000003f };
+const u32 jtbl_800AE78C_7EC3C[8] = {
+    0x80077E34, 0x80077E5C, 0x80077E34, 0x80077E14,
+    0x80077E54, 0x80077E54, 0x80077E54, 0x80077E54,
+};
+const u32 jtbl_800AE7AC_7EC5C[25] = {
+    0x80078BC0, 0x80078C98, 0x80078B68, 0x80078CF4,
+    0x80078D1C, 0x80078B68, 0x80078B68, 0x80078D6C,
+    0x80078D84, 0x80078DFC, 0x80078E94, 0x80078EA4,
+    0x80078EB4, 0x80078FA0, 0x80079094, 0x80078EC4,
+    0x80079078, 0x80078FD0, 0x80079024, 0x800790E8,
+    0x800790F8, 0x80078BE8, 0x80078B68, 0x80078F10,
+    0x80079108,
+};
+const u32 jtbl_800AE810_7ECC0[7] = {
+    0x80078CC8, 0x80078CC0, 0x80078CD4, 0x80078CD4,
+    0x80078CD4, 0x80078CDC, 0x80078CE8,
+};
+const u32 jtbl_800AE82C_7ECDC[8] = {
+    0x80078DF4, 0x80078B68, 0x80078DAC, 0x80078DB8,
+    0x80078DC4, 0x80078DD0, 0x80078DDC, 0x80078DE8,
+};
+const u32 jtbl_800AE84C_7ECFC[7] = {
+    0x8007A7F4, 0x8007A840, 0x8007A86C, 0x8007A8B4,
+    0x8007A98C, 0x8007AA20, 0x00000000,
+};
+const f64 D_800AE868_7ED18[1] = { 340 };
+const f64 D_800AE870_7ED20[1] = { 19.25 };
+const f64 D_800AE878_7ED28[1] = { 680 };
+const f64 D_800AE880_7ED30[1] = { 28.5 };
+const f64 D_800AE888_7ED38[1] = { 1.8 };
+const f64 D_800AE890_7ED40[1] = { 110 };
+const f32 D_800AE898_7ED48[2] = { 1500.0f, 0.0f };
+const f64 D_800AE8A0_7ED50[1] = { 1200 };
+const f64 D_800AE8A8_7ED58[1] = { 2000 };
+const f64 D_800AE8B0_7ED60[1] = { 1000 };
+const f64 D_800AE8B8_7ED68[1] = { 2000 };
+const u32 jtbl_800AE8C0_7ED70[8] = {
+    0x8007D6A0, 0x8007D560, 0x8007D5AC, 0x8007D540,
+    0x8007D5F8, 0x8007D648, 0x00000000, 0x00000000,
+};
+const char D_800AE8E0_7ED90[] = "INVALID MOVIE EVENT!!!!!\012";
+const char D_800AE8FC_7EDAC[] = "ERROR: guLookAt is going to CRASH.\012";
+const char D_800AE920_7EDD0[] = "ERROR: Too many keyframes for buffers! 100 KF Maximum!\012";
+const char D_800AE958_7EE08[] = "newAmbientLight r: %d g: %d b: %d\012";
+const char D_800AE97C_7EE2C[] = "ERROR: No free animation buffers! See Frank. \012";
+const u32 jtbl_800AE9AC_7EE5C[35] = {
+    0x8007E1DC, 0x8007E25C, 0x8007E978, 0x8007E288,
+    0x8007E2D0, 0x8007E2E0, 0x8007E378, 0x8007E3B8,
+    0x8007E4A4, 0x8007E4B4, 0x8007E4DC, 0x8007E568,
+    0x8007E584, 0x8007E5A0, 0x8007E5FC, 0x8007E96C,
+    0x8007E648, 0x8007E670, 0x8007E6B8, 0x8007E724,
+    0x8007E734, 0x8007E764, 0x8007E784, 0x8007E7B0,
+    0x8007E7E0, 0x8007E804, 0x8007E814, 0x8007E870,
+    0x8007E880, 0x8007E894, 0x8007E8A0, 0x8007E90C,
+    0x8007E918, 0x8007E924, 0x8007E950,
+};
+const f32 D_800AEA38_7EEE8[1] = { 1.33333337f };
+const f32 D_800AEA3C_7EEEC[1] = { 0.00999999978f };
+const f64 D_800AEA40_7EEF0[1] = { 6.2831853070000001 };
+const f64 D_800AEA48_7EEF8[1] = { 360 };
+const f64 D_800AEA50_7EF00[1] = { 180 };
+const f64 D_800AEA58_7EF08[1] = { 0.01 };
+const f64 D_800AEA60_7EF10[1] = { 0.128 };
+const f64 D_800AEA68_7EF18[1] = { 0.40000000000000002 };
+const f32 D_800AEA70_7EF20[1] = { 0.00249999994f };
+const f32 D_800AEA74_7EF24[3] = { 0.00499999989f, 0.0f, 0.0f };
+const char D_800AEA80_7EF30[] = "JAVA 1941";
+const char D_800AEA8C_7EF3C[] = "AMERICA 1966";
+const char D_800AEA9C_7EF4C[] = "SIBERIA 1991";
+const char D_800AEAAC_7EF5C[] = "ALIEN COMET 2016";
+const char D_800AEAC0_7EF70[] = "JAVA 1941";
+const char D_800AEACC_7EF7C[] = "USA 1966";
+const char D_800AEAD8_7EF88[] = "SIBERIE 1991";
+const char D_800AEAE8_7EF98[] = "COMETE 2016";
+const char D_800AEAF4_7EFA4[] = "JAVA 1941";
+const char D_800AEB00_7EFB0[] = "AMERIKA 1966";
+const char D_800AEB10_7EFC0[] = "SIBIRIEN 1991";
+const char D_800AEB20_7EFD0[] = "KOMET 2016";
+const char D_800AEB2C_7EFDC[] = "%C";
+const char D_800AEB30_7EFE0[] = "%@Primary objective complete.";
+const char D_800AEB50_7F000[] = "%@Co-ordinates for next";
+const char D_800AEB68_7F018[] = "%@objective selected:";
+const char D_800AEB80_7F030[] = "%C";
+const char D_800AEB84_7F034[] = "%@Objectif principal atteint.";
+const char D_800AEBA4_7F054[] = "%@Co-ordonn\351e selectionn\351e pour";
+const char D_800AEBC4_7F074[] = "%@le prochain objectif:";
+const char D_800AEBDC_7F08C[] = "%C";
+const char D_800AEBE0_7F090[] = "%@Prim\344rziel erf\374llt.";
+const char D_800AEBF8_7F0A8[] = "%@Koordinaten f\374r n\344chstes";
+const char D_800AEC14_7F0C4[] = "%@Ziel gew\344hlt:";
+const char D_800AEC24_7F0D4[] = "%@%s";
+const char D_800AEC2C_7F0DC[] = "%@%s";
+const char D_800AEC34_7F0E4[] = "%@%s";
+const f32 D_800AEC3C_7F0EC[1] = { 20000.0f };

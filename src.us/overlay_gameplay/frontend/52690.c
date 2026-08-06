@@ -283,7 +283,7 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 			sp124.unk2 = ((varS4 - tempS6) * 0x10) - 0x12C;
 		}
 
-		guPerspective((Mtx *)D_8005BB3C, &sp132, 55.0f, 1.3333334f, 50.0f, D_800AEC3C_7F0EC, 1.0f);
+		guPerspective((Mtx *)D_8005BB3C, &sp132, 55.0f, 1.3333334f, 50.0f, D_800AEC3C_7F0EC[0], 1.0f);
 		guLookAt((Mtx *)D_8005BB38, 0.0f, 0.0f, 0.0f, (f32)sp10C.unk0, (f32)sp10C.unk2, (f32)sp10C.unk4,
 				 0.0f, 1.0f, 0.0f);
 		spB8 = D_8005BB38;
@@ -1277,19 +1277,19 @@ void func_800857D4_55C84(u8 arg0, f32 *arg1, s32 arg2, s32 arg3) {
 		spawn[1] = template[1];
 		spawn[2] = template[2];
 
-		randX = (f32)((f64)(f32)(func_800038E0_44E0() % (u8)arg3) / D_800AEC40_7F0F0);
+		randX = (f32)((f64)(f32)(func_800038E0_44E0() % (u8)arg3) / D_800AEC40_7F0F0[0]);
 		if ((func_800038E0_44E0() % 21) < 10) {
 			randX = -randX;
 		}
 		randX += arg1[0];
 
-		randY = (f32)((f64)(f32)(func_800038E0_44E0() % (u8)arg3) / D_800AEC48_7F0F8);
+		randY = (f32)((f64)(f32)(func_800038E0_44E0() % (u8)arg3) / D_800AEC48_7F0F8[0]);
 		if ((func_800038E0_44E0() % 21) < 10) {
 			randY = -randY;
 		}
 		randY += arg1[1];
 
-		randZ = (f32)((f64)(f32)(func_800038E0_44E0() % (u8)arg3) / D_800AEC50_7F100);
+		randZ = (f32)((f64)(f32)(func_800038E0_44E0() % (u8)arg3) / D_800AEC50_7F100[0]);
 		if ((func_800038E0_44E0() % 21) < 10) {
 			randZ = -randZ;
 		}
@@ -1497,7 +1497,7 @@ void func_80085FF0_564A0(u8 arg0) {
 
 					x = currentUnk8->unk0;
 					y = currentUnk8->unk2;
-					angle = (f32)((1.0 * D_800AEC60_7F110) / D_800AEC58_7F108);
+					angle = (f32)((1.0 * D_800AEC60_7F110[0]) / D_800AEC58_7F108[0]);
 
 					cosAngle = cosf(angle);
 					sinAngle = sinf(angle);
@@ -2740,19 +2740,19 @@ void func_8008A094_5A544(u8 arg0) {
 	z = (s8)templateBytes[2];
 	func_800837B4_53C64(&x, &x);
 
-	randX = (f32)((f64)(f32)(func_800038E0_44E0() % templateBytes[4]) / D_800AEC70_7F120);
+	randX = (f32)((f64)(f32)(func_800038E0_44E0() % templateBytes[4]) / D_800AEC70_7F120[0]);
 	if ((func_800038E0_44E0() % 21) < 10) {
 		randX = -randX;
 	}
 	randX += x;
 
-	randY = (f32)((f64)(f32)(func_800038E0_44E0() % templateBytes[4]) / D_800AEC78_7F128);
+	randY = (f32)((f64)(f32)(func_800038E0_44E0() % templateBytes[4]) / D_800AEC78_7F128[0]);
 	if ((func_800038E0_44E0() % 21) < 10) {
 		randY = -randY;
 	}
 	randY += y;
 
-	randZ = (f32)((f64)(f32)(func_800038E0_44E0() % templateBytes[4]) / D_800AEC80_7F130);
+	randZ = (f32)((f64)(f32)(func_800038E0_44E0() % templateBytes[4]) / D_800AEC80_7F130[0]);
 	if ((func_800038E0_44E0() % 21) < 10) {
 		randZ = -randZ;
 	}
@@ -5139,7 +5139,7 @@ void func_80090648_60AF8(void) {
 	func_80004D38_5938();
 
 	guPerspective((Mtx*)D_8005BB38, &perspNorm, (f32)((FrontendCamState*)D_800D7A18)->unk3A, D_800D7974, D_800D8510,
-				  D_800AED68_7F218, 1.0f);
+				  D_800AED68_7F218[0], 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, perspNorm);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
@@ -5175,3 +5175,42 @@ void func_80090648_60AF8(void) {
 
 	gDPPipeSync(D_8005BB2C++);
 }
+
+
+
+
+
+
+/* ===== Frontend .rodata (ROM 0x7F0F0 - 0x7F220) ===== */
+const f64 D_800AEC40_7F0F0[1] = { 255 };
+const f64 D_800AEC48_7F0F8[1] = { 255 };
+const f64 D_800AEC50_7F100[1] = { 255 };
+const f64 D_800AEC58_7F108[1] = { 360 };
+const f64 D_800AEC60_7F110[1] = { 6.2831853070000001 };
+const f64 D_800AEC68_7F118[1] = { 255 };
+const f64 D_800AEC70_7F120[1] = { 255 };
+const f64 D_800AEC78_7F128[1] = { 255 };
+const f64 D_800AEC80_7F130[1] = { 255 };
+const u32 jtbl_800AEC88_7F138[11] = {
+    0x8008CC90, 0x8008CCA8, 0x8008CCB8, 0x8008CCC8,
+    0x8008CCD8, 0x8008CCE8, 0x8008CCF8, 0x8008CD08,
+    0x8008CD30, 0x8008CD18, 0x8008CD28,
+};
+const u32 jtbl_800AECB4_7F164[11] = {
+    0x8008DB5C, 0x8008DBB4, 0x8008DBB4, 0x8008DBB4,
+    0x8008DB6C, 0x8008DB7C, 0x8008DB8C, 0x8008DB9C,
+    0x8008DBB4, 0x8008DBAC, 0x8008DBB4,
+};
+const f64 D_800AECE0_7F190[1] = { 360 };
+const f64 D_800AECE8_7F198[1] = { 6.2831853070000001 };
+const u32 jtbl_800AECF0_7F1A0[30] = {
+    0x8008FEDC, 0x8008FF18, 0x8008FF38, 0x8008FFA4,
+    0x8008FFC0, 0x80090040, 0x800900BC, 0x800900CC,
+    0x80090174, 0x8009024C, 0x8009028C, 0x800902C8,
+    0x800902E0, 0x80090304, 0x80090328, 0x80090394,
+    0x800903A4, 0x800903B0, 0x800903D4, 0x80090408,
+    0x80090478, 0x8009049C, 0x800904C0, 0x800904D8,
+    0x800904E4, 0x80090508, 0x80090518, 0x80090560,
+    0x80090578, 0x800905CC,
+};
+const f32 D_800AED68_7F218[1] = { 2500.0f };
