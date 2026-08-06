@@ -5316,13 +5316,13 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 	if (D_80094934_64DE4 != 0) {
 		switch (arg0) {
 		case 0:
-			func_8007EA0C_4EEBC(&D_80098FF0[0]);
+			func_8007EA0C_4EEBC((s32*)&D_80098FF0_694A0[0]);
 			break;
 		case 1:
-			func_8007EA0C_4EEBC(&D_80098FF0[1]);
+			func_8007EA0C_4EEBC((s32*)&D_80098FF0_694A0[1]);
 			break;
 		case 2:
-			func_8007EA0C_4EEBC(&D_80098FF0[2]);
+			func_8007EA0C_4EEBC((s32*)&D_80098FF0_694A0[2]);
 			break;
 		default:
 			break;

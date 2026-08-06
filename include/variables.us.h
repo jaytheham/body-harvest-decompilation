@@ -1277,7 +1277,7 @@ extern Unk8007E12CEntry8 D_80096548_669F8[];
 extern Unk8007E12CEntry8 D_800965D8_66A88[];
 extern f32 D_800965E8_66A98[];
 extern Unk8007E12CEntry8 D_800965F0_66AA0[];
-extern s32 D_80098FF0[];
+extern void* D_80098FF0_694A0[3];
 // AI - Per-room display lists (8 Gfx per room, 32 bytes each; indexed by levelIndex << 5)
 extern u8 D_8009C1A8_184268[];
 // AI - Per-world base offsets into the room object catalog (D_8008E0A8_176168) / room ranges
@@ -1550,12 +1550,12 @@ extern const char D_800AE448_7E8F8[];
 extern const char D_800AE468_7E918[];
 extern const char D_800AE49C_7E94C[];
 extern const char D_800AE4C8_7E978[];
-extern f64 D_800AE518_7E9C8;
-extern f32 D_800AE77C_7EC2C;
+extern f64 D_800AE518_7E9C8[2];
+extern f32 D_800AE77C_7EC2C[4];
 extern f32 D_800AE780_7EC30;
 extern f32 D_800AE784_7EC34;
 extern f32 D_800AE788_7EC38;
-extern f64 D_800AE868_7ED18;
+extern f64 D_800AE868_7ED18[11];
 extern f64 D_800AE870_7ED20;
 extern f64 D_800AE878_7ED28;
 extern f64 D_800AE880_7ED30;
@@ -1566,20 +1566,20 @@ extern f64 D_800AE8A0_7ED50;
 extern f64 D_800AE8A8_7ED58;
 extern f64 D_800AE8B0_7ED60;
 extern f64 D_800AE8B8_7ED68;
-extern char D_800AE8E0_7ED90;
+extern char D_800AE8E0_7ED90[]; /* osSyncPrintf format strings */
 extern char D_800AE8FC_7EDAC[];
 extern char D_800AE920_7EDD0; /* osSyncPrintf format string */
 extern char D_800AE958_7EE08; /* osSyncPrintf format string */
 extern char D_800AE97C_7EE2C; /* osSyncPrintf format string */
-extern f32 D_800AEA38_7EEE8;
+extern f32 D_800AEA38_7EEE8[2];
 extern f32 D_800AEA3C_7EEEC;
-extern f64 D_800AEA40_7EEF0;
+extern f64 D_800AEA40_7EEF0[6];
 extern f64 D_800AEA48_7EEF8;
 extern f64 D_800AEA50_7EF00;
 extern f64 D_800AEA58_7EF08;
 extern f64 D_800AEA60_7EF10;
 extern f64 D_800AEA68_7EF18;
-extern f32 D_800AEA70_7EF20;
+extern f32 D_800AEA70_7EF20[2];
 extern f32 D_800AEA74_7EF24;
 extern char D_800AEB2C_7EFDC[];
 extern char D_800AEB30_7EFE0[];
