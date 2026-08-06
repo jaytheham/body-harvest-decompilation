@@ -1276,7 +1276,7 @@ extern Unk80080588Entry5 D_80096540_669F0[];
 extern Unk8007E12CEntry8 D_80096548_669F8[];
 extern Unk8007E12CEntry8 D_800965D8_66A88[];
 extern f32 D_800965E8_66A98[];
-extern u8 D_800965F0_66AA0[];
+extern Unk8007E12CEntry8 D_800965F0_66AA0[];
 extern s32 D_80098FF0[];
 // AI - Per-room display lists (8 Gfx per room, 32 bytes each; indexed by levelIndex << 5)
 extern u8 D_8009C1A8_184268[];
