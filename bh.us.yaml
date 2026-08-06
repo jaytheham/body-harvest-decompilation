@@ -260,6 +260,13 @@ segments:
       - [0x66820, .data, overlay_gameplay/frontend/data_66820]
       - [0x66AA0, .data, overlay_gameplay/frontend/data_66AA0]
       - [0x68FA0, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x796F0, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x79EF0, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x7A6F0, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x7A8F0, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x7AAF0, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x7C598, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x7CDA0, .data, overlay_gameplay/frontend/data_68FA0]
       - [0x7D5A0, .rodata, overlay_gameplay/frontend/40720]
       - [0x7F0F0, .rodata, overlay_gameplay/frontend/52690]
 
