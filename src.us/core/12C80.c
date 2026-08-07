@@ -395,11 +395,7 @@ void func_800129FC_135FC(s8 arg0, s8 arg1) {
 	}
 }
 
-// CURRENT(120) — structurally perfect; only register rotation in the
-// D_955300/D_963A70 section remains (size/&D_8006AB48/D_955300 vs target's
-// s0/s1/s2). The (s32) casts on the bank-size subtraction are needed to break
-// IDO's CSE of D_963A70 with the alBnkfNew arg (otherwise D_963A70 is kept in
-// a saved reg and D_955300 is recomputed).
+// CURRENT(120)
 // https://decomp.me/scratch/06otn
 #ifdef NON_MATCHING
 void func_80012A74_13674(void)
