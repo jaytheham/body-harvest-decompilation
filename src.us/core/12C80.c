@@ -395,7 +395,11 @@ void func_800129FC_135FC(s8 arg0, s8 arg1) {
 	}
 }
 
-// CURRENT(0), but needs...?
+// CURRENT(120) — structurally perfect; only register rotation in the
+// D_955300/D_963A70 section remains (size/&D_8006AB48/D_955300 vs target's
+// s0/s1/s2). The (s32) casts on the bank-size subtraction are needed to break
+// IDO's CSE of D_963A70 with the alBnkfNew arg (otherwise D_963A70 is kept in
+// a saved reg and D_955300 is recomputed).
 // https://decomp.me/scratch/06otn
 #ifdef NON_MATCHING
 void func_80012A74_13674(void)
@@ -404,7 +408,7 @@ void func_80012A74_13674(void)
   ALSynConfig synConfig;
   ALSndpConfig sndpConfig;
 	s16 maxSeqLen;
-	ALSeqFile* seqFile;
+	u8 *seqBase;
 	s32 j;
   BhAudioGlobals synData;
 	s16 seqFileSize;
@@ -417,9 +421,9 @@ void func_80012A74_13674(void)
 	}
 	
   alHeapInit(&D_8006AB98, D_80165710, sizeof(D_80165710));
-  D_8006AB4C = D_8006AB48 = alHeapDBAlloc(0, 0, &D_8006AB98, 1, (D_963A70 - D_955300));
-  func_8000F5A8_101A8(D_955300, D_8006AB48, (D_963A70 - D_955300));
-  alBnkfNew(D_8006AB48, D_963A70_2);
+  D_8006AB4C = D_8006AB48 = alHeapDBAlloc(0, 0, &D_8006AB98, 1, (s32)D_963A70 - (s32)D_955300);
+  func_8000F5A8_101A8((s32)D_955300, D_8006AB48, (s32)D_963A70 - (s32)D_955300);
+  alBnkfNew(D_8006AB48, (u8 *)D_963A70);
   D_8006AB8C = D_8006AB48->bankArray[0];
   D_8006AB90 = D_8006AB48->bankArray[1];
   synConfig.maxVVoices = 0x50;
@@ -456,25 +460,25 @@ void func_80012A74_13674(void)
   D_8006AA80 = D_8006AA84 = 0;
   func_80012080_12C80(-1);
 
+  seqBase = D_BBB9B0;
   D_8006AB3C = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 4);
-  func_8000F5A8_101A8(D_BBB9B0, D_8006AB3C, 8);
+  func_8000F5A8_101A8(seqBase, D_8006AB3C, 8);
   {
 
 	  seqFileSize = (D_8006AB3C->seqCount * 8) + 4;
 
 	D_8006AB44 = alHeapDBAlloc(0, 0, &D_8006AB98, 1, (D_8006AB3C->seqCount * 8) + 4);
-	func_8000F5A8_101A8(D_BBB9B0, D_8006AB44, seqFileSize);
-	alSeqFileNew((ALSeqFile *) D_8006AB44, D_BBB9B0);
+	func_8000F5A8_101A8(seqBase, D_8006AB44, seqFileSize);
+	alSeqFileNew((ALSeqFile *) D_8006AB44, seqBase);
 
 	{
 		maxSeqLen = 0;
-		seqFile = (ALSeqFile *) D_8006AB44;
 	  
-		for (j = 0; j < ((s32) seqFile->seqCount); j++)
+		for (j = 0; j < ((s32) ((ALSeqFile *) D_8006AB44)->seqCount); j++)
 		{
-		  if (maxSeqLen < seqFile->seqArray[j].len)
+		  if (maxSeqLen < ((ALSeqFile *) D_8006AB44)->seqArray[j].len)
 		  {
-			maxSeqLen = seqFile->seqArray[j].len;
+			maxSeqLen = ((ALSeqFile *) D_8006AB44)->seqArray[j].len;
 		  }
 		}
 	  if (maxSeqLen & 1)

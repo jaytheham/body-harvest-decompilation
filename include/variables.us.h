@@ -1083,8 +1083,8 @@ extern Unk8006AA84Node *D_8006AAC8;
 extern s32 D_8006AAD0[];
 extern s32 D_8006AB10;
 extern s16 D_8006AB14;
-extern Unk80031424 *D_8006AB18[4]; // ALCSPlayer*?
-extern ALCSeq *D_8006AB20[4];
+extern Unk80031424 *D_8006AB18[2]; // ALCSPlayer*?
+extern ALCSeq *D_8006AB20[2];
 extern ALCSeq *D_8006AB28;
 extern s32 D_8006AB30[2];
 extern s32 D_8006AB38;
@@ -1092,7 +1092,7 @@ extern BhSeqFile *D_8006AB3C;
 extern BhSeqFile *D_8006AB44;
 extern ALBankFile *D_8006AB48;
 extern ALBankFile *D_8006AB4C;
-extern ALSeqpConfig D_8006AB50[4];
+extern ALSeqpConfig D_8006AB50[2];
 extern s32 D_8006AB88;
 extern ALBank *D_8006AB8C;
 extern ALBank *D_8006AB90;
