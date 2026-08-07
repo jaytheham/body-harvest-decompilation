@@ -32,16 +32,16 @@ void func_8001A54C_1B14C(u8 *arg0) {
 	D_80053C8C = D_80052AD8;
 }
 
-#ifdef NON_MATCHING
+// CURRENT(0)
 void func_8001A598_1B198(u8 *arg0) {
 	u8 *dst;
 	u8 c;
 	s32 temp;
 	s32 count;
-
-	dst = D_8006C580 + D_8006C6C2 * 0x28;
-	c = *arg0;
+	dst = &D_8006C580[D_8006C6C2 * 0x28];
+	temp = 0; // dead init; forces IDO to assign temp->$v1 and c->$a2 (matches target regalloc)
 	count = 1;
+	c = *arg0;
 	if (c != 0) {
 		do {
 			if ((c & 0x80) && D_800313D0_31FD0 == 3) {
@@ -66,9 +66,6 @@ void func_8001A598_1B198(u8 *arg0) {
 		D_8006C6C2 = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1B100/func_8001A598_1B198.s")
-#endif
 
 void func_8001A650_1B250(s16 arg0) {
 	if ((arg0 != D_8006C6D4) || (D_8006C6C6 == 0)) {
@@ -192,3 +189,4 @@ void func_8001A828_1B428(void)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1B100/func_8001A828_1B428.s")
 #endif
+
