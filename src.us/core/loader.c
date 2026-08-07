@@ -565,16 +565,13 @@ void loadLevelCode(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelCode.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(0)
 void func_800117D8_123D8(void) {
 	osInvalICache(func_80070270, (u8 *)&D_8008DDF0 - (u8*)&func_80070270);
 	osInvalDCache(&D_8008DDF0, D_800A5720 - (u8 *)&D_8008DDF0);
 	func_800101F0_10DF0(func_80070270, D_158330, D_18D7E0 - D_158330);
 	bzero(D_800A5720, D_800FCF50 - D_800A5720);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_800117D8_123D8.s")
-#endif
 
 void func_80011858_12458(u8 arg0, s32 arg1) {
 	if ((u32)(func_8001032C_10F2C(arg1, D_80031C04_32804[arg0 - 1], D_8006AA6C) - D_80031C04_32804[arg0 - 1]) >= 0x30D41U) {
