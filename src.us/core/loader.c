@@ -278,6 +278,7 @@ void loadLevel(s32 arg0) {
 }
 
 // https://decomp.me/scratch/8dWr0
+// CURRENT(2435)
 #ifdef NON_MATCHING
 void loadLevelData(u8 arg0)
 {
@@ -503,9 +504,12 @@ void loadLevelData(u8 arg0)
 	{
 		j = 3;
 		tempKey = (row % 2) << 13;
-		cells[2] ^= tempKey;
-		cells[1] = (cells[1] ^ 0x4000) ^ tempKey;
-		cells[0] ^= tempKey;
+		if (1)
+		{
+			cells[2] ^= tempKey;
+			cells[1] = (cells[1] ^ 0x4000) ^ tempKey;
+			cells[0] ^= tempKey;
+		}
 		do
 		{
 			s32 cellVal;
@@ -513,8 +517,8 @@ void loadLevelData(u8 arg0)
 			cellVal = new_var ^ ((j % 2) << 14);
 			rows[j] = cellVal ^ tempKey;
 		} while (++j != 0xFF);
-		cells += 0x100;
 		rows += 0x100;
+		cells += 0x100;
 	}
 }
 #else
