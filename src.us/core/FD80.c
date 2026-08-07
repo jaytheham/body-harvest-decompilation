@@ -218,7 +218,7 @@ void func_8000F6B0_102B0(s32 arg0) {
 
 		switch (sp70->type) {
 		case 1:
-			D_800313D4++;
+			D_800313D4_31FD4++;
 			var_s5++;
 			if (var_s0 >= 2) {
 				sp64++;
