@@ -395,7 +395,7 @@ void func_800129FC_135FC(s8 arg0, s8 arg1) {
 	}
 }
 
-// CURRENT(0), but needs...?
+// CURRENT(120)
 // https://decomp.me/scratch/06otn
 #ifdef NON_MATCHING
 void func_80012A74_13674(void)
@@ -404,7 +404,7 @@ void func_80012A74_13674(void)
   ALSynConfig synConfig;
   ALSndpConfig sndpConfig;
 	s16 maxSeqLen;
-	ALSeqFile* seqFile;
+	u8 *seqBase;
 	s32 j;
   BhAudioGlobals synData;
 	s16 seqFileSize;
@@ -417,9 +417,9 @@ void func_80012A74_13674(void)
 	}
 	
   alHeapInit(&D_8006AB98, D_80165710, sizeof(D_80165710));
-  D_8006AB4C = D_8006AB48 = alHeapDBAlloc(0, 0, &D_8006AB98, 1, (D_963A70 - D_955300));
-  func_8000F5A8_101A8(D_955300, D_8006AB48, (D_963A70 - D_955300));
-  alBnkfNew(D_8006AB48, D_963A70_2);
+  D_8006AB4C = D_8006AB48 = alHeapDBAlloc(0, 0, &D_8006AB98, 1, (s32)D_963A70 - (s32)D_955300);
+  func_8000F5A8_101A8((s32)D_955300, D_8006AB48, (s32)D_963A70 - (s32)D_955300);
+  alBnkfNew(D_8006AB48, (u8 *)D_963A70);
   D_8006AB8C = D_8006AB48->bankArray[0];
   D_8006AB90 = D_8006AB48->bankArray[1];
   synConfig.maxVVoices = 0x50;
@@ -456,25 +456,25 @@ void func_80012A74_13674(void)
   D_8006AA80 = D_8006AA84 = 0;
   func_80012080_12C80(-1);
 
+  seqBase = D_BBB9B0;
   D_8006AB3C = alHeapDBAlloc(0, 0, &D_8006AB98, 1, 4);
-  func_8000F5A8_101A8(D_BBB9B0, D_8006AB3C, 8);
+  func_8000F5A8_101A8(seqBase, D_8006AB3C, 8);
   {
 
 	  seqFileSize = (D_8006AB3C->seqCount * 8) + 4;
 
 	D_8006AB44 = alHeapDBAlloc(0, 0, &D_8006AB98, 1, (D_8006AB3C->seqCount * 8) + 4);
-	func_8000F5A8_101A8(D_BBB9B0, D_8006AB44, seqFileSize);
-	alSeqFileNew((ALSeqFile *) D_8006AB44, D_BBB9B0);
+	func_8000F5A8_101A8(seqBase, D_8006AB44, seqFileSize);
+	alSeqFileNew((ALSeqFile *) D_8006AB44, seqBase);
 
 	{
 		maxSeqLen = 0;
-		seqFile = (ALSeqFile *) D_8006AB44;
 	  
-		for (j = 0; j < ((s32) seqFile->seqCount); j++)
+		for (j = 0; j < ((s32) ((ALSeqFile *) D_8006AB44)->seqCount); j++)
 		{
-		  if (maxSeqLen < seqFile->seqArray[j].len)
+		  if (maxSeqLen < ((ALSeqFile *) D_8006AB44)->seqArray[j].len)
 		  {
-			maxSeqLen = seqFile->seqArray[j].len;
+			maxSeqLen = ((ALSeqFile *) D_8006AB44)->seqArray[j].len;
 		  }
 		}
 	  if (maxSeqLen & 1)
@@ -1432,7 +1432,7 @@ void func_80015210_15E10(s16 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4)
   Unk8006AA80Node sp50;
   s16 temp_v1;
   if (D_8006AB88 != 0)
-  {  
+  {
 	sp50.unk2 = D_80032228_32E28[arg0 & 0xFFFF];
 	sp50.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
 	sp50.unk6 = -1;
@@ -1440,8 +1440,8 @@ void func_80015210_15E10(s16 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4)
 	sp50.unk8 = 0;
 	temp_v1 = D_80031F04_32B04[arg0] * (arg4 / 200.0f);
 	sp50.unk0 = arg0 & 0xFFFF;
-	if (temp_v1 < 0x2FFF) { temp_v1 += 0x2FFF; }
-	else { temp_v1 = 0x7FFF; }sp50.unk20 = temp_v1;  sp50.unk0E = -1; sp50.unk22 = 0x40;
+	if (temp_v1 < 0x2FFF) { sp50.unk20 = temp_v1 + 0x2FFF; }
+	else { sp50.unk20 = 0x7FFF; }  sp50.unk0E = -1; sp50.unk22 = 0x40;
 	func_800121B4_12DB4(sp50, &D_8006AA80, &D_8006AA84);
   }
 }
@@ -1911,7 +1911,7 @@ s32 func_800164C4_170C4(void) {
 }
 
 // https://decomp.me/scratch/CQbLj
-// CURRENT(2338)
+// CURRENT(108)
 #ifdef NON_MATCHING
 s8 func_800165EC_171EC(void) {
 	s32 sp48;
@@ -1936,19 +1936,17 @@ s8 func_800165EC_171EC(void) {
 		}
 	}
 
-	i = 0;
-	do {
-		if (*(s8*)((s32)(D_80031CD0_328D0) + i) != -1 && D_80031CA4 != 2) {
+	for (i = 0; i < 2; i++) {
+		if (D_80031CD0_alt[i] != -1 && D_80031CA4 != 2) {
 			func_80016ABC_176BC(i);
 			return i;
 		}
-		if (func_80012E88_13A88(i) == 0 && D_80031CE4_328E4[i] == 0 && *(s8*)((s32)(D_80031CD0_328D0) + i) == -1) {
+		if (func_80012E88_13A88(i) == 0 && D_80031CE4_328E4[i] == 0 && D_80031CD0_alt[i] == -1) {
 			func_80016ABC_176BC(i);
 			return i;
 		}
-		i++;
 		var_s3++;
-	} while (i < 2);
+	}
 
 	if (var_s3 == 2) {
 		for (i = 0; i < 2; i++) {
@@ -1967,9 +1965,9 @@ s8 func_800165EC_171EC(void) {
 
 		for (i = 0; i < 2; i++) {
 			s16 score;
-			if (D_80031CE4_328E4[i] == 1 && func_80012E88_13A88(i) == 1) {
+			if (D_80031CE4_328E4[i] == 1 && func_80012E88_13A88(i) == 1U) {
 				if (D_80031D28_32928[i] == 1) {
-					score = (s16)((D_80031D44_32944[i] * ((f32)D_80031D74_32974[D_80031D1C_3291C[i]] * D_80031D2C_3292C[i]) / D_80031D34_32934[i] + D_80031D3C_3293C[i] * (f32)D_80031D74_32974[D_80031D1C_3291C[i]]) * D_80031D64_32964);
+					score = (s16)((D_80031D3C_3293C[i] * (f32)D_80031D74_32974[D_80031D1C_3291C[i]] + D_80031D44_32944[i] * ((f32)D_80031D74_32974[D_80031D1C_3291C[i]] * D_80031D2C_3292C[i]) / D_80031D34_32934[i]) * D_80031D64_32964);
 				} else {
 					score = (s16)((f32)D_80031D74_32974[D_80031D1C_3291C[i]] * D_80031D64_32964);
 				}
@@ -1985,15 +1983,16 @@ s8 func_800165EC_171EC(void) {
 			return var_s6;
 		}
 
-		for (i = 0; i < 2; i++) {
-			if (D_8006AB18[0]->unk1C < D_80031D20_32920[i]) {
-				if (D_8006AB18[0]->unk1C < 0) {
-					sp48 = (0x7FFFFFFF - D_80031D20_32920[i]) - D_8006AB18[0]->unk1C;
-				} else {
-					sp48 = (D_8006AB18[0]->unk1C + 0x7FFFFFFF) - D_80031D20_32920[i];
-				}
-			} else {
+			for (i = 0; i < 2; i++) {
+			if (D_8006AB18[0]->unk1C >= D_80031D20_32920[i]) {
 				sp48 = D_8006AB18[0]->unk1C - D_80031D20_32920[i];
+			} else {
+				if (D_8006AB18[0]->unk1C >= 0) {
+					sp48 = D_8006AB18[0]->unk1C + 0x7FFFFFFF;
+					sp48 -= D_80031D20_32920[i];
+				} else {
+					sp48 = (0x7FFFFFFF - D_80031D20_32920[i]) - D_8006AB18[0]->unk1C;
+				}
 			}
 
 			if (sp44 < sp48) {
@@ -2174,49 +2173,40 @@ s16 func_800172E0_17EE0(u8 *arg0)
 }
 
 // https://decomp.me/scratch/sIowK
-// CURRENT(1450)
+// CURRENT(120)
 #ifdef NON_MATCHING
 s16 func_80017394_17F94(u8 *arg0, s16 arg1)
 {
 	s32 width;
-	s32 c;
 	u8 *ptr;
 
 	width = 0;
 	ptr = arg0;
-	c = *arg0;
-	if (0xA != c && 0 != c && 0x40 != c && 0x3B != c) {
-		arg1 = (s16)(arg1 - 1);
-		if (arg1 != 0) {
-			c = *arg0;
-			while (1) {
-				if (c >= 0x20 && c < 0x80) {
-					if (c == 0x5E) {
-						arg1 = (s16)(arg1 - 2);
+	if (*arg0 != 0xA && *arg0 != 0 && *arg0 != 0x40 && *arg0 != 0x3B) {
+		
+		while (--arg1) {
+			
+				if (*ptr >= 0x20 && *ptr < 0x80) {
+					if (*ptr == 0x5E) {
 						ptr += 2;
-						c = *ptr;
+						arg1 -= 2;
 					}
 
-					if (width != 0 || (c != 0x20 && c != 0x26 && c != 0x25)) {
-						width += D_80031720_32320[(c * 2) + 0x261];
+					if (width != 0 || *ptr != 0x20 || *ptr != 0x26 || *ptr != 0x25) {
+						width += D_80031720_32320[*ptr * 2 + 0x261];
 					}
-				}
-
-				c = ptr[1];
-				arg1 = (s16)(arg1 - 1);
-				if (c == 0xA) {
-					break;
 				}
 
 				ptr++;
-				if (c == 0 || c == 0x40 || c == 0x3B) {
+				if (*ptr == 0xA) {
 					break;
 				}
 
-				if (arg1 == 0) {
+				if (*ptr == 0 || *ptr == 0x40 || *ptr == 0x3B) {
 					break;
 				}
-			}
+
+				
 		}
 	}
 	return width;
@@ -2745,29 +2735,30 @@ void func_80018D58_19958(void) {
 }
 
 // https://decomp.me/scratch/q8jZh
-// CURRENT(2007)
-#ifdef NON_MATCHING
+// CURRENT(180)
 // Play dialogue with index arg0
+#ifdef NON_MATCHING
 void func_80018D7C_1997C(u16 arg0)
 {
   u8 sp20;
+  s32 pad0;
+  s32 pad1;
   D_80034494 = 0;
-  sp20 = arg0;
 	// PlayDialogue: %d
   osSyncPrintf(&D_8003845C_3905C, arg0);
   if (!(D_800313C8 & 8) && !(D_80052ACD & 0x10))
   {
 	if (arg0 >= 0xCD)
 	{
-			  sp20 = (arg0 - 0xCD);
 	  func_80019F80_1AB80();
-	  if ((D_80034460 + D_8006C550[sp20])[0] != 0x25)
+			  sp20 = (arg0 - 0xCD);
+	  if (D_80034460[D_8006C550[sp20]] != 0x25)
 	  {
-		if ((D_80034460 + D_8006C550[sp20])[0] == 0x26)
+		if (D_80034460[D_8006C550[sp20]] == 0x26)
 		{
 		  D_80034484 = 1;
 		  D_8003447C = 0;
-	
+
 		  func_80017B08_18708(sp20);
 		  func_80015380_15F80(sp20);
 		  if (sp20 < 0x26)
@@ -2784,25 +2775,25 @@ void func_80018D7C_1997C(u16 arg0)
 		return;
 	  }
 
-	  if ((D_80034460 + D_8006C550[sp20])[0] == 0x5E)
+	  if (D_80034460[D_8006C550[sp20]] == 0x5E)
 	  {
 		  // ----%c,%c,%c
 		osSyncPrintf(&D_80038470_39070,
-					 (D_80034460 + D_8006C550[sp20])[0],
-					 (D_80034460 + D_8006C550[sp20])[1],
-					 (D_80034460 + D_8006C550[sp20])[2]);
-		D_8006C570 = func_8001A37C_1AF7C((D_80034460 + D_8006C550[sp20]));
+					 D_80034460[D_8006C550[sp20]],
+					 D_80034460[D_8006C550[sp20] + 1],
+					 D_80034460[D_8006C550[sp20] + 2]);
+		D_8006C570 = func_8001A37C_1AF7C(&D_80034460[D_8006C550[sp20]]);
 		D_80034494 = 1;
 		D_80034490_35090 = 1;
 		D_80034498_35098 = 0;
 		func_80017B08_18708(sp20);
 		return;
 	  }
-	  if ((D_80034460 + D_8006C550[sp20])[1] == 0x24)
+	  if (D_80034460[D_8006C550[sp20] + 1] == 0x24)
 	  {
 		gzip_data_0000 = 1;
-		D_8006C56D = (D_80034460 + D_8006C550[sp20])[2];
-		D_8006C56E = (D_80034460 + D_8006C550[sp20])[3];
+		D_8006C56D = D_80034460[D_8006C550[sp20] + 2];
+		D_8006C56E = D_80034460[D_8006C550[sp20] + 3];
 		osSyncPrintf(&D_80038480_39080); // \n
 		  // wayPoint x: %d z: %d
 		osSyncPrintf(&D_80038484_39084, (s8) D_8006C56D, (s8) D_8006C56E);
@@ -2814,25 +2805,25 @@ void func_80018D7C_1997C(u16 arg0)
 	  osSyncPrintf(&D_8003849C_3909C, arg0);
 		// Offset:%d
 	  osSyncPrintf(&D_800384A8_390A8, D_8006C550[arg0]);
-	  if ((D_80034460 + D_8006C550[arg0])[0] == 0x5E)
+	  if (D_80034460[D_8006C550[arg0]] == 0x5E)
 	  {
-		D_8006C570 = func_8001A37C_1AF7C((D_80034460 + D_8006C550[arg0]));
+		D_8006C570 = func_8001A37C_1AF7C(&D_80034460[D_8006C550[arg0]]);
 		  // keyNumber =%d
 		osSyncPrintf(&D_800384B4_390B4, D_8006C570, &D_8006C570);
 		D_80034498_35098 = 0;
 		D_80034494 = 1;
 		D_80034490_35090 = 1;
 	  }
-	  else if ((D_80034460 + D_8006C550[arg0])[0] == 0x24)
+	  else if (D_80034460[D_8006C550[arg0]] == 0x24)
 	  {
 		gzip_data_0000 = 1;
-		D_8006C56D = (D_80034460 + D_8006C550[arg0])[1];
-		D_8006C56E = (D_80034460 + D_8006C550[arg0])[2];
+		D_8006C56D = D_80034460[D_8006C550[arg0] + 1];
+		D_8006C56E = D_80034460[D_8006C550[arg0] + 2];
 		osSyncPrintf(&D_800384C4_390C4); // \n
 		  // wayPoint x: %d z: %d
 		osSyncPrintf(&D_800384C8_390C8, (s8) D_8006C56D, (s8) D_8006C56E);
 	  }
-	  func_80017B08_18708((s32) arg0);
+	  func_80017B08_18708(arg0);
 	}
   }
 }
@@ -2840,7 +2831,7 @@ void func_80018D7C_1997C(u16 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018D7C_1997C.s")
 #endif
 
-// CURRENT(6205)
+// CURRENT(5760)
 #ifdef NON_MATCHING
 void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 	Unk800190D4 *entry;
@@ -2855,10 +2846,6 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 
 	portraitIndex = arg2;
 	switch (portraitIndex) {
-	default:
-		entry = &D_8003429C[D_80034453_35053[currentLevel] + portraitIndex - 1];
-		texture = (u8 *)((portraitIndex * 0x1600) + D_80034470 - 0x1600);
-		break;
 	case 0:
 		func_80017BF8_187F8(0);
 		entry = &D_8003429C[portraitIndex];
@@ -2883,6 +2870,10 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 		func_80017BF8_187F8(4);
 		entry = &D_8003429C[portraitIndex];
 		texture = D_80265A80;
+		break;
+	default:
+		entry = &D_8003429C[D_80034453_35053[currentLevel] + portraitIndex - 1];
+		texture = (u8 *)((portraitIndex * 0x1600) + D_80034470 - 0x1600);
 		break;
 	}
 
@@ -2956,7 +2947,7 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800190D4_19CD4.s")
 #endif
 
-// CURRENT(4239) — Only Regalloc/Stack not matching
+// CURRENT(969)
 #ifdef NON_MATCHING
 void func_80019ABC_1A6BC(arg0, arg1)
 s32 arg0;
@@ -2984,17 +2975,18 @@ s32 arg1;
 	cnt = D_800344A8;
 	if ((cnt % 3) != 2) {
 	} else {
-		D_8006C56C = ((u8)D_8006C56C + 1) % 6;
+		D_8006C56C = (D_8006C56C + 1) % 6;
 	}
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_80264B00[(u8)D_8006C56C * 0x240]));
+	cnt += 1;
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_80264B00[D_8006C56C * 0x240]));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
 	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 287, 683);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_RENDERTILE, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x5C, 0x5C);
-	gSPTextureRectangle(D_8005BB2C++, arg0 * 4, arg1 * 4, (arg0 + 0x12) * 4, (arg1 + 0x12) * 4, G_TX_RENDERTILE, 0, 0, 0x0555, 0x0555);
-	D_800344A8 = cnt + 1;
+	gSPTextureRectangle(D_8005BB2C++, arg0 * 4, arg1 * 4, (arg0 + 0x12) << 2, (arg1 + 0x12) << 2, G_TX_RENDERTILE, 0, 0, 0x0555, 0x0555);
+	D_800344A8 = cnt;
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 }
