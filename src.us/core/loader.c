@@ -525,16 +525,13 @@ void loadLevelData(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelData.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(0)
 void loadFrontendData(void) {
 	osInvalICache(func_80070270, (u8 *)&D_800909B0 - (u8*)&func_80070270);
 	osInvalDCache(&D_800909B0, (u8 *)&D_800AED70 - (u8 *)&D_800909B0);
 	func_800101F0_10DF0(func_80070270, D_40720, D_7F220 - D_40720);
 	bzero(&D_800AED70, (u8 *)&D_800E1D70 - (u8 *)&D_800AED70);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadFrontendData.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_80011674_12274(void) {

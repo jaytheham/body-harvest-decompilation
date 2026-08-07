@@ -40,3 +40,13 @@ In loader.c and other .c files that use `func_80070270` as a data address: **no 
 - In IDO 5.3, generating `jal symbol` requires a direct function call by name (not a pointer). A function-pointer cast `((void(*)(s32))func_80070270)(0)` would generate `jalr` instead.
 - The per-TU macro avoids conflicting declarations in the same translation unit.
 - loader.c's DMA functions remain unchanged and continue to match their original assembly.
+
+## Status (applied)
+This guard is now fully applied in-tree:
+- `include/variables.us.h`: `#ifndef OVERLAY_ENTRY_AS_FUNC extern u8 func_80070270[]; #endif`
+- `include/functions.us.h`: `#ifdef OVERLAY_ENTRY_AS_FUNC s32 func_80070270(s32 arg0); #endif`
+- Callers `10A20.c` and `53F0.c` define `OVERLAY_ENTRY_AS_FUNC` at the top.
+
+It fixes `loadFrontendData` (was: 0x20 frame, CSE of the address into `a3` + `sw a3,0x1c(sp)` spill; now: 0x18 frame, independent `lui`/`addiu` per use). The sibling loader functions `func_80011674_12274` and `func_800117D8_123D8` use the same pattern and should already rematerialise correctly.
+
+Note: when the ROM is mismatched, asm-differ may report phantom non-zero scores for nearby functions — verify with a full build (`make` → `build/bh.us.z64: OK`) rather than trusting per-function diff scores in isolation.
