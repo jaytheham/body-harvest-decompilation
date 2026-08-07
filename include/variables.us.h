@@ -3,6 +3,14 @@
 
 #include "PR/sched.h"
 
+// Overlay entry point (shared RAM address 0x80070270 for all gameplay
+// overlays).  Declared as a data array here; TUs that genuinely call it as a
+// function (10A20.c, 53F0.c) define OVERLAY_ENTRY_AS_FUNC to get the function
+// prototype from functions.us.h instead.
+#ifndef OVERLAY_ENTRY_AS_FUNC
+extern u8 func_80070270[];
+#endif
+
 extern u8 D_040A6650[];
 extern u8 D_040A8F70[];
 extern u8 D_040AAE40[];
