@@ -118,8 +118,7 @@ s32 func_8001A7A0_1B3A0(s16 arg0) {
 }
 
 // https://decomp.me/scratch/kLkCO
-// CURRENT(645)
-#ifdef NON_MATCHING
+// CURRENT(0)
 void func_8001A828_1B428(void)
 {
   if (currentLevel == 1)
@@ -139,9 +138,10 @@ void func_8001A828_1B428(void)
   {
 	if (func_80018AC8_196C8() == 0)
 	{
-	  if ((D_8006C6C6 == 0) || (((D_8006C6C6 >= 9) && (D_8006C6C6 < 0x12)) && (D_8006C6C0 != D_8006C6C2)))
+	  s32 cur = D_8006C6C6;
+	  if ((cur == 0) || (((cur >= 9) && (cur < 0x12)) && (D_8006C6C0 != D_8006C6C2)))
 	  {
-		D_8006C6CC = D_8006C6C6;
+		D_8006C6CC = cur;
 		D_8006C6CE = D_8006C6C8;
 		D_8006C6CA = (D_8006C6C0 + 7) % 8;
 		D_8006C6C6 = ((func_8000A2B8_AEB8(&D_8006C580[D_8006C6C0 * 0x28], 0) + 0x50) / 3) + 0x10;
@@ -186,7 +186,4 @@ void func_8001A828_1B428(void)
 	}
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1B100/func_8001A828_1B428.s")
-#endif
 
