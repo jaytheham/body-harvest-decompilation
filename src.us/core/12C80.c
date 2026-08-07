@@ -2836,7 +2836,7 @@ void func_80018D7C_1997C(u16 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018D7C_1997C.s")
 #endif
 
-// CURRENT(6205)
+// CURRENT(5760)
 #ifdef NON_MATCHING
 void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 	Unk800190D4 *entry;
@@ -2851,10 +2851,6 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 
 	portraitIndex = arg2;
 	switch (portraitIndex) {
-	default:
-		entry = &D_8003429C[D_80034453_35053[currentLevel] + portraitIndex - 1];
-		texture = (u8 *)((portraitIndex * 0x1600) + D_80034470 - 0x1600);
-		break;
 	case 0:
 		func_80017BF8_187F8(0);
 		entry = &D_8003429C[portraitIndex];
@@ -2879,6 +2875,10 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 		func_80017BF8_187F8(4);
 		entry = &D_8003429C[portraitIndex];
 		texture = D_80265A80;
+		break;
+	default:
+		entry = &D_8003429C[D_80034453_35053[currentLevel] + portraitIndex - 1];
+		texture = (u8 *)((portraitIndex * 0x1600) + D_80034470 - 0x1600);
 		break;
 	}
 
