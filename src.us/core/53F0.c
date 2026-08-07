@@ -508,19 +508,19 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 s16 func_80006520_7120(s16 arg0, s16 arg1, u16 arg2) {
 	f64 var_f6;
 
-	var_f6 = (f64)(u32)arg2;
+	var_f6 = (u32)arg2;
 	return (s16) (s32) ((f32) arg0 + ((f32) (arg1 - arg0) * (f32) (var_f6 / D_80037138_37D38)));
 }
 
 s16 func_800065A4_71A4(s16 arg0, s16 arg1, u16 arg2)
 {
 	s32 sins_val = sins(((short) ((s32) arg2 >> 1)) - 0x4000);
-	return (f32) arg0 + ((arg1 - arg0) * ((f32) ((((f32) sins_val / 32768.0) * (f64) 0.5f) + 0.5)));
+	return (f32) arg0 + ((arg1 - arg0) * ((f32) ((((f32) sins_val / 32768.0) * 0.5f) + 0.5)));
 }
 
 s16 func_80006654_7254(s16 arg0, s16 arg1, u16 arg2) {
 	s32 diff = arg1 - arg0;
-	f32 temp_f0 = (f32)(((f64)(f32)sins(((s32)arg2 >> 1) - 0x4000) / 32768.0) + 1.0);
+	f32 temp_f0 = (f32)(((f32)sins(((s32)arg2 >> 1) - 0x4000) / 32768.0) + 1.0);
 	if ((s32)arg2 < 0x8000) {
 		return (s16)(s32)((f32)arg0 + (f32)diff * temp_f0);
 	}
@@ -529,7 +529,7 @@ s16 func_80006654_7254(s16 arg0, s16 arg1, u16 arg2) {
 
 s16 func_80006710_7310(s16 arg0, s16 arg1, u16 arg2) {
 	s32 sins_val = sins((arg2 >> 2) + 0xC000);
-	return (s16) (s32) ((f32) arg0 + ((f32) (arg1 - arg0) * (f32) (((f64) (f32) sins_val / 32768.0) + 1.0)));
+	return (s16) (s32) ((f32) arg0 + ((f32) (arg1 - arg0) * (f32) (((f32) sins_val / 32768.0) + 1.0)));
 }
 
 // https://decomp.me/scratch/ad5ME
@@ -557,41 +557,43 @@ s16 func_800067B4_73B4(s16 arg0, s16 arg1, u16 arg2, s16 arg3, s16 arg4)
 
 void func_800069FC_75FC(void)
 {
-  s32 sp44;
-  f32 temp_f0;
-  f32 var_f0;
-  s32 temp_f4;
-  s32 temp_v1;
-  if ((currentLevel == 2) && (func_8000726C_7E6C(0x1E) == 0))
-  {
-	func_80004DDC_59DC(D_8004773C.unk0, D_8004773C.unk1, D_8004773C.unk2, 0, D_80068088 - 1);
-	return;
-  }
-  sp44 = ((s32) ((((s32) ((D_80047964 * 2) & 0xFFFF)) >> 2) * 0x140)) / 8192;
-  if (D_80052B34 != NULL)
-  {
-	var_f0 = (f32) D_80052B34->unk2;
-  }
-  else
-  {
-	var_f0 = 0.0f;
-  }
-  temp_f4 = (s32) (((f32) ((((s16) D_8004794E) / 36) + D_8003161C_3221C)) + (var_f0 / 15.0f));
-  if (temp_f4 >= 2)
-  {
-	func_80004DDC_59DC(D_80047740.unk0, D_80047740.unk1, D_80047740.unk2, 0, temp_f4 - 1);
-  }
-  temp_v1 = D_80068088 - 1;
-  temp_f0 = (f32) temp_f4;
+	s32 sp44;
+	f32 temp_f0;
+	f32 var_f0;
+	s32 temp_f4;
+	s32 temp_v1;
+	if ((currentLevel == 2) && (func_8000726C_7E6C(0x1E) == 0))
+	{
+		func_80004DDC_59DC(D_8004773C.unk0, D_8004773C.unk1, D_8004773C.unk2, 0, D_80068088 - 1);
+		return;
+	}
+	sp44 = ((s32)((((s32)((D_80047964 * 2) & 0xFFFF)) >> 2) * 0x140)) / 8192;
+	if (D_80052B34 != NULL)
+	{
+		var_f0 = (f32)D_80052B34->unk2;
+	}
+	else
+	{
+		var_f0 = 0.0f;
+	}
+	temp_f4 = (s32)(((f32)((((s16)D_8004794E) / 36) + D_8003161C_3221C)) + (var_f0 / 15.0f));
+	if (temp_f4 >= 2)
+	{
+		func_80004DDC_59DC(D_80047740.unk0, D_80047740.unk1, D_80047740.unk2, 0, temp_f4 - 1);
+	}
+	temp_v1 = D_80068088 - 1;
+	temp_f0 = (f32)temp_f4;
 	temp_f0 += 128.0f * D_80031618_32218;
-  
-  if (temp_f0 < ((f32) temp_v1))
-  {
-	func_80004DDC_59DC(D_8004773C.unk0, D_8004773C.unk1, D_8004773C.unk2, (s32) temp_f0, temp_v1);
-	  if (currentLevel){}
-  }
-  func_80005C5C_685C(&D_802CA8D0, 2, 1, 8, sp44, temp_f4, 0x140, 0x80, 2.0f, D_80031618_32218, &D_80047748);
-  func_80005C5C_685C(&D_802CA8D0, 2, 1, 8, sp44 - 0x280, temp_f4, 0x140, 0x80, 2.0f, D_80031618_32218, NULL);
+
+	if (temp_f0 < ((f32)temp_v1))
+	{
+		func_80004DDC_59DC(D_8004773C.unk0, D_8004773C.unk1, D_8004773C.unk2, (s32)temp_f0, temp_v1);
+		if (currentLevel)
+		{
+		}
+	}
+	func_80005C5C_685C(&D_802CA8D0, 2, 1, 8, sp44, temp_f4, 0x140, 0x80, 2.0f, D_80031618_32218, &D_80047748);
+	func_80005C5C_685C(&D_802CA8D0, 2, 1, 8, sp44 - 0x280, temp_f4, 0x140, 0x80, 2.0f, D_80031618_32218, NULL);
 }
 
 void func_80006C4C_784C(void) {
@@ -1408,59 +1410,38 @@ void guess_checkMissions(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_checkMissions.s")
 #endif
 
-// CURRENT(80)
-#ifdef NON_MATCHING
-void debug_drawTimingGraphBars(void) {
-	s32 pad1;
-	s32 pad2;
-	s32 pad3;
-	s32 pad4;
-	s32 pad5;
-	s32 pad6;
-	s32 pad7;
-	s32 pad8;
-	s32 pad9;
-	Gfx *sp30;
-	s32 pad10;
-	s32 pad11;
-	Gfx *sp24;
-	s32 pad12;
-	s32 lrxVal;
+// https://decomp.me/scratch/jEgey
+void debug_drawTimingGraphBars(void)
+{
 	s32 var_a1;
 	s32 var_a2;
-
-	if (D_80047720 != 0) {
+	if (D_80047720 != 0)
+	{
 		gDPPipeSync(D_8005BB2C++);
-		gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
-		gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+		gDPSetCycleType(D_8005BB2C++, 3 << 20);
+		gDPSetRenderMode(D_8005BB2C++, (((((0 | 0x4000) | 0) | (0 << 30)) | (3 << 26)) | (0 << 22)) | (2 << 18), (((((0 | 0x4000) | 0) | (0 << 28)) | (3 << 24)) | (0 << 20)) | (2 << 16));
 		gDPSetFillColor(D_8005BB2C++, 0xFFFFFFFF);
 		var_a1 = 5;
 		var_a2 = 0x110;
-		do {
+		do
+		{
 			gDPFillRectangle(D_8005BB2C++, var_a2, 192, var_a2, 208);
 			var_a2 -= 0x30;
 		} while (var_a1--);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetFillColor(D_8005BB2C++, 0x3E003E);
-		sp30 = D_8005BB2C++;
-		lrxVal = (s32)((u64)((s64)D_80052B38 * 1000000LL) / D_80035610 / 347);
-		lrxVal = (lrxVal + 32) & 0x3FF;
-		gDPFillRectangle(sp30, 32, 194, lrxVal, 199);
+
+		gDPFillRectangle(D_8005BB2C++, 32, 194, (((D_80052B38 * 1000000LL) / D_80035610 / 347) + 32), 199);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetFillColor(D_8005BB2C++, 0xF800F800);
-		sp24 = D_8005BB2C++;
-		lrxVal = (s32)((u64)((s64)D_80052B3C * 1000000LL) / D_80035610 / 347);
-		lrxVal = (lrxVal + 32) & 0x3FF;
-		gDPFillRectangle(sp24, 32, 200, lrxVal, 205);
+
+		gDPFillRectangle(D_8005BB2C++, 32, 200, (((D_80052B3C * 1000000LL) / D_80035610 / 347) + 32), 205);
 		gDPPipeSync(D_8005BB2C++);
-		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
-		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
-		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+		gDPSetCycleType(D_8005BB2C++, 0 << 20);
+		gSPSetGeometryMode(D_8005BB2C++, 0x00000001);
+		gDPSetRenderMode(D_8005BB2C++, (((((((((0x8 | 0x10) | 0x20) | 0x40) | 0) | 0) | 0x2000) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (1 << 18), (((((((((0x8 | 0x10) | 0x20) | 0x40) | 0) | 0) | 0x2000) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (1 << 16));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/debug_drawTimingGraphBars.s")
-#endif
 
 void func_80008C18_9818(void)
 {
