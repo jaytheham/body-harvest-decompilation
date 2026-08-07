@@ -3,7 +3,6 @@
 
 #include "functions.h"
 
-// core
 void func_80012080_12C80(s32 arg0);
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1);
 void* (*func_80000CD4_18D4(Unk80042DA8** arg0))(void);
@@ -25,8 +24,6 @@ void guess_restoreSavedData(void);
 void func_80001190_1D90(void);
 void func_800020E0_2CE0(s32 arg0, s32 arg1);
 void func_800035D8_41D8(s16 arg0);
-
-// F9230
 void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3);
 void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3);
 void func_800EB8A4_FA854(Unk80157600 *arg0, f32 arg1);
@@ -207,7 +204,6 @@ s32 func_802D64D0_18EFE0(void);
 void loadFrontendData(void);
 void func_8001A460_1B060(LzssHeader *data, u8 *out);
 void __dummy(void);
-// loader.c functions - prototype-less to preserve implicit int behavior for matching functions
 s32 func_8001032C_10F2C();
 void func_8000F1E8_FDE8(void);
 void func_8000F5A8_101A8(s32 arg0, s32 arg1, s32 arg2);
@@ -311,8 +307,6 @@ void func_800E7B20_F6AD0(s32 arg0, s32 arg1);
 s32 func_800101F0_10DF0(s32 arg0, s32 arg1, s32 arg2);
 s32 func_80010290_10E90(s32 arg0);
 s32 func_800104AC_110AC(u8 arg0);
-
-// overlay_gameplay frontend
 s32 func_80070270_40720(s32 arg0);
 s32 func_80070390_40840(void);
 MissionData* func_80070494_40944(s16 arg0);
@@ -433,8 +427,6 @@ void func_80081290_51740(void);
 void* func_8008035C_5080C(FrontendStreamSlot* arg0, AnimChannelState* arg1, u32* arg2, s32 arg3, u8 arg4);
 void func_80080AD4_50F84(FrontendStreamSlot *arg0, AnimChannelState *arg1, u8 arg2);
 void func_80080B80_51030(s32 *arg0, s16 *arg1, s16 *arg2, s32 arg3);
-
-// overlay_gameplay outside
 void func_80070440_7F3F0(void);
 void func_80071148_800F8(u8 arg0, u8 arg1);
 void func_80071178_80128(void);
@@ -978,12 +970,9 @@ void func_8013B054_14A004(void);
 s32 func_8013B480_14A430(s16 arg0);
 s32 func_8013B5E4_14A594(s32 arg0);
 void func_8013B688_14A638(void);
-
 void func_800DA994_E9944(void);
 void func_800DAA1C_E99CC(s32 arg0);
 void func_800E049C_EF44C(s16 arg0, s16 arg1, s16 arg2);
-
-// overlay_level
 void func_802D4CD0_18D7E0(s32, s32);
 s32 func_802D57A0_18E2B0(void);
 void func_802D6D20_18F830(void);
@@ -994,7 +983,6 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2);
 void func_802DC2E4_194DF4(u8 arg0);
 void func_802D5190_2548D0(void);
 void func_802DBD08_25B448(u8, s32, s32);
-
 void osViExtendVStart(s32 arg0);
 void func_8000140C_200C(OSThread *arg0);
 OSThread *__osGetActiveQueue(void);
@@ -1178,7 +1166,6 @@ s32 func_80085984_16DA44(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 a
 u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13);
 s32 func_801223B0_131360(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_80122524_1314D4(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3);
-/* CFE30.c internal functions */
 void func_800C15C0_D0570(u8 arg0, s32 arg1, s16 arg2, s32 arg3);
 s16 func_800C17B4_D0764(u8 arg0, s32 arg1);
 s16 func_800C18D0_D0880(u8 arg0);
@@ -1539,26 +1526,15 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 void func_80128650_137600(Projectile *arg0, s32 arg1);
 s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4);
 void func_800D9DD8_E8D88(s16 arg0, s16 arg1, s16 arg2);
-/* core/loader */
 extern void (*__printfunc)(s32, s32);
-
-/* core/FB00 */
 void func_8000EFB8_FBB8(void *);
-
-/* overlay_gameplay/outside/A40B0 */
 void func_80095100_A40B0(s16, s16);
-
-/* core/53D0 */
 void func_800047D0_53D0(s32, s32);
-
-/* core/FB00 — thread entry points */
 void func_8000F6B0_102B0(s32);
 void func_8000FE50_10A50(void *);
 void __osSiCreateAccessQueue(void);
 void func_80002EF8_3AF8(void *);
 void func_8000F218_FE18(void);
-
-/* overlay_level/java/1ED9E0 */
 s32 func_802D51F8_1EDF08(void);
 void func_802D5508_1EE218(void);
 void func_802D57F4_1EE504(void);
@@ -1573,15 +1549,12 @@ void func_802DA844_1F3554(u8);
 void func_802DD140_1F5E50(u8 arg0, u8 arg1);
 void func_802E0B08_2C2F38(u8);
 void func_802D62E4_2B8714(void);
-/* overlay_gameplay/inside/1648A0 */
 f32 func_8007C96C_164A2C(OSContPad *arg0);
 void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1);
 void func_8007D37C_16543C(VehicleInstance *arg0, s16 arg1, s32 arg2);
 void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1);
 void func_8007EB1C_166BDC(void *arg0);
 void func_8007EFD4_167094(VehicleInstance *arg0);
-
-/* added for func_800720F4_810A4 */
 void func_8000AFDC_BBDC(void);
 void func_8000577C_637C(void);
 void func_800071D8_7DD8(void);
@@ -1591,7 +1564,6 @@ void func_80008CA8_98A8(s32 arg0);
 void playMapMusic(void);
 void playInventoryMusic(void);
 s32 guess_displayInventory(void);
-
 s32 isButtonNewlyPressed(s32 controllerNum, u16 buttonMask);
 void func_800E8190_F7140(void);
 void func_800EFFB4_FEF64(void);
@@ -1631,8 +1603,6 @@ void func_800DEADC_EDA8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_80103760_112710(VehicleInstance *, VehicleInstance *);
 s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s32 arg2);
 void func_800F32EC_10229C(u8 arg0, u8 arg1);
-
-/* java/1ED9E0 — additional function declarations */
 void func_8008EF1C_9DECC(u8);
 s32 func_800C2274_D1224(s16, s16, s16, u8);
 s16 func_800C3BD8_D2B88(s16, s16, s16, u16, u16, u8, u8, u8);
@@ -1662,8 +1632,6 @@ void debug_drawTimingGraphBars(void);
 unsigned long long func_8001D1A0_1DDA0(s32, u32, s32, s16);
 u8 func_800D5FD4_E4F84(s16, s16, s16, u8, u8, u8);
 f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1);
-
-/* 1416E0 */
 void func_800B42B0_C3260(s32);
 void func_800B4660_C3610(s32);
 void func_800B49A4_C3954(s32);
@@ -1679,8 +1647,6 @@ void func_800D9B14_E8AC4(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_8011592C_1248DC(s16 arg0, s16 arg1);
 void func_800F1004_FFFB4(void);
 void func_8012B150_13A100(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2, s32 arg3);
-
-/* overlay_level/siberia/2B7100 */
 void func_802D4CD0_2B7100(s32 arg0, s32 arg1);
 void func_802D4DCC_2B71FC(void);
 void func_802D4F1C_2B734C(void);
@@ -1688,8 +1654,6 @@ void func_802D5754_2B7B84(void);
 s32 func_802D7398_2B97C8(void);
 void func_802D9FB4_2BC3E4(u8 arg0);
 void func_802E0298_2C26C8(u8 arg0);
-
-/* overlay_level/comet */
 void func_802DBEA4_31FFF4(u8 arg0, s16 arg1, s16 arg2);
 s32 func_802E1FE0_326130(u8 arg0);
 void func_802DDB08_321C58(u8 arg0, u8 arg1, s16 arg2, s32 *arg3);
