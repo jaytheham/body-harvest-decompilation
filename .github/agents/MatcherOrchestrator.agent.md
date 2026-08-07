@@ -35,7 +35,7 @@ Ask each subagent to target a single function.
 
 Subagents are not to commit any changes. After they finish you will check the current changes, then add NON_MATCHING if needed, fix any errors, revert any unintended changes, and fix whatever else is necessary to return the build to `build/bh.us.z64: OK` before committing. Make sure the function has a comment with the current difference value before committing. Only commit when the build is OK.
 
-If there are multiple NON_MATCHING functions with switch statements, only process the last one in the C file. Functions with switch statements have to be matched last-to-first so that their jump table rodata gets positioned correctly.
+If there are multiple NON_MATCHING functions with switch statements, only process the last one in the C file. Functions with switch statements have to be matched last-to-first so that their jump table rodata gets positioned correctly. So if there are multiple NON_MATCHING functions with switch statements, process the last one first, then only if that one is now matched, process the next-to-last one, and so on.
 
 Keep going automatically until all NON_MATCHING functions in the file have been processed by subagents.
 

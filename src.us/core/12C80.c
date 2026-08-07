@@ -2187,9 +2187,9 @@ s16 func_80017394_17F94(u8 *arg0, s16 arg1)
 	width = 0;
 	ptr = arg0;
 	if (*arg0 != 0xA && *arg0 != 0 && *arg0 != 0x40 && *arg0 != 0x3B) {
-		arg1 = (s16)(arg1 - 1);
-		if (arg1 != 0) {
-			do {
+		
+		while (--arg1) {
+			
 				if (*ptr >= 0x20 && *ptr < 0x80) {
 					if (*ptr == 0x5E) {
 						ptr += 2;
@@ -2210,8 +2210,7 @@ s16 func_80017394_17F94(u8 *arg0, s16 arg1)
 					break;
 				}
 
-				arg1 = (s16)(arg1 - 1);
-			} while (arg1 != 0);
+				
 		}
 	}
 	return width;
@@ -2952,7 +2951,7 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800190D4_19CD4.s")
 #endif
 
-// CURRENT(969) — Regalloc/Stack + texture-addr scheduling remaining
+// CURRENT(969)
 #ifdef NON_MATCHING
 void func_80019ABC_1A6BC(arg0, arg1)
 s32 arg0;
