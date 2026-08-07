@@ -1114,7 +1114,7 @@ extern u16 D_8006C564;
 extern u16 D_8006C566;
 extern u16 D_8006C568;
 extern u16 D_8006C56A;
-extern s8 D_8006C56C;
+extern u8 D_8006C56C;
 extern s8 D_8006C56D;
 extern s8 D_8006C56E;
 extern s32 D_8006C570;
