@@ -32,16 +32,15 @@ void func_8001A54C_1B14C(u8 *arg0) {
 	D_80053C8C = D_80052AD8;
 }
 
-#ifdef NON_MATCHING
 void func_8001A598_1B198(u8 *arg0) {
 	u8 *dst;
 	u8 c;
 	s32 temp;
 	s32 count;
-
-	dst = D_8006C580 + D_8006C6C2 * 0x28;
-	c = *arg0;
+	dst = &D_8006C580[D_8006C6C2 * 0x28];
+	temp = 0; // dead init; forces IDO to assign temp->$v1 and c->$a2 (matches target regalloc)
 	count = 1;
+	c = *arg0;
 	if (c != 0) {
 		do {
 			if ((c & 0x80) && D_800313D0_31FD0 == 3) {
@@ -66,9 +65,6 @@ void func_8001A598_1B198(u8 *arg0) {
 		D_8006C6C2 = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1B100/func_8001A598_1B198.s")
-#endif
 
 void func_8001A650_1B250(s16 arg0) {
 	if ((arg0 != D_8006C6D4) || (D_8006C6C6 == 0)) {
@@ -121,8 +117,6 @@ s32 func_8001A7A0_1B3A0(s16 arg0) {
 }
 
 // https://decomp.me/scratch/kLkCO
-// CURRENT(645)
-#ifdef NON_MATCHING
 void func_8001A828_1B428(void)
 {
   if (currentLevel == 1)
@@ -142,9 +136,10 @@ void func_8001A828_1B428(void)
   {
 	if (func_80018AC8_196C8() == 0)
 	{
-	  if ((D_8006C6C6 == 0) || (((D_8006C6C6 >= 9) && (D_8006C6C6 < 0x12)) && (D_8006C6C0 != D_8006C6C2)))
+	  s32 cur = D_8006C6C6;
+	  if ((cur == 0) || (((cur >= 9) && (cur < 0x12)) && (D_8006C6C0 != D_8006C6C2)))
 	  {
-		D_8006C6CC = D_8006C6C6;
+		D_8006C6CC = cur;
 		D_8006C6CE = D_8006C6C8;
 		D_8006C6CA = (D_8006C6C0 + 7) % 8;
 		D_8006C6C6 = ((func_8000A2B8_AEB8(&D_8006C580[D_8006C6C0 * 0x28], 0) + 0x50) / 3) + 0x10;
@@ -189,6 +184,3 @@ void func_8001A828_1B428(void)
 	}
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1B100/func_8001A828_1B428.s")
-#endif
