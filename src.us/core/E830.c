@@ -143,13 +143,13 @@ void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			temp_v0 -= 4;
 			temp_v1 = (arg1 + arg3) - 1;
 			temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-			var_f0 = (f32) ((D_80037628 - (f64) (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037628);
+			var_f0 = (f32) ((D_80037628 - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037628);
 			D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 + 0x300) * var_f0) - 768.0f);
 		} else {
 			temp_v0 -= 4;
 			temp_v1 = (arg1 + arg3) - 7;
 			temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-			var_f0 = (f32) ((D_80037630 - (f64) (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037630);
+			var_f0 = (f32) ((D_80037630 - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037630);
 			D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 - 0x300) * var_f0) + 768.0f);
 		}
 		D_80059CD2 = (s16) (s32) (((f32) (D_80059CD2 - 0x480) * var_f0) + 1152.0f);
@@ -160,13 +160,13 @@ void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 		temp_v0 -= 6;
 		temp_v1 = (arg1 + arg3) - 1;
 		temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-		var_f0 = (f32) ((D_80037638 - (f64) (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037638);
+		var_f0 = (f32) ((D_80037638 - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037638);
 		D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 + 0x300) * var_f0) - 768.0f);
 	} else {
 		temp_v0 -= 6;
 		temp_v1 = (arg1 + arg3) - 7;
 		temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-		var_f0 = (f32) ((D_80037640 - (f64) (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037640);
+		var_f0 = (f32) ((D_80037640 - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037640);
 		D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 - 0x300) * var_f0) + 768.0f);
 	}
 	D_80059CD2 = (s16) (s32) (((f32) (D_80059CD2 + 0x480) * var_f0) - 1152.0f);
