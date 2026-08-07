@@ -335,8 +335,6 @@ void func_8000577C_637C(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000577C_637C.s")
 #endif
 
-
-#ifdef NON_MATCHING
 void func_80005844_6444(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	guOrtho(D_8005BB38, -1.0f, 1.0f, -1.0f, 1.0f, -10.0f, 10.0f, 1.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_LOAD | G_MTX_PROJECTION);
@@ -354,9 +352,6 @@ void func_80005844_6444(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_PROJECTION);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005844_6444.s")
-#endif
 
 void func_80005AEC_66EC(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	D_80047734 = 1;
