@@ -32,7 +32,6 @@ void func_8001A54C_1B14C(u8 *arg0) {
 	D_80053C8C = D_80052AD8;
 }
 
-// CURRENT(0)
 void func_8001A598_1B198(u8 *arg0) {
 	u8 *dst;
 	u8 c;
@@ -118,7 +117,6 @@ s32 func_8001A7A0_1B3A0(s16 arg0) {
 }
 
 // https://decomp.me/scratch/kLkCO
-// CURRENT(0)
 void func_8001A828_1B428(void)
 {
   if (currentLevel == 1)
@@ -186,4 +184,3 @@ void func_8001A828_1B428(void)
 	}
   }
 }
-
