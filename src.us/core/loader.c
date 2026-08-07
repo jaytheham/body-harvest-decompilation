@@ -525,7 +525,6 @@ void loadLevelData(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelData.s")
 #endif
 
-// CURRENT(0)
 void loadFrontendData(void) {
 	osInvalICache(func_80070270, (u8 *)&D_800909B0 - (u8*)&func_80070270);
 	osInvalDCache(&D_800909B0, (u8 *)&D_800AED70 - (u8 *)&D_800909B0);
@@ -533,7 +532,6 @@ void loadFrontendData(void) {
 	bzero(&D_800AED70, (u8 *)&D_800E1D70 - (u8 *)&D_800AED70);
 }
 
-// CURRENT(0)
 void func_80011674_12274(void) {
 	osInvalICache(func_80070270, (u8 *)&D_8013B8F0 - (u8*)&func_80070270);
 	osInvalDCache(&D_8013B8F0, (u8 *)&D_80149380 - (u8 *)&D_8013B8F0);
@@ -565,7 +563,6 @@ void loadLevelCode(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelCode.s")
 #endif
 
-// CURRENT(0)
 void func_800117D8_123D8(void) {
 	osInvalICache(func_80070270, (u8 *)&D_8008DDF0 - (u8*)&func_80070270);
 	osInvalDCache(&D_8008DDF0, D_800A5720 - (u8 *)&D_8008DDF0);
