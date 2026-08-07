@@ -2177,49 +2177,41 @@ s16 func_800172E0_17EE0(u8 *arg0)
 }
 
 // https://decomp.me/scratch/sIowK
-// CURRENT(1450)
+// CURRENT(120)
 #ifdef NON_MATCHING
 s16 func_80017394_17F94(u8 *arg0, s16 arg1)
 {
 	s32 width;
-	s32 c;
 	u8 *ptr;
 
 	width = 0;
 	ptr = arg0;
-	c = *arg0;
-	if (0xA != c && 0 != c && 0x40 != c && 0x3B != c) {
+	if (*arg0 != 0xA && *arg0 != 0 && *arg0 != 0x40 && *arg0 != 0x3B) {
 		arg1 = (s16)(arg1 - 1);
 		if (arg1 != 0) {
-			c = *arg0;
-			while (1) {
-				if (c >= 0x20 && c < 0x80) {
-					if (c == 0x5E) {
-						arg1 = (s16)(arg1 - 2);
+			do {
+				if (*ptr >= 0x20 && *ptr < 0x80) {
+					if (*ptr == 0x5E) {
 						ptr += 2;
-						c = *ptr;
+						arg1 -= 2;
 					}
 
-					if (width != 0 || (c != 0x20 && c != 0x26 && c != 0x25)) {
-						width += D_80031720_32320[(c * 2) + 0x261];
+					if (width != 0 || *ptr != 0x20 || *ptr != 0x26 || *ptr != 0x25) {
+						width += D_80031720_32320[*ptr * 2 + 0x261];
 					}
-				}
-
-				c = ptr[1];
-				arg1 = (s16)(arg1 - 1);
-				if (c == 0xA) {
-					break;
 				}
 
 				ptr++;
-				if (c == 0 || c == 0x40 || c == 0x3B) {
+				if (*ptr == 0xA) {
 					break;
 				}
 
-				if (arg1 == 0) {
+				if (*ptr == 0 || *ptr == 0x40 || *ptr == 0x3B) {
 					break;
 				}
-			}
+
+				arg1 = (s16)(arg1 - 1);
+			} while (arg1 != 0);
 		}
 	}
 	return width;
