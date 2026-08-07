@@ -3280,6 +3280,7 @@ extern Gfx D_9052C10[];
 extern Gfx D_9052C70[];
 extern u8 D_955300[];
 extern u8 D_963A70[];
+extern u8 D_963A70_2[];
 extern Gfx D_A002120[];
 extern u8 D_A003F40;
 extern Unk8014DD50 *D_802E67D0_32A920[];
