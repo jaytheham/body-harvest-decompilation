@@ -647,10 +647,11 @@ s32 func_80011B14_12714(s32 arg0) {
 	return (&D_7A4400 - &D_791C20) + arg0;
 }
 
+// CURRENT(1629)
 #ifdef NON_MATCHING
 s32 func_80011B60_12760(u8 arg0, s32 arg1) {
 	D_8006AA70 = arg1;
-	func_800101F0_10DF0(arg1, D_80031BDC_327DC[arg0 - 1], D_80031BF0_327F0[arg0 - 1] - D_80031BDC_327DC[arg0 - 1]);
+	func_800101F0_10DF0(D_8006AA70, D_80031BDC_327DC[arg0 - 1], D_80031BF0_327F0[arg0 - 1] - D_80031BDC_327DC[arg0 - 1]);
 	return D_80031BF0_327F0[arg0 - 1] - D_80031BDC_327DC[arg0 - 1] + arg1;
 }
 #else
