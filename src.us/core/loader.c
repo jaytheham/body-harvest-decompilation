@@ -541,7 +541,7 @@ void func_80011674_12274(void) {
 }
 
 // https://decomp.me/scratch/ktq8M
-// CURRENT(38)
+// CURRENT(28)
 #ifdef NON_MATCHING
 void loadLevelCode(u8 arg0)
 {
@@ -556,12 +556,9 @@ void loadLevelCode(u8 arg0)
 			   D_80031C40_32840[level - 1],
 			   D_80031C18_32818[level - 1],
 			   D_80031C2C_3282C[level - 1] - D_80031C18_32818[level - 1]);
-	
-	loadAddr = D_80031C50_32850[level] - D_80031C40_32840[level - 1];
-	loadAddr += D_80031C40_32840[level - 1];
-	D_8006AA68 = loadAddr;
-	osSyncPrintf(&D_8003802C_38C2C, loadAddr);
-  
+  loadAddr = D_80031C40_32840[level - 1] + (D_80031C50_32850[level] - D_80031C40_32840[level - 1]);
+  D_8006AA68 = loadAddr;
+  osSyncPrintf(&D_8003802C_38C2C, loadAddr);
   __printfunc = (void (*)(s32, s32)) D_8006AA68;
 }
 #else
