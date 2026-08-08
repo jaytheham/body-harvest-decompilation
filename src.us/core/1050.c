@@ -393,24 +393,22 @@ void func_80001144_1D44(u8 arg0, u8 arg1, u8 arg2) {
 void func_80001190_1D90(void) {
 	f32 temp_f0;
 	int new_var;
-	s32 temp_f8;
 	s32 temp_t1;
 	s32 temp_t6;
 	s32 temp_t8;
-temp_f8 = gameplayMode != D_80047698;
-	if (temp_f8) {
+
+	if (gameplayMode != D_80047698) {
 		func_800010C4_1CC4(0);
 		D_80047698 = gameplayMode;
 	}
 
 	if ((gameplayMode == 1) || (gameplayMode == 3) || (gameplayMode == 0xB)) {
 		if (D_80047678 == 1) {
-			D_800313CC_31FCC = (s64)D_8004767C;
+			D_800313CC_31FCC = D_8004767C;
 			if (D_8004768C >= 0x2711) {
-				temp_f0 = D_80036C88_37888 / (f32) D_8004768C;
-				temp_f8 = ((f32) D_8004767C * (temp_f0 * temp_f0 * temp_f0));
-				D_800313CC_31FCC = temp_f8;
-					D_800313CC_31FCC =(D_800313CC_31FCC/ 2);
+				temp_f0 = D_80036C88_37888 / D_8004768C;
+				D_800313CC_31FCC = (D_8004767C * (temp_f0 * temp_f0 * temp_f0));
+				D_800313CC_31FCC /= 2;
 			}
 			if (D_800313CC_31FCC >= 0x100) {
 				func_80001050_1C50(0);
@@ -1323,7 +1321,7 @@ void func_80002EF8_3AF8(void *arg0)
   func_80001424_2024();
   func_8000FF40_10B40();
   osContStartReadData(&D_80043388);
-  while (1)
+  while ((u64)1)
   {
 	osRecvMesg(&D_80043388, &sp34, 1);
 	func_80002ED4_3AD4();
@@ -1497,7 +1495,6 @@ void func_80003064_3C64(void)
 #endif
 
 // https://decomp.me/scratch/66U7q
-
 void func_800033D4_3FD4(u16 arg0, s32 controllerNum)
 {
 	int new_var2;
@@ -1597,7 +1594,7 @@ s16 func_80003680_4280(f32 arg0) {
 	} else {
 		absval = -arg0;
 	}
-	if ((f64)absval > 1.0) {
+	if (absval > 1.0) {
 		return 0;
 	}
 	if (arg0 < 0.0f) {
@@ -1614,11 +1611,11 @@ s16 func_80003740_4340(f32 arg0) {
 		arg0 = -arg0;
 		var_v1 = -1;
 	}
-	if ((f64) arg0 > 1.0) {
-		arg0 = (f32)(1.0 / (f64)arg0);
+	if (arg0 > 1.0) {
+		arg0 = (f32)(1.0 / arg0);
 		return (s16) ((0x4000 - D_8003D800_3E400[(s32) (arg0 * 1024.0f)]) * var_v1);
 	}
-	if ((f64) arg0 == 1.0) {
+	if (arg0 == 1.0) {
 		return (s16) (var_v1 << 0xD);
 	}
 	return (s16) (D_8003D800_3E400[(s32) (arg0 * 1024.0f)] * var_v1);
@@ -1889,7 +1886,7 @@ s32 func_80004254_4E54(f32 arg0, s32 arg1, s32 *arg2, s32 *arg3) {
 	s32 mantissa;
 	u32 frac;
 	s32 temp;
-	s32 i;
+	u16 i;
 	s32 rem;
 	s32 temp_lo;
 
@@ -1921,7 +1918,7 @@ s32 func_80004254_4E54(f32 arg0, s32 arg1, s32 *arg2, s32 *arg3) {
 	i = 0;
 	if (arg1 > 0) {
 		rem = arg1 & 3;
-		if (rem != 0) {
+		if (rem) {
 			do {
 				i++;
 				frac = (frac & 0x7FFFFF) * 10;
