@@ -616,6 +616,7 @@ void setGameplayResolution(void) {
 	setVideoInterfaceYSize(0xE6);
 }
 
+// AI - Requests a gameplay/frontend mode transition by setting D_80052AC8 (2=level complete) once a transition is pending.
 void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 	if (D_80052AD0 != 0) {
 		D_80052AD4 = arg0;
@@ -624,6 +625,7 @@ void func_80006DAC_79AC(s32 arg0, s32 arg1) {
 	}
 }
 
+// AI - Gameplay→frontend transition driver
 void func_80006DDC_79DC(void) {
 	s32 pad0;
 	s32 pad1;
@@ -673,6 +675,7 @@ void func_80006DDC_79DC(void) {
 			D_80052AE8.unk30 = 0;
 			D_80052AE8.unk40 = (u8*)3;
 			break;
+		// End of level, go to next level or end game
 		case 2:
 			if (currentLevel == 5) {
 				func_800170F4_17CF4(3);
@@ -695,7 +698,7 @@ void func_80006DDC_79DC(void) {
 				D_800476A0 = 1;
 				var_s3 = 1;
 				setFullResolution();
-				func_80070270(6);
+				func_80070270(6); // Show end game cutscene + credits
 			} else {
 				currentLevel += 1;
 				func_80007570_8170();

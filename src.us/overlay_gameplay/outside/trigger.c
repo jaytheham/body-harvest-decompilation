@@ -864,6 +864,7 @@ void func_800B018C_BF13C(s32 arg0) {
 	func_800AE454_BD404(&tmp);
 }
 
+// AI - End-of-level trigger callback; on the final level (currentLevel==5) requests the end-game credits via func_80006DAC_79AC(0x50, 2).
 void func_800B01E4_BF194(void *arg0) {
 	Unk80222A78 tmp;
 	func_800136CC_142CC();
@@ -882,6 +883,7 @@ void func_800B01E4_BF194(void *arg0) {
 	func_80006DAC_79AC(0x50, 2);
 }
 
+// AI - After boss spawn, schedules the end-of-level callback func_800B01E4_BF194 (skipped on the final level 5).
 void func_800B0288_BF238(s32 arg0) {
 	Unk80222A78 tmp;
 	tmp.unk0 = 2;
@@ -903,6 +905,7 @@ void func_800B02FC_BF2AC(Unk80222A78 *arg0) {
 	alienInstances[idx].unk20 |= (1 << (arg0->unk1 + 0xB));
 }
 
+// AI - Schedules the end-of-level callback func_800B01E4_BF194; used on the final level after the last alien is defeated.
 void func_800B034C_BF2FC(void) {
 	Unk80222A78 tmp;
 	tmp.unk0 = 2;
@@ -918,6 +921,7 @@ void func_800B0390_BF340(Unk80222A78 *arg0) {
 }
 
 // https://decomp.me/scratch/67lnk
+// AI - Spawns the level's boss alien with followers and schedules the follow-up end-of-level callback.
 u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2)
 {
 	Unk80222A78 sp60;

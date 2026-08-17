@@ -32,6 +32,7 @@ typedef enum FrontEndState
 
 // CURRENT(5)
 #ifdef NON_MATCHING
+// AI - Frontend overlay entry point; dispatches frontend actions (6=end-game comet movie + credits, 7=end-game message).
 s32 func_80070270_40720(s32 arg0) {
 		switch (arg0) {
 		case 1:
@@ -1894,6 +1895,7 @@ void func_800764B4_46964(void) {
 }
 
 // displayCometExplodesMovie
+// AI - Plays the comet-explosion end-game movie, then shows the credits and returns to the title screen.
 s32 func_80076504_469B4(void)
 {
   s32 result;
@@ -1964,6 +1966,7 @@ s32 func_80076504_469B4(void)
 }
 
 // displayEndGameMessage
+// AI - Shows the end-game message then scrolls the credits; returns to the title screen.
 s32 func_8007685C_46D0C(void) {
 	func_8007949C_4994C(func_80070390_40840(), 0);
 	func_8007C7F4_4CCA4();
@@ -3221,6 +3224,7 @@ s32 func_80078424_488D4(void) {
 #endif
 
 // startFile (unused?)
+// AI - Starts a new file at level 1 and enters the gameplay/frontend transition loop (func_80006DDC_79DC).
 void func_800788E4_48D94(void) {
 	currentLevel = 1;
 	func_800050C4_5CC4();
@@ -3234,6 +3238,7 @@ void func_800788E4_48D94(void) {
 }
 
 // Start saved game
+// AI - Continues the saved game and enters the gameplay/frontend transition loop (func_80006DDC_79DC).
 void func_80078968_48E18(void) {
 	func_800050C4_5CC4();
 	func_8000DC9C_E89C(D_8005BB48[D_80031B84], D_8005BB48[D_80031B84 ^ 1]);
@@ -3247,6 +3252,7 @@ void func_80078968_48E18(void) {
 
 // doFrontEndLoop
 #ifdef NON_MATCHING
+// AI - Main frontend state machine loop; drives press-start, file select, gameplay, and end-game credits.
 void func_800789E4_48E94(void) {
   Gfx* gfx;
   s32 result;
@@ -4737,6 +4743,7 @@ void func_8007BFC4_4C474(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(3430)
+// AI - Displays the end-game credits, scrolling lines from D_800944E8_64998 with a fade.
 void func_8007C4BC_4C96C(void) {
 	u16 fadeCounter;
 	s16 foundCount;
@@ -4830,6 +4837,7 @@ void func_8007C764_4CC14(u16 arg0, u16 arg1) {
 
 #ifdef NON_MATCHING
 // CURRENT(1840)
+// AI - Shows the end-of-game summary screen (total score, time, humans) then returns to press-start.
 void func_8007C7F4_4CCA4(void) {
 	s16 var_v1;
 	u16 var_s0;

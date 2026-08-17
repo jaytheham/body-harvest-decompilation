@@ -4340,7 +4340,8 @@ void func_800D0FE0_DFF90(s16, s32);
 void func_800D0F5C_DFF0C(s16, s16, s16, s16);
 
 #ifdef NON_MATCHING
-// Score: CURRENT(10019) - stack variable allocation differs from target
+// CURRENT(10019)
+// AI - Comet level boss-event handler; on the boss trigger (D_8014D17C==0xC7) spawns the boss via func_800B03CC_BF37C (leads to the credits).
 void func_802DF290_3233E0(void) {
 	s32 sp44;
 	s32 sp40;
