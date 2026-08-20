@@ -654,7 +654,7 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 		if (slopeDeg < -10.0f) {
 			u16 flags = D_80052B34->unk20;
 
-			if (!(flags & 0x800) && !(flags & 4) && !(D_80157A28 & PLAYER_STATE_FLAG_SWIMMING)) {
+			if (!(flags & VEHICLE_FLAG_ON_BRIDGE) && !(flags & VEHICLE_FLAG_HALF_ON_BRIDGE) && !(D_80157A28 & PLAYER_STATE_FLAG_SWIMMING)) {
 				if (slopeDeg < -10.0f) {
 					speedScale = D_80144410_1533C0;
 				}
@@ -1441,13 +1441,13 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 					func_800FB430_10A3E0(arg0, spB0);
 				}
 
-				if ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) && ((!(arg0->unk20 & 2) && ((D_80222A70 - 0x24) < arg0->unk2)) || (D_80222A70 < arg0->unk2))) {
+				if ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) && ((!(arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && ((D_80222A70 - 0x24) < arg0->unk2)) || (D_80222A70 < arg0->unk2))) {
 					D_801575C0 = (s16)(s32)((f64)arg0->unk0 - (((f64)(f32)coss((u16)arg0->unkE) / 32768.0) * 16.0));
 					D_801575C2 = (s16)(s32)((f64)arg0->unk4 - (((f64)(f32)sins((u16)arg0->unkE) / 32768.0) * 16.0));
 
 					if ((D_80222A70 - 0x24) < (s16)(func_800B84D0_C7480(D_801575C0, D_801575C2) >> 8)) {
 						func_800EB090_FA040();
-						if (!(arg0->unk20 & 2)) {
+						if (!(arg0->unk20 & VEHICLE_FLAG_AIRBORNE)) {
 							func_800EB534_FA4E4(&D_80157600, ANIM_SWIMMING_STANDUP, 0, 0.0f);
 							osSyncPrintf(D_80144370_153320);
 						}
@@ -1962,7 +1962,7 @@ block_125:
 			spAC = (f32) ((f64) sp74 / D_801444C0_153470);
 		}
 		temp_v0_7 = arg0->unk20;
-		if ((temp_v0_7 & 2) && !(temp_v0_7 & 0x800) && (temp_v1_6 == 0)) {
+		if ((temp_v0_7 & VEHICLE_FLAG_AIRBORNE) && !(temp_v0_7 & VEHICLE_FLAG_ON_BRIDGE) && (temp_v1_6 == 0)) {
 			D_801575F8 += 1;
 			temp_t5 = D_801575D8 + 1;
 			D_801575D8 = temp_t5;
@@ -1992,7 +1992,7 @@ block_125:
 		}
 		if (((temp_a0_3 & PLAYER_STATE_FLAG_HURT) == PLAYER_STATE_FLAG_HURT) && (D_80157A34 == 0)) {
 			func_80001144_1D44(0x46, 0xA, 0xA);
-			if (!(arg0->unk20 & 2) && ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) != PLAYER_STATE_FLAG_SWIMMING)) {
+			if (!(arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) != PLAYER_STATE_FLAG_SWIMMING)) {
 				func_800EB534_FA4E4(&D_80157600, func_800ED55C_FC50C(arg0, D_80157A2C), 0, 0);
 			}
 			D_80157A28 &= ~PLAYER_STATE_FLAG_HURT;
@@ -2014,7 +2014,7 @@ block_125:
 		}
 		if ((temp_a0_3 & PLAYER_STATE_FLAG_JUST_LANDED) == PLAYER_STATE_FLAG_JUST_LANDED) {
 			D_80157A28 = temp_a0_3 & ~PLAYER_STATE_FLAG_JUST_LANDED;
-			if (!(arg0->unk20 & 2) && ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) != PLAYER_STATE_FLAG_SWIMMING) && (D_801575F8 >= 0xB)) {
+			if (!(arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) != PLAYER_STATE_FLAG_SWIMMING) && (D_801575F8 >= 0xB)) {
 				func_800EB534_FA4E4(&D_80157600, ANIM_LAND, 7, 0);
 			}
 			D_801575F8 = 0;

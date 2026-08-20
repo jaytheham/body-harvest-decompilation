@@ -696,7 +696,7 @@ void func_8008D4A0_9C450(unsigned int arg0)
 // AI - Start interaction sequence with player
 void func_8008D634_9C5E4(u8 arg0)
 {
-	if (!(D_8004DCA8 & 2) && !(D_80052B34->unk20 & 0x80) && (D_80052B34->unk1A == 0) && (D_80159300 == 0))
+	if (!(D_8004DCA8 & 2) && !(D_80052B34->unk20 & VEHICLE_FLAG_UNK8) && (D_80052B34->unk1A == 0) && (D_80159300 == 0))
 	{
 		if (D_80048180 == 1)
 		{
@@ -1249,7 +1249,7 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 	sp2C += sp2A;
 	if (alienInstances[arg0].unk20 & 0x08000000)
 	{
-		sp24 = D_80052B34->unk20 & 2;
+		sp24 = D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE;
 		if (sp24 && (D_80222A70 >= D_80052B34->unk2))
 		{
 			sp24 = 0;
@@ -1301,7 +1301,7 @@ void func_8008EB20_9DAD0(u8 arg0, s32 arg1, s32 arg2)
 
 	if (inst->unk20 & 0x08000000)
 	{
-		sp24 = D_80052B34->unk20 & 2;
+		sp24 = D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE;
 		if (sp24 && D_80222A70 >= D_80052B34->unk2)
 		{
 			sp24 = 0;

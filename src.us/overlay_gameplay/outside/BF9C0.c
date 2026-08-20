@@ -4286,7 +4286,7 @@ void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 		return;
 	}
 
-	if (D_80052B34->unk20 & 2) {
+	if (D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) {
 		return;
 	}
 

@@ -5572,7 +5572,7 @@ void func_800CF948_DE8F8(void) {
 
 				if (absX < maxDist && absY < maxDist && absZ < maxDist) {
 					u32 distSq = (absX * absX) + (absY * absY) + (absZ * absZ);
-					if ((s32)sqrtf((f32)distSq) < maxDist && *(s16 *)&entry[2] > 0 && !(vehicle->unk20 & 2)) {
+					if ((s32)sqrtf((f32)distSq) < maxDist && *(s16 *)&entry[2] > 0 && !(vehicle->unk20 & VEHICLE_FLAG_AIRBORNE)) {
 						func_80102DDC_111D8C(vehicle, func_80003824_4424((f32)-absX, (f32)-absZ), 0, 9.0f);
 					}
 				}
@@ -12478,7 +12478,7 @@ void func_800E5B78_F4B28(void) {
 
 		if (entry->unk2 == 1) {
 			if (entry->unk1 == 2) {
-				vehicleInstances[entry->unk0].unk20 &= ~0x80;
+				vehicleInstances[entry->unk0].unk20 &= ~VEHICLE_FLAG_UNK8;
 			} else if (entry->unk1 == 1) {
 				val = buildingInstances[entry->unk0].unk8;
 				shifted = val >> 12;

@@ -836,9 +836,9 @@ void func_802D4DD4_254514(void) {
 	func_800FB468_10A418(&vehicleInstances[80], 1970.0f);
 	func_800FB468_10A418(&vehicleInstances[81], 1970.0f);
 	func_800FB468_10A418(&vehicleInstances[82], 1970.0f);
-	vehicleInstances[80].unk20 = (u16)(vehicleInstances[80].unk20 | 3);
-	vehicleInstances[81].unk20 = (u16)(vehicleInstances[81].unk20 | 3);
-	vehicleInstances[82].unk20 = (u16)(vehicleInstances[82].unk20 | 3);
+	vehicleInstances[80].unk20 = (u16)(vehicleInstances[80].unk20 | (VEHICLE_FLAG_UNK1 | VEHICLE_FLAG_AIRBORNE));
+	vehicleInstances[81].unk20 = (u16)(vehicleInstances[81].unk20 | (VEHICLE_FLAG_UNK1 | VEHICLE_FLAG_AIRBORNE));
+	vehicleInstances[82].unk20 = (u16)(vehicleInstances[82].unk20 | (VEHICLE_FLAG_UNK1 | VEHICLE_FLAG_AIRBORNE));
 	if (func_8000726C_7E6C(0x26) != 0) {
 		func_802D4CD0_254410(0x13, 0);
 	}
@@ -2027,7 +2027,7 @@ void func_802D803C_25777C(u8 arg0) {
 	func_800877E8_96798(arg0, 0xC8, 0xFA);
 
 	if (!(alien->unk20 & 0xF000)) {
-		if (!(D_80052B34->unk20 & 2) && (((D_80052B34->unk1A == 0) && ((D_80052B34->unk0 - alien->unk0) * (D_80052B34->unk0 - alien->unk0) + (D_80052B34->unk4 - alien->unk4) * (D_80052B34->unk4 - alien->unk4) < 0x186A0)) || ((D_80052B34->unk1A != 0) && ((D_80052B34->unk0 - alien->unk0) * (D_80052B34->unk0 - alien->unk0) + (D_80052B34->unk4 - alien->unk4) * (D_80052B34->unk4 - alien->unk4) < 0x493E0)))) {
+		if (!(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) && (((D_80052B34->unk1A == 0) && ((D_80052B34->unk0 - alien->unk0) * (D_80052B34->unk0 - alien->unk0) + (D_80052B34->unk4 - alien->unk4) * (D_80052B34->unk4 - alien->unk4) < 0x186A0)) || ((D_80052B34->unk1A != 0) && ((D_80052B34->unk0 - alien->unk0) * (D_80052B34->unk0 - alien->unk0) + (D_80052B34->unk4 - alien->unk4) * (D_80052B34->unk4 - alien->unk4) < 0x493E0)))) {
 			if (alien->unk2A < alien->unkE) {
 				alien->unk20 |= 0x8000;
 			} else {
@@ -3321,7 +3321,7 @@ void func_802DC244_25B984(u8 arg0) {
 			sp50 = func_80084E54_93E04(D_80052B34, alien);
 			if (sp50 < (vehicleSpecs[D_80052B34->unk1A].unkC + 0x64)) {
 				func_80123AC4_132A74(D_80052B34);
-			} else if ((sp50 < 0x3D0900) && !(D_80052B34->unk20 & 2)) {
+			} else if ((sp50 < 0x3D0900) && !(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE)) {
 				sp7C = 0x3D0900 - sp50;
 				func_80102DDC_111D8C(D_80052B34,
 					func_80003824_4424((f32)-(alien->unk0 - D_80052B34->unk0), (f32)-(alien->unk4 - D_80052B34->unk4)),

@@ -1253,7 +1253,7 @@ void func_800AC5BC_BB56C(u8 arg0) {
 
 	triggered = 0;
 	specIdx = D_80052B34->unk1A;
-	if ((specIdx != 0) && ((D_80052B34->unk20 & 2) == 0) && (D_80052B34->unk12 != 0)) {
+	if ((specIdx != 0) && ((D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) == 0) && (D_80052B34->unk12 != 0)) {
 		speedAbs = D_80052B34->unk58;
 		speedAbs = (-speedAbs < speedAbs) ? speedAbs : -speedAbs;
 

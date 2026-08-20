@@ -409,7 +409,7 @@ void func_802D4E6C_1EDB7C(void) {
 	u32 temp_v1;
 
 	func_800FB468_10A418(&vehicleInstances[8], 675.0f);
-	vehicleInstances[8].unk20 = (u16) (vehicleInstances[8].unk20 | 3);
+	vehicleInstances[8].unk20 = (u16) (vehicleInstances[8].unk20 | (VEHICLE_FLAG_UNK1 | VEHICLE_FLAG_AIRBORNE));
 	if (func_8000726C_7E6C((u64) 0x1E) != 0) {
 		func_800E2720_F16D0(0);
 		var_v1 = 0;
@@ -428,7 +428,7 @@ void func_802D4E6C_1EDB7C(void) {
 		func_8011C080_12B030(0x31);
 		func_8011C080_12B030(0x32);
 	}
-	vehicleInstances[58].unk20 = (u16) (vehicleInstances[58].unk20 | 0x80);
+	vehicleInstances[58].unk20 = (u16) (vehicleInstances[58].unk20 | VEHICLE_FLAG_UNK8);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4E6C_1EDB7C.s")
@@ -806,7 +806,7 @@ void func_802D5BF8_1EE908(void) {
 #endif
 
 void func_802D5DE4_1EEAF4(void) {
-	vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & 0xFBFF);
+	vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & ~VEHICLE_FLAG_UNKB);
 }
 
 // CURRENT(8) - 4-byte stack alignment gap for sp30 (cfe temp at 0x30 vs declared at 0x2C)
@@ -4228,7 +4228,7 @@ void func_802DE0C8_1F6DD8(u8 arg0) {
 				temp_a1 = temp_a3 - (s32)sp70;
 				temp_v1_2 = (temp_a0_2 * temp_a0_2) + (temp_a1 * temp_a1);
 
-				if ((temp_v1_2 < 0x225510) && !(vehicle->unk20 & 2)) {
+				if ((temp_v1_2 < 0x225510) && !(vehicle->unk20 & VEHICLE_FLAG_AIRBORNE)) {
 					temp_t0_2 = 0x225510 - temp_v1_2;
 					deltaX = alienIdx->unk0 - temp_a2;
 					sp68 = temp_t0_2;

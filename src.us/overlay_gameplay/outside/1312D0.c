@@ -547,7 +547,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
   arg0->unk1C = 0;
   if (arg0 == D_80052B34)
   {
-	if (((arg0->unk20 & 2) && (arg0->unk1A != 0)) && (gameplayMode == 1))
+	if (((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && (arg0->unk1A != 0)) && (gameplayMode == 1))
 	{
 	  arg0->unk3C = 0;
 	  D_801591AC = 6;
@@ -567,7 +567,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 	  return;
 	}
   }
-  else if (arg0->unk20 & 0x400)
+  else if (arg0->unk20 & VEHICLE_FLAG_UNKB)
   {
 	func_800AE190_BD140(2);
 	div = D_80145160_154110[0];
@@ -580,7 +580,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 
   }
   // If SCUD launcher on Siberia spawn nuke
-  if (((currentLevel == 4) && (arg0->unk1A == 0xD)) && (!(arg0->unk20 & 0x10)))
+  if (((currentLevel == 4) && (arg0->unk1A == 0xD)) && (!(arg0->unk20 & VEHICLE_FLAG_UNK5)))
   {
 	osSyncPrintf(D_80145088_154038);
 	func_800D6ADC_E5A8C(arg0->unk0, arg0->unk2, arg0->unk4, 5);
@@ -673,7 +673,7 @@ void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
 #endif
 
 void func_80124118_1330C8(VehicleInstance *arg0, s16 arg1) {
-	if ((arg0->unk20 & 0x80) == 0) {
+	if ((arg0->unk20 & VEHICLE_FLAG_UNK8) == 0) {
 		if ((arg0 != D_80052B34) || (D_801493E0 != 0)) {
 			func_80123E90_132E40(arg0, arg1);
 		}
@@ -717,7 +717,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 
 			vehicle = &vehicleInstances[*activeList];
 			vehSpec = &vehicleSpecs[vehicle->unk1A];
-			if (((vehicle->unk20 & 0x40) != 0) && (vehicle != arg5)) {
+			if (((vehicle->unk20 & VEHICLE_FLAG_UNK7) != 0) && (vehicle != arg5)) {
 				dx = (arg0 - vehicle->unk0) >> 2;
 				dy = (arg1 - vehicle->unk2) >> 2;
 				dz = (arg2 - vehicle->unk4) >> 2;
@@ -757,7 +757,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 								D_80052B34->unk24 = 0;
 								func_800FB430_10A3E0(D_80052B34, 0);
 								D_80159320 |= 0x800;
-								D_80052B34->unk20 |= 2;
+								D_80052B34->unk20 |= VEHICLE_FLAG_AIRBORNE;
 								func_800FB3E8_10A398(D_80052B34, 1.0f);
 							} else {
 								func_80102D00_111CB0(vehicle, (f32)((f64)((f32)dx * pushScale) / 10.0), (f32)((f32)dy * pushScale), (f32)((f64)((f32)dz * pushScale) / 10.0));
@@ -3245,7 +3245,7 @@ void func_8012B26C_13A21C(void) {
 				vehicleId = &D_80158E80[vehicleIdx];
 				while (alive != 0) {
 					VehicleInstance *vehicle = &vehicleInstances[*vehicleId];
-					if ((vehicle->unk20 & 0x40) != 0) {
+					if ((vehicle->unk20 & VEHICLE_FLAG_UNK7) != 0) {
 						VehicleSpec *vehicleSpec = &vehicleSpecs[vehicle->unk1A];
 						s32 vehicleRadius = *(s32 *)((u8 *)vehicleSpec + 8);
 						s32 distance = func_800047FC_53FC((s16)((s16)vehicle->unk0 - (s16)projectile->unk0));

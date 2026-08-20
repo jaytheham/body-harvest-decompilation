@@ -143,9 +143,9 @@ void func_800734AC_8245C() {
 	D_80052B34->unk38 = 0.0f;
 	D_80052B34->unkE = -0x4000;
 	func_800FB430_10A3E0(D_80052B34, 0.0f);
-	D_80052B34->unk20 = (u16) (D_80052B34->unk20 | 2);
+	D_80052B34->unk20 = (u16) (D_80052B34->unk20 | VEHICLE_FLAG_AIRBORNE);
 	if (currentControllerStates[0].button & BUTTON_Z) {
-		D_80052B34->unk20 = (u16) (D_80052B34->unk20 | 1);
+		D_80052B34->unk20 = (u16) (D_80052B34->unk20 | VEHICLE_FLAG_UNK1);
 		func_800762A8_85258(func_800734AC_8245C);
 		D_801591AC = 0;
 	}
@@ -193,7 +193,7 @@ void func_800737A4_82754() {
 
 // func_800737BC_8276C
 void func_800737BC_8276C(void) {
-	if (!(D_80052B34->unk20 & 0x80)) {
+	if (!(D_80052B34->unk20 & VEHICLE_FLAG_UNK8)) {
 		func_800E5CF4_F4CA4(2, D_80149441);
 		return;
 	}

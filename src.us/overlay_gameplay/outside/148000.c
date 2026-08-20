@@ -1034,7 +1034,7 @@ void func_8013B688_14A638(void) {
 	temp_v0 = D_80052B34;
 	if ((temp_v0->unk1A == 0)
 		&& ((temp_v0->unk20 & 0x1000)
-			|| ((temp_v0->unk20 & 2) && ((D_80159320 << 8) >= 0)))) {
+			|| ((temp_v0->unk20 & VEHICLE_FLAG_AIRBORNE) && ((D_80159320 << 8) >= 0)))) {
 		D_801601DC = 0;
 		D_801601E4 = 0;
 		func_8013B384_14A334();

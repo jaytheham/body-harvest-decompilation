@@ -1934,7 +1934,7 @@ void func_8011A2A0_129250(void) {
 					temp_t4 = var_s1->unk20 | 0x8000;
 					var_s1->unk20 = temp_t4;
 					var_s1->unk46 = (var_s1->unk46 & 0xFFC0) | 0x3F;
-					var_s1->unk20 = temp_t4 & 0xFFFE;
+					var_s1->unk20 = temp_t4 & ~VEHICLE_FLAG_UNK1;
 					var_s6[-0x73] = temp_v0 - 1;
 					var_s1->unk6 = var_s1->unkE;
 					if (temp_v0 <= 0) {

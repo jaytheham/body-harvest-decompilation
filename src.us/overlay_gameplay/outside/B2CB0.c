@@ -626,7 +626,7 @@ void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3) {
 	func_8008076C_8F71C(arg0);
 	func_800A53C0_B4370(arg0, 0x1F4, 0x1388);
 	if ((s32)(entry->unk20 << 4) < 0) {
-		sp1C = D_80052B34->unk20 & 2;
+		sp1C = D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE;
 		if (sp1C != 0 && D_80222A70 >= D_80052B34->unk2) {
 			sp1C = 0;
 		}

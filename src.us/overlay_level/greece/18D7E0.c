@@ -629,7 +629,7 @@ void func_802D4F74_18DA84(void) {
 			func_80018D7C_1997C(0xE8);
 			buildingInstances[12].door2InteriorId = 0x77;
 		}
-		if (D_80052B34->unk20 & 2) {
+		if (D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) {
 			D_8004DC58 = 1;
 			D_802DE460 = 0;
 		}
@@ -644,13 +644,13 @@ void func_802D4F74_18DA84(void) {
 
 	case 2:
 		D_802DE460 = 0;
-		if (!(D_80052B34->unk20 & 2)) {
+		if (!(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE)) {
 			D_8004DC58 = 8;
 		}
 		break;
 
 	case 3:
-		if (D_80052B34->unk20 & 2) {
+		if (D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) {
 			D_8004DC58 = 2;
 		}
 		break;
@@ -674,7 +674,7 @@ void func_802D4F74_18DA84(void) {
 		if (D_802DE460 == 0x14) {
 			func_80018D7C_1997C(0xEB);
 		}
-		if (!(D_80052B34->unk20 & 2)) {
+		if (!(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE)) {
 			D_8004DC58 = 6;
 			D_802DE460 = 0;
 		}
@@ -792,7 +792,7 @@ void func_802D5578_18E088(void) {
 		func_800074BC_80BC(func_802D5578_18E088);
 	}
 	if ((vehicleInstances[84].unk0 < 0x1000) && (vehicleInstances[84].unk4 < -0x6B00)) {
-		vehicleInstances[84].unk20 = (u16)(vehicleInstances[84].unk20 & 0xFBFF);
+		vehicleInstances[84].unk20 = (u16)(vehicleInstances[84].unk20 & ~VEHICLE_FLAG_UNKB);
 		func_800074BC_80BC(func_802D5578_18E088);
 	}
 	D_802DE466 = D_802DE466 + 1;
@@ -2852,7 +2852,7 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 				dx = vehicle->unk0 - posX;
 				dz = vehicle->unk4 - posZ;
 				distSq = (dx * dx) + (dz * dz);
-				if ((distSq < 0x127690) && !(vehicle->unk20 & 2)) {
+				if ((distSq < 0x127690) && !(vehicle->unk20 & VEHICLE_FLAG_AIRBORNE)) {
 					distRem = 0x127690 - distSq;
 					func_80102DDC_111D8C(D_80052B34,
 						func_80003824_4424(
@@ -2879,7 +2879,7 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 
 		if (result == 2) {
 			func_80137468_146418(arg0, 0x131);
-			if (!(D_80052B34->unk20 & 2) && (func_800879A4_96954(arg0, 0x50, 0) != 0)) {
+			if (!(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) && (func_800879A4_96954(arg0, 0x50, 0) != 0)) {
 				vehicle = D_80052B34;
 				dx = vehicle->unk0 - alien->unk0;
 				dz = vehicle->unk4 - alien->unk4;
