@@ -961,7 +961,7 @@ void func_801176F4_1266A4(u8 arg0, u8 arg1, s32 arg2) {
 		if (!((minZ - specRadius) < alien->unk4)) {
 			continue;
 		}
-		if (!(alien->unk20 & 0x100000)) {
+		if (!(alien->unk20 & ALIEN_FLAG_UNKL)) {
 			func_80079910_888C0(alienId);
 		}
 	}
@@ -2939,8 +2939,8 @@ void func_8011C770_12B720(s32 arg0, s32 arg1) {
 			if (arg0 == alienInstances[alienId].unk3D) {
 				alienInstances[alienId].unk12 = 0xA0;
 				alienInstances[alienId].unk38 = arg1;
-				alienInstances[alienId].unk20 &= -0x41E1;
-				alienInstances[alienId].unk20 |= 0x80;
+				alienInstances[alienId].unk20 &= ~(ALIEN_FLAG_UNKF | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_AWAY | ALIEN_FLAG_TARGET_OBJ | ALIEN_FLAG_UNK1);
+				alienInstances[alienId].unk20 |= ALIEN_FLAG_TARGET_VEHICLE;
 			}
 		} while ((alienIds < alienIdsEnd) && (alienId = *alienIds, 1));
 	}

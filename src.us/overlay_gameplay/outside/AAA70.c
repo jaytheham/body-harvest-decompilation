@@ -804,7 +804,7 @@ void func_8009D96C_AC91C(void) {
 			if (alien->specIndex != 0) {
 				u16 tempU16;
 
-				if (alien->unk20 & 0x100000) {
+				if (alien->unk20 & ALIEN_FLAG_UNKL) {
 					sp98 = 0.0f;
 				} else {
 					sp98 = (f32) ((f64) (f32) alien->hitPoints / 100.0);
@@ -1595,7 +1595,7 @@ void func_8009FB58_AEB08(void) {
 	{
 		s32 i;
 		for (i = 0xFE; i != 0; i--) {
-		if ((alien->specIndex == 0x19) && ((alien->unk20 & 0x100000) == 0)) {
+		if ((alien->specIndex == 0x19) && ((alien->unk20 & ALIEN_FLAG_UNKL) == 0)) {
 			s32 distance;
 
 			distance = func_800F9C40_108BF0((player->unk0 - alien->unk0) >> 2);
@@ -1677,7 +1677,7 @@ void func_800A03FC_AF3AC(void) {
 					func_80015BCC_167CC(alien->specIndex);
 				}
 
-				if (!(alien->unk20 & 0x100000) && (alien->specIndex != 1)) {
+				if (!(alien->unk20 & ALIEN_FLAG_UNKL) && (alien->specIndex != 1)) {
 					func_8009BCC0_AAC70(mapX, mapZ, 2);
 					func_8009BCC0_AAC70(mapX, mapZ - 1, 4);
 					func_8009BCC0_AAC70(mapX - 1, mapZ, 4);

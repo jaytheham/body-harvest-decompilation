@@ -1130,7 +1130,7 @@ loop:
 	}
 	case 0x9B: {
 		AlienInstance *alien = alienInstances + D_8004D161[arg0[1] * 2];
-		if (alien->unk20 & 0x100000) {
+		if (alien->unk20 & ALIEN_FLAG_UNKL) {
 			return 1;
 		}
 		return alien->hitPoints < alienSpecs[alien->specIndex].unk3A;
@@ -1155,7 +1155,7 @@ loop:
 	case 0x9A:
 		return vehicleInstances[arg0[1]].unk1C < 1;
 	case 0x9B:
-		if (alienInstances[D_8004D161[arg0[1] * 2]].unk20 & 0x100000) {
+		if (alienInstances[D_8004D161[arg0[1] * 2]].unk20 & ALIEN_FLAG_UNKL) {
 			return 1;
 		}
 		return alienInstances[D_8004D161[arg0[1] * 2]].hitPoints < 1;

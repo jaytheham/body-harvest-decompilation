@@ -10404,8 +10404,8 @@ s32 func_8010FF84_11EF34(VehicleInstance *arg0, s32 arg1)
 	while (i--)
 	{
 		alien = &alienInstances[i];
-		if (alien->unk20 & 0x600 &&
-			(((!(alien->unk20 & 0x100000)) || (alien->specIndex == 0x1A)) || (alien->specIndex == 0x1B)))
+		if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB) &&
+			(((!(alien->unk20 & ALIEN_FLAG_UNKL)) || (alien->specIndex == 0x1A)) || (alien->specIndex == 0x1B)))
 		{
 			spec = &alienSpecs[alien->specIndex];
 			if ((spec->unk54 & 8) &&

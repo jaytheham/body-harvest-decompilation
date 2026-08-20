@@ -2291,7 +2291,7 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 		D_80157E78--;
 	}
 
-	if ((arg0->unk20 & 0x1000) && ((D_8013E5AC_14D55C[D_80157A48.unk40C].unk4 & 0x480) == 0)) {
+	if ((arg0->unk20 & ALIEN_FLAG_UNKD) && ((D_8013E5AC_14D55C[D_80157A48.unk40C].unk4 & 0x480) == 0)) {
 		arg0->unk12 = 0;
 		func_800EB534_FA4E4(&D_80157A48, ((Unk8013E45C *)D_8013E45C_14D40C)[D_80157E7C].unk08, 0, 0);
 	}
@@ -2301,7 +2301,7 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 			func_80087188_96138((((s32) arg0 - (s32) alienInstances) / 0x50) & 0xFF, 0, 0x18);
 		}
 
-		if ((((Unk8007F878_404 *) D_80157A48.unk404)->unkE50 == 0) && ((arg0->unk20 & 0x1000) == 0)) {
+		if ((((Unk8007F878_404 *) D_80157A48.unk404)->unkE50 == 0) && ((arg0->unk20 & ALIEN_FLAG_UNKD) == 0)) {
 			func_800EB534_FA4E4(&D_80157A48, ANIM_DEFAULT, 0, 0);
 		}
 	}

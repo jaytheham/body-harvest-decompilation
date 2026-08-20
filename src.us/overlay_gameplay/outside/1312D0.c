@@ -3365,7 +3365,7 @@ void func_8012B26C_13A21C(void) {
 				if ((distance < alienSpec->unk8) && ((f32)testY < projectile->unk4) && (projectile->unk4 < (f32)(alien->unk2 + alienSpec->unk38))) {
 					u8 spec = alien->specIndex;
 
-					if ((spec >= 0x1B) && (spec < 0x20) && (((alien->unk20 & 0x400000) != 0) || (D_80140AC4_14FA74 == (s32)alien))) {
+					if ((spec >= 0x1B) && (spec < 0x20) && (((alien->unk20 & ALIEN_FLAG_INVINCIBLE) != 0) || (D_80140AC4_14FA74 == (s32)alien))) {
 						deferredAlien = alienIdx;
 						continue;
 					}
@@ -3443,7 +3443,7 @@ void func_8012B26C_13A21C(void) {
 							}
 
 							if (sideDist < threshold2) {
-								alien->unk20 |= 0x800000;
+								alien->unk20 |= ALIEN_FLAG_W;
 								impactDamage = (impactDamage * D_80147098_156048[(s8)alienSpec->pad5A[0] * 0xC]) >> 8;
 							}
 						}

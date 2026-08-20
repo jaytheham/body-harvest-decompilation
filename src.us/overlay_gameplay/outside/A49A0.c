@@ -1962,7 +1962,7 @@ block_100:
 			var_s1_3 = &D_8014D408[var_s0_6];
 			do {
 				temp_v0_16 = &alienInstances[*var_s1_3];
-				if (!(temp_v0_16->unk20 & 0x100000)) {
+				if (!(temp_v0_16->unk20 & ALIEN_FLAG_UNKL)) {
 					temp_a0_6 = temp_v0_16->specIndex;
 					switch (temp_a0_6) {            /* switch 5; irregular */
 					case 25:                        /* switch 5 */

@@ -193,7 +193,7 @@ void func_800AE6CC_BD67C(void)
 		  break;
 
 		case 4:
-		  if (alienInstances[D_80222A78[i].unk8].unk20 & 0x80000000)
+		  if (alienInstances[D_80222A78[i].unk8].unk20 & ALIEN_FLAG_UNKP)
 		{
 		  shouldRun = 1;
 		}
@@ -591,12 +591,12 @@ void func_800AF634_BE5E4(Unk80222A78 *arg0) {
 		parent = alienInstances + alienInstances[alienIdx].unk25;
 		waveIndex = alienInstances[alienIdx].unk3E;
 
-		if ((parent->unk20 & 0x4000) != 0) {
+		if ((parent->unk20 & ALIEN_FLAG_UNKF) != 0) {
 			if (D_80223780[waveIndex].unkE != 0) {
 				func_800AF4A4_BE454(waveIndex, D_80223780[waveIndex].unkE * 0xC8, alienInstances[alienIdx].unk3D);
 			}
 		}
-		if ((parent->unk20 & 0x8000) != 0) {
+		if ((parent->unk20 & ALIEN_FLAG_UNKG) != 0) {
 			func_800AF5B0_BE560(arg0->unk9);
 			func_800AFBA4_BEB54(D_80223780[waveIndex].xPosition, D_80223780[waveIndex].yPosition);
 		} else {

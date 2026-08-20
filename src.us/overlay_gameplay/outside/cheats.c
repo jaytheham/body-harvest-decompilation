@@ -46,7 +46,7 @@ void func_800731B0_82160(void)
 	i = temp;
 	do
 	{
-		if (((alien->specIndex >= ALIEN_SPEC_HCU) || ((alien->specIndex == ALIEN_SPEC_HUMAN) && (alien->unk24 == 1))) && (!(alien->unk20 & 0x100000)))
+		if (((alien->specIndex >= ALIEN_SPEC_HCU) || ((alien->specIndex == ALIEN_SPEC_HUMAN) && (alien->unk24 == 1))) && (!(alien->unk20 & ALIEN_FLAG_UNKL)))
 		{
 			temp = alien->unk0 - D_80052B34->unk0;
 			if (((temp >= 0) ? (temp) : (-temp)) < 0xA00)
