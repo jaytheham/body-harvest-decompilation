@@ -916,34 +916,38 @@ typedef struct {
 typedef struct {s16 x; s16 z;} Vec2_S16;
 
 typedef enum AlienFlags {
-	ALIEN_FLAG_UNK1 = 1,
-	ALIEN_FLAG_UNK2 = 2,
-	ALIEN_FLAG_UNK3 = 4,
+	ALIEN_FLAG_UNK1 = 1, // walker slot index (bit 1)?
+	ALIEN_FLAG_UNK2 = 2, // walker slot index (bit 2)?
+	ALIEN_FLAG_UNK3 = 4, // walker slot index (bit 3)?
 	ALIEN_FLAG_UNK4 = 8,
-	ALIEN_FLAG_UNK5 = 0x10,
+	ALIEN_FLAG_UNK5 = 0x10, // close-range attack / attack-timer active
 	ALIEN_FLAG_TARGET_OBJ = 0x20,
-	ALIEN_FLAG_AWAY = 0x40,
+	ALIEN_FLAG_AWAY = 0x40, // in motion toward/away from a target (engagement)?
 	ALIEN_FLAG_TARGET_VEHICLE = 0x80,
-	ALIEN_FLAG_TARGET_PT = 0x100, // Set when targeting a building
-	ALIEN_FLAG_UNKA = 0x200,
-	ALIEN_FLAG_UNKB = 0x400,
-	ALIEN_FLAG_UNKC = 0x800,
-	ALIEN_FLAG_UNKD = 0x1000,
-	ALIEN_FLAG_UNKE = 0x2000,
-	ALIEN_FLAG_UNKF = 0x4000, // Target building?
-	ALIEN_FLAG_UNKG = 0x8000,
-	ALIEN_FLAG_UNKH = 0x10000,
+	ALIEN_FLAG_TARGET_PT = 0x100, // Set when targeting a building? targeting a point (pathing waypoint)?
+	ALIEN_FLAG_UNKA = 0x200, // walker/simple body (uses leg-walker, throttled updates)
+	ALIEN_FLAG_UNKB = 0x400, // active object has a physical body / participates in updates
+	ALIEN_FLAG_UNKC = 0x800, // approaching the target
+	ALIEN_FLAG_UNKD = 0x1000, // has a movement/attack target
+	ALIEN_FLAG_UNKE = 0x2000, // is attacking. Harvester uses this for isSubDrone #1 alive?
+	ALIEN_FLAG_UNKF = 0x4000, // timed attack/dive state. Harvester uses this for isSubDrone #2 alive?
+	ALIEN_FLAG_UNKG = 0x8000, // attacking / firing (specific attack anim). Processor=use skeleton model? Harvester uses this for isSubDrone #3 alive?
+	ALIEN_FLAG_UNKH = 0x10000, // In attach range of target. Harvester uses this for isSubDrone #4 alive?
 	ALIEN_FLAG_UNKI = 0x20000,
-	ALIEN_FLAG_UNKJ = 0x40000,
-	ALIEN_FLAG_UNKK = 0x80000,
-	ALIEN_FLAG_UNKL = 0x100000,
-	ALIEN_FLAG_UNKM = 0x200000,
+	ALIEN_FLAG_UNKJ = 0x40000, // Knocked back. Harvester uses to block drone spawn?
+	ALIEN_FLAG_UNKK = 0x80000, // has walker body, see bits 0-2. Harvester uses for drone spawn is in progress.
+	ALIEN_FLAG_UNKL = 0x100000, // is alive / active
+	ALIEN_FLAG_UNKM = 0x200000, // enraged / alerted (low-HP berserk) ?
 	ALIEN_FLAG_INVINCIBLE = 0x400000,
-	ALIEN_FLAG_PLAYER = 0x8000000,
-	ALIEN_FLAG_UNKN = 0x10000000,
-	ALIEN_FLAG_UNKO = 0x20000000,
-	ALIEN_FLAG_FALL = 0x40000000,
-	ALIEN_FLAG_UNKP = 0x80000000
+	ALIEN_FLAG_W = 0x800000,
+	ALIEN_FLAG_X = 0x1000000, // Is boss/special? Disables alien/alien collision?
+	ALIEN_FLAG_Y = 0x2000000, // Has a target building?
+	ALIEN_FLAG_Z = 0x4000000, // Left/right side leg, flyer aim point flip?
+	ALIEN_FLAG_PLAYER = 0x8000000, // Player detected / in range
+	ALIEN_FLAG_UNKN = 0x10000000, // is on-screen / in camera frustum
+	ALIEN_FLAG_UNKO = 0x20000000, // externally-positioned / special movement state ?
+	ALIEN_FLAG_FALL = 0x40000000, // Falling / in air
+	ALIEN_FLAG_UNKP = 0x80000000 // was just hit / damage flash
 } AlienFlags;
 
 typedef struct {
