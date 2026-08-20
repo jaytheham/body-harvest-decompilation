@@ -583,7 +583,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 	}
 
   }
-  // If Siberia, and dead vehicle is SCUD launcher, and has not launched missile
+  // If Siberia, and target vehicle is SCUD launcher, and has not launched missile
   if (((currentLevel == 4) && (arg0->unk1A == 0xD)) && (!(arg0->unk20 & VEHICLE_FLAG_UNK5)))
   {
 	osSyncPrintf(D_80145088_154038);
@@ -597,6 +597,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 	  D_80052B34->unk1C = 0;
 	  // Mark player vehicle as destroyed
 	  func_800FDD8C_10CD3C(D_80052B34);
+	  // Eject player from vehicle
 	  func_800FDEA8_10CE58(D_80052B2C, 1);
 	}
 	func_80123AC4_132A74(D_80052B34);
