@@ -331,6 +331,7 @@ void func_801371B0_146160(s32 arg0) {
 
 }
 
+// AI - Play a 3D positional sound effect (ID arg1) at world position (arg2,arg3,arg4) when audio is enabled
 void func_801371B8_146168(s32 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4, f32 arg5) {
 	f32 temp_f1;
 

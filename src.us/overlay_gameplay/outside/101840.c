@@ -4559,6 +4559,7 @@ void func_800FDD48_10CCF8(s16 arg0) {
 }
 
 // https://decomp.me/scratch/BaeVc
+// AI - Mark a vehicle as destroyed, clearing its active flag and updating the tracked-vehicle list
 void func_800FDD8C_10CD3C(VehicleInstance *arg0)
 {
 	s16 i = 0x80;
@@ -4588,6 +4589,7 @@ void func_800FDE00_10CDB0(void) {
 }
 
 #ifdef NON_MATCHING
+// AI - Eject the player from a destroyed vehicle and find a safe landing spot on the ground (disembark)
 void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1) {
 	VehicleInstance *vehicle;
 	VehicleSpec *spec;
@@ -7354,6 +7356,7 @@ void func_80107890_116840(VehicleInstance *arg0) {
 		if (tableEntry->unk8 < arg0->unkA - retVal) {
 			func_80123E90_132E40(arg0, (s16)((arg0->unkA - retVal - tableEntry->unk8) >> 2));
 		}
+		// If SCUD missile?
 		if (currentLevel == LEVEL_SIBERIA && arg0->unk1A == 0xE) {
 			func_800FDB58_10CB08(arg0);
 		}

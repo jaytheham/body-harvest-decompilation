@@ -2791,6 +2791,7 @@ void func_800C6D80_D5D30(void) {
 
 // CURRENT(5215)
 #ifdef NON_MATCHING
+// AI - Spawn a particle/effect entry at (arg0,arg1,arg2) from source effect arg4 with random colour/velocity
 s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linked;
@@ -10600,6 +10601,7 @@ void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 
 #ifdef NON_MATCHING
 // CURRENT(18263)
+// AI - Spawn an explosion at (arg0,arg1,arg2) with radius arg3, creating smoke/fire/debris/shake effects
 s32 func_800DF038_EDFE8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s8 *arg5) {
 	s16 result;
 	s16 i;

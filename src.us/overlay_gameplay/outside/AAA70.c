@@ -327,6 +327,7 @@ void func_8009C1D8_AB188(s16 arg0, s16 arg1, s32 arg2)
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
+// AI - Trigger a screen shake by adding +0x10 to both the X/Y shake offsets
 void func_8009C458_AB408(void) {
 	D_8014F1F6 = 0x10;
 	D_8014F1F8 = 0x10;
