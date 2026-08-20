@@ -527,6 +527,9 @@ void func_801238DC_13288C(s16 arg0) {
 #endif
 
 // https://decomp.me/scratch/lb79O
+// Matching, but due to the 1000.0 const needs all rodata after this to be matched first
+// Currently the 1000.0f const gets put in the wrong place
+// CURRENT(0)
 #ifdef NON_MATCHING
 // on Vehicle death
 void func_80123AC4_132A74(VehicleInstance *arg0)
@@ -570,11 +573,9 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
   else if (arg0->unk20 & VEHICLE_FLAG_UNKB)
   {
 	func_800AE190_BD140(2);
-	div = D_80145160_154110[0];
-	x = 0.25; 
 	for (i = 0; i < 2; i++)
 	{
-	  func_801371B8_146168(0, 0x185, arg0->unk0, arg0->unk2, arg0->unk4, x + ((f32) (func_800038E0_44E0() % 100) / div));
+	  func_801371B8_146168(0, 0x185, arg0->unk0, arg0->unk2, arg0->unk4, 0.25 + ((f32) (func_800038E0_44E0() % 100) / 1000.0));
 	  func_800C7924_D68D4(arg0->unk0, arg0->unk2, arg0->unk4, 0x10, sp44, vehicleSpecs[arg0->unk1A].unk36 * 2, slot, 1);
 	}
 

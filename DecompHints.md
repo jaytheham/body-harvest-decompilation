@@ -27,6 +27,7 @@
 - separate statements via `,` instead of `;`, or put them on the same line
 - change the control flow, e.g. `?:` vs `if`/`else`, or early returns vs normal control flow
 - copy a whole struct rather than copying members individually
+- const values, especially f64 values currently declared like `const f64 D_80145160_154110[1] = {1000.0};` should probably be inline literals and never declared as consts, but require later rodata in the file to be matched first so they get the correct address.
 
 ### Stack local variable placement
 The optimizer can move some variables into registers, leaving stack slots empty. If an explicitly declared stack variable is unused or placed in a register, and it is last in the declaration order, it won't affect `sp`. (Thus, a strategy for getting correct stack usage is to first move all stack-placed variables to their correct place on the stack, then either pad with unused variables at the top of the stack to increase stack size, or move registers variables from the start to the end of the declaration order to decrease it.)
