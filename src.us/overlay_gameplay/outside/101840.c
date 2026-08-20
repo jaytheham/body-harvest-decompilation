@@ -11427,6 +11427,7 @@ void func_80113248_1221F8(VehicleInstance *arg0) {
 
 // CURRENT(1361)
 #ifdef NON_MATCHING
+// Sets vehicle is airborne flag, and other things?
 void func_80113310_1222C0(VehicleInstance *arg0) {
 	VehicleSpec *spec;
 	WeaponSpecEntry *tableEntry;

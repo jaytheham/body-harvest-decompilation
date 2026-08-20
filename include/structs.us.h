@@ -773,18 +773,22 @@ typedef struct {
 } VehicleSpawnOffset; /* size = 0x04 */
 
 typedef enum VehicleFlags {
-	VEHICLE_FLAG_UNK1 = 1,
+	VEHICLE_FLAG_UNK1 = 1, // vehicle was moved this frame and still needs physics/collision
 	VEHICLE_FLAG_AIRBORNE = 2,
 	VEHICLE_FLAG_HALF_ON_BRIDGE = 4,
 	VEHICLE_FLAG_UNDER_BRIDGE = 8,
-	VEHICLE_FLAG_UNK5 = 0x10,
+	VEHICLE_FLAG_UNK5 = 0x10, // SCUD nuke launched
 	VEHICLE_FLAG_UNK6 = 0x20,
-	VEHICLE_FLAG_UNK7 = 0x40,
-	VEHICLE_FLAG_UNK8 = 0x80, // Shielded
+	VEHICLE_FLAG_UNK7 = 0x40, // Is inside current shield wall bounds
+	VEHICLE_FLAG_UNK8 = 0x80, // Shielded - blocks damage
 	VEHICLE_FLAG_UNK9 = 0x100,
 	VEHICLE_FLAG_UNKA = 0x200,
-	VEHICLE_FLAG_UNKB = 0x400,
-	VEHICLE_FLAG_ON_BRIDGE = 0x800
+	VEHICLE_FLAG_UNKB = 0x400, // Is autonomous grid-guided vehicle (turret / road-follower)
+	VEHICLE_FLAG_ON_BRIDGE = 0x800,
+	VEHICLE_FLAG_UNKD = 0x1000, // Is player being grabbed / in interaction
+	VEHICLE_FLAG_UNKE = 0x2000, // Draw damage flash this frame
+	VEHICLE_FLAG_UNKF = 0x4000,
+	VEHICLE_FLAG_UNK = 0x8000 // Is active, gates physics/render/death
 } VehicleFlags;
 
 typedef struct {
@@ -820,7 +824,7 @@ typedef struct {
 	/* 0x3E */ u8 pad3E[2];
 	/* 0x40 */ s16 unk40;
 	/* 0x42 */ s16 unk42;
-	/* 0x44 */ u8 unk44;
+	/* 0x44 */ u8 unk44; // direction bitmask (1=N, 2=S, 4=W, 8=E) ?
 	/* 0x45 */ u8 unk45;
 	/* 0x46 */ u8 unk46;
 	/* 0x47 */ u8 unk47;
