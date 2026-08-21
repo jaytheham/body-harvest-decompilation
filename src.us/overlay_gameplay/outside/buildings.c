@@ -3479,7 +3479,6 @@ void func_8011DE60_12CE10(s32 arg0) {
 	D_8015EB80 = arg0;
 }
 
-// CURRENT(21902)
 #ifdef NON_MATCHING
 s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 	BuildingInstance *inst;
@@ -3494,7 +3493,7 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 	s16 outB;
 	s16 instanceId;
 	s16 dist;
-	s16 delta;
+	s32 delta;
 	s16 sampleY;
 	s32 cellY;
 	s32 searchIndex;
@@ -3512,18 +3511,14 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 		specType = inst->buildingType;
 	}
 	history = &D_8015EB67;
+	searchIndex = 7;
 
-	for (searchIndex = 7; searchIndex != 0; searchIndex--) {
-		s32 historyBase = 0;
-
-		if (((inst->unk8 >> 0xC) & 4) != 0) {
-			historyBase = 0x80;
-		}
-
-		if (history[-searchIndex] == (u8)(historyBase + specType)) {
+	do {
+		if (*history == (((inst->unk8 >> 0xC) & 4) ? 0x80 : 0) + specType) {
 			break;
 		}
-	}
+		history--;
+	} while (searchIndex--);
 
 	if ((D_8015EA28 == inst->buildingType) && (D_80052554 >= 0x401)) {
 		*arg2 = 1000;
@@ -3541,11 +3536,10 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 			localX = 5.0f;
 			localZ = (f32)((arg1 & 0xFF) >> 2);
 		}
-		needSeamFix = 0;
 	} else {
-		rot = inst->unk8 & 3;
 		localX = (f32)(arg0 - inst->xCoord);
 		localZ = (f32)(arg1 - inst->zCoord);
+		rot = inst->unk8 & 3;
 
 		switch (rot) {
 		case 0:
@@ -3575,23 +3569,25 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 		}
 
 		if ((f32)spec->unk10 < absX) {
-			*arg2 = (s16)cellY;
-			return -1;
+			goto fail;
 		}
-
 		if (localZ >= 0.0f) {
 			absZ = localZ;
 		} else {
 			absZ = -localZ;
 		}
-
 		if ((f32)spec->unk12 < absZ) {
-			*arg2 = (s16)cellY;
-			return -1;
+			goto fail;
 		}
+		goto scale_ok;
 
-		localX = (f32)((localX * (32.0 / spec->unk10)) + 32.0);
-		localZ = (f32)((localZ * (32.0 / spec->unk12)) + 32.0);
+fail:
+		*arg2 = (s16)cellY;
+		return -1;
+
+scale_ok:
+		localX = (f32)((localX * (32.0 / (f32)spec->unk10)) + 32.0);
+		localZ = (f32)((localZ * (32.0 / (f32)spec->unk12)) + 32.0);
 		needSeamFix = 0;
 		if (D_8015EA28 == inst->buildingType) {
 			if ((rot & 1) != 0) {
@@ -3673,25 +3669,25 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 			sampleY = ((delta >> 1) + instA->xCoord) - arg0;
 		}
 
-		*arg2 -= func_8011619C_12514C((s16)func_80118670_127620((s8)(arg0 >> 8), (s8)(arg1 >> 8)), (s16)((dist - 0xE6) >> 1), sampleY);
+		*arg2 -= func_8011619C_12514C((s16)func_80118670_127620(arg0 >> 8, arg1 >> 8), (s16)((dist - 0xE6) >> 1), sampleY);
 	}
 
-	if (*arg2 == 0) {
-		*arg2 = (s16)(func_800B84D0_C7480(arg0, arg1) >> 8);
-		return -1;
+	if (*arg2 != 0) {
+		*arg2 = *arg2 + inst->yCoord;
+		if (*arg2 < cellY) {
+			*arg2 = (s16)cellY;
+			return -1;
+		}
+
+		if (((spec->pad16[4] & 8) == 0) && (D_8015EB80 == 0) && (*arg2 != 0)) {
+			*arg2 = spec->unk14 + inst->yCoord;
+		}
+
+		return instanceId;
 	}
 
-	*arg2 = *arg2 + inst->yCoord;
-	if (*arg2 < cellY) {
-		*arg2 = (s16)cellY;
-		return -1;
-	}
-
-	if (((spec->pad16[4] & 8) == 0) && (D_8015EB80 == 0) && (*arg2 != 0)) {
-		*arg2 = spec->unk14 + inst->yCoord;
-	}
-
-	return instanceId;
+	*arg2 = (s16)(func_800B84D0_C7480(arg0, arg1) >> 8);
+	return -1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011DE6C_12CE1C.s")
