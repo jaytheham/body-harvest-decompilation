@@ -170,17 +170,13 @@ s32 func_801223B0_131360(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 }
 
 // CURRENT(429)
-#ifdef NON_MATCHING
 void func_80122524_1314D4(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 pct = func_801223B0_131360(arg0, arg2, arg3, arg1);
-	s32 temp = (s32)(arg1 * (1.0 - pct / 100.0));
-	if ((s16)temp > 0) {
-		func_80124118_1330C8(arg0, (s16)temp);
+	arg1 = (s16)(s32)(arg1 * (1.0 - pct / 100.0));
+	if (arg1 > 0) {
+		func_80124118_1330C8(arg0, arg1);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80122524_1314D4.s")
-#endif
 
 #ifdef NON_MATCHING
 s16 func_801225C4_131574(Projectile *arg0) {
