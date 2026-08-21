@@ -840,6 +840,7 @@ void func_80124B5C_133B0C(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4) {
 	func_80124170_133120(arg0, arg1, arg2, arg3, arg4, 0);
 }
 
+// CURRENT(580)
 #ifdef NON_MATCHING
 void func_80124BA8_133B58(void) {
 	Projectile *var_a0;
@@ -847,15 +848,15 @@ void func_80124BA8_133B58(void) {
 	s32 var_v1;
 	u8 temp_t6;
 	u8 temp_t7;
-	s32 *temp_v0;
-	s32 *temp_v1;
+	volatile s32 *temp_v0;
+	volatile s32 *temp_v1;
 
 	var_a0 = &D_8015EB90[0x3F];
 	var_v1 = 0x3F;
 	do {
 		var_a0->unk10 = 0.0f;
 		var_a0->unk14 = 0.0f;
-		var_a0->unk18 = 0.0f;
+		var_a0->unk18F32 = 0.0f;
 		var_a0->unk28 = 0;
 		var_a0->unk20 = 0;
 		var_a0->unk24 = 0;
@@ -865,10 +866,10 @@ void func_80124BA8_133B58(void) {
 	var_a0_2 = &D_8015F790[0xF];
 	var_v1 = 0xF;
 	do {
-		temp_t6 = (u8)var_a0_2->unk1E;
+		temp_t6 = var_a0_2->unk1F;
 		temp_t7 = temp_t6 & 0xFFFD;
-		var_a0_2->unk1E = (var_a0_2->unk1E & 0xFF00) | temp_t7;
-		var_a0_2->unk1E = (var_a0_2->unk1E & 0xFF00) | (temp_t7 & 0xFFFE);
+		var_a0_2->unk1F = temp_t7;
+		var_a0_2->unk1F &= 0xFFFE;
 		var_a0_2--;
 	} while (var_v1--);
 
