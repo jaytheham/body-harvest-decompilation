@@ -830,7 +830,6 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 				}
 			}
 		}
-
 		alien--;
 	}
 
@@ -2193,7 +2192,6 @@ void func_80128504_1374B4(AlienInstance *arg0, s32 arg1, s32 *arg2, s32 *arg3, s
 #ifdef NON_MATCHING
 void func_80128650_137600(Projectile *arg0, s32 arg1) {
 	const WeaponEntry_80129864 *building;
-	f32 *motion;
 	VehicleInstance *vehicle;
 	AlienInstance *alien;
 	AlienSpec *alienSpec;
@@ -2214,11 +2212,9 @@ building = &D_80145BE0_154B90[arg0->unk20];
 	D_80158FEC = NULL;
 	D_80158FE8 = NULL;
 	D_80158FE4 = NULL;
-
-	motion = (f32 *)((u8 *)arg0 + 0xC);
 	for (i = 0;; i++) {
-		if (motion[0] < 0.0) {
-			motion[0] = (f32)(motion[0] + D_801451B8_154168);
+		if (arg0->unkC < 0.0) {
+			arg0->unkC += D_801451B8_154168;
 		}
 
 		if ((i >> 1) < 0x18) {
@@ -2227,10 +2223,10 @@ building = &D_80145BE0_154B90[arg0->unk20];
 			D_8015FA40[i >> 1].unk4 = (s16)(s32)arg0->unk8;
 		}
 
-		arg0->unk0 += motion[1] * motion[0];
-		arg0->unk4 += motion[2] * motion[0];
+		arg0->unk0 += arg0->unk10 * arg0->unkC;
+		arg0->unk4 += arg0->unk14 * arg0->unkC;
 		arg0->unk14 -= 3.0f;
-		arg0->unk8 += motion[3] * motion[0];
+		arg0->unk8 += arg0->unk18 * arg0->unkC;
 		if (arg0->unk14 > 100.0f) {
 			arg0->unk14 = 100.0f;
 		}
@@ -2242,13 +2238,13 @@ building = &D_80145BE0_154B90[arg0->unk20];
 			break;
 		}
 
-		if (!((((s32)building->unk8) >> 8) & 1) && (arg0->unk4 < D_80222A70)) {
+		if (!(((building->unk8) >> 8) & 1) && (arg0->unk4 < D_80222A70)) {
 			arg0->unk4 = D_80222A70;
 			D_8015F9D0.unk8 = 2;
 			break;
 		}
 
-		if (((((s32)building->unk8) >> 8) & 0x200) && ((f32)D_80222A70 < arg0->unk4)) {
+		if ((((building->unk8) >> 8) & 0x200) && ((f32)D_80222A70 < arg0->unk4)) {
 			arg0->unk4 = D_80222A70;
 			D_8015F9D0.unk8 = 0xC;
 			break;
@@ -2276,7 +2272,7 @@ building = &D_80145BE0_154B90[arg0->unk20];
 				vehicle = &vehicleInstances[D_80158E80[i]];
 				absY = func_800047FC_53FC((s16)(s32)((f32)vehicle->unk2 - arg0->unk4));
 				absX = func_800047FC_53FC((s16)(s32)((f32)vehicle->unk0 - arg0->unk0));
-				if ((func_800047FC_53FC((s16)(s32)((f32)vehicle->unk4 - arg0->unk8)) + absX + absY) < *(s32 *)((u8 *)&vehicleSpecs[vehicle->unk1A] + 0x8)) {
+				if ((func_800047FC_53FC((s16)(s32)((f32)vehicle->unk4 - arg0->unk8)) + absX + absY) < vehicleSpecs[vehicle->unk1A].unk8) {
 					if ((s32)vehicle != arg0->unk24) {
 						D_8015F9D0.unk8 = 5;
 						D_80158FE4 = vehicle;
@@ -2306,9 +2302,8 @@ building = &D_80145BE0_154B90[arg0->unk20];
 				break;
 			}
 		}
-
-		alien = &alienInstances[0xFE];
 		for (instId = 0xFE; instId != 0; instId--) {
+			alien = &alienInstances[instId];
 			if (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0) {
 				alienSpec = &alienSpecs[alien->specIndex];
 				absY = func_800047FC_53FC((s16)(s32)((f32)alien->unk2 - arg0->unk4));
@@ -2321,7 +2316,6 @@ building = &D_80145BE0_154B90[arg0->unk20];
 					}
 				}
 			}
-			alien--;
 		}
 
 		if (D_8015F9D0.unk8 == 7) {
@@ -2340,7 +2334,12 @@ building = &D_80145BE0_154B90[arg0->unk20];
 		D_80159226 = (s16)i;
 	}
 
-	func_801238DC_13288C((s16)(((u8 *)arg0 - (u8 *)D_8015EB90) / 0x30));
+	for (i = 0; i < 0x40; i++) {
+		if (&D_8015EB90[i] == arg0) {
+			break;
+		}
+	}
+	func_801238DC_13288C((s16)i);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80128650_137600.s")
