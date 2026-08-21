@@ -217,48 +217,40 @@ s16 func_801225C4_131574(Projectile *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801225C4_131574.s")
 #endif
 
-// CURRENT(20678)
+// CURRENT(24833)
 #ifdef NON_MATCHING
 Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s16 arg3, s16 arg4, f32 arg5, f32 arg6, f32 arg7) {
 	VehicleInstance *vehicle = (VehicleInstance *)arg0;
 	Projectile *entry;
+	f32 negArg7;
 	s16 sp7A;
 	s16 sp78;
 	s16 sp76;
 	s16 sp74;
+	u16 sp72;
 	s16 sp70;
 	s16 sp6E;
 	s16 sp6C;
 	s16 sp5C;
-	u16 sp72;
-	u8 temp_v0;
 	s16 var_v0;
-	s16 weaponIndex;
-	f32 absArg5;
-	f32 negArg7;
+	s32 weaponIndex;
 
 	sp7A = vehicle->unk0 + arg2;
 	sp78 = vehicle->unk2 + arg3;
 	sp76 = vehicle->unk4 + arg4;
 
-	absArg5 = -arg5;
-	if (absArg5 < arg5) {
-		absArg5 = arg5;
+	if (((-arg5 < arg5) ? arg5 : -arg5) > 0.0f) {
+		goto set_angle;
 	}
-
-	if (absArg5 > 0.0f) {
-		sp74 = func_80003824_4424(arg5, arg7);
-	} else {
-		negArg7 = -arg7;
-		if (negArg7 < arg7) {
-			negArg7 = arg7;
-		}
-		if (negArg7 > 0.0f) {
-			sp74 = func_80003824_4424(arg5, arg7);
-		} else {
-			sp74 = 0;
-		}
+	negArg7 = ((-arg7 < arg7) ? arg7 : -arg7);
+	if (negArg7 > 0.0f) {
+		goto set_angle;
 	}
+	sp74 = 0;
+	goto angle_done;
+set_angle:
+	sp74 = func_80003824_4424(arg5, arg7);
+angle_done:
 
 	if ((vehicle->unkC == -2) && (vehicleSpecs[vehicle->unk1A].launchAngle != 0xFF)) {
 		sp72 = (u16)(vehicleSpecs[vehicle->unk1A].launchAngle << 8);
@@ -285,7 +277,7 @@ Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s1
 		}
 		entry->unk10S16 = sp74;
 		entry->unk12S16 = (s16)(s32)arg6;
-		entry->unk18 = 0.0f;
+		entry->unk18 = 0;
 		entry->unk14S16 = arg1->door2InteriorId;
 	} else {
 		if ((((s32)arg1->unk8 >> 8) & 0x2000) != 0) {
@@ -309,13 +301,10 @@ Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s1
 		}
 	}
 
-	weaponIndex = 0;
-	while ((weaponIndex < 0x100) && (arg1 != (BuildingInstance *)&D_80145BE0_154B90[weaponIndex])) {
-		weaponIndex++;
-	}
+	weaponIndex = ((u32)arg1 - (u32)D_80145BE0_154B90) / 0x18;
 	entry->unk20 = weaponIndex;
 	entry->unk24 = (s32)vehicle;
-	entry->unk28 = (s16)((s32)arg1->xCoord / (s32)arg1->door2InteriorId);
+	entry->unk28 = (s16)((u16)arg1->xCoord / (s32)arg1->door2InteriorId);
 	if ((D_80145BE8_154B98[entry->unk20][0] >> 8) & 0x100) {
 		entry->unk2A = func_801225C4_131574(entry);
 	}
@@ -350,7 +339,7 @@ Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s1
 
 				func_800DEA08_ED9B8((s16)(s32)(arg5 * 0.5f), (s16)(s32)(arg6 * 0.5f), sp70, sp6E, sp6C, 0x32, 6, 2, 0x19, 0xFF, 0xE1);
 				func_800DE9B8_ED968(sp70, sp6E, sp6C, 0x64);
-				func_800C541C_D43CC(sp70, sp6E, sp6C, (s8)(s32)(absArg5 * 0.5f), -0x28, (s8)(s32)(negArg7 * 0.5f), 0x1E, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
+				func_800C541C_D43CC(sp70, sp6E, sp6C, (s8)(s32)((((-arg5 < arg5) ? arg5 : -arg5) * 0.5f)), -0x28, (s8)(s32)(negArg7 * 0.5f), 0x1E, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
 
 				sp70 = (s16)(s32)(entry->unk0 + (arg5 * 0.5f));
 				sp6E = (s16)(s32)(entry->unk4 + (arg6 * 0.5f));
@@ -365,14 +354,13 @@ Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s1
 			} else if (entry->unk20 == 0x27) {
 				negArg7 = -arg7;
 				func_800DEA08_ED9B8((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 0x32, 6, 2, 0x19, 0xFF, 0xE1, 0xDC, 0xA0);
-				func_800C541C_D43CC((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, (s8)(s32)(absArg5 * 0.5f), 0, (s8)(s32)(negArg7 * 0.5f), 0x14, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
+				func_800C541C_D43CC((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, (s8)(s32)((((-arg5 < arg5) ? arg5 : -arg5) * 0.5f)), 0, (s8)(s32)(negArg7 * 0.5f), 0x14, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
 				func_800DE9B8_ED968((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 0x64);
 			} else if (entry->unk20 == 0x28) {
 			}
 		}
 	} else if (((s32)arg1->unk8 >> 8) & 0x1000) {
-		temp_v0 = arg1->unk16;
-		entry->unk2E = func_800C2D50_D1D00((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, ((temp_v0 * 0xC) + 0x1E) & 0xFF, temp_v0, 0);
+		entry->unk2E = func_800C2D50_D1D00((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, ((arg1->unk16 * 0xC) + 0x1E) & 0xFF, arg1->unk16, 0);
 	} else {
 		if (entry->unk20 == 0x5C) {
 			var_v0 = func_800D49CC_E397C((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8);
