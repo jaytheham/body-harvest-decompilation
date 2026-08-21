@@ -601,7 +601,6 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 #endif
 
 // CURRENT(690)
-#ifdef NON_MATCHING
 // 80123F04 Reduces damage to adam by 40% in easy
 void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
 	volatile struct Unk80013E44_arg0 sp24;
@@ -630,12 +629,9 @@ void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
 	}
 
 	if (arg0 == D_80052B34) {
-		damage = arg1 * 5;
-		if (damage >= 0x100) {
-			damage = 0xFF;
-		}
+		damage = ((arg1 * 5) >= 0x100) ? 0xFF : (arg1 * 5);
 
-		func_80001144_1D44(damage & 0xFF, 0xA, 0x14);
+		func_80001144_1D44(damage, 0xA, 0x14);
 		if (D_80052B34->unk1A == 0) {
 			D_8014ED42 = 8;
 		} else {
@@ -663,9 +659,6 @@ void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
 		func_80123AC4_132A74(arg0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80123E90_132E40.s")
-#endif
 
 void func_80124118_1330C8(VehicleInstance *arg0, s16 arg1) {
 	if ((arg0->unk20 & VEHICLE_FLAG_UNK8) == 0) {
