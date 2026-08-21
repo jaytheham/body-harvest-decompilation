@@ -3843,7 +3843,7 @@ void func_8011EAF8_12DAA8(s32 arg0, s32 arg1) {
 	}
 }
 
-// CURRENT(9768)
+// CURRENT(7012)
 #ifdef NON_MATCHING
 void func_8011EB40_12DAF0(BuildingInstance *arg0) {
 	f64 tempF22;
@@ -3851,15 +3851,17 @@ void func_8011EB40_12DAF0(BuildingInstance *arg0) {
 	s32 varS0;
 	s16 state;
 	s16 *tempEA48;
+	s16 *spEB84;
 
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 
+	tempEA48 = &D_8015EA48;
 	D_80052B40.unk0 = D_80159DC8 + D_8015EA4C;
 	D_80052B40.unk2 = D_80159DCA + D_8015EA4E;
 	D_80052B40.unk4 = D_80159DCC + D_8015EA50;
 	D_80052B48.unk0 = 0;
 	D_80052B48.unk4 = 0;
-	D_80052B48.unk2 = D_8015EA48;
+	D_80052B48.unk2 = *tempEA48;
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
@@ -3894,27 +3896,29 @@ void func_8011EB40_12DAF0(BuildingInstance *arg0) {
 		}
 
 		if (state == 1) {
-			varS0 = 3;
+			varS0 = 4;
 			tempF22 = D_80144FC0_153F70[0];
-			do {
-				tempS1 = sins(D_8015EB84);
-				func_8012D700_13C6B0(
-					1,
-					(((((s32)((u8 *)arg0 - (u8 *)buildingInstances) / 0x18) * 0x10) + varS0) & 0xFFFF),
-					(s16)(arg0->xCoord + D_80159DC8 - 0x62),
-					(s16)(s32)((((f64)(f32)tempS1 / 32768.0) * tempF22) + (f64)(arg0->yCoord + D_80159DCA + 0x26)),
-					(s32)((((f64)(f32)coss(D_8015EB84) / 32768.0) * tempF22) + (f64)(arg0->zCoord + D_80159DCC - 0xB5)),
-					0,
-					0,
-					0,
-					0x14,
-					0x28,
-					0x28,
-					&func_8011EABC_12DA6C,
-					NULL);
-				D_8015EB84 = (s16)D_8015EB84 + 0x4000;
-				varS0 -= 1;
-			} while (varS0 != 0);
+			spEB84 = &D_8015EB84;
+			if (varS0--) {
+				do {
+					tempS1 = sins(*spEB84);
+					func_8012D700_13C6B0(
+						1,
+						((((arg0 - buildingInstances) * 0x10) + varS0) & 0xFFFF),
+						(s16)(arg0->xCoord + D_80159DC8 - 0x62),
+						(s16)(s32)((((f64)(f32)tempS1 / 32768.0) * tempF22) + (f64)(arg0->yCoord + D_80159DCA + 0x26)),
+						(s32)((((f64)(f32)coss(*spEB84) / 32768.0) * tempF22) + (f64)(arg0->zCoord + D_80159DCC - 0xB5)),
+						0,
+						0,
+						0,
+						0x14,
+						0x28,
+						0x28,
+						&func_8011EABC_12DA6C,
+						NULL);
+					*spEB84 = (s16)*spEB84 + 0x4000;
+				} while (varS0--);
+			}
 
 			func_8012D700_13C6B0(
 				1,
