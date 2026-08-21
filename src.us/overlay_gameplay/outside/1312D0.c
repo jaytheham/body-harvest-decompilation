@@ -178,41 +178,40 @@ void func_80122524_1314D4(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 	}
 }
 
+// CURRENT(345)
 #ifdef NON_MATCHING
 s16 func_801225C4_131574(Projectile *arg0) {
-	s32 i;
-	s32 foundIndex;
-	Unk8015F790 *entry;
+	s32 var_v1;
+	s32 var_a1;
+	Unk8015F790 *var_a2;
 
 	if ((D_8015F9E8 >= 0x10) || !((D_80145BE8_154B98[arg0->unk20][0] >> 8) & 0x10)) {
 		return -1;
 	}
 	D_8015F9E8++;
 
-	foundIndex = -1;
-	for (i = 15; i >= 0; i--) {
-		if (!(D_8015F790[i].unk1E & 2)) {
-			foundIndex = i;
-			break;
+	var_v1 = 15;
+	do {
+		if (D_8015F790[var_v1].unk1C << 30 < 0) {
+			continue;
 		}
-	}
+		var_a1 = var_v1;
+		break;
+	} while (var_v1--);
 
-	if (foundIndex < 0) {
-		return -1;
-	}
+	var_a2 = &D_8015F790[var_a1], var_v1 = 4;
+	do {
+		var_a2->posX[var_v1 - 1] = (s16)arg0->unk0;
+		var_a2->posY[var_v1 - 1] = (s16)arg0->unk4;
+		var_a2->posZ[var_v1 - 1] = (s16)arg0->unk8;
+	} while (var_v1--);
 
-	entry = &D_8015F790[foundIndex];
-	for (i = 3; i >= 0; i--) {
-		entry->posX[i] = (s16)arg0->unk0;
-		entry->posY[i] = (s16)arg0->unk4;
-		entry->posZ[i] = (s16)arg0->unk8;
-	}
+	var_a2->unk1E = (var_a2->unk1E & 3) | 0x14;
+	var_a2->unk20 = arg0;
+	var_a2->unk1F = var_a2->unk1F | 2;
+	var_a2->unk1F &= 0xFE;
 
-	entry->unk1E = (entry->unk1E & 3) | 0x14;
-	entry->unk20 = arg0;
-	entry->unk1E = (entry->unk1E & 0xFF00) | (((u8)entry->unk1E | 2) & 0xFE);
-
-	return (s16)foundIndex;
+	return (s16)var_a1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801225C4_131574.s")
