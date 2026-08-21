@@ -2062,29 +2062,22 @@ void func_80127D88_136D38(BuildingInstance *arg0, VehicleInstance *arg1, s16 arg
 #ifdef NON_MATCHING
 void func_80127F9C_136F4C(s16 arg0, s16 arg1, s16 arg2) {
 	s32 count;
-	u8 *indices;
 	VehicleInstance *vehicle;
 	AlienInstance *alien;
 	s32 threshold;
 	s32 dx;
 	s32 dz;
-	AlienSpec *spec;
-	u8 *tbl;
-	s16 *tbl16;
 	s16 val;
 	s32 bldg;
-	s32 offset;
-	s16 vehicleIdx;
+	s16 y;
 
 	count = D_80158FD8;
 	if (count != 0) {
 		count--;
-		indices = &D_80158E80[count];
 		
 		while (1) {
-			vehicleIdx = *indices;
-			vehicle = &vehicleInstances[vehicleIdx];
-			threshold = *(s32 *)((u8 *)&vehicleSpecs[vehicle->unk1A] + 0x08);
+			vehicle = &vehicleInstances[D_80158E80[count]];
+			threshold = vehicleSpecs[vehicle->unk1A].unk8;
 			dx = func_800047FC_53FC(vehicle->unk0 - arg0);
 			dz = func_800047FC_53FC(vehicle->unk4 - arg1);
 			
@@ -2093,26 +2086,22 @@ void func_80127F9C_136F4C(s16 arg0, s16 arg1, s16 arg2) {
 			}
 			
 			if (count == 0) break;
-			indices--;
 			count--;
 		}
 	}
 	
-	alien = &alienInstances[0xFE];
-	offset = arg2 * 0x18;
 	count = 0xFE;
 	
 	while (count != 0) {
+		alien = &alienInstances[count];
 		if (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0) {
-			spec = &alienSpecs[alien->specIndex];
 			dx = func_800047FC_53FC(alien->unk0 - arg0);
 			dz = func_800047FC_53FC(alien->unk4 - arg1);
 			
-			if ((dx + dz) < spec->unk8) {
-			func_80124C40_133BF0((void *)alien, D_80145BE0_154B90[arg2].unk2, arg0, arg1);
+			if ((dx + dz) < alienSpecs[alien->specIndex].unk8) {
+				func_80124C40_133BF0((EntityInstance *)alien, D_80145BE0_154B90[arg2].unk2, arg0, arg1);
 			}
 		}
-		alien = (AlienInstance *)((u8 *)alien - 0x50);
 		count--;
 	}
 	
@@ -2125,8 +2114,8 @@ void func_80127F9C_136F4C(s16 arg0, s16 arg1, s16 arg2) {
 		}
 	}
 	
-	func_800F9F00_108EB0(arg0, arg1);
-	func_80124170_133120(arg0, func_800F9F00_108EB0(arg0, arg1), arg1, D_80145BE0_154B90[arg2].unk2, (s32)D_80145BE0_154B90[arg2].unk4, NULL);
+	y = func_800F9F00_108EB0(arg0, arg1);
+	func_80124170_133120(arg0, y, arg1, D_80145BE0_154B90[arg2].unk2, D_80145BE0_154B90[arg2].unk4, NULL);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80127F9C_136F4C.s")

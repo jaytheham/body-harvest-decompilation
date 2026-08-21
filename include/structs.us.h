@@ -1256,7 +1256,8 @@ typedef struct {
 // 0x6D Shadow Z
 typedef struct {
 	/* 0x00 */ u32 modelDL; // Model display list pointer
-	/* 0x04 */ u8 pad4[0x8];
+	/* 0x04 */ u8 pad4[0x4];
+	/* 0x08 */ s32 unk8;
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ u8 pad0E[0x6];
 	/* 0x14 */ u16 unk14;
