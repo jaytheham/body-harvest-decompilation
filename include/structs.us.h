@@ -1387,8 +1387,17 @@ typedef struct {
 	/* 0x04 */ f32 unk4;
 	/* 0x08 */ f32 unk8;
 	/* 0x0C */ f32 unkC;
-	/* 0x10 */ f32 unk10;
-	/* 0x14 */ f32 unk14;
+	union {
+		/* 0x10 */ f32 unk10;
+		struct {
+			/* 0x10 */ s16 unk10S16;
+			/* 0x12 */ s16 unk12S16;
+		};
+	};
+	union {
+		/* 0x14 */ f32 unk14;
+		/* 0x14 */ s16 unk14S16;
+	};
 	/* 0x18 */ s32 unk18;
 	/* 0x1C */ s8 unk1C;
 	/* 0x1D */ s8 unk1D;
