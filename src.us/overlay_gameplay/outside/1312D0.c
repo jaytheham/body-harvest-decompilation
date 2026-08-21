@@ -1179,15 +1179,17 @@ void func_80125C48_134BF8(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
+// CURRENT(16)
 #ifdef NON_MATCHING
 void func_80125CA0_134C50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 	s32 unused0;
 	s32 unused1;
-	s16 sp3A;
 	s32 sp2C;
 	s32 sp28;
 	s32 temp_t0;
 	s32 temp_v1;
+	s32 unused2;
+	s16 sp3A;
 
 	temp_v1 = arg3 - arg0;
 	temp_t0 = arg5 - arg2;
