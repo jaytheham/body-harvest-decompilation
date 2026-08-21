@@ -1308,7 +1308,7 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 						}
 
 						if (temp_f22_2 <= (f32)var_s1) {
-							temp_s2 = (s16 *)func_80011F90_12B90(*(void **)((u8 *)temp_s0 + 8));
+							temp_s2 = (s16 *)func_80011F90_12B90(temp_s0->unk8);
 
 							if (temp_s0->unk10 == temp_s0->unk30) {
 								var_f2 = spC4;
@@ -1318,7 +1318,7 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 
 							temp_f0_2 = (f32)((f64)var_f2 * 0.00390625);
 							temp_s1_3 = temp_s0->unk22 - temp_s0->unk12;
-							temp_f20_2 = (f32)((f64)((s16 *)((u8 *)cheatData + 0x11A))[currentLevel * 0xC + temp_s0->unk0 * 6]
+							temp_f20_2 = (f32)((f64)*(s16 *)&cheatData[17].cheatPattern[10 + ((currentLevel * 0xC + temp_s0->unk0 * 6) * 2)]
 								* ((f64)-((temp_f0_2 - (f32)(s32)temp_f0_2) * 32.0)));
 							temp_f0_3 = (f32)(((f64)(temp_f22_2 - (f32)(func_800B84D0_C7480((s16)(s32)spCC, (s16)(s32)spC4) >> 8))
 								* (32.0 / (f64)temp_s1_3)) + 31.0);

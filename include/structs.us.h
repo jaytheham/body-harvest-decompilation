@@ -1475,7 +1475,8 @@ typedef struct {
 	/* 0x03 */ u8 pad3;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
-	/* 0x08 */ u8 pad8[0x8];
+	/* 0x08 */ void *unk8;
+	/* 0x0C */ s32 unkC;
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;

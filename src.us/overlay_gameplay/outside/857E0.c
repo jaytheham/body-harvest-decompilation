@@ -1027,7 +1027,7 @@ void func_80078F5C_87F0C(s16 arg0, s16 arg1, u16 arg2) {
 			func_80076868_85818(temp_v0);
 			return;
 		}
-		*(u32*)D_80259D90[temp_v0].pad8 = D_80222A30[temp_v1];
+		D_80259D90[temp_v0].unk8 = (void *)D_80222A30[temp_v1];
 	}
 }
 
