@@ -3078,7 +3078,6 @@ void func_8012B26C_13A21C(void) {
 	Projectile *projectile;
 	WeaponEntry_80129864 *entry;
 	Unk8015F790 *queueEntry;
-	s16 (*fadeData)[4];
 
 	if (D_8015F9EC != 0) {
 		D_8015F9EC--;
@@ -3157,7 +3156,7 @@ void func_8012B26C_13A21C(void) {
 				travel = sqrtf((f32)dist) / (f32)ctrl->unk8;
 				if (travel > 0.0f) {
 					step = (f32)(u8)entry->unk12;
-					current = (f32)*(s16 *)((u8 *)projectile + 0x12);
+					current = (f32)projectile->unk12S16;
 					desired = ((f32)desiredY - projectile->unk4) / travel;
 
 					if ((current + step) <= desired) {
@@ -3168,7 +3167,7 @@ void func_8012B26C_13A21C(void) {
 						yVel = (s16)desired;
 					}
 
-					*(s16 *)((u8 *)projectile + 0x12) = yVel;
+					projectile->unk12S16 = yVel;
 				}
 			}
 
@@ -3236,16 +3235,14 @@ void func_8012B26C_13A21C(void) {
 
 		if (alive != 0) {
 			s32 vehicleIdx;
-			u8 *vehicleId;
 
 			vehicleIdx = D_80158FD8 - 1;
 			if (vehicleIdx >= 0) {
-				vehicleId = &D_80158E80[vehicleIdx];
 				while (alive != 0) {
-					VehicleInstance *vehicle = &vehicleInstances[*vehicleId];
+					VehicleInstance *vehicle = &vehicleInstances[D_80158E80[vehicleIdx]];
 					if ((vehicle->unk20 & VEHICLE_FLAG_UNK7) != 0) {
 						VehicleSpec *vehicleSpec = &vehicleSpecs[vehicle->unk1A];
-						s32 vehicleRadius = *(s32 *)((u8 *)vehicleSpec + 8);
+						s32 vehicleRadius = vehicleSpec->unk8;
 						s32 distance = func_800047FC_53FC((s16)((s16)vehicle->unk0 - (s16)projectile->unk0));
 						distance += func_800047FC_53FC((s16)((s16)vehicle->unk4 - (s16)projectile->unk8));
 
@@ -3272,7 +3269,6 @@ void func_8012B26C_13A21C(void) {
 						}
 					}
 
-					vehicleId--;
 					vehicleIdx--;
 					if (vehicleIdx < 0) {
 						break;
@@ -3335,11 +3331,12 @@ void func_8012B26C_13A21C(void) {
 			s16 alienIdx;
 			AlienInstance *alien;
 
-			alien = &alienInstances[0xFE];
-			for (alienIdx = 0xFE; (alienIdx != 0) && (alive != 0); alienIdx--, alien++) {
+			for (alienIdx = 0xFE; (alienIdx != 0) && (alive != 0); alienIdx--) {
 				AlienSpec *alienSpec;
 				s16 testY;
 				s32 distance;
+
+				alien = &alienInstances[0xFE + (0xFE - alienIdx)];
 
 				if (((void *)alien == (void *)projectile->unk24) || (func_8012235C_13130C((Unk8004D0F8 *)alien) == 0)) {
 					continue;
@@ -3729,9 +3726,8 @@ void func_8012B26C_13A21C(void) {
 		func_801238DC_13288C((s16)i);
 	}
 
-	queueEntry = &D_8015F790[15];
-	i = 0xF;
-	do {
+	for (i = 0xF; i != 0; i--) {
+		queueEntry = &D_8015F790[i];
 		if (queueEntry->unk1E & 2) {
 			s32 j;
 
@@ -3747,8 +3743,7 @@ void func_8012B26C_13A21C(void) {
 
 				queueEntry->unk1E = (u16)((((burstCount - 1) << 2) & 0xFFFC) | (count & 3));
 				if (burstCount == 0) {
-					((u8 *)&queueEntry->unk1E)[1] &= 0xFD;
-					((u8 *)&queueEntry->unk1E)[1] &= 0xFE;
+					queueEntry->unk1E &= 0xFCFF;
 					D_8015F9E8--;
 				}
 			} else {
@@ -3758,14 +3753,11 @@ void func_8012B26C_13A21C(void) {
 				queueEntry->curZ = (s16)projectile->unk8;
 			}
 		}
-		queueEntry--;
-		i--;
-	} while (i != 0);
+	}
 
-	fadeData = D_8015F9F8;
 	for (i = 0; i < 8; i++) {
-		if (fadeData[i][3] != 0) {
-			fadeData[i][3]--;
+		if (D_8015F9F8[i][3] != 0) {
+			D_8015F9F8[i][3]--;
 		}
 	}
 
