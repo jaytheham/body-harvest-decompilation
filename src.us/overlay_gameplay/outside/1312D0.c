@@ -470,7 +470,7 @@ void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801236F0_1326A0.s")
 #endif
 
-// CURRENT(383)
+// CURRENT(378)
 #ifdef NON_MATCHING
 void func_801238DC_13288C(s16 arg0) {
 	Projectile *entry;
@@ -485,7 +485,7 @@ void func_801238DC_13288C(s16 arg0) {
 	entry = &D_8015EB90[arg0];
 	linkIndex = entry->unk2A;
 	if (linkIndex != -1) {
-		D_8015F790[linkIndex].unk1E |= 1;
+		D_8015F790[linkIndex].unk1F |= 1;
 	}
 
 	buildingIndex = entry->unk20;
