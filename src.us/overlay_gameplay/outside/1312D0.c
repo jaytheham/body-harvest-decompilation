@@ -134,21 +134,20 @@ int func_8012235C_13130C(Unk8004D0F8 *arg0)
 }
 
 // CURRENT(210)
-#ifdef NON_MATCHING
 s32 func_801223B0_131360(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
-	u8 *spec;
+	EntityDamageSpec *spec;
 	s16 damageDir;
 	s16 ret;
 	s32 dirBucket;
 
-	spec = (u8 *)func_800FAFB8_109F68(arg0);
+	spec = (EntityDamageSpec *)func_800FAFB8_109F68((VehicleInstance *)arg0);
 	damageDir = (func_80003824_4424((f32)(arg0->unk0 - arg1), (f32)(arg0->unk4 - arg2)) - arg0->unk6) + 0x2000;
 
 	if ((arg0->unkC == -2) && (arg0->unk1A == 0x12) && (currentLevel == 1) && (D_8015FA38 != 0)) {
 		return 0;
 	}
 
-	if ((arg0 == D_80052B34) && (D_80052B34->unk1A == 0)) {
+	if (((VehicleInstance *)arg0 == D_80052B34) && (D_80052B34->unk1A == 0)) {
 		D_80157A2C = func_80003824_4424((f32)(arg0->unk0 - arg1), (f32)(arg0->unk4 - arg2));
 		D_80157A28 |= PLAYER_STATE_FLAG_HURT;
 		func_800E0764_EF714(arg3);
@@ -157,22 +156,18 @@ s32 func_801223B0_131360(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 	dirBucket = damageDir >> 14;
 	switch (dirBucket) {
+		case 0:
+			ret = spec->rearDamage;
+			break;
 		case -2:
-			ret = *(s16 *)(spec + 0xE);
+			ret = spec->frontalDamage;
 			break;
 		default:
-			ret = *(s16 *)(spec + 0x10);
-			break;
-		case 0:
-			ret = *(s16 *)(spec + 0x12);
-			break;
+			ret = spec->sideDamage;
 	}
 
 	return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801223B0_131360.s")
-#endif
 
 // CURRENT(429)
 #ifdef NON_MATCHING

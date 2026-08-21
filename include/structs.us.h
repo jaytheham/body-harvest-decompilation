@@ -1084,6 +1084,14 @@ typedef struct {
 	/* 0x4C */ u32 unk4C;
 } EntitySpec; /* size = 0x50 */
 
+/* Common damage values returned by func_800FAFB8_109F68. */
+typedef struct {
+    /* 0x00 */ u8 pad0[0x0E];
+    /* 0x0E */ s16 frontalDamage;
+    /* 0x10 */ s16 sideDamage;
+    /* 0x12 */ s16 rearDamage;
+} EntityDamageSpec;
+
 
 // 0x5C Pointer to Death animation ASM?
 // 0x60 xxxxyyyy xxxx Drops modifier
