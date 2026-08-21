@@ -410,15 +410,15 @@ angle_done:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801226F8_1316A8.s")
 #endif
 
-// CURRENT(1561)
+// CURRENT(1184)
 #ifdef NON_MATCHING
 void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5) {
+	s32 count;
 	s16 sp64[3];
 	u16 randX;
 	u16 randZ;
 	s16 halfSpan;
-	s32 height;
-	s32 count;
+	s16 height;
 	const WeaponEntry_80129864 *building;
 
 	sp64[0] = arg0;
@@ -441,7 +441,7 @@ void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 				(f32) ((randX % arg3) - halfSpan),
 				(f32) (((randZ % arg3) + arg3) >> 2),
 				(f32) ((func_800038E0_44E0() % arg3) - halfSpan));
-		} while (count-- != 0);
+		} while (count--);
 	}
 }
 #else
