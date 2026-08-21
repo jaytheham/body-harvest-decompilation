@@ -2566,12 +2566,12 @@ Projectile *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 
 #ifdef NON_MATCHING
 Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-	typedef Projectile *(*SpawnFunc_801226F8)(void *, void *, s16, s16, s16, f32, f32, f32);
+	typedef Projectile *(*SpawnFunc_801226F8)(s16 *, BuildingInstance *, s16, s16, s16, f32, f32, f32);
 	SpawnFunc_801226F8 spawnFunc;
 
 	AlienInstance *alien;
 	VehicleInstance *vehicle;
-	u8 *weaponData;
+	EntitySpec *weaponData;
 	WeaponEntry_80129864 *entry;
 	WeaponEntry_80129864 *entryD;
 	Projectile *spawned;
@@ -2596,7 +2596,7 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 
 	alien = (AlienInstance *)arg0;
 	vehicle = (VehicleInstance *)arg0;
-	spawnFunc = (SpawnFunc_801226F8)func_801226F8_1316A8;
+	spawnFunc = func_801226F8_1316A8;
 	weaponData = func_800FAFB8_109F68(vehicle);
 	sp9C = D_80052AD0;
 
@@ -2605,9 +2605,9 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 	}
 
 	if (arg1 == 0) {
-		spE6 = *(s16 *)(weaponData + 0x1C);
+		spE6 = weaponData->weapon1B;
 	} else {
-		spE6 = *(s16 *)(weaponData + 0x28);
+		spE6 = weaponData->weapon2B;
 	}
 
 	if ((D_801591A8 == 0) && (alien->unk1E > 0)) {
@@ -2644,7 +2644,7 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 			pos[0] = (s16)arg2;
 			pos[1] = (s16)(arg3 + 0x700);
 			pos[2] = (s16)arg4;
-			spawned = spawnFunc(pos, entry, 0, 0, 0, 0.0f, 0.0f, 0.0f);
+			spawned = spawnFunc(pos, (BuildingInstance *)entry, 0, 0, 0, 0.0f, 0.0f, 0.0f);
 			if (spawned != NULL) {
 				spawned->unk1C = 0x64;
 			}
@@ -2720,7 +2720,7 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 				func_800D9DD8_E8D88(alien->unk0, alien->unk2, alien->unk4);
 				return NULL;
 			}
-			func_800D9F60_E8F10(((VehicleInstance *)alien - vehicleInstances) / 1);
+			func_800D9F60_E8F10(func_800FAE60_109E10(vehicle));
 			return NULL;
 		}
 
@@ -2771,7 +2771,7 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 		f32 normX;
 		f32 normZ;
 
-		func_80127D88_136D38((u8 *)entry, alien, (s16)x, (s16)y, (s16)z, arg2, arg3, arg4);
+		func_80127D88_136D38((BuildingInstance *)entry, alien, (s16)x, (s16)y, (s16)z, arg2, arg3, arg4);
 		if (D_801591A8 != 0) {
 			D_801591F8.unk18 = D_8015F9D0.unkC;
 			return NULL;
@@ -2984,9 +2984,9 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 
 	if (D_801591A8 != 0) {
 		entryD = &D_80145BE0_154B90[20];
-		spawned = spawnFunc(alien, entryD, hitX, hitY, hitZ, fx, fy, fz);
+		spawned = spawnFunc((s16 *)alien, (BuildingInstance *)entryD, hitX, hitY, hitZ, fx, fy, fz);
 	} else {
-		spawned = spawnFunc(alien, entry, hitX, hitY, hitZ, fx, fy, fz);
+		spawned = spawnFunc((s16 *)alien, (BuildingInstance *)entry, hitX, hitY, hitZ, fx, fy, fz);
 	}
 
 	if (spawned == NULL) {
