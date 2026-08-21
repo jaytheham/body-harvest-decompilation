@@ -667,17 +667,16 @@ void func_80124118_1330C8(VehicleInstance *arg0, s16 arg1) {
 		}
 	}
 }
-// CURRENT(18762)
+// CURRENT(13067)
 #ifdef NON_MATCHING
 void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, VehicleInstance *arg5) {
 	s32 radiusSq;
 	s32 count;
 	f32 scale;
-	u8 *activeList;
 	VehicleInstance *vehicle;
 	AlienInstance *alien;
 	BuildingInstance *building;
-	s32 hitObj;
+
 
 	arg4 = arg4 >> 2;
 	if (arg4 == 0) {
@@ -689,23 +688,26 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 
 	count = D_80158FD8;
 	if (count != 0) {
+        u8 *activeList;
+        s32 dx;
+        s32 dy;
+        s32 dz;
+        u32 distSq;
+        u32 dist;
+        s32 damage;
+        s32 result;
+        f32 pushScale;
+        s32 hitObj;
 		count--;
 		activeList = &D_80158E80[count];
+do {
+vehicle = &vehicleInstances[*activeList];
 
-		while (1) {
-			s32 dx;
-			s32 dy;
-			s32 dz;
-			u32 distSq;
-			u32 dist;
-			s32 damage;
-			s32 result;
-			f32 pushScale;
-			VehicleSpec *vehSpec;
-
-			vehicle = &vehicleInstances[*activeList];
-			vehSpec = &vehicleSpecs[vehicle->unk1A];
 			if (((vehicle->unk20 & VEHICLE_FLAG_UNK7) != 0) && (vehicle != arg5)) {
+
+				VehicleSpec *vehSpec;
+
+				vehSpec = &vehicleSpecs[vehicle->unk1A];
 				dx = (arg0 - vehicle->unk0) >> 2;
 				dy = (arg1 - vehicle->unk2) >> 2;
 				dz = (arg2 - vehicle->unk4) >> 2;
@@ -714,7 +716,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 					dist = (u32)sqrtf((f32)distSq);
 					damage = (s32)(((f32)(arg4 - dist) * scale) * (f32)(arg4 - dist));
 					if (damage != 0) {
-						result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, vehicle->unk0, vehicle->unk2 + vehSpec->unk38, vehicle->unk4, &hitObj);
+result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, vehicle->unk0, vehicle->unk2 + vehSpec->unk38, vehicle->unk4, &hitObj);
 						if (result == 3) {
 							damage >>= 2;
 						} else if ((VehicleInstance *)hitObj != vehicle) {
@@ -734,8 +736,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 								}
 								func_80122524_1314D4(vehicle, (s16)damage, arg0, arg2);
 							}
-
-							pushScale = -(((f32)(damage << 5) / (f32)(dist + 1)) * 2.0f) / (f32)vehSpec->unk32;
+							pushScale = -(((f32)(damage << 5) / (f32)(dist + 1)) * 2.0f) / (f32)vehicleSpecs[vehicle->unk1A].unk32;
 							if (vehicle->unk1A == 0) {
 								func_80102D00_111CB0(vehicle, (f32)(((f32)dx * pushScale) / 100.0), (f32)((f64)-pushScale / 10.0), (f32)((f64)((f32)dz * pushScale) / 100.0));
 								D_80052B34->unkA = 0x7FFF;
@@ -754,13 +755,8 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 					}
 				}
 			}
-
-			if (count == 0) {
-				break;
-			}
 			activeList--;
-			count--;
-		}
+		} while (count--);
 	}
 
 	alien = &alienInstances[0xFE];
@@ -774,7 +770,8 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 		s32 result;
 
 		if ((arg5 != (VehicleInstance *)alien) && ((currentLevel == 5) || (alien->specIndex != 0x12)) && ((alien->unk1B == 0xFF) || (D_80047F94 == alien->unk1B)) && (alien->specIndex != 0)) {
-			AlienSpec *alienSpec;
+            AlienSpec *alienSpec;
+            s32 hitObj;
 
 			alienSpec = &alienSpecs[alien->specIndex];
 			dx = (arg0 - alien->unk0) >> 2;
@@ -785,7 +782,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 				dist = (u32)sqrtf((f32)distSq);
 				damage = (s32)(((f32)(arg4 - dist) * scale) * (f32)(arg4 - dist));
 				if (damage != 0) {
-					result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, alien->unk0, alienSpec->unk18 + alien->unk2, alien->unk4, &hitObj);
+result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, alien->unk0, alienSpec->unk38 + alien->unk2, alien->unk4, &hitObj);
 					if (result == 3) {
 						damage >>= 2;
 					} else if ((AlienInstance *)hitObj != alien) {
