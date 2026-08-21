@@ -3479,7 +3479,6 @@ void func_8011DE60_12CE10(s32 arg0) {
 	D_8015EB80 = arg0;
 }
 
-// CURRENT(21902)
 #ifdef NON_MATCHING
 s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 	BuildingInstance *inst;
@@ -3494,7 +3493,7 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 	s16 outB;
 	s16 instanceId;
 	s16 dist;
-	s16 delta;
+	s32 delta;
 	s16 sampleY;
 	s32 cellY;
 	s32 searchIndex;
@@ -3512,18 +3511,14 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 		specType = inst->buildingType;
 	}
 	history = &D_8015EB67;
+	searchIndex = 7;
 
-	for (searchIndex = 7; searchIndex != 0; searchIndex--) {
-		s32 historyBase = 0;
-
-		if (((inst->unk8 >> 0xC) & 4) != 0) {
-			historyBase = 0x80;
-		}
-
-		if (history[-searchIndex] == (u8)(historyBase + specType)) {
+	do {
+		if (*history == (((inst->unk8 >> 0xC) & 4) ? 0x80 : 0) + specType) {
 			break;
 		}
-	}
+		history--;
+	} while (searchIndex--);
 
 	if ((D_8015EA28 == inst->buildingType) && (D_80052554 >= 0x401)) {
 		*arg2 = 1000;
@@ -3541,11 +3536,10 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 			localX = 5.0f;
 			localZ = (f32)((arg1 & 0xFF) >> 2);
 		}
-		needSeamFix = 0;
 	} else {
-		rot = inst->unk8 & 3;
 		localX = (f32)(arg0 - inst->xCoord);
 		localZ = (f32)(arg1 - inst->zCoord);
+		rot = inst->unk8 & 3;
 
 		switch (rot) {
 		case 0:
@@ -3575,23 +3569,25 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 		}
 
 		if ((f32)spec->unk10 < absX) {
-			*arg2 = (s16)cellY;
-			return -1;
+			goto fail;
 		}
-
 		if (localZ >= 0.0f) {
 			absZ = localZ;
 		} else {
 			absZ = -localZ;
 		}
-
 		if ((f32)spec->unk12 < absZ) {
-			*arg2 = (s16)cellY;
-			return -1;
+			goto fail;
 		}
+		goto scale_ok;
 
-		localX = (f32)((localX * (32.0 / spec->unk10)) + 32.0);
-		localZ = (f32)((localZ * (32.0 / spec->unk12)) + 32.0);
+fail:
+		*arg2 = (s16)cellY;
+		return -1;
+
+scale_ok:
+		localX = (f32)((localX * (32.0 / (f32)spec->unk10)) + 32.0);
+		localZ = (f32)((localZ * (32.0 / (f32)spec->unk12)) + 32.0);
 		needSeamFix = 0;
 		if (D_8015EA28 == inst->buildingType) {
 			if ((rot & 1) != 0) {
@@ -3673,25 +3669,25 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 			sampleY = ((delta >> 1) + instA->xCoord) - arg0;
 		}
 
-		*arg2 -= func_8011619C_12514C((s16)func_80118670_127620((s8)(arg0 >> 8), (s8)(arg1 >> 8)), (s16)((dist - 0xE6) >> 1), sampleY);
+		*arg2 -= func_8011619C_12514C((s16)func_80118670_127620(arg0 >> 8, arg1 >> 8), (s16)((dist - 0xE6) >> 1), sampleY);
 	}
 
-	if (*arg2 == 0) {
-		*arg2 = (s16)(func_800B84D0_C7480(arg0, arg1) >> 8);
-		return -1;
+	if (*arg2 != 0) {
+		*arg2 = *arg2 + inst->yCoord;
+		if (*arg2 < cellY) {
+			*arg2 = (s16)cellY;
+			return -1;
+		}
+
+		if (((spec->pad16[4] & 8) == 0) && (D_8015EB80 == 0) && (*arg2 != 0)) {
+			*arg2 = spec->unk14 + inst->yCoord;
+		}
+
+		return instanceId;
 	}
 
-	*arg2 = *arg2 + inst->yCoord;
-	if (*arg2 < cellY) {
-		*arg2 = (s16)cellY;
-		return -1;
-	}
-
-	if (((spec->pad16[4] & 8) == 0) && (D_8015EB80 == 0) && (*arg2 != 0)) {
-		*arg2 = spec->unk14 + inst->yCoord;
-	}
-
-	return instanceId;
+	*arg2 = (s16)(func_800B84D0_C7480(arg0, arg1) >> 8);
+	return -1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011DE6C_12CE1C.s")
@@ -3843,7 +3839,7 @@ void func_8011EAF8_12DAA8(s32 arg0, s32 arg1) {
 	}
 }
 
-// CURRENT(9768)
+// CURRENT(7012)
 #ifdef NON_MATCHING
 void func_8011EB40_12DAF0(BuildingInstance *arg0) {
 	f64 tempF22;
@@ -3851,15 +3847,17 @@ void func_8011EB40_12DAF0(BuildingInstance *arg0) {
 	s32 varS0;
 	s16 state;
 	s16 *tempEA48;
+	s16 *spEB84;
 
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 
+	tempEA48 = &D_8015EA48;
 	D_80052B40.unk0 = D_80159DC8 + D_8015EA4C;
 	D_80052B40.unk2 = D_80159DCA + D_8015EA4E;
 	D_80052B40.unk4 = D_80159DCC + D_8015EA50;
 	D_80052B48.unk0 = 0;
 	D_80052B48.unk4 = 0;
-	D_80052B48.unk2 = D_8015EA48;
+	D_80052B48.unk2 = *tempEA48;
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
@@ -3894,27 +3892,29 @@ void func_8011EB40_12DAF0(BuildingInstance *arg0) {
 		}
 
 		if (state == 1) {
-			varS0 = 3;
+			varS0 = 4;
 			tempF22 = D_80144FC0_153F70[0];
-			do {
-				tempS1 = sins(D_8015EB84);
-				func_8012D700_13C6B0(
-					1,
-					(((((s32)((u8 *)arg0 - (u8 *)buildingInstances) / 0x18) * 0x10) + varS0) & 0xFFFF),
-					(s16)(arg0->xCoord + D_80159DC8 - 0x62),
-					(s16)(s32)((((f64)(f32)tempS1 / 32768.0) * tempF22) + (f64)(arg0->yCoord + D_80159DCA + 0x26)),
-					(s32)((((f64)(f32)coss(D_8015EB84) / 32768.0) * tempF22) + (f64)(arg0->zCoord + D_80159DCC - 0xB5)),
-					0,
-					0,
-					0,
-					0x14,
-					0x28,
-					0x28,
-					&func_8011EABC_12DA6C,
-					NULL);
-				D_8015EB84 = (s16)D_8015EB84 + 0x4000;
-				varS0 -= 1;
-			} while (varS0 != 0);
+			spEB84 = &D_8015EB84;
+			if (varS0--) {
+				do {
+					tempS1 = sins(*spEB84);
+					func_8012D700_13C6B0(
+						1,
+						((((arg0 - buildingInstances) * 0x10) + varS0) & 0xFFFF),
+						(s16)(arg0->xCoord + D_80159DC8 - 0x62),
+						(s16)(s32)((((f64)(f32)tempS1 / 32768.0) * tempF22) + (f64)(arg0->yCoord + D_80159DCA + 0x26)),
+						(s32)((((f64)(f32)coss(*spEB84) / 32768.0) * tempF22) + (f64)(arg0->zCoord + D_80159DCC - 0xB5)),
+						0,
+						0,
+						0,
+						0x14,
+						0x28,
+						0x28,
+						&func_8011EABC_12DA6C,
+						NULL);
+					*spEB84 = (s16)*spEB84 + 0x4000;
+				} while (varS0--);
+			}
 
 			func_8012D700_13C6B0(
 				1,
