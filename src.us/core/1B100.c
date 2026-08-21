@@ -1,7 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-// https://decomp.me/scratch/AA2W0
 void func_8001A500_1B100(s32 arg0)
 {
 	D_8006C6C2 = D_8006C6C0 = D_8006C6C6 = 0;
@@ -116,7 +115,6 @@ s32 func_8001A7A0_1B3A0(s16 arg0) {
 	}
 }
 
-// https://decomp.me/scratch/kLkCO
 void func_8001A828_1B428(void)
 {
   if (currentLevel == 1)

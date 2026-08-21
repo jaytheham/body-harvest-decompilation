@@ -252,7 +252,6 @@ extern s8 D_80031CB4_328B4;
 extern s32 D_80031CB8_328B8;
 extern s32 D_80031CBC_328BC;
 extern s8 D_80031CD0_328D0[];
-extern s8 D_80031CD0_alt[];
 extern s16 D_80031CD4_328D4;
 extern s32 D_80031CD8_328D8;
 extern s16 D_80031CDC_328DC;
