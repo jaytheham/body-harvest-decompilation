@@ -1956,6 +1956,8 @@ extern char D_80144840[];
 extern char D_80144868;
 extern char D_80144880;
 extern const WeaponEntry_80129864 D_80145BE0_154B90[];
+extern const WeaponEntry_80129864 D_80145C10_154BC0;
+extern const WeaponEntry_80129864 D_801465B8_155568;
 extern Unk80050ADA D_80145BE2_154B92[];
 extern s32 D_80145BE8_154B98[][6];
 extern BuildingInstance D_80145E98;
