@@ -133,7 +133,7 @@ int func_8012235C_13130C(Unk8004D0F8 *arg0)
   return ((arg0->unk1A != 0) && ((arg0->unk20 & 0x100000) == 0)) && ((arg0->unk1B == 0xFF) || (D_80047F94 == arg0->unk1B));
 }
 
-// CURRENT(210)
+// CURRENT(0)
 s32 func_801223B0_131360(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 	EntityDamageSpec *spec;
 	s16 damageDir;
@@ -169,7 +169,7 @@ s32 func_801223B0_131360(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 	return ret;
 }
 
-// CURRENT(429)
+// CURRENT(0)
 void func_80122524_1314D4(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 pct = func_801223B0_131360(arg0, arg2, arg3, arg1);
 	arg1 = (s16)(s32)(arg1 * (1.0 - pct / 100.0));
@@ -600,7 +600,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80123AC4_132A74.s")
 #endif
 
-// CURRENT(690)
+// CURRENT(0)
 // 80123F04 Reduces damage to adam by 40% in easy
 void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
 	volatile struct Unk80013E44_arg0 sp24;
@@ -1914,7 +1914,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80126B80_135B30.s")
 #endif
 
-// CURRENT(270)
+// CURRENT(0)
 s32 func_80127C08_136BB8(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s32 *arg7) {
 	s32 sp3C;
 	s32 sp38;
@@ -1957,6 +1957,7 @@ s32 func_80127C08_136BB8(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16
 	return 0;
 }
 
+// CURRENT(0)
 void func_80127D88_136D38(BuildingInstance *arg0, VehicleInstance *arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7) {
 	u8 sp3B[5];
 	u8 pad[8];
