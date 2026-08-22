@@ -980,7 +980,7 @@ typedef struct {
 	/* 0x1C */ s16 hitPoints;
 	/* 0x1E */ s16 unk1E; // Weapons? Upper byte used as HCU count for harvester?
 	/* 0x20 */ s32 unk20; // Bit flags
-	/* 0x24 */ u8 unk24; // Human type
+	/* 0x24 */ u8 unk24; // Human type, humans eaten by harvester
 	/* 0x25 */ u8 unk25; // parent alien instance id?
 	/* 0x26 */ u8 unk26;
 	/* 0x27 */ u8 unk27;

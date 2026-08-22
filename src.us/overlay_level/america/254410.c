@@ -1331,47 +1331,50 @@ void func_802D5F88_2556C8(u8 arg0) {
 	}
 }
 
-// CURRENT(245)
-#ifdef NON_MATCHING
-void func_802D6138_255878(u8 arg0) {
+// Alien specType 0xA death handler
+void func_802D6138_255878(u8 arg0)
+{
 	s16 sp2E;
 	s32 temp_v0;
 	s32 var_v1;
 	AlienInstance *temp_s0;
-
 	temp_s0 = &alienInstances[arg0];
 	temp_v0 = temp_s0->unk20;
+	var_v1 = temp_v0;
 	temp_s0->unk12 = 0;
 	sp2E = temp_s0->unk25;
-
-	if (temp_v0 & 0x1000) {
-		var_v1 = temp_v0 & 0x100000;
-		if ((var_v1 == 0) && (temp_v0 & 0x600)) {
-			func_800DF848_EE7F8(temp_s0->unk0, temp_s0->unk2, temp_s0->unk4,
-				(alienSpecs[temp_s0->specIndex].unkC * 2) & 0xFFFF, 0);
+	if (temp_v0 & ALIEN_FLAG_UNKD)
+	{
+		var_v1 = var_v1 & 0x100000;
+		if ((var_v1 == 0) && (temp_v0 & 0x600))
+		{
+			func_800DF848_EE7F8(temp_s0->unk0, temp_s0->unk2, temp_s0->unk4, (alienSpecs[temp_s0->specIndex].unkC * 2), 0);
 			temp_s0->unk12 = 0;
 			func_80124B5C_133B0C(temp_s0->unk0, temp_s0->unk2, temp_s0->unk4, 0x12C, 0xC8);
 			var_v1 = temp_s0->unk20 & ALIEN_FLAG_UNKL;
 		}
-	} else {
-		if (!(temp_v0 & 0x100000)) {
+	}
+	else
+	{
+		if (!(temp_v0 & ALIEN_FLAG_UNKL))
+		{
 			func_802D5F88_2556C8(arg0);
 			var_v1 = temp_s0->unk20 & ALIEN_FLAG_UNKL;
-		} else {
+		}
+		else
+		{
 			func_8008AAFC_99AAC(arg0, 0x96, 4);
 			var_v1 = temp_s0->unk20 & ALIEN_FLAG_UNKL;
 		}
 	}
-
-	if ((var_v1 == 0) && (sp2E != 0xFF)) {
-		if (alienInstances[sp2E].specIndex == 0x1A) {
+	if ((var_v1 == 0) && (sp2E != 0xFF))
+	{
+		if (alienInstances[sp2E].specIndex == 0x1A)
+		{
 			alienInstances[sp2E].unk24--;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D6138_255878.s")
-#endif
 
 // CURRENT(8649)
 #ifdef NON_MATCHING
