@@ -1523,65 +1523,17 @@ u64 func_80126990_135940(u64 value) {
 }
 
 // CURRENT(9174)
-#ifdef NON_MATCHING
-u32 func_801269BC_13596C(s32 arg0, u32 arg1, s32 arg2, u32 arg3, s32 arg4, u32 arg5, s32 arg6, u32 arg7, s32 arg8, u32 arg9,
-	s32 arg10, u32 arg11) {
-	union {
-		s64 full;
-		struct {
-			s32 hi;
-			u32 lo;
-		} parts;
-	} deltaA;
-	union {
-		s64 full;
-		struct {
-			s32 hi;
-			u32 lo;
-		} parts;
-	} deltaB;
-	union {
-		s64 full;
-		struct {
-			s32 hi;
-			u32 lo;
-		} parts;
-	} temp0;
-	union {
-		s64 full;
-		struct {
-			s32 hi;
-			u32 lo;
-		} parts;
-	} temp1;
+s32 func_801269BC_13596C(s64 arg0, s64 arg1, s64 arg2, s64 arg3, s64 arg4, s64 arg5) {
 	s64 denom;
 
-	deltaA.parts.hi = (arg4 - arg0) - (arg5 < arg1);
-	deltaA.parts.lo = arg5 - arg1;
-	deltaB.parts.hi = (arg6 - arg2) - (arg7 < arg3);
-	deltaB.parts.lo = arg7 - arg3;
-	denom = (s64)func_80126990_135940(deltaA.full) + (s64)func_80126990_135940(deltaB.full);
+	denom = func_80126990_135940(arg2 - arg0) + func_80126990_135940(arg3 - arg1);
 
 	if (denom == 0) {
-		temp0.parts.hi = (arg8 - arg0) - (arg9 < arg1);
-		temp0.parts.lo = arg9 - arg1;
-		temp1.parts.hi = (arg10 - arg2) - (arg11 < arg3);
-		temp1.parts.lo = arg11 - arg3;
-		return (u32)(__ll_mul(temp0.full, temp0.full) + __ll_mul(temp1.full, temp1.full));
+		return (s32)(__ll_mul(arg4 - arg0, arg4 - arg0) + __ll_mul(arg5 - arg1, arg5 - arg1));
 	}
 
-	temp0.parts.hi = (arg10 - arg2) - (arg11 < arg3);
-	temp0.parts.lo = arg11 - arg3;
-	temp1.parts.hi = (arg8 - arg0) - (arg9 < arg1);
-	temp1.parts.lo = arg9 - arg1;
-	temp0.full = temp0.full * deltaA.full;
-	temp1.full = temp1.full * deltaB.full;
-
-	return (u32)((s64)func_80126990_135940(temp0.full - temp1.full) / denom);
+	return (s32)__ll_div((s64)func_80126990_135940((arg5 - arg1) * (arg2 - arg0) - (arg4 - arg0) * (arg3 - arg1)), denom);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801269BC_13596C.s")
-#endif
 
 // CURRENT(49020)
 #ifdef NON_MATCHING
