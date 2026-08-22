@@ -2,6 +2,7 @@
 #include <stdarg.h>
 #include "common.h"
 
+
 const char D_80145020_153FD0[] = "Couldn't create a bullet of type %d\n"; // "Couldn't create a bullet of type %d\n"
 const char D_80145048_153FF8[] = "Couldn't create a bullet of type %d\n"; // "Couldn't create a bullet of type %d\n"
 const char D_80145070_154020[] = "Aeroplane is crashing\n"; // "Aeroplane is crashing\n"
@@ -3730,21 +3731,15 @@ void func_8012D84C_13C7FC()
   }
 }
 
-// CURRENT(35000)
-#ifdef NON_MATCHING
+// CURRENT(2285)
 // DisplayForces - Debug draw interaction boxes
+#ifdef NON_MATCHING
 void func_8012D884_13C834(void) {
 	Unk8015FAD0 *var_s3;
 	s16 temp_a3;
-	s16 temp_s0;
 	s16 temp_s2;
+	s16 temp_t7;
 	s16 temp_s4;
-	s16 temp_t0;
-	s16 temp_t2;
-	s16 temp_t3;
-	s16 temp_t4;
-	s16 temp_t5;
-	s32 temp_t7;
 	s32 temp_t8;
 	s32 temp_t9;
 	s32 var_v1;
@@ -3752,27 +3747,21 @@ void func_8012D884_13C834(void) {
 
 	var_s3 = D_8015FAD0;
 	if (D_80047710 == -0x63) {
-		gSPMatrix(D_8005BB2C++, &D_80031160, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 		var_v1 = 0x19;
 		var_s5 = 0x18;
 		if (var_v1 != 0) {
 			do {
 				if (var_s3->unk2C != 0) {
-					temp_s2 = var_s3->unk18;
 					temp_t9 = var_s3->unk0 >> 0x10;
-					temp_s4 = var_s3->unk1A;
-					temp_a3 = var_s3->unk1C;
-					temp_t0 = temp_t9 + temp_s2;
-					D_8005BB34->v.ob[0] = temp_t0;
+					temp_t7 = var_s3->unk18;
 					temp_t8 = var_s3->unk4 >> 0x10;
-					temp_t7 = var_s3->unk8 >> 0x10;
-					temp_t2 = temp_t8 + temp_a3;
-					D_8005BB34->v.ob[1] = temp_t2;
-					temp_t3 = temp_t7 + temp_s4;
-					temp_t4 = temp_t8 - temp_a3;
-					D_8005BB34->v.ob[2] = temp_t3;
-					temp_t5 = temp_t7 - temp_s4;
-					temp_s0 = temp_t9 - temp_s2;
+					temp_s2 = var_s3->unk8 >> 0x10;
+					temp_a3 = var_s3->unk1C;
+					temp_s4 = var_s3->unk1A;
+					D_8005BB34->v.ob[0] = temp_t9 + temp_t7;
+					D_8005BB34->v.ob[1] = temp_t8 + temp_a3;
+					D_8005BB34->v.ob[2] = temp_s2 + temp_s4;
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0;
@@ -3780,9 +3769,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34->v.cn[1] = 0;
 					D_8005BB34->v.cn[2] = 0;
 					D_8005BB34->v.cn[3] = 0xFF;
-					D_8005BB34[1].v.ob[0] = temp_t0;
-					D_8005BB34[1].v.ob[1] = temp_t4;
-					D_8005BB34[1].v.ob[2] = temp_t3;
+					D_8005BB34[1].v.ob[0] = temp_t9 + temp_t7;
+					D_8005BB34[1].v.ob[1] = temp_t8 - temp_a3;
+					D_8005BB34[1].v.ob[2] = temp_s2 + temp_s4;
 					D_8005BB34[1].v.flag = 0;
 					D_8005BB34[1].v.tc[0] = 0;
 					D_8005BB34[1].v.tc[1] = 0;
@@ -3790,9 +3779,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34[1].v.cn[1] = 0;
 					D_8005BB34[1].v.cn[2] = 0xFF;
 					D_8005BB34[1].v.cn[3] = 0xFF;
-					D_8005BB34[2].v.ob[0] = temp_t0;
-					D_8005BB34[2].v.ob[1] = temp_t2;
-					D_8005BB34[2].v.ob[2] = temp_t5;
+					D_8005BB34[2].v.ob[0] = temp_t9 + temp_t7;
+					D_8005BB34[2].v.ob[1] = temp_t8 + temp_a3;
+					D_8005BB34[2].v.ob[2] = temp_s2 - temp_s4;
 					D_8005BB34[2].v.flag = 0;
 					D_8005BB34[2].v.tc[0] = 0;
 					D_8005BB34[2].v.tc[1] = 0;
@@ -3800,9 +3789,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34[2].v.cn[1] = 0xFF;
 					D_8005BB34[2].v.cn[2] = 0;
 					D_8005BB34[2].v.cn[3] = 0xFF;
-					D_8005BB34[3].v.ob[0] = temp_t0;
-					D_8005BB34[3].v.ob[1] = temp_t4;
-					D_8005BB34[3].v.ob[2] = temp_t5;
+					D_8005BB34[3].v.ob[0] = temp_t9 + temp_t7;
+					D_8005BB34[3].v.ob[1] = temp_t8 - temp_a3;
+					D_8005BB34[3].v.ob[2] = temp_s2 - temp_s4;
 					D_8005BB34[3].v.flag = 0;
 					D_8005BB34[3].v.tc[0] = 0;
 					D_8005BB34[3].v.tc[1] = 0;
@@ -3810,9 +3799,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34[3].v.cn[1] = 0xFF;
 					D_8005BB34[3].v.cn[2] = 0xFF;
 					D_8005BB34[3].v.cn[3] = 0xFF;
-					D_8005BB34[4].v.ob[0] = temp_s0;
-					D_8005BB34[4].v.ob[1] = temp_t2;
-					D_8005BB34[4].v.ob[2] = temp_t3;
+					D_8005BB34[4].v.ob[0] = temp_t9 - temp_t7;
+					D_8005BB34[4].v.ob[1] = temp_t8 + temp_a3;
+					D_8005BB34[4].v.ob[2] = temp_s2 + temp_s4;
 					D_8005BB34[4].v.flag = 0;
 					D_8005BB34[4].v.tc[0] = 0;
 					D_8005BB34[4].v.tc[1] = 0;
@@ -3820,9 +3809,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34[4].v.cn[1] = 0;
 					D_8005BB34[4].v.cn[2] = 0;
 					D_8005BB34[4].v.cn[3] = 0xFF;
-					D_8005BB34[5].v.ob[0] = temp_s0;
-					D_8005BB34[5].v.ob[1] = temp_t4;
-					D_8005BB34[5].v.ob[2] = temp_t3;
+					D_8005BB34[5].v.ob[0] = temp_t9 - temp_t7;
+					D_8005BB34[5].v.ob[1] = temp_t8 - temp_a3;
+					D_8005BB34[5].v.ob[2] = temp_s2 + temp_s4;
 					D_8005BB34[5].v.flag = 0;
 					D_8005BB34[5].v.tc[0] = 0;
 					D_8005BB34[5].v.tc[1] = 0;
@@ -3830,9 +3819,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34[5].v.cn[1] = 0;
 					D_8005BB34[5].v.cn[2] = 0xFF;
 					D_8005BB34[5].v.cn[3] = 0xFF;
-					D_8005BB34[6].v.ob[0] = temp_s0;
-					D_8005BB34[6].v.ob[1] = temp_t2;
-					D_8005BB34[6].v.ob[2] = temp_t5;
+					D_8005BB34[6].v.ob[0] = temp_t9 - temp_t7;
+					D_8005BB34[6].v.ob[1] = temp_t8 + temp_a3;
+					D_8005BB34[6].v.ob[2] = temp_s2 - temp_s4;
 					D_8005BB34[6].v.flag = 0;
 					D_8005BB34[6].v.tc[0] = 0;
 					D_8005BB34[6].v.tc[1] = 0;
@@ -3840,9 +3829,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34[6].v.cn[1] = 0xFF;
 					D_8005BB34[6].v.cn[2] = 0;
 					D_8005BB34[6].v.cn[3] = 0xFF;
-					D_8005BB34[7].v.ob[0] = temp_s0;
-					D_8005BB34[7].v.ob[1] = temp_t4;
-					D_8005BB34[7].v.ob[2] = temp_t5;
+					D_8005BB34[7].v.ob[0] = temp_t9 - temp_t7;
+					D_8005BB34[7].v.ob[1] = temp_t8 - temp_a3;
+					D_8005BB34[7].v.ob[2] = temp_s2 - temp_s4;
 					D_8005BB34[7].v.flag = 0;
 					D_8005BB34[7].v.tc[0] = 0;
 					D_8005BB34[7].v.tc[1] = 0;
@@ -3867,11 +3856,15 @@ void func_8012D884_13C834(void) {
 
 					D_8005BB34 += 8;
 				}
+				var_v1 = var_s5;
+
 				var_s3++;
-			} while (var_s5-- != 0);
+			} while (var_s5--);
 		}
 	}
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012D884_13C834.s")
 #endif
