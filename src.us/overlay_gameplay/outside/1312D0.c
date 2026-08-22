@@ -1320,29 +1320,30 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 #endif
 
 // CURRENT(12686)
+// CURRENT(7311)
 #ifdef NON_MATCHING
 s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, s32 arg6, s32 arg7) {
 	s32 xFixed;
 	s32 yFixed;
 	s32 zFixed;
+	s32 stepCount;
 	s32 stepX;
 	s32 stepY;
 	s32 stepZ;
-	s32 stepCount;
 	s32 dx;
 	s32 dy;
 	s32 dz;
-	s16 prevTileX;
-	s16 prevTileZ;
-	s16 maxBuildingY;
-	f32 hitScale;
 	s32 buildingIdx;
 	s32 mapY;
 	s32 tileX;
 	s32 tileZ;
 	s32 surfaceType;
 	s32 absDx;
-	s32 absDy;
+	s8 pad;
+	s16 prevTileX;
+	s16 prevTileZ;
+	s16 maxBuildingY;
+	f32 hitScale;
 	s32 absDz;
 	BuildingInstance *building;
 
@@ -1371,26 +1372,21 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 		}
 	}
 
-	absDx = -dx;
-	absDy = -dy;
-	absDz = -dz;
 
 	if ((dx == 0) && (dz == 0)) {
-		if (absDy < dy) {
+		absDx = -dy;
+		if (absDx < dy) {
 			stepCount = dy;
 		} else {
-			stepCount = absDy;
+			stepCount = absDx;
 		}
 		stepCount >>= arg7;
 		stepX = 0;
-		if (absDy > 0) {
-			stepY = -0x100;
-		} else {
-			stepY = 0x100;
-		}
-		stepY <<= arg7;
+		stepY = (absDx > 0 ? -0x100 : 0x100) << arg7;
 		stepZ = 0;
 	} else {
+		absDx = -dx;
+		absDz = -dz;
 		if (absDx < dx) {
 			absDx = dx;
 		}
@@ -1406,13 +1402,8 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 			}
 			stepCount >>= arg7;
 			if (stepCount != 0) {
-				if (absDx > 0) {
-					stepX = -0x100;
-				} else {
-					stepX = 0x100;
-				}
+				stepX = (absDx > 0 ? -0x100 : 0x100) << arg7;
 				stepY = (dy << 8) / stepCount;
-				stepX <<= arg7;
 				stepZ = (dz << 8) / stepCount;
 			}
 		} else {
@@ -1438,8 +1429,7 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 		D_80158FE8 = NULL;
 	}
 
-	while (stepCount != 0) {
-		stepCount--;
+	for (; stepCount--; ) {
 
 		xFixed += stepX;
 		yFixed += stepY;
