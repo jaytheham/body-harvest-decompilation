@@ -2583,6 +2583,8 @@ extern s32 D_80159D6C;
 extern s32 D_80159D70;
 extern f32 D_80159D78[8]; // X corner offsets (vehicle 1: 0-3, vehicle 2: 4-7)
 extern f32 D_80159D98[8]; // Z corner offsets (vehicle 1: 0-3, vehicle 2: 4-7)
+extern f32 D_80159D84;
+extern f32 D_80159DA4;
 extern u8 D_80159DC0;
 extern s32 D_80159DC4;
 extern s16 D_80159DC8;
@@ -2655,6 +2657,7 @@ extern s16 D_8015F9F8[8][4];
 extern s16 D_8015FA38;
 extern Unk8015FA40Entry D_8015FA40[];
 extern Unk8015FAD0 D_8015FAD0[0x19];
+extern Unk8015FAD0 D_8015FF50;
 extern s16 D_8015FAEE;
 extern u8 D_8015FAF8;
 extern u8 D_8015FAFC;

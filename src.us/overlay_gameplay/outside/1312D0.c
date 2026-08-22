@@ -1546,10 +1546,10 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 	s32 objDist;
 	s32 objThreshold;
 	s32 lineDist;
-	s16 minX;
-	s16 maxX;
 	s16 minZ;
 	s16 maxZ;
+	s16 minX;
+	s16 maxX;
 	s32 exactHit;
 	f32 pathDistSq;
 	f32 bestDistF;
@@ -2756,8 +2756,6 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 					break;
 
 				case 11:
-				default:
-					break;
 			}
 		}
 
@@ -4020,21 +4018,23 @@ void func_8012E204_13D1B4(s16 arg0, s32 arg1) {
 	callback(arg1, arg0);
 }
 
-// CURRENT(30589)
+// CURRENT(19686)
 #ifdef NON_MATCHING
 void func_8012E258_13D208(void) {
 	s32 i;
 	s32 activeCount;
+	s32 best;
+	VehicleInstance *vehicle;
+	Unk8015FAD0 *entry;
 	s32 dy;
 	s32 dx;
-	s16 x;
-	s16 z;
 	s16 y;
-	s16 halfX;
+	s16 z;
+	s16 x;
 	s16 halfZ;
+	s16 halfX;
 	s16 halfY;
 	s16 minY;
-	s16 maxY;
 	s16 minX;
 	s16 maxX;
 	s16 minZ;
@@ -4043,38 +4043,31 @@ void func_8012E258_13D208(void) {
 	s16 dMaxZ;
 	s16 dMaxX;
 	s16 dMinX;
-	s16 pushX;
-	s16 pushZ;
+	volatile s16 pushX;
+	volatile s16 pushZ;
 	s16 side;
 	s16 behavior;
 	s16 collisionIdx;
-	f32 minForward;
-	f32 minStrafe;
-	VehicleInstance *vehicle;
-	Unk8015FAD0 *entry;
+	s16 minForward;
+	s16 minStrafe;
 	u8 *activeList;
 
+	activeCount = D_80158FD8;
 	D_80159320 &= 0xFEFFFFFF;
 	D_80159320 &= 0xFF7FFFFF;
-
-	activeCount = D_80158FD8;
 	if (activeCount == 0) {
 		return;
 	}
 
 	activeList = &D_80158E80[activeCount - 1];
-	while (activeCount != 0) {
-		activeCount--;
+	do {
 		vehicle = &vehicleInstances[activeList[0]];
 
 		if ((currentLevel != 2) || (vehicle->unk1A != 5)) {
-			entry = &D_8015FAD0[0x18];
+			entry = &D_8015FF50;
 			i = 0x18;
 			do {
-				if ((entry->unk2C == 0) || (entry->unk2C >= 4)) {
-					continue;
-				}
-
+				if ((entry->unk2C != 0) && (entry->unk2C < 4)) {
 				x = entry->unk0 >> 0x10;
 				z = entry->unk8 >> 0x10;
 				y = entry->unk4 >> 0x10;
@@ -4098,7 +4091,7 @@ void func_8012E258_13D208(void) {
 					continue;
 				}
 
-				dx = D_80145BE0_154B90[arg2].unk4 - z;
+				dx = vehicle->unk4 - z;
 				if (dx < 0) {
 					dx = -dx;
 				}
@@ -4106,7 +4099,7 @@ void func_8012E258_13D208(void) {
 					continue;
 				}
 
-				if ((vehicleSpecs[vehicle->unk1A].unk38 + D_80145BE0_154B90[arg2].unk2 < (y - halfY)) || ((y + halfY) < D_80145BE0_154B90[arg2].unk2)) {
+				if ((vehicleSpecs[vehicle->unk1A].unk38 + vehicle->unk2 < (y - halfY)) || ((y + halfY) < vehicle->unk2)) {
 					continue;
 				}
 
@@ -4119,16 +4112,16 @@ void func_8012E258_13D208(void) {
 
 				{
 					s32 j;
-					f32 *xCorners;
 					f32 *zCorners;
+					f32 *xCorners;
 
-					xCorners = &D_80159D78[3];
-					zCorners = &D_80159D98[3];
+					xCorners = &D_80159D84;
+					zCorners = &D_80159DA4;
 					for (j = 3; j >= 0; j--) {
 						f32 fx;
 						f32 fz;
 
-						fx = *xCorners + D_80145BE0_154B90[arg2].unk4C;
+						fx = *xCorners + vehicle->unk4C;
 						fz = *zCorners + vehicle->unk54;
 
 						if ((f32)minX < fx) {
@@ -4158,8 +4151,6 @@ void func_8012E258_13D208(void) {
 				if ((dMinZ <= 0) || (dMaxZ <= 0) || (dMaxX <= 0) || (dMinX <= 0)) {
 					behavior = 0;
 				} else {
-					s32 best;
-
 					best = 0x7FFF;
 					if ((dMinZ > 0) && (dMinZ < best)) {
 						best = dMinZ;
@@ -4178,7 +4169,7 @@ void func_8012E258_13D208(void) {
 					}
 
 					if ((side > 0) && (entry->unk2C == 2)) {
-						osSyncPrintf(&D_801453B0_154360);
+						osSyncPrintf(D_801453B0_154360);
 						func_800FB468_10A418(vehicle, (f32)(y + halfY));
 						vehicle->unk34 = 0.0f;
 
@@ -4191,29 +4182,32 @@ void func_8012E258_13D208(void) {
 				}
 
 				collisionIdx = vehicleSpecs[vehicle->unk1A].unk38 >> 1;
-				pushX = 0;
-				pushZ = 0;
-
-				if (side == 1) {
+				switch (side) {
+				case 1:
+					pushX = 0;
 					pushZ = dMinZ;
-				}
-				if (side == 2) {
+					break;
+				case 2:
+					pushX = 0;
 					pushZ = -dMaxZ;
-				}
-				if (side == 3) {
+					break;
+				case 3:
 					pushX = -dMaxX;
-				}
-				if (side == 4) {
+					pushZ = 0;
+					break;
+				case 4:
 					pushX = dMinX;
+					pushZ = 0;
+					break;
 				}
 
 				if (side > 0) {
 					behavior = 2;
-					if (((y + halfY) - D_80145BE0_154B90[arg2].unk2) < collisionIdx) {
+					if (((y + halfY) - vehicle->unk2) < collisionIdx) {
 						behavior = 1;
 					} else {
-						minForward = (f32)pushX;
-						minStrafe = (f32)pushZ;
+						minForward = pushX;
+						minStrafe = pushZ;
 					}
 				} else {
 					s16 xMax;
@@ -4228,46 +4222,47 @@ void func_8012E258_13D208(void) {
 
 					if (func_8010CF7C_11BF2C(xMax, zMax) != 0) {
 						behavior = 2;
-						if (((y + halfY) - D_80145BE0_154B90[arg2].unk2) < collisionIdx) {
+						if (((y + halfY) - vehicle->unk2) < collisionIdx) {
 							behavior = 1;
 						} else {
-							minForward = 10.0f;
-							minStrafe = 10.0f;
+							minForward = 10;
+							minStrafe = 10;
 						}
 					}
 
 					if (func_8010CF7C_11BF2C(xMax, zMin) != 0) {
 						behavior = 2;
-						if (((y + halfY) - D_80145BE0_154B90[arg2].unk2) < collisionIdx) {
+						if (((y + halfY) - vehicle->unk2) < collisionIdx) {
 							behavior = 1;
 						} else {
 							minForward = 10.0f;
-							minStrafe = -10.0f;
+							minStrafe = -10;
 						}
 					}
 
 					if (func_8010CF7C_11BF2C(xMin, zMax) != 0) {
 						behavior = 2;
-						if (((y + halfY) - D_80145BE0_154B90[arg2].unk2) < collisionIdx) {
+						if (((y + halfY) - vehicle->unk2) < collisionIdx) {
 							behavior = 1;
 						} else {
-							minForward = -10.0f;
-							minStrafe = 10.0f;
+							minForward = -10;
+							minStrafe = 10;
 						}
 					}
 
 					if (func_8010CF7C_11BF2C(xMin, zMin) != 0) {
 						behavior = 2;
-						if (((y + halfY) - D_80145BE0_154B90[arg2].unk2) < collisionIdx) {
+						if (((y + halfY) - vehicle->unk2) < collisionIdx) {
 							behavior = 1;
 						} else {
-							minForward = -10.0f;
-							minStrafe = -10.0f;
+							minForward = -10;
+							minStrafe = -10;
 						}
 					}
 				}
 
-				if (behavior == 1) {
+				switch (behavior) {
+				case 1:
 					func_800FB468_10A418(vehicle, (f32)(y + halfY));
 					vehicle->unk34 = 0.0f;
 					func_800FB3C4_10A374(vehicle, (f32)((f64)entry->unkC / 65536.0));
@@ -4275,27 +4270,30 @@ void func_8012E258_13D208(void) {
 					if (entry->unk20 != NULL) {
 						((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
 					}
-				}
+					break;
 
-				if (behavior == 2) {
+				case 2:
 					func_800FB430_10A3E0(vehicle, 0.0f);
 					func_800FB3C4_10A374(vehicle, minForward);
 					func_800FB40C_10A3BC(vehicle, minStrafe);
 					if (entry->unk20 != NULL) {
 						((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
 					}
-				}
+					break;
 
-				if ((behavior == 3) && (entry->unk20 != NULL)) {
-					((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
+				case 3:
+					if (entry->unk20 != NULL) {
+						((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
+					}
+					break;
 				}
-			} while ((entry--, i-- != 0));
+				}
+				} while ((entry--, i--));
 		}
 
 		activeList--;
-	}
+	} while (activeCount--);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012E258_13D208.s")
 #endif
-
