@@ -1084,6 +1084,14 @@ typedef struct {
 	/* 0x4C */ u32 unk4C;
 } EntitySpec; /* size = 0x50 */
 
+/* Common damage values returned by func_800FAFB8_109F68. */
+typedef struct {
+    /* 0x00 */ u8 pad0[0x0E];
+    /* 0x0E */ s16 frontalDamage;
+    /* 0x10 */ s16 sideDamage;
+    /* 0x12 */ s16 rearDamage;
+} EntityDamageSpec;
+
 
 // 0x5C Pointer to Death animation ASM?
 // 0x60 xxxxyyyy xxxx Drops modifier
@@ -1399,9 +1407,20 @@ typedef struct {
 		/* 0x14 */ f32 unk14;
 		/* 0x14 */ s16 unk14S16;
 	};
-	/* 0x18 */ s32 unk18;
-	/* 0x1C */ s8 unk1C;
-	/* 0x1D */ s8 unk1D;
+	union {
+		/* 0x18 */ s32 unk18;
+		/* 0x18 */ f32 unk18F32;
+	};
+	union {
+		struct {
+			/* 0x1C */ s8 unk1C;
+			/* 0x1D */ s8 unk1D;
+		};
+		struct {
+			/* 0x1C */ u8 unk1C_u8;
+			/* 0x1D */ u8 unk1D_u8;
+		};
+	};
 	/* 0x1E */ u8 pad1E[0x2];
 	/* 0x20 */ s32 unk20;
 	/* 0x24 */ s32 unk24;
@@ -1418,8 +1437,20 @@ typedef struct {
 	/* 0x0A */ s16 curY;
 	/* 0x0C */ s16 posY[4];
 	/* 0x14 */ s16 curZ;
-	/* 0x16 */ s16 posZ[4];
-	/* 0x1E */ u16 unk1E; /* bitfield: bit 0 = ?, bit 1 = in-use */
+	/* 0x16 */ s16 posZ[3];
+	union {
+		struct {
+			/* 0x1C */ s16 posZ3;
+			union {
+				/* 0x1E */ u16 unk1E;
+				struct {
+					/* 0x1E */ u8 pad1E;
+					/* 0x1F */ u8 unk1F; /* bitfield: bit 0 = ?, bit 1 = in-use */
+				};
+			};
+		};
+		/* 0x1C */ s32 unk1C;
+	};
 	/* 0x20 */ void *unk20; // Owning Projectile pointer
 } Unk8015F790; /* size = 0x24 */
 
@@ -2615,7 +2646,15 @@ typedef struct {
 	s16 unk2;
 	s16 unk4;
 	s16 unk6;
-	s32 unk8;
+	union {
+		/* 0x08 */ s32 unk8;
+		struct {
+			/* 0x08 */ u8 pad8;
+			/* 0x09 */ u8 pad9;
+			/* 0x0A */ u8 padA;
+			/* 0x0B */ s8 unkB;
+		};
+	};
 	s16 unkC;
 	s16 unkE;
 	s16 unk10;

@@ -2,6 +2,7 @@
 #include <stdarg.h>
 #include "common.h"
 
+
 const char D_80145020_153FD0[] = "Couldn't create a bullet of type %d\n"; // "Couldn't create a bullet of type %d\n"
 const char D_80145048_153FF8[] = "Couldn't create a bullet of type %d\n"; // "Couldn't create a bullet of type %d\n"
 const char D_80145070_154020[] = "Aeroplane is crashing\n"; // "Aeroplane is crashing\n"
@@ -28,6 +29,7 @@ const u32 jtbl_80145168_154118[20] = {
 	0x80125154, 0x80125198, 0x80125198, 0x80125198,
 	0x80125154, 0x80125198, 0x80125198, 0x80125070,
 };
+
 
 const f64 D_801451B8_154168[1] = {0.05};
 const f64 D_801451C0_154170[1] = {0.7};
@@ -112,7 +114,7 @@ u8 D_80140B7C_14FB2C[0x24] = {
 	0xFF, 0xFF, 0xFF, 0x3C, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00,
 };
- 
+
 s32 func_80122320_1312D0(s32 arg0)
 {
 	int new_var;
@@ -133,22 +135,21 @@ int func_8012235C_13130C(Unk8004D0F8 *arg0)
   return ((arg0->unk1A != 0) && ((arg0->unk20 & 0x100000) == 0)) && ((arg0->unk1B == 0xFF) || (D_80047F94 == arg0->unk1B));
 }
 
-// CURRENT(210)
-#ifdef NON_MATCHING
+// CURRENT(0)
 s32 func_801223B0_131360(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
-	u8 *spec;
+	EntityDamageSpec *spec;
 	s16 damageDir;
 	s16 ret;
 	s32 dirBucket;
 
-	spec = (u8 *)func_800FAFB8_109F68(arg0);
+	spec = (EntityDamageSpec *)func_800FAFB8_109F68((VehicleInstance *)arg0);
 	damageDir = (func_80003824_4424((f32)(arg0->unk0 - arg1), (f32)(arg0->unk4 - arg2)) - arg0->unk6) + 0x2000;
 
 	if ((arg0->unkC == -2) && (arg0->unk1A == 0x12) && (currentLevel == 1) && (D_8015FA38 != 0)) {
 		return 0;
 	}
 
-	if ((arg0 == D_80052B34) && (D_80052B34->unk1A == 0)) {
+	if (((VehicleInstance *)arg0 == D_80052B34) && (D_80052B34->unk1A == 0)) {
 		D_80157A2C = func_80003824_4424((f32)(arg0->unk0 - arg1), (f32)(arg0->unk4 - arg2));
 		D_80157A28 |= PLAYER_STATE_FLAG_HURT;
 		func_800E0764_EF714(arg3);
@@ -157,118 +158,101 @@ s32 func_801223B0_131360(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 	dirBucket = damageDir >> 14;
 	switch (dirBucket) {
+		case 0:
+			ret = spec->rearDamage;
+			break;
 		case -2:
-			ret = *(s16 *)(spec + 0xE);
+			ret = spec->frontalDamage;
 			break;
 		default:
-			ret = *(s16 *)(spec + 0x10);
-			break;
-		case 0:
-			ret = *(s16 *)(spec + 0x12);
-			break;
+			ret = spec->sideDamage;
 	}
 
 	return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801223B0_131360.s")
-#endif
 
-// CURRENT(429)
-#ifdef NON_MATCHING
+// CURRENT(0)
 void func_80122524_1314D4(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 pct = func_801223B0_131360(arg0, arg2, arg3, arg1);
-	s32 temp = (s32)(arg1 * (1.0 - pct / 100.0));
-	if ((s16)temp > 0) {
-		func_80124118_1330C8(arg0, (s16)temp);
+	arg1 = (s16)(s32)(arg1 * (1.0 - pct / 100.0));
+	if (arg1 > 0) {
+		func_80124118_1330C8(arg0, arg1);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80122524_1314D4.s")
-#endif
 
+// CURRENT(345)
 #ifdef NON_MATCHING
 s16 func_801225C4_131574(Projectile *arg0) {
-	s32 i;
-	s32 foundIndex;
-	Unk8015F790 *entry;
+	s32 var_v1;
+	s32 var_a1;
+	Unk8015F790 *var_a2;
 
 	if ((D_8015F9E8 >= 0x10) || !((D_80145BE8_154B98[arg0->unk20][0] >> 8) & 0x10)) {
 		return -1;
 	}
 	D_8015F9E8++;
 
-	foundIndex = -1;
-	for (i = 15; i >= 0; i--) {
-		if (!(D_8015F790[i].unk1E & 2)) {
-			foundIndex = i;
-			break;
+	var_v1 = 15;
+	do {
+		if (D_8015F790[var_v1].unk1C << 30 < 0) {
+			continue;
 		}
-	}
+		var_a1 = var_v1;
+		break;
+	} while (var_v1--);
 
-	if (foundIndex < 0) {
-		return -1;
-	}
+	var_a2 = &D_8015F790[var_a1], var_v1 = 4;
+	do {
+		var_a2->posX[var_v1 - 1] = (s16)arg0->unk0;
+		var_a2->posY[var_v1 - 1] = (s16)arg0->unk4;
+		var_a2->posZ[var_v1 - 1] = (s16)arg0->unk8;
+	} while (var_v1--);
 
-	entry = &D_8015F790[foundIndex];
-	for (i = 3; i >= 0; i--) {
-		entry->posX[i] = (s16)arg0->unk0;
-		entry->posY[i] = (s16)arg0->unk4;
-		entry->posZ[i] = (s16)arg0->unk8;
-	}
+	var_a2->unk1E = (var_a2->unk1E & 3) | 0x14;
+	var_a2->unk20 = arg0;
+	var_a2->unk1F = var_a2->unk1F | 2;
+	var_a2->unk1F &= 0xFE;
 
-	entry->unk1E = (entry->unk1E & 3) | 0x14;
-	entry->unk20 = arg0;
-	entry->unk1E = (entry->unk1E & 0xFF00) | (((u8)entry->unk1E | 2) & 0xFE);
-
-	return (s16)foundIndex;
+	return (s16)var_a1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801225C4_131574.s")
 #endif
 
-// CURRENT(20678)
+// CURRENT(24833)
 #ifdef NON_MATCHING
 Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s16 arg3, s16 arg4, f32 arg5, f32 arg6, f32 arg7) {
 	VehicleInstance *vehicle = (VehicleInstance *)arg0;
 	Projectile *entry;
+	f32 negArg7;
 	s16 sp7A;
 	s16 sp78;
 	s16 sp76;
 	s16 sp74;
+	u16 sp72;
 	s16 sp70;
 	s16 sp6E;
 	s16 sp6C;
 	s16 sp5C;
-	u16 sp72;
-	u8 temp_v0;
 	s16 var_v0;
-	s16 weaponIndex;
-	f32 absArg5;
-	f32 negArg7;
+	s32 weaponIndex;
 
 	sp7A = vehicle->unk0 + arg2;
 	sp78 = vehicle->unk2 + arg3;
 	sp76 = vehicle->unk4 + arg4;
 
-	absArg5 = -arg5;
-	if (absArg5 < arg5) {
-		absArg5 = arg5;
+	if (((-arg5 < arg5) ? arg5 : -arg5) > 0.0f) {
+		goto set_angle;
 	}
-
-	if (absArg5 > 0.0f) {
-		sp74 = func_80003824_4424(arg5, arg7);
-	} else {
-		negArg7 = -arg7;
-		if (negArg7 < arg7) {
-			negArg7 = arg7;
-		}
-		if (negArg7 > 0.0f) {
-			sp74 = func_80003824_4424(arg5, arg7);
-		} else {
-			sp74 = 0;
-		}
+	negArg7 = ((-arg7 < arg7) ? arg7 : -arg7);
+	if (negArg7 > 0.0f) {
+		goto set_angle;
 	}
+	sp74 = 0;
+	goto angle_done;
+set_angle:
+	sp74 = func_80003824_4424(arg5, arg7);
+angle_done:
 
 	if ((vehicle->unkC == -2) && (vehicleSpecs[vehicle->unk1A].launchAngle != 0xFF)) {
 		sp72 = (u16)(vehicleSpecs[vehicle->unk1A].launchAngle << 8);
@@ -295,7 +279,7 @@ Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s1
 		}
 		entry->unk10S16 = sp74;
 		entry->unk12S16 = (s16)(s32)arg6;
-		entry->unk18 = 0.0f;
+		entry->unk18 = 0;
 		entry->unk14S16 = arg1->door2InteriorId;
 	} else {
 		if ((((s32)arg1->unk8 >> 8) & 0x2000) != 0) {
@@ -319,13 +303,10 @@ Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s1
 		}
 	}
 
-	weaponIndex = 0;
-	while ((weaponIndex < 0x100) && (arg1 != (BuildingInstance *)&D_80145BE0_154B90[weaponIndex])) {
-		weaponIndex++;
-	}
+	weaponIndex = ((u32)arg1 - (u32)D_80145BE0_154B90) / 0x18;
 	entry->unk20 = weaponIndex;
 	entry->unk24 = (s32)vehicle;
-	entry->unk28 = (s16)((s32)arg1->xCoord / (s32)arg1->door2InteriorId);
+	entry->unk28 = (s16)((u16)arg1->xCoord / (s32)arg1->door2InteriorId);
 	if ((D_80145BE8_154B98[entry->unk20][0] >> 8) & 0x100) {
 		entry->unk2A = func_801225C4_131574(entry);
 	}
@@ -360,7 +341,7 @@ Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s1
 
 				func_800DEA08_ED9B8((s16)(s32)(arg5 * 0.5f), (s16)(s32)(arg6 * 0.5f), sp70, sp6E, sp6C, 0x32, 6, 2, 0x19, 0xFF, 0xE1);
 				func_800DE9B8_ED968(sp70, sp6E, sp6C, 0x64);
-				func_800C541C_D43CC(sp70, sp6E, sp6C, (s8)(s32)(absArg5 * 0.5f), -0x28, (s8)(s32)(negArg7 * 0.5f), 0x1E, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
+				func_800C541C_D43CC(sp70, sp6E, sp6C, (s8)(s32)((((-arg5 < arg5) ? arg5 : -arg5) * 0.5f)), -0x28, (s8)(s32)(negArg7 * 0.5f), 0x1E, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
 
 				sp70 = (s16)(s32)(entry->unk0 + (arg5 * 0.5f));
 				sp6E = (s16)(s32)(entry->unk4 + (arg6 * 0.5f));
@@ -375,14 +356,13 @@ Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s1
 			} else if (entry->unk20 == 0x27) {
 				negArg7 = -arg7;
 				func_800DEA08_ED9B8((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 0x32, 6, 2, 0x19, 0xFF, 0xE1, 0xDC, 0xA0);
-				func_800C541C_D43CC((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, (s8)(s32)(absArg5 * 0.5f), 0, (s8)(s32)(negArg7 * 0.5f), 0x14, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
+				func_800C541C_D43CC((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, (s8)(s32)((((-arg5 < arg5) ? arg5 : -arg5) * 0.5f)), 0, (s8)(s32)(negArg7 * 0.5f), 0x14, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
 				func_800DE9B8_ED968((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 0x64);
 			} else if (entry->unk20 == 0x28) {
 			}
 		}
 	} else if (((s32)arg1->unk8 >> 8) & 0x1000) {
-		temp_v0 = arg1->unk16;
-		entry->unk2E = func_800C2D50_D1D00((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, ((temp_v0 * 0xC) + 0x1E) & 0xFF, temp_v0, 0);
+		entry->unk2E = func_800C2D50_D1D00((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, ((arg1->unk16 * 0xC) + 0x1E) & 0xFF, arg1->unk16, 0);
 	} else {
 		if (entry->unk20 == 0x5C) {
 			var_v0 = func_800D49CC_E397C((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8);
@@ -432,15 +412,15 @@ Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s1
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801226F8_1316A8.s")
 #endif
 
-// CURRENT(1561)
+// CURRENT(1184)
 #ifdef NON_MATCHING
 void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5) {
+	s32 count;
 	s16 sp64[3];
 	u16 randX;
 	u16 randZ;
 	s16 halfSpan;
-	s32 height;
-	s32 count;
+	s16 height;
 	const WeaponEntry_80129864 *building;
 
 	sp64[0] = arg0;
@@ -463,14 +443,14 @@ void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 				(f32) ((randX % arg3) - halfSpan),
 				(f32) (((randZ % arg3) + arg3) >> 2),
 				(f32) ((func_800038E0_44E0() % arg3) - halfSpan));
-		} while (count-- != 0);
+		} while (count--);
 	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801236F0_1326A0.s")
 #endif
 
-// CURRENT(383)
+// CURRENT(378)
 #ifdef NON_MATCHING
 void func_801238DC_13288C(s16 arg0) {
 	Projectile *entry;
@@ -485,7 +465,7 @@ void func_801238DC_13288C(s16 arg0) {
 	entry = &D_8015EB90[arg0];
 	linkIndex = entry->unk2A;
 	if (linkIndex != -1) {
-		D_8015F790[linkIndex].unk1E |= 1;
+		D_8015F790[linkIndex].unk1F |= 1;
 	}
 
 	buildingIndex = entry->unk20;
@@ -622,8 +602,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80123AC4_132A74.s")
 #endif
 
-// CURRENT(690)
-#ifdef NON_MATCHING
+// CURRENT(0)
 // 80123F04 Reduces damage to adam by 40% in easy
 void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
 	volatile struct Unk80013E44_arg0 sp24;
@@ -652,12 +631,9 @@ void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
 	}
 
 	if (arg0 == D_80052B34) {
-		damage = arg1 * 5;
-		if (damage >= 0x100) {
-			damage = 0xFF;
-		}
+		damage = ((arg1 * 5) >= 0x100) ? 0xFF : (arg1 * 5);
 
-		func_80001144_1D44(damage & 0xFF, 0xA, 0x14);
+		func_80001144_1D44(damage, 0xA, 0x14);
 		if (D_80052B34->unk1A == 0) {
 			D_8014ED42 = 8;
 		} else {
@@ -685,9 +661,6 @@ void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
 		func_80123AC4_132A74(arg0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80123E90_132E40.s")
-#endif
 
 void func_80124118_1330C8(VehicleInstance *arg0, s16 arg1) {
 	if ((arg0->unk20 & VEHICLE_FLAG_UNK8) == 0) {
@@ -696,17 +669,16 @@ void func_80124118_1330C8(VehicleInstance *arg0, s16 arg1) {
 		}
 	}
 }
-// CURRENT(18762)
+// CURRENT(13067)
 #ifdef NON_MATCHING
 void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, VehicleInstance *arg5) {
 	s32 radiusSq;
 	s32 count;
 	f32 scale;
-	u8 *activeList;
 	VehicleInstance *vehicle;
 	AlienInstance *alien;
 	BuildingInstance *building;
-	s32 hitObj;
+
 
 	arg4 = arg4 >> 2;
 	if (arg4 == 0) {
@@ -718,23 +690,26 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 
 	count = D_80158FD8;
 	if (count != 0) {
+        u8 *activeList;
+        s32 dx;
+        s32 dy;
+        s32 dz;
+        u32 distSq;
+        u32 dist;
+        s32 damage;
+        s32 result;
+        f32 pushScale;
+        s32 hitObj;
 		count--;
 		activeList = &D_80158E80[count];
+do {
+vehicle = &vehicleInstances[*activeList];
 
-		while (1) {
-			s32 dx;
-			s32 dy;
-			s32 dz;
-			u32 distSq;
-			u32 dist;
-			s32 damage;
-			s32 result;
-			f32 pushScale;
-			VehicleSpec *vehSpec;
-
-			vehicle = &vehicleInstances[*activeList];
-			vehSpec = &vehicleSpecs[vehicle->unk1A];
 			if (((vehicle->unk20 & VEHICLE_FLAG_UNK7) != 0) && (vehicle != arg5)) {
+
+				VehicleSpec *vehSpec;
+
+				vehSpec = &vehicleSpecs[vehicle->unk1A];
 				dx = (arg0 - vehicle->unk0) >> 2;
 				dy = (arg1 - vehicle->unk2) >> 2;
 				dz = (arg2 - vehicle->unk4) >> 2;
@@ -743,7 +718,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 					dist = (u32)sqrtf((f32)distSq);
 					damage = (s32)(((f32)(arg4 - dist) * scale) * (f32)(arg4 - dist));
 					if (damage != 0) {
-						result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, vehicle->unk0, vehicle->unk2 + vehSpec->unk38, vehicle->unk4, &hitObj);
+result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, vehicle->unk0, vehicle->unk2 + vehSpec->unk38, vehicle->unk4, &hitObj);
 						if (result == 3) {
 							damage >>= 2;
 						} else if ((VehicleInstance *)hitObj != vehicle) {
@@ -763,8 +738,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 								}
 								func_80122524_1314D4(vehicle, (s16)damage, arg0, arg2);
 							}
-
-							pushScale = -(((f32)(damage << 5) / (f32)(dist + 1)) * 2.0f) / (f32)vehSpec->unk32;
+							pushScale = -(((f32)(damage << 5) / (f32)(dist + 1)) * 2.0f) / (f32)vehicleSpecs[vehicle->unk1A].unk32;
 							if (vehicle->unk1A == 0) {
 								func_80102D00_111CB0(vehicle, (f32)(((f32)dx * pushScale) / 100.0), (f32)((f64)-pushScale / 10.0), (f32)((f64)((f32)dz * pushScale) / 100.0));
 								D_80052B34->unkA = 0x7FFF;
@@ -783,13 +757,8 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 					}
 				}
 			}
-
-			if (count == 0) {
-				break;
-			}
 			activeList--;
-			count--;
-		}
+		} while (count--);
 	}
 
 	alien = &alienInstances[0xFE];
@@ -803,9 +772,10 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 		s32 result;
 
 		if ((arg5 != (VehicleInstance *)alien) && ((currentLevel == 5) || (alien->specIndex != 0x12)) && ((alien->unk1B == 0xFF) || (D_80047F94 == alien->unk1B)) && (alien->specIndex != 0)) {
-			AlienSpec *alienSpec;
+            AlienSpec *alienSpec;
+            s32 hitObj;
 
-			alienSpec = &alienSpecs[alien->specIndex];
+			spec = &alienSpecs[alien->specIndex];
 			dx = (arg0 - alien->unk0) >> 2;
 			dy = (arg1 - alien->unk2) >> 2;
 			dz = (arg2 - alien->unk4) >> 2;
@@ -814,7 +784,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 				dist = (u32)sqrtf((f32)distSq);
 				damage = (s32)(((f32)(arg4 - dist) * scale) * (f32)(arg4 - dist));
 				if (damage != 0) {
-					result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, alien->unk0, alienSpec->unk18 + alien->unk2, alien->unk4, &hitObj);
+result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, alien->unk0, alienSpec->unk38 + alien->unk2, alien->unk4, &hitObj);
 					if (result == 3) {
 						damage >>= 2;
 					} else if ((AlienInstance *)hitObj != alien) {
@@ -872,6 +842,7 @@ void func_80124B5C_133B0C(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4) {
 	func_80124170_133120(arg0, arg1, arg2, arg3, arg4, 0);
 }
 
+// CURRENT(580)
 #ifdef NON_MATCHING
 void func_80124BA8_133B58(void) {
 	Projectile *var_a0;
@@ -879,15 +850,15 @@ void func_80124BA8_133B58(void) {
 	s32 var_v1;
 	u8 temp_t6;
 	u8 temp_t7;
-	s32 *temp_v0;
-	s32 *temp_v1;
+	volatile s32 *temp_v0;
+	volatile s32 *temp_v1;
 
 	var_a0 = &D_8015EB90[0x3F];
 	var_v1 = 0x3F;
 	do {
 		var_a0->unk10 = 0.0f;
 		var_a0->unk14 = 0.0f;
-		var_a0->unk18 = 0.0f;
+		var_a0->unk18F32 = 0.0f;
 		var_a0->unk28 = 0;
 		var_a0->unk20 = 0;
 		var_a0->unk24 = 0;
@@ -897,10 +868,10 @@ void func_80124BA8_133B58(void) {
 	var_a0_2 = &D_8015F790[0xF];
 	var_v1 = 0xF;
 	do {
-		temp_t6 = (u8)var_a0_2->unk1E;
+		temp_t6 = var_a0_2->unk1F;
 		temp_t7 = temp_t6 & 0xFFFD;
-		var_a0_2->unk1E = (var_a0_2->unk1E & 0xFF00) | temp_t7;
-		var_a0_2->unk1E = (var_a0_2->unk1E & 0xFF00) | (temp_t7 & 0xFFFE);
+		var_a0_2->unk1F = temp_t7;
+		var_a0_2->unk1F &= 0xFFFE;
 		var_a0_2--;
 	} while (var_v1--);
 
@@ -935,25 +906,27 @@ void func_80124C40_133BF0(EntityInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
   }
 }
 
-// CURRENT(49074)
-#ifdef NON_MATCHING
+// CURRENT(31662)
 // displayBullets
+#ifdef NON_MATCHING
 void func_80124D60_133D10(void) {
+	Unk80052B40 fadeVec;
+
+	s16 pos[2];
+	s8 color[4];
 	Projectile *bullet;
 	const WeaponEntry_80129864 *weaponEntry;
 	s32 i;
-	s32 objType;
 	u8 sparkType;
 	s32 weaponFlags;
 	const u8 *trailColor;
 	const u8 (*trailColors)[0xB];
-	s16 pos[2];
-	s8 color[4];
 	u8 *extraPtr;
 	u32 *sparkDLs;
-	Vtx *trailVertex;
+	s16 (*fadeData)[4];
 	s32 fadeIndex;
 
+	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
@@ -965,23 +938,23 @@ void func_80124D60_133D10(void) {
 	gDPSetRenderMode(D_8005BB30++, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
 	gDPSetCycleType(D_8005BB30++, G_CYC_2CYCLE);
 
-	trailVertex = D_8005BB34;
 
 	if (D_8015F9E4 != 0) {
-		for (i = D_8015F9E4 - 1; i >= 0; i--) {
+		i = D_8015F9E4;
+		while (i--) {
 			bullet = &D_8015EB90[i];
-			objType = bullet->unk20;
-			weaponEntry = &D_80145BE0_154B90[objType];
+			weaponEntry = &D_80145BE0_154B90[bullet->unk20];
 			sparkType = weaponEntry->unk16;
 			sparkDLs = (const u32 *)&D_80140AD8_14FA88;
 
 			if ((gameplayMode == 1) || (gameplayMode == 0xC) || (gameplayMode == 3) || (gameplayMode == 0xB)) {
 				weaponFlags = weaponEntry->unk8 >> 8;
-				if ((weaponFlags & 0x1000) || (objType == 0x5D)) {
+				if ((weaponFlags & 0x1000) || (bullet->unk20 == 0x5D)) {
 					func_800C31AC_D215C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E);
-				} else if ((weaponFlags << 9) >= 0) {
-					if ((objType >= 0x5C) && (objType < 0x70)) {
-						switch (objType - 0x5C) {
+				} else if ((weaponFlags << 9) < 0) {
+					func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
+				} else {
+					switch (bullet->unk20 - 0x5C) {
 							case 0:
 								func_800D4AB0_E3A60(bullet->unk2C, (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
 								break;
@@ -1005,16 +978,12 @@ void func_80124D60_133D10(void) {
 								break;
 						}
 					}
-				} else {
-					func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
-				}
-
 				if ((((s32)(weaponEntry->unk8 >> 8)) & 0x10000) != 0) {
-					if ((objType == 0x1D) || (objType == 0x2A) || (objType == 0x0C)) {
+					if ((bullet->unk20 == 0x1D) || (bullet->unk20 == 0x2A) || (bullet->unk20 == 0x0C)) {
 						if ((D_80052A8C % 3) == 0) {
 							func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E, 2);
 						}
-					} else if (objType == 0x5B) {
+					} else if (bullet->unk20 == 0x5B) {
 						func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E, 1);
 					} else {
 						func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E, 0);
@@ -1024,7 +993,7 @@ void func_80124D60_133D10(void) {
 
 			if (sparkType == 0x80) {
 				trailColors = (const u8 (*)[0xB])&D_80140768_14F718[4];
-				trailColor = trailColors[objType];
+				trailColor = trailColors[bullet->unk20];
 
 				color[0] = trailColor[0];
 				color[1] = trailColor[1];
@@ -1038,56 +1007,56 @@ void func_80124D60_133D10(void) {
 					color[3] = (color[3] + 0x4B > 0xFF) ? 0xFF : color[3] + 0x4B;
 				}
 
-				trailVertex->v.ob[0] = (s16)(s32)bullet->unk0;
-				trailVertex->v.ob[1] = (s16)(s32)bullet->unk4;
-				trailVertex->v.ob[2] = (s16)(s32)bullet->unk8;
-				trailVertex->v.flag = 0;
-				trailVertex->v.tc[0] = 0;
-				trailVertex->v.tc[1] = 0;
-				trailVertex->v.cn[0] = color[3];
-				trailVertex->v.cn[1] = trailColor[7];
-				trailVertex->v.cn[2] = trailColor[8];
-				trailVertex->v.cn[3] = trailColor[9];
-				trailVertex = &trailVertex[1];
+				D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
+				D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
+				D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = color[3];
+				D_8005BB34->v.cn[1] = trailColor[7];
+				D_8005BB34->v.cn[2] = trailColor[8];
+				D_8005BB34->v.cn[3] = trailColor[9];
+				D_8005BB34++;
 
-				trailVertex->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
-				trailVertex->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
-				trailVertex->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18);
-				trailVertex->v.flag = 0;
-				trailVertex->v.tc[0] = 0;
-				trailVertex->v.tc[1] = 0;
-				trailVertex->v.cn[0] = color[0];
-				trailVertex->v.cn[1] = color[1];
-				trailVertex->v.cn[2] = color[2];
-				trailVertex->v.cn[3] = 0xFF;
-				trailVertex = &trailVertex[1];
+				D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
+				D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
+				D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = color[0];
+				D_8005BB34->v.cn[1] = color[1];
+				D_8005BB34->v.cn[2] = color[2];
+				D_8005BB34->v.cn[3] = 0xFF;
+				D_8005BB34++;
 
-				trailVertex->v.ob[0] = (s16)(s32)bullet->unk0;
-				trailVertex->v.ob[1] = (s16)(s32)bullet->unk4;
-				trailVertex->v.ob[2] = (s16)(s32)bullet->unk8;
-				trailVertex->v.flag = 0;
-				trailVertex->v.tc[0] = 0;
-				trailVertex->v.tc[1] = 0;
-				trailVertex->v.cn[0] = color[3];
-				trailVertex->v.cn[1] = color[3];
-				trailVertex->v.cn[2] = color[3];
-				trailVertex->v.cn[3] = trailColor[0xA];
-				trailVertex = &trailVertex[1];
+				D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
+				D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
+				D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = color[3];
+				D_8005BB34->v.cn[1] = color[3];
+				D_8005BB34->v.cn[2] = color[3];
+				D_8005BB34->v.cn[3] = trailColor[0xA];
+				D_8005BB34++;
 
-				trailVertex->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
-				trailVertex->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
-				trailVertex->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18);
-				trailVertex->v.flag = 0;
-				trailVertex->v.tc[0] = 0;
-				trailVertex->v.tc[1] = 0;
-				trailVertex->v.cn[0] = color[3];
-				trailVertex->v.cn[1] = trailColor[7];
-				trailVertex->v.cn[2] = trailColor[8];
-				trailVertex->v.cn[3] = trailColor[9];
-				trailVertex = &trailVertex[1];
+				D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
+				D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
+				D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18);
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = color[3];
+				D_8005BB34->v.cn[1] = trailColor[7];
+				D_8005BB34->v.cn[2] = trailColor[8];
+				D_8005BB34->v.cn[3] = trailColor[9];
+				D_8005BB34++;
 
 				gDPPipeSync(D_8005BB30++);
-				gSPVertex(D_8005BB30++, &trailVertex[-4], 4, 0);
+				gSPVertex(D_8005BB30++, D_8005BB34 - 4, 4, 0);
 				gSPLine3D(D_8005BB30++, 0, 8, 0);
 				gSPLine3D(D_8005BB30++, 2, 3, 0);
 				gSPLine3D(D_8005BB30++, 0, 1, 0);
@@ -1104,8 +1073,8 @@ void func_80124D60_133D10(void) {
 						D_80052B48.unk2 = 0;
 						D_80052B48.unk4 = -func_80003824_4424((f32)bullet->unk14S16, (f32)bullet->unk12S16);
 					} else {
-						D_80052B48.unk0 = bullet->pad1C[0] << 8;
-						D_80052B48.unk2 = bullet->pad1C[1] << 8;
+						D_80052B48.unk0 = bullet->unk1C_u8 << 8;
+						D_80052B48.unk2 = bullet->unk1D_u8 << 8;
 						D_80052B48.unk4 = 0;
 					}
 
@@ -1117,47 +1086,44 @@ void func_80124D60_133D10(void) {
 			}
 
 			if ((s8)weaponEntry->unkB != 0) {
-			extraPtr = &D_80140C70[((weaponEntry->unkB & 7) * 3) - 4];
-				color[0] = (s8)((extraPtr[0] * (weaponEntry->unkB & 0xF8)) >> 9);
-				color[1] = (s8)((extraPtr[1] * (weaponEntry->unkB & 0xF8)) >> 9);
-				color[2] = (s8)((extraPtr[2] * (weaponEntry->unkB & 0xF8)) >> 9);
+			extraPtr = &D_80140B7C_14FB2C[((weaponEntry->unkB & 7) * 3) - 4];
+				color[0] = ((extraPtr[0] * (weaponEntry->unkB & 0xF8)) >> 9);
+				color[1] = ((extraPtr[1] * (weaponEntry->unkB & 0xF8)) >> 9);
+				color[2] = ((extraPtr[2] * (weaponEntry->unkB & 0xF8)) >> 9);
 				color[3] = 0;
 				pos[0] = (s16)(s32)bullet->unk0;
 				pos[1] = (s16)(s32)bullet->unk8;
 				func_800B2354_C1304(pos, color, 0x100, 0x258);
 			}
 		}
-	D_8005BB34 = trailVertex;
 	}
 
 	if (((D_80159320 & 0x40) != 0) && (gameplayMode == 1) && (currentLevel == 2) && func_800A2A88_B1A38()) {
 		s32 alpha;
 
-		trailVertex = D_8005BB34;
 
 		for (i = 0x17; i >= 0; i--) {
-			trailVertex->v.ob[0] = D_8015FA40[i].unk0;
-			trailVertex->v.ob[1] = D_8015FA40[i].unk2;
-			trailVertex->v.ob[2] = D_8015FA40[i].unk4;
-			trailVertex->v.flag = 0;
-			trailVertex->v.tc[0] = 0;
-			trailVertex->v.tc[1] = 0;
+			D_8005BB34->v.ob[0] = D_8015FA40[i].unk0;
+			D_8005BB34->v.ob[1] = D_8015FA40[i].unk2;
+			D_8005BB34->v.ob[2] = D_8015FA40[i].unk4;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
 
 			alpha = 0x80 - (i * 4);
-			trailVertex->v.cn[0] = alpha;
-			trailVertex->v.cn[1] = alpha;
-			trailVertex->v.cn[2] = alpha;
-			trailVertex->v.cn[3] = 0x40;
-			trailVertex = &trailVertex[1];
+			D_8005BB34->v.cn[0] = alpha;
+			D_8005BB34->v.cn[1] = alpha;
+			D_8005BB34->v.cn[2] = alpha;
+			D_8005BB34->v.cn[3] = 0x40;
+			D_8005BB34++;
 		}
 
-		gSPVertex(D_8005BB30++, &trailVertex[-24], 24, 0);
+		gSPVertex(D_8005BB30++, D_8005BB34 - 24, 24, 0);
 		for (i = 0x16; i >= 0; i--) {
 			if ((D_8015FA40[i + 2].unk0 != 0x7FFF) && (D_8015FA40[i + 1].unk0 != 0x7FFF)) {
 				gSPLineW3D(D_8005BB30++, i, i + 1, 4, 0);
 			}
 		}
-		D_8005BB34 = trailVertex;
 	}
 
 	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
@@ -1169,15 +1135,16 @@ void func_80124D60_133D10(void) {
 				s32 fade;
 				s32 invFade;
 
+
 				fade = (fadeData[fadeIndex][3] << 6) - 1;
 				invFade = (0xFF - fade) & 0xFF;
-				D_80052B40.unk0 = fadeData[fadeIndex][0];
-				D_80052B40.unk2 = fadeData[fadeIndex][1];
-				D_80052B40.unk4 = fadeData[fadeIndex][2];
+				fadeVec.unk0 = (fade << 2) - fade;
+				fadeVec.unk2 = fadeVec.unk0;
+				fadeVec.unk4 = fadeVec.unk0;
 
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, invFade, invFade, invFade, 0xFF);
 
-				func_800039D0_45D0(&D_80052B40, NULL, &D_80052B48, D_8005BB38);
+				func_800039D0_45D0((Unk80052B40 *)fadeData[fadeIndex], NULL, &fadeVec, D_8005BB38);
 				gSPVertex(D_8005BB2C++, D_8005BB38, 4, 0);
 				D_8005BB38 += 0x40;
 				gSPDisplayList(D_8005BB2C++, &D_50332A0);
@@ -1210,15 +1177,17 @@ void func_80125C48_134BF8(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
+// CURRENT(16)
 #ifdef NON_MATCHING
 void func_80125CA0_134C50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 	s32 unused0;
 	s32 unused1;
-	s16 sp3A;
 	s32 sp2C;
 	s32 sp28;
 	s32 temp_t0;
 	s32 temp_v1;
+	s32 unused2;
+	s16 sp3A;
 
 	temp_v1 = arg3 - arg0;
 	temp_t0 = arg5 - arg2;
@@ -1349,29 +1318,30 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 #endif
 
 // CURRENT(12686)
+// CURRENT(7311)
 #ifdef NON_MATCHING
 s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, s32 arg6, s32 arg7) {
 	s32 xFixed;
 	s32 yFixed;
 	s32 zFixed;
+	s32 stepCount;
 	s32 stepX;
 	s32 stepY;
 	s32 stepZ;
-	s32 stepCount;
 	s32 dx;
 	s32 dy;
 	s32 dz;
-	s16 prevTileX;
-	s16 prevTileZ;
-	s16 maxBuildingY;
-	f32 hitScale;
 	s32 buildingIdx;
 	s32 mapY;
 	s32 tileX;
 	s32 tileZ;
 	s32 surfaceType;
 	s32 absDx;
-	s32 absDy;
+	s8 pad;
+	s16 prevTileX;
+	s16 prevTileZ;
+	s16 maxBuildingY;
+	f32 hitScale;
 	s32 absDz;
 	BuildingInstance *building;
 
@@ -1400,26 +1370,21 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 		}
 	}
 
-	absDx = -dx;
-	absDy = -dy;
-	absDz = -dz;
 
 	if ((dx == 0) && (dz == 0)) {
-		if (absDy < dy) {
+		absDx = -dy;
+		if (absDx < dy) {
 			stepCount = dy;
 		} else {
-			stepCount = absDy;
+			stepCount = absDx;
 		}
 		stepCount >>= arg7;
 		stepX = 0;
-		if (absDy > 0) {
-			stepY = -0x100;
-		} else {
-			stepY = 0x100;
-		}
-		stepY <<= arg7;
+		stepY = (absDx > 0 ? -0x100 : 0x100) << arg7;
 		stepZ = 0;
 	} else {
+		absDx = -dx;
+		absDz = -dz;
 		if (absDx < dx) {
 			absDx = dx;
 		}
@@ -1435,13 +1400,8 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 			}
 			stepCount >>= arg7;
 			if (stepCount != 0) {
-				if (absDx > 0) {
-					stepX = -0x100;
-				} else {
-					stepX = 0x100;
-				}
+				stepX = (absDx > 0 ? -0x100 : 0x100) << arg7;
 				stepY = (dy << 8) / stepCount;
-				stepX <<= arg7;
 				stepZ = (dz << 8) / stepCount;
 			}
 		} else {
@@ -1467,8 +1427,7 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 		D_80158FE8 = NULL;
 	}
 
-	while (stepCount != 0) {
-		stepCount--;
+	for (; stepCount--; ) {
 
 		xFixed += stepX;
 		yFixed += stepY;
@@ -1565,77 +1524,32 @@ u64 func_80126990_135940(u64 value) {
 }
 
 // CURRENT(9174)
-#ifdef NON_MATCHING
-u32 func_801269BC_13596C(s32 arg0, u32 arg1, s32 arg2, u32 arg3, s32 arg4, u32 arg5, s32 arg6, u32 arg7, s32 arg8, u32 arg9,
-	s32 arg10, u32 arg11) {
-	union {
-		s64 full;
-		struct {
-			s32 hi;
-			u32 lo;
-		} parts;
-	} deltaA;
-	union {
-		s64 full;
-		struct {
-			s32 hi;
-			u32 lo;
-		} parts;
-	} deltaB;
-	union {
-		s64 full;
-		struct {
-			s32 hi;
-			u32 lo;
-		} parts;
-	} temp0;
-	union {
-		s64 full;
-		struct {
-			s32 hi;
-			u32 lo;
-		} parts;
-	} temp1;
+s32 func_801269BC_13596C(s64 arg0, s64 arg1, s64 arg2, s64 arg3, s64 arg4, s64 arg5) {
 	s64 denom;
 
-	deltaA.parts.hi = (arg4 - arg0) - (arg5 < arg1);
-	deltaA.parts.lo = arg5 - arg1;
-	deltaB.parts.hi = (arg6 - arg2) - (arg7 < arg3);
-	deltaB.parts.lo = arg7 - arg3;
-	denom = (s64)func_80126990_135940(deltaA.full) + (s64)func_80126990_135940(deltaB.full);
+	denom = func_80126990_135940(arg2 - arg0) + func_80126990_135940(arg3 - arg1);
 
 	if (denom == 0) {
-		temp0.parts.hi = (arg8 - arg0) - (arg9 < arg1);
-		temp0.parts.lo = arg9 - arg1;
-		temp1.parts.hi = (arg10 - arg2) - (arg11 < arg3);
-		temp1.parts.lo = arg11 - arg3;
-		return (u32)(__ll_mul(temp0.full, temp0.full) + __ll_mul(temp1.full, temp1.full));
+		return (s32)(__ll_mul(arg4 - arg0, arg4 - arg0) + __ll_mul(arg5 - arg1, arg5 - arg1));
 	}
 
-	temp0.parts.hi = (arg10 - arg2) - (arg11 < arg3);
-	temp0.parts.lo = arg11 - arg3;
-	temp1.parts.hi = (arg8 - arg0) - (arg9 < arg1);
-	temp1.parts.lo = arg9 - arg1;
-	temp0.full = temp0.full * deltaA.full;
-	temp1.full = temp1.full * deltaB.full;
-
-	return (u32)((s64)func_80126990_135940(temp0.full - temp1.full) / denom);
+	return (s32)__ll_div((s64)func_80126990_135940((arg5 - arg1) * (arg2 - arg0) - (arg4 - arg0) * (arg3 - arg1)), denom);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801269BC_13596C.s")
-#endif
 
-// CURRENT(63423)
+// CURRENT(49020)
 #ifdef NON_MATCHING
 void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s32 *arg5, s32 *arg6) {
+	s32 x = arg1;
+	s32 z = arg3;
+	s32 y = arg2;
 	s32 distSqBest;
 	s32 objDist;
 	s32 objThreshold;
 	s32 lineDist;
-	s16 minX;
-	s16 maxX;
 	s16 minZ;
 	s16 maxZ;
+	s16 minX;
+	s16 maxX;
 	s32 exactHit;
 	f32 pathDistSq;
 	f32 bestDistF;
@@ -1646,33 +1560,34 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 	s32 shadowZ;
 	s16 hitX;
 	s16 hitZ;
+	u8 *vehicleIndex;
 	s32 vehicleCount;
 	VehicleInstance *vehicle;
-	VehicleSpec *vehicleSpec;
+	VehicleSpec *spec;
 	AlienInstance *alien;
-	AlienSpec *alienSpec;
+	Unk8015F9D0 *hitResult;
 	f32 interp;
 	s32 dx;
 	s32 dy;
 	s32 dz;
-	s32 candidate;
+
 
 	distSqBest = 0x7FFFFFFF;
 
-	if (arg1 < *arg4) {
-		minX = (s16)(arg1 - 0xC8);
+	if (x < *arg4) {
+		minX = (s16)(x - 0xC8);
 		maxX = (s16)(*arg4 + 0xC8);
 	} else {
 		minX = (s16)(*arg4 - 0xC8);
-		maxX = (s16)(arg1 + 0xC8);
+		maxX = (s16)(x + 0xC8);
 	}
 
-	if (arg3 < *arg6) {
-		minZ = (s16)(arg3 - 0xC8);
+	if (z < *arg6) {
+		minZ = (s16)(z - 0xC8);
 		maxZ = (s16)(*arg6 + 0xC8);
 	} else {
 		minZ = (s16)(*arg6 - 0xC8);
-		maxZ = (s16)(arg3 + 0xC8);
+		maxZ = (s16)(z + 0xC8);
 	}
 
 	if (D_801591A8 != 0) {
@@ -1681,9 +1596,9 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 		D_80158FF0 = 0;
 	}
 
-	dx = (arg1 - *arg4) >> 2;
-	dy = (arg2 - *arg5) >> 2;
-	dz = (arg3 - *arg6) >> 2;
+	dx = (x - *arg4) >> 2;
+	dy = (y - *arg5) >> 2;
+	dz = (z - *arg6) >> 2;
 	pathDistSq = (f32)((dx * dx) + (dy * dy) + (dz * dz));
 
 	if (pathDistSq == 0.0f) {
@@ -1692,220 +1607,189 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 
 	exactHit = 0;
 
+
 	if ((currentLevel != LEVEL_COMET) || (arg0 != D_80052B34)) {
-		vehicleCount = D_80158FD8 - 1;
-		if (D_80158FD8 != 0) {
-					do {
-				candidate = 0;
-				vehicle = &vehicleInstances[D_80158E80[vehicleCount]];
-				vehicleSpec = &vehicleSpecs[vehicle->unk1A];
-				if (vehicle != arg0) {
-					if ((vehicle->unk0 >= minX) && (vehicle->unk0 <= maxX) && (vehicle->unk4 >= minZ) && (vehicle->unk4 <= maxZ)) {
-						if (((arg1 - *arg4) == 0) && ((arg3 - *arg6) == 0)) {
-							if ((vehicle->unk2 + vehicleSpec->unk38) >= *arg5) {
-								func_8010C4EC_11B49C(vehicle);
-								if (func_8010CF7C_11BF2C((s16)arg1, (s16)arg3) != 0) {
-									D_8015F9D0.unk0 = (s16)arg1;
-									D_8015F9D0.unk2 = (s16)(vehicle->unk2 + vehicleSpec->unk38);
-									D_8015F9D0.unk4 = (s16)arg3;
-									exactHit = 1;
-									bestDistF = (f32)distSqBest;
-									candidate = 1;
-								}
-							}
-						} else {
-							lineDist = func_801269BC_13596C(arg1 >> 31, (u32)(s16)arg1, arg3 >> 31, (u32)(s16)arg3, *arg4 >> 31, (u32)*arg4,
-								*arg6 >> 31, (u32)*arg6, vehicle->unk0 >> 31, (u32)vehicle->unk0, vehicle->unk4 >> 31, (u32)vehicle->unk4);
-							if (lineDist < vehicleSpec->unk8) {
-								switch (vehicleSpec->unk16 & 0xF) {
-									case 0: {
-										s32 ax = arg1 - *arg4;
-										s32 az = arg3 - *arg6;
-										s32 absX = (ax < 0) ? -ax : ax;
-										s32 absZ = (az < 0) ? -az : az;
-										s32 sideDist;
-
-										if (absZ < absX) {
-											sideDist = func_801269BC_13596C(arg1 >> 31, (u32)(s16)arg1, arg2 >> 31, (u32)arg2, *arg4 >> 31,
-												(u32)*arg4, *arg5 >> 31, (u32)*arg5, vehicle->unk0 >> 31, (u32)vehicle->unk0,
-												vehicle->unk2 >> 31, (u32)vehicle->unk2);
-										} else {
-											sideDist = func_801269BC_13596C(arg3 >> 31, (u32)(s16)arg3, arg2 >> 31, (u32)arg2, *arg6 >> 31,
-												(u32)*arg6, *arg5 >> 31, (u32)*arg5, vehicle->unk4 >> 31, (u32)vehicle->unk4,
-												vehicle->unk2 >> 31, (u32)vehicle->unk2);
-										}
-
-										if (vehicleSpec->unk8 >= sideDist) {
-											D_8015F9D0.unk8 = 0;
-											bestDistF = (f32)distSqBest;
-											candidate = 1;
-										}
-										break;
-									}
-
-									case 1: {
-										dx = (arg1 - vehicle->unk0) >> 2;
-										dy = (arg2 - vehicle->unk2) >> 2;
-										dz = (arg3 - vehicle->unk4) >> 2;
-										shadowY = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - arg2)) + (f32)arg2);
-										if ((shadowY >= vehicle->unk2) && (shadowY <= (vehicle->unk2 + vehicleSpec->unk38))) {
-											D_8015F9D0.unk8 = 0;
-											bestDistF = (f32)distSqBest;
-											candidate = 1;
-										}
-										break;
-									}
-
-									case 2:
-										hitX = (s16)*arg4;
-										hitZ = (s16)*arg6;
-										if (func_8010D4EC_11C49C((s16)arg1, (s16)arg3, &hitX, &hitZ, vehicle) != 0) {
-											dx = (arg1 - hitX) >> 2;
-											dz = (arg3 - hitZ) >> 2;
-											shadowY = (s32)((sqrtf((f32)((dx * dx) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - arg2)) + (f32)arg2);
-											if ((shadowY >= vehicle->unk2) && (shadowY <= (vehicle->unk2 + vehicleSpec->unk38))) {
-												D_8015F9D0.unk0 = hitX;
-												D_8015F9D0.unk2 = (s16)shadowY;
-												D_8015F9D0.unk4 = hitZ;
-												exactHit = 1;
-												bestDistF = (f32)distSqBest;
-												candidate = 1;
-											}
-										}
-										break;
-
-									default:
-										bestDistF = (f32)distSqBest;
-										candidate = 1;
-								}
+		vehicleCount = D_80158FD8;
+		if (vehicleCount != 0) {
+			vehicleCount--;
+			vehicleIndex = &D_80158E80[vehicleCount];
+			hitResult = &D_8015F9D0;
+			do {
+				vehicle = &vehicleInstances[*vehicleIndex];
+				spec = &vehicleSpecs[vehicle->unk1A];
+				if ((vehicle != arg0) && (vehicle->unk0 >= minX) && (vehicle->unk0 <= maxX)
+					&& (vehicle->unk4 >= minZ) && (vehicle->unk4 <= maxZ)) {
+					if (((x - *arg4) >> 2) == 0 && ((z - *arg6) >> 2) == 0) {
+						if ((vehicle->unk2 + spec->unk38) >= *arg5) {
+							func_8010C4EC_11B49C(vehicle);
+							if (func_8010CF7C_11BF2C((s16)x, (s16)z) != 0) {
+								hitResult->unk0 = (s16)x;
+								hitResult->unk2 = (s16)(vehicle->unk2 + spec->unk38);
+								hitResult->unk4 = (s16)z;
+								exactHit = 1;
+								bestDistF = (f32)distSqBest;
+								goto vehicle_common;
 							}
 						}
 					}
-				}
-
-				if (candidate) {
-					dx = (arg1 - vehicle->unk0) >> 2;
-					dy = (arg2 - vehicle->unk2) >> 2;
-					dz = (arg3 - vehicle->unk4) >> 2;
-					objDist = (dx * dx) + (dy * dy) + (dz * dz);
-					if ((f32)objDist < bestDistF) {
-						lineDistBest = lineDist;
-						if (D_801591A8 != 0) {
-							D_80158FE4 = vehicle;
+				} else {
+					lineDist = func_801269BC_13596C(x >> 31, (u32)(s16)x, z >> 31, (u32)(s16)z, *arg4 >> 31, (u32)*arg4,
+						*arg6 >> 31, (u32)*arg6, vehicle->unk0 >> 31, (u32)vehicle->unk0, vehicle->unk4 >> 31, (u32)vehicle->unk4);
+					if (lineDist < spec->unk8) {
+						switch (spec->unk16 & 0xF) {
+						case 0: {
+							s32 ax = x - *arg4;
+							s32 az = z - *arg6;
+							s32 absX = (ax < 0) ? -ax : ax;
+							s32 absZ = (az < 0) ? -az : az;
+							s32 sideDist;
+							if (absZ < absX) sideDist = func_801269BC_13596C(x >> 31, (u32)(s16)x, y >> 31, (u32)y, *arg4 >> 31, (u32)*arg4, *arg5 >> 31, (u32)*arg5, vehicle->unk0 >> 31, (u32)vehicle->unk0, vehicle->unk2 >> 31, (u32)vehicle->unk2);
+							else sideDist = func_801269BC_13596C(z >> 31, (u32)(s16)z, y >> 31, (u32)y, *arg6 >> 31, (u32)*arg6, *arg5 >> 31, (u32)*arg5, vehicle->unk4 >> 31, (u32)vehicle->unk4, vehicle->unk2 >> 31, (u32)vehicle->unk2);
+							if (spec->unk8 < sideDist) goto vehicle_next;
+							hitResult->unk8 = 0;
+							bestDistF = (f32)distSqBest;
+							break;
 						}
-						objThreshold = vehicleSpec->unk8;
-						distSqBest = objDist;
-						if (D_8015F9D0.unk8 == 0) {
-							D_8015F9D0.unk0 = vehicle->unk0;
-							D_8015F9D0.unk2 = vehicle->unk2;
-							D_8015F9D0.unk4 = vehicle->unk4;
-							exactHit = 0;
+						case 1:
+							dx = (x - vehicle->unk0) >> 2;
+							dy = (y - vehicle->unk2) >> 2;
+							dz = (z - vehicle->unk4) >> 2;
+							shadowY = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - y)) + (f32)y);
+							if ((shadowY < vehicle->unk2) || (shadowY > vehicle->unk2 + spec->unk38)) goto vehicle_next;
+							hitResult->unk8 = 0;
+							bestDistF = (f32)distSqBest;
+							break;
+						case 2:
+							hitX = (s16)*arg4;
+							hitZ = (s16)*arg6;
+							if (func_8010D4EC_11C49C((s16)x, (s16)z, &hitX, &hitZ, vehicle) == 0) goto vehicle_next;
+							dx = (x - hitX) >> 2;
+							dz = (z - hitZ) >> 2;
+							shadowY = (s32)((sqrtf((f32)((dx * dx) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - y)) + (f32)y);
+							if ((shadowY < vehicle->unk2) || (shadowY > vehicle->unk2 + spec->unk38)) goto vehicle_next;
+							hitResult->unk0 = hitX;
+							hitResult->unk2 = (s16)shadowY;
+							hitResult->unk4 = hitZ;
+							exactHit = 1;
+							bestDistF = (f32)distSqBest;
+							break;
+						default:
+							bestDistF = (f32)distSqBest;
 						}
-						D_8015F9D0.unkC = (s32)vehicle;
-						D_8015F9D0.unk8 = 5;
-					}
-				}
+						goto vehicle_common;
+                    }
+                }
+                goto vehicle_next;
 
-				vehicleCount--;
-			} while (alienIndex != 0);
+vehicle_common:
+                dx = (x - vehicle->unk0) >> 2;
+                dy = (y - vehicle->unk2) >> 2;
+                dz = (z - vehicle->unk4) >> 2;
+                objDist = (dx * dx) + (dy * dy) + (dz * dz);
+                if ((f32)objDist < bestDistF) {
+                    lineDistBest = lineDist;
+                    if (D_801591A8 != 0) D_80158FE4 = vehicle;
+                    objThreshold = spec->unk8;
+                    distSqBest = objDist;
+                    if (hitResult->unk8 == 0) {
+                        hitResult->unk0 = vehicle->unk0;
+                        hitResult->unk2 = vehicle->unk2;
+                        hitResult->unk4 = vehicle->unk4;
+                        exactHit = 0;
+                    }
+                    hitResult->unkC = (s32)vehicle;
+                    hitResult->unk8 = 5;
+                }
+vehicle_next:
+
+				vehicleIndex--;
+			} while (vehicleCount--);
 		}
 	}
 
 	alien = &alienInstances[0xFE];
 	vehicleCount = 0xFE;
-	while (alienIndex != 0) {
+	do {
 		if ((arg0 != alien) && (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0)
-			&& ((func_80122320_1312D0((s32)alien) == 0) || (func_80122320_1312D0((s32)arg0) == 0))) {
-			if ((alien->unk0 >= minX) && (alien->unk0 <= maxX) && (alien->unk4 >= minZ) && (alien->unk4 <= maxZ)) {
-				alienSpec = &alienSpecs[alien->specIndex];
-				lineDist = func_801269BC_13596C(arg1 >> 31, (u32)(s16)arg1, arg3 >> 31, (u32)(s16)arg3, *arg4 >> 31, (u32)*arg4,
-					*arg6 >> 31, (u32)*arg6, alien->unk0 >> 31, (u32)alien->unk0, alien->unk4 >> 31, (u32)alien->unk4);
-				if (lineDist < alienSpec->unk8) {
-					candidate = 1;
-					if ((alienSpec->unk16 & 0xF) == 0) {
-						s32 ax = arg1 - *arg4;
-						s32 az = arg3 - *arg6;
-						s32 absX = (ax < 0) ? -ax : ax;
-						s32 absZ = (az < 0) ? -az : az;
-						s32 sideDist;
-
-						if (absZ < absX) {
-							sideDist = func_801269BC_13596C(arg1 >> 31, (u32)(s16)arg1, arg2 >> 31, (u32)arg2, *arg4 >> 31, (u32)*arg4,
-								*arg5 >> 31, (u32)*arg5, alien->unk0 >> 31, (u32)alien->unk0, alien->unk2 >> 31, (u32)alien->unk2);
-						} else {
-							sideDist = func_801269BC_13596C(arg3 >> 31, (u32)(s16)arg3, arg2 >> 31, (u32)arg2, *arg6 >> 31, (u32)*arg6,
-								*arg5 >> 31, (u32)*arg5, alien->unk4 >> 31, (u32)alien->unk4, alien->unk2 >> 31, (u32)alien->unk2);
-						}
-						if (alienSpec->unk8 >= sideDist) {
-							candidate = 0;
-						}
+			&& ((func_80122320_1312D0((s32)alien) == 0) || (func_80122320_1312D0((s32)arg0) == 0))
+			&& (alien->unk0 >= minX) && (alien->unk0 <= maxX) && (alien->unk4 >= minZ) && (alien->unk4 <= maxZ)) {
+			spec = (VehicleSpec *)&alienSpecs[alien->specIndex];
+			lineDist = func_801269BC_13596C(x >> 31, (u32)(s16)x, z >> 31, (u32)(s16)z, *arg4 >> 31, (u32)*arg4,
+				*arg6 >> 31, (u32)*arg6, alien->unk0 >> 31, (u32)alien->unk0, alien->unk4 >> 31, (u32)alien->unk4);
+			if (lineDist < spec->unk8) {
+				if ((spec->unk16 & 0xF) == 0) {
+					s32 ax = x - *arg4;
+					s32 az = z - *arg6;
+					s32 absX = (ax < 0) ? -ax : ax;
+					s32 absZ = (az < 0) ? -az : az;
+					s32 sideDist;
+					if (absZ < absX) {
+						sideDist = func_801269BC_13596C(x >> 31, (u32)(s16)x, y >> 31, (u32)y, *arg4 >> 31, (u32)*arg4,
+							*arg5 >> 31, (u32)*arg5, alien->unk0 >> 31, (u32)alien->unk0, alien->unk2 >> 31, (u32)alien->unk2);
+					} else {
+						sideDist = func_801269BC_13596C(z >> 31, (u32)(s16)z, y >> 31, (u32)y, *arg6 >> 31, (u32)*arg6,
+							*arg5 >> 31, (u32)*arg5, alien->unk4 >> 31, (u32)alien->unk4, alien->unk2 >> 31, (u32)alien->unk2);
 					}
-					if (candidate) {
-						dx = (arg1 - alien->unk0) >> 2;
-						dy = (arg2 - alien->unk2) >> 2;
-						dz = (arg3 - alien->unk4) >> 2;
-						if ((alienSpec->unk16 & 0xF) == 1) {
-							shadowY = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - arg2)) + (f32)arg2);
-							hitX = alien->unk2;
-							if ((alienSpec->unk16 & 0x10) != 0) {
-								hitX -= alienSpec->unk38;
+					if (spec->unk8 >= sideDist) {
+						goto alien_next;
+					}
+				}
+				dx = (x - alien->unk0) >> 2;
+					dy = (y - alien->unk2) >> 2;
+				dz = (z - alien->unk4) >> 2;
+				if ((spec->unk16 & 0xF) == 1) {
+					shadowY = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq)
+						* (f32)(*arg5 - y)) + (f32)y);
+					hitX = alien->unk2;
+					if ((spec->unk16 & 0x10) != 0) {
+						hitX -= spec->unk38;
+					}
+					if ((shadowY < (hitX - 0x14)) || (shadowY > (alien->unk2 + spec->unk38 + 0x14))) {
+						goto alien_next;
+					}
+				}
+				objDist = (dx * dx) + (dy * dy) + (dz * dz);
+				if ((f32)objDist < (f32)distSqBest) {
+					if (D_801591A8 != 0) {
+						D_80158FEC = alien;
+						D_80158FE4 = NULL;
+					}
+					objThreshold = spec->unk8;
+					lineDistBest = lineDist;
+					distSqBest = objDist;
+					hitResult->unk0 = alien->unk0;
+					hitResult->unk2 = alien->unk2;
+					hitResult->unk4 = alien->unk4;
+					D_8015F9DC = (s32)alien;
+					hitResult->unk8 = 7;
+					if (((AlienSpec *)spec)->unk5A != -1) {
+						Unk80147090Entry_8012B26C *entry = &D_80147090_156040[((AlienSpec *)spec)->unk5A];
+						lineThresholdBest = entry->radius * entry->radius;
+						func_80128428_1373D8(alien, entry->x, entry->y, entry->z, &shadowX, &shadowY, &shadowZ);
+						if ((f32)func_801269BC_13596C(x >> 31, (u32)(s16)x, z >> 31, (u32)(s16)z, *arg4 >> 31, (u32)*arg4,
+							*arg6 >> 31, (u32)*arg6, shadowX >> 31, (u32)shadowX, shadowZ >> 31, (u32)shadowZ) < (f32)lineThresholdBest) {
+							s32 ax = x - *arg4;
+							s32 az = z - *arg6;
+							s32 absX = (ax < 0) ? -ax : ax;
+							s32 absZ = (az < 0) ? -az : az;
+							s32 sideDist;
+							if (absZ < absX) {
+								sideDist = func_801269BC_13596C(x >> 31, (u32)(s16)x, y >> 31, (u32)y, *arg4 >> 31, (u32)*arg4,
+									*arg5 >> 31, (u32)*arg5, shadowX >> 31, (u32)shadowX, shadowY >> 31, (u32)shadowY);
+							} else {
+								sideDist = func_801269BC_13596C(z >> 31, (u32)(s16)z, y >> 31, (u32)y, *arg6 >> 31, (u32)*arg6,
+									*arg5 >> 31, (u32)*arg5, shadowZ >> 31, (u32)shadowZ, shadowY >> 31, (u32)shadowY);
 							}
-							if ((shadowY < (hitX - 0x14)) || (shadowY > (alien->unk2 + alienSpec->unk38 + 0x14))) {
-								candidate = 0;
-							}
-						}
-						if (candidate) {
-							objDist = (dx * dx) + (dy * dy) + (dz * dz);
-							if ((f32)objDist < (f32)distSqBest) {
-								if (D_801591A8 != 0) {
-									D_80158FEC = alien;
-									D_80158FE4 = NULL;
-								}
-
-								objThreshold = alienSpec->unk8;
-								lineDistBest = lineDist;
-								distSqBest = objDist;
-								D_8015F9D0.unk0 = alien->unk0;
-								D_8015F9D0.unk2 = alien->unk2;
-								D_8015F9D0.unk4 = alien->unk4;
-								D_8015F9DC = (s32)alien;
-								D_8015F9D0.unk8 = 7;
-
-								if (alienSpec->unk5A != -1) {
-									Unk80147090Entry_8012B26C *entry = &D_80147090_156040[alienSpec->unk5A];
-									lineThresholdBest = entry->radius * entry->radius;
-
-									func_80128428_1373D8(alien, entry->x, entry->y, entry->z, &shadowX, &shadowY, &shadowZ);
-
-									if ((f32)func_801269BC_13596C(arg1 >> 31, (u32)(s16)arg1, arg3 >> 31, (u32)(s16)arg3, *arg4 >> 31, (u32)*arg4,
-										*arg6 >> 31, (u32)*arg6, shadowX >> 31, (u32)shadowX, shadowZ >> 31, (u32)shadowZ) < (f32)lineThresholdBest) {
-										s32 ax = arg1 - *arg4;
-										s32 az = arg3 - *arg6;
-										s32 absX = (ax < 0) ? -ax : ax;
-										s32 absZ = (az < 0) ? -az : az;
-										s32 sideDist;
-
-										if (absZ < absX) {
-											sideDist = func_801269BC_13596C(arg1 >> 31, (u32)(s16)arg1, arg2 >> 31, (u32)arg2, *arg4 >> 31, (u32)*arg4,
-												*arg5 >> 31, (u32)*arg5, shadowX >> 31, (u32)shadowX, shadowY >> 31, (u32)shadowY);
-										} else {
-											sideDist = func_801269BC_13596C(arg3 >> 31, (u32)(s16)arg3, arg2 >> 31, (u32)arg2, *arg6 >> 31, (u32)*arg6,
-												*arg5 >> 31, (u32)*arg5, shadowZ >> 31, (u32)shadowZ, shadowY >> 31, (u32)shadowY);
-										}
-
-										if (sideDist < lineThresholdBest) {
-											dx = (arg1 - shadowX) >> 2;
-											dy = (arg2 - shadowY) >> 2;
-											dz = (arg3 - shadowZ) >> 2;
-											if (((dx * dx) + (dy * dy) + (dz * dz)) < distSqBest) {
-												if (D_801591A8 != 0) {
-													D_80158FF0 = (s32)alien;
-												}
-												D_8015F9D0.unk8 = 8;
-												osSyncPrintf(&D_801450DC_15408C);
-											}
-										}
+							if (sideDist < lineThresholdBest) {
+								dx = (x - shadowX) >> 2;
+								dy = (y - shadowY) >> 2;
+								dz = (z - shadowZ) >> 2;
+								if (((dx * dx) + (dy * dy) + (dz * dz)) < distSqBest) {
+									if (D_801591A8 != 0) {
+										D_80158FF0 = (s32)alien;
 									}
+									hitResult->unk8 = 8;
+									osSyncPrintf(D_801450DC_15408C);
 								}
 							}
 						}
@@ -1913,18 +1797,19 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 				}
 			}
 		}
-`n`t`talienIndex--;
-	}
+alien_next:
+		alien--;
+	} while (vehicleCount--);
 
 	if ((distSqBest != 0x7FFFFFFF) && (exactHit == 0)) {
-		dx = (arg1 - D_8015F9D0.unk0) >> 2;
-		dy = (arg2 - D_8015F9D0.unk2) >> 2;
-		dz = (arg3 - D_8015F9D0.unk4) >> 2;
+		dx = (x - hitResult->unk0) >> 2;
+		dy = (y - hitResult->unk2) >> 2;
+		dz = (z - hitResult->unk4) >> 2;
 		interp = (f32)((dx * dx) + (dy * dy) + (dz * dz) - (lineDistBest >> 4));
 
-		dx = (arg1 - *arg4) >> 2;
-		dy = (arg2 - *arg5) >> 2;
-		dz = (arg3 - *arg6) >> 2;
+		dx = (x - *arg4) >> 2;
+		dy = (y - *arg5) >> 2;
+		dz = (z - *arg6) >> 2;
 
 		if (interp < 10.0f) {
 			bestDistF = 1.0f;
@@ -1932,29 +1817,29 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 			bestDistF = sqrtf(interp / (f32)((dx * dx) + (dy * dy) + (dz * dz)));
 		}
 
-		D_8015F9D0.unk0 = (s16)((f32)arg1 - ((f32)(dx * 4) * bestDistF));
-		D_8015F9D0.unk2 = (s16)((f32)arg2 - ((f32)(dy * 4) * bestDistF));
-		D_8015F9D0.unk4 = (s16)((f32)arg3 - ((f32)(dz * 4) * bestDistF));
+		hitResult->unk0 = (s16)((f32)x - ((f32)(dx * 4) * bestDistF));
+		hitResult->unk2 = (s16)((f32)y - ((f32)(dy * 4) * bestDistF));
+		hitResult->unk4 = (s16)((f32)z - ((f32)(dz * 4) * bestDistF));
 
 		if (interp > 10.0f) {
 			f32 blend = sqrtf((f32)((objThreshold - lineDistBest) >> 4) / interp);
-			D_8015F9D0.unk0 = (s16)((f32)D_8015F9D0.unk0 + ((f32)(arg1 - D_8015F9D0.unk0) * blend));
-			D_8015F9D0.unk4 = (s16)((f32)D_8015F9D0.unk4 + ((f32)(arg3 - D_8015F9D0.unk4) * blend));
+			hitResult->unk0 = (s16)((f32)hitResult->unk0 + ((f32)(x - hitResult->unk0) * blend));
+			hitResult->unk4 = (s16)((f32)hitResult->unk4 + ((f32)(z - hitResult->unk4) * blend));
 		}
 	}
 
 	if (distSqBest != 0x7FFFFFFF) {
-		*arg4 = D_8015F9D0.unk0;
-		*arg5 = D_8015F9D0.unk2;
-		*arg6 = D_8015F9D0.unk4;
+		*arg4 = hitResult->unk0;
+		*arg5 = hitResult->unk2;
+		*arg6 = hitResult->unk4;
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80126B80_135B30.s")
 #endif
 
-// CURRENT(270)
-#ifdef NON_MATCHING
+// CURRENT(0)
 s32 func_80127C08_136BB8(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s32 *arg7) {
 	s32 sp3C;
 	s32 sp38;
@@ -1996,29 +1881,25 @@ s32 func_80127C08_136BB8(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80127C08_136BB8.s")
-#endif
 
-#ifdef NON_MATCHING
+// CURRENT(0)
 void func_80127D88_136D38(BuildingInstance *arg0, VehicleInstance *arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7) {
 	u8 sp3B[5];
 	u8 pad[8];
 	s32 varT0;
-	s32 varV0;
 
 	D_8015F9D0.unkC = 0;
-	D_8015F9D0.unk8 = 0xA;
 	D_8015F9D0.unk0 = arg5;
 	D_8015F9D0.unk2 = arg6;
 	D_8015F9D0.unk4 = arg7;
+	D_8015F9D0.unk8 = 0xA;
 
 	if (func_800B1028_BFFD8(arg2, arg3, arg4, &arg5, &arg6, &arg7, &sp3B[-5]) != 0) {
-		D_8015F9D0.unk8 = 9;
+		D_8015F9D0.unk10 = sp3B[-5];
 		D_8015F9D0.unk0 = arg5;
 		D_8015F9D0.unk2 = arg6;
 		D_8015F9D0.unk4 = arg7;
-		D_8015F9D0.unk10 = sp3B[-5];
+		D_8015F9D0.unk8 = 9;
 	}
 
 	D_8015F9D0.unk0 = arg5;
@@ -2035,13 +1916,7 @@ void func_80127D88_136D38(BuildingInstance *arg0, VehicleInstance *arg1, s16 arg
 		varT0 = 0;
 	}
 
-	if (arg1->unkC == -2) {
-		varV0 = 5;
-	} else {
-		varV0 = 7;
-	}
-
-	func_80126268_135218(arg2, arg3, arg4, &arg5, &arg6, &arg7, varT0, varV0);
+	func_80126268_135218(arg2, arg3, arg4, &arg5, &arg6, &arg7, varT0, arg1->unkC == -2 ? 5 : 7);
 
 	D_8015F9D0.unk0 = arg5;
 	D_8015F9D0.unk2 = arg6;
@@ -2053,66 +1928,49 @@ void func_80127D88_136D38(BuildingInstance *arg0, VehicleInstance *arg1, s16 arg
 
 	func_80126B80_135B30(arg1, arg2, arg3, arg4, &arg5, &arg6, &arg7);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80127D88_136D38.s")
-#endif
 
-// CURRENT(6200)
+// CURRENT(270)
 #ifdef NON_MATCHING
 void func_80127F9C_136F4C(s16 arg0, s16 arg1, s16 arg2) {
 	s32 count;
 	VehicleInstance *vehicle;
 	AlienInstance *alien;
-	s32 threshold;
-	s32 dx;
-	s32 dz;
-	s16 val;
+	VehicleSpec *spec;
 	s32 bldg;
 	s16 y;
+	u8 *activeList;
 
 	count = D_80158FD8;
-	if (count != 0) {
-		count--;
-		
-		while (1) {
-			vehicle = &vehicleInstances[D_80158E80[count]];
-			threshold = vehicleSpecs[vehicle->unk1A].unk8;
-			dx = func_800047FC_53FC(vehicle->unk0 - arg0);
-			dz = func_800047FC_53FC(vehicle->unk4 - arg1);
-			
-			if ((dx + dz) < threshold) {
+	if (count--) {
+		activeList = &D_80158E80[count];
+		do {
+			vehicle = &vehicleInstances[*activeList];
+			spec = &vehicleSpecs[vehicle->unk1A];
+			if ((func_800047FC_53FC(vehicle->unk0 - arg0) + func_800047FC_53FC(vehicle->unk4 - arg1)) < spec->unk8) {
 				func_80124C40_133BF0(vehicle, D_80145BE0_154B90[arg2].unk2, arg0, arg1);
 			}
-			
-			if (count == 0) break;
-			count--;
-		}
+			activeList--;
+		} while (count--);
 	}
-	
-	count = 0xFE;
-	
-	while (count != 0) {
-		alien = &alienInstances[count];
+
+	alien = &alienInstances[0xFE], count = 0xFE;
+	do {
 		if (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0) {
-			dx = func_800047FC_53FC(alien->unk0 - arg0);
-			dz = func_800047FC_53FC(alien->unk4 - arg1);
-			
-			if ((dx + dz) < alienSpecs[alien->specIndex].unk8) {
+			spec = &alienSpecs[alien->specIndex];
+			if ((func_800047FC_53FC(alien->unk0 - arg0) + func_800047FC_53FC(alien->unk4 - arg1)) < spec->unk8) {
 				func_80124C40_133BF0((EntityInstance *)alien, D_80145BE0_154B90[arg2].unk2, arg0, arg1);
 			}
 		}
-		count--;
-	}
-	
+		alien--;
+	} while (count--);
+
 	bldg = func_8011D260_12C210((s8)(arg0 >> 8), (s8)(arg1 >> 8));
-	
 	if ((bldg != -1) && (D_80158FE8 == &buildingInstances[bldg])) {
-		val = D_80145BE0_154B90[arg2].unk2;
-		if (func_8011BEA0_12AE50(bldg & 0xFF, val >> 7) != 0) {
+		if (func_8011BEA0_12AE50(bldg & 0xFF, D_80145BE0_154B90[arg2].unk2 >> 7) != 0) {
 			D_8014ED48 = 8;
 		}
 	}
-	
+
 	y = func_800F9F00_108EB0(arg0, arg1);
 	func_80124170_133120(arg0, y, arg1, D_80145BE0_154B90[arg2].unk2, D_80145BE0_154B90[arg2].unk4, NULL);
 }
@@ -2270,9 +2128,9 @@ building = &D_80145BE0_154B90[arg0->unk20];
 			i = D_80158FD8 - 1;
 			while (1) {
 				vehicle = &vehicleInstances[D_80158E80[i]];
-				absY = func_800047FC_53FC((s16)(s32)((f32)vehicle->unk2 - arg0->unk4));
+				absY = func_800047FC_53FC((s16)(s32)((f32)D_80145BE0_154B90[arg2].unk2 - arg0->unk4));
 				absX = func_800047FC_53FC((s16)(s32)((f32)vehicle->unk0 - arg0->unk0));
-				if ((func_800047FC_53FC((s16)(s32)((f32)vehicle->unk4 - arg0->unk8)) + absX + absY) < vehicleSpecs[vehicle->unk1A].unk8) {
+				if ((func_800047FC_53FC((s16)(s32)((f32)D_80145BE0_154B90[arg2].unk4 - arg0->unk8)) + absX + absY) < vehicleSpecs[vehicle->unk1A].unk8) {
 					if ((s32)vehicle != arg0->unk24) {
 						D_8015F9D0.unk8 = 5;
 						D_80158FE4 = vehicle;
@@ -2444,7 +2302,7 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80128E48_137DF8.s")
 #endif
 
-// CURRENT(8502)
+// CURRENT(4381)
 #ifdef NON_MATCHING
 Projectile *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	AlienInstance *alien;
@@ -2452,17 +2310,18 @@ Projectile *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 	const WeaponEntry_80129864 *entry;
 	s16 *ammo;
 	s16 weaponType;
-	s32 pad0;
-	s32 pad1;
-	s32 power;
 	s32 x;
 	s32 y;
 	s32 z;
+	s32 dx;
+	s32 dy;
+	s32 dz;
 	s32 distance;
-	s32 i;
 	s32 halfDistance;
+	s32 i;
 	s32 quarterDistance;
 	s32 val;
+	s32 power;
 	EntitySpec *temp;
 
 	alien = (AlienInstance *)arg0;
@@ -2498,26 +2357,27 @@ Projectile *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 		distance = (s16)distance;
 		distance /= 5;
 
-		i = (entry == &D_80145BE0_154B90[2]) ? 5 : 9;
+		i = (entry == &D_80145C10_154BC0) ? 5 : 9;
 
-		D_80145BE0_154B90[2].unk8 = (((((D_80145BE0_154B90[2].unk8 >> 8) & 0xFFFDFFFF) ^
+		((WeaponEntry_80129864 *)D_80145BE0_154B90)[2].unk8 = (((((D_80145BE0_154B90[2].unk8 >> 8) & 0xFFFDFFFF) ^
 				((u32)D_80145BE0_154B90[2].unk8 >> 8)) << 8) ^ D_80145BE0_154B90[2].unk8);
 
 		if (i != 0) {
 			halfDistance = distance / 2;
 			quarterDistance = distance / 4;
-			for (i -= 1; i != 0; i -= 1) {
-				x = (func_800038E0_44E0() % distance) - halfDistance;
-				y = (func_800038E0_44E0() % halfDistance) - quarterDistance;
-				z = (func_800038E0_44E0() % distance) - halfDistance;
+			i--;
+			do {
+				dx = (func_800038E0_44E0() % distance) - halfDistance;
+				dy = (func_800038E0_44E0() % halfDistance) - quarterDistance;
+				dz = (func_800038E0_44E0() % distance) - halfDistance;
 
 				alien->unk1E = 0;
-				func_80129864_138814((s32)alien, arg1, arg2 + x, arg3 + y, arg4 + z);
-			}
+				func_80129864_138814((s32)alien, arg1, arg2 + dx, arg3 + dy, arg4 + dz);
+			} while (i--);
 		}
 
 		alien->unk1E = 0;
-		D_80145BE0_154B90[2].unk8 = (((((D_80145BE0_154B90[2].unk8 >> 8) | 0x20000) ^
+		((WeaponEntry_80129864 *)D_80145BE0_154B90)[2].unk8 = (((((D_80145BE0_154B90[2].unk8 >> 8) | 0x20000) ^
 				((u32)D_80145BE0_154B90[2].unk8 >> 8)) << 8) ^ D_80145BE0_154B90[2].unk8);
 		result = func_80129864_138814((s32)alien, arg1, arg2, arg3, arg4);
 	} else {
@@ -2530,7 +2390,7 @@ Projectile *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 			power /= 2;
 		}
 
-		if (entry == &D_80145BE0_154B90[105]) {
+		if (entry == &D_801465B8_155568) {
 			val = (power * 3) / 4;
 			if (val > 0xC8) {
 				val = 0xC8;
@@ -2563,7 +2423,6 @@ Projectile *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80129354_138304.s")
 #endif
-
 #ifdef NON_MATCHING
 Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	typedef Projectile *(*SpawnFunc_801226F8)(s16 *, BuildingInstance *, s16, s16, s16, f32, f32, f32);
@@ -2897,8 +2756,6 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 					break;
 
 				case 11:
-				default:
-					break;
 			}
 		}
 
@@ -3240,20 +3097,20 @@ void func_8012B26C_13A21C(void) {
 			if (vehicleIdx >= 0) {
 				while (alive != 0) {
 					VehicleInstance *vehicle = &vehicleInstances[D_80158E80[vehicleIdx]];
-					if ((vehicle->unk20 & VEHICLE_FLAG_UNK7) != 0) {
+					if ((D_80145BE0_154B90[arg2].unk20 & VEHICLE_FLAG_UNK7) != 0) {
 						VehicleSpec *vehicleSpec = &vehicleSpecs[vehicle->unk1A];
 						s32 vehicleRadius = vehicleSpec->unk8;
 						s32 distance = func_800047FC_53FC((s16)((s16)vehicle->unk0 - (s16)projectile->unk0));
-						distance += func_800047FC_53FC((s16)((s16)vehicle->unk4 - (s16)projectile->unk8));
+						distance += func_800047FC_53FC((s16)((s16)D_80145BE0_154B90[arg2].unk4 - (s16)projectile->unk8));
 
 						if ((vehicleSpec->unk16 & 0xF) == 0) {
-							distance += func_800047FC_53FC((s16)((s16)vehicle->unk2 - (s16)projectile->unk4));
+							distance += func_800047FC_53FC((s16)((s16)D_80145BE0_154B90[arg2].unk2 - (s16)projectile->unk4));
 						}
 
 						if ((distance < vehicleRadius) && (vehicle != (VehicleInstance *)projectile->unk24) &&
 							(((vehicleSpec->unk16 & 0xF) != 2) ||
-							 (((f32)vehicle->unk2 <= projectile->unk4) &&
-							  (projectile->unk4 <= (f32)(vehicle->unk2 + vehicleSpec->unk38)) &&
+							 (((f32)D_80145BE0_154B90[arg2].unk2 <= projectile->unk4) &&
+							  (projectile->unk4 <= (f32)(D_80145BE0_154B90[arg2].unk2 + vehicleSpec->unk38)) &&
 							  ((func_8010C4EC_11B49C(vehicle), 1) != 0) &&
 							  (func_8010CF7C_11BF2C((s16)projectile->unk0, (s16)projectile->unk8) != 0)))) {
 							s16 hitYaw;
@@ -3872,21 +3729,15 @@ void func_8012D84C_13C7FC()
   }
 }
 
-// CURRENT(35000)
-#ifdef NON_MATCHING
+// CURRENT(2285)
 // DisplayForces - Debug draw interaction boxes
+#ifdef NON_MATCHING
 void func_8012D884_13C834(void) {
 	Unk8015FAD0 *var_s3;
 	s16 temp_a3;
-	s16 temp_s0;
 	s16 temp_s2;
+	s16 temp_t7;
 	s16 temp_s4;
-	s16 temp_t0;
-	s16 temp_t2;
-	s16 temp_t3;
-	s16 temp_t4;
-	s16 temp_t5;
-	s32 temp_t7;
 	s32 temp_t8;
 	s32 temp_t9;
 	s32 var_v1;
@@ -3894,27 +3745,21 @@ void func_8012D884_13C834(void) {
 
 	var_s3 = D_8015FAD0;
 	if (D_80047710 == -0x63) {
-		gSPMatrix(D_8005BB2C++, &D_80031160, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 		var_v1 = 0x19;
 		var_s5 = 0x18;
 		if (var_v1 != 0) {
 			do {
 				if (var_s3->unk2C != 0) {
-					temp_s2 = var_s3->unk18;
 					temp_t9 = var_s3->unk0 >> 0x10;
-					temp_s4 = var_s3->unk1A;
-					temp_a3 = var_s3->unk1C;
-					temp_t0 = temp_t9 + temp_s2;
-					D_8005BB34->v.ob[0] = temp_t0;
+					temp_t7 = var_s3->unk18;
 					temp_t8 = var_s3->unk4 >> 0x10;
-					temp_t7 = var_s3->unk8 >> 0x10;
-					temp_t2 = temp_t8 + temp_a3;
-					D_8005BB34->v.ob[1] = temp_t2;
-					temp_t3 = temp_t7 + temp_s4;
-					temp_t4 = temp_t8 - temp_a3;
-					D_8005BB34->v.ob[2] = temp_t3;
-					temp_t5 = temp_t7 - temp_s4;
-					temp_s0 = temp_t9 - temp_s2;
+					temp_s2 = var_s3->unk8 >> 0x10;
+					temp_a3 = var_s3->unk1C;
+					temp_s4 = var_s3->unk1A;
+					D_8005BB34->v.ob[0] = temp_t9 + temp_t7;
+					D_8005BB34->v.ob[1] = temp_t8 + temp_a3;
+					D_8005BB34->v.ob[2] = temp_s2 + temp_s4;
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0;
@@ -3922,9 +3767,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34->v.cn[1] = 0;
 					D_8005BB34->v.cn[2] = 0;
 					D_8005BB34->v.cn[3] = 0xFF;
-					D_8005BB34[1].v.ob[0] = temp_t0;
-					D_8005BB34[1].v.ob[1] = temp_t4;
-					D_8005BB34[1].v.ob[2] = temp_t3;
+					D_8005BB34[1].v.ob[0] = temp_t9 + temp_t7;
+					D_8005BB34[1].v.ob[1] = temp_t8 - temp_a3;
+					D_8005BB34[1].v.ob[2] = temp_s2 + temp_s4;
 					D_8005BB34[1].v.flag = 0;
 					D_8005BB34[1].v.tc[0] = 0;
 					D_8005BB34[1].v.tc[1] = 0;
@@ -3932,9 +3777,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34[1].v.cn[1] = 0;
 					D_8005BB34[1].v.cn[2] = 0xFF;
 					D_8005BB34[1].v.cn[3] = 0xFF;
-					D_8005BB34[2].v.ob[0] = temp_t0;
-					D_8005BB34[2].v.ob[1] = temp_t2;
-					D_8005BB34[2].v.ob[2] = temp_t5;
+					D_8005BB34[2].v.ob[0] = temp_t9 + temp_t7;
+					D_8005BB34[2].v.ob[1] = temp_t8 + temp_a3;
+					D_8005BB34[2].v.ob[2] = temp_s2 - temp_s4;
 					D_8005BB34[2].v.flag = 0;
 					D_8005BB34[2].v.tc[0] = 0;
 					D_8005BB34[2].v.tc[1] = 0;
@@ -3942,9 +3787,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34[2].v.cn[1] = 0xFF;
 					D_8005BB34[2].v.cn[2] = 0;
 					D_8005BB34[2].v.cn[3] = 0xFF;
-					D_8005BB34[3].v.ob[0] = temp_t0;
-					D_8005BB34[3].v.ob[1] = temp_t4;
-					D_8005BB34[3].v.ob[2] = temp_t5;
+					D_8005BB34[3].v.ob[0] = temp_t9 + temp_t7;
+					D_8005BB34[3].v.ob[1] = temp_t8 - temp_a3;
+					D_8005BB34[3].v.ob[2] = temp_s2 - temp_s4;
 					D_8005BB34[3].v.flag = 0;
 					D_8005BB34[3].v.tc[0] = 0;
 					D_8005BB34[3].v.tc[1] = 0;
@@ -3952,9 +3797,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34[3].v.cn[1] = 0xFF;
 					D_8005BB34[3].v.cn[2] = 0xFF;
 					D_8005BB34[3].v.cn[3] = 0xFF;
-					D_8005BB34[4].v.ob[0] = temp_s0;
-					D_8005BB34[4].v.ob[1] = temp_t2;
-					D_8005BB34[4].v.ob[2] = temp_t3;
+					D_8005BB34[4].v.ob[0] = temp_t9 - temp_t7;
+					D_8005BB34[4].v.ob[1] = temp_t8 + temp_a3;
+					D_8005BB34[4].v.ob[2] = temp_s2 + temp_s4;
 					D_8005BB34[4].v.flag = 0;
 					D_8005BB34[4].v.tc[0] = 0;
 					D_8005BB34[4].v.tc[1] = 0;
@@ -3962,9 +3807,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34[4].v.cn[1] = 0;
 					D_8005BB34[4].v.cn[2] = 0;
 					D_8005BB34[4].v.cn[3] = 0xFF;
-					D_8005BB34[5].v.ob[0] = temp_s0;
-					D_8005BB34[5].v.ob[1] = temp_t4;
-					D_8005BB34[5].v.ob[2] = temp_t3;
+					D_8005BB34[5].v.ob[0] = temp_t9 - temp_t7;
+					D_8005BB34[5].v.ob[1] = temp_t8 - temp_a3;
+					D_8005BB34[5].v.ob[2] = temp_s2 + temp_s4;
 					D_8005BB34[5].v.flag = 0;
 					D_8005BB34[5].v.tc[0] = 0;
 					D_8005BB34[5].v.tc[1] = 0;
@@ -3972,9 +3817,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34[5].v.cn[1] = 0;
 					D_8005BB34[5].v.cn[2] = 0xFF;
 					D_8005BB34[5].v.cn[3] = 0xFF;
-					D_8005BB34[6].v.ob[0] = temp_s0;
-					D_8005BB34[6].v.ob[1] = temp_t2;
-					D_8005BB34[6].v.ob[2] = temp_t5;
+					D_8005BB34[6].v.ob[0] = temp_t9 - temp_t7;
+					D_8005BB34[6].v.ob[1] = temp_t8 + temp_a3;
+					D_8005BB34[6].v.ob[2] = temp_s2 - temp_s4;
 					D_8005BB34[6].v.flag = 0;
 					D_8005BB34[6].v.tc[0] = 0;
 					D_8005BB34[6].v.tc[1] = 0;
@@ -3982,9 +3827,9 @@ void func_8012D884_13C834(void) {
 					D_8005BB34[6].v.cn[1] = 0xFF;
 					D_8005BB34[6].v.cn[2] = 0;
 					D_8005BB34[6].v.cn[3] = 0xFF;
-					D_8005BB34[7].v.ob[0] = temp_s0;
-					D_8005BB34[7].v.ob[1] = temp_t4;
-					D_8005BB34[7].v.ob[2] = temp_t5;
+					D_8005BB34[7].v.ob[0] = temp_t9 - temp_t7;
+					D_8005BB34[7].v.ob[1] = temp_t8 - temp_a3;
+					D_8005BB34[7].v.ob[2] = temp_s2 - temp_s4;
 					D_8005BB34[7].v.flag = 0;
 					D_8005BB34[7].v.tc[0] = 0;
 					D_8005BB34[7].v.tc[1] = 0;
@@ -4009,11 +3854,15 @@ void func_8012D884_13C834(void) {
 
 					D_8005BB34 += 8;
 				}
+				var_v1 = var_s5;
+
 				var_s3++;
-			} while (var_s5-- != 0);
+			} while (var_s5--);
 		}
 	}
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012D884_13C834.s")
 #endif
@@ -4169,21 +4018,23 @@ void func_8012E204_13D1B4(s16 arg0, s32 arg1) {
 	callback(arg1, arg0);
 }
 
-// CURRENT(30589)
+// CURRENT(19686)
 #ifdef NON_MATCHING
 void func_8012E258_13D208(void) {
 	s32 i;
 	s32 activeCount;
+	s32 best;
+	VehicleInstance *vehicle;
+	Unk8015FAD0 *entry;
 	s32 dy;
 	s32 dx;
-	s16 x;
-	s16 z;
 	s16 y;
-	s16 halfX;
+	s16 z;
+	s16 x;
 	s16 halfZ;
+	s16 halfX;
 	s16 halfY;
 	s16 minY;
-	s16 maxY;
 	s16 minX;
 	s16 maxX;
 	s16 minZ;
@@ -4192,38 +4043,31 @@ void func_8012E258_13D208(void) {
 	s16 dMaxZ;
 	s16 dMaxX;
 	s16 dMinX;
-	s16 pushX;
-	s16 pushZ;
+	volatile s16 pushX;
+	volatile s16 pushZ;
 	s16 side;
 	s16 behavior;
 	s16 collisionIdx;
-	f32 minForward;
-	f32 minStrafe;
-	VehicleInstance *vehicle;
-	Unk8015FAD0 *entry;
+	s16 minForward;
+	s16 minStrafe;
 	u8 *activeList;
 
+	activeCount = D_80158FD8;
 	D_80159320 &= 0xFEFFFFFF;
 	D_80159320 &= 0xFF7FFFFF;
-
-	activeCount = D_80158FD8;
 	if (activeCount == 0) {
 		return;
 	}
 
 	activeList = &D_80158E80[activeCount - 1];
-	while (activeCount != 0) {
-		activeCount--;
+	do {
 		vehicle = &vehicleInstances[activeList[0]];
 
 		if ((currentLevel != 2) || (vehicle->unk1A != 5)) {
-			entry = &D_8015FAD0[0x18];
+			entry = &D_8015FF50;
 			i = 0x18;
 			do {
-				if ((entry->unk2C == 0) || (entry->unk2C >= 4)) {
-					continue;
-				}
-
+				if ((entry->unk2C != 0) && (entry->unk2C < 4)) {
 				x = entry->unk0 >> 0x10;
 				z = entry->unk8 >> 0x10;
 				y = entry->unk4 >> 0x10;
@@ -4268,11 +4112,11 @@ void func_8012E258_13D208(void) {
 
 				{
 					s32 j;
-					f32 *xCorners;
 					f32 *zCorners;
+					f32 *xCorners;
 
-					xCorners = &D_80159D78[3];
-					zCorners = &D_80159D98[3];
+					xCorners = &D_80159D84;
+					zCorners = &D_80159DA4;
 					for (j = 3; j >= 0; j--) {
 						f32 fx;
 						f32 fz;
@@ -4307,8 +4151,6 @@ void func_8012E258_13D208(void) {
 				if ((dMinZ <= 0) || (dMaxZ <= 0) || (dMaxX <= 0) || (dMinX <= 0)) {
 					behavior = 0;
 				} else {
-					s32 best;
-
 					best = 0x7FFF;
 					if ((dMinZ > 0) && (dMinZ < best)) {
 						best = dMinZ;
@@ -4327,7 +4169,7 @@ void func_8012E258_13D208(void) {
 					}
 
 					if ((side > 0) && (entry->unk2C == 2)) {
-						osSyncPrintf(&D_801453B0_154360);
+						osSyncPrintf(D_801453B0_154360);
 						func_800FB468_10A418(vehicle, (f32)(y + halfY));
 						vehicle->unk34 = 0.0f;
 
@@ -4340,20 +4182,23 @@ void func_8012E258_13D208(void) {
 				}
 
 				collisionIdx = vehicleSpecs[vehicle->unk1A].unk38 >> 1;
-				pushX = 0;
-				pushZ = 0;
-
-				if (side == 1) {
+				switch (side) {
+				case 1:
+					pushX = 0;
 					pushZ = dMinZ;
-				}
-				if (side == 2) {
+					break;
+				case 2:
+					pushX = 0;
 					pushZ = -dMaxZ;
-				}
-				if (side == 3) {
+					break;
+				case 3:
 					pushX = -dMaxX;
-				}
-				if (side == 4) {
+					pushZ = 0;
+					break;
+				case 4:
 					pushX = dMinX;
+					pushZ = 0;
+					break;
 				}
 
 				if (side > 0) {
@@ -4361,8 +4206,8 @@ void func_8012E258_13D208(void) {
 					if (((y + halfY) - vehicle->unk2) < collisionIdx) {
 						behavior = 1;
 					} else {
-						minForward = (f32)pushX;
-						minStrafe = (f32)pushZ;
+						minForward = pushX;
+						minStrafe = pushZ;
 					}
 				} else {
 					s16 xMax;
@@ -4380,8 +4225,8 @@ void func_8012E258_13D208(void) {
 						if (((y + halfY) - vehicle->unk2) < collisionIdx) {
 							behavior = 1;
 						} else {
-							minForward = 10.0f;
-							minStrafe = 10.0f;
+							minForward = 10;
+							minStrafe = 10;
 						}
 					}
 
@@ -4391,7 +4236,7 @@ void func_8012E258_13D208(void) {
 							behavior = 1;
 						} else {
 							minForward = 10.0f;
-							minStrafe = -10.0f;
+							minStrafe = -10;
 						}
 					}
 
@@ -4400,8 +4245,8 @@ void func_8012E258_13D208(void) {
 						if (((y + halfY) - vehicle->unk2) < collisionIdx) {
 							behavior = 1;
 						} else {
-							minForward = -10.0f;
-							minStrafe = 10.0f;
+							minForward = -10;
+							minStrafe = 10;
 						}
 					}
 
@@ -4410,13 +4255,14 @@ void func_8012E258_13D208(void) {
 						if (((y + halfY) - vehicle->unk2) < collisionIdx) {
 							behavior = 1;
 						} else {
-							minForward = -10.0f;
-							minStrafe = -10.0f;
+							minForward = -10;
+							minStrafe = -10;
 						}
 					}
 				}
 
-				if (behavior == 1) {
+				switch (behavior) {
+				case 1:
 					func_800FB468_10A418(vehicle, (f32)(y + halfY));
 					vehicle->unk34 = 0.0f;
 					func_800FB3C4_10A374(vehicle, (f32)((f64)entry->unkC / 65536.0));
@@ -4424,27 +4270,30 @@ void func_8012E258_13D208(void) {
 					if (entry->unk20 != NULL) {
 						((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
 					}
-				}
+					break;
 
-				if (behavior == 2) {
+				case 2:
 					func_800FB430_10A3E0(vehicle, 0.0f);
 					func_800FB3C4_10A374(vehicle, minForward);
 					func_800FB40C_10A3BC(vehicle, minStrafe);
 					if (entry->unk20 != NULL) {
 						((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
 					}
-				}
+					break;
 
-				if ((behavior == 3) && (entry->unk20 != NULL)) {
-					((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
+				case 3:
+					if (entry->unk20 != NULL) {
+						((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
+					}
+					break;
 				}
-			} while ((entry--, i-- != 0));
+				}
+				} while ((entry--, i--));
 		}
 
 		activeList--;
-	}
+	} while (activeCount--);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012E258_13D208.s")
 #endif
-

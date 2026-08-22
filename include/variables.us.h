@@ -1956,6 +1956,8 @@ extern char D_80144840[];
 extern char D_80144868;
 extern char D_80144880;
 extern const WeaponEntry_80129864 D_80145BE0_154B90[];
+extern const WeaponEntry_80129864 D_80145C10_154BC0;
+extern const WeaponEntry_80129864 D_801465B8_155568;
 extern Unk80050ADA D_80145BE2_154B92[];
 extern s32 D_80145BE8_154B98[][6];
 extern BuildingInstance D_80145E98;
@@ -2581,6 +2583,8 @@ extern s32 D_80159D6C;
 extern s32 D_80159D70;
 extern f32 D_80159D78[8]; // X corner offsets (vehicle 1: 0-3, vehicle 2: 4-7)
 extern f32 D_80159D98[8]; // Z corner offsets (vehicle 1: 0-3, vehicle 2: 4-7)
+extern f32 D_80159D84;
+extern f32 D_80159DA4;
 extern u8 D_80159DC0;
 extern s32 D_80159DC4;
 extern s16 D_80159DC8;
@@ -2653,6 +2657,7 @@ extern s16 D_8015F9F8[8][4];
 extern s16 D_8015FA38;
 extern Unk8015FA40Entry D_8015FA40[];
 extern Unk8015FAD0 D_8015FAD0[0x19];
+extern Unk8015FAD0 D_8015FF50;
 extern s16 D_8015FAEE;
 extern u8 D_8015FAF8;
 extern u8 D_8015FAFC;
