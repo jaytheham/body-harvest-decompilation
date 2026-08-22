@@ -1411,8 +1411,16 @@ typedef struct {
 		/* 0x18 */ s32 unk18;
 		/* 0x18 */ f32 unk18F32;
 	};
-	/* 0x1C */ s8 unk1C;
-	/* 0x1D */ s8 unk1D;
+	union {
+		struct {
+			/* 0x1C */ s8 unk1C;
+			/* 0x1D */ s8 unk1D;
+		};
+		struct {
+			/* 0x1C */ u8 unk1C_u8;
+			/* 0x1D */ u8 unk1D_u8;
+		};
+	};
 	/* 0x1E */ u8 pad1E[0x2];
 	/* 0x20 */ s32 unk20;
 	/* 0x24 */ s32 unk24;
@@ -2638,7 +2646,15 @@ typedef struct {
 	s16 unk2;
 	s16 unk4;
 	s16 unk6;
-	s32 unk8;
+	union {
+		/* 0x08 */ s32 unk8;
+		struct {
+			/* 0x08 */ u8 pad8;
+			/* 0x09 */ u8 pad9;
+			/* 0x0A */ u8 padA;
+			/* 0x0B */ s8 unkB;
+		};
+	};
 	s16 unkC;
 	s16 unkE;
 	s16 unk10;
