@@ -1583,9 +1583,12 @@ u32 func_801269BC_13596C(s32 arg0, u32 arg1, s32 arg2, u32 arg3, s32 arg4, u32 a
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801269BC_13596C.s")
 #endif
 
-// CURRENT(63423)
+// CURRENT(49020)
 #ifdef NON_MATCHING
 void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s32 *arg5, s32 *arg6) {
+	s32 x = arg1;
+	s32 z = arg3;
+	s32 y = arg2;
 	s32 distSqBest;
 	s32 objDist;
 	s32 objThreshold;
@@ -1604,33 +1607,34 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 	s32 shadowZ;
 	s16 hitX;
 	s16 hitZ;
+	u8 *vehicleIndex;
 	s32 vehicleCount;
 	VehicleInstance *vehicle;
-	VehicleSpec *vehicleSpec;
+	VehicleSpec *spec;
 	AlienInstance *alien;
-	AlienSpec *alienSpec;
+	Unk8015F9D0 *hitResult;
 	f32 interp;
 	s32 dx;
 	s32 dy;
 	s32 dz;
-	s32 candidate;
+
 
 	distSqBest = 0x7FFFFFFF;
 
-	if (arg1 < *arg4) {
-		minX = (s16)(arg1 - 0xC8);
+	if (x < *arg4) {
+		minX = (s16)(x - 0xC8);
 		maxX = (s16)(*arg4 + 0xC8);
 	} else {
 		minX = (s16)(*arg4 - 0xC8);
-		maxX = (s16)(arg1 + 0xC8);
+		maxX = (s16)(x + 0xC8);
 	}
 
-	if (arg3 < *arg6) {
-		minZ = (s16)(arg3 - 0xC8);
+	if (z < *arg6) {
+		minZ = (s16)(z - 0xC8);
 		maxZ = (s16)(*arg6 + 0xC8);
 	} else {
 		minZ = (s16)(*arg6 - 0xC8);
-		maxZ = (s16)(arg3 + 0xC8);
+		maxZ = (s16)(z + 0xC8);
 	}
 
 	if (D_801591A8 != 0) {
@@ -1639,9 +1643,9 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 		D_80158FF0 = 0;
 	}
 
-	dx = (arg1 - *arg4) >> 2;
-	dy = (arg2 - *arg5) >> 2;
-	dz = (arg3 - *arg6) >> 2;
+	dx = (x - *arg4) >> 2;
+	dy = (y - *arg5) >> 2;
+	dz = (z - *arg6) >> 2;
 	pathDistSq = (f32)((dx * dx) + (dy * dy) + (dz * dz));
 
 	if (pathDistSq == 0.0f) {
@@ -1650,220 +1654,189 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 
 	exactHit = 0;
 
+
 	if ((currentLevel != LEVEL_COMET) || (arg0 != D_80052B34)) {
-		vehicleCount = D_80158FD8 - 1;
-		if (D_80158FD8 != 0) {
-					do {
-				candidate = 0;
-				vehicle = &vehicleInstances[D_80158E80[vehicleCount]];
+		vehicleCount = D_80158FD8;
+		if (vehicleCount != 0) {
+			vehicleCount--;
+			vehicleIndex = &D_80158E80[vehicleCount];
+			hitResult = &D_8015F9D0;
+			do {
+				vehicle = &vehicleInstances[*vehicleIndex];
 				spec = &vehicleSpecs[vehicle->unk1A];
-				if (vehicle != arg0) {
-					if ((vehicle->unk0 >= minX) && (vehicle->unk0 <= maxX) && (vehicle->unk4 >= minZ) && (vehicle->unk4 <= maxZ)) {
-						if (((arg1 - *arg4) == 0) && ((arg3 - *arg6) == 0)) {
-							if ((vehicle->unk2 + vehicleSpec->unk38) >= *arg5) {
-								func_8010C4EC_11B49C(vehicle);
-								if (func_8010CF7C_11BF2C((s16)arg1, (s16)arg3) != 0) {
-									D_8015F9D0.unk0 = (s16)arg1;
-									D_8015F9D0.unk2 = (s16)(vehicle->unk2 + vehicleSpec->unk38);
-									D_8015F9D0.unk4 = (s16)arg3;
-									exactHit = 1;
-									bestDistF = (f32)distSqBest;
-									candidate = 1;
-								}
-							}
-						} else {
-							lineDist = func_801269BC_13596C(arg1 >> 31, (u32)(s16)arg1, arg3 >> 31, (u32)(s16)arg3, *arg4 >> 31, (u32)*arg4,
-								*arg6 >> 31, (u32)*arg6, vehicle->unk0 >> 31, (u32)vehicle->unk0, vehicle->unk4 >> 31, (u32)vehicle->unk4);
-							if (lineDist < spec->unk8) {
-								switch (vehicleSpec->unk16 & 0xF) {
-									case 0: {
-										s32 ax = arg1 - *arg4;
-										s32 az = arg3 - *arg6;
-										s32 absX = (ax < 0) ? -ax : ax;
-										s32 absZ = (az < 0) ? -az : az;
-										s32 sideDist;
-
-										if (absZ < absX) {
-											sideDist = func_801269BC_13596C(arg1 >> 31, (u32)(s16)arg1, arg2 >> 31, (u32)arg2, *arg4 >> 31,
-												(u32)*arg4, *arg5 >> 31, (u32)*arg5, vehicle->unk0 >> 31, (u32)vehicle->unk0,
-												vehicle->unk2 >> 31, (u32)vehicle->unk2);
-										} else {
-											sideDist = func_801269BC_13596C(arg3 >> 31, (u32)(s16)arg3, arg2 >> 31, (u32)arg2, *arg6 >> 31,
-												(u32)*arg6, *arg5 >> 31, (u32)*arg5, vehicle->unk4 >> 31, (u32)vehicle->unk4,
-												vehicle->unk2 >> 31, (u32)vehicle->unk2);
-										}
-
-										if (vehicleSpec->unk8 >= sideDist) {
-											D_8015F9D0.unk8 = 0;
-											bestDistF = (f32)distSqBest;
-											candidate = 1;
-										}
-										break;
-									}
-
-									case 1: {
-										dx = (arg1 - vehicle->unk0) >> 2;
-										dy = (arg2 - vehicle->unk2) >> 2;
-										dz = (arg3 - vehicle->unk4) >> 2;
-										shadowY = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - arg2)) + (f32)arg2);
-										if ((shadowY >= vehicle->unk2) && (shadowY <= (vehicle->unk2 + vehicleSpec->unk38))) {
-											D_8015F9D0.unk8 = 0;
-											bestDistF = (f32)distSqBest;
-											candidate = 1;
-										}
-										break;
-									}
-
-									case 2:
-										hitX = (s16)*arg4;
-										hitZ = (s16)*arg6;
-										if (func_8010D4EC_11C49C((s16)arg1, (s16)arg3, &hitX, &hitZ, vehicle) != 0) {
-											dx = (arg1 - hitX) >> 2;
-											dz = (arg3 - hitZ) >> 2;
-											shadowY = (s32)((sqrtf((f32)((dx * dx) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - arg2)) + (f32)arg2);
-											if ((shadowY >= vehicle->unk2) && (shadowY <= (vehicle->unk2 + vehicleSpec->unk38))) {
-												D_8015F9D0.unk0 = hitX;
-												D_8015F9D0.unk2 = (s16)shadowY;
-												D_8015F9D0.unk4 = hitZ;
-												exactHit = 1;
-												bestDistF = (f32)distSqBest;
-												candidate = 1;
-											}
-										}
-										break;
-
-									default:
-										bestDistF = (f32)distSqBest;
-										candidate = 1;
-								}
+				if ((vehicle != arg0) && (vehicle->unk0 >= minX) && (vehicle->unk0 <= maxX)
+					&& (vehicle->unk4 >= minZ) && (vehicle->unk4 <= maxZ)) {
+					if (((x - *arg4) >> 2) == 0 && ((z - *arg6) >> 2) == 0) {
+						if ((vehicle->unk2 + spec->unk38) >= *arg5) {
+							func_8010C4EC_11B49C(vehicle);
+							if (func_8010CF7C_11BF2C((s16)x, (s16)z) != 0) {
+								hitResult->unk0 = (s16)x;
+								hitResult->unk2 = (s16)(vehicle->unk2 + spec->unk38);
+								hitResult->unk4 = (s16)z;
+								exactHit = 1;
+								bestDistF = (f32)distSqBest;
+								goto vehicle_common;
 							}
 						}
 					}
-				}
-
-				if (candidate) {
-					dx = (arg1 - vehicle->unk0) >> 2;
-					dy = (arg2 - vehicle->unk2) >> 2;
-					dz = (arg3 - vehicle->unk4) >> 2;
-					objDist = (dx * dx) + (dy * dy) + (dz * dz);
-					if ((f32)objDist < bestDistF) {
-						lineDistBest = lineDist;
-						if (D_801591A8 != 0) {
-							D_80158FE4 = vehicle;
+				} else {
+					lineDist = func_801269BC_13596C(x >> 31, (u32)(s16)x, z >> 31, (u32)(s16)z, *arg4 >> 31, (u32)*arg4,
+						*arg6 >> 31, (u32)*arg6, vehicle->unk0 >> 31, (u32)vehicle->unk0, vehicle->unk4 >> 31, (u32)vehicle->unk4);
+					if (lineDist < spec->unk8) {
+						switch (spec->unk16 & 0xF) {
+						case 0: {
+							s32 ax = x - *arg4;
+							s32 az = z - *arg6;
+							s32 absX = (ax < 0) ? -ax : ax;
+							s32 absZ = (az < 0) ? -az : az;
+							s32 sideDist;
+							if (absZ < absX) sideDist = func_801269BC_13596C(x >> 31, (u32)(s16)x, y >> 31, (u32)y, *arg4 >> 31, (u32)*arg4, *arg5 >> 31, (u32)*arg5, vehicle->unk0 >> 31, (u32)vehicle->unk0, vehicle->unk2 >> 31, (u32)vehicle->unk2);
+							else sideDist = func_801269BC_13596C(z >> 31, (u32)(s16)z, y >> 31, (u32)y, *arg6 >> 31, (u32)*arg6, *arg5 >> 31, (u32)*arg5, vehicle->unk4 >> 31, (u32)vehicle->unk4, vehicle->unk2 >> 31, (u32)vehicle->unk2);
+							if (spec->unk8 < sideDist) goto vehicle_next;
+							hitResult->unk8 = 0;
+							bestDistF = (f32)distSqBest;
+							break;
 						}
-						objThreshold = vehicleSpec->unk8;
-						distSqBest = objDist;
-						if (D_8015F9D0.unk8 == 0) {
-							D_8015F9D0.unk0 = vehicle->unk0;
-							D_8015F9D0.unk2 = vehicle->unk2;
-							D_8015F9D0.unk4 = vehicle->unk4;
-							exactHit = 0;
+						case 1:
+							dx = (x - vehicle->unk0) >> 2;
+							dy = (y - vehicle->unk2) >> 2;
+							dz = (z - vehicle->unk4) >> 2;
+							shadowY = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - y)) + (f32)y);
+							if ((shadowY < vehicle->unk2) || (shadowY > vehicle->unk2 + spec->unk38)) goto vehicle_next;
+							hitResult->unk8 = 0;
+							bestDistF = (f32)distSqBest;
+							break;
+						case 2:
+							hitX = (s16)*arg4;
+							hitZ = (s16)*arg6;
+							if (func_8010D4EC_11C49C((s16)x, (s16)z, &hitX, &hitZ, vehicle) == 0) goto vehicle_next;
+							dx = (x - hitX) >> 2;
+							dz = (z - hitZ) >> 2;
+							shadowY = (s32)((sqrtf((f32)((dx * dx) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - y)) + (f32)y);
+							if ((shadowY < vehicle->unk2) || (shadowY > vehicle->unk2 + spec->unk38)) goto vehicle_next;
+							hitResult->unk0 = hitX;
+							hitResult->unk2 = (s16)shadowY;
+							hitResult->unk4 = hitZ;
+							exactHit = 1;
+							bestDistF = (f32)distSqBest;
+							break;
+						default:
+							bestDistF = (f32)distSqBest;
 						}
-						D_8015F9D0.unkC = (s32)vehicle;
-						D_8015F9D0.unk8 = 5;
-					}
-				}
+						goto vehicle_common;
+                    }
+                }
+                goto vehicle_next;
 
-				vehicleCount--;
-			} while (alienIndex != 0);
+vehicle_common:
+                dx = (x - vehicle->unk0) >> 2;
+                dy = (y - vehicle->unk2) >> 2;
+                dz = (z - vehicle->unk4) >> 2;
+                objDist = (dx * dx) + (dy * dy) + (dz * dz);
+                if ((f32)objDist < bestDistF) {
+                    lineDistBest = lineDist;
+                    if (D_801591A8 != 0) D_80158FE4 = vehicle;
+                    objThreshold = spec->unk8;
+                    distSqBest = objDist;
+                    if (hitResult->unk8 == 0) {
+                        hitResult->unk0 = vehicle->unk0;
+                        hitResult->unk2 = vehicle->unk2;
+                        hitResult->unk4 = vehicle->unk4;
+                        exactHit = 0;
+                    }
+                    hitResult->unkC = (s32)vehicle;
+                    hitResult->unk8 = 5;
+                }
+vehicle_next:
+
+				vehicleIndex--;
+			} while (vehicleCount--);
 		}
 	}
 
 	alien = &alienInstances[0xFE];
 	vehicleCount = 0xFE;
-	while (alienIndex != 0) {
+	do {
 		if ((arg0 != alien) && (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0)
-			&& ((func_80122320_1312D0((s32)alien) == 0) || (func_80122320_1312D0((s32)arg0) == 0))) {
-			if ((alien->unk0 >= minX) && (alien->unk0 <= maxX) && (alien->unk4 >= minZ) && (alien->unk4 <= maxZ)) {
-				alienSpec = &alienSpecs[alien->specIndex];
-				lineDist = func_801269BC_13596C(arg1 >> 31, (u32)(s16)arg1, arg3 >> 31, (u32)(s16)arg3, *arg4 >> 31, (u32)*arg4,
-					*arg6 >> 31, (u32)*arg6, alien->unk0 >> 31, (u32)alien->unk0, alien->unk4 >> 31, (u32)alien->unk4);
-				if (lineDist < spec->unk8) {
-					candidate = 1;
-					if ((alienSpec->unk16 & 0xF) == 0) {
-						s32 ax = arg1 - *arg4;
-						s32 az = arg3 - *arg6;
-						s32 absX = (ax < 0) ? -ax : ax;
-						s32 absZ = (az < 0) ? -az : az;
-						s32 sideDist;
-
-						if (absZ < absX) {
-							sideDist = func_801269BC_13596C(arg1 >> 31, (u32)(s16)arg1, arg2 >> 31, (u32)arg2, *arg4 >> 31, (u32)*arg4,
-								*arg5 >> 31, (u32)*arg5, alien->unk0 >> 31, (u32)alien->unk0, alien->unk2 >> 31, (u32)alien->unk2);
-						} else {
-							sideDist = func_801269BC_13596C(arg3 >> 31, (u32)(s16)arg3, arg2 >> 31, (u32)arg2, *arg6 >> 31, (u32)*arg6,
-								*arg5 >> 31, (u32)*arg5, alien->unk4 >> 31, (u32)alien->unk4, alien->unk2 >> 31, (u32)alien->unk2);
-						}
-						if (alienSpec->unk8 >= sideDist) {
-							candidate = 0;
-						}
+			&& ((func_80122320_1312D0((s32)alien) == 0) || (func_80122320_1312D0((s32)arg0) == 0))
+			&& (alien->unk0 >= minX) && (alien->unk0 <= maxX) && (alien->unk4 >= minZ) && (alien->unk4 <= maxZ)) {
+			spec = (VehicleSpec *)&alienSpecs[alien->specIndex];
+			lineDist = func_801269BC_13596C(x >> 31, (u32)(s16)x, z >> 31, (u32)(s16)z, *arg4 >> 31, (u32)*arg4,
+				*arg6 >> 31, (u32)*arg6, alien->unk0 >> 31, (u32)alien->unk0, alien->unk4 >> 31, (u32)alien->unk4);
+			if (lineDist < spec->unk8) {
+				if ((spec->unk16 & 0xF) == 0) {
+					s32 ax = x - *arg4;
+					s32 az = z - *arg6;
+					s32 absX = (ax < 0) ? -ax : ax;
+					s32 absZ = (az < 0) ? -az : az;
+					s32 sideDist;
+					if (absZ < absX) {
+						sideDist = func_801269BC_13596C(x >> 31, (u32)(s16)x, y >> 31, (u32)y, *arg4 >> 31, (u32)*arg4,
+							*arg5 >> 31, (u32)*arg5, alien->unk0 >> 31, (u32)alien->unk0, alien->unk2 >> 31, (u32)alien->unk2);
+					} else {
+						sideDist = func_801269BC_13596C(z >> 31, (u32)(s16)z, y >> 31, (u32)y, *arg6 >> 31, (u32)*arg6,
+							*arg5 >> 31, (u32)*arg5, alien->unk4 >> 31, (u32)alien->unk4, alien->unk2 >> 31, (u32)alien->unk2);
 					}
-					if (candidate) {
-						dx = (arg1 - alien->unk0) >> 2;
-						dy = (arg2 - alien->unk2) >> 2;
-						dz = (arg3 - alien->unk4) >> 2;
-						if ((alienSpec->unk16 & 0xF) == 1) {
-							shadowY = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - arg2)) + (f32)arg2);
-							hitX = alien->unk2;
-							if ((alienSpec->unk16 & 0x10) != 0) {
-								hitX -= alienSpec->unk38;
+					if (spec->unk8 >= sideDist) {
+						goto alien_next;
+					}
+				}
+				dx = (x - alien->unk0) >> 2;
+					dy = (y - alien->unk2) >> 2;
+				dz = (z - alien->unk4) >> 2;
+				if ((spec->unk16 & 0xF) == 1) {
+					shadowY = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq)
+						* (f32)(*arg5 - y)) + (f32)y);
+					hitX = alien->unk2;
+					if ((spec->unk16 & 0x10) != 0) {
+						hitX -= spec->unk38;
+					}
+					if ((shadowY < (hitX - 0x14)) || (shadowY > (alien->unk2 + spec->unk38 + 0x14))) {
+						goto alien_next;
+					}
+				}
+				objDist = (dx * dx) + (dy * dy) + (dz * dz);
+				if ((f32)objDist < (f32)distSqBest) {
+					if (D_801591A8 != 0) {
+						D_80158FEC = alien;
+						D_80158FE4 = NULL;
+					}
+					objThreshold = spec->unk8;
+					lineDistBest = lineDist;
+					distSqBest = objDist;
+					hitResult->unk0 = alien->unk0;
+					hitResult->unk2 = alien->unk2;
+					hitResult->unk4 = alien->unk4;
+					D_8015F9DC = (s32)alien;
+					hitResult->unk8 = 7;
+					if (((AlienSpec *)spec)->unk5A != -1) {
+						Unk80147090Entry_8012B26C *entry = &D_80147090_156040[((AlienSpec *)spec)->unk5A];
+						lineThresholdBest = entry->radius * entry->radius;
+						func_80128428_1373D8(alien, entry->x, entry->y, entry->z, &shadowX, &shadowY, &shadowZ);
+						if ((f32)func_801269BC_13596C(x >> 31, (u32)(s16)x, z >> 31, (u32)(s16)z, *arg4 >> 31, (u32)*arg4,
+							*arg6 >> 31, (u32)*arg6, shadowX >> 31, (u32)shadowX, shadowZ >> 31, (u32)shadowZ) < (f32)lineThresholdBest) {
+							s32 ax = x - *arg4;
+							s32 az = z - *arg6;
+							s32 absX = (ax < 0) ? -ax : ax;
+							s32 absZ = (az < 0) ? -az : az;
+							s32 sideDist;
+							if (absZ < absX) {
+								sideDist = func_801269BC_13596C(x >> 31, (u32)(s16)x, y >> 31, (u32)y, *arg4 >> 31, (u32)*arg4,
+									*arg5 >> 31, (u32)*arg5, shadowX >> 31, (u32)shadowX, shadowY >> 31, (u32)shadowY);
+							} else {
+								sideDist = func_801269BC_13596C(z >> 31, (u32)(s16)z, y >> 31, (u32)y, *arg6 >> 31, (u32)*arg6,
+									*arg5 >> 31, (u32)*arg5, shadowZ >> 31, (u32)shadowZ, shadowY >> 31, (u32)shadowY);
 							}
-							if ((shadowY < (hitX - 0x14)) || (shadowY > (alien->unk2 + alienSpec->unk38 + 0x14))) {
-								candidate = 0;
-							}
-						}
-						if (candidate) {
-							objDist = (dx * dx) + (dy * dy) + (dz * dz);
-							if ((f32)objDist < (f32)distSqBest) {
-								if (D_801591A8 != 0) {
-									D_80158FEC = alien;
-									D_80158FE4 = NULL;
-								}
-
-								objThreshold = alienSpec->unk8;
-								lineDistBest = lineDist;
-								distSqBest = objDist;
-								D_8015F9D0.unk0 = alien->unk0;
-								D_8015F9D0.unk2 = alien->unk2;
-								D_8015F9D0.unk4 = alien->unk4;
-								D_8015F9DC = (s32)alien;
-								D_8015F9D0.unk8 = 7;
-
-								if (alienSpec->unk5A != -1) {
-									Unk80147090Entry_8012B26C *entry = &D_80147090_156040[alienSpec->unk5A];
-									lineThresholdBest = entry->radius * entry->radius;
-
-									func_80128428_1373D8(alien, entry->x, entry->y, entry->z, &shadowX, &shadowY, &shadowZ);
-
-									if ((f32)func_801269BC_13596C(arg1 >> 31, (u32)(s16)arg1, arg3 >> 31, (u32)(s16)arg3, *arg4 >> 31, (u32)*arg4,
-										*arg6 >> 31, (u32)*arg6, shadowX >> 31, (u32)shadowX, shadowZ >> 31, (u32)shadowZ) < (f32)lineThresholdBest) {
-										s32 ax = arg1 - *arg4;
-										s32 az = arg3 - *arg6;
-										s32 absX = (ax < 0) ? -ax : ax;
-										s32 absZ = (az < 0) ? -az : az;
-										s32 sideDist;
-
-										if (absZ < absX) {
-											sideDist = func_801269BC_13596C(arg1 >> 31, (u32)(s16)arg1, arg2 >> 31, (u32)arg2, *arg4 >> 31, (u32)*arg4,
-												*arg5 >> 31, (u32)*arg5, shadowX >> 31, (u32)shadowX, shadowY >> 31, (u32)shadowY);
-										} else {
-											sideDist = func_801269BC_13596C(arg3 >> 31, (u32)(s16)arg3, arg2 >> 31, (u32)arg2, *arg6 >> 31, (u32)*arg6,
-												*arg5 >> 31, (u32)*arg5, shadowZ >> 31, (u32)shadowZ, shadowY >> 31, (u32)shadowY);
-										}
-
-										if (sideDist < lineThresholdBest) {
-											dx = (arg1 - shadowX) >> 2;
-											dy = (arg2 - shadowY) >> 2;
-											dz = (arg3 - shadowZ) >> 2;
-											if (((dx * dx) + (dy * dy) + (dz * dz)) < distSqBest) {
-												if (D_801591A8 != 0) {
-													D_80158FF0 = (s32)alien;
-												}
-												D_8015F9D0.unk8 = 8;
-												osSyncPrintf(&D_801450DC_15408C);
-											}
-										}
+							if (sideDist < lineThresholdBest) {
+								dx = (x - shadowX) >> 2;
+								dy = (y - shadowY) >> 2;
+								dz = (z - shadowZ) >> 2;
+								if (((dx * dx) + (dy * dy) + (dz * dz)) < distSqBest) {
+									if (D_801591A8 != 0) {
+										D_80158FF0 = (s32)alien;
 									}
+									hitResult->unk8 = 8;
+									osSyncPrintf(D_801450DC_15408C);
 								}
 							}
 						}
@@ -1871,18 +1844,19 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 				}
 			}
 		}
-`n`t`talienIndex--;
-	}
+alien_next:
+		alien--;
+	} while (vehicleCount--);
 
 	if ((distSqBest != 0x7FFFFFFF) && (exactHit == 0)) {
-		dx = (arg1 - D_8015F9D0.unk0) >> 2;
-		dy = (arg2 - D_8015F9D0.unk2) >> 2;
-		dz = (arg3 - D_8015F9D0.unk4) >> 2;
+		dx = (x - hitResult->unk0) >> 2;
+		dy = (y - hitResult->unk2) >> 2;
+		dz = (z - hitResult->unk4) >> 2;
 		interp = (f32)((dx * dx) + (dy * dy) + (dz * dz) - (lineDistBest >> 4));
 
-		dx = (arg1 - *arg4) >> 2;
-		dy = (arg2 - *arg5) >> 2;
-		dz = (arg3 - *arg6) >> 2;
+		dx = (x - *arg4) >> 2;
+		dy = (y - *arg5) >> 2;
+		dz = (z - *arg6) >> 2;
 
 		if (interp < 10.0f) {
 			bestDistF = 1.0f;
@@ -1890,23 +1864,24 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 			bestDistF = sqrtf(interp / (f32)((dx * dx) + (dy * dy) + (dz * dz)));
 		}
 
-		D_8015F9D0.unk0 = (s16)((f32)arg1 - ((f32)(dx * 4) * bestDistF));
-		D_8015F9D0.unk2 = (s16)((f32)arg2 - ((f32)(dy * 4) * bestDistF));
-		D_8015F9D0.unk4 = (s16)((f32)arg3 - ((f32)(dz * 4) * bestDistF));
+		hitResult->unk0 = (s16)((f32)x - ((f32)(dx * 4) * bestDistF));
+		hitResult->unk2 = (s16)((f32)y - ((f32)(dy * 4) * bestDistF));
+		hitResult->unk4 = (s16)((f32)z - ((f32)(dz * 4) * bestDistF));
 
 		if (interp > 10.0f) {
 			f32 blend = sqrtf((f32)((objThreshold - lineDistBest) >> 4) / interp);
-			D_8015F9D0.unk0 = (s16)((f32)D_8015F9D0.unk0 + ((f32)(arg1 - D_8015F9D0.unk0) * blend));
-			D_8015F9D0.unk4 = (s16)((f32)D_8015F9D0.unk4 + ((f32)(arg3 - D_8015F9D0.unk4) * blend));
+			hitResult->unk0 = (s16)((f32)hitResult->unk0 + ((f32)(x - hitResult->unk0) * blend));
+			hitResult->unk4 = (s16)((f32)hitResult->unk4 + ((f32)(z - hitResult->unk4) * blend));
 		}
 	}
 
 	if (distSqBest != 0x7FFFFFFF) {
-		*arg4 = D_8015F9D0.unk0;
-		*arg5 = D_8015F9D0.unk2;
-		*arg6 = D_8015F9D0.unk4;
+		*arg4 = hitResult->unk0;
+		*arg5 = hitResult->unk2;
+		*arg6 = hitResult->unk4;
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80126B80_135B30.s")
 #endif
