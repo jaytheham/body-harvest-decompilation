@@ -1963,7 +1963,6 @@ void func_80127F9C_136F4C(s16 arg0, s16 arg1, s16 arg2)
 	func_80124170_133120(arg0, y, arg1, D_80145BE0_154B90[arg2].unk2, D_80145BE0_154B90[arg2].unk4, NULL);
 }
 
-// https://decomp.me/scratch/TrRk0
 void func_80128288_137238(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3)
 {
 	s16 value;
@@ -2408,6 +2407,7 @@ Projectile *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80129354_138304.s")
 #endif
+
 #ifdef NON_MATCHING
 Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	typedef Projectile *(*SpawnFunc_801226F8)(s16 *, BuildingInstance *, s16, s16, s16, f32, f32, f32);
@@ -3609,7 +3609,6 @@ void func_8012B26C_13A21C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012B26C_13A21C.s")
 #endif
 
-// https://decomp.me/scratch/NbuM2
 s32 func_8012D600_13C5B0(void)
 {
 	u32 minTime;
@@ -3659,7 +3658,6 @@ s32 func_8012D6A4_13C654(u8 arg0, u16 arg1)
   return -1;
 }
 
-// https://decomp.me/scratch/krXCn
 s32 func_8012D700_13C6B0(u8 arg0, u16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5, s32 arg6, s32 arg7, s16 arg8, s16 arg9, s16 arg10, void *arg11, void *arg12)
 {
 	Unk8015FAD0 *v1;
@@ -3704,17 +3702,17 @@ void func_8012D824_13C7D4(void) {
 
 void func_8012D84C_13C7FC()
 {
-  s32 i;
-  for (i = 0x19;i--;)
-  {
-	if (D_8015FAD0[i].unk28 != -1)
+	s32 i;
+	for (i = 0x19; i--;)
 	{
-	  D_8015FAD0[i].unk2C = 0;
+		if (D_8015FAD0[i].unk28 != -1)
+		{
+			D_8015FAD0[i].unk2C = 0;
+		}
 	}
-  }
 }
 
-// CURRENT(2285)
+// CURRENT(28705)
 // DisplayForces - Debug draw interaction boxes
 #ifdef NON_MATCHING
 void func_8012D884_13C834(void) {
@@ -3852,7 +3850,6 @@ void func_8012D884_13C834(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012D884_13C834.s")
 #endif
 
-// https://decomp.me/scratch/vix2w
 s32 func_8012DDA8_13CD58(s16 arg0, s16 arg1, s16 arg2, s16 arg3, void *arg4, s32 arg5, s32 *arg6)
 {
 	Unk8015FAD0 *entry;
@@ -3936,7 +3933,6 @@ s32 func_8012DF90_13CF40(Unk8015FAD0 *arg0, void *arg1, s32 arg2) {
 	return var_v1;
 }
 
-// https://decomp.me/scratch/5FBm4
 s32 func_8012E03C_13CFEC(s16 arg0, s16 arg1, s16 arg2)
 {
 	s32 a0;
