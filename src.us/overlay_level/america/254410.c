@@ -1346,7 +1346,7 @@ void func_802D6138_255878(u8 arg0)
 	if (alienFlags & ALIEN_FLAG_UNKD)
 	{
 		isAlive = isAlive & ALIEN_FLAG_UNKL;
-		if ((isAlive == 0) && (alienFlags & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
+		if (!isAlive && (alienFlags & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
 		{
 			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienSpecs[alien->specIndex].unkC * 2), 0);
 			alien->unk12 = 0;
@@ -1367,7 +1367,7 @@ void func_802D6138_255878(u8 arg0)
 			isAlive = alien->unk20 & ALIEN_FLAG_UNKL;
 		}
 	}
-	if ((isAlive == 0) && (parentInstanceId != 0xFF))
+	if (!isAlive && (parentInstanceId != 0xFF))
 	{
 		if (alienInstances[parentInstanceId].specIndex == 0x1A)
 		{
