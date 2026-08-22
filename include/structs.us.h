@@ -1137,7 +1137,7 @@ typedef struct {
 	/* 0x58 */ s16 unk58; // Height of body off the ground
 	/* 0x5A */ s8 unk5A;
 	/* 0x5B */ u8 pad5B;
-	/* 0x5C */ void *unk5C;
+	/* 0x5C */ void (*unk5C)(u8); // On-death handler function pointer?
 	/* 0x60 */ u8 pad60[0x8];
 } AlienSpec; /* size = 0x68 */
 

@@ -414,7 +414,20 @@ segments:
       - [0x1DDF8C, bin, overlay_level/greece/terrain_palettes] #mio0
       - [0x1DF290, bin, overlay_level/greece/sky_texture] #mio0
       - [0x1E40A4, bin, overlay_level/greece/sky_palette] #mio0
-      - [0x1E42E0, bin, overlay_level/greece/alien_types] # 48 * 104 bytes
+
+  - name: overlay_level_greece_alien_types
+    type: code
+    start: 0x1E42E0
+    vram: 0x8032B7D0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x1E42E0, .data, overlay_level/greece/alien_types] # 48 * 104 bytes
+
+  - name: overlay_level_greece_data_tail
+    type: bin
+    start: 0x1E5660
+    subsegments:
       - [0x1E5660, bin, overlay_level/greece/vehicle_types] # 21 * 112 bytes
       - [0x1E5F90, bin, overlay_level/greece/signposts]
       - [0x1E5FF0, bin, overlay_level/greece/english_sign_strings]

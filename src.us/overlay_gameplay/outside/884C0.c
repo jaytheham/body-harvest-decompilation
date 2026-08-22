@@ -6688,7 +6688,7 @@ void func_80088760_97710(AlienInstance* alien) {
 	} else {
 		if (alienSpecs[specIndex].unk5C) {
 			// This is what calls func_80089D04_98CB4 when blackadam is killed
-			((void(*)(u8))alienSpecs[specIndex].unk5C)((u8)(alien - alienInstances));
+			alienSpecs[specIndex].unk5C((u8)(alien - alienInstances));
 		} else {
 			func_80089EB4_98E64((u8)(alien - alienInstances), 0x28, 0, 2, 0);
 		}

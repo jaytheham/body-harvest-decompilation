@@ -1520,7 +1520,7 @@ void func_802D763C_19014C(u8 arg0) {
 #ifdef NON_MATCHING
 /* CURRENT(16009) */
 // AI - Alien damage death reaction and sub-alien spawning
-void func_802D775C_19026C(s32 arg0) {
+void func_802D775C_19026C(u8 arg0) {
 	AlienInstance *s0;
 	u8 sp73;
 	s32 sp68;

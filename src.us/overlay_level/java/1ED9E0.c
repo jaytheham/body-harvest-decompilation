@@ -282,7 +282,7 @@ AlienSpec D_802E0CE4_1F99F4 = {
 	0x012C,                         /* unk58 */
 	0xFF,                           /* unk5A */
 	0x00,                           /* pad5B */
-	(void *)0x802DFC28,             /* unk5C */
+	(void (*)(u8))0x802DFC28,       /* unk5C */
 	{ 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, /* pad60 */
 };
 
