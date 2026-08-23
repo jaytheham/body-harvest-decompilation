@@ -4345,7 +4345,7 @@ s32 func_800BC5DC_CB58C(s16 arg0) {
 		((D_8021EA30[(a1 / 4) * 0x40 + (a3 / 4)] & 0xF) == 7) && (((u32)tile >> 0xF) != 1)) {
 		*tilePtr = (tile & 0xFC3F) | 0x380;
 		func_800DF038_EDFE8(sp36, (func_800B84D0_C7480(sp36, sp34) >> 8) + 0xA, sp34, 0x78, 0, 0);
-		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)alienSpecs[alienInstances[arg0].specIndex].unkC, 0);
+		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)alienTypes[alienInstances[arg0].typeIndex].unkC, 0);
 		func_80079910_888C0(arg0);
 		return 1;
 	}

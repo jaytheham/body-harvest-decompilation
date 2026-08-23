@@ -135,12 +135,12 @@ int func_8012235C_13130C(Unk8004D0F8 *arg0)
 }
 
 s32 func_801223B0_131360(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
-	EntityDamageSpec *spec;
+	EntityDamageType *type;
 	s16 damageDir;
 	s16 ret;
 	s32 dirBucket;
 
-	spec = (EntityDamageSpec *)func_800FAFB8_109F68((VehicleInstance *)arg0);
+	type = (EntityDamageType *)func_800FAFB8_109F68((VehicleInstance *)arg0);
 	damageDir = (func_80003824_4424((f32)(arg0->unk0 - arg1), (f32)(arg0->unk4 - arg2)) - arg0->unk6) + 0x2000;
 
 	if ((arg0->unkC == -2) && (arg0->unk1A == 0x12) && (currentLevel == 1) && (D_8015FA38 != 0)) {
@@ -157,13 +157,13 @@ s32 func_801223B0_131360(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 	dirBucket = damageDir >> 14;
 	switch (dirBucket) {
 		case 0:
-			ret = spec->rearDamage;
+			ret = type->rearDamage;
 			break;
 		case -2:
-			ret = spec->frontalDamage;
+			ret = type->frontalDamage;
 			break;
 		default:
-			ret = spec->sideDamage;
+			ret = type->sideDamage;
 	}
 
 	return ret;
@@ -253,8 +253,8 @@ set_angle:
 	sp74 = func_80003824_4424(arg5, arg7);
 angle_done:
 
-	if ((vehicle->unkC == -2) && (vehicleSpecs[vehicle->unk1A].launchAngle != 0xFF)) {
-		sp72 = (u16)(vehicleSpecs[vehicle->unk1A].launchAngle << 8);
+	if ((vehicle->unkC == -2) && (vehicleTypes[vehicle->unk1A].launchAngle != 0xFF)) {
+		sp72 = (u16)(vehicleTypes[vehicle->unk1A].launchAngle << 8);
 		negArg7 = sqrtf((arg5 * arg5) + (arg7 * arg7));
 		arg6 = (f32)((((f32)sins(sp72) / 32768.0) * negArg7) / ((f32)sins((0x4000 - (s16)sp72) & 0xFFFF) / 32768.0));
 	} else {
@@ -533,7 +533,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
   }
   if (arg0->unk1A != 0)
   {
-	sp44 = func_800DF038_EDFE8(arg0->unk0, arg0->unk2, arg0->unk4, vehicleSpecs[arg0->unk1A].unk36 * 2, (func_800038E0_44E0() % 3) + 3, 0);
+	sp44 = func_800DF038_EDFE8(arg0->unk0, arg0->unk2, arg0->unk4, vehicleTypes[arg0->unk1A].unk36 * 2, (func_800038E0_44E0() % 3) + 3, 0);
   }
   arg0->unk1C = 0;
   if (arg0 == D_80052B34)
@@ -567,7 +567,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 		// Play sound effect at vehicle position
 	  func_801371B8_146168(0, 0x185, arg0->unk0, arg0->unk2, arg0->unk4, 0.25 + ((f32) (func_800038E0_44E0() % 100) / 1000.0));
 	  // Spawn particle effect at vehicle position
-	  func_800C7924_D68D4(arg0->unk0, arg0->unk2, arg0->unk4, 0x10, sp44, vehicleSpecs[arg0->unk1A].unk36 * 2, slot, 1);
+	  func_800C7924_D68D4(arg0->unk0, arg0->unk2, arg0->unk4, 0x10, sp44, vehicleTypes[arg0->unk1A].unk36 * 2, slot, 1);
 	}
 
   }
@@ -581,7 +581,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 	if (D_80052B34->unk1A != 0)
 	{
 		// Create explosion at vehicle position
-	  func_800DF038_EDFE8(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, vehicleSpecs[D_80052B34->unk1A].unk36 * 2, (func_800038E0_44E0() % 3) + 3, 0);
+	  func_800DF038_EDFE8(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, vehicleTypes[D_80052B34->unk1A].unk36 * 2, (func_800038E0_44E0() % 3) + 3, 0);
 	  D_80052B34->unk1C = 0;
 	  // Mark player vehicle as destroyed
 	  func_800FDD8C_10CD3C(D_80052B34);
@@ -709,9 +709,9 @@ vehicle = &vehicleInstances[*activeList];
 
 			if (((vehicle->unk20 & VEHICLE_FLAG_UNK7) != 0) && (vehicle != arg5)) {
 
-				VehicleSpec *vehSpec;
+				VehicleType *vehType;
 
-				vehSpec = &vehicleSpecs[vehicle->unk1A];
+				vehType = &vehicleTypes[vehicle->unk1A];
 				dx = (arg0 - vehicle->unk0) >> 2;
 				dy = (arg1 - vehicle->unk2) >> 2;
 				dz = (arg2 - vehicle->unk4) >> 2;
@@ -720,7 +720,7 @@ vehicle = &vehicleInstances[*activeList];
 					dist = (u32)sqrtf((f32)distSq);
 					damage = (s32)(((f32)(arg4 - dist) * scale) * (f32)(arg4 - dist));
 					if (damage != 0) {
-result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, vehicle->unk0, vehicle->unk2 + vehSpec->unk38, vehicle->unk4, &hitObj);
+result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, vehicle->unk0, vehicle->unk2 + vehType->unk38, vehicle->unk4, &hitObj);
 						if (result == 3) {
 							damage >>= 2;
 						} else if ((VehicleInstance *)hitObj != vehicle) {
@@ -740,7 +740,7 @@ result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, vehicle->unk0, vehicle->un
 								}
 								func_80122524_1314D4(vehicle, (s16)damage, arg0, arg2);
 							}
-							pushScale = -(((f32)(damage << 5) / (f32)(dist + 1)) * 2.0f) / (f32)vehicleSpecs[vehicle->unk1A].unk32;
+							pushScale = -(((f32)(damage << 5) / (f32)(dist + 1)) * 2.0f) / (f32)vehicleTypes[vehicle->unk1A].unk32;
 							if (vehicle->unk1A == 0) {
 								func_80102D00_111CB0(vehicle, (f32)(((f32)dx * pushScale) / 100.0), (f32)((f64)-pushScale / 10.0), (f32)((f64)((f32)dz * pushScale) / 100.0));
 								D_80052B34->unkA = 0x7FFF;
@@ -773,11 +773,11 @@ result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, vehicle->unk0, vehicle->un
 		s32 damage;
 		s32 result;
 
-		if ((arg5 != (VehicleInstance *)alien) && ((currentLevel == 5) || (alien->specIndex != 0x12)) && ((alien->unk1B == 0xFF) || (D_80047F94 == alien->unk1B)) && (alien->specIndex != 0)) {
-			AlienSpec *alienSpec;
+		if ((arg5 != (VehicleInstance *)alien) && ((currentLevel == 5) || (alien->typeIndex != 0x12)) && ((alien->unk1B == 0xFF) || (D_80047F94 == alien->unk1B)) && (alien->typeIndex != 0)) {
+			AlienType *alienType;
 			s32 hitObj;
 
-			spec = &alienSpecs[alien->specIndex];
+			type = &alienTypes[alien->typeIndex];
 			dx = (arg0 - alien->unk0) >> 2;
 			dy = (arg1 - alien->unk2) >> 2;
 			dz = (arg2 - alien->unk4) >> 2;
@@ -786,7 +786,7 @@ result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, vehicle->unk0, vehicle->un
 				dist = (u32)sqrtf((f32)distSq);
 				damage = (s32)(((f32)(arg4 - dist) * scale) * (f32)(arg4 - dist));
 				if (damage != 0) {
-result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, alien->unk0, alienSpec->unk38 + alien->unk2, alien->unk4, &hitObj);
+result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, alien->unk0, alienType->unk38 + alien->unk2, alien->unk4, &hitObj);
 					if (result == 3) {
 						damage >>= 2;
 					} else if ((AlienInstance *)hitObj != alien) {
@@ -1553,7 +1553,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 	u8 *vehicleIndex;
 	s32 vehicleCount;
 	VehicleInstance *vehicle;
-	VehicleSpec *spec;
+	VehicleType *type;
 	AlienInstance *alien;
 	Unk8015F9D0 *hitResult;
 	f32 interp;
@@ -1606,15 +1606,15 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 			hitResult = &D_8015F9D0;
 			do {
 				vehicle = &vehicleInstances[*vehicleIndex];
-				spec = &vehicleSpecs[vehicle->unk1A];
+				type = &vehicleTypes[vehicle->unk1A];
 				if ((vehicle != arg0) && (vehicle->unk0 >= minX) && (vehicle->unk0 <= maxX)
 					&& (vehicle->unk4 >= minZ) && (vehicle->unk4 <= maxZ)) {
 					if (((x - *arg4) >> 2) == 0 && ((z - *arg6) >> 2) == 0) {
-						if ((vehicle->unk2 + spec->unk38) >= *arg5) {
+						if ((vehicle->unk2 + type->unk38) >= *arg5) {
 							func_8010C4EC_11B49C(vehicle);
 							if (func_8010CF7C_11BF2C((s16)x, (s16)z) != 0) {
 								hitResult->unk0 = (s16)x;
-								hitResult->unk2 = (s16)(vehicle->unk2 + spec->unk38);
+								hitResult->unk2 = (s16)(vehicle->unk2 + type->unk38);
 								hitResult->unk4 = (s16)z;
 								exactHit = 1;
 								bestDistF = (f32)distSqBest;
@@ -1625,8 +1625,8 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 				} else {
 					lineDist = func_801269BC_13596C(x >> 31, (u32)(s16)x, z >> 31, (u32)(s16)z, *arg4 >> 31, (u32)*arg4,
 						*arg6 >> 31, (u32)*arg6, vehicle->unk0 >> 31, (u32)vehicle->unk0, vehicle->unk4 >> 31, (u32)vehicle->unk4);
-					if (lineDist < spec->unk8) {
-						switch (spec->unk16 & 0xF) {
+					if (lineDist < type->unk8) {
+						switch (type->unk16 & 0xF) {
 						case 0: {
 							s32 ax = x - *arg4;
 							s32 az = z - *arg6;
@@ -1635,7 +1635,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 							s32 sideDist;
 							if (absZ < absX) sideDist = func_801269BC_13596C(x >> 31, (u32)(s16)x, y >> 31, (u32)y, *arg4 >> 31, (u32)*arg4, *arg5 >> 31, (u32)*arg5, vehicle->unk0 >> 31, (u32)vehicle->unk0, vehicle->unk2 >> 31, (u32)vehicle->unk2);
 							else sideDist = func_801269BC_13596C(z >> 31, (u32)(s16)z, y >> 31, (u32)y, *arg6 >> 31, (u32)*arg6, *arg5 >> 31, (u32)*arg5, vehicle->unk4 >> 31, (u32)vehicle->unk4, vehicle->unk2 >> 31, (u32)vehicle->unk2);
-							if (spec->unk8 < sideDist) goto vehicle_next;
+							if (type->unk8 < sideDist) goto vehicle_next;
 							hitResult->unk8 = 0;
 							bestDistF = (f32)distSqBest;
 							break;
@@ -1645,7 +1645,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 							dy = (y - vehicle->unk2) >> 2;
 							dz = (z - vehicle->unk4) >> 2;
 							shadowY = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - y)) + (f32)y);
-							if ((shadowY < vehicle->unk2) || (shadowY > vehicle->unk2 + spec->unk38)) goto vehicle_next;
+							if ((shadowY < vehicle->unk2) || (shadowY > vehicle->unk2 + type->unk38)) goto vehicle_next;
 							hitResult->unk8 = 0;
 							bestDistF = (f32)distSqBest;
 							break;
@@ -1656,7 +1656,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 							dx = (x - hitX) >> 2;
 							dz = (z - hitZ) >> 2;
 							shadowY = (s32)((sqrtf((f32)((dx * dx) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - y)) + (f32)y);
-							if ((shadowY < vehicle->unk2) || (shadowY > vehicle->unk2 + spec->unk38)) goto vehicle_next;
+							if ((shadowY < vehicle->unk2) || (shadowY > vehicle->unk2 + type->unk38)) goto vehicle_next;
 							hitResult->unk0 = hitX;
 							hitResult->unk2 = (s16)shadowY;
 							hitResult->unk4 = hitZ;
@@ -1679,7 +1679,7 @@ vehicle_common:
 				if ((f32)objDist < bestDistF) {
 					lineDistBest = lineDist;
 					if (D_801591A8 != 0) D_80158FE4 = vehicle;
-					objThreshold = spec->unk8;
+					objThreshold = type->unk8;
 					distSqBest = objDist;
 					if (hitResult->unk8 == 0) {
 						hitResult->unk0 = vehicle->unk0;
@@ -1703,11 +1703,11 @@ vehicle_next:
 		if ((arg0 != alien) && (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0)
 			&& ((func_80122320_1312D0((s32)alien) == 0) || (func_80122320_1312D0((s32)arg0) == 0))
 			&& (alien->unk0 >= minX) && (alien->unk0 <= maxX) && (alien->unk4 >= minZ) && (alien->unk4 <= maxZ)) {
-			spec = (VehicleSpec *)&alienSpecs[alien->specIndex];
+			type = (VehicleType *)&alienTypes[alien->typeIndex];
 			lineDist = func_801269BC_13596C(x >> 31, (u32)(s16)x, z >> 31, (u32)(s16)z, *arg4 >> 31, (u32)*arg4,
 				*arg6 >> 31, (u32)*arg6, alien->unk0 >> 31, (u32)alien->unk0, alien->unk4 >> 31, (u32)alien->unk4);
-			if (lineDist < spec->unk8) {
-				if ((spec->unk16 & 0xF) == 0) {
+			if (lineDist < type->unk8) {
+				if ((type->unk16 & 0xF) == 0) {
 					s32 ax = x - *arg4;
 					s32 az = z - *arg6;
 					s32 absX = (ax < 0) ? -ax : ax;
@@ -1720,21 +1720,21 @@ vehicle_next:
 						sideDist = func_801269BC_13596C(z >> 31, (u32)(s16)z, y >> 31, (u32)y, *arg6 >> 31, (u32)*arg6,
 							*arg5 >> 31, (u32)*arg5, alien->unk4 >> 31, (u32)alien->unk4, alien->unk2 >> 31, (u32)alien->unk2);
 					}
-					if (spec->unk8 >= sideDist) {
+					if (type->unk8 >= sideDist) {
 						goto alien_next;
 					}
 				}
 				dx = (x - alien->unk0) >> 2;
 					dy = (y - alien->unk2) >> 2;
 				dz = (z - alien->unk4) >> 2;
-				if ((spec->unk16 & 0xF) == 1) {
+				if ((type->unk16 & 0xF) == 1) {
 					shadowY = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq)
 						* (f32)(*arg5 - y)) + (f32)y);
 					hitX = alien->unk2;
-					if ((spec->unk16 & 0x10) != 0) {
-						hitX -= spec->unk38;
+					if ((type->unk16 & 0x10) != 0) {
+						hitX -= type->unk38;
 					}
-					if ((shadowY < (hitX - 0x14)) || (shadowY > (alien->unk2 + spec->unk38 + 0x14))) {
+					if ((shadowY < (hitX - 0x14)) || (shadowY > (alien->unk2 + type->unk38 + 0x14))) {
 						goto alien_next;
 					}
 				}
@@ -1744,7 +1744,7 @@ vehicle_next:
 						D_80158FEC = alien;
 						D_80158FE4 = NULL;
 					}
-					objThreshold = spec->unk8;
+					objThreshold = type->unk8;
 					lineDistBest = lineDist;
 					distSqBest = objDist;
 					hitResult->unk0 = alien->unk0;
@@ -1752,8 +1752,8 @@ vehicle_next:
 					hitResult->unk4 = alien->unk4;
 					D_8015F9DC = (s32)alien;
 					hitResult->unk8 = 7;
-					if (((AlienSpec *)spec)->unk5A != -1) {
-						Unk80147090Entry_8012B26C *entry = &D_80147090_156040[((AlienSpec *)spec)->unk5A];
+					if (((AlienType *)type)->unk5A != -1) {
+						Unk80147090Entry_8012B26C *entry = &D_80147090_156040[((AlienType *)type)->unk5A];
 						lineThresholdBest = entry->radius * entry->radius;
 						func_80128428_1373D8(alien, entry->x, entry->y, entry->z, &shadowX, &shadowY, &shadowZ);
 						if ((f32)func_801269BC_13596C(x >> 31, (u32)(s16)x, z >> 31, (u32)(s16)z, *arg4 >> 31, (u32)*arg4,
@@ -1922,7 +1922,7 @@ void func_80127F9C_136F4C(s16 arg0, s16 arg1, s16 arg2)
 	s32 count;
 	VehicleInstance *vehicle;
 	AlienInstance *alien;
-	VehicleSpec *spec;
+	VehicleType *type;
 	s32 bldg;
 	s16 y;
 	u8 *activeList;
@@ -1932,8 +1932,8 @@ void func_80127F9C_136F4C(s16 arg0, s16 arg1, s16 arg2)
 		activeList = &D_80158E80[count];
 
 		vehicle = &vehicleInstances[*activeList];
-		spec = &vehicleSpecs[vehicle->unk1A];
-		if ((func_800047FC_53FC(vehicle->unk0 - arg0) + func_800047FC_53FC(vehicle->unk4 - arg1)) < spec->unk8)
+		type = &vehicleTypes[vehicle->unk1A];
+		if ((func_800047FC_53FC(vehicle->unk0 - arg0) + func_800047FC_53FC(vehicle->unk4 - arg1)) < type->unk8)
 		{
 			func_80124C40_133BF0(vehicle, D_80145BE0_154B90[arg2].unk2, arg0, arg1);
 		}
@@ -1944,8 +1944,8 @@ void func_80127F9C_136F4C(s16 arg0, s16 arg1, s16 arg2)
 		alien = &alienInstances[count];
 		if (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0)
 		{
-			spec = &alienSpecs[alien->specIndex];
-			if ((func_800047FC_53FC(alien->unk0 - arg0) + func_800047FC_53FC(alien->unk4 - arg1)) < spec->unk8)
+			type = &alienTypes[alien->typeIndex];
+			if ((func_800047FC_53FC(alien->unk0 - arg0) + func_800047FC_53FC(alien->unk4 - arg1)) < type->unk8)
 			{
 				func_80124C40_133BF0((EntityInstance *)alien, D_80145BE0_154B90[arg2].unk2, arg0, arg1);
 			}
@@ -1966,7 +1966,7 @@ void func_80127F9C_136F4C(s16 arg0, s16 arg1, s16 arg2)
 void func_80128288_137238(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3)
 {
 	s16 value;
-	value = arg3 / ((vehicleSpecs[arg0->unk1A].unk32 >> 6) + 1);
+	value = arg3 / ((vehicleTypes[arg0->unk1A].unk32 >> 6) + 1);
 	if (arg0->unk1A == 0)
 	{
 		value = value >> 2;
@@ -2008,24 +2008,24 @@ void func_80128428_1373D8(AlienInstance *arg0, s16 arg1, s16 arg2, s16 arg3, s32
 }
 
 void func_80128504_1374B4(AlienInstance *arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4) {
-	AlienSpec *spec;
+	AlienType *type;
 	f32 x;
 	f32 y;
 	f32 z;
 
-	spec = func_800FAFB8_109F68((VehicleInstance *)arg0);
+	type = func_800FAFB8_109F68((VehicleInstance *)arg0);
 	if (arg1 == 0) {
-		if (D_801591A8 == 0 && currentLevel == 4 && arg0->specIndex == 0xC) {
+		if (D_801591A8 == 0 && currentLevel == 4 && arg0->typeIndex == 0xC) {
 			x = (f32)((func_800038E0_44E0() % 8) * 5 - 0x14);
 		} else {
-			x = (f32)spec->unk20;
+			x = (f32)type->unk20;
 		}
-		y = (f32)spec->unk22;
-		z = (f32)spec->unk24;
+		y = (f32)type->unk22;
+		z = (f32)type->unk24;
 	} else {
-		x = (f32)spec->unk2C;
-		y = (f32)spec->unk2E;
-		z = (f32)spec->unk30;
+		x = (f32)type->unk2C;
+		y = (f32)type->unk2E;
+		z = (f32)type->unk30;
 	}
 	func_80128428_1373D8(arg0, (s16)(s32)x, (s16)(s32)y, (s16)(s32)z, arg2, arg3, arg4);
 }
@@ -2036,7 +2036,7 @@ void func_80128650_137600(Projectile *arg0, s32 arg1) {
 	const WeaponEntry_80129864 *building;
 	VehicleInstance *vehicle;
 	AlienInstance *alien;
-	AlienSpec *alienSpec;
+	AlienType *alienType;
 	s16 floorY;
 	s32 i;
 	s32 instId;
@@ -2114,7 +2114,7 @@ building = &D_80145BE0_154B90[arg0->unk20];
 				vehicle = &vehicleInstances[D_80158E80[i]];
 				absY = func_800047FC_53FC((s16)(s32)((f32)D_80145BE0_154B90[arg2].unk2 - arg0->unk4));
 				absX = func_800047FC_53FC((s16)(s32)((f32)vehicle->unk0 - arg0->unk0));
-				if ((func_800047FC_53FC((s16)(s32)((f32)D_80145BE0_154B90[arg2].unk4 - arg0->unk8)) + absX + absY) < vehicleSpecs[vehicle->unk1A].unk8) {
+				if ((func_800047FC_53FC((s16)(s32)((f32)D_80145BE0_154B90[arg2].unk4 - arg0->unk8)) + absX + absY) < vehicleTypes[vehicle->unk1A].unk8) {
 					if ((s32)vehicle != arg0->unk24) {
 						D_8015F9D0.unk8 = 5;
 						D_80158FE4 = vehicle;
@@ -2147,11 +2147,11 @@ building = &D_80145BE0_154B90[arg0->unk20];
 		for (instId = 0xFE; instId != 0; instId--) {
 			alien = &alienInstances[instId];
 			if (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0) {
-				alienSpec = &alienSpecs[alien->specIndex];
+				alienType = &alienTypes[alien->typeIndex];
 				absY = func_800047FC_53FC((s16)(s32)((f32)alien->unk2 - arg0->unk4));
 				absX = func_800047FC_53FC((s16)(s32)((f32)alien->unk0 - arg0->unk0));
-				if ((func_800047FC_53FC((s16)(s32)((f32)alien->unk4 - arg0->unk8)) + absX + absY) < alienSpec->unk8) {
-					if (((s32)alien != arg0->unk24) && ((f32)alien->unk2 < arg0->unk4) && (arg0->unk4 < (f32)(alien->unk2 + alienSpec->unk38))) {
+				if ((func_800047FC_53FC((s16)(s32)((f32)alien->unk4 - arg0->unk8)) + absX + absY) < alienType->unk8) {
+					if (((s32)alien != arg0->unk24) && ((f32)alien->unk2 < arg0->unk4) && (arg0->unk4 < (f32)(alien->unk2 + alienType->unk38))) {
 						D_8015F9D0.unk8 = 7;
 						D_80158FEC = alien;
 						break;
@@ -2306,10 +2306,10 @@ Projectile *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 	s32 quarterDistance;
 	s32 val;
 	s32 power;
-	EntitySpec *temp;
+	EntityType *temp;
 
 	alien = (AlienInstance *)arg0;
-	temp = (EntitySpec *)func_800FAFB8_109F68((VehicleInstance *)alien);
+	temp = (EntityType *)func_800FAFB8_109F68((VehicleInstance *)alien);
 	if ((alien->unk1E > 0) && (D_801591A8 == 0)) {
 		return NULL;
 	}
@@ -2415,7 +2415,7 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 
 	AlienInstance *alien;
 	VehicleInstance *vehicle;
-	EntitySpec *weaponData;
+	EntityType *weaponData;
 	WeaponEntry_80129864 *entry;
 	WeaponEntry_80129864 *entryD;
 	Projectile *spawned;
@@ -3083,19 +3083,19 @@ void func_8012B26C_13A21C(void) {
 				while (alive != 0) {
 					VehicleInstance *vehicle = &vehicleInstances[D_80158E80[vehicleIdx]];
 					if ((D_80145BE0_154B90[arg2].unk20 & VEHICLE_FLAG_UNK7) != 0) {
-						VehicleSpec *vehicleSpec = &vehicleSpecs[vehicle->unk1A];
-						s32 vehicleRadius = vehicleSpec->unk8;
+						VehicleType *vehicleType = &vehicleTypes[vehicle->unk1A];
+						s32 vehicleRadius = vehicleType->unk8;
 						s32 distance = func_800047FC_53FC((s16)((s16)vehicle->unk0 - (s16)projectile->unk0));
 						distance += func_800047FC_53FC((s16)((s16)D_80145BE0_154B90[arg2].unk4 - (s16)projectile->unk8));
 
-						if ((vehicleSpec->unk16 & 0xF) == 0) {
+						if ((vehicleType->unk16 & 0xF) == 0) {
 							distance += func_800047FC_53FC((s16)((s16)D_80145BE0_154B90[arg2].unk2 - (s16)projectile->unk4));
 						}
 
 						if ((distance < vehicleRadius) && (vehicle != (VehicleInstance *)projectile->unk24) &&
-							(((vehicleSpec->unk16 & 0xF) != 2) ||
+							(((vehicleType->unk16 & 0xF) != 2) ||
 							 (((f32)D_80145BE0_154B90[arg2].unk2 <= projectile->unk4) &&
-							  (projectile->unk4 <= (f32)(D_80145BE0_154B90[arg2].unk2 + vehicleSpec->unk38)) &&
+							  (projectile->unk4 <= (f32)(D_80145BE0_154B90[arg2].unk2 + vehicleType->unk38)) &&
 							  ((func_8010C4EC_11B49C(vehicle), 1) != 0) &&
 							  (func_8010CF7C_11BF2C((s16)projectile->unk0, (s16)projectile->unk8) != 0)))) {
 							s16 hitYaw;
@@ -3174,7 +3174,7 @@ void func_8012B26C_13A21C(void) {
 			AlienInstance *alien;
 
 			for (alienIdx = 0xFE; (alienIdx != 0) && (alive != 0); alienIdx--) {
-				AlienSpec *alienSpec;
+				AlienType *alienType;
 				s16 testY;
 				s32 distance;
 
@@ -3187,27 +3187,27 @@ void func_8012B26C_13A21C(void) {
 					continue;
 				}
 
-				alienSpec = &alienSpecs[alien->specIndex];
+				alienType = &alienTypes[alien->typeIndex];
 				distance = func_800047FC_53FC((s16)((s16)alien->unk0 - (s16)projectile->unk0));
 				distance += func_800047FC_53FC((s16)((s16)alien->unk4 - (s16)projectile->unk8));
-				if ((alienSpec->unk16 & 0xF) == 0) {
+				if ((alienType->unk16 & 0xF) == 0) {
 					distance += func_800047FC_53FC((s16)((s16)alien->unk2 - (s16)projectile->unk4));
 				}
 
 				testY = alien->unk2;
-				if ((alienSpec->unk16 & 0x10) != 0) {
-					testY = (s16)(testY - alienSpec->unk38);
+				if ((alienType->unk16 & 0x10) != 0) {
+					testY = (s16)(testY - alienType->unk38);
 				}
 
-				if ((distance < alienSpec->unk8) && ((f32)testY < projectile->unk4) && (projectile->unk4 < (f32)(alien->unk2 + alienSpec->unk38))) {
-					u8 spec = alien->specIndex;
+				if ((distance < alienType->unk8) && ((f32)testY < projectile->unk4) && (projectile->unk4 < (f32)(alien->unk2 + alienType->unk38))) {
+					u8 type = alien->typeIndex;
 
-					if ((spec >= 0x1B) && (spec < 0x20) && (((alien->unk20 & ALIEN_FLAG_INVINCIBLE) != 0) || (D_80140AC4_14FA74 == (s32)alien))) {
+					if ((type >= 0x1B) && (type < 0x20) && (((alien->unk20 & ALIEN_FLAG_INVINCIBLE) != 0) || (D_80140AC4_14FA74 == (s32)alien))) {
 						deferredAlien = alienIdx;
 						continue;
 					}
 
-					if (alienSpec->unk5A != -1) {
+					if (alienType->unk5A != -1) {
 						Unk80147090Entry_8012B26C *hitEntry;
 						s32 hitX;
 						s32 hitY;
@@ -3218,7 +3218,7 @@ void func_8012B26C_13A21C(void) {
 						s32 ax;
 						s32 az;
 
-						hitEntry = &D_80147090_156040[alienSpec->unk5A];
+						hitEntry = &D_80147090_156040[alienType->unk5A];
 						threshold2 = hitEntry->radius * hitEntry->radius;
 						func_80128428_1373D8((VehicleInstance *)alien, hitEntry->x, hitEntry->y, hitEntry->z, &hitX, &hitY, &hitZ);
 
@@ -3281,7 +3281,7 @@ void func_8012B26C_13A21C(void) {
 
 							if (sideDist < threshold2) {
 								alien->unk20 |= ALIEN_FLAG_W;
-								impactDamage = (impactDamage * D_80147098_156048[(s8)alienSpec->pad5A[0] * 0xC]) >> 8;
+								impactDamage = (impactDamage * D_80147098_156048[(s8)alienType->pad5A[0] * 0xC]) >> 8;
 							}
 						}
 					}
@@ -4067,7 +4067,7 @@ void func_8012E258_13D208(void) {
 					dy = -dy;
 				}
 
-				minY = minY + vehicleSpecs[vehicle->unk1A].unkC + 0x64;
+				minY = minY + vehicleTypes[vehicle->unk1A].unkC + 0x64;
 				if (dy >= minY) {
 					continue;
 				}
@@ -4080,7 +4080,7 @@ void func_8012E258_13D208(void) {
 					continue;
 				}
 
-				if ((vehicleSpecs[vehicle->unk1A].unk38 + vehicle->unk2 < (y - halfY)) || ((y + halfY) < vehicle->unk2)) {
+				if ((vehicleTypes[vehicle->unk1A].unk38 + vehicle->unk2 < (y - halfY)) || ((y + halfY) < vehicle->unk2)) {
 					continue;
 				}
 
@@ -4162,7 +4162,7 @@ void func_8012E258_13D208(void) {
 					behavior = 0;
 				}
 
-				collisionIdx = vehicleSpecs[vehicle->unk1A].unk38 >> 1;
+				collisionIdx = vehicleTypes[vehicle->unk1A].unk38 >> 1;
 				switch (side) {
 				case 1:
 					pushX = 0;

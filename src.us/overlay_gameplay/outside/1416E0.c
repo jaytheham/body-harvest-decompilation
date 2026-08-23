@@ -83,7 +83,7 @@ void func_80132740_1416F0(Unk80160080 *arg0) {
 	arg0->unk6C = 1;
 	arg0->unk30 = (f32) sp1C->unk0;
 	{
-		s16 temp_v0 = vehicleSpecs[D_80052B34->unk1A].unk38;
+		s16 temp_v0 = vehicleTypes[D_80052B34->unk1A].unk38;
 		arg0->unk34 = (f32) (temp_v0 - (temp_v0 >> 2)) + (f32) sp1C->unk2;
 	}
 	arg0->unk38 = (f32) sp1C->unk4;
@@ -173,9 +173,9 @@ void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1) {
 				D_80160146 = D_80052B34->unkE;
 			} else {
 				if (arg0->unk6C == 1) {
-					arg0->unk56 = (s16)(vehicleSpecs[vehicleType].unk5C * 0x10);
+					arg0->unk56 = (s16)(vehicleTypes[vehicleType].unk5C * 0x10);
 				} else {
-					arg0->unk56 = (s16)(vehicleSpecs[vehicleType].unk5D * 0x10);
+					arg0->unk56 = (s16)(vehicleTypes[vehicleType].unk5D * 0x10);
 				}
 				arg0->unk60 = D_80052B34->unk6;
 			}
@@ -466,10 +466,10 @@ void func_80133934_1428E4(Unk80160080 *arg0) {
 	if (D_801600F0 != 0) {
 		if (arg0->unk6C == 1) {
 			arg0->unk52 = 0x71C;
-			arg0->unk56 = (s16)(vehicleSpecs[D_80052B34->unk1A].unk5C * 0x10);
+			arg0->unk56 = (s16)(vehicleTypes[D_80052B34->unk1A].unk5C * 0x10);
 		} else {
 			arg0->unk52 = 0x1555;
-			arg0->unk56 = (s16)(vehicleSpecs[D_80052B34->unk1A].unk5D * 0x10);
+			arg0->unk56 = (s16)(vehicleTypes[D_80052B34->unk1A].unk5D * 0x10);
 		}
 		D_8016011C = 0.0f;
 		D_80160120 = 0.0f;
@@ -519,9 +519,9 @@ void func_80133A54_142A04(Unk80160080 *arg0) {
 	}
 
 	arg0->unk56 = 0x73;
-	sp40 = (f32)(vehicleSpecs[D_80052B34->unk1A].unkC * 2);
+	sp40 = (f32)(vehicleTypes[D_80052B34->unk1A].unkC * 2);
 	sp44.x = (f32)(D_80052B34->unk0 - (((f32)coss((u16)arg0->unk58) / 32768.0) * sp40));
-	sp44.y = (f32)(vehicleSpecs[D_80052B34->unk1A].unk38 + D_80052B34->unk2 + 0x32);
+	sp44.y = (f32)(vehicleTypes[D_80052B34->unk1A].unk38 + D_80052B34->unk2 + 0x32);
 	sp44.z = (f32)(D_80052B34->unk4 - (((f32)sins((u16)arg0->unk58) / 32768.0) * sp40));
 
 	func_801336CC_14267C(arg0, &sp44);
@@ -771,7 +771,7 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 	sp4C = (s32)arg0->unk38;
 	func_80133C9C_142C4C(&sp6C, (Vec3f *)&arg0->unkC, &sp60, arg0->unk48, var_s1, arg0->unk4C, arg0->unk4E);
 	temp_s0 = func_800B84D0_C7480((s16)(s32)sp6C.x, (s16)(s32)sp6C.z);
-	temp_v1 = vehicleSpecs[D_80052B34->unk1A].unk38;
+	temp_v1 = vehicleTypes[D_80052B34->unk1A].unk38;
 	temp_s0 = (temp_v1 - (temp_v1 >> 2)) + (temp_s0 >> 8);
 	if (((func_80126268_135218((s16)(s32)sp6C.x, (s16)(s32)sp6C.y, (s16)(s32)sp6C.z, &sp54, &sp50, &sp4C, 0, 6) == 1) ||
 		 ((sp6C.y - (f32)temp_s0) < 50.0f)) &&
@@ -788,7 +788,7 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 			sp4C = (s32)arg0->unk38;
 			func_80133C9C_142C4C(&sp6C, (Vec3f *)&arg0->unkC, &sp60, arg0->unk48, var_s1, arg0->unk4C, arg0->unk4E);
 			temp_s0 = func_800B84D0_C7480((s16)(s32)sp6C.x, (s16)(s32)sp6C.z);
-			temp_v1 = vehicleSpecs[D_80052B34->unk1A].unk38;
+			temp_v1 = vehicleTypes[D_80052B34->unk1A].unk38;
 			temp_s0 = (temp_v1 - (temp_v1 >> 2)) + (temp_s0 >> 8);
 			if (!(((func_80126268_135218((s16)(s32)sp6C.x, (s16)(s32)sp6C.y, (s16)(s32)sp6C.z, &sp54, &sp50, &sp4C, 0, 6) == 1) ||
 				   ((sp6C.y - (f32)temp_s0) < 50.0f)) &&
@@ -823,7 +823,7 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 		sp50 = (s32)arg0->unk34;
 		sp4C = (s32)arg0->unk38;
 		temp_s0 = func_800B84D0_C7480((s16)(s32)sp6C.x, (s16)(s32)sp6C.z);
-		temp_v1 = vehicleSpecs[D_80052B34->unk1A].unk38;
+		temp_v1 = vehicleTypes[D_80052B34->unk1A].unk38;
 		temp_s0 = (temp_v1 - (temp_v1 >> 2)) + (temp_s0 >> 8);
 		if ((func_80126268_135218((s16)(s32)sp6C.x, (s16)(s32)sp6C.y, (s16)(s32)sp6C.z, &sp54, &sp50, &sp4C, 0, 6) == 1) ||
 			((sp6C.y - (f32)temp_s0) < 50.0f)) {
@@ -1204,7 +1204,7 @@ void func_801354C0_144470(Unk80160080 *arg0) {
 	register VehicleInstance *v1 = D_80052B34;
 
 	arg0->unk30 = (f32)v1->unk0;
-	arg0->unk34 = (f32)(vehicleSpecs[D_80052B34->unk1A].unk38 - (vehicleSpecs[D_80052B34->unk1A].unk38 >> 2)) + (f32)v1->unk2;
+	arg0->unk34 = (f32)(vehicleTypes[D_80052B34->unk1A].unk38 - (vehicleTypes[D_80052B34->unk1A].unk38 >> 2)) + (f32)v1->unk2;
 	arg0->unk38 = (f32)v1->unk4;
 	var_f2 = (f32)((arg0->unk6C == 2) ? 400.0 : 100.0);
 	arg0->unk24 = (f32)(((f64)(f32)coss((u16)v1->unk6) / 32768.0) * (f64)var_f2 + (f64)arg0->unk30);
@@ -1236,7 +1236,7 @@ void func_80135630_1445E0(Unk80160080 *arg0) {
 // vehicleCameraControls?
 // AI - Vehicle camera view cycling
 void func_801356F4_1446A4(Unk80160080 *arg0) {
-	VehicleSpec *temp = &vehicleSpecs[D_80052B34->unk1A];
+	VehicleType *temp = &vehicleTypes[D_80052B34->unk1A];
 	func_801358E8_144898(arg0, (s16)(temp->unk5C * 0x10), (s16)(temp->unk5D * 0x10));
 	func_8000345C_405C(3);
 	if (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_RIGHT) {
@@ -1264,9 +1264,9 @@ void func_801357EC_14479C(Unk80160080 *arg0) {
 		D_80160124 = 0.0f;
 		D_80160134 = D_801456DC_15468C[0];
 		if (arg0->unk6C == 1) {
-			arg0->unk56 = (s16)(vehicleSpecs[D_80052B34->unk1A].unk5C * 0x10);
+			arg0->unk56 = (s16)(vehicleTypes[D_80052B34->unk1A].unk5C * 0x10);
 		} else {
-			arg0->unk56 = (s16)(vehicleSpecs[D_80052B34->unk1A].unk5D * 0x10);
+			arg0->unk56 = (s16)(vehicleTypes[D_80052B34->unk1A].unk5D * 0x10);
 		}
 	}
 	if (D_801591BC != 0) {

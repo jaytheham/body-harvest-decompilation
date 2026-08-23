@@ -55,7 +55,7 @@ u8 func_800A3DC8_B2D78(void) {
 		temp_a2 = D_8014D408[var_v0];
 		alien = &alienInstances[temp_a2];
 		
-		if (alien->specIndex == ALIEN_SPEC_HARVESTER) {
+		if (alien->typeIndex == ALIEN_TYPE_HARVESTER) {
 			if (alien->unk3C != 0) {
 				alien->unk3C = (s8) (alien->unk3C - 1);
 				osSyncPrintf("Found parent %d\n", temp_a2);
@@ -113,7 +113,7 @@ s32 func_800A3E74_B2E24(u8 arg0) {
 	child->unk18 = (s16) (s32) ((((f32) sins((u16) dir) / 32768.0) * 400.0) + parent->unk4);
 	child->unk2C = 0x1E;
 
-	if (alienSpecs[child->specIndex].unk54 & 1) {
+	if (alienTypes[child->typeIndex].unk54 & 1) {
 		groundY = func_800B84D0_C7480(child->unk0, child->unk4) >> 8;
 		func_8011E6FC_12D6AC(child->unk0, child->unk4, &groundY);
 		child->unk2 = groundY + 0x19;
@@ -226,7 +226,7 @@ void func_800A41B0_B3160(u8 arg0) {
 				levelStep = 0xA;
 			}
 
-			if ((timer >= 0x10) && (alienSpecs[alien->specIndex].unk3A / 10 < alien->hitPoints) && ((timer % levelStep) == 0) && (alien->unk3D != 0)) {
+			if ((timer >= 0x10) && (alienTypes[alien->typeIndex].unk3A / 10 < alien->hitPoints) && ((timer % levelStep) == 0) && (alien->unk3D != 0)) {
 				s16 randA;
 				s16 randB;
 				s8 velX;
@@ -315,7 +315,7 @@ void func_800A41B0_B3160(u8 arg0) {
 		flags = alien->unk20;
 	}
 
-	if ((flags < 0) && (alienSpecs[alien->specIndex].unk3A / 10 < alien->hitPoints)) {
+	if ((flags < 0) && (alienTypes[alien->typeIndex].unk3A / 10 < alien->hitPoints)) {
 		if (!((currentLevel == 4) && (alien->unk1B == 2))) {
 			u8 attackCap;
 
@@ -425,7 +425,7 @@ void func_800A41B0_B3160(u8 arg0) {
 #ifdef NON_MATCHING
 void func_800A4C28_B3BD8(u8 arg0) {
 	AlienInstance *alien = &alienInstances[arg0];
-	u8 specIndex = alien->specIndex;
+	u8 typeIndex = alien->typeIndex;
 	Unk8014DD50 *node;
 	s32 pad[2];
 	u8 *levelTable = (u8 *)D_8013D786_14C736;
@@ -433,7 +433,7 @@ void func_800A4C28_B3BD8(u8 arg0) {
 	s16 coords[3];
 	s32 point[3];
 	s16 direction;
-	s32 originalSpecValue;
+	s32 originalTypeValue;
 	s8 nextNode;
 	s8 nextNextNode;
 	s8 nextNextNextNode;
@@ -475,21 +475,21 @@ void func_800A4C28_B3BD8(u8 arg0) {
 			*((s16 *)(routeTable + (nextNode * 0x10))) = direction;
 			result = func_80081F18_90EC8(arg0, 2, 6, coords, (Unk8014DD50 **)&D_8013D840_14C7F0);
 			if (alien->unk36 == 3) {
-				point[0] = (s32)((f64)(f32)sins((u16)direction) * ((f64)alienSpecs[specIndex].unk24 / 32768.0));
-				func_80128428_1373D8(alien, (s16)point[0], alienSpecs[specIndex].unk22, (s16)((f64)(f32)coss((u16)direction) * ((f64)alienSpecs[specIndex].unk24 / 32768.0) + (f64)node->unk4), &point[0], &point[1], &point[2]);
+				point[0] = (s32)((f64)(f32)sins((u16)direction) * ((f64)alienTypes[typeIndex].unk24 / 32768.0));
+				func_80128428_1373D8(alien, (s16)point[0], alienTypes[typeIndex].unk22, (s16)((f64)(f32)coss((u16)direction) * ((f64)alienTypes[typeIndex].unk24 / 32768.0) + (f64)node->unk4), &point[0], &point[1], &point[2]);
 				func_800C56A4_D4654((s16)point[2], (s16)point[1], (s16)point[0], 0x8C, 0xF, 3, 0x28);
 			}
 			if (result == 4) {
 				alien->unk1E = 0;
-				originalSpecValue = alienSpecs[specIndex].unk24;
-				alienSpecs[specIndex].unk20 = (s16)((f64)(f32)sins((u16)direction) * ((f64)originalSpecValue / 32768.0));
-				alienSpecs[specIndex].unk24 = (s16)((f64)(f32)coss((u16)direction) * ((f64)originalSpecValue / 32768.0) + (f64)node->unk4);
+				originalTypeValue = alienTypes[typeIndex].unk24;
+				alienTypes[typeIndex].unk20 = (s16)((f64)(f32)sins((u16)direction) * ((f64)originalTypeValue / 32768.0));
+				alienTypes[typeIndex].unk24 = (s16)((f64)(f32)coss((u16)direction) * ((f64)originalTypeValue / 32768.0) + (f64)node->unk4);
 				if (func_80084FE8_93F98(arg0, 0x3FFF) == 0) {
 					func_80086D70_95D20(arg0, 0, (s16)-direction);
 				} else {
 					func_800871CC_9617C(arg0, 0, 0);
 				}
-				alienSpecs[specIndex].unk24 = (s16)originalSpecValue;
+				alienTypes[typeIndex].unk24 = (s16)originalTypeValue;
 				if (alien->unk3A != 0) {
 					alien->unk36 = 2;
 				}
@@ -513,10 +513,10 @@ void func_800A4C28_B3BD8(u8 arg0) {
 			coords[1] = (s16)point[1];
 			coords[2] = (s16)point[2];
 			func_800A931C_B82CC(alien->unkD, coords, point);
-			alienSpecs[specIndex].unk20 = (s16)point[0];
-			alienSpecs[specIndex].unk22 = (s16)point[1];
-			alienSpecs[specIndex].unk24 = (s16)point[2];
-			alienSpecs[specIndex].unk1C = (D_80047F94 == 2) ? 0x33 : 0x2F;
+			alienTypes[typeIndex].unk20 = (s16)point[0];
+			alienTypes[typeIndex].unk22 = (s16)point[1];
+			alienTypes[typeIndex].unk24 = (s16)point[2];
+			alienTypes[typeIndex].unk1C = (D_80047F94 == 2) ? 0x33 : 0x2F;
 			if (!(alien->unk20 & (ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKD)) && (func_80084FE8_93F98(arg0, 0x27D0) != 0) && (func_800871CC_9617C(arg0, 0, 0) != 0)) {
 				alien->unk1E = 0x28;
 				alien->unk4B = 0;
@@ -576,7 +576,7 @@ void func_800A53C0_B4370(u8 arg0, s16 arg1, s16 arg2) {
 	s32 sp_idx;
 	s32 abs_arg1;
 	s32 sign;
-	sp_idx = alienInstances[arg0].specIndex;
+	sp_idx = alienInstances[arg0].typeIndex;
 	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNK5) {
 		if (-arg1 < arg1) {
 			abs_arg1 = arg1;
@@ -586,7 +586,7 @@ void func_800A53C0_B4370(u8 arg0, s16 arg1, s16 arg2) {
 		sign = (alienInstances[arg0].unk8 > 0) ? 1 : (alienInstances[arg0].unk8 < 0) ? -1 : 0;
 		alienInstances[arg0].unk8 = alienInstances[arg0].unk8 - sign * abs_arg1;
 	} else {
-		s16 lookup = alienSpecs[sp_idx].unk42;
+		s16 lookup = alienTypes[sp_idx].unk42;
 		s16 diff = alienInstances[arg0].unk2A - alienInstances[arg0].unkE;
 		if (-lookup >= diff) {
 			alienInstances[arg0].unk8 = alienInstances[arg0].unk8 - arg1;
@@ -617,11 +617,11 @@ void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3) {
 	AlienInstance *entry;
 	s32 sp1C;
 	u8 sp23;
-	AlienSpec *spec;
+	AlienType *type;
 
 	entry = &alienInstances[arg0];
 	sp1C = 0;
-	sp23 = entry->specIndex;
+	sp23 = entry->typeIndex;
 	func_80137468_146418(arg0, 0x1C);
 	func_8008076C_8F71C(arg0);
 	func_800A53C0_B4370(arg0, 0x1F4, 0x1388);
@@ -631,10 +631,10 @@ void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3) {
 			sp1C = 0;
 		}
 	}
-	spec = &alienSpecs[sp23];
+	type = &alienTypes[sp23];
 	{
-		s32 temp_f10 = (s32)(((f32)(entry->unk12 - entry->unk2C) / (f32)spec->unk40) * 8000.0f * 2.0f);
-		if (temp_f10 == 0 || entry->unk12 >= (spec->unk40 - spec->unk3E * 2)) {
+		s32 temp_f10 = (s32)(((f32)(entry->unk12 - entry->unk2C) / (f32)type->unk40) * 8000.0f * 2.0f);
+		if (temp_f10 == 0 || entry->unk12 >= (type->unk40 - type->unk3E * 2)) {
 			if (entry->unkA >= 0xFA1) {
 				entry->unkA = (s16)(entry->unkA - 0xC8);
 			}

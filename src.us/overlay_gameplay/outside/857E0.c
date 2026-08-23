@@ -1037,11 +1037,11 @@ s32 func_80078FE0_87F90(u8 *arg0, VehicleInstance *arg1, s32 *arg2) {
 	s32 ctx10;
 	s32 ctx14;
 	f64 direction;
-	VehicleSpec *spec;
+	VehicleType *type;
 	f32 speedFactor;
 	s32 scaled;
 
-	spec = (VehicleSpec *)func_800FAFB8_109F68(arg1);
+	type = (VehicleType *)func_800FAFB8_109F68(arg1);
 	if ((currentLevel == 3) && ((arg1->unk1A == 9) || (arg1->unk1A == 8))) {
 		return 1;
 	}
@@ -1056,7 +1056,7 @@ s32 func_80078FE0_87F90(u8 *arg0, VehicleInstance *arg1, s32 *arg2) {
 		}
 	}
 
-	scaled = (s32)((f32)spec->unk32 * speedFactor);
+	scaled = (s32)((f32)type->unk32 * speedFactor);
 
 	ctx10 = *(s16 *)(arg0 + 0x10);
 	ctx14 = *(s16 *)(arg0 + 0x14);

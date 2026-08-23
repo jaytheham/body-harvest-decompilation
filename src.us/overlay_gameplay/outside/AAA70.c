@@ -802,7 +802,7 @@ void func_8009D96C_AC91C(void) {
 
 	if (gameplayMode != 0xC) {
 		if (alien != NULL) {
-			if (alien->specIndex != 0) {
+			if (alien->typeIndex != 0) {
 				u16 tempU16;
 
 				if (alien->unk20 & ALIEN_FLAG_UNKL) {
@@ -811,11 +811,11 @@ void func_8009D96C_AC91C(void) {
 					sp98 = (f32) ((f64) (f32) alien->hitPoints / 100.0);
 				}
 
-				tempU16 = alienSpecs[alien->specIndex].unk3A;
+				tempU16 = alienTypes[alien->typeIndex].unk3A;
 				sp8A = (s16) (((f64) tempU16 / 100.0) * 50.0);
 				func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
 
-				tempU16 = alienSpecs[alien->specIndex].unk3A;
+				tempU16 = alienTypes[alien->typeIndex].unk3A;
 				D_8014F202 = 3;
 				sp8C = (s32) &D_8025EC40;
 				sp7C = (s32) alien;
@@ -833,11 +833,11 @@ void func_8009D96C_AC91C(void) {
 				vehicle = D_80158FE4;
 				if ((currentLevel != 1) || (vehicle->unk1A != 0x12)) {
 					sp98 = (f32) ((f64) (f32) vehicle->unk1C / 100.0);
-					tempU16 = vehicleSpecs[vehicle->unk1A].hitPoints;
+					tempU16 = vehicleTypes[vehicle->unk1A].hitPoints;
 					sp8A = (s16) (((f64) tempU16 / 100.0) * 50.0);
 					func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
 
-					tempU16 = vehicleSpecs[vehicle->unk1A].hitPoints;
+					tempU16 = vehicleTypes[vehicle->unk1A].hitPoints;
 					sp8C = (s32) &D_8025EE80;
 					D_8014F202 = 2;
 					sp7C = (s32) vehicle;
@@ -908,7 +908,7 @@ void func_8009D96C_AC91C(void) {
 			} else {
 				u16 tempU16;
 
-				tempU16 = vehicleSpecs[vehicleInstances[0].unk1A].hitPoints;
+				tempU16 = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
 				if (vehicleInstances[0].unk1C >= ((s32) tempU16 >> 2)) {
 					D_8014ED4C = D_8014ED42;
 				}
@@ -957,7 +957,7 @@ void func_8009D96C_AC91C(void) {
 			sp76 = vehicle->unk3C;
 			D_8014F69C = sp76;
 			sp74 = vehicle->unk1C;
-			tempU16 = vehicleSpecs[varV1_2].hitPoints;
+			tempU16 = vehicleTypes[varV1_2].hitPoints;
 			sp72 = (s16) tempU16;
 
 			D_8014F69E = sp74;
@@ -1017,7 +1017,7 @@ void func_8009D96C_AC91C(void) {
 	{
 		u16 tempU16;
 
-		tempU16 = vehicleSpecs[vehicleInstances[0].unk1A].hitPoints;
+		tempU16 = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
 		if (vehicleInstances[0].unk1C < ((s32) tempU16 >> 2)) {
 			D_8014ED4C = 8 - (D_80052A8C & 7);
 		} else {
@@ -1189,7 +1189,7 @@ void func_8009EE30_ADDE0(void)
 	s32 var_v1;
 	s16 var_s4;
 
-	var_s4 = vehicleSpecs[D_80052B34->unk1A].arcOfFire;
+	var_s4 = vehicleTypes[D_80052B34->unk1A].arcOfFire;
 	if (var_s4 == 0) {
 		return;
 	}
@@ -1434,8 +1434,8 @@ void func_8009F130_AE0E0(void) {
 		}
 
 		if (D_8013D730_14C6E0 == 3) {
-			D_80052B34->unk3C = (s16) (vehicleSpecs[D_80052B34->unk1A].unk61 << 8);
-			((void (*)(VehicleSpec *, s32, VehicleInstance **)) func_800FD410_10C3C0)(&vehicleSpecs[D_80052B34->unk1A], 0x70, &D_80052B34);
+			D_80052B34->unk3C = (s16) (vehicleTypes[D_80052B34->unk1A].unk61 << 8);
+			((void (*)(VehicleType *, s32, VehicleInstance **)) func_800FD410_10C3C0)(&vehicleTypes[D_80052B34->unk1A], 0x70, &D_80052B34);
 			func_801392FC_1482AC(1);
 		}
 
@@ -1596,7 +1596,7 @@ void func_8009FB58_AEB08(void) {
 	{
 		s32 i;
 		for (i = 0xFE; i != 0; i--) {
-		if ((alien->specIndex == 0x19) && ((alien->unk20 & ALIEN_FLAG_UNKL) == 0)) {
+		if ((alien->typeIndex == 0x19) && ((alien->unk20 & ALIEN_FLAG_UNKL) == 0)) {
 			s32 distance;
 
 			distance = func_800F9C40_108BF0((player->unk0 - alien->unk0) >> 2);
@@ -1662,23 +1662,23 @@ void func_800A03FC_AF3AC(void) {
 		while (i < 0xFF) {
 			alien = &alienInstances[i];
 
-			if ((alien->specIndex >= 3) || ((alien->specIndex == 1) && ((alien->unk24 == 1) || (alien->unk24 == 0xF) || (alien->unk24 == 0x10)))) {
+			if ((alien->typeIndex >= 3) || ((alien->typeIndex == 1) && ((alien->unk24 == 1) || (alien->unk24 == 0xF) || (alien->unk24 == 0x10)))) {
 				mapX = ((alien->unk0 - D_80052B34->unk0) + 0x1000) >> 8;
 				mapZ = ((alien->unk4 - D_80052B34->unk4) + 0x1000) >> 8;
 
 				if (func_8009BC48_AABF8(mapX, mapZ, 1) != 0) {
-					if (alien->specIndex == 1) {
-						if (func_800038E0_44E0(alien->specIndex) < 0x64) {
+					if (alien->typeIndex == 1) {
+						if (func_800038E0_44E0(alien->typeIndex) < 0x64) {
 							func_800153D8_15FD8(0xF3);
 						}
 					} else {
-						func_80015BCC_167CC(alien->specIndex);
+						func_80015BCC_167CC(alien->typeIndex);
 					}
 				} else if (D_80052ACA == 2) {
-					func_80015BCC_167CC(alien->specIndex);
+					func_80015BCC_167CC(alien->typeIndex);
 				}
 
-				if (!(alien->unk20 & ALIEN_FLAG_UNKL) && (alien->specIndex != 1)) {
+				if (!(alien->unk20 & ALIEN_FLAG_UNKL) && (alien->typeIndex != 1)) {
 					func_8009BCC0_AAC70(mapX, mapZ, 2);
 					func_8009BCC0_AAC70(mapX, mapZ - 1, 4);
 					func_8009BCC0_AAC70(mapX - 1, mapZ, 4);
@@ -2418,7 +2418,7 @@ s32 func_800A2A88_B1A38(void) {
 	if (D_8013D5B4_14C564 == 0) {
 		return 0;
 	}
-	temp_v0 = vehicleSpecs[D_80052B34->unk1A].weapon1;
+	temp_v0 = vehicleTypes[D_80052B34->unk1A].weapon1;
 	if (temp_v0 == 0) {
 		return 0;
 	}

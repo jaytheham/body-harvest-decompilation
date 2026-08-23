@@ -71,7 +71,7 @@ Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1) {
 #ifdef NON_MATCHING
 // castVehicleShadows?
 void func_800E8A00_F79B0(void) {
-	VehicleSpec *vehicleSpec;
+	VehicleType *vehicleType;
 	ShadowPartEntry *part;
 	s32 vehicleIndex;
 	s32 savedVehicleIndex;
@@ -88,14 +88,14 @@ void func_800E8A00_F79B0(void) {
 	savedVehicleIndex = D_80052B34->unk1A;
 
 	if ((vehicleIndex < 0x14) && (vehicleIndex > 0)) {
-		vehicleSpec = &vehicleSpecs[vehicleIndex];
-		if ((*(s32 *) vehicleSpec != 0) && (vehicleIndex != 0x13)) {
+		vehicleType = &vehicleTypes[vehicleIndex];
+		if ((*(s32 *) vehicleType != 0) && (vehicleIndex != 0x13)) {
 			D_801575A4 = (void *) (&D_802C4080[vehicleIndex << 10]);
 			D_80052B34->unk8 = 0;
 			D_80052B34->unkA = 0;
 			D_80052B34->unk6 = 0;
 			D_80052B34->unk1A = (u8) vehicleIndex;
-			osSyncPrintf(D_8014429C_15324C, vehicleSpec->unk18, D_800344B4_350B4[vehicleSpec->unk18].name);
+			osSyncPrintf(D_8014429C_15324C, vehicleType->unk18, D_800344B4_350B4[vehicleType->unk18].name);
 		} else {
 			D_801575A4 = D_802C4080;
 		}
@@ -108,7 +108,7 @@ void func_800E8A00_F79B0(void) {
 		return;
 	}
 
-	vehicleSpec = &vehicleSpecs[D_80052B34->unk1A];
+	vehicleType = &vehicleTypes[D_80052B34->unk1A];
 
 	gSPViewport(D_8005BB2C++, D_13E440);
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG | G_LIGHTING);
@@ -142,9 +142,9 @@ void func_800E8A00_F79B0(void) {
 	D_80052B48.unk2 = 0;
 	D_80052B48.unk4 = (s16) (D_80052B34->unkA + 0x4000);
 
-	size = (f32) ((u8 *) vehicleSpec)[0x65];
-	D_80052B50.unk0 = (s16) (s32) (32768.0 / ((f32) (((u8 *) vehicleSpec)[0x6C] * 2) + size));
-	D_80052B50.unk4 = (s16) (s32) (32768.0 / ((f32) (((u8 *) vehicleSpec)[0x6D] * 2) + size));
+	size = (f32) ((u8 *) vehicleType)[0x65];
+	D_80052B50.unk0 = (s16) (s32) (32768.0 / ((f32) (((u8 *) vehicleType)[0x6C] * 2) + size));
+	D_80052B50.unk4 = (s16) (s32) (32768.0 / ((f32) (((u8 *) vehicleType)[0x6D] * 2) + size));
 	D_80052B50.unk2 = (s16) -((D_80052B50.unk0 + D_80052B50.unk4) >> 1);
 
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
@@ -157,12 +157,12 @@ void func_800E8A00_F79B0(void) {
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-	if ((vehicleIndex < 0x15) && (vehicleIndex > 0) && (*(s32 *) (&vehicleSpecs[vehicleIndex]) != 0)) {
+	if ((vehicleIndex < 0x15) && (vehicleIndex > 0) && (*(s32 *) (&vehicleTypes[vehicleIndex]) != 0)) {
 		osSyncPrintf(D_801442BC_15326C);
 	}
 
 	if (D_80052B34->unk1A != 0) {
-		gSPDisplayList(D_8005BB2C++, func_800E88C0_F7870(*(s32 *) vehicleSpec, 1));
+		gSPDisplayList(D_8005BB2C++, func_800E88C0_F7870(*(s32 *) vehicleType, 1));
 	} else {
 		gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 
@@ -171,12 +171,12 @@ void func_800E8A00_F79B0(void) {
 		gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
 	}
 
-	if ((vehicleIndex < 0x15) && (vehicleIndex > 0) && (*(s32 *) (&vehicleSpecs[vehicleIndex]) != 0)) {
+	if ((vehicleIndex < 0x15) && (vehicleIndex > 0) && (*(s32 *) (&vehicleTypes[vehicleIndex]) != 0)) {
 		osSyncPrintf(D_801442C0_153270);
 	}
 
-	partCount = ((u8 *) vehicleSpec)[0x54];
-	partStart = ((u8 *) vehicleSpec)[0x53];
+	partCount = ((u8 *) vehicleType)[0x54];
+	partStart = ((u8 *) vehicleType)[0x53];
 	if (partCount != 0) {
 		partCount--;
 		part = (ShadowPartEntry *) (&D_8013FDA8_14ED58[partStart]);
@@ -193,7 +193,7 @@ void func_800E8A00_F79B0(void) {
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			}
 
-			if ((partStart != ((u8 *) vehicleSpec)[0x63]) && (partStart != ((u8 *) vehicleSpec)[0x64])) {
+			if ((partStart != ((u8 *) vehicleType)[0x63]) && (partStart != ((u8 *) vehicleType)[0x64])) {
 				if (partFlags & 0x20) {
 					gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 
@@ -241,7 +241,7 @@ void func_800E8A00_F79B0(void) {
 
 	D_80052B34->unk1A = (u8) savedVehicleIndex;
 
-	if ((vehicleIndex < 0x15) && (vehicleIndex > 0) && (*(s32 *) (&vehicleSpecs[vehicleIndex]) != 0)) {
+	if ((vehicleIndex < 0x15) && (vehicleIndex > 0) && (*(s32 *) (&vehicleTypes[vehicleIndex]) != 0)) {
 		osSyncPrintf(D_801442C4_153274);
 	}
 }
@@ -354,7 +354,7 @@ s16 func_800E9868_F8818(s32 arg0, s32 arg1) {
 
 #ifdef NON_MATCHING
 // CURRENT(4940)
-void func_800E988C_F883C(AlienInstance *arg0, AlienSpec *arg1) {
+void func_800E988C_F883C(AlienInstance *arg0, AlienType *arg1) {
 	s16 sp86;
 	s16 sp84;
 	f32 sp8C;
@@ -383,13 +383,13 @@ void func_800E988C_F883C(AlienInstance *arg0, AlienSpec *arg1) {
 		return;
 	}
 
-	if ((arg0->unkC != -2) && (arg0->specIndex == 2)) {
+	if ((arg0->unkC != -2) && (arg0->typeIndex == 2)) {
 		return;
 	}
 
 	if (arg0->unkC == -2) {
-		var_s7 = (s16)(((u16)((u8*)&vehicleSpecs[arg0->specIndex])[0x6C]) << 1);
-		sp84 = (s16)(((u16)((u8*)&vehicleSpecs[arg0->specIndex])[0x6D]) << 1);
+		var_s7 = (s16)(((u16)((u8*)&vehicleTypes[arg0->typeIndex])[0x6C]) << 1);
+		sp84 = (s16)(((u16)((u8*)&vehicleTypes[arg0->typeIndex])[0x6D]) << 1);
 	} else {
 		var_s7 = (*(s16*)((u8*)arg1 + 0x34)) >> 1;
 		sp84 = (*(s16*)((u8*)arg1 + 0x36)) >> 1;
@@ -411,7 +411,7 @@ void func_800E988C_F883C(AlienInstance *arg0, AlienSpec *arg1) {
 		}
 	}
 
-	if ((var_t5 == var_v0) && ((void*)arg0 == (void*)D_80052B34) && (vehicleSpecs[arg0->specIndex].unk4C & 0x20000000)) {
+	if ((var_t5 == var_v0) && ((void*)arg0 == (void*)D_80052B34) && (vehicleTypes[arg0->typeIndex].unk4C & 0x20000000)) {
 		var_t5 = func_800F9F00_108EB0;
 	}
 
@@ -430,7 +430,7 @@ void func_800E988C_F883C(AlienInstance *arg0, AlienSpec *arg1) {
 			var_t4 = D_802C4080;
 		}
 	} else if (arg0->unkC == -2) {
-		u8 temp_v0_4 = arg0->specIndex;
+		u8 temp_v0_4 = arg0->typeIndex;
 
 		if (temp_v0_4 == 0x13) {
 			var_t4 = D_5000000;
@@ -548,7 +548,7 @@ void func_800EA12C_F90DC(void) {
 			if ((v->unk20 & 0x8000) && func_800703B0_7F360(v->unk0, v->unk4) != 0 &&
 				func_800B93AC_C835C(v->unk0, v->unk4, 0xA0, (s32)D_80052B2C->unk0, (s32)D_80052B2C->unk8, 0x4000 - D_80047950) != 0) {
 				do { } while (0);
-				func_800E988C_F883C((AlienInstance *)v, (AlienSpec *)&vehicleSpecs[v->unk1A]);
+				func_800E988C_F883C((AlienInstance *)v, (AlienType *)&vehicleTypes[v->unk1A]);
 			}
 		} while (i--);
 	}

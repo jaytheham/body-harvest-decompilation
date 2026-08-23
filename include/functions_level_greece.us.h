@@ -21,7 +21,7 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2);
 void func_802DC2E4_194DF4(u8 arg0);
 void func_802DC500_195010(u8 arg0);
 
-/* Alien spec handlers defined in the greece level overlay (18D7E0.c). */
+/* Alien type handlers defined in the greece level overlay (18D7E0.c). */
 void func_802D738C_18FE9C(u8 arg0);
 void func_802D775C_19026C(u8 arg0);
 void func_802D7FC0_190AD0(u8 arg0);

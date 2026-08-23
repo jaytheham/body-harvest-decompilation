@@ -1101,11 +1101,11 @@ s32 func_800143C4_14FC4(s16 arg0)
 void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
 {
   f32 temp_f14;
-  VehicleSpec *spec;
+  VehicleType *type;
   WeaponLevelSpec *levelSpec;
   f32 temp_f12;
   f32 temp_f2;
-  spec = &vehicleSpecs[arg0->unk1A];
+  type = &vehicleTypes[arg0->unk1A];
   if (!D_8006AB88)
   {
 	return;
@@ -1146,7 +1146,7 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
 	// levelSpec = &D_800330B0_33CB0[currentLevel - 1][arg0->unk1A];
 	  
 	levelSpec = &D_800330B0_33CB0[currentLevel][arg0->unk1A];
-	switch (spec->unk58)
+	switch (type->unk58)
 	{
 	  case 0:
 		temp_f14 = (levelSpec - 21)->unk14 * (((f32) arg2) / ((f32) 1));
@@ -1191,10 +1191,10 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
   }
   else
   {
-	if (((s32) (spec->unk4C << 9)) >= 0)
+	if (((s32) (type->unk4C << 9)) >= 0)
 	{
 	  levelSpec = &D_800330B0_33CB0[currentLevel][arg0->unk1A];
-	  if ((spec->unk58 == 3) || (spec->unk58 == 7))
+	  if ((type->unk58 == 3) || (type->unk58 == 7))
 	  {
 		temp_f2 = (levelSpec - 21)->unkC;
 		temp_f14 = temp_f2;
@@ -1228,7 +1228,7 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
   }
   {
 	f32 dist = func_8001D940(((((((f32) arg0->unk0) / 4) - D_80047954) * ((((f32) arg0->unk0) / 4) - D_80047954)) + (((((f32) arg0->unk2) / 4) - D_80047958) * ((((f32) arg0->unk2) / 4) - D_80047958))) + (((((f32) arg0->unk4) / 4) - D_8004795C) * ((((f32) arg0->unk4) / 4) - D_8004795C)));
-	func_80014A3C_1563C((s32) (&vehicleSpecs[arg0->unk1A]), D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0, dist, 0, temp_f14);
+	func_80014A3C_1563C((s32) (&vehicleTypes[arg0->unk1A]), D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0, dist, 0, temp_f14);
   }
 }
 #else

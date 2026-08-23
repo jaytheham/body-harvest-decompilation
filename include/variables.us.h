@@ -2665,7 +2665,7 @@ extern f32 D_80159D54;
 extern f32 D_80159D58;
 extern VehicleInstance *D_80159D5C;
 extern Unk8010ED84Pos *D_80159D60;
-extern VehicleSpec *D_80159D64;
+extern VehicleType *D_80159D64;
 extern Unk8010ED84Data *D_80159D68;
 extern s32 D_80159D6C;
 extern s32 D_80159D70;
@@ -2849,14 +2849,14 @@ extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 extern u8 D_80224680; // missions?
 extern u8 D_80224E80[];
 extern u8 D_80254E80[]; // Tile palette data
-extern AlienSpec alienSpecs[0x30]; // 80256680
-extern u16 D_8025668C[]; // 8025668C (aliases alienSpecs[0].unkC)
+extern AlienType alienTypes[0x30]; // 80256680
+extern u16 D_8025668C[]; // 8025668C (aliases alienTypes[0].unkC)
 extern u16 D_802566BA[]; // 802566BA
 extern s16 D_802566D8[]; // 802566D8
 extern s16 D_80256EE2; // 0x80256EE2
 extern u16 D_802571B2; // 0x802571B2
 extern s16 D_802571B8; // 0x802571B8
-extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
+extern VehicleType vehicleTypes[0x14]; // 0x80257A00
 extern SignpostData D_80258330[0x20]; // signposts
 extern s32 D_80258390; // English sign strings
 extern s32 D_80258F90; // English sign string offsets (accessed as u16[] via D_8006C550)
@@ -3056,7 +3056,7 @@ extern Unk8014DD50 *D_802E0CD0_260410[3];
 extern u32 D_802E0CDC_26041C[2];
 extern s16 D_802E0CE4_260424[2];
 extern s16 D_802E0CE8_260428[4];
-extern AlienSpec D_802E0CE4_1F99F4; // 0x802E0CE4
+extern AlienType D_802E0CE4_1F99F4; // 0x802E0CE4
 extern const char D_802E0CF0_260430[];
 extern const char D_802E0D08_260448[];
 extern const char D_802E0D28_260468[];

@@ -1,7 +1,7 @@
 #include <ultra64.h>
 #include "common.h"
 
-AlienSpec D_8032B7D0_1E42E0[0x30] = {
+AlienType D_8032B7D0_1E42E0[0x30] = {
 	/* [00] */
 	{
 		0, /* unk0 */

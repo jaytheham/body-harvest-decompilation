@@ -5547,7 +5547,7 @@ void func_800CF948_DE8F8(void) {
 					absRadius = radius;
 				}
 
-				maxDist = vehicleSpecs[vehicle->unk1A].unkC;
+				maxDist = vehicleTypes[vehicle->unk1A].unkC;
 				maxDist = maxDist + absRadius + 0x64;
 
 				dx = *(s16 *)&data[0] - vehicle->unk0;
@@ -5588,7 +5588,7 @@ void func_800CF948_DE8F8(void) {
 				s32 dz = *(s16 *)&data[4] - alien->unk4;
 				s16 radius = *(s16 *)&entry[2];
 
-				if ((dx * dx) + (dy * dy) + (dz * dz) < (s32)(alienSpecs[alien->specIndex].unk8 + (radius * radius))) {
+				if ((dx * dx) + (dy * dy) + (dz * dz) < (s32)(alienTypes[alien->typeIndex].unk8 + (radius * radius))) {
 					func_80088760_97710(alien);
 				}
 			}
@@ -11344,7 +11344,7 @@ void func_800E1F70_F0F20(VehicleInstance *arg0) {
 				(func_800038E0_44E0() % 10) + temp + 45);
 		}
 	} else if ((func_800038E0_44E0() % 40) < (temp + 10)) {
-		if (vehicleSpecs[arg0->unk1A].unk4C & 0x20000) {
+		if (vehicleTypes[arg0->unk1A].unk4C & 0x20000) {
 			randA = func_800038E0_44E0();
 			randB = func_800038E0_44E0();
 			randC = func_800038E0_44E0();
@@ -11352,7 +11352,7 @@ void func_800E1F70_F0F20(VehicleInstance *arg0) {
 				(((u16)randA % 40) + arg0->unk0) - 20,
 				D_80222A70 + 3,
 				(((u16)randB % 40) + arg0->unk4) - 20,
-				(((u16)randC % 40) + vehicleSpecs[arg0->unk1A].unkC) & 0xFF,
+				(((u16)randC % 40) + vehicleTypes[arg0->unk1A].unkC) & 0xFF,
 				(func_800038E0_44E0() % 10) + ((s32)temp / 2) + 60);
 		} else {
 			randA = func_800038E0_44E0();
@@ -11362,7 +11362,7 @@ void func_800E1F70_F0F20(VehicleInstance *arg0) {
 				(((u16)randA % 40) + arg0->unk0) - 20,
 				D_80222A70 + 3,
 				(((u16)randB % 40) + arg0->unk4) - 20,
-				(((u16)randC % 20) + (vehicleSpecs[arg0->unk1A].unkC / 2)) & 0xFF,
+				(((u16)randC % 20) + (vehicleTypes[arg0->unk1A].unkC / 2)) & 0xFF,
 				(func_800038E0_44E0() % 10) + ((s32)temp / 2) + 60);
 		}
 	}
@@ -11382,7 +11382,7 @@ void func_800E24B8_F1468(u8 arg0) {
 	s32 temp_a0;
 	s32 temp_t9;
 	s32 var_a1;
-	s16 specValue;
+	s16 typeValue;
 
 	temp_v0 = func_800038E0_44E0();
 	alien = &alienInstances[arg0];
@@ -11409,18 +11409,18 @@ void func_800E24B8_F1468(u8 arg0) {
 		temp2 = (u16)sp26 % divisor;
 		temp3 = (u16)sp28 % 20;
 
-		specValue = alienSpecs[alien->specIndex].unkC;
-		if (specValue < 0) {
-			specValue = (specValue + 1) >> 1;
+		typeValue = alienTypes[alien->typeIndex].unkC;
+		if (typeValue < 0) {
+			typeValue = (typeValue + 1) >> 1;
 		} else {
-			specValue = specValue >> 1;
+			typeValue = typeValue >> 1;
 		}
 
 		func_800DEED0_EDE80(
 			(s16) ((temp1 + alien->unk0) - 15),
 			(s16) (D_80222A70 + 5),
 			(s16) ((temp2 + alien->unk4) - 15),
-			((temp3 + specValue) & 0xFF),
+			((temp3 + typeValue) & 0xFF),
 			((temp_v0 % 10) + 50));
 	}
 }
@@ -12382,7 +12382,7 @@ void func_800E5538_F44E8(void) {
 					var_t0 = vehicle->unk0;
 					var_t1 = vehicle->unk2;
 					var_t2 = vehicle->unk4;
-					var_a2 = vehicleSpecs[vehicle->unk1A].unkC * 28;
+					var_a2 = vehicleTypes[vehicle->unk1A].unkC * 28;
 				} else {
 					building = &buildingInstances[entry->unk0];
 					var_t0 = building->xCoord;

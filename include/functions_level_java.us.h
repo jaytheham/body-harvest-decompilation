@@ -19,7 +19,7 @@ void func_802DEFC0_1F7CD0(s32 arg0, s32 arg1, s16 arg2, s16 arg3);
 void func_802DF3C0_1F80D0(u8 arg0, s16 *arg1, s16 *arg2);
 void func_802DF8DC_1F85EC(u8 arg0, s32 arg1);
 
-/* Alien spec handlers defined in the java level overlay (1ED9E0.c). */
+/* Alien type handlers defined in the java level overlay (1ED9E0.c). */
 void func_802D7B68_1F0878(u8 arg0);
 void func_802D7FCC_1F0CDC(s32 arg0);
 void func_802D8830_1F1540(u8 arg0);

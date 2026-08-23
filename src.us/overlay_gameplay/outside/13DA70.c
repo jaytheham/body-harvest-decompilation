@@ -1296,7 +1296,7 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 				guRotate(D_8005BB38, 90.0f, 0.0f, 1.0f, 0.0f);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				gDPPipeSync(D_8005BB2C++);
-				gSPDisplayList(D_8005BB2C++, alienSpecs[2].unk0);
+				gSPDisplayList(D_8005BB2C++, alienTypes[2].unk0);
 
 				D_800311A0.unk0 = resultX;
 				D_800311A0.unk2 = resultY;

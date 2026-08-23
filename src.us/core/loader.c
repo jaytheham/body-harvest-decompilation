@@ -377,12 +377,12 @@ void loadLevelData(u8 arg0)
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
 	osSyncPrintf(&D_80037D28_38928);
-	var_s0 = func_800101F0_10DF0(&alienSpecs, var_s0, 0x1380);
+	var_s0 = func_800101F0_10DF0(&alienTypes, var_s0, 0x1380);
 	osSyncPrintf(&D_80037D5C_3895C, 0x1380, (D_8006AA60 == 0x1380) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	osSyncPrintf(&D_80037D70_38970);
-	var_s0 = func_800101F0_10DF0(&vehicleSpecs, var_s0, 0x930);
+	var_s0 = func_800101F0_10DF0(&vehicleTypes, var_s0, 0x930);
 	osSyncPrintf(&D_80037DA4_389A4, 0x930, (D_8006AA60 == 0x930) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	if (vehicleSpecs[0].unk14 == 0x3039)
+	if (vehicleTypes[0].unk14 == 0x3039)
 	{
 		osSyncPrintf(&D_80037DB8_389B8);
 	}

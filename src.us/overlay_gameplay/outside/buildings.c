@@ -906,15 +906,15 @@ void func_801176F4_1266A4(u8 arg0, u8 arg1, s32 arg2) {
 	s32 minZ;
 	s32 maxZ;
 	f64 halfXf;
-	s32 specRadius;
+	s32 typeRadius;
 	s32 alienId;
-	s32 alienSpecIndex;
-	s32 specIndex;
+	s32 alienTypeIndex;
+	s32 typeIndex;
 
-	specIndex = vehicleInstances[arg2].unk1A;
+	typeIndex = vehicleInstances[arg2].unk1A;
 
-	halfX = vehicleSpecs[specIndex].unk34 + 0xC8;
-	halfZ = vehicleSpecs[specIndex].unk36 + 0xC8;
+	halfX = vehicleTypes[typeIndex].unk34 + 0xC8;
+	halfZ = vehicleTypes[typeIndex].unk36 + 0xC8;
 	halfX /= 2;
 
 	func_801165FC_1255AC(arg0, arg1, &centerX, &centerY, &centerZ, &orientation);
@@ -943,22 +943,22 @@ void func_801176F4_1266A4(u8 arg0, u8 arg1, s32 arg2) {
 
 	for (alienId = 0; alienId != 0xFF; alienId++) {
 		alien = &alienInstances[alienId];
-		alienSpecIndex = alien->specIndex;
-		if (alienSpecIndex < 3 || alienSpecIndex == 0x20) {
+		alienTypeIndex = alien->typeIndex;
+		if (alienTypeIndex < 3 || alienTypeIndex == 0x20) {
 			continue;
 		}
 
-		specRadius = alienSpecs[alienSpecIndex].unkC;
-		if (!(alien->unk0 < (maxX + specRadius))) {
+		typeRadius = alienTypes[alienTypeIndex].unkC;
+		if (!(alien->unk0 < (maxX + typeRadius))) {
 			continue;
 		}
-		if (!((minX - specRadius) < alien->unk0)) {
+		if (!((minX - typeRadius) < alien->unk0)) {
 			continue;
 		}
-		if (!(alien->unk4 < (maxZ + specRadius))) {
+		if (!(alien->unk4 < (maxZ + typeRadius))) {
 			continue;
 		}
-		if (!((minZ - specRadius) < alien->unk4)) {
+		if (!((minZ - typeRadius) < alien->unk4)) {
 			continue;
 		}
 		if (!(alien->unk20 & ALIEN_FLAG_UNKL)) {
@@ -986,11 +986,11 @@ void func_80117A4C_1269FC(Unk80148620 *arg0) {
 	temp_s0->unk20 |= 0x8049;
 	func_801165FC_1255AC(D_80052543, 0, &sp3A, &sp38, &sp36, &sp34);
 	func_800FB44C_10A3FC(temp_s0,
-						 (f32)(((f64)vehicleSpecs[temp_s0->unk1A].unk36 * ((f64)(f32)coss((u16)(-0x4000 - sp34)) / 32768.0)) +
+						 (f32)(((f64)vehicleTypes[temp_s0->unk1A].unk36 * ((f64)(f32)coss((u16)(-0x4000 - sp34)) / 32768.0)) +
 							   (f64)sp3A));
 	func_800FB468_10A418(temp_s0, (f32)sp38);
 	func_800FB484_10A434(temp_s0,
-						 (f32)(((f64)vehicleSpecs[temp_s0->unk1A].unk36 * ((f64)(f32)sins((u16)(-0x4000 - sp34)) / 32768.0)) +
+						 (f32)(((f64)vehicleTypes[temp_s0->unk1A].unk36 * ((f64)(f32)sins((u16)(-0x4000 - sp34)) / 32768.0)) +
 							   (f64)sp36));
 	temp_s0->unk6 = 0x4000 - sp34;
 	func_800FD510_10C4C0(0, (u8)(arg0->unk4 >> 8));

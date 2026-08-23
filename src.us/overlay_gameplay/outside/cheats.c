@@ -46,7 +46,7 @@ void func_800731B0_82160(void)
 	i = temp;
 	do
 	{
-		if (((alien->specIndex >= ALIEN_SPEC_HCU) || ((alien->specIndex == ALIEN_SPEC_HUMAN) && (alien->unk24 == 1))) && (!(alien->unk20 & ALIEN_FLAG_UNKL)))
+		if (((alien->typeIndex >= ALIEN_TYPE_HCU) || ((alien->typeIndex == ALIEN_TYPE_HUMAN) && (alien->unk24 == 1))) && (!(alien->unk20 & ALIEN_FLAG_UNKL)))
 		{
 			temp = alien->unk0 - D_80052B34->unk0;
 			if (((temp >= 0) ? (temp) : (-temp)) < 0xA00)
@@ -107,9 +107,9 @@ void func_800732E0_82290() {
 
 // func_80073428_823D8
 void func_80073428_823D8() {   
-	D_80052B34->unk1C = (u16) vehicleSpecs[D_80052B34->unk1A].hitPoints;
-	D_80052B34->unk3C = (s16) (vehicleSpecs[D_80052B34->unk1A].unk61 << 8);
-	func_800FD410_10C3C0(&(vehicleSpecs[D_80052B34->unk1A]));
+	D_80052B34->unk1C = (u16) vehicleTypes[D_80052B34->unk1A].hitPoints;
+	D_80052B34->unk3C = (s16) (vehicleTypes[D_80052B34->unk1A].unk61 << 8);
+	func_800FD410_10C3C0(&(vehicleTypes[D_80052B34->unk1A]));
 }
 
 // doWanderingCheatEffect
@@ -216,7 +216,7 @@ void func_8007383C_827EC(void) {
 
 		index = D_8014D408[i];
 		alien = &alienInstances[index];
-		if (alien->specIndex == ALIEN_SPEC_HARVESTER) {
+		if (alien->typeIndex == ALIEN_TYPE_HARVESTER) {
 			alien->unk24 = 6;
 			func_80087AAC_96A5C(index);
 			func_800AFBA4_BEB54(alien->unk0, alien->unk4);

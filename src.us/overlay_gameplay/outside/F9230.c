@@ -498,7 +498,7 @@ void func_800EABE0_F9B90(VehicleInstance *arg0) {
 	u16 sp2A;
 	s32 temp;
 	s16 temp_v0;
-	UnkF9230SpecView *spec;
+	UnkF9230TypeView *type;
 	f32 temp_f2;
 
 	temp = D_80159020->unk0;
@@ -525,10 +525,10 @@ void func_800EABE0_F9B90(VehicleInstance *arg0) {
 		temp_v0 = weaponEntry->unk1E;
 		sp2A = (u16)(s16)(s32)(((f32)temp_v0 * (1.0f - temp_f2)) + ((f32)-temp_v0 * temp_f2));
 
-		spec = func_800FAFB8_109F68(arg0);
-		spec->unk20 = weaponEntry->unk18;
-		spec->unk22 = (s16)(s32)((weaponEntry->unk1C * ((f32)sins(sp2A) / 32768.0)) + (((f32)weaponEntry->unk1A * 64.0) / (f64)(f32)D_80157A3C));
-		spec->unk24 = (s16)(s32)(((f32)coss(sp2A) / 32768.0) * weaponEntry->unk1C);
+		type = func_800FAFB8_109F68(arg0);
+		type->unk20 = weaponEntry->unk18;
+		type->unk22 = (s16)(s32)((weaponEntry->unk1C * ((f32)sins(sp2A) / 32768.0)) + (((f32)weaponEntry->unk1A * 64.0) / (f64)(f32)D_80157A3C));
+		type->unk24 = (s16)(s32)(((f32)coss(sp2A) / 32768.0) * weaponEntry->unk1C);
 	}
 }
 #else
@@ -1033,9 +1033,9 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	D_801575E0.unk0 = 0;
 	D_801575E0.unk4 = 0;
 
-	xOff = (s8)vehicleSpecs[vehicle->unk1A].unk5E;
-	yOff = (s8)vehicleSpecs[vehicle->unk1A].unk5F;
-	zOff = (s8)vehicleSpecs[vehicle->unk1A].unk60;
+	xOff = (s8)vehicleTypes[vehicle->unk1A].unk5E;
+	yOff = (s8)vehicleTypes[vehicle->unk1A].unk5F;
+	zOff = (s8)vehicleTypes[vehicle->unk1A].unk60;
 
 	temp_f0 = cosf((f32) (( (f32) vehicle->unk6 * temp_f20) / 32768.0));
 
@@ -1756,7 +1756,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 					func_800FB468_10A418(arg0, sp60);
 					func_800FB484_10A434(arg0, sp5C);
 					temp_v0_3 = &vehicleInstances[D_80157E82];
-					temp_v1_2 = (vehicleSpecs[temp_v0_3->unk1A].unk38 * 6) + temp_v0_3->unk2;
+					temp_v1_2 = (vehicleTypes[temp_v0_3->unk1A].unk38 * 6) + temp_v0_3->unk2;
 					temp_a2_2 = (s32) D_80157600.unkC + arg0->unk2;
 					if (((temp_v1_2 - 0xC8) < temp_a2_2) && (temp_a2_2 < (temp_v1_2 + 0x32))) {
 						func_800E35E0_F2590(0xAA);
@@ -1811,7 +1811,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 				func_800FB484_10A434(arg0, sp5C);
 			} else {
 				temp_v0_5 = &vehicleInstances[D_80052B1C];
-				temp_v1_4 = (vehicleSpecs[temp_v0_5->unk1A].unk38 * 6) + temp_v0_5->unk2;
+				temp_v1_4 = (vehicleTypes[temp_v0_5->unk1A].unk38 * 6) + temp_v0_5->unk2;
 				sp92 = temp_v1_4;
 				sp90 = (s32) D_80157600.unkC + arg0->unk2;
 				func_800FB44C_10A3FC(arg0, (f32) temp_v0_5->unk0);
@@ -1873,7 +1873,7 @@ block_76:
 			func_8000CF4C_DB4C(D_80157600.unk404, &D_80157600, 0x10, D_80157600.unk410);
 			return;
 		}
-		if ((f64) ((f32) arg0->unk1C / (f32) vehicleSpecs[arg0->unk1A].hitPoints) < 0.25) {
+		if ((f64) ((f32) arg0->unk1C / (f32) vehicleTypes[arg0->unk1A].hitPoints) < 0.25) {
 			D_80157A28 = temp_a0 | PLAYER_STATE_FLAG_LOW_HEALTH;
 			if (D_80157600.unk40C == 0x24) {
 				arg0->unk1C = (s16) (arg0->unk1C + 1);
@@ -2046,7 +2046,7 @@ block_125:
 		if (D_8013E5AC_14D55C[D_80157600.unk40C].unk0 & 0x80) {
 			D_801575D0 = 0;
 			if (func_800EB9C4_FA974(D_801575DC, &D_80157600) != 0) {
-				D_80159236 = vehicleSpecs[arg0->unk1A].weapon1;
+				D_80159236 = vehicleTypes[arg0->unk1A].weapon1;
 				func_800EABE0_F9B90(arg0);
 				var_a3_2 = D_80158FEC;
 				if (D_80158FEC != 0) {
@@ -2357,7 +2357,7 @@ void func_800EF9F0_FE9A0(s16 arg0)
 	s32 spPad[2];
 	Unk80052B40 sp48;
 	alien = &alienInstances[arg0];
-	modelDisplayList = alienSpecs[alien->specIndex].unk0;
+	modelDisplayList = alienTypes[alien->typeIndex].unk0;
 	func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
 	sp48.unk2 = 0;
@@ -2392,7 +2392,7 @@ void func_800EFC28_FEBD8(u8 arg0) {
 	alien->unk0 = D_80052B34->unk0;
 	alien->unk4 = D_80052B34->unk4 + 0x50;
 	if (arg0 == 0) {
-		alienSpecs[arg0].unk0 = (s32)&D_5040770;
+		alienTypes[arg0].unk0 = (s32)&D_5040770;
 		alien->unk24 = 0x10;
 	}
 }

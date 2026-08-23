@@ -13,7 +13,7 @@ void func_802DBD08_25B448(u8, s32, s32);
 void func_802DDF04_25D644(u8 arg0);
 void func_802DE990_25E0D0(u8 arg0, s16 arg1, s16 arg2, s16 arg3, Unk8014DD50 *arg4);
 
-/* Alien spec handlers defined in the america level overlay (254410.c). */
+/* Alien type handlers defined in the america level overlay (254410.c). */
 void func_802D5CA8_2553E8(u8 arg0);
 void func_802D5D08_255448(u8 arg0);
 void func_802D6138_255878(u8 arg0);
