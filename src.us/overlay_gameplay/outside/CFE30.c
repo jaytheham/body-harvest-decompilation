@@ -9154,7 +9154,7 @@ void func_800DAA1C_E99CC(s32 arg0) {
 
 	buildingId = arg0 & 0xFF;
 	building = &buildingInstances[buildingId];
-	hpLimit = buildingSpecs[building->buildingType].unk19 >> 2;
+	hpLimit = buildingTypes[building->buildingType].unk19 >> 2;
 	buildingFlags = building->unk8;
 	effectId = D_80154282;
 
@@ -12388,7 +12388,7 @@ void func_800E5538_F44E8(void) {
 					var_t0 = building->xCoord;
 					var_t1 = building->yCoord;
 					var_t2 = building->zCoord;
-					var_a2 = buildingSpecs[building->buildingType].unk14 * 15;
+					var_a2 = buildingTypes[building->buildingType].unk14 * 15;
 				}
 
 				temp_v0_7 = entry->unk2;

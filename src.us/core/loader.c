@@ -323,7 +323,7 @@ void loadLevelData(u8 arg0)
 	D_80222A70 <<= 5;
 	osSyncPrintf(&D_80037A58_38658, 8, (D_8006AA60 == 8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	osSyncPrintf(&D_80037A6C_3866C);
-	var_s0 = func_800101F0_10DF0(&buildingSpecs, var_s0, 0x400);
+	var_s0 = func_800101F0_10DF0(&buildingTypes, var_s0, 0x400);
 	osSyncPrintf(&D_80037AA0_386A0, 0x400, (D_8006AA60 == 0x400) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	osSyncPrintf(&D_80037AB4_386B4);
 	var_s0 = func_800101F0_10DF0(&buildingInstances, var_s0, 0x17E8);

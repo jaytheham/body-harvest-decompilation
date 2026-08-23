@@ -1467,7 +1467,7 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 					}
 
 					func_80080B44_8FAF4(arg0, sp5F);
-					sp30->unk16 += buildingSpecs[buildingInstances[sp5F].buildingType].unk14 + 0x64;
+					sp30->unk16 += buildingTypes[buildingInstances[sp5F].buildingType].unk14 + 0x64;
 					sp30->unk20 &= ~(ALIEN_FLAG_UNKH | ALIEN_FLAG_UNKC);
 
 					func_80080B44_8FAF4(sp5E, sp5F);
@@ -1701,7 +1701,7 @@ void func_8008F6C0_9E670(u8 arg0)
 	}
 	temp_a1 = (u8)alienInstances[alienInstances[arg0].unk25].unk38;
 	func_80080B44_8FAF4(arg0, temp_a1);
-	alienInstances[arg0].unk16 = buildingSpecs[buildingInstances[temp_a1].buildingType].unk14 + alienInstances[arg0].unk16 + 0x64;
+	alienInstances[arg0].unk16 = buildingTypes[buildingInstances[temp_a1].buildingType].unk14 + alienInstances[arg0].unk16 + 0x64;
 }
 
 // AI - Movement update with follow-target refresh
@@ -2500,14 +2500,14 @@ void func_80091470_A0420(u8 arg0)
 			func_80081BB0_90B60(arg0);
 			buildingIdx = ((u8 *)&alienInstances[parentIdx].unk38)[1];
 			building = &buildingInstances[buildingIdx];
-			if ((s8)building->hitPoints < (buildingSpecs[building->buildingType].unk19 / 2))
+			if ((s8)building->hitPoints < (buildingTypes[building->buildingType].unk19 / 2))
 			{
 				osSyncPrintf(&D_80141EB0_150E60, buildingIdx);
 				found = func_8011B6C0_12A670(inst->unk0, inst->unk4, alienTypes[inst->typeIndex].unk51 / 20, 1, 0x100C);
 				if (found != 0xFF)
 				{
 					func_80080B44_8FAF4(arg0, found);
-					inst->unk16 += buildingSpecs[buildingInstances[found].buildingType].unk14 + 0xC8;
+					inst->unk16 += buildingTypes[buildingInstances[found].buildingType].unk14 + 0xC8;
 					return;
 				}
 				alienInstances[parentIdx].unk20 |= ALIEN_FLAG_UNKD;
@@ -2519,7 +2519,7 @@ void func_80091470_A0420(u8 arg0)
 				return;
 			}
 			func_80080B44_8FAF4(arg0, buildingIdx);
-			inst->unk16 += buildingSpecs[building->buildingType].unk14 + 0xC8;
+			inst->unk16 += buildingTypes[building->buildingType].unk14 + 0xC8;
 			return;
 		}
 

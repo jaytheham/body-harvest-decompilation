@@ -850,7 +850,7 @@ void func_8009D96C_AC91C(void) {
 
 				building = D_80158FE8;
 				varV1_2 = *(s8 *) &building->hitPoints;
-				tempA3 = buildingSpecs[building->buildingType].unk19;
+				tempA3 = buildingTypes[building->buildingType].unk19;
 				if (currentLevel == 5) {
 					varV1_2 = (s8) ((s16) varV1_2 / 3);
 				}

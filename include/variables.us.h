@@ -2860,7 +2860,7 @@ extern VehicleType vehicleTypes[0x14]; // 0x80257A00
 extern SignpostData D_80258330[0x20]; // signposts
 extern s32 D_80258390; // English sign strings
 extern s32 D_80258F90; // English sign string offsets (accessed as u16[] via D_8006C550)
-extern BuildingSpec buildingSpecs[0x20]; // 0x80259090
+extern BuildingType buildingTypes[0x20]; // 0x80259090
 extern u8 D_80259470[];
 extern Unk80259490 D_80259490; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
 extern u8 D_80259D7E[];

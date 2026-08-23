@@ -10739,7 +10739,7 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	VehicleType *vehicleType;
 	BuildingInstance *building;
-	BuildingSpec *buildingSpec;
+	BuildingType *buildingType;
 	typedef struct {
 		s8 unk0;
 		u8 pad1[3];
@@ -10936,10 +10936,10 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 
 		j = (u32) building->unk8 >> 0xC;
 		if ((j & 1) && !(j & 0x20000)) {
-			buildingSpec = &buildingSpecs[building->buildingType];
-			spawn = &((Unk80052560Entry *) D_80052560)[buildingSpec->unk1A[2]];
+			buildingType = &buildingTypes[building->buildingType];
+			spawn = &((Unk80052560Entry *) D_80052560)[buildingType->unk1A[2]];
 
-			for (j = buildingSpec->unk1A[3]; j != 0; j--, spawn--) {
+			for (j = buildingType->unk1A[3]; j != 0; j--, spawn--) {
 				spD8 = building->yCoord + spawn->unk8;
 				spD6 = building->yCoord + spawn->unkA;
 				spCA = spawn->unk4;
@@ -10959,7 +10959,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 						arg0->unk30 = arg0->unk30 / 2.0f;
 						arg0->unk38 = arg0->unk38 / 2.0f;
 						if ((currentLevel == 4) && (arg0->unk1A == 2) && (arg0->unk12 >= 0xB) && !(((u32) building->unk8 >> 0xC) & 0x1000) &&
-							((buildingSpec->unk10 * buildingSpec->unk12) < 0x10000)) {
+							((buildingType->unk10 * buildingType->unk12) < 0x10000)) {
 							func_8011C080_12B030(i & 0xFF);
 						}
 					}
@@ -11169,9 +11169,9 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 
 				if ((arg1 == 0) && (currentLevel == 4) && (((arg0->unk1A == 2) && (arg0->unk12 >= 0xB)) || ((arg0->unk1A == 0x11) && (arg0->unk12 >= 0x10)))) {
 					BuildingInstance *hitBuilding = &buildingInstances[func_8011D260_12C210((s8) (bestX >> 8), (s8) (zForBest >> 8))];
-					BuildingSpec *hitSpec = &buildingSpecs[hitBuilding->buildingType];
+					BuildingType *hitType = &buildingTypes[hitBuilding->buildingType];
 
-					if (!(((u32) hitBuilding->unk8 >> 0xC) & 0x1000) && (((hitSpec->unk10 * hitSpec->unk12) < 0x10000) || (*(s32 *) &hitSpec->pad0[0] == (s32) &D_C0067F0))) {
+					if (!(((u32) hitBuilding->unk8 >> 0xC) & 0x1000) && (((hitType->unk10 * hitType->unk12) < 0x10000) || (*(s32 *) &hitType->pad0[0] == (s32) &D_C0067F0))) {
 						func_8011C080_12B030(((s32) (hitBuilding - &buildingInstances[0])) & 0xFF);
 					}
 				}

@@ -1126,7 +1126,7 @@ loop:
 	}
 	case 0x99: {
 		BuildingInstance *bi = buildingInstances + arg0[1];
-		return (s8)bi->hitPoints < buildingSpecs[bi->buildingType].unk19;
+		return (s8)bi->hitPoints < buildingTypes[bi->buildingType].unk19;
 	}
 	case 0x9B: {
 		AlienInstance *alien = alienInstances + D_8004D161[arg0[1] * 2];

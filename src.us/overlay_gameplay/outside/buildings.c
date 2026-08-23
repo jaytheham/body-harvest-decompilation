@@ -272,7 +272,7 @@ s32 func_8011629C_12524C(BuildingInstance *arg0, s16 arg1, s16 arg2) {
 		temp->yCoord = prev->yCoord;
 		arg0->yCoord = prev->yCoord;
 
-		hitPoints = buildingSpecs[*buildingType].unk19;
+		hitPoints = buildingTypes[*buildingType].unk19;
 		prev->hitPoints = hitPoints;
 		temp->hitPoints = hitPoints;
 		arg0->hitPoints = hitPoints;
@@ -490,7 +490,7 @@ void func_8011694C_1258FC(void) {
 	s32 unusedPad1;
 	s32 unusedPad2;
 	s32 unusedPad3;
-	BuildingSpec *spec;
+	BuildingType *type;
 	UnkBuildDoorMap *doorMap;
 	UnkBuildGridCell *gridCell;
 	BuildingInstance *inst;
@@ -505,12 +505,12 @@ void func_8011694C_1258FC(void) {
 	u32 flags;
 
 	D_8015EB80 = 0;
-	spec = buildingSpecs;
+	type = buildingTypes;
 	doorRef = &D_800522C0[0x1F];
 	for (i = 0x1F; i >= 0; i--) {
 		if (doorRef->unk13 != 0) {
 			for (j = 0x1F; j >= 0; j--) {
-				if ((s32) spec[j].pad0 == doorRef->unkC) {
+				if ((s32) type[j].pad0 == doorRef->unkC) {
 					doorRef->unkC = j;
 				}
 			}
@@ -521,20 +521,20 @@ void func_8011694C_1258FC(void) {
 	}
 
 	for (i = 0x1F; i >= 0; i--) {
-		buildingSpecs[i].pad16[7] = 0;
-		buildingSpecs[i].pad16[6] = 0xFF;
+		buildingTypes[i].pad16[7] = 0;
+		buildingTypes[i].pad16[6] = 0xFF;
 	}
 
 	doorMap = (UnkBuildDoorMap *) D_80052A7C;
 	for (i = 0x6D; i >= 0; i--) {
 		if (doorMap->unkA != doorMap->unk8) {
 			for (j = 0x1F; j >= 0; j--) {
-				spec = &buildingSpecs[j];
-				if ((s32) spec->pad0 == doorMap->unk0) {
+				type = &buildingTypes[j];
+				if ((s32) type->pad0 == doorMap->unk0) {
 					doorMap->unk0 = j;
-					spec->pad16[7] += 1;
-					if (spec->pad16[6] == 0xFF) {
-						spec->pad16[6] = i;
+					type->pad16[7] += 1;
+					if (type->pad16[6] == 0xFF) {
+						type->pad16[6] = i;
 					}
 				}
 			}
@@ -578,30 +578,30 @@ void func_8011694C_1258FC(void) {
 
 	D_8015EA28 = 0xFF;
 	for (i = 0x1F; i >= 0; i--) {
-		if ((s32) buildingSpecs[i].pad0 == ((s32 *) D_80140A00_14F9B0)[currentLevel]) {
+		if ((s32) buildingTypes[i].pad0 == ((s32 *) D_80140A00_14F9B0)[currentLevel]) {
 			D_8015EA28 = i;
 		}
-		if ((s32) buildingSpecs[i].pad0 == (s32) D_5002D40) {
+		if ((s32) buildingTypes[i].pad0 == (s32) D_5002D40) {
 			D_8015EA29 = i;
 		}
 	}
 
 	for (i = 0x1F; i >= 0; i--) {
-		spec = &buildingSpecs[i];
+		type = &buildingTypes[i];
 		if (currentLevel == 1) {
 			if ((i == D_8015EA28) || (i == 4) || (i == 6) || (i == 0x14)) {
-				spec->pad16[4] |= 8;
+				type->pad16[4] |= 8;
 			}
 		} else if (currentLevel == 2) {
 			if ((i == D_8015EA28) || (i == 6) || (i == 0xD) || (i == 0xE) || (i == 0x10) || (i == 0x16)) {
-				spec->pad16[4] |= 8;
+				type->pad16[4] |= 8;
 			}
 		} else if (currentLevel == 3) {
 			if ((i == 7) || (i == 0x12) || (i == 0xC) || (i == 0x15)) {
-				spec->pad16[4] |= 8;
+				type->pad16[4] |= 8;
 			}
 		} else if ((currentLevel == 4) && ((i == 4) || (i == 5) || (i == 0x10) || (i == 0x14))) {
-			spec->pad16[4] |= 8;
+			type->pad16[4] |= 8;
 		}
 	}
 
@@ -657,19 +657,19 @@ void func_8011694C_1258FC(void) {
 		}
 	}
 
-	spec = &buildingSpecs[D_8015EA28];
+	type = &buildingTypes[D_8015EA28];
 	D_80048172 = 0;
-	spec->unk10 = 0x80;
-	spec->unk12 = 0x80;
-	spec->unk14 = 0x80;
-	spec->pad16[2] = 0;
-	spec->pad16[3] = 0x1F;
-	buildingSpecs[0x1F].unk10 = 0x80;
-	buildingSpecs[0x1F].unk12 = 0x80;
-	buildingSpecs[0x1F].unk14 = 0x1000;
-	buildingSpecs[0x1F].pad16[2] = 0;
-	buildingSpecs[0x1F].pad16[3] = 0x1F;
-	buildingSpecs[0x1F].pad16[4] |= 8;
+	type->unk10 = 0x80;
+	type->unk12 = 0x80;
+	type->unk14 = 0x80;
+	type->pad16[2] = 0;
+	type->pad16[3] = 0x1F;
+	buildingTypes[0x1F].unk10 = 0x80;
+	buildingTypes[0x1F].unk12 = 0x80;
+	buildingTypes[0x1F].unk14 = 0x1000;
+	buildingTypes[0x1F].pad16[2] = 0;
+	buildingTypes[0x1F].pad16[3] = 0x1F;
+	buildingTypes[0x1F].pad16[4] |= 8;
 	D_8015EB6A = D_80048172;
 	D_8015EB6C = D_8015EB6A;
 	D_8015EB68 = D_8015EB6C;
@@ -685,15 +685,15 @@ void func_8011694C_1258FC(void) {
 	for (i = 0; i < 0xFF; i++) {
 		D_8015EA60[i] = i;
 		inst = &buildingInstances[i];
-		spec = &buildingSpecs[inst->buildingType];
+		type = &buildingTypes[inst->buildingType];
 
-		if ((spec->pad16[4] & 4) || ((((u32) inst->unk8 >> 28) != 0xF)) || (func_80118114_1270C4(i) != 0)) {
+		if ((type->pad16[4] & 4) || ((((u32) inst->unk8 >> 28) != 0xF)) || (func_80118114_1270C4(i) != 0)) {
 			flags = inst->unk8;
 			inst->unk8 = ((((flags >> 12) | 0x1000) ^ (flags >> 12)) << 12) ^ flags;
 		}
 
 		flags = inst->unk8;
-		if (spec->pad16[2] == 0) {
+		if (type->pad16[2] == 0) {
 			inst->unk8 = ((((flags >> 12) | 8) ^ (flags >> 12)) << 12) ^ flags;
 		} else {
 			inst->unk8 = ((((flags >> 12) | 0x8000) ^ (flags >> 12)) << 12) ^ flags;
@@ -710,13 +710,13 @@ void func_8011694C_1258FC(void) {
 	}
 
 	for (i = 0x1F; i >= 0; i--) {
-		buildingSpecs[i].pad16[5] = 0xFF;
+		buildingTypes[i].pad16[5] = 0xFF;
 	}
 
 	for (i = 0x1C; i >= 0; i--) {
 		for (j = 0x1F; j >= 0; j--) {
-			if ((s32) buildingSpecs[j].pad0 == D_801486A0_157650[i * 5]) {
-				buildingSpecs[j].pad16[5] = i;
+			if ((s32) buildingTypes[j].pad0 == D_801486A0_157650[i * 5]) {
+				buildingTypes[j].pad16[5] = i;
 			}
 		}
 	}
@@ -1191,9 +1191,9 @@ void func_801184E4_127494(s8 arg0) {
 }
 
 s32 func_801184F4_1274A4(BuildingInstance *building) {
-	BuildingSpec *spec = &buildingSpecs[building->buildingType];
+	BuildingType *type = &buildingTypes[building->buildingType];
 
-	if ((spec->unk10 >= 0x321) || (spec->unk12 >= 0x321)) {
+	if ((type->unk10 >= 0x321) || (type->unk12 >= 0x321)) {
 		return 1;
 	}
 
@@ -1288,7 +1288,7 @@ void func_80118774_127724(s32 arg0) {
 	BuildingInstance *building;
 	BuildingInstance *neighbor;
 	BuildingInstance *sp7C;
-	BuildingSpec *spec;
+	BuildingType *type;
 	Unk800522C0 *doorRef;
 	UnkBuildDoorMap *doorMap;
 	UnkBuildingProp_80118774 *prop;
@@ -1401,13 +1401,13 @@ main_scan:
 	}
 
 	sp1C8 = building->buildingType;
-	spec = &buildingSpecs[building->buildingType];
+	type = &buildingTypes[building->buildingType];
 	if (building->unk8 & 1) {
-		halfX = spec->unk12;
-		halfZ = spec->unk10;
+		halfX = type->unk12;
+		halfZ = type->unk10;
 	} else {
-		halfX = spec->unk10;
-		halfZ = spec->unk12;
+		halfX = type->unk10;
+		halfZ = type->unk12;
 	}
 
 	bboxTest = func_800B960C_C85BC((s16)(building->xCoord - halfX), (s16)(building->zCoord - halfZ), halfX * 2, halfZ * 2);
@@ -1512,11 +1512,11 @@ process_current:
 		}
 
 		if (!(flags & 4)) {
-			gSPDisplayList(D_8005BB2C++, *(u32 *)&buildingSpecs[building->buildingType].pad0[0]);
-		} else if (*(u32 *)&buildingSpecs[building->buildingType].pad0[4] != 0) {
-			gSPDisplayList(D_8005BB2C++, *(u32 *)&buildingSpecs[building->buildingType].pad0[4]);
+			gSPDisplayList(D_8005BB2C++, *(u32 *)&buildingTypes[building->buildingType].pad0[0]);
+		} else if (*(u32 *)&buildingTypes[building->buildingType].pad0[4] != 0) {
+			gSPDisplayList(D_8005BB2C++, *(u32 *)&buildingTypes[building->buildingType].pad0[4]);
 		} else {
-			gSPDisplayList(D_8005BB2C++, *(u32 *)&buildingSpecs[building->buildingType].pad0[0]);
+			gSPDisplayList(D_8005BB2C++, *(u32 *)&buildingTypes[building->buildingType].pad0[0]);
 		}
 	}
 
@@ -1712,8 +1712,8 @@ next_door_ref:
 	}
 
 	if (!(propMode) && (flags & 1)) {
-		if (buildingSpecs[building->buildingType].pad16[5] != 0xFF) {
-			action = (UnkBuildingAction_80118774 *)((u8 *)D_801486A0_157650 + (buildingSpecs[building->buildingType].pad16[5] * sizeof(UnkBuildingAction_80118774)));
+		if (buildingTypes[building->buildingType].pad16[5] != 0xFF) {
+			action = (UnkBuildingAction_80118774 *)((u8 *)D_801486A0_157650 + (buildingTypes[building->buildingType].pad16[5] * sizeof(UnkBuildingAction_80118774)));
 			D_80159DD0 = building;
 			D_80159DC0 = action->unkF;
 			D_80159DC4 = action->unk10;
@@ -1721,7 +1721,7 @@ next_door_ref:
 			D_80159DCA = action->unkA;
 			D_80159DCC = action->unkC;
 			func_80116554_125504(building->unk8 & 3, &D_80159DC8, &D_80159DCC);
-			if (buildingSpecs[building->buildingType].pad16[5] == 0xA) {
+			if (buildingTypes[building->buildingType].pad16[5] == 0xA) {
 				D_80159DCA = 0x11;
 				switch (building->unk8 & 3) {
 					case 0:
@@ -2011,7 +2011,7 @@ void func_8011A604_1295B4(void) {
 	u8 *activeEntry;
 	u8 entryId;
 	BuildingInstance *inst;
-	BuildingSpec *spec;
+	BuildingType *type;
 	Unk80148620 *foundEntry;
 	u8 *model;
 
@@ -2070,7 +2070,7 @@ void func_8011A604_1295B4(void) {
 			continue;
 		}
 
-		spec = &buildingSpecs[inst->buildingType];
+		type = &buildingTypes[inst->buildingType];
 		if (flags & 0x8000) {
 			buildingId = entryId & 0xFF;
 			if (!(flags & 0x10000) && (func_80117464_126414(buildingId & 0xFF) != 0)) {
@@ -2088,12 +2088,12 @@ void func_8011A604_1295B4(void) {
 				x = xPos;
 				z = zPos;
 				yTerrain = func_800B84D0_C7480(xPos, zPos) >> 8;
-				maxSize = spec->unk12;
-				if (maxSize < spec->unk10) {
-					maxSize = spec->unk10;
+				maxSize = type->unk12;
+				if (maxSize < type->unk10) {
+					maxSize = type->unk10;
 				}
 
-				inst->yCoord += (s16) (((inst->yCoord - yTerrain) - spec->unk14) / inst->state);
+				inst->yCoord += (s16) (((inst->yCoord - yTerrain) - type->unk14) / inst->state);
 
 				vecY = 0.0f;
 				vecX = (f32) (x / 4) - D_80047954;
@@ -2151,7 +2151,7 @@ void func_8011A604_1295B4(void) {
 				activeEntry--;
 				inst->yCoord = (s16) (func_800B84D0_C7480(inst->xCoord, inst->zCoord) >> 8);
 
-				model = *(u8 **) spec;
+				model = *(u8 **) type;
 				if (currentLevel == 3) {
 					if (model == D_B00D230) {
 						func_8012D84C_13C7FC(currentLevel);
@@ -2186,11 +2186,11 @@ void func_8011A604_1295B4(void) {
 				flags = (u32) inst->unk8 >> 12;
 				if (flags & 4) {
 					buildingId = entryId & 0xFF;
-					if (!(flags & 0x10) && (hp < ((s8) spec->pad16[3] >> 2))) {
+					if (!(flags & 0x10) && (hp < ((s8) type->pad16[3] >> 2))) {
 						inst->unk8 ^= (((flags ^ (flags | 0x210)) << 12));
 						if ((currentLevel < 5) && ((currentLevel != 4) || (inst->buildingType != 4)) &&
 							((currentLevel != 3) || (inst->buildingType != 2))) {
-							func_800D249C_E144C(inst->xCoord, (s16) (s32) ((f64) inst->yCoord + ((f64) spec->unk14 * D_80144F88_153F38[0])),
+							func_800D249C_E144C(inst->xCoord, (s16) (s32) ((f64) inst->yCoord + ((f64) type->unk14 * D_80144F88_153F38[0])),
 												 inst->zCoord, 0xC8, 0x55, 0x55, (s32) entryId, 0);
 						}
 					}
@@ -2200,7 +2200,7 @@ void func_8011A604_1295B4(void) {
 						rand2 = func_800038E0_44E0() & 0xFFFF;
 						rand3 = func_800038E0_44E0() & 0xFFFF;
 						func_800DEA08_ED9B8((s16) (((rand1 >> 9) + inst->xCoord) - 0x40),
-											 (s16) ((inst->yCoord + spec->unk14) - (rand2 >> 9)),
+											 (s16) ((inst->yCoord + type->unk14) - (rand2 >> 9)),
 											 (s16) (((rand3 >> 9) + inst->zCoord) - 0x40),
 											 (s16) ((s32) (func_800038E0_44E0() + 0xFA) >> 9),
 											 8,
@@ -2216,7 +2216,7 @@ void func_8011A604_1295B4(void) {
 						inst->state = 0;
 						func_8011BEA0_12AE50(buildingId & 0xFF, 1);
 					}
-				} else if (hp < ((s8) spec->pad16[3] >> 1)) {
+				} else if (hp < ((s8) type->pad16[3] >> 1)) {
 					inst->unk8 ^= (((flags ^ (flags | 0x24)) << 12));
 					if (D_80052ACA != 2) {
 						D_80048174++;
@@ -2233,7 +2233,7 @@ void func_8011A604_1295B4(void) {
 			func_800AD3BC_BC36C(entryId & 0xFF);
 		}
 
-		model = *(u8 **) spec;
+		model = *(u8 **) type;
 		if ((currentLevel == 3) && (model == D_B007F80)) {
 			xPos = inst->xCoord;
 			zPos = inst->zCoord;
@@ -2308,7 +2308,7 @@ s32 func_8011B584_12A534(s32 arg0, s32 arg1) {
 		func_80079910_888C0(arg1);
 		return 0;
 	}
-	if (buildingInstances[arg0].unk7 < buildingSpecs[buildingInstances[arg0].buildingType].pad16[2]) {
+	if (buildingInstances[arg0].unk7 < buildingTypes[buildingInstances[arg0].buildingType].pad16[2]) {
 		func_80079910_888C0(arg1);
 		buildingInstances[arg0].unk7++;
 		if (buildingInstances[arg0].unk11 == -1) {
@@ -2464,7 +2464,7 @@ void func_8011BA80_12AA30(u8 arg0, s16 arg1) {
 // CURRENT(6030)
 void func_8011BB94_12AB44(s32 arg0, s32 arg1) {
 	BuildingInstance *building;
-	BuildingSpec *spec;
+	BuildingType *type;
 	u32 flags;
 	s32 radius;
 	s32 x;
@@ -2480,14 +2480,14 @@ void func_8011BB94_12AB44(s32 arg0, s32 arg1) {
 	unkSp6C[2] = srcWords[2];
 
 	building = &buildingInstances[arg0];
-	spec = &buildingSpecs[building->buildingType];
+	type = &buildingTypes[building->buildingType];
 
-	radius = (s32)sqrtf((f32)((spec->unk12 * spec->unk12) + (spec->unk10 * spec->unk10)));
+	radius = (s32)sqrtf((f32)((type->unk12 * type->unk12) + (type->unk10 * type->unk10)));
 	x = building->xCoord;
 	z = building->zCoord;
 	y = (func_800B84D0_C7480((s16)x, (s16)z) >> 8) + 0x32;
 
-	temp = (s8)spec->pad16[3];
+	temp = (s8)type->pad16[3];
 	temp = temp / 2;
 	if (((s8)building->unk10 >= temp) && ((s8)building->hitPoints < temp)) {
 		building->padC[0] = 0xA;
@@ -2589,7 +2589,7 @@ s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 #ifdef NON_MATCHING
 void func_8011BF7C_12AF2C(u8 arg0) {
 	BuildingInstance *inst = &buildingInstances[arg0];
-	BuildingSpec *spec = &buildingSpecs[inst->buildingType];
+	BuildingType *type = &buildingTypes[inst->buildingType];
 
 	if ((s8)inst->hitPoints <= 0) {
 		return;
@@ -2602,7 +2602,7 @@ void func_8011BF7C_12AF2C(u8 arg0) {
 	}
 	func_800D249C_E144C(
 		inst->xCoord,
-		(s16)(s32)(inst->yCoord + spec->unk14 * D_80144FA0_153F50[0]),
+		(s16)(s32)(inst->yCoord + type->unk14 * D_80144FA0_153F50[0]),
 		inst->zCoord,
 		0xC8,
 		0x55,
@@ -2628,7 +2628,7 @@ void func_8011C080_12B030(u8 arg0)
 // CURRENT(4954)
 s32 func_8011C0CC_12B07C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	BuildingInstance *building;
-	BuildingSpec *spec;
+	BuildingType *type;
 	s32 halfX;
 	s32 halfZ;
 	s32 x;
@@ -2645,14 +2645,14 @@ s32 func_8011C0CC_12B07C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 cornerZ;
 
 	building = &buildingInstances[arg0];
-	spec = &buildingSpecs[building->buildingType];
+	type = &buildingTypes[building->buildingType];
 
 	if (building->unk8 & 1) {
-		halfX = spec->unk12;
-		halfZ = spec->unk10;
+		halfX = type->unk12;
+		halfZ = type->unk10;
 	} else {
-		halfX = spec->unk10;
-		halfZ = spec->unk12;
+		halfX = type->unk10;
+		halfZ = type->unk12;
 	}
 
 	x = building->xCoord;
@@ -3068,7 +3068,7 @@ void func_8011CC40_12BBF0(u8 arg0, u8 arg1, u8 arg2) {
 #ifdef NON_MATCHING
 void func_8011CDA4_12BD54(void) {
 	BuildingInstance *inst;
-	BuildingSpec *spec;
+	BuildingType *type;
 	s16 xHalfSize;
 	s16 zHalfSize;
 	s16 xCell;
@@ -3094,13 +3094,13 @@ void func_8011CDA4_12BD54(void) {
 			continue;
 		}
 
-		spec = &buildingSpecs[inst->buildingType];
+		type = &buildingTypes[inst->buildingType];
 		if (flags & 1) {
-			xHalfSize = spec->unk12;
-			zHalfSize = spec->unk10;
+			xHalfSize = type->unk12;
+			zHalfSize = type->unk10;
 		} else {
-			xHalfSize = spec->unk10;
-			zHalfSize = spec->unk12;
+			xHalfSize = type->unk10;
+			zHalfSize = type->unk12;
 		}
 
 		if (inst->buildingType == 0x1F) {
@@ -3152,11 +3152,11 @@ void func_8011D030_12BFE0(u8 arg0) {
 	buildingType = inst->buildingType;
 
 	if (inst->unk8 & 1) {
-		xHalfSize = buildingSpecs[buildingType].unk12;
-		zHalfSize = buildingSpecs[buildingType].unk10;
+		xHalfSize = buildingTypes[buildingType].unk12;
+		zHalfSize = buildingTypes[buildingType].unk10;
 	} else {
-		xHalfSize = buildingSpecs[buildingType].unk10;
-		zHalfSize = buildingSpecs[buildingType].unk12;
+		xHalfSize = buildingTypes[buildingType].unk10;
+		zHalfSize = buildingTypes[buildingType].unk12;
 	}
 
 	xMax = ((inst->xCoord + xHalfSize) - 1) >> 8;
@@ -3234,7 +3234,7 @@ s32 func_8011D2DC_12C28C(s16 arg0, s16 arg1)
 {
 	s32 index;
 	BuildingInstance *inst;
-	BuildingSpec *spec;
+	BuildingType *type;
 	index = func_8011D260_12C210((s8)(arg0 >> 8), (s8)(arg1 >> 8));
 	if (index == (-1))
 	{
@@ -3245,15 +3245,15 @@ s32 func_8011D2DC_12C28C(s16 arg0, s16 arg1)
 	{
 		return index;
 	}
-	spec = &buildingSpecs[inst->buildingType];
+	type = &buildingTypes[inst->buildingType];
 	if ((inst->unk8 & 0xFFFF) & 1)
 	{
-		if ((((arg0 >= (inst->xCoord - spec->unk12)) && ((inst->xCoord + spec->unk12) >= arg0)) && (arg1 >= (inst->zCoord - spec->unk10))) && ((inst->zCoord + spec->unk10) >= arg1))
+		if ((((arg0 >= (inst->xCoord - type->unk12)) && ((inst->xCoord + type->unk12) >= arg0)) && (arg1 >= (inst->zCoord - type->unk10))) && ((inst->zCoord + type->unk10) >= arg1))
 		{
 			return index;
 		}
 	}
-	else if ((((arg0 >= (inst->xCoord - spec->unk10)) && ((inst->xCoord + spec->unk10) >= arg0)) && (arg1 >= (inst->zCoord - spec->unk12))) && ((inst->zCoord + spec->unk12) >= arg1))
+	else if ((((arg0 >= (inst->xCoord - type->unk10)) && ((inst->xCoord + type->unk10) >= arg0)) && (arg1 >= (inst->zCoord - type->unk12))) && ((inst->zCoord + type->unk12) >= arg1))
 	{
 		return index;
 	}
@@ -3311,8 +3311,8 @@ void func_8011D438_12C3E8(u8 arg0, s32 arg1) {
 
 #ifdef NON_MATCHING
 void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1, s16 startIndex, s32 arg3) {
-	BuildingSpec *spec;
-	u32 *specWords;
+	BuildingType *type;
+	u32 *typeWords;
 	u8 value;
 	u8 buildingIndex;
 
@@ -3345,38 +3345,38 @@ void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1, s16 startIndex, s32 arg3) {
 
 	D_8005BB38 += 0x40;
 
-	spec = &buildingSpecs[buildingIndex];
-	specWords = (u32 *) spec;
+	type = &buildingTypes[buildingIndex];
+	typeWords = (u32 *) type;
 	D_80052B40.unk0 = 0;
 	D_80052B40.unk2 = 0;
 	D_80052B40.unk4 = 0;
-	D_80052B44 = -(s16) spec->unk14;
+	D_80052B44 = -(s16) type->unk14;
 	D_80052B48.unk0 = 0;
 	D_80052B48.unk2 = 0x8000;
 	D_80052B48.unk4 = 0x4000;
-	D_80052B50.unk0 = (s16) (s32) (((256.0 / (f64) (spec->unk10 * 2)) * 128.0));
+	D_80052B50.unk0 = (s16) (s32) (((256.0 / (f64) (type->unk10 * 2)) * 128.0));
 	D_80052B50.unk2 = 0x100;
-	D_80052B54 = (s16) (s32) (((256.0 / (f64) (spec->unk12 * 2)) * 128.0));
+	D_80052B54 = (s16) (s32) (((256.0 / (f64) (type->unk12 * 2)) * 128.0));
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-	guOrtho(D_8005BB38, -64.0f, 64.0f, 64.0f, 0.0f, 1.0f, (f32) spec->unk14, 1.0f);
+	guOrtho(D_8005BB38, -64.0f, 64.0f, 64.0f, 0.0f, 1.0f, (f32) type->unk14, 1.0f);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
 	if (arg0 & 0x80) {
-		if ((u32) D_5002D40 == specWords[0]) {
+		if ((u32) D_5002D40 == typeWords[0]) {
 			gSPDisplayList(D_8005BB2C++, (u32)func_800E88C0_F7870((s32) D_5002D40, 2));
-		} else if (specWords[1] != 0) {
-			gSPDisplayList(D_8005BB2C++, (u32)func_800E88C0_F7870((s32) specWords[1], 2));
+		} else if (typeWords[1] != 0) {
+			gSPDisplayList(D_8005BB2C++, (u32)func_800E88C0_F7870((s32) typeWords[1], 2));
 		} else {
-			gSPDisplayList(D_8005BB2C++, (u32)func_800E88C0_F7870((s32) specWords[0], 2));
+			gSPDisplayList(D_8005BB2C++, (u32)func_800E88C0_F7870((s32) typeWords[0], 2));
 		}
-	} else if ((u32) D_5002D40 == specWords[0]) {
+	} else if ((u32) D_5002D40 == typeWords[0]) {
 		gSPDisplayList(D_8005BB2C++, (u32)func_800E88C0_F7870((s32) D_5002D40, 2));
 	} else {
-		gSPDisplayList(D_8005BB2C++, (u32)func_800E88C0_F7870((s32) specWords[0], 2));
+		gSPDisplayList(D_8005BB2C++, (u32)func_800E88C0_F7870((s32) typeWords[0], 2));
 	}
 
 	if (D_8015EA28 == value) {
@@ -3403,7 +3403,7 @@ void func_8011DBA0_12CB50() {
 		s32 unk4;
 	} Unk80140A40;
 
-	BuildingSpec *spec;
+	BuildingType *type;
 	Unk80140A40 *unkTable;
 	u16 *unkPtr;
 	u8 *pendingPtr;
@@ -3420,7 +3420,7 @@ void func_8011DBA0_12CB50() {
 	if (D_8015EB6C != 0) {
 		D_8015EB6C--;
 		if (D_8015EB6C == 0) {
-			spec = &buildingSpecs[(u8)D_8015EB6E & 0x7F];
+			type = &buildingTypes[(u8)D_8015EB6E & 0x7F];
 			unkTable = (Unk80140A40 *)D_80140A40_14F9F0;
 			counter = 0xFFF;
 
@@ -3428,7 +3428,7 @@ void func_8011DBA0_12CB50() {
 				value = *unkPtr;
 				entry = &unkTable[value >> 0xD];
 				temp = (entry->unk4 + ((((s32)value >> 2) & 0x7FF) << entry->unk0)) >> 3;
-				*unkPtr = (u16)((1.0 - ((f64)temp / D_80144FA8_153F58[0])) * (f64)spec->unk14);
+				*unkPtr = (u16)((1.0 - ((f64)temp / D_80144FA8_153F58[0])) * (f64)type->unk14);
 				unkPtr++;
 			} while (counter-- != 0);
 
@@ -3447,7 +3447,7 @@ void func_8011DBA0_12CB50() {
 		D_8015EB6E = D_8015EB70;
 		index = startIndex;
 
-		while ((D_8015EB60[index] != 0xFF) && (*((u8 *)&buildingSpecs[D_8015EB60[index]] + 0x1A) & 0x10)) {
+		while ((D_8015EB60[index] != 0xFF) && (*((u8 *)&buildingTypes[D_8015EB60[index]] + 0x1A) & 0x10)) {
 			index++;
 			if (index >= 8) {
 				index = 0;
@@ -3484,7 +3484,7 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 	BuildingInstance *inst;
 	BuildingInstance *instA;
 	BuildingInstance *instB;
-	BuildingSpec *spec;
+	BuildingType *type;
 	f32 localX;
 	f32 localZ;
 	f32 absX;
@@ -3497,7 +3497,7 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 	s16 sampleY;
 	s32 cellY;
 	s32 searchIndex;
-	s32 specType;
+	s32 buildingType;
 	s32 rot;
 	s32 needSeamFix;
 	u8 *history;
@@ -3506,15 +3506,15 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 	instanceId = arg3;
 	inst = &buildingInstances[instanceId];
 	if (inst->buildingType == 0x1F) {
-		specType = D_8015EA28;
+		buildingType = D_8015EA28;
 	} else {
-		specType = inst->buildingType;
+		buildingType = inst->buildingType;
 	}
 	history = &D_8015EB67;
 	searchIndex = 7;
 
 	do {
-		if (*history == (((inst->unk8 >> 0xC) & 4) ? 0x80 : 0) + specType) {
+		if (*history == (((inst->unk8 >> 0xC) & 4) ? 0x80 : 0) + buildingType) {
 			break;
 		}
 		history--;
@@ -3525,8 +3525,8 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 		return instanceId;
 	}
 
-	spec = &buildingSpecs[specType];
-	spec->pad16[4] |= 0x10;
+	type = &buildingTypes[buildingType];
+	type->pad16[4] |= 0x10;
 
 	if (inst->buildingType == 0x1F) {
 		if ((inst->unk8 & 1) != 0) {
@@ -3568,7 +3568,7 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 			absX = -localX;
 		}
 
-		if ((f32)spec->unk10 < absX) {
+		if ((f32)type->unk10 < absX) {
 			goto fail;
 		}
 		if (localZ >= 0.0f) {
@@ -3576,7 +3576,7 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 		} else {
 			absZ = -localZ;
 		}
-		if ((f32)spec->unk12 < absZ) {
+		if ((f32)type->unk12 < absZ) {
 			goto fail;
 		}
 		goto scale_ok;
@@ -3586,8 +3586,8 @@ fail:
 		return -1;
 
 scale_ok:
-		localX = (f32)((localX * (32.0 / (f32)spec->unk10)) + 32.0);
-		localZ = (f32)((localZ * (32.0 / (f32)spec->unk12)) + 32.0);
+		localX = (f32)((localX * (32.0 / (f32)type->unk10)) + 32.0);
+		localZ = (f32)((localZ * (32.0 / (f32)type->unk12)) + 32.0);
 		needSeamFix = 0;
 		if (D_8015EA28 == inst->buildingType) {
 			if ((rot & 1) != 0) {
@@ -3608,7 +3608,7 @@ scale_ok:
 	}
 
 	if (searchIndex == -1) {
-		*arg2 = inst->yCoord + spec->unk14;
+		*arg2 = inst->yCoord + type->unk14;
 		if (*arg2 < cellY) {
 			*arg2 = (s16)cellY;
 			return -1;
@@ -3625,21 +3625,21 @@ scale_ok:
 	if (D_8015EB80 != 0) {
 		switch (currentLevel) {
 		case LEVEL_GREECE:
-			if ((*(s32 *)&buildingSpecs[inst->buildingType] == (s32)D_900AD50) && (localX > 23.0f) && (localX < 41.0f) && (localZ > 45.0f)) {
+			if ((*(s32 *)&buildingTypes[inst->buildingType] == (s32)D_900AD50) && (localX > 23.0f) && (localX < 41.0f) && (localZ > 45.0f)) {
 				*arg2 = 0;
 			}
 			break;
 		case LEVEL_JAVA:
-			if ((*(s32 *)&buildingSpecs[inst->buildingType] == (s32)D_A014AD8) && (localX > 26.0f) && (localX < 38.0f) && (localZ > 55.0f)) {
+			if ((*(s32 *)&buildingTypes[inst->buildingType] == (s32)D_A014AD8) && (localX > 26.0f) && (localX < 38.0f) && (localZ > 55.0f)) {
 				if ((func_8011D260_12C210(0x45, 0x12) != (s32)(inst - buildingInstances)) || (func_8000726C_7E6C((u64)0xFULL) != 0)) {
 					*arg2 = 0;
 				}
-			} else if ((*(s32 *)&buildingSpecs[inst->buildingType] == (s32)D_A01EC58) && (localX > 21.0f) && (localX < 43.0f) && (localZ > 51.0f)) {
+			} else if ((*(s32 *)&buildingTypes[inst->buildingType] == (s32)D_A01EC58) && (localX > 21.0f) && (localX < 43.0f) && (localZ > 51.0f)) {
 				*arg2 = 0;
 			}
 			break;
 		case LEVEL_AMERICA:
-			if ((*(s32 *)&buildingSpecs[inst->buildingType] == (s32)D_B00E4E8) && (localX > 19.0f) && (localX < 45.0f)) {
+			if ((*(s32 *)&buildingTypes[inst->buildingType] == (s32)D_B00E4E8) && (localX > 19.0f) && (localX < 45.0f)) {
 				*arg2 = 0;
 			}
 			break;
@@ -3679,8 +3679,8 @@ scale_ok:
 			return -1;
 		}
 
-		if (((spec->pad16[4] & 8) == 0) && (D_8015EB80 == 0) && (*arg2 != 0)) {
-			*arg2 = spec->unk14 + inst->yCoord;
+		if (((type->pad16[4] & 8) == 0) && (D_8015EB80 == 0) && (*arg2 != 0)) {
+			*arg2 = type->unk14 + inst->yCoord;
 		}
 
 		return instanceId;
@@ -3709,7 +3709,7 @@ s32 func_8011E6FC_12D6AC(s16 arg0, s16 arg1, s16 *arg2) {
 #ifdef NON_MATCHING
 s16 func_8011E788_12D738(s16 arg0, s16 arg1, s16 *arg2, s32 arg3, s32 arg4) {
 	BuildingInstance *inst;
-	BuildingSpec *spec;
+	BuildingType *type;
 	s16 xMin;
 	s16 xMax;
 	s16 zMin;
@@ -3742,17 +3742,17 @@ s16 func_8011E788_12D738(s16 arg0, s16 arg1, s16 *arg2, s32 arg3, s32 arg4) {
 		return (s16)index;
 	}
 
-	spec = &buildingSpecs[inst->buildingType];
+	type = &buildingTypes[inst->buildingType];
 	if (inst->unk8 & 1) {
-		zMin = inst->zCoord - spec->unk10;
-		zMax = inst->zCoord + spec->unk10;
-		xMax = inst->xCoord + spec->unk12;
-		xMin = inst->xCoord - spec->unk12;
+		zMin = inst->zCoord - type->unk10;
+		zMax = inst->zCoord + type->unk10;
+		xMax = inst->xCoord + type->unk12;
+		xMin = inst->xCoord - type->unk12;
 	} else {
-		zMin = inst->zCoord - spec->unk12;
-		zMax = inst->zCoord + spec->unk12;
-		xMax = inst->xCoord + spec->unk10;
-		xMin = inst->xCoord - spec->unk10;
+		zMin = inst->zCoord - type->unk12;
+		zMax = inst->zCoord + type->unk12;
+		xMax = inst->xCoord + type->unk10;
+		xMin = inst->xCoord - type->unk10;
 	}
 
 	if (arg0 < xMin || xMax < arg0 || arg1 < zMin || zMax < arg1) {
@@ -4336,7 +4336,7 @@ void func_801206B0_12F660(void) {
 			idx = func_8011D260_12C210(xCell, zCell);
 			if (idx != -1) {
 				instA = &buildingInstances[idx];
-				if (*(s32 *)&buildingSpecs[instA->buildingType] == (s32)D_A01F868) {
+				if (*(s32 *)&buildingTypes[instA->buildingType] == (s32)D_A01F868) {
 					break;
 				}
 			}
@@ -4347,7 +4347,7 @@ void func_801206B0_12F660(void) {
 			idx = func_8011D260_12C210(xCell, zCell);
 			if (idx != -1) {
 				instB = &buildingInstances[idx];
-				if (*(s32 *)&buildingSpecs[instB->buildingType] == (s32)D_A01F868) {
+				if (*(s32 *)&buildingTypes[instB->buildingType] == (s32)D_A01F868) {
 					break;
 				}
 			}

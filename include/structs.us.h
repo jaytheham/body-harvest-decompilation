@@ -980,7 +980,7 @@ typedef struct {
 	/* 0x1C */ s16 hitPoints;
 	/* 0x1E */ s16 unk1E; // Weapons? 0x1F used as HCU count for harvester?
 	/* 0x20 */ s32 unk20; // Bit flags
-	/* 0x24 */ u8 unk24; // Human type. Harvester humans eaten count
+	/* 0x24 */ u8 unk24; // Human type. Harvester humans eaten count. Processor child alien spawned count.
 	/* 0x25 */ u8 unk25; // Parent alien instance id
 	/* 0x26 */ u8 unk26; // Harvester unspawned HCU count
 	/* 0x27 */ u8 unk27;
@@ -1378,7 +1378,7 @@ typedef struct {
 	/* 0x16 */ u8 pad16[0x3];
 	/* 0x19 */ s8 unk19;
 	/* 0x1A */ u8 unk1A[0x6];
-} BuildingSpec; /* size = 0x20 */
+} BuildingType; /* size = 0x20 */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
