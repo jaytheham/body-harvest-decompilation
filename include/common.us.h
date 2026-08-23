@@ -8,6 +8,11 @@
 
 #include "structs.us.h"
 #include "functions.us.h"
+#include "functions_level_greece.us.h"
+#include "functions_level_java.us.h"
+#include "functions_level_america.us.h"
+#include "functions_level_siberia.us.h"
+#include "functions_level_comet.us.h"
 #include "variables.us.h"
 #include "ld_symbols.us.h"
 

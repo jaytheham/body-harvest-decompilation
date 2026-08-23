@@ -470,7 +470,49 @@ segments:
       - [0x213C98, bin, overlay_level/java/java_terrain_object_groups] #mio0
       - [0x21404C, bin, overlay_level/java/java_terrain_object_model_pointers]
       - [0x21408C, bin, overlay_level/java/java_water_table_height]
-      - [0x214094, bin, overlay_level/java/UNMAPPED]
+      - [0x214094, bin, overlay_level/java/java_building_types] # 32 x 32 bytes
+      - [0x214494, bin, overlay_level/java/java_building_instances] # 255 * 24 bytes
+      - [0x215C7C, bin, overlay_level/java/java_trigger_array] # 192 * 16 bytes ?
+      - [0x21687C, bin, overlay_level/java/java_next_trigger] # 0xC bytes (4 pad + trigger + 4 pad)
+      - [0x216888, bin, overlay_level/java/java_alien_waves] # 192 * 20 bytes. 0x0 is wave type; 0x2 & 0x4 are spawn coords
+      - [0x217788, bin, overlay_level/java/java_vehicle_instances] # 128 * 18 bytes. 0x0 and 0x2 are coords, 0x7 is type
+      - [0x218088, bin, overlay_level/java/java_missions] # 0x808 bytes, starts with A8 01
+      - [0x218890, bin, overlay_level/java/java_terrain_textures] #mio0
+      - [0x244680, bin, overlay_level/java/java_terrain_palettes] #mio0
+      - [0x245A40, bin, overlay_level/java/java_sky_texture] #mio0
+      - [0x24AC38, bin, overlay_level/java/java_sky_palette] #mio0
+
+  - name: overlay_level_java_alien_types
+    type: code
+    start: 0x24AD10
+    vram: 0x80332000
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x24AD10, .data, overlay_level/java/alien_types] # 48 * 104 bytes
+
+  - name: overlay_level_java_data_tail
+    type: bin
+    start: 0x24C090
+    subsegments:
+      - [0x24C090, bin, overlay_level/java/java_vehicle_types] # 21 * 112 bytes
+      - [0x24C9C0, bin, overlay_level/java/java_signposts]
+      - [0x24CA20, bin, overlay_level/java/java_english_sign_strings]
+      - [0x24D620, bin, overlay_level/java/java_english_sign_string_offsets]
+      - [0x24D720, bin, overlay_level/java/java_french_sign_strings]
+      - [0x24E320, bin, overlay_level/java/java_french_sign_string_offsets]
+      - [0x24E420, bin, overlay_level/java/java_german_sign_strings]
+      - [0x24F020, bin, overlay_level/java/java_german_sign_string_offsets]
+      - [0x24F120, bin, overlay_level/java/java_english_comms_strings]
+      - [0x250920, bin, overlay_level/java/java_english_comms_strings_offsets]
+      - [0x250A20, bin, overlay_level/java/java_french_comms_strings]
+      - [0x252220, bin, overlay_level/java/java_french_comms_strings_offsets]
+      - [0x252320, bin, overlay_level/java/java_german_comms_strings]
+      - [0x253B20, bin, overlay_level/java/java_german_comms_strings_offsets]
+      - [0x253C20, bin, overlay_level/java/java_comms_sentence_info] # 0x40 bytes -> per-sentence portrait index table
+      - [0x253C60, bin, overlay_level/java/java_doors] # 0x280 bytes -> 32 x 0x14 bytes. Building type id at +0xC
+      - [0x253EE0, bin, overlay_level/java/java_bc_points] # 0x528 bytes -> 110 x 12 bytes, grouped by building type id
+      - [0x254408, bin, Padding_0x254408]
 
   - name: overlay_level_america
     type: code

@@ -982,7 +982,7 @@ typedef struct {
 	/* 0x20 */ s32 unk20; // Bit flags
 	/* 0x24 */ u8 unk24; // Human type, humans eaten by harvester
 	/* 0x25 */ u8 unk25; // parent alien instance id?
-	/* 0x26 */ u8 unk26;
+	/* 0x26 */ u8 unk26; // Harvester unspawned HCU count
 	/* 0x27 */ u8 unk27;
 	/* 0x28 */ s8 unk28; // Last collision tile X
 	/* 0x29 */ s8 unk29; // Last collision tile Z
@@ -1086,10 +1086,10 @@ typedef struct {
 
 /* Common damage values returned by func_800FAFB8_109F68. */
 typedef struct {
-    /* 0x00 */ u8 pad0[0x0E];
-    /* 0x0E */ s16 frontalDamage;
-    /* 0x10 */ s16 sideDamage;
-    /* 0x12 */ s16 rearDamage;
+	/* 0x00 */ u8 pad0[0x0E];
+	/* 0x0E */ s16 frontalDamage;
+	/* 0x10 */ s16 sideDamage;
+	/* 0x12 */ s16 rearDamage;
 } EntityDamageSpec;
 
 
