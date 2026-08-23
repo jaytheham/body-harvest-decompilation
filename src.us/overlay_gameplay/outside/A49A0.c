@@ -1926,7 +1926,7 @@ block_100:
 	spA0 = sp2E8 & 0x20;
 	var_s1 = 0xFE;
 	do {
-		temp_v0_14 = var_s0_4->specIndex;
+		temp_v0_14 = var_s0_4->typeIndex;
 		if (((s32) temp_v0_14 >= 2) && (var_s0_4->hitPoints > 0) && (temp_v0_14 != 0x1A) && (temp_v0_14 != 0x18)) {
 			func_80095D4C_A4CFC(var_s0_4->unk0, var_s0_4->unk4, 0xE6, 0xF, 0xF);
 		}
@@ -1963,7 +1963,7 @@ block_100:
 			do {
 				temp_v0_16 = &alienInstances[*var_s1_3];
 				if (!(temp_v0_16->unk20 & ALIEN_FLAG_UNKL)) {
-					temp_a0_6 = temp_v0_16->specIndex;
+					temp_a0_6 = temp_v0_16->typeIndex;
 					switch (temp_a0_6) {            /* switch 5; irregular */
 					case 25:                        /* switch 5 */
 						gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (u32) D_50323B0);

@@ -857,7 +857,7 @@ void func_800A7C6C_B6C1C(void) {
 
 					beacon = &D_8003154C[currentLevel - 1][i];
 
-					range = *(s16 *)((u8 *)vehicleSpecs + 0x0C + vehicle->unk1A * 0x5C) + 0x50;
+					range = *(s16 *)((u8 *)vehicleTypes + 0x0C + vehicle->unk1A * 0x5C) + 0x50;
 					deltaX = (beacon->x << 8) - vehicle->unk0;
 					deltaZ = (beacon->z << 8) - vehicle->unk4;
 					absX = deltaX;
@@ -1051,12 +1051,12 @@ void func_800A854C_B74FC(void)
 	  distCopy = dist;
 	  sp78 = (D_80052B34->unk1A == 0) ? 0x96 : 0x12C;
 	  
-	  if (((dist < (f32)(vehicleSpecs[D_80052B34->unk1A].unkC + sp78)) && (0.0f < dist)) && (yLimit == D_8014F6D0[i].unk2))
+	  if (((dist < (f32)(vehicleTypes[D_80052B34->unk1A].unkC + sp78)) && (0.0f < dist)) && (yLimit == D_8014F6D0[i].unk2))
 	  {
 		
 		if (D_80052B34->unk2 == (func_800B84D0_C7480(D_80052B34->unk0, D_80052B34->unk4) >> 8))
 		{
-		  accel = (((vehicleSpecs[D_80052B34->unk1A].unkC + sp78) - (s16)distCopy) >> 2);
+		  accel = (((vehicleTypes[D_80052B34->unk1A].unkC + sp78) - (s16)distCopy) >> 2);
 		  D_8014F6D0[i].unk6 = (((f32)accel) * deltaX) / distCopy;
 		  D_8014F6D0[i].unkA = (((f32)accel) * deltaZ) / distCopy;
 		}
@@ -1221,39 +1221,39 @@ s32 func_800A8E18_B7DC8(u32 arg0)
 	  case 16:
 		if (vehicleInstances[0].unk1C != 0)
 	  {
-		if (D_80052B34->unk1C < vehicleSpecs[D_80052B34->unk1A].hitPoints)
+		if (D_80052B34->unk1C < vehicleTypes[D_80052B34->unk1A].hitPoints)
 		{
 		  if (arg0 == 1)
 		  {
-			D_80052B34->unk1C += vehicleSpecs[D_80052B34->unk1A].hitPoints / 4;
+			D_80052B34->unk1C += vehicleTypes[D_80052B34->unk1A].hitPoints / 4;
 			
-			if (vehicleSpecs[D_80052B34->unk1A].hitPoints < D_80052B34->unk1C)
+			if (vehicleTypes[D_80052B34->unk1A].hitPoints < D_80052B34->unk1C)
 			{
-			  D_80052B34->unk1C = vehicleSpecs[D_80052B34->unk1A].hitPoints;
+			  D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].hitPoints;
 			}
 		  }
 		  else
 		  {
-			D_80052B34->unk1C = vehicleSpecs[D_80052B34->unk1A].hitPoints;
+			D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].hitPoints;
 		  }
 			result = 1;
 		}
 		else
 		{
-		  if (vehicleInstances[0].unk1C < vehicleSpecs[vehicleInstances[0].unk1A].hitPoints)
+		  if (vehicleInstances[0].unk1C < vehicleTypes[vehicleInstances[0].unk1A].hitPoints)
 		  {
 			if (arg0 == 1)
 			{
-			  vehicleInstances[0].unk1C += vehicleSpecs[vehicleInstances[0].unk1A].hitPoints / 4;
+			  vehicleInstances[0].unk1C += vehicleTypes[vehicleInstances[0].unk1A].hitPoints / 4;
 			  
-			  if (vehicleSpecs[vehicleInstances[0].unk1A].hitPoints < vehicleInstances[0].unk1C)
+			  if (vehicleTypes[vehicleInstances[0].unk1A].hitPoints < vehicleInstances[0].unk1C)
 			  {
-				vehicleInstances[0].unk1C = vehicleSpecs[vehicleInstances[0].unk1A].hitPoints;
+				vehicleInstances[0].unk1C = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
 			  }
 			}
 			else
 			{
-			  vehicleInstances[0].unk1C = vehicleSpecs[vehicleInstances[0].unk1A].hitPoints;
+			  vehicleInstances[0].unk1C = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
 			}
 			result = 1;  
 		  }

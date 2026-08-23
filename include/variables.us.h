@@ -1973,6 +1973,94 @@ extern TileCoord D_801475F0[];
 extern ShieldWallPoint D_801475F0_1565A0[][48];
 extern u8 D_801479B0_156960[][0x80];
 extern Unk8014FD30Type D_80147C30_156BE0[][6];
+extern const char D_80147F40_156EF0[];
+extern const char D_80147F48_156EF8[];
+extern const char D_80147F50_156F00[];
+extern const char D_80147F54_156F04[];
+extern const char D_80147F60_156F10[];
+extern const char D_80147F6C_156F1C[];
+extern const char D_80147F74_156F24[];
+extern const char D_80147F7C_156F2C[];
+extern const char D_80147F84_156F34[];
+extern const char D_80147F90_156F40[];
+extern const char D_80147F9C_156F4C[];
+extern const char D_80147FA8_156F58[];
+extern const char D_80147FB4_156F64[];
+extern const char D_80147FC0_156F70[];
+extern const char D_80147FC8_156F78[];
+extern const char D_80147FD0_156F80[];
+extern const char D_80147FD8_156F88[];
+extern const char D_80147FE4_156F94[];
+extern const char D_80147FEC_156F9C[];
+extern const char D_80147FF8_156FA8[];
+extern const char D_80148004_156FB4[];
+extern const char D_80148010_156FC0[];
+extern const char D_8014801C_156FCC[];
+extern const char D_80148028_156FD8[];
+extern const char D_80148030_156FE0[];
+extern const char D_80148038_156FE8[];
+extern const char D_80148044_156FF4[];
+extern const char D_80148050_157000[];
+extern const char D_8014805C_15700C[];
+extern const char D_80148068_157018[];
+extern const char D_80148074_157024[];
+extern const char D_8014807C_15702C[];
+extern const char D_80148090_157040[];
+extern const char D_801480A0_157050[];
+extern const char D_801480AC_15705C[];
+extern const char D_801480B4_157064[];
+extern const char D_801480C0_157070[];
+extern const char D_801480C8_157078[];
+extern const char D_801480D0_157080[];
+extern const char D_801480E0_157090[];
+extern const char D_801480E8_157098[];
+extern const char D_801480F0_1570A0[];
+extern const char D_801480F8_1570A8[];
+extern const char D_80148100_1570B0[];
+extern const char D_80148108_1570B8[];
+extern const char D_80148114_1570C4[];
+extern const char D_8014811C_1570CC[];
+extern const char D_80148128_1570D8[];
+extern const char D_80148130_1570E0[];
+extern const char D_80148138_1570E8[];
+extern const char D_80148140_1570F0[];
+extern const char D_80148150_157100[];
+extern const char D_8014815C_15710C[];
+extern const char D_80148168_157118[];
+extern const char D_80148174_157124[];
+extern const char D_80148180_157130[];
+extern const char D_8014818C_15713C[];
+extern const char D_80148194_157144[];
+extern const char D_801481A0_157150[];
+extern const char D_801481AC_15715C[];
+extern const char D_801481B4_157164[];
+extern const char D_801481C0_157170[];
+extern const char D_801481D0_157180[];
+extern const char D_801481DC_15718C[];
+extern const char D_801481E8_157198[];
+extern const char D_801481EC_15719C[];
+extern const char D_801481F8_1571A8[];
+extern const char D_80148208_1571B8[];
+extern const char D_8014821C_1571CC[];
+extern const char D_80148230_1571E0[];
+extern const char D_80148244_1571F4[];
+extern const char D_80148250_157200[];
+extern const char D_80148264_157214[];
+extern const char D_80148278_157228[];
+extern const char D_80148290_157240[];
+extern const char D_801482A8_157258[];
+extern const char D_801482B0_157260[];
+extern const char D_801482C0_157270[];
+extern const char D_801482D0_157280[];
+extern const char D_801482E0_157290[];
+extern const char D_801482EC_15729C[];
+extern const char D_801482FC_1572AC[];
+extern const char D_8014830C_1572BC[];
+extern const char D_80148320_1572D0[];
+extern const char D_80148334_1572E4[];
+extern const char D_80148344_1572F4[];
+extern const char D_80148358_157308[];
+extern const char D_80148370_157320[];
 extern UnkBuildingProp_80118774 D_80148390_157340[];
 extern s16 D_801483A4[];
 extern Unk80148620 D_80148620_1575D0[];
@@ -2577,7 +2665,7 @@ extern f32 D_80159D54;
 extern f32 D_80159D58;
 extern VehicleInstance *D_80159D5C;
 extern Unk8010ED84Pos *D_80159D60;
-extern VehicleSpec *D_80159D64;
+extern VehicleType *D_80159D64;
 extern Unk8010ED84Data *D_80159D68;
 extern s32 D_80159D6C;
 extern s32 D_80159D70;
@@ -2761,18 +2849,18 @@ extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 extern u8 D_80224680; // missions?
 extern u8 D_80224E80[];
 extern u8 D_80254E80[]; // Tile palette data
-extern AlienSpec alienSpecs[0x30]; // 80256680
-extern u16 D_8025668C[]; // 8025668C (aliases alienSpecs[0].unkC)
+extern AlienType alienTypes[0x30]; // 80256680
+extern u16 D_8025668C[]; // 8025668C (aliases alienTypes[0].unkC)
 extern u16 D_802566BA[]; // 802566BA
 extern s16 D_802566D8[]; // 802566D8
 extern s16 D_80256EE2; // 0x80256EE2
 extern u16 D_802571B2; // 0x802571B2
 extern s16 D_802571B8; // 0x802571B8
-extern VehicleSpec vehicleSpecs[0x14]; // 0x80257A00
+extern VehicleType vehicleTypes[0x14]; // 0x80257A00
 extern SignpostData D_80258330[0x20]; // signposts
 extern s32 D_80258390; // English sign strings
 extern s32 D_80258F90; // English sign string offsets (accessed as u16[] via D_8006C550)
-extern BuildingSpec buildingSpecs[0x20]; // 0x80259090
+extern BuildingType buildingTypes[0x20]; // 0x80259090
 extern u8 D_80259470[];
 extern Unk80259490 D_80259490; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
 extern u8 D_80259D7E[];
@@ -2968,7 +3056,7 @@ extern Unk8014DD50 *D_802E0CD0_260410[3];
 extern u32 D_802E0CDC_26041C[2];
 extern s16 D_802E0CE4_260424[2];
 extern s16 D_802E0CE8_260428[4];
-extern AlienSpec D_802E0CE4_1F99F4; // 0x802E0CE4
+extern AlienType D_802E0CE4_1F99F4; // 0x802E0CE4
 extern const char D_802E0CF0_260430[];
 extern const char D_802E0D08_260448[];
 extern const char D_802E0D28_260468[];

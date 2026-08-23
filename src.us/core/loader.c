@@ -323,7 +323,7 @@ void loadLevelData(u8 arg0)
 	D_80222A70 <<= 5;
 	osSyncPrintf(&D_80037A58_38658, 8, (D_8006AA60 == 8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	osSyncPrintf(&D_80037A6C_3866C);
-	var_s0 = func_800101F0_10DF0(&buildingSpecs, var_s0, 0x400);
+	var_s0 = func_800101F0_10DF0(&buildingTypes, var_s0, 0x400);
 	osSyncPrintf(&D_80037AA0_386A0, 0x400, (D_8006AA60 == 0x400) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	osSyncPrintf(&D_80037AB4_386B4);
 	var_s0 = func_800101F0_10DF0(&buildingInstances, var_s0, 0x17E8);
@@ -377,12 +377,12 @@ void loadLevelData(u8 arg0)
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
 	osSyncPrintf(&D_80037D28_38928);
-	var_s0 = func_800101F0_10DF0(&alienSpecs, var_s0, 0x1380);
+	var_s0 = func_800101F0_10DF0(&alienTypes, var_s0, 0x1380);
 	osSyncPrintf(&D_80037D5C_3895C, 0x1380, (D_8006AA60 == 0x1380) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	osSyncPrintf(&D_80037D70_38970);
-	var_s0 = func_800101F0_10DF0(&vehicleSpecs, var_s0, 0x930);
+	var_s0 = func_800101F0_10DF0(&vehicleTypes, var_s0, 0x930);
 	osSyncPrintf(&D_80037DA4_389A4, 0x930, (D_8006AA60 == 0x930) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	if (vehicleSpecs[0].unk14 == 0x3039)
+	if (vehicleTypes[0].unk14 == 0x3039)
 	{
 		osSyncPrintf(&D_80037DB8_389B8);
 	}

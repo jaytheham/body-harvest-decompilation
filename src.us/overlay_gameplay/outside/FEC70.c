@@ -343,13 +343,13 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2) {
 	case 1:
 		D_80157586 = D_80052B34->unk0 >> 2;
 		D_80157588 = D_80052B34->unk2 >> 2;
-		D_80157588 += vehicleSpecs[D_80052B34->unk1A].unk38 >> 3;
+		D_80157588 += vehicleTypes[D_80052B34->unk1A].unk38 >> 3;
 		D_8015758A = D_80052B34->unk4 >> 2;
 		break;
 	case 2:
 		D_80157586 = (buildingInstances[entryS16[7]].xCoord >> 2) + *(u16 *)&D_80159DE0;
 		D_80157588 = (buildingInstances[entryS16[7]].yCoord >> 2) + D_80159DE2;
-		D_80157588 += buildingSpecs[buildingInstances[entryS16[7]].buildingType].unk14 >> 3;
+		D_80157588 += buildingTypes[buildingInstances[entryS16[7]].buildingType].unk14 >> 3;
 		D_8015758A = (buildingInstances[entryS16[7]].zCoord >> 2) + *(u16 *)&D_80159DE4;
 		break;
 	case 3:
@@ -411,7 +411,7 @@ s32 func_800F066C_FF61C(void) {
 		sp30 = D_80052B34->unk0 >> 2;
 		s0 = sp30;
 		a3 = D_80052B34->unk2 >> 2;
-		a3 += vehicleSpecs[D_80052B34->unk1A].unk38 >> 3;
+		a3 += vehicleTypes[D_80052B34->unk1A].unk38 >> 3;
 		sp2C = D_80052B34->unk4 >> 2;
 		s1 = sp2C;
 		break;
@@ -420,7 +420,7 @@ s32 func_800F066C_FF61C(void) {
 		sp30 = s0;
 		s0 = sp30;
 		a3 = (buildingInstances[entryS16[7]].yCoord >> 2) + D_80159DE2;
-		a3 += buildingSpecs[buildingInstances[entryS16[7]].buildingType].unk14 >> 3;
+		a3 += buildingTypes[buildingInstances[entryS16[7]].buildingType].unk14 >> 3;
 		a3 = (s16)a3;
 		s1 = (buildingInstances[entryS16[7]].zCoord >> 2) + *(u16 *)&D_80159DE4;
 		sp2C = s1;

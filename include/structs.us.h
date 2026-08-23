@@ -175,14 +175,14 @@ typedef enum {
 } AlienWaveType;
 
 typedef enum {
-	ALIEN_SPEC_NOTHING = 0,
-	ALIEN_SPEC_HUMAN = 1,
-	ALIEN_SPEC_HCU = 2, // Human Capture Unit
-	ALIEN_SPEC_BLACK_ADAM = 0x12,
-	ALIEN_SPEC_HARVESTER = 0x19, // "King Drone"
-	ALIEN_SPEC_PROCESSOR = 0x1A,
-	ALIEN_SPEC_BOSS = 0x1B,
-} AlienSpecType;
+	ALIEN_TYPE_NOTHING = 0,
+	ALIEN_TYPE_HUMAN = 1,
+	ALIEN_TYPE_HCU = 2, // Human Capture Unit
+	ALIEN_TYPE_BLACK_ADAM = 0x12,
+	ALIEN_TYPE_HARVESTER = 0x19, // "King Drone"
+	ALIEN_TYPE_PROCESSOR = 0x1A,
+	ALIEN_TYPE_BOSS = 0x1B,
+} AlienTypeId;
 
 typedef struct {
 	/* 0x00 */ f32 v0;
@@ -603,7 +603,7 @@ typedef struct {
 	/* 0x00 */ s16 relZ;
 	/* 0x02 */ s16 unk02;
 	/* 0x04 */ s16 relX;
-	/* 0x06 */ u8 spec;
+	/* 0x06 */ u8 type;
 	/* 0x07 */ u8 pad;
 } AlienSpawnSlot; /* size = 0x08 */
 
@@ -763,7 +763,7 @@ typedef struct {
 } Unk800190D4; /* size = 0x08 */
 
 /* Spawn offset/type for entities spawned relative to the player's vehicle.
-   Table is indexed [level - 1][vehicle specIndex]; x/y offsets are scaled by 2
+   Table is indexed [level - 1][vehicle typeIndex]; x/y offsets are scaled by 2
    into world units, byte 2 (zOffset) is the forward offset. */
 typedef struct {
 	/* 0x00 */ s8 xOffset; // lateral offset from vehicle
@@ -805,7 +805,7 @@ typedef struct {
 	/* 0x14 */ s16 unk14;
 	/* 0x16 */ s16 unk16;
 	/* 0x18 */ s16 unk18;
-	/* 0x1A */ u8 unk1A; // specIndex
+	/* 0x1A */ u8 unk1A; // typeIndex
 	/* 0x1B */ u8 unk1B;
 	/* 0x1C */ s16 unk1C; // hitPoints
 	/* 0x1E */ s16 unk1E;
@@ -975,14 +975,14 @@ typedef struct {
 	/* 0x14 */ s16 unk14; // target x coord
 	/* 0x16 */ s16 unk16; // target y coord
 	/* 0x18 */ s16 unk18; // target z coord
-	/* 0x1A */ u8 specIndex; // Specs are the same every level? e.g. 0x19 is harvester, 0x1B is Boss
+	/* 0x1A */ u8 typeIndex; // Types are the same every level? e.g. 0x19 is harvester, 0x1B is Boss
 	/* 0x1B */ u8 unk1B; // "Stage" something to do with showing health bar? Used as human count for harvester?
 	/* 0x1C */ s16 hitPoints;
-	/* 0x1E */ s16 unk1E; // Weapons? Upper byte used as HCU count for harvester?
+	/* 0x1E */ s16 unk1E; // Weapons? 0x1F used as HCU count for harvester?
 	/* 0x20 */ s32 unk20; // Bit flags
-	/* 0x24 */ u8 unk24; // Human type, humans eaten by harvester
-	/* 0x25 */ u8 unk25; // parent alien instance id?
-	/* 0x26 */ u8 unk26;
+	/* 0x24 */ u8 unk24; // Human type. Harvester humans eaten count. Processor child alien spawned count.
+	/* 0x25 */ u8 unk25; // Parent alien instance id
+	/* 0x26 */ u8 unk26; // Harvester unspawned HCU count
 	/* 0x27 */ u8 unk27;
 	/* 0x28 */ s8 unk28; // Last collision tile X
 	/* 0x29 */ s8 unk29; // Last collision tile Z
@@ -996,8 +996,8 @@ typedef struct {
 	/* 0x37 */ u8 unk37; // Hit counter?
 	/* 0x38 */ s16 unk38; // target building/vehicle instance id. Some code loads 0x39 as a u8 by loading it into a u8 var
 	/* 0x3A */ s16 unk3A; // Wait counter?
-	/* 0x3C */ s8 unk3C;
-	/* 0x3D */ s8 unk3D;
+	/* 0x3C */ s8 unk3C; // Processor child AlienType id
+	/* 0x3D */ s8 unk3D; // Processor child alien count to spawn.
 	/* 0x3E */ u8 unk3E;
 	/* 0x3F */ u8 unk3F;
 	/* 0x40 */ s16 unk40; // Water counter?
@@ -1027,7 +1027,7 @@ typedef struct {
 	/* 0x14 */ s16 unk14;
 	/* 0x16 */ s16 unk16;
 	/* 0x18 */ s16 unk18;
-	/* 0x1A */ u8 unk1A; // specIndex
+	/* 0x1A */ u8 unk1A; // typeIndex
 	/* 0x1B */ u8 unk1B;
 	/* 0x1C */ s16 hitPoints;
 	/* 0x1E */ s16 unk1E;
@@ -1036,9 +1036,9 @@ typedef struct {
 	/* 0x25 */ u8 unk25;
 } EntityInstance; // Properties shared by VehicleInstance & AlienInstance
 
-/* Common prefix shared by VehicleSpec & AlienSpec, mirroring how EntityInstance is
-   the common prefix of VehicleInstance & AlienInstance. Cast a VehicleSpec* or
-   AlienSpec* to EntitySpec* to access the properties common to both at the same
+/* Common prefix shared by VehicleType & AlienType, mirroring how EntityInstance is
+   the common prefix of VehicleInstance & AlienInstance. Cast a VehicleType* or
+   AlienType* to EntityType* to access the properties common to both at the same
    byte offsets (e.g. func_80129354_138304). */
 typedef struct {
 	/* 0x00 */ u32 modelDL; // Model display list pointer
@@ -1082,15 +1082,15 @@ typedef struct {
 	/* 0x44 */ u32 unk44;
 	/* 0x48 */ u32 unk48;
 	/* 0x4C */ u32 unk4C;
-} EntitySpec; /* size = 0x50 */
+} EntityType; /* size = 0x50 */
 
 /* Common damage values returned by func_800FAFB8_109F68. */
 typedef struct {
-    /* 0x00 */ u8 pad0[0x0E];
-    /* 0x0E */ s16 frontalDamage;
-    /* 0x10 */ s16 sideDamage;
-    /* 0x12 */ s16 rearDamage;
-} EntityDamageSpec;
+	/* 0x00 */ u8 pad0[0x0E];
+	/* 0x0E */ s16 frontalDamage;
+	/* 0x10 */ s16 sideDamage;
+	/* 0x12 */ s16 rearDamage;
+} EntityDamageType;
 
 
 // 0x5C Pointer to Death animation ASM?
@@ -1137,27 +1137,27 @@ typedef struct {
 	/* 0x58 */ s16 unk58; // Height of body off the ground
 	/* 0x5A */ s8 unk5A;
 	/* 0x5B */ u8 pad5B;
-	/* 0x5C */ void *unk5C;
+	/* 0x5C */ void (*unk5C)(u8); // On-death handler function pointer?
 	/* 0x60 */ u8 pad60[0x8];
-} AlienSpec; /* size = 0x68 */
+} AlienType; /* size = 0x68 */
 
 typedef struct {
 	/* 0x00 */ u8 pad0[0x20];
 	/* 0x20 */ s16 unk20;
 	/* 0x22 */ s16 unk22;
 	/* 0x24 */ s16 unk24;
-} UnkF9230SpecView;
+} UnkF9230TypeView;
 
 typedef struct {
 	/* 0x00 */ s16 xOffset;
 	/* 0x02 */ s16 zOffset;
 	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 alienSpecId;
+	/* 0x06 */ u8 alienTypeId;
 	/* 0x07 */ u8 pad7;
 } AlienWaveEntry; /* size = 0x08 */
 
 typedef struct {
-	/* 0x00 */ s8 waveSpecId;
+	/* 0x00 */ s8 waveTypeId;
 	/* 0x01 */ u8 pad1;
 	/* 0x02 */ s16 xPosition;
 	/* 0x04 */ s16 yPosition;
@@ -1318,7 +1318,7 @@ typedef struct {
 	/* 0x63 */ u8 pad63[0x7];
 	/* 0x6A */ s16 unk6A;
 	/* 0x6C */ u8 pad6C[0x4];
-} VehicleSpec; /* size = 0x70 */
+} VehicleType; /* size = 0x70 */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
@@ -1378,7 +1378,7 @@ typedef struct {
 	/* 0x16 */ u8 pad16[0x3];
 	/* 0x19 */ s8 unk19;
 	/* 0x1A */ u8 unk1A[0x6];
-} BuildingSpec; /* size = 0x20 */
+} BuildingType; /* size = 0x20 */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;

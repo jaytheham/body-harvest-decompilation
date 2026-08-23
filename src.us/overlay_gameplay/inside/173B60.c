@@ -970,7 +970,7 @@ void func_8008C8A4_174964(void) {
 		yOffset = (currentLevel == 5) ? 0 : -0x14;
 
 		if (D_80052B34->unk1C > 0) {
-			vehicleMaxHealth = vehicleSpecs[vehicleInstances->unk1A].hitPoints;
+			vehicleMaxHealth = vehicleTypes[vehicleInstances->unk1A].hitPoints;
 			temp_f8 = (f32) vehicleMaxHealth;
 			if (vehicleMaxHealth < 0) {
 				temp_f8 += 4294967296.0f;
@@ -1001,7 +1001,7 @@ void func_8008C8A4_174964(void) {
 		D_800FCF46 = 0;
 	}
 
-	if ((vehicleSpecs[vehicleInstances[0].unk1A].hitPoints >> 2) >= vehicleInstances[0].unk1C) {
+	if ((vehicleTypes[vehicleInstances[0].unk1A].hitPoints >> 2) >= vehicleInstances[0].unk1C) {
 		D_800FCF44 = 8 - (D_800E65AC % 8);
 	} else {
 		D_800FCF44 = 0;

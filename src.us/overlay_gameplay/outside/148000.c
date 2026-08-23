@@ -45,7 +45,7 @@ void func_801390F4_1480A4(s16 arg0) {
 	if (D_80052B34->unk1A == 0) {
 		D_80047948 = arg0 - 1;
 	}
-	vehicleSpecs[D_80052B34->unk1A].weapon1 = D_80031424[arg0];
+	vehicleTypes[D_80052B34->unk1A].weapon1 = D_80031424[arg0];
 }
 
 s32 func_80139150_148100(u8 arg0, u16 arg1) {
@@ -240,23 +240,23 @@ void func_801396A8_148658(s32 arg0) {
 	func_801394DC_14848C();
 	func_8013A1CC_14917C();
 	
-	if (!(vehicleSpecs[arg0].unk4C & 0x04000000)) {
+	if (!(vehicleTypes[arg0].unk4C & 0x04000000)) {
 		D_801601D0 = D_801601D4;
 	}
 	func_8013B004_149FB4();
 	func_800EA2B0_F9260(D_80047948);
-	vehicleSpecs[arg0].weapon1 = D_80031424[11];
+	vehicleTypes[arg0].weapon1 = D_80031424[11];
 	D_801601DC = 0;
 	D_801601E4 = 0;
 }
 
 void func_80139778_148728(void) {
 	u8 temp_v1;
-	VehicleSpec *temp_v0;
+	VehicleType *temp_v0;
 	
 	D_801601D4 = D_801601D0;
-	D_80031424[11] = (s32) vehicleSpecs[D_80052B34->unk1A].weapon1;
-	D_80031424[12] = (s32) vehicleSpecs[D_80052B34->unk1A].weapon2;
+	D_80031424[11] = (s32) vehicleTypes[D_80052B34->unk1A].weapon1;
+	D_80031424[12] = (s32) vehicleTypes[D_80052B34->unk1A].weapon2;
 	temp_v1 = D_80052B34->unk1A;
 	if (temp_v1 == 0x13) {
 		func_80139460_148410();
@@ -267,7 +267,7 @@ void func_80139778_148728(void) {
 		func_801391DC_14818C(0xF, 0);
 		func_8013A1CC_14917C();
 	} else {
-		temp_v0 = &vehicleSpecs[temp_v1];
+		temp_v0 = &vehicleTypes[temp_v1];
 		if (!(temp_v0->unk4C & 0x04000000)) {
 			osSyncPrintf(&D_80145A70_154A20, temp_v0->weapon1);
 			func_80139460_148410();
@@ -363,7 +363,7 @@ void func_80139B34_148AE4(void) {
 	D_801601DC = 0;
 	D_801601D8 = -1;
 	temp_v1 = 1;
-	vehicleSpecs[0].weapon1 = temp_v1;
+	vehicleTypes[0].weapon1 = temp_v1;
 	D_801601D0 = 0;
 	D_8004794A = 0;
 	D_80047948 = temp_v1;
@@ -485,7 +485,7 @@ void func_80139D58_148D08(void) {
 		mode = vehicle->unk1A;
 	}
 
-	if ((vehicleSpecs[mode].unk4C << 5) < 0) {
+	if ((vehicleTypes[mode].unk4C << 5) < 0) {
 		slot0 = weaponSlots[0];
 		slot1 = weaponSlots[1];
 		slot2 = weaponSlots[2];
@@ -802,9 +802,9 @@ void func_8013B054_14A004(void) {
 	}
 
 	if (D_80052B34 == D_8013FD78_14ED28) {
-		D_801601D8 = D_80140D17_14FCC7[vehicleSpecs[D_80052B34->unk1A].weapon1];
+		D_801601D8 = D_80140D17_14FCC7[vehicleTypes[D_80052B34->unk1A].weapon1];
 	} else {
-		D_801601D8 = vehicleSpecs[D_80052B34->unk1A].weapon1 + 0x18;
+		D_801601D8 = vehicleTypes[D_80052B34->unk1A].weapon1 + 0x18;
 	}
 
 	if (D_800313D0_31FD0 == 0) {
@@ -971,7 +971,7 @@ s32 func_8013B480_14A430(s16 arg0) {
 			return arg0 < 0x14;
 		}
 	} else {
-		if (vehicleSpecs[temp_v0].unk4C & 0x04000000) {
+		if (vehicleTypes[temp_v0].unk4C & 0x04000000) {
 			var_v0 = (arg0 < 6);
 			if (var_v0 == 0) {
 				return (arg0 == 0xB);
@@ -1012,7 +1012,7 @@ s32 func_8013B5E4_14A594(s32 arg0) {
 	}
 
 	if (D_801601D0 == 0) {
-		vehicleSpecs[D_80052B34->unk1A].weapon1 = 0;
+		vehicleTypes[D_80052B34->unk1A].weapon1 = 0;
 		return 1;
 	}
 

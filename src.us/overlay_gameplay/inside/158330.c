@@ -7300,7 +7300,7 @@ void func_8007290C_15A9CC(void)
 
 		if ((D_800E65A8 == 1) && (D_800E66A4 == 5)) {
 			D_80052B34->unk1C += 2;
-			maxHitPoints = vehicleSpecs[D_80052B34->unk1A].hitPoints;
+			maxHitPoints = vehicleTypes[D_80052B34->unk1A].hitPoints;
 			if (maxHitPoints < D_80052B34->unk1C) {
 				D_80052B34->unk1C = maxHitPoints;
 			}
@@ -9800,7 +9800,7 @@ void func_800784B8_160578(void) {
 						vehicle = D_80052B34;
 						vehicle->unk1C += 2;
 						vehicle = D_80052B34;
-						maxHp = vehicleSpecs[vehicle->unk1A].hitPoints;
+						maxHp = vehicleTypes[vehicle->unk1A].hitPoints;
 						if (maxHp < vehicle->unk1C) {
 							vehicle->unk1C = maxHp;
 						}
@@ -10982,14 +10982,14 @@ void func_8007A8AC_16296C(s32 arg0) {
 
 					changed = 1;
 					if (eventId == 1) {
-						D_80052B34->unk1C += vehicleSpecs[D_80052B34->unk1A].unk3A / 4;
-						if ((u16)vehicleSpecs[D_80052B34->unk1A].unk3A < D_80052B34->unk1C) {
-							D_80052B34->unk1C = vehicleSpecs[D_80052B34->unk1A].unk3A;
+						D_80052B34->unk1C += vehicleTypes[D_80052B34->unk1A].unk3A / 4;
+						if ((u16)vehicleTypes[D_80052B34->unk1A].unk3A < D_80052B34->unk1C) {
+							D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].unk3A;
 						}
 					} else if (eventId == 0x10) {
-						D_80052B34->unk1C = vehicleSpecs[D_80052B34->unk1A].unk3A;
-						if ((u16)vehicleSpecs[D_80052B34->unk1A].unk3A < D_80052B34->unk1C) {
-							D_80052B34->unk1C = vehicleSpecs[D_80052B34->unk1A].unk3A;
+						D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].unk3A;
+						if ((u16)vehicleTypes[D_80052B34->unk1A].unk3A < D_80052B34->unk1C) {
+							D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].unk3A;
 						}
 					} else {
 						func_80008C44_9844(eventId);

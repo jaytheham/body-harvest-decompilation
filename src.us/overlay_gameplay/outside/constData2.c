@@ -3,95 +3,184 @@
 #include "common.h"
 
 // 80147F40_156EF0
+const char D_80147F40_156EF0[] = "NULL"; // "NULL"
+const char D_80147F48_156EF8[] = "Human"; // "Human"
+const char D_80147F50_156F00[] = "HCU"; // "HCU"
+const char D_80147F54_156F04[] = "Mental HCU"; // "Mental HCU"
+const char D_80147F60_156F10[] = "Brain blob"; // "Brain blob"
+const char D_80147F6C_156F1C[] = "Scout"; // "Scout"
+const char D_80147F74_156F24[] = "Stinger"; // "Stinger"
+const char D_80147F7C_156F2C[] = "Flea"; // "Flea"
+const char D_80147F84_156F34[] = "FireFlea"; // "FireFlea"
+const char D_80147F90_156F40[] = "SandFlea"; // "SandFlea"
+const char D_80147F9C_156F4C[] = "Gun Flea"; // "Gun Flea"
+const char D_80147FA8_156F58[] = "SwampFlea"; // "SwampFlea"
+const char D_80147FB4_156F64[] = "LavaTick"; // "LavaTick"
+const char D_80147FC0_156F70[] = "Sniper"; // "Sniper"
+const char D_80147FC8_156F78[] = "Spyder"; // "Spyder"
+const char D_80147FD0_156F80[] = "Drone"; // "Drone"
+const char D_80147FD8_156F88[] = "EggDrone"; // "EggDrone"
+const char D_80147FE4_156F94[] = "Bomber"; // "Bomber"
+const char D_80147FEC_156F9C[] = "Warrior1"; // "Warrior1"
+const char D_80147FF8_156FA8[] = "Warrior2"; // "Warrior2"
+const char D_80148004_156FB4[] = "Warrior3"; // "Warrior3"
+const char D_80148010_156FC0[] = "Drone King"; // "Drone King"
+const char D_8014801C_156FCC[] = "Processor"; // "Processor"
+const char D_80148028_156FD8[] = "Sheep"; // "Sheep"
+const char D_80148030_156FE0[] = "Mine"; // "Mine"
+const char D_80148038_156FE8[] = "DoodleBug"; // "DoodleBug"
+const char D_80148044_156FF4[] = "Scorpion1"; // "Scorpion1"
+const char D_80148050_157000[] = "Scorpion2"; // "Scorpion2"
+const char D_8014805C_15700C[] = "Scorpion3"; // "Scorpion3"
+const char D_80148068_157018[] = "Snowbeast"; // "Snowbeast"
+const char D_80148074_157024[] = "Baiter"; // "Baiter"
+const char D_8014807C_15702C[] = "Shield Generator"; // "Shield Generator"
+const char D_80148090_157040[] = "Gun enplacement"; // "Gun enplacement"
+const char D_801480A0_157050[] = "MiniCrab"; // "MiniCrab"
+const char D_801480AC_15705C[] = "Crab"; // "Crab"
+const char D_801480B4_157064[] = "MantaRay"; // "MantaRay"
+const char D_801480C0_157070[] = "Shark"; // "Shark"
+const char D_801480C8_157078[] = "Cruiser"; // "Cruiser"
+const char D_801480D0_157080[] = "Drone Cruiser"; // "Drone Cruiser"
+const char D_801480E0_157090[] = "Piranha"; // "Piranha"
+const char D_801480E8_157098[] = "Chopper"; // "Chopper"
+const char D_801480F0_1570A0[] = "Locust"; // "Locust"
+const char D_801480F8_1570A8[] = "Hornet"; // "Hornet"
+const char D_80148100_1570B0[] = "Torabug"; // "Torabug"
+const char D_80148108_1570B8[] = "CrabThug"; // "CrabThug"
+const char D_80148114_1570C4[] = "Stalker"; // "Stalker"
+const char D_8014811C_1570CC[] = "Trilobite"; // "Trilobite"
+const char D_80148128_1570D8[] = "Raptor"; // "Raptor"
+const char D_80148130_1570E0[] = "Leech"; // "Leech"
+const char D_80148138_1570E8[] = "Mutant"; // "Mutant"
+const char D_80148140_1570F0[] = "Kraken Spawn"; // "Kraken Spawn"
+const char D_80148150_157100[] = "Brain Gun"; // "Brain Gun"
+const char D_8014815C_15710C[] = "Monopede"; // "Monopede"
+const char D_80148168_157118[] = "Ambush Bug1"; // "Ambush Bug1"
+const char D_80148174_157124[] = "Ambush Bug2"; // "Ambush Bug2"
+const char D_80148180_157130[] = "Black Adam"; // "Black Adam"
+const char D_8014818C_15713C[] = "Daisy"; // "Daisy"
+const char D_80148194_157144[] = "Doombomb"; // "Doombomb"
+const char D_801481A0_157150[] = "Rhinosaur"; // "Rhinosaur"
+const char D_801481AC_15715C[] = "Zzax"; // "Zzax"
+const char D_801481B4_157164[] = "Manticore"; // "Manticore"
+const char D_801481C0_157170[] = "ScorpionKing"; // "ScorpionKing"
+const char D_801481D0_157180[] = "Sentinel"; // "Sentinel"
+const char D_801481DC_15718C[] = "Burrower"; // "Burrower"
+const char D_801481E8_157198[] = "BAD"; // "BAD"
+const char D_801481EC_15719C[] = "Cerberus"; // "Cerberus"
+const char D_801481F8_1571A8[] = "Cerberus Sphere"; // "Cerberus Sphere"
+const char D_80148208_1571B8[] = "Cerberus Left Head"; // "Cerberus Left Head"
+const char D_8014821C_1571CC[] = "Cerberus Front Body"; // "Cerberus Front Body"
+const char D_80148230_1571E0[] = "Cerberus Right Head"; // "Cerberus Right Head"
+const char D_80148244_1571F4[] = "Crab Boss"; // "Crab Boss"
+const char D_80148250_157200[] = "Crab lower-left Arm"; // "Crab lower-left Arm"
+const char D_80148264_157214[] = "Crab upper-left Arm"; // "Crab upper-left Arm"
+const char D_80148278_157228[] = "Crab lower-right Arm"; // "Crab lower-right Arm"
+const char D_80148290_157240[] = "Crab upper-right Arm"; // "Crab upper-right Arm"
+const char D_801482A8_157258[] = "Boss3"; // "Boss3"
+const char D_801482B0_157260[] = "Boss3 right arm"; // "Boss3 right arm"
+const char D_801482C0_157270[] = "Boss3 left arm"; // "Boss3 left arm"
+const char D_801482D0_157280[] = "Boss3 buzzsaw"; // "Boss3 buzzsaw"
+const char D_801482E0_157290[] = "Beelzebub"; // "Beelzebub"
+const char D_801482EC_15729C[] = "Beelzebub head"; // "Beelzebub head"
+const char D_801482FC_1572AC[] = "Beelzebub tail"; // "Beelzebub tail"
+const char D_8014830C_1572BC[] = "Beelzebub left arm"; // "Beelzebub left arm"
+const char D_80148320_1572D0[] = "Beelzebub right arm"; // "Beelzebub right arm"
+const char D_80148334_1572E4[] = "Tomegatherion"; // "Tomegatherion"
+const char D_80148344_1572F4[] = "Tomegatherion visor"; // "Tomegatherion visor"
+const char D_80148358_157308[] = "Tomegatherion left arm"; // "Tomegatherion left arm"
+const char D_80148370_157320[] = "Tomegatherion right arm"; // "Tomegatherion right arm"
+
 const char *enemyNameStrings[] = {
-	"NULL",
-	"Human",
-	"HCU",
-	"Mental HCU",
-	"Brain blob",
-	"Scout",
-	"Stinger",
-	"Flea",
-	"FireFlea",
-	"SandFlea",
-	"Gun Flea",
-	"SwampFlea",
-	"LavaTick",
-	"Sniper",
-	"Spyder",
-	"Drone",
-	"EggDrone",
-	"Bomber",
-	"Warrior1",
-	"Warrior2",
-	"Warrior3",
-	"Drone King",
-	"Processor",
-	"Sheep",
-	"Mine",
-	"DoodleBug",
-	"Scorpion1",
-	"Scorpion2",
-	"Scorpion3",
-	"Snowbeast",
-	"Baiter",
-	"Shield Generator",
-	"Gun enplacement",
-	"MiniCrab",
-	"Crab",
-	"MantaRay",
-	"Shark",
-	"Cruiser",
-	"Drone Cruiser",
-	"Piranha",
-	"Chopper",
-	"Locust",
-	"Hornet",
-	"Torabug",
-	"CrabThug",
-	"Stalker",
-	"Trilobite",
-	"Raptor",
-	"Leech",
-	"Mutant",
-	"Kraken Spawn",
-	"Brain Gun",
-	"Monopede",
-	"Ambush Bug1",
-	"Ambush Bug2",
-	"Black Adam",
-	"Daisy",
-	"Doombomb",
-	"Rhinosaur",
-	"Zzax",
-	"Manticore",
-	"ScorpionKing",
-	"Sentinel",
-	"Burrower",
-	"BAD",
-	"Cerberus",
-	"Cerberus Sphere",
-	"Cerberus Left Head",
-	"Cerberus Front Body",
-	"Cerberus Right Head",
-	"Crab Boss",
-	"Crab lower-left Arm",
-	"Crab upper-left Arm",
-	"Crab lower-right Arm",
-	"Crab upper-right Arm",
-	"Boss3",
-	"Boss3 right arm",
-	"Boss3 left arm",
-	"Boss3 buzzsaw",
-	"Beelzebub",
-	"Beelzebub head",
-	"Beelzebub tail",
-	"Beelzebub left arm",
-	"Beelzebub right arm",
-	"Tomegatherion",
-	"Tomegatherion visor",
-	"Tomegatherion left arm",
-	"Tomegatherion right arm"
+	D_80147F40_156EF0,
+	D_80147F48_156EF8,
+	D_80147F50_156F00,
+	D_80147F54_156F04,
+	D_80147F60_156F10,
+	D_80147F6C_156F1C,
+	D_80147F74_156F24,
+	D_80147F7C_156F2C,
+	D_80147F84_156F34,
+	D_80147F90_156F40,
+	D_80147F9C_156F4C,
+	D_80147FA8_156F58,
+	D_80147FB4_156F64,
+	D_80147FC0_156F70,
+	D_80147FC8_156F78,
+	D_80147FD0_156F80,
+	D_80147FD8_156F88,
+	D_80147FE4_156F94,
+	D_80147FEC_156F9C,
+	D_80147FF8_156FA8,
+	D_80148004_156FB4,
+	D_80148010_156FC0,
+	D_8014801C_156FCC,
+	D_80148028_156FD8,
+	D_80148030_156FE0,
+	D_80148038_156FE8,
+	D_80148044_156FF4,
+	D_80148050_157000,
+	D_8014805C_15700C,
+	D_80148068_157018,
+	D_80148074_157024,
+	D_8014807C_15702C,
+	D_80148090_157040,
+	D_801480A0_157050,
+	D_801480AC_15705C,
+	D_801480B4_157064,
+	D_801480C0_157070,
+	D_801480C8_157078,
+	D_801480D0_157080,
+	D_801480E0_157090,
+	D_801480E8_157098,
+	D_801480F0_1570A0,
+	D_801480F8_1570A8,
+	D_80148100_1570B0,
+	D_80148108_1570B8,
+	D_80148114_1570C4,
+	D_8014811C_1570CC,
+	D_80148128_1570D8,
+	D_80148130_1570E0,
+	D_80148138_1570E8,
+	D_80148140_1570F0,
+	D_80148150_157100,
+	D_8014815C_15710C,
+	D_80148168_157118,
+	D_80148174_157124,
+	D_80148180_157130,
+	D_8014818C_15713C,
+	D_80148194_157144,
+	D_801481A0_157150,
+	D_801481AC_15715C,
+	D_801481B4_157164,
+	D_801481C0_157170,
+	D_801481D0_157180,
+	D_801481DC_15718C,
+	D_801481E8_157198,
+	D_801481EC_15719C,
+	D_801481F8_1571A8,
+	D_80148208_1571B8,
+	D_8014821C_1571CC,
+	D_80148230_1571E0,
+	D_80148244_1571F4,
+	D_80148250_157200,
+	D_80148264_157214,
+	D_80148278_157228,
+	D_80148290_157240,
+	D_801482A8_157258,
+	D_801482B0_157260,
+	D_801482C0_157270,
+	D_801482D0_157280,
+	D_801482E0_157290,
+	D_801482EC_15729C,
+	D_801482FC_1572AC,
+	D_8014830C_1572BC,
+	D_80148320_1572D0,
+	D_80148334_1572E4,
+	D_80148344_1572F4,
+	D_80148358_157308,
+	D_80148370_157320,
 };
 
 const u32 padding[] ={0x0, 0x0};
