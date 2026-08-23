@@ -996,8 +996,8 @@ typedef struct {
 	/* 0x37 */ u8 unk37; // Hit counter?
 	/* 0x38 */ s16 unk38; // target building/vehicle instance id. Some code loads 0x39 as a u8 by loading it into a u8 var
 	/* 0x3A */ s16 unk3A; // Wait counter?
-	/* 0x3C */ s8 unk3C;
-	/* 0x3D */ s8 unk3D;
+	/* 0x3C */ s8 unk3C; // Processor child AlienType id
+	/* 0x3D */ s8 unk3D; // Processor child alien count to spawn.
 	/* 0x3E */ u8 unk3E;
 	/* 0x3F */ u8 unk3F;
 	/* 0x40 */ s16 unk40; // Water counter?

@@ -145,6 +145,7 @@ void func_800A4150_B3100(u8 arg0) {
 
 // CURRENT(36203)
 #ifdef NON_MATCHING
+// Update alien Processor? Sets child spawn type among other things.
 void func_800A41B0_B3160(u8 arg0) {
 	AlienInstance *alien;
 	Unk8014DD50 *node;
