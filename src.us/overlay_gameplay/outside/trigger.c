@@ -404,7 +404,7 @@ void func_800AEC34_BDBE4(void *arg0)
 	}
 }
 
-// spawnAlienWave arg3 changes orientation?
+// spawn Alien Wave arg3 changes orientation?
 u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
 {
 	Unk80222A78 sp68;

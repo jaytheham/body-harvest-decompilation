@@ -1107,7 +1107,7 @@ typedef struct {
 	/* 0x14 */ s16 unk14; // Points given on death
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 pad17;
-	/* 0x18 */ s32 unk18; // Ptr to name
+	/* 0x18 */ char * unk18; // Ptr to name
 	/* 0x1C */ s32 unk1C; // First weapon?
 	/* 0x20 */ s16 unk20;
 	/* 0x22 */ s16 unk22;
