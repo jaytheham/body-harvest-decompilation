@@ -1,5 +1,5 @@
-#ifndef FUNCTIONS_LEVEL_AMERICA_US_H
-#define FUNCTIONS_LEVEL_AMERICA_US_H
+#ifndef AMERICA_254410_H
+#define AMERICA_254410_H
 
 /* Functions defined in the america level overlay (254410.c). */
 void func_802D4CD0_254410(s32 arg0, s32 arg1);

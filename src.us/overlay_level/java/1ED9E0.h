@@ -1,5 +1,5 @@
-#ifndef FUNCTIONS_LEVEL_JAVA_US_H
-#define FUNCTIONS_LEVEL_JAVA_US_H
+#ifndef JAVA_1ED9E0_H
+#define JAVA_1ED9E0_H
 
 /* Functions defined in the java level overlay (1ED9E0.c). */
 s32 func_802D51F8_1EDF08(void);

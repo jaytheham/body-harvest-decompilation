@@ -1,5 +1,5 @@
-#ifndef FUNCTIONS_LEVEL_SIBERIA_US_H
-#define FUNCTIONS_LEVEL_SIBERIA_US_H
+#ifndef SIBERIA_2B7100_H
+#define SIBERIA_2B7100_H
 
 /* Functions defined in the siberia level overlay (2B7100.c). */
 void func_802D4CD0_2B7100(s32 arg0, s32 arg1);

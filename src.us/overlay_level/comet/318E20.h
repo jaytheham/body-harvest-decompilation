@@ -1,5 +1,5 @@
-#ifndef FUNCTIONS_LEVEL_COMET_US_H
-#define FUNCTIONS_LEVEL_COMET_US_H
+#ifndef COMET_318E20_H
+#define COMET_318E20_H
 
 /* Functions defined in the comet level overlay (318E20.c). */
 void func_802D4EE4_319034(s16 arg0);

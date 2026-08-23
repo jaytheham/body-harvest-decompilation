@@ -1,5 +1,5 @@
-#ifndef FUNCTIONS_LEVEL_GREECE_US_H
-#define FUNCTIONS_LEVEL_GREECE_US_H
+#ifndef GREECE_18D7E0_H
+#define GREECE_18D7E0_H
 
 /* Functions defined in the greece level overlay (18D7E0.c). */
 void func_802D4CD0_18D7E0(s32, s32);
