@@ -387,6 +387,7 @@ void func_80079510_884C0(u8 arg0)
   *((u8*)&inst->unk1E) = 0xFF;
 }
 
+// Spawn alien of type arg0, return instance index or -1 if no slots available
 s32 func_8007956C_8851C(u8 arg0)
 {
 	s32 slotIndex;

@@ -1092,10 +1092,6 @@ typedef struct {
 	/* 0x12 */ s16 rearDamage;
 } EntityDamageType;
 
-
-// 0x5C Pointer to Death animation ASM?
-// 0x60 xxxxyyyy xxxx Drops modifier
-// 0x68
 typedef struct {
 	/* 0x00 */ s32 unk0; // Body modifier
 	/* 0x04 */ u8 pad4[0x4]; // Changes shadow
@@ -1138,7 +1134,7 @@ typedef struct {
 	/* 0x5A */ s8 unk5A;
 	/* 0x5B */ u8 pad5B;
 	/* 0x5C */ void (*unk5C)(u8); // On-death handler function pointer?
-	/* 0x60 */ u8 pad60[0x8];
+	/* 0x60 */ u8 pad60[0x8]; // 0x60 xxxxyyyy xxxx Drops modifier?
 } AlienType; /* size = 0x68 */
 
 typedef struct {
