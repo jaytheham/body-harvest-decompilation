@@ -978,10 +978,10 @@ typedef struct {
 	/* 0x1A */ u8 specIndex; // Specs are the same every level? e.g. 0x19 is harvester, 0x1B is Boss
 	/* 0x1B */ u8 unk1B; // "Stage" something to do with showing health bar? Used as human count for harvester?
 	/* 0x1C */ s16 hitPoints;
-	/* 0x1E */ s16 unk1E; // Weapons? Upper byte used as HCU count for harvester?
+	/* 0x1E */ s16 unk1E; // Weapons? 0x1F used as HCU count for harvester?
 	/* 0x20 */ s32 unk20; // Bit flags
-	/* 0x24 */ u8 unk24; // Human type, humans eaten by harvester
-	/* 0x25 */ u8 unk25; // parent alien instance id?
+	/* 0x24 */ u8 unk24; // Human type. Harvester humans eaten count
+	/* 0x25 */ u8 unk25; // Parent alien instance id
 	/* 0x26 */ u8 unk26; // Harvester unspawned HCU count
 	/* 0x27 */ u8 unk27;
 	/* 0x28 */ s8 unk28; // Last collision tile X

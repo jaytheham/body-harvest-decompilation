@@ -528,6 +528,58 @@ segments:
   - name: overlay_level_america_data
     type: bin
     start: 0x260570
+    subsegments:
+      - [0x260570, bin, overlay_level/america/america_height_map] #mio0
+      - [0x275DE8, bin, overlay_level/america/america_texture_map] #mio0
+      - [0x2760DC, bin, overlay_level/america/america_landscape_colours] #mio0
+      - [0x278910, bin, overlay_level/america/america_landscape_palette] #mio0
+      - [0x278A7C, bin, overlay_level/america/america_terrain_objects] #mio0
+      - [0x279028, bin, overlay_level/america/america_terrain_object_groups] #mio0
+      - [0x2793E8, bin, overlay_level/america/america_terrain_object_model_pointers]
+      - [0x279428, bin, overlay_level/america/america_water_table_height]
+      - [0x279430, bin, overlay_level/america/america_building_types] # 32 x 32 bytes
+      - [0x279830, bin, overlay_level/america/america_building_instances] # 255 * 24 bytes
+      - [0x27B018, bin, overlay_level/america/america_trigger_array] # 192 * 16 bytes ?
+      - [0x27BC18, bin, overlay_level/america/america_next_trigger] # 0xC bytes (4 pad + trigger + 4 pad)
+      - [0x27BC24, bin, overlay_level/america/america_alien_waves] # 192 * 20 bytes. 0x0 is wave type; 0x2 & 0x4 are spawn coords
+      - [0x27CB24, bin, overlay_level/america/america_vehicle_instances] # 128 * 18 bytes. 0x0 and 0x2 are coords, 0x7 is type
+      - [0x27D424, bin, overlay_level/america/america_missions] # 0x800 data + 0xC align
+      - [0x27DC30, bin, overlay_level/america/america_terrain_textures] #mio0
+      - [0x2A99E4, bin, overlay_level/america/america_terrain_palettes] #mio0
+      - [0x2AACA0, bin, overlay_level/america/america_sky_texture] #mio0
+      - [0x2AD894, bin, overlay_level/america/america_sky_palette] #mio0
+
+  - name: overlay_level_america_alien_types
+    type: code
+    start: 0x2ADA00
+    vram: 0x8032B7D0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x2ADA00, .data, overlay_level/america/alien_types] # 48 * 104 bytes
+
+  - name: overlay_level_america_data_tail
+    type: bin
+    start: 0x2AED80
+    subsegments:
+      - [0x2AED80, bin, overlay_level/america/america_vehicle_types] # 21 * 112 bytes
+      - [0x2AF6B0, bin, overlay_level/america/america_signposts]
+      - [0x2AF710, bin, overlay_level/america/america_english_sign_strings]
+      - [0x2B0310, bin, overlay_level/america/america_english_sign_string_offsets]
+      - [0x2B0410, bin, overlay_level/america/america_french_sign_strings]
+      - [0x2B1010, bin, overlay_level/america/america_french_sign_string_offsets]
+      - [0x2B1110, bin, overlay_level/america/america_german_sign_strings]
+      - [0x2B1D10, bin, overlay_level/america/america_german_sign_string_offsets]
+      - [0x2B1E10, bin, overlay_level/america/america_english_comms_strings]
+      - [0x2B3610, bin, overlay_level/america/america_english_comms_strings_offsets]
+      - [0x2B3710, bin, overlay_level/america/america_french_comms_strings]
+      - [0x2B4F10, bin, overlay_level/america/america_french_comms_strings_offsets]
+      - [0x2B5010, bin, overlay_level/america/america_german_comms_strings]
+      - [0x2B6810, bin, overlay_level/america/america_german_comms_strings_offsets]
+      - [0x2B6910, bin, overlay_level/america/america_comms_sentence_info] # 0x40 bytes -> per-sentence portrait index table
+      - [0x2B6950, bin, overlay_level/america/america_doors] # 0x280 bytes -> 32 x 0x14 bytes. Building type id at +0xC
+      - [0x2B6BD0, bin, overlay_level/america/america_bc_points] # 0x528 bytes -> 110 x 12 bytes, grouped by building type id
+      - [0x2B70F8, bin, Padding_0x2B70F8]
 
   - name: overlay_level_siberia
     type: code
