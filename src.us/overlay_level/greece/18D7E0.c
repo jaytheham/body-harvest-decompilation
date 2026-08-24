@@ -1732,23 +1732,19 @@ void func_802D7FC0_190AD0(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(1991) */
 // AI - Alien death knockback behavior
 void func_802D8150_190C60(u8 arg0) {
 	AlienInstance *alien;
 	u8 type_index;
 	u32 temp_v1;
-	u8 temp_a1;
 
-	type_index = arg0 & 0xFF;
-	alien = (AlienInstance *)((u8 *)alienInstances + (((type_index << 2) + type_index) << 4));
-	temp_a1 = alien->unk25;
+	alien = &alienInstances[arg0];
 	type_index = alien->typeIndex;
 	if (!(alien->unk20 & ALIEN_FLAG_UNKL)) {
-		if (temp_a1 != 0xFF) {
-			AlienInstance *temp_alien = (AlienInstance *)((u8 *)alienInstances + (((temp_a1 << 2) + temp_a1) << 4));
-			if (temp_alien->typeIndex == 0x1A) {
-				temp_alien->unk24--;
+		if (alien->unk25 != 0xFF) {
+			AlienInstance *parentAlien = &alienInstances[alien->unk25];
+			if (parentAlien->typeIndex == 0x1A) {
+				parentAlien->unk24--;
 			}
 		}
 		if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
