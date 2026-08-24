@@ -1734,22 +1734,22 @@ void func_802D7FC0_190AD0(u8 arg0) {
 // Flea onDeath handler
 void func_802D8150_190C60(u8 arg0)
 {
-	u8 type_index;
+	u8 alienTypeIndex;
 	s32 newv;
 	AlienInstance *alien;
-	AlienInstance *temp_alien;
-	s16 temp_a1;
+	AlienInstance *parentAlien;
+	s16 parentAlienIndex;
 	alien = &alienInstances[arg0];
-	temp_a1 = alien->unk25;
-	type_index = alien->typeIndex;
+	parentAlienIndex = alien->unk25;
+	alienTypeIndex = alien->typeIndex;
 	if (!(alien->unk20 & ALIEN_FLAG_UNKL))
 	{
-		if (temp_a1 != 0xFF)
+		if (parentAlienIndex != 0xFF)
 		{
-			temp_alien = &alienInstances[temp_a1];
-			if (temp_alien->typeIndex == 0x1A)
+			parentAlien = &alienInstances[parentAlienIndex];
+			if (parentAlien->typeIndex == 0x1A)
 			{
-				temp_alien->unk24 = (u8)(temp_alien->unk24 - 1);
+				parentAlien->unk24 = (u8)(parentAlien->unk24 - 1);
 			}
 		}
 		if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
@@ -1759,11 +1759,11 @@ void func_802D8150_190C60(u8 arg0)
 			{
 				alien->unk20 = (s32)(alien->unk20 | ALIEN_FLAG_UNKL);
 				func_80124B5C_133B0C(alien->unk0, alien->unk2, alien->unk4, 0x12C, 0xC8);
-				func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[type_index].unkC * 3), 4);
+				func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[alienTypeIndex].unkC * 3), 4);
 				alien->unk2C = 1;
 				return;
 			}
-			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[type_index].unkC * 2), 0);
+			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[alienTypeIndex].unkC * 2), 0);
 			newv = (func_800038E0_44E0() >> 7);
 			alien->unk10 = ((alien->unk10 + newv) + 0x300);
 			alien->unk20 = (alien->unk20 | ALIEN_FLAG_FALL);
@@ -1781,7 +1781,7 @@ void func_802D8150_190C60(u8 arg0)
 		alien->unk26 = 0U;
 		if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
 		{
-			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[type_index].unkC * 2), 0);
+			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[alienTypeIndex].unkC * 2), 0);
 		}
 		alien->unk24 = func_800C2274_D1224(alien->unk0, alien->unk2, alien->unk4, 2);
 	}
@@ -1789,7 +1789,7 @@ void func_802D8150_190C60(u8 arg0)
 	{
 		if (alien->unk20 & 0x600)
 		{
-			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[type_index].unkC * 2), 2);
+			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[alienTypeIndex].unkC * 2), 2);
 		}
 		alien->unk2C = 1;
 		return;
