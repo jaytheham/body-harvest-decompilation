@@ -66,36 +66,29 @@ u8 func_800A3DC8_B2D78(void) {
 	return 0xFF;
 }
 
-const char D_80142754_151704[] = "making alien type %d:\n";
-const char D_8014276C_15171C[] = "made at %d\n";
-
-// https://decomp.me/scratch/40J2m
-// CURRENT (62)
-#ifdef NON_MATCHING
 // Spawn child alien of arg0 alien instance. Returns 1 if successful, 0 if not.
 s32 func_800A3E74_B2E24(u8 parentIndex)
 {
 	AlienInstance *parent;
-	AlienInstance *child;
+    u8 pad;
+	u8 childIndex;
 	s32 childType;
 	s32 dir;
 	s16 groundY;
-	u8 childIndex;
 
 	parent = &alienInstances[parentIndex];
 	childType = parent->unk3C;
-	osSyncPrintf(D_80142754_151704, childType);
+	osSyncPrintf("making alien type %d:\n", childType);
 	childIndex = func_8007956C_8851C((u8)parent->unk3C);
-	osSyncPrintf(D_8014276C_15171C, childIndex);
+	osSyncPrintf("made at %d\n", childIndex);
 	if (childIndex == 0xFF)
 	{
 		return 0;
 	}
-	child = &alienInstances[childIndex];
-	child->unk20 |= 0x01000000;
+	alienInstances[childIndex].unk20 |= 0x01000000;
 	if (childType == 0xA)
 	{
-		child->unk3A = 0x64;
+		alienInstances[childIndex].unk3A = 0x64;
 	}
 	if (childType == 0xD)
 	{
@@ -106,22 +99,22 @@ s32 func_800A3E74_B2E24(u8 parentIndex)
 	{
 		dir = parent->unk6;
 	}
-	child->unkE = dir;
-	child->unk6 = dir;
-	child->unk0 = ((((f32)coss(parent->unk6)) / 32768.0) * 100.0) + parent->unk0;
-	child->unk4 = ((((f32)sins(parent->unk6)) / 32768.0) * 100.0) + parent->unk4;
-	child->unk25 = parentIndex;
-	child->unk26 = func_800A3DC8_B2D78();
-	child->unk12 = 0x460;
-	child->unk14 = ((((f32)coss(dir)) / 32768.0) * 400.0) + parent->unk0;
-	child->unk16 = parent->unk2;
-	child->unk18 = ((((f32)sins(dir)) / 32768.0) * 400.0) + parent->unk4;
-	child->unk2C = 0x1E;
-	if (alienTypes[child->typeIndex].unk54 & 1)
+	alienInstances[childIndex].unkE = dir;
+	alienInstances[childIndex].unk6 = dir;
+	alienInstances[childIndex].unk0 = ((((f32)coss(parent->unk6)) / 32768.0) * 100.0) + parent->unk0;
+	alienInstances[childIndex].unk4 = ((((f32)sins(parent->unk6)) / 32768.0) * 100.0) + parent->unk4;
+	alienInstances[childIndex].unk25 = parentIndex;
+	alienInstances[childIndex].unk26 = func_800A3DC8_B2D78();
+	alienInstances[childIndex].unk12 = 0x460;
+	alienInstances[childIndex].unk14 = ((((f32)coss(dir)) / 32768.0) * 400.0) + parent->unk0;
+	alienInstances[childIndex].unk16 = parent->unk2;
+	alienInstances[childIndex].unk18 = ((((f32)sins(dir)) / 32768.0) * 400.0) + parent->unk4;
+	alienInstances[childIndex].unk2C = 0x1E;
+	if (alienTypes[alienInstances[childIndex].typeIndex].unk54 & 1)
 	{
-		groundY = func_800B84D0_C7480(child->unk0, child->unk4) >> 8;
-		func_8011E6FC_12D6AC(child->unk0, child->unk4, &groundY);
-		child->unk2 = groundY + 0x19;
+		groundY = func_800B84D0_C7480(alienInstances[childIndex].unk0, alienInstances[childIndex].unk4) >> 8;
+		func_8011E6FC_12D6AC(alienInstances[childIndex].unk0, alienInstances[childIndex].unk4, &groundY);
+		alienInstances[childIndex].unk2 = groundY + 0x19;
 	}
 	else
 	{
@@ -129,9 +122,6 @@ s32 func_800A3E74_B2E24(u8 parentIndex)
 	}
 	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A3E74_B2E24.s")
-#endif
 
 void func_800A4150_B3100(u8 arg0) {
 	s32 temp_v1;
