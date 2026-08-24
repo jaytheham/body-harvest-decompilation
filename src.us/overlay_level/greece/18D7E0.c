@@ -1731,69 +1731,76 @@ void func_802D7FC0_190AD0(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// AI - Alien death knockback behavior
-void func_802D8150_190C60(u8 arg0) {
-	AlienInstance *alien;
+// Flea onDeath handler
+void func_802D8150_190C60(u8 arg0)
+{
 	u8 type_index;
-	u32 temp_v1;
-
+	s32 newv;
+	AlienInstance *alien;
+	AlienInstance *temp_alien;
+	s16 temp_a1;
 	alien = &alienInstances[arg0];
+	temp_a1 = alien->unk25;
 	type_index = alien->typeIndex;
-	if (!(alien->unk20 & ALIEN_FLAG_UNKL)) {
-		if (alien->unk25 != 0xFF) {
-			AlienInstance *parentAlien = &alienInstances[alien->unk25];
-			if (parentAlien->typeIndex == 0x1A) {
-				parentAlien->unk24--;
+	if (!(alien->unk20 & ALIEN_FLAG_UNKL))
+	{
+		if (temp_a1 != 0xFF)
+		{
+			temp_alien = &alienInstances[temp_a1];
+			if (temp_alien->typeIndex == 0x1A)
+			{
+				temp_alien->unk24 = (u8)(temp_alien->unk24 - 1);
 			}
 		}
-		if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
+		if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
+		{
 			func_80137468_146418(arg0, 0xD);
-			if ((alien->unk47 & 8) || (alien->unk20 & ALIEN_FLAG_UNKE)) {
-				alien->unk20 |= ALIEN_FLAG_UNKL;
+			if ((alien->unk47 & 8) || (alien->unk20 & ALIEN_FLAG_UNKE))
+			{
+				alien->unk20 = (s32)(alien->unk20 | ALIEN_FLAG_UNKL);
 				func_80124B5C_133B0C(alien->unk0, alien->unk2, alien->unk4, 0x12C, 0xC8);
-				func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[type_index].unkC * 3) & 0xFFFF, 4);
+				func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[type_index].unkC * 3), 4);
 				alien->unk2C = 1;
 				return;
 			}
-			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[type_index].unkC * 2) & 0xFFFF, 0);
-			alien->unk10 = (s16) (alien->unk10 + (func_800038E0_44E0() >> 7) + 0x300);
-			alien->unk20 |= ALIEN_FLAG_FALL;
-			alien->unk14 = (s16) (0x1000 - (func_800038E0_44E0() >> 5));
-			alien->unk18 = (s16) (0x1000 - (func_800038E0_44E0() >> 5));
+			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[type_index].unkC * 2), 0);
+			newv = (func_800038E0_44E0() >> 7);
+			alien->unk10 = ((alien->unk10 + newv) + 0x300);
+			alien->unk20 = (alien->unk20 | ALIEN_FLAG_FALL);
+			alien->unk14 = (0x1000 - (func_800038E0_44E0() >> 5));
+			alien->unk18 = (0x1000 - (func_800038E0_44E0() >> 5));
 			alien->unk26 = 1U;
 			alien->unk2C = 0x50;
 			alien->unk12 = 0x300;
-			goto block_9;
 		}
-		goto block_9;
 	}
-block_9:
-	if ((alien->unk10 <= 0) && (alien->unk26 != 0)) {
-		alien->unk10 = (s16) (alien->unk10 + (func_800038E0_44E0() >> 7) + 0x300);
+	if ((alien->unk10 <= 0) && (alien->unk26 != 0))
+	{
+		newv = (func_800038E0_44E0() >> 7);
+		alien->unk10 = ((alien->unk10 + newv) + 0x300);
 		alien->unk26 = 0U;
-		if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
-			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[type_index].unkC * 2) & 0xFFFF, 0);
+		if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
+		{
+			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[type_index].unkC * 2), 0);
 		}
 		alien->unk24 = func_800C2274_D1224(alien->unk0, alien->unk2, alien->unk4, 2);
 	}
-	temp_v1 = alien->unk20;
-	if ((!(temp_v1 & 0x40000000) || (alien->unk47 & 1)) && (alien->unk2C > 0)) {
-		if (temp_v1 & 0x600) {
-			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[type_index].unkC * 2) & 0xFFFF, 2);
+	if (((!(alien->unk20 & 0x40000000)) || (alien->unk47 & 1)) && (alien->unk2C > 0))
+	{
+		if (alien->unk20 & 0x600)
+		{
+			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (alienTypes[type_index].unkC * 2), 2);
 		}
 		alien->unk2C = 1;
 		return;
 	}
-	alien->unk8 = (s16) (alien->unk8 + alien->unk18);
-	alien->unkA = (s16) (alien->unkA + alien->unk14);
-	if (alien->unk26 == 0) {
+	alien->unk8 = (s16)(alien->unk8 + alien->unk18);
+	alien->unkA = (s16)(alien->unkA + alien->unk14);
+	if (alien->unk26 == 0)
+	{
 		func_800C1ECC_D0E7C(alien->unk0, alien->unk2, alien->unk4, alien->unk24, 2);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D8150_190C60.s")
-#endif
 
 // AI - Alien ranged attack AI
 void func_802D84A0_190FB0(u8 arg0) {
