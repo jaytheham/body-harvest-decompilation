@@ -411,47 +411,39 @@ angle_done:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801226F8_1316A8.s")
 #endif
 
-// https://decomp.me/scratch/nUEjs
-// CURRENT(630)
-#ifdef NON_MATCHING
 void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5)
 {
-  s32 count;
-  s16 sp64[3];
-  u16 randX;
-  u16 randZ;
-  s16 halfSpan;
-  s16 height;
-  WeaponEntry_80129864 *building;
-  sp64[0] = arg0;
-  sp64[2] = arg2;
-  count = arg0;
-  height = func_800B84D0_C7480(count, arg2) >> 8;
-  if (arg1 < height)
-  {
-	sp64[1] = height;
-  }
-  else
-  {
-	sp64[1] = arg1;
-  }
-  if (arg4 != 0)
-  {
-	count = arg4 - 1;
-	halfSpan = arg3 >> 1;
-	building = &D_80145BE0_154B90[arg5];
-	do
+	s32 count;
+	s16 sp64[3];
+	u16 randX;
+	u16 randZ;
+	s16 halfSpan;
+	s16 height;
+	WeaponEntry_80129864 *building;
+	sp64[0] = arg0;
+	sp64[2] = arg2;
+	height = func_800B84D0_C7480(sp64[0], sp64[2]) >> 8;
+	if (arg1 < height)
 	{
-	  randX = func_800038E0_44E0();
-	  randZ = func_800038E0_44E0();
-	  func_801226F8_1316A8(sp64, (BuildingInstance *) building, 0, 0, 0, (f32) ((randX % arg3) - halfSpan), (f32) (((randZ % arg3) + arg3) >> 2), (f32) ((func_800038E0_44E0() % arg3) - halfSpan));
+		sp64[1] = height;
 	}
-	while (count--);
-  }
+	else
+	{
+		sp64[1] = arg1;
+	}
+	if (arg4 != 0)
+	{
+		count = arg4 - 1;
+		halfSpan = arg3 >> 1;
+		building = &D_80145BE0_154B90[arg5];
+		do
+		{
+			randX = func_800038E0_44E0();
+			randZ = func_800038E0_44E0();
+			func_801226F8_1316A8(sp64, (BuildingInstance *)building, 0, 0, 0, (f32)((randX % arg3) - halfSpan), (f32)(((randZ % arg3) + arg3) >> 2), (f32)((func_800038E0_44E0() % arg3) - halfSpan));
+		} while (count--);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801236F0_1326A0.s")
-#endif
 
 // CURRENT(378)
 #ifdef NON_MATCHING
