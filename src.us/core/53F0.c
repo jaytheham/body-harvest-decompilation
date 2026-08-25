@@ -1413,7 +1413,6 @@ void guess_checkMissions(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_checkMissions.s")
 #endif
 
-// https://decomp.me/scratch/jEgey
 void debug_drawTimingGraphBars(void)
 {
 	s32 var_a1;
