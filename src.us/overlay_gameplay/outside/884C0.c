@@ -3503,98 +3503,71 @@ void func_80080B44_8FAF4(u8 alienInstanceIndex, u8 buildingInstanceIndex) {
 	alien->unk20 |= ALIEN_FLAG_TARGET_PT;
 }
 
-// https://decomp.me/scratch/RJAQq
-// CURRENT(830)
-#ifdef NON_MATCHING
 void func_80080BC0_8FB70(u8 arg0, s16 arg1, s16 arg2, u8 arg3)
 {
-	s16 unk0;
-	s16 unk4;
 	s16 shifted_unk4;
 	s16 shifted_unk0;
 	s16 shifted_arg1;
+	s16 shifted_arg2;
 	s32 dx;
 	s32 dz;
-	s16 new_var2;
-	s32 abs_dx;
-	s32 abs_dz;
 	s32 step;
 	s32 mask;
-	s16 *new_var;
 	s32 half;
-	unk0 = alienInstances[arg0].unk0;
-	unk4 = alienInstances[arg0].unk4;
-	new_var = &shifted_unk4;
-	new_var2 = unk4 >> arg3;
-	shifted_unk4 = (s16)new_var2;
-	dz = arg3;
-	shifted_unk0 = (s16)(unk0 >> dz);
-	shifted_arg1 = (s16)(arg1 >> arg3);
-	if ((shifted_unk0 != shifted_arg1) || (shifted_unk4 != ((s16)(arg2 >> arg3))))
+	shifted_unk0 = alienInstances[arg0].unk0 >> arg3;
+	shifted_unk4 = alienInstances[arg0].unk4 >> arg3;
+	shifted_arg1 = arg1 >> arg3;
+	shifted_arg2 = (dz = arg2) >> arg3;
+	if ((shifted_unk0 != shifted_arg1) || (shifted_unk4 != ((s16)(dz >> arg3))))
 	{
 		if (shifted_unk0 != shifted_arg1)
 		{
-			s16 unkE = alienInstances[arg0].unkE;
-			if (unkE < 0)
+			if (alienInstances[arg0].unkE < 0)
 			{
-				alienInstances[arg0].unkE = unkE - ((shifted_unk0 - shifted_arg1) << 14);
+				alienInstances[arg0].unkE -= ((shifted_unk0 - shifted_arg1) << 14);
 			}
 			else
 			{
-				alienInstances[arg0].unkE = unkE + ((shifted_unk0 - shifted_arg1) << 14);
+				alienInstances[arg0].unkE += ((shifted_unk0 - shifted_arg1) << 14);
 			}
 			alienInstances[arg0].unk0 = arg1;
 			return;
 		}
-		if (shifted_unk4 != ((s16)(arg2 >> arg3)))
+		if (shifted_unk4 != (s16)(dz >> arg3))
 		{
-			s16 unkE = alienInstances[arg0].unkE;
-			s16 shifted_arg2 = (s16)(arg2 >> dz);
-			s32 abs_unkE = ((-unkE) < unkE) ? (unkE) : (-unkE);
-			if (abs_unkE >= 0x4001)
+			if (BH_ABS_ALT(alienInstances[arg0].unkE) >= 0x4001)
 			{
-				alienInstances[arg0].unkE = unkE + ((shifted_unk4 - shifted_arg2) << 14);
+				alienInstances[arg0].unkE += ((shifted_unk4 - shifted_arg2) << 14);
 			}
 			else
 			{
-				alienInstances[arg0].unkE = unkE - (((*new_var) - shifted_arg2) << 14);
+				alienInstances[arg0].unkE -= ((shifted_unk4 - shifted_arg2) << 14);
 			}
-			(*(alienInstances + arg0)).unk4 = arg2;
+			alienInstances[arg0].unk4 = dz;
 		}
 	}
 	else
 	{
-		step = 1 << dz;
+		step = 1 << arg3;
 		mask = step - 1;
 		half = step / 2;
-		dx = (unk0 & mask) - half;
-		dz = (unk4 & mask) - half;
-		abs_dx = ((-dx) < dx) ? (dx) : (-dx);
-		abs_dz = ((-dz) < dz) ? (dz) : (-dz);
-		if (abs_dz < abs_dx)
+
+		dz = (alienInstances[arg0].unk0 & mask) - half;
+		dx = (alienInstances[arg0].unk4 & mask) - half;
+		if (BH_ABS_ALT(dz) > BH_ABS_ALT(dx))
 		{
-			if (dx < 0)
-			{
-				alienInstances[arg0].unk0 = (unk0 & 0xFF00) - 1;
-			}
-			else
-			{
-				alienInstances[arg0].unk0 = (unk0 & 0xFF00) + 0x100;
-			}
-		}
-		else if (dz < 0)
-		{
-			alienInstances[arg0].unk4 = (unk4 & 0xFF00) - 1;
+			alienInstances[arg0].unk0 = (dz < 0)
+				? (alienInstances[arg0].unk0 & 0xFF00) - 1
+				: (alienInstances[arg0].unk0 & 0xFF00) + 0x100;
 		}
 		else
 		{
-			alienInstances[arg0].unk4 = (unk4 & 0xFF00) + 0x100;
+			alienInstances[arg0].unk4 = (dx < 0)
+				? (alienInstances[arg0].unk4 & 0xFF00) - 1
+				: (alienInstances[arg0].unk4 & 0xFF00) + 0x100;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080BC0_8FB70.s")
-#endif
 
 // CURRENT(4825)
 #ifdef NON_MATCHING
