@@ -1198,6 +1198,7 @@ void getSaveFileName(s32 arg0, u8 *arg1)
 	arg1[6] = 0;
 }
 
+// https://decomp.me/scratch/TfpgG
 // CURRENT(2110)
 #ifdef NON_MATCHING
 s32 func_80002B20_3720(s32 arg0) {

@@ -1450,6 +1450,79 @@ typedef struct {
 	/* 0x20 */ void *unk20; // Owning Projectile pointer
 } Unk8015F790; /* size = 0x24 */
 
+/* Save slot per-area stats in compressed save format (8 bytes each).
+   score: 4 bytes LE (s32)
+   humansKilled: 1 byte
+   secondsElapsed: 3 bytes LE (24-bit) */
+typedef struct {
+	/* 0x00 */ u8 score[4];
+	/* 0x04 */ u8 humansKilled;
+	/* 0x05 */ u8 secondsElapsed[3];
+} SaveAreaStat; /* size = 0x08 */
+
+/* Save slot data section (0x76 bytes), starting at offset +4 within a slot.
+   The slot itself is 0x7A bytes: 4-byte checksum header + 0x76 byte data. */
+typedef struct {
+	/* 0x00 */ SaveAreaStat areaStats[6]; // 48 bytes (6 areas)
+	/* 0x30 */ u8 levelAndArea;          // low nibble=level, high nibble=area stage
+	/* 0x31 */ u8 warpPoint;             // warp point number
+	/* 0x32 */ u8 gameStateFlags[4];     // D_80031420
+	/* 0x36 */ u8 saveData[6];           // D_80047FA8[0..5]
+	/* 0x3C */ u8 weaponSlots[7];        // weaponSlots[0..6]
+	/* 0x43 */ u8 keys[8];              // D_8004DC48 (64-bit flags)
+	/* 0x4B */ u8 dcPacked;              // (D_8004DC5C << 4) | D_8004DC5E
+	/* 0x4C */ u8 artifacts[2];          // D_80048026 (16-bit LE)
+	/* 0x4E */ u8 unk48028[2];          // D_80048028 (16-bit LE)
+	/* 0x50 */ u8 flags2[8];            // D_8004DC50 (64-bit flags)
+	/* 0x58 */ u8 playTime[4];           // D_80052A90 (32-bit LE)
+	/* 0x5C */ u8 beacons;               // D_80047F98
+	/* 0x5D */ u8 d4d154[4];            // D_8004D154 (32-bit LE)
+	/* 0x61 */ u8 d4d158[4];            // D_8004D158 (32-bit LE)
+	/* 0x65 */ u8 weaponDamages[7];      // shifted weapon damage values
+	/* 0x6C */ u8 objective;             // D_80048030
+	/* 0x6D */ u8 gamestateBitflags;     // D_80052ACD
+	/* 0x6E */ u8 unkValues[4];          // D_8004815C/E/60/62
+	/* 0x72 */ u8 pad[4];                // padding to 0x76 bytes
+} SaveSlotData; /* size = 0x76 */
+
+/* Wrapper struct to access save slot data from base + arg0 * 0x7A pointer.
+   The 0x53-byte pad puts SaveSlotData at the correct offset within the slot.
+   Slot layout: base + 0x4F = slot start, data at +4 within slot = base + 0x53. */
+typedef struct {
+	/* 0x00 */ u8 pad[0x53];
+	/* 0x53 */ SaveSlotData data;
+} SaveSlotAccess; /* size = 0x53 + 0x76 = 0xC9 */
+
+typedef struct {
+    u8 version;
+    u8 unk1;
+    u8 checksum[2];
+    u8 unk4[0x76];
+} SaveSlot;
+
+typedef struct {
+	u8 name[0x6];
+	u8 score[4];
+	u8 humansKilled;
+	u8 secondsElapsed[3];
+} HighScore;
+
+typedef struct {
+    u8 version;
+    u8 unk1;
+    u8 checksum[2];
+    u8 unk4;
+	HighScore highScores[5];
+} HighScores;
+
+typedef struct {
+    u8 version;
+    u8 unk1;
+    u8 checksum[2]; // Whole save file checksum
+	HighScores highScores;
+    SaveSlot slots[3];
+} SaveData;
+
 typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
@@ -2737,42 +2810,6 @@ typedef struct {
 	u8 data[0x108];
 } BhAudioGlobals; /* size = 0x108 */
 
-typedef struct {
-	/* 0x00 */ u8 unk0[0x53];
-	/* 0x53 */ u8 unk53;
-	/* 0x54 */ u8 unk54;
-	/* 0x55 */ u8 unk55;
-	/* 0x56 */ u8 unk56;
-	/* 0x57 */ u8 unk57;
-	/* 0x58 */ u8 unk58;
-	/* 0x59 */ u8 unk59;
-	/* 0x5A */ u8 unk5A;
-	/* 0x5B */ u8 unk5B;
-	/* 0x5C */ u8 unk5C;
-	/* 0x5D */ u8 unk5D;
-	/* 0x5E */ u8 unk5E;
-	/* 0x5F */ u8 unk5F[0x04];
-	/* 0x63 */ u8 unk63;
-	/* 0x64 */ u8 unk64;
-	/* 0x65 */ u8 unk65;
-	/* 0x66 */ u8 unk66;
-	/* 0x67 */ u8 unk67[0x04];
-	/* 0x6B */ u8 unk6B;
-	/* 0x6C */ u8 unk6C;
-	/* 0x6D */ u8 unk6D;
-	/* 0x6E */ u8 unk6E;
-	/* 0x6F */ u8 unk6F[0x04];
-	/* 0x73 */ u8 unk73;
-	/* 0x74 */ u8 unk74;
-	/* 0x75 */ u8 unk75;
-	/* 0x76 */ u8 unk76;
-	/* 0x77 */ u8 unk77[0x04];
-	/* 0x7B */ u8 unk7B;
-	/* 0x7C */ u8 unk7C;
-	/* 0x7D */ u8 unk7D;
-	/* 0x7E */ u8 unk7E;
-} SaveSlot; /* size = 0x7F */
-
 #pragma pack(1)
 typedef struct {
 	s32 unk0;
@@ -3032,48 +3069,5 @@ typedef struct {
 	/* 0x0C */ f32 targetY;  // look-at target Y
 	/* 0x10 */ f32 targetZ;  // look-at target Z
 } OrbitCam; /* size = 0x14 */
-
-/* Save slot per-area stats in compressed save format (8 bytes each).
-   score: 4 bytes LE (s32)
-   humansKilled: 1 byte
-   secondsElapsed: 3 bytes LE (24-bit) */
-typedef struct {
-	/* 0x00 */ u8 score[4];
-	/* 0x04 */ u8 humansKilled;
-	/* 0x05 */ u8 secondsElapsed[3];
-} SaveAreaStat; /* size = 0x08 */
-
-/* Save slot data section (0x76 bytes), starting at offset +4 within a slot.
-   The slot itself is 0x7A bytes: 4-byte checksum header + 0x76 byte data. */
-typedef struct {
-	/* 0x00 */ SaveAreaStat areaStats[6]; // 48 bytes (6 areas)
-	/* 0x30 */ u8 levelAndArea;          // low nibble=level, high nibble=area stage
-	/* 0x31 */ u8 warpPoint;             // warp point number
-	/* 0x32 */ u8 gameStateFlags[4];     // D_80031420
-	/* 0x36 */ u8 saveData[6];           // D_80047FA8[0..5]
-	/* 0x3C */ u8 weaponSlots[7];        // weaponSlots[0..6]
-	/* 0x43 */ u8 keys[8];              // D_8004DC48 (64-bit flags)
-	/* 0x4B */ u8 dcPacked;              // (D_8004DC5C << 4) | D_8004DC5E
-	/* 0x4C */ u8 artifacts[2];          // D_80048026 (16-bit LE)
-	/* 0x4E */ u8 unk48028[2];          // D_80048028 (16-bit LE)
-	/* 0x50 */ u8 flags2[8];            // D_8004DC50 (64-bit flags)
-	/* 0x58 */ u8 playTime[4];           // D_80052A90 (32-bit LE)
-	/* 0x5C */ u8 beacons;               // D_80047F98
-	/* 0x5D */ u8 d4d154[4];            // D_8004D154 (32-bit LE)
-	/* 0x61 */ u8 d4d158[4];            // D_8004D158 (32-bit LE)
-	/* 0x65 */ u8 weaponDamages[7];      // shifted weapon damage values
-	/* 0x6C */ u8 objective;             // D_80048030
-	/* 0x6D */ u8 gamestateBitflags;     // D_80052ACD
-	/* 0x6E */ u8 unkValues[4];          // D_8004815C/E/60/62
-	/* 0x72 */ u8 pad[4];                // padding to 0x76 bytes
-} SaveSlotData; /* size = 0x76 */
-
-/* Wrapper struct to access save slot data from base + arg0 * 0x7A pointer.
-   The 0x53-byte pad puts SaveSlotData at the correct offset within the slot.
-   Slot layout: base + 0x4F = slot start, data at +4 within slot = base + 0x53. */
-typedef struct {
-	/* 0x00 */ u8 pad[0x53];
-	/* 0x53 */ SaveSlotData data;
-} SaveSlotAccess; /* size = 0x53 + 0x76 = 0xC9 */
 
 #endif

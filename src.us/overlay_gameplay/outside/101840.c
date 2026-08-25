@@ -6079,7 +6079,6 @@ void func_801027E8_111798(VehicleInstance *arg0, f32 arg1, f32 arg2, f32 arg3)
 	arg0->unk20 |= VEHICLE_FLAG_UNK1;
 }
 
-// https://decomp.me/scratch/lIfrb
 // CURRENT(4905)
 #ifdef NON_MATCHING
 void func_80102A0C_1119BC(VehicleInstance *arg0, s16 arg1, s16 arg2, f32 arg3)
