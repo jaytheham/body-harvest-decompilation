@@ -475,6 +475,18 @@ typedef struct {
 	/* 0x15 */ u8 unk15;
 } Unk84EECEffect; /* size = 0x16 */
 
+typedef struct {
+	/* 0x00 */ s16 pad0;
+	/* 0x02 */ s16 pad2;
+	/* 0x04 */ s16 pad4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ u8 pad8;
+	/* 0x09 */ u8 unk9;
+	/* 0x0A */ u8 unkA;
+	/* 0x0B */ u8 unkB;
+	/* 0x0C */ u8 unkC;
+} Unk84EECEffectTail;
+
 /* Cutscene entry: 24 bytes (6 s32), stored in D_80157E90[5] (120 bytes) */
 typedef struct {
 	/* 0x00 */ Unk84EECEffect effect;

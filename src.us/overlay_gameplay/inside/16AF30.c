@@ -260,16 +260,16 @@ s16 func_80083390_16B450(u8 arg0) {
 		effect = -3;
 	} else {
 		effect = D_800FC8E2;
-		((Unk84EECEffect *)&D_800FB7B0)[effect].unk0 = 1;
-		((Unk84EECEffect *)&D_800FB7B0)[effect].unk2 = 1;
-		((Unk84EECEffect *)&D_800FB7B0)[effect].unk4 = -5;
+		D_800FB7B0[effect].unk0 = 1;
+		D_800FB7B0[effect].unk2 = 1;
+		D_800FB7B0[effect].unk4 = -5;
 
 		if (D_800FB6F8[arg0].unk4 == 0) {
 			D_800FB6F8[arg0].unk6 = effect;
-			((Unk84EECEffect *)&D_800FB7B0)[effect].unk6 = -4;
+			D_800FB7B0[effect].unk6 = -4;
 		} else {
-			((Unk84EECEffect *)&D_800FB7B0)[effect].unk6 = D_800FB6F8[arg0].unk8;
-			((Unk84EECEffect *)&D_800FB7B0)[D_800FB6F8[arg0].unk8].unk4 = effect;
+			D_800FB7B0[effect].unk6 = D_800FB6F8[arg0].unk8;
+			D_800FB7B0[D_800FB6F8[arg0].unk8].unk4 = effect;
 		}
 
 		D_800FB6F8[arg0].unk8 = effect;
@@ -280,7 +280,7 @@ s16 func_80083390_16B450(u8 arg0) {
 		i = effect;
 		if (effect < 0xC8) {
 			do {
-				if (((Unk84EECEffect *)&D_800FB7B0)[i].unk0 == 0) {
+				if (D_800FB7B0[i].unk0 == 0) {
 					D_800FC8E2 = i;
 					i = 0xC8;
 				}
@@ -335,7 +335,7 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 	s16 temp;
 	Unk84EECEffect *baseEffect;
 
-	effect = &((Unk84EECEffect *)D_800FB7B0)[arg0];
+	effect = &D_800FB7B0[arg0];
 	baseEffect = effect;
 	slot = &D_800FB6F8[arg1];
 
@@ -360,12 +360,12 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 			temp = effect->unk6;
 			if (temp == -4) {
 				slot->unk6 = effect->unk4;
-				effect = &((Unk84EECEffect *)D_800FB7B0)[slot->unk6];
+				effect = &D_800FB7B0[slot->unk6];
 				effect->unk6 = -4;
 				effect->unk4 = -5;
 			} else if (effect->unk4 == -5) {
 				slot->unk8 = temp;
-				effect = &((Unk84EECEffect *)D_800FB7B0)[slot->unk6];
+				effect = &D_800FB7B0[slot->unk6];
 				effect->unk6 = -4;
 				effect->unk4 = -5;
 			} else {
@@ -377,16 +377,16 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 			temp = effect->unk6;
 			if (temp == -4) {
 				slot->unk6 = effect->unk4;
-				effect = &((Unk84EECEffect *)D_800FB7B0)[effect->unk4];
+				effect = &D_800FB7B0[effect->unk4];
 				effect->unk6 = -4;
 			} else if (effect->unk4 == -5) {
 				slot->unk8 = temp;
-				effect = &((Unk84EECEffect *)D_800FB7B0)[temp];
+				effect = &D_800FB7B0[temp];
 				effect->unk4 = -5;
 			} else {
-				effect = &((Unk84EECEffect *)D_800FB7B0)[effect->unk4];
+				effect = &D_800FB7B0[effect->unk4];
 				effect->unk6 = temp;
-				effect = &((Unk84EECEffect *)D_800FB7B0)[slot->unk6];
+				effect = &D_800FB7B0[slot->unk6];
 				effect->unk4 = slot->unk8;
 			}
 			break;
@@ -437,7 +437,7 @@ void func_80083924_16B9E4(s16 arg0, u8 arg1) {
 	s16 sp1E;
 
 	if (arg0 >= 0 && arg0 < 0xC8 && arg1 < 0xF) {
-		sp1E = ((Unk84EECEffect *)D_800FB7B0)[arg0].unk4;
+		sp1E = D_800FB7B0[arg0].unk4;
 		func_800835F0_16B6B0(arg0, arg1);
 		func_800835F0_16B6B0(sp1E, arg1);
 		return;
@@ -472,11 +472,11 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	// D_800FB7B0 references need to be converted to array & struct access
 	// The struct itself might need updating to be correct
 	// Then all this pointer arithmetic & casting can be replaced with struct access
-	effectUnit = (u8 *)D_800FB7B0 + D_800FB6F8[arg0].unk6 * 22 + 8;
+	effectUnit = (u8 *)&D_800FB7B0[D_800FB6F8[arg0].unk6] + 8;
 	idx = func_80083390_16B450(arg0);
 	if (idx != -3) {
 		if (effectUnit[0xA] == 1) {
-			newUnit = (u8 *)D_800FB7B0 + idx * 22;
+			newUnit = (u8 *)&D_800FB7B0[idx];
 			newUnit += 8;
 			*(s16 *)&newUnit[0] = *(s16 *)&effectUnit[0];
 			*(s16 *)&newUnit[2] = *(s16 *)&effectUnit[2];
@@ -508,7 +508,7 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 		sp30 = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
 		sp2E = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
 		temp = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
-		newUnit = (u8 *)D_800FB7B0 + idx * 22;
+		newUnit = (u8 *)&D_800FB7B0[idx];
 		newUnit += 8;
 		*(s16 *)&newUnit[0] = *(s16 *)&effectUnit[0] + sp30;
 		*(s16 *)&newUnit[2] = *(s16 *)&effectUnit[2] + sp2E;
@@ -961,17 +961,12 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 	u8 scale;
 	Unk84EECEffect *entry;
 	Unk84EECEffect *other;
-	s32 ofs;
 
 	effect = func_80083584_16B644(0xD);
 	if (effect != -3) {
 		temp = (s16)(s32)((f64)(f32)arg3 * D_800A5468_18D528[0]);
 
-		// This ptr arithmetic is probably wrong, it should be an array access instead:
-		ofs = (effect << 2) - effect;
-		ofs = (ofs << 2) - effect;
-		ofs <<= 1;
-		entry = (Unk84EECEffect *)((u8 *)D_800FB7B0 + ofs);
+		entry = &D_800FB7B0[effect];
 		x = arg0 * 4;
 		y = arg1 * 4;
 		z = arg2 * 4;
@@ -995,11 +990,7 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 		((u8 *)entry + 8)[0xA] = 0;
 		((u8 *)entry + 8)[0xC] = 0;
 
-		// Again shoud be an array access instead of pointer arithmetic:
-		ofs = (entry->unk4 << 2) - entry->unk4;
-		ofs = (ofs << 2) - entry->unk4;
-		ofs <<= 1;
-		other = (Unk84EECEffect *)((u8 *)D_800FB7B0 + ofs);
+		other = &D_800FB7B0[entry->unk4];
 		other->unk8 = x;
 		other->unkA = y;
 		other->unkC = z;
@@ -1022,35 +1013,28 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 
 // https://decomp.me/scratch/8LzOB
 // CURRENT(8)
-#ifdef NON_MATCHING
 // Create a candle flame effect
+#ifdef NON_MATCHING
 s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
-  u8 *temp_s0;
- s16 effect;
- s32 half;  
+  Unk84EECEffectTail *temp_s0;
+  s16 effect;
+  s32 half;
   effect = func_80083390_16B450(0xC);
   if (effect != (-3))
   {
-	// need to replace all this pointer arithmetic with proper array/struct access
-		temp_s0 = (u8 *)D_800FB7B0 + effect * 0x16;
-		*(s16 *)(temp_s0 + 2) = arg3;
-		*(s16 *)(temp_s0 + 8) = arg0 * 4;
-		*(s16 *)(temp_s0 + 0xA) = arg1 * 4;
-		*(s16 *)(temp_s0 + 0xC) = arg2 * 4;
-		temp_s0 += 8;
+		temp_s0 = (Unk84EECEffectTail *)&D_800FB7B0[effect].unk8;
+		D_800FB7B0[effect].unk2 = arg3;
+		temp_s0->pad0 = arg0 * 4;
+		temp_s0->pad2 = arg1 * 4;
+		temp_s0->pad4 = arg2 * 4;
 	
 		half = arg3 / 2;
-		// 0x11
-		*(s8 *)(temp_s0 + 9) = (func_800038E0_44E0() % half) + arg3 / 3;
-		// 0x13
-		*(s8 *)(temp_s0 + 0xb) = (func_800038E0_44E0() % half) + arg3 / 3;
-		// 0x12
-		*(s8 *)(temp_s0 + 0xa) = (func_800038E0_44E0() % half) + arg3 / 3;
-		// 0x14
-		*(s8 *)(temp_s0 + 0xc) = (func_800038E0_44E0() % half) + arg3 / 3;
-		// 0xE
-	*(s16 *)(temp_s0 + 0x6) = func_80084EEC_16CFAC(arg0, arg1 + (arg3 / 8), arg2, arg3 * 2, 0xF0, 0xC8, 0x64, 0xFF, 0xB4, 0x46, 0x32, 1);
+		temp_s0->unk9 = (func_800038E0_44E0() % half) + arg3 / 3;
+		temp_s0->unkB = (func_800038E0_44E0() % half) + arg3 / 3;
+		temp_s0->unkA = (func_800038E0_44E0() % half) + arg3 / 3;
+		temp_s0->unkC = (func_800038E0_44E0() % half) + arg3 / 3;
+		temp_s0->unk6 = func_80084EEC_16CFAC(arg0, arg1 + (arg3 / 8), arg2, arg3 * 2, 0xF0, 0xC8, 0x64, 0xFF, 0xB4, 0x46, 0x32, 1);
   }
   return effect;
 }
@@ -1086,7 +1070,7 @@ void func_800852B8_16D378(s32 arg0) {
 		entry->unkA = base->unkA;
 		entry->unkC = base->unkC;
 
-		baseBytes = (u8 *)D_800FB7B0 + base->unk4 * 0x16;
+		baseBytes = (u8 *)&D_800FB7B0[base->unk4];
 		entry->unk11 = ((Unk84EECEffect *)baseBytes)->unk10;
 		baseBytes += 8;
 
@@ -1135,7 +1119,7 @@ void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg
 	temp_arg0 = arg0;
 	effect = func_80083390_16B450(0xB);
 	if (effect != -3) {
-		entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+		entry = &D_800FB7B0[effect];
 		entry->unk8 = temp_arg0;
 		entry->unkA = 1;
 		entry->unk11 = 0;
@@ -1179,13 +1163,13 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 		}
 
 		// This pointer arithmetic is probably wrong, it should be an array/struct access instead:
-		entry = (u8 *)D_800FB7B0 + (effect * 0x16);
+		entry = (u8 *)&D_800FB7B0[effect];
 		*(u16 *)(entry + 2) = arg7;
 		*(s16 *)(entry + 8) = arg0 << 2;
 		*(s16 *)(entry + 0xA) = arg1 << 2;
 		*(s16 *)(entry + 0xC) = arg2 << 2;
 
-		other = (u8 *)D_800FB7B0 + (*(s16 *)(entry + 4) * 0x16);
+		other = (u8 *)&D_800FB7B0[*(s16 *)(entry + 4)];
 		other[8] = arg3;
 		other[9] = arg4;
 		other[0xA] = arg5;
@@ -1295,7 +1279,7 @@ void func_80085CB4_16DD74(s16 arg0, s16 arg1, s16 arg2) {
 
 	temp_v0 = func_80085984_16DA44(0x28, 0x50, ((func_800038E0_44E0() % 5) + 5) & 0xFF, arg0, arg1, arg2);
 	if (temp_v0 != -3) {
-		((Unk84EECEffect *)D_800FB7B0)[temp_v0].unk14 = 1;
+		D_800FB7B0[temp_v0].unk14 = 1;
 	}
 }
 
@@ -1372,8 +1356,8 @@ void func_80085F28_16DFE8(u8 arg0) {
 
 	// These pointer arithmetic operations are probably wrong, they should be struct/array accesses instead
 	sp38 = (UnkFB6F8Entry *)((arg0 * 0xC) + (u8 *)D_800FB6F8);
-	s2 = (Unk84EECEffect *)((sp38->unk6 * 0x16) + (u8 *)D_800FB7B0);
-	sp30 = (Unk84EECEffect *)((s2->unk4 * 0x16) + (u8 *)D_800FB7B0);
+	s2 = &D_800FB7B0[sp38->unk6];
+	sp30 = &D_800FB7B0[s2->unk4];
 	s1 = (u8 *)sp30 + 8;
 	sp30->unk12++;
 	if ((sp30->unk12 & 0xFF) == 0x10) {
@@ -1439,7 +1423,7 @@ void func_80085F28_16DFE8(u8 arg0) {
 			Unk84EECEffect *entry;
 			u8 *entry8;
 
-			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+			entry = &D_800FB7B0[effect];
 			entry8 = (u8 *)entry + 8;
 			if (entry->unk11 < 0x1E) {
 				s16 nextEffect;
@@ -1477,7 +1461,7 @@ void func_80086550_16E610(void) {
 	if ((effect != -5) && (effect != -6)) {
 		alpha = 0xFF;
 		do {
-			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+			entry = &D_800FB7B0[effect];
 			entry->unk13--;
 			if (entry->unk13 == 0) {
 				s16 nextEffect;
@@ -1522,7 +1506,7 @@ void func_80086728_16E7E8(void) {
 			Unk84EECEffect *entry;
 			s8 *entry8;
 
-			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+			entry = &D_800FB7B0[effect];
 			entry8 = (s8 *) entry + 8;
 			if ((u8)entry8[0xC] == 0) {
 				value = (func_800038E0_44E0() % 2) + 2 + entry8[0xA];
@@ -1561,7 +1545,7 @@ void func_8008688C_16E94C(void) {
 			s16 spread;
 			Unk84EECEffect *entry;
 
-			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+			entry = &D_800FB7B0[effect];
 			value = entry->unk2;
 			if (value < 0) {
 				spread = (value + 3) >> 2;
@@ -1591,7 +1575,7 @@ void func_80086A34_16EAF4(void) {
 	effect = D_800FB782;
 	if ((effect != -5) && (effect != -6)) {
 		do {
-			Unk84EECEffect *entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+			Unk84EECEffect *entry = &D_800FB7B0[effect];
 			u8 *entry8 = (u8 *) entry + 8;
 			if (entry->unk12 < 9) {
 				nextEffect = entry->unk4;
@@ -1758,7 +1742,7 @@ void func_80086F24_16EFE4(s16 arg0) {
 // AI - Remove a specific effect and its linked sub-effect
 void func_80086F58_16F018(s16 arg0) {
 	if (arg0 != -3) {
-		func_80086F24_16EFE4(*(s16 *)&((Unk84EECEffect *)D_800FB7B0)[arg0].unkE);
+		func_80086F24_16EFE4(*(s16 *)&D_800FB7B0[arg0].unkE);
 		func_800835F0_16B6B0(arg0, 0xC);
 	}
 }
@@ -1790,9 +1774,9 @@ void func_80086FC4_16F084(s32 arg0) {
 	u8 temp_t9;
 
 	sp9C = *(s16 *)(&D_800FB6FE + ((arg0 & 0xFF) * 0xC));
-	sp30 = &((Unk84EECEffect *)&D_800FB7B0)[sp9C];
+	sp30 = &D_800FB7B0[sp9C];
 	sp9A = sp30->unk4;
-	sp28 = &((Unk84EECEffect *)&D_800FB7B0)[sp9A];
+	sp28 = &D_800FB7B0[sp9A];
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
@@ -1879,7 +1863,7 @@ void func_80086FC4_16F084(s32 arg0) {
 
 	var_a2 = sp28->unk4;
 	while ((var_a2 != -5) && (var_a2 != -6)) {
-		temp_t5 = &((Unk84EECEffect *)&D_800FB7B0)[var_a2];
+		temp_t5 = &D_800FB7B0[var_a2];
 		temp_t6 = temp_t5->unk12;
 		var_f2 = (f32)temp_t6;
 		if ((s32)temp_t6 < 0) {
@@ -1993,7 +1977,7 @@ void func_80087A40_16FB00(s32 arg0) {
 
 	if ((effect != -5) && (effect != -6)) {
 		pos = &D_800FB6D0;
-		effectBase = (Unk84EECEffect *)&D_800FB7B0;
+		effectBase = D_800FB7B0;
 		color = &D_800FB6DC;
 		scale = &D_800FB6E0;
 		alpha = &D_800FB6E4;
@@ -2031,7 +2015,7 @@ void func_80087CB8_16FD78(s32 arg0) {
 	s16 next;
 
 	entry = &D_800FB6F8[arg0 & 0xFF];
-	effectBase = (Unk84EECEffect *) &D_800FB7B0;
+	effectBase = D_800FB7B0;
 	next = effectBase[entry->unk6].unk4;
 	color = &effectBase[entry->unk6].unkE;
 
@@ -2041,7 +2025,7 @@ void func_80087CB8_16FD78(s32 arg0) {
 
 	if ((next != -5) && (next != -6)) {
 		do {
-		effect = &((Unk84EECEffect *) &D_800FB7B0)[next];
+		effect = &D_800FB7B0[next];
 		sp58[0] = effect->unk8;
 		sp58[1] = effect->unkA;
 		sp58[2] = effect->unkC;
@@ -2076,7 +2060,7 @@ void func_80087E3C_16FEFC(void) {
 		do {
 			s16 *pos;
 
-			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+			entry = &D_800FB7B0[effect];
 
 			gDPPipeSync(D_8005BB2C++);
 			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
@@ -2170,7 +2154,7 @@ void func_800881C0_170280(void) {
 
 			gDPPipeSync(D_8005BB2C++);
 
-			s2 = &((Unk84EECEffect *)&D_800FB7B0)[var_t2];
+			s2 = &D_800FB7B0[var_t2];
 			s1 = (Unk89834Pos *)&s2->unk8;
 			var_s3 = s1;
 
@@ -2406,8 +2390,8 @@ void func_80088DFC_170EBC(s32 arg0) {
 	Unk84EECEffect *base;
 	Unk84EECEffect *entry;
 
-	base = &((Unk84EECEffect *)&D_800FB7B0)[D_800FB6F8[arg0 & 0xFF].unk6];
-	entry = &((Unk84EECEffect *)&D_800FB7B0)[base->unk4];
+	base = &D_800FB7B0[D_800FB6F8[arg0 & 0xFF].unk6];
+	entry = &D_800FB7B0[base->unk4];
 	effect = entry->unk4;
 
 	D_800FB6E5 = 0x10;
@@ -2432,7 +2416,7 @@ void func_80088DFC_170EBC(s32 arg0) {
 
 	if ((effect != -6) && (effect != -5)) {
 		do {
-			entry = &((Unk84EECEffect *)&D_800FB7B0)[effect];
+			entry = &D_800FB7B0[effect];
 
 			gDPSetPrimColor(D_8005BB2C++, 0, 0, base->unkE, base->unkF, base->unk10, entry->unk11);
 			gDPSetEnvColor(D_8005BB2C++, base->unk11, base->unk12, base->unk13, entry->unk11);
@@ -2532,30 +2516,30 @@ void func_80089408_1714C8(s32 arg0) {
 	srcIndex = D_800FB6F8[index].unk6;
 	dstIndex = func_80083390_16B450(index);
 	if (dstIndex != -3) {
-		srcEffect = &((Unk84EECEffect *) &D_800FB7B0)[srcIndex];
-		srcPos = &srcEffect->pos;
+		srcEffect = &D_800FB7B0[srcIndex];
+		srcPos = (Unk89408Pos *)&srcEffect->unk8;
 
 		if (srcPos->unkA == 1) {
-			((Unk84EECEffect *) &D_800FB7B0)[dstIndex].unk2 = (func_800038E0_44E0() % 0x23) + 0x23;
+			D_800FB7B0[dstIndex].unk2 = (func_800038E0_44E0() % 0x23) + 0x23;
 			color = 0xAA;
-			((Unk84EECEffect *) &D_800FB7B0)[dstIndex].pos.unk9 = 0x82;
-			dstPos = &((Unk84EECEffect *) &D_800FB7B0)[dstIndex].pos;
+			dstPos = (Unk89408Pos *)&D_800FB7B0[dstIndex].unk8;
+			dstPos->unk9 = 0x82;
 			dstPos->unk6 = color;
 			dstPos->unk7 = color;
 			dstPos->unk8 = color;
 		} else if (srcPos->unkA == 0) {
-			((Unk84EECEffect *) &D_800FB7B0)[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
+			D_800FB7B0[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
 			color = 0xFF;
-			((Unk84EECEffect *) &D_800FB7B0)[dstIndex].pos.unk9 = color;
-			dstPos = &((Unk84EECEffect *) &D_800FB7B0)[dstIndex].pos;
+			dstPos = (Unk89408Pos *)&D_800FB7B0[dstIndex].unk8;
+			dstPos->unk9 = color;
 			dstPos->unk6 = color;
 			dstPos->unk7 = color;
 			dstPos->unk8 = color;
 		} else {
-			((Unk84EECEffect *) &D_800FB7B0)[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
+			D_800FB7B0[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
 			color = 0xFF;
-			((Unk84EECEffect *) &D_800FB7B0)[dstIndex].pos.unk9 = color;
-			dstPos = &((Unk84EECEffect *) &D_800FB7B0)[dstIndex].pos;
+			dstPos = (Unk89408Pos *)&D_800FB7B0[dstIndex].unk8;
+			dstPos->unk9 = color;
 			dstPos->unk6 = 0x32;
 			dstPos->unk7 = color;
 			dstPos->unk8 = 0x82;
@@ -2629,7 +2613,7 @@ void func_8008972C_1717EC(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	s8 *temp_v1;
 
 	temp_v0 = *(s16 *)(&D_800FB6FE + (arg3 * 0xC));
-	temp_v1 = (s8 *)&D_800FB7B0 + temp_v0 * 0x16;
+	temp_v1 = (s8 *)&D_800FB7B0[temp_v0];
 	*(s16 *)(temp_v1 + 0x8) = arg0 * 4;
 	*(s16 *)(temp_v1 + 0xA) = arg1 * 4;
 	*(s16 *)(temp_v1 + 0xC) = arg2 * 4;
@@ -2648,7 +2632,7 @@ void func_80089794_171854(s32 arg0) {
 			func_80083300_16B3C0(temp_t6);
 			return;
 		}
-		((Unk84EECEffect *)&D_800FB7B0)[temp_v0->unk6].unk11 = 0;
+		D_800FB7B0[temp_v0->unk6].unk11 = 0;
 	}
 }
 #else
@@ -2670,7 +2654,7 @@ void func_80089834_1718F4(s32 arg0) {
 
 	temp_fp = arg0;
 	temp_s3 = &D_800FB6F8[temp_fp];
-	base = (Unk84EECEffect *)&D_800FB7B0;
+	base = D_800FB7B0;
 	var_s0 = base[temp_s3->unk6].unk4;
 	sp40 = (u8 *)&base[temp_s3->unk6].unk8;
 	if ((var_s0 != -5) && (var_s0 != -6)) {
@@ -2738,7 +2722,7 @@ void func_80089BCC_171C8C(s32 arg0) {
 	Unk84EECEffect *base;
 
 	effect = *(s16 *)(&D_800FB6FE + ((arg0 & 0xFF) * 0xC));
-	base = (Unk84EECEffect *)&D_800FB7B0;
+	base = D_800FB7B0;
 	effect = base[effect].unk4;
 
 	gDPPipeSync(D_8005BB2C++);
@@ -3241,7 +3225,7 @@ void func_8008B0AC_17316C(void) {
 
 	j = 0;
 	do {
-		*(((u8 *) &D_800FB7B0) + (j * 0x16)) = 0;
+		D_800FB7B0[j].unk0 = 0;
 	} while ((j = (j + 1) & 0xFFFF) < 0xC8);
 
 	D_800FC8E2 = 0;
