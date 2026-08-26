@@ -25,7 +25,7 @@ Cheat cheatData[21] = {
 	{ "feeble", func_80073A08_829B8 }
 };
 
-// enableCheatAnnull
+// Cheat Annull - Kill all aliens within 0xA00 horizontal units of player
 void func_800731B0_82160(void)
 {
 	int new_var;
@@ -64,13 +64,13 @@ void func_800731B0_82160(void)
 	} while (i--);
 }
 
-// func_800732C8_82278
+// Cheat ZFarewell - Proceed to next level
 void func_800732C8_82278() {
 	D_80052AC8 = 2;
 	D_80052AD0 = 0;
 }
 
-// func_800732E0_82290
+// Cheat Arsenal - Give player weapons and ammo
 void func_800732E0_82290() {
 	func_801391DC_14818C(5, 0x3E7); // a0 = itemId, a1 = quantity. Machine gun
 	if (currentLevel == LEVEL_GREECE) {
@@ -105,7 +105,7 @@ void func_800732E0_82290() {
 	func_801391DC_14818C(7, 3);
 }
 
-// func_80073428_823D8
+// Cheat Durable - Restore current vehicle health and fuel, and ???
 void func_80073428_823D8() {   
 	D_80052B34->unk1C = (u16) vehicleTypes[D_80052B34->unk1A].hitPoints;
 	D_80052B34->unk3C = (s16) (vehicleTypes[D_80052B34->unk1A].unk61 << 8);
@@ -152,22 +152,22 @@ void func_800734AC_8245C() {
 
 }
 
-// func_8007364C_825FC
+// Cheat Wander - Move player around with left stick
 void func_8007364C_825FC(void) {
 	func_8007622C_851DC(func_800734AC_8245C);
 }
 
-// func_80073670_82620
+// Cheat ZSnared - Freeze all aliens
 void func_80073670_82620() {
 	D_8004D148 = 0;
 }
 
-// func_8007367C_8262C
+// Cheat ZFreed - Unfreeze all aliens
 void func_8007367C_8262C() {
 	D_8004D148 = 1;
 }
 
-// func_8007368C_8263C
+// Cheat Alfa - Spawn 4 Alpha tank ammo pickups around player
 void func_8007368C_8263C(void) {
 	func_800A8A68_B7A18((s16) (D_80052B34->unk0 + 0x64), (s16) (D_80052B34->unk2 - 0xFA), D_80052B34->unk4, 0x15);
 	func_800A8A68_B7A18((s16) (D_80052B34->unk0 + 0x64), (s16) (D_80052B34->unk2 + 0xFA), D_80052B34->unk4, 0x17);
@@ -175,23 +175,22 @@ void func_8007368C_8263C(void) {
 	func_800A8A68_B7A18((s16) (D_80052B34->unk0 - 0xC8), (s16) (D_80052B34->unk2 + 0xC8), D_80052B34->unk4, 0x19);
 }
 
-// func_8007377C_8272C
-// use normal player model
+// Cheat Snuffle - Increase weapon power?
 void func_8007377C_8272C() {
 	D_80052ACD ^= 4;
 }
 
-// func_80073794_82744
+// Cheat ZAward - Unlock all levels for Replay Level option (must save game)
 void func_80073794_82744() {
 	D_80047FA0 = 5;
 }
 
-// func_800737A4_82754
+// Cheat Surreal - Buildings change size
 void func_800737A4_82754() {
 	D_80159320 ^= 0x80;
 }
 
-// func_800737BC_8276C
+// Cheat ZDefender - Add or remove player shield
 void func_800737BC_8276C(void) {
 	if (!(D_80052B34->unk20 & VEHICLE_FLAG_UNK8)) {
 		func_800E5CF4_F4CA4(2, D_80149441);
@@ -200,13 +199,12 @@ void func_800737BC_8276C(void) {
 	func_800E5E3C_F4DEC(2, D_80149441);
 }
 
-// func_80073814_827C4
+// Cheat Bleed - Deal 0x7FFF damage to player vehicle
 void func_80073814_827C4() {
 	func_80124118_1330C8(D_80052B34, 0x7FFF);
 }
 
-// enableCheatSuffer
-// Turn Harvesters into Mutants
+// Cheat Suffer - Turn Harvesters into Mutants
 void func_8007383C_827EC(void) {
 	s32 i;
 	s32 index;
@@ -225,14 +223,12 @@ void func_8007383C_827EC(void) {
 	}
 }
 
-// func_8007391C_828CC
-// use Black Adam model for player
+// Cheat Weasel - use Black Adam model for player
 void func_8007391C_828CC() {
 	D_80052ACD ^= 2;
 }
 
-//func_80073934_828E4
-// gain all alien artifacts
+// Cheat Useful -  Gain all alien artifacts
 void func_80073934_828E4() {
 	s32 temp_v0;
 
@@ -249,28 +245,27 @@ void func_80073934_828E4() {
 	D_80048026 |= 7 << ((currentLevel * 3) - 3);
 }
 
-// func_800739B8_82968
+// Cheat Dwarf - Make Adam really short
 void func_800739B8_82968() {
 	D_80157A3C = 0x68;
 }
 
-// func_800739C8_82978
+// Cheat Banana - Make Adam really tall
 void func_800739C8_82978() {
 	D_80157A3C = 0x22;
 }
 
-// func_800739D8_82988
+// Cheat Dundee - Make Adam dance
 void func_800739D8_82988() {
 	func_800EA2BC_F926C();
 }
 
-// func_800739F8_829A8
+// Cheat Lard - Make alien legs fat
 void func_800739F8_829A8() {
 	D_8013FCD0_14EC80 = 1;
 }
 
-// func_80073A08_829B8
-// Weak bosses
+// Cheat Feeble - Make bosses weak (actually all aliens?)
 void func_80073A08_829B8() {
 	s32 x = D_8013BD04_14ACB4;
 	D_8013BD04_14ACB4 = x == 0;
@@ -327,7 +322,7 @@ void func_80073B30_82AE0(s32 arg0)
   cheatData[arg0].cheatFunc();
 }
 
-// https://decomp.me/scratch/Xo6Wf
+// Update cheat input buffer and check for cheat codes
 void func_80073B78_82B28(void)
 {
 	s32 bufferIndex;

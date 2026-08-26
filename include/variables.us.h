@@ -915,7 +915,7 @@ extern s16 D_80052AC8;
 extern u8 D_80052ACA;
 extern u8 D_80052ACB; // Rendering Flags? 1=Shadows 2=Objects
 extern u8 D_80052ACC;
-extern u8 D_80052ACD; // Game state bitflags
+extern u8 D_80052ACD; // Bitflags. 0x2=Use Black Adam player model.
 extern s32 D_80052AD0;
 extern s32 D_80052AD4;
 extern s32 D_80052AD8;
@@ -1851,7 +1851,7 @@ extern Unk8013E45C D_8013E45C[];
 extern Unk8009E8DC D_8013E5AC_14D55C[110];
 extern u8 D_8013E5B0_14D560[];
 extern s32 D_8013ECC8_14DC78;
-extern s32 D_8013FCD0_14EC80;
+extern s32 D_8013FCD0_14EC80; // Is Lard cheat enabled (fat legs)
 extern VehicleInstance *D_8013FD78_14ED28;
 extern s32 D_8013FD7C_14ED2C;
 extern Unk8013FDA8Entry D_8013FDA8_14ED58[];
@@ -2604,7 +2604,7 @@ extern s16 D_80159316;
 extern s16 D_80159318;
 extern s16 D_8015931A;
 extern s16 D_8015931C;
-extern s32 D_80159320;
+extern s32 D_80159320; // Bitflags? 0x80=Surreal cheat mode enabled.
 extern s16 D_80159328[0x20];
 extern s16 D_80159368[0x20];
 extern s16 D_801593A8[0x20];

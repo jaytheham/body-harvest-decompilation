@@ -789,6 +789,7 @@ void func_800C15C0_D0570(u8 arg0, s32 arg1, s16 arg2, s32 arg3) {
 	osSyncPrintf(&D_80142FDC_151F8C, arg2, D_80154310, D_8015430E);
 }
 
+// AI - Allocate effect slot
 s16 func_800C17B4_D0764(u8 arg0, s32 arg1) {
 	s16 var_a2;
 
@@ -813,6 +814,7 @@ s16 func_800C17B4_D0764(u8 arg0, s32 arg1) {
 	return var_a2;
 }
 
+// AI - Request effect slot
 s16 func_800C18D0_D0880(u8 arg0) {
 	return func_800C17B4_D0764(arg0, 0);
 }
@@ -6057,6 +6059,7 @@ void func_800D10D0_E0080(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(3865)
+// AI - Create effect chain between two points (lightning) startX, startY, startZ, endX, endY, endZ, effectType
 s16 func_800D16BC_E066C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
 	s16 sp50;
 	s32 pad4C;

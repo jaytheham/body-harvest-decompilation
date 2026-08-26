@@ -137,7 +137,7 @@ u8 D_8013BCDC_14AC8C[0x24] = {
 };
 
 u8 D_8013BD00_14ACB0[4] = {0x00, 0x00, 0x00, 0x00};
-s32 D_8013BD04_14ACB4 = 0;
+s32 D_8013BD04_14ACB4 = 0; // Is Feeble cheat enabled
 
 u8 D_8013BD08_14ACB8[0x30] = {
 	0x40, 0x7F, 0x40, 0x00, 0x40, 0x7F, 0x40, 0x00, 0x80, 0xE5, 0x80, 0x00,
@@ -6386,6 +6386,7 @@ void func_80088000_96FB0(s16 arg0)
   }
 }
 
+// Is any Harvester within 2 meals of spawning a mutant?
 s32 func_800880B8_97068(void)
 {
 	s16 i;
@@ -7030,7 +7031,6 @@ void func_80089EB4_98E64(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 	}
 }
 
-// https://decomp.me/scratch/RlzKa
 void func_80089FAC_98F5C(u8 arg0)
 {
 	u8 typeIndex;

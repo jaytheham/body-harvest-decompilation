@@ -736,9 +736,9 @@ void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 	}
 }
 
-// Draws Health/Human/vehicle/+more bars on HUD
 // CURRENT(19959)
 #ifdef NON_MATCHING
+// Draws Health/Human/vehicle/+more bars on HUD
 void func_8009D96C_AC91C(void) {
 	AlienInstance *alien;
 	VehicleInstance *vehicle;

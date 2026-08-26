@@ -597,7 +597,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80123AC4_132A74.s")
 #endif
 
-// Reduces damage to adam by 40% in easy
+// Deal damage to vehicle. Reduces damage to Adam by 40% in easy
 void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
 	volatile struct Unk80013E44_arg0 sp24;
 	s32 damage;

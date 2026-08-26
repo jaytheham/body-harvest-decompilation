@@ -1201,6 +1201,7 @@ void func_802D6DF8_1EFB08(void) {
 	}
 }
 
+// AI - Lightning controller
 #ifdef NON_MATCHING
 void func_802D6E70_1EFB80(void) {
 	s16 sp6E;

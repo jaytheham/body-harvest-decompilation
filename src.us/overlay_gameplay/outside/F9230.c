@@ -203,7 +203,7 @@ void func_800EA298_F9248(s16 arg0) {
 
 void func_800EA2B0_F9260(s32 arg0) { D_801575DC = arg0; }
 
-// https://decomp.me/scratch/4eqv8
+// If not in vehicle, play the scottish dance animation.
 void func_800EA2BC_F926C(void)
 {
   if (D_80052B34->unk1A == 0)
@@ -738,6 +738,7 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 
 // CURRENT(1351)
 #ifdef NON_MATCHING
+// Do (player?) animation
 void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	Unk80157600 *player = arg0;
 	s32 state;
