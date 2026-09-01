@@ -3408,61 +3408,56 @@ void func_800B9C28_C8BD8(void) {
 
 // https://decomp.me/scratch/Ln5ro
 // CURRENT(7852)
-#ifdef NON_MATCHING
 // DrawTileBuffer
 // Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
+#ifdef NON_MATCHING
 void func_800B9DB8_C8D68(u8 arg0)
 {
-	// Agent - remove these comments and rename the variables instead
-  s16 sp10C;   // tile X scroll offset
-  s16 sp10A;   // tile Y scroll offset
-  s32 spFC;    // vertex pointer for current macro-tile row
-  s32 spF8;    // vertex pointer advancing through sub-tiles
-  s16 spF4;    // counter: sub-tiles drawn
-  s16 spF2;    // counter: sub-tiles culled/occluded
-  s16 sp50;    // macro-tile row center Z in world space
-  s32 sp54;    // current macro-tile row index
-  s32 sp68;    // macro-tile base column
-  s32 sp6C;    // macro-tile base row
-  u8 *sp60;    // pointer into D_8021EA30 row
   u8 sp117;
-  s16 var_s3;  // height count for bottom edge partial tile
-  s16 var_s4;  // width left-edge skip for partial scroll
-  s16 var_s5;  // height top-edge skip for partial scroll
-  s16 var_s6;  // width count for right-edge partial tile
-  s32 ra;      // macro-tile row iterator
+  Vtx *spFC;
+  Vtx *spF8;
+  s16 spF4;
+  s16 spF2;
+  s32 sp50;
+  s32 sp54;
+  s16 var_s3;
+  s16 sp10C;
+  s16 sp10A;
+  s32 sp68;
+  s32 sp6C;
+  s16 var_s4;
+  s16 var_s5;
+  s16 var_s6;
   s32 s7;
-  s32 var_t5;  // macro-tile col iterator
-  s32 col_idx;
-  s32 s2;      // adjusted macro-tile column index
-  s32 s1;      // tile byte: lo nibble = texture index, hi nibble = brightness
-  s32 temp_s1; // saved DL start pointer
-  u8 *t2;      // pointer into D_8021EA30 for current cell
+  s32 ra;
+  s32 var_t5;
+  s32 s1;
+  s32 s2;
+  Vtx *temp_s1;
   u8 t4;
   spF4 = 0;
   spF2 = 0;
-  func_800B9AC8_C8A78();      // update particle/effect animations
+  func_800B9AC8_C8A78();
   if (D_8014F838 != 0)
   {
-	func_800B879C_C774C();    // animate crater expansion if active
+	func_800B879C_C774C();
   }
   temp_s1 = D_8005BB34;
-  func_800B5090_C4040(&D_8005BB34, arg0);  // build vertex buffer for the 19×19 tile ring
+  func_800B5090_C4040(&D_8005BB34, (s32) arg0 & 0xFF);
   gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
   
-  D_8014F89A = 0;             // reset road tile draw count
-  D_8014FD28 = 0x8F;          // reset road tile draw index (starts high, counts down)
-  sp10C = (s16) D_80151DD8.mapPosX;   // tile X scroll offset
-  sp10A = (s16) D_80151DD8.mapPosY;   // tile Y scroll offset
+  D_8014F89A = 0;
+  D_8014FD28 = 0x8F;
+  sp10C = (s16) D_80151DD8.mapPosX;
+  sp10A = (s16) D_80151DD8.mapPosY;
   spF8 = temp_s1;
   spFC = temp_s1;
-  // Set render mode: opaque surfaces, Z-buf update, coverage AA
   gDPSetRenderMode(D_8005BB2C++, (((3 << 30) | (2 << 26)) | (0 << 22)) | (0 << 18), (((((((0x10 | 0x20) | 0x200) | 0x2000) | 0) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (1 << 16));
-  gDPSetTexturePersp(D_8005BB2C++, 1 << 19);  // enable perspective correction
-  gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);  // enable texturing
-  gDPSetTextureLUT(D_8005BB2C++, 2 << 14);    // enable CI texture lookup
-  gSPSetGeometryMode(D_8005BB2C++, (0x00002000 | 0x00020000) | 0x00000200);  // enable Z-buf, lighting, culling
-  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_80254E80));  // load TLUT palette
+  gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
+  gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
+  gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
+  gSPSetGeometryMode(D_8005BB2C++, (0x00002000 | 0x00020000) | 0x00000200);
+  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, (u8 *) (((u32) (&D_80254E80)) & 0x1FFFFFFF));
   gDPTileSync(D_8005BB2C++);
   gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_4b, 0, 0x0100, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
   gDPLoadSync(D_8005BB2C++);
@@ -3470,7 +3465,6 @@ void func_800B9DB8_C8D68(u8 arg0)
   gDPPipeSync(D_8005BB2C++);
   gDPLoadSync(D_8005BB2C++);
   
-  // Choose lighting based on outdoor/indoor mode
   if (D_801493CC != 0)
   {
 	gSPNumLights(D_8005BB2C++, 1);
@@ -3485,68 +3479,61 @@ void func_800B9DB8_C8D68(u8 arg0)
   }
   ra = 0;
   sp117 = 0;
-  sp6C = sp10A / 4;    // macro-tile base row
-  sp68 = sp10C / 4;    // macro-tile base column
-  do                    // iterate over 5 macro-tile rows
+  sp6C = sp10A / 4;
+  sp68 = sp10C / 4;
+  do
   {
-	col_idx = (sp6C + ra) & 0xFF;
-	sp60 = &D_8021EA30[col_idx << 6];  // row in 64-entry tile map
-	sp54 = col_idx;
-	sp50 = (s16) ((col_idx << 10) + 0x8000);  // world Z center of this macro-tile row
+  sp54 = (sp6C + ra) & 0xFF;
+  sp50 = (sp54 << 10) + 0x8000;
 	s7 = 0;
 	var_t5 = 0;
-	do                  // iterate over 5 macro-tile columns
+	do
 	{
-	  // Handle sub-tile edges when scroll offset is not aligned to 4
-	  var_s4 = (var_t5 == 0) ? (sp10C % 4) : 0;       // left partial
-	  var_s6 = (var_t5 == 4) ? (sp10C % 4) + 1 : 4;   // right partial
-	  var_s5 = (ra == 0) ? (sp10A % 4) : 0;            // top partial
-	  var_s3 = (ra == 4) ? (sp10A % 4) + 1 : 4;        // bottom partial
+	  var_s4 = (var_t5 == 0) ? (sp10C % 4) : 0;
+      var_s6 = (var_t5 == 4) ? (sp10C % 4) + 1 : 4;
+	  var_s5 = (ra == 0) ? (sp10A % 4) : 0;
+      var_s3 = (ra == 4) ? (sp10A % 4) + 1 : 4;
 	  
-	  s2 = (sp68 + var_t5) & 0xFF;       // macro-tile column index
-	  t2 = sp60 + s2;                     // pointer to tile map entry
-	  s1 = (*t2);                         // read tile byte
-	  // Load the texture palette for this tile (low nibble selects palette)
-	  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_80254E80[(s1 & 0xF) * 512]));
+	  s2 = (sp68 + var_t5) & 0xFF;
+      s1 = D_8021EA30[(sp54 << 6) + s2] & 0xF;
+	  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, ((u32) (&D_80254E80[(s1 & 0xF) * 512])) & 0x1FFFFFFF);
 	  gDPTileSync(D_8005BB2C++);
 	  gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_4b, 0, 0x0100, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
 	  gDPLoadSync(D_8005BB2C++);
 	  gDPLoadTLUTCmd(D_8005BB2C++, 7, 255);
 	  gDPPipeSync(D_8005BB2C++);
 	  gDPLoadSync(D_8005BB2C++);
-		ra = 4;
-	  t4 = *t2;
-	  if ((t4 & 0xF0) != 0xF0)           // if not fully bright, increment brightness
+      ra = 4;
+      t4 = D_8021EA30[(sp54 << 6) + s2];
+	  if ((t4 & 0xF0) != 0xF0)
 	  {
-		*t2 = t4 + 0x10;
+        D_8021EA30[(sp54 << 6) + s2] = t4 + 0x10;
 	  }
-	  gSPClearGeometryMode(D_8005BB2C++, 0x00020000);  // disable lighting for ground tiles
-	  // Cull test: check if this sub-tile (world space 0x400×0x400) is in camera frustum
+	  gSPClearGeometryMode(D_8005BB2C++, 0x00020000);
 	  if (func_800B960C_C85BC((s16) ((s2 << 10) + 0x8000), sp50, 0x400, 0x400) != 0)
 	  {
 		spF4 += 1;
-		// Emit the quad geometry for this visible sub-tile
-		func_800B604C_C4FFC(spF8, var_s4, var_s5, var_s6, var_s3, ((((s2 * 4) + (sp54 * 0x400)) + (var_s5 * 0x100)) & 0xFFFF) + var_s4, s1);
+        func_800B604C_C4FFC(spF8, var_s4, var_s5, var_s6, var_s3, ((((s2 * 4) + (sp54 * 0x400)) + (var_s5 * 0x100)) & 0xFFFF) + var_s4, s1);
 	  }
 	  else
 	  {
-		spF2 += 1;   // tile was culled
+		spF2 += 1;
 	  }
 	  var_t5 = (s7 + 1) & 0xFF;
 	  s7 = var_t5;
-	  spF8 += (ra - var_s4) * 0x10;  // advance vertex pointer past this sub-tile
+      spF8 += (ra - var_s4) * 0x10;
 	}
 	while (var_t5 < 5);
 	ra = (sp117 + 1) & 0xFF;
-	spFC += (4 - var_s5) * 0x120;   // advance past this macro-tile row
+    spFC += (4 - var_s5) * 0x120;
 	sp117 = (u8) ra;
 	spF8 = spFC;
   }
   while (ra < 5);
   gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEI, G_CC_PASS2);
   gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
-  func_800B753C_C64EC(spFC);         // emit rotated (road) tiles
-  gDPSetTextureLUT(D_8005BB2C++, 0 << 14);  // restore default LUT mode
+  func_800B753C_C64EC();
+  gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9DB8_C8D68.s")
