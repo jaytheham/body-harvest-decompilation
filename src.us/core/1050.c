@@ -1208,12 +1208,11 @@ s32 func_80002B20_3720(s32 arg0) {
 	s32 idx;
 	u8 *ptr2;
 	s32 v1;
-	
+
 	stride = arg0 * 0x7A;
-	base = (u8*)&D_800431C0;
+	base = (u8 *)&D_800431C0;
 	ptr1 = base + stride;
-	
-	v1  = ptr1[0x53];
+	v1 = ptr1[0x53];
 	v1 += ptr1[0x54] << 8;
 	v1 += ptr1[0x55] << 0x10;
 	v1 += ptr1[0x56] << 0x18;
