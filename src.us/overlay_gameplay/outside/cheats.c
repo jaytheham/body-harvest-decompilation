@@ -225,7 +225,7 @@ void func_8007383C_827EC(void) {
 
 // Cheat Weasel - use Black Adam model for player
 void func_8007391C_828CC() {
-	D_80052ACD ^= 2;
+	D_80052ACD ^= D_80052ACD_FLAG_USE_BLACK_ADAM_MODEL;
 }
 
 // Cheat Useful -  Gain all alien artifacts

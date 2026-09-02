@@ -608,7 +608,7 @@ void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
 		arg1 >>= 1;
 	}
 
-	if ((arg0 == D_80052B34) && (D_80052ACD & 0x40)) {
+	if ((arg0 == D_80052B34) && (D_80052ACD & D_80052ACD_FLAG_EASY_MODE)) {
 		arg1 = (s16) (s32) ((f32) (arg1 + 1) * D_8003141C);
 	}
 

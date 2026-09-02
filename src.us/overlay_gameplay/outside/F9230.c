@@ -2249,7 +2249,7 @@ void func_800EF14C_FE0FC(VehicleInstance *arg0) {
 			((u16 *)D_8013FCB4_14EC64)[0] = 5;
 		}
 
-		if (D_80052ACD & 2) {
+		if (D_80052ACD & D_80052ACD_FLAG_USE_BLACK_ADAM_MODEL) {
 			gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(&D_50408F0));
 			return;
 		}

@@ -6430,7 +6430,7 @@ s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 	if ((D_8004DCBC != 0) || (currentLevel == 5)) {
 		arg1 = (s16)(arg1 >> 1);
 	}
-	if (D_80052ACD & 0x40) {
+	if (D_80052ACD & D_80052ACD_FLAG_EASY_MODE) {
 		arg1 = (s16)((f32)arg1 * D_80031418);
 	}
 	if ((arg0->unk20 & ALIEN_FLAG_INVINCIBLE) || (arg0 == (AlienInstance*)D_80140AC4_14FA74)) {
