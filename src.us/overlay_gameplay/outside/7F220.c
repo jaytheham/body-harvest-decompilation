@@ -139,59 +139,49 @@ void func_80070420_7F3D0(func_80070420_7F3D0_UnkArg0* arg0) {
 	func_8007679C_8574C(arg0->unk9);
 }
 
-// https://decomp.me/scratch/pdwjd
-// CURRENT(4100)
 /// Inits data after save file started
-#ifdef NON_MATCHING
 void func_80070440_7F3F0(void)
 {
-	s16 sp26;
 	s16 spawnX;
+	Unk8003E000(*new_var)[6];
 	s16 spawnY;
 	s32 level;
 	s32 var_a0;
 	void *temp_v0;
-	s16 temp_v1;
-	s16 temp_a1;
 	s16 temp_t5;
 	s16 c0;
+	f32 temp_f0;
+	s16 sp26;
 	func_8001599C_1659C();
+	new_var = D_8003E000;
 	osSyncPrintf(D_80140D90_14FD40, D_80047F9C);
-	level = currentLevel;
-	if (D_80047F98 == 0 || level == 5)
+	if (D_80047F98 == 0 || currentLevel == 5)
 	{
-		var_a0 = D_80047F9C;
 		D_80047F94 = 0;
 	}
 	else
 	{
-		var_a0 = D_80047F9C;
-		D_80047F94 = var_a0 - 1;
+		D_80047F94 = D_80047F9C - 1;
 	}
-	if (var_a0 == 5)
+	if (D_80047F9C == 5)
 	{
-		D_80047F94 = D_8003E000[level - 1][var_a0].unk4;
+		D_80047F94 = new_var[currentLevel - 1][D_80047F9C].unk4;
 		weaponSlots[0] = 2;
-		weaponSlots[1] = 0;
-		weaponSlots[2] = 0;
-		weaponSlots[3] = 0;
-		weaponSlots[4] = 0;
-		weaponSlots[5] = 0;
-		weaponSlots[6] = 0;
+		sp26 = (weaponSlots[1] = 0);
+		var_a0 = (weaponSlots[2] = (weaponSlots[3] = (weaponSlots[4] = (weaponSlots[5] = sp26))));
+		weaponSlots[6] = var_a0;
 	}
 
-	temp_v1 = D_8003E000[level - 1][var_a0].unk0;
-	temp_a1 = D_8003E000[level - 1][var_a0].unk2;
-	temp_t5 = D_8003E000[level - 1][var_a0].unk6;
+	spawnX = D_8003E000[currentLevel - 1][D_80047F9C].unk0 << 8;
+	spawnY = D_8003E000[currentLevel - 1][D_80047F9C].unk2 << 8;
+	temp_t5 = D_8003E000[currentLevel - 1][D_80047F9C].unk6;
 	D_801493A0 = -0x6F;
 	D_80149398 = 0x6F;
 	D_801493A4 = -0x6F;
 	D_8014939C = 0x6F;
-	spawnX = temp_v1;
 	D_80052B2C = &D_80052AE8;
-	spawnY = temp_a1;
-	D_80259490.unk0 = temp_v1;
-	D_80259490.unk2 = temp_a1;
+	D_80259490.unk0 = D_8003E000[currentLevel - 1][D_80047F9C].unk0;
+	D_80259490.unk2 = D_8003E000[currentLevel - 1][D_80047F9C].unk2;
 	D_80259490.unk8 = temp_t5;
 	D_80052AD0 = 1;
 	D_80052A8C = 0;
@@ -224,9 +214,10 @@ void func_80070440_7F3F0(void)
 		D_800314C4 = 0x19;
 		D_80048168 = 6;
 	}
+	temp_f0 = D_801411A0_150150[0];
 	D_80052AD8 = 0;
 	D_801493D4 = 0;
-	D_80052A94 = (u8 *)D_801FEA30 + 0x10100;
+	D_80052A94 = (D_801FEA30_Row *)((u32)D_801FEA30 + ((0x100 << 8) | 0x100));
 	D_80152C90 = 0;
 	D_801493DC = 0;
 	D_801493CC = 0;
@@ -235,10 +226,10 @@ void func_80070440_7F3F0(void)
 	D_8004DCA8 = 0;
 	D_801493E0 = 0;
 	D_801493E2 = 0;
-	D_801493F0 = D_801411A0_150150[0];
+	D_801493F0 = temp_f0;
 	D_801493EC = D_801493F0;
 	D_801493E8 = D_801493EC;
-	D_801493FC = D_801411A0_150150[0];
+	D_801493FC = temp_f0;
 	D_801493F8 = D_801493FC;
 	D_801493F4 = D_801493F8;
 	D_80149400 = 0.0f;
@@ -261,7 +252,7 @@ void func_80070440_7F3F0(void)
 	D_80047B70 = 0;
 	D_80047F80 = 0;
 	func_800A17EC_B079C();
-	func_800B41C8_C3178(((spawnX >> 8) + 0x77) & 0xFF, ((spawnY >> 8) + 0x77) & 0xFF, (u8 *)D_801FEA30, 0);
+	func_800B41C8_C3178((u8)((spawnX >> 8) + 0x77), (u8)((spawnY >> 8) + 0x77), (u8 *)D_801FEA30, 0);
 	func_80076FCC_85F7C(spawnX, spawnY);
 	func_8007AA0C_899BC();
 	func_8011694C_1258FC();
@@ -343,9 +334,6 @@ void func_80070440_7F3F0(void)
 	}
 	D_801493E2 = 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80070440_7F3F0.s")
-#endif
 
 void func_80070BFC_7FBAC(void) {
 	func_80011E14_12A14(D_80047F93);

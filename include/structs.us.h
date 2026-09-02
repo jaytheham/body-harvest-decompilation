@@ -750,7 +750,7 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ s32 score;
 	/* 0x04 */ u16 secondsElapsed;
-	/* 0x06 */ s16 humansKilled;
+	/* 0x06 */ u16 humansKilled;
 } Unk80052A98; /* size = 0x08 */
 
 typedef struct {
