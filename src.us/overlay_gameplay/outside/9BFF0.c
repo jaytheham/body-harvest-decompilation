@@ -567,8 +567,8 @@ void func_8008D040_9BFF0(u8 arg0)
 {
 	u8 new_var;
 	s32 parentUnk20;
-	AlienInstance *inst;
-	AlienInstance *parent;
+	register AlienInstance *parent;
+	register AlienInstance *inst;
 	arg0 = arg0;
 	inst = &alienInstances[arg0];
 	new_var = inst->unk25;
@@ -808,98 +808,71 @@ s32 func_8008D978_9C928(u8 arg0)
 }
 
 // CURRENT(3738)
-#ifdef NON_MATCHING
 // AI - following logic for carried humans
 void func_8008DA24_9C9D4(u8 arg0)
 {
-	AlienInstance *inst;
-	AlienInstance *parent;
-	AlienInstance *other;
 	AlienInstance *target;
+	u8 idx;
+	AlienInstance *other;
 	s32 x;
 	s32 y;
 	s32 z;
-	u8 idx;
-	u8 otherIdx;
-	u16 randA;
-	u16 randB;
+	u8 humanType;
 
-	idx = arg0;
-	inst = &alienInstances[idx];
-	otherIdx = inst->unk25;
-
-	if (inst->unk48 != 0)
+	idx = alienInstances[arg0].unk25;
+	if (alienInstances[arg0].unk48 != 0)
 	{
-		func_80128428_1373D8(&alienInstances[otherIdx], 0, 0, -0x32, &x, &y, &z);
-		inst->unk2C -= 1;
-		if (inst->unk2C == 0)
+		func_80128428_1373D8(&alienInstances[idx], 0, 0, -0x32, &x, &y, &z);
+		alienInstances[arg0].unk2C -= 1;
+		if (alienInstances[arg0].unk2C == 0)
 		{
-			inst->unk2C = 0x4B0 - (alienTypes[2].unk51 * 5);
-			inst->unk20 &= ~ALIEN_FLAG_UNKF;
+			alienInstances[arg0].unk2C = 0x4B0 - (alienTypes[2].unk51 * 5);
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKF;
 		}
 	}
 	else
 	{
-		parent = &alienInstances[otherIdx];
-		func_80128504_1374B4(parent, 0, &x, &y, &z);
-		inst->unk2C += 1;
-
-		if ((D_80048180 != 0) && (D_80048184 == idx))
+		func_80128504_1374B4(&alienInstances[idx], 0, &x, &y, &z);
+		alienInstances[arg0].unk2C += 1;
+		other = (AlienInstance *)D_80048180;
+		if ((other != 0) && (D_80048184 == arg0))
 		{
-			D_80157A3C = ((0xF - inst->unk2C) << 6) / 15;
+			D_80157A3C = ((0xF - alienInstances[arg0].unk2C) << 6) / 15;
 		}
-
-		if ((inst->unk2C >= 0x10) || !(inst->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
+		if ((alienInstances[arg0].unk2C >= 0x10) || (!(alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))))
 		{
-			parent->unk26 += 1;
-			target = &alienInstances[parent->unk25];
-
-			if (inst->unk20 & ALIEN_FLAG_UNKE)
+			target = &alienInstances[alienInstances[idx].unk25];
+			alienInstances[idx].unk26 += 1;
+			if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKE)
 			{
-				u8 humanType;
-
-				humanType = inst->unk24;
-				if ((D_80048180 != 0) && (D_80048184 == idx))
+				humanType = alienInstances[arg0].unk24;
+				if ((other != 0) && (D_80048184 == arg0))
 				{
 					D_80157A3C = 0;
 					func_80006DAC_79AC(0x3C, 0);
 					other = &alienInstances[humanType];
-					D_80048184 = otherIdx;
+					D_80048184 = idx;
 				}
 				else
 				{
 					other = &alienInstances[humanType];
 					if (other->unk20 & ALIEN_FLAG_UNKL)
 					{
-						parent->unk20 &= ~ALIEN_FLAG_UNKG;
+						alienInstances[idx].unk20 &= ~ALIEN_FLAG_UNKG;
 						func_80079910_888C0(humanType);
-						if (parent->unk24 >= (u8)D_80048168)
+						if (alienInstances[idx].unk24 >= ((u8)D_80048168))
 						{
 							target->unk20 |= ALIEN_FLAG_UNKG;
-							target->unk20 |= (ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE);
-							func_80087AAC_96A5C(otherIdx);
-							parent->unk26 = 4;
+							target->unk20 |= ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE;
+							func_80087AAC_96A5C(idx);
+							alienInstances[idx].unk26 = 4;
 						}
-
 						if ((other->unk24 == 1) || (other->unk24 == 0x1D))
 						{
-							randA = func_800038E0_44E0();
-							randB = func_800038E0_44E0();
-							func_800CA5EC_D959C(
-								other->unk0,
-								other->unk2,
-								other->unk4,
-								(s8)((randA % 120) - 0x3C),
-								0x7F,
-								(s8)((randB % 120) - 0x3C),
-								0x1E,
-								4,
-								0x14,
-								(func_800038E0_44E0() % 90) + 0x28,
-								0,
-								0xFF,
-								0,
-								0xFF);
+							u16 random[2];
+							random[0] = func_800038E0_44E0();
+							random[1] = func_800038E0_44E0();
+							func_800CA5EC_D959C(other->unk0, other->unk2, other->unk4, (s8)((random[0] % 120) - 0x3C), 0x7F, (s8)((random[1] % 120) - 0x3C), 0x1E, 4, 0x14, (func_800038E0_44E0() % 90) + 0x28, 0, 0xFF, 0, 0xFF);
 						}
 						else
 						{
@@ -909,11 +882,10 @@ void func_8008DA24_9C9D4(u8 arg0)
 					else
 					{
 						target->unk1B = humanType;
-						parent->unk36 = 0;
-						other->unk25 = otherIdx;
+						alienInstances[idx].unk36 = 0;
+						other->unk25 = idx;
 						other->unk2C = 0x1E;
-						func_80137468_146418(otherIdx, 2);
-
+						func_80137468_146418(idx, 2);
 						if ((other->unk24 == 0x14) || (other->unk24 == 4))
 						{
 							func_80137468_146418(humanType, 0x274);
@@ -924,10 +896,8 @@ void func_8008DA24_9C9D4(u8 arg0)
 						}
 					}
 				}
-
-				parent->unk3A = 0;
-				parent->unk24 += 1;
-
+				alienInstances[idx].unk3A = 0;
+				alienInstances[idx].unk24 += 1;
 				if (!(other->unk20 & ALIEN_FLAG_UNKL))
 				{
 					if (other->unk24 == 4)
@@ -939,22 +909,17 @@ void func_8008DA24_9C9D4(u8 arg0)
 			}
 			else
 			{
-				parent->unk20 &= ~ALIEN_FLAG_UNKG;
+				alienInstances[idx].unk20 &= ~ALIEN_FLAG_UNKG;
 			}
-
-			target->unk1E = 0xFF;
+			target->unk1EByte = 0xFF;
 			target->unk20 &= ~ALIEN_FLAG_UNKD;
-			parent->unk2C = 0x32;
-			func_80079910_888C0(idx);
+			alienInstances[idx].unk2C = 0x32;
+			func_80079910_888C0(arg0);
 		}
 	}
-
-	inst->unk0 = x;
-	inst->unk4 = z;
+	alienInstances[arg0].unk0 = x;
+	alienInstances[arg0].unk4 = z;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008DA24_9C9D4.s")
-#endif
 
 // https://decomp.me/scratch/BnGko
 // AI - General update tick with cooldown and collision
@@ -2964,7 +2929,8 @@ void func_800920C0_A1070(u8 arg0)
 			{
 			alien->unk20 &= ~ALIEN_FLAG_UNKE;
 
-			entry3->unk6 = (s16)(s32)(((f64)(f32)sins((u16)((alien->unk2C * 0x17E8) & 0xFFFF)) / 32768.0) * 50.0);
+			entry3->unk6 = (s16)(s32)(((f32)sins((u16)((alien->unk2C * 0x17E8) & 0xFFFF)) / 32768.0) * 50.0);
+			}
 		}
 		else
 		{
@@ -2976,7 +2942,7 @@ void func_800920C0_A1070(u8 arg0)
 				s16 absSwing;
 				u8 savedArg0;
 
-				swing = (s16)(s32)(sinf((f32)((((f64)(timer - 0x46) * 6.0) / 30.0))) * (f32)(timer * 0x32));
+				swing = (s16)(s32)(sinf((f32)((((timer - 0x46) * 6.0) / 30.0))) * (f32)(timer * 0x32));
 				negSwing = -swing;
 				absSwing = swing;
 				if (negSwing >= swing)

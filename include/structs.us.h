@@ -990,7 +990,13 @@ typedef struct {
 	/* 0x1A */ u8 typeIndex; // Types are the same every level? e.g. 0x19 is harvester, 0x1B is Boss
 	/* 0x1B */ u8 unk1B; // "Stage" something to do with showing health bar? Used as human count for harvester?
 	/* 0x1C */ s16 hitPoints;
-	/* 0x1E */ s16 unk1E; // Weapons? 0x1F used as HCU count for harvester?
+	union {
+		/* 0x1E */ s16 unk1E; // Weapons? 0x1F used as HCU count for harvester?
+		struct {
+			/* 0x1E */ u8 unk1EByte;
+			/* 0x1F */ u8 pad1F;
+		};
+	};
 	/* 0x20 */ s32 unk20; // Bit flags
 	/* 0x24 */ u8 unk24; // Human type. Harvester humans eaten count. Processor child alien spawned count.
 	/* 0x25 */ u8 unk25; // Parent alien instance id
