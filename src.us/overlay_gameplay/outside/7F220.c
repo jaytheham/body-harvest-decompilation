@@ -343,7 +343,8 @@ void func_80071178_80128(void) {
 }
 
 // Draw world and objects
-void func_80071228_801D8(void) {
+void func_80071228_801D8(void)
+{
 	s32 saved[3];
 	s32 offset;
 	func_800E8890_F7840();
@@ -354,125 +355,152 @@ void func_80071228_801D8(void) {
 
 	func_80070FB8_7FF68();
 	func_800B9DB8_C8D68(0);
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DrawTileBuffer OK\n");
 	}
 	func_800B19F8_C09A8();
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("ClearDynamicLightBuffer OK\n");
 	}
 
-	if (D_80052ACB == 0) {
+	if (D_80052ACB == 0)
+	{
 		func_800E94B8_F8468();
-		if (currentControllerStates[0].button == 0x30) {
+		if (currentControllerStates[0].button == 0x30)
+		{
 			osSyncPrintf("SetupForShadows OK\n");
 		}
 
 		func_8007BEC0_8AE70();
-		if (currentControllerStates[0].button == 0x30) {
+		if (currentControllerStates[0].button == 0x30)
+		{
 			osSyncPrintf("DrawComplexObjectShadows OK\n");
 		}
 
 		func_800EA12C_F90DC();
-		if (currentControllerStates[0].button == 0x30) {
+		if (currentControllerStates[0].button == 0x30)
+		{
 			osSyncPrintf("DisplayVehicleShadows OK\n");
 		}
 
 		func_800F97FC_1087AC();
-		if (currentControllerStates[0].button == 0x30) {
+		if (currentControllerStates[0].button == 0x30)
+		{
 			osSyncPrintf("DrawLegsShadows OK\n");
 		}
 
 		func_800DD5E0_EC590();
-		if (currentControllerStates[0].button == 0x30) {
+		if (currentControllerStates[0].button == 0x30)
+		{
 			osSyncPrintf("DrawNonZBufferedEffects OK\n");
 		}
 
 		func_800EA088_F9038();
-		if (currentControllerStates[0].button == 0x30) {
+		if (currentControllerStates[0].button == 0x30)
+		{
 			osSyncPrintf("StopDrawingShadows OK\n");
 		}
-	} else {
+	}
+	else
+	{
 		osSyncPrintf("SHADOWS NOT DRAWN - overflow\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
 	func_800F98C0_108870();
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DrawLegs OK\n");
 	}
 
-	/* cull back faces while drawing list at D_800311D0 */
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 	gSPDisplayList(D_8005BB2C++, D_800311D0);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_INTER2);
 	gDPPipeSync(D_8005BB2C++);
 
 	func_80124D60_133D10();
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DisplayBullets OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
-	if (D_80052ACA != 2) {
+	if (D_80052ACA != 2)
+	{
 		func_8007764C_865FC();
-		if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf("DisplayTrees OK\n");
+		if (currentControllerStates[0].button == 0x30)
+		{
+			osSyncPrintf("DisplayTrees OK\n");
 		}
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
 	func_8010065C_10F60C(0);
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DisplayVehicles(0) OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
 	func_80101C14_110BC4();
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DisplayDeadVehicles OK\n");
 	}
 
-	if (D_80157590 != 0) {
+	if (D_80157590 != 0)
+	{
 		func_8010065C_10F60C(1);
 	}
 
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DisplayVehicles(1) OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
-	if ((D_80052ACA != 2) || (currentLevel == LEVEL_COMET)) {
-		
-		if (D_80159320 & 0x80) {
+	if ((D_80052ACA != 2) || (currentLevel == LEVEL_COMET))
+	{
+
+		if (D_80159320 & 0x80)
+		{
 			saved[0] = D_800311A0.unk0;
 			saved[1] = D_800311A0.unk2;
 			saved[2] = D_800311A0.unk4;
 
-			offset = (s32) (((f64) (f32) sins((u16)(D_80052A8C << 12)) / 32768.0) * 32.0);
+			offset = (s32)(((f32)sins((u16)(D_80052A8C << 12)) / 32768.0) * 32.0);
 			D_800311A0.unk2 += offset;
 			D_800311A0.unk0 -= offset >> 1;
 			D_800311A0.unk4 -= offset >> 1;
@@ -480,211 +508,232 @@ void func_80071228_801D8(void) {
 
 		func_80118774_127724();
 
-		if (D_80159320 & 0x80) {
+		if (D_80159320 & 0x80)
+		{
 			D_800311A0.unk0 = saved[0];
 			D_800311A0.unk2 = saved[1];
 			D_800311A0.unk4 = saved[2];
 		}
 
-		if (currentControllerStates[0].button == 0x30) {
+		if (currentControllerStates[0].button == 0x30)
+		{
 			osSyncPrintf("DisplayBuildings OK\n");
 		}
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
 	func_8007C044_8AFF4();
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DrawComplexObjects OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
 	func_8012D884_13C834();
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DisplayForces OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
-	if (currentLevel == LEVEL_COMET) {
+	if (currentLevel == LEVEL_COMET)
+	{
 		func_802D4CD0_18D7E0(0x11, 0);
 	}
-	if (currentLevel == LEVEL_AMERICA) {
+	if (currentLevel == LEVEL_AMERICA)
+	{
 		func_802D4CD0_18D7E0(0xE, 0);
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
 	func_800A70B8_B6068();
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DisplayBeacons OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
 	func_801365E0_145590();
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DisplaySignposts OK\n");
 	}
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DoEndGameStuff OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
-	if (D_80157590 == 0) {
-/* draw list for 31230 before changing render state */
-			gSPDisplayList(D_8005BB2C++, D_80031230);
+	if (D_80157590 == 0)
+	{
+		gSPDisplayList(D_8005BB2C++, D_80031230);
 
-			func_800A3490_B2440(D_80159020);
+		func_800A3490_B2440(D_80159020);
 
-			/* restore saved display list */
 		gSPDisplayList(D_8005BB2C++, D_80031200);
 
-			/* reset matrix and enable lighting with smooth fog shading */
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-			gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
-			gSPSetGeometryMode(D_8005BB2C++, G_SHADE | G_FOG | G_SHADING_SMOOTH);
-			gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_INTER2);
-			gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
-			gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
-			gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
-			gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
-			gDPPipeSync(D_8005BB2C++);
-			gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_LIGHTING);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+		gSPSetGeometryMode(D_8005BB2C++, G_SHADE | G_FOG | G_SHADING_SMOOTH);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_INTER2);
+		gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
+		gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
+		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+		gDPPipeSync(D_8005BB2C++);
+		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_LIGHTING);
 
 		func_80071178_80128();
 		func_8010065C_10F60C(1);
 		func_80070FB8_7FF68();
 
-		/* back to 1-cycle rendering */
 		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	}
 
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DisplayVehicles\t(1) OK\n");
 	}
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+	gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
+	gDPPipeSync(D_8005BB2C++);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-/* disable texture lookup table and lighting, restore matrix */
-		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-		gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
-		gDPPipeSync(D_8005BB2C++);
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
 	func_800E71F8_F61A8();
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DisplayFXUnderWater OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
 	func_800BA5B0_C9560(0, 1);
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DrawVtxBufferWater OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
 	func_800BD360_CC310();
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DisplayGates OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
-	if (D_80052ACA != 2) {
+	if (D_80052ACA != 2)
+	{
 		func_800BB5E0_CA590();
 	}
 
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DrawShieldWalls OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
-	if (D_80052ACB != 2) {
+	if (D_80052ACB != 2)
+	{
 		func_800E7234_F61E4();
-	} else {
+	}
+	else
+	{
 		osSyncPrintf("SFX NOT DRAWN - overflow\n");
 	}
 
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DisplayFXOnWater OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
-/* switch back to list 31230 */
-		gSPDisplayList(D_8005BB2C++, D_80031230);
+	gSPDisplayList(D_8005BB2C++, D_80031230);
 
 	func_800E5044_F3FF4();
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DisplayLasers OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
 	func_800A2B58_B1B08();
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DrawGhostTarget OK\n");
 	}
 
-	if (D_80052ACB == 2) {
+	if (D_80052ACB == 2)
+	{
 		return;
 	}
 
-/* load viewport */
-		gSPViewport(D_8005BB2C++, K0_TO_PHYS(D_8005BB24));
-
-	guPerspective((void*) (D_8005BB20 + 0x140), &D_801493D6, (f32) D_80149404, 1.3333334f, 10.0f, 10000.0f, 1.0f);
-
-/* set perspective normalization */
-		gSPPerspNormalize(D_8005BB2C++, D_801493D6);
-
-	/* restore saved display list 311D0 */
-		gSPDisplayList(D_8005BB2C++, D_800311D0);
-
-	/* load projection matrix */
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(*(&D_8005BB20) + 0x140), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-
-/* multiply projection matrix */
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(*(&D_8005BB20) + 0x200), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+	gSPViewport(D_8005BB2C++, K0_TO_PHYS(D_8005BB24));
+	guPerspective((void *)(D_8005BB20 + 0x140), &D_801493D6, (f32)D_80149404, 1.3333334f, 10.0f, 10000.0f, 1.0f);
+	gSPPerspNormalize(D_8005BB2C++, D_801493D6);
+	gSPDisplayList(D_8005BB2C++, D_800311D0);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(*(&D_8005BB20) + 0x140), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(*(&D_8005BB20) + 0x200), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 
 	func_800A03FC_AF3AC();
 
-	if (currentControllerStates[0].button == 0x30) {
+	if (currentControllerStates[0].button == 0x30)
+	{
 		osSyncPrintf("DisplayScanner OK\n");
 	}
 }
+
 void func_80071E88_80E38(Unk80052B2C* arg0) {
 	D_80149430 = (s16) arg0->unkC;
 	D_80149432 = (s16) arg0->unk14;
@@ -696,17 +745,20 @@ void func_80071E88_80E38(Unk80052B2C* arg0) {
 }
 
 // guess_doGamePlay
-void func_80071F28_80ED8(void) {
+void func_80071F28_80ED8(void)
+{
 	D_80052B34 = D_80052B2C->unk38;
 	D_80149440 = D_80052B2C->unk34;
 	func_80071228_801D8();
 	func_801052E8_114298(D_80052B2C, &currentControllerStates[CONTROLLER_ONE]);
 	D_80149406 = -D_80149406;
-	if (D_80149406 > 0) {
-		D_80149406 -= (s16) D_80149406 >> 1;
+	if (D_80149406 > 0)
+	{
+		D_80149406 -= (s16)D_80149406 >> 1;
 		D_80149406 -= 1;
 	}
-	if (D_80149406 >= 0x12D) {
+	if (D_80149406 >= 0x12D)
+	{
 		D_80149406 = 0x12C;
 	}
 	func_800BDDCC_CCD7C();
@@ -716,7 +768,8 @@ void func_80071F28_80ED8(void) {
 	func_8012B26C_13A21C();
 	func_80113CEC_122C9C();
 	func_80112F98_121F48();
-	if ((D_8004D148 != 0) && (D_80159260 == 0)) {
+	if ((D_8004D148 != 0) && (D_80159260 == 0))
+	{
 		func_800F4DB0_103D60();
 		func_800AE6CC_BD67C();
 		func_8007AAEC_89A9C();
@@ -728,7 +781,8 @@ void func_80071F28_80ED8(void) {
 	func_8011A604_1295B4();
 	func_800A854C_B74FC();
 	func_800A7C6C_B6C1C();
-	if (currentLevel == LEVEL_COMET) {
+	if (currentLevel == LEVEL_COMET)
+	{
 		func_802D4CD0_18D7E0(0x12, 0);
 	}
 	func_80075AA4_84A54();
@@ -739,7 +793,8 @@ void func_80071F28_80ED8(void) {
 	func_802D4CD0_18D7E0(0x45, 0);
 }
 
-void func_800720B8_81068(void) {
+void func_800720B8_81068(void)
+{
 	D_80052B34 = D_80052B2C->unk38;
 	D_80149440 = D_80052B2C->unk34;
 	func_80071228_801D8();
@@ -814,7 +869,7 @@ void func_800720F4_810A4(void)
 			drawText("%Y", -12);
 			drawText("%@Demo", 15, 0);
 		}
-		if (isButtonNewlyPressed(1, 0x10))
+		if (isButtonNewlyPressed(CONTROLLER_TWO, BUTTON_R))
 		{
 			func_800BDAF4_CCAA4();
 		}
@@ -1112,7 +1167,7 @@ void func_800720F4_810A4(void)
 				D_80149394 = 300;
 			}
 		}
-		if (currentControllerStates[1].button & 0x2000)
+		if (currentControllerStates[CONTROLLER_TWO].button & BUTTON_Z)
 		{
 			if (D_80149380 == 0)
 			{

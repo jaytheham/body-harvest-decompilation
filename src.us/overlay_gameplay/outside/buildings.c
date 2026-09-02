@@ -1283,7 +1283,7 @@ s32 func_80118670_127620(s16 arg0, s16 arg1) {
 
 // CURRENT(70000)
 #ifdef NON_MATCHING
-// displayBuildings
+// DisplayBuildings
 void func_80118774_127724(s32 arg0) {
 	BuildingInstance *building;
 	BuildingInstance *neighbor;

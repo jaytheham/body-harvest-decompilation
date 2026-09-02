@@ -897,8 +897,8 @@ void func_80124C40_133BF0(EntityInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
 }
 
 // CURRENT(31662)
-// displayBullets
 #ifdef NON_MATCHING
+// DisplayBullets
 void func_80124D60_133D10(void) {
 	Unk80052B40 fadeVec;
 
