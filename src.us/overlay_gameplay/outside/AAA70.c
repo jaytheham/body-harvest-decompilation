@@ -2459,7 +2459,7 @@ void func_800A2B58_B1B08(void)
 	gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
 	gDPSetColorDither(D_8005BB2C++, 0 << 6);
 	gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
-	gDPSetRenderMode(D_8005BB2C++, ((((((0x40 | 0x200) | 0x4000) | 0) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (0 << 18), ((((((0x40 | 0x200) | 0x4000) | 0) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (0 << 16));
+	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 	gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
 	new_var = &D_8014F618.unk79;

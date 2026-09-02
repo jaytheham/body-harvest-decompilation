@@ -1421,7 +1421,7 @@ void debug_drawTimingGraphBars(void)
 	{
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCycleType(D_8005BB2C++, 3 << 20);
-		gDPSetRenderMode(D_8005BB2C++, (((((0 | 0x4000) | 0) | (0 << 30)) | (3 << 26)) | (0 << 22)) | (2 << 18), (((((0 | 0x4000) | 0) | (0 << 28)) | (3 << 24)) | (0 << 20)) | (2 << 16));
+		gDPSetRenderMode(D_8005BB2C++, FORCE_BL | G_RM_PASS, FORCE_BL | GBL_c2(G_BL_CLR_IN, G_BL_0, G_BL_CLR_IN, G_BL_1));
 		gDPSetFillColor(D_8005BB2C++, 0xFFFFFFFF);
 		var_a1 = 5;
 		var_a2 = 0x110;
@@ -1441,7 +1441,7 @@ void debug_drawTimingGraphBars(void)
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCycleType(D_8005BB2C++, 0 << 20);
 		gSPSetGeometryMode(D_8005BB2C++, 0x00000001);
-		gDPSetRenderMode(D_8005BB2C++, (((((((((0x8 | 0x10) | 0x20) | 0x40) | 0) | 0) | 0x2000) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (1 << 18), (((((((((0x8 | 0x10) | 0x20) | 0x40) | 0) | 0) | 0x2000) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (1 << 16));
+		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	}
 }
 

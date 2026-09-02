@@ -3452,7 +3452,7 @@ void func_800B9DB8_C8D68(u8 arg0)
   sp10A = (s16) D_80151DD8.mapPosY;
   spF8 = temp_s1;
   spFC = temp_s1;
-  gDPSetRenderMode(D_8005BB2C++, (((3 << 30) | (2 << 26)) | (0 << 22)) | (0 << 18), (((((((0x10 | 0x20) | 0x200) | 0x2000) | 0) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (1 << 16));
+  gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
   gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
   gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
   gDPSetTextureLUT(D_8005BB2C++, 2 << 14);

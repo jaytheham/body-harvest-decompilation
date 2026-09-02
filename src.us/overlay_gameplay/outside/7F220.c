@@ -1073,7 +1073,7 @@ void func_800720F4_810A4(void)
 		gSPDisplayList(D_8005BB2C++, D_80031200);
 		func_80070FB8_7FF68();
 		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
-		gDPSetRenderMode(D_8005BB2C++, (((3 << 30) | (2 << 26)) | (0 << 22)) | (0 << 18), ((((((((((0x8 | 0x10) | 0x40) | 0) | 0x1000) | 0x2000) | 0x4000) | 0x800) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (0 << 16));
+		gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_XLU_LINE2);
 		guPerspective((Mtx *)(D_8005BB20 + 0x180), &D_801493D6, D_80149404, 1.3333334f, D_80157574, D_80157576, 1.0f);
 		gSPPerspNormalize(D_8005BB2C++, D_801493D6);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB20 + 0x180), (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_PROJECTION);

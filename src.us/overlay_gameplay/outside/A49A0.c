@@ -727,7 +727,7 @@ void func_800970C0_A6070(void)
   s32 tileRow;
   gDPPipeSync(D_8005BB2C++);
   gSPClearGeometryMode(D_8005BB2C++, (0x00000001 | 0x00003000) | 0x00020000);
-  gDPSetRenderMode(D_8005BB2C++, (((((((0x8 | 0x40) | 0) | 0) | 0x2000) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (1 << 18), (((((((0x8 | 0x40) | 0) | 0) | 0x2000) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (1 << 16));
+  gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
   gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
   gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
   gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
@@ -2348,4 +2348,3 @@ block_356:
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_8009811C_A70CC.s")
 #endif
-

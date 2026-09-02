@@ -1020,7 +1020,7 @@ void func_800847E4_54C94(u8 arg0) {
 
 	gDPPipeSync(D_8005BB2C++);
 	gSPClearGeometryMode(D_8005BB2C++, 1);
-	gDPSetRenderMode(D_8005BB2C++, 0x504240, 0x504240);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, 0, 0, 0, SHADE, 0, 0, 0, PRIMITIVE, 0, 0, 0, SHADE);
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, color[0], color[1], color[2], 0);
 	gDPPipeSync(D_8005BB2C++);
@@ -1144,7 +1144,7 @@ void func_800847E4_54C94(u8 arg0) {
 
 	gDPPipeSync(D_8005BB2C++);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
-	gDPSetRenderMode(D_8005BB2C++, 0x504A50, 0x504A50);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_ZB_XLU_SURF, G_RM_ZB_XLU_SURF2);
 	gDPPipeSync(D_8005BB2C++);
 }
 #else
