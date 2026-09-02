@@ -412,72 +412,58 @@ void func_80071178_80128(void) {
 	}
 }
 
-// CURRENT(6566)
-#ifdef NON_MATCHING
 // Draw world and objects
 void func_80071228_801D8(void) {
-	Gfx* dl;
-	Gfx* savedDl31200;
-	Gfx* savedDl311D0;
-	s32 savedX;
-	s32 savedY;
-	s32 savedZ;
-	s32 phase;
+	s32 saved[3];
 	s32 offset;
-	s32 halfOffset;
-	s32 level;
-	u32 segAddr31160;
-	u32 matrixBase;
 	func_800E8890_F7840();
 
-	savedDl31200 = D_80031200;
-
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-	gSPDisplayList(D_8005BB2C++, savedDl31200);
+	gSPDisplayList(D_8005BB2C++, D_80031200);
 
 	func_80070FB8_7FF68();
 	func_800B9DB8_C8D68(0);
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140DD8);
+		osSyncPrintf(D_80140DD8_14FD88);
 	}
 	func_800B19F8_C09A8();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140DEC);
+		osSyncPrintf(D_80140DEC_14FD9C);
 	}
 
 	if (D_80052ACB == 0) {
 		func_800E94B8_F8468();
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140E08);
+			osSyncPrintf(D_80140E08_14FDB8);
 		}
 
 		func_8007BEC0_8AE70();
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140E1C);
+			osSyncPrintf(D_80140E1C_14FDCC);
 		}
 
 		func_800EA12C_F90DC();
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140E3C);
+			osSyncPrintf(D_80140E3C_14FDEC);
 		}
 
 		func_800F97FC_1087AC();
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140E58);
+			osSyncPrintf(D_80140E58_14FE08);
 		}
 
 		func_800DD5E0_EC590();
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140E6C);
+			osSyncPrintf(D_80140E6C_14FE1C);
 		}
 
 		func_800EA088_F9038();
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140E88);
+			osSyncPrintf(D_80140E88_14FE38);
 		}
 	} else {
-		osSyncPrintf(D_80140EA0);
+		osSyncPrintf(D_80140EA0_14FE50);
 	}
 
 	if (D_80052ACB == 2) {
@@ -490,7 +476,7 @@ void func_80071228_801D8(void) {
 	}
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140EC0);
+		osSyncPrintf(D_80140EC0_14FE70);
 	}
 
 	/* cull back faces while drawing list at D_800311D0 */
@@ -499,10 +485,9 @@ void func_80071228_801D8(void) {
 	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_INTER2);
 	gDPPipeSync(D_8005BB2C++);
 
-	savedDl311D0 = D_800311D0;
 	func_80124D60_133D10();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140ED0);
+		osSyncPrintf(D_80140ED0_14FE80);
 	}
 
 	if (D_80052ACB == 2) {
@@ -512,7 +497,7 @@ void func_80071228_801D8(void) {
 	if (D_80052ACA != 2) {
 		func_8007764C_865FC();
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140EE4);
+		osSyncPrintf(D_80140EE4_14FE94);
 		}
 	}
 
@@ -522,7 +507,7 @@ void func_80071228_801D8(void) {
 
 	func_8010065C_10F60C(0);
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140EF8);
+		osSyncPrintf(D_80140EF8_14FEA8);
 	}
 
 	if (D_80052ACB == 2) {
@@ -535,7 +520,7 @@ void func_80071228_801D8(void) {
 	}
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140F10);
+		osSyncPrintf(D_80140F10_14FEC0);
 	}
 
 	if (D_80157590 != 0) {
@@ -543,7 +528,7 @@ void func_80071228_801D8(void) {
 	}
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140F28);
+		osSyncPrintf(D_80140F28_14FED8);
 	}
 
 	if (D_80052ACB == 2) {
@@ -553,30 +538,26 @@ void func_80071228_801D8(void) {
 	if ((D_80052ACA != 2) || (currentLevel == LEVEL_COMET)) {
 		
 		if (D_80159320 & 0x80) {
-			phase = D_80052A8C;
-			savedX = D_800311A0.unk0;
-			savedY = D_800311A0.unk2;
-			savedZ = D_800311A0.unk4;
+			saved[0] = D_800311A0.unk0;
+			saved[1] = D_800311A0.unk2;
+			saved[2] = D_800311A0.unk4;
 
-			offset = (s32) (((f64) (f32) sins((D_80052A8C << 12) & 0xFFFF) / 32768.0) * 32.0);
-			halfOffset = offset >> 1;
-
+			offset = (s32) (((f64) (f32) sins((u16)(D_80052A8C << 12)) / 32768.0) * 32.0);
 			D_800311A0.unk2 += offset;
-			D_800311A0.unk0 -= halfOffset;
-			D_800311A0.unk4 -= halfOffset;
-			phase = offset;
+			D_800311A0.unk0 -= offset >> 1;
+			D_800311A0.unk4 -= offset >> 1;
 		}
 
-		func_80118774_127724(phase);
+		func_80118774_127724();
 
 		if (D_80159320 & 0x80) {
-			D_800311A0.unk0 = savedX;
-			D_800311A0.unk2 = savedY;
-			D_800311A0.unk4 = savedZ;
+			D_800311A0.unk0 = saved[0];
+			D_800311A0.unk2 = saved[1];
+			D_800311A0.unk4 = saved[2];
 		}
 
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140F40);
+			osSyncPrintf(D_80140F40_14FEF0);
 		}
 	}
 
@@ -586,7 +567,7 @@ void func_80071228_801D8(void) {
 
 	func_8007C044_8AFF4();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140F58);
+		osSyncPrintf(D_80140F58_14FF08);
 	}
 
 	if (D_80052ACB == 2) {
@@ -595,19 +576,17 @@ void func_80071228_801D8(void) {
 
 	func_8012D884_13C834();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140F70);
+		osSyncPrintf(D_80140F70_14FF20);
 	}
 
 	if (D_80052ACB == 2) {
 		return;
 	}
 
-	level = currentLevel;
-	if (level == LEVEL_COMET) {
+	if (currentLevel == LEVEL_COMET) {
 		func_802D4CD0_18D7E0(0x11, 0);
-		level = currentLevel;
 	}
-	if (level == LEVEL_AMERICA) {
+	if (currentLevel == LEVEL_AMERICA) {
 		func_802D4CD0_18D7E0(0xE, 0);
 	}
 
@@ -617,7 +596,7 @@ void func_80071228_801D8(void) {
 
 	func_800A70B8_B6068();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140F84);
+		osSyncPrintf(D_80140F84_14FF34);
 	}
 
 	if (D_80052ACB == 2) {
@@ -626,10 +605,10 @@ void func_80071228_801D8(void) {
 
 	func_801365E0_145590();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140F98);
+		osSyncPrintf(D_80140F98_14FF48);
 	}
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140FB0);
+		osSyncPrintf(D_80140FB0_14FF60);
 	}
 
 	if (D_80052ACB == 2) {
@@ -643,10 +622,10 @@ void func_80071228_801D8(void) {
 			func_800A3490_B2440(D_80159020);
 
 			/* restore saved display list */
-			gSPDisplayList(D_8005BB2C++, savedDl31200);
+		gSPDisplayList(D_8005BB2C++, D_80031200);
 
 			/* reset matrix and enable lighting with smooth fog shading */
-			gSPMatrix(D_8005BB2C++, segAddr31160, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 			gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 			gSPSetGeometryMode(D_8005BB2C++, G_SHADE | G_FOG | G_SHADING_SMOOTH);
 			gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_INTER2);
@@ -666,14 +645,14 @@ void func_80071228_801D8(void) {
 	}
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140FC4);
+		osSyncPrintf(D_80140FC4_14FF74);
 	}
 
 /* disable texture lookup table and lighting, restore matrix */
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 		gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
 		gDPPipeSync(D_8005BB2C++);
-		gSPMatrix(D_8005BB2C++, segAddr31160, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	if (D_80052ACB == 2) {
 		return;
@@ -681,7 +660,7 @@ void func_80071228_801D8(void) {
 
 	func_800E71F8_F61A8();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140FDC);
+		osSyncPrintf(D_80140FDC_14FF8C);
 	}
 
 	if (D_80052ACB == 2) {
@@ -690,7 +669,7 @@ void func_80071228_801D8(void) {
 
 	func_800BA5B0_C9560(0, 1);
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140FF4);
+		osSyncPrintf(D_80140FF4_14FFA4);
 	}
 
 	if (D_80052ACB == 2) {
@@ -699,7 +678,7 @@ void func_80071228_801D8(void) {
 
 	func_800BD360_CC310();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_8014100C);
+		osSyncPrintf(D_8014100C_14FFBC);
 	}
 
 	if (D_80052ACB == 2) {
@@ -711,7 +690,7 @@ void func_80071228_801D8(void) {
 	}
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80141020);
+		osSyncPrintf(D_80141020_14FFD0);
 	}
 
 	if (D_80052ACB == 2) {
@@ -721,11 +700,11 @@ void func_80071228_801D8(void) {
 	if (D_80052ACB != 2) {
 		func_800E7234_F61E4();
 	} else {
-		osSyncPrintf(D_80141034);
+		osSyncPrintf(D_80141034_14FFE4);
 	}
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80141050);
+		osSyncPrintf(D_80141050_150000);
 	}
 
 	if (D_80052ACB == 2) {
@@ -737,7 +716,7 @@ void func_80071228_801D8(void) {
 
 	func_800E5044_F3FF4();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80141068);
+		osSyncPrintf(D_80141068_150018);
 	}
 
 	if (D_80052ACB == 2) {
@@ -746,7 +725,7 @@ void func_80071228_801D8(void) {
 
 	func_800A2B58_B1B08();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_8014107C);
+		osSyncPrintf(D_8014107C_15002C);
 	}
 
 	if (D_80052ACB == 2) {
@@ -756,32 +735,26 @@ void func_80071228_801D8(void) {
 /* load viewport */
 		gSPViewport(D_8005BB2C++, K0_TO_PHYS(D_8005BB24));
 
-	guPerspective((void*) (D_8005BB20 + 0x140), &D_801493D6, (f32) D_80149404, 1.3333334f, 10.0f, D_801411A4, 1.0f);
+	guPerspective((void*) (D_8005BB20 + 0x140), &D_801493D6, (f32) D_80149404, 1.3333334f, 10.0f, D_801411A4_150154[0], 1.0f);
 
 /* set perspective normalization */
 		gSPPerspNormalize(D_8005BB2C++, D_801493D6);
 
-/* restore saved display list 311D0 */
-		gSPDisplayList(D_8005BB2C++, savedDl311D0);
+	/* restore saved display list 311D0 */
+		gSPDisplayList(D_8005BB2C++, D_800311D0);
 
-	matrixBase = (u32) D_8005BB20;
-
-/* load projection matrix */
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(matrixBase + 0x140), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	/* load projection matrix */
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(*(&D_8005BB20) + 0x140), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
 /* multiply projection matrix */
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(matrixBase + 0x200), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(*(&D_8005BB20) + 0x200), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 
 	func_800A03FC_AF3AC();
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80141090);
+		osSyncPrintf(D_80141090_150040);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/7F220/func_80071228_801D8.s")
-#endif
-
 void func_80071E88_80E38(Unk80052B2C* arg0) {
 	D_80149430 = (s16) arg0->unkC;
 	D_80149432 = (s16) arg0->unk14;
