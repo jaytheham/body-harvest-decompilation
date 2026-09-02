@@ -54,7 +54,7 @@ u16 func_80078530_874E0(s16 arg0, s16 arg1);
 s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2);
 void func_80083EF4_92EA4(AlienInstance *arg0, AlienInstance *arg1, s16 arg2, s16 arg3);
 void func_80107184_116134(VehicleInstance *arg0, s32 arg1, s32 arg2, f32 arg3);
-s32 func_8010CA38_11B9E8(VehicleInstance *arg0);
+void func_8010CA38_11B9E8(VehicleInstance *arg0);
 s32 func_801073FC_1163AC(VehicleInstance *arg0, VehicleInstance *arg1, s32 arg2, s32 arg3);
 s32 func_8010E040_11CFF0(s16 arg0, s16 arg1, s16 arg2);
 s32 func_80076088_85038(s32 arg0);
