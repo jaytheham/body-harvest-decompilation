@@ -807,7 +807,6 @@ s32 func_8008D978_9C928(u8 arg0)
 	return 0;
 }
 
-// CURRENT(3738)
 // AI - following logic for carried humans
 void func_8008DA24_9C9D4(u8 arg0)
 {
@@ -921,7 +920,6 @@ void func_8008DA24_9C9D4(u8 arg0)
 	alienInstances[arg0].unk4 = z;
 }
 
-// https://decomp.me/scratch/BnGko
 // AI - General update tick with cooldown and collision
 void func_8008DEF4_9CEA4(u8 arg0)
 {
@@ -929,7 +927,7 @@ void func_8008DEF4_9CEA4(u8 arg0)
 	s32 sp48;
 	s32 sp44;
 	s32 sp40;
-	s32 pad;
+	s16 pad;
 	s32 temp_v0;
 	var_t0 = 1;
 	alienInstances[arg0].unk12 = alienInstances[arg0].unk48;
@@ -4093,7 +4091,7 @@ void func_80094BE0_A3B90(u8 arg0)
 	}
 }
 
-// CURRENT(1533)
+// CURRENT(609)
 // AI - Boss/mech animation sync
 #ifdef NON_MATCHING
 void func_80094DE0_A3D90(u8 arg0)
@@ -4102,26 +4100,21 @@ void func_80094DE0_A3D90(u8 arg0)
 	s16 sp5C;
 	s16 sp5A;
 	s16 sp58;
-	s16 sp3E;
 	s16 sp56;
 	s16 sp50[3];
-	s32 sp44[3];
-	s32 sp40;
+    s32 sp44[3];
+    s32 sp40;
+	 s16 sp3E;
 	s16 sp38[2];
 	s16 sp34;
-	Unk8014DD50 *sp2C;
-	Unk8014DD50 *sp28;
-
-	sp5E = alienInstances[arg0].unkC;
-	sp2C = &D_8014DD50[sp5E];
-	sp5C = (s8)sp2C->unkC;
-	sp28 = &D_8014DD50[sp5C];
-	sp58 = (s8)sp28->unkC;
-	sp5A = (s8)D_8014DD50[sp58].unkD;
 	sp3E = alienInstances[arg0].typeIndex;
+	sp5E = alienInstances[arg0].unkC;
+	sp5C = (s8)D_8014DD50[sp5E].unkC;
+	sp58 = (s8)D_8014DD50[sp5C].unkC;
+	sp5A = (s8)D_8014DD50[sp58].unkD;
 	sp56 = (s8)D_8014DD50[sp5A].unkD;
 	func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
-	sp2C->unk6 = alienInstances[arg0].unk6, sp28->unk6 = -alienInstances[arg0].unk6;
+	D_8014DD50[sp5C].unk6 = -(D_8014DD50[sp5E].unk6 = alienInstances[arg0].unk6);
 	func_80086164_95114(arg0, sp5C);
 	sp50[0] = 0x3C;
 	sp50[1] = -8;
