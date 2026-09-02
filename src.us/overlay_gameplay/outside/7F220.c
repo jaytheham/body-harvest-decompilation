@@ -1,55 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-const char D_80140D90_14FD40[] = "WarpPointNumber = %d\n"; // "WarpPointNumber = %d\n"
-const char D_80140DA8_14FD58[] = "Easy mode activated\n"; // "Easy mode activated\n"
-const char D_80140DC0_14FD70[] = "Easy mode disactivated\n"; // "Easy mode disactivated\n"
-const char D_80140DD8_14FD88[] = "DrawTileBuffer OK\n"; // "DrawTileBuffer OK\n"
-const char D_80140DEC_14FD9C[] = "ClearDynamicLightBuffer OK\n"; // "ClearDynamicLightBuffer OK\n"
-const char D_80140E08_14FDB8[] = "SetupForShadows OK\n"; // "SetupForShadows OK\n"
-const char D_80140E1C_14FDCC[] = "DrawComplexObjectShadows OK\n"; // "DrawComplexObjectShadows OK\n"
-const char D_80140E3C_14FDEC[] = "DisplayVehicleShadows OK\n"; // "DisplayVehicleShadows OK\n"
-const char D_80140E58_14FE08[] = "DrawLegsShadows OK\n"; // "DrawLegsShadows OK\n"
-const char D_80140E6C_14FE1C[] = "DrawNonZBufferedEffects OK\n"; // "DrawNonZBufferedEffects OK\n"
-const char D_80140E88_14FE38[] = "StopDrawingShadows OK\n"; // "StopDrawingShadows OK\n"
-const char D_80140EA0_14FE50[] = "SHADOWS NOT DRAWN - overflow\n"; // "SHADOWS NOT DRAWN - overflow\n"
-const char D_80140EC0_14FE70[] = "DrawLegs OK\n"; // "DrawLegs OK\n"
-const char D_80140ED0_14FE80[] = "DisplayBullets OK\n"; // "DisplayBullets OK\n"
-const char D_80140EE4_14FE94[] = "DisplayTrees OK\n"; // "DisplayTrees OK\n"
-const char D_80140EF8_14FEA8[] = "DisplayVehicles(0) OK\n"; // "DisplayVehicles(0) OK\n"
-const char D_80140F10_14FEC0[] = "DisplayDeadVehicles OK\n"; // "DisplayDeadVehicles OK\n"
-const char D_80140F28_14FED8[] = "DisplayVehicles(1) OK\n"; // "DisplayVehicles(1) OK\n"
-const char D_80140F40_14FEF0[] = "DisplayBuildings OK\n"; // "DisplayBuildings OK\n"
-const char D_80140F58_14FF08[] = "DrawComplexObjects OK\n"; // "DrawComplexObjects OK\n"
-const char D_80140F70_14FF20[] = "DisplayForces OK\n"; // "DisplayForces OK\n"
-const char D_80140F84_14FF34[] = "DisplayBeacons OK\n"; // "DisplayBeacons OK\n"
-const char D_80140F98_14FF48[] = "DisplaySignposts OK\n"; // "DisplaySignposts OK\n"
-const char D_80140FB0_14FF60[] = "DoEndGameStuff OK\n"; // "DoEndGameStuff OK\n"
-const char D_80140FC4_14FF74[] = "DisplayVehicles\t(1) OK\n"; // "DisplayVehicles\t(1) OK\n"
-const char D_80140FDC_14FF8C[] = "DisplayFXUnderWater OK\n"; // "DisplayFXUnderWater OK\n"
-const char D_80140FF4_14FFA4[] = "DrawVtxBufferWater OK\n"; // "DrawVtxBufferWater OK\n"
-const char D_8014100C_14FFBC[] = "DisplayGates OK\n"; // "DisplayGates OK\n"
-const char D_80141020_14FFD0[] = "DrawShieldWalls OK\n"; // "DrawShieldWalls OK\n"
-const char D_80141034_14FFE4[] = "SFX NOT DRAWN - overflow\n"; // "SFX NOT DRAWN - overflow\n"
-const char D_80141050_150000[] = "DisplayFXOnWater OK\n"; // "DisplayFXOnWater OK\n"
-const char D_80141068_150018[] = "DisplayLasers OK\n"; // "DisplayLasers OK\n"
-const char D_8014107C_15002C[] = "DrawGhostTarget OK\n"; // "DrawGhostTarget OK\n"
-const char D_80141090_150040[] = "DisplayScanner OK\n"; // "DisplayScanner OK\n"
-const char D_801410A4_150054[] = "Position %d, %d, %d\n"; // "Position %d, %d, %d\n"
-const char D_801410BC_15006C[] = "%Y"; // "%Y"
-const char D_801410C0_150070[] = "%@Demo"; // "%@Demo"
-const char D_801410C8_150078[] = "%C%@UNLUCKY ANDREW!"; // "%C%@UNLUCKY ANDREW!"
-const char D_801410DC_15008C[] = "GfxList overflowed by %d\n"; // "GfxList overflowed by %d\n"
-const char D_801410F8_1500A8[] = "GfxList about to overflow!\n"; // "GfxList about to overflow!\n"
-const char D_80141114_1500C4[] = "LineList overflowed by %d\n"; // "LineList overflowed by %d\n"
-const char D_80141130_1500E0[] = "VtxList overflowed by %d\n"; // "VtxList overflowed by %d\n"
-const char D_8014114C_1500FC[] = "VtxList about to overflow!\n"; // "VtxList about to overflow!\n"
-const char D_80141168_150118[] = "MtxList overflowed by %d\n"; // "MtxList overflowed by %d\n"
-const char D_80141184_150134[] = "MtxList about to overflow!\n"; // "MtxList about to overflow!\n"
-
-const f32 D_801411A0_150150[1] = {32767.0f};
-const f32 D_801411A4_150154[1] = {10000.0f};
-
 s32 func_80070270_7F220(s32 arg0) {
 	if (arg0 != 7) {
 		if (arg0 == 8) {
@@ -133,7 +84,7 @@ void func_80070440_7F3F0(void)
 	s16 sp26;
 	func_8001599C_1659C();
 	new_var = D_8003E000;
-	osSyncPrintf(D_80140D90_14FD40, D_80047F9C);
+	osSyncPrintf("WarpPointNumber = %d\n", D_80047F9C);
 	if (D_80047F98 == 0 || currentLevel == 5)
 	{
 		D_80047F94 = 0;
@@ -175,12 +126,12 @@ void func_80070440_7F3F0(void)
 	}
 	if (D_80052ACD & 0x80)
 	{
-		osSyncPrintf(D_80140DA8_14FD58);
+		osSyncPrintf("Easy mode activated\n");
 		D_80052ACD |= D_80052ACD_FLAG_EASY_MODE;
 	}
 	else
 	{
-		osSyncPrintf(D_80140DC0_14FD70);
+		osSyncPrintf("Easy mode disactivated\n");
 		D_80052ACD &= ~D_80052ACD_FLAG_EASY_MODE;
 	}
 	if (D_80052ACD & D_80052ACD_FLAG_EASY_MODE)
@@ -193,7 +144,7 @@ void func_80070440_7F3F0(void)
 		D_800314C4 = 0x19;
 		D_80048168 = 6;
 	}
-	temp_f0 = D_801411A0_150150[0];
+	temp_f0 = 32767.0f;
 	D_80052AD8 = 0;
 	D_801493D4 = 0;
 	D_80052A94 = (D_801FEA30_Row *)((u32)D_801FEA30 + ((0x100 << 8) | 0x100));
@@ -404,45 +355,45 @@ void func_80071228_801D8(void) {
 	func_80070FB8_7FF68();
 	func_800B9DB8_C8D68(0);
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140DD8_14FD88);
+		osSyncPrintf("DrawTileBuffer OK\n");
 	}
 	func_800B19F8_C09A8();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140DEC_14FD9C);
+		osSyncPrintf("ClearDynamicLightBuffer OK\n");
 	}
 
 	if (D_80052ACB == 0) {
 		func_800E94B8_F8468();
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140E08_14FDB8);
+			osSyncPrintf("SetupForShadows OK\n");
 		}
 
 		func_8007BEC0_8AE70();
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140E1C_14FDCC);
+			osSyncPrintf("DrawComplexObjectShadows OK\n");
 		}
 
 		func_800EA12C_F90DC();
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140E3C_14FDEC);
+			osSyncPrintf("DisplayVehicleShadows OK\n");
 		}
 
 		func_800F97FC_1087AC();
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140E58_14FE08);
+			osSyncPrintf("DrawLegsShadows OK\n");
 		}
 
 		func_800DD5E0_EC590();
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140E6C_14FE1C);
+			osSyncPrintf("DrawNonZBufferedEffects OK\n");
 		}
 
 		func_800EA088_F9038();
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140E88_14FE38);
+			osSyncPrintf("StopDrawingShadows OK\n");
 		}
 	} else {
-		osSyncPrintf(D_80140EA0_14FE50);
+		osSyncPrintf("SHADOWS NOT DRAWN - overflow\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -455,7 +406,7 @@ void func_80071228_801D8(void) {
 	}
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140EC0_14FE70);
+		osSyncPrintf("DrawLegs OK\n");
 	}
 
 	/* cull back faces while drawing list at D_800311D0 */
@@ -466,7 +417,7 @@ void func_80071228_801D8(void) {
 
 	func_80124D60_133D10();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140ED0_14FE80);
+		osSyncPrintf("DisplayBullets OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -476,7 +427,7 @@ void func_80071228_801D8(void) {
 	if (D_80052ACA != 2) {
 		func_8007764C_865FC();
 		if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140EE4_14FE94);
+		osSyncPrintf("DisplayTrees OK\n");
 		}
 	}
 
@@ -486,7 +437,7 @@ void func_80071228_801D8(void) {
 
 	func_8010065C_10F60C(0);
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140EF8_14FEA8);
+		osSyncPrintf("DisplayVehicles(0) OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -499,7 +450,7 @@ void func_80071228_801D8(void) {
 	}
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140F10_14FEC0);
+		osSyncPrintf("DisplayDeadVehicles OK\n");
 	}
 
 	if (D_80157590 != 0) {
@@ -507,7 +458,7 @@ void func_80071228_801D8(void) {
 	}
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140F28_14FED8);
+		osSyncPrintf("DisplayVehicles(1) OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -536,7 +487,7 @@ void func_80071228_801D8(void) {
 		}
 
 		if (currentControllerStates[0].button == 0x30) {
-			osSyncPrintf(D_80140F40_14FEF0);
+			osSyncPrintf("DisplayBuildings OK\n");
 		}
 	}
 
@@ -546,7 +497,7 @@ void func_80071228_801D8(void) {
 
 	func_8007C044_8AFF4();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140F58_14FF08);
+		osSyncPrintf("DrawComplexObjects OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -555,7 +506,7 @@ void func_80071228_801D8(void) {
 
 	func_8012D884_13C834();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140F70_14FF20);
+		osSyncPrintf("DisplayForces OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -575,7 +526,7 @@ void func_80071228_801D8(void) {
 
 	func_800A70B8_B6068();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140F84_14FF34);
+		osSyncPrintf("DisplayBeacons OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -584,10 +535,10 @@ void func_80071228_801D8(void) {
 
 	func_801365E0_145590();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140F98_14FF48);
+		osSyncPrintf("DisplaySignposts OK\n");
 	}
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140FB0_14FF60);
+		osSyncPrintf("DoEndGameStuff OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -624,7 +575,7 @@ void func_80071228_801D8(void) {
 	}
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140FC4_14FF74);
+		osSyncPrintf("DisplayVehicles\t(1) OK\n");
 	}
 
 /* disable texture lookup table and lighting, restore matrix */
@@ -639,7 +590,7 @@ void func_80071228_801D8(void) {
 
 	func_800E71F8_F61A8();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140FDC_14FF8C);
+		osSyncPrintf("DisplayFXUnderWater OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -648,7 +599,7 @@ void func_80071228_801D8(void) {
 
 	func_800BA5B0_C9560(0, 1);
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80140FF4_14FFA4);
+		osSyncPrintf("DrawVtxBufferWater OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -657,7 +608,7 @@ void func_80071228_801D8(void) {
 
 	func_800BD360_CC310();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_8014100C_14FFBC);
+		osSyncPrintf("DisplayGates OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -669,7 +620,7 @@ void func_80071228_801D8(void) {
 	}
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80141020_14FFD0);
+		osSyncPrintf("DrawShieldWalls OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -679,11 +630,11 @@ void func_80071228_801D8(void) {
 	if (D_80052ACB != 2) {
 		func_800E7234_F61E4();
 	} else {
-		osSyncPrintf(D_80141034_14FFE4);
+		osSyncPrintf("SFX NOT DRAWN - overflow\n");
 	}
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80141050_150000);
+		osSyncPrintf("DisplayFXOnWater OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -695,7 +646,7 @@ void func_80071228_801D8(void) {
 
 	func_800E5044_F3FF4();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80141068_150018);
+		osSyncPrintf("DisplayLasers OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -704,7 +655,7 @@ void func_80071228_801D8(void) {
 
 	func_800A2B58_B1B08();
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_8014107C_15002C);
+		osSyncPrintf("DrawGhostTarget OK\n");
 	}
 
 	if (D_80052ACB == 2) {
@@ -714,7 +665,7 @@ void func_80071228_801D8(void) {
 /* load viewport */
 		gSPViewport(D_8005BB2C++, K0_TO_PHYS(D_8005BB24));
 
-	guPerspective((void*) (D_8005BB20 + 0x140), &D_801493D6, (f32) D_80149404, 1.3333334f, 10.0f, D_801411A4_150154[0], 1.0f);
+	guPerspective((void*) (D_8005BB20 + 0x140), &D_801493D6, (f32) D_80149404, 1.3333334f, 10.0f, 10000.0f, 1.0f);
 
 /* set perspective normalization */
 		gSPPerspNormalize(D_8005BB2C++, D_801493D6);
@@ -731,7 +682,7 @@ void func_80071228_801D8(void) {
 	func_800A03FC_AF3AC();
 
 	if (currentControllerStates[0].button == 0x30) {
-		osSyncPrintf(D_80141090_150040);
+		osSyncPrintf("DisplayScanner OK\n");
 	}
 }
 void func_80071E88_80E38(Unk80052B2C* arg0) {
@@ -847,7 +798,7 @@ void func_800720F4_810A4(void)
 		func_800BC2F8_CB2A8(D_80052B34->unk0, D_80052B34->unk4);
 		if (currentControllerStates[0].button & 0x200)
 		{
-			osSyncPrintf(D_801410A4_150054, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4);
+			osSyncPrintf("Position %d, %d, %d\n", D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4);
 		}
 		if (D_801493E6 != 0)
 		{
@@ -860,8 +811,8 @@ void func_800720F4_810A4(void)
 		if (showDemoText == 1)
 		{
 			func_8000577C_637C();
-			drawText(D_801410BC_15006C, -12);
-			drawText(D_801410C0_150070, 15, 0);
+			drawText("%Y", -12);
+			drawText("%@Demo", 15, 0);
 		}
 		if (isButtonNewlyPressed(1, 0x10))
 		{
@@ -1029,7 +980,7 @@ void func_800720F4_810A4(void)
 			}
 			if ((D_80159320 << 4) < 0)
 			{
-				drawText(D_801410C8_150078, 0xFF, 0, 0, 0x80, 5);
+				drawText("%C%@UNLUCKY ANDREW!", 0xFF, 0, 0, 0x80, 5);
 			}
 			break;
 
@@ -1086,12 +1037,12 @@ void func_800720F4_810A4(void)
 		gfxUsed = ((s32)((((u32)D_8005BB2C) - ((u32)D_8005BB20)) - 0x280)) >> 3;
 		if (gfxUsed >= 0x1C21)
 		{
-			osSyncPrintf(D_801410DC_15008C, gfxUsed - 0x1C20);
+			osSyncPrintf("GfxList overflowed by %d\n", gfxUsed - 0x1C20);
 			D_80052ACB = 2;
 		}
 		else if (gfxUsed >= 0x1AB9)
 		{
-			osSyncPrintf(D_801410F8_1500A8);
+			osSyncPrintf("GfxList about to overflow!\n");
 			D_80052ACB = 1;
 		}
 		if (D_80149380 != 0)
@@ -1105,7 +1056,7 @@ void func_800720F4_810A4(void)
 		gfxUsed = ((s32)((((u32)D_8005BB30) - ((u32)D_8005BB20)) + ((s32)0xFFFF1C80))) >> 3;
 		if (gfxUsed >= 0x231)
 		{
-			osSyncPrintf(D_80141114_1500C4, gfxUsed - 0x230);
+			osSyncPrintf("LineList overflowed by %d\n", gfxUsed - 0x230);
 		}
 		if (D_80149380 != 0)
 		{
@@ -1118,12 +1069,12 @@ void func_800720F4_810A4(void)
 		gfxUsed = ((s32)((((u32)D_8005BB34) - ((u32)D_8005BB20)) + ((s32)0xFFFF0B00))) >> 4;
 		if (gfxUsed >= 0xED9)
 		{
-			osSyncPrintf(D_80141130_1500E0, gfxUsed - 0xED8);
+			osSyncPrintf("VtxList overflowed by %d\n", gfxUsed - 0xED8);
 			D_80052ACB = 2;
 		}
 		else if (gfxUsed >= 0xE1B)
 		{
-			osSyncPrintf(D_8014114C_1500FC);
+			osSyncPrintf("VtxList about to overflow!\n");
 			D_80052ACB = 1;
 		}
 		if (D_80149380 != 0)
@@ -1137,12 +1088,12 @@ void func_800720F4_810A4(void)
 		gfxUsed = ((s32)((((u32)D_8005BB38) - ((u32)D_8005BB20)) + ((s32)0xFFFE1D80))) >> 6;
 		if (gfxUsed >= 0x123)
 		{
-			osSyncPrintf(D_80141168_150118, gfxUsed - 0x122);
+			osSyncPrintf("MtxList overflowed by %d\n", gfxUsed - 0x122);
 			D_80052ACB = 2;
 		}
 		else if (gfxUsed >= 0x115)
 		{
-			osSyncPrintf(D_80141184_150134);
+			osSyncPrintf("MtxList about to overflow!\n");
 			D_80052ACB = 1;
 		}
 		if (D_80149380 != 0)
