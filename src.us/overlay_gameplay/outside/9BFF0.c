@@ -1028,12 +1028,12 @@ void func_8008E23C_9D1EC(u8 arg0)
 }
 
 // AI - Pathfinding movement via 2 nodes
-void func_8008E2B4_9D264(u8 arg0, s16 arg1, s16 arg2)
+s32 func_8008E2B4_9D264(u8 arg0, s16 arg1, s16 arg2)
 {
 	s16 arr[2];
 	arr[0] = arg1;
 	arr[1] = arg2;
-	func_80081F18_90EC8(arg0, 2, 3, arr, &D_8013C610_14B5C0);
+	return func_80081F18_90EC8(arg0, 2, 3, arr, &D_8013C610_14B5C0);
 }
 
 // AI - Check parent flag for player targeting
@@ -3319,97 +3319,83 @@ void func_8009335C_A230C(u8 arg0)
 	}
 }
 
-#ifdef NON_MATCHING
 // CURRENT(2444)
 // AI - Guard/aggressive alien AI
 void func_80093438_A23E8(u8 arg0)
 {
-	AlienInstance *inst;
-	s32 pad0;
-	s32 pad1;
-	s16 node;
+	struct
+	{
+		s8 path;
+		s16 pad2;
+		s16 pad3;
+		s16 node;
+	} nodeLocal;
 	s32 dx;
 	s32 dz;
+	s32 dist;
 	s32 absDx;
 	s32 absDz;
-	s32 dist;
-	s8 nextNode;
-	u8 flags;
-	u8 pathResult;
 
-	inst = &alienInstances[arg0];
-	node = D_8014DD50[inst->unkC].unkC;
-	func_80090948_9F8F8(node, 0x7D0);
+	nodeLocal.node = D_8014DD50[alienInstances[arg0].unkC].unkC;
+	func_80090948_9F8F8(nodeLocal.node, 0x7D0);
 
-	dz = inst->unk0 - D_80052B34->unk0;
-	dx = inst->unk4 - D_80052B34->unk4;
+	dz = alienInstances[arg0].unk0 - D_80052B34->unk0;
+	dx = alienInstances[arg0].unk4 - D_80052B34->unk4;
 	absDz = (-dz < dz) ? dz : -dz;
 	absDx = (-dx < dx) ? dx : -dx;
-
-	if (absDx < absDz)
-	{
-		dist = (-dz < dz) ? dz : -dz;
-	}
-	else
-	{
-		dist = (-dx < dx) ? dx : -dx;
-	}
+	dist = absDx < absDz
+			   ? ((-dz < dz) ? dz : -dz)
+			   : ((-dx < dx) ? dx : -dx);
 
 	if (D_80052B34->unk1A == 0)
 	{
-		if (inst->unk20 & ALIEN_FLAG_UNKF)
+		if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF)
 		{
-			flags = inst->unk47;
-			inst->unk12 = 0;
-			if (flags == 0)
+			alienInstances[arg0].unk12 = 0;
+			if (alienInstances[arg0].unk47 == 0)
 			{
-				inst->unk20 &= ~ALIEN_FLAG_UNKF;
-				flags = inst->unk47;
+				alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKF;
 			}
 		}
 		else
 		{
 			func_8008735C_9630C(arg0);
-			flags = inst->unk47;
 		}
 
-		if (flags & 8)
+		if (alienInstances[arg0].unk47 & 8)
 		{
-			inst->unk12 = 0;
-			inst->unk20 |= ALIEN_FLAG_UNKF;
-			if ((D_80052B34->unk1A == 0) && !(inst->unk20 & ALIEN_FLAG_UNKG))
+			alienInstances[arg0].unk12 = 0;
+			alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKF;
+			if ((D_80052B34->unk1A == 0) && !(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKG))
 			{
-				inst->unk20 |= ALIEN_FLAG_UNKG;
-				inst->unk36 = 0;
+				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKG;
+				alienInstances[arg0].unk36 = 0;
 			}
 		}
-		else if ((dist < 0x1F4) && (inst->unk1E == 0) && (flags == 0))
+		else if ((dist < 0x1F4) && (alienInstances[arg0].unk1E == 0) && (alienInstances[arg0].unk47 == 0))
 		{
-			inst->unk36 = 0;
-			inst->unk1E = 0x20;
-			inst->unk20 |= ALIEN_FLAG_UNKG;
+			alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKG;
+			alienInstances[arg0].unk36 = 0;
+			alienInstances[arg0].unk1E = 0x20;
 		}
 	}
 	else
 	{
 		func_8008751C_964CC(arg0, 0xFA, 0x190);
-		if ((dist < 0x1F4) && (inst->unk1E == 0) && !(inst->unk20 & ALIEN_FLAG_UNKG))
+		if ((dist < 0x1F4) && (alienInstances[arg0].unk1E == 0) && !(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKG))
 		{
-			inst->unk20 |= ALIEN_FLAG_UNKG;
-			inst->unk36 = 0;
+			alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKG;
+			alienInstances[arg0].unk36 = 0;
 		}
 	}
 
-	if (inst->unk20 & ALIEN_FLAG_UNKG)
+	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKG)
 	{
-		nextNode = D_8014DD50[node].unkC;
-		pathResult = ((u8 (*)(u8, s16, s16))func_8008E2B4_9D264)(arg0, nextNode, D_8014DD50[nextNode].unkD);
-
-		if (pathResult == 2)
+		if ((nodeLocal.path = func_8008E2B4_9D264(arg0, D_8014DD50[nodeLocal.node].unkC, D_8014DD50[D_8014DD50[nodeLocal.node].unkC].unkD)) == 2)
 		{
 			if ((D_80052B34->unk1A == 0) && (dist < 0x64) && (func_80084FE8_93F98(arg0, 0x400) != 0))
 			{
-				inst->unk1E = 0;
+				alienInstances[arg0].unk1E = 0;
 				func_80085690_94640(arg0, 0x400);
 				func_80137468_146418(arg0, 9);
 				func_80137468_146418(arg0, 2);
@@ -3418,23 +3404,20 @@ void func_80093438_A23E8(u8 arg0)
 		else
 		{
 			func_80087188_96138(arg0, 1, 0x14);
-			inst->unk1E = 0x2D - (currentLevel * 5);
+			alienInstances[arg0].unk1E = 0x2D - (currentLevel * 5);
 		}
 
-		if (pathResult == 3)
+		if (nodeLocal.path == 3)
 		{
-			inst->unk20 &= ~ALIEN_FLAG_UNKG;
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKG;
 		}
 	}
 
-	if (inst->unk1E != 0)
+	if (alienInstances[arg0].unk1E != 0)
 	{
-		inst->unk1E--;
+		alienInstances[arg0].unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80093438_A23E8.s")
-#endif
 
 // AI - Turret/sentry AI
 void func_8009377C_A272C(u8 arg0)
