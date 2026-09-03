@@ -929,7 +929,7 @@ void func_8008DEF4_9CEA4(u8 arg0)
 	s32 sp48;
 	s32 sp44;
 	s32 sp40;
-	s16 pad;
+	s32 pad;
 	s32 temp_v0;
 	var_t0 = 1;
 	alienInstances[arg0].unk12 = alienInstances[arg0].unk48;
@@ -3436,66 +3436,57 @@ void func_80093438_A23E8(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80093438_A23E8.s")
 #endif
 
-// CURRENT(2155)
-#ifdef NON_MATCHING
 // AI - Turret/sentry AI
 void func_8009377C_A272C(u8 arg0)
 {
-	AlienInstance *inst;
-	u8 idx;
-	s8 temp;
-	s16 nextNode;
-	s16 dz;
 	s16 dx;
-	s32 absDz;
-	s32 absDx;
-	s32 dist;
+	s16 nextNode;
+	s16 dist;
+	s16 dz;
+	s32 abs_dx;
+	s32 abs_dz;
+	s8 temp_a1;
 
-	idx = arg0;
-	inst = &alienInstances[idx];
-	temp = D_8014DD50[inst->unkC].unkC;
-	nextNode = D_8014DD50[temp].unkD;
+	temp_a1 = D_8014DD50[alienInstances[arg0].unkC].unkC;
+	nextNode = D_8014DD50[temp_a1].unkD;
+	func_80086230_951E0(arg0, temp_a1, 0x4000);
+	func_800877E8_96798(arg0, 0x12C, 0x190);
 
-	func_80086230_951E0(idx, temp, 0x4000);
-	func_800877E8_96798(idx, 0x12C, 0x190);
+	dx = alienInstances[arg0].unk0 - alienInstances[arg0].unk14;
+	dz = alienInstances[arg0].unk4 - alienInstances[arg0].unk18;
+	abs_dx = -dx < dx ? dx : -dx;
+	abs_dz = -dz < dz ? dz : -dz;
+	dist = (abs_dz < abs_dx
+				? -dx < dx
+					? dx
+					: -dx
+				: -dz < dz
+					? dz
+					: -dz);
 
-	dz = inst->unk0 - inst->unk14;
-	dx = inst->unk4 - inst->unk18;
-	absDz = (-dz < dz) ? dz : -dz;
-	absDx = (-dx < dx) ? dx : -dx;
-
-	if (absDx < absDz)
+	if (alienInstances[arg0].unk4E != 0)
 	{
-		dist = (-dz < dz) ? dz : -dz;
-	}
-	else
-	{
-		dist = (-dx < dx) ? dx : -dx;
-	}
-
-	if (inst->unk4E != 0)
-	{
-		if ((func_80084FE8_93F98(idx, 0x800) != 0) && (dist < 0x3E8) && !(inst->unk20 & ALIEN_FLAG_UNKG))
+		if ((func_80084FE8_93F98(arg0, 0x800) != 0) && (dist < 0x3E8) && !(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKG))
 		{
-			if (func_800871CC_9617C(idx, 0, 0x28) != 0)
+			if (func_800871CC_9617C(arg0, 0, 0x28) != 0)
 			{
-				inst->unk4B = 0;
-				inst->unk20 |= ALIEN_FLAG_UNKG;
-				inst->unk1E = 0x14;
+				alienInstances[arg0].unk4B = 0;
+				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKG;
+				if (1)
+				{
+				}
+				alienInstances[arg0].unk1E = 0x14;
 			}
 		}
 	}
 
-	func_800A3D00_B2CB0(idx, nextNode, 2, &D_8013CA24_14B9D4);
+	func_800A3D00_B2CB0(arg0, nextNode, 2, &D_8013CA24_14B9D4);
 
-	if (inst->unk1E != 0)
+	if (alienInstances[arg0].unk1E != 0)
 	{
-		inst->unk1E--;
+		alienInstances[arg0].unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8009377C_A272C.s")
-#endif
 
 // AI - Calculate heading from terrain samples
 s16 func_8009395C_A290C(u8 arg0, s16 arg1)
