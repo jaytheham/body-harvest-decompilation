@@ -528,8 +528,8 @@ u32 D_8013CAE4_14BA94[2] = {0x8013CA44, 0x8013CAC4};
 u32 D_8013CAEC_14BA9C = 0x8013CA64;
 u32 D_8013CAF0_14BAA0[3] = {0x8013CA84, 0x8013CAA4, 0x8013CAC4};
 
-u32 D_8013CAFC_14BAAC[] = {
-	0x00000000,
+Unk80154082 D_8013CAFC_14BAAC = {0x00, 0x00, 0x00};
+u32 D_8013CB00_14BAB0[] = {
 	0x00000000,
 	0x00000000,
 	0x0000DCD8,
@@ -538,6 +538,8 @@ u32 D_8013CAFC_14BAAC[] = {
 	0x00000000,
 	0x00000000,
 	0x00010007,
+};
+u32 D_8013CB20_14BAD0[] = {
 	0x00000000,
 	0x00000000,
 	0x00001F40,
@@ -2238,7 +2240,6 @@ void func_80090D0C_9FCBC(u8 arg0)
 	s32 pos2;
 	s32 pos1;
 	s32 pos0;
-	s32 pad0;
 	s32 pad1;
 	AlienInstance *parent;
 	Unk8014DD50 *route;
@@ -2551,7 +2552,7 @@ void func_800918E0_A0890(u8 arg0)
 	s32 dx, neg_dx, abs_dx;
 	s32 dy, neg_dy, abs_dy;
 
-	alien = &alienInstances[arg0];
+		alien = &alienInstances[arg0];
 	flags = alien->unk20;
 	if (flags & ALIEN_FLAG_TARGET_PT)
 	{
@@ -3575,55 +3576,50 @@ void func_80093AE4_A2A94(u8 arg0, s32 arg1)
 	alienInstances[arg0].unk20 |= ALIEN_FLAG_FALL;
 }
 
-// CURRENT(28849)
-#ifdef NON_MATCHING
+// CURRENT(13145)
 // AI - Major pathfinding/movement AI
+#ifdef NON_MATCHING
 void func_80093C7C_A2C2C(u8 arg0)
 {
-	AlienInstance *alien;
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	s32 pad3;
-	s32 dist;
-	Unk8014DD50 *path0;
-	Unk8014DD50 *path1;
-	Unk8014DD50 *path2;
-	Unk8014DD50 *pathWork;
-	AlienType *type;
-	s16 pathNode;
-	s16 pathNext;
-	s16 spB0;
-	s16 spB2;
-	s16 sp9E;
-	s16 tempS16;
-	s16 yawTarget;
-	s32 deltaX;
-	s32 deltaZ;
-	s32 absVal;
-	s32 sign;
-	s16 x;
-	s16 z;
-	s16 xBack;
-	s16 zBack;
-	s16 heading;
-	s8 pathResult;
-	f32 vecX;
-	f32 vecY;
-	f32 vecZ;
-	u16 pathAngle;
-	u32 sp84;
+   register s32 typeIndex;
+   s16 yawTarget;
+   s16 pathNode;
+   s16 tempS16;
+   s16 pathNext;
+   s32 dist;
+   s16 sp9E;
+   s16 spB0;
+   s16 spB2;
+   Unk8014DD50 *path1;
+   Unk8014DD50 *path2;
+   AlienInstance *alien;
+   AlienType *type;
+   s32 deltaX;
+   s32 deltaZ;
+   s32 absVal;
+   s32 sign;
+   Unk80154082 sp84;
+   s32 x;
+   s32 z;
+   s32 xBack;
+   s32 zBack;
+   f32 vecX;
+   f32 vecY;
+   f32 vecZ;
+   s32 heading;
+   s8 pathResult;
+   u16 pathAngle;
 
-	alien = &alienInstances[arg0];
-	path0 = &D_8014DD50[alien->unkC];
-	pathNode = (s16)path0->unkC;
+	 alien = &alienInstances[arg0];
+	typeIndex = alien->typeIndex;
+	type = &alienTypes[typeIndex];
+	sp84 = D_8013CAFC_14BAAC;
+	pathNode = D_8014DD50[alien->unkC].unkC;
 	path1 = &D_8014DD50[pathNode];
-	pathNext = (s16)path1->unkD;
-	path2 = &D_8014DD50[pathNext];
-	type = &alienTypes[alien->typeIndex];
-	sp84 = *(u32 *)D_8013CAFC_14BAAC;
+	path2 = &D_8014DD50[path1->unkD];
+	pathNext = (s16)path2->unkD;
 
-	if ((alien->hitPoints < ((s16)type->unk3A / 4)) && (D_80222A70 < alien->unk2))
+		if ((alien->hitPoints < (type->unk3A / 4)) && (D_80222A70 < alien->unk2))
 	{
 		func_80089200_981B0(arg0, 4, 0x5A);
 	}
@@ -3659,19 +3655,19 @@ void func_80093C7C_A2C2C(u8 arg0)
 			guNormalize(&vecX, &vecY, &vecZ);
 			vecX *= 120.0f;
 			vecZ *= 120.0f;
-			xBack = (s16)((f32)x - vecX);
-			zBack = (s16)((f32)z - vecZ);
+			xBack = (s32)((f32)x - vecX);
+			zBack = (s32)((f32)z - vecZ);
 
 			if (alien->unk20 & ALIEN_FLAG_UNKF)
 			{
-				heading = (s16)((func_800B84D0_C7480(xBack, zBack) >> 8) + 0x32);
+				heading = (func_800B84D0_C7480(xBack, zBack) >> 8) + 0x32;
 				func_800DEA08_ED9B8(xBack, heading, zBack, 0xC8, 0x14, 0, 0x32, 0xC8, 0x88, 0x67, 0x11);
 				func_800DEE5C_EDE0C(xBack, (s16)(heading - 0x28), zBack, 0x50, 0x14);
 				func_80135D44_144CF4(alien->unk0, alien->unk2, alien->unk4, 3.0f);
 			}
 			else
 			{
-				heading = (s16)((func_800B84D0_C7480(xBack, zBack) >> 8) + 0x14);
+				heading = (func_800B84D0_C7480(xBack, zBack) >> 8) + 0x14;
 				func_800DEA08_ED9B8(xBack, heading, zBack, 0x64, 0xA, 0, 0x1E, 0xC8, 0x88, 0x67, 0x11);
 				func_80135D44_144CF4(alien->unk0, alien->unk2, alien->unk4, 2.0f);
 			}
@@ -3696,7 +3692,7 @@ void func_80093C7C_A2C2C(u8 arg0)
 		else
 		{
 			tempS16 = path1->unk6;
-			absVal = (tempS16 >= 0) ? tempS16 : -tempS16;
+			absVal = (-tempS16 < tempS16) ? tempS16 : -tempS16;
 			if ((absVal >= (0x2000 - type->unk42)) || (dist >= 0xFB) || (dist < 0xFA))
 			{
 				alien->unk2C = 8;
@@ -3704,9 +3700,9 @@ void func_80093C7C_A2C2C(u8 arg0)
 			}
 		}
 
-		pathWork = &D_8014DD50[pathNext];
-		pathWork->unkA = func_8009395C_A290C(arg0, alien->unk6);
-		pathWork->unk8 = func_8009395C_A290C(arg0, (s16)(alien->unk6 + 0x4000));
+		type = (AlienType *)&D_8014DD50[pathNext];
+		((Unk8014DD50 *)type)->unkA = func_8009395C_A290C(arg0, alien->unk6);
+		((Unk8014DD50 *)type)->unk8 = func_8009395C_A290C(arg0, (s16)(alien->unk6 + 0x4000));
 
 		if (alien->unk47 & 1)
 		{
@@ -3714,17 +3710,18 @@ void func_80093C7C_A2C2C(u8 arg0)
 		}
 	}
 	else
-	{
-		if (alien->unk10 > 0)
 		{
-			pathWork = &D_8014DD50[pathNext];
-			if (pathWork->unkA < 0x1000)
-			{
-				pathWork->unkA += 0x320;
-			}
+			   if (alien->unk10 > 0)
+			   {
+				type = (AlienType *)&D_8014DD50[pathNext];
+				   tempS16 = ((Unk8014DD50 *)type)->unkA;
+				   if (tempS16 < 0x1000)
+				   {
+					   ((Unk8014DD50 *)type)->unkA += 0x320;
+				   }
 
-			yawTarget = pathWork->unk8;
-			absVal = (yawTarget >= 0) ? yawTarget : -yawTarget;
+				 yawTarget = ((Unk8014DD50 *)type)->unk8;
+			absVal = (-yawTarget < yawTarget) ? yawTarget : -yawTarget;
 			if (absVal >= 0x321)
 			{
 				if (yawTarget > 0)
@@ -3739,28 +3736,30 @@ void func_80093C7C_A2C2C(u8 arg0)
 				{
 					sign = 0;
 				}
-				pathWork->unk8 = (s16)(yawTarget - (sign * 0x320));
-			}
-			alien->unk3C = 1;
-		}
-		else
-		{
-			sp9E = func_8009395C_A290C(arg0, alien->unk6);
+				((Unk8014DD50 *)type)->unk8 = (s16)(yawTarget - (sign * 0x320));
+						}
+						alien->unk3C = 1;
+				}
+				else
+				{
+						sp9E = func_8009395C_A290C(arg0, alien->unk6);
 			yawTarget = func_8009395C_A290C(arg0, (s16)(alien->unk6 + 0x4000));
 
-			pathWork = &D_8014DD50[pathNext];
-			if (sp9E < pathWork->unkA)
-			{
-				pathWork->unkA -= 0x320;
-			}
-			else
-			{
-				pathWork->unkA = sp9E;
-			}
 
-			heading = pathWork->unk8;
+			type = (AlienType *)&D_8014DD50[pathNext];
+				   tempS16 = ((Unk8014DD50 *)type)->unkA;
+				   if (sp9E < tempS16)
+				   {
+					   ((Unk8014DD50 *)type)->unkA -= 0x320;
+				   }
+				   else
+				   {
+					   ((Unk8014DD50 *)type)->unkA = sp9E;
+				   }
+
+				 heading = ((Unk8014DD50 *)type)->unk8;
 			tempS16 = (s16)(heading - yawTarget);
-			absVal = (tempS16 >= 0) ? tempS16 : -tempS16;
+			absVal = (-tempS16 < tempS16) ? tempS16 : -tempS16;
 			if (absVal >= 0x321)
 			{
 				if (yawTarget > 0)
@@ -3775,14 +3774,14 @@ void func_80093C7C_A2C2C(u8 arg0)
 				{
 					sign = 0;
 				}
-				pathWork->unk8 = (s16)(heading + (sign * 0x320));
+				((Unk8014DD50 *)type)->unk8 = (s16)(heading + (sign * 0x320));
 			}
-			else
-			{
-				pathWork->unk8 = yawTarget;
-			}
+						else
+						{
+				((Unk8014DD50 *)type)->unk8 = yawTarget;
+						}
 
-			if (alien->unk47 & 0xE)
+						if (alien->unk47 & 0xE)
 			{
 				alien->unk3C = 0;
 				alien->unk20 &= ~(ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD);
@@ -3818,15 +3817,15 @@ void func_80093C7C_A2C2C(u8 arg0)
 		}
 	}
 
-	pathAngle = (u16)path0->unk6;
+	pathAngle = (u16)path1->unk6;
 	if ((s16)pathAngle >= 0x2001)
 	{
-		path0->unk6 = 0x2000;
+		path1->unk6 = 0x2000;
 		pathAngle = 0x2000;
 	}
 	else if ((s16)pathAngle < -0x2000)
 	{
-		path0->unk6 = -0x2000;
+		path1->unk6 = -0x2000;
 		pathAngle = 0xE000;
 	}
 
@@ -3855,11 +3854,11 @@ void func_80093C7C_A2C2C(u8 arg0)
 		alien->unk6 = (s16)(alien->unk6 + path2->unk6);
 	}
 
-	if (alien->unk20 & ALIEN_FLAG_UNKE)
-	{
+		if (alien->unk20 & ALIEN_FLAG_UNKE)
+		{
 		spB0 = (s16)path2->unkC;
-		pathWork = &D_8014DD50[spB0];
-		spB2 = (s16)pathWork->unkC;
+		type = (AlienType *)&D_8014DD50[spB0];
+		spB2 = (s16)((Unk8014DD50 *)type)->unkC;
 
 		if (currentLevel == 1)
 		{
@@ -3872,13 +3871,13 @@ void func_80093C7C_A2C2C(u8 arg0)
 				spB0 = spB2;
 			}
 			else
-			{
-				spB0 = D_8014DD50[pathWork->unkD].unkC;
-			}
+						{
+				spB0 = D_8014DD50[((Unk8014DD50 *)type)->unkD].unkC;
+						}
 
-			if (currentLevel == 2)
+						if (currentLevel == 2)
 			{
-				pathResult = func_80081F18_90EC8(arg0, 1, 2, &spB0, (Unk8014DD50 **)&D_8013CAEC_14BA9C);
+			pathResult = func_80081F18_90EC8(arg0, 1, 2, &spB0, (Unk8014DD50 **)&D_8013CAEC_14BA9C);
 			}
 			else
 			{
@@ -3897,7 +3896,6 @@ void func_80093C7C_A2C2C(u8 arg0)
 		alien->unk1E--;
 	}
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80093C7C_A2C2C.s")
 #endif
@@ -4102,8 +4100,8 @@ void func_80094DE0_A3D90(u8 arg0)
 	s16 sp58;
 	s16 sp56;
 	s16 sp50[3];
-    s32 sp44[3];
-    s32 sp40;
+	s32 sp44[3];
+	s32 sp40;
 	 s16 sp3E;
 	s16 sp38[2];
 	s16 sp34;

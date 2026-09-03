@@ -1512,10 +1512,10 @@ typedef struct {
 } SaveSlotAccess; /* size = 0x53 + 0x76 = 0xC9 */
 
 typedef struct {
-    u8 version;
-    u8 unk1;
-    u8 checksum[2];
-    u8 unk4[0x76];
+	u8 version;
+	u8 unk1;
+	u8 checksum[2];
+	u8 unk4[0x76];
 } SaveSlot;
 
 typedef struct {
@@ -1526,19 +1526,19 @@ typedef struct {
 } HighScore;
 
 typedef struct {
-    u8 version;
-    u8 unk1;
-    u8 checksum[2];
-    u8 unk4;
+	u8 version;
+	u8 unk1;
+	u8 checksum[2];
+	u8 unk4;
 	HighScore highScores[5];
 } HighScores;
 
 typedef struct {
-    u8 version;
-    u8 unk1;
-    u8 checksum[2]; // Whole save file checksum
+	u8 version;
+	u8 unk1;
+	u8 checksum[2]; // Whole save file checksum
 	HighScores highScores;
-    SaveSlot slots[3];
+	SaveSlot slots[3];
 } SaveData;
 
 typedef struct {
