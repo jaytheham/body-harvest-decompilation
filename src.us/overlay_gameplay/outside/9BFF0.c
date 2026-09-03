@@ -2783,39 +2783,37 @@ void func_80091E70_A0E20(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091E70_A0E20.s")
 #endif
 
-// CURRENT(18369)
-#ifdef NON_MATCHING
+// CURRENT(14339)
 // AI - Drone/Boss attack AI with melee patterns
+#ifdef NON_MATCHING
 void func_800920C0_A1070(u8 arg0)
 {
 	u8 useAttack;
-	u8 id;
-	s16 targetSpeed;
 	s16 sp86;
 	s16 sp80;
 	s16 sp7E;
-	s32 sp78;
-	s32 sp74;
-	s32 sp70;
+	s16 arm;
+	s16 targetSpeed;
 	f32 sp6C;
 	f32 scale;
 	s32 moveBlocked;
-	AlienType *type;
-	Unk8014DD50 *entry2;
 	Unk8014DD50 *entry3;
+	s32 sp78;
+	s32 sp74;
+	s32 sp70;
+	AlienType *type;
 	Unk8014DD50 *entry;
 	AlienInstance *alien;
 
 	alien = &alienInstances[arg0];
-	id = alien->typeIndex;
-	type = &alienTypes[id];
+	type = &alienTypes[alien->typeIndex];
 	targetSpeed = type->unk40;
-	entry2 = &D_8014DD50[alien->unkC];
-	sp86 = entry2->unkC;
+	sp86 = D_8014DD50[alien->unkC].unkC;
 	entry3 = &D_8014DD50[sp86];
-	sp80 = D_8014DD50[entry3->unkD].unkD;
-	entry = entry3;
 	useAttack = 0;
+	entry = &D_8014DD50[entry3->unkC];
+	sp80 = entry->unkD;
+
 
 	func_80128428_1373D8(alien, entry3->unk0, (s16)((entry->unk2 + entry3->unk2) - 0x16), (s16)(entry->unk4 + entry3->unk4 + 0x32), &sp78, &sp74, &sp70);
 	if (sp80 != -1)
@@ -2826,7 +2824,7 @@ void func_800920C0_A1070(u8 arg0)
 	}
 
 	func_80090948_9F8F8(sp86, 0x7D0);
-	if (((alien->unk2E >> 8) != (alien->unk0 >> 8)) || ((alien->unk32 >> 8) != (alien->unk4 >> 8)))
+	if ((alien->unk2E >> 8) != (alien->unk0 >> 8) || (alien->unk32 >> 8) != (alien->unk4 >> 8))
 	{
 		useAttack = 1;
 	}
@@ -2838,15 +2836,16 @@ void func_800920C0_A1070(u8 arg0)
 		if ((alien->unk47 & 4) && (func_80091AC0_A0A70(arg0, alien->unk28, alien->unk29) != 0))
 		{
 			targetSpeed = 0;
-			alien->unk47 &= (u8)0xFA;
+			alien->unk47 &= 0xFFFA;
 		}
 
 		if (alien->unk47 & 8)
 		{
 			s32 capped;
+			register s32 cappedValue;
 			s16 fx;
 
-			alien->unk47 &= (u8)0xF6;
+			alien->unk47 &= 0xFFF6;
 			targetSpeed = 0;
 
 			if ((D_80052B34->unk1A != 0) && (alien->unk12 > 0))
@@ -2856,23 +2855,27 @@ void func_800920C0_A1070(u8 arg0)
 				capped = vehicleTypes[D_80052B34->unk1A].unk32;
 				if (capped >= 0x2711)
 				{
-					capped = 0x2710;
+					cappedValue = 0x2710;
+				}
+				else
+				{
+					cappedValue = capped;
 				}
 
-				scale = (f32)(1.0 - ((f64)(f32)capped / 10000.0)) * ((f32)alien->unk12 / 512.0f);
-				fx = (s16)(s32)((f32)D_80145BE0_154B90[*(s32 *)alienTypes[id].pad1C].unk2 * scale);
+				scale = (f32)(1.0 - ((f32)cappedValue / D_80141F08_150EB8[0])) * ((f32)alien->unk12 / (f32)0x200);
+				fx = (s16)(s32)((f32)D_80145BE2_154B92[alienTypes[alien->typeIndex].unk1C].unk0 * scale);
 				func_80122524_1314D4(D_80052B34, fx, alien->unk0, alien->unk4);
 
-				func_80128288_137238(D_80052B34, alien->unk6, (s16)(s32)((f64)scale * 120.0), (s16)(s32)((f64)scale * 180.0));
+				func_80128288_137238(D_80052B34, alien->unk6, (s16)(s32)(scale * D_80141F10_150EC0[0]), (s16)(s32)(scale * D_80141F18_150EC8[0]));
 
-				sp6C = (f32)((f64)(f32)sins((u16)(alien->unk6 + 0x4000)) / 32768.0);
+				sp6C = (f32)((f32)sins((u16)(alien->unk6 + 0x4000)) / 32768.0);
 				func_800C541C_D43CC(
 					D_80052B34->unk0,
 					D_80052B34->unk2,
 					D_80052B34->unk4,
 					(s8)(s32)(sp6C * 127.0f),
 					0x50,
-					(s8)(s32)(-((f64)(f32)coss((u16)(alien->unk6 + 0x4000)) / 32768.0) * 127.0),
+					(s8)(s32)(-((f32)coss((u16)(alien->unk6 + 0x4000)) / 32768.0) * 127.0),
 					0x3C,
 					0x80,
 					0x14,
@@ -2909,27 +2912,22 @@ void func_800920C0_A1070(u8 arg0)
 	}
 	else
 	{
-		s16 timer;
-		s8 arm;
-
 		alien->unk2C--;
 		if (entry3->unkC != -1)
 		{
 			entry = &D_8014DD50[(s16)entry3->unkC];
 		}
 
-		timer = alien->unk2C;
-		arm = entry->unkD;
-
-		if (timer < 0x46)
+		if (alien->unk2C < 0x46)
 		{
 			targetSpeed = -0x80;
-			if ((timer <= 0) || (alien->unk47 & 1))
+			if ((alien->unk2C <= 0) || (alien->unk47 & 1))
 			{
 			alien->unk20 &= ~ALIEN_FLAG_UNKE;
+			alien->unk47 &= 0xFFFA;
+			}
 
 			entry3->unk6 = (s16)(s32)(((f32)sins((u16)((alien->unk2C * 0x17E8) & 0xFFFF)) / 32768.0) * 50.0);
-			}
 		}
 		else
 		{
@@ -2937,27 +2935,24 @@ void func_800920C0_A1070(u8 arg0)
 			if ((D_80052B34->unk1A == 0) && (alien->unk20 & ALIEN_FLAG_PLAYER))
 			{
 				s16 swing;
-				s16 negSwing;
-				s16 absSwing;
-				u8 savedArg0;
 
-				swing = (s16)(s32)(sinf((f32)((((timer - 0x46) * 6.0) / 30.0))) * (f32)(timer * 0x32));
-				negSwing = -swing;
-				absSwing = swing;
-				if (negSwing >= swing)
+				arm = entry->unkD;
+
+				swing = (s16)(s32)(sinf((f32)(((f64)(alien->unk2C - 0x46) * D_80141F20_150ED0[0]) / 30.0)) * (f32)(alien->unk2C * 0x32));
+				if (-swing >= swing)
 				{
-					absSwing = negSwing;
-					negSwing = -negSwing;
+					swing = -swing;
 				}
 
-				entry->unk6 = negSwing;
-				D_8014DD50[arm].unk6 = absSwing;
+				entry->unk6 = -swing;
+				D_8014DD50[arm].unk6 = swing;
 
-				if ((negSwing == 0) && (timer != 0x63))
+				if ((swing == 0) && (alien->unk2C != 0x63))
 				{
+					u8 savedArg0;
 					savedArg0 = arg0;
 					func_80137468_146418(arg0, 0x22);
-					if ((func_80084F00_93EB0(D_80052B34, alien) < 0xC8) && (func_80084FE8_93F98(arg0, 0x400) != 0))
+					if (((s16)(s32)func_80084F00_93EB0(D_80052B34, alien) < 0xC8) && (func_80084FE8_93F98(arg0, 0x400) != 0))
 					{
 						alien->unk1E = 0;
 						func_80122524_1314D4(D_80052B34, 0x64, alien->unk0, alien->unk4);
@@ -2988,7 +2983,7 @@ void func_800920C0_A1070(u8 arg0)
 		}
 	}
 
-	if ((D_80052A8C % ((func_800038E0_44E0() % 20) + 0xA)) == 0)
+	if (((u32)D_80052A8C % ((func_800038E0_44E0() % 20) + 0xA)) == 0)
 	{
 		func_800CA5EC_D959C((s16)sp78, (s16)sp74, (s16)sp70, 0, 0, 0, 0xA, 3, 6, 0xFF, 0xAA, 0xFF, 0, 0x8C);
 	}
