@@ -2442,6 +2442,7 @@ void func_80091470_A0420(u8 arg0)
 {
 	u8 parentIdx;
 	u8 found;
+	u8 new_var;
 	u8 buildingIdx;
 	BuildingInstance *building;
 	parentIdx = alienInstances[arg0].unk25;
@@ -2468,7 +2469,8 @@ void func_80091470_A0420(u8 arg0)
 		func_80081BB0_90B60(arg0);
 		buildingIdx = ((u8 *)&alienInstances[parentIdx].unk38)[1];
 		building = &buildingInstances[buildingIdx];
-		type = &buildingTypes[building->buildingType].unk19;
+		new_var = building->buildingType;
+		type = &buildingTypes[new_var].unk19;
 		if (building->hitPoints < (*type / 2))
 		{
 			osSyncPrintf(&D_80141EB0_150E60, buildingIdx);
