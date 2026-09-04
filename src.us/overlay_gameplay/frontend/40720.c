@@ -2419,7 +2419,7 @@ s32 func_80077494_47944(void) {
   s32 foundSelectableFile;
   s32 state;
   s16 saveSlot;
-  register s16* selectedSaveSlot;
+  s16* selectedSaveSlot;
 
   frameCounter = 0;
   foundSelectableFile = 0;

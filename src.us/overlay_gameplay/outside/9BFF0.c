@@ -569,8 +569,8 @@ void func_8008D040_9BFF0(u8 arg0)
 {
 	u8 new_var;
 	s32 parentUnk20;
-	register AlienInstance *parent;
-	register AlienInstance *inst;
+	AlienInstance *parent;
+	AlienInstance *inst;
 	arg0 = arg0;
 	inst = &alienInstances[arg0];
 	new_var = inst->unk25;
@@ -2435,65 +2435,70 @@ void func_80091220_A01D0(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091220_A01D0.s")
 #endif
 
-// CURRENT(5477)
+// CURRENT(2734)
 #ifdef NON_MATCHING
 // AI - Building targeting / Drone Hunter AI
 void func_80091470_A0420(u8 arg0)
 {
-	AlienInstance *inst = &alienInstances[arg0];
-	u8 parentIdx = inst->unk25;
-
-	inst->unk3A = 0xFF;
-	if (!(inst->unk20 & ALIEN_FLAG_TARGET_PT))
+	u8 parentIdx;
+	u8 found;
+	u8 buildingIdx;
+	BuildingInstance *building;
+	parentIdx = alienInstances[arg0].unk25;
+	alienInstances[arg0].unk3A = 0xFF;
+	if (alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_PT)
 	{
-		if (inst->unk20 & ALIEN_FLAG_UNKF)
-		{
-			u8 buildingIdx = ((u8 *)&inst->unk38)[1];
-			u8 buildingType = buildingInstances[buildingIdx].unk11;
-			u8 target = func_8011C338_12B2E8((s8 *)(&D_80146688_155638[currentLevel - 1][buildingType]), 0);
-			func_80080B44_8FAF4(arg0, target);
-			return;
-		}
+		return;
+	}
+	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF)
+	{
+		u8 buildingType;
+		u8 target;
 
-		if (alienInstances[parentIdx].unk20 & ALIEN_FLAG_UNKF)
-		{
-			BuildingInstance *building;
-			u8 buildingIdx;
-			u8 found;
+		buildingIdx = ((u8 *)&alienInstances[arg0].unk38)[1];
+		buildingType = buildingInstances[buildingIdx].unk11;
+		target = func_8011C338_12B2E8((s8 *)(&D_80146688_155638[currentLevel - 1][buildingType]), buildingIdx);
+		func_80080B44_8FAF4(arg0, target);
+		return;
+	}
 
-			func_80081BB0_90B60(arg0);
-			buildingIdx = ((u8 *)&alienInstances[parentIdx].unk38)[1];
-			building = &buildingInstances[buildingIdx];
-			if ((s8)building->hitPoints < (buildingTypes[building->buildingType].unk19 / 2))
+	if (alienInstances[parentIdx].unk20 & ALIEN_FLAG_UNKF)
+	{
+		s8 *type;
+		func_80081BB0_90B60(arg0);
+		buildingIdx = ((u8 *)&alienInstances[parentIdx].unk38)[1];
+		building = &buildingInstances[buildingIdx];
+		type = &buildingTypes[building->buildingType].unk19;
+		if (building->hitPoints < (*type / 2))
+		{
+			osSyncPrintf(&D_80141EB0_150E60, buildingIdx);
+			found = func_8011B6C0_12A670(alienInstances[arg0].unk0, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unk51 / 20, 1, 0x100C);
+			if (found != 0xFF)
 			{
-				osSyncPrintf(&D_80141EB0_150E60, buildingIdx);
-				found = func_8011B6C0_12A670(inst->unk0, inst->unk4, alienTypes[inst->typeIndex].unk51 / 20, 1, 0x100C);
-				if (found != 0xFF)
-				{
-					func_80080B44_8FAF4(arg0, found);
-					inst->unk16 += buildingTypes[buildingInstances[found].buildingType].unk14 + 0xC8;
-					return;
-				}
-				alienInstances[parentIdx].unk20 |= ALIEN_FLAG_UNKD;
-				if (alienInstances[parentIdx].unk2C < 4)
-				{
-					alienInstances[parentIdx].unk2C = 4;
-				}
-				func_80081AD4_90A84(arg0, parentIdx);
+				func_80080B44_8FAF4(arg0, found);
+				alienInstances[arg0].unk16 += buildingTypes[buildingInstances[found].buildingType].unk14 + 0xC8;
 				return;
 			}
-			func_80080B44_8FAF4(arg0, buildingIdx);
-			inst->unk16 += buildingTypes[building->buildingType].unk14 + 0xC8;
+			alienInstances[parentIdx].unk20 |= ALIEN_FLAG_UNKD;
+			if (alienInstances[parentIdx].unk2C < 4)
+			{
+				alienInstances[parentIdx].unk2C = 4;
+			}
+			func_80081AD4_90A84(arg0, parentIdx);
 			return;
 		}
-
+		func_80080B44_8FAF4(arg0, buildingIdx);
+		alienInstances[(u8)(arg0 | 0)].unk16 += buildingTypes[building->buildingType].unk14 + 0xC8;
+	}
+	else
+	{
 		func_80081AD4_90A84(arg0, parentIdx);
+		return;
 	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091470_A0420.s")
 #endif
-
 // AI - Parent targeting helper
 void func_8009170C_A06BC(u8 arg0)
 {
@@ -2845,7 +2850,7 @@ void func_800920C0_A1070(u8 arg0)
 		if (alien->unk47 & 8)
 		{
 			s32 capped;
-			register s32 cappedValue;
+			s32 cappedValue;
 			s16 fx;
 
 			alien->unk47 &= 0xFFF6;
@@ -3549,7 +3554,7 @@ void func_80093AE4_A2A94(u8 arg0, s32 arg1)
 #ifdef NON_MATCHING
 void func_80093C7C_A2C2C(u8 arg0)
 {
-   register s32 typeIndex;
+   s32 typeIndex;
    s16 yawTarget;
    s16 pathNode;
    s16 tempS16;

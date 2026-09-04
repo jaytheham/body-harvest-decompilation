@@ -3199,9 +3199,9 @@ s16 func_800FA7F0_1097A0(VehicleInstance *arg0, s16 arg1, s32 arg2) {
 s16 func_800FAA08_1099B8(s16 arg0, s16 arg1) {
 	s16 temp_v1;
 	s16 var_a0;
-	register s16 diff;
+	s16 diff;
 	s16 var_v0;
-	register u16 *var_a3;
+	u16 *var_a3;
 	s16 ret;
 	s32 temp_v0;
 

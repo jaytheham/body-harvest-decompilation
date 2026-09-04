@@ -1201,7 +1201,7 @@ void func_80135380_144330(Unk80160080 *arg0)
 // AI - Vehicle camera target update
 void func_801354C0_144470(Unk80160080 *arg0) {
 	f32 var_f2;
-	register VehicleInstance *v1 = D_80052B34;
+	VehicleInstance *v1 = D_80052B34;
 
 	arg0->unk30 = (f32)v1->unk0;
 	arg0->unk34 = (f32)(vehicleTypes[D_80052B34->unk1A].unk38 - (vehicleTypes[D_80052B34->unk1A].unk38 >> 2)) + (f32)v1->unk2;
