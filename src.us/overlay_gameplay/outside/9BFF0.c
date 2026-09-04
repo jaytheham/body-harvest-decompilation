@@ -1932,13 +1932,13 @@ void func_8009012C_9F0DC(u8 arg0)
 	AlienInstance *parent;
 	AlienInstance *targetInst;
 	Unk8014DD50 *node;
-	u8 typeIdx;
+	u8 typeIdx[1];
 	s32 parentFlags;
 	s32 step;
 	s16 parentNode;
 	s16 targetSpeed;
 	s16 pathNodes[3];
-	s8 pathResult;
+	s8 pathResult[1];
 	s16 target;
 	s32 dx;
 	s32 dz;
@@ -1948,7 +1948,7 @@ void func_8009012C_9F0DC(u8 arg0)
 	inst = &alienInstances[arg0];
 	parentFlags = inst->unk20;
 	parentNode = inst->unkC;
-	typeIdx = inst->typeIndex;
+	typeIdx[0] = inst->typeIndex;
 	targetSpeed = 0;
 	step = 1;
 	if (!(parentFlags & 0x600))
@@ -2228,8 +2228,8 @@ void func_80090C14_9FBC4(u8 arg0)
 #endif
 
 // CURRENT(2109)
-#ifdef NON_MATCHING
 // AI - Boss/Drone King AI state machine
+#ifdef NON_MATCHING
 void func_80090D0C_9FCBC(u8 arg0)
 {
 	AlienInstance *inst;
@@ -2237,10 +2237,11 @@ void func_80090D0C_9FCBC(u8 arg0)
 	s16 pathNodes[2];
 	s16 typeSlot;
 	s8 pathResult;
+	s32 pad0;
+	s32 pad1;
 	s32 pos2;
 	s32 pos1;
 	s32 pos0;
-	s32 pad1;
 	AlienInstance *parent;
 	Unk8014DD50 *route;
 	s32 parentFlags;
@@ -2268,7 +2269,7 @@ void func_80090D0C_9FCBC(u8 arg0)
 		tmp = inst->unkC;
 		pathNodes[1] = D_8014DD50[tmp].unkC;
 		pathNodes[0] = tmp;
-		pathResult = func_80081F18_90EC8(arg0, 2, 5, pathNodes, &D_8013C848_14B7F8);
+	pathResult = func_80081F18_90EC8(arg0, 2, 5, pathNodes, &D_8013C848_14B7F8);
 		if ((inst->unk36 == 2) || (pathResult == 1))
 		{
 			if (func_80086A34_959E4(arg0, 1, (s16)(func_800870D8_96088(0x40, 0x1F) + 0x8000)))
@@ -2338,13 +2339,13 @@ void func_80090D0C_9FCBC(u8 arg0)
 	if (func_80084E54_93E04((EntityInstance *)inst, (EntityInstance *)D_80052B34) < 0x2EE)
 	{
 		tmp = (s16)(inst->unkE - inst->unk2A);
-		if (tmp < 0)
+		if (tmp >= 0)
 		{
-			pad0 = -tmp;
+			pad0 = tmp;
 		}
 		else
 		{
-			pad0 = tmp;
+			pad0 = -tmp;
 		}
 		if (pad0 < alienTypes[typeIdx].unk42)
 		{
@@ -2365,7 +2366,6 @@ void func_80090D0C_9FCBC(u8 arg0)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80090D0C_9FCBC.s")
 #endif
-
 // CURRENT(413)
 // AI - Hybrid boss/companion AI update
 #ifdef NON_MATCHING
