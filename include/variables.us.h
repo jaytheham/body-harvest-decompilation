@@ -2152,7 +2152,7 @@ extern u8 D_8014D50A;
 extern u8 D_8014D510[];
 extern u8 D_8014D550[];
 extern Unk8014DD50 D_8014DD50[];
-extern u8 D_8014DD5C[];
+extern Unk8014DD5C D_8014DD5C[];
 extern Unk8014DD50 D_8014E4D0[];
 extern s16 D_8014E4D6[];
 extern s8 D_8014EC50[];

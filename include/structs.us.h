@@ -1637,6 +1637,11 @@ typedef struct {
 } Unk8014DD50; /* size = 0x10 */
 
 typedef struct {
+	/* 0x00 */ s8 unk0;
+	/* 0x01 */ u8 pad1[0xF];
+} Unk8014DD5C; /* size = 0x10 */
+
+typedef struct {
 	/* 0x00 */ u8  unk0;               /* type identifier */
 	/* 0x01 */ s8  unk1;               /* x tile coordinate */
 	/* 0x02 */ s8  unk2;               /* z tile coordinate */
