@@ -532,28 +532,20 @@ s16 func_80006710_7310(s16 arg0, s16 arg1, u16 arg2) {
 	return (s16) (s32) ((f32) arg0 + ((f32) (arg1 - arg0) * (f32) (((f32) sins_val / 32768.0) + 1.0)));
 }
 
-// https://decomp.me/scratch/ad5ME
-// CURRENT(8)
-#ifdef NON_MATCHING
 s16 func_800067B4_73B4(s16 arg0, s16 arg1, u16 arg2, s16 arg3, s16 arg4)
 {
-  f32 temp_f4;
-  f32 temp_f0;
-  f32 sins_if;
-  temp_f0 = (f32) (arg1 - arg0);
-  if (arg2 < 0x4001)
-  {
-	sins_if = sins(arg2 - 0x4000);
-	return (arg0 + (temp_f0 * ((f32) ((sins_if / 32768.0) + 1.0))));
-  }
+	f32 sins_if;
+	f32 temp_f0;
+	temp_f0 = (f32)(arg1 - arg0);
+	if (arg2 < 0x4001)
+	{
+		sins_if = sins(arg2 - 0x4000);
+		return (arg0 + (temp_f0 * ((f32)((sins_if / 32768.0) + 1.0))));
+	}
 
-	temp_f4 = (((((f32) sins((((arg2 - 0x4000) * 1.5) - 16384.0))) / 32768.0) + 1.0) * 0.5);
-	return ((((((f32) sins(arg2 * arg3)) / 32768.0) * temp_f4) * arg4) + arg1);
-  
+	sins_if = (((((f32)sins((((arg2 - 0x4000) * 1.5) - 16384.0))) / 32768.0) + 1.0) * 0.5);
+	return (arg1 + (arg4 * (sins_if * (((f32)sins(arg2 * arg3)) / 32768.0))));
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800067B4_73B4.s")
-#endif
 
 void func_800069FC_75FC(void)
 {
