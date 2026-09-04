@@ -2366,21 +2366,23 @@ void func_80090D0C_9FCBC(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80090D0C_9FCBC.s")
 #endif
 
-// CURRENT(956)
+// CURRENT(770)
 #ifdef NON_MATCHING
 // AI - Hybrid boss/companion AI update
 void func_80091220_A01D0(u8 arg0)
 {
 	AlienInstance *instance = &alienInstances[arg0];
 	AlienInstance *parent = &alienInstances[instance->unk25];
-	s16 sp50;
-	s16 sp54;
-	s16 sp58;
-	s16 instanceValue;
-	s32 randomValue;
-	u32 divisor;
+	s16 padX;
+	s16 instanceValue[1];
+	s16 pad5C;
+	s16 output2[1];
+	s16 pad56;
+	s16 output1[1];
+	s16 pad52;
+	s16 output0[1];
 
-	instanceValue = instance->unkC;
+	instanceValue[-3] = instance->unkC;
 	if (*(s32 *)&parent->unk10 != 0)
 	{
 		func_80090D0C_9FCBC(arg0);
@@ -2411,22 +2413,24 @@ void func_80091220_A01D0(u8 arg0)
 
 	if ((instance->unk24 != 0) && ((D_80031420 & 3) == 3))
 	{
-		randomValue = func_800038E0_44E0();
-		divisor = (randomValue % 0x28) + 0x14;
-		if (((u32)D_80052A8C % divisor) == 0)
+		if (((u32)D_80052A8C % ((func_800038E0_44E0() % 0x28) + 0x14)) == 0)
 		{
 			func_80128428_1373D8(
-				instance,
-				D_8014DD50[D_8014DD50[instanceValue].unkC].unk0,
-				D_8014DD50[D_8014DD50[instanceValue].unkC].unk2 - 0x14,
-				D_8014DD50[D_8014DD50[instanceValue].unkC].unk4 + 0x38,
-				&sp58,
-				&sp54,
-				&sp50);
+				&alienInstances[arg0],
+				D_8014DD50[D_8014DD50[instanceValue[-3]].unkC].unk0,
+				D_8014DD50[D_8014DD50[instanceValue[-3]].unkC].unk2 - 0x14,
+				D_8014DD50[D_8014DD50[instanceValue[-3]].unkC].unk4 + 0x38,
+				&output2[-4],
+				&output1[-4],
+				&output0[-4]);
 
 			if ((currentLevel != LEVEL_SIBERIA) || (D_80047F94 != 0))
 			{
-				func_800CA5EC_D959C(sp58, sp54, sp50, 0, 0, 0, 0xA, 3, 4, 0xFF, 0xFF, 0, 0, 0xFF);
+				func_800CA5EC_D959C(
+					((s16 *)&output2[-4])[1],
+					((s16 *)&output1[-4])[1],
+					((s16 *)&output0[-4])[1],
+					0, 0, 0, 0xA, 3, 4, 0xFF, 0xFF, 0, 0, 0xFF);
 			}
 		}
 	}
