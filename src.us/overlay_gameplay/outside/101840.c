@@ -10645,7 +10645,7 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 							func_8010CA38_11B9E8(var_s2);
 							var_s4 = 0;
 							if ((D_80159D6C == 2) && (D_80159D70 == 2)) {
-								if ((func_8007E500_8D4B0(arg0, arg1, var_s2, &vehicleTypes[var_s2->unk1A]) != 0) && (func_801073FC_1163AC(arg0, var_s2, 0, 0) != 0)) {
+								if ((func_8007E500_8D4B0((EntityInstance *)arg0, (EntityType *)arg1, (EntityInstance *)var_s2, (EntityType *)&vehicleTypes[var_s2->unk1A]) != 0) && (func_801073FC_1163AC(arg0, var_s2, 0, 0) != 0)) {
 									var_s4 = 1;
 											}
 										} else {

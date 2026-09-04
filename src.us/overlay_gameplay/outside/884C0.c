@@ -2368,7 +2368,7 @@ block_167:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007D690_8C640.s")
 #endif
 
-s32 func_8007E500_8D4B0(AlienInstance *arg0, AlienType *arg1, AlienInstance *arg2, AlienType *arg3)
+s32 func_8007E500_8D4B0(EntityInstance *arg0, EntityType *arg1, EntityInstance *arg2, EntityType *arg3)
 {
 	s32 var_a0;
 	s32 var_a1;
@@ -2377,11 +2377,11 @@ s32 func_8007E500_8D4B0(AlienInstance *arg0, AlienType *arg1, AlienInstance *arg
 	s32 dist;
 	if ((arg1->unk16 & 0xF) != 1 && (arg3->unk16 & 0xF) != 1)
 	{
-		dist = func_80084F00_93EB0((EntityInstance *) arg0, (EntityInstance *)arg2);
+		dist = func_80084F00_93EB0(arg0, arg2);
 	}
 	else
 	{
-		dist = func_80084E54_93E04((EntityInstance *)arg0, (EntityInstance *)arg2);
+		dist = func_80084E54_93E04(arg0, arg2);
 	}
 	if (dist < 0)
 	{

@@ -947,7 +947,7 @@ void func_80084CF8_93CA8(AlienInstance *, AlienInstance *);
 void func_80084D80_93D30(u8 arg0);
 s32 func_80084E54_93E04(EntityInstance *, EntityInstance *);
 s32 func_80084F00_93EB0(EntityInstance *, EntityInstance *);
-s32 func_8007E500_8D4B0(AlienInstance *, AlienType *, AlienInstance *, AlienType *);
+s32 func_8007E500_8D4B0(EntityInstance *, EntityType *, EntityInstance *, EntityType *);
 s32 func_8007E734_8D6E4(AlienInstance *, s16);
 s32 func_8008199C_9094C(u8 arg0);
 s32 func_8007F9C8_8E978(u8, u8);
