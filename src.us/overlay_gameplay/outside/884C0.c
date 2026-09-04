@@ -2377,11 +2377,11 @@ s32 func_8007E500_8D4B0(AlienInstance *arg0, AlienType *arg1, AlienInstance *arg
 	s32 dist;
 	if ((arg1->unk16 & 0xF) != 1 && (arg3->unk16 & 0xF) != 1)
 	{
-		dist = func_80084F00_93EB0((VehicleInstance *) arg0, arg2);
+		dist = func_80084F00_93EB0((EntityInstance *) arg0, (EntityInstance *)arg2);
 	}
 	else
 	{
-		dist = func_80084E54_93E04(arg0, arg2);
+		dist = func_80084E54_93E04((EntityInstance *)arg0, (EntityInstance *)arg2);
 	}
 	if (dist < 0)
 	{
@@ -5176,8 +5176,8 @@ void func_80084D80_93D30(u8 arg0)
 	alienInstances[arg0].unk26 = 0;
 }
 
-// Get X/Z distance between
-s32 func_80084E54_93E04(VehicleInstance *vehicle, AlienInstance *alien)
+// Get X,Z distance between entities
+s32 func_80084E54_93E04(EntityInstance *vehicle, EntityInstance *alien)
 {
 	s32 xDiff;
 	s32 zDiff;
@@ -5213,8 +5213,8 @@ s32 func_80084E54_93E04(VehicleInstance *vehicle, AlienInstance *alien)
 	)) * 2;
 }
 
-// get distance between alien and vehicle
-s32 func_80084F00_93EB0(VehicleInstance *vehicle, AlienInstance *alien)
+// Get X,Y,Z distance between entities
+s32 func_80084F00_93EB0(EntityInstance *vehicle, EntityInstance *alien)
 {
 	s32 hx;
 	s32 hy;
@@ -6173,7 +6173,7 @@ void func_80087720_966D0(u8 arg0, s32 arg1)
 
 s32 func_800877E8_96798(u8 arg0, s16 arg1, s16 arg2) {
 	s16 typeVal = alienTypes[alienInstances[arg0].typeIndex].unk40;
-	s16 sp24 = func_80084E54_93E04(D_80052B34, &alienInstances[arg0]);
+	s16 sp24 = func_80084E54_93E04((EntityInstance *)D_80052B34, (EntityInstance *)&alienInstances[arg0]);
 
 	func_80087720_966D0(arg0, sp24);
 

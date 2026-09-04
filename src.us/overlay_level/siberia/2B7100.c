@@ -3246,7 +3246,7 @@ void func_802DB3F0_2BD820(u8 arg0) {
 			alien->unk20 |= ALIEN_FLAG_UNKD;
 		}
 	}
-	if (func_80084E54_93E04(D_80052B34, alien) < 0x5DC) {
+	if (func_80084E54_93E04((EntityInstance *)D_80052B34, (EntityInstance *)alien) < 0x5DC) {
 		func_800871CC_9617C(arg0, 0, 0);
 	}
 	if (alien->unk1E != 0) {
@@ -4200,7 +4200,7 @@ void func_802DDE3C_2C026C(s32 arg0) {
 	AlienInstance *alien;
 
 	alien = &alienInstances[((u8 *)&arg0)[3]];
-	ret = func_80084E54_93E04(D_80052B34, alien);
+	ret = func_80084E54_93E04((EntityInstance *)D_80052B34, (EntityInstance *)alien);
 
 	if (!(alien->unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF)) &&
 		D_80052B34->unk0 >= -0x171C && D_80052B34->unk0 < -0x1333 &&
@@ -4518,7 +4518,7 @@ void func_802DEB5C_2C0F8C(s32 arg0) {
 		func_80092C40_A1BF0(arg0 & 0xFF);
 
 		if (alien->unk3A == 0 && alien->unk1E == 0) {
-			if (func_80084F00_93EB0(D_80052B34, alien) < 0x3E8) {
+			if (func_80084F00_93EB0((EntityInstance *)D_80052B34, (EntityInstance *)(EntityInstance *)alien) < 0x3E8) {
 				func_800871CC_9617C(arg0 & 0xFF, 0, 0x40);
 				alien->unk1E = (func_800038E0_44E0() % 7) + 5;
 			}

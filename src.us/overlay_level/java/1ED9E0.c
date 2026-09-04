@@ -1735,7 +1735,7 @@ void func_802D872C_1F143C(u8 arg0) {
 		func_80088760_97710(temp_s0);
 	}
 	if (temp_s0->unk2C == 0xE) {
-		sp24 = (func_80084F00_93EB0(D_80052B34, temp_s0) - vehicleTypes[D_80052B34->unk1A].unkC) - alienTypes[temp_s0->typeIndex].unkC;
+		sp24 = (func_80084F00_93EB0((EntityInstance *)D_80052B34, (EntityInstance *)temp_s0) - vehicleTypes[D_80052B34->unk1A].unkC) - alienTypes[temp_s0->typeIndex].unkC;
 		if ((func_80084FE8_93F98(arg0, 0x800) != 0) && (sp24 < 0x8C)) {
 			temp_s0->unk20 = (s32) (temp_s0->unk20 | ALIEN_FLAG_UNKE);
 		}

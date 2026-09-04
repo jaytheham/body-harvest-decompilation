@@ -1683,7 +1683,7 @@ void func_802D7EBC_1909CC(u8 arg0) {
 		func_80088760_97710(alien);
 	}
 	if (alien->unk2C == 0xE) {
-		sp24 = func_80084F00_93EB0(D_80052B34, alien) - vehicleTypes[D_80052B34->unk1A].unkC - alienTypes[alien->typeIndex].unkC;
+		sp24 = func_80084F00_93EB0((EntityInstance *)D_80052B34, (EntityInstance *)alien) - vehicleTypes[D_80052B34->unk1A].unkC - alienTypes[alien->typeIndex].unkC;
 		if ((func_80084FE8_93F98(arg0, 0x800) != 0) && (sp24 < 0x8C)) {
 			alien->unk20 = alien->unk20 | ALIEN_FLAG_UNKE;
 		}

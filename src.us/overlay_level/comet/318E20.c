@@ -1932,7 +1932,7 @@ void func_802D7B4C_31BC9C(u8 arg0) {
 	s16 countdown;
 
 	inst = &alienInstances[arg0];
-	if ((func_80084E54_93E04(D_80052B34, inst) < 0x1388) &&
+	if ((func_80084E54_93E04((EntityInstance *)D_80052B34, (EntityInstance *)inst) < 0x1388) &&
 		(func_80084FE8_93F98(arg0, 0x8000) != 0)) {
 		if (func_800871CC_9617C(arg0, 0, 0x14) != 0) {
 			inst->unk3D++;

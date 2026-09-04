@@ -1945,7 +1945,7 @@ void func_800ADB4C_BCAFC(u8 arg0) {
 				D_80158C42 = 2;
 			}
 
-			temp = func_80084E54_93E04((VehicleInstance *) alien, (AlienInstance *) D_80052B34);
+			temp = func_80084E54_93E04((EntityInstance *) alien, (EntityInstance *) D_80052B34);
 			if (alien->unk2C < 0x191) {
 				if ((D_80158FEC == alien) || (temp < 0x190)) {
 					if (D_8013D910_14C8C0[0] == 0) {
