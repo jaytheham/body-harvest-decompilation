@@ -2335,7 +2335,7 @@ void func_80090D0C_9FCBC(u8 arg0)
 		return;
 	}
 
-	if (func_80084E54_93E04((VehicleInstance *)inst, (AlienInstance *)D_80052B34) < 0x2EE)
+	if (func_80084E54_93E04((EntityInstance *)inst, (EntityInstance *)D_80052B34) < 0x2EE)
 	{
 		tmp = (s16)(inst->unkE - inst->unk2A);
 		if (tmp < 0)
@@ -2366,23 +2366,24 @@ void func_80090D0C_9FCBC(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80090D0C_9FCBC.s")
 #endif
 
-// CURRENT(770)
-#ifdef NON_MATCHING
+// CURRENT(413)
 // AI - Hybrid boss/companion AI update
+#ifdef NON_MATCHING
 void func_80091220_A01D0(u8 arg0)
 {
 	AlienInstance *instance = &alienInstances[arg0];
-	AlienInstance *parent = &alienInstances[instance->unk25];
+	AlienInstance *parent;
 	s16 padX;
 	s16 instanceValue[1];
 	s16 pad5C;
 	s16 output2[1];
 	s16 pad56;
+	s16 new_var;
 	s16 output1[1];
 	s16 pad52;
 	s16 output0[1];
-
 	instanceValue[-3] = instance->unkC;
+	parent = &alienInstances[instance->unk25];
 	if (parent->unk10_word != 0)
 	{
 		func_80090D0C_9FCBC(arg0);
@@ -2393,13 +2394,14 @@ void func_80091220_A01D0(u8 arg0)
 		if (instance->unk20 & ALIEN_FLAG_UNKP)
 		{
 			if ((instance->unk20 & ALIEN_FLAG_UNKG) == 0)
-			{
+		{
 				s8 nodeIdx;
 
 				parent->unk10_word = 0x190;
-				instance->unk20 |= ALIEN_FLAG_UNKG;
+				padX = instance->unkC;
 				instance->unk34 = 1;
-				nodeIdx = D_8014DD50[instance->unkC].unkC;
+				instance->unk20 |= ALIEN_FLAG_UNKG;
+				nodeIdx = D_8014DD50[padX].unkC;
 				nodeIdx = D_8014DD50[nodeIdx].unkC;
 				nodeIdx = D_8014DD50[nodeIdx].unkD;
 				D_8014DD50[D_8014DD50[nodeIdx].unkD].unk2 = -0x7D00;
@@ -2411,15 +2413,16 @@ void func_80091220_A01D0(u8 arg0)
 		}
 	}
 
-	if ((instance->unk24 != 0) && ((D_80031420 & 3) == 3))
+	pad52 = 3;
+	if ((instance->unk24 != 0) && ((D_80031420 & pad52) == pad52))
 	{
 		if (((u32)D_80052A8C % ((func_800038E0_44E0() % 0x28) + 0x14)) == 0)
 		{
 			func_80128428_1373D8(
-				&alienInstances[arg0],
-				D_8014DD50[D_8014DD50[instanceValue[-3]].unkC].unk0,
-				D_8014DD50[D_8014DD50[instanceValue[-3]].unkC].unk2 - 0x14,
-				D_8014DD50[D_8014DD50[instanceValue[-3]].unkC].unk4 + 0x38,
+				instance,
+				D_8014DD50[D_8014DD50[new_var = instanceValue[-pad52]].unkC].unk0,
+				D_8014DD50[D_8014DD50[new_var].unkC].unk2 - 0x14,
+				D_8014DD50[D_8014DD50[new_var].unkC].unk4 + 0x38,
 				&output2[-4],
 				&output1[-4],
 				&output0[-4]);
@@ -2430,7 +2433,7 @@ void func_80091220_A01D0(u8 arg0)
 					((s16 *)&output2[-4])[1],
 					((s16 *)&output1[-4])[1],
 					((s16 *)&output0[-4])[1],
-					0, 0, 0, 0xA, 3, 4, 0xFF, 0xFF, 0, 0, 0xFF);
+					0, 0, 0, 0xA, pad52, 4, 0xFF, 0xFF, 0, 0, 0xFF);
 			}
 		}
 	}
@@ -2438,7 +2441,6 @@ void func_80091220_A01D0(u8 arg0)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091220_A01D0.s")
 #endif
-
 // CURRENT(100)
 // AI - Building targeting / Drone Hunter AI
 #ifdef NON_MATCHING

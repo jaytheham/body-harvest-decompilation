@@ -5177,7 +5177,7 @@ void func_80084D80_93D30(u8 arg0)
 }
 
 // Get X,Z distance between entities
-s32 func_80084E54_93E04(EntityInstance *vehicle, EntityInstance *alien)
+s32 func_80084E54_93E04(EntityInstance *entity1, EntityInstance *entity2)
 {
 	s32 xDiff;
 	s32 zDiff;
@@ -5186,7 +5186,7 @@ s32 func_80084E54_93E04(EntityInstance *vehicle, EntityInstance *alien)
 	s32 halfAbsoluteZDiff;
 	s32 absoluteXDiff;
 	s32 absoluteZDiff;
-	xDiff = vehicle->unk0 - alien->unk0;
+	xDiff = entity1->unk0 - entity2->unk0;
 	if ((-xDiff) < xDiff)
 	{
 		absoluteXDiff = xDiff;
@@ -5198,7 +5198,7 @@ s32 func_80084E54_93E04(EntityInstance *vehicle, EntityInstance *alien)
 	halfAbsoluteXDiff = absoluteXDiff;
 	if (!halfAbsoluteXDiff) {}
 	halfAbsoluteXDiff = halfAbsoluteXDiff >> 1;
-	zDiff = vehicle->unk4 - alien->unk4;
+	zDiff = entity1->unk4 - entity2->unk4;
 	if ((-zDiff) < zDiff)
 	{
 		absoluteZDiff = zDiff;
