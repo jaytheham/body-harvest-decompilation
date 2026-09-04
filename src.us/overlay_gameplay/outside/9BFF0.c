@@ -2650,65 +2650,71 @@ void func_80091A78_A0A28(u8 arg0)
 	alienInstances[arg0].unk2C = 0x64;
 }
 
-// CURRENT(2930)
-#ifdef NON_MATCHING
+// CURRENT(2085)
 // AI - Building attack/destruction
+#ifdef NON_MATCHING
 s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2)
 {
 	AlienInstance *temp_s0;
-	s32 var_a1;
 	u8 sp7B;
-	s16 sp6C[6];
+	union {
+		s32 value;
+		s16 half[2];
+	} sp74, sp70, sp6C;
+	s32 var_a0;
+	s32 var_a1;
 	f32 sp60;
 	f32 sp5C;
 	s16 sp5A;
 
 	temp_s0 = &alienInstances[arg0];
 	sp5A = D_8014DD50[temp_s0->unkC].unkC;
-	sp7B = func_8011D260_12C210(arg1, arg2) & 0xFF;
+	sp7B = func_8011D260_12C210(arg1, arg2);
 	if (sp7B == 0xFF)
 	{
 		return 0;
 	}
 
-	var_a1 = -temp_s0->unk12;
-	if (var_a1 < temp_s0->unk12)
+	if (-(&alienInstances[arg0])->unk12 < (&alienInstances[arg0])->unk12)
 	{
 		var_a1 = temp_s0->unk12;
 	}
-
-	var_a1 = (alienTypes[temp_s0->typeIndex].unk52 * var_a1) / 0xC8 >> 5;
-	if ((temp_s0->unk20 << 4) >= 0)
+	else
+	{
+		var_a1 = -temp_s0->unk12;
+	}
+	var_a1 = (var_a0 = ((alienTypes[temp_s0->typeIndex].unk52 * var_a1) / 0xC8) >> 5);
+	if (((&alienInstances[arg0])->unk20 << 4) >= 0)
 	{
 		func_8011BEA0_12AE50(sp7B & 0xFF, var_a1);
-		if (temp_s0->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
+		if ((&alienInstances[arg0])->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
 		{
 			func_80137468_146418(arg0, 8);
 		}
 
-		if (temp_s0->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
+		if ((&alienInstances[arg0])->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
 		{
-			sp60 = (f32)sins((temp_s0->unk6 - 0x4000) & 0xFFFF) / 32768.0;
-			sp5C = -((f32)coss((temp_s0->unk6 - 0x4000) & 0xFFFF) / 32768.0);
-			func_80128428_1373D8(temp_s0, D_8014DD50[sp5A].unk0, D_8014DD50[sp5A].unk2, D_8014DD50[sp5A].unk4 + 0x1E,
-								 (s32 *)&sp6C[4], (s32 *)&sp6C[2], (s32 *)&sp6C[0]);
-			func_800DE9B8_ED968(sp6C[5], sp6C[3], sp6C[1], 0xFF);
-			func_800DEE5C_EDE0C(sp6C[5], (func_800B84D0_C7480(sp6C[5], sp6C[1]) >> 8) + 5, sp6C[1], 0x78, 0x10);
-			func_800C541C_D43CC(sp6C[5], sp6C[3], sp6C[1], (s8)(s32)(sp60 * 127.0f), 0x50,
+			sp60 = (f32)((f64)(f32)sins(temp_s0->unk6 - 0x4000) / 32768.0);
+			sp5C = (f32)-((f64)(f32)coss(temp_s0->unk6 - 0x4000) / 32768.0);
+			func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[sp5A].unk0, D_8014DD50[sp5A].unk2, D_8014DD50[sp5A].unk4 + 0x1E,
+					 &sp74.value, &sp70.value, &sp6C.value);
+			func_800DE9B8_ED968(sp74.half[1], sp70.half[1], sp6C.half[1], 0xFF);
+			func_800DEE5C_EDE0C(sp74.half[1], (func_800B84D0_C7480(sp74.half[1], sp6C.half[1]) >> 8) + 5, sp6C.half[1], 0x78, 0x10);
+			func_800C541C_D43CC(sp74.half[1], sp70.half[1], sp6C.half[1], (s8)(s32)(sp60 * 127.0f), 0x50,
 								(s32)(sp5C * 127.0f), 0x3C, 0xFF, 0x50, 0x28, 0xFF, 0xFF, 0x80);
-			func_800DEA08_ED9B8(sp6C[5], sp6C[3], sp6C[1], 0x96, 8, 6, 0x28, 0xC8, 0x1E, 0x1E, 0x1E);
-			func_80135D44_144CF4(*(s32 *)&sp6C[4], *(s32 *)&sp6C[2], *(s32 *)&sp6C[0], 3.0f);
+			func_800DEA08_ED9B8(sp74.half[1], sp70.half[1], sp6C.half[1], 0x96, 8, 6, 0x28, 0xC8, 0x1E, 0x1E, 0x1E);
+			func_80135D44_144CF4(sp74.value, sp70.value, sp6C.value, 3.0f);
 		}
 	}
 
-	temp_s0->unk20 = temp_s0->unk20 & ~ALIEN_FLAG_UNKD;
-	if ((temp_s0->unk20 << 4) >= 0)
+	temp_s0->unk20 &= ~ALIEN_FLAG_UNKD;
+	if (((&alienInstances[arg0])->unk20 << 4) >= 0)
 	{
 		if (!((buildingInstances[sp7B].unk8 >> 12) & 0x100C))
 		{
-			alienInstances[temp_s0->unk25].unk38 = (s16)sp7B;
+			alienInstances[(&alienInstances[arg0])->unk25].unk38 = (s16)sp7B;
 		}
-		temp_s0->unk20 = temp_s0->unk20 & ~ALIEN_FLAG_TARGET_PT;
+		(&alienInstances[arg0])->unk20 &= ~ALIEN_FLAG_TARGET_PT;
 	}
 
 	func_80091A78_A0A28(arg0);
@@ -2717,19 +2723,16 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091AC0_A0A70.s")
 #endif
-
 // https://decomp.me/scratch/TAjH8
 // CURRENT(38)
 #ifdef NON_MATCHING
 // AI - Movement AI with building attack
 void func_80091E70_A0E20(u8 arg0)
 {
-
+s32 x;
 	u8 useAttack = 0;
 	s16 targetSpeed;
 	u8 typeIndex = alienInstances[arg0].typeIndex;
-
-	s32 x;
 	s32 z;
 
 	targetSpeed = alienTypes[typeIndex].unk40;

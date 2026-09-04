@@ -1006,9 +1006,9 @@ typedef struct {
 	/* 0x29 */ s8 unk29; // Last collision tile Z
 	/* 0x2A */ s16 unk2A; // Desired direction
 	/* 0x2C */ s16 unk2C; // Counters
-	/* 0x2E */ s16 unk2E;
-	/* 0x30 */ s16 unk30;
-	/* 0x32 */ s16 unk32;
+	/* 0x2E */ s16 unk2E; // X coord, used for ??
+	/* 0x30 */ s16 unk30; // Y coord, used for ??
+	/* 0x32 */ s16 unk32; // Z coord, used for ??
 	/* 0x34 */ s16 unk34; // Collision counter?
 	/* 0x36 */ u8 unk36; // Anim counter?
 	/* 0x37 */ u8 unk37; // Hit counter?
