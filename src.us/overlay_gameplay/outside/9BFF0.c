@@ -2144,14 +2144,14 @@ skip_parent_cleanup:
 void func_800908C4_9F874(u8 arg0)
 {
 	AlienInstance *inst = &alienInstances[alienInstances[arg0].unk25];
-	s32 unk10 = *(s32 *)&inst->unk10;
+	s32 unk10 = inst->unk10_word;
 	if (unk10 <= 0)
 	{
 		func_8009012C_9F0DC(arg0);
 		return;
 	}
 	inst->unk20 &= ~(ALIEN_FLAG_UNKH | ALIEN_FLAG_UNKI);
-	*(s32 *)&inst->unk10 = unk10 - 1;
+	inst->unk10_word = unk10 - 1;
 }
 
 // AI - Spawn spark/particle at a path node
@@ -2254,16 +2254,16 @@ void func_80090D0C_9FCBC(u8 arg0)
 
 	parent = &alienInstances[inst->unk25];
 	inst->unk20 |= (ALIEN_FLAG_PLAYER | ALIEN_FLAG_UNKG | ALIEN_FLAG_TARGET_PT);
-	parentTimer = *(s32 *)&parent->unk10;
+	parentTimer = parent->unk10_word;
 	parentFlags = parent->unk20;
 	parentTimer--;
-	*(s32 *)&parent->unk10 = parentTimer;
+	parent->unk10_word = parentTimer;
 
 	if ((parentFlags << 0xF) < 0)
 	{
 		if (parentTimer == 0)
 		{
-			*(s32 *)&parent->unk10 = 1;
+			parent->unk10_word = 1;
 		}
 		tmp = inst->unkC;
 		pathNodes[1] = D_8014DD50[tmp].unkC;
@@ -2287,9 +2287,9 @@ void func_80090D0C_9FCBC(u8 arg0)
 
 	if ((parentFlags << 0xE) < 0)
 	{
-		if (*(s32 *)&parent->unk10 == 0)
+		if (parent->unk10_word == 0)
 		{
-			*(s32 *)&parent->unk10 = 1;
+			parent->unk10_word = 1;
 		}
 		if (inst->unk1E > 0)
 		{
@@ -2327,10 +2327,10 @@ void func_80090D0C_9FCBC(u8 arg0)
 		inst->unk20 |= ALIEN_FLAG_AWAY;
 	}
 
-	if ((*(s32 *)&parent->unk10 <= 0) || (inst->unk47 & 1))
+	if ((parent->unk10_word <= 0) || (inst->unk47 & 1))
 	{
 		inst->unk20 &= ~(ALIEN_FLAG_PLAYER | ALIEN_FLAG_UNKG | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY);
-		*(s32 *)&parent->unk10 = 0;
+		parent->unk10_word = 0;
 		D_8014DD50[D_8014DD50[D_8014DD50[D_8014DD50[typeSlot].unkC].unkD].unkD].unk2 = -4;
 		return;
 	}
@@ -2383,7 +2383,7 @@ void func_80091220_A01D0(u8 arg0)
 	s16 output0[1];
 
 	instanceValue[-3] = instance->unkC;
-	if (*(s32 *)&parent->unk10 != 0)
+	if (parent->unk10_word != 0)
 	{
 		func_80090D0C_9FCBC(arg0);
 	}
@@ -2396,7 +2396,7 @@ void func_80091220_A01D0(u8 arg0)
 			{
 				s8 nodeIdx;
 
-				*(s32 *)&parent->unk10 = 0x190;
+				parent->unk10_word = 0x190;
 				instance->unk20 |= ALIEN_FLAG_UNKG;
 				instance->unk34 = 1;
 				nodeIdx = D_8014DD50[instance->unkC].unkC;

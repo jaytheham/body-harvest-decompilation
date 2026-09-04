@@ -6704,7 +6704,7 @@ void func_80088E40_97DF0(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s8 arg
 }
 
 s32 func_80088F78_97F28(u8 arg0) {
-	s32 unk0 = *(s32 *)&alienTypes[alienInstances[arg0].typeIndex];
+	s32 unk0 = alienTypes[alienInstances[arg0].typeIndex].unk0;
 	if (((u32)unk0 >> 0x18) == 1) {
 		unk0 = func_80011FAC_12BAC((void *)unk0);
 	} else {
@@ -6756,7 +6756,7 @@ s32 func_8008916C_9811C(u8 arg0, s16 arg1) {
 	s32 sp20;
 	padX = alienInstances[arg0].unkC;
 	sp24 = D_8014DD50[padX].unkC;
-	sp20 = *(s32 *)&alienTypes[alienInstances[arg0].typeIndex];
+	sp20 = alienTypes[alienInstances[arg0].typeIndex].unk0;
 	sp20 = func_80012000_12C00(sp20);
 	return func_80088FFC_97FAC(&sp20, arg1, sp24);
 }

@@ -982,8 +982,13 @@ typedef struct {
 		};
 	};
 	/* 0x0E */ s16 unkE; // "Direction"
-	/* 0x10 */ s16 unk10; // Y Velocity, are this and Speed actually a single s32?
-	/* 0x12 */ s16 unk12; // Speed
+	union {
+		struct {
+			/* 0x10 */ s16 unk10; // Y Velocity, are this and Speed actually a single s32?
+			/* 0x12 */ s16 unk12; // Speed
+		};
+		/* 0x10 */ s32 unk10_word;
+	};
 	/* 0x14 */ s16 unk14; // target x coord
 	/* 0x16 */ s16 unk16; // target y coord
 	/* 0x18 */ s16 unk18; // target z coord
