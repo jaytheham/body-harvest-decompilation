@@ -2323,6 +2323,7 @@ s32 func_8011B584_12A534(s32 arg0, s32 arg1) {
 
 // CURRENT(22351)
 #ifdef NON_MATCHING
+// Find building within range and matching criteria?
 s32 func_8011B6C0_12A670(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4) {
 	s8 candidates[8];
 	s16 xPos;

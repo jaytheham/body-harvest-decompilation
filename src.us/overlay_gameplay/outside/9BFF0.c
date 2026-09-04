@@ -2439,17 +2439,18 @@ void func_80091220_A01D0(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091220_A01D0.s")
 #endif
 
-// CURRENT(2734)
-#ifdef NON_MATCHING
+// CURRENT(100)
 // AI - Building targeting / Drone Hunter AI
+#ifdef NON_MATCHING
 void func_80091470_A0420(u8 arg0)
 {
+	s32 new_var;
 	u8 parentIdx;
 	u8 found;
-	u8 new_var;
 	u8 buildingIdx;
-	BuildingInstance *building;
+	AlienInstance *alien;
 	parentIdx = alienInstances[arg0].unk25;
+	alien = &alienInstances[arg0];
 	alienInstances[arg0].unk3A = 0xFF;
 	if (alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_PT)
 	{
@@ -2469,19 +2470,16 @@ void func_80091470_A0420(u8 arg0)
 
 	if (alienInstances[parentIdx].unk20 & ALIEN_FLAG_UNKF)
 	{
-		s8 *type;
 		func_80081BB0_90B60(arg0);
 		buildingIdx = ((u8 *)&alienInstances[parentIdx].unk38)[1];
-		building = &buildingInstances[buildingIdx];
-		new_var = building->buildingType;
-		type = &buildingTypes[new_var].unk19;
-		if (building->hitPoints < (*type / 2))
+		if (buildingInstances[buildingIdx].hitPoints < (buildingTypes[buildingInstances[buildingIdx].buildingType].unk19 / 2))
 		{
 			osSyncPrintf(&D_80141EB0_150E60, buildingIdx);
-			found = func_8011B6C0_12A670(alienInstances[arg0].unk0, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unk51 / 20, 1, 0x100C);
+			found = (u8)func_8011B6C0_12A670(alienInstances[arg0].unk0, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unk51 / 20, 1, 0x100C);
 			if (found != 0xFF)
 			{
-				func_80080B44_8FAF4(arg0, found);
+				new_var = found;
+				func_80080B44_8FAF4(arg0, new_var);
 				alienInstances[arg0].unk16 += buildingTypes[buildingInstances[found].buildingType].unk14 + 0xC8;
 				return;
 			}
@@ -2493,8 +2491,11 @@ void func_80091470_A0420(u8 arg0)
 			func_80081AD4_90A84(arg0, parentIdx);
 			return;
 		}
-		func_80080B44_8FAF4(arg0, buildingIdx);
-		alienInstances[(u8)(arg0 | 0)].unk16 += buildingTypes[building->buildingType].unk14 + 0xC8;
+		else
+		{
+			func_80080B44_8FAF4(arg0, buildingIdx);
+			alien->unk16 += buildingTypes[buildingInstances[buildingIdx].buildingType].unk14 + 0xC8;
+		}
 	}
 	else
 	{
@@ -2505,6 +2506,7 @@ void func_80091470_A0420(u8 arg0)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091470_A0420.s")
 #endif
+
 // AI - Parent targeting helper
 void func_8009170C_A06BC(u8 arg0)
 {
@@ -2661,7 +2663,7 @@ void func_80091A78_A0A28(u8 arg0)
 	alienInstances[arg0].unk2C = 0x64;
 }
 
-// CURRENT(2085)
+// CURRENT(40)
 // AI - Building attack/destruction
 #ifdef NON_MATCHING
 s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2)
@@ -2734,19 +2736,20 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091AC0_A0A70.s")
 #endif
+
 // https://decomp.me/scratch/TAjH8
 // CURRENT(38)
 #ifdef NON_MATCHING
 // AI - Movement AI with building attack
 void func_80091E70_A0E20(u8 arg0)
 {
-s32 x;
+	s32 x;
 	u8 useAttack = 0;
 	s16 targetSpeed;
-	u8 typeIndex = alienInstances[arg0].typeIndex;
+	u8 specIndex = alienInstances[arg0].typeIndex;
 	s32 z;
 
-	targetSpeed = alienTypes[typeIndex].unk40;
+	targetSpeed = alienTypes[specIndex].unk40;
 	x = alienInstances[arg0].unk0 >> 8;
 	z = alienInstances[arg0].unk4 >> 8;
 	if ((x != (alienInstances[arg0].unk2E >> 8)) || (z != (alienInstances[arg0].unk32 >> 8)))
@@ -2754,43 +2757,38 @@ s32 x;
 		useAttack = 1;
 	}
 	func_800919C0_A0970(arg0, useAttack);
-	if (useAttack != 0)
+	if (useAttack && func_800B325C_C220C(x, z, 0x800))
 	{
-		if (func_800B325C_C220C((s8)x, (s8)z, 0x800) != 0)
-		{
-			func_80091AC0_A0A70(arg0, (s8)x, (s8)z);
-		}
+		func_80091AC0_A0A70(arg0, x, z);
 	}
-	if ((alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER) == 0)
+
+	if ((alienInstances[arg0].unk20 & 0x8000000) == 0)
 	{
-		if (((alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD) != 0) && ((alienInstances[arg0].unk20 & ALIEN_FLAG_UNKE) == 0))
+		if (((alienInstances[arg0].unk20 & 0x1000) != 0) && ((alienInstances[arg0].unk20 & 0x2000) == 0))
 		{
 			targetSpeed = 0x1000;
-			if ((D_80052A8C & 0x1C) == (arg0 & 0x1C))
+			if ((D_80052A8C & 0x1C) == (arg0 & 0x1C) && func_800B325C_C220C((alienInstances[arg0].unk14 >> 8), (alienInstances[arg0].unk18 >> 8), 0x800) == 0)
 			{
-				if (func_800B325C_C220C((s8)(alienInstances[arg0].unk14 >> 8), (s8)(alienInstances[arg0].unk18 >> 8), 0x800) == 0)
-				{
-					alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT);
-				}
+				alienInstances[arg0].unk20 &= ~0x1100;
 			}
 		}
-		else if ((alienInstances[arg0].unk20 & ALIEN_FLAG_UNKE) != 0)
+		else if ((alienInstances[arg0].unk20 & 0x2000) != 0)
 		{
 			targetSpeed = -0x80;
 			alienInstances[arg0].unk2C -= 4;
 			if (alienInstances[arg0].unk2C <= 0)
 			{
-				alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKE;
+				alienInstances[arg0].unk20 &= ~0x2000;
 			}
 		}
 	}
 	if (alienInstances[arg0].unk12 < targetSpeed)
 	{
-		alienInstances[arg0].unk12 += alienTypes[typeIndex].unk3E * 4;
+		alienInstances[arg0].unk12 += alienTypes[specIndex].unk3E * 4;
 	}
 	else if (alienInstances[arg0].unk12 > targetSpeed)
 	{
-		alienInstances[arg0].unk12 -= alienTypes[typeIndex].unk3E * 4;
+		alienInstances[arg0].unk12 -= alienTypes[specIndex].unk3E * 4;
 	}
 }
 #else
