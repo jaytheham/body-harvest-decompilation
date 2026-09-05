@@ -1035,6 +1035,7 @@ extern s32 D_8006807C;
 extern s32 D_80068080;
 extern s32 D_80068084;
 extern s32 D_80068088;
+extern s32 D_80140CE0_14FC90;
 extern f32 D_8006808C;
 extern f32 D_80068090;
 extern f32 D_80068094;
