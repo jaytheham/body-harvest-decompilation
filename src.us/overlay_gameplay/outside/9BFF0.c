@@ -1373,9 +1373,9 @@ void func_8008EF7C_9DF2C(u8 arg0)
 	}
 }
 
-// CURRENT(9972)
+// CURRENT(3341)
+// AI - AI movement/state machine
 #ifdef NON_MATCHING
-// AI - Complex AI movement/state machine
 void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 {
 	u8 sp5F;
@@ -1388,19 +1388,20 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 	s32 var_t1;
 	s16 var_t3;
 	s8 otherType;
+	u8 alienType;
 	s32 distX;
-	s32 distZ;
-	s32 negX;
-	s32 negZ;
 	s32 absX;
+	s32 negX;
+	s32 distZ;
+	s32 negZ;
 	s32 absZ;
-	s32 maxDist;
 	Unk80146688 *zone;
 
 	sp30 = &alienInstances[arg0];
-	sp2C = &alienTypes[sp30->typeIndex];
-	sp48 = 1;
+	alienType = sp30->typeIndex;
+	sp2C = &alienTypes[alienType];
 	sp5A = sp2C->unk40;
+	sp48 = 1;
 
 	func_80137468_146418(arg0, 7);
 
@@ -1418,14 +1419,14 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 	{
 		if (arg1 != 0)
 		{
-			sp5F = (u8)func_8011B6C0_12A670(sp30->unk0, sp30->unk4, (s16)(sp2C->unk51 / 15), 1, 0x100C);
+			sp5F = (u8)func_8011B6C0_12A670(sp30->unk0, sp30->unk4, (s16)(alienTypes[sp30->typeIndex].unk51 / 15), 1, 0x100C);
 			if (sp5F != 0xFF)
 			{
-				sp5E = sp30->unk25;
-				sp20 = &alienInstances[sp5E];
+				sp20 = &alienInstances[sp30->unk25];
 				otherType = sp20->unk3D;
 				if ((otherType == -1) || (otherType == (s8)buildingInstances[sp5F].unk11))
 				{
+					sp5E = sp30->unk25;
 					if (sp5F != sp30->unk38)
 					{
 						func_800ACF9C_BBF4C(sp5F);
@@ -1472,26 +1473,34 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 
 			if (absZ < absX)
 			{
-				maxDist = negX;
 				if (negX < distX)
 				{
-					maxDist = distX;
+					absX = distX;
 				}
+				else
+				{
+					absX = negX;
+				}
+				distX = absX;
 			}
 			else
 			{
-				maxDist = negZ;
 				if (negZ < distZ)
 				{
-					maxDist = distZ;
+					negX = distZ;
 				}
+				else
+				{
+					negX = negZ;
+				}
+				distX = negX;
 			}
 
-			if (maxDist < 0x23A)
+			if (distX < 0x23A)
 			{
 				sp5A = -0x180;
 			}
-			else if (maxDist >= 0x259)
+			else if (distX >= 0x259)
 			{
 				sp5A = 0x180;
 			}
@@ -1500,7 +1509,7 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 				sp5A = 0;
 			}
 
-			func_80087720_966D0(arg0, maxDist);
+			func_80087720_966D0(arg0, distX);
 			var_t3 = sp5A;
 		}
 		else
@@ -1538,22 +1547,30 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 
 		if (absZ < absX)
 		{
-			maxDist = negX;
 			if (negX < distX)
 			{
-				maxDist = distX;
+				absX = distX;
 			}
+			else
+			{
+				absX = negX;
+			}
+			distX = absX;
 		}
 		else
 		{
-			maxDist = negZ;
 			if (negZ < distZ)
 			{
-				maxDist = distZ;
+				negX = distZ;
 			}
+			else
+			{
+				negX = negZ;
+			}
+			distX = negX;
 		}
 
-		if ((zone->unk2 + 6) < maxDist)
+		if ((zone->unk2 + 6) < distX)
 		{
 			sp30->unk20 = var_t1 | (ALIEN_FLAG_UNKE | ALIEN_FLAG_TARGET_OBJ);
 			var_t1 = sp30->unk20 & ~ALIEN_FLAG_UNKC;
@@ -1563,12 +1580,14 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 	}
 	else if ((var_t1 & 0x2000) && (arg1 != 0))
 	{
-		sp5E = sp30->unk25;
-		sp20 = &alienInstances[sp5E];
+		AlienInstance *parent;
 
-		distX = (sp30->unk0 - sp20->unk0) >> 8;
+		sp5E = sp30->unk25;
+		parent = &alienInstances[sp5E];
+
+		distX = (sp30->unk0 - parent->unk0) >> 8;
 		negX = -distX;
-		distZ = (sp30->unk4 - sp20->unk4) >> 8;
+		distZ = (sp30->unk4 - parent->unk4) >> 8;
 
 		if (negX < distX)
 		{
@@ -1588,22 +1607,30 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 
 		if (absZ < absX)
 		{
-			maxDist = negX;
 			if (negX < distX)
 			{
-				maxDist = distX;
+				absX = distX;
 			}
+			else
+			{
+				absX = negX;
+			}
+			distX = absX;
 		}
 		else
 		{
-			maxDist = negZ;
 			if (negZ < distZ)
 			{
-				maxDist = distZ;
+				negX = distZ;
 			}
+			else
+			{
+				negX = negZ;
+			}
+			distX = negX;
 		}
 
-		if (maxDist < 2)
+		if (distX < 2)
 		{
 			var_t1 &= ~0x2020;
 			sp30->unk20 = var_t1;
@@ -1686,7 +1713,6 @@ void func_8008F818_9E7C8(u8 arg0)
 	}
 }
 
-// https://decomp.me/scratch/zzVqU
 // AI - Pathfinding to parent/owner
 void func_8008F8D4_9E884(u8 arg0, s16 arg1)
 {
