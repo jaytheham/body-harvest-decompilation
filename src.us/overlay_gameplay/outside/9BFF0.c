@@ -1924,9 +1924,9 @@ s32 func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 #endif
 
 // CURRENT(11639)
-#ifdef NON_MATCHING
 // AI - AI state machine for carried humans/companions
-void func_8009012C_9F0DC(u8 arg0)
+#ifdef NON_MATCHING
+void func_8009012C_9F0DC(u32 arg0)
 {
 	AlienInstance *inst;
 	AlienInstance *parent;
@@ -1945,19 +1945,18 @@ void func_8009012C_9F0DC(u8 arg0)
 	s32 radius;
 	s32 i;
 
-	inst = &alienInstances[arg0];
-	parentFlags = inst->unk20;
-	parentNode = inst->unkC;
-	typeIdx[0] = inst->typeIndex;
-	targetSpeed = 0;
+	parentFlags = alienInstances[arg0].unk20;
+	parentNode = alienInstances[arg0].unkC;
+	typeIdx = alienInstances[arg0].typeIndex;
 	step = 1;
+	targetSpeed = 0;
 	if (!(parentFlags & 0x600))
 	{
 		step = 4;
 	}
 
+	inst = &alienInstances[arg0];
 	parent = &alienInstances[inst->unk25];
-
 	if ((inst->unk3A >= 0xBB9) && !(parentFlags & 0x8000))
 	{
 		parent->unk20 |= ALIEN_FLAG_UNKE;
@@ -2002,7 +2001,7 @@ void func_8009012C_9F0DC(u8 arg0)
 			}
 			else
 			{
-				parent->unk20 |= ALIEN_FLAG_UNKD;
+			parent->unk20 |= ALIEN_FLAG_UNKD;
 			}
 			inst->unk3A = 0;
 		}
@@ -2018,7 +2017,7 @@ void func_8009012C_9F0DC(u8 arg0)
 			target = func_80082394_91344(inst->unk0, inst->unk4, 8);
 			if (target < 0xFF)
 			{
-				targetInst = &alienInstances[(u8)target];
+				targetInst = &alienInstances[target];
 				osSyncPrintf(&D_80141E94_150E44, target, targetInst->unk0, targetInst->unk4);
 				inst->unk14 = targetInst->unk0;
 				inst->unk16 = targetInst->unk2;
@@ -2059,35 +2058,34 @@ void func_8009012C_9F0DC(u8 arg0)
 	}
 
 	if (inst->unk20 & ALIEN_FLAG_UNKG)
-	{
-		if (parent->unk1B != 0xFF)
 		{
-			if (inst->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
+			if (parent->unk1B != 0xFF)
 			{
-				node = &D_8014DD50[parentNode];
-				pathNodes[0] = node->unkC;
-				node = &D_8014DD50[pathNodes[0]];
-				pathNodes[1] = node->unkC;
-				node = &D_8014DD50[pathNodes[1]];
-				pathNodes[2] = node->unkD;
-				pathResult = func_80081F18_90EC8(arg0, 3, 8, pathNodes, &D_8013C9D0_14B980);
-				if (pathResult != 8)
+				if (inst->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
 				{
-					goto skip_parent_cleanup;
+					node = &D_8014DD50[parentNode];
+					pathNodes[0] = node->unkC;
+					node = &D_8014DD50[pathNodes[0]];
+					pathNodes[1] = node->unkC;
+					node = &D_8014DD50[pathNodes[1]];
+					pathNodes[2] = node->unkD;
+					pathResult = func_80081F18_90EC8(arg0, 3, 8, pathNodes, &D_8013C9D0_14B980);
+				}
+
+				if (!(inst->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) || (pathResult == 8))
+				{
+					inst->unk20 &= ~ALIEN_FLAG_UNKG;
+					func_80079910_888C0(parent->unk1B);
+					parent->unk1B = 0xFF;
+					if (inst->unk24 >= D_80048168)
+					{
+						parent->unk20 |= ALIEN_FLAG_UNKG;
+						parent->unk20 |= (ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE);
+						func_80087AAC_96A5C(arg0);
+						inst->unk26 = 4;
+					}
 				}
 			}
-
-			inst->unk20 &= ~ALIEN_FLAG_UNKG;
-			func_80079910_888C0(parent->unk1B);
-			parent->unk1B = 0xFF;
-			if (inst->unk24 >= D_80048168)
-			{
-				parent->unk20 |= ALIEN_FLAG_UNKG;
-				parent->unk20 |= (ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE);
-				func_80087AAC_96A5C(arg0);
-				inst->unk26 = 4;
-			}
-		}
 		else if (parent->unk1E == 0xFF)
 		{
 			if (inst->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
@@ -2122,8 +2120,6 @@ void func_8009012C_9F0DC(u8 arg0)
 	{
 		inst->unk20 &= ~(ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD);
 	}
-
-skip_parent_cleanup:
 	if ((parentFlags & 0x2000) && (((buildingInstances[inst->unk38].unk8 >> 12) & 4) != 0))
 	{
 		inst->unk20 &= ~(ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE);
