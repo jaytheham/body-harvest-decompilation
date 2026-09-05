@@ -1212,7 +1212,7 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 		sp2A = (s16)D_80222A70;
 	}
 	sp2C += sp2A;
-	if (alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER)
+	if (inst->unk20 & ALIEN_FLAG_PLAYER)
 	{
 		sp24 = D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE;
 		if (sp24 && (D_80222A70 >= D_80052B34->unk2))
@@ -1248,31 +1248,29 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008E978_9D928.s")
 #endif
 
-// CURRENT(1824)
-#ifdef NON_MATCHING
 // AI - Gravity with type-driven height offset
+#ifdef NON_MATCHING
 void func_8008EB20_9DAD0(u8 arg0, s32 arg1, s32 arg2)
 {
-	AlienInstance *inst = &alienInstances[arg0];
-	s16 sp46;
-	s32 sp24;
-	s16 typeIndex;
-	s32 sp2C;
+	s32 temp2;
 	s32 temp;
-
+	s16 sp46;
+	s16 typeIndex;
+	s32 sp24;
+	f64 factor;
+	AlienInstance *inst;
+	typeIndex = alienInstances[arg0].typeIndex;
 	sp24 = 0;
-	typeIndex = inst->typeIndex;
-	func_8011E6FC_12D6AC(inst->unk0, inst->unk4, &sp46);
-
+	func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &sp46);
+	inst = &alienInstances[arg0];
 	if (inst->unk20 & ALIEN_FLAG_PLAYER)
 	{
 		sp24 = D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE;
-		if (sp24 && D_80222A70 >= D_80052B34->unk2)
+		if (sp24 && (D_80222A70 >= D_80052B34->unk2))
 		{
 			sp24 = 0;
 		}
 	}
-
 	if (alienTypes[typeIndex].unk54 & 0x10000000)
 	{
 		if (sp46 >= D_80222A70)
@@ -1284,36 +1282,39 @@ void func_8008EB20_9DAD0(u8 arg0, s32 arg1, s32 arg2)
 	{
 		sp46 = D_80222A70;
 	}
-
 	if (sp24)
 	{
-		sp2C = D_80052B34->unk2 + 0xC8;
+		arg1 = D_80052B34->unk2 + 0xC8;
 	}
 	else
 	{
-		sp2C = (s32)sp46 + arg1;
+		arg1 += sp46;
 	}
-
-	if (inst->unk2 < sp2C)
+	if (inst->unk2 < arg1)
 	{
-		inst->unkA = (s16)((s32)(inst->unkA - arg2 * (((sp2C - inst->unk2) / 160) > 1.0 ? 1.0 : (f64)((sp2C - inst->unk2) / 160))));
+		factor = (((arg1 - inst->unk2) / 160) > 1.0) ? (1.0) : ((arg1 - inst->unk2) / 160);
+		inst->unkA = inst->unkA - (arg2 * factor);
 	}
-	if (sp2C < inst->unk2)
+	if (arg1 < inst->unk2)
 	{
-		inst->unkA = (s16)((s32)(inst->unkA + arg2 * (((inst->unk2 - sp2C) / 160) > 1.0 ? 1.0 : (f64)((inst->unk2 - sp2C) / 160))));
+		factor = (((inst->unk2 - arg1) / 160) > 1.0) ? (1.0) : ((inst->unk2 - arg1) / 160);
+		inst->unkA = inst->unkA + (arg2 * factor);
 	}
-
-	inst->unkA = (s16)((s32)(inst->unkA * D_80141EE8_150E98[0]));
+	inst->unkA *= D_80141EE8_150E98[0];
 	temp = -inst->unk12;
 	if (temp < inst->unk12)
 	{
-		temp = inst->unk12;
+		temp2 = inst->unk12;
 	}
-	if (temp < 0x101)
+	else
 	{
-		temp = 0x100;
+		temp2 = (u64)temp;
 	}
-	inst->unk10 = (s16)(-((s32)(((f32)sins(inst->unkA) / 32768.0) * temp)));
+	if (temp2 < 0x101)
+	{
+		temp2 = 0x100;
+	}
+	inst->unk10 = -((s32)((((f32)sins(inst->unkA)) / 32768.0) * temp2));
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008EB20_9DAD0.s")
