@@ -325,7 +325,7 @@ void func_8012F2DC_13E28C(s32 src, s32 dst, s32 increment)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F2DC_13E28C.s")
 #endif
 
-// CURRENT(31894)
+// CURRENT(30251)
 #ifdef NON_MATCHING
 s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, u8 arg7)
 {
@@ -333,42 +333,40 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 	s32 textWidth;
 	u8 textLen;
 	s32 x;
-	s32 allMatched;
 	u8 pulseColor[4];
-	s32 flags;
+	s32 allMatched;
 
 	allMatched = 1;
-	flags = arg7;
 
 	if (arg6 != 0) {
 		s32 idx;
 
-		if ((flags & 4) != 0) {
+		if ((arg7 & 4) != 0) {
 			D_8015FF88 = 100;
 		} else {
 			D_8015FF88 = 0;
 		}
 
 		for (idx = 0; &D_8015FF90[idx] != (s32 *) &D_80160050; idx += 4) {
-			if ((flags & 4) != 0) {
+			if ((arg7 & 4) != 0) {
 				D_8015FF90[idx] = 100;
 			} else {
 				D_8015FF90[idx] = 0;
 			}
 
-			if ((flags & 4) != 0) {
+			if ((arg7 & 4) != 0) {
 				D_8015FF90[idx + 1] = 100;
 			} else {
 				D_8015FF90[idx + 1] = 0;
 			}
 
-			if ((flags & 4) != 0) {
+			if ((arg7 & 4) != 0) {
 				D_8015FF90[idx + 2] = 100;
 			} else {
 				D_8015FF90[idx + 2] = 0;
 			}
 
-			if ((flags & 4) != 0) {
+			if ((arg7 & 4) != 0) {
 				D_8015FF90[idx + 3] = 100;
 			} else {
 				D_8015FF90[idx + 3] = 0;
@@ -383,7 +381,7 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 		D_8015FF90[0] = D_8015FF88;
 	}
 
-	if ((flags & 0x20) != 0) {
+	if ((arg7 & 0x20) != 0) {
 		func_8012F2DC_13E28C((s32) arg4, (s32) pulseColor, 5);
 	}
 
@@ -400,15 +398,12 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 	x = (D_80068084 / 2) - (textWidth >> 1);
 
 	for (i = 0; i < textLen; i++) {
-		u8 ch;
-
-		ch = arg0[i];
-		if (func_8012EC3C_13DBEC(ch) == 0) {
+		if (func_8012EC3C_13DBEC(arg0[i]) == 0) {
 			x += arg1 + 2;
 			continue;
 		}
 
-		if ((ch == 'i') || (ch == 'I') || (ch == '1')) {
+		if ((arg0[i] == 'i') || (arg0[i] == 'I') || (arg0[i] == '1')) {
 			x -= arg1 >> 1;
 		}
 
@@ -433,17 +428,17 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 					osSyncPrintf(&D_801453C0_154370);
 				}
 
-				if ((flags & 0x10) != 0) {
+				if ((arg7 & 0x10) != 0) {
 					alpha = D_8015FF90[(rowBase * 4) + band];
 				} else {
 					alpha = D_8015FF90[band];
 				}
 
-				if (((flags & 4) != 0) && (arg5 != 0) && (alpha == 0x5A) && ((flags & 0x10) != 0) && (band == 6)) {
+				if (((arg7 & 4) != 0) && (arg5 != 0) && (alpha == 0x5A) && ((arg7 & 0x10) != 0) && (band == 6)) {
 					func_800153D8_15FD8(0xCD);
 				}
 
-				if (((flags & 4) != 0 && alpha != 0) || ((flags & 4) == 0 && alpha != 100)) {
+				if (((arg7 & 4) != 0 && alpha != 0) || ((arg7 & 4) == 0 && alpha != 100)) {
 					allMatched = 0;
 				}
 
@@ -452,7 +447,7 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 					sHalf = 1;
 				}
 
-				if ((((flags & 4) != 0) && (alpha == 0)) || (((flags & 4) == 0) && (alpha == 100)) || ((flags & 8) != 0)) {
+				if ((((arg7 & 4) != 0) && (alpha == 0)) || (((arg7 & 4) == 0) && (alpha == 100)) || ((arg7 & 8) != 0)) {
 					gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
 				} else {
 					func_8012F24C_13E1FC(pulseColor, 5);
@@ -460,8 +455,8 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 				}
 
 				bandHeight = alpha;
-				if ((flags & 8) != 0) {
-					bandHeight = ((flags & 4) != 0) ? 0 : 100;
+				if ((arg7 & 8) != 0) {
+					bandHeight = ((arg7 & 4) != 0) ? 0 : 100;
 				}
 
 				gDPPipeSync(D_8005BB2C++);
@@ -474,14 +469,14 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 					G_TX_RENDERTILE,
 					0,
 					0,
-					(s32) ((1.0f / (((f32) (sHalf * 2)) / 32.0f)) * 1024.0f),
-					(s32) ((1.0f / (((f32) ((bandHeight * 2) + arg2)) / 32.0f)) * 1024.0f)
+					(s32) ((1.0f / (((f32) (sHalf * 2)) / 32)) * 1024.0f),
+					(s32) ((1.0f / (((f32) ((bandHeight * 2) + arg2)) / 32)) * 1024.0f)
 				);
 			}
 
 			x += arg1;
 		} else {
-			if ((flags & 0x20) != 0) {
+			if ((arg7 & 0x20) != 0) {
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], 0xFF);
 			} else {
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
@@ -497,8 +492,8 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 				G_TX_RENDERTILE,
 				0,
 				0,
-				(s32) ((1.0f / (((f32) arg1) / 32.0f)) * 1024.0f),
-				(s32) ((1.0f / (((f32) arg2) / 32.0f)) * 1024.0f)
+				(s32) ((1.0f / (((f32) arg1) / 32)) * 1024.0f),
+				(s32) ((1.0f / (((f32) arg2) / 32)) * 1024.0f)
 			);
 
 			x += arg1;
@@ -511,19 +506,19 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 		s32 target;
 		s32 next;
 
-		if ((flags & 4) != 0) {
-			target = ((flags & 4) != 0) ? 0 : 100;
+		if ((arg7 & 4) != 0) {
+			target = ((arg7 & 4) != 0) ? 0 : 100;
 			next = D_8015FF88 - 10;
 			if (next < target) {
-				D_8015FF88 = ((flags & 4) != 0) ? 0 : 100;
+				D_8015FF88 = ((arg7 & 4) != 0) ? 0 : 100;
 			} else {
 				D_8015FF88 = next;
 			}
 		} else {
-			target = ((flags & 4) != 0) ? 0 : 100;
+			target = ((arg7 & 4) != 0) ? 0 : 100;
 			next = D_8015FF88 + 10;
 			if (target < next) {
-				D_8015FF88 = ((flags & 4) != 0) ? 0 : 100;
+				D_8015FF88 = ((arg7 & 4) != 0) ? 0 : 100;
 			} else {
 				D_8015FF88 = next;
 			}
