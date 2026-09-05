@@ -1872,6 +1872,7 @@ extern u8 D_80140C70[4];
 extern u8 D_80140C74[4];
 extern s32 D_80140C78;
 extern s32 D_80140C84;
+extern s32 D_80140C84_W;
 extern s32 D_80140C88;
 extern s32 D_80140C8C;
 extern s32 D_80140C90;

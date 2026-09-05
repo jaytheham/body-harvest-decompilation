@@ -70,6 +70,8 @@ D_01013080 = 0x01013080;
 
 /* Write alias for D_8014ECC8 to prevent address CSE */
 D_8014ECC8_W = 0x8014ECC8;
+/* Write alias for D_80140C84 to prevent address CSE */
+D_80140C84_W = 0x80140C84;
 D_03059BA0 = 0x03059BA0;
 D_0305AFA0 = 0x0305AFA0;
 D_04000040 = 0x04000040;
