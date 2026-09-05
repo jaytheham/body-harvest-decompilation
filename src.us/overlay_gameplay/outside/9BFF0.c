@@ -1194,16 +1194,14 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008E524_9D4D4.s")
 #endif
 
-// https://decomp.me/scratch/V6LCq
-// CURRENT(821)
-#ifdef NON_MATCHING
 // AI - Vertical velocity/gravity update
+#ifdef NON_MATCHING
 void func_8008E978_9D928(u8 arg0, s32 arg1)
 {
 	s32 sp2C;
 	s16 sp2A;
 	s32 sp24;
-	sp2C = arg1;
+
 	sp24 = 0;
 	func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &sp2A);
 
@@ -1211,8 +1209,8 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 	{
 		sp2A = (s16)D_80222A70;
 	}
-	sp2C += sp2A;
-	if (inst->unk20 & ALIEN_FLAG_PLAYER)
+	sp2C = (arg1 += sp2A);
+	if (alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER)
 	{
 		sp24 = D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE;
 		if (sp24 && (D_80222A70 >= D_80052B34->unk2))
@@ -1220,7 +1218,7 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 			sp24 = 0;
 		}
 	}
-	if (sp24 != 0)
+	if (sp24)
 	{
 		sp2C = D_80052B34->unk2;
 	}
@@ -1232,7 +1230,7 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 	{
 		alienInstances[arg0].unkA += 0x1F4;
 	}
-	alienInstances[arg0].unkA = alienInstances[arg0].unkA * D_80141EE0_150E90[0];
+	alienInstances[arg0].unkA *= D_80141EE0_150E90[0];
 	sp2C = -((s16)alienInstances[arg0].unk12);
 	if (sp2C < alienInstances[arg0].unk12)
 	{
