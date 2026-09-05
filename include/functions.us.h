@@ -973,6 +973,7 @@ void func_8013001C_13EFCC(void);
 void func_801306C4_13F674(u8 *arg0);
 void func_80130BA0_13FB50(void);
 void func_80131280_140230(u8 *arg0);
+s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 arg4, s32 arg5);
 void func_80133260_142210(Unk80160080 *arg0);
 void func_80137130_1460E0(s32, s32, s16, s16, s16);
 void func_801371B8_146168(s32, s32, s16, s16, s16, f32);
