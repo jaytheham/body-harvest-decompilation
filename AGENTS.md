@@ -34,7 +34,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
 Prioritize incorrect, missing, and out-of-order instructions, ignore register allocation and stack placement until all the logic is correct.
 Sometimes a change can produce more accurate logic, but change register/stack allocation in a way that causes more differences overall, this is OK, the goal is to get the logic correct first, then optimize the register/stack allocation to match the target assembly.
 
-Don't bother checking git history for any reason, the unmatched code in master is the best known state, there are no other branches or historical commits with better code. It's your job to make improvements.
+Don't bother checking git history, or the git web repo for any reason, the unmatched code in local master is the best known state, there are no other branches or historical commits with better code. It's your job to make improvements.
 
 If a function has a switch statement and there is an associated jump table const defined at the start of the C file, delete that const before you begin. The consts are placeholders that make the rodata  build correctly while the functions are NON_MATCHING and the .s file is being used instead, when the C code is being included in the build it will generate its own jump table replacing the need for the const version. 
 

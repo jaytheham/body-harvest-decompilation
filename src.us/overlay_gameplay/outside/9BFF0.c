@@ -1889,27 +1889,24 @@ s32 func_8008FE18_9EDC8(u8 arg0)
 	return 0;
 }
 
-// CURRENT(1442)
-#ifdef NON_MATCHING
+// CURRENT(1067)
 // AI - Calculate spawn offset from path node
+#ifdef NON_MATCHING
 s32 func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 {
-	AlienInstance *inst;
-	Unk8014DD50 *nodeA;
+	s32 padA;
+	s32 padB;
 	s32 x;
 	s32 y;
 	s32 z;
 	s16 angle;
 	s16 trig;
 
-	inst = &alienInstances[arg0];
-	nodeA = &D_8014DD50[inst->unkC];
+	x = D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk0 + D_8014DD50[alienInstances[arg0].unkC].unk0;
+	y = D_8014DD50[alienInstances[arg0].unkC].unk2 + D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk2;
+	z = D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk4 + D_8014DD50[alienInstances[arg0].unkC].unk4;
 
-	x = D_8014DD50[nodeA->unkC].unk0 + nodeA->unk0;
-	y = D_8014DD50[nodeA->unkC].unk2 + nodeA->unk2;
-	z = nodeA->unk4 + D_8014DD50[nodeA->unkC].unk4;
-
-	angle = (u16)D_8014DD50[nodeA->unkC].unkA;
+	angle = (u16)D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unkA;
 
 	trig = sins(angle);
 	y = (s32)(y + ((-50.0 * ((f32)coss(angle) / 32768.0)) - (D_80141EF8_150EA8[0] * ((f32)trig / 32768.0))));
@@ -1917,7 +1914,7 @@ s32 func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 	trig = coss(angle);
 	z = (s32)(z + ((D_80141F00_150EB0[0] * ((f32)trig / 32768.0)) + (-50.0 * ((f32)sins(angle) / 32768.0))));
 
-	func_80128428_1373D8(inst, (s16)x, (s16)y, (s16)z, arg1, arg2, arg3);
+	func_80128428_1373D8(&alienInstances[arg0], (s16)x, (s16)y, (s16)z, arg1, arg2, arg3);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008FF54_9EF04.s")
