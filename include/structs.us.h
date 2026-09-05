@@ -3098,4 +3098,9 @@ typedef struct {
 	/* 0x10 */ f32 targetZ;  // look-at target Z
 } OrbitCam; /* size = 0x14 */
 
+typedef struct {
+	/* 0x00 */ u8 tick;
+	/* 0x01 */ u8 frame;
+} Unk8016006C; /* size = 0x02 */
+
 #endif

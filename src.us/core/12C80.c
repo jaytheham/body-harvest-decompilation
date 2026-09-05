@@ -583,7 +583,6 @@ void func_80013314_13F14(void) {
 
 void func_80013324_13F24(void)
 {
-	s8 idx;
 	s8 arr_val;
 	if (D_8006AB88 == 0)
 	{
@@ -592,8 +591,7 @@ void func_80013324_13F24(void)
 	if (D_80031CA4 != 3)
 	{
 		arr_val = D_80033C6C_3486C % 15;
-		idx = (s8) arr_val;
-		arr_val = D_80033C5C_3485C[idx];
+		arr_val = D_80033C5C_3485C[arr_val];
 		D_80033C6C_W = D_80033C6C_3486C + 1;
 		func_80015C94_16894(arr_val, 3);
 	}
