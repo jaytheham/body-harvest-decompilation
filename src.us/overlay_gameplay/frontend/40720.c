@@ -755,57 +755,46 @@ void func_80071738_41BE8(void) {
 #endif
 
 // https://decomp.me/scratch/DRRoV
-// CURRENT(110)
+// CURRENT(1)
 #ifdef NON_MATCHING
 s32 func_80071760_41C10(s32 arg0)
 {
-	s32 totalWidth;
-	s16 digitCount;
-	s16 i;
-	s16 j;
-	s32 value;
+  s32 totalWidth;
+  s16 digitCount;
+  s16 i;
+  s16 j;
+  s32 value; 
 	s32 divisor;
-	s32 pad;
-	s8 chpad;
-	s8 chpad2;
+	s32 pad1;s8 pad2;s8 pad3;s8 pad4;
 	s8 ch;
-	s8 chpad3;
 	s32 textWidth;
-	digitCount = 0;
-	totalWidth = 0;
-	value = arg0;
-	textWidth = func_8000A2B8_AEB8(&D_800AD7E4_7DC94, 0) * 0x1C;
-	if (arg0 > 0)
-	{
-		do
-		{
-			value = value / 10.0f;
-			digitCount++;
-		} while (value > 0);
-		ch = 0;
-	}
+  digitCount = 0;
+  totalWidth = 0;
+  value = arg0;
+  textWidth = func_8000A2B8_AEB8(&D_800AD7E4_7DC94, 0) * 0x1C;
+  for (arg0 > 0; value > 0;)
+  {
+	  value = value / 10.0f;
+	  digitCount++;
+  }
+	// Is not ch being set here?
+  for (ch = 0, i = 0; i < digitCount; i++)
+  {
+	  divisor = 1;
+	  for (j = 0; j < i; j++)
+	  {
+		divisor *= 10;
+	  }
 
-	if (digitCount > 0)
-	{
-		i = 0;
-		do
-		{
-			divisor = 1;
-			for (j = 0; j < i; j++)
-			{
-				divisor *= 10;
-			}
-
-			value = ((f32)arg0) / divisor;
-			ch = (value - (((s32)(value / 10.0f)) * 10)) + '0';
-			totalWidth += func_8000A2B8_AEB8(&ch, 0) * 4;
-		} while ((++i) < digitCount);
-	}
-	if (arg0 == 0)
-	{
-		totalWidth = func_8000A2B8_AEB8(&D_800AD7E8_7DC98, 0) * 4;
-	}
-	return textWidth - totalWidth;
+	  value = ((f32) arg0) / divisor;
+	  ch = (value - (((s32) (value / 10.0f)) * 10)) + '0';
+	  totalWidth += func_8000A2B8_AEB8(&ch, 0) * 4; 
+  }
+  if (arg0 == 0)
+  {
+	totalWidth = func_8000A2B8_AEB8(&D_800AD7E8_7DC98, 0) * 4;
+  }
+  return textWidth - totalWidth;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071760_41C10.s")

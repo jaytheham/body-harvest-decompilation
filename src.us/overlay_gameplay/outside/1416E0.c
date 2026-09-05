@@ -1411,36 +1411,31 @@ void func_80135D08_144CB8(f32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 // AI - Calculate camera shake from impact distance
 void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
 {
-	f32 var_f14;
-	f32 new_var;
-	float new_var2;
-	s32 var_v0;
-	s32 var_v1;
-	s32 var_a0;
-	f32 temp_f16;
-	f32 temp_f18;
-	new_var2 = 0.0f;
-	if (arg3 != 0.0f)
+  f32 var_f14;
+  f32 new_var;
+  float new_var2;
+  s32 var_v0;
+  s32 var_v1;
+  s32 var_a0;
+  f32 temp_f16;
+  
+  if (arg3 != 0.0f)
   {
-	f32 temp_f2;
 	new_var2 = arg0 / 4;
-	temp_f2 = new_var2 - D_80047954;
-	var_v0 = ((-temp_f2) < temp_f2) ? ((s32) temp_f2) : ((s32) (-temp_f2));
-	temp_f2 = (arg1 / 4) - D_80047958;
-	var_v1 = ((-temp_f2) < temp_f2) ? ((s32) temp_f2) : ((s32) (-temp_f2));
-	temp_f2 = (arg2 / 4) - D_8004795C;
-	var_a0 = ((-temp_f2) < temp_f2) ? ((s32) temp_f2) : ((s32) (-temp_f2));
+	var_v0 = (s32)BH_ABS_ALT(new_var2 - D_80047954);
+	  
+	var_v1 = (s32)BH_ABS_ALT((arg1 / 4) - D_80047958);
+	  
+	var_a0 = (s32)BH_ABS_ALT((arg2 / 4) - D_8004795C);
+	  
 	new_var = D_801456F8_1546A8[0];
-	temp_f16 = (((var_v0 * var_v0) + (var_v1 * var_v1)) + (var_a0 * var_a0)) / new_var;
-	temp_f18 = temp_f16;
-	temp_f18 = arg3 - temp_f18;
-	var_f14 = temp_f18;
+	temp_f16 = ((var_v0 * var_v0) + (var_v1 * var_v1) + (var_a0 * var_a0)) / new_var;
+	var_f14 = arg3 - temp_f16;
 	if (arg3 < temp_f16)
 	{
 	  var_f14 = new_var2;
 	}
-	else
-	  if (temp_f18 < 1.0)
+	else if (var_f14 < 1.0)
 	{
 	  var_f14 = 1.0f;
 	}
