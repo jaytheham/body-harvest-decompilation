@@ -3139,17 +3139,18 @@ void func_802DBF64_194A74(u8 arg0) {
 }
 
 
-#ifdef NON_MATCHING
 /* CURRENT(2418) */
 // AI - Alien type 4 behavior
 void func_802DBF98_194AA8(u8 arg0) {
-	u8 otherIndex;
-	s32 var_v0;
 	s32 pad0;
-	s32 distanceThreshold;
+	u8 otherIndex;
+	u8 pad1;
+	s32 var_v0;
 	s32 flagValue;
+	s32 distanceThreshold;
 
 	otherIndex = alienInstances[arg0].unk25;
+	pad1 = otherIndex;
 	func_800A93A4_B8354(arg0, 0x99, 0x32, 0xD4);
 	D_8014DD50[alienInstances[arg0].unkC].unk4 = -0x96;
 	if ((alienInstances[otherIndex].unk20 & ALIEN_FLAG_UNKF) != ALIEN_FLAG_UNKF) {
@@ -3162,50 +3163,31 @@ void func_802DBF98_194AA8(u8 arg0) {
 		distanceThreshold = 0x7D0;
 	}
 
-	if (var_v0 != 0) {
-		return;
-	}
-
+	if (var_v0 == 0) {
 	if ((func_800038E0_44E0() % 100) == 0) {
-		s32 dx;
-		s32 dy;
-		s32 adx;
-		s32 ady;
-		VehicleInstance *player;
-
-		player = D_80052B34;
-
-		dx = player->unk0 - alienInstances[arg0].unk0;
-		adx = -dx;
-		if (adx < dx) {
-			adx = dx;
-		}
-		dy = player->unk4 - alienInstances[arg0].unk4;
-		ady = -dy;
-		if (ady < dy) {
-			ady = dy;
-		}
-		if (ady < adx) {
-			if (adx < dx) {
-			} else {
-				dx = adx;
-			}
-			var_v0 = dx;
-		} else {
-			if (ady < dy) {
-				ady = dy;
-			}
-			var_v0 = ady;
-		}
-		if (var_v0 < distanceThreshold && !(*(s32 *) ((u8 *) &alienInstances[otherIndex] + 0x45) & 0x8000)) {
+		if (((-(D_80052B34->unk0 - alienInstances[arg0].unk0) <
+				  (D_80052B34->unk0 - alienInstances[arg0].unk0)
+			  ? (D_80052B34->unk0 - alienInstances[arg0].unk0)
+			  : -(D_80052B34->unk0 - alienInstances[arg0].unk0)) >
+			 (-(D_80052B34->unk4 - alienInstances[arg0].unk4) <
+				  (D_80052B34->unk4 - alienInstances[arg0].unk4)
+			  ? (D_80052B34->unk4 - alienInstances[arg0].unk4)
+			  : -(D_80052B34->unk4 - alienInstances[arg0].unk4))
+			 ? (-(D_80052B34->unk0 - alienInstances[arg0].unk0) <
+					 (D_80052B34->unk0 - alienInstances[arg0].unk0)
+				 ? (D_80052B34->unk0 - alienInstances[arg0].unk0)
+				 : -(D_80052B34->unk0 - alienInstances[arg0].unk0))
+			 : (-(D_80052B34->unk4 - alienInstances[arg0].unk4) <
+					 (D_80052B34->unk4 - alienInstances[arg0].unk4)
+				 ? (D_80052B34->unk4 - alienInstances[arg0].unk4)
+				 : -(D_80052B34->unk4 - alienInstances[arg0].unk4))) < distanceThreshold &&
+			!(*(s32 *) ((u8 *) &alienInstances[pad1] + 0x45) & 0x8000)) {
 			alienInstances[arg0].unk36 = 0;
 			alienInstances[arg0].unk20 |= flagValue;
 		}
 	}
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DBF98_194AA8.s")
-#endif
 
 // AI - Alien type 4 setup
 void func_802DC184_194C94(u8 arg0) {
