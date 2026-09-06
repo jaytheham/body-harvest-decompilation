@@ -3165,22 +3165,10 @@ void func_802DBF98_194AA8(u8 arg0) {
 
 	if (var_v0 == 0) {
 	if ((func_800038E0_44E0() % 100) == 0) {
-		if (((-(D_80052B34->unk0 - alienInstances[arg0].unk0) <
-				  (D_80052B34->unk0 - alienInstances[arg0].unk0)
-			  ? (D_80052B34->unk0 - alienInstances[arg0].unk0)
-			  : -(D_80052B34->unk0 - alienInstances[arg0].unk0)) >
-			 (-(D_80052B34->unk4 - alienInstances[arg0].unk4) <
-				  (D_80052B34->unk4 - alienInstances[arg0].unk4)
-			  ? (D_80052B34->unk4 - alienInstances[arg0].unk4)
-			  : -(D_80052B34->unk4 - alienInstances[arg0].unk4))
-			 ? (-(D_80052B34->unk0 - alienInstances[arg0].unk0) <
-					 (D_80052B34->unk0 - alienInstances[arg0].unk0)
-				 ? (D_80052B34->unk0 - alienInstances[arg0].unk0)
-				 : -(D_80052B34->unk0 - alienInstances[arg0].unk0))
-			 : (-(D_80052B34->unk4 - alienInstances[arg0].unk4) <
-					 (D_80052B34->unk4 - alienInstances[arg0].unk4)
-				 ? (D_80052B34->unk4 - alienInstances[arg0].unk4)
-				 : -(D_80052B34->unk4 - alienInstances[arg0].unk4))) < distanceThreshold &&
+		if (((BH_ABS_ALT(D_80052B34->unk0 - alienInstances[arg0].unk0)) >
+			 (BH_ABS_ALT(D_80052B34->unk4 - alienInstances[arg0].unk4))
+			 ? (BH_ABS_ALT(D_80052B34->unk0 - alienInstances[arg0].unk0))
+			 : (BH_ABS_ALT(D_80052B34->unk4 - alienInstances[arg0].unk4))) < distanceThreshold &&
 			!(*(s32 *) ((u8 *) &alienInstances[pad1] + 0x45) & 0x8000)) {
 			alienInstances[arg0].unk36 = 0;
 			alienInstances[arg0].unk20 |= flagValue;
