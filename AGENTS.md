@@ -56,4 +56,4 @@ If build returns `build/bh.us.z64: OK` the function is matched and you can stop 
 
 ## Finalize
 
-Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated notes to help future decomp. Only for matched functions.
+Whenever you match a function or a particularly tricky bit of asm think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated notes to help future decomp.

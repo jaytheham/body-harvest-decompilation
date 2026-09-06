@@ -2947,62 +2947,31 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DB16C_193C7C.s")
 #endif
-#ifdef NON_MATCHING
 /* CURRENT(2295) */
 // AI - Alien type 1 behavior with patrol and pursuit
 void func_802DBA00_194510(u8 arg0) {
 	s32 pad0;
-	u8 sp43;
+	u8 otherIndex;
 	s32 pad1;
-	s32 var_v0;
-	s32 temp_a0;
-	s32 var_a3;
-	s32 temp_v1;
-	s32 temp_a1;
-	s32 var_a2;
-	s32 var_a0;
+	s32 pad2;
+	s32 pad3;
 
-	sp43 = alienInstances[arg0].unk25;
+	otherIndex = alienInstances[arg0].unk25;
 	func_800A93A4_B8354(arg0, -0xBB, 0x22, 0x147);
 	D_8014DD50[alienInstances[arg0].unkC].unk4 = -0x96;
 	if (func_802DB16C_193C7C(arg0, &D_802DDE18_196928, &D_802DDE24_196934) == 0) {
 		if ((func_800038E0_44E0() % 100) == 0) {
-			var_v0 = D_80052B34->unk0 - alienInstances[arg0].unk0;
-			temp_a0 = -var_v0;
-			if (temp_a0 < var_v0) {
-				var_a3 = var_v0;
-			} else {
-				var_a3 = temp_a0;
-			}
-			temp_v1 = D_80052B34->unk4 - alienInstances[arg0].unk4;
-			temp_a1 = -temp_v1;
-			if (temp_a1 < temp_v1) {
-				var_a2 = temp_v1;
-			} else {
-				var_a2 = temp_a1;
-			}
-			if (var_a2 < var_a3) {
-				if (temp_a0 < var_v0) {
-				} else {
-					var_v0 = temp_a0;
-				}
-			} else {
-				var_a0 = temp_a1;
-				if (temp_a1 < temp_v1) {
-					var_a0 = temp_v1;
-				}
-				var_v0 = var_a0;
-			}
-			if (var_v0 < 0x320 && !(alienInstances[sp43].unk47 & 0x80)) {
+			if (((BH_ABS_ALT(D_80052B34->unk0 - alienInstances[arg0].unk0) >
+				 BH_ABS_ALT(D_80052B34->unk4 - alienInstances[arg0].unk4))
+				? BH_ABS_ALT(D_80052B34->unk0 - alienInstances[arg0].unk0)
+				: BH_ABS_ALT(D_80052B34->unk4 - alienInstances[arg0].unk4)) < 0x320 &&
+				!(*(s32 *) ((u8 *) &alienInstances[otherIndex] + 0x45) & 0x8000)) {
 				alienInstances[arg0].unk36 = 0;
 				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD;
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DBA00_194510.s")
-#endif
 
 // AI - Alien type 1 setup
 void func_802DBB88_194698(u8 arg0) {

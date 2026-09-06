@@ -42,3 +42,9 @@ s16 sp2E;
 u8 *sp24;
 ```
 Four s32 padding variables add 16 bytes (0x10), moving the frame from 0x30 to 0x40. `sp2E` and `sp24` keep their exact stack positions unchanged.
+
+If the real variable is a `u8` whose target slot is inside the added area, split
+the padding around it rather than putting all pads before it. In
+`func_802DBA00_194510`, one `s32` before `u8 otherIndex` and three after it
+produced the required 0x48 frame while moving the byte from `sp+0x37` to
+`sp+0x43`; all four pads remain unused and non-last.
