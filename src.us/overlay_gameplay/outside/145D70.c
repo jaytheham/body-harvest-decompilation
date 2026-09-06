@@ -241,7 +241,7 @@ f32 func_80136DC0_145D70(s16 arg0, s16 arg1, s16 arg2) {
 	return sqrtf(temp_f0 * temp_f0 + temp_f2 * temp_f2 + temp_f14 * temp_f14);
 }
 
-// CURRENT(2431)
+// Current(1117)
 #ifdef NON_MATCHING
 s16 func_80136ECC_145E7C(s16 arg0, s16 arg1, s16 arg2) {
 	f32 sp44;
@@ -254,15 +254,14 @@ s16 func_80136ECC_145E7C(s16 arg0, s16 arg1, s16 arg2) {
 	f32 temp_f2_2;
 	f32 var_f0;
 	f32 var_f2;
+	s32 padS0;
+	s16 padS1;
 	s16 sp20;
 	s16 var_v1;
-	s32 temp_v0;
+	s16 temp_v0;
 	s32 temp_v1;
-	s32 var_t4;
 
 	arg1 = arg1;
-	pad0 = 0;
-	pad1 = 0;
 
 	if (D_8006AB88 == 0) {
 		return 0;
@@ -296,17 +295,16 @@ s16 func_80136ECC_145E7C(s16 arg0, s16 arg1, s16 arg2) {
 
 	temp_v0 = func_80003680_4280(var_f2 / var_f0);
 	if (D_80157F68 > 0) {
-		var_t4 = ((s32)D_80157F08.unk8 - D_80157F08.unk1A) << 0x10;
+		temp_v1 = (s16)((s32)D_80157F08.unk8 - D_80157F08.unk1A);
 	} else {
-		var_t4 = ((s32)D_80160080.unk14 - (s32)D_80160080.unk8) << 0x10;
+		temp_v1 = (s16)((s32)D_80160080.unk14 - (s32)D_80160080.unk8);
 	}
-	temp_v1 = var_t4 >> 0x10;
 
 	if (temp_v1 < 0) {
-		var_v1 = (0x4000 - temp_v0) - sp20;
+		var_v1 = (s16)(0x4000 - temp_v0) - sp20;
 	} else {
 		if (temp_v1 > 0) {
-			var_v1 = sp20 - (0x4000 - temp_v0);
+			var_v1 = sp20 - (s16)(0x4000 - temp_v0);
 		} else {
 			var_v1 = 0;
 		}
