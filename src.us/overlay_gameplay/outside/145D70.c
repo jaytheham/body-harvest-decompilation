@@ -382,13 +382,18 @@ void func_80137368_146318(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 // Play alien sounds?
 void func_80137468_146418(s32 arg0, s32 arg1) {
 	s32 temp_v1;
-	AlienInstance *temp_v0;
+	s32 temp_v2;
+	s32 temp_v3;
+	Unk8006AA80Node *temp_v0;
 
 	if (D_8006AB88 != 0) {
 		temp_v1 = func_800038E0_44E0() & 0xFFFF;
 		D_80140D2C_14FCDC[0] += 1;
-		if (arg1 < 0x190) {
+		if (arg1 < 0x64) {
 			switch (arg1) {
+			case 1:
+				func_80137130_1460E0(0, 0x14B, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
+				return;
 			case 0x2:
 				func_80137130_1460E0(0, 0xAB, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 				return;
@@ -482,6 +487,15 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 			case 0x22:
 				func_80137130_1460E0(0, 0xCC, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 				return;
+			}
+			return;
+		}
+
+		if (arg1 >= 0x64 && arg1 < 0xC8) {
+			switch (arg1) {
+			case 0x64:
+				func_80137130_1460E0(0, 0xB6, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
+				return;
 			case 0x65:
 				func_801371B8_146168(&alienInstances[arg0], 0xB5, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, -1.0f);
 				return;
@@ -498,16 +512,24 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 			case 0x6A:
 				func_80137130_1460E0(0, 0xB2, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 				return;
-			case 0xCA:
+			}
+		}
+
+		if (arg1 >= 0xC8 && arg1 < 0x12C) {
+			switch (arg1) {
+			case 0xCB:
+				func_801371B8_146168(&alienInstances[arg0], 0x36, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, -1.0f);
+				return;
+			case 0xCC:
 				func_80137130_1460E0(0, 0xCC, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 				return;
-			case 0xCB:
+			case 0xCD:
 				func_80137130_1460E0(0, 0xB0, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 				return;
-			case 0xCD:
+			case 0xCF:
 				func_80137130_1460E0(0, 0x8D, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 				return;
-			case 0xCE:
+			case 0xD0:
 				temp_v0 = func_80012778_13378(&alienInstances[arg0]);
 				if (temp_v0 != 0) {
 					func_801371B8_146168(&alienInstances[arg0], 0x26, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
@@ -519,31 +541,45 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 				}
 				func_801371B8_146168(&alienInstances[arg0], 0x26, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, -1.0f);
 				return;
-			case 0xD0:
+			case 0xD2:
 				func_801371B8_146168(&alienInstances[arg0], 0xB9, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, -1.0f);
 				return;
-			case 0xD3:
+			case 0xD5:
 				func_801371B8_146168(&alienInstances[arg0], 0xB9, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, -1.0f);
-				return;
-			case 0xD4:
-				func_80137130_1460E0(0, 0xB4, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 				return;
 			case 0xD6:
+				func_80137130_1460E0(0, 0xB4, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
+				return;
+			}
+		}
+
+		if (arg1 >= 0x12C && arg1 < 0x190) {
+			switch (arg1) {
+			case 0x12D:
 				func_801371B8_146168(&alienInstances[arg0], 0xAF, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, D_801458EC_15489C);
 				return;
 			case 0x12E:
-				func_80137130_1460E0(&alienInstances[arg0], 0xB0, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
+				temp_v2 = alienInstances[arg0].unk48;
+				temp_v1 = -temp_v2;
+				temp_v3 = 0x12C - ((temp_v1 < temp_v2) ? temp_v2 : temp_v1);
+				if (temp_v3 < 0) {
+					temp_v3 = 0;
+				} else {
+					temp_v3 = 0x12C - ((temp_v1 < temp_v2) ? temp_v2 : temp_v1);
+				}
+				func_801371B8_146168(&alienInstances[arg0], 0xAF, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
+					(f32) (((f64) (f32) temp_v3 * D_801458F0_1548A0) / D_801458F8_1548A8 + D_80145900_1548B0));
 				return;
 			case 0x12F:
+				func_80137130_1460E0(&alienInstances[arg0], 0xB0, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
+				return;
+			case 0x130:
 				func_801371B8_146168(&alienInstances[arg0], 0x10, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
 					(f32) (((f32) alienInstances[arg0].unk2 / D_80145908_1548B8) * 0.5));
 				return;
-			case 0x130:
+			case 0x131:
 				func_801371B8_146168(0, 0xB1, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
 					(f32) (((f32) (temp_v1 % 300) / D_80145910_1548C0) + D_80145918_1548C8));
-				return;
-			case 0x133:
-				func_801371B8_146168(0, 0x6A, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, D_80145920_1548D0);
 				return;
 			case 0x134:
 				func_80137130_1460E0(0, 0xB2, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
@@ -551,7 +587,7 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 			case 0x135:
 				func_80137130_1460E0(0, 0xB3, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 				return;
-			case 0x137:
+			case 0x136:
 				func_80137130_1460E0(0, 0xB4, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 				return;
 			case 0x138:
@@ -569,6 +605,9 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 			case 0x13C:
 				func_80137130_1460E0(0, 0xB4, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 				return;
+			case 0x13D:
+				func_80137130_1460E0(0, 0xB4, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
+				return;
 			case 0x13F:
 				return;
 			}
@@ -577,72 +616,102 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 		if (arg1 >= 0x190) {
 			if (arg1 < 0x1F4) {
 				switch (arg1) {
+					case 0x191:
+						func_801371B8_146168(&alienInstances[arg0], 0x10, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, -1.0f);
+						return;
 					case 0x192:
-						func_801371B8_146168(0, 0xE8, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0.5f);
-						func_80137130_1460E0(0, 0xB4, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
+						func_801371B8_146168(0, 0x8E, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, -1.0f);
 						return;
 					case 0x193:
-						func_801371B8_146168(0, 0xE8, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, D_801459D4_154984);
+						func_801371B8_146168(0, 0xAE, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
+							(f32) (((f64) (f32) alienInstances[arg0].unk2 / D_80145958_154908) * 0.75));
 						return;
 					case 0x194:
-						func_801371B8_146168(&alienInstances[arg0], 0xB9, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 1.0f);
-						return;
-					case 0x195:
-						func_801371B8_146168(&alienInstances[arg0], 0x184, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 1.0f);
+						func_80137130_1460E0(0, 0xF3, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 						return;
 					case 0x196:
-						func_801371B8_146168(0, 0x185, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
-							(f32) (((f64) (f32) (temp_v1 % 100) / D_801459D8_154988) + 0.25));
+						func_80137130_1460E0(0, 0xCC, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 						return;
 					case 0x197:
-						func_801371B8_146168(0, 0x185, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
-							(f32) (((f64) (f32) (temp_v1 % 100) / D_801459E0_154990) + D_801459E8_154998));
-						return;
-					case 0x198:
-						func_80137130_1460E0(0, 0x186, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
-						return;
-					case 0x199:
-						func_801371B8_146168(&alienInstances[arg0], 0x184, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
-							(f32) (((f64) ((f32) alienInstances[arg0].unk12 / 1280.0f) * D_801459F0_1549A0) + D_801459F8_1549A8));
-						return;
-					case 0x19A:
-						func_801371B8_146168(0, 0x185, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0.25f);
+						func_80137130_1460E0(0, 0xB2, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 						return;
 					case 0x19B:
-						func_801371B8_146168(&alienInstances[arg0], 0x32, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, D_80145A00_1549B0);
+						func_801371B8_146168(&alienInstances[arg0], 0xAF, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, -1.0f);
 						return;
 					case 0x19C:
-						func_801371B8_146168(0, 0xB0, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
-							(f32) (((f64) (f32) (temp_v1 % 150) / D_80145A08_1549B8) + D_80145A10_1549C0));
+						func_80137130_1460E0(0, 0x7D, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 						return;
 					default:
 						return;
 				}
 			}
 
-			if (arg1 < 0x1FC) {
-				if (arg1 == 0x1F4) {
-					func_80137130_1460E0(0, 0xB2, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
-					return;
-				}
-				if (arg1 == 0x1FB) {
-					func_801371B8_146168(&alienInstances[arg0], 0x10, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
-						(f32) ((((f32) alienInstances[arg0].unk12 / 1280.0f) * D_80145A18_1549C8) + D_80145A20_1549D0));
-					return;
-				}
+			if (arg1 == 0x1F4) {
+				func_80137130_1460E0(0, 0xB2, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 				return;
 			}
 
-			switch (arg1) {
-				case 0x25B:
+			if (arg1 >= 0x1FC) {
+				switch (arg1) {
+				case 0x258:
 					func_80137130_1460E0(0, 0x180, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
 					return;
-				case 0x265:
-					func_801371B8_146168(&alienInstances[arg0], 0x10, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
-						(f32) ((((f32) alienInstances[arg0].unk12 / 1280.0f) * D_80145A18_1549C8) + D_80145A20_1549D0));
+				case 0x259:
+					func_801371B8_146168(0, 0xE8, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0.5f);
+					func_80137130_1460E0(0, 0xB4, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
+					return;
+				case 0x25A:
+					func_801371B8_146168(0, 0xE8, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, D_801459D4_154984);
+					return;
+				case 0x261:
+					func_801371B8_146168(&alienInstances[arg0], 0xB9, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 1.0f);
+					return;
+				case 0x262:
+					func_801371B8_146168(&alienInstances[arg0], 0x184, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 1.0f);
+					return;
+				case 0x263:
+					func_801371B8_146168(0, 0x185, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
+						(f32) (((f64) (f32) (temp_v1 % 100) / D_801459D8_154988) + 0.25));
+					return;
+				case 0x264:
+					func_80137130_1460E0(0, 0x186, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4);
+					return;
+				case 0x266:
+				case 0x267:
+				case 0x268:
+					func_801371B8_146168(&alienInstances[arg0], 0x187, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
+						(f32) (((f32) alienInstances[arg0].unk12 / 1280.0f) + 0.5));
+					return;
+				case 0x269:
+					func_801371B8_146168(0, 0x185, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0.25f);
+					return;
+				case 0x26A:
+				case 0x26B:
+					func_801371B8_146168(&alienInstances[arg0], 0x184, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
+						(f32) (((f64) ((f32) alienInstances[arg0].unk12 / 1280.0f) * D_801459F0_1549A0) + D_801459F8_1549A8));
+					return;
+				case 0x26C:
+					func_801371B8_146168(0, 0x185, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0.25f);
+					return;
+				case 0x274:
+					func_801371B8_146168(0, 0xB0, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
+						(f32) (((f64) (f32) (temp_v1 % 150) / D_80145A08_1549B8) + D_80145A10_1549C0));
+					return;
+				case 0x25B:
+					break;
+				case 0x275:
+					func_801371B8_146168(0, 0x185, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
+						(f32) (((f64) (f32) (temp_v1 % 100) / D_801459E0_154990) + D_801459E8_154998));
 					return;
 				default:
-					return;
+					break;
+				}
+			}
+
+			if (arg1 == 0x1FB) {
+				func_801371B8_146168(&alienInstances[arg0], 0x10, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
+					(f32) ((((f32) alienInstances[arg0].unk12 / 1280.0f) * D_80145A18_1549C8) + D_80145A20_1549D0));
+				return;
 			}
 		}
 	}
