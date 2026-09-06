@@ -3232,7 +3232,7 @@ void func_802DC1B8_194CC8(u8 arg0, s32 arg1) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(6581) */
+// CURRENT(5706)
 // AI - Alien death sequence with particles
 void func_802DC2E4_194DF4(u8 arg0) {
 	AlienInstance *alien;
