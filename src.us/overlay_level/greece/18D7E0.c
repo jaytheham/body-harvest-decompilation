@@ -3079,67 +3079,34 @@ void func_802DBDA8_1948B8(u8 arg0) {
 	func_800A93A4_B8354(arg0, -0x88, 0x32, 0xD4);
 }
 
-#ifdef NON_MATCHING
-/* CURRENT(1690) */
 // AI - Alien type 3 behavior
 void func_802DBDDC_1948EC(u8 arg0) {
 	u8 otherIndex;
+	AlienInstance *alien;
 
-	otherIndex = alienInstances[arg0].unk25;
+	alien = &alienInstances[arg0];
+	otherIndex = alien->unk25;
 	func_800A93A4_B8354(arg0, 0xBB, 0x24, 0x145);
-	D_8014DD50[alienInstances[arg0].unkC].unk4 = -0x96;
+	D_8014DD50[alien->unkC].unk4 = -0x96;
 	if (func_802DB16C_193C7C(arg0, &D_802DDF00_196A10, &D_802DDF0C_196A1C) == 0) {
 		if ((func_800038E0_44E0() % 100) == 0) {
-			s32 var_v0;
-			s32 temp_a0;
-			s32 var_a3;
-			s32 temp_v1;
-			s32 temp_a1;
-			s32 var_a2;
-			s32 var_a0;
-
-			var_v0 = D_80052B34->unk0 - alienInstances[arg0].unk0;
-			temp_a0 = -var_v0;
-			var_a3 = temp_a0;
-			if (temp_a0 < var_v0) {
-				var_a3 = var_v0;
-			}
-			temp_v1 = D_80052B34->unk4 - alienInstances[arg0].unk4;
-			temp_a1 = -temp_v1;
-			var_a2 = temp_a1;
-			if (temp_a1 < temp_v1) {
-				var_a2 = temp_v1;
-			}
-			if (var_a2 < var_a3) {
-				if (temp_a0 < var_v0) {
-				} else {
-					var_v0 = temp_a0;
-				}
-			} else {
-				var_a0 = temp_a1;
-				if (temp_a1 < temp_v1) {
-					var_a0 = temp_v1;
-				}
-				var_v0 = var_a0;
-			}
-			if (var_v0 < 0x320 && !(*(s32 *) ((u8 *) &alienInstances[otherIndex] + 0x45) & 0x8000)) {
-				alienInstances[arg0].unk36 = 0;
-				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD;
+			if (((BH_ABS_ALT(D_80052B34->unk0 - alien->unk0)) >
+				 (BH_ABS_ALT(D_80052B34->unk4 - alien->unk4))
+				 ? (BH_ABS_ALT(D_80052B34->unk0 - alien->unk0))
+				 : (BH_ABS_ALT(D_80052B34->unk4 - alien->unk4))) < 0x320 &&
+				!(*(s32 *) ((u8 *) &alienInstances[otherIndex] + 0x45) & 0x8000)) {
+				alien->unk36 = 0;
+				alien->unk20 |= ALIEN_FLAG_UNKD;
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DBDDC_1948EC.s")
-#endif
 
 // AI - Alien type 3 setup
 void func_802DBF64_194A74(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0xBB, 0x24, 0x145);
 }
 
-
-/* CURRENT(2418) */
 // AI - Alien type 4 behavior
 void func_802DBF98_194AA8(u8 arg0) {
 	s32 pad0;
