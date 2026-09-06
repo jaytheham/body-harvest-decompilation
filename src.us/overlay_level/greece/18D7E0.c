@@ -464,10 +464,7 @@ u8 D_802DE280_196D90[] = {
 	0x00, 0x00, 0xFF, 0xA7, 0x00, 0x01, 0x00, 0x05,
 };
 
-u16 D_802DE2C0_196DD0[] = {
-	0x0000, 0x001E, 0x0050, 0x0000,
-	0x0000, 0x0000, 0x0000, 0x0000,
-};
+u32 D_802DE2C0_196DD0[4] = {0x0000001E, 0x00500000, 0x0, 0x0};
 
 const char D_802DE2D0_196DE0[] = "Unwritten Greece Function %d\n";
 const char D_802DE2F0_196E00[] = "OffsetBuildingNumber %d\n";
@@ -3293,25 +3290,26 @@ void func_802DC2E4_194DF4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC2E4_194DF4.s")
 #endif
 
+// Current(3671)
 #ifdef NON_MATCHING
 // AI - Alien death spawn visual effects
 void func_802DC500_195010(u8 arg0) {
 	s16 sp9E;
 	s32 sp8C[3];
 	s32 sp80[3];
-	Unk800311A0 sp78;
+	u32 sp78;
 	s16 sp70[3];
 	s32 sp6C;
 	s32 sp68;
 	s32 sp64;
+	s32 sp4C;
 	u16 sp5C;
 	u16 sp5A;
 	u16 sp58;
 	u16 sp56;
 	u16 sp54;
-	s32 sp4C;
 
-	sp78 = D_802DE2C0_196DD0;
+	sp78 = D_802DE2C0_196DD0[0];
 	sp9E = alienInstances[arg0].unkC;
 	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL)) {
 		func_802DC2E4_194DF4(arg0);

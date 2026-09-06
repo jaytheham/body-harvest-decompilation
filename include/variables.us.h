@@ -2887,7 +2887,6 @@ extern Unk8014DD50 *D_802DE25C_196D6C;
 extern Unk8014DD50 *D_802DE268_196D78;
 extern Unk8014DD50 *D_802DE274_196D84;
 extern u8 D_802DE280_196D90[];
-extern u16 D_802DE2C0_196DD0[];
 extern const char D_802DE2D0_196DE0[]; /* osSyncPrintf format string */
 extern const char D_802DE2F0_196E00[];
 extern const f64 D_802DE400_196F10[];
