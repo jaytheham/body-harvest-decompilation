@@ -3398,13 +3398,11 @@ void func_802DCA6C_19557C(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0x99, 0x32, 0xD4);
 }
 
+// Current(7710)
 #ifdef NON_MATCHING
-/* CURRENT(9677) */
 // AI - Boss alien death sequence
 void func_802DCADC_1955EC(u8 arg0) {
 	AlienInstance *alien;
-	Unk8014DD50 *obj0;
-	Unk8014DD50 *obj1;
 	Unk8014DD50 *obj2;
 	Unk8014DD50 *obj3;
 	Unk8014DD50 *obj4;
@@ -3417,21 +3415,19 @@ void func_802DCADC_1955EC(u8 arg0) {
 	u16 angle;
 
 	alien = &alienInstances[arg0];
-	obj0 = &D_8014DD50[alien->unkC];
-	obj1 = &D_8014DD50[obj0->unkC];
-	obj2 = &D_8014DD50[obj1->unkD];
+	tmpB = D_8014DD50[alien->unkC].unkC;
+	tmpA = D_8014DD50[tmpB].unkD;
+	obj2 = &D_8014DD50[tmpA];
 	obj3 = &D_8014DD50[obj2->unkD];
 	obj4 = &D_8014DD50[obj3->unkD];
 	obj4Next = obj4->unkD;
-	tmpA = obj1->unkD;
-	tmpB = obj0->unkC;
 
 	if (alien->unk2C >= 0x51) {
 		obj4->unk2 = 0;
 		D_8014DD50[obj4Next].unk2 = 0;
 
-		obj2->unk6 = (u16) (65535.0 - ((((f64) (f32) coss((D_80052A8C * 0x4E20) & 0xFFFF) / 32768.0) + 1.0) * 2000.0));
-		obj3->unk6 = (u16) (((((f64) (f32) coss((D_80052A8C * 0x4E20) & 0xFFFF) / 32768.0) + 1.0) * 2000.0));
+		obj3->unk6 = (u16) (65535.0 - ((((f64) (f32) coss((D_80052A8C * 0x4E20) & 0xFFFF) / 32768.0) + 1.0) * 2000.0));
+		obj4->unk6 = (u16) (((((f64) (f32) coss((D_80052A8C * 0x4E20) & 0xFFFF) / 32768.0) + 1.0) * 2000.0));
 
 		func_80090948_9F8F8(tmpB, 0x7D0);
 		func_80090948_9F8F8(tmpA, 0x7D0);
@@ -3439,8 +3435,8 @@ void func_802DCADC_1955EC(u8 arg0) {
 		obj4->unk2 = 0x7D00;
 		D_8014DD50[obj4Next].unk2 = 0x7D00;
 
-		if ((u16) obj1->unkA < 0x2710) {
-			obj1->unkA = (u16) ((u16) obj1->unkA + 0x3E8);
+		if ((u16) D_8014DD50[tmpB].unkA < 0x2710) {
+			D_8014DD50[tmpB].unkA = (u16) ((u16) D_8014DD50[tmpB].unkA + 0x3E8);
 		}
 
 		if ((u16) obj2->unkA < 0x2710) {
