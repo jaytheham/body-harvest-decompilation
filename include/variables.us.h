@@ -2898,6 +2898,8 @@ extern const f64 D_802DE428_196F38[];
 extern const f64 D_802DE430_196F40[];
 extern const f32 D_802DE438_196F48[];
 extern const f32 D_802DE43C_196F4C[];
+extern const f32 D_802DE438[];
+extern const f32 D_802DE43C[];
 extern s16 D_802DE460;
 extern s16 D_802DE462;
 extern s16 D_802DE464;
