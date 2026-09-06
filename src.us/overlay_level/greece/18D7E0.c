@@ -2561,30 +2561,34 @@ void func_802DA378_192E88(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-/* CURRENT(33017) */
+// CURRENT(16177)
 // AI - Alien swarm formation flying AI
 void func_802DA3EC_192EFC(u8 arg0) {
 	AlienInstance *alien;
+	s16 pathA;
+	s16 pathB;
 	AlienInstance *parent;
-	Unk8014DD50 *path1;
-	Unk8014DD50 *path2;
-	Unk8014DD50 *path3;
-	Unk8014DD50 *path4;
+	s16 path4;
+	s16 pathCounter;
 	s32 dist;
 	s32 dx;
 	s32 dz;
-	s32 highAlert;
-	s16 pathA;
-	s16 pathB;
 	u8 neigh0;
 	u8 neigh1;
 	u8 neigh2;
 	u8 neigh3;
-	s32 worldX;
-	s32 worldY;
-	s32 worldZ;
-	u16 yaw;
 	u8 *levelColor;
+	Unk8014DD50 *path1;
+	Unk8014DD50 *path2;
+	Unk8014DD50 *path3;
+	s16 outX1;
+	s16 outX2;
+	s16 outY1;
+	s16 outY2;
+	s16 outZ1;
+	s16 outZ2;
+	s32 yaw;
+	s32 highAlert;
 
 	highAlert = 0;
 	alien = &alienInstances[arg0];
@@ -2621,18 +2625,19 @@ void func_802DA3EC_192EFC(u8 arg0) {
 		}
 	}
 
-	pathA = D_8014DD50[alien->unkC].unkC;
+	pathA = D_8014DD5C[alien->unkC].unk0;
 	func_80090948_9F8F8(pathA, 0x7D0);
-	pathB = D_8014DD50[pathA].unkD;
-	func_80090948_9F8F8(pathB, 0x7D0);
+	pathB = D_8014DD5C[pathA].unkD;
+	func_80090948_9F8F8((s16)(s32)pathB, 0x7D0);
 
+	pathCounter = alien->unk2C;
 	path1 = &D_8014DD50[D_8014DD50[pathB].unkD];
 	path2 = &D_8014DD50[path1->unkD];
 	path3 = &D_8014DD50[path2->unkD];
-	path4 = &D_8014DD50[path3->unkD];
+	path4 = path3->unkD;
 
-	if ((alien->unk2C < 2) || (parent->unk20 & ALIEN_FLAG_UNKG)) {
-		if (alien->unk2C <= 0) {
+	if ((pathCounter < 2) || (parent->unk20 & ALIEN_FLAG_UNKG)) {
+		if (pathCounter <= 0) {
 			if (highAlert != 0) {
 				alien->unk2C = (func_800038E0_44E0() % 10) + 3;
 			} else {
@@ -2650,13 +2655,13 @@ void func_802DA3EC_192EFC(u8 arg0) {
 		}
 
 		path3->unk2 = 0;
-		path4->unk2 = 0;
+		D_8014DD50[path4].unk2 = 0;
 	} else {
 		path3->unk2 = 0x7D00;
-		path4->unk2 = 0x7D00;
+		D_8014DD50[path4].unk2 = 0x7D00;
 	}
 
-	alien->unk2C -= 1;
+	alien->unk2C = pathCounter - 1;
 
 	if (dist < 0x258) {
 		if (func_80084FE8_93F98(arg0, 0x3E8) != 0) {
@@ -2676,7 +2681,7 @@ void func_802DA3EC_192EFC(u8 arg0) {
 		}
 
 		path3->unk2 = 0;
-		path4->unk2 = 0;
+		D_8014DD50[path4].unk2 = 0;
 
 		if (alien->unk26 >= 0x10) {
 			s32 phase;
@@ -2693,12 +2698,12 @@ void func_802DA3EC_192EFC(u8 arg0) {
 			}
 
 			if (phase == 1) {
-				func_80128504_1374B4(alien, 1, &worldX, &worldY, &worldZ);
+				func_80128504_1374B4(alien, 1, (s32 *)&outX2, (s32 *)&outY2, (s32 *)&outZ2);
 				yaw = alien->unk6;
 				if (func_800868A4_95854(arg0, 1, 0, 0) != 0) {
 					func_80137468_146418(arg0, 0x273);
-					func_800DEA08_ED9B8((s16)worldX, (s16)worldY, (s16)worldZ, 0xB4, 0xA, 0, 0x1E, 0xC8, 0xA0, 0x96, 0);
-					func_800CA5EC_D959C((s16)worldX, (s16)worldY, (s16)worldZ,
+					func_800DEA08_ED9B8(outX1, outY1, outZ1, 0xB4, 0xA, 0, 0x1E, 0xC8, 0xA0, 0x96, 0);
+					func_800CA5EC_D959C(outX1, outY1, outZ1,
 						(s8)(s32)(((f64)(f32)coss(yaw) / 32768.0) * 100.0),
 						-0x14,
 						(s32)(((f64)(f32)sins(yaw) / 32768.0) * 100.0),
@@ -2709,8 +2714,8 @@ void func_802DA3EC_192EFC(u8 arg0) {
 		} else {
 			s32 phase2;
 
-			phase2 = alien->unk26 & 3;
-			alien->unkA = (s16)(s32)((((f64)(f32)coss((u16)((((f32)phase2) / 4.0f) * D_802DE408_196F18)) / 32768.0) + 1.0) * D_802DE410_196F20);
+		phase2 = alien->unk26 % 4;
+			alien->unkA = (s16)(s32)((((f64)(f32)coss((u16)((((f32)phase2) / 4) * D_802DE408_196F18[0])) / 32768.0) + 1.0) * D_802DE410_196F20[0]);
 			path1->unk6 = (s16)(-(s32)alien->unk26 * 0x177);
 			path2->unk6 = (s16)((s32)alien->unk26 * 0x177);
 		}
@@ -2756,9 +2761,9 @@ void func_802DA3EC_192EFC(u8 arg0) {
 
 	if ((highAlert != 0) || (parent->unk20 & ALIEN_FLAG_UNKG)) {
 		if (alien->unk26 == 0) {
-			alien->unkA = (s16)(s32)(((f64)(f32)coss((D_80052A8C * 0x5CC60) & 0xFFFF) / 32768.0) * D_802DE418_196F28);
-			path1->unk6 = (s16)(s32)(D_802DE428_196F38 - ((((f64)(f32)coss((D_80052A8C * 0x3A98) & 0xFFFF) / 32768.0) + 1.0) * D_802DE420_196F30));
-			path2->unk6 = (s16)(s32)(((((f64)(f32)coss((D_80052A8C * 0x3A98) & 0xFFFF) / 32768.0) + 1.0) * D_802DE430_196F40));
+			alien->unkA = (s16)(s32)(((f64)(f32)coss((D_80052A8C * 0x5CC60) & 0xFFFF) / 32768.0) * D_802DE418_196F28[0]);
+			path1->unk6 = (u16)(D_802DE428_196F38[0] - ((((f64)(f32)coss((D_80052A8C * 0x3A98) & 0xFFFF) / 32768.0) + 1.0) * D_802DE420_196F30[0]));
+			path2->unk6 = (u16)(((((f64)(f32)coss((D_80052A8C * 0x3A98) & 0xFFFF) / 32768.0) + 1.0) * D_802DE430_196F40[0]));
 		}
 
 		if (parent->unk20 & ALIEN_FLAG_UNKG) {
@@ -2791,6 +2796,7 @@ void func_802DA3EC_192EFC(u8 arg0) {
 
 	func_800A92E0_B8290(arg0, 0xF000);
 	func_800A9F34_B8EE4(arg0);
+
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DA3EC_192EFC.s")
