@@ -1108,7 +1108,7 @@ s32 func_802D64D0_18EFE0(void) {
 // AI - Boss alien multi-phase sequence
 s32 func_802D6904_18F414(void) {
 	s32 alienId;
-	AlienInstance *alien;
+	
 
 	D_80157F96 = 0;
 	D_80157F76 = 0x12C;
@@ -1124,9 +1124,9 @@ s32 func_802D6904_18F414(void) {
 		} else {
 			func_800800E4_8F094((u8)D_80157F94);
 			func_80080510_8F4C0(D_80157F95);
-			alien = &alienInstances[D_80157F94];
-			alien->unk6 = alien->unkE;
-			alienTypes[alien->typeIndex].unk48((u8)D_80157F94);
+			
+			alienInstances[D_80157F94].unk6 = alienInstances[D_80157F94].unkE;
+			alienTypes[alienInstances[D_80157F94].typeIndex].unk48((u8)D_80157F94);
 		}
 	}
 
@@ -1142,22 +1142,20 @@ s32 func_802D6904_18F414(void) {
 
 		alienId = func_8007956C_8851C(0x12);
 		if (alienId != 0xFF) {
-			alien = &alienInstances[alienId];
-			alien->unk20 &= ~(ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
-			alien->unk0 = 0x4C80;
-			alien->unk4 = -0x6780;
-			alien->unk14 = 0x4C80;
-			alien->unk18 = -0x6380;
-			alien->unk20 |= ALIEN_FLAG_TARGET_PT;
-			alien->unk24 = 2;
-			alien->unkE = 0x4000;
-			alien->unk2A = 0x4000;
-			func_8007A198_89148((u8)alienId);
+			alienInstances[alienId].unk20 &= ~(ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
+			alienInstances[alienId].unk0 = 0x4C80;
+			alienInstances[alienId].unk4 = -0x6780;
+			alienInstances[alienId].unk14 = 0x4C80;
+			alienInstances[alienId].unk18 = -0x6380;
+			alienInstances[alienId].unk20 |= ALIEN_FLAG_TARGET_PT;
+			alienInstances[alienId].unk24 = 2;
+			alienInstances[alienId].unkE = 0x4000;
+			alienInstances[alienId].unk2A = 0x4000;
+			func_8007A198_89148(alienId);
 			D_80157F94 = alienId;
 		}
 
-		alien = &alienInstances[D_80157F94];
-		D_80157F98 = func_800CDB40_DCAF0(alien->unk0, alien->unk2, alien->unk4);
+		D_80157F98 = func_800CDB40_DCAF0(alienInstances[D_80157F94].unk0, alienInstances[D_80157F94].unk2, alienInstances[D_80157F94].unk4);
 		break;
 
 	case 1:
@@ -1187,10 +1185,9 @@ s32 func_802D6904_18F414(void) {
 		break;
 
 	case 4:
-		alien = &alienInstances[D_80157F94];
-		osSyncPrintf(D_802DE318_196E28, alien->unk0 + 0x96, alien->unk2, alien->unk4);
-		func_80087AAC_96A5C(D_80157F95);
+		osSyncPrintf(D_802DE318_196E28, alienInstances[D_80157F94].unk0 + 0x96, alienInstances[D_80157F94].unk2, alienInstances[D_80157F94].unk4);
 		alienInstances[D_80157F94].unk2C = 0x14;
+		func_80087AAC_96A5C(D_80157F95);
 		D_80157F8C += 1;
 		if (D_80157F94 != 0xFF) {
 			func_80087AFC_96AAC((u8)D_80157F94);
