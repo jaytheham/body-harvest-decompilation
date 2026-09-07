@@ -56,4 +56,6 @@ If build returns `build/bh.us.z64: OK` the function is matched and you can stop 
 
 ## Finalize
 
+Make at least 25 attempts to match the function.
+
 Whenever you match a function or a particularly tricky bit of asm think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated notes to help future decomp.

@@ -2100,112 +2100,127 @@ void func_802D90C8_191BD8(u8 arg0) {
 	func_800873A8_96358(arg0);
 }
 
-#ifdef NON_MATCHING
-/* CURRENT(2031) */
+// CURRENT(1448)
 // AI - Alien idle wander AI
-void func_802D911C_191C2C(u8 arg0) {
-	AlienInstance *alien;
+#ifdef NON_MATCHING
+void func_802D911C_191C2C(u8 arg0)
+{
 	Unk8014DD50 *pathB;
 	Unk8014DD50 *pathA;
+	s8 sp43;
+	s8 new_var;
+	s8 sp42;
 	s8 sp37;
 	s8 sp33;
 	s8 sp2F;
-	s8 sp43;
-	s8 sp42;
-	s8 nodeA;
-	s8 nodeB;
 	s32 distSq;
-
-	alien = &alienInstances[arg0];
-
-	if (alien->unk47 & 1) {
+	if (alienInstances[arg0].unk47 & 1)
+	{
 		func_8008064C_8F5FC(arg0);
-	} else {
+	}
+	else
+	{
 		func_8008076C_8F71C(arg0);
 	}
-
-	distSq = ((alien->unk0 - alien->unk14) * (alien->unk0 - alien->unk14)) +
-		((alien->unk4 - alien->unk18) * (alien->unk4 - alien->unk18));
-
-	if ((distSq >= 0x225511) || (alien->unk47 & 1)) {
-		alien->unk20 |= ALIEN_FLAG_TARGET_PT;
-		alien->unk20 &= ~(ALIEN_FLAG_UNKC | ALIEN_FLAG_AWAY);
-	} else if (distSq >= 0xF4241) {
-		alien->unk20 |= ALIEN_FLAG_UNKC;
-		alien->unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY);
-	} else {
-		alien->unk20 |= (ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY);
-		alien->unk20 &= ~ALIEN_FLAG_UNKC;
+	distSq = ((alienInstances[arg0].unk0 - alienInstances[arg0].unk14) * (alienInstances[arg0].unk0 - alienInstances[arg0].unk14)) + ((alienInstances[arg0].unk4 - alienInstances[arg0].unk18) * (alienInstances[arg0].unk4 - alienInstances[arg0].unk18));
+	if ((distSq >= 0x225511) || (alienInstances[arg0].unk47 & 1))
+	{
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
+		alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKC | ALIEN_FLAG_AWAY);
 	}
-
-	if (alien->unk20 & ALIEN_FLAG_UNKD) {
-		if (alien->unk2C != 0) {
-			alien->unk2C--;
-		} else {
-			alien->unk10 += 0x40;
+	else if (distSq >= 0xF4241)
+	{
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKC;
+		alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY);
+	}
+	else
+	{
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY;
+		alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKC;
+	}
+	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD)
+	{
+		if (alienInstances[arg0].unk2C != 0)
+		{
+			alienInstances[arg0].unk2C--;
 		}
-		if ((alien->unk10 < 0) && (D_80222A70 < alien->unk2)) {
-			alien->unk1E = 0;
-			if (alien->unk20 & ALIEN_FLAG_PLAYER) {
+		else
+		{
+			alienInstances[arg0].unk10 = alienInstances[arg0].unk10 + 0x40;
+		}
+		if ((alienInstances[arg0].unk10 < 0) && (D_80222A70 < alienInstances[arg0].unk2))
+		{
+			alienInstances[arg0].unk1E = 0;
+			if (alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER)
+			{
 				func_800871CC_9617C(arg0, 0, 0x18);
-			} else {
-				func_80129354_138304(alien, 0, alien->unk14, alien->unk16, alien->unk18);
 			}
-			alien->unk20 &= ~ALIEN_FLAG_UNKD;
+			else
+			{
+				func_80129354_138304(&alienInstances[arg0], 0, alienInstances[arg0].unk14, alienInstances[arg0].unk16, alienInstances[arg0].unk18);
+			}
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD;
 		}
-		if (!(alien->unk20 & ALIEN_FLAG_FALL)) {
-			alien->unk20 |= ALIEN_FLAG_FALL;
-			alien->unk2C = 0;
+		if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_FALL))
+		{
+			alienInstances[arg0].unk20 |= ALIEN_FLAG_FALL;
+			alienInstances[arg0].unk2C = 0;
 		}
-	} else if (alien->unk20 & ALIEN_FLAG_FALL) {
-		if (alien->unk2 < D_80222A70) {
-			if (alien->unk10 < -0x60) {
-				alien->unk10 += 0x40;
+	}
+	else if (alienInstances[arg0].unk20 & ALIEN_FLAG_FALL)
+	{
+		if (alienInstances[arg0].unk2 < D_80222A70)
+		{
+			if (alienInstances[arg0].unk10 < (-0x60))
+			{
+				alienInstances[arg0].unk10 += 0x40;
 			}
 		}
-		if (alien->unk2 < D_80222A70 - 0x14) {
-			alien->unk20 &= ~ALIEN_FLAG_FALL;
+		if (alienInstances[arg0].unk2 < (D_80222A70 - 0x14))
+		{
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_FALL;
 		}
-	} else if (((func_800038E0_44E0() % 100) == 0) && (alien->unk1E == 0)) {
-		sp43 = (s16) alien->unk0 >> 8;
-		sp42 = (s16) alien->unk4 >> 8;
+	}
+	else if (((func_800038E0_44E0() % 100) == 0) && (alienInstances[arg0].unk1E == 0))
+	{
+		sp43 = ((s16)alienInstances[arg0].unk0) >> 8;
+		sp42 = ((s16)alienInstances[arg0].unk4) >> 8;
 		sp37 = sp43 - 1;
 		sp33 = sp42 - 1;
 		sp2F = sp42 - 1;
-
-		if ((func_800B325C_C220C(sp37, sp33, 0x1000) != 0) &&
-			(func_800B325C_C220C(sp37, sp42, 0x1000) != 0)) {
-			if (func_800B325C_C220C(sp37, sp42 + 1, 0x1000) != 0) {
-				if ((func_800B325C_C220C(sp43 + 1, sp33, 0x1000) != 0) &&
-					(func_800B325C_C220C(sp37, sp42, 0x1000) != 0) &&
-					(func_800B325C_C220C(sp37, sp2F, 0x1000) != 0) &&
-					(func_800B325C_C220C(sp43, sp33, 0x1000) != 0) &&
-					(func_800B325C_C220C(sp43, sp2F, 0x1000) != 0)) {
-					alien->unk20 |= (ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD);
-					alien->unk2C = 6;
-					alien->unk10 = 0;
+		if ((func_800B325C_C220C(sp37, sp33, 0x1000) != 0) && (func_800B325C_C220C(sp37, sp42, 0x1000) != 0))
+		{
+			if (func_800B325C_C220C(sp37, sp42 + 1, 0x1000) != 0)
+			{
+				if (((((func_800B325C_C220C(sp43 + 1, sp33, 0x1000) != 0) && (func_800B325C_C220C(sp37, sp42, 0x1000) != 0)) && (func_800B325C_C220C(sp37, sp2F, 0x1000) != 0)) && (func_800B325C_C220C(sp43, sp33, 0x1000) != 0)) && (func_800B325C_C220C(sp43, sp2F, 0x1000) != 0))
+				{
+					alienInstances[arg0].unk20 |= ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD;
+					alienInstances[arg0].unk2C = 6;
+					alienInstances[arg0].unk10 = 0;
 				}
 			}
 		}
-	} else {
-		alien->unk10 = 0;
 	}
-
-	if (alien->unk2 < D_80222A70 + 5) {
+	else
+	{
+		alienInstances[arg0].unk10 = 0;
+	}
+	if (alienInstances[arg0].unk2 < (D_80222A70 + 5))
+	{
 		func_800E24B8_F1468(arg0);
 	}
-
-	nodeA = D_8014DD50[alien->unkC].unkC;
-	nodeB = D_8014DD50[nodeA].unkD;
-	pathA = &D_8014DD50[nodeA];
-	alien->unkA = alien->unk10 * -8;
-	pathB = &D_8014DD50[nodeB];
-	pathB->unkA = alien->unkA;
-	distSq = (s32)(((f64)(f32)sins(((arg0 + D_80052A8C) * 0x7D0) & 0xFFFF) / 32768.0) * D_802DE400_196F10);
+	pathA = &D_8014DD50[alienInstances[arg0].unkC];
+	pathA = &D_8014DD50[pathA->unkC];
+	new_var = pathA->unkD;
+	alienInstances[arg0].unkA = alienInstances[arg0].unkA * (-8);
+	pathB = &D_8014DD50[new_var];
+	pathB->unkA = alienInstances[arg0].unkA;
+	distSq = (s32)((((f64)((f32)sins(((arg0 + D_80052A8C) * 0x7D0) & 0xFFFF))) / 32768.0) * D_802DE400_196F10[0]);
 	pathA->unk6 = distSq;
 	pathB->unk6 = distSq;
-	if (alien->unk1E != 0) {
-		alien->unk1E--;
+	if (alienInstances[arg0].unk1E != 0)
+	{
+		alienInstances[arg0].unk1E--;
 	}
 }
 #else
