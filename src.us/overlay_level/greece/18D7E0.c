@@ -1862,39 +1862,41 @@ void func_802D85F8_191108(u8 arg0)
   }
 }
 
-
-#ifdef NON_MATCHING
-/* CURRENT(218) */
 // AI - Alien AI with projectile attacks
-void func_802D8724_191234(u8 arg0) {
-	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF) && (func_8008E478_9D428(arg0) != 0 || func_8008E30C_9D2BC(arg0, 0x80000000) != 0)) {
+void func_802D8724_191234(u8 arg0)
+{
+	s16 new_var2;
+	u8 new_var;
+	if ((!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF)) &&
+		((func_8008E478_9D428(arg0) != 0) || (func_8008E30C_9D2BC(arg0, 0x80000000) != 0)))
+	{
 		func_80085900_948B0(arg0, 0x3E8);
 		func_802D84A0_190FB0(arg0);
-	} else {
+	}
+	else
+	{
 		func_802D852C_19103C(arg0);
-		if ((alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_PT) && ((arg0 & 0x3F) == (D_80052A8C & 0x3F))) {
-			u8 temp_v0;
-			u32 temp_t5;
-
-			temp_v0 = alienInstances[arg0].unk38;
-			temp_t5 = (buildingInstances[temp_v0].unk8 >> 0xC);
-			if (((temp_t5 & 1) == 0) || (temp_t5 & 0x10)) {
+		if ((alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_PT) && ((arg0 & 0x3F) == (D_80052A8C & 0x3F)))
+		{
+			new_var = alienInstances[arg0].unk38;
+			if ((((buildingInstances[new_var].unk8 >> 0xC) & 1) == 0) ||
+				((buildingInstances[new_var].unk8 >> 0xC) & 0x10))
+			{
 				alienInstances[arg0].unk20 &= ~ALIEN_FLAG_TARGET_PT;
 			}
 		}
 	}
-	if (alienInstances[arg0].unk1E != 0) {
+	if (alienInstances[arg0].unk1E != 0)
+	{
 		alienInstances[arg0].unk1E--;
 	}
 	func_8008076C_8F71C(arg0);
 	func_800A53C0_B4370(arg0, 0x100, 0x1000);
-	func_8008E978_9D928(arg0, (s16)func_8008E524_9D4D4(arg0, 0x190, 2));
+	new_var2 = func_8008E524_9D4D4(arg0, 0x190, 2);
+	func_8008E978_9D928(arg0, new_var2);
 	func_8008EF1C_9DECC(arg0);
 	func_80137468_146418(arg0, 7);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D8724_191234.s")
-#endif
 
 // CURRENT(245)
 // AI - Flying alien AI with vertical movement
