@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-07T09:26:49Z",
-  "commit": "32d85daa",
-  "commit_timestamp": "2026-09-07T21:26:05+12:00",
+  "generated": "2026-09-07T19:07:52Z",
+  "commit": "41badb29",
+  "commit_timestamp": "2026-09-08T07:07:15+12:00",
   "overall": {
     "total_functions": 2714,
     "matched": 1672,
@@ -1121,7 +1121,7 @@
     },
     {
       "date": "2026-09-06",
-      "commit": "32d85da",
+      "commit": "41badb2",
       "matched": 1672,
       "non_matching": 1042,
       "total": 2714
