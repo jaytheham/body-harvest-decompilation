@@ -2309,7 +2309,7 @@ void func_802D962C_19213C(u8 arg0, s16 arg1, s16 arg2, AlienInstance *alien) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(717) */
+// CURRENT(663)
 // AI - Alien combat distance evaluation AI
 void func_802D9964_192474(u8 arg0) {
 	AlienInstance *alien;
@@ -2318,14 +2318,15 @@ void func_802D9964_192474(u8 arg0) {
 	s16 sp4A;
 	s16 sp46;
 	s16 sp44;
+	s32 pad0;
 	s32 temp_a1;
 	s32 temp_a0;
 	s32 var_v1;
 	s32 var_v0;
-	s32 pad0;
 	s32 pad1;
 	s32 pad2;
 	s32 pad3;
+	s32 pad4;
 
 	alien = &alienInstances[arg0];
 	sp4E = D_8014DD50[alien->unkC].unkC;
@@ -2346,16 +2347,8 @@ void func_802D9964_192474(u8 arg0) {
 		if (func_80086230_951E0(arg0, sp4E, 0x2000) == 0) {
 			temp_a1 = -sp46;
 			temp_a0 = -sp44;
-			if (temp_a1 < sp46) {
-				var_v1 = sp46;
-			} else {
-				var_v1 = temp_a1;
-			}
-			if (temp_a0 < sp44) {
-				var_v0 = sp44;
-			} else {
-				var_v0 = temp_a0;
-			}
+			var_v1 = BH_ABS_ALT(sp46);
+			var_v0 = BH_ABS_ALT(sp44);
 			if (var_v0 < var_v1) {
 				var_v0 = temp_a1;
 				if (temp_a1 < sp46) {
@@ -2364,11 +2357,7 @@ void func_802D9964_192474(u8 arg0) {
 					var_v1 = var_v0;
 				}
 			} else {
-				if (temp_a0 < sp44) {
-					var_v0 = temp_a0;
-				} else {
-					var_v0 = sp44;
-				}
+				var_v0 = BH_ABS_ALT(sp44);
 				var_v1 = var_v0;
 			}
 
@@ -2379,16 +2368,8 @@ void func_802D9964_192474(u8 arg0) {
 
 		temp_a1 = -sp46;
 		temp_a0 = -sp44;
-		if (temp_a1 < sp46) {
-			var_v1 = sp46;
-		} else {
-			var_v1 = temp_a1;
-		}
-		if (temp_a0 < sp44) {
-			var_v0 = sp44;
-		} else {
-			var_v0 = temp_a0;
-		}
+		var_v1 = BH_ABS_ALT(sp46);
+		var_v0 = BH_ABS_ALT(sp44);
 		if (var_v0 < var_v1) {
 			var_v0 = temp_a1;
 			if (temp_a1 < sp46) {
@@ -2397,25 +2378,13 @@ void func_802D9964_192474(u8 arg0) {
 				var_v1 = var_v0;
 			}
 		} else {
-			if (temp_a0 < sp44) {
-				var_v0 = temp_a0;
-			} else {
-				var_v0 = sp44;
-			}
+			var_v0 = BH_ABS_ALT(sp44);
 			var_v1 = var_v0;
 		}
 
 		if (var_v1 < 0x79) {
-			if (temp_a1 < sp46) {
-				var_v1 = sp46;
-			} else {
-				var_v1 = temp_a1;
-			}
-			if (temp_a0 < sp44) {
-				var_v0 = sp44;
-			} else {
-				var_v0 = temp_a0;
-			}
+			var_v1 = BH_ABS_ALT(sp46);
+			var_v0 = BH_ABS_ALT(sp44);
 			if (var_v0 < var_v1) {
 				var_v0 = temp_a1;
 				if (temp_a1 < sp46) {
@@ -2424,11 +2393,7 @@ void func_802D9964_192474(u8 arg0) {
 					var_v1 = var_v0;
 				}
 			} else {
-				if (temp_a0 < sp44) {
-					var_v0 = temp_a0;
-				} else {
-					var_v0 = sp44;
-				}
+				var_v0 = BH_ABS_ALT(sp44);
 				var_v1 = var_v0;
 			}
 
@@ -2448,7 +2413,6 @@ void func_802D9964_192474(u8 arg0) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D9964_192474.s")
 #endif
-
 #ifdef NON_MATCHING
 // CURRENT(9498)
 // AI - Alien skeleton joint animation system
