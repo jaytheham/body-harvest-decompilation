@@ -1104,12 +1104,15 @@ s32 func_802D64D0_18EFE0(void) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(2910) */
+// CURRENT(570)
 // AI - Boss alien multi-phase sequence
 s32 func_802D6904_18F414(void) {
+	s32 pad[2];
 	s32 alienId;
+	s16 *idPtr;
+	s16 *statePtr;
+	s16 *counterPtr;
 	
-
 	D_80157F96 = 0;
 	D_80157F76 = 0x12C;
 	D_80157FAC = 0xE;
@@ -1130,6 +1133,7 @@ s32 func_802D6904_18F414(void) {
 		}
 	}
 
+	idPtr = &D_80157F94;
 	switch (D_80157F8C) {
 	case 0:
 		D_80157F8E = 0;
@@ -1142,11 +1146,11 @@ s32 func_802D6904_18F414(void) {
 
 		alienId = func_8007956C_8851C(0x12);
 		if (alienId != 0xFF) {
-			alienInstances[alienId].unk20 &= ~(ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
 			alienInstances[alienId].unk0 = 0x4C80;
 			alienInstances[alienId].unk4 = -0x6780;
 			alienInstances[alienId].unk14 = 0x4C80;
 			alienInstances[alienId].unk18 = -0x6380;
+			alienInstances[alienId].unk20 &= ~(ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
 			alienInstances[alienId].unk20 |= ALIEN_FLAG_TARGET_PT;
 			alienInstances[alienId].unk24 = 2;
 			alienInstances[alienId].unkE = 0x4000;
@@ -1168,8 +1172,10 @@ s32 func_802D6904_18F414(void) {
 	case 2:
 		func_800CDD7C_DCD2C(D_80157F98);
 		func_800DFBA8_EEB58(0x4C7C, 0x350, -0x675C, 0xB4, 6);
-		D_80157F8C += 1;
-		if (D_80157F8E++ >= 5) {
+		statePtr = &D_80157F8C;
+		counterPtr = &D_80157F8E;
+		*statePtr += 1;
+		if ((*counterPtr)++ >= 5) {
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
@@ -1177,8 +1183,10 @@ s32 func_802D6904_18F414(void) {
 
 	case 3:
 		func_80124B5C_133B0C(0x4C7C, 0x350, -0x675C, 0x2711, 0x300);
-		D_80157F8C += 1;
-		if (D_80157F8E++ >= 0x29) {
+		statePtr = &D_80157F8C;
+		counterPtr = &D_80157F8E;
+		*statePtr += 1;
+		if ((*counterPtr)++ >= 0x29) {
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
@@ -1186,10 +1194,10 @@ s32 func_802D6904_18F414(void) {
 
 	case 4:
 		osSyncPrintf(D_802DE318_196E28, alienInstances[D_80157F94].unk0 + 0x96, alienInstances[D_80157F94].unk2, alienInstances[D_80157F94].unk4);
-		alienInstances[D_80157F94].unk2C = 0x14;
 		func_80087AAC_96A5C(D_80157F95);
+		alienInstances[D_80157F94].unk2C = 0x14;
 		D_80157F8C += 1;
-		if (D_80157F94 != 0xFF) {
+		if (*idPtr != 0xFF) {
 			func_80087AFC_96AAC((u8)D_80157F94);
 		}
 
