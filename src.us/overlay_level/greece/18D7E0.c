@@ -1514,12 +1514,12 @@ void func_802D763C_19014C(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-/* CURRENT(16009) */
+// CURRENT(13515)
 // AI - Alien damage death reaction and sub-alien spawning
+#ifdef NON_MATCHING
 void func_802D775C_19026C(u8 arg0) {
-	AlienInstance *s0;
 	u8 sp73;
+	s32 childId;
 	s32 sp68;
 	s32 sp64;
 	s32 sp60;
@@ -1530,61 +1530,58 @@ void func_802D775C_19026C(u8 arg0) {
 	Unk8014DD50 *sp40;
 	Unk8014DD50 *sp3C;
 	Unk8014DD50 *sp34;
-	AlienInstance *v1;
-	s16 temp;
 
-	arg0 &= 0xFF;
-	s0 = &alienInstances[arg0];
-
-	if ((s0->unk20 << 11) >= 0) {
-		func_802D763C_19014C((u8)arg0);
+	if ((alienInstances[arg0].unk20 << 11) >= 0) {
+		func_802D763C_19014C(arg0);
 		return;
 	}
 
-	sp44 = &D_8014DD50[(u8)D_8014DD50[(u8)s0->unkC].unkC];
+	sp44 = &D_8014DD50[(u8)D_8014DD50[(u8)alienInstances[arg0].unkC].unkC];
 	sp40 = &D_8014DD50[(u8)sp44->unkC];
 	sp3C = &D_8014DD50[(u8)sp40->unkD];
 	sp73 = (u8)sp3C->unkD;
 
-	if (s0->unk2C < 0x51) {
+	if (alienInstances[arg0].unk2C < 0x51) {
 		sp34 = &D_8014DD50[sp73];
-		func_80128428_1373D8(s0, sp34->unk0 + sp44->unk0, sp34->unk2 + sp44->unk2, sp34->unk4 + sp44->unk4, &sp68, &sp64, &sp60);
+		func_80128428_1373D8(&alienInstances[arg0], sp34->unk0 + sp44->unk0, sp34->unk2 + sp44->unk2, sp34->unk4 + sp44->unk4, &sp68, &sp64, &sp60);
 
-		if (s0->unk2C >= 0x49) {
+		if (alienInstances[arg0].unk2C >= 0x49) {
 			sp34->unk2 += 0xA;
-			if (s0->unk24 != 0xFC) {
-				func_800C1ECC_D0E7C((s16)sp68, (s16)sp64, (s16)sp60, s0->unk3C, 2);
+			if (alienInstances[arg0].unk24 != 0xFC) {
+				func_800C1ECC_D0E7C((s16)sp68, (s16)sp64, (s16)sp60, alienInstances[arg0].unk3C, 2);
 			}
-		} else if (s0->unk2C == 0x48) {
+		} else if (alienInstances[arg0].unk2C == 0x48) {
+			
+
 			sp34->unk2 += 0xA;
-			arg0 = func_8007956C_8851C(0xD);
-			v1 = &alienInstances[(s16)arg0];
-			s0->unk3C = (s8)arg0;
-			s0->unk26 = 0;
-			v1->unk48 = sp64 + 0xA;
-			v1->unk1B = s0->unk1B;
-			v1->unk2E = sp68;
-			v1->unk0 = sp68;
-			v1->unk32 = sp60;
-			v1->unk4 = sp60;
-			v1->unk30 = v1->unk48;
-			v1->unk2 = v1->unk48;
-			temp = s0->unk6;
-			v1->unk20 |= ALIEN_FLAG_FALL;
-			v1->unk12 = 0x200;
-			v1->unk6 = temp;
-			v1->unkE = temp;
-			func_8007A2A0_89250((s16)arg0);
-		} else if (s0->unk26 == 0) {
-			v1 = &alienInstances[(s8)s0->unk3C];
-			if (v1->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
+			childId = func_8007956C_8851C(0xD);
+			
+			alienInstances[arg0].unk3C = (s8)(s16)childId;
+			alienInstances[arg0].unk26 = 0;
+			alienInstances[(s16)childId].unk48 = sp64 + 0xA;
+			alienInstances[(s16)childId].unk1B = alienInstances[arg0].unk1B;
+			alienInstances[(s16)childId].unk2E = sp68;
+			alienInstances[(s16)childId].unk0 = sp68;
+			alienInstances[(s16)childId].unk32 = sp60;
+			alienInstances[(s16)childId].unk4 = sp60;
+			alienInstances[(s16)childId].unk30 = alienInstances[(s16)childId].unk48;
+			alienInstances[(s16)childId].unk2 = alienInstances[(s16)childId].unk48;
+			alienInstances[(s16)childId].unk20 |= ALIEN_FLAG_FALL;
+			alienInstances[(s16)childId].unk12 = 0x200;
+			alienInstances[(s16)childId].unk6 = alienInstances[arg0].unk6;
+			alienInstances[(s16)childId].unkE = alienInstances[arg0].unk6;
+			func_8007A2A0_89250((s16)childId);
+		} else if (alienInstances[arg0].unk26 == 0) {
+			
+
+			if (alienInstances[(s8)alienInstances[arg0].unk3C].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
 				func_80088E10_97DC0(sp73);
-				s0->unk26 = 1;
+				alienInstances[arg0].unk26 = 1;
 			} else {
-				v1->unk48 = sp64 + 0xA;
+				alienInstances[(s8)alienInstances[arg0].unk3C].unk48 = sp64 + 0xA;
 				sp34->unk2 += 0xA;
-				if (s0->unk24 != 0xFC) {
-					func_800C1ECC_D0E7C((s16)sp68, (s16)sp64, (s16)sp60, s0->unk3C, 2);
+				if (alienInstances[arg0].unk24 != 0xFC) {
+					func_800C1ECC_D0E7C((s16)sp68, (s16)sp64, (s16)sp60, alienInstances[arg0].unk3C, 2);
 				}
 			}
 		}
@@ -1595,28 +1592,25 @@ void func_802D775C_19026C(u8 arg0) {
 		sp40->unkA += 0x400;
 	}
 
-	if (s0->unk2C < 0x48) {
+	if (alienInstances[arg0].unk2C < 0x48) {
 		*(u16 *)&sp44->unk6 += 0x96;
-		if (((s16)s0->unk2C % ((func_800038E0_44E0() % 7) + 1)) == 0) {
-			sp4C = (u16)func_800038E0_44E0();
-			sp4E = (u16)func_800038E0_44E0();
-			sp50 = (u16)func_800038E0_44E0();
+		if (((s16)alienInstances[arg0].unk2C % ((func_800038E0_44E0() % 7) + 1)) == 0) {
+				sp4C = (u16)func_800038E0_44E0();
+				sp4E = (u16)func_800038E0_44E0();
+				sp50 = (u16)func_800038E0_44E0();
 			func_800DFA34_EE9E4(
-				(u16)sp4C % 100 + s0->unk0 - 0x32,
-				(u16)sp4E % 100 + s0->unk2 - 0x32,
-				(u16)sp50 % 100 + s0->unk4 - 0x32,
+					(u16)sp4C % 100 + alienInstances[arg0].unk0 - 0x32,
+					(u16)sp4E % 100 + alienInstances[arg0].unk2 - 0x32,
+					(u16)sp50 % 100 + alienInstances[arg0].unk4 - 0x32,
 				((func_800038E0_44E0() % 20) + 0x14) & 0xFFFF,
 				0);
 		}
 	}
 
-	if (s0->unk2C != 1) {
-		return;
+	if (alienInstances[arg0].unk2C == 1) {
+		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)(s32)((f64)alienTypes[alienInstances[arg0].typeIndex].unkC * 1.5), 6);
 	}
-
-	func_800DF848_EE7F8(s0->unk0, s0->unk2, s0->unk4, (u16)((f64)alienTypes[s0->typeIndex].unkC * 1.5), 6);
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D775C_19026C.s")
 #endif
@@ -1830,36 +1824,36 @@ void func_802D852C_19103C(u8 arg0) {
 // AI - Alien behavior dispatcher choosing attack or patrol
 void func_802D85F8_191108(u8 arg0)
 {
-  u8 new_var;
-  new_var = arg0;
-  if ((!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF)) && ((func_8008E478_9D428(arg0) != 0) || (func_8008E30C_9D2BC(new_var, 0x80000000) != 0)))
-  {
-	func_802D84A0_190FB0(arg0);
-  }
-  else
-  {
-	func_802D852C_19103C(arg0);
-	if ((arg0 & 0x3C) == (D_80052A8C & 0x3C))
+	u8 new_var;
+	new_var = arg0;
+	if ((!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF)) && ((func_8008E478_9D428(arg0) != 0) || (func_8008E30C_9D2BC(new_var, 0x80000000) != 0)))
 	{
-	  if (alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_PT)
-	  {
-		new_var = alienInstances[arg0].unk38;
-		if ((((buildingInstances[new_var].unk8 >> 0xC) & 1) == 0) || ((buildingInstances[new_var].unk8 >> 0xc )& 4))
-		{
-		  alienInstances[arg0].unk20 &= ~ALIEN_FLAG_TARGET_PT;
-		}
-	  }
+		func_802D84A0_190FB0(arg0);
 	}
-  }
-  func_8008076C_8F71C(arg0);
-  if (alienInstances[arg0].unk1E > 0)
-  {
-	alienInstances[arg0].unk1E -= 4;
-  }
-  else
-  {
-	alienInstances[arg0].unk1E = 0;
-  }
+	else
+	{
+		func_802D852C_19103C(arg0);
+		if ((arg0 & 0x3C) == (D_80052A8C & 0x3C))
+		{
+			if (alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_PT)
+			{
+				new_var = alienInstances[arg0].unk38;
+				if ((((buildingInstances[new_var].unk8 >> 0xC) & 1) == 0) || ((buildingInstances[new_var].unk8 >> 0xc) & 4))
+				{
+					alienInstances[arg0].unk20 &= ~ALIEN_FLAG_TARGET_PT;
+				}
+			}
+		}
+	}
+	func_8008076C_8F71C(arg0);
+	if (alienInstances[arg0].unk1E > 0)
+	{
+		alienInstances[arg0].unk1E -= 4;
+	}
+	else
+	{
+		alienInstances[arg0].unk1E = 0;
+	}
 }
 
 // AI - Alien AI with projectile attacks
