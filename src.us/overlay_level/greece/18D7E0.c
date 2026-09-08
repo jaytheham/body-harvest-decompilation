@@ -464,7 +464,7 @@ u8 D_802DE280_196D90[] = {
 	0x00, 0x00, 0xFF, 0xA7, 0x00, 0x01, 0x00, 0x05,
 };
 
-u32 D_802DE2C0_196DD0[4] = {0x0000001E, 0x00500000, 0x0, 0x0};
+Unk800311A0 D_802DE2C0_196DD0 = {0, 0x1E, 0x50};
 
 const char D_802DE2D0_196DE0[] = "Unwritten Greece Function %d\n";
 const char D_802DE2F0_196E00[] = "OffsetBuildingNumber %d\n";
@@ -3098,75 +3098,76 @@ void func_802DC2E4_194DF4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC2E4_194DF4.s")
 #endif
 
-// Current(3671)
-#ifdef NON_MATCHING
 // AI - Alien death spawn visual effects
-void func_802DC500_195010(u8 arg0) {
+void func_802DC500_195010(u8 arg0)
+{
 	s16 sp9E;
+	s32 new_var;
 	s32 sp8C[3];
 	s32 sp80[3];
-	u32 sp78;
+	Unk800311A0 sp78;
 	s16 sp70[3];
 	s32 sp6C;
 	s32 sp68;
 	s32 sp64;
-	s32 sp4C;
-	u16 sp5C;
-	u16 sp5A;
-	u16 sp58;
-	u16 sp56;
-	u16 sp54;
+	s32 rnd6;
+	u16 pad;
+	u16 rnd5;
+	u16 rnd4;
+	u16 rnd3;
+	u16 rnd2;
+	u16 rnd1;
 
-	sp78 = D_802DE2C0_196DD0[0];
+	sp78 = D_802DE2C0_196DD0;
 	sp9E = alienInstances[arg0].unkC;
-	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL)) {
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL))
+	{
 		func_802DC2E4_194DF4(arg0);
 	}
-	sp4C = (s32)arg0;
-	if (((u32)(arg0 + D_80052A8C) % 12U) == 0) {
+	if (((arg0 + D_80052A8C) % 12U) == 0)
+	{
+		sp70[0] = (((u16)D_8014DD50[sp9E].unk6) - alienInstances[arg0].unk6) + 0x4000;
 		sp70[1] = 0;
-		sp70[0] = ((u16)D_8014DD50[sp9E].unk6 - alienInstances[arg0].unk6) + 0x4000;
-		sp70[2] = (u16)D_8014DD50[sp9E].unkA;
+		sp70[2] = *((u16 *)(&D_8014DD50[sp9E].unkA));
 		func_800044D4_50D4(&alienInstances[arg0].unk14, sp8C, sp70);
-		func_800044D4_50D4((s16 *)&sp78, sp80, sp70);
+		func_800044D4_50D4(&sp78.unk0, sp80, sp70);
 		sp8C[0] += alienInstances[arg0].unk0;
 		sp8C[1] += alienInstances[arg0].unk2;
 		sp8C[2] += alienInstances[arg0].unk4;
-		if (D_80031420 & 3) {
-			sp54 = func_800038E0_44E0();
-			sp56 = func_800038E0_44E0();
-			sp58 = func_800038E0_44E0();
-			sp5A = func_800038E0_44E0();
-			sp5C = func_800038E0_44E0();
-			func_800CA5EC_D959C(
-				(s16)sp8C[0], (s16)sp8C[1], (s16)sp8C[2],
-				(s8)(sp80[0] - (sp54 % 20) + 10),
-				(sp80[1] - (sp56 % 20)) + 10,
-				(sp80[2] - (sp58 % 20)) + 10,
-				(sp5A % 30) + 0x50,
-				8,
-				(sp5C % 10) + 10,
-				(func_800038E0_44E0() % 55) + 35,
-				D_8013E3C0[currentLevel * 3 - 3],
-				D_8013E3C0[currentLevel * 3 - 2],
-				D_8013E3C0[currentLevel * 3 - 1],
-				0xFF
-			);
+		if (D_80031420 & 3)
+		{
+			rnd1 = func_800038E0_44E0();
+			rnd2 = func_800038E0_44E0();
+			rnd3 = func_800038E0_44E0();
+			rnd4 = func_800038E0_44E0();
+			rnd5 = func_800038E0_44E0();
+			rnd6 = func_800038E0_44E0();
+			func_800CA5EC_D959C(sp8C[0], sp8C[1], sp8C[2],
+								(sp80[0] - (rnd1 % 20)) + 10,
+								(sp80[1] - (rnd2 % 20)) + 10,
+								(sp80[2] - (rnd3 % 20)) + 10,
+								(rnd4 % 30) + 0x50, 8,
+								(rnd5 % 10) + 10,
+								(rnd6 % 55) + 35,
+								D_8013E3C0[(currentLevel * 3) - 3],
+								D_8013E3C0[(currentLevel * 3) - 2],
+								D_8013E3C0[(currentLevel * 3) - 1],
+								0xFF);
 		}
 	}
-	func_800821F0_911A0(sp4C, sp9E, 4, D_802DE280_196D90);
-	if (((D_8014F828 >= 3 && alienInstances[arg0].unk2C < 0xFA) || (alienInstances[alienInstances[arg0].unk25].unk20 & ALIEN_FLAG_UNKL)) && alienInstances[arg0].unk2C >= 3) {
-		alienInstances[arg0].unk2C = 2;
+	func_800821F0_911A0(arg0, sp9E, 4, D_802DE280_196D90);
+	new_var = 2;
+	if ((((D_8014F828 >= 3) && (alienInstances[arg0].unk2C < 0xFA)) || (alienInstances[alienInstances[arg0].unk25].unk20 & ALIEN_FLAG_UNKL)) && (alienInstances[arg0].unk2C >= 3))
+	{
+		alienInstances[arg0].unk2C = new_var;
 	}
-	if (alienInstances[arg0].unk2C == 2) {
-		func_80128428_1373D8(&alienInstances[arg0], (s16)(alienInstances[arg0].unk14 / 2), (s16)(alienInstances[arg0].unk16 / 2), (s16)(alienInstances[arg0].unk18 / 2), &sp6C, &sp68, &sp64);
-		func_800DF038_EDFE8((s16)sp6C, (s16)sp68, (s16)sp64, (u16)alienTypes[alienInstances[arg0].typeIndex].unkC, 6, 0);
+	if (alienInstances[arg0].unk2C == 2)
+	{
+		func_80128428_1373D8(&alienInstances[arg0], alienInstances[arg0].unk14 / new_var, alienInstances[arg0].unk16 / new_var, alienInstances[arg0].unk18 / 2, &sp6C, &sp68, &sp64);
+		func_800DF038_EDFE8(sp6C, sp68, sp64, alienTypes[alienInstances[arg0].typeIndex].unkC, 6, 0);
 		D_8014F828 -= 1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DC500_195010.s")
-#endif
 
 // AI - Alien type 1 setup with offsets
 void func_802DC91C_19542C(u8 arg0) {
