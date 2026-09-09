@@ -1965,50 +1965,45 @@ void func_802D8898_1913A8(u8 arg0)
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(948)
 // AI - Alien chase attack AI
 void func_802D8BAC_1916BC(u8 arg0)
 {
-  s8 temp_a1;
-  s16 sp3C;
-  s16 sp36;
-  s16 temp_v1;
-  s16 temp_a0;
-  s32 var_t1;
-  s32 var_a3;
-  s32 temp_v0;
-  temp_a1 = D_8014DD50[alienInstances[arg0].unkC].unkC;
-  sp3C = D_8014DD50[temp_a1].unkD;
-  func_80086230_951E0(arg0, temp_a1, 0x4000);
-  temp_v0 = func_800877E8_96798(arg0, 0x12C, 0x190);
-  temp_v1 = alienInstances[arg0].unk0 - alienInstances[arg0].unk14;
-  temp_a0 = alienInstances[arg0].unk4 - alienInstances[arg0].unk18;
-  var_t1 = BH_ABS_ALT(temp_v1);
-  var_a3 = BH_ABS_ALT(temp_a0);
-  sp36 = (var_a3 < var_t1) ? BH_ABS_ALT(temp_v1) : BH_ABS_ALT(temp_a0);
-  
-  if (temp_v0 != 0)
-  {
-	if (((func_80084FE8_93F98(arg0, 0x800) != 0) && (sp36 < 0x3E8)) && (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKG)))
+	s8 temp_a1;
+	s16 sp3C;
+	s32 var_a3;
+	s16 sp36;
+	s16 temp_v1;
+	s16 temp_a0;
+	s32 var_t1;
+	s32 temp_v0;
+	temp_a1 = D_8014DD50[alienInstances[arg0].unkC].unkC;
+	sp3C = D_8014DD50[temp_a1].unkD;
+	func_80086230_951E0(arg0, temp_a1, 0x4000);
+	temp_v0 = func_800877E8_96798(arg0, 0x12C, 0x190);
+	temp_v1 = alienInstances[arg0].unk0 - alienInstances[arg0].unk14;
+	temp_a0 = alienInstances[arg0].unk4 - alienInstances[arg0].unk18;
+	var_t1 = BH_ABS_ALT(temp_v1);
+	var_a3 = BH_ABS_ALT(temp_a0);
+	sp36 = (var_a3 < var_t1) ? BH_ABS_ALT(temp_v1) : BH_ABS_ALT(temp_a0);
+
+	if (temp_v0 != 0)
 	{
-	  if (func_800871CC_9617C(arg0, 0, 0x28) != 0)
-	  {
-		alienInstances[arg0].unk4B = 0;
-		alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKG;
-		alienInstances[arg0].unk1E = 0x14;
-	  }
+		if (((func_80084FE8_93F98(arg0, 0x800) != 0) && (sp36 < 0x3E8)) && (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKG)))
+		{
+			if (func_800871CC_9617C(arg0, 0, 0x28) != 0)
+			{
+				alienInstances[arg0].unk4B = 0;
+				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKG;
+				alienInstances[arg0].unk1E = 0x14;
+			}
+		}
 	}
-  }
-  func_800A3D00_B2CB0(arg0, sp3C, 2, &D_802DDCD8_1967E8);
-  if (alienInstances[arg0].unk1E != 0)
-  {
-	alienInstances[arg0].unk1E--;
-  }
+	func_800A3D00_B2CB0(arg0, sp3C, 2, &D_802DDCD8_1967E8);
+	if (alienInstances[arg0].unk1E != 0)
+	{
+		alienInstances[arg0].unk1E--;
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D8BAC_1916BC.s")
-#endif
 
 // AI - Alien combat ranged attack behavior
 void func_802D8D84_191894(u8 arg0)
