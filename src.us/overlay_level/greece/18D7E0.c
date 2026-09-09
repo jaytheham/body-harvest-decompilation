@@ -1221,6 +1221,7 @@ s32 func_802D6904_18F414(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D6904_18F414.s")
 #endif
 
+// CURERNT(0) rodata
 #ifdef NON_MATCHING
 // AI - Mission progression state machine
 void func_802D6D20_18F830(void) {
@@ -2733,6 +2734,7 @@ void func_802DA3EC_192EFC(u8 arg0)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DA3EC_192EFC.s")
 #endif
+
 // CURRENT(2301)
 // AI - Alien attack retreat decision AI
 #ifdef NON_MATCHING
@@ -2798,8 +2800,8 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 							(f32)(-(alienInstances[alienInstances[alienIndex].unk25].unk0 - vehicle->unk0)),
 							(f32)(-(alienInstances[alienInstances[alienIndex].unk25].unk4 - vehicle->unk4))
 						),
-						(s16)(s32)(((f32)sp8C / D_802DE438[0]) + 8192.0f),
-						(f32)(sp8C * 0x32) / D_802DE43C[0]);
+						(s16)(s32)(((f32)sp8C / D_802DE438_196F48[0]) + 8192.0f),
+						(f32)(sp8C * 0x32) / D_802DE43C_196F4C[0]);
 
 					randomBase = 1000;
 					D_80052B34->unk22 = (s16)(randomBase - (func_800038E0_44E0() % 2000));
