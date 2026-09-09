@@ -2714,7 +2714,7 @@ void func_802DA3EC_192EFC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DA3EC_192EFC.s")
 #endif
 
-// CURRENT(7337)
+// CURRENT(2301)
 // AI - Alien attack retreat decision AI
 #ifdef NON_MATCHING
 s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
@@ -2732,7 +2732,7 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 	s32 randomBase;
 	f32 sp70;
 	VehicleInstance *vehicle;
-
+	// TODO - permuter shows improvements when replacing some but not all uses of alienIndex with arg0
 	alienIndex = arg0;
 	vehicle = D_80052B34;
 	 nodes[2] = alienInstances[alienIndex].unkC;
@@ -3022,6 +3022,7 @@ void func_802DC1B8_194CC8(u8 arg0, s32 arg1) {
 	}
 }
 
+// https://decomp.me/scratch/I6o8z
 #ifdef NON_MATCHING
 // CURRENT(2798)
 // AI - Alien death sequence with particles
