@@ -1320,91 +1320,73 @@ void func_802D6D20_18F830(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D6D20_18F830.s")
 #endif
 
+// https://decomp.me/scratch/M4B8n
+// CURRENT(30)
 // AI - Screen shake rotation effects
 #ifdef NON_MATCHING
-void func_802D6F7C_18FA8C(void) {
+void func_802D6F7C_18FA8C(void)
+{
 	f32 sp5C;
-	s32 temp_a1;
 	f32 sp58;
 	f32 sp54;
 	f32 sp50;
 	f32 sp4C;
 	f32 sp48;
+	s32 temp_a1;
 	f64 temp_f20;
 	s32 i;
 	Unk8013FDA8Entry *sp30;
 	Unk8013FDA8Entry *sp2C;
+	sp5C = vehicleTypes[8].unk34 >> 1;
+	sp30 = (Unk8013FDA8Entry *)func_80011F90_12B90(D_9052A00);
+	sp2C = (Unk8013FDA8Entry *)func_80011F90_12B90(D_9052AC0);
 
-	sp5C = (f32)(vehicleTypes[8].unk34 >> 1);
-	sp30 = (Unk8013FDA8Entry *) func_80011F90_12B90(D_9052A00);
-	sp2C = (Unk8013FDA8Entry *) func_80011F90_12B90(D_9052AC0);
-
-	temp_a1 = sins(D_80052B34->unk6);
-	temp_f20 = sp5C;
-	sp58 = (f32) ((((f32) temp_a1 / 32768.0) * temp_f20) + D_80052B34->unk4C);
-	temp_a1 = coss(D_80052B34->unk6);
-	sp54 = (f32) (D_80052B34->unk54 - (((f32) temp_a1 / 32768.0) * temp_f20));
+	sp58 = D_80052B34->unk4C + ((((f32)sins(D_80052B34->unk6)) / 32768.0) * sp5C);
+	sp54 = D_80052B34->unk54 - ((((f32)coss(D_80052B34->unk6)) / 32768.0) * sp5C);
 	sp48 = sqrtf(((D_8004DCAC - sp58) * (D_8004DCAC - sp58)) + ((sp54 - D_8004DCB0) * (sp54 - D_8004DCB0)));
-
-	temp_a1 = (s32) ((f32) (((-(f32) coss((func_80003824_4424(sp58 - D_8004DCAC, sp54 - D_8004DCB0) - D_80052B34->unk6) & 0xFFFF) / 32768.0) * -sp48)) * 21.0f);
+	temp_a1 =
+		((f32)(-(
+				   (f32)coss((func_80003824_4424(sp58 - D_8004DCAC, sp54 - D_8004DCB0) - D_80052B34->unk6) & 0xFFFF) / 32768.0) *
+			   -sp48) *
+		 21.0f);
 	D_8004DCAC = sp58;
 	D_8004DCB0 = sp54;
-
 	{
-		/*
-		Better form?
-		while (i--) {
-			sp30[i].unk8.unk0 = (s16) (sp30[i].unk8.unk0 - temp_a1);
+
+		for (i = 0xC; i--;)
+		{
+			sp30[i].unk8.unk0 = (sp30[i].unk8.unk0 + temp_a1);
 		}
-		*/
-		Unk8013FDA8Entry *entry;
-		entry = &sp30[0xB];
-		i = 0xC;
-		while (i--) {
-			entry->unk8.unk0 = (s16) (entry->unk8.unk0 + temp_a1);
-			entry--;
+	}
+	temp_a1 = (((s16)sp30[1].unk8.unk0) >> 0xC) << 0xC;
+	{
+		for (i = 0xC; i--;)
+		{
+			sp30[i].unk8.unk0 = (sp30[i].unk8.unk0 - temp_a1);
 		}
 	}
 
-	temp_a1 = ((s16) sp30[1].unk8.unk0 >> 0xC) << 0xC;
-	{
-		Unk8013FDA8Entry *entry;
-		entry = &sp30[0xB];
-		i = 0xC;
-		while (i--) {
-			entry->unk8.unk0 = (s16) (entry->unk8.unk0 - temp_a1);
-			entry--;
-		}
-	}
-
-	temp_a1 = sins(D_80052B34->unk6);
-	sp50 = (f32) (D_80052B34->unk4C - (((f32) temp_a1 / 32768.0) * temp_f20));
-	temp_a1 = coss(D_80052B34->unk6);
-	sp4C = (f32) ((((f32) temp_a1 / 32768.0) * temp_f20) + D_80052B34->unk54);
+	sp50 = D_80052B34->unk4C - ((((f32)sins(D_80052B34->unk6)) / 32768.0) * sp5C);
+	sp4C = D_80052B34->unk54 + ((((f32)coss(D_80052B34->unk6)) / 32768.0) * sp5C);
 	sp48 = sqrtf(((D_8004DCB4 - sp50) * (D_8004DCB4 - sp50)) + ((sp4C - D_8004DCB8) * (sp4C - D_8004DCB8)));
-
-	temp_a1 = (s32) ((f32) (((-(f32) coss((func_80003824_4424(sp50 - D_8004DCB4, sp4C - D_8004DCB8) - D_80052B34->unk6) & 0xFFFF) / 32768.0) * -sp48)) * 21.0f);
+	temp_a1 = (((f32)(-((((f32)
+							  coss((func_80003824_4424(sp50 - D_8004DCB4, sp4C - D_8004DCB8) - D_80052B34->unk6) & 0xFFFF))) /
+						32768.0) *
+					  (-sp48))) *
+			   21.0f);
 	D_8004DCB4 = sp50;
 	D_8004DCB8 = sp4C;
-
 	{
-		Unk8013FDA8Entry *entry;
-		entry = &sp2C[0xB];
-		i = 0xC;
-		while (i--) {
-			entry->unk8.unk0 = (s16) (entry->unk8.unk0 + temp_a1);
-			entry--;
+		for (i = 0xC; i--;)
+		{
+			sp2C[i].unk8.unk0 = (sp2C[i].unk8.unk0 + temp_a1);
 		}
 	}
-
-	temp_a1 = ((s16) sp2C[1].unk8.unk0 >> 0xC) << 0xC;
+	temp_a1 = (((s16)sp2C[1].unk8.unk0) >> 0xC) << 0xC;
 	{
-		Unk8013FDA8Entry *entry;
-		entry = &sp2C[0xB];
-		i = 0xC;
-		while (i--) {
-			entry->unk8.unk0 = (s16) (entry->unk8.unk0 - temp_a1);
-			entry--;
+		for (i = 0xC; i--;)
+		{
+			sp2C[i].unk8.unk0 = (sp2C[i].unk8.unk0 - temp_a1);
 		}
 	}
 }
@@ -2064,7 +2046,8 @@ void func_802D90C8_191BD8(u8 arg0) {
 	func_800873A8_96358(arg0);
 }
 
-// CURRENT(1448)
+// https://decomp.me/scratch/wXigU
+// CURRENT(1229)
 // AI - Alien idle wander AI
 #ifdef NON_MATCHING
 void func_802D911C_191C2C(u8 arg0)
