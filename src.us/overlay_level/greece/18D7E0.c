@@ -2199,79 +2199,87 @@ void func_802D95A8_1920B8(u8 arg0, s16 arg1, s16 arg2) {
 	alienInstances[arg0].unk36 = 0;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(1180)
 // AI - Alien charged special attack with explosions
-void func_802D962C_19213C(u8 arg0, s16 arg1, s16 arg2) {
+void func_802D962C_19213C(u8 arg0, s16 arg1, s16 arg2)
+{
 	u8 currentNode;
 	u8 typeIndex;
-	u8 state;
+	s16 state;
 	s32 turnSpeed;
 	s32 pad0;
 	s32 pad1;
 	AlienInstance *alienInst;
-
 	alienInst = &alienInstances[arg0];
 	currentNode = alienInst->unk26;
 	typeIndex = alienInst->typeIndex;
-	if (alienInst->unk20 & ALIEN_FLAG_UNKD) {
-		if (arg1 == currentNode) {
-			alienInst->unk2A = (s16) (alienInst->unk2A + 0x1000);
-		} else {
-			alienInst->unk2A = (s16) (alienInst->unk2A - 0x1000);
+	if (alienInst->unk20 & ALIEN_FLAG_UNKD)
+	{
+		if (arg1 == alienInst->unk26)
+		{
+			alienInst->unk2A = (s16)(alienInst->unk2A + 0x1000);
 		}
-
-		func_80081E5C_90E0C((s16) currentNode);
-		if (D_8014DD50[currentNode].unkE == 0) {
+		else
+		{
+			alienInst->unk2A = (s16)(alienInst->unk2A - 0x1000);
+		}
+		func_80081E5C_90E0C(currentNode);
+		if (D_8014DD50[currentNode].unkE == 0)
+		{
 			s32 hit;
 			state = alienInst->unk36;
-			if (state == 3) {
-				alienInst->unk20 = (s32) (alienInst->unk20 & ~ALIEN_FLAG_UNKD);
+			if (state == 3)
+			{
+				alienInst->unk20 = (s32)(alienInst->unk20 & (~ALIEN_FLAG_UNKD));
 				return;
 			}
 			func_80081C84_90C34(currentNode, &D_802DDCF8_196808[state]);
 			alienInst->unk36++;
 			state = alienInst->unk36;
-			if (state == 3) {
+			if (state == 3)
+			{
 				s32 sp5C;
 				s32 sp58;
 				s32 sp54;
 				AlienType *type;
 				func_80137468_146418(arg0, 0x64);
-				if (arg1 == alienInst->unk26) {
+				if (arg1 == alienInst->unk26)
+				{
 					hit = func_800879A4_96954(arg0, 0, 1);
 				}
-				if (arg2 == alienInst->unk26) {
+				if (arg2 == alienInst->unk26)
+				{
 					type = &alienTypes[typeIndex];
-					type->unk2C = (s16) -type->unk2C;
+					type->unk2C = (-type->unk2C);
 					hit = func_800879A4_96954(arg0, 0x96, 1);
-					type->unk2C = (s16) -type->unk2C;
+					type->unk2C = (-type->unk2C);
 				}
 				type = &alienTypes[typeIndex];
-				if (hit != 0) {
+				if (hit != 0)
+				{
 					func_80122524_1314D4(D_80052B34, 0x190, alienInst->unk0, alienInst->unk4);
 				}
-				if (arg2 == alienInst->unk26) {
+				if (arg2 == alienInst->unk26)
+				{
 					turnSpeed = -type->unk2C;
-				} else {
+				}
+				else
+				{
 					turnSpeed = type->unk2C;
 				}
 				func_80128428_1373D8(alienInst, turnSpeed, type->unk2E, type->unk30, &sp5C, &sp58, &sp54);
-				func_800DEE5C_EDE0C((s16) sp5C, (s16) (sp58 + 5), (s16) sp54, 0x50, 0x14);
-				func_800C541C_D43CC((s16) sp5C, (s16) sp58, (s16) sp54, 0, -1, 0, 0x64, 0xFF, 0x28, 0x14, 0xFF, 0xFF, 0x80);
-				func_800DEA08_ED9B8((s16) sp5C, (s16) sp58, (s16) sp54, 0x96, 8, 6, 0x28, 0xC8, 0xA6, 0x85, 0x2F);
+				func_800DEE5C_EDE0C(sp5C, (sp58 + 5), sp54, 0x50, 0x14);
+				func_800C541C_D43CC(sp5C, sp58, sp54, 0, -1, 0, 0x64, 0xFF, 0x28, 0x14, 0xFF, 0xFF, 0x80);
+				func_800DEA08_ED9B8(sp5C, sp58, sp54, 0x96, 8, 6, 0x28, 0xC8, 0xA6, 0x85, 0x2F);
 				func_80135D44_144CF4(sp5C, sp58, sp54, 3.0f);
 				state = alienInst->unk36;
 			}
-			if (state == 4) {
-				alienInst->unk20 = (s32) (alienInst->unk20 & ~ALIEN_FLAG_UNKD);
+			if (state == 4)
+			{
+				alienInst->unk20 = (alienInst->unk20 & (~ALIEN_FLAG_UNKD));
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D962C_19213C.s")
-#endif
 
 // AI - Alien combat distance evaluation AI
 void func_802D9964_192474(u8 arg0)
