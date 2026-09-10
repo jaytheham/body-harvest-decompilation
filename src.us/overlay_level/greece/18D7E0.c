@@ -2434,9 +2434,9 @@ void func_802DA378_192E88(u8 arg0) {
 	func_80089EB4_98E64(arg0, 0x3C, 0, 6, 3);
 }
 
-// CURRENT(226)
-// AI - Alien swarm formation flying AI
 #ifdef NON_MATCHING
+// CURRENT(210)
+// AI - Alien swarm formation flying AI
 void func_802DA3EC_192EFC(u8 arg0)
 {
 	AlienInstance *parent;
@@ -2447,8 +2447,8 @@ void func_802DA3EC_192EFC(u8 arg0)
 	s8 pathNode2;
 	s8 pathNode3;
 	s16 path4;
-	s32 dist;
 	s32 phase;
+	s32 dist;
 	s32 inv;
 	u8 *levelColor;
 	u8 neigh0;

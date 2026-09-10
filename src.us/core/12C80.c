@@ -581,6 +581,7 @@ void func_80013314_13F14(void) {
 	D_80031CA4 = -1;
 }
 
+// https://decomp.me/scratch/ZleAv
 void func_80013324_13F24(void)
 {
 	s8 arr_val;
