@@ -1643,9 +1643,10 @@ typedef struct {
 } Unk8014DD50; /* size = 0x10 */
 
 typedef struct {
-	/* 0x00 */ s8 unk0;
-	/* 0x01 */ u8 pad1[0xC];
-	/* 0x0D */ s8 unkD;
+      /* 0x00 */ s8 unk0;
+      /* 0x01 */ s8 unk1;
+      /* 0x02 */ u8 pad2[0xB];
+      /* 0x0D */ s8 unkD;
 	/* 0x0E */ u8 padE[2];
 } Unk8014DD5C; /* size = 0x10 */
 
