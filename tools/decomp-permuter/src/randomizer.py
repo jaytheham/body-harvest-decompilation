@@ -267,6 +267,21 @@ def find_var_reads(top_node: ca.Node) -> List[ca.ID]:
     return ret
 
 
+def get_mentioned_names(fn: ca.FuncDef, region: Region) -> List[str]:
+    names: List[str] = []
+
+    class IdVisitor(ca.NodeVisitor):
+        def visit_ID(self, node: ca.ID) -> None:
+            if region.contains_node(node):
+                names.append(node.name)
+
+        def visit_StructRef(self, node: ca.StructRef) -> None:
+            self.visit(node.name)
+
+    IdVisitor().visit(fn)
+    return names
+
+
 def visit_replace(top_node: ca.Node, callback: Callable[[ca.Node, bool], Any]) -> None:
     def empty_statement_to_none(node: Any) -> Any:
         if isinstance(node, ca.EmptyStatement):
@@ -888,17 +903,7 @@ def perm_randomize_internal_type(
     """Randomize types of pre-existing local variables. Function parameters
     are not included -- those are handled by perm_randomize_function_type.
     Only variables mentioned within the given region are affected."""
-    names: Set[str] = set()
-
-    class IdVisitor(ca.NodeVisitor):
-        def visit_ID(self, node: ca.ID) -> None:
-            if region.contains_node(node):
-                names.add(node.name)
-
-        def visit_StructRef(self, node: ca.StructRef) -> None:
-            self.visit(node.name)
-
-    IdVisitor().visit(fn)
+    names = set(get_mentioned_names(fn, region))
 
     typemap = build_typemap(ast, fn)
     decls: List[ca.Decl] = []
@@ -923,18 +928,7 @@ def perm_randomize_external_type(
 ) -> None:
     """Randomize types of global variables. Only variables mentioned within the
     given region are affected."""
-    names: List[str] = []
-
-    class IdVisitor(ca.NodeVisitor):
-        def visit_ID(self, node: ca.ID) -> None:
-            if region.contains_node(node):
-                names.append(node.name)
-
-        def visit_StructRef(self, node: ca.StructRef) -> None:
-            self.visit(node.name)
-
-    IdVisitor().visit(fn)
-
+    names = get_mentioned_names(fn, region)
     ensure(names)
     name = random.choice(dedup(names))
     decls: List[Tuple[ca.Decl, int]] = []
@@ -2071,6 +2065,7 @@ def perm_remove_ast(
     cands: List[Tuple[ca.Node, ca.Node]] = []
 
     class Visitor(ca.NodeVisitor):
+        # Replace (type)(x) with (x)
         def visit_Cast(self, node: ca.Cast) -> None:
             if region.contains_node(node):
                 cands.append((node, node.expr))
@@ -2488,6 +2483,110 @@ def perm_var_cond_block(
     ]
 
 
+def perm_alias_array(
+    fn: ca.FuncDef, ast: ca.FileAST, indices: Indices, region: Region, random: Random
+) -> None:
+    """Replace two same-type variables by an array."""
+    mentioned_names = set(get_mentioned_names(fn, region))
+    typemap = build_typemap(ast, fn)
+    cands_by_type: List[Tuple[Type, List[Tuple[int, ca.Decl]]]] = []
+    all_names = set()
+
+    stmts = ast_util.get_block_stmts(fn.body, False)
+    for i, decl in enumerate(stmts):
+        if not isinstance(decl, ca.Decl) or not decl.name:
+            continue
+        all_names.add(decl.name)
+        if decl.init or decl.name not in mentioned_names:
+            continue
+        tp = get_decl_type(decl)
+        real_type = resolve_typedefs(tp, typemap)
+        if isinstance(real_type, ca.ArrayDecl):
+            continue
+        for t, arr in cands_by_type:
+            if same_type(t, tp, typemap, allow_similar=True):
+                break
+        else:
+            arr = []
+            cands_by_type.append((tp, arr))
+        arr.append((i, decl))
+
+    cands = [(tp, decls) for tp, decls in cands_by_type if len(decls) >= 2]
+    ensure(cands)
+    tp, decls = random.choice(cands)
+    (i1, decl1), (i2, decl2) = random.sample(decls, 2)
+    assert decl1.name
+    assert decl2.name
+    array_ind = {
+        decl1.name: 0,
+        decl2.name: 1,
+    }
+
+    var = "new_var"
+    counter = 1
+    while var in all_names:
+        counter += 1
+        var = f"new_var{counter}"
+    arr_tp = ca.ArrayDecl(tp, ca.Constant("int", "2"), [])
+    stmts[min(i1, i2)] = ast_util.make_decl(var, arr_tp)
+    del stmts[max(i1, i2)]
+
+    def callback(node: ca.Node, is_expr: bool) -> Optional[ca.Node]:
+        if not isinstance(node, ca.ID) or node.name not in array_ind:
+            return None
+        return ca.ArrayRef(ca.ID(var), ca.Constant("int", str(array_ind[node.name])))
+
+    visit_replace(fn.body, callback)
+
+
+def perm_remove_var(
+    fn: ca.FuncDef, ast: ca.FileAST, indices: Indices, region: Region, random: Random
+) -> None:
+    """Remove a variable, replacing all its instances with
+    a randomly chosen variable of similar type."""
+    mentioned_names = set(get_mentioned_names(fn, region))
+    typemap = build_typemap(ast, fn)
+    cands_by_type: List[Tuple[Type, List[Tuple[int, str]]]] = []
+
+    def add_cand(tp: Type, stmt_idx: int, name: str) -> None:
+        for t, arr in cands_by_type:
+            if same_type(t, tp, typemap, allow_similar=True):
+                break
+        else:
+            arr = []
+            cands_by_type.append((tp, arr))
+        arr.append((stmt_idx, name))
+
+    stmts = ast_util.get_block_stmts(fn.body, False)
+    for i, decl in enumerate(stmts):
+        if isinstance(decl, ca.Decl) and decl.name:
+            if decl.name not in mentioned_names:
+                continue
+            tp = get_decl_type(decl)
+            add_cand(tp, i, decl.name)
+
+    assert isinstance(fn.decl.type, ca.FuncDecl)
+    if fn.decl.type.args is not None:
+        for param in fn.decl.type.args.params:
+            if isinstance(param, ca.Decl) and param.name:
+                add_cand(get_decl_type(param), -1, param.name)
+
+    cands = [(tp, names) for tp, names in cands_by_type if len(names) >= 2]
+    ensure(cands)
+    tp, names = random.choice(cands)
+    (i1, name1), (i2, name2) = random.sample(names, 2)
+
+    ensure(i1 != -1)
+    del stmts[i1]
+
+    def callback(node: ca.Node, is_expr: bool) -> Optional[ca.Node]:
+        if not isinstance(node, ca.ID) or node.name != name1:
+            return None
+        return ca.ID(name2)
+
+    visit_replace(fn.body, callback)
+
+
 RandomizationPass = Callable[[ca.FuncDef, ca.FileAST, Indices, Region, Random], None]
 
 RANDOMIZATION_PASSES: List[RandomizationPass] = [
@@ -2525,6 +2624,8 @@ RANDOMIZATION_PASSES: List[RandomizationPass] = [
     perm_pad_var_decl,
     perm_inline,
     perm_var_cond_block,
+    perm_alias_array,
+    perm_remove_var,
 ]
 
 

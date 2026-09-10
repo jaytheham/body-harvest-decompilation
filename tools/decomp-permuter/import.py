@@ -254,11 +254,12 @@ def fixup_build_command(
     res: List[str] = []
     skip_count = 0
     assembler = None
-    for part in parts:
+    last_o = len(parts) - 1 - parts[::-1].index("-o")
+    for i, part in enumerate(parts):
         if skip_count > 0:
             skip_count -= 1
             continue
-        if part in ["-MF", "-MT", "-MQ", "-o"]:
+        if part in ["-MF", "-MT", "-MQ"] or i == last_o:
             skip_count = 1
             continue
         if part in ["-M", "-MM", "-MG", "-MP", "-MD", "-MMD", "-Mno-modules"]:
@@ -666,25 +667,33 @@ def prune_and_separate_context(
     Returns (source, context)."""
     try:
         ast = ast_util.parse_c(source, from_import=True)
-        orig_fn, ind = ast_util.extract_fn(ast, func_name)
-        if should_prune:
-            try:
-                ind = ast_util.prune_ast(orig_fn, ast)
-            except Exception:
-                print(
-                    "Source minimization failed! "
-                    "You could try --no-prune as a workaround."
-                )
-                raise
-        del ast.ext[ind]
-        source = ast_util.to_c(orig_fn, from_import=True)
-        context = ast_util.to_c(ast, from_import=True)
-        return source, context
     except CandidateConstructionFailure as e:
         print(e.message)
         print("Unable to split context from source.")
         print("Using the entire source as context.")
         return "", ast_util.process_pragmas(source)
+
+    try:
+        orig_fn, ind = ast_util.extract_fn(ast, func_name)
+    except CandidateConstructionFailure as e:
+        print(e.message)
+        print("Falling back to just removing function bodies.")
+        context = ast_util.to_c(ast, from_import=True)
+        return "", context
+
+    if should_prune:
+        try:
+            ind = ast_util.prune_ast(orig_fn, ast)
+        except Exception:
+            print(
+                "Source minimization failed! "
+                "You could try --no-prune as a workaround."
+            )
+            raise
+    del ast.ext[ind]
+    source = ast_util.to_c(orig_fn, from_import=True)
+    context = ast_util.to_c(ast, from_import=True)
+    return source, context
 
 
 def get_decompme_compiler_name(
@@ -755,6 +764,7 @@ def get_compiler_flags(settings: Mapping[str, object], cmdline: List[str]) -> st
 def write_compile_command(compiler: List[str], cwd: str, out_file: str) -> None:
     with open(out_file, "w", encoding="utf-8") as f:
         f.write("#!/usr/bin/env bash\n")
+        f.write("set -euo pipefail\n")
         f.write('INPUT="$(realpath "$1")"\n')
         f.write('OUTPUT="$(realpath "$3")"\n')
         f.write(f"cd {shlex.quote(cwd)}\n")
@@ -972,7 +982,6 @@ def main(arg_list: List[str]) -> None:
         api_base = os.environ.get("DECOMPME_API_BASE", "https://decomp.me")
         compiler_name = get_decompme_compiler_name(compiler, settings, api_base)
         source, context = prune_and_separate_context(source, args.prune, func_name)
-        print("Uploading...")
         try:
             post_data = urllib.parse.urlencode(
                 {

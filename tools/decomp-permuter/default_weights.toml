@@ -36,12 +36,15 @@ perm_long_chain_assignment = 3
 perm_pad_var_decl = 1
 perm_inline = 10
 perm_var_cond_block = 5
+perm_alias_array = 1
+perm_remove_var = 5
 
 [ido]
 perm_float_literal = 10
 perm_sameline = 10
 perm_inline = 0
 perm_var_cond_block = 0
+perm_alias_array = 0.5
 
 [mwcc]
 perm_chain_assignment = 10
@@ -53,6 +56,7 @@ perm_xor_zero = 0.5
 perm_var_cond_block = 1
 
 [gcc]
+perm_alias_array = 3
 # The following passes were originally written with IDO in mind and are not beneficial for GCC
 perm_add_mask = 0.5
 perm_xor_zero = 0.5

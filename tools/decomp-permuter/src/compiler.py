@@ -14,6 +14,14 @@ class Compiler:
         self.show_errors = show_errors
         self.debug_mode = debug_mode
 
+        bash = shutil.which("bash")
+        if bash is None:
+            raise Exception(
+                "No `bash` executable was found on PATH. Install bash and make "
+                "sure it's on PATH (on Windows, Git for Windows provides one)."
+            )
+        self._bash = bash
+
     def compile(self, source: str, *, show_errors: bool = False) -> Optional[str]:
         """Try to compile a piece of C code. Returns the filename of the resulting .o
         temp file if it succeeds."""
@@ -41,7 +49,7 @@ class Compiler:
         try:
             stderr = 2 if show_errors else subprocess.DEVNULL
             subprocess.check_call(
-                [self.compile_cmd, c_name, "-o", o_name],
+                [self._bash, self.compile_cmd, c_name, "-o", o_name],
                 stdout=stderr,
                 stderr=stderr,
             )
