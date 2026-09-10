@@ -2698,12 +2698,13 @@ void func_802DA3EC_192EFC(u8 arg0)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DA3EC_192EFC.s")
 #endif
-// CURRENT(2301)
+
+// CURRENT(835)
 // AI - Alien attack retreat decision AI
 #ifdef NON_MATCHING
 s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
-	u8 alienIndex;
 	u8 sp9F;
+	u8 alienIndex;
 	s32 sp98;
 	s32 sp94;
 	s32 sp90;
@@ -2716,9 +2717,8 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 	s32 randomBase;
 	f32 sp70;
 	VehicleInstance *vehicle;
-	// TODO - permuter shows improvements when replacing some but not all uses of alienIndex with arg0
+	s32 new_var;
 	alienIndex = arg0;
-	vehicle = D_80052B34;
 	 nodes[2] = alienInstances[alienIndex].unkC;
    nodes[0] = D_8014DD50[nodes[2]].unkC;
    nodes[1] = D_8014DD50[nodes[0]].unkC;
@@ -2758,9 +2758,10 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 				if (sp8C < 0x127690) {
 					sp8C = 0x127690 - sp8C;
 					if (!(vehicle->unk20 & VEHICLE_FLAG_AIRBORNE)) {
+					new_var = -(alienInstances[alienInstances[alienIndex].unk25].unk0 - vehicle->unk0);
 					func_80102DDC_111D8C(D_80052B34,
 						func_80003824_4424(
-							(f32)(-(alienInstances[alienInstances[alienIndex].unk25].unk0 - vehicle->unk0)),
+							(f32)new_var,
 							(f32)(-(alienInstances[alienInstances[alienIndex].unk25].unk4 - vehicle->unk4))
 						),
 						(s16)(s32)(((f32)sp8C / D_802DE438_196F48[0]) + 8192.0f),
@@ -2820,19 +2821,19 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 				randVal = (func_800038E0_44E0() * 2000) / 0x10000;
 			D_80052B34->unk26 = (s16)(randomBase - randVal);
 
-				alienInstances[alienIndex].unk20 &= ~ALIEN_FLAG_UNKD;
-				alienInstances[alienIndex].unk36 = 0;
-				alienInstances[alienIndex].unk20 |= ALIEN_FLAG_UNKE;
+				alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD;
+				alienInstances[arg0].unk36 = 0;
+				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKE;
 						   D_8014DD50[nodes[0]].unkE = 0;
 			}
 		}
 		return 1;
 	}
 
-	if (alienInstances[alienIndex].unk20 & ALIEN_FLAG_UNKE) {
+	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKE) {
 		result = func_80081F18_90EC8(alienIndex, 3, 2, &nodes[0], arg2);
 		if (result == 2) {
-			alienInstances[alienIndex].unk20 &= ~ALIEN_FLAG_UNKE;
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKE;
 		}
 		return 1;
 	}
@@ -2842,6 +2843,7 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DB16C_193C7C.s")
 #endif
+
 /* CURRENT(2295) */
 // AI - Alien type 1 behavior with patrol and pursuit
 void func_802DBA00_194510(u8 arg0) {
