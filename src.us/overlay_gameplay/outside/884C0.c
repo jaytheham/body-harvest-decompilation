@@ -3535,7 +3535,7 @@ void func_80080BC0_8FB70(u8 arg0, s16 arg1, s16 arg2, u8 arg3)
 		}
 		if (shifted_unk4 != (s16)(dz >> arg3))
 		{
-			if (BH_ABS_ALT(alienInstances[arg0].unkE) >= 0x4001)
+			if (BH_ABS(alienInstances[arg0].unkE) >= 0x4001)
 			{
 				alienInstances[arg0].unkE += ((shifted_unk4 - shifted_arg2) << 14);
 			}
@@ -3554,7 +3554,7 @@ void func_80080BC0_8FB70(u8 arg0, s16 arg1, s16 arg2, u8 arg3)
 
 		dz = (alienInstances[arg0].unk0 & mask) - half;
 		dx = (alienInstances[arg0].unk4 & mask) - half;
-		if (BH_ABS_ALT(dz) > BH_ABS_ALT(dx))
+		if (BH_ABS(dz) > BH_ABS(dx))
 		{
 			alienInstances[arg0].unk0 = (dz < 0)
 				? (alienInstances[arg0].unk0 & 0xFF00) - 1
@@ -4520,7 +4520,7 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 			alien->unk28 = (s8)(x >> 8);
 			alien->unk29 = (s8)(z >> 8);
 			blockedBuilding = hitBuilding;
-			if (BH_ABS_ALT(delta) < 0x4000) {
+			if (BH_ABS(delta) < 0x4000) {
 				nearCount++;
 			}
 			if (spanCount == 0) {
@@ -5608,7 +5608,7 @@ s32 func_80085E2C_94DDC(u8 arg0, s16 arg1, s32 arg2)
 	new_var = func_80003824_4424((f32)temp_dx, (f32)temp_dy);
 	sp42 = new_var - alienInstances[arg0].unk6;
 	D_8014DD50[arg1].unk6 = func_80085A9C_94A4C(D_8014DD50[arg1].unk6, -sp42, arg2, -arg2, alienTypes[sp47].unk42);
-	if ((alienTypes[sp47].unk42 * 2) < BH_ABS_ALT(D_8014DD50[arg1].unk6 + sp42))
+	if ((alienTypes[sp47].unk42 * 2) < BH_ABS(D_8014DD50[arg1].unk6 + sp42))
 	{
 		return 1;
 	}
@@ -5637,7 +5637,7 @@ s32 func_80085F68_94F18(u8 arg0, s16 arg1, s32 arg2)
 	sp62 = res - alienInstances[arg0].unk6;
 	D_8014DD50[arg1].unk6 = func_80085A9C_94A4C(D_8014DD50[arg1].unk6, -sp62, arg2, -arg2, alienTypes[typeIndex].unk42);
 
-	if ((alienTypes[typeIndex].unk42 * 2) < BH_ABS_ALT(D_8014DD50[arg1].unk6 + sp62))
+	if ((alienTypes[typeIndex].unk42 * 2) < BH_ABS(D_8014DD50[arg1].unk6 + sp62))
 	{
 		return 1;
 	}

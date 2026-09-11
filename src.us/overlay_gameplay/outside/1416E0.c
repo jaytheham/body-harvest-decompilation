@@ -1422,11 +1422,11 @@ void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
   if (arg3 != 0.0f)
   {
 	new_var2 = arg0 / 4;
-	var_v0 = (s32)BH_ABS_ALT(new_var2 - D_80047954);
+	var_v0 = (s32)BH_ABS(new_var2 - D_80047954);
 	  
-	var_v1 = (s32)BH_ABS_ALT((arg1 / 4) - D_80047958);
+	var_v1 = (s32)BH_ABS((arg1 / 4) - D_80047958);
 	  
-	var_a0 = (s32)BH_ABS_ALT((arg2 / 4) - D_8004795C);
+	var_a0 = (s32)BH_ABS((arg2 / 4) - D_8004795C);
 	  
 	new_var = D_801456F8_1546A8[0];
 	temp_f16 = ((var_v0 * var_v0) + (var_v1 * var_v1) + (var_a0 * var_a0)) / new_var;
