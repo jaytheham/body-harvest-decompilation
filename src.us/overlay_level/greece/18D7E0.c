@@ -2047,145 +2047,136 @@ void func_802D90C8_191BD8(u8 arg0) {
 	func_800873A8_96358(arg0);
 }
 
-// https://decomp.me/scratch/wXigU
-// CURRENT(1229)
 // AI - Alien idle wander AI
-#ifdef NON_MATCHING
 void func_802D911C_191C2C(u8 arg0)
 {
-  Unk8014DD50 *pathB;
-  Unk8014DD50 *pathA;
-  
-  s8 new_var;
-  s8 sp42;
+	s32 temp_v0;
+	s32 temp_v1;
+	s32 distSq;
 	s8 sp43;
-  s8 sp37;
-  s8 sp33;
-  s8 sp2F;
-  s32 distSq;
-  if (alienInstances[arg0].unk47 & 1)
-  {
-	func_8008064C_8F5FC(arg0);
-  }
-  else
-  {
-	func_8008076C_8F71C(arg0);
-  }
-  distSq = ((alienInstances[arg0].unk4 - alienInstances[arg0].unk18) *
-	   (alienInstances[arg0].unk4 - alienInstances[arg0].unk18)) +
-	  ((alienInstances[arg0].unk0 - alienInstances[arg0].unk14) *
-			(alienInstances[arg0].unk0 - alienInstances[arg0].unk14));
-  if ((distSq >= 0x225511) || (alienInstances[arg0].unk47 & 1))
-  {
-	alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
-	alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKC | ALIEN_FLAG_AWAY);
-  }
-  else if (distSq >= 0xF4241)
-  {
-	alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKC;
-	alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY);
-  }
-  else
-  {
-	alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY;
-	alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKC;
-  }
-  if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD)
-  {
-	if (alienInstances[arg0].unk2C != 0)
+	s8 sp42;
+	s8 sp33;
+	s8 sp2F;
+	// Fake
+	if (alienInstances[arg0].unk1E && alienInstances[arg0].unk1E) {}
+
+	if (alienInstances[arg0].unk47 & 1)
 	{
-	  alienInstances[arg0].unk2C--;
+		func_8008064C_8F5FC(arg0);
 	}
 	else
 	{
-	  alienInstances[arg0].unk10 = alienInstances[arg0].unk10 + 0x40;
+		func_8008076C_8F71C(arg0);
 	}
-	if ((alienInstances[arg0].unk10 < 0) && (D_80222A70 < alienInstances[arg0].unk2))
+	distSq = ((alienInstances[arg0].unk4 - alienInstances[arg0].unk18) *
+			  (alienInstances[arg0].unk4 - alienInstances[arg0].unk18)) +
+			 ((alienInstances[arg0].unk0 - alienInstances[arg0].unk14) *
+			  (alienInstances[arg0].unk0 - alienInstances[arg0].unk14));
+	if ((distSq >= 0x225511) || (alienInstances[arg0].unk47 & 1))
 	{
-	  alienInstances[arg0].unk1E = 0;
-	  if (alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER)
-	  {
-		func_800871CC_9617C(arg0, 0, 0x18);
-	  }
-	  else
-	  {
-		func_80129354_138304(&alienInstances[arg0], 0, alienInstances[arg0].unk14, alienInstances[arg0].unk16, alienInstances[arg0].unk18);
-	  }
-	  alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD;
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
+		alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKC | ALIEN_FLAG_AWAY);
 	}
-	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_FALL))
+	else if (distSq >= 0xF4241)
 	{
-	  alienInstances[arg0].unk20 |= ALIEN_FLAG_FALL;
-	  alienInstances[arg0].unk2C = 0;
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKC;
+		alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY);
 	}
-  }
-  else
-	if (alienInstances[arg0].unk20 & ALIEN_FLAG_FALL)
-  {
-	if (alienInstances[arg0].unk2 < D_80222A70)
+	else
 	{
-	  if (alienInstances[arg0].unk10 < (-0x60))
-	  {
-		alienInstances[arg0].unk10 += 0x40;
-	  }
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY;
+		alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKC;
 	}
-	if (alienInstances[arg0].unk2 < (D_80222A70 - 0x14))
+	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD)
 	{
-	  alienInstances[arg0].unk20 &= ~ALIEN_FLAG_FALL;
-	}
-  }
-  else
-	if (((func_800038E0_44E0() % 100) == 0) && (alienInstances[arg0].unk1E == 0))
-  {
-	sp43 = alienInstances[arg0].unk0 >> 8;
-	sp42 = alienInstances[arg0].unk4 >> 8;
-	sp37 = sp43 - 1;
-	sp33 = sp42 - 1;
-	sp2F = sp42 + 1;
-	if ((func_800B325C_C220C(sp37, sp33, 0x1000) != 0) &&
-		(func_800B325C_C220C(sp37, sp42, 0x1000) != 0))
-	{
-	  if (func_800B325C_C220C(sp37, sp42 + 1, 0x1000) != 0)
-	  {
-		sp37 = sp43 + 1;
-		if (func_800B325C_C220C(sp37, sp33, 0x1000) &&
-			func_800B325C_C220C(sp37, sp42, 0x1000) &&
-			func_800B325C_C220C(sp37, sp2F, 0x1000) &&
-			func_800B325C_C220C(sp43, sp33, 0x1000) &&
-			func_800B325C_C220C(sp43, sp2F, 0x1000))
+		if (alienInstances[arg0].unk2C != 0)
 		{
-		  alienInstances[arg0].unk20 |= ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD;
-		  alienInstances[arg0].unk2C = 6;
-		  alienInstances[arg0].unk10 = 0;
+			alienInstances[arg0].unk2C--;
 		}
-	  }
+		else
+		{
+			alienInstances[arg0].unk10 = alienInstances[arg0].unk10 + 0x40;
+		}
+		if ((alienInstances[arg0].unk10 < 0) && (D_80222A70 < alienInstances[arg0].unk2))
+		{
+			alienInstances[arg0].unk1E = 0;
+			if (alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER)
+			{
+				func_800871CC_9617C(arg0, 0, 0x18);
+			}
+			else
+			{
+				func_80129354_138304(&alienInstances[arg0], 0, alienInstances[arg0].unk14, alienInstances[arg0].unk16, alienInstances[arg0].unk18);
+			}
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD;
+		}
+		if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_FALL))
+		{
+			alienInstances[arg0].unk20 |= ALIEN_FLAG_FALL;
+			alienInstances[arg0].unk2C = 0;
+		}
 	}
-  }
-  else
-  {
-	alienInstances[arg0].unk10 = 0;
-  }
-  if (alienInstances[arg0].unk2 < (D_80222A70 + 5))
-  {
-	func_800E24B8_F1468(arg0);
-  }
-  pathA = &D_8014DD50[alienInstances[arg0].unkC];
-  pathA = &D_8014DD50[pathA->unkC];
-  pathB = &D_8014DD50[pathA->unkD];
-  alienInstances[arg0].unkA = alienInstances[arg0].unk10 * (-8);
-  
-  pathB->unkA = alienInstances[arg0].unkA;
-  distSq = (((((f32) sins(((arg0 + D_80052A8C) * 0x7D0) & 0xFFFF))) / 32768.0) * D_802DE400_196F10[0]);
-  pathA->unk6 = distSq;
-  pathB->unk6 = distSq;
-  if (alienInstances[arg0].unk1E != 0)
-  {
-	alienInstances[arg0].unk1E--;
-  }
+	else if (alienInstances[arg0].unk20 & ALIEN_FLAG_FALL)
+	{
+		if (alienInstances[arg0].unk2 < D_80222A70)
+		{
+			if (alienInstances[arg0].unk10 < (-0x60))
+			{
+				alienInstances[arg0].unk10 += 0x40;
+			}
+		}
+		if (alienInstances[arg0].unk2 < (D_80222A70 - 0x14))
+		{
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_FALL;
+		}
+	}
+	else if (((func_800038E0_44E0() % 100) == 0) && (alienInstances[arg0].unk1E == 0))
+	{
+		sp43 = alienInstances[arg0].unk0 >> 8;
+		sp42 = alienInstances[arg0].unk4 >> 8;
+		temp_v0 = sp43 - 1;
+		sp33 = sp42 - 1;
+		sp2F = sp42 + 1;
+		if ((func_800B325C_C220C(temp_v0, sp33, 0x1000) != 0) &&
+			(func_800B325C_C220C(temp_v0, sp42, 0x1000) != 0))
+		{
+			if (func_800B325C_C220C(temp_v0, sp42 + 1, 0x1000) != 0)
+			{
+				temp_v0 = sp43 + 1;
+				if (func_800B325C_C220C(temp_v0, sp33, 0x1000) &&
+					func_800B325C_C220C(temp_v0, sp42, 0x1000) &&
+					func_800B325C_C220C(temp_v0, sp2F, 0x1000) &&
+					func_800B325C_C220C(sp43, sp33, 0x1000) &&
+					func_800B325C_C220C(sp43, sp2F, 0x1000))
+				{
+					alienInstances[arg0].unk20 |= ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD;
+					alienInstances[arg0].unk2C = 6;
+					alienInstances[arg0].unk10 = 0;
+				}
+			}
+		}
+	}
+	else
+	{
+		alienInstances[arg0].unk10 = 0;
+	}
+	if (alienInstances[arg0].unk2 < (D_80222A70 + 5))
+	{
+		func_800E24B8_F1468(arg0);
+	}
+	temp_v0 = D_8014DD50[alienInstances[arg0].unkC].unkC;
+	temp_v1 = D_8014DD50[temp_v0].unkD;
+	alienInstances[arg0].unkA = -alienInstances[arg0].unk10 * 8;
+
+	D_8014DD50[temp_v1].unkA = alienInstances[arg0].unkA;
+	D_8014DD50[temp_v1].unk6 = D_8014DD50[temp_v0].unk6 = (D_802DE400_196F10[0] * ((((f32)sins((arg0 + D_80052A8C) * 0x7D0))) / 32768.0));
+	if (alienInstances[arg0].unk1E != 0)
+	{
+		alienInstances[arg0].unk1E--;
+	}
+	// Fake?
+	if (D_8014DD50[temp_v0].unkD) {}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D911C_191C2C.s")
-#endif
 
 // AI - Alien target selection
 void func_802D95A8_1920B8(u8 arg0, s16 arg1, s16 arg2) {
