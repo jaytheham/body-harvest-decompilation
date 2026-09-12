@@ -1511,10 +1511,11 @@ void func_802D763C_19014C(u8 arg0) {
 	}
 }
 
-// CURRENT(13515)
+// CURRENT(8479)
 // AI - Alien damage death reaction and sub-alien spawning
 #ifdef NON_MATCHING
 void func_802D775C_19026C(u8 arg0) {
+	s32 pad;
 	u8 sp73;
 	s32 childId;
 	s32 sp68;
@@ -1533,7 +1534,7 @@ void func_802D775C_19026C(u8 arg0) {
 		return;
 	}
 
-	sp44 = &D_8014DD50[(u8)D_8014DD50[(u8)alienInstances[arg0].unkC].unkC];
+	sp44 = &D_8014DD50[(u8)D_8014DD50[(u8)alienInstances[arg0].unkD].unkC];
 	sp40 = &D_8014DD50[(u8)sp44->unkC];
 	sp3C = &D_8014DD50[(u8)sp40->unkD];
 	sp73 = (u8)sp3C->unkD;
@@ -1548,11 +1549,8 @@ void func_802D775C_19026C(u8 arg0) {
 				func_800C1ECC_D0E7C((s16)sp68, (s16)sp64, (s16)sp60, alienInstances[arg0].unk3C, 2);
 			}
 		} else if (alienInstances[arg0].unk2C == 0x48) {
-			
-
 			sp34->unk2 += 0xA;
 			childId = func_8007956C_8851C(0xD);
-			
 			alienInstances[arg0].unk3C = (s8)(s16)childId;
 			alienInstances[arg0].unk26 = 0;
 			alienInstances[(s16)childId].unk48 = sp64 + 0xA;
@@ -1563,10 +1561,9 @@ void func_802D775C_19026C(u8 arg0) {
 			alienInstances[(s16)childId].unk4 = sp60;
 			alienInstances[(s16)childId].unk30 = alienInstances[(s16)childId].unk48;
 			alienInstances[(s16)childId].unk2 = alienInstances[(s16)childId].unk48;
+			alienInstances[(s16)childId].unkE = alienInstances[(s16)childId].unk6 = alienInstances[arg0].unk6;
 			alienInstances[(s16)childId].unk20 |= ALIEN_FLAG_FALL;
 			alienInstances[(s16)childId].unk12 = 0x200;
-			alienInstances[(s16)childId].unk6 = alienInstances[arg0].unk6;
-			alienInstances[(s16)childId].unkE = alienInstances[arg0].unk6;
 			func_8007A2A0_89250((s16)childId);
 		} else if (alienInstances[arg0].unk26 == 0) {
 			
@@ -1584,9 +1581,9 @@ void func_802D775C_19026C(u8 arg0) {
 		}
 	}
 
-	if ((u16)sp3C->unkA < 0x1000) {
-		sp3C->unkA += 0x400;
-		sp40->unkA += 0x400;
+	if (*(u16 *)&sp3C->unkA < 0x1000) {
+		*(u16 *)&sp3C->unkA += 0x400;
+		*(u16 *)&sp40->unkA += 0x400;
 	}
 
 	if (alienInstances[arg0].unk2C < 0x48) {
@@ -1605,7 +1602,7 @@ void func_802D775C_19026C(u8 arg0) {
 	}
 
 	if (alienInstances[arg0].unk2C == 1) {
-		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)(s32)((f64)alienTypes[alienInstances[arg0].typeIndex].unkC * 1.5), 6);
+		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)(((f64)alienTypes[alienInstances[arg0].typeIndex].unkC) * 1.5), 6);
 	}
 }
 #else
