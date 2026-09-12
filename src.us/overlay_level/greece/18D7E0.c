@@ -1428,8 +1428,8 @@ void func_802D738C_18FE9C(u8 arg0)
   sp58 = D_8014DD50[sp5C].unkC;
   sp5A = D_8014DD50[sp58].unkD;
   sp56 = D_8014DD50[sp5A].unkD;
-	// Changing this func to return void fixes the weirdness here
-	// but I don't believe it is void return.
+	// Changing this func to return void fixes the weirdness here without the if (1)
+	// but I don't believe it is void return based on other calls to it.
   func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
   D_8014DD50[sp5C].unk6 = -(D_8014DD50[sp5E].unk6 = alienInstances[arg0].unk6 * 1); // hmmmm
   func_80086164_95114(arg0, sp5C);
@@ -1491,6 +1491,7 @@ void func_802D738C_18FE9C(u8 arg0)
 	  alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKG;
 	}
   }
+
   if (alienInstances[arg0].unk1E != 0)
   {
 	alienInstances[arg0].unk1E--;
