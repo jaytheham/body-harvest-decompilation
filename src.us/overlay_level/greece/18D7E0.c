@@ -1321,10 +1321,7 @@ void func_802D6D20_18F830(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D6D20_18F830.s")
 #endif
 
-// https://decomp.me/scratch/M4B8n
-// CURRENT(30)
 // AI - Screen shake rotation effects
-#ifdef NON_MATCHING
 void func_802D6F7C_18FA8C(void)
 {
 	f32 sp5C;
@@ -1336,8 +1333,10 @@ void func_802D6F7C_18FA8C(void)
 	s32 temp_a1;
 	f64 temp_f20;
 	s32 i;
+
 	Unk8013FDA8Entry *sp30;
 	Unk8013FDA8Entry *sp2C;
+	s16 temp_v0;
 	sp5C = vehicleTypes[8].unk34 >> 1;
 	sp30 = (Unk8013FDA8Entry *)func_80011F90_12B90(D_9052A00);
 	sp2C = (Unk8013FDA8Entry *)func_80011F90_12B90(D_9052AC0);
@@ -1345,55 +1344,45 @@ void func_802D6F7C_18FA8C(void)
 	sp58 = D_80052B34->unk4C + ((((f32)sins(D_80052B34->unk6)) / 32768.0) * sp5C);
 	sp54 = D_80052B34->unk54 - ((((f32)coss(D_80052B34->unk6)) / 32768.0) * sp5C);
 	sp48 = sqrtf(((D_8004DCAC - sp58) * (D_8004DCAC - sp58)) + ((sp54 - D_8004DCB0) * (sp54 - D_8004DCB0)));
+	temp_v0 = func_80003824_4424(sp58 - D_8004DCAC, sp54 - D_8004DCB0) - D_80052B34->unk6;
 	temp_a1 =
 		((f32)(-(
-				   (f32)coss((func_80003824_4424(sp58 - D_8004DCAC, sp54 - D_8004DCB0) - D_80052B34->unk6) & 0xFFFF) / 32768.0) *
+				   (f32)coss((u16)temp_v0) / 32768.0) *
 			   -sp48) *
 		 21.0f);
 	D_8004DCAC = sp58;
 	D_8004DCB0 = sp54;
+	for (i = 0xC; i--;)
 	{
-
-		for (i = 0xC; i--;)
-		{
-			sp30[i].unk8.unk0 = (sp30[i].unk8.unk0 + temp_a1);
-		}
+		sp30[i].unk8.unk0 += temp_a1;
 	}
-	temp_a1 = (((s16)sp30[1].unk8.unk0) >> 0xC) << 0xC;
+	temp_a1 = ((sp30[1].unk8.unk0) >> 0xC) << 0xC;
+	for (i = 0xC; i--;)
 	{
-		for (i = 0xC; i--;)
-		{
-			sp30[i].unk8.unk0 = (sp30[i].unk8.unk0 - temp_a1);
-		}
+		sp30[i].unk8.unk0 -= temp_a1;
 	}
 
 	sp50 = D_80052B34->unk4C - ((((f32)sins(D_80052B34->unk6)) / 32768.0) * sp5C);
 	sp4C = D_80052B34->unk54 + ((((f32)coss(D_80052B34->unk6)) / 32768.0) * sp5C);
 	sp48 = sqrtf(((D_8004DCB4 - sp50) * (D_8004DCB4 - sp50)) + ((sp4C - D_8004DCB8) * (sp4C - D_8004DCB8)));
+	temp_v0 = func_80003824_4424(sp50 - D_8004DCB4, sp4C - D_8004DCB8) - D_80052B34->unk6;
 	temp_a1 = (((f32)(-((((f32)
-							  coss((func_80003824_4424(sp50 - D_8004DCB4, sp4C - D_8004DCB8) - D_80052B34->unk6) & 0xFFFF))) /
+							  coss((u16)temp_v0))) /
 						32768.0) *
 					  (-sp48))) *
 			   21.0f);
 	D_8004DCB4 = sp50;
 	D_8004DCB8 = sp4C;
+	for (i = 0xC; i--;)
 	{
-		for (i = 0xC; i--;)
-		{
-			sp2C[i].unk8.unk0 = (sp2C[i].unk8.unk0 + temp_a1);
-		}
+		sp2C[i].unk8.unk0 += temp_a1;
 	}
-	temp_a1 = (((s16)sp2C[1].unk8.unk0) >> 0xC) << 0xC;
+	temp_a1 = ((sp2C[1].unk8.unk0) >> 0xC) << 0xC;
+	for (i = 0xC; i--;)
 	{
-		for (i = 0xC; i--;)
-		{
-			sp2C[i].unk8.unk0 = (sp2C[i].unk8.unk0 - temp_a1);
-		}
+		sp2C[i].unk8.unk0 -= temp_a1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D6F7C_18FA8C.s")
-#endif
 
 // AI - Render display list
 void func_802D7334_18FE44(void) {

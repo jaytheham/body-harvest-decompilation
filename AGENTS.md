@@ -26,7 +26,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
 # Your Workflow
 1. Remove the `#ifdef NON_MATCHING` wrapper around the function so the C code will be included in the build.
 2. Always read the whole file `DecompHints.md` for general matching advice.
-3. Read the closest already matched functions before and after the target one, IDO codegen is very dependant on code style, so seeing the style of matched functions will help guide your implementation.
+3. Read the closest already matched functions before and after the target one, IDO codegen is very dependant on code style, so nearby matched functions will help guide your implementation. Ignore NON_MATCHING wrapped functions as their logic may be wrong.
 4. Build, compare with target, identify differences.
 5. Change the C code in a way that will make the current assembly match the target assembly.
 6. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
@@ -52,10 +52,9 @@ If a function has a switch statement and there is an associated jump table const
 
 `ExampleFixes` folder contains .md files with examples of fixes that have been applied previously to solve specific patterns, search in here for specific cases.
 
+Make at least 25 attempts to match the function.
 If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
 ## Finalize
-
-Make at least 25 attempts to match the function.
 
 Whenever you match a function or a particularly tricky bit of asm think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated notes to help future decomp.
