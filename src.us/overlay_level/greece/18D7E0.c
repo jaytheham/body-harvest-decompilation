@@ -2328,9 +2328,9 @@ void func_802D9964_192474(u8 arg0)
 	}
 }
 
-#ifdef NON_MATCHING
 // CURRENT(4762)
 // AI - Alien skeleton joint animation system
+#ifdef NON_MATCHING
 void func_802D9C60_192770(u8 arg0) {
 	s32 sp6C;
 	s32 sp68;
@@ -2358,54 +2358,50 @@ void func_802D9C60_192770(u8 arg0) {
 		sp54 = D_8014DD50[sp58].unkC;
 		sp52 = D_8014DD50[sp56].unkC;
 		s0 = func_8008916C_9811C(arg0, sp5A);
-		func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[sp5A].unk0, D_8014DD50[sp5A].unk2, D_8014DD50[sp5A].unk4, (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
-		func_800C80F0_D70A0(((-(u16) D_8014DD50[sp5A].unk6 - alienInstances[arg0].unk6) + 0x4000) & 0xFFFF, 0, 0,
-			func_800C7924_D68D4((s16) sp6C, (s16) sp68, (s16) sp64, 0x40, -8, alienTypes[alienInstances[arg0].typeIndex].unkC, s0, 1));
-		func_800E093C_EF8EC((s16) sp6C, (s16) sp68, (s16) sp64, 0);
-		func_800E093C_EF8EC((s16) sp6C, (s16) sp68, (s16) sp64, 0x1E);
-		s0 = alienInstances[arg0].unk6 & 0xFFFF;
+		func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[sp5A].unk0, D_8014DD50[sp5A].unk2, D_8014DD50[sp5A].unk4, &sp6C, &sp68, &sp64);
+		func_800C80F0_D70A0((-(u16) D_8014DD50[sp5A].unk6 - alienInstances[arg0].unk6) + 0x4000, 0, 0,
+			func_800C7924_D68D4(sp6C, sp68, sp64, 0x40, -8, alienTypes[alienInstances[arg0].typeIndex].unkC, s0, 1));
+		func_800E093C_EF8EC(sp6C, sp68, sp64, 0);
+		func_800E093C_EF8EC(sp6C, sp68, sp64, 0x1E);
+		sp34 = alienInstances[arg0].unk6;
 		alienInstances[arg0].unk14 = sp6C;
 		alienInstances[arg0].unk16 = sp68;
 		alienInstances[arg0].unk18 = sp64;
-		sp60 = (s32) (((f64) (f32) coss(s0 & 0xFFFF) / 32768.0) * 6.0);
-		sp5C = (s32) (((f64) (f32) sins(s0 & 0xFFFF) / 32768.0) * 6.0);
+		sp60 = (((f32) coss(sp34) / 32768.0) * 6.0);
+		sp5C = (((f32) sins(sp34) / 32768.0) * 6.0);
 		s0 = func_8008916C_9811C(arg0, sp58);
-		func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[sp58].unk0, D_8014DD50[sp58].unk2, D_8014DD50[sp58].unk4, (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
-		jointId = func_800C7924_D68D4((s16) sp6C, (s16) sp68, (s16) sp64, 0x40, -8, alienTypes[alienInstances[arg0].typeIndex].unkC, s0, 1);
-		s0 = jointId;
-		func_800C80F0_D70A0((0x4000 - alienInstances[arg0].unk6), 0, 0, jointId);
+		func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[sp58].unk0, D_8014DD50[sp58].unk2, D_8014DD50[sp58].unk4, &sp6C, &sp68, &sp64);
+		jointId = func_800C7924_D68D4(sp6C, sp68, sp64, 0x40, -8, alienTypes[alienInstances[arg0].typeIndex].unkC, s0, 1);
+
+		func_800C80F0_D70A0(0x4000 - alienInstances[arg0].unk6, 0, 0, jointId);
 		func_800C820C_D71BC(0, 0, 0, jointId);
-		sp34 = -sp60;
-		sp5F = -sp60;
-		func_800C8184_D7134(sp5F, 3, sp34, jointId);
+
+		func_800C8184_D7134(-sp60, 3, -sp60, jointId);
 		if (sp54 != -1) {
 			s0 = func_8008916C_9811C(arg0, sp54);
-			func_80128428_1373D8(&alienInstances[arg0], (s16) (D_8014DD50[sp54].unk0 + D_8014DD50[sp58].unk0), (s16) (D_8014DD50[sp54].unk2 + D_8014DD50[sp58].unk2), (s16) (D_8014DD50[sp54].unk4 + D_8014DD50[sp58].unk4), (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
-			jointId = func_800C7924_D68D4((s16) sp6C, (s16) sp68, (s16) sp64, 0x40, -8, alienTypes[alienInstances[arg0].typeIndex].unkC, s0, 1);
-			s0 = jointId;
-			func_800C80F0_D70A0((0x4000 - alienInstances[arg0].unk6), 0, 0, jointId);
+			func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[sp54].unk0 + D_8014DD50[sp58].unk0, D_8014DD50[sp54].unk2 + D_8014DD50[sp58].unk2, D_8014DD50[sp54].unk4 + D_8014DD50[sp58].unk4, &sp6C, &sp68, &sp64);
+			jointId = func_800C7924_D68D4(sp6C, sp68, sp64, 0x40, -8, alienTypes[alienInstances[arg0].typeIndex].unkC, s0, 1);
+
+			func_800C80F0_D70A0(0x4000 - alienInstances[arg0].unk6, 0, 0, jointId);
 			func_800C820C_D71BC(0, 0, 0, jointId);
-			sp43 = D_8014DD50[sp54].unkC;
-			sp37 = D_8014DD50[sp58].unkC;
-			func_800C8184_D7134(sp43, 3, sp37, jointId);
+			
+			func_800C8184_D7134(D_8014DD50[sp54].unkC, 3, D_8014DD50[sp58].unkC, jointId);
 		}
 		s0 = func_8008916C_9811C(arg0, sp56);
-		func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[sp56].unk0, D_8014DD50[sp56].unk2, D_8014DD50[sp56].unk4, (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
-		jointId = func_800C7924_D68D4((s16) sp6C, (s16) sp68, (s16) sp64, 0x40, -8, alienTypes[alienInstances[arg0].typeIndex].unkC, s0, 1);
-		s0 = jointId;
-		func_800C80F0_D70A0((0x4000 - alienInstances[arg0].unk6), 0, 0, jointId);
+		func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[sp56].unk0, D_8014DD50[sp56].unk2, D_8014DD50[sp56].unk4, &sp6C, &sp68, &sp64);
+		jointId = func_800C7924_D68D4(sp6C, sp68, sp64, 0x40, -8, alienTypes[alienInstances[arg0].typeIndex].unkC, s0, 1);
+
+		func_800C80F0_D70A0(0x4000 - alienInstances[arg0].unk6, 0, 0, jointId);
 		func_800C820C_D71BC(0, 0, 0, jointId);
-		sp63 = -sp5C;
-		func_800C8184_D7134(sp63, 3, sp63, jointId);
+
+		func_800C8184_D7134(-sp5C, 3, -sp5C, jointId);
 		if (sp52 != -1) {
 			s0 = func_8008916C_9811C(arg0, sp52);
-			func_80128428_1373D8(&alienInstances[arg0], (s16) (D_8014DD50[sp52].unk0 + D_8014DD50[sp56].unk0), (s16) (D_8014DD50[sp52].unk2 + D_8014DD50[sp56].unk2), (s16) (D_8014DD50[sp52].unk4 + D_8014DD50[sp56].unk4), (s32 *) &sp6C, (s32 *) &sp68, (s32 *) &sp64);
-			s0 = func_800C7924_D68D4((s16) sp6C, (s16) sp68, (s16) sp64, 0x40, -8, alienTypes[alienInstances[arg0].typeIndex].unkC, s0, 1);
-			func_800C80F0_D70A0((0x4000 - alienInstances[arg0].unk6), 0, 0, s0);
-			func_800C820C_D71BC(0, 0, 0, s0);
-			sp43 = D_8014DD50[sp52].unkC;
-			sp3F = D_8014DD50[sp56].unkC;
-			func_800C8184_D7134(sp43, 3, sp3F, s0);
+			func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[sp52].unk0 + D_8014DD50[sp56].unk0, D_8014DD50[sp52].unk2 + D_8014DD50[sp56].unk2, D_8014DD50[sp52].unk4 + D_8014DD50[sp56].unk4, &sp6C, &sp68, &sp64);
+			jointId = func_800C7924_D68D4(sp6C, sp68, sp64, 0x40, -8, alienTypes[alienInstances[arg0].typeIndex].unkC, s0, 1);
+			func_800C80F0_D70A0(0x4000 - alienInstances[arg0].unk6, 0, 0, jointId);
+			func_800C820C_D71BC(0, 0, 0, jointId);
+			func_800C8184_D7134(D_8014DD50[sp52].unkC, 3, D_8014DD50[sp56].unkC, jointId);
 		}
 		func_80088E10_97DC0(sp5A);
 		func_80088E10_97DC0(sp58);
