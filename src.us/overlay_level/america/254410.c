@@ -720,7 +720,7 @@ Unk8014DD50 *D_802E0CD0_260410[] = {
 	D_802E0C50_260390,
 };
 
-u32 D_802E0CDC_26041C[2] = { 0x00000000, 0x00000000 };
+Unk802E0CC4Entry D_802E0CDC_26041C = { 0x00000000, 0x0000, 0x0000 };
 
 s16 D_802E0CE4_260424[2] = { 0x00F0, 0x0000 };
 
@@ -4028,67 +4028,68 @@ void func_802DDF50_25D690(u8 arg0) {
 // CURRENT(8729)
 #ifdef NON_MATCHING
 void func_802DE5E8_25DD28(u8 arg0) {
-	s32 sp64;
-	s32 sp60;
-	s32 sp5C;
 	s32 sp54;
 	s32 sp50;
-	s32 sp4C;
-	u32 sp70_word;
-	u32 sp70_hword;
-	AlienInstance *sp80;
 	s16 sp88;
 	s16 sp86;
+	AlienInstance *sp80;
+	s16 gap3[4];
+	volatile s16 sp70[3];
 	s16 temp_v0;
 	Unk8014DD50 *var_t0;
+	s32 sp5C[3];
 
-	sp70_word = D_802E0CDC_26041C.unk0;
-	sp70_hword = D_802E0CDC_26041C.unk4;
 	sp50 = arg0;
+	if (1) {
+		*(s32 *)&sp70[0] = D_802E0CDC_26041C.w;
+		sp70[2] = D_802E0CDC_26041C.h;
+	}
 	temp_v0 = arg0;
 	sp80 = &alienInstances[alienInstances[arg0].unk25];
 	sp88 = D_8014DD50[(u8)D_8014DD50[alienInstances[arg0].unkC].unkC].unkD;
 	var_t0 = &D_8014DD50[sp88];
 	sp86 = var_t0->unkD;
 
-	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKG)) {
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL)) {
+		u8 child0;
+		u8 child1;
+
 		sp54 = (s32)var_t0;
 		func_80088000_96FB0((s16)arg0);
 		func_8012B21C_13A1CC();
 		func_800A92B0_B8260();
 
-		alienInstances[*(u8 *)sp80].unk2C += 0x14;
-		alienInstances[*((u8 *)sp80 + 1)].unk2C += 0x14;
+		child0 = *((u8 *)sp80);
+		child1 = *((u8 *)sp80 + 1);
+		alienInstances[child0].unk2C += 0x14;
+		alienInstances[child1].unk2C += 0x14;
 		alienInstances[arg0].unk2C = 0xD2;
 
-		func_800DF848_EE7F8(*(s16 *)((u8 *)&sp64 + 2), *(s16 *)((u8 *)&sp60 + 2), *(s16 *)((u8 *)&sp5C + 2), 0x12C, 3);
-		func_80137468_146418(arg0, 0x11);
+		func_800DF848_EE7F8(((s16 *)&sp5C[2])[1], ((s16 *)&sp5C[1])[1], ((s16 *)&sp5C[0])[1], 0x12C, 3);
+		func_80137468_146418(sp50, 0x11);
 	} else {
 		if (alienInstances[arg0].unk2C >= 0x97) {
-			func_802DB7B8_25AEF8(arg0, 0x258, 0, sp86, sp88, 0x1F40, -0x1388, 0x9C4, D_802E0E10_260550);
+		func_802DB7B8_25AEF8(arg0, 0x258, 0, sp86, sp88, 0x1F40, -0x1388, 0x9C4, D_802E0E10_260550[0]);
 		}
 	}
-
 	if (alienInstances[arg0].unk2C == 0x96) {
-		func_80128428_1373D8(&alienInstances[arg0], var_t0->unk0, var_t0->unk2, var_t0->unk4, &sp64, &sp60, &sp5C);
-		func_800DF848_EE7F8(*(s16 *)((u8 *)&sp64 + 2), *(s16 *)((u8 *)&sp60 + 2), *(s16 *)((u8 *)&sp5C + 2), 0x12C, 3);
+		func_80128428_1373D8(&alienInstances[arg0], var_t0->unk0, var_t0->unk2, var_t0->unk4, &sp5C[2], &sp5C[1], &sp5C[0]);
+		func_800DF848_EE7F8(((s16 *)&sp5C[2])[1], ((s16 *)&sp5C[1])[1], ((s16 *)&sp5C[0])[1], 0x12C, 3);
 		func_80088E10_97DC0(sp88);
 
 		var_t0 = &D_8014DD50[sp86];
-		func_80128428_1373D8(&alienInstances[arg0], var_t0->unk0, var_t0->unk2, var_t0->unk4, &sp64, &sp60, &sp5C);
-		func_800DF848_EE7F8(*(s16 *)((u8 *)&sp64 + 2), *(s16 *)((u8 *)&sp60 + 2), *(s16 *)((u8 *)&sp5C + 2), 0x12C, 3);
+		func_80128428_1373D8(&alienInstances[arg0], var_t0->unk0, var_t0->unk2, var_t0->unk4, &sp5C[2], &sp5C[1], &sp5C[0]);
+		func_800DF848_EE7F8(((s16 *)&sp5C[2])[1], ((s16 *)&sp5C[1])[1], ((s16 *)&sp5C[0])[1], 0x12C, 3);
 		func_80088E10_97DC0(sp86);
 
-		alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKD;
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD;
 		alienInstances[arg0].unk12 = 0;
 	}
 
 	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_FALL) && (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD)) {
 		alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD;
-		sp4C = 0;
-
 		func_80135D44_144CF4(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 5.0f);
-		func_80137468_146418(arg0, 0x13D);
+		func_80137468_146418(sp50, 0x13D);
 		func_800DEA08_ED9B8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0x320, 0xC, 0x10, 0x28, 0xFF, 0xA6, 0x85, 0x2F);
 		func_800C541C_D43CC(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0, 0x7F, 0, 0x64, 0xFF, 0x3C, 0x14, 0x6A, 0x53, 0);
 		func_800E35E0_F2590(0xFF);
@@ -4096,11 +4097,7 @@ void func_802DE5E8_25DD28(u8 arg0) {
 	}
 
 	func_800AA340_B92F0(arg0);
-	func_80137468_146418(arg0, 0x28);
-
-	(void)sp70_word;
-	(void)sp70_hword;
-	(void)temp_v0;
+	func_80137468_146418(sp50, 0x28);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DE5E8_25DD28.s")
