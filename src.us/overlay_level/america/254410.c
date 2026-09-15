@@ -941,7 +941,7 @@ void func_802D51B8_2548F8(void) {
 	}
 
 	if (func_8000726C_7E6C(4) != 0) {
-		if (D_802E0D78_2604B8[0] <= (f64)D_80052B34->unk58) {
+		if (D_802E0D78_2604B8[0] <= D_80052B34->unk58) {
 			vehicleTypes[0xA].unk3E = 0x42;
 			vehicleTypes[0xA].unk40 = 0x82;
 			if ((u32)D_80052A8C % 12U == 0) {
@@ -1306,8 +1306,8 @@ void func_802D5F88_2556C8(u8 arg0) {
 	alien->unk20 |= ALIEN_FLAG_FALL;
 	alien->unk2C = 0x7FFF;
 	sp3A = D_8014DD50[alien->unkC].unkC;
-	cosVal = (s16)(((f64)(f32)coss(alien->unk6) / 32768.0) * 6.0);
-	sinVal = (s16)(((f64)(f32)sins(alien->unk6) / 32768.0) * 6.0);
+	cosVal = (s16)(((f32)coss(alien->unk6) / 32768.0) * 6.0);
+	sinVal = (s16)(((f32)sins(alien->unk6) / 32768.0) * 6.0);
 	func_80088E40_97DF0(arg0, sp3A, D_8014DD50[sp3A].unk0, D_8014DD50[sp3A].unk2, D_8014DD50[sp3A].unk4, -sinVal, 8, cosVal);
 	func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16)alienTypes[alien->typeIndex].unkC, 0);
 	if (alien->unk25 != 0xFF) {
@@ -1390,11 +1390,11 @@ void func_802D62A0_2559E0(u8 arg0) {
 
 		cosVal = coss(sp38);
 		sinVal = sins(sp38);
-		sp68 = (s32)(((f64)D_8014DD50[(u8)sp75].unk2 + D_802E0DB0_2604F0 * ((f64)(f32)cosVal / 32768.0) - 0.0 * ((f64)(f32)sinVal / 32768.0)));
+		sp68 = (s32)((D_8014DD50[(u8)sp75].unk2 + D_802E0DB0_2604F0 * ((f32)cosVal / 32768.0) - 0.0 * ((f32)sinVal / 32768.0)));
 
 		cosVal = sins(D_8014DD50[(u8)sp75].unkA);
 		sinVal = coss(D_8014DD50[(u8)sp75].unkA);
-		sp64 = (s32)((f64)D_8014DD50[(u8)sp75].unk4 + 0.0 * ((f64)(f32)cosVal / 32768.0) + D_802E0DB8_2604F8 * (((f64)(f32)sinVal / 32768.0)));
+		sp64 = (s32)(D_8014DD50[(u8)sp75].unk4 + 0.0 * ((f32)cosVal / 32768.0) + D_802E0DB8_2604F8 * (((f32)sinVal / 32768.0)));
 
 		func_80128428_1373D8(alien, (s16)sp6C, (s16)sp38, (s16)sp64, &sp60, &sp5C, &sp58);
 		func_80128428_1373D8(alien, (s16)(sp6C * -1), (s16)sp38, (s16)sp64, &sp54, &sp50, &sp4C);
@@ -1677,14 +1677,14 @@ void func_802D6890_255FD0(u8 arg0) {
 			if ((spAF == 2) || (alien->unk36 == 2)) {
 				s16 tempV1;
 
-				sp9C = (s32)(((f64)(f32)sins((u16)D_8014DD50[spB2].unk6) / 32768.0) * 120.0);
+				sp9C = (s32)(((f32)sins((u16)D_8014DD50[spB2].unk6) / 32768.0) * 120.0);
 				tempV1 = D_8014DD50[spB0].unk6;
 				sp92 = tempV1;
-				sp94 = (s32)(((((f64)(f32)coss((u16)D_8014DD50[spB2].unk6) / 32768.0) * 120.0) + D_802E0DC0_260500));
+				sp94 = (s32)(((((f32)coss((u16)D_8014DD50[spB2].unk6) / 32768.0) * 120.0) + D_802E0DC0_260500));
 				sp72 = coss((u16)tempV1);
-				sp54->unk2C = (s16)(s32)((((f64)(f32)sins((u16)tempV1) / 32768.0) * (f64)sp94) + ((f64)D_8014DD50[spB0].unk0 + ((f64)sp9C * ((f64)(f32)sp72 / 32768.0))));
+				sp54->unk2C = (s16)(s32)((((f32)sins((u16)tempV1) / 32768.0) * sp94) + (D_8014DD50[spB0].unk0 + (sp9C * ((f32)sp72 / 32768.0))));
 				sp72 = sins((u16)tempV1);
-				sp54->unk30 = (s16)(s32)((((f64)(f32)coss((u16)tempV1) / 32768.0) * (f64)sp94) + ((f64)D_8014DD50[spB0].unk4 + ((f64)-sp9C * ((f64)(f32)sp72 / 32768.0))));
+				sp54->unk30 = (s16)(s32)((((f32)coss((u16)tempV1) / 32768.0) * sp94) + (D_8014DD50[spB0].unk4 + (-sp9C * ((f32)sp72 / 32768.0))));
 				sp54->unk2E = D_8014DD50[spB0].unk2;
 				var_a3 = sp92 + D_8014DD50[spB2].unk6;
 				if (alien->unk20 & ALIEN_FLAG_UNKF) {
@@ -1697,8 +1697,8 @@ void func_802D6890_255FD0(u8 arg0) {
 					func_80102DDC_111D8C(D_80052B34, sp92, 0, 30.0f);
 					if (D_80052B34->unk1A != 0) {
 						func_80137468_146418(arg0, 0x258);
-						sp7C = (f32)((f64)(f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
-						func_800C541C_D43CC(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, (s8)(s32)(sp7C * 127.0f), -0x50, (s8)(s32)((f32)-((f64)(f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0) * 127.0f), 0x5A, 0xFF, 0x28, 0x14, 0xFF, 0xFF, 0xC8);
+						sp7C = (f32)((f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
+						func_800C541C_D43CC(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, (s8)(s32)(sp7C * 127.0f), -0x50, (s8)(s32)((f32)-((f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0) * 127.0f), 0x5A, 0xFF, 0x28, 0x14, 0xFF, 0xFF, 0xC8);
 					} else {
 						func_80137468_146418(arg0, 0x134);
 					}
@@ -1781,7 +1781,7 @@ void func_802D736C_256AAC(s32 arg0) {
 		s16 posX = alien->unk0;
 		s16 posZ = alien->unk4;
 
-		fltVal = (f32)((f64)alienTypes[alien->typeIndex].unkC * 0.75);
+		fltVal = (f32)(alienTypes[alien->typeIndex].unkC * 0.75);
 		func_800DF848_EE7F8(posX, (s16)(func_800B84D0_C7480(posX, posZ) >> 8), posZ, (u16)(s32)fltVal, 2);
 	}
 
@@ -1790,15 +1790,15 @@ void func_802D736C_256AAC(s32 arg0) {
 
 		angle = (alien->unk6 + 0x2000) & 0xFFFF;
 		sinVal = sins(angle);
-		fltVal = (f32)(((f64)(f32)sinVal / 32768.0) * 15.0);
+		fltVal = (f32)(((f32)sinVal / 32768.0) * 15.0);
 		cosVal = coss(angle);
-		func_80088E40_97DF0(alienIdx, sp9C, ptr2->unk0, ptr2->unk2, ptr2->unk4, (s32)fltVal, 0, (s32)(f32)(((f64)(f32)cosVal / 32768.0) * -15.0));
+		func_80088E40_97DF0(alienIdx, sp9C, ptr2->unk0, ptr2->unk2, ptr2->unk4, (s32)fltVal, 0, (s32)(f32)(((f32)cosVal / 32768.0) * -15.0));
 
 		angle = (alien->unk6 + 0x6000) & 0xFFFF;
 		sinVal = sins(angle);
-		fltVal = (f32)(((f64)(f32)sinVal / 32768.0) * 15.0);
+		fltVal = (f32)(((f32)sinVal / 32768.0) * 15.0);
 		cosVal = coss(angle);
-		func_80088E40_97DF0(alienIdx, sp9A, ptr3->unk0, ptr3->unk2, ptr3->unk4, (s32)fltVal, 0, (s32)(f32)(((f64)(f32)cosVal / 32768.0) * -15.0));
+		func_80088E40_97DF0(alienIdx, sp9A, ptr3->unk0, ptr3->unk2, ptr3->unk4, (s32)fltVal, 0, (s32)(f32)(((f32)cosVal / 32768.0) * -15.0));
 	}
 }
 #else
@@ -1868,8 +1868,8 @@ void func_802D7968_2570A8(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 		if (func_800879A4_96954(arg0, 0x64, 0) != 0) {
 			if (D_80052B34->unk1A != 0) {
 				func_80137468_146418(arg0, 0x258);
-				sp58 = (f32)((f64)(f32)sins((alienInstances[arg0].unk6 + 0x4000) & 0xFFFF) / 32768.0);
-				func_800C541C_D43CC(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, (s8)(s32)(sp58 * 127.0f), -0x50, (s8)(s32)((f32)-((f64)(f32)coss((alienInstances[arg0].unk6 + 0x4000) & 0xFFFF) / 32768.0) * 127.0f), 0xB4, 0xFF, 0x28, 0x14, 0xFF, 0xFF, 0xC8);
+				sp58 = (f32)((f32)sins((alienInstances[arg0].unk6 + 0x4000) & 0xFFFF) / 32768.0);
+				func_800C541C_D43CC(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, (s8)(s32)(sp58 * 127.0f), -0x50, (s8)(s32)((f32)-((f32)coss((alienInstances[arg0].unk6 + 0x4000) & 0xFFFF) / 32768.0) * 127.0f), 0xB4, 0xFF, 0x28, 0x14, 0xFF, 0xFF, 0xC8);
 			}
 			func_80122524_1314D4(D_80052B34, D_8014619A, alienInstances[arg0].unk0, alienInstances[arg0].unk4);
 			func_80102DDC_111D8C(D_80052B34, alienInstances[arg0].unk6, 0, 100.0f);
@@ -2189,20 +2189,20 @@ void func_802D86D8_257E18(u8 arg0) {
 			caseVal = func_80081F18_90EC8(arg0, 0xB, 6, spA0, &D_802DFF78_25F6B8);
 			if (caseVal == 2) {
 				sp50 = (alien->unk6 + 0x6000) & 0xFFFF;
-				sp78 = (f32)(((f64)(f32)sins(sp50) / 32768.0) * 15.0);
-				func_80088E40_97DF0(arg0, spA0[7], (s16)(D_8014DD50[spA0[7]].unk0 + sp58->unk0 + sp54->unk0), (s16)(D_8014DD50[spA0[7]].unk2 + sp58->unk2 + sp54->unk2), D_8014DD50[spA0[7]].unk4 + sp58->unk4 + sp54->unk4, (s32)sp78, 0xF, (s32)(f32)(((f64)(f32)coss(sp50) / 32768.0) * -15.0));
+				sp78 = (f32)(((f32)sins(sp50) / 32768.0) * 15.0);
+				func_80088E40_97DF0(arg0, spA0[7], (s16)(D_8014DD50[spA0[7]].unk0 + sp58->unk0 + sp54->unk0), (s16)(D_8014DD50[spA0[7]].unk2 + sp58->unk2 + sp54->unk2), D_8014DD50[spA0[7]].unk4 + sp58->unk4 + sp54->unk4, (s32)sp78, 0xF, (s32)(f32)(((f32)coss(sp50) / 32768.0) * -15.0));
 				sp50 = (alien->unk6 + 0x8000) & 0xFFFF;
-				sp78 = (f32)(((f64)(f32)sins(sp50) / 32768.0) * 15.0);
-				func_80088E40_97DF0(arg0, spAC, (s16)(sp54->unk0 + sp58->unk0), (s16)(sp54->unk2 + sp58->unk2), sp54->unk4 + sp58->unk4, (s32)sp78, 0xF, (s32)(f32)(((f64)(f32)coss(sp50) / 32768.0) * -15.0));
+				sp78 = (f32)(((f32)sins(sp50) / 32768.0) * 15.0);
+				func_80088E40_97DF0(arg0, spAC, (s16)(sp54->unk0 + sp58->unk0), (s16)(sp54->unk2 + sp58->unk2), sp54->unk4 + sp58->unk4, (s32)sp78, 0xF, (s32)(f32)(((f32)coss(sp50) / 32768.0) * -15.0));
 				return;
 			}
 			if (caseVal == 3) {
 				sp50 = (alien->unk6 + 0x2000) & 0xFFFF;
-				sp78 = (f32)(((f64)(f32)sins(sp50) / 32768.0) * 15.0);
-				func_80088E40_97DF0(arg0, spA0[4], (s16)(D_8014DD50[spA0[4]].unk0 + sp60->unk0 + sp5C->unk0), (s16)(D_8014DD50[spA0[4]].unk2 + sp60->unk2 + sp5C->unk2), D_8014DD50[spA0[4]].unk4 + sp60->unk4 + sp5C->unk4, (s32)sp78, 0xF, (s32)(f32)(((f64)(f32)coss(sp50) / 32768.0) * -15.0));
+				sp78 = (f32)(((f32)sins(sp50) / 32768.0) * 15.0);
+				func_80088E40_97DF0(arg0, spA0[4], (s16)(D_8014DD50[spA0[4]].unk0 + sp60->unk0 + sp5C->unk0), (s16)(D_8014DD50[spA0[4]].unk2 + sp60->unk2 + sp5C->unk2), D_8014DD50[spA0[4]].unk4 + sp60->unk4 + sp5C->unk4, (s32)sp78, 0xF, (s32)(f32)(((f32)coss(sp50) / 32768.0) * -15.0));
 				sp50 = alien->unk6 & 0xFFFF;
-				sp78 = (f32)(((f64)(f32)sins(sp50) / 32768.0) * 15.0);
-				func_80088E40_97DF0(arg0, spB2, (s16)(sp5C->unk0 + sp60->unk0), (s16)(sp5C->unk2 + sp60->unk2), sp5C->unk4 + sp60->unk4, (s32)sp78, 0xF, (s32)(f32)(((f64)(f32)coss(sp50) / 32768.0) * -15.0));
+				sp78 = (f32)(((f32)sins(sp50) / 32768.0) * 15.0);
+				func_80088E40_97DF0(arg0, spB2, (s16)(sp5C->unk0 + sp60->unk0), (s16)(sp5C->unk2 + sp60->unk2), sp5C->unk4 + sp60->unk4, (s32)sp78, 0xF, (s32)(f32)(((f32)coss(sp50) / 32768.0) * -15.0));
 				return;
 			}
 			if (caseVal == 5) {
@@ -2216,8 +2216,8 @@ void func_802D86D8_257E18(u8 arg0) {
 				type->unk2E = 0x55;
 				type->unk30 = 0xD2;
 				sp50 = (alien->unk6 + 0x4000) & 0xFFFF;
-				sp78 = (f32)(((f64)(f32)sins(sp50) / 32768.0) * 5.0);
-				func_80088E40_97DF0(arg0, spBE, sp64->unk0, sp64->unk2, sp64->unk4, (s32)sp78, 5, (s32)(f32)(((f64)(f32)coss(sp50) / 32768.0) * -5.0));
+				sp78 = (f32)(((f32)sins(sp50) / 32768.0) * 5.0);
+				func_80088E40_97DF0(arg0, spBE, sp64->unk0, sp64->unk2, sp64->unk4, (s32)sp78, 5, (s32)(f32)(((f32)coss(sp50) / 32768.0) * -5.0));
 				return;
 			}
 			if (caseVal == 6) {
@@ -2232,8 +2232,8 @@ void func_802D86D8_257E18(u8 arg0) {
 			if ((alien->unk2C >= 0xB) && ((alien->unk2C % 6) == 0) && (D_80031420_32020 & 3)) {
 				s32 temp_r;
 				func_80128428_1373D8(alien, sp64->unk0, (s16)(sp64->unk2 - 0x8000), sp64->unk4, &sp84, &sp80, &sp7C);
-				sp78 = (f32)((f64)(f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
-				sp74 = (f32)-((f64)(f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
+				sp78 = (f32)((f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
+				sp74 = (f32)-((f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
 				temp_r = 0xB4 - (func_800038E0_44E0() % 80);
 				func_800CA5EC_D959C((s16)sp84, (s16)sp80, (s16)sp7C, (s8)(s32)(sp78 * 128.0f), 0, (s32)(sp74 * 128.0f), 0x28, 0xA, 0x14, 0x32, temp_r, 0, 0x32, 0xFF);
 			}
@@ -2295,13 +2295,13 @@ void func_802D9038_258778(u8 arg0) {
 		}
 		if (alien->unk2C == 0x28) {
 			sp3C = (alien->unk6 + 0x8000) & 0xFFFF;
-			sp5C = (f32)(((f64)(f32)sins(sp3C) / 32768.0) * 15.0);
-			func_80088E40_97DF0(idx, sp8C, (s16)(D_8014DD50[sp8C].unk0 + sp40->unk0), (s16)(D_8014DD50[sp8C].unk2 + sp40->unk2), D_8014DD50[sp8C].unk4 + sp40->unk4, (s32)sp5C, 0xF, (s32)(f32)(((f64)(f32)coss(sp3C) / 32768.0) * -15.0));
+			sp5C = (f32)(((f32)sins(sp3C) / 32768.0) * 15.0);
+			func_80088E40_97DF0(idx, sp8C, (s16)(D_8014DD50[sp8C].unk0 + sp40->unk0), (s16)(D_8014DD50[sp8C].unk2 + sp40->unk2), D_8014DD50[sp8C].unk4 + sp40->unk4, (s32)sp5C, 0xF, (s32)(f32)(((f32)coss(sp3C) / 32768.0) * -15.0));
 		}
 		if (alien->unk2C == 0x14) {
 			sp3C = alien->unk6 & 0xFFFF;
-			sp5C = (f32)(((f64)(f32)sins(sp3C) / 32768.0) * 15.0);
-			func_80088E40_97DF0(idx, sp8E, (s16)(D_8014DD50[sp8E].unk0 + sp44->unk0), (s16)(D_8014DD50[sp8E].unk2 + sp44->unk2), D_8014DD50[sp8E].unk4 + sp44->unk4, (s32)sp5C, 0xF, (s32)(f32)(((f64)(f32)coss(sp3C) / 32768.0) * -15.0));
+			sp5C = (f32)(((f32)sins(sp3C) / 32768.0) * 15.0);
+			func_80088E40_97DF0(idx, sp8E, (s16)(D_8014DD50[sp8E].unk0 + sp44->unk0), (s16)(D_8014DD50[sp8E].unk2 + sp44->unk2), D_8014DD50[sp8E].unk4 + sp44->unk4, (s32)sp5C, 0xF, (s32)(f32)(((f32)coss(sp3C) / 32768.0) * -15.0));
 		}
 		if ((alien->unk2C & 7) == 0) {
 			func_80128504_1374B4(alien, 1, &sp68, &sp64, &sp60);
@@ -2445,9 +2445,9 @@ void func_802D99E4_259124(u8 arg0) {
 		s32 sinVal = sins((u16)angle);
 
 		if (alien->unk26 == 0) {
-			alien->unkA = (s16)(s32)(-(f32)((f64)(f32)sinVal / 32768.0) * D_802E0DCC_26050C);
+			alien->unkA = (s16)(s32)(-(f32)((f32)sinVal / 32768.0) * D_802E0DCC_26050C);
 		} else {
-			alien->unkA = (s16)(s32)((f32)((f64)(f32)sinVal / 32768.0) * D_802E0DD0_260510);
+			alien->unkA = (s16)(s32)((f32)((f32)sinVal / 32768.0) * D_802E0DD0_260510);
 		}
 	}
 
@@ -2494,8 +2494,8 @@ void func_802D99E4_259124(u8 arg0) {
 		f32 sp60;
 		f32 sp4C;
 
-		sp64 = (f64)(f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0;
-		sp60 = -((f64)(f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
+		sp64 = (f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0;
+		sp60 = -((f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
 		sp4C = sp64 * 250.0f;
 
 		func_800DEA08_ED9B8((s16)((f32)alien->unk0 + sp4C), (s16)sp6C, (s16)((f32)alien->unk4 + sp60 * 250.0f), 0x64, 0xF, 0, 0x32, 0xFF, 0xA6, 0x85, 0x2F);
@@ -2625,8 +2625,8 @@ void func_802DA120_259860(s16 arg0, s32 arg1) {
 	}
 	if (!(D_80052A8C & 1) && (arg1 != 0)) {
 		angle = (alien->unk6 + 0x4000) & 0xFFFF;
-		sinVal = (f32)((f64)(f32)sins(angle) / 32768.0);
-		cosVal = (f32)((f64)(f32)coss(angle) / 32768.0);
+		sinVal = (f32)((f32)sins(angle) / 32768.0);
+		cosVal = (f32)((f32)coss(angle) / 32768.0);
 		func_800C541C_D43CC(x, heading, z, (s8)(s32)(sinVal * 127.0f), 0x7F, (s8)(s32)(-cosVal * 127.0f), 0x64, 0xFF, 0x50, 0x14, 0x6A, 0x53, 0);
 	}
 }
@@ -2872,7 +2872,7 @@ void func_802DAAF0_25A230(u8 arg0) {
 		}
 	}
 	if (!(D_80052A8C & 7) && (D_80031420_32020 & 3)) {
-		sp70 = (f32)((f64)(f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
+		sp70 = (f32)((f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0);
 		coss((alien->unk6 + 0x4000) & 0xFFFF);
 		sp64 = D_80047710;
 		sp66 = D_80047712;
@@ -2947,7 +2947,7 @@ void func_802DAEDC_25A61C(u8 arg0) {
 		}
 
 		if (alien->unk2C >= 0x65) {
-			data->unk2 = (s16)(s32)((((f64)(f32)sins(((-alien->unk2C * 500) + 0x186A0) & 0xFFFF) / 32768.0) * D_802E0DD8_260518) + D_802E0DE0_260520);
+			data->unk2 = (s16)(s32)((((f32)sins(((-alien->unk2C * 500) + 0x186A0) & 0xFFFF) / 32768.0) * D_802E0DD8_260518) + D_802E0DE0_260520);
 
 			if (!(D_80052A8C & 3)) {
 				func_800DEA08_ED9B8((s16)sp74, (s16)sp70, (s16)sp6C, 0x50, 0xA, 8, 0x28, 0xFF, 0xFF, 0, 0);
@@ -2971,10 +2971,10 @@ void func_802DAEDC_25A61C(u8 arg0) {
 	} else {
 		sp8E = (s16)v1;
 		data = &D_8014DD50[(s16)sp8E];
-		data->unk2 = (s16)(s32)((((f64)(f32)sins((D_80052A8C * 1000) & 0xFFFF) / 32768.0) * 10.0) + D_802E0DE8_260528);
+		data->unk2 = (s16)(s32)((((f32)sins((D_80052A8C * 1000) & 0xFFFF) / 32768.0) * 10.0) + D_802E0DE8_260528);
 		data = &D_8014DD50[(s16)sp8E];
-		data->unk8 = (s16)(s32)((((f64)(f32)sins((D_80052A8C * 1600) & 0xFFFF) / 32768.0) * 1600.0));
-		data->unkA = (s16)(s32)((((f64)(f32)coss((D_80052A8C * 1400) & 0xFFFF) / 32768.0) * D_802E0DF0_260530));
+		data->unk8 = (s16)(s32)((((f32)sins((D_80052A8C * 1600) & 0xFFFF) / 32768.0) * 1600.0));
+		data->unkA = (s16)(s32)((((f32)coss((D_80052A8C * 1400) & 0xFFFF) / 32768.0) * D_802E0DF0_260530));
 
 		func_800D16BC_E066C(alien->unk0, (s16)(alien->unk2 + 0x3C), alien->unk4,
 						   alien->unk0, alien->unk2 - 0x14, alien->unk4, 1);
@@ -3080,10 +3080,10 @@ void func_802DB7B8_25AEF8(u8 arg0, s32 arg1, u8 arg2, s16 arg3, s16 arg4, s16 ar
 	func_80137468_146418(arg0, 0x1E);
 
 	cos1 = coss(sp4C);
-	sp54 = (s32)((f64)sp64 * ((f64)(f32)coss(sp4E) / 32768.0) * ((f64)(f32)cos1 / 32768.0));
-	alien->unk10 = (s16)(s32)((f64)alien->unk10 + (f64)sp54);
-	tempV1 = (s32)((f64)sp64 * ((f64)(f32)cos1 / 32768.0) * ((f64)(f32)sins(sp4E) / 32768.0));
-	sp54 = (s32)((f64)sp64 * ((f64)(f32)sins(sp4C) / 32768.0) * ((f64)(f32)coss(sp4E) / 32768.0));
+	sp54 = (s32)(sp64 * ((f32)coss(sp4E) / 32768.0) * ((f32)cos1 / 32768.0));
+	alien->unk10 = (s16)(s32)(alien->unk10 + sp54);
+	tempV1 = (s32)(sp64 * ((f32)cos1 / 32768.0) * ((f32)sins(sp4E) / 32768.0));
+	sp54 = (s32)(sp64 * ((f32)sins(sp4C) / 32768.0) * ((f32)coss(sp4E) / 32768.0));
 
 	if (tempV1 != 0) {
 		func_801022F4_1112A4((VehicleInstance *)alien, alien->unk6, *(f32*)&tempV1);
@@ -3093,7 +3093,7 @@ void func_802DB7B8_25AEF8(u8 arg0, s32 arg1, u8 arg2, s16 arg3, s16 arg4, s16 ar
 		func_801022F4_1112A4((VehicleInstance *)alien, (s16)(alien->unk6 + 0x4000), *(f32*)&sp54);
 	}
 
-	alien->unk48 = (s16)(s32)((f64)alien->unk48 * D_802E0DF8_260538);
+	alien->unk48 = (s16)(s32)(alien->unk48 * D_802E0DF8_260538);
 	alien->unk12 = (s16)(s32)((f32)alien->unk12 * (1.0f - arg8));
 
 	sp54 = (s32)func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8;
@@ -3216,8 +3216,8 @@ void func_802DBD84_25B4C4(u8 arg0) {
 				sp4E = (s16)((s32)alien->unk4B << 12);
 				sp2C = sp4E & 0xFFFF;
 
-				D_802E0E32 = (s16)(D_802E0E32 + 20.0 * ((f64)(f32)sins(sp2C) / 32768.0));
-				*(s16 *)D_802E0E30 = (s16)(*(s16 *)D_802E0E30 + 40.0 * ((f64)(f32)sins(sp2C) / 32768.0));
+				D_802E0E32 = (s16)(D_802E0E32 + 20.0 * ((f32)sins(sp2C) / 32768.0));
+				*(s16 *)D_802E0E30 = (s16)(*(s16 *)D_802E0E30 + 40.0 * ((f32)sins(sp2C) / 32768.0));
 
 				alien->unk4B++;
 
@@ -3243,8 +3243,8 @@ void func_802DBD84_25B4C4(u8 arg0) {
 				func_80137468_146418(arg0, 0x13E);
 			}
 
-			D_802DF3A4_25EAE4 = (f32)((f64)*(s16 *)D_802E0E30 * (1.0 / 256.0));
-			D_802DF3A8_25EAE8 = (f32)((f64)D_802E0E32 * (1.0 / 256.0));
+			D_802DF3A4_25EAE4 = (f32)(*(s16 *)D_802E0E30 * (1.0 / 256.0));
+			D_802DF3A8_25EAE8 = (f32)(D_802E0E32 * (1.0 / 256.0));
 		}
 	} else {
 		*(s16 *)D_802E0E30 = 0x100;
@@ -3318,7 +3318,7 @@ void func_802DC244_25B984(u8 arg0) {
 				D_80052B34->unk24 = 0x3E8 - (func_800038E0_44E0() % 2000);
 				D_80052B34->unk26 = 0x3E8 - (func_800038E0_44E0() % 2000);
 			}
-			parent->unk20 &= ~ALIEN_FLAG_UNKG;
+			parent->unk20 &= ~ALIEN_FLAG_UNKG;S
 			alien->unk1E = 0x32;
 		} else {
 			s32 sp64;
@@ -3332,9 +3332,9 @@ void func_802DC244_25B984(u8 arg0) {
 			if ((alien->unk1E < 0x28) && ((D_802E099C_2600DC != -1) || (D_802E09A0_2600E0 != -1))) {
 				sp64 = (alien->unk1E * -0x32) + 0x7D0;
 				sp50 = ((alien->unk1E % 5) * 0x3333) & 0xFFFF;
-				sp48 = (f64)sp64;
-				sp70 = (s32)(((f64)(f32)sins(sp50) / 32768.0) * sp48 + (f64)D_802E099C_2600DC);
-				sp6C = (s32)((f64)D_802E09A0_2600E0 - (((f64)(f32)coss(sp50) / 32768.0) * sp48));
+				sp48 = sp64;
+				sp70 = (s32)(((f32)sins(sp50) / 32768.0) * sp48 + D_802E099C_2600DC);
+				sp6C = (s32)(D_802E09A0_2600E0 - (((f32)coss(sp50) / 32768.0) * sp48));
 				func_800DFA34_EE9E4((s16)sp70, (s16)sp80, (s16)sp6C, 0x96, 0);
 				alien->unk20 |= ALIEN_FLAG_INVINCIBLE;
 				func_80124B5C_133B0C((s16)sp70, (s16)sp80, (s16)sp6C, 0xDAC, 0x190);
@@ -3966,7 +3966,7 @@ void func_802DDF50_25D690(u8 arg0) {
 
 		if (!(alien->unk20 & ALIEN_FLAG_FALL) && !(D_80052A8C & 3)) {
 			sp68 = (f32)((f32)sins((alien->unk6 - 0x4000)) / 32768.0);
-			sp64 = (f32)(-((f64)(f32)coss((alien->unk6 - 0x4000)) / 32768.0));
+			sp64 = (f32)(-((f32)coss((alien->unk6 - 0x4000)) / 32768.0));
 
 			func_800C541C_D43CC(alien->unk0, alien->unk2, alien->unk4,
 				(s8)(s32)(sp68 * 64.0f), 0x7F,
