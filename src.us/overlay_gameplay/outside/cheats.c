@@ -167,7 +167,7 @@ void func_8007367C_8262C() {
 	D_8004D148 = 1;
 }
 
-// Cheat Alfa - Spawn 4 Alpha tank ammo pickups around player
+// Cheat Alfa - Spawn 4 Alpha tank ammo PowerupItems around player
 void func_8007368C_8263C(void) {
 	func_800A8A68_B7A18((s16) (D_80052B34->unk0 + 0x64), (s16) (D_80052B34->unk2 - 0xFA), D_80052B34->unk4, 0x15);
 	func_800A8A68_B7A18((s16) (D_80052B34->unk0 + 0x64), (s16) (D_80052B34->unk2 + 0xFA), D_80052B34->unk4, 0x17);

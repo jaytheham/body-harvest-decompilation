@@ -10493,7 +10493,7 @@ s32 func_80110144_11F0F4(VehicleInstance *arg0, s32 arg1) {
 }
 
 void func_801103B4_11F364(VehicleInstance *arg0, VehicleType *arg1) {
-	BeaconDisplayEntry *entry;
+	PowerupItem *entry;
 	s32 i;
 
 	if (arg0 == D_80052B34) {

@@ -52,8 +52,8 @@ LevelBeaconData D_8013D898_14C848 = {{
 { 0x02, 0x0A, 0x11, 0x16 }};
 BeaconColor D_8013D8B0_14C860 = { 0x32, 0x64, 0xFF };
 
-// AI - Find free beacon display entry
-BeaconDisplayEntry* func_800A5A10_B49C0() {
+// AI - Find free PowerupItem display entry
+PowerupItem* func_800A5A10_B49C0() {
 	s32 i;
 
 	i = 16;
@@ -121,7 +121,7 @@ void func_800A5D3C_B4CEC(void)
 {
 	u8 i;
 	s32 j;
-	BeaconDisplayEntry *entry;
+	PowerupItem *entry;
 	entry = &D_8014F7DE;
 	j = 0xF; do {
 		D_8014F6D0[j].unkC = -1;
@@ -971,8 +971,7 @@ void func_800A7C6C_B6C1C(void) {
 
 // CURRENT(2696)
 #ifdef NON_MATCHING
-// Actually powerups not beacons?
-// AI - Update beacon particle effects
+// Update PowerupItems
 void func_800A854C_B74FC(void)
 {
   u8 alpha;
@@ -1093,7 +1092,7 @@ void func_800A854C_B74FC(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A854C_B74FC.s")
 #endif
 
-/* Spawn powerup
+/* Spawn PowerupItem
 	arg3:
 	1	Small Heart
 	x10	Large Heart
@@ -1106,7 +1105,7 @@ void func_800A854C_B74FC(void)
 	x1B Small shotgun ammo
 */
 void func_800A8A68_B7A18(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
-	BeaconDisplayEntry *entry;
+	PowerupItem *entry;
 
 	entry = func_800A5A10_B49C0();
 	if (entry == NULL) {
@@ -1137,7 +1136,7 @@ void func_800A8A68_B7A18(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	entry->unkE = (s16)((func_800038E0_44E0() & 0x7F) + 0x1F4);
 }
 
-// AI - Spawn random powerup
+// AI - Spawn random PowerupItem item
 void func_800A8C44_B7BF4(s16 arg0, s16 arg1, s16 arg2)
 {
 	u8 weaponIndex;
