@@ -1,0 +1,1 @@
+docker run --name bh-container --rm -ti -v "${PWD}:/bh" bh-local

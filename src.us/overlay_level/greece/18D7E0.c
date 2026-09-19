@@ -2690,7 +2690,7 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2)
   s16 nodes[3];
   f32 randomBase;
   f32 sp70;
-  s16 nodeIndex;
+  s32 nodeIndex;
   s32 new_var;
   s16 pad0;
   sp9F = alienInstances[arg0].typeIndex;
@@ -2728,13 +2728,12 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2)
 	  else
 	  {
 		sp94 = D_80052B34->unk0;
-		sp90 = D_80052B34->unk4;
-		
-		sp8C = 0x127690;
-		sp94 = (sp94 - sp88) * (sp94 - sp88) + (sp90 - sp80) * (sp90 - sp80);
-		if (sp8C > sp94)
+          sp90 = D_80052B34->unk4;
+          sp8C = 0x127690;
+		nodeIndex = SQ(sp94 - sp88) + SQ(sp90 - sp80);
+		if (sp8C > nodeIndex)
 		{
-		  sp8C -= sp94;
+		  sp8C -= nodeIndex;
 		  if (!(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE))
 		  {
 			sp94 = alienInstances[alienInstances[arg0].unk25].unk0 - D_80052B34->unk0;
