@@ -1643,6 +1643,18 @@ typedef struct {
 } Unk8014DD50; /* size = 0x10 */
 
 typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ u16 unk8;
+	/* 0x0A */ u16 unkA;
+	/* 0x0C */ s8 unkC;
+	/* 0x0D */ s8 unkD;
+	/* 0x0E */ s16 unkE;
+} Unk8014DD50Angles; /* size = 0x10 */
+
+typedef struct {
 	  /* 0x00 */ s8 unk0;
 	  /* 0x01 */ s8 unk1;
 	  /* 0x02 */ u8 pad2[0xB];
