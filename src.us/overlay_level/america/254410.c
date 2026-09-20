@@ -2906,11 +2906,11 @@ extern const f64 D_802E0DF0_260530[];
 
 extern volatile u32 D_802E0654_25FD94;
 
-// CURRENT(7472)
+// CURRENT(8211)
 #ifdef NON_MATCHING
 void func_802DAEDC_25A61C(u8 arg0) {
 	AlienInstance *alien;
-	s8 v1;
+	s32 v1;
 	s16 sp8E;
 	s16 sp8C;
 	s16 sp7E;
@@ -2925,7 +2925,7 @@ void func_802DAEDC_25A61C(u8 arg0) {
 	alien = &alienInstances[arg0];
 	v1 = D_8014DD50[alien->unkC].unkC;
 	sp78 = D_802E0654_25FD94;
-	sp8C = (s16)alien->typeIndex;
+	sp8C = alien->typeIndex;
 	alien->unk20 &= ~ALIEN_FLAG_INVINCIBLE;
 
 	if (alien->unk20 & ALIEN_FLAG_UNKD) {
@@ -2935,12 +2935,12 @@ void func_802DAEDC_25A61C(u8 arg0) {
 			alien->unk20 |= ALIEN_FLAG_UNKP;
 		}
 
-		func_80128428_1373D8(alien, data->unk0, data->unk2, data->unk4, &sp74, (s32*)&sp70, &sp6C);
+		func_80128428_1373D8(alien, data->unk0, data->unk2, data->unk4, &sp74, &sp70, &sp6C);
 
 		if ((func_800038E0_44E0() % 8) == 0) {
 			s32 rnd;
 
-			sp66 = (s16)func_800038E0_44E0();
+			sp66 = func_800038E0_44E0();
 			rnd = func_800038E0_44E0();
 			func_800D16BC_E066C((s16)sp6C, (s16)sp70, (s16)sp74,
 							   (s16)(((u16)sp66 % 2000) + sp6C - 1000),
@@ -2949,7 +2949,7 @@ void func_802DAEDC_25A61C(u8 arg0) {
 		}
 
 		if (alien->unk2C >= 0x65) {
-			data->unk2 = (s16)(s32)((((f32)sins(((-alien->unk2C * 500) + 0x186A0) & 0xFFFF) / 32768.0) * D_802E0DD8_260518) + D_802E0DE0_260520);
+			data->unk2 = (s16)(((f32)sins(((-alien->unk2C * 500) + 0x186A0) & 0xFFFF) / 32768.0) * D_802E0DD8_260518[0] + D_802E0DE0_260520[0]);
 
 			if (!(D_80052A8C & 3)) {
 				func_800DEA08_ED9B8((s16)sp74, (s16)sp70, (s16)sp6C, 0x50, 0xA, 8, 0x28, 0xFF, 0xFF, 0, 0);
@@ -2971,17 +2971,17 @@ void func_802DAEDC_25A61C(u8 arg0) {
 			alien->unk2C--;
 		}
 	} else {
-		sp8E = (s16)v1;
-		data = &D_8014DD50[(s16)sp8E];
-		data->unk2 = (s16)(s32)((((f32)sins((D_80052A8C * 1000) & 0xFFFF) / 32768.0) * 10.0) + D_802E0DE8_260528);
-		data = &D_8014DD50[(s16)sp8E];
-		data->unk8 = (s16)(s32)((((f32)sins((D_80052A8C * 1600) & 0xFFFF) / 32768.0) * 1600.0));
-		data->unkA = (s16)(s32)((((f32)coss((D_80052A8C * 1400) & 0xFFFF) / 32768.0) * D_802E0DF0_260530));
+		sp8E = v1;
+		data = &D_8014DD50[sp8E];
+		data->unk2 = (s16)(((f32)sins((D_80052A8C * 1000) & 0xFFFF) / 32768.0) * 10.0 + D_802E0DE8_260528[0]);
+		data = &D_8014DD50[sp8E];
+		data->unk8 = (s16)((f32)sins((D_80052A8C * 1600) & 0xFFFF) / 32768.0 * 1600.0);
+		data->unkA = (s16)((f32)coss((D_80052A8C * 1400) & 0xFFFF) / 32768.0 * D_802E0DF0_260530[0]);
 
 		func_800D16BC_E066C(alien->unk0, (s16)(alien->unk2 + 0x3C), alien->unk4,
 						   alien->unk0, alien->unk2 - 0x14, alien->unk4, 1);
 
-		if ((D_80052A8C % (((alien->hitPoints * 15) / alienTypes[sp8C].unk3A) + 8)) == 0) {
+		if (((u32)D_80052A8C % (u32)(((alien->hitPoints * 15) / alienTypes[sp8C].unk3A) + 8)) == 0) {
 			sp7C = alien->unk0;
 			sp7E = alien->unk4;
 			func_800B99A8_C8958((Unk80152B80 *)&sp7C, 0, 0xC8, 0xFF, (u8 *)&sp78, 0x96, 0xA, 0);
