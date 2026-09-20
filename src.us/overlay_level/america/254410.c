@@ -3849,19 +3849,19 @@ void func_802DDB68_25D2A8(u8 arg0) {
 	func_8007A2A0_89250(id);
 }
 
-// CURRENT(117)
+// CURRENT(75)
 #ifdef NON_MATCHING
 void func_802DDC88_25D3C8(u8 arg0) {
 	s32 pad34;
 	s32 pad35;
 	s32 pad36;
 	s32 pad37;
-	s32 pad38;
+	AlienInstance *alien;
 	s16 sp42;
 	s16 sp40;
 	u8 v0;
 	s8 ret;
-	AlienInstance *alien;
+	u8 pad39;
 
 	func_800A93A4_B8354(arg0, -6, -0x73, 0x13);
 

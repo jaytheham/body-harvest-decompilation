@@ -3386,6 +3386,7 @@ extern u8 D_D040F50[];
 extern char D_E020FB0[];
 extern char D_E020FF0[];
 extern char D_E021030[];
+extern char D_E021070[];
 extern s32 __additional_scanline;
 extern s32 __osActiveQueue2;
 extern s32 D_8005BAF0; /* game "current time" (distinct from libultra __osCurrentTime) */
