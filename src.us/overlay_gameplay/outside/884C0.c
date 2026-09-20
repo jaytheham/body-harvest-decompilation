@@ -3253,7 +3253,7 @@ void func_8007FDD8_8ED88(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007FDD8_8ED88.s")
 #endif
 
-void func_800800DC_8F08C(s32 arg0) {
+void func_800800DC_8F08C(u8 arg0) {
 }
 
 // https://decomp.me/scratch/bZqed
