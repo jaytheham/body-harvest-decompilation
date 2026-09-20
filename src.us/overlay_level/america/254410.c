@@ -3054,7 +3054,6 @@ void func_802DB6B0_25ADF0(u8 arg0) {
 	}
 }
 
-// CURRENT(13656)
 #ifdef NON_MATCHING
 void func_802DB7B8_25AEF8(u8 arg0, s32 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, f32 arg8) {
 	s32 sp64;
@@ -3082,20 +3081,19 @@ void func_802DB7B8_25AEF8(u8 arg0, s32 arg1, u8 arg2, s16 arg3, s16 arg4, s16 ar
 	func_80137468_146418(arg0, 0x1E);
 
 	cos1 = coss(sp4C);
-	sp54 = (s32)(sp64 * ((f32)coss(sp4E) / 32768.0) * ((f32)cos1 / 32768.0));
-	alien->unk10 = (s16)(s32)(alien->unk10 + sp54);
+	alien->unk10 = (s16)(s32)(alien->unk10 + sp64 * ((f32)coss(sp4E) / 32768.0) * ((f32)cos1 / 32768.0));
 	tempV1 = (s32)(sp64 * ((f32)cos1 / 32768.0) * ((f32)sins(sp4E) / 32768.0));
 	sp54 = (s32)(sp64 * ((f32)sins(sp4C) / 32768.0) * ((f32)coss(sp4E) / 32768.0));
 
 	if (tempV1 != 0) {
-		func_801022F4_1112A4((VehicleInstance *)alien, alien->unk6, *(f32*)&tempV1);
+		func_801022F4_1112A4((VehicleInstance *)alien, alien->unk6, (s16)tempV1);
 	}
 
 	if (sp54 != 0) {
-		func_801022F4_1112A4((VehicleInstance *)alien, (s16)(alien->unk6 + 0x4000), *(f32*)&sp54);
+		func_801022F4_1112A4((VehicleInstance *)alien, (s16)(alien->unk6 + 0x4000), (s16)sp54);
 	}
 
-	alien->unk48 = (s16)(s32)(alien->unk48 * D_802E0DF8_260538);
+	alien->unk48 = (s16)(s32)(alien->unk48 * D_802E0DF8_260538[0]);
 	alien->unk12 = (s16)(s32)((f32)alien->unk12 * (1.0f - arg8));
 
 	sp54 = (s32)func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8;
