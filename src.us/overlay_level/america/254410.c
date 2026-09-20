@@ -2636,7 +2636,7 @@ void func_802DA120_259860(s16 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DA120_259860.s")
 #endif
 
-// CURRENT(2973)
+// CURRENT(1840)
 #ifdef NON_MATCHING
 void func_802DA520_259C60(u8 arg0) {
 	AlienInstance *alien = &alienInstances[arg0];
@@ -2680,7 +2680,7 @@ void func_802DA520_259C60(u8 arg0) {
 	if (alien->unk47 & 8) {
 		sp38 = (f32)(D_80052B34->unk0 - alien->unk0);
 		sp34 = (f32)(D_80052B34->unk4 - alien->unk4);
-		if (-func_80003824_4424(sp38, sp34) < func_80003824_4424(sp38, sp34)) {
+		if (func_80003824_4424(sp38, sp34) > -func_80003824_4424(sp38, sp34)) {
 			func_80102DDC_111D8C(D_80052B34, func_80003824_4424(sp38, sp34), 0, 50.0f);
 		} else {
 			func_80102DDC_111D8C(D_80052B34, -func_80003824_4424(sp38, sp34), 0, 50.0f);
