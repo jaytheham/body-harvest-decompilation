@@ -3261,13 +3261,15 @@ void func_802DBD84_25B4C4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DBD84_25B4C4.s")
 #endif
 
-// CURRENT(7800)
+// CURRENT(1311)
 #ifdef NON_MATCHING
 void func_802DC244_25B984(u8 arg0) {
 	AlienInstance *alien;
-	s32 sp80;
+	s16 pad;
 	AlienInstance *parent;
+	s32 sp80;
 	s32 sp50;
+	s32 sp54;
 
 	alien = &alienInstances[arg0];
 	parent = &alienInstances[alien->unk25];
@@ -3275,8 +3277,8 @@ void func_802DC244_25B984(u8 arg0) {
 
 	if ((alien->unk20 & (ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) == (ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) {
 		if (parent->unk20 & ALIEN_FLAG_UNKF) {
-			((s16 *)((u8 *)alienTypes + 0xB38))[0] = 0x600;
-			((s16 *)((u8 *)alienTypes + 0xB38))[1] = 0x400;
+			alienTypes[0x1B].unk40 = 0x600;
+			alienTypes[0x1B].unk42 = 0x400;
 			func_8008064C_8F5FC(arg0);
 			if (((sp80 + 0x546) < alien->unk2) || (alien->unkA > 0)) {
 				if (alien->unkA < 0x7830) {
@@ -3286,10 +3288,9 @@ void func_802DC244_25B984(u8 arg0) {
 			if (alien->unkA >= 0x7830) {
 				parent->unk20 &= ~ALIEN_FLAG_UNKF;
 				parent->unk20 |= ALIEN_FLAG_UNKG;
-				alien->unk20 |= ALIEN_FLAG_FALL;
 			}
+			alien->unk20 |= ALIEN_FLAG_FALL;
 		} else if (parent->unk20 & ALIEN_FLAG_UNKG) {
-			s32 sp54;
 			s32 sp7C;
 
 			func_80137468_146418(arg0, 0x13C);
@@ -3309,11 +3310,11 @@ void func_802DC244_25B984(u8 arg0) {
 			if (sp50 < (vehicleTypes[D_80052B34->unk1A].unkC + 0x64)) {
 				func_80123AC4_132A74(D_80052B34);
 			} else if ((sp50 < 0x3D0900) && !(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE)) {
-				sp7C = 0x3D0900 - sp50;
+				sp7C = (sp50 = 0x3D0900 - sp50);
 				func_80102DDC_111D8C(D_80052B34,
 					func_80003824_4424((f32)-(alien->unk0 - D_80052B34->unk0), (f32)-(alien->unk4 - D_80052B34->unk4)),
-					(s16)(((f32)sp7C / D_802E0E00_260540) + 8192.0f),
-					(f32)(sp7C * 0x32) / D_802E0E04_260544);
+					(s16)(((f32)sp7C / D_802E0E00_260540[0]) + 8192.0f),
+					(f32)(sp7C * 0x32) / D_802E0E04_260544[0]);
 				D_80052B34->unk22 = 0x3E8 - (func_800038E0_44E0() % 2000);
 				D_80052B34->unk24 = 0x3E8 - (func_800038E0_44E0() % 2000);
 				D_80052B34->unk26 = 0x3E8 - (func_800038E0_44E0() % 2000);
@@ -3321,20 +3322,18 @@ void func_802DC244_25B984(u8 arg0) {
 			parent->unk20 &= ~ALIEN_FLAG_UNKG;
 			alien->unk1E = 0x32;
 		} else {
-			s32 sp64;
-			s32 sp6C;
 			s32 sp70;
-			f64 sp48;
-
+			s32 sp6C;
+			s32 padBranch;
+			s32 sp64;
 			if (alien->unkA > 0) {
 				alien->unkA = (s16)(alien->unkA - 0x7D0);
 			}
 			if ((alien->unk1E < 0x28) && ((D_802E099C_2600DC != -1) || (D_802E09A0_2600E0 != -1))) {
-				sp64 = (alien->unk1E * -0x32) + 0x7D0;
 				sp50 = ((alien->unk1E % 5) * 0x3333) & 0xFFFF;
-				sp48 = sp64;
-				sp70 = (s32)(((f32)sins(sp50) / 32768.0) * sp48 + D_802E099C_2600DC);
-				sp6C = (s32)(D_802E09A0_2600E0 - (((f32)coss(sp50) / 32768.0) * sp48));
+				sp64 = (alien->unk1E * -0x32) + 0x7D0;
+				sp70 = (s32)(((f64)(f32)sins(sp50) / 32768.0) * sp64 + D_802E099C_2600DC);
+				sp6C = (s32)(D_802E09A0_2600E0 - (((f64)(f32)coss(sp50) / 32768.0) * sp64));
 				func_800DFA34_EE9E4((s16)sp70, (s16)sp80, (s16)sp6C, 0x96, 0);
 				alien->unk20 |= ALIEN_FLAG_INVINCIBLE;
 				func_80124B5C_133B0C((s16)sp70, (s16)sp80, (s16)sp6C, 0xDAC, 0x190);
