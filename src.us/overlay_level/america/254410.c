@@ -2812,7 +2812,7 @@ void func_802DAA98_25A1D8(u8 arg0) {
 	}
 }
 
-// CURRENT(10882)
+// CURRENT(6833)
 #ifdef NON_MATCHING
 void func_802DAAF0_25A230(u8 arg0) {
 	AlienInstance *alien;
@@ -2821,6 +2821,7 @@ void func_802DAAF0_25A230(u8 arg0) {
 	s32 sp60;
 	s16 sp64;
 	s16 sp66;
+	u8 new_var;
 	s16 sp68;
 	f32 sp70;
 	s32 sp74;
@@ -2834,6 +2835,8 @@ void func_802DAAF0_25A230(u8 arg0) {
 	s16 sp9C;
 	s16 sp9E;
 	s32 temp_v1;
+	s32 pad0;
+	s32 pad1;
 
 	alien = &alienInstances[arg0];
 	sp88[0] = D_8014DD50[alien->unkC].unkC;
@@ -2842,6 +2845,7 @@ void func_802DAAF0_25A230(u8 arg0) {
 	sp88[3] = D_8014DD50[sp88[2]].unkC;
 	sp88[4] = D_8014DD50[sp88[3]].unkD;
 	sp96 = D_8014DD50[sp88[3]].unkC;
+	new_var = D_8014DD50[sp88[4]].unkC;
 
 	if (!(alien->unk20 & ALIEN_FLAG_UNKL)) {
 		alien->unk2C = 0x78;
@@ -2850,7 +2854,7 @@ void func_802DAAF0_25A230(u8 arg0) {
 		return;
 	}
 
-	sp88[5] = D_8014DD50[sp88[4]].unkC;
+	sp88[5] = new_var;
 	sp98 = sp88[3];
 	sp94 = sp88[4];
 	sp9A = sp88[2];
