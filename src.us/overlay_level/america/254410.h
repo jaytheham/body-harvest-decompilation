@@ -20,7 +20,7 @@ void func_802D6138_255878(u8 arg0);
 void func_802D6684_255DC4(u8 arg0);
 void func_802D6824_255F64(u8 arg0);
 void func_802D6890_255FD0(u8 arg0);
-void func_802D736C_256AAC(s32 arg0);
+void func_802D736C_256AAC(u8 alienIdx);
 void func_802D803C_25777C(u8 arg0);
 void func_802D83D0_257B10(u8 arg0);
 void func_802D86D8_257E18(u8 arg0);
