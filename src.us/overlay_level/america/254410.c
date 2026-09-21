@@ -959,7 +959,6 @@ void func_802D5288_2549C8(s32 arg0) {
 	func_800072CC_7ECC((u64)0x2C);
 }
 
-#ifdef NON_MATCHING
 void func_802D52B0_2549F0(void) {
 	u8 id;
 	Unk80222A78 sp24;
@@ -970,7 +969,7 @@ void func_802D52B0_2549F0(void) {
 		return;
 	}
 
-	alienTypes[0x11].unk54 = 0x5D;
+	alienTypes[0x12].unk1C = 0x5D;
 	D_80157E7C = 2;
 
 	func_8011E6FC_12D6AC(-0xF28, -0x6300, &temp);
@@ -986,9 +985,6 @@ void func_802D52B0_2549F0(void) {
 
 	func_800AE454_BD404(&sp24);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D52B0_2549F0.s")
-#endif
 
 void func_802D536C_254AAC(void) {
 	s16 temp = 0x96 - D_8004D1B2;
