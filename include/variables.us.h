@@ -2835,6 +2835,7 @@ extern AlienType alienTypes[0x30]; // 80256680
 extern u16 D_8025668C[]; // 8025668C (aliases alienTypes[0].unkC)
 extern u16 D_802566BA[]; // 802566BA
 extern s16 D_802566D8[]; // 802566D8
+extern s32 D_80256DEC;
 extern s16 D_80256EE2; // 0x80256EE2
 extern u16 D_802571B2; // 0x802571B2
 extern s16 D_802571B8; // 0x802571B8
