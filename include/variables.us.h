@@ -1599,7 +1599,7 @@ extern Unk800E66A8 D_800E66A8[];
 extern u8 D_800E66B0[];
 extern s16 D_800E66B2[];
 extern u8 D_800E66B3[];
-extern u8 D_800E69A7;
+extern u8 D_800E69A7[];
 // AI - Per-room byte data copied from the building block (D_800E65E8[0x80 + i])
 extern u8 D_800E69A8[];
 extern Vec3f D_800E6A10;

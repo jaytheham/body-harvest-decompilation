@@ -11606,12 +11606,11 @@ s32 func_8007C428_1644E8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C428_1644E8.s")
 #endif
 
-#ifdef NON_MATCHING
-/* CURRENT(755) */
+// CURRENT(205)
 // AI - Checks if a grid cell is passable (not occupied)
+#ifdef NON_MATCHING
 s32 func_8007C698_164758(s32 arg0, s32 arg1) {
 	Unk8007C698Npc *npc;
-	u8 *cellObj;
 	s32 cellX;
 	s32 cellY;
 	s32 width;
@@ -11622,17 +11621,21 @@ s32 func_8007C698_164758(s32 arg0, s32 arg1) {
 	cellX = arg0 / 96;
 	width = D_800E6460;
 	cellY -= 1;
-	cellType = (&D_800E69A7)[width * cellY + cellX];
+	cellType = D_800E69A7[width * cellY + cellX];
 
+	i = 0;
 	if (D_800E668C > 0) {
 		npc = (Unk8007C698Npc *) D_800E66A8;
-		i = 0;
 		do {
 			if (npc->unk0 == 0x1E) {
-			cellObj = (u8 *) D_800E65E8 + i;
-			if ((cellObj[0x40] + 1 == cellX) && (cellObj[0x50] == cellY) && (npc->unk24 == 0.0f)) {
-				cellType = 0xFF;
-			}
+				u8 objCellX;
+				u8 objCellY;
+
+				objCellX = ((Unk8007C698CellObj *) ((u8 *) D_800E65E8 + i))->unk40;
+				objCellY = ((Unk8007C698CellObj *) ((u8 *) D_800E65E8 + i))->unk50;
+				if ((objCellX + 1 == cellX) && (objCellY == cellY) && (npc->unk24 == 0.0f)) {
+					cellType = 0xFF;
+				}
 			}
 			i++;
 			npc++;
