@@ -1072,12 +1072,18 @@ void func_802D55A0_254CE0(void) {
 // CURRENT(115)
 #ifdef NON_MATCHING
 void func_802D55E4_254D24(void) {
-	s32 temp_v0;
+	D_801FEA30_Row *row;
+	u16 *tile;
+	u8 *tileByte;
 
-	temp_v0 = (s32)D_80052A94 - 0x10000;
-	*(u8 *)(temp_v0 + 0x708D) = ((*(u16 *)(temp_v0 + 0x708C) - 0x11) & 0x3F) | (*(u8 *)(temp_v0 + 0x708D) & 0xFFC0);
-	temp_v0 = (s32)D_80052A94 - 0x10000;
-	*(u8 *)(temp_v0 + 0x6E8D) = ((*(u16 *)(temp_v0 + 0x6E8C) - 0x11) & 0x3F) | (*(u8 *)(temp_v0 + 0x6E8D) & 0xFFC0);
+	row = &D_80052A94[-0x80];
+	tile = &row[0x38].col[0x46];
+	tileByte = (u8 *)tile;
+	tileByte[1] = (u8)(((*tile - 0x11) & 0x3F) | (tileByte[1] & 0xFFC0));
+	row = &D_80052A94[-0x80];
+	tile = &row[0x37].col[0x46];
+	tileByte = (u8 *)tile;
+	tileByte[1] = (u8)(((*tile - 0x11) & 0x3F) | (tileByte[1] & 0xFFC0));
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D55E4_254D24.s")

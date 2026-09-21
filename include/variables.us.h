@@ -910,7 +910,7 @@ extern u32 D_80052A90; // millseconds played in current level
 typedef struct {
 	u16 col[256];
 } D_801FEA30_Row;
-extern D_801FEA30_Row *D_80052A94;
+extern D_801FEA30_Row *D_80052A94; // AI - Pointer to the center cell [0x80][0x80] of the terrain tile grid.
 extern Unk80052A98 D_80052A98[]; // LevelStats
 extern s16 D_80052AC8;
 extern u8 D_80052ACA;
