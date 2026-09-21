@@ -2057,16 +2057,16 @@ void func_802D803C_25777C(u8 arg0) {
 void func_802D83D0_257B10(u8 arg0) {
 	AlienInstance *alien;
 	s16 sp5E;
-	s16 sp5C;
 	s16 sp5A;
-	s16 sp58;
 	s16 sp56;
+	s16 sp58;
 	s16 sp54;
-	s32 pad;
+	s16 sp5C;
 	s32 sp4C;
 	s32 sp48;
 	s32 sp44;
 	s32 sp40;
+	s32 pad;
 
 	alien = &alienInstances[arg0];
 	
@@ -2074,7 +2074,7 @@ void func_802D83D0_257B10(u8 arg0) {
 	sp5A = D_8014DD50[sp5E].unkD;
 	sp4C = 0;
 	sp56 = D_8014DD50[sp5A].unkD;
-	sp58 = D_8014DD50[sp5E].unkC;
+	sp58 = D_8014DD50[sp5A].unkC;
 	sp54 = D_8014DD50[sp56].unkC;
 	sp5C = D_8014DD50[sp56].unkD;
 	
