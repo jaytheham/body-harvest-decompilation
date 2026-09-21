@@ -772,9 +772,8 @@ const f32 D_802E0E20_260560[] = { 0.333f, 0.0f, 0.0f, 0.0f };
 
 void func_802D62A0_2559E0(u8 arg0);
 void func_802D65BC_255CFC(u8 arg0);
-typedef struct { s16 lo; s16 hi; } UnkArg802D7840;
 void func_802D7968_2570A8(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
-s32 func_802D7840_256F80(s32 arg0, s32 arg1);
+s32 func_802D7840_256F80(u8 arg0, s16 arg1);
 void func_802D7C00_257340(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7);
 void func_802DA054_259794(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7);
 void func_802DA120_259860(s16 arg0, s32 arg1);
@@ -1808,30 +1807,29 @@ void func_802D736C_256AAC(s32 arg0) {
 #endif
 
 // CURRENT(2630)
-#ifdef NON_MATCHING
-s32 func_802D7840_256F80(s32 arg0, UnkArg802D7840 arg1) {
+s32 func_802D7840_256F80(u8 arg0, s16 arg1) {
 	s16 sp40[4];
-	s32 temp_s0;
+	s32 pad[2];
 	AlienInstance *temp_s1;
 	s32 temp_v0;
 
-	temp_s0 = arg0 & 0xFF;
-	temp_s1 = &alienInstances[temp_s0];
+	temp_s1 = &alienInstances[arg0];
 
 	if (temp_s1->unk20 & ALIEN_FLAG_UNKE) {
-		sp40[0] = arg1.hi;
-		sp40[1] = D_8014DD50[sp40[0]].unkC;
+		sp40[0] = arg1;
+		temp_v0 = D_8014DD50[sp40[0]].unkC;
+		sp40[1] = temp_v0;
+		sp40[2] = D_8014DD50[temp_v0].unkC;
 		sp40[3] = temp_s1->unkC;
-		sp40[2] = D_8014DD50[sp40[1]].unkC;
 
-		temp_v0 = func_80081F18_90EC8(temp_s0 & 0xFF, 4, 3, sp40, &D_802DFB28_25F268);
+		temp_v0 = func_80081F18_90EC8(arg0, 4, 3, sp40, &D_802DFB28_25F268);
 		if (temp_v0 == 2) {
-			if (func_80084FE8_93F98(temp_s0 & 0xFF, 0x800) != 0) {
-				func_800871CC_9617C(temp_s0 & 0xFF, 1, 0xF);
+			if (func_80084FE8_93F98(arg0, 0x800) != 0) {
+				func_800871CC_9617C(arg0, 1, 0xF);
 			} else {
-				func_80087188_96138(temp_s0 & 0xFF, 1, 0xF);
+				func_80087188_96138(arg0, 1, 0xF);
 			}
-			func_80137468_146418(temp_s0, 0x25C);
+			func_80137468_146418(arg0, 0x25C);
 			temp_s1->unk1E = 0xF;
 			return 1;
 		}
@@ -1843,9 +1841,6 @@ s32 func_802D7840_256F80(s32 arg0, UnkArg802D7840 arg1) {
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D7840_256F80.s")
-#endif
 
 void func_802D7968_2570A8(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 sp60[4];
