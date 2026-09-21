@@ -6217,58 +6217,36 @@ f32 func_80070448_158508(void) {
 	return D_800E65E0 / D_800E65C8->unk14;
 }
 
-// https://decomp.me/scratch/49h7b
-#ifdef NON_MATCHING
-/* CURRENT(1690) */
 // AI - Adjusts room coordinates based on orientation direction
 void func_80070464_158524(s32 *arg0, s32 *arg1, s32 arg2)
 {
-  s32 temp_v1;
-  s32 temp_v1_3;
-  s32 temp_v1_4;
-  s32 temp_v1_5;
-  u8 temp_a3;
-  u8 temp_v0;
-  Unk80070464Obj **temp_a2;
-  temp_v0 = D_800E66A8[arg2].unk0;
-  *arg0 = D_800E66A8[arg2].unk2;
-  *arg1 = D_800E66A8[arg2].unk6;
-  temp_a3 = D_800E66A8[arg2].unk8;
-  temp_a2 = (Unk80070464Obj **) (&D_800E65BC);
-  temp_v1 = (temp_v0 << 3) + temp_v0;
-  switch (temp_a3)
-  {
+	u8 temp_v0;
+	temp_v0 = D_800E66A8[arg2].unk0;
+	*arg0 = D_800E66A8[arg2].unk2;
+	*arg1 = D_800E66A8[arg2].unk6;
+	switch (D_800E66A8[arg2].unk8)
+	{
 	case 0:
-	  temp_v1 <<= 3;
-	  *arg0 += ((Unk80070464Obj *) (((u8 *) (*temp_a2)) + temp_v1))->unk8;
-	  *arg1 += ((Unk80070464Obj *) (((u8 *) (*temp_a2)) + temp_v1))->unkA;
-	  return;
+		*arg0 += D_800E65BC[temp_v0].unk8;
+		*arg1 += D_800E65BC[temp_v0].unkA;
+		return;
 
 	case 1:
-	  temp_a2 = (Unk80070464Obj **) (&D_800E65BC);
-	  temp_v1_3 = temp_v0 * 0x48;
-	  *arg0 += ((Unk80070464Obj *) (((u8 *) (*temp_a2)) + temp_v1_3))->unkA;
-	  *arg1 -= ((Unk80070464Obj *) (((u8 *) (*temp_a2)) + temp_v1_3))->unk8;
-	  return;
+		*arg0 += D_800E65BC[temp_v0].unkA;
+		*arg1 -= D_800E65BC[temp_v0].unk8;
+		return;
 
 	case 2:
-	  temp_a2 = (Unk80070464Obj **) (&D_800E65BC);
-	  temp_v1_4 = temp_v0 * 0x48;
-	  *arg0 -= ((Unk80070464Obj *) (((u8 *) (*temp_a2)) + temp_v1_4))->unk8;
-	  *arg1 -= ((Unk80070464Obj *) (((u8 *) (*temp_a2)) + temp_v1_4))->unkA;
-	  return;
+		*arg0 -= D_800E65BC[temp_v0].unk8;
+		*arg1 -= D_800E65BC[temp_v0].unkA;
+		return;
 
 	case 3:
-	  temp_a2 = (Unk80070464Obj **) (&D_800E65BC);
-	  temp_v1_5 = temp_v0 * 0x48;
-	  *arg0 -= ((Unk80070464Obj *) (((u8 *) (*temp_a2)) + temp_v1_5))->unkA;
-	  *arg1 += ((Unk80070464Obj *) (((u8 *) (*temp_a2)) + temp_v1_5))->unk8;
-	  return;
-  }
+		*arg0 -= D_800E65BC[temp_v0].unkA;
+		*arg1 += D_800E65BC[temp_v0].unk8;
+		return;
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80070464_158524.s")
-#endif
 
 #ifdef NON_MATCHING
 // AI - Main interior initialization: sets up rooms, positions, and mission flags

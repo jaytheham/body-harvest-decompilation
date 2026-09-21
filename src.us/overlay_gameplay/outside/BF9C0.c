@@ -3406,7 +3406,6 @@ void func_800B9C28_C8BD8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9C28_C8BD8.s")
 #endif
 
-// https://decomp.me/scratch/Ln5ro
 // CURRENT(7852)
 #ifdef NON_MATCHING
 // DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
@@ -3442,7 +3441,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 	func_800B879C_C774C();
   }
   temp_s1 = D_8005BB34;
-  func_800B5090_C4040(&D_8005BB34, (s32) arg0 & 0xFF);
+  func_800B5090_C4040(&D_8005BB34, (s32) arg0);
   gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
   
   D_8014F89A = 0;
