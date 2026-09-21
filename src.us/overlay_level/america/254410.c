@@ -1215,7 +1215,7 @@ void func_802D5CA8_2553E8(u8 arg0) {
 	func_8008064C_8F5FC(arg0);
 }
 
-// CURRENT(1267)
+// CURRENT(2650)
 #ifdef NON_MATCHING
 void func_802D5D08_255448(u8 arg0) {
 	s32 sp38;
@@ -1237,7 +1237,7 @@ void func_802D5D08_255448(u8 arg0) {
 
 	if (!(alien->unk20 & ALIEN_FLAG_UNK5) && !(alien->unk20 & ALIEN_FLAG_UNKG)) {
 		alien->unk20 |= ALIEN_FLAG_PLAYER;
-		if (func_80084E54_93E04((VehicleInstance *)alien, (AlienInstance *)D_80052B34) < 0x640) {
+		if (func_80084E54_93E04(alien, D_80052B34) < 0x640) {
 			alien->unk3C = 0x50;
 			alien->unk1E = 0;
 			alien->unk20 |= (ALIEN_FLAG_UNKE | ALIEN_FLAG_UNK5);
@@ -1271,9 +1271,9 @@ void func_802D5D08_255448(u8 arg0) {
 		} else {
 			temp = func_8008E524_9D4D4(arg0, sp38, 0xA);
 			if (sp38 < temp) {
-				func_8008EB20_5EFD0(arg0, temp, 0x640);
+				func_8008EB20_5EFD0(arg0, temp, 0x640, 0, 0, 0, 0);
 			} else {
-				func_8008EB20_5EFD0(arg0, temp, 0x320);
+				func_8008EB20_5EFD0(arg0, temp, 0x320, 0, 0, 0, 0);
 			}
 		}
 	}
