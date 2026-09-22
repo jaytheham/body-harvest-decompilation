@@ -11412,8 +11412,6 @@ void func_8007BC18_163CD8(s32 arg0, f32 *arg1, f32 *arg2, s32 *arg3, s32 *arg4) 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007BC18_163CD8.s")
 #endif
 
-// CURRENT(1820)
-#ifdef NON_MATCHING
 // AI - Detects collision with a rectangular area
 s32 func_8007BEC8_163F88(Vec3f *arg0, Vec3f *arg1, f32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, Unk8007C1DC *arg7) {
 	if (arg1->x < 0.0f) {
@@ -11470,13 +11468,10 @@ s32 func_8007BEC8_163F88(Vec3f *arg0, Vec3f *arg1, f32 arg2, s32 arg3, s32 arg4,
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007BEC8_163F88.s")
-#endif
 
-#ifdef NON_MATCHING
-/* CURRENT(215) */
+// CURRENT(215)
 // AI - Checks line-segment intersection with collision boundary
+#ifdef NON_MATCHING
 s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007C1DC *arg4) {
 	f32 temp_f0;
 	f32 temp_f14;
