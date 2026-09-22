@@ -403,34 +403,31 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800835F0_16B6B0.s")
 #endif
 
-// https://decomp.me/scratch/6yUii
-// CURRENT(621)
-#ifdef NON_MATCHING
 // AI - Remove three specific effects from a slot
 void func_80083814_16B8D4(s16 arg0, u8 arg1)
 {
-  s16 sp1E;
-  s16 sp22;
-  if (arg0 < 0 ||
-	  arg0 >= 0xC8 ||
-	  arg1 >= 0xF ||
-	  ((D_800FB6F8[arg1].unk0 != 0xB) && (D_800FB6F8[arg1].unk0 != 0xC)))
-  {
-	
-  } else {
-	  sp1E = D_800FB7B0[arg0].unk4;
-	  func_800835F0_16B6B0((s32)arg0, arg1);
-	  sp22 = D_800FB7B0[sp1E].unk4;
-	
-	  func_800835F0_16B6B0((s32)sp1E, arg1);
-	  func_800835F0_16B6B0(sp22, arg1);
-	  return;
-  }
-  osSyncPrintf(&D_800A5128_18D1E8);
+	s16 sp1E;
+	UnkFB6F8Entry *new_var2;
+	u8 new_var;
+	new_var2 = D_800FB6F8;
+	if ((arg0 < 0) ||
+		(arg0 >= 0xC8) ||
+		(arg1 >= 0xF) ||
+		(((*(D_800FB6F8 + arg1)).unk0 != 0xB) && (new_var2[arg1].unk0 != 0xC)))
+	{
+	}
+	else
+	{
+		sp1E = D_800FB7B0[arg0].unk4;
+		func_800835F0_16B6B0((s32)arg0, arg1);
+		new_var = arg1;
+		arg0 = D_800FB7B0[sp1E].unk4;
+		func_800835F0_16B6B0(sp1E, arg1);
+		func_800835F0_16B6B0(arg0, new_var);
+		return;
+	}
+	osSyncPrintf(&D_800A5128_18D1E8);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083814_16B8D4.s")
-#endif
 
 // AI - Remove two specific effects from a slot
 void func_80083924_16B9E4(s16 arg0, u8 arg1) {

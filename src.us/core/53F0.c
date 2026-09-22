@@ -1165,37 +1165,37 @@ loop:
 #endif
 
 // https://decomp.me/scratch/fln37
-// CURRENT(785)
+// CURRENT(845)
 #ifdef NON_MATCHING
 s32 func_8000807C_8C7C(u8 *arg0, u8 *arg1) {
-	s32 temp;
 	s32 opcode;
-
-loop_1:
-	switch (opcode = arg0[0]) {
+	
+	while(1){
+	opcode = arg0[0];
+	switch (opcode) {
 	case 0x98:
 		switch (arg1[0]) {
 		case 0x9A:
 			return D_80052B34 == &vehicleInstances[arg1[1]];
 		case 0xAF:
-			temp = arg1[1];
-			arg1 = D_8004D180 + temp * 3;
-			goto loop_1;
+			arg1 = D_8004D180 + arg1[1] * 3;
+			continue;
 		case 0x99:
 			return D_80052540 == arg1[1];
 		}
 	case 0x9B:
 		switch (arg1[0]) {
 		case 0x99:
-			return arg0[1] == ((buildingInstances[arg1[1]].unk8 << 26) >> 28);
+			return arg0[1] == (((buildingInstances[arg1[1]].unk8) << 26) >> 28);
 		case 0xAF:
-			temp = arg1[1];
-			arg1 = D_8004D180 + temp * 3;
-			goto loop_1;
+			arg1 = D_8004D180 + arg1[1] * 3;
+			continue;
 		}
 	case 0xAF:
 		arg0 = D_8004D180 + arg0[1] * 3;
-		goto loop_1;
+		continue;
+	}
+		return;
 	}
 }
 #else
