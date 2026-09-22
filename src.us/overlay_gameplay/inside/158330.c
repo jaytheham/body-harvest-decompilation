@@ -11133,7 +11133,7 @@ void func_8007B1E0_1632A0(s32 arg0) {
 s32 func_8007B2F0_1633B0(s32 arg0) {
 	s32 roomId;
 	s16 *interiorFlagsPtr;
-	s32 ret;
+	s8 ret;
 	s16 interiorFlags;
 
 	ret = 1;
@@ -11226,25 +11226,24 @@ s32 func_8007B51C_1635DC(s32 arg0) {
 	return 1;
 }
 
-#ifdef NON_MATCHING
+// CURRENT(845)
 // AI - Detects collision with walls and room objects
+#ifdef NON_MATCHING
 void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *arg3) {
-	s32 spA4;
-	s32 spA0;
-	f32 sp8C;
-	f32 sp88;
-	s32 sp80;
-	s32 sp7C;
-	s32 sp68;
 	Unk800E66A8 *var_s0_2;
 	f32 var_f0;
 	f32 var_f16, var_f18, var_f12, var_f14;
+	s32 spA4;
+	s32 spA0;
 	s32 var_s1_2, var_s3;
 	s32 var_a1, var_a2;
-	s32 var_s0, var_s1;
+	f32 sp8C;
+	f32 sp88;
+	s32 var_s1;
+	s32 sp80;
+	s32 sp7C;
 	s32 var_s5;
-	s32 temp_v0;
-	s32 ret;
+	s32 sp68;
 	u8 objType;
 
 	arg3->unk18 = 0;
@@ -11270,20 +11269,17 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 	var_a2 = (s32)var_f18 / 96;
 	spA4 = (s32)var_f12 / 96;
 	spA0 = (s32)var_f14 / 96;
-
 	if (var_a1 < 0) {
 		var_a1 = 0;
 	}
-	temp_v0 = D_800E6460 + 2;
-	if (var_a2 >= temp_v0) {
-		var_a2 = temp_v0;
+	if (var_a2 >= D_800E6460 + 2) {
+		var_a2 = D_800E6460 + 2;
 	}
 	if (spA4 < 0) {
 		spA4 = 0;
 	}
-	temp_v0 = D_800E6464 + 2;
-	if (spA0 >= temp_v0) {
-		spA0 = temp_v0;
+	if (spA0 >= D_800E6464 + 2) {
+		spA0 = D_800E6464 + 2;
 	}
 
 	arg3->unkE = 0;
@@ -11291,27 +11287,27 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 
 	if (var_a2 >= var_a1) {
 		sp68 = var_a2 + 1;
-		var_s1 = var_a1;
 		do {
-			var_s0 = spA4;
-			if (spA0 >= var_s0) {
+		var_s1 = var_a1;
+			var_a1 = spA4;
+			if (spA0 >= var_a1) {
 				s32 upper_z = spA0 + 1;
 				do {
-					if (D_800E6468[var_s0 * (D_800E6460 + 2) + var_s1] != 0xFF) {
-						ret = func_8007BEC8_163F88(arg0, arg1, arg2, 96, 96, var_s1 * 96, var_s0 * 96, (Unk8007C1DC *)arg3);
-						if (ret != 0) {
+					if (D_800E6468[var_a1 * (D_800E6460 + 2) + var_s1] != 0xFF) {
+						var_a2 = func_8007BEC8_163F88(arg0, arg1, arg2, 96, 96, var_s1 * 96, var_a1 * 96, (Unk8007C1DC *)arg3);
+						if (var_a2 != 0) {
 							D_800E6698 = 0;
 							D_800E669C = 1;
 							arg3->unk18 = 0;
 							arg3->unk1C = 1;
-							arg3->unkE = ret;
+							arg3->unkE = var_a2;
 							arg3->unkC = (s8)var_s1;
-							arg3->unkD = (s8)var_s0;
-							D_800E66A0 = ret;
+							arg3->unkD = (s8)var_a1;
+							D_800E66A0 = var_a2;
 						}
 					}
-					var_s0++;
-				} while (var_s0 != upper_z);
+				var_a1++;
+			} while (var_a1 != upper_z);
 			}
 			var_s1++;
 		} while (var_s1 != sp68);
@@ -11334,35 +11330,35 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 					var_s1_2 = (s32)((f32)var_s1_2 + var_s0_2->unk20);
 					var_s3 = (s32)((f32)var_s3 + var_s0_2->unk28);
 				}
-				ret = func_8007BEC8_163F88(arg0, arg1, arg2, (s32)sp8C, (s32)sp88,
+				var_a2 = func_8007BEC8_163F88(arg0, arg1, arg2, (s32)sp8C, (s32)sp88,
 					(s32)((f32)var_s1_2 - sp8C / 2),
 						(s32)((f32)var_s3 - sp88 / 2),
 					(Unk8007C1DC *)arg3);
-				if (ret != 0) {
+				if (var_a2 != 0) {
 					D_800E669C = 0;
 					D_800E6698 = 1;
 					arg3->unk1C = 0;
 					arg3->unk18 = 1;
 					D_800E66A1 = var_s5;
-					arg3->unkE = ret;
+					arg3->unkE = var_a2;
 					arg3->unk14 = var_s0_2->unk0;
-					D_800E66A0 = ret;
+					D_800E66A0 = var_a2;
 				}
 				if ((D_800E65BC[objType].unk40 & 0x400000) && (var_s0_2->unk2E & 1)) {
-					func_8007BC18_163CD8(var_s5 & 0xFF, &sp8C, &sp88, &sp80, &sp7C);
-					ret = func_8007BEC8_163F88(arg0, arg1, arg2, (s32)sp8C, (s32)sp88,
+					func_8007BC18_163CD8((u8)var_s5, &sp8C, &sp88, &sp80, &sp7C);
+					var_a2 = func_8007BEC8_163F88(arg0, arg1, arg2, (s32)sp8C, (s32)sp88,
 						(s32)((f32)(var_s1_2 + sp80) - sp8C / 2),
 						(s32)((f32)(var_s3 + sp7C) - sp88 / 2),
 						(Unk8007C1DC *)arg3);
-					if (ret != 0) {
+					if (var_a2 != 0) {
 						D_800E669C = 0;
 						D_800E6698 = 1;
 						arg3->unk1C = 0;
 						arg3->unk18 = 1;
 						D_800E66A1 = var_s5;
-						arg3->unkE = ret;
+						arg3->unkE = var_a2;
 						arg3->unk14 = var_s0_2->unk0;
-						D_800E66A0 = ret;
+						D_800E66A0 = var_a2;
 					}
 				}
 			}
@@ -11374,7 +11370,6 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B65C_16371C.s")
 #endif
-
 // AI - Returns door sub-object offset and dimensions by orientation
 void func_8007BC18_163CD8(u8 arg0, f32 *arg1, f32 *arg2, s32 *arg3, s32 *arg4) {
 	u8 objId;
