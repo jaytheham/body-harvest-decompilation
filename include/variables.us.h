@@ -1143,6 +1143,7 @@ extern Unk8008DE78 D_8008DE78_175F38;
 extern Unk8008DED0Entry D_8008DED0_175F90[];
 // AI - Per-room effect/overlay display lists (indexed by currentLevel*0xB + variant)
 extern Gfx *D_8008DFA0_176060[];
+extern u8 D_F019540[];
 // AI - Room object catalog: 25 rooms x 32 room-object types (geometry, dimensions, spawns, flags)
 extern Unk80070F7CObj D_8008E0A8_176168[25][32];
 extern MissionData D_800909B0[42];

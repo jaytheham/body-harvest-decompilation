@@ -499,7 +499,8 @@ typedef struct {
 // AI - Special-effect entry: effect display list + state for interior rendering (D_8008DED0_175F90)
 typedef struct {
 	/* 0x00 */ Gfx *unk0; // AI - effect display list (NULL = disabled)
-	/* 0x04 */ s32 unk4; // AI - effect flags/count
+	/* 0x04 */ u8 unk4; // AI - effect flags/count
+	/* 0x05 */ u8 pad5[3];
 	/* 0x08 */ s32 unk8; // AI - enabled flag (0/1)
 } Unk8008DED0Entry; /* stride 0xC */
 
