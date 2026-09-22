@@ -10538,23 +10538,20 @@ void func_80079C4C_161D0C(void) {
 #endif
 
 // CURRENT(758)
-#ifdef NON_MATCHING
 // AI - Debug tool: adjusts room visit state values
 void func_80079E50_161F10(void) {
 	s32 var_s2;
 	s32 temp_v1;
 	s32 temp_s0;
-	Unk800E66A8 *temp_v0;
 
 	var_s2 = 0;
 	if (D_800E65F4 != 0) {
 		osSyncPrintf(&D_800A4884_18C944);
 	}
 
-	temp_v0 = &D_800E66A8[D_800E65F8];
-	if (temp_v0->unk2E & 1) {
+	if (D_800E66A8[D_800E65F8].unk2E & 1) {
 		temp_v1 = currentControllerStates[CONTROLLER_TWO].button;
-		temp_s0 = temp_v0->unk0;
+		temp_s0 = D_800E66A8[D_800E65F8].unk0;
 
 		if (temp_v1 & 8) {
 			var_s2 = 1;
@@ -10598,20 +10595,14 @@ void func_80079E50_161F10(void) {
 		}
 
 		if ((var_s2 != 0) && (D_800E65BC[temp_s0].unk40 & 0x20000000)) {
-			temp_v0 = &D_800E66A8[D_800E65F8];
-			temp_v0->unk2E &= 0xFFFE;
+			D_800E66A8[D_800E65F8].unk2E &= 0xFFFE;
 			func_80077B40_15FC00(D_800E65F8, temp_s0);
 
-			temp_v0 = &D_800E66A8[D_800E65F8];
-			temp_v0->unk2E |= 1;
+			D_800E66A8[D_800E65F8].unk2E |= 1;
 			func_80077B40_15FC00(D_800E65F8, temp_s0);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80079E50_161F10.s")
-#endif
-
 // CURRENT(2236)
 // AI - Checks if player is near a room interaction zone
 #ifdef NON_MATCHING

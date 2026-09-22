@@ -11,6 +11,8 @@ When a function accesses a global array like `alienInstances[arg0]` repeatedly, 
 
 This also applies to other globals like `alienSpecs[specIndex]` — avoid declaring `AlienSpec *spec = &alienSpecs[specIndex]`.
 
+Even when the stack size is unchanged, the named pointer can change callee-saved register allocation and prevent stores from moving into `jal` delay slots. Inline repeated indexed accesses when matching those instruction-level details.
+
 **Example** (from `func_802D92A8_31D3F8`):
 
 ```c
