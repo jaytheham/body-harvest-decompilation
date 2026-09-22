@@ -7009,6 +7009,7 @@ void func_80071F08_159FC8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80071F08_159FC8.s")
 #endif
 
+// jtbl_800A4A08_18CAC8
 // CURRENT (12772)
 #ifdef NON_MATCHING
 // AI - Processes tile map to set up wall/collision boundaries
@@ -7381,6 +7382,7 @@ void func_8007290C_15A9CC(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007290C_15A9CC.s")
 #endif
 
+// jtbl_800A4A88_18CB48
 // https://decomp.me/scratch/hiUtd
 // CURRENT(0)
 #ifdef NON_MATCHING
@@ -9329,6 +9331,7 @@ void func_800775F0_15F6B0(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800775F0_15F6B0.s")
 #endif
 
+// jtbl_800A4AC8_18CB88
 // CURRENT(5892)
 #ifdef NON_MATCHING
 // AI - Spawns objects/enemies in a room based on type
@@ -9414,6 +9417,7 @@ void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007774C_15F80C.s")
 #endif
 
+// jtbl_800A4AE8_18CBA8
 #ifdef NON_MATCHING
 // AI - Removes/despawns objects from a room based on type
 void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
@@ -9728,6 +9732,7 @@ void func_80077B94_15FC54(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80077B94_15FC54.s")
 #endif
 
+// jtbl_800A4B08_18CBC8
 // CURRENT(3740)
 #ifdef NON_MATCHING
 // AI - Handles level-specific interior events and missions
@@ -9938,6 +9943,7 @@ u8 func_8007899C_160A5C(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007899C_160A5C.s")
 #endif
 
+// jtbl_800A4B5C_18CC1C
 #ifdef NON_MATCHING
 // AI - Sets room visitability flags based on level and building variant
 void func_80078AD4_160B94(s32 arg0) {
@@ -10181,6 +10187,7 @@ void func_80079310_1613D0(void) {
 	D_800E65A8 &= ~0x8000;
 }
 
+// jtbl_800A4B78_18CC38
 #ifdef NON_MATCHING
 /* CURRENT(5) */
 // AI - Debug room selection tool (controller 2 input)
@@ -11119,6 +11126,7 @@ void func_8007B1E0_1632A0(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B1E0_1632A0.s")
 #endif
 
+// jtbl_800A4B9C_18CC5C
 // CURRENT(626)
 #ifdef NON_MATCHING
 // AI - Handles mission-related room events
