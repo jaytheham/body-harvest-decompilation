@@ -11375,50 +11375,44 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B65C_16371C.s")
 #endif
 
-#ifdef NON_MATCHING
 // AI - Returns door sub-object offset and dimensions by orientation
-void func_8007BC18_163CD8(s32 arg0, f32 *arg1, f32 *arg2, s32 *arg3, s32 *arg4) {
-	Unk80070F7CObj *obj;
+void func_8007BC18_163CD8(u8 arg0, f32 *arg1, f32 *arg2, s32 *arg3, s32 *arg4) {
 	u8 objId;
-	u8 orient;
+	s32 orient;
 
-	objId = D_800E66A8[arg0 & 0xFF].unk0;
-	orient = D_800E66A8[arg0 & 0xFF].unk8;
-	obj = &D_800E65BC[objId];
+	objId = D_800E66A8[arg0].unk0;
+	orient = D_800E66A8[arg0].unk8;
 
 	switch (orient) {
 		case 0:
-			*arg3 = obj->unk36;
-			*arg4 = obj->unk38;
-			*arg1 = obj->unk3A;
-			*arg2 = obj->unk3B;
+			*arg3 = D_800E65BC[objId].unk36;
+			*arg4 = D_800E65BC[objId].unk38;
+			*arg1 = D_800E65BC[objId].unk3A;
+			*arg2 = D_800E65BC[objId].unk3B;
 			break;
 
 		case 1:
-			*arg3 = obj->unk38;
-			*arg4 = -obj->unk36;
-			*arg1 = obj->unk3B;
-			*arg2 = obj->unk3A;
+			*arg3 = D_800E65BC[objId].unk38;
+			*arg4 = -D_800E65BC[objId].unk36;
+			*arg1 = D_800E65BC[objId].unk3B;
+			*arg2 = D_800E65BC[objId].unk3A;
 			break;
 
 		case 2:
-			*arg3 = -obj->unk36;
-			*arg4 = -obj->unk38;
-			*arg1 = obj->unk3A;
-			*arg2 = obj->unk3B;
+			*arg3 = -D_800E65BC[objId].unk36;
+			*arg4 = -D_800E65BC[objId].unk38;
+			*arg1 = D_800E65BC[objId].unk3A;
+			*arg2 = D_800E65BC[objId].unk3B;
 			break;
 
 		case 3:
-			*arg3 = -obj->unk38;
-			*arg4 = obj->unk36;
-			*arg1 = obj->unk3B;
-			*arg2 = obj->unk3A;
+			*arg3 = -D_800E65BC[objId].unk38;
+			*arg4 = D_800E65BC[objId].unk36;
+			*arg1 = D_800E65BC[objId].unk3B;
+			*arg2 = D_800E65BC[objId].unk3A;
 			break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007BC18_163CD8.s")
-#endif
 
 // AI - Detects collision with a rectangular area
 s32 func_8007BEC8_163F88(Vec3f *arg0, Vec3f *arg1, f32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, Unk8007C1DC *arg7) {
