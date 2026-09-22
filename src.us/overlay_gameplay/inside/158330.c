@@ -11556,35 +11556,35 @@ s32 func_8007C3C0_164480(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
 void func_8007C420_1644E0(void) {
 }
 
-// CURRENT(1447)
-#ifdef NON_MATCHING
+// CURRENT(546)
 // AI - Frustum culling check for room objects
-s32 func_8007C428_1644E8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s16 arg4) {
-	s32 xProj;
+#ifdef NON_MATCHING
+s32 func_8007C428_1644E8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 arg5, s32 arg6, u16 arg7, s16 arg8) {
 	s32 pad0;
 	s32 pad1;
 	s32 pad2;
 	s32 pad3;
 	s32 pad4;
-	s32 pad5;
-	s32 yProj;
+	s32 xLimit;
 	s32 radius;
 	s32 angle;
-	s32 xLimit;
+	s32 xProj;
+	s32 pad6;
+	s32 yProj;
 	u16 testAngle;
 
-	xProj = (s32)(D_800E7350[3][0] + ((arg0 * D_800E7350[0][0]) + (arg1 * D_800E7350[1][0]) + (arg2 * D_800E7350[2][0])));
-	yProj = -(s32)(D_800E7350[3][2] + ((arg0 * D_800E7350[0][2]) + (arg1 * D_800E7350[1][2]) + (arg2 * D_800E7350[2][2])));
+	xProj = (s32)(((arg0 * D_800E7350[0][0]) + (arg1 * D_800E7350[1][0]) + (arg2 * D_800E7350[2][0])) + D_800E7350[3][0]);
+	yProj = -(s32)(((arg0 * D_800E7350[0][2]) + (arg1 * D_800E7350[1][2]) + (arg2 * D_800E7350[2][2])) + D_800E7350[3][2]);
 	radius = (s32)sqrtf((f32)((xProj * xProj) + (yProj * yProj)));
 
-	angle = (arg4 / 2) + func_80003824_4424((f32)yProj, (f32)xProj);
+	angle = func_80003824_4424((f32)yProj, (f32)xProj) + (arg8 / 2);
 	coss(angle & 0xFFFF);
 
 	if ((s32)((((f64)(f32)sins(angle & 0xFFFF) / 32768.0) * (f64)radius)) < -(s32)arg3) {
 		return 0;
 	}
 
-	testAngle = (angle - arg4) & 0xFFFF;
+	testAngle = (angle - arg8) & 0xFFFF;
 	xLimit = (s32)((((f64)(f32)coss(testAngle) / 32768.0) * (f64)radius));
 
 	if ((s32)arg3 < (s32)((((f64)(f32)sins(testAngle) / 32768.0) * (f64)radius))) {
@@ -11601,7 +11601,6 @@ s32 func_8007C428_1644E8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s16 arg4) {
 
 	return 1;
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C428_1644E8.s")
 #endif
