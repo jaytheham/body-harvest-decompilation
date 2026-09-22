@@ -10671,30 +10671,32 @@ s32 func_8007A168_162228(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A168_162228.s")
 #endif
 
-#ifdef NON_MATCHING
 // AI - Checks if player facing direction matches room threshold
 s32 func_8007A370_162430(s32 arg0, s32 arg1) {
-	if (arg0 == 0) {
-		if (arg1 < 0xD3) { return 0; }
-		return arg1 < 0x14A;
-	}
-	if (arg0 == 1) {
-		if (arg1 < 0x79) { return 0; }
-		return arg1 < 0xF0;
-	}
-	if (arg0 == 2) {
-		if (arg1 < 0x1F) { return 0; }
-		return arg1 < 0x96;
-	}
-	if (arg0 == 3) {
-		if (arg1 >= 0x12D) { return 1; }
-		return arg1 < 0x3C;
+	switch (arg0) {
+		case 0:
+			if (arg1 >= 0xD3) {
+				if (arg1 < 0x14A) { return 1; }
+			}
+			break;
+		case 1:
+			if (arg1 >= 0x79) {
+				if (arg1 < 0xF0) { return 1; }
+			}
+			break;
+		case 2:
+			if (arg1 >= 0x1F) {
+				if (arg1 < 0x96) { return 1; }
+			}
+			break;
+		case 3:
+			if ((arg1 >= 0x12D) || (arg1 < 0x3C)) { return 1; }
+			break;
+		default:
+			break;
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A370_162430.s")
-#endif
 
 // CURRENT(160)
 // AI - Checks if player position is within room hotspot bounds
