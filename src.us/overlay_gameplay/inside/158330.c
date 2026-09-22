@@ -11127,19 +11127,21 @@ void func_8007B1E0_1632A0(s32 arg0) {
 #endif
 
 // jtbl_800A4B9C_18CC5C
-// CURRENT(626)
-#ifdef NON_MATCHING
+// CURRENT(465)
 // AI - Handles mission-related room events
+#ifdef NON_MATCHING
 s32 func_8007B2F0_1633B0(s32 arg0) {
 	s32 roomId;
 	s16 *interiorFlagsPtr;
-	s8 ret;
-	s16 interiorFlags;
+	u32 ret;
+	s32 switchValue;
 
 	ret = 1;
+	switchValue = D_800E66A8[arg0].unk2C & 0xE0;
+	switchValue >>= 5;
 	roomId = ((D_800E66A8[arg0].unk2C & 0x1C) >> 2) + 0x38;
 
-	switch (((s32)(D_800E66A8[arg0].unk2C & 0xE0)) >> 5) {
+	switch (switchValue) {
 		case 0:
 			if (func_8000726C_7E6C(roomId) != 0) {
 				func_800073B8_7FB8(roomId);
@@ -11147,50 +11149,42 @@ s32 func_8007B2F0_1633B0(s32 arg0) {
 				func_800072CC_7ECC(roomId);
 			}
 			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-			interiorFlags = *interiorFlagsPtr;
 			break;
 
 		case 1:
 			func_800072CC_7ECC(roomId);
 			ret = func_8007B51C_1635DC(roomId);
 			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-			interiorFlags = *interiorFlagsPtr;
 			break;
 
 		case 2:
 			func_800073B8_7FB8(roomId);
 			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-			interiorFlags = *interiorFlagsPtr;
 			break;
 
 		case 3:
 			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-			interiorFlags = *interiorFlagsPtr;
-			if (!(interiorFlags & (1 << D_800E662C))) {
+			if (!(*interiorFlagsPtr & (1 << D_800E662C))) {
 				func_800072CC_7ECC(roomId);
 				interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-				interiorFlags = *interiorFlagsPtr;
 			}
 			break;
 
 		case 4:
 			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-			interiorFlags = *interiorFlagsPtr;
-			if (!(interiorFlags & (1 << D_800E662C))) {
+			if (!(*interiorFlagsPtr & (1 << D_800E662C))) {
 				func_800073B8_7FB8(roomId);
 				interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-				interiorFlags = *interiorFlagsPtr;
 			}
 			break;
 
 		default:
 			osSyncPrintf(D_800A49EC_18CAAC);
 			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-			interiorFlags = *interiorFlagsPtr;
 			break;
 	}
 
-	*interiorFlagsPtr = interiorFlags | (1 << arg0);
+	*interiorFlagsPtr = *interiorFlagsPtr | (1 << arg0);
 	return ret;
 }
 #else
