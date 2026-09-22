@@ -10612,59 +10612,32 @@ void func_80079E50_161F10(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80079E50_161F10.s")
 #endif
 
-// CURRENT(45040)
-#ifdef NON_MATCHING
+// CURRENT(2236)
 // AI - Checks if player is near a room interaction zone
-s32 func_8007A168_162228(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+#ifdef NON_MATCHING
+s32 func_8007A168_162228(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
+{
 	f32 sp3C;
 	f32 sp38;
-	s32 sp30;
-	Unk800E66A8 *sp2C;
-	s32 sp28;
-	f32 temp_f0;
-	f32 temp_f16;
-	f32 temp_f18;
-	f32 temp_f2;
-	f32 temp_f6;
-	s32 temp_t1;
 	s32 var_v0;
 	Unk800E66A8 *temp_t0;
-
+	s32 temp_t1;
+	f32 temp_f16;
+	f32 temp_f6;
 	temp_t0 = &D_800E66A8[arg0];
 	temp_t1 = ((temp_t0->unk0 << 3) + temp_t0->unk0) << 3;
 	var_v0 = 0xF;
-	if (((Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_t1))->unk40 & 0x10) {
+	if (((Unk80070F7CObj *)(((u8 *)D_800E65BC) + temp_t1))->unk40 & 0x10)
+	{
 		var_v0 = 0x14;
 	}
-	sp30 = var_v0;
-	sp2C = temp_t0;
-	sp28 = temp_t1;
-
 	func_800774E0_15F5A0(arg0, &sp3C, &sp38);
-
-	temp_f16 = sp3C / 2.0f;
-	temp_f0 = (f32) sp30;
-	temp_f2 = (f32) arg1;
-	temp_f18 = (f32) arg2;
-	temp_f6 = sp38 / 2.0f;
-
-	if ((func_8007C3C0_164480((f32) arg3,
-							 (f32) arg4,
-							 temp_f2 - (temp_f16 + temp_f0 + 1.0f + 5.0f),
-							 temp_f2 + temp_f16 + temp_f0 + 1.0f + 5.0f,
-							 temp_f18 - (temp_f6 + temp_f0 + 1.0f + 5.0f),
-							 temp_f18 + temp_f6 + temp_f0 + 1.0f + 5.0f) != 0) &&
-		(func_8007C2D0_164390((s16) arg4,
-							  (s16) arg3,
-							  (s16) arg2,
-							  (s16) arg1,
-							  sp2C->unk8 << 0xE,
-							  (s32) (s16) (s32) ((f64) ((f32) ((Unk8007A168Obj *) ((u8 *) D_800E65BC + sp28))->unk24 *
-															  32768.0f) /
-										 D_800A4B90_18CC50[0]) != 0))) {
+	temp_f6 = sp3C / (f32)2;
+	temp_f16 = sp38 / (f32)2;
+	if ((func_8007C3C0_164480((f32)arg3, (f32)arg4, (f32)arg1 - (((temp_f6 + (f32)var_v0) + 1.0f) + 5.0f), ((((f32)arg1 + temp_f6) + (f32)var_v0) + 1.0f) + 5.0f, (f32)arg2 - (((temp_f16 + (f32)var_v0) + 1.0f) + 5.0f), ((((f32)arg2 + temp_f16) + (f32)var_v0) + 1.0f) + 5.0f) != 0) && func_8007C2D0_164390((s16)arg4, (s16)arg3, (s16)arg2, (s16)arg1, temp_t0->unk8 << 0xE, (s32)((s16)((s32)(((f64)(((f32)((Unk8007A168Obj *)(((u8 *)D_800E65BC) + temp_t1))->unk24) * 32768.0f)) / D_800A4B90_18CC50[0])))))
+	{
 		return 1;
 	}
-
 	return 0;
 }
 #else
