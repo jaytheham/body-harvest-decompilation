@@ -5975,119 +5975,119 @@ s16 D_8009CE34_184EF4[22] = {
 // 158330 rodata
 // ============================================================
 
-const char D_800A4380_18C440[] = "Char in the house:%d, x = %d, z = %d\n";
+const char D_800A4380_18C440[] = "Char in the house:%d, x = %d, z = %d\n"; // "Char in the house:%d, x = %d, z = %d\n"
 
-const char D_800A43A8_18C468[] = "Object in the house:%d, x = %d, z = %d\n";
+const char D_800A43A8_18C468[] = "Object in the house:%d, x = %d, z = %d\n"; // "Object in the house:%d, x = %d, z = %d\n"
 
-const char D_800A43D0_18C490[] = "RED FLASH Light Activated\n";
+const char D_800A43D0_18C490[] = "RED FLASH Light Activated\n"; // "RED FLASH Light Activated\n"
 
-const char D_800A43EC_18C4AC[] = "ERROR: inSetUpCollMap(): Invalid MapEntry %d\n";
+const char D_800A43EC_18C4AC[] = "ERROR: inSetUpCollMap(): Invalid MapEntry %d\n"; // "ERROR: inSetUpCollMap(): Invalid MapEntry %d\n"
 
-const char D_800A441C_18C4DC[] = "Enter Finished\n";
+const char D_800A441C_18C4DC[] = "Enter Finished\n"; // "Enter Finished\n"
 
-const char D_800A442C_18C4EC[] = "Exit Finished\n";
+const char D_800A442C_18C4EC[] = "Exit Finished\n"; // "Exit Finished\n"
 
-const char D_800A443C_18C4FC[] = "Invalid Door Animation Type\n";
+const char D_800A443C_18C4FC[] = "Invalid Door Animation Type\n"; // "Invalid Door Animation Type\n"
 
-const char D_800A445C_18C51C[] = "Give Obj Contents\n";
+const char D_800A445C_18C51C[] = "Give Obj Contents\n"; // "Give Obj Contents\n"
 
-const char D_800A4470_18C530[] = "startBookIndex = %d\n";
+const char D_800A4470_18C530[] = "startBookIndex = %d\n"; // "startBookIndex = %d\n"
 
-const char D_800A4488_18C548[] = "NO SEARCH\n";
+const char D_800A4488_18C548[] = "NO SEARCH\n"; // "NO SEARCH\n"
 
-const char D_800A4494_18C554[] = "Active Debug Object:%d\n";
+const char D_800A4494_18C554[] = "Active Debug Object:%d\n"; // "Active Debug Object:%d\n"
 
-const char D_800A44AC_18C56C[] = "Active Debug Object:%d\n";
+const char D_800A44AC_18C56C[] = "Active Debug Object:%d\n"; // "Active Debug Object:%d\n"
 
-const char D_800A44C4_18C584[] = "Changed Debug State To CHANGE OBJ WALKTO POS\n";
+const char D_800A44C4_18C584[] = "Changed Debug State To CHANGE OBJ WALKTO POS\n"; // "Changed Debug State To CHANGE OBJ WALKTO POS\n"
 
-const char D_800A44F4_18C5B4[] = "WalkToXOff:%d WalkToZOff:%d\n";
+const char D_800A44F4_18C5B4[] = "WalkToXOff:%d WalkToZOff:%d\n"; // "WalkToXOff:%d WalkToZOff:%d\n"
 
-const char D_800A4514_18C5D4[] = "WalkToXOff:%d WalkToZOff:%d\n";
+const char D_800A4514_18C5D4[] = "WalkToXOff:%d WalkToZOff:%d\n"; // "WalkToXOff:%d WalkToZOff:%d\n"
 
-const char D_800A4534_18C5F4[] = "WalkToXOff:%d WalkToZOff:%d\n";
+const char D_800A4534_18C5F4[] = "WalkToXOff:%d WalkToZOff:%d\n"; // "WalkToXOff:%d WalkToZOff:%d\n"
 
-const char D_800A4554_18C614[] = "WalkToXOff:%d WalkToZOff:%d\n";
+const char D_800A4554_18C614[] = "WalkToXOff:%d WalkToZOff:%d\n"; // "WalkToXOff:%d WalkToZOff:%d\n"
 
-const char D_800A4574_18C634[] = "Changed Debug State To CHANGE DOOR WALKTO POS\n";
+const char D_800A4574_18C634[] = "Changed Debug State To CHANGE DOOR WALKTO POS\n"; // "Changed Debug State To CHANGE DOOR WALKTO POS\n"
 
-const char D_800A45A4_18C664[] = "WalkToXPos:%d WalkToZPos:%d\n";
+const char D_800A45A4_18C664[] = "WalkToXPos:%d WalkToZPos:%d\n"; // "WalkToXPos:%d WalkToZPos:%d\n"
 
-const char D_800A45C4_18C684[] = "WalkToXPos:%d WalkToZPos:%d\n";
+const char D_800A45C4_18C684[] = "WalkToXPos:%d WalkToZPos:%d\n"; // "WalkToXPos:%d WalkToZPos:%d\n"
 
-const char D_800A45E4_18C6A4[] = "WalkToXPos:%d WalkToZPos:%d\n";
+const char D_800A45E4_18C6A4[] = "WalkToXPos:%d WalkToZPos:%d\n"; // "WalkToXPos:%d WalkToZPos:%d\n"
 
-const char D_800A4604_18C6C4[] = "WalkToXPos:%d WalkToZPos:%d\n";
+const char D_800A4604_18C6C4[] = "WalkToXPos:%d WalkToZPos:%d\n"; // "WalkToXPos:%d WalkToZPos:%d\n"
 
-const char D_800A4624_18C6E4[] = "Changed Debug State To MAIN BOX COLL\n";
+const char D_800A4624_18C6E4[] = "Changed Debug State To MAIN BOX COLL\n"; // "Changed Debug State To MAIN BOX COLL\n"
 
-const char D_800A464C_18C70C[] = "Obj:%d Width:%d Depth:%d\n";
+const char D_800A464C_18C70C[] = "Obj:%d Width:%d Depth:%d\n"; // "Obj:%d Width:%d Depth:%d\n"
 
-const char D_800A4668_18C728[] = "Obj:%d Width:%d Depth:%d\n";
+const char D_800A4668_18C728[] = "Obj:%d Width:%d Depth:%d\n"; // "Obj:%d Width:%d Depth:%d\n"
 
-const char D_800A4684_18C744[] = "Obj:%d Width:%d Depth:%d\n";
+const char D_800A4684_18C744[] = "Obj:%d Width:%d Depth:%d\n"; // "Obj:%d Width:%d Depth:%d\n"
 
-const char D_800A46A0_18C760[] = "Obj:%d Width:%d Depth:%d\n";
+const char D_800A46A0_18C760[] = "Obj:%d Width:%d Depth:%d\n"; // "Obj:%d Width:%d Depth:%d\n"
 
-const char D_800A46BC_18C77C[] = "Changed Debug State To SUB BOX COLL\n";
+const char D_800A46BC_18C77C[] = "Changed Debug State To SUB BOX COLL\n"; // "Changed Debug State To SUB BOX COLL\n"
 
-const char D_800A46E4_18C7A4[] = "Obj:%d SubWidth:%d SubDepth:%d\n";
+const char D_800A46E4_18C7A4[] = "Obj:%d SubWidth:%d SubDepth:%d\n"; // "Obj:%d SubWidth:%d SubDepth:%d\n"
 
-const char D_800A4704_18C7C4[] = "Obj:%d SubWidth:%d SubDepth:%d\n";
+const char D_800A4704_18C7C4[] = "Obj:%d SubWidth:%d SubDepth:%d\n"; // "Obj:%d SubWidth:%d SubDepth:%d\n"
 
-const char D_800A4724_18C7E4[] = "Obj:%d SubWidth:%d SubDepth:%d\n";
+const char D_800A4724_18C7E4[] = "Obj:%d SubWidth:%d SubDepth:%d\n"; // "Obj:%d SubWidth:%d SubDepth:%d\n"
 
-const char D_800A4744_18C804[] = "Obj:%d SubWidth:%d SubDepth:%d\n";
+const char D_800A4744_18C804[] = "Obj:%d SubWidth:%d SubDepth:%d\n"; // "Obj:%d SubWidth:%d SubDepth:%d\n"
 
-const char D_800A4764_18C824[] = "Obj:%d SubXOff:%d SubZOff:%d\n";
+const char D_800A4764_18C824[] = "Obj:%d SubXOff:%d SubZOff:%d\n"; // "Obj:%d SubXOff:%d SubZOff:%d\n"
 
-const char D_800A4784_18C844[] = "Obj:%d SubXOff:%d SubZOff:%d\n";
+const char D_800A4784_18C844[] = "Obj:%d SubXOff:%d SubZOff:%d\n"; // "Obj:%d SubXOff:%d SubZOff:%d\n"
 
-const char D_800A47A4_18C864[] = "Obj:%d SubXOff:%d SubZOff:%d\n";
+const char D_800A47A4_18C864[] = "Obj:%d SubXOff:%d SubZOff:%d\n"; // "Obj:%d SubXOff:%d SubZOff:%d\n"
 
-const char D_800A47C4_18C884[] = "Obj:%d SubXOff:%d SubZOff:%d\n";
+const char D_800A47C4_18C884[] = "Obj:%d SubXOff:%d SubZOff:%d\n"; // "Obj:%d SubXOff:%d SubZOff:%d\n"
 
-const char D_800A47E4_18C8A4[] = "Changed Debug State To PAD\n";
+const char D_800A47E4_18C8A4[] = "Changed Debug State To PAD\n"; // "Changed Debug State To PAD\n"
 
-const char D_800A4800_18C8C0[] = "Obj:%d PAD RESET\n";
+const char D_800A4800_18C8C0[] = "Obj:%d PAD RESET\n"; // "Obj:%d PAD RESET\n"
 
-const char D_800A4814_18C8D4[] = "Obj:%d Offset:%d Width:%d\n";
+const char D_800A4814_18C8D4[] = "Obj:%d Offset:%d Width:%d\n"; // "Obj:%d Offset:%d Width:%d\n"
 
-const char D_800A4830_18C8F0[] = "Obj:%d Offset:%d Width:%d\n";
+const char D_800A4830_18C8F0[] = "Obj:%d Offset:%d Width:%d\n"; // "Obj:%d Offset:%d Width:%d\n"
 
-const char D_800A484C_18C90C[] = "Obj:%d Offset:%d Width:%d\n";
+const char D_800A484C_18C90C[] = "Obj:%d Offset:%d Width:%d\n"; // "Obj:%d Offset:%d Width:%d\n"
 
-const char D_800A4868_18C928[] = "Obj:%d Offset:%d Width:%d\n";
+const char D_800A4868_18C928[] = "Obj:%d Offset:%d Width:%d\n"; // "Obj:%d Offset:%d Width:%d\n"
 
-const char D_800A4884_18C944[] = "Changed Debug State To GFX Off Change\n";
+const char D_800A4884_18C944[] = "Changed Debug State To GFX Off Change\n"; // "Changed Debug State To GFX Off Change\n"
 
-const char D_800A48AC_18C96C[] = "Obj:%d ID:%d YOff:%d\n";
+const char D_800A48AC_18C96C[] = "Obj:%d ID:%d YOff:%d\n"; // "Obj:%d ID:%d YOff:%d\n"
 
-const char D_800A48C4_18C984[] = "Obj:%d ID:%d YOff:%d\n";
+const char D_800A48C4_18C984[] = "Obj:%d ID:%d YOff:%d\n"; // "Obj:%d ID:%d YOff:%d\n"
 
-const char D_800A48DC_18C99C[] = "Obj:%d ID:%d XOff:%d\n";
+const char D_800A48DC_18C99C[] = "Obj:%d ID:%d XOff:%d\n"; // "Obj:%d ID:%d XOff:%d\n"
 
-const char D_800A48F4_18C9B4[] = "Obj:%d ID:%d XOff:%d\n";
+const char D_800A48F4_18C9B4[] = "Obj:%d ID:%d XOff:%d\n"; // "Obj:%d ID:%d XOff:%d\n"
 
-const char D_800A490C_18C9CC[] = "Obj:%d ID:%d ZOff:%d\n";
+const char D_800A490C_18C9CC[] = "Obj:%d ID:%d ZOff:%d\n"; // "Obj:%d ID:%d ZOff:%d\n"
 
-const char D_800A4924_18C9E4[] = "Obj:%d ID:%d ZOff:%d\n";
+const char D_800A4924_18C9E4[] = "Obj:%d ID:%d ZOff:%d\n"; // "Obj:%d ID:%d ZOff:%d\n"
 
-const char D_800A493C_18C9FC[] = "ERROR: Invalid Base Rot\n";
+const char D_800A493C_18C9FC[] = "ERROR: Invalid Base Rot\n"; // "ERROR: Invalid Base Rot\n"
 
-const char D_800A4958_18CA18[] = "PowerUp:%d, ObjSearchIndex=%d \n";
+const char D_800A4958_18CA18[] = "PowerUp:%d, ObjSearchIndex=%d \n"; // "PowerUp:%d, ObjSearchIndex=%d \n"
 
-const char D_800A4978_18CA38[] = "AlienArtefacts=%d \n";
+const char D_800A4978_18CA38[] = "AlienArtefacts=%d \n"; // "AlienArtefacts=%d \n"
 
-const char D_800A498C_18CA4C[] = "EnteredRoom=%d \n";
+const char D_800A498C_18CA4C[] = "EnteredRoom=%d \n"; // "EnteredRoom=%d \n"
 
-const char D_800A49A0_18CA60[] = "\n\n\n GIVING DELAYED POWERUP TYPE=%d\n";
+const char D_800A49A0_18CA60[] = "\n\n\n GIVING DELAYED POWERUP TYPE=%d\n"; // "\n\n\n GIVING DELAYED POWERUP TYPE=%d\n"
 
-const char D_800A49C4_18CA84[] = "Get Contents\n";
+const char D_800A49C4_18CA84[] = "Get Contents\n"; // "Get Contents\n"
 
-const char D_800A49D4_18CA94[] = "Going Into Cutscene\n";
+const char D_800A49D4_18CA94[] = "Going Into Cutscene\n"; // "Going Into Cutscene\n"
 
-const char D_800A49EC_18CAAC[] = "Invalid Switch ID\n";
+const char D_800A49EC_18CAAC[] = "Invalid Switch ID\n"; // "Invalid Switch ID\n"
 
 const f64 D_800A4A00_18CAC0[1] = {180.0};
 
@@ -10469,75 +10469,53 @@ void func_80079954_161A14(void) {
 	}
 }
 
-// CURRENT(230)
-#ifdef NON_MATCHING
 // AI - Debug tool: adjusts door selection highlight
 void func_80079C4C_161D0C(void) {
-	u8 temp_s1;
-	s32 temp_v1;
+	s32 temp_s1;
+	s32 temp_v0;
 
 	if (D_800E65F4 != 0) {
 		osSyncPrintf(&D_800A47E4_18C8A4);
 	}
 
 	temp_s1 = D_800E66A8[D_800E65F8].unk0;
-	temp_v1 = temp_s1 * 0x48;
 
-	if (((Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1))->unk40 & 4) {
-		s32 temp_v0;
-		Unk80070F7CObj *temp_v0_2;
-		Unk80070F7CObj *temp_v0_3;
+	if (D_800E65BC[temp_s1].unk40 & 4) {
 
 		func_8000345C_405C(0x1000);
 		temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
-
-		if (temp_v0 & 0x1000) {
-			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
-			temp_v0_2->unk34 = ((Unk80070F7CObj *) temp_v0_2)->unk18;
-			temp_v0_3 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
-			temp_v0_3->unk32 = 0;
+		if (temp_v0 & 0x1000U) {
+			D_800E65BC[temp_s1].unk34 = D_800E65BC[temp_s1].unk18;
+			D_800E65BC[temp_s1].unk32 = 0;
 			osSyncPrintf(&D_800A4800_18C8C0, D_800E65F8);
 			temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
-		if (temp_v0 & 0x200) {
-			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
-			temp_v0_2->unk34 -= 1;
-			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
-			osSyncPrintf(&D_800A4814_18C8D4, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
+		if (temp_v0 & 0x200U) {
+			D_800E65BC[temp_s1].unk34 -= 1;
+			osSyncPrintf(&D_800A4814_18C8D4, D_800E65F8, D_800E65BC[temp_s1].unk32, D_800E65BC[temp_s1].unk34);
 			temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
-		if (temp_v0 & 0x100) {
-			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
-			temp_v0_2->unk34 += 1;
-			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
-			osSyncPrintf(&D_800A4830_18C8F0, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
+		if (temp_v0 & 0x100U) {
+			D_800E65BC[temp_s1].unk34 += 1;
+			osSyncPrintf(&D_800A4830_18C8F0, D_800E65F8, D_800E65BC[temp_s1].unk32, D_800E65BC[temp_s1].unk34);
 			temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
-		if (temp_v0 & 0x800) {
-			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
-			temp_v0_2->unk32 += 1;
-			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
-			osSyncPrintf(&D_800A484C_18C90C, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
+		if (temp_v0 & 0x800U) {
+			D_800E65BC[temp_s1].unk32 += 1;
+			osSyncPrintf(&D_800A484C_18C90C, D_800E65F8, D_800E65BC[temp_s1].unk32, D_800E65BC[temp_s1].unk34);
 			temp_v0 = currentControllerStates[CONTROLLER_TWO].button;
 		}
 
-		if (temp_v0 & 0x400) {
-			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
-			temp_v0_2->unk32 -= 1;
-			temp_v0_2 = (Unk80070F7CObj *) ((u8 *) D_800E65BC + temp_v1);
-			osSyncPrintf(&D_800A4868_18C928, D_800E65F8, temp_v0_2->unk32, temp_v0_2->unk34);
+		if (temp_v0 & 0x400U) {
+			D_800E65BC[temp_s1].unk32 -= 1;
+			osSyncPrintf(&D_800A4868_18C928, D_800E65F8, D_800E65BC[temp_s1].unk32, D_800E65BC[temp_s1].unk34);
 		}
 	}
 }
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80079C4C_161D0C.s")
-#endif
-
-// CURRENT(758)
 // AI - Debug tool: adjusts room visit state values
 void func_80079E50_161F10(void) {
 	s32 var_s2;
