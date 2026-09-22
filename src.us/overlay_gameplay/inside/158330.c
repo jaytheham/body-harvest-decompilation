@@ -11019,68 +11019,75 @@ void func_8007A8AC_16296C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A8AC_16296C.s")
 #endif
 
-// CURRENT(7458)
-#ifdef NON_MATCHING
 // AI - Handles building exit/transition logic
-void func_8007AE40_162F00(void) {
+void func_8007AE40_162F00(void)
+{
 	s32 roomId;
-	s16 x;
-	s16 y;
-	s16 z;
-	u8 flags;
+	s32 z;
+	s32 x;
+	s32 y;
+	s32 six;
 
 	osSyncPrintf(D_800A49C4_18CA84);
-	if (D_800E65A8 & 0x400) {
+	if (D_800E65A8 & 0x400)
+	{
 		D_800E65A8 &= ~0x400;
 		return;
 	}
 
-	if (func_80008478_9078() != 0) {
+	if (func_80008478_9078() != 0)
+	{
 		osSyncPrintf(D_800A49D4_18CA94);
 		D_800E65A8 |= 0x100;
 		D_800E65B8 = 1;
 	}
 
+	six = D_800E66A8[D_800E662C].unk2D & 0x3F;
 	roomId = D_800E66A8[D_800E662C].unk0;
-	if (func_8000726C_7E6C(D_800E66A8[D_800E662C].unk2D & 0x3F) != 0) {
-		if (!(D_800E65A8 & 0x10000)) {
-			if ((currentLevel == 5) && (roomId == 0x1F) && (D_800E6630 == 1)) {
-				D_800E65B4 = 6;
+	if (func_8000726C_7E6C(six) != 0)
+	{
+		if (!(D_800E65A8 & 0x10000))
+		{
+			if ((currentLevel == 5) && (roomId == 0x1F) && (D_800E6630 == 1))
+			{
+				D_800E65B4 = (six = 6);
 				D_800E65A8 |= 0x8000;
 				D_800E65A8 |= 0x10000;
 				D_800E65A8 &= ~4;
 			}
-		} else {
+		}
+		else
+		{
+			y = (s32)((f32)D_800E66A8[D_800E662C].unk4 + D_800E66A8[D_800E662C].unk24);
 			x = D_800E66A8[D_800E662C].unk2 - 0x60;
 			z = D_800E66A8[D_800E662C].unk6 - 0x60;
-			y = (s16) ((s32) (D_800E66A8[D_800E662C].unk24 + (f32) D_800E66A8[D_800E662C].unk4) + 0x3C);
 
-			func_80089648_171708(x + 0x14, y, z, 0xA, 0, 0, 2);
-			func_80089648_171708(x - 0x14, y, z, -0xA, 0, 0, 2);
+			func_80089648_171708(x + 0x14, (s16)(y + 0x3C), z, 0xA, 0, 0, 2);
+			func_80089648_171708(x - 0x14, (s16)(y + 0x3C), z, -0xA, 0, 0, 2);
 			D_800E65A8 &= 0xFFFEFFFF;
 		}
 
-		if (D_800E65BC[roomId].unk40 & 0x8000) {
-			flags = D_800E66A8[D_800E662C].unk2E;
-			if (!(flags & 1)) {
-				flags |= 1;
-				D_800E66A8[D_800E662C].unk2E = flags;
+		if (D_800E65BC[roomId].unk40 & 0x8000)
+		{
+			if (!(D_800E66A8[D_800E662C].unk2E & 1))
+			{
+				D_800E66A8[D_800E662C].unk2E |= 1;
+				D_800E66A8[D_800E662C].unk2E |= 2;
 			}
-			D_800E66A8[D_800E662C].unk2E = flags | 2;
-		} else {
-			flags = D_800E66A8[D_800E662C].unk2E ^ 1;
-			D_800E66A8[D_800E662C].unk2E = flags;
-			D_800E66A8[D_800E662C].unk2E = flags | 2;
+		}
+		else
+		{
+			D_800E66A8[D_800E662C].unk2E ^= 1;
+			D_800E66A8[D_800E662C].unk2E |= 2;
 		}
 
 		D_800E65A8 |= 0x20;
-	} else if (roomId != 0x1F) {
+	}
+	else if (roomId != 0x1F)
+	{
 		func_80014A3C_1563C(0, 0xD1, 0, 0, D_800A4B98_18CC58[0]);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007AE40_162F00.s")
-#endif
 
 // AI - Handles room exit or triggers building exit logic
 void func_8007B124_1631E4(s32 arg0) {
@@ -11355,6 +11362,7 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B65C_16371C.s")
 #endif
+
 // AI - Returns door sub-object offset and dimensions by orientation
 void func_8007BC18_163CD8(u8 arg0, f32 *arg1, f32 *arg2, s32 *arg3, s32 *arg4) {
 	u8 objId;
