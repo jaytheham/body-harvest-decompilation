@@ -9844,30 +9844,28 @@ void func_800784B8_160578(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800784B8_160578.s")
 #endif
 
-// CURRENT(1663)
-#ifdef NON_MATCHING
+// CURRENT(240)
 // AI - Handles room selection confirmation and building exit logic
-void func_800787E8_1608A8(s32 arg0, s32 arg1) {
-	u8 playerIndex;
+#ifdef NON_MATCHING
+void func_800787E8_1608A8(u8 arg0, u8 arg1) {
 	s32 type;
 
-	playerIndex = arg1;
 	if (D_800E65A8 & 0x20) {
-		if (D_800E662C == playerIndex) {
-			osSyncPrintf(&D_800A445C_18C51C, playerIndex);
-			if (D_800E65BC[(u8) arg0].unk40 & 0x10000) {
+		if (D_800E662C == arg1) {
+			osSyncPrintf(&D_800A445C_18C51C);
+			if (D_800E65BC[arg0].unk40 & 0x10000) {
 				D_800E65A8 &= ~0x20;
 				D_800E65A8 |= 0x200;
-				type = (D_800E66A8[playerIndex].unk2C & 0xFC) >> 2;
+				type = (D_800E66A8[arg1].unk2C & 0xFC) >> 2;
 				if (type != 3) {
 					D_800E65EC = D_800E65E8[(type * 2) + 0xEA];
 					D_800E65ED = D_800E65E8[(type * 2) + 0xE9];
 				}
 			} else {
 				D_800E65A8 &= ~0x20;
-				if (D_800E65BC[(u8) arg0].unk40 & 0x02000000) {
+				if (D_800E65BC[arg0].unk40 & 0x02000000) {
 					osSyncPrintf(&D_800A4470_18C530, D_800EAE90);
-					func_80018D7C_1997C(((D_800E66A8[playerIndex].unk2C & 0xFC) >> 2) + D_800EAE90 - 2);
+					func_80018D7C_1997C(((D_800E66A8[arg1].unk2C & 0xFC) >> 2) + D_800EAE90 - 2);
 					D_800E65A8 |= 0x400;
 				} else {
 					func_8007A8AC_16296C(1);
@@ -9881,7 +9879,6 @@ void func_800787E8_1608A8(s32 arg0, s32 arg1) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800787E8_1608A8.s")
 #endif
-
 // CURRENT(140)
 // AI - Remaps button directions based on room orientation
 #ifdef NON_MATCHING
