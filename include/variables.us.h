@@ -1273,12 +1273,11 @@ extern void* D_80098FE4_69494[3];
 extern u32 D_80098FFC_694AC[];
 // AI - Per-room display lists (8 Gfx per room, 32 bytes each; indexed by levelIndex << 5)
 extern u8 D_8009C1A8_184268[];
+extern s32 D_8009C4C4_184584[]; // Fake symbol - dont' use
 // AI - Per-world base offsets into the room object catalog (D_8008E0A8_176168) / room ranges
-extern s32 D_8009C4C4_184584[];
-// AI - Alias into D_8009C4C4 (used as cumulative per-room display-list offsets; D_8009C4C8 = &D_8009C4C4[1])
-extern s32 D_8009C4C8;
+extern s32 D_8009C4C8_184588[];
 // AI - Per-room misc data (8 s32 per room, 32 bytes each; indexed by levelIndex << 5)
-extern u8 D_8009C4E4_1845A4[];
+extern s32 D_8009C4E4_1845A4[];
 // AI - Per-room configuration table (25 rooms; runtime pointer D_800E65C8)
 extern Unk9C804 D_8009C804_1848C4[];
 // AI - Room map/layout data (per-room tile map, 0x1E bytes per currentLevel)
