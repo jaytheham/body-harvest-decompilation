@@ -7576,6 +7576,7 @@ void func_8008B8E4_9A894(u8 arg0)
 }
 
 // CURRENT(1895)
+// Shield Tower on-death function
 #ifdef NON_MATCHING
 void func_8008BC58_9AC08(u8 arg0)
 {
@@ -7595,7 +7596,7 @@ void func_8008BC58_9AC08(u8 arg0)
 
 	if (inst->unk2C == 0x28)
 	{
-		func_800D6ADC_E5A8C(inst->unk0, inst->unk2, inst->unk4, 5);
+		func_800D6ADC_E5A8C(inst->unk0, inst->unk2, inst->unk4, 5); // create nuke
 	}
 
 	if (inst->unk2C < 0x28)
