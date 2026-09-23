@@ -6911,15 +6911,12 @@ void func_80071D94_159E54(int arg0, unsigned char arg1, unsigned char arg2, unsi
 	gDPPipeSync(D_8005BB2C++);
 }
 
-#ifdef NON_MATCHING
+// CURRENT(820)
 // AI - Interior entry point: resets state, loads building, sets player spawn
+#ifdef NON_MATCHING
 void func_80071F08_159FC8(void) {
 	s32 i;
 	s32 musicId;
-	s32 value;
-	u8 direction;
-	Unk800E66A8 *entry;
-	s32 halfLen;
 
 	func_8008B0AC_17316C();
 	D_800E65AC = 0;
@@ -6944,8 +6941,7 @@ void func_80071F08_159FC8(void) {
 
 	if (D_80047B70.unk0 == 0) {
 		for (i = 0; i != 8; i++) {
-			value = i + 0x38;
-			func_800073B8_7FB8((s64) value);
+			func_800073B8_7FB8((s64) (i + 0x38));
 		}
 	}
 
@@ -6962,38 +6958,38 @@ void func_80071F08_159FC8(void) {
 	func_8007C7E0_1648A0();
 	func_80072300_15A3C0();
 	if (D_800E65A8 & 0x200) {
-		D_800E65A8 = 1;
-		entry = &D_800E66A8[D_800E65EC];
-		direction = entry->unk8;
-		value = entry->unk0;
+		s32 value;
 
-		switch (direction) {
+		D_800E65A8 = 1;
+		value = D_800E66A8[D_800E65EC].unk0;
+
+		switch (D_800E66A8[D_800E65EC].unk8) {
 			case 0:
 				D_800E6A78.unkE = 0x4000;
-				D_800E6A78.unk4C = entry->unk2;
-				halfLen = (s16) D_800E65BC[value].unk1A / 2;
-				D_800E6A78.unk54 = halfLen + entry->unk6 + 0xF;
+				D_800E6A78.unk4C = D_800E66A8[D_800E65EC].unk2;
+				
+				D_800E6A78.unk54 = (D_800E65BC[value].unk1A / 2) + D_800E66A8[D_800E65EC].unk6 + 0xF;
 				return;
 
 			case 2:
 				D_800E6A78.unkE = -0x4000;
-				D_800E6A78.unk4C = entry->unk2;
-				halfLen = (s16) D_800E65BC[value].unk1A / 2;
-				D_800E6A78.unk54 = entry->unk6 - halfLen - 0xF;
+				D_800E6A78.unk4C = D_800E66A8[D_800E65EC].unk2;
+				
+				D_800E6A78.unk54 = D_800E66A8[D_800E65EC].unk6 - (D_800E65BC[value].unk1A / 2) - 0xF;
 				return;
 
 			case 1:
 				D_800E6A78.unkE = 0;
-				halfLen = (s16) D_800E65BC[value].unk1A / 2;
-				D_800E6A78.unk4C = halfLen + entry->unk2 + 0xF;
-				D_800E6A78.unk54 = entry->unk6;
+				
+				D_800E6A78.unk4C = (D_800E65BC[value].unk1A / 2) + D_800E66A8[D_800E65EC].unk2 + 0xF;
+				D_800E6A78.unk54 = D_800E66A8[D_800E65EC].unk6;
 				return;
 
 			case 3:
 				D_800E6A78.unkE = -0x8000;
-				halfLen = (s16) D_800E65BC[value].unk1A / 2;
-				D_800E6A78.unk4C = entry->unk2 - halfLen - 0xF;
-				D_800E6A78.unk54 = entry->unk6;
+				
+				D_800E6A78.unk4C = D_800E66A8[D_800E65EC].unk2 - (D_800E65BC[value].unk1A / 2) - 0xF;
+				D_800E6A78.unk54 = D_800E66A8[D_800E65EC].unk6;
 				return;
 		}
 
@@ -7008,11 +7004,12 @@ void func_80071F08_159FC8(void) {
 			D_800E65DC = -(D_800E65C8->unk20 * D_800E65C8->unk10);
 			D_800A0964_188A24 = 1;
 			return;
+		} else {
+			D_800E65A8 = 1;
+			func_8007343C_15B4FC();
+			D_80047B70.unk0 = 0;
+			return;
 		}
-
-		D_800E65A8 = 1;
-		func_8007343C_15B4FC();
-		D_80047B70.unk0 = 0;
 	}
 }
 #else

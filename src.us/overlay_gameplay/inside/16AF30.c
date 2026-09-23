@@ -456,7 +456,7 @@ void func_800839B8_16BA78(u8 arg0) {
 // AI - Spawn a new visual particle effect (copy from template with randomization)
 void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	f32 sp3C;
-	volatile f32 sp38;
+	f32 sp38;
 	f32 sp34;
 	s16 temp;
 	s16 sp30;

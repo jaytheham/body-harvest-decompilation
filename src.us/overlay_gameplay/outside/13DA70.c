@@ -1170,7 +1170,7 @@ s32 temp_v0;
 u8 currentChar;
 u8 colorData[3];
 s16 charCount;
-volatile s32 swayOffset;
+s32 swayOffset;
 
 gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 35, 0, D_80068084 - 0x21, D_80068088);
 charCount = 0;

@@ -2360,7 +2360,7 @@ void func_802D9038_258778(u8 arg0) {
 // CURRENT(5422)
 #ifdef NON_MATCHING
 void func_802D9510_258C50(u8 arg0) {
-	volatile u8 sp47;
+	u8 sp47;
 	u8 sp46;
 	s8 sp45;
 	s32 distSq;
@@ -4086,7 +4086,7 @@ void func_802DE5E8_25DD28(u8 arg0) {
 	s16 sp86;
 	AlienInstance *sp80;
 	s16 gap3[4];
-	volatile s16 sp70[3];
+	s16 sp70[3];
 	s16 temp_v0;
 	Unk8014DD50 *var_t0;
 	s32 sp5C[3];

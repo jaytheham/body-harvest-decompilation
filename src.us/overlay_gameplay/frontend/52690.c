@@ -984,7 +984,7 @@ void func_800847E4_54C94(u8 arg0) {
 	f32 p0x;
 	f32 p0y;
 	f32 p0z;
-	volatile u8 count;
+	u8 count;
 	f32 p1x;
 	f32 p1y;
 	f32 p1z;

@@ -1648,12 +1648,12 @@ void func_8007C7E0_1648A0(void) {
 #ifdef NON_MATCHING
 // AI - Free player animation memory and cleanup
 void func_8007C8BC_16497C(void) {
-	volatile Unk80157600 *ptr;
+	Unk80157600 *ptr;
 
 	func_8000C764_D364(D_800E7304);
-	ptr = (volatile Unk80157600 *) &D_800E6AD8;
+	ptr = (Unk80157600 *) &D_800E6AD8;
 	func_8000C764_D364((s32) ptr->unk408);
-	ptr = (volatile Unk80157600 *) &D_800E6AD8;
+	ptr = (Unk80157600 *) &D_800E6AD8;
 	ptr->unk408 = NULL;
 	ptr->unk404 = NULL;
 }

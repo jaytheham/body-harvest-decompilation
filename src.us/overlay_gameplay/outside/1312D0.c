@@ -844,8 +844,8 @@ void func_80124BA8_133B58(void) {
 	s32 var_v1;
 	u8 temp_t6;
 	u8 temp_t7;
-	volatile s32 *temp_v0;
-	volatile s32 *temp_v1;
+	s32 *temp_v0;
+	s32 *temp_v1;
 
 	var_a0 = &D_8015EB90[0x3F];
 	var_v1 = 0x3F;
@@ -4016,8 +4016,8 @@ void func_8012E258_13D208(void) {
 	s16 dMaxZ;
 	s16 dMaxX;
 	s16 dMinX;
-	volatile s16 pushX;
-	volatile s16 pushZ;
+	s16 pushX;
+	s16 pushZ;
 	s16 side;
 	s16 behavior;
 	s16 collisionIdx;

@@ -561,7 +561,7 @@ void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 	s16 sp6E;
 	s16 sp6C;
 	s16 sp6A;
-	volatile s16 sp68;
+	s16 sp68;
 	s16 var_s4;
 	s16 var_v0;
 	s32 var_s3;
@@ -2197,7 +2197,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	f32 sp11C;
 	f32 spF8;
 	f32 spF4;
-	volatile f32 four;
+	f32 four;
 	f32 three;
 	s16 spEA;
 	s16 spE8;
@@ -2228,7 +2228,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	u8 cR;
 	u8 cG;
 	u8 cB;
-	volatile Vtx *vtx;
+	Vtx *vtx;
 
 	radius = (f32)D_801601F0[arg3].unk8;
 	four = 4.0f;

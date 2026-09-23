@@ -189,7 +189,7 @@ void func_80080168_168228(u16 arg0, u16 arg1, u16 arg2) {
 #ifdef NON_MATCHING
 // AI - Compute camera position from spherical coords (yaw/pitch/distance) with collision smoothing
 void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4) {
-	volatile f32 sp74;
+	f32 sp74;
 	s32 pad0;
 	s32 pad1;
 	s32 pad2;
@@ -200,9 +200,9 @@ void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4
 	s32 pad7;
 	s32 pad8;
 	s32 pad9;
-	volatile f32 sp70;
-	volatile f32 sp68;
-	volatile f32 sp64;
+	f32 sp70;
+	f32 sp68;
+	f32 sp64;
 	f32 temp_f0;
 	f32 temp_f0_2;
 	f32 temp_f2;

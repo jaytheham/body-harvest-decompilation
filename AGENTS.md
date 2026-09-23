@@ -25,11 +25,10 @@ You will be tasked with an existing C function to modify iteratively until it pr
 
 # Your Workflow
 1. Remove the `#ifdef NON_MATCHING` wrapper around the function so the C code will be included in the build.
-2. Always read the whole file `DecompHints.md` for general matching advice.
-3. Read the closest already matched functions before and after the target one, IDO codegen is very dependant on code style, so nearby matched functions will help guide your implementation. Ignore NON_MATCHING wrapped functions as their logic may be wrong.
-4. Build, compare with target, identify differences.
-5. Change the C code in a way that will make the current assembly match the target assembly.
-6. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
+2. Read the closest already matched functions before and after the target one, IDO codegen is very dependant on code style, so nearby matched functions will help guide your implementation. Ignore NON_MATCHING wrapped functions as their logic may be wrong.
+3. Build, compare with target, identify differences.
+4. Change the C code in a way that will make the current assembly match the target assembly.
+5. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
 
 Prioritize incorrect, missing, and out-of-order instructions, ignore register allocation and stack placement until all the logic is correct.
 Sometimes a change can produce more accurate logic, but change register/stack allocation in a way that causes more differences overall, this is OK, the goal is to get the logic correct first, then optimize the register/stack allocation to match the target assembly.
@@ -40,17 +39,15 @@ Don't use the permuter. It's your job to discover improvements.
 
 If a function has a switch statement and there is an associated jump table const defined at the start of the C file, delete that const before you begin. The consts are placeholders that make the rodata  build correctly while the functions are NON_MATCHING and the .s file is being used instead, when the C code is being included in the build it will generate its own jump table replacing the need for the const version. 
 
-- Declarations of data symbols used by the function must go in `include/variables.us.h`.
+- Declarations of data symbols must go in `include/variables.us.h`.
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
 - Add or update declarations for any called functions in `include/functions.us.h`.
-- Important: Replace all pointer arithmetic with struct/array access!
+- Important: Replace all pointer math with struct/array access!
 - Remove unnecessary casts.
-- Unusual constructions (e.g. `(arg0 < 0x9C) ^ 1`) should be converted into simpler forms (e.g. `arg0 >= 0x9C`).
 - Replace goto-based control flow with structured control flow (if/else, for, while).
-- Replace if-do-while and do-while loops with for(;;) or while() loops.
 - Search in `/asm` for any `jal` references (e.g. `jal        func_80073DC0_82D70`) to the target function to determine correct parameter and return types.
 
-`ExampleFixes` folder contains .md files with examples of fixes that have been applied previously to solve specific patterns, search in here for specific cases.
+`ExampleFixes` folder contains .md files with examples of fixes that have been applied previously to solve specific patterns, search in here for specific cases. Also `DecompHints.md`
 
 Make at least 25 attempts to match the function.
 If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.

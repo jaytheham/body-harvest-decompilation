@@ -1322,9 +1322,9 @@ void func_802D5DA0_319EF0(void) {
 // CURRENT(2500)
 #ifdef NON_MATCHING
 s32 func_802D5DD8_319F28(void) {
-	volatile s32 sp20;
+	s32 sp20;
 	s32 levelIdx;
-	volatile s16 sp24;
+	s16 sp24;
 
 	sp24 = *(s16 *)((u8 *)&D_802E4F68_3290B8 + 2);
 	sp20 = D_802E4F6C_3290BC;
@@ -1367,11 +1367,11 @@ void func_802D5F24_31A074(void) {
 // CURRENT(2000)
 #ifdef NON_MATCHING
 s32 func_802D5F6C_31A0BC(void) {
-	volatile s32 sp20;
+	s32 sp20;
 	s32 levelIdx;
-	volatile s16 sp24;
+	s16 sp24;
 
-	sp24 = *((volatile s16 *)&D_802E4F70_3290C0 + 1);
+	sp24 = *((s16 *)&D_802E4F70_3290C0 + 1);
 	sp20 = D_802E4F74_3290C4;
 	switch (D_80157F8C) {
 	case 0:
@@ -1412,11 +1412,11 @@ void func_802D60B8_31A208(void) {
 // CURRENT(2000)
 #ifdef NON_MATCHING
 s32 func_802D6100_31A250(void) {
-	volatile s32 sp20;
+	s32 sp20;
 	s32 levelIdx;
-	volatile s16 sp24;
+	s16 sp24;
 
-	sp24 = *(volatile s16 *)((u8 *)&D_802E4F78_3290C8 + 2);
+	sp24 = *(s16 *)((u8 *)&D_802E4F78_3290C8 + 2);
 	sp20 = D_802E4F7C_3290CC;
 	switch (D_80157F8C) {
 	case 0:
@@ -1457,11 +1457,11 @@ void func_802D624C_31A39C(void) {
 // CURRENT(2000)
 #ifdef NON_MATCHING
 s32 func_802D6294_31A3E4(void) {
-	volatile s32 sp20;
+	s32 sp20;
 	s32 levelIdx;
-	volatile s16 sp24;
+	s16 sp24;
 
-	sp24 = *(volatile s16 *)((u8 *)&D_802E4F80_3290D0 + 2);
+	sp24 = *(s16 *)((u8 *)&D_802E4F80_3290D0 + 2);
 	sp20 = D_802E4F84_3290D4;
 	switch (D_80157F8C) {
 	case 0:
@@ -5064,7 +5064,7 @@ void func_802E19EC_325B3C(u8 arg0) {
 #ifdef NON_MATCHING
 s32 func_802E1AE4_325C34(u8 arg0, u8 arg1) {
 	s16 sp40[3];
-	volatile Unk802E71B8 sp38;
+	Unk802E71B8 sp38;
 	s32 pad0;
 	s32 temp_v0;
 	s32 temp_v0_2;

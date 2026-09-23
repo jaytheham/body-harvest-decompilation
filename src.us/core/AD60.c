@@ -1185,15 +1185,15 @@ s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, 
 void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, f32 arg3) {
 	f64 temp_f20;
 	f64 temp_f22;
-	volatile f32 sp70;
-	volatile f32 sp6C;
-	volatile f32 sp68;
-	volatile f32 sp64;
-	volatile f32 sp60;
-	volatile f32 sp5C;
-	volatile f32 sp50;
-	volatile f32 sp4C;
-	volatile f32 sp48;
+	f32 sp70;
+	f32 sp6C;
+	f32 sp68;
+	f32 sp64;
+	f32 sp60;
+	f32 sp5C;
+	f32 sp50;
+	f32 sp4C;
+	f32 sp48;
 	f32 temp_f24;
 	s32 temp_t6;
 	s32 var_s0;

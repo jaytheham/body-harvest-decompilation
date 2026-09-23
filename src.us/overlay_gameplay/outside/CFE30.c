@@ -7979,7 +7979,7 @@ void func_800D702C_E5FDC(s16 arg0, s32 arg1) {
 // CURRENT(8632)
 #ifdef NON_MATCHING
 void func_800D7284_E6234(u8 arg0) {
-	volatile s16 sp8E;
+	s16 sp8E;
 	s32 sp88_pad0;
 	s32 sp84_pad1;
 	f32 sp88;
@@ -9743,7 +9743,7 @@ void func_800DC18C_EB13C(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 	f32 temp_f14;
 	f32 temp_f16;
 	f32 temp_f18;
-	volatile f32 sp4;
+	f32 sp4;
 
 	temp_f2 = (f32)(u16)arg3;
 	temp_f0 = D_80153AB8.x;

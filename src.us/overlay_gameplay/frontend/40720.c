@@ -882,7 +882,7 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
  // CURRENT(2155)
 #ifdef NON_MATCHING
 void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
-	volatile s32 textureIndex;
+	s32 textureIndex;
 	s32 weaponType;
 	s32 sizeX;
 	s32 sizeY;
@@ -2490,7 +2490,7 @@ s32 func_80077494_47944(void) {
 // doCopyFile
 #ifdef NON_MATCHING
 s32 func_800776BC_47B6C(void) {
-  volatile s32 saveSlotSp;
+  s32 saveSlotSp;
   u8* saveName;
   s16 saveSlot;
   s32 sourceFileIndex;
@@ -3720,7 +3720,7 @@ void func_800796D0_49B80(s32 arg0, s32 arg1) {
 	s16 shouldExit;
 	s16 i;
 	s16 timer;
-	volatile s32 tempArg1;
+	s32 tempArg1;
 	s32 t;
 	s32 fade;
 	s32 slide;
@@ -3937,7 +3937,7 @@ void func_800796D0_49B80(s32 arg0, s32 arg1) {
 // CURRENT(1074)
 #ifdef NON_MATCHING
 void func_80079F30_4A3E0(s32 arg0) {
-	volatile s32 sp0;
+	s32 sp0;
 
 	sp0 = arg0;
 	gDPPipeSync(D_8005BB2C++);
@@ -5935,9 +5935,9 @@ void func_8007F3F8_4F8A8(FrontendStruct* arg0, u8* arg1) {
 	f32 sp2C;
 	f32 temp_f0;
 	f32 temp_f2;
-	volatile f32 temp_f12;
-	volatile f32 temp_f14;
-	volatile f32 temp_f18;
+	f32 temp_f12;
+	f32 temp_f14;
+	f32 temp_f18;
 	f64 temp_f20;
 	f64 temp_f22;
 
@@ -6414,15 +6414,15 @@ void func_80080588_50A38(s32 arg0) {
 #ifdef NON_MATCHING
 // CURRENT(8571)
 void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, s32 arg3) {
-	volatile f32 sp70;
-	volatile f32 sp6C;
-	volatile f32 sp68;
-	volatile f32 sp64;
-	volatile f32 sp60;
-	volatile f32 sp5C;
-	volatile f32 sp50;
-	volatile f32 sp4C;
-	volatile f32 sp48;
+	f32 sp70;
+	f32 sp6C;
+	f32 sp68;
+	f32 sp64;
+	f32 sp60;
+	f32 sp5C;
+	f32 sp50;
+	f32 sp4C;
+	f32 sp48;
 	f32 temp_f0;
 	f32 temp_f10;
 	f32 temp_f10_2;
