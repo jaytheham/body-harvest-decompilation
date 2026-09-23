@@ -785,7 +785,7 @@ extern f32 D_80047960;
 extern s16 D_80047964;
 extern s32 D_80047968;
 extern s16 D_80047970[256];
-extern s32 D_80047B70;
+extern Unk158330SavedRoomState D_80047B70;
 extern s32 D_80047D30;
 extern s16 D_80047D40[0x100];
 extern s32 D_80047F40[8];

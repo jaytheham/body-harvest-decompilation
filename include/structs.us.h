@@ -2918,6 +2918,26 @@ typedef struct {
 } Unk158330SrcState;
 
 typedef struct {
+	f32 unk0;
+	f32 unk4;
+	f32 unk8;
+	f32 unkC;
+	f32 unk10;
+	f32 unk14;
+	u8 unk18;
+	u8 unk19;
+	u8 pad1A[0x2];
+} Unk158330SavedObjectState; /* size = 0x1C */
+
+typedef struct {
+	s32 unk0;
+	Unk158330SavedObjectState objects[16];
+	s32 unk1C4;
+	f32 unk1C8;
+	f32 unk1CC;
+} Unk158330SavedRoomState; /* size = 0x1D0 */
+
+typedef struct {
 	u8 pad00[0x14];
 	f32 unk14;
 	f32 unk18;

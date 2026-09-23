@@ -6932,7 +6932,7 @@ void func_80071F08_159FC8(void) {
 
 	func_800072CC_7ECC(0ULL);
 
-	if (D_80047B70 == 0) {
+	if (D_80047B70.unk0 == 0) {
 		for (i = 0; i != 8; i++) {
 			value = i + 0x38;
 			func_800073B8_7FB8((s64) value);
@@ -6989,7 +6989,7 @@ void func_80071F08_159FC8(void) {
 
 		return;
 	} else {
-		if (D_80047B70 == 0) {
+		if (D_80047B70.unk0 == 0) {
 			D_800E65A8 = 0x40;
 			musicId = *(s32 *) &D_800E65C8->unk30;
 			if (musicId != -1) {
@@ -7002,7 +7002,7 @@ void func_80071F08_159FC8(void) {
 
 		D_800E65A8 = 1;
 		func_8007343C_15B4FC();
-		D_80047B70 = 0;
+		D_80047B70.unk0 = 0;
 	}
 }
 #else
@@ -7636,91 +7636,27 @@ void func_8007343C_15B4FC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007343C_15B4FC.s")
 #endif
 
-#ifdef NON_MATCHING
 /* CURRENT(6460) */
 // AI - Saves current room state for later restoration
+#ifdef NON_MATCHING
 void func_8007356C_15B62C(void) {
-	u8 *a0;
-	u8 *a1;
-	u8 *v0;
-	u8 *v1;
-	f32 tempF4;
-	f32 tempF6;
-	f32 tempF8;
-	f32 tempF10;
-	f32 tempF16;
-	f32 tempF18;
-	u16 tempT1;
-	u16 tempT3;
-	u16 tempT7;
-	u16 tempT9;
-	u8 tempT0;
-	u8 tempT2;
-	u8 tempT4;
-	u8 tempT8;
+	s32 i;
 
-	D_80047B70 = 1;
-	a1 = (u8 *) &D_80047B70;
-	v1 = (u8 *) &D_80047B70;
-	a0 = (u8 *) D_800E66A8;
-	v0 = (u8 *) D_800E66A8 + 0x300;
-	do {
-		*(f32 *) (v1 + 0x04) = *(f32 *) (a0 + 0x14);
-		*(f32 *) (v1 + 0x08) = *(f32 *) (a0 + 0x18);
-		*(f32 *) (v1 + 0x0C) = *(f32 *) (a0 + 0x1C);
-		*(f32 *) (v1 + 0x10) = *(f32 *) (a0 + 0x20);
-		*(f32 *) (v1 + 0x14) = *(f32 *) (a0 + 0x24);
-		*(f32 *) (v1 + 0x18) = *(f32 *) (a0 + 0x28);
-		*(f32 *) (v1 + 0x34) = *(f32 *) (a0 + 0x58);
-		*(f32 *) (v1 + 0x30) = *(f32 *) (a0 + 0x54);
-		*(f32 *) (v1 + 0x2C) = *(f32 *) (a0 + 0x50);
-		*(f32 *) (v1 + 0x28) = *(f32 *) (a0 + 0x4C);
-		*(f32 *) (v1 + 0x24) = *(f32 *) (a0 + 0x48);
-		*(f32 *) (v1 + 0x20) = *(f32 *) (a0 + 0x44);
-		*(f32 *) (v1 + 0x3C) = *(f32 *) (a0 + 0x74);
-		*(f32 *) (v1 + 0x40) = *(f32 *) (a0 + 0x78);
-		*(f32 *) (v1 + 0x44) = *(f32 *) (a0 + 0x7C);
-		*(f32 *) (v1 + 0x48) = *(f32 *) (a0 + 0x80);
-		*(f32 *) (v1 + 0x4C) = *(f32 *) (a0 + 0x84);
-		*(f32 *) (v1 + 0x50) = *(f32 *) (a0 + 0x88);
+	D_80047B70.unk0 = 1;
+	for (i = 0; i < 16; i++) {
+		D_80047B70.objects[i].unk0 = D_800E66A8[i].unk14;
+		D_80047B70.objects[i].unk4 = D_800E66A8[i].unk18;
+		D_80047B70.objects[i].unk8 = D_800E66A8[i].unk1C;
+		D_80047B70.objects[i].unkC = D_800E66A8[i].unk20;
+		D_80047B70.objects[i].unk10 = D_800E66A8[i].unk24;
+		D_80047B70.objects[i].unk14 = D_800E66A8[i].unk28;
+		D_80047B70.objects[i].unk18 = D_800E66A8[i].unk10;
+		D_80047B70.objects[i].unk19 = D_800E66A8[i].unk2E;
+	}
 
-		tempF18 = *(f32 *) (a0 + 0xB8);
-		tempF16 = *(f32 *) (a0 + 0xB4);
-		tempF10 = *(f32 *) (a0 + 0xB0);
-		tempF8 = *(f32 *) (a0 + 0xAC);
-		tempF6 = *(f32 *) (a0 + 0xA8);
-		tempF4 = *(f32 *) (a0 + 0xA4);
-		tempT9 = *(u16 *) (a0 + 0x40);
-		tempT0 = *(u8 *) (a0 + 0x5E);
-		tempT1 = *(u16 *) (a0 + 0x70);
-		tempT2 = *(u8 *) (a0 + 0x8E);
-		tempT3 = *(u16 *) (a0 + 0xA0);
-		tempT4 = *(u8 *) (a0 + 0xBE);
-		tempT7 = *(u16 *) (a0 + 0x10);
-		tempT8 = *(u8 *) (a0 + 0x2E);
-
-		a0 += 0xC0;
-		v1 += 0x70;
-
-		*(f32 *) (v1 - 0x04) = tempF18;
-		*(f32 *) (v1 - 0x08) = tempF16;
-		*(f32 *) (v1 - 0x0C) = tempF10;
-		*(f32 *) (v1 - 0x10) = tempF8;
-		*(f32 *) (v1 - 0x14) = tempF6;
-		*(f32 *) (v1 - 0x18) = tempF4;
-		*(u8 *) (v1 - 0x38) = tempT9;
-		*(u8 *) (v1 - 0x37) = tempT0;
-		*(u8 *) (v1 - 0x1C) = tempT1;
-		*(u8 *) (v1 - 0x1B) = tempT2;
-		*(u8 *) (v1 + 0x00) = tempT3;
-		*(u8 *) (v1 + 0x01) = tempT4;
-		*(u8 *) (v1 - 0x54) = tempT7;
-		*(u8 *) (v1 - 0x53) = tempT8;
-	} while (a0 != v0);
-
-	*(s32 *) (a1 + 0x1C4) = D_800E6A78.unkE;
-	*(f32 *) (a1 + 0x1C8) = D_800E6A78.unk4C;
-	*(f32 *) (a1 + 0x1CC) = D_800E6A78.unk54;
+	D_80047B70.unk1C4 = D_800E6A78.unkE;
+	D_80047B70.unk1C8 = D_800E6A78.unk4C;
+	D_80047B70.unk1CC = D_800E6A78.unk54;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007356C_15B62C.s")
