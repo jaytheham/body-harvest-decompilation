@@ -6478,9 +6478,6 @@ void func_800705E0_1586A0(void *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800705E0_1586A0.s")
 #endif
 
-// https://decomp.me/scratch/1UBsS
-// CURRENT(40)
-#ifdef NON_MATCHING
 // AI - Initializes a room entry's animated offset/scale values
 void func_80070F7C_15903C(s16 arg0, u8 arg1, u8 arg2)
 {
@@ -6496,7 +6493,7 @@ void func_80070F7C_15903C(s16 arg0, u8 arg1, u8 arg2)
   entry->unk14 = 0.0f;
   entry->unk18 = 0.0f;
   entry->unk1C = 0.0f;
-  obj = &D_800E65BC[arg1];
+  obj = &((Unk80070F7CObj *)D_800E65BC)[arg1];
   if (obj->unk40 & 0x7F00)
   {
 	entry->unk20 = (f32) obj->unk2C;
@@ -6592,9 +6589,6 @@ void func_80070F7C_15903C(s16 arg0, u8 arg1, u8 arg2)
 	}
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80070F7C_15903C.s")
-#endif
 
 // AI - Updates interior lighting/brightness values with flicker animation
 void func_80071304_1593C4(void)
