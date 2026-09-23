@@ -7736,12 +7736,10 @@ void func_800736C4_15B784(void) {
 	}
 }
 
-// CURRENT(722)
-#ifdef NON_MATCHING
 // AI - Renders a colored 2D rectangle (floor tile) via RDP
-void func_80073714_15B7D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
-	s32 halfWidth;
-	s32 halfHeight;
+void func_80073714_15B7D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7)
+{
+	s32 half;
 	s16 x0;
 	s16 x1;
 	s16 z0;
@@ -7749,14 +7747,12 @@ void func_80073714_15B7D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	u8 r;
 	u8 g;
 	u8 b;
-
-	halfWidth = arg0 / 2;
-	x0 = arg2 - halfWidth;
-	x1 = halfWidth + arg2;
-	halfHeight = arg1 / 2;
-	z0 = arg4 - halfHeight;
-	z1 = arg4 + halfHeight;
-
+	half = arg0 / 2;
+	x0 = arg2 - half;
+	x1 = half + arg2;
+	half = arg1 / 2;
+	z0 = arg4 - half;
+	z1 = half + arg4;
 	D_8005BB34[0].v.ob[0] = x0;
 	D_8005BB34[0].v.ob[1] = arg3;
 	D_8005BB34[0].v.ob[2] = z0;
@@ -7767,7 +7763,6 @@ void func_80073714_15B7D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34[0].v.cn[1] = 0;
 	D_8005BB34[0].v.cn[2] = 0;
 	D_8005BB34[0].v.cn[3] = 0xFF;
-
 	D_8005BB34[1].v.ob[0] = x1;
 	D_8005BB34[1].v.ob[1] = arg3;
 	D_8005BB34[1].v.ob[2] = z0;
@@ -7778,7 +7773,6 @@ void func_80073714_15B7D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34[1].v.cn[1] = 0;
 	D_8005BB34[1].v.cn[2] = 0;
 	D_8005BB34[1].v.cn[3] = 0xFF;
-
 	D_8005BB34[2].v.ob[0] = x0;
 	D_8005BB34[2].v.ob[1] = arg3;
 	D_8005BB34[2].v.ob[2] = z1;
@@ -7789,7 +7783,6 @@ void func_80073714_15B7D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34[2].v.cn[1] = 0;
 	D_8005BB34[2].v.cn[2] = 0;
 	D_8005BB34[2].v.cn[3] = 0xFF;
-
 	D_8005BB34[3].v.ob[0] = x1;
 	D_8005BB34[3].v.ob[1] = arg3;
 	D_8005BB34[3].v.ob[2] = z1;
@@ -7800,27 +7793,22 @@ void func_80073714_15B7D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34[3].v.cn[1] = 0;
 	D_8005BB34[3].v.cn[2] = 0;
 	D_8005BB34[3].v.cn[3] = 0xFF;
-
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
-	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG | G_LIGHTING);
+	gDPSetCycleType(D_8005BB2C++, 0 << 20);
+	gSPClearGeometryMode(D_8005BB2C++, (0x00003000 | 0x00010000) | 0x00020000);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
 	r = arg5;
 	g = arg6;
 	b = arg7;
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, 0xFF);
-	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
-	gSPVertex(D_8005BB2C++, OS_PHYSICAL_TO_K0(D_8005BB34), 4, 0);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 0);
+	gSPVertex(D_8005BB2C++, (void *)(((u32)D_8005BB34) + 0x80000000), 4, 0);
 	gSP1Triangle(D_8005BB2C++, 0, 1, 3, 0);
 	gSP1Triangle(D_8005BB2C++, 0, 3, 2, 0);
 	gDPPipeSync(D_8005BB2C++);
-	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-
+	gSPSetGeometryMode(D_8005BB2C++, 0x00020000);
 	D_8005BB34 += 4;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80073714_15B7D4.s")
-#endif
 
 // AI - Empty stub function
 void func_80073A48_15BB08(void) {
