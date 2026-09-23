@@ -9281,55 +9281,54 @@ void func_800774E0_15F5A0(s32 arg0, f32 *arg1, f32 *arg2) {
 	*arg2 = D_800E65BC[objIndex].unk18;
 }
 
-#ifdef NON_MATCHING
-/* CURRENT(649) */
 // AI - Spawns an NPC or object in a room based on type
-void func_800775F0_15F6B0(s32 arg0, s32 arg1) {
-	Unk800E66A8 *entry;
-	Unk80070F7CObj *obj;
+void func_800775F0_15F6B0(s32 arg0, s32 arg1)
+{
 	s32 objType;
 	s32 var_t0;
+	s32 pad;
 	s32 var_t1;
 	s32 var_t2;
 
-	entry = &D_800E66A8[arg0];
-	obj = &((Unk80070F7CObj *) D_800E65BC)[arg1];
-	objType = obj->unkC;
-	var_t2 = obj->unk10 + entry->unk4;
+	objType = D_800E65BC[arg1].unkC;
+	var_t2 = D_800E66A8[arg0].unk4 + D_800E65BC[arg1].unk10;
+	switch (D_800E66A8[arg0].unk8)
+	{
+	case 0:
+		var_t0 = D_800E66A8[arg0].unk2 + D_800E65BC[arg1].unkE;
+		var_t1 = D_800E66A8[arg0].unk6 + D_800E65BC[arg1].unk12;
+		break;
 
-	switch (entry->unk8) {
-		case 0:
-			var_t0 = obj->unkE + entry->unk2;
-			var_t1 = obj->unk12 + entry->unk6;
-			break;
+	case 1:
+		var_t0 = D_800E66A8[arg0].unk2 + D_800E65BC[arg1].unk12;
+		var_t1 = D_800E66A8[arg0].unk6 - D_800E65BC[arg1].unkE;
+		break;
 
-		case 1:
-			var_t0 = obj->unk12 + entry->unk2;
-			var_t1 = entry->unk6 - obj->unkE;
-			break;
+	case 2:
+		var_t0 = D_800E66A8[arg0].unk2 - D_800E65BC[arg1].unkE;
+		var_t1 = D_800E66A8[arg0].unk6 - D_800E65BC[arg1].unk12;
+		break;
 
-		case 2:
-			var_t0 = entry->unk2 - obj->unkE;
-			var_t1 = entry->unk6 - obj->unk12;
-			break;
-
-		case 3:
-			var_t0 = entry->unk2 - obj->unk12;
-			var_t1 = obj->unkE + entry->unk6;
-			break;
+	case 3:
+		var_t0 = D_800E66A8[arg0].unk2 - D_800E65BC[arg1].unk12;
+		var_t1 = D_800E66A8[arg0].unk6 + D_800E65BC[arg1].unkE;
+		break;
 	}
 
 	var_t0 -= 0x60;
 	var_t1 -= 0x60;
-	if (objType == 5) {
-		func_800858F4_16D9B4(var_t0, var_t2, var_t1);
-	} else if (objType == 4) {
+	if (objType != 4)
+	{
+		if (objType == 5)
+		{
+			func_800858F4_16D9B4(var_t0, var_t2, var_t1);
+		}
+	}
+	else
+	{
 		func_80085984_16DA44(0x28, 0x14, 0x14, var_t0, var_t2, var_t1);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800775F0_15F6B0.s")
-#endif
 
 // jtbl_800A4AC8_18CB88
 // CURRENT(5892)
@@ -9338,15 +9337,15 @@ void func_800775F0_15F6B0(s32 arg0, s32 arg1) {
 void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 	Unk800E66A8 *entry;
 	Unk80070F7CObj *obj;
-	s32 objType;
+	s32 pad;
 	s32 x;
 	s32 z;
 	s32 y;
 	s32 var_t2;
 	s32 var_t3;
 
-	entry = &D_800E66A8[arg0];
 	obj = &((Unk80070F7CObj *) D_800E65BC)[arg1];
+	entry = &D_800E66A8[arg0];
 	objType = obj->unkC;
 	y = obj->unk10 + entry->unk4;
 	var_t2 = 0;
