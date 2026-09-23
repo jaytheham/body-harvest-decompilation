@@ -1597,7 +1597,6 @@ extern s8 D_800E66A1;
 extern s32 D_800E66A4;
 // AI - Placed room object instances for the current room (built from the building data block)
 extern Unk800E66A8 D_800E66A8[];
-extern u8 D_800E66B0[];
 extern s16 D_800E66B2[];
 extern u8 D_800E66B3[];
 extern u8 D_800E69A7[];

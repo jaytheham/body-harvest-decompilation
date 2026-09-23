@@ -9882,16 +9882,15 @@ void func_800787E8_1608A8(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800787E8_1608A8.s")
 #endif
 
-#ifdef NON_MATCHING
-/* CURRENT(145) */
+// CURRENT(140)
 // AI - Remaps button directions based on room orientation
+#ifdef NON_MATCHING
 u8 func_8007899C_160A5C(s32 arg0, s32 arg1) {
 	u8 ret;
 
-	switch (D_800E66B0[arg1 * 0x30]) {
+	switch (D_800E66A8[arg1].unk8) {
 	case 0:
 		ret = arg0;
-		ret &= 0xFF;
 		break;
 	case 1:
 		if (arg0 & 4) {
@@ -9907,8 +9906,12 @@ u8 func_8007899C_160A5C(s32 arg0, s32 arg1) {
 			ret = (ret | 8) & 0xFF;
 		}
 		break;
-	case 2:
-		if (arg0 & 4) {
+	case 2: {
+		u8 mask2;
+
+		mask2 = arg0;
+		mask2 &= 4;
+		if (mask2) {
 			ret |= 8;
 		}
 		if (arg0 & 8) {
@@ -9921,20 +9924,26 @@ u8 func_8007899C_160A5C(s32 arg0, s32 arg1) {
 			ret = (ret | 1) & 0xFF;
 		}
 		break;
-	case 3:
-		if (arg0 & 4) {
+	}
+	case 3: {
+		u8 mask3;
+
+		mask3 = arg0;
+		mask3 &= 4;
+		if (mask3) {
 			ret |= 1;
 		}
 		if (arg0 & 8) {
-			ret = (ret | 2) & 0xFF;
+			ret = ret | 2;
 		}
 		if (arg0 & 1) {
-			ret = (ret | 8) & 0xFF;
+			ret = ret | 8;
 		}
 		if (arg0 & 2) {
-			ret = (ret | 4) & 0xFF;
+			ret = ret | 4;
 		}
 		break;
+	}
 	}
 
 	return ret;
