@@ -7636,7 +7636,7 @@ void func_8007343C_15B4FC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007343C_15B4FC.s")
 #endif
 
-/* CURRENT(6460) */
+// CURRENT(810)
 // AI - Saves current room state for later restoration
 #ifdef NON_MATCHING
 void func_8007356C_15B62C(void) {
