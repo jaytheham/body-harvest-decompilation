@@ -6677,95 +6677,87 @@ block_33:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80071304_1593C4.s")
 #endif
 
-// https://decomp.me/scratch/WSdX9
-// CURRENT(220)
-#ifdef NON_MATCHING
-// AI - Handles special lighting modes for specific level interiors
 void func_80071510_1595D0(void)
 {
-  s32 temp;
-  if (((currentLevel == 4) && (func_8000726C_7E6C(2) == 0)) && (buildingInteriorToLoadId == 0x1E))
-  {
-	func_800072CC_7ECC(1);
-  }
-  if (((currentLevel == 4) && (func_8000726C_7E6C(1) != 0)) || ((currentLevel == 3) && (func_8000726C_7E6C(0x36) != 0)))
-  {
-	if ((D_800E6628 & 8) == 0)
+	if (((currentLevel == 4) && (func_8000726C_7E6C(2) == 0)) && (buildingInteriorToLoadId == 0x1E))
 	{
-	  osSyncPrintf(&D_800A43D0_18C490);
-	  D_800E6628 = 8;
-	  D_800E6618 = 0x28;
-	  D_800E661C = 0xF;
+		func_800072CC_7ECC(1);
 	}
-	func_80071304_1593C4();
-  }
-  else if ((currentLevel == 4) && (func_8000726C_7E6C(0x37) != 0))
-  {
-	if ((D_800E6628 & 6) == 0)
+	if (((currentLevel == 4) && (func_8000726C_7E6C(1) != 0)) || ((currentLevel == 3) && (func_8000726C_7E6C(0x36) != 0)))
 	{
-	  D_800E6628 = 4;
-	  D_800E6624 = D_8008DE08_175EC8[0];
-	  D_800E6620 = 1;
-	  func_80071304_1593C4();
+		if ((D_800E6628 & 8) == 0)
+		{
+			osSyncPrintf(&D_800A43D0_18C490);
+			D_800E6628 = 8;
+			D_800E6618 = 0x28;
+			D_800E661C = 0xF;
+		}
+		func_80071304_1593C4();
 	}
-	if (D_800E6624 == 0)
+	else if ((currentLevel == 4) && (func_8000726C_7E6C(0x37) != 0))
 	{
-	  if (D_800E6628 & 2)
-	  {
-		D_800E6628 = 4;
-	  }
-	  else
-	  {
-		D_800E6628 = 2;
-	  }
-	  temp = (D_800E6624 = D_8008DE08_175EC8[D_800E6620]);
-	  D_800E6620++;
-	  if (temp == (-1))
-	  {
-		D_800E6624 = D_8008DE08_175EC8[0];
-		D_800E6620 = 1;
-	  }
-	  func_80071304_1593C4();
+		if ((D_800E6628 & 6) == 0)
+		{
+			D_800E6628 = 4;
+			D_800E6624 = D_8008DE08_175EC8[0];
+			D_800E6620 = 1;
+			func_80071304_1593C4();
+		}
+		if (D_800E6624 == 0)
+		{
+			if (D_800E6628 & 2)
+			{
+				D_800E6628 = 4;
+			}
+			else
+			{
+				D_800E6628 = 2;
+			}
+			D_800E6624 = D_8008DE08_175EC8[D_800E6620];
+			D_800E6620++;
+			if (D_800E6624 == (-1))
+			{
+				D_800E6624 = D_8008DE08_175EC8[0];
+				D_800E6620 = 1;
+			}
+			func_80071304_1593C4();
+		}
+		else
+		{
+			D_800E6624--;
+		}
 	}
 	else
 	{
-	  D_800E6624--;
-	}
-  }
-  else
-  {
-	if (D_800E6628 != 1)
-	{
-	  func_80071304_1593C4();
-	}
-	D_800E6628 = 1;
-	if (D_800E6604 > 0)
-	{
-	  D_800E6608 += D_800E660C;
-	  if (D_800E660C < 0)
-	  {
-		if (D_800E6608 < (-0x14))
+		if (D_800E6628 != 1)
 		{
-		  D_800E6608 = -0x14;
-		  D_800E660C = 1;
+			func_80071304_1593C4();
 		}
-	  }
-	  else
-	  {
-		temp = D_800E6608;
-		if (temp >= 0x15)
+		D_800E6628 = 1;
+		if (D_800E6604 > 0)
 		{
-		  D_800E6608 = 0x14;
-		  D_800E660C = -1;
+			D_800E6608 += D_800E660C;
+			if (D_800E660C < 0)
+			{
+				if (D_800E6608 < (-0x14))
+				{
+					D_800E6608 = -0x14;
+					D_800E660C = 1;
+				}
+			}
+			else
+			{
+
+				if (D_800E6608 >= 0x15)
+				{
+					D_800E6608 = 0x14;
+					D_800E660C = -1;
+				}
+			}
+			func_80071304_1593C4();
 		}
-	  }
-	  func_80071304_1593C4();
 	}
-  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80071510_1595D0.s")
-#endif
 
 // AI - Returns a lighting/color byte
 u8 func_800717A8_159868(void) {
