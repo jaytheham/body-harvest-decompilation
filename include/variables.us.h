@@ -1585,8 +1585,7 @@ extern Vec3f D_800E6650;
 extern Vec3f D_800E6660;
 extern Vec3f D_800E6670;
 extern Vec3f D_800E6680;
-// AI - Number of placed room object instances in the current room (D_800E66A8 entries)
-extern s32 D_800E668C;
+extern s32 D_800E668C; // Number of objects in the current room (D_800E66A8 entries)
 extern s32 D_800E6690;
 extern s32 D_800E6694;
 extern s32 D_800E6698;

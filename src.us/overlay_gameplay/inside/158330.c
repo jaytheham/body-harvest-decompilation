@@ -6249,7 +6249,7 @@ void func_80070464_158524(s32 *arg0, s32 *arg1, s32 arg2)
 }
 
 #ifdef NON_MATCHING
-// AI - Main interior initialization: sets up rooms, positions, and mission flags
+// Spawns objects/characters in the current room
 void func_800705E0_1586A0(void *arg0) {
 	s16 tempS16;
 	s32 i;
@@ -6295,6 +6295,16 @@ void func_800705E0_1586A0(void *arg0) {
 		for (roomIndex = 0; roomIndex < D_800E668C; roomIndex++) {
 			roomData = D_800E65E8 + roomIndex;
 			roomType = roomData[0x30] & 0x1F;
+			// Actually objectType
+			// First 3 bits are:
+			// 000 Facing forward
+			// 100 Facing forward
+			// 110 Facing back
+			// 111 Facing right
+			// 011 Facing right
+			// 001 Facing left
+			// 010 Facing back
+			// Last 5 are object id
 
 			entry->unk0 = roomType;
 			entry->unk8 = (roomData[0x30] & 0x60) >> 5;
@@ -9301,10 +9311,12 @@ void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 
 	switch (objType) {
 		case 1:
+			// Small candle flame
 			entry->unkA = func_80084C68_16CD28(x, y, z, 0x50, 0xFFFF, 0xFF, 0xAA, 0x1E);
 			break;
 
 		case 2:
+			// Light glow without flame
 			entry->unkA = func_8008506C_16D12C(x, y, z, 0x32);
 			break;
 
@@ -9317,10 +9329,12 @@ void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 			break;
 
 		case 5:
+			// Large candle flame
 			entry->unkA = func_80089648_171708(x, y, z, (s8) (var_t3 * 0x14), 0, var_t2 * 0x14, 1);
 			break;
 
 		case 6:
+			// Steam jet
 			entry->unkA = func_80089648_171708(x, y, z, 0, -0xA, 0, 2);
 			break;
 
