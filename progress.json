@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-23T04:50:11Z",
-  "commit": "d55ee136",
-  "commit_timestamp": "2026-09-23T16:49:21+12:00",
+  "generated": "2026-09-23T05:46:11Z",
+  "commit": "ad5fcb13",
+  "commit_timestamp": "2026-09-23T17:45:20+12:00",
   "overall": {
     "total_functions": 2714,
-    "matched": 1703,
-    "non_matching": 1011,
+    "matched": 1705,
+    "non_matching": 1009,
     "asm_stubs": 0,
-    "matched_pct": 62.75,
+    "matched_pct": 62.82,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -40,11 +40,11 @@
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
-      "matched": 113,
-      "non_matching": 124,
+      "matched": 115,
+      "non_matching": 122,
       "asm_stubs": 0,
       "total": 237,
-      "matched_pct": 47.7,
+      "matched_pct": 48.5,
       "decompiled_pct": 100.0
     },
     "overlay_level/greece": {
@@ -437,11 +437,11 @@
     {
       "path": "overlay_gameplay/inside/158330.c",
       "segment": "overlay_gameplay/inside",
-      "matched": 47,
-      "non_matching": 47,
+      "matched": 49,
+      "non_matching": 45,
       "asm_stubs": 0,
       "total": 94,
-      "matched_pct": 50.0,
+      "matched_pct": 52.1,
       "contributor": "jaytheham"
     },
     {
@@ -889,8 +889,8 @@
     {
       "name": "jaytheham",
       "files": 78,
-      "matched": 1701,
-      "non_matching": 1011,
+      "matched": 1703,
+      "non_matching": 1009,
       "asm_stubs": 0
     },
     {
@@ -1135,9 +1135,9 @@
     },
     {
       "date": "2026-09-20",
-      "commit": "d55ee13",
-      "matched": 1703,
-      "non_matching": 1011,
+      "commit": "ad5fcb1",
+      "matched": 1705,
+      "non_matching": 1009,
       "total": 2714
     }
   ]
