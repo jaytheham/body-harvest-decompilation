@@ -10015,55 +10015,49 @@ void func_80078AD4_160B94(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80078AD4_160B94.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(5104)
 // AI - Handles player room selection and interaction detection
+#ifdef NON_MATCHING
 void func_80078D68_160E28(void) {
-	Unk80070F7CObj* temp_v1;
+	Unk800E66A8* var_s2;
 	f64 temp_f20;
 	f64 temp_f22;
-	s32 temp_s4;
 	s32 temp_t4;
 	s32 temp_v0;
-	s32 temp_v0_2;
-	s32 temp_v0_4;
 	s32 temp_v1_2;
-	s32 var_s1;
-	s32 var_s3;
-	s32 var_v0;
 	s32 temp_s6;
+	s32 var_s1 = 0;
+	s32 var_s3 = 0;
+	s32 var_v0;
 	u8 temp_a1;
 
-	var_s1 = 0;
-	var_s3 = 0;
-	if (D_800E668C > 0) {
-		Unk800E66A8* var_s2 = &D_800E66A8[0];
+	if ((D_800E668C <= 0) != 0) {
+		return;
+	}
+	var_s2 = &D_800E66A8[0];
 
-		temp_f22 = 32768.0;
-		temp_f20 = D_800A4B70_18CC30[0];
-loop_2:
+	temp_f22 = 32768.0;
+	temp_f20 = D_800A4B70_18CC30[0];
+	while (1) {
 		temp_s6 = var_s2->unk0;
-		temp_s4 = temp_s6 * 0x48;
 		if ((((D_800E65BC[temp_s6].unk44 & 4) != 0) || (isButtonNewlyPressed(0, 0x8000) != 0)) && (D_800E65A8 == 1)) {
 			if (temp_s6 == 0x1F) {
 				func_80078AD4_160B94(temp_s6);
 			}
-			temp_v1 = (Unk80070F7CObj *)((u8*)D_800E65BC + temp_s4);
-			temp_t4 = temp_v1->unk40 & 0x01000006;
+			temp_t4 = D_800E65BC[temp_s6].unk40 & 0x01000006;
 			switch (temp_t4) {
 				case 4:
-					temp_v0 = func_8007A414_1624D4(var_s3, (s32)D_800E6A78.unk4C, (s32)D_800E6A78.unk54);
-					var_s1 = temp_v0;
-					if (temp_v0 != 0) {
+					var_s1 = func_8007A414_1624D4(var_s3, (s32)D_800E6A78.unk4C, (s32)D_800E6A78.unk54);
+					if (var_s1) {
 						var_s1 = func_8007A370_162430(var_s2->unk8,
 							(s32)((((f64)(f32)(D_800E6A78.unkE & 0xFFFF)) * temp_f20) / temp_f22));
 					}
 					break;
 
 				case 2:
-					temp_v0_2 = func_8007A168_162228(var_s3, var_s2->unk2, var_s2->unk6,
+					var_s1 = func_8007A168_162228(var_s3, var_s2->unk2, var_s2->unk6,
 						(s32)D_800E6A78.unk4C, (s32)D_800E6A78.unk54);
-					var_s1 = temp_v0_2;
-					if (temp_v0_2 != 0) {
+					if (var_s1) {
 						var_s1 = func_8007C2D0_164390(var_s2->unk2, var_s2->unk6,
 							(s16)(s32)D_800E6A78.unk4C, (s16)(s32)D_800E6A78.unk54,
 							D_800E6A78.unkE & 0xFFFF, 0x5555);
@@ -10072,10 +10066,11 @@ loop_2:
 
 				case 0x1000000:
 					if ((D_800E6698 != 0) && (var_s3 == (u8)D_800E66A1)) {
-						temp_v1_2 = 1 << ((u8)D_800E66A0 + 0x1F);
-						if ((temp_v1_2 & func_8007899C_160A5C(*((u8*)temp_v1 + 0x3C), var_s3)) != 0) {
+						temp_v1_2 = func_8007899C_160A5C(D_800E65BC[temp_s6].pad3C[0], var_s3);
+						temp_v0 = 1 << ((u8)D_800E66A0 + 0x1F);
+						if ((temp_v1_2 & temp_v0) != 0) {
 							var_s1 = 1;
-							if ((temp_v1_2 & 0xA) != 0) {
+							if ((temp_v0 & 0xA) != 0) {
 								D_80047970[buildingInteriorToLoadId] |= 1 << var_s3;
 							}
 						}
@@ -10083,14 +10078,14 @@ loop_2:
 					break;
 			}
 			if (var_s1 != 0) {
-				temp_v0_4 = ((Unk80070F7CObj *)((u8*)D_800E65BC + temp_s4))->unk40;
-				if ((((temp_v0_4 & 0x800000) != 0) && ((var_s2->unk2E & 1) != 0)) ||
-					(((temp_v0_4 & 0x02000000) != 0) && ((((s32)(var_s2->unk2C & 0xFC)) >> 2) == 0))) {
+				temp_t4 = D_800E65BC[temp_s6].unk40;
+				if ((((temp_t4 & 0x800000) != 0) && ((var_s2->unk2E & 1) != 0)) ||
+					(((temp_t4 & 0x02000000) != 0) && ((((s32)(var_s2->unk2C & 0xFC)) >> 2) == 0))) {
 					osSyncPrintf(&D_800A4488_18C548);
 					func_800137E0();
 					return;
 				}
-				temp_a1 = *((u8*)var_s2 + 0x2D) & 0x3F;
+				temp_a1 = var_s2->unk2D & 0x3F;
 				if (func_8000726C_7E6C((s64)(s32)temp_a1) != 0) {
 					D_800E662C = var_s3;
 					D_800E65A8 |= 4;
@@ -10159,17 +10154,14 @@ loop_2:
 					D_800E65A8 |= 4;
 					func_8007D548_165608(var_s3, var_s2->unk2, var_s2->unk6, temp_s6, D_800E66A4);
 				}
-			} else {
-				goto block_54;
+				return;
 			}
-		} else {
-block_54:
-			func_800137D8();
-			var_s3 += 1;
-			var_s2 = (Unk800E66A8 *)((u8*)var_s2 + 0x30);
-			if (var_s3 < D_800E668C) {
-				goto loop_2;
-			}
+		}
+		func_800137D8();
+		var_s3 += 1;
+		var_s2++;
+		if (var_s3 >= D_800E668C) {
+			break;
 		}
 	}
 }
