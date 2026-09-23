@@ -9138,8 +9138,9 @@ void func_80076C08_15ECC8(s32 *arg0, u16 *arg1, s16 *arg2, s32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80076C08_15ECC8.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(1952)
 // AI - Builds child transformation matrix for multi-part objects
+#ifdef NON_MATCHING
 void func_80077010_15F0D0(s32 *arg0, u16 *arg1, s16 *arg2, s32 *arg3) {
 	Unk800476C8 sp50[2];
 	s32 sp4C;
@@ -9150,6 +9151,7 @@ void func_80077010_15F0D0(s32 *arg0, u16 *arg1, s16 *arg2, s32 *arg3) {
 	s32 temp_v0;
 	s32 *var_v0;
 	s32 *var_a0;
+
 
 	sp50[0].unkC = 0;
 	sp50[0].unk1C = 0;
@@ -9198,28 +9200,26 @@ void func_80077010_15F0D0(s32 *arg0, u16 *arg1, s16 *arg2, s32 *arg3) {
 	if (arg2 != NULL) {
 		sp50[0].unk0 = sp50[0].unk0 * arg2[0];
 		sp50[0].unk4 = sp50[0].unk4 * arg2[0];
-		sp50[0].unk0 = sp50[0].unk0 >> 8;
 		sp50[0].unk8 = sp50[0].unk8 * arg2[0];
+		sp50[0].unk0 = sp50[0].unk0 >> 8;
 		sp50[0].unk4 = sp50[0].unk4 >> 8;
 		sp50[0].unk8 = sp50[0].unk8 >> 8;
-
 		sp50[0].unk10 = sp50[0].unk10 * arg2[1];
 		sp50[0].unk14 = sp50[0].unk14 * arg2[1];
-		sp50[0].unk10 = sp50[0].unk10 >> 8;
 		sp50[0].unk18 = sp50[0].unk18 * arg2[1];
+		sp50[0].unk10 = sp50[0].unk10 >> 8;
 		sp50[0].unk14 = sp50[0].unk14 >> 8;
 		sp50[0].unk18 = sp50[0].unk18 >> 8;
-
 		sp50[1].unk0 = sp50[1].unk0 * arg2[2];
 		sp50[1].unk4 = sp50[1].unk4 * arg2[2];
-		sp50[1].unk0 = sp50[1].unk0 >> 8;
 		sp50[1].unk8 = sp50[1].unk8 * arg2[2];
+		sp50[1].unk0 = sp50[1].unk0 >> 8;
 		sp50[1].unk4 = sp50[1].unk4 >> 8;
 		sp50[1].unk8 = sp50[1].unk8 >> 8;
 	}
 
-	var_v0 = (s32 *)sp50;
 	var_a0 = arg3;
+	var_v0 = (s32 *)&sp50[0];
 	do {
 		var_a0[0] = ((var_v0[1] & 0xFFFF0000) >> 0x10) + (var_v0[0] & 0xFFFF0000);
 		var_a0 += 4;
