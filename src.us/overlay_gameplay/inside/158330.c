@@ -6831,22 +6831,28 @@ void func_800717B4_159874(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800717B4_159874.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(130)
 // AI - Sets up RDP state for interior rendering
+#ifdef NON_MATCHING
 void func_80071854_159914(void) {
+	union {
+		Vp * volatile viewport;
+		u8 padding[0x88];
+	} stack;
 	osRecvMesg(&D_8006A8D0, &D_80068038, 1);
 	func_80011E14_12A14(D_80047F93);
 
-	gSPViewport(D_8005BB2C++, (Vp *)(0x03000000 + 0x14D0));
+	gSPViewport(D_8005BB2C++, D_314D0);
+	stack.viewport = D_314D0;
 
 	func_80004CC8_58C8();
 	func_80004D38_5938();
 
-	gSPDisplayList(D_8005BB2C++, D_800311A8);
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_800311A8));
 
 	func_80004F64_5B64();
 
-	if ((D_800A0964_188A24 != 0) && ((u8)D_800E73DF == 4)) {
+	if ((D_800A0964_188A24_target != 0) && ((u8)D_800E73DF == 4)) {
 		func_80071D94_159E54(D_8005BB48[D_80031B84_32784], 0xA, 0, 0x1E);
 	} else if ((currentLevel == 1) || (currentLevel == 3)) {
 		func_80071D94_159E54(D_8005BB48[D_80031B84_32784], 0x7F, 0x43, 0xD);
@@ -6854,15 +6860,15 @@ void func_80071854_159914(void) {
 		func_80071D94_159E54(D_8005BB48[D_80031B84_32784], 0, 0x19, 0xF);
 	}
 
-	gSPDisplayList(D_8005BB2C++, D_800311D0);
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_800311D0));
 
 	gDPPipeSync(D_8005BB2C++);
 
-	gSPViewport(D_8005BB2C++, (Vp *)(0x03000000 + 0x14D0));
+	gSPViewport(D_8005BB2C++, stack.viewport);
 
-	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | G_CLIPPING);
+	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
 
-	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_CULL_BACK | G_SHADING_SMOOTH);
+	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_CULL_BACK | G_SHADING_SMOOTH | G_LIGHTING);
 
 	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 0, 0, D_80068084, D_80068088);
 
