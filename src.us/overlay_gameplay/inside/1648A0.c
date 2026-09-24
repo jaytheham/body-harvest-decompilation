@@ -1843,53 +1843,36 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007CAA8_164B68.s")
 #endif
 
-#ifdef NON_MATCHING
 // AI - Smoothly rotate player toward target yaw angle
 void func_8007D37C_16543C(VehicleInstance *arg0, s16 arg1, s32 arg2) {
-	s32 var_v0;
-	s32 var_v1;
-
-	var_v0 = arg0->unkE;
-	var_v1 = var_v0 - arg1;
-	var_v1 = (var_v1 << 16) >> 16;
+	s32 var_v1 = (s16)(arg0->unkE - arg1);
 	if (var_v1 < -0x4000) {
 		if (((Unk80157600 *)D_800E6F00)->unk40C != 0xA) {
 			func_8007DAA8_165B68((Unk80157600 *)D_800E6F00, 0xA, NULL, 0.0f, 0x10);
-			var_v0 = arg0->unkE;
 		}
-		D_800E732C = (s16)(arg1 - var_v0) / 10;
-		var_v0 = arg0->unkE;
-		var_v1 = var_v0 - arg1;
-		var_v1 = (var_v1 << 16) >> 16;
+		D_800E732C = (s16)(arg1 - arg0->unkE) / 10;
+		var_v1 = (s16)(arg0->unkE - arg1);
 	} else if (var_v1 >= 0x4001) {
 		if (((Unk80157600 *)D_800E6F00)->unk40C != 0xB) {
 			func_8007DAA8_165B68((Unk80157600 *)D_800E6F00, 0xB, NULL, 0.0f, 0x10);
-			var_v1 = arg0->unkE - arg1;
-			var_v1 = (var_v1 << 16) >> 16;
+			var_v1 = (s16)(arg0->unkE - arg1);
 		}
 		D_800E732C = var_v1 / 10;
-		var_v0 = arg0->unkE;
-		var_v1 = var_v0 - arg1;
-		var_v1 = (var_v1 << 16) >> 16;
+		var_v1 = (s16)(arg0->unkE - arg1);
 	} else if (!(D_8009E8E0_1869A0[((Unk80157600 *)D_800E6F00)->unk40C].unk0 & 0x100)) {
 		D_800E732C = 0x5DC;
-		var_v0 = arg0->unkE;
-		var_v1 = var_v0 - arg1;
-		var_v1 = (var_v1 << 16) >> 16;
+		var_v1 = (s16)(arg0->unkE - arg1);
 	}
 	if (-D_800E732C >= var_v1) {
-		arg0->unkE = (s16)(var_v0 + D_800E732C);
+		arg0->unkE = (s16)(arg0->unkE + D_800E732C);
 		return;
 	}
 	if (var_v1 >= D_800E732C) {
-		arg0->unkE = (s16)(var_v0 - D_800E732C);
+		arg0->unkE = (s16)(arg0->unkE - D_800E732C);
 		return;
 	}
 	arg0->unkE = arg1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007D37C_16543C.s")
-#endif
 
 // AI - Clear movement-in-progress flag
 void func_8007D52C_1655EC(void) {
