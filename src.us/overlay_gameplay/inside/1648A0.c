@@ -2733,14 +2733,16 @@ void func_8007F668_167728(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007F668_167728.s")
 #endif
 
-#ifdef NON_MATCHING
 // AI - Free NPC animation memory
 void func_8007F724_1677E4(void) {
-	Unk80157600 *ptr;
+	volatile Unk80157600 *ptr;
+	s32 unk404;
 
 	ptr = (Unk80157600 *) &D_800E6AD8;
-	if (ptr->unk404 != NULL) {
-		func_8000C764_D364((s32) ptr->unk404);
+	if (ptr){}
+	unk404 = (s32) ptr->unk404;
+	if (unk404 != 0) {
+		func_8000C764_D364(unk404);
 		ptr = (Unk80157600 *) &D_800E6AD8;
 		func_8000C764_D364((s32) ptr->unk408);
 		ptr = (Unk80157600 *) &D_800E6AD8;
@@ -2748,9 +2750,6 @@ void func_8007F724_1677E4(void) {
 		ptr->unk404 = NULL;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007F724_1677E4.s")
-#endif
 
 // AI - Update NPC animation state each frame
 void func_8007F778_167838(void) {
