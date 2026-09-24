@@ -7576,6 +7576,7 @@ void func_8008B8E4_9A894(u8 arg0)
 }
 
 // CURRENT(1895)
+// Shield Generator on-death function - called in Greece, Java, America, and Siberia - this func does not directly lead to boss cutscene
 #ifdef NON_MATCHING
 void func_8008BC58_9AC08(u8 arg0)
 {
@@ -7595,10 +7596,11 @@ void func_8008BC58_9AC08(u8 arg0)
 
 	if (inst->unk2C == 0x28)
 	{
-		func_800D6ADC_E5A8C(inst->unk0, inst->unk2, inst->unk4, 5);
+		func_800D6ADC_E5A8C(inst->unk0, inst->unk2, inst->unk4, 5); // create nuke
 	}
-
-	if (inst->unk2C < 0x28)
+    
+	// random particle effects/explosions
+	if (inst->unk2C < 0x28) 
 	{
 		u32 divisor = (func_800038E0_44E0() % 5) + 2;
 		if (((u32)D_80052A8C % divisor) == 0)
@@ -7623,14 +7625,17 @@ void func_8008BC58_9AC08(u8 arg0)
 		}
 	}
 
-	if ((inst->unk2C < 0x50) && (inst->unk2C >= 0x10))
+	if ((inst->unk2C < 0x50) && (inst->unk2C >= 0x10)) 
 	{
 		s32 idx;
 		s32 iter;
 
 		func_80128504_1374B4(inst, 0, &sp70, &sp6C, &sp68);
 
-		idx = inst->unk2C - 0x10;
+	    // walk through VehicleInstances and apply 32767 damage to non-player vehicles within 8192 distance of the Shield Generator instance
+	    // implementation seems bugged/incomplete as any vehicles in slot 64 or higher aren't actually destroyed by this function
+
+		idx = inst->unk2C - 0x10; 
 		if ((D_80052B34 != &vehicleInstances[idx]) && (vehicleInstances[idx].unk1A != 0))
 		{
 			if (func_80084E54_93E04(inst, &vehicleInstances[idx]) < 0x2000)
@@ -7638,6 +7643,9 @@ void func_8008BC58_9AC08(u8 arg0)
 				func_80123E90_132E40(&vehicleInstances[idx], 0x7FFF);
 			}
 		}
+
+		// walk through AlienInstances and despawn any active aliens in entire level
+
 		for (iter = 0; iter != 0x100; iter += 0x40, idx += 0x40)
 		{
 			if ((idx != 0xFF) && (idx >= 0) && (idx != arg0))
