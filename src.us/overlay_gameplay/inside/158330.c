@@ -6225,53 +6225,43 @@ void func_80070464_158524(s32 *arg0, s32 *arg1, s32 arg2)
 	}
 }
 
-#ifdef NON_MATCHING
+// CURRENT(80)
 // Spawns objects/characters in the current room
-void func_800705E0_1586A0(void *arg0) {
-	s16 tempS16;
+#ifdef NON_MATCHING
+void func_800705E0_1586A0(u8 *arg0) {
+	s32 roomIndex;
 	s32 i;
+	s32 roomId;
 	s32 interiorId;
 	s32 levelIndex;
-	s32 objectFlags;
-	s32 roomIndex;
-	s32 roomId;
-	s32 wordIndex;
-	u64 missionId;
-	u32 bitIndex;
-	u8 roomType;
+	s32 roomType;
 	u8 roomX;
 	u8 roomY;
-	u8 *mapData;
-	u8 *roomData;
-	u8 *mapRoot;
-	Unk80070F7CObj *obj;
-	Unk800E66A8 *entry;
 
 	D_800E65E8 = arg0;
-	D_800A0960_188A20 = D_800E65E8[0xE8];
+	*((u8 *)&D_800A0960_188A20) = D_800E65E8[0xE8];
 	D_800E7394 = arg0;
 	D_800E66A4 = D_800E65E8[0xE7];
 
-	levelIndex = D_8009C4C8_184588[currentLevel] + D_800E66A4;
-	D_800E65BC = (Unk80070F7CObj *)&D_8008E0A8_176168[levelIndex][0];
-	D_800E65C0 = (Gfx **)&D_8009C1A8_184268[levelIndex << 5];
-	D_800E65C4 = &D_8009C4E4_1845A4[levelIndex << 3];
+	levelIndex = D_8009C4C4_184584[currentLevel] + D_800E66A4;
+	D_800E65BC = &D_8008E0A8_176168[levelIndex][0];
+	D_800E65C0 = &((Gfx **)D_8009C1A8_184268)[levelIndex << 3];
+	D_800E65C4 = &((s32 *)D_8009C4E4_1845A4)[levelIndex << 3];
 	D_800E65C8 = &D_8009C804_1848C4[levelIndex];
 
 	D_800E6460 = D_800E65E8[0xE4];
 	D_800E6464 = D_800E65E8[0xE5];
-	for (i = 0; i < 0x64; i++) {
-		D_800E69A8[i] = D_800E65E8[0x80 + i];
+	i = 0;
+	roomIndex = 0;
+	for (; roomIndex < 0x64; roomIndex++) {
+		D_800E69A8[roomIndex] = D_800E65E8[0x80 + roomIndex];
 	}
 
-	D_800E668C = D_800E65E8[0xE6];
-	i = 0;
+	D_800E668C = arg0[0xE6];
+	roomIndex = 0;
 	if (D_800E668C > 0) {
-		interiorId = (s32)buildingInteriorToLoadId;
-		entry = D_800E66A8;
-		for (roomIndex = 0; roomIndex < D_800E668C; roomIndex++) {
-			roomData = D_800E65E8 + roomIndex;
-			roomType = roomData[0x30] & 0x1F;
+		do {
+			roomType = (&D_800E65E8[roomIndex])[0x30] & 0x1F;
 			// Actually objectType
 			// First 3 bits are:
 			// 000 Facing forward
@@ -6283,188 +6273,163 @@ void func_800705E0_1586A0(void *arg0) {
 			// 010 Facing back
 			// Last 5 are object id
 
-			entry->unk0 = roomType;
-			entry->unk8 = (roomData[0x30] & 0x60) >> 5;
-			roomX = roomData[0x40];
-			roomY = roomData[0x50];
-			entry->unk2C = roomData[0x60];
-			entry->unkC = 0;
-			entry->unkE = -1;
-			entry->unk2E &= 0xFE;
-			entry->unk2D = roomData[0x70];
+			D_800E66A8[i].unk0 = roomType;
+			D_800E66A8[i].unk8 = (D_800E65E8[roomIndex + 0x30] & 0x60) >> 5;
+			roomX = D_800E65E8[roomIndex + 0x40];
+			roomY = D_800E65E8[roomIndex + 0x50];
+			D_800E66A8[i].unk2C = D_800E65E8[roomIndex + 0x60];
+			D_800E66A8[i].unk2D = D_800E65E8[roomIndex + 0x70];
+			D_800E66A8[i].unkC = 0;
+			D_800E66A8[i].unkE = -1;
+			D_800E66A8[i].unk2E &= ~1;
 
-			wordIndex = interiorId >> 5;
-			if ((interiorId < 0) && ((interiorId & 0x1F) != 0)) {
-				wordIndex--;
-			}
-			bitIndex = (u32)interiorId & 0x1F;
-			if ((interiorId < 0) && (bitIndex != 0)) {
-				bitIndex -= 0x20;
-			}
+			interiorId = (s32)buildingInteriorToLoadId;
 
-			if (((u32 *)D_80047F40)[wordIndex] & (1U << bitIndex)) {
+			if (D_80047F40[interiorId / 32] & (1 << (interiorId % 32))) {
 				if (D_80047D40[interiorId] & (1 << i)) {
-					entry->unk2E |= 1;
-					entry->unkC = D_800E65BC[roomType].unk16;
+					D_800E66A8[i].unk2E |= 1;
+					D_800E66A8[i].unkC = (u16)D_800E65BC[roomType].unk16;
 				}
-			} else if (roomData[0x30] & 0x80) {
-				entry->unk2E |= 1;
+			} else if (D_800E65E8[roomIndex + 0x30] & 0x80) {
+				D_800E66A8[i].unk2E |= 1;
 			}
+			roomId = D_800E66A8[i].unk2D & 0x3F;
 
-			obj = &D_800E65BC[roomType];
-			roomId = entry->unk2D & 0x3F;
-
-			if (obj->unk40 & 0xE0000) {
-				func_80070F7C_15903C(0, roomType, i);
-				obj = &D_800E65BC[roomType];
-				if (obj->unk40 & 0x80000) {
-					entry->unk2E |= 3;
+			if (D_800E65BC[roomType].unk40 & 0xE0000) {
+				func_80070F7C_15903C(0, (u8)roomType, i);
+				if (D_800E65BC[roomType].unk40 & 0x80000) {
+					D_800E66A8[i].unk2E |= 1;
+					D_800E66A8[i].unk2E |= 2;
 				} else {
 					if ((roomId < 0x38) && (roomId != 0)) {
-						missionId = (((u64)((u32)(roomId >> 0x1F))) << 0x20) | (u32)roomId;
-						if ((func_8000726C_7E6C(missionId) != 0) && (entry->unk2D & 0x40)) {
-							entry->unk2E |= 1;
+						if ((func_8000726C_7E6C((u64)roomId) != 0) && (D_800E66A8[i].unk2D & 0x40)) {
+							D_800E66A8[i].unk2E |= 1;
 						} else {
-							entry->unk2E &= 0xFE;
+							D_800E66A8[i].unk2E &= ~1;
 						}
 					}
-					if (entry->unk2E & 1) {
-						missionId = (((u64)((u32)(roomId >> 0x1F))) << 0x20) | (u32)roomId;
-						func_800072CC_7ECC(missionId);
-						obj = &D_800E65BC[roomType];
-						if (obj->unk40 & 0x20000) {
-							entry->unk2E |= 2;
+					if (D_800E66A8[i].unk2E & 1) {
+						func_800072CC_7ECC((u64)roomId);
+						if (D_800E65BC[roomType].unk40 & 0x20000) {
+							D_800E66A8[i].unk2E |= 2;
 						}
-					} else if (obj->unk40 & 0x40000) {
-						entry->unk2E |= 2;
+					} else if (D_800E65BC[roomType].unk40 & 0x40000) {
+						D_800E66A8[i].unk2E |= 2;
 					}
 				}
 			} else {
 				if ((roomId < 0x38) && (roomId != 0)) {
-					missionId = (((u64)((u32)(roomId >> 0x1F))) << 0x20) | (u32)roomId;
-					if ((func_8000726C_7E6C(missionId) != 0) && (entry->unk2D & 0x40)) {
-						entry->unk2E |= 1;
+					if (func_8000726C_7E6C((u64)roomId) != 0) {
+						if (D_800E66A8[i].unk2D & 0x40) {
+							D_800E66A8[i].unk2E |= 1;
+						}
 					} else {
-						entry->unk2E &= 0xFE;
+					D_800E66A8[i].unk2E &= ~1;
 					}
 				}
-				if (entry->unk2E & 1) {
-					missionId = (((u64)((u32)(roomId >> 0x1F))) << 0x20) | (u32)roomId;
-					func_800072CC_7ECC(missionId);
-					func_80070F7C_15903C(obj->unk1E, roomType, i);
+				if (D_800E66A8[i].unk2E & 1) {
+					func_800072CC_7ECC((u64)roomId);
+					func_80070F7C_15903C(D_800E65BC[roomType].unk1E, roomType, i);
 				} else {
 					func_80070F7C_15903C(0, roomType, i);
 				}
-				obj = &D_800E65BC[roomType];
 			}
 
 			switch (roomType) {
 			case 30:
-				entry->unk4 = (s8)obj->pad1C[0];
-				switch (entry->unk8) {
+				D_800E66A8[i].unk4 = (s8)D_800E65BC[roomType].pad1C[0];
+				switch (D_800E66A8[i].unk8) {
 				case 0:
-					entry->unk2 = ((s32)obj->unk18 / 2) + ((s8)roomX * 0x60) + 0x60;
-					entry->unk6 = ((s32)obj->unk1A / 2) + ((s8)roomY * 0x60) + 0x60;
+					D_800E66A8[i].unk2 = ((s32)D_800E65BC[roomType].unk18 / 2) + ((s8)roomX * 0x60) + 0x60;
+					D_800E66A8[i].unk6 = ((s32)D_800E65BC[roomType].unk1A / 2) + ((s8)roomY * 0x60) + 0x60;
 					break;
 				case 1:
-					entry->unk2 = ((s32)obj->unk1A / 2) + ((s8)roomX * 0x60) + 0x60;
-					tempS16 = ((s32)obj->unk18 / 2) + ((s8)roomY * 0x60) + 0x60;
-					entry->unk6 = tempS16;
+					D_800E66A8[i].unk2 = ((s32)D_800E65BC[roomType].unk1A / 2) + ((s8)roomX * 0x60) + 0x60;
+					D_800E66A8[i].unk6 = ((s32)D_800E65BC[roomType].unk18 / 2) + (roomY * 0x60) + 0x60;
 					break;
 				case 2:
-					entry->unk2 = ((s8)roomX * 0x60) - ((s32)obj->unk18 / 2) + 0xC0;
-					tempS16 = ((s8)roomY * 0x60) - ((s32)obj->unk1A / 2) + 0xC0;
-					entry->unk6 = tempS16;
+					D_800E66A8[i].unk2 = ((s8)roomX * 0x60) - ((s32)D_800E65BC[roomType].unk18 / 2) + 0xC0;
+					D_800E66A8[i].unk6 = ((s8)roomY * 0x60) - ((s32)D_800E65BC[roomType].unk1A / 2) + 0xC0;
 					break;
 				case 3:
-					entry->unk2 = ((s8)roomX * 0x60) - ((s32)obj->unk1A / 2) + 0xC0;
-					tempS16 = ((s8)roomY * 0x60) - ((s32)obj->unk18 / 2) + 0xC0;
-					entry->unk6 = tempS16;
+					D_800E66A8[i].unk2 = ((s8)roomX * 0x60) - ((s32)D_800E65BC[roomType].unk1A / 2) + 0xC0;
+					D_800E66A8[i].unk6 = ((s8)roomY * 0x60) - ((s32)D_800E65BC[roomType].unk18 / 2) + 0xC0;
 					break;
 				}
-				objectFlags = obj->unk40;
 				break;
 
 			case 29:
-				entry->unk2 = roomX + 1;
-				entry->unk6 = roomY + 1;
-				entry->unk4 = 0;
-				objectFlags = obj->unk40;
+				D_800E66A8[i].unk2 = roomX + 1;
+				D_800E66A8[i].unk6 = roomY + 1;
+				D_800E66A8[i].unk4 = 0;
 				break;
 
 			case 31:
 				D_800E6630 = (buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C;
-				entry->unk2 = (roomX * 8) + 0x60;
-				entry->unk4 = (s8)obj->pad1C[0];
-				entry->unk6 = (roomY * 8) + 0x60;
+				D_800E66A8[i].unk2 = (roomX * 8) + 0x60;
+				D_800E66A8[i].unk4 = (s8)D_800E65BC[roomType].pad1C[0];
+				D_800E66A8[i].unk6 = (roomY * 8) + 0x60;
 
-				mapRoot = &D_8009CD7C_184E3C[currentLevel * 0x1E];
-				mapData = &mapRoot[D_800E6630 * 2];
-				obj->unk18 = mapData[0];
-				D_800E65BC[roomType].unk1A = mapData[1];
+			D_800E65BC[roomType].unk18 = D_8009CD7C_184E3C[((currentLevel - 1) * 0x1E) + (D_800E6630 * 2)];
+			D_800E65BC[roomType].unk1A = D_8009CD7C_184E3C[((currentLevel - 1) * 0x1E) + (D_800E6630 * 2) + 1];
 
-				osSyncPrintf(D_800A4380_18C440, D_800E6630, entry->unk2, entry->unk6);
+				osSyncPrintf(D_800A4380_18C440, D_800E6630, D_800E66A8[i].unk2, D_800E66A8[i].unk6);
 				func_8007F668_167728(D_80047F93, D_800E6633);
-				objectFlags = D_800E65BC[roomType].unk40;
 				break;
 
 			default:
-				objectFlags = obj->unk40;
-				if (*(s32 *)obj == 0) {
+				if (*(u32 *)D_800E65BC[roomType].pad0 == 0) {
 					i--;
-					entry--;
 					break;
 				}
 
-				if (objectFlags & 8) {
-					if (objectFlags & 0x80) {
+				if (D_800E65BC[roomType].unk40 & 8) {
+					if (D_800E65BC[roomType].unk40 & 0x80) {
 						D_800E6610++;
-						if (entry->unk2E & 1) {
+						if (D_800E66A8[i].unk2E & 1) {
 							D_800E6614++;
-							if (obj->unk40 & 0x40) {
+							if (D_800E65BC[roomType].unk40 & 0x40) {
 								D_800E6604++;
 							}
 						}
 					} else {
 						D_800E6600++;
-						if (entry->unk2E & 1) {
+						if (D_800E66A8[i].unk2E & 1) {
 							D_800E65FC++;
-							if (obj->unk40 & 0x40) {
+							if (D_800E65BC[roomType].unk40 & 0x40) {
 								D_800E6604++;
 							}
 						}
 					}
 				}
 
-				if (objectFlags < 0) {
-					entry->unk2 = ((s8)roomX * 0x60) + 0x90;
-					entry->unk4 = (s8)obj->pad1C[0];
-					entry->unk6 = ((s8)roomY * 0x60) + 0x90;
+				if (D_800E65BC[roomType].unk40 & 0x80000000) {
+				D_800E66A8[i].unk2 = ((s8)roomX * 0x60) + 0x90;
+					D_800E66A8[i].unk4 = (s8)D_800E65BC[roomType].pad1C[0];
+				D_800E66A8[i].unk6 = ((s8)roomY * 0x60) + 0x90;
 				} else {
-					entry->unk2 = (roomX * 8) + 0x60;
-					entry->unk6 = (roomY * 8) + 0x60;
-					entry->unk4 = (s8)obj->pad1C[0];
+					D_800E66A8[i].unk2 = (roomX * 8) + 0x60;
+					D_800E66A8[i].unk4 = (s8)D_800E65BC[roomType].pad1C[0];
+					D_800E66A8[i].unk6 = (roomY * 8) + 0x60;
 				}
 
-				osSyncPrintf(D_800A43A8_18C468, roomType, entry->unk2, entry->unk6);
-				objectFlags = D_800E65BC[roomType].unk40;
+				osSyncPrintf(D_800A43A8_18C468, roomType, D_800E66A8[i].unk2, D_800E66A8[i].unk6);
 				break;
 			}
 
-			if (objectFlags & 0x40000000) {
+			if (D_800E65BC[roomType].unk40 & 0x40000000) {
 				func_8007774C_15F80C(i, roomType);
 			}
-			if (entry->unk2E & 1) {
-				objectFlags = D_800E65BC[roomType].unk40;
-				if (!(objectFlags & 0xE0000) && (objectFlags & 0x20000000)) {
+			if (D_800E66A8[i].unk2E & 1) {
+				if (!(D_800E65BC[roomType].unk40 & 0xE0000) && (D_800E65BC[roomType].unk40 & 0x20000000)) {
 					func_8007774C_15F80C(i, roomType);
 				}
 			}
 
 			func_80074D98_15CE58(i);
+			roomIndex++;
 			i++;
-			entry++;
-		}
+		} while (roomIndex < D_800E668C);
 	}
 
 	D_800E668C = i;
@@ -6477,6 +6442,7 @@ void func_800705E0_1586A0(void *arg0) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800705E0_1586A0.s")
 #endif
+
 
 // AI - Initializes a room entry's animated offset/scale values
 void func_80070F7C_15903C(s16 arg0, u8 arg1, u8 arg2)
