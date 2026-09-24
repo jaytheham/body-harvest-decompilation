@@ -5906,7 +5906,8 @@ D_80096548 = 0x80096548;
 D_800965D8 = 0x800965D8;
 D_800965E8 = 0x800965E8;
 D_800965F0 = 0x800965F0;
-/* Symbols within overlay_gameplay/inside 1648A0.c data section (overlap with D_8009E4D4_186594) */
+/* Symbols within overlay_gameplay/inside 1648A0.c data section (addresses aliased into D_8009E4C8_186588) */
+D_8009E4D4_186594 = 0x8009E4D4;
 D_8009E8D8_186998 = 0x8009E8D8;
 D_8009E8DC_18699C = 0x8009E8DC;
 /* Symbols within overlay_gameplay/inside 1648A0.c data section (offset into D_800A05FC_1886BC route array) */

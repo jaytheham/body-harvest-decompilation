@@ -1292,8 +1292,7 @@ extern u8 D_8009CE60_184F20[];
 extern s32 D_8009D260_185320[];
 // AI - Model/vertex data following the character display list table
 extern u8 D_8009D298_185358[];
-extern u8 D_8009E4C8_186588[];
-extern u8 D_8009E4D4_186594[];
+extern Unk8009E4C8_Row D_8009E4C8_186588[];
 extern s32 D_8009E8D8;
 extern Unk8009E8DC D_8009E8DC_18699C[];
 extern Unk8009E8E0 D_8009E8E0_1869A0[];
