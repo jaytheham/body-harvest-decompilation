@@ -1509,6 +1509,7 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1);
 void func_8007D37C_16543C(VehicleInstance *arg0, s16 arg1, s32 arg2);
 void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1);
 void func_8007EB1C_166BDC(void *arg0);
+u8 func_800717A8_159868(void);
 void func_8007EFD4_167094(VehicleInstance *arg0);
 void func_8000AFDC_BBDC(void);
 void func_8000577C_637C(void);
