@@ -1562,27 +1562,17 @@ u8 D_800A2220_18A2E0[0x400] = {
 // 1648A0 rodata
 // ============================================================
 
-const char D_800A4BB0_18CC70[] = "ALLOCATE 2 PLAYER BUFFERS:\n";
-
-const char D_800A4BCC_18CC8C[] = "ERROR: could not find search animation for object %d. Using SEARCH_MED\n";
-
-const char D_800A4C14_18CCD4[] = "Ussr Search Table Parse\n";
-
-const char D_800A4C30_18CCF0[] = "Usa Search Table Parse\n";
-
-const char D_800A4C48_18CD08[] = "Java Search Table Parse\n";
-
-const char D_800A4C64_18CD24[] = "Greec Search Table Parse\n";
-
-const char D_800A4C80_18CD40[] = "For obj=%d style = %d,  search anim is %s\n";
-
-const char D_800A4CAC_18CD6C[] = "Call Doug - inSearchObject() NOW!\n";
-
-const char D_800A4CD0_18CD90[] = "Turn to door\n";
-
-const char D_800A4CE0_18CDA0[] = "ouch\n";
-
-const char D_800A4CE8_18CDA8[] = "ALLOCATE 2 CHARACTER BUFFERS\n";
+const char D_800A4BB0_18CC70[] = "ALLOCATE 2 PLAYER BUFFERS:\n"; // "ALLOCATE 2 PLAYER BUFFERS:\n"
+const char D_800A4BCC_18CC8C[] = "ERROR: could not find search animation for object %d. Using SEARCH_MED\n"; // "ERROR: could not find search animation for object %d. Using SEARCH_MED\n"
+const char D_800A4C14_18CCD4[] = "Ussr Search Table Parse\n"; // "Ussr Search Table Parse\n"
+const char D_800A4C30_18CCF0[] = "Usa Search Table Parse\n"; // "Usa Search Table Parse\n"
+const char D_800A4C48_18CD08[] = "Java Search Table Parse\n"; // "Java Search Table Parse\n"
+const char D_800A4C64_18CD24[] = "Greec Search Table Parse\n"; // "Greec Search Table Parse\n"
+const char D_800A4C80_18CD40[] = "For obj=%d style = %d,  search anim is %s\n"; // "For obj=%d style = %d,  search anim is %s\n"
+const char D_800A4CAC_18CD6C[] = "Call Doug - inSearchObject() NOW!\n"; // "Call Doug - inSearchObject() NOW!\n"
+const char D_800A4CD0_18CD90[] = "Turn to door\n"; // "Turn to door\n"
+const char D_800A4CE0_18CDA0[] = "ouch\n"; // "ouch\n"
+const char D_800A4CE8_18CDA8[] = "ALLOCATE 2 CHARACTER BUFFERS\n"; // "ALLOCATE 2 CHARACTER BUFFERS\n"
 
 const f64 D_800A4D08_18CDC8[1] = {3.141592654};
 
@@ -2709,6 +2699,7 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 // AI - Initialize NPC entity and its animation
 void func_8007F668_167728(u8 arg0, u8 arg1) {
 	s32 sp24;
+	Unk8009E4C8 *entry;
 
 	sp24 = arg0;
 	D_800E6AD8.unk426 = sp24 - 1;
@@ -2717,9 +2708,10 @@ void func_8007F668_167728(u8 arg0, u8 arg1) {
 	D_800E6AD8.unk404 = func_8000C6F4_D2F4();
 	D_800E6AD8.unk408 = func_8000C6F4_D2F4();
 	D_800E6AD8.unk410 = 1.0f;
+	entry = &((Unk8009E4C8_Row *) D_8009E4C8_186588)[sp24 - 1][arg1];
 	func_8000C790_D390(&D_800E6AD8,
-		*(s32 *)(D_8009E4C8_186588 + sp24 * 0xD0 + arg1 * 0x10 - 0xCC),
-		*(D_8009E4C8_186588 + sp24 * 0xD0 + arg1 * 0x10 - 0xC4));
+		entry->unk4,
+		entry->unkC);
 	((Unk8007F878_404 *)D_800E6AD8.unk404)->unkE50 = 0;
 }
 #else
@@ -2749,15 +2741,15 @@ void func_8007F724_1677E4(void) {
 void func_8007F778_167838(void) {
 	u8 temp_v1;
 	u8 temp_t0;
-	u8 *temp_v0;
+	Unk8009E4C8 *temp_v0;
 
 	if ((Unk8007F878_404 *)D_800E6AD8.unk404 != NULL) {
 		temp_v1 = D_800E6AD8.unk426;
 		temp_t0 = D_800E6AD8.unk425;
 		if (((Unk8007F878_404 *)D_800E6AD8.unk404)->unkE50 == 0) {
 			if (!((currentLevel == LEVEL_COMET) && (temp_v1 == 4) && (temp_t0 == 0) && (D_800E65A8 & 0x100))) {
-				temp_v0 = &D_8009E4C8_186588[temp_v1 * 0xD0 + temp_t0 * 0x10];
-				func_8007DAA8_165B68(&D_800E6AD8, *(s32*)(temp_v0 + 8), NULL, 0.0f, temp_v0[0xC]);
+				temp_v0 = &((Unk8009E4C8_Row *) D_8009E4C8_186588)[temp_v1][temp_t0];
+				func_8007DAA8_165B68(&D_800E6AD8, temp_v0->unk8, NULL, 0.0f, temp_v0->unkC);
 			}
 		}
 		func_8000CF4C_DB4C((Unk8007F878_404 *)D_800E6AD8.unk404, &D_800E6AD8,
@@ -2788,58 +2780,52 @@ void func_8007F878_167938(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007F878_167938.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(1160)
 // AI - Render NPC model with full matrix transforms
-void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-	s32 sp64;
-	s32 sp60;
-	s32 sp5C;
-	s16 sp58;
-	s16 sp56;
-	s16 sp54;
-	s16 sp50;
-	s16 sp4E;
-	s16 sp4C;
-	u8 sp4B;
-	u8 sp4A;
-	s32 sp44;
-	s32 sp40;
-	s32 sp3C;
-	void *sp20;
-	void *temp_t1;
-
-	sp5C = arg0 << 0x10;
-	sp4B = D_800E6AD8.unk426;
-	sp4C = arg3;
-	sp60 = arg1 << 0x10;
-	sp64 = arg2 << 0x10;
-	sp4E = 0;
-	sp50 = 0;
-	sp54 = 0x40;
-	sp56 = 0x40;
-	sp58 = 0x40;
-	sp4A = D_800E6AD8.unk425;
-	func_8000C81C_D41C(&sp5C, &sp4C, &sp54, D_8005BB38);
+#ifdef NON_MATCHING
+void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
+{
+	s32 position[3];
+	s16 scale[3];
+	u8 model;
+	u8 category;
+	s16 rotation[3];
+	Unk8009E4C8 *entry;
+	s32 translation[3];
+	position[0] = arg0 << 0x10;
+	category = D_800E6AD8.unk426;
+	position[1] = arg1 << 0x10;
+	model = D_800E6AD8.unk425;
+	position[2] = arg2 << 0x10;
+	rotation[0] = arg3;
+	rotation[1] = 0;
+	rotation[2] = 0;
+	scale[0] = 0x40;
+	scale[1] = 0x40;
+	scale[2] = 0x40;
+	func_8000C81C_D41C(position, rotation, scale, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	if ((D_800E6AD8.unk426 == 4) && (D_800E6AD8.unk425 == 0)) {
-		sp3C = (s32) (D_800E6AD8.unk8 * 65536.0f);
-		sp40 = (s32) (D_800E6AD8.unkC * 65536.0f);
-		sp44 = (s32) (D_800E6AD8.unk10 * 65536.0f);
-	} else {
-		sp40 = 0;
-		sp3C = (s32) (D_800E6AD8.unk8 * 65536.0f);
-		sp44 = (s32) (D_800E6AD8.unk10 * 65536.0f);
+	if ((D_800E6AD8.unk426 == 4) && (D_800E6AD8.unk425 == 0))
+	{
+		translation[0] = (s32)(D_800E6AD8.unk8 * 65536.0f);
+		translation[1] = (s32)(D_800E6AD8.unkC * 65536.0f);
+		translation[2] = (s32)(D_800E6AD8.unk10 * 65536.0f);
 	}
-	sp4C = D_800E6AD8.unk2 * 8;
-	sp4E = D_800E6AD8.unk4 * 8;
-	sp50 = D_800E6AD8.unk0 * 8;
-	func_8000C81C_D41C(&sp3C, &sp4C, NULL, D_8005BB38);
+	else
+	{
+		translation[1] = 0;
+		translation[0] = (s32)(D_800E6AD8.unk8 * 65536.0f);
+		translation[2] = (s32)(D_800E6AD8.unk10 * 65536.0f);
+	}
+	rotation[0] = D_800E6AD8.unk2 * 8;
+	rotation[1] = D_800E6AD8.unk4 * 8;
+	rotation[2] = D_800E6AD8.unk0 * 8;
+	func_8000C81C_D41C(translation, rotation, NULL, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
-	temp_t1 = (sp4B * 0xD0) + (sp4A * 0x10) + &D_8009E4C8_186588;
-	sp20 = temp_t1;
-	func_8000CC3C_D83C(&D_800E6AD8, temp_t1->unkC);
-	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(temp_t1->unk0));
+	entry = &((Unk8009E4C8_Row *)D_8009E4C8_186588)[category][model];
+	func_8000CC3C_D83C(&D_800E6AD8, entry->unkC);
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(entry->unk0));
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }

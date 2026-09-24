@@ -364,7 +364,7 @@ segments:
     exclusive_ram_id: 80070270
     overlay: true
     subsegments:
-      - [0x158330, c, overlay_gameplay/inside/158330] # Inside main, rendering
+      - [0x158330, c, overlay_gameplay/inside/158330] # Rendering, object/char spawning
       - [0x1648A0, c, overlay_gameplay/inside/1648A0] # Player, animations, NPCs
       - [0x167C90, c, overlay_gameplay/inside/167C90] # Camera
       - [0x16AF30, c, overlay_gameplay/inside/16AF30] # Effects

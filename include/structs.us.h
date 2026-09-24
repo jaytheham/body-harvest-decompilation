@@ -1815,7 +1815,14 @@ typedef struct {
 } Unk80080588Rgb; /* size = 0x03 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x18];
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[0x2];
+	/* 0x08 */ f32 unk8;
+	/* 0x0C */ f32 unkC;
+	/* 0x10 */ f32 unk10;
+	/* 0x14 */ u8 pad14[0x4];
 	/* 0x18 */ s32 unk18;
 } Unk80080588Entry1C; /* size = 0x1C */
 
@@ -2171,7 +2178,14 @@ typedef struct {
 } AnimChannelState; /* size = 0x40 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x18];
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[0x2];
+	/* 0x08 */ f32 unk8;
+	/* 0x0C */ f32 unkC;
+	/* 0x10 */ f32 unk10;
+	/* 0x14 */ u8 pad14[0x4];
 	/* 0x18 */ s32 unk18;
 	/* 0x1C */ u8 pad1C[0x3E8];
 	/* 0x404 */ void *unk404;
@@ -2182,6 +2196,16 @@ typedef struct {
 	/* 0x425 */ u8 unk425;
 	/* 0x426 */ u8 unk426;
 } Unk8007F878_D6AD8; /* size = 0x428 */
+
+typedef struct {
+	/* 0x00 */ u32 unk0; /* segmented display-list address */
+	/* 0x04 */ s16 *unk4; /* animation data */
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ u8 unkC;
+	/* 0x0D */ u8 padD[0x3];
+} Unk8009E4C8; /* stride = 0x10 */
+
+typedef Unk8009E4C8 Unk8009E4C8_Row[0xD];
 
 typedef struct {
 	/* 0x00 */ u8 unk0;
