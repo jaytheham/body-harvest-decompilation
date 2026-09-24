@@ -1896,21 +1896,22 @@ void func_8007D52C_1655EC(void) {
 	D_800E6A68 &= ~0x200;
 }
 
-#ifdef NON_MATCHING
 // AI - Set up search mode with target coordinates and yaw
 void func_8007D548_165608(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+	f32 xDiff;
+	f32 zDiff;
 	func_8007DAA8_165B68(D_800E6F00, 0x11, NULL, 0.0f, 0x10);
 	D_800E6A1C = arg0;
 	D_800E6A20 = arg1;
 	D_800E6A24 = arg2;
 	D_800E6A28 = arg3;
 	D_800E6A2C = arg4;
-	D_800E6A30 = (func_80003824_4424(D_800E6A78.unk4C - (f32) D_800E6A20, D_800E6A78.unk54 - (f32) D_800E6A24) + 0x8000) & 0xFFFF;
+	xDiff = D_800E6A78.unk4C - (f32) D_800E6A20;
+	zDiff = D_800E6A78.unk54 - (f32) D_800E6A24;
+	D_800E6A30 = (func_80003824_4424(xDiff, zDiff) + 0x8000) & 0xFFFF;
 	D_800E6A68 |= 0x80;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007D548_165608.s")
-#endif
+
 
 // AI - Look up search animation ID for a given object
 s32 func_8007D62C_1656EC(Unk8007D62C_Entry *arg0, s32 arg1) {
@@ -1928,7 +1929,6 @@ s32 func_8007D62C_1656EC(Unk8007D62C_Entry *arg0, s32 arg1) {
 	}
 
 	if (found == 0) {
-		// ERROR: could not find search animation for object %d. Using SEARCH_MED.
 		osSyncPrintf(D_800A4BCC_18CC8C, arg1);
 		result = 0x1A;
 	}

@@ -139,7 +139,7 @@ s32 func_8007A168_162228(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 s32 func_8007A370_162430(s32 arg0, s32 arg1);
 s32 func_8007A414_1624D4(s32 arg0, s32 arg1, s32 arg2);
 void func_8007A6B4_89664(u8 arg0);
-void func_8007D548_165608(s32 arg0, s16 arg1, s16 arg2, u8 arg3, s32 arg4);
+void func_8007D548_165608(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_80007900_8500(u8 *arg0);
 void func_80007A20_8620(u8 *arg0);
 void func_80007C78_8878(u8 *arg0);
