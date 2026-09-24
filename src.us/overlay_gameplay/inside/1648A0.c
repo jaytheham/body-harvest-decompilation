@@ -2551,147 +2551,122 @@ void func_8007EB1C_166BDC(void *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007EB1C_166BDC.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(12777)
 // AI - Render player character model with full matrix setup and damage flash
+#ifdef NON_MATCHING
 void func_8007EFD4_167094(VehicleInstance *arg0) {
-	s32 spBC;
-	s32 spB8;
-	s32 spB4;
-	s16 spB0;
-	s16 spAE;
-	s16 spAC;
-	s16 spA8;
-	s16 spA6;
-	s16 spA4;
-	s16 spA0;
-	s16 sp9E;
-	s16 sp9C;
-	u8 sp84[24];
-	u8 sp6C[24];
-	s32 *temp_v0;
-	s32 *temp_v0_10;
-	s32 *temp_v0_11;
-	s32 *temp_v0_12;
-	s32 *temp_v0_13;
-	s32 *temp_v0_14;
-	s32 *temp_v0_2;
-	s32 *temp_v0_3;
-	s32 *temp_v0_4;
-	s32 *temp_v0_5;
-	s32 *temp_v0_6;
-	s32 *temp_v0_7;
-	s32 *temp_v0_8;
-	s32 *temp_v0_9;
 	s32 temp_a3;
-	s32 temp_a3_2;
-	s32 temp_a3_3;
-	s32 temp_a3_4;
-	s32 temp_a3_5;
-	s32 temp_a3_6;
 	s32 temp_f10;
-	s32 temp_f18;
-	s32 temp_f6;
-	u16 temp_t2;
+	s32 translation[3];
+	struct {
+		u32 table2[6];
+		u32 table1[6];
+		Unk80052B40 rotation;
+		u16 rotationPad;
+		Unk80052B40 scale;
+		u16 scalePad;
+		Unk80052B40 position;
+	} locals;
 
-	*(u32*)&sp84[0x0] = *(u32*)&D_800A092C[0x0];
-	*(u32*)&sp84[0x4] = *(u32*)&D_800A092C[0x4];
-	*(u32*)&sp84[0xC] = *(u32*)&D_800A092C[0xC];
-	*(u32*)&sp84[0x8] = *(u32*)&D_800A092C[0x8];
-	*(u32*)&sp84[0x10] = *(u32*)&D_800A092C[0x10];
-	*(u32*)&sp84[0x14] = *(u32*)&D_800A092C[0x14];
-	*(u32*)&sp6C[0x4] = *(u32*)&D_800A0944[0x4];
-	*(u32*)&sp6C[0x0] = *(u32*)&D_800A0944[0x0];
-	*(u32*)&sp6C[0x8] = *(u32*)&D_800A0944[0x8];
-	*(u32*)&sp6C[0xC] = *(u32*)&D_800A0944[0xC];
-	*(u32*)&sp6C[0x14] = *(u32*)&D_800A0944[0x14];
-	*(u32*)&sp6C[0x10] = *(u32*)&D_800A0944[0x10];
+	*(u32 *)&locals.table1[0] = *(u32 *)&D_800A092C_1889EC[0];
+	*(u32 *)&locals.table1[1] = *(u32 *)&D_800A092C_1889EC[1];
+	*(u32 *)&locals.table1[3] = *(u32 *)&D_800A092C_1889EC[3];
+	*(u32 *)&locals.table1[2] = *(u32 *)&D_800A092C_1889EC[2];
+	*(u32 *)&locals.table1[4] = *(u32 *)&D_800A092C_1889EC[4];
+	*(u32 *)&locals.table1[5] = *(u32 *)&D_800A092C_1889EC[5];
+	*(u32 *)&locals.table2[1] = *(u32 *)&D_800A0944_188A04[1];
+	*(u32 *)&locals.table2[0] = *(u32 *)&D_800A0944_188A04[0];
+	*(u32 *)&locals.table2[2] = *(u32 *)&D_800A0944_188A04[2];
+	*(u32 *)&locals.table2[3] = *(u32 *)&D_800A0944_188A04[3];
+	*(u32 *)&locals.table2[5] = *(u32 *)&D_800A0944_188A04[5];
+	*(u32 *)&locals.table2[4] = *(u32 *)&D_800A0944_188A04[4];
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, &D_80031200);
-	if (((u8*)D_80052B34)[0x20] & 0x2000) {
+	if (D_80052B34->unk20 & 0x2000) {
 		gDPSetFogColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF);
 		gSPFogPosition(D_8005BB2C++, 0, 100);
-		osSyncPrintf(&D_800A4CE0);
+		osSyncPrintf(D_800A4CE0_18CDA0);
 	} else {
 		gSPFogPosition(D_8005BB2C++, 995, 1000);
 	}
-	spAC = (s16) (s32) ((f64) (arg0->unk4C - 96.0f) + 0.5);
-	spAE = (s16) (s32) ((f64) arg0->unk50 + 0.5);
-	spB0 = (s16) (s32) ((f64) (arg0->unk54 - 96.0f) + 0.5);
-	sp9E = 0;
-	sp9C = 0x4000 - arg0->unkE;
-	spA0 = 0;
-	spA4 = 0x40;
-	spA6 = 0x40;
-	spA8 = 0x40;
-	func_800039D0_45D0(&spAC, &sp9C, &spA4, D_8005BB38);
+	locals.position.unk0 = (s16) (s32) ((f64) (arg0->unk4C - 96.0f) + 0.5);
+	locals.position.unk2 = (s16) (s32) ((f64) arg0->unk50 + 0.5);
+	locals.position.unk4 = (s16) (s32) ((f64) (arg0->unk54 - 96.0f) + 0.5);
+	locals.rotation.unk2 = 0;
+	locals.rotation.unk0 = 0x4000 - arg0->unkE;
+	locals.rotation.unk4 = 0;
+	locals.scale.unk0 = 0x40;
+	locals.scale.unk2 = 0x40;
+	locals.scale.unk4 = 0x40;
+	func_800039D0_45D0(&locals.position, &locals.rotation, &locals.scale, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	spB4 = 0;
-	spBC = 0;
-	sp9C = *(s16*)&D_800E6F00[0x0] * 8;
-	sp9E = *(s16*)&D_800E6F00[0x4] * 8;
-	spA0 = *(s16*)&D_800E6F00[0x2] * 8;
-	spB8 = (s32) (*(f32*)&D_800E6F00[0xC] * 65536.0f);
-	func_8000C81C_D41C(&spB4, &sp9C, 0, D_8005BB38);
+	translation[0] = 0;
+	translation[2] = 0;
+	locals.rotation.unk0 = *(s16*)&D_800E6F00[0x0] * 8;
+	locals.rotation.unk2 = *(s16*)&D_800E6F00[0x4] * 8;
+	locals.rotation.unk4 = *(s16*)&D_800E6F00[0x2] * 8;
+	translation[1] = (s32) (*(f32*)&D_800E6F00[0xC] * 65536.0f);
+	func_8000C81C_D41C(translation, &locals.rotation, 0, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
 	gSPSegment(D_8005BB2C++, 0x06, func_80012000_12C00(*(s32*)(&D_8009D260_185320 + (D_800E6A70 * 4))));
 	func_8000CC3C_D83C(&D_800E6F00, 0x10);
 	switch (*(s32*)&D_800E6F00[0x40C]) {
 	case 4:
-		if ((*(s16*)&D_800E6F00[0x18] >= 7) && (D_800A095C < 6)) {
+		if ((*(s32*)&D_800E6F00[0x18] >= 7) && (D_800A095C_188A1C < 6)) {
 			temp_a3 = D_8005BB38;
+			temp_f10 = (s32) (*(f32 *)&locals.table1[D_800A095C_188A1C] * 256.0f);
 			D_8005BB38 = temp_a3 + 0x40;
-			temp_f10 = (s32) ((*(f32*)&sp84[D_800A095C * 4]) * 256.0f);
-			spA6 = (s16) temp_f10;
-			spA4 = (s16) temp_f10;
-			spA8 = (s16) temp_f10;
-			func_800039D0_45D0(NULL, NULL, &spA4, temp_a3);
-			D_800A095C += 1;
-			if (spA4 == 0) {
+			locals.scale.unk2 = (s16) temp_f10;
+			locals.scale.unk0 = (s16) temp_f10;
+			locals.scale.unk4 = (s16) temp_f10;
+			func_800039D0_45D0(NULL, NULL, &locals.scale, temp_a3);
+			D_800A095C_188A1C += 1;
+			if (locals.scale.unk0 == 0) {
 				D_800E6A70 = 0;
 			}
 		} else {
-			temp_a3_2 = D_8005BB38;
-			D_8005BB38 = temp_a3_2 + 0x40;
-			func_800039D0_45D0(NULL, NULL, NULL, temp_a3_2);
+			temp_a3 = D_8005BB38;
+			D_8005BB38 = temp_a3 + 0x40;
+			func_800039D0_45D0(NULL, NULL, NULL, temp_a3);
 		}
 		break;
 	case 5:
-		if ((*(s16*)&D_800E6F00[0x18] >= 0xE) && (D_800A095C < 6)) {
-			temp_a3_3 = D_8005BB38;
-			D_8005BB38 = temp_a3_3 + 0x40;
-			temp_f6 = (s32) ((*(f32*)&sp84[D_800A095C * 4]) * 256.0f);
-			spA6 = (s16) temp_f6;
-			spA4 = (s16) temp_f6;
-			spA8 = (s16) temp_f6;
-			func_800039D0_45D0(NULL, NULL, &spA4, temp_a3_3);
-			D_800A095C += 1;
-			if (spA4 == 0) {
+		if ((*(s16*)&D_800E6F00[0x18] >= 0xE) && (D_800A095C_188A1C < 6)) {
+			temp_a3 = D_8005BB38;
+			temp_f10 = (s32) (*(f32 *)&locals.table1[D_800A095C_188A1C] * 256.0f);
+			D_8005BB38 = temp_a3 + 0x40;
+			locals.scale.unk2 = (s16) temp_f10;
+			locals.scale.unk0 = (s16) temp_f10;
+			locals.scale.unk4 = (s16) temp_f10;
+			func_800039D0_45D0(NULL, NULL, &locals.scale, temp_a3);
+			D_800A095C_188A1C += 1;
+			if (locals.scale.unk0 == 0) {
 				D_800E6A70 = 0;
 			}
 		} else {
-			temp_a3_4 = D_8005BB38;
-			D_8005BB38 = temp_a3_4 + 0x40;
-			func_800039D0_45D0(NULL, NULL, NULL, temp_a3_4);
-			D_800A095C = 0;
+			temp_a3 = D_8005BB38;
+			D_8005BB38 = temp_a3 + 0x40;
+			func_800039D0_45D0(NULL, NULL, NULL, temp_a3);
+			D_800A095C_188A1C = 0;
 		}
 		break;
 	default:
 		if (D_800E65A8 & 0x8000) {
-			temp_a3_5 = D_8005BB38;
-			D_8005BB38 = temp_a3_5 + 0x40;
-			temp_f18 = (s32) (256.0f * D_800E6A38);
-			spA6 = (s16) temp_f18;
-			spA4 = (s16) temp_f18;
-			spA8 = (s16) temp_f18;
-			func_800039D0_45D0(NULL, NULL, &spA4, temp_a3_5);
+			temp_a3 = D_8005BB38;
+			temp_f10 = (s32) (256.0f * D_800E6A38);
+			D_8005BB38 = temp_a3 + 0x40;
+			locals.scale.unk2 = (s16) temp_f10;
+			locals.scale.unk0 = (s16) temp_f10;
+			locals.scale.unk4 = (s16) temp_f10;
+			func_800039D0_45D0(NULL, NULL, &locals.scale, temp_a3);
 		} else {
-			temp_a3_6 = D_8005BB38;
-			spA6 = 0;
-			spA4 = 0;
-			D_8005BB38 = temp_a3_6 + 0x40;
-			spA8 = 0;
-			func_800039D0_45D0(NULL, NULL, &spA4, temp_a3_6);
+			temp_a3 = D_8005BB38;
+			locals.scale.unk2 = 0;
+			locals.scale.unk0 = 0;
+			D_8005BB38 = temp_a3 + 0x40;
+			locals.scale.unk4 = 0;
+			func_800039D0_45D0(NULL, NULL, &locals.scale, temp_a3);
 		}
 		break;
 	}
@@ -2700,9 +2675,8 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-	temp_t2 = *(u16*)&((u8*)D_80052B34)[0x20];
-	if (temp_t2 & 0x2000) {
-		*(u16*)&((u8*)D_80052B34)[0x20] = (u16) (temp_t2 & 0xDFFF);
+	if (D_80052B34->unk20 & 0x2000) {
+		D_80052B34->unk20 &= 0xDFFF;
 	}
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031120), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 }
