@@ -2132,11 +2132,10 @@ void func_8007DB98_165C58(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	}
 }
 
-#ifdef NON_MATCHING
 // AI - Handle animation-end callback with yaw and chained anims
 void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, s32 arg2) {
 	if (((Unk8007F878_404 *)arg1->unk404)->unkE50 == 0) {
-		arg0->unkE += (s32)((f32)D_8009E8DC_18699C[arg1->unk40C].unk10 * 32768.0f / D_800A4D90);
+		arg0->unkE += (s16)((f32)D_8009E8DC_18699C[arg1->unk40C].unk10 * 32768.0f / D_800A4D90_18CE50[0]);
 		arg1->unk2 = 0;
 		if (D_8009E8DC_18699C[arg1->unk40C].unk4 & 1) {
 			func_8007DAA8_165B68(arg1, arg1->unk40C, (void *)D_8009E8DC_18699C[arg1->unk40C].unk8, *(f32*)&arg2, 0x10);
@@ -2146,9 +2145,6 @@ void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, s32 arg2) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007DC80_165D40.s")
-#endif
 
 // CURRENT(14377)
 // AI - Main player update FSM: search, cutscene, enter/exit, free control
