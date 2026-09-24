@@ -418,6 +418,39 @@ typedef struct {
 	/* 0x3C */ f32 *unk3C; // speed curve pointer (2000.0f sentinel-terminated)
 } Unk165E60Path; /* size = 0x40 */
 
+typedef union {
+	struct {
+		s16 unk0;
+		s16 unk2;
+		s16 unk4;
+		s16 unk6[7];
+		s32 unk14;
+		s32 unk18;
+		s32 unk1C;
+		s32 unk20;
+		s32 unk24;
+		s32 unk28;
+		s32 unk2C;
+		s16 unk30;
+		s16 unk32;
+		f32 unk34;
+		s16 unk38;
+		s16 unk3A;
+		f32 *unk3C;
+	} metadata;
+	struct {
+		s16 points[2][6];
+	} coordinates;
+	struct {
+		u8 pad0[0x14];
+		s32 headings[2];
+	} heading;
+	struct {
+		u8 pad0[0x20];
+		s32 frames[2];
+	} animation;
+} Unk165E60PathView;
+
 typedef struct {
 	/* 0x00 */ Unk165E60Keyframe keyframes[3]; // movement keyframes
 	/* 0x3C */ s32 unk3C;
@@ -432,7 +465,6 @@ typedef struct {
 	/* 0x5C */ s32 unk5C;
 } Unk165E60Timeline; /* size = 0x60 */
 
-
 typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ s32 unk4;
@@ -440,7 +472,7 @@ typedef struct {
 	/* 0x0C */ u8 padC[0x2];
 	/* 0x0E */ s16 unkE;
 	/* 0x10 */ u8 pad10[0x4];
-	/* 0x14 */ Unk165E60Path *unk14;
+	/* 0x14 */ Unk165E60PathView *unk14;
 	/* 0x18 */ Unk165E60Timeline *unk18;
 } Unk165E60Route;
 

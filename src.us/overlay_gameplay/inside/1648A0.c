@@ -2150,15 +2150,15 @@ void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007DC80_165D40.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(14377)
 // AI - Main player update FSM: search, cutscene, enter/exit, free control
+#ifdef NON_MATCHING
 void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
+	u8 stackPad2[0x10];
 	f32 speedScale;
 	s32 anim;
+	u8 stackPad[0x28];
 	s32 flags;
-	s32 sp6C;
-	s32 sp34;
-	s32 sp20;
 
 	speedScale = 1.0f;
 	flags = D_800E65A8;
@@ -2178,11 +2178,16 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 			return;
 		}
 	} else if (flags & 0x8000) {
+		
+		Unk165E60Route *route;
+		Unk165E60PathView *pathView;
+		s32 sp34;
+		s32 *timeline;
+		s32 *timelineEntry;
+		s16 transitionValue;
+		s16 previousTimelineStep;
 		s32 canAdvance;
 		s32 stepFrame;
-		Unk165E60Route *route;
-		Unk165E60Path *path;
-		Unk165E60Timeline *timeline;
 
 		D_800E6A34 = func_80079304_1613C4();
 		D_800A0924_1889E4 = D_800E6A34;
@@ -2194,9 +2199,10 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 			func_8007D52C_1655EC();
 		}
 
-		canAdvance = 1;
 		if (D_800A091C_1889DC != 0) {
 			canAdvance = func_80005B30_6730();
+		} else {
+			canAdvance = 1;
 		}
 
 		if (canAdvance != 0) {
@@ -2209,75 +2215,79 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				D_800A0900_1889C0 = 0;
 				D_800A0904_1889C4 = 0;
 
-				((void (*)(s32, s32))func_80081A18_169AD8)(D_800A0614_1886D4[D_800E6A34].unk14, D_800E6A34);
+				func_80081A18_169AD8(D_800A0614_1886D4[D_800E6A34].unk14);
 				func_80081A24_169AE4();
 				func_80081E08_169EC8(D_800A090A_1889CA);
 
-				route = &D_800A05FC_1886BC[D_800E6A34];
-				path = route->unk14;
-				arg0->unkE = (s16)((f64)((f32)path[D_800A0904_1889C4].unk14 * 32768.0f) / D_800A4D98_18CE58[0]);
+				{
+					s32 routeStride;
+					routeStride = 0x1C;
+					route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * routeStride);
+				}
+				pathView = route->unk14;
+				arg0->unkE = (s16)((f64)((f32)pathView->heading.headings[D_800A0904_1889C4] * 32768.0f) / D_800A4D98_18CE58[0]);
 
-				D_800E6A78.unk4C = (f32)path[D_800A0904_1889C4].unk0;
-				D_800E6A78.unk50 = (f32)path[D_800A0904_1889C4].unk2;
-				D_800E6A78.unk54 = (f32)path[D_800A0904_1889C4].unk4;
-				D_800E6A38 = path->unk34;
+				D_800E6A78.unk4C = (f32)pathView->coordinates.points[D_800A0904_1889C4][0];
+				D_800E6A78.unk50 = (f32)pathView->coordinates.points[D_800A0904_1889C4][1];
+				D_800E6A78.unk54 = (f32)pathView->coordinates.points[D_800A0904_1889C4][2];
+				D_800E6A38 = pathView->metadata.unk34;
 				D_800A090C_1889CC = 0;
 				D_800A0908_1889C8++;
 
-				func_8007DAA8_165B68(D_800E6F00, path[D_800A0904_1889C4].unk20, NULL, 0.0f, 0x10);
+				func_8007DAA8_165B68(D_800E6F00, pathView->animation.frames[D_800A0904_1889C4], NULL, 0.0f, 0x10);
 			}
 
 			if (((Unk8007F878_404 *)D_800E7304)->unkE50 == 0) {
 				D_800A0904_1889C4++;
 			}
 
-			route = &D_800A05FC_1886BC[D_800E6A34];
-			path = route->unk14;
-			stepFrame = path[D_800A0904_1889C4].unk20;
-			sp20 = stepFrame;
-			if (D_800E730C != stepFrame) {
-				func_8007DAA8_165B68(D_800E6F00, stepFrame, NULL, 0.0f, 0x10);
-				route = &D_800A05FC_1886BC[D_800E6A34];
-				path = route->unk14;
+			route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * 0x1C);
+			pathView = route->unk14;
+			if (D_800E730C != (stepFrame = pathView->animation.frames[D_800A0904_1889C4])) {
+				func_8007DAA8_165B68(D_800E6F00, pathView->animation.frames[D_800A0904_1889C4], NULL, 0.0f, 0x10);
+				route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * 0x1C);
+				pathView = route->unk14;
 			}
 
-			if (path[D_800A0904_1889C4].unk14 != 0x7D0) {
-				arg0->unkE = (s16)((f64)((f32)path[D_800A0904_1889C4].unk14 * 32768.0f) / D_800A4DA0_18CE60[0]);
-				route = &D_800A05FC_1886BC[D_800E6A34];
+			if (pathView->heading.headings[D_800A0904_1889C4] != 0x7D0) {
+				arg0->unkE = (s16)((f64)((f32)pathView->heading.headings[D_800A0904_1889C4] * 32768.0f) / D_800A4DA0_18CE60[0]);
+				route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * 0x1C);
 			}
 
-			timeline = &route->unk18[D_800A0908_1889C8];
-			if (D_800A0900_1889C0 >= timeline->unk3C) {
+			timeline = (s32 *)route->unk18;
+			timelineEntry = timeline + D_800A0908_1889C8;
+			if (D_800A0900_1889C0 >= timelineEntry[15]) {
 				if (D_800A0908_1889C8 < 3) {
-					func_80081E90_169F50((s16)(D_800A0908_1889C8 - 1), (s16)D_800A0908_1889C8, timeline->unk4A);
+					previousTimelineStep = (s16)(D_800A0908_1889C8 - 1);
+					transitionValue = *(s16 *)((u8 *)timelineEntry + 0x4A);
+					func_80081E90_169F50(previousTimelineStep, (s16)D_800A0908_1889C8, transitionValue);
 					D_800A0908_1889C8++;
-					timeline = D_800A0614_1886D4[D_800E6A34].unk0;
+					timeline = (s32 *)D_800A0614_1886D4[D_800E6A34].unk0;
 				}
 			}
 
-			if (D_800A0900_1889C0 == timeline[D_800A0910_1889D0].unk54) {
+			if (D_800A0900_1889C0 == timeline[D_800A0910_1889D0 + 21]) {
 				D_800A0920_1889E0 = 1;
 				func_80005AEC_66EC(0, 0, 0, 0x14);
 				D_800A0910_1889D0++;
 			}
 
-			sp34 = 0;
 			if (D_800A0920_1889E0 != 0) {
 				sp34 = func_80005B30_6730();
-				if (sp34 != 0) {
-					D_800A0920_1889E0 = 0;
-				}
 			}
 
-			route = &D_800A05FC_1886BC[D_800E6A34];
-			path = route->unk14;
-			if ((D_800A0900_1889C0 >= path->unk30) && (path->unk32 >= D_800A0900_1889C0)) {
-				if (path->unk2C != 0) {
-					D_800E6A70 = path->unk2C;
-					if (D_800A0900_1889C0 >= path->unk38) {
+			route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * 0x1C);
+			pathView = route->unk14;
+			if (sp34 != 0) {
+				D_800A0920_1889E0 = 0;
+			}
+			if ((D_800A0900_1889C0 >= pathView->metadata.unk30) && (pathView->metadata.unk32 >= D_800A0900_1889C0)) {
+				if (pathView->metadata.unk2C != 0) {
+					D_800E6A70 = pathView->metadata.unk2C;
+					if (D_800A0900_1889C0 >= pathView->metadata.unk38) {
 						f32 speed;
 
-						speed = path->unk3C[D_800A090C_1889CC];
+						speed = pathView->metadata.unk3C[D_800A090C_1889CC];
 						if (speed != 2000.0f) {
 							D_800E6A38 = speed;
 							D_800A090C_1889CC++;
@@ -2288,20 +2298,19 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				D_800E6A70 = 0;
 			}
 
-			if (D_800A0900_1889C0 == route->unk4) {
+			if (D_800A0900_1889C0 == D_800A05FC_1886BC[D_800E6A34].unk4) {
 				func_8007B124_1631E4(D_800E6A1C);
 				if (D_800E6A34 == 7) {
 					func_8007DAA8_165B68(&D_800E6AD8, 0x73, NULL, 0.0f, 0x10);
 				}
 			}
 
-			if (D_800A0900_1889C0 == route->unk8) {
-				((void (*)(s16, s32, s32))func_800153D8_15FD8)(route->unkE, D_800E6A34, D_800A0900_1889C0);
-				route = &D_800A05FC_1886BC[D_800E6A34];
+			if (D_800A0900_1889C0 == D_800A05FC_1886BC[D_800E6A34].unk8) {
+				func_800153D8_15FD8(D_800A05FC_1886BC[D_800E6A34].unkE);
 			}
 
 			D_800A0900_1889C0++;
-			if (D_800A0900_1889C0 == route->unk0) {
+			if (D_800A0900_1889C0 == D_800A05FC_1886BC[D_800E6A34].unk0) {
 				if ((D_800E6A34 == 6) || (D_800E6A34 == 7)) {
 					D_800E65A8 |= 0x100;
 				} else {
@@ -2314,11 +2323,11 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				}
 			}
 		}
-	} else if (flags & 4) {
+			} else if (flags & 4) {
 		if (func_8008DDC0_175E80() != 0) {
 			func_8007D69C_16575C(arg0);
 		}
-	} else if (flags & 0x40) {
+				} else if (flags & 0x40) {
 		func_8007D52C_1655EC();
 		anim = 4;
 		if (arg1->button & 0x2000) {
@@ -2335,17 +2344,21 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 			}
 		}
 	} else if ((flags & 0x800) || (flags & 0x80)) {
-		s16 targetYaw;
+		s32 targetYaw;
+		s32 currentYaw;
+		s32 originX;
+		f32 xDiff;
 
 		func_8007D52C_1655EC();
-		targetYaw = (s16)((func_80003824_4424((f32)(s32)((D_800E6A78.unk4C - 96.0f) - (f32)func_800703D0_158490()),
-										 (f32)(s32)D_800E6A78.unk54) + 0x8000) & 0xFFFF);
+		originX = func_800703D0_158490();
+		xDiff = D_800E6A78.unk4C - 96.0f;
+		targetYaw = (func_80003824_4424((f32)(s32)(xDiff - (f32)originX),
+										 (f32)(s32)D_800E6A78.unk54) + 0x8000) & 0xFFFF;
 
-		if ((u16)targetYaw != (u16)arg0->unkE) {
+		currentYaw = arg0->unkE;
+		if ((u16)targetYaw != (u16)currentYaw) {
 			if ((D_800E730C != 0x11) && (D_800E730C != 0xB) && (D_800E730C != 0xA)) {
-				sp6C = targetYaw;
 				func_8007DAA8_165B68(D_800E6F00, 0x11, NULL, 0.0f, 0x10);
-				targetYaw = sp6C;
 			}
 			func_8007D37C_16543C(arg0, targetYaw, 0);
 			osSyncPrintf(D_800A4CD0_18CD90);
@@ -2416,16 +2429,29 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 		vehicleInstances[0].unk1C++;
 	}
 
-	func_8007DC80_165D40(arg0, (Unk80157600 *)D_800E6F00, speedScale);
+	func_8007DC80_165D40(arg0, (Unk80157600 *)D_800E6F00, *(s32 *)&speedScale);
 	if (D_8009E8E0_1869A0[D_800E730C].unk0 & 4) {
-		func_8000D8DC_E4DC((Unk8007F878_404 *)D_800E7304, (Unk8007F878_404 *)D_800E7308, (AnimChannelState *)D_800E6F00, 0x10, speedScale, D_800E7310);
+		f32 channelRate;
+		channelRate = *(f32 *)&D_800E7310;
+		func_8000D8DC_E4DC((Unk8007F878_404 *)D_800E7304, (Unk8007F878_404 *)D_800E7308, (AnimChannelState *)D_800E6F00, 0x10, speedScale, channelRate);
 	} else {
 		func_8000CF4C_DB4C((void *)D_800E7304, D_800E6F00, 0x10, *(s32 *)&D_800E7310);
 	}
 
-	if ((((Unk165E60AnimState *)D_800E6F00)->unk40C == 0) && ((((Unk165E60AnimState *)D_800E6F00)->unk18 == 3) || (((Unk165E60AnimState *)D_800E6F00)->unk18 == 8)) && (((Unk165E60AnimState *)D_800E6F00)->unk1C == 1.0f)) {
-		func_800153D8_15FD8(0x96);
-		func_80014A3C_1563C(D_800E6F00, 0x97, 0, 0, (f32)(((f64)(func_800038E0_44E0() & 1) * D_800A4DA8_18CE68[0]) + D_800A4DB0_18CE70[0]));
+	{
+		Unk165E60AnimState *animState;
+		f32 randomFrame;
+		s32 currentAnim;
+
+		animState = (Unk165E60AnimState *)D_800E6F00;
+		if (animState->unk40C == 0) {
+			currentAnim = animState->unk18;
+			if (((currentAnim == 3) || (currentAnim == 8)) && (animState->unk1C == 1.0f)) {
+				func_800153D8_15FD8(0x96);
+				randomFrame = (f32)(((f64)(func_800038E0_44E0() & 1) * D_800A4DA8_18CE68[0]) + D_800A4DB0_18CE70[0]);
+				func_80014A3C_1563C(D_800E6F00, 0x97, 0, 0, randomFrame);
+			}
+		}
 	}
 
 	D_800A08FC_1889BC = D_800E65A8;
