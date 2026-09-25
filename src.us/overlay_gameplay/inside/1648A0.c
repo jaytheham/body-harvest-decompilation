@@ -1678,7 +1678,6 @@ void func_8007C93C_1649FC(void) {
 	func_8007EFD4_167094(&D_800E6A78);
 }
 
-#ifdef NON_MATCHING
 // AI - Normalize analog stick input to speed scalar (0.0-1.0)
 f32 func_8007C96C_164A2C(OSContPad *arg0) {
 	f32 temp_f0;
@@ -1691,15 +1690,7 @@ f32 func_8007C96C_164A2C(OSContPad *arg0) {
 	temp_v0 = (s16) (s32) ((f64) arg0->stick_x / 5.0);
 	temp_v1 = (s16) (s32) -((f64) arg0->stick_y / 5.0);
 	temp_f0 = sqrtf((f32) ((temp_v0 * temp_v0) + (temp_v1 * temp_v1)));
-	if (temp_f0 <= 0.0f) {
-		var_f12 = 0.0f;
-	} else {
-		if (8.0f <= temp_f0) {
-			var_f12 = 8.0f;
-		} else {
-			var_f12 = temp_f0;
-		}
-	}
+	var_f12 = (temp_f0 <= 0.0f) ? 0.0f : ((temp_f0 >= 8.0f) ? 8.0f : temp_f0);
 	temp_f0_2 = (f64) var_f12 / 13.0;
 	if (temp_f0_2 >= 0.0) {
 		var_f2 = (f32) temp_f0_2;
@@ -1711,9 +1702,6 @@ f32 func_8007C96C_164A2C(OSContPad *arg0) {
 	}
 	return var_f2;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007C96C_164A2C.s")
-#endif
 
 // CURRENT(2073)
 // AI - Handle player input, movement, and collision
