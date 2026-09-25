@@ -6225,7 +6225,7 @@ void func_80070464_158524(s32 *arg0, s32 *arg1, s32 arg2)
 	}
 }
 
-// CURRENT(80)
+// CURRENT(9805)
 // Spawns objects/characters in the current room
 #ifdef NON_MATCHING
 void func_800705E0_1586A0(InteriorRoomData *arg0) {
@@ -6746,19 +6746,15 @@ void func_800717B4_159874(void)
 	}
 }
 
-// CURRENT(130)
+// CURRENT(108)
 // AI - Sets up RDP state for interior rendering
 #ifdef NON_MATCHING
 void func_80071854_159914(void) {
-	union {
-		Vp * volatile viewport;
-		u8 padding[0x88];
-	} stack;
+
 	osRecvMesg(&D_8006A8D0, &D_80068038, 1);
 	func_80011E14_12A14(D_80047F93);
 
-	gSPViewport(D_8005BB2C++, D_314D0);
-	stack.viewport = D_314D0;
+	gSPViewport(D_8005BB2C++, D_800314D0_320D0);
 
 	func_80004CC8_58C8();
 	func_80004D38_5938();
@@ -6779,7 +6775,7 @@ void func_80071854_159914(void) {
 
 	gDPPipeSync(D_8005BB2C++);
 
-	gSPViewport(D_8005BB2C++, stack.viewport);
+	gSPViewport(D_8005BB2C++, D_800314D0_320D0);
 
 	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
 

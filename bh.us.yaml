@@ -219,8 +219,11 @@ segments:
       - [0x2E390, lib, libultra_rom, yieldthread]
       - [0x2E3E0, asm, libultra/seq] # alSeqNew (has own .rodata - not convertible)
       - [0x2EA00, lib, libultra_rom, synsetpriority]
-      - [0x2EA10, databin]
-      - [0x31EF0, .data, core/1050]
+      # RSP microcode blobs (binary). Their CPU-side pointers live in core/1050.c and core/FD80.c.
+      - [0x2EA10, databin, rsp/rspboot]    # RSP boot ucode: rspbootTextStart, 0xD0 bytes
+      - [0x2EAE0, databin, rsp/gfxucode]   # M_GFXTASK ucode: D_8002DEE0_2EAE0, 0x1430 bytes (game loads ucode_size 0x1000)
+      - [0x2FF10, databin, rsp/audioucode] # M_AUDTASK ucode: D_8002F310_2FF10, 0x1E10 bytes
+      - [0x31D20, .data, core/1050]        # shared identity/scale Mtx + 5 static display lists
       - [0x31FD0, .data, core/53F0]
       - [0x32000, .data, core/AD60]
       - [0x32050, .data, core/E830]

@@ -1,6 +1,79 @@
 #include <ultra64.h>
 #include "common.h"
 
+/* Shared graphics state (ROM 0x31D20 - 0x31EF0) */
+
+Mtx D_80031120_31D20 = { {
+	{ 0x00010000, 0x00000000, 0x00000001, 0x00000000 },
+	{ 0x00000000, 0x00010000, 0x00000000, 0x00000001 },
+	{ 0x00000000, 0x00000000, 0x00000000, 0x00000000 },
+	{ 0x00000000, 0x00000000, 0x00000000, 0x00000000 },
+} };
+
+Mtx D_80031160 = { {
+	{ 0x00000000, 0x00000000, 0x00000000, 0x00000000 },
+	{ 0x00000000, 0x00000000, 0x00000000, 0x00000001 },
+	{ 0x40000000, 0x00000000, 0x00004000, 0x00000000 },
+	{ 0x00000000, 0x40000000, 0x00000000, 0x00000000 },
+} };
+
+Unk800311A0 D_800311A0 = { 0x40, 0x40, 0x40 };
+
+Gfx D_800311A8[] = {
+	gsDPPipeSync(),
+	gsSPClearGeometryMode(G_ZBUFFER),
+	gsDPSetRenderMode(G_RM_OPA_SURF, G_RM_OPA_SURF2),
+	gsDPPipeSync(),
+	gsSPEndDisplayList(),
+};
+
+Gfx D_800311D0[] = {
+	gsDPPipeSync(),
+	gsSPSetGeometryMode(G_ZBUFFER),
+	gsDPSetRenderMode(G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2),
+	gsDPSetDepthImage(&D_3DA800),
+	gsDPPipeSync(),
+	gsSPEndDisplayList(),
+};
+
+Gfx D_80031200[] = {
+	gsDPPipeSync(),
+	gsDPSetCombineMode(G_CC_MODULATEI, G_CC_PASS2),
+	gsSPSetGeometryMode(G_FOG),
+	gsDPSetCycleType(G_CYC_2CYCLE),
+	gsDPSetRenderMode(G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2),
+	gsSPEndDisplayList(),
+};
+
+Gfx D_80031230[] = {
+	gsDPPipeSync(),
+	gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
+	gsSPClearGeometryMode(G_FOG),
+	gsDPSetCycleType(G_CYC_1CYCLE),
+	gsDPSetRenderMode(G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2),
+	gsSPEndDisplayList(),
+};
+
+Gfx D_80031260[18] = {
+	gsDPPipeSync(),
+	gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
+	gsDPSetCycleType(G_CYC_1CYCLE),
+	gsDPSetTextureLOD(G_TL_TILE),
+	gsDPSetTextureLUT(G_TT_NONE),
+	gsDPSetTextureDetail(G_TD_CLAMP),
+	gsDPSetTexturePersp(G_TP_NONE),
+	gsDPSetTextureFilter(G_TF_BILERP),
+	gsDPSetTextureConvert(G_TC_FILT),
+	gsDPSetCombineKey(G_CK_NONE),
+	gsDPSetAlphaCompare(G_AC_NONE),
+	gsDPSetRenderMode(G_RM_OPA_SURF, G_RM_OPA_SURF2),
+	gsDPNoOp(),
+	gsDPSetColorDither(G_CD_DISABLE),
+	gsDPPipelineMode(G_PM_NPRIMITIVE),
+	gsDPPipeSync(),
+	gsSPEndDisplayList(),
+};
+
 u32 D_800312F0_31EF0 = 0;
 s32 D_800312F4_31EF4 = 0;
 u32 D_800312F8_31EF8 = 0;

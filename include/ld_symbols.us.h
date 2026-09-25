@@ -6,7 +6,6 @@
 extern Addr _29870_s;
 extern Addr _29960_s;
 extern Addr _2E120_s;
-extern Addr _2EA10_s;
 extern Addr _32250_bin;
 extern Addr _bootSegmentDataEnd;
 extern Addr _bootSegmentDataSize;
@@ -420,6 +419,9 @@ extern Addr overlay_level_siberia_2B7100_c;
 extern Addr overlay_level_siberia_alien_types_c;
 extern Addr overlay_level_siberia_data_bin;
 extern Addr overlay_level_siberia_data_tail_bin;
+extern Addr rsp_audioucode_s;
+extern Addr rsp_gfxucode_s;
+extern Addr rsp_rspboot_s;
 extern Addr unknown_bin;
 
 #endif

@@ -25,6 +25,7 @@ ASM_DIRS  = asm \
 			asm/overlay_level/siberia \
 			asm/overlay_level/comet \
 			asm/data \
+			asm/data/rsp \
 			asm/data/overlay_gameplay/outside
 BIN_DIRS  = assets
 SRC_DIR   = src.$(VERSION)

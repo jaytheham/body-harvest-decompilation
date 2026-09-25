@@ -85,9 +85,9 @@ if ($NextAddr) {
 
 # execute the command in the container
 if ($showScore) {
-    docker exec -it $Container bash -c "$bashCmd"
+    docker exec $Container bash -c "$bashCmd"
 } else {
     # Pipe through sed to strip the CURRENT difference amount from the header line.
     # Using -u (unbuffered) so sed doesn't interfere with interactive output.
-    docker exec -it $Container bash -c "$bashCmd | sed -uE 's/^(TARGET[[:space:]]+)CURRENT \([0-9]+\)/\1CURRENT/'"
+    docker exec $Container bash -c "$bashCmd | sed -uE 's/^(TARGET[[:space:]]+)CURRENT \([0-9]+\)/\1CURRENT/'"
 }
