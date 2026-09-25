@@ -2395,7 +2395,7 @@ void func_80017B08_18708(s32 arg0) {
 	func_8000C6B8_D2B8(0);
 }
 
-s32 func_80017B78_18778(void) {
+u16 func_80017B78_18778(void) {
 	if (D_80052AD0 != 0) {
 		if ((D_8006C55E != 0xFFFF) && ((gameplayMode == 1) || (gameplayMode == 9) || (gameplayMode == 0) || (gameplayMode == 9) || (gameplayMode == 6) || (gameplayMode == 0xC))) {
 			return D_8006C55E;

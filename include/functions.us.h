@@ -1167,7 +1167,7 @@ void func_8001A598_1B198(u8 *arg0);
 void func_8001A828_1B428(void);
 void func_80019ABC_1A6BC();
 void func_8001A130_1AD30();
-s32 func_80017B78_18778(void);
+u16 func_80017B78_18778(void);
 s16 func_80017CA4_188A4(void);
 s16 func_800172E0_17EE0(u8 *arg0);
 s16 func_80017394_17F94(u8 *arg0, s16 arg1);

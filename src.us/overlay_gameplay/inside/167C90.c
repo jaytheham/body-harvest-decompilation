@@ -1214,58 +1214,64 @@ void func_80082B04_16ABC4(void) {
 	D_80034484 = 0;
 }
 
-// CURRENT(20)
 // AI - Handle interior gameplay: screen fade colors and entering/exiting state transitions
-#ifdef NON_MATCHING
-void func_80082B50_16AC10(void) {
-	u32 temp_flags;
-	s32 temp_v0;
-
-	if (D_800E65A8 & 1) {
-		if (1 != func_80017B78_18778()) {
-		} else {
+void func_80082B50_16AC10(void)
+{
+	s32 temp;
+	if (D_800E65A8 & 1)
+	{
+		if (func_80017B78_18778() == 1)
+		{
 			D_800A0A1C_188ADC = D_80034484;
 			D_800E7398 = 1;
-			if (!(D_800E65A8 & 0x408)) {
+			if (!(D_800E65A8 & 0x408))
+			{
 				D_800E65A8 |= 2;
 			}
 		}
-
-		if (func_80018A58_19658() != 0) {
-			if (D_800A0A1C_188ADC != 0) {
+		if (func_80018A58_19658() != 0)
+		{
+			if (D_800A0A1C_188ADC != 0)
+			{
 				func_80018AEC_196EC(0x32, 0x32, 0x78);
-			} else {
+			}
+			else
+			{
 				func_80018AEC_196EC(0x78, 0x32, 0x78);
 			}
-
-			if (func_80018AA0_196A0() != 0) {
+			if (func_80018AA0_196A0() != 0)
+			{
 				D_80053BF4 = 0xFF;
 				D_80053BF2 = D_80053BF4;
 				D_80053BF0 = D_80053BF2;
-				if (D_800A0A1C_188ADC != 0) {
+				if (D_800A0A1C_188ADC != 0)
+				{
 					D_80053BF8 = 0x7F;
 					D_80053BFA = 0xC8;
 					D_80053BFC = 0xDC;
 					D_80053BF6 = 0;
 					D_80053BFE = 0xFF;
-				} else {
+				}
+				else
+				{
 					D_80053BF8 = 0xDC;
 					D_80053BFA = 0xC8;
 					D_80053BFC = 0x7F;
 					D_80053BF6 = 0;
 					D_80053BFE = 0xFF;
 				}
-
 				gDPPipeSync(D_8005BB2C++);
 				func_80017CA4_188A4();
-
-				if (D_800A0A1C_188ADC != 0) {
+				if (D_800A0A1C_188ADC != 0)
+				{
 					D_80053BF0 = 0x7F;
 					D_80053BF2 = 0xC8;
 					D_80053BF4 = 0xDC;
 					D_80053BF6 = 0;
 					D_80053BFE = 0xFF;
-				} else {
+				}
+				else
+				{
 					D_80053BF0 = 0xDC;
 					D_80053BF2 = 0xC8;
 					D_80053BF4 = 0x7F;
@@ -1275,32 +1281,28 @@ void func_80082B50_16AC10(void) {
 				D_80053BFC = 0xFF;
 				D_80053BFA = D_80053BFC;
 				D_80053BF8 = D_80053BFA;
-
-				if (func_80017B78_18778() == 0xFFFF) {
-					
+				if (func_80017B78_18778() == 0xFFFF)
+				{
 					D_800E7398 = 0;
 					D_800E65A8 &= ~2;
-					
-					if (D_800E65A8 & 8) {
+					if (D_800E65A8 & 8)
+					{
 						func_8007AE40_162F00();
 						D_800E65A8 &= ~8;
 					}
-					if (D_800E65A8 & 0x1000) {
+					if (D_800E65A8 & 0x1000)
+					{
 						D_800E65A8 &= ~0x1000;
 					}
-					if (D_800E65A8 & 0x400) {
+					if (D_800E65A8 & 0x400)
+					{
 						D_800E65A8 &= ~0x400;
 					}
 				}
-
 				gDPPipeSync(D_8005BB2C++);
 				gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_MODULATEIA);
 			}
 		}
 	}
-
 	D_80052AD8 += 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80082B50_16AC10.s")
-#endif
