@@ -41,39 +41,22 @@ u8 pad_18A768[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 // ============================================================
 
 const char D_800A4F70_18D030[] = "ieNormVecF3()  {0,0,0} -> {0,0,0}\n";
-
 const char D_800A4F94_18D054[] = "WARNING : Out of space to create a new special effect of type %d.\n";
-
 const char D_800A4FD8_18D098[] = "EFFECTS WARNING : Call to free up an effect which does not exist\n";
-
 const char D_800A501C_18D0DC[] = "WARNING - New special effect unit cannot be allocated - out of space.\n";
-
 const char D_800A5064_18D124[] = "UNIT POOL CRITICAL ERROR - Call to free unused unit %d from effect %d\n";
-
 const char D_800A50AC_18D16C[] = "ERROR : Tried to kill unit from effect which has no units.\n";
-
 const char D_800A50E8_18D1A8[] = "ERROR : Unit list inconsistency occurred with 2 units left.\n";
-
 const char D_800A5128_18D1E8[] = "EFFECTS WARNING : Call to free up invalid triple effect unit.\n";
-
 const char D_800A5168_18D228[] = "EFFECTS WARNING : Call to free up invalid double effect unit.\n";
-
 const char D_800A51A8_18D268[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n";
-
 const char D_800A51F8_18D2B8[] = "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n";
-
 const char D_800A5248_18D308[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n";
-
 const char D_800A5298_18D358[] = "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n";
-
 const char D_800A52E8_18D3A8[] = "EFFECTS WARNING : Cannot start fire effect - there are no units left\n";
-
 const char D_800A5330_18D3F0[] = "INSIDE EFFECTS WARNING : Spurt effect not created - could not allocated any units\n";
-
 const char D_800A5384_18D444[] = "EFFECTS WARNING: Failed to create a jet stream - could not allocate any units\n";
-
 const char D_800A53D4_18D494[] = "Call to draw generic flat effect with unknown render type.\n";
-
 const char D_800A5410_18D4D0[] = "INSIDE FX WARNING : Call to draw an effect of unknown type %d.\n";
 
 const f64 D_800A5450_18D510[1] = {255.0};
@@ -3340,18 +3323,16 @@ void func_8008B53C_1735FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 	D_800FB6A2 = arg4;
 }
 
-#ifdef NON_MATCHING
+// CURRENT(1245)
 // AI - Render (animated billboard with texture)
+#ifdef NON_MATCHING
 void func_8008B594_173654(void) {
-	s32 pad;
-	s8 spA6;
-	s8 spA5;
-	s8 spA4;
-	u32 temp_result;
-	u8 temp_t5;
+	s8 spA4[3];
+	s32 temp_t5;
 
 	if (D_800A26A0_18A760 != 0) {
 		D_800A26A0_18A760 = 0;
+
 		D_800FB6E5 = 0x20;
 		D_800FB6E6 = 0x20;
 
@@ -3381,9 +3362,9 @@ void func_8008B594_173654(void) {
 
 		gDPPipeSync(D_8005BB2C++);
 
-		temp_result = (temp_t5 + 1) & 0xFF;
-		D_800A26A4_18A764 = (u8)temp_result;
-		if (temp_result == 4) {
+		temp_t5 = (temp_t5 + 1) & 0xFF;
+		D_800A26A4_18A764 = temp_t5;
+		if (temp_t5 == 4) {
 			D_800A26A4_18A764 = 0;
 		}
 
@@ -3391,16 +3372,13 @@ void func_8008B594_173654(void) {
 		D_800FB6D0.y = D_800FCA7C;
 		D_800FB6D0.z = D_800FCA7E;
 
-		temp_result = func_800038E0_44E0();
-		spA4 = (temp_result % 0x3C) + 0xC3;
+		spA4[0] = (func_800038E0_44E0() % 0x3C) + 0xC3;
 
-		temp_result = func_800038E0_44E0();
-		spA5 = (temp_result % 0x3C) + 0xC3;
+		spA4[1] = (func_800038E0_44E0() % 0x3C) + 0xC3;
 
-		temp_result = func_800038E0_44E0();
-		spA6 = (temp_result % 0x3C) + 0xC3;
+		spA4[2] = (func_800038E0_44E0() % 0x3C) + 0xC3;
 
-		D_800FB6DC = &spA4;
+		D_800FB6DC = &spA4[0];
 		D_800FB6E0 = (f32)D_800FB6A0 * D_800A54D0_18D590[0];
 		D_800FB6E4 = 0xFF;
 
@@ -3459,5 +3437,3 @@ void func_8008B594_173654(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B594_173654.s")
 #endif
-
-
