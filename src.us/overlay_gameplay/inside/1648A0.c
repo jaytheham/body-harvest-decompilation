@@ -1650,21 +1650,18 @@ void func_8007C7E0_1648A0(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 // AI - Free player animation memory and cleanup
-void func_8007C8BC_16497C(void) {
-	Unk80157600 *ptr;
-
+void func_8007C8BC_16497C(void)
+{
+	volatile Unk80157600 *ptr;
 	func_8000C764_D364(D_800E7304);
-	ptr = (Unk80157600 *) &D_800E6AD8;
-	func_8000C764_D364((s32) ptr->unk408);
-	ptr = (Unk80157600 *) &D_800E6AD8;
+	ptr = (Unk80157600 *)D_800E6F00;
+	if (ptr) {}
+	func_8000C764_D364((s32)ptr->unk408);
+	ptr = (Unk80157600 *)D_800E6F00;
 	ptr->unk408 = NULL;
 	ptr->unk404 = NULL;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007C8BC_16497C.s")
-#endif
 
 // AI - Dispatch main player update each frame
 void func_8007C8FC_1649BC(void) {
