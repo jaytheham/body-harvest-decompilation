@@ -1060,7 +1060,7 @@ void func_800808BC_16897C(void);
 s16 func_80003680_4280(f32 arg0);
 void func_800808D0_168990(void);
 s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2);
-s32 func_800811DC_16929C(s16 arg0, s32 arg1);
+u8 func_800811DC_16929C(s16 arg0, s32 arg1);
 void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4);
 void func_800FB430_10A3E0(VehicleInstance *arg0, f32 arg1);
 void func_800E75A0_F6550(s16 arg0, s16 arg1, s16 arg2);

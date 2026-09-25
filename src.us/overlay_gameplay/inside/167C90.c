@@ -610,7 +610,7 @@ s16 func_80080FD8_169098(void) {
 // CURRENT(1620)
 #ifdef NON_MATCHING
 // AI - Map yaw angle to a compass-direction marker index for the debug map
-s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
+u8 func_800811DC_16929C(s16 arg0, s32 arg1) {
 	f32 temp_f2;
 	s32 var_v1;
 
@@ -934,55 +934,69 @@ void func_80081E90_169F50(s16 arg0, s16 arg1, s16 arg2) {
 	D_800E746A = a3->unk12;
 }
 
-#ifdef NON_MATCHING
+// CURRENT(935)
 // AI - Render an ASCII debug map showing collision grid, player position, and camera markers
+#ifdef NON_MATCHING
 void func_80081F98_16A058(void) {
-	u8 sp58[0x9C50];
-	u8 temp;
-	u8 firstMarker;
-	u8 secondMarker;
 	s16 playerX;
 	s16 playerY;
-	s16 markerYaw;
-	s16 row;
+	s32 row;
 	s16 x;
 	s16 y;
 	s32 col;
+	s8 markerCol;
 	s32 width;
+	u8 sp58[0x9C38];
+	u8 (*mapRows)[0xC8];
+	s32 printWidth;
+	u8 secondMarker;
+	u8 firstMarker;
 	s32 height;
-	UnkS8Pair *markerOffsets;
+	s16 markerYaw;
+	const UnkS8Pair *markerOffsets;
+	s32 cell;
 
 	height = D_800E6464 + 2;
+	row = 0;
 	if (height > 0) {
+	do {
 		width = D_800E6460 + 2;
-		for (row = 0; row < height; row++) {
-			if (width > 0) {
-				for (col = 0; col < width; col++) {
-					temp = D_800E6468[(row * width) + col];
-					if (temp == 0xFF) {
-						sp58[(row * 0xC8) + col] = 0x5F;
-					} else if (temp == 1) {
-						sp58[(row * 0xC8) + col] = 0x31;
-					} else {
-						sp58[(row * 0xC8) + col] = 0x2E;
-					}
-				}
+		col = 0;
+		if (width > 0) {
+			printWidth = width * row;
+			do {
+				cell = D_800E6468[printWidth];
+				if (cell == 0xFF) {
+				((u8 (*)[0xC8]) sp58)[row][col] = 0x5F;
+			} else if (cell == 1) {
+				((u8 (*)[0xC8]) sp58)[row][col] = 0x31;
+			} else {
+				((u8 (*)[0xC8]) sp58)[row][col] = 0x2E;
 			}
+				col++;
+				col--;
+				col++;
+				printWidth++;
+			} while (col < width);
 		}
+		row++;
+	} while (row < (D_800E6464 + 2));
 	}
 
+	mapRows = (u8 (*)[0xC8]) sp58;
 	playerX = (s16) (D_800E6A78.unk4C / 96.0f);
 	playerY = (s16) (D_800E6A78.unk54 / 96.0f);
-	sp58[(playerY * 0xC8) + playerX] = 0x50;
+	mapRows[playerY][playerX] = 0x50;
 	markerYaw = 0x4000 - D_800E6A78.unkE;
 
 	if (D_800E73E8 > 155.0f) {
 		markerOffsets = D_800A09A4_188A64;
-		for (col = 0; col < 0x18; col += 2) {
-			x = markerOffsets[col / 2].unk0 + playerX;
-			y = markerOffsets[col / 2].unk1 + playerY;
+		for (markerCol = 0; markerCol < 0x18; markerCol += 2) {
+			x = ((const s8 *) markerOffsets)[markerCol];
+			x += playerX;
+			y = ((const s8 *) markerOffsets)[markerCol + 1] + playerY;
 			if ((x >= 0) && (y >= 0)) {
-				sp58[(y * 0xC8) + x] = 0x4F;
+				mapRows[y][x] = 0x4F;
 			}
 		}
 
@@ -992,49 +1006,49 @@ void func_80081F98_16A058(void) {
 		x = markerOffsets[firstMarker].unk0 + playerX;
 		y = markerOffsets[firstMarker].unk1 + playerY;
 		if ((x >= 0) && (y >= 0)) {
-			sp58[(y * 0xC8) + x] = 0x5E;
+			mapRows[y][x] = 0x5E;
 		}
 
 		x = markerOffsets[secondMarker].unk0 + playerX;
 		y = markerOffsets[secondMarker].unk1 + playerY;
 		if ((x >= 0) && (y >= 0)) {
-			sp58[(y * 0xC8) + x] = 0x21;
+			mapRows[y][x] = 0x21;
 		}
 	} else {
 		markerOffsets = D_800A09BC_188A7C;
-		for (col = 0; col < 0x10; col += 2) {
-			x = markerOffsets[col / 2].unk0 + playerX;
-			y = markerOffsets[col / 2].unk1 + playerY;
-			sp58[(y * 0xC8) + x] = 0x2A;
+		for (markerCol = 0; markerCol < 0x10; markerCol += 2) {
+			x = ((const s8 *) markerOffsets)[markerCol] + playerX;
+			y = ((const s8 *) markerOffsets)[markerCol + 1] + playerY;
+			mapRows[y][x] = 0x2A;
 		}
 
 		firstMarker = func_800811DC_16929C(D_800E73E0, 0);
 		secondMarker = func_800811DC_16929C(markerYaw, 0);
 
-		x = markerOffsets[firstMarker].unk0 + playerX;
+		x = markerOffsets[firstMarker].unk0;
+		x += playerX;
 		y = markerOffsets[firstMarker].unk1 + playerY;
 		if ((x >= 0) && (y >= 0)) {
-			sp58[(y * 0xC8) + x] = 0x5E;
+			mapRows[y][x] = 0x5E;
 		}
 
 		x = markerOffsets[secondMarker].unk0 + playerX;
 		y = markerOffsets[secondMarker].unk1 + playerY;
 		if ((x >= 0) && (y >= 0)) {
-			sp58[(y * 0xC8) + x] = 0x21;
+			mapRows[y][x] = 0x21;
 		}
 	}
 
-	osSyncPrintf("\n");
-	if (height > 0) {
-		for (row = 0; row < height; row++) {
-			width = D_800E6460 + 2;
-			if (width > 0) {
-				for (col = 0; col < width; col++) {
-					osSyncPrintf("%c", D_800E6468[(row * D_800E6464) + col]);
-				}
-			}
-			osSyncPrintf("\n");
+	osSyncPrintf(D_800A4E34_18CEF4);
+	for (row = 0; row < (D_800E6464 + 2); row++) {
+		if ((D_800E6460 + 2) > 0) {
+			col = 0;
+			do {
+				osSyncPrintf(D_800A4E3C_18CEFC, D_800E6468[(row * D_800E6464) + col]);
+				col++;
+			} while (col < (D_800E6460 + 2));
 		}
+		osSyncPrintf(D_800A4E40_18CF00);
 	}
 }
 #else
