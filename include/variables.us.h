@@ -1554,8 +1554,8 @@ extern s32 D_800E65D4;
 extern s32 D_800E65D8;
 extern s32 D_800E65DC;
 extern f32 D_800E65E0;
-// AI - Current building data block pointer (D_800D6460 + buildingInteriorToLoadId*0x100)
-extern u8 *D_800E65E8;
+// AI - Current building interior layout record (D_800D6460 + buildingInteriorToLoadId*0x100)
+extern InteriorRoomData *D_800E65E8;
 extern u8 D_800E65EC;
 extern u8 D_800E65ED;
 extern s32 D_800E65F0;
@@ -1593,14 +1593,14 @@ extern s32 D_800E6698;
 extern s32 D_800E669C;
 extern s8 D_800E66A0;
 extern s8 D_800E66A1;
-// AI - Room sub-selector (from building data byte 0xE7); added to the world base to form levelIndex
+// AI - Room sub-selector (InteriorRoomData.roomSetIndex); added to the world base to form levelIndex
 extern s32 D_800E66A4;
-// AI - Placed room object instances for the current room (built from the building data block)
+// AI - Placed room object instances for the current room (built from the InteriorRoomData record)
 extern Unk800E66A8 D_800E66A8[];
 extern s16 D_800E66B2[];
 extern u8 D_800E66B3[];
 extern u8 D_800E69A7[];
-// AI - Per-room byte data copied from the building block (D_800E65E8[0x80 + i])
+// AI - Tile map copied from the interior record (InteriorRoomData.tileMap)
 extern u8 D_800E69A8[];
 extern Vec3f D_800E6A10;
 extern s32 D_800E6A1C;
@@ -1638,7 +1638,8 @@ extern s16 D_800E733C;
 extern Vec3f D_800E7340;
 extern f32 D_800E7350[4][4];
 extern s16 D_800E7390;
-extern u8* D_800E7394;
+// AI - Alias of D_800E65E8 (same interior layout record), used by the interior camera code
+extern InteriorRoomData* D_800E7394;
 extern s32 D_800E7398;
 extern s32 D_800E739C;
 extern s32 D_800E73A0;

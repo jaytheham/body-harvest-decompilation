@@ -6228,7 +6228,7 @@ void func_80070464_158524(s32 *arg0, s32 *arg1, s32 arg2)
 // CURRENT(80)
 // Spawns objects/characters in the current room
 #ifdef NON_MATCHING
-void func_800705E0_1586A0(u8 *arg0) {
+void func_800705E0_1586A0(InteriorRoomData *arg0) {
 	s32 roomIndex;
 	s32 i;
 	s32 roomId;
@@ -6239,9 +6239,9 @@ void func_800705E0_1586A0(u8 *arg0) {
 	u8 roomY;
 
 	D_800E65E8 = arg0;
-	*((u8 *)&D_800A0960_188A20) = D_800E65E8[0xE8];
+	*((u8 *)&D_800A0960_188A20) = arg0->viewMode;
 	D_800E7394 = arg0;
-	D_800E66A4 = D_800E65E8[0xE7];
+	D_800E66A4 = arg0->roomSetIndex;
 
 	levelIndex = D_8009C4C4_184584[currentLevel] + D_800E66A4;
 	D_800E65BC = &D_8008E0A8_176168[levelIndex][0];
@@ -6249,19 +6249,19 @@ void func_800705E0_1586A0(u8 *arg0) {
 	D_800E65C4 = &((s32 *)D_8009C4E4_1845A4)[levelIndex << 3];
 	D_800E65C8 = &D_8009C804_1848C4[levelIndex];
 
-	D_800E6460 = D_800E65E8[0xE4];
-	D_800E6464 = D_800E65E8[0xE5];
+	D_800E6460 = arg0->gridWidth;
+	D_800E6464 = arg0->gridHeight;
 	i = 0;
 	roomIndex = 0;
 	for (; roomIndex < 0x64; roomIndex++) {
-		D_800E69A8[roomIndex] = D_800E65E8[0x80 + roomIndex];
+		D_800E69A8[roomIndex] = arg0->tileMap[roomIndex];
 	}
 
-	D_800E668C = arg0[0xE6];
+	D_800E668C = arg0->objectCount;
 	roomIndex = 0;
 	if (D_800E668C > 0) {
 		do {
-			roomType = (&D_800E65E8[roomIndex])[0x30] & 0x1F;
+			roomType = arg0->objectType[roomIndex] & 0x1F;
 			// Actually objectType
 			// First 3 bits are:
 			// 000 Facing forward
@@ -6274,11 +6274,11 @@ void func_800705E0_1586A0(u8 *arg0) {
 			// Last 5 are object id
 
 			D_800E66A8[i].unk0 = roomType;
-			D_800E66A8[i].unk8 = (D_800E65E8[roomIndex + 0x30] & 0x60) >> 5;
-			roomX = D_800E65E8[roomIndex + 0x40];
-			roomY = D_800E65E8[roomIndex + 0x50];
-			D_800E66A8[i].unk2C = D_800E65E8[roomIndex + 0x60];
-			D_800E66A8[i].unk2D = D_800E65E8[roomIndex + 0x70];
+			D_800E66A8[i].unk8 = (arg0->objectType[roomIndex] & 0x60) >> 5;
+			roomX = arg0->objectCellX[roomIndex];
+			roomY = arg0->objectCellY[roomIndex];
+			D_800E66A8[i].unk2C = arg0->objectFlags[roomIndex];
+			D_800E66A8[i].unk2D = arg0->objectRoomId[roomIndex];
 			D_800E66A8[i].unkC = 0;
 			D_800E66A8[i].unkE = -1;
 			D_800E66A8[i].unk2E &= ~1;
@@ -6290,7 +6290,7 @@ void func_800705E0_1586A0(u8 *arg0) {
 					D_800E66A8[i].unk2E |= 1;
 					D_800E66A8[i].unkC = (u16)D_800E65BC[roomType].unk16;
 				}
-			} else if (D_800E65E8[roomIndex + 0x30] & 0x80) {
+			} else if (arg0->objectType[roomIndex] & 0x80) {
 				D_800E66A8[i].unk2E |= 1;
 			}
 			roomId = D_800E66A8[i].unk2D & 0x3F;
@@ -6870,7 +6870,7 @@ void func_80071F08_159FC8(void) {
 		func_800717B4_159874();
 	}
 
-	func_800705E0_1586A0((void *) ((buildingInteriorToLoadId << 8) + (u32) &D_800D6460));
+	func_800705E0_1586A0((InteriorRoomData *) ((buildingInteriorToLoadId << 8) + (u32) &D_800D6460));
 	D_800E65DC = 0;
 	D_800E65E0 = 0.0f;
 
@@ -9689,8 +9689,8 @@ void func_800787E8_1608A8(u8 arg0, u8 arg1) {
 				D_800E65A8 |= 0x200;
 				type = (D_800E66A8[arg1].unk2C & 0xFC) >> 2;
 				if (type != 3) {
-					D_800E65EC = D_800E65E8[(type * 2) + 0xEA];
-					D_800E65ED = D_800E65E8[(type * 2) + 0xE9];
+					D_800E65EC = D_800E65E8->exitTable[type].objectIndex;
+					D_800E65ED = D_800E65E8->exitTable[type].interiorId;
 				}
 			} else {
 				D_800E65A8 &= ~0x20;
@@ -11342,48 +11342,41 @@ s32 func_8007C428_1644E8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 a
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C428_1644E8.s")
 #endif
 
-// CURRENT(205)
 // AI - Checks if a grid cell is passable (not occupied)
-#ifdef NON_MATCHING
-s32 func_8007C698_164758(s32 arg0, s32 arg1) {
-	Unk8007C698Npc *npc;
+s32 func_8007C698_164758(s32 arg0, s32 arg1)
+{
+	Unk800E66A8 *new_var;
 	s32 cellX;
 	s32 cellY;
-	s32 width;
+	s32 xMinus;
 	s32 i;
-	u8 cellType;
-
+	s32 cellType;
+	s32 objCellX;
+	s32 objCellY;
+	s32 x;
 	cellY = arg1 / 96;
 	cellX = arg0 / 96;
-	width = D_800E6460;
+	xMinus = cellX - 1;
 	cellY -= 1;
-	cellType = D_800E69A7[width * cellY + cellX];
-
-	i = 0;
-	if (D_800E668C > 0) {
-		npc = (Unk8007C698Npc *) D_800E66A8;
-		do {
-			if (npc->unk0 == 0x1E) {
-				u8 objCellX;
-				u8 objCellY;
-
-				objCellX = ((Unk8007C698CellObj *) ((u8 *) D_800E65E8 + i))->unk40;
-				objCellY = ((Unk8007C698CellObj *) ((u8 *) D_800E65E8 + i))->unk50;
-				if ((objCellX + 1 == cellX) && (objCellY == cellY) && (npc->unk24 == 0.0f)) {
-					cellType = 0xFF;
-				}
+	cellType = D_800E69A7[(D_800E6460 * cellY) + cellX];
+	for (i = 0; i < D_800E668C; i++)
+	{
+		new_var = &D_800E66A8[i];
+		x = new_var->unk0;
+		if (x == 0x1E)
+		{
+			objCellX = D_800E65E8->objectCellX[i];
+			objCellY = D_800E65E8->objectCellY[i];
+			if ((((objCellX + 1) == cellX) && (objCellY == cellY)) && (new_var->unk24 == 0.0f))
+			{
+				cellType = 0xFF;
 			}
-			i++;
-			npc++;
-		} while (i < D_800E668C);
+		}
 	}
 
-	if ((cellX - 1 < 0) || (cellY < 0) || (cellX - 1 >= width) || (cellY >= D_800E6464) || (cellType == 0xFF)) {
+	if (((((xMinus < 0) || (cellY < 0)) || (xMinus >= D_800E6460)) || (cellY >= D_800E6464)) || (cellType == 0xFF))
+	{
 		return 1;
 	}
-
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C698_164758.s")
-#endif

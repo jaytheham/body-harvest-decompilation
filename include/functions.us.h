@@ -101,7 +101,7 @@ void func_80007570_8170(void);
 s32 func_8000726C_7E6C(u64);
 void func_800072CC_7ECC(u64);
 void func_800073B8_7FB8(u64);
-void func_800705E0_1586A0(u8 *arg0);
+void func_800705E0_1586A0(InteriorRoomData *arg0);
 void func_800717B4_159874(void);
 void func_80072300_15A3C0(void);
 void func_8007343C_15B4FC(void);

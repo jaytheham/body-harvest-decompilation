@@ -2260,7 +2260,7 @@ typedef struct {
 	/* 0x30 */ s32 unk30;
 } Unk8009E8E0; /* size = 0x34 */
 
-// AI - Placed room object instance (one entry in the current room's layout, built from the building data block)
+// AI - Placed room object instance (one entry in the current room's layout, built from the InteriorRoomData record)
 // AI - Each instance references an object type from the room's 32-entry catalog (Unk80070F7CObj) via unk0
 typedef struct {
 	/* 0x00 */ u8 unk0; // AI - room object type index (0-31) into D_800E65BC catalog
@@ -3046,12 +3046,39 @@ typedef struct {
 	/* 0x28 */ u8 pad28[0x8];
 } Unk8007C698Npc; /* size = 0x30 */
 
+// AI - One exit/door row of a building-interior layout record
 typedef struct {
-	/* 0x00 */ u8 pad0[0x40];
-	/* 0x40 */ u8 unk40;
-	/* 0x41 */ u8 pad41[0xF];
-	/* 0x50 */ u8 unk50;
-} Unk8007C698CellObj;
+	/* 0x0 */ u8 interiorId;  // destination buildingInteriorToLoadId (-> D_800E65ED)
+	/* 0x1 */ u8 objectIndex; // entry object index into D_800E66A8 (-> D_800E65EC)
+} InteriorRoomExit; /* size = 0x2 */
+
+// AI - Building-interior layout record. D_800D6460 holds the current level's interior
+// asset (0xFE00 bytes = 254 records); the live record is
+// D_800D6460 + buildingInteriorToLoadId * sizeof(InteriorRoomData) (pointed to by D_800E65E8).
+typedef struct {
+	/* 0x00 */ u8 unk00[0x28];        // unreferenced by code
+	/* 0x28 */ u8 anchorCellX;        // world X = (v - 0.5) * 96
+	/* 0x29 */ u8 anchorCellZ;        // world Z = (v - 0.5) * 96
+	/* 0x2A */ u8 unk2A;
+	/* 0x2B */ u8 unk2B;
+	/* 0x2C */ u8 unk2C;
+	/* 0x2D */ u8 unk2D;
+	/* 0x2E */ u8 anchorHeight;       // world Y = ((v >> 1) & 0x7F) + 50
+	/* 0x2F */ u8 unk2F;
+	/* 0x30 */ u8 objectType[16];     // bits 0-4 catalogue id, bits 5-6 orientation, bit 7 flag
+	/* 0x40 */ u8 objectCellX[16];
+	/* 0x50 */ u8 objectCellY[16];
+	/* 0x60 */ u8 objectFlags[16];    // bits 2-7 event/room id, bits 0-1 sub-state
+	/* 0x70 */ u8 objectRoomId[16];   // low 6 bits loading-zone id, 0x40 flag
+	/* 0x80 */ u8 tileMap[10 * 10];   // gridWidth * gridHeight tile ids, 0xFF = solid
+	/* 0xE4 */ u8 gridWidth;          // <= 10
+	/* 0xE5 */ u8 gridHeight;         // <= 10
+	/* 0xE6 */ u8 objectCount;        // <= 16
+	/* 0xE7 */ u8 roomSetIndex;       // + D_8009C4C4_184584[currentLevel] = room index
+	/* 0xE8 */ u8 viewMode;           // copied to D_800A0960_188A20
+	/* 0xE9 */ InteriorRoomExit exitTable[3];
+	/* 0xEF */ u8 padEF[0x11];
+} InteriorRoomData; /* size = 0x100 */
 
 // AI - Interior lighting/color data (D_8008DE78_175F38): 8 s16 color/brightness components
 typedef struct {

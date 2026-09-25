@@ -310,21 +310,13 @@ void func_800804E0_1685A0(void) {
 	s32 temp_t6;
 	u16 temp_t2;
 	u16 temp_t3;
-	u8 *temp_v0;
 
-	temp_t6 = D_800E7394[0x28];
-	temp_v0 = &D_800E7394[0x28];
+	temp_t6 = D_800E7394->anchorCellX;
 	temp_f6 = (f64) temp_t6;
-	if (temp_t6 < 0) {
-		temp_f6 += 4294967296.0;
-	}
-	temp_t1 = temp_v0[1];
-	temp_f12 = ((temp_v0[6] >> 1) & 0x7F) + 50;
+	temp_t1 = D_800E7394->anchorCellZ;
+	temp_f12 = ((D_800E7394->anchorHeight >> 1) & 0x7F) + 50;
 	temp_f2 = (f32) ((temp_f6 - 0.5) * 96.0);
 	temp_f10 = (f64) temp_t1;
-	if (temp_t1 < 0) {
-		temp_f10 += 4294967296.0;
-	}
 	temp_f14 = (f32) ((temp_f10 - 0.5) * 96.0);
 
 	if ((f64) D_800E73B0 < 1.0) {
