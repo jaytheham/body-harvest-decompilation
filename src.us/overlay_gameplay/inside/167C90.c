@@ -1203,14 +1203,16 @@ void func_80082B04_16ABC4(void) {
 	D_80034484 = 0;
 }
 
-// CURRENT(3045)
-#ifdef NON_MATCHING
+// CURRENT(20)
 // AI - Handle interior gameplay: screen fade colors and entering/exiting state transitions
+#ifdef NON_MATCHING
 void func_80082B50_16AC10(void) {
+	u32 temp_flags;
 	s32 temp_v0;
 
 	if (D_800E65A8 & 1) {
-		if (func_80017B78_18778() == 1) {
+		if (1 != func_80017B78_18778()) {
+		} else {
 			D_800A0A1C_188ADC = D_80034484;
 			D_800E7398 = 1;
 			if (!(D_800E65A8 & 0x408)) {
@@ -1234,48 +1236,49 @@ void func_80082B50_16AC10(void) {
 					D_80053BFA = 0xC8;
 					D_80053BFC = 0xDC;
 					D_80053BF6 = 0;
+					D_80053BFE = 0xFF;
 				} else {
 					D_80053BF8 = 0xDC;
 					D_80053BFA = 0xC8;
 					D_80053BFC = 0x7F;
 					D_80053BF6 = 0;
+					D_80053BFE = 0xFF;
 				}
-				D_80053BFE = 0xFF;
 
 				gDPPipeSync(D_8005BB2C++);
-				func_80017CA4_188A4(0xFF, &D_80053BF4, &D_80053BF2);
+				func_80017CA4_188A4();
 
 				if (D_800A0A1C_188ADC != 0) {
 					D_80053BF0 = 0x7F;
 					D_80053BF2 = 0xC8;
 					D_80053BF4 = 0xDC;
 					D_80053BF6 = 0;
+					D_80053BFE = 0xFF;
 				} else {
 					D_80053BF0 = 0xDC;
 					D_80053BF2 = 0xC8;
 					D_80053BF4 = 0x7F;
 					D_80053BF6 = 0;
+					D_80053BFE = 0xFF;
 				}
-				D_80053BFE = 0xFF;
 				D_80053BFC = 0xFF;
 				D_80053BFA = D_80053BFC;
 				D_80053BF8 = D_80053BFA;
 
-				if (func_80017B78_18778() == -1) {
+				if (func_80017B78_18778() == 0xFFFF) {
+					
 					D_800E7398 = 0;
-					temp_v0 = D_800E65A8 & ~2;
-					D_800E65A8 = temp_v0;
-					if (temp_v0 & 8) {
+					D_800E65A8 &= ~2;
+					
+					if (D_800E65A8 & 8) {
 						func_8007AE40_162F00();
-						temp_v0 = D_800E65A8 & ~8;
-						D_800E65A8 = temp_v0;
+						D_800E65A8 &= ~8;
 					}
-					if (temp_v0 & 0x1000) {
-						temp_v0 &= ~0x1000;
-						D_800E65A8 = temp_v0;
+					if (D_800E65A8 & 0x1000) {
+						D_800E65A8 &= ~0x1000;
 					}
-					if (temp_v0 & 0x400) {
-						D_800E65A8 = temp_v0 & ~0x400;
+					if (D_800E65A8 & 0x400) {
+						D_800E65A8 &= ~0x400;
 					}
 				}
 
