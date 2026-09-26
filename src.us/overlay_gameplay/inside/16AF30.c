@@ -3057,50 +3057,53 @@ void func_8008A704_1727C4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A704_1727C4.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(3275)
 // AI - Allocate a new animated sprite slot in UnkFC8E8Entry table
+#ifdef NON_MATCHING
 s32 func_8008AD40_172E00(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u16 arg4) {
 	UnkFC8E8Entry *entry;
 	s8 *tableA;
+	u8 *tableB;
 	u8 slot;
 	u8 search;
-	u8 *tableB;
+	u8 *arg3Ptr;
+	s32 divisor;
+	s32 result;
 
 	if ((s32) D_800FCA78 >= 0x14) {
 		return 0xFF;
 	}
 
-	entry = &(&D_800FC8E8)[D_800FCA79];
+	slot = D_800FCA79;
+	entry = &(&D_800FC8E8)[slot];
 	entry->unk0 = arg0 * 4;
-	entry->unk4 = arg2 * 4;
 	entry->unk2 = arg1 * 4;
-
-	tableA = &D_800A2690_18A750[arg3 * 8];
+	entry->unk4 = arg2 * 4;
 	entry->unkA = arg4;
 	entry->unkC = arg3;
 	entry->unkF = 0;
+	tableA = &D_800A2690_18A750[arg3 * 8];
 	entry->unk10 = tableA[1];
 	entry->unk11 = tableA[2];
 	entry->unk12 = tableA[3];
 
+	result = func_800038E0_44E0(entry, arg1, arg2, &D_800FC8E8);
 	slot = D_800FCA79;
 	entry = &(&D_800FC8E8)[slot];
-	tableB = &D_800A2698_18A758[arg3 * 4];
-	entry->unkE = func_800038E0_44E0(entry, arg1, arg2, &D_800FC8E8) % tableA[0];
+	divisor = tableA[0];
+	arg3Ptr = &arg3;
+	tableB = &D_800A2698_18A758[*arg3Ptr * 4];
+	entry->unkE = result % divisor;
 	entry->unkD = tableB[3];
 	entry->unk6 = tableB[0];
 	entry->unk7 = tableB[1];
 	entry->unk8 = tableB[2];
 
-	if (slot < 0x14) {
-		search = slot;
-		do {
-			if ((&D_800FC8E8)[search].unkA == 0) {
-				D_800FCA79 = search;
-				search = 0x14;
-			}
-			search = (search + 1) & 0xFF;
-		} while (search < 0x14);
+	for (search = slot; search < 0x14; search++) {
+		if ((&D_800FC8E8)[search].unkA == 0) {
+			D_800FCA79 = search;
+			search = 0x14;
+		}
 	}
 
 	D_800FCA78++;
