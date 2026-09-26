@@ -2473,7 +2473,7 @@ void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
 // CURRENT(4710)
 #ifdef NON_MATCHING
 // AI - Spawn a child particle effect for rendering
-void func_80089408_1714C8(s32 arg0) {
+void func_80089408_1714C8(u8 arg0) {
 
 	Unk84EECEffect *srcEffect;
 	Unk89408Pos *srcPos;
@@ -2611,49 +2611,56 @@ void func_80089794_171854(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089794_171854.s")
 #endif
 
-// CURRENT(5906)
-#ifdef NON_MATCHING
 // AI - Update slot type 8 effects: gravity, bounce, and lifecycle
-void func_80089834_1718F4(s32 arg0) {
-	u8 *sp40;
-	u8 temp_fp;
-	s16 temp_s2;
+void func_80089834_1718F4(u8 arg0) {
+	typedef struct {
+		s16 unk0;
+		s16 unk2;
+		s16 unk4;
+		u8 unk6;
+		u8 unk7;
+		u8 unk8;
+		u8 unk9;
+		s8 unkA;
+		s8 unkB;
+		s8 unkC;
+		u8 unkD;
+	} Unk89834Pos;
+	s32 pad4C;
+	s32 pad48;
+	s32 pad44;
+	Unk89408Pos *sp40;
 	s16 var_s0;
 	Unk89834Pos *temp_s0;
-	Unk84EECEffect *temp_s1_2;
 	UnkFB6F8Entry *temp_s3;
-	Unk84EECEffect *base;
 
-	temp_fp = arg0;
-	temp_s3 = &D_800FB6F8[temp_fp];
-	base = D_800FB7B0;
-	var_s0 = base[temp_s3->unk6].unk4;
-	sp40 = (u8 *)&base[temp_s3->unk6].unk8;
-	if ((var_s0 != -5) && (var_s0 != -6)) {
-		for (;;) {
-			temp_s1_2 = &base[var_s0];
-			if (temp_s1_2->unk11 < 0x34) {
-				if ((temp_s3->unk4 < 3) && (base[temp_s3->unk6].unk11 == 0)) {
-					func_800839B8_16BA78(temp_fp);
-					func_80083300_16B3C0(temp_fp);
+	temp_s3 = &D_800FB6F8[arg0];
+	var_s0 = temp_s3->unk6;
+	sp40 = (Unk89408Pos *)&D_800FB7B0[var_s0].unk8;
+	for (var_s0 = D_800FB7B0[var_s0].unk4; (var_s0 != -5) && (var_s0 != -6);) {
+			temp_s0 = (Unk89834Pos *)&D_800FB7B0[var_s0].unk8;
+			if (D_800FB7B0[var_s0].unk11 < 0x34) {
+				s16 temp_s2;
+				if ((temp_s3->unk4 < 3) && (D_800FB7B0[temp_s3->unk6].unk11 == 0)) {
+					func_800839B8_16BA78(arg0);
+					func_80083300_16B3C0(arg0);
 					return;
 				}
-				temp_s2 = temp_s1_2->unk4;
-				func_800835F0_16B6B0(var_s0, temp_fp);
+				temp_s2 = D_800FB7B0[var_s0].unk4;
+				func_800835F0_16B6B0(var_s0, arg0);
 				var_s0 = temp_s2;
 			} else {
-				temp_s0 = (Unk89834Pos *)&temp_s1_2->unk8;
 				if (temp_s0->unkD == 0) {
 					temp_s0->unk9 = (temp_s0->unk9 - (func_800038E0_44E0() % 6)) - 6;
-					temp_s1_2->unk2 = temp_s1_2->unk2 + (func_800038E0_44E0() % 3) + 3;
+					D_800FB7B0[var_s0].unk2 = (func_800038E0_44E0() % 3) + D_800FB7B0[var_s0].unk2 + 3;
 				} else {
 					temp_s0->unk9 = (temp_s0->unk9 - (func_800038E0_44E0() % 7)) - 7;
-					temp_s1_2->unk2 = temp_s1_2->unk2 + (func_800038E0_44E0() % 6) + 6;
+					D_800FB7B0[var_s0].unk2 = (func_800038E0_44E0() % 6) + D_800FB7B0[var_s0].unk2 + 6;
 				}
 				temp_s0->unk0 += temp_s0->unkA;
 				temp_s0->unk2 += temp_s0->unkB;
 				temp_s0->unk4 += temp_s0->unkC;
-				if (sp40[0xA] == 2) {
+				if (sp40->unkA == 2) {
 					temp_s0->unk6 -= 2;
 					temp_s0->unk7 -= 3;
 					temp_s0->unk8 -= 2;
@@ -2666,25 +2673,18 @@ void func_80089834_1718F4(s32 arg0) {
 					temp_s0->unk2 = 0;
 					if (temp_s0->unkD == 0) {
 						temp_s0->unkD = 1;
-						temp_s0->unkA = (temp_s0->unkA + (func_800038E0_44E0() % 20)) - 0xA;
-						temp_s0->unkC = (temp_s0->unkC + (func_800038E0_44E0() % 20)) - 0xA;
+						temp_s0->unkA += (func_800038E0_44E0() % 20) - 0xA;
+						temp_s0->unkC += (func_800038E0_44E0() % 20) - 0xA;
 					}
 				}
-				var_s0 = temp_s1_2->unk4;
+				var_s0 = D_800FB7B0[var_s0].unk4;
 			}
-			if ((var_s0 == -5) || (var_s0 == -6)) {
-				break;
-			}
-		}
 	}
 
-	if (base[temp_s3->unk6].unk11 == 1) {
-		func_80089408_1714C8(temp_fp);
+	if (D_800FB7B0[temp_s3->unk6].unk11 == 1) {
+		func_80089408_1714C8(arg0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089834_1718F4.s")
-#endif
 
 // CURRENT(192)
 // AI - Render slot type 7 effects: smoke/cloud sprites
