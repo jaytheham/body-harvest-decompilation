@@ -3230,16 +3230,17 @@ void func_8008B0AC_17316C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B0AC_17316C.s")
 #endif
 
-#ifdef NON_MATCHING
+// Matched - Needs below funcs also matched so rodata builds properly.
 // AI - Main render dispatcher: set up RDP state and render all active slots
+#ifdef NON_MATCHING
 void func_8008B1A8_173268(void) {
 	s32 i;
-	u8 mode;
 
-	gSPSegment(D_8005BB2C++, 4, OS_K0_TO_PHYSICAL(&D_80031160));
+	gSPMatrix(D_8005BB2C++, ((u32)&D_80031160 & 0x1FFFFFFF), G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK | G_FOG | G_LIGHTING);
+	gDPPipeSync(D_8005BB2C++);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
@@ -3252,10 +3253,9 @@ void func_8008B1A8_173268(void) {
 	func_80088B9C_170C5C();
 	func_8008A704_1727C4();
 
-	for (i = 0; (i & 0xFF) < 0xF; i = (i + 1) & 0xFF) {
-		mode = D_800FB6F8[i].pad0[0];
-		if (mode != 0xFA) {
-			switch (mode) {
+	for (i = 0; i < 0xF; i = (i + 1) & 0xFF) {
+		if (D_800FB6F8[i].unk0 != 0xFA) {
+			switch (D_800FB6F8[i].unk0) {
 				case 0:
 					func_80086FC4_16F084(i & 0xFF);
 					break;
@@ -3275,15 +3275,15 @@ void func_8008B1A8_173268(void) {
 					func_80088654_170714();
 					break;
 				case 6:
-					func_80088DFC_170EBC(i & 0xFF);
 					break;
 				case 7:
-					func_80089BCC_171C8C(i & 0xFF);
+					func_80088DFC_170EBC(i & 0xFF);
 					break;
 				case 8:
+					func_80089BCC_171C8C(i & 0xFF);
 					break;
 				default:
-					osSyncPrintf(D_800A5410_18D4D0);
+					osSyncPrintf(D_800A5410_18D4D0, D_800FB6F8[i].unk0);
 					break;
 			}
 		}

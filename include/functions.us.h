@@ -1603,4 +1603,16 @@ void func_8012B150_13A100(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2, s32 ar
 s8 func_80081F18_90EC8(u8 arg0, u8 arg1, u8 arg2, s16 *arg3, Unk8014DD50 **arg4);
 void func_8011BA80_12AA30(u8 arg0, s16 arg1);
 
+void func_80086FC4_16F084(s32 arg0);
+void func_80087A40_16FB00(s32 arg0);
+void func_80087CB8_16FD78(s32 arg0);
+void func_80087E3C_16FEFC(void);
+void func_800881C0_170280(void);
+void func_80088654_170714(void);
+void func_80088B9C_170C5C(void);
+void func_80088DFC_170EBC(s32 arg0);
+void func_80089BCC_171C8C(s32 arg0);
+void func_8008A704_1727C4(void);
+void func_8008B594_173654(void);
+
 #endif
