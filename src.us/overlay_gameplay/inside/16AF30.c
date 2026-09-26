@@ -3156,21 +3156,12 @@ void func_8008AFD0_173090(u8 arg0, s8 arg1, s8 arg2) {
 	}
 }
 
-#if NON_MATCHING
 // AI - Set sprite entry unkD field
-void func_8008B020_1730E0(s32 arg0, s32 arg1) {
-	s32 temp_t6;
-	s32 temp_t7;
-
-	temp_t6 = arg0 & 0xFF;
-	temp_t7 = arg1 & 0xFF;
-	if (temp_t6 != 0xFF) {
-		*(&D_800FC8F7 + (temp_t6 * 0x14)) = temp_t7;
+void func_8008B020_1730E0(u8 arg0, u8 arg1) {
+	if (arg0 != 0xFF) {
+		(&D_800FC8E8)[arg0].unkF = arg1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B020_1730E0.s")
-#endif
 
 // AI - Free a sprite entry in the UnkFC8E8Entry table
 void func_8008B058_173118(u8 arg0) {
@@ -3181,7 +3172,6 @@ void func_8008B058_173118(u8 arg0) {
 	D_800FCA78--;
 }
 
-// CURRENT(285)
 // AI - Initialize the entire effect system (clear all slots and effects)
 void func_8008B0AC_17316C(void) {
 	s32 i;
