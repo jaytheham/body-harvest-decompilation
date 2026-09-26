@@ -1391,7 +1391,7 @@ void func_80085F28_16DFE8(u8 arg0) {
 
 	effect = sp30->unk4;
 	if ((effect != -5) && (effect != -6)) {
-		do {
+	do {
 			Unk84EECEffect *entry;
 			u8 *entry8;
 
@@ -1414,8 +1414,8 @@ void func_80085F28_16DFE8(u8 arg0) {
 				entry8[8] = entry8[8] - 3;
 				effect = entry->unk4;
 			}
-		} while ((effect != -5) && (effect != -6));
-	}
+	} while ((effect != -5) && (effect != -6));
+}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085F28_16DFE8.s")
@@ -1966,7 +1966,7 @@ void func_80087A40_16FB00(s32 arg0) {
 			pos->y = entry->unkA;
 			pos->z = entry->unkC;
 			*scale = entry->unk2;
-			func_8008A1D8_172298();
+		func_8008A1D8_172298();
 			effect = entry->unk4;
 		} while ((effect != -5) && (effect != end));
 	}
@@ -2061,7 +2061,7 @@ void func_80087E3C_16FEFC(void) {
 			D_800FB6E4 = 0xFF;
 			D_800FB6E0 = entry->unk2;
 			D_800FB6DC = (s8 *)(pos + 3);
-			func_8008A1D8_172298();
+		func_8008A1D8_172298();
 
 			effect = entry->unk4;
 		} while ((effect != -5) && (effect != -6));
@@ -2686,16 +2686,14 @@ void func_80089834_1718F4(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089834_1718F4.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(192)
 // AI - Render slot type 7 effects: smoke/cloud sprites
+#ifdef NON_MATCHING
 void func_80089BCC_171C8C(s32 arg0) {
-	s16 effect;
-	Unk84EECEffect *entry;
-	Unk84EECEffect *base;
+	s16 var_s1;
 
-	effect = *(s16 *)(&D_800FB6FE + ((arg0 & 0xFF) * 0xC));
-	base = D_800FB7B0;
-	effect = base[effect].unk4;
+	var_s1 = D_800FB6F8[arg0 & 0xFF].unk6;
+	var_s1 = D_800FB7B0[var_s1].unk4;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
@@ -2713,16 +2711,15 @@ void func_80089BCC_171C8C(s32 arg0) {
 	D_800FB6E5 = 0x20;
 	D_800FB6E6 = 0x20;
 
-	while ((effect != -5) && (effect != -6)) {
-		entry = &base[effect];
-		D_800FB6D0.x = entry->unk8;
-		D_800FB6D0.y = entry->unkA;
-		D_800FB6D0.z = entry->unkC;
-		D_800FB6DC = &entry->unkE;
-		D_800FB6E4 = entry->unk11;
-		D_800FB6E0 = entry->unk2;
+	while ((var_s1 != -5) && (var_s1 != -6)) {
+		D_800FB6D0.x = (f32)D_800FB7B0[var_s1].unk8;
+		D_800FB6D0.y = (f32)D_800FB7B0[var_s1].unkA;
+		D_800FB6D0.z = (f32)D_800FB7B0[var_s1].unkC;
+		D_800FB6DC = &D_800FB7B0[var_s1].unkE;
+		D_800FB6E0 = (f32)D_800FB7B0[var_s1].unk2;
+		D_800FB6E4 = D_800FB7B0[var_s1].unk11;
 		func_8008A1D8_172298();
-		effect = entry->unk4;
+		var_s1 = D_800FB7B0[var_s1].unk4;
 	}
 }
 #else
