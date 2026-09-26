@@ -3181,7 +3181,6 @@ void func_8008B058_173118(u8 arg0) {
 	D_800FCA78--;
 }
 
-#ifdef NON_MATCHING
 // CURRENT(285)
 // AI - Initialize the entire effect system (clear all slots and effects)
 void func_8008B0AC_17316C(void) {
@@ -3190,46 +3189,40 @@ void func_8008B0AC_17316C(void) {
 
 	func_8008A59C_17265C();
 
-	i = 0;
-	do {
+	for (i = 0; i < 0xF; i = (i + 1) & 0xFF) {
 		*(((u8 *) &D_800FB6F8) + (i * 0xC)) = 0xFA;
-	} while ((i = (i + 1) & 0xFF) < 0xF);
+	}
 
-	j = 0;
-	do {
+	for (j = 0; j < 0xC8; j = (j + 1) & 0xFFFF) {
 		D_800FB7B0[j].unk0 = 0;
-	} while ((j = (j + 1) & 0xFFFF) < 0xC8);
+	}
 
 	D_800FC8E2 = 0;
 	D_800FC8E0 = 0;
 
-	D_800FB6F8[14].pad0[0] = 3;
+	D_800FB6F8[14].unk0 = 3;
 	D_800FB6F8[14].unk4 = 0;
 	D_800FB6F8[14].unk6 = -6;
-	*((s16 *) &D_800FB6F8[14].pad8[0]) = -6;
+	D_800FB6F8[14].unk8 = -6;
 
-	D_800FB6F8[13].pad0[0] = 4;
+	D_800FB6F8[13].unk0 = 4;
 	D_800FB6F8[13].unk4 = 0;
 	D_800FB6F8[13].unk6 = -6;
-	*((s16 *) &D_800FB6F8[13].pad8[0]) = -6;
+	D_800FB6F8[13].unk8 = -6;
 
-	D_800FB6F8[12].pad0[0] = 5;
+	D_800FB6F8[12].unk0 = 5;
 	D_800FB6F8[12].unk4 = 0;
 	D_800FB6F8[12].unk6 = -6;
-	*((s16 *) &D_800FB6F8[12].pad8[0]) = -6;
+	D_800FB6F8[12].unk8 = -6;
 
-	D_800FB6F8[11].pad0[0] = 6;
+	D_800FB6F8[11].unk0 = 6;
 	D_800FB6F8[11].unk4 = 0;
 	D_800FB6F8[11].unk6 = -6;
-	*((s16 *) &D_800FB6F8[11].pad8[0]) = -6;
+	D_800FB6F8[11].unk8 = -6;
 
 	D_800FB7AD = 0;
 	D_800FB7AC = 4;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B0AC_17316C.s")
-#endif
-
 // Matched - Needs below funcs also matched so rodata builds properly.
 // AI - Main render dispatcher: set up RDP state and render all active slots
 #ifdef NON_MATCHING
