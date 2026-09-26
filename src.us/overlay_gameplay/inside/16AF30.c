@@ -3135,18 +3135,12 @@ void func_8008AF5C_17301C(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008AF5C_17301C.s")
 #endif
 
-#ifdef NON_MATCHING
 // AI - Set sprite entry unk10 field
-void func_8008AF94_173054(s32 arg0, s8 arg1) {
-	s32 temp_t6 = arg0 & 0xFF;
-
-	if (temp_t6 != 0xFF) {
-		*(&D_800FC8FA + (temp_t6 * 0x14)) = arg1;
+void func_8008AF94_173054(u8 arg0, s8 arg1) {
+	if (arg0 != 0xFF) {
+		(&D_800FC8E8)[arg0].unk12 = arg1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008AF94_173054.s")
-#endif
 
 // AI - Set sprite entry velocity values
 void func_8008AFD0_173090(u8 arg0, s8 arg1, s8 arg2) {
