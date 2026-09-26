@@ -1443,9 +1443,9 @@ void func_80086550_16E610(void) {
 				effect = nextEffect;
 			} else {
 				if (entry->unk14 == 1) {
-					entry->unk8 += D_800FB6F0[0] * 4;
-					entry->unkA += D_800FB6F0[1] * 4;
-					entry->unkC += D_800FB6F0[2] * 4;
+					entry->unk8 += D_800FB6F0.x * 4;
+					entry->unkA += D_800FB6F0.y * 4;
+					entry->unkC += D_800FB6F0.z * 4;
 				}
 
 				entry->unkE = (func_800038E0_44E0() % 0x55) + 0xAA;
@@ -1639,7 +1639,7 @@ void func_80086B34_16EBF4(s32 arg0) {
 #ifdef NON_MATCHING
 // CURRENT(5)
 // AI - Main update dispatcher: iterate all 15 slots and call type-specific update
-void func_80086D88_16EE48() {
+void func_80086D88_16EE48(void) {
 	s32 i;
 
 	for (i = 0; i < 0xF; i = (i + 1) & 0xFF) {
@@ -3295,23 +3295,18 @@ void func_8008B1A8_173268(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B1A8_173268.s")
 #endif
 
-#if NON_MATCHING
-// CURRENT(1605)
 // AI - Main update and render entry point: update effects, then render
 void func_8008B474_173534(void) {
 	func_8008311C_16B1DC();
-	(&D_800FB6F0)[0] = (s16) ((s32) D_800E6A78.unk4C - (&D_800FB6E8)[0]);
-	(&D_800FB6F0)[1] = (s16) ((s32) D_800E6A78.unk50 - (&D_800FB6E8)[1]);
-	(&D_800FB6F0)[2] = (s16) ((s32) D_800E6A78.unk54 - (&D_800FB6E8)[2]);
-	func_80086D88_16EE48(&D_800FB6F0);
+	D_800FB6F0.x = (s16) D_800E6A78.unk4C - D_800FB6E8.x;
+	D_800FB6F0.y = (s16) D_800E6A78.unk50 - D_800FB6E8.y;
+	D_800FB6F0.z = (s16) D_800E6A78.unk54 - D_800FB6E8.z;
+	func_80086D88_16EE48();
 	func_8008A5E4_1726A4();
-	(&D_800FB6E8)[0] = (s16) (s32) D_800E6A78.unk4C;
-	(&D_800FB6E8)[1] = (s16) (s32) D_800E6A78.unk50;
-	(&D_800FB6E8)[2] = (s16) (s32) D_800E6A78.unk54;
+	D_800FB6E8.x = (s16) (s32) D_800E6A78.unk4C;
+	D_800FB6E8.y = (s16) (s32) D_800E6A78.unk50;
+	D_800FB6E8.z = (s16) (s32) D_800E6A78.unk54;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B474_173534.s")
-#endif
 
 // AI - Set lens flare position and size parameters
 void func_8008B53C_1735FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
