@@ -2160,7 +2160,7 @@ void func_8011A604_1295B4(void) {
 					if (model == D_C012598) {
 						func_8012D84C_13C7FC(currentLevel);
 					}
-				} else if (currentLevel == 5) {
+				} else if (currentLevel == 5) { // on Comet spawn various ammo pickups depending on building type destroyed
 					if (model == D_D011660) {
 						func_800A8A68_B7A18(inst->xCoord, inst->yCoord, inst->zCoord, 0x1A);
 					} else if (model == D_D00C4B8) {

@@ -2262,6 +2262,7 @@ void func_800EF14C_FE0FC(VehicleInstance *arg0) {
 #endif
 
 // CURRENT(491)
+// Black Adam animations controller? called by his behavior function
 #ifdef NON_MATCHING
 s32 func_800EF650_FE600(AlienInstance *arg0) {
 	s32 pad;

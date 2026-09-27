@@ -1835,7 +1835,9 @@ void func_800ADAF8_BCAA8(u8 arg0) {
 
 // CURRENT(3367)
 #ifdef NON_MATCHING
-// AI - Combat AI state machine
+// AI - Combat AI state machine 
+// Black Adam's behaviors - func is named at unk48 on his enemyspecs table (entry 0x12 in all levels)
+// unk24 on his enemyinstance determines case - running, shooting at you, kneeling on death, etc
 void func_800ADB4C_BCAFC(u8 arg0) {
 	AlienInstance *alien;
 	s32 state;
@@ -1857,7 +1859,7 @@ void func_800ADB4C_BCAFC(u8 arg0) {
 	}
 
 	mode = alien->unk24;
-	switch (mode - 1) {
+	switch (mode - 1) { // subtract 1 from actual unk24 value to determine case...
 		case 0:
 			dx = alien->unk0 - D_80052B34->unk0;
 			dz = alien->unk4 - D_80052B34->unk4;

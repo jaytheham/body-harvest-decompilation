@@ -4808,6 +4808,7 @@ void func_800BDDA0_CCD50(void) {
 	D_8013D9AC_14C95C = 0;
 }
 
+// only call happens a couple seconds into Black Adam's death - lighting related?
 void func_800BDDB4_CCD64(void) {
 	D_80151DD0 = 3;
 	D_8013D9AC_14C95C = 0;

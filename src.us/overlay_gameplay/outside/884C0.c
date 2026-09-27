@@ -551,7 +551,7 @@ void func_80079910_888C0(s32 arg0)
 	{
 		if (!(alien->unk20 & ALIEN_FLAG_UNKM))
 		{
-			func_800797A4_88754(arg0, alienTypes[typeIndex].pad60[0]);
+			func_800797A4_88754(arg0, alienTypes[typeIndex].pad60[0]); // check enemyspec pad60 for item drop generation
 		}
 	}
 	alien->typeIndex = 0;
@@ -3671,13 +3671,14 @@ s32 func_80080D98_8FD48(u8 arg0, s32 arg1) {
 		return 0;
 	}
 
+	// if running over a zombie with Combine, spawn pickup giving 2 shotgun ammo at player position!
 	func_80088760_97710(alien);
 	alienType = alien->typeIndex;
 	if (alienType == 1) {
 		if (D_80052B34->unk1A == 6) {
 			alien->unk20 |= ALIEN_FLAG_UNKL;
 			humanType = alien->unk24;
-			if ((humanType == 1) || (humanType == 0x1D)) {
+			if ((humanType == 1) || (humanType == 0x1D)) { 
 				sins((u16)(target->unkE + 0x4000));
 				coss((u16)(target->unkE + 0x4000));
 				D_80159320 |= 0x02000000;
@@ -6979,29 +6980,29 @@ void func_80089C40_98BF0(u8 arg0) {
 	}
 }
 
-void func_80089D04_98CB4(u8 arg0)
+void func_80089D04_98CB4(u8 arg0) // Black Adam on-death function
 {
   AlienInstance *s0 = &alienInstances[arg0];
   int new_var;
   func_800EF650_FE600(&alienInstances[arg0]);
   if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL))
   {
-	if (currentLevel != LEVEL_COMET)
+	if (currentLevel != LEVEL_COMET) // if not on comet..
 	{
-	  alienInstances[arg0].unk2C = 1;
+	  alienInstances[arg0].unk2C = 1; // ... death timer 1, return, no endgame/level win triggered
 	  return;
 	}
-	alienInstances[arg0].unk2C = 0x7D00;
-	s0->unk24 = 7;
+	alienInstances[arg0].unk2C = 0x7D00; // set death timer 32000 - unnecessarily high, would last over 20 minutes if not for credits etc
+	s0->unk24 = 7; // falls to his knees
 	if ((alienInstances[arg0].unk26 == 0) && (D_80031420 & 3))
 	{
 	  func_800CA5EC_D959C(alienInstances[arg0].unk0, alienInstances[arg0].unk2 + 0x28, alienInstances[arg0].unk4, 0, 0x7F, 0, 0x32, 3, 0x14, 0xFF, 0, 0xFF, 0, 0xFF);
 	}
 	func_80137468_146418(arg0, 0x26C);
-	func_800B034C_BF2FC();
+	func_800B034C_BF2FC(); // starts end of level handling?
 	return;
   }
-  if (alienInstances[arg0].unk2C == 0x7CCE)
+  if (alienInstances[arg0].unk2C == 0x7CCE) // at death timer 31950 - about 2.5 seconds later
   {
 	func_800BDDB4_CCD64();
   }
@@ -7010,7 +7011,7 @@ void func_80089D04_98CB4(u8 arg0)
 	new_var = 8;
 	func_800CA5EC_D959C(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0, 0x7F, 0, 5, 6, new_var, 0xFF, 0, 0xFF, 0, 0xFF);
   }
-}
+			}
 
 void func_80089EB4_98E64(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 {
