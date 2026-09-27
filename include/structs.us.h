@@ -519,7 +519,8 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ s16 pad0;
 	/* 0x02 */ s16 pad2;
-	/* 0x04 */ s16 pad4;
+	/* 0x04 */ u8 pad4;
+	/* 0x05 */ u8 unk5;
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ u8 pad8;
 	/* 0x09 */ u8 unk9;
@@ -527,6 +528,18 @@ typedef struct {
 	/* 0x0B */ u8 unkB;
 	/* 0x0C */ u8 unkC;
 } Unk84EECEffectTail;
+
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ u8 unk8;
+	/* 0x09 */ u8 unk9;
+	/* 0x0A */ u8 unkA;
+	/* 0x0B */ u8 unkB;
+	/* 0x0C */ u8 unkC;
+} Unk84EECEffectTailView;
 
 /* Cutscene entry: 24 bytes (6 s32), stored in D_80157E90[5] (120 bytes) */
 typedef struct {

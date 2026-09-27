@@ -1568,74 +1568,86 @@ void func_80086A34_16EAF4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086A34_16EAF4.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(2791)
 // AI - Update effect slot type 7: physics (gravity, movement) and spawn child effects
-void func_80086B34_16EBF4(s32 arg0) {
+#ifdef NON_MATCHING
+void func_80086B34_16EBF4(u8 arg0) {
+	u8 slotIdx;
 	UnkFB6F8Entry *slot;
 	Unk84EECEffect *head;
-	Unk84EECEffect *Unk84EECEffect;
-	s16 effect;
+	Unk84EECEffectTailView *entryTail;
+	Unk84EECEffectTailView *headTail;
+	Unk84EECEffect * volatile headEffect;
+	Unk84EECEffect *entry;
+	Unk84EECEffect *effects;
 	s16 next;
-	u8 slotIdx;
+	s16 effect;
 	u16 timer;
+	s8 clamp;
+	s32 i;
 	u8 count;
-	u8 i;
 
-	slotIdx = arg0 & 0xFF;
+	slotIdx = arg0;
+	effects = D_800FB7B0;
 	slot = &D_800FB6F8[slotIdx];
-	head = &D_800FB7B0[slot->unk6];
-	effect = head->unk4;
+		head = &effects[slot->unk6];
+		headEffect = &effects[head->unk4];
+		effect = headEffect->unk4;
 
 	if ((effect != -5) && (effect != -6)) {
+		clamp = -0x14;
 		do {
-			Unk84EECEffect = &D_800FB7B0[effect];
+			entry = &effects[effect];
+			entryTail = (Unk84EECEffectTailView *) &entry->unk8;
+			headTail = (Unk84EECEffectTailView *) &head->unk8;
 
-			Unk84EECEffect->unk8 += Unk84EECEffect->unk12;
-			Unk84EECEffect->unkC += Unk84EECEffect->unk14;
-			Unk84EECEffect->unkA += Unk84EECEffect->unk13;
+			entryTail->unk0 += (s8) entry->unk12;
+			entryTail->unk4 += (s8) entry->unk14;
+			entry->unkA += (s8) entry->unk13;
 
-			if (Unk84EECEffect->unk13 >= -0x13) {
-				Unk84EECEffect->unk11--;
+			if ((s8) entryTail->unkB >= -0x13) {
+				entryTail->unkB = (s8) entryTail->unkB - 1;
 			} else {
-				Unk84EECEffect->unk11 = -0x14;
+				entryTail->unkB = clamp;
 			}
 
-			if (Unk84EECEffect->unk2 < 2) {
-				func_8008568C_16D74C(Unk84EECEffect->unk8, Unk84EECEffect->unkC, Unk84EECEffect->unk2, head->unkE, head->unkF, head->unk10, Unk84EECEffect->unk9);
+			if (entryTail->unk2 < 2) {
+				func_8008568C_16D74C(entryTail->unk0, entryTail->unk4, entry->unk2, ((u8 *)headTail)[6], ((u8 *)headTail)[7], ((u8 *)headTail)[8], *((u8 *)entry + 9));
 
-				if ((slot->unk4 < 4) && (head->unkD == 0)) {
-					func_800839B8_16BA78(slotIdx);
-					func_80083300_16B3C0(slotIdx);
+				if ((slot->unk4 < 4) && (*((u8 *) headEffect + 0xD) == 0)) {
+				func_800839B8_16BA78(slotIdx);
+				func_80083300_16B3C0(slotIdx);
 					return;
 				}
 
-				next = Unk84EECEffect->unk4;
+				next = entry->unk4;
 				func_800835F0_16B6B0(effect, slotIdx);
 				effect = next;
 			} else {
-				effect = Unk84EECEffect->unk4;
+				effect = entry->unk4;
 			}
 		} while ((effect != -5) && (effect != -6));
 	}
 
-	timer = head->unkE;
+	timer = *(u16 *) &headEffect->unkE;
 	if (timer > 0) {
-		head->unkE = timer - 1;
+		entryTail = (Unk84EECEffectTailView *) ((u8 *) headEffect + 8);
+		entryTail->unk6 = timer - 1;
 		return;
 	}
 
+	entryTail = (Unk84EECEffectTailView *) ((u8 *) headEffect + 8);
 	count = (func_800038E0_44E0() % 3) + 2;
 	for (i = 0; i < count; i = (i + 1) & 0xFF) {
-		if (slot->unk5 > 0) {
-			func_800852B8_16D378(slotIdx);
-			slot->unk5--;
+		if (((u8 *) entryTail)[5] > 0) {
+		func_800852B8_16D378(arg0);
+			((u8 *) entryTail)[5]--;
 		}
 	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086B34_16EBF4.s")
 #endif
-
 #ifdef NON_MATCHING
 // CURRENT(5)
 // AI - Main update dispatcher: iterate all 15 slots and call type-specific update
