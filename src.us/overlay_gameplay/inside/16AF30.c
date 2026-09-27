@@ -1314,108 +1314,113 @@ void func_80085D40_16DE00(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085D40_16DE00.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(6668)
+// CURRENT(1342)
 // AI - Update effect slot type 0: random jitter, color, and lifecycle
+#ifdef NON_MATCHING
 void func_80085F28_16DFE8(u8 arg0) {
+	Unk84EECEffectTailUpdate *s1;
 	Unk84EECEffect *s2;
-	u8 *s1;
-	UnkFB6F8Entry *sp38;
-	Unk84EECEffect *sp30;
+	s16 s3;
+	s16 s4;
+	UnkFB6F8Entry *slot;
+	Unk84EECEffectTailView *spread;
+	Unk84EECEffectTailUpdate *spreadTail;
 	s16 effect;
-	s32 s3;
-	s32 s4;
+	void *saved[3];
 
-	// These pointer arithmetic operations are probably wrong, they should be struct/array accesses instead
-	sp38 = (UnkFB6F8Entry *)((arg0 * 0xC) + (u8 *)D_800FB6F8);
-	s2 = &D_800FB7B0[sp38->unk6];
-	sp30 = &D_800FB7B0[s2->unk4];
-	s1 = (u8 *)sp30 + 8;
-	sp30->unk12++;
-	if ((sp30->unk12 & 0xFF) == 0x10) {
-		sp30->unk12 = 0;
+	slot = &D_800FB6F8[arg0];
+	s2 = &D_800FB7B0[slot->unk6];
+	s1 = (Unk84EECEffectTailUpdate *)&D_800FB7B0[s2->unk4].unk8;
+	spread = (Unk84EECEffectTailView *)&s2->unk2;
+	spreadTail = (Unk84EECEffectTailUpdate *)&s2->unk8;
+	{
+		s32 counter;
+
+		counter = s1->pad4 + 1;
+		s1->pad4 = counter;
+		if ((counter & 0xFF) == 0x10) {
+			s1->pad4 = 0;
+		}
 	}
-
+	saved[0] = s1;
+	saved[2] = slot;
 	s3 = 6;
 	s4 = 1;
 	if ((func_800038E0_44E0() % s3) == s4) {
-		effect = s2->unk2;
-		s1[5] = (func_800038E0_44E0() % (effect / 4)) - (effect / 8);
+		s1->unk5 = (func_800038E0_44E0() % (spread->unk0 / 4)) - (spread->unk0 / 8);
 	}
 	if ((func_800038E0_44E0() % s3) == s4) {
-		effect = s2->unk2;
-		s1[7] = (func_800038E0_44E0() % (effect / 4)) - (effect / 8);
+		s1->unk6.bytes.low = (func_800038E0_44E0() % (spread->unk0 / 4)) - (spread->unk0 / 8);
 	}
 	if ((func_800038E0_44E0() % s3) == s4) {
-		effect = s2->unk2;
-		s1[6] = (func_800038E0_44E0() % (effect / 4)) - (effect / 8);
+		s1->unk6.bytes.high = (func_800038E0_44E0() % (spread->unk0 / 4)) - (spread->unk0 / 8);
 	}
 	if ((func_800038E0_44E0() % s3) == s4) {
-		effect = s2->unk2;
-		s1[8] = (func_800038E0_44E0() % (effect / 4)) - (effect / 8);
+		s1->pad8 = (func_800038E0_44E0() % (spread->unk0 / 4)) - (spread->unk0 / 8);
 	}
 
 	if ((func_800038E0_44E0() % 4) == s4) {
-		effect = sp38->unk2;
-		if (*((u8 *)&D_800FB6FA + (effect * 0xC) + 2) < 0x23) {
-			func_80084980_16CA40(arg0, effect & 0xFF);
+		s16 slotIndex;
+
+		slotIndex = ((UnkFB6F8Entry *)saved[2])->unk2;
+		if (D_800FB6FC[slotIndex * 0xC] < 0x23) {
+			func_80084980_16CA40(arg0, slotIndex);
 		}
 	}
 
-	if (((func_800038E0_44E0() % 2) == s4) && (sp38->unk4 < 0x14)) {
+	if (((func_800038E0_44E0() % 2) == s4) && (((UnkFB6F8Entry *)saved[2])->unk4 < 0x14)) {
 		func_80084628_16C6E8(arg0);
 	}
 
-	// This ptr casting should probably be replaced with a struct access instead:
-	if (*(u16 *)(s1 + 0) != 0xFFFF) {
-		if (*(u16 *)(s1 + 0) > 0) {
-			*(u16 *)(s1 + 0) = *(u16 *)(s1 + 0) - 1;
-			effect = s2->unk2;
-			if (effect < *(s16 *)(s1 + 2)) {
-				s2->unk2 = effect + 2;
-				s2->unkA = s2->unkA + 1;
+	if (s1->pad0 != 0xFFFF) {
+		if (s1->pad0 > 0) {
+			s1->pad0--;
+			effect = spread->unk0;
+			if (effect < s1->pad2) {
+				spread->unk0 = effect + 2;
+				spreadTail->pad2 = spreadTail->pad2 + 1;
 			}
-		} else if (s2->unk2 >= 0x1F) {
-			s2->unk2 = s2->unk2 - 2;
-			s2->unkA = s2->unkA - 1;
 		} else {
-			effect = sp38->unk2;
-			if (effect != 0xFB) {
-				*(s16 *)((effect * 0xC) + (u8 *)&D_800FB6FA) = 0xF1;
+			if (spread->unk0 >= 0x1F) {
+				spread->unk0 = spread->unk0 - 2;
+				spreadTail->pad2 = spreadTail->pad2 - 1;
+			} else {
+				s16 expirationIndex;
+
+			expirationIndex = ((UnkFB6F8Entry *)saved[2])->unk2;
+		if (expirationIndex != 0xFB) {
+					D_800FB6F8[expirationIndex].unk2 = 0xF1;
+				}
+				func_800839B8_16BA78(arg0);
+				func_80083300_16B3C0(arg0);
+				return;
 			}
-			func_800839B8_16BA78(arg0);
-			func_80083300_16B3C0(arg0);
-			return;
 		}
 	}
 
-	effect = sp30->unk4;
-	if ((effect != -5) && (effect != -6)) {
-	do {
-			Unk84EECEffect *entry;
-			u8 *entry8;
+	effect = *(s16 *)((u8 *)saved[0] - 4);
+	for (; (effect != -5) && (effect != -6);) {
+			Unk84EECEffectTailUpdate *entry8;
 
-			entry = &D_800FB7B0[effect];
-			entry8 = (u8 *)entry + 8;
-			if (entry->unk11 < 0x1E) {
+			entry8 = (Unk84EECEffectTailUpdate *)&D_800FB7B0[effect].unk8;
+			if (D_800FB7B0[effect].unk11 < 0x1E) {
 				s16 nextEffect;
 
-				nextEffect = entry->unk4;
+				nextEffect = D_800FB7B0[effect].unk4;
 				func_800835F0_16B6B0(effect, arg0);
 				effect = nextEffect;
 			} else {
-				entry8[0xA] = (func_800038E0_44E0() % 8) + 5;
-				entry8[0xC] = (func_800038E0_44E0() % 8) + 5;
-				entry8[0xB] = (func_800038E0_44E0() % 0xA) + 7;
-				entry8[0xD] = (func_800038E0_44E0() % 0xA) + 7;
-				entry8[9] = (entry8[9] - (func_800038E0_44E0() % 4)) - 6;
-				*(s16 *)(entry8 + 2) = *(s16 *)(entry8 + 2) + (func_800038E0_44E0() % 4) + 5;
-				entry8[7] = entry8[7] - 2;
-				entry8[8] = entry8[8] - 3;
-				effect = entry->unk4;
+				entry8->unkA = (func_800038E0_44E0() % 8) + 5;
+				entry8->unkC = (func_800038E0_44E0() % 8) + 5;
+				entry8->unkB = (func_800038E0_44E0() % 0xA) + 7;
+				entry8->unkD = (func_800038E0_44E0() % 0xA) + 7;
+				entry8->unk9 = (entry8->unk9 - (func_800038E0_44E0() % 4)) - 6;
+				entry8->pad2 = entry8->pad2 + (func_800038E0_44E0() % 4) + 5;
+				entry8->unk6.bytes.low = entry8->unk6.bytes.low - 2;
+				entry8->pad8 = entry8->pad8 - 3;
+				effect = D_800FB7B0[effect].unk4;
 			}
-	} while ((effect != -5) && (effect != -6));
-}
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085F28_16DFE8.s")

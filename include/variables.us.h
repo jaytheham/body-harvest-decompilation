@@ -1698,7 +1698,7 @@ extern s8 D_800FB6E6;
 extern Vec3s D_800FB6E8;
 extern Vec3s D_800FB6F0;
 extern UnkFB6F8Entry D_800FB6F8[0xF];
-extern s8 D_800FB6FA;
+extern u8 D_800FB6FC[];
 extern s8 D_800FB6FE;
 extern s16 D_800FB702;
 extern s16 D_800FB782;
