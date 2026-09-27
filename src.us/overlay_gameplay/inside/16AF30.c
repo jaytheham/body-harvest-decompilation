@@ -2470,50 +2470,42 @@ void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089148_171208.s")
 #endif
 
-// CURRENT(4710)
-#ifdef NON_MATCHING
+// CURRENT(3705)
 // AI - Spawn a child particle effect for rendering
+#ifdef NON_MATCHING
 void func_80089408_1714C8(u8 arg0) {
-
-	Unk84EECEffect *srcEffect;
-	Unk89408Pos *srcPos;
-	Unk89408Pos *dstPos;
 	s16 srcIndex;
+	Unk89408Pos *srcPos;
 	s16 dstIndex;
+	Unk89408Pos *dstPos;
 	s32 temp;
-	u8 index;
-	u8 color;
 
-	index = arg0 & 0xFF;
-	srcIndex = D_800FB6F8[index].unk6;
-	dstIndex = func_80083390_16B450(index);
+	srcIndex = D_800FB6F8[arg0].unk6;
+	dstIndex = func_80083390_16B450(arg0);
 	if (dstIndex != -3) {
-		srcEffect = &D_800FB7B0[srcIndex];
-		srcPos = (Unk89408Pos *)&srcEffect->unk8;
+		srcPos = (Unk89408Pos *)&D_800FB7B0[srcIndex].unk8;
+		srcIndex = srcPos->unkA;
 
-		if (srcPos->unkA == 1) {
+		if (srcIndex == 1) {
 			D_800FB7B0[dstIndex].unk2 = (func_800038E0_44E0() % 0x23) + 0x23;
-			color = 0xAA;
+			D_800FB7B0[dstIndex].unk11 = 0x82;
 			dstPos = (Unk89408Pos *)&D_800FB7B0[dstIndex].unk8;
-			dstPos->unk9 = 0x82;
-			dstPos->unk6 = color;
-			dstPos->unk7 = color;
-			dstPos->unk8 = color;
-		} else if (srcPos->unkA == 0) {
+			dstPos->unk6 = 0xAA;
+			dstPos->unk7 = 0xAA;
+			dstPos->unk8 = 0xAA;
+		} else if (srcIndex == 0) {
 			D_800FB7B0[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
-			color = 0xFF;
+			D_800FB7B0[dstIndex].unk11 = 0xFF;
 			dstPos = (Unk89408Pos *)&D_800FB7B0[dstIndex].unk8;
-			dstPos->unk9 = color;
-			dstPos->unk6 = color;
-			dstPos->unk7 = color;
-			dstPos->unk8 = color;
+			dstPos->unk6 = 0xFF;
+			dstPos->unk7 = 0xFF;
+			dstPos->unk8 = 0xFF;
 		} else {
 			D_800FB7B0[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
-			color = 0xFF;
+			D_800FB7B0[dstIndex].unk11 = 0xFF;
 			dstPos = (Unk89408Pos *)&D_800FB7B0[dstIndex].unk8;
-			dstPos->unk9 = color;
 			dstPos->unk6 = 0x32;
-			dstPos->unk7 = color;
+			dstPos->unk7 = 0xFF;
 			dstPos->unk8 = 0x82;
 		}
 
@@ -2524,7 +2516,7 @@ void func_80089408_1714C8(u8 arg0) {
 		dstPos->unkB = (func_800038E0_44E0() % 6) + srcPos->unk7 - 3;
 		temp = func_800038E0_44E0() % 6;
 		dstPos->unkD = 0;
-		dstPos->unkC = temp + srcPos->unk8 - 3;
+		dstPos->unkC = srcPos->unk8 + temp - 3;
 	}
 }
 #else
