@@ -40,24 +40,24 @@ u8 pad_18A768[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 // 16AF30 rodata
 // ============================================================
 
-const char D_800A4F70_18D030[] = "ieNormVecF3()  {0,0,0} -> {0,0,0}\n";
-const char D_800A4F94_18D054[] = "WARNING : Out of space to create a new special effect of type %d.\n";
-const char D_800A4FD8_18D098[] = "EFFECTS WARNING : Call to free up an effect which does not exist\n";
-const char D_800A501C_18D0DC[] = "WARNING - New special effect unit cannot be allocated - out of space.\n";
-const char D_800A5064_18D124[] = "UNIT POOL CRITICAL ERROR - Call to free unused unit %d from effect %d\n";
-const char D_800A50AC_18D16C[] = "ERROR : Tried to kill unit from effect which has no units.\n";
-const char D_800A50E8_18D1A8[] = "ERROR : Unit list inconsistency occurred with 2 units left.\n";
-const char D_800A5128_18D1E8[] = "EFFECTS WARNING : Call to free up invalid triple effect unit.\n";
-const char D_800A5168_18D228[] = "EFFECTS WARNING : Call to free up invalid double effect unit.\n";
-const char D_800A51A8_18D268[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n";
-const char D_800A51F8_18D2B8[] = "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n";
-const char D_800A5248_18D308[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n";
-const char D_800A5298_18D358[] = "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n";
-const char D_800A52E8_18D3A8[] = "EFFECTS WARNING : Cannot start fire effect - there are no units left\n";
-const char D_800A5330_18D3F0[] = "INSIDE EFFECTS WARNING : Spurt effect not created - could not allocated any units\n";
-const char D_800A5384_18D444[] = "EFFECTS WARNING: Failed to create a jet stream - could not allocate any units\n";
-const char D_800A53D4_18D494[] = "Call to draw generic flat effect with unknown render type.\n";
-const char D_800A5410_18D4D0[] = "INSIDE FX WARNING : Call to draw an effect of unknown type %d.\n";
+const char D_800A4F70_18D030[] = "ieNormVecF3()  {0,0,0} -> {0,0,0}\n"; // "ieNormVecF3()  {0,0,0} -> {0,0,0}\n"
+const char D_800A4F94_18D054[] = "WARNING : Out of space to create a new special effect of type %d.\n"; // "WARNING : Out of space to create a new special effect of type %d.\n"
+const char D_800A4FD8_18D098[] = "EFFECTS WARNING : Call to free up an effect which does not exist\n"; // "EFFECTS WARNING : Call to free up an effect which does not exist\n"
+const char D_800A501C_18D0DC[] = "WARNING - New special effect unit cannot be allocated - out of space.\n"; // "WARNING - New special effect unit cannot be allocated - out of space.\n"
+const char D_800A5064_18D124[] = "UNIT POOL CRITICAL ERROR - Call to free unused unit %d from effect %d\n"; // "UNIT POOL CRITICAL ERROR - Call to free unused unit %d from effect %d\n"
+const char D_800A50AC_18D16C[] = "ERROR : Tried to kill unit from effect which has no units.\n"; // "ERROR : Tried to kill unit from effect which has no units.\n"
+const char D_800A50E8_18D1A8[] = "ERROR : Unit list inconsistency occurred with 2 units left.\n"; // "ERROR : Unit list inconsistency occurred with 2 units left.\n"
+const char D_800A5128_18D1E8[] = "EFFECTS WARNING : Call to free up invalid triple effect unit.\n"; // "EFFECTS WARNING : Call to free up invalid triple effect unit.\n"
+const char D_800A5168_18D228[] = "EFFECTS WARNING : Call to free up invalid double effect unit.\n"; // "EFFECTS WARNING : Call to free up invalid double effect unit.\n"
+const char D_800A51A8_18D268[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n"; // "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n"
+const char D_800A51F8_18D2B8[] = "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n"; // "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n"
+const char D_800A5248_18D308[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n"; // "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n"
+const char D_800A5298_18D358[] = "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n"; // "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n"
+const char D_800A52E8_18D3A8[] = "EFFECTS WARNING : Cannot start fire effect - there are no units left\n"; // "EFFECTS WARNING : Cannot start fire effect - there are no units left\n"
+const char D_800A5330_18D3F0[] = "INSIDE EFFECTS WARNING : Spurt effect not created - could not allocated any units\n"; // "INSIDE EFFECTS WARNING : Spurt effect not created - could not allocated any units\n"
+const char D_800A5384_18D444[] = "EFFECTS WARNING: Failed to create a jet stream - could not allocate any units\n"; // "EFFECTS WARNING: Failed to create a jet stream - could not allocate any units\n"
+const char D_800A53D4_18D494[] = "Call to draw generic flat effect with unknown render type.\n"; // "Call to draw generic flat effect with unknown render type.\n"
+const char D_800A5410_18D4D0[] = "INSIDE FX WARNING : Call to draw an effect of unknown type %d.\n"; // "INSIDE FX WARNING : Call to draw an effect of unknown type %d.\n"
 
 const f64 D_800A5450_18D510[1] = {255.0};
 
@@ -2531,53 +2531,33 @@ void func_80089408_1714C8(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089408_1714C8.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(1192)
 // Create a large candle(?) flame effect
-u8 func_80089648_171708(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6) {
-	typedef struct {
-		u8 pad0[0x08];
-		s16 unk8;
-		s16 unkA;
-		s16 unkC;
-		s8 unkE;
-		s8 unkF;
-		s8 unk10;
-		u8 unk11;
-		u8 unk12;
-	} Unk84EECEffect;
-
-	s32 temp_v0;
-	u8 slot;
+u8 func_80089648_171708(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6)
+{
+	f32 dummy1;
+	f32 dummy2;
+	u8 slot = func_80083224_16B2E4(8);
 	s32 effect;
-	Unk84EECEffect *entry;
-
-	temp_v0 = func_80083224_16B2E4(8);
-	slot = temp_v0;
-	if (temp_v0 != 0xFB) {
+	if (slot != 0xFB)
+	{
 		effect = func_80083390_16B450(slot);
-		if (effect == -3) {
-			osSyncPrintf(&D_800A5384_18D444, slot);
+		if (effect == (-3))
+		{
+			osSyncPrintf(D_800A5384_18D444, (unsigned long)slot);
 			func_80083300_16B3C0(slot);
 			return 0xFB;
 		}
-
-		entry = &((Unk84EECEffect *)D_800FB7B0)[effect];
-		entry->unk8 = arg0 * 4;
-		entry->unkA = arg1 * 4;
-		entry->unkC = arg2 * 4;
-		entry->unk11 = 1;
-		entry->unkE = arg3;
-		entry->unkF = arg4;
-		entry->unk10 = arg5;
-		entry->unk12 = arg6;
+		D_800FB7B0[effect].unk8 = arg0 * 4;
+		D_800FB7B0[effect].unkA = arg1 * 4;
+		D_800FB7B0[effect].unkC = arg2 * 4;
+		D_800FB7B0[effect].unkE = arg3;
+		D_800FB7B0[effect].unkF = arg4;
+		D_800FB7B0[effect].unk10 = arg5;
+		D_800FB7B0[effect].unk11 = 1;
+		D_800FB7B0[effect].unk12 = arg6;
 	}
-
 	return slot;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089648_171708.s")
-#endif
 
 // AI - Update an effect's position data
 void func_8008972C_1717EC(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
