@@ -1678,25 +1678,24 @@ void func_80086D88_16EE48(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086D88_16EE48.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(15)
 // AI - Remove a slot and clean up all its associated effects
-void func_80086E90_16EF50(s32 arg0) {
-	UnkFB6F8Entry *sp1C;
+#ifdef NON_MATCHING
+void func_80086E90_16EF50(u8 arg0) {
+	UnkFB6F8Entry * volatile sp1C;
 	s16 temp_v1;
-	s32 temp_t6;
-	u8 sp23;
+	register UnkFB6F8Entry *temp_s0;
 
-	temp_t6 = arg0 & 0xFF;
-	if (temp_t6 < 0xF) {
-		sp1C = &D_800FB6F8[temp_t6];
-		if (sp1C->pad0[0] == 0) {
-			sp23 = temp_t6;
-			func_800839B8_16BA78(temp_t6);
-			temp_v1 = sp1C->unk2;
+	if (arg0 < 0xF) {
+		if (D_800FB6F8[arg0].unk0 == 0) {
+			sp1C = &D_800FB6F8[arg0];
+			func_800839B8_16BA78(arg0);
+			temp_s0 = sp1C;
+			temp_v1 = temp_s0->unk2;
 			if (temp_v1 != 0xFB) {
 				D_800FB6F8[temp_v1].unk2 = 0xF1;
 			}
-			func_80083300_16B3C0(sp23);
+			func_80083300_16B3C0(arg0);
 		}
 	}
 }
