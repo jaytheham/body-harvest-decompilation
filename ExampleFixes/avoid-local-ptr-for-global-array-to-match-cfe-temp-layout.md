@@ -41,3 +41,26 @@ void func(u8 arg0) {
 **Key rule**: Only declare local variables for values that *wouldn't normally exist as cfe temps* (scalars like `u8`, `s32`, `s16`). Let the compiler generate temporaries for pointer computations from global arrays.
 
 See also: `func_802DA910_2BCD40` for a nearly identical pattern.
+
+### Direct indexed field accesses can preserve the array base across a branch
+
+In `func_80086A34_16EAF4`, a named `Unk84EECEffect *entry` caused IDO to copy the computed element address from `$v0` into `$a1` before the threshold branch. That changed the branch form and the byte-load delay slot, and the update path later loaded the next link through `$a1`. Removing `entry` and spelling each field access as `D_800FB7B0[effect].field` let IDO retain the element base in `$v0`, schedule the threshold byte load in the target `beql` delay slot, and match the complete function.
+
+```c
+// Mismatched register/branch scheduling:
+Unk84EECEffect *entry = &D_800FB7B0[effect];
+if (entry->unk12 < 9) {
+    nextEffect = entry->unk4;
+    // ...
+} else {
+    // entry->unk2, tail bytes, and entry->unk4
+}
+
+// Matched: leave indexed struct bases as compiler temporaries:
+if (D_800FB7B0[effect].unk12 < 9) {
+    nextEffect = D_800FB7B0[effect].unk4;
+    // ...
+} else {
+    // D_800FB7B0[effect].unk2, tail bytes, and D_800FB7B0[effect].unk4
+}
+```

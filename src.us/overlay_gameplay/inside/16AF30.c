@@ -1537,8 +1537,6 @@ void func_8008688C_16E94C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008688C_16E94C.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(535)
 // AI - Update effect slot type 6: manage shrinking/lifetime
 void func_80086A34_16EAF4(void) {
 	s16 effect;
@@ -1547,28 +1545,23 @@ void func_80086A34_16EAF4(void) {
 	effect = D_800FB782;
 	if ((effect != -5) && (effect != -6)) {
 		do {
-			Unk84EECEffect *entry = &D_800FB7B0[effect];
-			u8 *entry8 = (u8 *) entry + 8;
-			if (entry->unk12 < 9) {
-				nextEffect = entry->unk4;
+			Unk84EECEffectTailView *tail = (Unk84EECEffectTailView *) ((u8 *) &D_800FB7B0[effect] + 8);
+			if (D_800FB7B0[effect].unk12 < 9) {
+				nextEffect = D_800FB7B0[effect].unk4;
 				func_800835F0_16B6B0(effect, 0xB);
 				effect = nextEffect;
 			} else {
-				if (entry8[9] < 4) {
-					entry->unk2 += entry8[0xB];
+				if (tail->unk9 < 4) {
+					D_800FB7B0[effect].unk2 += tail->unkB;
 				}
-				entry8[9]++;
-				entry8[0xA] -= 7;
-				effect = entry->unk4;
+				tail->unk9++;
+				tail->unkA -= 7;
+				effect = D_800FB7B0[effect].unk4;
 			}
 		} while ((effect != -5) && (effect != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086A34_16EAF4.s")
-#endif
 
-// CURRENT(2791)
 // AI - Update effect slot type 7: physics (gravity, movement) and spawn child effects
 #ifdef NON_MATCHING
 void func_80086B34_16EBF4(u8 arg0) {
