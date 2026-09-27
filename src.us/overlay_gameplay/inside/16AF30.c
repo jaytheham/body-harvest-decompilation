@@ -1255,16 +1255,13 @@ void func_80085CB4_16DD74(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(2960)
 // AI - Update effect slot type 1: animation and aging
 void func_80085D40_16DE00(u8 arg0) {
 	UnkFB6F8Entry *temp_s4;
-	Unk84EECEffect *temp_s2;
-	u8 *temp_s0;
-	s16 temp_s0_2;
 	s16 var_s3;
-	u8 temp_v0;
+	Unk84EECEffectTailUpdate *temp_s0;
+	s16 temp_s0_2;
+	s32 rand2;
 
 	temp_s4 = &D_800FB6F8[(u8)arg0];
 	var_s3 = temp_s4->unk6;
@@ -1273,36 +1270,36 @@ void func_80085D40_16DE00(u8 arg0) {
 	}
 
 	for (;;) {
-		temp_s2 = &D_800FB7B0[var_s3];
-		temp_s0 = (u8 *)temp_s2 + 8;
-		if (temp_s2->unk11 < 0x1E) {
+		temp_s0 = (Unk84EECEffectTailUpdate *)&D_800FB7B0[var_s3].unk8;
+		if (D_800FB7B0[var_s3].unk11 < 0x1E) {
 			if ((temp_s4->unk2 == 0xF1) && (temp_s4->unk4 == 1)) {
 				func_800839B8_16BA78(arg0);
 				func_80083300_16B3C0(arg0);
 				return;
 			}
 
-			temp_s0_2 = temp_s2->unk4;
+			temp_s0_2 = D_800FB7B0[var_s3].unk4;
 			func_800835F0_16B6B0(var_s3, arg0);
 			var_s3 = temp_s0_2;
 		} else {
-			if (temp_s0[0xA] == 0) {
-				temp_v0 = temp_s0[9];
-				if (temp_v0 >= 0xAB) {
-					temp_s0[0xA] = 1;
+			if (temp_s0->unkA == 0) {
+				if (temp_s0->unk9 >= 0xAB) {
+					temp_s0->unkA = 1;
 				} else {
-					temp_s0[9] = temp_v0 + 0x13;
+					temp_s0->unk9 = temp_s0->unk9 + 0x13;
 				}
 			} else {
-				temp_s0[9] -= 0x19;
+				temp_s0->unk9 -= 0x19;
 			}
 
-			*((s16 *)(temp_s0 + 2)) = (*((s16 *)(temp_s0 + 2)) + (func_800038E0_44E0() % 2)) + 2;
-			temp_s2->unk2 = (temp_s2->unk2 + (func_800038E0_44E0() % 2)) + 2;
-			temp_s0[6] -= 3;
-			temp_s0[7] -= 3;
-			temp_s0[8] -= 3;
-			var_s3 = temp_s2->unk4;
+			rand2 = func_800038E0_44E0() % 2;
+			temp_s0->pad2 = (temp_s0->pad2 + rand2) + 2;
+			rand2 = func_800038E0_44E0() % 2;
+			D_800FB7B0[var_s3].unk2 = (D_800FB7B0[var_s3].unk2 + rand2) + 2;
+			temp_s0->unk6.bytes.high -= 3;
+			temp_s0->unk6.bytes.low -= 3;
+			temp_s0->pad8 -= 3;
+			var_s3 = D_800FB7B0[var_s3].unk4;
 		}
 
 		if ((var_s3 == -5) || (var_s3 == -6)) {
@@ -1310,9 +1307,6 @@ void func_80085D40_16DE00(u8 arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085D40_16DE00.s")
-#endif
 
 // CURRENT(1342)
 // AI - Update effect slot type 0: random jitter, color, and lifecycle

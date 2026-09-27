@@ -38,6 +38,19 @@ void func(u8 arg0) {
 }
 ```
 
+### Capture modulo results to steer IDO temporary registers
+
+In `func_80085D40_16DE00`, direct indexed accesses fixed the threshold branch and delay slot, but the inline expressions `field = field + (func() % 2) + 2` still assigned the loaded field and remainder to opposite temporary registers from the target. Store each remainder in a reusable `s32` local first, then combine it with the field:
+
+```c
+rand2 = func_800038E0_44E0() % 2;
+tail->pad2 = (tail->pad2 + rand2) + 2;
+rand2 = func_800038E0_44E0() % 2;
+D_800FB7B0[effect].unk2 = (D_800FB7B0[effect].unk2 + rand2) + 2;
+```
+
+This causes IDO to allocate the loaded halfword and remainder to the same registers as the matching assembly. The complete function then matches byte for byte.
+
 **Key rule**: Only declare local variables for values that *wouldn't normally exist as cfe temps* (scalars like `u8`, `s32`, `s16`). Let the compiler generate temporaries for pointer computations from global arrays.
 
 See also: `func_802DA910_2BCD40` for a nearly identical pattern.
