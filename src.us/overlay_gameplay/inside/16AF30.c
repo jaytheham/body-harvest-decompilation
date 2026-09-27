@@ -740,7 +740,7 @@ void func_80084628_16C6E8(s32 arg0) {
 	Unk84EECEffect *base;
 	Unk84EECEffect *entry;
 	s16 effect;
-	s16 spread;
+		s16 spread;
 	u16 quarter;
 	s32 half;
 	s32 third;
@@ -1504,38 +1504,26 @@ void func_80086728_16E7E8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086728_16E7E8.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(1398)
 // AI - Update effect slot type 5: randomize spread values
 void func_8008688C_16E94C(void) {
 	s16 effect;
+	Unk84EECEffectTailView *tail;
 
-	effect = D_800FB78E;
-	if ((effect != -5) && (effect != -6)) {
-		do {
-			s16 value;
-			s16 spread;
-			Unk84EECEffect *entry;
+	for (effect = D_800FB78E; (effect != -5) && (effect != -6); effect = D_800FB7B0[effect].unk4) {
+		Unk84EECEffectTailView *tailCopy;
+		s32 spread;
 
-			entry = &D_800FB7B0[effect];
-			value = entry->unk2;
-			if (value < 0) {
-				spread = (value + 3) >> 2;
-			} else {
-				spread = value >> 2;
-			}
+		tail = (Unk84EECEffectTailView *) &D_800FB7B0[effect].unk8;
+		tailCopy = tail;
+		spread = D_800FB7B0[effect].unk2 / 4;
+		spread = (s16) spread;
 
-			entry->unk9 = (func_800038E0_44E0() % spread) + spread;
-			entry->unkB = (func_800038E0_44E0() % spread) + spread;
-			entry->unkA = (func_800038E0_44E0() % spread) + spread;
-			entry->unkC = (func_800038E0_44E0() % spread) + spread;
-			effect = entry->unk4;
-		} while ((effect != -5) && (effect != -6));
+		tail->unk9 = (func_800038E0_44E0() % spread) + spread;
+		tail->unkB = (func_800038E0_44E0() % spread) + spread;
+		tail->unkA = (func_800038E0_44E0() % spread) + spread;
+		tailCopy->unkC = (func_800038E0_44E0() % spread) + spread;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008688C_16E94C.s")
-#endif
 
 // AI - Update effect slot type 6: manage shrinking/lifetime
 void func_80086A34_16EAF4(void) {
