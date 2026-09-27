@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-27T18:40:05Z",
-  "commit": "e0bd4b48",
-  "commit_timestamp": "2026-09-28T07:39:11+13:00",
+  "generated": "2026-09-27T18:48:24Z",
+  "commit": "fe615984",
+  "commit_timestamp": "2026-09-28T07:47:39+13:00",
   "overall": {
     "total_functions": 2714,
     "matched": 1727,
@@ -542,7 +542,7 @@
       "asm_stubs": 0,
       "total": 32,
       "matched_pct": 78.1,
-      "contributor": "jaytheham"
+      "contributor": "goliath2526"
     },
     {
       "path": "overlay_gameplay/outside/7F220.c",
@@ -632,7 +632,7 @@
       "asm_stubs": 0,
       "total": 20,
       "matched_pct": 75.0,
-      "contributor": "jaytheham"
+      "contributor": "goliath2526"
     },
     {
       "path": "overlay_gameplay/outside/B8290.c",
@@ -642,7 +642,7 @@
       "asm_stubs": 0,
       "total": 52,
       "matched_pct": 78.8,
-      "contributor": "jaytheham"
+      "contributor": "goliath2526"
     },
     {
       "path": "overlay_gameplay/outside/BF9C0.c",
@@ -652,7 +652,7 @@
       "asm_stubs": 0,
       "total": 75,
       "matched_pct": 44.0,
-      "contributor": "jaytheham"
+      "contributor": "goliath2526"
     },
     {
       "path": "overlay_gameplay/outside/CFE30.c",
@@ -702,7 +702,7 @@
       "asm_stubs": 0,
       "total": 40,
       "matched_pct": 57.5,
-      "contributor": "jaytheham"
+      "contributor": "goliath2526"
     },
     {
       "path": "overlay_gameplay/outside/FEC70.c",
@@ -722,7 +722,7 @@
       "asm_stubs": 0,
       "total": 106,
       "matched_pct": 54.7,
-      "contributor": "jaytheham"
+      "contributor": "goliath2526"
     },
     {
       "path": "overlay_gameplay/outside/cheats.c",
@@ -732,7 +732,7 @@
       "asm_stubs": 0,
       "total": 26,
       "matched_pct": 100.0,
-      "contributor": "jaytheham"
+      "contributor": "goliath2526"
     },
     {
       "path": "overlay_gameplay/outside/constData.c",
@@ -888,9 +888,16 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 78,
-      "matched": 1725,
-      "non_matching": 987,
+      "files": 71,
+      "matched": 1504,
+      "non_matching": 857,
+      "asm_stubs": 0
+    },
+    {
+      "name": "goliath2526",
+      "files": 7,
+      "matched": 221,
+      "non_matching": 130,
       "asm_stubs": 0
     },
     {
@@ -1142,7 +1149,7 @@
     },
     {
       "date": "2026-09-27",
-      "commit": "e0bd4b4",
+      "commit": "fe61598",
       "matched": 1727,
       "non_matching": 987,
       "total": 2714
