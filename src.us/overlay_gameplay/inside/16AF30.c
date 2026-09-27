@@ -2355,15 +2355,20 @@ void func_80088B9C_170C5C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088B9C_170C5C.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(4471)
 // AI - Render slot type 6 effects with prim/env colors (glow effects)
+#ifdef NON_MATCHING
 void func_80088DFC_170EBC(s32 arg0) {
 	s16 effect;
-	Unk84EECEffect *base;
+	Unk84EECEffectTail *base;
+	Unk84EECEffect *baseStart;
 	Unk84EECEffect *entry;
+	s16 posX;
+	s16 posY;
+	s16 posZ;
 
-	base = &D_800FB7B0[D_800FB6F8[arg0 & 0xFF].unk6];
-	entry = &D_800FB7B0[base->unk4];
+	baseStart = &D_800FB7B0[D_800FB6F8[arg0 & 0xFF].unk6];
+	entry = &D_800FB7B0[baseStart->unk4];
 	effect = entry->unk4;
 
 	D_800FB6E5 = 0x10;
@@ -2374,30 +2379,33 @@ void func_80088DFC_170EBC(s32 arg0) {
 	}
 
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, 0, TEXEL0, 0);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100D700));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
 		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 2, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
 		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 15 << G_TEXTURE_IMAGE_FRAC, 15 << G_TEXTURE_IMAGE_FRAC);
 	gDPPipeSync(D_8005BB2C++);
 
 	if ((effect != -6) && (effect != -5)) {
+		base = (Unk84EECEffectTail *)&baseStart->unk8;
 		do {
 			entry = &D_800FB7B0[effect];
-
-			gDPSetPrimColor(D_8005BB2C++, 0, 0, base->unkE, base->unkF, base->unk10, entry->unk11);
-			gDPSetEnvColor(D_8005BB2C++, base->unk11, base->unk12, base->unk13, entry->unk11);
+			gDPSetPrimColor(D_8005BB2C++, 0, 0, ((u8 *)&base->unk6)[0], ((u8 *)&base->unk6)[1], base->pad8, entry->unk11);
+			gDPSetEnvColor(D_8005BB2C++, base->unk9, base->unkA, base->unkB, entry->unk11);
 			gDPPipeSync(D_8005BB2C++);
 
-			D_800FB6D0.x = (f32)entry->unk8;
-			D_800FB6D0.y = (f32)entry->unkA;
-			D_800FB6D0.z = (f32)entry->unkC;
-			D_800FB6DC = (s8 *)&base->unkE;
+			posX = entry->unk8;
+			posY = entry->unkA;
+			posZ = entry->unkC;
+			D_800FB6D0.x = (f32)posX;
+			D_800FB6D0.y = (f32)posY;
+			D_800FB6D0.z = (f32)posZ;
+			D_800FB6DC = (s8 *)&base->unk6;
 			D_800FB6E0 = (f32)entry->unk2;
 			D_800FB6E4 = entry->unk11;
 			func_8008A1D8_172298();
