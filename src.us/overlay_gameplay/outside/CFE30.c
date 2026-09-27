@@ -12502,7 +12502,7 @@ void func_800E5B78_F4B28(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5B78_F4B28.s")
 #endif
 
-// Allocate shield (wtf is a shield?)
+// Allocate shield (wtf is a shield?) (temporary shield around Adam, triggered by Defender cheat and by unused item pickup
 void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 	Unk80152CA0Entry *entry;
 	s16 count;

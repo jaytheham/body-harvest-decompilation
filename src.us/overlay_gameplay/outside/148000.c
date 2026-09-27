@@ -324,7 +324,7 @@ void func_80139984_148934(void) {
 		D_80048140[12] = -0x8000;
 		D_80048140[13] = -0x8000;
 	}
-	if (currentLevel == LEVEL_COMET) {
+	if (currentLevel == LEVEL_COMET) { // if reloading a save in comet, give tons of ammo
 		func_801391DC_14818C(3, 0xA);
 		func_801391DC_14818C(5, 0x64);
 		func_801391DC_14818C(6, 5);

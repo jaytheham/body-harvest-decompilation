@@ -108,9 +108,9 @@ void func_800A5BD0_B4B80(s32 beaconIndex)
 	xPosition = D_8003154C[currentLevel - 1][beaconIndex].x << 8;
 	zPosition = D_8003154C[currentLevel - 1][beaconIndex].z << 8;
 	yPosition = func_800B84D0_C7480((s16)xPosition, (s16)zPosition) >> 8;
-	if (currentLevel == LEVEL_AMERICA && beaconIndex == 0)
+	if (currentLevel == LEVEL_AMERICA && beaconIndex == 0) // America stage 1
 	{
-		yPosition = 0x7D0; // This beacon appears on top of a building
+		yPosition = 0x7D0; // This beacon appears on top of a building (hospital)
 	}
 	func_8012D684_13C634(func_8012D700_13C6B0(4, (beaconIndex * 2 + 0x1000), (s16)xPosition, (s16)yPosition, (s16)zPosition, 0, 0, 0, 0x19, 0x19, 0x50, func_800A5B30_B4AE0, NULL));
 	func_8012D684_13C634(func_8012D700_13C6B0(5, (beaconIndex * 2 + 0x1001), (s16)xPosition, (s16)yPosition, (s16)zPosition, 0, 0, 0, 0xF, 0xF, 0x50, NULL, func_8012E1F8_13D1A8));
@@ -986,21 +986,21 @@ void func_800A854C_B74FC(void)
   s32 lod;
   s32 *groundLevel = &D_80222A70;
   
-  for (i = 0x10; i--;)
+  for (i = 0x10; i--;) // iterate through the pickup pool at D_8014F6D0, which has 16 available slots
   {
 	if (D_8014F6D0[i].unkC != -1)
 	{
-	  D_8014F6D0[i].unk0 += D_8014F6D0[i].unk6;
+	  D_8014F6D0[i].unk0 += D_8014F6D0[i].unk6; //apply xyz velocities to xyz position
 	  D_8014F6D0[i].unk4 += D_8014F6D0[i].unkA;
 	  D_8014F6D0[i].unk2 += D_8014F6D0[i].unk8;
 	  func_800F9D60_108D10(D_8014F6D0[i].unk0, D_8014F6D0[i].unk4, &sp8C, &sp8A, &sp88);
 	  yLimit = (sp88 < sp8C) ? sp8C : sp88;
 	  
-	  if ((currentLevel != 4 || D_80047F94 != 2) && yLimit < *groundLevel)
+	  if ((currentLevel != 4 || D_80047F94 != 2) && yLimit < *groundLevel) // underwater height check for Siberia 3
 	  {
 		yLimit = *groundLevel;
 	  }
-	  if (D_8014F6D0[i].unk2 < yLimit)
+	  if (D_8014F6D0[i].unk2 < yLimit) 
 	  {
 		D_8014F6D0[i].unk8 = 0;
 		D_8014F6D0[i].unk2 = yLimit;
@@ -1036,6 +1036,8 @@ void func_800A854C_B74FC(void)
 		}
 	  }
 	  else
+
+	  // horizontal damping - bugged? positive velocities keep drifting, negative velocities reach 0 and pickup stops moving
 	  {
 		D_8014F6D0[i].unk6 -= (D_8014F6D0[i].unk6 >> 2);
 		if (*groundLevel < D_8014F6D0[i].unk2)
@@ -1044,6 +1046,8 @@ void func_800A854C_B74FC(void)
 		}
 		D_8014F6D0[i].unkA -= (D_8014F6D0[i].unkA >> 2);
 	  }
+
+	  // attract the pickup to player if close enough
 	  deltaX = (D_80052B34->unk0 - D_8014F6D0[i].unk0);
 	  deltaZ = (D_80052B34->unk4 - D_8014F6D0[i].unk4);
 	  dist = sqrtf((deltaX * deltaX) + (deltaZ * deltaZ));
@@ -1061,7 +1065,6 @@ void func_800A854C_B74FC(void)
 		}
 	  }
 	  
-		
 	  alpha = (D_8014F6D0[i].unkE < 0x10) ? (D_8014F6D0[i].unkE * 4) : 0x40;
 	  lod = (D_8014F6D0[i].unkE < 0x64) ? (D_8014F6D0[i].unkE / 0x32) + 1 : 0;
 	  
@@ -1075,6 +1078,7 @@ void func_800A854C_B74FC(void)
 	}
   }
   
+  // countdown timer for pickup effect- used for Defender shield effect
   if (D_8014F7F0 != 0)
   {
 	D_8014F7F0--;
@@ -1096,13 +1100,13 @@ void func_800A854C_B74FC(void)
 	arg3:
 	1	Small Heart
 	x10	Large Heart
-	x15 Alpha1 Fragcannon ammo
-	x16 Alpha1 Fragcannon ammo
-	x17 Alpha1 ? (Purple with white star) ammo
-	x18 Alpha1 Plasmabomb(?) ammo
-	x19 Alpha1 Missile ammo
-	x1A Alpha1 Missile ammo
-	x1B Small shotgun ammo
+	x15 20 Alpha1 Fragcannon ammo
+	x16 10 Alpha1 Fragcannon ammo
+	x17 3 Alpha1 Resonator ammo
+	x18 5 Alpha1 Plasmabomb ammo
+	x19 30 Alpha1 Laser Missile ammo
+	x1A 15 Alpha1 Missile ammo
+	x1B 2 shotgun ammo
 */
 void func_800A8A68_B7A18(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	PowerupItem *entry;
@@ -1136,7 +1140,7 @@ void func_800A8A68_B7A18(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	entry->unkE = (s16)((func_800038E0_44E0() & 0x7F) + 0x1F4);
 }
 
-// AI - Spawn random PowerupItem item
+// AI - Spawn random PowerupItem item - func is not called anywhere in finished game
 void func_800A8C44_B7BF4(s16 arg0, s16 arg1, s16 arg2)
 {
 	u8 weaponIndex;
@@ -1213,16 +1217,16 @@ s32 func_800A8E18_B7DC8(u32 arg0)
 	switch (arg0)
 	{
 	  case 0:
-		result = func_801391DC_14818C(9, -0x8000);
+		result = func_801391DC_14818C(9, -0x8000); // give infinite grenades
 		break;
 
-	  case 1:
-	  case 16:
+	  case 1: // small heart
+	  case 16: // large heart
 		if (vehicleInstances[0].unk1C != 0)
 	  {
 		if (D_80052B34->unk1C < vehicleTypes[D_80052B34->unk1A].hitPoints)
 		{
-		  if (arg0 == 1)
+		  if (arg0 == 1) 
 		  {
 			D_80052B34->unk1C += vehicleTypes[D_80052B34->unk1A].hitPoints / 4;
 			
@@ -1262,123 +1266,123 @@ s32 func_800A8E18_B7DC8(u32 arg0)
 		break;
 
 	  case 2:
-		result = func_801391DC_14818C(1, -0x8000);
+		result = func_801391DC_14818C(1, -0x8000); // ??
 		break;
 
 	  case 3:
-		result = func_801391DC_14818C(2, -0x8000);
+		result = func_801391DC_14818C(2, -0x8000); // ??
 		break;
 
 	  case 4:
-		if ((currentLevel == 4) && (D_80047F94 == 0))
+		if ((currentLevel == 4) && (D_80047F94 == 0)) // if Siberia stage 1..
 	  {
-		result = func_801391DC_14818C(3, 0);
+		result = func_801391DC_14818C(3, 0); // give 0 shotgun ammo
 	  }
 	  else
 	  {
-		result = func_801391DC_14818C(3, 0xA);
+		result = func_801391DC_14818C(3, 0xA); //else give 10 shotgun ammo
 	  }
 		break;
 
 	  case 5:
-		result = func_801391DC_14818C(4, 0xA);
+		result = func_801391DC_14818C(4, 0xA); // give 10 rifle ammo
 		break;
 
 	  case 6:
-		result = func_801391DC_14818C(5, 0x64);
+		result = func_801391DC_14818C(5, 0x64); // give 100 machine gun ammo.. case 6 has no break and feeds directly into case 9 why?
 	  case 9:
 		break;
 
 	  case 7:
-		result = func_801391DC_14818C(6, 5);
+		result = func_801391DC_14818C(6, 5); // give 5 rockets
 		break;
 
 	  case 8:
-		result = func_801391DC_14818C(7, 3);
+		result = func_801391DC_14818C(7, 3); // give 3 TNT
 		break;
 
-	  case 10:
+	  case 10: // creates small temporary shield used by the ZDefender cheat
 		if (func_800E60CC_F507C(2, (u8) D_80052B2C->unk34) != 0)
 	  {
-		D_8014F7F4 += 0x258;
+		D_8014F7F4 += 0x258; // add 600 units (~30 seconds) to effect timer if already running
 		result = 1;
 	  }
 	  else
 	  {
-		D_8014F7F4 = 0x258;
+		D_8014F7F4 = 0x258; // set effect timer to 600 units (~30 seconds)
 		func_800E5CF4_F4CA4(2, (u8) D_80052B2C->unk34);
 		result = 1;
 	  }
 		break;
 
 	  case 11:
-		result = func_80139150_148100(3, 5);
+		result = func_80139150_148100(3, 5); // give 5 shotgun ammo
 		break;
 
 	  case 12:
-		result = func_80139150_148100(3, 0x14);
+		result = func_80139150_148100(3, 0x14); // give 20 shotgun ammo
 		break;
 
 	  case 13:
-		result = func_80139150_148100(6, 3);
+		result = func_80139150_148100(6, 3); // give 3 rockets
 		break;
 
 	  case 14:
-		result = func_80139150_148100(6, 0xA);
+		result = func_80139150_148100(6, 0xA); // give 10 rockets
 		break;
 
 	  case 15:
-		result = func_80139150_148100(0xA, 0x19);
+		result = func_80139150_148100(0xA, 0x19); // give 25 special weapon ammo
 		break;
 
 	  case 17:
-		result = func_80139150_148100(5, 0x32);
+		result = func_80139150_148100(5, 0x32); // give 50 machine gun ammo
 		break;
 
 	  case 18:
-		result = func_80139150_148100(4, 0x14);
+		result = func_80139150_148100(4, 0x14); // give 20 fragcannon
 		break;
 
-	  case 19:
-		D_8004DC5C++;
-		if (D_8004DC5C == 3)
+	  case 19: 
+		D_8004DC5C++; // give 1 Weapon Crystal
+		if (D_8004DC5C == 3) // if now have 3 Weapon Crystals...
 	  {
-		result = func_801391DC_14818C(0xA, 0x32);
+		result = func_801391DC_14818C(0xA, 0x32); // ...give 50 Special Weapon ammo and gun
 		func_800DA994_E9944();
 		func_8001A650_1B250(0x15);
 	  }
 		break;
 
 	  case 20:
-		D_8004DC5E++;
+		D_8004DC5E++; // increment total Alien Artifacts collected count
 		break;
 
 	  case 21:
-		result = func_80139150_148100(0xE, 0x14);
+		result = func_80139150_148100(0xE, 0x14); // give 20 fragcannon ammo
 		break;
 
 	  case 22:
-		result = func_80139150_148100(0xE, 0xA);
+		result = func_80139150_148100(0xE, 0xA); // give 10 fragcannon ammo
 		break;
 
 	  case 23:
-		result = func_80139150_148100(0x10, 3);
+		result = func_80139150_148100(0x10, 3); // give 3 resonator ammo
 		break;
 
 	  case 24:
-		result = func_80139150_148100(0x11, 5);
+		result = func_80139150_148100(0x11, 5); // give 5 plasma bomb ammo
 		break;
 
 	  case 25:
-		result = func_80139150_148100(0xF, 0x1E);
+		result = func_80139150_148100(0xF, 0x1E); // give 30 laser missile ammo
 		break;
 
 	  case 26:
-		result = func_80139150_148100(0xF, 0xF);
+		result = func_80139150_148100(0xF, 0xF); // give 15 laser missile ammo
 		break;
 
 	  case 27:
-		result = func_80139150_148100(3, 2);
+		result = func_80139150_148100(3, 2); // give 2 shotgun ammo
 		break;
 
 	}
