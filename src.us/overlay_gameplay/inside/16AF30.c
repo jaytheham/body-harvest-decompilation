@@ -1421,49 +1421,49 @@ void func_80085F28_16DFE8(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085F28_16DFE8.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(378)
 // AI - Update effect slot type 3: movement, color cycling, and expiration
-void func_80086550_16E610(void) {
+void func_80086550_16E610(void)
+{
 	s16 effect;
+	s16 nextEffect;
 	u8 alpha;
-	Unk84EECEffect *entry;
 
-	effect = D_800FB7A6;
-	if ((effect != -5) && (effect != -6)) {
-		alpha = 0xFF;
-		do {
-			entry = &D_800FB7B0[effect];
-			entry->unk13--;
-			if (entry->unk13 == 0) {
-				s16 nextEffect;
+	alpha = 0xFF;
+	for (effect = D_800FB7A6; (effect != -5) && (effect != -6);)
+	{
+		Unk84EECEffectTailView *tail;
+		s8 *entry8;
 
-				nextEffect = entry->unk4;
-				func_800835F0_16B6B0(effect, 0xE);
-				effect = nextEffect;
-			} else {
-				if (entry->unk14 == 1) {
-					entry->unk8 += D_800FB6F0.x * 4;
-					entry->unkA += D_800FB6F0.y * 4;
-					entry->unkC += D_800FB6F0.z * 4;
-				}
-
-				entry->unkE = (func_800038E0_44E0() % 0x55) + 0xAA;
-				entry->unkF = (func_800038E0_44E0() % 0x55) + 0xAA;
-				entry->unk10 = alpha;
-				entry->unk12++;
-				if (entry->unk12 >= 8) {
-					entry->unk12 = 0;
-				}
-
-				effect = entry->unk4;
+		tail = (Unk84EECEffectTailView *)&D_800FB7B0[effect].unk8;
+		entry8 = (s8 *)tail;
+		D_800FB7B0[effect].unk13--;
+		if (D_800FB7B0[effect].unk13 == 0)
+		{
+			nextEffect = D_800FB7B0[effect].unk4;
+			func_800835F0_16B6B0(effect, 0xE);
+			effect = nextEffect;
+		}
+		else
+		{
+			if (tail->unkC == 1)
+			{
+				tail->unk0 += D_800FB6F0.x * 4;
+				tail->unk2 += D_800FB6F0.y * 4;
+				tail->unk4 += D_800FB6F0.z * 4;
 			}
-		} while ((effect != -5) && (effect != -6));
+
+			entry8[6] = (func_800038E0_44E0() % 0x55) + 0xAA;
+			entry8[7] = (func_800038E0_44E0() % 0x55) + 0xAA;
+			tail->unk8 = alpha;
+			tail->unkA++;
+			if (tail->unkA >= 8)
+			{
+				tail->unkA = 0;
+			}
+			effect = D_800FB7B0[effect].unk4;
+		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086550_16E610.s")
-#endif
 
 // AI - Update effect slot type 4: oscillating ping-pong animation
 void func_80086728_16E7E8(void) {
