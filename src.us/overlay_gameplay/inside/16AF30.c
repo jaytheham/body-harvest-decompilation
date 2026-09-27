@@ -1465,44 +1465,36 @@ void func_80086550_16E610(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086550_16E610.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(2019)
 // AI - Update effect slot type 4: oscillating ping-pong animation
 void func_80086728_16E7E8(void) {
 	s16 effect;
 
-	effect = D_800FB79A;
-	if ((effect != -5) && (effect != -6)) {
-		do {
-			s16 value;
+	for (effect = D_800FB79A; (effect != -5) && (effect != -6); effect = D_800FB7B0[effect].unk4) {
+			s32 value;
 			Unk84EECEffect *entry;
 			s8 *entry8;
 
 			entry = &D_800FB7B0[effect];
 			entry8 = (s8 *) entry + 8;
 			if ((u8)entry8[0xC] == 0) {
-				value = (func_800038E0_44E0() % 2) + 2 + entry8[0xA];
+				value = (s16)((func_800038E0_44E0() % 2) + 2);
+				value += entry8[0xA];
 				if (entry8[0xB] < value) {
 					entry8[0xC] = 1;
 				} else {
 					entry8[0xA] = value;
 				}
 			} else {
-				value = -5 - (func_800038E0_44E0() % 5) + entry8[0xA];
+				value = (s16)(-5 - (func_800038E0_44E0() % 5));
+				value += entry8[0xA];
 				if (value < -entry8[0xB]) {
 					entry8[0xC] = 0;
 				} else {
 					entry8[0xA] = value;
 				}
 			}
-
-			effect = entry->unk4;
-		} while ((effect != -5) && (effect != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086728_16E7E8.s")
-#endif
 
 // AI - Update effect slot type 5: randomize spread values
 void func_8008688C_16E94C(void) {
