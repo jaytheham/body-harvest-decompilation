@@ -1187,7 +1187,7 @@ void func_800852B8_16D378(s32 arg0);
 s32 func_80018AA0_196A0(void);
 s32 func_80018AC8_196C8(void);
 s32 func_80018AEC_196EC(s32 arg0, s32 arg1, s32 arg2);
-s32 func_80085984_16DA44(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 arg5);
+s32 func_80085984_16DA44(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5);
 u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13);
 s32 func_801223B0_131360(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_80122524_1314D4(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3);

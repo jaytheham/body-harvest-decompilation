@@ -1194,36 +1194,33 @@ void func_800858F4_16D9B4(s16 arg0, s16 arg1, s16 arg2) {
 	func_8008574C_16D80C(arg0, arg1, arg2, 0, 0x78, 0, 0x28, 8, 0x1E, 0x96, 0xAA, 0xB4, 0xFF, 0x78);
 }
 
-// CURRENT(566)
-#ifdef NON_MATCHING
+// CURRENT(168)
 // AI - Create a random scatter effect with sub-particle burst
-s32 func_80085984_16DA44(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 arg5) {
-	Unk84EECEffect *effect;
-	u8 *entry;
+#ifdef NON_MATCHING
+s32 func_80085984_16DA44(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5) {
+	UnkScatterEffectTail *entry;
 	s32 half;
-	u16 randX;
-	u16 randY;
-	s16 ret;
 	s8 dirY;
+	s16 ret;
+	u16 randY;
+	u16 randX;
 	s8 dirX;
 
 	ret = func_80083390_16B450(0xE);
 	if (ret != -3) {
-		effect = &D_800FB7B0[ret];
-		effect->unk2 = arg0;
-		entry = (u8 *)effect + 8;
-		half = (u8)arg1 / 2;
-		// This pointer casting is probably wrong, it should be struct access instead:
-		*(s16 *)&entry[0] = (func_800038E0_44E0() % (u8)arg1) + arg3 * 4 - half;
-		*(s16 *)&entry[2] = (func_800038E0_44E0() % (u8)arg1) + arg4 * 4 - half;
-		*(s16 *)&entry[4] = (func_800038E0_44E0() % (u8)arg1) + arg5 * 4 - half;
-		entry[6] = -1;
-		entry[7] = -1;
-		entry[8] = -1;
-		entry[9] = arg1;
-		entry[0xA] = func_800038E0_44E0() % 8;
-		entry[0xB] = arg2;
-		entry[0xC] = 0;
+		D_800FB7B0[ret].unk2 = arg0;
+		entry = (UnkScatterEffectTail *)&D_800FB7B0[ret].unk8;
+		half = arg1 / 2;
+		entry->unk0 = (func_800038E0_44E0() % arg1) + arg3 * 4 - half;
+		entry->unk2 = (func_800038E0_44E0() % arg1) + arg4 * 4 - half;
+		entry->unk4 = (func_800038E0_44E0() % arg1) + arg5 * 4 - half;
+		entry->unk6 = -1;
+		entry->unk7 = -1;
+		entry->unk8 = -1;
+		entry->unk9 = arg1;
+		entry->unkA = func_800038E0_44E0() % 8;
+		entry->unkB = arg2;
+		entry->unkC = 0;
 
 		dirX = (func_800038E0_44E0() % 70) + 0x37;
 		dirY = (func_800038E0_44E0() % 70) + 0x37;
@@ -1244,12 +1241,11 @@ s32 func_80085984_16DA44(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 a
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085984_16DA44.s")
 #endif
-
 // AI - Create a scatter effect with a specific flag set
 void func_80085CB4_16DD74(s16 arg0, s16 arg1, s16 arg2) {
 	s32 temp_v0;
 
-	temp_v0 = func_80085984_16DA44(0x28, 0x50, ((func_800038E0_44E0() % 5) + 5) & 0xFF, arg0, arg1, arg2);
+	temp_v0 = func_80085984_16DA44(0x28, 0x50, (func_800038E0_44E0() % 5) + 5, arg0, arg1, arg2);
 	if (temp_v0 != -3) {
 		D_800FB7B0[temp_v0].unk14 = 1;
 	}
