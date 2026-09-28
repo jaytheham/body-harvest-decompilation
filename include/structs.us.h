@@ -517,6 +517,27 @@ typedef struct {
 } Unk84EECEffect; /* size = 0x16 */
 
 typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 pad1;
+	/* 0x02 */ u16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ s8 unk8;
+	/* 0x09 */ s8 unk9;
+	/* 0x0A */ s8 unkA;
+	/* 0x0B */ u8 unkB;
+	/* 0x0C */ u8 unkC;
+	/* 0x0D */ u8 unkD;
+	/* 0x0E */ union { u16 word; struct { u8 high; u8 low; } bytes; } unkE;
+	/* 0x10 */ u8 unk10;
+	/* 0x11 */ u8 unk11;
+	/* 0x12 */ u8 unk12;
+	/* 0x13 */ u8 unk13;
+	/* 0x14 */ u8 unk14;
+	/* 0x15 */ u8 unk15;
+} Unk84EECEffectBytes; /* size = 0x16 */
+
+typedef struct {
 	/* 0x00 */ s16 pad0;
 	/* 0x02 */ s16 pad2;
 	/* 0x04 */ u8 pad4;

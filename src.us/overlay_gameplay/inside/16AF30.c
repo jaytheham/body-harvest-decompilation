@@ -1109,18 +1109,20 @@ void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg
 }
 
 // CURRENT(4135)
-#ifdef NON_MATCHING
 // AI - Create a multi-part debris/shatter effect with two linked entries
+#ifdef NON_MATCHING
 u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
 	s32 pad0;
 	s32 pad1;
 	s32 pad2;
-	s32 effect;
-	u8 *entry;
-	u8 *other;
+	s16 effect;
+	Unk84EECEffect *entry;
+	Unk84EECEffectBytes *other;
 	u8 ret;
 	s16 temp;
 	u8 life;
+	Unk84EECEffectTailUpdate *tail;
+	s16 clamp;
 
 	pad0 = 0;
 	pad1 = 0;
@@ -1128,59 +1130,59 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 
 	if ((ret = func_80083224_16B2E4(7)) != 0xFB) {
 		effect = func_80083584_16B644(ret);
+		temp = arg10;
 		if (effect == -3) {
 			osSyncPrintf(D_800A5330_18D3F0);
 			func_80083300_16B3C0(ret);
 			return 0xFB;
+		} else {
+			entry = &D_800FB7B0[effect];
+			other = (Unk84EECEffectBytes *)&D_800FB7B0[entry->unk4];
+			entry->unk2 = arg7;
+			entry->unk8 = arg0 << 2;
+			entry->unkA = arg1 << 2;
+			entry->unkC = arg2 << 2;
+
+			other->unk8 = arg3;
+			other->unk9 = arg4;
+			other->unkA = arg5;
+			other->unkB = arg6;
+			other->unkC = arg9;
+
+			entry->unkE = temp;
+			entry->unkF = arg11;
+			entry->unk10 = arg12;
+			tail = (Unk84EECEffectTailUpdate *)&entry->unk8;
+
+			clamp = temp - 0x78;
+			if (clamp < 0) {
+				clamp = 0;
+			}
+			tail->unk9 = clamp;
+
+			clamp = arg11 - 0x78;
+			if (clamp < 0) {
+				clamp = 0;
+			}
+			tail->unkA = clamp;
+
+			clamp = arg12 - 0x78;
+			if (clamp < 0) {
+				clamp = 0;
+			}
+			tail->unkB = clamp;
+
+			tail = (Unk84EECEffectTailUpdate *)&other->unk8;
+			tail->pad8 = arg13;
+			life = arg8;
+			if (life >= 0x4C) {
+				life = 0x4B;
+			} else if (life == 0) {
+				life = 1;
+			}
+			tail->unk5 = life;
+			tail->unk6.word = 0;
 		}
-
-		// This pointer arithmetic is probably wrong, it should be an array/struct access instead:
-		entry = (u8 *)&D_800FB7B0[effect];
-		*(u16 *)(entry + 2) = arg7;
-		*(s16 *)(entry + 8) = arg0 << 2;
-		*(s16 *)(entry + 0xA) = arg1 << 2;
-		*(s16 *)(entry + 0xC) = arg2 << 2;
-
-		other = (u8 *)&D_800FB7B0[*(s16 *)(entry + 4)];
-		other[8] = arg3;
-		other[9] = arg4;
-		other[0xA] = arg5;
-		other[0xB] = arg6;
-		other[0xC] = arg9;
-
-		entry[0xE] = arg10;
-		entry[0xF] = arg11;
-		entry[0x10] = arg12;
-		entry = entry + 8;
-
-		temp = arg10 - 0x78;
-		if (temp < 0) {
-			temp = 0;
-		}
-		entry[9] = temp;
-
-		temp = arg11 - 0x78;
-		if (temp < 0) {
-			temp = 0;
-		}
-		entry[0xA] = temp;
-
-		temp = arg12 - 0x78;
-		if (temp < 0) {
-			temp = 0;
-		}
-		entry[0xB] = temp;
-
-		entry = other + 8;
-		entry[8] = arg13;
-		life = arg8;
-		if (life >= 0x4C) {
-			life = 0x4B;
-		} else if (life == 0) {
-			life = 1;
-		}
-		entry[5] = life;
-		*(u16 *)(entry + 6) = 0;
 	}
 
 	return ret;
