@@ -927,26 +927,26 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084C68_16CD28.s")
 #endif
 
-// CURRENT(2085)
-#ifdef NON_MATCHING
+// CURRENT(525)
 // AI - Create a linked paired effect (two entries linked together)
-s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11) {
-	extern f64 D_800A5468_18D528;
-
+#ifdef NON_MATCHING
+s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, volatile s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11) {
 	s16 effect;
-	s16 temp;
+	u16 temp;
+	s16 linkedIndex;
 	s16 x;
 	s16 y;
 	s16 z;
-	u8 scale;
+	s16 scale;
 	Unk84EECEffect *entry;
 	Unk84EECEffect *other;
+	Unk84EECEffectTail *entryTail;
 
 	effect = func_80083584_16B644(0xD);
 	if (effect != -3) {
 		temp = (s16)(s32)((f64)(f32)arg3 * D_800A5468_18D528[0]);
-
 		entry = &D_800FB7B0[effect];
+		entryTail = (Unk84EECEffectTail *)&entry->unk8;
 		x = arg0 * 4;
 		y = arg1 * 4;
 		z = arg2 * 4;
@@ -962,15 +962,15 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 
 		scale = 0xF;
 		if ((arg10 + 0xF) >= 0x100) {
-			scale = 0xFF - arg10;
+			scale = (u8)(0xFF - arg10);
 		}
 
-		// Does the entry struct need to be updated to include these fields so we don't have to do pointer arithmetic?
-		((u8 *)entry + 8)[0xB] = scale;
-		((u8 *)entry + 8)[0xA] = 0;
-		((u8 *)entry + 8)[0xC] = 0;
+		entryTail->unkB = scale;
+		entryTail->unkA = 0;
+		entryTail->unkC = 0;
 
-		other = &D_800FB7B0[entry->unk4];
+		linkedIndex = D_800FB7B0[effect].unk4;
+		other = &D_800FB7B0[linkedIndex];
 		other->unk8 = x;
 		other->unkA = y;
 		other->unkC = z;
@@ -990,31 +990,30 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084EEC_16CFAC.s")
 #endif
-
 // Create a candle flame effect
 s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
-  Unk84EECEffectTail *temp_s0;
-  s16 effect;
-  effect = func_80083390_16B450(0xC);
-  if (effect != -3)
-  {
+	Unk84EECEffectTail *temp_s0;
+	s16 effect;
+	effect = func_80083390_16B450(0xC);
+	if (effect != -3)
+	{
 		temp_s0 = (Unk84EECEffectTail *)&D_800FB7B0[effect].unk8;
 		D_800FB7B0[effect].unk2 = arg3;
 		D_800FB7B0[effect].unk8 = arg0 * 4;
 		D_800FB7B0[effect].unkA = arg1 * 4;
 		D_800FB7B0[effect].unkC = arg2 * 4;
-	
+
 		temp_s0->unk9 = (func_800038E0_44E0() % (arg3 / 2)) + arg3 / 3;
 		temp_s0->unkB = (func_800038E0_44E0() % (arg3 / 2)) + arg3 / 3;
 		temp_s0->unkA = (func_800038E0_44E0() % (arg3 / 2)) + arg3 / 3;
 		temp_s0->unkC = (func_800038E0_44E0() % (arg3 / 2)) + arg3 / 3;
 		temp_s0->unk6 = func_80084EEC_16CFAC(arg0, arg1 + (arg3 / 8), arg2, arg3 * 2, 0xF0, 0xC8, 0x64, 0xFF, 0xB4, 0x46, 0x32, 1);
-  }
-  return effect;
+	}
+	return effect;
 }
 
-// CURRENT(3129)
+// CURRENT(1082)
 // AI - Spawn a child particle effect with randomized offset from parent
 #ifdef NON_MATCHING
 void func_800852B8_16D378(s32 arg0) {
