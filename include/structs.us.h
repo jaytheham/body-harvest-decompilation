@@ -577,6 +577,24 @@ typedef struct {
 } Unk84EECEffectTailView;
 
 typedef struct {
+	/* 0x00 */ s8 offsetX;
+	/* 0x01 */ s8 offsetY;
+	/* 0x02 */ s8 offsetZ;
+	/* 0x03 */ u8 strength;
+	/* 0x04 */ u8 radius;
+} Unk84EECEffectRandomData;
+
+typedef struct {
+	/* 0x00 */ s8 offsetX;
+	/* 0x01 */ s8 offsetY;
+	/* 0x02 */ s8 offsetZ;
+	/* 0x03 */ u8 strength;
+	/* 0x04 */ u8 radius;
+	/* 0x05 */ u8 pad5[3];
+	/* 0x08 */ u8 unk10;
+} Unk84EECEffectTemplateData;
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;

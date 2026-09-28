@@ -888,6 +888,9 @@ segments:
 # 514xxx prototype human running animation ?
 # 52EB10 HUD compass icon
 # 532BA0 HUD waypoint, harvester, shield generator icons
+# 0x541980 Adam driving model
+# 0x54CA20 signpost
+# 0x552E40 Alpha 1 hovercraft
 
       - [0x55B0A0, bin, item_models] # item textures, then models
 #        - [0x5610A0, 0x5612E0, "bin", "weapon_crystal"] // 0F006140
