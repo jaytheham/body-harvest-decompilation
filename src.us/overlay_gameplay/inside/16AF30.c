@@ -613,113 +613,74 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800840F0_16C1B0.s")
 #endif
 
-// CURRENT(2581)
-#ifdef NON_MATCHING
 // AI - Update effect state: movement, aging, and spawning sub-effects
-void func_80084258_16C318(s32 arg0) {
-	typedef struct {
-		s16 unk0;
-		s16 unk2;
-		s16 unk4;
-		s8 unk6;
-		s8 unk7;
-		s8 unk8;
-		u8 unk9;
-		u8 unkA;
-	} Unk84258Pos;
-
-	u8 slot;
+void func_80084258_16C318(u8 arg0) {
 	UnkFB6F8Entry *owner;
 	s16 effect;
-	Unk84EECEffect *a3;
-	Unk84258Pos *s2;
+	Unk89408Pos *s2;
+	Unk89408Pos *dstPos;
 
-	slot = arg0;
-	owner = &D_800FB6F8[slot];
-	effect = owner->unk6;
-	a3 = &D_800FB7B0[effect];
-	effect = a3->unk4;
-	s2 = (Unk84258Pos *)&a3->unk8;
+	for (owner = &D_800FB6F8[arg0],
+		 effect = owner->unk6,
+		 s2 = (Unk89408Pos *)&D_800FB7B0[effect].unk8,
+		 effect = D_800FB7B0[effect].unk4,
+		 dstPos = (Unk89408Pos *)&D_800FB7B0[effect].unk8;
+		 effect != -5 && effect != -6;
+		 dstPos = (Unk89408Pos *)&D_800FB7B0[effect].unk8) {
 
-	if ((effect != -5) && (effect != -6)) {
-		u8 life;
-		Unk84258Pos *dstPos;
-// need to replace this with a for/while/do loop
-loop_5:
-		if (s2->unkA == 2) {
-			life = s2->unk9;
-			if (life == 0) {
-				func_800839B8_16BA78(slot);
-				func_80083300_16B3C0(slot);
-				return;
-			}
+			if (s2->unkA == 2) {
+				u8 life;
 
-			{
-				Unk84EECEffect *entry;
-				s16 pos0;
-				s16 pos2;
-				s16 pos4;
-
-				entry = &D_800FB7B0[effect];
-							dstPos = (Unk84258Pos *)&entry->unk8;
-				pos0 = dstPos->unk0;
-				pos2 = dstPos->unk2;
-				pos4 = dstPos->unk4;
-				dstPos->unk6 = (s8)((s2->unk0 - pos0) / life);
-				dstPos->unk7 = (s8)((s2->unk2 - pos2) / s2->unk9);
-				dstPos->unk8 = (s8)((s2->unk4 - pos4) / s2->unk9);
-				dstPos->unk0 = pos0 + dstPos->unk6;
-				dstPos->unk2 = pos2 + dstPos->unk7;
-				dstPos->unk4 = pos4 + dstPos->unk8;
-				if (dstPos->unk9 < 0xEB) {
-					dstPos->unk9 += 0x14;
-				}
-				a3 = entry;
-			}
-		} else {
-			Unk84EECEffect *entry;
-			s16 nextEffect;
-
-			entry = &D_800FB7B0[effect];
-					dstPos = (Unk84258Pos *)&entry->unk8;
-
-			if (dstPos->unk9 < 0xF) {
-				if (owner->unk4 < 3) {
-					func_800839B8_16BA78(slot);
-					func_80083300_16B3C0(slot);
+				life = s2->unk9;
+				if (life == 0) {
+					func_800839B8_16BA78(arg0);
+					func_80083300_16B3C0(arg0);
 					return;
 				}
 
-				nextEffect = entry->unk4;
-				func_800835F0_16B6B0(effect, slot);
-				effect = nextEffect;
-				goto block_26;
-			} else {
+				dstPos->unk6 = (s8)((s2->unk0 - dstPos->unk0) / life);
+				dstPos->unk7 = (s8)((s2->unk2 - dstPos->unk2) / s2->unk9);
+				dstPos->unk8 = (s8)((s2->unk4 - dstPos->unk4) / s2->unk9);
 				dstPos->unk0 += dstPos->unk6;
-				dstPos->unk4 += dstPos->unk8;
 				dstPos->unk2 += dstPos->unk7;
-				dstPos->unkA += 1;
-				if (dstPos->unkA >= 0xB) {
-					dstPos->unk9 -= 0xA;
+				dstPos->unk4 += dstPos->unk8;
+				if (dstPos->unk9 < 0xEB) {
+					dstPos->unk9 += 0x14;
 				}
-				if (dstPos->unk2 < 2) {
-					dstPos->unk2 = 2;
-					dstPos->unk7 = 0;
-				}
-				if (dstPos->unk7 >= -0x13) {
-					dstPos->unk7 -= 1;
-				} else {
-					dstPos->unk7 = -0x14;
-				}
-				a3 = entry;
-			}
-		}
+				effect = D_800FB7B0[effect].unk4;
+			} else {
+				if (dstPos->unk9 < 0xF) {
+					s16 nextEffect;
 
-		effect = a3->unk4;
-block_26:
-		if ((effect != -5) && (effect != -6)) {
-			goto loop_5;
-		}
+					if (owner->unk4 < 3) {
+						func_800839B8_16BA78(arg0);
+						func_80083300_16B3C0(arg0);
+						return;
+					}
+					nextEffect = D_800FB7B0[effect].unk4;
+					func_800835F0_16B6B0(effect, arg0);
+					effect = nextEffect;
+				} else {
+					dstPos->unk0 += dstPos->unk6;
+					dstPos->unk4 += dstPos->unk8;
+					dstPos->unk2 += dstPos->unk7;
+					dstPos->unkA += 1;
+					if (dstPos->unkA >= 0xB) {
+						dstPos->unk9 -= 0xA;
+					}
+					if (dstPos->unk2 < 2) {
+						dstPos->unk2 = 2;
+						dstPos->unk7 = 0;
+					}
+					if (dstPos->unk7 >= -0x13) {
+						dstPos->unk7 -= 1;
+					} else {
+						dstPos->unk7 = -0x14;
+					}
+					if (!effect) {}
+					effect = D_800FB7B0[effect].unk4;
+				}
+			}
 	}
 
 	if (s2->unkA == 2) {
@@ -729,9 +690,6 @@ block_26:
 		s2->unk8 = (s8)((func_800038E0_44E0() % 55) + 0xC8);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084258_16C318.s")
-#endif
 
 // AI - Create a child particle effect with randomized spread and colors (debris/sparks)
 void func_80084628_16C6E8(u8 arg0) {
@@ -1371,8 +1329,8 @@ void func_80085F28_16DFE8(u8 arg0) {
 				s16 nextEffect;
 
 				nextEffect = D_800FB7B0[effect].unk4;
-				func_800835F0_16B6B0(effect, arg0);
-				effect = nextEffect;
+					func_800835F0_16B6B0(effect, arg0);
+					effect = nextEffect;
 			} else {
 				entry8->unkA = (func_800038E0_44E0() % 8) + 5;
 				entry8->unkC = (func_800038E0_44E0() % 8) + 5;
@@ -1429,7 +1387,7 @@ void func_80086550_16E610(void)
 			{
 				tail->unkA = 0;
 			}
-			effect = D_800FB7B0[effect].unk4;
+					effect = D_800FB7B0[effect].unk4;
 		}
 	}
 }
@@ -1498,14 +1456,14 @@ void func_80086A34_16EAF4(void) {
 			if (D_800FB7B0[effect].unk12 < 9) {
 				nextEffect = D_800FB7B0[effect].unk4;
 				func_800835F0_16B6B0(effect, 0xB);
-				effect = nextEffect;
+					effect = nextEffect;
 			} else {
 				if (tail->unk9 < 4) {
 					D_800FB7B0[effect].unk2 += tail->unkB;
 				}
 				tail->unk9++;
 				tail->unkA -= 7;
-				effect = D_800FB7B0[effect].unk4;
+						effect = D_800FB7B0[effect].unk4;
 			}
 		} while ((effect != -5) && (effect != -6));
 	}
