@@ -794,50 +794,43 @@ void func_80084628_16C6E8(s32 arg0) {
 
 // https://decomp.me/scratch/Hj9r3
 // CURRENT(1715)
-#ifdef NON_MATCHING
 // AI - Create a child effect based on a parent effect's position
 void func_80084980_16CA40(u8 arg0, u8 arg1)
 {
-  s16 baseIdx;
-  s16 effect;
-  s16 spread;
   u16 quarter;
-  s16 *basePos;
+  s16 effect;
+  Unk84EECEffectPositionView *basePos;
+  s16 spread;
+  Unk84EECEffectPositionView *effectPos;
 
-  baseIdx = D_800FB6F8[arg0].unk6;
-  basePos = &D_800FB7B0[D_800FB6F8[arg0].unk6].unk8;
-  spread = D_800FB7B0[baseIdx].unk2;
-  if (arg1 == 0xFB)
-  {
-	return;
+  basePos = (Unk84EECEffectPositionView *)&D_800FB7B0[D_800FB6F8[arg0].unk6].unk8;
+  spread = D_800FB7B0[D_800FB6F8[arg0].unk6].unk2;
+  if (arg1 == 0xFB) {
+    return;
   }
   effect = func_80083390_16B450(arg1);
-  if (effect == -3)
-  {
-	return;
+  if (effect == -3) {
+    return;
   }
 
   quarter = spread / 4;
-
   D_800FB7B0[effect].unk2 = (func_800038E0_44E0() % 5) + quarter;
+  effectPos = (Unk84EECEffectPositionView *)&D_800FB7B0[effect].unk8;
 
-  D_800FB7B0[effect].unk8 = (basePos[0] + ((func_800038E0_44E0() % spread) / 2)) - quarter;
+  effectPos->unk0 = (basePos->unk0 + ((func_800038E0_44E0() % spread) / 2)) - quarter;
 
-  D_800FB7B0[effect].unkA = ((func_800038E0_44E0() % 10) + basePos[1]) + quarter;
+  effectPos->unk2 = ((func_800038E0_44E0() % 10) + basePos->unk2) + quarter;
 
-  D_800FB7B0[effect].unkC = (basePos[2] + ((func_800038E0_44E0() % spread) / 2)) - quarter;
-  D_800FB7B0[effect].unk11 = 0x3C;
-  D_800FB7B0[effect].unk12 = 0;
+  effectPos->unk4 = (basePos->unk4 + ((func_800038E0_44E0() % spread) / 2)) - quarter;
+  effectPos->unk9 = 0x3C;
+  effectPos->unkA = 0;
 
-  D_800FB7B0[effect].unkE = (func_800038E0_44E0() % 30) + 0xB4;
+  effectPos->unk6.bytes.high = (func_800038E0_44E0() % 30) + 0xB4;
 
-  D_800FB7B0[effect].unkF = (func_800038E0_44E0() % 30) + 0xA0;
+  effectPos->unk6.bytes.low = (func_800038E0_44E0() % 30) + 0xA0;
 
-  D_800FB7B0[effect].unk10 = (func_800038E0_44E0() % 30) + 0xA0;
+  effectPos->unk8 = (func_800038E0_44E0() % 30) + 0xA0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084980_16CA40.s")
-#endif
 
 // AI - Allocate an effect slot and store a value
 s32 func_80084C18_16CCD8(u8 arg0)
