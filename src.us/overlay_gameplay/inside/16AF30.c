@@ -442,62 +442,58 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	f32 sp38;
 	f32 sp34;
 	s16 temp;
+	s16 radius;
 	s16 sp30;
 	s16 sp2E;
 	s16 idx;
-	u8 *effectUnit;
-	u8 *newUnit;
+	Unk84EECEffect *effectUnit;
+	Unk84EECEffect *newUnit;
 
-	// Agent: fix this before beginning:
-	// D_800FB7B0 references need to be converted to array & struct access
-	// The struct itself might need updating to be correct
-	// Then all this pointer arithmetic & casting can be replaced with struct access
-	effectUnit = (u8 *)&D_800FB7B0[D_800FB6F8[arg0].unk6] + 8;
+	effectUnit = &D_800FB7B0[D_800FB6F8[arg0].unk6];
 	idx = func_80083390_16B450(arg0);
 	if (idx != -3) {
-		if (effectUnit[0xA] == 1) {
-			newUnit = (u8 *)&D_800FB7B0[idx];
-			newUnit += 8;
-			*(s16 *)&newUnit[0] = *(s16 *)&effectUnit[0];
-			*(s16 *)&newUnit[2] = *(s16 *)&effectUnit[2];
-			*(s16 *)&newUnit[4] = *(s16 *)&effectUnit[4];
-			sp34 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5450_18D510[0]);
+		if (effectUnit->unk12 == 1) {
+			newUnit = &D_800FB7B0[idx];
+			newUnit->unk8 = effectUnit->unk8;
+			newUnit->unkA = effectUnit->unkA;
+			newUnit->unkC = effectUnit->unkC;
+			sp34 = (f32) ((f32) (func_800038E0_44E0() % arg3) / D_800A5450_18D510[0]);
 			if ((func_800038E0_44E0() % 21) < 10) {
 				sp34 = 0.0f - sp34;
 			}
 			sp34 += arg1->x;
-			sp38 = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5458_18D518[0]);
+			sp38 = (f32) ((f32) (func_800038E0_44E0() % arg3) / D_800A5458_18D518[0]);
 			if ((func_800038E0_44E0() % 21) < 10) {
 				sp38 = 0.0f - sp38;
 			}
 			sp38 += arg1->y;
-			sp3C = (f32) ((f64) (f32) (func_800038E0_44E0() % arg3) / D_800A5460_18D520[0]);
+			sp3C = (f32) ((f32) (func_800038E0_44E0() % arg3) / D_800A5460_18D520[0]);
 			if ((func_800038E0_44E0() % 21) < 10) {
 				sp3C = 0.0f - sp3C;
 			}
 			sp3C += arg1->z;
 			func_80083014_16B0D4((Vec3f *)&sp34, (Vec3f *)&sp34);
-			((s8 *)newUnit)[6] = (s8) (s32) ((f32) (arg2 / 4) * sp34);
+			newUnit->unkE = ((f32) (arg2 / 4) * sp34);
 			sp34 = sp3C;
-			((s8 *)newUnit)[7] = (s8) (s32) ((f32) (arg2 / 4) * sp38);
-			newUnit[9] = 0xFF;
-			newUnit[0xA] = 0;
-			((s8 *)newUnit)[8] = (s8) (s32) ((f32) (arg2 / 4) * sp34);
+			newUnit->unkF = ((f32) (arg2 / 4) * sp38);
+			newUnit->unk11 = 0xFF;
+			newUnit->unk12 = 0;
+			newUnit->unk10 = ((f32) (arg2 / 4) * sp34);
 			return;
 		}
-		sp30 = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
-		sp2E = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
-		temp = (func_800038E0_44E0() % (*(s16 *)&effectUnit[0xC] * 2)) - *(s16 *)&effectUnit[0xC];
-		newUnit = (u8 *)&D_800FB7B0[idx];
-		newUnit += 8;
-		*(s16 *)&newUnit[0] = *(s16 *)&effectUnit[0] + sp30;
-		*(s16 *)&newUnit[2] = *(s16 *)&effectUnit[2] + sp2E;
-		*(s16 *)&newUnit[4] = *(s16 *)&effectUnit[4] + temp;
-		((s8 *)newUnit)[6] = (s8) -(sp30 / (s32)effectUnit[9]);
-		((s8 *)newUnit)[7] = (s8) -(sp2E / (s32)effectUnit[9]);
-		((s8 *)newUnit)[8] = (s8) -(temp / (s32)effectUnit[9]);
-		newUnit[9] = 0xC;
-		newUnit[0xA] = 0;
+		radius = (((u16)effectUnit->unk14 << 8) | effectUnit->unk15);
+		sp30 = (func_800038E0_44E0() % (radius * 2)) - radius;
+		sp2E = (func_800038E0_44E0() % (radius * 2)) - radius;
+		temp = (func_800038E0_44E0() % (radius * 2)) - radius;
+		newUnit = &D_800FB7B0[idx];
+		newUnit->unk8 = effectUnit->unk8 + sp30;
+		newUnit->unkA = effectUnit->unkA + sp2E;
+		newUnit->unkC = effectUnit->unkC + temp;
+		newUnit->unkE = -(sp30 / (s32)effectUnit->unk11);
+		newUnit->unkF = -(sp2E / (s32)effectUnit->unk11);
+		newUnit->unk10 = -(temp / (s32)effectUnit->unk11);
+		newUnit->unk11 = 0xC;
+		newUnit->unk12 = 0;
 	}
 }
 #else
@@ -576,8 +572,7 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 			return;
 		}
 
-		// Agent, fix this: Surely this should actually reference some property of entry or D_800FB7B0
-		*(s16 *)((u8 *)&D_800FB702 + slot * 12) = effect;
+		D_800FB6F8[slot].unkA = effect;
 		entry = &D_800FB7B0[effect];
 			count = arg5;
 		arg5 += 0;
