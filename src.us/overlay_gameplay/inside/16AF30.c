@@ -524,7 +524,7 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 		}
 
 		entry = &D_800FB7B0[effect];
-		*(s16 *)((u8 *)&D_800FB702 + slot * 12) = effect;
+			*(s16 *)((u8 *)&D_800FB702 + slot * 12) = effect;
 		entry->unk2 = arg9;
 		entry->unk8 = arg0 << 2;
 		entry->unkA = arg1 << 2;
@@ -579,7 +579,7 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 		// Agent, fix this: Surely this should actually reference some property of entry or D_800FB7B0
 		*(s16 *)((u8 *)&D_800FB702 + slot * 12) = effect;
 		entry = &D_800FB7B0[effect];
-		count = arg5;
+			count = arg5;
 		arg5 += 0;
 
 		entry->unk8 = arg0 * 4;
@@ -661,7 +661,7 @@ loop_5:
 				s16 pos4;
 
 				entry = &D_800FB7B0[effect];
-				dstPos = (Unk84258Pos *)&entry->unk8;
+							dstPos = (Unk84258Pos *)&entry->unk8;
 				pos0 = dstPos->unk0;
 				pos2 = dstPos->unk2;
 				pos4 = dstPos->unk4;
@@ -681,7 +681,7 @@ loop_5:
 			s16 nextEffect;
 
 			entry = &D_800FB7B0[effect];
-			dstPos = (Unk84258Pos *)&entry->unk8;
+					dstPos = (Unk84258Pos *)&entry->unk8;
 
 			if (dstPos->unk9 < 0xF) {
 				if (owner->unk4 < 3) {
@@ -733,67 +733,47 @@ block_26:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084258_16C318.s")
 #endif
 
-// CURRENT(1828)
-#ifdef NON_MATCHING
 // AI - Create a child particle effect with randomized spread and colors (debris/sparks)
-void func_80084628_16C6E8(s32 arg0) {
-	Unk84EECEffect *base;
-	Unk84EECEffect *entry;
+void func_80084628_16C6E8(u8 arg0) {
+	Unk84EECEffectPositionView *basePos;
+	s32 unused;
+	s16 spread;
 	s16 effect;
-		s16 spread;
+	s16 positionIndex;
 	u16 quarter;
+	Unk89408Pos *effectPos;
+	Unk84EECEffect *effectRecord;
 	s32 half;
 	s32 third;
-	s32 rnd;
-	u8 slot;
-	s32 index;
-
-	slot = arg0 & 0xFF;
-	index = D_800FB6F8[slot].unk6;
-	base = &D_800FB7B0[index];
-	spread = base->unk2;
-	effect = func_80083390_16B450(slot);
+	basePos = (Unk84EECEffectPositionView *)&D_800FB7B0[(s32)D_800FB6F8[arg0].unk6].unk8;
+	spread = D_800FB7B0[(s32)D_800FB6F8[arg0].unk6].unk2;
+	effect = func_80083390_16B450(arg0);
 	if (effect == -3) {
 		return;
 	}
 
-	rnd = func_800038E0_44E0();
-	index = effect;
-	entry = &D_800FB7B0[index];
 	quarter = spread / 4;
-	entry->unk2 = (rnd % quarter) + quarter;
-	entry->unkE = (base->unk11 + base->unkE) / 2;
-	entry->unkF = (base->unk12 + base->unkF) / 2;
-	entry->unk10 = (base->unk13 + base->unk10) / 2;
+	effectRecord = &D_800FB7B0[effect];
+	effectRecord->unk2 = (func_800038E0_44E0() % quarter) + quarter;
+	positionIndex = effect;
+	effectPos = (Unk89408Pos *)(u32)&D_800FB7B0[(s32)positionIndex].unk8;
+	effectPos->unk6 = (basePos->unk9 + basePos->unk6.bytes.high) / 2;
+	effectPos->unk7 = (basePos->unkA + basePos->unk6.bytes.low) / 2;
+	effectPos->unk8 = (basePos->unkB + basePos->unk8) / 2;
+	effectPos->unk9 = (func_800038E0_44E0() % 0x32) + 0x5A;
 
-	rnd = func_800038E0_44E0();
-	entry->unk11 = (rnd % 0x32) + 0x5A;
-	rnd = func_800038E0_44E0();
 	half = quarter / 2;
 	third = quarter / 3;
+	effectPos->unkA = (func_800038E0_44E0() % half) + third;
+	effectPos->unkC = (func_800038E0_44E0() % half) + third;
+	effectPos->unkB = (func_800038E0_44E0() % half) + third;
+	effectPos->unkD = (func_800038E0_44E0() % half) + third;
 
-	entry->unk12 = (rnd % half) + third;
-	rnd = func_800038E0_44E0();
-	entry->unk14 = (rnd % half) + third;
-	rnd = func_800038E0_44E0();
-	entry->unk13 = (rnd % half) + third;
-	rnd = func_800038E0_44E0();
-	entry->unk15 = (rnd % half) + third;
-
-	rnd = func_800038E0_44E0();
-	entry->unk8 = ((rnd % spread) / 2) + base->unk8 - quarter;
-	entry->unkA = base->unkA;
-
-	rnd = func_800038E0_44E0();
-	entry->unkC = ((rnd % spread) / 2) + base->unkC - quarter;
-
+	effectPos->unk0 = ((func_800038E0_44E0() % spread) / 2) + basePos->unk0 - quarter;
+	effectPos->unk2 = basePos->unk2;
+	effectPos->unk4 = ((func_800038E0_44E0() % spread) / 2) + basePos->unk4 - quarter;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084628_16C6E8.s")
-#endif
 
-// https://decomp.me/scratch/Hj9r3
-// CURRENT(1715)
 // AI - Create a child effect based on a parent effect's position
 void func_80084980_16CA40(u8 arg0, u8 arg1)
 {
@@ -863,7 +843,7 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 		}
 
 		entry = &D_800FB7B0[effect];
-		owner = &D_800FB6F8[slot];
+			owner = &D_800FB6F8[slot];
 
 		entry->unk8 = arg0 * 4;
 		owner->unkA = effect;
@@ -939,7 +919,7 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, volatile s16 arg3, u8 arg
 	if (effect != -3) {
 		temp = (s16)(s32)((f64)(f32)arg3 * D_800A5468_18D528[0]);
 		entry = &D_800FB7B0[effect];
-		entryTail = (Unk84EECEffectTail *)&entry->unk8;
+			entryTail = (Unk84EECEffectTail *)&entry->unk8;
 		x = arg0 * 4;
 		y = arg1 * 4;
 		z = arg2 * 4;
@@ -1084,7 +1064,7 @@ void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg
 	effect = func_80083390_16B450(0xB);
 	if (effect != -3) {
 		entry = &D_800FB7B0[effect];
-		entry->unk8 = temp_arg0;
+			entry->unk8 = temp_arg0;
 		entry->unkA = 1;
 		entry->unk11 = 0;
 		entry->unk2 = arg2;
@@ -1129,7 +1109,7 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 			return 0xFB;
 		} else {
 			entry = &D_800FB7B0[effect];
-			other = (Unk84EECEffectBytes *)&D_800FB7B0[entry->unk4];
+					other = (Unk84EECEffectBytes *)&D_800FB7B0[entry->unk4];
 			entry->unk2 = arg7;
 			entry->unk8 = arg0 << 2;
 			entry->unkA = arg1 << 2;
@@ -1464,7 +1444,7 @@ void func_80086728_16E7E8(void) {
 			s8 *entry8;
 
 			entry = &D_800FB7B0[effect];
-			entry8 = (s8 *) entry + 8;
+					entry8 = (s8 *) entry + 8;
 			if ((u8)entry8[0xC] == 0) {
 				value = (s16)((func_800038E0_44E0() % 2) + 2);
 				value += entry8[0xA];
@@ -2006,7 +1986,7 @@ void func_80087E3C_16FEFC(void) {
 			s16 *pos;
 
 			entry = &D_800FB7B0[effect];
-
+		
 			gDPPipeSync(D_8005BB2C++);
 			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
 				K0_TO_PHYS(D_100E880 + (entry->unk12 << 7)));
@@ -2368,7 +2348,7 @@ void func_80088DFC_170EBC(s32 arg0) {
 		base = (Unk84EECEffectTail *)&baseStart->unk8;
 		do {
 			entry = &D_800FB7B0[effect];
-			gDPSetPrimColor(D_8005BB2C++, 0, 0, ((u8 *)&base->unk6)[0], ((u8 *)&base->unk6)[1], base->pad8, entry->unk11);
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, ((u8 *)&base->unk6)[0], ((u8 *)&base->unk6)[1], base->pad8, entry->unk11);
 			gDPSetEnvColor(D_8005BB2C++, base->unk9, base->unkA, base->unkB, entry->unk11);
 			gDPPipeSync(D_8005BB2C++);
 
