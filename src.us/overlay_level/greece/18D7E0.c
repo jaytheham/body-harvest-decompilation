@@ -1501,103 +1501,106 @@ void func_802D763C_19014C(u8 arg0) {
 	}
 }
 
-// CURRENT(8479)
+// CURRENT(66)
 // AI - Alien damage death reaction and sub-alien spawning
 #ifdef NON_MATCHING
 void func_802D775C_19026C(u8 arg0) {
-	s32 pad;
+	u8 rootId;
+	u8 bodyId;
+	u8 limbId;
+	u8 tipId;
 	u8 sp73;
-	s32 childId;
+	s16 childId;
+	s16 childValue;
 	s32 sp68;
 	s32 sp64;
 	s32 sp60;
-	s16 sp50;
-	s16 sp4E;
-	s16 sp4C;
-	Unk8014DD50 *sp44;
-	Unk8014DD50 *sp40;
-	Unk8014DD50 *sp3C;
-	Unk8014DD50 *sp34;
+	s32 pad1[3];
+	u16 randomOffset[3];
 
 	if ((alienInstances[arg0].unk20 << 11) >= 0) {
 		func_802D763C_19014C(arg0);
 		return;
 	}
 
-	sp44 = &D_8014DD50[(u8)D_8014DD50[(u8)alienInstances[arg0].unkD].unkC];
-	sp40 = &D_8014DD50[(u8)sp44->unkC];
-	sp3C = &D_8014DD50[(u8)sp40->unkD];
-	sp73 = (u8)sp3C->unkD;
+	rootId = alienInstances[arg0].unkD;
+	bodyId = D_8014DD50[rootId].unkC;
+	limbId = D_8014DD50[bodyId].unkC;
+	tipId = D_8014DD50[limbId].unkD;
+	sp73 = D_8014DD50[tipId].unkD;
 
 	if (alienInstances[arg0].unk2C < 0x51) {
-		sp34 = &D_8014DD50[sp73];
-		func_80128428_1373D8(&alienInstances[arg0], sp34->unk0 + sp44->unk0, sp34->unk2 + sp44->unk2, sp34->unk4 + sp44->unk4, &sp68, &sp64, &sp60);
+		func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[bodyId].unk0 + D_8014DD50[sp73].unk0, D_8014DD50[bodyId].unk2 + D_8014DD50[sp73].unk2, D_8014DD50[bodyId].unk4 + D_8014DD50[sp73].unk4, &sp68, &sp64, &sp60);
 
 		if (alienInstances[arg0].unk2C >= 0x49) {
-			sp34->unk2 += 0xA;
+			D_8014DD50[sp73].unk2 += 0xA;
 			if (alienInstances[arg0].unk24 != 0xFC) {
-				func_800C1ECC_D0E7C((s16)sp68, (s16)sp64, (s16)sp60, alienInstances[arg0].unk3C, 2);
+				func_800C1ECC_D0E7C(sp68, sp64, sp60, alienInstances[arg0].unk3C, 2);
 			}
 		} else if (alienInstances[arg0].unk2C == 0x48) {
-			sp34->unk2 += 0xA;
+			D_8014DD50[sp73].unk2 += 0xA;
 			childId = func_8007956C_8851C(0xD);
-			alienInstances[arg0].unk3C = (s8)(s16)childId;
+			alienInstances[arg0].unk3C = childId;
 			alienInstances[arg0].unk26 = 0;
-			alienInstances[(s16)childId].unk48 = sp64 + 0xA;
-			alienInstances[(s16)childId].unk1B = alienInstances[arg0].unk1B;
-			alienInstances[(s16)childId].unk2E = sp68;
-			alienInstances[(s16)childId].unk0 = sp68;
-			alienInstances[(s16)childId].unk32 = sp60;
-			alienInstances[(s16)childId].unk4 = sp60;
-			alienInstances[(s16)childId].unk30 = alienInstances[(s16)childId].unk48;
-			alienInstances[(s16)childId].unk2 = alienInstances[(s16)childId].unk48;
-			alienInstances[(s16)childId].unkE = alienInstances[(s16)childId].unk6 = alienInstances[arg0].unk6;
-			alienInstances[(s16)childId].unk20 |= ALIEN_FLAG_FALL;
-			alienInstances[(s16)childId].unk12 = 0x200;
-			func_8007A2A0_89250((s16)childId);
+			alienInstances[childId].unk48 = sp64 + 0xA;
+			alienInstances[childId].unk1B = alienInstances[arg0].unk1B;
+			alienInstances[childId].unk2E = sp68;
+			alienInstances[childId].unk0 = sp68;
+			alienInstances[childId].unk32 = sp60;
+			alienInstances[childId].unk4 = sp60;
+			childValue = alienInstances[childId].unk48;
+			alienInstances[childId].unk30 = childValue;
+			alienInstances[childId].unk2 = childValue;
+			childValue = alienInstances[arg0].unk6;
+			alienInstances[childId].unk6 = childValue;
+			alienInstances[childId].unkE = childValue;
+			alienInstances[childId].unk20 |= ALIEN_FLAG_FALL;
+			alienInstances[childId].unk12 = 0x200;
+			func_8007A2A0_89250(childId);
 		} else if (alienInstances[arg0].unk26 == 0) {
-			
+			childId = (s8)alienInstances[arg0].unk3C;
 
-			if (alienInstances[(s8)alienInstances[arg0].unk3C].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
+			if (alienInstances[childId].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
 				func_80088E10_97DC0(sp73);
 				alienInstances[arg0].unk26 = 1;
 			} else {
-				alienInstances[(s8)alienInstances[arg0].unk3C].unk48 = sp64 + 0xA;
-				sp34->unk2 += 0xA;
+				D_8014DD50[sp73].unk2 += 0xA;
+				alienInstances[childId].unk48 = sp64 + 0xA;
 				if (alienInstances[arg0].unk24 != 0xFC) {
-					func_800C1ECC_D0E7C((s16)sp68, (s16)sp64, (s16)sp60, alienInstances[arg0].unk3C, 2);
+					func_800C1ECC_D0E7C(sp68, sp64, sp60, alienInstances[arg0].unk3C, 2);
 				}
 			}
 		}
 	}
 
-	if (*(u16 *)&sp3C->unkA < 0x1000) {
-		*(u16 *)&sp3C->unkA += 0x400;
-		*(u16 *)&sp40->unkA += 0x400;
+	if (D_8014DD50[tipId].unkAUnsigned < 0x1000) {
+		D_8014DD50[tipId].unkAUnsigned += 0x400;
+		D_8014DD50[limbId].unkAUnsigned += 0x400;
 	}
 
 	if (alienInstances[arg0].unk2C < 0x48) {
-		*(u16 *)&sp44->unk6 += 0x96;
-		if (((s16)alienInstances[arg0].unk2C % ((func_800038E0_44E0() % 7) + 1)) == 0) {
-				sp4C = (u16)func_800038E0_44E0();
-				sp4E = (u16)func_800038E0_44E0();
-				sp50 = (u16)func_800038E0_44E0();
+		D_8014DD50[bodyId].unk6Unsigned += 0x96;
+		if ((alienInstances[arg0].unk2C % ((func_800038E0_44E0() % 7) + 1)) == 0) {
+				randomOffset[0] = func_800038E0_44E0();
+				randomOffset[1] = func_800038E0_44E0();
+				randomOffset[2] = func_800038E0_44E0();
 			func_800DFA34_EE9E4(
-					(u16)sp4C % 100 + alienInstances[arg0].unk0 - 0x32,
-					(u16)sp4E % 100 + alienInstances[arg0].unk2 - 0x32,
-					(u16)sp50 % 100 + alienInstances[arg0].unk4 - 0x32,
-				((func_800038E0_44E0() % 20) + 0x14) & 0xFFFF,
+					alienInstances[arg0].unk0 + randomOffset[0] % 100 - 0x32,
+					alienInstances[arg0].unk2 + randomOffset[1] % 100 - 0x32,
+					alienInstances[arg0].unk4 + randomOffset[2] % 100 - 0x32,
+				(func_800038E0_44E0() % 20) + 0x14,
 				0);
 		}
 	}
 
 	if (alienInstances[arg0].unk2C == 1) {
-		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)(((f64)alienTypes[alienInstances[arg0].typeIndex].unkC) * 1.5), 6);
+		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC * 1.5, 6);
 	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D775C_19026C.s")
 #endif
+
 
 // AI - Alien jump movement logic
 s32 func_802D7D08_190818(u8 arg0, s32 arg1, s32 arg2) {
