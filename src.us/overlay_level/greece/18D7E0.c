@@ -2410,21 +2410,17 @@ void func_802DA378_192E88(u8 arg0) {
 	func_80089EB4_98E64(arg0, 0x3C, 0, 6, 3);
 }
 
-// https://decomp.me/scratch/T5uwn
-// CURRENT(126)
 // AI - Alien swarm formation flying AI
-#ifdef NON_MATCHING
 void func_802DA3EC_192EFC(u8 arg0)
 {
 	AlienInstance *parent;
+	s16 pathPad;
 	s16 pathA;
 	s16 pathB;
-	s8 pathNode1;
-	s8 pathNode2;
-	s8 pathNode3;
+	s16 pathNode1;
+	s16 pathNode2;
+	s16 pathNode3;
 	s16 path4;
-	s16 pathPad;
-	s32 dx;
 	s32 dist;
 	s32 phase;
 	s32 inv;
@@ -2434,7 +2430,7 @@ void func_802DA3EC_192EFC(u8 arg0)
 	u8 neigh3;
 	s32 out[3];
 	s32 yaw;
-	int new_var;
+	s32 dx;
 	s32 highAlert = 0;
 	parent = &alienInstances[alienInstances[arg0].unk25];
 	if (parent->unk20 & ALIEN_FLAG_UNKH)
@@ -2540,13 +2536,13 @@ void func_802DA3EC_192EFC(u8 arg0)
 			if (phase >= 4)
 			{
 				inv = 9 - phase;
-				alienInstances[arg0].unkA = (s16)((-inv) * 500);
-				D_8014DD50[pathNode1].unk6 = (s16)((-inv) * 1000);
-				D_8014DD50[pathNode2].unk6 = (s16)(inv * 1000);
+				alienInstances[arg0].unkA = (-inv) * 500;
+				D_8014DD50[pathNode1].unk6 = (-inv) * 1000;
+				D_8014DD50[pathNode2].unk6 = inv * 1000;
 			}
 			else
 			{
-				alienInstances[arg0].unkA = (s16)((-phase) * 1000);
+				alienInstances[arg0].unkA = (-phase) * 1000;
 			}
 			if (phase == 1)
 			{
@@ -2612,8 +2608,8 @@ void func_802DA3EC_192EFC(u8 arg0)
 		}
 		else
 		{
-			new_var = func_800038E0_44E0() % 100;
-			func_80087188_96138(arg0, 0, new_var);
+			dx = func_800038E0_44E0() % 100;
+			func_80087188_96138(arg0, 0, dx);
 		}
 		if ((highAlert != 0) || (parent->unk20 & ALIEN_FLAG_UNKG))
 		{
@@ -2667,9 +2663,6 @@ void func_802DA3EC_192EFC(u8 arg0)
 	func_800A92E0_B8290(arg0, 0xF000);
 	func_800A9F34_B8EE4(arg0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802DA3EC_192EFC.s")
-#endif
 
 // AI - Alien attack retreat decision AI
 s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2)
