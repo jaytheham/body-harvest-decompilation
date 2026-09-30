@@ -1394,101 +1394,95 @@ void func_802D7360_18FE70(void) {
 	gSPDisplayList(D_8005BB2C++, D_9052C70);
 }
 
-// https://decomp.me/scratch/wEWwV
-#ifdef NON_MATCHING
-// CURRENT(264)
 // AI - Primary alien AI skeleton setup and attack cooldown
 void func_802D738C_18FE9C(u8 arg0)
 {
-  s16 sp5E;
-  s16 sp5C;
-  s16 sp5A;
-  s16 sp58;
-  s16 sp56;
-  s16 sp50[3];
-  s32 sp44[3];
-  s32 sp40;
-  s16 sp3E;
-  s16 sp38[2];
-  s16 sp34;
-  sp3E = alienInstances[arg0].typeIndex;
-  sp5E = alienInstances[arg0].unkC;
-  sp5C = D_8014DD50[sp5E].unkC;
-  sp58 = D_8014DD50[sp5C].unkC;
-  sp5A = D_8014DD50[sp58].unkD;
-  sp56 = D_8014DD50[sp5A].unkD;
-	// Changing this func to return void fixes the weirdness here without the if (1)
-	// but I don't believe it is void return based on other calls to it.
-  func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
-  D_8014DD50[sp5C].unk6 = -(D_8014DD50[sp5E].unk6 = alienInstances[arg0].unk6 * 1); // hmmmm
-  func_80086164_95114(arg0, sp5C);
-  sp50[0] = 0x3C;
-  sp50[1] = -8;
-  sp50[2] = 0x70;
-  func_800A931C_B82CC(sp5C, sp50, sp44);
-  sp50[0] = sp44[0];
-  sp50[1] = sp44[1];
-  sp50[2] = sp44[2];
-  func_800A931C_B82CC(sp5E, sp50, sp44);
-  alienTypes[sp3E].unk20 = sp44[0];
-  alienTypes[sp3E].unk22 = sp44[1];
-  alienTypes[sp3E].unk24 = sp44[2];
-  sp40 = func_80084E54_93E04(D_80052B34, &alienInstances[arg0]);
-  if (currentLevel == 1)
-  {
-	sp34 = 0x3C;
-  }
-  else
-  {
-	sp34 = 0x1E;
-  }
-  if ((func_80084FE8_93F98(arg0, 0x1000) != 0) && (sp40 < 0x7D0))
-  {
-	alienInstances[arg0].unk26++;
-	if (alienInstances[arg0].unk26 > (sp34 + 0x28))
+	s16 sp5E;
+	s16 sp5C;
+	s16 sp5A;
+	s16 sp58;
+	s16 sp56;
+	s16 sp50[3];
+	s32 sp44[3];
+	s32 sp40;
+	s16 sp3E;
+	s16 sp38[2];
+	s16 sp36;
+	s16 sp34;
+	sp3E = alienInstances[arg0].typeIndex;
+	sp5E = alienInstances[arg0].unkC;
+	sp5C = D_8014DD50[sp5E].unkC;
+	sp58 = D_8014DD50[sp5C].unkC;
+	sp5A = D_8014DD50[sp58].unkD;
+	sp56 = D_8014DD50[sp5A].unkD;
+	func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
+
+	D_8014DD50[sp5E].unk6Unsigned = alienInstances[arg0].unk6;
+	D_8014DD50[sp5C].unk6 = -D_8014DD50[sp5E].unk6Unsigned;
+	func_80086164_95114(arg0, sp5C);
+	sp50[0] = 0x3C;
+	sp50[1] = -8;
+	sp50[2] = 0x70;
+	func_800A931C_B82CC(sp5C, sp50, sp44);
+	sp50[0] = sp44[0];
+	sp50[1] = sp44[1];
+	sp50[2] = sp44[2];
+	func_800A931C_B82CC(sp5E, sp50, sp44);
+	alienTypes[sp3E].unk20 = sp44[0];
+	alienTypes[sp3E].unk22 = sp44[1];
+	alienTypes[sp3E].unk24 = sp44[2];
+	sp40 = func_80084E54_93E04(D_80052B34, &alienInstances[arg0]);
+	if (currentLevel == 1)
 	{
-	  alienInstances[arg0].unk1E = 0x28;
-	  alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKE;
-	  alienInstances[arg0].unk26 = 0;
-	}
-	if (func_80087188_96138(arg0, 0, 0x28) != 0)
-	{
-	  alienInstances[arg0].unk36 = 0;
-	  alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKE;
-	  alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD;
-	  alienInstances[arg0].unk1E = 6;
-	}
-  }
-  else
-  {
-	alienInstances[arg0].unk26 = 0;
-	alienInstances[arg0].unk1E = 0;
-  }
-  if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKD))
-  {
-	if (alienInstances[arg0].unk20 & ALIEN_FLAG_Z)
-	{
-	  sp38[0] = sp58;
+		sp34 = 0x3C;
 	}
 	else
 	{
-	  sp38[0] = sp5A;
+		sp34 = 0x1E;
 	}
-	sp38[1] = sp56;
-	if (func_80081F18_90EC8(arg0, 2, 2, sp38, &D_802DDC88_196798) == 2)
+	if ((func_80084FE8_93F98(arg0, 0x1000) != 0) && (sp40 < 0x7D0))
 	{
-	  alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKG;
+		alienInstances[arg0].unk26++;
+		if (alienInstances[arg0].unk26 > (sp34 + 0x28))
+		{
+			alienInstances[arg0].unk1E = 0x28;
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKE;
+			alienInstances[arg0].unk26 = 0;
+		}
+		if (func_80087188_96138(arg0, 0, 0x28) != 0)
+		{
+			alienInstances[arg0].unk36 = 0;
+			alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKE;
+			alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD;
+			alienInstances[arg0].unk1E = 6;
+		}
 	}
-  }
-
-  if (alienInstances[arg0].unk1E != 0)
-  {
-	alienInstances[arg0].unk1E--;
-  }
+	else
+	{
+		alienInstances[arg0].unk26 = 0;
+		alienInstances[arg0].unk1E = 0;
+	}
+	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKD))
+	{
+		if (alienInstances[arg0].unk20 & ALIEN_FLAG_Z)
+		{
+			sp38[0] = sp58;
+		}
+		else
+		{
+			sp38[0] = sp5A;
+		}
+		sp38[1] = sp56;
+		if (func_80081F18_90EC8(arg0, 2, 2, sp38, &D_802DDC88_196798) == 2)
+		{
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKG;
+		}
+	}
+	if (alienInstances[arg0].unk1E != 0)
+	{
+		alienInstances[arg0].unk1E--;
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D738C_18FE9C.s")
-#endif
 
 // AI - Alien weapon projectile spawning
 void func_802D763C_19014C(u8 arg0) {
