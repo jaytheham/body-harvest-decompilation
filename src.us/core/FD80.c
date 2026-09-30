@@ -91,11 +91,11 @@ void func_8000F478_10078(BhGfxTask *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F478_10078.s")
 #endif
 
-void func_8000F5A8_101A8(s32 arg0, s32 arg1, s32 arg2) {
+void func_8000F5A8_101A8(s32 arg0, void *arg1, s32 arg2) {
 	OSIoMesg sp28;
 
 	osWritebackDCacheAll();
-	osPiStartDma(&sp28, 0, 0, arg0, (void *)arg1, arg2, &D_80067FD0);
+	osPiStartDma(&sp28, 0, 0, arg0, arg1, arg2, &D_80067FD0);
 	osRecvMesg(&D_80067FD0, &D_80068038, 1);
 }
 
