@@ -2749,6 +2749,8 @@ void func_802DA520_259C60(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DA520_259C60.s")
 #endif
 
+// behavior for Burrower (sandworm in America) enemy types 0x08 and 0x09, func is listed on specs both unk48 and unk4C
+// a Burrower seems to be type 0x08 when underground and type 0x09 when it surfaces
 void func_802DA878_259FB8(u8 arg0) {
 	AlienInstance *alien = &alienInstances[arg0];
 
@@ -2819,6 +2821,7 @@ void func_802DA878_259FB8(u8 arg0) {
 	}
 }
 
+// probably handled Burrower transition, but seems unreferenced? case 1 above handles type 9 to 8 transition
 void func_802DAA98_25A1D8(u8 arg0) {
 	AlienInstance *alien = &alienInstances[arg0];
 

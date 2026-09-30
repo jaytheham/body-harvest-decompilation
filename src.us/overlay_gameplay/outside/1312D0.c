@@ -553,7 +553,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
   }
   else if (arg0->unk20 & VEHICLE_FLAG_UNKB)
   {
-	func_800AE190_BD140(2);
+	func_800AE190_BD140(2); // increase global humans killed count
 	for (i = 0; i < 2; i++)
 	{
 		// Play sound effect at vehicle position

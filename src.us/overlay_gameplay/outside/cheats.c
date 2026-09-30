@@ -72,37 +72,38 @@ void func_800732C8_82278() {
 
 // Cheat Arsenal - Give player weapons and ammo
 void func_800732E0_82290() {
-	func_801391DC_14818C(5, 0x3E7); // a0 = itemId, a1 = quantity. Machine gun
+	func_801391DC_14818C(5, 0x3E7); // a0 = itemId, a1 = quantity. 999 Machine gun all levels
 	if (currentLevel == LEVEL_GREECE) {
-		func_801391DC_14818C(7, 3); // T. N. T.
-		func_801391DC_14818C(8, -0x8000); // Sunshield
-		func_801391DC_14818C(0xA, 0x64); // Tri-Spinner
+		func_801391DC_14818C(7, 3); // 3 T. N. T.
+		func_801391DC_14818C(8, -0x8000); // unlimited Sunshield
+		func_801391DC_14818C(0xA, 0x64); // 100 Tri-Spinner
 		return;
 	}
 	if (currentLevel == LEVEL_JAVA) {
-		func_801391DC_14818C(3, 0x64);
-		func_801391DC_14818C(4, 0x32);
-		func_801391DC_14818C(9, 0x14);
-		func_801391DC_14818C(0xA, 0x64);
+		func_801391DC_14818C(3, 0x64); // 100 shotgun
+		func_801391DC_14818C(4, 0x32); // 50 rifle
+		func_801391DC_14818C(9, 0x14); // 20 grenades
+		func_801391DC_14818C(0xA, 0x64); // 100 Starburst
 		return;
 	}
 	if (currentLevel == LEVEL_AMERICA) {
-		func_801391DC_14818C(3, 0x64);
-		func_801391DC_14818C(4, 0x32);
-		func_801391DC_14818C(0xA, 0x64);
+		func_801391DC_14818C(3, 0x64); // 100 shotgun
+		func_801391DC_14818C(4, 0x32); // 50 rifle
+		func_801391DC_14818C(0xA, 0x64); // 100 Lightning Gun
 		return;
 	}
 	if (currentLevel == LEVEL_SIBERIA) {
-		func_801391DC_14818C(3, 0x64);
-		func_801391DC_14818C(4, 0x32);
-		func_801391DC_14818C(6, 0x19);
-		func_801391DC_14818C(0xA, 0x64);
+		func_801391DC_14818C(3, 0x64); // 100 shotgun
+		func_801391DC_14818C(4, 0x32); // 50 rifle
+		func_801391DC_14818C(6, 0x19); // 25 rockets
+		func_801391DC_14818C(0xA, 0x64); // 100 Disruptor
 		return;
 	}
-	func_801391DC_14818C(3, 0x64);
-	func_801391DC_14818C(4, 0x32);
-	func_801391DC_14818C(6, 0x19);
-	func_801391DC_14818C(7, 3);
+	// else Comet
+	func_801391DC_14818C(3, 0x64); // 100 shotgun
+	func_801391DC_14818C(4, 0x32); // 50 rifle
+	func_801391DC_14818C(6, 0x19); // 25 rockets
+	func_801391DC_14818C(7, 3); // 3 TNT
 }
 
 // Cheat Durable - Restore current vehicle health and fuel, and ???
@@ -120,6 +121,7 @@ void func_800734AC_8245C() {
 	D_801591AC = 5;
 	var_v0 += currentControllerStates[0].stick_x * 4;
 	var_v1 -= currentControllerStates[0].stick_y * 4;
+	// Wandering is limited to +/- 27648, staying inside the outer shield walls
 	if (var_v0 < -0x6C00) {
 		var_v0 = -0x6C00;
 	}

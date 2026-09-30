@@ -1757,7 +1757,7 @@ extern u16 D_8013BCD0_14AC80;
 extern u32 D_8013BCD4_14AC84;
 extern u16 D_8013BCD8_14AC88;
 extern u8 D_8013BCDC_14AC8C[0x24];
-extern u8 D_8013BD00_14ACB0[4];
+extern u8 D_8013BD00_14ACB0[4]; // used for bookkeeping Burrowers/sandworms in America
 extern s32 D_8013BD04_14ACB4;
 extern s32 D_8013C16C_14B11C;
 extern u8 D_8013C1A7[];
@@ -2544,7 +2544,7 @@ extern s32 D_801591B8;
 extern s32 D_801591BC;
 extern s16 D_801591C0;
 extern s16 D_801591C2;
-extern s16 D_801591C4;
+extern s16 D_801591C4; // counter used to track humans during Java 3 old freighter and Siberia 3 oil rig missions
 extern s16 D_801591C6;
 extern s16 D_801591C8;
 extern s16 D_801591CA;
@@ -2824,7 +2824,7 @@ extern u8 D_8021F250[];
 extern u16 D_8021FA30[][0x10]; // Terrain objects 0x1f20 total size
 extern u8 D_80221A30[][0x40]; // Terrain object groups 0x1000 total size
 extern u32 D_80222A30[]; // terrain object model pointers
-extern s32 D_80222A70;
+extern s32 D_80222A70; // current water height
 extern s16 D_80222A72;
 extern Unk80222A78 D_80222A78[0xD0]; // trigger array (does this actually start at 70 or 74?)
 extern s32 D_80223778;
