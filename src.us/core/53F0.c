@@ -1,4 +1,5 @@
 #define OVERLAY_ENTRY_AS_FUNC
+#define CORE_53F0_BSS
 #define GAME_OSSETTIME_IMPL
 #include <ultra64.h>
 #include "common.h"
@@ -833,51 +834,45 @@ void func_80007548_8148(void)
 	}
 }
 
-// https://decomp.me/scratch/qADEg
-// CURRENT(855)
-#ifdef NON_MATCHING
 void func_80007570_8170(void)
 {
-  s32 temp;
+	s32 temp;
 	s32 i;
-  D_80047F98 = 0;
-  D_80047F9C = 0;
-  D_80047F94 = 0;
+	D_80047F98 = 0;
+	D_80047F9C = 0;
+	D_80047F94 = 0;
 	weaponSlots[0] = 2;
-	for (i=1; i < 7; i++)
+	for (i = 1; i < 7; i++)
 	{
-	  weaponSlots[i] = 0;
+		weaponSlots[i] = 0;
 	}
 
-  D_8004DC48.unk0 = 1;
-	D_8004DC50.unk0 = 0;
-	
-  D_80052A90 = 0;
-  D_8004D154 = 0;
-  D_8004D150 = 0;
-  D_8004D158 = 0;
-  D_80048030 = 0;
-  D_8004DC5C = 0;
-  temp = ((s32) D_80048028) >> ((currentLevel * 3) + 0x1D);
-  if (temp & 1)
-  {
-	D_8004DC5C = 1;
-  }
-  if (temp & 2)
-  {
-	D_8004DC5C += 1;
-  }
-  if (temp & 4)
-  {
-	D_8004DC5C += 1;
-  }
-  D_80052A98[currentLevel - 1].score = 0;
-  D_80052A98[currentLevel - 1].humansKilled = 0;
-  D_80052A98[currentLevel - 1].secondsElapsed = 0;
+	D_8004DC48.unk0 = 1;
+	D_8004DC50.flags = 0;
+
+	D_80052A90 = 0;
+	D_8004D154 = 0;
+	D_8004D150 = 0;
+	D_8004D158 = 0;
+	D_80048030 = 0;
+	D_8004DC5C = 0;
+	temp = D_80048028 >> ((currentLevel * 3) + 0x1D);
+	if (temp & 1)
+	{
+		D_8004DC5C++;
+	}
+	if (temp & 2)
+	{
+		D_8004DC5C += 1;
+	}
+	if (temp & 4)
+	{
+		D_8004DC5C += 1;
+	}
+	D_80052A98[currentLevel - 1].score = 0;
+	D_80052A98[currentLevel - 1].humansKilled = 0;
+	D_80052A98[currentLevel - 1].secondsElapsed = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007570_8170.s")
-#endif
 
 void func_80007690_8290(void) {
 	D_80048030 = D_80048030 + 1;

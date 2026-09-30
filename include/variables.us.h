@@ -3882,3 +3882,11 @@ extern const f64 D_800AECE0_7F190[];
 extern const f64 D_800AECE8_7F198[];
 extern const u32 jtbl_800AECF0_7F1A0[];
 extern const f32 D_800AED68_7F218[];
+
+#ifdef CORE_53F0_BSS
+/* Local tentative definitions let IDO share address loads within these objects.
+ * The linker resolves their addresses through the existing absolute symbols. */
+BitFlags64 D_8004DC48;
+Flags2x32 D_8004DC50;
+u8 weaponSlots[7];
+#endif

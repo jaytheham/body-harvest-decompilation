@@ -231,9 +231,12 @@ typedef struct {
 	/* 0x34 */ s16 unk34;
 	/* 0x36 */ s16 unk36;
 } Unk8010D234Data; /* size = 0x38 */
-typedef struct {
-	/* 0x00 */ s32 unk0;
-	/* 0x04 */ s32 unk4;
+typedef union {
+	struct {
+		/* 0x00 */ s32 unk0;
+		/* 0x04 */ s32 unk4;
+	};
+	/* 0x00 */ u64 flags;
 } Flags2x32; /* size = 0x08 */
 
 typedef struct {
