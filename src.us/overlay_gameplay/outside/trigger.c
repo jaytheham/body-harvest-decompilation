@@ -20,20 +20,6 @@ const char D_80142C14_151BC4[] = "Add boss %d, %d\n"; // "Add boss %d, %d\n"
 const char D_80142C28_151BD8[] = "Add boss component %d\n"; // "Add boss component %d\n"
 const char D_80142C40_151BF0[] = "deleting wave %d\n"; // "deleting wave %d\n"
 
-const u32 jtbl_80142C54_151C04[] = {
-	0x800AEA8C,
-	0x800AE760,
-	0x800AE83C,
-	0x800AE954,
-	0x800AE9D4,
-	0x800AE9B8,
-	0x800AEA08,
-	0x800AE988,
-	0x800AEA3C,
-	0x800AE8A0,
-	0x800AEA68,
-};
-
 void func_800AE2C0_BD270(void) {
 	u8 i;
 	for (i = 0; i < 0xD0; i++) {
@@ -113,164 +99,160 @@ void func_800AE588_BD538(void) {
 	}
 }
 
-// https://decomp.me/scratch/AnFgt
 // guess_checkTriggers
-// CURRENT(1303)
-#ifdef NON_MATCHING
 void func_800AE6CC_BD67C(void)
 {
-  Unk80222A78 tmp;
-  u8 i;
-  u8 shouldRun;
-  u8 waveId0;
-  u8 waveId1;
-  s32 dummy;
+	u8 i;
+	Unk80222A78 tmp;
+	u8 shouldRun;
+	u8 waveId1;
+	u8 waveId0;
 
 	for (i = 0; i < D_80223778; i++)
 	{
-	  shouldRun = 0;
-	  switch (D_80222A78[i].unk0)
-	  {
-		case 0:
-		  
-		  if (D_80047F94 == D_80223780[D_80222A78[i].unk9].unk12
-			  && ((-(D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8))) < (D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8)) ? (D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8)) : (-(D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8)))) < D_80222A78[i].pad3
-			  && ((-(D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8))) < (D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8)) ? (D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8)) : (-(D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8)))) < D_80222A78[i].pad3)
-			{
-			  waveId0 = D_80223780[D_80222A78[i].unk9].unkD;
-			  waveId1 = D_80223780[D_80222A78[i].unk9].unkC;
-			  if ((waveId0 == 0xFF) || (func_8000726C_7E6C(waveId0) != 0))
-			  {
-				if ((waveId1 == 0xFF) || (func_8000726C_7E6C(waveId1) == 0))
-				{
-				  shouldRun = 1;
-				}
-			  }
-		}
-		  break;
+		shouldRun = 0;
+		switch (D_80222A78[i].unk0)
+		{
 
 		case 1:
-		  if ((D_80222A78[i].unkC == ((void (*)(void *)) func_800AFD48_BECF8)) || (D_80222A78[i].unkC == NULL))
-		{
-		  if (D_80047F94 != D_80223780[D_80222A78[i].unk9].unk12)
-		  {
-			D_80222A78[i].unk4++;
-		  }
-		}
-		  if (D_8014F820 >= D_80222A78[i].unk4)
-		{
-		  shouldRun = 1;
-		}
-		  break;
+
+			if (D_80047F94 == D_80223780[D_80222A78[i].unk9].unk12 && ((-(D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8))) < (D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8)) ? (D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8)) : (-(D_80222A78[i].unk1 - (D_80052B34->unk0 >> 8)))) < D_80222A78[i].pad3 && ((-(D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8))) < (D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8)) ? (D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8)) : (-(D_80222A78[i].unk2 - (D_80052B34->unk4 >> 8)))) < D_80222A78[i].pad3)
+			{
+				waveId0 = D_80223780[D_80222A78[i].unk9].unkD;
+				waveId1 = D_80223780[D_80222A78[i].unk9].unkC;
+				if ((0xFF == waveId0) || (func_8000726C_7E6C(waveId0) != 0))
+				{
+					if ((0xFF == waveId1) || (func_8000726C_7E6C(waveId1) == 0))
+					{
+						shouldRun = 1;
+					}
+				}
+			}
+			break;
 
 		case 2:
-		  if ((D_80222A78[i].unkC == ((void (*)(void *)) func_800AFD48_BECF8)) || (D_80222A78[i].unkC == NULL))
-		{
-		  if (D_80047F94 != D_80223780[D_80222A78[i].unk9].unk12)
-		  {
-			D_80222A78[i].unk4++;
-		  }
-		}
-		  if (D_8014F820 >= D_80222A78[i].unk4)
-		{
-		  waveId0 = D_80223780[D_80222A78[i].unk9].unkD;
-		  waveId1 = D_80223780[D_80222A78[i].unk9].unkC;
-		  if ((waveId0 == 0xFF) || (func_8000726C_7E6C(waveId0) != 0))
-		  {
-			if ((waveId1 == 0xFF) || (func_8000726C_7E6C(waveId1) == 0))
+			if ((D_80222A78[i].unkC == ((void (*)(void *))func_800AFD48_BECF8)) || (D_80222A78[i].unkC == NULL))
 			{
-			  shouldRun = 1;
+				if (D_80047F94 != D_80223780[D_80222A78[i].unk9].unk12)
+				{
+					D_80222A78[i].unk4++;
+				}
 			}
-		  }
-		}
-		  break;
-
-		case 3:
-		  if ((alienInstances[D_80222A78[i].unk8].unk20 & 0x00300000))
-		{
-		  shouldRun = 1;
-		}
-		  break;
-
-		case 4:
-		  if (alienInstances[D_80222A78[i].unk8].unk20 & ALIEN_FLAG_UNKP)
-		{
-		  shouldRun = 1;
-		}
-		  break;
-
-		case 5:
-		  if (D_80149440 == D_80222A78[i].unk8)
-		{
-		  shouldRun = 1;
-		}
-		  break;
-
-		case 6:
-		  if (vehicleInstances[D_80222A78[i].unk8].unk1C <= 0)
-		{
-		  shouldRun = 1;
-		}
-		  break;
-
-		case 7:
-		  if (((buildingInstances[D_80222A78[i].unk8].unk8 >> 0xC) & 1) == 0)
-		{
-		  shouldRun = 1;
-		}
-		  break;
-
-		case 8:
-		  if (D_80052540 == D_80222A78[i].unk8)
-		{
-		  osSyncPrintf(&D_80142B50_151B00);
-		  shouldRun = 1;
-		}
-		  break;
+			if (D_8014F820 >= D_80222A78[i].unk4)
+			{
+				shouldRun = 1;
+			}
+			break;
 
 		case 9:
-		  if (D_80223780[D_80222A78[i].unk9].unk10 == 0)
-		{
-		  shouldRun = 1;
-		}
-		  break;
+			if ((D_80222A78[i].unkC == ((void (*)(void *))func_800AFD48_BECF8)) || (D_80222A78[i].unkC == NULL))
+			{
+				if (D_80047F94 != D_80223780[D_80222A78[i].unk9].unk12)
+				{
+					D_80222A78[i].unk4++;
+				}
+			}
+			if (D_8014F820 >= D_80222A78[i].unk4)
+			{
+				waveId0 = D_80223780[D_80222A78[i].unk9].unkD;
+				waveId1 = D_80223780[D_80222A78[i].unk9].unkC;
+				if ((0xFF == waveId0) || (func_8000726C_7E6C(waveId0) != 0))
+				{
+					if ((0xFF == waveId1) || (func_8000726C_7E6C(waveId1) == 0))
+					{
+						shouldRun = 1;
+					}
+				}
+			}
+			break;
+
+		case 3:
+			if ((alienInstances[D_80222A78[i].unk8].unk20 & 0x00300000))
+			{
+				shouldRun = 1;
+			}
+			break;
+
+		case 7:
+			if (alienInstances[D_80222A78[i].unk8].unk20 & ALIEN_FLAG_UNKP)
+			{
+				shouldRun = 1;
+			}
+			break;
+
+		case 5:
+			if (D_80149440 == D_80222A78[i].unk8)
+			{
+				shouldRun = 1;
+			}
+			break;
+
+		case 4:
+			if (vehicleInstances[D_80222A78[i].unk8].unk1C <= 0)
+			{
+				shouldRun = 1;
+			}
+			break;
+
+		case 6:
+			if (((buildingInstances[D_80222A78[i].unk8].unk8 >> 0xC) & 1) == 0)
+			{
+				shouldRun = 1;
+			}
+			break;
+
+		case 8:
+			if (D_80052540 == D_80222A78[i].unk8)
+			{
+				osSyncPrintf(&D_80142B50_151B00);
+				shouldRun = 1;
+			}
+			break;
 
 		case 10:
-		  D_80223778--;
-		  if (i < D_80223778)
-		{
-		  D_80222A78[i] = D_80222A78[D_80223778];
-		  i--;
-		}
-		  break;
+			if (D_80223780[D_80222A78[i].unk9].unk10 == 0)
+			{
+				shouldRun = 1;
+			}
+			break;
 
-	  }
+		case 0:
+			D_80223778--;
+			if (D_80223778 > i)
+			{
+				D_80222A78[i] = D_80222A78[D_80223778];
+				i--;
+			}
+			break;
+		default:
+			break;
+		}
 
-	  if (shouldRun != 0)
-	  {
-		tmp = D_80222A78[i];
-		D_80223778--;
-		if (i < D_80223778)
+		if (shouldRun == 0)
 		{
-		  D_80222A78[i] = D_80222A78[D_80223778];
-		  i--;
+			continue;
 		}
-		if (tmp.unkC != NULL)
 		{
-		  tmp.unkC(&tmp);
+			tmp = D_80222A78[i];
+			D_80223778--;
+			if (D_80223778 > i)
+			{
+				D_80222A78[i] = D_80222A78[D_80223778];
+				i--;
+			}
+			if (tmp.unkC != NULL)
+			{
+				tmp.unkC(&tmp);
+			}
+			else
+			{
+				func_800AFD48_BECF8(&tmp);
+			}
 		}
-		else
-		{
-		  func_800AFD48_BECF8(&tmp);
-		}
-	  }
 	}
-  
-  D_8014F820++;
+
+	D_8014F820++;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/trigger/func_800AE6CC_BD67C.s")
-#endif
 
 void func_800AEBC4_BDB74(s32 arg0) {
 	if (currentLevel == 4 && D_80047F94 == 3) {
@@ -282,7 +264,6 @@ void func_800AEBC4_BDB74(s32 arg0) {
 	func_800A6FD4_B5F84();
 }
 
-// https://decomp.me/scratch/ycEOT
 void func_800AEC34_BDBE4(void *arg0)
 {
 	Unk80222A78 sp28;
