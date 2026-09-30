@@ -13,6 +13,28 @@ s32 func_80070270_7F220(s32 arg0) {
 	return 0;
 }
 
+/*
+ * AI Matching notes: best diff score is 10. All instructions, control flow and
+ * stack offsets match except the final timestamp reload/store at ROM 0x7F34C
+ * and 0x7F35C: current uses t6, target uses t0. The timestamp is correctly
+ * spilled at sp+0x1C in the __ll_mul delay slot; the frame is correctly 0x20.
+ *
+ * Native u64 multiplication/division generates the same code as explicit
+ * __ll_mul/__ull_div calls. Keep the subtraction 32-bit before widening.
+ * Reusing referenceTick for the final store, changing scalar signedness,
+ * chaining initial assignments and introducing local scopes did not fix the
+ * final reload register. Swapping currentTick/referenceTick declaration order
+ * moved the timestamp spill to sp+0x18, making the match worse.
+ *
+ * A one-element currentTick array kept the same score but reloaded into t1.
+ * A referenceTick array reused for the saved timestamp could reload into t0:
+ * compute a u32 delta, overwrite referenceTick[0] with currentTick BEFORE the
+ * helpers, and store referenceTick[0] at the end. Declaring that array first
+ * preserved sp+0x1C. This variant had score 60 because the gameplay-mode load
+ * and millisecond arithmetic temporary registers shifted down by one. Leaving
+ * the array overwrite until after the helpers added an unwanted old-reference
+ * spill. Retain the simpler scalar version below as the best known baseline.
+ */
 // https://decomp.me/scratch/bBdJM
 // CURRENT(10)
 #ifdef NON_MATCHING
