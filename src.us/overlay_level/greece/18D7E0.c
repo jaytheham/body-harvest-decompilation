@@ -494,13 +494,6 @@ const u32 jtbl_802DE398_196EA8[] = {
 	0x802D6CF4,
 };
 
-const u32 jtbl_802DE3BC_196ECC[] = {
-	0x802D6D50, 0x802D6D78, 0x802D6D98, 0x802D6DC0,
-	0x802D6F6C, 0x802D6DE4, 0x802D6E0C, 0x802D6E34,
-	0x802D6E5C, 0x802D6E84, 0x802D6EBC, 0x802D6EE0,
-	0x802D6F08, 0x802D6F2C, 0x802D6F50, 0x802D6F6C,
-	0x802D6F6C,
-};
 
 
 #ifdef NON_MATCHING
@@ -1212,8 +1205,6 @@ s32 func_802D6904_18F414(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D6904_18F414.s")
 #endif
 
-// CURERNT(0) rodata
-#ifdef NON_MATCHING
 // AI - Mission progression state machine
 void func_802D6D20_18F830(void) {
 	switch (D_80048030) {
@@ -1241,76 +1232,74 @@ void func_802D6D20_18F830(void) {
 		}
 		break;
 
-	case 4:
+	case 0x5:
 		if (D_80052B34->unk1A == 7) {
 			func_800076D4_82D4(6);
 		}
 		break;
 
-	case 5:
+	case 0x6:
 		if (func_80004818_5418(-0x61, 3, 3) != 0) {
 			func_800076D4_82D4(7);
 		}
 		break;
 
-	case 6:
+	case 0x7:
 		if (func_80004818_5418(-0x67, 0x10, 0x10) == 0) {
 			func_800076D4_82D4(8);
 		}
 		break;
 
-	case 7:
+	case 0x8:
 		if (func_80004818_5418(-0x21, 0x38, 2) != 0) {
 			func_800076D4_82D4(9);
 		}
 		break;
 
-	case 8:
+	case 0x9:
 		if ((func_8000726C_7E6C(0x24) != 0) || (func_80004818_5418(-0x4E, 0x61, 1) != 0)) {
 			func_800076D4_82D4(0xA);
 		}
 		break;
 
-	case 9:
+	case 0xA:
 		if (func_8000726C_7E6C(0x14) != 0) {
 			func_800076D4_82D4(0xB);
 		}
 		break;
 
-	case 0xA:
+	case 0xB:
 		if (func_80004818_5418(0, 0x55, 2) != 0) {
 			func_800076D4_82D4(0xC);
 		}
 		break;
 
-	case 0xB:
+	case 0xC:
 		if (func_8000726C_7E6C(0x30) != 0) {
 			func_800076D4_82D4(0xD);
 		}
 		break;
 
-	case 0xC:
+	case 0xD:
 		if (func_8000726C_7E6C(0x1C) != 0) {
 			func_800076D4_82D4(0xE);
 		}
 		break;
 
-	case 0xD:
+	case 0xE:
 		if (func_8000726C_7E6C(0x1E) != 0) {
 			func_800076D4_82D4(0xF);
 		}
 		break;
 
-	case 0xE:
+	case 4:
 	case 0xF:
 	case 0x10:
 	default:
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D6D20_18F830.s")
-#endif
+
 
 // AI - Screen shake rotation effects
 void func_802D6F7C_18FA8C(void)
