@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-30T10:08:45Z",
-  "commit": "0ac8d6db",
-  "commit_timestamp": "2026-09-30T23:07:54+13:00",
+  "generated": "2026-09-30T18:38:19Z",
+  "commit": "8f659abb",
+  "commit_timestamp": "2026-10-01T07:37:46+13:00",
   "overall": {
     "total_functions": 2714,
-    "matched": 1745,
-    "non_matching": 969,
+    "matched": 1750,
+    "non_matching": 964,
     "asm_stubs": 0,
-    "matched_pct": 64.3,
+    "matched_pct": 64.48,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -31,11 +31,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 951,
-      "non_matching": 495,
+      "matched": 956,
+      "non_matching": 490,
       "asm_stubs": 0,
       "total": 1446,
-      "matched_pct": 65.8,
+      "matched_pct": 66.1,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -537,12 +537,12 @@
     {
       "path": "overlay_gameplay/outside/148000.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 25,
-      "non_matching": 7,
+      "matched": 30,
+      "non_matching": 2,
       "asm_stubs": 0,
       "total": 32,
-      "matched_pct": 78.1,
-      "contributor": "goliath2526"
+      "matched_pct": 93.8,
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/7F220.c",
@@ -888,16 +888,16 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 71,
-      "matched": 1522,
-      "non_matching": 839,
+      "files": 72,
+      "matched": 1552,
+      "non_matching": 841,
       "asm_stubs": 0
     },
     {
       "name": "goliath2526",
-      "files": 7,
-      "matched": 221,
-      "non_matching": 130,
+      "files": 6,
+      "matched": 196,
+      "non_matching": 123,
       "asm_stubs": 0
     },
     {
@@ -1149,9 +1149,9 @@
     },
     {
       "date": "2026-09-27",
-      "commit": "0ac8d6d",
-      "matched": 1745,
-      "non_matching": 969,
+      "commit": "8f659ab",
+      "matched": 1750,
+      "non_matching": 964,
       "total": 2714
     }
   ]
