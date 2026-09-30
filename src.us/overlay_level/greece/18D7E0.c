@@ -502,15 +502,6 @@ const u32 jtbl_802DE3BC_196ECC[] = {
 	0x802D6F6C,
 };
 
-const f64 D_802DE400_196F10[] = { 4000.0 };
-const f32 D_802DE408_196F18[] = { 65535.0f };
-const f64 D_802DE410_196F20[] = { 500.0 };
-const f64 D_802DE418_196F28[] = { 300.0 };
-const f64 D_802DE420_196F30[] = { 2000.0 };
-const f64 D_802DE428_196F38[] = { 65535.0 };
-const f64 D_802DE430_196F40[] = { 2000.0 };
-const f32 D_802DE438_196F48[] = { 295.41015625f };
-const f32 D_802DE43C_196F4C[] = { 1210000.0f };
 
 #ifdef NON_MATCHING
 /* CURRENT(5) */
@@ -2039,10 +2030,9 @@ void func_802D911C_191C2C(u8 arg0)
 	s32 distSq;
 	s8 sp43;
 	s8 sp42;
+	s16 pad;
 	s8 sp33;
 	s8 sp2F;
-	// Fake
-	if (alienInstances[arg0].unk1E && alienInstances[arg0].unk1E) {}
 
 	if (alienInstances[arg0].unk47 & 1)
 	{
@@ -2153,13 +2143,12 @@ void func_802D911C_191C2C(u8 arg0)
 	alienInstances[arg0].unkA = -alienInstances[arg0].unk10 * 8;
 
 	D_8014DD50[temp_v1].unkA = alienInstances[arg0].unkA;
-	D_8014DD50[temp_v1].unk6 = D_8014DD50[temp_v0].unk6 = (D_802DE400_196F10[0] * ((((f32)sins((arg0 + D_80052A8C) * 0x7D0))) / 32768.0));
+	D_8014DD50[temp_v0].unk6 = (4000.0 * ((((f32)sins((arg0 + D_80052A8C) * 0x7D0))) / 32768.0));
+	D_8014DD50[temp_v1].unk6 = D_8014DD50[temp_v0].unk6Unsigned;
 	if (alienInstances[arg0].unk1E != 0)
 	{
 		alienInstances[arg0].unk1E--;
 	}
-	// Fake?
-	if (D_8014DD50[temp_v0].unkD) {}
 }
 
 // AI - Alien target selection
@@ -2556,7 +2545,7 @@ void func_802DA3EC_192EFC(u8 arg0)
 		}
 		else
 		{
-			alienInstances[arg0].unkA = D_802DE410_196F20[0] * ((((f32)coss(D_802DE408_196F18[0] * (((f32)(alienInstances[arg0].unk26 % 4)) / 4))) / 32768.0) + 1.0);
+			alienInstances[arg0].unkA = 500.0 * ((((f32)coss(65535.0f * (((f32)(alienInstances[arg0].unk26 % 4)) / 4))) / 32768.0) + 1.0);
 			D_8014DD50[pathNode1].unk6 = (-alienInstances[arg0].unk26) * 0x177;
 			D_8014DD50[pathNode2].unk6 = alienInstances[arg0].unk26 * 0x177;
 		}
@@ -2621,9 +2610,9 @@ void func_802DA3EC_192EFC(u8 arg0)
 	{
 		if (alienInstances[arg0].unk26 == 0)
 		{
-			alienInstances[arg0].unkA = D_802DE418_196F28[0] * (((f32)coss(D_80052A8C * 0x5CC60)) / 32768.0);
-			D_8014DD50[pathNode1].unk6 = (u16)(D_802DE428_196F38[0] - (D_802DE420_196F30[0] * ((((f32)coss(D_80052A8C * 0x3A98)) / 32768.0) + 1.0)));
-			D_8014DD50[pathNode2].unk6 = (u16)(D_802DE430_196F40[0] * ((((f32)coss(D_80052A8C * 0x3A98)) / 32768.0) + 1.0));
+			alienInstances[arg0].unkA = 300.0 * (((f32)coss(D_80052A8C * 0x5CC60)) / 32768.0);
+			D_8014DD50[pathNode1].unk6 = (u16)(65535.0 - (2000.0 * ((((f32)coss(D_80052A8C * 0x3A98)) / 32768.0) + 1.0)));
+			D_8014DD50[pathNode2].unk6 = (u16)(2000.0 * ((((f32)coss(D_80052A8C * 0x3A98)) / 32768.0) + 1.0));
 		}
 		if (parent->unk20 & ALIEN_FLAG_UNKG)
 		{
@@ -2728,8 +2717,8 @@ s32 func_802DB16C_193C7C(u8 arg0, Unk8014DD50 **arg1, Unk8014DD50 **arg2)
 						func_80102DDC_111D8C(
 							D_80052B34,
 							func_80003824_4424(-sp94, -sp90),
-							(sp8C / D_802DE438_196F48[0]) + 8192.0f,
-							(sp8C * 0x32) / D_802DE43C_196F4C[0]);
+							(sp8C / 295.41015625f) + 8192.0f,
+							(sp8C * 0x32) / 1210000.0f);
 						D_80052B34->unk22 = 1000 - (func_800038E0_44E0() % 2000);
 						D_80052B34->unk24 = 1000 - (func_800038E0_44E0() % 2000);
 						D_80052B34->unk26 = 1000 - (func_800038E0_44E0() % 2000);

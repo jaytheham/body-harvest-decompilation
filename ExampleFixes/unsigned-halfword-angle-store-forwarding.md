@@ -31,3 +31,28 @@ the complete stack frame is the target's `0x60` bytes.
 
 Validation: the function diff has no differences and the full ROM build
 reports `build/bh.us.z64: OK`.
+
+## Floating-point angle assignment and stack layout
+
+For `func_802D911C_191C2C`, a chained assignment of a floating-point
+expression to two signed joint angles emitted the right instructions but
+allocated the joint pointers and final cooldown to different registers.
+Splitting the assignment fixed allocation while retaining store forwarding:
+
+```c
+D_8014DD50[root].unk6 = 4000.0 * ((f32)sins(angle) / 32768.0);
+D_8014DD50[child].unk6 = D_8014DD50[root].unk6Unsigned;
+```
+
+Keep the first store signed: assigning the floating-point expression directly
+to `unk6Unsigned` introduces unsigned conversion handling instead of the
+target's `trunc.w.d`.
+
+Removing the chained assignment also changed compiler-generated stack
+temporaries. An unused `s16` between the two coordinate bytes and the two
+neighbor-coordinate bytes restored the target's 0x50-byte frame, coordinate
+slots at 0x43/0x42, and spill slots at 0x34/0x30/0x2C. An `s32` in the same
+position aligned the coordinate bytes correctly but left spills four bytes
+too low.
+
+Validation: no function diff differences; `build/bh.us.z64: OK`.
