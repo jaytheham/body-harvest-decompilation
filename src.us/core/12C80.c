@@ -395,7 +395,6 @@ void func_800129FC_135FC(s8 arg0, s8 arg1) {
 	}
 }
 
-// https://decomp.me/scratch/06otn
 void func_80012A74_13674(void)
 {
 	s32 i;

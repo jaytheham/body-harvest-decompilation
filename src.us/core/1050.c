@@ -1271,7 +1271,7 @@ void getSaveFileName(s32 arg0, u8 *arg1)
 	arg1[6] = 0;
 }
 
-/* Sum the six area scores stored as little-endian bytes in a save slot. */
+// AI - Sum the six area scores stored as little-endian bytes in a save slot.
 s32 func_80002B20_3720(s32 arg0) {
 	s32 idx;
 	s32 total;
@@ -1293,6 +1293,7 @@ s32 func_80002B20_3720(s32 arg0) {
 	}
 	return total;
 }
+
 s32 func_80002C58_3858(s32 arg0)
 {
   u8 *ptr = ((u8 *) (&D_800431C0)) + (arg0 * 0x7A);
