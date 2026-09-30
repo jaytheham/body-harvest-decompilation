@@ -9,7 +9,10 @@ and the bank-file reload into `a1` rather than `v1` after `alBnkfNew`. The helpe
 passes the destination directly to `osPiStartDma`; its destination cast is then
 unnecessary. The complete ROM checksum also verified the other callers.
 
-The existing `D_963A70_2` declaration needed a linker definition at `0x963A70`.
+The existing `D_963A70_2` declaration needed a linker definition at `0x963A70`
+in the tracked `undefined_syms.us.txt`. Do not put C-only aliases in the ignored,
+generated `undefined_syms_auto.txt`: local builds can pass using that file, but
+fresh extraction does not recreate the alias and clean builds fail to link.
 The size calculation uses `D_963A70`, while `alBnkfNew` uses `D_963A70_2`.
 These represent the same ROM boundary but keep IDO from preserving the bank-table
 address across the DMA call. Replacing the alias with `D_963A70` kept the wrong
