@@ -179,55 +179,24 @@ void func_801394DC_14848C(void)
   }
 }
 
-// https://decomp.me/scratch/cGhwK
-// CURRENT(5000)
-#ifdef NON_MATCHING
-void func_8013958C_14853C(void) {
-	s32 weapon1;
-	s32 *src;
-	s32 weapon2;
-	s32 idx;
-	s32 val;
+void func_8013958C_14853C(void)
+{
+	s32 i;
 
 	D_80031474[11] = 0;
 	D_80031474[12] = 1;
-	val = D_80031424[2];
-	weapon1 = D_80031424[11];
-	src = &D_80031424[3];
-	if (weapon1 == val) {
-		D_80031474[11] = D_80031474[2];
-	}
-	weapon2 = D_80031424[12];
-	idx = 3;
-	if (weapon2 == val) {
-		D_80031474[12] = D_80031474[2];
-	}
-
-	// Looks like this is unrolled and should only do idx++ each loop?
-	while (src != &D_80031424[11]) {
-		val = src[0];
-		if (weapon1 == val) D_80031474[11] = D_80031474[idx + 0];
-		if (weapon2 == val) D_80031474[12] = D_80031474[idx + 0];
-
-		val = src[1];
-		if (weapon1 == val) D_80031474[11] = D_80031474[idx + 1];
-		if (weapon2 == val) D_80031474[12] = D_80031474[idx + 1];
-
-		val = src[2];
-		if (weapon1 == val) D_80031474[11] = D_80031474[idx + 2];
-		if (weapon2 == val) D_80031474[12] = D_80031474[idx + 2];
-
-		val = src[3];
-		src += 4;
-		if (weapon1 == val) D_80031474[11] = D_80031474[idx + 3];
-		if (weapon2 == val) D_80031474[12] = D_80031474[idx + 3];
-
-		idx += 4;
+	for (i = 2; i < 11; i++)
+	{
+		if (D_80031424[11] == D_80031424[i])
+		{
+			D_80031474[11] = D_80031474[i];
+		}
+		if (D_80031424[12] == D_80031424[i])
+		{
+			D_80031474[12] = D_80031474[i];
+		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013958C_14853C.s")
-#endif
 
 void func_801396A8_148658(s32 arg0) {
 	func_801392FC_1482AC(0xB);
@@ -387,199 +356,61 @@ void func_80139B34_148AE4(void) {
 	}
 }
 
-// CURRENT(2300)
-#ifdef NON_MATCHING
-void func_80139BF8_148BA8(void) {
+void func_80139BF8_148BA8(void)
+{
+	s32 i;
+
 	D_801601CC = 0;
-	if (weaponSlots[0] >= 2) {
-		hudWeaponItems[D_801601CC].weaponSlot = 0;
-		D_801601CC = 1;
-	}
-	if (weaponSlots[1] >= 2) {
-		hudWeaponItems[D_801601CC].weaponSlot = 1;
-		D_801601CC += 1;
-	}
-	if (weaponSlots[2] >= 2) {
-		hudWeaponItems[D_801601CC].weaponSlot = 2;
-		D_801601CC += 1;
-	}
-	if ((weaponSlots + 3)[0] >= 2) {
-		hudWeaponItems[D_801601CC].weaponSlot = 3;
-		D_801601CC += 1;
-	}
-	if ((weaponSlots + 3)[1] >= 2) {
-		hudWeaponItems[D_801601CC].weaponSlot = 4;
-		D_801601CC += 1;
-	}
-	if ((weaponSlots + 3)[2] >= 2) {
-		hudWeaponItems[D_801601CC].weaponSlot = 5;
-		D_801601CC += 1;
-	}
-	if ((weaponSlots + 3)[3] >= 2) {
-		hudWeaponItems[D_801601CC].weaponSlot = 6;
-		D_801601CC += 1;
+	for (i = 0; i < 7; i++)
+	{
+		if (weaponSlots[i] >= 2)
+		{
+			hudWeaponItems[D_801601CC].weaponSlot = i;
+			D_801601CC++;
+		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139BF8_148BA8.s")
-#endif
 
 // Vehicle weapon UI related?
-// CURRENT(4135)
-#ifdef NON_MATCHING
-void func_80139D58_148D08(void) {
-	VehicleInstance* vehicle;
-	u8* slots3;
-	u8 value;
-	u8 mode;
-	u8 slot0;
-	u8 slot1;
-	u8 slot2;
+void func_80139D58_148D08(void)
+{
+	s32 i;
 
 	D_801601CC = 0;
-	vehicle = D_80052B34;
-	mode = vehicle->unk1A;
-	if (mode == 0x13) {
-		mode = 3;
-		slots3 = weaponSlots + mode;
-
-		if (weaponSlots[0] >= 0xD) {
-			hudWeaponItems[0].weaponSlot = 0;
-			D_801601CC = 1;
+	if (D_80052B34->unk1A == 0x13)
+	{
+		for (i = 0; i < 7; i++)
+		{
+			if (weaponSlots[i] >= 0xD)
+			{
+				hudWeaponItems[D_801601CC].weaponSlot = i;
+				D_801601CC++;
+			}
 		}
-
-		if (weaponSlots[1] >= 0xD) {
-			hudWeaponItems[D_801601CC].weaponSlot = 1;
-			D_801601CC++;
-		}
-
-		if (weaponSlots[2] >= 0xD) {
-			hudWeaponItems[D_801601CC].weaponSlot = 2;
-			D_801601CC++;
-		}
-
-		value = *slots3;
-		if (value >= 0xD) {
-			hudWeaponItems[D_801601CC].weaponSlot = mode;
-			D_801601CC++;
-		}
-
-		value = *(slots3 + 1);
-		if (value >= 0xD) {
-			hudWeaponItems[D_801601CC].weaponSlot = mode + 1;
-			D_801601CC++;
-		}
-
-		value = *(slots3 + 2);
-		if (value >= 0xD) {
-			hudWeaponItems[D_801601CC].weaponSlot = mode + 2;
-			D_801601CC++;
-		}
-
-		value = *(slots3 + 3);
-		if (value >= 0xD) {
-			hudWeaponItems[D_801601CC].weaponSlot = mode + 3;
-			D_801601CC++;
-		}
-
-		mode = vehicle->unk1A;
 	}
-
-	if ((vehicleTypes[mode].unk4C << 5) < 0) {
-		slot0 = weaponSlots[0];
-		slot1 = weaponSlots[1];
-		slot2 = weaponSlots[2];
-		mode = 3;
-
-		if ((slot0 >= 2) && (slot0 < 6)) {
-			hudWeaponItems[D_801601CC].weaponSlot = 0;
-			D_801601CC++;
+	if (vehicleTypes[D_80052B34->unk1A].unk4C & 0x04000000)
+	{
+		for (i = 0; i < 7; i++)
+		{
+			if ((weaponSlots[i] >= 2) && (weaponSlots[i] < 6))
+			{
+				hudWeaponItems[D_801601CC].weaponSlot = i;
+				D_801601CC++;
+			}
 		}
-
-		if ((slot1 >= 2) && (slot1 < 6)) {
-			hudWeaponItems[D_801601CC].weaponSlot = 1;
-			D_801601CC++;
-		}
-
-		slots3 = weaponSlots + mode;
-		if ((slot2 >= 2) && (slot2 < 6)) {
-			hudWeaponItems[D_801601CC].weaponSlot = 2;
-			D_801601CC++;
-		}
-
-		value = *slots3;
-		if ((value >= 2) && (value < 6)) {
-			hudWeaponItems[D_801601CC].weaponSlot = mode;
-			D_801601CC++;
-		}
-
-		value = *(slots3 + 1);
-		if ((value >= 2) && (value < 6)) {
-			hudWeaponItems[D_801601CC].weaponSlot = mode + 1;
-			D_801601CC++;
-		}
-
-		value = *(slots3 + 2);
-		if ((value >= 2) && (value < 6)) {
-			hudWeaponItems[D_801601CC].weaponSlot = mode + 2;
-			D_801601CC++;
-		}
-
-		value = *(slots3 + 3);
-		if ((value >= 2) && (value < 6)) {
-			hudWeaponItems[D_801601CC].weaponSlot = mode + 3;
-			D_801601CC++;
-		}
-	} else {
-		slot0 = weaponSlots[0];
-		slot1 = weaponSlots[1];
-		slot2 = weaponSlots[2];
-		mode = 3;
-
-		if ((slot0 == 0xB) || (slot0 == 0xC)) {
-			hudWeaponItems[D_801601CC].weaponSlot = 0;
-			D_801601CC++;
-		}
-
-		if ((slot1 == 0xB) || (slot1 == 0xC)) {
-			hudWeaponItems[D_801601CC].weaponSlot = 1;
-			D_801601CC++;
-		}
-
-		slots3 = weaponSlots + mode;
-		if ((slot2 == 0xB) || (slot2 == 0xC)) {
-			hudWeaponItems[D_801601CC].weaponSlot = 2;
-			D_801601CC++;
-		}
-
-		value = *slots3;
-		if ((value == 0xB) || (value == 0xC)) {
-			hudWeaponItems[D_801601CC].weaponSlot = mode;
-			D_801601CC++;
-		}
-
-		value = *(slots3 + 1);
-		if ((value == 0xB) || (value == 0xC)) {
-			hudWeaponItems[D_801601CC].weaponSlot = mode + 1;
-			D_801601CC++;
-		}
-
-		value = *(slots3 + 2);
-		if ((value == 0xB) || (value == 0xC)) {
-			hudWeaponItems[D_801601CC].weaponSlot = mode + 2;
-			D_801601CC++;
-		}
-
-		value = *(slots3 + 3);
-		if ((value == 0xB) || (value == 0xC)) {
-			hudWeaponItems[D_801601CC].weaponSlot = mode + 3;
-			D_801601CC++;
+	}
+	else
+	{
+		for (i = 0; i < 7; i++)
+		{
+			if ((weaponSlots[i] == 0xB) || (weaponSlots[i] == 0xC))
+			{
+				hudWeaponItems[D_801601CC].weaponSlot = i;
+				D_801601CC++;
+			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_80139D58_148D08.s")
-#endif
 
 void func_8013A1CC_14917C(void) {
 	if (D_80052B34->unk1A == 0) {
@@ -590,9 +421,8 @@ void func_8013A1CC_14917C(void) {
 	func_8013B004_149FB4();
 }
 
-// CURRENT (16)
-#ifdef NON_MATCHING
-void func_8013A218_1491C8(s16 arg0, s16 arg1, u8 arg2) {
+void func_8013A218_1491C8(s16 arg0, s16 arg1, u8 arg2)
+{
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_1009C70[arg2 << 7]));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
@@ -603,52 +433,40 @@ void func_8013A218_1491C8(s16 arg0, s16 arg1, u8 arg2) {
 			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
 	gDPPipeSync(D_8005BB2C++);
-	{ s32 _yl = arg1 * 4;
-	gSPTextureRectangle(D_8005BB2C++, MAX((s16)(arg0 << 2), 0), MAX((s16)_yl, 0),
-					MAX((s16)((arg0 + 8) << 2), 0), MAX((s16)((arg1 + 8) << 2), 0), G_TX_RENDERTILE,
-					-(((s16)(arg0 << 2) < 0) ? MIN((((s16)(arg0 << 2) << 11) >> 7), 0) : 0),
-					-((_yl < 0) ? MIN((((s16)_yl) << 11) >> 7, 0) : 0),
-					0x0800, 0x0800);
-	}
+
+	gSPTextureRectangle(D_8005BB2C++, MAX((s16)(arg0 << 2), 0), MAX((s16)(arg1 * 4), 0),
+						MAX((s16)((arg0 + 8) << 2), 0), MAX((s16)((arg1 + 8) << 2), 0), G_TX_RENDERTILE,
+						-(((s16)(arg0 << 2) < 0) ? MIN((((s16)(arg0 << 2) << 11) >> 7), 0) : 0),
+						-(((arg1 * 4) < 0) ? MIN((((s16)(arg1 * 4)) << 11) >> 7, 0) : 0),
+						0x0800, 0x0800);
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A218_1491C8.s")
-#endif
 
-// CURRENT(300)
-#ifdef NON_MATCHING
-void func_8013A4C8_149478(s16 arg0, s32 arg1) {
-	u8 sp1E;
-	u8 sp1D;
-	u8 var_a2;
-	u8 var_a3;
-	s32 sp18;
-	s16 temp_a1;
+void func_8013A4C8_149478(s16 arg0, s16 arg1)
+{
+	u8 hundreds;
+	u8 tens;
+	u8 ones;
 
-	if (arg0 == -0x8000) {
-		var_a2 = 0xE;
-		var_a3 = 0xE;
-		sp1D = 0xE;
-	} else {
-		var_a2 = arg0 / 100;
-		arg0 -= var_a2 * 100;
-		var_a3 = arg0 / 10;
-		arg0 -= var_a3 * 10;
-		sp1D = arg0;
+	if (arg0 == -0x8000)
+	{
+		hundreds = 14;
+		tens = 14;
+		ones = 14;
+	}
+	else
+	{
+		hundreds = arg0 / 100;
+		arg0 -= hundreds * 100;
+		tens = arg0 / 10;
+		arg0 -= tens * 10;
+		ones = arg0;
 	}
 
-	temp_a1 = ((s16*)&arg1)[1] + 4;
-	sp18 = temp_a1;
-	sp1E = var_a3;
-
-	func_8013A218_1491C8(0x2C - D_8014F1FA, temp_a1, var_a2);
-	func_8013A218_1491C8(0x33 - D_8014F1FA, ((s16*)&sp18)[1], sp1E);
-	func_8013A218_1491C8(0x3A - D_8014F1FA, ((s16*)&sp18)[1], sp1D);
+	func_8013A218_1491C8(0x2C - D_8014F1FA, arg1 + 4, hundreds);
+	func_8013A218_1491C8(0x33 - D_8014F1FA, arg1 + 4, tens);
+	func_8013A218_1491C8(0x3A - D_8014F1FA, arg1 + 4, ones);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A4C8_149478.s")
-#endif
 
 void func_8013A630_1495E0(void) {
 	gDPPipeSync(D_8005BB2C++);
@@ -663,117 +481,91 @@ void func_8013A630_1495E0(void) {
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADE);
 }
 
-#ifdef NON_MATCHING
 // CURRENT(27704)
-void func_8013A764_149714(u8 arg0) {
-	s16 ammo;
-	s16 yPos;
-	s16 x0;
-	s16 y0;
-	s16 s0;
-	s16 t0;
-	u8 state;
-	s32 pad0;
-	s32 pad1;
-	HudWeaponItem* item;
-	u8* color;
-
-	if (D_8014F1FA >= 0x51) {
-		return;
-	}
-
-	ammo = func_8013994C_1488FC(arg0);
-	func_8013A630_1495E0();
-
-	if (ammo == 0) {
-		state = 0;
-	} else if (D_801601D0 == arg0) {
-		state = 1;
-	} else {
-		state = 2;
-	}
-
-	item = &hudWeaponItems[arg0];
-	color = &D_80140D68_14FD18[state * 3];
-
-	gDPSetPrimColor(D_8005BB2C++, 0, 0, color[0], color[1], color[2], item->opacity);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_80260500);
-	gDPTileSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x100, G_TX_LOADTILE, 0,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
-	gDPPipeSync(D_8005BB2C++);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE,
-				 PRIMITIVE, K4, TEXEL0, 0, 0, 0, PRIM_LOD_FRAC, PRIMITIVE);
-
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1,
-				  D_8025CCC0 + (D_80031474[weaponSlots[item->weaponSlot]] * 0x240));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-			   G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 287, 683);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_RENDERTILE, 0,
-			   G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (23 << G_TEXTURE_IMAGE_FRAC), (23 << G_TEXTURE_IMAGE_FRAC));
-	gDPPipeSync(D_8005BB2C++);
-
-	if (D_801601D0 != arg0) {
-		x0 = (item->yPosition + 2) * 4;
-		y0 = (0x1B - D_8014F1FA) * 4;
-		yPos = item->yPosition + 1;
-		gSPTextureRectangle(D_8005BB2C++, x0, y0, (item->yPosition + 0x10) * 4, (0x29 - D_8014F1FA) * 4,
-					  G_TX_RENDERTILE, 0, 0, 0x06DB, 0x06DB);
-	} else {
-		x0 = (item->yPosition + 3) * 4;
-		y0 = (0x15 - D_8014F1FA) * 4;
-		yPos = item->yPosition + 4;
-		gSPTextureRectangle(D_8005BB2C++, x0, y0, (item->yPosition + 0x15) * 4, (0x27 - D_8014F1FA) * 4,
-					  G_TX_RENDERTILE, 0, 0, 0x0555, 0x0555);
-	}
-
-	color = &D_80140D74_14FD24[state * 3];
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0,
-				 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
-	gDPSetPrimColor(D_8005BB2C++, 0, 0, color[0], color[1], color[2], item->opacity);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, D_100ADF0);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
-	gDPPipeSync(D_8005BB2C++);
-
-	x0 = yPos * 4;
-	y0 = (0x27 - D_8014F1FA) * 4;
-	s0 = -(((x0 < 0) ? MIN(((x0 * (s16) 0x800) >> 7), 0) : 0));
-	t0 = -(((y0 < 0) ? MIN(((y0 * (s16) 0x800) >> 7), 0) : 0));
-
-	gSPTextureRectangle(D_8005BB2C++, MAX(x0, 0), MAX(y0, 0), MAX((yPos + 0x10) * 4, 0), MAX((0x47 - D_8014F1FA) * 4, 0),
-				  G_TX_RENDERTILE, s0, t0, 0x400, 0x400);
-	gDPPipeSync(D_8005BB2C++);
-
-	if (state == 1) {
-		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, item->opacity);
-	}
-
-	func_8013A4C8_149478(ammo, yPos);
+#ifdef NON_MATCHING
+void func_8013A764_149714(u8 arg0)
+{
+  s16 ammo;
+  s16 yPos;
+  u8 state[4];
+  u8 padding[180];
+  struct 
+  {
+    u32 r;
+    u32 g;
+    u32 b;
+    u32 a;
+  } colors;
+  u32 paletteState;
+  s16 clipX;
+  s16 clipY;
+  s32 textureIndex;
+  if (D_8014F1FA >= 0x51)
+  {
+    return;
+  }
+  ammo = func_8013994C_1488FC(arg0);
+  func_8013A630_1495E0();
+  if (ammo == 0)
+  {
+    state[3] = 0;
+  }
+  else
+    if (D_801601D0 == arg0)
+  {
+    state[3] = 1;
+  }
+  else
+  {
+    state[3] = 2;
+  }
+  {
+    Gfx *gfx = D_8005BB2C++;
+    gfx->words.w0 = 0xFA000000;
+    colors.a = hudWeaponItems[arg0].opacity;
+    paletteState = state[3] * 3;
+    colors.r = D_80140D68_14FD18[paletteState];
+    colors.g = D_80140D68_14FD18[paletteState + 1];
+    colors.b = D_80140D68_14FD18[paletteState + 2];
+    gfx->words.w1 = ((unsigned int) ((((unsigned int) colors.g) & ((0x01 << 8) - 1)) << 16)) | (((unsigned int) ((((unsigned int) colors.r) & ((0x01 << 8) - 1)) << 24)) | ((unsigned int) ((((unsigned int) colors.a) & ((0x01 << 8) - 1)) << 0)));
+    gfx->words.w1 = ((unsigned int) ((((unsigned int) colors.b) & ((0x01 << 8) - 1)) << 8)) | gfx->words.w1;
+  }
+  gDPLoadTLUT_pal256(D_8005BB2C++, D_80260500);
+  gDPPipeSync(D_8005BB2C++);
+  gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE);
+  textureIndex = D_80031474[weaponSlots[hudWeaponItems[arg0].weaponSlot]];
+  gDPLoadTextureBlock(D_8005BB2C++, ((u32) (&D_8025CCC0[textureIndex * 0x240])) & 0x1FFFFFFF, 2, G_IM_SIZ_8b, 24, 24, 0, 0x1 | 0x2, 0x1 | 0x2, 0, 0, 0, 0);
+  gDPPipeSync(D_8005BB2C++);
+  if (D_801601D0 != arg0)
+  {
+    gSPTextureRectangle(D_8005BB2C++, (0x1B - D_8014F1FA) << 2, (hudWeaponItems[arg0].yPosition + 2) << 2, (0x29 - D_8014F1FA) << 2, (hudWeaponItems[arg0].yPosition + 0x10) << 2, 0, 0, 0, 0x06DB, 0x06DB);
+    yPos = hudWeaponItems[arg0].yPosition + 1;
+  }
+  else
+  {
+    gSPTextureRectangle(D_8005BB2C++, (0x15 - D_8014F1FA) << 2, (hudWeaponItems[arg0].yPosition + 3) << 2, (0x27 - D_8014F1FA) << 2, (hudWeaponItems[arg0].yPosition + 0x15) << 2, 0, 0, 0, 0x0555, 0x0555);
+    yPos = hudWeaponItems[arg0].yPosition + 4;
+  }
+  gDPPipeSync(D_8005BB2C++);
+  gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
+  gDPSetColor(D_8005BB2C++, 0xfa, ((unsigned int) ((((unsigned int) D_80140D74_14FD24[paletteState + 2]) & ((0x01 << 8) - 1)) << 8)) | (((unsigned int) ((((unsigned int) D_80140D74_14FD24[paletteState + 1]) & ((0x01 << 8) - 1)) << 16)) | (((unsigned int) ((((unsigned int) D_80140D74_14FD24[paletteState]) & ((0x01 << 8) - 1)) << 24)) | ((unsigned int) ((((unsigned int) hudWeaponItems[arg0].opacity) & ((0x01 << 8) - 1)) << 0)))));
+  gDPPipeSync(D_8005BB2C++);
+  clipX = 0;
+  clipY = 0;
+  gDPLoadTextureBlock_4b(D_8005BB2C++, ((u32) D_100ADF0) & 0x1FFFFFFF, 4, 32, 16, 0, 0x2, 0x2, 0, 0, 0, 0);
+  gDPPipeSync(D_8005BB2C++);
+  gSPTextureRectangle(D_8005BB2C++, MAX((s16) ((0x27 - D_8014F1FA) * 4), 0), MAX((s16) (yPos * 4), 0), MAX((s16) ((0x47 - D_8014F1FA) << 2), clipX), MAX((s16) ((yPos + 0x10) << 2), clipY), 0, -((((s16) ((0x27 - D_8014F1FA) * 4)) < 0) ? (MIN((((s16) ((0x27 - D_8014F1FA) * 4)) << 10) >> 7, 0)) : (0)), -(((yPos * 4) < 0) ? (MIN((((s16) (yPos * 4)) << 10) >> 7, 0)) : (0)), 0x400, 0x400);
+  gDPPipeSync(D_8005BB2C++);
+  if (state[3] == 1)
+  {
+    gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, hudWeaponItems[arg0].opacity);
+  }
+  func_8013A4C8_149478(ammo, yPos);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A764_149714.s")
 #endif
+
 
 void func_8013AF58_149F08(void) {
 	u8 i;
