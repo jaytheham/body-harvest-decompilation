@@ -482,11 +482,6 @@ const u32 jtbl_802DE350_196E60[] = {
 	0x802D513C,
 };
 
-const u32 jtbl_802DE374_196E84[] = {
-	0x802D65A0, 0x802D66B4, 0x802D66E0, 0x802D66F8,
-	0x802D6710, 0x802D6728, 0x802D6840, 0x802D6888,
-	0x802D68B4,
-};
 
 
 
@@ -967,8 +962,6 @@ s32 func_802D57A0_18E2B0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D57A0_18E2B0.s")
 #endif
 
-#ifdef NON_MATCHING
-/* CURRENT(3063) */
 // AI - Refinery boss multi-phase sequence
 s32 func_802D64D0_18EFE0(void) {
 	u8 typeIndex;
@@ -978,10 +971,10 @@ s32 func_802D64D0_18EFE0(void) {
 
 	if (D_80157F94 != 0xFF) {
 		typeIndex = alienInstances[D_80157F94].typeIndex;
-		func_800800E4_8F094((u8)D_80157F94);
+		func_800800E4_8F094(D_80157F94);
 		func_80080510_8F4C0(D_80157F95);
 		alienInstances[D_80157F94].unk6 = alienInstances[D_80157F94].unkE;
-		alienTypes[typeIndex].unk48((u8)D_80157F94);
+		alienTypes[typeIndex].unk48(D_80157F94);
 	}
 
 	switch (D_80157F8C) {
@@ -1000,15 +993,15 @@ s32 func_802D64D0_18EFE0(void) {
 		func_800072CC_7ECC(0x2A);
 
 		alienId = func_8007956C_8851C(0x12);
-		alienInstances[alienId].unk20 |= ALIEN_FLAG_TARGET_PT;
-		alienInstances[alienId].unk20 &= ~ALIEN_FLAG_PLAYER;
 		alienInstances[alienId].unk0 = buildingInstances[0x61].xCoord + 0x80;
 		alienInstances[alienId].unk14 = buildingInstances[0x61].xCoord + 0x600;
+		alienInstances[alienId].unk20 |= ALIEN_FLAG_TARGET_PT;
+		alienInstances[alienId].unk20 &= ~ALIEN_FLAG_PLAYER;
 		alienInstances[alienId].unk24 = 2;
 		alienInstances[alienId].unk4 = buildingInstances[0x61].zCoord;
 		alienInstances[alienId].unk18 = buildingInstances[0x61].zCoord;
 
-		func_8007A198_89148((u8)alienId);
+		func_8007A198_89148(alienId);
 		D_80157F94 = alienId;
 		break;
 
@@ -1045,22 +1038,22 @@ s32 func_802D64D0_18EFE0(void) {
 
 		func_800E35E0_F2590(0x50);
 		D_80157F8C += 1;
-		D_80052554 -= D_80157F8E * 8;
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x33) {
-			D_80157F8E = 0;
-			D_80157F8C += 1;
-		}
-		break;
-
+		/* Fall through to the timer phase. */
 	case 6:
-		if (D_80157F8E++ >= 2) {
+		D_80052554 -= D_80157F8E * 8;
+		if (D_80157F8E++ >= 0x33) {
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
 		break;
 
 	case 7:
+		if (D_80157F8E++ >= 2) {
+			D_80157F8E = 0;
+			D_80157F8C += 1;
+		}
+		break;
+
 	case 8:
 		func_800072CC_7ECC(0x28);
 		func_800073B8_7FB8(0x2A);
@@ -1074,9 +1067,6 @@ s32 func_802D64D0_18EFE0(void) {
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D64D0_18EFE0.s")
-#endif
 
 // AI - Boss alien multi-phase sequence
 s32 func_802D6904_18F414(void) {
