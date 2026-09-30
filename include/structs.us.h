@@ -3334,4 +3334,15 @@ typedef struct {
 	/* 0x01 */ u8 frame;
 } Unk8016006C; /* size = 0x02 */
 
+/* Terrain cells store flags above the six-bit height. */
+typedef struct {
+	u16 flags : 10;
+	u16 height : 6;
+} TerrainCell;
+
+typedef union {
+	u16 col[256];
+	TerrainCell cells[256];
+} D_801FEA30_Row;
+
 #endif
