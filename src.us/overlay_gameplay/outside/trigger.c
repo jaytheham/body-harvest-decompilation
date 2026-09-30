@@ -1,25 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-const char D_80142AB0_151A60[] = "nextTrigger < MAX_GAME_TRIGGERS"; // "nextTrigger < MAX_GAME_TRIGGERS"
-const char D_80142AD0_151A80[] = "src/trigger.c"; // "src/trigger.c"
-const char D_80142AE0_151A90[] = "nextTrigger < MAX_GAME_TRIGGERS"; // "nextTrigger < MAX_GAME_TRIGGERS"
-const char D_80142B00_151AB0[] = "src/trigger.c"; // "src/trigger.c"
-const char D_80142B10_151AC0[] = "*********************\n"; // "*********************\n"
-const char D_80142B28_151AD8[] = "proc states:%d\n"; // "proc states:%d\n"
-const char D_80142B38_151AE8[] = "********************\n"; // "********************\n"
-const char D_80142B50_151B00[] = "trigger: entered building\n"; // "trigger: entered building\n"
-const char D_80142B6C_151B1C[] = "Wave type %d\n"; // "Wave type %d\n"
-const char D_80142B7C_151B2C[] = "Create positional %d in %d seconds\n"; // "Create positional %d in %d seconds\n"
-const char D_80142BA0_151B50[] = "Do not regenerate %d\n"; // "Do not regenerate %d\n"
-const char D_80142BB8_151B68[] = "Wave regenerated %d in %d seconds\n"; // "Wave regenerated %d in %d seconds\n"
-const char D_80142BDC_151B8C[] = "Wave failed %d\n"; // "Wave failed %d\n"
-const char D_80142BEC_151B9C[] = "Wave successful %d\n"; // "Wave successful %d\n"
-const char D_80142C00_151BB0[] = "\n\nWAVE %d KILLED\n\n"; // "\n\nWAVE %d KILLED\n\n"
-const char D_80142C14_151BC4[] = "Add boss %d, %d\n"; // "Add boss %d, %d\n"
-const char D_80142C28_151BD8[] = "Add boss component %d\n"; // "Add boss component %d\n"
-const char D_80142C40_151BF0[] = "deleting wave %d\n"; // "deleting wave %d\n"
-
 void func_800AE2C0_BD270(void) {
 	u8 i;
 	for (i = 0; i < 0xD0; i++) {
@@ -31,7 +12,7 @@ void func_800AE2C0_BD270(void) {
 
 s16 func_800AE300_BD2B0(Unk80222A78 *arg0) {
 	if (D_80223778 >= 0xD0) {
-		sourceTaggedPrintF(&D_80142AB0_151A60, &D_80142AD0_151A80, 0x6D);
+		sourceTaggedPrintF("nextTrigger < MAX_GAME_TRIGGERS", "src/trigger.c", 0x6D);
 	}
 	if (D_80223778 >= 0xD0) {
 		return -1;
@@ -52,7 +33,7 @@ void func_800AE3AC_BD35C(Unk80222A78 *arg0) {
 
 s32 func_800AE454_BD404(Unk80222A78 *arg0) {
 	if (D_80223778 >= 0xD0) {
-		sourceTaggedPrintF(&D_80142AE0_151A90, &D_80142B00_151AB0, 0x8F);
+		sourceTaggedPrintF("nextTrigger < MAX_GAME_TRIGGERS", "src/trigger.c", 0x8F);
 	}
 	if (D_80223778 >= 0xD0) {
 		return -1;
@@ -88,9 +69,9 @@ void func_800AE588_BD538(void) {
 		D_80223780[i].unk13 = -1;
 	}
 
-	osSyncPrintf(&D_80142B10_151AC0);
-	osSyncPrintf(&D_80142B28_151AD8, D_80047F98);
-	osSyncPrintf(&D_80142B38_151AE8);
+	osSyncPrintf("*********************\n");
+	osSyncPrintf("proc states:%d\n", D_80047F98);
+	osSyncPrintf("********************\n");
 
 	if (currentLevel != 5) {
 		func_8007562C_845DC();
@@ -204,7 +185,7 @@ void func_800AE6CC_BD67C(void)
 		case 8:
 			if (D_80052540 == D_80222A78[i].unk8)
 			{
-				osSyncPrintf(&D_80142B50_151B00);
+				osSyncPrintf("trigger: entered building\n");
 				shouldRun = 1;
 			}
 			break;
@@ -395,7 +376,7 @@ u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
 	AlienInstance *leaderGroup;
 
 	leaderId = 0xFF;
-	osSyncPrintf(&D_80142B6C_151B1C, waveType); // Wave type %d
+	osSyncPrintf("Wave type %d\n", waveType); // Wave type %d
 	D_80223780[arg3].unk11 = 0;
 	for (i = 0; i < 0xC; i++) {
 		if (D_8003BCC0[waveType][i].alienTypeId == 0) {
@@ -511,14 +492,14 @@ void func_800AF3B8_BE368(Unk80222A78 *arg0) {
 
 	sp1C = D_80223780[arg0->unk9].unkE * 200;
 	if (sp1C != 0) {
-		osSyncPrintf(&D_80142B7C_151B2C, arg0->unk9, sp1C / 20, arg0); // Create positional %d in %d seconds
+		osSyncPrintf("Create positional %d in %d seconds\n", arg0->unk9, sp1C / 20, arg0); // Create positional %d in %d seconds
 		arg0->unk0 = 2;
 		arg0->unk4 = sp1C + D_8014F820;
 		arg0->unkC = func_800AF390_BE340;
 		func_800AE454_BD404(arg0);
 		return;
 	}
-	osSyncPrintf(&D_80142BA0_151B50, arg0->unk9); // Do not regenerate %d
+	osSyncPrintf("Do not regenerate %d\n", arg0->unk9); // Do not regenerate %d
 }
 
 void func_800AF474_BE424(s32 arg0) {}
@@ -530,7 +511,7 @@ void func_800AF49C_BE44C(s32 arg0) {}
 
 void func_800AF4A4_BE454(s32 arg0, s32 arg1, s32 arg2) {
 	Unk80222A78 tmp;
-	osSyncPrintf(&D_80142BB8_151B68, arg0, arg2); // Wave regenerated %d in %d seconds
+	osSyncPrintf("Wave regenerated %d in %d seconds\n", arg0, arg2); // Wave regenerated %d in %d seconds
 	tmp.unk0 = 9;
 	tmp.unk1 = 0;
 	tmp.unk2 = 0;
@@ -543,7 +524,7 @@ void func_800AF4A4_BE454(s32 arg0, s32 arg1, s32 arg2) {
 
 void func_800AF52C_BE4DC(s32 arg0) {
 	if ((D_80048038[arg0] == 1) || (D_80048038[arg0] == 0)) {
-		osSyncPrintf(&D_80142BDC_151B8C, arg0); // Wave failed %d
+		osSyncPrintf("Wave failed %d\n", arg0); // Wave failed %d
 		D_80048038[arg0] = 3;
 		if (D_8014CFF0[arg0 * 2] != 0x93) {
 			func_800AF764_BE714((s16)D_8014CFF0[arg0 * 2]);
@@ -553,7 +534,7 @@ void func_800AF52C_BE4DC(s32 arg0) {
 
 void func_800AF5B0_BE560(s32 arg0) {
 	if ((D_80048038[arg0] == 1) || (D_80048038[arg0] == 0)) {
-		osSyncPrintf(&D_80142BEC_151B9C, arg0); // Wave successful %d
+		osSyncPrintf("Wave successful %d\n", arg0); // Wave successful %d
 		D_80048038[arg0] = 2;
 		if (D_8014CFF1[arg0 * 2] != 0x93) {
 			func_800AF764_BE714((s16)D_8014CFF1[arg0 * 2]);
@@ -567,7 +548,7 @@ void func_800AF634_BE5E4(Unk80222A78 *arg0) {
 	AlienInstance *parent;
 	s32 waveIndex;
 
-	osSyncPrintf(&D_80142C00_151BB0, alienInstances[alienIdx].unk3E);
+	osSyncPrintf("\n\nWAVE %d KILLED\n\n", alienInstances[alienIdx].unk3E);
 	if (alienInstances[alienIdx].typeIndex == ALIEN_TYPE_HARVESTER) {
 		parent = alienInstances + alienInstances[alienIdx].unk25;
 		waveIndex = alienInstances[alienIdx].unk3E;
@@ -941,7 +922,7 @@ u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2)
 	*((s16 *)&parentAlien->unk24) = arg1;
 	*((s16 *)&parentAlien->unk26) = arg2;
 	D_80140AC4_14FA74 = (s32)&alienInstances[temp_v0];
-	osSyncPrintf(&D_80142C14_151BC4, temp_v0, alienInstances[temp_v0].unk25);
+	osSyncPrintf("Add boss %d, %d\n", temp_v0, alienInstances[temp_v0].unk25);
 	D_80140AB0_14FA60[0] = &alienInstances[temp_v0];
 
 	for (i = 1; i < 5; i++)
@@ -967,7 +948,7 @@ u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2)
 			sp60.unk8 = followerId;
 			sp60.unkC = func_800B02FC_BF2AC;
 			func_800AE454_BD404(&sp60);
-			osSyncPrintf(&D_80142C28_151BD8, followerId);
+			osSyncPrintf("Add boss component %d\n", followerId);
 			((u8 *)parentAlien)[i - 1] = followerId;
 			D_80140AB0_14FA60[i] = &alienInstances[followerId];
 		}
@@ -1042,7 +1023,7 @@ void func_800B08DC_BF88C(s32 arg0)
 	{
 		if (((!a0->unkC) && (!a0->unkC)) && (!a0->unkC)){}
 	  a0->unk0 = 0;
-	  osSyncPrintf(&D_80142C40_151BF0, v0);
+	  osSyncPrintf("deleting wave %d\n", v0);
 	}
   }
 }
