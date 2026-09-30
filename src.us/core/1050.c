@@ -1271,52 +1271,28 @@ void getSaveFileName(s32 arg0, u8 *arg1)
 	arg1[6] = 0;
 }
 
-// https://decomp.me/scratch/TfpgG
-// CURRENT(2110)
-#ifdef NON_MATCHING
+/* Sum the six area scores stored as little-endian bytes in a save slot. */
 s32 func_80002B20_3720(s32 arg0) {
-	s32 stride;
-	u8 *base;
-	u8 *ptr1;
 	s32 idx;
-	u8 *ptr2;
-	s32 v1;
+	s32 total;
+	s32 stride;
+	s32 offset;
+	u8 *base;
 
+	idx = 0;
+	total = 0;
 	stride = arg0 * 0x7A;
-	base = (u8 *)&D_800431C0;
-	ptr1 = base + stride;
-	v1 = ptr1[0x53];
-	v1 += ptr1[0x54] << 8;
-	v1 += ptr1[0x55] << 0x10;
-	v1 += ptr1[0x56] << 0x18;
-	idx = 2;
-	idx <<= 3;
-	ptr2 = base + stride + idx;
-	v1 += ptr1[0x5B];
-	v1 += ptr1[0x5C] << 8;
-	v1 += ptr1[0x5D] << 0x10;
-	v1 += ptr1[0x5E] << 0x18;
-	v1 += ptr2[0x53];
-	v1 += ptr2[0x54] << 8;
-	v1 += ptr2[0x55] << 0x10;
-	v1 += ptr2[0x56] << 0x18;
-	v1 += ptr2[0x5B];
-	v1 += ptr2[0x5C] << 8;
-	v1 += ptr2[0x5D] << 0x10;
-	v1 += ptr2[0x5E] << 0x18;
-	v1 += ptr2[0x63];
-	v1 += ptr2[0x64] << 8;
-	v1 += ptr2[0x65] << 0x10;
-	v1 += ptr2[0x66] << 0x18;
-	v1 += ptr2[0x6B];
-	v1 += ptr2[0x6C] << 8;
-	v1 += ptr2[0x6D] << 0x10;
-	return v1 + (ptr2[0x6E] << 0x18);
+	base = D_800431C0;
+	for (; idx < 6; idx++) {
+		offset = stride;
+		offset += idx * 8;
+		total += base[offset + 0x53];
+		total += base[offset + 0x54] << 8;
+		total += base[offset + 0x55] << 16;
+		total += base[offset + 0x56] << 24;
+	}
+	return total;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80002B20_3720.s")
-#endif
-
 s32 func_80002C58_3858(s32 arg0)
 {
   u8 *ptr = ((u8 *) (&D_800431C0)) + (arg0 * 0x7A);
