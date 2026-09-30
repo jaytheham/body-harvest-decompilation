@@ -1852,6 +1852,10 @@ extern s16 D_8013E3F4_14D3A4;
 extern s16 D_8013E3F8_14D3A8;
 extern s16 D_8013E3F8_W;
 extern s32 D_8013E438_14D3E8;
+/* Read aliases avoid IDO retaining the distance address across trig calls. */
+extern s32 debugCameraDistanceX;
+extern s32 debugCameraDistanceY;
+extern s32 debugCameraDistanceZ;
 extern s32 D_8013E450;
 extern Unk8013E45C D_8013E45C[];
 extern Unk8009E8DC D_8013E5AC_14D55C[110];
