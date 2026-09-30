@@ -476,11 +476,6 @@ const u32 jtbl_802DE338_196E48[] = {
 	0x802D4DD0, 0x802D4DE0,
 };
 
-const u32 jtbl_802DE350_196E60[] = {
-	0x802D505C, 0x802D50EC, 0x802D5118, 0x802D515C,
-	0x802D5178, 0x802D5194, 0x802D5208, 0x802D5228,
-	0x802D513C,
-};
 
 
 
@@ -569,8 +564,6 @@ void func_802D4F50_18DA60(void) {
 	osViExtendVStart((s32) &D_802DD170);
 }
 
-#ifdef NON_MATCHING
-/* CURRENT(5) */
 // AI - Main suburbs sequence state machine
 void func_802D4F74_18DA84(void) {
 	if (D_802DE460 < 0x3E8) {
@@ -617,25 +610,25 @@ void func_802D4F74_18DA84(void) {
 		}
 		break;
 
-	case 3:
+	case 8:
 		if (D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) {
 			D_8004DC58 = 2;
 		}
 		break;
 
-	case 4:
+	case 3:
 		func_80018D7C_1997C(0xEA);
 		D_8004DC58 = 2;
 		break;
 
-	case 5:
+	case 4:
 		if (D_802DE460 == 0x14) {
 			D_8004DC58 = 7;
 			D_802DE460 = 0;
 		}
 		break;
 
-	case 6:
+	case 5:
 		if (D_802DE460 == 1) {
 			D_80158BD0[D_802DE462] = 2;
 		}
@@ -648,14 +641,14 @@ void func_802D4F74_18DA84(void) {
 		}
 		break;
 
-	case 7:
+	case 6:
 		if (D_80052B34->unk1A != 3) {
 			D_8004DC58 = 7;
 			D_802DE460 = 0;
 		}
 		break;
 
-	case 8:
+	case 7:
 		if (D_802DE460 == 0x14) {
 			func_80018D7C_1997C(0xEC);
 			func_800074BC_80BC(func_802D4F74_18DA84);
@@ -666,9 +659,7 @@ void func_802D4F74_18DA84(void) {
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D4F74_18DA84.s")
-#endif
+
 
 // AI - Reset and start suburbs sequence
 void func_802D5290_18DDA0(void) {
