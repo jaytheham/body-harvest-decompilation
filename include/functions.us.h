@@ -1619,10 +1619,3 @@ void func_8008A704_1727C4(void);
 void func_8008B594_173654(void);
 
 #endif
-
-
-
-
-
-
-

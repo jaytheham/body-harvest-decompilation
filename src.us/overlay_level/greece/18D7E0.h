@@ -10,6 +10,7 @@ void func_802D5578_18E088(void);
 s32 func_802D57A0_18E2B0(void);
 void func_802D5660_18E170(void);
 s32 func_802D64D0_18EFE0(void);
+s32 func_802D6904_18F414(void);s32 func_802D6904_18F414(void);
 void func_802D6D20_18F830(void);
 void func_802D6F7C_18FA8C(void);
 void func_802D7334_18FE44(void);
