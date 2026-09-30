@@ -471,18 +471,6 @@ const char D_802DE2F0_196E00[] = "OffsetBuildingNumber %d\n";
 const char D_802DE30C_196E1C[] = "(%d,%d)\n";
 const char D_802DE318_196E28[] = "transport up point %d,%d,%d\n";
 
-const u32 jtbl_802DE338_196E48[] = {
-	0x802D4D6C, 0x802D4D88, 0x802D4DA4, 0x802D4DC0,
-	0x802D4DD0, 0x802D4DE0,
-};
-
-
-
-
-
-
-#ifdef NON_MATCHING
-/* CURRENT(5) */
 // AI - Mission dispatcher routing commands to handlers
 void func_802D4CD0_18D7E0(s32 arg0, s32 arg1) {
 	arg1 = arg0;
@@ -518,13 +506,10 @@ void func_802D4CD0_18D7E0(s32 arg0, s32 arg1) {
 		func_80007690_8290();
 		break;
 	default:
-		osSyncPrintf(&D_802DE2D0_196DE0, arg0);
+		osSyncPrintf(D_802DE2D0_196DE0, arg0);
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D4CD0_18D7E0.s")
-#endif
 
 // AI - Mission flag cleanup and callback setup
 void func_802D4E28_18D938(void) {
