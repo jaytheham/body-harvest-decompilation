@@ -1486,9 +1486,7 @@ void func_802D763C_19014C(u8 arg0) {
 	}
 }
 
-// CURRENT(66)
 // AI - Alien damage death reaction and sub-alien spawning
-#ifdef NON_MATCHING
 void func_802D775C_19026C(u8 arg0) {
 	u8 rootId;
 	u8 bodyId;
@@ -1500,7 +1498,8 @@ void func_802D775C_19026C(u8 arg0) {
 	s32 sp68;
 	s32 sp64;
 	s32 sp60;
-	s32 pad1[3];
+	s32 randomSize;
+	s32 pad1[2];
 	u16 randomOffset[3];
 
 	if ((alienInstances[arg0].unk20 << 11) >= 0) {
@@ -1566,14 +1565,15 @@ void func_802D775C_19026C(u8 arg0) {
 	if (alienInstances[arg0].unk2C < 0x48) {
 		D_8014DD50[bodyId].unk6Unsigned += 0x96;
 		if ((alienInstances[arg0].unk2C % ((func_800038E0_44E0() % 7) + 1)) == 0) {
-				randomOffset[0] = func_800038E0_44E0();
-				randomOffset[1] = func_800038E0_44E0();
-				randomOffset[2] = func_800038E0_44E0();
+			randomOffset[0] = func_800038E0_44E0();
+			randomOffset[1] = func_800038E0_44E0();
+			randomOffset[2] = func_800038E0_44E0();
+			randomSize = func_800038E0_44E0();
 			func_800DFA34_EE9E4(
 					alienInstances[arg0].unk0 + randomOffset[0] % 100 - 0x32,
 					alienInstances[arg0].unk2 + randomOffset[1] % 100 - 0x32,
 					alienInstances[arg0].unk4 + randomOffset[2] % 100 - 0x32,
-				(func_800038E0_44E0() % 20) + 0x14,
+				(randomSize % 20) + 0x14,
 				0);
 		}
 	}
@@ -1582,10 +1582,6 @@ void func_802D775C_19026C(u8 arg0) {
 		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC * 1.5, 6);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D775C_19026C.s")
-#endif
-
 
 // AI - Alien jump movement logic
 s32 func_802D7D08_190818(u8 arg0, s32 arg1, s32 arg2) {
