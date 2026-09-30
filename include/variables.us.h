@@ -2872,7 +2872,7 @@ extern u8 D_802CA8D0;
 extern u8 D_802D48CF;
 extern u8 D_802D48D0;
 extern u8 D_802D4AD0;
-extern void (*D_802DDBF4_196704[])(s32);
+extern void (*D_802DDBF4_196704[])(void);
 extern Unk8014DD50 *D_802DDC88_196798;
 extern Unk8014DD50 *D_802DDCD0_1967E0;
 extern s32 D_802DDCD8_1967E8;
@@ -2888,8 +2888,6 @@ extern Unk8014DD50 *D_802DE25C_196D6C;
 extern Unk8014DD50 *D_802DE268_196D78;
 extern Unk8014DD50 *D_802DE274_196D84;
 extern u8 D_802DE280_196D90[];
-extern const char D_802DE2D0_196DE0[]; /* osSyncPrintf format string */
-extern const char D_802DE2F0_196E00[];
 extern const f64 D_802DE400_196F10[];
 extern const f32 D_802DE408_196F18[];
 extern const f64 D_802DE410_196F20[];

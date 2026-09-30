@@ -204,27 +204,27 @@ u32 D_802DD520_196030[] = {
 
 s32 D_802DDBF0_196700 = 0x7FFFFFFF;
 
-void (*D_802DDBF4_196704[])(s32) = {
-	(void (*)(s32))0x802D531C,
-	(void (*)(s32))0x802D5460,
-	(void (*)(s32))0x802D562C,
-	(void (*)(s32))0x802D54AC,
-	(void (*)(s32))0x802D56E8,
-	(void (*)(s32))0x802D5720,
-	(void (*)(s32))0x802D5760,
-	(void (*)(s32))0x802D5290,
-	(void (*)(s32))0x802D5434,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x802D4E28,
-	(void (*)(s32))0x802D4F50,
+void (*D_802DDBF4_196704[])(void) = {
+	(void (*)(void))0x802D531C,
+	(void (*)(void))0x802D5460,
+	(void (*)(void))0x802D562C,
+	(void (*)(void))0x802D54AC,
+	(void (*)(void))0x802D56E8,
+	(void (*)(void))0x802D5720,
+	(void (*)(void))0x802D5760,
+	(void (*)(void))0x802D5290,
+	(void (*)(void))0x802D5434,
+	(void (*)(void))0x80076820,
+	(void (*)(void))0x80076820,
+	(void (*)(void))0x80076820,
+	(void (*)(void))0x80076820,
+	(void (*)(void))0x80076820,
+	(void (*)(void))0x80076820,
+	(void (*)(void))0x80076820,
+	(void (*)(void))0x80076820,
+	(void (*)(void))0x80076820,
+	(void (*)(void))0x802D4E28,
+	(void (*)(void))0x802D4F50,
 	NULL,
 };
 
@@ -466,17 +466,12 @@ u8 D_802DE280_196D90[] = {
 
 Unk800311A0 D_802DE2C0_196DD0 = {0, 0x1E, 0x50};
 
-const char D_802DE2D0_196DE0[] = "Unwritten Greece Function %d\n";
-const char D_802DE2F0_196E00[] = "OffsetBuildingNumber %d\n";
-const char D_802DE30C_196E1C[] = "(%d,%d)\n";
-const char D_802DE318_196E28[] = "transport up point %d,%d,%d\n";
-
 // AI - Mission dispatcher routing commands to handlers
 void func_802D4CD0_18D7E0(s32 arg0, s32 arg1) {
 	arg1 = arg0;
 
 	if (arg0 < 0x14) {
-		((void (*)(void))D_802DDBF4_196704[arg0])();
+		D_802DDBF4_196704[arg0]();
 		return;
 	}
 
@@ -506,7 +501,7 @@ void func_802D4CD0_18D7E0(s32 arg0, s32 arg1) {
 		func_80007690_8290();
 		break;
 	default:
-		osSyncPrintf(D_802DE2D0_196DE0, arg0);
+		osSyncPrintf("Unwritten Greece Function %d\n", arg0);
 		break;
 	}
 }
@@ -800,7 +795,7 @@ s32 func_802D57A0_18E2B0(void) {
 	case 0:
 		v = func_8011D260_12C210(0x46, -0x25);
 		D_80159DDF = v;
-		osSyncPrintf(D_802DE2F0_196E00, v & 0xFF);
+		osSyncPrintf("OffsetBuildingNumber %d\n", v & 0xFF);
 		D_80159DE0 = 0;
 		D_80159DE2 = 0;
 		D_80159DE4 = 0;
@@ -1031,7 +1026,7 @@ s32 func_802D6904_18F414(void) {
 	D_80157FAE = 0xB;
 	D_80157FB0 = -9;
 
-	osSyncPrintf(D_802DE30C_196E1C, D_80157F8C, D_80157F8E);
+	osSyncPrintf("(%d,%d)\n", D_80157F8C, D_80157F8E);
 
 	if (D_80157F94 != 0xFF) {
 		if (alienInstances[D_80157F94].typeIndex == 0) {
@@ -1108,7 +1103,7 @@ s32 func_802D6904_18F414(void) {
 		break;
 
 	case 6:
-		osSyncPrintf(D_802DE318_196E28, alienInstances[D_80157F94].unk0 + 0x96, alienInstances[D_80157F94].unk2, alienInstances[D_80157F94].unk4);
+		osSyncPrintf("transport up point %d,%d,%d\n", alienInstances[D_80157F94].unk0 + 0x96, alienInstances[D_80157F94].unk2, alienInstances[D_80157F94].unk4);
 		func_80087AAC_96A5C(D_80157F95);
 		alienInstances[D_80157F94].unk2C = 0x14;
 		D_80157F8C += 1;
