@@ -94,7 +94,6 @@ Unk_8013D91C D_8013D91C[6] = {
 	{ 0x0000, 0x0258 },
 };
 
-
 // AI - Clear global if flag match
 void func_800A92E0_B8290(u8 arg0, s32 arg1) {
 	if ((alienInstances[arg0].unk20 & arg1) == arg1) {
@@ -694,45 +693,46 @@ void func_800AB4B4_BA464(u8 arg0) {
 // AI - Acquire target position
 void func_800AB570_BA520(u8 arg0)
 {
-  s16 targetX;
-  s16 targetY;
-  s16 targetZ;
-  s32 dx;
-  s32 absDx;
-  s32 dz;
-  s32 lateral;
-	
+	s16 targetX;
+	s16 targetY;
+	s16 targetZ;
+	s32 dx;
+	s32 absDx;
+	s32 dz;
+	s32 lateral;
+
 	s32 pad;
-	
-  alienInstances[arg0].unk48 = 0xC0;
-  if (func_80080840_8F7F0(arg0, 0x23) != 0)
-  {
-	alienInstances[arg0].unk48 = 0;
-	alienInstances[arg0].unk36 = 0;
-	alienInstances[arg0].unk24++;
-	return;
-  }
-  func_8011B3F0_12A3A0(0x64, &targetX, &targetY, &targetZ);
-  dx = alienInstances[arg0].unk0 - targetX;
-  dz = alienInstances[arg0].unk4 - targetZ;
-  
-  absDx = -dx < dx ? dx : -dx;
-  lateral = -dz < dz ? dz : -dz;
-  dx = lateral < absDx
-		? -dx < dx ? dx : -dx
-		: -dz < dz ? dz : -dz;
-  if (dx < 0x4B0)
-  {
-	  alienInstances[arg0].unk24 = 0x14;
-	  pad = 0x64;
-	  alienInstances[arg0].unk38 = pad;
-	  alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKI | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
-	  alienInstances[arg0].unk14 = targetX;
-	  alienInstances[arg0].unk16 = targetY;
-	  alienInstances[arg0].unk18 = targetZ;
-	  alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
-	  alienInstances[arg0].unk48 = 0xA0;
-  }
+
+	alienInstances[arg0].unk48 = 0xC0;
+	if (func_80080840_8F7F0(arg0, 0x23) != 0)
+	{
+		alienInstances[arg0].unk48 = 0;
+		alienInstances[arg0].unk36 = 0;
+		alienInstances[arg0].unk24++;
+		return;
+	}
+	func_8011B3F0_12A3A0(0x64, &targetX, &targetY, &targetZ);
+	dx = alienInstances[arg0].unk0 - targetX;
+	dz = alienInstances[arg0].unk4 - targetZ;
+
+	absDx = -dx < dx ? dx : -dx;
+	lateral = -dz < dz ? dz : -dz;
+	dx = lateral < absDx
+			 ? -dx < dx ? dx : -dx
+		 : -dz < dz ? dz
+					: -dz;
+	if (dx < 0x4B0)
+	{
+		alienInstances[arg0].unk24 = 0x14;
+		pad = 0x64;
+		alienInstances[arg0].unk38 = pad;
+		alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKI | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
+		alienInstances[arg0].unk14 = targetX;
+		alienInstances[arg0].unk16 = targetY;
+		alienInstances[arg0].unk18 = targetZ;
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
+		alienInstances[arg0].unk48 = 0xA0;
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB570_BA520.s")
@@ -1114,7 +1114,8 @@ void func_800AC198_BB148(u8 arg0)
 // CURRENT (500)
 // AI - Select target
 #ifdef NON_MATCHING
-s32 func_800AC2FC_BB2AC(u8 arg0) {
+s32 func_800AC2FC_BB2AC(u8 arg0)
+{
 	s32 sp4C;
 	s32 v0;
 	s32 temp;
@@ -1124,38 +1125,47 @@ s32 func_800AC2FC_BB2AC(u8 arg0) {
 	s32 state20;
 	s16 a3;
 
-
 	state20 = 0x14;
 	sp4C = 0x3D0900;
 	v0 = alienInstances[(s32)arg0].unk24;
 
-	if ((v0 != 0) && (state20 != v0)) {
+	if ((v0 != 0) && (state20 != v0))
+	{
 		return 1;
 	}
 
-	if (!(alienInstances[(s32)arg0].unk20 & (ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ))) {
+	if (!(alienInstances[(s32)arg0].unk20 & (ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ)))
+	{
 		temp = alienTypes[alienInstances[(s32)arg0].typeIndex].unk51;
-		if (state20 != v0) {
-				a0 = func_8011B6C0_12A670(alienInstances[(s32)arg0].unk0, alienInstances[(s32)arg0].unk4, (s16)(temp / 20), 1, 0x102C);
-		} else {
+		if (state20 != v0)
+		{
+			a0 = func_8011B6C0_12A670(alienInstances[(s32)arg0].unk0, alienInstances[(s32)arg0].unk4, (s16)(temp / 20), 1, 0x102C);
+		}
+		else
+		{
 			a0 = -1;
 		}
 
-		if (a0 != -1) {
+		if (a0 != -1)
+		{
 			alienInstances[(s32)arg0].unk38 = a0;
 			temp = func_8011B3F0_12A3A0(a0, &alienInstances[(s32)arg0].unk14, &alienInstances[(s32)arg0].unk16, &alienInstances[(s32)arg0].unk18);
-		} else {
+		}
+		else
+		{
 			alienInstances[(s32)arg0].unk38 = 0xFF;
 			temp = 0;
 		}
-		if (temp != 0) {
+		if (temp != 0)
+		{
 			alienInstances[(s32)arg0].unk48 = 0xA0;
 			alienInstances[(s32)arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
 			return 0;
 		}
 
 		temp = func_800825E8_91598(alienInstances[(s32)arg0].unk0, alienInstances[(s32)arg0].unk4, &sp4C);
-		if (sp4C < 0x77A10) {
+		if (sp4C < 0x77A10)
+		{
 			alienInstances[(s32)arg0].unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
 			alienInstances[(s32)arg0].unk20 |= ALIEN_FLAG_TARGET_OBJ | ALIEN_FLAG_AWAY;
 			alienInstances[(s32)arg0].unk48 = 0xA0;
@@ -1171,20 +1181,27 @@ s32 func_800AC2FC_BB2AC(u8 arg0) {
 	}
 
 	a3 = alienInstances[(s32)arg0].unk38;
-	if (a3 == 0xFF) {
-		if (alienInstances[(s32)arg0].unk2C != 0) {
+	if (a3 == 0xFF)
+	{
+		if (alienInstances[(s32)arg0].unk2C != 0)
+		{
 			alienInstances[(s32)arg0].unk2C = alienInstances[(s32)arg0].unk2C - 1;
-		} else {
+		}
+		else
+		{
 			osSyncPrintf(D_80142910_1518C0);
 			alienInstances[(s32)arg0].unk20 &= ~(ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT);
 			alienInstances[(s32)arg0].unk48 = 0x40;
 			func_800ABE7C_BAE2C(arg0);
 		}
-	} else if (alienInstances[(s32)arg0].unk20 & ALIEN_FLAG_AWAY) {
+	}
+	else if (alienInstances[(s32)arg0].unk20 & ALIEN_FLAG_AWAY)
+	{
 		otherIdx = a3 & 0xFF;
 		dx = alienInstances[otherIdx].unk0 - alienInstances[(s32)arg0].unk0;
 		dz = alienInstances[otherIdx].unk4 - alienInstances[(s32)arg0].unk4;
-		if ((dx * dx) + (dz * dz) >= 0x1DE841) {
+		if ((dx * dx) + (dz * dz) >= 0x1DE841)
+		{
 			alienInstances[(s32)arg0].unk20 = alienInstances[(s32)arg0].unk20 & ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY | ALIEN_FLAG_TARGET_OBJ);
 		}
 	}
@@ -1201,56 +1218,91 @@ s32 func_800AC2FC_BB2AC(u8 arg0) {
 // CURRENT(30)
 // AI - Avoid vehicle collision
 #ifdef NON_MATCHING
-void func_800AC5BC_BB56C(u8 arg0) {
-    s32 forward;
-    s32 lateral;
-    s32 dx;
-    s32 dz;
-    s32 limit;
-    f32 pad;
-    s32 triggered;
-    s16 yaw;
-    s16 delta;
-    s32 temp;
-    f32 speedAbs;
-    s16 trig;
+void func_800AC5BC_BB56C(u8 arg0)
+{
+	s32 forward;
+	s32 lateral;
+	s32 dx;
+	s32 dz;
+	s32 limit;
+	f32 pad;
+	s32 triggered;
+	s16 yaw;
+	s16 delta;
+	s32 temp;
+	f32 speedAbs;
+	s16 trig;
 
-    triggered = 0;
-    if ((D_80052B34->unk1A != 0) && !(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) && (D_80052B34->unk12 != 0)) {
-        speedAbs = (-D_80052B34->unk58 < D_80052B34->unk58) ? D_80052B34->unk58 : -D_80052B34->unk58;
-        limit = speedAbs * 30.0f + (vehicleTypes[D_80052B34->unk1A].unk36 >> 1);
-        dx = alienInstances[arg0].unk0 - D_80052B34->unk0;
-        dz = alienInstances[arg0].unk4 - D_80052B34->unk4;
-        temp = (-dx < dx) ? dx : -dx;
-        if (temp < limit) {
-            if (-dz < dz) { lateral = dz; } else { lateral = -dz; }
-            if (lateral < limit) {
-                trig = coss(D_80052B34->unk6);
-                forward = (((f32)sins(D_80052B34->unk6) / 32768.0) * dz) + (dx * ((f32)trig / 32768.0));
-                trig = sins(D_80052B34->unk6);
-                lateral = (((f32)coss(D_80052B34->unk6) / 32768.0) * dz) + (-dx * ((f32)trig / 32768.0));
-                if ((forward < limit && D_80052B34->unk58 > 0.0f) || (-limit < forward && D_80052B34->unk58 < 0.0f)) {
-                    if (-lateral < lateral) { temp = lateral; } else { temp = -lateral; }
-                    if (temp < (vehicleTypes[D_80052B34->unk1A].unk34 >> 1)) { triggered = 1; }
-                }
-            }
-        }
-    }
-    if ((triggered == 0) && ((D_80158FEC != &alienInstances[arg0]) || (func_800A2A88_B1A38() == 0))) { return; }
-    yaw = D_80052B34->unk6 - D_80052B2C->unk36 + 0x4000;
-    delta = alienInstances[arg0].unkE - yaw;
-    if (-delta < delta) { temp = delta; } else { temp = -delta; }
-    if (temp >= 0x4001) { yaw += 0x8000; }
-    forward = alienInstances[arg0].unk0 + ((f32)coss(yaw) / 32768.0) * 1000.0;
-    dx = alienInstances[arg0].unk4 + ((f32)sins(yaw) / 32768.0) * 1000.0;
-    alienInstances[arg0].unk20 = alienInstances[arg0].unk20 & ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_AWAY | ALIEN_FLAG_TARGET_OBJ);
-    alienInstances[arg0].unk20 = alienInstances[arg0].unk20 | (ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT);
-    alienInstances[arg0].unk14 = forward;
-    alienInstances[arg0].unk18 = dx;
-    alienInstances[arg0].unk16 = (func_800B84D0_C7480(alienInstances[arg0].unk14, alienInstances[arg0].unk18) >> 8) + 0x64;
-    alienInstances[arg0].unk2C = 0x32;
-    alienInstances[arg0].unk38 = 0xFF;
-    alienInstances[arg0].unk48 = 0xA0;
+	triggered = 0;
+	if ((D_80052B34->unk1A != 0) && !(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) && (D_80052B34->unk12 != 0))
+	{
+		speedAbs = (-D_80052B34->unk58 < D_80052B34->unk58) ? D_80052B34->unk58 : -D_80052B34->unk58;
+		limit = speedAbs * 30.0f + (vehicleTypes[D_80052B34->unk1A].unk36 >> 1);
+		dx = alienInstances[arg0].unk0 - D_80052B34->unk0;
+		dz = alienInstances[arg0].unk4 - D_80052B34->unk4;
+		temp = (-dx < dx) ? dx : -dx;
+		if (temp < limit)
+		{
+			if (-dz < dz)
+			{
+				lateral = dz;
+			}
+			else
+			{
+				lateral = -dz;
+			}
+			if (lateral < limit)
+			{
+				trig = coss(D_80052B34->unk6);
+				forward = (((f32)sins(D_80052B34->unk6) / 32768.0) * dz) + (dx * ((f32)trig / 32768.0));
+				trig = sins(D_80052B34->unk6);
+				lateral = (((f32)coss(D_80052B34->unk6) / 32768.0) * dz) + (-dx * ((f32)trig / 32768.0));
+				if ((forward < limit && D_80052B34->unk58 > 0.0f) || (-limit < forward && D_80052B34->unk58 < 0.0f))
+				{
+					if (-lateral < lateral)
+					{
+						temp = lateral;
+					}
+					else
+					{
+						temp = -lateral;
+					}
+					if (temp < (vehicleTypes[D_80052B34->unk1A].unk34 >> 1))
+					{
+						triggered = 1;
+					}
+				}
+			}
+		}
+	}
+	if ((triggered == 0) && ((D_80158FEC != &alienInstances[arg0]) || (func_800A2A88_B1A38() == 0)))
+	{
+		return;
+	}
+	yaw = D_80052B34->unk6 - D_80052B2C->unk36 + 0x4000;
+	delta = alienInstances[arg0].unkE - yaw;
+	if (-delta < delta)
+	{
+		temp = delta;
+	}
+	else
+	{
+		temp = -delta;
+	}
+	if (temp >= 0x4001)
+	{
+		yaw += 0x8000;
+	}
+	forward = alienInstances[arg0].unk0 + ((f32)coss(yaw) / 32768.0) * 1000.0;
+	dx = alienInstances[arg0].unk4 + ((f32)sins(yaw) / 32768.0) * 1000.0;
+	alienInstances[arg0].unk20 = alienInstances[arg0].unk20 & ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_AWAY | ALIEN_FLAG_TARGET_OBJ);
+	alienInstances[arg0].unk20 = alienInstances[arg0].unk20 | (ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT);
+	alienInstances[arg0].unk14 = forward;
+	alienInstances[arg0].unk18 = dx;
+	alienInstances[arg0].unk16 = (func_800B84D0_C7480(alienInstances[arg0].unk14, alienInstances[arg0].unk18) >> 8) + 0x64;
+	alienInstances[arg0].unk2C = 0x32;
+	alienInstances[arg0].unk38 = 0xFF;
+	alienInstances[arg0].unk48 = 0xA0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC5BC_BB56C.s")
