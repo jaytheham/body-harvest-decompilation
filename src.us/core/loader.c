@@ -538,30 +538,20 @@ void func_80011674_12274(void) {
 	func_800101F0_10DF0(func_80070270, D_7F220, D_158330 - D_7F220);
 }
 
-// https://decomp.me/scratch/ktq8M
-// CURRENT(28)
-#ifdef NON_MATCHING
 void loadLevelCode(u8 arg0)
 {
-  s32 level = arg0;
-  s32 loadAddr;
-  osSyncPrintf(&D_80038000_38C00, level);
-  func_800101F0_10DF0(
-	  D_80031C40_32840[level - 1],
-	  D_80031C18_32818[level - 1],
-	  D_80031C2C_3282C[level - 1] - D_80031C18_32818[level - 1]);
-  osSyncPrintf(&D_80038018_38C18,
-			   D_80031C40_32840[level - 1],
-			   D_80031C18_32818[level - 1],
-			   D_80031C2C_3282C[level - 1] - D_80031C18_32818[level - 1]);
-  loadAddr = D_80031C40_32840[level - 1] + (D_80031C50_32850[level] - D_80031C40_32840[level - 1]);
-  D_8006AA68 = loadAddr;
-  osSyncPrintf(&D_8003802C_38C2C, loadAddr);
-  __printfunc = (void (*)(s32, s32)) D_8006AA68;
+	osSyncPrintf(&D_80038000_38C00, (s32)arg0);
+	func_800101F0_10DF0(
+		D_80031C40_32840[(s32)arg0 - 1],
+		D_80031C18_32818[(s32)arg0 - 1],
+		D_80031C2C_3282C[(s32)arg0 - 1] - D_80031C18_32818[(s32)arg0 - 1]);
+	osSyncPrintf(&D_80038018_38C18,
+				 D_80031C40_32840[(s32)arg0 - 1],
+				 D_80031C18_32818[(s32)arg0 - 1],
+				 D_80031C2C_3282C[(s32)arg0 - 1] - D_80031C18_32818[(s32)arg0 - 1]);
+	osSyncPrintf(&D_8003802C_38C2C, (s32)(D_8006AA68 = &D_80031C40_32840[(s32)arg0 - 1][D_80031C50_32850[(s32)arg0] - D_80031C40_32840[(s32)arg0 - 1]]));
+	__printfunc = (void (*)(s32, s32))D_8006AA68;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelCode.s")
-#endif
 
 void func_800117D8_123D8(void) {
 	osInvalICache(func_80070270, (u8 *)&D_8008DDF0 - (u8*)&func_80070270);
