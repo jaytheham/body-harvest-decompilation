@@ -2192,34 +2192,28 @@ void func_80090A6C_9FA1C(u8 arg0, s16 arg1, u16 arg2)
 	}
 }
 
-// https://decomp.me/scratch/qLxSW
-// CURRENT(15)
-#ifdef NON_MATCHING
 // AI - Face toward the player
 void func_80090C14_9FBC4(u8 arg0)
 {
-	s16 sp2C2;
-	s16 sp2C;
+	s16 playerAngle;
+	s16 targetAngle;
 	s32 diffX;
 	s32 diffZ;
 
 	diffX = alienInstances[arg0].unk14 - alienInstances[arg0].unk0;
 	diffZ = alienInstances[arg0].unk18 - alienInstances[arg0].unk4;
-	sp2C = func_80003824_4424((f32)-diffZ, (f32)diffX);
+	targetAngle = func_80003824_4424(-diffZ, diffX);
 	diffX = D_80052B34->unk0 - alienInstances[arg0].unk0;
 	diffZ = D_80052B34->unk4 - alienInstances[arg0].unk4;
-	diffX = sp2C - func_80003824_4424((f32)diffX, (f32)diffZ);
-	if (((-diffX < diffX) ? diffX : -diffX) < 0x4000)
+	playerAngle = func_80003824_4424(diffX, diffZ);
+	if (BH_ABS(targetAngle - playerAngle) < 0x4000)
 	{
-		sp2C += 0x8000;
+		targetAngle += 0x8000;
 	}
 	alienInstances[arg0].unk34 = 0x78;
 	alienInstances[arg0].unk47 |= 1;
-	alienInstances[arg0].unk2A = sp2C;
+	alienInstances[arg0].unk2A = targetAngle;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80090C14_9FBC4.s")
-#endif
 
 // CURRENT(1434)
 #ifdef NON_MATCHING
