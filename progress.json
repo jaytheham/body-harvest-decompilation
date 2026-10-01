@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-01T00:38:35Z",
-  "commit": "4e819284",
-  "commit_timestamp": "2026-10-01T13:37:44+13:00",
+  "generated": "2026-10-01T00:40:35Z",
+  "commit": "6de59dd2",
+  "commit_timestamp": "2026-10-01T13:39:51+13:00",
   "overall": {
     "total_functions": 2714,
     "matched": 1753,
@@ -582,7 +582,7 @@
       "asm_stubs": 0,
       "total": 74,
       "matched_pct": 77.0,
-      "contributor": "jaytheham"
+      "contributor": "goliath2526"
     },
     {
       "path": "overlay_gameplay/outside/A40B0.c",
@@ -888,16 +888,16 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 72,
-      "matched": 1555,
-      "non_matching": 838,
+      "files": 71,
+      "matched": 1498,
+      "non_matching": 821,
       "asm_stubs": 0
     },
     {
       "name": "goliath2526",
-      "files": 6,
-      "matched": 196,
-      "non_matching": 123,
+      "files": 7,
+      "matched": 253,
+      "non_matching": 140,
       "asm_stubs": 0
     },
     {
@@ -1149,7 +1149,7 @@
     },
     {
       "date": "2026-09-27",
-      "commit": "4e81928",
+      "commit": "6de59dd",
       "matched": 1753,
       "non_matching": 961,
       "total": 2714
