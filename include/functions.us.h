@@ -459,6 +459,8 @@ s32 func_800765C4_85574(s32 arg0);
 s32 func_80082A98_91A48(u8 arg0);
 s32 func_800828F0_918A0(u8 arg0, u16 arg1, u16 arg2);
 s32 func_80082B30_91AE0(u8 arg0);
+s32 func_80082990_91940(s16 arg0, s16 arg1);
+s16 func_800829EC_9199C(u8 arg0, s32 arg1);
 s32 func_80082C04_91BB4(u8 arg0);
 s32 func_80082CA0_91C50(u8 arg0);
 s32 func_80082E38_91DE8(u8 arg0, s16 arg1);

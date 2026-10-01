@@ -880,8 +880,8 @@ void func_8007A6B4_89664(u8 arg0)
 {
   s16 startX;
   s16 startZ;
-  s32 x;
-  s32 z;
+  s16 x;
+  s16 z;
   s32 diffX;
   s32 diffZ;
   s32 absX;
@@ -4289,34 +4289,29 @@ s32 func_80082A98_91A48(u8 arg0)
 	return func_800829EC_9199C(new_var, v0);
 }
 
-// https://decomp.me/scratch/M9ZDB
-// CURRENT(40)
-#ifdef NON_MATCHING
 s32 func_80082B30_91AE0(u8 arg0)
 {
-  s16 xPos;
-  s16 zPos;
-  AlienInstance *alien;
-  int new_var2;
-  u8 typeIndex;
-  s32 threshold;
-  alien = &alienInstances[arg0];
-  typeIndex = alien->typeIndex;
-  
-  xPos = alien->unk0;
-  zPos = alien->unk4;
-  threshold = ((u32) (alienTypes[typeIndex].unk54 & 0x180000)) >> 0x13;
-  new_var2 = func_800056D0_62D0(alien->unk0, alien->unk4);
-  if (D_8003E290[new_var2].unkC <= threshold)
-  {
-	return -1;
-  }
+	s16 xPos;
+	s16 zPos;
+	AlienInstance *alien;
+	int terrainIndex;
+	u8 typeIndex;
+	s32 threshold;
 
-  return func_800829EC_9199C(arg0, func_80082990_91940(xPos & 0xff, zPos & 0xFF));
+	alien = &alienInstances[arg0];
+	typeIndex = alien->typeIndex;
+	xPos = alien->unk0;
+	zPos = alien->unk4;
+	threshold = ((u32)(alienTypes[typeIndex].unk54 & 0x180000)) >> 19;
+	terrainIndex = func_800056D0_62D0(xPos, zPos);
+	if (D_8003E290[terrainIndex].unkC <= threshold)
+	{
+		return -1;
+	}
+	xPos &= 0xFF;
+	zPos &= 0xFF;
+	return func_800829EC_9199C(arg0, func_80082990_91940(xPos, zPos));
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082B30_91AE0.s")
-#endif
 
 s32 func_80082C04_91BB4(u8 arg0)
 {
