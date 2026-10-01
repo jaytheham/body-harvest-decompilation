@@ -24,3 +24,31 @@ alienInstances[arg0].unk10 = -((s16)(
 ```
 
 Using `(s32)` instead emitted the same instructions, but the final conversion and negation used `t3/t4` instead of the target's `t5/t6`. Casting to `s16` after the negation did not fix those registers. IDO eliminates the narrowing instructions when storing a halfword, while its compiler temporaries still affect register allocation. Preserve the double-precision `32768.0` divisor and the conversion of the sine return value to `f32`.
+
+## Type-driven gravity and the pointer spill slot
+
+`func_8008EB20_9DAD0` also matched with the absolute-speed ternary and the
+`s16` cast before final negation. Using an explicit negative temporary and
+an unnecessary `u64` cast happened to produce the target registers but left
+the cached instance pointer at sp+0x30 instead of sp+0x34.
+
+Use direct `alienInstances[arg0]` field accesses instead of a named instance
+pointer, and declare the locals in this order:
+
+```c
+s32 amplitude;
+s32 pad; /* unused slot at sp+0x48 */
+s16 terrainHeight;
+s16 typeIndex;
+s32 airborne;
+f64 factor;
+```
+
+The resulting frame is 0x50: amplitude spills at 0x4c, terrainHeight at
+0x46, typeIndex at 0x44, airborne at 0x40, and the compiler's cached
+instance pointer at 0x34. Removing `pad` leaves the same frame and pointer
+slot but moves the two halfwords and airborne up four bytes. Keeping the
+named `f64 factor` also preserves floating-point operand/register ordering;
+inlining the clamp ternaries into the multiplication changed that ordering.
+
+Verified with an exact function diff and `build/bh.us.z64: OK`.

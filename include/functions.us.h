@@ -600,6 +600,7 @@ void func_80087AAC_96A5C(u8);
 s32 func_80087E30_96DE0(void);
 void func_80088760_97710(AlienInstance*);
 void func_8008E978_9D928(u8, s32);
+void func_8008EB20_9DAD0(u8, s32, s32);
 s32 func_80085900_948B0(u8, s32);
 s32 func_8008E524_9D4D4(u8, s32, u8);
 void func_8008EDFC_9DDAC(u8);
