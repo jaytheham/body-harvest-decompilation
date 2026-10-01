@@ -594,7 +594,7 @@ void func_800ACE40_BBDF0(u8 arg0);
 void func_800ADAF8_BCAA8(u8 arg0);
 void func_800ADB4C_BCAFC(u8 arg0);
 void func_800ADFE8_BCF98(u8 arg0);
-void func_800847D0_93780();
+void func_800847D0_93780(u8 arg0);
 void func_80087AFC_96AAC(u8 arg0);
 void func_80087AAC_96A5C(u8);
 s32 func_80087E30_96DE0(void);

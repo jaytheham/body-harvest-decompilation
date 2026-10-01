@@ -56,3 +56,20 @@ values really are u8-range (confirmed by `& 0xFF` masking), so `u8` is the corre
 **Key insight:** Declaring intermediate variables with their semantically correct
 smaller type (`u8` instead of `s32`) can reduce the stack frame by the full word-size
 difference per variable, even if the compiler keeps them in registers.
+
+#### Byte type index and pointer spills: `func_800847D0_93780`
+
+This function's instructions matched while its frame was `0x30` instead of
+`0x28`. Remove the unused `AlienType *type` declaration and declare the index
+loaded from `alienInstances[arg0].typeIndex` as `u8`, rather than `s32`.
+With `u8 typeIdx` followed by `s16 rnd`, IDO places the compiler-generated
+instance pointer at `sp+0x1c` and type pointer at `sp+0x18`, matching the target.
+
+When changing the header from `void func_800847D0_93780()` to the correct
+`void func_800847D0_93780(u8 arg0)`, also check compiled callers. In
+`func_800877E8_96798`, passing its already-byte-sized argument as
+`func_800847D0_93780(arg0 & 0xFF)` generated an extra `move` and `andi`,
+growing the caller by eight bytes and shifting later sections. Passing
+`func_800847D0_93780(arg0)` restored the target's single `andi` in the call
+delay slot. The target and caller both scored zero, and the full ROM
+verification returned `build/bh.us.z64: OK`.
