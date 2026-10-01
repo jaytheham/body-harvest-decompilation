@@ -25,11 +25,11 @@ void func_80012080_12C80(s32 arg0)
 	D_80031CA0_328A0 -= 1;
 }
 
-Unk8006AA84Node *func_80012128_12D28() {
+Unk8006AA80Node *func_80012128_12D28() {
 	s32 i;
 	s32 j;
 	s32 *slot;
-	Unk8006AA84Node **entry;
+	Unk8006AA80Node **entry;
 
 	if (D_8006AB88 == 0) {
 		return NULL;
@@ -49,99 +49,115 @@ Unk8006AA84Node *func_80012128_12D28() {
 		j += 4;
 		slot++;
 	} while (i != 0x10);
-	entry = (Unk8006AA84Node **)((char *)D_8006AA88 + j);
+	entry = (Unk8006AA80Node **)((char *)D_8006AA88 + j);
 	(*entry)->unk4 = i;
 	return *entry;
 }
 
 // https://decomp.me/scratch/XY5gv
-// CURRENT(865)
+// CURRENT(420)
 #ifdef NON_MATCHING
 s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA84Node **arg2)
 {
-  Unk8006AA80Node *node;
-  Unk8006AA80Node *src;
-  Unk8006AA80Node *prev;
-  s16 temp;
-  s16 *counter;
-  s32 diff;
-  if (D_8006AB88 == 0)
-  {
-	return -1;
-  }
-  src = *arg1;
-  D_80031CA0_328A0 += 1;
-  if (D_80031CA0_328A0 >= 0x11)
-  {
-	D_80031CA0_328A0 -= 1;
-	return -1;
-  }
-  node = func_80012128_12D28();
-  if (node == NULL)
-  {
-	return -1;
-  }
-  temp = node->unk4;
-  *node = arg0;
-  node->unk4 = temp;
-  counter = &D_80033B4C_3474C;
-  if ((*arg2) == NULL)
-  {
-	temp = (*counter) + 1;
-	node->unk34 = NULL;
-	node->unk30 = NULL;
-	node->unk10 = temp;
-	*arg2 = (Unk8006AA84Node *) node;
-	*arg1 = node;
-	*counter = temp;
-	return temp;
-  }
-  prev = NULL;
-  while (src != NULL)
-  {
-	diff = src->unk2 - node->unk2;
-	if (diff < 0)
+	Unk8006AA80Node *node;
+	Unk8006AA80Node *src;
+	Unk8006AA80Node *prev;
+	s16 *counter;
+	s16 savedIndex;
+	s32 diff;
+
+	if (D_8006AB88 == 0)
 	{
-	  prev = src;
-	  src = src->unk34;
+		return -1;
 	}
-	else
+	src = *arg1;
+	D_80031CA0_328A0 += 1;
+	if (D_80031CA0_328A0 >= 0x11)
 	{
-	  if (src->unk30 != NULL)
-	  {
-		   temp = (*counter) + 1;
-		  src->unk30->unk34 = node;
-		  node->unk34 = src;
-		node->unk30 = src->unk30;
-		src->unk30 = node;
-		node->unk10 = temp;
-	  }
-	  else
-	  {
-		  temp = (*counter) + 1;
-		node->unk34 = src;
-		  node->unk30 = NULL;
-		src->unk30 = node;
-		node->unk10 = temp;
+		D_80031CA0_328A0 -= 1;
+		return -1;
+	}
+	node = func_80012128_12D28();
+	if (node == NULL)
+	{
+		return -1;
+	}
+	savedIndex = node->unk4;
+	*node = arg0;
+	counter = &D_80033B4C_3474C;
+	node->unk4 = savedIndex;
+	if (*arg2 == NULL)
+	{
+		s16 id;
+
+		id = *counter + 1;
+		/* Temporary codegen probe: retains the saved index through this expression. */
+		if (savedIndex)
+		{
+		}
+		node->unk34 = NULL;
+		node->unk30 = NULL;
+		node->unk10 = id;
+		*arg2 = (Unk8006AA84Node *)node;
 		*arg1 = node;
-	  }
-	  *counter = temp;
-	  return temp;
+		*counter = id;
+		return id;
 	}
-  }
-  temp = (*counter) + 1;
-  prev->unk34 = node;
-  node->unk34 = NULL;
-  node->unk30 = prev;
-  node->unk10 = temp;
-  *arg2 = (Unk8006AA84Node *) node;
-  *counter = temp;
-  return temp;
+	prev = NULL;
+	while (src != NULL)
+	{
+		diff = src->unk2 - node->unk2;
+		if (diff < 0)
+		{
+			prev = src;
+			src = src->unk34;
+		}
+		else
+		{
+			if (src->unk30 != NULL)
+			{
+				s16 id;
+
+				id = *counter + 1;
+				src->unk30->unk34 = node;
+				node->unk34 = src;
+				node->unk30 = src->unk30;
+				src->unk30 = node;
+				node->unk10 = id;
+				*counter = id;
+				return id;
+			}
+			else
+			{
+				s16 id;
+
+				id = *counter + 1;
+				node->unk34 = src;
+				node->unk30 = NULL;
+				src->unk30 = node;
+				node->unk10 = id;
+				*arg1 = node;
+				*counter = id;
+				return id;
+			}
+		}
+	}
+	{
+		s16 id;
+
+		id = *counter + 1;
+		prev->unk34 = node;
+		node->unk34 = NULL;
+		node->unk30 = prev;
+		node->unk10 = id;
+		*arg2 = (Unk8006AA84Node *)node;
+		*counter = id;
+		return id;
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800121B4_12DB4.s")
 #endif
-
 
 void func_800123A4_12FA4(Unk8006AA80Node *arg0, Unk8006AA80Node **arg1, Unk8006AA80Node **arg2) {
 	if (D_8006AB88 != 0 && arg0 != NULL) {
