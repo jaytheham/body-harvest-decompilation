@@ -175,7 +175,6 @@ void func_8009BAC0_AAA70(void)
   func_80139B34_148AE4();
 }
 
-// https://decomp.me/scratch/HfYzB
 s32 func_8009BC48_AABF8(s32 arg0, s32 arg1, s32 arg2)
 {
 	s32 var_v1;
