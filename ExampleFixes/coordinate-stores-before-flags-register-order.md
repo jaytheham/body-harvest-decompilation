@@ -25,3 +25,24 @@ and comparison. The following delay and completion phases are cases 7 and 8.
 
 Removing the `(u8)` cast from `func_8007A198_89148(alienId)` was also necessary:
 its declared argument is `s32`, and the target passes the full allocation result.
+
+### Flag operations before a coordinate store can also match a later store order
+
+In the final steering block of `func_800AC5BC_BB56C`, write both flag
+operations before the X destination in C:
+
+```c
+alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_TARGET_PT |
+    ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_AWAY | ALIEN_FLAG_TARGET_OBJ);
+alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT;
+alienInstances[arg0].unk14 = forward;
+alienInstances[arg0].unk18 = dx;
+```
+
+IDO still schedules the stores as cleared flags, X destination, then set
+flags. This source order allocates the OR result to `t8` and the reloaded X
+to `t2`, exactly matching the target. Placing the X assignment between the
+two flag operations gives the same instruction sequence but uses `t2` for
+the OR result and `t9` for X. At this checkpoint the whole final block
+matches; four FP-register instruction differences remain near the start of
+the function, so the function and ROM are not yet fully matched.
