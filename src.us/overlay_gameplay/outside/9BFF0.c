@@ -639,6 +639,7 @@ s32 func_8008D0E0_9C090(u8 arg0)
 }
 
 // AI - Set targeting mode to parent
+// HCU behavior - set target back to parent Harvester
 void func_8008D3B0_9C360(u8 arg0)
 {
 	alienInstances[arg0].unk20 &= ~ALIEN_FLAG_TARGET_OBJ;
@@ -696,6 +697,7 @@ void func_8008D4A0_9C450(unsigned int arg0)
 }
 
 // AI - Start interaction sequence with player
+// HCU - player capture
 void func_8008D634_9C5E4(u8 arg0)
 {
 	if (!(D_8004DCA8 & 2) && !(D_80052B34->unk20 & VEHICLE_FLAG_UNK8) && (D_80052B34->unk1A == 0) && (D_80159300 == 0))
@@ -761,7 +763,7 @@ void func_8008D71C_9C6CC(u32 arg0)
 					{
 						func_80137468_146418(target, 0x263);
 					}
-					alienInstances[target].unk24 = 3;
+					alienInstances[target].unk24 = 3; // set human to "being carried"
 				}
 				alienInstances[target].unk25 = arg0;
 				alienInstances[target].unk48 = 0;
@@ -770,7 +772,7 @@ void func_8008D71C_9C6CC(u32 arg0)
 				if (0)
 				{
 				}
-				func_8008D3B0_9C360(arg0);
+				func_8008D3B0_9C360(arg0);  // set target back to parent harvester
 
 				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKE;
 				alienInstances[arg0].unk48 = 0x60;
@@ -810,6 +812,7 @@ s32 func_8008D978_9C928(u8 arg0)
 }
 
 // AI - following logic for carried humans
+// HCU - captured human/player handling with parent Harvester
 void func_8008DA24_9C9D4(u8 arg0)
 {
 	AlienInstance *target;
@@ -823,7 +826,7 @@ void func_8008DA24_9C9D4(u8 arg0)
 	idx = alienInstances[arg0].unk25;
 	if (alienInstances[arg0].unk48 != 0)
 	{
-		func_80128428_1373D8(&alienInstances[idx], 0, 0, -0x32, &x, &y, &z);
+		func_80128428_1373D8(&alienInstances[idx], 0, 0, -0x32, &x, &y, &z); // HCU targets position 50 units below Harvester's mouth
 		alienInstances[arg0].unk2C -= 1;
 		if (alienInstances[arg0].unk2C == 0)
 		{
@@ -850,7 +853,7 @@ void func_8008DA24_9C9D4(u8 arg0)
 				if ((other != 0) && (D_80048184 == arg0))
 				{
 					D_80157A3C = 0;
-					func_80006DAC_79AC(0x3C, 0);
+					func_80006DAC_79AC(0x3C, 0); // calls back to frontend with game over screen if Adam was eaten?
 					other = &alienInstances[humanType];
 					D_80048184 = idx;
 				}
@@ -861,12 +864,12 @@ void func_8008DA24_9C9D4(u8 arg0)
 					{
 						alienInstances[idx].unk20 &= ~ALIEN_FLAG_UNKG;
 						func_80079910_888C0(humanType);
-						if (alienInstances[idx].unk24 >= ((u8)D_80048168))
+						if (alienInstances[idx].unk24 >= ((u8)D_80048168)) // check harvester's eaten count against the MutantSpawn value
 						{
 							target->unk20 |= ALIEN_FLAG_UNKG;
 							target->unk20 |= ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE;
-							func_80087AAC_96A5C(idx);
-							alienInstances[idx].unk26 = 4;
+							func_80087AAC_96A5C(idx); // start harvester's despawn that eventually leads to mutant etc
+							alienInstances[idx].unk26 = 4; // set harvester's "current blobs" to 4 so no more spawn?
 						}
 						if ((other->unk24 == 1) || (other->unk24 == 0x1D))
 						{
@@ -898,14 +901,14 @@ void func_8008DA24_9C9D4(u8 arg0)
 					}
 				}
 				alienInstances[idx].unk3A = 0;
-				alienInstances[idx].unk24 += 1;
+				alienInstances[idx].unk24 += 1; // add one to this Harvester's humans eaten
 				if (!(other->unk20 & ALIEN_FLAG_UNKL))
 				{
 					if (other->unk24 == 4)
 					{
 						D_8004816C -= 1;
 					}
-					func_800AE1C0_BD170();
+					func_800AE1C0_BD170(); // increase global "humans harvested" count
 				}
 			}
 			else
@@ -979,6 +982,7 @@ void func_8008DEF4_9CEA4(u8 arg0)
 }
 
 // AI - Wrapper update with target selection
+// HCU behavior - specs unk4C - used in all levels incl Comet
 void func_8008E0D8_9D088(u8 arg0)
 {
 	func_8008DEF4_9CEA4(arg0);
@@ -990,6 +994,7 @@ void func_8008E0D8_9D088(u8 arg0)
 }
 
 // AI - Update with player interaction check
+// HCU behavior - specs unk48 - used in all levels incl Comet
 void func_8008E16C_9D11C(u8 arg0)
 {
 	s32 result;
@@ -1014,6 +1019,7 @@ void func_8008E16C_9D11C(u8 arg0)
 }
 
 // AI - Fall/dying update
+// Mental HCU behavior func - specs unk48
 void func_8008E23C_9D1EC(u8 arg0)
 {
 	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_FALL))
@@ -2239,6 +2245,7 @@ void func_80090C14_9FBC4(u8 arg0)
 // CURRENT(1434)
 #ifdef NON_MATCHING
 // AI - Boss/Drone King AI state machine
+// Harvester/"Drone King" behavior and attacks
 void func_80090D0C_9FCBC(u8 arg0)
 {
 	u8 typeIdx;
@@ -2342,6 +2349,7 @@ void func_80090D0C_9FCBC(u8 arg0)
 		return;
 	}
 
+	//if player is close enough, choose lightning attack or green poop attack based on orientation?
 	if (func_80084E54_93E04(inst, D_80052B34) < 0x2EE)
 	{
 		new_var = inst->unkE;
@@ -2375,6 +2383,7 @@ void func_80090D0C_9FCBC(u8 arg0)
 #endif
 // CURRENT(413)
 // AI - Hybrid boss/companion AI update
+// Harvester/"Drone King" behavior func - alienspecs unk48
 #ifdef NON_MATCHING
 void func_80091220_A01D0(u8 arg0)
 {

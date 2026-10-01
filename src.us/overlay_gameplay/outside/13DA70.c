@@ -885,12 +885,14 @@ void func_80130BA0_13FB50(void)
 		if (1) { D_80140CAC_14FC5C = 0; }
 		if (1) { D_80140CB0_14FC60 = 0; }
 		if (1) { D_8016006D = 0; }
+		// if no humans killed, give 5000 bonus to score
 		if (1) { if (D_80048170 == 0) {
 			D_8016005C = baseScore;
 			baseScore += 0x1388;
 		} else {
 			D_8016005C = baseScore;
 		} }
+		// if no humans harvested, give 5000 bonus to score
 		if (1) { if (D_8004816E == 0) {
 			D_80160060 = baseScore;
 			D_80160064 = baseScore + 0x1388;
@@ -953,7 +955,7 @@ void func_80130BA0_13FB50(void)
 			drawText(D_80145530_1544E0, 2, 2);
 			break;
 		}
-		if (D_80048170 == 0) {
+		if (D_80048170 == 0) { // text: "No people killed: 5000" else 0
 			drawText(D_80145540_1544F0, 0x1D, 2, 0x1388);
 		} else {
 			drawText(D_80145548_1544F8, 0x1D, 2, 0);
@@ -982,7 +984,7 @@ void func_80130BA0_13FB50(void)
 			drawText(D_80145588_154538, 2, 3);
 			break;
 		}
-		if (D_8004816E == 0) {
+		if (D_8004816E == 0) { // text: "No people harvested: 5000" else 0
 			drawText(D_801455A0_154550, 0x1D, 3, 0x1388);
 		} else {
 			drawText(D_801455A8_154558, 0x1D, 3, 0);

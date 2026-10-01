@@ -704,6 +704,7 @@ void func_802D5460_18DF70(void) {
 }
 
 // AI - Check building destruction status
+// Buildings on fire in Pollstura can add 3 each to human meter if they explode at end of mission
 void func_802D54AC_18DFBC(void) {
 	if ((buildingInstances[55].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x37);

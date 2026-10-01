@@ -438,14 +438,14 @@ s32 func_8007956C_8851C(u8 arg0)
 	}
 
 	D_8014ECC8_W = activeCount + 1;
-	if ((arg0 == 0x19) || (arg0 == 0x1B))
+	if ((arg0 == 0x19) || (arg0 == 0x1B)) // Harvesters and Bosses
 	{
 		alienInstances[slotIndex].unk25 = func_8007956C_8851C(0);
 		func_80079510_884C0(slotIndex);
 	}
-	if (currentLevel == 3)
+	if (currentLevel == 3) // update Burrower/sandworm bookkeeping in America
 	{
-		if ((arg0 == 9) || (arg0 == 8))
+		if ((arg0 == 9) || (arg0 == 8)) 
 		{
 			D_8013BD00_14ACB0[0]++;
 		}
@@ -499,6 +499,7 @@ void func_800797A4_88754(s32 arg0, u8 arg1)
 }
 
 // https://decomp.me/scratch/Q33n1
+// a lot of alien death bookkeeping/effects
 void func_80079910_888C0(s32 arg0)
 {
 	u8 pad;
@@ -557,13 +558,13 @@ void func_80079910_888C0(s32 arg0)
 	alien->typeIndex = 0;
 	D_8014ECC8--;
 	D_8014D308[D_8014ECC8] = arg0;
-	if ((typeIndex == 0x19) || (typeIndex == 0x1B))
+	if ((typeIndex == 0x19) || (typeIndex == 0x1B)) // if Harvester or Boss...
 	{
-		func_80079910_888C0(alien->unk25);
+		func_80079910_888C0(alien->unk25); // recursive call of this func?
 	}
 	if (currentLevel == 3)
 	{
-		if ((typeIndex == 9) || (typeIndex == 8))
+		if ((typeIndex == 9) || (typeIndex == 8)) // if Burrower (sandworms in America), update bookkeeping
 		{
 			D_8013BD00_14ACB0[0]--;
 		}
@@ -1951,12 +1952,12 @@ void func_8007D424_8C3D4(void) {
 				}
 
 				type = &alienTypes[typeIndex];
+			}
 				tickCallback = (void (*)(u8))type->unk4C;
 				if (tickCallback == NULL) {
 					osSyncPrintf(&D_80141C58_150C08, typeIndex);
 				} else {
 					tickCallback((u8)idxU8);
-				}
 
 			skipUpdate:
 				{
@@ -2147,10 +2148,10 @@ block_11:
 							}
 						} else if (temp_v1_4 & 0x80) {
 							temp_s0->unk2 = temp_s3_2->unk58 + D_80222A70;
+
 						} else if (!(temp_v1_4 & 1) && !(temp_s0->unk20 & (ALIEN_FLAG_UNKO | ALIEN_FLAG_UNKL))) {
 							func_80080510_8F4C0(temp_s4);
 						}
-
 						if (temp_s6 & 0x100000) {
 							u8 temp_v0_6;
 
@@ -3413,6 +3414,7 @@ s32 func_80080840_8F7F0(u8 arg0, s32 arg1)
   return 0;
 }
 
+// generic movement helper- move alien towards target?
 s32 func_800808F0_8F8A0(u8 arg0, s16 *arg1)
 {
 	s32 var_v0;
@@ -4011,6 +4013,7 @@ void func_800822BC_9126C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 }
 
 // CURRENT(11598)
+// HCU behavior- searching for closest target to carry
 #ifdef NON_MATCHING
 s16 func_80082394_91344(s32 arg0, s32 arg1, s32 arg2) {
 	s16 closestAlien;
@@ -4043,10 +4046,12 @@ s16 func_80082394_91344(s32 arg0, s32 arg1, s32 arg2) {
 			alienId++;
 			alien = &alienInstances[idx];
 
+			// if not a human, skip
 			if (alien->typeIndex != 1) {
 				continue;
 			}
 
+			//if human is is any of these states, ignore
 			alienType = alien->unk24;
 			if ((alienType == 3) || (alienType == 4) || (alienType == 0x1D) || (alienType == 0x13)) {
 				continue;
@@ -4085,7 +4090,8 @@ s16 func_80082394_91344(s32 arg0, s32 arg1, s32 arg2) {
 		} while (alienId < alienIdEnd);
 	}
 
-	if ((D_80052B34->unk1A == 0) && (D_80048180 == 0)) {
+	// if player is not in vehicle, and is within certain radius (scaled by level?) then player is the target
+	if ((D_80052B34->unk1A == 0) && (D_80048180 == 0)) { 
 		s32 dx;
 		s32 dz;
 		s32 negDx;
@@ -6054,6 +6060,7 @@ void func_8008735C_9630C(u8 arg0) {
 	func_8008064C_8F5FC(arg0);
 }
 
+// Alien behavior func on specs for a lot of aliens in multiple levels
 void func_800873A8_96358(u8 arg0)
 {
   if (alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_PT)
@@ -6491,12 +6498,16 @@ s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 			}
 			return 0;
 		}
+
+		// outside Comet, don't allow Black Adam's health below 10
+		// on Comet, don't allow BAD (Black Adam Driving? the fight before Daisy rescue) health below 10
 		if (((sp2C == 0x12) && (currentLevel != 5)) || ((currentLevel == 5) && (sp2C == 0x26))) {
 			if (arg0->hitPoints < 0xA) {
 				arg0->hitPoints = 0xA;
 			}
 			return 0;
 		}
+
 		if (!(arg0->unk20 & (ALIEN_FLAG_UNKM | ALIEN_FLAG_UNKL))) {
 			if (sp30->unk14 != 0) {
 				if (D_80052ACD & 0x80) {
@@ -6810,6 +6821,7 @@ void func_800893C8_98378(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 }
 
 // CURRENT(9151)
+// human on-death function
 #ifdef NON_MATCHING
 void func_80089574_98524(u8 arg0) {
 	u16 sp48;
@@ -6872,7 +6884,7 @@ void func_80089574_98524(u8 arg0) {
 				if ((temp_v0 == 0x14) || (temp_v0 == 0xB) || (temp_v0 == 0xC) || (temp_v0 == 4)) {
 					D_8004816C--;
 				}
-				func_800AE190_BD140(1);
+				func_800AE190_BD140(1); // increase global humans killed count
 			}
 		}
 		temp_v0 = s0->unk24;
@@ -6968,6 +6980,9 @@ void func_80089A2C_989DC(u8 arg0) {
 	}
 }
 
+// Mental HCU on-death function - unused enemy type 0x20 in Greece, Java, America
+// if Mental HCU's unk47 bit is set to 8, damage is dealt to player vehicle (not just Adam) 
+// possible Mental HCU was meant to attack/attach to player like a bomb, or could have picked up and carried vehicles?
 void func_80089C40_98BF0(u8 arg0) {
 	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL)) {
 		if (alienInstances[arg0].unk47 & 8) {

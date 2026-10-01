@@ -675,8 +675,8 @@ s32 func_800AB250_BA200(u8 arg0, s32 arg1) {
 
 // AI - Reset on fall
 void func_800AB32C_BA2DC(u8 arg0) {
-	if (D_80222A70 >= alienInstances[arg0].unk2) {
-		func_80088760_97710(&alienInstances[arg0]);
+	if (D_80222A70 >= alienInstances[arg0].unk2) { // if height is now underwater..
+		func_80088760_97710(&alienInstances[arg0]); // alien dies?
 		alienInstances[arg0].unk2C = 0xA;
 	}
 }
@@ -792,6 +792,7 @@ void func_800AB700_BA6B0(u8 arg0) {
 }
 
 // AI - Evade player proximity
+// Human behavior - called for case 6, 8, 10, 14
 void func_800AB730_BA6E0(u8 arg0) {
 	s32 dx;
 	s32 dz;
@@ -827,6 +828,7 @@ void func_800AB730_BA6E0(u8 arg0) {
 }
 
 // AI - Process state input
+// Human behavior - called for case 5, 7, 9, 13
 void func_800AB80C_BA7BC(u8 arg0) {
 	s32 dummy1, dummy2, dummy3, dummy4;
 	alienInstances[arg0].unk48 = 0xC0;
@@ -910,6 +912,7 @@ void func_800AB8CC_BA87C(u8 arg0) {
 #endif
 
 // AI - Stun knockback timer
+// Human behavior- case 1 - ZOMBIE
 void func_800ABC2C_BABDC(u8 arg0) {
 	AlienInstance *ptr = &alienInstances[arg0];
 
@@ -929,31 +932,32 @@ void func_800ABC2C_BABDC(u8 arg0) {
 // CURRENT(20)
 #ifdef NON_MATCHING
 // AI - Dispatch behavior states
+// Human behaviors - human's unk24 determines case
 s32 func_800ABCC8_BAC78(u8 arg0) {
 	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
 		switch (alienInstances[arg0].unk24) {
 			case 1:
-				func_800ABC2C_BABDC(arg0);
+				func_800ABC2C_BABDC(arg0); // zombie - visual error/crash game if not in Siberia (zombie graphic not available?)
 				break;
 
 			case 3:
 			case 4:
 			case 29:
-				func_800AB8CC_BA87C(arg0);
+				func_800AB8CC_BA87C(arg0); // laying down - used when human carried by HCU
 				return 1;
 
 			case 5:
 			case 7:
 			case 9:
 			case 13:
-				func_800AB80C_BA7BC(arg0);
+				func_800AB80C_BA7BC(arg0); // run towards player
 				break;
 
 			case 6:
 			case 8:
 			case 10:
 			case 14:
-				func_800AB730_BA6E0(arg0);
+				func_800AB730_BA6E0(arg0); // stand near player waiting
 				break;
 
 			case 11:
@@ -1326,6 +1330,7 @@ void func_800AC5BC_BB56C(u8 arg0) {
 #endif
 
 // AI - Manage stamina timer
+// human behavior - called only thru the two human specs funcs at unk48 and unk4C
 s32 func_800ACA3C_BB9EC(u8 arg0) {
 	AlienInstance *ptr = &alienInstances[arg0];
 	s32 flags = ptr->unk20;
@@ -1346,6 +1351,7 @@ s32 func_800ACA3C_BB9EC(u8 arg0) {
 		}
 	}
 
+	// if human is in water long enough eventually they drown
 	if ((flags & 0x600) && (ptr->unk2 < D_80222A70)) {
 		ptr->unk48 = 0x60;
 		return 1;
@@ -1385,6 +1391,7 @@ void func_800ACB3C_BBAEC(u8 arg0) {
 }
 
 // AI - Update building-spawned AI
+// Human behavior- alienspecs unk4C
 void func_800ACC5C_BBC0C(u8 arg0)
 {
 	u32 sp24;
@@ -1445,6 +1452,7 @@ block_12:
 }
 
 // AI - Update free-roam AI
+// Human behavior func- alienspecs unk48
 void func_800ACE40_BBDF0(u8 arg0) {
 	AlienInstance *inst;
 	s32 flags;
@@ -2049,14 +2057,14 @@ void func_800AE010_BCFC0(u8 arg0) {
 
 // AI - Add to globals
 void func_800AE190_BD140(s16 arg0) {
-	D_8004816A += arg0;
-	D_80048170 += arg0;
+	D_8004816A += arg0; // increase human meter
+	D_80048170 += arg0; // increase "humans killed" count
 }
 
 // AI - Increment globals
 void func_800AE1C0_BD170(void) {
-	D_8004816A += 1;
-	D_8004816E += 1;
+	D_8004816A += 1; // increase human meter
+	D_8004816E += 1; // increase "humans harvested" count
 }
 
 // AI - Switch all idle aliens
