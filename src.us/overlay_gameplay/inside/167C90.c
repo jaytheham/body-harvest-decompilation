@@ -85,10 +85,9 @@ void func_8007FBD0_167C90(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_8007FBD0_167C90.s")
 #endif
 
-// https://decomp.me/scratch/2g3yf
-// CURRENT(1920) 
-#ifdef NON_MATCHING
+// CURRENT(30) 
 // AI - Main camera update dispatch: select view mode, set up projection and look-at matrices
+#ifdef NON_MATCHING
 void func_8007FC74_167D34(void) {
 	u16 sp56;
 	f32 sp50;
@@ -102,15 +101,15 @@ void func_8007FC74_167D34(void) {
 		}
 	} else if ((D_800E7398 != 0) && (D_80034484 == 0) && (func_8001A114_1AD14() != 0xFF)) {
 		D_800E73DF = 3;
-	} else if ((u8)D_800E73DF != 2 && (u8)D_800E73DF != 5 && (u8)D_800E73DF != 6) {
+	} else if (D_800E73DF != 2 && D_800E73DF != 5 && D_800E73DF != 6) {
 		D_800E73DF = D_80047F80;
 	}
 
-	if (((u8)D_800E73DE == 1) && ((u8)D_800E73DF == 4)) {
+	if ((D_800E73DE == 1) && (D_800E73DF == 4)) {
 		func_800808D0_168990();
 	}
 
-	switch ((u8)D_800E73DF - 1) {
+	switch (D_800E73DF - 1) {
 		case 2: // Talking to NPC view
 			func_800804E0_1685A0();
 			break;
@@ -139,7 +138,7 @@ void func_8007FC74_167D34(void) {
 	}
 
 	D_800A096C_188A2C = D_800A0968_188A28;
-	D_800E73DE = (u8)D_800E73DF;
+	D_800E73DE = D_800E73DF;
 
 	if ((D_800E659C == D_8008DDF4_175EB4) && (D_800E65A4 == D_8008DDFC_175EBC)) {
 		D_8008DDF4_175EB4 -= 10.0f;
@@ -150,11 +149,11 @@ void func_8007FC74_167D34(void) {
 	sp4C = D_800E65A4 - D_8008DDFC_175EBC;
 	temp_f0 = sqrtf((sp50 * sp50) + (sp4C * sp4C));
 
-	if ((D_800E7398 == 0) && ((u8)D_800E73DF != 4) && ((u8)D_800E73DF != 5)) {
+	if ((D_800E7398 == 0) && (D_800E73DF != 4) && (D_800E73DF != 5)) {
 		D_800E65A0 = 50.0f - (temp_f0 / 6.0f);
 	}
 
-	D_8008DDF0_175EB0 = ((((f32)func_80003824_4424(sp4C, sp50)) * D_800A4F20_18CFE0[0]) / 32768.0);
+	D_8008DDF0_175EB0 = ((((f32)func_80003824_4424(sp4C, sp50)) * 180.0) / 32768.0);
 	if (D_8008DDF0_175EB0 < 0.0f) {
 		D_8008DDF0_175EB0 += 360.0f;
 	}
@@ -165,18 +164,19 @@ void func_8007FC74_167D34(void) {
 	D_800E6A74 = 0x4000 - D_800E73E0;
 	func_80073A50_15BB10();
 
-	guPerspective((Mtx *)D_8005BB38, &sp56, 40.0f, 1.3333334f, D_800A097C_188A3C, D_800A0978_188A38, 1.0f);
+	guPerspective(D_8005BB38, &sp56, 40.0f, 1.3333334f, D_800A097C_188A3C, D_800A0978_188A38, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, &sp56);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-	guLookAt((Mtx *)D_8005BB38, D_8008DDF4_175EB4, D_8008DDF8_175EB8, D_8008DDFC_175EBC, D_800E659C, D_800E65A0,
+	guLookAt(D_8005BB38, D_8008DDF4_175EB4, D_8008DDF8_175EB8, D_8008DDFC_175EBC, D_800E659C, D_800E65A0,
 			 D_800E65A4, 0.0f, 1.0f, 0.0f);
-	guMtxL2F(D_800E7350, (Mtx *)D_8005BB38);
+	guMtxL2F(D_800E7350, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_8007FC74_167D34.s")
 #endif
+
 
 // AI - Store three view-related values (NPC target coordinates)
 void func_80080168_168228(u16 arg0, u16 arg1, u16 arg2) {

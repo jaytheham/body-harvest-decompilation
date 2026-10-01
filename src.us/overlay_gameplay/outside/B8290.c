@@ -175,7 +175,6 @@ void func_800A93A4_B8354(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A93A4_B8354.s")
 #endif
 
-// https://decomp.me/scratch/7WPiF
 // AI - Propagate flag set to squad
 void func_800A9738_B86E8(u8 arg0, s32 arg1)
 {

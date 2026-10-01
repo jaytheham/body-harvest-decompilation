@@ -1649,8 +1649,8 @@ extern s32 D_800E73D4;
 extern s16 D_800E73D8;
 extern s16 D_800E73DA;
 extern s16 D_800E73DC;
-extern s8 D_800E73DE;
-extern s8 D_800E73DF;
+extern u8 D_800E73DE;
+extern u8 D_800E73DF;
 extern s16 D_800E73E0; // indoorCameraYaw
 extern s16 D_800E73E4; // indoorCameraPitch
 extern f32 D_800E73E8;
