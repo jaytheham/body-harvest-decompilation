@@ -1923,103 +1923,126 @@ s32 func_800164C4_170C4(void) {
 }
 
 // https://decomp.me/scratch/CQbLj
-// CURRENT(108)
+// CURRENT(30)
 #ifdef NON_MATCHING
-s8 func_800165EC_171EC(void) {
+s8 func_800165EC_171EC(void)
+{
+	int new_var;
 	s32 sp48;
 	s32 sp44;
 	s8 var_s3;
 	s8 var_s6;
 	s16 var_s5;
 	s8 i;
-
 	var_s6 = -1;
 	var_s3 = 0;
 	var_s5 = 0x7FFF;
-
-	if (D_80031CA4 != 2) {
-		for (i = 0; i < 2; i++) {
-			if (D_80031CD0_328D0[i] != -1 && D_80031CE4_328E4[i] == 0) {
+	if (D_80031CA4 != 2)
+	{
+		for (i = 0; i < 2; i++)
+		{
+			if ((D_80031CD0_328D0[i] != (-1)) && (D_80031CE4_328E4[i] == 0))
+			{
 				func_80016ABC_176BC(i);
 			}
-			if (D_80031CE4_328E4[i] == 1 && func_80012E88_13A88(i) == 0) {
+			if ((D_80031CE4_328E4[i] == 1) && (func_80012E88_13A88(i) == 0))
+			{
 				func_80013E64_14A64(i);
 			}
 		}
 	}
-
-	for (i = 0; i < 2; i++) {
-		if (D_80031CD0_328D0[i] != -1 && D_80031CA4 != 2) {
+	for (i = 0; i < 2; i++)
+	{
+		if ((D_80031CD0_328D0[i] != (-1)) && (D_80031CA4 != 2))
+		{
 			func_80016ABC_176BC(i);
 			return i;
 		}
-		if (func_80012E88_13A88(i) == 0 && D_80031CE4_328E4[i] == 0 && D_80031CD0_328D0[i] == -1) {
+		if (((func_80012E88_13A88(i) == 0) && (D_80031CE4_328E4[i] == 0)) && (D_80031CD0_328D0[i] == (-1)))
+		{
 			func_80016ABC_176BC(i);
 			return i;
 		}
 		var_s3++;
 	}
 
-	if (var_s3 == 2) {
-		for (i = 0; i < 2; i++) {
-			if (D_80031CE4_328E4[i] == 1 && func_80012E88_13A88(i) == 0) {
+	if (var_s3 == 2)
+	{
+		for (i = 0; i < 2; i++)
+		{
+			if ((D_80031CE4_328E4[i] == 1) && (func_80012E88_13A88(i) == 0))
+			{
 				func_80013E64_14A64(i);
 				return i;
 			}
 		}
 
-		for (i = 0; i < 2; i++) {
-			if (D_80031CE4_328E4[i] == 0 && func_80012E88_13A88(i) != 0) {
+		for (i = 0; i < 2; i++)
+		{
+			if ((D_80031CE4_328E4[i] == 0) && (func_80012E88_13A88(i) != 0))
+			{
 				func_80016ABC_176BC(i);
 				return i;
 			}
 		}
 
-		for (i = 0; i < 2; i++) {
+		new_var = 0x7FFFFFFF;
+		for (i = 0; i < 2; i++)
+		{
 			s16 score;
-			if (D_80031CE4_328E4[i] == 1 && func_80012E88_13A88(i) == 1U) {
-				if (D_80031D28_32928[i] == 1) {
-					score = (s16)((D_80031D3C_3293C[i] * (f32)D_80031D74_32974[D_80031D1C_3291C[i]] + D_80031D44_32944[i] * ((f32)D_80031D74_32974[D_80031D1C_3291C[i]] * D_80031D2C_3292C[i]) / D_80031D34_32934[i]) * D_80031D64_32964);
-				} else {
-					score = (s16)((f32)D_80031D74_32974[D_80031D1C_3291C[i]] * D_80031D64_32964);
+			if ((D_80031CE4_328E4[i] == 1) && (func_80012E88_13A88(i) == 1U))
+			{
+				if (D_80031D28_32928[i] == 1)
+				{
+					score = (s16)(((D_80031D3C_3293C[i] * ((f32)D_80031D74_32974[D_80031D1C_3291C[i]])) + ((D_80031D44_32944[i] * (((f32)D_80031D74_32974[D_80031D1C_3291C[i]]) * D_80031D2C_3292C[i])) / D_80031D34_32934[i])) * D_80031D64_32964);
 				}
-				if (score < var_s5) {
+				else
+				{
+					score = (s16)(((f32)D_80031D74_32974[D_80031D1C_3291C[i]]) * D_80031D64_32964);
+				}
+				if (score < var_s5)
+				{
 					var_s5 = score;
 					var_s6 = i;
 				}
 			}
 		}
 
-		if (var_s6 != -1) {
+		if (var_s6 != (-1))
+		{
 			func_80013E64_14A64(var_s6);
 			return var_s6;
 		}
-
-			for (i = 0; i < 2; i++) {
-			if (D_8006AB18[0]->unk1C >= D_80031D20_32920[i]) {
+		for (i = 0; i < 2; i++)
+		{
+			if (D_8006AB18[0]->unk1C >= D_80031D20_32920[i])
+			{
 				sp48 = D_8006AB18[0]->unk1C - D_80031D20_32920[i];
-			} else {
-				if (D_8006AB18[0]->unk1C >= 0) {
-					sp48 = D_8006AB18[0]->unk1C + 0x7FFFFFFF;
-					sp48 -= D_80031D20_32920[i];
-				} else {
-					sp48 = (0x7FFFFFFF - D_80031D20_32920[i]) - D_8006AB18[0]->unk1C;
-				}
 			}
-
-			if (sp44 < sp48) {
+			else if (D_8006AB18[0]->unk1C >= 0)
+			{
+				sp48 = (D_8006AB18[0]->unk1C + new_var) - D_80031D20_32920[i];
+			}
+			else
+			{
+				sp48 = (new_var - D_80031D20_32920[i]) - D_8006AB18[0]->unk1C;
+			}
+			while (sp44 < sp48)
+			{
 				sp44 = sp48;
 				var_s6 = i;
 			}
 		}
 
-		if (var_s6 != -1) {
+		if (var_s6 != (-1))
+		{
 			func_80013E64_14A64(var_s6);
 			return var_s6;
 		}
-
 		osSyncPrintf(&D_800382A0_38EA0);
-	} else {
+	}
+	else
+	{
 		osSyncPrintf(&D_800382C8_38EC8);
 	}
 }
