@@ -27,3 +27,20 @@ This gave CURRENT(1291) vs the original CURRENT(2747) by fixing:
 3. The addiu a3 for &sp38 was scheduled in the correct branch delay slot
 
 **Note:** This approach may increase the stack frame by 8 bytes (from 0x60 to 0x68) if the array triggers alignment padding. To keep the frame at 0x60, place the array after all related variables.
+
+### Adjacent random-result spills without passing an address
+
+This also applies when neither local's address is passed to a function.
+In `func_8008C0F8_9B0A8`, the declarations `u8 typeEntry; s16 randA;
+s16 randB;` produced otherwise identical assembly, but placed `randA` at
+`sp+0x2C` instead of the target's `sp+0x28`. `randB` was already at
+`sp+0x2A`, and `typeEntry` was at `sp+0x2F`.
+
+Replacing the two scalar declarations with `s16 rand[2];` after
+`typeEntry` placed the elements at `sp+0x28` and `sp+0x2A`, keeping the
+frame size and all instruction scheduling unchanged. The full ROM
+checksum then matched (`build/bh.us.z64: OK`).
+
+Keep the signed remainder expression `(s32)(u16)rand[i] % 128` when the
+target has `lhu` followed by signed-remainder correction branches.
+Simplifying it to an unsigned mask changes the target instruction sequence.
