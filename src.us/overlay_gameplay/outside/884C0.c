@@ -6789,30 +6789,22 @@ s32 func_8008916C_9811C(u8 arg0, s16 arg1) {
 	return func_80088FFC_97FAC(&sp20, arg1, sp24);
 }
 
-// https://decomp.me/scratch/6va5T
-// CURRENT(712)
-#ifdef NON_MATCHING
 void func_80089200_981B0(u8 arg0, u32 arg1, s32 arg2)
 {
-  u16 sp38;
-	u16 sp3C;
-  u16 sp3A;    
-  
-  if (((D_80052A8C + arg0) % arg1) == (func_800038E0_44E0() % ((s32) arg1)))
-  {
-	sp38 = func_800038E0_44E0();
-	sp3A = func_800038E0_44E0();
-	sp3C = func_800038E0_44E0();
-	func_800DEA08_ED9B8((s16) (((sp38 % arg2) + alienInstances[arg0].unk0) - (arg2 / 2)),
-						((sp3A >> 10) + alienInstances[arg0].unk2),
-						(((sp3C % arg2) + alienInstances[arg0].unk4) - (arg2 / 2)),
-						(s16) ((func_800038E0_44E0() + 0x12C) >> 11),
-						8, 8, 0x32, 0xC8, 0x64, 0x64, 0x64);
-  }
+	u16 random[3];
+
+	if (((D_80052A8C + arg0) % arg1) == (func_800038E0_44E0() % (s32)arg1)) {
+		random[0] = func_800038E0_44E0();
+		random[1] = func_800038E0_44E0();
+		random[2] = func_800038E0_44E0();
+		func_800DEA08_ED9B8(
+			alienInstances[arg0].unk0 + (random[0] % arg2) - (arg2 / 2),
+			alienInstances[arg0].unk2 + (random[1] >> 10),
+			alienInstances[arg0].unk4 + (random[2] % arg2) - (arg2 / 2),
+			(func_800038E0_44E0() + 0x12C) >> 11,
+			8, 8, 0x32, 0xC8, 0x64, 0x64, 0x64);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80089200_981B0.s")
-#endif
 
 void func_800893C8_98378(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8) {
 	s16 temp;
