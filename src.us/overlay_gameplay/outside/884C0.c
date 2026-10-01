@@ -4410,16 +4410,13 @@ s32 func_80082E38_91DE8(u8 arg0, s16 arg1) {
 	return 1;
 }
 
-// https://decomp.me/scratch/lTDM9
-// CURRENT(691)
-#ifdef NON_MATCHING
 s32 func_80082EB4_91E64(u8 arg0, s16 arg1)
 {
-	s16 var_v1;
-	s16 var_v0;
+	s16 pad;
 	s16 sp34;
-	u8 typeIndex;
+	s16 var_v0;
 	s16 var_t1;
+	u8 typeIndex;
 	u8 temp;
 	typeIndex = alienInstances[arg0].typeIndex;
 	if ((alienTypes[typeIndex].unk58 + alienTypes[typeIndex].unk38) < alienTypes[typeIndex].unkC)
@@ -4432,7 +4429,7 @@ s32 func_80082EB4_91E64(u8 arg0, s16 arg1)
 	}
 	if (((alienInstances[arg0].unk20 & (ALIEN_FLAG_FALL | ALIEN_FLAG_UNKO | ALIEN_FLAG_UNKL)) || (alienTypes[typeIndex].unk54 & 0xC1)) && (((var_v0 = -1, currentLevel != 3)) || ((typeIndex != 9) && (typeIndex != 8))))
 	{
-		var_v1 = alienInstances[arg0].unk2;
+		sp34 = alienInstances[arg0].unk2;
 		var_v0 = -1;
 	}
 	else
@@ -4445,17 +4442,19 @@ s32 func_80082EB4_91E64(u8 arg0, s16 arg1)
 				sp34 = func_800B84D0_C7480(alienInstances[arg0].unk0, alienInstances[arg0].unk4) >> 8;
 			}
 		}
-		var_v1 = sp34 + var_t1;var_v0 = sp34 - (var_t1 * 2);
+		var_v0 = (u16)sp34;
+		sp34 += var_t1;
+		var_v0 = var_v0 - (var_t1 * 2);
 	}
-	if ((var_v1 < arg1) || (!(var_v0 < arg1)))
+	if ((sp34 >= arg1) && (var_v0 < arg1))
+	{
+		return 0;
+	}
+	else
 	{
 		return 1;
 	}
-	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082EB4_91E64.s")
-#endif
 
 // https://decomp.me/scratch/fQx5r
 s32 func_80083060_92010(s16 arg0, s16 arg1, s32 arg2, u8 *arg3)
