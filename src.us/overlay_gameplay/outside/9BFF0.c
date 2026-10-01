@@ -2747,16 +2747,17 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091AC0_A0A70.s")
 #endif
 
-// https://decomp.me/scratch/TAjH8
-// CURRENT(38)
-#ifdef NON_MATCHING
 // AI - Movement AI with building attack
 void func_80091E70_A0E20(u8 arg0)
 {
-	s32 x;
-	u8 useAttack = 0;
-	s16 targetSpeed;
 	u8 specIndex = alienInstances[arg0].typeIndex;
+	u8 pad0;
+	u8 pad1;
+	u8 useAttack = 0;
+	u8 pad2;
+	u8 pad3;
+	s16 targetSpeed;
+	s32 x;
 	s32 z;
 
 	targetSpeed = alienTypes[specIndex].unk40;
@@ -2801,9 +2802,6 @@ void func_80091E70_A0E20(u8 arg0)
 		alienInstances[arg0].unk12 -= alienTypes[specIndex].unk3E * 4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091E70_A0E20.s")
-#endif
 
 // CURRENT(10706)
 // AI - Drone/Boss attack AI with melee patterns
