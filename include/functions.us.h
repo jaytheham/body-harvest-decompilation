@@ -308,6 +308,7 @@ s32 func_80010290_10E90(s32 arg0);
 s32 func_800104AC_110AC(u8 arg0);
 s32 func_80070270_40720(s32 arg0);
 s32 func_80070390_40840(void);
+s32 func_80071760_41C10(s32 arg0);
 MissionData* func_80070494_40944(s16 arg0);
 void func_80070514_409C4(s16 arg0);
 void func_80070B68_41018(s16 arg0);
