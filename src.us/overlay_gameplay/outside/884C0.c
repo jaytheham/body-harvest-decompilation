@@ -3712,46 +3712,63 @@ s32 func_80080D98_8FD48(u8 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80080D98_8FD48.s")
 #endif
 
-// https://decomp.me/scratch/B1BlZ
-// CURRENT(1085)
-#ifdef NON_MATCHING
-s16 func_80081390_90340(u8 arg0) {
+s16 func_80081390_90340(u8 arg0)
+{
 	s32 dx = alienInstances[arg0].unk14 - alienInstances[arg0].unk0;
 	s32 dz = alienInstances[arg0].unk18 - alienInstances[arg0].unk4;
 	s16 angle;
 	s32 diff;
 
-	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ)) {
-		if (alienInstances[arg0].unk20 & ALIEN_FLAG_AWAY) {
+	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ))
+	{
+		if (alienInstances[arg0].unk20 & ALIEN_FLAG_AWAY)
+		{
 			return (s16)(func_80003824_4424((f32)dx, (f32)dz) + 0x8000);
 		}
 		return func_80003824_4424((f32)dx, (f32)dz);
 	}
-	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKC) {
+	else if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKC)
+	{
 		angle = func_80003824_4424((f32)-dz, (f32)dx);
 		diff = (s16)(alienInstances[arg0].unkE - angle);
-		if (-diff < diff) {
+		if (-diff < diff)
+		{
 			diff = (s16)(alienInstances[arg0].unkE - angle);
-		} else {
+		}
+		else
+		{
 			diff = -(s16)(alienInstances[arg0].unkE - angle);
 		}
-		if (diff < 0x4000) {
-			if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKH) {
-				return (s16)(angle - 0x800);
+		if (diff < 0x4000)
+		{
+			if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKH)
+			{
+				angle -= 0x800;
 			}
-			return (s16)(angle + 0x800);
+			else
+			{
+				angle += 0x800;
+			}
 		}
-		angle = (s16)(angle + 0x8000);
-		if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKH) {
-			return (s16)(angle + 0x800);
+		else
+		{
+			angle = (s16)(angle + 0x8000);
+			if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKH)
+			{
+				angle += 0x800;
+			}
+			else
+			{
+				angle -= 0x800;
+			}
 		}
-		return (s16)(angle - 0x800);
+		return angle;
 	}
-	return alienInstances[arg0].unkE;
+	else
+	{
+		return alienInstances[arg0].unkE;
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80081390_90340.s")
-#endif
 
 s32 func_8008153C_904EC(u8 arg0, s16 *arg1)
 {
