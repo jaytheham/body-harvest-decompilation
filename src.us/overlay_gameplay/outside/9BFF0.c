@@ -1201,7 +1201,6 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 #endif
 
 // AI - Vertical velocity/gravity update
-#ifdef NON_MATCHING
 void func_8008E978_9D928(u8 arg0, s32 arg1)
 {
 	s32 sp2C;
@@ -1215,7 +1214,7 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 	{
 		sp2A = (s16)D_80222A70;
 	}
-	sp2C = (arg1 += sp2A);
+	arg1 += sp2A;
 	if (alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER)
 	{
 		sp24 = D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE;
@@ -1226,31 +1225,24 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 	}
 	if (sp24)
 	{
-		sp2C = D_80052B34->unk2;
+		arg1 = D_80052B34->unk2;
 	}
-	if (alienInstances[arg0].unk2 < sp2C)
+	if (alienInstances[arg0].unk2 < arg1)
 	{
 		alienInstances[arg0].unkA -= 0x1F4;
 	}
-	if (sp2C < alienInstances[arg0].unk2)
+	if (arg1 < alienInstances[arg0].unk2)
 	{
 		alienInstances[arg0].unkA += 0x1F4;
 	}
 	alienInstances[arg0].unkA *= D_80141EE0_150E90[0];
-	sp2C = -((s16)alienInstances[arg0].unk12);
-	if (sp2C < alienInstances[arg0].unk12)
-	{
-		sp2C = alienInstances[arg0].unk12;
-	}
-	else if (sp2C < 0x301)
+	sp2C = -alienInstances[arg0].unk12 < alienInstances[arg0].unk12 ? alienInstances[arg0].unk12 : -alienInstances[arg0].unk12;
+	if (sp2C < 0x301)
 	{
 		sp2C = 0x300;
 	}
-	alienInstances[arg0].unk10 = -((s32)(((f32)sins(alienInstances[arg0].unkA) / 32768.0) * sp2C));
+	alienInstances[arg0].unk10 = -((s16)(((f32)sins(alienInstances[arg0].unkA) / 32768.0) * sp2C));
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008E978_9D928.s")
-#endif
 
 // AI - Gravity with type-driven height offset
 #ifdef NON_MATCHING
