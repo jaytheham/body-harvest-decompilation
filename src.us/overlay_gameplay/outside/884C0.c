@@ -737,23 +737,19 @@ s32 func_80079F08_88EB8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80079F08_88EB8.s")
 #endif
 
-// https://decomp.me/scratch/PEXJ7
-// CURRENT(18)
-#ifdef NON_MATCHING
 s32 func_8007A198_89148(s32 arg0)
 {
 	u8 sp2C;
 	u8 sp2E;
 	u8 sp2D;
-	s32 new_var;
 	sp2D = alienInstances[arg0].typeIndex;
 	func_80079F08_88EB8(arg0);
 	func_80080510_8F4C0(arg0);
 	if (alienTypes[sp2D].unk50 != -1)
 	{
-		new_var = (s8)func_800F3990_102940(arg0, alienTypes[sp2D].unk50) | 0x80000;
+		s8 slot = func_800F3990_102940(arg0, alienTypes[sp2D].unk50);
 		alienInstances[arg0].unk20 &= ~7;
-		alienInstances[arg0].unk20 |= new_var;
+		alienInstances[arg0].unk20 |= (u32)(slot | 0x80000);
 	}
 	func_80079C8C_88C3C(arg0);
 	func_80079E64_88E14(arg0);
@@ -763,9 +759,6 @@ s32 func_8007A198_89148(s32 arg0)
 	D_8014ECCC++;
 	return D_8014ECCC - 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007A198_89148.s")
-#endif
 
 // guess_addActiveObject Skipping seems to result in aliens with no physical presence
 s32 func_8007A2A0_89250(s32 arg0)
@@ -1586,8 +1579,7 @@ void func_8007C044_8AFF4(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 
 	for (i = 0; i < (s32)D_8014ECCC; i++) {
-		u8 alienId;
-		u8 typeIndex;
+			u8 typeIndex;
 
 		alienId = D_8014D510[i];
 		inst = &alienInstances[alienId];
@@ -1683,8 +1675,7 @@ void func_8007C044_8AFF4(void) {
 		gDPSetTileSize(D_8005BB2C++, 1, 0, 0, 60, 60);
 
 		for (i = 0; i < D_8014D507; i++) {
-			u8 alienId;
-			u8 state;
+					u8 state;
 
 			alienId = D_8014D408[i];
 			inst = &alienInstances[alienId];
@@ -1810,8 +1801,7 @@ void func_8007C044_8AFF4(void) {
 		gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 
 		for (i = D_8014D507; i < D_8014D508; i++) {
-			u8 alienId;
-
+		
 			alienId = D_8014D408[i];
 			inst = &alienInstances[alienId];
 			flags = inst->unk20;
