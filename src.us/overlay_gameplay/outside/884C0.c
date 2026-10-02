@@ -873,130 +873,100 @@ s32 func_8007A4F8_894A8(s32 arg0)
   return 1;
 }
 
-// https://decomp.me/scratch/JpM9S
-// CURRENT(1117)
-#ifdef NON_MATCHING
 void func_8007A6B4_89664(u8 arg0)
 {
-  s16 startX;
-  s16 startZ;
-  s16 x;
-  s16 z;
-  s32 diffX;
-  s32 diffZ;
-  s32 absX;
-  s32 absZ;
-  s32 stepX;
-  s32 stepZ;
-  s32 i;
-  u8 stage;
-  i = 0;
-  if (currentLevel == 3)
-  {
-	stage = alienInstances[arg0].typeIndex;
-	if ((stage == 9) || (stage == 8))
+	s32 pad0;
+	s32 pad1;
+	s32 cameraX;
+	s32 startZ;
+	s32 x;
+	s32 z;
+	s32 diffX;
+	s32 diffZ;
+	s32 absX;
+	s32 absZ;
+	s32 stepX;
+	s32 stepZ;
+	s32 i;
+	u8 type;
+	u8 stage;
+	i = 0;
+	if (currentLevel == 3)
 	{
-	  return;
+		type = alienInstances[arg0].typeIndex;
+		if ((type == 9) || (type == 8))
+		{
+			return;
+		}
 	}
-  }
-  diffX = alienInstances[arg0].unk0 - D_80149434;
-  diffZ = alienInstances[arg0].unk4 - D_80149436;
-  
+	cameraX = D_80149434, startZ = alienInstances[arg0].unk4, diffX = alienInstances[arg0].unk0 - cameraX, diffZ = startZ - D_80149436;
+
 	absX = (-diffX) < diffX ? diffX : -diffX;
 	absZ = ((-diffZ) < diffZ) ? diffZ : -diffZ;
-  
-  stepX = 0;
-  if (absZ < absX)
-  {
-	if ((-diffX) > 0)
-	{
-	  stepX = -0x100;
-	  stepZ = 0;
-	}
-	else
-	{
-	  stepX = 0x100;
-	  stepZ = 0;
-	}
-  }
-  else
-  {
-	if ((-diffZ) > 0)
-	{
-	  stepZ = -0x100;
-	}
-	else
-	{
-	  stepZ = 0x100;
-	}
-  }
-  if (stepX != 0)
-  {
-	x = (s32) (((double) D_80149434) + (((double) (stepX * 18)) * 0.5));
-	z = startZ;
-  }
-  else if (stepZ != 0)
-  {
-	x = startX;
-	z = (s32) (((double) D_80149436) + (((double) (stepZ * 18)) * 0.5));
-  }
-  stage = alienInstances[arg0].unk1B;
-  alienInstances[arg0].unk0 = x;
-  alienInstances[arg0].unk2E = x;
-  alienInstances[arg0].unk4 = z;
-  alienInstances[arg0].unk32 = z;
-  if (D_80047F94 == stage)
-  {
-	if ((func_800B0D10_BFCC0(alienInstances[arg0].unk0, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC) == 0) && (func_8007F9C8_8E978(arg0, alienInstances[arg0].typeIndex) == 0))
-	{
-	  return;
-	}
-	while (1)
-	{
-	  alienInstances[arg0].unk0 -= stepX;
-	  alienInstances[arg0].unk4 -= stepZ;
-	  osSyncPrintf(&D_80141904_1508B4, alienInstances[arg0].unk0, alienInstances[arg0].unk4, D_80149434, D_80149436, stepX, stepZ);
-	  i++;
-	  if (i >= 10)
-	  {
-		return;
-	  }
-	  if (func_800B0D10_BFCC0(alienInstances[arg0].unk0, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC) == 0)
-	  {
-		if (func_8007F9C8_8E978(arg0, alienInstances[arg0].typeIndex) == 0)
-		{
-		  return;
-		}
-	  }
-	}
 
-  }
-  else if (stage == 0xFF)
-  {
-	if (func_8007F9C8_8E978(arg0, alienInstances[arg0].typeIndex) == 0)
+	stepX = 0;
+	if (absZ < absX)
 	{
-	  return;
+		if ((-diffX) > 0)
+		{
+			stepX = -0x100;
+			stepZ = 0;
+		}
+		else
+		{
+			stepX = 0x100;
+			stepZ = 0;
+		}
 	}
-	while (1)
+	else
 	{
-	  alienInstances[arg0].unk0 -= stepX;
-	  alienInstances[arg0].unk4 -= stepZ;
-	  osSyncPrintf(&D_80141950_150900, alienInstances[arg0].unk0, alienInstances[arg0].unk4, D_80149434, D_80149436, stepX, stepZ);
-	  i++;
-	  if (i >= 10)
-	  {
-		return;
-	  }
-	  if (func_8007F9C8_8E978(arg0, alienInstances[arg0].typeIndex) == 0)
-	  {
-		return;
-	  }
+		if ((-diffZ) > 0)
+		{
+			stepZ = -0x100;
+		}
+		else
+		{
+			stepZ = 0x100;
+		}
 	}
-  }
+	if (stepX != 0)
+	{
+		x = cameraX + stepX * 18 * 0.5;
+		z = startZ;
+	}
+	else if (stepZ != 0)
+	{
+		x = alienInstances[arg0].unk0;
+		z = D_80149436 + stepZ * 18 * 0.5;
+	}
+	alienInstances[arg0].unk0 = x;
+	alienInstances[arg0].unk2E = x;
+	alienInstances[arg0].unk4 = z;
+	alienInstances[arg0].unk32 = z;
+	if (D_80047F94 == alienInstances[arg0].unk1B)
+	{
+		while (i < 10 && (func_800B0D10_BFCC0(alienInstances[arg0].unk0, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC) != 0 || func_8007F9C8_8E978(arg0, alienInstances[arg0].typeIndex) != 0))
+		{
+			alienInstances[arg0].unk0 -= stepX;
+			alienInstances[arg0].unk4 -= stepZ;
+			osSyncPrintf(&D_80141904_1508B4, alienInstances[arg0].unk0, alienInstances[arg0].unk4, D_80149434, D_80149436, stepX, stepZ);
+			i++;
+		}
+	}
+	else if (alienInstances[arg0].unk1B == 0xFF)
+	{
+		while (i < 10 && func_8007F9C8_8E978(arg0, alienInstances[arg0].typeIndex) != 0)
+		{
+			alienInstances[arg0].unk0 -= stepX;
+			alienInstances[arg0].unk4 -= stepZ;
+			osSyncPrintf(&D_80141950_150900, alienInstances[arg0].unk0, alienInstances[arg0].unk4, D_80149434, D_80149436, stepX, stepZ);
+			if (!stepX)
+			{
+			}
+			i++;
+		}
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007A6B4_89664.s")
-#endif
 
 void func_8007AA0C_899BC(void)
 {
