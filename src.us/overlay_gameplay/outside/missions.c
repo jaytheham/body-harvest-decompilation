@@ -1455,9 +1455,7 @@ void func_80076754_85704(void)
   D_8004D154 = -1;
 }
 
-// https://decomp.me/scratch/uwSSA
-// CURRENT(200)
-#ifdef NON_MATCHING
+
 // AI - Mark a specific mission as completed
 void func_8007679C_8574C(s16 arg0) {
 	MissionCondEntry *entry;
@@ -1474,6 +1472,5 @@ void func_8007679C_8574C(s16 arg0) {
 	}
 	func_800078CC_84CC(arg0, &D_8004D150);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007679C_8574C.s")
-#endif
+
+void func_80076820_857D0() {}
