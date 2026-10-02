@@ -1517,9 +1517,14 @@ typedef struct {
 	/* 0x0F */ s8 hitPoints;
 	/* 0x10 */ u8 unk10;
 	/* 0x11 */ s8 unk11;
-	/* 0x12 */ u8 door1InteriorId;
-	/* 0x13 */ u8 door2InteriorId;
-	/* 0x14 */ u8 door3InteriorId;
+	union {
+		struct {
+			/* 0x12 */ u8 door1InteriorId;
+			/* 0x13 */ u8 door2InteriorId;
+			/* 0x14 */ u8 door3InteriorId;
+		};
+		/* 0x12 */ u8 doorInteriorIds[3];
+	};
 	/* 0x15 */ u8 unk15;
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 unk17;

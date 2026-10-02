@@ -380,36 +380,20 @@ s32 func_801165FC_1255AC(u8 arg0, u8 arg1, s16 *arg2, s16 *arg3, s16 *arg4, s16 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801165FC_1255AC.s")
 #endif
 
-// https://decomp.me/scratch/SwQQl
-// CURRENT(110)
-#ifdef NON_MATCHING
 void func_80116724_1256D4(void) {
 	s32 building_idx;
-	BuildingInstance *building;
-	u32 door_idx;
-	u32 interior_to_load;
-
-	building = buildingInstances[1];
-	interior_to_load = buildingInteriorToLoadId;
-	building_idx = 1;
-
-	do {
+	s32 door_idx;
+	for (building_idx = 1; building_idx < 0xFF; building_idx++) {
 		door_idx = 3;
 		while (door_idx--) {
-			if ((&building->door1InteriorId)[door_idx] == interior_to_load) {
+			if (buildingInstances[building_idx].doorInteriorIds[door_idx] == buildingInteriorToLoadId) {
 				D_80052540 = building_idx;
 				D_80052544 = door_idx;
 				return;
 			}
 		}
-
-		building_idx += 1;
-		building++;
-	} while (building_idx != 0xFF);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80116724_1256D4.s")
-#endif
 
 // CURRENT(205)
 #ifdef NON_MATCHING
