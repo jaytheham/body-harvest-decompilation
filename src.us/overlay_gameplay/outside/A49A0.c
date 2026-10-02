@@ -608,13 +608,13 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			left = &levelCoords[leftIdx - 48];
 			right = &levelCoords[rightIdx - 48];
 
-			v0 = *vtxHead;
+			v0 = &D_8005BB34[0].v;
 			*vtxHead = (Vtx *) (v0 + 1);
-			v1 = *vtxHead;
+			v1 = &D_8005BB34[0].v;
 			*vtxHead = (Vtx *) (v1 + 1);
-			v2 = *vtxHead;
+			v2 = &D_8005BB34[0].v;
 			*vtxHead = (Vtx *) (v2 + 1);
-			v3 = *vtxHead;
+			v3 = &D_8005BB34[0].v;
 			*vtxHead = (Vtx *) (v3 + 1);
 
 			color0 = left->x * 8;
@@ -710,18 +710,17 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 #endif
 
 // https://decomp.me/scratch/z0WpV
-// CURRENT(175)
 #ifdef NON_MATCHING
 void func_800970C0_A6070(void)
 {
-  Vtx_t *vtx0;
-  Vtx_t *vtx1;
-  Vtx_t *vtx2;
-  Vtx_t *vtx3;
+  Vtx *vtx0;
+  Vtx *vtx1;
+  Vtx *vtx2;
+  Vtx *vtx3;
   u32 col;
   u32 row;
-  s32 x0;
-  s32 x1;
+  u32 x0;
+  u32 x1;
   s32 y0;
   s32 y1;
   s32 tileRow;
@@ -740,37 +739,38 @@ void func_800970C0_A6070(void)
 	tileRow = row << 3;
 	for (col = 0; col < 8; col++)
 	{
-	  x0 = (col - 4) << 8;
+	  x1 = col - 4;
+	  x0 = x1 << 8;
 	  x1 = x0 + 0x100;
-	  vtx0 = &D_8005BB34[0].v;
+	  vtx0 = D_8005BB34;
 	  D_8005BB34 = vtx0 + 1;
-	  vtx1 = &D_8005BB34[0].v;
+	  vtx1 = D_8005BB34;
 	  D_8005BB34 = vtx1 + 1;
-	  vtx2 = &D_8005BB34[0].v;
+	  vtx2 = D_8005BB34;
 	  D_8005BB34 = vtx2 + 1;
-	  vtx3 = &D_8005BB34[0].v;
+	  vtx3 = D_8005BB34;
 	  D_8005BB34 = vtx3 + 1;
-	  vtx0->ob[0] = x0;
-	  vtx0->ob[1] = y0;
-	  vtx0->ob[2] = 0;
-	  vtx1->ob[0] = x1;
-	  vtx1->ob[1] = y0;
-	  vtx1->ob[2] = 0;
-	  vtx2->ob[0] = x0;
-	  vtx2->ob[1] = y1;
-	  vtx2->ob[2] = 0;
-	  vtx3->ob[0] = x1;
-	  vtx3->ob[1] = y1;
-	  vtx3->ob[2] = 0;
-	  vtx0->tc[0] = -0x20;
-	  vtx0->tc[1] = 0x7E0;
-	  vtx2->tc[0] = -0x20;
-	  vtx2->tc[1] = -0x20;
-	  vtx3->tc[0] = 0x7E0;
-	  vtx3->tc[1] = -0x20;
-	  vtx1->tc[0] = 0x7E0;
-	  vtx1->tc[1] = 0x7E0;
-	  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, D_8006AA6C + (((tileRow + col) << 7) << 4));
+	  vtx0->v.ob[0] = x0;
+	  vtx0->v.ob[1] = y0;
+	  vtx0->v.ob[2] = 0;
+	  vtx1->v.ob[0] = x1;
+	  vtx1->v.ob[1] = y0;
+	  vtx1->v.ob[2] = 0;
+	  vtx2->v.ob[0] = x0;
+	  vtx2->v.ob[1] = y1;
+	  vtx2->v.ob[2] = 0;
+	  vtx3->v.ob[0] = x1;
+	  vtx3->v.ob[1] = y1;
+	  vtx3->v.ob[2] = 0;
+	  vtx0->v.tc[0] = -0x20;
+	  vtx0->v.tc[1] = 0x7E0;
+	  vtx2->v.tc[0] = -0x20;
+	  vtx2->v.tc[1] = -0x20;
+	  vtx3->v.tc[0] = 0x7E0;
+	  vtx3->v.tc[1] = -0x20;
+	  vtx1->v.tc[0] = 0x7E0;
+	  vtx1->v.tc[1] = 0x7E0;
+	  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, ((u8 (*)[16]) D_8006AA6C)[(tileRow + col) << 7]);
 	  gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
 	  gDPLoadSync(D_8005BB2C++);
 	  gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 1023, 256);
