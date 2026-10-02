@@ -4758,50 +4758,41 @@ s32 func_800836D0_92680(u8 arg0, s16 *arg1, s16 *arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800836D0_92680.s")
 #endif
 
-// https://decomp.me/scratch/cC8xU
-// CURRENT(530)
-#ifdef NON_MATCHING
-void func_80083EF4_92EA4(AlienInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
+void func_80083EF4_92EA4(AlienInstance *arg0, void *arg1, s16 arg2, s16 arg3)
 {
-  u8 sp27;
-  f32 var_f10;
-  f32 var_f0;
-  s16 half;
-  sp27 = arg0->typeIndex;
-  if (!(arg0->unk47 & 1))
-  {
-	arg0->unk47 |= 1;
-	func_8007EB74_8DB24(arg0, arg1);
-  }
-  func_8007F0E8_8E098((arg0 - alienInstances) & 0xFF, arg1 * 0, 1);
-  if (arg1 == ((s32) D_80052B34))
-  {
-	arg0->unk47 |= 8;
-  }
-  if ((arg0->unk20 & ALIEN_FLAG_UNKK) && (arg0->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
-  {
-	func_800F2D48_101CF8(((unsigned char) arg0->unk20) & 7, arg0->unk0, arg0->unk4);
-  }
-  half = arg2 / 2;
-  if (half >= (alienTypes[sp27].unk32 * 4))
-  {
-	arg0->unk20 |= ALIEN_FLAG_UNKJ;
-	arg0->unk2A = arg0->unk6;
-	var_f10 = (f32) ((u32) alienTypes[sp27].unk32);
-	var_f0 = ((f32) half) / var_f10;
-	if (var_f0 > 10.0f)
+	u8 typeIndex;
+	f32 strength;
+	typeIndex = arg0->typeIndex;
+	if (!(arg0->unk47 & 1))
 	{
-	  var_f0 = 10.0f;
+		arg0->unk47 |= 1;
+		func_8007EB74_8DB24(arg0, arg1);
 	}
-	if (alienTypes[sp27].unk40 != 0)
+	func_8007F0E8_8E098(arg0 - alienInstances, 0, 1);
+	if (arg1 == D_80052B34)
 	{
-	  func_801022F4_1112A4(arg0, arg3, (s16) (var_f0 * 32.0f));
+		arg0->unk47 |= 8;
 	}
-  }
+	if ((arg0->unk20 & ALIEN_FLAG_UNKK) && (arg0->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
+	{
+		func_800F2D48_101CF8((u8)(arg0->unk20 & 7), arg0->unk0, arg0->unk4);
+	}
+	arg2 /= 2;
+	if ((alienTypes[typeIndex].unk32 * 4) <= arg2)
+	{
+		arg0->unk20 |= ALIEN_FLAG_UNKJ;
+		arg0->unk2A = arg0->unk6;
+		strength = arg2 / (f32)(u32)alienTypes[typeIndex].unk32;
+		if (strength > 10.0f)
+		{
+			strength = 10.0f;
+		}
+		if (alienTypes[typeIndex].unk40 != 0)
+		{
+			func_801022F4_1112A4((VehicleInstance *)arg0, arg3, (s16)(strength * 32.0f));
+		}
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80083EF4_92EA4.s")
-#endif
 
 // CURRENT(3522)
 #ifdef NON_MATCHING
