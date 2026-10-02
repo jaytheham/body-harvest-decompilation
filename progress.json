@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-02T08:15:47Z",
-  "commit": "7f8d1e4d",
-  "commit_timestamp": "2026-10-02T11:55:12+13:00",
+  "generated": "2026-10-02T22:51:37Z",
+  "commit": "9b9c81aa",
+  "commit_timestamp": "2026-10-03T11:51:05+13:00",
   "overall": {
-    "total_functions": 2714,
-    "matched": 1774,
-    "non_matching": 940,
+    "total_functions": 2715,
+    "matched": 1778,
+    "non_matching": 937,
     "asm_stubs": 0,
-    "matched_pct": 65.36,
+    "matched_pct": 65.49,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -31,11 +31,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 976,
-      "non_matching": 470,
+      "matched": 980,
+      "non_matching": 467,
       "asm_stubs": 0,
-      "total": 1446,
-      "matched_pct": 67.5,
+      "total": 1447,
+      "matched_pct": 67.7,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -567,11 +567,11 @@
     {
       "path": "overlay_gameplay/outside/884C0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 136,
-      "non_matching": 38,
+      "matched": 138,
+      "non_matching": 36,
       "asm_stubs": 0,
       "total": 174,
-      "matched_pct": 78.2,
+      "matched_pct": 79.3,
       "contributor": "jaytheham"
     },
     {
@@ -757,11 +757,11 @@
     {
       "path": "overlay_gameplay/outside/missions.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 28,
-      "non_matching": 9,
+      "matched": 30,
+      "non_matching": 8,
       "asm_stubs": 0,
-      "total": 37,
-      "matched_pct": 75.7,
+      "total": 38,
+      "matched_pct": 78.9,
       "contributor": "jaytheham"
     },
     {
@@ -889,8 +889,8 @@
     {
       "name": "jaytheham",
       "files": 73,
-      "matched": 1617,
-      "non_matching": 828,
+      "matched": 1621,
+      "non_matching": 825,
       "asm_stubs": 0
     },
     {
@@ -1149,10 +1149,10 @@
     },
     {
       "date": "2026-09-27",
-      "commit": "7f8d1e4",
-      "matched": 1774,
-      "non_matching": 940,
-      "total": 2714
+      "commit": "9b9c81a",
+      "matched": 1778,
+      "non_matching": 937,
+      "total": 2715
     }
   ]
 }
