@@ -4220,73 +4220,62 @@ void func_8008DF40_5E3F0(u8 arg0) {
 	}
 }
 
-// https://decomp.me/scratch/PjKaT
-// CURRENT(285)
-#ifdef NON_MATCHING
-// AI - Updates sprite slots: handles animation frame timing, advances frames, and frees finished sprites
+// Updates sprite animation and releases finished slots.
 void func_8008DFA0_5E450(void)
 {
-	s16 life;
-	s32 var_s0;
-	s32 temp_a0;
-	u8 temp_v1;
-	s32 temp_t9;
-	s32 var_s2;
-	s32 var_v1;
+	u8 remaining;
+	u8 i;
 	Unk800E1980 *entry;
-	u8 *entryBytes;
-	var_s2 = D_800E1D68;
-	var_s0 = 0;
-	var_v1 = var_s2;
-	if (var_s2 > 0)
+	s16 life;
+	s32 kind;
+	s32 ten = 0xA;
+	s32 thirteen = 0xD;
+
+	remaining = D_800E1D68;
+	i = 0;
+	if ((s32)remaining > 0)
 	{
 		do
 		{
-			entry = &D_800E1980[var_s0];
+			entry = &D_800E1980[i];
 			life = entry->unkA;
 			if (life != 0)
 			{
-				entryBytes = (u8 *)entry;
-				temp_v1 = entry->unkF;
-				if (temp_v1 == 0)
+				if (entry->unkF == 0)
 				{
-					temp_a0 = entry->unkC;
-					temp_v1 = temp_a0;
-					if (((0xD == temp_a0 && entryBytes[0xE] < 7) || ((temp_v1 == 0xA) && (entryBytes[0xD] < (entry->unk12 * (-4))))) || (((temp_v1 != 0xA) && (temp_v1 != 0xD)) && (entry->unk12 < entryBytes[0xD])))
+					kind = entry->unkC;
+					if ((0xD == entry->unkC && entry->unkE < 7) ||
+						(ten == kind && entry->unkD < entry->unk12 * -4) ||
+						(ten != kind && thirteen != kind && entry->unk12 < entry->unkD))
 					{
-						temp_t9 = entryBytes[0xE] + 1;
-						entryBytes[0xD] = entryBytes[0xD] - entry->unk12;
-						entryBytes[0xE] = temp_t9;
-						if (((short)temp_t9 & 0xFF) >= D_800AA694[temp_a0 * 8])
+						entry->unkD -= entry->unk12;
+						entry->unkE++;
+						if (entry->unkE >= D_800AA694[entry->unkC * 8])
 						{
-							entryBytes[0xE] = 0;
+							entry->unkE = 0;
 						}
 						entry->unkA += entry->unk10;
 						entry->unk2 += entry->unk11;
 					}
 					else
 					{
-						if (temp_v1 == 0xA)
+						if (ten == kind)
 						{
 							func_8008DC34_5E0E4(entry->unk0, entry->unk2, entry->unk4, 0xB, life);
 						}
-						func_8008DF40_5E3F0((u8)var_s0);
+						func_8008DF40_5E3F0(i);
 					}
 				}
 				else
 				{
-					entry->unkF = temp_v1 - 1;
+					entry->unkF--;
 				}
-				var_v1 = (var_s2 - 1) & 0xFF;
-				var_s2 = var_v1;
+				remaining--;
 			}
-			var_s0 = (var_s0 + 1) & 0xFF;
-		} while (var_v1 > 0);
+			i++;
+		} while ((s32)remaining > 0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008DFA0_5E450.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(31147)

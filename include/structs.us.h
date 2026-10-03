@@ -2072,7 +2072,7 @@ typedef struct {
 	/* 0x0A */ s16 unkA;
 	/* 0x0C */ u8 unkC;
 	/* 0x0D */ u8 unkD;
-	/* 0x0E */ s8 unkE;
+	/* 0x0E */ u8 unkE;
 	/* 0x0F */ u8 unkF;
 	/* 0x10 */ s8 unk10;
 	/* 0x11 */ s8 unk11;

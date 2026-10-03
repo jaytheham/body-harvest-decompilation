@@ -405,6 +405,7 @@ void func_8008CDC8_5D278(void);
 void func_8008D14C_5D5FC(void);
 void func_8008D510_5D9C0(void);
 u8 func_8008DC34_5E0E4(s16, s32, s32, s16, s16);
+void func_8008DF40_5E3F0(u8 arg0);
 s16 func_8008EB20_5EFD0(s16, s16, s16, u16, u8, s32, u8);
 void func_800840C4_54574(u8);
 void func_8008412C_545DC(u8 arg0, u8 arg1);
