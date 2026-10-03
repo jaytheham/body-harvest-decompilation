@@ -581,44 +581,32 @@ void func_800015B4_21B4(s32 arg0, s32 arg1) {
 	D_800431C0[arg0 + 3] = (var_a2) >> 8;
 }
 
-
-// https://decomp.me/scratch/Y6mYv
-// CURRENT(65)
-#ifdef NON_MATCHING
 s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 {
-  u8 *ptr;
-  u8 version;
-  u16 stored_checksum;
-  u16 computed_checksum;
-  u16 i;
-  ptr = D_800431C0 + arg0;
-  if (ptr[0] != 0x1C)
-  {
-	  // Version %d failed
-	osSyncPrintf(&D_8003685C_3745C, ptr[0]);
-	return 0;
-  }
-  stored_checksum = (ptr[2] + (ptr[3] << 8));
-  ptr += 4;
-  computed_checksum = 0;
- 
-  for (i = 0; i < arg1; i++)
-  {
-	computed_checksum += *ptr++;
-  }
+	u16 stored_checksum;
+	u16 computed_checksum;
+	u16 i;
 
-  if (computed_checksum != stored_checksum)
-  {
-	  // Checksum failed
-	osSyncPrintf(&D_80036870_37470);
-	return 0;
-  }
-  return 1;
+	if (D_800431C0[arg0] != 0x1C)
+	{
+		osSyncPrintf(&D_8003685C_3745C, D_800431C0[arg0]);
+		return 0;
+	}
+	stored_checksum = D_800431C0[arg0 + 2] + (D_800431C0[arg0 + 3] << 8);
+	arg0 += 4;
+	computed_checksum = 0;
+	for (i = 0; i < arg1; i++)
+	{
+		computed_checksum += D_800431C0[arg0];
+		arg0++;
+	}
+	if (stored_checksum != computed_checksum)
+	{
+		osSyncPrintf(&D_80036870_37470);
+		return 0;
+	}
+	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/validateSaveVersionAndChecksum.s")
-#endif
 
 // https://decomp.me/scratch/vCY8e
 void func_800016D8_22D8(void) {
@@ -971,6 +959,7 @@ void func_800020E0_2CE0(s32 arg0, s32 arg1) {
 void func_800021CC_2DCC(s32 arg0)
 {
   u8 *ptr;
+  u8 *data;
   s32 i;
   ptr = &D_800431C0[0x53 + (arg0 * 0x7A)];
   for (i = 0; i < 6; i++)
