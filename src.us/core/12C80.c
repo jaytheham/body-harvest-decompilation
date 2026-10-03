@@ -2748,102 +2748,75 @@ void func_80018D58_19958(void) {
 	D_8003449C = 0;
 }
 
-// https://decomp.me/scratch/q8jZh
-// CURRENT(180)
 // Play dialogue with index arg0
-#ifdef NON_MATCHING
-void func_80018D7C_1997C(u16 arg0)
-{
-  u8 sp20;
-  s32 pad0;
-  s32 pad1;
-  D_80034494 = 0;
-	// PlayDialogue: %d
-  osSyncPrintf(&D_8003845C_3905C, arg0);
-  if (!(D_800313C8 & 8) && !(D_80052ACD & 0x10))
-  {
-	if (arg0 >= 0xCD)
-	{
-	  func_80019F80_1AB80();
-			  sp20 = (arg0 - 0xCD);
-	  if (D_80034460[D_8006C550[sp20]] != 0x25)
-	  {
-		if (D_80034460[D_8006C550[sp20]] == 0x26)
-		{
-		  D_80034484 = 1;
-		  D_8003447C = 0;
+void func_80018D7C_1997C(u16 arg0) {
+	u8 dialogueIndex;
+	s32 character;
 
-		  func_80017B08_18708(sp20);
-		  func_80015380_15F80(sp20);
-		  if (sp20 < 0x26)
-		  {
-			D_80034480 = sp20;
-		  }
-		  D_80034478 = 0;
+	D_80034494 = 0;
+	osSyncPrintf(&D_8003845C_3905C, arg0); // PlayDialogue: %d
+	if (!(D_800313C8 & 8) && !(D_80052ACD & 0x10)) {
+		if (arg0 >= 0xCD) {
+			func_80019F80_1AB80();
+			dialogueIndex = arg0 - 0xCD;
+			character = D_80034460[D_8006C550[dialogueIndex]];
+			switch (character) {
+			case 0x26:
+				D_80034484 = 1;
+				D_8003447C = 0;
+				func_80017B08_18708(dialogueIndex);
+				func_80015380_15F80(dialogueIndex);
+				if (dialogueIndex < 0x26) {
+					D_80034480 = dialogueIndex;
+				}
+				D_80034478 = 0;
+				break;
+			case 0x25:
+				func_80019EA8_1AAA8(dialogueIndex);
+				func_8001A024_1AC24();
+				return;
+			}
+
+			if (D_80034460[D_8006C550[dialogueIndex]] == 0x5E) {
+				// ----%c,%c,%c
+				osSyncPrintf(&D_80038470_39070,
+					D_80034460[D_8006C550[dialogueIndex]],
+					D_80034460[D_8006C550[dialogueIndex] + 1],
+					D_80034460[D_8006C550[dialogueIndex] + 2]);
+				D_8006C570 = func_8001A37C_1AF7C(&D_80034460[D_8006C550[dialogueIndex]]);
+				D_80034494 = 1;
+				D_80034490_35090 = 1;
+				D_80034498_35098 = 0;
+				func_80017B08_18708(dialogueIndex);
+				return;
+			}
+			if (D_80034460[D_8006C550[dialogueIndex] + 1] == 0x24) {
+				gzip_data_0000 = 1;
+				D_8006C56D = D_80034460[D_8006C550[dialogueIndex] + 2];
+				D_8006C56E = D_80034460[D_8006C550[dialogueIndex] + 3];
+				osSyncPrintf(&D_80038480_39080); // \n
+				osSyncPrintf(&D_80038484_39084, D_8006C56D, D_8006C56E); // wayPoint x: %d z: %d
+			}
+		} else {
+			osSyncPrintf(&D_8003849C_3909C, arg0); // Index:%d
+			osSyncPrintf(&D_800384A8_390A8, D_8006C550[arg0]); // Offset:%d
+			if (D_80034460[D_8006C550[arg0]] == 0x5E) {
+				D_8006C570 = func_8001A37C_1AF7C(&D_80034460[D_8006C550[arg0]]);
+				osSyncPrintf(&D_800384B4_390B4, D_8006C570, &D_8006C570); // keyNumber =%d
+				D_80034498_35098 = 0;
+				D_80034494 = 1;
+				D_80034490_35090 = 1;
+			} else if (D_80034460[D_8006C550[arg0]] == 0x24) {
+				gzip_data_0000 = 1;
+				D_8006C56D = D_80034460[D_8006C550[arg0] + 1];
+				D_8006C56E = D_80034460[D_8006C550[arg0] + 2];
+				osSyncPrintf(&D_800384C4_390C4); // \n
+				osSyncPrintf(&D_800384C8_390C8, D_8006C56D, D_8006C56E); // wayPoint x: %d z: %d
+			}
+			func_80017B08_18708(arg0);
 		}
-	  }
-	  else
-	  {
-		func_80019EA8_1AAA8(sp20);
-		func_8001A024_1AC24();
-		return;
-	  }
-
-	  if (D_80034460[D_8006C550[sp20]] == 0x5E)
-	  {
-		  // ----%c,%c,%c
-		osSyncPrintf(&D_80038470_39070,
-					 D_80034460[D_8006C550[sp20]],
-					 D_80034460[D_8006C550[sp20] + 1],
-					 D_80034460[D_8006C550[sp20] + 2]);
-		D_8006C570 = func_8001A37C_1AF7C(&D_80034460[D_8006C550[sp20]]);
-		D_80034494 = 1;
-		D_80034490_35090 = 1;
-		D_80034498_35098 = 0;
-		func_80017B08_18708(sp20);
-		return;
-	  }
-	  if (D_80034460[D_8006C550[sp20] + 1] == 0x24)
-	  {
-		gzip_data_0000 = 1;
-		D_8006C56D = D_80034460[D_8006C550[sp20] + 2];
-		D_8006C56E = D_80034460[D_8006C550[sp20] + 3];
-		osSyncPrintf(&D_80038480_39080); // \n
-		  // wayPoint x: %d z: %d
-		osSyncPrintf(&D_80038484_39084, (s8) D_8006C56D, (s8) D_8006C56E);
-	  }
 	}
-	else
-	{
-		// Index:%d
-	  osSyncPrintf(&D_8003849C_3909C, arg0);
-		// Offset:%d
-	  osSyncPrintf(&D_800384A8_390A8, D_8006C550[arg0]);
-	  if (D_80034460[D_8006C550[arg0]] == 0x5E)
-	  {
-		D_8006C570 = func_8001A37C_1AF7C(&D_80034460[D_8006C550[arg0]]);
-		  // keyNumber =%d
-		osSyncPrintf(&D_800384B4_390B4, D_8006C570, &D_8006C570);
-		D_80034498_35098 = 0;
-		D_80034494 = 1;
-		D_80034490_35090 = 1;
-	  }
-	  else if (D_80034460[D_8006C550[arg0]] == 0x24)
-	  {
-		gzip_data_0000 = 1;
-		D_8006C56D = D_80034460[D_8006C550[arg0] + 1];
-		D_8006C56E = D_80034460[D_8006C550[arg0] + 2];
-		osSyncPrintf(&D_800384C4_390C4); // \n
-		  // wayPoint x: %d z: %d
-		osSyncPrintf(&D_800384C8_390C8, (s8) D_8006C56D, (s8) D_8006C56E);
-	  }
-	  func_80017B08_18708(arg0);
-	}
-  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80018D7C_1997C.s")
-#endif
 
 // CURRENT(5760)
 #ifdef NON_MATCHING
