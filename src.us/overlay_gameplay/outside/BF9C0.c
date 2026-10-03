@@ -1211,24 +1211,16 @@ void func_800B316C_C211C(s8 arg0, s8 arg1, u16 arg2, u8 arg3) {
 }
 
 /* Mark tile as having a terrain object (set flag bits in the heightmap) */
-// https://decomp.me/scratch/oc09b
-// CURRENT(80)
-#ifdef NON_MATCHING
 void func_800B31FC_C21AC(s8 arg0, s8 arg1)
 {
-  u16 *v0;
-  
-	// D_80052A94 is a ptr to the middle of a [256][256] u16 array
-  v0 = (u8 *)&D_80052A94[arg1].unk0[arg0];
+	TerrainObjectCell *tile;
 
-	*(u8*)v0 |= 0x80;
-	*(u8*)v0 &= 0xf7;
-	*(u8*)v0 |= 0x4;
-	*v0 = *v0 & 0xFC3F | 0x300;
+	tile = &D_80052A94[arg1].objects[arg0];
+	tile->terrainObject = 1;
+	tile->flag11 = 0;
+	tile->flag10 = 1;
+	tile->terrainType = 12;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B31FC_C21AC.s")
-#endif
 
 /* Test bits in the world tile map at (arg0, arg1) */
 s32 func_800B325C_C220C(s8 arg0, s8 arg1, u16 arg2)

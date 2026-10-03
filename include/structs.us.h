@@ -3348,9 +3348,19 @@ typedef struct {
 	u16 height : 6;
 } TerrainCell;
 
+typedef struct {
+	u16 terrainObject : 1;
+	u16 unusedFlags : 3;
+	u16 flag11 : 1;
+	u16 flag10 : 1;
+	u16 terrainType : 4;
+	u16 height : 6;
+} TerrainObjectCell;
+
 typedef union {
 	u16 col[256];
 	TerrainCell cells[256];
+	TerrainObjectCell objects[256];
 } D_801FEA30_Row;
 
 #endif
