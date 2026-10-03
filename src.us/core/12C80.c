@@ -1435,31 +1435,25 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014A3C_1563C.s")
 #endif
 
-// https://decomp.me/scratch/ZQpri
-// CURRENT(215)
-#ifdef NON_MATCHING
 void func_80015210_15E10(s16 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4)
 {
-  Unk8006AA80Node sp50;
-	s16 temp_v1;
-  if (D_8006AB88 != 0)
-  {
-	sp50.unk2 = D_80032228_32E28[arg0 & 0xFFFF];
-	sp50.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
-	sp50.unk6 = -1;
-	sp50.unk0C = 0;
-	sp50.unk8 = 0;
-	temp_v1 = D_80031F04_32B04[arg0] * (arg4 / 200.0f);
-	  
-	sp50.unk0 = arg0 & 0xFFFF;
-	  temp_v1 = temp_v1 < 0x2FFF ? temp_v1 + 0x2FFF : 0x7FFF;
-	sp50.unk20 = temp_v1; sp50.unk0E = -1; sp50.unk22 = 0x40;
-	func_800121B4_12DB4(sp50, &D_8006AA80, &D_8006AA84);
-  }
+	Unk8006AA80Node sp50;
+	if (D_8006AB88 != 0)
+	{
+		sp50.unk2 = D_80032228_32E28[arg0 & 0xFFFF];
+		sp50.unk24 = D_80032A78_33678[arg0 & 0xFFFF];
+		sp50.unk6 = -1;
+		sp50.unk0C = 0;
+		sp50.unk8 = 0;
+		sp50.unk20 = D_80031F04_32B04[arg0] * (arg4 / 200.0f);
+
+		sp50.unk0 = arg0 & 0xFFFF;
+		sp50.unk20 = sp50.unk20 < 0x2FFF ? sp50.unk20 + 0x2FFF : 0x7FFF;
+		sp50.unk0E = -1;
+		sp50.unk22 = 0x40;
+		func_800121B4_12DB4(sp50, &D_8006AA80, &D_8006AA84);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015210_15E10.s")
-#endif
 
 void func_80015380_15F80(u8 arg0) {
 }
