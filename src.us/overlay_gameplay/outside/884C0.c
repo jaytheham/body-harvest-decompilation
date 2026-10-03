@@ -4298,53 +4298,51 @@ s32 func_80082C04_91BB4(u8 arg0)
 	return -1;
 }
 
- // https://decomp.me/scratch/bCNBv
- // CURRNET(283)
-#ifdef NON_MATCHING
 /*  3×3 grid scan — searches a 3×3 area of grid cells around an alien's position
  for cells where func_800B325C_C220C returns 0, preferring orthogonal cells.*/
+#ifdef NON_MATCHING
 s32 func_80082CA0_91C50(u8 arg0)
 {
-  s16 startXPos;
-  s16 startZPos;
-  s32 matchingXOffset;
-  s32 matchingZOffset;
-  s32 xOffest;
-  s32 zOffset;
-  s32 curXPos;
-  s32 curZPos;
+	s32 matchingXOffset;
+	s16 startXPos;
+	s16 startZPos;
+	s32 matchingZOffset;
+	s32 xOffest;
+	s32 zOffset;
+	s32 curXPos;
+	s32 curZPos;
 
-  startXPos = (alienInstances[arg0].unk0 >> 8) - 1;
-  startZPos = (alienInstances[arg0].unk4 >> 8) - 1;
-	
-  matchingXOffset = -1;
-  matchingZOffset = -1;
+	startXPos = (alienInstances[arg0].unk0 >> 8) - 1;
+	startZPos = (alienInstances[arg0].unk4 >> 8) - 1;
 
-  for (zOffset = 0, curZPos = startZPos; zOffset != 3; zOffset++, curZPos++)
-  {
-	for (xOffest = 0, curXPos = startXPos; xOffest != 3; xOffest++, curXPos++)
+	matchingXOffset = -1;
+	matchingZOffset = -1;
+
+	for (zOffset = 0, curZPos = startZPos; zOffset != 3; zOffset++, curZPos++)
 	{
-	  if (func_800B325C_C220C(curXPos, curZPos, 0x1000) == 0)
-	  {
-		matchingXOffset = xOffest;
-		matchingZOffset = zOffset;
-		if ((zOffset + xOffest) & 1)
+		for (xOffest = 0, curXPos = startXPos; xOffest != 3; xOffest++, curXPos++)
 		{
-		  alienInstances[arg0].unk28 = curXPos;
-		  alienInstances[arg0].unk29 = curZPos;
-		  return D_8013C2BC_14B26C[(zOffset * 3) + xOffest];
+			if (func_800B325C_C220C(curXPos, curZPos, 0x1000) == 0)
+			{
+				matchingXOffset = xOffest;
+				matchingZOffset = zOffset;
+				if ((zOffset + xOffest) & 1)
+				{
+					alienInstances[arg0].unk28 = curXPos;
+					alienInstances[arg0].unk29 = curZPos;
+					return D_8013C2BC_14B26C[(zOffset * 3) + xOffest];
+				}
+			}
 		}
-	  }
 	}
-  }
 
-  if (matchingXOffset != (-1))
-  {
-	alienInstances[arg0].unk28 = startXPos + matchingXOffset;
-	alienInstances[arg0].unk29 = startZPos + matchingZOffset;
-	return D_8013C2BC_14B26C[(matchingZOffset * 3) + matchingXOffset];
-  }
-  return -1;
+	if (matchingXOffset != (-1))
+	{
+		alienInstances[arg0].unk28 = startXPos + matchingXOffset;
+		alienInstances[arg0].unk29 = startZPos + matchingZOffset;
+		return D_8013C2BC_14B26C[(matchingZOffset * 3) + matchingXOffset];
+	}
+	return -1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082CA0_91C50.s")
