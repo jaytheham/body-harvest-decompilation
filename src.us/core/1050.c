@@ -460,17 +460,12 @@ void func_80001144_1D44(u8 arg0, u8 arg1, u8 arg2) {
 	}
 }
 
-// https://decomp.me/scratch/ffueu
-// CURRENT(155)
-#ifdef NON_MATCHING
 void func_80001190_1D90(void) {
 	f32 temp_f0;
-	int new_var;
-	s32 temp_t1;
+	s32 mode;
 	s32 temp_t6;
-	s32 temp_t8;
 
-	if (gameplayMode != D_80047698) {
+	if ((mode = gameplayMode) != D_80047698) {
 		func_800010C4_1CC4(0);
 		D_80047698 = gameplayMode;
 	}
@@ -480,7 +475,7 @@ void func_80001190_1D90(void) {
 			D_800313CC_31FCC = D_8004767C;
 			if (D_8004768C >= 0x2711) {
 				temp_f0 = D_80036C88_37888 / D_8004768C;
-				D_800313CC_31FCC = (D_8004767C * (temp_f0 * temp_f0 * temp_f0));
+				D_800313CC_31FCC = D_800313CC_31FCC * (temp_f0 * temp_f0 * temp_f0);
 				D_800313CC_31FCC /= 2;
 			}
 			if (D_800313CC_31FCC >= 0x100) {
@@ -491,16 +486,15 @@ void func_80001190_1D90(void) {
 			if (D_8004767C >= 0x100) {
 				D_8004767C -= 0x100;
 			} else {
-				temp_t6 = (s32) D_80047680 >> 4;
-				D_8004767C += (s32) (temp_t6 * temp_t6 * temp_t6) / 512;
+				temp_t6 = D_80047680 >> 4;
+				D_8004767C += (temp_t6 * temp_t6 * temp_t6) / 512;
 			}
 			if (D_80047688 > 0) {
 				D_80047688 -= 1;
 			} else if (D_80047684 < D_80047680) {
 				D_80047680 -= D_80047684;
 			} else {
-				D_80047680 = 
-				D_80047684 = 0;
+				D_80047680 = D_80047684 = 0;
 			}
 			D_8004768C += 1;
 			if (D_8004767C >= 0x100) {
@@ -521,9 +515,6 @@ void func_80001190_1D90(void) {
 		func_8000108C_1C8C(0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001190_1D90.s")
-#endif
 
 void osViExtendVStart(s32 arg0) {
 	__additional_scanline = arg0;
