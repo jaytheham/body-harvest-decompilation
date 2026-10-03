@@ -2201,9 +2201,6 @@ s16 func_800172E0_17EE0(u8 *arg0)
 	return count;
 }
 
-// https://decomp.me/scratch/sIowK
-// CURRENT(120)
-#ifdef NON_MATCHING
 s16 func_80017394_17F94(u8 *arg0, s16 arg1)
 {
 	s32 width;
@@ -2211,38 +2208,24 @@ s16 func_80017394_17F94(u8 *arg0, s16 arg1)
 
 	width = 0;
 	ptr = arg0;
-	if (*arg0 != 0xA && *arg0 != 0 && *arg0 != 0x40 && *arg0 != 0x3B) {
-		
-		while (--arg1) {
-			
-				if (*ptr >= 0x20 && *ptr < 0x80) {
-					if (*ptr == 0x5E) {
-						ptr += 2;
-						arg1 -= 2;
-					}
-
-					if (width != 0 || *ptr != 0x20 || *ptr != 0x26 || *ptr != 0x25) {
-						width += D_80031720_32320[*ptr * 2 + 0x261];
-					}
-				}
-
-				ptr++;
-				if (*ptr == 0xA) {
-					break;
-				}
-
-				if (*ptr == 0 || *ptr == 0x40 || *ptr == 0x3B) {
-					break;
-				}
-
-				
+	while (*ptr != 0xA && *ptr != 0 && *ptr != 0x40 && *ptr != 0x3B && --arg1)
+	{
+		if (*ptr >= 0x20 && *ptr < 0x80)
+		{
+			if (*ptr == 0x5E)
+			{
+				ptr = &ptr[2];
+				arg1 -= 2;
+			}
+			if (width != 0 || *ptr != 0x20 || *ptr != 0x26 || *ptr != 0x25)
+			{
+				width += D_80031720_32320[*ptr * 2 + 0x261];
+			}
 		}
+		ptr++;
 	}
 	return width;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80017394_17F94.s")
-#endif
 
 // CURRENT(27406)
 #ifdef NON_MATCHING
