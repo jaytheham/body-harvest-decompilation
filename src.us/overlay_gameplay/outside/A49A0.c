@@ -709,7 +709,6 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80096BC4_A5B74.s")
 #endif
 
-// https://decomp.me/scratch/z0WpV
 #ifdef NON_MATCHING
 void func_800970C0_A6070(void)
 {

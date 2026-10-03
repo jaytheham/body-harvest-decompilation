@@ -720,8 +720,6 @@ void func_800136F0_142F0(void) {
 	}
 }
 
-// https://decomp.me/scratch/imH5M
-// CURRENT(25)
 #ifdef NON_MATCHING
 void func_80013720_14320(void)
 {
