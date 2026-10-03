@@ -2134,7 +2134,7 @@ extern s16 D_80149B4A; // AI - Error flag (set to 1 on any buffer overflow)
 extern u8 D_80149B50[]; // AI - Random object weight scratch buffer
 extern u8 D_80149B60[][11][50]; // AI - Mission tile/map data per mission per chunk
 extern u8 D_8014CCCA; // AI - Mission info initialization source data
-extern u8 D_8014CEF0[]; // AI - Mission info entries (4 bytes each, max 64)
+extern MissionInfo D_8014CEF0[]; // AI - Mission info entries (4 bytes each, max 64)
 extern u8 D_8014CFF0[]; // AI - Random object weight pair buffer
 extern u8 D_8014CFF1[]; // AI - Overlaps D_8014CFF0, weight pair data
 extern u8 D_8014D16E; // AI - Mission condition data byte

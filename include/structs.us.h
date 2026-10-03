@@ -3,6 +3,11 @@
 
 #include <PR/sched.h>
 
+typedef struct MissionInfo {
+    u8 flags;
+    u8 command[3];
+} MissionInfo;
+
 typedef enum GameplayMode {
 	GAMEPLAY_MODE_LEVEL_MAP = 0, // Actually something else?
 	GAMEPLAY_MODE_UNK1 = 1, // Normal gameplay

@@ -228,7 +228,7 @@ void func_80074204_831B4(void) {
 		v0 -= 0x226;
 	} while (i--);
 
-	v0 = &D_8014CEF0[0xFC];
+	v0 = &D_8014CEF0[0x3F].flags;
 	i = 0x3F;
 	do {
 		v0 -= 4;
@@ -531,15 +531,11 @@ void func_80074970_83920(void)
   }
 }
 
-// https://decomp.me/scratch/PR95Q
-// CURRENT(80)
-#ifdef NON_MATCHING
 // readMissionInfo
 // AI - Read mission info entries with type flags
 void func_80074B2C_83ADC(void) {
-	u8 *entry;
+	MissionInfo *entry;
 	u8 cmd;
-	s16 b48;
 
 	cmd = func_80074558_83508();
 	while ((cmd == 0xAC) || (D_801494BC == 0xAE)) {
@@ -553,22 +549,18 @@ void func_80074B2C_83ADC(void) {
 			D_80149B4A = 1;
 		}
 
-		entry = &D_8014CEF0[D_80149B34 * 4], D_80149B34 += 1;
+		entry = &D_8014CEF0[D_80149B34], D_80149B34 += 1;
 		if (D_801494BC == 0xAC) {
-			entry[0] &= 0xFF7F;
+			entry->flags &= 0xFF7F;
 		} else {
-			entry[0] |= 0x80;
+			entry->flags = (entry->flags & 0xFF7F) | 0x80;
 		}
 
-		b48 = D_80149B48;
-		entry[0] = (b48 & 0x7F) | (entry[0] & 0xFF80);
-		func_80074578_83528(&entry[1]);
+		entry->flags = (D_80149B48 & 0xFF & 0x7F) | (entry->flags & 0xFF80);
+		func_80074578_83528(entry->command);
 		cmd = func_80074558_83508();
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80074B2C_83ADC.s")
-#endif
 
 // guess_readMissionCondition
 // AI - Read game conditions for a mission
@@ -1145,7 +1137,7 @@ s32 func_80075E50_84E00(void) {
 		D_8014D1B8[count] = 0;
 	} while (count--);
 
-	cmd = &D_8014CEF0[0xFC];
+	cmd = &D_8014CEF0[0x3F].flags;
 	count = 0x3F;
 	do {
 		if (cmd[1] == 0x99) {
