@@ -278,18 +278,17 @@ void loadLevel(s32 arg0) {
 }
 
 // https://decomp.me/scratch/8dWr0
-// CURRENT(2435)
-#ifdef NON_MATCHING
 void loadLevelData(u8 arg0)
 {
 	s32 j;
-	s32 tempKey;
 	s32 row;
-	u16 *cells;
-	u16 *rows;	u16 new_var;	Unk8031C88 sp48;
+	s32 var_s0;
+	s32 sp64;
+	s32 sp60;
+	u16 new_var;
+	Unk8031C88 sp48;
 	Unk80154082 sp44;
 	Unk80378D0 sp34;
-	s32 var_s0;
 	sp48 = D_80031C88_32888;
 	sp44 = D_800378CC_384CC;
 	sp34 = D_800378D0_384D0;
@@ -411,11 +410,13 @@ void loadLevelData(u8 arg0)
 		break;
 
 	case 1:
-		var_s0 = func_800101F0_10DF0(&D_80258390, var_s0 + 0xD00, 0xC00);
+		var_s0 += 0xD00;
+		var_s0 = func_800101F0_10DF0(&D_80258390, var_s0, 0xC00);
 		break;
 
 	case 2:
-		var_s0 = func_800101F0_10DF0(&D_80258390, var_s0 + 0x1A00, 0xC00);
+		var_s0 += 0x1A00;
+		var_s0 = func_800101F0_10DF0(&D_80258390, var_s0, 0xC00);
 		break;
 	}
 
@@ -453,11 +454,13 @@ void loadLevelData(u8 arg0)
 		break;
 
 	case 1:
-		var_s0 = func_800101F0_10DF0(&D_8006AC10, var_s0 + 0x1900, 0x1800);
+		var_s0 += 0x1900;
+		var_s0 = func_800101F0_10DF0(&D_8006AC10, var_s0, 0x1800);
 		break;
 
 	case 2:
-		var_s0 = func_800101F0_10DF0(&D_8006AC10, var_s0 + 0x3200, 0x1800);
+		var_s0 += 0x3200;
+		var_s0 = func_800101F0_10DF0(&D_8006AC10, var_s0, 0x1800);
 		break;
 	}
 
@@ -499,32 +502,17 @@ void loadLevelData(u8 arg0)
 	func_800101F0_10DF0(&D_80052560, var_s0, 0x528);
 	osSyncPrintf(&D_80037FEC_38BEC, 0x528, (D_8006AA60 == 0x528) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 
-	cells = rows = &D_801FEA30[0][0];
 	for (row = 0; row != 0xFF; row++)
 	{
-		j = 3;
-		tempKey = (row % 2) << 13;
-		if (1)
+		for (j = 0; j != 0xFF; j++)
 		{
-			cells[2] ^= tempKey;
-			cells[1] = (cells[1] ^ 0x4000) ^ tempKey;
-			cells[0] ^= tempKey;
+			new_var = D_801FEA30[row][j];
+			new_var ^= (j % 2) << 14;
+			new_var ^= (row % 2) << 13;
+			D_801FEA30[row][j] = new_var;
 		}
-		do
-		{
-			s32 cellVal;
-			new_var = rows[j];
-			cellVal = new_var ^ ((j % 2) << 14);
-			rows[j] = cellVal ^ tempKey;
-		} while (++j != 0xFF);
-		rows += 0x100;
-		cells += 0x100;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelData.s")
-#endif
-
 void loadFrontendData(void) {
 	osInvalICache(func_80070270, (u8 *)&D_800909B0 - (u8*)&func_80070270);
 	osInvalDCache(&D_800909B0, (u8 *)&D_800AED70 - (u8 *)&D_800909B0);
