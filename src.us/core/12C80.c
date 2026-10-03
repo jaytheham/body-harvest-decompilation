@@ -2675,27 +2675,26 @@ s32 func_80018AC8_196C8(void) {
 }
 
 // https://decomp.me/scratch/aLEsw
-// CURRENT(160)
 #ifdef NON_MATCHING
 s32 func_80018AEC_196EC(s32 arg0, s32 arg1, s32 arg2)
 {
   s32 sp24;
   s32 temp_v0;
-  s32 var_v1;
-  s32 *ptr;
   s32 temp_v1;
+  s32 *ptr;
   sp24 = 0;
   if (func_80017B78_18778() == 1)
   {
 	ptr = &D_800344A4;
-	var_v1 = *ptr;
-	var_v1 = var_v1 + 1 >= 0xB ? 0xA : var_v1 + 1;
+	temp_v1 = *ptr;
+	temp_v0 = temp_v1 + 1;
+	temp_v1 = temp_v0 >= 0xB ? 0xA : temp_v0;
 	if ((D_8006C6C6 > 0) && (D_8004802C == 0))
 	{
-	  var_v1 = 0;
+	  temp_v1 = 0;
 	}
-	*ptr = var_v1;
-	if (var_v1 >= 0xA)
+	*ptr = temp_v1;
+	if (temp_v1 >= 0xA)
 	{
 	  if ((D_8003449C == 0) && (gameplayMode != 0))
 	  {
