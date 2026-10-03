@@ -1,3 +1,8 @@
+typedef struct MissionCommand {
+    u8 opcode;
+    u8 args[2];
+} MissionCommand; /* size = 0x03 */
+
 #ifndef STRUCTS_US_H
 #define STRUCTS_US_H
 

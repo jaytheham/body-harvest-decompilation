@@ -1094,92 +1094,72 @@ void func_80075AA4_84A54(void) {
 #endif
 
 // CURRENT(3846)
-#ifdef NON_MATCHING
 // AI - Post-process mission cleanup and bitmask building
-s32 func_80075E50_84E00(void) {
-	u8 *stream;
-	s32 has83After82;
-	u32 bitmask[8];
-	u8 *cmd;
-	s32 count;
+#ifdef NON_MATCHING
+void func_80075E50_84E00(void) {
+    u8 *stream;
+    u8 has83After82;
+    s32 bitmask[8];
+    MissionCommand *cmd;
+    s32 count;
 
-	stream = &D_80224680;
-	cmd = D_801497C8;
-	count = D_80149B30;
-	has83After82 = 0;
-
-	if (count--) {
-		do {
-			if (cmd[0] == 0x9C) {
-				u32 vehicleOffset;
-				u8 idx;
-
-				idx = cmd[1];
-				vehicleOffset = idx;
-				vehicleOffset = (vehicleOffset << 2) - vehicleOffset;
-				vehicleOffset = (vehicleOffset << 3) - idx;
-				vehicleOffset <<= 2;
-
-				if (((VehicleInstance *)((u8 *)vehicleInstances + vehicleOffset))->unk3C == 1) {
-					func_800E5CF4_F4CA4(2, idx);
-				} else {
-					((VehicleInstance *)((u8 *)vehicleInstances + vehicleOffset))->unk20 &= 0x7FFF;
-				}
-			}
-			cmd += 3;
-		} while (count--);
-	}
-
-	func_800FAD10_109CC0();
-
-	count = 7;
-	do {
-		D_8014D1B8[count] = 0;
-	} while (count--);
-
-	cmd = &D_8014CEF0[0x3F].flags;
-	count = 0x3F;
-	do {
-		if (cmd[1] == 0x99) {
-			D_8014D1B8[cmd[2] >> 5] |= 1 << (cmd[2] & 0x1F);
-		}
-		cmd -= 4;
-	} while (count--);
-
-	count = 0x7FF;
-	do {
-		if (stream[0] == 0x82 && stream[1] == 0x99 && stream[3] == 0x8E) {
-			bitmask[stream[2] >> 5] |= 1 << (stream[2] & 0x1F);
-		}
-		stream++;
-	} while (count--);
-
-	{
-		u32 *dst;
-		u32 *src;
-		s32 i;
-
-		dst = &D_8014D1B8[7];
-		src = &bitmask[7];
-		i = 7;
-		do {
-			*dst &= *src;
-			dst--;
-			src--;
-		} while (i--);
-	}
-
-	stream = &D_80224680;
-	count = 0x7FF;
-	do {
-		u8 val = *stream++;
-		if (val == 0x82) {
-			has83After82 = 0;
-		}
-		if (val == 0x83 && has83After82 == 0) {
-			has83After82 = 1;
-		}
-	} while (count--);
+    stream = &D_80224680;
+    has83After82 = 0;
+    for (cmd = (MissionCommand *)D_801497C8, count = D_80149B30; count--; cmd++) {
+        if (cmd->opcode == 0x9C) {
+            if (vehicleInstances[cmd->args[0]].unk3C == 1) {
+                func_800E5CF4_F4CA4(2, cmd->args[0]);
+            } else {
+                vehicleInstances[cmd->args[0]].unk20 &= 0x7FFF;
+            }
+        }
+    }
+    func_800FAD10_109CC0();
+    count = 7;
+    do {
+        D_8014D1B8[count] = 0;
+    } while (count--);
+    {
+        MissionInfo *info;
+        info = &D_8014CEF0[0x3F];
+        count = 0x3F;
+        do {
+            if (info->command[0] == 0x99) {
+                D_8014D1B8[info->command[1] >> 5] |= 1 << (info->command[1] & 0x1F);
+            }
+            info--;
+        } while (count--);
+    }
+    count = 0x7FF;
+    do {
+        if (stream[0] == 0x82 && stream[1] == 0x99 && stream[3] == 0x8E) {
+            bitmask[stream[2] >> 5] |= 1 << (stream[2] & 0x1F);
+        }
+        stream++;
+    } while (count--);
+    {
+        u32 *dst;
+        s32 *src;
+        dst = &D_8014D1B8[7];
+        src = &bitmask[7];
+        count = 7;
+        do {
+            *dst &= *src;
+            dst--;
+            src--;
+        } while (count--);
+    }
+    stream = &D_80224680;
+    count = 0x7FF;
+    do {
+        u8 val = *stream++;
+        if (val == 0x82) {
+            has83After82 = 0;
+        }
+        if (val == 0x83 && has83After82 == 0) {
+            has83After82 = 1;
+        }
+    } while (count--);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_80075E50_84E00.s")
@@ -1228,8 +1208,9 @@ s32 func_80076088_85038(s32 arg0) {
 }
 
 // AI - Check if mission ID is in active list
-s32 func_80076208_851B8(s32 arg0) {
-  return func_800078B8_84B8(arg0, &D_8004D150);
+s32 func_80076208_851B8(s32 arg0)
+{
+	return func_800078B8_84B8(arg0, &D_8004D150);
 }
 
 // https://decomp.me/scratch/iNhL3
@@ -1251,16 +1232,17 @@ void func_8007622C_851DC(s32 arg0) {
 
 // Remove the current callback from the list of callbacks
 // AI - Remove a mission callback from list
-void func_800762A8_85258(void (*callback))
+void func_800762A8_85258(void(*callback))
 {
 	s32 i;
-	for (i = 0x10;i--;) {
-	if ((s32)callback == D_80149478[i])
+	for (i = 0x10; i--;)
 	{
-	  D_80149478[i] = 0;
-	  break;
+		if ((s32)callback == D_80149478[i])
+		{
+			D_80149478[i] = 0;
+			break;
+		}
 	}
-  } 
 }
 
 // AI - Activate all secondary mission entries
@@ -1298,63 +1280,45 @@ void func_80076390_85340(void)
   func_80013460();
 }
 
-// CURRENT(2345)
-#ifdef NON_MATCHING
 // AI - Handle mission failure with effects
-s32 func_8007643C_853EC(s32 arg0) {
-	MissionCondEntry *condEntry;
-	MissionCondEntry *foundEntry;
-	u8 *missionEntry;
+s32 func_8007643C_853EC(s32 arg0)
+{
 	s32 i;
-	s32 temp;
+	MissionCondEntry *foundEntry;
 
-	if (func_800078B8_84B8(arg0, &D_8004D150) != 0) {
+	if (func_800078B8_84B8(arg0, &D_8004D150) != 0)
+	{
 		i = 0x80;
-		temp = i;
-	} else {
+	}
+	else
+	{
 		return -1;
 	}
 
-	i = -1;
-	if (temp != 0) {
-		s32 condType;
-
-		i = temp - 1;
-		temp = i;
-		condType = 2;
-		condEntry = &D_801494C0[i];
-		foundEntry = condEntry;
-		if ((condEntry->unk0 == condType) && (arg0 == condEntry->unk1)) {
-		} else {
-			do {
-				temp = i;
-				i -= 1;
-				condEntry -= 1;
-				foundEntry = condEntry;
-				if (temp == 0) {
-					break;
-				}
-			} while (!((condEntry->unk0 == condType) && (arg0 == condEntry->unk1)));
-		}
+	while (i-- && ((foundEntry = &D_801494C0[i])->unk0 != 2 || arg0 != foundEntry->unk1))
+	{
 	}
-
-	if (arg0 == D_80149474) {
+	if (arg0 == D_80149474)
+	{
 		D_80149474 = 0xFF;
 	}
 
-	if (i != -1) {
-		missionEntry = D_80149B60[arg0][0];
-
-		if (missionEntry[0x32] == 0x64) {
-			if (func_800078B8_84B8(arg0, &D_8004D15C) == 0) {
+	if (i != -1)
+	{
+		switch (D_80149B60[arg0][1][0])
+		{
+		case 0x64:
+			if (func_800078B8_84B8(arg0, &D_8004D15C) == 0)
+			{
 				func_8001A650_1B250(0xB);
 			}
-		} else {
-			if (missionEntry[0x32] != 0x6E) {
-				func_8001A598_1B198(&missionEntry[0x32]);
-			}
+			break;
+		case 0x6E:
+			break;
+		default:
+			func_8001A598_1B198(D_80149B60[arg0][1]);
+			break;
 		}
-
 		func_80073DC0_82D70(foundEntry->unk4);
 	}
 
@@ -1362,91 +1326,67 @@ s32 func_8007643C_853EC(s32 arg0) {
 	func_800078CC_84CC(arg0, &D_8004D154);
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_8007643C_853EC.s")
-#endif
 
-// CURRENT(2345)
-#ifdef NON_MATCHING
 // AI - Handle mission success with effects
-s32 func_800765C4_85574(s32 arg0) {
-	MissionCondEntry *condEntry;
-	MissionCondEntry *foundEntry;
-	u8 *missionEntry;
+s32 func_800765C4_85574(s32 arg0)
+{
 	s32 i;
-	s32 temp;
+	MissionCondEntry *foundEntry;
 
-	if (func_800078B8_84B8(arg0, &D_8004D150) != 0) {
+	if (func_800078B8_84B8(arg0, &D_8004D150) != 0)
+	{
 		i = 0x80;
-		temp = i;
-	} else {
+	}
+	else
+	{
 		return -1;
 	}
 
-	i = -1;
-	if (temp != 0) {
-		s32 condType;
-
-		i = temp - 1;
-		temp = i;
-		condType = 3;
-		condEntry = &D_801494C0[i];
-		foundEntry = condEntry;
-		if ((condEntry->unk0 == condType) && (arg0 == condEntry->unk1)) {
-		} else {
-			do {
-				temp = i;
-				i -= 1;
-				condEntry -= 1;
-				foundEntry = condEntry;
-				if (temp == 0) {
-					break;
-				}
-			} while (!((condEntry->unk0 == condType) && (arg0 == condEntry->unk1)));
-		}
+	while (i-- && ((foundEntry = &D_801494C0[i])->unk0 != 3 || arg0 != foundEntry->unk1))
+	{
 	}
-
-	if (arg0 == D_80149474) {
+	if (arg0 == D_80149474)
+	{
 		D_80149474 = 0xFF;
 	}
 
-	if (i != -1) {
-		missionEntry = D_80149B60[arg0][0];
-
-		if (missionEntry[0x64] == 0x64) {
-			if (func_800078B8_84B8(arg0, &D_8004D15C) == 0) {
+	if (i != -1)
+	{
+		switch (D_80149B60[arg0][2][0])
+		{
+		case 0x64:
+			if (func_800078B8_84B8(arg0, &D_8004D15C) == 0)
+			{
 				func_8001A650_1B250(0xC);
 			}
-		} else if (missionEntry[0x64] == 0x6E) {
-		} else {
-			func_8001A598_1B198(&missionEntry[0x64]);
+			break;
+		case 0x6E:
+			break;
+		default:
+			func_8001A598_1B198(D_80149B60[arg0][2]);
+			break;
 		}
-
 		func_80073DC0_82D70(foundEntry->unk4);
 	}
 
 	func_800078E4_84E4(arg0, &D_8004D150);
 	func_800078CC_84CC(arg0, &D_8004D158);
-	return func_80013460(), 0;
+	func_80013460();
+	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/missions/func_800765C4_85574.s")
-#endif
 
 // AI - Fail all active missions
 void func_80076754_85704(void)
 {
-  s32 var_s0;
-  var_s0 = 0x17;
-  do
-  {
-	func_8007643C_853EC(var_s0);
-  }
-  while (var_s0--);
-  D_8004D158 = 0;
-  D_8004D154 = -1;
+	s32 var_s0;
+	var_s0 = 0x17;
+	do
+	{
+		func_8007643C_853EC(var_s0);
+	} while (var_s0--);
+	D_8004D158 = 0;
+	D_8004D154 = -1;
 }
-
 
 // AI - Mark a specific mission as completed
 void func_8007679C_8574C(s16 arg0) {

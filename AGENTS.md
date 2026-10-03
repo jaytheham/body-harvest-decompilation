@@ -30,6 +30,9 @@ You will be tasked with an existing C function to modify iteratively until it pr
 4. Change the C code in a way that will make the current assembly match the target assembly.
 5. Rebuild, compare with target, and repeat until the assembly matches the target. Keep trying until you get a perfect match!
 
+C files are UTF-8
+Line endings are LF
+
 Prioritize incorrect, missing, and out-of-order instructions, ignore register allocation and stack placement until all the logic is correct.
 Sometimes a change can produce more accurate logic, but change register/stack allocation in a way that causes more differences overall, this is OK, the goal is to get the logic correct first, then optimize the register/stack allocation to match the target assembly.
 
