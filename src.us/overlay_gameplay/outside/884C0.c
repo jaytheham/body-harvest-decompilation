@@ -5394,23 +5394,20 @@ void func_8008554C_944FC(u8 arg0)
 	}
 }
 
-// https://decomp.me/scratch/NQqt9
-// CURRENT(250)
 #ifdef NON_MATCHING
-void func_80085690_94640(u8 arg0, u16 arg1)
+void func_80085690_94640(u8 arg0, s16 arg1)
 {
-  AlienInstance *alien;
-	s32 x = func_80084FE8_93F98(arg0, arg1 &= 0xFFFF);
-  if (x && alienInstances[arg0].unk1E == 0)
-  {
-	  func_80122524_1314D4(
-		  D_80052B34,
-		  D_80145BE0_154B90[alienTypes[alienInstances[arg0].typeIndex].unk1C].unk2,
-		  alienInstances[arg0].unk0,
-		  alienInstances[arg0].unk4);
-	  alienInstances[arg0].unk1E = 0x1C;
-	
-  }
+	s32 x;
+	AlienInstance *alien;
+	x = func_80084FE8_93F98(arg0, arg1);
+	if (x && alienInstances[arg0].unk1E == 0)
+	{
+		alien = &alienInstances[arg0];
+		func_80122524_1314D4(D_80052B34,
+			D_80145BE0_154B90[alienTypes[alien->typeIndex].unk1C].unk2,
+			alien->unk0, alien->unk4);
+		alien->unk1E = 0x1C;
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085690_94640.s")
