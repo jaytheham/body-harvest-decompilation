@@ -56,3 +56,29 @@ position aligned the coordinate bytes correctly but left spills four bytes
 too low.
 
 Validation: no function diff differences; `build/bh.us.z64: OK`.
+
+## Unsigned joint transfer and explicit index local
+
+Matched `func_80092EF4_A1EA4` with an unsigned union view of the joint's
+`unk8` halfword. The target uses `lhu`, compares against 2001, then subtracts
+2000 from that joint and adds 2000 to its linked joint. Accessing the signed
+field emits `lh` and changes the comparison for values above 32767.
+
+Store the first nested lookup in an `s16` local before looking up the linked
+joint:
+
+```c
+jointIndex = D_8014DD50[alienInstances[id].unkC].unkC;
+nextJointIndex = D_8014DD50[jointIndex].unkD;
+if (D_8014DD50[jointIndex].unk8Unsigned >= 0x7D1) {
+    D_8014DD50[jointIndex].unk8Unsigned -= 0x7D0;
+    D_8014DD50[nextJointIndex].unk8Unsigned += 0x7D0;
+}
+```
+
+The named index produces the target's `v0` lookup result instead of a
+temporary register, restoring register allocation through the following
+instructions. Read the alien's `unk47` directly in the later condition;
+a named byte temporary allocates `v1` where the target uses `t2`.
+
+Validation: zero function differences and `build/bh.us.z64: OK`.

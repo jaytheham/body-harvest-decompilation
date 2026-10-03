@@ -3167,18 +3167,15 @@ void func_80092DFC_A1DAC(u8 arg0)
 	}
 }
 
-// https://decomp.me/scratch/NgKhQ
-// CURRENT(136)
 // AI - Patrol alien update with rotation sync
-#ifdef NON_MATCHING
 void func_80092EF4_A1EA4(u8 arg0)
 {
-	u8 sp3F;
-	u8 new_var;
-	s8 temp_a1;
-	s16 pad;
-	s16 sp38;
-	sp3F = alienInstances[arg0].typeIndex;
+	u8 typeIndex;
+	u8 pad;
+	s8 nextJointIndex;
+	s16 jointIndex;
+	s16 height;
+	typeIndex = alienInstances[arg0].typeIndex;
 	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKC)
 	{
 		func_8008064C_8F5FC(arg0);
@@ -3191,16 +3188,16 @@ void func_80092EF4_A1EA4(u8 arg0)
 	{
 		func_80137468_146418(arg0, 0x25);
 		alienInstances[arg0].unk6 = alienInstances[arg0].unkE;
-		temp_a1 = D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unkD;
-		if (D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk8 >= 0x7D1)
+		jointIndex = D_8014DD50[alienInstances[arg0].unkC].unkC;
+		nextJointIndex = D_8014DD50[jointIndex].unkD;
+		if (D_8014DD50[jointIndex].unk8Unsigned >= 0x7D1)
 		{
-			D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk8 -= 0x7D0;
-			D_8014DD50[temp_a1].unk8 = (s16)(((u16)D_8014DD50[temp_a1].unk8) + 0x7D0);
+			D_8014DD50[jointIndex].unk8Unsigned -= 0x7D0;
+			D_8014DD50[nextJointIndex].unk8Unsigned += 0x7D0;
 		}
 
-		func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &sp38);
-		new_var = alienInstances[arg0].unk47;
-		if ((new_var & 0xE) || ((alienInstances[arg0].unk2 - alienTypes[sp3F].unkC) < sp38))
+		func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &height);
+		if ((alienInstances[arg0].unk47 & 0xE) || ((alienInstances[arg0].unk2 - alienTypes[typeIndex].unkC) < height))
 		{
 			if (alienInstances[arg0].unk3F != 0xFF)
 			{
@@ -3215,7 +3212,7 @@ void func_80092EF4_A1EA4(u8 arg0)
 			else
 			{
 				func_80124B5C_133B0C(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0x320, 0x100);
-				func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)(alienTypes[sp3F].unkC * 4), 0);
+				func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, alienTypes[typeIndex].unkC * 4, 0);
 			}
 		}
 	}
@@ -3223,8 +3220,8 @@ void func_80092EF4_A1EA4(u8 arg0)
 	{
 		if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKC)
 		{
-			sp38 = func_8008E524_9D4D4(arg0, 0x2EE, 4);
-			func_8008E978_9D928(arg0, sp38);
+			height = func_8008E524_9D4D4(arg0, 0x2EE, 4);
+			func_8008E978_9D928(arg0, height);
 		}
 		else
 		{
@@ -3238,9 +3235,6 @@ void func_80092EF4_A1EA4(u8 arg0)
 		alienInstances[arg0].unk3A--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80092EF4_A1EA4.s")
-#endif
 
 // AI - Support alien update
 void func_80093164_A2114(u8 arg0)

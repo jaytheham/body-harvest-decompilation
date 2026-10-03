@@ -1778,7 +1778,7 @@ typedef struct {
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ union { s16 unk6; u16 unk6Unsigned; };
-	/* 0x08 */ s16 unk8;
+	/* 0x08 */ union { s16 unk8; u16 unk8Unsigned; };
 	/* 0x0A */ union { s16 unkA; u16 unkAUnsigned; };
 	/* 0x0C */ s8 unkC;
 	/* 0x0D */ s8 unkD;
