@@ -1422,7 +1422,7 @@ void func_80002EF8_3AF8(void *arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80002EF8_3AF8.s")
 #endif
 
-// CURRENT(645)
+// CURRENT(590)
 #ifdef NON_MATCHING
 void func_80003064_3C64(void)
 {
@@ -1482,9 +1482,8 @@ void func_80003064_3C64(void)
 			D_800475F0 = 0;
 		}
 	}
-	sp4 = (currentControllerStates[0].stick_x < 0) ? (-1) : (1);
-	sp10 = (D_800475A0[0].stick_x < 0) ? (-1) : (1);
-	if (sp4 != sp10)
+	sp4 = (currentControllerStates[0].stick_x < 0) ? -1 : 1;
+	if (((D_800475A0[0].stick_x < 0) ? -1 : 1) != sp4)
 	{
 		D_800475F0 = (D_800475F0 + D_800475F4) + 1;
 		D_800475F4 = 8;
