@@ -953,103 +953,99 @@ void func_800020E0_2CE0(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800020E0_2CE0.s")
 #endif
 
-// https://decomp.me/scratch/o6clA
-// CURRENT(110)
-#ifdef NON_MATCHING
+// Initialize an empty save slot and update its checksum.
 void func_800021CC_2DCC(s32 arg0)
 {
-  u8 *ptr;
-  u8 *data;
-  s32 i;
-  ptr = &D_800431C0[0x53 + (arg0 * 0x7A)];
-  for (i = 0; i < 6; i++)
-  {
-	ptr[0] = 0;
-	ptr[1] = 0;
-	ptr[2] = 0;
-	ptr[3] = 0;
-	ptr[4] = 0;
-	ptr[5] = 0;
-	ptr[6] = 0;
-	ptr[7] = 0;
-	ptr += 8;
-  }
+	s32 offset;
+	s32 stride;
+	s32 i;
+	stride = arg0 * 0x7A;
+	offset = stride + 0x53;
+	for (i = 0; i < 6; i++)
+	{
+		D_800431C0[offset + 0] = 0;
+		D_800431C0[offset + 1] = 0;
+		D_800431C0[offset + 2] = 0;
+		D_800431C0[offset + 3] = 0;
+		D_800431C0[offset + 4] = 0;
+		D_800431C0[offset + 5] = 0;
+		D_800431C0[offset + 6] = 0;
+		D_800431C0[offset + 7] = 0;
+		offset += 8;
+	}
 
-  ptr[0] = 1;
-  ptr[1] = 0;
-  ptr[2] = 0x7B;
-  ptr[3] = 0;
-  ptr[4] = 0;
-  ptr[5] = 0;
-  ptr[6] = 0x45;
-  ptr[7] = 0x6D;
-  ptr[8] = 0x70;
-  ptr[9] = 0x74;
-  ptr[10] = 0x79;
-  ptr[11] = 0;
-  ptr[12] = 2;
-  ptr += 0xD;
-  for (i = 1; i < 7; i++)
-  {
-	*ptr = 0;
-	ptr++;
-  }
+	D_800431C0[offset + 0] = 1;
+	D_800431C0[offset + 1] = 0;
+	D_800431C0[offset + 2] = 0x7B;
+	D_800431C0[offset + 3] = 0;
+	D_800431C0[offset + 4] = 0;
+	D_800431C0[offset + 5] = 0;
+	D_800431C0[offset + 6] = 0x45;
+	D_800431C0[offset + 7] = 0x6D;
+	D_800431C0[offset + 8] = 0x70;
+	D_800431C0[offset + 9] = 0x74;
+	D_800431C0[offset + 10] = 0x79;
+	D_800431C0[offset + 11] = 0;
+	D_800431C0[offset + 12] = 2;
+	offset += 0xD;
+	for (i = 1; i < 7; i++)
+	{
+		D_800431C0[offset] = 0;
+		offset++;
+	}
 
-  *ptr = 1;
-  ptr++;
-  for (i = 1; i < 8; i++)
-  {
-	*ptr = 0;
-	ptr++;
-  }
+	D_800431C0[offset] = 1;
+	offset++;
+	for (i = 1; i < 8; i++)
+	{
+		D_800431C0[offset] = 0;
+		offset++;
+	}
 
-  ptr[0] = 0;
-  ptr[1] = 0;
-  ptr[2] = 0;
-  ptr[3] = 0;
-  ptr[4] = 0;
-  ptr += 5;
-  for (i = 0; i < 8; i++)
-  {
-	*ptr = 0;
-	ptr++;
-  }
+	D_800431C0[offset + 0] = 0;
+	D_800431C0[offset + 1] = 0;
+	D_800431C0[offset + 2] = 0;
+	D_800431C0[offset + 3] = 0;
+	D_800431C0[offset + 4] = 0;
+	offset += 5;
+	for (i = 0; i < 8; i++)
+	{
+		D_800431C0[offset] = 0;
+		offset++;
+	}
 
-  for (i = 0; i < 4; i++)
-  {
-	*ptr = 0;
-	ptr++;
-  }
+	for (i = 0; i < 4; i++)
+	{
+		D_800431C0[offset] = 0;
+		offset++;
+	}
 
-  *ptr = 0;
-  ptr++;
-  for (i = 0; i < 8; i++)
-  {
-	*ptr = 0;
-	ptr++;
-	continue;
-  }
+	D_800431C0[offset] = 0;
+	offset++;
+	for (i = 0; i < 8; i++)
+	{
+		D_800431C0[offset] = 0;
+		offset++;
+		continue;
+	}
 
-  ptr[0] = 0;
-  ptr[1] = 0;
-  ptr[2] = 0;
-  ptr[4] = 0;
-  ptr[5] = 0;
-  ptr[6] = 0;
-  ptr[3] = 0;
-  ptr[7] = 0;
-  ptr[8] = 0;
-  ptr[9] = 0;
-  ptr[10] = 0;
-  ptr[11] = 0;
-  ptr += 0xC;
-  *ptr = 0;
-	i = arg0;
-  func_800015B4_21B4((i * 0x7A) + 0x4F, 0x76);
+	D_800431C0[offset + 0] = 0;
+	D_800431C0[offset + 1] = 0;
+	D_800431C0[offset + 2] = 0;
+	D_800431C0[offset + 4] = 0;
+	D_800431C0[offset + 5] = 0;
+	D_800431C0[offset + 6] = 0;
+	D_800431C0[offset + 3] = 0;
+	D_800431C0[offset + 7] = 0;
+	D_800431C0[offset + 8] = 0;
+	D_800431C0[offset + 9] = 0;
+	D_800431C0[offset + 10] = 0;
+	D_800431C0[offset + 11] = 0;
+	offset += 0xC;
+	D_800431C0[offset] = 0;
+	i = stride;
+	func_800015B4_21B4(i + 0x4F, 0x76);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800021CC_2DCC.s")
-#endif
 
 // CURRENT(17871)
 #ifdef NON_MATCHING
