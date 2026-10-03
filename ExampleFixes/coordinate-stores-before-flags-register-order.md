@@ -26,6 +26,32 @@ and comparison. The following delay and completion phases are cases 7 and 8.
 Removing the `(u8)` cast from `func_8007A198_89148(alienId)` was also necessary:
 its declared argument is `s32`, and the target passes the full allocation result.
 
+### Y destination before flag updates fixes allocation without changing scheduling
+
+In `func_800AB570_BA520`, the instruction order and stack layout already
+matched, but the flags load, masked flags, and Y destination used the wrong
+temporary registers. Assigning `unk16 = targetY` immediately before the flag
+clear fixed all remaining differences:
+
+```c
+alienInstances[arg0].unk24 = 0x14;
+pad = 0x64;
+alienInstances[arg0].unk38 = pad;
+alienInstances[arg0].unk16 = targetY;
+alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKI | ALIEN_FLAG_TARGET_PT |
+    ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
+alienInstances[arg0].unk14 = targetX;
+alienInstances[arg0].unk18 = targetZ;
+alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
+alienInstances[arg0].unk48 = 0xA0;
+```
+
+IDO still schedules the Y store last. The earlier source assignment puts its
+load in `t9`, the flags load in `t3`, and the masked flags in `t4`. Moving
+the Y assignment after the speed store instead changed branch scheduling
+and shortened the function. Verification: full ROM build reported
+`build/bh.us.z64: OK`, and the function diff had no differences.
+
 ### Flag operations before a coordinate store can also match a later store order
 
 In the final steering block of `func_800AC5BC_BB56C`, write both flag

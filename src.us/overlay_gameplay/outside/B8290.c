@@ -686,9 +686,6 @@ void func_800AB4B4_BA464(u8 arg0) {
 	
 }
 
-// https://decomp.me/scratch/xQVGn
-/* CURRENT(35) */
-#ifdef NON_MATCHING
 // AI - Acquire target position
 void func_800AB570_BA520(u8 arg0)
 {
@@ -725,17 +722,15 @@ void func_800AB570_BA520(u8 arg0)
 		alienInstances[arg0].unk24 = 0x14;
 		pad = 0x64;
 		alienInstances[arg0].unk38 = pad;
+		alienInstances[arg0].unk16 = targetY;
 		alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKI | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
 		alienInstances[arg0].unk14 = targetX;
-		alienInstances[arg0].unk16 = targetY;
 		alienInstances[arg0].unk18 = targetZ;
 		alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
 		alienInstances[arg0].unk48 = 0xA0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB570_BA520.s")
-#endif
+
 
 // AI - Gradual yaw rotation
 void func_800AB6D0_BA680(u8 arg0) {
