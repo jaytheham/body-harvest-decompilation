@@ -303,7 +303,9 @@ typedef struct {
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;
 	/* 0x16 */ s16 unk16;
-	/* 0x18 */ u8 pad18[0x08];
+	/* 0x18 */ s16 unk18;
+	/* 0x1A */ u8 pad1A[2];
+	/* 0x1C */ f32 unk1C;
 } UnkE830ModeEntry; /* size = 0x20 */
 
 typedef struct {
@@ -794,7 +796,9 @@ typedef struct Unk8006AA80Node {
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;
 	/* 0x16 */ s16 unk16;
-	/* 0x18 */ u8 pad18[0x08];
+	/* 0x18 */ s16 unk18;
+	/* 0x1A */ u8 pad1A[2];
+	/* 0x1C */ f32 unk1C;
 	/* 0x20 */ s16 unk20;
 	/* 0x22 */ s8 unk22;
 	/* 0x23 */ u8 pad23;
