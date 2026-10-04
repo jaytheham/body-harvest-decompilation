@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-04T20:53:50Z",
-  "commit": "5ce6f2b4",
-  "commit_timestamp": "2026-10-05T09:53:06+13:00",
+  "generated": "2026-10-04T20:56:29Z",
+  "commit": "b9ee03e1",
+  "commit_timestamp": "2026-10-05T09:55:41+13:00",
   "overall": {
     "total_functions": 2716,
     "matched": 1815,
@@ -622,7 +622,7 @@
       "asm_stubs": 0,
       "total": 10,
       "matched_pct": 60.0,
-      "contributor": "jaytheham"
+      "contributor": "goliath2526"
     },
     {
       "path": "overlay_gameplay/outside/B49C0.c",
@@ -852,7 +852,7 @@
       "asm_stubs": 0,
       "total": 102,
       "matched_pct": 38.2,
-      "contributor": "jaytheham"
+      "contributor": "goliath2526"
     },
     {
       "path": "overlay_level/java/alien_types.c",
@@ -888,16 +888,16 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 76,
-      "matched": 1772,
-      "non_matching": 896,
+      "files": 74,
+      "matched": 1727,
+      "non_matching": 829,
       "asm_stubs": 0
     },
     {
       "name": "goliath2526",
-      "files": 2,
-      "matched": 41,
-      "non_matching": 5,
+      "files": 4,
+      "matched": 86,
+      "non_matching": 72,
       "asm_stubs": 0
     },
     {
@@ -1156,7 +1156,7 @@
     },
     {
       "date": "2026-10-04",
-      "commit": "5ce6f2b",
+      "commit": "b9ee03e",
       "matched": 1815,
       "non_matching": 901,
       "total": 2716
