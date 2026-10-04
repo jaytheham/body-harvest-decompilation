@@ -151,69 +151,81 @@ void func_80073DC0_82D70(s32 arg0) {
 }
 
 // AI - Reset all mission data structures
-void func_80074204_831B4(void) {
-    s32 i;
-    u8 a1;
-    u8 a2;
-    u8 *v0;
+void func_80074204_831B4(void)
+{
+	s32 i;
+	u8 a1;
+	u8 a2;
+	u8 *v0;
 
-    v0 = &D_80149B60[0][0][0];
-    i = 0x2580;
-    while (i--) {
-        *v0++ = 0;
-    }
-    i = 24;
-    a2 = 0x64;
-    a1 = 0x6E;
-    while (i--) {
-        D_80149B60[i][0][0] = a1;
-        D_80149B60[i][1][0] = a2;
-        D_80149B60[i][2][0] = a2;
-    }
-    i = 64;
-    while (i--) {
-        D_8014CEF0[i].flags = (D_8014CEF0[i].flags & 0xFF80) | 0x7F;
-    }
-    i = 128;
-    a1 = 0xFF;
-    while (i--) {
-        D_801494C0[i].unk0 = 0;
-        D_801494C0[i].unk1 = a1;
-        D_801494C0[i].unk2 = 0;
-        D_801494C0[i].unk3 = 0;
-        D_801494C0[i].unk4 = a1;
-    }
-    i = 16;
-    while (i--) {
-        D_8004D1B0[i] = a1;
-    }
-    i = 192;
-    a2 = 0xC1;
-    while (i--) {
-        ((u8 (*)[2])D_8014CFF0)[i][0] = a2;
-        ((u8 (*)[2])D_8014CFF0)[i][1] = a2;
-    }
-    i = 16;
-    while (i--) {
-        D_8004D180[i].opcode = a1;
-    }
-    i = 16;
-    while (i--) {
-        D_80149478[i] = 0;
-    }
-    i = 16;
-    while (i--) {
-        ((MissionCommand *)D_80149AF8)[i].opcode = a1;
-    }
-    i = 16;
-    while (i--) {
-        ((u8 (*)[2])D_8004D160)[i][0] = 0;
-        ((u8 (*)[2])D_8004D160)[i][1] = 0;
-    }
-    i = 24;
-    while (i--) {
-        D_8014D188[i] = 0;
-    }
+	v0 = &D_80149B60[0][0][0];
+	i = 0x2580;
+	while (i--)
+	{
+		*v0++ = 0;
+	}
+	i = 24;
+	a2 = 0x64;
+	a1 = 0x6E;
+	while (i--)
+	{
+		D_80149B60[i][0][0] = a1;
+		D_80149B60[i][1][0] = a2;
+		D_80149B60[i][2][0] = a2;
+	}
+	i = 64;
+	while (i--)
+	{
+		D_8014CEF0[i].flags = (D_8014CEF0[i].flags & 0xFF80) | 0x7F;
+	}
+	i = 128;
+	a1 = 0xFF;
+	while (i--)
+	{
+		D_801494C0[i].unk0 = 0;
+		D_801494C0[i].unk1 = a1;
+		D_801494C0[i].unk2 = 0;
+		D_801494C0[i].unk3 = 0;
+		D_801494C0[i].unk4 = a1;
+	}
+	i = 16;
+	while (i--)
+	{
+		D_8004D1B0[i] = a1;
+	}
+	i = 192;
+	a2 = 0xC1;
+	while (i--)
+	{
+		((u8(*)[2])D_8014CFF0)[i][0] = a2;
+		((u8(*)[2])D_8014CFF0)[i][1] = a2;
+	}
+	i = 16;
+	while (i--)
+	{
+		D_8004D180[i].opcode = a1;
+	}
+	i = 16;
+	while (i--)
+	{
+		D_80149478[i] = 0;
+	}
+	i = 16;
+	while (i--)
+	{
+		((MissionCommand *)D_80149AF8)[i].opcode = a1;
+	}
+	i = 16;
+	while (i--)
+	{
+		((u8(*)[2])D_8004D160)[i][0] = 0;
+		((u8(*)[2])D_8004D160)[i][1] = 0;
+	}
+	i = 24;
+	while (i--)
+	{
+		D_8014D188[i] = 0;
+	}
 
 	D_80149470 = 0;
 	D_8004D15C = -1;
@@ -340,74 +352,81 @@ void func_80074768_83718(void) {
 }
 
 // AI - Read weighted random object table and select entry
-void func_800747A8_83758(void) {
-    s32 sum;
-    s32 randomValue;
-    s32 selectedIndex;
+void func_800747A8_83758(void)
+{
+	s32 sum;
+	s32 randomValue;
+	s32 selectedIndex;
 
-    sum = 0;
-    selectedIndex = 0;
-    while (func_80074558_83508() != 0x87) {
-        randomValue = func_80074500_834B0();
-        sum += randomValue;
-        if (selectedIndex >= 16) {
-            osSyncPrintf(D_80141248_1501F8);
-        }
-        D_80149B50[selectedIndex] = randomValue;
-        func_80074578_83528(&D_80149AC8[selectedIndex++].opcode);
-    }
+	sum = 0;
+	selectedIndex = 0;
+	while (func_80074558_83508() != 0x87)
+	{
+		randomValue = func_80074500_834B0();
+		sum += randomValue;
+		if (selectedIndex >= 16)
+		{
+			osSyncPrintf(D_80141248_1501F8);
+		}
+		D_80149B50[selectedIndex] = randomValue;
+		func_80074578_83528(&D_80149AC8[selectedIndex++].opcode);
+	}
 
-    randomValue = func_800038E0_44E0() % sum;
-    selectedIndex = -1;
-    while (randomValue >= 0) {
-        randomValue -= D_80149B50[++selectedIndex];
-    }
-    if (D_80149B38 >= 0x10) {
-        osSyncPrintf(D_80141268_150218);
-        D_80149B4A = 1;
-    }
-    D_8004D180[D_80149B38] = D_80149AC8[selectedIndex];
-    D_80149B38++;
+	randomValue = func_800038E0_44E0() % sum;
+	selectedIndex = -1;
+	while (randomValue >= 0)
+	{
+		randomValue -= D_80149B50[++selectedIndex];
+	}
+	if (D_80149B38 >= 0x10)
+	{
+		osSyncPrintf(D_80141268_150218);
+		D_80149B4A = 1;
+	}
+	D_8004D180[D_80149B38] = D_80149AC8[selectedIndex];
+	D_80149B38++;
 }
 
 // AI - Read map/tile data chunks from mission stream
 void func_80074970_83920(void)
 {
-  s32 i;
-  s32 chunkIndex;
-  u8 curBC;
-  chunkIndex = -1;
-  if (func_80074558_83508() != 0xB7)
-  {
-	if (D_801494BC != 0xAC)
+	s32 i;
+	s32 chunkIndex;
+	u8 curBC;
+	chunkIndex = -1;
+	if (func_80074558_83508() != 0xB7)
 	{
-	  if (D_801494BC != 0xAE)
-	  {
-		do
+		if (D_801494BC != 0xAC)
 		{
-		  if (D_801494BC == 0x90)
-		  {
-			chunkIndex += 1;
-			i = 0;
-			func_80074500_834B0();
-		  }
-		  D_80149B60[D_80149B48][chunkIndex][i] = func_80074500_834B0();
-		  i += 1;
-		  if ((D_801494BC == 0x80) || (D_801494BC == 0x81))
-		  {
-			D_80149B60[D_80149B48][chunkIndex][i] = func_80074500_834B0();
-			i++;
-		  }
-		  if (func_80074558_83508() == 0xB7) break;
-		  if (D_801494BC == 0xAC) break;
-		} while (D_801494BC != 0xAE);
-	  }
+			if (D_801494BC != 0xAE)
+			{
+				do
+				{
+					if (D_801494BC == 0x90)
+					{
+						chunkIndex += 1;
+						i = 0;
+						func_80074500_834B0();
+					}
+					D_80149B60[D_80149B48][chunkIndex][i] = func_80074500_834B0();
+					i += 1;
+					if ((D_801494BC == 0x80) || (D_801494BC == 0x81))
+					{
+						D_80149B60[D_80149B48][chunkIndex][i] = func_80074500_834B0();
+						i++;
+					}
+					if (func_80074558_83508() == 0xB7)
+						break;
+					if (D_801494BC == 0xAC)
+						break;
+				} while (D_801494BC != 0xAE);
+			}
+		}
 	}
-  }
-  if (chunkIndex >= 4)
-  {
-	func_800078E4_84E4(D_80149B48, &D_8004D15C);
-  }
+	if (chunkIndex >= 4)
+	{
+		func_800078E4_84E4(D_80149B48, &D_8004D15C);
+	}
 }
 
 // readMissionInfo
@@ -557,143 +576,141 @@ void func_80074FA8_83F58(void) {
 // AI - Link success conditions to command sequences
 void func_80075148_840F8(void)
 {
-  MissionCondEntry *entry;
-  s16 matchId;
-  s32 count;
+	MissionCondEntry *entry;
+	s16 matchId;
+	s32 count;
 	s32 new_var2;
 	s32 new_var;
-  count = D_80149B28;
-  if (count--)
-  {
-	entry = &D_801494C0[count], matchId = D_80149B48; do
+	count = D_80149B28;
+	if (count--)
 	{
-	  if ((entry->unk1 == matchId) && (entry->unk0 == 1))
-	  {
-		entry->unk4 = (u8) D_80149B30;
-	  }
-	  entry--;
+		entry = &D_801494C0[count], matchId = D_80149B48; do
+		{
+			if ((entry->unk1 == matchId) && (entry->unk0 == 1))
+			{
+				entry->unk4 = (u8)D_80149B30;
+			}
+			entry--;
+		} while (count--);
 	}
-	while (count--);
-  }
-  while (func_800744E0_83490(func_80074558_83508()))
-  {
-	func_8007463C_835EC();
-  }
+	while (func_800744E0_83490(func_80074558_83508()))
+	{
+		func_8007463C_835EC();
+	}
 
-  func_800746F8_836A8();
+	func_800746F8_836A8();
 }
 
 // AI - Link failure conditions to command sequences
 void func_80075210_841C0(void)
 {
-  MissionCondEntry *entry;
-  s16 matchId;
-  s32 count;
-  count = D_80149B28;
-  if (count--)
-  {
-	entry = &D_801494C0[count], matchId = D_80149B48; do
+	MissionCondEntry *entry;
+	s16 matchId;
+	s32 count;
+	count = D_80149B28;
+	if (count--)
 	{
-	  if ((entry->unk1 == matchId) && (entry->unk0 == 2))
-	  {
-		entry->unk4 = (u8) D_80149B30;
-	  }
-	  entry--;
+		entry = &D_801494C0[count], matchId = D_80149B48; do
+		{
+			if ((entry->unk1 == matchId) && (entry->unk0 == 2))
+			{
+				entry->unk4 = (u8)D_80149B30;
+			}
+			entry--;
+		} while (count--);
 	}
-	while (count--);
-  }
-  while (func_800744E0_83490(func_80074558_83508()))
-  {
-	func_8007463C_835EC();
-  }
+	while (func_800744E0_83490(func_80074558_83508()))
+	{
+		func_8007463C_835EC();
+	}
 
-  func_800746F8_836A8();
+	func_800746F8_836A8();
 }
 
 // AI - Link special conditions to command sequences
 void func_800752D8_84288(void)
 {
-  MissionCondEntry *entry;
-  s16 matchId;
-  s32 count;
-  count = D_80149B28;
- if (count--) { entry = &D_801494C0[count], matchId = D_80149B48; do {
-	  if ((entry->unk1 == matchId) && (entry->unk0 == 3))
-	  {
-		entry->unk4 = (u8) D_80149B30;
-	  }
-	  entry--;
+	MissionCondEntry *entry;
+	s16 matchId;
+	s32 count;
+	count = D_80149B28;
+	if (count--)
+	{
+		entry = &D_801494C0[count], matchId = D_80149B48; do
+		{
+			if ((entry->unk1 == matchId) && (entry->unk0 == 3))
+			{
+				entry->unk4 = (u8)D_80149B30;
+			}
+			entry--;
+		} while (count--);
 	}
-	while (count--);
-  }
-  while (func_800744E0_83490(func_80074558_83508()))
-  {
-	func_8007463C_835EC();
-  }
+	while (func_800744E0_83490(func_80074558_83508()))
+	{
+		func_8007463C_835EC();
+	}
 
-  func_800746F8_836A8();
+	func_800746F8_836A8();
 }
 
 // AI - Read dialogue condition entries from stream
 void func_800753A0_84350(void)
 {
-  u8 *temp;
-  s32 i;
-  temp = &D_8004D342;
-  i = 0x3F;
-  do
-  {
-	*temp = 0;
-	temp -= 6;
-  }
-  while (i--);
-  if (func_80074558_83508() == 0xB7)
-  {
+	u8 *temp;
+	s32 i;
+	temp = &D_8004D342;
+	i = 0x3F;
 	do
 	{
-	  i = D_80149B3C;
-	  D_801497C0 = (MissionCondEntry *) (((u8 *) D_8004D1C8) + (i * 6));      D_80149B3C++;
-	  D_801497C0->unk0 = 4;
-	  D_801497C0->unk2 = (u8) D_80149B2C;
-	  D_801497C0->unk3 = 0;
-	  func_80074500_834B0();
-	  if (func_80074500_834B0() == 0xB9)
-	  {
-		D_801497C0->unk1 = (u8) func_8007452C_834DC();
-		func_80074500_834B0();
-		if (func_80074558_83508() == 0x94)
+		*temp = 0;
+		temp -= 6;
+	} while (i--);
+	if (func_80074558_83508() == 0xB7)
+	{
+		do
 		{
-		  func_80074500_834B0();
-		  func_80074500_834B0();
-		  func_80074500_834B0();
-		  D_801497C0->unk5 = (u8) func_8007452C_834DC();
-		  func_80074500_834B0();
-		}
-		else
-		{
-		  D_801497C0->unk5 = 3;
-		}
-		func_80074CA0_83C50();
-		if ((D_801497C0->unk1 < 0x46) || (D_801497C0->unk1 >= 0x48))
-		{
-		  osSyncPrintf(D_80141384_150334, D_80149B48);
-		}
-	  }
-	  else
-	  {
-		func_80074500_834B0();
-		func_80074500_834B0();
-		func_80074500_834B0();
-		func_80074500_834B0();
-		D_801497C0->unk1 = (u8) func_8007452C_834DC();
-		func_80074CA0_83C50();
-	  }
-	  func_80074500_834B0();
-	  func_80074500_834B0();
-	  D_801497C0->unk4 = (u8) (func_8007452C_834DC() - 1);
+			i = D_80149B3C;
+			D_801497C0 = (MissionCondEntry *)(((u8 *)D_8004D1C8) + (i * 6)); D_80149B3C++;
+			D_801497C0->unk0 = 4;
+			D_801497C0->unk2 = (u8)D_80149B2C;
+			D_801497C0->unk3 = 0;
+			func_80074500_834B0();
+			if (func_80074500_834B0() == 0xB9)
+			{
+				D_801497C0->unk1 = (u8)func_8007452C_834DC();
+				func_80074500_834B0();
+				if (func_80074558_83508() == 0x94)
+				{
+					func_80074500_834B0();
+					func_80074500_834B0();
+					func_80074500_834B0();
+					D_801497C0->unk5 = (u8)func_8007452C_834DC();
+					func_80074500_834B0();
+				}
+				else
+				{
+					D_801497C0->unk5 = 3;
+				}
+				func_80074CA0_83C50();
+				if ((D_801497C0->unk1 < 0x46) || (D_801497C0->unk1 >= 0x48))
+				{
+					osSyncPrintf(D_80141384_150334, D_80149B48);
+				}
+			}
+			else
+			{
+				func_80074500_834B0();
+				func_80074500_834B0();
+				func_80074500_834B0();
+				func_80074500_834B0();
+				D_801497C0->unk1 = (u8)func_8007452C_834DC();
+				func_80074CA0_83C50();
+			}
+			func_80074500_834B0();
+			func_80074500_834B0();
+			D_801497C0->unk4 = (u8)(func_8007452C_834DC() - 1);
+		} while (func_80074558_83508() == 0xB7);
 	}
-	while (func_80074558_83508() == 0xB7);
-  }
 }
 
 // AI - Read random object weight table from stream
@@ -715,25 +732,28 @@ void func_80075574_84524(void) {
 // AI - Clear all mission/dialogue conditions
 void func_800755E0_84590(void)
 {
-  s32 i;
-  func_80074204_831B4();
-  for (i = 0; i < 0x40; i++)
-  {
-	D_8004D1C8[i].unk0 = 0;
-  }
+	s32 i;
+	func_80074204_831B4();
+	for (i = 0; i < 0x40; i++)
+	{
+		D_8004D1C8[i].unk0 = 0;
+	}
 
-  D_8004D150 = 0;
+	D_8004D150 = 0;
 }
 
 // AI - Check and mark completed missions for current level
-void func_8007562C_845DC(void) {
-  s32 i;
+void func_8007562C_845DC(void)
+{
+	s32 i;
 
-  for (i = 0; i < 4; i++) {
-	if ((D_8013BAC0_14AA70[currentLevel - 1][i] >= 0) && (func_80076208_851B8(D_8013BAC0_14AA70[currentLevel - 1][i]) != 0)) {
-	  func_800078E4_84E4(D_8013BAC0_14AA70[currentLevel - 1][i], &D_8004D150);
+	for (i = 0; i < 4; i++)
+	{
+		if ((D_8013BAC0_14AA70[currentLevel - 1][i] >= 0) && (func_80076208_851B8(D_8013BAC0_14AA70[currentLevel - 1][i]) != 0))
+		{
+			func_800078E4_84E4(D_8013BAC0_14AA70[currentLevel - 1][i], &D_8004D150);
+		}
 	}
-  }
 }
 
 // AI - Parse entire mission data blob
@@ -966,74 +986,91 @@ void func_80075AA4_84A54(void) {
 }
 
 // AI - Post-process mission cleanup and bitmask building
-void func_80075E50_84E00(void) {
-    u8 vehicleId;
-    s32 count;
-    MissionCommand *cmd;
-    s32 bitId;
-    u8 *stream;
-    s32 has83After82;
-    u8 val;
-    u32 bitmask[8];
+void func_80075E50_84E00(void)
+{
+	u8 vehicleId;
+	s32 count;
+	MissionCommand *cmd;
+	s32 bitId;
+	u8 *stream;
+	s32 has83After82;
+	u8 val;
+	u32 bitmask[8];
 
-    stream = &D_80224680;
-    cmd = D_801497C8;
-    count = D_80149B30;
-    has83After82 = 0;
-    for (; count--; cmd++) {
-        switch (cmd->opcode) {
-        case 0x9C:
-            vehicleId = cmd->args[0];
-            if (vehicleInstances[vehicleId].unk3C == 1) {
-                func_800E5CF4_F4CA4(2, vehicleId);
-            } else {
-                vehicleInstances[vehicleId].unk20 &= 0x7FFF;
-            }
-            break;
-        default:
-            continue;
-        }
-    }
-    func_800FAD10_109CC0();
-    count = 8;
-    while (count--) {
-        D_8014D1B8[count] = 0;
-    }
-    count = 0x40;
-    while (count--) {
-        if (D_8014CEF0[count].command[0] == 0x99) {
-            bitId = D_8014CEF0[count].command[1];
-            D_8014D1B8[bitId >> 5] |= 1 << (bitId & 0x1F);
-        }
-    }
-    count = 0x800;
-    while (count--) {
-        if (stream[0] == 0x82 && stream[1] == 0x99 && stream[3] == 0x8E) {
-            bitId = stream[2];
-            bitmask[bitId >> 5] |= 1 << (bitId & 0x1F);
-        }
-        stream++;
-    }
-    count = 8;
-    while (count--) {
-        D_8014D1B8[count] &= bitmask[count];
-    }
-    stream = &D_80224680;
-    count = 0x800;
-    while (count--) {
-        val = *stream++;
-        if (val == 0x82) {
-            has83After82 = 0;
-        }
-        if (val == 0x83) {
-            if (has83After82 == 1) {
-                /* Keep the true constant live through IDO register allocation. */
-            }
-            if (!has83After82) {
-                has83After82 = 1;
-            }
-        }
-    }
+	stream = &D_80224680;
+	cmd = D_801497C8;
+	count = D_80149B30;
+	has83After82 = 0;
+	for (; count--; cmd++)
+	{
+		switch (cmd->opcode)
+		{
+		case 0x9C:
+			vehicleId = cmd->args[0];
+			if (vehicleInstances[vehicleId].unk3C == 1)
+			{
+				func_800E5CF4_F4CA4(2, vehicleId);
+			}
+			else
+			{
+				vehicleInstances[vehicleId].unk20 &= 0x7FFF;
+			}
+			break;
+		default:
+			continue;
+		}
+	}
+	func_800FAD10_109CC0();
+	count = 8;
+	while (count--)
+	{
+		D_8014D1B8[count] = 0;
+	}
+	count = 0x40;
+	while (count--)
+	{
+		if (D_8014CEF0[count].command[0] == 0x99)
+		{
+			bitId = D_8014CEF0[count].command[1];
+			D_8014D1B8[bitId >> 5] |= 1 << (bitId & 0x1F);
+		}
+	}
+	count = 0x800;
+	while (count--)
+	{
+		if (stream[0] == 0x82 && stream[1] == 0x99 && stream[3] == 0x8E)
+		{
+			bitId = stream[2];
+			bitmask[bitId >> 5] |= 1 << (bitId & 0x1F);
+		}
+		stream++;
+	}
+	count = 8;
+	while (count--)
+	{
+		D_8014D1B8[count] &= bitmask[count];
+	}
+	stream = &D_80224680;
+	count = 0x800;
+	while (count--)
+	{
+		val = *stream++;
+		if (val == 0x82)
+		{
+			has83After82 = 0;
+		}
+		if (val == 0x83)
+		{
+			if (has83After82 == 1)
+			{
+				/* Keep the true constant live through IDO register allocation. */
+			}
+			if (!has83After82)
+			{
+				has83After82 = 1;
+			}
+		}
+	}
 }
 
 // AI - Check if mission category is unlocked
