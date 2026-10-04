@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-04T08:14:44Z",
-  "commit": "d7aa9013",
-  "commit_timestamp": "2026-10-04T14:37:47+13:00",
+  "generated": "2026-10-04T20:53:50Z",
+  "commit": "5ce6f2b4",
+  "commit_timestamp": "2026-10-05T09:53:06+13:00",
   "overall": {
-    "total_functions": 2715,
-    "matched": 1802,
-    "non_matching": 913,
+    "total_functions": 2716,
+    "matched": 1815,
+    "non_matching": 901,
     "asm_stubs": 0,
-    "matched_pct": 66.37,
+    "matched_pct": 66.83,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -31,10 +31,10 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 994,
+      "matched": 995,
       "non_matching": 453,
       "asm_stubs": 0,
-      "total": 1447,
+      "total": 1448,
       "matched_pct": 68.7,
       "decompiled_pct": 100.0
     },
@@ -85,11 +85,11 @@
     },
     "overlay_level/comet": {
       "display_name": "Level / Comet",
-      "matched": 48,
-      "non_matching": 74,
+      "matched": 60,
+      "non_matching": 62,
       "asm_stubs": 0,
       "total": 122,
-      "matched_pct": 39.3,
+      "matched_pct": 49.2,
       "decompiled_pct": 100.0
     }
   },
@@ -707,11 +707,11 @@
     {
       "path": "overlay_gameplay/outside/FEC70.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 8,
+      "matched": 9,
       "non_matching": 6,
       "asm_stubs": 0,
-      "total": 14,
-      "matched_pct": 57.1,
+      "total": 15,
+      "matched_pct": 60.0,
       "contributor": "jaytheham"
     },
     {
@@ -807,11 +807,11 @@
     {
       "path": "overlay_level/comet/318E20.c",
       "segment": "overlay_level/comet",
-      "matched": 48,
-      "non_matching": 74,
+      "matched": 60,
+      "non_matching": 62,
       "asm_stubs": 0,
       "total": 122,
-      "matched_pct": 39.3,
+      "matched_pct": 49.2,
       "contributor": "jaytheham"
     },
     {
@@ -889,8 +889,8 @@
     {
       "name": "jaytheham",
       "files": 76,
-      "matched": 1759,
-      "non_matching": 908,
+      "matched": 1772,
+      "non_matching": 896,
       "asm_stubs": 0
     },
     {
@@ -1156,10 +1156,10 @@
     },
     {
       "date": "2026-10-04",
-      "commit": "d7aa901",
-      "matched": 1802,
-      "non_matching": 913,
-      "total": 2715
+      "commit": "5ce6f2b",
+      "matched": 1815,
+      "non_matching": 901,
+      "total": 2716
     }
   ]
 }
