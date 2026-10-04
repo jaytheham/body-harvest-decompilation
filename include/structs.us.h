@@ -1000,7 +1000,7 @@ typedef struct {
 	/* 0x16 */ s16 unk16; // target y coord
 	/* 0x18 */ s16 unk18; // target z coord
 	/* 0x1A */ u8 typeIndex; // Types are the same every level? e.g. 0x19 is harvester, 0x1B is Boss
-	/* 0x1B */ u8 unk1B; // "Stage" something to do with showing health bar? Used as human count for harvester?
+	/* 0x1B */ u8 unk1B; // Stage this enemy is considered active part of (0 = stage 1; 1 = stage 2; etc)
 	/* 0x1C */ s16 hitPoints;
 	union {
 		/* 0x1E */ s16 unk1E; // Weapons? 0x1F used as HCU count for harvester?
@@ -1010,7 +1010,7 @@ typedef struct {
 		};
 	};
 	/* 0x20 */ s32 unk20; // Bit flags
-	/* 0x24 */ u8 unk24; // Human type. Harvester humans eaten count. Processor child alien spawned count.
+	/* 0x24 */ u8 unk24; // Human type/behavior. Harvester humans eaten count. Processor child alien spawned count. Black Adam behavior.
 	/* 0x25 */ u8 unk25; // Parent alien instance id
 	/* 0x26 */ u8 unk26; // Harvester unspawned HCU count
 	/* 0x27 */ u8 unk27;
@@ -1368,7 +1368,7 @@ typedef struct {
 	/* 0x02 */ s16 yCoord;
 	/* 0x04 */ s16 zCoord;
 	/* 0x06 */ u8 buildingType;
-	/* 0x07 */ u8 unk7;
+	/* 0x07 */ u8 unk7; // number of humans inside building
 	union {
 		struct {
 			/* 0x08 */ u8 isDestroyable;

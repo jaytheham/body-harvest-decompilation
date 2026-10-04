@@ -792,6 +792,7 @@ void func_8008D71C_9C6CC(u32 arg0)
 
 // https://decomp.me/scratch/lrRls
 // AI - Detach alien from parent
+// Goliath/"Spyder" behavior - set unk25 parent to FF if parent harvester died?
 s32 func_8008D978_9C928(u8 arg0)
 {
 	AlienInstance *inst = &alienInstances[arg0];
@@ -1380,6 +1381,7 @@ void func_8008EF7C_9DF2C(u8 arg0)
 
 // CURRENT(3341)
 // AI - AI movement/state machine
+// Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) movement/state machine
 #ifdef NON_MATCHING
 void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 {
@@ -1672,6 +1674,7 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 #endif
 
 // AI - Set follow-target for companion aliens
+// Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) behavior/targeting
 void func_8008F6C0_9E670(u8 arg0)
 {
 	u8 temp_a0;
@@ -1702,6 +1705,7 @@ void func_8008F6C0_9E670(u8 arg0)
 }
 
 // AI - Movement update with follow-target refresh
+// Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) behavior specs.unk4C
 void func_8008F818_9E7C8(u8 arg0)
 {
 	AlienInstance *ai = &alienInstances[arg0];
@@ -1753,6 +1757,7 @@ void func_8008F8D4_9E884(u8 arg0, s16 arg1)
 // Current(817)
 #ifdef NON_MATCHING
 // AI - Harvester/drone AI update
+// Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) behavior specs.unk48
 void func_8008F9E4_9E994(u8 arg0)
 {
 	s32 moved = 0;
@@ -2641,6 +2646,7 @@ void func_800918E0_A0890(u8 arg0)
 }
 
 // AI - General AI step (detach, player check, target update)
+// Goliath/"Spyder" attack AI
 s32 func_800919C0_A0970(u8 arg0, u8 arg1)
 {
 	AlienInstance *alien;
@@ -2759,6 +2765,7 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2)
 // CURRENT(38)
 #ifdef NON_MATCHING
 // AI - Movement AI with building attack
+// Goliath/"Spyder" behavior specs.unk4C
 void func_80091E70_A0E20(u8 arg0)
 {
 	s32 x;
@@ -2815,6 +2822,7 @@ void func_80091E70_A0E20(u8 arg0)
 
 // CURRENT(10706)
 // AI - Drone/Boss attack AI with melee patterns
+// Goliath/"Spyder" behavior specs.unk48
 #ifdef NON_MATCHING
 void func_800920C0_A1070(u8 arg0)
 {

@@ -3074,6 +3074,7 @@ void func_802DBBE4_1F48F4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBBE4_1F48F4.s")
 #endif
 
+// Locust (Greece green glider enemy) behavior specs.unk4C
 #ifdef NON_MATCHING
 void func_802DBCB0_1F49C0(u8 arg0) {
 	AlienInstance *alien;

@@ -1290,6 +1290,7 @@ void func_802D5D08_255448(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5D08_255448.s")
 #endif
 
+// helper function called through Torabug on-death function
 void func_802D5F88_2556C8(u8 arg0) {
 	s32 pad_top1;
 	s32 pad_top2;
@@ -1309,12 +1310,16 @@ void func_802D5F88_2556C8(u8 arg0) {
 	sinVal = (s16)(((f32)sins(alien->unk6) / 32768.0) * 6.0);
 	func_80088E40_97DF0(arg0, sp3A, D_8014DD50[sp3A].unk0, D_8014DD50[sp3A].unk2, D_8014DD50[sp3A].unk4, -sinVal, 8, cosVal);
 	func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16)alienTypes[alien->typeIndex].unkC, 0);
+
 	if (alien->unk25 != 0xFF) {
 		alienInstances[alien->unk25].unk24--;
 	}
+	// ^^^ if alien has a parent, decrement parent's unk24 value without checking what parent type it is. this seems to be a dev oversight and leads to two separate glitches:
+	// 1. a Torabug with Harvester parent decrements Harvester's "humans eaten count" - this can underflow to 255, leading to early Mutant spawn
+	// 2. a Torabug with Processor parent decrements twice (here, and again in func_802D6138) - Processor's unk24 can underflow to 255, stopping new minion spawns
 }
 
-// Alien type 0xA death handler
+// Torabug (purple gunship) on-death function
 void func_802D6138_255878(u8 arg0)
 {
 	s16 parentInstanceId;
@@ -1350,6 +1355,7 @@ void func_802D6138_255878(u8 arg0)
 			isAlive = alien->unk20 & ALIEN_FLAG_UNKL;
 		}
 	}
+	// if parent is a Processor, decrement parent's unk24 (Processor active minion count)
 	if (!isAlive && (parentInstanceId != 0xFF))
 	{
 		if (alienInstances[parentInstanceId].typeIndex == 0x1A)
