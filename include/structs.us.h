@@ -1,12 +1,12 @@
-typedef struct MissionCommand {
-    u8 opcode;
-    u8 args[2];
-} MissionCommand; /* size = 0x03 */
-
 #ifndef STRUCTS_US_H
 #define STRUCTS_US_H
 
 #include <PR/sched.h>
+
+typedef struct MissionCommand {
+    u8 opcode;
+    u8 args[2];
+} MissionCommand; /* size = 0x03 */
 
 typedef struct MissionInfo {
     u8 flags;
@@ -344,6 +344,9 @@ typedef struct {
 	/* 0x04 */ u8 unk4;
 	/* 0x05 */ u8 unk5;
 } MissionCondEntry; /* size = 0x06 */
+
+/* Two three-byte operands, two byte parameters, and an opcode. */
+typedef u8 MissionGameCondition[9];
 
 typedef struct {
 	/* 0x00 */ u8 cheatPattern[0xC];
@@ -1521,7 +1524,14 @@ typedef struct {
 			/* 0x08 */ u8 isDestroyable;
 			/* 0x09 */ u8 unk9;
 			/* 0x0A */ u8 state;
-			/* 0x0B */ u8 rotation;
+			/* 0x0B */ union {
+                u8 rotation;
+                struct {
+                    u8 rotationHighFlags : 2;
+                    u8 rotationIndex : 4;
+                    u8 rotationLowFlags : 2;
+                };
+            };
 		};
 		/* 0x08 */ u32 unk8;
 	};

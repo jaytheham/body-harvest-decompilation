@@ -853,7 +853,7 @@ extern s32 D_8004D15C; // AI - Mission tile-data-complete set bitmask/pointer
 extern u8 D_8004D160[]; // AI - Mission character/actor ID pairs [id, spawnedInstance]
 extern u8 D_8004D161[]; // AI - Overlaps D_8004D160, character spawned instance indices
 extern u8 D_8004D17E; // AI - Mission random object count
-extern u8 D_8004D180[]; // AI - Selected random object entries (3-byte each, max 16)
+extern MissionCommand D_8004D180[]; // AI - Selected random object entries (3-byte each, max 16)
 extern u8 D_8004D1AD; // AI - Mission init flag (initialized to 0xFF)
 extern u8 D_8004D1B0[]; // AI - Mission flag array (cleared by command opcode 0xA3)
 extern u8 D_8004D1B1; // AI - Part of mission flag array D_8004D1B0
@@ -864,7 +864,7 @@ extern u8 D_8004D1BF; // AI - Mission init marker (initialized to 0xFF)
 extern s16 D_8004D1C0; // AI - Mission state flag (reset on flag-clear command)
 extern MissionCondEntry D_8004D1C8[]; // AI - Dialogue condition entries (max 64, 6 bytes each)
 extern s8 D_8004D342; // AI - Dialogue condition counter (initialized to 0)
-extern u8 D_8004D348[]; // AI - Game condition entries (9 bytes each, max 255)
+extern MissionGameCondition D_8004D348[]; // AI - Game condition entries (9 bytes each, max 255)
 extern u8 D_8004D350[]; // AI - Overlaps D_8004D348, game condition data
 extern s32 D_8004DC40; // AI - Mission state (-1 = uninitialized)
 extern BitFlags64 D_8004DC48; // "keys"
@@ -2116,9 +2116,9 @@ extern u8 D_801494BC; // AI - Current byte from mission data stream
 extern MissionCondEntry D_801494C0[]; // AI - Mission condition entries (max 128, 6 bytes each)
 extern u8 D_801497BA; // AI - Secondary/special mission entry buffer (6-byte entries, max 128)
 extern MissionCondEntry *D_801497C0; // AI - Pointer to current mission condition entry
-extern u8 *D_801497C4; // AI - Pointer to current game condition entry
-extern u8 D_801497C8[]; // AI - Mission command buffer (3-byte entries, max 254)
-extern u8 D_80149AC8[]; // AI - Random object scratch space (3-byte entries)
+extern MissionGameCondition *D_801497C4; // AI - Pointer to current game condition entry
+extern MissionCommand D_801497C8[]; // AI - Mission command buffer (3-byte entries, max 254)
+extern MissionCommand D_80149AC8[]; // AI - Random object scratch space (3-byte entries)
 extern u8 D_80149AF8[]; // AI - Wave entry / random object definitions (3-byte entries)
 extern u8 D_80149B25; // AI - Mission flag init byte (initialized to 0xFF)
 extern s32 D_80149B28; // AI - Number of mission conditions (max 128)

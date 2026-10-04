@@ -918,7 +918,7 @@ loop:
 		*arg2 = arg0[2] << 8;
 		return;
 	case 0xAF:
-		arg0 = &D_8004D180[arg0[1] * 3];
+		arg0 = &D_8004D180[arg0[1]].opcode;
 		goto loop;
 	}
 }
@@ -969,7 +969,7 @@ void func_80007900_8500(u8 *arg0) {
 			break;
 		case 0xAF:
 			osSyncPrintf(&D_80036E20_37A20, arg0[1]);
-			func_80007900_8500(&D_8004D180[arg0[1] * 3]);
+			func_80007900_8500(&D_8004D180[arg0[1]].opcode);
 			osSyncPrintf(&D_80036E34_37A34);
 			break;
 		default:
@@ -1067,7 +1067,7 @@ void func_80007C78_8878(u8 *arg0) {
 	u8 *ptr;
 
 	i = arg0[3];
-	ptr = &D_8004D348[arg0[2] * 9];
+	ptr = D_8004D348[arg0[2]];
 	osSyncPrintf(&D_80036FE4_37BE4); //  because
 	if (i--) {
 		do {
@@ -1123,7 +1123,7 @@ loop:
 		return alien->hitPoints < alienTypes[alien->typeIndex].unk3A;
 	}
 	case 0xAF:
-		arg0 = &D_8004D180[arg0[1] * 3];
+		arg0 = &D_8004D180[arg0[1]].opcode;
 		goto loop;
 	}
 }
@@ -1151,7 +1151,7 @@ loop:
 		return (s8)bi->hitPoints < 1;
 	}
 	case 0xAF:
-		arg0 = &D_8004D180[arg0[1] * 3];
+		arg0 = &D_8004D180[arg0[1]].opcode;
 		goto loop;
 	}
 }
@@ -1173,7 +1173,7 @@ s32 func_8000807C_8C7C(u8 *arg0, u8 *arg1) {
 		case 0x9A:
 			return D_80052B34 == &vehicleInstances[arg1[1]];
 		case 0xAF:
-			arg1 = D_8004D180 + arg1[1] * 3;
+			arg1 = &D_8004D180[arg1[1]].opcode;
 			continue;
 		case 0x99:
 			return D_80052540 == arg1[1];
@@ -1183,11 +1183,11 @@ s32 func_8000807C_8C7C(u8 *arg0, u8 *arg1) {
 		case 0x99:
 			return arg0[1] == (((buildingInstances[arg1[1]].unk8) << 26) >> 28);
 		case 0xAF:
-			arg1 = D_8004D180 + arg1[1] * 3;
+			arg1 = &D_8004D180[arg1[1]].opcode;
 			continue;
 		}
 	case 0xAF:
-		arg0 = D_8004D180 + arg0[1] * 3;
+		arg0 = &D_8004D180[arg0[1]].opcode;
 		continue;
 	}
 		return;
@@ -1280,7 +1280,7 @@ u8 func_8000851C_911C(s16 arg0) {
 	while (i--) {
 		if (entry[0] != 0 && entry[1] == arg0) {
 			count = entry[3];
-			item = &D_8004D348[entry[2] * 9];
+			item = D_8004D348[entry[2]];
 			if (count--) {
 				loop_1:
 				{
@@ -1294,7 +1294,7 @@ u8 func_8000851C_911C(s16 arg0) {
 				if (count != 0) {
 					goto loop_1_check;
 				}
-				item = &D_8004D348[entry[2] * 9];
+				item = D_8004D348[entry[2]];
 				count = entry[3];
 				osSyncPrintf(&D_80037018_37C18, entry[4] + 1);
 				if (count--) {
@@ -1336,7 +1336,7 @@ void guess_checkMissions(void) {
 		sp5C = 0x3F;
 		do {
 			if (!((s32)((1 << sp5C) >> 31) & D_8004DC50.unk0) && !((1 << sp5C) & D_8004DC50.unk4) && entry[0] != 0 && (s32)entry[1] >= 0x46) {
-				item = &D_8004D348[entry[2] * 9];
+				item = D_8004D348[entry[2]];
 				var_s0 = entry[3] - 1;
 				if (entry[3] != 0) {
 				loop_7:
@@ -1348,7 +1348,7 @@ void guess_checkMissions(void) {
 								sp4C = 1;
 								osSyncPrintf(&D_80037070_37C70, entry[4] + 1, entry[5]);
 								var_s0 = entry[3] - 1;
-								item = &D_8004D348[entry[2] * 9];
+								item = D_8004D348[entry[2]];
 								if (entry[3] != 0) {
 									do {
 										cur = item;
