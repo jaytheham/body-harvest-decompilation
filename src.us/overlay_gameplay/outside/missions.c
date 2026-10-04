@@ -646,7 +646,7 @@ void func_800753A0_84350(void)
 		do
 		{
 			i = D_80149B3C;
-			D_801497C0 = (MissionCondEntry *)(((u8 *)D_8004D1C8) + (i * 6)); D_80149B3C++;
+			D_801497C0 = &D_8004D1C8[i]; D_80149B3C++;
 			D_801497C0->unk0 = 4;
 			D_801497C0->unk2 = (u8)D_80149B2C;
 			D_801497C0->unk3 = 0;
