@@ -840,7 +840,7 @@ extern s32 D_80048188;
 extern s32 D_8004818C;
 extern s32 D_80048190;
 extern s32 D_80048194;
-extern u8 D_800481BD[];
+extern u8 D_800481BD[][0x50]; /* AI - alienInstances parent byte, one entry per instance */
 extern s16 D_800481A4; // 0x800481A4 = alienInstances[0].unk0C
 extern u8 D_800481CE; // 0x800481CE = alienInstances[0].unk36
 extern AlienInstance alienInstances[0xFE]; // 0x80048198
@@ -3332,7 +3332,6 @@ extern const f64 D_802E7C08_32BD58[];
 extern const f64 D_802E7C10_32BD60[];
 extern const f64 D_802E7C18_32BD68[];
 extern const f64 D_802E7C20_32BD70[];
-extern const f64 D_802E7C28_32BD78[];
 extern s16 D_802E7C30;
 extern s16 D_802E7C32;
 extern s16 D_802E7C34;

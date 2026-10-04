@@ -3387,4 +3387,12 @@ typedef union {
 	TerrainObjectCell objects[256];
 } D_801FEA30_Row;
 
+typedef union {
+	s32 word;
+	struct {
+		s16 high;
+		s16 low;
+	} halves;
+} SignedWord;
+
 #endif
