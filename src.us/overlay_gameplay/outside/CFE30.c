@@ -2025,6 +2025,7 @@ void func_800C4CB8_D3C68(void) {
 #endif
 
 // CURRENT(4247)
+// spawn particle?
 #ifdef NON_MATCHING
 void func_800C4F48_D3EF8(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	Vec3f sp34;
@@ -2093,6 +2094,7 @@ void func_800C4F48_D3EF8(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 #endif
 
 // CURRENT(3437)
+// spawn splash/burst visual effect? called from dozens of places
 #ifdef NON_MATCHING
 void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10,
 						 u8 arg11, u8 arg12) {
@@ -2161,6 +2163,7 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 #endif
 
 // CURRENT(477)
+// spawn radial particle effect?
 #ifdef NON_MATCHING
 void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	s32 i;
@@ -3659,6 +3662,7 @@ void func_800CA1B0_D9160(u8 arg0) {
 #endif
 
 // CURRENT(4556)
+// spurt/blood visual effect?
 #ifdef NON_MATCHING
 s32 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8,
 						u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
@@ -10796,6 +10800,7 @@ void func_800DFA98_EEA48(s8 *arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(4815)
+// large explosion effect with smaller random explosions
 void func_800DFBA8_EEB58(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 	s8 sp68[0x10];
 	s32 i;

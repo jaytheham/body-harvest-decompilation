@@ -3947,6 +3947,7 @@ void func_800821F0_911A0(s32 arg0, s32 arg1, s32 arg2, u8 *arg3) {
 	}
 }
 
+// only called thru Processor on-death function
 void func_800822BC_9126C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	s32 sp1c;
 	s32 sp18;
@@ -6168,6 +6169,7 @@ s32 func_800879A4_96954(u8 arg0, s16 arg1, u8 arg2)
 	}
 }
 
+// set up alien for removal with ~2 second timer
 void func_80087AAC_96A5C(u8 arg0) {
 	if (!(alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKM | ALIEN_FLAG_UNKL))) {
 		alienInstances[arg0].unk12 = 0;
@@ -6271,6 +6273,7 @@ s32 func_80087E30_96DE0(void) {
 	} while (i--);
 }
 
+// clear/remove all active aliens at full human meter - special handling for different types
 void func_80087F08_96EB8(void)
 {
   AlienWaveInstance *waves;
@@ -6797,7 +6800,7 @@ void func_80089574_98524(u8 arg0) {
 				if ((temp_v0 == 0x14) || (temp_v0 == 0xB) || (temp_v0 == 0xC) || (temp_v0 == 4)) {
 					D_8004816C--;
 				}
-				func_800AE190_BD140(1); // increase global humans killed count
+				func_800AE190_BD140(1); // increase human meter + humans killed
 			}
 		}
 		temp_v0 = s0->unk24;
@@ -6835,6 +6838,7 @@ void func_80089574_98524(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80089574_98524.s")
 #endif
 
+// HCU on-death function all levels
 void func_80089A2C_989DC(u8 arg0) {
 	s32 pad0;
 	s32 pad1;
@@ -6932,7 +6936,7 @@ void func_80089D04_98CB4(u8 arg0) // Black Adam on-death function
   }
   if (alienInstances[arg0].unk2C == 0x7CCE) // at death timer 31950 - about 2.5 seconds later
   {
-	func_800BDDB4_CCD64();
+	func_800BDDB4_CCD64(); // triggers visual effects - lightning, explosions, rings on ground
   }
   if ((!(D_80052A8C & 7)) && (D_80031420 & 3))
   {
@@ -7250,6 +7254,7 @@ void func_8008AC5C_99C0C(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008AC5C_99C0C.s")
 #endif
 
+// Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) on-death func
 void func_8008AF58_99F08(u8 arg0)
 {
 	s32 inst;
@@ -7300,6 +7305,7 @@ void func_8008B108_9A0B8(u8 arg0) {
 }
 
 // CURRENT(2818)
+// Goliath/"Spyder" on-death function
 #ifdef NON_MATCHING
 void func_8008B190_9A140(u8 arg0) {
 	AlienInstance *inst;
@@ -7403,6 +7409,7 @@ void func_8008B190_9A140(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008B190_9A140.s")
 #endif
 
+// called only thru Processor on-death function
 void func_8008B870_9A820(u8 arg0) {
 	AlienInstance *inst;
 	s32 unk20;
@@ -7418,6 +7425,7 @@ void func_8008B870_9A820(u8 arg0) {
 }
 
 // https://decomp.me/scratch/YKVHR
+// Processor on-death function - does not explicitly win stage, open shield portal, or kill current stage enemies
 void func_8008B8E4_9A894(u8 arg0)
 {
 	s32 pad[2];

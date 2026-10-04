@@ -706,6 +706,7 @@ void func_80075574_84524(void) {
 }
 
 // AI - Clear all mission/dialogue conditions
+// only called during full human meter game over sequence
 void func_800755E0_84590(void)
 {
 	s32 i;

@@ -538,22 +538,22 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 	  osSyncPrintf(D_80145070_154020);
 	  return;
 	}
-	if ((arg0->unk1A == 0) && (gameplayMode != 0xC))
+	if ((arg0->unk1A == 0) && (gameplayMode != 0xC)) // if Adam isnt already dead
 	{
-	  if (D_80222A70 < D_80052B34->unk2)
+	  if (D_80222A70 < D_80052B34->unk2) // if above water, scream?
 	  {
 		func_801371B8_146168(0, 0x185, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 0.25f);
 	  }
 	  func_80133260_142210(&D_80160080);
-	  func_80006DAC_79AC(0x64, 0);
+	  func_80006DAC_79AC(0x64, 0); // 5 second transition to frontend/game over
 	  // Do screen shake
 	  func_8009C458_AB408();
 	  return;
 	}
   }
-  else if (arg0->unk20 & VEHICLE_FLAG_UNKB)
+  else if (arg0->unk20 & VEHICLE_FLAG_UNKB) // if NPC vehicle...
   {
-	func_800AE190_BD140(2); // increase global humans killed count
+	func_800AE190_BD140(2); // ... add 2 to global humans killed count
 	for (i = 0; i < 2; i++)
 	{
 		// Play sound effect at vehicle position
@@ -580,7 +580,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 	  // Eject player from vehicle
 	  func_800FDEA8_10CE58(D_80052B2C, 1);
 	}
-	func_80123AC4_132A74(D_80052B34);
+	func_80123AC4_132A74(D_80052B34); // recursive call of this func to ensure Adam dies if he was in a vehicle
   }
   // Mark target vehicle as destroyed
   func_800FDD8C_10CD3C(arg0);

@@ -4508,8 +4508,8 @@ void func_800FDC30_10CBE0(s16 arg0) {
 	switch (currentLevel) {
 	case 1: {
 		s32 type = v->unk1A;
-		if (type != 0xC) {
-			if (type == 0x11) {
+		if (type != 0xC) { // if not ambulance in Greece...
+			if (type == 0x11) {// if Plane Training Target?
 				s32 i = 0x7F;
 				VehicleInstance *v2 = &vehicleInstances[127];
 				do {
@@ -4524,7 +4524,7 @@ void func_800FDC30_10CBE0(s16 arg0) {
 				D_8004DC58 = 5;
 			}
 		} else {
-			func_800AE190_BD140(0xA);
+			func_800AE190_BD140(0xA); // ambulance dying adds 10 to human meter (during mission, NPC vehicle dying adds 2 more separately)
 			return;
 		}
 		break;

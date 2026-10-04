@@ -1620,6 +1620,9 @@ void func_802D8150_190C60(u8 arg0)
 	alienTypeIndex = alien->typeIndex;
 	if (!(alien->unk20 & ALIEN_FLAG_UNKL))
 	{
+		// bookkeep against flea parent's "minion" counter unk24 ONLY if parent is a Processor
+		// possible bug: only decrements if flea self-exploded, not if killed by player or enemy friendly fire
+		// this leads to processor reaching Max minion count (and stopping new flea spawns
 		if (parentAlienIndex != 0xFF)
 		{
 			parentAlien = &alienInstances[parentAlienIndex];
@@ -1628,6 +1631,7 @@ void func_802D8150_190C60(u8 arg0)
 				parentAlien->unk24 = (u8)(parentAlien->unk24 - 1);
 			}
 		}
+
 		if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
 		{
 			func_80137468_146418(arg0, 0xD);
@@ -1707,6 +1711,7 @@ void func_802D852C_19103C(u8 arg0) {
 }
 
 // AI - Alien behavior dispatcher choosing attack or patrol
+// Bomber (Greece green glider enemy) behavior specs.unk4C
 void func_802D85F8_191108(u8 arg0)
 {
 	u8 new_var;
@@ -1742,6 +1747,7 @@ void func_802D85F8_191108(u8 arg0)
 }
 
 // AI - Alien AI with projectile attacks
+// Bomber (Greece green glider enemy) behavior specs.unk48
 void func_802D8724_191234(u8 arg0)
 {
 	s16 new_var2;
@@ -1778,6 +1784,7 @@ void func_802D8724_191234(u8 arg0)
 }
 
 // AI - Flying alien AI with vertical movement
+// Bomber (Greece green glider enemy) on-death function
 void func_802D8898_1913A8(u8 arg0)
 {
 	if (alienInstances[arg0].unk20 & 0x600)

@@ -140,7 +140,7 @@ void func_800A4150_B3100(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-// Update alien Processor? Sets child spawn type among other things.
+// Processor behavior with minion spawning - enemyspecs.unk4C
 void func_800A41B0_B3160(u8 arg0) {
 	s8 armA;
 	s8 armB;
@@ -301,33 +301,34 @@ void func_800A41B0_B3160(u8 arg0) {
 		alienInstances[arg0].unk26--;
 	}
 
-	if ((alienInstances[arg0].unk20 & ALIEN_FLAG_UNKP) && (alienTypes[typeIndex].unk3A / 10 < alienInstances[arg0].hitPoints)) {
-		if (!((currentLevel == 4) && (alienInstances[arg0].unk1B == 2))) {
-			if (alienInstances[arg0].unk24 < (currentLevel < 3 ? 0xC : 6)) {
+	if ((alienInstances[arg0].unk20 & ALIEN_FLAG_UNKP) && (alienTypes[typeIndex].unk3A / 10 < alienInstances[arg0].hitPoints)) { // minions only spawn when processor is damaged
+		if (!((currentLevel == 4) && (alienInstances[arg0].unk1B == 2))) { // if Siberia stage 3, disallow minion spawning in case 3 below
+			if (alienInstances[arg0].unk24 < (currentLevel < 3 ? 0xC : 6)) { // Greece and Java, max minions 12; America and Siberia, max minions 6
 				if ((alienInstances[arg0].unk26 == 0) && !(alienInstances[arg0].unk20 & 0x1000)) {
 					alienInstances[arg0].unk20 |= 0x1000;
 					alienInstances[arg0].unk20 &= ~0x4000;
 					alienInstances[arg0].unk2C = 0;
 					alienInstances[arg0].unk26 = (u8) ((func_800038E0_44E0() % 0x32) + 0x14);
 
+					// minion spawn type and amount
 					switch (currentLevel) {
-					case 1:
+					case 1: // Greece = 6 Fleas
 						alienInstances[arg0].unk3C = 0xD;
 						alienInstances[arg0].unk3D = 6;
 						break;
-					case 2:
+					case 2: // Java = 3 Doodlebugs (red flying kamikaze)
 						alienInstances[arg0].unk3C = 0xA;
 						alienInstances[arg0].unk3D = 3;
 						break;
-					case 3:
+					case 3: // America = 3 Torabugs (purple flying gunship)
 						alienInstances[arg0].unk3C = 0xA;
 						alienInstances[arg0].unk3D = 3;
 						break;
-					case 4:
-						if (alienInstances[arg0].unk1B == 2) {
+					case 4: // Siberia
+						if (alienInstances[arg0].unk1B == 2) { // stage 3 = 2 Sharks (lightning fish) - doesn't happen in finished game. branch explicitly skipped with check above
 							alienInstances[arg0].unk3C = 7;
 							alienInstances[arg0].unk3D = 2;
-						} else {
+						} else { // stages 1, 2, 4 = 3 Doodlebugs (red flying kamikaze)
 							alienInstances[arg0].unk3C = 0xA;
 							alienInstances[arg0].unk3D = 3;
 						}
@@ -383,6 +384,7 @@ void func_800A41B0_B3160(u8 arg0) {
 #endif
 
 // CURRENT (17849)
+// Processor behavior - enemyspecs.unk48
 #ifdef NON_MATCHING
 void func_800A4C28_B3BD8(u8 arg0) {
 	AlienInstance *alien = &alienInstances[arg0];

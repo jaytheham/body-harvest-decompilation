@@ -4800,13 +4800,14 @@ void func_800BDDA0_CCD50(void) {
 	D_8013D9AC_14C95C = 0;
 }
 
-// only call happens a couple seconds into Black Adam's death - lighting related?
+// called thru Black Adam's death - trigger visual effects thru state 3 of func_800BDDCC
 void func_800BDDB4_CCD64(void) {
 	D_80151DD0 = 3;
 	D_8013D9AC_14C95C = 0;
 }
 
 // CURRENT(8803)
+// compare current Human Meter against Max Human Count - game over and endgame effects
 #ifdef NON_MATCHING
 void func_800BDDCC_CCD7C(void) {
 	s16 sp5E;
@@ -4825,8 +4826,8 @@ void func_800BDDCC_CCD7C(void) {
 
 	state = D_80151DD0;
 	if ((state == 0) && ((u8)D_8013D9AC_14C95C == 0)) {
-		if ((D_8004816A >= ((u8)D_800314C4 - 2)) || (func_8000726C_7E6C(0x33) != 0)) {
-			D_80151DD0 = 1;
+		if ((D_8004816A >= ((u8)D_800314C4 - 2)) || (func_8000726C_7E6C(0x33) != 0)) { // when human meter is 2 away from max human count..
+			D_80151DD0 = 1; // set state 1 (save beacons disabled here onwards via check in func_800A5A50)
 			D_8013D9AC_14C95C = 0x40;
 		}
 		state = D_80151DD0;
@@ -4834,37 +4835,37 @@ void func_800BDDCC_CCD7C(void) {
 	} else {
 		timer = (u8)D_8013D9AC_14C95C;
 		if ((state == 1) && (timer == 0)) {
-			if ((D_8004816A >= ((u8)D_800314C4 - 1)) || (func_8000726C_7E6C(0x33) != 0)) {
-				D_80151DD0 = 2;
+			if ((D_8004816A >= ((u8)D_800314C4 - 1)) || (func_8000726C_7E6C(0x33) != 0)) { // when human meter is 1 away from max human count...
+				D_80151DD0 = 2; // set state 2
 				D_8013D9AC_14C95C = 0x40;
 			}
 			state = D_80151DD0;
 			timer = (u8)D_8013D9AC_14C95C;
 		} else if ((state == 2) && (timer == 0)) {
-			if ((D_8004816A >= (u8)D_800314C4) || (func_8000726C_7E6C(0x33) != 0)) {
-				D_80151DD0 = 3;
-				D_8013D9AC_14C95C = 0x96;
-				func_800755E0_84590();
+			if ((D_8004816A >= (u8)D_800314C4) || (func_8000726C_7E6C(0x33) != 0)) { // if human meter has reached max human count... bad things
+				D_80151DD0 = 3; // set state 3
+				D_8013D9AC_14C95C = 0x96; // timer ~7.5 seconds
+				func_800755E0_84590(); // clear all missions/dialogue
 				sp5E = 0xFE;
 				do {
-					buildingInstances[sp5E].door1InteriorId = 0;
+					buildingInstances[sp5E].hitPoints = 0; // destroy all buildings
 					func_8011BB94_12AB44(sp5E, 1);
 				} while (sp5E-- != 0);
-				func_80087F08_96EB8();
+				func_80087F08_96EB8(); // remove all active aliens
 			}
 			state = D_80151DD0;
 			timer = (u8)D_8013D9AC_14C95C;
-		} else if ((state == 3) && (timer == 0) && (currentLevel != 5)) {
-			func_80006DAC_79AC(0x64, 0);
-			func_80123AC4_132A74(D_80052B34);
-			func_80123AC4_132A74(D_80052B34);
-			func_800DFBA8_EEB58(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 0xFA, 6);
+		} else if ((state == 3) && (timer == 0) && (currentLevel != 5)) { // Game Over effects only if not on comet (Black Adam death jumps to state 3 for visual effects only)
+			func_80006DAC_79AC(0x64, 0); // start frontend/game over screen countdown ~5 seconds
+			func_80123AC4_132A74(D_80052B34); // kill active player vehicle
+			func_80123AC4_132A74(D_80052B34); // kill active player vehicle again ensuring Adam dies
+			func_800DFBA8_EEB58(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 0xFA, 6); // player-centered explosion effects
 			D_80151DD0 = 4;
 			state = 4;
 		}
 	}
 
-	if ((state == 3) && (timer == 0x28) && (currentLevel != 5)) {
+	if ((state == 3) && (timer == 0x28) && (currentLevel != 5)) { // call pre-Game Over dialogue only if not on comet (Black Adam death jumps to state 3 for visual effects only)
 		func_80018D7C_1997C(0xE5);
 		state = D_80151DD0;
 		timer = (u8)D_8013D9AC_14C95C;
@@ -4874,6 +4875,7 @@ void func_800BDDCC_CCD7C(void) {
 		D_8013D9AC_14C95C = timer - 1;
 	}
 
+	// 2 away from max human count - random white splash visual effects on ground only
 	if ((state == 1) && ((D_80052A8C % 5U) == 0)) {
 		sp5C = ((func_800038E0_44E0() / 32) + D_80052B34->unk0) - 0x404;
 		sp5A = ((func_800038E0_44E0() / 32) + D_80052B34->unk4) - 0x404;
@@ -4883,8 +4885,9 @@ void func_800BDDCC_CCD7C(void) {
 		state = D_80151DD0;
 	}
 
-	if (state == 2) {
+	if (state == 2) { // 1 away from max human count
 		ticks = D_80052A8C;
+		// random white splash effects on the ground
 		if ((ticks % 3U) == 0) {
 			sp5C = ((func_800038E0_44E0() / 32) + D_80052B34->unk0) - 0x404;
 			sp5A = ((func_800038E0_44E0() / 32) + D_80052B34->unk4) - 0x404;
@@ -4894,6 +4897,7 @@ void func_800BDDCC_CCD7C(void) {
 			ticks = D_80052A8C;
 		}
 
+		// random explosion visual effects on the ground
 		if ((ticks % 9U) == 0) {
 			sp5C = ((func_800038E0_44E0() / 32) + D_80052B34->unk0) - 0x404;
 			sp5A = ((func_800038E0_44E0() / 32) + D_80052B34->unk4) - 0x404;
@@ -4903,8 +4907,9 @@ void func_800BDDCC_CCD7C(void) {
 	}
 
 	state = D_80151DD0;
-	if ((state == 3) || (state == 4)) {
+	if ((state == 3) || (state == 4)) { // at max human meter and after Black Adam death
 		ticks = D_80052A8C;
+		// random expanding light ring visual effects on the ground
 		if ((ticks & 7) == 0) {
 			sp50 = ((func_800038E0_44E0() / 32) + D_80052B34->unk0) - 0x404;
 			sp52 = ((func_800038E0_44E0() / 32) + D_80052B34->unk4) - 0x404;
@@ -4915,6 +4920,7 @@ void func_800BDDCC_CCD7C(void) {
 			ticks = D_80052A8C;
 		}
 
+		// random explosion visual effects on the ground
 		if ((ticks % 5U) == 0) {
 			sp5C = ((func_800038E0_44E0() / 32) + D_80052B34->unk0) - 0x404;
 			sp5A = ((func_800038E0_44E0() / 32) + D_80052B34->unk4) - 0x404;
@@ -4923,6 +4929,7 @@ void func_800BDDCC_CCD7C(void) {
 			ticks = D_80052A8C;
 		}
 
+		// random lightning visual effects
 		if ((ticks % 10U) == 3) {
 			sp5C = ((func_800038E0_44E0() / 32) + D_80052B34->unk0) - 0x404;
 			sp5A = ((func_800038E0_44E0() / 32) + D_80052B34->unk4) - 0x404;

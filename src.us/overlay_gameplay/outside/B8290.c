@@ -664,6 +664,7 @@ void func_800AB408_BA3B8(u8 arg0) {
 }
 
 // AI - Check vehicle follow range
+// human behavior - case 12
 void func_800AB4B4_BA464(u8 arg0) {
 	VehicleInstance *type;
 	s32 dx, dz, ndx, ndz;
@@ -799,6 +800,7 @@ void func_800AB80C_BA7BC(u8 arg0) {
 // CURRENT(7007)
 #ifdef NON_MATCHING
 // AI - Follow squad leader
+// human behavior - for case 3 when captured by HCU
 void func_800AB8CC_BA87C(u8 arg0) {
 	AlienInstance *inst = &alienInstances[arg0];
 	AlienInstance *type = &alienInstances[inst->unk25];
@@ -806,11 +808,12 @@ void func_800AB8CC_BA87C(u8 arg0) {
 	s32 helper1;
 	s32 helper2;
 
+	// human's parent is HCU when being carried - use human's position for HCU to calculate path to its parent Harvester?
 	if (type->typeIndex == 2) {
 		inst->unk0 = type->unk0;
 		inst->unk4 = type->unk4;
 		if (type->unk20 & ALIEN_FLAG_UNKF) {
-			func_8008FF54_9EF04(type->unk25, &helper0, &helper1, &helper2);
+			func_8008FF54_9EF04(type->unk25, &helper0, S&helper1, &helper2);
 			inst->unk2 = (s16)(((type->unk2C * (helper1 - type->unk2)) / 0xF) + type->unk2);
 			return;
 		}
@@ -819,6 +822,7 @@ void func_800AB8CC_BA87C(u8 arg0) {
 		return;
 	}
 
+	// human's parent briefly becomes Harvester when being eaten
 	if (type->typeIndex == 0x19) {
 		func_8008FF54_9EF04(inst->unk25, &helper0, &helper1, &helper2);
 		inst->unk0 = (s16)helper0;
@@ -834,6 +838,7 @@ void func_800AB8CC_BA87C(u8 arg0) {
 			return;
 		}
 
+		// random blood spurts when eaten
 		if ((inst->unk24 == 1) || (inst->unk24 == 0x1D)) {
 			s32 rand0;
 			s32 rand1;
@@ -2000,6 +2005,7 @@ void func_800AE190_BD140(s16 arg0) {
 }
 
 // AI - Increment globals
+// this is only ever called through func_8008DA24 when HCU carries a human to harvester
 void func_800AE1C0_BD170(void) {
 	D_8004816A += 1; // increase human meter
 	D_8004816E += 1; // increase "humans harvested" count

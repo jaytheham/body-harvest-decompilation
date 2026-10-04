@@ -11,6 +11,7 @@ const char D_80145AA4_154A54[] = "Weapon %d not valid\n"; // "Weapon %d not vali
 const char D_80145ABC_154A6C[] = "Weapon %d not valid\n"; // "Weapon %d not valid\n";
 const char D_80145AD4_154A84[] = "New weapon down\n"; // "New weapon down\n";
 
+// max ammo counts allowed for each weapon type- unlimited pistol, 100 shotgun, 999 machine gun...
 s16 D_80140D40_14FCF0[] = {
 	0x0000, 0x0000, -0x8000, 0x0064, 0x0032, 0x03E7, 0x0019, 0x0003,
 	-0x8000, 0x0014, 0x0064, -0x8000, -0x8000, -0x8000, 0x0064, 0x00C8,
@@ -48,18 +49,19 @@ void func_801390F4_1480A4(s16 arg0) {
 	vehicleTypes[D_80052B34->unk1A].weapon1 = D_80031424[arg0];
 }
 
+// update ammo counts, arg0 = ammo type, arg1 = amount
 s32 func_80139150_148100(u8 arg0, u16 arg1) {
 		
-	if (D_80048140[arg0] == D_80140D40_14FCF0[arg0]) {
+	if (D_80048140[arg0] == D_80140D40_14FCF0[arg0]) { // if already at ammo cap, return
 		return 0;
 	}
 	if (D_80048140[arg0] == -0x8000) {
 		return 1;
 	}
-	if (arg1 == -0x8000) {
+	if (arg1 == -0x8000) { // -0x8000 treated as unlimited ammo
 		D_80048140[arg0] = D_80140D40_14FCF0[arg0];
 	}
-	D_80048140[arg0] += arg1;
+	D_80048140[arg0] += arg1; // add to current ammo, not exceeding cap for that ammo type
 	if (D_80140D40_14FCF0[arg0] < D_80048140[arg0]) {
 		D_80048140[arg0] = D_80140D40_14FCF0[arg0];
 	}
@@ -173,9 +175,9 @@ void func_801394DC_14848C(void)
 
   if (currentLevel == LEVEL_COMET)
   {
-	D_80048140[3] = 0x64;
-	D_80048140[4] = 0x190;
-	D_80048140[6] = 0x18;
+	D_80048140[3] = 0x64; // 100 shotgun ammo
+	D_80048140[4] = 0x190; // 400 rifle ammo? wtf
+	D_80048140[6] = 0x18; // 24 rockets
   }
 }
 
@@ -293,11 +295,11 @@ void func_80139984_148934(void) {
 		D_80048140[12] = -0x8000;
 		D_80048140[13] = -0x8000;
 	}
-	if (currentLevel == LEVEL_COMET) { // if reloading a save in comet, give tons of ammo
-		func_801391DC_14818C(3, 0xA);
-		func_801391DC_14818C(5, 0x64);
-		func_801391DC_14818C(6, 5);
-		if (D_80052ACD & 0x10) {
+	if (currentLevel == LEVEL_COMET) { // if reloading a save in comet, give tons of ammo...
+		func_801391DC_14818C(3, 0xA); // 10 shotgun ammo
+		func_801391DC_14818C(5, 0x64); // 100 machine gun
+		func_801391DC_14818C(6, 5); // 5 rockets
+		if (D_80052ACD & 0x10) { // not sure what sets this flag but would give various alpha1 ammo
 			func_800A8E18_B7DC8(0x15);
 			func_800A8E18_B7DC8(0x15);
 			func_800A8E18_B7DC8(0x19);

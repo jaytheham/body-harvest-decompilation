@@ -195,7 +195,7 @@ extern s32 D_80031450_32050;
 extern s32 D_80031454;
 extern s32 D_80031458[];
 extern s32 D_80031474[];
-extern s8 D_800314C4;
+extern s8 D_800314C4; // Human Meter Game Over value - 40 easy mode, 25 hero mode
 extern s32 D_800314C8_320C8;
 extern OSMesg D_800314CC;
 extern OSMesg D_800314CC_320CC;
@@ -818,17 +818,17 @@ extern s32 showDemoText; // 0x80048034
 extern u8 D_80048038[];
 extern u8 weaponSlots[7]; // 80048138
 extern u8 D_8004813F;
-extern s16 D_80048140[];
+extern s16 D_80048140[]; // current ammo counts array
 extern s16 D_80048156;
 extern s16 D_8004815C;
 extern s16 D_8004815E;
 extern s16 D_80048160;
 extern s16 D_80048162;
 extern s8 D_80048168; // numHumansEatenToSpawnMutant
-extern s16 D_8004816A; // numHumansKilled
+extern s16 D_8004816A; // numHumansKilled - Human Meter total
 extern s16 D_8004816C;
-extern s16 D_8004816E;
-extern s16 D_80048170;
+extern s16 D_8004816E; // living humans "harvested" - a dead human eaten by harvester does NOT increase this
+extern s16 D_80048170; // humans "killed" not harvested
 extern s16 D_80048172;
 extern s16 D_80048174;
 extern s16 D_80048176;
@@ -870,9 +870,9 @@ extern s32 D_8004DC40; // AI - Mission state (-1 = uninitialized)
 extern BitFlags64 D_8004DC48; // "keys"
 extern Flags2x32 D_8004DC50;
 extern u32 D_8004DC54; // same address as D_8004DC50.unk4
-extern s16 D_8004DC58;
-extern u8 D_8004DC5C;
-extern u16 D_8004DC5E;
+extern s16 D_8004DC58; // counter used for some events like Greece suburbs fire and plane training
+extern u8 D_8004DC5C; // weapon crystal count
+extern u16 D_8004DC5E; // total alien artifact count
 extern s16 D_8004DC60;
 extern s32 D_8004DC68[4]; // Callback function pointers
 extern s32 D_8004DC74; /* = D_8004DC68[3] */
@@ -1835,7 +1835,7 @@ extern Ambient D_8013D958_14C908;
 extern Light D_8013D960_14C910;
 extern Ambient D_8013D970_14C920;
 extern Light D_8013D978_14C928;
-extern u8 D_8013D9AC_14C95C;
+extern u8 D_8013D9AC_14C95C; // used as a timer during human meter game over sequence, maybe lighting related
 extern s8 D_8013D9B0_14C960;
 extern s32 D_8013D9B4_14C964;
 extern u8 D_8013DAE0_14CA90; /* particle/effect count */
@@ -2247,7 +2247,7 @@ extern s32 D_8014F6B4;
 extern s16 D_8014F6C0;
 extern f32 D_8014F6C4;
 extern s32 D_8014F6C8;
-extern PowerupItem D_8014F6D0[0x10];
+extern PowerupItem D_8014F6D0[0x10]; // pool with 16 slots for pickup items like big/small hearts and alpha 1 ammo
 extern PowerupItem D_8014F7DE; // False symbol - end of D_8014F6D0. Replace with D_8014F6D0
 extern s32 D_8014F7F0;
 extern s32 D_8014F7F4;
@@ -2291,7 +2291,7 @@ extern Unk8014FD30Type D_8014FD30; // Current stage shield wall bounds (3 boundi
 extern u8 D_8014FD48[];
 extern u16 D_8014FDC8;
 extern u8 D_8014FDD0[];
-extern u8 D_80151DD0;
+extern u8 D_80151DD0; // state tracker for effects used by human meter/game over and black adam death
 extern TileRing D_80151DD8;
 extern s8 D_8015273E;
 extern u8 D_80152740[];

@@ -72,7 +72,7 @@ void func_800A5A50_B4A00(s32 arg0, s32 arg1) {
 
 	D_8014F800 = 1;
 	osSyncPrintf(D_80142790_151740, arg0);
-	if (D_80151DD0 == 0) {
+	if (D_80151DD0 == 0) { // beacons disabled starting when human meter is 2 away from game over - set by func_800BDDCC
 		D_80047F9C = arg0 + 1;
 		sp1C = func_80009F18_AB18(arg1);
 		func_80116784_125734();
@@ -984,7 +984,7 @@ void func_800A854C_B74FC(void)
   s16 yLimit;
   s32 i;
   s32 lod;
-  s32 *groundLevel = &D_80222A70;
+  s32 *groundLevel = &D_80222A70; // current water height used as floor for pickups to float on
   
   for (i = 0x10; i--;) // iterate through the pickup pool at D_8014F6D0, which has 16 available slots
   {
@@ -996,7 +996,7 @@ void func_800A854C_B74FC(void)
 	  func_800F9D60_108D10(D_8014F6D0[i].unk0, D_8014F6D0[i].unk4, &sp8C, &sp8A, &sp88);
 	  yLimit = (sp88 < sp8C) ? sp8C : sp88;
 	  
-	  if ((currentLevel != 4 || D_80047F94 != 2) && yLimit < *groundLevel) // underwater height check for Siberia 3
+	  if ((currentLevel != 4 || D_80047F94 != 2) && yLimit < *groundLevel) // underwater height check for Siberia 3 pickups allowed to spawn and rest underwater
 	  {
 		yLimit = *groundLevel;
 	  }
@@ -1017,6 +1017,7 @@ void func_800A854C_B74FC(void)
 			D_8014F6D0[i].unk6 = ((D_8014F6D0[i].unk6 + yLimit) - func_800F9FAC_108F5C((D_8014F6D0[i].unk0 + 0x1E), D_8014F6D0[i].unk4));
 			D_8014F6D0[i].unkA = ((D_8014F6D0[i].unkA + yLimit) - func_800F9FAC_108F5C(D_8014F6D0[i].unk0, (D_8014F6D0[i].unk4 + 0x1E)));
 		  }
+		  //horizontal velocities capped between -30 and 30
 		  if (D_8014F6D0[i].unk6 < (-0x1E))
 		  {
 			D_8014F6D0[i].unk6 = -0x1E;
@@ -1270,7 +1271,7 @@ s32 func_800A8E18_B7DC8(u32 arg0)
 		break;
 
 	  case 3:
-		result = func_801391DC_14818C(2, -0x8000); // ??
+		result = func_801391DC_14818C(2, -0x8000); // unlimited pistol
 		break;
 
 	  case 4:
@@ -1410,6 +1411,7 @@ void func_800A9238_B81E8() {
 }
 
 // AI - Reset all beacon display entries
+// reset the pickup items pool?
 void func_800A92B0_B8260(void) {
 	s32 i;
 	
