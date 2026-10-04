@@ -11,30 +11,6 @@ s32 D_8013BAC0_14AA70[5][4] = {
 	0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF
 };
 
-const char D_801411F0_1501A0[] = "**** ERROR: MISSION COMMANDS OVERFLOW ****\n";
-const char D_8014121C_1501CC[] = "**** ERROR: MISSION COMMANDS OVERFLOW ****\n";
-const char D_80141248_1501F8[] = "ERROR: SCRATCH SPACE OVERFLOW\n";
-const char D_80141268_150218[] = "ERROR: RANDOM OBJECT OVERFLOW\n";
-const char D_80141288_150238[] = "**** ERROR: MISSION INFO OVERFLOW ****\n";
-const char D_801412B0_150260[] = "**** ERROR: GAME CONDITION OVERFLOW ****\n";
-const char D_801412DC_15028C[] = "**** ERROR: TILES_FROM EXPECTED ****\n";
-const char D_80141304_1502B4[] = "**** ERROR: TIMER COMPARATOR EXPECTED ****\n";
-const char D_80141330_1502E0[] = "**** ERROR: SECONDS EXPECTED ****\n";
-const char D_80141354_150304[] = "**** ERROR: MISSION CONDITION OVERFLOW ****\n";
-const char D_80141384_150334[] = "**** WARNING: UNKNOWN MESSAGE FORMAT IN MISSION %d\n";
-const char D_801413B8_150368[] = "**** ERROR: NOT A MISSION FILE ****\n";
-const char D_801413E0_150390[] = "**** ERROR: TOO MANY MISSIONS ****\n";
-const char D_80141404_1503B4[] = "\n";
-const char D_80141408_1503B8[] = "  Number of Missions: %4d out of %d\n";
-const char D_80141430_1503E0[] = "  Mission Conditions: %4d out of %d\n";
-const char D_80141458_150408[] = " Dialogue Conditions: %4d out of %d\n";
-const char D_80141480_150430[] = "     Game Conditions: %4d out of %d\n";
-const char D_801414A8_150458[] = "            Commands: %4d out of %d\n";
-const char D_801414D0_150480[] = "     Map information: %4d out of %d\n";
-const char D_801414F8_1504A8[] = "      Random objects: %4d out of %d\n";
-const char D_80141520_1504D0[] = "     Command objects: %4d out of %d\n";
-const char D_80141548_1504F8[] = "          Characters: %4d out of %d\n";
-const char D_80141570_150520[] = "Size of mission data: %4d out of %d\n";
 // AI - Execute mission command opcodes (spawning, flags, etc.)
 void func_80073DC0_82D70(s32 arg0) {
 	MissionCommand *entry;
@@ -317,7 +293,7 @@ void func_8007463C_835EC(void) {
 
 	entry = &D_801497C8[D_80149B30].opcode;
 	if (++D_80149B30 >= 0xFE) {
-		osSyncPrintf(D_801411F0_1501A0); // **** ERROR: MISSION COMMANDS OVERFLOW ****
+		osSyncPrintf("**** ERROR: MISSION COMMANDS OVERFLOW ****\n");
 		D_80149B4A = 1;
 	}
 	entry[0] = func_80074500_834B0();
@@ -338,7 +314,7 @@ void func_800746F8_836A8(void) {
 
 	temp_a1 = &D_801497C8[D_80149B30].opcode;
 	if (++D_80149B30 >= 0xFE) {
-		osSyncPrintf(D_8014121C_1501CC, temp_a1); // **** ERROR: MISSION COMMANDS OVERFLOW ****
+		osSyncPrintf("**** ERROR: MISSION COMMANDS OVERFLOW ****\n", temp_a1);
 		D_80149B4A = 1;
 	}
 	*temp_a1 = 0xA9;
@@ -366,7 +342,7 @@ void func_800747A8_83758(void)
 		sum += randomValue;
 		if (selectedIndex >= 16)
 		{
-			osSyncPrintf(D_80141248_1501F8);
+			osSyncPrintf("ERROR: SCRATCH SPACE OVERFLOW\n");
 		}
 		D_80149B50[selectedIndex] = randomValue;
 		func_80074578_83528(&D_80149AC8[selectedIndex++].opcode);
@@ -380,7 +356,7 @@ void func_800747A8_83758(void)
 	}
 	if (D_80149B38 >= 0x10)
 	{
-		osSyncPrintf(D_80141268_150218);
+		osSyncPrintf("ERROR: RANDOM OBJECT OVERFLOW\n");
 		D_80149B4A = 1;
 	}
 	D_8004D180[D_80149B38] = D_80149AC8[selectedIndex];
@@ -443,7 +419,7 @@ void func_80074B2C_83ADC(void) {
 
 		func_80074500_834B0();
 		if (D_80149B34 >= 0x3F) {
-			osSyncPrintf(D_80141288_150238);
+			osSyncPrintf("**** ERROR: MISSION INFO OVERFLOW ****\n");
 			D_80149B4A = 1;
 		}
 
@@ -471,7 +447,7 @@ void func_80074CA0_83C50(void) {
 
 	for (;;) {
 		if (D_80149B2C >= 0xFE) {
-			osSyncPrintf(D_801412B0_150260);
+			osSyncPrintf("**** ERROR: GAME CONDITION OVERFLOW ****\n");
 			D_80149B4A = 1;
 		}
 
@@ -488,7 +464,7 @@ void func_80074CA0_83C50(void) {
 			if (((*D_801497C4)[8] == 0x89) || ((*D_801497C4)[8] == 0x8A)) {
 				(*D_801497C4)[6] = func_8007452C_834DC();
 				if (func_80074500_834B0() != 0x8B) {
-					osSyncPrintf(D_801412DC_15028C);
+					osSyncPrintf("**** ERROR: TILES_FROM EXPECTED ****\n");
 				}
 
 				func_80074578_83528(&(*D_801497C4)[3]);
@@ -509,11 +485,11 @@ void func_80074CA0_83C50(void) {
 					(*D_801497C4)[8] = 0xA7;
 					(*D_801497C4)[7] = func_8007452C_834DC();
 				} else {
-					osSyncPrintf(D_80141304_1502B4);
+					osSyncPrintf("**** ERROR: TIMER COMPARATOR EXPECTED ****\n");
 				}
 
 				if (func_80074500_834B0() != 0x97) {
-					osSyncPrintf(D_80141330_1502E0);
+					osSyncPrintf("**** ERROR: SECONDS EXPECTED ****\n");
 				}
 			}
 		}
@@ -537,7 +513,7 @@ void func_80074FA8_83F58(void) {
 	while (1) {
 		count = D_80149B28;
 		if (count >= 0x7F) {
-			osSyncPrintf(D_80141354_150304);
+			osSyncPrintf("**** ERROR: MISSION CONDITION OVERFLOW ****\n");
 			D_80149B4A = 1;
 			count = D_80149B28;
 		}
@@ -694,7 +670,7 @@ void func_800753A0_84350(void)
 				func_80074CA0_83C50();
 				if ((D_801497C0->unk1 < 0x46) || (D_801497C0->unk1 >= 0x48))
 				{
-					osSyncPrintf(D_80141384_150334, D_80149B48);
+					osSyncPrintf("**** WARNING: UNKNOWN MESSAGE FORMAT IN MISSION %d\n", D_80149B48);
 				}
 			}
 			else
@@ -767,7 +743,7 @@ void func_800756DC_8468C(void) {
 
 	if (func_80074558_83508() != 0xA8) {
 		if ((D_801494BC != 0x90) && (D_801494BC != 0xB0)) {
-			osSyncPrintf(D_801413B8_150368);
+			osSyncPrintf("**** ERROR: NOT A MISSION FILE ****\n");
 			goto doneParsing;
 		}
 	}
@@ -824,7 +800,7 @@ void func_800756DC_8468C(void) {
 
 			D_80149B48 += 1;
 			if (D_80149B48 >= 0x19) {
-				osSyncPrintf(D_801413E0_150390);
+				osSyncPrintf("**** ERROR: TOO MANY MISSIONS ****\n");
 				D_80149B4A = 1;
 			}
 		} while (func_80074558_83508() != 0x87);
@@ -836,17 +812,17 @@ void func_800756DC_8468C(void) {
 	func_80075574_84524();
 
 	if (D_80149B4A != 0) {
-		osSyncPrintf(D_80141404_1503B4);
-		osSyncPrintf(D_80141408_1503B8, D_80149B48, 0x18);
-		osSyncPrintf(D_80141430_1503E0, D_80149B28, 0x80);
-		osSyncPrintf(D_80141458_150408, D_80149B3C, 0x40);
-		osSyncPrintf(D_80141480_150430, D_80149B2C, 0xFF);
-		osSyncPrintf(D_801414A8_150458, D_80149B30, 0xFE);
-		osSyncPrintf(D_801414D0_150480, D_80149B34, 0x40);
-		osSyncPrintf(D_801414F8_1504A8, D_80149B38, 0x10);
-		osSyncPrintf(D_80141520_1504D0, D_80149B40, 0x10);
-		osSyncPrintf(D_80141548_1504F8, D_80149B44, 0x10);
-		osSyncPrintf(D_80141570_150520, (s32)(D_801494B8 - missionStart), 0x800);
+		osSyncPrintf("\n");
+		osSyncPrintf("  Number of Missions: %4d out of %d\n", D_80149B48, 0x18);
+		osSyncPrintf("  Mission Conditions: %4d out of %d\n", D_80149B28, 0x80);
+		osSyncPrintf(" Dialogue Conditions: %4d out of %d\n", D_80149B3C, 0x40);
+		osSyncPrintf("     Game Conditions: %4d out of %d\n", D_80149B2C, 0xFF);
+		osSyncPrintf("            Commands: %4d out of %d\n", D_80149B30, 0xFE);
+		osSyncPrintf("     Map information: %4d out of %d\n", D_80149B34, 0x40);
+		osSyncPrintf("      Random objects: %4d out of %d\n", D_80149B38, 0x10);
+		osSyncPrintf("     Command objects: %4d out of %d\n", D_80149B40, 0x10);
+		osSyncPrintf("          Characters: %4d out of %d\n", D_80149B44, 0x10);
+		osSyncPrintf("Size of mission data: %4d out of %d\n", (s32)(D_801494B8 - missionStart), 0x800);
 	}
 
 doneParsing:
