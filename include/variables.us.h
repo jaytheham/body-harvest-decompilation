@@ -2459,7 +2459,11 @@ extern f32 D_80157F7C;
 extern f32 D_80157F80;
 extern f32 D_80157F84;
 extern f32 D_80157F88;
+#ifdef FEC70_BSS
+extern u16 D_80157F8C;
+#else
 extern s16 D_80157F8C;
+#endif
 extern s16 D_80157F8E;
 extern s16 D_80157F90;
 extern s16 D_80157F92;
@@ -2468,7 +2472,12 @@ extern u8 D_80157F95;
 extern s16 D_80157F96;
 extern s16 D_80157F98;
 extern s16 D_80157F9A;
+#ifdef FEC70_BSS
+extern u8 D_80157F9E;
+extern u8 D_80157F9F;
+#else
 extern u8 D_80157F9E[3];
+#endif
 extern u8 D_80157FA0;
 extern BuildingInstance *D_80157FA4;
 extern s32 D_80157FA8;
@@ -2491,6 +2500,7 @@ extern s16 D_80157FD6;
 extern u8 D_80157FD7;
 extern u8 D_80157FDC[];
 extern f32 D_80157FE4;
+extern f32 D_80157FE4_Write;
 extern s8 D_80157FF0[];
 extern u8 D_80157FF8;
 extern UnkF9230ShadowWalker D_80158000[];
@@ -3898,3 +3908,4 @@ BitFlags64 D_8004DC48;
 Flags2x32 D_8004DC50;
 u8 weaponSlots[7];
 #endif
+
