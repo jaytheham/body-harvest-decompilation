@@ -930,26 +930,6 @@ const f64 D_802E7BC8_32BD18[] = { 270.176968244 };
 
 const f64 D_802E7BD0_32BD20[] = { 270.176968244 };
 
-const f64 D_802E7BD8_32BD28[] = { 173.0 };
-
-const f64 D_802E7BE0_32BD30[] = { 173.0 };
-
-const f64 D_802E7BE8_32BD38[] = { -360.0 };
-
-const f64 D_802E7BF0_32BD40[] = { -360.0 };
-
-const f64 D_802E7BF8_32BD48[] = { 533.0 };
-
-const f64 D_802E7C00_32BD50[] = { 197.0 };
-
-const f64 D_802E7C08_32BD58[] = { 197.0 };
-
-const f64 D_802E7C10_32BD60[] = { -197.0 };
-
-const f64 D_802E7C18_32BD68[] = { -197.0 };
-
-const f64 D_802E7C20_32BD70[] = { 394.0 };
-
 #ifdef NON_MATCHING
 void func_802D4CD0_318E20(s32 arg0, void *arg1) {
 	if (arg0 < 0x14) {
@@ -4723,7 +4703,6 @@ void func_802E0588_3246D8(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0588_3246D8.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802E0B64_324CB4(u8 arg0) {
 	u8 sp6F;
 	s16 sp6C;
@@ -4806,9 +4785,7 @@ void func_802E0B64_324CB4(u8 arg0) {
 		alienInstances[arg0].unk8 = sp44;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0B64_324CB4.s")
-#endif
+
 
 int func_802E1274_3253C4(u8 arg0) {
 	s32 idx;
