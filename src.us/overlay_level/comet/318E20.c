@@ -5063,12 +5063,11 @@ s32 func_802E1FE0_326130(u8 arg0) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
 void func_802E205C_3261AC(u8 arg0) {
 	u8 typeIndex;
 	s32 output[3];
 	s16 root;
-	s32 joint;
+	s16 joint;
 	Unk802E71B8 first;
 	Unk802E71B8 second;
 
@@ -5094,9 +5093,7 @@ void func_802E205C_3261AC(u8 arg0) {
 	alienTypes[typeIndex].unk2E = output[1];
 	alienTypes[typeIndex].unk30 = output[2];
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E205C_3261AC.s")
-#endif
+
 
 void func_802E21C4_326314(u8 arg0) {
 	s16 joint[1];
