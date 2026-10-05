@@ -3326,6 +3326,7 @@ extern s16 D_802E7C32;
 extern s16 D_802E7C34;
 extern s16 D_802E7C36;
 extern s16 D_802E7C38;
+extern s16 D_802E7C38_R;
 extern s16 D_802E7C3A;
 extern s32 D_802E7C3C;
 extern s16 D_802E7C40;

@@ -930,26 +930,6 @@ const f64 D_802E7BC8_32BD18[] = { 270.176968244 };
 
 const f64 D_802E7BD0_32BD20[] = { 270.176968244 };
 
-const f64 D_802E7BD8_32BD28[] = { 173.0 };
-
-const f64 D_802E7BE0_32BD30[] = { 173.0 };
-
-const f64 D_802E7BE8_32BD38[] = { -360.0 };
-
-const f64 D_802E7BF0_32BD40[] = { -360.0 };
-
-const f64 D_802E7BF8_32BD48[] = { 533.0 };
-
-const f64 D_802E7C00_32BD50[] = { 197.0 };
-
-const f64 D_802E7C08_32BD58[] = { 197.0 };
-
-const f64 D_802E7C10_32BD60[] = { -197.0 };
-
-const f64 D_802E7C18_32BD68[] = { -197.0 };
-
-const f64 D_802E7C20_32BD70[] = { 394.0 };
-
 #ifdef NON_MATCHING
 void func_802D4CD0_318E20(s32 arg0, void *arg1) {
 	if (arg0 < 0x14) {
@@ -4678,102 +4658,51 @@ s32 func_802E0234_324384(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0234_324384.s")
 #endif
 
-// CURRENT(16728)
 #ifdef NON_MATCHING
-void func_802E0588_3246D8(s32 arg0) {
-	s16 sp3E;
-	s32 sp38;
-	void *sp30;
-	s32 sp2C;
-	f32 sp8;
-	f32 temp_f14;
-	f32 temp_f16;
-	f32 temp_f18;
-	f32 temp_f4;
-	f32 var_f;
-	f64 temp_f12;
-	f64 temp_f2;
-	s16 temp_t8;
-	s16 temp_t9;
-	s16 temp_t9_2;
-	u16 temp_t6;
-	u16 temp_t7_2;
-	u16 temp_t8_2;
-	u16 temp_t8_3;
-	u16 temp_t9_3;
-	u16 temp_t9_4;
-	AlienInstance *temp_v0;
-	Unk8014DD50 *temp_a2;
-	Unk8014DD50 *temp_t0;
-	Unk8014DD50 *temp_t2;
-	Unk8014DD50 *temp_t4;
-	Unk8014DD50 *temp_t7;
-	Unk8014DD50 *temp_v0_2;
+void func_802E0588_3246D8(u8 arg0) {
+	s32 joint0;
+	s32 joint1;
+	s32 joint2;
+	s32 joint3;
+	s32 joint4;
+	s32 joint5;
+	f32 rotation;
+	f32 *rotationPtr = &rotation;
+	s16 delta;
+	s32 radius;
+	f32 offset2;
+	f32 speed[1];
+	s32 yaw;
+	f64 turn[2];
+	union { f32 value; volatile f32 reload; } offset0;
 
-	temp_v0 = &alienInstances[arg0 & 0xFF];
-	temp_f2 = (f64) (f32) (temp_v0->unk12 / 32);
-	temp_a2 = &D_8014DD50[D_8014DD50[temp_v0->unkC].unkC];
-	temp_t0 = &D_8014DD50[temp_a2->unkD];
-	temp_t2 = &D_8014DD50[temp_t0->unkD];
-	temp_t4 = &D_8014DD50[temp_t2->unkD];
-	temp_t9 = temp_v0->unk6;
-	temp_t7 = &D_8014DD50[temp_t4->unkD];
-	sp30 = temp_t7;
-	sp2C = (s32) temp_t9;
-	temp_t8 = temp_t9 - D_802E7184_32B2D4;
-	temp_t9_2 = temp_a2->unk0;
-	sp3E = temp_t8;
-	sp38 = (s32) temp_t9_2;
-	temp_t7_2 = temp_a2->unkA;
-	temp_f14 = (f32) ((temp_f2 / D_802E7BA0_32BCF0) * 65536.0);
-	temp_f12 = (f64) (f32) ((f64) (temp_t9_2 * 2) * D_802E7BA8_32BCF8 * (f64) ((f32) temp_t8 / 65536.0f));
-	var_f = (f32) temp_t7_2;
-	temp_f4 = (f32) ((temp_f12 / D_802E7BB0_32BD00) * 65536.0);
-	sp8 = temp_f4;
-	if ((s32) temp_t7_2 < 0) {
-		var_f += 4294967296.0f;
-	}
-	temp_a2->unkA = (u16) (u32) (var_f + (temp_f14 + temp_f4));
-	temp_t6 = temp_t0->unkA;
-	var_f = (f32) temp_t6;
-	if ((s32) temp_t6 < 0) {
-		var_f += 4294967296.0f;
-	}
-	temp_t0->unkA = (u16) (u32) (var_f + (temp_f14 - sp8));
-	temp_t9_3 = temp_t2->unkA;
-	var_f = (f32) temp_t9_3;
-	temp_f16 = (f32) ((temp_f12 / D_802E7BB8_32BD08) * 65536.0);
-	if ((s32) temp_t9_3 < 0) {
-		var_f += 4294967296.0f;
-	}
-	temp_t2->unkA = (u16) (u32) (var_f + ((f32) ((temp_f2 / D_802E7BC0_32BD10) * 65536.0) + temp_f16));
-	temp_t8_2 = temp_t4->unkA;
-	var_f = (f32) temp_t8_2;
-	if ((s32) temp_t8_2 < 0) {
-		var_f += 4294967296.0f;
-	}
-	temp_t4->unkA = (u16) (u32) (var_f + (temp_f14 - temp_f16));
-	temp_t8_3 = temp_t7->unkA;
-	var_f = (f32) temp_t8_3;
-	temp_f18 = (f32) ((temp_f12 / D_802E7BC8_32BD18) * 65536.0);
-	if ((s32) temp_t8_3 < 0) {
-		var_f += 4294967296.0f;
-	}
-	temp_v0_2 = &D_8014DD50[temp_t7->unkD];
-	temp_t7->unkA = (u16) (u32) (var_f + ((f32) ((temp_f2 / D_802E7BD0_32BD20) * 65536.0) + temp_f18));
-	temp_t9_4 = temp_v0_2->unkA;
-	var_f = (f32) temp_t9_4;
-	if ((s32) temp_t9_4 < 0) {
-		var_f += 4294967296.0f;
-	}
-	temp_v0_2->unkA = (u16) (u32) (var_f + (temp_f14 - temp_f18));
-	D_802E7184_32B2D4 = (s16) sp2C;
+	speed[0] = alienInstances[arg0].unk12 / 32;
+	joint0 = D_8014DD50[alienInstances[arg0].unkC].unkC;
+	joint1 = D_8014DD50[joint0].unkD;
+	joint2 = D_8014DD50[joint1].unkD;
+	joint3 = D_8014DD50[joint2].unkD;
+	joint4 = D_8014DD50[joint3].unkD;
+	joint5 = D_8014DD50[joint4].unkD;
+	yaw = alienInstances[arg0].unk6;
+	delta = yaw - D_802E7184_32B2D4;
+	radius = D_8014DD50[joint0].unk0;
+	*rotationPtr = (speed[0] / (200.0 * 3.141592654)) * 65536.0;
+	turn[0] = (f32)((radius * 2) * 3.141592654 * ((f32)delta / 65536.0f));
+	offset0.value = (turn[0] / 628.3185308) * 65536.0;
+	D_8014DD50[joint0].unkAUnsigned += rotation + offset0.value;
+	offset0.value = offset0.reload;
+	D_8014DD50[joint1].unkAUnsigned += rotation - offset0.value;
+	D_8014DD50[joint2].unkAUnsigned += (f32)((speed[0] / (128.0 * 3.141592654)) * 65536.0) + (f32)((turn[0] / 402.123859712) * 65536.0);
+	D_8014DD50[joint3].unkAUnsigned += rotation - (f32)((turn[0] / 402.123859712) * 65536.0);
+	offset2 = (turn[0] / 270.176968244) * 65536.0;
+	D_8014DD50[joint4].unkAUnsigned += (f32)((speed[0] / (86.0 * 3.141592654)) * 65536.0) + offset2;
+	D_8014DD50[joint5].unkAUnsigned += rotation - offset2;
+	D_802E7184_32B2D4 = yaw;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0588_3246D8.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802E0B64_324CB4(u8 arg0) {
 	u8 sp6F;
 	s16 sp6C;
@@ -4846,7 +4775,7 @@ void func_802E0B64_324CB4(u8 arg0) {
 	} else if (D_802E7C38 - alienInstances[arg0].unkA >= 0x200) {
 		alienInstances[arg0].unkA += 0x200;
 	} else {
-		alienInstances[arg0].unkA = D_802E7C38;
+		alienInstances[arg0].unkA = D_802E7C38_R;
 	}
 	if (sp44 - alienInstances[arg0].unk8 < -0x1FF) {
 		alienInstances[arg0].unk8 -= 0x200;
@@ -4856,9 +4785,6 @@ void func_802E0B64_324CB4(u8 arg0) {
 		alienInstances[arg0].unk8 = sp44;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0B64_324CB4.s")
-#endif
 
 
 int func_802E1274_3253C4(u8 arg0) {
@@ -5144,6 +5070,7 @@ void func_802E205C_3261AC(u8 arg0) {
 	alienTypes[typeIndex].unk2E = output[1];
 	alienTypes[typeIndex].unk30 = output[2];
 }
+
 
 void func_802E21C4_326314(u8 arg0) {
 	s16 joint[1];
