@@ -331,6 +331,12 @@ typedef struct {
 } Vec3s; /* size = 0x06 */
 
 typedef struct {
+	/* 0x00 */ s32 x;
+	/* 0x04 */ s32 y;
+	/* 0x08 */ s32 z;
+} Vec3i; /* size = 0x0C */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;

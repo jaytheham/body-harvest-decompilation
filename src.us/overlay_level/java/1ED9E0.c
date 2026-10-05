@@ -4565,47 +4565,39 @@ void func_802DEFC0_1F7CD0(u8 arg0, s32 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DEFC0_1F7CD0.s")
 #endif
 
-#ifdef NON_MATCHING
-/* func_802DF1F8_1F7F08 - Process alien attack against vehicle */
+/* Process an alien attack against the vehicle. */
 void func_802DF1F8_1F7F08(u8 arg0) {
 	AlienInstance *alien;
-	Unk8014DD50 *type_entry;
-	s8 type_idx;
-	s8 type_idx2;
-	s16 local_sp_66;
-	s16 local_sp_64;
-	s32 sp50;
-	s32 sp4C;
-	s32 sp48;
-	s16 local_sp_46;
-	s32 sp54;
-	s16 local_diff_y;
-	s16 local_diff_x;
-	s16 clamped_z_dist;
+	s16 type_idx;
+	s16 type_idx2;
+	s16 dx;
+	s16 dz;
+	s32 pad;
+	Vec3i position;
+	s32 x;
+	s32 y;
+	s32 z;
+	s16 yaw;
+	s32 pad2;
+	s16 pitch;
 
 	alien = &alienInstances[arg0];
-	type_entry = &D_8014DD50[alien->unkC];
-	type_idx = type_entry->unkC;
-	type_entry = &D_8014DD50[type_idx];
-	type_idx2 = type_entry->unkC;
-	func_800A931C_B82CC(type_idx, &D_8014DD50[type_idx2], &sp54, &D_8014DD50);
-	func_80128428_1373D8(alien, local_sp_56, local_sp_5A, local_sp_5E, &sp50, &sp4C, &sp48);
-	local_diff_x = D_80052B34->unk0 - sp50;
-	local_diff_y = D_80052B34->unk4 - sp48;
-	local_sp_64 = local_diff_y;
-	local_sp_66 = local_diff_x;
-	local_sp_46 = func_80003824_4424((f32) local_diff_x, (f32) local_diff_y, local_diff_y) - alien->unk6;
-	clamped_z_dist = (s16) ((s16) ((func_80003824_4424(sqrtf((f32) ((local_diff_x * local_diff_x) + (local_diff_y * local_diff_y)), local_diff_y), (f32) ((alien->unk2 + (s32) local_sp_58) - D_80052B34->unk2)) - D_80047710) - 0x2000) / 2);
-	if (clamped_z_dist < -0x2000) {
-		clamped_z_dist = -0x2000;
-	} else if (clamped_z_dist >= 0x801) {
-		clamped_z_dist = 0x800;
+	type_idx = D_8014DD50[alien->unkC].unkC;
+	type_idx2 = D_8014DD50[type_idx].unkC;
+	func_800A931C_B82CC(type_idx, &D_8014DD50[type_idx2].unk0, &position.x);
+	func_80128428_1373D8(alien, position.x, position.y, position.z, &x, &y, &z);
+	dx = D_80052B34->unk0 - x;
+	dz = D_80052B34->unk4 - z;
+	yaw = func_80003824_4424(dx, dz) - alien->unk6;
+	pitch = (s16)(func_80003824_4424(sqrtf(dx * dx + dz * dz), (alien->unk2 + position.y) - D_80052B34->unk2) - D_80047710 - 0x2000) / 2;
+	if (pitch < -0x2000) {
+		pitch = -0x2000;
+	} else if (pitch >= 0x801) {
+		pitch = 0x800;
 	}
-	func_802DEFC0_1F7CD0(arg0, local_sp_46, clamped_z_dist, 0);
+	func_802DEFC0_1F7CD0(arg0, yaw, pitch, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DF1F8_1F7F08.s")
-#endif
+
 
 // CURRENT(100)
 void func_802DF3C0_1F80D0(u8 arg0, s16 *arg1, s16 *arg2) {
