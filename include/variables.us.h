@@ -3401,8 +3401,8 @@ extern s32 leomecha_bss_0004;
 extern OSMesg siacs_bss_0000;
 extern Unk802E0CC4Entry D_802E0CC4_1F99D4;
 extern Unk802E0CC4Entry D_802E0CCC_1F99DC;
-extern Unk802E0CC4Entry D_802E0CD4_1F99E4;
-extern Unk802E0CC4Entry D_802E0CDC_1F99EC;
+extern Vec3s D_802E0CD4_1F99E4;
+extern Vec3s D_802E0CDC_1F99EC;
 
 #endif
 

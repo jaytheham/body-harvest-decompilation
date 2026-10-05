@@ -1642,4 +1642,6 @@ void func_80089BCC_171C8C(s32 arg0);
 void func_8008A704_1727C4(void);
 void func_8008B594_173654(void);
 
+void func_802DEFC0_1F7CD0(u8 arg0, s32 arg1, s16 arg2, s16 arg3);
+
 #endif
