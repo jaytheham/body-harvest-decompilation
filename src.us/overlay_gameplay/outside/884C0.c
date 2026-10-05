@@ -6714,7 +6714,7 @@ void func_80089200_981B0(u8 arg0, u32 arg1, s32 arg2)
 	}
 }
 
-void func_800893C8_98378(s32 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8) {
+void func_800893C8_98378(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8) {
 	s16 temp;
 	Unk8014DD50 sp24;
 

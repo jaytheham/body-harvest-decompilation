@@ -17,3 +17,5 @@ Example: The pattern `AlienInstance *sp1C; ... sp1C = &alienInstances[unk25];` p
 
 
 Java `func_802DFCA8_1F89B8` also matched by replacing both named instance pointers with array accesses. Keep a block-local `u8 parentId` for the second instance: it reproduces the target a0 load. Direct `alienInstances[arg0]` access reduces the frame from 0x30 to 0x28 and moves the cached instance address from sp+0x24 to sp+0x20. Full ROM checksum verified `OK`.
+
+Java func_802DF3C0_1F80D0 matched using direct accesses for both alienInstances and alienTypes. Removing both named pointers preserves the 0x70 frame while moving cached skeleton-pointer and promoted-byte spills upward by four bytes. Keep the six type-position assignments on separate source lines to preserve their load/store order. The helper func_800893C8_98378 takes an unused u8 alien ID: correcting its declaration and definition removed a promoted-ID copy in the caller while retaining all existing matches, verified by the full ROM checksum.

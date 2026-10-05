@@ -4608,76 +4608,63 @@ void func_802DF1F8_1F7F08(u8 arg0) {
 #endif
 
 // CURRENT(100)
-#ifdef NON_MATCHING
 void func_802DF3C0_1F80D0(u8 arg0, s16 *arg1, s16 *arg2) {
-	AlienInstance *alien;
-	Unk8014DD50 *type_entry;
-	Unk8014DD50 *type2_entry;
-	s8 type_idx;
-	s8 type_idx2;
 	s32 sp64[3];
 	s32 sp58[3];
-	s32 v0;
-	AlienType *type;
+	s16 type_idx;
+	s16 type_idx2;
+	u8 typeIndex;
 
-	alien = &alienInstances[arg0];
-	type_entry = &D_8014DD50[alien->unkC];
-	type_idx = type_entry->unkC;
-	type2_entry = &D_8014DD50[type_idx];
-	type_idx2 = type2_entry->unkC;
+	type_idx = D_8014DD50[alienInstances[arg0].unkC].unkC;
+	type_idx2 = D_8014DD50[type_idx].unkC;
+	typeIndex = alienInstances[arg0].typeIndex;
 
-	if (alien->unk20 & ALIEN_FLAG_UNKE) {
+	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKE) {
 		func_802DF1F8_1F7F08(arg0);
 
-		if (alien->unk1E != 0) {
-			alien->unk1E--;
+		if (alienInstances[arg0].unk1E != 0) {
+			alienInstances[arg0].unk1E--;
 			return;
 		}
 
-		if (alien->unk20 & ALIEN_FLAG_UNKG) {
+		if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKG) {
+
 			func_800A931C_B82CC(type_idx2, arg1, sp64);
-			arg1[0] = (s16) sp64[0];
-			arg1[1] = (s16) sp64[1];
-			arg1[2] = (s16) sp64[2];
+			arg1[0] = sp64[0];
+			arg1[1] = sp64[1];
+			arg1[2] = sp64[2];
 
 			func_800A931C_B82CC(type_idx, arg1, sp64);
 
 			func_800A931C_B82CC(type_idx2, arg2, sp58);
-			arg2[0] = (s16) sp58[0];
-			arg2[1] = (s16) sp58[1];
-			arg2[2] = (s16) sp58[2];
+			arg2[0] = sp58[0];
+			arg2[1] = sp58[1];
+			arg2[2] = sp58[2];
 
 			func_800A931C_B82CC(type_idx, arg2, sp58);
 
-			type = &alienTypes[alien->typeIndex];
-			type->unk20 = (s16) sp64[0];
-			type->unk22 = (s16) sp64[1];
-			type->unk24 = (s16) sp64[2];
-			type->unk2C = (s16) sp58[0];
-			type->unk2E = (s16) sp58[1];
-			type->unk30 = (s16) sp58[2];
+			alienTypes[typeIndex].unk20 = sp64[0];
+			alienTypes[typeIndex].unk22 = sp64[1];
+			alienTypes[typeIndex].unk24 = sp64[2];
+			alienTypes[typeIndex].unk2C = sp58[0];
+			alienTypes[typeIndex].unk2E = sp58[1];
+			alienTypes[typeIndex].unk30 = sp58[2];
 
-			v0 = func_800870D8_96088(0x80, 0x10);
-			func_80086D70_95D20(arg0, 0, (s16)(v0 - type2_entry->unk6 - type_entry->unk6));
-			alien->unk1E = 0;
-			func_80086D70_95D20(arg0, 1, (s16)(func_800870D8_96088(0x80, 0x10) - type2_entry->unk6 - type_entry->unk6));
-			alien->unk20 &= ~ALIEN_FLAG_UNKE;
+			func_80086D70_95D20(arg0, 0, func_800870D8_96088(0x80, 0x10) - D_8014DD50[type_idx2].unk6Unsigned - D_8014DD50[type_idx].unk6Unsigned);
+			alienInstances[arg0].unk1E = 0;
+			func_80086D70_95D20(arg0, 1, func_800870D8_96088(0x80, 0x10) - D_8014DD50[type_idx2].unk6Unsigned - D_8014DD50[type_idx].unk6Unsigned);
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKE;
 		}
 	} else {
-		if (alienInstances[alien->unk25].unk20 & ALIEN_FLAG_UNKG) {
-			alien->unk20 |= ALIEN_FLAG_UNKE;
-			alien->unk1E = 5;
-			type2_entry->unkE = 0;
-			type_entry->unkE = 0;
+		if (alienInstances[alienInstances[arg0].unk25].unk20 & ALIEN_FLAG_UNKG) {
+			alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKE; alienInstances[arg0].unk1E = 5; D_8014DD50[type_idx2].unkE = 0;
+			D_8014DD50[type_idx].unkE = 0;
 		}
 
 		func_800893C8_98378(arg0, type_idx2, 0x5DC, 0x9C4, 0, -0x3E8, 0x7D0, 0x14, 0x1E);
 		func_800893C8_98378(arg0, type_idx, 0x3E8, 0x7D0, 0, -0x5DC, 0xBB8, 0x14, 0x1E);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DF3C0_1F80D0.s")
-#endif
 
 // CURRENT(2942)
 void func_802DF69C_1F83AC(u8 arg0) {
