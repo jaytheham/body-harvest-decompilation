@@ -11,6 +11,7 @@ void func_802E1CC0_325E10(u8 arg0);
 void func_802E1324_325474(u8 arg0);
 void func_802E2390_3264E0(u8 arg0);
 void func_802E0588_3246D8(u8 arg0);
+void func_802E0B64_324CB4(u8 arg0);
 int func_802E1EFC_32604C(u8 arg0, u8 arg1);
 int func_802E1AE4_325C34(u8 arg0, u8 arg1);
 int func_802E14F4_325644(u8 arg0);

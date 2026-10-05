@@ -2851,7 +2851,6 @@ extern u8 D_80254E80[]; // Tile palette data
 extern AlienType alienTypes[0x30]; // 80256680
 extern u16 D_8025668C[]; // 8025668C (aliases alienTypes[0].unkC)
 extern u16 D_802566BA[]; // 802566BA
-extern s16 D_802566D8[]; // 802566D8
 extern s32 D_80256DEC;
 extern s16 D_80256EE2; // 0x80256EE2
 extern u16 D_802571B2; // 0x802571B2
@@ -3322,16 +3321,6 @@ extern const f64 D_802E7BB8_32BD08[];
 extern const f64 D_802E7BC0_32BD10[];
 extern const f64 D_802E7BC8_32BD18[];
 extern const f64 D_802E7BD0_32BD20[];
-extern const f64 D_802E7BD8_32BD28[];
-extern const f64 D_802E7BE0_32BD30[];
-extern const f64 D_802E7BE8_32BD38[];
-extern const f64 D_802E7BF0_32BD40[];
-extern const f64 D_802E7BF8_32BD48[];
-extern const f64 D_802E7C00_32BD50[];
-extern const f64 D_802E7C08_32BD58[];
-extern const f64 D_802E7C10_32BD60[];
-extern const f64 D_802E7C18_32BD68[];
-extern const f64 D_802E7C20_32BD70[];
 extern s16 D_802E7C30;
 extern s16 D_802E7C32;
 extern s16 D_802E7C34;
@@ -3908,3 +3897,7 @@ Flags2x32 D_8004DC50;
 u8 weaponSlots[7];
 #endif
 
+
+extern Unk8014DD50 D_802E6D60_32AEB0[12];
+extern Unk8014DD50 *D_802E6E20_32AF70[4];
+extern Unk8014DD50 D_802E6E30_32AF80[32];
