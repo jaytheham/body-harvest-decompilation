@@ -236,8 +236,8 @@ Unk8014DD50 *D_802E0CB0_1F99C0 = (Unk8014DD50 *)0x802E0C5C;
 
 u32 D_802E0CB4_1F99C4[] = { 0xFFDD003A, 0x00500000 };
 u32 D_802E0CBC_1F99CC[] = { 0x001E003A, 0x00500000 };
-Unk802E0CC4Entry D_802E0CC4_1F99D4 = { 0xFFE20024, 0x000C, 0x0000 };
-Unk802E0CC4Entry D_802E0CCC_1F99DC = { 0x001E0024, 0x000C, 0x0000 };
+Vec3s D_802E0CC4_1F99D4 = { -30, 36, 12 };
+Vec3s D_802E0CCC_1F99DC = { 30, 36, 12 };
 Vec3s D_802E0CD4_1F99E4 = { -30, 36, 12 };
 Vec3s D_802E0CDC_1F99EC = { 30, 36, 12 };
 
@@ -4680,28 +4680,21 @@ void func_802DF3C0_1F80D0(u8 arg0, s16 *arg1, s16 *arg2) {
 #endif
 
 // CURRENT(2942)
-#ifdef NON_MATCHING
 void func_802DF69C_1F83AC(u8 arg0) {
-	u8 sp1F;
-	s16 sp28[3];
-	s16 sp20[3];
-	AlienInstance *alien;
+	Vec3s sp28;
+	Vec3s sp20;
+	u8 parentId;
 
-	if (1) { *(s32 *)&sp28[0] = D_802E0CC4_1F99D4.w; sp28[2] = D_802E0CC4_1F99D4.h; }
-	if (1) { *(s32 *)&sp20[0] = D_802E0CCC_1F99DC.w; sp20[2] = D_802E0CCC_1F99DC.h; }
-	if (1) { sp1F = alienInstances[arg0].unk25; }
+	sp28 = D_802E0CC4_1F99D4;
+	sp20 = D_802E0CCC_1F99DC;
+	parentId = alienInstances[arg0].unk25;
 	func_800A93A4_B8354(arg0, -0xAE, 0x7E, 0x183);
-
-	alien = &alienInstances[sp1F];
-	if ((alien->unk24 != 0) && (alien->unk2C < 0xA0)) {
+	if ((alienInstances[parentId].unk24 != 0) && (alienInstances[parentId].unk2C < 0xA0)) {
 		func_802DEFC0_1F7CD0(arg0, 0x2328, -0x2000, -0x1000);
 		return;
 	}
-	func_802DF3C0_1F80D0(arg0, sp28, sp20);
+	func_802DF3C0_1F80D0(arg0, &sp28.x, &sp20.x);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DF69C_1F83AC.s")
-#endif
 
 void func_802DF788_1F8498(u8 arg0) {
 	func_800A93A4_B8354(arg0, -0xAE, 0x7E, 0x183);
