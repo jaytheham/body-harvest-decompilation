@@ -4752,7 +4752,6 @@ void func_802DF8DC_1F85EC(u8 arg0, s32 arg1) {
 	alienInstances[inst->unk25].unk26++;
 }
 
-#ifdef NON_MATCHING
 void func_802DF99C_1F86AC(u8 arg0) {
 	AlienInstance *inst = &alienInstances[arg0];
 	s32 flags = inst->unk20;
@@ -4807,9 +4806,6 @@ void func_802DF99C_1F86AC(u8 arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DF99C_1F86AC.s")
-#endif
 
 void func_802DFB94_1F88A4(u8 arg0) {
 	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL)) {
