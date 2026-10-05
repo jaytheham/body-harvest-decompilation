@@ -3,6 +3,21 @@
 
 #include "functions.h"
 
+void func_8007ED9C_8DD4C(u8 arg0);
+s32 func_80085340_942F0(u8 arg0, u16 arg1);
+void func_802E1630_325780(u8 arg0);
+void func_802E19EC_325B3C(u8 arg0);
+void func_802E1CC0_325E10(u8 arg0);
+void func_802E1324_325474(u8 arg0);
+void func_802E2390_3264E0(u8 arg0);
+void func_802E0588_3246D8(u8 arg0);
+int func_802E1EFC_32604C(u8 arg0, u8 arg1);
+int func_802E1AE4_325C34(u8 arg0, u8 arg1);
+int func_802E14F4_325644(u8 arg0);
+int func_802E1274_3253C4(u8 arg0);
+int func_802E1C34_325D84(u8 arg0);
+int func_802E193C_325A8C(u8 arg0);
+
 void func_80012080_12C80(s32 arg0);
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1);
 void* (*func_80000CD4_18D4(Unk80042DA8** arg0))(void);

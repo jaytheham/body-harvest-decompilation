@@ -2780,8 +2780,13 @@ typedef struct {
 
 #pragma pack(1)
 typedef struct {
-	/* 0x00 */ s32 unk0;
-	/* 0x04 */ u16 unk4;
+	union {
+		struct {
+			/* 0x00 */ s32 unk0;
+			/* 0x04 */ u16 unk4;
+		};
+		s16 coordinates[3];
+	};
 } Unk802E71B8; /* size = 0x6 */
 #pragma pack()
 
