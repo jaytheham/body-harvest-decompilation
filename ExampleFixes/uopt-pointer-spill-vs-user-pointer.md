@@ -14,3 +14,6 @@ If the target has a pointer spilled at 0x1C with slot 0x18 empty (frame=0x28), t
 Java `func_802DFF90_1F8CA0` and `func_802DFD80_1F8A90` have the same pattern in a larger frame. An explicit parent pointer spilled at sp+0x4C and pushed the alien ID spill to sp+0x48. Retaining the `u8 parentId` local and accessing `alienInstances[parentId]` directly instead produced the target pointer spill at sp+0x50 and ID spill at sp+0x4C. Reuse the existing instance pointer briefly for the grandparent access, then restore it; adding a separate grandparent pointer reserves another slot and restores the incorrect spill offsets. A block-local skeleton/model index reproduces the target v0 loads. Halfword padding before the saved type index places it at sp+0x5C. Full ROM checksum verified `OK`.
 
 Example: The pattern `AlienInstance *sp1C; ... sp1C = &alienInstances[unk25];` puts sp1C at 0x18 (wrong). Using `(&alienInstances[unk25])->field` inline lets the uopt temp land at 0x1C (correct).
+
+
+Java `func_802DFCA8_1F89B8` also matched by replacing both named instance pointers with array accesses. Keep a block-local `u8 parentId` for the second instance: it reproduces the target a0 load. Direct `alienInstances[arg0]` access reduces the frame from 0x30 to 0x28 and moves the cached instance address from sp+0x24 to sp+0x20. Full ROM checksum verified `OK`.
