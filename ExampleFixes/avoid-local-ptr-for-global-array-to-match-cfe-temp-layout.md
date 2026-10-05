@@ -55,6 +55,10 @@ This causes IDO to allocate the loaded halfword and remainder to the same regist
 
 See also: `func_802DA910_2BCD40` for a nearly identical pattern.
 
+### Direct indexed accesses can fix scheduling without changing registers or frame size
+
+In `func_802E2390_3264E0`, a named `AlienInstance *alien` left a diff score of 180. The frame size and registers already matched, but the parent-pointer reload occurred after the cooldown store instead of between `div` and `mfhi`, and the invincibility constant loaded too early. Removing the local pointer and replacing **every** `alien->field` access with `alienInstances[arg0].field` matched the whole function (score 0 and `build/bh.us.z64: OK`). Replacing only the cooldown field access did not fix it. Test removal across the entire function even when the remaining differences are confined to one block.
+
 ### Direct indexed field accesses can preserve the array base across a branch
 
 In `func_80086A34_16EAF4`, a named `Unk84EECEffect *entry` caused IDO to copy the computed element address from `$v0` into `$a1` before the threshold branch. That changed the branch form and the byte-load delay slot, and the update path later loaded the next link through `$a1`. Removing `entry` and spelling each field access as `D_800FB7B0[effect].field` let IDO retain the element base in `$v0`, schedule the threshold byte load in the target `beql` delay slot, and match the complete function.
