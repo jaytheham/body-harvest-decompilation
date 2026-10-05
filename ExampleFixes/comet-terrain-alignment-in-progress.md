@@ -120,3 +120,7 @@ Current retained source is all-max-540 with void/u8 terrain prototype and origin
 75. Qualify both desired-pitch reads as volatile through pointer casts, leaving global stores ordinary: score1295, produces the second read but shared-base addiu and incorrect scheduling; rejected.
 76. Qualify only the final desired-pitch read after a normal cached difference: unchanged1295; rejected.
 User requested restoring best version and stopping. Restored tools/comet-terrain-all-max-540.txt, the structurally closest ordinary C candidate (score540), preserving the eleven previously matched functions. No further matching work is authorized under the revised goal.
+
+## Exact match (resumed goal)
+
+Attempts 77-81 tested named pitch pointers, branch-local pointers, and cached differences; none restored the target load without other differences. Attempt 82 used the existing split-symbol technique: comparisons read D_802E7C38 and the final snap reads D_802E7C38_R, linked to the same address in tracked undefined_syms.us.txt. Declare both in variables.us.h. This prevents IDO from retaining the first global load across the final branch and produces the target lui/lh in that branch. It also frees a1 for the delta, fixing the subsequent temporary register sequence. Delete the ten terrain f64 placeholders when enabling the function so its inline literals supply their rodata. The apparent -0x10 rodata drift was caused by the shortened function; it disappeared when the missing two instructions were restored. Full ROM OK and function diff score 0.
