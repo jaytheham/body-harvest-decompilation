@@ -11,4 +11,6 @@ If the target has a pointer spilled at 0x1C with slot 0x18 empty (frame=0x28), t
 - Declare any index variable (e.g. `u8 unk25`) as the ONLY user-declared variable - this reserves the 0x18 slot (keeping frame at 0x28) because it is NOT last in declaration order relative to the uopt temp region.
 - The uopt temp for the boss pointer then lands at 0x1C (correct).
 
+Java `func_802DFF90_1F8CA0` has the same pattern in a larger frame. An explicit parent pointer spilled at sp+0x4C and pushed the alien ID spill to sp+0x48. Retaining the `u8 parentId` local and accessing `alienInstances[parentId]` directly instead produced the target pointer spill at sp+0x50 and ID spill at sp+0x4C. Reuse the existing instance pointer briefly for the grandparent access, then restore it; adding a separate grandparent pointer reserves another slot and restores the incorrect spill offsets. A block-local skeleton/model index reproduces the target v0 loads. Halfword padding before the saved type index places it at sp+0x5C. Full ROM checksum verified `OK`.
+
 Example: The pattern `AlienInstance *sp1C; ... sp1C = &alienInstances[unk25];` puts sp1C at 0x18 (wrong). Using `(&alienInstances[unk25])->field` inline lets the uopt temp land at 0x1C (correct).
