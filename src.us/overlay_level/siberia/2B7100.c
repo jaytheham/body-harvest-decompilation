@@ -5026,36 +5026,26 @@ void func_802E0958_2C2D88(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802E0958_2C2D88.s")
 #endif
 
-// CURRENT(406)
-#ifdef NON_MATCHING
 void func_802E0B08_2C2F38(u8 arg0) {
-	AlienInstance *alien;
 	AlienInstance *grandparent;
-	AlienInstance *parent;
-	s16 val;
+	u8 index;
 
-	alien = &alienInstances[arg0];
-	parent = &alienInstances[alien->unk25];
-	grandparent = &alienInstances[parent->unk25];
+	index = alienInstances[arg0].unk25;
+	grandparent = &alienInstances[alienInstances[index].unk25];
 
-	if (!(alien->unk20 & ALIEN_FLAG_UNKL)) {
-		alien->unk20 |= ALIEN_FLAG_FALL;
-		val = alienTypes[alien->typeIndex].unkC;
-		func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16)((u32)((f64)val * 1.5)), 2);
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL)) {
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_FALL;
+		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)(alienTypes[alienInstances[arg0].typeIndex].unkC * 1.5), 2);
 		func_80137468_146418(arg0, 0x11);
 	}
 
-	val = alienTypes[alien->typeIndex].unkC;
-	func_8008AAFC_99AAC(arg0, (s32)((f64)val * 1.5), 5);
+	func_8008AAFC_99AAC(arg0, (s32)(alienTypes[alienInstances[arg0].typeIndex].unkC * 1.5), 5);
 
-	if (alien->unk2C == 1) {
+	if (alienInstances[arg0].unk2C == 1) {
 		grandparent->unk20 |= ALIEN_FLAG_UNKF;
-		parent->unk2C = 0x28;
+		alienInstances[index].unk2C = 0x28;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802E0B08_2C2F38.s")
-#endif
 
 void func_802E0CF8_2C3128(u8 arg0) {
 	func_802E0B08_2C2F38(arg0);
