@@ -2142,39 +2142,33 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 #endif
 
 // CURRENT(1202)
-#ifdef NON_MATCHING
-s32 func_800B5EE4_C4E94(u16 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
-	arg3 &= 0xFF;
+s32 func_800B5EE4_C4E94(u16 arg0, u8 *arg1, s32 arg2, u8 arg3, u8 arg4) {
 
 	if (arg0 & 0x8000) {
 		if (arg0 & 0x400) {
-			D_8014F8A8[D_8014FD28].unk0 = arg1 + (arg4 * 0x120) + (arg3 * 0x10);
-			D_8014F8A8[D_8014FD28].unk4 = (s8)((arg0 & 0x3C0) >> 6);
-			D_8014F8A8[D_8014FD28].unk5 = (s8)((arg0 & 0x4000) >> 14);
-			D_8014F8A8[D_8014FD28].unk6 = (s8)((arg0 & 0x2000) >> 13);
+			D_8014F8A8[D_8014FD28].unk0 = (Vtx *)&(&arg1[(arg4 * 9) << 5])[arg3 * 16];
+			D_8014F8A8[D_8014FD28].unk4 = (arg0 & 0x3C0) >> 6;
+			D_8014F8A8[D_8014FD28].unk5 = (arg0 & 0x4000) >> 14;
+			D_8014F8A8[D_8014FD28].unk6 = (arg0 & 0x2000) >> 13;
 			D_8014FD28--;
-			if (D_8014FD28 == D_8014F89A) {
-				osSyncPrintf(&D_80142D30_151CE0, arg1, &D_8014FD28, arg3);
+			if (D_8014F89A == D_8014FD28) {
+				osSyncPrintf(&D_80142D30_151CE0);
 			}
 			return 0;
 		}
 
-		D_8014F8A8[D_8014F89A].unk0 = arg1 + (arg4 * 0x120) + (arg3 * 0x10);
-		D_8014F8A8[D_8014F89A].unk4 = (s8)((arg0 & 0x3C0) >> 6);
-		D_8014F8A8[D_8014F89A].unk5 = (s8)((arg0 & 0x4000) >> 14);
-		D_8014F8A8[D_8014F89A].unk6 = (s8)((arg0 & 0x2000) >> 13);
-		D_8014F89A++;
-		if (D_8014FD28 == D_8014F89A) {
-			osSyncPrintf(&D_80142D58_151D08, arg1, &D_8014FD28, arg3);
+		D_8014F8A8[D_8014F89A].unk0 = (Vtx *)&(&arg1[(arg4 * 9) << 5])[arg3 * 16];
+		D_8014F8A8[D_8014F89A].unk4 = (arg0 & 0x3C0) >> 6;
+		D_8014F8A8[D_8014F89A].unk5 = (arg0 & 0x4000) >> 14;
+		D_8014F8A8[D_8014F89A].unk6 = (arg0 & 0x2000) >> 13;
+		if (D_8014FD28 == ++D_8014F89A) {
+			osSyncPrintf(&D_80142D58_151D08);
 		}
 		return 0;
 	}
 
 	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5EE4_C4E94.s")
-#endif
 
 /* Emit ground quad geometry: vertices + sorted-by-texture-bucket triangles */
 // CURRENT(75264)
@@ -2241,7 +2235,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * 5) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, (u8 *)arg0, y & 0xFF, x & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -2313,7 +2307,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * cols) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, (u8 *)arg0, y & 0xFF, x & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -2381,7 +2375,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * cols) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, (u8 *)arg0, y & 0xFF, x & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -2449,7 +2443,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * cols) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, (u8 *)arg0, y & 0xFF, x & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
