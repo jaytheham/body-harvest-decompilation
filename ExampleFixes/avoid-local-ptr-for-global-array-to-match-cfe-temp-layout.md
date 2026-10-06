@@ -81,3 +81,5 @@ if (D_800FB7B0[effect].unk12 < 9) {
     // D_800FB7B0[effect].unk2, tail bytes, and D_800FB7B0[effect].unk4
 }
 ```
+
+In Siberia `func_802E0B08_2C2F38`, declare only the grandparent pointer and a `u8` parent index. Access the alien and parent through `alienInstances[arg0]` and `alienInstances[index]`. IDO caches both addresses automatically. Explicit alien or parent pointer locals enlarge the frame from 0x38 to 0x40. The named parent index also places its initial load in v0, aligning register allocation throughout the function. Inline the type radius in both double multiplications instead of caching it in a signed halfword local. Whole-ROM checksum passed.

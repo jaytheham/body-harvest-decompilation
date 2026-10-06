@@ -1166,10 +1166,20 @@ typedef struct {
 		};
 	};
 	/* 0x20 */ s32 unk20; // Bit flags
-	/* 0x24 */ u8 unk24; // Human type/behavior. Harvester humans eaten count. Processor child alien spawned count. Black Adam behavior.
-	/* 0x25 */ u8 unk25; // Parent alien instance id
-	/* 0x26 */ u8 unk26; // Harvester unspawned HCU count
-	/* 0x27 */ u8 unk27;
+	union {
+		struct {
+			/* 0x24 */ u8 unk24; // Human type/behavior. Harvester humans eaten count. Processor child alien spawned count. Black Adam behavior.
+			/* 0x25 */ u8 unk25; // Parent alien instance id
+		};
+		/* 0x24 */ s16 unk24Signed; // Siberia boss target X
+	};
+	union {
+		struct {
+			/* 0x26 */ u8 unk26; // Harvester unspawned HCU count
+			/* 0x27 */ u8 unk27;
+		};
+		/* 0x26 */ s16 unk26Signed; // Siberia boss target Z
+	};
 	/* 0x28 */ s8 unk28; // Last collision tile X
 	/* 0x29 */ s8 unk29; // Last collision tile Z
 	/* 0x2A */ s16 unk2A; // Desired direction
