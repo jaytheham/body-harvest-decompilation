@@ -224,8 +224,9 @@ extern s16 D_80031634_32234[];
 extern s32 D_80031636[];
 extern u16 D_80031648_32248;
 extern s16 D_80031650_32250[];
-extern s8 D_80031720_32320[]; // maxHumanDeathsAllowed?
-extern s8 D_800319C1_325C1;
+extern Vtx D_800316E0_322E0[];
+extern s8 D_80031720_32320[]; // glyph vertical offsets and advances
+extern s8 D_800319C1_325C1; // alias of D_80031720_32320[0x2A1]
 extern UnkE830ModeEntry D_80031A90[];
 extern s16 D_80031B50;
 extern u8 D_80031B58_32758;

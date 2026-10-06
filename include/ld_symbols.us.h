@@ -6,7 +6,7 @@
 extern Addr _29870_s;
 extern Addr _29960_s;
 extern Addr _2E120_s;
-extern Addr _32250_bin;
+extern Addr _32680_bin;
 extern Addr _bootSegmentDataEnd;
 extern Addr _bootSegmentDataSize;
 extern Addr _bootSegmentDataStart;
@@ -293,6 +293,7 @@ extern Addr core_10A20_c;
 extern Addr core_12C80_c;
 extern Addr core_1B060_c;
 extern Addr core_1B100_c;
+extern Addr core_32000_c;
 extern Addr core_320D0_c;
 extern Addr core_53D0_c;
 extern Addr core_53F0_c;

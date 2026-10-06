@@ -225,10 +225,11 @@ segments:
       - [0x2FF10, databin, rsp/audioucode] # M_AUDTASK ucode: D_8002F310_2FF10, 0x1E10 bytes
       - [0x31D20, .data, core/1050]        # shared identity/scale Mtx + 5 static display lists
       - [0x31FD0, .data, core/53F0]
-      - [0x32000, .data, core/AD60]
+      - [0x32000, .data, core/32000]
       - [0x32050, .data, core/E830]
       - [0x320D0, .data, core/320D0]
-      - [0x32250, bin]
+      - [0x32250, .data, core/AD60]
+      - [0x32680, bin]
 
   - name: overlay_gameplay_frontend
     type: code
