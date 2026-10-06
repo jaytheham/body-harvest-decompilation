@@ -1470,20 +1470,16 @@ void func_800B41C8_C3178(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 }
 
 /* Scroll ring buffer right: shift 1 tile column to the right, compute new column */
-// CURRENT(1148)
-#ifdef NON_MATCHING
 void func_800B42B0_C3260(s32 arg0) {
 	u8 sp6F;
+	u8 var_s0;
+	u8 temp_t8;
 	u8 sp68[3];
 	s8 sp60[5];
 	u16 *sp5C;
+	u16 temp_t9;
 	u8 sp59;
 	u8 sp54[3];
-	u16 *temp_s6;
-	u16 *temp_s7;
-	s32 var_s0;
-	s32 temp_t8;
-	s32 temp_t9;
 
 	(void)arg0;
 
@@ -1492,29 +1488,25 @@ void func_800B42B0_C3260(s32 arg0) {
 	D_8014F89D = D_80151DD8.mapPosY;
 	D_8014F899 = D_80151DD8.ringX;
 	D_8014F898 = D_80151DD8.ringY;
+	sp59 = D_8014F898;
 	D_8014F89C++;
 
-	sp6F = 0;
-	sp59 = D_8014F898;
+	for (sp6F = 0; sp6F < 0x13; sp6F++) {
+		temp_t9 = D_8014F89C + ((D_8014F89D + sp6F) << 8) + 0x12;
 
-	do {
-		temp_t9 = (D_8014F89C + ((D_8014F89D + sp6F) << 8) + 0x12) & 0xFFFF;
-		temp_s6 = (u16 *)((u8 *)sp5C + temp_t9 * 2);
-		temp_s7 = sp5C + temp_t9;
-
-		sp60[0] = temp_s6[-0x100] & 0x3F;
-		sp60[1] = temp_s6[-1] & 0x3F;
-		sp60[2] = temp_s7[0] & 0x3F;
-		sp60[3] = temp_s6[1] & 0x3F;
-		sp60[4] = temp_s6[0x100] & 0x3F;
+		sp60[0] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-0x100] & 0x3F;
+		sp60[1] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-1] & 0x3F;
+		sp60[2] = sp5C[temp_t9] & 0x3F;
+		sp60[3] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[1] & 0x3F;
+		sp60[4] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[0x100] & 0x3F;
 
 		func_800B1814_C07C4((D_8014F89D + sp6F) & 0xFF, (D_8014F89C + 0x12) & 0xFF, sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, (s8 *)sp68);
 
 		var_s0 = 0;
 		while (var_s0 < 0x40) {
-			if (((D_8014F89C + 0x12) == D_8014FD48[var_s0 * 2]) && ((D_8014F89D + sp6F) == D_8014FD48[var_s0 * 2 + 1])) {
-				temp_t8 = (func_800038E0_44E0() % 60) & 0xFF;
+			if (((D_8014F89C + 0x12) == D_8014FD48[(u32)var_s0 * 2]) && ((D_8014F89D + sp6F) == D_8014FD48[(u32)var_s0 * 2 + 1])) {
+				temp_t8 = func_800038E0_44E0() % 60;
 				if ((temp_t8 + 0x14) < 0) {
 					sp68[0] = 0;
 				} else {
@@ -1531,30 +1523,27 @@ void func_800B42B0_C3260(s32 arg0) {
 					sp68[2] = temp_t8 - 0x19;
 				}
 			}
-			var_s0 = (var_s0 + 1) & 0xFF;
+			var_s0++;
 		}
 
-		D_80151DD8.tiles[(u8)sp59][D_8014F899].tileType = *temp_s7;
-		if (temp_s6[-1] & 0x800) {
-			D_80151DD8.tiles[(u8)sp59][D_8014F899].r = (sp68[0] / 4) * 3;
-			D_80151DD8.tiles[(u8)sp59][D_8014F899].b = (sp68[2] / 4) * 3;
-			D_80151DD8.tiles[(u8)sp59][D_8014F899].g = (sp68[1] / 4) * 3;
+		D_80151DD8.tiles[sp59][D_8014F899].tileType = sp5C[temp_t9];
+		if (((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-1] & 0x800) {
+			D_80151DD8.tiles[sp59][D_8014F899].r = (sp68[0] / 4) * 3;
+			D_80151DD8.tiles[sp59][D_8014F899].b = (sp68[2] / 4) * 3;
+			D_80151DD8.tiles[sp59][D_8014F899].g = (sp68[1] / 4) * 3;
 		} else {
-			D_80151DD8.tiles[(u8)sp59][D_8014F899].r = sp68[0];
-			D_80151DD8.tiles[(u8)sp59][D_8014F899].g = sp68[1];
-			D_80151DD8.tiles[(u8)sp59][D_8014F899].b = sp68[2];
+			D_80151DD8.tiles[sp59][D_8014F899].r = sp68[0];
+			D_80151DD8.tiles[sp59][D_8014F899].g = sp68[1];
+			D_80151DD8.tiles[sp59][D_8014F899].b = sp68[2];
 		}
 
 		sp59 = (sp59 + 1) % 19;
-		sp6F++;
-	} while (sp6F < 0x13);
+	}
 
 	D_8014F899 = (D_8014F899 + 1) % 19;
 	D_80151DD8.ringX = D_8014F899;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B42B0_C3260.s")
-#endif
+
 
 /* Scroll ring buffer left: shift 1 tile column to the left, compute new column */
 // CURRENT(6983)
