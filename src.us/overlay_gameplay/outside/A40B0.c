@@ -256,7 +256,7 @@ void func_80095100_A40B0(s16 arg0, s16 arg1)
   {
 	if ((D_8013CBB4 == 0xB) || (D_8013CBB4 == 0xC))
 	{
-	  drawText(D_801421A8, D_80034574[s0 * 2]);
+	  drawText(D_801421A8, D_80034574_35174[s0 * 2]);
 	  return;
 	}
   }
