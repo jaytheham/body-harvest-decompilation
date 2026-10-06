@@ -299,16 +299,15 @@ extern s16 D_80033A88_34688[][16];
 extern s16 D_80033B28_34728[];
 extern s16 D_80033B4C_3474C;
 extern BhAudioGlobals D_80033B54_34754;
-extern BhAudioGlobals D_80033B54_34754;
 extern s8 D_80033C5C_3485C[];
 extern u8 D_80033C6C_3486C;
-extern u8 D_80033C6C_W;
+extern u8 D_80033C6C_3486C_W; // write alias preserving the matching compiler access pattern
 extern s8 D_80033C70_34870[];
 extern u8 D_80033C80_34880;
-extern u8 D_80033C80_W;
+extern u8 D_80033C80_34880_W; // write alias preserving the matching compiler access pattern
 extern s8 D_80033C84_34884[];
 extern u8 D_80033C88_34888;
-extern u8 D_80033C88_W;
+extern u8 D_80033C88_34888_W; // write alias preserving the matching compiler access pattern
 extern s16 D_80033C90_34890;
 extern s16 D_80033C94_34894;
 extern Float4 D_80033C9C_3489C;
