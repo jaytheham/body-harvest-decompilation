@@ -7145,3 +7145,7 @@ D_802E7C38_R = D_802E7C38;
 /* Interior aliases of the C sound pitch table. */
 D_80032D88_33988 = D_80032A78_33678 + 0x310;
 D_80032EB8_33AB8 = D_80032A78_33678 + 0x440;
+
+/* Lookup bases inside the last C vehicle audio record. */
+D_80033A68_34668 = D_800330B0_33CB0 + 0x9B8;
+D_80033A74_34674 = D_800330B0_33CB0 + 0x9C4;

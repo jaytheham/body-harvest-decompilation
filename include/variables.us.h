@@ -295,6 +295,8 @@ extern WeaponLevelSpec D_80032EB8_33AB8[][21]; // base one level before vehicle 
 extern WeaponLevelSpec D_800330B0_33CB0[][21];
 extern s16 D_80033A68_34668[][16];
 extern s16 D_80033A74_34674[];
+extern s16 D_80033A88_34688[][16];
+extern s16 D_80033B28_34728[];
 extern s16 D_80033B4C_3474C;
 extern BhAudioGlobals D_80033B54_34754;
 extern BhAudioGlobals D_80033B54_34754;
