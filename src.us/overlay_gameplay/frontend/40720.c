@@ -1268,6 +1268,8 @@ void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 #endif
 
 
+// CURRENT(100690) - the body compiles now (first real score; the earlier 0 was the
+// wrapped-function artifact). 9 data symbols + array/scalar + 2-arg sins fixed.
 #ifdef NON_MATCHING
 void func_800731A8_43658(void) {
 	void *sp114;
@@ -1325,10 +1327,19 @@ void func_800731A8_43658(void) {
 	u8 var_t5;
 	u8 var_t5_2;
 	u8 var_t5_3;
+	extern char D_800918A0_61D50[];
+	extern u16 D_800920A0_62550[];
+	extern char D_800921A0_62650[];
+	extern u16 D_800929A0_62E50[];
+	extern char D_80092AA0_62F50[];
+	extern u16 D_800932A0_63750[];
+	extern u8 *D_800AED74;
+	extern s32 D_800D6D98[];
+	extern s32 D_800D6D9C[];
 
 	var_s4 = &D_800D6DC0;
 	func_800038E0_44E0();
-	D_800946E0_64B90 += 0x320;
+	D_800946E0_64B90[0] += 0x320;
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
@@ -1363,12 +1374,12 @@ void func_800731A8_43658(void) {
 				if ((s32) D_80094858_64D08 > 0) {
 					var_a0 = (D_80094858_64D08 - 0xA) & 0xFF;
 					var_a1 = temp_a1;
-					D_800946E0_64B90 = 0x4000;
+					D_800946E0_64B90[0] = 0x4000;
 					var_t3 = var_a0;
 				} else {
 					var_t3 = D_80094858_64D08;
 					var_a0 = var_t3;
-					var_a1 = (s32) (((f64) (f32) sins((u16) D_800946E0_64B90, temp_a1) / 32768.0) * D_800AE520_7E9D0[0]) + var_t3;
+					var_a1 = (s32) (((f64) (f32) sins((u16) D_800946E0_64B90[0]) / 32768.0) * D_800AE520_7E9D0[0]) + var_t3;
 				}
 				temp_v0_5 = var_a1 + 0xFF;
 				if (var_a1 < 0) {
