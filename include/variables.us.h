@@ -3215,7 +3215,6 @@ extern const f32 D_802E3050_2C5480[];
 extern const f32 D_802E3054_2C5484[];
 extern const f64 D_802E3058_2C5488[];
 extern const f64 D_802E3060_2C5490[];
-extern const f64 D_802E3068_2C5498[];
 extern const f64 D_802E3070_2C54A0[];
 extern const f64 D_802E3078_2C54A8[];
 extern const f64 D_802E3080_2C54B0[];
