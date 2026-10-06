@@ -317,48 +317,39 @@ s16 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 leve
 }
 
 // CURRENT(175)
-#ifdef NON_MATCHING
 s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
-	Unk8014FD30Type *base;
-	Unk8014FD30Type *cur;
-	BoundingBox *sub;
-	s32 cnt = 0;
-	s32 idx;
+    Unk8014FD30Type *base;
+    Unk8014FD30Type *cur;
+    s32 idx;
+    s32 subIdx;
+    s32 level;
+    s32 minX;
 
-	idx = currentLevel - 1;
-	base = D_80147C30_156BE0[idx];
-	cur = base;
-	idx = 0;
-	for (; idx != 6; idx++, cur++) {
-		if (arg0 < cur->main.minX || cur->main.maxX < arg0 || cur->main.minZ >= arg1) {
-			continue;
-		}
-		if (arg1 >= cur->main.maxZ) {
-			continue;
-		}
-		cnt = 0, sub = (BoundingBox *)base + (idx * 4 - idx);
-		for (;;) {
-			if (sub[1].minX == sub[1].maxX) {
-				return (u8)idx;
-			}
-			if ((arg0 < sub[1].minX) || (sub[1].maxX < arg0) || (sub[1].minZ >= arg1) || (arg1 >= sub[1].maxZ)) {
-				if (cnt == 8) {
-					return (u8)idx;
-				}
-				cnt += 8;
-				sub++;
-				if (cnt != 0x10) {
-					continue;
-				}
-			}
-			break;
-		}
-	}
-	return 0xFF;
+    level = currentLevel - 1;
+    idx = 0; base = D_80147C30_156BE0[level]; cur = base;
+    for (; idx != 6; idx++, cur++) {
+        if (arg0 < cur->main.minX || cur->main.maxX < arg0 || cur->main.minZ >= arg1) {
+            continue;
+        }
+        if (arg1 >= cur->main.maxZ) {
+            continue;
+        }
+        for (subIdx = 0; subIdx != 2; subIdx++) {
+            if ((minX = base[idx].sub[subIdx].minX) == base[idx].sub[subIdx].maxX) {
+                return (u8)idx;
+            }
+            if (arg0 < minX || base[idx].sub[subIdx].maxX < arg0 ||
+                base[idx].sub[subIdx].minZ >= arg1 || arg1 >= base[idx].sub[subIdx].maxZ) {
+                if (subIdx == 1) {
+                    return (u8)idx;
+                }
+            } else {
+                break;
+            }
+        }
+    }
+    return 0xFF;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B0F20_BFED0.s")
-#endif
 
 // CURRENT(4946)
 #ifdef NON_MATCHING
