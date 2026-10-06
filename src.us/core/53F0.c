@@ -181,7 +181,7 @@ void func_80004DDC_59DC(u8 arg0, u8 arg1, u8 arg2, s32 arg3, s32 arg4) {
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
-	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, K0_TO_PHYS(D_8005BB48[D_80031B84]));
+	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, K0_TO_PHYS(D_8005BB48[D_80031B84_32784]));
 	gDPSetFillColor(D_8005BB2C++, ((((arg0 << 8) & 0xF800) | ((arg1 * 8) & 0x7C0) | (((s32)arg2 >> 2) & 0x3E) | 1) << 16) | (((arg0 << 8) & 0xF800) | ((arg1 * 8) & 0x7C0) | (((s32)arg2 >> 2) & 0x3E) | 1));
 	gDPPipeSync(D_8005BB2C++);
 	gDPFillRectangle(D_8005BB2C++, 0, arg3, D_80068084 - 1, arg4);
@@ -1657,7 +1657,7 @@ s32 func_80009F18_AB18(s32 arg0) {
 
 	func_8000505C_5C5C();
 	func_800050C4_5CC4();
-	func_8000DC9C_E89C(*(s32*)((u8*)D_8005BB48 + D_80031B84 * 4), *(s32*)((u8*)D_8005BB4C + (-(D_80031B84 * 4))));
+	func_8000DC9C_E89C(*(s32*)((u8*)D_8005BB48 + D_80031B84_32784 * 4), *(s32*)((u8*)D_8005BB4C + (-(D_80031B84_32784 * 4))));
 	func_8000505C_5C5C();
 	func_800050C4_5CC4();
 	osSetTime(D_80068084, D_80068088);
@@ -1686,7 +1686,7 @@ s32 guess_displayInventory(void) {
 
 	func_8000505C_5C5C();
 	func_800050C4_5CC4();
-	func_8000DC9C_E89C(*(s32*)((u8*)D_8005BB48 + D_80031B84 * 4), *(s32*)((u8*)D_8005BB4C + (-(D_80031B84 * 4))));
+	func_8000DC9C_E89C(*(s32*)((u8*)D_8005BB48 + D_80031B84_32784 * 4), *(s32*)((u8*)D_8005BB4C + (-(D_80031B84_32784 * 4))));
 	func_8000AFDC_BBDC();
 	func_8000505C_5C5C();
 	func_800050C4_5CC4();

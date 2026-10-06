@@ -963,7 +963,7 @@ int func_800F1DDC_100D8C(void) {
 
 	flag = 1;
 	D_80157F96 = flag;
-	if ((currentControllerStates[0].button & 0x9000) && ((s16)D_80157F8C > 0) && (D_80031B50 == flag)) {
+	if ((currentControllerStates[0].button & 0x9000) && ((s16)D_80157F8C > 0) && (D_80031B50_32750 == flag)) {
 		buildingInstances[D_80159DDF].yCoord =
 			func_800B84D0_C7480(buildingInstances[D_80159DDF].xCoord, buildingInstances[D_80159DDF].zCoord) >> 8;
 		D_80159DE2 = 0;

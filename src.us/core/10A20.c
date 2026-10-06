@@ -3,6 +3,10 @@
 #include "common.h"
 
 
+s16 D_80031B50_32750 = 0;
+s32 __osSiAccessQueueEnabled = 0;
+u8 D_80031B58_32758 = 0;
+
 /* Out-of-line epilogue of func_8000F6B0_102B0.
  * The main game-loop function (102B0) saves s0-s7/s8/ra with a 0xA0-byte
  * stack frame, then ends in an infinite loop (osDestroyThread paths).

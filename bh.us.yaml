@@ -230,7 +230,9 @@ segments:
       - [0x320D0, .data, core/320D0]
       - [0x32250, .data, core/AD60]
       - [0x32680, .data, core/E830]
-      - [0x32750, bin]
+      - [0x32750, .data, core/10A20]
+      - [0x32760, .data, core/FD80]
+      - [0x32790, bin]
 
   - name: overlay_gameplay_frontend
     type: code

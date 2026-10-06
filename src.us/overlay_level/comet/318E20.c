@@ -1583,7 +1583,7 @@ s32 func_802D67A8_31A8F8(void) {
 	D_80157F96 = 1;
 	D_8015EA2C = 0.0f;
 	
-	if ((currentControllerStates[0].button & 0x9000) && (D_80157F8C > 0) && (D_80031B50 == 1)) {
+	if ((currentControllerStates[0].button & 0x9000) && (D_80157F8C > 0) && (D_80031B50_32750 == 1)) {
 		D_80159DE2 = 0;
 		buildingInstances[D_80159DDF].yCoord = func_800B84D0_C7480(buildingInstances[D_80159DDF].xCoord, buildingInstances[D_80159DDF].zCoord) >> 8;
 		func_800CD390_DC340(D_80157F9E[0]);

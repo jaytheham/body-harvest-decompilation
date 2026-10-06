@@ -6,7 +6,7 @@
 extern Addr _29870_s;
 extern Addr _29960_s;
 extern Addr _2E120_s;
-extern Addr _32750_bin;
+extern Addr _32790_bin;
 extern Addr _bootSegmentDataEnd;
 extern Addr _bootSegmentDataSize;
 extern Addr _bootSegmentDataStart;

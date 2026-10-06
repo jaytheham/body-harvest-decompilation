@@ -3209,7 +3209,7 @@ s32 func_80078424_488D4(void) {
 void func_800788E4_48D94(void) {
 	currentLevel = 1;
 	func_800050C4_5CC4();
-	func_8000DC9C_E89C(D_8005BB48[D_80031B84], D_8005BB48[D_80031B84 ^ 1]);
+	func_8000DC9C_E89C(D_8005BB48[D_80031B84_32784], D_8005BB48[D_80031B84_32784 ^ 1]);
 	func_8000505C_5C5C();
 	showDemoText = 0;
 	D_800313C8_31FC8 = 1;
@@ -3222,7 +3222,7 @@ void func_800788E4_48D94(void) {
 // AI - Continues the saved game and enters the gameplay/frontend transition loop (func_80006DDC_79DC).
 void func_80078968_48E18(void) {
 	func_800050C4_5CC4();
-	func_8000DC9C_E89C(D_8005BB48[D_80031B84], D_8005BB48[D_80031B84 ^ 1]);
+	func_8000DC9C_E89C(D_8005BB48[D_80031B84_32784], D_8005BB48[D_80031B84_32784 ^ 1]);
 	func_8000505C_5C5C();
 	D_800313C8 = 1;
 	func_80006DDC_79DC();
