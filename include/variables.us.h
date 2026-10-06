@@ -290,8 +290,8 @@ extern u8 D_80032228_32E28[];
 extern f32 D_800323BC_32FBC[];
 extern f32 D_80032430_33030[];
 extern f32 D_80032A78_33678[];
-extern f32 D_80032D88_33988;
-extern WeaponLevelSpec D_80032EB8_33AB8[][21];
+extern f32 D_80032D88_33988; // alias of D_80032A78_33678[0xC4]
+extern WeaponLevelSpec D_80032EB8_33AB8[][21]; // base one level before vehicle audio settings
 extern WeaponLevelSpec D_800330B0_33CB0[][21];
 extern s16 D_80033A68_34668[][16];
 extern s16 D_80033A74_34674[];
