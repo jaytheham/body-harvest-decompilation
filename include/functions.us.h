@@ -634,7 +634,7 @@ s16 func_80085C50_94C00(s16, s16, s16, s16, s16, s16);
 void func_80085CE0_94C90(u8, s16, s16, s16, s16);
 void func_80085DC8_94D78(u8, s16, s16, s16, s16);
 void func_80089EB4_98E64(u8, s32, s32, s32, s32);
-void func_800893C8_98378(s32, s16, s16, s16, s16, s16, s16, s32, s32);
+void func_800893C8_98378(u8, s16, s16, s16, s16, s16, s16, s32, s32);
 s32 func_8008AAFC_99AAC(u8, s32, s32);
 void func_8008AC5C_99C0C(u8);
 void func_8008B02C_99FDC(u8);
@@ -1641,5 +1641,9 @@ void func_80088DFC_170EBC(s32 arg0);
 void func_80089BCC_171C8C(s32 arg0);
 void func_8008A704_1727C4(void);
 void func_8008B594_173654(void);
+
+void func_802DEFC0_1F7CD0(u8 arg0, s16 arg1, s16 arg2, s16 arg3);
+
+void func_802DF1F8_1F7F08(u8 arg0);
 
 #endif

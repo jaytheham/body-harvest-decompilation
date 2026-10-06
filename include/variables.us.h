@@ -3044,8 +3044,8 @@ extern Unk8014DD50 *D_802E0CA4_1F99B4;
 extern Unk8014DD50 *D_802E0CA8_1F99B8;
 extern Unk8014DD50 *D_802E0CAC_1F99BC;
 extern Unk8014DD50 *D_802E0CB0_1F99C0;
-extern u32 D_802E0CB4_1F99C4[];
-extern u32 D_802E0CBC_1F99CC[];
+extern Vec3s D_802E0CB4_1F99C4;
+extern Vec3s D_802E0CBC_1F99CC;
 extern Unk8014DD50 *D_802E0CD0_260410[3];
 extern s16 D_802E0CE4_260424[2];
 extern s16 D_802E0CE8_260428[4];
@@ -3118,9 +3118,6 @@ extern const f32 D_802E0F78_1F9C88[];
 extern const f64 D_802E0F80_1F9C90[];
 extern const f32 D_802E0F88_1F9C98[];
 extern const f32 D_802E0F8C_1F9C9C[];
-extern const f64 D_802E0F90_1F9CA0[];
-extern const f64 D_802E0F98_1F9CA8[];
-extern const f64 D_802E0FA0_1F9CB0[];
 extern s16 D_802E0FB0;
 extern s16 D_802E0FB0;
 extern s16 D_802E0FB2;
@@ -3399,10 +3396,10 @@ extern s32 gzip_data_0000;
 extern u32 jtbl_801411A8[];
 extern s32 leomecha_bss_0004;
 extern OSMesg siacs_bss_0000;
-extern Unk802E0CC4Entry D_802E0CC4_1F99D4;
-extern Unk802E0CC4Entry D_802E0CCC_1F99DC;
-extern Unk802E0CC4Entry D_802E0CD4_1F99E4;
-extern Unk802E0CC4Entry D_802E0CDC_1F99EC;
+extern Vec3s D_802E0CC4_1F99D4;
+extern Vec3s D_802E0CCC_1F99DC;
+extern Vec3s D_802E0CD4_1F99E4;
+extern Vec3s D_802E0CDC_1F99EC;
 
 #endif
 
