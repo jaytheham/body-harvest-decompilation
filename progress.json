@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-05T21:00:00Z",
-  "commit": "c663f600",
-  "commit_timestamp": "2026-10-06T09:58:55+13:00",
+  "generated": "2026-10-06T01:39:24Z",
+  "commit": "dbef30ce",
+  "commit_timestamp": "2026-10-06T14:38:45+13:00",
   "overall": {
     "total_functions": 2716,
-    "matched": 1831,
-    "non_matching": 885,
+    "matched": 1843,
+    "non_matching": 873,
     "asm_stubs": 0,
-    "matched_pct": 67.42,
+    "matched_pct": 67.86,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -58,11 +58,11 @@
     },
     "overlay_level/java": {
       "display_name": "Level / Java",
-      "matched": 39,
-      "non_matching": 63,
+      "matched": 51,
+      "non_matching": 51,
       "asm_stubs": 0,
       "total": 102,
-      "matched_pct": 38.2,
+      "matched_pct": 50.0,
       "decompiled_pct": 100.0
     },
     "overlay_level/america": {
@@ -847,12 +847,12 @@
     {
       "path": "overlay_level/java/1ED9E0.c",
       "segment": "overlay_level/java",
-      "matched": 39,
-      "non_matching": 63,
+      "matched": 51,
+      "non_matching": 51,
       "asm_stubs": 0,
       "total": 102,
-      "matched_pct": 38.2,
-      "contributor": "goliath2526"
+      "matched_pct": 50.0,
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_level/java/alien_types.c",
@@ -888,16 +888,16 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 74,
-      "matched": 1743,
-      "non_matching": 813,
+      "files": 75,
+      "matched": 1794,
+      "non_matching": 864,
       "asm_stubs": 0
     },
     {
       "name": "goliath2526",
-      "files": 4,
-      "matched": 86,
-      "non_matching": 72,
+      "files": 3,
+      "matched": 47,
+      "non_matching": 9,
       "asm_stubs": 0
     },
     {
@@ -1156,9 +1156,9 @@
     },
     {
       "date": "2026-10-04",
-      "commit": "b130c4f",
-      "matched": 1831,
-      "non_matching": 885,
+      "commit": "ed302bd",
+      "matched": 1843,
+      "non_matching": 873,
       "total": 2716
     }
   ]
