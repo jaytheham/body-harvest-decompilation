@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-06T01:39:24Z",
-  "commit": "dbef30ce",
-  "commit_timestamp": "2026-10-06T14:38:45+13:00",
+  "generated": "2026-10-06T08:32:27Z",
+  "commit": "00407c91",
+  "commit_timestamp": "2026-10-06T21:31:40+13:00",
   "overall": {
     "total_functions": 2716,
-    "matched": 1843,
-    "non_matching": 873,
+    "matched": 1852,
+    "non_matching": 864,
     "asm_stubs": 0,
-    "matched_pct": 67.86,
+    "matched_pct": 68.19,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -67,20 +67,20 @@
     },
     "overlay_level/america": {
       "display_name": "Level / America",
-      "matched": 50,
-      "non_matching": 24,
+      "matched": 51,
+      "non_matching": 23,
       "asm_stubs": 0,
       "total": 74,
-      "matched_pct": 67.6,
+      "matched_pct": 68.9,
       "decompiled_pct": 100.0
     },
     "overlay_level/siberia": {
       "display_name": "Level / Siberia",
-      "matched": 45,
-      "non_matching": 50,
+      "matched": 53,
+      "non_matching": 42,
       "asm_stubs": 0,
       "total": 95,
-      "matched_pct": 47.4,
+      "matched_pct": 55.8,
       "decompiled_pct": 100.0
     },
     "overlay_level/comet": {
@@ -787,11 +787,11 @@
     {
       "path": "overlay_level/america/254410.c",
       "segment": "overlay_level/america",
-      "matched": 50,
-      "non_matching": 24,
+      "matched": 51,
+      "non_matching": 23,
       "asm_stubs": 0,
       "total": 74,
-      "matched_pct": 67.6,
+      "matched_pct": 68.9,
       "contributor": "jaytheham"
     },
     {
@@ -867,11 +867,11 @@
     {
       "path": "overlay_level/siberia/2B7100.c",
       "segment": "overlay_level/siberia",
-      "matched": 45,
-      "non_matching": 50,
+      "matched": 53,
+      "non_matching": 42,
       "asm_stubs": 0,
       "total": 95,
-      "matched_pct": 47.4,
+      "matched_pct": 55.8,
       "contributor": "jaytheham"
     },
     {
@@ -889,8 +889,8 @@
     {
       "name": "jaytheham",
       "files": 75,
-      "matched": 1794,
-      "non_matching": 864,
+      "matched": 1803,
+      "non_matching": 855,
       "asm_stubs": 0
     },
     {
@@ -1156,9 +1156,9 @@
     },
     {
       "date": "2026-10-04",
-      "commit": "ed302bd",
-      "matched": 1843,
-      "non_matching": 873,
+      "commit": "7051402",
+      "matched": 1852,
+      "non_matching": 864,
       "total": 2716
     }
   ]
