@@ -6,7 +6,7 @@
 extern Addr _29870_s;
 extern Addr _29960_s;
 extern Addr _2E120_s;
-extern Addr _359D0_bin;
+extern Addr _359E0_bin;
 extern Addr _bootSegmentDataEnd;
 extern Addr _bootSegmentDataSize;
 extern Addr _bootSegmentDataStart;
@@ -342,6 +342,7 @@ extern Addr libultra_seqplayer_s;
 extern Addr libultra_siacs_s;
 extern Addr libultra_sinf_s;
 extern Addr libultra_sins_s;
+extern Addr libultra_sl_c;
 extern Addr libultra_sndplayer_s;
 extern Addr libultra_sptask_s;
 extern Addr libultra_synthesizer_s;

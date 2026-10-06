@@ -51,7 +51,7 @@ segments:
       - [0x1B060, c, core/1B060]
       - [0x1B100, c, core/1B100]
       - [0x1B7E0, lib, libultra_rom, aisetfreq]
-      - [0x1B940, lib, libultra_rom, sl]
+      - [0x1B940, c, libultra/sl]
       - [0x1BA00, lib, libultra_rom, heapalloc]
       - [0x1BA60, lib, libultra_rom, createmesgqueue]
       - [0x1BA90, lib, libultra_rom, createthread]
@@ -235,7 +235,8 @@ segments:
       - [0x32790, .data, core/loader]
       - [0x328A0, .data, core/12C80]
       - [0x350B0, .data, core/1B100]
-      - [0x359D0, bin]
+      - [0x359D0, .data, libultra/sl]
+      - [0x359E0, bin]
 
   - name: overlay_gameplay_frontend
     type: code
